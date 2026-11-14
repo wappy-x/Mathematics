@@ -10,7 +10,9 @@ A glass tube of hydrogen gas, with a high voltage across it, glows pink-red. Pas
 
 An engineer wants to predict those lines before building the filter. The answer is that the electron in hydrogen can only hold certain energies, and they follow one rule: **minus 13.6 electronvolts divided by n squared**, with n = 1, 2, 3, and so on. An electronvolt (eV) is the energy one electron gains crossing one volt. The red line is the electron dropping from n = 3 to n = 2 and throwing away the difference, 1.888651 eV, as one particle of light.
 
-The rule comes from Schrödinger's equation, the same equation that gave the levels of an electron in a 1 nm box ([Schrodinger's equation](03-schrodinger-equation-and-the-particle-in-a-box.md)). The new difficulty is three dimensions. The trick is that the proton pulls the same way in every direction. So the wave splits into a part that depends only on distance and a part that depends only on direction. Each part gives one whole number, and the up-down axis gives a third. Those three whole numbers, n, l and m, are the **quantum numbers**: the labels on every state of the atom, and the reason chemistry has shells.
+The rule comes from Schrödinger's equation, the same equation that gave the levels of an electron in a 1 nm box ([Schrodinger's equation](03-schrodinger-equation-and-the-particle-in-a-box.md)). The new difficulty is three dimensions.
+
+The trick is that the proton pulls the same way in every direction. So the wave splits into a part that depends only on distance and a part that depends only on direction. Each part gives one whole number, and the up-down axis gives a third. Those three whole numbers, n, l and m, are the **quantum numbers**: the labels on every state of the atom, and the reason chemistry has shells.
 
 **Because the pull depends only on distance, the hydrogen wave splits into a radial factor and an angular factor; the angular factor is allowed only for whole numbers l and m with m from −l to l, the radial factor only for whole n above l, and the energy depends on n alone, as −13.598287 eV divided by n squared.**
 
@@ -29,7 +31,7 @@ n = 4   ##                                         0.85 eV
 n = 5   #                                          0.54 eV
 ```
 
-The box levels grow as n squared and spread apart. The hydrogen levels shrink as one over n squared and crowd together towards zero, the energy of an electron pulled free. The hydrogen electron is held far harder than the boxed one, because the proton's pull squeezes it into a region a few Bohr radii across. The standard Bohr radius, with the proton held still, is 0.052918 nm; this card lets the proton move too, so its Bohr radius $a_0$ is 0.052947 nm.
+The box levels grow as n squared and spread apart. The hydrogen levels shrink as one over n squared and crowd together towards zero, the energy of an electron pulled free. The hydrogen electron is held far harder than the boxed one, because the proton's pull squeezes it into a region a few Bohr radii across. The Bohr radius is the atom's natural unit of length. The standard Bohr radius, with the proton held still, is 0.052918 nm; this card lets the proton move too, so its Bohr radius $a_0$ is 0.052947 nm.
 
 ---
 
@@ -60,7 +62,7 @@ $$n = 1, 2, 3, \dots \qquad l = 0, 1, \dots, n-1 \qquad m = -l, \dots, 0, \dots,
 | $\mu$, $m_e$, $m_p$ | **reduced mass** $m_e m_p/(m_e + m_p)$: electron and proton both swing about their centre | $0.99945568\,m_e$ | levels deepen in proportion |
 | $h$, $\hbar$, $c$ | Planck's constant; $\hbar = h/2\pi$; speed of light | $hc = 1239.841984$ eV nm | |
 | $e$, $\varepsilon_0$ | size of the electron's charge (but in $e^{-r/a_0}$, e is 2.718…, the exponential); electric constant | $e$ exact in SI; $\varepsilon_0$ = 8.8541878188 × 10⁻¹² F/m | larger $e$: much deeper levels, as $e^4$ |
-| $a_0$ | **Bohr radius** with the reduced mass, $4\pi\varepsilon_0\hbar^2/(\mu e^2)$: the atom's natural length. CODATA's Bohr radius has $m_e$ in place of $\mu$ | 0.052947 nm; CODATA's, 0.052918 nm | |
+| $a_0$ | **Bohr radius** with the reduced mass, $4\pi\varepsilon_0\hbar^2/(\mu e^2)$: the atom's natural length. CODATA's Bohr radius (CODATA: the international committee that publishes the recommended values of physical constants) has $m_e$ in place of $\mu$ | 0.052947 nm; CODATA's, 0.052918 nm | |
 | $\nabla^2$ | the Laplacian: how much the wave's value differs from its average nearby | | |
 | $\lambda$ | wavelength of the light from a jump, $hc$ over the energy given up | 656.470 nm | |
 
@@ -69,7 +71,7 @@ The letters s, p, d stand for l = 0, 1, 2, so "2p" means n = 2, l = 1.
 ### When it holds
 
 - **One electron.** True for hydrogen, and for any atom stripped to one electron. With two or more, the electrons push each other apart, the energy starts to depend on l too, and the periodic table's third row holds 8 elements, not the 18 of hydrogen's third shell.
-- **Slow electron, no relativity.** The electron moves slowly compared with light, so the error is small but real: the outline gives 13.598287 eV to free the electron, the measured value is 13.598435 eV. Most of that gap is relativity; a smaller shift from quantum electrodynamics, the Lamb shift, pulls the other way.
+- **Slow electron, no relativity.** The electron moves slowly compared with light, so the error is small but real: the outline gives 13.598287 eV to free the electron, the measured value is 13.598435 eV. Most of that gap is relativity; a smaller shift from quantum electrodynamics (the quantum theory of light and charge), the Lamb shift, pulls the other way.
 - **Spin left out of the equation.** Spin ([Spin one-half](06-spin-and-two-state-systems.md)) doubles each count, so shell n holds 2n² electrons, and relativity, with spin's magnetic coupling to the orbit, splits shell 2 by 45.26 micro-eV. The code takes that number from the relativistic formula; this card does not derive it.
 - **No outside field.** A magnet splits the states with different m; an electric field mixes l. The formula is for a free atom.
 - **Bound states only.** Above zero energy the electron flies off, and the levels become a continuous range, not covered here.
@@ -84,7 +86,7 @@ The proton pulls with the same strength at the same distance in every direction.
 
 ### Step 1: split the wave into a distance part times a direction part
 
-In round coordinates the Laplacian is (its derivation is the planned card The Laplacian in round coordinates):
+In round coordinates (spherical coordinates: a distance r and the two angles θ and φ) the Laplacian is (its derivation is the planned card The Laplacian in round coordinates):
 
 $$\nabla^2\psi = \frac{1}{r^2}\frac{\partial}{\partial r}\Big(r^2\frac{\partial\psi}{\partial r}\Big) + \frac{1}{r^2}\Big[\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\Big(\sin\theta\,\frac{\partial\psi}{\partial\theta}\Big) + \frac{1}{\sin^2\theta}\frac{\partial^2\psi}{\partial\phi^2}\Big]$$
 
@@ -98,7 +100,7 @@ Move the electron outwards and only the left side could change; turn it and only
 
 The φ part must be $\cos m\phi$ or $\sin m\phi$. Going once round the axis brings the electron back to the same place, so the wave must repeat: m is a whole number.
 
-With $m = 0$, write $x = \cos\theta$. The direction equation becomes exactly Legendre's equation, with l in the place of its n. Its power series stays finite at both poles only if it stops, and it stops only when l is a whole number ([Legendre's equation](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/04-legendre-polynomials.md)). With m not zero the same argument, on the associated equation, adds one condition: m runs from −l to l. So each l has 2l + 1 shapes: one round s shape, three p shapes, five d shapes.
+With $m = 0$, write $x = \cos\theta$. The direction equation becomes exactly Legendre's equation, with l in the place of its n. Its power series stays finite at both poles only if it stops, and it stops only when l is a whole number ([Legendre's equation](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/04-legendre-polynomials.md)). With m not zero the same argument, on the associated Legendre equation (Legendre's equation with an extra term for m), adds one condition: m runs from −l to l. So each l has 2l + 1 shapes: one round s shape, three p shapes, five d shapes.
 
 Nothing in this step used the electric pull. Every round pull, in every atom, nucleus or molecule turning in space, has these same direction shapes.
 
@@ -116,7 +118,11 @@ Try $R = r^l e^{-r/(n a_0)}$ times a power series in $r/a_0$. Putting it in Step
 
 $$\frac{\text{term } k+1}{\text{term } k} = \frac{2\,(k + l + 1 - n)}{n\,(k+1)(k + 2l + 2)}\cdot\frac{r}{a_0}$$
 
-If no term is ever zero, then far out the ratio tends to $2r/(n k a_0)$. That is the series for $e^{2r/(n a_0)}$, so $R$ grows like $e^{+r/(n a_0)}$: the electron would sit at infinity, not in an atom. The only escape is a top bracket of zero: $k + l + 1 - n = 0$ for some whole $k \ge 0$. So **n is a whole number, at least l + 1**, and the series is a polynomial with $n - l - 1$ terms after the first. The checks build these series: n = 2, l = 0 gives $1 - 0.5\,r/a_0$; n = 3, l = 0 gives $1 - 0.666667\,r/a_0 + 0.074074\,(r/a_0)^2$, the textbook $2/27$. With n = 2.5, $R$ at $40a_0$ has a base-10 logarithm of 1.44, against −7.41 for n = 2. The first is the growing wave; the second has died away.
+If no term is ever zero, then far out the ratio tends to $2r/(n k a_0)$. That is the series for $e^{2r/(n a_0)}$, so $R$ grows like $e^{+r/(n a_0)}$: the electron would sit at infinity, not in an atom.
+
+The only escape is a top bracket of zero: $k + l + 1 - n = 0$ for some whole $k \ge 0$. So **n is a whole number, at least l + 1**, and the series is a polynomial with $n - l - 1$ terms after the first.
+
+The checks build these series: n = 2, l = 0 gives $1 - 0.5\,r/a_0$; n = 3, l = 0 gives $1 - 0.666667\,r/a_0 + 0.074074\,(r/a_0)^2$, the textbook $2/27$. With n = 2.5, $R$ at $40a_0$ has a base-10 logarithm of 1.44, against −7.41 for n = 2. The first is the growing wave; the second has died away.
 
 <details>
 <summary>The algebra behind the term rule, and where 13.6 eV comes from</summary>
@@ -137,7 +143,9 @@ Back in SI units the energy unit $\hbar^2/(\mu a_0^2)$ is $\mu e^4/(4\varepsilon
 
 ### Step 5: count the states in a shell
 
-For each n, l runs from 0 to n − 1, and each l brings 2l + 1 values of m. Shell 2 has $1 + 3 = 4$ states, shell 3 has $1 + 3 + 5 = 9$: shell n has n² states, all at the same energy, because the energy contains n and nothing else. Spin doubles that to 2, 8, 18, 32 places for electrons. The energy ignoring l is special to the pure 1/r electric pull. It comes from a second kept quantity that only this pull has, the Laplace–Runge–Lenz vector: an arrow that, for a classical orbit, points from the proton to the orbit's nearest point and never turns. This outline names it and does not derive it; [Symmetry and conservation](08-symmetry-and-conserved-quantities.md) gives the general rule that pairs a symmetry with a kept quantity.
+For each n, l runs from 0 to n − 1, and each l brings 2l + 1 values of m. Shell 2 has $1 + 3 = 4$ states, shell 3 has $1 + 3 + 5 = 9$: shell n has n² states, all at the same energy, because the energy contains n and nothing else. Spin doubles that to 2, 8, 18, 32 places for electrons.
+
+The energy ignoring l is special to the pure 1/r electric pull. It comes from a second kept quantity that only this pull has, the Laplace–Runge–Lenz vector: an arrow that, for a classical orbit, points from the proton to the orbit's nearest point and never turns. This outline names it and does not derive it; [Symmetry and conservation](08-symmetry-and-conserved-quantities.md) gives the general rule that pairs a symmetry with a kept quantity.
 
 ---
 
@@ -155,7 +163,7 @@ The red line, from n = 3 to n = 2, with the CODATA 2022 constants (in the code).
 | energy given up | $3.399572 - 1.510921$ | 1.888651 eV |
 | wavelength | $hc/1.888651 = 1239.841984/1.888651$ | **656.470 nm** |
 
-This outline puts the light from that jump at 656.470 nm in vacuum: red, the colour of the glowing tube. The measured line is 656.460 nm in vacuum, so the outline is 0.010 nm long; H-alpha filter makers quote the air wavelength, 656.279 nm. The same rule gives 486.27 nm (blue-green, n = 4 to 2), 121.57 nm (ultraviolet, n = 2 to 1) and the Balmer series limit, 364.71 nm, which the red line's family crowds towards as n runs to infinity.
+This outline puts the light from that jump at 656.470 nm in vacuum: red, the colour of the glowing tube. The measured line is 656.460 nm in vacuum, so the outline is 0.010 nm long. This red line is called H-alpha, and H-alpha filter makers quote its air wavelength, 656.279 nm. The same rule gives 486.27 nm (blue-green, n = 4 to 2), 121.57 nm (ultraviolet, n = 2 to 1) and the Balmer series limit, 364.71 nm, which the red line's family crowds towards as n runs to infinity.
 
 ### Where the electron is: the radial picture
 
@@ -178,7 +186,7 @@ Orange: 1s (n = 1, l = 0), peaked at one Bohr radius, with mean distance 1.5 Boh
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Electron mass in place of the reduced mass | 13.605693 eV; red line 656.112 nm | The proton moves too. The error is about twice the 0.179 nm gap between hydrogen and deuterium, which spectrometers resolve easily. |
+| Electron mass in place of the reduced mass | 13.605693 eV; red line 656.112 nm | The proton moves too. The error is about twice the 0.179 nm gap between hydrogen and deuterium (heavy hydrogen), which spectrometers resolve easily. |
 | Energy as 1/n, not 1/n² | red line 547.06 nm, green | The far-away decay fixes $E \propto -1/n^2$; with 1/n the colours are wrong. |
 | Forget m: one shape per l | shell 2 holds 4 electrons, not 8 | Each l has 2l + 1 tilted shapes; neon's full second shell needs all 8. |
 | Trust the outline below 0.0001 eV | one level at n = 2 | Relativity splits shell 2 by 45.26 micro-eV, so the red line is really split into components about 0.0157 nm apart. Outside the model. |
@@ -187,7 +195,11 @@ Orange: 1s (n = 1, l = 0), peaked at one Bohr radius, with mean distance 1.5 Boh
 
 ## Code, from first principles, and it actually runs
 
-The code reaches the levels by three independent roads. Road 1 is the closed form from the CODATA constants, checked against CODATA's own Rydberg energy and Bohr radius; its red line is checked against the measured one. Road 2 builds the radial series term by term and shows it stops only for whole n. Road 3 never uses the formula: it integrates the radial equation outward from the proton (Numerov's method, a careful step-by-step rule for equations like $u'' = f(r)\,u$, here with $u = rR$) and bisects on the energy until the wave dies far away. It finds each level for l = 0, 1, 2, and finds none below n = l + 1. Simpson's rule then checks the normalisation, the 1.5 Bohr radius mean distance and the zero overlap of 1s with 2s.
+The code reaches the levels by three independent roads. Road 1 is the closed form from the CODATA constants, checked against CODATA's own Rydberg energy (13.605693 eV, the energy unit with the electron mass) and Bohr radius; its red line is checked against the measured one. Road 2 builds the radial series term by term and shows it stops only for whole n.
+
+Road 3 never uses the formula: it integrates the radial equation outward from the proton (Numerov's method, a careful step-by-step rule for equations like $u'' = f(r)\,u$, here with $u = rR$) and bisects on the energy (halves the search range again and again) until the wave dies far away. It finds each level for l = 0, 1, 2, and finds none below n = l + 1.
+
+Simpson's rule (an area rule that fits short parabolas through the points) then checks the normalisation (the constant that makes the total chance 1), the 1.5 Bohr radius mean distance and the zero overlap of 1s with 2s.
 
 ### Python
 
@@ -585,10 +597,148 @@ try: n=100 circular state radius 529.47 nm, energy -1.360 meV
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves that the radial series stops only for whole n above l, and counts the states in every shell.
+
+- Take any positive trial number n and any whole l. Then the radial series stops exactly when n is a whole number above l.
+- Suppose n is a whole number above l. Then term k of the series is zero exactly when k is larger than $n - l - 1$.
+- Take any whole n. Then shell n has exactly n² states, with l from 0 to n − 1 and m from −l to l.
+- Take n = 2 and l = 0. Then term 1 is −1/2 and term 2 is 0.
+- Take n = 3 and l = 0. Then term 1 is −2/3 and term 2 is 2/27.
+- Take n = 3 and l = 1. Then term 1 is −1/6 and term 2 is 0.
+- Shells 1 to 4 hold 1, 4, 9 and 16 states, and with spin 2, 8, 18 and 32 electrons.
+- The red line, from shell 3 to shell 2, gives up $1/4 - 1/9 = 5/36$ of the energy unit. The wrong 1/n rule gives 1/6.
+
+Lean starts from Step 4's term rule, so the energies, wavelengths, shooting solve and integrals are left to the Python and Rust checks.
+
+```lean
+-- Hydrogen in outline: the radial series stops only for a whole shell number n above l, it then has n - l - 1 terms after the first, and the quantum numbers give shell n exactly n² states.
+import Mathlib.Basic.Real.Basic
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Order.Interval.Finset.Defs
+import Mathlib.Data.Int.Interval
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Positivity
+
+/-- The radial series of Step 4, with r in Bohr radii: term 0 is 1, and term k + 1 is term k
+times 2 (k + l + 1 - ν) / (ν (k + 1) (k + 2l + 2)). Here ν is the trial shell number, any
+positive real number, and l is the orbital number. -/
+noncomputable def radialCoeff (ν : ℝ) (l : ℕ) : ℕ → ℝ
+  | 0 => 1
+  | k + 1 => radialCoeff ν l k *
+      (2 * ((k : ℝ) + l + 1 - ν) / (ν * ((k : ℝ) + 1) * ((k : ℝ) + 2 * l + 2)))
+
+/-- The states of shell n: pairs (l, m) with l = 0, 1, …, n - 1 and m = -l, …, l. -/
+def shellStates (n : ℕ) : Finset (Σ _ : ℕ, ℤ) :=
+  (Finset.range n).sigma fun l => Finset.Icc (-(l : ℤ)) l
+
+/-- Helper: for ν ≠ 0, term k of the radial series is zero exactly when some earlier
+numerator factor j + l + 1 - ν (with j < k) is zero. -/
+theorem radialCoeff_eq_zero_iff (ν : ℝ) (hν : ν ≠ 0) (l : ℕ) (k : ℕ) :
+    radialCoeff ν l k = 0 ↔ ∃ j : ℕ, j < k ∧ (j : ℝ) + l + 1 = ν := by
+  induction k with
+  | zero => simp [radialCoeff]
+  | succ k ih =>
+    have h1 : ((k : ℝ) + 1) ≠ 0 := by positivity
+    have h2 : ((k : ℝ) + 2 * l + 2) ≠ 0 := by positivity
+    rw [radialCoeff, mul_eq_zero, ih, div_eq_zero_iff]
+    simp only [mul_eq_zero, hν, h1, h2, or_false, OfNat.ofNat_ne_zero, false_or, sub_eq_zero]
+    constructor
+    · rintro (⟨j, hj, e⟩ | e)
+      · exact ⟨j, by omega, e⟩
+      · exact ⟨k, by omega, e⟩
+    · rintro ⟨j, hj, e⟩
+      rcases Nat.lt_succ_iff_lt_or_eq.mp hj with hj | rfl
+      · exact Or.inl ⟨j, hj, e⟩
+      · exact Or.inr e
+
+#print axioms radialCoeff_eq_zero_iff
+
+/-- The series must stop: for a trial shell number ν > 0 and any orbital number l, the radial
+series has only finitely many nonzero terms exactly when ν is a whole number n with n > l
+(that is, n at least l + 1). -/
+theorem radial_series_stops_iff_whole_n_above_l (ν : ℝ) (hν : 0 < ν) (l : ℕ) :
+    (∃ K : ℕ, ∀ k, K ≤ k → radialCoeff ν l k = 0) ↔ ∃ n : ℕ, l < n ∧ ν = n := by
+  constructor
+  · rintro ⟨K, hK⟩
+    obtain ⟨j, -, e⟩ := (radialCoeff_eq_zero_iff ν hν.ne' l K).mp (hK K le_rfl)
+    exact ⟨j + l + 1, by omega, by rw [← e]; push_cast; ring⟩
+  · rintro ⟨n, hn, rfl⟩
+    obtain ⟨j, rfl⟩ := Nat.exists_eq_add_of_lt hn
+    refine ⟨j + 1, fun k hk => (radialCoeff_eq_zero_iff _ hν.ne' l k).mpr ⟨j, by omega, ?_⟩⟩
+    push_cast; ring
+
+/-- When n is a whole number above l, the radial series is a polynomial with n - l - 1 terms
+after the first: term k is zero exactly when k is larger than n - l - 1. -/
+theorem radial_series_has_n_sub_l_sub_one_terms_after_first (n l : ℕ) (h : l < n) (k : ℕ) :
+    radialCoeff n l k = 0 ↔ n - l - 1 < k := by
+  have hn : ((n : ℕ) : ℝ) ≠ 0 := by exact_mod_cast (show n ≠ 0 by omega)
+  rw [radialCoeff_eq_zero_iff _ hn]
+  constructor
+  · rintro ⟨j, hj, e⟩
+    have e' : j + l + 1 = n := by exact_mod_cast e
+    omega
+  · intro hk
+    exact ⟨n - l - 1, by omega, by
+      have : n - l - 1 + l + 1 = n := by omega
+      exact_mod_cast this⟩
+
+/-- Counting states: with l from 0 to n - 1 and m from -l to l, shell n has n² states. -/
+theorem shell_has_n_sq_states (n : ℕ) : (shellStates n).card = n ^ 2 := by
+  rw [shellStates, Finset.card_sigma]
+  have : ∀ l : ℕ, (Finset.Icc (-(l : ℤ)) l).card = 2 * l + 1 := by
+    intro l
+    rw [Int.card_Icc]
+    omega
+  simp only [this]
+  induction n with
+  | zero => simp
+  | succ n ih => rw [Finset.sum_range_succ, ih]; ring
+
+-- Step 4's checks: n = 2, l = 0 gives 1 - 0.5 r; n = 3, l = 0 gives 1 - (2/3) r + (2/27) r²;
+-- n = 3, l = 1 gives 1 - (1/6) r.
+example : radialCoeff 2 0 1 = -1 / 2 := by norm_num [radialCoeff]
+example : radialCoeff 2 0 2 = 0 := by norm_num [radialCoeff]
+example : radialCoeff 3 0 1 = -2 / 3 := by norm_num [radialCoeff]
+example : radialCoeff 3 0 2 = 2 / 27 := by norm_num [radialCoeff]
+example : radialCoeff 3 1 1 = -1 / 6 := by norm_num [radialCoeff]
+example : radialCoeff 3 1 2 = 0 := by norm_num [radialCoeff]
+
+-- Step 5: shells 1 to 4 hold 1, 4, 9, 16 states; with spin, 2, 8, 18, 32 electrons.
+example : (shellStates 1).card = 1 := by decide
+example : (shellStates 2).card = 4 := by decide
+example : (shellStates 3).card = 9 := by decide
+example : (shellStates 4).card = 16 := by decide
+example : (2 * (shellStates 1).card, 2 * (shellStates 2).card,
+    2 * (shellStates 3).card, 2 * (shellStates 4).card) = (2, 8, 18, 32) := by decide
+
+-- The red line, 3 to 2, gives up 1/4 - 1/9 = 5/36 of the energy unit; the wrong 1/n rule
+-- would give 1/2 - 1/3 = 1/6.
+example : (1 : ℚ) / 2 ^ 2 - 1 / 3 ^ 2 = 5 / 36 := by norm_num
+example : (1 : ℚ) / 2 - 1 / 3 = 1 / 6 := by norm_num
+
+#print axioms radial_series_stops_iff_whole_n_above_l
+#print axioms radial_series_has_n_sub_l_sub_one_terms_after_first
+#print axioms shell_has_n_sq_states
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'radialCoeff_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'radial_series_stops_iff_whole_n_above_l' depends on axioms: [propext, Classical.choice, Quot.sound]
+'radial_series_has_n_sub_l_sub_one_terms_after_first' depends on axioms: [propext, Classical.choice, Quot.sound]
+'shell_has_n_sq_states' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - Guess first: does swapping the proton for a deuteron, twice as heavy, move the red line by more or less than 1 nm? The `try: deuterium` line computes it with `MD` in place of `MP`: 656.291 nm, 0.179 nm shorter, enough to discover deuterium in 1932. (Changing `mu = reduced(MP)` itself also works, and then the assert against measured hydrogen fails, as it should.)
-> - Guess first: how big is a hydrogen atom with n = 100? The circular state (l = 99) peaks at n² Bohr radii, checked at n = 3 to give 9.000. At n = 100 that is 529.47 nm, the size of a wavelength of green light, with an energy of only −1.360 meV.
+> - Guess first: how big is a hydrogen atom with n = 100? The circular state (l = 99) peaks at n² Bohr radii, checked at n = 3 to give 9.000. At n = 100 that is 529.47 nm, the size of a wavelength of green light, with an energy of only −1.360 meV (thousandths of an eV).
 > - Guess first: what is the shortest wavelength in the red line's family? Change `lam(E1, 3, 2)` to `lam(E1, 1e9, 2)`: 364.71 nm.
 > - Guess first: which jump gives ultraviolet light? Change `lam(E1, 3, 2)` to `lam(E1, 2, 1)`: 121.57 nm, the line that rockets carry detectors for, since air absorbs it.
 

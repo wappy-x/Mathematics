@@ -20,7 +20,9 @@ That sideways escape is **buckling**. The steel's strength does not decide when 
 
 <p align="center"><img src="../figures/buckling-and-stability.svg" alt="Four 3 m tubes under an end load P, with their buckled shapes: pinned at both ends (one half-wave, K = 1, 31.71 kN), fixed base and free top (a quarter-wave, K = 2, 7.93 kN), fixed base and pinned top (K = 0.6992, 64.86 kN), fixed at both ends (K = 0.5, 126.82 kN); open circles mark the points where the bend changes direction" width="420"></p>
 
-Each tube is 3 m tall, drawn at 60 px per metre. The dashed line is the straight tube; the solid curve is the shape it buckles into. A triangle is a pin (free to turn), a hatched bar a clamp (held square). The sideways bow is exaggerated, because the theory fixes the shape but not its size. Open circles mark **inflection points**, where the bend changes direction: at heights 0 and 3 m on the pinned tube, 3 m on the flagpole, 0.903 and 3 m on the fixed-pinned tube, 0.75 and 2.25 m on the fixed-fixed tube. The stretch between two of them buckles like a pinned tube of that length.
+Each tube is 3 m tall, drawn at 60 px per metre. The dashed line is the straight tube; the solid curve is the shape it buckles into. A triangle is a pin (free to turn), a hatched bar a clamp (held square). The sideways bow is exaggerated, because the theory fixes the shape but not its size.
+
+Open circles mark **inflection points**, where the bend changes direction: at heights 0 and 3 m on the pinned tube, 3 m on the flagpole, 0.903 and 3 m on the fixed-pinned tube, 0.75 and 2.25 m on the fixed-fixed tube. The stretch between two of them buckles like a pinned tube of that length.
 
 ---
 
@@ -93,7 +95,7 @@ With $k = \sqrt{P/EI}$ every solution is $a + bx + c\cos kx + d\sin kx$, four fr
 - **clamped:** no bow, no slope, so $y = 0$ and $y' = 0$;
 - **free:** no moment and no side force, so $y'' = 0$ and $EI\,y''' + P\,y' = 0$.
 
-Four conditions on four constants have a nonzero answer only when their determinant is zero. That happens at $kL = \pi$ (pinned-pinned), $\pi/2$ (flagpole), $2\pi$ (fixed-fixed), and at the first root of $\tan kL = kL$, which is $kL$ = 4.4934 (fixed-pinned). Writing $kL = \pi/K$ gives every case in one formula, with $K$ = 1, 2, 0.5 and 0.6992.
+Four conditions on four constants have a nonzero answer only when their determinant is zero. The determinant is one number made from the conditions' coefficients, and it is zero exactly when a nonzero answer exists ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). That happens at $kL = \pi$ (pinned-pinned), $\pi/2$ (flagpole), $2\pi$ (fixed-fixed), and at the first root of $\tan kL = kL$, which is $kL$ = 4.4934 (fixed-pinned). Writing $kL = \pi/K$ gives every case in one formula, with $K$ = 1, 2, 0.5 and 0.6992.
 
 <details>
 <summary>Detailed working: the fixed-pinned tube</summary>
@@ -220,13 +222,25 @@ xychart-beta
     line [235, 235, 235, 235, 235, 235, 235, 235, 235, 235, 235, 235, 235, 235, 235]
 ```
 
-Loads in even 2 kN steps. Orange, rising: squeeze only, the straight tube. Teal: squeeze plus bending with a 3 mm bow. Dark: with a 1 mm bow. Orange, flat along the top: the yield stress, 235 MPa. The 3 mm tube reaches it at 29.05 kN, just past the right edge; the 1 mm tube at 30.75 kN. Both arrive just short of 31.71 kN, because near $P_{cr}$ the bow, and with it the stress, shoots up whatever it started at. For a slender tube Euler's number is the ceiling the real tube creeps up to.
+Loads in even 2 kN steps. Orange, rising: squeeze only, the straight tube. Teal: squeeze plus bending with a 3 mm bow. Dark: with a 1 mm bow. Orange, flat along the top: the yield stress, 235 MPa.
+
+The 3 mm tube reaches it at 29.05 kN, just past the right edge; the 1 mm tube at 30.75 kN. Both arrive just short of 31.71 kN, because near $P_{cr}$ the bow, and with it the stress, shoots up whatever it started at. For a slender tube Euler's number is the ceiling the real tube creeps up to.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code reaches the critical load three independent ways. Road one is Euler's formula, with the fixed-pinned $kL$ found by bisection on $\tan kL = kL$. Road two never uses the formula: it shoots the fourth-order equation from the base with Runge-Kutta 4 for each pair of ends, forms the two-by-two determinant of the top conditions, scans the load in 1 kN steps until the determinant changes sign, and bisects. Road three models the pinned tube as a chain of stiff links joined by springs, writes its energy as a matrix, and finds the first load at which elimination meets a negative pivot (a sign that some bow releases energy); with 10, 20 and 40 links it closes in on 31.71 kN from below. The bowed tube is checked twice too: the amplification formula against a Runge-Kutta solution of the bent-tube equation. The tube's area and $I$, and with them the squash load, are found twice: by the ring formulas and by adding up 4000 thin rings. Each first-yield load is found twice: by bisection on the peak stress, and as the smaller root of the quadratic $(\sigma_y - P/A)(1 - P/P_{cr}) = P e_0/W$.
+The code reaches the critical load three independent ways.
+
+- **Road one** is Euler's formula, with the fixed-pinned $kL$ found by bisection on $\tan kL = kL$. Bisection halves an interval that contains the root until the interval is tiny ([Bisection](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/01-bisection-and-bracketing.md)).
+- **Road two** never uses the formula: it shoots the fourth-order equation from the base with Runge-Kutta 4 for each pair of ends, forms the two-by-two determinant of the top conditions, scans the load in 1 kN steps until the determinant changes sign, and bisects. Runge-Kutta 4 steps a differential equation forward, using four slope samples per step ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)).
+- **Road three** models the pinned tube as a chain of stiff links joined by springs, writes its energy as a matrix, and finds the first load at which elimination meets a negative pivot (a sign that some bow releases energy); with 10, 20 and 40 links it closes in on 31.71 kN from below.
+
+Other numbers are found twice as well:
+
+- The bowed tube is checked twice too: the amplification formula against a Runge-Kutta solution of the bent-tube equation.
+- The tube's area and $I$, and with them the squash load, are found twice: by the ring formulas and by adding up 4000 thin rings.
+- Each first-yield load is found twice: by bisection on the peak stress, and as the smaller root of the quadratic $(\sigma_y - P/A)(1 - P/P_{cr}) = P e_0/W$.
 
 ### Python
 

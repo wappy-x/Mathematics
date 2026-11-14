@@ -14,7 +14,7 @@ The crowd's 1.00 Hz sits almost exactly on the slow mode. If all 100 walkers fal
 
 **A structure of connected masses and springs vibrates in a few modes, found by solving K v = λ M v; a repeating force drives each mode separately, and the one that sways most is the one the force matches in both frequency and shape.**
 
-**What kind of fact this is:** the existence of the modes and the split into one-mass problems is a theorem about linear mass-spring systems, proved on this card in Why it works; the footbridge with two lumped masses is a model, an assumption that fits small sways well enough, and the crowd's push is an assumed force.
+**What kind of fact this is:** the existence of the modes and the split into one-mass problems is a theorem about linear mass-spring systems, proved on this card in Why it works. The footbridge with two lumped masses is a model, an assumption that fits small sways well enough, and the crowd's push is an assumed force.
 
 ### The picture: how far the long span sways, against the crowd's sideways frequency
 
@@ -34,7 +34,11 @@ The first line (orange) is the middle of the 60 m span; the second (green) is th
 
 ## The formula
 
-Notation, in words first. This is the engineer's first frame model of the deck, a two-mass frame. The sideways sway of each span is lumped into one mass at its middle: $m_1$ = 60000 kg for the long span and $m_2$ = 40000 kg for the short one. Three springs, each of stiffness $k$ = 2000000 N/m, stand for what holds the deck sideways: one from each abutment (the bank-side support) to its span, and one between the spans for the deck's continuity over the pier. The pier is taken as a slender column that gives the deck almost no sideways restraint, so it has no spring of its own. The three stiffnesses are set equal, at a value chosen to put the slow mode near 1 Hz; they are not measured from a real bridge. The two sways, in metres, form a vector $x$; a dot over it is a rate of change in time $t$, so $\ddot x$ is acceleration.
+Notation, in words first. This is the engineer's first frame model of the deck, a two-mass frame. The sideways sway of each span is lumped into one mass at its middle: $m_1$ = 60000 kg for the long span and $m_2$ = 40000 kg for the short one.
+
+Three springs, each of stiffness $k$ = 2000000 N/m, stand for what holds the deck sideways. There is one from each abutment (the bank-side support) to its span, and one between the spans for the deck's continuity over the pier. The pier is taken as a slender column that gives the deck almost no sideways restraint, so it has no spring of its own. The three stiffnesses are set equal, at a value chosen to put the slow mode near 1 Hz; they are not measured from a real bridge.
+
+The two sways, in metres, form a vector $x$; a dot over it is a rate of change in time $t$, so $\ddot x$ is acceleration.
 
 Newton's second law for both masses at once, with the crowd's push $F$ repeating at angular frequency $\Omega$ (rad/s):
 
@@ -62,7 +66,7 @@ At resonance, $\Omega = \omega_r$, the gain is $1/(2\zeta)$. With $\zeta$ = 0.01
 | $k$ | stiffness of each of the three springs | 2000000 N/m | both frequencies rise |
 | $M$, $K$ | mass matrix; stiffness matrix | as displayed | — |
 | $C$, $c_r$, $\alpha$, $\beta$ | damping matrix $\alpha M + \beta K$; modal damping $v_r\cdot Cv_r$; the two coefficients | 0.08057 1/s, 0.001139 s | sway falls |
-| $\zeta$ | damping ratio of each mode: damping as a fraction of critical | 0.01 | sway at resonance falls as 1/ζ |
+| $\zeta$ | damping ratio of each mode: damping as a fraction of critical damping, the least damping at which a released mode returns to rest without swinging | 0.01 | sway at resonance falls as 1/ζ |
 | $\lambda_r$, $\omega_r$, $f_r$ | mode r's squared angular frequency; angular frequency; frequency | 39.2375 1/s^2, 6.2640 rad/s, 0.9969 Hz; 127.4292 1/s^2, 11.2885 rad/s, 1.7966 Hz | — |
 | $v_r$ | mode shape, span 1 scaled to 1 | (1, 0.8229); (1, −1.8229) | — |
 | $q_r$ | amount of mode r in the motion at time t, in m | 32.40 mm, 0.02 mm (amplitudes) | — |
@@ -90,7 +94,9 @@ The figure is the deck seen from above, spans to scale (60 m and 40 m). Dashed i
 
 ### Step 0: in a mode, every span gets the push its own mass needs
 
-A mode keeps its shape because, at every instant, the spring force on each mass is exactly what that mass needs to follow the shape. If span 1 swings by 1 and span 2 by 0.8229, the springs must pull span 1 back with 60000 × λ times its sway and span 2 with 40000 × λ times its sway, for the same λ. Then both accelerate in proportion, and the shape never changes. Written out, that is $Kv = \lambda Mv$. The mass matrix is on the right because heavy spans need more force for the same acceleration. With equal masses it drops to the ordinary eigenvalue problem, as on [Normal modes](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md), which proves the general case for any number of masses.
+A mode keeps its shape because, at every instant, the spring force on each mass is exactly what that mass needs to follow the shape. If span 1 swings by 1 and span 2 by 0.8229, the springs must pull span 1 back with 60000 × λ times its sway and span 2 with 40000 × λ times its sway, for the same λ. Then both accelerate in proportion, and the shape never changes.
+
+Written out, that is $Kv = \lambda Mv$. The mass matrix is on the right because heavy spans need more force for the same acceleration. With equal masses it drops to the ordinary eigenvalue problem, as on [Normal modes](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md), which proves the general case for any number of masses.
 
 ### Step 1: two masses give a quadratic for λ
 
@@ -104,7 +110,7 @@ For each λ, the first row of $(K - \lambda M)v = 0$ gives the shape. With span 
 
 ### Step 2: the modes are perpendicular, weighted by mass
 
-Take the two equations $Kv_1 = \lambda_1 Mv_1$ and $Kv_2 = \lambda_2 Mv_2$. Dot the first with $v_2$ and the second with $v_1$. $K$ and $M$ are symmetric, so the left sides are equal, and
+Take the two equations $Kv_1 = \lambda_1 Mv_1$ and $Kv_2 = \lambda_2 Mv_2$. Dot the first with $v_2$ and the second with $v_1$. $K$ and $M$ are symmetric (each equals its own mirror image across the main diagonal, so the dot product comes out the same either way round), so the left sides are equal, and
 
 $$(\lambda_1 - \lambda_2)\; v_1\cdot M v_2 = 0 .$$
 
@@ -186,7 +192,19 @@ The code prints all four, and the linear model's 648 mm for 2000 walkers in step
 
 ## Code, from first principles, and it actually runs
 
-The script builds the bridge's mass and stiffness matrices and reaches the modes by three roads: the quadratic $\det(K - \lambda M) = 0$; inverse iteration (repeatedly solving $Ky = Mx$, which pulls any start towards the slowest mode, with mode 2 kept mass-perpendicular to mode 1, its frequency read off as the Rayleigh quotient $v\cdot Kv / v\cdot Mv$, which equals λ for a mode); and an RK4 simulation ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) of the deck released in mode 1's shape, timing its swing. It then reaches the crowd's sway by three roads: the modal sum; a direct solve of the 2 by 2 complex system $(K - \Omega^2M + j\Omega C)X = F$, with $j$ for √−1 as engineers write it (the rest of the library writes i); and an RK4 run of the crowd for 160 s. It also prints both charts, every row of the what-breaks table and the figure's coordinates.
+The script builds the bridge's mass and stiffness matrices and reaches the modes by three roads:
+
+- the quadratic $\det(K - \lambda M) = 0$;
+- inverse iteration: repeatedly solving $Ky = Mx$, which pulls any start towards the slowest mode. Mode 2 is kept mass-perpendicular to mode 1, and its frequency is read off as the Rayleigh quotient $v\cdot Kv / v\cdot Mv$, which equals λ for a mode;
+- an RK4 simulation ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) of the deck released in mode 1's shape, timing its swing.
+
+It then reaches the crowd's sway by three roads:
+
+- the modal sum;
+- a direct solve of the 2 by 2 complex system $(K - \Omega^2M + j\Omega C)X = F$, with $j$ for √−1 as engineers write it (the rest of the library writes i);
+- an RK4 run of the crowd for 160 s.
+
+It also prints both charts, every row of the what-breaks table and the figure's coordinates.
 
 ### Python
 
@@ -575,6 +593,118 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the main facts of Steps 1 to 3 for any masses, stiffnesses and frequencies, and checks the bridge's exact numbers.
+
+- Take any number of masses, symmetric $M$ and $K$, and two modes with different λ. Then the modes are perpendicular weighted by mass: $v_1\cdot Mv_2 = 0$.
+- Take the same two modes. Then they are also perpendicular weighted by stiffness: $v_1\cdot Kv_2 = 0$.
+- Take the same two modes and Rayleigh damping $C = \alpha M + \beta K$, for any $\alpha$ and $\beta$. Then $v_1\cdot Cv_2 = 0$.
+- Take masses $m_1$, $m_2$ and three springs of stiffness $k$, as on the bridge. Then $\det(K - \lambda M) = m_1m_2\,\lambda^2 - 2k(m_1 + m_2)\,\lambda + 3k^2$.
+- Take positive $\omega_1$ and $\omega_2$, a damping ratio $\zeta$, and $\alpha$ and $\beta$ from the two formulas in Step 3. Then each mode's damping ratio, $\alpha/(2\omega_r) + \beta\omega_r/2$, equals $\zeta$, for r = 1 and 2.
+- With the bridge's numbers, the quadratic's coefficients are 2.4, 400 and 12000, in units of 10^9.
+- Sixty walkers on span 1 and 40 on span 2, at 25 N each, give F = (1500, 1000) N.
+- Take the push held still. Then $x$ = (2/3 mm, 7/12 mm) solves $Kx = F$: the 0.6667 mm and 0.5833 mm above.
+- With ζ = 0.01, the resonance gain $1/(2\zeta)$ is exactly 50.
+
+The roots, shapes, decimals and simulations are left to the Python and Rust checks.
+
+```lean
+-- Vibration modes: two modes K v = λ M v of a symmetric mass-spring system with different λ are perpendicular when weighted by M, by K and by Rayleigh damping α M + β K, and the two-span bridge's determinant and damping formulas hold exactly.
+import Mathlib.LinearAlgebra.Matrix.Symmetric
+import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Basic.Real.Basic
+import Mathlib.Tactic
+
+open Matrix
+
+/-- A symmetric matrix gives the same weighted product in either order. -/
+theorem sym_dot {n : Type*} [Fintype n] (A : Matrix n n ℝ) (hA : A.IsSymm) (v w : n → ℝ) :
+    v ⬝ᵥ (A *ᵥ w) = w ⬝ᵥ (A *ᵥ v) := by
+  rw [dotProduct_mulVec, ← hA.eq, vecMul_transpose, dotProduct_comm, hA.eq]
+
+#print axioms sym_dot
+
+/-- The modes split the structure into separate one-mass problems: for any number `n`
+of masses, with a symmetric mass matrix `M` and a symmetric stiffness matrix `K`
+(linear springs), if `v₁` and `v₂` are modes, `K v₁ = l₁ M v₁` and `K v₂ = l₂ M v₂` (the card writes λ for l),
+with `l₁ ≠ l₂`, then they are perpendicular weighted by mass, `v₁ · M v₂ = 0`,
+weighted by stiffness, `v₁ · K v₂ = 0`, and weighted by any Rayleigh damping
+`C = α M + β K`, `v₁ · C v₂ = 0`. -/
+theorem modes_orthogonal_mass_stiffness_rayleigh_damping {n : Type*} [Fintype n]
+    (M K : Matrix n n ℝ) (hM : M.IsSymm) (hK : K.IsSymm) (α β : ℝ)
+    (v₁ v₂ : n → ℝ) (l₁ l₂ : ℝ)
+    (h₁ : K *ᵥ v₁ = l₁ • (M *ᵥ v₁)) (h₂ : K *ᵥ v₂ = l₂ • (M *ᵥ v₂))
+    (hne : l₁ ≠ l₂) :
+    v₁ ⬝ᵥ (M *ᵥ v₂) = 0 ∧ v₁ ⬝ᵥ (K *ᵥ v₂) = 0 ∧ v₁ ⬝ᵥ ((α • M + β • K) *ᵥ v₂) = 0 := by
+  have e1 : v₁ ⬝ᵥ (K *ᵥ v₂) = l₂ * (v₁ ⬝ᵥ (M *ᵥ v₂)) := by
+    rw [h₂, dotProduct_smul, smul_eq_mul]
+  have e2 : v₁ ⬝ᵥ (K *ᵥ v₂) = l₁ * (v₁ ⬝ᵥ (M *ᵥ v₂)) := by
+    rw [sym_dot K hK, h₁, dotProduct_smul, smul_eq_mul, sym_dot M hM]
+  have hm : v₁ ⬝ᵥ (M *ᵥ v₂) = 0 := by
+    have : (l₁ - l₂) * (v₁ ⬝ᵥ (M *ᵥ v₂)) = 0 := by rw [sub_mul]; linarith
+    rcases mul_eq_zero.mp this with h | h
+    · exact absurd (sub_eq_zero.mp h) hne
+    · exact h
+  have hk : v₁ ⬝ᵥ (K *ᵥ v₂) = 0 := by rw [e1, hm, mul_zero]
+  refine ⟨hm, hk, ?_⟩
+  rw [add_mulVec, smul_mulVec, smul_mulVec, dotProduct_add, dotProduct_smul,
+    dotProduct_smul, hm, hk, smul_zero, smul_zero, add_zero]
+
+/-- Two masses give a quadratic for `λ`: for the two-span frame with masses `m₁`, `m₂`
+and three springs of stiffness `k`, `det(K - λ M) = m₁ m₂ λ² - 2 k (m₁ + m₂) λ + 3 k²`. -/
+theorem two_mass_frame_det (m₁ m₂ k l : ℝ) :
+    (!![2 * k, -k; -k, 2 * k] - l • !![m₁, 0; 0, m₂]).det
+      = m₁ * m₂ * l ^ 2 - 2 * k * (m₁ + m₂) * l + 3 * k ^ 2 := by
+  rw [det_fin_two]
+  simp
+  ring
+
+/-- Rayleigh damping gives the chosen damping ratio in both modes: with
+`α = 2 ζ ω₁ ω₂ / (ω₁ + ω₂)` and `β = 2 ζ / (ω₁ + ω₂)`, the damping ratio of mode `r`,
+`α / (2 ω_r) + β ω_r / 2`, equals `ζ` for `r = 1` and `r = 2`. -/
+theorem rayleigh_damping_ratio_both_modes (ζ ω₁ ω₂ : ℝ) (h₁ : 0 < ω₁) (h₂ : 0 < ω₂) :
+    let α := 2 * ζ * ω₁ * ω₂ / (ω₁ + ω₂)
+    let β := 2 * ζ / (ω₁ + ω₂)
+    α / (2 * ω₁) + β * ω₁ / 2 = ζ ∧ α / (2 * ω₂) + β * ω₂ / 2 = ζ := by
+  intro α β
+  have hs : ω₁ + ω₂ ≠ 0 := by positivity
+  constructor
+  · simp only [α, β]; field_simp; ring
+  · simp only [α, β]; field_simp
+
+-- The card's quadratic coefficients: m₁ m₂ = 2.4 × 10^9, 2 k (m₁ + m₂) = 400 × 10^9,
+-- 3 k² = 12000 × 10^9, for m₁ = 60000 kg, m₂ = 40000 kg, k = 2000000 N/m.
+example : (60000 : ℕ) * 40000 = 2400000000 := by norm_num
+example : 2 * (2000000 : ℕ) * (60000 + 40000) = 400000000000 := by norm_num
+example : 3 * (2000000 : ℕ) ^ 2 = 12000000000000 := by norm_num
+
+-- The in-step crowd: 60 walkers on span 1 and 40 on span 2, 25 N each, gives F = (1500, 1000) N.
+example : 25 * 60 = 1500 ∧ 25 * 40 = 1000 := by decide
+
+-- The push held still: K x = F with x = (2/3 mm, 7/12 mm), the card's 0.6667 mm and 0.5833 mm.
+example : !![(4000000 : ℚ), -2000000; -2000000, 4000000] *ᵥ ![2 / 3000, 7 / 12000]
+    = ![1500, 1000] := by
+  ext i; fin_cases i <;> simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two] <;> norm_num
+
+-- Resonance gain 1 / (2 ζ) with ζ = 1/100 is 50.
+example : (1 : ℚ) / (2 * (1 / 100)) = 50 := by norm_num
+
+#print axioms modes_orthogonal_mass_stiffness_rayleigh_damping
+#print axioms two_mass_frame_det
+#print axioms rayleigh_damping_ratio_both_modes
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'sym_dot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'modes_orthogonal_mass_stiffness_rayleigh_damping' depends on axioms: [propext, Classical.choice, Quot.sound]
+'two_mass_frame_det' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rayleigh_damping_ratio_both_modes' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

@@ -29,13 +29,19 @@ Orange: the allowance $1/\lvert W_P\rvert$ from the peaked weight, the most $\lv
 
 **H-infinity design writes each requirement as a weight over frequency, stacks the weighted closed-loop gains, and chooses the controller that makes the peak of the stack, the worst-case gain from disturbance to weighted error, as small as possible; a peak below 1 meets every requirement at every frequency at once.**
 
-**What kind of fact this is:** a design method. Its guarantee, that $\gamma < 1$ meets every weighted requirement and keeps every belt in the envelope stable, is a theorem proved on this card in Why it works. That the truly best controller can be computed from two Riccati equations is a theorem stated here, not proved; this card finds a good controller by a search instead, and says how far from the best it can be.
+**What kind of fact this is:** a design method. Its guarantee, that $\gamma < 1$ meets every weighted requirement and keeps every belt in the envelope stable, is a theorem proved on this card in Why it works. That the truly best controller can be computed from two Riccati equations (quadratic matrix equations, described in Step 5) is a theorem stated here, not proved; this card finds a good controller by a search instead, and says how far from the best it can be.
 
 ---
 
 ## The formula
 
-Notation from earlier cards, one line each. The controller is written $K$ here, as is usual in H-infinity work; the earlier cards call it $C$. The loop gain $L = PK$ is one trip round plant and controller; the sensitivity $S = 1/(1+L)$ is the fraction of a disturbance that survives the loop, and $T = L/(1+L)$ is the fraction of a signal that goes round it ([Sensitivity functions](../03-Feedback%20Control/02-sensitivity-and-the-gang-of-four.md)). Engineers write $j$ for the square root of −1; the rest of the library writes i. The **H-infinity norm** $\lVert G\rVert_\infty$ is the peak gain of a stable system $G$ over all frequencies ([Writing down model error](01-model-uncertainty-and-the-small-gain-theorem.md)). The weights $W$ and $W_P$ and the test $\lvert W_P S\rvert + \lvert WT\rvert < 1$ come from [Robust tests](02-robust-stability-and-robust-performance.md).
+Notation from earlier cards, one line each:
+
+- The controller is written $K$ here, as is usual in H-infinity work; the earlier cards call it $C$.
+- The loop gain $L = PK$ is one trip round plant and controller; the sensitivity $S = 1/(1+L)$ is the fraction of a disturbance that survives the loop, and $T = L/(1+L)$ is the fraction of a signal that goes round it ([Sensitivity functions](../03-Feedback%20Control/02-sensitivity-and-the-gang-of-four.md)).
+- Engineers write $j$ for the square root of −1; the rest of the library writes i.
+- The **H-infinity norm** $\lVert G\rVert_\infty$ is the peak gain of a stable system $G$ over all frequencies ([Writing down model error](01-model-uncertainty-and-the-small-gain-theorem.md)).
+- The weights $W$ and $W_P$ and the test $\lvert W_P S\rvert + \lvert WT\rvert < 1$ come from [Robust tests](02-robust-stability-and-robust-performance.md).
 
 The plant, from drive torque in N·m to roller speed in rad/s, and the controller family searched on this card:
 
@@ -81,7 +87,7 @@ Schematic. One disturbance in, added to the roller speed, three weighted errors 
 - **Linear and unsaturated.** Everything here assumes the drive gives whatever torque is asked. The weight $W_U$ limits the torque per rad/s of wobble, not the torque for a big command change. Design B has $K_p$ = 7.000, so a 3 rad/s step in the speed command asks for 21.0 N·m at once, over a 20 N·m drive: outside the range this card describes.
 - **The bump is at the frequency the weight names.** The resonator kills 2 Hz exactly. If the chute speeds up so parcels land at 2.4 Hz, design B leaves 0.0918 rad/s on the full belt, worse than the plain design's 0.0870.
 - **The model errors sit inside the envelope.** Robust stability covers inertias from 0.20 to 0.40 kg·m², the family $W$ was drawn from. A delay or a slipping belt is a different error and needs its own weight.
-- **One input, one output.** With one drive and one speed the stack's size is a square root of a sum of squares. With several drives on one belt it becomes the largest singular value of a matrix, the same idea with more algebra.
+- **One input, one output.** With one drive and one speed the stack's size is a square root of a sum of squares. With several drives on one belt it becomes the largest singular value of a matrix (the most the matrix can stretch a vector), the same idea with more algebra.
 - **A search, not the optimum.** The controller here comes from a search over three gains. Its $\gamma$ is an upper bound on $\gamma_{\text{opt}}$, what the best controller of any form could reach.
 
 ---
@@ -108,7 +114,7 @@ Each squared term is at most the squared stack. So $\gamma < 1$ gives, at every 
 - $\lvert W_U KS\rvert < 1$: a speed wobble of 1 rad/s never asks for more than 20 N·m of torque wobble;
 - $\lvert WT\rvert < 1$: by the small gain rule of [Robust tests](02-robust-stability-and-robust-performance.md), every belt from empty to full stays stable.
 
-For design B, $\lvert WT\rvert$ peaks at 0.6411. The Routh test on the closed-loop polynomial, which uses no frequencies at all, agrees: every first-column entry is positive for the empty, half and full belts.
+For design B, $\lvert WT\rvert$ peaks at 0.6411. The Routh test ([Routh-Hurwitz](../03-Feedback%20Control/04-routh-hurwitz-criterion.md)) on the closed-loop polynomial, which uses no frequencies at all, agrees: every first-column entry is positive for the empty, half and full belts.
 
 What $\gamma < 1$ does **not** give is robust performance. That needs $\lvert W_P S\rvert + \lvert WT\rvert < 1$, and a sum can be up to $\sqrt 2$ times the square root of the sum of squares. For design B the sum peaks at 1.3418, under the most it could be, 1.3712, but over 1. Checked directly, the full belt's $\lvert W_P S_J\rvert$ reaches 1.8324 at 14.21 rad/s. The full belt still kills the 2 Hz bump exactly, but near it, at 14 rad/s, it lets 0.903 of a disturbance through where the specification allowed 0.500.
 
@@ -133,13 +139,17 @@ For the conveyor the floor is 0.5000 with the flat weight, reached at high frequ
 
 ### Step 4: the weight's shape becomes the loop's shape
 
-With the flat weight the search returns $K_r$ = 0.000: design A is a plain PI controller (proportional plus integral), $\gamma$ = 0.6288. That it matches the certificate on [Writing down model error](01-model-uncertainty-and-the-small-gain-theorem.md) to four digits is a coincidence: a different controller and a different quantity. The peaked weight multiplies $\lvert W_P\rvert$ at 2 Hz by 5, from 0.5927 to 2.9636, so at 12.57 rad/s $\lvert S\rvert$ may be at most 0.337 when $\gamma$ = 1. A PI controller can get there only by raising its gain at every frequency. The best PI found, $K_p$ = 8.725, cuts $\lvert S\rvert$ at 2 Hz to 0.2962, yet its stack still reaches 1.0169 twice. The first peak is beside 2 Hz, at 12.66 rad/s (1.0141 at 2 Hz itself), where the model-error term, unavoidable once $\lvert S\rvert$ is small, adds to the performance term. The second is at 50.99 rad/s, where the high gain lifts $\lvert S\rvert$, $\lvert KS\rvert$ and $\lvert T\rvert$ together. More gain would lower the first peak and raise the second, so the search finds no PI under 1. The resonator escapes this trade. Its gain $K_r s/(s^2 + \omega_0^2)$ is infinite at $\omega_0$ and falls away on either side, so $L$ is infinite and $S(j\omega_0)$ = 0 exactly, for every belt that stays stable. This is the internal model idea: a controller that contains a model of the disturbance, here an undamped 2 Hz oscillator, can cancel it completely.
+With the flat weight the search returns $K_r$ = 0.000: design A is a plain PI controller (proportional plus integral), $\gamma$ = 0.6288. That it matches the certificate on [Writing down model error](01-model-uncertainty-and-the-small-gain-theorem.md) to four digits is a coincidence: a different controller and a different quantity.
+
+The peaked weight multiplies $\lvert W_P\rvert$ at 2 Hz by 5, from 0.5927 to 2.9636, so at 12.57 rad/s $\lvert S\rvert$ may be at most 0.337 when $\gamma$ = 1. A PI controller can get there only by raising its gain at every frequency. The best PI found, $K_p$ = 8.725, cuts $\lvert S\rvert$ at 2 Hz to 0.2962, yet its stack still reaches 1.0169 twice. The first peak is beside 2 Hz, at 12.66 rad/s (1.0141 at 2 Hz itself), where the model-error term, unavoidable once $\lvert S\rvert$ is small, adds to the performance term. The second is at 50.99 rad/s, where the high gain lifts $\lvert S\rvert$, $\lvert KS\rvert$ and $\lvert T\rvert$ together. More gain would lower the first peak and raise the second, so the search finds no PI under 1.
+
+The resonator escapes this trade. Its gain $K_r s/(s^2 + \omega_0^2)$ is infinite at $\omega_0$ and falls away on either side, so $L$ is infinite and $S(j\omega_0)$ = 0 exactly, for every belt that stays stable. This is the internal model idea: a controller that contains a model of the disturbance, here an undamped 2 Hz oscillator, can cancel it completely.
 
 The cancellation has a price, and Bode's sensitivity integral from [Loop shaping](../03-Feedback%20Control/09-lead-lag-compensation-and-loop-shaping.md) names it: pushing $\lvert S\rvert$ down at one frequency pushes it up nearby. The notch's shoulders at 14 and 16 rad/s are that price, and the search picks the $K_r$ that keeps them furthest under the allowance on the model.
 
 ### Step 5: how the best controller is really found
 
-Exact H-infinity synthesis does not search. For a given $\gamma$ it solves two Riccati equations (quadratic matrix equations, like the one behind the LQR gain); a solution of a certain kind exists exactly when some controller reaches $\gamma$. Bisecting on $\gamma$ finds the optimum, and the answer is a controller whose order equals the plant's plus the weights'. That theorem is stated here, not proved. Reliable Riccati solvers belong to [Numerical analysis](../../16-Numerical%20analysis/README.md); the same synthesis written as linear matrix inequalities (matrix conditions solved by convex optimisation) belongs to [Optimization](../../15-Optimization/README.md).
+Exact H-infinity synthesis does not search. For a given $\gamma$ it solves two Riccati equations (quadratic matrix equations, like the one behind the feedback gain of [The LQR](../04-State%20Space%20and%20Optimal%20Control/06-linear-quadratic-regulator.md), the linear quadratic regulator); a solution of a certain kind exists exactly when some controller reaches $\gamma$. Bisecting on $\gamma$ finds the optimum, and the answer is a controller whose order equals the plant's plus the weights'. That theorem is stated here, not proved. Reliable Riccati solvers belong to [Numerical analysis](../../16-Numerical%20analysis/README.md); the same synthesis written as linear matrix inequalities (matrix conditions solved by convex optimisation) belongs to [Optimization](../../15-Optimization/README.md).
 
 This card instead fixes the controller's form and searches its three gains: a grid of 13 × 13 × 11 controllers, then a pattern search (try a step up and down in each gain, halve the step when nothing improves). The peak of a stack is not smooth in the gains, so this finds a good controller, not a certified best. Searching a fixed form is a real method used in industry, because a three-gain controller is easy to install and explain.
 
@@ -610,6 +620,133 @@ try: peak 2.5x (zd = 0.2): Kp = 5.654, Ki = 1.713, Kr = 0.000; gamma = 0.8233
 try: peak 10x (zd = 0.05): Kp = 7.000, Ki = 2.109, Kr = 28.000; gamma = 0.9915
 try: torque weight 0.1: Kp = 6.000, Ki = 2.641, Kr = 20.000; gamma = 1.1467
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves the guarantee of Step 2, the floor of Step 3 and the two loop identities, for all values meeting each bullet's conditions.
+
+- Suppose the peak of the stack over all frequencies is a finite number below 1. Then each of the three weighted terms is below 1 at every frequency. Lean does not prove the step from there to every belt staying stable.
+- Take sizes $a \ge 0$ and $c \ge 0$, as in Step 3. Then the smallest stack at one frequency, over every complex number $S$, is exactly $ac/\sqrt{a^2 + c^2}$.
+- Take values of $P$ and $K$ at one frequency, with $P \ne 0$ and $1 + PK \ne 0$. Then $S + T = 1$ and $KS = T/P$.
+
+The search for designs A and B, every $\gamma$, the wobbles and the Routh test are left to the Python and Rust checks.
+
+```lean
+-- H-infinity design: if the peak over frequency of the stacked weighted gains is below 1, each weighted requirement holds at every frequency, and no choice of S can push the stack below the floor a c / sqrt (a^2 + c^2).
+import Mathlib.Analysis.Complex.Basic
+import Mathlib.Analysis.Real.Sqrt
+
+open Complex
+
+/-- The card's main guarantee (Step 2). Take any plant `P`, controller `K` and weights `WP`, `WU`,
+`W`, each given by its value at every frequency `ω`. Write `S = 1/(1 + P K)` for the sensitivity
+and `T = P K/(1 + P K)` for the complementary sensitivity. If the peak over all frequencies of the
+stack `sqrt (|WP S|^2 + |WU K S|^2 + |W T|^2)` is a finite number below 1, then at every frequency
+`|WP S| < 1` (the error specification), `|WU K S| < 1` (the torque budget) and `|W T| < 1`
+(the room the model error leaves). -/
+theorem stack_peak_below_one_meets_every_requirement
+    (P K WP WU W : ℝ → ℂ)
+    (hbdd : BddAbove (Set.range fun ω : ℝ =>
+      Real.sqrt (‖WP ω * (1 / (1 + P ω * K ω))‖ ^ 2
+        + ‖WU ω * (K ω * (1 / (1 + P ω * K ω)))‖ ^ 2
+        + ‖W ω * (P ω * K ω / (1 + P ω * K ω))‖ ^ 2)))
+    (hγ : (⨆ ω : ℝ,
+      Real.sqrt (‖WP ω * (1 / (1 + P ω * K ω))‖ ^ 2
+        + ‖WU ω * (K ω * (1 / (1 + P ω * K ω)))‖ ^ 2
+        + ‖W ω * (P ω * K ω / (1 + P ω * K ω))‖ ^ 2)) < 1) :
+    ∀ ω : ℝ, ‖WP ω * (1 / (1 + P ω * K ω))‖ < 1
+      ∧ ‖WU ω * (K ω * (1 / (1 + P ω * K ω)))‖ < 1
+      ∧ ‖W ω * (P ω * K ω / (1 + P ω * K ω))‖ < 1 := by
+  intro ω
+  have hle := le_ciSup hbdd ω
+  set x := ‖WP ω * (1 / (1 + P ω * K ω))‖ with hx
+  set y := ‖WU ω * (K ω * (1 / (1 + P ω * K ω)))‖ with hy
+  set z := ‖W ω * (P ω * K ω / (1 + P ω * K ω))‖ with hz
+  have h0 : Real.sqrt (x ^ 2 + y ^ 2 + z ^ 2) < 1 := lt_of_le_of_lt hle hγ
+  have hx0 : 0 ≤ x := norm_nonneg _
+  have hy0 : 0 ≤ y := norm_nonneg _
+  have hz0 : 0 ≤ z := norm_nonneg _
+  have h1 : x ≤ Real.sqrt (x ^ 2 + y ^ 2 + z ^ 2) :=
+    Real.le_sqrt_of_sq_le (by nlinarith [sq_nonneg y, sq_nonneg z])
+  have h2 : y ≤ Real.sqrt (x ^ 2 + y ^ 2 + z ^ 2) :=
+    Real.le_sqrt_of_sq_le (by nlinarith [sq_nonneg x, sq_nonneg z])
+  have h3 : z ≤ Real.sqrt (x ^ 2 + y ^ 2 + z ^ 2) :=
+    Real.le_sqrt_of_sq_le (by nlinarith [sq_nonneg y, sq_nonneg x])
+  exact ⟨by linarith, by linarith, by linarith⟩
+
+/-- The floor of Step 3. At one frequency, with `a = |WP| ≥ 0` and `c ≥ 0` the combined size of
+`WU/P` and `W`, the squared stack is `a^2 |S|^2 + c^2 |1 - S|^2`. Over every complex number `S`,
+the smallest value of its square root is exactly `a c / sqrt (a^2 + c^2)`. -/
+theorem stack_floor_over_complex_s (a c : ℝ) (ha : 0 ≤ a) (hc : 0 ≤ c) :
+    IsLeast (Set.range fun S : ℂ => Real.sqrt (a ^ 2 * ‖S‖ ^ 2 + c ^ 2 * ‖1 - S‖ ^ 2))
+      (a * c / Real.sqrt (a ^ 2 + c ^ 2)) := by
+  rcases eq_or_lt_of_le (add_nonneg (sq_nonneg a) (sq_nonneg c)) with hD | hD
+  · have ha0 : a = 0 := by nlinarith [sq_nonneg a, sq_nonneg c]
+    have hc0 : c = 0 := by nlinarith [sq_nonneg a, sq_nonneg c]
+    subst ha0; subst hc0
+    refine ⟨⟨0, by simp⟩, ?_⟩
+    rintro _ ⟨S, rfl⟩
+    simp
+  · have hsD : 0 < Real.sqrt (a ^ 2 + c ^ 2) := Real.sqrt_pos.mpr hD
+    have hlhs : 0 ≤ a * c / Real.sqrt (a ^ 2 + c ^ 2) := by positivity
+    refine ⟨⟨((c ^ 2 / (a ^ 2 + c ^ 2) : ℝ) : ℂ), ?_⟩, ?_⟩
+    · simp only
+      have e1 : ‖((c ^ 2 / (a ^ 2 + c ^ 2) : ℝ) : ℂ)‖ = c ^ 2 / (a ^ 2 + c ^ 2) := by
+        rw [Complex.norm_real, Real.norm_of_nonneg (by positivity)]
+      have e2 : ‖(1 : ℂ) - ((c ^ 2 / (a ^ 2 + c ^ 2) : ℝ) : ℂ)‖ = a ^ 2 / (a ^ 2 + c ^ 2) := by
+        have : (1 : ℂ) - ((c ^ 2 / (a ^ 2 + c ^ 2) : ℝ) : ℂ) = ((a ^ 2 / (a ^ 2 + c ^ 2) : ℝ) : ℂ) := by
+          have hr : (1 : ℝ) - c ^ 2 / (a ^ 2 + c ^ 2) = a ^ 2 / (a ^ 2 + c ^ 2) := by
+            field_simp
+            ring
+          rw [← Complex.ofReal_one, ← Complex.ofReal_sub, hr]
+        rw [this, Complex.norm_real, Real.norm_of_nonneg (by positivity)]
+      rw [e1, e2]
+      have hin : a ^ 2 * (c ^ 2 / (a ^ 2 + c ^ 2)) ^ 2 + c ^ 2 * (a ^ 2 / (a ^ 2 + c ^ 2)) ^ 2
+          = (a * c / Real.sqrt (a ^ 2 + c ^ 2)) ^ 2 := by
+        rw [div_pow (a * c), Real.sq_sqrt (le_of_lt hD)]
+        field_simp
+        ring
+      rw [hin, Real.sqrt_sq hlhs]
+    · rintro _ ⟨S, rfl⟩
+      simp only
+      apply Real.le_sqrt_of_sq_le
+      have hxy : 1 ≤ ‖S‖ + ‖1 - S‖ := by
+        have := norm_add_le S (1 - S)
+        simpa using this
+      have hx0 : 0 ≤ ‖S‖ := norm_nonneg _
+      have hy0 : 0 ≤ ‖1 - S‖ := norm_nonneg _
+      have key : a ^ 2 * c ^ 2 ≤ (a ^ 2 * ‖S‖ ^ 2 + c ^ 2 * ‖1 - S‖ ^ 2) * (a ^ 2 + c ^ 2) := by
+        have hsq : 1 ≤ (‖S‖ + ‖1 - S‖) ^ 2 := by nlinarith
+        have hac : 0 ≤ a ^ 2 * c ^ 2 := by positivity
+        nlinarith [sq_nonneg (a ^ 2 * ‖S‖ - c ^ 2 * ‖1 - S‖), mul_le_mul_of_nonneg_left hsq hac]
+      rw [div_pow, Real.sq_sqrt (le_of_lt hD), div_le_iff₀ hD, mul_pow]
+      exact key
+
+/-- The two loop identities behind the floor: whatever the controller, `S + T = 1` and `K S = T / P`,
+where `S = 1/(1 + P K)` and `T = P K/(1 + P K)`, for a loop with `1 + P K ≠ 0` and a plant value
+`P ≠ 0`. -/
+theorem sensitivity_identities (P K : ℂ) (hP : P ≠ 0) (hL : 1 + P * K ≠ 0) :
+    1 / (1 + P * K) + P * K / (1 + P * K) = 1
+      ∧ K * (1 / (1 + P * K)) = (P * K / (1 + P * K)) / P := by
+  refine ⟨?_, ?_⟩
+  · field_simp
+  · field_simp
+
+-- "When it holds": design B has Kp = 7, so a 3 rad/s speed step asks 7 x 3 = 21 N m, over a 20 N m drive.
+example : (7 : ℕ) * 3 = 21 ∧ 20 < (7 : ℕ) * 3 := by norm_num
+
+#print axioms stack_peak_below_one_meets_every_requirement
+#print axioms stack_floor_over_complex_s
+#print axioms sensitivity_identities
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'stack_peak_below_one_meets_every_requirement' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stack_floor_over_complex_s' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sensitivity_identities' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]

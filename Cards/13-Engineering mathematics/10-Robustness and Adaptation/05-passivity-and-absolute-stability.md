@@ -6,17 +6,19 @@
 
 ## General Overview
 
-A parcel conveyor in a sorting depot runs its belt at 1.00 m/s most of the day. While staff load awkward items it drops to a creep speed of 0.05 m/s. A PI speed loop drives the motor: one push proportional to the speed error, and one proportional to the error's running total. Belt and load weigh 500 kg on average, anywhere from 200 kg to 800 kg through the day. This belt is longer and heavier than the roller drive on the rest of this shelf, so it is described in straight-line units: kg, m/s and N.
+A parcel conveyor in a sorting depot runs its belt at 1.00 m/s most of the day. While staff load awkward items it drops to a creep speed of 0.05 m/s. A PI (proportional-integral) speed loop drives the motor: one push proportional to the speed error, and one proportional to the error's running total. Belt and load weigh 500 kg on average, anywhere from 200 kg to 800 kg through the day. This belt is longer and heavier than the roller drive on the rest of this shelf, so it is described in straight-line units: kg, m/s and N.
 
 The friction under the belt is the trouble. It takes up to 600 N to break the belt loose from rest. Once it moves, friction falls: 596.2 N at 0.02 m/s, 493.6 N at 0.10 m/s, 443.7 N at 0.20 m/s. Only then does it climb again, by 200 N for each extra m/s. Over that first stretch the friction curve slopes downhill. Downhill friction hands energy back: speed up a little, friction eases, so the belt speeds up more. That is how belts judder: stick, lurch, stick again (stick-slip).
 
 The engineer wants one answer: will the belt hold 0.05 m/s smoothly at every load, while the friction curve drifts with wear and temperature? Nobody knows the curve exactly, and no one can simulate every possible curve.
 
-Passivity answers it with one inequality. A part is **passive** when it can only store or burn the energy it is given, never create it. Join two passive parts in a loop and the stored energy can only fall, so the loop cannot blow up. The change in friction around the set speed is not passive, but its worst behaviour is bounded: the curve's steepest downhill slope is 1515.5 N·s/m (newtons of friction lost per m/s of speed gained). The speed loop's proportional gain is 2000 N·s/m of braking. The controller out-burns what the friction can hand back, with 484.5 N·s/m to spare. So the belt settles, at every load, for every friction curve that never slopes downhill faster than 1515.5 N·s/m.
+Passivity answers it with one inequality. A part is **passive** when it can only store or burn the energy it is given, never create it. Join two passive parts in a loop and the stored energy can only fall, so the loop cannot blow up.
+
+The change in friction around the set speed is not passive. But its worst behaviour is bounded: the curve's steepest downhill slope is 1515.5 N·s/m (newtons of friction lost per m/s of speed gained). The speed loop's proportional gain is 2000 N·s/m of braking. The controller out-burns what the friction can hand back, with 484.5 N·s/m to spare. So the belt settles, at every load, for every friction curve that never slopes downhill faster than 1515.5 N·s/m.
 
 **If each part of a loop only absorbs energy, the loop's stored energy can only fall and it settles; if one part can hand back energy at most at a known rate, a band condition, then a partner that burns more than that rate makes the loop stable for every nonlinearity inside the band at once.**
 
-**What kind of fact this is:** a theorem (the passivity theorem, and its band form, the circle criterion), proved for this loop on this card in Why it works; the friction curve itself is a model, an assumption that fits real belts well enough, not a law.
+**What kind of fact this is:** a theorem (the passivity theorem, and its band form, the circle criterion), proved for this loop on this card in Why it works. The friction curve itself is a model, an assumption that fits real belts well enough, not a law.
 
 ### The picture: friction against belt speed
 
@@ -35,7 +37,9 @@ The line is the friction force F(v). It falls from 600 N near rest to 443.7 N at
 
 ## The formula
 
-Notation first. Write v for the belt speed and v₀ for the set speed, both in m/s. The **speed error** is e = v − v₀, and z is its running total, in metres: how far the belt has fallen behind or run ahead. The motor force is u = F(v₀) − K_p e − K_i z, where F(v₀) is the friction at the set speed. A real PI loop has no separate F(v₀) term: its integral builds up until it supplies that force, and z counts the running total from that resting value. Newton's law M v' = u − F(v), with a prime meaning a rate in time, becomes
+Notation first. Write v for the belt speed and v₀ for the set speed, both in m/s. The **speed error** is e = v − v₀, and z is its running total, in metres: how far the belt has fallen behind or run ahead.
+
+The motor force is u = F(v₀) − K_p e − K_i z, where F(v₀) is the friction at the set speed. A real PI loop has no separate F(v₀) term: its integral builds up until it supplies that force, and z counts the running total from that resting value. Newton's law M v' = u − F(v), with a prime meaning a rate in time, becomes
 
 $$M e' = -K_p\, e - K_i\, z - \varphi(e), \qquad z' = e, \qquad \varphi(e) = F(v_0 + e) - F(v_0)$$
 
@@ -47,7 +51,7 @@ $$e\,\varphi(e) \ge -a\,e^2 \;\text{ for all } e, \qquad K_p > a \quad\Longright
 
 **Read it aloud:** if the friction change never hands back more than a times the error squared, and the proportional gain beats a, then the stored energy V falls by at least (K_p − a) e² every second, and the belt returns to its set speed.
 
-A loop that is stable for every nonlinearity in a band is called **absolutely stable**; finding such bands for a linear part joined to one unknown curve is the **Lur'e problem**. In the frequency domain the same test reads: the transfer function G(s) = s / (M s² + K_p s + K_i), from a push on the belt to its speed error, must keep G(jω) inside the disk whose diameter runs from 0 to 1/a. That is the **circle criterion**.
+A loop that is stable for every nonlinearity in a band is called **absolutely stable**; finding such bands for a linear part joined to one unknown curve is the **Lur'e problem**. The same test can also be read in the frequency domain. The transfer function G(s) = s / (M s² + K_p s + K_i), from a push on the belt to its speed error, must keep G(jω) inside the disk whose diameter runs from 0 to 1/a. That is the **circle criterion**.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -67,7 +71,7 @@ A loop that is stable for every nonlinearity in a band is called **absolutely st
 ### When it holds
 
 - **Friction depends only on the present speed.** Friction with memory (bristle models, lubricant films that build up) is a dynamic part, and needs its own storage function before it can join the argument.
-- **The band covers every set speed the belt runs at.** From 0.05 m/s the local slope is −1357.6 N·s/m, but the worst chord is −1477.0, and the steepest slope anywhere is −1515.5. A K_p of 1400 picked from the local slope at 0.05 m/s carries no guarantee there, and at a set speed of 0.0707 m/s, where the slope itself is −1515.5, the belt judders between 0.0334 and 0.1081 m/s.
+- **The band covers every set speed the belt runs at.** From 0.05 m/s the local slope is −1357.6 N·s/m, but the worst chord is −1477.0, and the steepest slope anywhere is −1515.5. A K_p of 1400 picked from the local slope at 0.05 m/s carries no guarantee there. At a set speed of 0.0707 m/s, where the slope itself is −1515.5, the belt judders between 0.0334 and 0.1081 m/s.
 - **K_p strictly above a.** At the edge the guarantee is gone: a straight-line friction of slope −2020 N·s/m, just past K_p, multiplies the stored energy by 3.3214 in 30 s; slope −1980 shrinks it to 0.3011.
 - **A stiff belt and an instant motor.** Belt stretch or a drive delay adds lag, G stops being positive real (Step 4), and the band then needs an upper end as well, checked with the circle criterion.
 - **The test is sufficient, not necessary.** At 0.05 m/s, K_p = 1400 fails the band (worst chord −1477.0), yet the belt settles from the kick, slowly, in 66.719 s. Failing it proves nothing either way.
@@ -78,7 +82,9 @@ A loop that is stable for every nonlinearity in a band is called **absolutely st
 
 ### Step 0: energy bookkeeping, with no solving
 
-Power is force times speed. Give each part of the loop an energy account: how much it holds, and how much flows in through its connection. A passive part never ends up holding more than was paid in. Two passive parts in a loop only trade energy with each other, so the total can only stay or fall. A total that cannot rise cannot run off to infinity. With one part burning energy whenever anything moves, the total falls until nothing moves. This is the Lyapunov argument ([Lyapunov functions](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/04-lyapunov-functions.md)), with the score built from physics part by part instead of guessed.
+Power is force times speed. Give each part of the loop an energy account: how much it holds, and how much flows in through its connection. A passive part never ends up holding more than was paid in. Two passive parts in a loop only trade energy with each other, so the total can only stay or fall.
+
+A total that cannot rise cannot run off to infinity. With one part burning energy whenever anything moves, the total falls until nothing moves. This is the Lyapunov argument ([Lyapunov functions](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/04-lyapunov-functions.md)), with the score built from physics part by part instead of guessed.
 
 ### Step 1: the belt with its PI loop is passive
 
@@ -86,7 +92,9 @@ Cut the loop at the friction. The belt side takes a push w, in N, and returns th
 
 $$V' = M e e' + K_i z z' = e(-K_p e - K_i z + w) + K_i z e = w\,e - K_p e^2.$$
 
-So the stored energy rises by at most the power paid in, minus K_p e² burned. The first half of V is the kinetic energy of the speed error. The second half belongs to the integral term, which acts like a spring of stiffness K_i stretched by the lag z: it stores energy and hands it back, but never makes any. Kinetic energy alone is not a storage. After the kick it falls to 0 J at 0.474 s, then the spring, helped by the friction dip, pushes the belt past its set speed and it rises again to 0.056963 J at 0.972 s.
+So the stored energy rises by at most the power paid in, minus K_p e² burned. The first half of V is the kinetic energy of the speed error. The second half belongs to the integral term, which acts like a spring of stiffness K_i stretched by the lag z: it stores energy and hands it back, but never makes any.
+
+Kinetic energy alone is not a storage. After the kick it falls to 0 J at 0.474 s. Then the spring, helped by the friction dip, pushes the belt past its set speed, and it rises again to 0.056963 J at 0.972 s.
 
 ### Step 2: friction with no dip is passive, and the joined loop settles
 
@@ -94,7 +102,9 @@ The friction side takes e and returns φ(e). The power it absorbs is e·φ(e). I
 
 $$V' = -K_p e^2 - e\,\varphi(e) \le -K_p e^2.$$
 
-V never rises, so e and z stay bounded. V′ is zero only where e = 0. A motion that stays on e = 0 has e′ = 0, so −K_i z = 0, so z = 0 too. By [LaSalle's principle](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/05-lasalle-and-the-damped-pendulum.md), every motion ends at e = 0, z = 0: the belt back at its set speed with the integral holding the right force. In general form, this is the **passivity theorem**: two passive parts in negative feedback, one of them burning energy whenever its output is non-zero, make a stable loop. Nothing about either part's inner workings was used.
+V never rises, so e and z stay bounded. V′ is zero only where e = 0. A motion that stays on e = 0 has e′ = 0, so −K_i z = 0, so z = 0 too. By [LaSalle's principle](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/05-lasalle-and-the-damped-pendulum.md), every motion ends at e = 0, z = 0: the belt back at its set speed with the integral holding the right force.
+
+In general form, this is the **passivity theorem**: two passive parts in negative feedback, one of them burning energy whenever its output is non-zero, make a stable loop. Nothing about either part's inner workings was used.
 
 ### Step 3: the dip, and the band that covers it
 
@@ -116,7 +126,9 @@ $$a = (F_s - F_c)\,\frac{\sqrt 2}{v_s}\,\exp(-1/2) - b = 1515.5 \text{ N·s/m}.$
 
 ### Step 4: the same test, read in frequencies
 
-The belt side's transfer function is G(s) = s / (M s² + K_p s + K_i). Its reciprocal at s = jω is 1/G(jω) = K_p + j(Mω − K_i/ω): the real part is K_p at every frequency. So 1/G runs up a vertical line, and G itself, plotted in the complex plane as ω runs (its **Nyquist plot**), runs round a circle through 0 with diameter 1/K_p = 0.000500 m/(N·s). The whole circle has Re G ≥ 0. A stable transfer function with Re G(jω) ≥ 0 at every frequency is called **positive real**: it is passivity seen in frequencies, since a part that absorbs power at every frequency absorbs it overall.
+The belt side's transfer function is G(s) = s / (M s² + K_p s + K_i). Its reciprocal at s = jω is 1/G(jω) = K_p + j(Mω − K_i/ω): the real part is K_p at every frequency. So 1/G runs up a vertical line, and G itself, plotted in the complex plane as ω runs (its **Nyquist plot**), runs round a circle through 0 with diameter 1/K_p = 0.000500 m/(N·s).
+
+The whole circle has Re G ≥ 0. A stable transfer function with Re G(jω) ≥ 0 at every frequency is called **positive real**: it is passivity seen in frequencies, since a part that absorbs power at every frequency absorbs it overall.
 
 The band [−a, ∞) moves the test. After the loop transformation, the belt side is G/(1 − aG), and that is positive real exactly when G(jω) stays inside the disk with diameter from 0 to 1/a = 0.000660 m/(N·s). For K_p = 2000 the circle of diameter 0.000500 sits inside it. For K_p = 1000 the circle's diameter is 0.001, and it sticks out.
 
@@ -198,7 +210,13 @@ Orange: K_p = 2000, inside the band; it peaks near 0.065 m/s and settles. Green:
 
 ## Code, from first principles, and it actually runs
 
-The scripts simulate the belt with a fourth-order Runge–Kutta step (RK4) of 0.001 s, with the friction smoothed through zero speed by tanh(v/ε), a smooth step from −1 to 1, with ε = 0.002 m/s, so the step can pass through rest. They take three independent roads to the band edge a* = K_p = 2000 N·s/m. The energy road is the formula of Step 3. The frequency road sweeps G(jω) over 2001 frequencies from 0.001 to 1000 rad/s, with complex numbers written out, and bisects for the largest a that keeps G/(1 − aG) positive real. The time road replaces friction by straight lines of slope −1980 and −2020 N·s/m and watches V shrink or grow. Separately, the band floor a comes from the closed form and from a scan of 20,000 tangent slopes. The nonlinear simulation checks that V never rises and that it drains at least the margin times the integral of e². Every load and friction curve in the table of Step 5 is simulated and must settle.
+The scripts simulate the belt with a fourth-order Runge–Kutta step (RK4) of 0.001 s. The friction is smoothed through zero speed by tanh(v/ε), a smooth step from −1 to 1, with ε = 0.002 m/s, so the step can pass through rest. They take three independent roads to the band edge a* = K_p = 2000 N·s/m:
+
+- The energy road is the formula of Step 3.
+- The frequency road sweeps G(jω) over 2001 frequencies from 0.001 to 1000 rad/s, with complex numbers written out, and bisects for the largest a that keeps G/(1 − aG) positive real.
+- The time road replaces friction by straight lines of slope −1980 and −2020 N·s/m and watches V shrink or grow.
+
+Separately, the band floor a comes from the closed form and from a scan of 20,000 tangent slopes. The nonlinear simulation checks that V never rises and that it drains at least the margin times the integral of e². Every load and friction curve in the table of Step 5 is simulated and must settle.
 
 ### Python
 
@@ -567,6 +585,373 @@ ALL CHECKS PASS
 ```
 
 The roads agree: the bisection lands on 2000.0000 N·s/m, the formula's K_p, and the straight-line frictions either side of it shrink and grow V. The scan finds the steepest slope 1515.5277 against the formula's 1515.5278, the gap being the finite-difference error. Along the kick, the 0.2250 J drained is more than the 0.1500 J the margin promises.
+
+### Lean
+
+Lean proves the results of Steps 2 to 4 for every load, gain and friction curve in the band, and checks the hand arithmetic.
+
+- Take any $M > 0$, a friction curve that depends only on the present speed, and any motion of the loop. Then the stored energy changes at the rate $V' = -K_p e^2 - e\,\varphi(e)$.
+- Suppose also the band holds: $e\,\varphi(e) \ge -a\,e^2$ for every $e$. Then $V' \le -(K_p - a)\,e^2$.
+- Suppose $M > 0$, $K_i > 0$, the friction curve has no jumps, the band holds, and $K_p > a$. Then along every motion, $e$ and $z$ both tend to 0: the belt settles at its set speed.
+- Take $a > 0$ and any complex value $G$. Then $G/(1 - aG)$ has real part at least 0 exactly when $G$ lies inside the disk with diameter from 0 to $1/a$.
+- Lean also checks the hand arithmetic: $\omega_n^2 = 8$, $\zeta^2 = 1/2$, and the stored energy and braking at the kick.
+
+The band floor $a = 1515.5$, the Nyquist circle, the settling times and the juddering are left to the Python and Rust checks.
+
+```lean
+-- Passivity: a belt with a PI speed loop, joined to any friction curve whose chords from the set speed never slope downhill faster than a, returns to its set speed whenever the proportional gain beats a, and the band test reads in frequencies as a disk.
+import Mathlib
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.Complex.Basic
+import Mathlib.Order.Filter.AtTopBot.Basic
+import Mathlib.Topology.Algebra.Order.Field
+
+open Filter Topology Set
+
+theorem belt_energy_rate_aux
+    (M Kp Ki a v₀ : ℝ) (F : ℝ → ℝ) (hM : 0 < M)
+    (hband : ∀ e : ℝ, e * (F (v₀ + e) - F v₀) ≥ -a * e ^ 2)
+    (e z : ℝ → ℝ) (t : ℝ)
+    (he : HasDerivWithinAt e ((-Kp * e t - Ki * z t - (F (v₀ + e t) - F v₀)) / M) (Ici 0) t)
+    (hz : HasDerivWithinAt z (e t) (Ici 0) t) :
+    HasDerivWithinAt (fun s => 1 / 2 * M * e s ^ 2 + 1 / 2 * Ki * z s ^ 2)
+        (-Kp * e t ^ 2 - e t * (F (v₀ + e t) - F v₀)) (Ici 0) t ∧
+      -Kp * e t ^ 2 - e t * (F (v₀ + e t) - F v₀) ≤ -(Kp - a) * e t ^ 2 := by
+  refine ⟨?_, by linarith [hband (e t)]⟩
+  have h1 := ((he.pow 2).const_mul (1 / 2 * M)).add ((hz.pow 2).const_mul (1 / 2 * Ki))
+  convert h1 using 1
+  field_simp
+  ring
+
+#print axioms belt_energy_rate_aux
+
+/-- A function whose one-sided derivative on `[0, ∞)` is nonpositive on a convex part `D`
+of `[0, ∞)` is antitone on `D`. -/
+lemma belt_antitoneOn_of_deriv {f f' : ℝ → ℝ} {D : Set ℝ} (hD : Convex ℝ D)
+    (hDs : D ⊆ Ici 0) (h : ∀ t ∈ Ici (0 : ℝ), HasDerivWithinAt f (f' t) (Ici 0) t)
+    (h0 : ∀ t ∈ D, f' t ≤ 0) : AntitoneOn f D :=
+  antitoneOn_of_hasDerivWithinAt_nonpos hD
+    (fun t ht => (h t (hDs ht)).continuousWithinAt.mono hDs)
+    (fun t ht => (h t (hDs (interior_subset ht))).mono (interior_subset.trans hDs))
+    (fun t ht => h0 t (interior_subset ht))
+
+#print axioms belt_antitoneOn_of_deriv
+
+/-- Adding a linear term `k * x` adds `k` to the derivative. -/
+lemma belt_hasDerivWithinAt_add_lin {f : ℝ → ℝ} {f' k t : ℝ} {s : Set ℝ}
+    (h : HasDerivWithinAt f f' s t) :
+    HasDerivWithinAt (fun x => f x + k * x) (f' + k) s t := by
+  have h2 := (hasDerivWithinAt_id t s).const_mul k
+  rw [mul_one] at h2
+  exact h.add h2
+
+#print axioms belt_hasDerivWithinAt_add_lin
+
+/-- The band form of the passivity theorem (absolute stability) for the belt loop.
+Take a belt of mass M > 0, integral gain K_i > 0, proportional gain K_p, a friction curve
+F that depends only on the present speed, and a set speed v₀. Write the friction change as
+φ(e) = F(v₀ + e) - F(v₀). If every chord of the friction curve from the set speed has slope
+at least -a, that is e·φ(e) ≥ -a·e² for every e, and K_p > a, then every motion of
+M e' = -K_p e - K_i z - φ(e), z' = e settles: the speed error e and its running total z
+both tend to 0. -/
+theorem belt_loop_settles_inside_band
+    (M Kp Ki a v₀ : ℝ) (F : ℝ → ℝ) (hM : 0 < M) (hKi : 0 < Ki) (hF : Continuous F)
+    (hband : ∀ e : ℝ, e * (F (v₀ + e) - F v₀) ≥ -a * e ^ 2) (hKp : Kp > a)
+    (e z : ℝ → ℝ)
+    (he : ∀ t ∈ Ici (0 : ℝ), HasDerivWithinAt e
+      ((-Kp * e t - Ki * z t - (F (v₀ + e t) - F v₀)) / M) (Ici 0) t)
+    (hz : ∀ t ∈ Ici (0 : ℝ), HasDerivWithinAt z (e t) (Ici 0) t) :
+    Tendsto e atTop (𝓝 0) ∧ Tendsto z atTop (𝓝 0) := by
+  have hE := fun t (ht : t ∈ Ici (0 : ℝ)) =>
+    belt_energy_rate_aux M Kp Ki a v₀ F hM hband e z t (he t ht) (hz t ht)
+  obtain ⟨φ, hφ⟩ : ∃ φ : ℝ → ℝ, ∀ x, φ x = F (v₀ + x) - F v₀ := ⟨_, fun _ => rfl⟩
+  have hφc : Continuous φ := by
+    have : φ = fun x => F (v₀ + x) - F v₀ := funext hφ
+    rw [this]; fun_prop
+  have hφ0 : φ 0 = 0 := by simp [hφ]
+  simp only [← hφ] at he hband hE
+  obtain ⟨V, hV⟩ : ∃ V : ℝ → ℝ, ∀ s, V s = 1 / 2 * M * e s ^ 2 + 1 / 2 * Ki * z s ^ 2 :=
+    ⟨_, fun _ => rfl⟩
+  have hVeq : (fun s => 1 / 2 * M * e s ^ 2 + 1 / 2 * Ki * z s ^ 2) = V := funext fun s => (hV s).symm
+  rw [hVeq] at hE
+  clear hVeq
+  set c := Kp - a with hc
+  have hcpos : 0 < c := by linarith
+  have hVnn : ∀ s, 0 ≤ V s := fun s => by rw [hV]; positivity
+  -- V is antitone on [0, ∞)
+  have hVanti : AntitoneOn V (Ici 0) :=
+    belt_antitoneOn_of_deriv (convex_Ici 0) subset_rfl (fun t ht => (hE t ht).1)
+      (fun t ht => by nlinarith [(hE t ht).2, sq_nonneg (e t)])
+  -- bounds on e and z
+  set R := 2 * V 0 / M + 2 * V 0 / Ki + 1 with hR
+  have hV0nn := hVnn 0
+  have hR1 : 1 ≤ R := by
+    have : 0 ≤ 2 * V 0 / M := by positivity
+    have : 0 ≤ 2 * V 0 / Ki := by positivity
+    linarith
+  have hVle0 : ∀ t ∈ Ici (0 : ℝ), V t ≤ V 0 := fun t ht => hVanti (mem_Ici.mpr le_rfl) ht ht
+  have he2 : ∀ t ∈ Ici (0 : ℝ), e t ^ 2 ≤ R := by
+    intro t ht
+    have h1 : e t ^ 2 ≤ 2 * V 0 / M := by
+      rw [le_div_iff₀ hM]
+      have := hVle0 t ht; rw [hV t] at this; nlinarith [sq_nonneg (z t)]
+    have : 0 ≤ 2 * V 0 / Ki := by positivity
+    linarith
+  have hz2 : ∀ t ∈ Ici (0 : ℝ), z t ^ 2 ≤ R := by
+    intro t ht
+    have h1 : z t ^ 2 ≤ 2 * V 0 / Ki := by
+      rw [le_div_iff₀ hKi]
+      have := hVle0 t ht; rw [hV t] at this; nlinarith [sq_nonneg (e t)]
+    have : 0 ≤ 2 * V 0 / M := by positivity
+    linarith
+  have heR : ∀ t ∈ Ici (0 : ℝ), |e t| ≤ R := fun t ht =>
+    abs_le.mpr ⟨by nlinarith [he2 t ht, sq_nonneg (e t + 1)],
+      by nlinarith [he2 t ht, sq_nonneg (e t - 1)]⟩
+  have hzR : ∀ t ∈ Ici (0 : ℝ), |z t| ≤ R := fun t ht =>
+    abs_le.mpr ⟨by nlinarith [hz2 t ht, sq_nonneg (z t + 1)],
+      by nlinarith [hz2 t ht, sq_nonneg (z t - 1)]⟩
+  obtain ⟨Φ, hΦ⟩ := (isCompact_Icc (a := -R) (b := R)).exists_bound_of_continuousOn
+    hφc.continuousOn
+  have hφR : ∀ t ∈ Ici (0 : ℝ), |φ (e t)| ≤ Φ := fun t ht => by
+    have := hΦ (e t) (abs_le.mp (heR t ht))
+    rwa [Real.norm_eq_abs] at this
+  -- bound on the derivative of e
+  set B := (|Kp| * R + Ki * R + Φ) / M + 1 with hB
+  have hB1 : ∀ t ∈ Ici (0 : ℝ), |(-Kp * e t - Ki * z t - φ (e t)) / M| ≤ B - 1 := by
+    intro t ht
+    have h1 : |Kp * e t| ≤ |Kp| * R := by
+      rw [abs_mul]; exact mul_le_mul_of_nonneg_left (heR t ht) (abs_nonneg _)
+    have h2 : |Ki * z t| ≤ Ki * R := by
+      rw [abs_mul, abs_of_pos hKi]; exact mul_le_mul_of_nonneg_left (hzR t ht) hKi.le
+    have h3 := hφR t ht
+    have hnum : |-Kp * e t - Ki * z t - φ (e t)| ≤ |Kp| * R + Ki * R + Φ := by
+      have a1 := abs_le.mp h1; have a2 := abs_le.mp h2; have a3 := abs_le.mp h3
+      apply abs_le.mpr; constructor <;> nlinarith
+    rw [abs_div, abs_of_pos hM, hB, add_sub_cancel_right]
+    exact div_le_div_of_nonneg_right hnum hM.le
+  have hBpos : 0 < B := by
+    have := hB1 0 (mem_Ici.mpr le_rfl)
+    have := abs_nonneg ((-Kp * e 0 - Ki * z 0 - φ (e 0)) / M)
+    linarith
+  have hLip : ∀ t s, 0 ≤ t → t ≤ s → |e s - e t| ≤ B * (s - t) := by
+    intro t s ht hts
+    have hs : s ∈ Ici (0 : ℝ) := le_trans ht hts
+    have A1 : AntitoneOn (fun x => e x + (-B) * x) (Ici 0) :=
+      belt_antitoneOn_of_deriv (convex_Ici 0) subset_rfl
+        (fun t ht => belt_hasDerivWithinAt_add_lin (he t ht))
+        (fun t ht => by have := abs_le.mp (hB1 t ht); linarith)
+    have A2 : AntitoneOn (fun x => -e x + (-B) * x) (Ici 0) :=
+      belt_antitoneOn_of_deriv (convex_Ici 0) subset_rfl
+        (fun t ht => belt_hasDerivWithinAt_add_lin (he t ht).neg)
+        (fun t ht => by have := abs_le.mp (hB1 t ht); linarith)
+    have h1 := A1 (show t ∈ Ici (0:ℝ) from ht) hs hts
+    have h2 := A2 (show t ∈ Ici (0:ℝ) from ht) hs hts
+    simp only at h1 h2
+    apply abs_le.mpr; constructor <;> nlinarith
+  -- the infimum of V
+  have hbdd : BddBelow (V '' Ici 0) := ⟨0, by rintro _ ⟨t, -, rfl⟩; exact hVnn t⟩
+  set L := sInf (V '' Ici 0) with hLdef
+  have hL : ∀ t ∈ Ici (0 : ℝ), L ≤ V t := fun t ht => csInf_le hbdd ⟨t, ht, rfl⟩
+  have hLapprox : ∀ δ > 0, ∃ T ∈ Ici (0 : ℝ), V T < L + δ := by
+    intro δ hδ
+    obtain ⟨_, ⟨T, hT, rfl⟩, hlt⟩ :=
+      exists_lt_of_csInf_lt ((nonempty_Ici).image V) (by linarith : L < L + δ)
+    exact ⟨T, hT, hlt⟩
+  have hL0 : 0 ≤ L := le_csInf ((nonempty_Ici).image V) (by rintro _ ⟨t, -, rfl⟩; exact hVnn t)
+  -- e tends to 0
+  have heT : Tendsto e atTop (𝓝 0) := by
+    rw [Metric.tendsto_atTop]
+    intro ε hε
+    set h := ε / (2 * B) with hh
+    have hhpos : 0 < h := by positivity
+    have hBh : B * h = ε / 2 := by rw [hh]; field_simp
+    have hδ : 0 < c * (ε / 2) ^ 2 * h := by positivity
+    obtain ⟨T, hT0, hTV⟩ := hLapprox _ hδ
+    refine ⟨T, fun t ht => ?_⟩
+    rw [Real.dist_eq, sub_zero]
+    by_contra hcon
+    replace hcon := not_lt.mp hcon
+    have ht0 : (0 : ℝ) ≤ t := le_trans hT0 ht
+    have hnear : ∀ s ∈ Icc t (t + h), (ε / 2) ^ 2 ≤ e s ^ 2 := by
+      intro s hs
+      have h1 := hLip t s ht0 hs.1
+      have h2 : B * (s - t) ≤ B * h := mul_le_mul_of_nonneg_left (by linarith [hs.2]) hBpos.le
+      have h3 : ε / 2 ≤ |e s| := by
+        have := abs_sub_abs_le_abs_sub (e t) (e s)
+        rw [abs_sub_comm] at this
+        linarith
+      have := pow_le_pow_left₀ (by positivity) h3 2
+      rwa [sq_abs] at this
+    have hanti : AntitoneOn (fun x => V x + (c * (ε / 2) ^ 2) * x) (Icc t (t + h)) :=
+      belt_antitoneOn_of_deriv (convex_Icc _ _)
+        (fun s hs => le_trans ht0 hs.1)
+        (fun s hs => belt_hasDerivWithinAt_add_lin (hE s hs).1)
+        (fun s hs => by
+          have h1 := (hE s (le_trans ht0 hs.1)).2
+          have h2 := mul_le_mul_of_nonneg_left (hnear s hs) hcpos.le
+          nlinarith)
+    have h1 := hanti (left_mem_Icc.mpr (by linarith)) (right_mem_Icc.mpr (by linarith))
+      (by linarith)
+    simp only at h1
+    have h2 := hVanti (show T ∈ Ici (0:ℝ) from hT0) (show t ∈ Ici (0:ℝ) from ht0) ht
+    have h3 := hL (t + h) (show (0:ℝ) ≤ t + h by linarith)
+    nlinarith
+  refine ⟨heT, ?_⟩
+  rcases eq_or_lt_of_le hL0 with hL0 | hLpos
+  · -- L = 0
+    rw [Metric.tendsto_atTop]
+    intro ε hε
+    obtain ⟨T, hT0, hTV⟩ := hLapprox (Ki * ε ^ 2 / 2) (by positivity)
+    refine ⟨T, fun t ht => ?_⟩
+    rw [Real.dist_eq, sub_zero]
+    have ht0 : (0 : ℝ) ≤ t := le_trans hT0 ht
+    have h2 := hVanti (show T ∈ Ici (0:ℝ) from hT0) (show t ∈ Ici (0:ℝ) from ht0) ht
+    rw [hV t] at h2
+    have h3 : z t ^ 2 < ε ^ 2 := by
+      by_contra hcon; replace hcon := not_lt.mp hcon
+      nlinarith [sq_nonneg (e t), mul_le_mul_of_nonneg_left hcon hKi.le]
+    exact abs_lt_of_sq_lt_sq h3 hε.le
+  · exfalso
+    set g : ℝ → ℝ := fun x => |Kp| * R * |x| + R * |φ x| + M * x ^ 2 with hg
+    have hgc : Continuous g := by rw [hg]; fun_prop
+    have hg0 : g 0 = 0 := by simp [hg, hφ0]
+    have hgT : Tendsto (g ∘ e) atTop (𝓝 0) := by
+      have := (hgc.tendsto 0).comp heT
+      rwa [hg0] at this
+    obtain ⟨T1, hT1⟩ := eventually_atTop.mp (hgT.eventually (gt_mem_nhds (by linarith : (0:ℝ) < L / 2)))
+    set T := max T1 0 with hT
+    have hT0 : (0 : ℝ) ≤ T := le_max_right _ _
+    have hU : ∀ t ∈ Ici (0 : ℝ), HasDerivWithinAt (fun s => M * e s * z s + L * s)
+        (M * ((-Kp * e t - Ki * z t - φ (e t)) / M) * z t + M * e t * e t + L) (Ici 0) t :=
+      fun t ht => belt_hasDerivWithinAt_add_lin (((he t ht).const_mul M).mul (hz t ht))
+    have hanti : AntitoneOn (fun s => M * e s * z s + L * s) (Ici T) :=
+      belt_antitoneOn_of_deriv (convex_Ici T) (fun s hs => le_trans hT0 hs) hU
+        (fun t ht => by
+          have ht0 : (0:ℝ) ≤ t := le_trans hT0 ht
+          have hg1 : g (e t) < L / 2 := hT1 t (le_trans (le_max_left _ _) ht)
+          simp only [hg] at hg1
+          have hMM : M * ((-Kp * e t - Ki * z t - φ (e t)) / M) = -Kp * e t - Ki * z t - φ (e t) := by
+            field_simp
+          rw [hMM]
+          have hLV := hL t ht0
+          rw [hV t] at hLV
+          have k1 : -Kp * e t * z t ≤ |Kp| * R * |e t| := by
+            have : |Kp * e t * z t| ≤ |Kp| * R * |e t| := by
+              rw [abs_mul, abs_mul]
+              have := mul_le_mul_of_nonneg_left (hzR t ht0) (mul_nonneg (abs_nonneg Kp) (abs_nonneg (e t)))
+              nlinarith
+            have := (abs_le.mp this).1
+            linarith
+          have k2 : -(φ (e t) * z t) ≤ R * |φ (e t)| := by
+            have : |φ (e t) * z t| ≤ R * |φ (e t)| := by
+              rw [abs_mul]
+              have := mul_le_mul_of_nonneg_left (hzR t ht0) (abs_nonneg (φ (e t)))
+              linarith
+            have := (abs_le.mp this).1
+            linarith
+          have k3 : 0 ≤ |Kp| * R * |e t| := by positivity
+          have k4 : 0 ≤ R * |φ (e t)| := by positivity
+          nlinarith)
+    have hUbd : ∀ s ∈ Ici (0 : ℝ), |M * e s * z s| ≤ M * R * R := by
+      intro s hs
+      rw [abs_mul, abs_mul, abs_of_pos hM]
+      have := mul_le_mul (heR s hs) (hzR s hs) (abs_nonneg _) (by linarith)
+      have := mul_le_mul_of_nonneg_left this hM.le
+      linarith
+    set s := T + 2 * M * R * R / L + 1 with hs
+    have hsT : T ≤ s := by
+      have : 0 ≤ 2 * M * R * R / L := by positivity
+      linarith
+    have h1 := hanti ((mem_Ici.mpr le_rfl)) (show s ∈ Ici T from hsT) hsT
+    simp only at h1
+    have b1 := abs_le.mp (hUbd T hT0)
+    have b2 := abs_le.mp (hUbd s (le_trans hT0 hsT))
+    have : L * (s - T) = 2 * M * R * R + L := by
+      rw [hs]; field_simp; ring
+    have : L * s - L * T = 2 * M * R * R + L := by rw [← mul_sub]; exact this
+    linarith
+
+/-- Steps 1 to 3: along the same loop, the stored energy V = ½ M e² + ½ K_i z² changes at
+the rate V' = -K_p e² - e·φ(e), and under the band e·φ(e) ≥ -a·e² this rate is at most
+-(K_p - a) e². -/
+theorem belt_loop_energy_rate
+    (M Kp Ki a v₀ : ℝ) (F : ℝ → ℝ) (hM : 0 < M)
+    (hband : ∀ e : ℝ, e * (F (v₀ + e) - F v₀) ≥ -a * e ^ 2)
+    (e z : ℝ → ℝ) (t : ℝ)
+    (he : HasDerivWithinAt e ((-Kp * e t - Ki * z t - (F (v₀ + e t) - F v₀)) / M) (Ici 0) t)
+    (hz : HasDerivWithinAt z (e t) (Ici 0) t) :
+    HasDerivWithinAt (fun s => 1 / 2 * M * e s ^ 2 + 1 / 2 * Ki * z s ^ 2)
+        (-Kp * e t ^ 2 - e t * (F (v₀ + e t) - F v₀)) (Ici 0) t ∧
+      -Kp * e t ^ 2 - e t * (F (v₀ + e t) - F v₀) ≤ -(Kp - a) * e t ^ 2 := by
+  exact belt_energy_rate_aux M Kp Ki a v₀ F hM hband e z t he hz
+
+/-- Step 4, the circle criterion's disk: for a band floor a > 0 and any complex value G,
+the transformed value G / (1 - a G) has non-negative real part exactly when G lies in the
+disk whose diameter runs from 0 to 1/a (centre 1/(2a), radius 1/(2a)). -/
+theorem band_is_disk (a : ℝ) (ha : 0 < a) (G : ℂ) :
+    0 ≤ (G / (1 - a * G)).re ↔ ‖G - (1 / (2 * a) : ℝ)‖ ≤ 1 / (2 * a) := by
+  have hr : (0:ℝ) ≤ 1 / (2 * a) := by positivity
+  rw [← sq_le_sq₀ (norm_nonneg _) hr, Complex.sq_norm, Complex.normSq_apply, Complex.div_re,
+    Complex.normSq_apply]
+  simp only [Complex.sub_re, Complex.sub_im, Complex.ofReal_re, Complex.ofReal_im, Complex.one_re,
+    Complex.one_im, Complex.mul_re, Complex.mul_im, sub_zero, zero_mul, zero_sub, add_zero]
+  set x := G.re
+  set y := G.im
+  have key : (x - 1 / (2 * a)) * (x - 1 / (2 * a)) + y * y ≤ (1 / (2 * a)) ^ 2 ↔ a * (x^2 + y^2) ≤ x := by
+    have : (x - 1 / (2 * a)) * (x - 1 / (2 * a)) + y * y - (1 / (2 * a)) ^ 2 = (a * (x^2 + y^2) - x) / a := by
+      field_simp; ring
+    constructor
+    · intro h
+      have h2 : (a * (x^2 + y^2) - x) / a ≤ 0 := by linarith
+      rw [div_nonpos_iff] at h2
+      rcases h2 with ⟨_, h3⟩ | ⟨h3, _⟩ <;> linarith
+    · intro h
+      have h2 : (a * (x^2 + y^2) - x) / a ≤ 0 := div_nonpos_of_nonpos_of_nonneg (by linarith) ha.le
+      linarith
+  rw [key]
+  set N := (1 - a * x) * (1 - a * x) + -(a * y) * -(a * y) with hN
+  rw [← add_div]
+  rcases eq_or_lt_of_le (show 0 ≤ N by nlinarith [mul_self_nonneg (1 - a * x), mul_self_nonneg (a * y)]) with h0 | hpos
+  · rw [← h0]
+    simp only [div_zero, le_refl, true_iff]
+    have hy : a * y = 0 := by nlinarith [sq_nonneg (1 - a * x), sq_nonneg (a * y)]
+    have hx : 1 - a * x = 0 := by nlinarith [sq_nonneg (1 - a * x), sq_nonneg (a * y)]
+    have hy0 : y = 0 := by
+      rcases mul_eq_zero.mp hy with h | h
+      · linarith
+      · exact h
+    rw [hy0]
+    have hax : a * x = 1 := by linarith
+    have : a * (x ^ 2 + 0 ^ 2) = x * (a * x) := by ring
+    rw [this, hax, mul_one]
+  · rw [le_div_iff₀ hpos, zero_mul]
+    constructor <;> intro h <;> nlinarith
+
+-- The card's whole-number plant: M = 500 kg, K_p = 2000 N·s/m, K_i = 4000 N/m.
+-- Natural frequency squared: ω_n² = K_i / M = 8, so ω_n = 2√2 ≈ 2.8284 rad/s.
+example : (4000 : ℚ) / 500 = 8 := by norm_num
+-- Damping ratio squared: ζ² = K_p² / (4 K_i M) = 1/2, so ζ = 1/√2 ≈ 0.7071.
+example : (2000 : ℚ) ^ 2 / (4 * 4000 * 500) = 1 / 2 := by norm_num
+-- Stored energy at the kick e = -3/100 m/s, z = 0: ½ × 500 × (3/100)² = 9/40 J (0.2250 J).
+example : (1 / 2 : ℚ) * 500 * (-3 / 100) ^ 2 + 1 / 2 * 4000 * 0 ^ 2 = 9 / 40 := by norm_num
+-- Proportional braking at the kick: -2000 × (3/100)² = -9/5 W (-1.8000 W).
+example : -(2000 : ℚ) * (-3 / 100) ^ 2 = -9 / 5 := by norm_num
+
+#print axioms belt_loop_settles_inside_band
+#print axioms belt_loop_energy_rate
+#print axioms band_is_disk
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'belt_energy_rate_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'belt_antitoneOn_of_deriv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'belt_hasDerivWithinAt_add_lin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'belt_loop_settles_inside_band' depends on axioms: [propext, Classical.choice, Quot.sound]
+'belt_loop_energy_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'band_is_disk' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

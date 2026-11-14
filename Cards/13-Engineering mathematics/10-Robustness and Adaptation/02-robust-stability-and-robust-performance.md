@@ -10,7 +10,9 @@ A parcel-depot conveyor is driven by one motor under speed control. Through the 
 
 The engineer wants two answers. First: does the speed loop stay stable for every load, not just the one it was tuned on? Second: does it still do its job for every load, keeping speed errors as small as the specification demands? The first is **robust stability**. The second is **robust performance**. Passing the first, and passing the specification on the empty belt, does not mean passing the second.
 
-The tests work one frequency at a time. At each frequency two numbers are read off the empty-belt model. One says how much the load's model error could hurt. The other says how much of the error budget the loop already uses. Their sum must stay under 1 at every frequency. For this conveyor and a gentle controller the largest sum is 0.881, at 19.72 rad/s, so every load passes. Checked load by load, the worst belt uses 0.600 of its budget.
+The tests work one frequency at a time. At each frequency two numbers are read off the empty-belt model. One says how much the load's model error could hurt. The other says how much of the error budget the loop already uses. Their sum must stay under 1 at every frequency.
+
+For this conveyor and a gentle controller the largest sum is 0.881, at 19.72 rad/s, so every load passes. Checked load by load, the worst belt uses 0.600 of its budget.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -23,7 +25,7 @@ xychart-beta
     line [0.420, 0.476, 0.540, 0.623, 0.701, 0.740, 0.753, 0.775, 0.825, 0.879, 0.829, 0.677, 0.569, 0.523, 0.508]
 ```
 
-Orange: the stability term $\lvert WT\rvert$, how much the load's model error could hurt. Green: the performance term $\lvert W_P S\rvert$, how much of the error budget the empty-belt loop uses. Dark: their sum, the robust performance test. The top of the chart is the limit, 1. The two terms peak almost a decade apart, at 4.73 rad/s and 35.81 rad/s, so their sum stays clear of the top. Labels are rounded; the points are a quarter-decade apart.
+Orange: the stability term $\lvert WT\rvert$, how much the load's model error could hurt. Green: the performance term $\lvert W_P S\rvert$, how much of the error budget the empty-belt loop uses. Dark: their sum, the robust performance test. The top of the chart is the limit, 1. The two terms peak almost a decade (a factor of 10 in frequency) apart, at 4.73 rad/s and 35.81 rad/s, so their sum stays clear of the top. Labels are rounded; the points are a quarter-decade apart.
 
 **Robust stability holds when the model error, weighted by how strongly the loop passes it round, stays under 1 at every frequency; robust performance holds when that term plus the model's performance term stays under 1 at every frequency, because the worst plant can be a different plant at each frequency.**
 
@@ -33,7 +35,12 @@ Orange: the stability term $\lvert WT\rvert$, how much the load's model error co
 
 ## The formula
 
-Notation first, in words. The loop gain $L$, the sensitivity $S = 1/(1+L)$ and the complementary sensitivity $T = L/(1+L)$ are from [Sensitivity functions](../03-Feedback%20Control/02-sensitivity-and-the-gang-of-four.md): $S$ is how much of an error survives the loop, $T$ how much of a signal goes round it. Engineers write $j$ for the square root of −1; the rest of the library writes i. [Writing down model error](01-model-uncertainty-and-the-small-gain-theorem.md) writes every real plant as the model times one plus an error inside an envelope $W$, and introduces the H-infinity norm, the peak gain over all frequencies. This card adds a performance weight $W_P$: the specification turned into a curve over frequency.
+Notation first, in words.
+
+- The loop gain $L$, the sensitivity $S = 1/(1+L)$ and the complementary sensitivity $T = L/(1+L)$ are from [Sensitivity functions](../03-Feedback%20Control/02-sensitivity-and-the-gang-of-four.md): $S$ is how much of an error survives the loop, $T$ how much of a signal goes round it.
+- Engineers write $j$ for the square root of −1; the rest of the library writes i.
+- [Writing down model error](01-model-uncertainty-and-the-small-gain-theorem.md) writes every real plant as the model times one plus an error inside an envelope $W$, and introduces the H-infinity norm, the peak gain over all frequencies.
+- This card adds a performance weight $W_P$: the specification turned into a curve over frequency.
 
 The conveyor, torque in N·m to belt speed in rad/s, and its PI controller (proportional plus integral), as on the small-gain card:
 
@@ -92,7 +99,13 @@ Factor the return difference (the $1 + PC$ whose zeros are the closed-loop poles
 
 $$1 + P_J C = 1 + L(1 + W\Delta) = (1 + L)\,(1 + W\Delta\,T).$$
 
-The first factor is the model loop, stable. Now grow the error from $\Delta = 0$ to its full size. The closed-loop poles move continuously, so to reach the right half-plane a pole must cross the imaginary axis at some $s = j\omega$. There the second factor would be zero, which needs $\lvert W\Delta T\rvert = 1$. If $\lvert WT\rvert < 1$ at every $\omega$ that cannot happen, so every plant in the family is stable. If instead $\lvert WT\rvert \ge 1$ somewhere, some $\Delta$ of size at most 1, with the right phase, puts a pole on the axis. For the envelope's family the test is exact.
+The closed-loop poles are the values of $s$ that set the loop's natural responses. A pole in the right half-plane (positive real part) is a response that grows, so the loop is unstable.
+
+The first factor is the model loop, stable. Now grow the error from $\Delta = 0$ to its full size. The closed-loop poles move continuously, so to reach the right half-plane a pole must cross the imaginary axis at some $s = j\omega$.
+
+There the second factor would be zero, which needs $\lvert W\Delta T\rvert = 1$. If $\lvert WT\rvert < 1$ at every $\omega$ that cannot happen, so every plant in the family is stable.
+
+If instead $\lvert WT\rvert \ge 1$ somewhere, some $\Delta$ of size at most 1, with the right phase, puts a pole on the axis. For the envelope's family the test is exact.
 
 For the gentle controller the peak is 0.460, at 4.73 rad/s. For the controller on the small-gain card, $K_p$ = 10 and $K_i$ = 50, it is 0.6288, the same number that card found.
 
@@ -547,6 +560,183 @@ wrong: envelope from half belt: RS 0.303; at 10 rad/s it allows 0.330, full belt
 saturation: a 10 rad/s step asks 30 N m at once, over a 20 N m drive; the 5 rad/s step asks 15 N m
 try: Ki = 8 -> sum 0.925; Kp = 5, Ki = 10 -> sum 0.994; wB = 6 rad/s -> sum 0.931
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves the algebra of Why it works at each frequency, for any loop, and checks the worked numbers.
+
+- Suppose $1 + L \ne 0$ at every frequency, and each $\Delta$ has size at most 1, chosen afresh at each frequency. Then no such $\Delta$ makes the return difference $1 + L(1 + W\Delta)$ zero exactly when $\lvert WT\rvert < 1$ at every frequency.
+- Take the same $L$ and $\Delta$, and any weight $W_P$. Then every such plant meets the specification with a nonzero return difference exactly when $\lvert W_P S\rvert + \lvert WT\rvert < 1$ everywhere.
+- Take $a = W_P S$ and $b = WT$ at one frequency, with $\lvert b\rvert < 1$. Then over all $\Delta$ of size at most 1, the largest $\lvert a/(1 + b\Delta)\rvert$ is $\lvert a\rvert/(1 - \lvert b\rvert)$.
+- Take the empty belt at $s = 10j$. Then the plant's bottom $(J_0 s + b)(\tau s + 1)$ is exactly $2.08j$.
+- The Hurwitz ratios for the empty, half and full belts are 221/5, 1309/30 and 867/20. These are 44.200, 43.633 and 43.350 to three places.
+- With $K_p$ = 3.0, a 10 rad/s step asks for 30 N·m, over a 20 N·m drive. A 5 rad/s step asks for 15 N·m, within it.
+
+The frequency scans, the real belts' Hurwitz tests, Bode's integral and the simulations are left to the Python and Rust checks.
+
+```lean
+-- Robust tests: for one loop with model loop gain L, envelope W and specification weight W_P, every plant inside the envelope keeps the loop closed and meets the specification at every frequency exactly when the stability term plus the performance term stays under 1 at every frequency.
+import Mathlib.Analysis.Complex.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+open Complex
+
+/-- The return difference factors through the model's return difference. -/
+lemma rd_factor (L W Δ : ℂ) (h : 1 + L ≠ 0) :
+    1 + L * (1 + W * Δ) = (1 + L) * (1 + W * (L / (1 + L)) * Δ) := by
+  field_simp
+  ring
+
+/-- Lower bound on `|1 + b Δ|` for `|Δ| ≤ 1`. -/
+lemma one_sub_norm_le (b Δ : ℂ) (hΔ : ‖Δ‖ ≤ 1) : 1 - ‖b‖ ≤ ‖1 + b * Δ‖ := by
+  have h1 := norm_sub_le (1 + b * Δ) (b * Δ)
+  rw [add_sub_cancel_right, norm_one, norm_mul] at h1
+  have h2 : ‖b‖ * ‖Δ‖ ≤ ‖b‖ := mul_le_of_le_one_right (norm_nonneg _) hΔ
+  linarith
+
+/-- Worst-case value at one frequency. -/
+lemma worst_case_aux (a b : ℂ) (hb : ‖b‖ < 1) :
+    IsGreatest {x : ℝ | ∃ Δ : ℂ, ‖Δ‖ ≤ 1 ∧ x = ‖a / (1 + b * Δ)‖} (‖a‖ / (1 - ‖b‖)) := by
+  have hpos : 0 < 1 - ‖b‖ := by linarith
+  constructor
+  · refine ⟨-(‖b‖ : ℂ) / b, ?_, ?_⟩
+    · rw [norm_div, norm_neg, Complex.norm_real, Real.norm_eq_abs, abs_norm]
+      exact div_self_le_one _
+    · have hbD : b * (-(‖b‖ : ℂ) / b) = -(‖b‖ : ℂ) := by
+        rcases eq_or_ne b 0 with rfl | hb0
+        · simp
+        · field_simp
+      have h1 : (1 : ℂ) + -(‖b‖ : ℂ) = ((1 - ‖b‖ : ℝ) : ℂ) := by push_cast; ring
+      rw [hbD, h1, norm_div, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hpos]
+  · rintro x ⟨Δ, hΔ, rfl⟩
+    rw [norm_div]
+    exact div_le_div_of_nonneg_left (norm_nonneg _) hpos (one_sub_norm_le b Δ hΔ)
+
+/-- Pointwise robust stability. -/
+lemma stab_forward (L W : ℝ → ℂ) (hL : ∀ ω, 1 + L ω ≠ 0)
+    (h : ∀ Δ : ℝ → ℂ, (∀ ω, ‖Δ ω‖ ≤ 1) → ∀ ω, 1 + L ω * (1 + W ω * Δ ω) ≠ 0) (ω : ℝ) :
+    ‖W ω * (L ω / (1 + L ω))‖ < 1 := by
+  by_contra hc
+  replace hc := not_lt.mp hc
+  have hc0 : W ω * (L ω / (1 + L ω)) ≠ 0 := by
+    intro h0
+    rw [h0, norm_zero] at hc
+    linarith
+  have hD : ∀ ω' : ℝ, ‖(fun _ : ℝ => -1 / (W ω * (L ω / (1 + L ω)))) ω'‖ ≤ 1 := by
+    intro ω'
+    rw [norm_div, norm_neg, norm_one]
+    exact div_le_one_of_le₀ hc (norm_nonneg _)
+  apply h _ hD ω
+  rw [rd_factor _ _ _ (hL ω)]
+  have : (1 : ℂ) + W ω * (L ω / (1 + L ω)) * (-1 / (W ω * (L ω / (1 + L ω)))) = 0 := by
+    rw [mul_div_assoc', mul_neg_one, neg_div, div_self hc0, add_neg_cancel]
+  rw [this, mul_zero]
+
+lemma stab_backward (L W : ℝ → ℂ) (hL : ∀ ω, 1 + L ω ≠ 0)
+    (h : ∀ ω, ‖W ω * (L ω / (1 + L ω))‖ < 1) (Δ : ℝ → ℂ) (hΔ : ∀ ω, ‖Δ ω‖ ≤ 1) (ω : ℝ) :
+    1 + L ω * (1 + W ω * Δ ω) ≠ 0 := by
+  rw [rd_factor _ _ _ (hL ω)]
+  apply mul_ne_zero (hL ω)
+  intro h0
+  have := one_sub_norm_le (W ω * (L ω / (1 + L ω))) (Δ ω) (hΔ ω)
+  rw [h0, norm_zero] at this
+  linarith [h ω]
+
+lemma perf_eq (L W W_P Δ : ℂ) (h : 1 + L ≠ 0) :
+    W_P / (1 + L * (1 + W * Δ)) = W_P * (1 / (1 + L)) / (1 + W * (L / (1 + L)) * Δ) := by
+  rw [rd_factor _ _ _ h, div_mul_eq_div_div, mul_one_div]
+
+#print axioms rd_factor
+#print axioms one_sub_norm_le
+#print axioms worst_case_aux
+#print axioms stab_forward
+#print axioms stab_backward
+#print axioms perf_eq
+
+/-- Robust performance holds exactly when the sum test passes at every frequency.
+At each angular frequency `ω`, `L ω` is the model's loop gain, `W ω` the envelope and `W_P ω` the
+performance weight; `S = 1/(1 + L)` and `T = L/(1 + L)`. A plant in the family has loop gain
+`L (1 + W Δ)` with `|Δ| ≤ 1`, and the worst `Δ` may differ from frequency to frequency.
+Every such plant keeps its return difference `1 + L (1 + W Δ)` away from zero and keeps its own
+performance term `|W_P S_J| = |W_P / (1 + L (1 + W Δ))|` under 1 at every frequency
+if and only if `|W_P S| + |W T| < 1` at every frequency. -/
+theorem robust_performance_iff_sum_lt_one (L W W_P : ℝ → ℂ) (hL : ∀ ω, 1 + L ω ≠ 0) :
+    (∀ Δ : ℝ → ℂ, (∀ ω, ‖Δ ω‖ ≤ 1) → ∀ ω,
+        1 + L ω * (1 + W ω * Δ ω) ≠ 0 ∧ ‖W_P ω / (1 + L ω * (1 + W ω * Δ ω))‖ < 1) ↔
+      ∀ ω, ‖W_P ω * (1 / (1 + L ω))‖ + ‖W ω * (L ω / (1 + L ω))‖ < 1 := by
+  constructor
+  · intro h ω
+    have hT := stab_forward L W hL (fun Δ hΔ ω => (h Δ hΔ ω).1) ω
+    obtain ⟨Δ0, hΔ0, heq⟩ := (worst_case_aux (W_P ω * (1 / (1 + L ω))) _ hT).1
+    have h2 := (h (fun _ => Δ0) (fun _ => hΔ0) ω).2
+    rw [perf_eq _ _ _ _ (hL ω), ← heq] at h2
+    have hpos : 0 < 1 - ‖W ω * (L ω / (1 + L ω))‖ := by linarith
+    rw [div_lt_one hpos] at h2
+    linarith
+  · intro h Δ hΔ ω
+    have hb : ‖W ω * (L ω / (1 + L ω))‖ < 1 := by
+      linarith [norm_nonneg (W_P ω * (1 / (1 + L ω))), h ω]
+    refine ⟨stab_backward L W hL (fun ω' => by
+      linarith [norm_nonneg (W_P ω' * (1 / (1 + L ω'))), h ω']) Δ hΔ ω, ?_⟩
+    rw [perf_eq _ _ _ _ (hL ω)]
+    have h1 := (worst_case_aux (W_P ω * (1 / (1 + L ω))) _ hb).2 ⟨Δ ω, hΔ ω, rfl⟩
+    have hpos : 0 < 1 - ‖W ω * (L ω / (1 + L ω))‖ := by linarith
+    have h2 : ‖W_P ω * (1 / (1 + L ω))‖ / (1 - ‖W ω * (L ω / (1 + L ω))‖) < 1 := by
+      rw [div_lt_one hpos]
+      linarith [h ω]
+    exact lt_of_le_of_lt h1 h2
+
+/-- Robust stability, frequency by frequency: no plant in the envelope's family puts a zero of the
+return difference `1 + L (1 + W Δ)` on the imaginary axis (so no closed-loop pole can cross it)
+if and only if `|W T| < 1` at every frequency, where `T = L/(1 + L)`. -/
+theorem robust_stability_iff_WT_lt_one (L W : ℝ → ℂ) (hL : ∀ ω, 1 + L ω ≠ 0) :
+    (∀ Δ : ℝ → ℂ, (∀ ω, ‖Δ ω‖ ≤ 1) → ∀ ω, 1 + L ω * (1 + W ω * Δ ω) ≠ 0) ↔
+      ∀ ω, ‖W ω * (L ω / (1 + L ω))‖ < 1 := by
+  exact ⟨fun h => stab_forward L W hL h, fun h => stab_backward L W hL h⟩
+
+/-- The worst plant at one frequency: with `a = W_P S` and `b = W T` and `|b| < 1`, the largest
+value of `|a / (1 + b Δ)|` over all `|Δ| ≤ 1` is exactly `|a| / (1 - |b|)`, and some `Δ` of size
+at most 1 reaches it. -/
+theorem worst_case_performance_term (a b : ℂ) (hb : ‖b‖ < 1) :
+    IsGreatest {x : ℝ | ∃ Δ : ℂ, ‖Δ‖ ≤ 1 ∧ x = ‖a / (1 + b * Δ)‖} (‖a‖ / (1 - ‖b‖)) := by
+  exact worst_case_aux a b hb
+
+-- Worked numbers, exact. Empty belt J0 = 1/5, b = 2/5, tau = 1/50, Kp = 3, Ki = 4.
+-- The plant's bottom (J0 s + b)(tau s + 1) at s = 10j is 2.08j = (52/25) j.
+example : ((1 / 5 : ℂ) * (10 * I) + 2 / 5) * (1 / 50 * (10 * I) + 1) = 52 / 25 * I := by
+  apply Complex.ext <;> simp <;> norm_num
+
+-- Hurwitz ratio (J + b tau)(b + Kp) / (J tau Ki) for the empty, half and full belts: 44.200, 43.633, 43.350.
+example : ((1 / 5 : ℚ) + 2 / 5 * (1 / 50)) * (2 / 5 + 3) / (1 / 5 * (1 / 50) * 4) = 221 / 5 := by
+  norm_num
+example : ((3 / 10 : ℚ) + 2 / 5 * (1 / 50)) * (2 / 5 + 3) / (3 / 10 * (1 / 50) * 4) = 1309 / 30 := by
+  norm_num
+example : ((2 / 5 : ℚ) + 2 / 5 * (1 / 50)) * (2 / 5 + 3) / (2 / 5 * (1 / 50) * 4) = 867 / 20 := by
+  norm_num
+example : (1 : ℚ) < 867 / 20 := by norm_num
+
+-- Saturation: Kp = 3 N m per rad/s; a 10 rad/s step asks 30 N m (over a 20 N m drive), a 5 rad/s step 15 N m.
+example : 3 * 10 = 30 ∧ 20 < 3 * 10 ∧ 3 * 5 = 15 ∧ 3 * 5 ≤ 20 := by decide
+
+#print axioms robust_performance_iff_sum_lt_one
+#print axioms robust_stability_iff_WT_lt_one
+#print axioms worst_case_performance_term
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'rd_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'one_sub_norm_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'worst_case_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stab_forward' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stab_backward' depends on axioms: [propext, Classical.choice, Quot.sound]
+'perf_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'robust_performance_iff_sum_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'robust_stability_iff_WT_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'worst_case_performance_term' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]

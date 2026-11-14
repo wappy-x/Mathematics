@@ -6,11 +6,15 @@
 
 ## General Overview
 
-A domestic central-heating loop: a boiler, a pump, copper pipes and radiators. The pump drives hot water at 70 °C round the loop at 0.25 litres per second. The main flow pipe has a 22 mm bore. Where it reduces to 15 mm, a reducing fitting narrows the bore over 20 mm of length. A gauge on the 22 mm pipe reads 1.5 bar above the air outside: 150,000 Pa. The card takes 22 and 15 mm as the bores, for round numbers. Real copper pipe is sized by its outside, so its bores are 20.2 and 13.6 mm; with those the speeds are 0.780 and 1.721 m/s and the drop is 1,150.4 Pa, 1.50 times the 767.0 Pa worked here. The method is the same.
+A domestic central-heating loop: a boiler, a pump, copper pipes and radiators. The pump drives hot water at 70 °C round the loop at 0.25 litres per second. The main flow pipe has a 22 mm bore. Where it reduces to 15 mm, a reducing fitting narrows the bore over 20 mm of length. A gauge on the 22 mm pipe reads 1.5 bar above the air outside: 150,000 Pa.
+
+The card takes 22 and 15 mm as the bores, for round numbers. Real copper pipe is sized by its outside, so its bores are 20.2 and 13.6 mm. With those the speeds are 0.780 and 1.721 m/s and the drop is 1,150.4 Pa, 1.50 times the 767.0 Pa worked here. The method is the same.
 
 An engineer wants two numbers for the 15 mm pipe. How fast does the water run there? And what does the pressure do as it squeezes through?
 
-Two rules answer both. First, water does not pile up or vanish, so every second 0.25 litres leaves the narrow end because 0.25 litres entered the wide end. A smaller hole means faster water: 0.658 m/s becomes 1.415 m/s. Second, speeding water up takes a push, and inside a pipe the only push along the flow is a pressure difference. So the pressure must be lower ahead of the water than behind it. It falls by 767 Pa, to 149,233 Pa. That is the weight of an 8.0 cm column of water: small, but it is the same effect that runs a venturi flow meter or an aircraft's airspeed gauge.
+Two rules answer both. First, water does not pile up or vanish, so every second 0.25 litres leaves the narrow end because 0.25 litres entered the wide end. A smaller hole means faster water: 0.658 m/s becomes 1.415 m/s.
+
+Second, speeding water up takes a push, and inside a pipe the only push along the flow is a pressure difference. So the pressure must be lower ahead of the water than behind it. It falls by 767 Pa, to 149,233 Pa. That is the weight of an 8.0 cm column of water: small, but it is the same effect that runs a venturi flow meter or an aircraft's airspeed gauge.
 
 <p align="center"><img src="../figures/continuity-and-bernoulli.svg" alt="To scale: a 22 mm bore narrowing to 15 mm over a 20 mm taper, with mean speed arrows of 0.658 m/s and 1.415 m/s and gauge pressures of 150,000 Pa and 149,233 Pa" width="420"></p>
 
@@ -24,7 +28,7 @@ To scale: 10 units per millimetre of pipe; speed arrows 100 units per m/s. The w
 
 ## The formula
 
-Notation first, in words. Subscript 1 marks the wide pipe and subscript 2 the narrow one. $A$ is a cross-section's area, $v$ the water's mean speed through it, $p$ its pressure, $z$ its height, $\rho$ (say "rho") the water's density and $g$ the acceleration of gravity.
+Notation first, in words. Subscript 1 marks the wide pipe and subscript 2 the narrow one. $A$ is a cross-section's area, $v$ the water's mean speed through it, $p$ its pressure, $z$ its height, $\rho$ (say "rho") the water's density and $g$ the acceleration of gravity. A streamline is the path one parcel of water follows in steady flow, that is, flow that does not change with time.
 
 $$A_1 v_1 = A_2 v_2 = Q \qquad\qquad p_1 + \tfrac12\rho v_1^2 + \rho g z_1 \;=\; p_2 + \tfrac12\rho v_2^2 + \rho g z_2$$
 
@@ -75,7 +79,7 @@ Here $v_1$ and $v_2$ are mean speeds, since the integral over a section is its a
 
 ### Step 2: Newton's law for a fluid, along one streamline
 
-A **streamline** is the path a parcel of water follows in steady flow. Per cubic metre, Newton's law reads mass times acceleration equals the forces. The mass is $\rho$. The forces are the pressure pushing from high to low, $-\nabla p$, and gravity, $-\rho g$ in the upward direction. This is **Euler's equation**, Newton's law for a fluid without friction.
+A **streamline** is the path a parcel of water follows in steady flow. Per cubic metre, Newton's law reads mass times acceleration equals the forces. The mass is $\rho$. The forces are the pressure pushing from high to low, $-\nabla p$, and gravity. Here $\nabla p$, the [Gradient](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md) of pressure, points the way pressure rises fastest, and its size is that rate in Pa per metre. Gravity is $-\rho g$ in the upward direction. This is **Euler's equation**, Newton's law for a fluid without friction.
 
 Take the part of it along the streamline, with $s$ the distance travelled. A parcel at speed $v$ that gains $dv$ over a distance $ds$ has acceleration $v\,dv/ds$, because it covers $ds$ in time $ds/v$. So
 
@@ -86,13 +90,13 @@ At the taper, a parcel's acceleration peaks at 75.32 m/s^2, and it crosses in 21
 <details>
 <summary>Detailed step: the along-streamline part of Euler's equation</summary>
 
-For steady flow the acceleration of a parcel is $(v\cdot\nabla)v$. A vector identity rewrites it as $\nabla(\tfrac12|v|^2) - v\times\operatorname{curl} v$. The second term is at right angles to $v$, so it has no part along the streamline; it only bends the path. The part of $\nabla(\tfrac12|v|^2)$ along the streamline is $d(\tfrac12 v^2)/ds = v\,dv/ds$. The same projection of $-\nabla p - \rho g\,\hat z$ gives $-dp/ds - \rho g\,dz/ds$. If the curl is zero everywhere, the cross term vanishes in every direction and the Bernoulli constant is the same on every streamline, not only along one.
+For steady flow the acceleration of a parcel is $(v\cdot\nabla)v$. A vector identity rewrites it as $\nabla(\tfrac12|v|^2) - v\times\operatorname{curl} v$. The second term is at right angles to $v$, so it has no part along the streamline; it only bends the path. The part of $\nabla(\tfrac12|v|^2)$ along the streamline is $d(\tfrac12 v^2)/ds = v\,dv/ds$. The same projection of $-\nabla p - \rho g\,\hat z$ gives $-dp/ds - \rho g\,dz/ds$. The curl of $v$ measures how fast the water spins about a point. If the curl is zero everywhere, the cross term vanishes in every direction and the Bernoulli constant is the same on every streamline, not only along one.
 
 </details>
 
 ### Step 3: add up along the streamline
 
-The left side is $d(\tfrac12\rho v^2)/ds$, since $\rho$ is fixed. Every term is now a rate of change along $s$. Integrate from section 1 to section 2. The integral of a rate of change along a path is the change between its ends, whatever the path's shape; for $\nabla p$ this is the line integral of a gradient ([Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md)). So
+The left side is $d(\tfrac12\rho v^2)/ds$, since $\rho$ is fixed. Every term is now a rate of change along $s$. Integrate from section 1 to section 2. The integral of a rate of change along a path is the change between its ends, whatever the path's shape. For $\nabla p$ this is the line integral of a gradient ([Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md)). So
 
 $$\tfrac12\rho v_2^2 - \tfrac12\rho v_1^2 = -(p_2 - p_1) - \rho g (z_2 - z_1),$$
 
@@ -127,7 +131,7 @@ Water at 70 °C, $\rho$ = 977.764 kg/m^3, $Q$ = 0.25 L/s, $p_1$ = 150,000 Pa, pi
 | pressure drop | $978.45 - 211.45$ | 767.0 Pa |
 | **pressure in 15 mm** | $150{,}000 - 767.0$ | **149,233 Pa** |
 
-The water leaves the fitting at 1.415 m/s, a little over twice its speed in the main, and its pressure is 767 Pa lower: 8.0 cm of water, small beside the 150,000 Pa on the gauge.
+The water leaves the fitting at 1.415 m/s, a little over twice its speed in the main. Its pressure is 767 Pa lower: 8.0 cm of water, small beside the 150,000 Pa on the gauge.
 
 ### What breaks if you drop a piece
 
@@ -157,7 +161,14 @@ One line: the pressure drop below $p_1$ at each point of the smooth taper, from 
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the 767.0 Pa drop by three roads and run it backwards on a fourth. Road 1 is continuity plus Bernoulli in closed form. Road 2 never uses Bernoulli: it applies Newton's law to thin slices of the taper, $dp/dx = -\rho v\,dv/dx$, with $dv/dx$ taken from the slope of the wall, and adds the slices by Simpson's rule, for two different taper shapes. Road 3 follows one parcel of water through the taper in time, stepping its position with the fourth-order Runge–Kutta method (RK4), and adds up mass times its own acceleration times each step moved. Road 4 runs the venturi-meter formula backwards and recovers the 0.25 L/s from the drop. Continuity gets a check of its own: the parcel's transit time, 21.89 ms, matches the taper's volume divided by the flow, 21.889 ms; the gap is less than one time step. A separate momentum balance gives the sudden-widening number and checks the Borda–Carnot loss.
+The scripts reach the 767.0 Pa drop by three roads and run it backwards on a fourth.
+
+- Road 1 is continuity plus Bernoulli in closed form.
+- Road 2 never uses Bernoulli: it applies Newton's law to thin slices of the taper, $dp/dx = -\rho v\,dv/dx$, with $dv/dx$ taken from the slope of the wall, and adds the slices by Simpson's rule, for two different taper shapes. Simpson's rule is a weighted sum that fits a parabola through each pair of slices: [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md).
+- Road 3 follows one parcel of water through the taper in time, stepping its position with the fourth-order Runge–Kutta method (RK4), and adds up mass times its own acceleration times each step moved. RK4 samples the speed four times per step and takes a weighted average: [Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md).
+- Road 4 runs the venturi-meter formula backwards and recovers the 0.25 L/s from the drop.
+
+Continuity gets a check of its own: the parcel's transit time, 21.89 ms, matches the taper's volume divided by the flow, 21.889 ms; the gap is less than one time step. A separate momentum balance gives the sudden-widening number and checks the Borda–Carnot loss.
 
 ### Python
 
@@ -531,6 +542,123 @@ ALL CHECKS PASS
 
 The two outputs agree line for line.
 
+### Lean
+
+Lean proves Bernoulli's equation from Euler's equation, the narrow-pipe result and the Borda–Carnot loss, for all values meeting each bullet's conditions.
+
+- Suppose speed, pressure and height change without jumps or corners along a streamline, and Euler's equation holds at every point between two ends. Then $p + \tfrac12\rho v^2 + \rho g z$ is the same at both ends. Lean takes Euler's equation as given; it does not derive it from Newton's law.
+- Suppose water flows forward through a level pipe that narrows, with the same volume each second and Bernoulli's equation between both sections. Then the water in the narrow section is faster and its pressure is lower: $v_2 > v_1$ and $p_2 < p_1$.
+- Take a density $\rho \ge 0$ and any speeds $v_1$ and $v_2$ either side of a sudden widening. Then Bernoulli's rise minus the momentum rise is exactly $\tfrac12\rho(v_2 - v_1)^2$, which is never negative.
+
+Every number on the card, such as the 767.0 Pa drop and the 486.8 Pa recovery, is left to the Python and Rust checks.
+
+```lean
+-- Continuity and Bernoulli: integrating Euler's equation along a streamline gives Bernoulli's equation, equal flow through a narrower section means faster water at lower pressure, and a sudden widening loses exactly half rho times the speed change squared.
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Calculus.Deriv.Pow
+import Mathlib.Analysis.Calculus.MeanValue
+import Mathlib.Analysis.Calculus.Deriv.MeanValue
+import Mathlib.Order.Interval.Set.UnorderedInterval
+
+open Set
+
+/-- Helper: the Bernoulli sum is the same at both ends of an ordered stretch `a < b`. -/
+theorem bernoulli_helper (ρ g a b : ℝ) (v p z : ℝ → ℝ) (hab : a < b)
+    (hv : ContinuousOn v (Icc a b)) (hp : ContinuousOn p (Icc a b))
+    (hz : ContinuousOn z (Icc a b))
+    (hv' : ∀ s ∈ Ioo a b, DifferentiableAt ℝ v s)
+    (hp' : ∀ s ∈ Ioo a b, DifferentiableAt ℝ p s)
+    (hz' : ∀ s ∈ Ioo a b, DifferentiableAt ℝ z s)
+    (euler : ∀ s ∈ Ioo a b, ρ * v s * deriv v s = -deriv p s - ρ * g * deriv z s) :
+    p a + 1 / 2 * ρ * v a ^ 2 + ρ * g * z a = p b + 1 / 2 * ρ * v b ^ 2 + ρ * g * z b := by
+  set F : ℝ → ℝ := fun s => p s + 1 / 2 * ρ * v s ^ 2 + ρ * g * z s with hF
+  have hFc : ContinuousOn F (Icc a b) := by
+    have h2 : ContinuousOn (fun s => 1 / 2 * ρ * v s ^ 2) (Icc a b) :=
+      continuousOn_const.mul (hv.pow 2)
+    have h3 : ContinuousOn (fun s => ρ * g * z s) (Icc a b) := continuousOn_const.mul hz
+    exact (hp.add h2).add h3
+  have hFd : ∀ s ∈ Ioo a b, HasDerivAt F
+      (deriv p s + 1 / 2 * ρ * (2 * v s * deriv v s) + ρ * g * deriv z s) s := by
+    intro s hs
+    have h1 := (hp' s hs).hasDerivAt
+    have h2 := ((hv' s hs).hasDerivAt.pow 2).const_mul (1 / 2 * ρ)
+    have h3 := (hz' s hs).hasDerivAt.const_mul (ρ * g)
+    have := (h1.add h2).add h3
+    convert this using 1
+    · push_cast; ring
+  obtain ⟨c, hc, hc'⟩ := exists_hasDerivAt_eq_slope F _ hab hFc hFd
+  have h0 : deriv p c + 1 / 2 * ρ * (2 * v c * deriv v c) + ρ * g * deriv z c = 0 := by
+    have := euler c hc
+    linarith
+  rw [h0, eq_comm, div_eq_zero_iff] at hc'
+  rcases hc' with h | h
+  · simp only [hF] at h; linarith
+  · exact absurd h (sub_ne_zero.mpr hab.ne')
+
+#print axioms bernoulli_helper
+
+/-- Bernoulli's equation along a streamline.  Let `s` be distance along the streamline, and
+let the speed `v s`, pressure `p s` and height `z s` be continuous on the stretch between
+`s₁` and `s₂` and differentiable inside it.  If the fluid has fixed density `ρ` (it does not
+compress) and Euler's equation for flow without friction holds along the streamline,
+`ρ v dv/ds = -dp/ds - ρ g dz/ds`, then pressure plus kinetic energy per cubic metre plus
+height energy per cubic metre is the same at both ends. -/
+theorem bernoulli_along_streamline (ρ g s₁ s₂ : ℝ) (v p z : ℝ → ℝ)
+    (hv : ContinuousOn v (uIcc s₁ s₂)) (hp : ContinuousOn p (uIcc s₁ s₂))
+    (hz : ContinuousOn z (uIcc s₁ s₂))
+    (hv' : ∀ s ∈ uIoo s₁ s₂, DifferentiableAt ℝ v s)
+    (hp' : ∀ s ∈ uIoo s₁ s₂, DifferentiableAt ℝ p s)
+    (hz' : ∀ s ∈ uIoo s₁ s₂, DifferentiableAt ℝ z s)
+    (euler : ∀ s ∈ uIoo s₁ s₂, ρ * v s * deriv v s = -deriv p s - ρ * g * deriv z s) :
+    p s₁ + 1 / 2 * ρ * v s₁ ^ 2 + ρ * g * z s₁ = p s₂ + 1 / 2 * ρ * v s₂ ^ 2 + ρ * g * z s₂ := by
+  rcases lt_trichotomy s₁ s₂ with h | h | h
+  · rw [uIcc_of_le h.le] at hv hp hz
+    rw [uIoo_of_lt h] at hv' hp' hz' euler
+    exact bernoulli_helper ρ g s₁ s₂ v p z h hv hp hz hv' hp' hz' euler
+  · subst h; rfl
+  · rw [uIcc_of_ge h.le] at hv hp hz
+    rw [uIoo_of_gt h] at hv' hp' hz' euler
+    exact (bernoulli_helper ρ g s₂ s₁ v p z h hv hp hz hv' hp' hz' euler).symm
+
+/-- A narrower pipe carries faster water, and faster water sits at lower pressure.  In a level
+pipe (`z₁ = z₂`), if the same volume crosses both sections each second (`A₁ v₁ = A₂ v₂`), the
+second section is narrower (`0 < A₂ < A₁`), the water moves forward (`0 < v₁`), the density is
+positive and Bernoulli's equation holds between the sections, then the water in the narrow
+section is faster and its pressure is lower. -/
+theorem narrower_pipe_faster_lower_pressure (ρ g A₁ A₂ v₁ v₂ p₁ p₂ z₁ z₂ : ℝ)
+    (hρ : 0 < ρ) (hA₂ : 0 < A₂) (hA : A₂ < A₁) (hv₁ : 0 < v₁) (hlevel : z₁ = z₂)
+    (continuity : A₁ * v₁ = A₂ * v₂)
+    (bernoulli : p₁ + 1 / 2 * ρ * v₁ ^ 2 + ρ * g * z₁ = p₂ + 1 / 2 * ρ * v₂ ^ 2 + ρ * g * z₂) :
+    v₁ < v₂ ∧ p₂ < p₁ := by
+  subst hlevel
+  have hv₂ : v₁ < v₂ := by nlinarith
+  refine ⟨hv₂, ?_⟩
+  have : v₁ ^ 2 < v₂ ^ 2 := by nlinarith
+  nlinarith
+
+/-- The Borda–Carnot loss at a sudden widening.  The pressure Bernoulli promises back,
+`½ρ(v₂² - v₁²)`, minus the pressure the momentum balance actually gives, `ρ v₁ (v₂ - v₁)`, is
+exactly `½ρ(v₂ - v₁)²`, which is never negative. -/
+theorem borda_carnot_loss (ρ v₁ v₂ : ℝ) :
+    1 / 2 * ρ * (v₂ ^ 2 - v₁ ^ 2) - ρ * v₁ * (v₂ - v₁) = 1 / 2 * ρ * (v₂ - v₁) ^ 2 ∧
+    (0 ≤ ρ → ρ * v₁ * (v₂ - v₁) ≤ 1 / 2 * ρ * (v₂ ^ 2 - v₁ ^ 2)) := by
+  refine ⟨by ring, fun h => ?_⟩
+  nlinarith [sq_nonneg (v₂ - v₁), mul_nonneg h (sq_nonneg (v₂ - v₁))]
+
+#print axioms bernoulli_along_streamline
+#print axioms narrower_pipe_faster_lower_pressure
+#print axioms borda_carnot_loss
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'bernoulli_helper' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bernoulli_along_streamline' depends on axioms: [propext, Classical.choice, Quot.sound]
+'narrower_pipe_faster_lower_pressure' depends on axioms: [propext, Classical.choice, Quot.sound]
+'borda_carnot_loss' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - Guess first: double the flow to `Q = 0.5e-3`. What happens to the drop? It becomes 3,068.0 Pa, four times 767.0 Pa, because both speeds double and the drop goes with their squares.
@@ -570,6 +698,7 @@ The two outputs agree line for line.
 
 - [Divergence and curl](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/03-divergence-and-curl.md): divergence as outflow per unit volume, which is zero for water and gives continuity; curl, whose vanishing makes the Bernoulli constant the same on every streamline.
 - [Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md): adding a field along a path; for a gradient the answer depends only on the ends, which is why Bernoulli ignores the taper's shape.
+- [Divergence theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/07-divergence-theorem.md): the outflow through a closed surface equals the divergence added up inside, which turns zero divergence into $A_1 v_1 = A_2 v_2$.
 
 ## Where this goes next
 

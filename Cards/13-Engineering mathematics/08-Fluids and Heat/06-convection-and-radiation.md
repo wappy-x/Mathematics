@@ -103,7 +103,11 @@ $$h \propto \frac{k}{L}\,\mathrm{Ra}^{1/4} \propto \left(\frac{T_s - T_\infty}{L
 
 Two things follow. A hotter panel drives faster air and a thinner film, so $h$ itself grows with the temperature difference, slowly. And a taller panel has a thicker film near its top, so each square metre does slightly worse.
 
-That exact solution gives Nu = 82.0 here, so $h$ = 3.73 W/(m² K). Real panels are not ideal plates, so engineers use fits to measurements, and Churchill and Chu published two. Their laminar-only fit, for Ra below 10⁹, gives Nu = 82.5 here, so $h$ = 3.75 W/(m² K): the measurements agree with the theory. Their all-range fit draws one curve through smooth and turbulent plates alike; it gives Nu = 107.1, so $h = 107.1 \times 0.0273 / 0.60$ = 4.87 W/(m² K). This card uses the all-range fit, which heat-transfer texts such as Bergman's give as suitable for most engineering calculations. Just below 10⁹, where this panel sits, it runs 30% above the laminar fit, because its one curve has to bend up to meet the turbulent data. With the laminar fit the panel would give 482.1 W, 62.7% of it radiation. That gap is a fair measure of the uncertainty in the convection half; the radiation half has no such doubt.
+That exact solution gives Nu = 82.0 here, so $h$ = 3.73 W/(m² K). Real panels are not ideal plates, so engineers use fits to measurements, and Churchill and Chu published two. Their laminar-only fit, for Ra below 10⁹, gives Nu = 82.5 here, so $h$ = 3.75 W/(m² K): the measurements agree with the theory.
+
+Their all-range fit draws one curve through smooth and turbulent (churning, eddying) plates alike; it gives Nu = 107.1, so $h = 107.1 \times 0.0273 / 0.60$ = 4.87 W/(m² K). This card uses the all-range fit, which heat-transfer texts such as Bergman's give as suitable for most engineering calculations.
+
+Just below 10⁹, where this panel sits, it runs 30% above the laminar fit, because its one curve has to bend up to meet the turbulent data. With the laminar fit the panel would give 482.1 W, 62.7% of it radiation. That gap is a fair measure of the uncertainty in the convection half; the radiation half has no such doubt.
 
 The same bend changes the height rule. The all-range curve grows faster than $\mathrm{Ra}^{1/4}$ well inside the smooth range, on its way to the turbulent law $\mathrm{Nu} \propto \mathrm{Ra}^{1/3}$, where height cancels out. So by the fit a 0.30 m panel has $h$ = 5.20 W/(m² K), not the 5.79 that the 1/4 power predicts from 4.87. That is the shape of the fitted curve, not a change in the flow: the smooth rise up a 0.30 m plate follows the 1/4 power.
 
@@ -128,7 +132,7 @@ Add it up over all wavelengths. Substitute $x = h_P c/(\lambda k_B T)$: every $\
 
 $$\int_0^\infty E_\lambda\,d\lambda = \frac{2\pi k_B^4 T^4}{h_P^3 c^2}\int_0^\infty \frac{x^3}{e^x - 1}\,dx = \frac{2\pi k_B^4 T^4}{h_P^3 c^2}\cdot\frac{\pi^4}{15}.$$
 
-So $\sigma = 2\pi^5 k_B^4/(15 h_P^3 c^2)$, built from three constants that the SI now fixes exactly. The code's second road does this sum numerically, wavelength by wavelength, from 0.1 μm to 10 mm, for both temperatures, and never uses $\sigma$ or a fourth power. It lands on 251.7673 W/m², the same as the formula to every printed digit. The same sum shows the spectrum's peak at 8.70 μm, as Wien's displacement law predicts.
+So $\sigma = 2\pi^5 k_B^4/(15 h_P^3 c^2)$, built from three constants that the SI now fixes exactly. The code's second road does this sum numerically, wavelength by wavelength, from 0.1 μm to 10 mm, for both temperatures, and never uses $\sigma$ or a fourth power. It lands on 251.7673 W/m², the same as the formula to every printed digit. The same sum shows the spectrum's peak at 8.70 μm, as Wien's displacement law predicts: the peak wavelength is a fixed constant divided by the absolute temperature.
 
 </details>
 
@@ -188,7 +192,11 @@ The air properties (ν, α, $k$) are read from a handbook table at 300 K and 350
 
 ## Code, from first principles, and it actually runs
 
-The code computes the panel's output from the convection fit and the radiation law. Road one is the formula. Road two checks the radiation half on its own: it adds up Planck's spectrum numerically, by Simpson's rule (a parabola through each three neighbouring samples) over 4,000 steps in the logarithm of wavelength, and never uses $\sigma$ or a fourth power. The convection half is a fitted formula and has no second road of its own. The code sets it beside the same authors' laminar-only fit and the smooth-flow theory, asserts that those two agree within 2%, and that the all-range fit's $h$ lies within 35% of the theory's. The Prandtl number worked out from the table's ν and α is checked against the table's own Prandtl column. A third calculation turns the balance round, solving by bisection for the surface temperature that sheds 535.9 W, and gets 60 °C back; that checks the solver, not the balance. The spectrum's peak is checked against Wien's constant from NIST. Every number on this card, including the chart and the mistakes, is printed.
+The code computes the panel's output from the convection fit and the radiation law. Road one is the formula. Road two checks the radiation half on its own: it adds up Planck's spectrum numerically, by Simpson's rule (a parabola through each three neighbouring samples) over 4,000 steps in the logarithm of wavelength, and never uses $\sigma$ or a fourth power.
+
+The convection half is a fitted formula and has no second road of its own. The code sets it beside the same authors' laminar-only fit and the smooth-flow theory, asserts that those two agree within 2%, and that the all-range fit's $h$ lies within 35% of the theory's. The Prandtl number worked out from the table's ν and α is checked against the table's own Prandtl column.
+
+A third calculation turns the balance round, solving by bisection for the surface temperature that sheds 535.9 W, and gets 60 °C back; that checks the solver, not the balance. The spectrum's peak is checked against Wien's constant from NIST. Every number on this card, including the chart and the mistakes, is printed.
 
 ### Python
 
@@ -584,6 +592,116 @@ chart, total W       104  167  233  304  378  455  536  620  707  797  890
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the facts of Steps 4 and 5 for any positive temperatures in kelvin, and checks the worked numbers.
+
+- Suppose $A$, $\varepsilon$, $\sigma$ and $T_\text{sur}$ are positive, $h \ge 0$, and air and walls are cooler than $T_s$. Then the radiation term equals $h_r(T_s - T_\text{sur})$ exactly, and $h_r$ and $Q$ are positive.
+- Suppose $\varepsilon$, $\sigma$ and $T_\text{sur}$ are positive, with $T_\text{sur}$ below $T_s$. Then the straight line at the wall temperature is below the one at the mean, and that is below the true $h_r$.
+- Suppose $\varepsilon$ and $\sigma$ are positive. Then the radiation term $\varepsilon\sigma(T_s^4 - T_\text{sur}^4)$ always rises as $T_s$ rises, from absolute zero up.
+- The surface leads the room by 40 K, the film temperature is 313.15 K, and the area is 1.2 m².
+- Step 4's factoring holds at 333.15 K and 293.15 K. In Celsius, $60^4 - 20^4$ is 12,800,000, far below the kelvin difference.
+
+The convection fit, the total's rise with $T_s$, the spectrum sum and the decimals are left to the Python and Rust checks.
+
+```lean
+-- Convection and radiation: the radiation loss εσ(Ts⁴ - Tsur⁴) is exactly a coefficient h_r = εσ(Ts + Tsur)(Ts² + Tsur²) times the temperature lead, so a warm panel's output is area times two coefficient-times-lead fluxes, and straightening the fourth power at the wall or mean temperature always comes out low.
+import Mathlib.Data.Real.Basic
+import Mathlib.Order.Monotone.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Positivity
+
+/-- Two routes in parallel, radiation in convection's shape. A surface of area `A > 0` at
+absolute temperature `Ts` leads the room air at `Tinf` and the walls at `Tsur > 0` (all in
+kelvin, `Tinf < Ts`, `Tsur < Ts`). It loses heat by convection with coefficient `h ≥ 0` and by
+radiation with emissivity `ε > 0` and Stefan–Boltzmann constant `σ > 0`, so its output is
+`Q = A [h (Ts - Tinf) + ε σ (Ts⁴ - Tsur⁴)]`. Then the radiation part is exactly a radiation
+coefficient `h_r = ε σ (Ts + Tsur)(Ts² + Tsur²)` times the lead over the walls, so
+`Q = A [h (Ts - Tinf) + h_r (Ts - Tsur)]`; that coefficient is positive, and the output is
+positive. -/
+theorem output_eq_area_times_convection_plus_radiation_coefficient
+    (A h ε σ Ts Tinf Tsur : ℝ) (hA : 0 < A) (hh : 0 ≤ h) (hε : 0 < ε) (hσ : 0 < σ)
+    (hTsur : 0 < Tsur) (hinf : Tinf < Ts) (hsur : Tsur < Ts) :
+    let hr := ε * σ * (Ts + Tsur) * (Ts ^ 2 + Tsur ^ 2)
+    let Q := A * (h * (Ts - Tinf) + ε * σ * (Ts ^ 4 - Tsur ^ 4))
+    Q = A * (h * (Ts - Tinf) + hr * (Ts - Tsur)) ∧ 0 < hr ∧ 0 < Q := by
+  intro hr Q
+  have hTs : 0 < Ts := lt_trans hTsur hsur
+  have heq : Q = A * (h * (Ts - Tinf) + hr * (Ts - Tsur)) := by
+    simp only [Q, hr]; ring
+  have hhr : 0 < hr := by simp only [hr]; positivity
+  refine ⟨heq, hhr, ?_⟩
+  rw [heq]
+  have h1 : 0 ≤ h * (Ts - Tinf) := mul_nonneg hh (by linarith)
+  have h2 : 0 < hr * (Ts - Tsur) := mul_pos hhr (by linarith)
+  exact mul_pos hA (by linarith)
+
+/-- Straightening the fourth power comes out low. For wall temperature `Tsur > 0` below the
+surface temperature `Ts`, with `ε > 0` and `σ > 0`, the straight line taken at the wall
+temperature, `4 ε σ Tsur³`, is below the one taken at the mean temperature
+`Tm = (Ts + Tsur)/2`, `4 ε σ Tm³`, and that is below the true radiation coefficient
+`h_r = ε σ (Ts + Tsur)(Ts² + Tsur²)`. -/
+theorem straightened_radiation_coefficient_lt_true
+    (ε σ Ts Tsur : ℝ) (hε : 0 < ε) (hσ : 0 < σ) (hTsur : 0 < Tsur) (hsur : Tsur < Ts) :
+    4 * ε * σ * Tsur ^ 3 < 4 * ε * σ * ((Ts + Tsur) / 2) ^ 3 ∧
+      4 * ε * σ * ((Ts + Tsur) / 2) ^ 3 < ε * σ * (Ts + Tsur) * (Ts ^ 2 + Tsur ^ 2) := by
+  have hTs : 0 < Ts := lt_trans hTsur hsur
+  have hes : 0 < ε * σ := mul_pos hε hσ
+  have hlt : Tsur < (Ts + Tsur) / 2 := by linarith
+  have hcube : Tsur ^ 3 < ((Ts + Tsur) / 2) ^ 3 :=
+    pow_lt_pow_left₀ hlt hTsur.le (by norm_num)
+  have hsum : 0 < Ts + Tsur := by linarith
+  have hsq : 0 < (Ts - Tsur) ^ 2 := by
+    have : Ts - Tsur ≠ 0 := by linarith
+    positivity
+  have key : 4 * ((Ts + Tsur) / 2) ^ 3 < (Ts + Tsur) * (Ts ^ 2 + Tsur ^ 2) := by
+    nlinarith [mul_pos hsum hsq]
+  constructor
+  · have := mul_lt_mul_of_pos_left hcube (mul_pos (by norm_num : (0:ℝ) < 4) hes)
+    linarith
+  · have := mul_lt_mul_of_pos_left key hes
+    linarith
+
+/-- The radiation loss only rises with the surface temperature. With `ε > 0` and `σ > 0`,
+the net radiation flux `ε σ (Ts⁴ - Tsur⁴)` is strictly increasing in the absolute surface
+temperature `Ts ≥ 0`; this is what lets bisection turn the balance round. -/
+theorem radiation_flux_strictMonoOn (ε σ Tsur : ℝ) (hε : 0 < ε) (hσ : 0 < σ) :
+    StrictMonoOn (fun Ts : ℝ => ε * σ * (Ts ^ 4 - Tsur ^ 4)) (Set.Ici 0) := by
+  intro a ha b hb hab
+  have ha' : (0 : ℝ) ≤ a := ha
+  have h4 : a ^ 4 < b ^ 4 := pow_lt_pow_left₀ hab ha' (by norm_num)
+  show ε * σ * (a ^ 4 - Tsur ^ 4) < ε * σ * (b ^ 4 - Tsur ^ 4)
+  exact mul_lt_mul_of_pos_left (by linarith) (mul_pos hε hσ)
+
+-- The card's whole-number steps, temperatures in hundredths of a kelvin.
+-- 60 °C = 333.15 K and 20 °C = 293.15 K: the surface leads the room by 40 K.
+example : (33315 : ℤ) - 29315 = 4000 := by norm_num
+-- Film temperature: (60 + 20)/2 + 273.15 = 313.15 K.
+example : ((60 : ℚ) + 20) / 2 + 27315 / 100 = 31315 / 100 := by norm_num
+-- Step 4's factoring of the fourth powers, at the card's own temperatures.
+example : (33315 : ℤ) ^ 4 - 29315 ^ 4
+    = (33315 - 29315) * (33315 + 29315) * (33315 ^ 2 + 29315 ^ 2) := by norm_num
+-- The Celsius mistake: 60⁴ - 20⁴ = 12,800,000, while in kelvin the difference is far larger.
+example : (60 : ℤ) ^ 4 - 20 ^ 4 = 12800000 := by norm_num
+example : (60 : ℤ) ^ 4 - 20 ^ 4 < ((33315 : ℤ) ^ 4 - 29315 ^ 4) / 100 ^ 4 := by norm_num
+-- Area of both faces: 2 × 0.60 m × 1.00 m = 1.2 m².
+example : (2 : ℚ) * (6 / 10) * 1 = 6 / 5 := by norm_num
+
+#print axioms output_eq_area_times_convection_plus_radiation_coefficient
+#print axioms straightened_radiation_coefficient_lt_true
+#print axioms radiation_flux_strictMonoOn
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'output_eq_area_times_convection_plus_radiation_coefficient' depends on axioms: [propext, Classical.choice, Quot.sound]
+'straightened_radiation_coefficient_lt_true' depends on axioms: [propext, Classical.choice, Quot.sound]
+'radiation_flux_strictMonoOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - Guess first: the panel is painted with metallic aluminium paint, emissivity about 0.30. Call `total(TS, 0.30)`. Output falls to 334.4 W: radiation drops by two thirds, convection is untouched.
@@ -624,7 +742,11 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [Fourier's law](05-heat-conduction-and-fouriers-law.md): conduction through a solid, which brings the heat from the water to the paint, and conduction through the still-air film, which is what convection really is at the surface. That card lumps the convection and radiation at a wall's face into one surface-film resistance. This card supplies it: the two coefficients act side by side, so they add, and for the panel the film resistance is $1/(h + h_r)$ = 0.0896 m² K/W. A wall face is a different case: on that card the inside face sits only 0.691 K below the room air. For a 2.5 m wall the same fit gives $h$ = 1.31 and $h_r$ = 5.12 W/(m² K), so $1/(h + h_r)$ = 0.1555 m² K/W, close to the design value of 0.13 used there. The panel's 0.0896 belongs to a hot surface and does not replace it. Radiation across the gap is also why an empty wall cavity leaks far more than still air's conductivity suggests.
+- [Fourier's law](05-heat-conduction-and-fouriers-law.md): conduction through a solid, which brings the heat from the water to the paint, and conduction through the still-air film, which is what convection really is at the surface.
+
+  That card lumps the convection and radiation at a wall's face into one surface-film resistance. This card supplies it: the two coefficients act side by side, so they add, and for the panel the film resistance is $1/(h + h_r)$ = 0.0896 m² K/W.
+
+  A wall face is a different case: on that card the inside face sits only 0.691 K below the room air. For a 2.5 m wall the same fit gives $h$ = 1.31 and $h_r$ = 5.12 W/(m² K), so $1/(h + h_r)$ = 0.1555 m² K/W, close to the design value of 0.13 used there. The panel's 0.0896 belongs to a hot surface and does not replace it. Radiation across the gap is also why an empty wall cavity leaks far more than still air's conductivity suggests.
 
 ## Where this goes next
 

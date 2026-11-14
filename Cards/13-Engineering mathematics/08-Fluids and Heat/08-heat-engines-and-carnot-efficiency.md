@@ -8,7 +8,11 @@
 
 A gas boiler heats the water in a central-heating loop to 90 °C. The pump sends it to the radiators, and the radiators give its heat to a room at 20 °C. Every kilowatt of heat drops 70 degrees on the way, and no work is taken from that drop.
 
-Two engineering questions sit on that drop. First: if an engine sat between the hot water and the room, how much of the heat could it turn into electricity? Second, run the other way: a heat pump (a machine that uses electricity to move heat from a cooler place to a warmer one) is sold as "scoring four", meaning 4 kW of heat for every 1 kW of electricity. This one is an exhaust-air heat pump: it draws its heat from the house's stale 20 °C air on its way out through the ventilation, heat that would otherwise be lost outdoors. Is four possible between these temperatures, and how close is it to the best possible?
+Two engineering questions sit on that drop. First: if an engine sat between the hot water and the room, how much of the heat could it turn into electricity?
+
+Second, run the other way. A heat pump (a machine that uses electricity to move heat from a cooler place to a warmer one) is sold as "scoring four", meaning 4 kW of heat for every 1 kW of electricity.
+
+This one is an exhaust-air heat pump: it draws its heat from the house's stale 20 °C air on its way out through the ventilation, heat that would otherwise be lost outdoors. Is four possible between these temperatures, and how close is it to the best possible?
 
 One limit answers both, and it depends on nothing but the two temperatures. Out of every 10 kW of heat leaving the 90 °C water, no engine of any design can deliver more than 1.9276 kW of work; at least 8.0724 kW must go on into the room. Run backwards, no heat pump can deliver more than 5.1879 kW of heat per kW of electricity. The pump scoring four sits at 0.7710 of that ceiling, below it as it must be.
 
@@ -78,7 +82,7 @@ Here is the escape hatch. Each joule dumped at the cold temperature carries more
 
 ### Step 1: energy balance over one lap
 
-After one full cycle the machine is back in its starting state, so its own energy is unchanged. The first law then says what went in came out:
+After one full cycle the machine is back in its starting state, so its own energy is unchanged. The first law (energy is conserved) then says what went in came out:
 
 $$W = Q_h - Q_c.$$
 
@@ -108,10 +112,14 @@ The pump limit is the reciprocal of the engine limit: $363.15/70 = 5.1879$, and 
 
 ### Step 5: the limit is the same for every machine, and a real cycle reaches it
 
-The bound came from two balances that hold for any machine, so it caps every design. It is also sharp: an ideal gas taken round Carnot's cycle (expand at $T_h$, expand further while insulated until it cools to $T_c$, compress at $T_c$, compress while insulated back to $T_h$) creates no entropy and lands exactly on it. The code runs that cycle with one mole of gas and adds up the work leg by leg: 2092.8866 J in from the hot side, 1689.4663 J out to the cold side, 403.4202 J of work, and $403.4202/2092.8866 = 0.1928$. A gas of a different kind, with $\gamma = 1.4$, gives 0.1928 again.
+The bound came from two balances that hold for any machine, so it caps every design. It is also sharp: an ideal gas taken round Carnot's cycle (expand at $T_h$, expand further while insulated until it cools to $T_c$, compress at $T_c$, compress while insulated back to $T_h$) creates no entropy and lands exactly on it.
+
+The code runs that cycle with one mole of gas and adds up the work leg by leg: 2092.8866 J in from the hot side, 1689.4663 J out to the cold side, 403.4202 J of work, and $403.4202/2092.8866 = 0.1928$. A gas of a different kind, with $\gamma = 1.4$, gives 0.1928 again.
 
 <details>
 <summary>Detailed proof: the gas cycle lands on the limit</summary>
+
+Number the cycle's four corners 1 to 4, in the order the gas visits them; $V_1$ to $V_4$ are the gas volumes there.
 
 On an isotherm (constant temperature) an ideal gas obeys $pV = nRT$, so its energy does not change and the heat it takes in equals the work it does: $\int p\,dV = nRT\ln(V_\text{end}/V_\text{start})$. On the hot leg that is $Q_h = nRT_h\ln(V_2/V_1)$; on the cold leg $Q_c = nRT_c\ln(V_3/V_4)$.
 
@@ -152,7 +160,9 @@ The 70-degree drop the radiators waste is worth at most 1.9276 kW of every 10 kW
 
 ### Placing the real pump below the limit
 
-The pump scoring four is legal: 4 is below 5.1879. Where does the rest of the gap go? Its refrigerant cannot be at 20 °C and 90 °C exactly, or no heat would flow into or out of it. Say each heat exchanger needs a 5 K difference: the refrigerant boils at 288.15 K and condenses at 368.15 K. Even a perfect inner cycle is then capped at $368.15/80 = 4.6019$. The pump reaches 0.8692 of that. The remaining loss is the compressor and the expansion valve, which create entropy as they work.
+The pump scoring four is legal: 4 is below 5.1879. Where does the rest of the gap go? Its refrigerant (the fluid the pump circulates to carry the heat) cannot be at 20 °C and 90 °C exactly, or no heat would flow into or out of it.
+
+Say each heat exchanger needs a 5 K difference: the refrigerant boils at 288.15 K and condenses at 368.15 K. Even a perfect inner cycle is then capped at $368.15/80 = 4.6019$. The pump reaches 0.8692 of that. The remaining loss is the compressor and the expansion valve, which create entropy as they work.
 
 Turn the question around. A pump scoring 4 that draws heat from 20 °C air can deliver it no hotter than $T_h = 4 \times 293.15/3 = 390.8667$ K, which is 117.7167 °C. Above that, a score of four is impossible for any machine.
 
@@ -166,7 +176,7 @@ xychart-beta
     line [4.00, 4.00, 4.00, 4.00, 4.00, 4.00, 4.00, 4.00, 4.00]
 ```
 
-The falling curve is the limit $T_h/(T_h - T_c)$. The flat line is the real pump's score of 4. The limit drops below the flat line between 110 °C and 120 °C. A cooler loop raises the ceiling fast: at 70 °C it is 6.86, which is why heat pumps are paired with low flow temperatures.
+The falling curve is the limit $T_h/(T_h - T_c)$. The flat line is the real pump's score of 4. The limit drops below the flat line between 110 °C and 120 °C. A cooler loop raises the ceiling fast: at 70 °C it is 6.86, which is why heat pumps are paired with low flow temperatures (the temperature of the water sent to the radiators).
 
 ### What breaks if you drop a piece
 
@@ -183,7 +193,7 @@ All four are printed by the checks.
 
 ## Code, from first principles, and it actually runs
 
-The code reaches the engine limit by **three independent roads**. Road 1 is the formula. Road 2 simulates one mole of ideal gas going round Carnot's cycle, adding up $p\,dV$ on each of the four legs with Simpson's rule (a way of adding thin slices under a curve), and never uses $1 - T_c/T_h$; its hot and cold legs are also checked against the closed form $nRT\ln 2$. Road 3 uses only entropy bookkeeping: it searches by bisection (halving an interval again and again) for the largest work that keeps the total entropy change from going negative. The heat-pump limit is checked against the gas cycle's $Q_h/W$, which the same cycle run backwards shares. The cooling tank is done in closed form and by stepping through 70,000 slices of the tank's temperature.
+The code reaches the engine limit by **three independent roads**. Road 1 is the formula. Road 2 simulates one mole of ideal gas going round Carnot's cycle. It adds up $p\,dV$ on each of the four legs with Simpson's rule (a way of adding thin slices under a curve), and never uses $1 - T_c/T_h$. Its hot and cold legs are also checked against the closed form $nRT\ln 2$. Road 3 uses only entropy bookkeeping: it searches by bisection (halving an interval again and again) for the largest work that keeps the total entropy change from going negative. The heat-pump limit is checked against the gas cycle's $Q_h/W$, which the same cycle run backwards shares. The cooling tank is done in closed form and by stepping through 70,000 slices of the tank's temperature.
 
 ### Python
 
@@ -528,6 +538,136 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line.
 
+### Lean
+
+Lean proves the engine limit, when it is reached, and the heat-pump limit, for any kelvin temperatures, and checks the worked numbers.
+
+- Suppose $W = Q_h - Q_c$, $\Delta S \ge 0$, and $Q_h$, $T_h$, $T_c$ are positive. Then $\eta = W/Q_h \le 1 - T_c/T_h$.
+- Keep $W = Q_h - Q_c$ and the same positive values. Then $\eta = 1 - T_c/T_h$ exactly when $\Delta S = 0$: a reversible machine.
+- Suppose $Q_h = W + Q_c$, $\Delta S \ge 0$, $Q_h > 0$ and $0 < T_c < T_h$. Then $\mathrm{COP} = Q_h/W \le T_h/(T_h - T_c)$.
+- For the card's boiler and room, the engine limit is 70/363.15 and the pump limit is 363.15/70, above the score of 4.
+- With 5 K exchanger gaps the limit, 368.15/80, is still above 4. Delivering at $4 \times 293.15/3$ K brings the limit down to exactly 4.
+- The fridge limit is one less than the heating limit. The Celsius mistakes give $1 - 20/90 = 7/9$ and $90/70 = 9/7$.
+
+The gas cycle, the entropy bisection, the cooling tank and the decimal values are left to the Python and Rust checks.
+
+```lean
+-- Heat engines: from the energy balance and the entropy balance over one cycle, an engine's efficiency is at most one minus cold over hot, with equality exactly when no entropy is created, and a heat pump's score is at most hot over the gap.
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+/-- Carnot's engine limit. Two reservoirs at fixed absolute temperatures
+`Th` and `Tc` (kelvin, so both positive). A machine running in a cycle takes
+heat `Qh > 0` from the hot side, hands heat `Qc` to the cold side and gives out
+work `W`. Over one lap the first law gives `W = Qh - Qc`, and the second law
+says the total entropy change `-Qh/Th + Qc/Tc` is not negative. Then the
+efficiency `W / Qh` is at most `1 - Tc/Th`. -/
+theorem carnot_efficiency_le (Th Tc Qh Qc W : ℝ)
+    (hTh : 0 < Th) (hTc : 0 < Tc) (hQh : 0 < Qh)
+    (energy : W = Qh - Qc)
+    (entropy : 0 ≤ -Qh / Th + Qc / Tc) :
+    W / Qh ≤ 1 - Tc / Th := by
+  have key : Qh * Tc ≤ Qc * Th := by
+    have h := mul_nonneg (mul_pos hTh hTc).le entropy
+    have e : Th * Tc * (-Qh / Th + Qc / Tc) = Qc * Th - Qh * Tc := by
+      field_simp; ring
+    linarith
+  subst energy
+  rw [div_le_iff₀ hQh]
+  have e2 : (1 - Tc / Th) * Qh = Qh - Qh * Tc / Th := by field_simp
+  rw [e2]
+  have : Qh * Tc / Th ≤ Qc := by rw [div_le_iff₀ hTh]; linarith
+  linarith
+
+/-- The engine reaches the limit exactly when it is reversible: under the same
+cycle and energy balance, the efficiency equals `1 - Tc/Th` if and only if the
+total entropy change `-Qh/Th + Qc/Tc` is zero. -/
+theorem carnot_efficiency_eq_iff_reversible (Th Tc Qh Qc W : ℝ)
+    (hTh : 0 < Th) (hTc : 0 < Tc) (hQh : 0 < Qh)
+    (energy : W = Qh - Qc) :
+    W / Qh = 1 - Tc / Th ↔ -Qh / Th + Qc / Tc = 0 := by
+  subst energy
+  have e : -Qh / Th + Qc / Tc = (Qc * Th - Qh * Tc) / (Th * Tc) := by
+    field_simp; ring
+  have e2 : (Qh - Qc) / Qh - (1 - Tc / Th) = (Qh * Tc - Qc * Th) / (Qh * Th) := by
+    field_simp; ring
+  rw [e, ← sub_eq_zero, e2, div_eq_zero_iff, div_eq_zero_iff]
+  constructor
+  · rintro (h | h)
+    · left; linarith
+    · exfalso; exact (mul_pos hQh hTh).ne' h
+  · rintro (h | h)
+    · left; linarith
+    · exfalso; exact (mul_pos hTh hTc).ne' h
+
+/-- Carnot's heat-pump limit. The engine run backwards between a cold
+reservoir at `Tc` and a hotter one at `Th` (kelvin, `0 < Tc < Th`): work `W`
+goes in, heat `Qc` is pulled from the cold side and heat `Qh > 0` is delivered
+to the hot side. Energy: `Qh = W + Qc`. Entropy: the cold side loses `Qc/Tc`,
+the hot side gains `Qh/Th`, and the total cannot fall. Then the score
+`COP = Qh / W` is at most `Th / (Th - Tc)`. -/
+theorem heat_pump_cop_le (Th Tc Qh Qc W : ℝ)
+    (hTc : 0 < Tc) (hcold : Tc < Th) (hQh : 0 < Qh)
+    (energy : Qh = W + Qc)
+    (entropy : 0 ≤ -Qc / Tc + Qh / Th) :
+    Qh / W ≤ Th / (Th - Tc) := by
+  have hTh : 0 < Th := by linarith
+  have hd : 0 < Th - Tc := by linarith
+  have key : Qc * Th ≤ Qh * Tc := by
+    have h := mul_nonneg (mul_pos hTh hTc).le entropy
+    have e : Th * Tc * (-Qc / Tc + Qh / Th) = Qh * Tc - Qc * Th := by
+      field_simp; ring
+    linarith
+  have hW : Qh * (Th - Tc) ≤ W * Th := by
+    have : W = Qh - Qc := by linarith
+    subst this; nlinarith
+  have hWpos : 0 < W := by
+    have := mul_pos hQh hd
+    by_contra hneg
+    have hneg' := not_lt.mp hneg
+    nlinarith
+  rw [div_le_div_iff₀ hWpos hd]
+  linarith
+
+-- The card's boiler: 90 °C = 36315/100 K and room 20 °C = 29315/100 K.
+-- Engine limit 1 - 293.15/363.15 = 70/363.15, written as exact fractions.
+example : (1 : ℝ) - (29315 / 100) / (36315 / 100) = 7000 / 36315 := by norm_num
+
+-- Heat-pump limit 363.15/70, and the pump scoring 4 sits below it.
+example : (36315 / 100 : ℝ) / (36315 / 100 - 29315 / 100) = 36315 / 7000 := by norm_num
+example : (4 : ℝ) < (36315 / 100) / (36315 / 100 - 29315 / 100) := by norm_num
+
+-- With 5 K gaps at each heat exchanger, the limit 368.15/80 is still above 4.
+example : (4 : ℝ) < (36815 / 100) / (36815 / 100 - 28815 / 100) := by norm_num
+
+-- A score of 4 drawing from 293.15 K allows delivery up to Th = 4 * 293.15 / 3,
+-- where the limit Th/(Th - Tc) is exactly 4.
+example : (4 * (29315 / 100) / 3 : ℝ) / (4 * (29315 / 100) / 3 - 29315 / 100) = 4 := by
+  norm_num
+
+-- The fridge limit Tc/(Th - Tc) is one less than the heating limit.
+example : (36315 / 100 : ℝ) / 70 - (29315 / 100) / 70 = 1 := by norm_num
+
+-- The Celsius mistake: 1 - 20/90 = 7/9 and 90/70 = 9/7.
+example : (1 : ℝ) - 20 / 90 = 7 / 9 := by norm_num
+example : (90 : ℝ) / 70 = 9 / 7 := by norm_num
+
+#print axioms carnot_efficiency_le
+#print axioms carnot_efficiency_eq_iff_reversible
+#print axioms heat_pump_cop_le
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'carnot_efficiency_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'carnot_efficiency_eq_iff_reversible' depends on axioms: [propext, Classical.choice, Quot.sound]
+'heat_pump_cop_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - Guess first: does a cooler loop help the engine or the pump? Set `TH` to `70.0 + K0`. The engine limit falls to 0.1457 and the pump limit rises to 6.8630. Then the first assert, which still holds the hand arithmetic 70/363.15, stops the run. Cooler water is worse for making electricity and better for heat pumps.
@@ -553,7 +693,7 @@ The two outputs are identical line for line.
 
 - **Heat-pump sizing.** Installers lower the flow temperature and fit larger radiators, because the limit, and with it the real score, rises fast as the delivered water gets cooler.
 - **Combined heat and power at home.** Some boilers carry a small engine that makes electricity from the drop between the flame and the heating water. The same formula, with the flame as the hot side and the water as the cold side, bounds what it can ever make.
-- **Power stations.** The cooling towers are the cold side. At least $T_c/T_h$ of the steam's heat must leave there, by Step 2, however good the turbine: 0.3529 of it for 600 °C steam with a 35 °C condenser, and 0.5521 for a nuclear plant's 285 °C steam. Real plants reject more, because of their losses.
+- **Power stations.** The cooling towers are the cold side. At least $T_c/T_h$ of the steam's heat must leave there, by Step 2, however good the turbine: 0.3529 of it for 600 °C steam with a 35 °C condenser (where the spent steam is cooled back to water), and 0.5521 for a nuclear plant's 285 °C steam. Real plants reject more, because of their losses.
 - **Fridges and air conditioners.** The same machine pointed the other way. Their rating counts heat removed, so their limit is $T_c/(T_h - T_c)$.
 
 > **Say it back**

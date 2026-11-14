@@ -8,9 +8,11 @@
 
 A conveyor in a parcel depot is driven by one motor. A speed controller holds the belt at its set speed. It was tuned in the morning, when the belt was nearly empty: the roller, the belt and the parcels on it added up to an inertia of 0.20 kg·m² (inertia: how hard the load is to spin up). By the afternoon rush the belt is full and the inertia has doubled, to 0.40 kg·m².
 
-The controller is the same all day. The engineer wants one answer: will the speed loop stay stable at every load between empty and full, without testing each load on the real belt? A single number gives it here: 0.6288. It is below 1, so every load in that range is safe, and the error could be 1.59 times larger before the guarantee runs out.
+The controller is the same all day. The engineer wants one answer: will the speed loop stay stable at every load between empty and full, without testing each load on the real belt? A single number, the certificate, gives it here: 0.6288. It is below 1, so every load in that range is safe, and the error could be 1.59 times larger before the guarantee runs out.
 
-The method has two parts. First, write the model error down as a size at each frequency: here the full belt answers fast wobbles up to 50% differently from the model, and slow ones hardly differently at all. That curve is the **envelope**. Second, look at the loop from the error's point of view. The error sends a signal round the loop, and the loop hands part of it back. If what comes back is always smaller than what went out, at every frequency, the signal cannot build up. The loop is stable, whatever the error is inside its envelope.
+The method has two parts. First, write the model error down as a size at each frequency: here the full belt answers fast wobbles up to 50% differently from the model, and slow ones hardly differently at all. That curve is the **envelope**.
+
+Second, look at the loop from the error's point of view. The error sends a signal round the loop, and the loop hands part of it back. If what comes back is always smaller than what went out, at every frequency, the signal cannot build up. The loop is stable, whatever the error is inside its envelope.
 
 **Write the model error as an envelope, a percentage of the plant or an added lump, at every frequency; if the round trip from the error through the rest of the loop and back has a gain below 1 at every frequency, the loop stays stable for every error inside the envelope.**
 
@@ -63,7 +65,7 @@ which is 0 for a steady speed, 35.4% at 1 rad/s and 50% for fast wobbles. Every 
 | $P_0(s)$, $P(s)$ | the modelled and the true motor: torque command to belt speed, (rad/s) per N·m | $P_0 = 1/((0.2s + 0.4)(0.02s + 1))$ | — |
 | $J_0$, $J$, $k$ | modelled and true load inertia in kg·m²; the factor $k = J/J_0$ | 0.20, 0.40, $k$ = 2 | the error approaches $1 - 1/k$; certified up to $k$ = 4.87 |
 | $b$, $\tau_a$ | belt friction, N·m·s/rad; the drive's torque lag, s | 0.40 N·m·s/rad, 0.020 s | — |
-| $C(s)$, $K_p$, $K_i$ | the PI speed controller: N·m per rad/s of error, N·m per rad of built-up error | 10.0 and 50.0 | $\lVert WT\rVert_\infty$ rises: 0.8125 at double both |
+| $C(s)$, $K_p$, $K_i$ | the PI (proportional-integral) speed controller: N·m per rad/s of error, N·m per rad of built-up error | 10.0 and 50.0 | $\lVert WT\rVert_\infty$ rises: 0.8125 at double both |
 | $L$, $L_0$, $S$, $T$ | loop gain $P_0 C$, written $L_0$ beside the true loop gain; sensitivity $1/(1+L)$; complementary sensitivity $L/(1+L)$ | $\lVert T\rVert_\infty$ = 1.2582 at 35.58 rad/s, $\lVert S\rVert_\infty$ = 1.5344 at 55.75 rad/s | — |
 | $s$, $j$, $\omega$, $\omega^*$ | the Laplace variable; the square root of −1; angular frequency in rad/s; the frequency of the peak | $\omega^*$ = 35.60 rad/s | — |
 | $W(s)$, $\Delta$ | the percentage envelope; the unknown, any stable system whose gain never exceeds 1 | $0.5s/(s+1)$, up to 50% | the certificate number rises in proportion |
@@ -138,13 +140,17 @@ For the conveyor, $M\Delta = -WT\Delta$, and the internal stability of the nomin
 
 Suppose instead the peak reaches 1 at some $\omega^*$. Then an error of size 1 with exactly the right phase at $\omega^*$, $\Delta(j\omega^*) = 1/M(j\omega^*) = -1/(WT)(j\omega^*)$, makes $1 - M\Delta$ zero and puts the true loop gain $L_0(1 + W\Delta)$ on −1, and some stable $\Delta$ achieves it. So for "every error inside the envelope", the rule cannot be improved.
 
-A delay can take any phase, so it comes close to that worst case. The relative error of a delay $\theta$ is $e^{-j\omega\theta} - 1$. The small gain rule with that as envelope certifies up to 19.38 ms; the loop's true delay margin is 20.94 ms, at 39.50 rad/s.
+A delay can take any phase, so it comes close to that worst case. The relative error of a delay $\theta$ is $e^{-j\omega\theta} - 1$. The small gain rule with that as envelope certifies up to 19.38 ms; the loop's true delay margin, the largest delay it survives, is 20.94 ms, at 39.50 rad/s.
 
-A heavier load cannot choose its phase. At each frequency its error has one definite phase, set by the physics, and for this loop that phase never lines up the loop gain with −1. The rule, using only the error's size, certifies loads up to 4.87 times the morning inertia. Routh's test on the closed-loop polynomial $J\tau_a s^3 + (J + b\tau_a)s^2 + (b + K_p)s + K_i$ ([Routh-Hurwitz](../03-Feedback%20Control/04-routh-hurwitz-criterion.md)) shows the loop is stable for every load: its decisive term is $J(b + K_p - \tau_a K_i) = 9.4J$ plus a positive constant. The rule is sufficient, never necessary; the extra caution is what it charges for not knowing the error's phase.
+A heavier load cannot choose its phase. At each frequency its error has one definite phase, set by the physics, and for this loop that phase never lines up the loop gain with −1. The rule, using only the error's size, certifies loads up to 4.87 times the morning inertia.
+
+Routh's test on the closed-loop polynomial $J\tau_a s^3 + (J + b\tau_a)s^2 + (b + K_p)s + K_i$ ([Routh-Hurwitz](../03-Feedback%20Control/04-routh-hurwitz-criterion.md)) shows the loop is stable for every load: its decisive term is $J(b + K_p - \tau_a K_i) = 9.4J$ plus a positive constant. The rule is sufficient, never necessary; the extra caution is what it charges for not knowing the error's phase.
 
 ### Step 5: lump or percentage
 
-The two forms describe the same error when $W_A = P_0 W$: then $W_A C S = W P_0 C S = W T$, and the certificate is 0.6288 either way. They differ when the envelope is drawn crudely. A percentage suits errors that scale with the plant: inertia, a motor constant, a gain. A lump suits errors with a fixed size in physical units, such as an unmodelled resonance or a parallel leakage path. Bounding the inertia error by a flat lump of its peak size, 0.8330 (rad/s)/N·m at all frequencies, gives a certificate of 12.83: a failure, for a loop that is fine.
+The two forms describe the same error when $W_A = P_0 W$: then $W_A C S = W P_0 C S = W T$, and the certificate is 0.6288 either way.
+
+They differ when the envelope is drawn crudely. A percentage suits errors that scale with the plant: inertia, a motor constant, a gain. A lump suits errors with a fixed size in physical units, such as an unmodelled resonance or a parallel leakage path. Bounding the inertia error by a flat lump of its peak size, 0.8330 (rad/s)/N·m at all frequencies, gives a certificate of 12.83: a failure, for a loop that is fine.
 
 ---
 
@@ -182,7 +188,13 @@ Checked against the belt itself. With the full load, the rightmost closed-loop p
 
 ## Code, from first principles, and it actually runs
 
-The code reaches the verdict by three independent roads. Road 1 sweeps frequency, finds the peak of $\lvert WT\rvert$ by a coarse grid and then golden-section search (narrowing an interval by a fixed ratio each time), and also checks that the envelope covers 21 loads between 0.20 and 0.40 kg·m². Road 2 finds the closed-loop poles of the true belt at several loads, by Durand-Kerner iteration (an update that moves all of a polynomial's roots at once), with no frequency response at all. Road 3 simulates the loop with fourth-order Runge-Kutta (RK4) steps: a sine wave at the peak frequency measures $\lvert T\rvert$ in the time domain, and speed steps show both loads settle. For the delay, Newton's method finds the closed-loop pole of the delay equation (it contains $e^{-s\theta}$, so it is not a polynomial), confirming the delay margin and the 25 ms instability. Asserts compare the roads with each other.
+The code reaches the verdict by three independent roads.
+
+- Road 1 sweeps frequency, finds the peak of $\lvert WT\rvert$ by a coarse grid and then golden-section search (narrowing an interval by a fixed ratio each time), and also checks that the envelope covers 21 loads between 0.20 and 0.40 kg·m².
+- Road 2 finds the closed-loop poles of the true belt at several loads, by Durand-Kerner iteration (an update that moves all of a polynomial's roots at once), with no frequency response at all.
+- Road 3 simulates the loop with fourth-order Runge-Kutta (RK4) steps: a sine wave at the peak frequency measures $\lvert T\rvert$ in the time domain, and speed steps show both loads settle.
+
+For the delay, Newton's method finds the closed-loop pole of the delay equation (it contains $e^{-s\theta}$, so it is not a polynomial), confirming the delay margin and the 25 ms instability. Asserts compare the roads with each other.
 
 ### Python
 
@@ -499,6 +511,126 @@ try: load x3, exact envelope: peak |W T| = 0.8386
 chart |W|    0.050, 0.144, 0.354, 0.474, 0.498, 0.499, 0.500, 0.500, 0.500, 0.500, 0.500
 chart 1/|T|  1.000, 1.000, 0.998, 0.983, 0.932, 0.869, 0.795, 1.227, 3.585, 35.505, 399.497
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves the small gain rule's algebra at a single frequency, and checks the conveyor's envelope and Routh's decisive term exactly.
+
+- Suppose the model's loop gain $L_0$ never touches −1, $\lvert W T\rvert < 1$ and $\lvert\Delta\rvert \le 1$ at every frequency. Then the true loop gain $L_0(1 + W\Delta)$ never reaches −1.
+- Take the setpoint at zero, $u = -C y$, $y = P_0 u + P_0 W p$, and $L_0$ not −1. Then $u = -W T\,p$: the error sees the rest of the loop as one block.
+- Suppose $L_0$ is not −1 and $\lvert W T\rvert = 1$ at some frequency. Then an error of size exactly 1, with the right phase, puts $L_0(1 + W\Delta)$ on −1.
+- Take $J_0$ = 0.20 and $J$ = 0.40 kg·m², with $b$ = 0.40. Then the percentage error $(J_0 - J)s/(Js + b)$ is $-W(s)$, so its size is exactly the envelope.
+- Take the card's $b$, $K_p$, $\tau_a$ and $K_i$, and any load $J$. Then Routh's decisive term is $9.4J$ plus a positive constant.
+
+Lean works one frequency at a time; the turn count, the sweeps, the poles and the simulations are left to the Python and Rust checks.
+
+```lean
+-- Writing down model error: at each frequency, if the envelope times the complementary sensitivity has size below 1, no error inside the envelope can put the true loop gain on −1, and the bound is exact for the worst error.
+import Mathlib.Analysis.Complex.Basic
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.NormNum
+
+/-- The small gain rule for a percentage error, frequency by frequency (the disc picture on
+the Nyquist plot). Let `L ω` be the nominal loop gain, `W ω` the envelope and `Δ ω` the
+unknown error at frequency `ω`. If the nominal loop never touches −1 (`1 + L ω ≠ 0`), the
+envelope times the complementary sensitivity `T = L / (1 + L)` has size below 1 at every
+frequency, and the error has size at most 1 at every frequency, then the true loop gain
+`L (1 + W Δ)` never reaches −1 at any frequency. -/
+theorem small_gain_true_loop_gain_avoids_minus_one
+    (L W Δ : ℝ → ℂ)
+    (hnom : ∀ ω, 1 + L ω ≠ 0)
+    (hgain : ∀ ω, ‖W ω * (L ω / (1 + L ω))‖ < 1)
+    (hΔ : ∀ ω, ‖Δ ω‖ ≤ 1) :
+    ∀ ω, 1 + L ω * (1 + W ω * Δ ω) ≠ 0 := by
+  intro ω
+  have h1 := hnom ω
+  have hlt : ‖W ω * (L ω / (1 + L ω)) * Δ ω‖ < 1 := by
+    rw [norm_mul]
+    calc ‖W ω * (L ω / (1 + L ω))‖ * ‖Δ ω‖ ≤ ‖W ω * (L ω / (1 + L ω))‖ * 1 :=
+          mul_le_mul_of_nonneg_left (hΔ ω) (norm_nonneg _)
+      _ < 1 := by rw [mul_one]; exact hgain ω
+  have hne : 1 + W ω * (L ω / (1 + L ω)) * Δ ω ≠ 0 := by
+    intro h
+    have : W ω * (L ω / (1 + L ω)) * Δ ω = -1 := by linear_combination h
+    rw [this, norm_neg, norm_one] at hlt
+    exact lt_irrefl _ hlt
+  have key : 1 + L ω * (1 + W ω * Δ ω)
+      = (1 + L ω) * (1 + W ω * (L ω / (1 + L ω)) * Δ ω) := by
+    field_simp
+    ring
+  rw [key]
+  exact mul_ne_zero h1 hne
+
+/-- Pulling the error out of the loop (Step 2). With the setpoint at zero, the controller
+sends `u = −C y`, and the true motor answers `y = P₀ u + P₀ W p`, where `p` is the error's
+output and `u` is what it sees. If the nominal loop `1 + P₀ C` is not zero, the error sees the
+rest of the loop as one block: `u = −W T p`, with `T = P₀ C / (1 + P₀ C)`. -/
+theorem error_sees_minus_W_T
+    (P₀ C W u y p : ℂ)
+    (hnom : 1 + P₀ * C ≠ 0)
+    (hu : u = -C * y)
+    (hy : y = P₀ * u + P₀ * W * p) :
+    u = -(W * (P₀ * C / (1 + P₀ * C))) * p := by
+  have h : u * (1 + P₀ * C) = -(C * P₀ * W * p) := by
+    rw [hy] at hu
+    linear_combination hu
+  field_simp
+  linear_combination h
+
+/-- The rule cannot be improved (Step 4). If the nominal loop does not touch −1 and the
+envelope times the complementary sensitivity has size exactly 1 at some frequency, then an
+error of size exactly 1 with the right phase puts the true loop gain `L (1 + W Δ)` on −1. -/
+theorem small_gain_exact_for_worst_error
+    (L W : ℂ)
+    (hnom : 1 + L ≠ 0)
+    (hpeak : ‖W * (L / (1 + L))‖ = 1) :
+    ∃ Δ : ℂ, ‖Δ‖ = 1 ∧ 1 + L * (1 + W * Δ) = 0 := by
+  have hx : W * (L / (1 + L)) ≠ 0 := by
+    intro h
+    rw [h, norm_zero] at hpeak
+    exact zero_ne_one hpeak
+  refine ⟨-(W * (L / (1 + L)))⁻¹, ?_, ?_⟩
+  · rw [norm_neg, norm_inv, hpeak, inv_one]
+  · have hLW : L * W = (1 + L) * (W * (L / (1 + L))) := by
+      field_simp
+    have hinv := mul_inv_cancel₀ hx
+    linear_combination (-(W * (L / (1 + L)))⁻¹) * hLW - (1 + L) * hinv
+
+-- The card's exact numbers. J₀ = 0.20 = 1/5, J = 0.40 = 2/5, b = 0.40 = 2/5, τₐ = 0.020 = 1/50,
+-- Kp = 10, Ki = 50.
+
+-- For the doubled inertia, the percentage error (J₀ − J) s / (J s + b) is −(0.5 s / (s + 1)),
+-- so its size is exactly the envelope W(s) = 0.5 s / (s + 1).
+example (s : ℂ) (hs : s + 1 ≠ 0) :
+    ((1 / 5 : ℂ) - 2 / 5) * s / (2 / 5 * s + 2 / 5) = -((1 / 2) * s / (s + 1)) := by
+  have h : (2 / 5 * s + 2 / 5 : ℂ) = 2 / 5 * (s + 1) := by ring
+  rw [h]
+  field_simp
+  ring
+
+-- Routh's decisive term: b + Kp − τₐ Ki = 0.4 + 10 − 0.02 × 50 = 9.4.
+example : (2 / 5 : ℚ) + 10 - 1 / 50 * 50 = 47 / 5 := by norm_num
+
+-- For the cubic J τₐ s³ + (J + b τₐ) s² + (b + Kp) s + Ki, Routh's product test
+-- (J + b τₐ)(b + Kp) − J τₐ Ki equals 9.4 J plus a positive constant.
+example (J : ℚ) :
+    (J + 2 / 5 * (1 / 50)) * (2 / 5 + 10) - J * (1 / 50) * 50
+      = 47 / 5 * J + 2 / 5 * (1 / 50) * (2 / 5 + 10) := by
+  ring
+
+#print axioms small_gain_true_loop_gain_avoids_minus_one
+#print axioms error_sees_minus_W_T
+#print axioms small_gain_exact_for_worst_error
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'small_gain_true_loop_gain_avoids_minus_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'error_sees_minus_W_T' depends on axioms: [propext, Classical.choice, Quot.sound]
+'small_gain_exact_for_worst_error' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]

@@ -10,7 +10,9 @@ Take a bicycle wheel off its bike. Tie a string to one end of its axle, 0.10 m f
 
 Now spin it first, once a second, hold the axle level, and let go with a gentle sideways push at the right speed. It does not fall. The axle stays level and swings round the string, one full circle every 3.6231 s. (Let go with no push and it nods down first; the card comes back to that.) That slow sideways turn is **precession**: the turning of a spinning thing's axle under a steady twist.
 
-The engineer's question is: how fast does it turn, and what sets that speed? The answer is one division. Divide the twist from the wheel's weight by the wheel's spin, measured the right way, and you get 1.7342 rad/s. That is the turning speed in radians (the angle unit where a full circle is 2π) per second. The same division explains why a spinning wheel fights your hands when you try to turn it. Holding it by the axle, hands 0.30 m apart, and turning it a quarter turn in half a second takes 11.8435 N at each hand, at right angles to the turn.
+The engineer's question is: how fast does it turn, and what sets that speed? The answer is one division. Divide the twist from the wheel's weight by the wheel's spin, measured the right way, and you get 1.7342 rad/s. That is the turning speed in radians (the angle unit where a full circle is 2π) per second.
+
+The same division explains why a spinning wheel fights your hands when you try to turn it. Holding it by the axle, hands 0.30 m apart, and turning it a quarter turn in half a second takes 11.8435 N at each hand, at right angles to the turn.
 
 **A spinning wheel carries its spin as an arrow along its axle; a twist adds to that arrow sideways, so the arrow, and the axle with it, swings round instead of tipping, at a rate equal to the twist divided by the arrow's length.**
 
@@ -20,7 +22,11 @@ The engineer's question is: how fast does it turn, and what sets that speed? The
 
 <p align="center"><img src="../figures/gyroscopes-and-precession.svg" alt="Side view and top view of a bicycle wheel hung from a string tied 0.10 m out along its axle, with the spin arrow L along the axle and the sideways change tau delta t at its tip" width="420"></p>
 
-Drawn to scale, 400 units per metre: a 0.30 m rim radius and a 0.10 m axle stub from string to hub. On the left, from the side: the string, the axle stub of length d, the wheel edge on, its weight m g acting at the hub, and the spin arrow L pointing out along the axle. On the right, from above: the hub's dashed circular path round the string, and the small sideways change τ Δt added at the tip of L. The arrows L and τ Δt show direction only; their lengths are not to scale.
+Drawn to scale, 400 units per metre: a 0.30 m rim radius and a 0.10 m axle stub from string to hub.
+
+On the left, from the side: the string, the axle stub of length d, the wheel edge on, its weight m g acting at the hub, and the spin arrow L pointing out along the axle.
+
+On the right, from above: the hub's dashed circular path round the string, and the small sideways change τ Δt added at the tip of L. The arrows L and τ Δt show direction only; their lengths are not to scale.
 
 ---
 
@@ -32,7 +38,7 @@ $$\boldsymbol{\tau} = \frac{d\mathbf{L}}{dt}, \qquad \Omega = \frac{\tau}{L} = \
 
 **Read it aloud:** torque is the rate at which the spin arrow changes; when the torque is side-on to the arrow, the arrow swings round at a rate equal to torque divided by spin, which for the hanging wheel is weight times stub length, divided by spin inertia times spin rate.
 
-The units check: τ is in newton metres, kg m²/s², and L is in kg m²/s, so τ/L is in 1/s, a rate. In the wing's dimension brackets, [M][L]²[T]⁻² over [M][L]²[T]⁻¹ is [T]⁻¹.
+The units check: τ is in newton metres, kg m²/s², and L is in kg m²/s, so τ/L is in 1/s, a rate. In the wing's dimension brackets ([M] mass, [L] length, [T] time), [M][L]²[T]⁻² over [M][L]²[T]⁻¹ is [T]⁻¹.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -51,8 +57,8 @@ The units check: τ is in newton metres, kg m²/s², and L is in kg m²/s, so τ
 
 ### When it holds
 
-- **The axle stays level and is already turning.** Then the formula is exact: the simulation keeps the axle level to 1e-6 degrees for 2 s. Let the wheel go from rest instead and it nods down first; at once a second the dip reaches 17.81° and the average turning rate runs 7.7% below the formula.
-- **Spin is fast.** Fast enough that the wheel's nodding stays small. At 4 rev/s the dip is 1.21° and the average rate is within 0.6%.
+- **The axle stays level and is already turning.** Then the formula is exact: the simulation keeps the axle level to 1e-6 degrees (a millionth of a degree) for 2 s. Let the wheel go from rest instead and it nods down first; at once a second the dip reaches 17.81° and the average turning rate runs 7.7% below the formula.
+- **Spin is fast.** Fast enough that the wheel's nodding stays small. At 4 rev/s (revolutions, or full turns, per second) the dip is 1.21° and the average rate is within 0.6%.
 - **The string end stays put.** The hub's circle needs a small sideways pull, so the string leans 1.7566° from vertical. A long, slack string lets the top wander and blurs the numbers.
 - **The spin holds steady.** Friction at the hub and air drag slow the spin. As $L$ shrinks, $\Omega = \tau/L$ grows: a dying wheel turns faster and faster, then droops.
 - **One rigid wheel, symmetric about its axle.** A buckled rim or a loose spoke adds wobble the formula does not see.
@@ -63,7 +69,9 @@ The units check: τ is in newton metres, kg m²/s², and L is in kg m²/s, so τ
 
 ### Step 0: spin is an arrow, and torque changes the arrow
 
-A spinning wheel's angular momentum has a size and a direction. The direction lies along the axle, set by the right-hand rule: curl the fingers of the right hand the way the rim moves, and the thumb points along **L**. [Rotation](02-rigid-body-rotation-and-moment-of-inertia.md) gives the size, $L = I_3\,\omega$, and the law that torque sets the rate of change of spin. Written as arrows, that law is $\boldsymbol{\tau} = d\mathbf{L}/dt$. It says nothing about the direction of the force. It says the change in the spin arrow points along the torque.
+A spinning wheel's angular momentum has a size and a direction. The direction lies along the axle, set by the right-hand rule: curl the fingers of the right hand the way the rim moves, and the thumb points along **L**.
+
+[Rotation](02-rigid-body-rotation-and-moment-of-inertia.md) gives the size, $L = I_3\,\omega$, and the law that torque sets the rate of change of spin. Written as arrows, that law is $\boldsymbol{\tau} = d\mathbf{L}/dt$. It says nothing about the direction of the force. It says the change in the spin arrow points along the torque.
 
 That is the whole surprise. The weight pulls down. Its torque points sideways. So the spin arrow moves sideways.
 
@@ -89,11 +97,17 @@ The code does this literally as road 3: ten thousand kicks of $\tau\,\Delta t$ i
 
 ### Step 3: the exact version, with the turning counted in
 
-The turning itself is a second, slow rotation about the vertical, and it carries angular momentum too: $I_1\,\Omega$, pointing up. So the full arrow has two parts: the spin part $I_3\,\omega$ along the axle, and the turning part $I_1\,\Omega$ straight up. With the axle level and turning steadily, the up part never changes. Only the axle part swings, at rate $\Omega$, so its rate of change has size $I_3\,\omega\,\Omega$, pointing north. Set that equal to the torque and $\Omega = m g d/(I_3\,\omega)$ exactly, at any spin. Road 2, a full simulation of the rigid wheel launched this way, agrees to the fourth decimal: 1.7342 rad/s.
+The turning itself is a second, slow rotation about the vertical, and it carries angular momentum too: $I_1\,\Omega$, pointing up. So the full arrow has two parts: the spin part $I_3\,\omega$ along the axle, and the turning part $I_1\,\Omega$ straight up.
+
+With the axle level and turning steadily, the up part never changes. Only the axle part swings, at rate $\Omega$, so its rate of change has size $I_3\,\omega\,\Omega$, pointing north. Set that equal to the torque and $\Omega = m g d/(I_3\,\omega)$ exactly, at any spin.
+
+Road 2, a full simulation of the rigid wheel launched this way, agrees to the fourth decimal: 1.7342 rad/s.
 
 ### Step 4: why a wheel let go from rest nods first
 
-Let go from rest and the wheel is not yet turning, so the up part $I_1\,\Omega$ starts at zero. The torque is horizontal, so the total up part of the angular momentum can never change. To start turning, the wheel must borrow up-momentum from its spin: the axle dips, which tips the spin arrow downward. Steady turning needs a dip angle of about $I_1\Omega/(I_3\omega)$, which is $\tau I_1/L^2$. The wheel overshoots, nods down to about twice that, and bounces back up, again and again. That bobbing is **nutation**.
+Let go from rest and the wheel is not yet turning, so the up part $I_1\,\Omega$ starts at zero. The torque is horizontal, so the total up part of the angular momentum can never change. To start turning, the wheel must borrow up-momentum from its spin: the axle dips, which tips the spin arrow downward.
+
+Steady turning needs a dip angle of about $I_1\Omega/(I_3\omega)$, which is $\tau I_1/L^2$. The wheel overshoots, nods down to about twice that, and bounces back up, again and again. That bobbing is **nutation**.
 
 Energy says the same thing: the dip lowers the weight, and that lost height pays for the turning motion.
 
@@ -101,7 +115,11 @@ At 4 rev/s, the estimate $2\tau I_1/L^2$ gives 1.21° and the simulation gives 1
 
 ### Step 5: the stubborn wheel
 
-Now run it backwards. Hold a spinning wheel by both ends of its axle, hands 0.30 m apart, and swing the axle round a quarter turn in half a second: $\Omega_t = 3.1416$ rad/s. The spin arrow must swing at that rate, which by Step 2 takes a torque of $L\,\Omega_t = 1.1310 \times 3.1416 = 3.5531$ N m. That torque points along the line square to both the axle and the turn: the hands must twist the axle up at one end and down at the other, 11.8435 N each. A still wheel turned at a steady rate needs no such twist. The spinning one pushes back at right angles, which feels like the wheel has a mind of its own. Spin it at 5 rev/s and each hand needs 59.2176 N.
+Now run it backwards. Hold a spinning wheel by both ends of its axle, hands 0.30 m apart, and swing the axle round a quarter turn in half a second: $\Omega_t = 3.1416$ rad/s. The spin arrow must swing at that rate, which by Step 2 takes a torque of $L\,\Omega_t = 1.1310 \times 3.1416 = 3.5531$ N m.
+
+That torque points along the line square to both the axle and the turn: the hands must twist the axle up at one end and down at the other, 11.8435 N each.
+
+A still wheel turned at a steady rate needs no such twist. The spinning one pushes back at right angles, which feels like the wheel has a mind of its own. Spin it at 5 rev/s and each hand needs 59.2176 N.
 
 ---
 
@@ -164,13 +182,21 @@ xychart-beta
     line [0.0, -0.6, -1.2, -0.5, -0.0, -0.8, -1.1, -0.3, -0.1, -1.0, -1.0, -0.2, -0.2, -1.1, -0.9, -0.1, -0.4, -1.2, -0.7, -0.0, -0.6, -1.2, -0.6, -0.0, -0.7, -1.2, -0.4, -0.1, -0.9, -1.1, -0.2]
 ```
 
-The deep, slow wave is the wheel spinning once a second. The shallow, fast ripple is the wheel spinning 4 rev/s. In a real wheel, friction at the string damps the nodding over a few seconds. What is left is steady turning near the middle of the nod, dipped by about $\tau I_1/L^2$ from Step 4: half the 19.33° estimate at 1 rev/s, well below level, and a fraction of a degree at 4 rev/s. Only fast spin gives the level turning of Step 3.
+The deep, slow wave is the wheel spinning once a second. The shallow, fast ripple is the wheel spinning 4 rev/s.
+
+In a real wheel, friction at the string damps the nodding over a few seconds. What is left is steady turning near the middle of the nod, dipped by about $\tau I_1/L^2$ from Step 4. That is half the 19.33° estimate at 1 rev/s, well below level, and a fraction of a degree at 4 rev/s. Only fast spin gives the level turning of Step 3.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code builds the hanging wheel and reaches its precession rate three independent ways: the formula $\tau/L$; a full simulation of the rigid wheel, stepping its axle direction and angular momentum forward with the fourth-order Runge–Kutta method of [Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md) (RK4: four slope samples per step); and the axle turned by ten thousand small sideways kicks in half a second. It then checks the stubborn-wheel torque by differencing the spin arrow in time, lets the wheel go from rest at 1 and 4 rev/s, and checks that the simulation keeps the energy constant. Nothing imported knows any mechanics.
+The code builds the hanging wheel and reaches its precession rate three independent ways:
+
+1. the formula $\tau/L$;
+2. a full simulation of the rigid wheel, stepping its axle direction and angular momentum forward with the fourth-order Runge–Kutta method of [Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md) (RK4: four slope samples per step);
+3. the axle turned by ten thousand small sideways kicks in half a second.
+
+It then checks the stubborn-wheel torque by differencing the spin arrow in time, lets the wheel go from rest at 1 and 4 rev/s, and checks that the simulation keeps the energy constant. Nothing imported knows any mechanics.
 
 ### Python
 
@@ -502,6 +528,120 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the torque, precession and stubborn-wheel facts of Steps 1, 3 and 5, for any wheel and spin.
+
+- Take the hub at $\mathbf{r} = (d, 0, 0)$ and the weight $\mathbf{F} = (0, 0, -m g)$. Then the torque $\mathbf{r}\times\mathbf{F}$ is $(0, m g d, 0)$.
+- Take $\mathbf{L}$ as Step 3's spin part plus turning part, with $I_3, \omega > 0$ and the axle level, turning steadily. Then $\boldsymbol{\tau} = d\mathbf{L}/dt$ at every moment exactly when $\Omega = m g d/(I_3\,\omega)$.
+- Take the axle turned by hand at a steady rate $\Omega_t$. Then the spin arrow changes at rate $L\,\Omega_t$, level and square to the axle.
+- The card's inertias come out exactly: $I_3 = 0.18$ kg m² and $I_1 = 0.11$ kg m².
+
+The nodding when let go from rest, the simulations and the decimal answers are left to the Python and Rust checks.
+
+```lean
+-- Precession: a level spinning axle turning steadily obeys torque = rate of change of angular momentum exactly when it turns at the rate m g d / (I₃ ω).
+import Mathlib.LinearAlgebra.CrossProduct
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+import Mathlib.Analysis.Calculus.Deriv.Pi
+import Mathlib.Analysis.Calculus.Deriv.Prod
+
+open Matrix Real
+
+/-- Helper: the derivative of a steadily turning level spin arrow plus a fixed vertical part. -/
+theorem gyro_spin_arrow_hasDerivAt (I₃ ω Ωₜ c t : ℝ) :
+    HasDerivAt
+      (fun s : ℝ => (I₃ * ω) • ![cos (Ωₜ * s), sin (Ωₜ * s), 0] + ![0, 0, c])
+      ((I₃ * ω * Ωₜ) • ![-sin (Ωₜ * t), cos (Ωₜ * t), 0]) t := by
+  rw [hasDerivAt_pi]
+  intro i
+  fin_cases i
+  · simp
+    have h := ((hasDerivAt_id t).const_mul Ωₜ).cos.const_mul (I₃ * ω)
+    convert h using 1
+    · simp
+    · simp; ring
+  · simp
+    have h := ((hasDerivAt_id t).const_mul Ωₜ).sin.const_mul (I₃ * ω)
+    convert h using 1
+    · simp
+    · simp; ring
+  · simp
+    exact hasDerivAt_const t c
+
+/-- Step 1: the weight `(0, 0, -m g)` hanging at the hub `(d, 0, 0)` has torque
+`r × F = (0, m g d, 0)` about the string: horizontal, and square to both the axle
+and the weight. -/
+theorem weight_torque_is_sideways (m g d : ℝ) :
+    crossProduct ![d, 0, 0] ![0, 0, -(m * g)] = ![0, m * g * d, 0] := by
+  rw [cross_apply]
+  ext i; fin_cases i <;> simp; ring
+
+/-- The precession rate. A wheel with spin inertia `I₃ > 0` spins at a steady rate
+`ω > 0` on a level axle that swings round the string at a steady rate `Ω`, so the axle
+points along `(cos Ωt, sin Ωt, 0)`. Its angular momentum is the spin part `I₃ ω` along
+the axle plus the turning part `I₁ Ω` straight up, and the weight `m g` acts at the hub,
+a distance `d` out along the axle. Then torque equals the rate of change of angular
+momentum at every moment exactly when `Ω = m g d / (I₃ ω)`, that is, `Ω = τ / L`. -/
+theorem precession_rate_eq_torque_div_angular_momentum
+    (m g d I₁ I₃ ω Ω : ℝ) (hI₃ : 0 < I₃) (hω : 0 < ω) :
+    (∀ t : ℝ, HasDerivAt
+        (fun s : ℝ => (I₃ * ω) • ![cos (Ω * s), sin (Ω * s), 0] + (I₁ * Ω) • ![0, 0, 1])
+        (crossProduct (d • ![cos (Ω * t), sin (Ω * t), 0]) ![0, 0, -(m * g)]) t)
+      ↔ Ω = m * g * d / (I₃ * ω) := by
+  have hf : (fun s : ℝ => (I₃ * ω) • ![cos (Ω * s), sin (Ω * s), 0] + (I₁ * Ω) • ![0, 0, 1])
+      = (fun s : ℝ => (I₃ * ω) • ![cos (Ω * s), sin (Ω * s), 0] + ![0, 0, I₁ * Ω]) := by
+    funext s; ext i; fin_cases i <;> simp
+  have hcross : ∀ t : ℝ, crossProduct (d • ![cos (Ω * t), sin (Ω * t), 0]) ![0, 0, -(m * g)]
+      = (m * g * d) • ![-sin (Ω * t), cos (Ω * t), 0] := by
+    intro t; rw [cross_apply]; ext i; fin_cases i <;> simp <;> ring
+  have hpos : 0 < I₃ * ω := mul_pos hI₃ hω
+  rw [hf]
+  constructor
+  · intro h
+    have h0 := (h 0).unique (gyro_spin_arrow_hasDerivAt I₃ ω Ω (I₁ * Ω) 0)
+    rw [hcross] at h0
+    have h1 := congrFun h0 1
+    simp at h1
+    rw [eq_div_iff hpos.ne']
+    linarith
+  · intro hΩ t
+    rw [hcross]
+    have hk : m * g * d = I₃ * ω * Ω := by
+      rw [hΩ]; field_simp
+    rw [hk]
+    exact gyro_spin_arrow_hasDerivAt I₃ ω Ω (I₁ * Ω) t
+
+/-- Step 5, the stubborn wheel. Turning a spinning wheel's axle by hand at a steady rate
+`Ωₜ` (with any fixed up part `c` of the angular momentum) changes the spin arrow at
+the rate `L Ωₜ = I₃ ω Ωₜ`, pointing horizontally at right angles to the axle: that is
+the torque the hands must supply. -/
+theorem stubborn_wheel_torque (I₃ ω Ωₜ c t : ℝ) :
+    HasDerivAt
+      (fun s : ℝ => (I₃ * ω) • ![cos (Ωₜ * s), sin (Ωₜ * s), 0] + ![0, 0, c])
+      ((I₃ * ω * Ωₜ) • ![-sin (Ωₜ * t), cos (Ωₜ * t), 0]) t := by
+  exact gyro_spin_arrow_hasDerivAt I₃ ω Ωₜ c t
+
+-- The card's inertias, exactly: a 2 kg hoop of rim radius 0.30 m has I₃ = m R² = 0.18,
+-- and about the string 0.10 m away, I₁ = m R² / 2 + m d² = 0.11.
+example : (2 : ℚ) * (3 / 10) ^ 2 = 18 / 100 := by norm_num
+example : (1 / 2 : ℚ) * 2 * (3 / 10) ^ 2 + 2 * (1 / 10) ^ 2 = 11 / 100 := by norm_num
+
+#print axioms gyro_spin_arrow_hasDerivAt
+#print axioms weight_torque_is_sideways
+#print axioms precession_rate_eq_torque_div_angular_momentum
+#print axioms stubborn_wheel_torque
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'gyro_spin_arrow_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'weight_torque_is_sideways' depends on axioms: [propext, Classical.choice, Quot.sound]
+'precession_rate_eq_torque_div_angular_momentum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stubborn_wheel_torque' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert is a line that stops the program if a number comes out wrong.
@@ -527,8 +667,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Bicycles.** A leaning bike's front wheel precesses toward the lean, which helps steer it under the fall. It is not the main reason a bike stays up: a bike built with a counter-spinning extra wheel, cancelling the spin arrow, can still be ridden.
-- **Spacecraft attitude control.** Control moment gyroscopes, like those on the International Space Station, are spinning wheels whose axles motors turn on purpose. By Step 5, turning the axle at rate $\Omega_t$ makes a torque $L\,\Omega_t$ on the craft, with no fuel burnt.
-- **Propeller aircraft and helicopters.** Pitch the nose of a single-propeller plane up and the propeller's spin arrow is forced to turn, so the plane yaws sideways: the stubborn wheel at aircraft scale.
+- **Spacecraft attitude control.** Attitude is the way a craft points. Control moment gyroscopes, like those on the International Space Station, are spinning wheels whose axles motors turn on purpose. By Step 5, turning the axle at rate $\Omega_t$ makes a torque $L\,\Omega_t$ on the craft, with no fuel burnt.
+- **Propeller aircraft and helicopters.** Pitch the nose of a single-propeller plane up and the propeller's spin arrow is forced to turn, so the plane yaws (its nose swings left or right): the stubborn wheel at aircraft scale.
 - **The Earth.** The Sun and Moon pull on Earth's equatorial bulge. That torque is side-on to the spin arrow, so the axis sweeps a slow cone over thousands of years, and the pole star changes.
 - **Spinning tops and gyroscopic toys.** The same formula, with the tilted axle adding a small correction term.
 

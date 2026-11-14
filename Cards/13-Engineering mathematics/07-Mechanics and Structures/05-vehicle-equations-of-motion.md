@@ -6,11 +6,13 @@
 
 ## General Overview
 
-A jumbo jet cruises at 40,000 ft (12,192 m) and Mach 0.8, which there is 235.909 m/s. An updraft tips its nose 1° further into the oncoming air. A moment later a side gust swings the air 1° across its nose. What does the jet do next, and does it settle by itself?
+A jumbo jet cruises at 40,000 ft (12,192 m) and Mach 0.8 (0.8 times the speed of sound), which there is 235.909 m/s. An updraft tips its nose 1° further into the oncoming air. A moment later a side gust swings the air 1° across its nose. What does the jet do next, and does it settle by itself?
 
 It does two quite different things. After the updraft the nose bobs: the 1° shrinks to 0.47° after one second, overshoots to −0.28° at three seconds, and is gone inside ten seconds. After the side gust the jet wags: the nose swings left and right while the wings rock, every 6.64 s, and the swing only halves every 21.05 s. Flight engineers call the first motion the **short-period pitch mode** and the second the **Dutch roll**, after the rolling, weaving gait of a skater.
 
-An aircraft is a rigid body free in six ways: it slides along three axes and turns about three. Written out, that gives six coupled, nonlinear equations. For small knocks they fall apart into two independent sets of four: the up-and-down motions in one, the sideways motions in the other. Each set holds three of the six freedoms plus the one angle that tips gravity into it: the pitch angle θ for the first, the bank angle φ for the second. Each set is linear, and its eigenvalues are the aircraft's natural motions, its **modes**. Five modes come out for this jet, with periods and time constants from 1.78 s to 137.40 s.
+An aircraft is a rigid body free in six ways: it slides along three axes and turns about three. Written out, that gives six coupled, nonlinear equations. For small knocks they fall apart into two independent sets of four: the up-and-down motions in one, the sideways motions in the other.
+
+Each set holds three of the six freedoms plus the one angle that tips gravity into it: the pitch angle θ for the first, the bank angle φ for the second. Each set is linear, and its eigenvalues are the aircraft's natural motions, its **modes**. An eigenvalue here is a rate at which one fixed pattern of motion grows, dies away or swings by itself. Five modes come out for this jet, with periods and time constants from 1.78 s to 137.40 s.
 
 **Write Newton's laws in axes fixed to the aircraft, keep only first-order terms in a small disturbance, and the left-right mirror symmetry splits the six freedoms into a longitudinal set and a lateral set, whose eigenvalues are the named modes.**
 
@@ -28,7 +30,7 @@ xychart-beta
     line [1.00, 0.57, -0.27, -0.82, -0.66, 0.02, 0.64, 0.71, 0.20, -0.44, -0.68, -0.37, 0.23, 0.60, 0.46, -0.04, -0.48, -0.50, -0.13, 0.33, 0.49]
 ```
 
-Orange: the change in angle of attack after the updraft, the short-period mode, dead in two swings. Teal: the sideslip after the side gust, the Dutch roll, still swinging at half size after 20 s. Both come from flying the nonlinear equations in the code below. The small 0.03° left on the orange line is the start of a third, much slower mode, the phugoid.
+Orange: the change in angle of attack (how far the air comes from below the nose) after the updraft, the short-period mode, dead in two swings. Teal: the sideslip (how far the air comes from the side) after the side gust, the Dutch roll, still swinging at half size after 20 s. Both come from flying the nonlinear equations in the code below. The small 0.03° left on the orange line is the start of a third, much slower mode, the phugoid.
 
 ---
 
@@ -126,13 +128,17 @@ The air forces are smooth functions of the state. To first order each is a slope
 
 ### Step 3: the mirror kills the cross terms
 
-Reflect the aircraft in its own plane of symmetry. Then u, w, q and θ stay the same, while v, p, r and φ flip sign. The lift, drag and pitching moment (X, Z, M) do not change in a mirror, so they are even functions of the sideways variables. An even function has zero slope at zero. The side force and the roll and yaw moments (Y, L, N) do flip, so they are zero whenever the sideways variables are zero, whatever the others do: again zero slope. Every slope that would join the two sets is zero, so the 8×8 matrix is two 4×4 blocks. Heading ψ appears nowhere: the jet behaves the same flying north or east.
+Reflect the aircraft in its own plane of symmetry. Then u, w, q and θ stay the same, while v, p, r and φ flip sign. The lift, drag and pitching moment (X, Z, M) do not change in a mirror, so they are even functions of the sideways variables. An even function has zero slope at zero. The side force and the roll and yaw moments (Y, L, N) do flip, so they are zero whenever the sideways variables are zero, whatever the others do: again zero slope.
+
+Every slope that would join the two sets is zero, so the 8×8 matrix is two 4×4 blocks. Heading ψ appears nowhere: the jet behaves the same flying north or east.
 
 The code writes its air forces with no cross terms, as this argument allows, so its check covers the rest: the turning-axes and gravity terms add no first-order coupling either. Its finite-difference slopes across the two blocks are 0.000000.
 
 ### Step 4: modes are eigenvalues
 
-A linear system $\dot x = Ax$, where x now stands for the set's four variables, not the nose axis, moves as a sum of patterns $e^{\lambda t}$, one for each eigenvalue λ of A: a complex pair swings, a real λ decays or grows. The longitudinal set has two pairs: the **short period**, a fast pitch bob at nearly constant speed, and the **phugoid**, a slow trade of height for speed. The lateral set has one pair, the **Dutch roll**, where yaw and roll swing together, and two real roots: **roll subsidence**, a roll rate dying away, and the **spiral**, a slow tightening or loosening of a bank.
+A linear system $\dot x = Ax$, where x now stands for the set's four variables, not the nose axis, moves as a sum of patterns $e^{\lambda t}$, one for each eigenvalue λ of A ([The eigenvalue method](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/02-the-eigenvalue-method.md)): a complex pair swings, a real λ decays or grows.
+
+The longitudinal set has two pairs: the **short period**, a fast pitch bob at nearly constant speed, and the **phugoid**, a slow trade of height for speed. The lateral set has one pair, the **Dutch roll**, where yaw and roll swing together, and two real roots: **roll subsidence**, a roll rate dying away, and the **spiral**, a slow tightening or loosening of a bank.
 
 Because the modes are so far apart in speed, two-state approximations can work. Freeze speed and pitch angle, keep (w, q), and you get the **short-period approximation**. Its 2×2 trace and determinant give ω_n and ζ directly ([Trace and determinant](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/05-classifying-equilibria-by-trace-and-determinant.md)). The same trick for the Dutch roll, keeping (β, r), works less well. The worked numbers show why.
 
@@ -203,7 +209,13 @@ A square law would give 25 and 225 times. The 5° case gives 24.5: the coupling 
 
 ## Code, from first principles, and it actually runs
 
-The code reaches the modes by **three independent roads**. Road 1 takes the published 4×4 matrices, builds each characteristic polynomial by the Faddeev–LeVerrier recursion, and finds its roots by the Durand–Kerner iteration. Road 2 writes the nonlinear body-axis equations, with the turning-axes terms, gravity and the attitude equations. It then takes their slopes by finite differences at trim. They reproduce the published matrices, the cos α0, sin α0, g cos α0/V and tan α0 entries included, and the slopes across the two blocks come out zero; its air forces have no cross terms by construction, so that zero tests the turning-axes and gravity terms. Road 3 flies the nonlinear equations by fourth-order Runge–Kutta (RK4) after a 0.1° nudge, records the motion once a second for 300 s, and fits the modes to the record. A sum of four modes obeys a fixed four-term recurrence, and the roots of that recurrence are $e^{\lambda \cdot 1\,\text{s}}$. That is Prony's method, the flight-test engineer's road. The nonlinear model leaves out the second-order spin terms such as $(I_z - I_y)qr$, which would need the inertias.
+The code reaches the modes by **three independent roads**.
+
+- Road 1 takes the published 4×4 matrices, builds each characteristic polynomial (the polynomial whose roots are the eigenvalues) by the Faddeev–LeVerrier recursion, and finds its roots by the Durand–Kerner iteration.
+- Road 2 writes the nonlinear body-axis equations, with the turning-axes terms, gravity and the attitude equations. It then takes their slopes by finite differences at trim. They reproduce the published matrices, the cos α0, sin α0, g cos α0/V and tan α0 entries included, and the slopes across the two blocks come out zero; its air forces have no cross terms by construction, so that zero tests the turning-axes and gravity terms.
+- Road 3 flies the nonlinear equations by fourth-order Runge–Kutta (RK4) after a 0.1° nudge, records the motion once a second for 300 s, and fits the modes to the record. A sum of four modes obeys a fixed four-term recurrence, and the roots of that recurrence are $e^{\lambda \cdot 1\,\text{s}}$. That is Prony's method, the flight-test engineer's road.
+
+The nonlinear model leaves out the second-order spin terms such as $(I_z - I_y)qr$, which would need the inertias.
 
 ### Python
 
@@ -595,6 +607,142 @@ Lb 0      -0.10566 +/- 0.78127j  wn  0.7884 rad/s  zeta  0.1340  period   8.04 s
 chart alpha change, deg: 1.00 0.47 -0.07 -0.28 -0.21 -0.05 0.06 0.08 0.05 0.01 -0.01 -0.00 0.01 0.02 0.03 0.02 0.02 0.02 0.02 0.03 0.03
 chart sideslip, deg:     1.00 0.57 -0.27 -0.82 -0.66 0.02 0.64 0.71 0.20 -0.44 -0.68 -0.37 0.23 0.60 0.46 -0.04 -0.48 -0.50 -0.13 0.33 0.49
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves the mirror split, the turning-axes moment terms and the 2×2 trace and determinant formulas, for any aircraft numbers.
+
+- Suppose reflecting the aircraft keeps the rates of u, w, q, θ and flips the rates of v, r, p, φ. Then, linearised about a trim with v, r, p, φ all zero, neither set feeds the other.
+- Take the spin arrow $\mathbf H$ of an aircraft symmetric about its x–z plane, as in the moment derivation. Then $\boldsymbol\omega \times \mathbf H$ gives exactly the three turning-axes terms of the moment equations.
+- Suppose a real 2×2 matrix has a complex pair $\lambda = -\sigma \pm j\omega_d$, with $\omega_d > 0$. Then $\omega_n = \sqrt{\det}$, $\zeta = -\text{trace}/(2\omega_n)$ and $\omega_d = \sqrt{\det - \text{trace}^2/4}$.
+
+Every number, the force and attitude equations, the 4×4 eigenvalues and the flights are left to the Python and Rust checks.
+
+```lean
+-- Equations of motion of a vehicle: mirror symmetry makes the linearised equations split into a longitudinal block and a lateral block, the turning-axes moment terms are the stated cross product, and a 2×2 block's trace and determinant give a complex mode's natural frequency, damping ratio and swing rate.
+import Mathlib.Analysis.Calculus.FDeriv.Prod
+import Mathlib.Analysis.Calculus.FDeriv.Comp
+import Mathlib.Analysis.Complex.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.LinearAlgebra.CrossProduct
+import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+
+open Matrix
+
+/-- In a real vector space, a vector equal to its own negative is zero. -/
+lemma eq_zero_of_eq_neg_real {M : Type*} [AddCommGroup M] [Module ℝ M] {w : M}
+    (h : w = -w) : w = 0 := by
+  have h2 : (2 : ℝ) • w = w - -w := by rw [two_smul, sub_neg_eq_add]
+  rw [← h, sub_self] at h2
+  exact (smul_eq_zero.mp h2).resolve_left two_ne_zero
+
+#print axioms eq_zero_of_eq_neg_real
+
+/-- The small-disturbance split. Let the state be a pair (x, y): x the longitudinal
+variables (u, w, q, θ) and y the lateral variables (v, r, p, φ), and let `F` give their
+rates of change. Left-right mirror symmetry means that reflecting the aircraft
+(y ↦ -y) leaves the longitudinal rates unchanged and flips the lateral rates.
+Linearise about a symmetric trim point (x₀, 0) where `F` is differentiable: then a
+longitudinal change produces no first-order lateral rate, and a lateral change
+produces no first-order longitudinal rate, so the linear system is two separate
+blocks. -/
+theorem mirror_symmetry_splits_linearised_motion
+    {E L : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    [NormedAddCommGroup L] [NormedSpace ℝ L]
+    (F : E × L → E × L)
+    (hmirror : ∀ x y, F (x, -y) = ((F (x, y)).1, -(F (x, y)).2))
+    (x₀ : E) (hF : DifferentiableAt ℝ F (x₀, 0)) :
+    (∀ u : E, (fderiv ℝ F (x₀, 0) (u, 0)).2 = 0) ∧
+    (∀ v : L, (fderiv ℝ F (x₀, 0) (0, v)).1 = 0) := by
+  set S : E × L →L[ℝ] E × L :=
+    (ContinuousLinearMap.fst ℝ E L).prod (-(ContinuousLinearMap.snd ℝ E L)) with hS
+  have hSp : S (x₀, 0) = (x₀, 0) := by simp [hS]
+  have hfun : F ∘ S = S ∘ F := by
+    funext ⟨x, y⟩
+    simp only [Function.comp_apply, hS, ContinuousLinearMap.prod_apply,
+      ContinuousLinearMap.coe_fst', neg_apply,
+      ContinuousLinearMap.coe_snd']
+    rw [hmirror]
+  have h1 : HasFDerivAt (F ∘ S) ((fderiv ℝ F (x₀, 0)).comp S) (x₀, 0) := by
+    have hF' : HasFDerivAt F (fderiv ℝ F (x₀, 0)) (S (x₀, 0)) := by
+      rw [hSp]; exact hF.hasFDerivAt
+    exact hF'.comp (x₀, 0) S.hasFDerivAt
+  have h2 : HasFDerivAt (S ∘ F) (S.comp (fderiv ℝ F (x₀, 0))) (x₀, 0) :=
+    S.hasFDerivAt.comp (x₀, 0) hF.hasFDerivAt
+  rw [hfun] at h1
+  have heq := h1.unique h2
+  have key : ∀ w, fderiv ℝ F (x₀, 0) (S w) = S (fderiv ℝ F (x₀, 0) w) := fun w => by
+    have := congrArg (fun T : E × L →L[ℝ] E × L => T w) heq
+    simpa using this
+  constructor
+  · intro u
+    have h := congrArg Prod.snd (key (u, 0))
+    have h' : (fderiv ℝ F (x₀, 0) (u, 0)).2 = -(fderiv ℝ F (x₀, 0) (u, 0)).2 := by
+      simpa [hS] using h
+    exact eq_zero_of_eq_neg_real h'
+  · intro v
+    have h := congrArg Prod.fst (key (0, v))
+    have hS0 : S ((0 : E), v) = -((0 : E), v) := by
+      ext <;> simp [hS]
+    have hS1 : (S (fderiv ℝ F (x₀, 0) (0, v))).1 = (fderiv ℝ F (x₀, 0) (0, v)).1 := by
+      simp [hS]
+    rw [hS0, map_neg, hS1, Prod.fst_neg] at h
+    exact eq_zero_of_eq_neg_real h.symm
+
+/-- The turning-axes terms of the moment equations. For an aircraft symmetric about
+its x–z plane the spin arrow is H = (I_x p - I_xz r, I_y q, I_z r - I_xz p), and the
+cross product ω × H with ω = (p, q, r) is
+((I_z - I_y) q r - I_xz p q, (I_x - I_z) r p + I_xz (p² - r²), (I_y - I_x) p q + I_xz q r). -/
+theorem moment_equation_turning_terms (p q r Ix Iy Iz Ixz : ℝ) :
+    ![p, q, r] ⨯₃ ![Ix * p - Ixz * r, Iy * q, Iz * r - Ixz * p] =
+      ![(Iz - Iy) * q * r - Ixz * p * q,
+        (Ix - Iz) * r * p + Ixz * (p ^ 2 - r ^ 2),
+        (Iy - Ix) * p * q + Ixz * q * r] := by
+  ext i
+  fin_cases i <;> simp [cross_apply] <;> ring
+
+/-- Two-state approximations by trace and determinant. If a real 2×2 matrix has a
+complex (non-real) eigenvalue z = -σ + j ω_d, then its natural frequency
+ω_n = |z| is the square root of the determinant, its damping ratio ζ = σ / |z|
+equals -trace / (2 ω_n), and its swing rate ω_d is √(det - trace² / 4). -/
+theorem two_by_two_mode_from_trace_and_det
+    (A : Matrix (Fin 2) (Fin 2) ℝ) (z : ℂ)
+    (heig : (A.charpoly.map (algebraMap ℝ ℂ)).IsRoot z) (hcomplex : z.im ≠ 0) :
+    ‖z‖ = Real.sqrt A.det ∧
+    -z.re / ‖z‖ = -A.trace / (2 * Real.sqrt A.det) ∧
+    |z.im| = Real.sqrt (A.det - A.trace ^ 2 / 4) := by
+  rw [Matrix.charpoly_fin_two] at heig
+  simp only [Polynomial.IsRoot, Polynomial.eval_map, Polynomial.eval₂_add, Polynomial.eval₂_sub,
+    Polynomial.eval₂_mul, Polynomial.eval₂_pow, Polynomial.eval₂_X, Polynomial.eval₂_C] at heig
+  have hre := congrArg Complex.re heig
+  have him := congrArg Complex.im heig
+  simp [pow_two] at hre him
+  have ht : A.trace = 2 * z.re := by
+    have : (2 * z.re - A.trace) * z.im = 0 := by linarith
+    rcases mul_eq_zero.mp this with h | h
+    · linarith
+    · exact absurd h hcomplex
+  have hd : A.det = z.re ^ 2 + z.im ^ 2 := by
+    rw [ht] at hre; linear_combination hre
+  have hn : ‖z‖ = Real.sqrt A.det := by
+    rw [Complex.norm_def, Complex.normSq_apply, hd]; congr 1; ring
+  refine ⟨hn, ?_, ?_⟩
+  · rw [← hn, ht]; ring
+  · rw [hd, ht, ← Real.sqrt_sq_eq_abs]; congr 1; ring
+
+#print axioms mirror_symmetry_splits_linearised_motion
+#print axioms moment_equation_turning_terms
+#print axioms two_by_two_mode_from_trace_and_det
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'eq_zero_of_eq_neg_real' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mirror_symmetry_splits_linearised_motion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'moment_equation_turning_terms' depends on axioms: [propext, Classical.choice, Quot.sound]
+'two_by_two_mode_from_trace_and_det' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]

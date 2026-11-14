@@ -6,13 +6,17 @@
 
 ## General Overview
 
-A floor pump for a road bike. Its barrel has a 30 mm bore and holds 300 cm^3 of air at 20 °C and 101.3 kPa (one atmosphere). The tyre is already at 7 bar on its gauge, so its valve stays shut until the barrel passes 801.3 kPa. Push the handle down fast, until 75 cm^3 are left. No air has left yet, so the barrel holds a fixed lump of air: a **closed system** (nothing crosses its boundary except heat and work).
+A floor pump for a road bike. Its barrel has a 30 mm bore and holds 300 cm^3 of air at 20 °C and 101.3 kPa (one atmosphere). The tyre is already at 7 bar on its gauge (a gauge reads pressure above the atmosphere; 1 bar is 100 kPa), so its valve stays shut until the barrel passes 801.3 kPa.
+
+Push the handle down fast, until 75 cm^3 are left. No air has left yet, so the barrel holds a fixed lump of air: a **closed system** (nothing crosses its boundary except heat and work).
 
 An engineer wants three numbers. How hot does the air get? How hard must the handle be pushed? And is there a cheaper way to do the same squeeze?
 
 The first law answers the first two. Energy is not created or destroyed, so the work done on the air has to show up somewhere. A fast stroke leaves no time for heat to escape, so all of it stays in the air as warmth. The air reaches 510.40 K, or 237.25 °C, and 705.7 kPa. At the end of the stroke the handle needs 427.2 N. This heating is why a pump barrel feels warm after a few strokes.
 
-The second law answers the third. Hold the handle down and the hot air cools back to 20 °C, giving its 56.32 J to the room. A slow stroke that lets heat leak out all the way reaches the same end state for only 42.14 J. The 14.18 J difference is work turned into heat for good. A quantity called **entropy** keeps the count: its total over the air and the room rose by 48.37 mJ/K, and 293.15 K times that rise is the 14.18 J lost. The same count rules out any stroke that makes this squeeze for less than 42.14 J.
+The second law answers the third. Hold the handle down and the hot air cools back to 20 °C, giving its 56.32 J to the room. A slow stroke that lets heat leak out all the way reaches the same end state for only 42.14 J. The 14.18 J difference is work turned into heat for good.
+
+A quantity called **entropy** keeps the count: its total over the air and the room rose by 48.37 mJ/K, and 293.15 K times that rise is the 14.18 J lost. The same count rules out any stroke that makes this squeeze for less than 42.14 J.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -75,7 +79,9 @@ Some books write $\Delta U = Q - W$ with $W$ the work done *by* the gas. Same ph
 
 ### Step 0: two ledgers, one kept and one that only grows
 
-Energy is a ledger that always balances: what the handle puts in and what heat takes out add up to the change in the air's stored energy. Entropy is a second ledger that is never paid back. Heat moving from hot to cold, friction and sudden shoves all add to it, and nothing removes it from the total. Both $U$ and $S$ are **state quantities**: fixed once you know the air's volume and temperature, however it got there. Heat and work are not. They depend on the path, and the pump shows it.
+Energy is a ledger that always balances: what the handle puts in and what heat takes out add up to the change in the air's stored energy. Entropy is a second ledger that is never paid back. Heat moving from hot to cold, friction and sudden shoves all add to it, and nothing removes it from the total.
+
+Both $U$ and $S$ are **state quantities**: fixed once you know the air's volume and temperature, however it got there. Heat and work are not. They depend on the path, and the pump shows it.
 
 ### Step 1: work is a line integral, so it depends on the path
 
@@ -96,7 +102,7 @@ Integrate both sides: $\ln T + (R/c_v)\ln V$ stays fixed, so $T V^{\gamma - 1}$ 
 
 ### Step 3: why heat divided by temperature is a state quantity
 
-The heat taken in by the air on a gentle step is $\delta Q = n c_v\, dT + (nRT/V)\, dV$. Could there be a "heat content", some function of $T$ and $V$, whose small change is this? If so, its two partial derivatives would be $n c_v$ and $nRT/V$, and the mixed partials would agree ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). They do not:
+The heat taken in by the air on a gentle step is $\delta Q = n c_v\, dT + (nRT/V)\, dV$. Could there be a "heat content", some function of $T$ and $V$, whose small change is this? If so, its two partial derivatives would be $n c_v$ and $nRT/V$, and the mixed partials (the derivative by one variable, then by the other, in either order) would agree ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). They do not:
 
 $$\frac{\partial (n c_v)}{\partial V} = 0, \qquad \frac{\partial}{\partial T}\!\left(\frac{nRT}{V}\right) = \frac{nR}{V}.$$
 
@@ -127,7 +133,9 @@ Add the two ledgers. The room's entropy change is the heat it receives over its 
 
 $$W = \Delta U - T_0\,\Delta S_{\text{air}} + T_0\, S_{\text{gen}}.$$
 
-The first two terms depend only on where the air starts and ends. So the cheapest route is the one that generates no entropy, and every other route pays $T_0 S_{\text{gen}}$ more. For the pump: $\Delta U = 0$ and $\Delta S_{\text{air}}$ = −143.75 mJ/K, so the floor is 42.14 J. The fast stroke and cool-down generate 48.37 mJ/K, so they cost 293.15 K × 48.37 mJ/K = 14.18 J more: 56.32 J. The code computes the 14.18 J both ways, from the works and from the entropy, and they agree to the last digit.
+The first two terms depend only on where the air starts and ends. So the cheapest route is the one that generates no entropy, and every other route pays $T_0 S_{\text{gen}}$ more.
+
+For the pump: $\Delta U = 0$ and $\Delta S_{\text{air}}$ = −143.75 mJ/K, so the floor is 42.14 J. The fast stroke and cool-down generate 48.37 mJ/K, so they cost 293.15 K × 48.37 mJ/K = 14.18 J more: 56.32 J. The code computes the 14.18 J both ways, from the works and from the entropy, and they agree to the last digit.
 
 <details>
 <summary>Where the 35 J claim went wrong, in one line</summary>
@@ -200,7 +208,14 @@ The total only climbs, and it climbs fastest at the start, when the temperature 
 
 ## Code, from first principles, and it actually runs
 
-The script reaches each key number by two independent roads. The end temperature and work come from the closed form $T V^{0.4}$ = const and from a 2,000-step RK4 walk along the stroke (RK4: a standard step-by-step method for differential equations, from wing 08). The slow-stroke work comes from $nRT_0\ln r$ and from Simpson's rule on $\int p\,dV$ (adding the integrand at evenly spaced points with weights 1, 4, 2, 4, …, 1). The air's entropy change comes from the logarithm and from adding $\delta Q/T$ over 100,000 small cooling steps. The lost work comes from the two works and from $T_0 S_{\text{gen}}$. It also prints the ruled-out claims, the "what breaks" numbers, the bar lengths and the chart points.
+The script reaches each key number by two independent roads:
+
+- The end temperature and work come from the closed form $T V^{0.4}$ = const and from a 2,000-step RK4 walk along the stroke (RK4: a standard step-by-step method for differential equations, from [Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)).
+- The slow-stroke work comes from $nRT_0\ln r$ and from Simpson's rule on $\int p\,dV$ (adding the integrand at evenly spaced points with weights 1, 4, 2, 4, …, 1, as in [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md)).
+- The air's entropy change comes from the logarithm and from adding $\delta Q/T$ over 100,000 small cooling steps.
+- The lost work comes from the two works and from $T_0 S_{\text{gen}}$.
+
+It also prints the ruled-out claims, the "what breaks" numbers, the bar lengths and the chart points.
 
 ### Python
 
@@ -573,6 +588,127 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the main results of Steps 3 to 5, for all values meeting each bullet's conditions.
+
+- Suppose $\Delta U = Q + W$, the room at $T_0 > 0$ gains entropy $-Q/T_0$, and $S_{\text{gen}} \ge 0$. Then $W = \Delta U - T_0\,\Delta S_{\text{air}} + T_0\,S_{\text{gen}}$. So $W$ is never below $\Delta U - T_0\,\Delta S_{\text{air}}$. Lean takes the two laws as given, as the card does.
+- Suppose a piece of heat $\delta Q > 0$ leaves a body at $T_h > 0$ for one at $T_c > 0$. Then the total entropy change, $\delta Q(1/T_c - 1/T_h)$, is positive exactly when $T_h > T_c$.
+- Take an ideal gas with $n$, $c_v$ and $R$ all positive. Then no heat content $f(T, V)$ has partial derivatives $n c_v$ and $nRT/V$ at every positive $T$ and $V$.
+- Take the same gas, with $T$ and $V$ positive. Then $n c_v/T$ and $nR/V$ are the partial derivatives of $S = n c_v \ln T + n R \ln V$.
+- Lean also checks three whole numbers: the volume ratio 4, the 801,325 Pa valve point and the 25 cm^3 chart step.
+
+The other numbers, such as the 14.18 J of lost work, are left to the Python and Rust checks.
+
+```lean
+-- The thermodynamic laws: from the first law and the second law, the work on a closed system is its change in stored energy, minus room temperature times its entropy change, plus room temperature times the entropy generated, so it can never be less than the first two terms; heat flowing from hot to cold is exactly what raises the total entropy; and heat has no state function while heat over temperature (the entropy) does.
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Tactic
+
+/-- The lost-work rule. A closed system takes heat `Q` and work `W`; by the first law its stored
+energy changes by `ΔU = Q + W`. The room at absolute temperature `T₀ > 0` receives the heat `-Q`,
+so its entropy changes by `-Q / T₀`. By the second law the total entropy change of system and room
+is the entropy generated, `S_gen ≥ 0`. Then the work is
+`W = ΔU - T₀ ΔS_air + T₀ S_gen`, and so it is never less than `ΔU - T₀ ΔS_air`, which depends only
+on the start and end states: every joule per kelvin generated costs `T₀` times that in extra work. -/
+theorem lost_work_rule (ΔU Q W ΔS_air ΔS_room S_gen T₀ : ℝ) (hT₀ : 0 < T₀)
+    (first_law : ΔU = Q + W)
+    (room : ΔS_room = -Q / T₀)
+    (second_law : ΔS_air + ΔS_room = S_gen)
+    (h_gen : 0 ≤ S_gen) :
+    W = ΔU - T₀ * ΔS_air + T₀ * S_gen ∧ ΔU - T₀ * ΔS_air ≤ W := by
+  have hT : T₀ ≠ 0 := hT₀.ne'
+  have h1 : T₀ * S_gen = T₀ * ΔS_air - Q := by
+    rw [← second_law, room]; field_simp; ring
+  refine ⟨?_, ?_⟩
+  · rw [h1, first_law]; ring
+  · nlinarith [mul_nonneg hT₀.le h_gen]
+
+/-- The entropy form of the second law contains the older one. A positive piece of heat `δQ`
+leaving a body at absolute temperature `T_h` for one at `T_c` changes the total entropy by
+`δQ (1/T_c - 1/T_h)`, and this is positive exactly when `T_h > T_c`: heat flows by itself only
+from hot to cold. -/
+theorem heat_flow_raises_entropy_iff_hot_to_cold (δQ T_h T_c : ℝ) (hQ : 0 < δQ)
+    (hh : 0 < T_h) (hc : 0 < T_c) :
+    0 < δQ * (1 / T_c - 1 / T_h) ↔ T_c < T_h := by
+  have key : 1 / T_c - 1 / T_h = (T_h - T_c) / (T_c * T_h) := by
+    field_simp
+  rw [key]
+  constructor
+  · intro h
+    by_contra hlt
+    have hle : T_h ≤ T_c := not_lt.mp hlt
+    have : (T_h - T_c) / (T_c * T_h) ≤ 0 :=
+      div_nonpos_of_nonpos_of_nonneg (by linarith) (by positivity)
+    nlinarith [mul_nonpos_of_nonneg_of_nonpos hQ.le this]
+  · intro h
+    apply mul_pos hQ
+    apply div_pos (by linarith) (by positivity)
+
+/-- Heat is not a state quantity, but heat over temperature is. For an ideal gas (`n > 0` moles,
+fixed `c_v > 0`, gas constant `R > 0`) the heat taken in on a gentle step is
+`δQ = n c_v dT + (n R T / V) dV`. No function `f(T, V)` on positive temperatures and volumes has
+these two partial derivatives. Divided by `T`, the two pieces `n c_v / T` and `n R / V` are exactly
+the partial derivatives of `S(T, V) = n c_v ln T + n R ln V`, the entropy. -/
+theorem heat_has_no_state_function_but_entropy_does (n c_v R : ℝ) (hn : 0 < n) (hcv : 0 < c_v)
+    (hR : 0 < R) :
+    (¬ ∃ f : ℝ → ℝ → ℝ, ∀ T V : ℝ, 0 < T → 0 < V →
+        HasDerivAt (fun t => f t V) (n * c_v) T ∧
+        HasDerivAt (fun v => f T v) (n * R * T / V) V) ∧
+    (∀ T V : ℝ, 0 < T → 0 < V →
+        HasDerivAt (fun t => n * c_v * Real.log t + n * R * Real.log V) (n * c_v / T) T ∧
+        HasDerivAt (fun v => n * c_v * Real.log T + n * R * Real.log v) (n * R / V) V) := by
+  refine ⟨?_, ?_⟩
+  · rintro ⟨f, hf⟩
+    -- For each volume, the change from temperature 1 to 2 is `n c_v`.
+    have hdiff : ∀ v : ℝ, 0 < v → f 2 v - f 1 v = n * c_v := by
+      intro v hv
+      obtain ⟨c, _, hc⟩ := exists_hasDerivAt_eq_slope (fun t => f t v) (fun _ => n * c_v)
+        (by norm_num : (1:ℝ) < 2)
+        (fun x hx => (hf x v (by linarith [hx.1]) hv).1.continuousAt.continuousWithinAt)
+        (fun x hx => (hf x v (by linarith [hx.1]) hv).1)
+      norm_num at hc
+      linarith
+    have hderiv : HasDerivAt (fun v => f 2 v - f 1 v) (n * R * 2 / 1 - n * R * 1 / 1) 1 :=
+      (hf 2 1 (by norm_num) (by norm_num)).2.sub (hf 1 1 (by norm_num) (by norm_num)).2
+    have hconst : HasDerivAt (fun v => f 2 v - f 1 v) 0 1 := by
+      apply (hasDerivAt_const (1:ℝ) (n * c_v)).congr_of_eventuallyEq
+      filter_upwards [Ioi_mem_nhds (by norm_num : (0:ℝ) < 1)] with v hv
+      exact hdiff v hv
+    have := hderiv.unique hconst
+    have hnR : 0 < n * R := mul_pos hn hR
+    linarith
+  · intro T V hT hV
+    refine ⟨?_, ?_⟩
+    · have := ((Real.hasDerivAt_log hT.ne').const_mul (n * c_v)).add_const (n * R * Real.log V)
+      convert this using 1
+      field_simp
+    · have := ((Real.hasDerivAt_log hV.ne').const_mul (n * R)).const_add (n * c_v * Real.log T)
+      convert this using 1
+      field_simp
+
+-- The card's whole-number checks.
+-- The squeeze from 300 cm^3 to 75 cm^3 is a volume ratio of 4.
+example : (300 : ℕ) / 75 = 4 ∧ (300 : ℕ) % 75 = 0 := by decide
+-- The tyre valve opens above 101,325 Pa plus 7 bar gauge (1 bar = 100,000 Pa): 801,325 Pa.
+example : (101325 : ℕ) + 7 * 100000 = 801325 := by decide
+-- The last step on the chart's volume axis, from 100 cm^3 to 75 cm^3, is 25 cm^3.
+example : (100 : ℕ) - 75 = 25 := by decide
+
+#print axioms lost_work_rule
+#print axioms heat_flow_raises_entropy_iff_hot_to_cold
+#print axioms heat_has_no_state_function_but_entropy_does
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'lost_work_rule' depends on axioms: [propext, Classical.choice, Quot.sound]
+'heat_flow_raises_entropy_iff_hot_to_cold' depends on axioms: [propext, Classical.choice, Quot.sound]
+'heat_has_no_state_function_but_entropy_does' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

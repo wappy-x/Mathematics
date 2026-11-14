@@ -10,7 +10,9 @@ A fielder on the cricket boundary throws the ball back towards the stumps. It le
 
 The school formula ignores the air and says 91.77 m. Put the air into the equation of motion, step it forward, and the ball comes down at 64.83 m, almost 27 m short. At release the air pushes back on the ball with 0.8978 N, more than half its weight of 1.5691 N. A force that big cannot be left out.
 
-Newton's second law is what turns those two forces into a flight path. It says force does not set the velocity; it sets the acceleration, the rate the velocity changes. So the law is a differential equation, and stepping it forward gives the 64.83 m. Two bookkeeping rules come out of the same law. Add up the force times each small step along the path and the total, the **work**, equals the change in the ball's energy of motion: it leaves with 72 J and lands with 38.76 J, so the air took 33.24 J. Add up the force times each small slice of time and the total, the **impulse**, equals the change in the ball's momentum.
+Newton's second law is what turns those two forces into a flight path. It says force does not set the velocity; it sets the acceleration, the rate the velocity changes. So the law is a differential equation, and stepping it forward gives the 64.83 m.
+
+Two bookkeeping rules come out of the same law. Add up the force times each small step along the path and the total, the **work**, equals the change in the ball's energy of motion: it leaves with 72 J and lands with 38.76 J, so the air took 33.24 J. Add up the force times each small slice of time and the total, the **impulse**, equals the change in the ball's momentum.
 
 **Newton's second law makes the total force on a body set its rate of change of momentum, so motion is a differential equation; added up along the path it says work equals the change in kinetic energy, and added up over time it says impulse equals the change in momentum.**
 
@@ -56,7 +58,7 @@ $$W = \int_C \mathbf{F}\cdot d\mathbf{r} = \tfrac12 m v_1^2 - \tfrac12 m v_0^2, 
 | $\mathbf{g}$, $g$ | gravity's pull per kilogram, straight down, m/s² | 9.80665 m/s² | shorter flight, lower arch |
 | $\mathbf{v}$, $v$, $v_0$ | velocity (vector), speed, speed at release, m/s | $v_0$ = 30 m/s | longer throw, but drag grows as $v^2$ |
 | $\theta$ | release angle above level | 45°, $\pi/4$ rad | higher and shorter past about 42° |
-| $\rho$, $\nu$ | the air's density, kg/m³, and kinematic viscosity, m²/s | 1.225 kg/m³; 1.46e-5 m²/s | $\rho$: more drag, shorter throw; $\nu$: lower Re, same drag at fixed $C_d$ |
+| $\rho$, $\nu$ | the air's density, kg/m³, and kinematic viscosity, how sticky it is, m²/s | 1.225 kg/m³; 1.46e-5 m²/s | $\rho$: more drag, shorter throw; $\nu$: lower Re, same drag at fixed $C_d$ |
 | $C_d$, $\text{Re}$ | drag coefficient, how blunt the shape is to the air; Reynolds number $vD/\nu$; both pure numbers | 0.40; 147,945 at release | $C_d$: more drag; Re: nearer the drag crisis |
 | $A$, $D$ | frontal area, the disc the ball shows the air, m²; diameter, m | 0.004072 m²; 0.072 m | more drag |
 | $k$ | drag constant, deceleration per (m/s)², 1/m | 0.006234 1/m | shorter throw |
@@ -81,13 +83,15 @@ Kinetic energy $\tfrac12 m v^2$ is the energy of motion, in joules (J, newton me
 
 ### Step 0: force changes motion; it does not cause it
 
-Newton's first law: a body with no net force on it keeps its velocity, in a straight line at a steady speed. So a force is not needed to keep the ball moving, only to change how it moves. The second law says how much: the rate of change of momentum equals the total force, $\dot{\mathbf{p}} = \mathbf{F}$; with fixed mass that is $m\dot{\mathbf{v}} = \mathbf{F}$. The third law says forces come in opposite pairs: the air pushes the ball back with 0.8978 N at release, and the ball pushes the air forward with the same 0.8978 N.
+Newton's first law: a body with no net force on it keeps its velocity, in a straight line at a steady speed. So a force is not needed to keep the ball moving, only to change how it moves.
+
+The second law says how much: the rate of change of momentum equals the total force, $\dot{\mathbf{p}} = \mathbf{F}$; with fixed mass that is $m\dot{\mathbf{v}} = \mathbf{F}$. The third law says forces come in opposite pairs: the air pushes the ball back with 0.8978 N at release, and the ball pushes the air forward with the same 0.8978 N.
 
 Because force fixes a rate, the second law is a differential equation, a rule for the rate plus a starting value, as on [A differential equation](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md). The starting value here is the release: position at the hand, velocity 30 m/s at 45°.
 
 ### Step 1: the equation of motion for the ball
 
-Two forces act. The weight $m\mathbf{g}$ points down. The drag points against the velocity; wind-tunnel tests give its size as $\tfrac12\rho C_d A v^2$. Point it along $-\mathbf{v}/v$ and it becomes $-\tfrac12\rho C_d A\, v\,\mathbf{v}$. Write $x$ for the distance across, $y$ for the height, and the vector law splits into two lines:
+Two forces act. The weight $m\mathbf{g}$ points down. The drag points against the velocity; wind-tunnel tests give its size as $\tfrac12\rho C_d A v^2$. Point it along $-\mathbf{v}/v$ and it becomes $-\tfrac12\rho C_d A\, v\,\mathbf{v}$. Write $x$ for the distance across, $y$ for the height, and the vector law splits into two lines. Two dots over a letter mean the rate of change taken twice, so $\ddot x$ is the acceleration across:
 
 $$\ddot x = -k\,v\,\dot x, \qquad \ddot y = -g - k\,v\,\dot y, \qquad v = \sqrt{\dot x^2 + \dot y^2}$$
 
@@ -161,7 +165,7 @@ The fielder's throw: $m$ = 0.160 kg, diameter 0.072 m, $C_d$ = 0.40, $\rho$ = 1.
 | drag work along the path | from the simulation | −33.2443 J |
 | **range with drag** | from the simulation, 1 ms steps | **64.83 m** |
 
-The throw carries 64.83 m on the full, 26.9462 m short of the no-air formula. The energy balance closes: every joule the ball lost was work done against the air.
+The throw carries 64.83 m on the full, that is, before its first bounce: 26.9462 m short of the no-air formula. The energy balance closes: every joule the ball lost was work done against the air.
 
 ### What breaks if you drop a piece
 
@@ -213,7 +217,13 @@ The total column is the work–energy theorem in action: it never moves from 72.
 
 ## Code, from first principles, and it actually runs
 
-Both programs step Newton's law forward with RK4 written out, carrying the drag work as an extra running total, then find the peak and the landing exactly by Newton steps in time. They take five independent roads. (1) With no air, the simulation must match the closed-form range, flight time and peak. (2) Thrown straight up into air, it must match the closed-form peak and time of Step 4, which tests the drag code. (3) Halving the step must not change the range. (4) The change in kinetic energy must equal the drag work added along the path, at landing and at the peak. (5) Both parts of the momentum change must equal the drag impulse plus weight's, with the drag impulse added up separately by Simpson's rule: the drag force read at the start, middle and end of each step, weighted 1, 4, 1. That sum never uses the RK4 velocity update, so a faulty stepper shows up as a mismatch.
+Both programs step Newton's law forward with RK4 written out, carrying the drag work as an extra running total, then find the peak and the landing exactly by Newton steps in time. A Newton step here is the root-finding method, not the law: divide what must reach zero (the upward speed at the peak, the height at landing) by its rate of change to get the time still to go. They take five independent roads.
+
+1. With no air, the simulation must match the closed-form range, flight time and peak.
+2. Thrown straight up into air, it must match the closed-form peak and time of Step 4, which tests the drag code.
+3. Halving the step must not change the range.
+4. The change in kinetic energy must equal the drag work added along the path, at landing and at the peak.
+5. Both parts of the momentum change must equal the drag impulse plus weight's, with the drag impulse added up separately by Simpson's rule: the drag force read at the start, middle and end of each step, weighted 1, 4, 1. That sum never uses the RK4 velocity update, so a faulty stepper shows up as a mismatch.
 
 ### Python
 
@@ -632,6 +642,169 @@ ALL CHECKS PASS
 ```
 
 The two outputs are identical, line for line.
+
+### Lean
+
+Lean proves the two balances for any fixed-mass body and any two times, and the straight-up throw of Step 4.
+
+- Suppose a body of fixed mass has total force equal to its rate of change of momentum, and the force has no jumps. Then the work between any two times equals the change in kinetic energy.
+- Take the same body. Then the impulse between any two times equals the change in momentum, in each direction.
+- Suppose a ball is thrown straight up at speed $v_0$, with $\dot v = -g - kv^2$ and $g, k > 0$. Then it peaks at height $H = \frac{1}{2k}\ln(1 + k v_0^2/g)$.
+- Take the same throw. Then the time to the peak is $\arctan(v_0\sqrt{k/g})/\sqrt{gk}$.
+- The kinetic energy at release, $\tfrac12 \times 0.160 \times 30^2$, is 72 J.
+
+The angled throw has no formula, so its range and its energy and impulse numbers are left to the Python and Rust checks.
+
+```lean
+-- Newton's laws: if the total force is the rate of change of momentum of a fixed mass, then the work equals the change in kinetic energy, the impulse equals the change in momentum, and a ball thrown straight up against quadratic drag peaks at the card's closed-form height and time.
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Analysis.InnerProductSpace.Calculus
+
+open Set
+
+/-- Work–energy theorem. A body of fixed mass `m` moves in `n`-dimensional space with
+velocity `v t`. Newton's second law says the total force `F t` is the rate of change of
+the momentum `m • v t`. Then the work done by the force between times `t₀` and `t₁`,
+the integral of the power `F · v` (since `v dt = dr`, this is `∫_C F · dr`), equals the
+change in kinetic energy `½ m |v|²`. The force is taken continuous so the work is an
+ordinary integral. -/
+theorem work_equals_change_in_kinetic_energy {n : ℕ} (m : ℝ)
+    (v F : ℝ → EuclideanSpace ℝ (Fin n))
+    (hlaw : ∀ t, HasDerivAt (fun s => m • v s) (F t) t)
+    (hF : Continuous F) (t₀ t₁ : ℝ) :
+    ∫ t in t₀..t₁, inner ℝ (F t) (v t)
+      = (1 / 2) * m * ‖v t₁‖ ^ 2 - (1 / 2) * m * ‖v t₀‖ ^ 2 := by
+  by_cases hm : m = 0
+  · subst hm
+    have hF0 : ∀ t, F t = 0 := by
+      intro t
+      have h := hlaw t
+      simp only [zero_smul] at h
+      exact h.unique (hasDerivAt_const t 0)
+    simp [hF0]
+  · have hv : ∀ t, HasDerivAt v (m⁻¹ • F t) t := by
+      intro t
+      have e : v = fun s => m⁻¹ • (m • v s) := by
+        funext s; rw [smul_smul, inv_mul_cancel₀ hm, one_smul]
+      rw [e]
+      exact (hlaw t).const_smul m⁻¹
+    have hvc : Continuous v := continuous_iff_continuousAt.2 fun t => (hv t).continuousAt
+    have hE : ∀ t, HasDerivAt (fun s => (1 / 2) * m * ‖v s‖ ^ 2) (inner ℝ (F t) (v t)) t := by
+      intro t
+      have h := (HasDerivAt.norm_sq (hv t)).const_mul ((1 / 2) * m)
+      convert h using 1
+      rw [inner_smul_right, real_inner_comm]
+      field_simp
+    rw [intervalIntegral.integral_eq_sub_of_hasDerivAt (fun t _ => hE t)]
+    exact (hF.inner hvc).intervalIntegrable _ _
+
+/-- Impulse–momentum theorem. Under the same second law for a fixed mass `m`, the impulse
+of the total force over the time from `t₀` to `t₁`, the integral of `F`, equals the change
+in momentum `m v₁ - m v₀`. As a vector equation it holds in every direction separately. -/
+theorem impulse_equals_change_in_momentum {n : ℕ} (m : ℝ)
+    (v F : ℝ → EuclideanSpace ℝ (Fin n))
+    (hlaw : ∀ t, HasDerivAt (fun s => m • v s) (F t) t)
+    (hF : Continuous F) (t₀ t₁ : ℝ) :
+    ∫ t in t₀..t₁, F t = m • v t₁ - m • v t₀ := by
+  exact intervalIntegral.integral_eq_sub_of_hasDerivAt (fun t _ => hlaw t)
+    (hF.intervalIntegrable _ _)
+
+/-- A ball thrown straight up into air with quadratic drag. On the way up, from release at
+time `0` (height `0`, speed `v₀`) to the peak at time `T` (speed `0`), the height `y` and
+upward speed `v` obey `ẏ = v` and `v̇ = -g - k v²`, with gravity `g > 0` and drag constant
+`k > 0`. Then the peak height is `H = (1/(2k)) ln(1 + k v₀² / g)` and the time to the peak is
+`arctan(v₀ √(k/g)) / √(g k)`. -/
+theorem straight_up_throw_peak_height_and_time (g k v₀ T : ℝ) (y v : ℝ → ℝ)
+    (hg : 0 < g) (hk : 0 < k) (hT : 0 ≤ T)
+    (hyc : ContinuousOn y (Icc 0 T)) (hvc : ContinuousOn v (Icc 0 T))
+    (hy : ∀ t ∈ Ioo 0 T, HasDerivAt y (v t) t)
+    (hv : ∀ t ∈ Ioo 0 T, HasDerivAt v (-g - k * v t ^ 2) t)
+    (hy0 : y 0 = 0) (hv0 : v 0 = v₀) (hvT : v T = 0) :
+    y T = 1 / (2 * k) * Real.log (1 + k * v₀ ^ 2 / g) ∧
+      T = Real.arctan (v₀ * Real.sqrt (k / g)) / Real.sqrt (g * k) := by
+  have hsq1 : Real.sqrt (k / g) = Real.sqrt k / Real.sqrt g := Real.sqrt_div' k hg.le
+  have hsq2 : Real.sqrt (g * k) = Real.sqrt g * Real.sqrt k := Real.sqrt_mul hg.le k
+  have ha : 0 < Real.sqrt g := Real.sqrt_pos.2 hg
+  have hb : 0 < Real.sqrt k := Real.sqrt_pos.2 hk
+  have ha2 : Real.sqrt g ^ 2 = g := Real.sq_sqrt hg.le
+  have hb2 : Real.sqrt k ^ 2 = k := Real.sq_sqrt hk.le
+  have hpos : ∀ t, 0 < g + k * v t ^ 2 := fun t => by positivity
+  constructor
+  · -- ψ t = y t + (1/(2k)) log (g + k v²) is constant
+    have hcont : ContinuousOn (fun t => y t + 1 / (2 * k) * Real.log (g + k * v t ^ 2))
+        (Icc 0 T) := by
+      apply hyc.add
+      apply ContinuousOn.mul continuousOn_const
+      apply ContinuousOn.log
+      · exact continuousOn_const.add (continuousOn_const.mul (hvc.pow 2))
+      · intro t _; exact (hpos t).ne'
+    have hder : ∀ t ∈ Ioo 0 T, HasDerivAt
+        (fun t => y t + 1 / (2 * k) * Real.log (g + k * v t ^ 2)) ((fun _ => (0:ℝ)) t) t := by
+      intro t ht
+      have h1 := (((hv t ht).pow 2).const_mul k).const_add g
+      have h2 := (h1.log (hpos t).ne').const_mul (1 / (2 * k))
+      have h3 := (hy t ht).add h2
+      apply h3.congr_deriv
+      have := (hpos t).ne'
+      simp only [Pi.pow_apply]
+      field_simp
+      ring
+    have h := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le hT hcont hder
+      intervalIntegrable_const
+    simp only [intervalIntegral.integral_zero, hy0, hv0, hvT] at h
+    have hg' : g ≠ 0 := hg.ne'
+    have hgv : g + k * v₀ ^ 2 ≠ 0 := by positivity
+    rw [show 1 + k * v₀ ^ 2 / g = (g + k * v₀ ^ 2) / g by field_simp, Real.log_div hgv hg']
+    simp at h
+    linear_combination -h
+  · have hcont : ContinuousOn
+        (fun t => t + Real.arctan (v t * Real.sqrt (k / g)) / Real.sqrt (g * k)) (Icc 0 T) := by
+      apply continuousOn_id.add
+      apply ContinuousOn.div_const
+      exact Real.continuous_arctan.comp_continuousOn (hvc.mul continuousOn_const)
+    have hder : ∀ t ∈ Ioo 0 T, HasDerivAt
+        (fun t => t + Real.arctan (v t * Real.sqrt (k / g)) / Real.sqrt (g * k))
+        ((fun _ => (0:ℝ)) t) t := by
+      intro t ht
+      obtain ⟨a, ha', rfl⟩ : ∃ a, 0 < a ∧ g = a ^ 2 := ⟨Real.sqrt g, ha, ha2.symm⟩
+      obtain ⟨b, hb', rfl⟩ : ∃ b, 0 < b ∧ k = b ^ 2 := ⟨Real.sqrt k, hb, hb2.symm⟩
+      have e1 : Real.sqrt (b ^ 2 / a ^ 2) = b / a := by
+        rw [Real.sqrt_div' _ (by positivity), Real.sqrt_sq hb'.le, Real.sqrt_sq ha'.le]
+      have e2 : Real.sqrt (a ^ 2 * b ^ 2) = a * b := by
+        rw [Real.sqrt_mul (by positivity), Real.sqrt_sq hb'.le, Real.sqrt_sq ha'.le]
+      have h1 := (((hv t ht).mul_const (Real.sqrt (b ^ 2 / a ^ 2))).arctan).div_const
+        (Real.sqrt (a ^ 2 * b ^ 2))
+      have h2 := (hasDerivAt_id t).add h1
+      apply h2.congr_deriv
+      rw [e1, e2]
+      have : 0 < a ^ 2 + b ^ 2 * v t ^ 2 := by positivity
+      field_simp
+      ring
+    have h := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le hT hcont hder
+      intervalIntegrable_const
+    simp only [intervalIntegral.integral_zero, hv0, hvT] at h
+    simp at h
+    linarith
+
+/-- Kinetic energy at release: ½ × 0.160 kg × (30 m/s)² = 72 J. -/
+example : (1 / 2 : ℚ) * (160 / 1000) * 30 ^ 2 = 72 := by norm_num
+
+#print axioms work_equals_change_in_kinetic_energy
+#print axioms impulse_equals_change_in_momentum
+#print axioms straight_up_throw_peak_height_and_time
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'work_equals_change_in_kinetic_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'impulse_equals_change_in_momentum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'straight_up_throw_peak_height_and_time' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

@@ -10,11 +10,11 @@ A quantum key link sends single photons, particles of light, one at a time: 1,00
 
 A photon cannot split. Each one lands on exactly one detector, and nothing in the photon decides which in advance. What the engineer can know is the chance: 93.30% pass, 6.70% blocked. Over one second the pass detector counts about 933,013 photons and the blocked one about 66,987. Each blocked photon is an error in the key, so 6.70% is the error rate the link must detect and correct. Shine a 1.000 mW laser through the same splitter instead and 0.9330 mW comes out of the pass exit: the same number, now as a share of power.
 
-This card shows where 0.9330 comes from, by a recipe that works for every quantum measurement. Write the photon's state as a short list of numbers, a vector. Write the device as a matrix. The matrix's eigenvalues are the readings the device can show; its eigenvectors are the directions those readings belong to; the squared length of the state along each direction is that reading's chance.
+This card shows where 0.9330 comes from, by a recipe that works for every quantum measurement. Write the photon's state as a short list of numbers, a vector. Write the device as a Hermitian matrix, one that is unchanged when you flip it across its diagonal and conjugate every entry. The matrix's eigenvalues are the readings the device can show; its eigenvectors are the directions those readings belong to; the squared length of the state along each direction is that reading's chance.
 
 **A state is a unit vector, a measuring device is a Hermitian matrix, its eigenvalues are the only readings it can give, and the chance of each reading is the squared length of the state's component along that reading's eigenvector.**
 
-**What kind of fact this is:** a model: the measurement rules of quantum mechanics, assumed and never yet contradicted by experiment. That the chances add to 1, and that the average reading is $\psi^*\hat A\psi$, are theorems proved on this card in Why it works.
+**What kind of fact this is:** a model: the measurement rules of quantum mechanics, assumed and never yet contradicted by experiment. That the chances add to 1, and that the average reading is the state times the matrix times the state, are theorems proved on this card in Why it works.
 
 ### The picture: the state split along the device's two directions
 
@@ -26,7 +26,12 @@ To scale, 160 pixels per unit. The black arrow is the state. The two grey arrows
 
 ## The formula
 
-Notation first, in words. $\psi$, read "psi", is the **state**: everything that can be known about the system, as a vector. When the state describes a wave spread over space, as for an electron in a box, $\psi$ is called the **wavefunction**. A hat on a letter, as in $\hat A$, marks an **operator**: a matrix that stands for something you can measure. In the statistics wing a hat meant an estimate; here it means an operator. And $\hbar$, read "h-bar", is the reduced Planck constant, the exchange rate between a frequency and an energy. The star is the conjugate transpose from [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): flip a column into a row and conjugate every entry.
+Notation first, in words.
+
+- $\psi$, read "psi", is the **state**: everything that can be known about the system, as a vector. When the state describes a wave spread over space, as for an electron in a box, $\psi$ is called the **wavefunction**.
+- A hat on a letter, as in $\hat A$, marks an **operator**: a matrix that stands for something you can measure. In the statistics wing a hat meant an estimate; here it means an operator.
+- $\hbar$, read "h-bar", is the reduced Planck constant, the exchange rate between a frequency and an energy.
+- The star is the conjugate transpose from [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): flip a column into a row and conjugate every entry.
 
 $$\hat A\,u_k = \lambda_k\,u_k, \qquad p_k = \bigl\lvert u_k^*\,\psi\bigr\rvert^2, \qquad \langle\hat A\rangle = \sum_k \lambda_k\,p_k = \psi^*\hat A\,\psi$$
 
@@ -53,7 +58,7 @@ $$\hat A_\alpha = \begin{pmatrix}\cos 2\alpha & \sin 2\alpha \\ \sin 2\alpha & -
 
 ### When it holds
 
-- **The state is one unit vector.** A laser or a single-photon source gives one. Circular light, equal horizontal and vertical swings a quarter cycle out of step, passes with chance 0.5000 at every polariser axis too, but a quarter-wave plate (a crystal that delays one direction of swing by a quarter cycle) turns it into a straight-line state that the right polariser passes for certain. Unpolarised light, such as sunlight, is a random mix: it passes half the time whatever comes first, and no single vector does that, so it needs a density matrix (a matrix that describes a random mix of states), which this outline leaves out.
+- **The state is one unit vector.** A laser or a single-photon source gives one. Unpolarised light, such as sunlight, is a random mix: it passes half the time whatever optics come first, and no single vector does that, so it needs a density matrix (a matrix that describes a random mix of states), which this outline leaves out. Circular light, equal horizontal and vertical swings a quarter cycle out of step, passes with chance 0.5000 at every polariser axis too, but a quarter-wave plate (a crystal that delays one direction of swing by a quarter cycle) turns it into a straight-line state that the right polariser passes for certain.
 - **The device is Hermitian: it equals its own conjugate transpose.** Then its readings are real and its exits are perpendicular. Use the non-Hermitian $N$ and the "chances" add to 0.8170, while the "average reading" comes out at 1.3660, above the largest reading the device can show.
 - **The device is ideal.** A real splitter absorbs a little light and leaks a little into the wrong exit; a real detector misses some photons. Multiply by measured efficiencies afterwards; the model gives the physics ceiling.
 - **Each photon is measured once, fresh.** The chances are per photon. A count over a second fluctuates around $p_k$ times the number sent, by about the square root of (number sent × $p_k$ × $(1 - p_k)$): 250 photons for the pass count.
@@ -121,7 +126,7 @@ Orange: the 30° photon $\psi$, certain to pass at 30° and certain to be blocke
 
 ### Step 6: after the reading, the state is the eigenvector
 
-A photon that leaves by the pass exit is now polarised at 45°: its state is $u_+$. Measure it again at 45° and it passes with chance 1. This collapse is a rule of the model, not a theorem. The next section shows the numbers it predicts.
+A photon that leaves by the pass exit is now polarised at 45°: its state is $u_+$. Measure it again at 45° and it passes with chance 1. This collapse is a rule of the model, not a theorem. The section "What a measurement does to the state" shows the numbers it predicts.
 
 <details>
 <summary>Detailed proof: real readings and perpendicular exits for any Hermitian matrix</summary>
@@ -155,9 +160,9 @@ The 30° photon at a 45° polarising splitter, 1,000,000 photons a second.
 | counts per second | $1{,}000{,}000 \times 0.9330$ and $\times 0.0670$ | 933,013 and 66,987 |
 | **pass chance, Malus check** | $\cos^2(45^\circ - 30^\circ)$ | **0.9330** |
 
-So each photon passes with chance 0.9330, and the pass detector should log about 933,000 counts a second. A simulated run of 100,000 photons gave 93,305 passes, 0.9331, well inside its band of four standard errors, ±0.0032.
+So each photon passes with chance 0.9330, and the pass detector should log about 933,000 counts a second. A simulated run of 100,000 photons gave 93,305 passes, 0.9331, well inside its band of four standard errors, ±0.0032. A standard error is the typical random scatter of a measured fraction; it shrinks as one over the square root of the number of photons.
 
-The same splitter on a bright beam: red light of wavelength 633 nm has angular frequency $\omega$ = 2π × (speed of light) / (wavelength) = 2.9758 × 10¹⁵ rad/s. With $\hbar$ = 1.054572 × 10⁻³⁴ J s (the Planck constant over 2π, from its exact SI value in CODATA 2018), each photon carries $E = \hbar\omega$ = 3.1381 × 10⁻¹⁹ J, or 1.9587 eV. A 1.000 mW beam is 3.1866 × 10¹⁵ photons a second, and 0.9330 mW leaves by the pass exit: Malus's law, one photon at a time.
+The same splitter on a bright beam: red light of wavelength 633 nm has angular frequency $\omega$ = 2π × (speed of light) / (wavelength) = 2.9758 × 10¹⁵ rad/s. With $\hbar$ = 1.054572 × 10⁻³⁴ J s (the Planck constant over 2π, from its exact SI value in CODATA 2018), each photon carries $E = \hbar\omega$ = 3.1381 × 10⁻¹⁹ J, or 1.9587 eV (electronvolts: 1 eV is the energy one electron gains across 1 volt). A 1.000 mW beam is 3.1866 × 10¹⁵ photons a second, and 0.9330 mW leaves by the pass exit: Malus's law, one photon at a time.
 
 ### What breaks if you drop a piece
 
@@ -599,6 +604,236 @@ ALL CHECKS PASS
 ```
 
 The two outputs are identical, digit for digit, including the simulated counts.
+
+### Lean
+
+Lean proves the measurement rule for every Hermitian matrix, Malus's law for every pair of angles, and the card's worked numbers.
+
+- Take an $n \times n$ Hermitian matrix with perpendicular unit eigenvectors $u_1, \dots, u_n$, and a unit state $\psi$. Then every reading $\lambda_k$ is real, and the chances $p_k$ add to 1.
+- Take the same matrix and state. Then the average reading $\sum_k \lambda_k\,p_k$ equals the sandwich $\psi^*\hat A\,\psi$.
+- Take a Hermitian $\hat A$ with $\hat A u = \lambda u$, $\hat A w = \mu w$ and $\lambda \ne \mu$. Then the exits are perpendicular: $w^* u = 0$.
+- Take a polariser at any angle $\alpha$. Then $\hat A_\alpha$ reads +1 on $u_+ = (\cos\alpha, \sin\alpha)$ and −1 on $u_- = (-\sin\alpha, \cos\alpha)$.
+- Take a photon at any angle $\theta$. Then its pass chance $(u_+^*\psi)^2$ is $\cos^2(\alpha - \theta)$, Malus's law.
+- The 45° splitter is Hermitian, reads +1 on (1, 1) and −1 on (1, −1), and those two exits are perpendicular.
+- The 30° photon $(\sqrt 3/2, 1/2)$ has length 1.
+- Take the 30° photon at the 45° splitter. Then the chances are exactly $(2 + \sqrt 3)/4$ and $(2 - \sqrt 3)/4$, and they add to 1.
+- The average reading comes out the same by readings and by sandwich.
+- The counts 933,013 and 66,987 add to 1,000,000.
+- Take the chain 30° → 45° → 120°. Then the fraction through, $(2 + \sqrt 3)/4$ times $(2 - \sqrt 3)/4$, is exactly 1/16.
+- $N$ is not Hermitian. It reads +1 on (1, 0) and −1 on (1, −1), but those exits are not perpendicular.
+- Take $N$'s two "chances", 3/4 and $(2 - \sqrt 3)/4$. Then they add to $(5 - \sqrt 3)/4$, not 1.
+- Take $N$ and the 30° photon. Then the sandwich is $(1 + \sqrt 3)/2$, above the largest reading, 1.
+
+The decimals, the complex states, the simulations and the photon energy are left to the Python and Rust checks.
+
+```lean
+-- States as vectors: for a Hermitian matrix with perpendicular unit eigenvectors and a unit state, the readings are real, the Born-rule chances add to 1 and the average reading is the sandwich ψ* A ψ; exits with different readings are perpendicular; a polariser's pass chance is Malus's cos²(α − θ); and the card's 30° photon, 45° splitter and look-alike N are checked exactly.
+import Mathlib.LinearAlgebra.Matrix.Hermitian
+import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+import Mathlib.LinearAlgebra.Matrix.DotProduct
+import Mathlib.Analysis.RCLike.Basic
+import Mathlib.Analysis.Complex.Basic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Analysis.Real.Sqrt
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.FinCases
+
+open Matrix Complex
+
+theorem hermitian_sandwich_swap {n : ℕ} {A : Matrix (Fin n) (Fin n) ℂ} (hA : A.IsHermitian)
+    (x y : Fin n → ℂ) : star x ⬝ᵥ (A *ᵥ y) = star (A *ᵥ x) ⬝ᵥ y := by
+  rw [star_mulVec, ← dotProduct_mulVec, hA.eq]
+
+open scoped ComplexOrder in
+theorem star_dotProduct_self_ne_zero_of_ne_zero {n : ℕ} {w : Fin n → ℂ} (hw : w ≠ 0) :
+    star w ⬝ᵥ w ≠ 0 := fun h => hw (dotProduct_star_self_eq_zero.1 h)
+
+/-- The measurement rule's two theorems. Let `A` be an `n × n` complex matrix that equals its
+own conjugate transpose (a Hermitian device), let `ψ` be a unit state (`ψ* ψ = 1`), and let
+`u_1, …, u_n` be perpendicular unit eigenvectors of `A` (`u_j* u_k` is 1 when `j = k` and 0
+otherwise) with `A u_k = λ_k u_k`. Then every reading `λ_k` is real, the chances
+`p_k = |u_k* ψ|²` add to 1, and the average reading `∑ λ_k p_k` equals the sandwich `ψ* A ψ`. -/
+theorem born_rule_chances_sum_to_one_and_average_is_sandwich (n : ℕ)
+    (A : Matrix (Fin n) (Fin n) ℂ) (hA : A.IsHermitian)
+    (ψ : Fin n → ℂ) (hψ : star ψ ⬝ᵥ ψ = 1)
+    (u : Fin n → Fin n → ℂ) (lam : Fin n → ℂ)
+    (hu : ∀ j k, star (u j) ⬝ᵥ u k = if j = k then 1 else 0)
+    (heig : ∀ k, A *ᵥ u k = lam k • u k) :
+    (∀ k, (lam k).im = 0) ∧
+      ∑ k, ‖star (u k) ⬝ᵥ ψ‖ ^ 2 = 1 ∧
+      ∑ k, lam k * ((‖star (u k) ⬝ᵥ ψ‖ ^ 2 : ℝ) : ℂ) = star ψ ⬝ᵥ (A *ᵥ ψ) := by
+  -- the matrix whose columns are the eigenvectors
+  set U : Matrix (Fin n) (Fin n) ℂ := Matrix.of fun i k => u k i with hUdef
+  have hUU : Uᴴ * U = 1 := by
+    ext j k
+    have := hu j k
+    simp only [dotProduct, Pi.star_apply] at this
+    simp [U, Matrix.mul_apply, conjTranspose_apply, Matrix.one_apply]
+    exact this
+  have hUU' : U * Uᴴ = 1 := mul_eq_one_comm.1 hUU
+  set c : Fin n → ℂ := Uᴴ *ᵥ ψ with hc
+  have hck : ∀ k, c k = star (u k) ⬝ᵥ ψ := by
+    intro k
+    simp [c, U, mulVec, dotProduct, conjTranspose_apply]
+  have hψc : ψ = U *ᵥ c := by
+    rw [hc, mulVec_mulVec, hUU', one_mulVec]
+  have hstarc : star c = star ψ ᵥ* U := by
+    rw [hc, star_mulVec, conjTranspose_conjTranspose]
+  have hnorm : ∀ k, (((‖star (u k) ⬝ᵥ ψ‖ ^ 2 : ℝ)) : ℂ) = star (c k) * c k := by
+    intro k
+    rw [← hck k]
+    push_cast
+    rw [← Complex.conj_mul']
+    rfl
+  clear_value c
+  refine ⟨?_, ?_, ?_⟩
+  · intro k
+    have h1 : star (u k) ⬝ᵥ (A *ᵥ u k) = lam k := by
+      rw [heig k, dotProduct_smul, hu k k]; simp
+    have h2 : star (A *ᵥ u k) ⬝ᵥ u k = star (lam k) := by
+      rw [heig k, star_smul, smul_dotProduct, hu k k]; simp
+    rw [← Complex.conj_eq_iff_im]
+    have := hermitian_sandwich_swap hA (u k) (u k)
+    rw [h1, h2] at this
+    exact this.symm
+  · have hsum : (((∑ k, ‖star (u k) ⬝ᵥ ψ‖ ^ 2 : ℝ)) : ℂ) = 1 := by
+      push_cast
+      have : ∀ k, ((‖star (u k) ⬝ᵥ ψ‖ : ℂ)) ^ 2 = star (c k) * c k := by
+        intro k; rw [← hnorm k]; push_cast; rfl
+      simp_rw [this]
+      change star c ⬝ᵥ c = 1
+      rw [hstarc, ← dotProduct_mulVec, hc, mulVec_mulVec, hUU', one_mulVec, hψ]
+    exact_mod_cast hsum
+  · have hAU : A * U = U * diagonal lam := by
+      ext i k
+      rw [mul_diagonal]
+      have := congrFun (heig k) i
+      simpa [U, mulVec, dotProduct, Matrix.mul_apply, mul_comm] using this
+    simp_rw [hnorm]
+    have hAψ : A *ᵥ ψ = U *ᵥ (diagonal lam *ᵥ c) := by
+      conv_lhs => rw [hψc]
+      rw [mulVec_mulVec, hAU, ← mulVec_mulVec]
+    rw [hAψ, dotProduct_mulVec, ← hstarc]
+    simp [dotProduct, mulVec_diagonal, Pi.star_apply]
+    refine Finset.sum_congr rfl fun k _ => by ring
+
+/-- Perpendicular exits. If a Hermitian matrix `A` has `A u = λ u` and `A w = μ w` with
+different readings `λ ≠ μ`, then the two directions are perpendicular: `w* u = 0`. -/
+theorem hermitian_eigenvectors_of_different_readings_perpendicular (n : ℕ)
+    (A : Matrix (Fin n) (Fin n) ℂ) (hA : A.IsHermitian)
+    (u w : Fin n → ℂ) (lam mu : ℂ)
+    (hu : A *ᵥ u = lam • u) (hw : A *ᵥ w = mu • w) (hne : lam ≠ mu) :
+    star w ⬝ᵥ u = 0 := by
+  by_cases hw0 : w = 0
+  · simp [hw0]
+  have hww : star w ⬝ᵥ w ≠ 0 := star_dotProduct_self_ne_zero_of_ne_zero hw0
+  have hmu : star mu = mu := by
+    have := hermitian_sandwich_swap hA w w
+    rw [hw, dotProduct_smul, star_smul, smul_dotProduct, smul_eq_mul, smul_eq_mul] at this
+    exact (mul_right_cancel₀ hww this).symm
+  have := hermitian_sandwich_swap hA w u
+  rw [hu, hw, dotProduct_smul, star_smul, smul_dotProduct, smul_eq_mul, smul_eq_mul, hmu] at this
+  have h2 : (lam - mu) * (star w ⬝ᵥ u) = 0 := by rw [sub_mul, this, sub_self]
+  rcases mul_eq_zero.1 h2 with h | h
+  · exact absurd (sub_eq_zero.1 h) hne
+  · exact h
+
+/-- The polariser and Malus's law. For every pass-axis angle `α` the polariser matrix
+`A_α = [[cos 2α, sin 2α], [sin 2α, -cos 2α]]` reads +1 on `u₊ = (cos α, sin α)` and -1 on
+`u₋ = (-sin α, cos α)`, and for a photon at every angle `θ`, `ψ = (cos θ, sin θ)`, the pass
+chance `(u₊* ψ)²` is `cos²(α - θ)`. -/
+theorem polariser_pass_chance_is_malus_law (α θ : ℝ) :
+    let A : Matrix (Fin 2) (Fin 2) ℝ :=
+      !![Real.cos (2 * α), Real.sin (2 * α); Real.sin (2 * α), -Real.cos (2 * α)]
+    let up : Fin 2 → ℝ := ![Real.cos α, Real.sin α]
+    let um : Fin 2 → ℝ := ![-Real.sin α, Real.cos α]
+    let ψ : Fin 2 → ℝ := ![Real.cos θ, Real.sin θ]
+    A *ᵥ up = up ∧ A *ᵥ um = -um ∧ (up ⬝ᵥ ψ) ^ 2 = Real.cos (α - θ) ^ 2 := by
+  intro A up um ψ
+  have hs := Real.sin_sq_add_cos_sq α
+  refine ⟨?_, ?_, ?_⟩
+  · ext i; fin_cases i <;>
+      simp [A, up, mulVec, dotProduct, Fin.sum_univ_two, Real.cos_two_mul, Real.sin_two_mul]
+    · linear_combination (2 * Real.cos α) * hs
+    · ring
+  · ext i; fin_cases i <;>
+      simp [A, um, mulVec, dotProduct, Fin.sum_univ_two, Real.cos_two_mul, Real.sin_two_mul]
+    · ring
+    · linear_combination (-2 * Real.cos α) * hs
+  · simp [up, ψ, dotProduct, Fin.sum_univ_two, Real.cos_sub]
+
+/-! The card's worked numbers, checked exactly. The 30° photon is ψ = (√3/2, 1/2); the 45°
+splitter is `[[0, 1], [1, 0]]` with exits (1, 1)/√2 and (1, -1)/√2; N = `[[1, 2], [0, -1]]`. -/
+
+-- The 45° splitter equals its own conjugate transpose.
+example : (!![0, 1; 1, 0] : Matrix (Fin 2) (Fin 2) ℂ).IsHermitian := by
+  ext i j; fin_cases i <;> fin_cases j <;> simp
+-- Its readings: (1, 1) reads +1 and (1, -1) reads -1.
+example : (!![0, 1; 1, 0] : Matrix (Fin 2) (Fin 2) ℤ) *ᵥ ![1, 1] = (1 : ℤ) • ![1, 1] := by
+  decide
+example : (!![0, 1; 1, 0] : Matrix (Fin 2) (Fin 2) ℤ) *ᵥ ![1, -1] = (-1 : ℤ) • ![1, -1] := by
+  decide
+-- Its two exits are perpendicular: (1, 1) · (1, -1) = 0.
+example : (![1, 1] : Fin 2 → ℤ) ⬝ᵥ ![1, -1] = 0 := by decide
+-- The state (√3/2, 1/2) has length 1.
+example : (Real.sqrt 3 / 2) ^ 2 + (1 / 2 : ℝ) ^ 2 = 1 := by
+  norm_num [div_pow]
+-- Pass chance ((√3/2 + 1/2)/√2)² = (2 + √3)/4 = 0.9330, blocked ((√3/2 - 1/2)/√2)² = (2 - √3)/4
+-- = 0.0670, and the two add to 1.
+example : ((Real.sqrt 3 / 2 + 1 / 2) / Real.sqrt 2) ^ 2 = (2 + Real.sqrt 3) / 4 := by
+  rw [div_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+  ring_nf; norm_num; ring
+example : ((Real.sqrt 3 / 2 - 1 / 2) / Real.sqrt 2) ^ 2 = (2 - Real.sqrt 3) / 4 := by
+  rw [div_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+  ring_nf; norm_num; ring
+example : (2 + Real.sqrt 3) / 4 + (2 - Real.sqrt 3) / 4 = 1 := by ring
+-- Average reading two ways: (+1)(2 + √3)/4 + (-1)(2 - √3)/4 = √3/2 = 2 · (√3/2) · (1/2), 0.8660.
+example : (2 + Real.sqrt 3) / 4 - (2 - Real.sqrt 3) / 4 = 2 * (Real.sqrt 3 / 2) * (1 / 2) := by
+  ring
+-- Counts per second: 933,013 pass and 66,987 blocked out of 1,000,000.
+example : 933013 + 66987 = 1000000 := by decide
+-- The chain 30° → 45° → 120°: cos² 15° · cos² 75° = (2 + √3)/4 · (2 - √3)/4 = 1/16 = 0.0625.
+example : (2 + Real.sqrt 3) / 4 * ((2 - Real.sqrt 3) / 4) = 1 / 16 := by
+  ring_nf; norm_num
+-- N = [[1, 2], [0, -1]] is not Hermitian.
+example : ¬ (!![1, 2; 0, -1] : Matrix (Fin 2) (Fin 2) ℂ).IsHermitian := by
+  intro h
+  have := congrFun (congrFun h 1) 0
+  norm_num [conjTranspose_apply] at this
+-- N still reads +1 on (1, 0) and -1 on (1, -1), but those exits are not perpendicular.
+example : (!![1, 2; 0, -1] : Matrix (Fin 2) (Fin 2) ℤ) *ᵥ ![1, 0] = (1 : ℤ) • ![1, 0] := by
+  decide
+example : (!![1, 2; 0, -1] : Matrix (Fin 2) (Fin 2) ℤ) *ᵥ ![1, -1] = (-1 : ℤ) • ![1, -1] := by
+  decide
+example : (![1, 0] : Fin 2 → ℤ) ⬝ᵥ ![1, -1] = 1 := by decide
+-- N's "chances" add to 3/4 + ((√3/2 - 1/2)/√2)² = (5 - √3)/4 = 0.8170, not 1.
+example : 3 / 4 + (2 - Real.sqrt 3) / 4 = (5 - Real.sqrt 3) / 4 := by ring
+-- N's "average reading" ψ* N ψ = 3/4 + 2 · (√3/2)(1/2) - 1/4 = (1 + √3)/2 = 1.3660, above 1.
+example : (Real.sqrt 3 / 2) ^ 2 + 2 * (Real.sqrt 3 / 2) * (1 / 2) - (1 / 2 : ℝ) ^ 2
+    = (1 + Real.sqrt 3) / 2 := by
+  norm_num [div_pow]; ring
+example : 1 < (1 + Real.sqrt 3) / 2 := by
+  have : 1 < Real.sqrt 3 := by
+    rw [show (1 : ℝ) = Real.sqrt 1 by simp]
+    exact Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
+  linarith
+
+#print axioms born_rule_chances_sum_to_one_and_average_is_sandwich
+#print axioms hermitian_eigenvectors_of_different_readings_perpendicular
+#print axioms polariser_pass_chance_is_malus_law
+#print axioms hermitian_sandwich_swap
+#print axioms star_dotProduct_self_ne_zero_of_ne_zero
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'born_rule_chances_sum_to_one_and_average_is_sandwich' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hermitian_eigenvectors_of_different_readings_perpendicular' depends on axioms: [propext, Classical.choice, Quot.sound]
+'polariser_pass_chance_is_malus_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hermitian_sandwich_swap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'star_dotProduct_self_ne_zero_of_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

@@ -8,9 +8,11 @@
 
 A steel footbridge has a deck carried on joists: horizontal beams that span from one cross-girder to the next. One joist spans 4 m, resting on a pin at each end. Three people stop together at its middle: about 2 kN (2,000 newtons, the weight of 203.9 kg).
 
-The engineer has two questions. Will the steel be pushed past what it can safely carry? And how far will the joist sag? Strength is the first worry most people have. On a footbridge the second usually decides the design. A deck that dips more than about 1/360 of its span, 11.11 mm here, feels soft underfoot and cracks surfacing, even though the steel is nowhere near failing. The design here takes both limits, as a working rule chosen for this card rather than the rule of any one design code: sag at most 11.11 mm, and stress at most 165 MPa (megapascals, millions of newtons per square metre), which is 60% of the 275 MPa at which grade S275 steel starts to bend for good (its yield stress as listed in the European steel code EN 1993-1-1, in Sources).
+The engineer has two questions. Will the steel be pushed past what it can safely carry? And how far will the joist sag? Strength is the first worry most people have. On a footbridge the second usually decides the design. A deck that dips more than about 1/360 of its span, 11.11 mm here, feels soft underfoot and cracks surfacing, even though the steel is nowhere near failing.
 
-Two candidate I-sections show the point. An 80 mm deep I carries the load at 102.96 MPa, comfortably strong, but sags 17.16 mm. A 100 mm deep I sags 8.16 mm at 61.23 MPa and passes both. It weighs 7.77 kg per metre.
+The design here takes both limits, as a working rule chosen for this card rather than the rule of any one design code. Sag is at most 11.11 mm. Stress is at most 165 MPa (megapascals, millions of newtons per square metre). That is 60% of the 275 MPa at which grade S275 steel starts to bend for good: its yield stress, as listed in the European steel code EN 1993-1-1 (in Sources).
+
+Two candidate I-sections show the point. An I-section is a steel beam shaped like a capital I when cut across: a wide plate at the top and bottom (the flanges), joined by a thin upright plate (the web). An 80 mm deep I carries the load at 102.96 MPa, comfortably strong, but sags 17.16 mm. A 100 mm deep I sags 8.16 mm at 61.23 MPa and passes both. It weighs 7.77 kg per metre.
 
 **A bent beam stretches its lower face and squeezes its upper face in proportion to distance from the middle; the steel's stiffness turns that into stress, and the stresses add up to the bending moment, so sag and stress both follow from one number, EI, the beam's bending stiffness.**
 
@@ -38,7 +40,7 @@ The **bending relation**, derived below:
 
 $$\kappa = \frac{M}{EI}, \qquad \sigma = -\frac{M\,y}{I}, \qquad \sigma_{\max} = \frac{M}{W}, \quad W = \frac{I}{c}$$
 
-**Read it aloud:** the beam curves in proportion to the bending moment over its bending stiffness; the stress grows straight-line with distance from the middle, a squeeze above it and a stretch below it when the beam sags, and is largest at the outer faces.
+**Read it aloud:** the beam curves in proportion to the bending moment over its bending stiffness. The stress grows straight-line with distance from the middle, a squeeze above it and a stretch below it when the beam sags, and is largest at the outer faces.
 
 The **sag equation**, a two-point boundary value problem:
 
@@ -91,7 +93,7 @@ $\sigma = E\varepsilon = -E\kappa y$. Stress is zero at the neutral axis and lar
 
 ### Step 3: no net push puts the neutral axis through the centroid
 
-The beam is bent, not stretched, so the stresses must add up to zero force: $\int \sigma\,dA = -E\kappa \int y\,dA = 0$. So $\int y\,dA = 0$: the neutral axis passes through the section's centroid. For a symmetric I, that is mid-depth, 50 mm from each face.
+The beam is bent, not stretched, so the stresses must add up to zero force: $\int \sigma\,dA = -E\kappa \int y\,dA = 0$. So $\int y\,dA = 0$: the neutral axis passes through the section's centroid, the balance point of its area. For a symmetric I, that is mid-depth, 50 mm from each face.
 
 ### Step 4: the stresses' turning effect is the moment
 
@@ -105,7 +107,7 @@ The integral $I = \int y^2 dA$ is the second moment of area. It counts each bit 
 
 For a gently curved line, curvature is the second derivative of height ([Second derivatives](../../06-Calculus%20and%20analysis/02-Derivatives/08-higher-derivatives-and-concavity.md)). With sag $v$ measured downward and a sagging moment taken positive, $EI\,v'' = -M(x)$. The pins say $v(0) = 0$ and $v(L) = 0$: one condition at each end, a boundary value problem ([Boundary value problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md)).
 
-The load is shared equally between the pins, so each pushes up with $P/2$ and the moment at $x$ on the left half is $M = Px/2$ ([Newton's laws](01-newtons-laws-work-and-energy.md): the piece of beam to the left of the cut must not turn). Integrating twice and fitting the pins gives
+The load is shared equally between the pins, so each pushes up with $P/2$. The moment at $x$ on the left half is then $M = Px/2$ ([Newton's laws](01-newtons-laws-work-and-energy.md): the piece of beam to the left of the cut must not turn). Integrating twice and fitting the pins gives
 
 $$v(x) = \frac{P\,x\,(3L^2 - 4x^2)}{48\,EI}, \quad 0 \le x \le L/2,$$
 
@@ -178,7 +180,16 @@ The code prints all five.
 
 ## Code, from first principles, and it actually runs
 
-The code sizes the joist from three candidate sections and then checks its own answer by independent roads. $I$ is found twice: from the three-rectangle formula, and by slicing the section into 0.05 mm strips and adding area × distance squared. The mid-span sag is found three ways: the closed form $PL^3/(48EI)$; a finite-difference solution of the boundary value problem $EI\,v'' = -M$ on 400 steps, solved by the Thomas algorithm (the tridiagonal sweep, written out); and the energy balance, integrated by Simpson's rule. The finite-difference sag differs from the formula by 0.0001 mm, the size of its grid error. The face stress is checked by slicing too: the strips' stresses must add up to no net push and turn with exactly the 2000 N m moment. The same solver, given the joist's own weight spread along the span, checks the 0.78 mm self-weight sag. The folding load, 10,343 N, assumes every strip has yielded and carries 275 MPa; it needs the sum of area × distance (not squared) over the section, 37.61 cm³, found both by the strips and by the rectangle formula. Every number on the card, including the chart points and the figure's coordinates, is printed.
+The code sizes the joist from three candidate sections and then checks its own answer by independent roads.
+
+- $I$ is found twice: from the three-rectangle formula, and by slicing the section into 0.05 mm strips and adding area × distance squared.
+- The mid-span sag is found three ways. The first is the closed form $PL^3/(48EI)$. The second is a finite-difference solution of the boundary value problem $EI\,v'' = -M$ on 400 steps: each $v''$ is replaced by differences of neighbouring sags. Those equations are solved by the Thomas algorithm (the tridiagonal sweep, written out: each equation links only three neighbouring sags). The third is the energy balance, integrated by Simpson's rule (a standard way to add up an integral from evenly spaced samples).
+- The finite-difference sag differs from the formula by 0.0001 mm, the size of its grid error.
+- The face stress is checked by slicing too: the strips' stresses must add up to no net push and turn with exactly the 2000 N m moment.
+- The same solver, given the joist's own weight spread along the span, checks the 0.78 mm self-weight sag.
+- The folding load, 10,343 N, assumes every strip has yielded and carries 275 MPa. It needs the sum of area × distance (not squared) over the section, 37.61 cm³, found both by the strips and by the rectangle formula.
+
+Every number on the card, including the chart points and the figure's coordinates, is printed.
 
 ### Python
 
@@ -522,6 +533,207 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the sag formulas exactly, for a pinned beam with any load at mid-span, any span and any bending stiffness.
+
+- Suppose the sag obeys $EI\,v'' = -M$ and is zero at both pins. Then the mid-span sag is $PL^3/(48EI)$.
+- Suppose the same, and take $0 \le x \le L/2$. Then the sag curve is $v(x) = Px(3L^2 - 4x^2)/(48EI)$.
+- Take a load $P$ that is not zero. Then the energy road of Step 6 gives $PL^3/(48EI)$ again.
+- The worked steps check too: the 2000 N m peak moment, the 165 MPa stress limit, and clamped ends giving a quarter of the sag.
+
+The section sizes, the sags in millimetres, and the finite-difference and Simpson roads are left to the Python and Rust checks.
+
+```lean
+-- Stress, strain and bending: a beam pinned at both ends with a point load P at mid-span, obeying E I v'' = -M, sags P L^3 / (48 E I) at the middle, with the card's sag curve and energy check.
+import Mathlib.Analysis.Calculus.MeanValue
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+
+/-- If `f' = g'` on `[a, b]` then `f - g` is constant there. -/
+lemma beam_sub_const_of_deriv_eq {f g g' : ℝ → ℝ} (hf : Differentiable ℝ f)
+    (hg : ∀ x, HasDerivAt g (g' x) x) {a b : ℝ}
+    (h : ∀ x ∈ Set.Icc a b, deriv f x = g' x) :
+    ∀ x ∈ Set.Icc a b, f x - g x = f a - g a := by
+  have hgd : Differentiable ℝ g := fun x => (hg x).differentiableAt
+  have hd : Differentiable ℝ (fun x => f x - g x) := hf.sub hgd
+  intro x hx
+  exact constant_of_has_deriv_right_zero (f := fun x => f x - g x) hd.continuous.continuousOn
+    (fun y hy => by
+      have h1 : HasDerivAt (fun x => f x - g x) (deriv f y - g' y) y :=
+        (hf y).hasDerivAt.sub (hg y)
+      rw [h y (Set.Ico_subset_Icc_self hy), sub_self] at h1
+      exact h1.hasDerivWithinAt) x hx
+
+/-- The sag curve on the left half, shared by the first two theorems. -/
+lemma beam_sag_left (P L E I : ℝ) (hL : 0 < L) (hE : 0 < E) (hI : 0 < I)
+    (v : ℝ → ℝ) (hv : Differentiable ℝ v) (hv' : Differentiable ℝ (deriv v))
+    (hbend : ∀ x ∈ Set.Icc 0 L, E * I * deriv (deriv v) x = -(P * min x (L - x) / 2))
+    (h0 : v 0 = 0) (hLend : v L = 0) :
+    ∀ x ∈ Set.Icc 0 (L / 2), v x = P * x * (3 * L ^ 2 - 4 * x ^ 2) / (48 * E * I) := by
+  have hEI : E * I ≠ 0 := by positivity
+  set K := P / (E * I) with hK
+  have hdd : ∀ x ∈ Set.Icc 0 L, deriv (deriv v) x = -(K * min x (L - x) / 2) := by
+    intro x hx
+    calc deriv (deriv v) x = (E * I * deriv (deriv v) x) / (E * I) := by field_simp
+      _ = -(K * min x (L - x) / 2) := by rw [hbend x hx, hK]; ring
+  -- A: slope on the left half
+  have hA := beam_sub_const_of_deriv_eq (f := deriv v) (g := fun x => -K / 4 * x ^ 2)
+    (g' := fun x => -K * x / 2) hv'
+    (fun x => by
+      have := (hasDerivAt_pow 2 x).const_mul (-K / 4)
+      convert this using 1; push_cast; ring)
+    (a := 0) (b := L / 2)
+    (fun x hx => by
+      rw [hdd x ⟨hx.1, by linarith [hx.2]⟩, min_eq_left (by linarith [hx.2])]; ring)
+  -- B: slope on the right half
+  have hB := beam_sub_const_of_deriv_eq (f := deriv v) (g := fun x => K / 4 * (L - x) ^ 2)
+    (g' := fun x => -K * (L - x) / 2) hv'
+    (fun x => by
+      have := ((hasDerivAt_id x).const_sub L).pow 2 |>.const_mul (K / 4)
+      convert this using 1
+      · funext y; simp only [id, Pi.pow_apply]
+      · simp only [id]; norm_num; ring)
+    (a := L / 2) (b := L)
+    (fun x hx => by
+      rw [hdd x ⟨by linarith [hx.1], hx.2⟩, min_eq_right (by linarith [hx.1])]; ring)
+  have hBL := hB L ⟨by linarith, le_refl L⟩
+  have hAm := hA (L / 2) ⟨by linarith, le_refl _⟩
+  -- C: sag on the left half
+  have hC := beam_sub_const_of_deriv_eq (f := v)
+    (g := fun x => deriv v 0 * x - K / 12 * x ^ 3)
+    (g' := fun x => deriv v 0 - K / 4 * x ^ 2) hv
+    (fun x => by
+      have := ((hasDerivAt_id x).const_mul (deriv v 0)).sub ((hasDerivAt_pow 3 x).const_mul (K / 12))
+      convert this using 1
+      · funext y; simp only [id, Pi.sub_apply]
+      · norm_num; ring)
+    (a := 0) (b := L / 2)
+    (fun x hx => by
+      have := hA x hx
+      linarith)
+  -- D: sag on the right half
+  have hD := beam_sub_const_of_deriv_eq (f := v)
+    (g := fun x => deriv v L * (x - L) - K / 12 * (L - x) ^ 3)
+    (g' := fun x => deriv v L + K / 4 * (L - x) ^ 2) hv
+    (fun x => by
+      have := (((hasDerivAt_id x).sub_const L).const_mul (deriv v L)).sub
+        ((((hasDerivAt_id x).const_sub L).pow 3).const_mul (K / 12))
+      convert this using 1
+      · funext y; simp only [id, Pi.pow_apply, Pi.sub_apply]
+      · simp only [id]; norm_num; ring)
+    (a := L / 2) (b := L)
+    (fun x hx => by
+      have := hB x hx
+      linarith)
+  have hCm := hC (L / 2) ⟨by linarith, le_refl _⟩
+  have hDL := hD L ⟨by linarith, le_refl L⟩
+  have hsum : (deriv v 0 + deriv v L) * L = 0 := by
+    rw [h0, hLend] at *
+    linear_combination -2 * hCm - 2 * hDL
+  have hsum' : deriv v 0 + deriv v L = 0 := by
+    rcases mul_eq_zero.mp hsum with h | h
+    · exact h
+    · exact absurd h hL.ne'
+  have hu0 : deriv v 0 = K * L ^ 2 / 16 := by
+    linear_combination (-1/2) * hAm - (1/2) * hBL + (1/2) * hsum'
+  intro x hx
+  have := hC x hx
+  rw [h0, hu0] at this
+  have hx' : v x = K * L ^ 2 / 16 * x - K / 12 * x ^ 3 := by linarith
+  rw [hx', hK]
+  field_simp
+  ring
+
+#print axioms beam_sub_const_of_deriv_eq
+#print axioms beam_sag_left
+
+/-- The mid-span sag of a pinned beam. A beam of span `L > 0` and bending stiffness `E I`
+(with `E > 0`, `I > 0`) rests on a pin at each end and carries a load `P` at mid-span, so the
+bending moment at `x` is `M(x) = P * min x (L - x) / 2`. If its sag `v` (twice differentiable)
+satisfies `E I v''(x) = -M(x)` along the span and `v(0) = v(L) = 0`, then the sag at
+mid-span is `δ = v(L/2) = P L^3 / (48 E I)`. -/
+theorem midspan_sag_eq_PL_cubed_div_48EI (P L E I : ℝ) (hL : 0 < L) (hE : 0 < E) (hI : 0 < I)
+    (v : ℝ → ℝ) (hv : Differentiable ℝ v) (hv' : Differentiable ℝ (deriv v))
+    (hbend : ∀ x ∈ Set.Icc 0 L, E * I * deriv (deriv v) x = -(P * min x (L - x) / 2))
+    (h0 : v 0 = 0) (hLend : v L = 0) :
+    v (L / 2) = P * L ^ 3 / (48 * E * I) := by
+  rw [beam_sag_left P L E I hL hE hI v hv hv' hbend h0 hLend (L / 2) ⟨by linarith, le_refl _⟩]
+  have hEI : E * I ≠ 0 := by positivity
+  field_simp
+  ring
+
+/-- The sag curve. Under the same conditions, on the left half of the span the sag is
+`v(x) = P x (3 L^2 - 4 x^2) / (48 E I)` for `0 ≤ x ≤ L/2` (mirrored on the right half). -/
+theorem sag_curve_left_half (P L E I : ℝ) (hL : 0 < L) (hE : 0 < E) (hI : 0 < I)
+    (v : ℝ → ℝ) (hv : Differentiable ℝ v) (hv' : Differentiable ℝ (deriv v))
+    (hbend : ∀ x ∈ Set.Icc 0 L, E * I * deriv (deriv v) x = -(P * min x (L - x) / 2))
+    (h0 : v 0 = 0) (hLend : v L = 0) :
+    ∀ x ∈ Set.Icc 0 (L / 2), v x = P * x * (3 * L ^ 2 - 4 * x ^ 2) / (48 * E * I) := by
+  exact beam_sag_left P L E I hL hE hI v hv hv' hbend h0 hLend
+
+/-- The second road, through energy. With the moment `M(x) = P * min x (L - x) / 2` of a
+load `P ≠ 0` at mid-span of a span `L > 0`, the sag found from the stored energy,
+`δ = (1/P) ∫₀ᴸ M(x)^2 / (E I) dx`, is again `P L^3 / (48 E I)`. -/
+theorem energy_sag_eq_PL_cubed_div_48EI (P L E I : ℝ) (hP : P ≠ 0) (hL : 0 < L)
+    (hE : 0 < E) (hI : 0 < I) :
+    (1 / P) * ∫ x in (0 : ℝ)..L, (P * min x (L - x) / 2) ^ 2 / (E * I)
+      = P * L ^ 3 / (48 * E * I) := by
+  have hEI : E * I ≠ 0 := by positivity
+  have hcont : Continuous (fun x : ℝ => (P * min x (L - x) / 2) ^ 2 / (E * I)) := by
+    fun_prop
+  rw [← intervalIntegral.integral_add_adjacent_intervals (b := L / 2)
+    (hcont.intervalIntegrable _ _) (hcont.intervalIntegrable _ _)]
+  set c := P ^ 2 / (4 * E * I) / 3 with hc
+  have h1 : ∫ x in (0 : ℝ)..L / 2, (P * min x (L - x) / 2) ^ 2 / (E * I)
+      = c * (L / 2) ^ 3 - c * 0 ^ 3 := by
+    refine intervalIntegral.integral_eq_sub_of_hasDerivAt (f := fun x => c * x ^ 3)
+      (fun x hx => ?_) (hcont.intervalIntegrable _ _)
+    rw [Set.uIcc_of_le (by linarith)] at hx
+    have := (hasDerivAt_pow 3 x).const_mul c
+    convert this using 1
+    rw [min_eq_left (by linarith [hx.2]), hc]
+    field_simp
+    ring
+  have h2 : ∫ x in L / 2..L, (P * min x (L - x) / 2) ^ 2 / (E * I)
+      = -c * (L - L) ^ 3 - -c * (L - L / 2) ^ 3 := by
+    refine intervalIntegral.integral_eq_sub_of_hasDerivAt (f := fun x => -c * (L - x) ^ 3)
+      (fun x hx => ?_) (hcont.intervalIntegrable _ _)
+    rw [Set.uIcc_of_le (by linarith)] at hx
+    have := (((hasDerivAt_id' x).const_sub L).pow 3).const_mul (-c)
+    convert this using 1
+    rw [min_eq_right (by linarith [hx.1]), hc]
+    field_simp
+    ring
+  rw [h1, h2, hc]
+  field_simp
+  ring
+
+-- The card's whole-number worked steps.
+-- Largest bending moment: P L / 4 = 2000 * 4 / 4 = 2000 N m.
+example : (2000 : ℝ) * 4 / 4 = 2000 := by norm_num
+-- The moment M(x) = P min(x, L - x) / 2 at mid-span x = 2 m of the 4 m joist is 2000 N m.
+example : (2000 : ℝ) * min 2 (4 - 2) / 2 = 2000 := by norm_num
+-- Stress limit: 60% of the 275 MPa yield stress is 165 MPa.
+example : (3 / 5 : ℚ) * 275 = 165 := by norm_num
+-- Clamped ends: P L^3 / (192 E I) is a quarter of P L^3 / (48 E I).
+example : (192 : ℕ) = 4 * 48 := by decide
+
+#print axioms midspan_sag_eq_PL_cubed_div_48EI
+#print axioms sag_curve_left_half
+#print axioms energy_sag_eq_PL_cubed_div_48EI
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'beam_sub_const_of_deriv_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'beam_sag_left' depends on axioms: [propext, Classical.choice, Quot.sound]
+'midspan_sag_eq_PL_cubed_div_48EI' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sag_curve_left_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+'energy_sag_eq_PL_cubed_div_48EI' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

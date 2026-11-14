@@ -39,7 +39,9 @@ Two separate runs; the first magnet's "down" atoms are blocked in both. Top row:
 
 ## The formula
 
-The [States as vectors](02-state-vectors-operators-and-measurement.md) card gave the rules: a state is a column of complex numbers of length 1, a measurement is a matrix, its eigenvalues are the possible readings, and a reading's chance is the squared overlap with its eigenvector. A hat marks an operator (here a matrix acting on the state), not an estimate. Here the column has two entries, because there are two spots. The three Pauli matrices (after Wolfgang Pauli, 1927) do all the work:
+The [States as vectors](02-state-vectors-operators-and-measurement.md) card gave the rules: a state is a column of complex numbers of length 1, a measurement is a matrix, its eigenvalues are the possible readings, and a reading's chance is the squared overlap with its eigenvector.
+
+A hat marks an operator (here a matrix acting on the state), not an estimate. Here the column has two entries, because there are two spots. The three Pauli matrices (after Wolfgang Pauli, 1927) do all the work:
 
 $$\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad \sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad \sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad \hat S_{\mathbf n}=\frac{\hbar}{2}\,\sigma_{\mathbf n},\quad \sigma_{\mathbf n}=n_x\sigma_x+n_y\sigma_y+n_z\sigma_z$$
 
@@ -89,7 +91,9 @@ Up-along-z atoms split 50/50 at an x magnet. So "up along x" must overlap $(1,0)
 
 ### Step 2: the y axis forces complex numbers
 
-A y magnet also splits up-along-z atoms 50/50, and it splits up-along-x atoms 50/50 too. So "up along y" must have overlap $\tfrac12$ (squared) with all four columns above. A real column $(c, d)$ cannot: overlap $\tfrac12$ with $(1,0)$ and $(0,1)$ means $c^2=d^2=\tfrac12$, so $d = \pm c$, and then it *is* up or down along x. The way out is a complex entry: $\tfrac{1}{\sqrt2}(1, i)$. Its squared overlap with $\tfrac1{\sqrt2}(1,1)$ is $\lvert 1+i\rvert^2/4 = 2/4 = \tfrac12$. The matrix with eigenvectors $\tfrac{1}{\sqrt2}(1,\pm i)$ and readings $\pm1$ is $\sigma_y$. Three axes at right angles need complex numbers: this is where quantum mechanics stops being real-valued ([Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md)).
+A y magnet also splits up-along-z atoms 50/50, and it splits up-along-x atoms 50/50 too. So "up along y" must have overlap $\tfrac12$ (squared) with all four columns above. A real column $(c, d)$ cannot: overlap $\tfrac12$ with $(1,0)$ and $(0,1)$ means $c^2=d^2=\tfrac12$, so $d = \pm c$, and then it *is* up or down along x.
+
+The way out is a complex entry: $\tfrac{1}{\sqrt2}(1, i)$. Its squared overlap with $\tfrac1{\sqrt2}(1,1)$ is $\lvert 1+i\rvert^2/4 = 2/4 = \tfrac12$. The matrix with eigenvectors $\tfrac{1}{\sqrt2}(1,\pm i)$ and readings $\pm1$ is $\sigma_y$. Three axes at right angles need complex numbers: this is where quantum mechanics stops being real-valued ([Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md)).
 
 The three matrices then obey $\sigma_x\sigma_y=i\sigma_z$, each squares to $I$, and any two different ones *anticommute*: $\sigma_x\sigma_y=-\sigma_y\sigma_x$. The checks multiply them out.
 
@@ -118,7 +122,9 @@ Write $x=\omega t/2$. The power series is $e^{-ix\sigma}=\sum_k (-ix)^k\sigma^k/
 
 </details>
 
-For a field along z, $U(t)$ only multiplies $a$ by $e^{-i\omega t/2}$ and $b$ by $e^{+i\omega t/2}$. The sizes $\lvert a\rvert$ and $\lvert b\rvert$ never change, so the chance of up along z never changes. Only the *relative phase* of $a$ and $b$ (the angle between them as arrows in the complex plane) turns, at rate $\omega$. That phase is what an x or y magnet reads. Start up along x, $\tfrac1{\sqrt2}(1,1)$, and the chance of still finding up along x is
+For a field along z, $U(t)$ only multiplies $a$ by $e^{-i\omega t/2}$ and $b$ by $e^{+i\omega t/2}$. The sizes $\lvert a\rvert$ and $\lvert b\rvert$ never change, so the chance of up along z never changes.
+
+Only the *relative phase* of $a$ and $b$ (the angle between them as arrows in the complex plane) turns, at rate $\omega$. That phase is what an x or y magnet reads. Start up along x, $\tfrac1{\sqrt2}(1,1)$, and the chance of still finding up along x is
 
 $$P_{+x}(t)=\cos^2\frac{\omega t}{2}.$$
 
@@ -187,13 +193,17 @@ xychart-beta
     line [0.750, 0.750, 0.750, 0.750, 0.750, 0.750, 0.750, 0.750, 0.750, 0.750]
 ```
 
-Orange: up along x, for an atom started up along x; the formula and the RK4 solution of Schrödinger's equation agree to three decimals at every point. Green: up along z, for an atom started 60° from z; flat, because the field is along z.
+Orange: up along x, for an atom started up along x; the formula and the RK4 solution of Schrödinger's equation ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md), a standard step-by-step solver) agree to three decimals at every point. Green: up along z, for an atom started 60° from z; flat, because the field is along z.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts build the Pauli matrices by hand and multiply them out. The 60° chance takes three independent roads: the half-angle formula; the eigenvector of the tilted magnet's matrix, found from its quadratic with no angle used; and the column (1, 0) turned 60° about y by the matrix exponential's power series, $e^{-i(\pi/6)\sigma_y}$, whose first entry squared is the chance. Then 100000 atoms drawn with that chance from a SplitMix64 generator, seed 2026, show the scatter a real count has; they are a demonstration, not a fourth road. The turning in time takes three roads: the closed form, an RK4 solution of Schrödinger's equation in 0.008 ps steps, and the same power series to 40 terms. The Larmor rate per tesla is checked against CODATA's electron gyromagnetic ratio, and the drift through the magnet against a stepped flight. Rust writes its own small complex type.
+The scripts build the Pauli matrices by hand and multiply them out. The 60° chance takes three independent roads: the half-angle formula; the eigenvector of the tilted magnet's matrix, found from its quadratic with no angle used; and the column (1, 0) turned 60° about y by the matrix exponential's power series, $e^{-i(\pi/6)\sigma_y}$, whose first entry squared is the chance.
+
+Then 100000 atoms drawn with that chance from a SplitMix64 generator, seed 2026, show the scatter a real count has; they are a demonstration, not a fourth road.
+
+The turning in time takes three roads: the closed form, an RK4 solution of Schrödinger's equation in 0.008 ps steps, and the same power series to 40 terms. The Larmor rate per tesla is checked against the electron gyromagnetic ratio from CODATA, the international table of physical constants, and the drift through the magnet against a stepped flight. Rust writes its own small complex type.
 
 ### Python
 
@@ -543,6 +553,224 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line, including the simulated count, because both generators produce the same stream from seed 2026.
+
+### Lean
+
+Lean proves the half-angle rule for every tilt, the two readings for every axis, and the turning formula for every time.
+
+- Take a magnet tilted by any angle α from z towards x, and any up and down eigenvectors of length 1. Then an atom up along z lands up with chance cos² of α/2, and down with chance sin² of α/2.
+- Take any axis n as a unit arrow. Then its matrix $\sigma_{\mathbf n}$ squares to $I$, so its only readings are +1 and −1.
+- Take any axis n as a unit arrow, any rate ω and any time t. Then the matrix exponential $e^{-i\omega t\,\sigma_{\mathbf n}/2}$ equals Step 4's two-term formula for $U(t)$.
+- Each Pauli matrix squares to $I$. Also $\sigma_x\sigma_y=i\sigma_z$ and $\sigma_x\sigma_y=-\sigma_y\sigma_x$.
+- Take the axis tilted by α from z towards x. Then its matrix is `[[cos α, sin α], [sin α, −cos α]]`.
+- At a 60° tilt the up chance is cos² 30° = 3/4: 7500 up and 2500 down out of 10000.
+- At tilts of 90°, 120° and 180° the up chances are 1/2, 1/4 and 0.
+- The full-angle mistake, cos² 60°, gives 1/4, not 3/4.
+- Magnets along z, then x, then z again: 10000 atoms, 5000 kept, then 2500 up and 2500 down.
+- After one full turn, ωt = 2π, the formula gives $-I$. After two full turns it gives $I$.
+
+Lean works with the matrices alone, so the drift, the Larmor rate and the swinging chances are left to the Python and Rust checks.
+
+```lean
+-- Spin one-half: an atom prepared up along z lands up along a magnet tilted by α with chance cos²(α/2) and down with chance sin²(α/2), every axis matrix n·σ squares to I so its only readings are +1 and −1, and a steady field turns the state by U = cos(ωt/2) I − i sin(ωt/2) n·σ.
+import Mathlib.Analysis.Normed.Algebra.MatrixExponential
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Series
+import Mathlib.Tactic
+
+open Matrix Real
+
+/-! A spin state is a column of two complex numbers, `Fin 2 → ℂ`. The overlap `⟨u|v⟩` is
+`star u ⬝ᵥ v`: conjugate the first column's entries, multiply entry by entry, add. A chance is
+the squared size of an overlap, `Complex.normSq`. The three Pauli matrices are written out below,
+and the matrix of the magnet along the axis `n = (n_x, n_y, n_z)` is `n_x σ_x + n_y σ_y + n_z σ_z`.
+The turning matrix `U(t) = e^(−i ω t σ_n / 2)` is Mathlib's matrix exponential `NormedSpace.exp`. -/
+
+/-- The Pauli matrix `σ_x = [[0, 1], [1, 0]]`. -/
+def σx : Matrix (Fin 2) (Fin 2) ℂ := !![0, 1; 1, 0]
+/-- The Pauli matrix `σ_y = [[0, −i], [i, 0]]`. -/
+def σy : Matrix (Fin 2) (Fin 2) ℂ := !![0, -Complex.I; Complex.I, 0]
+/-- The Pauli matrix `σ_z = [[1, 0], [0, −1]]`. -/
+def σz : Matrix (Fin 2) (Fin 2) ℂ := !![1, 0; 0, -1]
+
+/-- The magnet's matrix for the axis `n = (n_x, n_y, n_z)`: `σ_n = n_x σ_x + n_y σ_y + n_z σ_z`. -/
+def σn (nx ny nz : ℝ) : Matrix (Fin 2) (Fin 2) ℂ :=
+  (nx : ℂ) • σx + (ny : ℂ) • σy + (nz : ℂ) • σz
+
+/-- **The half-angle rule.** Take the magnet tilted by any angle `α` from z towards x, axis
+`n = (sin α, 0, cos α)`. Let `u` be a unit column that the magnet's matrix keeps as itself (an
+"up along n" eigenvector, reading +1) and `w` a unit column that it flips (a "down along n"
+eigenvector, reading −1). Then an atom prepared up along z, the column `(1, 0)`, lands up with
+chance `|⟨n₊|ψ⟩|² = cos²(α/2)` and down with chance `|⟨n₋|ψ⟩|² = sin²(α/2)`, whichever unit
+eigenvectors are chosen. -/
+theorem up_chance_is_cos_sq_half_angle (α : ℝ) (u w : Fin 2 → ℂ)
+    (hu : σn (Real.sin α) 0 (Real.cos α) *ᵥ u = u) (hu1 : star u ⬝ᵥ u = 1)
+    (hw : σn (Real.sin α) 0 (Real.cos α) *ᵥ w = -w) (hw1 : star w ⬝ᵥ w = 1) :
+    Complex.normSq (star u ⬝ᵥ ![1, 0]) = Real.cos (α / 2) ^ 2 ∧
+      Complex.normSq (star w ⬝ᵥ ![1, 0]) = Real.sin (α / 2) ^ 2 := by
+  have hcr : Real.cos α = 2 * Real.cos (α / 2) ^ 2 - 1 := by
+    rw [← Real.cos_two_mul]; ring_nf
+  have hsr : Real.sin α = 2 * Real.sin (α / 2) * Real.cos (α / 2) := by
+    rw [← Real.sin_two_mul]; ring_nf
+  have hc : Complex.cos (α : ℂ) = 2 * ((Real.cos (α / 2) : ℝ) : ℂ) ^ 2 - 1 := by
+    rw [← Complex.ofReal_cos, hcr]; push_cast; ring
+  have hs : Complex.sin (α : ℂ) =
+      2 * ((Real.sin (α / 2) : ℝ) : ℂ) * ((Real.cos (α / 2) : ℝ) : ℂ) := by
+    rw [← Complex.ofReal_sin, hsr]; push_cast; ring
+  have hscr : Real.sin (α / 2) ^ 2 + Real.cos (α / 2) ^ 2 = 1 := Real.sin_sq_add_cos_sq _
+  have hsc : ((Real.sin (α / 2) : ℝ) : ℂ) ^ 2 + ((Real.cos (α / 2) : ℝ) : ℂ) ^ 2 = 1 := by
+    exact_mod_cast hscr
+  have hu0 := congrFun hu 0
+  have hu1' := congrFun hu 1
+  have hw0 := congrFun hw 0
+  have hw1' := congrFun hw 1
+  simp [σn, σx, σy, σz, mulVec, dotProduct, Fin.sum_univ_two] at hu0 hu1' hw0 hw1' hu1 hw1
+  simp only [dotProduct, Fin.sum_univ_two, Pi.star_apply, Matrix.cons_val_zero,
+    Matrix.cons_val_one, mul_one, mul_zero, add_zero, Complex.star_def, Complex.normSq_conj]
+  rw [hc, hs] at hu0 hu1' hw0 hw1'
+  set C : ℝ := Real.cos (α / 2) with hC
+  set S : ℝ := Real.sin (α / 2) with hS
+  -- norm-squared form of the unit conditions
+  have nu : Complex.normSq (u 0) + Complex.normSq (u 1) = 1 := by
+    have : ((Complex.normSq (u 0) + Complex.normSq (u 1) : ℝ) : ℂ) = 1 := by
+      push_cast
+      rw [← Complex.mul_conj, ← Complex.mul_conj, mul_comm (u 0), mul_comm (u 1)]
+      exact hu1
+    exact_mod_cast this
+  have nw : Complex.normSq (w 0) + Complex.normSq (w 1) = 1 := by
+    have : ((Complex.normSq (w 0) + Complex.normSq (w 1) : ℝ) : ℂ) = 1 := by
+      push_cast
+      rw [← Complex.mul_conj, ← Complex.mul_conj, mul_comm (w 0), mul_comm (w 1)]
+      exact hw1
+    exact_mod_cast this
+  constructor
+  · set k : ℂ := (C : ℂ) * u 0 + (S : ℂ) * u 1 with hk
+    have ha : u 0 = (C : ℂ) * k := by rw [hk]; linear_combination (-1/2 : ℂ) * hu0
+    have hb : u 1 = (S : ℂ) * k := by rw [hk]; linear_combination (-1/2 : ℂ) * hu1' - u 1 * hsc
+    rw [ha, hb, Complex.normSq_mul, Complex.normSq_mul, Complex.normSq_ofReal,
+      Complex.normSq_ofReal] at nu
+    rw [ha, Complex.normSq_mul, Complex.normSq_ofReal]
+    have hk1 : Complex.normSq k = 1 := by nlinarith
+    rw [hk1]; ring
+  · set k : ℂ := (S : ℂ) * w 0 - (C : ℂ) * w 1 with hk
+    have ha : w 0 = (S : ℂ) * k := by rw [hk]; linear_combination (1/2 : ℂ) * hw0 - w 0 * hsc
+    have hb : w 1 = -(C : ℂ) * k := by rw [hk]; linear_combination (1/2 : ℂ) * hw1'
+    rw [ha, hb, Complex.normSq_mul, Complex.normSq_mul, Complex.normSq_ofReal,
+      Complex.normSq_neg, Complex.normSq_ofReal] at nw
+    rw [ha, Complex.normSq_mul, Complex.normSq_ofReal]
+    have hk1 : Complex.normSq k = 1 := by nlinarith
+    rw [hk1]; ring
+
+/-- **Every axis gives exactly two spots** (Step 3). For every unit arrow `n`
+(`n_x² + n_y² + n_z² = 1`) the magnet's matrix squares to the identity, `σ_n² = I`, so the only
+possible readings (eigenvalues with a nonzero eigenvector) are `+1` and `−1`. -/
+theorem axis_matrix_squares_to_one (nx ny nz : ℝ) (hn : nx ^ 2 + ny ^ 2 + nz ^ 2 = 1) :
+    σn nx ny nz * σn nx ny nz = 1 ∧
+      ∀ (μ : ℂ) (v : Fin 2 → ℂ), v ≠ 0 → σn nx ny nz *ᵥ v = μ • v → μ = 1 ∨ μ = -1 := by
+  have hn' : (nx : ℂ) ^ 2 + (ny : ℂ) ^ 2 + (nz : ℂ) ^ 2 = 1 := by exact_mod_cast hn
+  have hsq : σn nx ny nz * σn nx ny nz = 1 := by
+    ext i j; fin_cases i <;> fin_cases j <;>
+      simp [σn, σx, σy, σz, Matrix.mul_apply, Fin.sum_univ_two] <;>
+      first | ring1 | linear_combination hn' - (ny : ℂ) ^ 2 * Complex.I_sq
+  refine ⟨hsq, fun μ v hv hμ => ?_⟩
+  have h2 : v = μ ^ 2 • v := by
+    have := congrArg (fun A => A *ᵥ v) hsq
+    simp only [one_mulVec, ← mulVec_mulVec, hμ, mulVec_smul, smul_smul] at this
+    rw [sq]; exact this.symm
+  have h3 : (μ ^ 2 - 1) • v = 0 := by rw [sub_smul, ← h2, one_smul, sub_self]
+  rcases smul_eq_zero.mp h3 with h | h
+  · exact sq_eq_one_iff.mp (sub_eq_zero.mp h)
+  · exact absurd h hv
+
+/-- **The turning matrix collapses to two terms** (Step 4). For every unit arrow `n`, every rate
+`ω` and every time `t`, the matrix exponential `U(t) = e^(−i ω t σ_n / 2)` equals
+`cos(ωt/2) I − i sin(ωt/2) σ_n`. -/
+theorem turning_matrix_closed_form (nx ny nz ω t : ℝ) (hn : nx ^ 2 + ny ^ 2 + nz ^ 2 = 1) :
+    NormedSpace.exp ((-Complex.I * ((ω * t / 2 : ℝ) : ℂ)) • σn nx ny nz) =
+      ((Real.cos (ω * t / 2) : ℝ) : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ) -
+        (Complex.I * ((Real.sin (ω * t / 2) : ℝ) : ℂ)) • σn nx ny nz := by
+  have hA2 : σn nx ny nz ^ 2 = 1 := by
+    rw [sq]; exact (axis_matrix_squares_to_one nx ny nz hn).1
+  set θ : ℝ := ω * t / 2
+  set A := σn nx ny nz
+  set z : ℂ := -Complex.I * (θ : ℂ) with hzdef
+  have hz : z ^ 2 = -(θ : ℂ) ^ 2 := by
+    rw [hzdef]; linear_combination (θ : ℂ) ^ 2 * Complex.I_sq
+  rw [NormedSpace.exp_eq_tsum ℂ]
+  refine HasSum.tsum_eq ?_
+  have hcos := (Complex.hasSum_cos (θ : ℂ)).smul_const (1 : Matrix (Fin 2) (Fin 2) ℂ)
+  have hsin := ((Complex.hasSum_sin (θ : ℂ)).mul_left (-Complex.I)).smul_const A
+  rw [Complex.ofReal_cos, Complex.ofReal_sin, sub_eq_add_neg, ← neg_smul,
+    show -(Complex.I * Complex.sin (θ : ℂ)) = -Complex.I * Complex.sin (θ : ℂ) by ring]
+  refine HasSum.even_add_odd ?_ ?_
+  · convert hcos using 1
+    funext n
+    rw [smul_pow, pow_mul A, hA2, one_pow, smul_smul]
+    congr 1
+    rw [pow_mul z, hz, neg_pow, pow_mul (θ : ℂ)]
+    ring
+  · convert hsin using 1
+    funext n
+    rw [smul_pow, pow_succ A, pow_mul A, hA2, one_pow, one_mul, smul_smul]
+    congr 1
+    rw [pow_succ z, pow_mul z, hz, neg_pow, ← pow_mul, hzdef]
+    ring
+
+/-! The card's exact checks. -/
+
+-- σ_x σ_y = i σ_z.
+example : σx * σy = Complex.I • σz := by
+  ext i j; fin_cases i <;> fin_cases j <;> simp [σx, σy, σz, Matrix.mul_apply, Fin.sum_univ_two]
+-- Each Pauli matrix squares to I.
+example : σx * σx = 1 ∧ σy * σy = 1 ∧ σz * σz = 1 := by
+  refine ⟨?_, ?_, ?_⟩ <;> ext i j <;> fin_cases i <;> fin_cases j <;>
+    simp [σx, σy, σz, Matrix.mul_apply, Fin.sum_univ_two]
+-- Two different Pauli matrices anticommute: σ_x σ_y = −σ_y σ_x.
+example : σx * σy = -(σy * σx) := by
+  ext i j; fin_cases i <;> fin_cases j <;> simp [σx, σy, Matrix.mul_apply, Fin.sum_univ_two]
+-- The tilted magnet's matrix is [[cos α, sin α], [sin α, −cos α]].
+example (α : ℝ) : σn (Real.sin α) 0 (Real.cos α) =
+    !![(Real.cos α : ℂ), Real.sin α; Real.sin α, -(Real.cos α : ℂ)] := by
+  ext i j; fin_cases i <;> fin_cases j <;> simp [σn, σx, σy, σz]
+-- Tilt 60°: cos² 30° = 3/4; of 10000 atoms, 7500 up and 2500 down.
+example : Real.cos (π / 3 / 2) ^ 2 = 3 / 4 := by
+  rw [show π / 3 / 2 = π / 6 by ring, Real.cos_pi_div_six, div_pow, Real.sq_sqrt (by norm_num)]
+  norm_num
+example : (10000 : ℚ) * (3 / 4) = 7500 ∧ (10000 : ℚ) * (1 - 3 / 4) = 2500 := by norm_num
+-- Tilts of 90°, 120° and 180°: up chances 1/2, 1/4 and 0.
+example : Real.cos (π / 2 / 2) ^ 2 = 1 / 2 := by
+  rw [show π / 2 / 2 = π / 4 by ring, Real.cos_pi_div_four, div_pow, Real.sq_sqrt (by norm_num)]
+  norm_num
+example : Real.cos (2 * π / 3 / 2) ^ 2 = 1 / 4 := by
+  rw [show 2 * π / 3 / 2 = π / 3 by ring, Real.cos_pi_div_three]; norm_num
+example : Real.cos (π / 2) ^ 2 = 0 := by simp
+-- The wrong full angle: cos² 60° = 1/4, not 3/4.
+example : Real.cos (π / 3) ^ 2 = 1 / 4 := by rw [Real.cos_pi_div_three]; norm_num
+-- z, then x (keep +x), then z again: 10000 → 5000 kept → 2500 up, 2500 down.
+example : (10000 : ℚ) * (1 / 2) = 5000 ∧ (5000 : ℚ) * (1 / 2) = 2500 ∧
+    (5000 : ℚ) * (1 - 1 / 2) = 2500 := by norm_num
+-- After one full turn, ωt = 2π, the closed form gives −I; after two turns, +I.
+example (nx ny nz : ℝ) :
+    ((Real.cos (2 * π / 2) : ℝ) : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ) -
+      (Complex.I * ((Real.sin (2 * π / 2) : ℝ) : ℂ)) • σn nx ny nz = -1 := by
+  rw [show 2 * π / 2 = π by ring, Real.cos_pi, Real.sin_pi]; simp
+example (nx ny nz : ℝ) :
+    ((Real.cos (4 * π / 2) : ℝ) : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ) -
+      (Complex.I * ((Real.sin (4 * π / 2) : ℝ) : ℂ)) • σn nx ny nz = 1 := by
+  rw [show 4 * π / 2 = 2 * π by ring, Real.cos_two_pi, Real.sin_two_pi]; simp
+
+#print axioms up_chance_is_cos_sq_half_angle
+#print axioms axis_matrix_squares_to_one
+#print axioms turning_matrix_closed_form
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'up_chance_is_cos_sq_half_angle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'axis_matrix_squares_to_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'turning_matrix_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
