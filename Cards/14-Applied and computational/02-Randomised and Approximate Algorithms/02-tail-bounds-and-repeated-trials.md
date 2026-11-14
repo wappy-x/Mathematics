@@ -8,11 +8,13 @@
 
 A web service answers 10 million requests a day. Each answer is the product of two tables of numbers, 1,000 rows by 1,000 columns, worked out on a separate worker machine. A worker with a faulty memory chip can send back a wrong product. Checking by redoing the product costs 1,000,000,000 multiplications per request, as much as the work itself.
 
-A cheaper check exists. Pick a random list of 1,000 zeros and ones. Push the list through the two tables, and separately through the claimed product, and compare the two results. That costs 3,000,000 multiplications. A right product always passes. A wrong product fails the check at least half the time, so each run is a coin flip that can only ever go against a wrong answer.
+A cheaper check exists. Pick a random list of 1,000 zeros and ones. Push the list through the two tables, and separately through the claimed product, and compare the two results. That costs 3,000,000 multiplications. A right product always passes. A wrong product fails the check at least half the time, so each run is a coin flip that can only ever go against a wrong answer. A test like this, which never rejects a right answer, is called one-sided.
 
 So run it 20 times, with a fresh random list each time. A wrong product survives only if all 20 coins land its way: a chance of 1 in 1,048,576, just under 1 in a million. The 20 runs cost 6% of redoing the work. That is the trade this card is about: spend a few repeats, and a method that is unreliable on one run becomes one that almost never embarrasses you.
 
-Two warnings come with it. The guarantee must hold even on a day when a broken worker spoils every product, and then ten million requests, each with a 1-in-a-million miss, let through 9.54 wrong products on average; making even one bad day a 1-in-a-million event takes 44 runs per request. And a test that can be wrong in both directions, right 3 times in 4 on each run, needs a majority vote and more runs: 79 at the least, 97 by the guarantee used here.
+Two warnings come with it. The guarantee must hold even on a day when a broken worker spoils every product. Then ten million requests, each with a 1-in-a-million miss, let through 9.54 wrong products on average. Making even one bad day a 1-in-a-million event takes 44 runs per request.
+
+And a two-sided test, one that can be wrong in both directions, needs a majority vote and more runs. If it is right 3 times in 4 on each run, it needs 79 runs at the least, 97 by the guarantee used here.
 
 **Independent repeats shrink a method's failure chance exponentially, so the number of runs needed grows only with the logarithm of how rare a failure must be and of how many times the method is used.**
 
@@ -52,7 +54,7 @@ $$\text{two-sided, majority vote:}\ \ P(\text{vote wrong}) \le e^{-k\,D(\frac12\
 
 $$\text{many uses, the union bound:}\ \ P(\text{some use fails}) \le N \times (\text{failure chance of one use})$$
 
-**Read it aloud:** a one-sided test misses only when every run misses; a majority vote is wrong with a chance that falls exponentially at Chernoff's rate $D$; and the chance that any of $N$ uses fails is at most $N$ times the chance for one.
+**Read it aloud:** a one-sided test misses only when every run misses. A majority vote is wrong with a chance that falls exponentially at Chernoff's rate $D$. The chance that any of $N$ uses fails is at most $N$ times the chance for one.
 
 Here $D(a\,\|\,b) = a\ln\frac{a}{b} + (1-a)\ln\frac{1-a}{1-b}$ is Chernoff's rate, the gap between a coin with chance $a$ and one with chance $b$ ([Concentration](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md)). For a vote, $a = \frac12$ is the line a majority must cross and $b = 1 - p$ is a run's chance of being wrong.
 
@@ -85,13 +87,17 @@ Here $D(a\,\|\,b) = a\ln\frac{a}{b} + (1-a)\ln\frac{1-a}{1-b}$ is Chernoff's rat
 
 ### Step 0: failures that need many coincidences are rare
 
-A one-sided method fails only if every run fails, and independent failures multiply, so each run cuts the failure chance by a fixed factor. A two-sided method decided by majority fails only if more than half its runs fail: a tail of a binomial count, which Chernoff's bound shows also falls exponentially, under a guarantee that shrinks by a fixed factor per run. Either way the runs needed grow with the logarithm of the target. The union bound then spreads one budget $\delta$ across many uses at the same logarithmic price.
+A one-sided method fails only if every run fails, and independent failures multiply, so each run cuts the failure chance by a fixed factor. A two-sided method decided by majority fails only if more than half its runs fail. That is a tail of a binomial count: the chance that the count of failed runs lands far above its mean. Chernoff's bound shows that this tail also falls exponentially, under a guarantee that shrinks by a fixed factor per run.
+
+Either way the runs needed grow with the logarithm of the target. The union bound then spreads one budget $\delta$ across many uses at the same logarithmic price.
 
 ### Step 1: one run of the check catches a wrong product at least half the time
 
 The check compares $A(Bx)$ with $Cx$. Together the two sides take three passes of a table over a list, two for $A(Bx)$ and one for $Cx$: about $3 \times 1{,}000^2 = 3{,}000{,}000$ multiplications, against $1{,}000^3$ to redo $AB$.
 
-If $C = AB$ the two sides are equal for every list, so a right product is never rejected. If $C$ is wrong, the error table $AB - C$ has some entry that is not zero, in row $i$ and column $j$. Entry $i$ of $(AB - C)x$ is that entry times $x_j$, plus terms that do not involve $x_j$. Fix every other entry of the list. Of the two values $x_j$ can take, 0 and 1, at most one makes the total zero, because they differ by the nonzero entry. So at least half of all lists expose the error. The code checks this on a 3 by 3 product with one entry off by one: exactly 4 of the 8 possible lists catch it, and 0 of 8 flag the right product.
+If $C = AB$ the two sides are equal for every list, so a right product is never rejected. If $C$ is wrong, the error table $AB - C$ has some entry that is not zero, in row $i$ and column $j$. Entry $i$ of $(AB - C)x$ is that entry times $x_j$, plus terms that do not involve $x_j$. Fix every other entry of the list. Of the two values $x_j$ can take, 0 and 1, at most one makes the total zero, because they differ by the nonzero entry. So at least half of all lists expose the error.
+
+The code checks this on a 3 by 3 product with one entry off by one: exactly 4 of the 8 possible lists catch it, and 0 of 8 flag the right product.
 
 ### Step 2: one-sided repeats multiply the doubt
 
@@ -128,11 +134,15 @@ Orange, top: the exact failure chance of the vote. Green, middle: Chernoff's gua
 
 The service does not run the check once; it runs it 10,000,000 times a day. The **union bound** ([Stopping the sieve early](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md)) says the chance that at least one of many events happens is at most the sum of their chances. It needs no independence, which suits requests that share machines.
 
-With 20 runs per request, the sum is $10^7 \times 9.54 \times 10^{-7} = 9.54$. A bound above 1 says nothing, and the worst case is grim: if a broken worker spoiled every product and the checks ran independently, the chance of at least one wrong product reaching a customer would be 0.99993. To make the whole day fail with chance at most 1 in a million, give each request $\delta/N = 10^{-13}$. Then $k \ge \ln(10^{13})/\ln 2 = 29.93/0.6931 = 43.19$, so 44 runs, and the union bound reads $5.68 \times 10^{-7}$. Ten million times as many uses cost 24 more runs, because $\log_2(10^7)$ is about 23.3. The two-sided vote needs $29.93/0.1438 = 208.10$, so 209 runs by Chernoff, and 189 by the exact sum.
+With 20 runs per request, the sum is $10^7 \times 9.54 \times 10^{-7} = 9.54$. A bound above 1 says nothing. The worst case is grim: if a broken worker spoiled every product and the checks ran independently, the chance of at least one wrong product reaching a customer would be 0.99993.
+
+To make the whole day fail with chance at most 1 in a million, give each request $\delta/N = 10^{-13}$. Then $k \ge \ln(10^{13})/\ln 2 = 29.93/0.6931 = 43.19$, so 44 runs, and the union bound reads $5.68 \times 10^{-7}$. Ten million times as many uses cost 24 more runs, because $\log_2(10^7)$ is about 23.3. The two-sided vote needs $29.93/0.1438 = 208.10$, so 209 runs by Chernoff, and 189 by the exact sum.
 
 ### Step 5: the same recipe for an estimate
 
-The service also wants the share of slow requests, without timing all ten million. Draw $n$ requests at random, independently, and report the share that were slow. Hoeffding's two-sided bound says the sample share misses the true share by $\varepsilon$ or more with chance at most $2e^{-2n\varepsilon^2}$. Set that to $\delta$: $n = \lceil \ln(2/\delta)/(2\varepsilon^2) \rceil$. For $\varepsilon = 0.01$ and $\delta$ 1 in a million that is 72,544 samples, under 1% of the day. This pair, "within $\varepsilon$, except with chance $\delta$", is the shape of the guarantees later on this shelf. $\delta$ sits inside a logarithm and $\varepsilon$ is squared underneath: $\varepsilon = 0.001$ costs 7,254,329 samples, a hundred times more.
+The service also wants the share of slow requests, without timing all ten million. Draw $n$ requests at random, independently, and report the share that were slow. Hoeffding's bound, counting misses above and below, says the sample share misses the true share by $\varepsilon$ or more with chance at most $2e^{-2n\varepsilon^2}$. Set that to $\delta$: $n = \lceil \ln(2/\delta)/(2\varepsilon^2) \rceil$. For $\varepsilon = 0.01$ and $\delta$ 1 in a million that is 72,544 samples, under 1% of the day.
+
+This pair, "within $\varepsilon$, except with chance $\delta$", is the shape of the guarantees later on this shelf. $\delta$ sits inside a logarithm and $\varepsilon$ is squared underneath: $\varepsilon = 0.001$ costs 7,254,329 samples, a hundred times more.
 
 ---
 
@@ -170,7 +180,7 @@ Forty-four runs of a three-million-multiplication check, 13.2% of the cost of re
 
 ## Code, from first principles, and it actually runs
 
-The script runs Freivalds' check (the random-list check above) on a 3 by 3 product and takes **three independent roads**. Closed forms: $m^k$, the Chernoff and Hoeffding exponentials, the union sum and the run-count formula. Exact counts: all 8 random lists, a run-by-run loop, and the binomial tail summed term by term and again built up one run at a time. A seeded simulation: SplitMix64, a small random-number generator written out in both languages, drives 100,000 trials of the real check, with fresh and with reused lists, and 100,000 votes of 9 runs. Asserts tie the roads together, simulations within four standard errors.
+The script runs Freivalds' check (the random-list check above) on a 3 by 3 product and takes **three independent roads**. Closed forms: $m^k$, the Chernoff and Hoeffding exponentials, the union sum and the run-count formula. Exact counts: all 8 random lists, a run-by-run loop, and the binomial tail summed term by term and again built up one run at a time. A seeded simulation: SplitMix64, a small random-number generator written out in both languages, drives 100,000 trials of the real check, with fresh and with reused lists, and 100,000 votes of 9 runs. Asserts tie the roads together, simulations within four standard errors (four times the scatter expected from chance alone).
 
 ### Python
 
@@ -576,6 +586,202 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the one-sided repeat rule with the union bound, and the check's catch rate, for every number of runs and uses.
+
+- Suppose each run misses with chance at most $m$, with $0 < m < 1$, and $k \ge \ln(N/\delta)/r$. Then the chance that some of the $N$ uses has all $k$ runs miss is at most $\delta$.
+- The runs inside one use must be independent, but different uses need not be.
+- Suppose $C = AB$. Then $A(Bx) = Cx$ for every list $x$ of zeros and ones.
+- Suppose $C \ne AB$. Then at least half of all lists $x$ of zeros and ones give $A(Bx) \ne Cx$.
+- On the card's 3 by 3 tables, 4 of the 8 lists catch the wrong product and 0 of 8 flag the right one.
+- One check costs 3,000,000 multiplications against 1,000,000,000 for a redo; 20 checks are 6% of a redo and 44 are 13.2%.
+- 20 runs reach 1 in a million and 19 do not; at a miss chance of 1/4, 10 runs do and 9 do not.
+- Over 10,000,000 requests, 20 runs give a union bound above 1; 44 runs reach 1 in a million and 43 do not.
+- For the vote right 3 times in 4, the margin is 1/4 and Hoeffding's rate is 1/8.
+- Markov's bound is 1/2 at every $k$, and Chebyshev's is $3/k$, reaching 1 in a million only at 3,000,000 runs.
+- The exact vote sum drops below 1 in a million at 79 runs and is still above it at 77.
+
+Chernoff's bound, the counts 97, 209 and 72,544, and the simulations are left to the Python and Rust checks.
+
+```lean
+-- Tail bounds: N uses of a one-sided test, each repeated k ≥ ln(N/δ)/ln(1/m) times with independent runs that each miss with chance at most m, all succeed except with chance at most δ, one run of Freivalds' check catches a wrong matrix product on at least half of all 0/1 lists while never rejecting a right one, and the card's whole-number run counts and 3 by 3 example check out exactly.
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Data.Matrix.Mul
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Data.Fintype.Pi
+import Mathlib.Data.Nat.Choose.Basic
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Tactic.NormNum.NatFactorial
+
+namespace TailBoundsAndRepeatedTrials
+
+open MeasureTheory ProbabilityTheory Matrix
+
+/-- The card's main claim, the one-sided repeat rule with the union bound. A method is used
+`N` times; use `j` makes `k` runs, and `miss j i` is the event that run `i` of use `j` misses.
+Within each use the runs are independent (fresh randomness every run), and every run misses with
+chance at most `m`, where `0 < m < 1`, so the rate per run is `r = ln(1/m)`. If the number of runs
+is at least `ln(N/δ) / r`, the chance that some use fails (all of its `k` runs miss) is at most
+`δ`. No independence between different uses is assumed. -/
+theorem one_sided_repeats_fail_somewhere_with_chance_at_most_delta
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (N k : ℕ) (miss : Fin N → Fin k → Set Ω) (hindep : ∀ j, iIndepSet (miss j) μ)
+    (m δ : ℝ) (hm0 : 0 < m) (hm1 : m < 1) (hδ : 0 < δ)
+    (hmiss : ∀ j i, μ (miss j i) ≤ ENNReal.ofReal m)
+    (hk : Real.log (N / δ) / Real.log (1 / m) ≤ k) :
+    μ (⋃ j, ⋂ i, miss j i) ≤ ENNReal.ofReal δ := by
+  classical
+  rcases Nat.eq_zero_or_pos N with hN | hN
+  · subst hN; simp
+  have hlogm : 0 < Real.log (1 / m) := Real.log_pos (by rw [one_div]; exact one_lt_inv₀ hm0 |>.2 hm1)
+  have key : (N : ℝ) * m ^ k ≤ δ := by
+    have h1 : Real.log (N / δ) ≤ k * Real.log (1 / m) := by rwa [div_le_iff₀ hlogm] at hk
+    have h2 : Real.log ((N : ℝ) / δ) ≤ Real.log ((1 / m) ^ k) := by rw [Real.log_pow]; exact h1
+    have hNpos : (0 : ℝ) < N := by exact_mod_cast hN
+    have h3 : (N : ℝ) / δ ≤ (1 / m) ^ k :=
+      (Real.log_le_log_iff (by positivity) (by positivity)).1 h2
+    rw [div_pow, one_pow, div_le_div_iff₀ hδ (by positivity)] at h3
+    linarith
+  calc μ (⋃ j, ⋂ i, miss j i) ≤ ∑ j, μ (⋂ i, miss j i) := measure_iUnion_fintype_le _ _
+    _ = ∑ j, ∏ i, μ (miss j i) := by
+        refine Finset.sum_congr rfl fun j _ => ?_
+        simpa using (hindep j).meas_biInter Finset.univ
+    _ ≤ ∑ _j : Fin N, ∏ _i : Fin k, ENNReal.ofReal m := by
+        gcongr with j _ i _
+        exact hmiss j i
+    _ = ENNReal.ofReal (N * m ^ k) := by
+        rw [ENNReal.ofReal_mul (by positivity), ENNReal.ofReal_pow hm0.le]
+        simp [Finset.prod_const, Finset.sum_const, nsmul_eq_mul]
+    _ ≤ ENNReal.ofReal δ := ENNReal.ofReal_le_ofReal key
+
+/-- A random list of zeros and ones, read from a list of yes/no choices. -/
+def zeroOneList {R : Type*} [Zero R] [One R] {n : ℕ} (x : Fin n → Bool) : Fin n → R :=
+  fun i => if x i then 1 else 0
+
+/-- Freivalds' check, one run (Step 1). The check compares `A (B x)` with `C x` for a list `x`
+of zeros and ones. A right product (`C = A B`) passes on every list. A wrong product
+(`C ≠ A B`) is caught by at least half of all `2^n` lists. -/
+theorem freivalds_check_never_rejects_right_and_catches_wrong_half_the_time
+    {R : Type*} [Ring R] [DecidableEq R] {n : ℕ} (A B C : Matrix (Fin n) (Fin n) R) :
+    (C = A * B → ∀ x : Fin n → Bool, A *ᵥ (B *ᵥ zeroOneList x) = C *ᵥ zeroOneList x) ∧
+      (C ≠ A * B → 2 ^ n ≤ 2 * (Finset.univ.filter (fun x : Fin n → Bool =>
+        A *ᵥ (B *ᵥ zeroOneList x) ≠ C *ᵥ zeroOneList x)).card) := by
+  classical
+  refine ⟨fun h x => by rw [h, Matrix.mulVec_mulVec], fun hne => ?_⟩
+  set D : Matrix (Fin n) (Fin n) R := A * B - C with hD
+  have hDv : ∀ v, D *ᵥ v = A *ᵥ (B *ᵥ v) - C *ᵥ v := fun v => by
+    rw [hD, Matrix.sub_mulVec, Matrix.mulVec_mulVec]
+  obtain ⟨r, c, hrc⟩ : ∃ r c, D r c ≠ 0 := by
+    by_contra hcon
+    push Not at hcon
+    apply hne
+    have : D = 0 := by ext r c; exact hcon r c
+    rw [hD, sub_eq_zero] at this
+    exact this.symm
+  let flip : (Fin n → Bool) → (Fin n → Bool) := fun x => Function.update x c (!x c)
+  have hflip_inj : Function.Injective flip := by
+    intro x y hxy
+    have hc := congrFun hxy c
+    simp only [flip, Function.update_self, Bool.not_inj_iff] at hc
+    funext k
+    by_cases hk : k = c
+    · subst hk; exact hc
+    · have := congrFun hxy k
+      simpa [flip, Function.update_of_ne hk] using this
+  have hdiff : ∀ x : Fin n → Bool, (zeroOneList x : Fin n → R) - zeroOneList (flip x)
+      = Pi.single c (if x c then (1 : R) else -1) := by
+    intro x
+    funext k
+    by_cases hk : k = c
+    · subst hk
+      cases h : x k <;> simp [zeroOneList, flip, h]
+    · simp [zeroOneList, flip, hk]
+  set S := Finset.univ.filter (fun x : Fin n → Bool =>
+        A *ᵥ (B *ᵥ zeroOneList x) ≠ C *ᵥ zeroOneList x) with hS
+  set T := Finset.univ.filter (fun x : Fin n → Bool =>
+        ¬ (A *ᵥ (B *ᵥ zeroOneList x) ≠ C *ᵥ zeroOneList x)) with hT
+  have hTS : T.card ≤ S.card := by
+    refine Finset.card_le_card_of_injOn flip ?_ (hflip_inj.injOn)
+    intro x hx
+    simp only [hT, hS, Finset.coe_filter, Finset.mem_univ, true_and, not_not,
+      Set.mem_ofPred_eq] at hx ⊢
+    intro hy
+    have h0 : D *ᵥ (zeroOneList x - zeroOneList (flip x)) = 0 := by
+      rw [Matrix.mulVec_sub, hDv, hDv, hx, hy, sub_self, sub_self, sub_self]
+    rw [hdiff, Matrix.mulVec_single] at h0
+    have h1 := congrFun h0 r
+    apply hrc
+    cases h : x c <;> simp [h, Matrix.col] at h1 <;> simpa using h1
+  have hsum := Finset.card_filter_add_card_filter_not
+    (s := (Finset.univ : Finset (Fin n → Bool)))
+    (fun x : Fin n → Bool => A *ᵥ (B *ᵥ zeroOneList x) ≠ C *ᵥ zeroOneList x)
+  rw [Finset.card_univ, Fintype.card_pi, Fintype.card_bool, Finset.prod_const,
+    Finset.card_univ, Fintype.card_fin] at hsum
+  rw [← hsum]
+  change S.card + T.card ≤ 2 * S.card
+  omega
+
+-- The card's 3 by 3 check: A, B, the right product AB, and a wrong one with entry (1, 2)
+-- off by one (11 becomes 12). 4 of the 8 lists catch the wrong one; 0 of 8 flag the right one.
+example : !![(2 : ℤ), 1, 0; 1, 3, 1; 0, 1, 2] * !![(1 : ℤ), 2, 1; 0, 1, 3; 2, 0, 1]
+    = !![(2 : ℤ), 5, 5; 3, 5, 11; 4, 1, 5] := by decide
+example : (Finset.univ.filter (fun x : Fin 3 → Bool =>
+    !![(2 : ℤ), 1, 0; 1, 3, 1; 0, 1, 2] *ᵥ (!![(1 : ℤ), 2, 1; 0, 1, 3; 2, 0, 1] *ᵥ zeroOneList x)
+      ≠ !![(2 : ℤ), 5, 5; 3, 5, 12; 4, 1, 5] *ᵥ zeroOneList x)).card = 4 := by decide
+example : (Finset.univ.filter (fun x : Fin 3 → Bool =>
+    !![(2 : ℤ), 1, 0; 1, 3, 1; 0, 1, 2] *ᵥ (!![(1 : ℤ), 2, 1; 0, 1, 3; 2, 0, 1] *ᵥ zeroOneList x)
+      ≠ !![(2 : ℤ), 5, 5; 3, 5, 11; 4, 1, 5] *ᵥ zeroOneList x)).card = 0 := by decide
+
+-- Cost: one check 3 × 1,000² = 3,000,000 multiplications, a redo 1,000³; 20 checks are 6% of
+-- a redo and 44 checks 13.2%.
+example : 3 * 1000 ^ 2 = 3000000 ∧ 1000 ^ 3 = 1000000000 := by norm_num
+example : 20 * 3000000 * 100 = 6 * 1000 ^ 3 ∧ 44 * 3000000 * 1000 = 132 * 1000 ^ 3 := by norm_num
+
+-- One request: (1/2)^20 = 1 / 1,048,576 is at most 1 in a million, and 19 runs are not enough.
+example : (2 : ℕ) ^ 20 = 1048576 ∧ 10 ^ 6 ≤ (2 : ℕ) ^ 20 ∧ (2 : ℕ) ^ 19 < 10 ^ 6 := by norm_num
+-- A check that misses 1 time in 4 (Miller-Rabin): 10 runs reach 1 in a million, 9 do not.
+example : 10 ^ 6 ≤ (4 : ℕ) ^ 10 ∧ (4 : ℕ) ^ 9 < 10 ^ 6 := by norm_num
+-- The whole day, 10,000,000 requests at 20 runs: the union bound 10^7 / 2^20 is above 1.
+example : (1 : ℚ) < 10 ^ 7 / 2 ^ 20 := by norm_num
+-- A safe day: 44 runs give 10^7 × 2^-44 ≤ 10^-6, and 43 runs do not; 2^44 = 17,592,186,044,416.
+example : (2 : ℕ) ^ 44 = 17592186044416 ∧ 10 ^ 7 * 10 ^ 6 ≤ (2 : ℕ) ^ 44 ∧
+    (2 : ℕ) ^ 43 < 10 ^ 7 * 10 ^ 6 := by norm_num
+example : (10 : ℚ) ^ 7 / 2 ^ 44 ≤ 1 / 10 ^ 6 := by norm_num
+
+-- The two-sided vote, right 3 times in 4: margin ε = 3/4 - 1/2 = 1/4 and Hoeffding's rate
+-- 2ε² = 1/8; Markov's bound (k/4)/(k/2) = 1/2 and Chebyshev's (3k/16)/(k/4)² = 3/k.
+example : (3 / 4 : ℚ) - 1 / 2 = 1 / 4 ∧ 2 * (1 / 4 : ℚ) ^ 2 = 1 / 8 := by norm_num
+example (k : ℚ) (hk : k ≠ 0) : (k / 4) / (k / 2) = 1 / 2 := by field_simp; ring
+example (k : ℚ) (hk : k ≠ 0) : (3 * k / 16) / (k / 4) ^ 2 = 3 / k := by field_simp; ring
+-- Chebyshev's 3/k reaches 1 in a million only at k = 3,000,000.
+example : (3 : ℚ) / 3000000 = 1 / 10 ^ 6 := by norm_num
+-- The exact vote: with 79 runs the chance that at least 40 are wrong,
+-- Σ C(79, w) 3^(79-w) / 4^79 over w ≥ 40, is below 1 in a million.
+example : 10 ^ 6 * ∑ w ∈ Finset.Ico 40 80, Nat.choose 79 w * 3 ^ (79 - w) < 4 ^ 79 := by
+  simp only [Finset.sum_Ico_eq_sum_range, Finset.sum_range_succ, Finset.sum_range_zero]
+  simp (disch := omega) only [Nat.choose_eq_factorial_div_factorial]
+  norm_num [Nat.factorial_succ]
+-- With 77 runs the chance that at least 39 are wrong is still above 1 in a million.
+example : 4 ^ 77 < 10 ^ 6 * ∑ w ∈ Finset.Ico 39 78, Nat.choose 77 w * 3 ^ (77 - w) := by
+  simp only [Finset.sum_Ico_eq_sum_range, Finset.sum_range_succ, Finset.sum_range_zero]
+  simp (disch := omega) only [Nat.choose_eq_factorial_div_factorial]
+  norm_num [Nat.factorial_succ]
+
+#print axioms one_sided_repeats_fail_somewhere_with_chance_at_most_delta
+#print axioms freivalds_check_never_rejects_right_and_catches_wrong_half_the_time
+
+end TailBoundsAndRepeatedTrials
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'TailBoundsAndRepeatedTrials.one_sided_repeats_fail_somewhere_with_chance_at_most_delta' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TailBoundsAndRepeatedTrials.freivalds_check_never_rejects_right_and_catches_wrong_half_the_time' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - Guess first: how many runs does a check that misses 1 time in 4 need for 1 in a million? Set `MISS = 0.25`. The line for miss chance 0.25 already answers it: 10. The first assert at the end then stops the script, because the 3 by 3 check really misses half the time.
@@ -612,7 +818,7 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [Randomised algorithms](01-randomised-algorithms-and-expectation.md): Monte Carlo and Las Vegas methods, and expected cost; this card bounds how often a Monte Carlo method is wrong.
+- [Randomised algorithms](01-randomised-algorithms-and-expectation.md): Monte Carlo methods (fixed cost, may be wrong) and Las Vegas methods (always right, random cost), and expected cost; this card bounds how often a Monte Carlo method is wrong.
 - [Markov and Chebyshev](../../09-Probability%20and%20statistics/02-Random%20Variables/08-markov-and-chebyshev-inequalities.md): the bounds from a mean and a variance, shown here to be too weak for amplification.
 - [Concentration](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md): proves Hoeffding's inequality and the Chernoff bound that size the majority vote and the sample.
 - [Stopping the sieve early](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md): proves the union bound by counting.

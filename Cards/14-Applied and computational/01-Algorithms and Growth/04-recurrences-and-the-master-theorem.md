@@ -8,7 +8,7 @@
 
 A phone holds a music library of 1,000,000 tracks, and the app has to list them in title order. It uses merge sort: cut the list in half, put each half in order the same way, then merge the two ordered halves by repeatedly taking whichever front track comes first.
 
-How many comparisons does that cost? The code cannot be counted line by line, because the sorting routine calls itself. But its cost can be written the same way the code is written: the cost on 1,000,000 tracks is the cost on each half, plus the merge, which makes at most one comparison per track placed. A rule that defines a cost from the cost of smaller inputs is a **recurrence** ([Recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/01-recurrences-and-fibonacci.md)).
+How many comparisons does that cost? The code cannot be counted line by line, because the sorting routine calls itself. But its cost can be written the same way the code is written. The cost on 1,000,000 tracks is the cost on each half, plus the merge, which makes at most one comparison per track placed. A rule that defines a cost from the cost of smaller inputs is a **recurrence** ([Recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/01-recurrences-and-fibonacci.md)).
 
 That rule answers the question. Halving 1,000,000 down to single tracks takes 20 rounds, and each round's merges make fewer than 1,000,000 comparisons, so the total is under 20,000,000. The exact worst case is 18,951,425. Sorting a synthetic library counted 18,674,254. Comparing every pair of tracks instead would cost 499,999,500,000.
 
@@ -30,7 +30,7 @@ xychart-beta
     line [999999, 999937, 998514, 985365, 939170, 849819, 724190, 530398, 380989, 260009, 162730, 78966, 44809, 24487, 12049, 3746, 1718, 784, 315, 54, 21, 9, 3]
 ```
 
-The first line is merge sort: every depth holds all the tracks, so every depth but the last few costs almost 1,000,000, and the tree stops after 20 depths. The second is quicksort with a lopsided split, one tenth against nine tenths: depths still cost at most 1,000,000 each, but the tree runs to 113 depths and thins out as the small pieces finish. Both totals grow like n log n; the master theorem can only say so for the first.
+The first line is merge sort: every depth holds all the tracks, so every depth but the last few costs almost 1,000,000, and the tree stops after 20 depths. The second is quicksort with a lopsided split, one tenth against nine tenths. Quicksort splits the list around one chosen track (Step 3 below). Its depths still cost at most 1,000,000 each, but the tree runs to 113 depths and thins out as the small pieces finish. Both totals grow like n log n; the master theorem can only say so for the first.
 
 ---
 
@@ -48,7 +48,13 @@ $$T(n) = T(\lfloor n/2 \rfloor) + T(\lceil n/2 \rceil) + (n - 1), \qquad T(1) = 
 
 The brackets $\lfloor\ \rfloor$ and $\lceil\ \rceil$ round down and up, so an odd list splits into two whole pieces.
 
-When the calls are $a$ copies of size $n/b$ and the outside work is $f(n) = n^d$, the master theorem ([Divide-and-conquer recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/07-divide-and-conquer-recurrences.md)) reads the answer off in one line: $T(n)$ is $\Theta(n^{\log_b a})$ if $d < \log_b a$, $\Theta(n^d \log n)$ if they are equal, and $\Theta(n^d)$ if $d$ is bigger. $\Theta(g)$ means "grows exactly like g, up to a constant factor, for large n" ([Big-O](01-big-o-and-growth-rates.md)).
+When the calls are $a$ copies of size $n/b$ and the outside work is $f(n) = n^d$, the master theorem ([Divide-and-conquer recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/07-divide-and-conquer-recurrences.md)) reads the answer off in one line. $T(n)$ is:
+
+- $\Theta(n^{\log_b a})$ if $d < \log_b a$;
+- $\Theta(n^d \log n)$ if they are equal;
+- $\Theta(n^d)$ if $d$ is bigger.
+
+$\Theta(g)$ means "grows exactly like g, up to a constant factor, for large n" ([Big-O](01-big-o-and-growth-rates.md)).
 
 | Code | Calls itself on | Work outside | Rule | Grows like |
 | --- | --- | --- | --- | --- |
@@ -71,14 +77,14 @@ When the calls are $a$ copies of size $n/b$ and the outside work is $f(n) = n^d$
 | $j$ | depth in the tree, the first call being depth 0 | 0 to 19 | smaller pieces, more of them |
 | $x$, $y$; $x_1$, $x_0$ | two numbers to multiply; the top and bottom halves of x's digits | 16 digits; 8 digits each | more digits, more levels |
 | $k$ | levels of the tree, $\lceil \log_2 n \rceil$ | 20 | one more level per doubling |
-| $H$ | the uneven split's entropy, $-(0.1 \ln 0.1 + 0.9 \ln 0.9)$ | 0.3251 | a more even split: fewer levels |
+| $H$ | the uneven split's entropy, $-(0.1 \ln 0.1 + 0.9 \ln 0.9)$; ln is the natural log | 0.3251 | a more even split: fewer levels |
 | $\Theta(g)$ | grows exactly like g, up to a constant | $\Theta(n \log n)$ | — |
 
 ### When it holds
 
 - **Every call's size is fixed by n.** Quicksort's piece sizes depend on the data, so its rule exists only for a named case: the worst case, or a fixed split. Leave the case unnamed and the rule means nothing.
 - **The pieces are a fixed fraction of n.** A rule like $T(n-1) + n$ has no $b$, so the theorem is silent; on a sorted playlist it gives n²/2, not n log n.
-- **The outside work is a plain power of n.** Work of n log₂ n per call falls between two cases; the tree gives n log² n, more than ten times the n log n a forced guess gives at 2²⁰ items.
+- **The outside work is a plain power of n.** Work of n log₂ n per call falls between two cases; the tree gives n log² n (n times log n squared), more than ten times the n log n a forced guess gives at 2²⁰ items.
 - **The answer is a growth class, not a count.** The theorem says merge sort is $\Theta(n \log n)$; it cannot tell 18,951,425 from 20,000,000. The exact count comes from the recurrence itself.
 
 ---
@@ -99,7 +105,7 @@ $$T(n) = \sum_{j=0}^{k-1} (n - 2^j) = n k - 2^k + 1$$
 
 At 1,000,000 tracks, $k = 20$: 20,000,000 minus 1,048,575 is **18,951,425**. The code checks this three ways: by running the recurrence, by the closed form, and by summing the depths.
 
-No comparison sort can beat $\log_2(n!)$ comparisons in the worst case, or on average over all orders: 18,488,885 here, because each comparison at best halves the orders still possible ([Sorting and searching](05-sorting-and-searching.md)). The counted run on the shuffled library, 18,674,254, sits between that floor and the worst case. The floor does not bind a single lucky order: handed the library already sorted, the same code makes 9,884,992.
+No comparison sort can beat $\log_2(n!)$ comparisons in the worst case, or on average over all orders: 18,488,885 here. Each comparison at best halves the orders still possible ([Sorting and searching](05-sorting-and-searching.md)). The counted run on the shuffled library, 18,674,254, sits between that floor and the worst case. The floor does not bind a single lucky order: handed the library already sorted, the same code makes 9,884,992.
 
 <details>
 <summary>Why every depth holds n − 2^j comparisons, even when n is not a power of 2</summary>
@@ -124,15 +130,25 @@ Quicksort picks one track, the **pivot**, compares every other track with it, an
 
 $$T(n) = T(\lfloor n/10 \rfloor) + T(n - 1 - \lfloor n/10 \rfloor) + (n - 1)$$
 
-Two calls of different sizes: there is no single $b$, so the master theorem does not apply. The tree still works. The pieces at any depth hold different tracks, so no depth costs more than n. The short branch runs out quickly; the long one shrinks by 9/10 each time, so the tree has a depth that grows like log n. At most n per depth, over a depth like log n: $\Theta(n \log n)$. The picture shows it: 113 depths, full at first, then thinning.
+Two calls of different sizes: there is no single $b$, so the master theorem does not apply.
 
-A sharper count charges each comparison to the track being compared. A track's cost is the number of pivots it met, which is its depth in the tree. Averaged over all the tracks, a track sits at depth about $\ln n / H$, where $H = 0.3251$ is the split's **entropy**: a measure of how evenly the split shares out the tracks, largest for a half-and-half split. That predicts 42,498,413 comparisons; the exact recurrence gives 38,011,396. The gap is the lower-order terms. Computed from the recurrence at 10,000, 100,000 and 1,000,000 tracks, the cost divided by $n \log_2 n$ is 1.794, 1.862 and 1.907: steady, creeping toward its limit 2.132, the sign of n log n with a larger constant than merge sort's, which is 0.951 here and tends to 1. The general result for unequal pieces is the Akra–Bazzi theorem.
+The tree still works. The pieces at any depth hold different tracks, so no depth costs more than n. The short branch runs out quickly; the long one shrinks by 9/10 each time, so the tree has a depth that grows like log n. At most n per depth, over a depth like log n: $\Theta(n \log n)$. The picture shows it: 113 depths, full at first, then thinning.
+
+A sharper count charges each comparison to the track being compared. A track's cost is the number of pivots it met, which is its depth in the tree.
+
+Averaged over all the tracks, a track sits at depth about $\ln n / H$, where $H = 0.3251$ is the split's **entropy**. Entropy is a measure of how evenly the split shares out the tracks, largest for a half-and-half split. That predicts 42,498,413 comparisons; the exact recurrence gives 38,011,396. The gap is the lower-order terms.
+
+Computed from the recurrence at 10,000, 100,000 and 1,000,000 tracks, the cost divided by $n \log_2 n$ is 1.794, 1.862 and 1.907. The ratio is steady, creeping toward its limit 2.132: the sign of n log n with a larger constant than merge sort's, which is 0.951 here and tends to 1. The general result for unequal pieces is the Akra–Bazzi theorem.
 
 ### Step 4: two more shapes outside the theorem
 
-**Subtract one, not divide.** Give quicksort a playlist that is already sorted and take the first track as pivot. Every other track is bigger, so one call gets nothing and the other gets n − 1 tracks: $T(n) = T(n-1) + (n - 1)$. There is only one node per depth and n depths, so the total is $(n-1) + (n-2) + \dots + 1 = n(n-1)/2$. The run counts 499,500 comparisons on 1,000 sorted tracks, and the same code makes 11,365 on 1,000 tracks in random order. At 1,000,000 sorted tracks it would make 499,999,500,000.
+**Subtract one, not divide.** Give quicksort a playlist that is already sorted and take the first track as pivot. Every other track is bigger, so one call gets nothing and the other gets n − 1 tracks: $T(n) = T(n-1) + (n - 1)$. There is only one node per depth and n depths, so the total is $(n-1) + (n-2) + \dots + 1 = n(n-1)/2$.
 
-**Outside work of n log n.** Suppose each call does its piece's size times $\log_2$ of that size in outside work: $T(n) = 2T(n/2) + n \log_2 n$. At depth j there are $2^j$ pieces of size $n/2^j$, so the depth costs $n(k - j)$ with $k = \log_2 n$. The depths no longer tie: they shrink slowly. Summing $k + (k-1) + \dots + 1$ gives $n k(k+1)/2$, which grows like $n \log^2 n$. At $2^{20}$ items that is 220,200,960, against 20,971,520 if it is wrongly read as n log n. The rule in general: when the outside work is $n^{\log_b a}$ times a power of log n, the total carries that power plus one.
+The run counts 499,500 comparisons on 1,000 sorted tracks, and the same code makes 11,365 on 1,000 tracks in random order. At 1,000,000 sorted tracks it would make 499,999,500,000.
+
+**Outside work of n log n.** Suppose each call does its piece's size times $\log_2$ of that size in outside work: $T(n) = 2T(n/2) + n \log_2 n$. At depth j there are $2^j$ pieces of size $n/2^j$, so the depth costs $n(k - j)$ with $k = \log_2 n$.
+
+The depths no longer tie: they shrink slowly. Summing $k + (k-1) + \dots + 1$ gives $n k(k+1)/2$, which grows like $n \log^2 n$. At $2^{20}$ items that is 220,200,960, against 20,971,520 if it is wrongly read as n log n. The rule in general: when the outside work is $n^{\log_b a}$ times a power of log n, the total carries that power plus one.
 
 ---
 
@@ -526,6 +542,170 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the exact totals for merge sort's rule and the two shapes outside the master theorem, and checks the worked numbers.
+
+- Suppose $T(1) = 0$ and merge sort's rule holds for every $n \ge 2$. Then $T(n) = nk - 2^k + 1$ for every $n \ge 1$, with $k = \lceil \log_2 n \rceil$.
+- Suppose $T(1) = 0$ and $T(n) = T(n-1) + (n-1)$ for every $n \ge 2$. Then $T(n) = n(n-1)/2$ for every $n \ge 1$.
+- Suppose $T(1) = 0$ and $T(n) = 2T(n/2) + n \log_2 n$ whenever n is a power of 2. Then $T(n) = nk(k+1)/2$ for every $n = 2^k$.
+- 1,000,000 tracks take 20 depths. The worst case is 20,000,000 minus 1,048,575, which is 18,951,425.
+- At 2²⁰ tracks the worst case becomes 19,922,945.
+- Comparing every pair of 1,000,000 tracks costs 499,999,500,000, and the sorted playlist of 1,000 tracks costs 499,500.
+- Karatsuba's one-product middle term checks out on 3141 and 2718, and so does the 16-digit product.
+- Karatsuba at 1,024 digits makes 59,049 one-digit multiplies, against 1,048,576 for the schoolbook and 10,240 for the n log n misreading.
+- Strassen at 1,024 by 1,024 makes 282,475,249 multiplies, against 1,073,741,824 with eight block products.
+- Outside work of n log n at 2²⁰ items totals 220,200,960, against 20,971,520 when read as n log n.
+
+The sorting runs, the 10% pivot split and the floor for any comparison sort are left to the Python and Rust checks.
+
+```lean
+-- Recurrences: the merge sort rule T(n) = T(⌊n/2⌋) + T(⌈n/2⌉) + (n − 1), T(1) = 0, totals exactly n·k − 2^k + 1 with k = ⌈log₂ n⌉, and the two shapes outside the master theorem total n(n − 1)/2 and n·k(k + 1)/2.
+import Mathlib.Data.Nat.Log
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.Linarith
+
+/-- Helper: the closed form holds for any exponent j with n ≤ 2^j ≤ 2n. -/
+theorem merge_sort_closed_form_aux (T : ℕ → ℕ) (h1 : T 1 = 0)
+    (hrec : ∀ n, 2 ≤ n → T n = T (n / 2) + T (n - n / 2) + (n - 1)) :
+    ∀ n : ℕ, 1 ≤ n → ∀ j : ℕ, n ≤ 2 ^ j → 2 ^ j ≤ 2 * n →
+      (T n : ℤ) = (n : ℤ) * (j : ℤ) - (2 : ℤ) ^ j + 1 := by
+  intro n
+  induction n using Nat.strong_induction_on with
+  | _ n ih =>
+    intro hn j hj1 hj2
+    rcases Nat.lt_or_ge n 2 with h | h
+    · have hn1 : n = 1 := by omega
+      subst hn1
+      rcases j with _ | _ | j
+      · simp [h1]
+      · simp [h1]
+      · exfalso
+        have : 2 ^ (j + 2) = 4 * 2 ^ j := by ring
+        have : 1 ≤ 2 ^ j := Nat.one_le_two_pow
+        omega
+    · rcases j with _ | i
+      · simp at hj1; omega
+      have hp : 2 ^ (i + 1) = 2 * 2 ^ i := by ring
+      have hab : n / 2 + (n - n / 2) = n := by omega
+      have hcond : n / 2 ≤ 2 ^ i ∧ 2 ^ i ≤ 2 * (n / 2) ∧
+          n - n / 2 ≤ 2 ^ i ∧ 2 ^ i ≤ 2 * (n - n / 2) := by
+        rcases i with _ | i
+        · simp at *; omega
+        · have : 2 ^ (i + 1) = 2 * 2 ^ i := by ring
+          omega
+      have ha := ih (n / 2) (by omega) (by omega) i hcond.1 hcond.2.1
+      have hb := ih (n - n / 2) (by omega) (by omega) i hcond.2.2.1 hcond.2.2.2
+      rw [hrec n h]
+      have habz : ((n / 2 : ℕ) : ℤ) + ((n - n / 2 : ℕ) : ℤ) = (n : ℤ) := by exact_mod_cast hab
+      have hn1z : ((n - 1 : ℕ) : ℤ) = (n : ℤ) - 1 := by omega
+      have : (2 : ℤ) ^ (i + 1) = 2 * 2 ^ i := by ring
+      rw [Nat.cast_add, Nat.cast_add, hn1z, ha, hb, this, Nat.cast_add, Nat.cast_one]
+      linear_combination (↑i : ℤ) * habz
+
+#print axioms merge_sort_closed_form_aux
+
+/-- Merge sort's worst case, solved exactly. If a cost satisfies the rule read off the code,
+T(n) = T(⌊n/2⌋) + T(⌈n/2⌉) + (n − 1) for n ≥ 2 with T(1) = 0, then for every n ≥ 1
+the total is n·k − 2^k + 1, where k = ⌈log₂ n⌉ is the number of depths in the call tree.
+(⌈n/2⌉ is written n − ⌊n/2⌋; the closed form is stated over the integers so nothing is cut off.) -/
+theorem merge_sort_worst_case_closed_form (T : ℕ → ℕ) (h1 : T 1 = 0)
+    (hrec : ∀ n, 2 ≤ n → T n = T (n / 2) + T (n - n / 2) + (n - 1)) :
+    ∀ n, 1 ≤ n → (T n : ℤ) = n * Nat.clog 2 n - 2 ^ Nat.clog 2 n + 1 := by
+  intro n hn
+  apply merge_sort_closed_form_aux T h1 hrec n hn
+  · exact Nat.le_pow_clog (by norm_num) n
+  · rcases Nat.lt_or_ge n 2 with h | h
+    · have : n = 1 := by omega
+      subst this
+      simp
+    · have hlt := Nat.pow_pred_clog_lt_self (b := 2) (by norm_num) (x := n) (by omega)
+      have hpos := Nat.clog_pos (b := 2) (n := n) (by norm_num) (by omega)
+      obtain ⟨c, hc⟩ : ∃ c, Nat.clog 2 n = c + 1 := ⟨Nat.clog 2 n - 1, by omega⟩
+      rw [hc] at hlt ⊢
+      simp only [Nat.pred_succ] at hlt
+      have : 2 ^ (c + 1) = 2 * 2 ^ c := by ring
+      omega
+
+/-- Subtract one, not divide: quicksort with the first track as pivot on a sorted playlist.
+If T(n) = T(n − 1) + (n − 1) for n ≥ 2 with T(1) = 0, then T(n) = n(n − 1)/2 for every n ≥ 1. -/
+theorem subtract_one_rule_total (T : ℕ → ℕ) (h1 : T 1 = 0)
+    (hrec : ∀ n, 2 ≤ n → T n = T (n - 1) + (n - 1)) :
+    ∀ n, 1 ≤ n → T n = n * (n - 1) / 2 := by
+  have key : ∀ m, T (m + 1) * 2 = (m + 1) * m := by
+    intro m
+    induction m with
+    | zero => simp [h1]
+    | succ m ih =>
+      have h := hrec (m + 2) (by omega)
+      simp only [show m + 2 - 1 = m + 1 by omega] at h
+      rw [show m + 1 + 1 = m + 2 by omega, h, add_mul, ih]
+      ring
+  intro n hn
+  obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, by omega⟩
+  rw [show m + 1 - 1 = m by omega, ← key m, Nat.mul_div_cancel _ (by norm_num)]
+
+/-- Outside work of n log n: if T(n) = 2T(n/2) + n·log₂ n on sizes n = 2^k, with T(1) = 0,
+then T(n) = n·k(k + 1)/2, which grows like n log² n, not n log n. -/
+theorem n_log_n_work_total (T : ℕ → ℕ) (h1 : T 1 = 0)
+    (hrec : ∀ k, T (2 ^ (k + 1)) = 2 * T (2 ^ k) + 2 ^ (k + 1) * (k + 1)) :
+    ∀ k, T (2 ^ k) = 2 ^ k * k * (k + 1) / 2 := by
+  have key : ∀ k, 2 * T (2 ^ k) = 2 ^ k * k * (k + 1) := by
+    intro k
+    induction k with
+    | zero => simp [h1]
+    | succ k ih =>
+      calc 2 * T (2 ^ (k + 1)) = 2 * (2 * T (2 ^ k)) + 2 * (2 ^ (k + 1) * (k + 1)) := by
+            rw [hrec]; ring
+        _ = 2 * (2 ^ k * k * (k + 1)) + 2 * (2 ^ (k + 1) * (k + 1)) := by rw [ih]
+        _ = 2 ^ (k + 1) * (k + 1 : ℕ) * (k + 1 + 1) := by ring
+  intro k
+  rw [← key k, Nat.mul_div_cancel_left _ (by norm_num)]
+
+-- The card's worked numbers.
+-- 1,000,000 tracks take k = 20 depths.
+example : Nat.clog 2 1000000 = 20 := by decide
+-- Depth 0 costs 999,999 and depth 19 costs 1,000,000 − 2^19 = 475,712.
+example : 1000000 - 2 ^ 0 = 999999 := by norm_num
+example : 1000000 - 2 ^ 19 = 475712 := by norm_num
+-- The ceiling, what the depths give back, and the worst case.
+example : 20 * 1000000 = 20000000 := by norm_num
+example : 2 ^ 20 - 1 = 1048575 := by norm_num
+example : (1000000 * 20 - 2 ^ 20 + 1 : ℤ) = 18951425 := by norm_num
+-- At N = 2^20 the worst case becomes 19,922,945.
+example : (2 ^ 20 * 20 - 2 ^ 20 + 1 : ℤ) = 19922945 := by norm_num
+-- Comparing every pair of 1,000,000 tracks; the sorted-playlist quicksort on 1,000 tracks.
+example : 1000000 * (1000000 - 1) / 2 = 499999500000 := by norm_num
+example : 1000 * (1000 - 1) / 2 = 499500 := by norm_num
+-- Karatsuba's middle term from one product, on the card's 4-digit numbers 3141 and 2718.
+example : (31 * 18 + 41 * 27 : ℤ) = (31 - 41) * (18 - 27) + 31 * 27 + 41 * 18 := by norm_num
+example : (3141592653589793 : ℕ) * 2718281828459045 = 8539734222673565677848730527685 := by norm_num
+-- Karatsuba at 1,024 digits against the schoolbook and the n log n misreading.
+example : 3 ^ 10 = 59049 ∧ 1024 ^ 2 = 1048576 ∧ 1024 * 10 = 10240 := by norm_num
+-- Karatsuba's counts at 4, 8 and 16 digits.
+example : 3 ^ 2 = 9 ∧ 3 ^ 3 = 27 ∧ 3 ^ 4 = 81 := by norm_num
+-- Strassen at 1,024 by 1,024: seven block products against eight.
+example : 7 ^ 10 = 282475249 ∧ 8 ^ 10 = 1073741824 := by norm_num
+-- Outside work of n log n at 2^20 items, against the n log n misreading.
+example : 2 ^ 20 * 20 * (20 + 1) / 2 = 220200960 := by norm_num
+example : 2 ^ 20 * 20 = 20971520 := by norm_num
+
+#print axioms merge_sort_worst_case_closed_form
+#print axioms subtract_one_rule_total
+#print axioms n_log_n_work_total
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'merge_sort_closed_form_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'merge_sort_worst_case_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'subtract_one_rule_total' depends on axioms: [propext, Classical.choice, Quot.sound]
+'n_log_n_work_total' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the card's numbers, so some changes stop the program.
@@ -571,7 +751,7 @@ The two outputs match line for line.
 - [Sorting and searching](05-sorting-and-searching.md): merge sort, quicksort and binary search in full, and why no comparison sort beats the n log n floor.
 - [Dynamic programming](07-dynamic-programming.md): when the calls overlap, store each answer once and the tree collapses to a table.
 
-This card costs quicksort in its worst case and for a fixed split; what it costs on average over every order of the playlist needs expectation, and is the question this card leaves open; [Sorting and searching](05-sorting-and-searching.md) answers it by counting which pairs of tracks ever meet.
+This card costs quicksort in its worst case and for a fixed split. What it costs on average over every order of the playlist needs expectation (an average weighted by probability), and is the question this card leaves open. [Sorting and searching](05-sorting-and-searching.md) answers it by counting which pairs of tracks ever meet.
 
 ---
 

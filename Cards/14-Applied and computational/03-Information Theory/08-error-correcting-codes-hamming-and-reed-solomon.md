@@ -10,7 +10,9 @@ A disc track holds the two letters "CD": bytes 67 and 68. A laser reads them bac
 
 The fix is to store more than the data. Split each byte into two **nibbles**, 4-bit halves: 4, 3, 4, 4. Hamming's code turns each nibble into 7 bits, so the two bytes take 28 bits on the disc. The 3 extra bits in each block are checks, and they are chosen so that when one bit flips, the pattern of failed checks spells out *which* bit, as a number from 1 to 7. The player flips that bit back and reads "CD" as if nothing happened.
 
-A scratch is different: it flips neighbouring bits together. Two flips in one Hamming block and the checks point at a third, innocent bit; the player "repairs" the track to "MD" and never knows. Reed-Solomon's code answers bursts by counting damage in symbols, not bits. It treats each nibble as one symbol, stores 8 symbols (32 bits) for the 4 it protects, and repairs *any* 2 damaged symbols, however many bits inside them went wrong. It spends 4 more bits than Hamming's 28 to do so; what those bits buy is a budget counted in symbols, not bits. The same scratch that made "MD" comes back as "CD".
+A scratch is different: it flips neighbouring bits together. Two flips in one Hamming block and the checks point at a third, innocent bit; the player "repairs" the track to "MD" and never knows.
+
+Reed-Solomon's code answers bursts by counting damage in symbols, not bits. It treats each nibble as one symbol, stores 8 symbols (32 bits) for the 4 it protects, and repairs *any* 2 damaged symbols, however many bits inside them went wrong. It spends 4 more bits than Hamming's 28 to do so; what those bits buy is a budget counted in symbols, not bits. The same scratch that made "MD" comes back as "CD".
 
 **An error-correcting code keeps its codewords far apart, so a damaged word is still nearest the one that was sent: if the closest two codewords differ in d places, any ⌊(d − 1)/2⌋ errors are repaired, and both Hamming's checks and Reed-Solomon's polynomial values are ways of building that distance cheaply.**
 
@@ -28,7 +30,7 @@ flowchart TB
     S2 --> R["2 symbols wrong, budget is 2<br/>reads CD"]
 ```
 
-Same track damage on both branches. Hamming's budget is one bit per block; Reed-Solomon's is two symbols per frame.
+Same track damage on both branches. Hamming's budget is one bit per block; Reed-Solomon's is two symbols per block.
 
 ---
 
@@ -42,7 +44,7 @@ $$\text{Reed-Solomon:}\quad c = \big(m(1),\, m(a),\, m(a^2),\, \dots,\, m(a^{n-1
 
 **Read it aloud:** the codeword is the generator matrix times the message; the receiver multiplies what it read by the check matrix, and the answer depends only on the error; a code whose codewords sit d apart repairs any t errors, half of d − 1 rounded down. For Reed-Solomon the codeword is a list of values of the message polynomial, and its distance is n − k + 1.
 
-Hamming's arithmetic is on bits, adding without carry: 1 + 1 = 0. Reed-Solomon's is in GF(16), the sixteen 4-bit symbols built exactly like the four-element field of [Finite fields](../../03-Algebra/09-Rings%20and%20Fields/05-finite-fields.md): polynomials in a with 0-or-1 coefficients, wrapped by the rule a⁴ = a + 1 (from x⁴ + x + 1, which does not factor). Adding is bit by bit without carry; a symbol is written as the number its 4 bits spell, so a = 2 and a + 1 = 3.
+Hamming's arithmetic is on bits, adding without carry: 1 + 1 = 0. Reed-Solomon's is in GF(16) (GF stands for Galois field, another name for a finite field), the sixteen 4-bit symbols built exactly like the four-element field of [Finite fields](../../03-Algebra/09-Rings%20and%20Fields/05-finite-fields.md): polynomials in a with 0-or-1 coefficients, wrapped by the rule a⁴ = a + 1 (from x⁴ + x + 1, which does not factor). Adding is bit by bit without carry; a symbol is written as the number its 4 bits spell, so a = 2 and a + 1 = 3.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -94,7 +96,9 @@ The same distance can be spent on detection instead: d − 1 errors can never tu
 
 ### Step 1: Hamming's checks are a matrix times a vector
 
-Each check bit makes one group of positions add to 0 (an even number of 1s): chk1 covers positions 1, 3, 5, 7; chk2 covers 2, 3, 6, 7; chk4 covers 4, 5, 6, 7. Position j belongs to the groups named by the 1s in j written in binary: 5 is 101, so groups 1 and 4. Encoding is a [Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md) with sums wrapped at 2: c = G m. Checking is another: H c = 0, because each row of H is one group's sum. The check prints H times all 16 codewords: every one is 0.
+Each check bit makes one group of positions add to 0 (an even number of 1s): chk1 covers positions 1, 3, 5, 7; chk2 covers 2, 3, 6, 7; chk4 covers 4, 5, 6, 7. Position j belongs to the groups named by the 1s in j written in binary: 5 is 101, so groups 1 and 4.
+
+Encoding is a [Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md) with sums wrapped at 2: c = G m. Checking is another: H c = 0, because each row of H is one group's sum. The check prints H times all 16 codewords: every one is 0.
 
 ### Step 2: the syndrome is the error's address
 
@@ -104,7 +108,9 @@ $$s = H r = H c + H e = H e.$$
 
 When e has a single 1, at position j, H e is column j of H, which is j in binary. Read as a number, the syndrome *is* the position. The player never needs to know what was sent: the checks see only the damage.
 
-That also gives the distance. A codeword's **weight** is its count of nonzero places, and it equals its distance from the all-zero codeword. The sum of two codewords is a codeword, since H(c₁ + c₂) = H c₁ + H c₂ = 0, and the two differ exactly where their sum has a 1. So the least distance between two codewords is the least weight of a nonzero codeword. A codeword of weight 1 would need a column of zeros, and one of weight 2 would need two equal columns; H has neither, so d ≥ 3. Columns 1, 2 and 3 add to 0 (001 + 010 + 011), so there is a codeword of weight 3, and d = 3 exactly. The check finds the same by comparing all 16 codewords in pairs.
+That also gives the distance. A codeword's **weight** is its count of nonzero places, and it equals its distance from the all-zero codeword. The sum of two codewords is a codeword, since H(c₁ + c₂) = H c₁ + H c₂ = 0, and the two differ exactly where their sum has a 1. So the least distance between two codewords is the least weight of a nonzero codeword.
+
+A codeword of weight 1 would need a column of zeros, and one of weight 2 would need two equal columns; H has neither, so d ≥ 3. Columns 1, 2 and 3 add to 0 (001 + 010 + 011), so there is a codeword of weight 3, and d = 3 exactly. The check finds the same by comparing all 16 codewords in pairs.
 
 ### Step 3: Hamming (7,4) wastes nothing, which is why it lies
 
@@ -122,11 +128,15 @@ The field is what makes "at most 3 roots" true. In the hours mod 16, 8 × 2 = 0,
 
 ### Step 5: no code of this size does better
 
-Delete the last d − 1 symbols of every codeword. The shortened words are still all different, since two codewords differ in at least d places and only d − 1 were removed. They have n − d + 1 symbols each, so there are at most 16 to the power n − d + 1 of them, while there are 16ᵏ messages. Hence k ≤ n − d + 1, or d ≤ n − k + 1, for *any* code with 16-letter symbols. Reed-Solomon meets the bound exactly: every pair of extra symbols buys one more repair, the best possible trade.
+Delete the last d − 1 symbols of every codeword. The shortened words are still all different, since two codewords differ in at least d places and only d − 1 were removed.
+
+They have n − d + 1 symbols each, so there are at most 16 to the power n − d + 1 of them, while there are 16ᵏ messages. Hence k ≤ n − d + 1, or d ≤ n − k + 1, for *any* code with 16-letter symbols. Reed-Solomon meets the bound exactly: every pair of extra symbols buys one more repair, the best possible trade.
 
 ### Step 6: decoding, in outline
 
-Any 4 correct values fix the cubic, by the interpolation formula of Lagrange. With at most 2 bad values among 8, some 4 values are all good, and their cubic agrees with the read word in at least 6 places. No other cubic can: it would be a codeword within 2 of the read word, so within 4 of the true one, closer than 5. The check decodes this way, fitting every choice of 4 values out of 8, and separately by comparing the read word with all 65536 codewords. Real decoders reach the same answer without trying choices: the Berlekamp-Massey and Berlekamp-Welch algorithms solve for a polynomial whose roots are the error positions. Their derivations belong to coding-theory texts; this card names them and does not prove them.
+Any 4 correct values fix the cubic, by the interpolation formula of Lagrange. With at most 2 bad values among 8, some 4 values are all good, and their cubic agrees with the read word in at least 6 places. No other cubic can: it would be a codeword within 2 of the read word, so within 4 of the true one, closer than 5.
+
+The check decodes this way, fitting every choice of 4 values out of 8, and separately by comparing the read word with all 65536 codewords. Real decoders reach the same answer without trying choices: the Berlekamp-Massey and Berlekamp-Welch algorithms solve for a polynomial whose roots are the error positions. Their derivations belong to coding-theory texts; this card names them and does not prove them.
 
 <details>
 <summary>Why some 4 values are all good, and the fit agrees in 6</summary>
@@ -137,7 +147,7 @@ With at most 2 bad positions among 8, at least 6 are good; choose 4 of them. Thr
 
 ### Step 7: what the channel-capacity card promised
 
-[Channel capacity](07-channel-capacity-and-the-noisy-channel-theorem.md) says that on a link flipping each bit with chance p = 0.01, codes exist at any rate below the capacity 0.9192 with as few block errors as wanted. Hamming (7,4) runs at rate 4/7 = 0.5714, well below, and still fails whenever 2 or more of 7 bits flip: 0.2031% of blocks, against 3.9404% of bare nibbles. Far fewer failures, at the cost of 3 extra bits in 7. Approaching capacity takes long blocks: [LDPC, turbo and polar codes](09-ldpc-turbo-and-polar-codes-in-outline.md).
+[Channel capacity](07-channel-capacity-and-the-noisy-channel-theorem.md) says that on a link flipping each bit with chance p = 0.01, codes exist at any rate below the capacity 0.9192 with as few block errors as wanted. Hamming (7,4) runs at rate 4/7 = 0.5714 (4 data bits for every 7 sent), well below, and still fails whenever 2 or more of 7 bits flip: 0.2031% of blocks, against 3.9404% of bare nibbles. Far fewer failures, at the cost of 3 extra bits in 7. Approaching capacity takes long blocks: [LDPC, turbo and polar codes](09-ldpc-turbo-and-polar-codes-in-outline.md).
 
 ---
 
@@ -183,7 +193,11 @@ The code prints every row.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows a code: matrices, field arithmetic, interpolation and the random flips are written out. Each claim is reached by two independent roads. Hamming's syndrome decoder is compared with "nearest of all 16 codewords" on all 128 words within one flip; its distance is found by comparing all pairs. Reed-Solomon's distance comes from the weight of all 65535 nonzero codewords, against n − k + 1; each damaged frame is decoded by "nearest of all 65536 codewords" and by fitting cubics through every 4 of the 8 values. Finally 200000 Hamming blocks cross a simulated link flipping each bit with chance 0.01, using a SplitMix64 generator with seed 2026, and the failure rate meets the formula.
+Nothing imported knows a code: matrices, field arithmetic, interpolation and the random flips are written out. Each claim is reached by two independent roads.
+
+Hamming's syndrome decoder is compared with "nearest of all 16 codewords" on all 128 words within one flip; its distance is found by comparing all pairs. Reed-Solomon's distance comes from the weight of all 65535 nonzero codewords, against n − k + 1; each damaged block is decoded by "nearest of all 65536 codewords" and by fitting cubics through every 4 of the 8 values.
+
+Finally 200000 Hamming blocks cross a simulated link flipping each bit with chance 0.01, using a SplitMix64 random-number generator with seed 2026, and the failure rate meets the formula.
 
 ### Python
 
@@ -569,6 +583,222 @@ ALL CHECKS PASS
 
 The two outputs match line for line, including the simulated flips.
 
+### Lean
+
+Lean proves the repair budget, Reed-Solomon's distance and the bound of Step 5 for codes of any size, and checks the worked numbers.
+
+- Suppose codewords sit at least d apart, and a read word has at most ⌊(d − 1)/2⌋ errors. Then the sent codeword is strictly nearer to it than any other codeword.
+- Take a field, n different evaluation points and message polynomials of degree below k, with 1 ≤ k ≤ n. Then codewords of different messages differ in at least n − k + 1 places, and some pair differs in exactly that many.
+- Take a code over a finite set of at least 2 symbols, with k ≥ 1 message symbols, n stored ones and distance at least d. Then d ≤ n − k + 1.
+- G encodes the nibble 4 as 1001100, and H times every one of the 16 codewords is 0.
+- The speck gives syndrome 6, the scratch on block 2 gives syndrome 3, and the "repair" lands on nibble 13.
+- Codewords of different Hamming messages differ in at least 3 places, and flipping positions 1, 2 and 3 of 0000000 gives a codeword.
+- In the hours mod 16, 8x² + 8x³ is zero at all 8 points 1, 2, 4, 8, 3, 6, 12, 11.
+
+Arithmetic in GF(16), both decoders and the simulated link are left to the Python and Rust checks.
+
+```lean
+-- Hamming and Reed-Solomon: a code whose codewords sit d apart repairs any ⌊(d − 1)/2⌋ errors, Reed-Solomon codes have distance exactly n − k + 1, and no code of that size can do better.
+import Mathlib.InformationTheory.Hamming
+import Mathlib.Algebra.Polynomial.Roots
+import Mathlib.Data.Matrix.Mul
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Data.ZMod.Defs
+import Mathlib.LinearAlgebra.Lagrange
+import Mathlib.Data.Fintype.Pigeonhole
+import Mathlib.Data.Fintype.Fin
+
+open Polynomial Matrix
+
+/-- Distance is a repair budget: if every two different codewords differ in at least `d`
+places, and the word read back differs from the sent codeword `c` in at most `⌊(d − 1)/2⌋`
+places, then `c` is strictly nearer the read word than every other codeword, so
+"pick the nearest codeword" recovers what was sent. -/
+theorem nearest_codeword_repairs_half_distance {α : Type*} [DecidableEq α] {n d : ℕ}
+    (C : Set (Fin n → α))
+    (hd : ∀ c₁ ∈ C, ∀ c₂ ∈ C, c₁ ≠ c₂ → d ≤ hammingDist c₁ c₂)
+    {c r : Fin n → α} (hc : c ∈ C) (hr : hammingDist r c ≤ (d - 1) / 2) :
+    ∀ c' ∈ C, c' ≠ c → hammingDist r c < hammingDist r c' := by
+  intro c' hc' hne
+  have h1 : 0 < hammingDist c c' := hammingDist_pos.mpr (Ne.symm hne)
+  have h2 : d ≤ hammingDist c c' := hd c hc c' hc' (Ne.symm hne)
+  have h3 := hammingDist_triangle c r c'
+  have h4 : hammingDist c r = hammingDist r c := hammingDist_comm c r
+  omega
+
+/-- Reed-Solomon has distance n − k + 1: over a field, store the values of every message
+polynomial of degree below `k` at `n` distinct points (`k ≤ n`). Any two different messages
+give codewords that differ in at least `n − k + 1` places, and some two differ in exactly
+`n − k + 1`. -/
+theorem reed_solomon_min_distance {F : Type*} [Field F] [DecidableEq F] {n k : ℕ}
+    (hk : 0 < k) (hkn : k ≤ n) (x : Fin n → F) (hx : Function.Injective x) :
+    (∀ p q : F[X], p.degree < k → q.degree < k → p ≠ q →
+        n - k + 1 ≤ hammingDist (fun i => p.eval (x i)) (fun i => q.eval (x i))) ∧
+    ∃ p q : F[X], p.degree < k ∧ q.degree < k ∧ p ≠ q ∧
+        hammingDist (fun i => p.eval (x i)) (fun i => q.eval (x i)) = n - k + 1 := by
+  -- the set of positions where two codewords agree
+  have key : ∀ p q : F[X], p.degree < k → q.degree < k → p ≠ q →
+      (Finset.univ.filter (fun i => p.eval (x i) = q.eval (x i))).card ≤ k - 1 := by
+    intro p q hp hq hpq
+    by_contra hcon
+    rw [not_le] at hcon
+    set A := Finset.univ.filter (fun i => p.eval (x i) = q.eval (x i)) with hA
+    have hcard : (A.image x).card = A.card := Finset.card_image_of_injective A hx
+    have hkA : (k : WithBot ℕ) ≤ ((A.image x).card : WithBot ℕ) := by
+      rw [hcard]; exact_mod_cast (by omega : k ≤ A.card)
+    apply hpq
+    refine Polynomial.eq_of_degrees_lt_of_eval_finset_eq (A.image x)
+      (lt_of_lt_of_le hp hkA) (lt_of_lt_of_le hq hkA) ?_
+    intro y hy
+    obtain ⟨i, hi, rfl⟩ := Finset.mem_image.mp hy
+    exact (Finset.mem_filter.mp hi).2
+  have split : ∀ p q : F[X],
+      hammingDist (fun i => p.eval (x i)) (fun i => q.eval (x i)) +
+        (Finset.univ.filter (fun i => p.eval (x i) = q.eval (x i))).card = n := by
+    intro p q
+    unfold hammingDist
+    have := Finset.card_filter_add_card_filter_not
+      (s := (Finset.univ : Finset (Fin n))) (fun i => p.eval (x i) ≠ q.eval (x i))
+    simp only [ne_eq, not_not, Finset.card_univ, Fintype.card_fin] at this
+    exact this
+  refine ⟨?_, ?_⟩
+  · intro p q hp hq hpq
+    have h1 := key p q hp hq hpq
+    have h2 := split p q
+    omega
+  · classical
+    let S : Finset (Fin n) := Finset.univ.filter (fun i : Fin n => (i : ℕ) < k - 1)
+    let q : F[X] := ∏ i ∈ S, (X - C (x i))
+    have hqmonic : q.Monic := Polynomial.monic_prod_of_monic _ _ (fun i _ => monic_X_sub_C (x i))
+    have hSc : S.card = k - 1 := by
+      have := Fin.card_filter_val_lt (n := n) (m := k - 1)
+      simp only [S]
+      rw [this]; omega
+    have hqdeg : q.natDegree = k - 1 := by
+      simp only [q]
+      rw [Polynomial.natDegree_prod_of_monic _ _ (fun i _ => monic_X_sub_C (x i))]
+      simp [hSc]
+    refine ⟨0, q, ?_, ?_, ?_, ?_⟩
+    · simp only [degree_zero]; exact WithBot.bot_lt_coe k
+    · rw [Polynomial.degree_eq_natDegree hqmonic.ne_zero, hqdeg]
+      exact_mod_cast (by omega : k - 1 < k)
+    · exact (hqmonic.ne_zero).symm
+    · have hagree : (Finset.univ.filter
+          (fun i => (0 : F[X]).eval (x i) = q.eval (x i))) = S := by
+        ext j
+        simp only [Finset.mem_filter, Finset.mem_univ, true_and, eval_zero, q, S,
+          Polynomial.eval_prod, eval_sub, eval_X, eval_C]
+        constructor
+        · intro h
+          have h' := h.symm
+          rw [Finset.prod_eq_zero_iff] at h'
+          obtain ⟨i, hi, hzero⟩ := h'
+          rw [sub_eq_zero] at hzero
+          rw [hx hzero]
+          exact (Finset.mem_filter.mp hi).2
+        · intro hj
+          symm
+          rw [Finset.prod_eq_zero_iff]
+          exact ⟨j, Finset.mem_filter.mpr ⟨Finset.mem_univ _, hj⟩, sub_self _⟩
+      have h2 := split 0 q
+      rw [hagree, hSc] at h2
+      omega
+
+/-- No code of this size does better (the Singleton bound): if a code turns `k ≥ 1` message
+symbols from a finite alphabet into `n` stored symbols, and any two different messages give
+codewords that differ in at least `d` places, then `d ≤ n − k + 1`. -/
+theorem singleton_bound {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α] {n k d : ℕ}
+    (hk : 0 < k) (enc : (Fin k → α) → (Fin n → α))
+    (hd : ∀ m m', m ≠ m' → d ≤ hammingDist (enc m) (enc m')) :
+    d ≤ n - k + 1 := by
+  classical
+  set j := min (k - 1) n with hj
+  have hjn : j ≤ n := min_le_right _ _
+  let f : (Fin k → α) → (Fin j → α) := fun m i => enc m ⟨i, by omega⟩
+  have hα : 1 < Fintype.card α := Fintype.one_lt_card
+  have hlt : Fintype.card (Fin j → α) < Fintype.card (Fin k → α) := by
+    simp only [Fintype.card_fun, Fintype.card_fin]
+    exact Nat.pow_lt_pow_right hα (by omega)
+  obtain ⟨m, m', hne, heq⟩ := Fintype.exists_ne_map_eq_of_card_lt f hlt
+  have h1 := hd m m' hne
+  have hle : hammingDist (enc m) (enc m') + j ≤ n := by
+    unfold hammingDist
+    have hdisj : Disjoint (Finset.univ.filter (fun i : Fin n => enc m i ≠ enc m' i))
+        (Finset.univ.filter (fun i : Fin n => (i : ℕ) < j)) := by
+      rw [Finset.disjoint_filter]
+      intro i _ hne' hij
+      apply hne'
+      have := congrFun heq ⟨i, hij⟩
+      simpa [f] using this
+    have hc := Finset.card_union_of_disjoint hdisj
+    have hsub := Finset.card_le_univ
+      (Finset.univ.filter (fun i : Fin n => enc m i ≠ enc m' i) ∪
+        Finset.univ.filter (fun i : Fin n => (i : ℕ) < j))
+    have hcj := Fin.card_filter_val_lt (n := n) (m := j)
+    simp only [Fintype.card_fin] at hsub
+    rw [hc] at hsub
+    rw [hcj] at hsub
+    have : min n j = j := min_eq_right hjn
+    omega
+  omega
+
+/-! Worked numbers from the card. Positions 1 to 7 are chk1, chk2, m1, chk4, m2, m3, m4. -/
+
+/-- The card's generator matrix G, 7 rows by 4 columns, over bits. -/
+def hammingG : Matrix (Fin 7) (Fin 4) (ZMod 2) :=
+  !![1, 1, 0, 1;
+     1, 0, 1, 1;
+     1, 0, 0, 0;
+     0, 1, 1, 1;
+     0, 1, 0, 0;
+     0, 0, 1, 0;
+     0, 0, 0, 1]
+
+/-- The card's check matrix H, 3 rows by 7 columns: column j is j in binary, low bit on top. -/
+def hammingH : Matrix (Fin 3) (Fin 7) (ZMod 2) :=
+  !![1, 0, 1, 0, 1, 0, 1;
+     0, 1, 1, 0, 0, 1, 1;
+     0, 0, 0, 1, 1, 1, 1]
+
+-- The nibble 4 is message bits 0, 1, 0, 0 and encodes to 1001100.
+example : hammingG *ᵥ ![0, 1, 0, 0] = ![1, 0, 0, 1, 1, 0, 0] := by decide
+-- H times every one of the 16 codewords is 0.
+example : ∀ m : Fin 4 → ZMod 2, hammingH *ᵥ (hammingG *ᵥ m) = 0 := by decide
+-- A speck flips position 6: 1001110 has syndrome bits 0, 1, 1, that is 6.
+example : hammingH *ᵥ ![1, 0, 0, 1, 1, 1, 0] = ![0, 1, 1] := by decide
+-- The scratch turns block 2, 1000011, into 1000101: syndrome bits 1, 1, 0, that is 3.
+example : hammingG *ᵥ ![0, 0, 1, 1] = ![1, 0, 0, 0, 0, 1, 1] := by decide
+example : hammingH *ᵥ ![1, 0, 0, 0, 1, 0, 1] = ![1, 1, 0] := by decide
+-- "Repairing" position 3 gives 1010101, the codeword of data 1101: nibble 13.
+example : hammingG *ᵥ ![1, 1, 0, 1] = ![1, 0, 1, 0, 1, 0, 1] := by decide
+-- Hamming (7,4) has distance 3: different messages give codewords at least 3 apart...
+example : ∀ m m' : Fin 4 → ZMod 2, m ≠ m' →
+    3 ≤ hammingDist (hammingG *ᵥ m) (hammingG *ᵥ m') := by decide
+-- ...and flipping positions 1, 2 and 3 of codeword 0000000 gives the codeword 1110000.
+example : hammingH *ᵥ ![1, 1, 1, 0, 0, 0, 0] = 0 := by decide
+-- Repair budgets: distance 3 repairs 1, distance 5 repairs 2.
+example : (3 - 1) / 2 = 1 ∧ (5 - 1) / 2 = 2 := by decide
+-- Perfect code: 16 codewords times 8 words in each ball is every 7-bit word.
+example : 16 * (1 + 7) = 2 ^ 7 := by norm_num
+-- Reed-Solomon (8,4): distance 8 − 4 + 1 = 5.
+example : 8 - 4 + 1 = 5 := by norm_num
+-- Mod 16 is not a field: 8x² + 8x³ is zero at all 8 points 1, 2, 4, 8, 3, 6, 12, 11.
+example : ∀ x ∈ ([1, 2, 4, 8, 3, 6, 12, 11] : List (ZMod 16)), 8 * x ^ 2 + 8 * x ^ 3 = 0 := by
+  decide
+
+#print axioms nearest_codeword_repairs_half_distance
+#print axioms reed_solomon_min_distance
+#print axioms singleton_bound
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'nearest_codeword_repairs_half_distance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'reed_solomon_min_distance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'singleton_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - Guess first: will Hamming (7,4) still be worth it on a far noisier link? Change `p` to 0.1. The block failure formula gives 14.9694%, about 15% of blocks, and the simulation's assert keeps agreeing with it.
@@ -581,7 +811,7 @@ The two outputs match line for line, including the simulated flips.
 ## The usual mistake
 
 > [!warning]
-> **Trusting a repair because the decoder made one.** A decoder returns the nearest codeword, and past the budget the nearest is the wrong one. Hamming (7,4) turns two flipped bits into "MD" with the same confidence it turns one flip into "CD". The budget t = ⌊(d − 1)/2⌋ is the whole promise; outside it, add detection (an overall parity bit, or a checksum over the frame) or the errors pass silently.
+> **Trusting a repair because the decoder made one.** A decoder returns the nearest codeword, and past the budget the nearest is the wrong one. Hamming (7,4) turns two flipped bits into "MD" with the same confidence it turns one flip into "CD". The budget t = ⌊(d − 1)/2⌋ is the whole promise; outside it, add detection (an overall parity bit, or a checksum over the block) or the errors pass silently.
 >
 > - **Reading d as the number repaired.** Distance 3 repairs 1, not 3; distance 5 repairs 2. Hamming (7,4) shown 3 flips can land exactly on another codeword (positions 1, 2 and 3) and report syndrome 0: "no error".
 > - **Counting bits for Reed-Solomon.** Its budget is 2 *symbols*. The 5-bit scratch on bits 10 to 14 is repaired, because it touches only two nibbles; three single flips in three nibbles (bits 1, 6, 25) are not, and come back as bytes 20, 78.

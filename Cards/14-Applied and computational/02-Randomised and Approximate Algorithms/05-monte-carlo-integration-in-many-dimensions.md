@@ -6,15 +6,23 @@
 
 ## General Overview
 
-A request to a web service handling 10 million requests a day may call 10 backend services, so the chance it finishes on time is a 10-dimensional integral, one dimension per delay. A ball in 10 dimensions is every point whose 10 coordinates, squared and added up, come to at most 1. That is Pythagoras with ten coordinates instead of two: the point lies within distance 1 of the centre. The ball's volume (its 10-dimensional size) is known exactly: π^5/120 = 2.550164. A known answer makes it a ruler for testing methods.
+A request to a web service handling 10 million requests a day may call 10 backend services. The chance it finishes on time is then a 10-dimensional integral, one dimension per delay.
 
-Put the ball inside the box that runs from −1 to 1 on every axis. The box has volume 2^10 = 1,024. Now throw 100,000 darts at the box, each one a list of 10 random numbers between −1 and 1. In the seeded run on this card, 268 land inside the ball. The ball's share of the box is about 268 out of 100,000, so its volume is about 1,024 × 268 / 100,000 = 2.7443, give or take 0.1674. The truth is 1.16 of those error bars away.
+A ball in 10 dimensions is every point whose 10 coordinates, squared and added up, come to at most 1. That is Pythagoras with ten coordinates instead of two: the point lies within distance 1 of the centre.
 
-Now try the obvious alternative: a tidy grid of points, counted exactly. A grid of 1,048,576 points, 4 along each axis, says the volume is 1.0000. A grid of 60,466,176 points, 6 along each axis, says 3.2255. That is 605 times the darts' budget, and it misses by 3.48 times as much. The grid is not unlucky. In 10 dimensions, even 100,000 points give only 3.1623 per axis, so a grid cannot see any detail.
+The ball's volume (its 10-dimensional size) is known exactly: π^5/120 = 2.550164. A known answer makes it a ruler for testing methods.
 
-**A random sample's error shrinks like one over the square root of its number of points whatever the dimension, while a grid's spacing shrinks only like the d-th root of its number of points, so once the dimension passes about four (eight against Simpson's rule), random points win.**
+Put the ball inside the box that runs from −1 to 1 on every axis. The box has volume 2^10 = 1,024. Now throw 100,000 darts at the box, each one a list of 10 random numbers between −1 and 1.
 
-**What kind of fact this is:** a method. Its error rate, σ/√N, is a theorem proved on [Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md); the grid's rates N^(−2/d) and N^(−4/d) are derived on this card in Why it works from the one-dimensional bounds on [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md).
+In the seeded run on this card, 268 land inside the ball. The ball's share of the box is about 268 out of 100,000, so its volume is about 1,024 × 268 / 100,000 = 2.7443, give or take 0.1674. The truth is 1.16 of those error bars away.
+
+Now try the obvious alternative: a tidy grid of points, counted exactly. A grid of 1,048,576 points, 4 along each axis, says the volume is 1.0000. A grid of 60,466,176 points, 6 along each axis, says 3.2255. That is 605 times the darts' budget, and it misses by 3.48 times as much.
+
+The grid is not unlucky. In 10 dimensions, even 100,000 points give only 3.1623 per axis, so a grid cannot see any detail.
+
+**A random sample's error shrinks like one over the square root of its number of points whatever the dimension, while a grid's spacing shrinks only like the d-th root of its number of points (d is the dimension), so once the dimension passes about four (eight against Simpson's rule), random points win.**
+
+**What kind of fact this is:** a method. Its error rate, σ/√N, is a theorem proved on [Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md): σ is the spread of one dart's score and N is the number of darts. The grid's rates N^(−2/d) and N^(−4/d) are derived on this card in Why it works from the one-dimensional bounds on [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md).
 
 ### The picture: seven answers for one volume
 
@@ -40,7 +48,9 @@ $$\hat V = 2^d \times \frac{K}{N}, \qquad \mathrm{SE} = \frac{\sigma}{\sqrt N}, 
 
 **Read it aloud:** the volume is the box's volume times the fraction of darts that landed inside, and its typical miss is the spread of one dart's score divided by the square root of the number of darts.
 
-The comparison this card is about. A grid of N points in d dimensions has $m = N^{1/d}$ points per axis, spaced $h = 2/m$ apart. The midpoint rule (score the centre of each small box and add up) misses by about $C h^2$, and Simpson's rule (a weighted version that fits curves through the points) by about $C h^4$, as [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md) shows in one dimension. Written in N, those errors become:
+The comparison this card is about. A grid of N points in d dimensions has $m = N^{1/d}$ points per axis, spaced $h = 2/m$ apart.
+
+The midpoint rule (score the centre of each small box and add up) misses by about $C h^2$. Simpson's rule (a weighted version that fits curves through the points) misses by about $C h^4$, as [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md) shows in one dimension. Written in N, those errors become:
 
 $$\text{darts: } \frac{\sigma}{\sqrt N} = \sigma N^{-1/2}, \qquad \text{midpoint grid: } C\,N^{-2/d}, \qquad \text{Simpson grid: } C\,N^{-4/d}$$
 
@@ -77,7 +87,9 @@ An average of independent draws gets more accurate with the number of draws. How
 
 ### Step 1: the volume is an average score
 
-Score each dart 1,024 if it lands inside the ball and 0 if not. The chance of landing inside is the ball's share of the box, $p$, so the long-run average score is $1{,}024 \times p = V_d$. The volume is an average, and [Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md) estimates averages: take the plain average of N scores, with standard error σ/√N. Here σ = 1,024 × √(p(1 − p)) = 51.0379, so 100,000 darts give a true standard error of 0.1614.
+Score each dart 1,024 if it lands inside the ball and 0 if not. The chance of landing inside is the ball's share of the box, $p$, so the long-run average score is $1{,}024 \times p = V_d$.
+
+The volume is an average, and [Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md) estimates averages: take the plain average of N scores, with standard error σ/√N. Here σ = 1,024 × √(p(1 − p)) = 51.0379, so 100,000 darts give a true standard error of 0.1614.
 
 ### Step 2: nothing in σ/√N counts dimensions
 
@@ -97,7 +109,9 @@ A grid with $m$ points along each of $d$ axes has $N = m^d$ points, so $m = N^{1
 - Simpson error ∝ $h^4$ ∝ $N^{-4/d}$,
 - darts error ∝ $N^{-1/2}$, in every dimension.
 
-The code measures the midpoint rate on a smooth test, $e^{x_1 + \dots + x_{10}}/(e-1)^{10}$ over the box from 0 to 1, whose true integral is 1. Going from 3 to 6 points per axis multiplies the points by 1,024 and cuts the miss from 0.04520 to 0.01150: only 3.93 times. That is a measured rate of 0.197 against the predicted 0.200. The same 1,024 times as many darts would cut their error 32.00 times.
+The code measures the midpoint rate on a smooth test, $e^{x_1 + \dots + x_{10}}/(e-1)^{10}$ over the box from 0 to 1, whose true integral is 1.
+
+Going from 3 to 6 points per axis multiplies the points by 1,024 and cuts the miss from 0.04520 to 0.01150: only 3.93 times. That is a measured rate of 0.197 against the predicted 0.200. The same 1,024 times as many darts would cut their error 32.00 times.
 
 <details>
 <summary>Why the midpoint error stays h² in d dimensions</summary>
@@ -106,7 +120,9 @@ Take one small box of the grid, side $h$, with centre $c$. Taylor's theorem in s
 
 Integrate over the box. The value at $c$ gives the midpoint rule's term: value times box volume. Each slope term integrates to zero, because the box is symmetric about its centre: every point on one side has a mirror point on the other. What is left is at most a constant times $h^2$ times the box's volume.
 
-Add up all the boxes. Their volumes add to the volume of the region, so the total error is at most a constant times $h^2$. Simpson's rule needs one more fact. Symmetry still removes the odd terms, and its weights, 1, 4 and 1 along each axis, also integrate the squared terms exactly, so the first term left is fourth order: $h^4$. The constants depend on the derivatives and on $d$, but the power of $h$ does not.
+Add up all the boxes. Their volumes add to the volume of the region, so the total error is at most a constant times $h^2$.
+
+Simpson's rule needs one more fact. Symmetry still removes the odd terms, and its weights, 1, 4 and 1 along each axis, also integrate the squared terms exactly, so the first term left is fourth order: $h^4$. The constants depend on the derivatives and on $d$, but the power of $h$ does not.
 
 </details>
 
@@ -133,7 +149,9 @@ In costs: one more correct decimal place means a tenth of the error. In 10 dimen
 
 The ball's score jumps from 1,024 to 0 at its surface, so no derivative is bounded there and Step 4's rates do not apply. The grid's error now comes from the boxes the surface cuts through, and that error can shrink as slowly as $h$, which is $N^{-1/d}$: a power of 0.10 in 10 dimensions.
 
-Worse, a grid in high dimensions sees the ball through a few thin shells. With 4 points per axis, every coordinate is ±1/4 or ±3/4. The 1,024 points with every coordinate at ±1/4 all sit at distance 0.7906 from the centre, inside. The next nearest points sit at 1.0607, outside. Nothing lies between, so the grid answers 1.0000 for every ball whose radius lies between 0.7906 and 1.0607. Darts land at every distance, so they have no such blind spots.
+Worse, a grid in high dimensions sees the ball through a few thin shells. With 4 points per axis, every coordinate is ±1/4 or ±3/4.
+
+The 1,024 points with every coordinate at ±1/4 all sit at distance 0.7906 from the centre, inside. The next nearest points sit at 1.0607, outside. Nothing lies between, so the grid answers 1.0000 for every ball whose radius lies between 0.7906 and 1.0607. Darts land at every distance, so they have no such blind spots.
 
 ---
 
@@ -174,7 +192,11 @@ Every number in that table is printed by both programs below.
 
 ## Code, from first principles, and it actually runs
 
-The volume of the 10-dimensional ball is reached four independent ways. The closed form builds $V_d$ by the step $V_d = V_{d-2} \times 2\pi/d$. Slicing builds it as a chain of one-dimensional integrals, each done by Simpson's rule. Darts use a SplitMix64 generator written out in each language, so Python and Rust draw the same numbers. Grids are counted exactly, twice: once by walking every grid point and dropping a branch as soon as it leaves the ball, and once by tallying the sums of squares coordinate by coordinate. Then the code measures the grid's rate on a smooth test, checks σ/√N in 2, 5 and 10 dimensions, and reproduces every what-breaks number. Nothing imported knows the answer.
+The volume of the 10-dimensional ball is reached four independent ways. The closed form builds $V_d$ by the step $V_d = V_{d-2} \times 2\pi/d$. Slicing builds it as a chain of one-dimensional integrals, each done by Simpson's rule.
+
+Darts use a SplitMix64 generator written out in each language, so Python and Rust draw the same numbers. Grids are counted exactly, twice: once by walking every grid point and dropping a branch as soon as it leaves the ball, and once by tallying the sums of squares coordinate by coordinate.
+
+Then the code measures the grid's rate on a smooth test, checks σ/√N in 2, 5 and 10 dimensions, and reproduces every what-breaks number. Nothing imported knows the answer.
 
 ### Python
 
@@ -590,6 +612,214 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line.
 
+### Lean
+
+Lean proves the σ/√N law, the estimate's aim and the comparison of powers, in every dimension, and checks the whole-number arithmetic.
+
+- Take independent darts spread evenly over the box, and any score with finite σ. Then the average of N scores has standard error exactly σ/√N.
+- Score a dart 1 inside the ball and 0 outside. Then the estimate $2^d \times K/N$ averages exactly the ball's volume.
+- Compare the darts' error $\sigma N^{-1/2}$ with the midpoint grid's $C N^{-2/d}$. Then the darts win for all large enough N, whatever positive σ and C, exactly when $d > 4$.
+- Compare the darts' error $\sigma N^{-1/2}$ with the Simpson grid's $C N^{-4/d}$. Then the darts win for all large enough N, whatever positive σ and C, exactly when $d > 8$.
+- The box's volume 1,024, the grid sizes, the 605-times budget, the two shells in Step 6 and the costs in Step 5 also check.
+
+The grids' error rates themselves, the seeded run, the smooth test and every decimal are left to the Python and Rust checks.
+
+```lean
+-- Monte Carlo integration: for independent darts spread evenly over the box [-1, 1]^d, the average score has standard error σ/√N in every dimension d and the darts' estimate 2^d·K/N aims exactly at the ball's volume, while the darts' rate N^(-1/2) beats every midpoint grid N^(-2/d) exactly when d > 4 and every Simpson grid N^(-4/d) exactly when d > 8.
+import Mathlib.Probability.Moments.Variance
+import Mathlib.Probability.Distributions.Uniform
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Probability.IdentDistrib
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+import Mathlib.Order.Filter.AtTopBot.Basic
+import Mathlib.Tactic.NormNum
+
+namespace MonteCarloIntegrationInManyDimensions
+
+open MeasureTheory ProbabilityTheory Filter
+
+lemma rate_beats_iff (a b : ℝ) :
+    (∀ σ C : ℝ, 0 < σ → 0 < C →
+        ∀ᶠ N : ℕ in atTop, σ * (N : ℝ) ^ (-a) < C * (N : ℝ) ^ (-b)) ↔ b < a := by
+  constructor
+  · intro h
+    by_contra hba
+    push Not at hba
+    obtain ⟨N, hN⟩ := ((h 1 1 one_pos one_pos).and (eventually_ge_atTop 1)).exists
+    have h1 : (1 : ℝ) ≤ N := by exact_mod_cast hN.2
+    have := Real.rpow_le_rpow_of_exponent_le h1 (neg_le_neg hba)
+    linarith [hN.1]
+  · intro hba σ C hσ hC
+    have ht : Tendsto (fun N : ℕ => (N : ℝ) ^ (a - b)) atTop atTop :=
+      (tendsto_rpow_atTop (sub_pos.mpr hba)).comp tendsto_natCast_atTop_atTop
+    filter_upwards [ht.eventually_gt_atTop (σ / C), eventually_ge_atTop 1] with N hN hN1
+    have hpos : (0 : ℝ) < N := by exact_mod_cast hN1
+    have hsplit : (N : ℝ) ^ (-b) = (N : ℝ) ^ (a - b) * (N : ℝ) ^ (-a) := by
+      rw [← Real.rpow_add hpos]; ring_nf
+    rw [hsplit]
+    have hp : 0 < (N : ℝ) ^ (-a) := Real.rpow_pos_of_pos hpos _
+    have : σ < C * (N : ℝ) ^ (a - b) := by
+      rw [div_lt_iff₀ hC] at hN; linarith
+    nlinarith
+
+#print axioms rate_beats_iff
+
+/-- The card's main claim, Steps 1 and 2: a dart is one point of the box [-1, 1]^d (a list
+of d coordinates), and its score is any measurable function `g` of the point (for the
+volume of the ball, `g` is 2^d inside the ball and 0 outside). If the darts are independent
+and each is spread evenly over the box, and one dart's score has finite spread σ (finite
+variance), then the average score of N darts has standard error exactly σ/√N.
+Nothing in the answer counts the dimension d: it enters only through σ. -/
+theorem dart_average_standard_error_eq_sigma_div_sqrt {d : ℕ} {Ω : Type*} [MeasurableSpace Ω]
+    {P : Measure Ω} [IsProbabilityMeasure P]
+    (X : ℕ → Ω → (Fin d → ℝ))
+    (hind : iIndepFun X P)
+    (hunif : ∀ i, pdf.IsUniform (X i) (Set.Icc (-1 : Fin d → ℝ) 1) P volume)
+    (g : (Fin d → ℝ) → ℝ) (hg : Measurable g)
+    (hσ : MemLp (fun ω => g (X 0 ω)) 2 P)
+    (N : ℕ) (hN : 0 < N) :
+    Real.sqrt (variance (fun ω => (∑ i ∈ Finset.range N, g (X i ω)) / N) P)
+      = Real.sqrt (variance (fun ω => g (X 0 ω)) P) / Real.sqrt N := by
+  set Y : ℕ → Ω → ℝ := fun i => g ∘ X i with hY
+  have hident : ∀ i, IdentDistrib (Y i) (Y 0) P P := fun i =>
+    (HasLaw.identDistrib (hunif i) (hunif 0)).comp hg
+  have hmem : ∀ i, MemLp (Y i) 2 P := fun i => (hident i).symm.memLp_snd hσ
+  have hindY : iIndepFun Y P := hind.comp (fun _ => g) (fun _ => hg)
+  have hfun : (fun ω => (∑ i ∈ Finset.range N, g (X i ω)) / N)
+      = fun ω => (N : ℝ)⁻¹ * (∑ i ∈ Finset.range N, Y i) ω := by
+    funext ω; simp [hY, Finset.sum_apply, div_eq_inv_mul]
+  rw [hfun, variance_const_mul, IndepFun.variance_sum (fun i _ => hmem i)
+    (fun i _ j _ hij => hindY.indepFun hij)]
+  have hv : ∀ i, variance (Y i) P = variance (fun ω => g (X 0 ω)) P := fun i =>
+    (hident i).variance_eq
+  simp only [hv, Finset.sum_const, Finset.card_range, nsmul_eq_mul]
+  have hNR : (0 : ℝ) < N := by exact_mod_cast hN
+  rw [eq_div_iff (Real.sqrt_pos.mpr hNR).ne', ← Real.sqrt_mul (by have := variance_nonneg (fun ω => g (X 0 ω)) P; positivity)]
+  congr 1
+  field_simp
+
+/-- The estimate aims at the true volume (Step 1, and the first line of When it holds).
+Score each dart 2^d if it lands in the unit ball {x : x₁² + ... + x_d² ≤ 1} and 0 if not.
+If every dart is spread evenly over the box [-1, 1]^d, the estimate 2^d × K / N, where K is
+the number of the first N darts inside the ball, has mean exactly the ball's volume. -/
+theorem dart_estimate_mean_eq_ball_volume {d : ℕ} {Ω : Type*} [MeasurableSpace Ω]
+    {P : Measure Ω} [IsProbabilityMeasure P]
+    (X : ℕ → Ω → (Fin d → ℝ))
+    (hunif : ∀ i, pdf.IsUniform (X i) (Set.Icc (-1 : Fin d → ℝ) 1) P volume)
+    (N : ℕ) (hN : 0 < N) :
+    ∫ ω, (2 : ℝ) ^ d * (∑ i ∈ Finset.range N,
+        Set.indicator {x : Fin d → ℝ | ∑ j, x j ^ 2 ≤ 1} (fun _ => (1 : ℝ)) (X i ω)) / N ∂P
+      = (volume {x : Fin d → ℝ | ∑ j, x j ^ 2 ≤ 1}).toReal := by
+  set B : Set (Fin d → ℝ) := {x : Fin d → ℝ | ∑ j, x j ^ 2 ≤ 1} with hB
+  have hBm : MeasurableSet B := measurableSet_le (by fun_prop) measurable_const
+  have hBsub : B ⊆ Set.Icc (-1 : Fin d → ℝ) 1 := by
+    intro x hx
+    simp only [hB, Set.mem_ofPred_eq] at hx
+    refine ⟨fun j => ?_, fun j => ?_⟩ <;>
+    · have h1 : x j ^ 2 ≤ ∑ k, x k ^ 2 :=
+        Finset.single_le_sum (f := fun k => x k ^ 2) (fun k _ => sq_nonneg _) (Finset.mem_univ j)
+      simp only [Pi.neg_apply, Pi.one_apply]
+      nlinarith [sq_nonneg (x j - 1), sq_nonneg (x j + 1)]
+  have hvol : (volume (Set.Icc (-1 : Fin d → ℝ) 1)) = 2 ^ d := by
+    rw [Real.volume_Icc_pi]
+    simp only [Pi.one_apply, Pi.neg_apply, sub_neg_eq_add]
+    norm_num
+  have hf : ∀ i, AEStronglyMeasurable (B.indicator (fun _ => (1 : ℝ))) (Measure.map (X i) P) :=
+    fun i => (stronglyMeasurable_const.indicator hBm).aestronglyMeasurable
+  have hint : ∀ i, ∫ ω, Set.indicator B (fun _ => (1 : ℝ)) (X i ω) ∂P
+      = (volume B).toReal / 2 ^ d := by
+    intro i
+    rw [← integral_map (hunif i).aemeasurable (hf i), integral_indicator_const _ hBm,
+      (hunif i).map_eq, measureReal_def, cond_apply measurableSet_Icc, hvol,
+      Set.inter_eq_right.mpr hBsub]
+    simp [ENNReal.toReal_mul, div_eq_inv_mul]
+  have hI : ∀ i, Integrable (fun ω => Set.indicator B (fun _ => (1 : ℝ)) (X i ω)) P := by
+    intro i
+    have : Integrable (B.indicator (fun _ => (1 : ℝ))) (Measure.map (X i) P) :=
+      (integrable_const (1 : ℝ)).indicator hBm
+    exact (integrable_map_measure (hf i) (hunif i).aemeasurable).mp this
+  have hNR : (0 : ℝ) < N := by exact_mod_cast hN
+  simp_rw [mul_div_assoc]
+  rw [integral_const_mul, integral_div, integral_finsetSum _ (fun i _ => hI i)]
+  simp only [hint, Finset.sum_const, Finset.card_range, nsmul_eq_mul]
+  field_simp
+
+/-- Step 5, comparing the powers. In dimension d ≥ 1 the darts' error is σ N^(-1/2), the
+midpoint grid's is C N^(-2/d) and the Simpson grid's is C N^(-4/d). The darts win for all
+large enough N, whatever the constants σ and C, exactly when d > 4 against the midpoint
+grid and exactly when d > 8 against the Simpson grid. -/
+theorem darts_beat_grid_iff_dimension_passes {d : ℕ} (hd : 0 < d) :
+    ((∀ σ C : ℝ, 0 < σ → 0 < C →
+        ∀ᶠ N : ℕ in atTop, σ * (N : ℝ) ^ (-(1 / 2 : ℝ)) < C * (N : ℝ) ^ (-(2 / (d : ℝ))))
+      ↔ 4 < d) ∧
+    ((∀ σ C : ℝ, 0 < σ → 0 < C →
+        ∀ᶠ N : ℕ in atTop, σ * (N : ℝ) ^ (-(1 / 2 : ℝ)) < C * (N : ℝ) ^ (-(4 / (d : ℝ))))
+      ↔ 8 < d) := by
+  have hdR : (0 : ℝ) < d := by exact_mod_cast hd
+  refine ⟨(rate_beats_iff _ _).trans ?_, (rate_beats_iff _ _).trans ?_⟩
+  · rw [div_lt_iff₀ hdR]
+    constructor
+    · intro h; have : (4 : ℝ) < d := by linarith
+      exact_mod_cast this
+    · intro h; have : (4 : ℝ) < d := by exact_mod_cast h
+      linarith
+  · rw [div_lt_iff₀ hdR]
+    constructor
+    · intro h; have : (8 : ℝ) < d := by linarith
+      exact_mod_cast this
+    · intro h; have : (8 : ℝ) < d := by exact_mod_cast h
+      linarith
+
+/-! ### The card's whole-number worked examples -/
+
+-- The box [-1, 1]^10 has volume 2^10 = 1,024.
+example : (2 : ℕ) ^ 10 = 1024 := by norm_num
+
+-- Grids of 3, 4, 5 and 6 points per axis in 10 dimensions.
+example : (3 : ℕ) ^ 10 = 59049 := by norm_num
+example : (4 : ℕ) ^ 10 = 1048576 := by norm_num
+example : (5 : ℕ) ^ 10 = 9765625 := by norm_num
+example : (6 : ℕ) ^ 10 = 60466176 := by norm_num
+
+-- The 6-per-axis grid costs about 605 times the darts' budget of 100,000.
+example : 604 * 100000 < (60466176 : ℕ) ∧ (60466176 : ℕ) < 605 * 100000 := by norm_num
+
+-- The estimate's numerator: 1,024 × 268 darts inside.
+example : (1024 * 268 : ℕ) = 274432 := by norm_num
+
+-- Step 5: the crossovers 2/d = 1/2 at d = 4 and 4/d = 1/2 at d = 8; in 10 dimensions
+-- both grid powers fall below the darts' 1/2.
+example : (2 : ℚ) / 4 = 1 / 2 ∧ (4 : ℚ) / 8 = 1 / 2 := by norm_num
+example : (2 : ℚ) / 10 < 1 / 2 ∧ (4 : ℚ) / 10 < 1 / 2 := by norm_num
+
+-- Step 6: with 4 points per axis every coordinate is ±1/4 or ±3/4. The 2^10 = 1,024 points
+-- with all coordinates ±1/4 have squared distance 10/16 ≤ 1 (inside); the next shell,
+-- one coordinate ±3/4, has squared distance 18/16 > 1 (outside).
+example : 10 * (1 / 4 : ℚ) ^ 2 = 10 / 16 ∧ 10 * (1 / 4 : ℚ) ^ 2 ≤ 1 := by norm_num
+example : 9 * (1 / 4 : ℚ) ^ 2 + (3 / 4 : ℚ) ^ 2 = 18 / 16 ∧ 1 < 9 * (1 / 4 : ℚ) ^ 2 + (3 / 4 : ℚ) ^ 2 := by
+  norm_num
+
+-- Step 5 in costs: a tenth of the error in 10 dimensions takes 10^2 = 100 times the darts
+-- and 10^(10/2) = 100,000 times the midpoint points.
+example : (10 : ℕ) ^ 2 = 100 ∧ (10 : ℕ) ^ (10 / 2) = 100000 := by norm_num
+
+#print axioms dart_average_standard_error_eq_sigma_div_sqrt
+#print axioms dart_estimate_mean_eq_ball_volume
+#print axioms darts_beat_grid_iff_dimension_passes
+
+end MonteCarloIntegrationInManyDimensions
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'MonteCarloIntegrationInManyDimensions.rate_beats_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MonteCarloIntegrationInManyDimensions.dart_average_standard_error_eq_sigma_div_sqrt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MonteCarloIntegrationInManyDimensions.dart_estimate_mean_eq_ball_volume' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MonteCarloIntegrationInManyDimensions.darts_beat_grid_iff_dimension_passes' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **400,000 darts instead of 100,000.** Guess first: four times the work. The standard error falls from 0.1614 to 0.0807, exactly half, in 10 dimensions just as in 2.
@@ -602,7 +832,9 @@ The two outputs are identical line for line.
 ## The usual mistake
 
 > [!warning]
-> **Reading "the error rate does not depend on dimension" as "Monte Carlo is easy in any dimension".** The rate, one over root N, has no d in it. The constant σ does. For the ball, the error relative to the volume at 1,000 darts is 0.017 in 2 dimensions, 0.071 in 5 and 0.633 in 10. In 20 dimensions, 100,000 darts score nothing. Monte Carlo beats the grid; it does not beat a target that almost no dart can hit. Shrinking σ is the job of [Variance reduction](../../09-Probability%20and%20statistics/11-Simulation/05-variance-reduction.md). When no direct sampler can reach the region at all, [MCMC as a tool](08-markov-chain-monte-carlo-for-computation.md) draws from it instead, at the price of correlated draws, which are worth fewer than independent ones.
+> **Reading "the error rate does not depend on dimension" as "Monte Carlo is easy in any dimension".** The rate, one over root N, has no d in it. The constant σ does. For the ball, the error relative to the volume at 1,000 darts is 0.017 in 2 dimensions, 0.071 in 5 and 0.633 in 10. In 20 dimensions, 100,000 darts score nothing. Monte Carlo beats the grid; it does not beat a target that almost no dart can hit.
+>
+> Shrinking σ is the job of [Variance reduction](../../09-Probability%20and%20statistics/11-Simulation/05-variance-reduction.md). When no direct sampler can reach the region at all, [MCMC as a tool](08-markov-chain-monte-carlo-for-computation.md) draws from it instead, at the price of correlated draws, which are worth fewer than independent ones.
 >
 > - **Expecting a finer grid to settle down.** In 10 dimensions, 3, 4, 5 and 6 points per axis give 3.4856, 1.0000, 3.0708 and 3.2255. Sixty million points are still off by 0.6754.
 > - **Quoting the grid's h² bound for a jumpy integrand.** The bound needs a bounded second derivative. At the ball's edge the score jumps, and the grid's power drops to 1/d, which is 0.10 in 10 dimensions.

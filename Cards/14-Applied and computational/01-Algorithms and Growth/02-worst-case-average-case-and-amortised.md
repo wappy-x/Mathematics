@@ -10,7 +10,9 @@ A phone keeps a playlist of 1,000,000 tracks in an **array**: one block of numbe
 
 When it fills, the phone cannot stretch the block in place. It asks for a new block twice the size, copies every track across, and then writes the new one. Building the playlist up to 1,000,000 tracks this way, the single worst add copies 524,288 tracks first: 524,289 writes for one tap. Yet the whole build costs 2,048,575 writes, about **2.05 per track**.
 
-Both numbers are true. They answer different questions. "How bad can one add be?" is the **worst case**. "What does a long run of adds cost per add?" is the **amortised cost** (amortised: a big bill spread over the many cheap operations before it, as putting a little aside each month pays a yearly bill). A third question, "how much on a typical search, if the tracks people look for follow some pattern?", is the **average case**. It needs that pattern written down, and it changes when the pattern does.
+Both numbers are true. They answer different questions. "How bad can one add be?" is the **worst case**. "What does a long run of adds cost per add?" is the **amortised cost** (amortised: a big bill spread over the many cheap operations before it, as putting a little aside each month pays a yearly bill).
+
+A third question, "how much on a typical search, if the tracks people look for follow some pattern?", is the **average case**. It needs that pattern written down, and it changes when the pattern does.
 
 **A cost is only meaningful with its case named: the worst case is a ceiling for one operation on any input, the average case is a mean over a stated spread of inputs, and the amortised cost is a ceiling on the mean over any run of operations from an empty start, with no probability involved.**
 
@@ -55,7 +57,7 @@ $$W(n) = \max_{x}\, t(x) \qquad A(n) = \sum_{x} p(x)\, t(x) \qquad \frac{1}{n}\s
 | $\Phi$ | potential: $2s - m$, the savings the next copy will need | 951,424 at the end | — |
 | $j$ | the power in $2^j$, the largest power of two below n: the biggest single copy | 19, so $2^{19}$ = 524,288 | each step up doubles the worst add |
 
-The search here is **linear search**, the scan from [Big-O](01-big-o-and-growth-rates.md): check slot 1, slot 2, and so on until the track turns up. A track in slot $k$ costs $k$ comparisons. Halving, on the same card, does better on a sorted playlist; this card keeps the plain scan because its cases are easy to see.
+The search here is **linear search**, the scan from [Big-O](01-big-o-and-growth-rates.md): check slot 1, slot 2, and so on until the track turns up. A track in slot $k$ costs $k$ comparisons. Halving, on the same card, does better on a sorted playlist: it opens the list in the middle and throws away the wrong half each time. This card keeps the plain scan because its cases are easy to see.
 
 ### When it holds
 
@@ -127,7 +129,9 @@ So $\sum c_i \le 3n$ for every n, not just at the end. The check tests the inequ
 
 ### Step 4: why a fixed step fails
 
-Grow by a fixed 1,000 slots instead. Copies happen at 1,000, 2,000, 3,000, … tracks, and their total is 1,000 times $1 + 2 + 3 + \dots$: Step 1's sum again, so it grows like $n^2$. The run costs 500,500,000 writes, 500.50 per add, and the per-add cost keeps rising with n. Doubling works because each copy is paid for by the adds since the last one: there are half as many of those as tracks to copy, and each banked 2. A fixed step adds only 1,000 new tracks to pay for each ever-larger copy.
+Grow by a fixed 1,000 slots instead. Copies happen at 1,000, 2,000, 3,000, … tracks, and their total is 1,000 times $1 + 2 + 3 + \dots$: Step 1's sum again, so it grows like $n^2$. The run costs 500,500,000 writes, 500.50 per add, and the per-add cost keeps rising with n.
+
+Doubling works because each copy is paid for by the adds since the last one: there are half as many of those as tracks to copy, and each banked 2. A fixed step adds only 1,000 new tracks to pay for each ever-larger copy.
 
 Any factor above 1 keeps the charge constant. Growing by half (×1.5) costs 3,099,719 writes, 3.10 per add: more frequent copies, but less wasted space.
 
@@ -146,7 +150,9 @@ One million adds to the doubling playlist, counted in writes.
 | worst single add | 524,288 copies + 1 write | 524,289 |
 | **amortised cost per add** | 2,048,575 ÷ 1,000,000 | **2.05** |
 
-Over the whole build, the playlist did about two writes per track: one to put it in, and on average about one to move it later. No one add is promised to be cheap, but a million adds are promised to cost under 3 million writes. Both numbers get called the amortised cost: 2.05 is the amortised cost of this 1,000,000-add run, and 3 is the bound that holds for a run of any length (1,048,577 adds reach 2.999997 per add). Quote 3 as the promise.
+Over the whole build, the playlist did about two writes per track: one to put it in, and on average about one to move it later. No one add is promised to be cheap, but a million adds are promised to cost under 3 million writes.
+
+Both numbers get called the amortised cost: 2.05 is the amortised cost of this 1,000,000-add run, and 3 is the bound that holds for a run of any length (1,048,577 adds reach 2.999997 per add). Quote 3 as the promise.
 
 The search, on the same 1,000,000 tracks:
 
@@ -552,6 +558,174 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the doubling playlist's costs for every number of adds n, and the search average for every playlist size n.
+
+- Take n adds to an empty playlist that doubles when full. Then the total is at most 3n writes.
+- Take the same n adds. Then the total is exactly $n + 2^{j+1} - 1$ writes, with $2^{j+1}$ the smallest power of two at least n.
+- Suppose the playlist has n slots, n at least 1, each slot equally likely. Then linear search averages $(n+1)/2$ comparisons.
+- The bar chart's 20 costs and the worked numbers by hand come out exactly as the card states.
+
+Python and Rust cover the rest: the real copying, the potential after every add, other growth and shrink rules, and the 9-in-10 search.
+
+```lean
+-- Which case are you quoting? Worst, average and amortised cost: a playlist array that doubles when full costs at most 3n writes for any n adds from empty, exactly n + 2^⌈log₂ n⌉ - 1 writes in total, and linear search over n equally likely slots averages (n + 1)/2 comparisons.
+import Mathlib.Data.Nat.Log
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Algebra.Order.Field.Basic
+import Mathlib.Data.Rat.Defs
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Algebra.BigOperators.Ring.Finset
+
+open Finset
+
+/-- The doubling array after `n` adds to an empty playlist, as
+`(size, capacity, total writes)`. An add writes the new track (1 write); if the
+block is full (`size = capacity`) it first copies every stored track into a new
+block of capacity `max 1 (2 * capacity)`, so that add costs `size + 1` writes. -/
+def doublingRun : ℕ → ℕ × ℕ × ℕ
+  | 0 => (0, 0, 0)
+  | n + 1 =>
+    let s := (doublingRun n).1
+    let m := (doublingRun n).2.1
+    let t := (doublingRun n).2.2
+    if s = m then (s + 1, max 1 (2 * m), t + s + 1) else (s + 1, m, t + 1)
+
+/-- Total writes made by `n` adds to an empty doubling playlist. -/
+def doublingTotal (n : ℕ) : ℕ := (doublingRun n).2.2
+
+/-- Closed form of the doubling run. -/
+theorem doublingRun_spec (n : ℕ) :
+    doublingRun n = (n, if n = 0 then 0 else 2 ^ Nat.clog 2 n, n + 2 ^ Nat.clog 2 n - 1) := by
+  induction n with
+  | zero => simp [doublingRun]
+  | succ n ih =>
+    rw [doublingRun, ih]
+    simp only
+    rcases Nat.eq_zero_or_pos n with rfl | hn
+    · simp
+    · have hn0 : n ≠ 0 := Nat.pos_iff_ne_zero.mp hn
+      simp only [hn0, ↓reduceIte, Nat.succ_ne_zero]
+      set c := Nat.clog 2 n with hc
+      have hle : n ≤ 2 ^ c := Nat.le_pow_clog (by norm_num) n
+      have hmono : c ≤ Nat.clog 2 (n + 1) := Nat.clog_mono_right 2 (Nat.le_succ n)
+      have hp : 1 ≤ 2 ^ c := Nat.one_le_two_pow
+      split_ifs with h
+      · have hc1 : Nat.clog 2 (n + 1) = c + 1 := by
+          apply le_antisymm
+          · apply Nat.clog_le_of_le_pow
+            rw [pow_succ]; omega
+          · rw [Nat.succ_le_iff, Nat.lt_clog_iff_pow_lt (by norm_num)]; omega
+        rw [hc1, pow_succ]
+        refine Prod.ext rfl (Prod.ext ?_ ?_) <;> dsimp only <;> omega
+      · have hc1 : Nat.clog 2 (n + 1) = c := by
+          apply le_antisymm
+          · apply Nat.clog_le_of_le_pow; omega
+          · exact hmono
+        rw [hc1]
+        refine Prod.ext rfl (Prod.ext rfl ?_)
+        dsimp only
+        omega
+
+#print axioms doublingRun_spec
+
+/-- For `n ≥ 1`, the smallest power of two at least `n` is below `2 n`. -/
+theorem two_pow_clog_lt (n : ℕ) (hn : 1 ≤ n) : 2 ^ Nat.clog 2 n < 2 * n := by
+  rcases Nat.lt_or_ge 1 n with h | h
+  · have h1 := Nat.pow_pred_clog_lt_self (b := 2) (by norm_num) h
+    have h2 : 0 < Nat.clog 2 n := Nat.clog_pos (by norm_num) h
+    have h3 : 2 ^ Nat.clog 2 n = 2 * 2 ^ (Nat.clog 2 n).pred := by
+      rw [← pow_succ']; congr 1; rw [Nat.pred_eq_sub_one]; omega
+    omega
+  · have : n = 1 := by omega
+    subst this; simp
+
+#print axioms two_pow_clog_lt
+
+/-- The sum `1 + 2 + ⋯ + n` in `ℚ`. -/
+theorem sum_Icc_one_cast (n : ℕ) : ∑ k ∈ Icc 1 n, (k : ℚ) = (n : ℚ) * ((n : ℚ) + 1) / 2 := by
+  induction n with
+  | zero => simp
+  | succ m ih =>
+    rw [Finset.sum_Icc_succ_top (by omega), ih]
+    push_cast
+    ring
+
+#print axioms sum_Icc_one_cast
+
+/-- The amortised bound: for every `n`, a run of `n` adds to an empty playlist
+array that doubles when full costs at most `3 n` writes in total, so the
+amortised cost per add is at most 3. -/
+theorem doubling_total_le_three_mul (n : ℕ) : doublingTotal n ≤ 3 * n := by
+  rcases Nat.eq_zero_or_pos n with rfl | hn
+  · decide
+  · have h := two_pow_clog_lt n hn
+    have e : doublingTotal n = n + 2 ^ Nat.clog 2 n - 1 := by
+      simp [doublingTotal, doublingRun_spec n]
+    omega
+
+/-- Where the copies fall: the copies are `1 + 2 + 4 + ⋯` up to the largest power
+of two below `n`, so the total of `n` adds from empty is exactly
+`n + 2^(j+1) - 1`, where `2^(j+1) = 2^⌈log₂ n⌉` is the smallest power of two that
+is at least `n`. -/
+theorem doubling_total_eq (n : ℕ) : doublingTotal n = n + 2 ^ Nat.clog 2 n - 1 := by
+  simp [doublingTotal, doublingRun_spec n]
+
+/-- The average case of linear search: a track in slot `k` costs `k` comparisons,
+and if each of the `n` slots is equally likely (chance `1/n` each), the mean cost
+is `(n + 1)/2`. -/
+theorem linear_search_average_uniform (n : ℕ) (hn : n ≠ 0) :
+    ∑ k ∈ Icc 1 n, (1 / (n : ℚ)) * (k : ℚ) = ((n : ℚ) + 1) / 2 := by
+  rw [← Finset.mul_sum, sum_Icc_one_cast]
+  have : (n : ℚ) ≠ 0 := by exact_mod_cast hn
+  field_simp
+
+/-! ### The card's whole-number worked examples -/
+
+-- The first 20 adds: capacity 32, total 51 writes (running average 51/20).
+example : doublingRun 20 = (20, 32, 51) := by decide
+-- The per-add costs in the chart: 1, 2, 3, 1, 5, 1, 1, 1, 9, then 1s, and 17 at add 17.
+example : (List.range 20).map (fun i => doublingTotal (i + 1) - doublingTotal i)
+    = [1, 2, 3, 1, 5, 1, 1, 1, 9, 1, 1, 1, 1, 1, 1, 1, 17, 1, 1, 1] := by decide
+-- One million adds: largest power of two below n is 2^19 = 524,288, final capacity 2^20.
+example : 2 ^ 19 < 1000000 ∧ 1000000 ≤ 2 ^ 20 ∧ 2 ^ 19 = 524288 ∧ 2 ^ 20 = 1048576 := by
+  norm_num
+-- Copies 1 + 2 + ⋯ + 524,288 = 1,048,575; total 2,048,575 writes, under 3,000,000.
+example : ∑ i ∈ range 20, 2 ^ i = 1048575 := by decide
+example : 1000000 + 2 ^ 20 - 1 = 2048575 ∧ 2048575 ≤ 3 * 1000000 := by norm_num
+-- Worst single add: 524,288 copies plus 1 write.
+example : 2 ^ 19 + 1 = 524289 := by norm_num
+-- Tight case: 1,048,577 adds cost 3,145,728 writes, still under 3 per add.
+example : 1048577 + 2 ^ 21 - 1 = 3145728 ∧ 3145728 < 3 * 1048577 := by norm_num
+-- Linear search on 1,000,000 slots: average (1,000,000 + 1)/2 = 500,000.5.
+example : ((1000000 : ℚ) + 1) / 2 = 1000001 / 2 := by norm_num
+-- 9 in 10 searches for the newest 10,000 (mean slot 995,000.5), 1 in 10 uniform.
+example : (2 * 1000000 - 9999 : ℚ) / 2 = 1990001 / 2 := by norm_num
+example : (9 / 10 : ℚ) * (1990001 / 2) + (1 / 10) * (1000001 / 2) = 1891001 / 2 := by norm_num
+-- Fixed +1,000 growth: copies at 1,000, 2,000, …, 999,000; total 500,500,000 writes.
+example : 1000000 + 1000 * (999 * 1000 / 2) = 500500000 := by norm_num
+-- Quoting the worst add as the per-add cost predicts 524,289,000,000 writes.
+example : 524289 * 1000000 = 524289000000 := by norm_num
+
+#print axioms doubling_total_le_three_mul
+#print axioms doubling_total_eq
+#print axioms linear_search_average_uniform
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'doublingRun_spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'two_pow_clog_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sum_Icc_one_cast' depends on axioms: [propext, Classical.choice, Quot.sound]
+'doubling_total_le_three_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'doubling_total_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'linear_search_average_uniform' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the playlist's numbers, so a change usually stops the script at one of them.
@@ -577,8 +751,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Dynamic arrays in every language.** Python's list, Java's ArrayList, C++'s vector and Rust's Vec all grow by a multiple when full, so appending is amortised constant time. The multiple differs (Java's ArrayList grows by half), and Step 4 shows why any multiple above 1 works.
-- **Hash tables.** A table rebuilds itself into a bigger one when it gets too full, the same doubling bill spread the same way; [Data structures](06-data-structures-heaps-hashes-and-trees.md) adds the load factor that decides when.
-- **Quicksort.** Its average case over random orders is fast and its worst case, a sorted playlist with the first element as pivot, is slow; [Sorting and searching](05-sorting-and-searching.md) runs both.
+- **Hash tables.** A table rebuilds itself into a bigger one when it gets too full, the same doubling bill spread the same way; [Data structures](06-data-structures-heaps-hashes-and-trees.md) adds the load factor (the fraction of slots in use) that decides when.
+- **Quicksort.** Its average case over random orders is fast and its worst case, a sorted playlist with the first element as pivot (the element the others are split around), is slow; [Sorting and searching](05-sorting-and-searching.md) runs both.
 - **Real-time systems.** Audio, games and trading systems care about the worst single operation. They pre-allocate, or copy a few elements at each add so no one add pays for all of them.
 - **Randomised methods.** A fourth case, the expected cost over the method's own coin flips for every input, is the subject of [Randomised algorithms](../02-Randomised%20and%20Approximate%20Algorithms/01-randomised-algorithms-and-expectation.md).
 

@@ -6,17 +6,31 @@
 
 ## General Overview
 
-A college has 40 exams to fit into 12 slots in exam week. Its 120 students sit 4 exams each. Two exams **clash** when one student sits both, and clashing exams cannot share a slot. The enrolments on this card are synthetic, made by a stated rule and seed: 40 first-years each sit 4 of 12 core exams, and 80 other students each sit 4 of all 40. Number the exams 0 to 39. A student's exams are drawn one at a time, and a draw is thrown back if its number leaves the same remainder, when divided by 12, as an exam already picked. So putting each exam in the slot given by that remainder causes no clash, and a clash-free 12-slot timetable is known to exist. The enrolments give 401 clashing pairs.
+A college has 40 exams to fit into 12 slots in exam week. Its 120 students sit 4 exams each. Two exams **clash** when one student sits both, and clashing exams cannot share a slot.
 
-Draw each exam as a dot and each clash as a line, and a timetable with no clash is a colouring of that graph with 12 colours ([Colouring](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md)). The 12 core exams all clash with each other, so 12 slots is the floor. Greedy colouring, taking the exams in listed order, uses 13 slots: one too many. Trying every timetable is out of the question, since there are 12^40, about 10^43.17 of them.
+The enrolments on this card are synthetic, made by a stated rule and seed: 40 first-years each sit 4 of 12 core exams. The 80 other students each sit 4 of all 40. Number the exams 0 to 39.
 
-**Local search** is humbler. Start from any timetable. Move one exam to another slot, and keep the move if it lowers the clashes. Repeat. This plain rule, **hill climbing**, reaches a clash-free timetable in only 22 of 400 runs. The rest get **stuck**: no single move helps, yet clashes remain. There are two ways out. One is to start again from a fresh random timetable (a **restart**). The other is to sometimes accept a move that does not help. **Simulated annealing** does that with a chance that shrinks as the search goes on. It finishes all 50 of 50 runs clash-free, after 6,321.1 moves looked at on average.
+A student's exams are drawn one at a time. A draw is thrown back if its number leaves the same remainder, when divided by 12, as an exam already picked. So putting each exam in the slot given by that remainder causes no clash, and a clash-free 12-slot timetable is known to exist. The enrolments give 401 clashing pairs.
+
+Draw each exam as a dot and each clash as a line, and a timetable with no clash is a colouring of that graph with 12 colours ([Colouring](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md)). The 12 core exams all clash with each other, so 12 slots is the floor.
+
+Greedy colouring gives each exam in turn the first slot with no clash. Taking the exams in listed order, it uses 13 slots: one too many. Trying every timetable is out of the question, since there are 12^40, about 10^43.17 of them.
+
+**Local search** is humbler. Start from any timetable. Move one exam to another slot, and keep the move if it lowers the clashes. Repeat.
+
+This plain rule, **hill climbing**, reaches a clash-free timetable in only 22 of 400 runs. The rest get **stuck**: no single move helps, yet clashes remain.
+
+There are two ways out. One is to start again from a fresh random timetable (a **restart**). The other is to sometimes accept a move that does not help.
+
+**Simulated annealing** does that with a chance that shrinks as the search goes on. It finishes all 50 of 50 runs clash-free, after 6,321.1 moves looked at on average.
 
 Then the honest part. A walk that accepts moves that change nothing, but never one that makes things worse, also finishes 50 of 50 runs, and faster: 1,794.4 looks. Here the way out is level ground, not uphill. A small timetable below shows where only an uphill move gets out.
 
 **Local search improves a timetable by one small move at a time, stops where no single move helps, escapes by restarting or by sometimes accepting a move that does not help, and is reported honestly only as what it found, at what cost, in how many of how many runs, against a known floor.**
 
-**What kind of fact this is:** a method with no promise: nothing guarantees a clash-free timetable. Two facts inside it are proved on this card in Why it works: hill climbing always stops, and k independent runs succeed with chance 1 − (1 − p)^k. A third, that at a fixed temperature the walk visits timetables in proportion to e^(−clashes/T), follows from detailed balance, proved on [MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md).
+**What kind of fact this is:** a method with no promise: nothing guarantees a clash-free timetable. Two facts inside it are proved on this card in Why it works: hill climbing always stops, and k independent runs succeed with chance 1 − (1 − p)^k.
+
+A third, that at a fixed temperature the walk visits timetables in proportion to e^(−clashes/T), follows from detailed balance, proved on [MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md). Here T, the temperature, is how willing the walk is to go uphill. Detailed balance means that, in the long run, each move is made as often as its reverse.
 
 ### The picture: three searches from the same bad timetable
 
@@ -37,7 +51,14 @@ Orange: hill climbing, stuck at 4 clashes after 6,160 looks. Green: annealing, w
 
 ## The formula
 
-Notation first, in words. A **timetable** $x$ lists the slot of each exam. $C(x)$ is its number of clashes: pairs of clashing exams that sit in the same slot. A **move** sends one exam $e$ from its slot $s$ to another slot $s'$. The timetables one move away are the **neighbourhood** of $x$. Here every timetable has 40 × 11 = 440 neighbours. $n_e(s)$ counts the exams that clash with $e$ and sit in slot $s$. A **look** is one move checked: its change in clashes worked out. Looks are the cost this card counts, never seconds.
+Notation first, in words.
+
+- A **timetable** $x$ lists the slot of each exam.
+- $C(x)$ is its number of clashes: pairs of clashing exams that sit in the same slot.
+- A **move** sends one exam $e$ from its slot $s$ to another slot $s'$.
+- The timetables one move away are the **neighbourhood** of $x$. Here every timetable has 40 × 11 = 440 neighbours.
+- $n_e(s)$ counts the exams that clash with $e$ and sit in slot $s$.
+- A **look** is one move checked: its change in clashes worked out. Looks are the cost this card counts, never seconds.
 
 $$\Delta = n_e(s') - n_e(s)$$
 
@@ -103,11 +124,19 @@ Over 400 runs, the end points spread out like this: 22 runs reach 0, 117 stop at
 
 ### Step 3: restarts turn a small chance into a large one
 
-Each run starts from its own random timetable, so the runs are independent. All $k$ fail with chance $(1 - p)^k$, which gives the restart formula. With $p$ = 22 / 400 = 0.0550, ten runs succeed with chance 0.4320. Split the 400 runs into 40 blocks of 10: 17 of the 40 blocks contain a win, a share close to that.
+Each run starts from its own random timetable, so the runs are independent. All $k$ fail with chance $(1 - p)^k$, which gives the restart formula.
 
-For a 95% chance, solve $(1 - p)^k \le 0.05$ using ln, the natural log: $k \ge \ln 0.05 / \ln 0.945$, so 53 runs. But $p$ is itself measured, so 53 is an estimate: across $p$'s likely range, 1.96 standard errors either side, the answer runs from 38 to 91. The number of runs until the first win has average $1/p$. So the expected cost is 7,543.8 looks per run divided by 0.0550: 137,160 looks.
+With $p$ = 22 / 400 = 0.0550, ten runs succeed with chance 0.4320. Split the 400 runs into 40 blocks of 10: 17 of the 40 blocks contain a win, a share close to that.
 
-A small case can be checked against every possibility. Take 8 exams with 13 clashing pairs and 3 slots. There are 3^8 = 6,561 timetables, so the checks run hill climbing from every one. It wins from 0.5284 of them. The formula then says 3 restarts win with chance 0.8951; 4,000 seeded trials of 3 restarts win 0.8982 of the time.
+For a 95% chance, solve $(1 - p)^k \le 0.05$ using ln, the natural log: $k \ge \ln 0.05 / \ln 0.945$, so 53 runs.
+
+But $p$ is itself measured, so 53 is an estimate: across $p$'s likely range, 1.96 standard errors either side, the answer runs from 38 to 91. The standard error of $p$, $\sqrt{p(1-p)/400}$, is the typical size of its error from measuring only 400 runs.
+
+The number of runs until the first win has average $1/p$. So the expected cost is 7,543.8 looks per run divided by 0.0550: 137,160 looks.
+
+A small case can be checked against every possibility. Take 8 exams with 13 clashing pairs and 3 slots. There are 3^8 = 6,561 timetables, so the checks run hill climbing from every one.
+
+It wins from 0.5284 of them. The formula then says 3 restarts win with chance 0.8951; 4,000 seeded trials of 3 restarts win 0.8982 of the time.
 
 ### Step 4: level ground is a way out
 
@@ -119,26 +148,40 @@ A walk that proposes random moves and accepts every move with $\Delta \le 0$ wan
 
 At temperature $T$, a move that adds one clash is accepted with chance $e^{-1/T}$: 0.6065 at T = 2 and 0.3679 at T = 1. With $\alpha$ = 0.9995 the temperature after 5,000 looks is 2 × 0.9995^5000 = 0.1641, and a +1 move is then accepted only 0.002254 of the time. So the walk roams early and then settles.
 
-Why settling works is the Metropolis rule from [MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md), where detailed balance is proved. Hold $T$ fixed. The proposal is symmetric, and the acceptance rule satisfies detailed balance (in the long run, each move is made as often as its reverse) with weights $e^{-C(x)/T}$. So in the long run the walk spends a share of its time at timetable $x$ equal to
+Why settling works is the Metropolis rule (the acceptance chance above) from [MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md), where detailed balance is proved.
+
+Hold $T$ fixed. The proposal is symmetric, and the acceptance rule satisfies detailed balance (in the long run, each move is made as often as its reverse) with weights $e^{-C(x)/T}$. So in the long run the walk spends a share of its time at timetable $x$ equal to
 
 $$\pi(x) = \frac{e^{-C(x)/T}}{Z}.$$
 
-Each clash divides a timetable's share by $e^{1/T}$. As $T$ falls that divisor grows, and the weight piles onto the clash-free timetables. The checks test this on the 8-exam case at T = 0.5. Summed over all 6,561 timetables, the formula gives the clash-free ones 0.2642 of the time. Twenty seeded walks spend 0.2608 of their time there, with a standard error of 0.0024.
+Here $Z$ is the total of $e^{-C/T}$ over all timetables, which turns weights into shares. Each clash divides a timetable's share by $e^{1/T}$. As $T$ falls that divisor grows, and the weight piles onto the clash-free timetables.
 
-When does the uphill move matter? On the 8-exam case, 108 timetables with clashes are stuck. Six of them are true traps. Each has 1 clash, and every one of its 16 moves adds at least 1 clash, so there is no level way out. One is the timetable `[0, 1, 2, 2, 0, 2, 1, 0]`. The temperature-0 walk started there escapes in 0 of 50 runs. Annealing from T = 1 escapes in 50 of 50, after 111.5 looks on average.
+The checks test this on the 8-exam case at T = 0.5. Summed over all 6,561 timetables, the formula gives the clash-free ones 0.2642 of the time. Twenty seeded walks spend 0.2608 of their time there, with a standard error of 0.0024.
+
+When does the uphill move matter? On the 8-exam case, 108 timetables with clashes are stuck. Six of them are true traps.
+
+Each has 1 clash, and every one of its 16 moves adds at least 1 clash, so there is no level way out. One is the timetable `[0, 1, 2, 2, 0, 2, 1, 0]`.
+
+The temperature-0 walk started there escapes in 0 of 50 runs. Annealing from T = 1 escapes in 50 of 50, after 111.5 looks on average.
 
 <details>
 <summary>What is promised about cooling, and what is not</summary>
 
-At a fixed temperature the share formula above is a theorem. A falling temperature has one guarantee, proved by Hajek (1988) and stated here without proof. Cool as $T_t = c / \ln(t + 1)$. Then the chance of standing on a best timetable tends to 1 exactly when $c$ is at least the depth of the deepest trap, meaning how far uphill a walk must climb to leave it. That schedule is far too slow to use. The geometric schedule $T_0\alpha^t$ used here, and nearly everywhere else, carries no guarantee at all. Its results are measured, run by run.
+At a fixed temperature the share formula above is a theorem. A falling temperature has one guarantee, proved by Hajek (1988) and stated here without proof.
+
+Cool as $T_t = c / \ln(t + 1)$. Then the chance of standing on a best timetable tends to 1 exactly when $c$ is at least the depth of the deepest trap. A trap's depth is how far uphill a walk must climb to leave it. That schedule is far too slow to use.
+
+The geometric schedule $T_0\alpha^t$ used here, and nearly everywhere else, carries no guarantee at all. Its results are measured, run by run.
 
 </details>
 
 ### Step 6: genetic moves
 
-A **genetic algorithm** keeps a population of timetables, here 30. A new timetable, the child, takes each exam's slot from one of two parents by a coin flip, a mixing step called a **crossover**; each parent is the better of two picked at random. One random move then **mutates** the child, and it replaces the worst timetable if it is no worse.
+A **genetic algorithm** keeps a population of timetables, here 30. A new timetable, the child, takes each exam's slot from one of two parents by a coin flip, a mixing step called a **crossover**. Each parent is the better of two picked at random. One random move then **mutates** the child, and it replaces the worst timetable if it is no worse.
 
-With 10,000 children per run, the best timetables of 5 runs have 0, 1, 1, 1 and 2 clashes. Only 1 run of 5 finishes. A likely reason, not tested here, is that slot numbers are only labels. Slot 3 in one parent holds a different group of exams than slot 3 in the other, so mixing exam by exam breaks up good groups. Crossovers that hand over whole slot groups would avoid this.
+With 10,000 children per run, the best timetables of 5 runs have 0, 1, 1, 1 and 2 clashes. Only 1 run of 5 finishes.
+
+A likely reason, not tested here, is that slot numbers are only labels. Slot 3 in one parent holds a different group of exams than slot 3 in the other, so mixing exam by exam breaks up good groups. Crossovers that hand over whole slot groups would avoid this.
 
 ---
 
@@ -550,6 +593,221 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves three facts for any exams, slots and clashes, and checks the 8-exam trap timetable.
+
+- Hill climbing always stops. Suppose each move in a run of timetables lowers the clashes. Then the run has at most $C(x)$ moves, where $x$ is its start.
+- Take any timetable $x$, and move exam $e$ from its slot $s$ to slot $s'$. Then the change in clashes is $\Delta = n_e(s') - n_e(s)$.
+- Suppose $k$ runs succeed independently, each with chance $p$. Then at least one of them succeeds with chance $1 - (1 - p)^k$.
+- The 8-exam case has 3^8 = 6,561 timetables and 13 clashing pairs.
+- The trap timetable `[0, 1, 2, 2, 0, 2, 1, 0]` has 1 clash and 16 moves.
+- Every one of those 16 moves adds at least 1 clash, so no level move leads out.
+
+Annealing, the fixed-temperature shares, the 108 stuck timetables and every measured run are left to the Python and Rust checks.
+
+```lean
+-- Local search: hill climbing on a timetable makes at most as many improving moves as the clashes it starts with, a move's change in clashes is the partners waiting in the new slot minus those left in the old one, k independent runs that each succeed with chance p succeed at least once with chance 1 - (1 - p)^k, and the card's 8-exam trap checks out.
+import Mathlib.Combinatorics.SimpleGraph.Finite
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Data.Fintype.Pi
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.NormNum
+import Mathlib.MeasureTheory.Measure.Real
+
+namespace LocalSearchAndMetaheuristics
+
+open Finset
+
+/-! Setting. The exams are a finite type `V` and the slots a type `S`. The clash graph `G` is a
+`SimpleGraph V`: two exams are joined when one student sits both. A timetable is a function
+`x : V → S` giving each exam its slot. `clashes G x` is `C(x)`: the number of clashing pairs
+(edges of `G`) whose two exams sit in the same slot. `partnersIn G x e s` is `n_e(s)`: the
+number of exams that clash with `e` and sit in slot `s`. A move sends exam `e` to slot `s'`,
+giving the timetable `Function.update x e s'`. -/
+
+variable {V S : Type*} [Fintype V] [DecidableEq V] [DecidableEq S]
+
+/-- `C(x)`: the clashing pairs that share a slot in timetable `x`. -/
+def clashes (G : SimpleGraph V) [DecidableRel G.Adj] (x : V → S) : ℕ :=
+  #(G.edgeFinset.filter (fun p => Sym2.lift ⟨fun a b => decide (x a = x b),
+    fun a b => by simp only [eq_comm]⟩ p = true))
+
+/-- `n_e(s)`: the exams that clash with `e` and sit in slot `s`. -/
+def partnersIn (G : SimpleGraph V) [DecidableRel G.Adj] (x : V → S) (e : V) (s : S) : ℕ :=
+  #((G.neighborFinset e).filter (fun b => x b = s))
+
+lemma clashes_split (G : SimpleGraph V) [DecidableRel G.Adj] (x : V → S) (e : V) :
+    clashes G x =
+      #((G.edgeFinset.filter (fun p => Sym2.lift ⟨fun a b => decide (x a = x b),
+        fun a b => by simp only [eq_comm]⟩ p = true)).filter (fun p => e ∈ p)) +
+      #((G.edgeFinset.filter (fun p => Sym2.lift ⟨fun a b => decide (x a = x b),
+        fun a b => by simp only [eq_comm]⟩ p = true)).filter (fun p => e ∉ p)) :=
+  (Finset.card_filter_add_card_filter_not _).symm
+
+lemma clashes_at (G : SimpleGraph V) [DecidableRel G.Adj] (y : V → S) (e : V) :
+    #((G.edgeFinset.filter (fun p => Sym2.lift ⟨fun a b => decide (y a = y b),
+        fun a b => by simp only [eq_comm]⟩ p = true)).filter (fun p => e ∈ p)) =
+      #((G.neighborFinset e).filter (fun b => y b = y e)) := by
+  symm
+  refine Finset.card_bij (fun b _ => s(e, b)) ?_ ?_ ?_
+  · intro b hb
+    simp only [mem_filter, SimpleGraph.mem_neighborFinset] at hb
+    simp only [mem_filter, SimpleGraph.mem_edgeFinset, SimpleGraph.mem_edgeSet, Sym2.lift_mk,
+      decide_eq_true_eq, Sym2.mem_mk_left, and_true]
+    exact ⟨hb.1, hb.2.symm⟩
+  · intro a _ b _ h
+    exact Sym2.congr_right.1 h
+  · intro p hp
+    simp only [mem_filter] at hp
+    obtain ⟨⟨hpE, hpx⟩, he⟩ := hp
+    obtain ⟨b, rfl⟩ := Sym2.mem_iff_exists.1 he
+    refine ⟨b, ?_, rfl⟩
+    simp only [SimpleGraph.mem_edgeFinset, SimpleGraph.mem_edgeSet] at hpE
+    simp only [Sym2.lift_mk, decide_eq_true_eq] at hpx
+    simp only [mem_filter, SimpleGraph.mem_neighborFinset]
+    exact ⟨hpE, hpx.symm⟩
+
+lemma clashes_away (G : SimpleGraph V) [DecidableRel G.Adj] (x : V → S) (e : V) (s' : S) :
+    (G.edgeFinset.filter (fun p => Sym2.lift ⟨fun a b => decide (Function.update x e s' a =
+        Function.update x e s' b), fun a b => by simp only [eq_comm]⟩ p = true)).filter
+        (fun p => e ∉ p) =
+      (G.edgeFinset.filter (fun p => Sym2.lift ⟨fun a b => decide (x a = x b),
+        fun a b => by simp only [eq_comm]⟩ p = true)).filter (fun p => e ∉ p) := by
+  ext p
+  induction p using Sym2.ind with
+  | h a b =>
+    simp only [mem_filter, Sym2.lift_mk, decide_eq_true_eq, Sym2.mem_iff, not_or]
+    constructor
+    · rintro ⟨⟨h1, h2⟩, ha, hb⟩
+      rw [Function.update_of_ne (Ne.symm ha), Function.update_of_ne (Ne.symm hb)] at h2
+      exact ⟨⟨h1, h2⟩, ha, hb⟩
+    · rintro ⟨⟨h1, h2⟩, ha, hb⟩
+      rw [← Function.update_of_ne (Ne.symm ha) s' x, ← Function.update_of_ne (Ne.symm hb) s' x] at h2
+      exact ⟨⟨h1, h2⟩, ha, hb⟩
+
+#print axioms clashes_split
+#print axioms clashes_at
+#print axioms clashes_away
+
+/-- The card's main fact: hill climbing always stops. Clashes are a whole number, never below 0,
+and every move hill climbing makes lowers them by at least 1. So any run of timetables
+`x₀, x₁, …, x_m` in which each move lowers the clashes has at most `C(x₀)` moves: from 30 clashes,
+at most 30 moves, and then the climb must stop. -/
+theorem hill_climbing_stops_within_starting_clashes (G : SimpleGraph V) [DecidableRel G.Adj]
+    (xs : ℕ → V → S) (m : ℕ)
+    (hdown : ∀ i < m, clashes G (xs (i + 1)) < clashes G (xs i)) :
+    m ≤ clashes G (xs 0) := by
+  have key : ∀ i ≤ m, clashes G (xs i) + i ≤ clashes G (xs 0) := by
+    intro i
+    induction i with
+    | zero => intro _; simp
+    | succ n ih =>
+      intro h
+      have := hdown n (by omega)
+      have := ih (by omega)
+      omega
+  have := key m le_rfl
+  omega
+
+/-- The card's formula `Δ = n_e(s') - n_e(s)`: moving exam `e` from its slot `s = x e` to slot
+`s'` changes the clashes by the number of clash partners waiting in the new slot minus the number
+left behind in the old one. Only exam `e`'s partners matter, because clashes are a sum over pairs. -/
+theorem move_change_is_new_partners_minus_old (G : SimpleGraph V) [DecidableRel G.Adj]
+    (x : V → S) (e : V) (s' : S) :
+    (clashes G (Function.update x e s') : ℤ) - clashes G x =
+      (partnersIn G x e s' : ℤ) - partnersIn G x e (x e) := by
+  rw [clashes_split G (Function.update x e s') e, clashes_split G x e, clashes_away,
+    clashes_at, clashes_at]
+  have h : (G.neighborFinset e).filter (fun b => Function.update x e s' b = Function.update x e s' e)
+      = (G.neighborFinset e).filter (fun b => x b = s') := by
+    apply Finset.filter_congr
+    intro b hb
+    rw [SimpleGraph.mem_neighborFinset] at hb
+    rw [Function.update_self, Function.update_of_ne (G.ne_of_adj hb).symm]
+  rw [h]
+  unfold partnersIn
+  push_cast
+  ring
+
+/-- The restart formula. If runs succeed independently, each with chance `p`, then at least one of
+`k` runs succeeds with chance `1 - (1 - p)^k`: all `k` fail with chance `(1 - p)^k`. -/
+theorem restarts_succeed_with_chance {Ω : Type*} [MeasurableSpace Ω]
+    (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ]
+    (A : ℕ → Set Ω) (hmeas : ∀ i, MeasurableSet (A i))
+    (hind : ProbabilityTheory.iIndepSet A μ) (p : ℝ) (hp : ∀ i, μ.real (A i) = p) (k : ℕ) :
+    μ.real (⋃ i ∈ range k, A i) = 1 - (1 - p) ^ k := by
+  have hU : MeasurableSet (⋃ i ∈ range k, A i) :=
+    Finset.measurableSet_biUnion _ (fun i _ => hmeas i)
+  have hc : (⋃ i ∈ range k, A i)ᶜ = ⋂ i ∈ range k, (A i)ᶜ := by
+    simp only [Set.compl_iUnion]
+  have hprod : μ (⋂ i ∈ range k, (A i)ᶜ) = ∏ i ∈ range k, μ (A i)ᶜ :=
+    (ProbabilityTheory.iIndepSet_iff A μ).1 hind (range k)
+      (fun i _ => (MeasurableSpace.measurableSet_generateFrom rfl).compl)
+  have hreal : μ.real (⋂ i ∈ range k, (A i)ᶜ) = (1 - p) ^ k := by
+    rw [MeasureTheory.measureReal_def, hprod, ENNReal.toReal_prod]
+    have : ∀ i ∈ range k, (μ (A i)ᶜ).toReal = 1 - p := by
+      intro i _
+      rw [← MeasureTheory.measureReal_def, MeasureTheory.probReal_compl_eq_one_sub (hmeas i), hp i]
+    rw [Finset.prod_congr rfl this, Finset.prod_const, Finset.card_range]
+  have h1 := MeasureTheory.measureReal_compl (μ := μ) hU
+  rw [MeasureTheory.probReal_univ] at h1
+  rw [hc, hreal] at h1
+  linarith
+
+/-! The card's small case: 8 exams, 13 clashing pairs, 3 slots. -/
+
+/-- The 13 clashing pairs of the card's 8-exam case. -/
+def pairs8 : List (ℕ × ℕ) :=
+  [(0, 1), (0, 3), (0, 6), (1, 2), (1, 3), (1, 6), (1, 7), (2, 6), (2, 7), (4, 5), (4, 6),
+    (5, 6), (5, 7)]
+
+/-- The clash graph of the 8-exam case. -/
+def exam8 : SimpleGraph (Fin 8) where
+  Adj a b := (a.val, b.val) ∈ pairs8 ∨ (b.val, a.val) ∈ pairs8
+  symm := ⟨fun _ _ h => h.symm⟩
+  loopless := ⟨fun a => by fin_cases a <;> decide⟩
+
+instance : DecidableRel exam8.Adj := fun a b =>
+  inferInstanceAs (Decidable ((a.val, b.val) ∈ pairs8 ∨ (b.val, a.val) ∈ pairs8))
+
+/-- The card's trap timetable `[0, 1, 2, 2, 0, 2, 1, 0]`. -/
+def trap8 : Fin 8 → Fin 3 := ![0, 1, 2, 2, 0, 2, 1, 0]
+
+-- 8 exams in 3 slots give 3^8 = 6,561 timetables.
+example : Fintype.card (Fin 8 → Fin 3) = 6561 := by simp
+
+-- The 8-exam clash graph has 13 clashing pairs.
+example : exam8.edgeFinset.card = 13 := by decide
+
+-- The trap has 1 clash.
+example : clashes exam8 trap8 = 1 := by decide
+
+-- The trap has 16 moves: 8 exams, 2 other slots each.
+example : #(univ.filter (fun m : Fin 8 × Fin 3 => m.2 ≠ trap8 m.1)) = 16 := by decide
+
+-- Every one of those 16 moves adds at least 1 clash, so no level move leads out.
+example : ∀ e : Fin 8, ∀ s : Fin 3, s ≠ trap8 e →
+    clashes exam8 trap8 + 1 ≤ clashes exam8 (Function.update trap8 e s) := by decide
+
+#print axioms hill_climbing_stops_within_starting_clashes
+#print axioms move_change_is_new_partners_minus_old
+#print axioms restarts_succeed_with_chance
+
+end LocalSearchAndMetaheuristics
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'LocalSearchAndMetaheuristics.clashes_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LocalSearchAndMetaheuristics.clashes_at' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LocalSearchAndMetaheuristics.clashes_away' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LocalSearchAndMetaheuristics.hill_climbing_stops_within_starting_clashes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LocalSearchAndMetaheuristics.move_change_is_new_partners_minus_old' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LocalSearchAndMetaheuristics.restarts_succeed_with_chance' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

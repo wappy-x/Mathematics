@@ -8,9 +8,13 @@
 
 A weather station has 200 daily rainfall records. On 70 days it rained, 594.0 mm in all, and the wettest day brought 37.9 mm. The records here are synthetic: made by a stated rule from a seeded generator, so every number can be checked. A council engineer sizing a drain wants one number: **the chance that a day brings more than 25 mm**, with an honest error bar.
 
-The model has three unknowns. $p$ is the chance a day is wet. A wet day's amount follows a **Weibull law**: the chance it tops $x$ mm is $e^{-(x/c)^k}$, where the **scale** $c$ (in mm) sets the typical amount and the **shape** $k$ sets how heavy the tail is. Each triple $(p, k, c)$ is a candidate explanation of the 200 days. The **posterior**, the probability law of the unknowns given the data ([MCMC in outline](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/06-markov-chain-monte-carlo-in-outline.md)), says how plausible each triple is. Its formula is known only up to a constant, and no recipe draws from it directly.
+The model has three unknowns. $p$ is the chance a day is wet. A wet day's amount follows a **Weibull law**: the chance it tops $x$ mm is $e^{-(x/c)^k}$. The **scale** $c$ (in mm) sets the typical amount and the **shape** $k$ sets how heavy the tail is. Each triple $(p, k, c)$ is a candidate explanation of the 200 days.
 
-A **Metropolis random walk** does the drawing. It steps from triple to triple, accepting or refusing each step by a ratio of posterior heights, and in the long run spends its time in proportion to the posterior; [MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md) proves why. This card is the practice: step sizes, four chains from scattered starts, a check that they agree, and error bars. The answer for the engineer: a day tops 25 mm with chance about 3.0%, give or take 1.0%, about 1 day in 33.
+The **posterior**, the probability law of the unknowns given the data ([MCMC in outline](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/06-markov-chain-monte-carlo-in-outline.md)), says how plausible each triple is. Its formula is known only up to a constant, and no recipe draws from it directly.
+
+A **Metropolis random walk** does the drawing. It steps from triple to triple, accepting or refusing each step by a ratio of posterior heights. In the long run it spends its time in proportion to the posterior; [MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md) proves why.
+
+This card is the practice: step sizes, four chains from scattered starts, a check that they agree, and error bars. The answer for the engineer: a day tops 25 mm with chance about 3.0%, give or take 1.0%, about 1 day in 33.
 
 **Give each unknown its own step, sized to its own spread, run several chains from far-apart starts until they agree, drop the start, and report two error bars: the posterior spread, which is uncertainty about the rain, and the Monte Carlo error, which is uncertainty about the run.**
 
@@ -34,7 +38,9 @@ First line: the chain started at c = 2 mm. Second line: the chain started at c =
 
 ## The formula
 
-Notation first, in words. $n$ is the number of days and $n_w$ the number of wet days; $x_1, \dots, x_{n_w}$ are the wet-day amounts in mm. $\theta$ (theta) is the current triple $(p, k, c)$ and $\theta'$ a proposed one. $\prod$ means "multiply together, one factor per wet day". With no preference between triples before the data, inside a wide box (a flat prior on $0 < p < 1$, $0 < k < 5$ and $0 < c < 100$ mm), the posterior is proportional to the chance of the data inside the box and 0 outside it:
+Notation first, in words. $n$ is the number of days and $n_w$ the number of wet days; $x_1, \dots, x_{n_w}$ are the wet-day amounts in mm. $\theta$ (theta) is the current triple $(p, k, c)$ and $\theta'$ a proposed one. $\prod$ means "multiply together, one factor per wet day".
+
+Suppose there is no preference between triples before the data, inside a wide box (a flat prior on $0 < p < 1$, $0 < k < 5$ and $0 < c < 100$ mm). Then the posterior is proportional to the chance of the data inside the box and 0 outside it:
 
 $$f(p, k, c) = p^{\,n_w}(1-p)^{\,n-n_w}\prod_{i=1}^{n_w}\frac{k}{c}\Bigl(\frac{x_i}{c}\Bigr)^{k-1}e^{-(x_i/c)^k}$$
 
@@ -64,7 +70,7 @@ $$\hat R = \sqrt{\frac{\frac{N-1}{N}\,W + \frac{B}{N}}{W}}, \qquad \text{MCSE} =
 | $\theta$, $\theta'$, $f$ | current triple; proposed triple; posterior height up to a constant | start triples in the code | — |
 | $s_i$, $z_i$ | step size for unknown i; a standard bell-curve draw (average 0, spread 1) | tuned steps 0.0447, 0.0996, 1.7201 | fewer steps accepted |
 | $\alpha$ | chance of accepting a proposal | 0.3133 of proposals accepted, tuned | — |
-| $d$, $\sigma_i$ | number of unknowns; posterior standard deviation (spread) of unknown i | 3; 0.0330, 0.0739, 1.2902 | — |
+| $d$, $\sigma_i$ | number of unknowns; posterior standard deviation (sd: its spread) of unknown i | 3; 0.0330, 0.0739, 1.2902 | — |
 | $m$, $N$ | chains; steps kept per chain after burn-in | 4; 10,000 | smaller Monte Carlo error |
 | $B$, $W$, $\hat R$ | N times the variance of the chain averages; average variance within a chain; R-hat | R-hat 1.0000 for c | chains disagree |
 | ESS, MCSE | effective sample size: independent draws the run is worth; Monte Carlo standard error | c: 2,481.9 of 40,000; 0.0259 mm | — |
@@ -83,11 +89,13 @@ $$\hat R = \sqrt{\frac{\frac{N-1}{N}\,W + \frac{B}{N}}{W}}, \qquad \text{MCSE} =
 
 ### Step 0: the ratio is all the walk needs
 
-The posterior's missing constant cancels in $f(\theta')/f(\theta)$. The acceptance rule makes as much probability flow from any triple to any other as flows back, so the posterior is the walk's equilibrium and long-run averages converge to posterior averages; [MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md) proves both, using [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md). Three practical questions remain: how big a step, how long a run, and how sure the answer is.
+The posterior's missing constant cancels in $f(\theta')/f(\theta)$. The acceptance rule makes as much probability flow from any triple to any other as flows back. Therefore the posterior is the walk's equilibrium, and long-run averages converge to posterior averages; [MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md) proves both, using [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md). Three practical questions remain: how big a step, how long a run, and how sure the answer is.
 
 ### Step 1: the step size trades acceptance against distance
 
-Too small, and nearly every step is accepted but each covers almost no ground. A random walk wanders like a drunkard: after t steps of size s it is typically about $s\sqrt t$ from where it began. Steps ten times smaller therefore need about 10 × 10 = 100 times as many steps to cross the same distance. Too big, and nearly every proposal lands far out in the tails where $f$ is tiny, so it is refused and the chain sits still.
+Too small, and nearly every step is accepted but each covers almost no ground. A random walk wanders like a drunkard: after t steps of size s it is typically about $s\sqrt t$ from where it began. Steps ten times smaller therefore need about 10 × 10 = 100 times as many steps to cross the same distance.
+
+Too big, and nearly every proposal lands far out in the tails where $f$ is tiny, so it is refused and the chain sits still.
 
 Both failures show up in the effective sample size of c over one 10,000-step chain:
 
@@ -105,7 +113,9 @@ Batch means (Step 4) needs each batch to be much longer than the chain's memory,
 
 ### Step 2: size each step from a pilot run
 
-For a posterior whose d unknowns are independent and bell-shaped, a 1997 theorem (see Sources) shows that as d grows the best random-walk step for each coordinate tends to $2.38/\sqrt d$ times its spread, which accepts about 23% of proposals. For small d the best rate is somewhat higher. Proved only in that limit, and only for independent unknowns, it is used here as a starting guess: k and c are correlated, 0.2555 on the grid. With d = 3 the factor is 1.3741.
+For a posterior whose d unknowns are independent and bell-shaped, a 1997 theorem (see Sources) shows that as d grows the best random-walk step for each coordinate tends to $2.38/\sqrt d$ times its spread. That step accepts about 23% of proposals. For small d the best rate is somewhat higher.
+
+Proved only in that limit, and only for independent unknowns, it is used here as a starting guess: k and c are correlated, 0.2555 on the grid. With d = 3 the factor is 1.3741.
 
 The spreads are unknown before the run, so the practice is a few pilot rounds. Start with a guess, here 0.1 for every step from the triple (0.5, 1.0, 5.0). Run 2,000 steps. Measure each unknown's spread over the second half. Set each step to 1.3741 times that spread. Repeat.
 
@@ -122,7 +132,11 @@ The exact spreads give steps of 0.0460, 0.1021 and 1.7668: the pilots got within
 
 One chain can look settled while still drifting. Several chains started far apart give a test: if all have forgotten their starts, their averages differ only by run-to-run noise.
 
-R-hat turns that into one number. $W$ is the average spread inside a chain. $B/N$ is the spread between chain averages. While the chains are still far apart, each chain alone has seen only part of the posterior, so $W$ is too small. Pooling the chains, $\tfrac{N-1}{N}W + \tfrac{B}{N}$, counts the gaps between them as well, so it is too large. Their ratio is above 1 and falls to 1 as the chains merge. A common modern threshold is 1.01 (the 2021 paper in Sources). That threshold was set for the paper's improved R-hat, which also splits each chain in half and works with ranks. The classic form computed here is less sensitive, though close to it once chains are long and settled.
+R-hat turns that into one number. $W$ is the average spread inside a chain. $B/N$ is the spread between chain averages.
+
+While the chains are still far apart, each chain alone has seen only part of the posterior, so $W$ is too small. Pooling the chains, $\tfrac{N-1}{N}W + \tfrac{B}{N}$, counts the gaps between them as well, so it is too large. Their ratio is above 1 and falls to 1 as the chains merge.
+
+A common modern threshold is 1.01 (the 2021 paper in Sources). That threshold was set for the paper's improved R-hat, which also splits each chain in half and works with ranks. The classic form computed here is less sensitive, though close to it once chains are long and settled.
 
 The four rainfall chains start at $(0.10, 0.30, 2)$, $(0.80, 2.00, 20)$, $(0.50, 1.20, 3)$ and $(0.20, 0.50, 15)$, scattered well beyond the plausible region in every direction:
 
@@ -131,13 +145,17 @@ The four rainfall chains start at $(0.10, 0.30, 2)$, $(0.80, 2.00, 20)$, $(0.50,
 | first 100, start included | 1.0872 | 1.2428 | 1.2127 |
 | 10,000 after a burn-in of 2,000 | 1.0002 | 1.0001 | 1.0000 |
 
-The burn-in of 2,000 is generous, since the chart shows the chains merging within about 40 steps; a long burn-in costs little, a short one biases every average. Scattering the starts is what gives R-hat its power: four chains started together at c = 20 drift down together, so after 100 steps R-hat for c is only 1.0207, against 1.2127 from scattered starts, while their average c is 9.0898. That is just over 1.01 and under the older rule of thumb of 1.1: an easy pass to wave through.
+The burn-in of 2,000 is generous, since the chart shows the chains merging within about 40 steps; a long burn-in costs little, a short one biases every average.
+
+Scattering the starts is what gives R-hat its power. Four chains started together at c = 20 drift down together. After 100 steps their R-hat for c is only 1.0207, against 1.2127 from scattered starts, while their average c is 9.0898. An R-hat of 1.0207 is just over 1.01 and under the older rule of thumb of 1.1: easy to accept as a pass by mistake.
 
 ### Step 4: two different error bars
 
 The 40,000 kept draws give each unknown's posterior average and spread. The spread is the **uncertainty about the rain**: with 200 days, c carries 1.29 mm either side of 7.72 mm. Only more data can shrink it.
 
-The average also wobbles because the run is finite: the **Monte Carlo error**. For independent draws it would be $\sigma/\sqrt N$, as on [Monte Carlo integration](05-monte-carlo-integration-in-many-dimensions.md). Chain draws are correlated, each repeating part of the last. **Batch means** measures the real error: cut each chain into 25 batches of 400 steps and read the error off the spread of the 100 batch averages ([MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md) explains why). For c that gives 0.0259 mm, the error of 2,481.9 independent draws: one per 16.1 steps.
+The average also wobbles because the run is finite: the **Monte Carlo error**. For independent draws it would be $\sigma/\sqrt N$, as on [Monte Carlo integration](05-monte-carlo-integration-in-many-dimensions.md). Chain draws are correlated, each repeating part of the last.
+
+**Batch means** measures the real error: cut each chain into 25 batches of 400 steps and read the error off the spread of the 100 batch averages ([MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md) explains why). For c that gives 0.0259 mm, the error of 2,481.9 independent draws: one per 16.1 steps.
 
 | Unknown | Posterior mean | Posterior sd | MCSE | Naive $\sigma/\sqrt{40{,}000}$ | ESS |
 | --- | --- | --- | --- | --- | --- |
@@ -168,7 +186,7 @@ The engineer's number is a function of the unknowns, $p\,e^{-(25/c)^k}$: the cha
 | **chance a day tops 25 mm, averaged over the draws** | average of 40,000 values of $p\,e^{-(25/c)^k}$ | **0.03030 ± 0.01037** |
 | as a frequency | 1 / 0.03030 | about 1 day in 33.0 |
 
-The engineer reads it as: a day tops 25 mm with chance about 3.0%, give or take 1.0% from what 200 days cannot pin down, and the simulation adds only ±0.017 percentage points to that.
+The engineer reads it as: a day tops 25 mm with chance about 3.0%, give or take 1.0% from what 200 days cannot pin down. The simulation adds only ±0.017 percentage points to that.
 
 The exact posterior for p is a **Beta law**, the law of an unknown chance after counting successes, with mean and spread straight from the counts. The chains agree: 0.3521 against 0.3515, within 4 MCSE. For k and c, a grid of 161 × 361 pairs gives 0.7679 and 7.7000, and the grid chance of a day over 25 mm is 0.03012: again within a few MCSE.
 
@@ -185,7 +203,7 @@ The exact posterior for p is a **Beta law**, the law of an unknown chance after 
 
 ## Code, from first principles, and it actually runs
 
-The script makes the 200 synthetic days from a written-out SplitMix64 generator (seed 2026), so Python and Rust see the same data and draw the same random numbers. It reaches the answer by **three independent roads**. The model splits into a part with p only and a part with k and c only, so road 1 is the exact Beta posterior for p, by formula. Road 2 puts k and c on a fine grid and sums, with no randomness. Road 3 is the practice of this card: pilot tuning, five step settings compared, four chains from scattered starts, R-hat, and batch-means error bars. The asserts hold each chain average to within 4 MCSE of roads 1 and 2, and check that the grid posterior lies within 3 spreads of the k = 0.75 and c = 6 mm that made the data, which catches a wrong likelihood that all roads would share.
+The script makes the 200 synthetic days from a written-out SplitMix64 generator (seed 2026), so Python and Rust see the same data and draw the same random numbers. It reaches the answer by **three independent roads**. The model splits into a part with p only and a part with k and c only, so road 1 is the exact Beta posterior for p, by formula. Road 2 puts k and c on a fine grid and sums, with no randomness. Road 3 is the practice of this card: pilot tuning, five step settings compared, four chains from scattered starts, R-hat, and batch-means error bars. The asserts hold each chain average to within 4 MCSE of roads 1 and 2. They also check that the grid posterior lies within 3 spreads of the k = 0.75 and c = 6 mm that made the data. That catches a wrong likelihood (the chance of the data given a triple) that all roads would share.
 
 ### Python
 
@@ -570,6 +588,112 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line: same generator, same order of draws, same plain left-to-right sums.
 
+### Lean
+
+Lean proves the three facts behind the Metropolis walk, for any number of unknowns, and checks the card's exact arithmetic.
+
+- Suppose the posterior height $f$ is never negative, has finite total weight, and every step is above 0. Then as much probability flows from $\theta$ to $\theta'$ as flows back.
+- A bell-curve step from $\theta$ to $\theta'$ is exactly as likely as the reverse step, so the Hastings correction is 1.
+- Suppose every height $f$ is multiplied by the same constant above 0. Then the acceptance chance $\alpha$ is unchanged, so the missing constant cancels.
+- By hand, 70 wet days of 200 leave 130 dry, and the exact posterior mean of $p$ is $71/202$.
+- The fraction under the root in the exact sd of $p$ reduces to $9301/8283212$.
+- Steps ten times smaller need 10 × 10 = 100 times as many steps.
+- Each chain keeps 12,000 − 2,000 = 10,000 steps, 40,000 in all, cut into 100 batches of 400.
+- The grid for k and c has 161 × 361 = 58,121 pairs.
+
+The step rule, R-hat, the error bars and every decimal are left to the Python and Rust checks.
+
+```lean
+-- MCMC as a tool: the Metropolis rule with independent bell-curve steps sends as much posterior weight from any point to any other as flows back, the step's chance is the same in both directions, and the unknown constant cancels from the acceptance chance.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.MeasureTheory.Function.L1Space.Integrable
+
+open MeasureTheory ProbabilityTheory
+open scoped NNReal
+
+/-- The chance density of proposing `θ'` from `θ` when every unknown `i` is nudged by its own
+step `s i` times a fresh standard bell-curve draw: `θ'ᵢ = θᵢ + sᵢ zᵢ`. -/
+noncomputable def proposalDensity {d : ℕ} (s : Fin d → ℝ≥0) (θ θ' : Fin d → ℝ) : ℝ :=
+  ∏ i, gaussianPDFReal 0 (s i ^ 2) (θ' i - θ i)
+
+/-- The Metropolis acceptance chance `α = min(1, f(θ') / f(θ))`. -/
+noncomputable def acceptance {d : ℕ} (f : (Fin d → ℝ) → ℝ) (θ θ' : Fin d → ℝ) : ℝ :=
+  min 1 (f θ' / f θ)
+
+/-- Helper: for nonnegative `a`, `b`, the flow `a * min(1, b/a)` equals `min a b`. -/
+lemma mul_min_one_div_eq_min (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
+    a * min 1 (b / a) = min a b := by
+  rcases ha.eq_or_lt with h | h
+  · subst h; simp [hb]
+  · rw [mul_min_of_nonneg _ _ h.le, mul_one, mul_div_cancel₀ _ h.ne']
+
+/-- Card claim (Step 0): for a posterior height `f` (nonnegative, finite total weight) on the
+`d` unknowns, and a random walk that moves each unknown by its own nonzero frozen step times a
+bell-curve draw and accepts with chance `min(1, f(θ')/f(θ))`, as much probability flows from any
+point `θ` to any other point `θ'` as flows back (detailed balance), so the posterior is the walk's
+equilibrium. -/
+theorem metropolis_flow_balanced {d : ℕ} (f : (Fin d → ℝ) → ℝ) (hf : ∀ θ, 0 ≤ f θ)
+    (hfint : Integrable f) (s : Fin d → ℝ≥0) (hs : ∀ i, s i ≠ 0) (θ θ' : Fin d → ℝ) :
+    f θ * proposalDensity s θ θ' * acceptance f θ θ' =
+      f θ' * proposalDensity s θ' θ * acceptance f θ' θ := by
+  have hsym : proposalDensity s θ' θ = proposalDensity s θ θ' := by
+    unfold proposalDensity
+    refine Finset.prod_congr rfl fun i _ => ?_
+    simp only [gaussianPDFReal]
+    ring_nf
+  rw [hsym, acceptance, acceptance, mul_right_comm, mul_min_one_div_eq_min _ _ (hf θ) (hf θ'),
+    mul_right_comm (f θ'), mul_min_one_div_eq_min _ _ (hf θ') (hf θ), min_comm]
+
+/-- Card claim: a bell-curve step from `θ` to `θ'` is exactly as likely as the reverse step, so
+the Hastings correction for lopsided proposals is 1. -/
+theorem bell_curve_step_symmetric {d : ℕ} (s : Fin d → ℝ≥0) (θ θ' : Fin d → ℝ) :
+    proposalDensity s θ θ' = proposalDensity s θ' θ := by
+  unfold proposalDensity
+  refine Finset.prod_congr rfl fun i _ => ?_
+  simp only [gaussianPDFReal]
+  ring_nf
+
+/-- Card claim: the posterior is known only up to a constant, and that constant cancels from the
+acceptance chance: scaling the height `f` by any `C > 0` leaves `min(1, f(θ')/f(θ))` unchanged. -/
+theorem acceptance_ignores_constant {d : ℕ} (f : (Fin d → ℝ) → ℝ) (C : ℝ) (hC : 0 < C)
+    (θ θ' : Fin d → ℝ) :
+    acceptance (fun x => C * f x) θ θ' = acceptance f θ θ' := by
+  simp only [acceptance]
+  rw [mul_div_mul_left _ _ hC.ne']
+
+-- Worked numbers from the card, whole numbers and exact fractions only.
+-- 70 wet days of 200 leaves 130 dry days.
+example : (200 : ℕ) - 70 = 130 := by norm_num
+-- Exact posterior mean of p under the flat prior: (70 + 1) / (200 + 2) = 71/202.
+example : ((70 + 1 : ℚ) / (200 + 2)) = 71 / 202 := by norm_num
+-- Exact posterior variance of p: 71 × 131 / (202² × 203).
+example : ((71 * 131 : ℚ) / (202 ^ 2 * 203)) = 9301 / 8283212 := by norm_num
+-- Steps ten times smaller need 10 × 10 = 100 times as many steps.
+example : (10 : ℕ) * 10 = 100 := by norm_num
+-- 12,000 steps per chain, 2,000 burn-in: 10,000 kept; four chains: 40,000 kept draws.
+example : (12000 : ℕ) - 2000 = 10000 := by norm_num
+example : (4 : ℕ) * 10000 = 40000 := by norm_num
+-- Batch means: 25 batches of 400 steps fill a 10,000-step chain; 4 chains give 100 batch averages.
+example : (25 : ℕ) * 400 = 10000 := by norm_num
+example : (4 : ℕ) * 25 = 100 := by norm_num
+-- The grid for (k, c): 161 × 361 pairs.
+example : (161 : ℕ) * 361 = 58121 := by norm_num
+
+#print axioms mul_min_one_div_eq_min
+#print axioms metropolis_flow_balanced
+#print axioms bell_curve_step_symmetric
+#print axioms acceptance_ignores_constant
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'mul_min_one_div_eq_min' depends on axioms: [propext, Classical.choice, Quot.sound]
+'metropolis_flow_balanced' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bell_curve_step_symmetric' depends on axioms: [propext, Classical.choice, Quot.sound]
+'acceptance_ignores_constant' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Make each step change on a new line just after `out("tuned steps p k c", *step)` and read the `tuned:` row. The asserts are pinned to the right answer, so expect one to stop the run after the rows print.
@@ -597,7 +721,7 @@ The two outputs are identical line for line: same generator, same order of draws
 
 - **Drainage and flood design.** A few-parameter law fitted to short rain or river records gives the chance of an extreme day, and the posterior spread dominates its error bar, as here.
 - **Bayesian fitting software.** Standard packages print R-hat and an effective sample size beside each parameter and warn above an R-hat of about 1.01.
-- **Epidemic models.** The SIR model's contact rate b and recovery rate g are fitted to case counts by chains like these, with the step for each rate tuned to its own scale.
+- **Epidemic models.** [The SIR model](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/07-the-sir-epidemic-model.md) splits a town into susceptible, infected and recovered people. Its contact rate b and recovery rate g are fitted to case counts by chains like these, with the step for each rate tuned to its own scale.
 - **Physics.** The method began in 1953, averaging over the positions of hundreds of particles in a liquid.
 - **Annealing.** [Local search](07-local-search-and-metaheuristics.md) uses the same accept-downhill-with-a-chance rule, with a temperature T that falls over time, to search rather than to sample.
 

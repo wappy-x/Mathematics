@@ -15,7 +15,9 @@ A trader walks to a hill-top fair with one rucksack. It holds 15 kg. Six items a
 
 Which items fetch the most money? Six items allow 64 packings, 40 of which fit. Checking all 64 works today. With 20 items there are 1,048,576 packings, and every extra item doubles the count.
 
-Dynamic programming asks smaller questions instead: "what is the most money from the first few items, with this much room left?" There are only 7 × 16 = 112 such questions here: 0 to 6 items, 0 to 15 kg of room. Each is answered from two answers already written down, once, in a table. The last cell gives **£310: wool, cheese and honey, exactly 15 kg**. Packing the best value per kilogram first gives only £265.
+Dynamic programming asks smaller questions instead: "what is the most money from the first few items, with this much room left?" There are only 7 × 16 = 112 such questions here: 0 to 6 items, 0 to 15 kg of room. Each is answered from two answers already written down, once, in a table.
+
+The last cell gives **£310: wool, cheese and honey, exactly 15 kg**. Packing the best value per kilogram first gives only £265.
 
 The same small question turns up again and again inside a plain search. That repetition is what the method exploits: answer it once, write it down, look it up after.
 
@@ -66,7 +68,7 @@ Each cell takes one comparison, so filling the table costs $n(W+1)$ cells: 6 × 
 
 ### When it holds
 
-- **Best answers are built from best answers** (optimal substructure). Take item $i$ out of a best packing, and what is left is a best packing of the earlier items in the remaining room. It fails if items interact: a bonus for cheese and honey sold together means the remaining room alone no longer fixes what the rest is worth, and the question must also remember what is already packed.
+- **Best answers are built from best answers** (optimal substructure). Take item $i$ out of a best packing, and what is left is a best packing of the earlier items in the remaining room. It fails if items interact: a bonus for cheese and honey sold together means the remaining room alone no longer fixes what the rest is worth. The question must then also remember what is already packed.
 - **The small questions repeat** (overlapping subproblems). Without repeats, storing answers saves nothing. Items weighing 1, 2, 4, 8, 16 and 32 kg in 63 kg of room leave a different room after every choice: 127 calls with a notebook or without one.
 - **Weights are whole numbers, and the limit $W$ is small.** The table has one column per kilogram. Measure the same items in grams and it needs 6 × 15,001 = 90,006 cells, not 96. The cost grows with the size of the number $W$, not with the number of digits needed to write it. If the size of the input counts those digits as well as the items, this cost is exponential, so it is not polynomial time in the sense of [Polynomial or exponential](03-polynomial-versus-exponential-time.md). Such a method is called **pseudo-polynomial**: polynomial in the value of $W$, not in its length.
 - **Each item is used at most once.** That is why the "take" option looks one row up, at $K(i-1, \cdot)$. Unlimited copies of each item is a different problem with a different table.
@@ -79,7 +81,7 @@ Each cell takes one comparison, so filling the table costs $n(W+1)$ cells: 6 × 
 
 The packings number $2^n$. The small questions number only $(n+1)(W+1)$, because a small question is fixed by two whole numbers: how many items are in play and how much room is free. If each small question can be answered from smaller ones, the whole problem costs about as much as the number of small questions, not the number of packings.
 
-The same idea runs a backward toll-road plan on [Dynamic programming](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md), which proves Bellman's principle of optimality: any tail of a best plan is itself a best plan. Here the same cut-and-paste argument gives the rucksack's rule.
+The same idea runs a backward toll-road plan on the optimal-control card [Dynamic programming](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md), which proves Bellman's principle of optimality: any tail of a best plan is itself a best plan. Here the same cut-and-paste argument gives the rucksack's rule.
 
 ### Step 1: optimal substructure, by cut and paste
 
@@ -93,11 +95,11 @@ Every packing falls in one case, so the best is the larger of the two. In the ex
 <details>
 <summary>Detailed proof, by induction on i</summary>
 
-Claim: for every $i$ from 0 to $n$ and every $w$ from 0 to $W$, the number $K(i, w)$ computed by the rule equals the most money over all packings that use only items 1 to $i$ and weigh at most $w$.
+Claim: take any $i$ from 0 to $n$ and any $w$ from 0 to $W$. Then the number $K(i, w)$ computed by the rule equals the most money over all packings that use only items 1 to $i$ and weigh at most $w$.
 
 Base, $i = 0$: the only packing is empty, worth 0, and $K(0, w) = 0$.
 
-Step: assume the claim for $i - 1$ and every room. Split the packings of items 1 to $i$ within $w$ by whether they contain item $i$. Those without it are exactly the packings of items 1 to $i - 1$ within $w$, whose best is $K(i-1, w)$ by assumption. Those with it exist only if $m_i \le w$; each is item $i$ plus a packing of items 1 to $i-1$ within $w - m_i$, so its worth is $v_i$ plus that packing's worth, and the best is $v_i + K(i-1, w - m_i)$ by assumption. The best overall is the larger of the two groups' bests, which is the rule. By [Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md), the claim holds at $i = n$, $w = W$.
+Step: assume the claim for $i - 1$ and every room. Split the packings of items 1 to $i$ within $w$ by whether they contain item $i$. Those without it are exactly the packings of items 1 to $i - 1$ within $w$, whose best is $K(i-1, w)$ by assumption. Those with it exist only if $m_i \le w$. Each is item $i$ plus a packing of items 1 to $i-1$ within $w - m_i$, so its worth is $v_i$ plus that packing's worth. The best of them is $v_i + K(i-1, w - m_i)$ by assumption. The best overall is the larger of the two groups' bests, which is the rule. By [Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md), the claim holds at $i = n$, $w = W$.
 
 </details>
 
@@ -105,7 +107,11 @@ Step: assume the claim for $i - 1$ and every room. Split the packings of items 1
 
 Written as a function that calls itself, the rule is correct but wasteful. On the six items, a plain recursion makes 96 calls but meets only 55 different questions. K(3, 10) is asked twice, as in the picture.
 
-With six items the waste is small. It grows like the packings. When every item fits, each call makes two more, so $n$ items cost $2^{n+1} - 1$ calls. The code builds synthetic shops from a stated seed: weights 1 to 10 kg, prices £10 to £99, a 50 kg rucksack. In the shops of 8 and 12 items every item fits at once, so 8 items take 511 calls and 12 take 8,191. By 16 items the weights add up to more than 50 kg and some branches run out of room, yet 20 items still take 1,883,476 calls. The different questions never exceed $(n+1)(W+1)$: at 20 items only 725 are ever asked.
+With six items the waste is small. It grows like the packings. When every item fits, each call makes two more, so $n$ items cost $2^{n+1} - 1$ calls.
+
+The code builds synthetic shops from a random-number generator with a stated seed (its starting number): weights 1 to 10 kg, prices £10 to £99, a 50 kg rucksack. In the shops of 8 and 12 items every item fits at once, so 8 items take 511 calls and 12 take 8,191.
+
+By 16 items the weights add up to more than 50 kg and some branches run out of room, yet 20 items still take 1,883,476 calls. The different questions never exceed $(n+1)(W+1)$: at 20 items only 725 are ever asked.
 
 Counting calls when everything fits gives $T(n) = 2T(n-1) + 1$ with $T(0) = 1$: the Tower of Hanoi rule on [Recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/01-recurrences-and-fibonacci.md), with a different seed.
 
@@ -180,7 +186,7 @@ The code prints all four. £400 and £520 beat the true best, which is the givea
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Three roads reach the answer: the table filled forwards, the recursion run backwards (plain, then memoised), and brute force over all 64 packings. The plain recursion counts its calls and records how often each question is asked. A generator written out in both languages, SplitMix64 with seed 2026, builds synthetic shops of 4 to 20 items, and the three roads must agree on each.
+Nothing is imported. Three roads reach the answer: the table filled forwards, the recursion run backwards (plain, then memoised), and brute force over all 64 packings. The plain recursion counts its calls and records how often each question is asked. A random-number generator written out in both languages, SplitMix64 with seed 2026, builds synthetic shops of 4 to 20 items, and the three roads must agree on each.
 
 ### Python
 
@@ -563,6 +569,152 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the table rule gives the best packing for any items, counts the plain recursion's calls when all fit, and checks the numbers.
+
+- Take items with whole-number weights and prices of zero or more, each used at most once. Then every cell $K(i, w)$ equals the most money from any packing of items 1 to $i$ within $w$ kg.
+- Take $n$ items whose weights add up to at most the room. Then a plain recursion on them makes $2^{n+1} - 1$ calls.
+- Take the six items and the 15 kg rucksack. Then $K(6, 15)$ = 310, and wool, cheese and honey weigh 15 kg and fetch £310.
+- Cells from the picture and the worked steps also check, such as $K(3, 10)$ = 160 and $K(5, 13)$ = 240.
+- Of the 64 packings, 40 fit in 15 kg, and the best of them fetches £310.
+- Take the six items in 15 kg. Then a plain recursion makes 96 calls.
+- Take weights of 1, 2, 4, 8, 16 and 32 kg in 63 kg of room. Then a plain recursion makes 127 calls.
+- The sums behind 511 and 8,191 calls, 112 small questions and 1,048,576 packings also check.
+
+The notebook's 71 calls, the mistakes, the gram table and the synthetic shops are left to the Python and Rust checks.
+
+```lean
+-- Dynamic programming: the rucksack table rule computes the most value of any packing that fits, and the plain recursion makes 2^(n+1) - 1 calls when every item fits.
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.Order.Monoid.Canonical.Defs
+import Mathlib.Data.Finset.Lattice.Fold
+import Mathlib.Data.Finset.Powerset
+
+open Finset
+
+namespace DynamicProgramming
+
+/-- The table rule from the card. Items are numbered from 0, so item `i` here is item `i + 1`
+on the card. `m i` is its weight in whole kilograms, `v i` is the money it sells for.
+`K m v i w` is the cell for the first `i` items with `w` kg of room:
+`K(0, w) = 0`, and `K(i+1, w) = max(K(i, w), v + K(i, w - m))`, the second option only when the item fits. -/
+def K {α : Type*} [Add α] [Zero α] [Max α] (m : ℕ → ℕ) (v : ℕ → α) : ℕ → ℕ → α
+  | 0, _ => 0
+  | i + 1, w => if m i ≤ w then max (K m v i w) (v i + K m v i (w - m i)) else K m v i w
+
+/-- The calls a plain recursion (no notebook) makes to answer `K(i, w)`: one for itself,
+one sub-call for "leave the item out", and one more for "put it in" when the item fits. -/
+def calls (m : ℕ → ℕ) : ℕ → ℕ → ℕ
+  | 0, _ => 1
+  | i + 1, w => 1 + calls m i w + (if m i ≤ w then calls m i (w - m i) else 0)
+
+/-- The card's main claim: with whole-number weights and each item used at most once,
+the table cell `K(i, w)` equals the most money over all packings (sets of items) drawn
+from the first `i` items whose total weight is at most `w`. -/
+theorem table_gives_best_packing {α : Type*} [AddCommMonoid α] [LinearOrder α] [OrderBot α]
+    [CanonicallyOrderedAdd α] (m : ℕ → ℕ) (v : ℕ → α) (i w : ℕ) :
+    K m v i w =
+      ((range i).powerset.filter (fun S => ∑ j ∈ S, m j ≤ w)).sup (fun S => ∑ j ∈ S, v j) := by
+  induction i generalizing w with
+  | zero =>
+    simp [K, filter_singleton]
+  | succ i ih =>
+    rw [range_add_one, powerset_insert, filter_union, sup_union, filter_image, sup_image]
+    have himg : ∀ S ∈ (range i).powerset, ∑ j ∈ insert i S, m j = m i + ∑ j ∈ S, m j ∧
+        ∑ j ∈ insert i S, v j = v i + ∑ j ∈ S, v j := by
+      intro S hS
+      have hiS : i ∉ S := fun h => by
+        have := mem_powerset.1 hS h
+        simp at this
+      exact ⟨sum_insert hiS, sum_insert hiS⟩
+    have hsup2 : (((range i).powerset.filter fun S => ∑ j ∈ insert i S, m j ≤ w).sup
+        ((fun S => ∑ j ∈ S, v j) ∘ insert i)) =
+        ((range i).powerset.filter fun S => m i + ∑ j ∈ S, m j ≤ w).sup
+        (fun S => v i + ∑ j ∈ S, v j) := by
+      rw [filter_congr (q := fun S => m i + ∑ j ∈ S, m j ≤ w)
+        (fun S hS => by rw [(himg S hS).1])]
+      apply sup_congr rfl
+      intro S hS
+      simp only [Function.comp_apply]
+      exact (himg S (mem_filter.1 hS).1).2
+    rw [hsup2, K, ← ih]
+    split_ifs with hm
+    · have hfil : ((range i).powerset.filter fun S => m i + ∑ j ∈ S, m j ≤ w) =
+          ((range i).powerset.filter fun S => ∑ j ∈ S, m j ≤ w - m i) :=
+        filter_congr (fun S _ => by omega)
+      rw [hfil]
+      have hne : ((range i).powerset.filter fun S => ∑ j ∈ S, m j ≤ w - m i).Nonempty :=
+        ⟨∅, by simp⟩
+      have hmono : Monotone (fun x : α => v i + x) := fun a b hab => by dsimp only; gcongr
+      rw [← Function.comp_def (fun x : α => v i + x),
+        ← apply_sup_eq_sup_comp_of_nonempty hmono hne, ← ih]
+    · have hfil : ((range i).powerset.filter fun S => m i + ∑ j ∈ S, m j ≤ w) = ∅ :=
+        filter_false_of_mem (fun S _ => by omega)
+      rw [hfil, sup_empty, sup_bot_eq]
+
+/-- Overlapping subproblems, counted: when every item fits (the total weight of all `n`
+items is at most the room `w`), a plain recursion on `n` items makes `2^(n+1) - 1` calls. -/
+theorem plain_recursion_calls_when_all_fit (m : ℕ → ℕ) (n w : ℕ)
+    (hfit : ∑ j ∈ range n, m j ≤ w) :
+    calls m n w = 2 ^ (n + 1) - 1 := by
+  induction n generalizing w with
+  | zero => simp [calls]
+  | succ n ih =>
+    rw [sum_range_succ] at hfit
+    have h1 : m n ≤ w := by omega
+    have h2 := ih w (by omega)
+    have h3 := ih (w - m n) (by omega)
+    have h4 : 1 ≤ 2 ^ (n + 1) := Nat.one_le_two_pow
+    simp only [calls, h1, ↓reduceIte, h2, h3]
+    rw [pow_succ 2 (n + 1)]
+    omega
+
+/-- The trader's six items: books, soap, wool, cheese, honey, candles. -/
+def kg (i : ℕ) : ℕ := [6, 4, 7, 5, 3, 2].getD i 0
+def gbp (i : ℕ) : ℕ := [100, 60, 135, 95, 80, 50].getD i 0
+
+-- The last cell: £310 from six items in 15 kg.
+example : K kg gbp 6 15 = 310 := by decide
+-- Cells from the picture and the table.
+example : K kg gbp 3 10 = 160 := by decide
+example : K kg gbp 5 13 = 240 := by decide
+example : K kg gbp 5 15 = 310 := by decide
+example : K kg gbp 4 15 = 255 := by decide
+example : K kg gbp 4 12 = 230 := by decide
+example : K kg gbp 3 15 = 235 := by decide
+-- Wool, cheese and honey (items 3, 4, 5 on the card) weigh exactly 15 kg and fetch £310.
+example : ∑ j ∈ ({2, 3, 4} : Finset ℕ), kg j = 15 ∧ ∑ j ∈ ({2, 3, 4} : Finset ℕ), gbp j = 310 := by
+  decide
+-- 64 packings, 40 of which fit in 15 kg.
+example : (range 6).powerset.card = 64 := by decide
+example : ((range 6).powerset.filter (fun S => ∑ j ∈ S, kg j ≤ 15)).card = 40 := by decide
+-- Brute force over all 64 packings agrees: the best is £310.
+example : ((range 6).powerset.filter (fun S => ∑ j ∈ S, kg j ≤ 15)).sup
+    (fun S => ∑ j ∈ S, gbp j) = 310 := by decide
+-- A plain recursion on the six items makes 96 calls.
+example : calls kg 6 15 = 96 := by decide
+-- Items of 1, 2, 4, 8, 16, 32 kg in 63 kg of room: 127 calls.
+example : calls (fun i => 2 ^ i) 6 63 = 127 := by decide
+-- T(8) = 511 and 12 items take 8,191 calls when all fit.
+example : 2 ^ (8 + 1) - 1 = 511 := by decide
+example : 2 ^ (12 + 1) - 1 = 8191 := by decide
+-- Small questions: 7 × 16 = 112; table cells: 6 × 16 = 96; 20 items allow 1,048,576 packings.
+example : (6 + 1) * (15 + 1) = 112 ∧ 6 * (15 + 1) = 96 ∧ 2 ^ 20 = 1048576 := by decide
+
+#print axioms table_gives_best_packing
+#print axioms plain_recursion_calls_when_all_fit
+
+end DynamicProgramming
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'DynamicProgramming.table_gives_best_packing' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DynamicProgramming.plain_recursion_calls_when_all_fit' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run the Python.
@@ -589,7 +741,7 @@ The two outputs match line for line.
 
 - **Phone storage.** Choosing which albums from a 1,000,000-track library to keep offline in a phone's spare space, for the most of what the owner rates highest, is this rucksack with megabytes for kilograms. The free space sets the table's width, so it decides whether the table is practical.
 - **Budgets.** Picking projects or adverts under a fixed budget, each with a cost and an expected return, is the same table with pounds as the room.
-- **Comparing text.** File comparison tools and spell checkers fill a table of best partial matches between two strings; that model belongs to Four classic models.
+- **Comparing text.** File comparison tools and spell checkers fill a table of best partial matches between two strings.
 - **DNA and protein alignment.** Lining up two gene sequences with the fewest edits is a table filled one row at a time, the same rule shape as here.
 - **Cutting stock.** Cutting a steel bar or a roll of paper into ordered lengths for the most value is a rucksack in disguise.
 
@@ -607,7 +759,7 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Greedy](08-greedy-algorithms-and-matroids.md): the next card. When taking the best next step is provably safe, the table is not needed.
-- [Four classic models](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/06-classic-integer-models-knapsack-assignment-and-covering.md): longest common subsequence, edit distance, shortest paths and sequence alignment, each set up as a table.
+- [Four classic models](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/06-classic-integer-models-knapsack-assignment-and-covering.md): the rucksack as one of four yes-or-no shapes, beside assignment, covering and routing; there the rucksack table picks the acts for a festival line-up.
 - [Backward induction](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/01-finite-horizon-dynamic-programming-and-backward-induction.md): the same recursion when chance decides what happens next, and each tail is an average.
 
 The question left open: when the room is too large for a table, how close can a fast method get to the best packing, and can it promise how close?

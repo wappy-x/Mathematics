@@ -8,13 +8,24 @@
 
 A city's bike-share scheme has 1,200 stations. Here they sit on a 40 by 30 grid of blocks, joined by 2,330 streets, one between each pair of neighbouring stations. Each street takes 60 to 120 seconds to ride and can carry 100 to 600 bikes an hour. The city is synthetic: every number comes from a stated random-number rule with seed 2026, so anyone can rebuild it.
 
-The operator asks six questions. Which stations can a van reach in the fewest streets? What is the fastest ride from the rail station at grid point (8, 20) to the university at (26, 10)? Can a phone answer that without searching the whole city? Which streets should get protected lanes, if every station must be joined for the least total length? If 956 streets become one-way, can every rider still get home? And how many bikes an hour can cross from the homes on the west edge to the offices on the east edge?
+The operator asks six questions.
 
-Wing 04 already proved which method answers four of these questions; this card proves the methods for the other two, A* and Tarjan's, and is mainly about making all six fast. The fastest ride is 2,124 seconds, 35.4 minutes. Plain Dijkstra finishes 804 stations before it can be sure of that; A*, aimed at the university, finishes 254. The lane plan keeps 1,199 streets with 92,026 seconds of riding: 460.1 km of lane at 5 m/s, the speed that turns riding time into length. Four tiny pockets of stations, five stations in all, would be cut off by the one-way plan. And 7,000 bikes an hour can cross the city, with a cut of streets worth exactly 7,000 to prove no plan does better.
+1. Which stations can a van reach in the fewest streets?
+2. What is the fastest ride from the rail station at grid point (8, 20) to the university at (26, 10)?
+3. Can a phone answer that without searching the whole city?
+4. Which streets should get protected lanes, if every station must be joined for the least total length?
+5. If 956 streets become one-way, can every rider still get home?
+6. How many bikes an hour can cross from the homes on the west edge to the offices on the east edge?
+
+Wing 04, [Combinatorics and graphs](../../04-Combinatorics%20and%20graphs/README.md), already proved which method answers four of these questions. This card proves the methods for the other two, A* and Tarjan's, and is mainly about making all six fast.
+
+The fastest ride is 2,124 seconds, 35.4 minutes. Plain Dijkstra finishes 804 stations before it can be sure of that; A*, aimed at the university, finishes 254.
+
+The lane plan keeps 1,199 streets with 92,026 seconds of riding: 460.1 km of lane at 5 m/s, the speed that turns riding time into length. Four tiny pockets of stations, five stations in all, would be cut off by the one-way plan. And 7,000 bikes an hour can cross the city, with a cut of streets worth exactly 7,000 to prove no plan does better.
 
 **Each graph method repeats one question thousands of times, so its speed is set by the structure that answers that question: a queue, a heap, a parent-pointer forest, a stack, or a level map.**
 
-**What kind of fact this is:** BFS, Dijkstra, Kruskal and maximum flow are proved correct on the wing 04 cards linked below; A* and Tarjan's method are proved on this card in Why it works; each cost on this card is a theorem, proved in outline in Why it works and counted by the code; A*'s saving on this city is a measurement, not a guarantee.
+**What kind of fact this is:** breadth-first search (BFS), Dijkstra, Kruskal and maximum flow are proved correct on the wing 04 cards linked below. A* and Tarjan's method are proved on this card in Why it works. Each cost on this card is a theorem, proved in outline in Why it works and counted by the code. A*'s saving on this city is a measurement, not a guarantee.
 
 ### The picture: six questions, six methods, the structure inside each
 
@@ -66,7 +77,7 @@ Here $h(v)$ is 60 seconds times the blocks still to cross. It is not the heap he
 - **No street takes negative time.** Dijkstra and A* settle a station once and never revisit it. A negative street breaks that, as the [Dijkstra's algorithm](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md) card shows.
 - **The heuristic never drops by more than a street's time.** Formally, $h(u) \le w(u,v) + h(v)$ and $h(\text{target}) = 0$. This is called **consistent**. Triple it to 180 × blocks and A* returns a 2,379-second ride when 2,124 is possible.
 - **The graph is stored as adjacency lists.** Each station keeps a list of its own streets. A V by V table of every pair would make BFS read 1,200 × 1,200 cells instead of 4,660 street ends.
-- **Capacities are fixed and not negative.** Dinic's round count rests on the residual graph changing only through its own pushes.
+- **Capacities are fixed and not negative.** Dinic's round count rests on the residual graph (the room left on each street, each way, after the pushes so far) changing only through its own pushes.
 - **These are worst-case costs.** A*'s saving depends on the map and the guess. A maze can force it to settle everything.
 
 ---
@@ -75,7 +86,15 @@ Here $h(v)$ is 60 seconds times the blocks still to cross. It is not the heap he
 
 ### Step 0: one repeated question, one structure
 
-Every method on wing 04 loops. BFS asks "which station is next in line?". Dijkstra asks "which unsettled station is cheapest?". Kruskal asks "are these two stations already joined?". Tarjan asks "has this search come back round?". Dinic asks "is there still a shortest route with room?". Most proofs that the loops give right answers are on wing 04; this card adds A*'s in Step 3 and Tarjan's in Step 5. The running time is the number of questions times the cost of one answer. So the work is to find a structure that answers in constant time or in $\log V$, and to bound how often the question is asked.
+Every method on wing 04 loops.
+
+- BFS asks "which station is next in line?".
+- Dijkstra asks "which unsettled station is cheapest?".
+- Kruskal asks "are these two stations already joined?".
+- Tarjan asks "has this search come back round?".
+- Dinic asks "is there still a shortest route with room?".
+
+Most proofs that the loops give right answers are on wing 04; this card adds A*'s in Step 3 and Tarjan's in Step 5. The running time is the number of questions times the cost of one answer. So the work is to find a structure that answers in constant time or in $\log V$, and to bound how often the question is asked.
 
 ### Step 1: breadth-first search, a queue
 
@@ -141,13 +160,17 @@ The code checks Tarjan against a second road: a station's piece is everything it
 
 ### Step 6: Dinic, levels and blocking flows
 
-[Flows](../../04-Combinatorics%20and%20graphs/13-Matchings%20and%20Flows/05-flow-networks-and-ford-fulkerson.md) pushes bikes along any route with room. Room includes cancelling earlier bikes, and the Edmonds-Karp rule takes the shortest such route each time. Dinic does a whole layer of shortest routes per round:
+[Flows](../../04-Combinatorics%20and%20graphs/13-Matchings%20and%20Flows/05-flow-networks-and-ford-fulkerson.md) pushes bikes along any route with room. Room includes cancelling earlier bikes, and the Edmonds-Karp rule takes the shortest such route each time. Dinic does a whole layer of shortest routes per round.
+
+The code adds two extra stations. The **source** feeds every station on the west edge, and the **sink** drains every station on the east edge. Each street becomes two **arcs**, one each way, and each arc has room for the street's bikes an hour.
 
 1. Search outward from the source and give each station its level $\ell(v)$: the fewest streets with room left from the source to v.
 2. Keep only the arcs from level $k$ to level $k + 1$. Push bikes along source-to-sink routes in this level graph until every such route has a full arc. This is a **blocking flow**. A pointer per station skips arcs found dead, so each arc is given up at most once per round.
 3. Repeat until the sink cannot be reached.
 
-After a round, every new arc with room points from level $k + 1$ back to $k$: the undo of a push. Levels are fewest-street distances, so no old arc with room climbs more than one level, and an undo arc falls one. So every arc with room climbs at most one level. A route as short as before would have to climb one level on every arc, so it would lie wholly in the old level graph, and the blocking flow filled one of its arcs. So any route that survives uses an arc that climbs no level (one outside the level graph, or a new undo arc), and it is longer. The source-to-sink distance rises every round. It cannot pass $V - 1$, so there are at most $V - 1$ rounds.
+After a round, every new arc with room points from level $k + 1$ back to $k$: the undo of a push. Levels are fewest-street distances, so no old arc with room climbs more than one level, and an undo arc falls one. So every arc with room climbs at most one level.
+
+A route as short as before would have to climb one level on every arc, so it would lie wholly in the old level graph, and the blocking flow filled one of its arcs. So any route that survives uses an arc that climbs no level (one outside the level graph, or a new undo arc), and it is longer. The source-to-sink distance rises every round. It cannot pass $V - 1$, so there are at most $V - 1$ rounds.
 
 Each round finds at most $E$ routes. Each route is at most $V$ long and kills at least one arc, giving $O(VE)$ per round and $O(V^2E)$ in all. On a matching-shaped network, where every station has room for just one unit coming in or going out, the bound falls to $O(E\sqrt V)$. On a matching problem, that is the Hopcroft-Karp method.
 
@@ -575,6 +598,126 @@ growth,V 300,E 565,bfs looks 1130,heap work 1746,(V+E) log2 V 7118,per (V+E) log
 growth,V 1200,E 2330,bfs looks 4660,heap work 8471,(V+E) log2 V 36108,per (V+E) log2 V 0.235
 growth,V 4800,E 9460,bfs looks 18920,heap work 39668,(V+E) log2 V 174383,per (V+E) log2 V 0.227
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves the A* facts of Step 3 and the BFS count of Step 1, for any map, and checks the worked numbers.
+
+- Suppose the heuristic is consistent. Then no shifted time $w'(u,v)$ is negative.
+- Take any route from $s$ to a station $v$. Then its shifted time is its true time minus $h(s)$ plus $h(v)$. So Dijkstra on $w'$ settles in A*'s key order.
+- Suppose the heuristic is consistent. Then every route from $s$ to the target is shifted down by the same $h(s)$. So the fastest route is unchanged.
+- Suppose the heuristic is consistent. Then $h(v)$ is at most the riding time of any route from $v$ to the target: it is never too high.
+- Take any graph stored as adjacency lists. Then one removal per station plus one look per street end comes to $V + 2E$.
+- The grid has 1,200 stations and 2,330 streets, so BFS does 5,860 steps. Street looks are exactly $2E$ at all three sizes.
+- The start guess is 1,680 s at 60 s a block, and 5,040 s at 180 s a block. The true ride is 2,124 s.
+- The lane plan keeps 1,199 streets, 460,130 m of lane. Top rank 5 means at least 32 stations, within $\log_2 V$, between 10 and 11.
+- The one-way plan leaves 3,704 arrows, and its pieces of 1,195, 2, 1, 1 and 1 stations add to 1,200.
+
+Lean does not run the methods, so every counted run is left to the Python and Rust checks.
+
+```lean
+-- Graph algorithms as code: with a consistent heuristic, A*'s shifted street times are never negative and shift every route by the same amount, so the heuristic never overshoots and A* is Dijkstra on non-negative times; and breadth-first search does exactly stations plus twice the streets in work.
+import Mathlib.Combinatorics.SimpleGraph.Walk.Basic
+import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Ring
+
+open SimpleGraph
+
+/-- A* is Dijkstra on shifted street times. Let the heuristic h be consistent:
+h(u) ≤ w(u, v) + h(v) on every street, and h(target) = 0. Give each street the shifted time
+w'(u, v) = w(u, v) - h(u) + h(v). Then (1) no shifted time is negative; (2) along any route from
+s to any station v the middle h terms cancel, so the shifted length is the true length
+- h(s) + h(v), which is why Dijkstra on w' settles in order of d[v] + h(v); (3) every route from
+s to the target is shifted by the same amount, its length - h(s); and (4) so the fastest route
+is unchanged: one route beats another on shifted times exactly when it beats it on true times. -/
+theorem astar_is_dijkstra_on_shifted_times {V : Type*} (G : SimpleGraph V)
+    (w : V → V → ℝ) (h : V → ℝ) (t : V)
+    (hcons : ∀ u v, G.Adj u v → h u ≤ w u v + h v) (ht : h t = 0) :
+    (∀ u v, G.Adj u v → 0 ≤ w u v - h u + h v) ∧
+    (∀ (s v : V) (p : G.Walk s v),
+      (p.darts.map fun d => w d.fst d.snd - h d.fst + h d.snd).sum
+        = (p.darts.map fun d => w d.fst d.snd).sum - h s + h v) ∧
+    (∀ (s : V) (p : G.Walk s t),
+      (p.darts.map fun d => w d.fst d.snd - h d.fst + h d.snd).sum
+        = (p.darts.map fun d => w d.fst d.snd).sum - h s) ∧
+    (∀ (s : V) (p q : G.Walk s t),
+      (p.darts.map fun d => w d.fst d.snd - h d.fst + h d.snd).sum
+          ≤ (q.darts.map fun d => w d.fst d.snd - h d.fst + h d.snd).sum
+        ↔ (p.darts.map fun d => w d.fst d.snd).sum ≤ (q.darts.map fun d => w d.fst d.snd).sum) := by
+  have h2 : ∀ (s v : V) (p : G.Walk s v),
+      (p.darts.map fun d => w d.fst d.snd - h d.fst + h d.snd).sum
+        = (p.darts.map fun d => w d.fst d.snd).sum - h s + h v := by
+    intro s v p
+    induction p with
+    | nil => simp
+    | cons hadj p ih =>
+      simp only [Walk.darts_cons, List.map_cons, List.sum_cons]
+      rw [ih]
+      ring
+  refine ⟨fun u v huv => by linarith [hcons u v huv], h2, ?_, ?_⟩
+  · intro s p
+    rw [h2, ht]
+    ring
+  · intro s p q
+    rw [h2, h2]
+    constructor <;> intro hle <;> linarith
+
+/-- A consistent heuristic is "a guess, never too high": if h(u) ≤ w(u, v) + h(v) on every street
+and h(target) = 0, then from every station v, h(v) is at most the riding time of any route from
+v to the target. -/
+theorem consistent_heuristic_never_too_high {V : Type*} (G : SimpleGraph V)
+    (w : V → V → ℝ) (h : V → ℝ) (t : V)
+    (hcons : ∀ u v, G.Adj u v → h u ≤ w u v + h v) (ht : h t = 0) :
+    ∀ (v : V) (p : G.Walk v t), h v ≤ (p.darts.map fun d => w d.fst d.snd).sum := by
+  intro v p
+  induction p with
+  | nil => simp [ht]
+  | cons hadj p ih =>
+    simp only [Walk.darts_cons, List.map_cons, List.sum_cons]
+    linarith [hcons _ _ hadj, ih ht]
+
+/-- Breadth-first search on adjacency lists: each station leaves the queue once and its street
+list is read once, and each street has two ends, so the work is V removals plus 2E street looks,
+V + 2E in all. -/
+theorem bfs_work_is_stations_plus_twice_streets {V : Type*} [Fintype V] (G : SimpleGraph V)
+    [DecidableRel G.Adj] :
+    ∑ v, (1 + G.degree v) = Fintype.card V + 2 * G.edgeFinset.card := by
+  rw [Finset.sum_add_distrib, sum_degrees_eq_twice_card_edges]
+  simp
+
+-- The city: a 40 by 30 grid has 1,200 stations and 39 x 30 + 40 x 29 = 2,330 streets.
+example : 40 * 30 = 1200 ∧ 39 * 30 + 40 * 29 = 2330 := by decide
+-- BFS work: 1,200 removals + 2 x 2,330 street looks = 5,860.
+example : 2 * 2330 = 4660 ∧ 1200 + 2 * 2330 = 5860 := by decide
+-- Growth table: BFS looks are exactly 2E at all three sizes (20 x 15, 40 x 30, 80 x 60 grids).
+example : 19 * 15 + 20 * 14 = 565 ∧ 2 * 565 = 1130 := by decide
+example : 79 * 60 + 80 * 59 = 9460 ∧ 2 * 9460 = 18920 ∧ 80 * 60 = 4800 := by decide
+-- The trip is 28 blocks; h = 60 s per block guesses 1,680 s at the start, below the true 2,124 s.
+example : (26 - 8) + (20 - 10) = 28 ∧ 60 * 28 = 1680 ∧ 1680 ≤ 2124 := by decide
+-- Tripled to 180 s per block, the guess at the start is 5,040 s, far above the true 2,124 s.
+example : 180 * 28 = 5040 ∧ 2124 < 5040 := by decide
+-- A spanning tree of 1,200 stations keeps 1,199 streets; 92,026 s at 5 m/s is 460,130 m.
+example : 1200 - 1 = 1199 ∧ 92026 * 5 = 460130 := by decide
+-- Union by rank: top rank 5 means at least 2^5 = 32 stations, and 2^10 ≤ 1,200 < 2^11.
+example : 2 ^ 5 = 32 ∧ 2 ^ 10 ≤ 1200 ∧ 1200 < 2 ^ 11 ∧ 4 ≤ 5 := by decide
+-- After the one-way plan: 2 x 2,330 - 956 = 3,704 arrows, and the pieces 1,195 + 2 + 1 + 1 + 1 = 1,200.
+example : 2 * 2330 - 956 = 3704 ∧ 1195 + 2 + 1 + 1 + 1 = 1200 := by decide
+
+#print axioms astar_is_dijkstra_on_shifted_times
+#print axioms consistent_heuristic_never_too_high
+#print axioms bfs_work_is_stations_plus_twice_streets
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'astar_is_dijkstra_on_shifted_times' depends on axioms: [propext, Classical.choice, Quot.sound]
+'consistent_heuristic_never_too_high' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bfs_work_is_stations_plus_twice_streets' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]

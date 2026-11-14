@@ -32,7 +32,14 @@ The last bar is a limit, not a code anyone has run. Real codes get close to it, 
 
 ## The formula
 
-Notation first, in words. One use of the link sends one bit X and delivers one bit Y. The link flips the bit with chance p, the **crossover probability**. The sender may favour 1s or 0s: q is the chance X is 1. From [Entropy](01-entropy.md), h(p) is the binary entropy, the bits in one yes-or-no answer of chance p. From [Conditional entropy and mutual information](02-conditional-entropy-and-mutual-information.md), I(X; Y) is the mutual information: how many bits Y tells about X on average. A link like this, the same flip chance for 0 and 1 and no memory between uses, is a **binary symmetric channel**.
+Notation first, in words. One use of the link sends one bit X and delivers one bit Y.
+
+- The link flips the bit with chance p, the **crossover probability**.
+- The sender may favour 1s or 0s: q is the chance X is 1.
+- From [Entropy](01-entropy.md), h(p) is the binary entropy, the bits in one yes-or-no answer of chance p.
+- From [Conditional entropy and mutual information](02-conditional-entropy-and-mutual-information.md), I(X; Y) is the mutual information: how many bits Y tells about X on average.
+
+A link like this, the same flip chance for 0 and 1 and no memory between uses, is a **binary symmetric channel**.
 
 $$C = \max_{q}\; I(X;Y) = 1 - h(p)$$
 
@@ -44,7 +51,7 @@ $$R < C:\ \text{for long enough } n \text{ some code of rate } R \text{ has } P_
 
 **Read it aloud:** under capacity, errors can be driven down without slowing down; over capacity, every code fails on at least a fixed share of its blocks.
 
-For a radio channel B hertz wide (hertz: cycles a second), with signal power S and noise power N inside the band (the noise per hertz times B, so a wider band lets in more noise), the **Shannon–Hartley theorem** gives the capacity in bits a second:
+Take a radio channel B hertz wide (hertz: cycles a second), with signal power S and noise power N inside the band. N is the noise per hertz times B, so a wider band lets in more noise. The **Shannon–Hartley theorem** gives the capacity in bits a second:
 
 $$C = B \log_2\!\left(1 + \frac{S}{N}\right)$$
 
@@ -124,7 +131,7 @@ The full proof is long: the 1948 paper and chapter 7 of Cover and Thomas, both i
 4. **Failure two: a wrong codeword fits.** A random wrong codeword differs from the received word in a pattern of fair coin flips. The chance it lands inside the likely cloud is about 2^(n h(p)) ÷ 2^n = 2^(−nC). There are fewer than 2^(nR) wrong codewords, so the chance any of them fits is at most about 2^(nR) × 2^(−nC) = 2^(−n(C − R)). When R is below C, this shrinks to 0 as n grows.
 5. **From average to one code.** The error chance, averaged over all random codes, goes to 0, so at least one code is that good. Discarding its worse half of codewords makes every message safe, at a cost of 1/n in rate.
 
-The code watches this happen. It draws one random code of rate 1/2 at each of three block lengths (a random linear code: random parity checks, which works as well as fully random codewords on this link) and computes its exact block error with the best decoder, the one that always assumes the fewest flips:
+The code watches this happen. It draws one random code of rate 1/2 at each of three block lengths. Each is a random linear code: its codewords pass random parity checks, each check saying a chosen set of bits holds an even number of 1s. On this link that works as well as fully random codewords. The code computes each one's exact block error with the best decoder, the one that always assumes the fewest flips:
 
 | Block length n | Message bits per block | Chance the block is wrong |
 | --- | --- | --- |
@@ -161,7 +168,7 @@ Write X for the n bits sent and Y for the n bits received. The information is I 
 
 A radio does not really send bits. It sends pulses of chosen height, and the receiver measures each pulse plus normal noise ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). Call the average signal power S and the noise power N.
 
-Step 1 carries over, with entropy for measured values in place of bits. One fact is needed: a normal value has an uncertainty score, its differential entropy, of ½ log2(2πe × its variance) (e ≈ 2.718 is the base of natural logs), and among all values with the same variance, the normal scores highest (Cover and Thomas, chapter 8). The score is not a count of bits and can even be negative; only the difference of two scores counts as bits, and the steps below use only differences.
+Step 1 carries over, with entropy for measured values in place of bits. One fact is needed. A normal value has an uncertainty score, its differential entropy, of ½ log2(2πe × its variance), where e ≈ 2.718 is the base of natural logs. Among all values with the same variance, the normal scores highest (Cover and Thomas, chapter 8). The score is not a count of bits and can even be negative; only the difference of two scores counts as bits, and the steps below use only differences.
 
 - Given the pulse sent, the uncertainty left is the noise's: ½ log2(2πe N).
 - The received value has variance at most S + N, so its uncertainty is at most ½ log2(2πe(S + N)), reached when the sent heights are themselves normal.
@@ -219,7 +226,7 @@ The code prints every row.
 
 ## Code, from first principles, and it actually runs
 
-Three roads lead to the 1% link's capacity: the formula 1 − h(p); a search over 1,001 input mixes computing I(X; Y) from the full table of chances; and a seeded simulation of 200,000 synthetic bits. Majority voting is checked by the binomial formula and by a best decoder that tries flip patterns from fewest flips up; the same decoder then scores random rate-1/2 codes. For Shannon–Hartley, bisection (halving an interval until it pins the answer) on a bell-curve area, measured by Simpson's rule, finds the pulse height; a series for the same area, with no integral, checks that area; simulated normal noise checks the flip chance; and entropies measured by Simpson's rule check ½ log2(1 + S/N). Random numbers come from SplitMix64, a small generator written out in both languages, so the two outputs match.
+Three roads lead to the 1% link's capacity: the formula 1 − h(p); a search over 1,001 input mixes computing I(X; Y) from the full table of chances; and a seeded simulation of 200,000 synthetic bits. Majority voting is checked by the binomial formula and by a best decoder that tries flip patterns from fewest flips up; the same decoder then scores random rate-1/2 codes. For Shannon–Hartley, bisection (halving an interval until it pins the answer) on a bell-curve area, measured by Simpson's rule, finds the pulse height. A series for the same area, with no integral, checks that area. Simulated normal noise checks the flip chance. Entropies measured by Simpson's rule check ½ log2(1 + S/N). Random numbers come from SplitMix64, a small generator written out in both languages, so the two outputs match.
 
 ### Python
 
@@ -653,6 +660,194 @@ chart, C at p = 0, 0.05, ..., 0.5: 1.000 0.714 0.531 0.390 0.278 0.189 0.119 0.0
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the capacity formula for any flip chance p, the last step of the converse, and the error chance of a majority vote.
+
+- Take a crossover probability p from 0 to 1. Then the most I(X; Y) over every input mix q is 1 − h(p), reached at q = 0.5.
+- Suppose nR ≤ nC + 1 + P_e nR, the count from Fano's inequality, with n and R above 0. Then P_e ≥ 1 − C/R − 1/(nR).
+- Take r copies of a bit, each flipped on its own with chance p. Then the majority vote's error chance equals the binomial formula: the chance that more than half flip.
+- Take the station's log at 1,000 bits a second. Then one, three and five copies take 23.04, 69.12 and 115.2 minutes.
+- Take p = 0.01. Then the expected wrong bits are 13,824 plain, 411.9552 with three copies and about 13.6 with five.
+- Take the capacity 1 − h(p). Then it is 0 at p = 0.5, and p = 0.99 gives the same capacity as p = 0.01.
+
+The random codes, Fano's inequality itself, Shannon–Hartley and the simulations are left to the Python and Rust checks.
+
+```lean
+-- Channel capacity: a link that flips each bit with chance p carries at most 1 - h(p) bits per use, reached when 0 and 1 are sent equally often, and a code above that rate keeps a floor under its error chance.
+import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
+import Mathlib.Analysis.SpecialFunctions.Log.Base
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Data.Fintype.Pi
+import Mathlib.Order.Bounds.Basic
+import Mathlib.Data.Nat.Choose.Sum
+
+open Real Finset
+
+/-- The chance that the sent bit is `x`, when the sender sends a 1 with chance `q`. -/
+noncomputable def inputProb (q : ℝ) : Bool → ℝ := fun x => if x then q else 1 - q
+
+/-- One use of the binary symmetric channel: the chance of receiving `y` when `x` was sent.
+The bit arrives unchanged with chance `1 - p` and flipped with chance `p`. -/
+noncomputable def bscTransition (p : ℝ) : Bool → Bool → ℝ := fun x y => if x = y then 1 - p else p
+
+/-- The joint chance that `x` is sent and `y` received. -/
+noncomputable def bscJoint (p q : ℝ) (x y : Bool) : ℝ := inputProb q x * bscTransition p x y
+
+/-- The chance that `y` is received. -/
+noncomputable def bscOutput (p q : ℝ) (y : Bool) : ℝ := ∑ x : Bool, bscJoint p q x y
+
+/-- The mutual information `I(X; Y)` in bits, straight from the table of joint chances:
+the sum of `P(x, y) log₂ (P(x, y) / (P(x) P(y)))`. Terms with `P(x, y) = 0` count as 0. -/
+noncomputable def bscMutualInfo (p q : ℝ) : ℝ :=
+  ∑ x : Bool, ∑ y : Bool,
+    bscJoint p q x y * logb 2 (bscJoint p q x y / (inputProb q x * bscOutput p q y))
+
+lemma mi_term_aux (a b o : ℝ) (hab : 0 ≤ a * b) (ho : a * b ≤ o) :
+    a * b * logb 2 (a * b / (a * o)) = a * b * (log b - log o) / log 2 := by
+  rcases eq_or_lt_of_le hab with h | h
+  · rw [← h]; simp
+  · have ha : a ≠ 0 := by rintro rfl; simp at h
+    have hb : b ≠ 0 := by rintro rfl; simp at h
+    have ho' : o ≠ 0 := by intro h'; rw [h'] at ho; linarith
+    rw [mul_div_mul_left _ _ ha, logb, log_div hb ho', mul_div_assoc]
+
+lemma bsc_mi_formula (p q : ℝ) (hp₀ : 0 ≤ p) (hp₁ : p ≤ 1) (hq₀ : 0 ≤ q) (hq₁ : q ≤ 1) :
+    bscMutualInfo p q = (binEntropy (bscOutput p q true) - binEntropy p) / log 2 := by
+  have hnn : ∀ x y, 0 ≤ bscJoint p q x y := by
+    intro x y
+    unfold bscJoint inputProb bscTransition
+    split_ifs <;> nlinarith
+  have hterm : ∀ x y, bscJoint p q x y * logb 2 (bscJoint p q x y / (inputProb q x * bscOutput p q y))
+      = inputProb q x * bscTransition p x y * (log (bscTransition p x y) - log (bscOutput p q y)) / log 2 := by
+    intro x y
+    have h1 := hnn x y
+    have h2 : bscJoint p q x y ≤ bscOutput p q y :=
+      single_le_sum (f := fun x' => bscJoint p q x' y) (fun x' _ => hnn x' y) (mem_univ x)
+    unfold bscJoint at h1 h2 ⊢
+    exact mi_term_aux _ _ _ h1 h2
+  have hot : bscOutput p q true = q * (1 - p) + (1 - q) * p := by
+    simp [bscOutput, bscJoint, inputProb, bscTransition]
+  have hof : bscOutput p q false = 1 - bscOutput p q true := by
+    rw [hot]; simp [bscOutput, bscJoint, inputProb, bscTransition]; ring
+  unfold bscMutualInfo
+  simp only [hterm]
+  simp only [Fintype.sum_bool, inputProb, bscTransition, Bool.false_eq_true, ite_true, ite_false,
+    Bool.true_eq_false]
+  rw [hof]
+  unfold binEntropy
+  rw [log_inv, log_inv, log_inv, log_inv]
+  generalize hA : log (bscOutput p q true) = A
+  generalize hB : log (1 - bscOutput p q true) = B
+  rw [hot]
+  field_simp
+  ring
+
+#print axioms mi_term_aux
+#print axioms bsc_mi_formula
+
+/-- The capacity of the binary symmetric channel. For a link that flips each bit with chance
+`p`, the most information one use can carry, over every input mix `q` (the chance of sending a
+1), is `C = 1 - h(p)` bits, where `h(p)` is the binary entropy in bits. The best mix is
+`q = 1/2`. -/
+theorem bsc_capacity_eq_one_sub_binary_entropy (p : ℝ) (hp₀ : 0 ≤ p) (hp₁ : p ≤ 1) :
+    IsGreatest (bscMutualInfo p '' Set.Icc 0 1) (1 - binEntropy p / log 2) ∧
+      bscMutualInfo p (1 / 2) = 1 - binEntropy p / log 2 := by
+  have hl : 0 < log 2 := log_pos one_lt_two
+  have hhalf : bscMutualInfo p (1 / 2) = 1 - binEntropy p / log 2 := by
+    rw [bsc_mi_formula p _ hp₀ hp₁ (by norm_num) (by norm_num)]
+    have : bscOutput p (1 / 2) true = 2⁻¹ := by
+      simp [bscOutput, bscJoint, inputProb, bscTransition]; ring
+    rw [this, binEntropy_two_inv, sub_div, div_self hl.ne']
+  refine ⟨⟨⟨1 / 2, ⟨by norm_num, by norm_num⟩, hhalf⟩, ?_⟩, hhalf⟩
+  rintro _ ⟨q, ⟨hq₀, hq₁⟩, rfl⟩
+  rw [bsc_mi_formula p q hp₀ hp₁ hq₀ hq₁, sub_div, ← div_self hl.ne']
+  gcongr
+  exact binEntropy_le_log_two
+
+/-- The converse, its last step. If the `nR` message bits are at most the `nC` bits the link
+can tell plus Fano's `1 + P_e nR` bits still unknown, then every code of rate `R` and block
+length `n` fails with chance `P_e ≥ 1 - C/R - 1/(nR)`. -/
+theorem error_floor_above_capacity (n : ℕ) (R C Pe : ℝ) (hn : 0 < n) (hR : 0 < R)
+    (hfano : n * R ≤ n * C + 1 + Pe * (n * R)) :
+    1 - C / R - 1 / (n * R) ≤ Pe := by
+  have hn' : (0 : ℝ) < n := by exact_mod_cast hn
+  have hnR : 0 < (n : ℝ) * R := mul_pos hn' hR
+  have hC : 1 - C / R - 1 / (n * R) = (n * R - n * C - 1) / (n * R) := by field_simp
+  rw [hC, div_le_iff₀ hnR]
+  linarith
+
+/-- Majority vote over `r` copies. Each copy flips on its own with chance `p`; the vote is
+wrong exactly when more than half the copies flip. Summing the chances of those flip patterns
+gives `∑_{k > r/2} C(r, k) p^k (1 - p)^(r - k)`. -/
+theorem majority_vote_error (r : ℕ) (p : ℝ) :
+    ∑ f : Fin r → Bool with r < 2 * #{i | f i = true},
+        ∏ i, (if f i then p else 1 - p) =
+      ∑ k ∈ Icc (r / 2 + 1) r, (r.choose k : ℝ) * p ^ k * (1 - p) ^ (r - k) := by
+  set g : ℕ → ℝ := fun k => if r < 2 * k then p ^ k * (1 - p) ^ (r - k) else 0 with hg
+  have h1 : ∑ f : Fin r → Bool with r < 2 * #{i | f i = true}, ∏ i, (if f i then p else 1 - p)
+      = ∑ s ∈ (univ : Finset (Fin r)).powerset, g #s := by
+    rw [sum_filter]
+    refine sum_nbij' (fun f => ({i | f i = true} : Finset (Fin r))) (fun s i => decide (i ∈ s))
+      ?_ ?_ ?_ ?_ ?_
+    · intro f _; simp
+    · intro s _; simp
+    · intro f _; funext i; simp
+    · intro s _; ext i; simp
+    · intro f _
+      simp only [hg]
+      split_ifs with h
+      · rw [prod_ite, prod_const, prod_const]
+        congr 2
+        have := card_filter_add_card_filter_not (s := (univ : Finset (Fin r)))
+          (fun i => f i = true)
+        simp only [card_univ, Fintype.card_fin] at this
+        omega
+      · rfl
+  rw [h1, sum_powerset_apply_card, card_univ, Fintype.card_fin]
+  have h2 : Icc (r / 2 + 1) r = (range (r + 1)).filter (fun k => r < 2 * k) := by
+    ext k; simp; omega
+  rw [h2, sum_filter]
+  refine sum_congr rfl fun k _ => ?_
+  simp only [hg, nsmul_eq_mul]
+  split_ifs <;> ring
+
+-- The day's log: 86,400 readings of 16 bits is 1,382,400 bits.
+example : 86400 * 16 = 1382400 := by decide
+-- At 1,000 bits a second: 23.04 minutes plain, 69.12 with three copies, 115.2 with five.
+example : (1382400 : ℚ) / 1000 / 60 = 576 / 25 ∧ 3 * ((1382400 : ℚ) / 1000 / 60) = 1728 / 25 ∧
+    5 * ((1382400 : ℚ) / 1000 / 60) = 576 / 5 := by norm_num
+-- A plain upload at p = 1/100 has 13,824 wrong bits expected.
+example : (1382400 : ℚ) * (1 / 100) = 13824 := by norm_num
+-- Three copies: a bit is wrong with chance 3 p² (1 - p) + p³ = 0.000298, so 411.9552 wrong bits.
+example : 3 * (1 / 100 : ℚ) ^ 2 * (99 / 100) + (1 / 100) ^ 3 = 149 / 500000 ∧
+    (1382400 : ℚ) * (149 / 500000) = 257472 / 625 := by norm_num
+-- Five copies: three or more flips, chance 49253/5000000000, so about 13.6 wrong bits.
+example : 10 * (1 / 100 : ℚ) ^ 3 * (99 / 100) ^ 2 + 5 * (1 / 100) ^ 4 * (99 / 100) +
+      (1 / 100) ^ 5 = 49253 / 5000000000 ∧
+    (1382400 : ℚ) * (49253 / 5000000000) = 5319324 / 390625 := by norm_num
+-- At p = 1/2 the capacity is 0: the received bit is a coin toss.
+example : 1 - binEntropy 2⁻¹ / log 2 = 0 := by
+  rw [binEntropy_two_inv, div_self (log_pos one_lt_two).ne', sub_self]
+-- A link that flips 99 bits in 100 has the same capacity as one that flips 1 in 100.
+example : 1 - binEntropy (99 / 100) / log 2 = 1 - binEntropy (1 / 100) / log 2 := by
+  rw [show (99 / 100 : ℝ) = 1 - 1 / 100 by norm_num, binEntropy_one_sub]
+
+#print axioms bsc_capacity_eq_one_sub_binary_entropy
+#print axioms error_floor_above_capacity
+#print axioms majority_vote_error
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'mi_term_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bsc_mi_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bsc_capacity_eq_one_sub_binary_entropy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'error_floor_above_capacity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'majority_vote_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - Guess first: if the link flips ten times as often, p = 0.1, does capacity fall tenfold? The `try: p = 0.1` line prints 0.531: it falls by less than half.
@@ -695,7 +890,7 @@ ALL CHECKS PASS
 - [Hamming and Reed-Solomon](08-error-correcting-codes-hamming-and-reed-solomon.md): the next card. Codes built by design rather than at random, with fast decoders, and how far they sit from capacity.
 - [Rate and distortion](10-lossy-compression-and-rate-distortion-in-outline.md): the mirror question. If some error is acceptable, how few bits will do?
 
-The theorem promises good codes but builds none that can be decoded quickly; how to get close to 0.919 with a decoder that runs in real time is the question it leaves open.
+The theorem promises good codes but builds none that can be decoded quickly. How to get close to 0.919 with a decoder that runs in real time is the question it leaves open.
 
 ---
 

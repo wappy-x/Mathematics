@@ -8,15 +8,19 @@
 
 A phone holds a music library of 1,000,000 tracks. Someone types a title into the search box. How much work does the phone do to find it?
 
-One way is a **scan**: read the titles in order, comparing each with the one typed, until one matches. If the track is last, or missing, that is 1,000,000 comparisons. Another way needs the titles kept in alphabetical order. Open the list in the middle and compare once. The match is either there, or in the first half, or in the second half. Throw the wrong half away and repeat. Each comparison halves what is left, so 20 comparisons always settle it for a million titles. This is **binary search**, called **halving** on this card.
+One way is a **scan**: read the titles in order, comparing each with the one typed, until one matches. If the track is last, or missing, that is 1,000,000 comparisons.
+
+Another way needs the titles kept in alphabetical order. Open the list in the middle and compare once. The match is either there, or in the first half, or in the second half. Throw the wrong half away and repeat. Each comparison halves what is left, so 20 comparisons always settle it for a million titles. This is **binary search**, called **halving** on this card.
 
 So the scan costs 1,000,000 comparisons and halving costs 20. Double the library to 2,000,000 tracks and the scan costs 2,000,000, while halving costs 21. One cost doubles when the library doubles. The other gains one comparison.
 
-That pattern does not depend on the phone. A phone twice as fast does each comparison in half the time, for both methods, so the scan stays 50,000 times the work. A stopwatch reading changes with the phone. The growth pattern does not, so it is the part worth naming. **Big-O** is the notation that names it: the scan's cost is "order n", written O(n), and halving's is "order log n", written O(log n), where n is the number of tracks.
+That pattern does not depend on the phone. A phone twice as fast does each comparison in half the time, for both methods, so the scan stays 50,000 times the work. A stopwatch reading changes with the phone. The growth pattern does not, so it is the part worth naming.
+
+**Big-O** is the notation that names it. The scan's cost is "order n", written O(n), and halving's is "order log n", written O(log n), where n is the number of tracks.
 
 **Big-O describes how a cost grows as the input grows, ignoring fixed multipliers, so it tells you which method wins at large sizes on any machine.**
 
-**What kind of fact this is:** O, Ω and Θ (a ceiling, a floor and an exact rate of growth, defined in The formula) are definitions. The facts about particular costs are theorems proved in Why it works: halving's worst case is exactly ⌊log2 n⌋ + 1 comparisons (log2 n rounded down, plus 1), and the six standard growth rates rank strictly, each beaten by the next.
+**What kind of fact this is:** O, Ω and Θ (a ceiling, a floor and an exact rate of growth, defined in The formula) are definitions. The facts about particular costs are theorems, proved in Why it works. Halving's worst case is exactly ⌊log2 n⌋ + 1 comparisons (log2 n rounded down, plus 1), and the six standard growth rates rank strictly, each beaten by the next.
 
 ### The picture: comparisons to find one track, worst case
 
@@ -48,7 +52,7 @@ $$f(n) = \Omega(g(n)) \iff f(n) \ge c \cdot g(n) \text{ for every } n \ge n_0, \
 
 **Read it aloud:** Ω says f grows at least like g; Θ says f grows exactly like g, up to a constant, for large n.
 
-For halving, $f(n) = \lfloor \log_2 n \rfloor + 1$ and $g(n) = \log n$, so halving is $\Theta(\log n)$. Inside O( ) the log carries no base: changing the base multiplies a log by a fixed number, and the constant c absorbs it. Outside O( ), this card writes log2 for halving counts. Wing 13 uses O( ) for an error that shrinks toward zero; here n grows.
+For halving, $f(n) = \lfloor \log_2 n \rfloor + 1$ and $g(n) = \log n$, so halving is $\Theta(\log n)$. Inside O( ) the log carries no base: changing the base multiplies a log by a fixed number, and the constant c absorbs it. Outside O( ), this card writes log2 for halving counts. [Regular perturbation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/05-regular-perturbation.md) uses O( ) for an error that shrinks toward zero; here n grows.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -78,13 +82,17 @@ For halving, $f(n) = \lfloor \log_2 n \rfloor + 1$ and $g(n) = \log n$, so halvi
 
 ### Step 0: compare growth by ratios, and constants cancel
 
-A cost depends on the machine through a fixed multiplier: a slower phone, or three machine steps per comparison instead of one, multiplies every count by the same number. Divide one method's cost by the other's and a shared multiplier cancels. What survives is how the ratio moves as n grows. If it settles below some fixed number, the first cost is O of the second. If it grows without limit, no constant can save the first method. That is why the definition allows any fixed c and why it only asks about large n.
+A cost depends on the machine through a fixed multiplier: a slower phone, or three machine steps per comparison instead of one, multiplies every count by the same number. Divide one method's cost by the other's and a shared multiplier cancels.
+
+What survives is how the ratio moves as n grows. If it settles below some fixed number, the first cost is O of the second. If it grows without limit, no constant can save the first method. That is why the definition allows any fixed c and why it only asks about large n.
 
 ### Step 1: the scan is Θ(n)
 
 A scan for a missing title compares it with every title once: exactly n comparisons. So f(n) = n, and with c₁ = c₂ = 1 the scan is Θ(n).
 
-Real code does bookkeeping too. Suppose the scan costs 2n + 3 steps: two per track and three to set up. Then 2n + 3 ≥ 2n for every n, so it is Ω(n) with c = 2. For the upper bound, 2n + 3 ≤ 3n once n ≥ 3, so it is O(n) with c = 3 and n₀ = 3. At n = 2 the bound fails, 7 against 6, which is why n₀ exists. The extra 3 and the factor 2 vanish into the constants: 2n + 3 is Θ(n).
+Real code does bookkeeping too. Suppose the scan costs 2n + 3 steps: two per track and three to set up. Then 2n + 3 ≥ 2n for every n, so it is Ω(n) with c = 2.
+
+For the upper bound, 2n + 3 ≤ 3n once n ≥ 3, so it is O(n) with c = 3 and n₀ = 3. At n = 2 the bound fails, 7 against 6, which is why n₀ exists. The extra 3 and the factor 2 vanish into the constants: 2n + 3 is Θ(n).
 
 ### Step 2: halving is Θ(log n), with an exact worst case
 
@@ -97,7 +105,7 @@ where W(m) is the worst-case number of comparisons on m titles. Unwind it: W(n) 
 <details>
 <summary>Detailed proof: the worst case is exactly ⌊log2 n⌋ + 1</summary>
 
-The sides left by a miss on m titles hold ⌊(m − 1)/2⌋ and ⌈(m − 1)/2⌉ titles, and the larger is ⌊m/2⌋. A target falling in a gap between titles always continues, so the worst-case target can be chosen to fall into the larger side every time: the worst case obeys the recurrence above with equality.
+The sides left by a miss on m titles hold ⌊(m − 1)/2⌋ and ⌈(m − 1)/2⌉ titles, and the larger is ⌊m/2⌋. A target falling in a gap between titles always continues. So the worst-case target can be chosen to fall into the larger side every time: the worst case obeys the recurrence above with equality.
 
 Now suppose $2^k \le m < 2^{k+1}$, so m has k + 1 binary digits. Then $2^{k-1} \le \lfloor m/2 \rfloor < 2^k$: halving removes exactly one digit. By induction on k, W(m) = k + 1. With k = ⌊log2 m⌋ this is the formula.
 
@@ -105,11 +113,13 @@ Since ⌊log2 n⌋ + 1 lies between log2 n and 2 · log2 n for n ≥ 2, halving 
 
 </details>
 
-The code checks this twice: it runs halving against every title and every gap for every library size from 1 to 300, and at 1,000,000 and 2,000,000 tracks, and the counted worst case equals the formula each time.
+The code checks this twice: it runs halving against every title and every gap for every library size from 1 to 300, and at 1,000,000 and 2,000,000 tracks. The counted worst case equals the formula each time.
 
 ### Step 3: proving a claim false
 
-Comparing every track with every other one, to hunt duplicates, costs n(n − 1)/2 comparisons. Is that O(n)? Divide by n: the ratio is (n − 1)/2, and it grows without limit. Whatever c is offered, n(n − 1)/2 > c · n as soon as n ≥ 2c + 2. For c = 1,000 the claim breaks at n = 2,002, and the code finds that size by searching upward. No fixed c survives, so the pair check is not O(n). It is Θ(n²).
+Comparing every track with every other one, to hunt duplicates, costs n(n − 1)/2 comparisons. Is that O(n)? Divide by n: the ratio is (n − 1)/2, and it grows without limit.
+
+Whatever c is offered, n(n − 1)/2 > c · n as soon as n ≥ 2c + 2. For c = 1,000 the claim breaks at n = 2,002, and the code finds that size by searching upward. No fixed c survives, so the pair check is not O(n). It is Θ(n²).
 
 ### Step 4: the ladder of six growth rates
 
@@ -134,7 +144,11 @@ The sort's count comes from [Sorting and searching](05-sorting-and-searching.md)
 | n² ÷ (n log2 n) | 4.0 | 102.4 |
 | 2ⁿ ÷ n² | 2⁸ | 2¹⁰⁰⁴ |
 
-Every row grows, so every rung pulls away from the one below. The last row needs a short proof. Adding a track doubles 2ⁿ. It multiplies n² by (n + 1)² ÷ n², which is below 2 once n ≥ 3. At n = 4 both are 16, so from there on 2ⁿ grows faster and stays ahead for good. Staying ahead is not yet pulling away without limit, so one more step: from n = 4 the square grows by at most (5/4)² = 1.5625 per track, so each track multiplies the ratio 2ⁿ ÷ n² by at least 2 ÷ 1.5625 = 1.28. A number multiplied by 1.28 again and again has no ceiling. [Linear versus exponential growth](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md) met the same race between adding and doubling.
+Every row grows, so every rung pulls away from the one below.
+
+The last row needs a short proof. Adding a track doubles 2ⁿ. It multiplies n² by (n + 1)² ÷ n², which is below 2 once n ≥ 3. At n = 4 both are 16, so from there on 2ⁿ grows faster and stays ahead for good.
+
+Staying ahead is not yet pulling away without limit, so one more step is needed. From n = 4 the square grows by at most (5/4)² = 1.5625 per track. So each track multiplies the ratio 2ⁿ ÷ n² by at least 2 ÷ 1.5625 = 1.28. A number multiplied by 1.28 again and again has no ceiling. [Linear versus exponential growth](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md) met the same race between adding and doubling.
 
 ### Step 5: the doubling test
 
@@ -147,7 +161,9 @@ The ladder has a fingerprint you can measure. Double n and watch the count:
 | linear | 1,000 | 2,000 | doubled |
 | quadratic | 499,500 | 1,999,000 | multiplied by about 4 |
 
-Exponential costs fail the test differently: one extra track doubles them. Trying every subset of 10, 11 and 12 tracks for a 30-minute playlist, with synthetic track lengths of 3 to 7 minutes made by the rule 3 + (7i mod 5) for track i = 0, 1, 2, …, tries 1,024, 2,048 and 4,096 subsets. That is how growth is checked honestly: count at several sizes and read the pattern, rather than time one run.
+Exponential costs fail the test differently: one extra track doubles them. Trying every subset of 10, 11 and 12 tracks for a 30-minute playlist tries 1,024, 2,048 and 4,096 subsets. The track lengths are synthetic: 3 to 7 minutes, made by the rule 3 + (7i mod 5) for track i = 0, 1, 2, …, where 7i mod 5 is the remainder when 7i is divided by 5.
+
+That is how growth is checked honestly: count at several sizes and read the pattern, rather than time one run.
 
 ---
 
@@ -195,7 +211,14 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The script writes the scan and halving out and lets each count its own comparisons. Every count meets a second road: the scan against n; halving's worst case, found by trying every title and every gap, against ⌊log2 n⌋ + 1 computed by halving the number n itself; the pair check's loop against n(n − 1)/2; the subset search against 2ⁿ, and its playlist count against a running table that never lists a subset. The constants c are found by searching upward and checked against the algebra. Python's `math` supplies only log2 and log10 for two ladder rows.
+The script writes the scan and halving out and lets each count its own comparisons. Every count meets a second road:
+
+- the scan against n;
+- halving's worst case, found by trying every title and every gap, against ⌊log2 n⌋ + 1 computed by halving the number n itself;
+- the pair check's loop against n(n − 1)/2;
+- the subset search against 2ⁿ, and its playlist count against a running table that never lists a subset.
+
+The constants c are found by searching upward and checked against the algebra. Python's `math` supplies only log2 and log10 for two ladder rows.
 
 ### Python
 
@@ -561,6 +584,144 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves halving's exact worst case for every library size, its Θ(log n) rate, and the strict ladder, then checks the worked numbers.
+
+- Suppose W(0) = 0 and W(m) = 1 + W(⌊m/2⌋) for every m ≥ 1. Then W(n) = ⌊log2 n⌋ + 1 for every n ≥ 1.
+- Take halving's worst case, ⌊log2 n⌋ + 1 comparisons on n titles. Then it is Θ(log n).
+- The six rates 1, log n, n, n log n, n² and 2ⁿ rank strictly. Each rung divided by the one below grows without limit.
+- Halving costs 20 comparisons at a million tracks and 21 at two million.
+- The pair check first exceeds 1,000n at 2,002 tracks, and ties with 50n at 101.
+
+Running the methods and counting their comparisons, and the scan's Θ(n) bounds for every n, are left to the Python and Rust checks.
+
+```lean
+-- Big-O: halving's worst case on n titles is exactly floor(log2 n) + 1 comparisons, which is Θ(log n), and the six standard growth rates 1, log n, n, n log n, n², 2ⁿ rank strictly, each beaten by the next.
+import Mathlib.Analysis.Asymptotics.Theta
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Data.Nat.Log
+import Mathlib.Analysis.SpecificLimits.Normed
+
+open Asymptotics Filter
+
+/-- Halving's worst case is exactly ⌊log2 n⌋ + 1 comparisons: if the worst-case count W on m
+titles obeys W(0) = 0 and W(m) = 1 + W(⌊m/2⌋) for every m ≥ 1 (one comparison, then the larger
+side of ⌊m/2⌋ titles), then W(n) = ⌊log2 n⌋ + 1 for every n ≥ 1. -/
+theorem halving_worst_case_eq_floor_log2_add_one (W : ℕ → ℕ) (h0 : W 0 = 0)
+    (hstep : ∀ m, 0 < m → W m = 1 + W (m / 2)) :
+    ∀ n, 0 < n → W n = Nat.log 2 n + 1 := by
+  intro n
+  induction n using Nat.strong_induction_on with
+  | _ n ih =>
+    intro hn
+    rw [hstep n hn]
+    rcases Nat.lt_or_ge n 2 with h | h
+    · have h1 : n = 1 := by omega
+      subst h1
+      simp [h0]
+    · rw [ih (n / 2) (by omega) (by omega), Nat.log_of_one_lt_of_le (by norm_num) h]
+      ring
+
+/-- Halving is Θ(log n): its worst case ⌊log2 n⌋ + 1 lies between fixed positive multiples of
+log n for all large n. -/
+theorem halving_isTheta_log :
+    (fun n : ℕ => ((Nat.log 2 n : ℝ) + 1)) =Θ[atTop] (fun n : ℕ => Real.log n) := by
+  have hl2 : 0 < Real.log 2 := Real.log_pos (by norm_num)
+  have key : ∀ n : ℕ, 0 < n → Real.log 2 * (Nat.log 2 n : ℝ) ≤ Real.log n ∧
+      Real.log n < Real.log 2 * ((Nat.log 2 n : ℝ) + 1) := by
+    intro n hn
+    have h1 : ((2 ^ Nat.log 2 n : ℕ) : ℝ) ≤ n := by
+      exact_mod_cast Nat.pow_log_le_self 2 hn.ne'
+    have h2 : (n : ℝ) < ((2 ^ (Nat.log 2 n + 1) : ℕ) : ℝ) := by
+      exact_mod_cast Nat.lt_pow_succ_log_self (by norm_num) n
+    push_cast at h1 h2
+    constructor
+    · have h3 := Real.log_le_log (by positivity) h1
+      rw [Real.log_pow] at h3
+      linarith
+    · have h3 := Real.log_lt_log (by positivity) h2
+      rw [Real.log_pow] at h3
+      push_cast at h3
+      linarith
+  constructor
+  · apply IsBigO.of_bound (2 / Real.log 2)
+    filter_upwards [eventually_ge_atTop 2] with n hn
+    have hn0 : 0 < n := by omega
+    have hk := (key n hn0).1
+    have h2n : Real.log 2 ≤ Real.log n :=
+      Real.log_le_log (by norm_num) (by exact_mod_cast hn)
+    have hk0 : (0 : ℝ) ≤ (Nat.log 2 n : ℝ) + 1 := by positivity
+    rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg hk0, abs_of_nonneg (by linarith),
+      div_mul_eq_mul_div, le_div_iff₀ hl2]
+    linarith
+  · apply IsBigO.of_bound (Real.log 2)
+    filter_upwards [eventually_ge_atTop 1] with n hn
+    have hn0 : 0 < n := by omega
+    have hk := (key n hn0).2
+    have hlog0 : 0 ≤ Real.log n := Real.log_nonneg (by exact_mod_cast hn)
+    have hk0 : (0 : ℝ) ≤ (Nat.log 2 n : ℝ) + 1 := by positivity
+    rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg hk0, abs_of_nonneg hlog0]
+    linarith
+
+/-- The ladder of six growth rates ranks strictly: 1, log n, n, n log n, n², 2ⁿ, slowest first.
+Each rung divided by the one below grows without limit, so each rate is O of the next and
+never the reverse. -/
+theorem growth_ladder_strict :
+    (fun _ : ℕ => (1 : ℝ)) =o[atTop] (fun n : ℕ => Real.log n) ∧
+    (fun n : ℕ => Real.log n) =o[atTop] (fun n : ℕ => (n : ℝ)) ∧
+    (fun n : ℕ => (n : ℝ)) =o[atTop] (fun n : ℕ => (n : ℝ) * Real.log n) ∧
+    (fun n : ℕ => (n : ℝ) * Real.log n) =o[atTop] (fun n : ℕ => (n : ℝ) ^ 2) ∧
+    (fun n : ℕ => (n : ℝ) ^ 2) =o[atTop] (fun n : ℕ => (2 : ℝ) ^ n) := by
+  have h1 : (fun _ : ℕ => (1 : ℝ)) =o[atTop] (fun n : ℕ => Real.log n) := by
+    rw [isLittleO_const_left]
+    right
+    exact tendsto_norm_atTop_atTop.comp (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop)
+  have h2 : (fun n : ℕ => Real.log n) =o[atTop] (fun n : ℕ => (n : ℝ)) :=
+    Real.isLittleO_log_id_atTop.comp_tendsto tendsto_natCast_atTop_atTop
+  refine ⟨h1, h2, ?_, ?_, ?_⟩
+  · simpa using (isBigO_refl (fun n : ℕ => (n : ℝ)) atTop).mul_isLittleO h1
+  · simpa [sq] using (isBigO_refl (fun n : ℕ => (n : ℝ)) atTop).mul_isLittleO h2
+  · exact isLittleO_pow_const_const_pow_of_one_lt 2 (by norm_num)
+
+-- Halving on a million tracks: 20 comparisons; on two million: 21.
+example : Nat.log 2 1000000 + 1 = 20 := by decide
+example : Nat.log 2 2000000 + 1 = 21 := by decide
+-- Halving on 1,000 and 2,000 tracks (the doubling test): 10 and 11.
+example : Nat.log 2 1000 + 1 = 10 := by decide
+example : Nat.log 2 2000 + 1 = 11 := by decide
+-- The scan does 50,000 times the work of halving at a million tracks.
+example : 1000000 / 20 = 50000 := by norm_num
+-- Scan costing 2n + 3: within 3n from n = 3, and not at n = 2 (7 against 6).
+example : 2 * 3 + 3 ≤ 3 * 3 ∧ ¬ (2 * 2 + 3 ≤ 3 * 2) := by decide
+-- Pair check n(n − 1)/2 against 50n: 190 against 1,000 at 20 tracks, equal (5,050) at 101.
+example : 20 * 19 / 2 = 190 ∧ 50 * 20 = 1000 := by norm_num
+example : 101 * 100 / 2 = 5050 ∧ 50 * 101 = 5050 := by norm_num
+-- With c = 1,000, the pair check first exceeds c · n at n = 2,002.
+example : 2001 * 2000 / 2 ≤ 1000 * 2001 ∧ 2002 * 2001 / 2 > 1000 * 2002 := by norm_num
+-- Pair check at 1,000, 2,000 and a million tracks.
+example : 1000 * 999 / 2 = 499500 ∧ 2000 * 1999 / 2 = 1999000 := by norm_num
+example : 1000000 * 999999 / 2 = 499999500000 := by norm_num
+example : 50 * 1000000 = 50000000 := by norm_num
+-- Every subset of 10, 11, 12 tracks: 1,024, 2,048, 4,096; and 2ⁿ = n² at n = 4.
+example : 2 ^ 10 = 1024 ∧ 2 ^ 11 = 2048 ∧ 2 ^ 12 = 4096 := by norm_num
+example : 2 ^ 4 = 4 ^ 2 := by norm_num
+-- The 2ⁿ ÷ n² rung at n = 16: 2¹⁶ = 2⁸ · 16².
+example : 2 ^ 16 = 2 ^ 8 * 16 ^ 2 := by norm_num
+
+#print axioms halving_worst_case_eq_floor_log2_add_one
+#print axioms halving_isTheta_log
+#print axioms growth_ladder_strict
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'halving_worst_case_eq_floor_log2_add_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'halving_isTheta_log' depends on axioms: [propext, Classical.choice, Quot.sound]
+'growth_ladder_strict' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. Some asserts are pinned to the card's numbers, so expect them to stop the program.
@@ -587,7 +748,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Search boxes.** A phone's music app, a contacts list and a database index all keep their keys sorted, or in a tree, so a lookup costs about log2 n comparisons, not n. Building that order costs n log n once; [Sorting and searching](05-sorting-and-searching.md) and [Data structures](06-data-structures-heaps-hashes-and-trees.md) pay it.
-- **Hunting a bad change.** Version-control tools test the middle commit of a range and halve. A fault hidden among 1,000 changes takes about 10 tests.
+- **Hunting a bad change.** Version-control tools test the middle commit (saved change) of a range and halve. A fault hidden among 1,000 changes takes about 10 tests.
 - **Spreadsheet lookups.** An approximate-match lookup halves its column, so it assumes the column is sorted; on an unsorted column it returns a wrong row with no warning, exactly the play-log failure.
 - **Code that is fine on test data.** A nested loop over every pair of items passes a test on 20 items and stalls on a million: 499,999,500,000 comparisons. The doubling test catches it, because doubling the input quadruples the count.
 - **Password and key length.** Trying every key of n bits means trying 2ⁿ keys. Each extra bit doubles the attacker's work, which is why keys grow by bits, not by percentages.
@@ -606,7 +767,7 @@ The two outputs match line for line.
 
 - [Which case are you quoting? Worst, average and amortised cost](02-worst-case-average-case-and-amortised.md): the named case every cost must carry, and costs averaged over a long run.
 - [Polynomial or exponential](03-polynomial-versus-exponential-time.md): where the ladder splits into what is feasible and what is not.
-- [Recurrences](04-recurrences-and-the-master-theorem.md): solving recurrences like halving's W(m) = 1 + W(⌊m/2⌋) for divide-and-conquer methods.
+- [Recurrences](04-recurrences-and-the-master-theorem.md): solving recurrences like halving's W(m) = 1 + W(⌊m/2⌋) for divide-and-conquer methods, which split the input into parts and solve each part.
 - [Cost in practice](../08-Scientific%20Computing%20Practice/04-computational-cost-and-vectorisation.md): counted operations against a real machine's caches and memory.
 - Time and space classes: memory as a cost alongside comparisons.
 - [Counting the work](../../16-Numerical%20analysis/01-Floating%20Point%20and%20Error/08-operation-counts-and-cost.md): turning a loop into a cost formula line by line.
