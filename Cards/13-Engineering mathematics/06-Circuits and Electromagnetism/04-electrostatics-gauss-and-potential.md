@@ -10,7 +10,9 @@ A radio picks one station by tuning a coil against a capacitor ([RLC resonance](
 
 The engineer wants two numbers. How strong is the electric push in the gap? And what voltage would a meter read across the plates? From those comes the capacitance, the charge stored per volt, which sets the station the radio hears.
 
-Coulomb's law gives the push between two small charges. Adding that up over a whole plate is hard work. Gauss's law skips the work: it says the field poking out through any closed surface counts the charge inside it. Draw a small box around a patch of plate, and the field falls out in one line: 11294.1 volts per metre. The field is the same everywhere in the gap, so the voltage is that field times the gap: 11.294 V. That is 88.54 pF (picofarads, trillionths of a farad) of capacitance, which with a 250 µH coil tunes to 1069.7 kHz, in the AM band.
+Coulomb's law gives the push between two small charges. Adding that up over a whole plate is hard work. Gauss's law skips the work: it says the field poking out through any closed surface counts the charge inside it.
+
+Draw a small box around a patch of plate, and the field falls out in one line: 11294.1 volts per metre. The field is the same everywhere in the gap, so the voltage is that field times the gap: 11.294 V. That is 88.54 pF (picofarads, trillionths of a farad) of capacitance, which with a 250 µH coil tunes to 1069.7 kHz, in the AM band.
 
 **Charge makes a field whose outward flux through any closed surface equals the charge inside divided by a constant, ε0; symmetry then gives the field of a sphere or a pair of plates in one line, and adding the field along a path gives the voltage.**
 
@@ -20,13 +22,17 @@ Coulomb's law gives the push between two small charges. Adding that up over a wh
 
 <p align="center"><img src="../figures/electrostatics-gauss-and-potential.svg" alt="Left: a 1 cm ball holding 1 nC inside a dashed 2 cm Gaussian sphere, field arrows to scale. Right: a 4 mm window of the 1 mm capacitor gap, with a pillbox across the top plate" width="420"></p>
 
-Left, to scale at 40 px per cm: a metal ball of radius 1 cm holding the same 1 nC, and a dashed imaginary sphere of radius 2 cm. Arrow length is 0.8 px per kV/m: 72 px at the ball's surface, where the field is 89875.5 V/m, and 18 px on the dashed sphere, where it is 22468.9 V/m. Right, to scale at 50 px per mm: the middle of the capacitor, gap 50 px. The dashed box is a pillbox, half in the metal, half in the gap. The arrows in the gap show direction only.
+Left, to scale at 40 px per cm: a metal ball of radius 1 cm holding the same 1 nC, and a dashed imaginary sphere of radius 2 cm. Arrow length is 0.8 px per kV/m: 72 px at the ball's surface, where the field is 89875.5 V/m, and 18 px on the dashed sphere, where it is 22468.9 V/m.
+
+Right, to scale at 50 px per mm: the middle of the capacitor, gap 50 px. The dashed box is a pillbox, half in the metal, half in the gap. The arrows in the gap show direction only.
 
 ---
 
 ## The formula
 
-Notation first, in words. A charge $q$ is measured in coulombs (C). The **electric field** $\mathbf E$ at a point is the force a small test charge would feel there, per coulomb of test charge, in newtons per coulomb, which is the same as volts per metre (V/m). $\varepsilon_0$, read "epsilon nought", is the permittivity of empty space (a constant of nature that sets how much field a charge makes): 8.8541878188 × 10^−12 F/m (farads per metre), from NIST CODATA 2022. Air is so close to empty space that this card uses $\varepsilon_0$ for it.
+Notation first, in words. A charge $q$ is measured in coulombs (C). The **electric field** $\mathbf E$ at a point is the force a small test charge would feel there, per coulomb of test charge, in newtons per coulomb, which is the same as volts per metre (V/m).
+
+$\varepsilon_0$, read "epsilon nought", is the permittivity of empty space (a constant of nature that sets how much field a charge makes): 8.8541878188 × 10^−12 F/m (farads per metre), from NIST CODATA 2022. Air is so close to empty space that this card uses $\varepsilon_0$ for it.
 
 **Coulomb's law.** Two charges $q_1$ and $q_2$ a distance $r$ apart push apart (same sign) or pull together (opposite signs) along the line joining them:
 
@@ -74,7 +80,7 @@ $$\text{sphere, outside: } E = \frac{kQ}{r^2},\ V = \frac{kQ}{r} \qquad \text{pl
 - **Charges at rest.** Coulomb's law and the potential are for statics. When currents change or magnets move, the changing magnetic field drives an electric field whose loop integral is not zero, and voltage stops being a single-valued potential ([Magnetic fields](05-magnetism-and-faradays-law.md)). Gauss's law itself survives as one of [Maxwell's equations](07-maxwells-equations.md).
 - **Symmetry, for the one-line answers.** Gauss's law always holds, but it gives the field only when symmetry makes the field the same size and square to the surface over each piece of it. A cube around a point charge still has flux 112.9409 V m, but the field on its faces varies, so the law alone cannot give it.
 - **Plates wide beside their gap.** The plate formula assumes plates of endless size. With the charge held evenly spread, the finite 10 cm plates at 1 mm fall 0.90% short of it at the centre. At a 50 mm gap the field at the centre is only 59.0% of the formula, and the voltage 348.5 V instead of 564.7 V. Real metal plates crowd their charge toward the edges and read a lower voltage still.
-- **Air or empty space between.** An insulating material in the gap weakens the field by its relative permittivity, and the capacitance rises by the same factor.
+- **Air or empty space between.** An insulating material in the gap weakens the field by its relative permittivity (a factor above 1 set by the material), and the capacitance rises by the same factor.
 
 ---
 
@@ -82,7 +88,7 @@ $$\text{sphere, outside: } E = \frac{kQ}{r^2},\ V = \frac{kQ}{r} \qquad \text{pl
 
 ### Step 0: the field thins out exactly as fast as the area grows
 
-A point charge's field falls as $1/r^2$. A sphere's area grows as $r^2$. Multiply and $r$ cancels: every sphere round the charge carries the same flux. A field line, once started, cannot get lost. That is why only the charge inside counts.
+A point charge's field falls as $1/r^2$. A sphere's area grows as $r^2$. Multiply and $r$ cancels: every sphere round the charge carries the same flux. A field line (a line drawn along the field's direction), once started, cannot get lost. That is why only the charge inside counts.
 
 ### Step 1: one sphere round one charge
 
@@ -138,7 +144,7 @@ Another way to see it: each plate alone, as a sheet, gives $\sigma/(2\varepsilon
 
 ### Step 6: from field to voltage
 
-Static fields of charges have zero curl, since each is minus the gradient of $kq/r$, so the voltage between two points does not depend on the path ([Conservative fields](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/04-conservative-fields-and-potentials.md)).
+Static fields of charges have zero curl (no circulation round any point), since each is minus the gradient of $kq/r$, the arrow pointing along its fastest rise. So the voltage between two points does not depend on the path ([Conservative fields](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/04-conservative-fields-and-potentials.md)).
 
 - **Plates.** Walk straight across the gap against the field. The field is constant, so the integral is field times distance: $V = Ed$ = 11.294 V, top plate above bottom.
 - **Sphere.** Walk in from very far away, where the potential is taken as zero, to the surface. Adding $kQ/r^2$ from infinity to $R$ gives $V = kQ/R$ = 898.76 V.
@@ -178,7 +184,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Both programs take two roads. Road 1 is Gauss's law in closed form, as above. Road 2 ignores Gauss's law and adds Coulomb's law over the charge, piece by piece: over a cube's six faces for the flux, over thin rings for the ball, over the square plates in angle slices for the capacitor. Then it adds the field along a path to get the voltage: across the gap for the plates, in from infinity for the ball. A known closed form for a square sheet's field checks the plate sums a third way. The plate charge is held evenly spread, a model: real metal plates crowd extra charge toward their edges.
+Both programs take two roads. Road 1 is Gauss's law in closed form, as above. Road 2 ignores Gauss's law and adds Coulomb's law over the charge, piece by piece: over a cube's six faces for the flux, over thin rings for the ball, over the square plates in angle slices for the capacitor.
+
+Then it adds the field along a path to get the voltage: across the gap for the plates, in from infinity for the ball. A known closed form for a square sheet's field checks the plate sums a third way. The plate charge is held evenly spread, a model: real metal plates crowd extra charge toward their edges.
 
 ### Python
 
@@ -525,6 +533,114 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves Gauss's law for a sphere centred on one point charge, the field as minus a gradient, and the plate capacitance.
+
+- Take a charge $q$ and a sphere of any radius $r > 0$ centred on it. Then the outward flux of its Coulomb field through the sphere is $q/\varepsilon_0$.
+- Take a point charge $q$. Then away from the charge, its field is minus the gradient of the potential $kq/r$.
+- Take plates of area $A$, gap $d$ and charge $Q \neq 0$, with field $\sigma/\varepsilon_0$ and $V = Ed$. Then $C = Q/V = \varepsilon_0 A/d$.
+
+Other closed surfaces, charge outside, the charged ball, finite plates and the decimals are left to the Python and Rust checks.
+
+```lean
+-- Electric fields: a point charge's Coulomb field sends flux q/ε₀ out through every sphere centred on it, is minus the gradient of the potential q/(4πε₀r), and parallel plates give capacitance ε₀A/d.
+import Mathlib.MeasureTheory.Constructions.HaarToSphere
+import Mathlib.MeasureTheory.Measure.Lebesgue.VolumeOfBalls
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.Analysis.Calculus.Gradient.Basic
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Analysis.InnerProductSpace.Calculus
+
+open MeasureTheory Metric Real InnerProductSpace
+
+/-- Coulomb's law: the field at `x` of a charge `q` sitting at `p`, in space with permittivity `ε₀`,
+is `k q (x - p) / ‖x - p‖³` with `k = 1/(4π ε₀)`: size `k q / r²`, pointing straight away from `p`. -/
+noncomputable def coulombField (ε₀ q : ℝ) (p x : EuclideanSpace ℝ (Fin 3)) :
+    EuclideanSpace ℝ (Fin 3) :=
+  (q / (4 * π * ε₀) / ‖x - p‖ ^ 3) • (x - p)
+
+/-- Helper: the unit sphere in 3-space has total surface measure `4π`. -/
+lemma toSphere_real_univ_fin_three :
+    (volume : Measure (EuclideanSpace ℝ (Fin 3))).toSphere.real Set.univ = 4 * π := by
+  rw [Measure.real, Measure.toSphere_apply_univ, EuclideanSpace.volume_ball_fin_three]
+  simp
+  rw [ENNReal.toReal_ofReal (by positivity)]
+  ring
+
+/-- Gauss's law for a sphere round the charge: the outward flux of a point charge's field through a
+sphere of any radius `r` centred on it equals the charge divided by `ε₀`. The point on the sphere is
+`p + r u` for `u` on the unit sphere, the outward unit normal there is `u`, and the area element is
+`r² dσ(u)`, where `σ` is the surface measure of the unit sphere (total area 4π). -/
+theorem gauss_flux_through_sphere_eq_charge_div_eps0 (ε₀ q : ℝ) (p : EuclideanSpace ℝ (Fin 3))
+    {r : ℝ} (hr : 0 < r) :
+    ∫ u : sphere (0 : EuclideanSpace ℝ (Fin 3)) 1,
+        ⟪coulombField ε₀ q p (p + r • (u : EuclideanSpace ℝ (Fin 3))),
+          (u : EuclideanSpace ℝ (Fin 3))⟫_ℝ * r ^ 2 ∂(volume.toSphere) = q / ε₀ := by
+  have key : ∀ u : sphere (0 : EuclideanSpace ℝ (Fin 3)) 1,
+      ⟪coulombField ε₀ q p (p + r • (u : EuclideanSpace ℝ (Fin 3))),
+          (u : EuclideanSpace ℝ (Fin 3))⟫_ℝ * r ^ 2 = q / (4 * π * ε₀) := by
+    intro u
+    have hu : ‖(u : EuclideanSpace ℝ (Fin 3))‖ = 1 := by simp
+    simp only [coulombField, add_sub_cancel_left, norm_smul, hu, Real.norm_eq_abs, abs_of_pos hr,
+      inner_smul_left, real_inner_self_eq_norm_sq]
+    simp
+    field_simp
+  simp_rw [key]
+  rw [integral_const, smul_eq_mul, toSphere_real_univ_fin_three]
+  rcases eq_or_ne ε₀ 0 with rfl | he
+  · simp
+  field_simp
+
+/-- Voltage as potential: away from the charge, the Coulomb field is minus the gradient of the
+potential `V(x) = k q / ‖x - p‖`, so adding the field along any path gives the same voltage. -/
+theorem coulomb_field_eq_neg_gradient_of_potential (ε₀ q : ℝ) {p x : EuclideanSpace ℝ (Fin 3)}
+    (hx : x ≠ p) :
+    HasGradientAt (fun y => q / (4 * π * ε₀) / ‖y - p‖) (-coulombField ε₀ q p x) x := by
+  set c := q / (4 * π * ε₀)
+  have hv : x - p ≠ 0 := sub_ne_zero.mpr hx
+  have hr : ‖x - p‖ ≠ 0 := norm_ne_zero_iff.mpr hv
+  have h1 := ((hasFDerivAt_id x).sub_const p).norm_sq
+  have h2 := h1.sqrt (by simpa using hr)
+  have h3 := ((hasDerivAt_inv (by simpa using hr : √(‖x - p‖ ^ 2) ≠ 0)).const_mul c).comp_hasFDerivAt
+    x h2
+  rw [hasGradientAt_iff_hasFDerivAt]
+  convert h3 using 1
+  · funext y
+    simp [Real.sqrt_sq (norm_nonneg _), div_eq_mul_inv]
+  · ext w
+    simp [coulombField, Real.sqrt_sq (norm_nonneg _)]
+    simp only [c]
+    field_simp
+
+/-- Parallel plates: with charge `Q` on plates of area `A` a gap `d` apart, the field is
+`E = σ/ε₀` with `σ = Q/A`, the voltage is `V = E d`, and the capacitance `C = Q/V` equals `ε₀ A / d`. -/
+theorem parallel_plate_capacitance (Q A d ε₀ : ℝ) (hQ : Q ≠ 0) :
+    Q / ((Q / A / ε₀) * d) = ε₀ * A / d := by
+  rcases eq_or_ne A 0 with rfl | hA
+  · simp
+  rcases eq_or_ne ε₀ 0 with rfl | he
+  · simp
+  rcases eq_or_ne d 0 with rfl | hd
+  · simp
+  field_simp
+
+#print axioms toSphere_real_univ_fin_three
+#print axioms gauss_flux_through_sphere_eq_charge_div_eps0
+#print axioms coulomb_field_eq_neg_gradient_of_potential
+#print axioms parallel_plate_capacitance
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'toSphere_real_univ_fin_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gauss_flux_through_sphere_eq_charge_div_eps0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'coulomb_field_eq_neg_gradient_of_potential' depends on axioms: [propext, Classical.choice, Quot.sound]
+'parallel_plate_capacitance' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

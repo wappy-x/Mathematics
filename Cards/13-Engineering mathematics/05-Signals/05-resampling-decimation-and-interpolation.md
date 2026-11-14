@@ -10,7 +10,7 @@ A studio records a guitar track at 48,000 samples a second, the video and broadc
 
 The test file here holds four steady tones: 440 Hz at amplitude 0.5, 3,000 Hz at 0.25, a 15,000 Hz shimmer at 0.1, and a 23,000 Hz tone at 0.1 that nobody can hear, the kind a synthesiser or a cheap microphone leaves behind. At 48 kHz all four are legal: the top tone is under the 24 kHz limit. At 44.1 kHz the limit drops to 22,050 Hz. Convert carelessly and the 23 kHz tone folds down to 21,100 Hz, and stays in the file for good as a fake tone.
 
-Two moves do all rate changes. **Decimation** lowers the rate by a whole number M: low-pass filter first, then keep one sample in M. **Interpolation** raises it by a whole number L: put L − 1 zeros after every sample, then smooth with a low-pass filter whose gain is L. A ratio such as 44,100/48,000 = 147/160 is one up by 147, one filter, and one down by 160. Done properly, the 21,100 Hz fake comes out at 6.6249 millionths, 83.6 dB below the tone that caused it.
+Two moves do all rate changes. **Decimation** lowers the rate by a whole number M: low-pass filter first, then keep one sample in M. **Interpolation** raises it by a whole number L: put L − 1 zeros after every sample, then smooth with a low-pass filter whose gain is L. A ratio such as 44,100/48,000 = 147/160 is one up by 147, one filter, and one down by 160. Done properly, the 21,100 Hz fake comes out at 6.6249 millionths, 83.6 dB (decibels: 20 times the base-10 logarithm of the amplitude ratio) below the tone that caused it.
 
 **To change a sampling rate, remove everything the new rate cannot hold before you drop samples, and remove the copies that zero-padding creates after you add them; one low-pass filter at the lower of the two limits does both.**
 
@@ -32,7 +32,11 @@ The middle rate is imagined, never stored. Step 5 of Why it works shows how to c
 
 ## The formula
 
-Reminder from [Sampling](01-sampling-and-the-nyquist-theorem.md): a stream at R samples a second cannot tell a tone at f from one at f + R or R − f, so it shows each tone at its folded frequency, and only tones below R/2 (the **Nyquist frequency**: half the rate) show truthfully. Reminder from [Digital filters](04-digital-filters-fir-and-iir.md): an FIR filter (finite impulse response: a weighted sum of nearby inputs) with taps h[j] that read the same either side of the centre delays every frequency equally. New here is how to pick the taps of a low-pass. The ideal low-pass passes every frequency below the cutoff f_c at full strength and nothing above it. Adding up the cosines of all those frequencies, equally weighted, gives its taps, h[j] = sin(2π f_c j / f_s) / (π j), a **sinc** curve (a sine divided by its own angle). It runs on forever; tapering it to a finite length with a window from [Windows](03-windows-and-spectral-leakage.md) gives a real filter, the **windowed sinc**.
+Reminder from [Sampling](01-sampling-and-the-nyquist-theorem.md): a stream at R samples a second cannot tell a tone at f from one at f + R or R − f, so it shows each tone at its folded frequency, and only tones below R/2 (the **Nyquist frequency**: half the rate) show truthfully.
+
+Reminder from [Digital filters](04-digital-filters-fir-and-iir.md): an FIR filter (finite impulse response: a weighted sum of nearby inputs) with taps h[j] that read the same either side of the centre delays every frequency equally.
+
+New here is how to pick the taps of a low-pass. The ideal low-pass passes every frequency below the cutoff f_c at full strength and nothing above it. Adding up the cosines of all those frequencies, equally weighted, gives its taps, h[j] = sin(2π f_c j / f_s) / (π j), a **sinc** curve (a sine divided by its own angle). It runs on forever; tapering it to a finite length with a window from [Windows](03-windows-and-spectral-leakage.md) gives a real filter, the **windowed sinc**.
 
 $$f_{\text{alias}} = \bigl|\,f - R\cdot\operatorname{round}(f/R)\,\bigr|$$
 
@@ -94,7 +98,11 @@ where ω is frequency in radians per sample. The copies with r ≠ 0 are the ali
 
 ### Step 2: filter first, and compute only what you keep
 
-Low-pass the 48 kHz file with a cutoff of 7,500 Hz, below the new Nyquist frequency of 8,000 Hz, then drop. The 440 and 3,000 Hz tones pass at 0.5000 and 0.2500. The 15,000 Hz tone is multiplied by the filter's gain at 15 kHz before it folds, so the 1,000 Hz alias should be 0.1 times that gain. The check computes the gain from the 265 taps alone, and gets 0.0189 millionths; it measures the alias in the decimated file, and gets 0.0189 millionths. That is 134.5 dB below the tone that caused it. A lone 9,000 Hz probe at 0.1, just above the new 8 kHz Nyquist frequency, tests the cutoff where it is tightest: it would fold to 7,000 Hz, and comes out at 2.3345 millionths, matching 0.1 times the gain from the taps. A cutoff at 9,000 Hz, above the limit, would let the probe through, and the check stops.
+Low-pass the 48 kHz file with a cutoff of 7,500 Hz, below the new Nyquist frequency of 8,000 Hz, then drop. The 440 and 3,000 Hz tones pass at 0.5000 and 0.2500.
+
+The 15,000 Hz tone is multiplied by the filter's gain at 15 kHz before it folds, so the 1,000 Hz alias should be 0.1 times that gain. The check computes the gain from the 265 taps alone, and gets 0.0189 millionths; it measures the alias in the decimated file, and gets 0.0189 millionths. That is 134.5 dB below the tone that caused it.
+
+A lone 9,000 Hz probe at 0.1, just above the new 8 kHz Nyquist frequency, tests the cutoff where it is tightest: it would fold to 7,000 Hz, and comes out at 2.3345 millionths, matching 0.1 times the gain from the taps. A cutoff at 9,000 Hz, above the limit, would let the probe through, and the check stops.
 
 Filtering every 48 kHz sample and then throwing two in three away wastes two thirds of the work. Since y[n] uses only x[3n − j], compute just the outputs you keep: 265 multiplies per 16 kHz sample instead of 795.
 
@@ -122,9 +130,13 @@ Two in three padded slots are zero, so skipping them changes nothing. This is th
 
 ### Step 5: a fraction is up, one filter, down
 
-Divide 48,000 and 44,100 by their greatest common divisor, 300: up by L = 147, down by M = 160. Padding to 7,056,000 slots a second creates images; dropping to 44,100 would fold anything above 22,050 Hz. One low-pass at 7,056,000 slots a second handles both, with its cutoff below the smaller limit, at 21,025 Hz, midway between 20,000 Hz (the top of hearing, kept) and 22,050 Hz, and gain 147. Stopping by 22,050 Hz is the strict choice, made so that the 23 kHz tone leaves no fake at all. The guard band of [Sampling](01-sampling-and-the-nyquist-theorem.md) would let the stop edge rise to 44,100 − 20,000 Hz, since anything folding down from below that edge lands above 20,000 Hz, out of hearing; a transition twice as wide needs half the taps.
+Divide 48,000 and 44,100 by their greatest common divisor, 300: up by L = 147, down by M = 160. Padding to 7,056,000 slots a second creates images; dropping to 44,100 would fold anything above 22,050 Hz.
 
-How many taps? The window smears the sinc's sharp edge across its main lobe. Blackman's lobe runs out to 3 bins either side of centre ([Windows](03-windows-and-spectral-leakage.md)), where a bin is the rate divided by the number of taps. A rule of thumb for the Blackman windowed sinc is that the gain falls from flat to deep stopband across about 5.5 bins, a little under the lobe's full width. A 2,050 Hz fall at 7,056,000 slots a second then needs 5.5 × 7,056,000 / 2,050 = 18,930.7 taps; the code rounds up to 129 × 147 = 18,963. The rule is only a rule, so the code measures the result.
+One low-pass at 7,056,000 slots a second handles both, with its cutoff below the smaller limit, at 21,025 Hz, midway between 20,000 Hz (the top of hearing, kept) and 22,050 Hz, and gain 147. Stopping by 22,050 Hz is the strict choice, made so that the 23 kHz tone leaves no fake at all.
+
+The guard band of [Sampling](01-sampling-and-the-nyquist-theorem.md) would let the stop edge rise to 44,100 − 20,000 Hz, since anything folding down from below that edge lands above 20,000 Hz, out of hearing; a transition twice as wide needs half the taps.
+
+How many taps? The window smears the sinc's sharp edge across its main lobe. Blackman's lobe runs out to 3 bins either side of centre ([Windows](03-windows-and-spectral-leakage.md)), where a bin is the rate divided by the number of taps. A rule of thumb for the Blackman windowed sinc is that the gain falls from flat to deep stopband (the band of frequencies the filter blocks) across about 5.5 bins, a little under the lobe's full width. A 2,050 Hz fall at 7,056,000 slots a second then needs 5.5 × 7,056,000 / 2,050 = 18,930.7 taps; the code rounds up to 129 × 147 = 18,963. The rule is only a rule, so the code measures the result.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -558,6 +570,204 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the folding rule, the comb and the images exactly, for any tone and any whole-number factor, and checks the worked numbers.
+
+- Take a tone of amplitude $a$ at $f$, sampled at rate $f_s$, and keep one sample in $M$. Then the kept samples are a tone of amplitude $a$ at its folded frequency for the rate $f_s/M$, perhaps with every sign flipped.
+- Take any whole number $L$ of at least 1. Then the comb $c[i]$ is 1 when $L$ divides $i$, and 0 otherwise.
+- Take a tone of amplitude $a$ at $f$, sampled at $f_s$, and put $L - 1$ zeros after every sample. Then the padded stream is exactly the tone at $f$, amplitude $a/L$, plus images at $r f_s \pm f$. Each copy $r$ from 1 to $L - 1$ gives $a/(2L)$, and copies $r$ and $L - r$ land on the same pair.
+- The greatest common divisor of 48,000 and 44,100 is 300, so $L = 147$ and $M = 160$. The in-between rate is 7,056,000 Hz.
+- At 44.1 kHz the new Nyquist frequency is 22,050 Hz, and 23,000 Hz folds to 21,100 Hz.
+- At 16 kHz, 15,000 Hz folds to 1,000 Hz and 23,000 Hz folds to 7,000 Hz.
+- The filter has 129 × 147 = 18,963 taps, 129 per output. The literal route costs 3,034,080 multiplies per CD sample.
+- Filtering every 48 kHz sample with 265 taps, then dropping two in three, costs 795 multiplies per 16 kHz sample.
+- Take output $n$ at 44.1 kHz and input $k$ at 48 kHz. Then their time gap, in ticks of 1/7,056,000 s, is exactly $nM - kL$.
+
+Lean does not touch the filter's taps, so its gains, the decibel figures and the measured tones are left to the Python and Rust checks.
+
+```lean
+-- Changing rate: dropping samples folds each tone to its alias frequency, the zero-padding comb is one in every L-th slot, and zero-padding a tone adds image tones at r·fs ± f.
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Algebra.Order.Round
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Tactic.NormNum.GCD
+
+open Real Finset
+
+/-! A tone of amplitude `a` at frequency `f` (Hz), sampled at `fs` samples a second, is the
+stream `k ↦ a * sin (2π f k / fs)` over whole-number sample counters `k`.
+Decimation by `M` keeps `y n = x (n M)`; the new rate is `R = fs / M`.
+The folded (alias) frequency at rate `R` is the card's `f_alias = |f - R * round (f / R)|`.
+Zero-padding by `L` gives `v i = x (i / L)` when `L` divides `i` and `0` otherwise. -/
+
+/-- Helper: the cosine sum over all `L` slots is zero when `L` does not divide `i`. -/
+theorem comb_cos_sum_zero (L : ℕ) (hL : 0 < L) (i : ℤ) (hi : ¬ (L : ℤ) ∣ i) :
+    ∑ r ∈ range L, Real.cos (2 * π * r * i / L) = 0 := by
+  have hL' : (L : ℝ) ≠ 0 := by positivity
+  set θ : ℝ := 2 * π * i / L with hθ
+  have hs : Real.sin (θ / 2) ≠ 0 := by
+    intro h
+    rw [Real.sin_eq_zero_iff] at h
+    obtain ⟨n, hn⟩ := h
+    apply hi
+    refine ⟨n, ?_⟩
+    have : (i : ℝ) = (L : ℝ) * n := by
+      rw [hθ] at hn
+      field_simp at hn
+      nlinarith [Real.pi_pos]
+    exact_mod_cast this
+  have key : ∀ r : ℕ, Real.sin (((r + 1 : ℕ) : ℝ) * θ - θ / 2) - Real.sin ((r : ℝ) * θ - θ / 2)
+      = 2 * Real.sin (θ / 2) * Real.cos (2 * π * r * i / L) := by
+    intro r
+    rw [Real.sin_sub_sin]
+    congr 2
+    · push_cast; congr 1; ring
+    · rw [hθ]; push_cast; ring
+  have tel := Finset.sum_range_sub (fun r : ℕ => Real.sin ((r : ℝ) * θ - θ / 2)) L
+  simp only [key] at tel
+  rw [← Finset.mul_sum] at tel
+  have hLθ : (L : ℝ) * θ - θ / 2 = -(θ / 2) + (i : ℝ) * (2 * π) := by
+    rw [hθ]; field_simp; ring
+  rw [hLθ, Real.sin_add_int_mul_two_pi] at tel
+  simp only [Nat.cast_zero, zero_mul, zero_sub] at tel
+  have : 2 * Real.sin (θ / 2) * ∑ r ∈ range L, Real.cos (2 * π * r * i / L) = 0 := by
+    rw [tel]; ring
+  rcases mul_eq_zero.mp this with h | h
+  · exfalso; apply hs; linarith
+  · exact h
+
+/-- Dropping samples folds the spectrum: keeping one sample in `M` of a tone at `f`
+sampled at `fs` gives, at the new rate `R = fs / M`, a tone with the same amplitude at the
+folded frequency `|f - R * round (f / R)|`, possibly with its sign flipped
+(the sign is the same for every sample). -/
+theorem decimation_folds_tone (a f fs : ℝ) (hfs : 0 < fs) (M : ℕ) (hM : 0 < M) :
+    ∃ s : ℝ, (s = 1 ∨ s = -1) ∧ ∀ n : ℤ,
+      a * Real.sin (2 * π * f * ((n * M : ℤ) : ℝ) / fs) =
+        s * a * Real.sin (2 * π * |f - fs / M * round (f / (fs / M))| * n / (fs / M)) := by
+  have hM' : (M : ℝ) ≠ 0 := by positivity
+  have hfs' : fs ≠ 0 := hfs.ne'
+  set q : ℤ := round (f / (fs / M))
+  set g : ℝ := f - fs / M * q with hg
+  have base : ∀ n : ℤ, Real.sin (2 * π * f * ((n * M : ℤ) : ℝ) / fs) =
+      Real.sin (2 * π * g * n / (fs / M)) := by
+    intro n
+    have : 2 * π * f * ((n * M : ℤ) : ℝ) / fs = 2 * π * g * n / (fs / M) + ((q * n : ℤ) : ℝ) * (2 * π) := by
+      rw [hg]; push_cast; field_simp; ring
+    rw [this, Real.sin_add_int_mul_two_pi]
+  rcases le_or_gt 0 g with h | h
+  · refine ⟨1, Or.inl rfl, fun n => ?_⟩
+    rw [abs_of_nonneg h, base n, one_mul]
+  · refine ⟨-1, Or.inr rfl, fun n => ?_⟩
+    rw [abs_of_neg h, base n]
+    have : 2 * π * -g * n / (fs / M) = -(2 * π * g * n / (fs / M)) := by ring
+    rw [this, Real.sin_neg]; ring
+
+/-- The zero-padding comb: `c[i] = (1/L) * Σ_{r=0}^{L-1} cos (2π r i / L)` is `1` when `L`
+divides `i` and `0` otherwise. -/
+theorem comb_is_one_every_Lth_slot (L : ℕ) (hL : 0 < L) (i : ℤ) :
+    (1 / (L : ℝ)) * ∑ r ∈ range L, Real.cos (2 * π * r * i / L) =
+      if (L : ℤ) ∣ i then 1 else 0 := by
+  have hL' : (L : ℝ) ≠ 0 := by positivity
+  split_ifs with h
+  · obtain ⟨j, rfl⟩ := h
+    have : ∀ r ∈ range L, Real.cos (2 * π * r * ((L * j : ℤ) : ℝ) / L) = 1 := by
+      intro r _
+      have : 2 * π * r * ((L * j : ℤ) : ℝ) / L = ((r * j : ℤ) : ℝ) * (2 * π) := by
+        push_cast; field_simp
+      rw [this, Real.cos_int_mul_two_pi]
+    rw [Finset.sum_congr rfl this]
+    simp [hL']
+  · rw [comb_cos_sum_zero L hL i h, mul_zero]
+
+/-- Padding with zeros makes copies: putting `L - 1` zeros after every sample of a tone of
+amplitude `a` at `f` (sampled at `fs`) gives, at the padded rate `L fs`, the tone at `f` with
+amplitude `a / L`, plus image tones at `r fs + f` and `r fs - f` with amplitude `a / (2L)` each,
+for `r = 1, …, L - 1` (copy `r` and copy `L - r` land on the same frequencies, giving `a / L`). -/
+theorem zero_padding_makes_images (a f fs : ℝ) (hfs : 0 < fs) (L : ℕ) (hL : 0 < L) (i : ℤ) :
+    (if (L : ℤ) ∣ i then a * Real.sin (2 * π * f * ((i / L : ℤ) : ℝ) / fs) else 0) =
+      a / L * Real.sin (2 * π * f * i / (L * fs)) +
+        ∑ r ∈ Ico 1 L, a / (2 * L) *
+          (Real.sin (2 * π * (r * fs + f) * i / (L * fs)) -
+            Real.sin (2 * π * (r * fs - f) * i / (L * fs))) := by
+  have hL' : (L : ℝ) ≠ 0 := by positivity
+  have hfs' : fs ≠ 0 := hfs.ne'
+  set B : ℝ := 2 * π * f * i / (L * fs) with hB
+  have term : ∀ r : ℕ, a / (2 * L) *
+      (Real.sin (2 * π * (r * fs + f) * i / (L * fs)) -
+        Real.sin (2 * π * (r * fs - f) * i / (L * fs))) =
+      a / L * Real.sin B * Real.cos (2 * π * r * i / L) := by
+    intro r
+    rw [Real.sin_sub_sin]
+    have e1 : (2 * π * (r * fs + f) * i / (L * fs) - 2 * π * (r * fs - f) * i / (L * fs)) / 2 = B := by
+      rw [hB]; field_simp; ring
+    have e2 : (2 * π * (r * fs + f) * i / (L * fs) + 2 * π * (r * fs - f) * i / (L * fs)) / 2
+        = 2 * π * r * i / L := by
+      field_simp; ring
+    rw [e1, e2]; field_simp
+  simp only [term]
+  rw [← Finset.mul_sum]
+  have hsplit : ∑ r ∈ range L, Real.cos (2 * π * r * i / L) =
+      1 + ∑ r ∈ Ico 1 L, Real.cos (2 * π * r * i / L) := by
+    rw [Finset.range_eq_Ico, Finset.sum_eq_sum_Ico_succ_bot hL]
+    simp
+  have comb := comb_is_one_every_Lth_slot L hL i
+  rw [hsplit] at comb
+  have : a / L * Real.sin B + a / L * Real.sin B * ∑ r ∈ Ico 1 L, Real.cos (2 * π * r * i / L)
+      = a * Real.sin B * ((1 / (L : ℝ)) * (1 + ∑ r ∈ Ico 1 L, Real.cos (2 * π * r * i / L))) := by
+    ring
+  rw [this, comb]
+  split_ifs with h
+  · obtain ⟨j, rfl⟩ := h
+    have hL0 : (L : ℤ) ≠ 0 := by exact_mod_cast hL.ne'
+    have hB2 : B = 2 * π * f * ((L * j / L : ℤ) : ℝ) / fs := by
+      rw [Int.mul_ediv_cancel_left _ hL0, hB]; push_cast; field_simp
+    rw [hB2, mul_one]
+  · ring
+
+/-! The card's whole-number worked examples. -/
+
+-- 48 kHz to 44.1 kHz: gcd 300, so up by L = 147 and down by M = 160.
+example : Nat.gcd 48000 44100 = 300 := by norm_num
+example : 44100 / 300 = 147 ∧ 48000 / 300 = 160 := by norm_num
+-- In-between rate, new Nyquist frequency, and where 23 kHz folds at 44.1 kHz.
+example : 48000 * 147 = 7056000 ∧ 44100 / 2 = 22050 ∧ 44100 - 23000 = 21100 := by norm_num
+example : |(23000 : ℝ) - 44100 * round ((23000 : ℝ) / 44100)| = 21100 := by
+  have : round ((23000 : ℝ) / 44100) = 1 := by
+    rw [round_eq, Int.floor_eq_iff]; norm_num
+  rw [this]; norm_num [abs_of_neg]
+-- Down by 3 to 16 kHz: 15 kHz folds to 1 kHz and 23 kHz folds to 7 kHz.
+example : |(15000 : ℝ) - 16000 * round ((15000 : ℝ) / 16000)| = 1000 := by
+  have : round ((15000 : ℝ) / 16000) = 1 := by
+    rw [round_eq, Int.floor_eq_iff]; norm_num
+  rw [this]; norm_num [abs_of_neg]
+example : |(23000 : ℝ) - 16000 * round ((23000 : ℝ) / 16000)| = 7000 := by
+  have : round ((23000 : ℝ) / 16000) = 1 := by
+    rw [round_eq, Int.floor_eq_iff]; norm_num
+  rw [this]; norm_num [abs_of_neg]
+-- Filter length and cost: 129 × 147 taps, 129 per output, literal route 160 × 18,963.
+example : 129 * 147 = 18963 ∧ 18963 / 147 = 129 ∧ 160 * 18963 = 3034080 := by norm_num
+-- Down by 3 with 265 taps: 795 multiplies if every sample is filtered.
+example : 3 * 265 = 795 := by norm_num
+-- The time gap between output n (at 44.1 kHz) and input k (at 48 kHz),
+-- in ticks of 1/7,056,000 s, is exactly n M - k L.
+example (n k : ℤ) : ((n : ℚ) / 44100 - k / 48000) * 7056000 = n * 160 - k * 147 := by ring
+
+#print axioms comb_cos_sum_zero
+#print axioms decimation_folds_tone
+#print axioms comb_is_one_every_Lth_slot
+#print axioms zero_padding_makes_images
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'comb_cos_sum_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'decimation_folds_tone' depends on axioms: [propext, Classical.choice, Quot.sound]
+'comb_is_one_every_Lth_slot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'zero_padding_makes_images' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

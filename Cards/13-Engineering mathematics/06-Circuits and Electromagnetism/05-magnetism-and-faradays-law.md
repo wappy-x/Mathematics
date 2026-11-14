@@ -10,7 +10,9 @@ A coil sits on a bench: 1000 turns of copper wire wound on a tube 25 cm long and
 
 An engineer wants three numbers. How strong is the magnetic field inside? How hard does the coil resist a change in its current, a property called **inductance**? And what voltage appears across the coil while the current dies, the number that decides which switch survives?
 
-The answers: 15.08 millitesla inside by the long-coil formula (14.79 mT at the true centre), nearly even over the middle 150 mm of the tube. An inductance of 9.87 millihenries. And 2.96 volts while the current falls over 10 ms. That last number is gentle only because 10 ms is slow. A mechanical contact that snaps open in 10 microseconds asks the coil for 2961 volts, enough to jump the gap as a spark. A cheap diode across the coil caps the voltage at the switch at 12.7 V.
+The answers: 15.08 millitesla inside by the long-coil formula (14.79 mT at the true centre), nearly even over the middle 150 mm of the tube. An inductance of 9.87 millihenries. And 2.96 volts while the current falls over 10 ms.
+
+That last number is gentle only because 10 ms is slow. A mechanical contact that snaps open in 10 microseconds asks the coil for 2961 volts, enough to jump the gap as a spark. A cheap diode (a part that lets current pass one way only) across the coil caps the voltage at the switch at 12.7 V.
 
 All three answers come from three facts. A current makes a magnetic field that circles it. A changing field drives a voltage round any loop it threads. A moving charge feels a sideways push from the field.
 
@@ -20,13 +22,22 @@ To scale, 1.6 px per mm. The top row of wire carries current out of the page, th
 
 **A current makes a magnetic field, the field threading a coil's own turns makes it resist any change in its current, and that resistance shows up as a voltage equal to the inductance times the rate the current changes.**
 
-**What kind of fact this is:** two laws of nature, Ampère's law and Faraday's law, found by experiment and part of [Maxwell's equations](07-maxwells-equations.md); the field and inductance formulas are then a model, exact for an endlessly long coil and checked on this card against the full calculation for this 25 cm one.
+**What kind of fact this is:** two laws of nature, Ampère's law and Faraday's law, found by experiment and part of [Maxwell's equations](07-maxwells-equations.md). The field and inductance formulas are then a model, exact for an endlessly long coil and checked on this card against the full calculation for this 25 cm one.
 
 ---
 
 ## The formula
 
-Notation first, in words. $B$ is the **magnetic field** (strictly the flux density) in teslas, T. $\mu_0$ is the magnetic constant: how much field one amp makes in empty space. $I$ is the current in the wire, in amps. $N$ is the number of turns and $\ell$ the coil's length, so $n = N/\ell$ is the number of turns per metre of coil. $A$ is the area inside one turn. $\Phi$ is the **flux** through one turn: field times the area it crosses, in webers, Wb. $L$ is the inductance, in henries, H. The **emf** $\mathcal E$ (from "electromotive force", though it is a voltage, in volts) is the voltage a changing field drives round a loop.
+Notation first, in words.
+
+- $B$ is the **magnetic field** (strictly the flux density) in teslas, T.
+- $\mu_0$ is the magnetic constant: how much field one amp makes in empty space.
+- $I$ is the current in the wire, in amps.
+- $N$ is the number of turns and $\ell$ the coil's length, so $n = N/\ell$ is the number of turns per metre of coil.
+- $A$ is the area inside one turn.
+- $\Phi$ is the **flux** through one turn: field times the area it crosses, in webers, Wb.
+- $L$ is the inductance, in henries, H.
+- The **emf** $\mathcal E$ (from "electromotive force", though it is a voltage, in volts) is the voltage a changing field drives round a loop.
 
 $$B = \mu_0\, n\, I, \qquad L = \frac{N\Phi}{I} = \frac{\mu_0 N^2 A}{\ell}, \qquad \mathcal E = -\frac{d(N\Phi)}{dt} = -L\,\frac{dI}{dt}$$
 
@@ -48,7 +59,7 @@ $$\mathbf F = q\,\mathbf v \times \mathbf B$$
 | $\Phi, N\Phi$ | flux through one turn, $BA$, webers (Wb); flux linkage, the same summed over all turns | 29.61 µWb; 29.61 mWb | more induced voltage when it changes |
 | $L, K_N$ | inductance, henries (H): linked flux per amp; the finite-length factor (Nagaoka's) | 9.87 mH ideal; 0.920 | bigger $L$: bigger voltage for the same switch-off |
 | $\mathcal E, t, \Delta t$ | induced voltage (emf), V; time, s; the switch-off time | 2.96 V; 10 ms | $\Delta t$ down: the voltage soars |
-| $\mathbf E, d\mathbf r, S, \mathbf n$ | electric field; a short step round a loop; a surface spanning the loop; its unit normal | the loop is one turn | — |
+| $\mathbf E, d\mathbf r, S, \partial S, \mathbf n$ | electric field; a short step round a loop; a surface spanning the loop; its edge, the loop itself; its unit normal | the loop is one turn | — |
 | $W, R, V_D, \tau$ | energy stored in the field, joules (J); coil resistance; a diode's forward drop; the time constant $L/R$ | 0.0444 J; 4 Ω; 0.7 V; 2.47 ms | $W$ must all leave at switch-off; $R$ up: the current dies faster |
 | $M, u, k, K, E$ | in the fold only: mutual inductance of two turns a distance $u$ apart; the elliptic modulus; the complete elliptic integrals (this $E$ is not the electric field) | $u$ from 0 to 0.25 m | $u$ up: $M$ falls |
 | $q, m, \mathbf v, \mathbf F$ | a charge and its mass; its velocity; the force on it | electron, 5931 km/s | faster or lighter: wider circle |
@@ -66,7 +77,9 @@ $$\mathbf F = q\,\mathbf v \times \mathbf B$$
 
 ### Step 0: fields circle currents, and loops add up
 
-A straight wire's field circles it, by the right-hand rule: thumb along the current, fingers along the field. In a coil, the field from the top row of wire and the field from the bottom row both point the same way along the axis inside. Outside, the top row's field and the bottom row's field point opposite ways and nearly cancel. So a long coil packs its field inside, uniform and along the axis. Two laws turn this picture into numbers: Ampère's law gives the field, Faraday's law gives the voltage.
+A straight wire's field circles it, by the right-hand rule: thumb along the current, fingers along the field. In a coil, the field from the top row of wire and the field from the bottom row both point the same way along the axis inside. Outside, the top row's field and the bottom row's field point opposite ways and nearly cancel.
+
+So a long coil packs its field inside, uniform and along the axis. Two laws turn this picture into numbers: Ampère's law gives the field, Faraday's law gives the voltage.
 
 ### Step 1: Ampère's loop gives the field
 
@@ -130,7 +143,7 @@ $M(u)$ grows like $-\ln u$ as $u \to 0$, which is still integrable; substituting
 
 $$\oint_{\partial S} \mathbf E\cdot d\mathbf r = -\frac{d}{dt}\iint_S \mathbf B\cdot\mathbf n\,dS.$$
 
-[Stokes' theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/08-stokes-theorem.md) turns this into the point-by-point form $\operatorname{curl}\mathbf E = -\partial\mathbf B/\partial t$; this card needs only the loop form. The left side, the push on charge round one turn, is that turn's emf. Each of the $N$ turns is in series, so the coil's voltage is $N$ times one turn's:
+[Stokes' theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/08-stokes-theorem.md) turns this into the point-by-point form $\operatorname{curl}\mathbf E = -\partial\mathbf B/\partial t$ (curl measures how much a field circles round each point); this card needs only the loop form. The left side, the push on charge round one turn, is that turn's emf. Each of the $N$ turns is in series, so the coil's voltage is $N$ times one turn's:
 
 $$\mathcal E = -N\frac{d\Phi}{dt} = -L\frac{dI}{dt}.$$
 
@@ -146,7 +159,11 @@ That fixes the trade-off. The energy is set; a faster switch-off delivers it in 
 
 ### Step 6: moving charges feel the field
 
-The same field pushes on anything moving through it. Fire an electron across the inside of the coil, square to its axis, after a 100 V accelerating gap: it travels at 5931 km/s. The push $q\mathbf v\times\mathbf B$ is always square to its motion, so it bends the path into a circle without changing speed. Setting the push equal to what a circle demands, $qvB = mv^2/\text{radius}$, gives a radius of $mv/(qB) = 2.24$ mm, and one lap takes 2.37 ns. The checks step the electron round with RK4 (the fourth-order Runge–Kutta stepping method for differential equations) and measure the same 2.24 mm.
+The same field pushes on anything moving through it. Fire an electron across the inside of the coil, square to its axis, after a 100 V accelerating gap: it travels at 5931 km/s.
+
+The push $q\mathbf v\times\mathbf B$ is always square to its motion, so it bends the path into a circle without changing speed. Setting the push equal to what a circle demands, $qvB = mv^2/\text{radius}$, gives a radius of $mv/(qB) = 2.24$ mm, and one lap takes 2.37 ns.
+
+The checks step the electron round with RK4 (the fourth-order Runge–Kutta stepping method for differential equations) and measure the same 2.24 mm.
 
 Summed over the electrons in a wire, the same push is the force on a current-carrying wire, which is how a motor or a loudspeaker works.
 
@@ -191,7 +208,7 @@ switch-off time   voltage the coil drives
    10 us          ██████████████████████████████  2960.88 V
 ```
 
-At 10 µs the voltage is 2961 V, enough to break down the air across a contact that has only just begun to open; the arc carries the current on, and the contact burns a little each time.
+At 10 µs the voltage is 2961 V, enough to break down the air across a contact that has only just begun to open. The arc carries the current on, and the contact burns a little each time.
 
 The usual fix is a **flyback diode**: a diode across the coil, pointed so it carries nothing while the supply drives the coil. When the switch opens, the coil's current swaps into the diode and circles through the coil and diode. The coil's voltage clamps at the diode's 0.7 V, so the switch sees the supply plus that: 12.7 V. The current then dies on its own, by $L\,dI/dt = -(RI + V_D)$:
 
@@ -633,6 +650,80 @@ ALL CHECKS PASS
 ```
 
 The two outputs are identical, line for line.
+
+### Lean
+
+Lean proves the voltage and inductance formulas from the long-coil field, and the Lorentz force fact, for every value.
+
+- Take $B = \mu_0 n I$ and $\Phi = BA$, and suppose $I$ has a finite $dI/dt$. Then $\mathcal E = -d(N\Phi)/dt = -L\,dI/dt$, with $L = \mu_0 N^2 A/\ell$.
+- Suppose the current $I$ is not zero. Then $L = N\Phi/I = \mu_0 N^2 A/\ell$, the same for every current.
+- Take any charge $q$, velocity $\mathbf v$ and field $\mathbf B$. Then $\mathbf F = q\,\mathbf v \times \mathbf B$ is square to $\mathbf v$, so it never speeds the charge up.
+- The hand arithmetic holds: 4000 turns per metre, 900 A through the loop, and 300, 3000 and 300000 A/s.
+- Doubling the turns or the radius quadruples $N^2$ or $r^2$. And 12 V plus the 0.7 V diode drop is 12.7 V.
+
+The field law itself, the Biot–Savart sums, the energy, the electron's path and every decimal are left to the Python and Rust checks.
+
+```lean
+-- Magnetic fields: in the long-coil model the induced voltage is minus the inductance mu0 N^2 A / l times the rate the current changes, and the Lorentz force never does work on a moving charge.
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Calculus.Deriv.Add
+import Mathlib.LinearAlgebra.CrossProduct
+
+open Matrix
+
+/-- Faraday's law for the long coil: with field `B = μ₀ (N/ℓ) I(t)` inside, flux `Φ = B A`
+through each turn, and flux linkage `N Φ`, the induced voltage `-d(N Φ)/dt` equals
+`-L dI/dt` with inductance `L = μ₀ N² A / ℓ`, whenever the current has a finite rate of
+change `dI/dt` at that moment. -/
+theorem emf_eq_neg_inductance_mul_rate (μ₀ N ℓ A : ℝ) (I : ℝ → ℝ) (I' t : ℝ)
+    (hI : HasDerivAt I I' t) :
+    HasDerivAt (fun s => -(N * ((μ₀ * (N / ℓ) * I s) * A))) (-(μ₀ * N ^ 2 * A / ℓ) * I') t := by
+  have h : HasDerivAt (fun s => -(N * ((μ₀ * (N / ℓ) * I s) * A)))
+      (-(N * ((μ₀ * (N / ℓ) * I') * A))) t :=
+    HasDerivAt.neg (((hI.const_mul (μ₀ * (N / ℓ))).mul_const A).const_mul N)
+  rw [show -(μ₀ * N ^ 2 * A / ℓ) * I' = -(N * ((μ₀ * (N / ℓ) * I') * A)) by ring]
+  exact h
+
+/-- Inductance is flux linkage per amp: for any nonzero current `I`, the linkage
+`N Φ = N (μ₀ (N/ℓ) I) A` divided by `I` is `μ₀ N² A / ℓ`, whatever the current. -/
+theorem inductance_eq_flux_linkage_div_current (μ₀ N ℓ A I : ℝ) (hI : I ≠ 0) :
+    N * ((μ₀ * (N / ℓ) * I) * A) / I = μ₀ * N ^ 2 * A / ℓ := by
+  rw [show N * ((μ₀ * (N / ℓ) * I) * A) = (μ₀ * N ^ 2 * A / ℓ) * I by ring,
+    mul_div_assoc, div_self hI, mul_one]
+
+/-- The Lorentz force `F = q v × B` is square to the velocity: its power `F · v` is zero,
+so it bends the path and never speeds the charge up. -/
+theorem lorentz_force_dot_velocity_eq_zero (q : ℝ) (v B : Fin 3 → ℝ) :
+    (q • crossProduct v B) ⬝ᵥ v = 0 := by
+  rw [smul_dotProduct, dotProduct_comm, dot_self_cross, smul_zero]
+
+-- turns per metre: 1000 turns on 0.25 m
+example : (1000 : ℚ) / (1 / 4) = 4000 := by norm_num
+-- Ampère loop: a 75 mm rectangle holds 300 turns, carrying 900 A in all
+example : (4000 : ℚ) * (75 / 1000) = 300 := by norm_num
+example : (300 : ℚ) * 3 = 900 := by norm_num
+-- rate of fall: 3 A in 10 ms, 1 ms and 10 µs
+example : (3 : ℚ) / (1 / 100) = 300 := by norm_num
+example : (3 : ℚ) / (1 / 1000) = 3000 := by norm_num
+example : (3 : ℚ) / (1 / 100000) = 300000 := by norm_num
+-- doubling the turns quadruples N²; the diameter for the radius quadruples r²
+example : ((2 * 1000 : ℕ) ^ 2) = 4 * 1000 ^ 2 := by norm_num
+example : ((2 * 25 : ℕ) ^ 2) = 4 * 25 ^ 2 := by norm_num
+-- flyback diode: the switch sees 12 V plus the 0.7 V diode drop
+example : (12 : ℚ) + 7 / 10 = 127 / 10 := by norm_num
+
+#print axioms emf_eq_neg_inductance_mul_rate
+#print axioms inductance_eq_flux_linkage_div_current
+#print axioms lorentz_force_dot_velocity_eq_zero
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'emf_eq_neg_inductance_mul_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'inductance_eq_flux_linkage_div_current' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lorentz_force_dot_velocity_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

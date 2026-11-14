@@ -8,13 +8,19 @@
 
 A small bird gives one whistle: a pure note that slides from 2000 Hz (hertz, cycles per second) up to 4000 Hz in half a second. A recorder samples it 16000 times a second, so the call is a list of 8000 numbers. Here the whistle is drawn from a formula rather than recorded, so every answer can be checked against the truth: at time $t$ seconds its pitch is $2000 + 4000\,t$ Hz.
 
-One Fourier transform of all 8000 samples ([The DFT and the FFT](02-discrete-fourier-transform-and-the-fft.md)) says the call holds every frequency from 2000 to 4000 Hz. True, and no help: it cannot say the low notes came first. A **spectrogram** can. Cut the recording into short slices, 32 ms long, a new one every 16 ms, so each overlaps the next by half. Taper each slice so it fades in and out. Take the spectrum of each. Stand the 30 spectra side by side, time across and frequency up, and the whistle appears as a rising ridge. The slice centred on 256 ms is centred on 3024.00 Hz, exactly where the formula puts the whistle at that moment.
+One Fourier transform of all 8000 samples ([The DFT and the FFT](02-discrete-fourier-transform-and-the-fft.md)) says the call holds every frequency from 2000 to 4000 Hz. True, and no help: it cannot say the low notes came first. A **spectrogram** can.
 
-The ridge is never a thin line. A slice lasts a while, so it hears a range of pitches. A slice also stops, so its spectrum is smeared. A shorter slice fixes the first fault and worsens the second. For this whistle the best slice is 32 ms long, and the ridge is then 25.56 Hz thick. No slice of any length, tapered by any real-valued window, can make it thinner than 25.23 Hz.
+Cut the recording into short slices, 32 ms long, a new one every 16 ms, so each overlaps the next by half. Taper each slice so it fades in and out. Take the spectrum of each.
+
+Stand the 30 spectra side by side, time across and frequency up, and the whistle appears as a rising ridge. The slice centred on 256 ms is centred on 3024.00 Hz, exactly where the formula puts the whistle at that moment.
+
+The ridge is never a thin line. A slice lasts a while, so it hears a range of pitches. A slice also stops, so its spectrum is smeared. A shorter slice fixes the first fault and worsens the second.
+
+For this whistle the best slice is 32 ms long, and the ridge is then 25.56 Hz thick. No slice of any length, tapered by any real-valued window, can make it thinner than 25.23 Hz.
 
 **A spectrogram is the spectrum of a sliding, tapered slice of the signal: its ridge follows the changing pitch, and its thickness combines the slice's own smear in frequency with the pitch drift inside the slice, so a short slice and a long slice both blur it.**
 
-**What kind of fact this is:** a method (the short-time Fourier transform) and a theorem about its blur, proved on this card in Why it works; the floor under the blur is Gabor's uncertainty theorem, stated here and proved on the planned Uncertainty card.
+**What kind of fact this is:** a method (the short-time Fourier transform) and a theorem about its blur, proved on this card in Why it works; the floor under the blur is Gabor's uncertainty theorem, stated here and proved on [Uncertainty](../09-Quantum%20Mechanics%20in%20Outline/05-uncertainty-principle.md).
 
 ### The picture: how thick the ridge is, against how long the slice is
 
@@ -35,11 +41,13 @@ The orange line is the whistle's ridge. The green line is a steady 2000 Hz tone 
 
 ## The formula
 
-Notation first, in words. The recording is $x[n]$, sample number $n$, taken $f_s$ times a second. The **window** $w[n]$, $n = 0$ to $L-1$, is the taper: here the Hann window $w[n] = \tfrac12 - \tfrac12\cos(2\pi n/L)$, a single hump that is 0 at the start and 1 in the middle ([Windows](03-windows-and-spectral-leakage.md)). Slice $m$ starts at sample $mH$, where the **hop** $H$ is the step between slice starts. As on the rest of the wing, $j$ is the square root of −1.
+Notation first, in words. The recording is $x[n]$, sample number $n$, taken $f_s$ times a second. The **window** $w[n]$, $n = 0$ to $L-1$, is the taper: here the Hann window $w[n] = \tfrac12 - \tfrac12\cos(2\pi n/L)$, a single hump that is 0 at the start and 1 in the middle ([Windows](03-windows-and-spectral-leakage.md)).
+
+Slice $m$ starts at sample $mH$, where the **hop** $H$ is the step between slice starts. As on the rest of the wing, $j$ is the square root of −1.
 
 $$X[m,k] = \sum_{n=0}^{L-1} x[mH+n]\;w[n]\;e^{-j2\pi kn/L}, \qquad S[m,k] = \lvert X[m,k]\rvert^2$$
 
-**Read it aloud:** take the $L$ samples starting at sample $mH$, multiply each by the window, and run the DFT; the spectrogram is the power of what comes out.
+**Read it aloud:** take the $L$ samples starting at sample $mH$, multiply each by the window, and run the DFT (discrete Fourier transform); the spectrogram is the power of what comes out.
 
 $X$ is the **short-time Fourier transform**. Slice $m$ is labelled by its centre time $t_m = (mH + L/2)/f_s$, and bin $k$ by the frequency $k f_s / L$. The spectrogram $S$ is the picture: one column per slice, one row per bin, brightness for power.
 
@@ -143,7 +151,9 @@ Multiply the two spreads: $\Delta t_w\,\Delta f_w = ab$, which for Hann is 0.081
 
 $$\Delta t_w\,\Delta f_w \ \ge\ \frac{1}{4\pi} = 0.07958,$$
 
-with equality only for the bell-shaped Gaussian window; the planned Uncertainty card proves it. Put $ab \ge 1/(4\pi)$ into $B = \sqrt{2abc}$: no real window of any shape or length can draw this whistle thinner than $\sqrt{c/(2\pi)} = 25.23$ Hz. (Step 2 assumed a real window. A complex window that chirps along with the whistle is not bound by this floor.) Hann's best, 25.56 Hz, sits just above the floor. That is the blur you cannot avoid: it comes from the whistle's sweep rate alone.
+with equality only for the bell-shaped Gaussian window; [Uncertainty](../09-Quantum%20Mechanics%20in%20Outline/05-uncertainty-principle.md) proves it.
+
+Put $ab \ge 1/(4\pi)$ into $B = \sqrt{2abc}$: no real window of any shape or length can draw this whistle thinner than $\sqrt{c/(2\pi)} = 25.23$ Hz. (Step 2 assumed a real window. A complex window that chirps along with the whistle is not bound by this floor.) Hann's best, 25.56 Hz, sits just above the floor. That is the blur you cannot avoid: it comes from the whistle's sweep rate alone.
 
 ### Step 6: half-overlapping Hann slices lose nothing
 
@@ -220,7 +230,9 @@ xychart-beta
     line [2695.4, 2823.4, 2951.4, 3079.4, 3207.4]
 ```
 
-Orange: 4 ms slices, the widest band; the table in the code output gives its $B$ as 144.36 Hz, nearly all of it the slice's own smear. Dark: 128 ms slices, $B$ = 72.56 Hz, nearly all of it the pitch drift inside the slice. Green: 32 ms slices, the thinnest band, $B$ = 25.56 Hz. All three bands climb with the whistle. Read across, the picture shows the trade-off directly: shortening the slice from 128 ms to 32 ms sharpens the ridge, and shortening it further to 4 ms blurs it again.
+Orange: 4 ms slices, the widest band; the table in the code output gives its $B$ as 144.36 Hz, nearly all of it the slice's own smear. Dark: 128 ms slices, $B$ = 72.56 Hz, nearly all of it the pitch drift inside the slice. Green: 32 ms slices, the thinnest band, $B$ = 25.56 Hz.
+
+All three bands climb with the whistle. Read across, the picture shows the trade-off directly: shortening the slice from 128 ms to 32 ms sharpens the ridge, and shortening it further to 4 ms blurs it again.
 
 ### What breaks if you drop a piece
 
@@ -235,7 +247,7 @@ Orange: 4 ms slices, the widest band; the table in the code output gives its $B$
 
 ## Code, from first principles, and it actually runs
 
-The script draws the whistle from its formula, writes its own FFT, and builds the spectrogram slice by slice. The pitch is reached **three independent ways**: the column's centre, its brightest point, and a count of zero crossings that uses no Fourier transform; all three are checked against the whistle's formula. The ridge's thickness is measured from the spectrum and checked against $\sqrt{\Delta f_w^{\,2} + c^2\Delta t_w^{\,2}}$, which is computed from the window alone in the time domain; Hann's spreads are checked against their closed forms. The overlap-add rebuild checks that the slices lose nothing.
+The script draws the whistle from its formula, writes its own FFT (fast Fourier transform), and builds the spectrogram slice by slice. The pitch is reached **three independent ways**: the column's centre, its brightest point, and a count of zero crossings that uses no Fourier transform; all three are checked against the whistle's formula. The ridge's thickness is measured from the spectrum and checked against $\sqrt{\Delta f_w^{\,2} + c^2\Delta t_w^{\,2}}$, which is computed from the window alone in the time domain; Hann's spreads are checked against their closed forms. The overlap-add rebuild checks that the slices lose nothing.
 
 ### Python
 
@@ -640,13 +652,214 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves Steps 4, 5 and 6 for every sweep rate and window length, and checks the worked numbers.
+
+- Take positive $a$, $b$, $c$ and $B^2 = a^2/T^2 + c^2 b^2 T^2$. Then $B$ strictly falls up to $T^\ast = \sqrt{a/(bc)}$, strictly rises after it, and equals $\sqrt{2abc}$ there.
+- Suppose $c > 0$ and a window of any shape obeys Gabor's theorem, $\Delta t_w\,\Delta f_w \ge 1/(4\pi)$. Then $B = \sqrt{\Delta f_w^2 + c^2 \Delta t_w^2}$ is at least $\sqrt{c/(2\pi)}$.
+- Take Hann windows of even length $L$, placed every $L/2$ samples. Then they add up to exactly 1 at every sample.
+- The worked numbers check exactly: sweep rate 4000 Hz per second, 30 slices, and bins 31.25 Hz apart.
+- Slice 15 is centred on 256 ms, where the whistle is at 3024 Hz. Every pitch in the ridge table matches the whistle's formula.
+- Labelled by its start, slice 15 reads 240 ms, when the whistle was at 2960 Hz. The Hann window is 0 at its first sample.
+
+Steps 2 and 3, Hann's $a$ and $b$, and every measured spectrum are left to the Python and Rust checks.
+
+```lean
+-- Spectrograms: the ridge thickness of a swept whistle is smallest at one slice length and grows on both sides, no real window gets below the floor sqrt(c/(2π)), and half-overlapping Hann windows add up to exactly 1.
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Analysis.Real.Sqrt
+import Mathlib.Algebra.BigOperators.Finprod
+import Mathlib.Tactic.NormNum
+
+open Real
+
+/-! A whistle's pitch climbs at `c` hertz per second. A window of length `T` seconds has
+time spread `Δt_w = b * T` and frequency spread `Δf_w = a / T`, where `a` and `b` are the
+two positive numbers fixed by the window's shape (Hann: `a = 1/√3`, `b ≈ 0.14145`).
+The ridge thickness is `B = sqrt (Δf_w ^ 2 + c ^ 2 * Δt_w ^ 2)` (Step 3 of the card), so as a
+function of the slice length it is `B T = sqrt ((a / T) ^ 2 + c ^ 2 * (b * T) ^ 2)`.
+
+The Hann window of length `L`, as a function on all sample numbers, is
+`1/2 - 1/2 * cos (2 π n / L)` for `0 ≤ n < L` and `0` elsewhere. -/
+
+/-- The Hann window of length `L`, zero outside samples `0, …, L - 1`. -/
+noncomputable def hannWin (L : ℕ) (n : ℤ) : ℝ :=
+  if 0 ≤ n ∧ n < (L : ℤ) then 1 / 2 - 1 / 2 * Real.cos (2 * π * n / L) else 0
+
+/-- The trade-off has a best slice length. With `Δt_w = b T` and `Δf_w = a / T`, the ridge
+thickness `B(T) = sqrt (a² / T² + c² b² T²)` strictly falls as the slice grows up to
+`T* = sqrt (a / (b c))` and strictly rises after it, so a short slice and a long slice both
+blur the ridge; at `T*` the thickness is `sqrt (2 a b c)`. -/
+theorem ridge_thickness_least_at_best_slice (a b c : ℝ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
+    StrictAntiOn (fun T : ℝ => Real.sqrt ((a / T) ^ 2 + c ^ 2 * (b * T) ^ 2))
+        (Set.Ioc 0 (Real.sqrt (a / (b * c)))) ∧
+      StrictMonoOn (fun T : ℝ => Real.sqrt ((a / T) ^ 2 + c ^ 2 * (b * T) ^ 2))
+        (Set.Ici (Real.sqrt (a / (b * c)))) ∧
+      Real.sqrt ((a / Real.sqrt (a / (b * c))) ^ 2 + c ^ 2 * (b * Real.sqrt (a / (b * c))) ^ 2)
+        = Real.sqrt (2 * a * b * c) := by
+  have hab : 0 < a / (b * c) := by positivity
+  set S := Real.sqrt (a / (b * c)) with hS
+  have hSpos : 0 < S := Real.sqrt_pos.mpr hab
+  have hS2 : S ^ 2 = a / (b * c) := Real.sq_sqrt hab.le
+  have key : ∀ x y : ℝ, 0 < x → 0 < y →
+      (a / x) ^ 2 + c ^ 2 * (b * x) ^ 2 - ((a / y) ^ 2 + c ^ 2 * (b * y) ^ 2)
+        = (y ^ 2 - x ^ 2) * (a ^ 2 - (c * b * x * y) ^ 2) / (x ^ 2 * y ^ 2) := by
+    intro x y hx hy
+    field_simp
+    ring
+  have hbcS : b * c * S ^ 2 = a := by rw [hS2]; field_simp
+  refine ⟨?_, ?_, ?_⟩
+  · intro x hx y hy hxy
+    obtain ⟨hx0, hxS⟩ := hx
+    obtain ⟨hy0, hyS⟩ := hy
+    apply Real.sqrt_lt_sqrt (by positivity)
+    have hxy2 : x * y < S ^ 2 := by nlinarith
+    have h1 : c * b * x * y < a := by
+      have : b * c * (x * y) < b * c * S ^ 2 := by
+        apply mul_lt_mul_of_pos_left hxy2 (by positivity)
+      nlinarith
+    have h2 : 0 < c * b * x * y := by positivity
+    have h3 : 0 < a ^ 2 - (c * b * x * y) ^ 2 := by nlinarith
+    have h4 : 0 < y ^ 2 - x ^ 2 := by nlinarith
+    have := key x y hx0 hy0
+    have h5 : 0 < (y ^ 2 - x ^ 2) * (a ^ 2 - (c * b * x * y) ^ 2) / (x ^ 2 * y ^ 2) := by
+      positivity
+    linarith
+  · intro x hx y hy hxy
+    simp only [Set.mem_Ici] at hx hy
+    have hx0 : 0 < x := lt_of_lt_of_le hSpos hx
+    have hy0 : 0 < y := by linarith
+    apply Real.sqrt_lt_sqrt (by positivity)
+    have hxy2 : S ^ 2 < x * y := by nlinarith
+    have h1 : a < c * b * x * y := by
+      have : b * c * S ^ 2 < b * c * (x * y) := by
+        apply mul_lt_mul_of_pos_left hxy2 (by positivity)
+      nlinarith
+    have h3 : 0 < (c * b * x * y) ^ 2 - a ^ 2 := by nlinarith
+    have h4 : 0 < y ^ 2 - x ^ 2 := by nlinarith
+    have := key x y hx0 hy0
+    have h5 : 0 < (y ^ 2 - x ^ 2) * ((c * b * x * y) ^ 2 - a ^ 2) / (x ^ 2 * y ^ 2) := by
+      positivity
+    have h6 : (y ^ 2 - x ^ 2) * (a ^ 2 - (c * b * x * y) ^ 2) / (x ^ 2 * y ^ 2)
+        = -((y ^ 2 - x ^ 2) * ((c * b * x * y) ^ 2 - a ^ 2) / (x ^ 2 * y ^ 2)) := by ring
+    linarith
+  · congr 1
+    rw [div_pow, mul_pow, hS2]
+    field_simp
+    ring
+
+/-- The floor under every real window. If the window's spreads obey Gabor's inequality
+`Δt_w * Δf_w ≥ 1 / (4π)` (proved on the Uncertainty card), then a whistle climbing at `c`
+hertz per second has ridge thickness `sqrt (Δf_w² + c² Δt_w²)` at least `sqrt (c / (2π))`,
+whatever the window's shape or length. -/
+theorem ridge_thickness_ge_gabor_floor (c dt df : ℝ) (hc : 0 < c)
+    (hgabor : 1 / (4 * π) ≤ dt * df) :
+    Real.sqrt (c / (2 * π)) ≤ Real.sqrt (df ^ 2 + c ^ 2 * dt ^ 2) := by
+  apply Real.sqrt_le_sqrt
+  have h1 : 0 ≤ (df - c * dt) ^ 2 := sq_nonneg _
+  have h2 : c / (2 * π) = 2 * c * (1 / (4 * π)) := by
+    field_simp
+    ring
+  have h3 : 2 * c * (1 / (4 * π)) ≤ 2 * c * (dt * df) :=
+    mul_le_mul_of_nonneg_left hgabor (by positivity)
+  nlinarith
+
+/-- Half-overlapping Hann slices lose nothing: Hann windows of length `L = 2M`, placed every
+`M = L/2` samples, add up to exactly 1 at every sample. -/
+theorem hann_half_overlap_sums_to_one (M : ℕ) (hM : 0 < M) (n : ℤ) :
+    ∑ᶠ m : ℤ, hannWin (2 * M) (n - m * M) = 1 := by
+  have hMz : (0:ℤ) < M := by exact_mod_cast hM
+  set q := n / (M:ℤ) with hq
+  set r := n % (M:ℤ) with hr
+  have hr0 : 0 ≤ r := Int.emod_nonneg _ hMz.ne'
+  have hrM : r < M := Int.emod_lt_of_pos _ hMz
+  have hn : n = r + q * M := (Int.emod_add_ediv_mul n M).symm
+  rw [finsum_eq_sum_of_support_subset _ (s := {q - 1, q}) ?_]
+  · rw [Finset.sum_pair (by omega)]
+    have e1 : n - (q - 1) * M = r + M := by rw [hn]; ring
+    have e2 : n - q * M = r := by rw [hn]; ring
+    rw [e1, e2]
+    simp only [hannWin]
+    rw [if_pos (by push_cast; omega), if_pos (by push_cast; omega)]
+    have hMr : (0:ℝ) < M := by exact_mod_cast hM
+    have : 2 * π * ((r + M : ℤ) : ℝ) / ((2 * M : ℕ) : ℝ)
+        = 2 * π * (r : ℝ) / ((2 * M : ℕ) : ℝ) + π := by
+      push_cast
+      field_simp
+    rw [this, Real.cos_add_pi]
+    ring
+  · intro m hm
+    simp only [Function.mem_support, hannWin] at hm
+    simp only [Finset.coe_insert, Finset.coe_singleton, Set.mem_insert_iff,
+      Set.mem_singleton_iff]
+    by_contra h
+    push_neg at h
+    apply hm
+    rw [if_neg]
+    rintro ⟨h1, h2⟩
+    push_cast at h2
+    have e : n - m * M = r + (q - m) * M := by rw [hn]; ring
+    rw [e] at h1 h2
+    rcases le_or_gt (q - m) (-1) with hk | hk
+    · have : (q - m) * M ≤ -1 * M := by nlinarith
+      omega
+    · have hk2 : 2 ≤ q - m := by omega
+      have : 2 * M ≤ (q - m) * M := by nlinarith
+      omega
+
+/-! The card's exact worked numbers (times in seconds, as fractions). -/
+
+-- Sweep rate: (4000 - 2000) Hz over half a second is 4000 Hz per second.
+example : ((4000 : ℚ) - 2000) / (1 / 2) = 4000 := by norm_num
+-- 8000 samples at 16000 per second is half a second.
+example : (8000 : ℚ) / 16000 = 1 / 2 := by norm_num
+-- Window 512 samples, hop 256: 30 slices fit in 8000 samples.
+example : (8000 - 512) / 256 + 1 = 30 := by decide
+example : 512 / 2 = 256 := by decide
+-- Slice length 512 / 16000 s = 32 ms; hop 256 / 16000 s = 16 ms.
+example : (512 : ℚ) / 16000 = 32 / 1000 := by norm_num
+example : (256 : ℚ) / 16000 = 16 / 1000 := by norm_num
+-- Bins 16000 / 512 = 31.25 Hz apart.
+example : (16000 : ℚ) / 512 = 3125 / 100 := by norm_num
+-- Slice 15's centre: (15 * 256 + 256) / 16000 s = 256 ms, where the whistle is at 3024 Hz.
+example : ((15 * 256 + 256 : ℚ)) / 16000 = 256 / 1000 := by norm_num
+example : (2000 : ℚ) + 4000 * (256 / 1000) = 3024 := by norm_num
+-- The ridge, slice by slice: slices 0, 5, 10, 20, 25, 29 sit at 2064, 2384, 2704, 3344, 3664, 3920 Hz.
+example : (2000 : ℚ) + 4000 * ((0 * 256 + 256) / 16000) = 2064 := by norm_num
+example : (2000 : ℚ) + 4000 * ((5 * 256 + 256) / 16000) = 2384 := by norm_num
+example : (2000 : ℚ) + 4000 * ((10 * 256 + 256) / 16000) = 2704 := by norm_num
+example : (2000 : ℚ) + 4000 * ((20 * 256 + 256) / 16000) = 3344 := by norm_num
+example : (2000 : ℚ) + 4000 * ((25 * 256 + 256) / 16000) = 3664 := by norm_num
+example : (2000 : ℚ) + 4000 * ((29 * 256 + 256) / 16000) = 3920 := by norm_num
+-- The slice centred on 250 ms: the whistle is at exactly 3000 Hz there.
+example : (2000 : ℚ) + 4000 * (250 / 1000) = 3000 := by norm_num
+-- Mistake, label by start: slice 15 starts at 240 ms, when the whistle was at 2960 Hz.
+example : ((15 * 256 : ℚ)) / 16000 = 240 / 1000 := by norm_num
+example : (2000 : ℚ) + 4000 * (240 / 1000) = 2960 := by norm_num
+-- Mistake, hop of the full window: the Hann window is 0 at its first sample.
+example : hannWin 512 0 = 0 := by norm_num [hannWin]
+
+#print axioms ridge_thickness_least_at_best_slice
+#print axioms ridge_thickness_ge_gabor_floor
+#print axioms hann_half_overlap_sums_to_one
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'ridge_thickness_least_at_best_slice' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ridge_thickness_ge_gabor_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hann_half_overlap_sums_to_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to this whistle, so a change may stop the script; the answers below are printed by the last lines of the output.
 > - **Sweep twice as fast.** Change `C` to `8000.0`. Longer or shorter best slice? Shorter, by $\sqrt2$: 361 samples, 22.6 ms, with thickness 36.15 Hz. Of the seven lengths, 256 samples (40.37 Hz) now beats 512 (40.46 Hz), so the assert pinned to 512 stops it.
 > - **Hold the pitch still.** How thick is a steady 2000 Hz tone's ridge through the longest slice, 2048 samples? The script already runs this: see the `try, steady` line and the `steady_tone_Hz` column. Only 4.51 Hz. With no drift, longer is always sharper.
 > - **Overlap more.** Set `HOP = 128`. The windows now add to 2.000 everywhere, so the rebuild comes out twice too loud and the overlap-add assert stops it.
-> - **Remove the taper.** How much power does a plain cut leave 500 Hz from the ridge? The script's `mistake, no taper` line measures it on the slice at 250 ms: −47.4 dB against the peak, where Hann gives −89.0 dB.
+> - **Remove the taper.** How much power does a plain cut leave 500 Hz from the ridge? The script's `mistake, no taper` line measures it on the slice at 250 ms: −47.4 dB (decibels, a logarithmic measure of power) against the peak, where Hann gives −89.0 dB.
 
 ---
 

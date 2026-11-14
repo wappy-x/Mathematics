@@ -8,13 +8,13 @@
 
 A cart on a rail carries a pole balanced upright on a hinge. The pole acts like a weight 0.613125 m above the hinge. The motor sets the cart's acceleration. Lean the pole by an angle θ (theta) and gravity tips it further, at 16 sin θ radians per second squared (16 is gravity, 9.81 m/s², divided by the 0.613125 m). Accelerate the cart and the hinge is dragged out from under the pole, tipping it back by the push times cos θ, divided by the pole's length.
 
-Sine and cosine make this model **curved** (nonlinear: doubling the lean does not double the push). Almost every tool on this shelf, from steering tests to the Kalman filter, wants a **straight** (linear) model instead: rates that are a fixed matrix times the state plus a fixed matrix times the input. Near upright the curve is almost straight. sin θ is almost θ, and cos θ is almost 1. So near upright the pole obeys θ'' = 16θ − 1.631u, where u is the cart's acceleration in m/s².
+Sine and cosine make this model **curved** (nonlinear: doubling the lean does not double the push). Almost every tool on this shelf, from steering tests to the Kalman filter, wants a **straight** (linear) model instead: rates that are a fixed matrix times the state plus a fixed matrix times the input. Near upright the curve is almost straight. sin θ is almost θ, and cos θ is almost 1. So near upright the pole obeys θ'' = 16θ − 1.631u, where θ'' is the lean's angular acceleration and u is the cart's acceleration in m/s².
 
 How near is near? At a lean of 0.1 rad the straight model is off by 0.17% in gravity's push and 0.50% in the motor's. At 0.5 rad it is off by 4.11% and 12.24%. A balancing rule designed on the straight model claims to stand the pole up from any lean. On the true pole it works from any lean up to 1.1656 rad (66.8°) and loses it beyond.
 
 **Pick a state and an input that hold the plant still, measure everything as an offset from that point, and keep only the first-order slopes: the offsets' rates become A times the state offset plus B times the input offset, the readings' offsets become C and D times them, and what is thrown away shrinks faster than the offsets.**
 
-**What kind of fact this is:** a method. Its error bound is Taylor's theorem, shown in Why it works. That the straight model's stable-or-unstable verdict is also the truth's, near the point, is a theorem (Lyapunov's indirect method). The [Linearisation](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/02-linearisation-and-the-jacobian.md) card of the differential-equations wing proves the attracting case and states the saddle case, with its proof in the sources.
+**What kind of fact this is:** a method. Its error bound is Taylor's theorem, shown in Why it works. That the straight model's stable-or-unstable verdict is also the truth's, near the point, is a theorem (Lyapunov's indirect method). The [Linearisation](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/02-linearisation-and-the-jacobian.md) card of the differential-equations wing proves the attracting case (every nearby motion dies away) and states the saddle case (some motions grow), with its proof in the sources.
 
 ### The picture: gravity's push and its straight-line stand-in
 
@@ -105,7 +105,11 @@ The tip reading's slope against θ is $l\cos\theta$: tilt the pole a little and 
 
 ### Step 3: a rest that has to be held
 
-Now ask the pole to lean forward at a steady 0.3 rad (17.19°), like a rider leaning into a sprint. The lean holds when gravity's tip equals the motor's tip-back: $g\sin\theta_e = u_e\cos\theta_e$, so $u_e = g\tan\theta_e = 3.0346$ m/s². The cart must keep accelerating at that rate. Its speed keeps growing, so the full four-number state never rests: $f(x_e, u_e)$ is not zero, since its speed row is 3.0346 m/s². This is an equilibrium of the lean and its rate only, $(\theta, \omega)$. The cart's two rows, $p' = v$ and $v' = u$, are straight already, so offsets of $p$ and $v$ measured from the cart's steadily accelerating path obey them exactly; the four-state A, B and C at the lean, which the code prints, describe offsets from that moving path. The cart's position is left to an outer loop.
+Now ask the pole to lean forward at a steady 0.3 rad (17.19°), like a rider leaning into a sprint. The lean holds when gravity's tip equals the motor's tip-back: $g\sin\theta_e = u_e\cos\theta_e$, so $u_e = g\tan\theta_e = 3.0346$ m/s². The cart must keep accelerating at that rate.
+
+Its speed keeps growing, so the full four-number state never rests: $f(x_e, u_e)$ is not zero, since its speed row is 3.0346 m/s². This is an equilibrium of the lean and its rate only, $(\theta, \omega)$.
+
+The cart's two rows, $p' = v$ and $v' = u$, are straight already. So offsets of $p$ and $v$ measured from the cart's steadily accelerating path obey them exactly. The four-state A, B and C at the lean, which the code prints, describe offsets from that moving path. The cart's position is left to an outer loop.
 
 The slopes there are different:
 
@@ -166,7 +170,7 @@ A balancing rule from [Pole placement](04-pole-placement-and-observers.md) sets 
 
 | Release | Straight model says | True pole does |
 | --- | --- | --- |
-| 1 mrad, motor off, after 1 s | 27.3082 mrad | 27.3078 mrad |
+| 1 mrad (a thousandth of a radian), motor off, after 1 s | 27.3082 mrad | 27.3078 mrad |
 | 0.05 rad, motor off, time to reach 0.5 rad | 0.7483 s | 0.7498 s |
 | 0.3 rad, rule on, lean after 1 s | 0.02747 rad | 0.02893 rad |
 | 1.2 rad, rule on | stands back up | falls flat by 0.7 s |
@@ -216,7 +220,7 @@ Orange: the true pole from 1.0 rad, caught but slower than promised. Green: the 
 
 ## Code, from first principles, and it actually runs
 
-The code builds the curved model, then takes its slopes **two independent ways**: written out by hand (road 1) and by nudging each variable by a millionth and differencing the curved model (road 2). Road 3 steps both the curved and the straight model forward with Runge–Kutta 4 ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) and checks the straight run against its closed form, 1 mrad times cosh 4t, with t the time in seconds. The largest lean the rule catches is found twice: by bisecting on simulated releases, and by solving tan θ = 2θ. Five asserts tie the roads together.
+The code builds the curved model, then takes its slopes **two independent ways**: written out by hand (road 1) and by nudging each variable by a millionth and differencing the curved model (road 2). Road 3 steps both the curved and the straight model forward with Runge–Kutta 4 ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) and checks the straight run against its closed form, 1 mrad times cosh 4t, with t the time in seconds. Here cosh is the hyperbolic cosine, $\cosh z = (e^z + e^{-z})/2$. The largest lean the rule catches is found twice: by bisecting on simulated releases (halving the range of starting leans each time), and by solving tan θ = 2θ. Five asserts tie the roads together.
 
 ### Python
 
@@ -582,6 +586,161 @@ chart, straight 1.0:   1.000 0.938 0.809 0.663 0.525 0.406 0.308 0.231 0.171 0.1
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the rule for any smooth plant at a rest, and the cart and pole's slopes, leftover and eigenvalues.
+
+- Suppose $f$ and $h$ are smooth at an operating point $(x_e, u_e)$ with $f(x_e, u_e) = 0$. Then $\delta x'$ is $A\,\delta x + B\,\delta u$ plus a leftover that shrinks faster than the offsets.
+- Take the same smooth $f$ and $h$ and the same point. Then $\delta y$ is $C\,\delta x + D\,\delta u$ plus a leftover that shrinks faster than the offsets.
+- Take any lean $\theta_e$ with $\cos\theta_e \ne 0$, held by $u_e = g\tan\theta_e$. Then the lean's rate is 0 there, and its slope against θ is $g/(l\cos\theta_e)$. Its slope against u is $-\cos\theta_e/l$.
+- Take a lean θ near upright. Then the leftover $\theta - \sin\theta$ is $\theta^3/6$, up to a part that shrinks faster than $\theta^3$.
+- 9.81 divided by 0.613125 is exactly 16, so g/l = 16 per s².
+- The upright A has eigenvalues +4, −4 and 0. Lean checks one special motion for each: (0, 0, 1, 4), (0, 0, 1, −4) and (1, 0, 0, 0).
+- For the balancing rule, 16 − 32 = −16, and −4 solves $\lambda^2 + 8\lambda + 16 = 0$.
+
+Lean runs no simulation, so the nudged slopes, the RK4 runs and the largest lean caught are left to the Python and Rust checks.
+
+```lean
+-- Linearisation: at a rest of a differentiable plant the rates and readings equal their first-order slopes times the offsets plus a leftover that shrinks faster than the offsets, with the cart-and-pole slopes and cubic leftover as cases.
+import Mathlib.Analysis.Calculus.FDeriv.Prod
+import Mathlib.Analysis.Calculus.FDeriv.Mul
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+import Mathlib.LinearAlgebra.Matrix.Notation
+
+open Asymptotics Filter Topology Matrix
+
+/-- Helper: the first-order remainder of a map differentiable at `(xe, ue)`, written with the slopes
+against each component of the product, shrinks faster than the offset. -/
+theorem linearisation_remainder_aux
+    {E F G : Type*}
+    [NormedAddCommGroup E] [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F]
+    [NormedAddCommGroup G] [NormedSpace ℝ G]
+    (φ : E × F → G) (xe : E) (ue : F) (hφ : DifferentiableAt ℝ φ (xe, ue)) :
+    (fun d : E × F => (φ (xe + d.1, ue + d.2) - φ (xe, ue))
+        - ((fderiv ℝ φ (xe, ue)).comp (ContinuousLinearMap.inl ℝ E F) d.1
+          + (fderiv ℝ φ (xe, ue)).comp (ContinuousLinearMap.inr ℝ E F) d.2))
+      =o[𝓝 0] (fun d => d) := by
+  have := hasFDerivAt_iff_isLittleO_nhds_zero.mp hφ.hasFDerivAt
+  refine this.congr_left (fun d => ?_)
+  have e1 : (xe, ue) + d = (xe + d.1, ue + d.2) := rfl
+  have e2 : (fderiv ℝ φ (xe, ue)) d
+      = (fderiv ℝ φ (xe, ue)) (d.1, 0) + (fderiv ℝ φ (xe, ue)) (0, d.2) := by
+    rw [← map_add]; simp
+  rw [e1, e2]; simp
+
+#print axioms linearisation_remainder_aux
+
+/-- Linearisation about an operating point. Let `x' = f (x, u)` and `y = h (x, u)` be a plant
+whose rules are smooth (differentiable, no kink) at a point `(xe, ue)` that really is a rest,
+`f (xe, ue) = 0`. Take `A, B` as the slopes of `f` against the state and the input, and `C, D`
+as the slopes of `h`, all at `(xe, ue)`. Then for offsets `(δx, δu)` the rates are
+`A δx + B δu` plus a leftover, the reading offsets `h (xe + δx, ue + δu) - h (xe, ue)` are
+`C δx + D δu` plus a leftover, and both leftovers shrink faster than the offsets. -/
+theorem linearisation_about_rest
+    {E F G H : Type*}
+    [NormedAddCommGroup E] [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F]
+    [NormedAddCommGroup G] [NormedSpace ℝ G] [NormedAddCommGroup H] [NormedSpace ℝ H]
+    (f : E × F → G) (h : E × F → H) (xe : E) (ue : F)
+    (hf : DifferentiableAt ℝ f (xe, ue)) (hh : DifferentiableAt ℝ h (xe, ue))
+    (hrest : f (xe, ue) = 0) :
+    let A := (fderiv ℝ f (xe, ue)).comp (ContinuousLinearMap.inl ℝ E F)
+    let B := (fderiv ℝ f (xe, ue)).comp (ContinuousLinearMap.inr ℝ E F)
+    let C := (fderiv ℝ h (xe, ue)).comp (ContinuousLinearMap.inl ℝ E F)
+    let D := (fderiv ℝ h (xe, ue)).comp (ContinuousLinearMap.inr ℝ E F)
+    (fun d : E × F => f (xe + d.1, ue + d.2) - (A d.1 + B d.2)) =o[𝓝 0] (fun d => d) ∧
+    (fun d : E × F => (h (xe + d.1, ue + d.2) - h (xe, ue)) - (C d.1 + D d.2))
+      =o[𝓝 0] (fun d => d) := by
+  intro A B C D
+  refine ⟨?_, linearisation_remainder_aux h xe ue hh⟩
+  refine (linearisation_remainder_aux f xe ue hf).congr_left (fun d => ?_)
+  simp only [hrest, sub_zero]
+  rfl
+
+/-- The cart and pole, at a held lean `θe` (upright is `θe = 0`). The push `ue = g tan θe`
+holds the lean still: the lean's rate `(g sin θ - u cos θ) / l` is zero there. Its slopes
+there are `g / (l cos θe)` against the lean and `-cos θe / l` against the push; at upright these
+are `g / l` and `-1 / l`. -/
+theorem cart_pole_slopes_at_held_lean (g l θe : ℝ) (hc : Real.cos θe ≠ 0) :
+    let ue := g * Real.tan θe
+    (g * Real.sin θe - ue * Real.cos θe) / l = 0 ∧
+    HasFDerivAt (fun q : ℝ × ℝ => (g * Real.sin q.1 - q.2 * Real.cos q.1) / l)
+      ((g / (l * Real.cos θe)) • ContinuousLinearMap.fst ℝ ℝ ℝ
+        - (Real.cos θe / l) • ContinuousLinearMap.snd ℝ ℝ ℝ) (θe, ue) := by
+  intro ue
+  refine ⟨?_, ?_⟩
+  · simp only [ue, Real.tan_eq_sin_div_cos]
+    field_simp
+    ring
+  · have h1 : HasFDerivAt (fun q : ℝ × ℝ => Real.sin q.1)
+        (Real.cos θe • ContinuousLinearMap.fst ℝ ℝ ℝ) (θe, ue) :=
+      (hasFDerivAt_fst (p := (θe, ue))).sin
+    have h2 : HasFDerivAt (fun q : ℝ × ℝ => Real.cos q.1)
+        (-Real.sin θe • ContinuousLinearMap.fst ℝ ℝ ℝ) (θe, ue) :=
+      (hasFDerivAt_fst (p := (θe, ue))).cos
+    have h3 : HasFDerivAt (fun q : ℝ × ℝ => q.2) (ContinuousLinearMap.snd ℝ ℝ ℝ) (θe, ue) :=
+      hasFDerivAt_snd
+    have h4 := ((h1.const_mul g).sub (h3.mul h2)).mul_const l⁻¹
+    have hfun : (fun q : ℝ × ℝ => (g * Real.sin q.1 - q.2 * Real.cos q.1) / l)
+        = (fun q : ℝ × ℝ => (g * Real.sin q.1 - q.2 * Real.cos q.1) * l⁻¹) := by
+      funext q; rw [div_eq_mul_inv]
+    rw [hfun]
+    convert h4 using 1
+    ext <;> simp [ue, Real.tan_eq_sin_div_cos] <;> field_simp
+    linear_combination (-(g * l⁻¹)) * Real.sin_sq_add_cos_sq θe
+
+/-- At upright the leftover that the straight model drops from gravity's push starts at the
+cube: `θ - sin θ` is `θ ^ 3 / 6` up to a term that shrinks faster than `θ ^ 3`. -/
+theorem pole_leftover_is_cubic :
+    (fun θ : ℝ => (θ - Real.sin θ) - θ ^ 3 / 6) =o[𝓝 0] (fun θ : ℝ => θ ^ 3) := by
+  have hb : (fun θ : ℝ => (θ - Real.sin θ) - θ ^ 3 / 6) =O[𝓝 0] (fun θ : ℝ => θ ^ 5) := by
+    refine Asymptotics.IsBigO.of_bound (1 / 100) ?_
+    have : ∀ᶠ θ : ℝ in 𝓝 0, |θ| ≤ 1 := by
+      have := Metric.closedBall_mem_nhds (0 : ℝ) one_pos
+      filter_upwards [this] with θ hθ
+      simpa [Real.dist_eq] using hθ
+    filter_upwards [this] with θ hθ
+    have := Real.sin_bound hθ
+    rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_pow]
+    calc |θ - Real.sin θ - θ ^ 3 / 6| = |Real.sin θ - (θ - θ ^ 3 / 6)| := by
+          rw [← abs_neg]; ring_nf
+      _ ≤ |θ| ^ 5 / 100 := this
+      _ = 1 / 100 * |θ| ^ 5 := by ring
+  exact hb.trans_isLittleO (Asymptotics.isLittleO_pow_pow (m := 3) (n := 5) (by norm_num))
+
+-- The card's pole: g = 9.81 m/s² over l = 0.613125 m is exactly 16 per s².
+example : (981 / 100 : ℚ) / (613125 / 1000000) = 16 := by norm_num
+
+-- The upright A: (0, 0, 1, 4) is a motion growing at +4 per s.
+example : (!![0, 1, 0, 0; 0, 0, 0, 0; 0, 0, 0, 1; 0, 0, 16, 0] : Matrix (Fin 4) (Fin 4) ℤ)
+    *ᵥ ![0, 0, 1, 4] = (4 : ℤ) • ![0, 0, 1, 4] := by decide
+
+-- The upright A: (0, 0, 1, -4) is a motion dying at -4 per s.
+example : (!![0, 1, 0, 0; 0, 0, 0, 0; 0, 0, 0, 1; 0, 0, 16, 0] : Matrix (Fin 4) (Fin 4) ℤ)
+    *ᵥ ![0, 0, 1, -4] = (-4 : ℤ) • ![0, 0, 1, -4] := by decide
+
+-- The upright A: (1, 0, 0, 0) is the cart's eigenvalue 0 (a still offset in position).
+example : (!![0, 1, 0, 0; 0, 0, 0, 0; 0, 0, 0, 1; 0, 0, 16, 0] : Matrix (Fin 4) (Fin 4) ℤ)
+    *ᵥ ![1, 0, 0, 0] = 0 := by decide
+
+-- The balancing rule u = l (32 θ + 8 ω) on θ'' = 16 θ - u / l gives θ'' = -16 θ - 8 ω,
+-- whose characteristic polynomial s² + 8 s + 16 has the double root -4.
+example : (16 : ℤ) - 32 = -16 ∧ (-4 : ℤ) ^ 2 + 8 * (-4) + 16 = 0 := by norm_num
+
+#print axioms linearisation_about_rest
+#print axioms cart_pole_slopes_at_held_lean
+#print axioms pole_leftover_is_cubic
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'linearisation_remainder_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'linearisation_about_rest' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cart_pole_slopes_at_held_lean' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pole_leftover_is_cubic' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - Guess first: a 1.0 m pole instead of 0.613125 m. Does it fall faster or slower? The script's `try: L = 1.0 m` line works it out (editing `L` itself trips the asserts, which hold the 16 per s² of this pole). Answer: slower, growth 3.1321 per s, doubling every 0.2213 s.
@@ -607,7 +766,7 @@ ALL CHECKS PASS
 
 - **Self-balancing scooters and robots.** The upright model of this card, with the person or chassis as the pole, is what the balancing loop is designed on. Leaning forward to accelerate is the held operating point of Step 3.
 - **Aircraft trim.** An airliner in level cruise is held by a steady thrust and elevator angle. Its flight-control laws are designed on a straight model taken at that trim, and re-taken at each speed and altitude, a practice called gain scheduling.
-- **Rockets on a gimbal.** A launcher balancing on its thrust is an inverted pendulum. Its attitude loop is linearised at points along the climb, as dynamic pressure and mass change.
+- **Rockets on a gimbal.** A launcher balancing on its thrust is an inverted pendulum. Its attitude loop is linearised at points along the climb, as dynamic pressure (the push of the oncoming air) and mass change.
 - **Chemical reactors and power grids.** A reactor running at a set temperature, or a grid at 50 Hz with a given load, is linearised there to tune its controllers. Large upsets move it off the point and the tuning stops being trustworthy.
 - **Filters on a curved plant.** The extended Kalman filter takes the slopes again at every step, around the latest estimate instead of a fixed rest.
 
@@ -619,7 +778,7 @@ ALL CHECKS PASS
 ## What this builds on
 
 - [State space](01-state-space-models-and-the-matrix-exponential.md): the form x' = Ax + Bu, y = Cx + Du that this card produces, and how to solve it.
-- [Linearisation](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/02-linearisation-and-the-jacobian.md): the Jacobian at a rest with no input, and the theorem that its eigenvalues decide stability near a hyperbolic rest.
+- [Linearisation](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/02-linearisation-and-the-jacobian.md): the Jacobian at a rest with no input, and the theorem that its eigenvalues decide stability near a hyperbolic rest (one with no eigenvalue of real part zero).
 - [Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md): the second-order term, which sizes the leftover this card throws away.
 
 ## Where this goes next

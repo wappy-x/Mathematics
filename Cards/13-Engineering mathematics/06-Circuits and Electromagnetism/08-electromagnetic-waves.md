@@ -6,11 +6,15 @@
 
 ## General Overview
 
-A station broadcasts at 100 MHz, near the middle of the FM band. A radio set across town has a telescopic antenna on its back and an RLC tuner inside ([RLC resonance](03-rlc-circuits-and-resonance.md)). Nothing connects the two. Yet the set picks up 100 million swings a second from a mast it cannot see.
+A station broadcasts at 100 MHz, near the middle of the FM band. A radio set across town has a telescopic antenna on its back and an RLC tuner inside: a resistor, a coil and a capacitor that answer one frequency loudest ([RLC resonance](03-rlc-circuits-and-resonance.md)). Nothing connects the two. Yet the set picks up 100 million swings a second from a mast it cannot see.
 
-The engineer building the set wants three numbers. How long is one wave? That sets the antenna's length. How fast does it travel? That sets the delay from mast to set. Which way does the field point? That says how to hold the antenna. The answers: one wave is 2.9979 m long, about 3 m; it travels at 299,792,458 m/s; and the field points one fixed way across the direction of travel, so the antenna should lie along it. A whip a quarter of a wave long, 0.7495 m, is why so many radio antennas pull out to about 75 cm.
+The engineer building the set wants three numbers. How long is one wave? That sets the antenna's length. How fast does it travel? That sets the delay from mast to set. Which way does the field point? That says how to hold the antenna.
 
-How can a field cross empty space with no wire to carry it? Two of Maxwell's equations do it between them. A magnetic field that changes in time makes an electric field that curls round it: Faraday's law. An electric field that changes in time makes a magnetic field that curls round it: Maxwell's added term. Each change makes the other, a little further along, so the pair hands itself forward. Work out how fast, and the answer depends on two electrical constants. In the 1850s their combination was measured on a laboratory bench with capacitors and coils, and it came out close to the measured speed of light. That is how light turned out to be an electromagnetic wave.
+The answers: one wave is 2.9979 m long, about 3 m; it travels at 299,792,458 m/s; and the field points one fixed way across the direction of travel, so the antenna should lie along it. A whip a quarter of a wave long, 0.7495 m, is why so many radio antennas pull out to about 75 cm.
+
+How can a field cross empty space with no wire to carry it? Two of Maxwell's equations do it between them. A magnetic field that changes in time makes an electric field that curls round it: Faraday's law. An electric field that changes in time makes a magnetic field that curls round it: Maxwell's added term. Each change makes the other, a little further along, so the pair hands itself forward.
+
+Work out how fast, and the answer depends on two electrical constants. In the 1850s their combination was measured on a laboratory bench with capacitors and coils, and it came out close to the measured speed of light. That is how light turned out to be an electromagnetic wave.
 
 **In empty space each field's change in time drives the other's curl in space, the two curl equations combine into the wave equation, and its speed is one over the square root of the two electrical constants: the speed of light.**
 
@@ -47,7 +51,7 @@ $$\mathbf E = E_0\,\hat{\mathbf y}\,\cos(kx-\omega t),\qquad \mathbf B = \frac{E
 | $\mathbf E$, $E_0$ | electric field, in volts per metre; its peak value | peak 1.000 mV/m, a clearly heard station (an illustrative input) | the antenna's voltage rises in proportion |
 | $\mathbf B$, $B_0$ | magnetic field, in tesla (T); its peak value | 3.336 pT (picotesla, $10^{-12}$ T) | locked to $E$: always $B_0 = E_0/c$ |
 | $\varepsilon_0$ | vacuum permittivity: how much electric field a charge makes; since 2019 fixed as $1/(\mu_0 c^2)$ | $8.8541878188\times10^{-12}$ F/m | the wave slows |
-| $\mu_0$ | vacuum permeability: how much magnetic field a current makes; a measured constant (CODATA 2022) | $1.25663706127\times10^{-6}$ N/A² | the wave slows |
+| $\mu_0$ | vacuum permeability: how much magnetic field a current makes; a measured constant (CODATA 2022, the international table of recommended values of the physical constants) | $1.25663706127\times10^{-6}$ N/A² | the wave slows |
 | $c$ | the wave's speed | 299,792,458 m/s | each wave is longer |
 | $f$, $\omega$ | frequency in hertz (swings per second); angular frequency $2\pi f$ in rad/s | 100 MHz; $628.3\times10^6$ rad/s | each wave is shorter |
 | $\lambda$, $k$ | wavelength, in metres; wavenumber $2\pi/\lambda$, in rad/m | 2.9979 m; 2.0958 rad/m | — |
@@ -91,7 +95,7 @@ The second step used the fourth equation. This is the moment the two curl equati
 
 ### Step 3: a twist of a twist is a bend
 
-For any smooth vector field, the curl of the curl equals the gradient of the divergence minus the Laplacian:
+For any smooth vector field, the curl of the curl equals the gradient of the divergence minus the Laplacian. The gradient, $\nabla$ on its own, is the direction and rate of steepest rise of a quantity:
 
 $$\nabla\times(\nabla\times\mathbf E) = \nabla(\nabla\cdot\mathbf E) - \nabla^2\mathbf E.$$
 
@@ -114,11 +118,17 @@ Put Step 3 into Step 2 and divide by $-\mu_0\varepsilon_0$:
 
 $$\frac{\partial^2 \mathbf E}{\partial t^2} = \frac{1}{\mu_0\varepsilon_0}\,\nabla^2\mathbf E.$$
 
-Each of the three components obeys the wave equation from wing 08, with $c^2 = 1/(\mu_0\varepsilon_0)$. The same steps, starting from the curl of the fourth equation, give the same equation for $\mathbf B$. With the CODATA 2022 constants, $c$ = 299,792,458 m/s. Today that match is built in: the metre is defined from $c$, and since 2019 $\varepsilon_0$ is fixed as $1/(\mu_0 c^2)$, so the code's check of $c$ confirms only that the constants are consistent. The real test came first. In the 1850s the combination $1/\sqrt{\mu_0\varepsilon_0}$ was measured on a bench with capacitors and coils, and Maxwell's 1865 paper set it beside the measured speed of light. They agreed within a few percent.
+Each of the three components obeys the wave equation from wing 08, with $c^2 = 1/(\mu_0\varepsilon_0)$. The same steps, starting from the curl of the fourth equation, give the same equation for $\mathbf B$.
+
+With the CODATA 2022 constants, $c$ = 299,792,458 m/s. Today that match is built in: the metre is defined from $c$, and since 2019 $\varepsilon_0$ is fixed as $1/(\mu_0 c^2)$, so the code's check of $c$ confirms only that the constants are consistent.
+
+The real test came first. In the 1850s the combination $1/\sqrt{\mu_0\varepsilon_0}$ was measured on a bench with capacitors and coils, and Maxwell's 1865 paper set it beside the measured speed of light. They agreed within a few percent.
 
 ### Step 5: the wave must point across its travel
 
-Try a wave that varies only with $x$. If $\mathbf E$ had a waving part along $x$, that part would change with $x$, and $\nabla\cdot\mathbf E$ would not be zero. So $\mathbf E$ lies across the direction of travel: the wave is **transverse**. Take $\mathbf E = E_0\hat{\mathbf y}\cos(kx-\omega t)$. Faraday's law then reads $\partial B_z/\partial t = -\partial E_y/\partial x$, which gives $\mathbf B$ along $\hat{\mathbf z}$ with peak $E_0 k/\omega$. The wave equation forces $\omega = ck$, so $B_0 = E_0/c$, and $\lambda = 2\pi/k = 2\pi c/\omega = c/f$. The two fields are at right angles to each other and to the travel, and they peak together.
+Try a wave that varies only with $x$. If $\mathbf E$ had a waving part along $x$, that part would change with $x$, and $\nabla\cdot\mathbf E$ would not be zero. So $\mathbf E$ lies across the direction of travel: the wave is **transverse**.
+
+Take $\mathbf E = E_0\hat{\mathbf y}\cos(kx-\omega t)$. Faraday's law then reads $\partial B_z/\partial t = -\partial E_y/\partial x$, which gives $\mathbf B$ along $\hat{\mathbf z}$ with peak $E_0 k/\omega$. The wave equation forces $\omega = ck$, so $B_0 = E_0/c$, and $\lambda = 2\pi/k = 2\pi c/\omega = c/f$. The two fields are at right angles to each other and to the travel, and they peak together.
 
 ### Step 6: polarisation is the direction of E
 
@@ -142,7 +152,7 @@ The station: $f$ = 100 MHz, peak field $E_0$ = 1.000 mV/m.
 | wavenumber, $k = 2\pi/\lambda$ | $2\pi/2.9979$ | 2.0958 rad/m |
 | check, $\omega/k$ | $628.3\times10^6/2.0958$ | 299,792,458 m/s |
 | magnetic peak, $B_0 = E_0/c$ | $0.001/299{,}792{,}458$ | 3.336 pT |
-| antenna tilted 60°, voltage | $\cos 60°$ | × 0.500, which is −6.02 dB |
+| antenna tilted 60°, voltage | $\cos 60°$ | × 0.500, which is −6.02 dB (decibels: ten times the base-10 logarithm of the power ratio, here 0.250) |
 
 One wave is 2.9979 m long, so a pull-out whip of about 75 cm is a quarter wave, and a wire dipole for the FM band is about 1.5 m tip to tip. The magnetic part of the wave is tiny in tesla, 3.336 pT, but that is only a choice of units: $cB$ equals $E$ exactly.
 
@@ -206,7 +216,13 @@ Orange: the field at 0 ns. Green: 2.5 ns later, every crest moved 0.749 m to the
 
 ## Code, from first principles, and it actually runs
 
-The code takes three independent roads. Road 1 is the closed form: the speed from the two constants, then wavelength, wavenumber and the magnetic peak. Its check of $c$ tests only that the constants are consistent (Step 4). Road 2 is a simulation that knows nothing but the two curl equations: it splits a 35 m line into 5 cm cells, keeps $E$ on the cell edges and $B$ halfway between, and steps each from the other's slope every 0.1 ns (Yee's leapfrog scheme). It measures the speed of a pulse, the wavelength of a steady 100 MHz drive, and the ratio $E/(cB)$, with no formula for any of them. The grid slows short waves very slightly, so the simulated speed is 0.9989 of $c$ and the wavelength 2.9970 m; both agree with road 1 within the half-percent the asserts allow. Run with Maxwell's term at a quarter of its size, the same simulation finds 0.4972 of $c$, within the 1% of half that its assert allows; the shorter waves sit on fewer cells and are slowed a little more. Road 3 checks the vector identity of Step 3 by finite differences on a field that is not a wave. Every number on this card is printed by both programs.
+The code takes three independent roads. Road 1 is the closed form: the speed from the two constants, then wavelength, wavenumber and the magnetic peak. Its check of $c$ tests only that the constants are consistent (Step 4).
+
+Road 2 is a simulation that knows nothing but the two curl equations: it splits a 35 m line into 5 cm cells, keeps $E$ on the cell edges and $B$ halfway between, and steps each from the other's slope every 0.1 ns (Yee's leapfrog scheme). It measures the speed of a pulse, the wavelength of a steady 100 MHz drive, and the ratio $E/(cB)$, with no formula for any of them.
+
+The grid slows short waves very slightly, so the simulated speed is 0.9989 of $c$ and the wavelength 2.9970 m; both agree with road 1 within the half-percent the asserts allow. Run with Maxwell's term at a quarter of its size, the same simulation finds 0.4972 of $c$, within the 1% of half that its assert allows; the shorter waves sit on fewer cells and are slowed a little more.
+
+Road 3 checks the vector identity of Step 3 by finite differences on a field that is not a wave. Every number on this card is printed by both programs.
 
 ### Python
 
@@ -557,6 +573,386 @@ try: F = 88 MHz: wavelength 3.4067 m, whip 0.8517 m, simulated 3.4060 m
 try: 20 cm cells, 15 per wavelength: pulse speed 0.9820 of c
 try: 0.2 ns step: light crosses 1.20 cells per step, over the limit 1
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves the three main claims for any smooth fields and any frequency, and checks the worked numbers exactly.
+
+- Take any smooth field $\mathbf E$, one that can be differentiated twice. Then $\nabla\times(\nabla\times\mathbf E) = \nabla(\nabla\cdot\mathbf E) - \nabla^2\mathbf E$ at every point.
+- Suppose smooth fields $\mathbf E$ and $\mathbf B$ obey the four vacuum equations of Step 1, with $\mu_0, \varepsilon_0 > 0$. Then $\partial^2\mathbf E/\partial t^2 = c^2\nabla^2\mathbf E$ everywhere, with $c = 1/\sqrt{\mu_0\varepsilon_0}$.
+- Take any peak $E_0$ and frequency $f > 0$, with $c$, $\lambda$, $k$ and $\omega$ as in the formula. Then the station's plane wave obeys all four vacuum equations at every time and point.
+- At 100 MHz the period is 10 ns and the wavelength is 2.99792458 m.
+- The quarter-wave whip is 0.749481145 m and the half-wave dipole is 1.49896229 m.
+- After 2.5, 5.0, 7.5 and 10 ns the crest is at 0.749481145, 1.49896229, 2.248443435 and 2.99792458 m.
+- At 50 Hz the wavelength is 5,995,849.16 m, about 5,996 km.
+- An antenna tilted 60° keeps $\cos 60°$ = 0.5 of the voltage and 0.25 of the power.
+- In polyethylene the wave slows by $\sqrt{2.25}$ = 1.5.
+
+The value of $c$ from the CODATA constants, the magnetic peak and the simulations are left to the Python and Rust checks.
+
+```lean
+-- Electromagnetic waves: in empty space, twice continuously differentiable fields that obey Maxwell's four vacuum equations make the electric field obey the wave equation with speed c = 1/√(μ₀ε₀), and the plane wave E₀ ŷ cos(kx − ωt), (E₀/c) ẑ cos(kx − ωt) with λ = c/f is one such pair of fields.
+import Mathlib.Analysis.Calculus.FDeriv.Symmetric
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Analysis.Real.Sqrt
+import Mathlib.Analysis.Calculus.Deriv.Prod
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+
+open Real
+
+/-! Space is `Fin 3 → ℝ`: a point `p` has coordinates `p 0 = x`, `p 1 = y`, `p 2 = z`. A vector
+field on space is a function `Space → Space`; a field that also changes in time is a function
+`ℝ → Space → Space`, time first. The fields are written with Mathlib's derivative `fderiv` in space
+and `deriv` in time; curl, divergence, gradient and Laplacian are spelled out component by component,
+exactly as on the card. -/
+
+/-- Points of space, and vectors at a point. -/
+abbrev Space := Fin 3 → ℝ
+
+/-- The rate of change of a quantity `f` on space along axis `i` at the point `p`: ∂f/∂xᵢ. -/
+noncomputable def pd (i : Fin 3) (f : Space → ℝ) (p : Space) : ℝ :=
+  fderiv ℝ f p (Pi.single i 1)
+
+/-- Divergence (net outflow): ∇·F = ∂Fx/∂x + ∂Fy/∂y + ∂Fz/∂z. -/
+noncomputable def divergence (F : Space → Space) (p : Space) : ℝ :=
+  pd 0 (fun q => F q 0) p + pd 1 (fun q => F q 1) p + pd 2 (fun q => F q 2) p
+
+/-- Curl (spin): ∇×F = (∂Fz/∂y − ∂Fy/∂z, ∂Fx/∂z − ∂Fz/∂x, ∂Fy/∂x − ∂Fx/∂y). -/
+noncomputable def curl (F : Space → Space) (p : Space) : Space :=
+  ![pd 1 (fun q => F q 2) p - pd 2 (fun q => F q 1) p,
+    pd 2 (fun q => F q 0) p - pd 0 (fun q => F q 2) p,
+    pd 0 (fun q => F q 1) p - pd 1 (fun q => F q 0) p]
+
+/-- Gradient (steepest rise): ∇f = (∂f/∂x, ∂f/∂y, ∂f/∂z). -/
+noncomputable def grad (f : Space → ℝ) (p : Space) : Space :=
+  ![pd 0 f p, pd 1 f p, pd 2 f p]
+
+/-- Laplacian (bending) of a vector field, component by component:
+(∇²F)ⱼ = ∂²Fⱼ/∂x² + ∂²Fⱼ/∂y² + ∂²Fⱼ/∂z². -/
+noncomputable def vecLaplacian (F : Space → Space) (p : Space) : Space :=
+  fun j => pd 0 (pd 0 (fun q => F q j)) p + pd 1 (pd 1 (fun q => F q j)) p +
+    pd 2 (pd 2 (fun q => F q j)) p
+
+/-- The rate of change in time at one fixed point: ∂F/∂t at time `t` and point `p`. -/
+noncomputable def timeD (F : ℝ → Space → Space) (t : ℝ) (p : Space) : Space :=
+  deriv (fun s => F s p) t
+
+section em_helpers
+
+variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
+
+lemma em_contDiff_fderiv_apply {f : V → ℝ} (hf : ContDiff ℝ 2 f) (v : V) :
+    ContDiff ℝ 1 (fun y => fderiv ℝ f y v) :=
+  (hf.fderiv_right (m := 1) (by norm_num)).clm_apply contDiff_const
+
+lemma em_fderiv_fderiv_apply {f : V → ℝ} (hf : ContDiff ℝ 2 f) (v w x : V) :
+    fderiv ℝ (fun y => fderiv ℝ f y v) x w = fderiv ℝ (fderiv ℝ f) x w v := by
+  have h1 : DifferentiableAt ℝ (fderiv ℝ f) x :=
+    ((hf.fderiv_right (m := 1) (by norm_num)).differentiable (by norm_num)) x
+  rw [fderiv_clm_apply h1 (differentiableAt_const v)]
+  simp
+
+lemma em_symm {f : V → ℝ} (hf : ContDiff ℝ 2 f) (v w x : V) :
+    fderiv ℝ (fderiv ℝ f) x w v = fderiv ℝ (fderiv ℝ f) x v w :=
+  (hf.contDiffAt.isSymmSndFDerivAt (by simp)) w v
+
+end em_helpers
+
+lemma em_pd_sub {f g : Space → ℝ} {p : Space} (hf : DifferentiableAt ℝ f p)
+    (hg : DifferentiableAt ℝ g p) (i : Fin 3) :
+    pd i (fun q => f q - g q) p = pd i f p - pd i g p := by
+  simp only [pd]
+  rw [show (fun q => f q - g q) = f - g from rfl, (hf.hasFDerivAt.sub hg.hasFDerivAt).fderiv]
+  simp
+
+lemma em_pd_add3 {f g h : Space → ℝ} {p : Space} (hf : DifferentiableAt ℝ f p)
+    (hg : DifferentiableAt ℝ g p) (hh : DifferentiableAt ℝ h p) (i : Fin 3) :
+    pd i (fun q => f q + g q + h q) p = pd i f p + pd i g p + pd i h p := by
+  simp only [pd]
+  rw [show (fun q => f q + g q + h q) = f + g + h from rfl, ((hf.hasFDerivAt.add hg.hasFDerivAt).add hh.hasFDerivAt).fderiv]
+  simp
+
+lemma em_pd_neg (f : Space → ℝ) (p : Space) (i : Fin 3) :
+    pd i (fun q => -f q) p = -pd i f p := by
+  simp [pd]
+
+lemma em_pd_const (a : ℝ) (p : Space) (i : Fin 3) : pd i (fun _ => a) p = 0 := by
+  simp [pd]
+
+lemma em_pd_diff {f : Space → ℝ} (hf : ContDiff ℝ 2 f) (i : Fin 3) :
+    Differentiable ℝ (pd i f) :=
+  (em_contDiff_fderiv_apply hf _).differentiable (by norm_num)
+
+lemma em_pd_comm {f : Space → ℝ} (hf : ContDiff ℝ 2 f) (i j : Fin 3) (p : Space) :
+    pd i (pd j f) p = pd j (pd i f) p := by
+  show fderiv ℝ (fun y => fderiv ℝ f y (Pi.single j 1)) p (Pi.single i 1) =
+    fderiv ℝ (fun y => fderiv ℝ f y (Pi.single i 1)) p (Pi.single j 1)
+  rw [em_fderiv_fderiv_apply hf, em_fderiv_fderiv_apply hf, em_symm hf]
+
+lemma em_pd_slice {H : ℝ × Space → ℝ} {s : ℝ} {p : Space} (hH : DifferentiableAt ℝ H (s, p))
+    (i : Fin 3) : pd i (fun q => H (s, q)) p = fderiv ℝ H (s, p) (0, Pi.single i 1) := by
+  have h := hH.hasFDerivAt.comp p ((hasFDerivAt_const s p).prodMk (hasFDerivAt_id p))
+  simp only [pd]
+  rw [show (fun q => H (s, q)) = H ∘ (fun q => (s, q)) from rfl, h.fderiv]
+  simp
+
+lemma em_deriv_slice {H : ℝ × Space → ℝ} {s : ℝ} {q : Space} (hH : DifferentiableAt ℝ H (s, q)) :
+    HasDerivAt (fun s => H (s, q)) (fderiv ℝ H (s, q) (1, 0)) s :=
+  hH.hasFDerivAt.comp_hasDerivAt s ((hasDerivAt_id' s).prodMk (hasDerivAt_const s q))
+
+lemma em_mixed {G : ℝ × Space → ℝ} (hG : ContDiff ℝ 2 G) (i : Fin 3) (t : ℝ) (p : Space) :
+    HasDerivAt (fun s => pd i (fun q => G (s, q)) p)
+      (pd i (fun q => deriv (fun s => G (s, q)) t) p) t := by
+  have hd : Differentiable ℝ G := hG.differentiable (by norm_num)
+  have hC1 : ∀ v, Differentiable ℝ (fun x => fderiv ℝ G x v) := fun v =>
+    (em_contDiff_fderiv_apply hG v).differentiable (by norm_num)
+  have e1 : (fun s => pd i (fun q => G (s, q)) p) =
+      fun s => (fun x => fderiv ℝ G x (0, Pi.single i 1)) (s, p) := by
+    funext s; exact em_pd_slice (hd _) i
+  have e2 : (fun q => deriv (fun s => G (s, q)) t) =
+      fun q => (fun x => fderiv ℝ G x (1, 0)) (t, q) := by
+    funext q; exact (em_deriv_slice (hd _)).deriv
+  have key := em_deriv_slice (H := fun x => fderiv ℝ G x (0, Pi.single i 1)) (hC1 _ (t, p))
+  rw [e1, e2, em_pd_slice (hC1 _ _)]
+  convert key using 1
+  rw [em_fderiv_fderiv_apply hG, em_fderiv_fderiv_apply hG, em_symm hG]
+
+lemma em_timeD_apply {X : ℝ → Space → Space}
+    (hX : ContDiff ℝ 2 (fun q : ℝ × Space => X q.1 q.2)) (t : ℝ) (q : Space) (j : Fin 3) :
+    timeD X t q j = deriv (fun s => X s q j) t := by
+  have hd : DifferentiableAt ℝ (fun s => X s q) t :=
+    DifferentiableAt.comp (g := fun q : ℝ × Space => X q.1 q.2) (f := fun s => (s, q)) t
+      ((hX.differentiable (by norm_num)) (t, q))
+      (differentiableAt_id.prodMk (differentiableAt_const q))
+  exact ((hasDerivAt_pi.mp hd.hasDerivAt) j).deriv.symm
+
+lemma em_curl_neg (X : Space → Space) (p : Space) : curl (fun q => -X q) p = -curl X p := by
+  ext j; fin_cases j <;> simp [curl, em_pd_neg] <;> ring
+
+lemma em_pd_wave (A k ω t : ℝ) (i : Fin 3) (p : Space) :
+    pd i (fun q => A * cos (k * q 0 - ω * t)) p =
+      -(A * k * sin (k * p 0 - ω * t)) * (Pi.single i (1 : ℝ) : Space) 0 := by
+  have hg : HasDerivAt (fun x => A * cos (k * x - ω * t)) (-(A * k * sin (k * p 0 - ω * t))) (p 0) := by
+    have := (HasDerivAt.cos (((hasDerivAt_id' (p 0)).const_mul k).sub_const (ω * t))).const_mul A
+    convert this using 1; ring
+  have h := hg.comp_hasFDerivAt p (hasFDerivAt_apply (𝕜 := ℝ) (F' := fun _ : Fin 3 => ℝ) 0 p)
+  simp only [pd]
+  rw [show (fun q : Space => A * cos (k * q 0 - ω * t)) =
+    (fun x => A * cos (k * x - ω * t)) ∘ (fun f : Space => f 0) from rfl, h.fderiv]
+  simp
+
+lemma em_hasDerivAt_wave (A k ω x t : ℝ) :
+    HasDerivAt (fun s => A * cos (k * x - ω * s)) (A * ω * sin (k * x - ω * t)) t := by
+  have := (HasDerivAt.cos (((hasDerivAt_id' t).const_mul ω).const_sub (k * x))).const_mul A
+  convert this using 1; ring
+
+#print axioms em_contDiff_fderiv_apply
+#print axioms em_fderiv_fderiv_apply
+#print axioms em_symm
+#print axioms em_pd_sub
+#print axioms em_pd_add3
+#print axioms em_pd_neg
+#print axioms em_pd_const
+#print axioms em_pd_diff
+#print axioms em_pd_comm
+#print axioms em_pd_slice
+#print axioms em_deriv_slice
+#print axioms em_mixed
+#print axioms em_timeD_apply
+#print axioms em_curl_neg
+#print axioms em_pd_wave
+#print axioms em_hasDerivAt_wave
+
+/-- A twist of a twist is a bend (Step 3). For any smooth vector field F on space (twice
+continuously differentiable is enough), the curl of the curl equals the gradient of the divergence
+minus the Laplacian: ∇×(∇×F) = ∇(∇·F) − ∇²F. -/
+theorem curl_curl_eq_grad_div_sub_laplacian (F : Space → Space) (hF : ContDiff ℝ 2 F)
+    (p : Space) :
+    curl (curl F) p = grad (divergence F) p - vecLaplacian F p := by
+  have hc : ∀ j, ContDiff ℝ 2 (fun q => F q j) := fun j => contDiff_pi.mp hF j
+  have hd : ∀ i j, DifferentiableAt ℝ (pd i (fun q => F q j)) p :=
+    fun i j => em_pd_diff (hc j) i p
+  ext j
+  fin_cases j
+  · show pd 1 (fun q => pd 0 (fun q => F q 1) q - pd 1 (fun q => F q 0) q) p
+        - pd 2 (fun q => pd 2 (fun q => F q 0) q - pd 0 (fun q => F q 2) q) p
+      = pd 0 (fun q => pd 0 (fun q => F q 0) q + pd 1 (fun q => F q 1) q
+          + pd 2 (fun q => F q 2) q) p
+        - (pd 0 (pd 0 (fun q => F q 0)) p + pd 1 (pd 1 (fun q => F q 0)) p
+          + pd 2 (pd 2 (fun q => F q 0)) p)
+    rw [em_pd_sub (hd _ _) (hd _ _), em_pd_sub (hd _ _) (hd _ _),
+      em_pd_add3 (hd _ _) (hd _ _) (hd _ _), em_pd_comm (hc 1) 1 0, em_pd_comm (hc 2) 2 0]
+    ring
+  · show pd 2 (fun q => pd 1 (fun q => F q 2) q - pd 2 (fun q => F q 1) q) p
+        - pd 0 (fun q => pd 0 (fun q => F q 1) q - pd 1 (fun q => F q 0) q) p
+      = pd 1 (fun q => pd 0 (fun q => F q 0) q + pd 1 (fun q => F q 1) q
+          + pd 2 (fun q => F q 2) q) p
+        - (pd 0 (pd 0 (fun q => F q 1)) p + pd 1 (pd 1 (fun q => F q 1)) p
+          + pd 2 (pd 2 (fun q => F q 1)) p)
+    rw [em_pd_sub (hd _ _) (hd _ _), em_pd_sub (hd _ _) (hd _ _),
+      em_pd_add3 (hd _ _) (hd _ _) (hd _ _), em_pd_comm (hc 2) 2 1, em_pd_comm (hc 0) 0 1]
+    ring
+  · show pd 0 (fun q => pd 2 (fun q => F q 0) q - pd 0 (fun q => F q 2) q) p
+        - pd 1 (fun q => pd 1 (fun q => F q 2) q - pd 2 (fun q => F q 1) q) p
+      = pd 2 (fun q => pd 0 (fun q => F q 0) q + pd 1 (fun q => F q 1) q
+          + pd 2 (fun q => F q 2) q) p
+        - (pd 0 (pd 0 (fun q => F q 2)) p + pd 1 (pd 1 (fun q => F q 2)) p
+          + pd 2 (pd 2 (fun q => F q 2)) p)
+    rw [em_pd_sub (hd _ _) (hd _ _), em_pd_sub (hd _ _) (hd _ _),
+      em_pd_add3 (hd _ _) (hd _ _) (hd _ _), em_pd_comm (hc 0) 0 2, em_pd_comm (hc 1) 1 2]
+    ring
+
+/-- The two curl equations combine into the wave equation (the card's main claim). In empty space,
+with no charge and no current, let the electric field E and the magnetic field B be smooth (twice
+continuously differentiable in space and time together) and obey Maxwell's four vacuum equations
+∇·E = 0, ∇·B = 0, ∇×E = −∂B/∂t and ∇×B = μ₀ε₀ ∂E/∂t, where the vacuum constants μ₀ and ε₀ are
+positive. Then at every time and every point the electric field's acceleration is c² times its
+Laplacian, ∂²E/∂t² = c² ∇²E, with speed c = 1/√(μ₀ε₀). -/
+theorem vacuum_maxwell_gives_wave_equation (μ₀ ε₀ : ℝ) (hμ₀ : 0 < μ₀) (hε₀ : 0 < ε₀)
+    (E B : ℝ → Space → Space)
+    (hE : ContDiff ℝ 2 (fun q : ℝ × Space => E q.1 q.2))
+    (hB : ContDiff ℝ 2 (fun q : ℝ × Space => B q.1 q.2))
+    (gauss_E : ∀ t p, divergence (E t) p = 0)
+    (gauss_B : ∀ t p, divergence (B t) p = 0)
+    (faraday : ∀ t p, curl (E t) p = -timeD B t p)
+    (ampere_maxwell : ∀ t p, curl (B t) p = (μ₀ * ε₀) • timeD E t p) :
+    ∀ t p, deriv (fun s => timeD E s p) t = (1 / √(μ₀ * ε₀)) ^ 2 • vecLaplacian (E t) p := by
+  intro t p
+  have hc : 0 < μ₀ * ε₀ := mul_pos hμ₀ hε₀
+  have hBc : ∀ j, ContDiff ℝ 2 (fun q : ℝ × Space => B q.1 q.2 j) := fun j => contDiff_pi.mp hB j
+  have hEt : ContDiff ℝ 2 (E t) := hE.comp (contDiff_const.prodMk contDiff_id)
+  have h1 : (fun s => timeD E s p) = fun s => (μ₀ * ε₀)⁻¹ • curl (B s) p := by
+    funext s; rw [ampere_maxwell, smul_smul, inv_mul_cancel₀ hc.ne', one_smul]
+  have eB : ∀ j, (fun q => timeD B t q j) = fun q => deriv (fun s => B s q j) t :=
+    fun j => funext fun q => em_timeD_apply hB t q j
+  have h2 : HasDerivAt (fun s => curl (B s) p) (curl (timeD B t) p) t := by
+    rw [hasDerivAt_pi]; intro j
+    fin_cases j
+    · show HasDerivAt (fun s => pd 1 (fun q => B s q 2) p - pd 2 (fun q => B s q 1) p)
+        (pd 1 (fun q => timeD B t q 2) p - pd 2 (fun q => timeD B t q 1) p) t
+      rw [eB, eB]
+      exact (em_mixed (hBc 2) 1 t p).sub (em_mixed (hBc 1) 2 t p)
+    · show HasDerivAt (fun s => pd 2 (fun q => B s q 0) p - pd 0 (fun q => B s q 2) p)
+        (pd 2 (fun q => timeD B t q 0) p - pd 0 (fun q => timeD B t q 2) p) t
+      rw [eB, eB]
+      exact (em_mixed (hBc 0) 2 t p).sub (em_mixed (hBc 2) 0 t p)
+    · show HasDerivAt (fun s => pd 0 (fun q => B s q 1) p - pd 1 (fun q => B s q 0) p)
+        (pd 0 (fun q => timeD B t q 1) p - pd 1 (fun q => timeD B t q 0) p) t
+      rw [eB, eB]
+      exact (em_mixed (hBc 1) 0 t p).sub (em_mixed (hBc 0) 1 t p)
+  have hTB : timeD B t = fun q => -curl (E t) q := by
+    funext q; rw [faraday, neg_neg]
+  have hdiv : divergence (E t) = fun _ => 0 := funext (gauss_E t)
+  have hgrad : grad (divergence (E t)) p = 0 := by
+    rw [hdiv]; ext j; fin_cases j <;> simp [grad, em_pd_const]
+  have h3 : curl (timeD B t) p = vecLaplacian (E t) p := by
+    rw [hTB, em_curl_neg, curl_curl_eq_grad_div_sub_laplacian (E t) hEt p, hgrad]
+    simp
+  rw [h1, show (fun s => (μ₀ * ε₀)⁻¹ • curl (B s) p) = (μ₀ * ε₀)⁻¹ • fun s => curl (B s) p from rfl,
+    (h2.const_smul (μ₀ * ε₀)⁻¹).deriv, h3, div_pow, one_pow, sq_sqrt hc.le, one_div]
+
+/-- The station's wave, travelling along x: E = E₀ ŷ cos(kx − ωt), pointing along y. -/
+noncomputable def planeE (E₀ k ω : ℝ) (t : ℝ) (p : Space) : Space :=
+  ![0, E₀ * cos (k * p 0 - ω * t), 0]
+
+/-- Its magnetic partner: B = (E₀/c) ẑ cos(kx − ωt), pointing along z. -/
+noncomputable def planeB (E₀ c k ω : ℝ) (t : ℝ) (p : Space) : Space :=
+  ![0, 0, E₀ / c * cos (k * p 0 - ω * t)]
+
+/-- One solution is the wave from the station (Steps 5 and 6). For any peak field E₀ and any
+frequency f > 0, with c = 1/√(μ₀ε₀), wavelength λ = c/f, wavenumber k = 2π/λ and angular frequency
+ω = 2πf, the plane wave E = E₀ ŷ cos(kx − ωt), B = (E₀/c) ẑ cos(kx − ωt) obeys all four of
+Maxwell's vacuum equations at every time and every point. -/
+theorem plane_wave_solves_vacuum_maxwell (μ₀ ε₀ E₀ f c lam k ω : ℝ) (hμ₀ : 0 < μ₀)
+    (hε₀ : 0 < ε₀) (hf : 0 < f) (hc : c = 1 / √(μ₀ * ε₀)) (hlam : lam = c / f)
+    (hk : k = 2 * π / lam) (hω : ω = 2 * π * f) :
+    (∀ t p, divergence (planeE E₀ k ω t) p = 0) ∧
+      (∀ t p, divergence (planeB E₀ c k ω t) p = 0) ∧
+      (∀ t p, curl (planeE E₀ k ω t) p = -timeD (planeB E₀ c k ω) t p) ∧
+      (∀ t p, curl (planeB E₀ c k ω t) p = (μ₀ * ε₀) • timeD (planeE E₀ k ω) t p) := by
+  have hsq : 0 < √(μ₀ * ε₀) := Real.sqrt_pos.mpr (mul_pos hμ₀ hε₀)
+  have hcpos : 0 < c := by rw [hc]; positivity
+  have hkc : k = ω / c := by
+    rw [hk, hlam, hω]; field_simp
+  have hμε : μ₀ * ε₀ = 1 / c ^ 2 := by
+    rw [hc, div_pow, one_pow, sq_sqrt (mul_pos hμ₀ hε₀).le, one_div_one_div]
+  have hTB : ∀ t p, timeD (planeB E₀ c k ω) t p = ![0, 0, E₀ / c * ω * sin (k * p 0 - ω * t)] := by
+    intro t p
+    apply HasDerivAt.deriv
+    rw [hasDerivAt_pi]; intro j
+    fin_cases j
+    · exact hasDerivAt_const t (0 : ℝ)
+    · exact hasDerivAt_const t (0 : ℝ)
+    · exact em_hasDerivAt_wave (E₀ / c) k ω (p 0) t
+  have hTE : ∀ t p, timeD (planeE E₀ k ω) t p = ![0, E₀ * ω * sin (k * p 0 - ω * t), 0] := by
+    intro t p
+    apply HasDerivAt.deriv
+    rw [hasDerivAt_pi]; intro j
+    fin_cases j
+    · exact hasDerivAt_const t (0 : ℝ)
+    · exact em_hasDerivAt_wave E₀ k ω (p 0) t
+    · exact hasDerivAt_const t (0 : ℝ)
+  refine ⟨fun t p => ?_, fun t p => ?_, fun t p => ?_, fun t p => ?_⟩
+  · simp [divergence, planeE, em_pd_wave, em_pd_const]
+  · simp [divergence, planeB, em_pd_wave, em_pd_const]
+  · rw [hTB]
+    ext j; fin_cases j <;> simp [curl, planeE, em_pd_wave, em_pd_const]
+    rw [hkc]; field_simp; simp
+  · rw [hTE]
+    ext j; fin_cases j <;> simp [curl, planeB, em_pd_wave, em_pd_const]
+    rw [hkc, hμε]; field_simp
+
+-- Worked numbers by hand, exactly (c = 299,792,458 m/s, f = 100 MHz = 100 × 10⁶ Hz).
+-- Period 1/f = 10 ns.
+example : (1 : ℚ) / (100 * 10 ^ 6) = 10 / 10 ^ 9 := by norm_num
+-- Wavelength λ = c/f = 2.99792458 m (the card's 2.9979 m).
+example : (299792458 : ℚ) / (100 * 10 ^ 6) = 299792458 / 10 ^ 8 := by norm_num
+-- Quarter-wave whip λ/4 = 0.749481145 m (0.7495 m); half-wave dipole λ/2 = 1.49896229 m (1.4990 m).
+example : (299792458 : ℚ) / 10 ^ 8 / 4 = 749481145 / 10 ^ 9 := by norm_num
+example : (299792458 : ℚ) / 10 ^ 8 / 2 = 149896229 / 10 ^ 8 := by norm_num
+-- The crest after 2.5 ns, 5.0 ns, 7.5 ns, 10 ns: 0.749, 1.499, 2.248, 2.998 m; after one period it is one wavelength on.
+example : (299792458 : ℚ) * (25 / 10 ^ 10) = 749481145 / 10 ^ 9 := by norm_num
+example : (299792458 : ℚ) * (50 / 10 ^ 10) = 149896229 / 10 ^ 8 := by norm_num
+example : (299792458 : ℚ) * (75 / 10 ^ 10) = 2248443435 / 10 ^ 9 := by norm_num
+example : (299792458 : ℚ) * (10 / 10 ^ 9) = 299792458 / 10 ^ 8 := by norm_num
+-- At 50 Hz the wavelength is 5,995,849.16 m, about 5,996 km.
+example : (299792458 : ℚ) / 50 = 599584916 / 100 := by norm_num
+-- Antenna tilted 60°: voltage × cos 60° = 1/2, power × 1/4.
+example : cos (π / 3) = 1 / 2 := by rw [cos_pi_div_three]
+example : cos (π / 3) ^ 2 = 1 / 4 := by rw [cos_pi_div_three]; norm_num
+-- Polyethylene, permittivity 2.25 ε₀: the wave slows by √2.25 = 1.5.
+example : √(9 / 4 : ℝ) = 3 / 2 := by
+  rw [show (9 / 4 : ℝ) = (3 / 2) ^ 2 by norm_num, sqrt_sq (by norm_num)]
+
+#print axioms curl_curl_eq_grad_div_sub_laplacian
+#print axioms vacuum_maxwell_gives_wave_equation
+#print axioms plane_wave_solves_vacuum_maxwell
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'em_contDiff_fderiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_fderiv_fderiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_pd_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_pd_add3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_pd_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_pd_const' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_pd_diff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_pd_comm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_pd_slice' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_deriv_slice' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_mixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_timeD_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_curl_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_pd_wave' depends on axioms: [propext, Classical.choice, Quot.sound]
+'em_hasDerivAt_wave' depends on axioms: [propext, Classical.choice, Quot.sound]
+'curl_curl_eq_grad_div_sub_laplacian' depends on axioms: [propext, Classical.choice, Quot.sound]
+'vacuum_maxwell_gives_wave_equation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'plane_wave_solves_vacuum_maxwell' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]

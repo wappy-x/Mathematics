@@ -6,11 +6,15 @@
 
 ## General Overview
 
-A radio's antenna picks up every FM station in range at once. In the US the FM band runs from 88 to 108 MHz (megahertz, millions of cycles per second), with stations on channels 200 kHz apart. Each station arrives as a voltage of a few microvolts. Say the listener wants 98.5 MHz.
+A radio's antenna picks up every FM station in range at once. In the US the FM band runs from 88 to 108 MHz (megahertz, millions of cycles per second), with stations on channels 200 kHz (kilohertz) apart. Each station arrives as a voltage of a few microvolts. Say the listener wants 98.5 MHz.
 
-The first thing the signal meets is a tuner: a coil, a capacitor and a little unavoidable resistance, wired in one loop. The antenna is coupled into that loop lightly, through a tap on the coil or a small second coil ([Transformers](06-transformers-and-mutual-inductance.md)), so the loop feels almost none of the antenna's own resistance. Here the coil is 100 nH (nanohenries) and its own losses come to 0.5 ohms. Turn the tuning knob until the capacitor reads 26.1077 pF (picofarads). Now a 10 µV (microvolt) signal at 98.5 MHz drives 20 µA (microamps) round the loop and builds 1.2378 mV across the capacitor: 124 times the voltage that came in. A station at 100.5 MHz, 2 MHz away, gets only 0.1970 of that current.
+The first thing the signal meets is a tuner: a coil, a capacitor and a little unavoidable resistance, wired in one loop. The antenna is coupled into that loop lightly, through a tap on the coil or a small second coil ([Transformers](06-transformers-and-mutual-inductance.md)), so the loop feels almost none of the antenna's own resistance. Here the coil is 100 nH (nanohenries) and its own losses come to 0.5 ohms.
 
-The engineer wants two numbers. **Where is the peak?** That is the resonant frequency, set by the coil and capacitor alone. **How sharp is it?** That is the quality factor Q, here 123.78: it sets how narrow a band gets through, how much the voltage is magnified, and how long the loop rings after a kick. That is why the antenna is coupled in lightly: a 75 Ω antenna wired straight into the loop would drag Q down to 0.82, and the loop would pass a band wider than the whole FM dial. Both numbers come from one fact: at one frequency the coil's and the capacitor's opposition to current cancel, leaving only the resistor.
+Turn the tuning knob until the capacitor reads 26.1077 pF (picofarads). Now a 10 µV (microvolt) signal at 98.5 MHz drives 20 µA (microamps) round the loop and builds 1.2378 mV (millivolts) across the capacitor: 124 times the voltage that came in. A station at 100.5 MHz, 2 MHz away, gets only 0.1970 of that current.
+
+The engineer wants two numbers. **Where is the peak?** That is the resonant frequency, set by the coil and capacitor alone. **How sharp is it?** That is the quality factor Q, here 123.78: it sets how narrow a band gets through, how much the voltage is magnified, and how long the loop rings after a kick.
+
+That is why the antenna is coupled in lightly. A 75 Ω antenna wired straight into the loop would drag Q down to 0.82, and the loop would pass a band wider than the whole FM dial. Both numbers come from one fact: at one frequency the coil's and the capacitor's opposition to current cancel, leaving only the resistor.
 
 **A series coil, capacitor and resistor passes current most easily at one frequency, set by the coil and capacitor alone, where their push-backs cancel; the quality factor Q, the coil's push-back there divided by the resistance, says how sharp that peak is, and the width of the band it passes is that frequency divided by Q.**
 
@@ -45,7 +49,7 @@ flowchart LR
   Cc -. "voltage across C" .-> Amp["amplifier"]
 ```
 
-Reminder from [Phasors](02-phasors-and-impedance.md): a sine wave of angular frequency ω is handled as a complex number, and each part has an **impedance** Z, its opposition to current: R for the resistor, jωL for the coil, 1/(jωC) for the capacitor. Here j is the square root of −1, as engineers write it (the rest of the library writes i). An angular frequency ω, in radians per second, is 2π times the frequency f in hertz.
+Reminder from [Phasors](02-phasors-and-impedance.md): a sine wave of angular frequency ω is handled as a complex number. Each part has an **impedance** Z, its opposition to current: R for the resistor, jωL for the coil, 1/(jωC) for the capacitor. Here j is the square root of −1, as engineers write it (the rest of the library writes i). An angular frequency ω, in radians per second, is 2π times the frequency f in hertz.
 
 In series the impedances add:
 
@@ -73,7 +77,7 @@ $$G(f) = \frac{|I(f)|}{|I(f_0)|} = \frac{1}{\sqrt{1 + Q^2\left(\dfrac{f}{f_0} - 
 | $f$, $\omega$ | the signal's frequency in hertz; ω = 2πf in rad/s | 98.7 MHz, a neighbour | — |
 | $f_0$, $\omega_0$ | the resonant frequency, where the current peaks | 98.5 MHz; 618.89 million rad/s | — |
 | $Z$, $X$, $j$ | impedance in ohms, a complex number; X its sideways part, the reactance; j = √−1 | Z = 0.5 Ω and X = 0 at f0 | less current |
-| $V$, $I$, $q$, $t$ | antenna voltage and loop current, as peak values ([Phasors](02-phasors-and-impedance.md) used rms; ratios such as G and Q are the same either way); charge on the capacitor; time | 10 µV; 20 µA at f0 | every current and voltage scales with V |
+| $V$, $I$, $q$, $t$ | antenna voltage and loop current, as peak values ([Phasors](02-phasors-and-impedance.md) used rms, root-mean-square, values; ratios such as G and Q are the same either way); charge on the capacitor; time | 10 µV; 20 µA at f0 | every current and voltage scales with V |
 | $V_C$ | the voltage across the capacitor, what the amplifier reads | 1.2378 mV at f0, which is Q × V | — |
 | $Q$ | quality factor: sharpness of the peak, no units | 123.78 | narrower band, bigger voltage gain, longer ringing |
 | $\Delta f$, $f_1$, $f_2$ | bandwidth: width of the band passing at least half the peak power; its lower and upper edges | 795.77 kHz; 98.1029 and 98.8987 MHz | — |
@@ -82,7 +86,7 @@ $$G(f) = \frac{|I(f)|}{|I(f_0)|} = \frac{1}{\sqrt{1 + Q^2\left(\dfrac{f}{f_0} - 
 
 ### When it holds
 
-- **A circuit small beside the wavelength.** The loop law assumes one current all round the loop at each instant. At 98.5 MHz the wavelength is 3.0436 m against parts a few centimetres long, so it holds. At 2.45 GHz (Wi-Fi) the wavelength is 12.24 cm, the size of the leads, and the lumped model fails ([Electromagnetic waves](08-electromagnetic-waves.md)).
+- **A circuit small beside the wavelength.** The loop law assumes one current all round the loop at each instant. At 98.5 MHz the wavelength is 3.0436 m against parts a few centimetres long, so it holds. At 2.45 GHz (gigahertz; Wi-Fi) the wavelength is 12.24 cm, the size of the leads, and the lumped model (each part treated as one point, joined by wires of no length) fails ([Electromagnetic waves](08-electromagnetic-waves.md)).
 - **Linear parts.** A tuning diode (a varactor: a capacitor set by a control voltage) shifts with a large signal, detuning f0 while the station plays. Microvolt signals leave it alone.
 - **A fixed resistance.** A real coil's resistance rises with frequency, as current crowds to the wire's surface, so Q across the band drifts from ω0L/R.
 - **High Q for the energy reading.** The bandwidth f0/Q is exact at any Q, but "2π/Q of the energy lost per cycle" is a high-Q estimate: 5.076% against the simulated 4.949%.
@@ -188,7 +192,7 @@ Same tuner, correct answers f0 = 98.5 MHz, Q = 123.78, bandwidth 795.77 kHz:
 | Bandwidth taken where the current halves | 1378.32 kHz | Half power is current at 1/√2, not 1/2; the half-current width is √3 times wider |
 | Q = 1/ζ | Q = 247.56, bandwidth 397.89 kHz | The spring link is Q = 1/(2ζ); this doubles Q and halves the band |
 | Bandwidth R/L read as hertz | 5.00 MHz | R/L is the width in rad/s; divide by 2π |
-| One tuned loop to separate neighbouring stations | 0.8937 of the peak at 98.7 MHz | The model is right; the hope is wrong. Rejecting the neighbour to 0.1 needs Q = 2452.6, a loop resistance of 25.2 mΩ |
+| One tuned loop to separate neighbouring stations | 0.8937 of the peak at 98.7 MHz | The model is right; the hope is wrong. Rejecting the neighbour to 0.1 needs Q = 2452.6, a loop resistance of 25.2 mΩ (milliohms) |
 
 ---
 
@@ -631,6 +635,301 @@ ALL CHECKS PASS
 
 The sweep lands on the formulas' 98.5000 MHz and 795.7747 kHz. The simulated currents match the phasor answer, at worst 17.8729 µA against 17.8732 µA, and the ring-down gives Q = 123.7787 against 123.7788.
 
+### Lean
+
+Lean proves the peak, the resonance curve and the half-power band, for any R, L and C above zero.
+
+- Take f0 = 1/(2π√(LC)). Then |Z| = R at f0, and |Z| is strictly larger at every other frequency above zero. So the current peaks at f0 alone, and R does not move that peak.
+- Take Q = ω0L/R. Then Q also equals (1/R)√(L/C).
+- Take any frequency f above zero. Then the gain is G(f) = 1/√(1 + Q²(f/f0 − f0/f)²).
+- The frequencies above zero that get at least half the peak power form one band, from f1 to f2. Its width f2 − f1 is exactly f0/Q, at any Q, and f1 f2 = f0².
+
+The tuner's numbers, the time-domain simulation, the voltage gain Q × V and the ringing are left to the Python and Rust checks.
+
+```lean
+-- RLC resonance: a series coil, capacitor and resistor draws the most current at exactly f0 = 1/(2π√(LC)), its current curve is 1/√(1 + Q²(f/f0 − f0/f)²), and its half-power band is exactly f0/Q wide.
+import Mathlib.Analysis.Complex.Norm
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+
+open Real
+
+/-- The impedance of a series loop of resistance `R`, inductance `L` and capacitance `C`
+at angular frequency `ω` (radians per second): `Z(ω) = R + j(ωL − 1/(ωC))`.
+The current for a drive of size `V` is `V / ‖Z(ω)‖`; a frequency `f` in hertz has `ω = 2πf`. -/
+noncomputable def seriesImpedance (R L C ω : ℝ) : ℂ :=
+  (R : ℂ) + ((ω * L - 1 / (ω * C) : ℝ) : ℂ) * Complex.I
+
+lemma rlc_norm_seriesImpedance (R L C ω : ℝ) :
+    ‖seriesImpedance R L C ω‖ = √(R ^ 2 + (ω * L - 1 / (ω * C)) ^ 2) :=
+  Complex.norm_add_mul_I _ _
+
+#print axioms rlc_norm_seriesImpedance
+
+lemma rlc_omega0 (L C : ℝ) (hL : 0 < L) (hC : 0 < C) :
+    2 * π * (1 / (2 * π * √(L * C))) = 1 / √(L * C) := by
+  have hs : 0 < √(L * C) := Real.sqrt_pos.mpr (mul_pos hL hC)
+  field_simp
+
+#print axioms rlc_omega0
+
+lemma rlc_reactance_zero (L C : ℝ) (hL : 0 < L) (hC : 0 < C) :
+    1 / √(L * C) * L - 1 / (1 / √(L * C) * C) = 0 := by
+  have hs : 0 < √(L * C) := Real.sqrt_pos.mpr (mul_pos hL hC)
+  have hs2 : √(L * C) ^ 2 = L * C := Real.sq_sqrt (mul_pos hL hC).le
+  field_simp
+  nlinarith
+
+#print axioms rlc_reactance_zero
+
+lemma rlc_norm_at_res (R L C : ℝ) (hR : 0 < R) (hL : 0 < L) (hC : 0 < C) :
+    ‖seriesImpedance R L C (2 * π * (1 / (2 * π * √(L * C))))‖ = R := by
+  rw [rlc_omega0 L C hL hC, rlc_norm_seriesImpedance, rlc_reactance_zero L C hL hC]
+  simp [Real.sqrt_sq hR.le]
+
+#print axioms rlc_norm_at_res
+
+/-- reactance vanishes only at resonance -/
+lemma rlc_reactance_ne (L C f : ℝ) (hL : 0 < L) (hC : 0 < C) (hf : 0 < f)
+    (hne : f ≠ 1 / (2 * π * √(L * C))) :
+    2 * π * f * L - 1 / (2 * π * f * C) ≠ 0 := by
+  intro h
+  have hs : 0 < √(L * C) := Real.sqrt_pos.mpr (mul_pos hL hC)
+  have hs2 : √(L * C) ^ 2 = L * C := Real.sq_sqrt (mul_pos hL hC).le
+  have hw : 0 < 2 * π * f := by positivity
+  apply hne
+  have h1 : (2 * π * f) ^ 2 * (L * C) = 1 := by
+    field_simp at h
+    nlinarith
+  have h2 : (2 * π * f * √(L * C)) ^ 2 = 1 := by rw [mul_pow, hs2]; exact h1
+  have h3 : 2 * π * f * √(L * C) = 1 := by
+    have hp : 0 < 2 * π * f * √(L * C) := by positivity
+    nlinarith
+  field_simp
+  linarith
+
+#print axioms rlc_reactance_ne
+
+/-- The quadratic factorisation behind the half-power edges. -/
+lemma rlc_factor (R L C S ω : ℝ) (hL : 0 < L) (hC : 0 < C)
+    (hS2 : S ^ 2 = R ^ 2 + 4 * L / C) :
+    L * ω ^ 2 - R * ω - 1 / C = L * (ω - (R + S) / (2 * L)) * (ω + (S - R) / (2 * L)) ∧
+    L * ω ^ 2 + R * ω - 1 / C = L * (ω - (S - R) / (2 * L)) * (ω + (R + S) / (2 * L)) := by
+  have hL' : L ≠ 0 := hL.ne'
+  have hC' : C ≠ 0 := hC.ne'
+  have hS2' : C * S ^ 2 = C * R ^ 2 + 4 * L := by rw [hS2]; field_simp
+  constructor
+  · field_simp
+    linear_combination hS2'
+  · field_simp
+    linear_combination hS2'
+
+#print axioms rlc_factor
+
+/-- Half-power condition in angular frequency. -/
+lemma rlc_band (R L C ω : ℝ) (hR : 0 < R) (hL : 0 < L) (hC : 0 < C) (hω : 0 < ω) :
+    (ω * L - 1 / (ω * C)) ^ 2 ≤ R ^ 2 ↔
+      (√(R ^ 2 + 4 * L / C) - R) / (2 * L) ≤ ω ∧ ω ≤ (R + √(R ^ 2 + 4 * L / C)) / (2 * L) := by
+  have hS2 : √(R ^ 2 + 4 * L / C) ^ 2 = R ^ 2 + 4 * L / C := Real.sq_sqrt (by positivity)
+  have hSR : R < √(R ^ 2 + 4 * L / C) := by
+    rw [show R = √(R ^ 2) from (Real.sqrt_sq hR.le).symm]
+    rw [Real.sqrt_sq hR.le]
+    have : 0 < 4 * L / C := by positivity
+    exact Real.lt_sqrt_of_sq_lt (by linarith)
+  generalize √(R ^ 2 + 4 * L / C) = S at hS2 hSR
+  obtain ⟨h1, h2⟩ := rlc_factor R L C S ω hL hC hS2
+  have hXω : (ω * L - 1 / (ω * C)) * ω = L * ω ^ 2 - 1 / C := by
+    field_simp
+  have hw1 : 0 < ω + (S - R) / (2 * L) := by
+    have : 0 < (S - R) / (2 * L) := div_pos (by linarith) (by linarith)
+    linarith
+  have hw2 : 0 < ω + (R + S) / (2 * L) := by
+    have : 0 < (R + S) / (2 * L) := div_pos (by linarith) (by linarith)
+    linarith
+  rw [sq_le_sq, abs_of_pos hR, abs_le]
+  constructor
+  · rintro ⟨hlo, hhi⟩
+    constructor
+    · -- b ≥ 0
+      have hb : 0 ≤ L * (ω - (S - R) / (2 * L)) * (ω + (R + S) / (2 * L)) := by
+        rw [← h2]; nlinarith
+      by_contra hcon
+      push Not at hcon
+      have : L * (ω - (S - R) / (2 * L)) * (ω + (R + S) / (2 * L)) < 0 := by
+        have : L * (ω - (S - R) / (2 * L)) < 0 := mul_neg_of_pos_of_neg hL (by linarith)
+        exact mul_neg_of_neg_of_pos this hw2
+      linarith
+    · have ha : L * (ω - (R + S) / (2 * L)) * (ω + (S - R) / (2 * L)) ≤ 0 := by
+        rw [← h1]; nlinarith
+      by_contra hcon
+      push Not at hcon
+      have : 0 < L * (ω - (R + S) / (2 * L)) * (ω + (S - R) / (2 * L)) := by
+        have : 0 < L * (ω - (R + S) / (2 * L)) := mul_pos hL (by linarith)
+        exact mul_pos this hw1
+      linarith
+  · rintro ⟨hlo, hhi⟩
+    have hb : 0 ≤ L * (ω - (S - R) / (2 * L)) * (ω + (R + S) / (2 * L)) :=
+      mul_nonneg (mul_nonneg hL.le (by linarith)) hw2.le
+    have ha : L * (ω - (R + S) / (2 * L)) * (ω + (S - R) / (2 * L)) ≤ 0 :=
+      mul_nonpos_of_nonpos_of_nonneg (mul_nonpos_of_nonneg_of_nonpos hL.le (by linarith)) hw1.le
+    rw [← h2] at hb
+    rw [← h1] at ha
+    constructor
+    · by_contra hcon
+      push Not at hcon
+      have : (ω * L - 1 / (ω * C)) * ω < -R * ω := mul_lt_mul_of_pos_right hcon hω
+      nlinarith
+    · by_contra hcon
+      push Not at hcon
+      have : R * ω < (ω * L - 1 / (ω * C)) * ω := mul_lt_mul_of_pos_right hcon hω
+      nlinarith
+
+#print axioms rlc_band
+
+/-- The card's main claim, the peak: for any positive resistance, inductance and capacitance,
+the size of the loop's impedance, and so the opposition to current, is smallest at exactly one
+positive frequency, `f0 = 1/(2π√(LC))`, which does not involve `R`. There the coil's and the
+capacitor's push-backs cancel and only the resistor is left: `‖Z‖ = R`. At every other positive
+frequency `‖Z‖` is strictly larger, so the current `V/‖Z‖` is strictly smaller. -/
+theorem current_peaks_at_resonant_frequency (R L C : ℝ) (hR : 0 < R) (hL : 0 < L) (hC : 0 < C) :
+    let f₀ := 1 / (2 * π * √(L * C))
+    ‖seriesImpedance R L C (2 * π * f₀)‖ = R ∧
+      ∀ f : ℝ, 0 < f → f ≠ f₀ →
+        ‖seriesImpedance R L C (2 * π * f₀)‖ < ‖seriesImpedance R L C (2 * π * f)‖ := by
+  intro f₀
+  refine ⟨rlc_norm_at_res R L C hR hL hC, fun f hf hne => ?_⟩
+  rw [rlc_norm_at_res R L C hR hL hC, rlc_norm_seriesImpedance]
+  have hX := rlc_reactance_ne L C f hL hC hf hne
+  have hpos : 0 < (2 * π * f * L - 1 / (2 * π * f * C)) ^ 2 := by positivity
+  rw [show R = √(R ^ 2) from (Real.sqrt_sq hR.le).symm]
+  rw [Real.sqrt_sq hR.le]
+  apply Real.lt_sqrt_of_sq_lt
+  linarith
+
+/-- The card's main claim, the sharpness: with `Q = 2π f0 L / R` (the coil's reactance at
+resonance over the resistance), the frequencies that get at least half the peak power, that is
+current at least `1/√2` of the peak current, form one closed band `[f1, f2]`. Its width is
+exactly `f0 / Q`, at any `Q`, and `f0` is the geometric mean of its edges: `f1 · f2 = f0²`. -/
+theorem half_power_bandwidth_eq_f0_div_Q (R L C : ℝ) (hR : 0 < R) (hL : 0 < L) (hC : 0 < C) :
+    let f₀ := 1 / (2 * π * √(L * C))
+    let Q := 2 * π * f₀ * L / R
+    ∃ f₁ f₂ : ℝ, 0 < f₁ ∧ f₁ < f₂ ∧
+      {f : ℝ | 0 < f ∧
+          1 / 2 ≤ (‖seriesImpedance R L C (2 * π * f₀)‖ / ‖seriesImpedance R L C (2 * π * f)‖) ^ 2} =
+        Set.Icc f₁ f₂ ∧
+      f₂ - f₁ = f₀ / Q ∧ f₁ * f₂ = f₀ ^ 2 := by
+  intro f₀ Q
+  have hS2 : √(R ^ 2 + 4 * L / C) ^ 2 = R ^ 2 + 4 * L / C := Real.sq_sqrt (by positivity)
+  have hSR : R < √(R ^ 2 + 4 * L / C) := by
+    rw [show R = √(R ^ 2) from (Real.sqrt_sq hR.le).symm]
+    rw [Real.sqrt_sq hR.le]
+    have : 0 < 4 * L / C := by positivity
+    exact Real.lt_sqrt_of_sq_lt (by linarith)
+  have hπ : 0 < 2 * π := by positivity
+  refine ⟨(√(R ^ 2 + 4 * L / C) - R) / (2 * L) / (2 * π),
+    (R + √(R ^ 2 + 4 * L / C)) / (2 * L) / (2 * π), ?_, ?_, ?_, ?_, ?_⟩
+  · exact div_pos (div_pos (by linarith) (by linarith)) hπ
+  · apply div_lt_div_of_pos_right _ hπ
+    apply div_lt_div_of_pos_right _ (by linarith)
+    linarith
+  · ext f
+    simp only [Set.mem_ofPred_eq, Set.mem_Icc]
+    rw [rlc_norm_at_res R L C hR hL hC, rlc_norm_seriesImpedance, div_pow,
+      Real.sq_sqrt (by positivity)]
+    rw [div_le_iff₀ hπ, le_div_iff₀ hπ]
+    constructor
+    · rintro ⟨hf, hhalf⟩
+      have hw : 0 < 2 * π * f := by positivity
+      have hpos : 0 < R ^ 2 + (2 * π * f * L - 1 / (2 * π * f * C)) ^ 2 := by positivity
+      rw [le_div_iff₀ hpos] at hhalf
+      have hX : (2 * π * f * L - 1 / (2 * π * f * C)) ^ 2 ≤ R ^ 2 := by linarith
+      obtain ⟨h1, h2⟩ := (rlc_band R L C (2 * π * f) hR hL hC hw).mp hX
+      constructor <;> linarith
+    · rintro ⟨h1, h2⟩
+      have hlo : 0 < (√(R ^ 2 + 4 * L / C) - R) / (2 * L) := div_pos (by linarith) (by linarith)
+      have hw : 0 < 2 * π * f := by linarith
+      have hf : 0 < f := by
+        by_contra h; push Not at h; nlinarith [Real.pi_pos]
+      refine ⟨hf, ?_⟩
+      have hX := (rlc_band R L C (2 * π * f) hR hL hC hw).mpr ⟨by linarith, by linarith⟩
+      have hpos : 0 < R ^ 2 + (2 * π * f * L - 1 / (2 * π * f * C)) ^ 2 := by positivity
+      rw [le_div_iff₀ hpos]
+      linarith
+  · show _ = (1 / (2 * π * √(L * C))) / (2 * π * (1 / (2 * π * √(L * C))) * L / R)
+    have hs : 0 < √(L * C) := Real.sqrt_pos.mpr (mul_pos hL hC)
+    generalize √(L * C) = s at hs
+    generalize √(R ^ 2 + 4 * L / C) = S
+    field_simp
+    ring
+  · show _ = (1 / (2 * π * √(L * C))) ^ 2
+    have hs : 0 < √(L * C) := Real.sqrt_pos.mpr (mul_pos hL hC)
+    have hs2 : √(L * C) ^ 2 = L * C := Real.sq_sqrt (mul_pos hL hC).le
+    generalize √(L * C) = s at hs hs2
+    generalize √(R ^ 2 + 4 * L / C) = S at hS2
+    have hS2' : C * S ^ 2 = C * R ^ 2 + 4 * L := by rw [hS2]; field_simp
+    field_simp
+    rw [hs2]
+    linear_combination L * hS2'
+
+/-- The resonance curve: at any positive frequency `f`, the current as a fraction of its peak,
+`G(f) = |I(f)| / |I(f0)| = ‖Z(f0)‖ / ‖Z(f)‖`, equals `1 / √(1 + Q²(f/f0 − f0/f)²)`,
+with `Q = 2π f0 L / R`, which also equals `(1/R)√(L/C)`. -/
+theorem resonance_curve_gain (R L C : ℝ) (hR : 0 < R) (hL : 0 < L) (hC : 0 < C) :
+    let f₀ := 1 / (2 * π * √(L * C))
+    let Q := 2 * π * f₀ * L / R
+    Q = 1 / R * √(L / C) ∧
+      ∀ f : ℝ, 0 < f →
+        ‖seriesImpedance R L C (2 * π * f₀)‖ / ‖seriesImpedance R L C (2 * π * f)‖ =
+          1 / √(1 + Q ^ 2 * (f / f₀ - f₀ / f) ^ 2) := by
+  intro f₀ Q
+  have hs : 0 < √(L * C) := Real.sqrt_pos.mpr (mul_pos hL hC)
+  have hs2 : √(L * C) ^ 2 = L * C := Real.sq_sqrt (mul_pos hL hC).le
+  have hsLC : √(L * C) = √L * √C := Real.sqrt_mul hL.le C
+  have hLC : √(L / C) = √L / √C := Real.sqrt_div' L hC.le
+  have hsL : 0 < √L := Real.sqrt_pos.mpr hL
+  have hsC : 0 < √C := Real.sqrt_pos.mpr hC
+  have hL2 : √L ^ 2 = L := Real.sq_sqrt hL.le
+  have hC2 : √C ^ 2 = C := Real.sq_sqrt hC.le
+  constructor
+  · show 2 * π * (1 / (2 * π * √(L * C))) * L / R = 1 / R * √(L / C)
+    rw [hsLC, hLC]
+    field_simp
+    linear_combination (-1 : ℝ) * hL2
+  · intro f hf
+    rw [rlc_norm_at_res R L C hR hL hC, rlc_norm_seriesImpedance]
+    have hf0 : 0 < f₀ := by positivity
+    have key : R ^ 2 + (2 * π * f * L - 1 / (2 * π * f * C)) ^ 2 =
+        R ^ 2 * (1 + Q ^ 2 * (f / f₀ - f₀ / f) ^ 2) := by
+      show _ = R ^ 2 * (1 + (2 * π * (1 / (2 * π * √(L * C))) * L / R) ^ 2 *
+        (f / (1 / (2 * π * √(L * C))) - (1 / (2 * π * √(L * C))) / f) ^ 2)
+      generalize √(L * C) = s at hs hs2 ⊢
+      field_simp
+      rw [show s ^ 4 = (s ^ 2) ^ 2 by ring, hs2]
+      ring
+    rw [key, Real.sqrt_mul (sq_nonneg R), Real.sqrt_sq hR.le]
+    have : 0 < √(1 + Q ^ 2 * (f / f₀ - f₀ / f) ^ 2) := Real.sqrt_pos.mpr (by positivity)
+    field_simp
+
+#print axioms current_peaks_at_resonant_frequency
+#print axioms half_power_bandwidth_eq_f0_div_Q
+#print axioms resonance_curve_gain
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'rlc_norm_seriesImpedance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rlc_omega0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rlc_reactance_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rlc_norm_at_res' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rlc_reactance_ne' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rlc_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rlc_band' depends on axioms: [propext, Classical.choice, Quot.sound]
+'current_peaks_at_resonant_frequency' depends on axioms: [propext, Classical.choice, Quot.sound]
+'half_power_bandwidth_eq_f0_div_Q' depends on axioms: [propext, Classical.choice, Quot.sound]
+'resonance_curve_gain' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - Guess first: raise R from 0.5 to 2.0 ohms. Does the peak move? Set `R = 2.0`. It stays at 98.5 MHz; Q falls to 30.9, and 98.0 MHz now passes 0.954 of the peak instead of 0.622 (the teal line in the picture).
@@ -656,7 +955,7 @@ The sweep lands on the formulas' 98.5000 MHz and 795.7747 kHz. The simulated cur
 - **FM radio front ends.** A varactor-tuned loop like this one sits right behind the antenna, coupled to it lightly so the antenna's resistance does not flatten the peak. It rejects strong signals far away, such as broadcast TV and mobile phones, and passes about one megahertz around the wanted station. Separating stations 200 kHz apart is left to a later, fixed filter: the superheterodyne receiver shifts every station to one intermediate frequency where a high-Q filter waits.
 - **Crystal oscillators in clocks and computers.** A quartz crystal behaves electrically like a series RLC with a very high Q. That sharpness is what holds a watch or a processor clock to one frequency.
 - **Wireless charging and contactless cards.** Both coils are tuned to one resonant frequency so energy passes between them efficiently. Higher Q gives more range but detunes more easily.
-- **Power systems.** A capacitor bank added to a factory resonates with the supply's inductance. If f0 lands on a harmonic of the mains, currents there swell and capacitors fail, so engineers compute f0 before installing.
+- **Power systems.** A capacitor bank added to a factory resonates with the supply's inductance. If f0 lands on a harmonic of the mains (a whole-number multiple of the supply frequency), currents there swell and capacitors fail, so engineers compute f0 before installing.
 
 > **Say it back**
 > A series coil and capacitor push back against current in opposite directions, and at one frequency, f0 = 1/(2π√(LC)), the push-backs cancel. There only the resistance limits the current, so the tuner answers loudest. The quality factor Q = ω0L/R says how sharp that peak is: the band it passes is f0/Q wide, the voltage on the capacitor is Q times the input, and after a kick it rings for about Q cycles. Seen as a spring and mass, Q is 1/(2ζ). For the tuner at 98.5 MHz, Q = 123.78 and the band is 795.77 kHz: enough to pick a region of the dial, not a single station.

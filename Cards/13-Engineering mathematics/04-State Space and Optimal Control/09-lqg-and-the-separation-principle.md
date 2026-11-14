@@ -8,9 +8,15 @@
 
 A cart balances a pole upright, 0.613125 m long. One encoder at the pivot reads the pole's angle 100 times a second, and each reading is off by about 0.005 rad (0.2865°) of noise. Random shoves tip the pole about. The motor sets the cart's acceleration. Nothing measures how fast the pole is tipping.
 
-Two earlier cards each solved half of this. [The LQR](06-linear-quadratic-regulator.md) found the best feedback gain, assuming the angle and its rate are known exactly. [The Kalman filter](07-kalman-filter.md) found the best estimate of both from the noisy angle readings. LQG (linear plant, quadratic price, Gaussian noise) joins them in the most naive way possible: feed the filter's estimate into the regulator's gain, unchanged, as if the estimate were the truth.
+Two earlier cards each solved half of this. [The LQR](06-linear-quadratic-regulator.md) (linear-quadratic regulator) found the best feedback gain, assuming the angle and its rate are known exactly. [The Kalman filter](07-kalman-filter.md) found the best estimate of both from the noisy angle readings.
 
-That naive join is the best controller there is for this problem. The joined loop has four poles (the numbers that set how fast each error dies away), and they are exactly the regulator's two plus the filter's two. Its average cost per tick (100 × angle² + 0.04 × acceleration², with the angle in radians and the cart's commanded acceleration in m/s²) is 8.2888 × 10⁻³, against 2.2729 × 10⁻³ if the rate could be seen directly; the gap is the price of looking through a noisy encoder. And there is a catch. The regulator alone keeps balancing with a motor anywhere from 0.1712 to 14.7138 times as strong as the model says. The joined loop survives only 0.3630 to 2.9189 times. Fit a motor three times stronger and the regulator alone would cope; the joined loop falls over.
+LQG (linear plant, quadratic price, Gaussian noise) joins them in the most naive way possible: feed the filter's estimate into the regulator's gain, unchanged, as if the estimate were the truth.
+
+That naive join is the best controller there is for this problem. The joined loop has four poles (the numbers that set how fast each error dies away), and they are exactly the regulator's two plus the filter's two.
+
+Its average cost per tick (100 × angle² + 0.04 × acceleration², with the angle in radians and the cart's commanded acceleration in m/s²) is 8.2888 × 10⁻³, against 2.2729 × 10⁻³ if the rate could be seen directly. The gap is the price of looking through a noisy encoder.
+
+And there is a catch. The regulator alone keeps balancing with a motor anywhere from 0.1712 to 14.7138 times as strong as the model says. The joined loop survives only 0.3630 to 2.9189 times. Fit a motor three times stronger and the regulator alone would cope; the joined loop falls over.
 
 **Design the best regulator as if the state were known, and the best estimator as if no one were steering, then feed the estimate into the gain: the loop's poles are the two designs' poles side by side and its cost is the best possible, but the regulator's safety margins do not come along.**
 
@@ -49,7 +55,7 @@ $$\det\big(\lambda I - \Phi\big) \;=\; \det\big(\lambda I - (A - BK)\big)\;\cdot
 
 **Read it aloud:** the joined loop's poles are the regulator's poles together with the filter's poles, and nothing else.
 
-Here $\Phi$ is the 4 × 4 matrix that steps the plant and the controller forward together (`F` in the code, where `G` and `H` are the loop's noise inputs and its command row, unrelated to the Kalman filter card's $F$, $G$, $H$), $\det(\lambda I - \cdot)$ is a matrix's characteristic polynomial, whose roots $\lambda$ are its poles, and $I$ is the identity matrix. The cost splits the same way:
+Here $\Phi$ is the 4 × 4 matrix that steps the plant and the controller forward together. In the code it is `F`, and `G` and `H` are the loop's noise inputs and its command row, unrelated to the Kalman filter card's $F$, $G$, $H$. The expression $\det(\lambda I - \cdot)$ is a matrix's characteristic polynomial, whose roots $\lambda$ are its poles, and $I$ is the identity matrix. In the cost below, a raised $\mathsf T$ turns a column into a row (the transpose). The cost splits the same way:
 
 $$J \;=\; \underbrace{\sigma_d^2\,B^{\mathsf T}PB}_{\text{if the state were seen}} \;+\; \underbrace{s\,K\,\Sigma\,K^{\mathsf T}}_{\text{price of the estimation error}}, \qquad s = R + B^{\mathsf T}PB.$$
 
@@ -58,14 +64,14 @@ $$J \;=\; \underbrace{\sigma_d^2\,B^{\mathsf T}PB}_{\text{if the state were seen
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
 | $x_k$ | the state at tick $k$: angle $\theta$ from upright (rad) and rate $\omega$ (rad/s) | starts at 0.05 rad (2.865°) in the chart | — |
-| $u_k$ | the cart's commanded acceleration, m/s² | rms 0.3390 m/s² | — |
+| $u_k$ | the cart's commanded acceleration, m/s² | rms (root mean square, the typical size) 0.3390 m/s² | — |
 | $y_k$, $C$ | the encoder reading; $C$ = (1, 0) picks out the angle | noise 0.2865° rms | — |
 | $g$, $l$, $h$ | gravity, pole length, one tick | 9.81 m/s², 0.613125 m, 0.01 s | longer $l$: a slower fall, an easier job |
 | $A$, $B$ | one tick of the plant, and what one tick of $u$ does | rows (1.0008, 0.0100), (0.1600, 1.0008); $B$ = (−0.0001, −0.0163) | — |
 | $d_k$, $v_k$, $\sigma_d$, $\sigma_v$ | the shove (as an extra cart acceleration) and the encoder noise, and their sizes | 0.613125 m/s² (1 rad/s² on the pole), 0.005 rad | $J$ rises; only their ratio changes the filter |
 | $Q$, $R$, $s$ | prices on angle, rate and motor effort; $s$ as defined above | angle 100, rate 0, effort 0.04 | a different $K$ |
-| $K$, $P$ | the LQR gain and the regulator's cost-to-go matrix, from [The LQR](06-linear-quadratic-regulator.md) | $K$ = (−57.3003, −8.3351) | a stiffer loop |
-| $M$, $\Sigma$ | the Kalman gain, and the error covariance just after a correction, from [The Kalman filter](07-kalman-filter.md) | $M$ = (0.1879, 1.9529); rms angle error 0.1242° | bigger $M$: more trust in each reading |
+| $K$, $P$ | the LQR gain and the regulator's cost-to-go matrix ($x^{\mathsf T}Px$ is the cost still to come from state $x$), from [The LQR](06-linear-quadratic-regulator.md) | $K$ = (−57.3003, −8.3351) | a stiffer loop |
+| $M$, $\Sigma$ | the Kalman gain, and the error covariance (how widely the estimation error spreads) just after a correction, from [The Kalman filter](07-kalman-filter.md) | $M$ = (0.1879, 1.9529); rms angle error 0.1242° | bigger $M$: more trust in each reading |
 | $z_k$, $\hat x_k$, $e_k$ | the filter's prediction before the reading, its estimate after, and the prediction error $x_k - z_k$ | — | — |
 | $\Phi$, $I$, $\lambda$, $j$ | the 4 × 4 loop matrix, the identity, a pole (often complex), and $j = \sqrt{-1}$ | poles $0.9305 \pm 0.0540\,j$ and $0.8970 \pm 0.0865\,j$ | — |
 | $J$, $\kappa$ | average cost per tick, $E[100\,\theta^2 + 0.04\,u^2]$; the real motor's strength as a multiple of the model's | 8.2888 × 10⁻³; $\kappa$ = 1 | $\kappa$ far from 1: closer to the edge |
@@ -75,7 +81,7 @@ The filter's gain $M$ matches the Kalman filter card's settled gain to the four 
 ### When it holds
 
 - **The plant is linear.** This model is the upright pole linearised ([Linearisation](02-linearisation-about-an-equilibrium.md)). At large tilts the filter's model is wrong and the poles no longer split; the nonlinear filters are on [Filtering a nonlinear plant](08-extended-kalman-filter-and-nonlinear-estimation.md).
-- **The price is quadratic and the noise Gaussian, with known sizes.** With hard limits on the motor, the best command is no longer the gain times the estimate, so certainty equivalence fails, although the filter is still the right one; [Predictive control](10-model-predictive-control.md) handles limits. With the wrong noise sizes the filter is no longer best and the cost rises: 1492.5533 × 10⁻³ for the recovery filter below, against 8.2888.
+- **The price is quadratic and the noise Gaussian, with known sizes.** With hard limits on the motor, the best command is no longer the gain times the estimate, so certainty equivalence (acting on the estimate as if it were the truth) fails, although the filter is still the right one. [Predictive control](10-model-predictive-control.md) handles limits. With the wrong noise sizes the filter is no longer best and the cost rises: 1492.5533 × 10⁻³ for the recovery filter below, against 8.2888.
 - **The model is exactly the plant.** The pole split relies on the filter's copy of $B$ matching the real motor. A motor three times stronger breaks the split and, here, the loop.
 - **Every unstable motion can be steered and seen.** The angle reading reveals both angle and rate, so both designs exist ([Can you steer every state, and can you see every state](03-controllability-and-observability.md)). The cart's position could not be estimated from the angle alone, which is one reason it is left out.
 
@@ -109,7 +115,11 @@ The checks reach this a second way, with no triangle in sight. They build the 4 
 
 The pole split says the join is *stable*. Optimality, meaning no other controller using the same readings does better, needs one more idea: **certainty equivalence**, acting on the best estimate as if it were the truth.
 
-The regulator's Riccati equation lets the expected cost be rewritten, by completing the square, as a part no controller can change plus $s\,E\big[(u_k + K x_k)^2\big]$. The controller does not know $x_k$, only the readings, so split $x_k$ into the estimate plus the error. The error's size $\Sigma$ does not depend on $u$ (Step 1). The only part the controller can touch is then $(u_k + K\hat x_k)^2$, which is zero at $u_k = -K\hat x_k$. What is left over is the second term of the cost formula, smallest when $\Sigma$ is smallest, which is the Kalman filter's job.
+The regulator's Riccati equation (the equation on the LQR card that fixes $P$) lets the expected cost be rewritten, by completing the square, as a part no controller can change plus $s\,E\big[(u_k + K x_k)^2\big]$.
+
+The controller does not know $x_k$, only the readings, so split $x_k$ into the estimate plus the error. The error's size $\Sigma$ does not depend on $u$ (Step 1).
+
+The only part the controller can touch is then $(u_k + K\hat x_k)^2$, which is zero at $u_k = -K\hat x_k$. What is left over is the second term of the cost formula, smallest when $\Sigma$ is smallest, which is the Kalman filter's job.
 
 <details>
 <summary>The cost argument in a little more detail</summary>
@@ -122,7 +132,9 @@ Average over the noise, in the steady state. Since $x_{k+1} = Ax_k + Bu_k + Bd_k
 
 </details>
 
-The checks compute the cost three ways: this formula; the steady covariance of the whole 4 × 4 loop, found by iterating $S \leftarrow \Phi S \Phi^{\mathsf T} + (\text{noise})$; and a 200,000-tick simulation with home-made random numbers. The first two agree to every printed digit, 8.2888 × 10⁻³, and the simulation lands at 8.3566 × 10⁻³. They also try a gentler gain, $0.8K$, and a harder one, $1.2K$, on the same filter: both cost more, as certainty equivalence says.
+The checks compute the cost three ways: this formula; the steady covariance of the whole 4 × 4 loop, found by iterating $S \leftarrow \Phi S \Phi^{\mathsf T} + (\text{noise})$; and a 200,000-tick simulation with home-made random numbers. The first two agree to every printed digit, 8.2888 × 10⁻³, and the simulation lands at 8.3566 × 10⁻³.
+
+They also try a gentler gain, $0.8K$, and a harder one, $1.2K$, on the same filter: both cost more, as certainty equivalence says.
 
 ### What the split does *not* say about the response
 
@@ -139,11 +151,13 @@ xychart-beta
     line [2.865, 2.130, 1.062, 0.358, 0.037, -0.057, -0.056, -0.033, -0.013, -0.003, 0.001, 0.001, 0.001]
 ```
 
-Orange: the true angle under LQG. Green: the filter's estimate of it. Dark blue: the angle under the LQR with the state seen exactly. The first reading lifts the estimate only to 0.538°. At 0.1 s the estimate has overshot to 2.192° while the pole is already at 1.854°, so the regulator pushes too hard, and the pole swings through to −1.369° at 0.3 s. The LQR alone is at −0.057° at its lowest charted point, 0.5 s. Both settle within a second, but the response carries the filter's speed as well as the regulator's.
+Orange: the true angle under LQG. Green: the filter's estimate of it. Dark blue: the angle under the LQR with the state seen exactly.
+
+The first reading lifts the estimate only to 0.538°. At 0.1 s the estimate has overshot to 2.192° while the pole is already at 1.854°, so the regulator pushes too hard, and the pole swings through to −1.369° at 0.3 s. The LQR alone is at −0.057° at its lowest charted point, 0.5 s. Both settle within a second, but the response carries the filter's speed as well as the regulator's.
 
 ### Step 4: robustness is not separated
 
-The margins on [Nyquist and margins](../03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md) ask how far a loop is from instability. Here the question is how strong or weak the real motor could be, as a multiple $\kappa$ of the model's, before the loop goes unstable. Each edge is found by a stability test on the characteristic polynomial, the Schur–Cohn–Jury test (it checks that every root lies inside the unit circle without finding any root), then halving the interval until the edge is pinned down.
+The margins on [Nyquist and margins](../03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md) ask how far a loop is from instability. Here the question is how strong or weak the real motor could be, as a multiple $\kappa$ of the model's, before the loop goes unstable. Each edge is found by a stability test on the characteristic polynomial, the Schur–Cohn–Jury test, then by halving the interval until the edge is pinned down. The test checks that every root has size below 1, so every error dies away, without finding any root.
 
 ```
 strongest motor that still balances (multiple of the model's)
@@ -152,7 +166,11 @@ LQG, the joined loop       ████████                             
 LQG, recovery filter       ██████████████████████████████████          12.5304
 ```
 
-The weakest motor that still balances is 0.1712, 0.3630 and 0.1795 times the model's, in the same order. The LQR card's guarantee, any scale from one half to infinity, is for a loop that acts continuously; acting once per tick, this regulator's range is 0.1712 to 14.7138, finite at the top because one tick of a hard enough push overshoots. Why the join loses so much: with a motor of strength $\kappa$, the plant receives $\kappa B u_k$ while the filter still adds $B u_k$ to its copy. The $u$ terms in Step 1 no longer cancel, the zero block fills in, and the regulator's gain now feeds the filter's error. Nothing about the two designs taken separately predicts what that coupling does. In 1978 a two-page paper showed how bad it can get: there are LQG loops with arbitrarily small margins, however comfortable the regulator and the filter look alone.
+The weakest motor that still balances is 0.1712, 0.3630 and 0.1795 times the model's, in the same order. The LQR card's guarantee, any scale from one half to infinity, is for a loop that acts continuously. Acting once per tick, this regulator's range is 0.1712 to 14.7138, finite at the top because one tick of a hard enough push overshoots.
+
+Why the join loses so much: with a motor of strength $\kappa$, the plant receives $\kappa B u_k$ while the filter still adds $B u_k$ to its copy. The $u$ terms in Step 1 no longer cancel, the zero block fills in, and the regulator's gain now feeds the filter's error. Nothing about the two designs taken separately predicts what that coupling does.
+
+In 1978 a two-page paper showed how bad it can get: there are LQG loops with arbitrarily small margins, however comfortable the regulator and the filter look alone.
 
 The standard repair is **loop transfer recovery**: design the filter as if huge shoves entered exactly where the motor does, here 100 m/s² instead of 0.613125. The filter then trusts each reading almost fully, and the joined loop's margins move back towards the regulator's: 0.1795 to 12.5304. The price is noise. That filter passes the encoder's noise straight to the motor, and the cost per tick jumps from 8.2888 × 10⁻³ to 1492.5533 × 10⁻³.
 
@@ -613,6 +631,138 @@ ALL CHECKS PASS
 ```
 
 The two outputs are identical, line for line.
+
+### Lean
+
+Lean proves the pole split, the filter-error step and the completed square for any linear plant and any gains, and checks the card's pole.
+
+- Take any linear plant $A$, $B$, $C$, any gains $K$ and $M$, and the loop matrix $\Phi$. Then $\det(\lambda I - \Phi)$ is the regulator's polynomial times the filter's, as in the separation formula.
+- Take any command $u$, shove $d$ and encoder noise $v$. Then the next prediction error is $A(I - MC)\,e - AMv + Bd$, with no $u$ in it.
+- Take one motor input, the LQR gain $K$, and a cost-to-go matrix $P$ equal to its transpose and solving the Riccati equation. Then the completed square in the cost fold of Step 3 holds for every state $x$ and command $u$.
+- Take $g = 9.81$ m/s² and $l = 0.613125$ m. Then $g/l = 16$ exactly, and the open-loop pole $\sqrt{16}$ is 4 rad/s.
+
+The averaging over noise, the gains' values, the costs, the simulation and the margins are left to the Python and Rust checks.
+
+```lean
+-- LQG: feeding the filter's estimate into the regulator's gain gives a loop whose poles are exactly the regulator's poles together with the filter's poles, because the filter's error ignores the steering.
+import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+import Mathlib.Analysis.Real.Sqrt
+import Mathlib.Tactic.NormNum
+
+open Matrix
+
+/-- The separation principle, for the poles. Take any linear plant `x ↦ A x + B u`, read through
+`y = C x`, any regulator gain `K` and any filter gain `M`. The controller corrects its prediction
+`z` by the reading, `x̂ = z + M (y - C z)`, commands `u = -K x̂`, and predicts the next state as
+`A x̂ + B u`, using the same `B` as the plant. Let `Φ` be the matrix that steps the plant state and
+the prediction forward together. Then the characteristic polynomial of `Φ` is the regulator's,
+`det(λI - (A - BK))`, times the filter's, `det(λI - A(I - MC))`: the joined loop's poles are the
+two designs' poles side by side, and nothing else. -/
+theorem lqg_loop_poles_eq_regulator_poles_and_filter_poles
+    {n m p : Type*} [Fintype n] [DecidableEq n] [Fintype m] [Fintype p]
+    (A : Matrix n n ℝ) (B : Matrix n m ℝ) (C : Matrix p n ℝ)
+    (K : Matrix m n ℝ) (M : Matrix n p ℝ) (Φ : Matrix (n ⊕ n) (n ⊕ n) ℝ)
+    (hΦ : ∀ x z : n → ℝ,
+      let xhat := z + M *ᵥ (C *ᵥ x - C *ᵥ z)
+      let u := -(K *ᵥ xhat)
+      Φ *ᵥ Sum.elim x z = Sum.elim (A *ᵥ x + B *ᵥ u) (A *ᵥ xhat + B *ᵥ u)) :
+    Φ.charpoly = (A - B * K).charpoly * (A * (1 - M * C)).charpoly := by
+  set T : Matrix (n ⊕ n) (n ⊕ n) ℝ := fromBlocks 1 0 1 (-1) with hT
+  set U : Matrix (n ⊕ n) (n ⊕ n) ℝ :=
+    fromBlocks (A - B * K) (B * K * (1 - M * C)) 0 (A * (1 - M * C)) with hU
+  have hTT : T * T = 1 := by
+    rw [hT, fromBlocks_multiply]; simp [fromBlocks_one]
+  have hΦU : Φ = T * (U * T) := by
+    rw [ext_iff_mulVec]
+    intro v
+    rw [← Sum.elim_comp_inl_inr v, hΦ, ← mulVec_mulVec, ← mulVec_mulVec, hT, hU]
+    simp only [fromBlocks_mulVec, Sum.elim_comp_inl, Sum.elim_comp_inr]
+    congr 1
+    · simp only [mulVec_add, mulVec_sub, mulVec_neg, sub_mulVec, add_mulVec, ← mulVec_mulVec,
+        one_mulVec, Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_one, zero_mulVec, neg_mulVec, mulVec_zero]
+      abel
+    · simp only [mulVec_add, mulVec_sub, mulVec_neg, sub_mulVec, add_mulVec, ← mulVec_mulVec,
+        one_mulVec, Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_one, zero_mulVec, neg_mulVec, mulVec_zero]
+      abel
+  rw [hΦU, charpoly_mul_comm, Matrix.mul_assoc, hTT, Matrix.mul_one, hU,
+    charpoly_fromBlocks_zero₂₁]
+
+/-- The filter's error does not care what the motor does. With shove `d` and encoder noise `v`,
+the plant steps to `A x + B u + B d`, the reading is `y = C x + v`, the estimate is
+`x̂ = z + M (y - C z)` and the next prediction is `A x̂ + B u`. Whatever command `u` is applied,
+the new prediction error is `A(I - MC) e - A M v + B d`, where `e = x - z`: no `u` appears. -/
+theorem lqg_prediction_error_ignores_command
+    {n m p : Type*} [Fintype n] [DecidableEq n] [Fintype m] [Fintype p]
+    (A : Matrix n n ℝ) (B : Matrix n m ℝ) (C : Matrix p n ℝ) (M : Matrix n p ℝ)
+    (x z : n → ℝ) (u d : m → ℝ) (v : p → ℝ) :
+    let y := C *ᵥ x + v
+    let xhat := z + M *ᵥ (y - C *ᵥ z)
+    (A *ᵥ x + B *ᵥ u + B *ᵥ d) - (A *ᵥ xhat + B *ᵥ u)
+      = (A * (1 - M * C)) *ᵥ (x - z) - (A * M) *ᵥ v + B *ᵥ d := by
+  intro y xhat
+  simp only [y, xhat, mulVec_add, mulVec_sub, sub_mulVec, ← mulVec_mulVec, one_mulVec,
+    Matrix.mul_sub, Matrix.mul_one]
+  abel
+
+/-- Completing the square with the regulator's Riccati equation (one motor input, as on the card).
+Let `P` be the regulator's cost-to-go matrix (a symmetric matrix, since `xᵀ P x` is a cost),
+`s = R + Bᵀ P B`, `K = s⁻¹ Bᵀ P A` the LQR gain, and suppose `P = Q + Aᵀ P A - Kᵀ s K`. Then for
+every state `x` and command `u`,
+`xᵀ Q x + R u² = xᵀ P x - (A x + B u)ᵀ P (A x + B u) + s (u + K x)²`.
+This is the step that makes `u = -K x̂` the best command once only the estimate is known. -/
+theorem lqr_riccati_completes_the_square
+    {n : Type*} [Fintype n] [DecidableEq n]
+    (A P Q : Matrix n n ℝ) (b K : n → ℝ) (R s : ℝ)
+    (hsym : Pᵀ = P)
+    (hs : s = R + b ⬝ᵥ (P *ᵥ b))
+    (hK : s • K = b ᵥ* (P * A))
+    (hP : P = Q + Aᵀ * P * A - s • vecMulVec K K)
+    (x : n → ℝ) (u : ℝ) :
+    x ⬝ᵥ (Q *ᵥ x) + R * u ^ 2
+      = x ⬝ᵥ (P *ᵥ x) - (A *ᵥ x + u • b) ⬝ᵥ (P *ᵥ (A *ᵥ x + u • b)) + s * (u + K ⬝ᵥ x) ^ 2 := by
+  have hswap : ∀ v w : n → ℝ, v ⬝ᵥ (P *ᵥ w) = w ⬝ᵥ (P *ᵥ v) := by
+    intro v w
+    rw [dotProduct_mulVec, ← hsym, vecMul_transpose, hsym, dotProduct_comm]
+  have h1 : x ⬝ᵥ (P *ᵥ x) = x ⬝ᵥ (Q *ᵥ x) + (A *ᵥ x) ⬝ᵥ (P *ᵥ (A *ᵥ x))
+      - s * (K ⬝ᵥ x) ^ 2 := by
+    conv_lhs => rw [hP]
+    rw [sub_mulVec, add_mulVec, smul_mulVec, vecMulVec_mulVec, dotProduct_sub,
+      dotProduct_add, dotProduct_smul, ← mulVec_mulVec, ← mulVec_mulVec, dotProduct_mulVec x Aᵀ,
+      vecMul_transpose]
+    simp only [MulOpposite.smul_eq_mul_unop, MulOpposite.unop_op, smul_eq_mul, dotProduct_smul]
+    rw [dotProduct_comm x K]
+    ring
+  have h2 : s * (K ⬝ᵥ x) = b ⬝ᵥ (P *ᵥ (A *ᵥ x)) := by
+    have := congrArg (· ⬝ᵥ x) hK
+    simp only [smul_dotProduct, smul_eq_mul] at this
+    rw [this, ← dotProduct_mulVec, mulVec_mulVec]
+  have h3 : (A *ᵥ x + u • b) ⬝ᵥ (P *ᵥ (A *ᵥ x + u • b))
+      = (A *ᵥ x) ⬝ᵥ (P *ᵥ (A *ᵥ x)) + 2 * u * (b ⬝ᵥ (P *ᵥ (A *ᵥ x)))
+        + u ^ 2 * (b ⬝ᵥ (P *ᵥ b)) := by
+    rw [mulVec_add, mulVec_smul, add_dotProduct, dotProduct_add, dotProduct_add,
+      smul_dotProduct, smul_dotProduct, dotProduct_smul, dotProduct_smul, hswap (A *ᵥ x) b]
+    simp only [smul_eq_mul]
+    ring
+  rw [h1, h3, ← h2, hs]
+  ring
+
+-- The card's pole: g = 9.81 m/s², l = 0.613125 m, so g/l = 16 exactly, and the open-loop pole is 4 rad/s.
+example : ((981 : ℚ) / 100) / (981 / 1600) = 16 := by norm_num
+example : Real.sqrt 16 = 4 := by
+  rw [show (16 : ℝ) = 4 ^ 2 by norm_num]; exact Real.sqrt_sq (by norm_num)
+
+#print axioms lqg_loop_poles_eq_regulator_poles_and_filter_poles
+#print axioms lqg_prediction_error_ignores_command
+#print axioms lqr_riccati_completes_the_square
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'lqg_loop_poles_eq_regulator_poles_and_filter_poles' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lqg_prediction_error_ignores_command' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lqr_riccati_completes_the_square' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

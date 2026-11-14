@@ -28,7 +28,7 @@ flowchart LR
     C --> D2["Detail, level 3<br/>64 numbers"]
 ```
 
-Each rung halves the resolution. The detail box beside it holds exactly what the halving threw away, so the bottom coarse picture plus the three detail boxes, 64 + 64 + 128 + 256 numbers, rebuild the 512 pixels exactly.
+Each rung halves the resolution. The detail box beside it holds exactly what the halving threw away. So the bottom coarse picture plus the three detail boxes, 64 + 64 + 128 + 256 numbers, rebuild the 512 pixels exactly.
 
 ---
 
@@ -96,7 +96,9 @@ The patterns nest: a box is two half-width boxes side by side, and an up-down st
 <details>
 <summary>The same ladder as a pair of filters and a rate change</summary>
 
-Each rung is a two-tap low-pass filter with weights $(1/\sqrt2, 1/\sqrt2)$ and a two-tap high-pass filter with weights $(1/\sqrt2, -1/\sqrt2)$ ([Digital filters](04-digital-filters-fir-and-iir.md)), each followed by keeping one output in two ([Changing rate](05-resampling-decimation-and-interpolation.md)). Neither short filter is a good low-pass or high-pass, so each half-rate channel is full of aliases: tones folded down by dropping every second sample. The aliases cancel exactly when the two channels are recombined, because the rebuild in Step 1 recovers each pair $a$ and $b$ without error. A pair of filters with this property is a **perfect-reconstruction filter bank**. Longer filters with the same property exist; the Daubechies family is the best known, and its four-tap member keeps straight-line ramps out of the details, which Haar does not. Their construction is proved in the harmonic analysis wing.
+A low-pass filter keeps slow changes and removes fast ones; a high-pass filter does the opposite. Each rung is a two-tap low-pass filter with weights $(1/\sqrt2, 1/\sqrt2)$ and a two-tap high-pass filter with weights $(1/\sqrt2, -1/\sqrt2)$ ([Digital filters](04-digital-filters-fir-and-iir.md)). Each is followed by keeping one output in two ([Changing rate](05-resampling-decimation-and-interpolation.md)). Neither short filter is a good low-pass or high-pass, so each half-rate channel is full of aliases: tones folded down by dropping every second sample. The aliases cancel exactly when the two channels are recombined, because the rebuild in Step 1 recovers each pair $a$ and $b$ without error.
+
+A pair of filters with this property is a **perfect-reconstruction filter bank**. Longer filters with the same property exist; the Daubechies family is the best known, and its four-tap member keeps straight-line ramps out of the details, which Haar does not. Their construction is proved in the harmonic analysis wing.
 
 </details>
 
@@ -108,7 +110,7 @@ The check runs 2000 rows of pure noise with $\sigma$ = 1 through the ladder. The
 
 ### Step 4: the page is a few large details
 
-Flat paper has no detail at any level: a pair of equal pixels has difference zero. An edge between paper and ink lands inside at most one pattern per level, so it makes at most one nonzero detail per level, of size up to about the contrast, 165 grey levels, times a factor set by where the edge falls and how wide the pattern is. The clean row's details are almost all exactly zero. The few that are not are large.
+Flat paper has no detail at any level: a pair of equal pixels has difference zero. An edge between paper and ink lands inside at most one pattern per level. So it makes at most one nonzero detail per level. That detail is up to about the contrast, 165 grey levels, times a factor set by where the edge falls and how wide the pattern is. The clean row's details are almost all exactly zero. The few that are not are large.
 
 A row with this property is called **sparse** in the wavelet basis. [Compressed sensing](10-compressed-sensing-in-outline.md) builds on the same fact.
 
@@ -118,12 +120,12 @@ Noise coefficients are bell-curve draws of size $\sigma$. The largest of $N$ suc
 
 The noise level itself comes from the data. Most level-1 details are pure noise, since most pixel pairs do not straddle an edge. The median of their sizes is robust to the few edge details, and for a bell curve the median size is 0.6745 $\sigma$. Here $\hat\sigma$ = 17.82 against a true 16: the edges still push it up a little, so $T$ = 62.95 is slightly cautious.
 
-A 1994 theorem (the fourth source below) shows that, for any signal, the soft form of this rule (see What breaks) comes within a factor of about $2\ln N$ of an oracle that knows which coefficients are signal. On a sparse signal the oracle's error is small, so the soft rule's is too. This card quotes that bound for the soft rule only. For the hard rule used here, the check measures the result directly, and on this page it does far better than the soft rule. The proof belongs to the harmonic analysis wing.
+A 1994 theorem (the fourth source below) is about the soft form of this rule (see What breaks). It shows that, for any signal, the soft rule comes within a factor of about $2\ln N$ of an oracle that knows which coefficients are signal. On a sparse signal the oracle's error is small, so the soft rule's is too. This card quotes that bound for the soft rule only. For the hard rule used here, the check measures the result directly, and on this page it does far better than the soft rule. The proof belongs to the harmonic analysis wing.
 
 <details>
 <summary>Why the largest of N bell-curve draws is about root of 2 ln N</summary>
 
-The chance that one standard bell-curve draw exceeds $t$ is about $e^{-t^2/2}$, up to a slowly varying factor. With $N$ draws, the expected number above $t$ is about $N e^{-t^2/2}$. Set that to 1 and solve: $t^2 = 2\ln N$. The check integrates the exact tail by Simpson's rule to get the 369.2 above.
+The chance that one standard bell-curve draw exceeds $t$ is about $e^{-t^2/2}$, up to a slowly varying factor. With $N$ draws, the expected number above $t$ is about $N e^{-t^2/2}$. Set that to 1 and solve: $t^2 = 2\ln N$. The check integrates the exact tail by Simpson's rule (a standard way to add up the area under a curve from evenly spaced points) to get the 369.2 above.
 
 </details>
 
@@ -162,7 +164,7 @@ xychart-beta
     line [214, 214, 214, 214, 226, 226, 52, 52, 56, 56, 221, 221, 217, 217, 217, 217, 239, 34, 49, 49, 40, 220, 223, 223, 231, 231, 231, 231, 43, 43, 43, 43, 229, 229, 229, 229, 229, 229, 229, 229, 239, 54, 60, 60, 38, 201, 230, 230]
 ```
 
-The orange line is the clean page: paper at 215, four ink stems at 50. The green line is the scan. The dark line is the denoised row: edges as sharp as the scan's, flat runs where the paper was, and leftover noise on the pixels right at an edge. A flat run can still sit well off the paper's 215, as at 231, the average of the four noisy paper pixels there, because the coarse value and the kept level-3 edge detail both carry their noise.
+The orange line is the clean page: paper at 215, four ink stems at 50. The green line is the scan. The dark line is the denoised row: edges as sharp as the scan's, flat runs where the paper was, and leftover noise on the pixels right at an edge. A flat run can still sit well off the paper's 215, as at 231, the average of the four noisy paper pixels there. The reason: the coarse value and the kept level-3 edge detail both carry their noise.
 
 ### What breaks if you drop a piece
 
@@ -188,7 +190,7 @@ error against the clean page, grey levels (20 marks = 27.22)
 
 ## Code, from first principles, and it actually runs
 
-The script draws the clean row, adds scanner noise (a SplitMix64 generator, turned into bell-curve draws by the Box–Muller recipe), runs the Haar ladder, thresholds and rebuilds. Four independent roads check it: the fast ladder against 512 dot products with the explicit Haar patterns; the noise size per level, on 2000 rows of pure noise, against the 1 that Step 3 predicts; the count of noise details above the multiplier against the bell curve's tail, integrated by Simpson's rule; and the denoised error from pixels against the same error from coefficients.
+The script draws the clean row, adds scanner noise (a SplitMix64 random-number generator, turned into bell-curve draws by the Box–Muller recipe), runs the Haar ladder, thresholds and rebuilds. Four independent roads check it: the fast ladder against 512 dot products with the explicit Haar patterns; the noise size per level, on 2000 rows of pure noise, against the 1 that Step 3 predicts; the count of noise details above the multiplier against the bell curve's tail, integrated by Simpson's rule; and the denoised error from pixels against the same error from coefficients.
 
 ### Python
 
@@ -576,6 +578,318 @@ chart, denoised: 214, 214, 214, 214, 226, 226, 52, 52, 56, 56, 221, 221, 217, 21
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the ladder facts from Why it works for every row, and checks the worked numbers.
+
+- Take a row of $N$ pixels, with $N$ a multiple of $2^J$. Then running the pairing backwards from $s_J$ and the details returns every pixel exactly.
+- Take the same row. Then its energy in pixels equals the energy of the coarse picture $s_J$ plus the energy of all the details.
+- Suppose the pixel noise values are independent, each with the same standard deviation $\sigma$. Then every detail and every coarse number of the noise has standard deviation $\sigma$ too.
+- Suppose the row is constant across the $2^j$ pixels that the detail $d_j[k]$ looks at. Then $d_j[k]$ is zero.
+- The row of 512 pixels is $2^3$ times 64, so three rungs fit with no padding.
+- The four boxes hold 64, 64, 128 and 256 numbers, which make 512.
+- For pixels 239 and 34, the squared sum plus the squared difference is twice the sum of their squares.
+- With their details zeroed, 52 and 45 come back as 48.5 twice, and 225 and 220 as 222.5 twice.
+- The kept details, 14, 26 and 21, make 61 of the 448.
+- Ink is 165 grey levels below paper, and the pencil line should read 175.
+
+The scan's noise, the threshold $T$, the errors and the 2000 pure-noise rows are left to the Python and Rust checks.
+
+```lean
+-- Wavelets: the Haar ladder rebuilds every row exactly and keeps its energy, independent pixel noise of one size stays that size in every coefficient, and flat stretches give zero detail.
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Probability.Moments.Variance
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Algebra.Order.Interval.Finset.SuccPred
+
+open Finset MeasureTheory ProbabilityTheory
+
+/-- One rung, the coarse half: s[k] = (x[2k] + x[2k+1]) / √2. -/
+noncomputable def haarSum (x : ℕ → ℝ) (k : ℕ) : ℝ := (x (2 * k) + x (2 * k + 1)) / Real.sqrt 2
+
+/-- One rung, the detail half: d[k] = (x[2k] - x[2k+1]) / √2. -/
+noncomputable def haarDiff (x : ℕ → ℝ) (k : ℕ) : ℝ := (x (2 * k) - x (2 * k + 1)) / Real.sqrt 2
+
+/-- The coarse picture at level j: s_0 = x, and s_j is the pair sums of s_(j-1). -/
+noncomputable def coarse (x : ℕ → ℝ) : ℕ → ℕ → ℝ
+  | 0 => x
+  | j + 1 => haarSum (coarse x j)
+
+/-- The detail at level j (j = 1 is the finest): d_j is the pair differences of s_(j-1). -/
+noncomputable def detail (x : ℕ → ℝ) (j : ℕ) : ℕ → ℝ := haarDiff (coarse x (j - 1))
+
+/-- Run one rung backwards: s_(j-1)[2k] = (s_j[k] + d_j[k]) / √2 and
+s_(j-1)[2k+1] = (s_j[k] - d_j[k]) / √2. -/
+noncomputable def haarMerge (s d : ℕ → ℝ) (n : ℕ) : ℝ :=
+  if n % 2 = 0 then (s (n / 2) + d (n / 2)) / Real.sqrt 2
+  else (s (n / 2) - d (n / 2)) / Real.sqrt 2
+
+/-- Rebuild from the level-J coarse picture s and the details d_J, ..., d_1, coarsest first. -/
+noncomputable def rebuild (d : ℕ → ℕ → ℝ) : ℕ → (ℕ → ℝ) → (ℕ → ℝ)
+  | 0, s => s
+  | J + 1, s => rebuild d J (haarMerge s (d (J + 1)))
+
+
+lemma haar_merge_inverse (c : ℕ → ℝ) : haarMerge (haarSum c) (haarDiff c) = c := by
+  funext n
+  have h2 : Real.sqrt 2 * Real.sqrt 2 = 2 := Real.mul_self_sqrt (by norm_num)
+  unfold haarMerge haarSum haarDiff
+  rcases Nat.even_or_odd' n with ⟨k, rfl | rfl⟩
+  · have h1 : (2 * k) % 2 = 0 := by omega
+    have h3 : 2 * k / 2 = k := by omega
+    simp only [h1, h3, ↓reduceIte]
+    rw [← add_div, div_div, h2]
+    ring
+  · have h1 : ¬ (2 * k + 1) % 2 = 0 := by omega
+    have h3 : (2 * k + 1) / 2 = k := by omega
+    simp only [h1, h3, ↓reduceIte]
+    rw [← sub_div, div_div, h2]
+    ring
+
+lemma haar_pair_energy (c : ℕ → ℝ) (M : ℕ) :
+    ∑ n ∈ range (2 * M), c n ^ 2 =
+      ∑ k ∈ range M, haarSum c k ^ 2 + ∑ k ∈ range M, haarDiff c k ^ 2 := by
+  induction M with
+  | zero => simp
+  | succ M ih =>
+    rw [show 2 * (M + 1) = 2 * M + 1 + 1 by ring, sum_range_succ, sum_range_succ, ih,
+      sum_range_succ, sum_range_succ]
+    have : haarSum c M ^ 2 + haarDiff c M ^ 2 = c (2 * M) ^ 2 + c (2 * M + 1) ^ 2 := by
+      unfold haarSum haarDiff
+      rw [div_pow, div_pow, Real.sq_sqrt (by norm_num)]
+      ring
+    linarith
+
+lemma haar_energy (x : ℕ → ℝ) (J : ℕ) : ∀ m : ℕ, ∑ n ∈ range (2 ^ J * m), x n ^ 2 =
+    ∑ k ∈ range m, coarse x J k ^ 2 +
+      ∑ j ∈ Icc 1 J, ∑ k ∈ range (2 ^ (J - j) * m), detail x j k ^ 2 := by
+  induction J with
+  | zero => intro m; simp [coarse]
+  | succ J ih =>
+    intro m
+    rw [show 2 ^ (J + 1) * m = 2 ^ J * (2 * m) by ring, ih (2 * m), haar_pair_energy,
+      ← Finset.insert_Icc_right_eq_Icc_add_one (by omega : 1 ≤ J + 1),
+      sum_insert (by simp)]
+    have hd : detail x (J + 1) = haarDiff (coarse x J) := rfl
+    have hc : coarse x (J + 1) = haarSum (coarse x J) := rfl
+    have hsum : ∑ j ∈ Icc 1 J, ∑ k ∈ range (2 ^ (J - j) * (2 * m)), detail x j k ^ 2 =
+        ∑ j ∈ Icc 1 J, ∑ k ∈ range (2 ^ (J + 1 - j) * m), detail x j k ^ 2 := by
+      apply sum_congr rfl
+      intro j hj
+      rw [mem_Icc] at hj
+      have : 2 ^ (J - j) * (2 * m) = 2 ^ (J + 1 - j) * m := by
+        rw [show J + 1 - j = (J - j) + 1 by omega, pow_succ]; ring
+      rw [this]
+    rw [hsum, hd, hc, Nat.sub_self, pow_zero, one_mul]
+    ring
+
+lemma haar_rebuild (x : ℕ → ℝ) (J : ℕ) : rebuild (detail x) J (coarse x J) = x := by
+  induction J with
+  | zero => rfl
+  | succ J ih =>
+    show rebuild (detail x) J (haarMerge (haarSum (coarse x J)) (haarDiff (coarse x J))) = x
+    rw [haar_merge_inverse, ih]
+
+lemma coarse_flat (x : ℕ → ℝ) (c : ℝ) (i : ℕ) : ∀ k,
+    (∀ n, 2 ^ i * k ≤ n → n < 2 ^ i * (k + 1) → x n = c) → coarse x i k = c * Real.sqrt 2 ^ i := by
+  induction i with
+  | zero => intro k h; simpa [coarse] using h k (by simp) (by simp)
+  | succ i ih =>
+    intro k h
+    have e1 : 2 ^ (i + 1) * k = 2 ^ i * (2 * k) := by ring
+    have e2 : 2 ^ (i + 1) * (k + 1) = 2 ^ i * (2 * k + 1 + 1) := by ring
+    rw [e1, e2] at h
+    have h0 := ih (2 * k) (fun n h1 h2 => h n h1
+      (Nat.lt_of_lt_of_le h2 (Nat.mul_le_mul_left _ (by omega))))
+    have h1 := ih (2 * k + 1) (fun n h1 h2 => h n
+      (le_trans (Nat.mul_le_mul_left _ (by omega)) h1) h2)
+    show (coarse x i (2 * k) + coarse x i (2 * k + 1)) / Real.sqrt 2 = _
+    rw [h0, h1, pow_succ]
+    have hs : Real.sqrt 2 ≠ 0 := by positivity
+    have h2 : Real.sqrt 2 * Real.sqrt 2 = 2 := Real.mul_self_sqrt (by norm_num)
+    have e : c * (Real.sqrt 2 ^ i * Real.sqrt 2) * Real.sqrt 2 =
+        c * Real.sqrt 2 ^ i * (Real.sqrt 2 * Real.sqrt 2) := by ring
+    rw [div_eq_iff hs, e, h2]
+    ring
+
+lemma coarse_formula (x : ℕ → ℝ) (i : ℕ) : ∀ k,
+    coarse x i k = (∑ n ∈ range (2 ^ i), x (2 ^ i * k + n)) / Real.sqrt 2 ^ i := by
+  induction i with
+  | zero => intro k; simp [coarse]
+  | succ i ih =>
+    intro k
+    show (coarse x i (2 * k) + coarse x i (2 * k + 1)) / Real.sqrt 2 = _
+    rw [ih, ih, show 2 ^ (i + 1) = 2 ^ i + 2 ^ i by ring, sum_range_add, pow_succ]
+    have hA : ∑ n ∈ range (2 ^ i), x (2 ^ i * (2 * k) + n) =
+        ∑ n ∈ range (2 ^ i), x ((2 ^ i + 2 ^ i) * k + n) := by
+      apply sum_congr rfl; intro n _; congr 1; ring
+    have hB : ∑ n ∈ range (2 ^ i), x (2 ^ i * (2 * k + 1) + n) =
+        ∑ n ∈ range (2 ^ i), x ((2 ^ i + 2 ^ i) * k + (2 ^ i + n)) := by
+      apply sum_congr rfl; intro n _; congr 1; ring
+    rw [hA, hB]
+    have hs : Real.sqrt 2 ≠ 0 := by positivity
+    field_simp
+
+lemma detail_formula (x : ℕ → ℝ) (i k : ℕ) :
+    detail x (i + 1) k = ∑ n ∈ range (2 ^ (i + 1)),
+      ((if n < 2 ^ i then 1 else -1) / Real.sqrt 2 ^ (i + 1)) * x (2 ^ (i + 1) * k + n) := by
+  show (coarse x i (2 * k) - coarse x i (2 * k + 1)) / Real.sqrt 2 = _
+  rw [coarse_formula, coarse_formula, show 2 ^ (i + 1) = 2 ^ i + 2 ^ i by ring, sum_range_add]
+  have hA : ∑ n ∈ range (2 ^ i),
+      ((if n < 2 ^ i then 1 else -1) / Real.sqrt 2 ^ (i + 1)) * x ((2 ^ i + 2 ^ i) * k + n) =
+      (∑ n ∈ range (2 ^ i), x (2 ^ i * (2 * k) + n)) / Real.sqrt 2 ^ (i + 1) := by
+    rw [sum_div]
+    apply sum_congr rfl; intro n hn
+    rw [mem_range] at hn
+    simp only [hn, ↓reduceIte]
+    rw [show (2 ^ i + 2 ^ i) * k + n = 2 ^ i * (2 * k) + n by ring]
+    ring
+  have hB : ∑ n ∈ range (2 ^ i), ((if 2 ^ i + n < 2 ^ i then 1 else -1) /
+      Real.sqrt 2 ^ (i + 1)) * x ((2 ^ i + 2 ^ i) * k + (2 ^ i + n)) =
+      -((∑ n ∈ range (2 ^ i), x (2 ^ i * (2 * k + 1) + n)) / Real.sqrt 2 ^ (i + 1)) := by
+    rw [sum_div, ← sum_neg_distrib]
+    apply sum_congr rfl; intro n _
+    have hn' : ¬ 2 ^ i + n < 2 ^ i := by omega
+    simp only [hn', ↓reduceIte]
+    rw [show (2 ^ i + 2 ^ i) * k + (2 ^ i + n) = 2 ^ i * (2 * k + 1) + n by ring]
+    ring
+  rw [hA, hB, pow_succ]
+  ring
+
+lemma variance_lin {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω} [IsProbabilityMeasure μ]
+    (X : ℕ → Ω → ℝ) (σ : ℝ) (hind : iIndepFun X μ) (hL2 : ∀ n, MemLp (X n) 2 μ)
+    (hvar : ∀ n, variance (X n) μ = σ ^ 2) (a : ℕ → ℝ) (b M : ℕ) :
+    variance (fun ω => ∑ n ∈ range M, a n * X (b + n) ω) μ = σ ^ 2 * ∑ n ∈ range M, a n ^ 2 := by
+  have : (fun ω => ∑ n ∈ range M, a n * X (b + n) ω) =
+      ∑ n ∈ range M, (fun ω => a n * X (b + n) ω) := by
+    funext ω; simp [Finset.sum_apply]
+  rw [this, IndepFun.variance_sum]
+  · rw [mul_sum]
+    apply sum_congr rfl; intro n _
+    rw [variance_const_mul, hvar]; ring
+  · intro n _; exact (hL2 _).const_mul (a n)
+  · intro n _ m _ hnm
+    have := hind.indepFun (show b + n ≠ b + m by omega)
+    exact this.comp (measurable_const_mul (a n)) (measurable_const_mul (a m))
+
+lemma sqrt2_pow_sq (i : ℕ) : (Real.sqrt 2 ^ i) ^ 2 = 2 ^ i := by
+  rw [← pow_mul, mul_comm, pow_mul, Real.sq_sqrt (by norm_num)]
+
+/-- **The Haar ladder rebuilds the row exactly and keeps its energy.** Take any row x of
+N pixels with N a multiple of 2^J, N = 2^J m. Run J rungs of the ladder: the coarse picture
+s_J (m numbers) and the details d_1, ..., d_J (2^(J-j) m numbers at level j). Running the
+pairing backwards from s_J and the details returns every pixel of x exactly, and the sum of
+squares of the N pixels equals the sum of squares of the N coefficients. -/
+theorem haar_ladder_rebuilds_exactly_and_keeps_energy (x : ℕ → ℝ) (J m N : ℕ)
+    (hN : N = 2 ^ J * m) :
+    rebuild (detail x) J (coarse x J) = x ∧
+      ∑ n ∈ range N, x n ^ 2 =
+        ∑ k ∈ range m, coarse x J k ^ 2 +
+          ∑ j ∈ Icc 1 J, ∑ k ∈ range (2 ^ (J - j) * m), detail x j k ^ 2 := by
+  subst hN
+  exact ⟨haar_rebuild x J, haar_energy x J m⟩
+
+/-- **The noise is the same size in every coefficient.** If the pixel noise values X_0, X_1, ...
+are independent, each with standard deviation σ (variance σ^2, finite), then every detail
+coefficient d_j[k] (j ≥ 1) and every coarse coefficient s_j[k] of the noise also has
+variance σ^2: the √2 keeps the noise from shrinking from rung to rung. -/
+theorem haar_noise_same_size_every_coefficient {Ω : Type*} [MeasurableSpace Ω]
+    {μ : Measure Ω} [IsProbabilityMeasure μ] (X : ℕ → Ω → ℝ) (σ : ℝ)
+    (hind : iIndepFun X μ) (hL2 : ∀ n, MemLp (X n) 2 μ) (hvar : ∀ n, variance (X n) μ = σ ^ 2)
+    (j k : ℕ) :
+    (1 ≤ j → variance (fun ω => detail (fun n => X n ω) j k) μ = σ ^ 2) ∧
+      variance (fun ω => coarse (fun n => X n ω) j k) μ = σ ^ 2 := by
+  constructor
+  · intro hj
+    obtain ⟨i, rfl⟩ : ∃ i, j = i + 1 := ⟨j - 1, by omega⟩
+    simp_rw [detail_formula]
+    rw [variance_lin X σ hind hL2 hvar]
+    have : ∀ n ∈ range (2 ^ (i + 1)),
+        ((if n < 2 ^ i then (1 : ℝ) else -1) / Real.sqrt 2 ^ (i + 1)) ^ 2 = 1 / 2 ^ (i + 1) := by
+      intro n _
+      rw [div_pow, sqrt2_pow_sq]
+      split_ifs <;> norm_num
+    rw [sum_congr rfl this, sum_const, card_range, nsmul_eq_mul]
+    push_cast
+    field_simp
+  · have hf : (fun ω => coarse (fun n => X n ω) j k) =
+        fun ω => ∑ n ∈ range (2 ^ j), (1 / Real.sqrt 2 ^ j) * X (2 ^ j * k + n) ω := by
+      funext ω
+      rw [coarse_formula, sum_div]
+      apply sum_congr rfl; intro n _; ring
+    rw [hf, variance_lin X σ hind hL2 hvar, sum_const, card_range, nsmul_eq_mul, div_pow,
+      sqrt2_pow_sq]
+    push_cast
+    field_simp
+
+/-- **Flat paper has no detail at any level.** If the row is constant across the 2^j pixels
+2^j k, ..., 2^j k + 2^j - 1 that the level-j detail d_j[k] looks at, then d_j[k] = 0. -/
+theorem haar_detail_zero_on_flat_stretch (x : ℕ → ℝ) (c : ℝ) (j k : ℕ) (hj : 1 ≤ j)
+    (hflat : ∀ n, 2 ^ j * k ≤ n → n < 2 ^ j * (k + 1) → x n = c) :
+    detail x j k = 0 := by
+  obtain ⟨i, rfl⟩ : ∃ i, j = i + 1 := ⟨j - 1, by omega⟩
+  have e1 : 2 ^ (i + 1) * k = 2 ^ i * (2 * k) := by ring
+  have e2 : 2 ^ (i + 1) * (k + 1) = 2 ^ i * (2 * k + 1 + 1) := by ring
+  rw [e1, e2] at hflat
+  have h0 := coarse_flat x c i (2 * k) (fun n h1 h2 => hflat n h1
+    (Nat.lt_of_lt_of_le h2 (Nat.mul_le_mul_left _ (by omega))))
+  have h1 := coarse_flat x c i (2 * k + 1) (fun n h1 h2 => hflat n
+    (le_trans (Nat.mul_le_mul_left _ (by omega)) h1) h2)
+  show (coarse x i (2 * k) - coarse x i (2 * k + 1)) / Real.sqrt 2 = 0
+  rw [h0, h1, sub_self, zero_div]
+
+-- The row: 512 pixels = 64 × 8 = 64 × 2^3, so three rungs fit with no padding.
+example : (512 : ℕ) = 2 ^ 3 * 64 := by norm_num
+-- The ladder's boxes: 256, 128 and 64 details plus 64 coarse numbers make the 512 pixels.
+example : 512 / 2 = 256 ∧ 512 / 4 = 128 ∧ 512 / 8 = 64 ∧ 64 + 64 + 128 + 256 = 512 := by norm_num
+-- Energy of one pair, pixels 40 and 41 (239 and 34): (a+b)^2 + (a-b)^2 = 2(a^2 + b^2).
+example : (239 + 34) ^ 2 + (239 - 34) ^ 2 = 2 * (239 ^ 2 + 34 ^ 2) := by norm_num
+-- A paper pixel next to an ink pixel differ by 215 - 50 = 165 grey levels.
+example : 215 - 50 = 165 := by norm_num
+-- The flat pair 52, 45: zero its detail and rebuild; both pixels come back as 97/2 = 48.5.
+example : ((52 + 45) / Real.sqrt 2 + 0) / Real.sqrt 2 = 97 / 2 := by
+  rw [add_zero, div_div, Real.mul_self_sqrt (by norm_num)]; norm_num
+-- The flat pair 225, 220 comes back as 445/2 = 222.5 twice.
+example : ((225 + 220) / Real.sqrt 2 + 0) / Real.sqrt 2 = 445 / 2 := by
+  rw [add_zero, div_div, Real.mul_self_sqrt (by norm_num)]; norm_num
+-- Details kept: 14 + 26 + 21 = 61 of the 256 + 128 + 64 = 448.
+example : 14 + 26 + 21 = 61 ∧ 256 + 128 + 64 = 448 := by norm_num
+-- The pencil line should read 215 - 40 = 175.
+example : 215 - 40 = 175 := by norm_num
+
+#print axioms haar_merge_inverse
+#print axioms haar_pair_energy
+#print axioms haar_energy
+#print axioms haar_rebuild
+#print axioms coarse_flat
+#print axioms coarse_formula
+#print axioms detail_formula
+#print axioms variance_lin
+#print axioms sqrt2_pow_sq
+#print axioms haar_ladder_rebuilds_exactly_and_keeps_energy
+#print axioms haar_noise_same_size_every_coefficient
+#print axioms haar_detail_zero_on_flat_stretch
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'haar_merge_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+'haar_pair_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'haar_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'haar_rebuild' depends on axioms: [propext, Classical.choice, Quot.sound]
+'coarse_flat' depends on axioms: [propext, Classical.choice, Quot.sound]
+'coarse_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+'detail_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+'variance_lin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sqrt2_pow_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'haar_ladder_rebuilds_exactly_and_keeps_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'haar_noise_same_size_every_coefficient' depends on axioms: [propext, Classical.choice, Quot.sound]
+'haar_detail_zero_on_flat_stretch' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to this row, so a change that spoils the cleaning stops the program.
@@ -603,7 +917,7 @@ ALL CHECKS PASS
 - **Document scanning.** Speckle is cleaned before a page is turned into pure black and white for the text reader, so noise is not read as dots and commas.
 - **JPEG 2000 and digital cinema.** The JPEG 2000 image standard uses a wavelet ladder in two dimensions (rows, then columns) and spends its bits on the large coefficients; digital cinema stores every frame this way.
 - **Fingerprint records.** The United States fingerprint-records standard, WSQ (wavelet scalar quantisation), stores scans as rounded wavelet coefficients.
-- **Medical and seismic signals.** ECG traces and seismograms have sharp events on a quiet background, the same few-large-details shape as a printed page.
+- **Medical and seismic signals.** ECG (electrocardiogram: heart-rhythm) traces and seismograms have sharp events on a quiet background, the same few-large-details shape as a printed page.
 - **Audio.** In a ten second guitar recording at 44.1 kHz, the pluck of each string is a sharp event and the ringing note is smooth; wavelets keep the pluck crisp where a fixed-window method smears it ([Spectrograms](09-short-time-fourier-and-spectrograms.md)).
 
 > **Say it back**
@@ -613,7 +927,7 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [Digital filters](04-digital-filters-fir-and-iir.md): the low-pass and high-pass FIR filters; each rung of the ladder is a two-tap pair of them.
+- [Digital filters](04-digital-filters-fir-and-iir.md): the low-pass and high-pass FIR (finite impulse response: a fixed, finite list of weights) filters; each rung of the ladder is a two-tap pair of them.
 - [Changing rate](05-resampling-decimation-and-interpolation.md): keeping one sample in two, and the aliasing it causes; the ladder decimates by 2 at every rung and cancels that aliasing on the way back.
 - [Gram-Schmidt](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md): orthonormal bases, where each coordinate is one dot product; the Haar patterns are one.
 - [Fourier series](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/01-fourier-series-and-orthogonality.md): orthogonal waves and coefficients as integrals; wavelets swap the endless sines for short patterns at many scales.
