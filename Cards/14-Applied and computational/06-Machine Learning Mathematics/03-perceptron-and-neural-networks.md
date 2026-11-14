@@ -8,9 +8,13 @@
 
 An online shop keeps 20,000 past orders, each described by 12 numbers. A few hundred of them were fraud: a stolen card, goods shipped to a stranger. The shop wants a rule that flags the next fraudulent order before it ships.
 
-Start with two of the 12 numbers: the **order value** in pounds, and the **distance** from the card's billing address to the delivery address in km. Fraud tends to be expensive and shipped far away. Eight orders, made up for this card (synthetic), show the pattern. Three were fraud: B (£800, 600 km), E (£500, 500 km) and F (£600, 400 km). Five were normal, including C, a £700 order delivered 100 km from home, and D, a £200 order sent 600 km as a gift.
+Start with two of the 12 numbers: the **order value** in pounds, and the **distance** from the card's billing address to the delivery address in km. Fraud tends to be expensive and shipped far away.
 
-A **perceptron** finds a straight line that puts the fraud on one side and the normal orders on the other. It starts with no opinion. It walks through the orders, and each time it gets one wrong it nudges its line toward that order. On these eight it makes 6 nudges and then gets all eight right. The line it settles on says: flag an order when its value in hundreds of pounds plus its distance in hundreds of km is more than 9.
+Eight orders, made up for this card (synthetic), show the pattern. Three were fraud: B (£800, 600 km), E (£500, 500 km) and F (£600, 400 km). Five were normal, including C, a £700 order delivered 100 km from home, and D, a £200 order sent 600 km as a gift.
+
+A **perceptron** finds a straight line that puts the fraud on one side and the normal orders on the other. It starts with no opinion. It walks through the orders, and each time it gets one wrong it nudges its line toward that order.
+
+On these eight it makes 6 nudges and then gets all eight right. The line it settles on says: flag an order when its value in hundreds of pounds plus its distance in hundreds of km is more than 9.
 
 Then the shop meets a pattern no straight line can catch. Fraud also shows up when one of the card and the device is in the UK and the other is abroad. One perceptron fails on that forever. Two layers of perceptrons solve it, and that stack is a **neural network**.
 
@@ -79,7 +83,9 @@ $$h = \mathrm{step}(W_1 x + b_1), \qquad \text{output} = \mathrm{step}(W_2 h + b
 
 ### Step 0: each fix moves the offending order's score the right way
 
-A fix adds $\eta\,y\,\bar x$ to $\bar w$. The order's own score then changes by $\eta\,y\,(x_1^2 + x_2^2 + 1)$, a positive amount times its label. So a fraud order's score rises and a normal order's score falls. Order A, normal at $(-3, -2)$, scored 0 at the start. After its fix the weights are $(3, 2)$ and $b = -1$, and its score is $3(-3) + 2(-2) - 1 = -14$: moved down by $9 + 4 + 1$.
+A fix adds $\eta\,y\,\bar x$ to $\bar w$. The order's own score then changes by $\eta\,y\,(x_1^2 + x_2^2 + 1)$, a positive amount times its label. So a fraud order's score rises and a normal order's score falls.
+
+Order A, normal at $(-3, -2)$, scored 0 at the start. After its fix the weights are $(3, 2)$ and $b = -1$, and its score is $3(-3) + 2(-2) - 1 = -14$: moved down by $9 + 4 + 1$.
 
 A fix for one order can push another across the line, as C and D show in the trace. So the proof tracks a quantity that only goes one way.
 
@@ -105,7 +111,9 @@ $$k\,\eta\,\gamma \;\le\; u \cdot \bar w_k \;\le\; |\bar w_k| \;\le\; \sqrt{k}\,
 
 The left side grows like $k$, the right like $\sqrt k$. Divide by $\sqrt{k}\,\eta\,\gamma$ and square: $k \le (R/\gamma)^2$. The learning rate cancels, and so does the order in which the data arrives.
 
-For the eight orders, take $u$ along the settled line $(2, 2, -4)$. Its length is $\sqrt{24}$ and the closest orders, C, D, E and F, all score 2 on the correct side, so $\gamma = 2/\sqrt{24} = 0.4082$. The farthest order is B, with $R = \sqrt{16 + 9 + 1} = 5.0990$. The bound is $26 \times 24 / 4 = 156$ fixes. The perceptron used 6. The bound is a guarantee, not a forecast. On 1,000 synthetic orders the bound is 1,885.0 and the run used 41.
+For the eight orders, take $u$ along the settled line $(2, 2, -4)$. Its length is $\sqrt{24}$ and the closest orders, C, D, E and F, all score 2 on the correct side, so $\gamma = 2/\sqrt{24} = 0.4082$. The farthest order is B, with $R = \sqrt{16 + 9 + 1} = 5.0990$.
+
+The bound is $26 \times 24 / 4 = 156$ fixes. The perceptron used 6. The bound is a guarantee, not a forecast. On 1,000 synthetic orders the bound is 1,885.0 and the run used 41.
 
 ### Step 4: one line cannot split XOR
 
@@ -124,7 +132,9 @@ The perceptron does worse than 3 of 4. From a zero start, one pass sets the weig
 
 ### Step 5: two lines, then a vote
 
-XOR needs two lines. Hidden unit 1 asks "is at least one of them abroad?": $h_1 = \mathrm{step}(x_1 + x_2 - 0.5)$. Hidden unit 2 asks "are both abroad?": $h_2 = \mathrm{step}(x_1 + x_2 - 1.5)$. The output unit flags "at least one, but not both": $\mathrm{step}(h_1 - h_2 - 0.5)$. Each unit is a perceptron. Written as layers, the hidden layer is a matrix times a vector ([Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md)): $W_1$ = `[[1, 1], [1, 1]]`, one row per hidden unit, plus $b_1 = (-0.5, -1.5)$.
+XOR needs two lines. Hidden unit 1 asks "is at least one of them abroad?": $h_1 = \mathrm{step}(x_1 + x_2 - 0.5)$. Hidden unit 2 asks "are both abroad?": $h_2 = \mathrm{step}(x_1 + x_2 - 1.5)$. The output unit flags "at least one, but not both": $\mathrm{step}(h_1 - h_2 - 0.5)$.
+
+Each unit is a perceptron. Written as layers, the hidden layer is a matrix times a vector ([Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md)): $W_1$ = `[[1, 1], [1, 1]]`, one row per hidden unit, plus $b_1 = (-0.5, -1.5)$.
 
 ```mermaid
 flowchart LR
@@ -142,11 +152,15 @@ The hidden layer moves the four orders to new positions: (0, 0), (1, 0), (1, 0) 
 
 ### Step 6: why the squashing function is not optional
 
-Remove the step between the layers. The output score becomes $W_2(W_1 x + b_1) + b_2 = (W_2 W_1)\,x + (W_2 b_1 + b_2)$: one matrix times $x$ plus one bias. That is a single perceptron again, so Step 4 forbids it from doing XOR. In numbers, $W_2 W_1 = (1 - 1,\; 1 - 1) = (0, 0)$ and the bias is $-0.5 + 1.5 - 0.5 = 0.5$. Every order scores 0.5 and is flagged: 2 of 4 right. Any number of layers without squashing is one layer in disguise.
+Remove the step between the layers. The output score becomes $W_2(W_1 x + b_1) + b_2 = (W_2 W_1)\,x + (W_2 b_1 + b_2)$: one matrix times $x$ plus one bias. That is a single perceptron again, so Step 4 forbids it from doing XOR.
+
+In numbers, $W_2 W_1 = (1 - 1,\; 1 - 1) = (0, 0)$ and the bias is $-0.5 + 1.5 - 0.5 = 0.5$. Every order scores 0.5 and is flagged: 2 of 4 right. Any number of layers without squashing is one layer in disguise.
 
 ### Step 7: a smooth squash keeps the decisions and adds a slope
 
-The step function has no slope to follow, so the weights above were set by hand. Replace each step by the logistic curve $\Lambda$, with every weight and bias multiplied by 10. The outputs become 0.0072 for the two matched orders and 0.9924 for the two mismatches: the same decisions, now as smooth numbers. A smooth network can be trained by following slopes downhill, which is the job of [Backpropagation](04-backpropagation.md). A single unit with $\Lambda$, fitted by maximum likelihood, is already a card of its own: [Logistic regression](../../09-Probability%20and%20statistics/09-Regression/05-logistic-regression.md), which calls it one artificial neuron.
+The step function has no slope to follow, so the weights above were set by hand. Replace each step by the logistic curve $\Lambda$, with every weight and bias multiplied by 10. The outputs become 0.0072 for the two matched orders and 0.9924 for the two mismatches: the same decisions, now as smooth numbers.
+
+A smooth network can be trained by following slopes downhill, which is the job of [Backpropagation](04-backpropagation.md). A single unit with $\Lambda$, fitted by maximum likelihood (choosing the weights that make the observed labels most probable), is already a card of its own: [Logistic regression](../../09-Probability%20and%20statistics/09-Regression/05-logistic-regression.md), which calls it one artificial neuron.
 
 The perceptron's own rule is a gradient step too. On the loss $\max(0, -y\,s)$, which is zero for a correct order and grows with how wrong a mistake is, the slope with respect to $\bar w$ is $-y\,\bar x$ for a mistake. A step of size $\eta$ downhill is exactly the perceptron fix.
 
@@ -184,7 +198,13 @@ Six fixes over two passes, then a clean third pass. Back in pounds and km, $x_1 
 
 ## Code, from first principles, and it actually runs
 
-Both programs train the perceptron on the eight orders and print each fix. They check the result three independent ways: the hand trace (6 fixes, ending at $w = (2, 2)$, $b = -4$); the stopping bound, computed by hand as 156 and from the data, on the eight orders and on 1,000 synthetic orders drawn by SplitMix64 (seed 2026) from the rule $0.6x_1 + 0.8x_2 > 1.4$ with a gap of 0.25 kept clear; and brute force over 4,913 lines, which finds a perfect line for the eight orders and none for XOR. They then build the two-layer network, test it against the XOR truth table, collapse it without squashing, and print every "what breaks" and "try changing" number.
+Both programs train the perceptron on the eight orders and print each fix. They check the result three independent ways:
+
+- the hand trace (6 fixes, ending at $w = (2, 2)$, $b = -4$);
+- the stopping bound, computed by hand as 156 and from the data, on the eight orders and on 1,000 synthetic orders drawn by SplitMix64 (a simple random-number generator, seed 2026) from the rule $0.6x_1 + 0.8x_2 > 1.4$ with a gap of 0.25 kept clear;
+- brute force over 4,913 lines, which finds a perfect line for the eight orders and none for XOR.
+
+They then build the two-layer network, test it against the XOR truth table, collapse it without squashing, and print every "what breaks" and "try changing" number.
 
 ### Python
 
@@ -565,6 +585,217 @@ ALL CHECKS PASS
 ```
 
 The two outputs are identical. On 1,000 orders, 286 of them fraud (a synthetic test built to check the bound, far richer in fraud than the shop's few hundred in 20,000), the perceptron needed 41 fixes in 3 passes against a promise of at most 1,885.0, and got all 1,000 right.
+
+### Lean
+
+Lean proves the stopping promise, the XOR fact and the two-layer collapse for any data and layer sizes, and checks the worked numbers.
+
+- Suppose a unit-length line $u$ separates the orders with margin $\gamma > 0$, every $\bar x$ has length at most $R$, and $\eta > 0$. Then the perceptron, started from zero weights and visiting orders in any sequence, makes at most $(R/\gamma)^2$ fixes.
+- No single line flags exactly the two mismatches of the XOR pattern.
+- Two layers with no squashing function between them, and any number of hidden units, cannot flag exactly those two mismatches either.
+- Take layer matrices $W_1$, $W_2$ and biases $b_1$, $b_2$ of any sizes. Then $W_2(W_1 x + b_1) + b_2 = (W_2 W_1)\,x + (W_2 b_1 + b_2)$.
+- The hand trace gives 6 fixes, ending at $w = (2, 2)$ and $b = -4$, then a clean third pass.
+- The settled scores and the bound of 156 come out exactly.
+- On XOR, one pass returns the weights to zero, and the two-layer network flags exactly the mismatches.
+- Without squashing, the stack has weights $(0, 0)$ and bias 0.5. The shop's network has 113 numbers to learn.
+
+Every other run on the card, such as the 1,000 orders and the logistic outputs, is left to the Python and Rust checks.
+
+```lean
+-- The perceptron and its stack: if a unit-length line separates labelled points with margin γ > 0 and every point has length at most R, the perceptron makes at most (R/γ)² fixes, while no single line, and no stack of layers without a squashing function, separates the XOR pattern.
+import Mathlib.Analysis.InnerProductSpace.Basic
+import Mathlib.Data.Matrix.Mul
+import Mathlib.Data.Fin.VecNotation
+
+open scoped RealInnerProductSpace
+open Matrix
+
+/-! Each order is written with its extra 1, `x̄ = (x₁, x₂, 1)`, so the bias is a third weight and
+a line is a vector `w̄` in an inner product space `V` (for the card, `V = ℝ³`). The orders are
+indexed by `ι`, with labels `y i = 1` (fraud) or `y i = -1` (normal). A run of the perceptron is
+the list of orders `ord t` it fixes on, in the order it meets them, with the weights `w t`
+before fix `t`: it starts at `w 0 = 0`, fixes only on a mistake (score times label `≤ 0`, so a
+score of exactly 0 counts as wrong), and each fix adds `η • y • x̄`. -/
+
+/-- The stopping promise (Block 1962). Suppose a line `u` of length 1 separates the
+orders with margin `γ > 0`: every order has `y · (u · x̄) ≥ γ`; every `x̄` has length at most `R`;
+and the learning rate `η` is positive. Then any run of the perceptron from zero weights, in any
+order of visits, makes at most `(R / γ)²` fixes. -/
+theorem perceptron_fixes_le_sq_radius_div_margin {V ι : Type*}
+    [NormedAddCommGroup V] [InnerProductSpace ℝ V]
+    (x : ι → V) (y : ι → ℝ) (hy : ∀ i, y i = 1 ∨ y i = -1)
+    (R γ η : ℝ) (hη : 0 < η) (hR : ∀ i, ‖x i‖ ≤ R)
+    (u : V) (hu : ‖u‖ = 1) (hγ : 0 < γ) (hsep : ∀ i, γ ≤ y i * ⟪u, x i⟫)
+    (k : ℕ) (ord : ℕ → ι) (w : ℕ → V) (hw0 : w 0 = 0)
+    (hmistake : ∀ t < k, y (ord t) * ⟪w t, x (ord t)⟫ ≤ 0)
+    (hfix : ∀ t < k, w (t + 1) = w t + (η * y (ord t)) • x (ord t)) :
+    (k : ℝ) ≤ (R / γ) ^ 2 := by
+  have hinner : ∀ t ≤ k, η * γ * t ≤ ⟪u, w t⟫ := by
+    intro t ht
+    induction t with
+    | zero => simp [hw0]
+    | succ n ih =>
+      have hn : n < k := ht
+      rw [hfix n hn, inner_add_right, real_inner_smul_right]
+      have h1 := ih hn.le
+      have h2 := hsep (ord n)
+      push_cast
+      have : η * γ ≤ η * (y (ord n) * ⟪u, x (ord n)⟫) := mul_le_mul_of_nonneg_left h2 hη.le
+      nlinarith
+  have hnorm : ∀ t ≤ k, ‖w t‖ ^ 2 ≤ η ^ 2 * R ^ 2 * t := by
+    intro t ht
+    induction t with
+    | zero => simp [hw0]
+    | succ n ih =>
+      have hn : n < k := ht
+      rw [hfix n hn, norm_add_sq_real, real_inner_smul_right, norm_smul, Real.norm_eq_abs]
+      have h1 := ih hn.le
+      have h2 := hmistake n hn
+      have hx : ‖x (ord n)‖ ^ 2 ≤ R ^ 2 :=
+        pow_le_pow_left₀ (norm_nonneg _) (hR (ord n)) 2
+      have hy2 : y (ord n) ^ 2 = 1 := by
+        rcases hy (ord n) with h | h <;> rw [h] <;> norm_num
+      have habs : |η * y (ord n)| ^ 2 = η ^ 2 := by
+        rw [sq_abs, mul_pow, hy2, mul_one]
+      push_cast
+      rw [mul_pow, habs]
+      have h3 : 2 * (η * y (ord n) * ⟪w n, x (ord n)⟫) ≤ 0 := by
+        have := mul_nonpos_of_nonneg_of_nonpos hη.le h2
+        nlinarith
+      nlinarith [sq_nonneg η]
+  have hk1 := hinner k le_rfl
+  have hk2 := hnorm k le_rfl
+  have hcs : ⟪u, w k⟫ ≤ ‖w k‖ := by
+    have := real_inner_le_norm u (w k)
+    rwa [hu, one_mul] at this
+  have hpos : 0 ≤ η * γ * k := by positivity
+  have hsq : (η * γ * k) ^ 2 ≤ η ^ 2 * R ^ 2 * k := by
+    have : η * γ * k ≤ ‖w k‖ := hk1.trans hcs
+    have := pow_le_pow_left₀ hpos this 2
+    linarith
+  rcases Nat.eq_zero_or_pos k with h0 | hkpos
+  · subst h0; simp; positivity
+  · have hkr : (0 : ℝ) < k := by exact_mod_cast hkpos
+    have hη2 : 0 < η ^ 2 := by positivity
+    have h4 : γ ^ 2 * k ≤ R ^ 2 := by
+      have : η ^ 2 * k * (γ ^ 2 * k) ≤ η ^ 2 * k * R ^ 2 := by nlinarith
+      exact le_of_mul_le_mul_left this (by positivity)
+    rw [div_pow, le_div_iff₀ (by positivity)]
+    linarith
+
+/-- One line cannot split XOR, and neither can layers with nothing between them. With
+`x₁, x₂ ∈ {0, 1}` (card abroad? device abroad?), no weights `w₁, w₂` and bias `b` give a
+score `w₁ x₁ + w₂ x₂ + b` that is above 0 exactly on the two mismatches `x₁ ≠ x₂`. Nor does
+any two-layer stack with no squashing function: hidden layer `W₁ x + b₁` of any width `m`,
+output score `w₂ · (W₁ x + b₁) + b₂`. -/
+theorem no_line_separates_xor :
+    (¬ ∃ w₁ w₂ b : ℝ, ∀ a c : Fin 2,
+        (0 < w₁ * (a : ℕ) + w₂ * (c : ℕ) + b ↔ a ≠ c)) ∧
+    ∀ m : ℕ, ¬ ∃ (W₁ : Matrix (Fin m) (Fin 2) ℝ) (b₁ : Fin m → ℝ) (w₂ : Fin m → ℝ) (b₂ : ℝ),
+        ∀ a c : Fin 2,
+          (0 < w₂ ⬝ᵥ (W₁ *ᵥ ![((a : ℕ) : ℝ), ((c : ℕ) : ℝ)] + b₁) + b₂ ↔ a ≠ c) := by
+  have h1 : ¬ ∃ w₁ w₂ b : ℝ, ∀ a c : Fin 2,
+        (0 < w₁ * (a : ℕ) + w₂ * (c : ℕ) + b ↔ a ≠ c) := by
+    rintro ⟨w₁, w₂, b, h⟩
+    have h00 := h 0 0
+    have h01 := h 0 1
+    have h10 := h 1 0
+    have h11 := h 1 1
+    simp at h00 h01 h10 h11
+    linarith
+  refine ⟨h1, ?_⟩
+  intro m
+  rintro ⟨W₁, b₁, w₂, b₂, h⟩
+  apply h1
+  refine ⟨(w₂ ᵥ* W₁) 0, (w₂ ᵥ* W₁) 1, w₂ ⬝ᵥ b₁ + b₂, ?_⟩
+  intro a c
+  rw [← h a c, dotProduct_add, dotProduct_mulVec]
+  simp only [dotProduct, Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one]
+  constructor <;> intro hh <;> linarith
+
+/-- Without a squashing function two layers are one: for any sizes, the output
+`W₂ (W₁ x + b₁) + b₂` equals one matrix `W₂ W₁` times `x` plus one bias `W₂ b₁ + b₂`. -/
+theorem two_linear_layers_are_one_layer {n m p : Type*} [Fintype n] [Fintype m]
+    (W₁ : Matrix m n ℝ) (b₁ : m → ℝ) (W₂ : Matrix p m ℝ) (b₂ : p → ℝ) (x : n → ℝ) :
+    W₂ *ᵥ (W₁ *ᵥ x + b₁) + b₂ = (W₂ * W₁) *ᵥ x + (W₂ *ᵥ b₁ + b₂) := by
+  rw [Matrix.mulVec_add, Matrix.mulVec_mulVec, add_assoc]
+
+/-! The card's worked numbers, exactly. An order is `(x₁, x₂, y)`, centred on £400 and 300 km, in
+hundreds; weights are `(w₁, w₂, b)`. `visit` is the perceptron rule with `η = 1`, counting fixes. -/
+
+namespace PerceptronCard
+
+def score (w o : ℤ × ℤ × ℤ) : ℤ := w.1 * o.1 + w.2.1 * o.2.1 + w.2.2
+
+def visit (st : (ℤ × ℤ × ℤ) × ℕ) (o : ℤ × ℤ × ℤ) : (ℤ × ℤ × ℤ) × ℕ :=
+  if o.2.2 * score st.1 o ≤ 0 then
+    ((st.1.1 + o.2.2 * o.1, st.1.2.1 + o.2.2 * o.2.1, st.1.2.2 + o.2.2), st.2 + 1)
+  else st
+
+/-- One pass over the data: the weights at the end, and the number of fixes in the pass. -/
+def pass (data : List (ℤ × ℤ × ℤ)) (w : ℤ × ℤ × ℤ) : (ℤ × ℤ × ℤ) × ℕ :=
+  data.foldl visit (w, 0)
+
+/-- Orders A to H; B, E and F are fraud. -/
+def orders : List (ℤ × ℤ × ℤ) :=
+  [(-3, -2, -1), (4, 3, 1), (3, -2, -1), (-2, 3, -1), (1, 2, 1), (2, 1, 1), (0, -1, -1), (-1, 1, -1)]
+
+/-- XOR: (card abroad, device abroad, label). -/
+def xorData : List (ℤ × ℤ × ℤ) := [(0, 0, -1), (0, 1, 1), (1, 0, 1), (1, 1, -1)]
+
+end PerceptronCard
+
+open PerceptronCard
+
+-- The hand trace: 3 fixes in pass 1 ending at w = (2, 1), b = -3; 3 in pass 2 ending at
+-- w = (2, 2), b = -4; then a clean pass 3. Six fixes in all.
+example : pass orders (0, 0, 0) = ((2, 1, -3), 3) ∧ pass orders (2, 1, -3) = ((2, 2, -4), 3) ∧
+    pass orders (2, 2, -4) = ((2, 2, -4), 0) := by decide
+
+-- Settled scores: A −14, B +10, C −2, D −2, E +2, F +2, G −6, H −4.
+example : orders.map (score (2, 2, -4)) = [-14, 10, -2, -2, 2, 2, -6, -4] := by decide
+
+-- Step 0: order A's score falls from 0 to 3(−3) + 2(−2) − 1 = −14, that is by 9 + 4 + 1.
+example : (3 : ℤ) * -3 + 2 * -2 - 1 = -14 ∧ (9 : ℤ) + 4 + 1 = 14 := by norm_num
+
+-- The bound: R² = 16 + 9 + 1 = 26 (order B), |u|² = 4 + 4 + 16 = 24, closest score 2,
+-- so (R/γ)² = 26 / (2² / 24) = 26 × 24 / 4 = 156, and 6 ≤ 156.
+example : (4 : ℚ) ^ 2 + 3 ^ 2 + 1 = 26 ∧ (2 : ℚ) ^ 2 + 2 ^ 2 + (-4) ^ 2 = 24 ∧
+    (26 : ℚ) / (2 ^ 2 / 24) = 156 ∧ (6 : ℚ) ≤ 156 := by norm_num
+
+-- XOR, one perceptron: pass 1 from zero makes 4 fixes and returns to (0, 0, 0), so every pass
+-- is the same 4 fixes.
+example : pass xorData (0, 0, 0) = ((0, 0, 0), 4) := by decide
+
+-- The two-layer network: h₁ = step(x₁ + x₂ − 1/2), h₂ = step(x₁ + x₂ − 3/2),
+-- output step(h₁ − h₂ − 1/2), flags exactly the mismatches.
+example : ∀ a c : Fin 2,
+    let step : ℚ → ℚ := fun s => if 0 < s then 1 else 0
+    let h₁ := step ((a : ℕ) + (c : ℕ) - 1 / 2)
+    let h₂ := step ((a : ℕ) + (c : ℕ) - 3 / 2)
+    step (h₁ - h₂ - 1 / 2) = if a ≠ c then 1 else 0 := by
+  intro a c
+  fin_cases a <;> fin_cases c <;> norm_num
+
+-- Without squashing: W₂ W₁ = (1 − 1, 1 − 1) = (0, 0) and the bias is −1/2 + 3/2 − 1/2 = 1/2.
+example : (1 : ℚ) * 1 + (-1) * 1 = 0 ∧ (1 : ℚ) * (-1 / 2) + (-1) * (-3 / 2) + (-1 / 2) = 1 / 2 := by
+  norm_num
+
+-- The shop's network, 12 inputs, 8 hidden units, 1 output: 96 + 8 + 8 + 1 = 113 numbers.
+example : 8 * 12 + 8 + 8 + 1 = 113 := by norm_num
+
+#print axioms perceptron_fixes_le_sq_radius_div_margin
+#print axioms no_line_separates_xor
+#print axioms two_linear_layers_are_one_layer
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'perceptron_fixes_le_sq_radius_div_margin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'no_line_separates_xor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'two_linear_layers_are_one_layer' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

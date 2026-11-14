@@ -12,7 +12,11 @@ Take two of the 12 numbers, each measured against the customer's own habits. The
 
 Honest orders crowd round (0, 0). Fraud is unusual in *any* direction: thieves test a stolen card with a £5 charge (amount score −2.75), then spend big. So the fraud forms a ring round a disc of honest orders. No straight line cuts a ring from its middle.
 
-A **support vector machine** (SVM) does two things. It picks the straight line with the widest empty strip on each side, the **margin**, letting a few orders sit inside the strip at a price. And because its calculation touches orders only through dot products, swapping the dot product for a **kernel** (a similarity score between two orders) bends the line into a curve. With the **radial kernel**, similarity that fades with distance, on synthetic data the boundary comes out as a closed loop round the honest orders, between 1.43 and 2.12 from the centre: it misses 20 of 100 test frauds, with 4 false alarms among 300 honest orders. A straight-line SVM gives up and flags nothing, so it misses all 100; even the best straight cut, found by scanning, misses 78.
+A **support vector machine** (SVM) does two things. It picks the straight line with the widest empty strip on each side, the **margin**, letting a few orders sit inside the strip at a price.
+
+Its calculation touches orders only through **dot products**: multiply two orders' matching scores and add. So swapping the dot product for a **kernel** (a similarity score between two orders) bends the line into a curve.
+
+With the **radial kernel**, similarity that fades with distance, on synthetic data the boundary comes out as a closed loop round the honest orders, between 1.43 and 2.12 from the centre. It misses 20 of 100 test frauds, with 4 false alarms among 300 honest orders. A straight-line SVM gives up and flags nothing, so it misses all 100; even the best straight cut, found by scanning, misses 78.
 
 **An SVM draws the boundary that leaves the widest gap to the nearest orders on each side, charges for any order that crosses it, and, because the answer needs only dot products between orders, can bend that boundary by replacing the dot product with a kernel.**
 
@@ -22,7 +26,13 @@ A **support vector machine** (SVM) does two things. It picks the straight line w
 
 <p align="center"><img src="../figures/kernels-and-support-vector-machines.svg" alt="Six orders to scale: three honest open dots near the origin, three fraud filled dots up and to the right, a shaded strip between the lines x1 + x2 = 1 and x1 + x2 = 4 with the boundary x1 + x2 = 2.5 down its middle, and a dashed perceptron line at x1 + x2 = 3" width="420"></p>
 
-Before the ring, a simpler case: six orders where every fraud is both big and late. Drawn to scale, across is the amount score $x_1$, up the hour score $x_2$. Open dots are honest, at (0, 0), (1, 0) and (0, 1); filled dots are fraud, at (2, 2), (3, 3) and (4, 1). The number beside each line is its value of $x_1 + x_2$. The shaded strip, from 1 to 4, is the widest empty strip any straight line allows, and the SVM's boundary, solid, runs down its middle at 2.5. The three ringed orders touch the strip: they are the **support vectors**, the word used from here on, and they alone fix the boundary. The dashed line at 3 is where a perceptron stopped. It splits the orders too, but passes only 0.7071 from the fraud at (2, 2), against 1.0607 for the SVM.
+Before the ring, a simpler case: six orders where every fraud is both big and late. Drawn to scale, across is the amount score $x_1$, up the hour score $x_2$.
+
+Open dots are honest, at (0, 0), (1, 0) and (0, 1); filled dots are fraud, at (2, 2), (3, 3) and (4, 1). The number beside each line is its value of $x_1 + x_2$.
+
+The shaded strip, from 1 to 4, is the widest empty strip any straight line allows, and the SVM's boundary, solid, runs down its middle at 2.5. The three ringed orders touch the strip: they are the **support vectors**, the word used from here on, and they alone fix the boundary.
+
+The dashed line at 3 is where a perceptron stopped. It splits the orders too, but passes only 0.7071 from the fraud at (2, 2), against 1.0607 for the SVM. A perceptron ([The perceptron and its stack](03-perceptron-and-neural-networks.md)) is the older method that stops at the first line that splits the orders, however close it passes.
 
 ---
 
@@ -77,7 +87,7 @@ Many straight lines split the six orders in the picture. A line that grazes an o
 
 ### Step 1: the gap is 2 over the length of the weights
 
-The distance from a point to a plane, measured along the normal, is $\lvert w \cdot x + b\rvert / \lvert w\rvert$ ([Lines and planes](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/02-lines-and-planes-in-space.md)). Here the "plane" is the boundary $w \cdot x + b = 0$ and the normal is $w$.
+The distance from a point to a plane, measured along the normal (the direction at right angles to the plane), is $\lvert w \cdot x + b\rvert / \lvert w\rvert$ ([Lines and planes](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/02-lines-and-planes-in-space.md)). Here the "plane" is the boundary $w \cdot x + b = 0$ and the normal is $w$.
 
 Doubling $w$ and $b$ draws the same boundary, so fix the scale: choose it so the nearest orders score exactly ±1. Then every order obeys $y_i(w \cdot x_i + b) \ge 1$, the strip's two edges are the lines $s = -1$ and $s = +1$, and each edge lies $1/\lvert w\rvert$ from the boundary. The strip is $2/\lvert w\rvert$ wide.
 
@@ -93,7 +103,7 @@ Slack $\xi_i$ lets order $i$ fall short of its edge by that much, at a cost of $
 
 First, why the best weights are built from the orders at all. Split $w$ into a part that is a combination of the orders $x_i$ and a part perpendicular to every one of them. The perpendicular part adds nothing to any $w \cdot x_i$, so it changes no limit and no slack, and it only makes $\lvert w\rvert^2$ bigger. So the best $w$ has no such part: it is a weighted sum of the orders.
 
-Lagrange multipliers ([Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md)) say which weights: one multiplier $\alpha_i \ge 0$ per order, a price on its limit. At the best point the gradient of the cost lines up with the limits' gradients, which gives
+Lagrange multipliers ([Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md)) say which weights: one multiplier $\alpha_i \ge 0$ per order, a price on its limit. At the best point the gradient of the cost (the direction in which it climbs fastest) lines up with the limits' gradients, which gives
 
 $$w = \sum_{i} \alpha_i\, y_i\, x_i, \qquad \sum_i \alpha_i\, y_i = 0 .$$
 
@@ -114,7 +124,7 @@ The cap $\alpha_i \le C$ is what slack adds. At the best point the two problems 
 
 </details>
 
-The orders enter the dual, and the score $s(x) = \sum_i \alpha_i y_i\, x_i \cdot x + b$, **only through dot products**. That is the opening for Step 4.
+The fold rewrites the problem in the prices $\alpha_i$ alone: the dual problem. The orders enter the dual, and the score $s(x) = \sum_i \alpha_i y_i\, x_i \cdot x + b$, **only through dot products**. That is the opening for Step 4.
 
 ### Step 4: a kernel is a dot product of features nobody has to compute
 
@@ -132,7 +142,7 @@ Each power $(x \cdot x')^k$ is a dot product of lifted features, as above for $k
 
 ### Step 5: what the solver does
 
-The code solves the dual one pair of orders at a time: it shifts the two $\alpha$ that most want to move, keeping $\sum_i \alpha_i y_i$ at zero, until no pair can raise the dual. This is sequential minimal optimisation (SMO), the method inside common SVM libraries; its convergence proof belongs to the optimisation wing. The check here is direct: on the ring, the cost and the dual value meet at 213.041234, a gap of 0.000000017.
+The code solves the dual one pair of orders at a time: it shifts the two $\alpha$ that most want to move, keeping $\sum_i \alpha_i y_i$ at zero, until no pair can raise the dual. This is sequential minimal optimisation (SMO), the method inside common SVM libraries; its convergence proof belongs to the optimisation wing. The check here is direct: on the ring, the cost (printed as `primal`) and the dual value meet at 213.041234, a gap of 0.000000017.
 
 ---
 
@@ -186,7 +196,11 @@ The linear SVM's 88 support vectors mean little. With the weights at zero, many 
 
 ## Code, from first principles, and it actually runs
 
-Both programs build the data from a SplitMix64 generator written out (seed 2026), so every order is synthetic and both languages see the same ones. The solver is SMO written out. The widest gap on six orders is reached three independent ways: the dual solver, a brute-force scan of 36,000 directions, and $3/\sqrt2$ by hand. The kernel identity is checked two ways: the lifted features against $(x\cdot x')^2$ on 200 random pairs, and the 30-term series against $e^{-2.5}$. On the ring, the cost and dual values must meet; the boundary's average distance from the centre, over 360 rays one degree apart, must lie within 0.2 of the generator's 1.6; and a sweep over 3,600 directions finds the straight cut with the fewest training errors, recounted directly, which the radial SVM must beat.
+Both programs build the data from a SplitMix64 generator written out (seed 2026), so every order is synthetic and both languages see the same ones. The solver is SMO written out. The widest gap on six orders is reached three independent ways: the dual solver, a brute-force scan of 36,000 directions, and $3/\sqrt2$ by hand. The kernel identity is checked two ways: the lifted features against $(x\cdot x')^2$ on 200 random pairs, and the 30-term series against $e^{-2.5}$. On the ring:
+
+- the cost and dual values must meet;
+- the boundary's average distance from the centre, over 360 rays one degree apart, must lie within 0.2 of the generator's 1.6;
+- a sweep over 3,600 directions finds the straight cut with the fewest training errors, recounted directly, which the radial SVM must beat.
 
 ### Python
 
@@ -573,6 +587,282 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the three facts of Steps 1, 3 and 4 for any training orders, and checks the six-order worked numbers.
+
+- Suppose $w \ne 0$ and every order scores at least 1 on its own side. Then every order lies at least $1/\lvert w\rvert$ from the boundary.
+- Suppose an order scores exactly +1 or −1, so it is a support vector. Then it lies exactly $1/\lvert w\rvert$ from the boundary.
+- Take any $w \ne 0$ and $b$. Then every point on one edge lies exactly $2/\lvert w\rvert$ from the other edge.
+- Suppose $w$, $b$ and the slacks $\xi_i$ give the lowest cost the SVM allows, for any price $C$. Then $w$ is a weighted sum of the training orders.
+- Take the lifted features $\phi(x) = (x_1^2,\ \sqrt2\,x_1x_2,\ x_2^2)$. Then $\phi(x)\cdot\phi(x') = (x\cdot x')^2$ for any two orders.
+- Take orders of any number of scores, and any $\gamma \ge 0$. Then the radial kernel is a dot product of some hidden features.
+- On the six orders, the support vectors score exactly −1 and +1, and the other three lie beyond their edges.
+- Take the weights on the orders: 2/9, 2/9 and 4/9. Then they rebuild $w$ and add up to $\lvert w\rvert^2$, which is 8/9.
+- Take the honest order at (3, 2) and the answer for $C = 1$. Then the slacks are 1/2 and 2, and the rest are 0.
+
+The solver, the weights it finds and every result on the ring are left to the Python and Rust checks.
+
+```lean
+-- Support vector machines: when every order scores at least 1 on its own side, each order lies at least 1/|w| from the boundary and the empty strip is exactly 2/|w| wide, the best soft-margin weights are a weighted sum of the training orders, and the squared and radial kernels are dot products of hidden features; the card's six-order numbers are checked.
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Topology.MetricSpace.HausdorffDistance
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Tactic.NormNum
+import Mathlib.Analysis.InnerProductSpace.l2Space
+import Mathlib.Analysis.InnerProductSpace.Projection.Basic
+import Mathlib.Analysis.SpecialFunctions.Exponential
+import Mathlib.Analysis.SpecificLimits.Normed
+import Mathlib.Topology.Algebra.InfiniteSum.Real
+
+open Metric RealInnerProductSpace
+
+namespace KernelsAndSupportVectorMachines
+
+/-- Distance from a point to a hyperplane `w · p + b = c`. -/
+lemma infDist_hyperplane {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (w : E) (hw : w ≠ 0) (b c : ℝ) (x : E) :
+    infDist x {p | ⟪w, p⟫ + b = c} = |⟪w, x⟫ + b - c| / ‖w‖ := by
+  have hn : 0 < ‖w‖ := norm_pos_iff.mpr hw
+  have hn2 : ‖w‖ ^ 2 ≠ 0 := by positivity
+  set t := (⟪w, x⟫ + b - c) / ‖w‖ ^ 2 with ht
+  have hmem : x - t • w ∈ {p | ⟪w, p⟫ + b = c} := by
+    simp only [Set.mem_ofPred_eq, inner_sub_right, real_inner_smul_right,
+      real_inner_self_eq_norm_sq, ht]
+    field_simp
+    ring
+  apply le_antisymm
+  · calc infDist x _ ≤ dist x (x - t • w) := infDist_le_dist_of_mem hmem
+      _ = |⟪w, x⟫ + b - c| / ‖w‖ := by
+        rw [dist_eq_norm, sub_sub_cancel, norm_smul, Real.norm_eq_abs, ht, abs_div,
+          abs_of_pos (by positivity : (0 : ℝ) < ‖w‖ ^ 2)]
+        field_simp
+  · rw [le_infDist ⟨_, hmem⟩]
+    intro p hp
+    simp only [Set.mem_ofPred_eq] at hp
+    rw [div_le_iff₀ hn, dist_eq_norm]
+    have h1 : ⟪w, x⟫ + b - c = ⟪w, x - p⟫ := by rw [inner_sub_right]; linarith
+    rw [h1, mul_comm]
+    exact abs_real_inner_le_norm _ _
+
+/-- A product of sums over `Fin n` multi-indices. -/
+lemma sum_prod_multiIndex {d : ℕ} (f : Fin d → ℝ) (n : ℕ) :
+    ∑ i : Fin n → Fin d, ∏ j, f (i j) = (∑ k, f k) ^ n := by
+  rw [Finset.sum_pow', Fintype.piFinset_univ]
+
+/-- Index set for the exponential feature map: a degree `n` and a multi-index. -/
+abbrev Idx (d : ℕ) : Type := Σ n : ℕ, (Fin n → Fin d)
+
+/-- Features whose dot product is `exp ⟪x, y⟫`. -/
+noncomputable def feat {d : ℕ} (x : EuclideanSpace ℝ (Fin d)) : Idx d → ℝ :=
+  fun p => Real.sqrt (1 / (p.1.factorial : ℝ)) * ∏ j, x (p.2 j)
+
+lemma feat_mul {d : ℕ} (x y : EuclideanSpace ℝ (Fin d)) (p : Idx d) :
+    feat x p * feat y p = 1 / (p.1.factorial : ℝ) * ∏ j, (x (p.2 j) * y (p.2 j)) := by
+  have h : Real.sqrt (1 / (p.1.factorial : ℝ)) * Real.sqrt (1 / (p.1.factorial : ℝ)) =
+      1 / (p.1.factorial : ℝ) := Real.mul_self_sqrt (by positivity)
+  simp only [feat, Finset.prod_mul_distrib]
+  linear_combination (∏ j, x (p.2 j)) * (∏ j, y (p.2 j)) * h
+
+lemma summable_feat {d : ℕ} (x y : EuclideanSpace ℝ (Fin d)) :
+    Summable (fun p : Idx d => feat x p * feat y p) := by
+  apply Summable.of_norm
+  rw [summable_sigma_of_nonneg (fun _ => norm_nonneg _)]
+  refine ⟨fun n => Summable.of_finite, ?_⟩
+  convert Real.summable_pow_div_factorial (∑ k, |x k| * |y k|) using 1
+  ext n
+  simp only [tsum_fintype, feat_mul, norm_mul, norm_prod, Real.norm_eq_abs]
+  rw [← Finset.mul_sum, sum_prod_multiIndex (fun k => |x k| * |y k|)]
+  rw [abs_of_pos (by positivity : (0 : ℝ) < 1 / (n.factorial : ℝ))]
+  ring
+
+lemma exists_exp_inner_feature (d : ℕ) :
+    ∃ ψ : EuclideanSpace ℝ (Fin d) → lp (fun _ : Idx d => ℝ) 2,
+      ∀ x y, ⟪ψ x, ψ y⟫ = Real.exp ⟪x, y⟫ := by
+  have hmem : ∀ x : EuclideanSpace ℝ (Fin d), Memℓp (feat x) 2 := by
+    intro x
+    apply memℓp_gen
+    convert summable_feat x x using 1
+    ext p
+    rw [ENNReal.toReal_ofNat, Real.rpow_two, Real.norm_eq_abs, sq_abs, sq]
+  refine ⟨fun x => ⟨feat x, hmem x⟩, fun x y => ?_⟩
+  rw [lp.inner_eq_tsum]
+  simp only [Real.inner_apply]
+  have hs := summable_feat y x
+  rw [(summable_feat x y).tsum_sigma' (fun _ => Summable.of_finite),
+    Real.exp_eq_exp_ℝ, NormedSpace.exp_eq_tsum_div]
+  refine tsum_congr fun n => ?_
+  simp only [tsum_fintype, feat_mul]
+  rw [← Finset.mul_sum, sum_prod_multiIndex (fun k => x k * y k)]
+  have hxy : ⟪x, y⟫ = ∑ k, x k * y k := by simp [PiLp.inner_apply, mul_comm]
+  rw [hxy]
+  ring
+
+
+/-- **The gap is 2 over the length of the weights** (Step 1). Take weights `w ≠ 0` and a bias `b`
+in any space with a dot product, and training orders `x i` labelled `y i = +1` (fraud) or `−1`
+(honest). Scale so that every order scores at least 1 on its own side:
+`y i (w · x i + b) ≥ 1`. Then every order lies at least `1/|w|` from the boundary
+`w · x + b = 0`, the orders that score exactly ±1 (the support vectors) lie exactly `1/|w|` from
+it, and the strip between the edges `w · x + b = +1` and `w · x + b = −1` is `2/|w|` wide: every
+point of one edge is exactly `2/|w|` from the other edge. -/
+theorem svm_margin_eq_two_div_norm {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    {m : ℕ} (w : E) (hw : w ≠ 0) (b : ℝ) (x : Fin m → E) (y : Fin m → ℝ)
+    (hy : ∀ i, y i = 1 ∨ y i = -1) (hfit : ∀ i, 1 ≤ y i * (⟪w, x i⟫ + b)) :
+    (∀ i, 1 / ‖w‖ ≤ infDist (x i) {p | ⟪w, p⟫ + b = 0}) ∧
+    (∀ i, y i * (⟪w, x i⟫ + b) = 1 → infDist (x i) {p | ⟪w, p⟫ + b = 0} = 1 / ‖w‖) ∧
+    (∀ p : E, ⟪w, p⟫ + b = 1 → infDist p {q | ⟪w, q⟫ + b = -1} = 2 / ‖w‖) ∧
+    (∀ p : E, ⟪w, p⟫ + b = -1 → infDist p {q | ⟪w, q⟫ + b = 1} = 2 / ‖w‖) := by
+  have hn : 0 < ‖w‖ := norm_pos_iff.mpr hw
+  refine ⟨fun i => ?_, fun i hi => ?_, fun p hp => ?_, fun p hp => ?_⟩
+  · rw [infDist_hyperplane w hw b 0, sub_zero]
+    have h1 : 1 ≤ |⟪w, x i⟫ + b| := by
+      have := hfit i
+      rcases hy i with h | h <;> rw [h] at this
+      · exact le_abs.mpr (Or.inl (by linarith))
+      · exact le_abs.mpr (Or.inr (by linarith))
+    gcongr
+  · rw [infDist_hyperplane w hw b 0, sub_zero]
+    rcases hy i with h | h <;> rw [h] at hi
+    · rw [show ⟪w, x i⟫ + b = 1 by linarith]; norm_num
+    · rw [show ⟪w, x i⟫ + b = -1 by linarith]; norm_num
+  · rw [infDist_hyperplane w hw b (-1), hp]; norm_num
+  · rw [infDist_hyperplane w hw b 1, hp]; norm_num
+
+/-- **The best weights are a weighted sum of the training orders** (Step 3). Take training
+orders `x i` with labels `y i` and a price `C` per unit of slack. Suppose the weights `w`, bias
+`b` and slacks `ξ` meet every limit `y i (w · x i + b) ≥ 1 − ξ i`, `ξ i ≥ 0`, and no other
+choice meeting the limits has a lower cost `½|w|² + C Σ ξ i`. Then `w` is a weighted sum of the
+orders: `w = Σ c i x i` for some numbers `c i`. -/
+theorem svm_best_weights_are_weighted_sum {E : Type*} [NormedAddCommGroup E]
+    [InnerProductSpace ℝ E] {m : ℕ} (x : Fin m → E) (y : Fin m → ℝ) (C : ℝ)
+    (w : E) (b : ℝ) (ξ : Fin m → ℝ)
+    (hfeas : ∀ i, 1 - ξ i ≤ y i * (⟪w, x i⟫ + b) ∧ 0 ≤ ξ i)
+    (hbest : ∀ (w' : E) (b' : ℝ) (ξ' : Fin m → ℝ),
+      (∀ i, 1 - ξ' i ≤ y i * (⟪w', x i⟫ + b') ∧ 0 ≤ ξ' i) →
+      ‖w‖ ^ 2 / 2 + C * ∑ i, ξ i ≤ ‖w'‖ ^ 2 / 2 + C * ∑ i, ξ' i) :
+    ∃ c : Fin m → ℝ, w = ∑ i, c i • x i := by
+  set K : Submodule ℝ E := Submodule.span ℝ (Set.range x) with hK
+  have : FiniteDimensional ℝ K := FiniteDimensional.span_of_finite ℝ (Set.finite_range x)
+  set u := K.starProjection w with hu
+  have hv : w - u ∈ Kᗮ := K.sub_starProjection_mem_orthogonal w
+  have huK : u ∈ K := K.starProjection_apply_mem w
+  have hinner : ∀ i, ⟪w, x i⟫ = ⟪u, x i⟫ := by
+    intro i
+    have h0 : ⟪x i, w - u⟫ = 0 :=
+      (Submodule.mem_orthogonal K (w - u)).mp hv (x i) (Submodule.subset_span ⟨i, rfl⟩)
+    rw [inner_sub_right, real_inner_comm w (x i), real_inner_comm u (x i)] at h0
+    linarith
+  have hfeas' : ∀ i, 1 - ξ i ≤ y i * (⟪u, x i⟫ + b) ∧ 0 ≤ ξ i := fun i => by
+    rw [← hinner i]; exact hfeas i
+  have hle := hbest u b ξ hfeas'
+  have hperp : ⟪u, w - u⟫ = 0 := (Submodule.mem_orthogonal K (w - u)).mp hv u huK
+  have hpy : ‖w‖ ^ 2 = ‖u‖ ^ 2 + ‖w - u‖ ^ 2 := by
+    have := norm_add_sq_real u (w - u)
+    rw [add_sub_cancel, hperp] at this
+    linarith
+  have hz : ‖w - u‖ ^ 2 ≤ 0 := by linarith
+  have hwu : w = u := by
+    have : ‖w - u‖ = 0 := by nlinarith [norm_nonneg (w - u)]
+    exact sub_eq_zero.mp (norm_eq_zero.mp this)
+  have hwK : w ∈ K := hwu ▸ huK
+  obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun ℝ).mp hwK
+  exact ⟨c, hc.symm⟩
+
+/-- **A kernel is a dot product of features nobody has to compute** (Step 4). For orders in the
+plane, the lifted features `φ(x) = (x₁², √2 x₁x₂, x₂²)` have `φ(x) · φ(x') = (x · x')²`. And
+for orders of any `d` numbers and any reach setting `γ ≥ 0`, the radial kernel
+`K(x, x') = e^{−γ |x − x'|²}` is a dot product of hidden features: there is a space with a dot
+product and a feature map `φ` into it with `K(x, x') = φ(x) · φ(x')` for every pair of orders. -/
+theorem kernels_are_feature_dot_products :
+    (∀ x₁ x₂ x₁' x₂' : ℝ,
+      x₁ ^ 2 * x₁' ^ 2 + (√2 * x₁ * x₂) * (√2 * x₁' * x₂') + x₂ ^ 2 * x₂' ^ 2 =
+        (x₁ * x₁' + x₂ * x₂') ^ 2) ∧
+    (∀ (d : ℕ) (γ : ℝ), 0 ≤ γ →
+      ∃ (H : Type) (_ : NormedAddCommGroup H) (_ : InnerProductSpace ℝ H)
+        (φ : EuclideanSpace ℝ (Fin d) → H),
+        ∀ x x' : EuclideanSpace ℝ (Fin d), Real.exp (-γ * ‖x - x'‖ ^ 2) = ⟪φ x, φ x'⟫) := by
+  refine ⟨fun x₁ x₂ x₁' x₂' => ?_, fun d γ hγ => ?_⟩
+  · have h2 : (√2) ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+    linear_combination (x₁ * x₂ * x₁' * x₂') * h2
+  · obtain ⟨ψ, hψ⟩ := exists_exp_inner_feature d
+    refine ⟨lp (fun _ : Idx d => ℝ) 2, inferInstance, inferInstance,
+      fun x => Real.exp (-γ * ‖x‖ ^ 2) • ψ (Real.sqrt (2 * γ) • x), fun x x' => ?_⟩
+    rw [real_inner_smul_left, real_inner_smul_right, hψ, real_inner_smul_left,
+      real_inner_smul_right, ← Real.exp_add, ← Real.exp_add, norm_sub_sq_real]
+    have hs : Real.sqrt (2 * γ) * Real.sqrt (2 * γ) = 2 * γ := Real.mul_self_sqrt (by linarith)
+    congr 1
+    linear_combination (-⟪x, x'⟫) * hs
+
+/-! The card's six orders, by hand. Honest at (0, 0), (1, 0), (0, 1); fraud at (2, 2), (3, 3),
+(4, 1). The SVM's score is `s = ⅔ (x₁ + x₂) − 5/3`, so `w = (⅔, ⅔)` and `b = −5/3`. -/
+
+/-- The hard-margin score of an order `(x₁, x₂)`. -/
+def s6 (p : ℚ × ℚ) : ℚ := 2 / 3 * (p.1 + p.2) - 5 / 3
+
+-- Support vectors score exactly −1 (honest) and +1 (fraud).
+example : s6 (1, 0) = -1 ∧ s6 (0, 1) = -1 ∧ s6 (2, 2) = 1 := by norm_num [s6]
+-- The other three orders sit beyond their edges: (0, 0) honest, (3, 3) and (4, 1) fraud.
+example : s6 (0, 0) ≤ -1 ∧ 1 ≤ s6 (3, 3) ∧ 1 ≤ s6 (4, 1) := by norm_num [s6]
+-- Edges at x₁ + x₂ = 1 and 4, boundary halfway at 5/2.
+example : (1 + 4 : ℚ) / 2 = 5 / 2 ∧ s6 (5 / 2, 0) = 0 := by norm_num [s6]
+-- |w|² = 8/9, the margin squared (2/|w|)² = 9/2 = (3/√2)², and the gap to each side
+-- squared (1/|w|)² = 9/8 (1.0607²).
+example : (2 / 3 : ℚ) ^ 2 + (2 / 3) ^ 2 = 8 / 9 ∧ (4 : ℚ) / (8 / 9) = 9 / 2 ∧
+    (9 : ℚ) / 2 = 3 ^ 2 / 2 ∧ (1 : ℚ) / (8 / 9) = 9 / 8 := by norm_num
+-- The weights on the orders: α = 2/9, 2/9, 4/9 for (1, 0), (0, 1), (2, 2). They rebuild w,
+-- their signed sum is 0, and their total is |w|² = 8/9.
+example : (4 / 9 : ℚ) * 2 - 2 / 9 * 1 - 2 / 9 * 0 = 2 / 3 ∧
+    (4 / 9 : ℚ) * 2 - 2 / 9 * 0 - 2 / 9 * 1 = 2 / 3 ∧
+    (4 / 9 : ℚ) - 2 / 9 - 2 / 9 = 0 ∧ (2 / 9 : ℚ) + 2 / 9 + 4 / 9 = 8 / 9 := by norm_num
+-- The perceptron's line x₁ + x₂ = 3 passes (2, 2) at distance |4 − 3|/√2: squared 1/2 (0.7071²).
+example : ((2 + 2 - 3 : ℚ)) ^ 2 / 2 = 1 / 2 := by norm_num
+-- The seventh order, honest at (3, 2): along (1, 2) the frauds (2, 2) and (4, 1) sit at 6 and it
+-- sits at 7, so the clearance is (6 − 7)/√5 < 0.
+example : (2 * 1 + 2 * 2 : ℤ) = 6 ∧ (4 * 1 + 1 * 2 : ℤ) = 6 ∧ (3 * 1 + 2 * 2 : ℤ) = 7 := by decide
+
+/-- The soft-margin score with `C = 1`: `w = (½, ½)`, `b = −3/2`, boundary `x₁ + x₂ = 3`. -/
+def s7 (p : ℚ × ℚ) : ℚ := 1 / 2 * (p.1 + p.2) - 3 / 2
+
+-- Slack `max(0, 1 − y s)`: 1/2 for the fraud at (2, 2), 2 for the honest order at (3, 2), and
+-- 0 for the other five; the strip is 2/|w| wide, squared 8 (2.8284²).
+example : max 0 (1 - s7 (2, 2)) = 1 / 2 ∧ max 0 (1 + s7 (3, 2)) = 2 ∧
+    max 0 (1 + s7 (0, 0)) = 0 ∧ max 0 (1 + s7 (1, 0)) = 0 ∧ max 0 (1 + s7 (0, 1)) = 0 ∧
+    max 0 (1 - s7 (3, 3)) = 0 ∧ max 0 (1 - s7 (4, 1)) = 0 ∧
+    (4 : ℚ) / ((1 / 2) ^ 2 + (1 / 2) ^ 2) = 8 := by norm_num [s7]
+-- One radial kernel value: |(1, 0) − (2, 2)|² = 5, and γ = 1/2 gives the exponent 5/2.
+example : (1 - 2 : ℤ) ^ 2 + (0 - 2) ^ 2 = 5 ∧ (1 / 2 : ℚ) * 5 = 5 / 2 := by norm_num
+-- The full shop's kernel table: 20,000 × 20,000 = 400 million entries, 3.2 GB at 8 bytes each.
+example : 20000 * 20000 = 400000000 ∧ 20000 * 20000 * 8 = 3200000000 := by norm_num
+
+#print axioms infDist_hyperplane
+#print axioms sum_prod_multiIndex
+#print axioms feat
+#print axioms feat_mul
+#print axioms summable_feat
+#print axioms exists_exp_inner_feature
+#print axioms svm_margin_eq_two_div_norm
+#print axioms svm_best_weights_are_weighted_sum
+#print axioms kernels_are_feature_dot_products
+
+end KernelsAndSupportVectorMachines
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'KernelsAndSupportVectorMachines.infDist_hyperplane' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KernelsAndSupportVectorMachines.sum_prod_multiIndex' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KernelsAndSupportVectorMachines.feat' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KernelsAndSupportVectorMachines.feat_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KernelsAndSupportVectorMachines.summable_feat' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KernelsAndSupportVectorMachines.exists_exp_inner_feature' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KernelsAndSupportVectorMachines.svm_margin_eq_two_div_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KernelsAndSupportVectorMachines.svm_best_weights_are_weighted_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KernelsAndSupportVectorMachines.kernels_are_feature_dot_products' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

@@ -10,11 +10,19 @@ A customer logs in to a bank from a laptop. The usual way, the laptop sends the 
 
 There is another way. The bank never stores the password. It stores one public number made from it. At login, the laptop answers a fresh question from the bank. Only someone who knows the password can answer it correctly. The answer is a number that looks random and is useless on its own. The bank ends up sure the customer knows the password, and it has learned nothing else.
 
-That is a **zero-knowledge proof**: a conversation that convinces a checker a claim is true and reveals nothing more. The claim here is "I know the secret number behind this public number". The method is Schnorr's protocol, three messages long: a **sigma protocol**, the general name for this commit, challenge, response shape. Every number below comes from a toy group with an 11-step clock, small enough to check by hand and **insecure** for that reason; real systems use a 256-bit clock.
+That is a **zero-knowledge proof**: a conversation that convinces a checker a claim is true and reveals nothing more. The claim here is "I know the secret number behind this public number". The method is Schnorr's protocol, three messages long: a **sigma protocol**, the general name for this commit, challenge, response shape.
+
+Every number below comes from a toy group with an 11-step clock, small enough to check by hand and **insecure** for that reason; real systems use a 256-bit clock.
 
 **The prover commits to a random number, the checker asks a random question, and the prover answers in a way that only the secret makes consistent; one answer proves nothing about the secret, but answers to two questions about the same commitment would reveal it, so a prover who can always answer must know it.**
 
-**What kind of fact this is:** three theorems about the protocol, proved on this card in Why it works: an honest prover always passes (completeness), a prover who can answer two questions knows the secret (special soundness; the rewinding argument that turns it into full soundness is cited, not proved), and the conversation can be faked without the secret (zero knowledge, against a checker who asks random questions). The step to a non-interactive proof, Fiat-Shamir, is proved secure only in an idealised model where the hash behaves like a perfectly random function. Hiding the secret also rests on an assumption: that discrete logarithms are hard.
+**What kind of fact this is:** three theorems about the protocol, proved on this card in Why it works:
+
+- an honest prover always passes (completeness);
+- a prover who can answer two questions knows the secret (special soundness; the rewinding argument that turns it into full soundness is cited, not proved);
+- the conversation can be faked without the secret (zero knowledge, against a checker who asks random questions).
+
+The step to a non-interactive proof, Fiat-Shamir, is proved secure only in an idealised model where the hash behaves like a perfectly random function. Hiding the secret also rests on an assumption: that discrete logarithms are hard.
 
 ### The picture: one login, three messages
 
@@ -32,7 +40,9 @@ Schematic. The secret x never travels. The bank sees only 12, 3 and 4.
 
 ## The formula
 
-Notation first, in words. The setting is a **prime-order group with generator g**, taught on [Diffie-Hellman and ElGamal](05-diffie-hellman-and-elgamal.md): numbers mod a prime p, and inside them a cycle of q powers of g, where q is also prime. Here p = 23, q = 11 and g = 4. The powers 4^0 to 4^10 mod 23 are 1, 4, 16, 18, 3, 12, 2, 8, 9, 13, 6, and then they repeat. Exponents therefore work mod 11.
+Notation first, in words. The setting is a **prime-order group with generator g**, taught on [Diffie-Hellman and ElGamal](05-diffie-hellman-and-elgamal.md): numbers mod a prime p, and inside them a cycle of q powers of g, where q is also prime.
+
+Here p = 23, q = 11 and g = 4. The powers 4^0 to 4^10 mod 23 are 1, 4, 16, 18, 3, 12, 2, 8, 9, 13, 6, and then they repeat. Exponents therefore work mod 11.
 
 The password becomes a secret exponent x. The bank stores y = g^x mod p. Finding x from y is the **discrete logarithm** problem, assumed hard at real sizes.
 
@@ -42,7 +52,7 @@ One round has three moves. The laptop picks a fresh random r and sends t = g^r m
 
 $$g^{s} \equiv t \cdot y^{c} \pmod p$$
 
-**Read it aloud:** g raised to the response must equal the commitment times the public number raised to the challenge, on the clock of size p.
+**Read it aloud:** g raised to the response must equal the commitment times the public number raised to the challenge, with the arithmetic done mod p.
 
 A cheater who does not know x passes one round with chance 1/q. After ℓ independent rounds the chance is $(1/q)^{\ell}$.
 
@@ -54,7 +64,7 @@ $$c = h(g \,\|\, y \,\|\, t \,\|\, \text{msg}) \bmod q$$
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p$ | the prime the clock wraps at | 23 (real: 3072 bits) | — |
+| $p$ | the prime the arithmetic wraps at | 23 (real: 3072 bits) | — |
 | $q$ | how many powers of g before they repeat; also prime | 11 (real: 256 bits) | cheater's chance 1/q falls |
 | $g$ | the generator: the base everyone uses | 4 | — |
 | $x$ | the secret exponent, made from the password | 7 | — |
@@ -97,9 +107,11 @@ Suppose someone can answer two different challenges c and c' for one commitment 
 
 $$g^{s - s'} = y^{c - c'} \quad\Rightarrow\quad x = \frac{s - s'}{c - c'} \bmod q$$
 
-Division mod q works because q is prime. In the example, the challenges 3 and 8 give responses 4 and 6. Then (4 − 6) mod 11 = 9. Dividing by (3 − 8) mod 11 means multiplying by its inverse, which is 2. So x = 9 · 2 mod 11 = 7, the secret. This turning of two answers into the secret is called **extraction**.
+Division mod q works because q is prime. In the example, the challenges 3 and 8 give responses 4 and 6. Then (4 − 6) mod 11 = 9. Dividing by (3 − 8) mod 11 means multiplying by its inverse mod 11, the number that multiplies it to 1, which is 2. So x = 9 · 2 mod 11 = 7, the secret. This turning of two answers into the secret is called **extraction**.
 
-So a prover who does not know x can, for each t, answer at most one challenge. The bank picks c at random from 11 values, so the cheater passes with chance at most 1/11. Their best strategy reaches it: guess c in advance, pick any s, and set t = g^s · y^{−c}. The code counts all 1,331 combinations of guess, s and c for that strategy: 121 pass, exactly 1 in 11. A simulation of 100,000 cheating rounds passes 0.0914 of the time, within one standard error of 0.0909.
+So a prover who does not know x can, for each t, answer at most one challenge. The bank picks c at random from 11 values, so the cheater passes with chance at most 1/11.
+
+Their best strategy reaches it: guess c in advance, pick any s, and set t = g^s · y^{−c}. Here y^{−c} is the number that cancels y^c; the code computes it as y^{q−c}. The code counts all 1,331 combinations of guess, s and c for that strategy: 121 pass, exactly 1 in 11. A simulation of 100,000 cheating rounds passes 0.0914 of the time, within one standard error of 0.0909.
 
 <details>
 <summary>What "knows" means, more carefully</summary>
@@ -114,7 +126,9 @@ To show the bank learns nothing, show it could have written the whole conversati
 
 The simulator works backwards. Pick the challenge c and the response s first, both at random. Then set t = g^s · y^{−c}. The check passes by construction.
 
-Why do fakes look exactly like real ones? Fix c. In a real run r is uniform, and s = r + c·x is r shifted by a fixed amount, so s is uniform too, and the check fixes t. In a fake, s is uniform and the check fixes t. Both are "a uniform s, a random c, and the one t that fits". The code lists all 121 real transcripts and all 121 fakes: the two lists are identical, each transcript appearing once.
+Why do fakes look exactly like real ones? Fix c. In a real run r is uniform (every value equally likely), and s = r + c·x is r shifted by a fixed amount, so s is uniform too, and the check fixes t. In a fake, s is uniform and the check fixes t. Both are "a uniform s, a random c, and the one t that fits".
+
+The code lists all 121 real transcripts and all 121 fakes: the two lists are identical, each transcript appearing once.
 
 This proves **honest-verifier** zero knowledge: it assumes the bank picks c at random. A bank that picks c to depend on t is not covered by this argument. Fiat-Shamir removes the bank's choice altogether.
 
@@ -165,7 +179,13 @@ The code prints every row.
 
 ## Code, from first principles, and it actually runs
 
-The script runs the protocol in the toy group and checks each promise by more than one road. Completeness: all 121 pairs of r and c. Soundness: extraction recovers x, matching a brute-force discrete log; and the best cheating strategy, guessing c, reaches exactly 1/q, counted over all 1,331 cases (121 pass) and simulated over 100,000 seeded rounds, within one standard error. Zero knowledge: every real and every simulated transcript, listed and compared. Powers, the FNV-1a hash and the SplitMix64 generator are written out, so both languages print the same thing, and the hash is checked against FNV-1a's published value for the text `a`. All of it is **insecure**: an 11-step group, a non-cryptographic hash, a predictable generator. Real deployments use a 256-bit q and SHA-256 or stronger, as in RFC 8235.
+The script runs the protocol in the toy group and checks each promise by more than one road:
+
+- Completeness: all 121 pairs of r and c.
+- Soundness: extraction recovers x, matching a brute-force discrete log; and the best cheating strategy, guessing c, reaches exactly 1/q, counted over all 1,331 cases (121 pass) and simulated over 100,000 seeded rounds, within one standard error.
+- Zero knowledge: every real and every simulated transcript, listed and compared.
+
+Powers, the FNV-1a hash and the SplitMix64 generator are written out, so both languages print the same thing, and the hash is checked against FNV-1a's published value for the text `a`. All of it is **insecure**: an 11-step group, a non-cryptographic hash, a predictable generator. Real deployments use a 256-bit q and SHA-256 or stronger, as in RFC 8235.
 
 ### Python
 
@@ -507,6 +527,135 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves Steps 1 to 3 whenever the powers of g form a cycle of q, with q prime, and checks the worked numbers.
+
+- Take any secret x, any r and any challenge c. Then the response s = r + c·x mod q always passes the check.
+- Suppose two different challenges c and c' for one commitment t both pass, with responses s and s'. Then x = (s − s')/(c − c') mod q.
+- Take every real transcript over all r and c, and every simulator fake over all c and s. Then the two lists are identical, each transcript appearing equally often.
+- Take the toy group p = 23, q = 11, g = 4 and x = 7. Then y = 8, t = 12, s = 4, and both sides of the check are 3.
+- Take r = 5 and the challenges 3 and 8. Then the responses are 4 and 6, and extraction gives x = 7.
+- Take r = 9 and c = 6. Then t = 13 and s = 7, as in Step 4.
+- Six rounds bring a cheater under 1 in a million, and five do not. Trying exponents in order finds x = 7 on the 8th try.
+
+The hash, the cheater's chance of 1/q, the simulation and the breaks are left to the Python and Rust checks.
+
+```lean
+-- Zero-knowledge: Schnorr's protocol in a group of prime order q is complete, two answers to one commitment reveal the secret, and simulated transcripts match real ones exactly.
+import Mathlib.GroupTheory.OrderOfElement
+import Mathlib.Algebra.Field.ZMod
+import Mathlib.Data.Fintype.Prod
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Group
+import Mathlib.Tactic.LinearCombination
+
+/-! The setting of the card: a group `G` and a generator `g` whose powers form a cycle of
+`q` elements, with `q` prime (`orderOf g = q`). Exponents work mod `q`, so the secret `x`,
+the random `r`, the challenge `c` and the response `s` are elements of `ZMod q`; `g ^ a.val`
+is `g` raised to the exponent `a`, read as a whole number from `0` to `q - 1`.
+The bank stores `y = g ^ x`. One round: commitment `t = g ^ r`, challenge `c`,
+response `s = r + c * x`. The bank accepts when `g ^ s = t * y ^ c`. -/
+
+/-- Completeness: an honest prover always passes. For every secret `x`, every random `r`
+and every challenge `c`, the response `s = r + c·x mod q` satisfies `g^s = t · y^c`
+with `t = g^r` and `y = g^x`. -/
+theorem schnorr_completeness {G : Type*} [Group G] {q : ℕ} [Fact q.Prime]
+    (g : G) (hg : orderOf g = q) (x r c : ZMod q) :
+    g ^ (r + c * x).val = g ^ r.val * (g ^ x.val) ^ c.val := by
+  have hq : NeZero q := ⟨(Fact.out : q.Prime).ne_zero⟩
+  rw [← pow_mul, ← pow_add, pow_eq_pow_iff_modEq, hg, ← ZMod.natCast_eq_natCast_iff]
+  push_cast
+  simp only [ZMod.natCast_zmod_val]
+  ring
+
+/-- Special soundness (extraction): if two different challenges `c ≠ c'` for the same
+commitment `t` are both answered correctly, with responses `s` and `s'`, then the secret is
+`x = (s - s') / (c - c') mod q`. -/
+theorem schnorr_two_answers_reveal_secret {G : Type*} [Group G] {q : ℕ} [Fact q.Prime]
+    (g : G) (hg : orderOf g = q) (x : ZMod q) (y t : G) (hy : y = g ^ x.val)
+    (c c' s s' : ZMod q) (hc : c ≠ c')
+    (h1 : g ^ s.val = t * y ^ c.val) (h2 : g ^ s'.val = t * y ^ c'.val) :
+    x = (s - s') / (c - c') := by
+  have hq : NeZero q := ⟨(Fact.out : q.Prime).ne_zero⟩
+  subst hy
+  rw [← pow_mul] at h1 h2
+  have ht : t = g ^ ((s.val : ℤ) - ((x.val * c.val : ℕ) : ℤ)) := by
+    rw [zpow_sub, zpow_natCast, zpow_natCast, h1]; group
+  rw [ht, ← zpow_natCast, ← zpow_natCast, ← zpow_add, zpow_eq_zpow_iff_modEq, hg,
+    ← ZMod.intCast_eq_intCast_iff] at h2
+  push_cast at h2
+  simp only [ZMod.natCast_zmod_val] at h2
+  have hcc : c - c' ≠ 0 := sub_ne_zero.mpr hc
+  rw [eq_div_iff hcc]
+  linear_combination h2
+
+/-- Honest-verifier zero knowledge: the conversation can be faked without the secret.
+Listing every real transcript `(g^r, c, r + c·x)` over all `r` and `c`, and every simulated
+transcript `(g^s · (y^c)⁻¹, c, s)` over all `c` and `s` (made without `x`), gives exactly the
+same list, each transcript counted the same number of times. So with `r` (or `s`) and `c`
+chosen uniformly at random, real and simulated transcripts have the same distribution. -/
+theorem schnorr_simulator_matches_real_transcripts {G : Type*} [Group G] {q : ℕ}
+    [Fact q.Prime] (g : G) (hg : orderOf g = q) (x : ZMod q) (y : G) (hy : y = g ^ x.val) :
+    ((Finset.univ : Finset (ZMod q × ZMod q)).val.map
+        fun rc => (g ^ rc.1.val, rc.2, rc.1 + rc.2 * x)) =
+      ((Finset.univ : Finset (ZMod q × ZMod q)).val.map
+        fun cs => (g ^ cs.2.val * (y ^ cs.1.val)⁻¹, cs.1, cs.2)) := by
+  have hq : NeZero q := ⟨(Fact.out : q.Prime).ne_zero⟩
+  let e : ZMod q × ZMod q ≃ ZMod q × ZMod q :=
+    { toFun := fun rc => (rc.2, rc.1 + rc.2 * x)
+      invFun := fun cs => (cs.2 - cs.1 * x, cs.1)
+      left_inv := fun rc => by simp
+      right_inv := fun cs => by simp }
+  have hcomp : (fun rc : ZMod q × ZMod q => (g ^ rc.1.val, rc.2, rc.1 + rc.2 * x)) =
+      (fun cs : ZMod q × ZMod q => (g ^ cs.2.val * (y ^ cs.1.val)⁻¹, cs.1, cs.2)) ∘ e := by
+    funext rc
+    simp only [Function.comp, e, Equiv.coe_fn_mk, Prod.mk.injEq, and_true]
+    rw [hy, schnorr_completeness g hg x rc.1 rc.2]
+    group
+  rw [hcomp, ← Multiset.map_map, Multiset.map_univ_val_equiv]
+
+/-! The card's worked numbers: p = 23, q = 11, g = 4, secret x = 7. -/
+
+-- The powers 4^0 to 4^10 mod 23, and 4^11 = 1: a cycle of 11.
+example : (List.range 11).map (fun k => (4 : ZMod 23) ^ k) =
+    [1, 4, 16, 18, 3, 12, 2, 8, 9, 13, 6] := by decide
+example : (4 : ZMod 23) ^ 11 = 1 := by decide
+-- The bank stores y = 4^7 mod 23 = 8.
+example : (4 : ZMod 23) ^ 7 = 8 := by decide
+-- The laptop commits t = 4^5 mod 23 = 12.
+example : (4 : ZMod 23) ^ 5 = 12 := by decide
+-- The response s = 5 + 3·7 = 26, which is 4 mod 11.
+example : 5 + 3 * 7 = 26 ∧ 26 % 11 = 4 := by decide
+-- The check: 4^4 mod 23 = 3, 8^3 mod 23 = 6, and 12 · 6 mod 23 = 3.
+example : (4 : ZMod 23) ^ 4 = 3 ∧ (8 : ZMod 23) ^ 3 = 6 ∧ (12 : ZMod 23) * 8 ^ 3 = 3 := by
+  decide
+-- Second challenge 8 with the same r = 5: s' = 5 + 8·7 mod 11 = 6.
+example : (5 + 8 * 7) % 11 = 6 := by decide
+-- Extraction: (4 - 6) mod 11 = 9, the inverse of (3 - 8) mod 11 is 2, and 9 · 2 = 7 mod 11.
+example : (4 - 6 : ZMod 11) = 9 ∧ (3 - 8 : ZMod 11) * 2 = 1 ∧ (9 * 2 : ZMod 11) = 7 := by
+  decide
+-- Fiat-Shamir example: r = 9 gives t = 4^9 mod 23 = 13; with c = 6, s = 9 + 6·7 mod 11 = 7.
+example : (4 : ZMod 23) ^ 9 = 13 ∧ (9 + 6 * 7) % 11 = 7 := by decide
+-- Six rounds of q = 11 bring a cheater under 1 in a million; five are not enough.
+example : 11 ^ 6 = 1771561 ∧ 10 ^ 6 < 11 ^ 6 ∧ 11 ^ 5 < 10 ^ 6 := by norm_num
+-- Brute force: 4^k mod 23 first equals 8 at k = 7, the 8th try.
+example : (List.range 11).findIdx (fun k => (4 : ZMod 23) ^ k = 8) = 7 := by decide
+
+#print axioms schnorr_completeness
+#print axioms schnorr_two_answers_reveal_secret
+#print axioms schnorr_simulator_matches_real_transcripts
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'schnorr_completeness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'schnorr_two_answers_reveal_secret' depends on axioms: [propext, Classical.choice, Quot.sound]
+'schnorr_simulator_matches_real_transcripts' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - Guess first: does a bigger clock help the cheater or hurt them? Set `P, Q, G = 47, 23, 2` (2 has 23 powers mod 47). The exact count becomes 529 of 12,167, which is 0.0435 or 1/23, and the simulated rate follows it down. The forger needs about 23 tries per fake proof.
@@ -544,6 +693,8 @@ The two outputs match line for line.
 ## What this builds on
 
 - [Digital signatures](07-digital-signatures.md): hash-then-sign, ECDSA and the nonce-reuse leak, with the Schnorr signature named in one line. This card is the three-message protocol under Schnorr's version: that card's nonce k is our r, its private key d our x, and its hash our Fiat-Shamir challenge.
+- [Diffie-Hellman and ElGamal](05-diffie-hellman-and-elgamal.md): the prime-order group with generator g, and the discrete-log assumption that keeps x hidden behind y.
+- [Hashes and MACs](03-hash-functions-and-macs.md): the hash function h that Fiat-Shamir uses in place of the bank's challenge.
 
 ## Where this goes next
 

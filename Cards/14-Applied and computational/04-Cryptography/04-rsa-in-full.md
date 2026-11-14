@@ -46,7 +46,7 @@ $$n = pq, \qquad e\,d \equiv 1 \pmod{\varphi(n)}, \qquad c = \mathrm{EM}^{\,e} \
 
 **Read it aloud:** multiply two secret primes to get the public modulus; pick d to undo e on the clock of size phi(n); encrypt the padded block by raising it to e; decrypt it by raising to the two halves of d on the two prime clocks and gluing the answers.
 
-Here mod n means "keep the remainder after dividing by n", and phi(n), Euler's totient, counts the numbers below n that share no factor with it. Both come from the number-theory wing. Long numbers below are written in hexadecimal (base 16), showing their first and last 8 digits.
+Here mod n means "keep the remainder after dividing by n", and phi(n), Euler's totient, counts the numbers below n that share no factor with it. Both come from the number-theory wing: see [Congruence](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md) and [Euler's totient](../../02-Number%20theory/04-Powers%20on%20the%20Clock/03-eulers-totient.md). Long numbers below are written in hexadecimal (base 16), showing their first and last 8 digits.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -69,7 +69,7 @@ Here mod n means "keep the remainder after dividing by n", and phi(n), Euler's t
 - **e shares no factor with phi(n).** Otherwise nothing undoes e. Key generation redraws a prime whenever p − 1 is a multiple of e.
 - **The message is padded.** Raw "textbook" RSA, $m^e \bmod n$ with no padding, can be guessed and edited: breaks 1 and 2.
 - **Both CRT halves are computed correctly.** One wrong bit in one half hands out a prime: break 3.
-- **Splitting n is hard.** At 2048 bits the best known method needs about $2^{112}$ operations (NIST SP 800-57). A large quantum computer would change this; see [Lattices](09-lattices-and-post-quantum-cryptography.md).
+- **Splitting n is hard.** At 2048 bits the best known method needs about $2^{112}$ operations (NIST SP 800-57; NIST is the US National Institute of Standards and Technology). A large quantum computer would change this; see [Lattices](09-lattices-and-post-quantum-cryptography.md).
 
 ---
 
@@ -83,13 +83,15 @@ Every private number on this card, phi(n), d, $d_p$, $d_q$, is a few lines of ar
 
 Draw a random odd number with its top two bits set, so that p × q fills all 2048 bits. Test it with [The Miller-Rabin test](../../02-Number%20theory/06-Codes%20and%20Secrets/05-miller-rabin.md). If it fails, draw again. The checks use the first 12 primes as Miller-Rabin bases. That gives a certain answer for the 32-bit toy primes and a probable one at 1024 bits; a composite p or q would make the decryption below fail, so the round trip is a second check.
 
-How many draws? Near any large number, about one number in its natural logarithm is prime (the prime number theorem). Skipping even numbers halves that, so a 1024-bit search expects **354.8 odd draws**. Each draw costs one quick test, so a key takes moments.
+How many draws? Near any large number, about one number in its natural logarithm is prime (the prime number theorem, on [How primes thin out](../../02-Number%20theory/07-For%20the%20Curious/03-how-primes-thin-out.md)). Skipping even numbers halves that, so a 1024-bit search expects **354.8 odd draws**. Each draw costs one quick test, so a key takes moments.
 
 The run's p took 399 odd draws and its q took 188, either side of that average. The toy primes took 13 and 18, and over 400 toy primes the average was 10.69 draws, against 11.02 from the formula.
 
 ### Step 2: the private exponent
 
-phi(n) = (p − 1)(q − 1). Then d is the number that undoes e on a clock of size phi(n). The Python check finds it with the extended Euclidean algorithm. The Rust check has no big-number division, so it finds the k below 65537 that makes 1 + k × phi(n) a multiple of e, and divides by e. Both get the same 2046-bit d, and e × d mod phi(n) = 1. Why $m^{ed}$ comes back to m is [Euler's theorem](../../02-Number%20theory/04-Powers%20on%20the%20Clock/04-eulers-theorem.md), shown in full on RSA in outline.
+phi(n) = (p − 1)(q − 1). Then d is the number that undoes e on a clock of size phi(n). The Python check finds it with the extended Euclidean algorithm: Euclid's gcd steps, run backwards to give the inverse ([Bezout's identity](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/04-bezouts-identity.md)).
+
+The Rust check has no big-number division, so it finds the k below 65537 that makes 1 + k × phi(n) a multiple of e, and divides by e. Both get the same 2046-bit d, and e × d mod phi(n) = 1. Why $m^{ed}$ comes back to m is [Euler's theorem](../../02-Number%20theory/04-Powers%20on%20the%20Clock/04-eulers-theorem.md), shown in full on RSA in outline.
 
 The original 1978 paper gives a test vector: p = 47, q = 59, e = 17. Its d is 157, and the block 920 encrypts to 948. The checks rebuild both.
 
@@ -123,15 +125,21 @@ Decryption means raising c to d, an exponent of about 2048 bits (2046 here), on 
 2. Compute $c^{d_p} \bmod p$ and $c^{d_q} \bmod q$: two jobs with half-size numbers and half-size exponents.
 3. Glue the two remainders into one number below n with [The Chinese remainder theorem](../../02-Number%20theory/03-Clock%20Arithmetic/06-chinese-remainder-theorem.md).
 
-Why about 4 times faster? Count multiplications. Square-and-multiply (the fast power method: one squaring per bit of the exponent after the first, one extra multiply per further 1 bit) on this d made **3067** multiplications of 2048-bit numbers. The two CRT halves made 1523 each, **3046** in total, but of 1024-bit numbers. Schoolbook multiplication of numbers twice as long costs four times as much. So the cost is 3067 × 4 against 3046 × 1: a speed-up of **4.03**. Both routes gave the same EM. Libraries with faster multiplication methods gain a little less.
+Why about 4 times faster? Count multiplications. Square-and-multiply (the fast power method of [Powers on the clock](../../02-Number%20theory/04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): one squaring per bit of the exponent after the first, one extra multiply per further 1 bit) on this d made **3067** multiplications of 2048-bit numbers.
+
+The two CRT halves made 1523 each, **3046** in total, but of 1024-bit numbers. Schoolbook multiplication of numbers twice as long costs four times as much. So the cost is 3067 × 4 against 3046 × 1: a speed-up of **4.03**. Both routes gave the same EM. Libraries with faster multiplication methods gain a little less.
 
 Encryption is cheap by comparison: raising to e = 65537 took 17 multiplications.
 
 ### Step 5: why factoring is the whole game
 
-**The factors give d.** With p and q, phi(n) is one multiplication and d is one run of Euclid's algorithm. Pollard's rho method (a random walk on the n clock that tends to repeat modulo p long before modulo n) takes steps in proportion to the square root of the smaller prime, hopeless at 1024 bits. So the checks run it on a toy key, 3516228229 × 4270626263, a 64-bit n. It split the toy n in 74725 steps; the square root of p is 59297. Single runs scatter widely around that square root, and only the average grows with it. The d rebuilt from that factor matches the toy key's d.
+**The factors give d.** With p and q, phi(n) is one multiplication and d is one run of Euclid's algorithm. Pollard's rho method (a random walk on the n clock that tends to repeat modulo p long before modulo n) takes steps in proportion to the square root of the smaller prime, hopeless at 1024 bits.
 
-**d gives the factors.** This is the surprising half. Since $ed - 1$ is a multiple of phi(n), raising any base a that shares no factor with n to the power $ed - 1$ gives 1. (A base that does share a factor splits n at once: gcd(a, n) is a prime.) Halve that exponent until it is odd, raise a to it, then square step by step until 1 appears. The value just before the 1 is a square root of 1.
+So the checks run it on a toy key, 3516228229 × 4270626263, a 64-bit n. It split the toy n in 74725 steps; the square root of p is 59297. Single runs scatter widely around that square root, and only the average grows with it. The d rebuilt from that factor matches the toy key's d.
+
+**d gives the factors.** This is the surprising half. Since $ed - 1$ is a multiple of phi(n), raising any base a that shares no factor with n to the power $ed - 1$ gives 1. (A base that does share a factor splits n at once: gcd(a, n) is a prime.)
+
+Halve that exponent until it is odd, raise a to it, then square step by step until 1 appears. The value just before the 1 is a square root of 1.
 
 On a prime clock, 1 has only two square roots, 1 and −1 (Step 0 of the Miller-Rabin card). On n = pq it has four. If the walk lands on one of the extra two, call it x, then x − 1 shares exactly one prime with n, and gcd(x − 1, n) is that prime. Most bases work. Base 2 worked here and gave p, cf8ab650…50560399.
 
@@ -139,7 +147,9 @@ So **knowing d and knowing the factors are the same knowledge**. Leaking d means
 
 One gap remains open. Decrypting a single ciphertext without d (the "RSA problem") is not proved to be as hard as factoring. No faster route is known.
 
-**What factoring costs.** For a 2048-bit n, trial division by every odd number up to the square root takes about $2^{1023}$ steps. Pollard's rho takes about $2^{512}$. The general number field sieve (GNFS), the best known method, grows more slowly than any power of n but faster than any power of its digit count. Its formula, without the small correction term, gives $2^{116.9}$. NIST rates a 2048-bit key at 112 bits of security: about $2^{112}$ operations, if no better method exists.
+**What factoring costs.** For a 2048-bit n, trial division by every odd number up to the square root takes about $2^{1023}$ steps. Pollard's rho takes about $2^{512}$.
+
+The general number field sieve (GNFS), the best known method, grows more slowly than any power of n but faster than any power of its digit count. Its formula, without the small correction term, gives $2^{116.9}$. NIST rates a 2048-bit key at 112 bits of security: about $2^{112}$ operations, if no better method exists.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -189,7 +199,18 @@ The bank recovers the laptop's AES key, and the two prime clocks do it for about
 
 ## Code, from first principles, and it actually runs
 
-Both programs build the 2048-bit key from a SplitMix64 generator (seed 2026), so Python and Rust draw the same primes and print the same lines. No three-argument `pow` and no `random`: square-and-multiply, Euclid, Miller-Rabin, OAEP and Pollard's rho are written out. Python takes SHA-256 from its standard library (`hashlib`). Rust's standard library has neither SHA-256 nor big integers, so the Rust program writes out SHA-256 as on [Hashes and MACs](03-hash-functions-and-macs.md), and a small big-number type: numbers held as 64-bit pieces, with Montgomery multiplication (a way to work mod n that adds multiples of n instead of dividing). The two outputs match line for line, which checks each SHA-256 and each big-number routine against the other. The answers are reached by **four independent roads**: Miller-Rabin against trial division for the toy primes, and the draw count against the prime number theorem; direct decryption against the CRT route, with the multiplication count checked against the bits of d; published test vectors, the 1978 paper's and, for Rust's SHA-256, FIPS 180-4's; and three separate ways to split n (a CRT fault, a shared prime, the leaked d), plus rho on the toy key, each checked against the true primes. Every assert can fail: a broken inverse, a wrong CRT glue, a miscounted multiply, a reused seed or broken big-number arithmetic each stop the run.
+Both programs build the 2048-bit key from a SplitMix64 generator (seed 2026), so Python and Rust draw the same primes and print the same lines. No three-argument `pow` and no `random`: square-and-multiply, Euclid, Miller-Rabin, OAEP and Pollard's rho are written out.
+
+Python takes SHA-256 from its standard library (`hashlib`). Rust's standard library has neither SHA-256 nor big integers, so the Rust program writes out SHA-256 as on [Hashes and MACs](03-hash-functions-and-macs.md), and a small big-number type: numbers held as 64-bit pieces, with Montgomery multiplication (a way to work mod n that adds multiples of n instead of dividing). The two outputs match line for line, which checks each SHA-256 and each big-number routine against the other.
+
+The answers are reached by **four independent roads**:
+
+1. Miller-Rabin against trial division for the toy primes, and the draw count against the prime number theorem.
+2. Direct decryption against the CRT route, with the multiplication count checked against the bits of d.
+3. Published test vectors, the 1978 paper's and, for Rust's SHA-256, FIPS 180-4's.
+4. Three separate ways to split n (a CRT fault, a shared prime, the leaked d), plus rho on the toy key, each checked against the true primes.
+
+Every assert can fail: a broken inverse, a wrong CRT glue, a miscounted multiply, a reused seed or broken big-number arithmetic each stop the run.
 
 ### Python
 
@@ -589,6 +610,227 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the round trip on two prime clocks and two ways to split n, for any distinct primes p and q.
+
+- Take distinct odd primes p and q, d undoing e on the phi(n) clock, and m below n encrypted to c. Then the CRT glue of $c^{d_p} \bmod p$ and $c^{d_q} \bmod q$ is m again.
+- Take distinct primes p and q, and x a square root of 1 on the n clock, neither 1 nor −1. Then gcd(x − 1, n) is p or q.
+- Take distinct primes p and q, d undoing e on the phi(n) clock, and bad agreeing with m mod p only. Then $\gcd(\mathrm{bad}^e - c, n) = p$, where c encrypts m.
+- The 1978 test vector holds: 47 and 59 are prime, d = 157, and 920 encrypts to 948 and decrypts back.
+- On the two prime clocks, $d_p = 19$ and $d_q = 41$, and both halves give back 920.
+- The toy primes 3516228229 and 4270626263 are prime, and their product has 64 bits.
+- The doubled textbook amount is 1000, and OAEP's longest message at 2048 bits is 190 bytes.
+
+The 2048-bit key, OAEP padding, the 4.03 speed-up and Pollard's rho are left to the Python and Rust checks.
+
+```lean
+-- RSA in full: decrypting on the two prime clocks and gluing with the Chinese remainder theorem gives back every message, and a non-trivial square root of 1 or a faulty CRT half splits n.
+import Mathlib.Data.Nat.ModEq
+import Mathlib.Data.Nat.Prime.Basic
+import Mathlib.Data.Int.GCD
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.FieldTheory.Finite.Basic
+
+/-- Fermat on one prime clock: if n ≡ 1 (mod r - 1) and n ≥ 1, then x^n ≡ x (mod r). -/
+theorem rsa_pow_modEq_self_of_modEq_one (r n x : ℕ) (hr : r.Prime) (hn : n ≡ 1 [MOD r - 1])
+    (hn1 : 1 ≤ n) : x ^ n ≡ x [MOD r] := by
+  have := Fact.mk hr
+  obtain ⟨k, hk⟩ := (Nat.modEq_iff_dvd' hn1).1 hn.symm
+  have hn' : n = (r - 1) * k + 1 := by omega
+  rw [← ZMod.natCast_eq_natCast_iff]
+  push_cast
+  by_cases hx : (x : ZMod r) = 0
+  · rw [hx, zero_pow (by omega)]
+  · rw [hn', pow_succ, pow_mul, ZMod.pow_card_sub_one_eq_one hx, one_pow, one_mul]
+
+#print axioms rsa_pow_modEq_self_of_modEq_one
+
+/-- Decryption on the clock of an odd prime factor p of n gives back m mod p. -/
+theorem rsa_clock_decrypt (p n e d m : ℕ) (hp : p.Prime) (hp2 : p ≠ 2) (hpn : p ∣ n)
+    (hd : e * d ≡ 1 [MOD p - 1]) :
+    (m ^ e % n) ^ (d % (p - 1)) % p = m % p := by
+  have hp3 : 3 ≤ p := by have := hp.two_le; omega
+  have h1 : e * (d % (p - 1)) ≡ 1 [MOD p - 1] :=
+    ((Nat.mod_modEq d (p - 1)).mul_left e).trans hd
+  have hpos : 1 ≤ e * (d % (p - 1)) := by
+    by_contra h0
+    have h0' : e * (d % (p - 1)) = 0 := by omega
+    rw [h0'] at h1
+    have : 1 % (p - 1) = 1 := Nat.mod_eq_of_lt (by omega)
+    unfold Nat.ModEq at h1
+    rw [this, Nat.zero_mod] at h1
+    exact absurd h1 (by norm_num)
+  have hc : m ^ e % n ≡ m ^ e [MOD p] := Nat.mod_mod_of_dvd _ hpn
+  have h2 : (m ^ e) ^ (d % (p - 1)) ≡ m [MOD p] := by
+    rw [← pow_mul]; exact rsa_pow_modEq_self_of_modEq_one p _ m hp h1 hpos
+  exact (hc.pow (d % (p - 1))).trans h2
+
+#print axioms rsa_clock_decrypt
+
+/-- RSA decryption on two prime clocks: let p and q be distinct primes, n = p q, and let d undo
+e on the clock of size phi(n) = (p - 1)(q - 1), that is e d ≡ 1 (mod phi(n)). Encrypt any
+message m < n as c = m^e mod n. Raise c to d_p = d mod (p - 1) on the p clock and to
+d_q = d mod (q - 1) on the q clock, and glue the two remainders with the Chinese remainder
+theorem. The glued number is m again. The primes are odd, as the card's key generation draws
+only odd numbers: for p = 2, d mod (p - 1) = 0 and every even m would glue back wrong. -/
+theorem rsa_crt_decryption_recovers_message (p q e d m : ℕ) (hp : p.Prime) (hq : q.Prime)
+    (hpq : p ≠ q) (hp2 : p ≠ 2) (hq2 : q ≠ 2) (hd : e * d ≡ 1 [MOD (p - 1) * (q - 1)]) (hm : m < p * q) :
+    let c := m ^ e % (p * q)
+    (Nat.chineseRemainder ((Nat.coprime_primes hp hq).2 hpq)
+        (c ^ (d % (p - 1)) % p) (c ^ (d % (q - 1)) % q) : ℕ) = m := by
+  intro c
+  have co := (Nat.coprime_primes hp hq).2 hpq
+  have hdp : e * d ≡ 1 [MOD p - 1] := hd.of_dvd (dvd_mul_right _ _)
+  have hdq : e * d ≡ 1 [MOD q - 1] := hd.of_dvd (dvd_mul_left _ _)
+  have hcp : c ^ (d % (p - 1)) % p = m % p :=
+    rsa_clock_decrypt p (p * q) e d m hp hp2 (dvd_mul_right _ _) hdp
+  have hcq : c ^ (d % (q - 1)) % q = m % q :=
+    rsa_clock_decrypt q (p * q) e d m hq hq2 (dvd_mul_left _ _) hdq
+  rw [hcp, hcq]
+  have hu := Nat.chineseRemainder_modEq_unique co (z := m)
+    (a := m % p) (b := m % q) (Nat.mod_modEq m p).symm (Nat.mod_modEq m q).symm
+  have hlt := Nat.chineseRemainder_lt_mul co (m % p) (m % q) hp.ne_zero hq.ne_zero
+  exact (Nat.ModEq.eq_of_lt_of_lt hu hm hlt).symm
+
+/-- d gives the factors: on n = p q with p and q distinct primes, a square root x of 1 that is
+neither 1 nor -1 (that is, not n - 1) shares exactly one prime with n, so gcd(x - 1, n) is p
+or q. -/
+theorem rsa_extra_square_root_of_one_splits_n (p q x : ℕ) (hp : p.Prime) (hq : q.Prime)
+    (hpq : p ≠ q) (hx : x < p * q) (hsq : x * x % (p * q) = 1) (h1 : x ≠ 1)
+    (hneg : x ≠ p * q - 1) :
+    Nat.gcd (x - 1) (p * q) = p ∨ Nat.gcd (x - 1) (p * q) = q := by
+  have hp2 := hp.two_le
+  have hq2 := hq.two_le
+  have hn4 : 4 ≤ p * q := Nat.mul_le_mul hp2 hq2
+  have hx2 : 2 ≤ x := by
+    rcases Nat.lt_or_ge x 2 with h | h
+    · interval_cases x
+      · simp at hsq
+      · exact absurd rfl h1
+    · exact h
+  have hdvd : p * q ∣ (x - 1) * (x + 1) := by
+    have h := Nat.div_add_mod (x * x) (p * q)
+    rw [hsq] at h
+    have he : (x - 1) * (x + 1) = x * x - 1 := by
+      obtain ⟨y, rfl⟩ : ∃ y, x = y + 1 := ⟨x - 1, by omega⟩
+      simp only [Nat.add_sub_cancel]
+      ring_nf
+      omega
+    rw [he]
+    exact ⟨x * x / (p * q), by omega⟩
+  set g := Nat.gcd (x - 1) (p * q) with hg
+  have hgd : g ∣ p * q := Nat.gcd_dvd_right _ _
+  obtain ⟨a, b, ha, hb, hab⟩ := Nat.dvd_mul.1 hgd
+  rcases (Nat.dvd_prime hp).1 ha with ha' | ha' <;>
+    rcases (Nat.dvd_prime hq).1 hb with hb' | hb' <;> rw [ha', hb'] at hab
+  · -- g = 1: then p q divides x + 1, so x = p q - 1
+    exfalso
+    have hcop : Nat.Coprime (p * q) (x - 1) := by
+      rw [Nat.Coprime, Nat.gcd_comm, ← hg, ← hab]
+    have h2 : p * q ∣ x + 1 := hcop.dvd_of_dvd_mul_left hdvd
+    have h3 := Nat.le_of_dvd (by omega) h2
+    have h4 : x + 1 = p * q := by
+      obtain ⟨k, hk⟩ := h2
+      rcases k with _ | _ | k
+      · omega
+      · omega
+      · nlinarith
+    omega
+  · right; rw [← hab]; ring
+  · left; rw [← hab]; ring
+  · -- g = p q: then p q divides x - 1, impossible since 0 < x - 1 < p q
+    exfalso
+    have h2 : p * q ∣ x - 1 := by rw [hab, hg]; exact Nat.gcd_dvd_left _ _
+    have h3 := Nat.le_of_dvd (by omega) h2
+    omega
+
+/-- Break 3, a CRT fault: with an RSA key (distinct primes p, q, n = p q, e d ≡ 1 mod phi(n))
+and ciphertext c = m^e mod n, a faulty decryption "bad" that is right mod p but wrong mod q
+gives gcd(bad^e - c, n) = p. -/
+theorem rsa_crt_fault_reveals_prime (p q e d m bad : ℕ) (hp : p.Prime) (hq : q.Prime)
+    (hpq : p ≠ q) (hd : e * d ≡ 1 [MOD (p - 1) * (q - 1)])
+    (hbp : bad ≡ m [MOD p]) (hbq : ¬ bad ≡ m [MOD q]) :
+    Int.gcd ((bad : ℤ) ^ e - ((m ^ e % (p * q) : ℕ) : ℤ)) ((p * q : ℕ) : ℤ) = p := by
+  have hp2 := hp.two_le
+  have hq2 := hq.two_le
+  -- e d ≥ 1, since phi(n) ≥ 2 for distinct primes
+  have hed : 1 ≤ e * d := by
+    by_contra h0
+    have h0' : e * d = 0 := by omega
+    have h := hd
+    unfold Nat.ModEq at h
+    rw [h0', Nat.zero_mod] at h
+    have h1 : (p - 1) * (q - 1) ∣ 1 := Nat.dvd_of_mod_eq_zero h.symm
+    have h2 := mul_eq_one.1 (Nat.dvd_one.1 h1)
+    omega
+  have hdq : e * d ≡ 1 [MOD q - 1] := hd.of_dvd (dvd_mul_left _ _)
+  -- the difference as a natural-number congruence statement
+  set D : ℤ := (bad : ℤ) ^ e - ((m ^ e % (p * q) : ℕ) : ℤ) with hD
+  have hcast : ∀ r : ℕ, r ∣ p * q →
+      (((r : ℕ) : ℤ) ∣ D ↔ m ^ e % (p * q) ≡ bad ^ e [MOD r]) := by
+    intro r _
+    rw [← Int.natCast_modEq_iff, Int.modEq_iff_dvd, hD]
+    push_cast
+    rfl
+  have hpD : (p : ℤ) ∣ D := by
+    rw [hcast p (dvd_mul_right _ _)]
+    exact (Nat.mod_mod_of_dvd _ (dvd_mul_right p q)).trans (hbp.pow e).symm
+  have hqD : ¬ (q : ℤ) ∣ D := by
+    rw [hcast q (dvd_mul_left _ _)]
+    intro h
+    have h' : bad ^ e ≡ m ^ e [MOD q] :=
+      (h.symm.trans (Nat.mod_mod_of_dvd _ (dvd_mul_left q p)))
+    have h'' := h'.pow d
+    rw [← pow_mul, ← pow_mul] at h''
+    exact hbq ((rsa_pow_modEq_self_of_modEq_one q _ bad hq hdq hed).symm.trans
+      (h''.trans (rsa_pow_modEq_self_of_modEq_one q _ m hq hdq hed)))
+  rw [Int.gcd_eq_natAbs, Int.natAbs_natCast]
+  have hpg : p ∣ Nat.gcd D.natAbs (p * q) :=
+    Nat.dvd_gcd (Int.ofNat_dvd_left.1 hpD) (dvd_mul_right _ _)
+  have hqg : ¬ q ∣ Nat.gcd D.natAbs (p * q) := fun h =>
+    hqD (Int.ofNat_dvd_left.2 (h.trans (Nat.gcd_dvd_left _ _)))
+  obtain ⟨k, hk⟩ := hpg
+  have hkq : k ∣ q := by
+    have := Nat.gcd_dvd_right D.natAbs (p * q)
+    rw [hk] at this
+    exact (Nat.mul_dvd_mul_iff_left hp.pos).1 this
+  rcases (Nat.dvd_prime hq).1 hkq with hk' | hk'
+  · rw [hk, hk', mul_one]
+  · exact absurd (hk ▸ hk' ▸ dvd_mul_left q p) hqg
+
+-- The 1978 paper's test vector: p = 47, q = 59, e = 17.
+example : Nat.Prime 47 ∧ Nat.Prime 59 ∧ 47 * 59 = 2773 := by norm_num
+example : 17 * 157 % (46 * 58) = 1 := by decide
+example : 920 ^ 17 % 2773 = 948 := by decide
+example : 948 ^ 157 % 2773 = 920 := by decide
+-- The same decryption on the two prime clocks: d_p = 157 mod 46 = 19, d_q = 157 mod 58 = 41.
+example : 157 % 46 = 19 ∧ 157 % 58 = 41 := by decide
+example : 948 ^ 19 % 47 = 920 % 47 ∧ 948 ^ 41 % 59 = 920 % 59 := by decide
+-- The 64-bit toy key: two 32-bit primes whose product has 64 bits.
+set_option maxRecDepth 100000 in
+example : Nat.Prime 3516228229 ∧ Nat.Prime 4270626263 := by norm_num
+example : 3516228229 * 4270626263 = 15016496621469378227 := by norm_num
+example : 2 ^ 63 ≤ 15016496621469378227 ∧ 15016496621469378227 < 2 ^ 64 := by norm_num
+-- Break 2: the doubled textbook amount; OAEP's largest message at 2048 bits (256-byte key).
+example : 500 * 2 = 1000 := by decide
+example : 256 - 2 * 32 - 2 = 190 := by decide
+
+#print axioms rsa_crt_decryption_recovers_message
+#print axioms rsa_extra_square_root_of_one_splits_n
+#print axioms rsa_crt_fault_reveals_prime
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'rsa_pow_modEq_self_of_modEq_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rsa_clock_decrypt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rsa_crt_decryption_recovers_message' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rsa_extra_square_root_of_one_splits_n' depends on axioms: [propext, Classical.choice, Quot.sound]
+'rsa_crt_fault_reveals_prime' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

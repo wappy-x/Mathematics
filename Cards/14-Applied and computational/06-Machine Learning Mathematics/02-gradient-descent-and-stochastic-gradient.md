@@ -6,11 +6,17 @@
 
 ## General Overview
 
-An online shop has 20,000 past orders, each described by 12 numbers. The shop wants a rule that predicts what an order is worth in pounds from those 12 numbers, so it can plan stock and delivery vans before the money arrives. This shop is synthetic and separate from the one on [Loss and empirical risk](01-loss-functions-and-empirical-risk.md). Its 12 numbers come already standardised (rescaled to a common size, with no units), each between about −1.3 and 1.3, and its average order is £40.0056.
+An online shop has 20,000 past orders, each described by 12 numbers. The shop wants a rule that predicts what an order is worth in pounds from those 12 numbers, so it can plan stock and delivery vans before the money arrives.
 
-The rule is a weighted sum: multiply each of the 12 numbers by its own **weight** (pounds per unit of that number), add the products, and add a fixed starting amount, the **bias**. Fitting means choosing the 12 weights and the bias that make the predictions miss by as little as possible. The miss is measured as on [Loss and empirical risk](01-loss-functions-and-empirical-risk.md): square each order's miss, then average over all 20,000 orders. That average is the **risk**.
+This shop is synthetic and separate from the one on [Loss and empirical risk](01-loss-functions-and-empirical-risk.md). Its 12 numbers come already standardised (rescaled to a common size, with no units), each between about −1.3 and 1.3, and its average order is £40.0056.
 
-Here the best rule is known exactly, so every method can be scored against it. Its typical miss is £4.96. Start from all weights at zero and let three methods run for 50 **passes**, where one pass means reading all 20,000 orders once. Plain gradient descent ends with one weight still wrong by £1.88. Add momentum and the worst weight is off by £0.11. Read the orders 100 at a time and step after each handful, and on this shuffle the worst is off by £0.07.
+The rule is a weighted sum: multiply each of the 12 numbers by its own **weight** (pounds per unit of that number), add the products, and add a fixed starting amount, the **bias**.
+
+Fitting means choosing the 12 weights and the bias that make the predictions miss by as little as possible. The miss is measured as on [Loss and empirical risk](01-loss-functions-and-empirical-risk.md): square each order's miss, then average over all 20,000 orders. That average is the **risk**.
+
+Here the best rule is known exactly, so every method can be scored against it. Its typical miss is £4.96. Start from all weights at zero and let three methods run for 50 **passes**, where one pass means reading all 20,000 orders once.
+
+Plain gradient descent ends with one weight still wrong by £1.88. Add momentum and the worst weight is off by £0.11. Read the orders 100 at a time and step after each handful, and on this shuffle the worst is off by £0.07.
 
 **Gradient descent fits a model by repeatedly stepping against the gradient of the average loss, with a step size below 2 over the steepest curvature; on large data, a gradient from a small random batch is an honest but noisy stand-in that lets the model take hundreds of steps per pass instead of one.**
 
@@ -30,7 +36,9 @@ The same 50 readings of the data, used three ways. The data is synthetic: genera
 
 ## The formula
 
-Notation first, in words. Order number i (from 1 to n) has a list of 12 numbers, written $x_i$, and a value in pounds, $y_i$. The 12 weights are one list, $w$; the bias is one number, $b$, which the loss card calls the starting amount. The prediction is $\hat y_i$ ("y hat"). The risk is $\hat R(w, b)$ ("R hat"), as on the loss card. Its gradient $\nabla \hat R$ (read "grad R hat") is the list of its rates of change, one per weight and one for the bias; it points up the steepest climb ([Gradient](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md)).
+Notation first, in words. Order number i (from 1 to n) has a list of 12 numbers, written $x_i$, and a value in pounds, $y_i$. The 12 weights are one list, $w$; the bias is one number, $b$, which the loss card calls the starting amount.
+
+The prediction is $\hat y_i$ ("y hat"). The risk is $\hat R(w, b)$ ("R hat"), as on the loss card. Its gradient $\nabla \hat R$ (read "grad R hat") is the list of its rates of change, one per weight and one for the bias; it points up the steepest climb ([Gradient](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md)).
 
 $$\hat y_i = w\cdot x_i + b, \qquad \hat R(w,b)=\frac1n\sum_{i=1}^{n}\big(\hat y_i-y_i\big)^2$$
 
@@ -95,7 +103,9 @@ At the start every prediction is £0, so every miss is minus the order's value. 
 
 Squared error of a weighted sum is exactly a bowl. Write e for the distance from the best weights, as a list. Then the risk is the lowest risk plus half of e times the Hessian H times e, and the gradient is H times e. One step turns e into (I − ηH) e, where I is the "do nothing" matrix.
 
-The Hessian here is symmetric, so it has perpendicular directions it only stretches, each with its own stretch factor λ, the curvature along that direction ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)). Along each such direction, one step multiplies the error by 1 − ηλ. The walk shrinks every error only if every such factor lies between −1 and 1. That needs ηλ < 2 for the steepest curvature, which is the step limit. [Wiener and LMS](../../13-Engineering%20mathematics/05-Signals/07-adaptive-and-optimal-filters.md) met the same limit on a two-weight filter; here it governs 13 weights.
+The Hessian here is symmetric, so it has perpendicular directions it only stretches, each with its own stretch factor λ, the curvature along that direction ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)).
+
+Along each such direction, one step multiplies the error by 1 − ηλ. The walk shrinks every error only if every such factor lies between −1 and 1. That needs ηλ < 2 for the steepest curvature, which is the step limit. [Wiener and LMS](../../13-Engineering%20mathematics/05-Signals/07-adaptive-and-optimal-filters.md) met the same limit on a two-weight filter; here it governs 13 weights.
 
 The gentlest direction sets the pace. Its factor per step is 1 − η λ_min. Here the 12 numbers all rise with the size of the order, so they move together. The bowl is a long, narrow valley: its steepest curvature is 141.3 times its gentlest. At η = 0.2 the gentlest error shrinks by a factor of only 0.98857 per pass.
 
@@ -108,7 +118,11 @@ Write θ for the 13 numbers (w, b) and θ* for the best ones, where the gradient
 
 $$\hat R(\theta)=\hat R(\theta^*)+\tfrac12(\theta-\theta^*)^{\top}H(\theta-\theta^*),\qquad H=\frac2n\sum_{i=1}^{n}(x_i,1)(x_i,1)^{\top}.$$
 
-The gradient is $H(\theta-\theta^*)$. With $e_t=\theta_t-\theta^*$ the step gives $e_{t+1}=(I-\eta H)e_t$, so $e_t=(I-\eta H)^t e_0$. H is symmetric and its curvatures are not negative, so it has perpendicular directions it only stretches ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)). Split the starting error into parts along those directions. After t steps the part along a direction of curvature λ has been multiplied by $(1-\eta\lambda)^t$. Every part tends to zero for every start exactly when $|1-\eta\lambda|<1$ for every curvature, which is $0<\eta<2/\lambda_{\max}$ when the gentlest curvature is positive. The excess risk is half the sum, over the directions, of λ times that part squared, so each term shrinks by $(1-\eta\lambda)^2$ per step. Late in the walk the terms whose factors are nearest 1 are all that is left, and in the very long run only the gentlest. After 50 passes here, all eleven gentle terms still count.
+The gradient is $H(\theta-\theta^*)$. With $e_t=\theta_t-\theta^*$ the step gives $e_{t+1}=(I-\eta H)e_t$, so $e_t=(I-\eta H)^t e_0$.
+
+H is symmetric and its curvatures are not negative, so it has perpendicular directions it only stretches ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)). Split the starting error into parts along those directions. After t steps the part along a direction of curvature λ has been multiplied by $(1-\eta\lambda)^t$. Every part tends to zero for every start exactly when $|1-\eta\lambda|<1$ for every curvature, which is $0<\eta<2/\lambda_{\max}$ when the gentlest curvature is positive.
+
+The excess risk is half the sum, over the directions, of λ times that part squared, so each term shrinks by $(1-\eta\lambda)^2$ per step. Late in the walk the terms whose factors are nearest 1 are all that is left, and in the very long run only the gentlest. After 50 passes here, all eleven gentle terms still count.
 
 </details>
 
@@ -118,15 +132,23 @@ A full step reads all 20,000 orders: 520,000 multiply-adds for one move, 13 to p
 
 The price is noise. Each batch's average wobbles around the true gradient, and the wobble shrinks as the batch grows. Far from the bottom the true slope is large and the wobble hardly matters. After one pass the mini-batch walk has an excess risk of 0.4078. Plain descent has 0.3836 only after all 50.
 
-Near the bottom the true gradient goes to zero but each batch's does not, because every order has its own miss. With a fixed step the weights never settle; they jitter around the bottom. The size of the jitter scales with the step. Averaged over passes 31 to 50, the excess risk is 0.0670 at step 0.05 and 0.0138 at step 0.0125: a quarter of the step gives a jitter 4.84 times smaller. To settle exactly, the step must shrink over time, slowly enough that the steps still add up to an unlimited distance, but fast enough that their squares add up to a finite total. A step that falls like 1 divided by the step count does both. That is the stochastic-approximation condition of the 1951 paper in Sources.
+Near the bottom the true gradient goes to zero but each batch's does not, because every order has its own miss. With a fixed step the weights never settle; they jitter around the bottom. The size of the jitter scales with the step.
+
+Averaged over passes 31 to 50, the excess risk is 0.0670 at step 0.05 and 0.0138 at step 0.0125: a quarter of the step gives a jitter 4.84 times smaller.
+
+To settle exactly, the step must shrink over time, slowly enough that the steps still add up to an unlimited distance, but fast enough that their squares add up to a finite total. A step that falls like 1 divided by the step count does both. That is the stochastic-approximation condition of the 1951 paper in Sources.
 
 A batch of one order, stepped after every sample, is [Wiener and LMS](../../13-Engineering%20mathematics/05-Signals/07-adaptive-and-optimal-filters.md)'s least-mean-squares filter: the same method on a stream of signal samples.
 
 ### Step 4: momentum, in outline
 
-In a narrow valley the gradient points mostly across the valley, not along it. Plain descent zigzags across the walls and creeps along the floor. Momentum adds a fraction β of the last move to the next one. Across the valley the slope flips sign each step, so those pushes cancel in the velocity. Along the floor the slope points the same way every step, so those pushes pile up: up to 1/(1 − β), here 5 times one step.
+In a narrow valley the gradient points mostly across the valley, not along it. Plain descent zigzags across the walls and creeps along the floor.
 
-The cost is overshoot early on. With β = 0.8 the excess risk is 22.3233 after two passes and 461.8404 after five, as the velocity carries the walk up the far wall, then it settles: 0.0121 after 50. On a bowl like this one, momentum with well-chosen settings shrinks the slow error at a pace set by roughly the square root of the curvature ratio instead of the ratio itself. That theorem, and its relatives, belong to the optimisation wing.
+Momentum adds a fraction β of the last move to the next one. Across the valley the slope flips sign each step, so those pushes cancel in the velocity. Along the floor the slope points the same way every step, so those pushes pile up: up to 1/(1 − β), here 5 times one step.
+
+The cost is overshoot early on. With β = 0.8 the excess risk is 22.3233 after two passes and 461.8404 after five, as the velocity carries the walk up the far wall, then it settles: 0.0121 after 50.
+
+On a bowl like this one, momentum with well-chosen settings shrinks the slow error at a pace set by roughly the square root of the curvature ratio instead of the ratio itself. That theorem, and its relatives, belong to the optimisation wing.
 
 ---
 
@@ -220,7 +242,12 @@ Orange: plain descent, step 0.2, a slow straight slide once the steep directions
 
 ## Code, from first principles, and it actually runs
 
-The script builds the 20,000 synthetic orders from SplitMix64 with seed 2026: each order has a shared size between −1 and 1, and each of its 12 numbers is that size plus its own wobble of up to 0.3. The value is £40 plus the true weights times the numbers plus noise with a standard deviation of £5. It then takes four roads. Road 1 solves for the exact bottom by elimination, as on [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md). Road 2 computes the gradient at zero three ways: from the summed products, order by order, and as a difference quotient of the risk read straight from the orders, which uses no slope formula. Road 3 finds the steepest and gentlest curvatures by power iteration (multiply a list by the matrix again and again until its direction stops changing; the gentlest takes 100,000 rounds, because eleven gentle curvatures sit close together) and predicts the step limit and the late shrink factor. It then confirms both curvatures a second way. Eliminate the Hessian minus a trial value: the number of negative pivots (the diagonal numbers left by elimination) equals the number of curvatures below that value, by the law of inertia for symmetric matrices. The count steps from 0 to 1 within 0.0001 of the gentlest and from 12 to 13 within 0.0001 of the steepest. Road 4 runs the three walks and scores them against road 1. The full-gradient walks use summed products added once, which give the same gradient as reading every order (road 2 checks this) and keep the script fast. The mini-batch walk really does read the orders, 100 at a time, reshuffled each pass with SplitMix64 seed 7.
+The script builds the 20,000 synthetic orders from SplitMix64 (a small random-number generator) with seed 2026 (its fixed starting number): each order has a shared size between −1 and 1, and each of its 12 numbers is that size plus its own wobble of up to 0.3. The value is £40 plus the true weights times the numbers plus noise with a standard deviation of £5. It then takes four roads.
+
+- Road 1 solves for the exact bottom by elimination, as on [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md).
+- Road 2 computes the gradient at zero three ways: from the summed products, order by order, and as a difference quotient of the risk read straight from the orders, which uses no slope formula.
+- Road 3 finds the steepest and gentlest curvatures by power iteration (multiply a list by the matrix again and again until its direction stops changing; the gentlest takes 100,000 rounds, because eleven gentle curvatures sit close together) and predicts the step limit and the late shrink factor. It then confirms both curvatures a second way. Eliminate the Hessian minus a trial value: the number of negative pivots (the diagonal numbers left by elimination) equals the number of curvatures below that value, by the law of inertia for symmetric matrices. The count steps from 0 to 1 within 0.0001 of the gentlest and from 12 to 13 within 0.0001 of the steepest.
+- Road 4 runs the three walks and scores them against road 1. The full-gradient walks use summed products added once, which give the same gradient as reading every order (road 2 checks this) and keep the script fast. The mini-batch walk really does read the orders, 100 at a time, reshuffled each pass with SplitMix64 seed 7.
 
 ### Python
 
@@ -600,6 +627,349 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the three theorems for any number of orders and weights, and checks the card's small sums as exact fractions.
+
+- The slope of the risk for each weight is twice the average of each order's miss times its number for that weight.
+- Take $e = \theta - \theta^*$, the distance from the best weights. Then the risk is the lowest risk plus $\tfrac12 e^{\top} H e$, and the gradient is $H e$.
+- Suppose the walk starts along a direction $v$ of curvature $\lambda$, so $H v = \lambda v$. Then each step multiplies its error by $1 - \eta\lambda$, and its excess risk by $(1 - \eta\lambda)^2$.
+- Suppose the bowl has one bottom: every curvature is positive. Then the walk reaches the best weights from every start exactly when $0 < \eta\lambda < 2$ for every curvature $\lambda$.
+- Take every batch of $B$ orders as equally likely. Then the batch gradient, averaged over all batches, is exactly the full gradient.
+- The step limit $2/8.0732$ lies between 0.24 and 0.25. A full step costs 520,000 multiply-adds, and one pass buys 200 batch steps.
+- Momentum 0.8 piles pushes up to 5 times one step. Number 1 at 100 times its size has 10,000 times the curvature.
+
+The Python and Rust checks cover the shop's own numbers: its curvatures, its three walks, the momentum bounce and the batch jitter.
+
+```lean
+-- Gradient descent: on the average squared miss of a weighted sum, gradient descent reaches the best weights from every start exactly when every curvature λ of the bowl has 0 < ηλ < 2, each step multiplies the error along a curvature-λ direction by 1 − ηλ, and the gradient of a uniformly random batch averages to the full gradient.
+import Mathlib.LinearAlgebra.Matrix.PosDef
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Topology.Algebra.Module.FiniteDimension
+import Mathlib.Data.Finset.Powerset
+import Mathlib
+
+open Filter Topology Matrix
+
+theorem gd_G_add {n p : ℕ}
+    (x : Fin n → Fin p → ℝ) (y : Fin n → ℝ)
+    (G : (Fin p → ℝ) → Fin p → ℝ)
+    (hG : ∀ θ, G θ = (2 / n : ℝ) • ∑ i, (θ ⬝ᵥ x i - y i) • x i)
+    (H : Matrix (Fin p) (Fin p) ℝ) (hH : H = (2 / n : ℝ) • ∑ i, vecMulVec (x i) (x i))
+    (θ d : Fin p → ℝ) : G (θ + d) = G θ + H *ᵥ d := by
+  rw [hG, hG, hH, smul_mulVec, sum_mulVec, ← smul_add, ← Finset.sum_add_distrib]
+  congr 1
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [vecMulVec_mulVec, op_smul_eq_smul, add_dotProduct, dotProduct_comm (x i) d,
+    show θ ⬝ᵥ x i + d ⬝ᵥ x i - y i = (θ ⬝ᵥ x i - y i) + d ⬝ᵥ x i by ring, add_smul]
+
+#print axioms gd_G_add
+
+theorem gd_R_add {n p : ℕ}
+    (x : Fin n → Fin p → ℝ) (y : Fin n → ℝ)
+    (R : (Fin p → ℝ) → ℝ) (hR : ∀ θ, R θ = (1 / n : ℝ) * ∑ i, (θ ⬝ᵥ x i - y i) ^ 2)
+    (G : (Fin p → ℝ) → Fin p → ℝ)
+    (hG : ∀ θ, G θ = (2 / n : ℝ) • ∑ i, (θ ⬝ᵥ x i - y i) • x i)
+    (H : Matrix (Fin p) (Fin p) ℝ) (hH : H = (2 / n : ℝ) • ∑ i, vecMulVec (x i) (x i))
+    (θ d : Fin p → ℝ) :
+    R (θ + d) = R θ + G θ ⬝ᵥ d + (1 / 2) * (d ⬝ᵥ H *ᵥ d) := by
+  rw [hR, hR, hG, hH, smul_mulVec, sum_mulVec, smul_dotProduct, dotProduct_smul,
+    sum_dotProduct, dotProduct_sum]
+  simp only [vecMulVec_mulVec, op_smul_eq_smul, smul_dotProduct, dotProduct_smul,
+    add_dotProduct, smul_eq_mul, Finset.mul_sum, ← Finset.sum_add_distrib]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [dotProduct_comm (x i) d]
+  ring
+
+#print axioms gd_R_add
+
+theorem gd_G_best {n p : ℕ}
+    (x : Fin n → Fin p → ℝ) (y : Fin n → ℝ)
+    (R : (Fin p → ℝ) → ℝ) (hR : ∀ θ, R θ = (1 / n : ℝ) * ∑ i, (θ ⬝ᵥ x i - y i) ^ 2)
+    (G : (Fin p → ℝ) → Fin p → ℝ)
+    (hG : ∀ θ, G θ = (2 / n : ℝ) • ∑ i, (θ ⬝ᵥ x i - y i) • x i)
+    (H : Matrix (Fin p) (Fin p) ℝ) (hH : H = (2 / n : ℝ) • ∑ i, vecMulVec (x i) (x i))
+    (θs : Fin p → ℝ) (hbest : ∀ θ, R θs ≤ R θ) : G θs = 0 := by
+  set d := G θs
+  set a := d ⬝ᵥ d
+  set b := (1 / 2 : ℝ) * (d ⬝ᵥ H *ᵥ d)
+  have key : ∀ t : ℝ, 0 ≤ t * a + t ^ 2 * b := by
+    intro t
+    have h := hbest (θs + t • d)
+    rw [gd_R_add x y R hR G hG H hH] at h
+    simp only [dotProduct_smul, smul_dotProduct, mulVec_smul, smul_eq_mul] at h
+    have : 0 ≤ t * (d ⬝ᵥ d) + 1 / 2 * (t * (t * (d ⬝ᵥ H *ᵥ d))) := by linarith
+    simp only [a, b]; nlinarith
+  have ha : 0 ≤ a := Finset.sum_nonneg fun i _ => mul_self_nonneg _
+  have ha0 : a = 0 := by
+    by_contra hne
+    have hapos : 0 < a := lt_of_le_of_ne ha (Ne.symm hne)
+    set c := |b| + 1 with hc
+    have hcpos : 0 < c := by positivity
+    have hbc : b < c := by have := le_abs_self b; linarith
+    have h := key (-a / c)
+    have h2 : 0 ≤ c ^ 2 * ((-a / c) * a + (-a / c) ^ 2 * b) := mul_nonneg (by positivity) h
+    have h3 : c ^ 2 * ((-a / c) * a + (-a / c) ^ 2 * b) = a ^ 2 * (b - c) := by
+      field_simp; ring
+    rw [h3] at h2
+    have : a ^ 2 * (b - c) < 0 := mul_neg_of_pos_of_neg (by positivity) (by linarith)
+    linarith
+  exact dotProduct_self_eq_zero.mp ha0
+
+#print axioms gd_G_best
+
+theorem gd_update_dotProduct {p : ℕ} (θ w : Fin p → ℝ) (j : Fin p) (s : ℝ) :
+    Function.update θ j s ⬝ᵥ w = θ ⬝ᵥ w + (s - θ j) * w j := by
+  classical
+  have : Function.update θ j s = θ + (s - θ j) • Pi.single j 1 := by
+    ext k
+    by_cases hk : k = j
+    · subst hk; simp
+    · simp [hk]
+  rw [this, add_dotProduct, smul_dotProduct, single_one_dotProduct, smul_eq_mul]
+
+#print axioms gd_update_dotProduct
+
+/-- **The step limit: gradient descent settles exactly when the step is under 2 over the
+steepest curvature.** There are `n` orders; order `i` has a list of `p` numbers `x i` (the bias
+is the number that is always 1) and a value `y i`. The weights `θ` predict `θ · x i`. The risk is
+the average squared miss `R θ = (1/n) Σ (θ · x i − y i)²`, its gradient is
+`G θ = (2/n) Σ (θ · x i − y i) x i`, and its Hessian (the table of second rates) is
+`H = (2/n) Σ x i x iᵀ`. Suppose the risk is a bowl with one bottom (`H` positive definite) and
+`θs` are the best weights. Gradient descent repeats `θ ← θ − η G θ`. It reaches the best weights
+from every start exactly when `0 < ηλ < 2` for every curvature `λ` of the bowl (every stretch
+factor of `H`), that is, exactly when `0 < η < 2 / λ_max`. -/
+theorem gradient_descent_converges_iff_step_below_limit {n p : ℕ}
+    (x : Fin n → Fin p → ℝ) (y : Fin n → ℝ)
+    (R : (Fin p → ℝ) → ℝ) (hR : ∀ θ, R θ = (1 / n : ℝ) * ∑ i, (θ ⬝ᵥ x i - y i) ^ 2)
+    (G : (Fin p → ℝ) → Fin p → ℝ)
+    (hG : ∀ θ, G θ = (2 / n : ℝ) • ∑ i, (θ ⬝ᵥ x i - y i) • x i)
+    (H : Matrix (Fin p) (Fin p) ℝ) (hH : H = (2 / n : ℝ) • ∑ i, vecMulVec (x i) (x i))
+    (hbowl : H.PosDef) (θs : Fin p → ℝ) (hbest : ∀ θ, R θs ≤ R θ) (η : ℝ) :
+    (∀ θ : ℕ → Fin p → ℝ, (∀ t, θ (t + 1) = θ t - η • G (θ t)) →
+        Tendsto θ atTop (𝓝 θs)) ↔
+      ∀ (l : ℝ) (v : Fin p → ℝ), v ≠ 0 → H *ᵥ v = l • v → 0 < η * l ∧ η * l < 2 := by
+  have hG0 := gd_G_best x y R hR G hG H hH θs hbest
+  have hGe : ∀ θ, G θ = H *ᵥ (θ - θs) := by
+    intro θ
+    have e : θ = θs + (θ - θs) := by abel
+    conv_lhs => rw [e]
+    rw [gd_G_add x y G hG H hH, hG0, zero_add]
+  constructor
+  · intro h l v hv0 hHv
+    set r := 1 - η * l with hr
+    have hseq : ∀ t, (fun t : ℕ => θs + r ^ t • v) (t + 1) =
+        (fun t : ℕ => θs + r ^ t • v) t - η • G ((fun t : ℕ => θs + r ^ t • v) t) := by
+      intro t
+      simp only
+      rw [hGe, add_sub_cancel_left, mulVec_smul, hHv, pow_succ, hr]
+      module
+    have hlim := (h (fun t => θs + r ^ t • v) hseq).sub_const θs
+    simp only [add_sub_cancel_left, sub_self] at hlim
+    obtain ⟨j, hj⟩ := Function.ne_iff.mp hv0
+    have hj : v j ≠ 0 := hj
+    have hj' := (tendsto_pi_nhds.1 hlim j).mul_const (v j)⁻¹
+    simp only [Pi.smul_apply, smul_eq_mul, Pi.zero_apply, zero_mul] at hj'
+    have hpow : Tendsto (fun t : ℕ => r ^ t) atTop (𝓝 0) := by
+      refine hj'.congr fun t => ?_
+      field_simp
+    rw [tendsto_pow_atTop_nhds_zero_iff, abs_lt] at hpow
+    constructor <;> linarith [hpow.1, hpow.2]
+  · intro h θ hθ
+    classical
+    have hS := hbowl.isHermitian
+    set b := hS.eigenvectorBasis
+    set ev := hS.eigenvalues
+    set c : Fin p → ℝ := fun k => b.repr (WithLp.toLp 2 (θ 0 - θs)) k
+    have hdec : θ 0 - θs = ∑ k, c k • ⇑(b k) := by
+      have := congrArg WithLp.ofLp (b.sum_repr (WithLp.toLp 2 (θ 0 - θs)))
+      rw [WithLp.ofLp_sum] at this
+      simp only [WithLp.ofLp_smul] at this
+      exact this.symm
+    have hform : ∀ t, θ t = θs + ∑ k, ((1 - η * ev k) ^ t * c k) • ⇑(b k) := by
+      intro t
+      induction t with
+      | zero =>
+        simp only [pow_zero, one_mul]
+        rw [← hdec]; abel
+      | succ t ih =>
+        rw [hθ, hGe, ih, add_sub_cancel_left, mulVec_sum, add_sub_assoc, Finset.smul_sum,
+          ← Finset.sum_sub_distrib]
+        congr 1
+        refine Finset.sum_congr rfl fun k _ => ?_
+        rw [mulVec_smul, hS.mulVec_eigenvectorBasis, pow_succ]
+        module
+    have hconv : ∀ k, Tendsto (fun t : ℕ => (1 - η * ev k) ^ t) atTop (𝓝 0) := by
+      intro k
+      have hne : (⇑(b k) : Fin p → ℝ) ≠ 0 := by
+        intro h0
+        apply b.orthonormal.ne_zero k
+        have := congrArg (WithLp.toLp 2) h0
+        simpa using this
+      obtain ⟨h1, h2⟩ := h (ev k) _ hne (hS.mulVec_eigenvectorBasis k)
+      rw [tendsto_pow_atTop_nhds_zero_iff, abs_lt]
+      constructor <;> linarith
+    have hlim : Tendsto (fun t => θs + ∑ k, ((1 - η * ev k) ^ t * c k) • ⇑(b k)) atTop
+        (𝓝 (θs + ∑ k : Fin p, ((0 : ℝ) * c k) • ⇑(b k))) :=
+      tendsto_const_nhds.add (tendsto_finsetSum _ fun k _ =>
+        ((hconv k).mul_const (c k)).smul_const _)
+    simp only [zero_mul, zero_smul, Finset.sum_const_zero, add_zero] at hlim
+    exact hlim.congr fun t => (hform t).symm
+
+/-- **Why it works: the slope formula, the exact bowl, and the shrink factor per step.** Same
+setting, with `θs` the best weights (no other hypothesis). Then:
+the rate of the risk with respect to weight `j` is `G θ j`, twice the average of each order's
+miss times its number `j` (the chain rule, Step 1);
+the risk is exactly the lowest risk plus half of `eᵀ H e`, and the gradient is `H e`, where
+`e = θ − θs` is the distance from the best weights (Step 2);
+and if the walk starts at `θs + c v` with `v` a direction of curvature `λ` (`H v = λ v`), then
+after `t` steps it is at `θs + (1 − ηλ)ᵗ c v`, and its excess risk has been multiplied by
+`(1 − ηλ)^(2t)`. -/
+theorem gradient_step_shrinks_each_direction {n p : ℕ}
+    (x : Fin n → Fin p → ℝ) (y : Fin n → ℝ)
+    (R : (Fin p → ℝ) → ℝ) (hR : ∀ θ, R θ = (1 / n : ℝ) * ∑ i, (θ ⬝ᵥ x i - y i) ^ 2)
+    (G : (Fin p → ℝ) → Fin p → ℝ)
+    (hG : ∀ θ, G θ = (2 / n : ℝ) • ∑ i, (θ ⬝ᵥ x i - y i) • x i)
+    (H : Matrix (Fin p) (Fin p) ℝ) (hH : H = (2 / n : ℝ) • ∑ i, vecMulVec (x i) (x i))
+    (θs : Fin p → ℝ) (hbest : ∀ θ, R θs ≤ R θ) :
+    (∀ (θ : Fin p → ℝ) (j : Fin p),
+        HasDerivAt (fun s => R (Function.update θ j s)) (G θ j) (θ j)) ∧
+      (∀ θ, R θ = R θs + (1 / 2) * ((θ - θs) ⬝ᵥ H *ᵥ (θ - θs)) ∧ G θ = H *ᵥ (θ - θs)) ∧
+      ∀ (η l c : ℝ) (v : Fin p → ℝ) (θ : ℕ → Fin p → ℝ), H *ᵥ v = l • v →
+        θ 0 = θs + c • v → (∀ t, θ (t + 1) = θ t - η • G (θ t)) →
+        ∀ t, θ t = θs + ((1 - η * l) ^ t * c) • v ∧
+          R (θ t) - R θs = (1 - η * l) ^ (2 * t) * (R (θ 0) - R θs) := by
+  have hG0 := gd_G_best x y R hR G hG H hH θs hbest
+  have hid : ∀ θ, R θ = R θs + (1 / 2) * ((θ - θs) ⬝ᵥ H *ᵥ (θ - θs)) ∧
+      G θ = H *ᵥ (θ - θs) := by
+    intro θ
+    have e : θ = θs + (θ - θs) := by abel
+    constructor
+    · conv_lhs => rw [e]
+      rw [gd_R_add x y R hR G hG H hH, hG0, zero_dotProduct, add_zero]
+    · conv_lhs => rw [e]
+      rw [gd_G_add x y G hG H hH, hG0, zero_add]
+  refine ⟨?_, hid, ?_⟩
+  · intro θ j
+    have hf : (fun s => R (Function.update θ j s)) = fun s =>
+        (1 / n : ℝ) * ∑ i, ((θ ⬝ᵥ x i - y i) + (s - θ j) * x i j) ^ 2 := by
+      funext s
+      rw [hR]
+      congr 1
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [gd_update_dotProduct]; ring
+    rw [hf]
+    have hd : ∀ i ∈ (Finset.univ : Finset (Fin n)), HasDerivAt
+        (fun s => ((θ ⬝ᵥ x i - y i) + (s - θ j) * x i j) ^ 2)
+        (((2 : ℕ) : ℝ) * ((θ ⬝ᵥ x i - y i) + (θ j - θ j) * x i j) ^ (2 - 1) * (1 * x i j))
+        (θ j) := fun i _ =>
+      ((((hasDerivAt_id (θ j)).sub_const (θ j)).mul_const (x i j)).const_add
+        (θ ⬝ᵥ x i - y i)).pow 2
+    refine ((HasDerivAt.fun_sum hd).const_mul (1 / n : ℝ)).congr_deriv ?_
+    rw [hG]
+    simp only [Pi.smul_apply, Finset.sum_apply, smul_eq_mul, Finset.mul_sum]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [sub_self]; push_cast; ring
+  · intro η l c v θ hv h0 hstep
+    have hpos : ∀ t, θ t = θs + ((1 - η * l) ^ t * c) • v := by
+      intro t
+      induction t with
+      | zero => simp [h0]
+      | succ t ih =>
+        rw [hstep, (hid _).2, ih, add_sub_cancel_left, mulVec_smul, hv, pow_succ]
+        module
+    have hrisk : ∀ t, R (θ t) - R θs = (1 / 2) * ((1 - η * l) ^ t * c) ^ 2 * (v ⬝ᵥ H *ᵥ v) := by
+      intro t
+      rw [(hid _).1, hpos, add_sub_cancel_left]
+      simp only [add_sub_cancel_left, mulVec_smul, dotProduct_smul, smul_dotProduct, smul_eq_mul]
+      ring
+    intro t
+    refine ⟨hpos t, ?_⟩
+    rw [hrisk, hrisk, mul_comm 2 t, pow_mul]
+    ring
+
+/-- **A random batch is an honest stand-in.** Same orders and weights `θ`. A batch is a set `S`
+of `B` orders, with `0 < B ≤ n`, and its gradient is the same slope formula averaged over the
+batch only: `(1/B) Σ_{i ∈ S} 2 (θ · x i − y i) x i`. Averaged over every possible batch of `B`
+orders, each equally likely, the batch gradient is exactly the full gradient
+`(2/n) Σ (θ · x i − y i) x i`. -/
+theorem minibatch_gradient_is_unbiased {n p : ℕ}
+    (x : Fin n → Fin p → ℝ) (y : Fin n → ℝ) (θ : Fin p → ℝ) (B : ℕ)
+    (hB : 0 < B) (hBn : B ≤ n) :
+    ((n.choose B : ℝ))⁻¹ • ∑ S ∈ (Finset.univ : Finset (Fin n)).powersetCard B,
+        ((B : ℝ))⁻¹ • ∑ i ∈ S, (2 * (θ ⬝ᵥ x i - y i)) • x i =
+      (2 / n : ℝ) • ∑ i, (θ ⬝ᵥ x i - y i) • x i := by
+  classical
+  set f : Fin n → Fin p → ℝ := fun i => (2 * (θ ⬝ᵥ x i - y i)) • x i with hf
+  have hswap : ∑ S ∈ (Finset.univ : Finset (Fin n)).powersetCard B, ∑ i ∈ S, f i =
+      ∑ i, (((Finset.univ : Finset (Fin n)).powersetCard B).filter (fun S => {i} ⊆ S)).card • f i := by
+    calc ∑ S ∈ (Finset.univ : Finset (Fin n)).powersetCard B, ∑ i ∈ S, f i
+        = ∑ S ∈ (Finset.univ : Finset (Fin n)).powersetCard B, ∑ i, if i ∈ S then f i else 0 := by
+          refine Finset.sum_congr rfl fun S _ => ?_
+          rw [← Finset.sum_filter]; congr 1; ext i; simp
+      _ = ∑ i, ∑ S ∈ (Finset.univ : Finset (Fin n)).powersetCard B, if i ∈ S then f i else 0 :=
+          Finset.sum_comm
+      _ = _ := by
+          refine Finset.sum_congr rfl fun i _ => ?_
+          rw [← Finset.sum_filter, Finset.sum_const]
+          simp only [Finset.singleton_subset_iff]
+  have hcard : ∀ i : Fin n,
+      (((Finset.univ : Finset (Fin n)).powersetCard B).filter (fun S => {i} ⊆ S)).card =
+        Nat.choose (n - 1) (B - 1) := by
+    intro i
+    rw [Finset.card_filter_powersetCard_subset]
+    · simp
+    · simp
+    · simp; omega
+  obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, by omega⟩
+  obtain ⟨k, rfl⟩ : ∃ k, B = k + 1 := ⟨B - 1, by omega⟩
+  have hid := Nat.add_one_mul_choose_eq m k
+  have hC : (0 : ℝ) < ((m + 1).choose (k + 1) : ℝ) := by
+    exact_mod_cast Nat.choose_pos hBn
+  have hidR : ((m : ℝ) + 1) * (m.choose k : ℝ) = ((m + 1).choose (k + 1) : ℝ) * ((k : ℝ) + 1) := by
+    exact_mod_cast hid
+  rw [← Finset.smul_sum, hswap]
+  simp only [hcard, Nat.add_sub_cancel, Finset.smul_sum, smul_smul, hf]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [← Nat.cast_smul_eq_nsmul ℝ, smul_smul, smul_smul]
+  congr 1
+  push_cast
+  field_simp
+  linear_combination (θ ⬝ᵥ x i - y i) * hidR
+
+/-! The card's exact worked numbers. -/
+
+-- A full step costs 13 + 13 multiply-adds per order, over 20,000 orders: 520,000.
+example : 2 * 20000 * 13 = 520000 := by norm_num
+-- Batches of 100: 200 steps per pass, and 10,000 steps in 50 passes.
+example : 20000 / 100 = 200 ∧ 50 * (20000 / 100) = 10000 := by norm_num
+-- The step limit 2 / 8.0732 = 0.2477 lies between the steps 0.24 (settles) and 0.25 (blows up).
+example : (24 / 100 : ℚ) < 2 / (80732 / 10000) ∧ 2 / (80732 / 10000) < (25 / 100 : ℚ) := by
+  norm_num
+-- Momentum 0.8 piles pushes up to 1 / (1 − 0.8) = 5 times one step.
+example : (1 : ℚ) / (1 - 4 / 5) = 5 := by norm_num
+-- Number 1 at 100 times its size: its curvature grows 100² = 10,000-fold.
+example : (100 : ℕ) ^ 2 = 10000 := by norm_num
+-- A quarter of the step 0.05 is 0.0125.
+example : (5 / 100 : ℚ) / 4 = 125 / 10000 := by norm_num
+
+#print axioms gradient_descent_converges_iff_step_below_limit
+#print axioms gradient_step_shrinks_each_direction
+#print axioms minibatch_gradient_is_unbiased
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'gd_G_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gd_R_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gd_G_best' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gd_update_dotProduct' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gradient_descent_converges_iff_step_below_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gradient_step_shrinks_each_direction' depends on axioms: [propext, Classical.choice, Quot.sound]
+'minibatch_gradient_is_unbiased' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to this shop's numbers, so expect some changes to stop the script.
@@ -646,7 +1016,7 @@ The two outputs match line for line.
 
 - [The perceptron and its stack](03-perceptron-and-neural-networks.md): single units that learn by a mistake-driven step, and how layers of them draw boundaries one line cannot.
 - [k-means](06-k-means-and-clustering.md): another fit by repeated improving steps, this time by taking turns instead of following a gradient.
-- Gradient descent (planned): the optimisation wing's proofs of the rates for smooth and convex losses in general.
+- [Gradient descent](../../15-Optimization/02-Unconstrained%20Methods/02-gradient-descent-and-its-rate.md): the optimisation wing's proofs of the rates for smooth and convex losses in general.
 - [Stochastic gradient](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/08-stochastic-gradient-and-sample-average-approximation.md): shrinking steps, and the proof that the noisy walk reaches the bottom.
 - [Momentum and Adam](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/09-momentum-adam-and-step-size-schedules.md): the accelerated rates sketched in Step 4, and step sizes that adapt for each weight.
 

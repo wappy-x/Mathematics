@@ -8,7 +8,7 @@
 
 The bank ships a new version of its laptop app: an update file of 65,536 bytes. Laptops fetch it from download mirrors the bank does not run. Before installing, each laptop needs one answer: **did this exact file come from the bank?**
 
-A MAC tag ([Hashes and MACs](03-hash-functions-and-macs.md)) cannot answer that. A MAC needs a key shared by both ends, and a key copied onto millions of laptops can be pulled out of any one of them. The bank needs a tag that only it can make and anyone can check.
+A MAC (message authentication code) tag ([Hashes and MACs](03-hash-functions-and-macs.md)) cannot answer that. A MAC needs a key shared by both ends, and a key copied onto millions of laptops can be pulled out of any one of them. The bank needs a tag that only it can make and anyone can check.
 
 That is a **digital signature**. The bank keeps a private key, a number only it knows. Every laptop holds the matching public key, shipped inside the app. The bank hashes the file to a short fingerprint and does a little arithmetic on it with the private key. The laptop does different arithmetic with the public key, the file and the signature, and gets yes or no. Flip one bit of the file and the answer is no.
 
@@ -36,7 +36,14 @@ Schematic. The solid arrows carry the file and the signature. The dotted arrow i
 
 ## The formula
 
-Notation first, in words. The curve is the set of points (x, y) with y² = x³ + 7, arithmetic mod a prime p, and kP means the point P added to itself k times ([Elliptic curves](06-elliptic-curve-cryptography.md)). G is a public **base point**, and n is how many multiples G, 2G, 3G, … there are before they repeat; here n is that count, as in the standard, not an input size. The **private key** d is a whole number from 1 to n − 1. The **public key** is the point Q = dG. The file is the message m, its hash is h(m) ([Hashes and MACs](03-hash-functions-and-macs.md)), and z is the leftmost bits of h(m) read as a number, as many bits as n has. The **nonce** k is a whole number from 1 to n − 1, fresh and secret for each signature; it is a multiplier, not the pad key of [The one-time pad](01-one-time-pad-and-perfect-secrecy.md). Finally, k⁻¹ mod n is the number that gives 1 when multiplied by k, mod n.
+Notation first, in words.
+
+- The curve is the set of points (x, y) with y² = x³ + 7, arithmetic mod a prime p, and kP means the point P added to itself k times ([Elliptic curves](06-elliptic-curve-cryptography.md)).
+- G is a public **base point**, and n is how many multiples G, 2G, 3G, … there are before they repeat; here n is that count, as in the standard, not an input size.
+- The **private key** d is a whole number from 1 to n − 1. The **public key** is the point Q = dG.
+- The file is the message m, its hash is h(m) ([Hashes and MACs](03-hash-functions-and-macs.md)), and z is the leftmost bits of h(m) read as a number, as many bits as n has.
+- The **nonce** k is a whole number from 1 to n − 1, fresh and secret for each signature; it is a multiplier, not the pad key of [The one-time pad](01-one-time-pad-and-perfect-secrecy.md).
+- k⁻¹ mod n is the number that gives 1 when multiplied by k, mod n.
 
 To sign:
 
@@ -58,7 +65,7 @@ where dividing means multiplying by the inverse mod n.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p$ | the prime the curve's arithmetic wraps round at | 1,000,003 (toy, insecure) | bigger curve, harder to break; P-256 uses a prime near 2^256 |
+| $p$ | the prime the curve's arithmetic wraps round at | 1,000,003 (toy, insecure) | bigger curve, harder to break; P-256, a standard curve in wide use, has a prime near 2^256 |
 | $G$ | the base point, public | (100, 2) | — |
 | $n$ | how many multiples of G there are; a prime | 999,007, 20 bits | a forger's work grows like its square root: about 2^128 at 256 bits |
 | $d$ | the private key | 512,377 | — |
@@ -113,11 +120,25 @@ A scheme has 128-bit security if no attacker spending far fewer than about 2^128
 
 ### Step 3: why hash first
 
-Hashing does two jobs. It shrinks a 65,536-byte file to a number small enough for the equation: 20 bits on the toy, 256 in real use. And it blocks forgery. Without a hash, the forger wins with the public key alone. Pick any two numbers a and b. Make the point R = aG + bQ, and set r = x(R) mod n, s = r·b⁻¹ and z = a·s. The verifier computes u1 = z/s = a and u2 = r/s = b, so its sum is aG + bQ = R and the check passes. With a = 1,234 and b = 5,678 the toy gives (r, s) = (840196, 874587), valid for the "message" 312,798. Under EUF-CMA that is a win.
+Hashing does two jobs. It shrinks a 65,536-byte file to a number small enough for the equation: 20 bits on the toy, 256 in real use. And it blocks forgery.
+
+Without a hash, the forger wins with the public key alone:
+
+1. Pick any two numbers a and b.
+2. Make the point R = aG + bQ, and set r = x(R) mod n, s = r·b⁻¹ and z = a·s.
+3. The verifier computes u1 = z/s = a and u2 = r/s = b, so its sum is aG + bQ = R and the check passes.
+
+With a = 1,234 and b = 5,678 the toy gives (r, s) = (840196, 874587), valid for the "message" 312,798. Under EUF-CMA that is a win.
 
 With a hash in front, the forger needs a file whose hash *is* 312,798: a **preimage**, about 2^256 tries for SHA-256. The hash turns "find any valid equation", which is easy, into "find one for a file you can name", which is not.
 
-But the hash must also resist **collisions**, two files with the same z. The chosen-message game shows why. The attacker writes 2,048 harmless drafts of the release notes, varying only a build number, and gets 2,046 different z values. Then it writes harmful drafts until one lands on a stored z, which took 179 tries. It asks the bank to sign harmless build 333, a normal request, and attaches that signature to harmful build 178. The laptop accepts. By the birthday bound the search grows like the square root of 2^20 hashes, not 2^20; for a 256-bit hash it is about 2^128, which is why P-256 pairs with SHA-256.
+But the hash must also resist **collisions**, two files with the same z. The chosen-message game shows why:
+
+1. The attacker writes 2,048 harmless drafts of the release notes, varying only a build number, and gets 2,046 different z values.
+2. Then it writes harmful drafts until one lands on a stored z, which took 179 tries.
+3. It asks the bank to sign harmless build 333, a normal request, and attaches that signature to harmful build 178. The laptop accepts.
+
+By the birthday bound the search grows like the square root of 2^20 hashes, not 2^20; for a 256-bit hash it is about 2^128, which is why P-256 pairs with SHA-256.
 
 ### Step 4: one reused nonce gives the key away
 
@@ -543,6 +564,141 @@ real sizes: P-256 with SHA-256, n and digest about 2^256; best known attacks, co
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves Steps 1 and 4 and the no-hash forgery on any elliptic curve mod a prime p, and checks the worked numbers.
+
+- Take n prime, G with exactly n multiples, and $s = k^{-1}(z + r\,d) \bmod n$, with r and s not 0. Then the laptop's sum $u_1 G + u_2 Q$ is $kG = R$, so the check passes.
+- Take two files with $z_1 \ne z_2$, signed with one nonce k and $r \ne 0$. Then $k = (z_1 - z_2)/(s_1 - s_2)$ and $d = (s_1 k - z_1)/r$, mod n.
+- Take any a and $b \ne 0$, $R = aG + bQ$, $r = x(R) \bmod n \ne 0$ and $s = r\,b^{-1}$. Then the check accepts (r, s) for the number $z = a\,s$, made from the public key alone.
+- It checks that 1,000,003 and 999,007 are prime, and that G, Q and R lie on the curve.
+- It checks the signing and checking arithmetic in Worked numbers: $k^{-1}$, s1, w, u1, u2 and s2.
+- It checks that k = 90,210 and d = 512,377 satisfy the nonce-reuse equations, and the forgery's s and z.
+
+Point addition and the points it gives, SHA-256, the brute-force walk and the collision search are left to the Python and Rust checks.
+
+```lean
+-- Digital signatures: an honest ECDSA signature on an elliptic curve over a prime field always verifies, two signatures made with one reused nonce give away the private key, and without a hash anyone can forge a valid signature from the public key alone.
+import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+import Mathlib.GroupTheory.OrderOfElement
+import Mathlib.Algebra.Field.ZMod
+import Mathlib.Tactic.NormNum.Prime
+
+open WeierstrassCurve
+
+/-- `x(P) mod n`: the x-coordinate of a curve point over `ZMod p`, read as a whole number from
+0 to p − 1, then reduced mod n. The point at infinity has no x-coordinate. -/
+def xModN {p : ℕ} (n : ℕ) {W : Affine (ZMod p)} : W.Point → Option (ZMod n)
+  | .zero => none
+  | .some x _ _ => some ((x.val : ℕ) : ZMod n)
+
+/-- The verifier's check on the signature `(r, s)` for the hash value `z`, with base point `G`
+and public key `Q`: both halves lie in 1 … n − 1, and with `w = s⁻¹`, `u₁ = z w`, `u₂ = r w`
+(mod n), the point `u₁ G + u₂ Q` is not the point at infinity and its x-coordinate mod n is `r`. -/
+def ecdsaVerify {p n : ℕ} [Fact p.Prime] (W : Affine (ZMod p)) (G Q : W.Point)
+    (z r s : ZMod n) : Prop :=
+  r ≠ 0 ∧ s ≠ 0 ∧ xModN n ((z * s⁻¹).val • G + (r * s⁻¹).val • Q) = some r
+
+/-- An honest signature always verifies. Take any curve over the prime field `ZMod p`, a base
+point `G` with exactly `n` multiples (n prime), a private key `d` and a nonce `k` from 1 to n − 1,
+and any hash value `z`. Sign: `R = kG`, `r = x(R) mod n`, `s = k⁻¹ (z + r d) mod n`, with
+`r` and `s` not zero. Then the laptop's check with the public key `Q = dG` accepts `(r, s)`. -/
+theorem honest_signature_verifies {p n : ℕ} [Fact p.Prime] [Fact n.Prime]
+    (W : Affine (ZMod p)) (G : W.Point) (hG : addOrderOf G = n)
+    (d k z r : ZMod n) (hd : d ≠ 0) (hk : k ≠ 0)
+    (hR : xModN n (k.val • G) = some r) (hr : r ≠ 0) (hs : k⁻¹ * (z + r * d) ≠ 0) :
+    ecdsaVerify W G (d.val • G) z r (k⁻¹ * (z + r * d)) := by
+  have hn : n.Prime := Fact.out
+  have : NeZero n := ⟨hn.ne_zero⟩
+  have hzrd : z + r * d ≠ 0 := by
+    intro h; apply hs; rw [h, mul_zero]
+  have hcast : ∀ m : ℕ, m • G = ((m : ZMod n).val) • G := by
+    intro m
+    rw [ZMod.val_natCast, ← hG, mod_addOrderOf_nsmul]
+  refine ⟨hr, hs, ?_⟩
+  have key : (z * (k⁻¹ * (z + r * d))⁻¹).val • G
+      + (r * (k⁻¹ * (z + r * d))⁻¹).val • (d.val • G) = k.val • G := by
+    rw [smul_smul, ← add_nsmul, hcast]
+    congr 2
+    push_cast
+    simp only [ZMod.natCast_zmod_val]
+    field_simp
+  rw [key]
+  exact hR
+
+/-- One reused nonce gives the key away. If two files with different hashes `z₁ ≠ z₂` are signed
+with the same nonce `k` and key `d` (so both carry the same `r ≠ 0`), then anyone can compute
+`k = (z₁ − z₂) / (s₁ − s₂)` and `d = (s₁ k − z₁) / r` mod n. -/
+theorem reused_nonce_reveals_key {n : ℕ} [Fact n.Prime]
+    (d k r z₁ z₂ s₁ s₂ : ZMod n) (hk : k ≠ 0) (hr : r ≠ 0) (hz : z₁ ≠ z₂)
+    (h₁ : s₁ = k⁻¹ * (z₁ + r * d)) (h₂ : s₂ = k⁻¹ * (z₂ + r * d)) :
+    k = (z₁ - z₂) / (s₁ - s₂) ∧ d = (s₁ * k - z₁) / r := by
+  have hzz : z₁ - z₂ ≠ 0 := sub_ne_zero.mpr hz
+  have hss : s₁ - s₂ = k⁻¹ * (z₁ - z₂) := by rw [h₁, h₂]; ring
+  constructor
+  · rw [hss]; field_simp
+  · rw [h₁]; field_simp; ring
+
+/-- Without a hash, anyone holding only the public key can forge. Pick any `a` and any `b ≠ 0`,
+make `R = aG + bQ`, and set `r = x(R) mod n`, `s = r b⁻¹`, `z = a s`. If `r ≠ 0`, the
+verifier accepts `(r, s)` for the "message" `z`. -/
+theorem unhashed_signature_forgery {p n : ℕ} [Fact p.Prime] [Fact n.Prime]
+    (W : Affine (ZMod p)) (G Q : W.Point) (a b r : ZMod n) (hb : b ≠ 0)
+    (hR : xModN n (a.val • G + b.val • Q) = some r) (hr : r ≠ 0) :
+    ecdsaVerify W G Q (a * (r * b⁻¹)) r (r * b⁻¹) := by
+  have hs : r * b⁻¹ ≠ 0 := mul_ne_zero hr (inv_ne_zero hb)
+  refine ⟨hr, hs, ?_⟩
+  have e1 : a * (r * b⁻¹) * (r * b⁻¹)⁻¹ = a := by field_simp
+  have e2 : r * (r * b⁻¹)⁻¹ = b := by field_simp
+  rw [e1, e2]
+  exact hR
+
+-- The toy sizes: p = 1,000,003 and n = 999,007 are prime.
+example : Nat.Prime 1000003 := by norm_num
+example : Nat.Prime 999007 := by norm_num
+
+-- G = (100, 2), Q = (407658, 775843) and R = (998774, 736591) lie on y² = x³ + 7 mod p.
+example : 2 ^ 2 % 1000003 = (100 ^ 3 + 7) % 1000003 := by norm_num
+example : 775843 ^ 2 % 1000003 = (407658 ^ 3 + 7) % 1000003 := by norm_num
+example : 736591 ^ 2 % 1000003 = (998774 ^ 3 + 7) % 1000003 := by norm_num
+
+-- Signing update 1: r = 998,774 mod n, 1/k = 418,130, z1 + r d = 242,542, s1 = 889,862.
+example : 998774 % 999007 = 998774 := by norm_num
+example : 90210 * 418130 % 999007 = 1 := by norm_num
+example : (744550 + 998774 * 512377) % 999007 = 242542 := by norm_num
+example : 418130 * 242542 % 999007 = 889862 := by norm_num
+
+-- The laptop's numbers: w = 962,102, u1 = 69,785, u2 = 606,809.
+example : 889862 * 962102 % 999007 = 1 := by norm_num
+example : 744550 * 962102 % 999007 = 69785 := by norm_num
+example : 998774 * 962102 % 999007 = 606809 := by norm_num
+
+-- Update 2 with the same nonce: s2 = 327,463.
+example : 418130 * ((302248 + 998774 * 512377) % 999007) % 999007 = 327463 := by norm_num
+
+-- Nonce reuse: s1 − s2 = 562,399, z1 − z2 = 442,302, k = 90,210 and d = 512,377 come back.
+example : 889862 - 327463 = 562399 := by norm_num
+example : 744550 - 302248 = 442302 := by norm_num
+example : 562399 * 90210 % 999007 = 442302 := by norm_num
+example : 889862 * 90210 % 999007 = (744550 + 998774 * 512377) % 999007 := by norm_num
+
+-- The no-hash forgery with a = 1,234 and b = 5,678: s = r / b and z = a s.
+example : 874587 * 5678 % 999007 = 840196 := by norm_num
+example : 1234 * 874587 % 999007 = 312798 := by norm_num
+
+#print axioms honest_signature_verifies
+#print axioms reused_nonce_reveals_key
+#print axioms unhashed_signature_forgery
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'honest_signature_verifies' depends on axioms: [propext, Classical.choice, Quot.sound]
+'reused_nonce_reveals_key' depends on axioms: [propext, Classical.choice, Quot.sound]
+'unhashed_signature_forgery' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - Guess first: does the attack still work if the second nonce is k + 1? Change the second `sign(d, k, upd2)` to `sign(d, k + 1, upd2)`. The r values differ, this subtraction no longer cancels d, and the asserts fail. It is still unsafe: an attacker who knows the offset writes k + 1 into the second equation and solves again.
@@ -555,7 +711,7 @@ ALL CHECKS PASS
 ## The usual mistake
 
 > [!warning]
-> **Treating the nonce as an ordinary random number.** It is a second private key, used once. Reused, it hands over d from two signatures: 512,377 here. Leaked, it hands over d from one. Predictable or slightly biased, it hands over d from enough signatures. The safe habit is to derive k from the private key and the hash of the message, so the same file always gets the same k and different files never share one (RFC 6979; EdDSA does the same by design).
+> **Treating the nonce as an ordinary random number.** It is a second private key, used once. Reused, it hands over d from two signatures: 512,377 here. Leaked, it hands over d from one. Predictable or slightly biased, it hands over d from enough signatures. The safe habit is to derive k from the private key and the hash of the message, so the same file always gets the same k and different files never share one (RFC 6979; EdDSA, a Schnorr-type signature scheme, does the same by design).
 >
 > Smaller traps:
 > - **"Signing is encrypting with the private key."** That holds only for textbook RSA ([RSA in full](04-rsa-in-full.md)). ECDSA encrypts nothing, and the file stays readable; a signature gives authenticity, not secrecy.
@@ -579,6 +735,7 @@ ALL CHECKS PASS
 
 ## What this builds on
 
+- [Hashes and MACs](03-hash-functions-and-macs.md): the hash h(m), and what preimages, collisions and the birthday bound are. This card signs the hash instead of the file, and Step 3 shows why both kinds of resistance matter.
 - [Elliptic curves](06-elliptic-curve-cryptography.md): the points, the rule for adding them, kP, the base point, and why getting k back from kP is hard. This card adds a way to use those points to sign.
 
 ## Where this goes next

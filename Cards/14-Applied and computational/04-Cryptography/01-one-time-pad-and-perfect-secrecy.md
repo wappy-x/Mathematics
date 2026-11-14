@@ -155,7 +155,7 @@ In 1883 Auguste Kerckhoffs set out rules for military ciphers. The one that last
 
 The pad passes. XOR is printed on this card, and the security proof above never assumed the method was hidden. Every bit of secrecy sits in the 160 bits of the pad. The opposite habit, keeping the method secret, fails the day the method leaks, and methods leak: through stolen devices, former staff, or reverse engineering. A key can be changed overnight; a method cannot.
 
-Modern ciphers follow the same rule and add a measure of strength. A cipher has **"k-bit security"** if breaking it takes about 2^k operations, assuming a stated mathematical problem stays hard (here k counts bits; it is not the pad). AES-128 aims at 128-bit security: about 2^128 operations. The pad is a different kind of claim. Its security does not rest on any problem being hard; no amount of computing helps, because every answer fits.
+Modern ciphers follow the same rule and add a measure of strength. A cipher has **"k-bit security"** if breaking it takes about 2^k operations, assuming a stated mathematical problem stays hard (here k counts bits; it is not the pad). AES-128 (the standard modern cipher, run with a 128-bit key: [AES](02-symmetric-ciphers-and-aes.md)) aims at 128-bit security: about 2^128 operations. The pad is a different kind of claim. Its security does not rest on any problem being hard; no amount of computing helps, because every answer fits.
 
 ### Step 7: what the attacker is allowed to see
 
@@ -184,7 +184,7 @@ The 750 order, its pad, and an eavesdropper deciding between the 750 order and t
 | chance of c, given the 950 order | 1 / 256^20 | 1 in 1.4615 × 10^48 |
 | odds after seeing c | 0.5 × (1/256^20) ÷ (1/256^20) | **0.5, unchanged** |
 
-**The eavesdropper's odds for the 750 order are 0.5 before and 0.5 after**: the 20 bytes moved them by nothing. The simulation in the code agrees. Over 100,000 synthetic orders, a guesser that reads byte 10 of c, in exactly the bits where `7` and `9` differ, wins 0.5001 of the time, within one standard error (0.0016) of a coin toss. The same guesser against a weak pad, whose bits are 1 only a quarter of the time, wins 0.7035, against an exact 0.7031. So the test can tell a weak pad from a proper one.
+**The eavesdropper's odds for the 750 order are 0.5 before and 0.5 after**: the 20 bytes moved them by nothing. The simulation in the code agrees. Over 100,000 synthetic orders, a guesser that reads byte 10 of c, in exactly the bits where `7` and `9` differ, wins 0.5001 of the time, within one standard error (0.0016) of a coin toss. A standard error is the typical size of the chance wobble in a simulated average: see [Standard error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md). The same guesser against a weak pad, whose bits are 1 only a quarter of the time, wins 0.7035, against an exact 0.7031. So the test can tell a weak pad from a proper one.
 
 The key that turns c into `TRANSFER 950 TO EVE.` differs from the real pad only where the orders differ: byte 10 (0x42 becomes 0x4C) and bytes 17 to 19 (A9 43 C3 become AE 5A C4). Nothing in c points to one of them over the other.
 
@@ -204,7 +204,17 @@ The repeated-key row grows as the key grows. Repeat a 1-, 2-, 3-, 4- or 5-byte k
 
 ## Code, from first principles, and it actually runs
 
-The script encrypts the order with a 20-byte pad and unlocks it. It then reaches perfect secrecy by **three independent roads**. The first is exact counting on the four-message toy, in whole 32nds, checking the posterior against the prior in all 16 cells. The second is exhaustive enumeration over every (message, key) pair, computing the leak two different ways (directly, and as H(C) − H(C | M)) under four key designs. The third is a seeded simulation over 100,000 orders. A guesser reads the bits of c where the 750 and 950 orders differ. Against a fresh pad it must score near 0.5; against a weak pad it must score near its exact 0.7031, which proves the guesser can see a leak when there is one. The reused-pad line beside it shows the Step 5 attack. It is an XOR identity, true for every key, so it is a demonstration, not evidence. Then it runs each failure in the "What breaks" table, and counts short-key decryptions both by a formula over key positions and by brute force over all 65,536 two-byte keys. The pad bytes come from SplitMix64, a small seeded generator written out in both languages, so the two programs print the same bytes. That makes this pad **insecure**: a real pad must be unpredictable, from a hardware noise source, never from a seeded formula.
+The script encrypts the order with a 20-byte pad and unlocks it. It then reaches perfect secrecy by **three independent roads**:
+
+1. Exact counting on the four-message toy, in whole 32nds, checking the posterior against the prior in all 16 cells.
+2. Exhaustive enumeration over every (message, key) pair, computing the leak two different ways (directly, and as H(C) − H(C | M)) under four key designs.
+3. A seeded simulation over 100,000 orders. A guesser reads the bits of c where the 750 and 950 orders differ. Against a fresh pad it must score near 0.5; against a weak pad it must score near its exact 0.7031, which proves the guesser can see a leak when there is one.
+
+The reused-pad line beside the simulation shows the Step 5 attack. It is an XOR identity, true for every key, so it is a demonstration, not evidence.
+
+Then the script runs each failure in the "What breaks" table. It counts short-key decryptions both by a formula over key positions and by brute force over all 65,536 two-byte keys.
+
+The pad bytes come from SplitMix64, a small seeded generator written out in both languages, so the two programs print the same bytes. That makes this pad **insecure**: a real pad must be unpredictable, from a hardware noise source, never from a seeded formula.
 
 ### Python
 
@@ -576,6 +586,199 @@ pad for 10,000,000 orders a day: 200,000,000 bytes a day, 73,000,000,000 a year
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the pad's secrecy for messages of any length, Shannon's bound for any cipher, and the card's worked numbers.
+
+- Take any message m and a key k of the same length. Then $(m \oplus k) \oplus k = m$, so unlocking gives the message back.
+- Take a uniformly random key as long as the message. Then every ciphertext is equally likely, whatever message was sent.
+- Take any prior for the message, and a uniformly random key as long as it, chosen independently. Then $P(M = m \mid C = c) = P(M = m)$ for every m and c.
+- Take any cipher whose unlocking works, where every message has a chance above zero and the key has any chances. Then perfect secrecy forces $n_k \ge n_m$.
+- The bytes of the worked example: character 10 locks to 0x75 and unlocks to 0x37, and the 950 order's key is 0x4C.
+- Suppose one pad locks both the 750 order and the 200 order. Then 15 of the 20 bytes of $c \oplus c_2$ are 00, and the known order reveals the other.
+- The toy's counts. With 4 keys, the posterior equals the prior in all 16 cells. With 3 keys, 4 cells are impossible; with 1 key, 12 are.
+- Tampering: flipping byte 10 of c by 0x0E makes the bank read `TRANSFER 950 TO BOB.`.
+
+The leaks in bits, the guessing simulation, the repeated-key counts and the SplitMix64 pad itself are left to the Python and Rust checks.
+
+```lean
+-- The one-time pad: with a uniformly random key as long as the message, added bit by bit mod 2, seeing the ciphertext leaves the odds of every message unchanged, and no cipher is perfectly secret with fewer keys than messages.
+import Mathlib.Data.ZMod.Basic
+import Mathlib.Basic.Real.Basic
+import Mathlib.Data.Fintype.Pi
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.Order.Field.Basic
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Abel
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Positivity
+
+open Finset
+
+/-- Exactly one key k turns m into c (namely k = c - m), so summing a times the indicator over all keys gives a. -/
+theorem otp_sum_indicator (n : ℕ) (a : ℝ) (m c : Fin n → ZMod 2) :
+    ∑ k : Fin n → ZMod 2, a * (if m + k = c then 1 else 0) = a := by
+  have h : ∀ k : Fin n → ZMod 2, (m + k = c) ↔ (c - m = k) := by
+    intro k; constructor <;> intro h <;> [rw [← h]; rw [← h]] <;> abel
+  simp only [h, mul_ite, mul_one, mul_zero]
+  rw [Finset.sum_ite_eq]; simp
+
+#print axioms otp_sum_indicator
+
+/-- Perfect secrecy of the one-time pad. Messages, keys and ciphertexts are strings of `n` bits,
+and XOR is addition mod 2 in each bit, so c = m + k. The message M has any prior p (chances 0 or
+more, adding to 1). The key K is chosen uniformly, each of the 2^n keys with chance 1/2^n,
+independently of the message. Then for every message m and every ciphertext c, the eavesdropper's
+odds after seeing c equal the odds before:
+P(M = m | C = c) = P(M = m ∧ C = c) / P(C = c) = P(M = m). -/
+theorem one_time_pad_perfect_secrecy (n : ℕ) (p : (Fin n → ZMod 2) → ℝ)
+    (hp_nonneg : ∀ m, 0 ≤ p m) (hp_sum : ∑ m, p m = 1)
+    (m c : Fin n → ZMod 2) :
+    (∑ k : Fin n → ZMod 2, p m * (1 / 2 ^ n) * (if m + k = c then 1 else 0)) /
+      (∑ m' : Fin n → ZMod 2, ∑ k : Fin n → ZMod 2,
+        p m' * (1 / 2 ^ n) * (if m' + k = c then 1 else 0)) = p m := by
+  simp only [otp_sum_indicator]
+  rw [← Finset.sum_mul, hp_sum]
+  field_simp
+
+/-- Unlocking works and the ciphertext is uniform whatever was sent. Adding the same pad twice
+gives the message back, (m ⊕ k) ⊕ k = m. And for a uniformly random key, whatever message m was
+sent, every ciphertext c has the same chance: P(C = c | M = m) = P(K = m ⊕ c) = 1/2^n. -/
+theorem one_time_pad_decrypts_and_ciphertext_uniform (n : ℕ) (m k c : Fin n → ZMod 2) :
+    (m + k) + k = m ∧
+      ∑ k' : Fin n → ZMod 2, (1 / 2 ^ n : ℝ) * (if m + k' = c then 1 else 0) = 1 / 2 ^ n := by
+  refine ⟨?_, otp_sum_indicator n _ m c⟩
+  have h2 : ∀ x : ZMod 2, x + x = 0 := by decide
+  funext i
+  simp only [Pi.add_apply, add_assoc, h2, add_zero]
+
+/-- Shannon's bound: perfect secrecy needs at least as many keys as messages. Take any cipher:
+finitely many messages, keys and ciphertexts, an encryption rule `enc k m`, and decryption that
+works (for each key, different messages give different ciphertexts). Every message is possible
+(chance above zero), and the key is drawn from any distribution q, independently of the message.
+If the cipher is perfectly secret, P(M = m | C = c) = P(M = m) for every message m and every
+ciphertext c that can occur, then the number of keys is at least the number of messages. -/
+theorem perfect_secrecy_needs_as_many_keys_as_messages
+    {Msg Key Ciph : Type*} [Fintype Msg] [Fintype Key] [Fintype Ciph] [DecidableEq Ciph]
+    (enc : Key → Msg → Ciph) (hdec : ∀ k, Function.Injective (enc k))
+    (p : Msg → ℝ) (hp_pos : ∀ m, 0 < p m) (hp_sum : ∑ m, p m = 1)
+    (q : Key → ℝ) (hq_nonneg : ∀ k, 0 ≤ q k) (hq_sum : ∑ k, q k = 1)
+    (hsecret : ∀ m c,
+      (∑ m', ∑ k, p m' * q k * (if enc k m' = c then 1 else 0)) ≠ 0 →
+        (∑ k, p m * q k * (if enc k m = c then 1 else 0)) /
+          (∑ m', ∑ k, p m' * q k * (if enc k m' = c then 1 else 0)) = p m) :
+    Fintype.card Msg ≤ Fintype.card Key := by
+  obtain ⟨m0, -, -⟩ := Finset.exists_ne_zero_of_sum_ne_zero (s := Finset.univ) (f := p)
+    (by rw [hp_sum]; norm_num)
+  obtain ⟨k0, -, hk0⟩ := Finset.exists_ne_zero_of_sum_ne_zero (s := Finset.univ) (f := q)
+    (by rw [hq_sum]; norm_num)
+  set c := enc k0 m0 with hc
+  have hterm : ∀ m' k, 0 ≤ p m' * q k * (if enc k m' = c then (1 : ℝ) else 0) := by
+    intro m' k
+    have := (hp_pos m').le
+    have := hq_nonneg k
+    split_ifs <;> positivity
+  have hpos : 0 < ∑ m', ∑ k, p m' * q k * (if enc k m' = c then (1 : ℝ) else 0) := by
+    have h1 : p m0 * q k0 * (if enc k0 m0 = c then (1 : ℝ) else 0)
+        ≤ ∑ k, p m0 * q k * (if enc k m0 = c then (1 : ℝ) else 0) :=
+      Finset.single_le_sum (f := fun k => p m0 * q k * (if enc k m0 = c then (1 : ℝ) else 0))
+        (fun k _ => hterm m0 k) (Finset.mem_univ k0)
+    have h2 : ∑ k, p m0 * q k * (if enc k m0 = c then (1 : ℝ) else 0)
+        ≤ ∑ m', ∑ k, p m' * q k * (if enc k m' = c then (1 : ℝ) else 0) :=
+      Finset.single_le_sum
+        (f := fun m' => ∑ k, p m' * q k * (if enc k m' = c then (1 : ℝ) else 0))
+        (fun m' _ => Finset.sum_nonneg (fun k _ => hterm m' k)) (Finset.mem_univ m0)
+    have h0 : 0 < p m0 * q k0 * (if enc k0 m0 = c then (1 : ℝ) else 0) := by
+      simp only [c, ite_true, mul_one]
+      exact mul_pos (hp_pos m0) (lt_of_le_of_ne (hq_nonneg k0) (Ne.symm hk0))
+    linarith
+  have hex : ∀ m, ∃ k, enc k m = c := by
+    intro m
+    have hs := hsecret m c hpos.ne'
+    have hnum : (∑ k, p m * q k * (if enc k m = c then (1 : ℝ) else 0)) ≠ 0 := by
+      intro h0
+      rw [h0, zero_div] at hs
+      exact (hp_pos m).ne' hs.symm
+    obtain ⟨k, -, hk⟩ := Finset.exists_ne_zero_of_sum_ne_zero hnum
+    refine ⟨k, ?_⟩
+    by_contra hne
+    exact hk (by simp [hne])
+  choose f hf using hex
+  apply Fintype.card_le_of_injective f
+  intro m1 m2 h
+  apply hdec (f m1)
+  rw [hf m1, h, hf m2]
+
+-- Character 10 of the order, bit by bit: '7' = 0x37, pad byte 0x42, ciphertext byte 0x75.
+example : (0x37 : ℕ) ^^^ 0x42 = 0x75 := by decide
+-- Unlocking at the bank: 0x75 ⊕ 0x42 = 0x37 = '7'.
+example : (0x75 : ℕ) ^^^ 0x42 = 0x37 := by decide
+-- The key that would make that byte a '9' (0x39) is 0x4C.
+example : (0x75 : ℕ) ^^^ 0x39 = 0x4C := by decide
+-- Keys of 20 bytes: 256^20 = 2^160.
+example : (256 : ℕ) ^ 20 = 2 ^ 160 := by norm_num
+
+-- The card's 20-byte example, written as byte values.
+-- m  = "TRANSFER 750 TO BOB.", m2 = "TRANSFER 200 TO ANN.", alt = "TRANSFER 950 TO EVE."
+-- k  = the pad, kalt = the pad that turns the same c into alt.
+def otpM : List ℕ := [0x54, 0x52, 0x41, 0x4E, 0x53, 0x46, 0x45, 0x52, 0x20, 0x37,
+  0x35, 0x30, 0x20, 0x54, 0x4F, 0x20, 0x42, 0x4F, 0x42, 0x2E]
+def otpM2 : List ℕ := [0x54, 0x52, 0x41, 0x4E, 0x53, 0x46, 0x45, 0x52, 0x20, 0x32,
+  0x30, 0x30, 0x20, 0x54, 0x4F, 0x20, 0x41, 0x4E, 0x4E, 0x2E]
+def otpAlt : List ℕ := [0x54, 0x52, 0x41, 0x4E, 0x53, 0x46, 0x45, 0x52, 0x20, 0x39,
+  0x35, 0x30, 0x20, 0x54, 0x4F, 0x20, 0x45, 0x56, 0x45, 0x2E]
+def otpK : List ℕ := [0x23, 0x5D, 0x8E, 0xF2, 0x49, 0x03, 0xAE, 0x2D, 0xF4, 0x42,
+  0x6D, 0xE0, 0x18, 0x65, 0x39, 0x49, 0xA9, 0x43, 0xC3, 0x19]
+def otpKAlt : List ℕ := [0x23, 0x5D, 0x8E, 0xF2, 0x49, 0x03, 0xAE, 0x2D, 0xF4, 0x4C,
+  0x6D, 0xE0, 0x18, 0x65, 0x39, 0x49, 0xAE, 0x5A, 0xC4, 0x19]
+def otpXor (a b : List ℕ) : List ℕ := List.zipWith (· ^^^ ·) a b
+
+-- c = m ⊕ k begins 77 0F CF BC 1A, and c ⊕ k gives the order back.
+example : (otpXor otpM otpK).take 5 = [0x77, 0x0F, 0xCF, 0xBC, 0x1A] := by decide
+example : otpXor (otpXor otpM otpK) otpK = otpM := by decide
+-- The same c, under a different pad, spells "TRANSFER 950 TO EVE.".
+example : otpXor otpAlt otpKAlt = otpXor otpM otpK ∧ otpKAlt ≠ otpK := by decide
+-- Pad reused for "TRANSFER 200 TO ANN.": c ⊕ c2 = m ⊕ m2, 15 of its 20 bytes are 00,
+-- and XORing on the known order m recovers m2.
+example : otpXor (otpXor otpM otpK) (otpXor otpM2 otpK) = otpXor otpM otpM2 := by decide
+example : (otpXor (otpXor otpM otpK) (otpXor otpM2 otpK)).count 0 = 15 := by decide
+example : otpXor (otpXor (otpXor otpM2 otpK) (otpXor otpM otpK)) otpM = otpM2 := by decide
+-- Tampering: flip c's byte 10 by 0x0E and the bank reads '9' (0x39), "TRANSFER 950 TO BOB.".
+example : ((0x37 ^^^ 0x42 : ℕ) ^^^ 0x0E) ^^^ 0x42 = 0x39 := by decide
+
+-- The toy, in 32nds: 4 messages coded 0..3 with prior 4/8, 2/8, 1/8, 1/8, and 4 two-bit keys,
+-- each with chance 1/4. Joint chance (in 32nds) of (m, c) is prior8 m when m ⊕ k = c for
+-- some key; posterior equals prior in all 16 cells: joint(m, c) * 8 = prior8 m * P(C = c).
+def toyPrior8 : Fin 4 → ℕ := ![4, 2, 1, 1]
+def toyJoint (keys : List ℕ) (m c : Fin 4) : ℕ :=
+  toyPrior8 m * (keys.filter (fun k => m.val ^^^ k = c.val)).length
+example : ∀ m c : Fin 4,
+    toyJoint [0, 1, 2, 3] m c * 8 = toyPrior8 m * (∑ m' : Fin 4, toyJoint [0, 1, 2, 3] m' c) := by
+  decide
+-- With 3 keys for 4 messages, 4 of the 16 cells are impossible; with 1 key, 12 are.
+example : ((Finset.univ : Finset (Fin 4 × Fin 4)).filter (fun x =>
+    toyJoint [0, 1, 2] x.1 x.2 = 0 ∧ (∑ m' : Fin 4, toyJoint [0, 1, 2] m' x.2) ≠ 0)).card = 4 := by
+  decide
+example : ((Finset.univ : Finset (Fin 4 × Fin 4)).filter (fun x =>
+    toyJoint [0] x.1 x.2 = 0 ∧ (∑ m' : Fin 4, toyJoint [0] m' x.2) ≠ 0)).card = 12 := by
+  decide
+
+#print axioms one_time_pad_perfect_secrecy
+#print axioms one_time_pad_decrypts_and_ciphertext_uniform
+#print axioms perfect_secrecy_needs_as_many_keys_as_messages
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'otp_sum_indicator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'one_time_pad_perfect_secrecy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'one_time_pad_decrypts_and_ciphertext_uniform' depends on axioms: [propext, Classical.choice, Quot.sound]
+'perfect_secrecy_needs_as_many_keys_as_messages' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - Guess first: does a guesser that reads a different bit do better? In `rule`, change `& 0x0E` to `& 0x80`, so it reads bit 7. The fresh-pad score stays within a few standard errors of 0.5, because the ciphertext is uniform whichever order was sent. The weak-pad score also falls to about 0.5, and its assert stops the run: bit 7 is the same in `7` and `9`, so this guesser cannot see the message even through a weak pad.
@@ -603,7 +806,7 @@ ALL CHECKS PASS
 - **The Moscow–Washington hotline.** The teletype link set up in 1963 used one-time tapes exchanged by diplomatic courier: the price of a pad paid in full, for a line where the volume was small and the stakes huge.
 - **Spy number stations.** Shortwave stations reading out groups of digits are the classic use of paper pads: agents decode them with a pad page, then destroy the page.
 - **Stream ciphers in your browser.** ChaCha20, one of the ciphers in TLS (the lock in the address bar), XORs the message with a long stream of bytes, exactly like a pad. The stream is computed from a 256-bit key and a nonce (a number used once), so a short key can serve gigabytes. The secrecy becomes computational, about 2^256 operations, and the "never reuse" rule survives as "never reuse a nonce". See [The TLS handshake](08-key-exchange-in-practice-the-tls-handshake.md).
-- **AES-GCM nonce reuse.** The same failure as Step 5 in a modern dress: reuse the counter value with the same key and two messages leak their XOR. See [AES](02-symmetric-ciphers-and-aes.md).
+- **AES-GCM nonce reuse.** AES-GCM (AES in Galois/Counter Mode) uses AES to make a long pad-like stream from a key and a counter. The same failure as Step 5 in a modern dress: reuse the counter value with the same key and two messages leak their XOR. See [AES](02-symmetric-ciphers-and-aes.md).
 - **Quantum key distribution.** Its pitch is to deliver pad bytes over a fibre with physics, rather than a courier. It replaces the courier, but it must still deliver 200,000,000 pad bytes a day for a bank sending 10 million 20-byte orders, 73,000,000,000 bytes a year.
 
 > **Say it back**

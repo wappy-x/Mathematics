@@ -10,11 +10,13 @@ A laptop opens a connection to its bank. Before any order is sent, the two must 
 
 So browsers and banks now add a second exchange that a quantum computer is not known to break. It is Kyber-768, published by the US standards body NIST in 2024 as ML-KEM-768 (FIPS 203). The laptop sends a public key of **1,184 bytes**. The bank sends back a ciphertext (the locked message) of **1,088 bytes**. Both sides end up with the same 32-byte secret, 256 bits. The price is size: the public key is 37 times larger than an X25519 key.
 
-The hard problem underneath is about a **lattice**: a regular grid of points in space, such as every whole-number mix of two arrows. Given a point near the grid, find the nearest grid point. In two dimensions that is easy. In 768 dimensions, described by a deliberately bad set of arrows, nobody knows a fast way, with or without a quantum computer. Kyber hides its secret as exactly such a point: a set of linear equations with small random errors added.
+The hard problem underneath is about a **lattice**: a regular grid of points in space, such as every whole-number mix of two arrows. Given a point near the grid, find the nearest grid point. In two dimensions that is easy. In 768 dimensions, described by a deliberately bad set of arrows, nobody knows a fast way, with or without a quantum computer. Kyber hides its secret as exactly such a point: a set of linear equations with small random errors added. The equations are worked mod q = 3329: on a clock of size q, where numbers wrap round.
 
 **Kyber publishes linear equations mod q with small errors mixed in; the owner of the secret can strip the errors because they stay below a quarter of q, while anyone else must find a short vector in a lattice of more than 768 dimensions, which the best known attacks, classical or quantum, put at about 2^182 or 2^165 operations.**
 
-**What kind of fact this is:** the decryption identity is a theorem, proved on this card in Why it works. Decryption then succeeds whenever the noise stays under q/4; that is a probability, not a certainty, and the standard sets the failure chance so low it is never expected in practice. Security is an assumption: that learning with errors is hard, for quantum computers too. It is unproved as of 2026-11-11. The 2^182 figure is an estimate from the standard rule of thumb, not a bound. Shor's algorithm is a theorem, proved in the source cited below.
+**What kind of fact this is:** the decryption identity is a theorem, proved on this card in Why it works. Decryption then succeeds whenever the noise stays under q/4; that is a probability, not a certainty, and the standard sets the failure chance so low it is never expected in practice.
+
+Security is an assumption: that learning with errors is hard, for quantum computers too. It is unproved as of 2026-11-11. The 2^182 figure is an estimate from the standard rule of thumb, not a bound. Shor's algorithm is a theorem, proved in the source cited below.
 
 ### The picture: one grid, two descriptions
 
@@ -89,9 +91,15 @@ The owner never mixes. Decryption takes one subtraction, so the errors stay smal
 
 The good basis (4, 1), (-1, 3) and the bad basis (17, 14), (10, 9) make the same lattice. The bad arrows are whole-number mixes of the good ones: (17, 14) = 5 × (4, 1) + 3 × (-1, 3), and (10, 9) = 3 × (4, 1) + 2 × (-1, 3). The mix can be undone with whole numbers too, because its own area factor is 5 × 2 − 3 × 3 = 1. Both bases span cells of the same area, 13.
 
-**Finding the short arrows again.** In two dimensions the Lagrange-Gauss method does it: subtract from the longer arrow the nearest whole multiple of the shorter, swap, repeat. From the bad basis it takes 3 steps to reach (1, -3) and (-4, -1). Brute force over every mix agrees that length² 10 is the shortest. This is [Gram-Schmidt](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md) with the rule that only whole multiples may be subtracted. The LLL algorithm extends it to many dimensions. It runs fast but only promises a vector within a factor that grows exponentially with the dimension. The better tool, BKZ, solves SVP exactly in blocks of β dimensions, and its cost grows like $2^{0.292\beta}$ with the best known classical method.
+**Finding the short arrows again.** In two dimensions the Lagrange-Gauss method does it: subtract from the longer arrow the nearest whole multiple of the shorter, swap, repeat. From the bad basis it takes 3 steps to reach (1, -3) and (-4, -1). Brute force over every mix agrees that length² 10 is the shortest.
 
-**Finding the nearest point.** Write the target (6, 10) in the basis and round each amount. With the good basis the amounts are 28/13 and 34/13, which round to 2 and 3: the point (5, 11), distance² 2. With the bad basis they are −46/13 and 86/13, which round to −4 and 7: the point (2, 7), distance² 25. Long, skewed arrows turn a small rounding error into a big jump. So a good basis can serve as a trapdoor (a secret shortcut) while a bad one is published: that is the older GGH scheme, and the Falcon signature still works this way. Kyber's secret is not a basis but one short vector, as Step 2 shows.
+This is [Gram-Schmidt](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md) with the rule that only whole multiples may be subtracted. The LLL algorithm extends it to many dimensions. It runs fast but only promises a vector within a factor that grows exponentially with the dimension.
+
+The better tool, BKZ, solves SVP exactly in blocks of β dimensions, and its cost grows like $2^{0.292\beta}$ with the best known classical method.
+
+**Finding the nearest point.** Write the target (6, 10) in the basis and round each amount. With the good basis the amounts are 28/13 and 34/13, which round to 2 and 3: the point (5, 11), distance² 2. With the bad basis they are −46/13 and 86/13, which round to −4 and 7: the point (2, 7), distance² 25.
+
+Long, skewed arrows turn a small rounding error into a big jump. So a good basis can serve as a trapdoor (a secret shortcut) while a bad one is published: that is the older GGH scheme, and the Falcon signature still works this way. Kyber's secret is not a basis but one short vector, as Step 2 shows.
 
 ### Step 2: LWE is a short-vector problem in disguise
 
@@ -99,7 +107,9 @@ Rewrite $t = As + e$ as $A s + e - t \equiv 0 \pmod q$. The list of whole number
 
 In that lattice, $(s, e, -1)$ is unusually short: every entry is between −2 and 2, while a typical lattice point has entries spread over the whole clock. So recovering the secret means finding an unusually short vector in a lattice with more dimensions than the 768 secret numbers. This is the "primal attack".
 
-How hard is it? The standard estimate (from the 2016 New Hope paper) asks for the smallest block size β at which BKZ would expose that short vector. The code runs the estimate. For Kyber-768 it gives β = 624: about $2^{0.292 \times 624} = 2^{182.2}$ operations classically. The standard quantum estimate changes 0.292 to 0.265, giving $2^{165.4}$. Kyber-512 and Kyber-1024 come out at 2^118.6 and 2^255.2 classically. Run on New Hope's own parameters, the same code gives β = 968 against the 967 in that paper's Table 1, so the rule is implemented as published. These are estimates of the best known attack, not proofs.
+How hard is it? The standard estimate (from the 2016 New Hope paper) asks for the smallest block size β at which BKZ would expose that short vector. The code runs the estimate. For Kyber-768 it gives β = 624: about $2^{0.292 \times 624} = 2^{182.2}$ operations classically. The standard quantum estimate changes 0.292 to 0.265, giving $2^{165.4}$.
+
+Kyber-512 and Kyber-1024 come out at 2^118.6 and 2^255.2 classically. Run on New Hope's own parameters, the same code gives β = 968 against the 967 in that paper's Table 1, so the rule is implemented as published. These are estimates of the best known attack, not proofs.
 
 Regev proved the link in the other direction too: solving random LWE would solve hard lattice problems in their worst case, using a quantum reduction. That is why LWE, and not some ad hoc puzzle, is trusted.
 
@@ -115,7 +125,11 @@ Why it is right, in four lines of algebra:
 
 $$v - s^{\mathsf T}u = (As + e)^{\mathsf T} r + e_2 + 1665\,m - s^{\mathsf T} A^{\mathsf T} r - s^{\mathsf T} e_1$$
 
-The terms $(As)^{\mathsf T} r$ and $s^{\mathsf T}A^{\mathsf T} r$ are the same number, so they cancel. What remains is $1665\,m + e^{\mathsf T} r - s^{\mathsf T} e_1 + e_2$. Each noise term is a sum of hundreds of products of small numbers with random signs. They mostly cancel, so the total stays far below q/4 = 832. In the worst case, every product large and the same sign, it would not; the parameters make that so unlikely that FIPS 203 treats failure as negligible. Then rounding to the nearer of 0 and 1665 returns each bit. The code checks the identity in all 256 places, and decrypts 8 messages, 2,048 bits, with no error and a largest noise of 280. The rounding to 10 and 4 bits adds a little more noise, and that is included in the 280.
+The terms $(As)^{\mathsf T} r$ and $s^{\mathsf T}A^{\mathsf T} r$ are the same number, so they cancel. What remains is $1665\,m + e^{\mathsf T} r - s^{\mathsf T} e_1 + e_2$. Each noise term is a sum of hundreds of products of small numbers with random signs. They mostly cancel, so the total stays far below q/4 = 832.
+
+In the worst case, every product large and the same sign, it would not; the parameters make that so unlikely that FIPS 203 treats failure as negligible. Then rounding to the nearer of 0 and 1665 returns each bit.
+
+The code checks the identity in all 256 places, and decrypts 8 messages, 2,048 bits, with no error and a largest noise of 280. The rounding to 10 and 4 bits adds a little more noise, and that is included in the 280.
 
 ML-KEM wraps this inner scheme. The 256 bits are hashed into the shared key, and the laptop re-encrypts what it decrypted to check the ciphertext was honest (the Fujisaki-Okamoto transform). The code skips this wrapper and the fast multiplication (the NTT).
 
@@ -127,13 +141,19 @@ ML-DSA (Dilithium, FIPS 204) signs by proving knowledge of a short secret, in th
 2. Hash that commitment with the message to get a small challenge.
 3. Answer with the mask plus the challenge times the secret $s$.
 
-The verifier multiplies the answer by $A$, takes away the challenge times $t$, and checks the high bits match the commitment. The catch: the answer is the secret pushed by a random mask, and when it lands near the edge of its allowed range, it leaks which way $s$ pushed it. So the signer **throws away** any answer that lands too near an edge, and tries again. The kept answers have the same spread whatever the secret is. The standard's parameters set how near is too near. Worked through in the code, they give 5.09 expected tries for ML-DSA-65, against 5.1 in the standard's table. The cost is size: a 1,952-byte public key and a 3,309-byte signature.
+The verifier multiplies the answer by $A$, takes away the challenge times $t$, and checks the high bits match the commitment.
+
+The catch: the answer is the secret pushed by a random mask, and when it lands near the edge of its allowed range, it leaks which way $s$ pushed it. So the signer **throws away** any answer that lands too near an edge, and tries again. The kept answers have the same spread whatever the secret is.
+
+The standard's parameters set how near is too near. Worked through in the code, they give 5.09 expected tries for ML-DSA-65, against 5.1 in the standard's table. The cost is size: a 1,952-byte public key and a 3,309-byte signature.
 
 ### Step 5: what Shor's algorithm ends, and what it does not
 
-RSA, Diffie-Hellman and elliptic curves all rest on a hidden **period**. For RSA modulus 3233 (61 × 53), the powers of 3 repeat every 260 steps. Knowing that is enough: 3^130 = 794 mod 3233, and the greatest common divisors of 793 and 795 with 3233 are 61 and 53. The factors fall out, and with them the private key ([RSA in full](04-rsa-in-full.md)). Classically, finding the period of a full-size modulus is hopeless. Shor's algorithm finds it on a quantum computer in polynomial time, with a quantum Fourier transform. Discrete logarithms, so Diffie-Hellman and elliptic curves, fall the same way.
+RSA, Diffie-Hellman and elliptic curves all rest on a hidden **period**. For RSA modulus 3233 (61 × 53), the powers of 3 repeat every 260 steps. Knowing that is enough: 3^130 = 794 mod 3233, and the greatest common divisors of 793 and 795 with 3233 are 61 and 53. The factors fall out, and with them the private key ([RSA in full](04-rsa-in-full.md)).
 
-So Shor ends RSA, finite-field Diffie-Hellman, ECDH and ECDSA outright: making the keys longer only delays the attack a little. It does not touch hashes or AES. Grover's search, the other quantum algorithm, only takes a square root of the guessing work, so it is answered by doubling key lengths.
+Classically, finding the period of a full-size modulus is hopeless. Shor's algorithm finds it on a quantum computer in polynomial time, with a quantum Fourier transform. Discrete logarithms, so Diffie-Hellman and elliptic curves, fall the same way.
+
+So Shor ends RSA, finite-field Diffie-Hellman ([Diffie-Hellman and ElGamal](05-diffie-hellman-and-elgamal.md)), ECDH and ECDSA (key exchange and signatures on elliptic curves) outright: making the keys longer only delays the attack a little. It does not touch hashes ([Hashes and MACs](03-hash-functions-and-macs.md)) or the block cipher [AES](02-symmetric-ciphers-and-aes.md). Grover's search, the other quantum algorithm, only takes a square root of the guessing work, so it is answered by doubling key lengths.
 
 Lattice problems have no known hidden period to find. Decades of work have produced no quantum algorithm for them that does more than shave the exponent: the standard estimates use 0.265 in place of 0.292, and the best quantum sieves published since go only slightly lower. That is evidence, not a proof.
 
@@ -178,9 +198,13 @@ The reused-randomness row repeats the reused-pad failure of [The one-time pad](0
 
 ## Code, from first principles, and it actually runs
 
-The script builds Kyber-768's inner encryption at full size: 3 × 3 polynomials of 256 numbers, mod 3329, with the real rounding to 12, 10 and 4 bits. It multiplies polynomials the slow, schoolbook way, with no NTT, and checks that a product wraps round to −1, the rule X^256 = −1. The randomness comes from SplitMix64 with a fixed seed, so Python and Rust print the same keys. That makes every key here **insecure**. Real ML-KEM draws its table from a SHAKE hash of a public seed and its noise from SHAKE hashes of secret seeds. Without SHAKE, this code cannot reproduce the FIPS 203 test vectors.
+The script builds Kyber-768's inner encryption at full size: 3 × 3 polynomials of 256 numbers, mod 3329, with the real rounding to 12, 10 and 4 bits. It multiplies polynomials the slow, schoolbook way, with no NTT, and checks that a product wraps round to −1, the rule X^256 = −1.
 
-The roads are independent. Key and ciphertext sizes come from the formula and from actually packing the bits. Decryption is checked by running it on 2,048 bits and by computing the noise identity from the small numbers alone. The shortest vector comes from Gauss reduction and from brute force over every mix, and the nearest point from rounding and from brute force. The toy secret comes from elimination and is compared against the secret drawn. Dilithium's tries and sizes are compared against the standard's tables. The factors from Shor's period are multiplied back to 3233. The attack estimate scans every block size and sample count, and meets the New Hope paper's own table.
+The randomness comes from SplitMix64 with a fixed seed, so Python and Rust print the same keys. That makes every key here **insecure**. Real ML-KEM draws its table from a SHAKE hash of a public seed and its noise from SHAKE hashes of secret seeds. Without SHAKE, this code cannot reproduce the FIPS 203 test vectors.
+
+The roads are independent. Key and ciphertext sizes come from the formula and from actually packing the bits. Decryption is checked by running it on 2,048 bits and by computing the noise identity from the small numbers alone. The shortest vector comes from Gauss reduction and from brute force over every mix, and the nearest point from rounding and from brute force.
+
+The toy secret comes from elimination and is compared against the secret drawn. Dilithium's tries and sizes are compared against the standard's tables. The factors from Shor's period are multiplied back to 3233. The attack estimate scans every block size and sample count, and meets the New Hope paper's own table.
 
 ### Python
 
@@ -562,6 +586,217 @@ ML-DSA-87: public key 2592 bytes, signature 4627 bytes, expected tries 3.85
 Shor's idea on RSA modulus 3233: period of 3 is 260; 3^130 = 794; factors 61 x 53
 period of 2 is 780: 2^390 = 3232 = -1, no factor
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves the decryption algebra, the rounding rule and the same-lattice fact for all inputs, and checks the worked numbers exactly.
+
+- Take $t = As + e$, $u = A^{\mathsf T} r + e_1$ and $v = t^{\mathsf T} r + e_2 + 1665\, m$. Then $v - s^{\mathsf T} u = 1665\, m + e^{\mathsf T} r - s^{\mathsf T} e_1 + e_2$. This holds for any table size, with numbers mod q or with Kyber's polynomials.
+- Take a bit $b$ sent as $1665\, b$, and a total noise $d$ with $|d| < 832$. Then rounding $1665\, b + d$ mod 3329 to the nearer of 0 and 1665 returns $b$.
+- Take two arrows $g_1, g_2$ and whole numbers $a, b, c, d$ with $ad - bc = 1$. Then $a g_1 + b g_2$ and $c g_1 + d g_2$ build the same lattice as $g_1, g_2$.
+- The bad arrows (17, 14) and (10, 9) are whole-number mixes of the good ones, with area factor 1. Both cells have area 13.
+- No nonzero lattice point has length² below 10. No lattice point is nearer the target (6, 10) than (5, 11), at distance² 2.
+- Rounding in the bad basis gives the amounts −4 and 7, so the point (2, 7) at distance² 25.
+- The sizes in Worked numbers check: 1,184 and 1,088 bytes, the hybrid shares, Kyber-512, Kyber-1024 and ML-DSA-65.
+- The powers of 3 mod 3233 repeat every 260 steps, and $3^{130} = 794$ gives the factors 61 and 53.
+- The powers of 2 repeat every 780 steps, but $2^{390} = 3232 = -1$, so no factor comes out.
+
+The noise run, the attack estimates, Dilithium's tries and the broken variants are left to the Python and Rust checks.
+
+```lean
+-- Lattices: Kyber's decryption identity v - sᵀu = 1665·m + (eᵀr - sᵀe₁ + e₂) holds over every commutative ring, rounding mod 3329 returns each bit whenever the noise stays below 832, two bases related by a whole-number mix of area factor 1 make the same lattice, and the card's size, lattice and Shor numbers are exact.
+import Mathlib.Data.Matrix.Mul
+import Mathlib.Data.ZMod.Basic
+import Mathlib.LinearAlgebra.Span.Defs
+import Mathlib.Algebra.Order.Group.Abs
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.NormNum.PowMod
+import Mathlib.Tactic.NormNum.GCD
+import Mathlib
+
+namespace LatticesAndPostQuantumCryptography
+
+open Matrix
+
+/-- The decryption identity (Step 3). Work in any commutative ring `R` (for Kyber, polynomials
+mod q with X^256 = -1) and any number of rows. Let the public key be t = A s + e, and let the
+ciphertext be u = Aᵀ r + e₁ and v = tᵀ r + e₂ + 1665 m. Then the owner of s computes
+v - sᵀ u = 1665 m + (eᵀ r - sᵀ e₁ + e₂): the terms (A s)ᵀ r and sᵀ Aᵀ r cancel, and only
+the message and a noise made of the small numbers remain. -/
+theorem kyber_decryption_identity {R ι : Type*} [CommRing R] [Fintype ι]
+    (A : Matrix ι ι R) (s e r e₁ t u : ι → R) (e₂ m v : R)
+    (ht : t = A *ᵥ s + e) (hu : u = Aᵀ *ᵥ r + e₁) (hv : v = t ⬝ᵥ r + e₂ + 1665 * m) :
+    v - s ⬝ᵥ u = 1665 * m + (e ⬝ᵥ r - s ⬝ᵥ e₁ + e₂) := by
+  subst ht hu hv
+  simp only [add_dotProduct, dotProduct_add, dotProduct_mulVec, vecMul_transpose]
+  rw [dotProduct_comm (A *ᵥ s) r]
+  ring
+
+/-- Kyber's rounding of one number mod q = 3329 to a bit: `compress(x, 1)` in the card's code,
+⌊(4x + q) / 2q⌋ mod 2. It gives 1 when x is nearer 1665 than 0 on the clock, and 0 otherwise. -/
+def roundBit (x : ZMod 3329) : ℕ := (4 * x.val + 3329) / 6658 % 2
+
+/-- Decryption succeeds when the noise is small (When it holds). If a bit b is sent as
+1665·b and the total noise d is below q/4 = 832 in size, then rounding 1665·b + d mod 3329
+to the nearer of 0 and 1665 returns b. -/
+theorem round_recovers_bit_of_noise_lt_832 (b : ℕ) (hb : b ≤ 1) (d : ℤ) (hd : |d| < 832) :
+    roundBit (((1665 * b : ℤ) + d : ℤ) : ZMod 3329) = b := by
+  unfold roundBit
+  have hx := ZMod.val_intCast (n := 3329) ((1665 * b : ℤ) + d)
+  generalize ((((1665 * b : ℤ) + d : ℤ) : ZMod 3329)).val = x at hx ⊢
+  rw [abs_lt] at hd
+  push_cast at hx
+  obtain ⟨hd1, hd2⟩ := hd
+  interval_cases b
+  · rcases le_or_gt 0 d with h0 | h0
+    · have : (x : ℤ) = d := by rw [hx]; omega
+      omega
+    · have : (x : ℤ) = d + 3329 := by rw [hx]; omega
+      omega
+  · have : (x : ℤ) = 1665 + d := by rw [hx]; omega
+    omega
+
+/-- A good basis and a bad basis make the same lattice (Step 1). If the arrows c₁ = a g₁ + b g₂
+and c₂ = c g₁ + d g₂ are whole-number mixes of g₁ and g₂ whose area factor a d - b c is 1,
+the mix can be undone with whole numbers, so every whole-number mix of c₁, c₂ is one of
+g₁, g₂ and back: L(c₁, c₂) = L(g₁, g₂). -/
+theorem same_lattice_of_mix_with_area_factor_one {n : ℕ} (g₁ g₂ : Fin n → ℤ) (a b c d : ℤ)
+    (h : a * d - b * c = 1) :
+    Submodule.span ℤ ({a • g₁ + b • g₂, c • g₁ + d • g₂} : Set (Fin n → ℤ)) =
+      Submodule.span ℤ ({g₁, g₂} : Set (Fin n → ℤ)) := by
+  apply le_antisymm
+  · rw [Submodule.span_le, Set.insert_subset_iff, Set.singleton_subset_iff]
+    have m1 : g₁ ∈ Submodule.span ℤ ({g₁, g₂} : Set (Fin n → ℤ)) :=
+      Submodule.subset_span (by simp)
+    have m2 : g₂ ∈ Submodule.span ℤ ({g₁, g₂} : Set (Fin n → ℤ)) :=
+      Submodule.subset_span (by simp)
+    exact ⟨Submodule.add_mem _ (Submodule.smul_mem _ _ m1) (Submodule.smul_mem _ _ m2),
+      Submodule.add_mem _ (Submodule.smul_mem _ _ m1) (Submodule.smul_mem _ _ m2)⟩
+  · rw [Submodule.span_le, Set.insert_subset_iff, Set.singleton_subset_iff]
+    set S := Submodule.span ℤ ({a • g₁ + b • g₂, c • g₁ + d • g₂} : Set (Fin n → ℤ)) with hS
+    have m1 : a • g₁ + b • g₂ ∈ S := Submodule.subset_span (by simp)
+    have m2 : c • g₁ + d • g₂ ∈ S := Submodule.subset_span (by simp)
+    have h1 : g₁ = d • (a • g₁ + b • g₂) + (-b) • (c • g₁ + d • g₂) := by
+      ext i
+      simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+      linear_combination (-(g₁ i)) * h
+    have h2 : g₂ = (-c) • (a • g₁ + b • g₂) + a • (c • g₁ + d • g₂) := by
+      ext i
+      simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+      linear_combination (-(g₂ i)) * h
+    refine ⟨?_, ?_⟩
+    · rw [h1]
+      exact Submodule.add_mem _ (Submodule.smul_mem _ _ m1) (Submodule.smul_mem _ _ m2)
+    · rw [h2]
+      exact Submodule.add_mem _ (Submodule.smul_mem _ _ m1) (Submodule.smul_mem _ _ m2)
+
+-- Kyber-768 sizes: 3 × 256 = 768 secret numbers; key 3 × 256 × 12 / 8 + 32 = 1,184 bytes;
+-- ciphertext 3 × 256 × 10 / 8 + 256 × 4 / 8 = 960 + 128 = 1,088 bytes.
+example : 3 * 256 = 768 ∧ 3 * 256 * 12 / 8 = 1152 ∧ 1152 + 32 = 1184 := by decide
+example : 3 * 256 * 10 / 8 = 960 ∧ 256 * 4 / 8 = 128 ∧ 960 + 128 = 1088 := by decide
+-- 1665 is q/2 rounded, 832 is q/4 rounded down; the key is 37 times an X25519 key.
+example : (3329 + 1) / 2 = 1665 ∧ 3329 / 4 = 832 ∧ 1184 = 37 * 32 := by decide
+-- Hybrid shares 1,184 + 32 = 1,216 and 1,088 + 32 = 1,120; Kyber-512 800 and 768,
+-- Kyber-1024 1,568 and 1,568.
+example : 1184 + 32 = 1216 ∧ 1088 + 32 = 1120 := by decide
+example : 384 * 2 + 32 = 800 ∧ 32 * (10 * 2 + 4) = 768 ∧
+    384 * 4 + 32 = 1568 ∧ 32 * (11 * 4 + 5) = 1568 := by decide
+-- ML-DSA-65: public key 32 + 320 × 6 = 1,952 bytes, signature 192/4 + 5 × 32 × 20 + 55 + 6 = 3,309.
+example : 32 + 320 * 6 = 1952 ∧ 192 / 4 + 5 * 32 * (1 + 19) + 55 + 6 = 3309 := by decide
+
+-- The bad arrows are mixes of the good ones: (17, 14) = 5 (4, 1) + 3 (-1, 3),
+-- (10, 9) = 3 (4, 1) + 2 (-1, 3), with area factor 5 × 2 - 3 × 3 = 1; both cells have area 13.
+example : ((5 * 4 + 3 * (-1) : ℤ), (5 * 1 + 3 * 3 : ℤ)) = (17, 14) ∧
+    ((3 * 4 + 2 * (-1) : ℤ), (3 * 1 + 2 * 3 : ℤ)) = (10, 9) := by decide
+example : (5 * 2 - 3 * 3 : ℤ) = 1 ∧ (4 * 3 - 1 * (-1) : ℤ) = 13 ∧ (17 * 9 - 14 * 10 : ℤ) = 13 := by
+  decide
+-- The shortest nonzero point of the lattice x (4, 1) + y (-1, 3) has length² 10, at (1, -3).
+example : ∀ x y : ℤ, (x, y) ≠ (0, 0) → 10 ≤ (4 * x - y) ^ 2 + (x + 3 * y) ^ 2 := by 
+  intro x y hxy
+  by_cases hx : x = 0
+  · subst hx
+    have hy : y ≠ 0 := by
+      intro hy
+      exact hxy (by simp [hy])
+    have : 1 ≤ y ^ 2 := by
+      have : 0 < |y| := abs_pos.mpr hy
+      nlinarith [sq_abs y]
+    nlinarith
+  · have : 1 ≤ x ^ 2 := by
+      have : 0 < |x| := abs_pos.mpr hx
+      nlinarith [sq_abs x]
+    nlinarith [sq_nonneg (x - y), sq_nonneg y]
+example : ((0 * 4 + (-1) * (-1) : ℤ), (0 * 1 + (-1) * 3 : ℤ)) = (1, -3) ∧
+    (1 : ℤ) ^ 2 + (-3) ^ 2 = 10 := by decide
+-- Nearest point to the target (6, 10): (5, 11) = 2 (4, 1) + 3 (-1, 3) at distance² 2,
+-- and no lattice point is nearer.
+example : ((2 * 4 + 3 * (-1) : ℤ), (2 * 1 + 3 * 3 : ℤ)) = (5, 11) ∧
+    (5 - 6 : ℤ) ^ 2 + (11 - 10) ^ 2 = 2 := by decide
+example : ∀ x y : ℤ, 2 ≤ (4 * x - y - 6) ^ 2 + (x + 3 * y - 10) ^ 2 := by 
+  intro x y
+  by_contra hlt
+  rw [not_le] at hlt
+  have h1 : (4 * x - y - 6) ^ 2 ≤ 1 := by nlinarith [sq_nonneg (x + 3 * y - 10)]
+  have h2 : (x + 3 * y - 10) ^ 2 ≤ 1 := by nlinarith [sq_nonneg (4 * x - y - 6)]
+  rw [sq_le_one_iff_abs_le_one, abs_le] at h1 h2
+  have : (4 * x - y - 6) ^ 2 + (x + 3 * y - 10) ^ 2 ≤ 1 := by omega
+  rcases (show 4 * x - y - 6 = -1 ∨ 4 * x - y - 6 = 0 ∨ 4 * x - y - 6 = 1 by omega) with e | e | e <;>
+  rcases (show x + 3 * y - 10 = -1 ∨ x + 3 * y - 10 = 0 ∨ x + 3 * y - 10 = 1 by omega) with f | f | f <;>
+  first | omega | (rw [e, f] at hlt; norm_num at hlt)
+-- Rounding the amounts: good basis 28/13 → 2 and 34/13 → 3; bad basis -46/13 → -4 and
+-- 86/13 → 7, giving (2, 7) = -4 (17, 14) + 7 (10, 9) at distance² 25.
+example : (6 * 3 - 10 * (-1) : ℤ) = 28 ∧ (4 * 10 - 1 * 6 : ℤ) = 34 ∧
+    (6 * 9 - 10 * 10 : ℤ) = -46 ∧ (17 * 10 - 14 * 6 : ℤ) = 86 := by decide
+example : 2 * |(28 : ℤ) - 13 * 2| < 13 ∧ 2 * |(34 : ℤ) - 13 * 3| < 13 ∧
+    2 * |(-46 : ℤ) - 13 * (-4)| < 13 ∧ 2 * |(86 : ℤ) - 13 * 7| < 13 := by decide
+example : ((-4 * 17 + 7 * 10 : ℤ), (-4 * 14 + 7 * 9 : ℤ)) = (2, 7) ∧
+    (2 - 6 : ℤ) ^ 2 + (7 - 10) ^ 2 = 25 := by decide
+
+-- Shor's step on 3233 = 61 × 53: the powers of 3 repeat every 260 steps, 3^130 = 794,
+-- and gcd(793, 3233) = 61, gcd(795, 3233) = 53.
+example : 61 * 53 = 3233 := by decide
+example : orderOf (3 : ZMod 3233) = 260 := by 
+  apply orderOf_eq_of_pow_and_pow_div_prime (by norm_num) (by decide)
+  intro p hp hdvd
+  have h260 : (260 : ℕ) = 2 * 2 * 5 * 13 := by norm_num
+  rw [h260] at hdvd
+  rcases (Nat.Prime.dvd_mul hp).1 hdvd with h | h
+  · rcases (Nat.Prime.dvd_mul hp).1 h with h | h
+    · rcases (Nat.Prime.dvd_mul hp).1 h with h | h <;>
+      · rw [(Nat.prime_dvd_prime_iff_eq hp Nat.prime_two).1 h]; decide
+    · rw [(Nat.prime_dvd_prime_iff_eq hp (by norm_num : Nat.Prime _)).1 h]; decide
+  · rw [(Nat.prime_dvd_prime_iff_eq hp (by norm_num : Nat.Prime _)).1 h]; decide
+example : (3 : ℕ) ^ 130 % 3233 = 794 ∧ Nat.gcd 793 3233 = 61 ∧ Nat.gcd 795 3233 = 53 := by norm_num
+-- With base 2 the period is 780, but 2^390 = 3232 = -1 mod 3233: no factor.
+example : orderOf (2 : ZMod 3233) = 780 := by 
+  apply orderOf_eq_of_pow_and_pow_div_prime (by norm_num) (by decide)
+  intro p hp hdvd
+  have h780 : (780 : ℕ) = 2 * 2 * 3 * 5 * 13 := by norm_num
+  rw [h780] at hdvd
+  rcases (Nat.Prime.dvd_mul hp).1 hdvd with h | h
+  · rcases (Nat.Prime.dvd_mul hp).1 h with h | h
+    · rcases (Nat.Prime.dvd_mul hp).1 h with h | h
+      · rcases (Nat.Prime.dvd_mul hp).1 h with h | h <;>
+        · rw [(Nat.prime_dvd_prime_iff_eq hp Nat.prime_two).1 h]; decide
+      · rw [(Nat.prime_dvd_prime_iff_eq hp Nat.prime_three).1 h]; decide
+    · rw [(Nat.prime_dvd_prime_iff_eq hp (by norm_num : Nat.Prime _)).1 h]; decide
+  · rw [(Nat.prime_dvd_prime_iff_eq hp (by norm_num : Nat.Prime _)).1 h]; decide
+example : (2 : ℕ) ^ 390 % 3233 = 3232 := by decide
+
+#print axioms kyber_decryption_identity
+#print axioms round_recovers_bit_of_noise_lt_832
+#print axioms same_lattice_of_mix_with_area_factor_one
+
+end LatticesAndPostQuantumCryptography
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'LatticesAndPostQuantumCryptography.kyber_decryption_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LatticesAndPostQuantumCryptography.round_recovers_bit_of_noise_lt_832' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LatticesAndPostQuantumCryptography.same_lattice_of_mix_with_area_factor_one' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]

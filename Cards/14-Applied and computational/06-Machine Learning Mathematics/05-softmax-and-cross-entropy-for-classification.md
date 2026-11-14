@@ -6,11 +6,15 @@
 
 ## General Overview
 
-A shop has 20,000 past orders. Each one left the warehouse in one of three **delivery classes**: as a **letter** (an envelope through the post), a **parcel** (a box on a van) or a **pallet** (a crate moved by forklift). The packers chose by eye, so the cut-offs are soft: a 2 kg order sometimes went as a large letter, and an 18 kg order sometimes went on a pallet. At checkout, before anything is packed, the warehouse wants to book the right transport. So it wants, for each new order, a chance for each class.
+A shop has 20,000 past orders. Each one left the warehouse in one of three **delivery classes**: as a **letter** (an envelope through the post), a **parcel** (a box on a van) or a **pallet** (a crate moved by forklift).
 
-The shop records 12 numbers per order. This card uses one of them, the order's weight in kg, so every step can be done by hand. The orders are synthetic: drawn from a stated rule with a fixed seed, so the fit can be graded against the truth. Of the 20,000, 7,883 went as letters, 9,151 as parcels and 2,966 as pallets.
+The packers chose by eye, so the cut-offs are soft: a 2 kg order sometimes went as a large letter, and an 18 kg order sometimes went on a pallet. At checkout, before anything is packed, the warehouse wants to book the right transport. So it wants, for each new order, a chance for each class.
 
-A model first gives each class a **score**: any number, positive or negative, higher meaning "more likely". **Softmax** turns the three scores into three chances that are positive and add to 1. For a 2 kg order the fitted model says: letter 0.2553, parcel 0.7446, pallet 0.0001. **Cross-entropy** then grades the model. It charges each order the surprise, in bits, of the class that actually happened: 0.4254 bits when a 2 kg order goes as a parcel, 1.9698 bits when it goes as a letter, 13.8568 bits when it goes on a pallet. Training picks the scores that make the average charge as small as possible. Over the 20,000 orders that average falls from 1.5850 bits, a blind guess among three classes, to 0.4015 bits.
+The shop records 12 numbers per order. This card uses one of them, the order's weight in kg, so every step can be done by hand. The orders are synthetic: drawn from a stated rule with a fixed seed (the starting number for the random draws), so the fit can be graded against the truth. Of the 20,000, 7,883 went as letters, 9,151 as parcels and 2,966 as pallets.
+
+A model first gives each class a **score**: any number, positive or negative, higher meaning "more likely". **Softmax** turns the three scores into three chances that are positive and add to 1. For a 2 kg order the fitted model says: letter 0.2553, parcel 0.7446, pallet 0.0001.
+
+**Cross-entropy** then grades the model. It charges each order the surprise, in bits, of the class that actually happened: 0.4254 bits when a 2 kg order goes as a parcel, 1.9698 bits when it goes as a letter, 13.8568 bits when it goes on a pallet. Training picks the scores that make the average charge as small as possible. Over the 20,000 orders that average falls from 1.5850 bits, a blind guess among three classes, to 0.4015 bits.
 
 **Softmax raises e to the power of each score and divides by the total, so the gap between two scores becomes the log of their odds; cross-entropy charges each order −log2 of the chance the model gave to what really happened, and minimising its average is maximum likelihood (the fit that makes the recorded classes most probable), the same fit as logistic regression extended to any number of classes.**
 
@@ -62,7 +66,7 @@ $$H(p, q) = -\sum_k p_k \log_2 q_k = H(p) + D(p\,\|\,q)$$
 | $\hat y_k$ | the model's chance for class $k$, the softmax of the scores; $e$ is the base of natural logarithms | (0.2553, 0.7446, 0.0001) | the loss falls if $k$ is what happened |
 | $y_k$ | 1 for the class that happened, 0 for the others | (0, 1, 0) | — |
 | $\ell$ | one order's loss: bits of surprise at what happened, $-\log_2$ of its chance; $\log_2$ is the base-2 logarithm, $\ln$ the natural one, which counts nats | 0.4254 bits | — |
-| $\hat R$, $n$ | the average loss over $n$ orders, called the empirical risk; $\sum$ adds over the orders $i$ | 0.4015 bits over $n$ = 20,000 | — |
+| $\hat R$, $n$ | the average loss over $n$ orders, called the empirical risk on [Loss and empirical risk](01-loss-functions-and-empirical-risk.md); $\sum$ adds over the orders $i$ | 0.4015 bits over $n$ = 20,000 | — |
 | $p_k$, $q_k$ | two lists of chances for class $k$: $p$ the truth, from the rule that drew the synthetic orders; $q$ a prediction, such as $\hat y$ | the rule: parcel −3 + 2$x$, pallet −13 + 2.5$x$ | — |
 | $H(p)$; $H(p, q)$ | entropy: the average surprise of the truth itself, the floor no model beats on average; cross-entropy: the average surprise when the truth is $p$ and the bet is $q$ | 0.4030 bits; 0.4032 bits for $q = \hat y$; both averaged over the orders | $H(p, q)$ grows as $q$ drifts from $p$ |
 | $D(p\,\|\,q)$ | KL divergence: the extra bits paid for predicting $q$ when the truth is $p$; never negative | 0.0002 bits, fitted model against truth | — |
@@ -119,7 +123,9 @@ Suppose an order's true chances are $p$ and the model says $q$. Over many such o
 
 $$H(p, q) = -\sum_k p_k \log_2 p_k \;+\; \sum_k p_k \log_2 \frac{p_k}{q_k} = H(p) + D(p\,\|\,q)$$
 
-The first part depends only on the truth. The second is never negative, and is zero only when $q = p$: Gibbs' inequality, proved on [KL divergence](../03-Information%20Theory/03-kl-divergence-and-cross-entropy.md). So the expected loss is smallest exactly when the model reports the true chances. A scoring rule with this property is called **proper**: no shading of the chances up or down can beat honesty. Accuracy, by contrast, only checks the top class, and is the same whether the model said 0.51 or 0.99.
+The first part depends only on the truth. The second is never negative, and is zero only when $q = p$: Gibbs' inequality, proved on [KL divergence](../03-Information%20Theory/03-kl-divergence-and-cross-entropy.md). So the expected loss is smallest exactly when the model reports the true chances. A scoring rule with this property is called **proper**: no shading of the chances up or down can beat honesty.
+
+Accuracy, by contrast, only checks the top class, and is the same whether the model said 0.51 or 0.99.
 
 On the 20,000 orders the check computes all three averages from the true rule and the fitted model: $H(p)$ = 0.4030, $D(p\,\|\,\hat y)$ = 0.0002, and their sum $H(p, \hat y)$ = 0.4032 bits, matching the cross-entropy computed directly. The fitted model is within 0.0002 bits of the truth.
 
@@ -139,7 +145,7 @@ Each score is $b_k + w_k x$, so by the chain rule the slope of the average loss 
 
 The second slopes of the loss in the scores form a table with $\hat y_k(1 - \hat y_k)$ on the diagonal and $-\hat y_j \hat y_k$ off it. Along any direction its value is the variance of the score change under the model's own chances, which is never negative. So the average loss is a bowl (convex): it has one bottom, and any point where all slopes are zero is that bottom.
 
-The check finds it by Newton's method, the climb used on the logistic card, here run downhill on four numbers. Starting from all scores 0, the loss by step:
+The check finds it by Newton's method, the climb used on the logistic card, here run downhill on four numbers. Each step fits a bowl to the loss's slopes and curvature at the current point, then jumps to that bowl's bottom. Starting from all scores 0, the loss by step:
 
 | Step | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -182,7 +188,9 @@ So this order costs the model 0.4254 bits, a little more than its average of 0.4
 
 ## Code, from first principles, and it actually runs
 
-The code draws the 20,000 orders from the stated rule with a SplitMix64 generator (seed 2026), fits the four numbers by Newton's method, and works the 2 kg order. Newton's method is road 1, and five more roads check it: Newton's minimum against eight nudged neighbours; predicted counts against observed counts; the fit against the true rule, by its loss within four standard errors of the expected loss under the truth and by a likelihood ratio test; the slope formula against finite differences; and two-class softmax against the logistic curve. Two more lines are consistency checks, identities that catch a slip in the code rather than test the fit: the shares-only loss against the entropy of the shares, and cross-entropy computed directly against entropy plus KL divergence. Every "what breaks" number is printed too. Python and Rust print identical output.
+The code draws the 20,000 orders from the stated rule with a SplitMix64 random-number generator (seed 2026), fits the four numbers by Newton's method, and works the 2 kg order. Newton's method is road 1, and five more roads check it: Newton's minimum against eight nudged neighbours; predicted counts against observed counts; the fit against the true rule, by its loss within four standard errors of the expected loss under the truth and by a likelihood ratio test; the slope formula against finite differences; and two-class softmax against the logistic curve.
+
+Two more lines are consistency checks, identities that catch a slip in the code rather than test the fit: the shares-only loss against the entropy of the shares, and cross-entropy computed directly against entropy plus KL divergence. Every "what breaks" number is printed too. Python and Rust print identical output.
 
 ### Python
 
@@ -355,7 +363,11 @@ chart, pallet 0.00 0.00 0.00 0.00 0.00 0.01 0.02 0.04 0.12 0.27 0.51 0.75 0.89 0
 ALL CHECKS PASS
 ```
 
-Three lines need reading. "floor H(p)" is 0.4030 bits, yet on these orders the true rule scores 0.4017 and the fitted model 0.4015, both below the floor. That is not a contradiction: the floor is an average over fresh labels, and the 20,000 labels drawn happened to fall a little on the easy side. Against what the fitted model should score on average, $H(p, \hat y)$ = 0.4032, the gap is −0.0017 bits, well inside the standard error of 0.0057. Tuning the four numbers to these orders buys only the last step, from 0.4017 to 0.4015 bits. Over all 20,000 orders that gain is a log-likelihood ratio, and twice it, in nats, is 6.0346. By Wilks' rule on [Likelihood ratio tests](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/07-likelihood-ratio-tests.md), a fit of four free numbers beats the true rule by that much or more by chance alone 19.66% of the time, so the fit is as close to the rule as chance allows. The check asserts that this chance is above 1 in 1,000.
+Three lines need reading. "floor H(p)" is 0.4030 bits, yet on these orders the true rule scores 0.4017 and the fitted model 0.4015, both below the floor. That is not a contradiction: the floor is an average over fresh labels, and the 20,000 labels drawn happened to fall a little on the easy side.
+
+Against what the fitted model should score on average, $H(p, \hat y)$ = 0.4032, the gap is −0.0017 bits, well inside the standard error of 0.0057. The standard error is the typical size of the chance wobble in an average over 20,000 orders.
+
+Tuning the four numbers to these orders buys only the last step, from 0.4017 to 0.4015 bits. Over all 20,000 orders that gain is a log-likelihood ratio, and twice it, in nats, is 6.0346. By Wilks' rule on [Likelihood ratio tests](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/07-likelihood-ratio-tests.md), a fit of four free numbers beats the true rule by that much or more by chance alone 19.66% of the time, so the fit is as close to the rule as chance allows. The check asserts that this chance is above 1 in 1,000.
 
 ### Rust
 
@@ -567,6 +579,212 @@ chart, letter 0.95 0.26 0.01 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0
 chart, parcel 0.05 0.74 0.99 1.00 1.00 0.99 0.98 0.96 0.88 0.73 0.49 0.25 0.11 0.04 0.01 0.01 0.00 0.00 0.00
 chart, pallet 0.00 0.00 0.00 0.00 0.00 0.01 0.02 0.04 0.12 0.27 0.51 0.75 0.89 0.96 0.99 0.99 1.00 1.00 1.00
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves the card's general facts for any scores and any chances, on a finite set of at least one class.
+
+- Take any scores. Then softmax gives every class a chance above 0, and the chances add to 1.
+- Take any two classes $j$ and $k$. Then $\hat y_j / \hat y_k = e^{z_j - z_k}$.
+- Adding the same number to every score leaves the chances unchanged.
+- Take just two classes, with scores $z_0$ and $z_1$. Then $\hat y_1 = 1/(1 + e^{-(z_1 - z_0)})$, the logistic curve at the score gap.
+- Suppose an order went as class $c$, with loss $-\ln \hat y_c$ in nats. Then its slope in score $z_k$ alone is $\hat y_k - y_k$.
+- Suppose $p$ and $q$ are lists of chances adding to 1, and $q_k > 0$ wherever $p_k > 0$. Then $H(p, q) \ge H(p)$, with equality exactly when $q = p$.
+- It also checks small numbers: a chance of 1/2 costs 1 bit, and all scores 0 give each of three classes 1/3.
+
+The 20,000 orders, the fitted numbers and Newton's method are left to the Python and Rust checks.
+
+```lean
+-- Softmax and cross-entropy: softmax turns any scores into positive chances that add to 1 whose ratios are the exponentials of the score gaps, the slope of the loss in each score is "predicted minus actual", and the average cross-entropy charge is smallest exactly when the model reports the true chances.
+import Mathlib.Analysis.SpecialFunctions.Log.Base
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Tactic.NormNum
+
+namespace SoftmaxCard
+
+open Real
+
+/-- Softmax of a list of scores `z`: each class's chance is its exponentiated score as a share
+of all the exponentiated scores, ŷ_k = e^{z_k} / Σ_j e^{z_j}. -/
+noncomputable def softmax {ι : Type*} [Fintype ι] (z : ι → ℝ) (k : ι) : ℝ :=
+  exp (z k) / ∑ j, exp (z j)
+
+/-- The entropy in bits of a list of chances `p`: H(p) = -Σ p_k log2 p_k. A class of chance 0
+adds nothing, since its term is 0 · log2 0 = 0. -/
+noncomputable def entropy {ι : Type*} [Fintype ι] (p : ι → ℝ) : ℝ :=
+  -∑ k, p k * logb 2 (p k)
+
+/-- The cross-entropy in bits: the average surprise H(p, q) = -Σ p_k log2 q_k when the truth
+is `p` and the model bets on `q`. -/
+noncomputable def crossEntropy {ι : Type*} [Fintype ι] (p q : ι → ℝ) : ℝ :=
+  -∑ k, p k * logb 2 (q k)
+
+/-- Helper: one class's share of Gibbs' inequality, in nats. -/
+theorem gibbs_term (p q : ℝ) (hp : 0 ≤ p) (hq : 0 ≤ q) (hpos : 0 < p → 0 < q) :
+    p * log q - p * log p ≤ q - p ∧ (p * log q - p * log p = q - p → q = p) := by
+  rcases hp.eq_or_lt with h0 | hp'
+  · subst h0
+    simp only [zero_mul, sub_zero, sub_self]
+    exact ⟨hq, fun h => h.symm⟩
+  · have hq' := hpos hp'
+    have hx : 0 < q / p := div_pos hq' hp'
+    have hlog : log q - log p = log (q / p) := (log_div hq'.ne' hp'.ne').symm
+    have key : p * log q - p * log p = p * log (q / p) := by rw [← hlog]; ring
+    have hqp : p * (q / p - 1) = q - p := by field_simp
+    refine ⟨?_, ?_⟩
+    · rw [key, ← hqp]
+      exact mul_le_mul_of_nonneg_left (log_le_sub_one_of_pos hx) hp'.le
+    · intro h
+      by_contra hne
+      have hx1 : q / p ≠ 1 := by
+        intro h1; apply hne; field_simp at h1; linarith
+      have := mul_lt_mul_of_pos_left (log_lt_sub_one_of_pos hx hx1) hp'
+      rw [hqp, ← key] at this
+      linarith
+
+#print axioms gibbs_term
+
+/-- **Telling the truth wins (cross-entropy is a proper scoring rule).** Let the classes be
+any finite set, exactly one of which happens: the true chances `p` and the model's chances `q`
+are each at least 0 and add to 1. Let `q` give a chance above zero to every class that `p` can
+produce (otherwise some order is charged without limit, H(p, q) is infinite, and there is
+nothing to prove). Then the model's average charge H(p, q) is at least the entropy H(p), and it
+equals H(p) exactly when the model reports the true chances, `q = p`. -/
+theorem cross_entropy_minimized_exactly_by_true_chances {ι : Type*} [Fintype ι]
+    (p q : ι → ℝ) (hp : ∀ k, 0 ≤ p k) (hp1 : ∑ k, p k = 1)
+    (hq : ∀ k, 0 ≤ q k) (hq1 : ∑ k, q k = 1) (hpos : ∀ k, 0 < p k → 0 < q k) :
+    entropy p ≤ crossEntropy p q ∧ (crossEntropy p q = entropy p ↔ q = p) := by
+  have hl2 : 0 < log 2 := log_pos (by norm_num)
+  have hT := fun k => gibbs_term (p k) (q k) (hp k) (hq k) (hpos k)
+  have hdiff : crossEntropy p q - entropy p
+      = -(∑ k, (p k * log (q k) - p k * log (p k))) / log 2 := by
+    simp only [crossEntropy, entropy, logb, Finset.sum_sub_distrib]
+    ring_nf
+    rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_neg_distrib, ← Finset.sum_neg_distrib,
+      ← Finset.sum_add_distrib, ← Finset.sum_add_distrib]
+    exact Finset.sum_congr rfl fun x _ => by ring
+  have hsum : ∑ k, (q k - p k) = 0 := by rw [Finset.sum_sub_distrib, hq1, hp1]; ring
+  have hle : ∑ k, (p k * log (q k) - p k * log (p k)) ≤ 0 := by
+    rw [← hsum]; exact Finset.sum_le_sum fun k _ => (hT k).1
+  refine ⟨?_, ?_, ?_⟩
+  · have : 0 ≤ crossEntropy p q - entropy p := by
+      rw [hdiff]; exact div_nonneg (by linarith) hl2.le
+    linarith
+  · intro h
+    have h0 : ∑ k, (p k * log (q k) - p k * log (p k)) = 0 := by
+      have : crossEntropy p q - entropy p = 0 := by linarith
+      rw [hdiff, div_eq_zero_iff] at this
+      rcases this with h1 | h1
+      · linarith
+      · exact absurd h1 hl2.ne'
+    have hz : ∑ k, ((q k - p k) - (p k * log (q k) - p k * log (p k))) = 0 := by
+      rw [Finset.sum_sub_distrib, hsum, h0]; ring
+    have hall := (Finset.sum_eq_zero_iff_of_nonneg (fun k _ => sub_nonneg.mpr (hT k).1)).mp hz
+    funext k
+    exact (hT k).2 (by linarith [hall k (Finset.mem_univ k)])
+  · rintro rfl; rfl
+
+/-- **Scores become odds.** For any scores `z` on a finite, nonempty set of classes, softmax
+gives every class a chance above 0, the chances add to 1, the odds between two classes are the
+exponential of their score gap, ŷ_j / ŷ_k = e^{z_j - z_k}, adding the same number `a` to every
+score leaves the chances unchanged, and with two classes softmax is the logistic curve at the
+score gap: ŷ_1 = 1 / (1 + e^{-(z_1 - z_0)}). -/
+theorem softmax_chances_odds_and_shift {ι : Type*} [Fintype ι] [Nonempty ι] (z : ι → ℝ) :
+    (∀ k, 0 < softmax z k) ∧ ∑ k, softmax z k = 1 ∧
+      (∀ j k, softmax z j / softmax z k = exp (z j - z k)) ∧
+      (∀ a : ℝ, softmax (fun k => z k + a) = softmax z) ∧
+      (∀ w : Fin 2 → ℝ, softmax w 1 = 1 / (1 + exp (-(w 1 - w 0)))) := by
+  have hS : 0 < ∑ j, exp (z j) := Finset.sum_pos (fun j _ => exp_pos _) Finset.univ_nonempty
+  refine ⟨fun k => div_pos (exp_pos _) hS, ?_, ?_, ?_, ?_⟩
+  · simp only [softmax, ← Finset.sum_div]; exact div_self hS.ne'
+  · intro j k
+    simp only [softmax]
+    rw [exp_sub]; field_simp
+  · intro a
+    funext k
+    simp only [softmax, exp_add, ← Finset.sum_mul]
+    rw [mul_div_mul_right _ _ (exp_pos a).ne']
+  · intro w
+    simp only [softmax, Fin.sum_univ_two]
+    rw [exp_neg, exp_sub]
+    have h0 := exp_pos (w 0)
+    have h1 := exp_pos (w 1)
+    field_simp
+    ring
+
+/-- **The slope is "predicted minus actual".** For one order that went as class `c`, measure
+its loss in nats, -ln ŷ_c. Move score `z_k` alone, holding the other scores still. The slope of
+the loss is ŷ_k - y_k, where y_k is 1 if `k = c` and 0 otherwise. -/
+theorem softmax_cross_entropy_slope {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (z : ι → ℝ) (c k : ι) :
+    HasDerivAt (fun t => -log (softmax (Function.update z k t) c))
+      (softmax z k - if k = c then 1 else 0) (z k) := by
+  set S : ℝ → ℝ := fun t => ∑ j, exp (Function.update z k t j) with hSdef
+  have hSpos : ∀ t, 0 < S t := fun t =>
+    Finset.sum_pos (fun j _ => exp_pos _) ⟨k, Finset.mem_univ k⟩
+  have hfun : (fun t => -log (softmax (Function.update z k t) c))
+      = fun t => -(Function.update z k t c) + log (S t) := by
+    funext t
+    simp only [softmax, hSdef]
+    rw [log_div (exp_pos _).ne' (hSpos t).ne', log_exp]
+    ring
+  have hterm : ∀ j ∈ (Finset.univ : Finset ι),
+      HasDerivAt (fun t => exp (Function.update z k t j)) (if j = k then exp (z k) else 0) (z k) := by
+    intro j _
+    by_cases hj : j = k
+    · subst hj
+      simp only [Function.update_self, ite_true]
+      exact hasDerivAt_exp _
+    · simp only [Function.update_of_ne hj, hj, ite_false]
+      exact hasDerivAt_const _ _
+  have hSd : HasDerivAt S (exp (z k)) (z k) := by
+    have := HasDerivAt.fun_sum hterm
+    simpa [Finset.sum_ite_eq'] using this
+  have hc : HasDerivAt (fun t => Function.update z k t c) (if k = c then 1 else 0) (z k) := by
+    by_cases hkc : k = c
+    · subst hkc
+      simp only [Function.update_self, ite_true]
+      exact hasDerivAt_id' _
+    · simp only [Function.update_of_ne (Ne.symm hkc), hkc, ite_false]
+      exact hasDerivAt_const _ _
+  have hlog := hSd.log (hSpos (z k)).ne'
+  have hall := hc.neg.add hlog
+  rw [hfun]
+  convert hall using 1
+  have : S (z k) = ∑ j, exp (z j) := by simp [hSdef, Function.update_eq_self]
+  rw [this]
+  simp only [softmax]
+  ring
+
+end SoftmaxCard
+
+open SoftmaxCard Real
+
+-- The 20,000 orders: 7,883 letters, 9,151 parcels and 2,966 pallets.
+example : (7883 : ℕ) + 9151 + 2966 = 20000 := by norm_num
+-- A chance of 1/2 costs exactly 1 bit.
+example : -logb 2 (1 / 2 : ℝ) = 1 := by norm_num [logb_div, logb_self_eq_one]
+-- The blind guess: all scores 0 give each of the three classes chance 1/3.
+example : softmax (fun _ : Fin 3 => (0 : ℝ)) 1 = 1 / 3 := by norm_num [softmax]
+-- A blind guess among three classes costs log2 3 bits whatever happens.
+example : -logb 2 (1 / 3 : ℝ) = logb 2 3 := by norm_num [logb_div, logb_self_eq_one]
+
+#print axioms cross_entropy_minimized_exactly_by_true_chances
+#print axioms softmax_chances_odds_and_shift
+#print axioms softmax_cross_entropy_slope
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'SoftmaxCard.gibbs_term' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SoftmaxCard.cross_entropy_minimized_exactly_by_true_chances' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SoftmaxCard.softmax_chances_odds_and_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SoftmaxCard.softmax_cross_entropy_slope' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]

@@ -42,6 +42,8 @@ Schematic: the first chart is the inside of AES, the second is GCM using AES as 
 
 ## The formula
 
+Bytes on this card are written in hexadecimal: two digits from 0 to 9 and a to f, so 50 is one byte, not fifty.
+
 One AES round on the state $s$, which starts as a 16-byte block XORed with round key $k_0$, and GCM on the backup's blocks:
 
 $$s \;\leftarrow\; M \cdot \mathrm{ShiftRows}\big(S(s)\big) \,\oplus\, k_r, \qquad r = 1, 2, \dots, 14 \quad (\text{no } M \text{ in round } 14)$$
@@ -73,7 +75,7 @@ The S-box and $M$ use arithmetic in GF(2^8), the field of 256 bytes where adding
 - **AES behaves like a random shuffle for each key.** This is the assumption. If a shortcut were found, every bound on this card would shrink with it.
 - **The tag is checked before any byte is used.** Decrypt first and a tampered backup restores silently, with exactly the bits the attacker chose flipped.
 - **One message stays under the counter's limit.** The 4-byte counter allows at most 68,719,476,704 bytes in one GCM message; the 4 GB backup is far inside it.
-- **With random nonces, at most 2^32 messages per key.** NIST SP 800-38D caps this so that the chance of a repeated nonce stays below about 1 in 2^32.
+- **With random nonces, at most 2^32 messages per key.** NIST SP 800-38D, the GCM standard from the US National Institute of Standards and Technology, caps this so that the chance of a repeated nonce stays below about 1 in 2^32.
 
 ---
 
@@ -81,7 +83,11 @@ The S-box and $M$ use arithmetic in GF(2^8), the field of 256 bytes where adding
 
 ### Step 0: build a shuffle that looks random from steps that are easy to undo
 
-A block cipher must be undoable, or the owner could not restore the backup. It must also look random to anyone without the key, or patterns in the disk would show through. The two ingredients were named in 1949, in the founding paper on secret writing as mathematics. **Confusion** makes each output bit depend on the key in a tangled, non-linear way. **Diffusion** spreads the effect of each input bit across the whole block. AES gets both by repeating one cheap round fourteen times. Each round is four steps, and every step is a bijection: it can be run backwards. A chain of bijections is a bijection, so the whole cipher can be run backwards with the key.
+A block cipher must be undoable, or the owner could not restore the backup. It must also look random to anyone without the key, or patterns in the disk would show through.
+
+The two ingredients were named in 1949, in the founding paper on secret writing as mathematics. **Confusion** makes each output bit depend on the key in a tangled, non-linear way. **Diffusion** spreads the effect of each input bit across the whole block.
+
+AES gets both by repeating one cheap round fourteen times. Each round is four steps, and every step is a bijection: it can be run backwards. A chain of bijections is a bijection, so the whole cipher can be run backwards with the key.
 
 ### Step 1: every step can be undone
 
@@ -94,7 +100,11 @@ So decryption exists: run the steps backwards with the inverse table, the invers
 
 ### Step 2: the S-box supplies the confusion
 
-Everything except the S-box is **linear** over bits: shifting and mixing send the XOR of two inputs to the XOR of their outputs, and adding a key only adds a constant. Take the S-box out, replacing it by "leave the byte alone", and the whole cipher obeys $E(a) \oplus E(b) \oplus E(c) = E(a \oplus b \oplus c)$ for every three blocks: XOR three outputs and the constant appears three times, which is once. The code checks this: **True** with no S-box, **False** with the real one. A cipher with that property is an affine map, $E(x) = Lx \oplus v$ for a fixed 128 × 128 bit matrix $L$ and constant block $v$. Then about 129 known blocks, one per input bit plus one, pin down $L$ and $v$ by elimination, and every other block decrypts without ever finding the key. The reciprocal map is very far from linear, and that is what stops the elimination.
+Everything except the S-box is **linear** over bits: shifting and mixing send the XOR of two inputs to the XOR of their outputs, and adding a key only adds a constant. Take the S-box out, replacing it by "leave the byte alone", and the whole cipher obeys $E(a) \oplus E(b) \oplus E(c) = E(a \oplus b \oplus c)$ for every three blocks: XOR three outputs and the constant appears three times, which is once.
+
+The code checks this: **True** with no S-box, **False** with the real one. A cipher with that property is an affine map, $E(x) = Lx \oplus v$ for a fixed 128 × 128 bit matrix $L$ and constant block $v$.
+
+Then about 129 known blocks, one per input bit plus one, pin down $L$ and $v$ by elimination, and every other block decrypts without ever finding the key. The reciprocal map is very far from linear, and that is what stops the elimination.
 
 ### Step 3: shift and mix supply the diffusion
 
@@ -118,7 +128,11 @@ Two rounds reach every byte. The other twelve are safety margin against attacks 
 
 AES encrypts exactly 16 bytes, and the same block under the same key always gives the same output. A disk image is full of identical blocks, mostly zeros. Encrypt each 16-byte block separately (**ECB mode**, the electronic code book) and every zero block encrypts to the same 16 bytes. The code encrypts a header and three zero blocks: the ciphertext shows **2 distinct blocks out of 4**, and anyone can see where the empty space on the disk is.
 
-**Counter mode** fixes this by never feeding AES the data at all. AES encrypts the nonce followed by a counter, 2, 3, 4 and so on, and the outputs are XORed onto the backup as a pad. Each counter value is different, so each pad block is different, and the four blocks come out **4 distinct**. This is the one-time pad with the pad generated from a short key. It inherits the pad's rule: never reuse a pad. Use the same key and nonce for two backups, $m$ on Monday and $m'$ on Tuesday, and the pads cancel: $c \oplus c' = m \oplus m'$. In the code Monday's backup held "balance: 1200.00". Anyone who knows that recovers Tuesday's "balance: 9875.50" from the two ciphertexts alone.
+**Counter mode** fixes this by never feeding AES the data at all. AES encrypts the nonce followed by a counter, 2, 3, 4 and so on, and the outputs are XORed onto the backup as a pad. Each counter value is different, so each pad block is different, and the four blocks come out **4 distinct**.
+
+This is the one-time pad with the pad generated from a short key. It inherits the pad's rule: never reuse a pad. Use the same key and nonce for two backups, $m$ on Monday and $m'$ on Tuesday, and the pads cancel: $c \oplus c' = m \oplus m'$.
+
+In the code Monday's backup held "balance: 1200.00". Anyone who knows that recovers Tuesday's "balance: 9875.50" from the two ciphertexts alone.
 
 Counter mode has a second weakness. Flipping a ciphertext bit flips exactly that plaintext bit on decryption, and nothing notices. The code flips one bit and the header decrypts as "CACKUP v1 part 1".
 
@@ -589,6 +603,147 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves three steps of Why it works for every field, finite for the tag bound, and checks the worked numbers.
+
+- Take blocks in any finite field, and a forger who changes at least one block and picks any tag change $\Delta$. Then the forgery works for at most $n + 1$ hash keys $H$.
+- Take a mix matrix with no zero entry, and change one byte of a column by a nonzero $\delta$. Then every byte of the mixed column changes.
+- In any field, "replace by the reciprocal", with 0 sent to 0, is a bijection. So that part of the S-box can be undone.
+- The bit-mix of ed gives 53, and the top byte of the mixed column is 5f. Adding round key 1 to 5f 72 64 15 gives 4f 63 76 06.
+- For the backup, Lean checks 268,435,456 blocks, 268,435,458 AES calls, 268,435,457 GHASH multiplications and 28 stored bytes.
+- It also checks that $n + 1$ lies between 2^28 and 2^29, and that (2^28)^2 / 2^129 is 2^-73.
+- The message limit of 68,719,476,704 bytes and the nonce figure of 1 in 8,589,934,594 also check.
+
+The full cipher, its inverse, the diffusion counts and the GCM test vectors are left to the Python and Rust checks.
+
+```lean
+-- AES: a forged GCM tag works for at most n + 1 values of the hash key, the mix step spreads a one-byte change to every byte of a column, and the S-box reciprocal is a bijection.
+import Mathlib.Algebra.Polynomial.Roots
+import Mathlib.Data.Matrix.Mul
+import Mathlib.Algebra.Group.Basic
+
+open Finset Matrix
+
+/-- GCM forgery bound (Step 5). Read n + 1 blocks as elements of a finite field and form
+GHASH_H(B) = B_1 H^(n+1) + B_2 H^n + ... + B_(n+1) H. If a forger changes at least one block
+(B' ≠ B) and picks any tag change Δ, the forgery works only when
+GHASH_H(B') = GHASH_H(B) + Δ, and that happens for at most n + 1 of the field's elements H.
+So with H unknown and uniform, the chance is at most (n + 1) / |F|; for GF(2^128), (n + 1) / 2^128. -/
+theorem gcm_forgery_works_for_at_most_n_plus_one_hash_keys
+    {F : Type*} [Field F] [Fintype F] [DecidableEq F]
+    (n : ℕ) (B B' : Fin (n + 1) → F) (hB : B ≠ B') (Δ : F) :
+    (univ.filter (fun H : F =>
+        ∑ j : Fin (n + 1), B' j * H ^ (n + 1 - (j : ℕ)) =
+          ∑ j : Fin (n + 1), B j * H ^ (n + 1 - (j : ℕ)) + Δ)).card ≤ n + 1 := by
+  classical
+  set P : Polynomial F :=
+    (∑ j : Fin (n + 1), Polynomial.C (B' j - B j) * Polynomial.X ^ (n + 1 - (j : ℕ)))
+      - Polynomial.C Δ with hP
+  obtain ⟨j0, hj0⟩ : ∃ j0, B j0 ≠ B' j0 := by
+    by_contra h
+    push Not at h
+    exact hB (funext h)
+  have hcoeff : P.coeff (n + 1 - (j0 : ℕ)) = B' j0 - B j0 := by
+    rw [hP, Polynomial.coeff_sub, Polynomial.finsetSum_coeff, Polynomial.coeff_C]
+    have hne : n + 1 - (j0 : ℕ) ≠ 0 := by have := j0.isLt; omega
+    rw [Finset.sum_eq_single j0]
+    · rw [Polynomial.coeff_C_mul_X_pow]
+      simp only [hne, ↓reduceIte, sub_zero]
+    · intro b _ hb
+      have hne' : n + 1 - (j0 : ℕ) ≠ n + 1 - (b : ℕ) := by
+        intro h
+        apply hb
+        have := b.isLt
+        have := j0.isLt
+        exact Fin.ext (by omega)
+      rw [Polynomial.coeff_C_mul_X_pow]
+      simp only [hne', ↓reduceIte]
+    · intro h; exact absurd (Finset.mem_univ j0) h
+  have hP0 : P ≠ 0 := by
+    intro h
+    rw [h, Polynomial.coeff_zero] at hcoeff
+    exact hj0 (sub_eq_zero.mp hcoeff.symm).symm
+  have hdeg : P.natDegree ≤ n + 1 := by
+    rw [hP]
+    refine (Polynomial.natDegree_sub_le _ _).trans (max_le ?_ ?_)
+    · apply Polynomial.natDegree_sum_le_of_forall_le
+      intro j _
+      exact (Polynomial.natDegree_C_mul_X_pow_le _ _).trans (by omega)
+    · simp
+  have hsub : (univ.filter (fun H : F =>
+        ∑ j : Fin (n + 1), B' j * H ^ (n + 1 - (j : ℕ)) =
+          ∑ j : Fin (n + 1), B j * H ^ (n + 1 - (j : ℕ)) + Δ)) ⊆ P.roots.toFinset := by
+    intro H hH
+    rw [Finset.mem_filter] at hH
+    rw [Multiset.mem_toFinset, Polynomial.mem_roots hP0, Polynomial.IsRoot.def, hP]
+    simp only [Polynomial.eval_sub, Polynomial.eval_finsetSum, Polynomial.eval_mul,
+      Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X, sub_mul,
+      Finset.sum_sub_distrib]
+    rw [hH.2]; ring
+  calc _ ≤ P.roots.toFinset.card := Finset.card_le_card hsub
+    _ ≤ Multiset.card P.roots := Multiset.toFinset_card_le _
+    _ ≤ P.natDegree := Polynomial.card_roots' _
+    _ ≤ n + 1 := hdeg
+
+/-- Diffusion in the mix step (Step 3). If every entry of the mix matrix M is nonzero, then
+changing one byte of a column by a nonzero difference δ changes every byte of the mixed column. -/
+theorem mix_step_changes_every_byte_of_the_column
+    {F ι : Type*} [Field F] [Fintype ι] [DecidableEq ι]
+    (M : Matrix ι ι F) (hM : ∀ i j, M i j ≠ 0)
+    (x : ι → F) (j : ι) (δ : F) (hδ : δ ≠ 0) :
+    ∀ i, (M *ᵥ (x + Pi.single j δ)) i ≠ (M *ᵥ x) i := by
+  intro i
+  rw [Matrix.mulVec_add, Pi.add_apply, Matrix.mulVec_single]
+  simp only [Pi.smul_apply, Matrix.col_apply, MulOpposite.smul_eq_mul_unop,
+    MulOpposite.unop_op, ne_eq, add_eq_left]
+  exact mul_ne_zero (hM i j) hδ
+
+/-- The S-box can be undone (Step 1). In a field, "replace each element by its reciprocal,
+and send 0 to 0" is a bijection. -/
+theorem reciprocal_map_is_bijection {F : Type*} [Field F] :
+    Function.Bijective (fun x : F => x⁻¹) := by
+  exact inv_involutive.bijective
+
+-- Bit-mix of ed in the S-box: ed ⊕ db ⊕ b7 ⊕ 6f ⊕ de ⊕ 63 = 53 (bytes as 8-bit vectors).
+example : (0xed#8 ^^^ 0xdb#8 ^^^ 0xb7#8 ^^^ 0x6f#8 ^^^ 0xde#8 ^^^ 0x63#8) = 0x53#8 := by decide
+-- The rotations of ed by 1, 2, 3, 4 places are db, b7, 6f, de.
+example : (0xed#8).rotateLeft 1 = 0xdb#8 ∧ (0xed#8).rotateLeft 2 = 0xb7#8 ∧
+    (0xed#8).rotateLeft 3 = 0x6f#8 ∧ (0xed#8).rotateLeft 4 = 0xde#8 := by decide
+-- 02 · 63 = c6 and 02 · 53 = a6 (shift left, top bit was 0); 03 · 53 = a6 ⊕ 53 = f5.
+example : (0x63#8) <<< 1 = 0xc6#8 ∧ (0x53#8) <<< 1 = 0xa6#8 ∧ (0xa6#8 ^^^ 0x53#8) = 0xf5#8 := by decide
+-- Top byte of the mixed column: c6 ⊕ f5 = 33, 33 ⊕ e0 = d3, d3 ⊕ 8c = 5f.
+example : (0xc6#8 ^^^ 0xf5#8) = 0x33#8 ∧ (0x33#8 ^^^ 0xe0#8) = 0xd3#8 ∧
+    (0xd3#8 ^^^ 0x8c#8) = 0x5f#8 := by decide
+-- Add round key 1: 5f ⊕ 10, 72 ⊕ 11, 64 ⊕ 12, 15 ⊕ 13 = 4f 63 76 06.
+example : (0x5f#8 ^^^ 0x10#8) = 0x4f#8 ∧ (0x72#8 ^^^ 0x11#8) = 0x63#8 ∧
+    (0x64#8 ^^^ 0x12#8) = 0x76#8 ∧ (0x15#8 ^^^ 0x13#8) = 0x06#8 := by decide
+-- The 4 GB backup: 4 · 2^30 bytes, 268,435,456 blocks, 268,435,458 AES calls,
+-- 268,435,457 GHASH multiplications, 12 + 16 = 28 bytes stored beside it.
+example : 4 * 2 ^ 30 = 4294967296 ∧ 4294967296 / 16 = 268435456 ∧
+    268435456 + 2 = 268435458 ∧ 268435456 + 1 = 268435457 ∧ 12 + 16 = 28 := by norm_num
+-- n + 1 = 268,435,457 is just over 2^28, so the forgery bound is about 2^28 / 2^128 = 2^-100.
+example : 2 ^ 28 < 268435457 ∧ 268435457 < 2 ^ 29 := by norm_num
+-- Pad versus random: (2^28)^2 / 2^129 = 2^-73.
+example : ((2 : ℚ) ^ 28) ^ 2 / 2 ^ 129 = 1 / 2 ^ 73 := by norm_num
+-- One GCM message holds at most (2^32 - 2) · 16 = 68,719,476,704 bytes.
+example : (2 ^ 32 - 2) * 16 = 68719476704 := by norm_num
+-- Random nonces, 2^32 messages: 2^97 / (2^32 · (2^32 - 1)) rounds down to 8,589,934,594.
+example : 2 ^ 97 / (2 ^ 32 * (2 ^ 32 - 1)) = 8589934594 := by norm_num
+
+#print axioms gcm_forgery_works_for_at_most_n_plus_one_hash_keys
+#print axioms mix_step_changes_every_byte_of_the_column
+#print axioms reciprocal_map_is_bijection
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'gcm_forgery_works_for_at_most_n_plus_one_hash_keys' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mix_step_changes_every_byte_of_the_column' depends on axioms: [propext, Classical.choice, Quot.sound]
+'reciprocal_map_is_bijection' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the published test vectors, so most changes stop the script.
@@ -632,7 +787,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- [Hashes and MACs](03-hash-functions-and-macs.md): checksums without a block cipher, the birthday bound in general, and MACs, of which the GCM tag is one kind.
+- [Hashes and MACs](03-hash-functions-and-macs.md): checksums without a block cipher, the birthday bound in general, and MACs (message authentication codes, keyed checksums), of which the GCM tag is one kind.
 
 The question this card leaves open: GCM's tag needs the secret key, so how can anyone check that a file is unchanged with no key at all, and how long must such a fingerprint be before two different files are unlikely to share one?
 

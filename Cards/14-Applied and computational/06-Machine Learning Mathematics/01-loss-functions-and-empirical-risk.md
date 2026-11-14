@@ -6,9 +6,13 @@
 
 ## General Overview
 
-An online shop has 20,000 past orders on file. Each order is described by 12 numbers: items in the basket, their average shelf price, the customer's past orders, days since their last order, phone or not, hour of day, discount code or not, delivery distance, weekend or not, account age, newsletter or not, and items viewed. Each order also carries the number the shop cares about: what it was worth, in pounds. The shop wants a rule that reads a new basket's 12 numbers and predicts its value, to plan stock and forecast revenue.
+An online shop has 20,000 past orders on file. Each order is described by 12 numbers: items in the basket, their average shelf price, the customer's past orders, days since their last order, phone or not, hour of day, discount code or not, delivery distance, weekend or not, account age, newsletter or not, and items viewed.
 
-"Learn a rule from the data" is vague. Two moves make it exact. First, pick a **loss**: a formula that scores one prediction against what happened, 0 for a perfect hit and larger for a worse miss. Second, average the loss over the orders on file. That average is the **empirical risk**: empirical because it is measured on data in hand, risk because it stands in for the average loss on orders still to come. Learning is then a search: among the rules on offer, find the one with the smallest average.
+Each order also carries the number the shop cares about: what it was worth, in pounds. The shop wants a rule that reads a new basket's 12 numbers and predicts its value, to plan stock and forecast revenue.
+
+"Learn a rule from the data" is vague. Two moves make it exact. First, pick a **loss**: a formula that scores one prediction against what happened, 0 for a perfect hit and larger for a worse miss. Second, average the loss over the orders on file.
+
+That average is the **empirical risk**: empirical because it is measured on data in hand, risk because it stands in for the average loss on orders still to come. Learning is then a search: among the rules on offer, find the one with the smallest average.
 
 The choice of loss is a real decision. Take the simplest rule, one fixed guess for every order, and fit it on 16,000 of the orders. Under **squared loss** (square each miss) the best guess is the average order, £96.04. Under **absolute loss** (take each miss's size, ignoring its sign) it is the middle order, £91.07. Each is best by its own score and worse by the other's. Forecast revenue for the other 4,000 orders from the £91.07 answer and the forecast comes up £19,484.64 short.
 
@@ -75,7 +79,7 @@ $$\text{hinge: } \max(0,\ 1 - m) \qquad\qquad \text{log: } \ln\big(1 + e^{-m}\bi
 - **The loss must match the decision.** Revenue is a sum, and the guess that gets sums right is the squared-loss guess. Forecast 4,000 orders with the absolute-loss guess and the total is £19,484.64 short.
 - **Enough orders per weight.** Thirteen weights fitted on 20 orders reach a training risk of 209.25 and a risk of 2,520.14 on the 4,000 kept aside. The low average was bought by copying noise.
 - **Every row deserves its vote.** Squared loss lets one wild row pull hard. Key 100 of the 16,000 orders in pence instead of pounds and the mean jumps from £96.04 to £152.73; the median moves to £91.33.
-- **The rule is judged on rows it never saw.** The average on the fitting rows is biased low. Training error against held-out error, and k-fold cross-validation, are taught on [Overfitting](../../09-Probability%20and%20statistics/09-Regression/08-cross-validation-and-overfitting.md); this card keeps 4,000 orders aside and never fits on them.
+- **The rule is judged on rows it never saw.** The average on the fitting rows is biased low. Training error against held-out error, and k-fold cross-validation (split the rows into k parts and let each part take a turn as the rows kept aside), are taught on [Overfitting](../../09-Probability%20and%20statistics/09-Regression/08-cross-validation-and-overfitting.md); this card keeps 4,000 orders aside and never fits on them.
 
 ---
 
@@ -83,7 +87,9 @@ $$\text{hinge: } \max(0,\ 1 - m) \qquad\qquad \text{log: } \ln\big(1 + e^{-m}\bi
 
 ### Step 0: an average over the orders in hand stands in for the orders to come
 
-The shop cares about the true risk $R(w)$: the average loss on every order it will ever take. That cannot be measured. But it is an average over orders drawn the same way as the ones on file, and an average over many such orders lands near it, by the law of large numbers. So the shop minimises the average it can measure, $\hat R(w)$. Two consequences follow, and the rest of the card is about them. The loss decides which answer counts as best. And the rule picked to make $\hat R$ small was picked partly for the noise in these particular rows, so its own $\hat R$ is optimistic.
+The shop cares about the true risk $R(w)$: the average loss on every order it will ever take. That cannot be measured. But it is an average over orders drawn the same way as the ones on file, and an average over many such orders lands near it, by the law of large numbers. So the shop minimises the average it can measure, $\hat R(w)$.
+
+Two consequences follow, and the rest of the card is about them. The loss decides which answer counts as best. And the rule picked to make $\hat R$ small was picked partly for the noise in these particular rows, so its own $\hat R$ is optimistic.
 
 ### Step 1: squared loss is minimised by the mean
 
@@ -109,7 +115,9 @@ Swap the fixed guess for the weighted sum. With squared loss, $\hat R(w)$ is the
 
 The fitted weights land near the hidden rule that made the data: £5.95 per item (true: £6), £1.07 per pound of average price (true: £1.10), £0.03 per hour of day (true: 0). The starting amount is £34.77, not the hidden rule's £4, and Step 1 says why. The hidden rule adds a random extra spend that averages £30, and squared loss aims at the average. With 12 numbers it predicts the average value of orders with those numbers.
 
-How good can any rule be? The extra spend has a variance of 900 square pounds (a standard deviation of £30), and no rule can predict it. Estimating 13 weights adds a little on top: 900 × (1 + 13/16,000), about 900.73 on average. The fitted rule scores 901.09 on its own 16,000 orders and 908.25 on the 4,000 kept aside. The hidden rule itself, plus its £30 average, scores 908.41 on those same 4,000. The fitted rule is as good as the truth, to within the noise of 4,000 orders.
+How good can any rule be? The extra spend has a variance (the average squared distance from its own mean) of 900 square pounds (a standard deviation of £30), and no rule can predict it. Estimating 13 weights adds a little on top: 900 × (1 + 13/16,000), about 900.73 on average.
+
+The fitted rule scores 901.09 on its own 16,000 orders and 908.25 on the 4,000 kept aside. The hidden rule itself, plus its £30 average, scores 908.41 on those same 4,000. The fitted rule is as good as the truth, to within the noise of 4,000 orders.
 
 ### Step 4: for yes or no, a loss with a slope replaces the mistake count
 
@@ -174,7 +182,11 @@ The £102 order alone supplies 3,844 of the 5,038: squared loss lets one big bas
 
 ## Code, from first principles, and it actually runs
 
-The script builds the 20,000 synthetic orders from a hidden rule and a seed, using SplitMix64 written out so Python and Rust draw the same numbers. It fits on the first 16,000 and never touches the last 4,000 until scoring. It reaches each answer by two independent roads. The best fixed guess: the mean and median by formula, against a search that only compares risks. The 12-number rule: the normal equations solved by elimination, against the slope of the risk measured at the answer and against the hidden rule's own weights and its known noise. Log and hinge loss: the proofs of Step 5, against a grid of every forecast to three decimals.
+The script builds the 20,000 synthetic orders from a hidden rule and a seed, using SplitMix64 written out so Python and Rust draw the same numbers. It fits on the first 16,000 and never touches the last 4,000 until scoring. It reaches each answer by two independent roads:
+
+- The best fixed guess: the mean and median by formula, against a search that only compares risks.
+- The 12-number rule: the normal equations solved by elimination, against the slope of the risk measured at the answer and against the hidden rule's own weights and its known noise.
+- Log and hinge loss: the proofs of Step 5, against a grid of every forecast to three decimals.
 
 ### Python
 
@@ -572,6 +584,188 @@ q = 0.4: best p by grid, its log loss    0.4000     0.6730
 q = 0.4: best score, its hinge         -1.0000     0.8000
 q = 0.1: log loss at p = 0.3, 0.5       0.4414     0.6931
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves Steps 1, 2 and 5 for every list of values and every chance, and checks the five-order sums.
+
+- Take any $n \ge 1$ values and any fixed guess $c$. Then $\hat R(c) = \hat R(\bar y) + (c - \bar y)^2$ under squared loss. So every other guess scores strictly worse than the mean.
+- Take any list of values and any median: at least half lie at or below it, and at least half at or above it. Then no fixed guess has a smaller average absolute loss.
+- Take a true chance $q$ and a forecast $p \ne q$, both strictly between 0 and 1. Then $p$ pays a strictly larger average log loss than $q$. So log loss is proper.
+- Take the five made-up orders. Then the mean is £40, and £27 is a median.
+- Take the same five orders. Then the squared losses total 5,038 at £40 and 5,883 at £27, and the absolute losses 124 and 101.
+- As arithmetic, $1007.60 + (27 - 40)^2 = 1176.60$. Hinge loss at score −1 averages 0.2 when $q = 0.1$ and 0.8 when $q = 0.4$.
+
+The 20,000 synthetic orders, the 12-number fit, and hinge loss's best score of −1 are left to the Python and Rust checks.
+
+```lean
+-- Loss and empirical risk: for any finite list of values, the mean minimises the average squared miss with exactly a squared-distance penalty, any median minimises the average absolute miss, and log loss is lowest at the true chance, with the card's five-order example checked.
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Tactic.NormNum
+
+open Finset Real
+
+namespace LossAndEmpiricalRisk
+
+/-- **Squared loss is minimised by the mean** (Step 1). Take `n ≥ 1` values `y₁, …, yₙ` and
+use one fixed guess `c` for all of them. Let `ȳ` be their mean and `R(c)` the empirical risk
+under squared loss, the average of `(yᵢ - c)²`. Then `R(c) = R(ȳ) + (c - ȳ)²` for every `c`,
+so the mean is the one best guess and every other guess scores strictly worse. -/
+theorem squared_loss_minimised_by_mean (n : ℕ) (hn : 0 < n) (y : Fin n → ℝ) :
+    let ybar : ℝ := (∑ i, y i) / n
+    let R : ℝ → ℝ := fun c => (∑ i, (y i - c) ^ 2) / n
+    (∀ c : ℝ, R c = R ybar + (c - ybar) ^ 2) ∧ (∀ c : ℝ, c ≠ ybar → R ybar < R c) := by
+  intro ybar R
+  have hn' : (n : ℝ) ≠ 0 := by positivity
+  have hsum : ∑ i, (y i - ybar) = 0 := by
+    rw [Finset.sum_sub_distrib]
+    simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, ybar]
+    field_simp
+    ring
+  have key : ∀ c : ℝ, ∑ i, (y i - c) ^ 2 = ∑ i, (y i - ybar) ^ 2 + n * (c - ybar) ^ 2 := by
+    intro c
+    have h : ∀ i, (y i - c) ^ 2
+        = (y i - ybar) ^ 2 + 2 * (ybar - c) * (y i - ybar) + (c - ybar) ^ 2 := fun i => by ring
+    simp only [h, Finset.sum_add_distrib, ← Finset.mul_sum, hsum, Finset.sum_const,
+      Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+    ring
+  have h1 : ∀ c : ℝ, R c = R ybar + (c - ybar) ^ 2 := by
+    intro c
+    simp only [R]
+    rw [key c, key ybar]
+    field_simp
+  refine ⟨h1, fun c hc => ?_⟩
+  rw [h1 c]
+  have : 0 < (c - ybar) ^ 2 := by
+    have : c - ybar ≠ 0 := sub_ne_zero.mpr hc
+    positivity
+  linarith
+
+/-- **Absolute loss is minimised by the median** (Step 2). Take `n` values `y₁, …, yₙ` and a
+median `m`: at least half the values lie at or below `m`, and at least half at or above it
+(with an even count, any guess between the two middle values is one). Then no fixed guess `c`
+has a smaller average absolute miss: the average of `|yᵢ - m|` is at most the average of
+`|yᵢ - c|`. -/
+theorem absolute_loss_minimised_by_median (n : ℕ) (y : Fin n → ℝ) (m : ℝ)
+    (hbelow : n ≤ 2 * (univ.filter (fun i => y i ≤ m)).card)
+    (habove : n ≤ 2 * (univ.filter (fun i => m ≤ y i)).card) (c : ℝ) :
+    (∑ i, |y i - m|) / n ≤ (∑ i, |y i - c|) / n := by
+  have hn0 : (0 : ℝ) ≤ n := by positivity
+  apply div_le_div_of_nonneg_right _ hn0
+  rcases le_total m c with hmc | hcm
+  · -- guess above the median
+    have hpt : ∀ i, (c - m) * (2 * (if y i ≤ m then (1 : ℝ) else 0) - 1)
+        ≤ |y i - c| - |y i - m| := by
+      intro i
+      by_cases h : y i ≤ m
+      · simp only [h, ↓reduceIte]
+        rw [ abs_of_nonpos (by linarith), abs_of_nonpos (by linarith)]
+        linarith
+      · simp only [h, ↓reduceIte]
+        have := abs_sub_abs_le_abs_sub (y i - m) (y i - c)
+        have e : y i - m - (y i - c) = c - m := by ring
+        rw [e, abs_of_nonneg (show (0 : ℝ) ≤ c - m by linarith)] at this
+        linarith
+    have hs := Finset.sum_le_sum (fun i (_ : i ∈ (univ : Finset (Fin n))) => hpt i)
+    rw [← Finset.mul_sum, Finset.sum_sub_distrib, ← Finset.mul_sum, Finset.sum_boole,
+      Finset.sum_sub_distrib] at hs
+    simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
+      mul_one] at hs
+    have hc : (n : ℝ) ≤ 2 * ((univ.filter (fun i => y i ≤ m)).card : ℝ) := by
+      exact_mod_cast hbelow
+    have : 0 ≤ (c - m) * (2 * ((univ.filter (fun i => y i ≤ m)).card : ℝ) - n) :=
+      mul_nonneg (by linarith) (by linarith)
+    linarith
+  · -- guess below the median
+    have hpt : ∀ i, (m - c) * (2 * (if m ≤ y i then (1 : ℝ) else 0) - 1)
+        ≤ |y i - c| - |y i - m| := by
+      intro i
+      by_cases h : m ≤ y i
+      · simp only [h, ↓reduceIte]
+        rw [ abs_of_nonneg (by linarith), abs_of_nonneg (by linarith)]
+        linarith
+      · simp only [h, ↓reduceIte]
+        have := abs_sub_abs_le_abs_sub (y i - m) (y i - c)
+        have e : y i - m - (y i - c) = c - m := by ring
+        rw [e, abs_of_nonpos (show c - m ≤ (0 : ℝ) by linarith)] at this
+        linarith
+    have hs := Finset.sum_le_sum (fun i (_ : i ∈ (univ : Finset (Fin n))) => hpt i)
+    rw [← Finset.mul_sum, Finset.sum_sub_distrib, ← Finset.mul_sum, Finset.sum_boole,
+      Finset.sum_sub_distrib] at hs
+    simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
+      mul_one] at hs
+    have hc : (n : ℝ) ≤ 2 * ((univ.filter (fun i => m ≤ y i)).card : ℝ) := by
+      exact_mod_cast habove
+    have : 0 ≤ (m - c) * (2 * ((univ.filter (fun i => m ≤ y i)).card : ℝ) - n) :=
+      mul_nonneg (by linarith) (by linarith)
+    linarith
+
+/-- **Log loss rewards the honest chance** (Step 5). If a yes-or-no outcome comes true with
+chance `q`, strictly between 0 and 1, a forecast `p` (also strictly between 0 and 1) pays on
+average `-(q ln p + (1 - q) ln (1 - p))`. Every forecast `p ≠ q` pays strictly more than the
+honest forecast `p = q`: log loss is proper. -/
+theorem log_loss_lowest_at_true_chance (q p : ℝ) (hq0 : 0 < q) (hq1 : q < 1)
+    (hp0 : 0 < p) (hp1 : p < 1) (hpq : p ≠ q) :
+    -(q * log q + (1 - q) * log (1 - q)) < -(q * log p + (1 - q) * log (1 - p)) := by
+  have hq1' : 0 < 1 - q := by linarith
+  have hp1' : 0 < 1 - p := by linarith
+  have ha : log (p / q) < p / q - 1 :=
+    Real.log_lt_sub_one_of_pos (div_pos hp0 hq0) (fun h => hpq ((div_eq_one_iff_eq hq0.ne').mp h))
+  have hb : log ((1 - p) / (1 - q)) < (1 - p) / (1 - q) - 1 :=
+    Real.log_lt_sub_one_of_pos (div_pos hp1' hq1')
+      (fun h => hpq (by have := (div_eq_one_iff_eq hq1'.ne').mp h; linarith))
+  rw [Real.log_div hp0.ne' hq0.ne'] at ha
+  rw [Real.log_div hp1'.ne' hq1'.ne'] at hb
+  have ha' : q * (log p - log q) < p - q := by
+    have := mul_lt_mul_of_pos_left ha hq0
+    rw [show q * (p / q - 1) = p - q by field_simp] at this
+    linarith
+  have hb' : (1 - q) * (log (1 - p) - log (1 - q)) < q - p := by
+    have := mul_lt_mul_of_pos_left hb hq1'
+    rw [show (1 - q) * ((1 - p) / (1 - q) - 1) = q - p by field_simp; ring] at this
+    linarith
+  nlinarith
+
+/-- The card's five made-up orders, in pounds. -/
+def five : Fin 5 → ℤ := ![14, 22, 27, 35, 102]
+
+-- Mean (14 + 22 + 27 + 35 + 102) / 5 = 40.
+example : ∑ i, five i = 200 ∧ (200 : ℤ) / 5 = 40 := by decide
+-- 27 is the median: 3 of the 5 lie at or below it and 3 at or above it.
+example : 5 ≤ 2 * (univ.filter (fun i => five i ≤ 27)).card ∧
+    5 ≤ 2 * (univ.filter (fun i => 27 ≤ five i)).card := by decide
+-- Squared losses at £40: 676 + 324 + 169 + 25 + 3,844 = 5,038; at £27: 169 + 25 + 0 + 64 + 5,625 = 5,883.
+example : ∑ i, (five i - 40) ^ 2 = 5038 := by decide
+example : ∑ i, (five i - 27) ^ 2 = 5883 := by decide
+-- The £102 order alone supplies 3,844 of the 5,038.
+example : (102 - 40 : ℤ) ^ 2 = 3844 := by decide
+-- Squared risks 5,038 / 5 = 1,007.60 and 5,883 / 5 = 1,176.60; Step 1's check: 1,007.60 + (27 − 40)² = 1,176.60.
+example : (5038 : ℚ) / 5 = 100760 / 100 ∧ (5883 : ℚ) / 5 = 117660 / 100 ∧
+    (5038 : ℚ) / 5 + (27 - 40) ^ 2 = 5883 / 5 := by norm_num
+-- Absolute losses: 124 at £40 and 101 at £27, so absolute risks 24.80 and 20.20.
+example : ∑ i, |five i - 40| = 124 ∧ ∑ i, |five i - 27| = 101 := by decide
+example : (124 : ℚ) / 5 = 2480 / 100 ∧ (101 : ℚ) / 5 = 2020 / 100 := by norm_num
+-- Hinge loss at score −1 averages 2q: 1/5 when q = 1/10 and 4/5 when q = 2/5.
+example : (1 / 10 : ℚ) * max 0 (1 - (-1)) + (1 - 1 / 10) * max 0 (1 + (-1)) = 1 / 5 := by norm_num
+example : (2 / 5 : ℚ) * max 0 (1 - (-1)) + (1 - 2 / 5) * max 0 (1 + (-1)) = 4 / 5 := by norm_num
+
+#print axioms squared_loss_minimised_by_mean
+#print axioms absolute_loss_minimised_by_median
+#print axioms log_loss_lowest_at_true_chance
+
+end LossAndEmpiricalRisk
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'LossAndEmpiricalRisk.squared_loss_minimised_by_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LossAndEmpiricalRisk.absolute_loss_minimised_by_median' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LossAndEmpiricalRisk.log_loss_lowest_at_true_chance' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]

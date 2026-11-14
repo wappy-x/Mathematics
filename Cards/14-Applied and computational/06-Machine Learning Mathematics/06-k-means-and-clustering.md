@@ -6,9 +6,13 @@
 
 ## General Overview
 
-A shop has 20,000 past orders. Each order is described by 12 numbers: basket value, number of items, share bought on discount, share of fresh food, share of household goods, share of electronics, share of clothing, home delivery or pickup, hour of day, weekday or weekend, days since the customer's last order, and items returned. The marketing team wants to know what kinds of customer are in there, so it can send each kind a different offer. Nobody has labelled any order. The groups have to come out of the numbers.
+A shop has 20,000 past orders. Each order is described by 12 numbers: basket value, number of items, share bought on discount, share of fresh food, share of household goods, share of electronics, share of clothing, home delivery or pickup, hour of day, weekday or weekend, days since the customer's last order, and items returned.
 
-k-means does this with one simple picture of a group: a group is a centre, and an order belongs to the group whose centre is nearest. Pick 4 starting centres. Then take turns. First, send every order to its nearest centre. Second, move every centre to the average of the orders it now holds. Repeat until no order changes group. On this shop's orders it settles in 3 passes. It finds a family weekly shop of 8,005 orders, bargain hunters (5,992), late-night top-ups (4,003) and big-ticket buyers (2,000). Because this dataset is synthetic, made from a stated rule, the true kinds are known, and 19,965 of the 20,000 orders land with their own kind.
+The marketing team wants to know what kinds of customer are in there, so it can send each kind a different offer. Nobody has labelled any order. The groups have to come out of the numbers.
+
+k-means does this with one simple picture of a group: a group is a centre, and an order belongs to the group whose centre is nearest. Pick 4 starting centres. Then take turns. First, send every order to its nearest centre. Second, move every centre to the average of the orders it now holds. Repeat until no order changes group.
+
+On this shop's orders it settles in 3 passes. It finds a family weekly shop of 8,005 orders, bargain hunters (5,992), late-night top-ups (4,003) and big-ticket buyers (2,000). Because this dataset is synthetic, made from a stated rule, the true kinds are known, and 19,965 of the 20,000 orders land with their own kind.
 
 Two questions remain, and the card answers both with numbers. Why does taking turns ever stop? Each turn can only lower one score, the total squared distance from orders to their centres. And why 4 groups, not 3 or 8? That score always falls when you add groups, so it cannot choose by itself. Two other tests, the elbow and the silhouette, both point to 4.
 
@@ -114,7 +118,9 @@ The bound $k^n$ is astronomically loose. In practice the passes are few: the bes
 
 "No single turn helps" is not "nothing helps". In the worst of the three starts, two centres end up sharing the 2,000 big-ticket orders (basket values 2.76 and 2.24), while one centre is left to cover the family shoppers and bargain hunters together. No order wants to move, and no centre wants to move, yet $J$ = 172,458.5, against 117,324.1 for the good answer. Only 13,996 orders end up with their own kind.
 
-Finding the grouping with the lowest $J$ for sure is hard: for points in many dimensions it is NP-hard even with $k = 2$ (Aloise and others, in Sources), which means no known method does it fast on every input. The practical remedy is careful starts. **k-means++** picks the first centre at random from the orders and each later one at random too, with an order's chance in proportion to its squared distance from the nearest centre chosen so far, so starts spread out. Running several starts and keeping the lowest $J$ costs little. The code runs three starts for every $k$.
+Finding the grouping with the lowest $J$ for sure is hard: for points in many dimensions it is NP-hard even with $k = 2$ (Aloise and others, in Sources), which means no known method does it fast on every input.
+
+The practical remedy is careful starts. **k-means++** picks the first centre at random from the orders. It picks each later one at random too, with an order's chance in proportion to its squared distance from the nearest centre chosen so far, so starts spread out. Running several starts and keeping the lowest $J$ costs little. The code runs three starts for every $k$.
 
 ### Step 5: choosing $k$, when $J$ always prefers more
 
@@ -191,7 +197,9 @@ The best k-means++ start on the 20,000 orders, one half-turn at a time. "Assign"
 
 The first update does almost all the work: centres that started on single orders jump to the middle of their groups. After that only orders near a border change sides, and $J$ barely moves. The fourth assign moves nobody, so the method stops.
 
-Where does it settle? Each order wobbles round its kind's true centre by a spread of 0.7 in each of 12 numbers, so a perfect grouping should leave about $n \times d \times \sigma^2$ = 20,000 × 12 × 0.7² = 117,600.0, give or take a standard deviation of $\sigma^2\sqrt{2nd}$ = 339.5 from chance in the wobble: one squared bell-shaped wobble has standard deviation $\sqrt 2\,\sigma^2$, and the $nd$ of them add independently. The run's 117,324.1, or 5.8662 per order, is just under that, inside one standard deviation; fitted centres also sit slightly closer to their orders than the true ones do. The check asserts that the gap is under three standard deviations. This is the third road: the score agrees with the rule that made the data, not just with itself.
+Where does it settle? Each order wobbles round its kind's true centre by a spread of 0.7 in each of 12 numbers, so a perfect grouping should leave about $n \times d \times \sigma^2$ = 20,000 × 12 × 0.7² = 117,600.0, give or take a standard deviation of $\sigma^2\sqrt{2nd}$ = 339.5 from chance in the wobble. One squared bell-shaped wobble has standard deviation $\sqrt 2\,\sigma^2$, and the $nd$ of them add independently.
+
+The run's 117,324.1, or 5.8662 per order, is just under that, inside one standard deviation; fitted centres also sit slightly closer to their orders than the true ones do. The check asserts that the gap is under three standard deviations. This is the third road: the score agrees with the rule that made the data, not just with itself.
 
 The other two starts at $k = 4$ took 67 and 37 passes. The slow one reached the same 117,324.1; the other stopped in the trap of Step 4.
 
@@ -199,7 +207,14 @@ The other two starts at $k = 4$ took 67 and 37 passes. The slow one reached the 
 
 ## Code, from first principles, and it actually runs
 
-The script builds the 20,000 synthetic orders from SplitMix64 with seed 2026, each one a true centre plus a bell-shaped wobble made by the Box–Muller method from two uniform numbers. It writes k-means out in full: assign, update, the stopping rule, k-means++ starts, the silhouette. Only `math` is imported, for the logarithm, cosine and square root and for `math.dist`, the straight-line distance between two lists. Four independent roads check the answer. (1) Brute force: all 31 splits of the six-order example, against k-means. (2) The shift identity of Step 2, both sides computed separately. (3) The run's $J$ against $n d \sigma^2$ from the generating rule, within three standard deviations. (4) The groups found, against the kinds the data was made from. It also asserts that $J$ never rises between half-turns, that the best $J$ falls as $k$ grows, and that the silhouette code matches a four-order example worked by hand. The Rust program does the same and prints identical lines.
+The script builds the 20,000 synthetic orders from SplitMix64, a short random-number generator written out in the code, with seed 2026, each one a true centre plus a bell-shaped wobble made by the Box–Muller method from two uniform numbers. It writes k-means out in full: assign, update, the stopping rule, k-means++ starts, the silhouette. Only `math` is imported, for the logarithm, cosine and square root and for `math.dist`, the straight-line distance between two lists. Four independent roads check the answer:
+
+1. Brute force: all 31 splits of the six-order example, against k-means.
+2. The shift identity of Step 2, both sides computed separately.
+3. The run's $J$ against $n d \sigma^2$ from the generating rule, within three standard deviations.
+4. The groups found, against the kinds the data was made from.
+
+It also asserts that $J$ never rises between half-turns, that the best $J$ falls as $k$ grows, and that the silhouette code matches a four-order example worked by hand. The Rust program does the same and prints identical lines.
 
 ### Python
 
@@ -585,6 +600,336 @@ worst k = 4 start: J = 172458.5, 1.4699 times the best; with own kind 13996; bas
 basket value left in pounds: grouped with their own kind 12631 of 20000 = 0.6315
 figure, centres (basket value, discount): (0.50, -0.01); (-1.00, 2.00); (2.50, -0.99); (-0.51, -0.50); 96 orders drawn
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves Steps 1, 2, 3 and 5 for any orders, any $k$ and any start, and checks the six-order example.
+
+- Take k-means from any start, with the tie rule of Step 1. Then $J$ never rises from one pass to the next.
+- On such a run, a pass that changes any label lowers $J$ strictly.
+- On such a run, after finitely many passes no label and no centre changes again.
+- Take a group of $m \ge 1$ orders with mean $\bar x$, and any centre $c$. Then the shift identity of Step 2 holds.
+- Every centre other than the mean gives that group a strictly larger total squared distance.
+- Take any grouping into $k$ groups. Then some grouping into $k + 1$ groups has no higher $J$, and a lower one whenever $J > 0$.
+- On the six orders, each assign sends every order to a nearest centre, and $J$ goes 53, 24, 16.8, then 16/3.
+- In pass 3 every order is already nearest its own centre, so no label changes.
+- There are 31 ways to cut the six orders into two groups. With centres at the group means, none scores below 16/3.
+- On A, B, C with centre A, the shift identity reads 6 = 8/3 + 3 × 10/9.
+- Take four orders at 0, 1, 3 and 4 on one number, grouped 0, 1 against 3, 4. Then their average silhouette is 23/35.
+
+The 20,000-order run, the k-means++ starts, Step 4's local best, the elbow and the shop's silhouette scores are left to the Python and Rust checks.
+
+```lean
+-- k-means: taking turns between nearest-centre labels and group means never raises the total squared distance and stops after finitely many passes, the mean is the one best centre for a group, one more centre can always lower the score, and the card's six-order example is checked.
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Data.Fintype.Pi
+import Mathlib.Data.Fintype.Powerset
+import Mathlib.Tactic.NormNum
+
+open Finset
+
+namespace KMeansAndClustering
+
+/-- The score `J`: the squared distance from every order `x i` to the centre `c (g i)` of its own
+group, added up over all `n` orders. Each order is a list of `d` numbers. -/
+noncomputable def score {n d k : ℕ} (x : Fin n → EuclideanSpace ℝ (Fin d)) (g : Fin n → Fin k)
+    (c : Fin k → EuclideanSpace ℝ (Fin d)) : ℝ :=
+  ∑ i, ‖x i - c (g i)‖ ^ 2
+
+/-- One **pass** of k-means, from labels `g` and centres `c` to labels `g'` and centres `c'`.
+Assign: every order gets a label whose centre is nearest (smallest squared distance), and an
+order keeps its current label whenever that centre is among the nearest (the tie rule).
+Update: every group that holds at least one order moves its centre to the mean of its orders;
+an empty group keeps its old centre, as the card's code does. -/
+def IsPass {n d k : ℕ} (x : Fin n → EuclideanSpace ℝ (Fin d)) (g : Fin n → Fin k)
+    (c : Fin k → EuclideanSpace ℝ (Fin d)) (g' : Fin n → Fin k)
+    (c' : Fin k → EuclideanSpace ℝ (Fin d)) : Prop :=
+  (∀ i, (∀ j, ‖x i - c (g' i)‖ ^ 2 ≤ ‖x i - c j‖ ^ 2) ∧
+    ((∀ j, ‖x i - c (g i)‖ ^ 2 ≤ ‖x i - c j‖ ^ 2) → g' i = g i)) ∧
+  (∀ j, c' j = if (univ.filter (fun i => g' i = j)).card = 0 then c j
+    else ((univ.filter (fun i => g' i = j)).card : ℝ)⁻¹ •
+      ∑ i ∈ univ.filter (fun i => g' i = j), x i)
+
+/-- Helper: the shift identity for a nonempty group. -/
+theorem shift_identity_aux {ι : Type*} {d : ℕ} (s : Finset ι) (hs : s.Nonempty)
+    (x : ι → EuclideanSpace ℝ (Fin d)) (c : EuclideanSpace ℝ (Fin d)) :
+    ∑ i ∈ s, ‖x i - c‖ ^ 2 = ∑ i ∈ s, ‖x i - (s.card : ℝ)⁻¹ • ∑ i ∈ s, x i‖ ^ 2 +
+      s.card * ‖(s.card : ℝ)⁻¹ • ∑ i ∈ s, x i - c‖ ^ 2 := by
+  set xbar := (s.card : ℝ)⁻¹ • ∑ i ∈ s, x i with hxbar
+  have hcard : (s.card : ℝ) ≠ 0 := by exact_mod_cast hs.card_pos.ne'
+  have hsum : ∑ i ∈ s, (x i - xbar) = 0 := by
+    rw [Finset.sum_sub_distrib, Finset.sum_const, hxbar, ← Nat.cast_smul_eq_nsmul ℝ, smul_smul,
+      mul_inv_cancel₀ hcard, one_smul, sub_self]
+  have h1 : ∀ i ∈ s, ‖x i - c‖ ^ 2 =
+      ‖x i - xbar‖ ^ 2 + 2 * inner ℝ (x i - xbar) (xbar - c) + ‖xbar - c‖ ^ 2 := by
+    intro i _
+    rw [← norm_add_sq_real]
+    congr 2
+    abel
+  rw [Finset.sum_congr rfl h1, Finset.sum_add_distrib, Finset.sum_add_distrib,
+    ← Finset.mul_sum, ← sum_inner, hsum, inner_zero_left, mul_zero,
+    add_zero, Finset.sum_const, nsmul_eq_mul]
+
+/-- Helper: the total squared distance of a group to its mean is at most that to any centre. -/
+theorem mean_le_aux {ι : Type*} {d : ℕ} (s : Finset ι) (hs : s.Nonempty)
+    (x : ι → EuclideanSpace ℝ (Fin d)) (c : EuclideanSpace ℝ (Fin d)) :
+    ∑ i ∈ s, ‖x i - (s.card : ℝ)⁻¹ • ∑ i ∈ s, x i‖ ^ 2 ≤ ∑ i ∈ s, ‖x i - c‖ ^ 2 := by
+  rw [shift_identity_aux s hs x c]
+  have : (0 : ℝ) ≤ s.card * ‖(s.card : ℝ)⁻¹ • ∑ i ∈ s, x i - c‖ ^ 2 := by positivity
+  linarith
+
+#print axioms shift_identity_aux
+#print axioms mean_le_aux
+
+/-- **Taking turns lowers the score and must stop** (Steps 1 to 3). Run k-means on `n` orders of
+`d` numbers with `k` groups from any start: labels `g 0` and centres `c 0`, then pass after pass.
+Then the score `J` never rises from one pass to the next; a pass that changes any label lowers
+`J` strictly; and after finitely many passes nothing changes any more, neither labels nor
+centres. -/
+theorem kmeans_score_never_rises_and_stops {n d k : ℕ} (x : Fin n → EuclideanSpace ℝ (Fin d))
+    (g : ℕ → Fin n → Fin k) (c : ℕ → Fin k → EuclideanSpace ℝ (Fin d))
+    (hpass : ∀ t, IsPass x (g t) (c t) (g (t + 1)) (c (t + 1))) :
+    (∀ t, score x (g (t + 1)) (c (t + 1)) ≤ score x (g t) (c t)) ∧
+    (∀ t, g (t + 1) ≠ g t → score x (g (t + 1)) (c (t + 1)) < score x (g t) (c t)) ∧
+    (∃ T, ∀ t, T ≤ t → g t = g T ∧ c t = c T) := by
+  classical
+  -- the mean centres of a labelling
+  let m : (Fin n → Fin k) → Fin k → EuclideanSpace ℝ (Fin d) := fun h j =>
+    ((univ.filter (fun i => h i = j)).card : ℝ)⁻¹ • ∑ i ∈ univ.filter (fun i => h i = j), x i
+  let F : (Fin n → Fin k) → ℝ := fun h => score x h (m h)
+  -- after a pass, the score is a function of the labels alone
+  have hF : ∀ t, score x (g (t + 1)) (c (t + 1)) = F (g (t + 1)) := by
+    intro t
+    unfold F score
+    refine Finset.sum_congr rfl fun i _ => ?_
+    have hc := (hpass t).2 (g (t + 1) i)
+    have hne : (univ.filter (fun i' => g (t + 1) i' = g (t + 1) i)).card ≠ 0 := by
+      apply Finset.card_ne_zero.mpr
+      exact ⟨i, by simp⟩
+    rw [hc, if_neg hne]
+  -- step (a)
+  have hA : ∀ t, score x (g (t + 1)) (c (t + 1)) ≤ score x (g t) (c t) := by
+    intro t
+    have h1 : score x (g (t + 1)) (c (t + 1)) ≤ score x (g (t + 1)) (c t) := by
+      unfold score
+      rw [← Finset.sum_fiberwise univ (g (t + 1)) (fun i => ‖x i - c (t + 1) (g (t + 1) i)‖ ^ 2),
+        ← Finset.sum_fiberwise univ (g (t + 1)) (fun i => ‖x i - c t (g (t + 1) i)‖ ^ 2)]
+      refine Finset.sum_le_sum fun j _ => ?_
+      have e1 : ∀ i ∈ univ.filter (fun i => g (t + 1) i = j),
+          ‖x i - c (t + 1) (g (t + 1) i)‖ ^ 2 = ‖x i - c (t + 1) j‖ ^ 2 := by
+        intro i hi
+        rw [(Finset.mem_filter.mp hi).2]
+      have e2 : ∀ i ∈ univ.filter (fun i => g (t + 1) i = j),
+          ‖x i - c t (g (t + 1) i)‖ ^ 2 = ‖x i - c t j‖ ^ 2 := by
+        intro i hi
+        rw [(Finset.mem_filter.mp hi).2]
+      rw [Finset.sum_congr rfl e1, Finset.sum_congr rfl e2, (hpass t).2 j]
+      split_ifs with h0
+      · exact le_refl _
+      · exact mean_le_aux _ (Finset.card_ne_zero.mp h0) x (c t j)
+    have h2 : score x (g (t + 1)) (c t) ≤ score x (g t) (c t) := by
+      unfold score
+      exact Finset.sum_le_sum fun i _ => ((hpass t).1 i).1 (g t i)
+    exact h1.trans h2
+  -- step (b)
+  have hB : ∀ t, g (t + 1) ≠ g t → score x (g (t + 1)) (c (t + 1)) < score x (g t) (c t) := by
+    intro t hne
+    obtain ⟨i₀, hi₀⟩ := Function.ne_iff.mp hne
+    have h1 : score x (g (t + 1)) (c (t + 1)) ≤ score x (g (t + 1)) (c t) := by
+      unfold score
+      rw [← Finset.sum_fiberwise univ (g (t + 1)) (fun i => ‖x i - c (t + 1) (g (t + 1) i)‖ ^ 2),
+        ← Finset.sum_fiberwise univ (g (t + 1)) (fun i => ‖x i - c t (g (t + 1) i)‖ ^ 2)]
+      refine Finset.sum_le_sum fun j _ => ?_
+      have e1 : ∀ i ∈ univ.filter (fun i => g (t + 1) i = j),
+          ‖x i - c (t + 1) (g (t + 1) i)‖ ^ 2 = ‖x i - c (t + 1) j‖ ^ 2 := by
+        intro i hi
+        rw [(Finset.mem_filter.mp hi).2]
+      have e2 : ∀ i ∈ univ.filter (fun i => g (t + 1) i = j),
+          ‖x i - c t (g (t + 1) i)‖ ^ 2 = ‖x i - c t j‖ ^ 2 := by
+        intro i hi
+        rw [(Finset.mem_filter.mp hi).2]
+      rw [Finset.sum_congr rfl e1, Finset.sum_congr rfl e2, (hpass t).2 j]
+      split_ifs with h0
+      · exact le_refl _
+      · exact mean_le_aux _ (Finset.card_ne_zero.mp h0) x (c t j)
+    have h2 : score x (g (t + 1)) (c t) < score x (g t) (c t) := by
+      unfold score
+      refine Finset.sum_lt_sum (fun i _ => ((hpass t).1 i).1 (g t i)) ⟨i₀, mem_univ _, ?_⟩
+      have hnot : ¬ ∀ j, ‖x i₀ - c t (g t i₀)‖ ^ 2 ≤ ‖x i₀ - c t j‖ ^ 2 :=
+        fun h => hi₀ (((hpass t).1 i₀).2 h)
+      push_neg at hnot
+      obtain ⟨j, hj⟩ := hnot
+      exact lt_of_le_of_lt (((hpass t).1 i₀).1 j) hj
+    exact lt_of_le_of_lt h1 h2
+  refine ⟨hA, hB, ?_⟩
+  -- step (c)
+  set s : ℕ → ℝ := fun t => score x (g t) (c t) with hs
+  have hanti : Antitone s := antitone_nat_of_succ_le hA
+  obtain ⟨h₀, hh₀, hmin⟩ := Set.exists_min_image (Set.range fun t => g (t + 1)) F
+    (Set.toFinite _) (Set.range_nonempty _)
+  obtain ⟨T0, rfl⟩ := hh₀
+  have hconst : ∀ t, T0 + 1 ≤ t → s t = s (T0 + 1) := by
+    intro t ht
+    apply le_antisymm (hanti ht)
+    obtain ⟨t', rfl⟩ : ∃ t', t = t' + 1 := ⟨t - 1, by omega⟩
+    show score x (g (T0 + 1)) (c (T0 + 1)) ≤ score x (g (t' + 1)) (c (t' + 1))
+    rw [hF, hF]
+    exact hmin _ ⟨t', rfl⟩
+  have hgstep : ∀ t, T0 + 1 ≤ t → g (t + 1) = g t := by
+    intro t ht
+    by_contra hne
+    have := hB t hne
+    have e1 := hconst t ht
+    have e2 := hconst (t + 1) (by omega)
+    simp only [hs] at e1 e2
+    linarith
+  have hg : ∀ t, T0 + 1 ≤ t → g t = g (T0 + 1) := by
+    intro t ht
+    induction t, ht using Nat.le_induction with
+    | base => rfl
+    | succ t ht ih => rw [hgstep t ht, ih]
+  have hcstep : ∀ t, T0 + 1 ≤ t → c (t + 2) = c (t + 1) := by
+    intro t ht
+    funext j
+    have hg2 : g (t + 2) = g (t + 1) := hgstep (t + 1) (by omega)
+    rw [(hpass (t + 1)).2 j, (hpass t).2 j, hg2]
+    split_ifs with h0
+    · rfl
+    · rfl
+  have hc : ∀ t, T0 + 2 ≤ t → c t = c (T0 + 2) := by
+    intro t ht
+    induction t, ht using Nat.le_induction with
+    | base => rfl
+    | succ t ht ih =>
+      obtain ⟨t', rfl⟩ : ∃ t', t = t' + 1 := ⟨t - 1, by omega⟩
+      rw [hcstep t' (by omega), ih]
+  refine ⟨T0 + 2, fun t ht => ⟨?_, hc t ht⟩⟩
+  rw [hg t (by omega), hg (T0 + 2) (by omega)]
+
+/-- **The mean is the one best centre** (Step 2, the shift identity). Take a group of `m ≥ 1`
+orders with mean `x̄`. For any centre `c`, the total squared distance to `c` equals the total
+squared distance to the mean plus `m` times the squared distance from the mean to `c`. So every
+centre other than the mean scores strictly worse. -/
+theorem mean_is_best_centre {ι : Type*} {d : ℕ} (s : Finset ι) (hs : s.Nonempty)
+    (x : ι → EuclideanSpace ℝ (Fin d)) :
+    let xbar := (s.card : ℝ)⁻¹ • ∑ i ∈ s, x i
+    (∀ c, ∑ i ∈ s, ‖x i - c‖ ^ 2 = ∑ i ∈ s, ‖x i - xbar‖ ^ 2 + s.card * ‖xbar - c‖ ^ 2) ∧
+    (∀ c, c ≠ xbar → ∑ i ∈ s, ‖x i - xbar‖ ^ 2 < ∑ i ∈ s, ‖x i - c‖ ^ 2) := by
+  intro xbar
+  have key : ∀ c, ∑ i ∈ s, ‖x i - c‖ ^ 2 = ∑ i ∈ s, ‖x i - xbar‖ ^ 2 + s.card * ‖xbar - c‖ ^ 2 :=
+    fun c => shift_identity_aux s hs x c
+  refine ⟨key, fun c hc => ?_⟩
+  rw [key c]
+  have hpos : (0 : ℝ) < s.card := by exact_mod_cast hs.card_pos
+  have hn : 0 < ‖xbar - c‖ := norm_pos_iff.mpr (sub_ne_zero.mpr (Ne.symm hc))
+  have : 0 < (s.card : ℝ) * ‖xbar - c‖ ^ 2 := by positivity
+  linarith
+
+/-- **One more centre never hurts** (Step 5). Any grouping of the orders into `k` groups can be
+matched by a grouping into `k + 1` groups whose score is no higher, and strictly lower whenever
+some order is not sitting on its own centre: put the new centre on top of that order. So the
+lowest score always prefers the most groups allowed and cannot choose `k` by itself. -/
+theorem more_centres_lower_score {n d k : ℕ} (x : Fin n → EuclideanSpace ℝ (Fin d))
+    (g : Fin n → Fin k) (c : Fin k → EuclideanSpace ℝ (Fin d)) :
+    ∃ (g' : Fin n → Fin (k + 1)) (c' : Fin (k + 1) → EuclideanSpace ℝ (Fin d)),
+      score x g' c' ≤ score x g c ∧ (0 < score x g c → score x g' c' < score x g c) := by
+  classical
+  by_cases h : ∃ i₀, 0 < ‖x i₀ - c (g i₀)‖ ^ 2
+  · obtain ⟨i₀, hi₀⟩ := h
+    refine ⟨fun i => if i = i₀ then Fin.last k else (g i).castSucc,
+      Fin.snoc (α := fun _ => EuclideanSpace ℝ (Fin d)) c (x i₀), ?_⟩
+    have hlt : score x (fun i => if i = i₀ then Fin.last k else (g i).castSucc)
+        (Fin.snoc (α := fun _ => EuclideanSpace ℝ (Fin d)) c (x i₀)) < score x g c := by
+      unfold score
+      refine Finset.sum_lt_sum (fun i _ => ?_) ⟨i₀, mem_univ _, ?_⟩
+      · by_cases hi : i = i₀
+        · subst hi
+          simp only [if_true, Fin.snoc_last, sub_self, norm_zero]
+          exact hi₀.le.trans' (by norm_num)
+        · simp only [hi, if_false, Fin.snoc_castSucc]
+          exact le_refl _
+      · simpa using hi₀
+    exact ⟨hlt.le, fun _ => hlt⟩
+  · push_neg at h
+    refine ⟨fun i => (g i).castSucc,
+      Fin.snoc (α := fun _ => EuclideanSpace ℝ (Fin d)) c 0, ?_, ?_⟩
+    · unfold score
+      simp only [Fin.snoc_castSucc]
+      exact le_refl _
+    · intro hpos
+      exfalso
+      have : score x g c ≤ 0 := Finset.sum_nonpos fun i _ => h i
+      linarith
+
+/-! The card's six orders, by hand: A (0, 4), B (1, 3), C (0, 2), D (3, 0), E (4, 1), F (5, 0). -/
+
+/-- The six orders, as (basket value, discount) pairs. -/
+def six : Fin 6 → ℚ × ℚ := ![(0, 4), (1, 3), (0, 2), (3, 0), (4, 1), (5, 0)]
+
+/-- Squared straight-line distance between two points of the plane. -/
+def sq (p q : ℚ × ℚ) : ℚ := (p.1 - q.1) ^ 2 + (p.2 - q.2) ^ 2
+
+/-- The score `J` of six orders for labels `g` and two centres `c`. -/
+def J6 (g : Fin 6 → Fin 2) (c : Fin 2 → ℚ × ℚ) : ℚ := ∑ i, sq (six i) (c (g i))
+
+/-- The mean of the orders labelled `j`. -/
+def mean6 (g : Fin 6 → Fin 2) (j : Fin 2) : ℚ × ℚ :=
+  let s := univ.filter (fun i => g i = j)
+  ((∑ i ∈ s, (six i).1) / s.card, (∑ i ∈ s, (six i).2) / s.card)
+
+-- Pass 1, assign, with centres at A and B: A goes to centre 1, B to F to centre 2; J = 53.
+example : (∀ i j, sq (six i) (![(0, 4), (1, 3)] (![0, 1, 1, 1, 1, 1] i)) ≤
+    sq (six i) (![(0, 4), (1, 3)] j)) ∧ J6 ![0, 1, 1, 1, 1, 1] ![(0, 4), (1, 3)] = 53 := by
+  decide +kernel
+-- Pass 1, update: centre 1 stays at (0, 4), centre 2 moves to (13/5, 6/5); J = 24.
+example : mean6 ![0, 1, 1, 1, 1, 1] 0 = (0, 4) ∧ mean6 ![0, 1, 1, 1, 1, 1] 1 = (13 / 5, 6 / 5) ∧
+    J6 ![0, 1, 1, 1, 1, 1] ![(0, 4), (13 / 5, 6 / 5)] = 24 := by
+  decide +kernel
+-- Pass 2, assign: B and C are now nearer (0, 4); J = 16.8.
+example : (∀ i j, sq (six i) (![(0, 4), (13 / 5, 6 / 5)] (![0, 0, 0, 1, 1, 1] i)) ≤
+    sq (six i) (![(0, 4), (13 / 5, 6 / 5)] j)) ∧
+    J6 ![0, 0, 0, 1, 1, 1] ![(0, 4), (13 / 5, 6 / 5)] = 168 / 10 := by
+  decide +kernel
+-- Pass 2, update: centres (1/3, 3) and (4, 1/3); J = 16/3.
+example : mean6 ![0, 0, 0, 1, 1, 1] 0 = (1 / 3, 3) ∧ mean6 ![0, 0, 0, 1, 1, 1] 1 = (4, 1 / 3) ∧
+    J6 ![0, 0, 0, 1, 1, 1] ![(1 / 3, 3), (4, 1 / 3)] = 16 / 3 := by
+  decide +kernel
+-- Pass 3, assign: every order is already nearest its own centre, so no label changes.
+example : ∀ i j, sq (six i) (![(1 / 3, 3), (4, 1 / 3)] (![0, 0, 0, 1, 1, 1] i)) ≤
+    sq (six i) (![(1 / 3, 3), (4, 1 / 3)] j) := by
+  decide +kernel
+-- There are 31 ways to cut six orders into two groups: name each by the group holding A.
+example : (univ.filter (fun s : Finset (Fin 6) => 0 ∈ s ∧ s ≠ univ)).card = 31 := by
+  decide +kernel
+-- Brute force over every labelling: with each centre at its group's mean, no split beats 16/3.
+example : ∀ g : Fin 6 → Fin 2, 16 / 3 ≤ J6 g (mean6 g) := by
+  decide +kernel
+-- Shift identity on A, B, C with centre A: 6 = 8/3 + 3 × 10/9.
+example : sq (0, 4) (0, 4) + sq (1, 3) (0, 4) + sq (0, 2) (0, 4) = 6 ∧
+    sq (0, 4) (1 / 3, 3) + sq (1, 3) (1 / 3, 3) + sq (0, 2) (1 / 3, 3) = 8 / 3 ∧
+    sq (1 / 3, 3) (0, 4) = 10 / 9 ∧ (6 : ℚ) = 8 / 3 + 3 * (10 / 9) := by
+  norm_num [sq]
+-- Silhouette by hand, orders at 0, 1 | 3, 4: (5/7 + 3/5 + 3/5 + 5/7) / 4 = 23/35.
+example : ((7 / 2 - 1) / max 1 (7 / 2) + (5 / 2 - 1) / max 1 (5 / 2) +
+    (5 / 2 - 1) / max 1 (5 / 2) + (7 / 2 - 1) / max 1 (7 / 2) : ℚ) / 4 = 23 / 35 := by
+  norm_num
+
+#print axioms kmeans_score_never_rises_and_stops
+#print axioms mean_is_best_centre
+#print axioms more_centres_lower_score
+
+end KMeansAndClustering
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'KMeansAndClustering.shift_identity_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KMeansAndClustering.mean_le_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KMeansAndClustering.kmeans_score_never_rises_and_stops' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KMeansAndClustering.mean_is_best_centre' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KMeansAndClustering.more_centres_lower_score' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]

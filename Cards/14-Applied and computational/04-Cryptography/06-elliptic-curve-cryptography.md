@@ -68,7 +68,7 @@ $$\text{steps} \approx \sqrt{\pi n / 4}$$
 | $d_L$, $d_B$ | the laptop's and the bank's secret numbers | 13 and 7 | — |
 | $Q_L$, $Q_B$, $S$ | their public keys; the shared point | (16, 4) and (0, 6); (3, 16) | — |
 | $d_S$, $Q_S$ | the bank's signing key and its public key | 9 and (7, 6) | — |
-| $k$, $z$ | the signature's one-time number; the message's hash, a number | 10; 5 (a stand-in) | — |
+| $k$, $z$ | the signature's one-time number (the code calls it the nonce); the message's hash, a number | 10; 5 (a stand-in) | — |
 | $r$, $s$, $u_1$, $u_2$ | the signature; the checker's two multipliers | 7, 3; 8, 15 | — |
 | $Q$, $w$, $i$, $j$ | in the attack: a public key to undo; the step size, about √n; the key written as $i w + j$ | 32-bit toy: w = 65,536 | cost grows like 2w |
 
@@ -90,7 +90,7 @@ In kP, k is any whole number; in ECDSA it is the one-time number. Security level
 
 Diffie-Hellman needs only a group (a set with one way of combining, a zero and undos) where repeating the operation is quick and undoing it is slow. Powers mod a prime are one such group, but their structure helps the attacker: numbers factor into primes, and the fastest attack (the number field sieve) exploits that. That is why the modulus needs 3,072 bits.
 
-Points on a well-chosen curve have no such structure. Nobody has found a general method there faster than the square-root ones in Step 5. So security of about 2^128 needs n near 2^256, and points that fit in 32 bytes. The comparison is NIST's table in SP 800-57: 128-bit security needs RSA or Diffie-Hellman moduli of 3,072 bits, or curves of 256 to 383 bits.
+Points on a well-chosen curve have no such structure. Nobody has found a general method there faster than the square-root ones in Step 5. So security of about 2^128 needs n near 2^256, and points that fit in 32 bytes. The comparison is the table in SP 800-57 from NIST, the US standards institute: 128-bit security needs RSA ([RSA in full](04-rsa-in-full.md)) or Diffie-Hellman moduli of 3,072 bits, or curves of 256 to 383 bits.
 
 ### Step 1: adding points mod p
 
@@ -129,7 +129,7 @@ Attacks on powers mod a prime split numbers into small prime factors and combine
 
 ### Step 6: Curve25519 as the standard writes it
 
-Curve25519 is $v^2 = u^3 + 486662\,u^2 + u$ mod $2^{255} - 19$, with base point u = 9 and n a prime just above $2^{252}$, 253 bits long. It is the same kind of curve in another form. A point P and its mirror image −P share u and differ only in the sign of v, and so do kP and −kP. So u alone fixes the u of kP, and a public key is u alone: 32 bytes.
+Curve25519 is $v^2 = u^3 + 486662\,u^2 + u$ mod $2^{255} - 19$, with base point u = 9 and n a prime just above $2^{252}$, 253 bits long. It is the same kind of curve in another form. A point P and its mirror image −P share u and differ only in the sign of v, and so do kP and −kP. So u alone fixes the u of kP, and a public key is u alone: 32 bytes. RFC 7748 calls Diffie-Hellman done this way, with u alone, X25519.
 
 The standard computes kP by a **ladder**. It keeps two running points, one always exactly P ahead of the other, and at every bit does one doubling and one addition, whatever the bit: 255 identical steps. Double-and-add does an addition only on 1-bits, so a timer can count them; the ladder gives a timer nothing.
 
@@ -172,7 +172,15 @@ Changing the hash from 5 to 6 while keeping (7, 3) makes the check fail, as it s
 
 ## Code, from first principles, and it actually runs
 
-The script works the toy curve, runs ECDH and ECDSA on it, attacks two toy groups, and runs X25519 on the standard's test vectors. It takes **five independent roads**. Double-and-add is checked against plain repeated addition. The group size is found by testing every pair (x, y) and, separately, by walking G back to O. ECDH and the signature are checked against multiples of G found by repeated addition. Baby step, giant step must recover the known secret within 2w steps. X25519 must reproduce the published RFC 7748 test vectors, and nG must come out as O. The toy curves are **insecure** on purpose. Rust has no big integers, so the Rust check holds each 256-bit number as four 64-bit pieces and uses $2^{256} = 38$ mod p.
+The script works the toy curve, runs ECDH and ECDSA on it, attacks two toy groups, and runs X25519 on the standard's test vectors. It takes **five independent roads**:
+
+- Double-and-add is checked against plain repeated addition.
+- The group size is found by testing every pair (x, y) and, separately, by walking G back to O.
+- ECDH and the signature are checked against multiples of G found by repeated addition.
+- Baby step, giant step must recover the known secret within 2w steps.
+- X25519 must reproduce the published RFC 7748 test vectors, and nG must come out as O.
+
+The toy curves are **insecure** on purpose. Rust has no big integers, so the Rust check holds each 256-bit number as four 64-bit pieces and uses $2^{256} = 38$ mod p.
 
 ### Python
 
@@ -550,6 +558,127 @@ bank sends u = 0, a point of order 2: shared 00000000000000000000000000000000000
 bytes: public key 32, RSA-3072 modulus 384  n has 253 bits  A 486662
 generic attack, about sqrt(pi n / 4) steps: 2^125.8
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves the facts behind Steps 3 to 5 in any group, and checks the worked numbers on the toy curves.
+
+- Take any group, a base point G of order n, and secret numbers $d_L$ and $d_B$. Then $d_L (d_B G) = d_B (d_L G) = (d_L d_B \bmod n)\,G$.
+- Take n prime, G of order n, and $s = k^{-1}(z + r\,d_S) \bmod n$ with s not 0. Then the checker's point $u_1 G + u_2 Q_S$ is kG.
+- Take a whole number w with $w^2 \ge n$, and a key below n. Then the key is $i w + j$, with i and j both below w.
+- On the toy curve mod 17, Lean counts 19 points, O included, and checks that each point in the worked table lies on the curve.
+- It checks the five slopes, 91 mod 19 = 15, and the signature's numbers s = 3, $u_1$ = 8 and $u_2$ = 15.
+- On the 32-bit toy, it checks w = 65,536, the key 3,141,592,653 = 47,936 w + 58,957, and 113,472 steps in all.
+
+Point addition, the attacks themselves and X25519 on the RFC 7748 test vectors are left to the Python and Rust checks.
+
+```lean
+-- Elliptic curves: in any group of points, both sides of Diffie-Hellman reach the same point (d_L d_B mod n)G, a correctly made ECDSA signature always checks, and baby step, giant step needs at most 2w steps.
+import Mathlib.GroupTheory.OrderOfElement
+import Mathlib.Algebra.Field.ZMod
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+/-- Key agreement (ECDH) gives both sides the same point. In any group of points,
+with base point G of order n, the laptop's d_L Q_B and the bank's d_B Q_L are the
+same point, and it equals (d_L d_B mod n) G. -/
+theorem ecdh_shared_point {A : Type*} [AddCommGroup A] (G : A) (n dL dB : ℕ)
+    (hn : addOrderOf G = n) :
+    dL • (dB • G) = dB • (dL • G) ∧ dB • (dL • G) = ((dL * dB) % n) • G := by
+  refine ⟨?_, ?_⟩
+  · rw [smul_smul, smul_smul, mul_comm]
+  · rw [smul_smul, ← hn, mod_addOrderOf_nsmul, mul_comm]
+
+/-- A correctly made ECDSA signature always checks. With base point G of prime order n,
+signing key d_S, public key Q_S = d_S G, one-time number k, hash z, first half r, and
+s = k⁻¹ (z + r d_S) mod n with s invertible, the checker's point
+u₁ G + u₂ Q_S, where u₁ = z s⁻¹ and u₂ = r s⁻¹ mod n, is exactly k G. -/
+theorem ecdsa_valid_signature_checks {A : Type*} [AddCommGroup A] (G : A) (n : ℕ)
+    [Fact n.Prime] (hn : addOrderOf G = n) (dS k z r s : ZMod n)
+    (hs_def : s = k⁻¹ * (z + r * dS)) (hs : s ≠ 0) :
+    (z * s⁻¹).val • G + (r * s⁻¹).val • (dS.val • G) = k.val • G := by
+  have key : ∀ m : ℕ, m • G = ((m : ZMod n).val) • G := by
+    intro m
+    rw [ZMod.val_natCast, ← hn, mod_addOrderOf_nsmul]
+  have hk : k ≠ 0 := by
+    rintro rfl
+    simp at hs_def
+    exact hs hs_def
+  have hX : z + r * dS = k * s := by
+    rw [hs_def, ← mul_assoc, mul_inv_cancel₀ hk, one_mul]
+  have hsum : z * s⁻¹ + r * s⁻¹ * dS = k := by
+    calc z * s⁻¹ + r * s⁻¹ * dS = (z + r * dS) * s⁻¹ := by ring
+      _ = k := by rw [hX, mul_assoc, mul_inv_cancel₀ hs, mul_one]
+  rw [smul_smul, ← add_nsmul, key]
+  congr 2
+  push_cast
+  simp only [ZMod.natCast_val, ZMod.cast_id', id]
+  rw [← hsum]
+
+/-- Baby step, giant step covers every key. If w is a whole number with w² ≥ n,
+every key below n can be written as i w + j with i and j both below w, so at most
+w baby steps and w giant steps find it. -/
+theorem baby_step_giant_step_split (n w k : ℕ) (hw : n ≤ w * w) (hk : k < n) :
+    ∃ i < w, ∃ j < w, k = i * w + j := by
+  have hw0 : 0 < w := by
+    rcases Nat.eq_zero_or_pos w with h | h
+    · subst h; omega
+    · exact h
+  refine ⟨k / w, ?_, k % w, Nat.mod_lt _ hw0, (Nat.div_add_mod' k w).symm⟩
+  exact (Nat.div_lt_iff_lt_mul hw0).2 (by omega)
+
+/-! Worked numbers from the card: the toy curve y² = x³ + 2x + 2 mod 17, n = 19. -/
+
+-- The points of the worked table lie on the toy curve.
+example : ((1 : ZMod 17))^2 = (5 : ZMod 17)^3 + 2 * 5 + 2 := by decide
+example : ((4 : ZMod 17))^2 = (16 : ZMod 17)^3 + 2 * 16 + 2 := by decide
+example : ((6 : ZMod 17))^2 = (0 : ZMod 17)^3 + 2 * 0 + 2 := by decide
+example : ((16 : ZMod 17))^2 = (3 : ZMod 17)^3 + 2 * 3 + 2 := by decide
+example : ((11 : ZMod 17))^2 = (7 : ZMod 17)^3 + 2 * 7 + 2 := by decide
+example : ((6 : ZMod 17))^2 = (7 : ZMod 17)^3 + 2 * 7 + 2 := by decide
+example : ((3 : ZMod 17))^2 = (6 : ZMod 17)^3 + 2 * 6 + 2 := by decide
+example : ((6 : ZMod 17))^2 = (10 : ZMod 17)^3 + 2 * 10 + 2 := by decide
+
+-- Testing every pair (x, y) mod 17 finds 18 points; with O that is 19.
+example : ((Finset.univ : Finset (ZMod 17 × ZMod 17)).filter
+    (fun q => q.2 ^ 2 = q.1 ^ 3 + 2 * q.1 + 2)).card + 1 = 19 := by decide
+
+-- Slopes in the double-and-add table, mod 17.
+example : (13 : ZMod 17) * (2 * 1) = 3 * 5 ^ 2 + 2 := by decide
+example : (2 : ZMod 17) * (5 - 6) = 1 - 3 := by decide
+example : (11 : ZMod 17) * (2 * 6) = 3 * 10 ^ 2 + 2 := by decide
+example : (10 : ZMod 17) * (2 * 13) = 3 * 16 ^ 2 + 2 := by decide
+example : (15 : ZMod 17) * (5 - 0) = 1 - 11 := by decide
+
+-- Shared point: 13 × 7 = 91, and 91 mod 19 = 15.
+example : 13 * 7 % 19 = 15 := by norm_num
+
+-- Signing with k = 10, z = 5, r = 7, d_S = 9: 1/k = 2 and s = 3.
+example : (10 : ZMod 19) * 2 = 1 := by decide
+example : (2 : ZMod 19) * (5 + 7 * 9) = 3 := by decide
+-- Checking: 1/s = 13, u₁ = 8, u₂ = 15, and 8 + 15 × 9 leaves 10 = k mod 19.
+example : (3 : ZMod 19) * 13 = 1 := by decide
+example : (5 : ZMod 19) * 13 = 8 ∧ (7 : ZMod 19) * 13 = 15 := by decide
+example : (8 + 15 * 9) % 19 = 10 := by norm_num
+
+-- The 32-bit toy group: w = 65,536 is the whole number at or just above √n.
+example : 65535 * 65535 < 4294956467 ∧ 4294956467 ≤ 65536 * 65536 := by norm_num
+-- The key 3,141,592,653 = 47,936 w + 58,957, so 47,936 giant steps find it,
+-- and 65,536 + 47,936 = 113,472 steps in all.
+example : 3141592653 = 47936 * 65536 + 58957 ∧ 65536 + 47936 = 113472 := by norm_num
+
+#print axioms ecdh_shared_point
+#print axioms ecdsa_valid_signature_checks
+#print axioms baby_step_giant_step_split
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'ecdh_shared_point' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ecdsa_valid_signature_checks' depends on axioms: [propext, Classical.choice, Quot.sound]
+'baby_step_giant_step_split' depends on axioms: [propext, Quot.sound]
 ```
 
 > [!TIP]
