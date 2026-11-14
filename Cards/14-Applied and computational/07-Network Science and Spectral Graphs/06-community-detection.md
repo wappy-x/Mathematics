@@ -10,11 +10,13 @@ A county football league has 24 clubs in four divisions, A to D, six clubs each.
 
 Now hide the division names and hand someone only the fixture list. Can they get the divisions back? Inside a division the clubs form a **clique**: a set of clubs where every pair has played. Between divisions only the scattered cup ties appear. So the groups are there in the data. The task is to find them without being told.
 
-This card does it in two moves. First, a score called **modularity** rates any split of the clubs into groups. It counts the fixtures that fall inside groups and subtracts the number that would fall inside them by chance. Second, a **greedy merge** (one choice at a time, never undone) starts with every club alone and keeps joining the two groups whose union raises the score most. On this league it ends with exactly the four divisions, at a modularity of 0.5391. Then the card tests the method honestly: with more cup ties it starts to fail, and on a fixture list with no divisions at all it still reports groups.
+This card does it in two moves. First, a score called **modularity** rates any split of the clubs into groups. It counts the fixtures that fall inside groups and subtracts the number that would fall inside them by chance. Second, a **greedy merge** (one choice at a time, never undone) starts with every club alone and keeps joining the two groups whose union raises the score most.
+
+On this league it ends with exactly the four divisions, at a modularity of 0.5391. Then the card tests the method honestly: with more cup ties it starts to fail, and on a fixture list with no divisions at all it still reports groups.
 
 **Modularity scores a split by how many more of the network's lines fall inside its groups than chance would put there, and a greedy merge climbs that score one join at a time, with no promise of reaching the top.**
 
-**What kind of fact this is:** modularity is a definition, a score measured against a chance model; the merge-gain formula is a theorem, proved on this card in Why it works; the greedy merge is a heuristic with no guarantee, and finding the highest-scoring split is NP-hard (at least as hard as every problem in NP, the class of problems whose answers can be checked quickly, so no fast method is known; Brandes and others, 2008), which is stated here, not proved.
+**What kind of fact this is:** modularity is a definition, a score measured against a chance model. The merge-gain formula is a theorem, proved on this card in Why it works. The greedy merge is a heuristic with no guarantee. Finding the highest-scoring split is NP-hard (at least as hard as every problem in NP, the class of problems whose answers can be checked quickly, so no fast method is known; Brandes and others, 2008); that fact is stated here, not proved.
 
 ### The picture: 24 clubs, four cliques, 16 cup ties
 
@@ -26,7 +28,9 @@ Schematic, not to scale. Solid lines are division fixtures, so each hexagon is a
 
 ## The formula
 
-Notation first, in words. The network has clubs $i$ and $j$ and **adjacency** $A_{ij}$: 1 if $i$ and $j$ played, 0 if not ([Bipartite graphs](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md) and its shelf set up graphs). Club $i$'s **degree** $k_i$ is how many fixtures it played. The network has $m$ lines in all. A split puts club $i$ in group $c_i$, and $\delta(c_i, c_j)$ is 1 when $i$ and $j$ share a group, 0 when they don't. This card introduces **modularity**, written $Q$. (On other shelves $Q$ is an order size or a queue; here it is only modularity.)
+Notation first, in words. The network has clubs $i$ and $j$ and **adjacency** $A_{ij}$: 1 if $i$ and $j$ played, 0 if not ([Bipartite graphs](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md) and its shelf set up graphs). Club $i$'s **degree** $k_i$ is how many fixtures it played. The network has $m$ lines in all.
+
+A split puts club $i$ in group $c_i$, and $\delta(c_i, c_j)$ is 1 when $i$ and $j$ share a group, 0 when they don't. This card introduces **modularity**, written $Q$. (On other shelves $Q$ is an order size or a queue; here it is only modularity.)
 
 $$Q \;=\; \frac{1}{2m}\sum_{i,j}\Big[A_{ij} - \frac{k_i k_j}{2m}\Big]\,\delta(c_i, c_j) \;=\; \sum_{c}\Big[\frac{L_c}{m} - \Big(\frac{d_c}{2m}\Big)^2\Big]$$
 
@@ -67,7 +71,9 @@ $$\Delta Q_{ab} \;=\; \frac{l_{ab}}{m} \;-\; \frac{d_a\, d_b}{2m^2}$$
 
 ### Step 0: count what is inside, then subtract what chance would put there
 
-A good split should have many fixtures inside its groups and few between them. So the first idea is to score a split by the share of fixtures inside its groups. That fails at once. Put all 24 clubs into one group and every fixture is inside: a perfect score of 1, and no information. The fix is to compare against a baseline. Ask how many fixtures *would* fall inside these groups if the same clubs, each with its same number of fixtures, were paired at random. Score only the excess. One big group then scores 0: everything is inside, but chance would put everything inside too.
+A good split should have many fixtures inside its groups and few between them. So the first idea is to score a split by the share of fixtures inside its groups. That fails at once. Put all 24 clubs into one group and every fixture is inside: a perfect score of 1, and no information.
+
+The fix is to compare against a baseline. Ask how many fixtures *would* fall inside these groups if the same clubs, each with its same number of fixtures, were paired at random. Score only the excess. One big group then scores 0: everything is inside, but chance would put everything inside too.
 
 ### Step 1: how often two clubs meet by chance
 
@@ -109,7 +115,9 @@ Here the peak comes at four groups, at the same moment the best available gain f
 
 ### Step 5: what greedy cannot promise
 
-A merge is never undone, so an early mistake stays. Greedy finds a split that no single join improves, and nothing more. On a 9-club mini league, three divisions of three plus three cup ties, the check scores all 21147 ways to split 9 clubs into groups: the best is 0.4132, and greedy finds 0.4132 too. On the main league with 24 cup ties, greedy stops at 0.4347 while the true divisions score 0.4630. The problem is NP-hard (Brandes and others, 2008), so no fast method is known that always finds the top score; the theory of such problems belongs to wing 24, Computability and complexity.
+A merge is never undone, so an early mistake stays. Greedy finds a split that no single join improves, and nothing more.
+
+On a 9-club mini league, three divisions of three plus three cup ties, the check scores all 21147 ways to split 9 clubs into groups: the best is 0.4132, and greedy finds 0.4132 too. On the main league with 24 cup ties, greedy stops at 0.4347 while the true divisions score 0.4630. The problem is NP-hard (Brandes and others, 2008), so no fast method is known that always finds the top score; the theory of such problems belongs to wing 24, Computability and complexity.
 
 ---
 
@@ -139,7 +147,9 @@ xychart-beta
     line [-0.0425, -0.0319, -0.0113, 0.0193, 0.0600, 0.1082, 0.1188, 0.1394, 0.1700, 0.2087, 0.2537, 0.2643, 0.2839, 0.3125, 0.3500, 0.3936, 0.4042, 0.4248, 0.4554, 0.4941, 0.5391, 0.4602, 0.3681, 0.0000]
 ```
 
-The one line is $Q$ after each join, read left to right as groups disappear. It climbs for 20 joins, peaks at 0.5391 with four groups, then falls: joining two divisions to make three groups gives 0.4602, two groups 0.3681, one group 0. The four groups at the peak are exactly A1 to A6, B1 to B6, C1 to C6 and D1 to D6. All 24 clubs are grouped with exactly their division-mates. As a last check, the best single move of one club to another group, C2 to division B, would lower $Q$ by 0.0425: the answer is a local peak.
+The one line is $Q$ after each join, read left to right as groups disappear. It climbs for 20 joins, peaks at 0.5391 with four groups, then falls: joining two divisions to make three groups gives 0.4602, two groups 0.3681, one group 0.
+
+The four groups at the peak are exactly A1 to A6, B1 to B6, C1 to C6 and D1 to D6. All 24 clubs are grouped with exactly their division-mates. As a last check, the best single move of one club to another group, C2 to division B, would lower $Q$ by 0.0425: the answer is a local peak.
 
 ### Testing against planted divisions
 
@@ -171,7 +181,9 @@ With 8 cup ties the divisions always come back. At 16, the main example's number
 
 ## Code, from first principles, and it actually runs
 
-The script builds the league from a written-out SplitMix64 generator, so Python and Rust print the same numbers. It keeps $Q$ as an exact integer over $4m^2$, so no rounding can blur a comparison. It reaches the answers by four independent roads. First, $Q$ by the pair sum against $Q$ by the group sum. Second, the merge formula against a fresh count of $Q$ after every join, plus the first join worked by hand from the degrees. Third, greedy against brute force over all 21147 splits of a 9-club mini league. Fourth, greedy against the planted divisions, on the main league and on 120 seeded leagues. Then it prints every "what breaks" number.
+The script builds the league from a written-out SplitMix64 generator, so Python and Rust print the same numbers. It keeps $Q$ as an exact integer over $4m^2$, so no rounding can blur a comparison.
+
+It reaches the answers by four independent roads. First, $Q$ by the pair sum against $Q$ by the group sum. Second, the merge formula against a fresh count of $Q$ after every join, plus the first join worked by hand from the degrees. Third, greedy against brute force over all 21147 splits of a 9-club mini league. Fourth, greedy against the planted divisions, on the main league and on 120 seeded leagues. Then it prints every "what breaks" number.
 
 ### Python
 
@@ -560,6 +572,243 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the merge formula and both forms of $Q$ for every network of plain lines and every split, and checks the league's numbers.
+
+- Take any network of plain lines, any split, and two different groups $a$ and $b$. Then joining them changes $Q$ by exactly $\Delta Q_{ab} = l_{ab}/m - d_a d_b/(2m^2)$.
+- Take any network of plain lines and any split. Then the pair sum for $Q$ equals the sum over groups of $L_c/m - (d_c/2m)^2$.
+- Put all the clubs in one big group. Then $Q = 0$, in any network of plain lines.
+- Take the league. Then $m = 76$, each division has $L_c = 15$, and the $d_c$ are 36, 38, 40 and 38.
+- Take the divisions as the split. Then $Q = 60/76 - 5784/23104 = 1557/2888$, which is 0.5391.
+- Take every club alone. Then $\sum_i k_i^2 = 982$, so $Q = -982/23104$, which is −0.0425.
+- Take the first join, A1 and A5. Then they met once, with degrees 6 and 5, and $\Delta Q = 61/5776$, which is 0.0106.
+- As arithmetic, the halved denominator gives 0.2888 and the 6-cycle split gives −0.5000.
+- There are 21147 ways to split 9 clubs into groups. In the ring of 30 cliques pairs beat singles; in a ring of 20, singles win.
+
+The greedy merge, the search over 21147 splits, the 120 seeded leagues and the random fixtures are left to the Python and Rust checks.
+
+```lean
+-- Communities: for every finite simple graph and every split of its nodes into groups, joining two groups changes the modularity by the share of lines between them minus d_a d_b / 2m^2, the pair form of modularity equals the group form, one big group scores 0, and the card's league numbers check out.
+import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
+import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+import Mathlib.Combinatorics.Enumerative.Bell
+import Mathlib.Data.Rat.Defs
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
+
+namespace CommunityDetection
+
+open SimpleGraph Finset
+
+variable {V ι : Type*} [Fintype V] [DecidableEq V] [DecidableEq ι]
+
+/-- Modularity `Q` of the split `c` (node `i` goes to group `c i`), by the card's pair form:
+`Q = (1 / 2m) · Σ_{i,j} [A_ij - k_i k_j / 2m] · δ(c_i, c_j)`, where `A` is the adjacency
+matrix, `k_i` the degree of `i`, and `m` the number of lines. -/
+def modularity (G : SimpleGraph V) [DecidableRel G.Adj] (c : V → ι) : ℚ :=
+  let m : ℚ := G.edgeFinset.card
+  (1 / (2 * m)) * ∑ i, ∑ j,
+    if c i = c j then G.adjMatrix ℚ i j - (G.degree i : ℚ) * G.degree j / (2 * m) else 0
+
+/-- `L_g`: the lines with both ends in group `g`. -/
+def insideLines (G : SimpleGraph V) [DecidableRel G.Adj] (c : V → ι) (g : ι) : ℕ :=
+  (G.edgeFinset.filter (fun e => e.map c = s(g, g))).card
+
+/-- `d_g`: the total degree of the nodes in group `g`. -/
+def groupDegree (G : SimpleGraph V) [DecidableRel G.Adj] (c : V → ι) (g : ι) : ℕ :=
+  ∑ v ∈ univ.filter (fun v => c v = g), G.degree v
+
+/-- `l_ab`: the lines with one end in group `a` and the other in group `b`. -/
+def linesBetween (G : SimpleGraph V) [DecidableRel G.Adj] (c : V → ι) (a b : ι) : ℕ :=
+  (G.edgeFinset.filter (fun e => e.map c = s(a, b))).card
+
+/-- The split after joining group `b` into group `a`: every node of `b` moves to `a`. -/
+def mergeGroups (c : V → ι) (a b : ι) : V → ι :=
+  fun v => if c v = b then a else c v
+
+/-- Summing over ordered pairs of adjacent nodes counts each line twice. -/
+theorem sum_adj_sym2 (G : SimpleGraph V) [DecidableRel G.Adj] (f : Sym2 V → ℚ) :
+    ∑ i, ∑ j, (if G.Adj i j then f s(i, j) else 0) = 2 * ∑ e ∈ G.edgeFinset, f e := by
+  have h1 : ∑ i, ∑ j, (if G.Adj i j then f s(i, j) else 0) = ∑ d : G.Dart, f d.edge := by
+    rw [← Finset.sum_product', ← Finset.sum_filter]
+    refine Finset.sum_bij' (fun p hp => ⟨p, (mem_filter.1 hp).2⟩) (fun d _ => d.toProd)
+      ?_ ?_ ?_ ?_ ?_ <;> simp
+  rw [h1, ← Finset.sum_fiberwise_of_maps_to (g := Dart.edge) (t := G.edgeFinset)
+    (fun d _ => by simp), Finset.mul_sum]
+  refine Finset.sum_congr rfl fun e he => ?_
+  rw [Finset.sum_congr rfl (g := fun _ => f e) (fun d hd => by rw [(mem_filter.1 hd).2]),
+    sum_const, nsmul_eq_mul, G.dart_edge_fiber_card e (by simpa using he)]
+  norm_num
+
+/-- The ordered pairs of adjacent nodes whose groups are `{a, b}` number `2 l_ab`. -/
+theorem sum_adj_pair_groups (G : SimpleGraph V) [DecidableRel G.Adj] (c : V → ι) (a b : ι) :
+    ∑ i, ∑ j, (if s(c i, c j) = s(a, b) then (if G.Adj i j then (1 : ℚ) else 0) else 0) =
+      2 * (linesBetween G c a b : ℚ) := by
+  have := sum_adj_sym2 G (fun e => if e.map c = s(a, b) then (1 : ℚ) else 0)
+  simp only [Sym2.map_mk] at this
+  refine Eq.trans ?_ (this.trans ?_)
+  · refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
+    split_ifs <;> simp_all
+  rw [linesBetween, Finset.sum_ite, sum_const_zero, add_zero, sum_const, nsmul_eq_mul,
+    mul_one]
+
+omit [DecidableEq V] in
+/-- The degree products over ordered pairs from groups `a` and `b` add up to `d_a d_b`. -/
+theorem sum_deg_pair_groups (G : SimpleGraph V) [DecidableRel G.Adj] (c : V → ι) (a b : ι) :
+    ∑ i, ∑ j, (if c i = a ∧ c j = b then (G.degree i : ℚ) * G.degree j else 0) =
+      (groupDegree G c a : ℚ) * groupDegree G c b := by
+  simp only [groupDegree, Nat.cast_sum, Finset.sum_filter, Finset.sum_mul_sum]
+  refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
+  split_ifs <;> simp_all
+
+/-- The card's merge formula. In any finite network of plain lines (a simple graph with `m`
+lines), for any split into groups and any two different groups `a` and `b`, joining them changes
+the modularity by `ΔQ_ab = l_ab / m - d_a d_b / (2 m^2)`: the share of lines running between them,
+minus what chance would run between them anyway. -/
+theorem merge_gain_eq (G : SimpleGraph V) [DecidableRel G.Adj] (c : V → ι) (a b : ι)
+    (hab : a ≠ b) :
+    modularity G (mergeGroups c a b) - modularity G c =
+      (linesBetween G c a b : ℚ) / G.edgeFinset.card -
+        (groupDegree G c a : ℚ) * groupDegree G c b / (2 * (G.edgeFinset.card : ℚ) ^ 2) := by
+  simp only [modularity, adjMatrix_apply]
+  generalize (G.edgeFinset.card : ℚ) = M
+  have key : ∀ i j, (if mergeGroups c a b i = mergeGroups c a b j then
+      (if G.Adj i j then (1 : ℚ) else 0) - (G.degree i : ℚ) * G.degree j / (2 * M) else 0) =
+      (if c i = c j then (if G.Adj i j then (1 : ℚ) else 0) - (G.degree i : ℚ) * G.degree j / (2 * M) else 0) +
+      ((if s(c i, c j) = s(a, b) then (if G.Adj i j then (1 : ℚ) else 0) else 0) -
+        (1 / (2 * M)) * ((if c i = a ∧ c j = b then (G.degree i : ℚ) * G.degree j else 0) +
+          (if c i = b ∧ c j = a then (G.degree i : ℚ) * G.degree j else 0))) := by
+    intro i j
+    unfold mergeGroups
+    by_cases hi : c i = b <;> by_cases hj : c j = b <;> by_cases hi' : c i = a <;>
+      by_cases hj' : c j = a <;> simp_all [eq_comm] <;> ring
+  simp_rw [key, Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.mul_sum,
+    Finset.sum_add_distrib, sum_adj_pair_groups, sum_deg_pair_groups]
+  ring
+
+/-- The two forms of modularity agree: the pair sum equals the sum over groups of
+`L_c / m - (d_c / 2m)^2`, the share of lines inside each group minus the share chance would put
+there. -/
+theorem modularity_eq_sum_over_groups (G : SimpleGraph V) [DecidableRel G.Adj] (c : V → ι) :
+    modularity G c =
+      ∑ g ∈ univ.image c,
+        ((insideLines G c g : ℚ) / G.edgeFinset.card -
+          ((groupDegree G c g : ℚ) / (2 * G.edgeFinset.card)) ^ 2) := by
+  simp only [modularity, insideLines, adjMatrix_apply]
+  generalize (G.edgeFinset.card : ℚ) = M
+  have key : ∀ i j, (if c i = c j then
+      (if G.Adj i j then (1 : ℚ) else 0) - (G.degree i : ℚ) * G.degree j / (2 * M) else 0) =
+      ∑ g ∈ univ.image c, ((if s(c i, c j) = s(g, g) then (if G.Adj i j then (1 : ℚ) else 0) else 0) -
+        (1 / (2 * M)) * (if c i = g ∧ c j = g then (G.degree i : ℚ) * G.degree j else 0)) := by
+    intro i j
+    rw [Finset.sum_eq_single (c i)]
+    · by_cases h : c i = c j <;> simp [h, eq_comm]; ring
+    · intro g _ hg
+      have : ¬ (c i = g) := fun h => hg h.symm
+      simp [this]
+    · intro h
+      exact absurd (mem_image_of_mem c (mem_univ i)) h
+  simp_rw [key]
+  rw [Finset.sum_comm]
+  simp_rw [Finset.sum_comm (s := univ) (t := univ.image c)]
+  rw [Finset.mul_sum]
+  refine Finset.sum_congr rfl fun g _ => ?_
+  rw [Finset.sum_comm]
+  simp_rw [Finset.sum_sub_distrib, ← Finset.mul_sum]
+  rw [sum_adj_pair_groups, sum_deg_pair_groups, linesBetween]
+  ring
+
+/-- Step 0 of the card: put every node in one big group and the score is 0. Every line is
+inside, but chance would put every line inside too. -/
+theorem modularity_one_group_eq_zero (G : SimpleGraph V) [DecidableRel G.Adj] (g : ι) :
+    modularity G (fun _ : V => g) = 0 := by
+  have h := sum_adj_sym2 G (fun _ => 1)
+  simp only [sum_const, nsmul_eq_mul, mul_one] at h
+  have hd : ∑ i, (G.degree i : ℚ) = 2 * G.edgeFinset.card := by
+    rw [← Nat.cast_sum, G.sum_degrees_eq_twice_card_edges]
+    push_cast; ring
+  simp only [modularity, adjMatrix_apply, ite_true]
+  generalize (G.edgeFinset.card : ℚ) = M at h hd
+  have hr : ∀ i j, (if G.Adj i j then (1 : ℚ) else 0) - (G.degree i : ℚ) * G.degree j / (2 * M) =
+      (if G.Adj i j then (1 : ℚ) else 0) - (1 / (2 * M)) * ((G.degree i : ℚ) * G.degree j) := by
+    intro i j; ring
+  simp_rw [hr, Finset.sum_sub_distrib, ← Finset.mul_sum]
+  simp only [h, hd, ← Finset.sum_mul]
+  by_cases hm : M = 0
+  · simp [hm]
+  · field_simp
+    ring
+
+/-! The card's league: clubs A1 to A6 are `0` to `5`, B1 to B6 are `6` to `11`, C1 to C6 are
+`12` to `17`, D1 to D6 are `18` to `23`. Club `i` is in division `i / 6`. -/
+
+/-- The 16 cup ties: A6-D2 C3-D1 A4-B4 B1-C2 A3-D3 B3-C2 A2-C6 C5-D3 B5-D3 A1-C5 C1-D5 C6-D6
+B6-C6 B3-C3 B1-D5 A6-B3. -/
+def cupTies : List (Fin 24 × Fin 24) :=
+  [(5, 19), (14, 18), (3, 9), (6, 13), (2, 20), (8, 13), (1, 17), (16, 20), (10, 20), (0, 16),
+   (12, 22), (17, 23), (11, 17), (8, 14), (6, 22), (5, 8)]
+
+/-- The league: every pair of clubs in one division played, plus the cup ties. -/
+def league : SimpleGraph (Fin 24) where
+  Adj x y := x ≠ y ∧ (x.val / 6 = y.val / 6 ∨ (x, y) ∈ cupTies ∨ (y, x) ∈ cupTies)
+  symm := ⟨fun _ _ h => ⟨h.1.symm, h.2.elim (fun e => Or.inl e.symm)
+    (fun h' => Or.inr h'.symm)⟩⟩
+  loopless := ⟨fun _ h => h.1 rfl⟩
+
+instance : DecidableRel league.Adj := fun _ _ => inferInstanceAs (Decidable (_ ∧ _))
+
+/-- The divisions as a split: club `i` goes to group `i / 6`. -/
+def division (i : Fin 24) : ℕ := i.val / 6
+
+-- 15 fixtures per division, 76 fixtures in all, and the total degree 152 is 2m.
+example : Nat.choose 6 2 = 15 ∧ 4 * 15 + 16 = 76 := by decide
+example : league.edgeFinset.card = 76 := by decide
+example : (List.range 4).map (insideLines league division) = [15, 15, 15, 15] := by decide
+example : (List.range 4).map (groupDegree league division) = [36, 38, 40, 38] := by decide
+example : 36 + 38 + 40 + 38 = 152 ∧ 152 = 2 * 76 := by norm_num
+-- Q of the divisions: 60/76 - 5784/23104 = 1557/2888 (0.5391).
+example : 36 ^ 2 + 38 ^ 2 + 40 ^ 2 + 38 ^ 2 = 5784 ∧ 152 ^ 2 = 23104 := by norm_num
+example : (60 : ℚ) / 76 - 5784 / 23104 = 1557 / 2888 := by norm_num
+-- Every club alone: Q = -Σ k_i^2 / 152^2 = -982/23104 (-0.0425).
+example : ∑ i, league.degree i ^ 2 = 982 := by decide
+-- The first join, A1 + A5: they met once, degrees 6 and 5, gain 1/76 - 30/(2·76^2) = 61/5776.
+example : league.Adj 0 4 ∧ league.degree 0 = 6 ∧ league.degree 4 = 5 := by decide
+example : (1 : ℚ) / 76 - 6 * 5 / (2 * 76 ^ 2) = 61 / 5776 := by norm_num
+-- What breaks: the chance term k_i k_j / m instead of / 2m gives (2·76·60 - 5784)/(2·76^2) (0.2888).
+example : ((2 * 76 * 60 - 5784 : ℚ)) / (2 * 76 ^ 2) = 417 / 1444 := by norm_num
+-- The mini league of 9 clubs has 21147 splits into groups (the Bell number of 9).
+example : Nat.bell 9 = 21147 := by
+  norm_num [Nat.bell_succ', Finset.Nat.antidiagonal_succ, Nat.choose]
+-- Resolution limit, ring of 30 five-club cliques (m = 330): in pairs beats each clique alone.
+example : (30 : ℚ) * (10 / 330 - (22 / 660) ^ 2) < 15 * (21 / 330 - (44 / 660) ^ 2) := by norm_num
+-- Ring of 20 (m = 220): now each clique alone wins.
+example : (10 : ℚ) * (21 / 220 - (44 / 440) ^ 2) < 20 * (10 / 220 - (22 / 440) ^ 2) := by norm_num
+-- A 6-cycle split into its two sides: no line inside, each side has degree 6, Q = -1/2.
+example : (2 : ℚ) * (0 / 6 - (6 / 12) ^ 2) = -1 / 2 := by norm_num
+
+#print axioms sum_adj_sym2
+#print axioms sum_adj_pair_groups
+#print axioms sum_deg_pair_groups
+#print axioms merge_gain_eq
+#print axioms modularity_eq_sum_over_groups
+#print axioms modularity_one_group_eq_zero
+
+end CommunityDetection
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'CommunityDetection.sum_adj_sym2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CommunityDetection.sum_adj_pair_groups' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CommunityDetection.sum_deg_pair_groups' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CommunityDetection.merge_gain_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CommunityDetection.modularity_eq_sum_over_groups' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CommunityDetection.modularity_one_group_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

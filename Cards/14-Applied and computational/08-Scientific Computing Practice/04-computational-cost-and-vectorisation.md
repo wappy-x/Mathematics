@@ -6,11 +6,23 @@
 
 ## General Overview
 
-A check script in this library has to answer a question about luck. Bet £1 on a fair coin 64 times in a row. What share of people who do this end at least £16 up? Ending £16 up means at least 40 heads out of 64. The script answers by simulation (running the experiment on made-up random numbers): it plays out 1,000,000 paths, one path being one person's 64 bets, and counts the paths that end £16 up.
+A check script in this library has to answer a question about luck. Bet £1 on a fair coin 64 times in a row. What share of people who do this end at least £16 up? Ending £16 up means at least 40 heads out of 64.
 
-Each path costs the same short list of work. Turn the path's number into 64 random bits, one bit per coin: 13 operations. Count the heads: 1 operation. Compare with 40: 1 operation. Add the result to the running total: 1 operation. That is 16 operations on one number each, so 16,000,000 for the whole run. Count the operations first, because that number is fixed by the method: running the same instructions as a loop or as arrays does not change it.
+The script answers by simulation (running the experiment on made-up random numbers): it plays out 1,000,000 paths, one path being one person's 64 bets, and counts the paths that end £16 up.
 
-How the 16,000,000 operations are launched is a separate cost. Written as a loop in Python, the **interpreter** (the program that reads Python and carries it out, line by line) handles every one of them separately. Each time it reads the instruction, checks what kind of numbers it holds, makes a new number for the result and stores it. That bookkeeping costs more than the arithmetic itself. Written as **array work**, each of the 16 instructions is launched once for all 1,000,000 paths together, and the repetition happens inside compiled code (code already turned into the machine's own instructions). The arithmetic stays at 16,000,000 operations. The launches fall from 16,000,000 to 16, counted by a small interpreter the script builds for the purpose: a table of 15 instructions and a runner that reads them. Launching is the only bookkeeping that arrays of Python's own numbers remove. Each number still has its type checked and a new number made for its result. Removing that too takes arrays of bare machine numbers of one type, such as NumPy's, which this standard-library card describes but cannot run. A plain loop in Rust needs no interpreter at all: the compiler turned it into machine instructions before the run.
+Each path costs the same short list of work. Turn the path's number into 64 random bits, one bit per coin: 13 operations. Count the heads: 1 operation. Compare with 40: 1 operation. Add the result to the running total: 1 operation.
+
+That is 16 operations on one number each, so 16,000,000 for the whole run. Count the operations first, because that number is fixed by the method: running the same instructions as a loop or as arrays does not change it.
+
+How the 16,000,000 operations are launched is a separate cost. Written as a loop in Python, the **interpreter** (the program that reads Python and carries it out, line by line) handles every one of them separately. Each time it reads the instruction, checks what kind of numbers it holds, makes a new number for the result and stores it. That bookkeeping costs more than the arithmetic itself.
+
+Written as **array work**, each of the 16 instructions is launched once for all 1,000,000 paths together, and the repetition happens inside compiled code (code already turned into the machine's own instructions). The arithmetic stays at 16,000,000 operations.
+
+The launches fall from 16,000,000 to 16, counted by a small interpreter the script builds for the purpose: a table of 15 instructions and a runner that reads them.
+
+Launching is the only bookkeeping that arrays of Python's own numbers remove. Each number still has its type checked and a new number made for its result. Removing that too takes arrays of bare machine numbers of one type, such as NumPy's, which this standard-library card describes but cannot run.
+
+A plain loop in Rust needs no interpreter at all: the compiler turned it into machine instructions before the run.
 
 All three versions find the same 30,037 paths, about 3 in 100. The exact answer, worked out without any simulation, is 0.029971.
 
@@ -56,7 +68,9 @@ $$\text{cost} \approx s \cdot D + e \cdot E, \qquad E = k\,n, \qquad D = \begin{
 | SE | standard error: the typical size of the gap between h/n and p, √(p(1 − p)/n) | 0.000171 | shrinks as n grows |
 | $2^{64}$ | the number of different 64-coin sequences | the bottom of the fraction p | — |
 
-The prices s and e depend on the machine, so this card counts D and E and never times them; [Big-O](../01-Algorithms%20and%20Growth/01-big-o-and-growth-rates.md) explains why counts, not stopwatch readings, are the honest measure. The model says only this: when s is far larger than e, cutting D is where the saving lies. That needs arrays of bare machine numbers, where e is a machine instruction or two. This card's standard-library arrays hold Python's own numbers, so each element operation still checks types and makes a new number: their e is not small, and cutting D alone may save nothing (Step 3).
+The prices s and e depend on the machine, so this card counts D and E and never times them; [Big-O](../01-Algorithms%20and%20Growth/01-big-o-and-growth-rates.md) explains why counts, not stopwatch readings, are the honest measure.
+
+The model says only this: when s is far larger than e, cutting D is where the saving lies. That needs arrays of bare machine numbers, where e is a machine instruction or two. This card's standard-library arrays hold Python's own numbers, so each element operation still checks types and makes a new number: their e is not small, and cutting D alone may save nothing (Step 3).
 
 ### When it holds
 
@@ -64,7 +78,7 @@ The prices s and e depend on the machine, so this card counts D and E and never 
 - **Each array operation runs in compiled code.** Python's `map` with a built-in operation such as `operator.mul` loops in compiled code. Hand it a Python function, or write a list comprehension, and the interpreter runs every element again: D climbs back to 16,000,000.
 - **There is memory for b numbers at once.** One chunk of 1,000,000 holds 1,000,000 numbers per array. Chunks of 10,000 hold 10,000 and cost 1,600 steps instead of 16, still far below the loop's 16,000,000.
 - **The arithmetic is exact.** Integer results do not depend on order, so every version finds 30,037. Floating-point sums do depend on order, and array libraries often add in a different order from a loop, so their last digits can differ ([Floating point](01-floating-point-in-practice.md)).
-- **The numbers behave the same in both languages.** Rust's 64-bit integers wrap round (keep only the low 64 bits) for free. Python's integers never wrap, so the Python code masks after each multiply: three extra operations per path, 16 against 13.
+- **The numbers behave the same in both languages.** Rust's 64-bit integers wrap round (keep only the low 64 bits) for free. Python's integers never wrap, so the Python code masks (keeps only the low 64 bits) after each multiply: three extra operations per path, 16 against 13.
 
 ---
 
@@ -72,7 +86,11 @@ The prices s and e depend on the machine, so this card counts D and E and never 
 
 ### Step 0: the work is a grid, and either order covers it
 
-Lay the work out as a grid. Each row is one path; each column is one of the 16 instructions. The whole run is 1,000,000 rows by 16 columns, and every cell is one element operation. A loop walks the grid row by row: path 1's 16 cells, then path 2's. Array work walks it column by column: instruction 1 for every path, then instruction 2 for every path. Inside a row the order matters, because each instruction uses the one before. Across rows it does not, because no path reads another. So both walks fill in exactly the same cells with exactly the same values. What differs is how many times the interpreter has to start something: once per cell, or once per column.
+Lay the work out as a grid. Each row is one path; each column is one of the 16 instructions. The whole run is 1,000,000 rows by 16 columns, and every cell is one element operation.
+
+A loop walks the grid row by row: path 1's 16 cells, then path 2's. Array work walks it column by column: instruction 1 for every path, then instruction 2 for every path.
+
+Inside a row the order matters, because each instruction uses the one before. Across rows it does not, because no path reads another. So both walks fill in exactly the same cells with exactly the same values. What differs is how many times the interpreter has to start something: once per cell, or once per column.
 
 ### Step 1: element operations are k times n, in any order
 
@@ -90,15 +108,23 @@ $$D = k \lceil n/b \rceil.$$
 
 For b = 100 that is 16 × 10,000 = 160,000 steps; for b = 10,000, 1,600; for one chunk of all 1,000,000 paths, 16. Setting b = 1 gives back the loop's 16,000,000, which is why a loop is just arrays of length one. The code counts D both ways and meets the formula at each b.
 
-The doubling test from [Big-O](../01-Algorithms%20and%20Growth/01-big-o-and-growth-rates.md) shows the difference in growth. At 1,000 paths the loop takes 16,000 steps and arrays take 16; at 2,000 paths the loop takes 32,000 and arrays still 16. The loop's steps are order n; one array's steps are order 1, a fixed count whatever n is.
+The doubling test from [Big-O](../01-Algorithms%20and%20Growth/01-big-o-and-growth-rates.md) shows the difference in growth. At 1,000 paths the loop takes 16,000 steps and arrays take 16; at 2,000 paths the loop takes 32,000 and arrays still 16. The loop's steps are order n, growing in step with n; one array's steps are order 1, a fixed count whatever n is.
 
 ### Step 3: why a step costs so much more than the arithmetic
 
-Python decides almost nothing before the program runs. A name such as `z` might hold a small integer, a huge one or a string, so before every `*` the interpreter looks up what `z` holds, checks both types, picks the right multiply, makes a new number object for the result and stores it. The multiply itself, for numbers that fit in 64 bits, is one machine instruction. The bookkeeping is many.
+Python decides almost nothing before the program runs. A name such as `z` might hold a small integer, a huge one or a string, so before every `*` the interpreter looks up what `z` holds, checks both types, picks the right multiply, makes a new number object for the result and stores it.
 
-Array work removes only the reading and launching: one launch per array instead of one per number. The rest of the bookkeeping belongs to the numbers themselves. This card's arrays are lists of Python integers, so `map` with `operator.mul` still checks the types and makes a new number object for every element: inside compiled code, but once per number. Arrays built for numerical work, such as NumPy's (Sources), store bare 64-bit numbers of one type in one block of memory. They check the type once per array, and the loop over the numbers costs a few machine instructions each. A standard-library card can describe them but not run them. A compiled language such as Rust does all the bookkeeping once, at compile time, for the whole program: it knows `z` is always a 64-bit integer, so the loop body becomes a handful of machine instructions and D = 0.
+The multiply itself, for numbers that fit in 64 bits, is one machine instruction. The bookkeeping is many.
 
-This is the model behind the formula: s, the price of a step, is many times e, the price of an element operation on bare machine numbers. It is how array libraries are designed (see Sources), but it is a statement about machines, so the card leaves it as a model and asserts no time. For this card's lists of Python integers, e carries the per-number bookkeeping too, so the model promises them no saving; what the card checks is the counts, D and E.
+Array work removes only the reading and launching: one launch per array instead of one per number. The rest of the bookkeeping belongs to the numbers themselves. This card's arrays are lists of Python integers, so `map` with `operator.mul` still checks the types and makes a new number object for every element: inside compiled code, but once per number.
+
+Arrays built for numerical work, such as NumPy's (Sources), store bare 64-bit numbers of one type in one block of memory. They check the type once per array, and the loop over the numbers costs a few machine instructions each. A standard-library card can describe them but not run them.
+
+A compiled language such as Rust does all the bookkeeping once, at compile time, for the whole program: it knows `z` is always a 64-bit integer, so the loop body becomes a handful of machine instructions and D = 0.
+
+This is the model behind the formula: s, the price of a step, is many times e, the price of an element operation on bare machine numbers. It is how array libraries are designed (see Sources), but it is a statement about machines, so the card leaves it as a model and asserts no time.
+
+For this card's lists of Python integers, e carries the per-number bookkeeping too, so the model promises them no saving; what the card checks is the counts, D and E.
 
 The Python script does ask the interpreter itself for one confirmation. Python offers a trace hook (a function it calls before running each line of Python). The script counts those calls: for the loop they grow in step with the number of paths, and for the array runner they stay the same when the paths double. That check is asserted but not printed, because Rust has no such hook.
 
@@ -108,7 +134,9 @@ A path ends at least £16 up when it has at least 40 heads among 64 fair coins. 
 
 $$p = \frac{552{,}859{,}891{,}708{,}071{,}949}{2^{64}} = 0.029971,$$
 
-and 1,000,000 paths should give about 29,970.6 hits. The simulation's hits h are the total of a million yes-or-no results, so h/n has standard error SE = √(p(1 − p)/n) = 0.000171. The run gives h = 30,037, an estimate of 0.030037, which is 0.39 standard errors above p. A correct simulation almost always lands within 4 standard errors of p; the code asserts the gap is under 4.
+and 1,000,000 paths should give about 29,970.6 hits.
+
+The simulation's hits h are the total of a million yes-or-no results, so h/n has standard error SE = √(p(1 − p)/n) = 0.000171. The run gives h = 30,037, an estimate of 0.030037, which is 0.39 standard errors above p. A correct simulation almost always lands within 4 standard errors of p; the code asserts the gap is under 4.
 
 The random bits come from SplitMix64 (a small generator of 64-bit random numbers written out in full; [Seeds](03-reproducible-simulation-and-seeds.md) covers how its seed makes a run repeatable). Path i uses the generator's i-th output from seed 2026. Before trusting it, the code checks it against a SplitMix64 test vector (five known outputs written into the script): from seed 1234567 the first is 6,457,827,717,110,365,317.
 
@@ -143,7 +171,11 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-The script writes one path's work as a table of 15 instructions and runs it two ways, each counting its own element operations and interpreter steps: path by path, and instruction by instruction across an array, in chunks of 100, 10,000 and 1,000,000. A plain loop written the ordinary way finds the same hits. The roads to the answer are independent: the exact probability from Pascal's triangle, with no random numbers; the simulation, which must land within 4 standard errors of it; and the counts, which must meet the formulas k n and k⌈n/b⌉. The generator also meets a SplitMix64 test vector, and in Python the interpreter's own trace hook confirms that the loop's work grows with n while the array runner's does not. In Python, `operator` supplies single operations such as multiply and shift, and `itertools.repeat` hands the same constant to every element; neither knows the answer.
+The script writes one path's work as a table of 15 instructions and runs it two ways, each counting its own element operations and interpreter steps: path by path, and instruction by instruction across an array, in chunks of 100, 10,000 and 1,000,000. A plain loop written the ordinary way finds the same hits.
+
+The roads to the answer are independent: the exact probability from Pascal's triangle, with no random numbers; the simulation, which must land within 4 standard errors of it; and the counts, which must meet the formulas k n and k⌈n/b⌉.
+
+The generator also meets a SplitMix64 test vector, and in Python the interpreter's own trace hook confirms that the loop's work grows with n while the array runner's does not. In Python, `operator` supplies single operations such as multiply and shift, and `itertools.repeat` hands the same constant to every element; neither knows the answer.
 
 ### Python
 
@@ -495,6 +527,285 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line.
+
+### Lean
+
+Lean proves the counts of Steps 1 and 2 for any paths and chunk size, the exact count of Step 4, and the worked numbers.
+
+- Take $k$ instructions on $n$ independent paths, and a chunk size $b \ge 1$. Then the loop and the arrays find the same value for every path.
+- Take $k$ instructions on $n$ paths, and a chunk size $b \ge 1$. Then the loop and the arrays each do exactly $E = k\,n$ element operations.
+- Take $k$ instructions on $n$ paths. Then the loop launches $D = k\,n$ interpreter steps.
+- Take $k$ instructions on $n$ paths in chunks of $b \ge 1$. Then the arrays launch $D = k \lceil n/b \rceil$ interpreter steps.
+- Arrays in chunks of one path give the same values, steps and element operations as the loop.
+- Count the 64-coin sequences with at least 40 heads. Then the count is entries 40 to 64 of row 64 of Pascal's triangle, added: 552,859,891,708,071,949.
+- The worked counts hold: 16 per path, 16,000,000 in all, and 16, 1,600 or 160,000 array steps.
+
+The simulation and its 30,037 hits, the SplitMix64 test and the trace hook are left to the Python and Rust checks.
+
+```lean
+-- Cost in practice: running a list of per-path instructions path by path or as arrays in chunks of b gives the same results and the same k n element operations, while the interpreter steps fall from k n to k times ⌈n/b⌉; and 552,859,891,708,071,949 of the 2^64 sequences of 64 coins have at least 40 heads.
+import Mathlib.Data.Fintype.Pi
+import Mathlib.Data.Nat.Choose.Sum
+import Mathlib.Algebra.Order.Floor.Semiring
+import Mathlib.Data.Rat.Floor
+import Mathlib.Tactic.NormNum
+
+open Finset
+
+/-! The card's model of a run. One path's state `σ` is its own registers (for the card's
+script, the numbers `z` and `t`). One path's work is a list `prog` of `k` instructions, each a
+function of that path's own state only: no instruction reads another path, which is the card's
+condition that the paths are independent. The `n` paths start from the list `xs`.
+
+Every run below returns three things: the final value of every path, the interpreter steps
+(instructions read and launched) and the element operations (work on one number). -/
+
+/-- One path through the loop: each instruction is launched on its own, so it costs one
+interpreter step and one element operation. -/
+def loopPath {σ : Type*} (prog : List (σ → σ)) (z : σ) : σ × ℕ × ℕ :=
+  prog.foldl (fun s f => (f s.1, s.2.1 + 1, s.2.2 + 1)) (z, 0, 0)
+
+/-- The loop, path by path: for each path, for each instruction. -/
+def runLoop {σ : Type*} (prog : List (σ → σ)) : List σ → List σ × ℕ × ℕ
+  | [] => ([], 0, 0)
+  | x :: xs =>
+    let r := loopPath prog x
+    let rest := runLoop prog xs
+    (r.1 :: rest.1, r.2.1 + rest.2.1, r.2.2 + rest.2.2)
+
+/-- One chunk as array work: each instruction is launched once for the whole array (one
+interpreter step) and does one element operation per number in the array. -/
+def arrayChunk {σ : Type*} (prog : List (σ → σ)) (zs : List σ) : List σ × ℕ × ℕ :=
+  prog.foldl (fun s f => (s.1.map f, s.2.1 + 1, s.2.2 + s.1.length)) (zs, 0, 0)
+
+/-- Array work in chunks of `b` paths: take the next `b` paths (or all that are left), run
+every instruction across that chunk, then go on to the rest. (A chunk size of 0 makes no
+sense and runs nothing.) -/
+def runArrays {σ : Type*} (prog : List (σ → σ)) (b : ℕ) (xs : List σ) : List σ × ℕ × ℕ :=
+  if _h : xs = [] ∨ b = 0 then ([], 0, 0) else
+    let r := arrayChunk prog (xs.take b)
+    let rest := runArrays prog b (xs.drop b)
+    (r.1 ++ rest.1, r.2.1 + rest.2.1, r.2.2 + rest.2.2)
+termination_by xs.length
+decreasing_by
+  simp only [not_or] at _h
+  have := List.length_pos_of_ne_nil _h.1
+  simp only [List.length_drop]
+  omega
+
+theorem loopPath_fold_aux {σ : Type*} (prog : List (σ → σ)) (z : σ) (a c : ℕ) :
+    prog.foldl (fun s f => (f s.1, s.2.1 + 1, s.2.2 + 1)) (z, a, c) =
+      (prog.foldl (fun x f => f x) z, a + prog.length, c + prog.length) := by
+  induction prog generalizing z a c with
+  | nil => simp
+  | cons f fs ih => simp only [List.foldl_cons, ih, List.length_cons]; ext <;> simp <;> omega
+
+theorem loopPath_eq {σ : Type*} (prog : List (σ → σ)) (z : σ) :
+    loopPath prog z = (prog.foldl (fun x f => f x) z, prog.length, prog.length) := by
+  simp [loopPath, loopPath_fold_aux]
+
+theorem arrayChunk_fold_aux {σ : Type*} (prog : List (σ → σ)) (zs : List σ) (a c : ℕ) :
+    prog.foldl (fun s f => (s.1.map f, s.2.1 + 1, s.2.2 + s.1.length)) (zs, a, c) =
+      (zs.map (fun x => prog.foldl (fun x f => f x) x), a + prog.length,
+        c + prog.length * zs.length) := by
+  induction prog generalizing zs a c with
+  | nil => simp
+  | cons f fs ih =>
+    simp only [List.foldl_cons, ih, List.length_cons, List.length_map, List.map_map]
+    ext
+    · simp [Function.comp_def]
+    · simp; omega
+    · simp; ring
+
+theorem arrayChunk_eq {σ : Type*} (prog : List (σ → σ)) (zs : List σ) :
+    arrayChunk prog zs = (zs.map (fun x => prog.foldl (fun x f => f x) x), prog.length,
+      prog.length * zs.length) := by
+  simp [arrayChunk, arrayChunk_fold_aux]
+
+theorem runLoop_eq {σ : Type*} (prog : List (σ → σ)) (xs : List σ) :
+    runLoop prog xs = (xs.map (fun x => prog.foldl (fun x f => f x) x),
+      prog.length * xs.length, prog.length * xs.length) := by
+  induction xs with
+  | nil => simp [runLoop]
+  | cons x xs ih =>
+    simp only [runLoop, ih, loopPath_eq, List.map_cons, List.length_cons]
+    ext <;> simp <;> ring
+
+theorem ceil_chunks_step (n b : ℕ) (hb : 0 < b) (hn : 0 < n) :
+    ⌈(n : ℚ) / b⌉₊ = 1 + ⌈((n - min b n : ℕ) : ℚ) / b⌉₊ := by
+  have hbq : (0 : ℚ) < b := by exact_mod_cast hb
+  rcases le_total b n with h | h
+  · rw [min_eq_left h, Nat.cast_sub h]
+    have : (n : ℚ) / b = ((n : ℚ) - b) / b + 1 := by field_simp; ring
+    rw [this, Nat.ceil_add_one]
+    · ring
+    · apply div_nonneg _ hbq.le
+      have : (b : ℚ) ≤ n := by exact_mod_cast h
+      linarith
+  · rw [min_eq_right h, Nat.sub_self]
+    simp only [Nat.cast_zero, zero_div, Nat.ceil_zero, add_zero]
+    rw [Nat.ceil_eq_iff one_ne_zero]
+    constructor
+    · simp only [Nat.sub_self, Nat.cast_zero]
+      apply div_pos _ hbq; exact_mod_cast hn
+    · rw [div_le_iff₀ hbq]; simp; exact_mod_cast h
+
+theorem runArrays_eq {σ : Type*} (prog : List (σ → σ)) (b : ℕ) (hb : 0 < b) (xs : List σ) :
+    runArrays prog b xs = (xs.map (fun x => prog.foldl (fun x f => f x) x),
+      prog.length * ⌈(xs.length : ℚ) / b⌉₊, prog.length * xs.length) := by
+  induction h : xs.length using Nat.strong_induction_on generalizing xs with
+  | _ n ih =>
+    rw [runArrays]
+    by_cases hx : xs = []
+    · subst hx; simp at h; subst h; simp
+    · have hcond : ¬ (xs = [] ∨ b = 0) := by
+        simp only [not_or]; exact ⟨hx, by omega⟩
+      rw [dite_eq_right_of_eq_false (eq_false hcond)]
+      have hlen : 0 < xs.length := List.length_pos_of_ne_nil hx
+      have hd : (xs.drop b).length < n := by simp; omega
+      rw [ih _ hd (xs.drop b) rfl, arrayChunk_eq]
+      simp only [List.length_take, List.length_drop]
+      ext
+      · simp [List.take_append_drop]
+      · simp only
+        rw [← h, ceil_chunks_step xs.length b hb hlen]
+        have : xs.length - min b xs.length = xs.length - b := by omega
+        rw [this]; ring
+      · simp only
+        rw [← h]
+        have : min b xs.length + (xs.length - b) = xs.length := by omega
+        rw [← mul_add, this]
+
+theorem card_bool_functions_with_j_true (n j : ℕ) :
+    (univ.filter (fun s : Fin n → Bool => (univ.filter (fun i => s i = true)).card = j)).card =
+      Nat.choose n j := by
+  have hc : (powersetCard j (univ : Finset (Fin n))).card = Nat.choose n j := by simp
+  rw [← hc]
+  refine card_bij (fun s _ => univ.filter (fun i => s i = true)) ?_ ?_ ?_
+  · intro s hs
+    simp only [mem_filter, mem_univ, true_and] at hs
+    simp [mem_powersetCard, hs]
+  · intro s _ s' _ h
+    funext i
+    have := congrArg (fun t => i ∈ t) h
+    simp only [mem_filter, mem_univ, true_and, eq_iff_iff] at this
+    cases hs : s i <;> cases hs' : s' i <;> simp_all
+  · intro t ht
+    rw [mem_powersetCard] at ht
+    refine ⟨fun i => decide (i ∈ t), ?_, ?_⟩
+    · simp only [mem_filter, mem_univ, true_and, decide_eq_true_eq]
+      rw [filter_mem_eq_inter, univ_inter, ht.2]
+    · simp
+
+theorem sum_choose_64_from_40 :
+    ∑ j ∈ Icc 40 64, Nat.choose 64 j = 552859891708071949 := by
+  decide
+
+theorem card_at_least_m_true (n m : ℕ) :
+    (univ.filter (fun s : Fin n → Bool =>
+        m ≤ (univ.filter (fun i => s i = true)).card)).card =
+      ∑ j ∈ Icc m n, Nat.choose n j := by
+  rw [card_eq_sum_card_fiberwise (f := fun s : Fin n → Bool =>
+    (univ.filter (fun i => s i = true)).card) (t := Icc m n)]
+  · refine sum_congr rfl fun j hj => ?_
+    rw [← card_bool_functions_with_j_true n j, filter_filter]
+    simp only [mem_Icc] at hj
+    exact congrArg card (filter_congr fun s _ => ⟨fun h => h.2, fun h => ⟨h ▸ hj.1, h⟩⟩)
+  · intro s hs
+    simp only [coe_filter, mem_univ, true_and, Set.mem_ofPred_eq] at hs
+    simp only [coe_Icc, Set.mem_Icc]
+    refine ⟨hs, ?_⟩
+    calc _ ≤ (univ : Finset (Fin n)).card := card_le_univ _
+      _ = n := by simp
+
+/-- The card's main claim. Run the same `k` instructions on `n` independent paths, first as a
+loop, path by path, and then as array work, `b` paths at a time with `b ≥ 1`. Both find the same
+value for every path; both do exactly `E = k n` element operations, so arrays do not reduce the
+arithmetic; but the loop launches `D = k n` interpreter steps and the arrays only
+`D = k ⌈n / b⌉`. -/
+theorem vectorising_keeps_arithmetic_and_cuts_launches {σ : Type*} (prog : List (σ → σ))
+    (xs : List σ) (b : ℕ) (hb : 0 < b) :
+    (runArrays prog b xs).1 = (runLoop prog xs).1 ∧
+    (runLoop prog xs).2.2 = prog.length * xs.length ∧
+    (runArrays prog b xs).2.2 = prog.length * xs.length ∧
+    (runLoop prog xs).2.1 = prog.length * xs.length ∧
+    (runArrays prog b xs).2.1 = prog.length * ⌈(xs.length : ℚ) / b⌉₊ := by
+  simp [runArrays_eq prog b hb, runLoop_eq]
+
+/-- A loop is just arrays of length one: array work in chunks of `b = 1` path gives the same
+values, the same interpreter steps and the same element operations as the loop. -/
+theorem loop_is_arrays_of_length_one {σ : Type*} (prog : List (σ → σ)) (xs : List σ) :
+    runArrays prog 1 xs = runLoop prog xs := by
+  rw [runArrays_eq prog 1 one_pos, runLoop_eq]
+  simp
+
+/-- The exact answer behind the simulation: of the `2^64` equally likely head-and-tail
+sequences of 64 fair coins, the number with at least 40 heads is the sum of entries 40 to 64 of
+row 64 of Pascal's triangle, which is 552,859,891,708,071,949. -/
+theorem sequences_with_at_least_40_heads :
+    (univ.filter (fun s : Fin 64 → Bool =>
+        40 ≤ (univ.filter (fun i => s i = true)).card)).card =
+      ∑ j ∈ Icc 40 64, Nat.choose 64 j ∧
+    ∑ j ∈ Icc 40 64, Nat.choose 64 j = 552859891708071949 := by
+  exact ⟨card_at_least_m_true 64 40, sum_choose_64_from_40⟩
+
+/-! The card's whole-number worked examples. -/
+
+-- Element operations per path: 15 instructions + 1 add to the total = 16.
+example : 15 + 1 = 16 := by norm_num
+-- Element operations for the whole run, and the loop's interpreter steps: 16 × 1,000,000.
+example : 16 * 1000000 = 16000000 := by norm_num
+-- Interpreter steps for one array chunk of all 1,000,000 paths: 16 × ⌈1,000,000 / 1,000,000⌉ = 16.
+example : 16 * ⌈(1000000 : ℚ) / 1000000⌉₊ = 16 := by norm_num
+-- Chunks of 100: ⌈1,000,000 / 100⌉ = 10,000 chunks, 16 × 10,000 = 160,000 steps.
+example : ⌈(1000000 : ℚ) / 100⌉₊ = 10000 := by norm_num
+example : 16 * ⌈(1000000 : ℚ) / 100⌉₊ = 160000 := by norm_num
+-- Chunks of 10,000: 16 × 100 = 1,600 steps.
+example : 16 * ⌈(1000000 : ℚ) / 10000⌉₊ = 1600 := by norm_num
+-- Steps saved, loop ÷ one chunk: 16,000,000 ÷ 16 = 1,000,000.
+example : 16000000 / 16 = 1000000 := by norm_num
+-- Doubling test: 1,000 paths take 16,000 loop steps, 2,000 take 32,000; one array chunk takes 16 each time.
+example : 16 * 1000 = 16000 ∧ 16 * 2000 = 32000 := by norm_num
+example : 16 * ⌈(1000 : ℚ) / 1000⌉₊ = 16 ∧ 16 * ⌈(2000 : ℚ) / 2000⌉₊ = 16 := by norm_num
+-- Where numbers wrap at 64 bits, 13 operations per path: 13 × 1,000,000 = 13,000,000.
+example : 13 * 1000000 = 13000000 := by norm_num
+-- The number of 64-coin sequences.
+example : 2 ^ 64 = 18446744073709551616 := by norm_num
+-- Adding entries 40 to 64 of row 64 of Pascal's triangle.
+example : ∑ j ∈ Icc 40 64, Nat.choose 64 j = 552859891708071949 := by decide
+
+#print axioms vectorising_keeps_arithmetic_and_cuts_launches
+#print axioms loop_is_arrays_of_length_one
+#print axioms sequences_with_at_least_40_heads
+#print axioms loopPath_fold_aux
+#print axioms loopPath_eq
+#print axioms arrayChunk_fold_aux
+#print axioms arrayChunk_eq
+#print axioms runLoop_eq
+#print axioms ceil_chunks_step
+#print axioms runArrays_eq
+#print axioms card_bool_functions_with_j_true
+#print axioms sum_choose_64_from_40
+#print axioms card_at_least_m_true
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'vectorising_keeps_arithmetic_and_cuts_launches' depends on axioms: [propext, Classical.choice, Quot.sound]
+'loop_is_arrays_of_length_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sequences_with_at_least_40_heads' depends on axioms: [propext, Classical.choice, Quot.sound]
+'loopPath_fold_aux' depends on axioms: [propext, Quot.sound]
+'loopPath_eq' depends on axioms: [propext, Quot.sound]
+'arrayChunk_fold_aux' depends on axioms: [propext, Quot.sound]
+'arrayChunk_eq' depends on axioms: [propext, Quot.sound]
+'runLoop_eq' depends on axioms: [propext, Quot.sound]
+'ceil_chunks_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'runArrays_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'card_bool_functions_with_j_true' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sum_choose_64_from_40' depends on axioms: [propext, Classical.choice, Quot.sound]
+'card_at_least_m_true' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

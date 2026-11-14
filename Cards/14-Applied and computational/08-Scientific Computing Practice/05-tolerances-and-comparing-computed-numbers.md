@@ -8,7 +8,9 @@
 
 A café receipt lists three items: water at £0.99, a pastry at £1.19 and a coffee at £2.19. The total is £4.37. A check script on this library adds the three prices and asserts the answer: `assert total == 4.37`.
 
-Added in the order they were rung up, the computer gets 4.369999999999999, and the assert stops the script. Added dearest first, the same three prices give 4.37 and the assert passes. Nothing was wrong either time. Each addition rounds its answer to the nearest number the machine can store ([Floating point](01-floating-point-in-practice.md)), and the two orders round differently. The two sums sit one storable step apart: one **ulp** (unit in the last place, the gap between neighbouring stored numbers), 8.882e-16 at this size.
+Added in the order they were rung up, the computer gets 4.369999999999999, and the assert stops the script. Added dearest first, the same three prices give 4.37 and the assert passes. Nothing was wrong either time.
+
+Each addition rounds its answer to the nearest number the machine can store ([Floating point](01-floating-point-in-practice.md)), and the two orders round differently. The two sums sit one storable step apart: one **ulp** (unit in the last place, the gap between neighbouring stored numbers), 8.882e-16 at this size.
 
 So the check asks a softer question: is the total *within 1e-9 of* 4.37? That passes both sums. It still fails if someone types the water as 98p, because then the total is off by a penny, far more than the allowance. The allowance is called a **tolerance**: how far apart two numbers may be and still count as the same answer.
 
@@ -16,7 +18,7 @@ This card says how to pick that allowance, and sets the rule every check script 
 
 **Compare computed numbers by asking whether they are close, with a tolerance set above the rounding noise and below the smallest mistake worth catching, and scaled to the size of the numbers.**
 
-**What kind of fact this is:** a working rule, not a theorem. It rests on one theorem, the bound on rounding error in a sum, proved to first order on [Floating point](01-floating-point-in-practice.md) and applied in Why it works.
+**What kind of fact this is:** a working rule, not a theorem. It rests on one theorem, the bound on rounding error in a sum, proved to first order on [Floating point](01-floating-point-in-practice.md) and applied in Why it works. First order means the bound leaves out products of two rounding errors, which are far smaller.
 
 ### The picture: the window, on a log scale
 
@@ -62,7 +64,7 @@ For the receipt, the window for $\tau_r$ runs from 5.551e-15 to 2.288e-4. The li
 
 ### When it holds
 
-- **The noise is rounding, not method error.** A computed integral, a coin-flip tree or a simulation is off by far more than $n u$. Its tolerance comes from the method's own error, or for a simulation from a few standard errors ([Seeds](03-reproducible-simulation-and-seeds.md)). Use 1e-9 there and correct code fails.
+- **The noise is rounding, not method error.** A computed integral, a coin-flip tree or a simulation is off by far more than $n u$. Its tolerance comes from the method's own error, or for a simulation from a few standard errors, the typical size of its random error ([Seeds](03-reproducible-simulation-and-seeds.md)). Use 1e-9 there and correct code fails.
 - **The number of roundings is known roughly.** The rule is safe while $\kappa n$ stays below about 9.01e5, at full margin. A loop of many millions of additions needs a larger $\tau_r$, or the bound must be checked by measuring the error.
 - **The answer is not near zero.** Relative error means nothing when the answer is 0, so the floor $\tau_a$ takes over. The floor must be set from the size of the *inputs*, not of the answer: the default 1e-12 covers $n\,\Sigma\lvert x\rvert$ up to about 900.7, and bigger computations need $10\,n\,u\,\Sigma\lvert x\rvert$.
 - **The mistake you care about is bigger than the noise.** If $\Delta/|b|$ is below $10\kappa n u$, the window is empty: no tolerance can tell right from wrong, and the computation itself must be made more accurate first.
@@ -74,7 +76,11 @@ For the receipt, the window for $\tau_r$ runs from 5.551e-15 to 2.288e-4. The li
 
 ### Step 0: two different sizes of wrong
 
-A computed number can be wrong in two ways. It carries rounding noise: tiny, unavoidable, and present in correct code. Or it carries a mistake: a wrong price, a dropped term, a sign. On the receipt the noise is below 1e-15 and the smallest mistake is 0.01. The gap between those two sizes is enormous. A tolerance anywhere in that gap tells the two apart. `==` sits at the bottom edge, with no room for noise, so it fails correct code at random.
+A computed number can be wrong in two ways. It carries rounding noise: tiny, unavoidable, and present in correct code. Or it carries a mistake: a wrong price, a dropped term, a sign.
+
+On the receipt the noise is below 1e-15 and the smallest mistake is 0.01. The gap between those two sizes is enormous.
+
+A tolerance anywhere in that gap tells the two apart. `==` sits at the bottom edge, with no room for noise, so it fails correct code at random.
 
 ### Step 1: one rounding is off by at most u, as a share
 
@@ -108,7 +114,9 @@ A fixed floor runs out on big inputs. Refund all 100,000 receipts from Step 3, i
 
 The tolerance needs margin on both sides, and the sides are measured in powers of ten. So the natural place is the middle on a log scale. On the receipt the window for $\tau_r$ runs from 5.551e-15 to 2.288e-4, and its middle is 1.127e-9. The library rounds this to 1e-9.
 
-How much rounding does 1e-9 cover? Divide by $u$: 9.01e6 roundings in the worst case at $\kappa = 1$, or 9.01e5 with the tenfold margin. In general it covers $\kappa n$ up to 9.01e5. The floor 1e-12 covers $n\,\Sigma\lvert x\rvert$ up to $10^{-12}/(10u)$ = 900.7. So the library's default is relative 1e-9 with a floor of 1e-12, for any comparison inside both limits. Outside them, the tolerance comes from the formula, with the floor $10\,n\,u\,\Sigma\lvert x\rvert$.
+How much rounding does 1e-9 cover? Divide by $u$: 9.01e6 roundings in the worst case at $\kappa = 1$, or 9.01e5 with the tenfold margin. In general it covers $\kappa n$ up to 9.01e5.
+
+The floor 1e-12 covers $n\,\Sigma\lvert x\rvert$ up to $10^{-12}/(10u)$ = 900.7. So the library's default is relative 1e-9 with a floor of 1e-12, for any comparison inside both limits. Outside them, the tolerance comes from the formula, with the floor $10\,n\,u\,\Sigma\lvert x\rvert$.
 
 ---
 
@@ -178,7 +186,11 @@ flowchart TB
 
 ## Code, from first principles, and it actually runs
 
-The code adds the receipt in two orders, then measures each total's true error in whole numbers: it reads the 64 stored bits, writes the total as a whole number over a power of two, and subtracts 437/100 exactly. That gives two independent roads to every error: the machine's arithmetic, and exact whole-number arithmetic that cannot round. An assert holds them to the same gap between the two orders. A third road is the worst-case bound from Step 2, which every measured error must sit under. The code then sweeps tolerances against a correct total and a penny typo, scales the receipt up 100,000 times, refunds both sizes to zero, and prints the library's rule in numbers. It writes its own comparison function rather than importing one.
+The code adds the receipt in two orders, then measures each total's true error in whole numbers: it reads the 64 stored bits, writes the total as a whole number over a power of two, and subtracts 437/100 exactly.
+
+That gives two independent roads to every error: the machine's arithmetic, and exact whole-number arithmetic that cannot round. An assert holds them to the same gap between the two orders. A third road is the worst-case bound from Step 2, which every measured error must sit under.
+
+The code then sweeps tolerances against a correct total and a penny typo, scales the receipt up 100,000 times, refunds both sizes to zero, and prints the library's rule in numbers. It writes its own comparison function rather than importing one.
 
 ### Python
 
@@ -554,6 +566,119 @@ ALL CHECKS PASS
 ```
 
 The two outputs match line for line. Both languages store and add numbers by the same standard, so the same order of additions gives the same bits.
+
+### Lean
+
+Lean proves three of the card's claims for all real numbers, and redoes the whole-number examples in pennies.
+
+- Suppose $\tau_r$ sits in the window and the floor $\tau_a$ is below $\Delta$, with $0 < \Delta \le \lvert b\rvert$. Then every $a$ within $\kappa n u \lvert b\rvert$ of $b$ passes, and every wrong value $w$ at least $\Delta$ from $b$ fails.
+- Take any nonzero leftover $a$ and any $\tau_r$ below 1. Then a relative test of $a$ against 0, with no floor, fails.
+- Take any tolerance above 0. Then some $a$, $b$ and $c$ have $a$ close to $b$ and $b$ close to $c$, yet $a$ not close to $c$.
+- In whole pennies, 99 + 119 + 219 is exactly 437, and the 98p typo gives 436, one penny short.
+- With half a penny allowed, 4.366 is close to 4.370 and 4.370 to 4.374, but 4.366 is not close to 4.374.
+- The £437,000 total of 100,000 receipts and the 600,003 roundings in their refund come out right.
+
+Every rounding effect, such as the one-ulp gap and the noise bound itself, is left to the Python and Rust checks.
+
+```lean
+-- Tolerances: a relative tolerance set inside the card's window passes every answer within the rounding noise and fails every mistake of the size worth catching, a relative test against zero fails any nonzero leftover, and closeness does not chain.
+import Mathlib.Algebra.Order.Field.Basic
+import Mathlib.Algebra.Order.AbsoluteValue.Basic
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+
+/-! The card's test: `a` and `b` count as the same answer when
+`|a - b| ≤ max (τr * max |a| |b|) τa`, with relative tolerance `τr` and absolute floor `τa`.
+The rounding noise of a correct computation of the true answer `b` is at most
+`κ * n * u * |b|` (`n` roundings, unit roundoff `u`, condition number `κ`), and `Δ` is the
+smallest mistake worth catching. The card's window for `τr` is
+`10 * κ * n * u ≤ τr ≤ Δ / (10 * |b|)`. -/
+
+/-- The tolerance window works: if the relative tolerance sits inside the window
+`10 κ n u ≤ τr ≤ Δ / (10 |b|)` and the floor `τa` sits below `Δ`,
+then every computed `a` within the rounding noise `κ n u |b|` of `b` passes the test,
+and every wrong value `w` that misses `b` by at least `Δ` fails it.
+Here `Δ` is positive and no bigger than the answer itself, as a penny is beside £4.37. -/
+theorem tolerance_in_window_passes_noise_and_catches_mistakes
+    (a w b τr τa κ u Δ : ℝ) (n : ℕ)
+    (hΔ : 0 < Δ) (hΔb : Δ ≤ |b|)
+    (hlow : 10 * κ * n * u ≤ τr) (hhigh : τr ≤ Δ / (10 * |b|))
+    (hτa : τa < Δ)
+    (hnoise : |a - b| ≤ κ * n * u * |b|) (hmistake : Δ ≤ |w - b|) :
+    |a - b| ≤ max (τr * max |a| |b|) τa ∧ ¬ |w - b| ≤ max (τr * max |w| |b|) τa := by
+  have hB : 0 < |b| := lt_of_lt_of_le hΔ hΔb
+  have hk : 0 ≤ κ * n * u := by
+    have h0 : 0 ≤ κ * n * u * |b| := le_trans (abs_nonneg _) hnoise
+    exact nonneg_of_mul_nonneg_left h0 hB
+  have hτr0 : 0 ≤ τr := le_trans (by linarith) hlow
+  have hτb : τr * |b| ≤ Δ / 10 := by
+    rw [le_div_iff₀ (by positivity)] at hhigh
+    linarith
+  have hτ1 : τr ≤ 1 / 10 := by nlinarith
+  refine ⟨?_, ?_⟩
+  · have hm : |b| ≤ max |a| |b| := le_max_right _ _
+    have h1 : τr * |b| ≤ τr * max |a| |b| := mul_le_mul_of_nonneg_left hm hτr0
+    have h2 : κ * n * u * |b| ≤ τr * |b| := by nlinarith
+    exact le_trans hnoise (le_trans (le_trans h2 h1) (le_max_left _ _))
+  · rw [not_le, max_lt_iff]
+    refine ⟨?_, by linarith⟩
+    rcases le_total |w| |b| with h | h
+    · rw [max_eq_right h]
+      linarith
+    · rw [max_eq_left h]
+      have hw : |w| ≤ |w - b| + |b| := by
+        have := abs_sub_abs_le_abs_sub w b
+        linarith
+      have : τr * |w| ≤ τr * (|w - b| + |b|) := mul_le_mul_of_nonneg_left hw hτr0
+      nlinarith
+
+/-- Near zero the share fails: with no floor, a relative test of any nonzero leftover `a`
+against the answer 0 fails at every relative tolerance below 1. -/
+theorem relative_test_against_zero_fails (a τr : ℝ) (ha : a ≠ 0) (hτr : τr < 1) :
+    ¬ |a - 0| ≤ max (τr * max |a| |0|) 0 := by
+  have hpos : 0 < |a| := abs_pos.mpr ha
+  simp only [sub_zero, abs_zero, max_eq_left (abs_nonneg a)]
+  rw [not_le, max_lt_iff]
+  refine ⟨by nlinarith, hpos⟩
+
+/-- Closeness does not chain: for every positive tolerance there are numbers `a`, `b`, `c`
+with `a` close to `b` and `b` close to `c`, yet `a` not close to `c`. -/
+theorem closeness_does_not_chain (τ : ℝ) (hτ : 0 < τ) :
+    ∃ a b c : ℝ, |a - b| ≤ τ ∧ |b - c| ≤ τ ∧ ¬ |a - c| ≤ τ := by
+  refine ⟨0, τ, 2 * τ, ?_, ?_, ?_⟩
+  · rw [zero_sub, abs_neg, abs_of_pos hτ]
+  · rw [show τ - 2 * τ = -τ by linarith, abs_neg, abs_of_pos hτ]
+  · rw [show (0 : ℝ) - 2 * τ = -(2 * τ) by linarith, abs_neg, abs_of_pos (by linarith)]
+    linarith
+
+/-! The card's whole-number worked examples, in pennies and in tenths of a penny. -/
+
+-- The receipt in pennies: 99 + 119 + 219 = 437, with no rounding, so `==` is right here.
+example : 99 + 119 + 219 = 437 := by decide
+-- The 98p typo: 98 + 119 + 219 = 436, one penny short of 437.
+example : 98 + 119 + 219 = 436 ∧ 437 - 436 = 1 := by decide
+-- The chain in tenths of a penny with half a penny (5) allowed:
+-- 4366 is close to 4370, 4370 is close to 4374, but 4366 is not close to 4374.
+example : |(4366 : ℝ) - 4370| ≤ 5 ∧ |(4370 : ℝ) - 4374| ≤ 5 ∧ ¬ |(4366 : ℝ) - 4374| ≤ 5 := by
+  norm_num [abs_of_neg, abs_of_pos]
+-- 100,000 receipts: 437 × 100000 = 43,700,000 pennies, so the true total is £437,000.
+example : 437 * 100000 = 43700000 := by decide
+-- The refund of 100,000 receipts: 600,003 roundings (300,003 up, 300,000 down).
+example : (3 * 100000 + 3) + 3 * 100000 = 600003 := by decide
+
+#print axioms tolerance_in_window_passes_noise_and_catches_mistakes
+#print axioms relative_test_against_zero_fails
+#print axioms closeness_does_not_chain
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'tolerance_in_window_passes_noise_and_catches_mistakes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'relative_test_against_zero_fails' depends on axioms: [propext, Classical.choice, Quot.sound]
+'closeness_does_not_chain' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

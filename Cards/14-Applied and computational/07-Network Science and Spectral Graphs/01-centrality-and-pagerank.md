@@ -6,11 +6,25 @@
 
 ## General Overview
 
-A city's bike-share scheme has 1,200 stations. The operator wants to know which station is the real hub: where to put the biggest dock, where to park the repair van, which station must never close, and where the rebalancing trucks (the vans that move bikes back to where riders need them) should call first. A good place to learn the answer is one corner of the map: ten stations and the eighteen routes riders use between them. The data are synthetic: made up for this card, in the shape of a standard test network.
+A city's bike-share scheme has 1,200 stations. The operator wants to know which station is the real hub:
+
+- where to put the biggest dock;
+- where to park the repair van;
+- which station must never close;
+- where the rebalancing trucks (the vans that move bikes back to where riders need them) should call first.
+
+A good place to learn the answer is one corner of the map: ten stations and the eighteen routes riders use between them. The data are synthetic: made up for this card, in the shape of a standard test network.
 
 Seven stations sit in the old town on top of a hill: Arcade, Bus Station, Cathedral, Market, East Gate, Fountain and Guildhall. Hill Top is where the town meets a steep road down to the river. At the bottom are Riverside and, further along the flat river path, Quay. Riders take the steep road down. Almost nobody pedals back up, so in the trip logs that route runs one way.
 
-Ask "which station is the hub?" four ways and get four different answers. **Market** has the most routes, 6. **Fountain** and **Guildhall** are closest to everything, 14 route-steps to all nine others. **Hill Top** has only 3 routes, yet 14 of the 36 station pairs that don't include it must ride through it. And a bike that keeps being ridden ends up most often at **Riverside**, about 15% of the time, against a fair share of 10%. Each answer is a **centrality**: a number that scores how important a station is. Each one is right about a different question.
+Ask "which station is the hub?" four ways and get four different answers.
+
+- **Market** has the most routes, 6.
+- **Fountain** and **Guildhall** are closest to everything, 14 route-steps to all nine others.
+- **Hill Top** has only 3 routes, yet 14 of the 36 station pairs that don't include it must ride through it.
+- A bike that keeps being ridden ends up most often at **Riverside**, about 15% of the time, against a fair share of 10%.
+
+Each answer is a **centrality**: a number that scores how important a station is. Each one is right about a different question.
 
 **Degree counts a station's links, closeness measures how near it is to everyone, betweenness counts the shortest routes that must pass through it, and PageRank is where a wandering rider spends the long run; they answer different questions, so on the same map they crown different hubs.**
 
@@ -99,13 +113,17 @@ Betweenness needs, for each pair, the number of shortest rides through $v$. List
 
 $$\sigma_{st}(v) = \sigma_{sv} \times \sigma_{vt} \quad \text{when } d(s, v) + d(v, t) = d(s, t), \text{ and } 0 \text{ otherwise.}$$
 
-**Proof.** Cut a shortest ride from $s$ to $t$ at $v$. The first piece is a ride from $s$ to $v$. If a shorter one existed, swapping it in would give a ride from $s$ to $t$ shorter than the shortest, which is impossible. So the first piece is a shortest ride to $v$, and the same holds for the second piece. Going the other way, any shortest $s$-to-$v$ ride followed by any shortest $v$-to-$t$ ride has $d(s, v) + d(v, t)$ routes. When that sum equals $d(s, t)$, the joined ride is a shortest one. Each choice of first and second piece gives a different ride, so the count multiplies. If the sum is bigger than $d(s, t)$, no shortest ride visits $v$.
+**Proof.** Cut a shortest ride from $s$ to $t$ at $v$. The first piece is a ride from $s$ to $v$. If a shorter one existed, swapping it in would give a ride from $s$ to $t$ shorter than the shortest, which is impossible. So the first piece is a shortest ride to $v$, and the same holds for the second piece.
+
+Going the other way, any shortest $s$-to-$v$ ride followed by any shortest $v$-to-$t$ ride has $d(s, v) + d(v, t)$ routes. When that sum equals $d(s, t)$, the joined ride is a shortest one. Each choice of first and second piece gives a different ride, so the count multiplies. If the sum is bigger than $d(s, t)$, no shortest ride visits $v$.
 
 Example: Market to Hill Top is 2 routes, by Fountain or by Guildhall, so $\sigma = 2$. Through Fountain: $1 \times 1$ ride. Fountain's share of that pair is 1/2.
 
 ### Step 4: Hill Top's 14 is a count of town-to-river pairs
 
-There are 36 pairs of stations not including Hill Top. Every ride from one of the 7 town stations to Riverside or Quay must cross Hill Top, since it is the only station linked to both sides. That is $7 \times 2 = 14$ pairs, each giving Hill Top a share of 1. No other pair uses it. Riverside and Quay are joined directly. Inside the town, Hill Top's only neighbours, Fountain and Guildhall, are already linked, so a detour through Hill Top is never shortest. So $b(\text{Hill Top}) = 14$, from only 3 routes.
+There are 36 pairs of stations not including Hill Top. Every ride from one of the 7 town stations to Riverside or Quay must cross Hill Top, since it is the only station linked to both sides. That is $7 \times 2 = 14$ pairs, each giving Hill Top a share of 1.
+
+No other pair uses it. Riverside and Quay are joined directly. Inside the town, Hill Top's only neighbours, Fountain and Guildhall, are already linked, so a detour through Hill Top is never shortest. So $b(\text{Hill Top}) = 14$, from only 3 routes.
 
 Riverside scores 8 the same way: every ride to Quay from the other 8 stations passes through it.
 
@@ -142,7 +160,7 @@ $$\pi(\text{R}) = 0.015 + 0.85 \left( \frac{\pi(\text{H})}{3} + \pi(\text{Q}) \r
 
 Hill Top's third is small, but Quay sends back everything it gets. Riverside comes out at 0.151, the top score. Quay, fed only by Riverside, is just behind at 0.144. That is what the operator sees: bikes pile up at the bottom of the hill, and trucks must carry them back up.
 
-The check finds $\pi$ three ways: by repeating the one-trip update 200 times, by solving the ten balance equations exactly, and by following 20,000 simulated bikes for 50 trips each, drawn from a SplitMix64 generator with seed 2026.
+The check finds $\pi$ three ways: by repeating the one-trip update 200 times, by solving the ten balance equations exactly, and by following 20,000 simulated bikes for 50 trips each, drawn from a SplitMix64 generator (a small, repeatable source of random numbers) started from seed 2026.
 
 ---
 
@@ -188,7 +206,14 @@ About 15 in every 100 bike stops end at Riverside, against a fair share of 10.
 
 ## Code, from first principles, and it actually runs
 
-The script builds the ten-station map and computes every score by at least two independent roads. Degree comes from the rows of $A$ and from counting down the route list. Distances come from breadth-first search and from powers of $A$. Betweenness comes from the backward pass and from listing all 56 shortest rides; the pass counts its own route checks against the promised $n \times 2m$. PageRank comes from repeated updates, an exact solve and 20,000 simulated bikes, with a tolerance of four standard errors on the simulation, and Riverside's balance equation is checked by hand arithmetic. The Python and Rust programs print identical output.
+The script builds the ten-station map and computes every score by at least two independent roads.
+
+- Degree comes from the rows of $A$ and from counting down the route list.
+- Distances come from breadth-first search and from powers of $A$.
+- Betweenness comes from the backward pass and from listing all 56 shortest rides; the pass counts its own route checks against the promised $n \times 2m$.
+- PageRank comes from repeated updates, an exact solve and 20,000 simulated bikes, with a tolerance of four standard errors on the simulation, and Riverside's balance equation is checked by hand arithmetic.
+
+The Python and Rust programs print identical output.
 
 ### Python
 
@@ -572,6 +597,186 @@ PageRank + F-R        0.102  0.099  0.080  0.144  0.076  0.160  0.117  0.058  0.
 PageRank, 0.5         0.097  0.097  0.083  0.124  0.083  0.109  0.109  0.072  0.116  0.108
 figure, A 60 40, B 150 40, C 25 110, M 105 110, E 190 110, F 60 170, G 150 170, H 105 220, R 215 220, Q 320 220
 ALL CHECKS PASS
+```
+
+### Lean
+
+Lean proves the facts of Steps 1, 2 and 3 for every finite two-way map, and checks the ten-station numbers.
+
+- Take any two-way map. Then all the degrees add up to $2m$, twice the number of routes.
+- Take stations $v$ and $w$ joined by some ride. Then $d(v, w)$ is the first $k$ at which $(A^k)_{vw}$ is above zero.
+- Take a start $s$, target $t$ and station $v$ with $d(s, v) + d(v, t) = d(s, t)$. Then $\sigma_{st}(v) = \sigma_{sv} \times \sigma_{vt}$.
+- Take $s$, $t$ and $v$ where that sum differs from $d(s, t)$. Then $\sigma_{st}(v) = 0$.
+- The degrees from Arcade to Quay are 4, 4, 3, 6, 3, 5, 5, 3, 2 and 1. They add to 36, and the map has 18 routes.
+- Market has more routes than any other station.
+- From Fountain, the powers of $A$ give distances 1, 2, 1, 1, 2, 1, 1, 2 and 3 to the other nine stations. They add to 14.
+- Market to Hill Top has two shortest rides of 2 routes, and one passes through Fountain.
+- Arcade to Guildhall has three shortest rides of 2 routes, and one passes through Fountain.
+
+Closeness, the betweenness scores such as Hill Top's 14, the backward pass and PageRank are left to the Python and Rust checks.
+
+```lean
+-- Centrality: in every finite two-way network the shortest rides from s to t through v number exactly the shortest rides from s to v times those from v to t when v lies on a shortest way and none otherwise, the distance is the first power of the adjacency matrix with a nonzero entry, the degrees add up to twice the routes, and the card's ten-station numbers check out.
+import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
+import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+import Mathlib.Combinatorics.SimpleGraph.Metric
+import Mathlib.Combinatorics.SimpleGraph.Walk.Counting
+
+namespace CentralityAndPagerank
+
+open SimpleGraph
+
+variable {V : Type*} [Fintype V] [DecidableEq V]
+
+/-- `σ s t`: the number of shortest rides from `s` to `t`, that is, walks from `s` to `t` whose
+number of routes equals the distance `d(s, t)`. -/
+noncomputable def numShortest (G : SimpleGraph V) [DecidableRel G.Adj] (s t : V) : ℕ :=
+  (G.finsetWalkLength (G.dist s t) s t).card
+
+/-- `σ s t (v)`: the number of shortest rides from `s` to `t` that pass through station `v`. -/
+noncomputable def numShortestThrough (G : SimpleGraph V) [DecidableRel G.Adj] (s t v : V) : ℕ :=
+  ((G.finsetWalkLength (G.dist s t) s t).filter (fun p => v ∈ p.support)).card
+
+omit [Fintype V] [DecidableEq V] in
+/-- Splitting a walk at a fixed length of its first part is injective. -/
+theorem append_inj_of_length_eq {G : SimpleGraph V} {s v t : V} {q q' : G.Walk s v}
+    {r r' : G.Walk v t} (hl : q.length = q'.length) (h : q.append r = q'.append r') :
+    q = q' ∧ r = r' := by
+  have e := congrArg Walk.support h
+  rw [Walk.support_append, Walk.support_append] at e
+  obtain ⟨h1, h2⟩ := List.append_inj e (by simp [Walk.length_support, hl])
+  refine ⟨Walk.ext_support h1, Walk.ext_support ?_⟩
+  rw [← r.cons_tail_support, ← r'.cons_tail_support, h2]
+
+#print axioms append_inj_of_length_eq
+
+/-- The card's main result (Step 3), the fact that makes betweenness exact and cheap. On any
+finite two-way network (a simple graph `G`), for any start `s`, target `t` and station `v`: the
+number of shortest rides from `s` to `t` that pass through `v` is the number of shortest rides
+from `s` to `v` times the number from `v` to `t` when `d(s, v) + d(v, t) = d(s, t)`, and 0
+otherwise. -/
+theorem shortest_rides_through_eq_mul (G : SimpleGraph V) [DecidableRel G.Adj] (s t v : V) :
+    numShortestThrough G s t v =
+      if G.dist s v + G.dist v t = G.dist s t then numShortest G s v * numShortest G v t
+      else 0 := by
+  classical
+  unfold numShortestThrough numShortest
+  have hsplit : ∀ p : G.Walk s t, ∀ h : v ∈ p.support,
+      p.length = G.dist s t → G.dist s v + G.dist v t = G.dist s t ∧
+        (p.takeUntil v h).length = G.dist s v ∧ (p.dropUntil v h).length = G.dist v t := by
+    intro p h hp
+    have e := congrArg Walk.length (p.take_spec h)
+    rw [Walk.length_append] at e
+    have h1 := G.dist_le (p.takeUntil v h)
+    have h2 := G.dist_le (p.dropUntil v h)
+    obtain ⟨q0, hq0⟩ := (p.takeUntil v h).reachable.exists_walk_length_eq_dist
+    obtain ⟨r0, hr0⟩ := (p.dropUntil v h).reachable.exists_walk_length_eq_dist
+    have h3 := G.dist_le (q0.append r0)
+    rw [Walk.length_append] at h3
+    omega
+  split_ifs with hc
+  · rw [← Finset.card_product]
+    symm
+    refine Finset.card_bij (fun x _ => x.1.append x.2) ?_ ?_ ?_
+    · rintro ⟨q, r⟩ hx
+      simp only [Finset.mem_product, mem_finsetWalkLength_iff] at hx
+      simp only [Finset.mem_filter, mem_finsetWalkLength_iff, Walk.length_append]
+      refine ⟨by omega, ?_⟩
+      rw [Walk.mem_support_append_iff]
+      exact Or.inr r.start_mem_support
+    · rintro ⟨q, r⟩ hx ⟨q', r'⟩ hx' heq
+      simp only [Finset.mem_product, mem_finsetWalkLength_iff] at hx hx' heq
+      obtain ⟨e1, e2⟩ := append_inj_of_length_eq (by omega) heq
+      rw [e1, e2]
+    · intro p hp
+      simp only [Finset.mem_filter, mem_finsetWalkLength_iff] at hp
+      obtain ⟨hp, h⟩ := hp
+      obtain ⟨-, h1, h2⟩ := hsplit p h hp
+      refine ⟨(p.takeUntil v h, p.dropUntil v h), ?_, p.take_spec h⟩
+      simp only [Finset.mem_product, mem_finsetWalkLength_iff]
+      exact ⟨h1, h2⟩
+  · rw [Finset.card_eq_zero, Finset.filter_eq_empty_iff]
+    intro p hp hv
+    rw [mem_finsetWalkLength_iff] at hp
+    exact hc (hsplit p hv hp).1
+
+/-- Step 2: distances come out in layers. When `w` can be reached from `v`, the distance
+`d(v, w)` is the first power `k` at which the entry in row `v`, column `w` of `A ^ k` (the
+number of walks of exactly `k` routes) is above zero. -/
+theorem dist_eq_first_nonzero_adjMatrix_power (G : SimpleGraph V) [DecidableRel G.Adj]
+    {v w : V} (h : G.Reachable v w) :
+    (G.adjMatrix ℕ ^ G.dist v w) v w ≠ 0 ∧ ∀ k < G.dist v w, (G.adjMatrix ℕ ^ k) v w = 0 := by
+  constructor
+  · obtain ⟨p, hp⟩ := h.exists_walk_length_eq_dist
+    rw [adjMatrix_pow_apply_eq_card_walk, Nat.cast_id]
+    exact (Fintype.card_pos_iff.mpr ⟨⟨p, hp⟩⟩).ne'
+  · intro k hk
+    rw [adjMatrix_pow_apply_eq_card_walk, Nat.cast_id, Fintype.card_eq_zero_iff]
+    refine ⟨fun ⟨p, hp⟩ => ?_⟩
+    have := G.dist_le p
+    simp only [Set.mem_ofPred_eq] at hp
+    omega
+
+/-- Step 1: every route has two ends, so the degrees of all stations add up to twice the
+number of routes, `∑ deg(v) = 2m`. -/
+theorem sum_degree_eq_two_mul_routes (G : SimpleGraph V) [DecidableRel G.Adj] :
+    ∑ v, G.degree v = 2 * G.edgeFinset.card := by
+  exact G.sum_degrees_eq_twice_card_edges
+
+/-! The card's ten stations: Arcade, Bus Station, Cathedral, Market, East Gate, Fountain,
+Guildhall, Hill Top, Riverside and Quay are `0` to `9`. Degree, closeness and betweenness read
+the street map with every route two-way. -/
+
+/-- The eighteen routes: AB AC AM AF BM BE BG CM CF ME MF MG EG FG FH GH HR RQ. -/
+def routes : List (Fin 10 × Fin 10) :=
+  [(0, 1), (0, 2), (0, 3), (0, 5), (1, 3), (1, 4), (1, 6), (2, 3), (2, 5), (3, 4), (3, 5),
+   (3, 6), (4, 6), (5, 6), (5, 7), (6, 7), (7, 8), (8, 9)]
+
+/-- The street map as a simple graph. -/
+def streets : SimpleGraph (Fin 10) where
+  Adj x y := (x, y) ∈ routes ∨ (y, x) ∈ routes
+  symm := ⟨fun _ _ h => h.symm⟩
+  loopless := ⟨by decide⟩
+
+instance : DecidableRel streets.Adj := fun _ _ => inferInstanceAs (Decidable (_ ∨ _))
+
+-- Degrees A to Q are 4 4 3 6 3 5 5 3 2 1; they add to 36 = 2 × 18 routes.
+example : (List.finRange 10).map (fun v => streets.degree v) = [4, 4, 3, 6, 3, 5, 5, 3, 2, 1] := by
+  decide
+example : ∑ v, streets.degree v = 36 ∧ streets.edgeFinset.card = 18 := by decide
+-- Market has the most routes, 6: every other station has fewer.
+example : ∀ v : Fin 10, v ≠ 3 → streets.degree v < streets.degree 3 := by decide
+
+/-- The card's distances from Fountain to A, B, C, M, E, F, G, H, R, Q. -/
+def fromFountain : Fin 10 → ℕ := ![1, 2, 1, 1, 2, 0, 1, 1, 2, 3]
+
+-- Fountain's layers: each distance is the first power of `A` with a nonzero entry, and they add to 14.
+example : ∀ w : Fin 10, (streets.adjMatrix ℕ ^ fromFountain w) 5 w ≠ 0 ∧
+    ∀ k < fromFountain w, (streets.adjMatrix ℕ ^ k) 5 w = 0 := by decide
+example : ∑ w, fromFountain w = 14 := by decide
+-- Market to Hill Top: distance 2, two shortest rides, one of them through Fountain.
+example : streets.adjMatrix ℕ 3 7 = 0 ∧ (streets.finsetWalkLength 2 3 7).card = 2 ∧
+    ((streets.finsetWalkLength 2 3 7).filter (fun p => (5 : Fin 10) ∈ p.support)).card = 1 := by
+  decide
+-- Arcade to Guildhall: distance 2, three shortest rides (via Market, Bus Station or Fountain), one through Fountain.
+example : streets.adjMatrix ℕ 0 6 = 0 ∧ (streets.finsetWalkLength 2 0 6).card = 3 ∧
+    ((streets.finsetWalkLength 2 0 6).filter (fun p => (5 : Fin 10) ∈ p.support)).card = 1 := by
+  decide
+
+#print axioms shortest_rides_through_eq_mul
+#print axioms dist_eq_first_nonzero_adjMatrix_power
+#print axioms sum_degree_eq_two_mul_routes
+
+end CentralityAndPagerank
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'CentralityAndPagerank.append_inj_of_length_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CentralityAndPagerank.shortest_rides_through_eq_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CentralityAndPagerank.dist_eq_first_nonzero_adjMatrix_power' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CentralityAndPagerank.sum_degree_eq_two_mul_routes' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 > [!TIP]

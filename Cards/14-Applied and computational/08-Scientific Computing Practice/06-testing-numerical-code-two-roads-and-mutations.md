@@ -10,8 +10,8 @@ A radio link sends 4 data bits wrapped in Hamming's (7,4) code: 7 bits, 3 of the
 
 A test that runs the decoder and prints "pass" settles nothing on its own. Many tests pass whether the code is right or wrong. The question that matters is the reverse: **if the decoder were wrong, would this test fail?** This card answers it in two moves, and they are how every number in this library is guarded.
 
-- **Two roads.** Get the answer twice, by methods that share no working parts. Here road 1 is a lookup table: for each of the 128 possible 7-bit words, the nearest of the 16 codewords, found by counting differences. Road 2 is the syndrome, the 3-bit pattern of failed checks that names the bad bit. The two roads agree on all 128 words.
-- **A mutation.** Break the decoder on purpose, one small bug at a time (a *mutant*), and run the tests. A test that still passes did not notice. Five bugs were planted. A round-trip test (encode, decode, compare) catches 1 of them. The two-roads test catches 4. A single answer worked by hand catches 3. Together they catch all 5. An assert that compares the decoder with itself catches 0.
+- **Two roads.** Get the answer twice, by methods that share no working parts. Here road 1 is a lookup table: for each of the 128 possible 7-bit words, the nearest of the 16 codewords (the 7-bit words the code can send), found by counting differences. Road 2 is the syndrome, the 3-bit pattern of failed checks that names the bad bit. The two roads agree on all 128 words.
+- **A mutation.** Break the decoder on purpose, one small bug at a time (a *mutant*), and run the tests. A test that still passes did not notice. Five bugs, M1 to M5, were planted. A round-trip test (T1: encode, decode, compare) catches 1 of them. The two-roads test (T2) catches 4. A single answer worked by hand (T3) catches 3. Together they catch all 5. T0, an assert that compares the decoder with itself, catches 0. (An assert is a line of code that stops the program when its claim is false.)
 
 **A number is trusted when two independent methods reach it, and a test is trusted only after it has been seen to fail on deliberately broken code.**
 
@@ -40,7 +40,7 @@ A test that checks every input either sees a bug or proves it absent. A test tha
 
 $$P(\text{catch}) \;=\; 1 - \left(1 - \frac{w}{N}\right)^{k}, \qquad \text{mutation score} \;=\; \frac{K}{M}.$$
 
-**Read it aloud:** the chance a random test of k inputs catches a bug is one minus the chance that every one of the k draws lands on an input where the bug is silent; a test suite's mutation score is the share of planted bugs it catches.
+**Read it aloud:** the chance a random test of k inputs catches a bug is one minus the chance that every one of the k draws lands on an input where the bug is silent. A test suite's mutation score is the share of planted bugs it catches.
 
 Here k counts test inputs. It is not the k of an (n, k) code on the Hamming card; this card never needs that one.
 
@@ -53,13 +53,13 @@ Here k counts test inputs. It is not the k of an (n, k) code on the Hamming card
 | $M$ | mutants planted, one at a time | 5 | a finer measure of the test |
 | $K$ | mutants killed: the test failed on them | 5 for T1, T2 and T3 together | score rises |
 | $r$ | the received 7-bit word, positions 1 to 7 | 1001110 | — |
-| $s$ | syndrome: the three check parities read as a binary number | 6 | names the flipped position |
+| $s$ | syndrome: the three check parities (each 0 if its sum is even, 1 if odd) read as a binary number | 6 | names the flipped position |
 | $p$ | a position in the word, 1 to 7 | 6, the flipped bit | — |
 | d1 to d4 | the 4 data bits, kept at positions 3, 5, 6, 7 | 0, 1, 0, 0 | — |
 | $A(r)$ | road 1's answer: the lookup table's 4 data bits | 0100 | — |
 | $B(r)$ | road 2's answer: the syndrome decoder's 4 data bits | 0100 | — |
 
-The test itself is one line: **pass when $A(r) = B(r)$ for every $r$ checked.** The bits are compared exactly. A floating-point number would be compared within a tolerance, the subject of [Tolerances](05-tolerances-and-comparing-computed-numbers.md).
+The test itself is one line: **pass when $A(r) = B(r)$ for every $r$ checked.** The bits are compared exactly. A floating-point number (a computer's rounded stand-in for a real number) would be compared within a tolerance, the subject of [Tolerances](05-tolerances-and-comparing-computed-numbers.md).
 
 ### When it holds
 
@@ -83,13 +83,15 @@ Road 1 never computes a syndrome. For each of the 128 words it counts, for every
 
 Road 2 is the fast method from [Hamming and Reed-Solomon](../03-Information%20Theory/08-error-correcting-codes-hamming-and-reed-solomon.md). The three checks cover positions {1, 3, 5, 7}, {2, 3, 6, 7} and {4, 5, 6, 7}. Each check adds its bits and keeps the remainder after dividing by 2 (its parity). Read the three parities as a binary number, low bit first, and that number is the position of the flipped bit.
 
-The two roads still share two pieces. Both read the data bits out of positions 3, 5, 6 and 7 at the end. And road 1's 16 codewords come from the encoder, which uses the same data positions and the same three check groups as road 2. A bug in either shared piece can make both roads wrong in the same way, and their agreement cannot see it. So the script pins the encoder with a third road: its four basic codewords must equal the four columns of the generator matrix typed in from the Hamming card. The shared read-out matters later.
+The two roads still share two pieces. Both read the data bits out of positions 3, 5, 6 and 7 at the end. And road 1's 16 codewords come from the encoder, which uses the same data positions and the same three check groups as road 2.
 
-Both roads are correct, for the reason the Hamming card proves: every one of the 128 words lies within one flip of exactly one codeword, so nearest-codeword decoding is well defined, and the syndrome of a single flip at position p is p in binary.
+A bug in either shared piece can make both roads wrong in the same way, and their agreement cannot see it. So the script pins the encoder with a third road: its four basic codewords must equal the four columns of the generator matrix typed in from the Hamming card (the matrix whose columns are the codewords for the four messages with a single 1). The shared read-out matters later.
+
+Both roads are correct, for the reason the Hamming card proves. Every one of the 128 words lies within one flip of exactly one codeword, so nearest-codeword decoding is well defined. And the syndrome of a single flip at position p is p in binary.
 
 ### Step 2: with a finite input space, check every input
 
-There are only 128 possible received words. Checking all of them is not a sample; it is a proof that the two roads compute the same function. The check also confirms the syndrome claim directly: flip each of the 7 positions of each of the 16 codewords, 112 one-flip words in all, and the syndrome equals the flipped position on 112 of 112.
+There are only 128 possible received words. Checking all of them is not a sample; it is a proof that the two roads compute the same function. The check also confirms the syndrome claim directly. It flips each of the 7 positions of each of the 16 codewords, 112 one-flip words in all, and the syndrome equals the flipped position on 112 of 112.
 
 When the input space is too big to list (every 64-bit float, every price), the test samples, and Step 3 says how much a sample is worth.
 
@@ -103,7 +105,9 @@ To reach a 99% catch, set the miss chance to 0.01 and solve with logarithms:
 
 $$k \;\ge\; \frac{\ln 0.01}{\ln(1 - w/N)}.$$
 
-For a bug that shows on one word in 128, that is 588 random draws, far more than the 128 that cover everything. On a small space, listing every input is cheaper than sampling it. The check confirms the formula a second way, by simulation: 20,000 random five-word tests per mutant, drawn with the SplitMix64 generator from a stated seed (see [Seeds](03-reproducible-simulation-and-seeds.md)), land within a few standard errors of the formula.
+For a bug that shows on one word in 128, that is 588 random draws, far more than the 128 that cover everything. On a small space, listing every input is cheaper than sampling it.
+
+The check confirms the formula a second way, by simulation. It runs 20,000 random five-word tests per mutant, drawn with the SplitMix64 generator from a stated seed (see [Seeds](03-reproducible-simulation-and-seeds.md)). The simulated catch rates land within a few standard errors of the formula. A standard error is the typical random spread of a simulated rate: the square root of P(1 − P)/20,000.
 
 ### The picture: catch probability against test size
 
@@ -134,7 +138,12 @@ The five mutants here, each a one-line change:
 | M4 | decoder computes the syndrome but forgets to flip the bit | 64 |
 | M5 | the shared read-out swaps d1 and d2 | 0 |
 
-The four tests: T0 compares road 2 with itself; T1 is the round trip on the 16 clean codewords; T2 is the two-roads test over all 128 words; T3 is the one hand-worked word, 1001110, which must decode to 0100.
+The four tests:
+
+- T0 compares road 2 with itself.
+- T1 is the round trip on the 16 clean codewords.
+- T2 is the two-roads test over all 128 words.
+- T3 is the one hand-worked word, 1001110, which must decode to 0100.
 
 The kill table, K for killed:
 
@@ -147,15 +156,21 @@ The kill table, K for killed:
 | M5 | – | K | – | K |
 | **score** | **0 of 5** | **1 of 5** | **4 of 5** | **3 of 5** |
 
-Each test has a blind spot, and they are different blind spots. T1 never calls road 1, so it cannot see M3's table typo, and it sees only clean words, where M1, M2 and M4 do no harm: with nothing to repair, the syndrome is 0 whichever order its bits are read and whether or not the flip is forgotten, and M2's false alarm on a clean word flips only check bit 2, which the read-out never looks at. T2 cannot see M5, because both roads pass through the broken read-out. T3 sees only one word, so it misses bugs that are silent there. Run together, T1, T2 and T3 kill 5 of 5.
+Each test has a blind spot, and they are different blind spots.
 
-The idea that small planted slips are a fair stand-in for real bugs is an observation, not a law: tests that catch simple faults have been found, in study after study, to catch most compound ones too.
+- T1 never calls road 1, so it cannot see M3's table typo. It also sees only clean words, where M1, M2 and M4 do no harm. With nothing to repair, the syndrome is 0 whichever order its bits are read and whether or not the flip is forgotten. M2's false alarm on a clean word flips only check bit 2, which the read-out never looks at.
+- T2 cannot see M5, because both roads pass through the broken read-out.
+- T3 sees only one word, so it misses bugs that are silent there.
+
+Run together, T1, T2 and T3 kill 5 of 5.
+
+The idea that small planted slips are a fair stand-in for real bugs is an observation, not a law. Tests that catch simple faults have been found, in study after study, to catch most compound ones too.
 
 ### Step 5: why the library also pins a number worked by hand
 
 M5 is the lesson of the shared step. Two roads that meet before the comparison can only check what comes before the meeting point. The fix is a third kind of road that shares nothing with the code: an answer known in advance. T1 knows its answers because it chose the messages. T3 knows its answer because it was worked by hand on paper. Either one kills M5.
 
-That is why each card in this library carries a "Worked numbers, by hand" table and asserts its final number: the hand-worked value is the road no bug in the code can reach.
+That is why each card in this library carries a "Worked numbers, by hand" table and asserts its final number. The hand-worked value is the road no bug in the code can reach.
 
 ---
 
@@ -195,7 +210,15 @@ So a random five-word test would let the table typo through with chance 0.96154,
 
 ## Code, from first principles, and it actually runs
 
-The script builds both decoders, confirms they agree on all 128 words and match the hand-worked word, then plants each of the five mutants and records which tests fail. The sampling formula is checked against a seeded simulation. That is three independent roads: road 1 against road 2 over the whole input space; both against the value worked by hand, and the shared encoder against the Hamming card's generator matrix (its matrix of codeword columns); and the catch formula against simulation. The Python and Rust listings are a fourth pair: written separately, they print identical output.
+The script builds both decoders, confirms they agree on all 128 words and match the hand-worked word, then plants each of the five mutants and records which tests fail. The sampling formula is checked against a seeded simulation.
+
+That is three independent roads:
+
+- road 1 against road 2 over the whole input space;
+- both against the value worked by hand, and the shared encoder against the Hamming card's generator matrix (its matrix of codeword columns);
+- the catch formula against simulation.
+
+The Python and Rust listings are a fourth pair: written separately, they print identical output.
 
 ### Python
 
@@ -589,11 +612,182 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line, including the simulated catch rates, because both languages draw from the same SplitMix64 stream.
 
+### Lean
+
+Lean proves the catch formula for every $N$, $w$ and $k$, and the two Hamming facts on all 128 words.
+
+- Suppose a random test draws $k$ inputs, each uniform over the $N$ inputs and independent of the others. Then it catches a bug that shows on $w$ inputs with chance $1 - (1 - w/N)^k$.
+- Take any codeword and flip its bit at position $p$, for any $p$ from 1 to 7. Then the syndrome is $p$.
+- Take any received word $r$ and any codeword nearest to it. Then that codeword's data bits equal road 2's answer, so $A(r) = B(r)$.
+- The encoder's four basic codewords equal the four columns of the Hamming card's generator matrix.
+- The word 1001110 has check sums 2, 1, 3 and syndrome 6, and road 2 decodes it to 0100.
+- Its distances to the 16 codewords are 4 4 3 3 1 5 2 2 5 5 2 6 4 4 3 3.
+- A bug on 1 word in 128 needs 588 random draws for a 99% catch, and 587 are not enough.
+
+The mutants, the kill table and the simulated catch rates are left to the Python and Rust checks.
+
+```lean
+-- Two roads and a mutation: a random test of k uniform independent draws catches a bug that shows on w of N inputs with chance 1 - (1 - w/N)^k, and on Hamming (7,4) the syndrome names every single flipped bit and agrees with nearest-codeword decoding on all 128 words.
+import Mathlib.InformationTheory.Hamming
+import Mathlib.Data.ZMod.Basic
+import Mathlib.Data.Fintype.Pi
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.Order.Field.Basic
+import Mathlib.Basic.Real.Basic
+import Mathlib.Tactic.NormNum
+
+open Finset
+
+/-! ### The sampling theorem
+
+A random test draws `k` inputs, each uniform over the `N` inputs and independent of the others.
+That is the same as drawing one `k`-tuple uniformly from all `N ^ k` tuples, so the chance of an
+event is the number of tuples in it divided by `N ^ k`. -/
+
+/-- The chance that a random test of `k` inputs, each drawn uniformly and independently from all
+`N` inputs, catches a bug that shows on `w` of them is `1 - (1 - w / N) ^ k`: one minus the chance
+that every draw lands on an input where the bug is silent. Here the inputs are the type `α`
+(`N = Fintype.card α`), the bug shows on the set `S` (`w = S.card`), and the test catches the bug
+when at least one of its `k` draws lies in `S`. -/
+theorem random_test_catch_probability {α : Type*} [Fintype α] [DecidableEq α]
+    (S : Finset α) (k : ℕ) :
+    ((univ.filter (fun f : Fin k → α => ∃ i, f i ∈ S)).card : ℝ) / (Fintype.card α : ℝ) ^ k
+      = 1 - (1 - (S.card : ℝ) / Fintype.card α) ^ k := by
+  have hc : (univ.filter (fun f : Fin k → α => ∃ i, f i ∈ S)).card
+      = Fintype.card α ^ k - (Fintype.card α - S.card) ^ k := by
+    have h1 : (univ.filter (fun f : Fin k → α => ¬ ∃ i, f i ∈ S)).card
+        = (Fintype.card α - S.card) ^ k := by
+      have : univ.filter (fun f : Fin k → α => ¬ ∃ i, f i ∈ S)
+          = Fintype.piFinset (fun _ : Fin k => Sᶜ) := by
+        ext f; simp [Fintype.mem_piFinset]
+      rw [this, Fintype.card_piFinset, Finset.prod_const, Finset.card_univ, Fintype.card_fin,
+        Finset.card_compl]
+    have h2 := Finset.card_filter_add_card_filter_not
+      (s := (univ : Finset (Fin k → α))) (fun f : Fin k → α => ∃ i, f i ∈ S)
+    rw [Finset.card_univ, Fintype.card_fun, Fintype.card_fin, h1] at h2
+    omega
+  have hle : (Fintype.card α - S.card) ^ k ≤ Fintype.card α ^ k :=
+    Nat.pow_le_pow_left (Nat.sub_le _ _) _
+  have hS : S.card ≤ Fintype.card α := Finset.card_le_univ S
+  rw [hc, Nat.cast_sub hle]
+  push_cast [Nat.cast_sub hS]
+  rcases Nat.eq_zero_or_pos (Fintype.card α) with h0 | hpos
+  · rw [h0]
+    rcases Nat.eq_zero_or_pos k with hk | hk
+    · subst hk; simp
+    · simp [zero_pow hk.ne']
+  · have hN : (Fintype.card α : ℝ) ≠ 0 := by exact_mod_cast hpos.ne'
+    rw [sub_div, div_self (pow_ne_zero _ hN), one_sub_div hN, div_pow]
+
+/-! ### Hamming (7,4): the code under test
+
+A word is 7 bits, positions 1 to 7 stored at indices 0 to 6. The data bits d1..d4 sit at
+positions 3, 5, 6, 7. The three checks cover positions {1, 3, 5, 7}, {2, 3, 6, 7}, {4, 5, 6, 7}. -/
+
+/-- A 7-bit word; position `p` (1 to 7) is stored at index `p - 1`. -/
+abbrev Word := Fin 7 → ZMod 2
+
+/-- A 4-bit message d1 d2 d3 d4. -/
+abbrev Msg := Fin 4 → ZMod 2
+
+/-- The encoder: data at positions 3, 5, 6, 7; check bit at positions 1, 2, 4. -/
+def encode (m : Msg) : Word :=
+  ![m 0 + m 1 + m 3, m 0 + m 2 + m 3, m 0, m 1 + m 2 + m 3, m 1, m 2, m 3]
+
+/-- The shared read-out step: the bits at positions 3, 5, 6, 7. -/
+def extract (c : Word) : Msg := ![c 2, c 4, c 5, c 6]
+
+/-- The three check groups, as indices (position minus 1). -/
+def checkGroup : Fin 3 → Finset (Fin 7) :=
+  ![{0, 2, 4, 6}, {1, 2, 5, 6}, {3, 4, 5, 6}]
+
+/-- The syndrome: the three check parities read as a binary number, low bit first. -/
+def syndrome (r : Word) : ℕ :=
+  ∑ j : Fin 3, (∑ i ∈ checkGroup j, r i).val * 2 ^ (j : ℕ)
+
+/-- Flip the bit at position `p` (1 to 7); `p = 0` flips nothing. -/
+def flipAt (r : Word) (p : ℕ) : Word := fun i => if (i : ℕ) + 1 = p then r i + 1 else r i
+
+/-- Road 2: the syndrome names the bad position; flip it, then read out the data. -/
+def road2 (r : Word) : Msg := extract (flipAt r (syndrome r))
+
+/-- The syndrome of a single flip at position `p` of any codeword is `p`: checked on all
+16 codewords times 7 positions, 112 one-flip words. -/
+theorem syndrome_of_single_flip_is_position (m : Msg) (p : Fin 7) :
+    syndrome (flipAt (encode m) ((p : ℕ) + 1)) = (p : ℕ) + 1 := by
+  revert m p
+  decide
+
+/-- The two roads agree on all 128 received words: whenever the codeword for a message `m` is a
+nearest codeword to `r` (no codeword differs from `r` in fewer positions), road 1 reads out `m`,
+and `m` is exactly what the syndrome decoder (road 2) returns. -/
+theorem two_roads_agree_on_all_words (r : Word) (m : Msg)
+    (hnear : ∀ m' : Msg, hammingDist r (encode m) ≤ hammingDist r (encode m')) :
+    extract (encode m) = road2 r := by
+  have hdec : ∀ r : Word, encode (road2 r) = flipAt r (syndrome r) := by
+    set_option maxRecDepth 20000 in decide
+  have hone : ∀ r : Word, hammingDist r (flipAt r (syndrome r)) ≤ 1 := by
+    set_option maxRecDepth 20000 in decide
+  have hsep : ∀ m m' : Msg, hammingDist (encode m) (encode m') ≤ 2 → m = m' := by decide
+  have hext : ∀ m : Msg, extract (encode m) = m := by decide
+  have h1 : hammingDist r (encode (road2 r)) ≤ 1 := by rw [hdec]; exact hone r
+  have h2 : hammingDist (encode m) (encode (road2 r)) ≤ 2 := by
+    calc hammingDist (encode m) (encode (road2 r))
+        ≤ hammingDist (encode m) r + hammingDist r (encode (road2 r)) := hammingDist_triangle _ _ _
+      _ = hammingDist r (encode m) + hammingDist r (encode (road2 r)) := by rw [hammingDist_comm]
+      _ ≤ 2 := by have := hnear (road2 r); omega
+  rw [hext, hsep m (road2 r) h2]
+
+/-! ### The card's worked numbers -/
+
+/-- The pinned word 1001110. -/
+def pin : Word := ![1, 0, 0, 1, 1, 1, 0]
+
+/-- The message with bits of `x` (0 to 15), d1 the high bit. -/
+def msgOf (x : ℕ) : Msg := fun i => ((x / 2 ^ (3 - (i : ℕ))) % 2 : ℕ)
+
+-- The encoder's four basic codewords equal the columns of the Hamming card's generator matrix.
+example : encode ![1, 0, 0, 0] = ![1, 1, 1, 0, 0, 0, 0] := by decide
+example : encode ![0, 1, 0, 0] = ![1, 0, 0, 1, 1, 0, 0] := by decide
+example : encode ![0, 0, 1, 0] = ![0, 1, 0, 1, 0, 1, 0] := by decide
+example : encode ![0, 0, 0, 1] = ![1, 1, 0, 1, 0, 0, 1] := by decide
+
+-- Check sums on 1001110 are 2, 1, 3 and the syndrome is 6.
+example : (∑ i ∈ checkGroup 0, (pin i).val, ∑ i ∈ checkGroup 1, (pin i).val,
+    ∑ i ∈ checkGroup 2, (pin i).val) = (2, 1, 3) := by decide
+example : syndrome pin = 6 := by decide
+
+-- Road 2: flip position 6 to get 1001100, read out 0100.
+example : flipAt pin 6 = ![1, 0, 0, 1, 1, 0, 0] := by decide
+example : road2 pin = ![0, 1, 0, 0] := by decide
+
+-- Road 1: distances from 1001110 to the 16 codewords; the nearest is 1001100 (message 0100), at 1.
+example : (List.range 16).map (fun x => hammingDist pin (encode (msgOf x)))
+    = [4, 4, 3, 3, 1, 5, 2, 2, 5, 5, 2, 6, 4, 4, 3, 3] := by decide
+
+-- A bug on 1 word in 128 needs 588 random draws for a 99% catch: (127/128)^588 ≤ 1/100 < (127/128)^587,
+-- written with whole numbers by multiplying through by 100 · 128^k.
+set_option exponentiation.threshold 600 in
+example : 127 ^ 588 * 100 ≤ 128 ^ 588 ∧ 128 ^ 587 < 127 ^ 587 * 100 := by norm_num
+
+#print axioms random_test_catch_probability
+#print axioms syndrome_of_single_flip_is_position
+#print axioms two_roads_agree_on_all_words
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'random_test_catch_probability' depends on axioms: [propext, Classical.choice, Quot.sound]
+'syndrome_of_single_flip_is_position' depends on axioms: [propext, Classical.choice, Quot.sound]
+'two_roads_agree_on_all_words' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - Guess first: if M3's typo is moved to the word `0000000`, a clean codeword, does the round trip T1 now catch it? Change `"0000011"` to `"0000000"`. No: T1 calls only road 2, and the typo is in road 1's table. Only T2 can see a bug in the reference road.
 > - Guess first: how often does a 20-word random test catch M3? Change both `5`s in the simulation loop (the draw count and `p_catch(W[m], 5)`) to `20`. The chance rises to about 0.145, the chart's bottom line at k = 20, and the simulation still lands within a few standard errors of the formula.
-> - Guess first: what if M4 skipped the repair only when the syndrome is 1? Change `MUT != "M4"` to `(MUT != "M4" or s > 1)`. Its $w$ drops to 0 and every test passes on it, so the assert that demands all five kills fails. Position 1 holds a check bit, so leaving it unrepaired never changes the data: an equivalent mutant.
+> - Guess first: what if M4 skipped the repair only when the syndrome is 1? Change `MUT != "M4"` to `(MUT != "M4" or s > 1)`. Its $w$ drops to 0 and every test passes on it, so the assert on the kill counts fails. Position 1 holds a check bit, so leaving it unrepaired never changes the data: an equivalent mutant.
 > - Guess first: does the pinned word alone catch the read-backwards bug M1? Yes. 110 read backwards is 3, and flipping position 3 turns the data into 1110 (the "pin" column of the output).
 
 ---

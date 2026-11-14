@@ -6,7 +6,11 @@
 
 ## General Overview
 
-Every simulated number in this library is printed twice: once by a Python script and once by a Rust program. The two outputs must match to the last character, or the card is not published. This card's own example throws 400,000 darts at a unit square, split across 4 workers of 100,000 darts each, to estimate π. Python prints 3.14064, give or take a standard error of 0.00260. Rust prints 3.14064 too. Both print the estimate's 64 binary digits, written in hexadecimal (base 16), as 40092007dd441355. The two programs share no code, yet they agree bit for bit. Both ran on the same computer here; Step 1 shows why any machine that follows the floating-point standard gives the same bits.
+Every simulated number in this library is printed twice: once by a Python script and once by a Rust program. The two outputs must match to the last character, or the card is not published. This card's own example throws 400,000 darts at a unit square, split across 4 workers of 100,000 darts each, to estimate π.
+
+Python prints 3.14064, give or take a standard error of 0.00260. Rust prints 3.14064 too. Both print the estimate's 64 binary digits, written in hexadecimal (base 16), as 40092007dd441355.
+
+The two programs share no code, yet they agree bit for bit. Both ran on the same computer here; Step 1 shows why any machine that follows the floating-point standard gives the same bits.
 
 That only works because nothing in the run is left to chance. A computer's random numbers come from a fixed rule applied to a starting number, the **seed** ([Random numbers from a computer](../../09-Probability%20and%20statistics/11-Simulation/01-pseudo-random-numbers.md)). Same rule and same seed give the same stream of numbers, so the same answer. The practice on this card is three habits that turn that fact into a result someone else can check:
 
@@ -93,10 +97,14 @@ Write all four down and the answer is pinned. The three habits are what that mea
 Two separate programs agree to the last bit only if every operation they perform is defined to the last bit.
 
 - **The generator is integer arithmetic.** SplitMix64 adds $\gamma$, then XORs (compares two numbers digit by digit, 1 where they differ), shifts and multiplies, all keeping the remainder after dividing by $2^{64}$. Integer arithmetic is exact in every language: from seed 0, Python and Rust both give the first output `e220a8397b1dcdaf`, the same value as the separately written generator on [Random numbers from a computer](../../09-Probability%20and%20statistics/11-Simulation/01-pseudo-random-numbers.md).
-- **The conversion to a number between 0 and 1 is exact.** The top 53 bits of an output, divided by $2^{53}$, give a draw between 0 and 1. A double holds 53 significant bits, so this division loses nothing.
+- **The conversion to a number between 0 and 1 is exact.** The top 53 bits of an output, divided by $2^{53}$, give a draw between 0 and 1. A double (the 64-bit floating-point number both languages use) holds 53 significant bits, so this division loses nothing.
 - **The dart test uses only correctly rounded operations.** Multiply, add, compare and square root are each required by IEEE 754 to give the exactly rounded true result. Same inputs, same bits, on any conforming machine.
 
-What the standard does not pin down is where reproducibility usually breaks. Functions such as `exp`, `log` and `sin` are not required to be correctly rounded, so two maths libraries may differ in the last bit. A compiler may fuse a multiply and an add into one step with one rounding instead of two. And order matters: the mean distance of a dart from the corner, summed in one pass, is 0.7645605934070648; summed as four partial sums, one per worker, it is 0.7645605934070693, 40 ulp away. Even the one pass depends on which worker's distances come first: with the workers in reverse order it gives 0.7645605934070685, 33 ulp from worker order. A parallel program that adds results in whatever order its workers finish can change its last digits from run to run. The fix is a fixed order: the checks add every sum in worker order, always.
+What the standard does not pin down is where reproducibility usually breaks. Functions such as `exp`, `log` and `sin` are not required to be correctly rounded, so two maths libraries may differ in the last bit. A compiler may fuse a multiply and an add into one step with one rounding instead of two.
+
+And order matters: the mean distance of a dart from the corner, summed in one pass, is 0.7645605934070648; summed as four partial sums, one per worker, it is 0.7645605934070693, 40 ulp away. Even the one pass depends on which worker's distances come first: with the workers in reverse order it gives 0.7645605934070685, 33 ulp from worker order.
+
+A parallel program that adds results in whatever order its workers finish can change its last digits from run to run. The fix is a fixed order: the checks add every sum in worker order, always.
 
 ### Step 2: two ways to give each part its own stream
 
@@ -104,9 +112,13 @@ All streams live on the same loop of $2^{64}$ states. Giving each part a stream 
 
 **Block splitting.** Start part $k$ exactly $k \times L$ steps along from the master seed. SplitMix64 makes the jump free: its state after $j$ steps is the seed plus $j\gamma$. The blocks then sit end to end and cannot overlap, by construction. The catch: $L$ must be known before the run, and must count draws, not darts or points.
 
-**Seeding from a master.** Start a generator from the master seed and use its first $N$ outputs as the stream seeds $s_k$. No draw counts are needed in advance, which matters when a part's needs depend on its own numbers. A part that keeps points in a disc by **rejection** (draw a point in the square, keep it only if it falls in the disc, [Rejection sampling and Box-Muller](../../09-Probability%20and%20statistics/11-Simulation/03-rejection-sampling-and-box-muller.md)) used 25,552 draws to keep 10,000 points; nobody could have written that number down beforehand. The price is that the streams now land at random-looking places on the loop, so they could in principle collide. Step 3 bounds that chance. This card's workers use this method.
+**Seeding from a master.** Start a generator from the master seed and use its first $N$ outputs as the stream seeds $s_k$. No draw counts are needed in advance, which matters when a part's needs depend on its own numbers.
 
-An older trap belongs to the generator, not the method: with some generators, seeds 1 and 2 give streams tied together by simple algebra, as the minstd example on [Random numbers from a computer](../../09-Probability%20and%20statistics/11-Simulation/01-pseudo-random-numbers.md) shows. SplitMix64's scrambler hides neighbouring seeds well, but deriving seeds from a master is the habit that does not depend on which generator is in use.
+A part that keeps points in a disc by **rejection** (draw a point in the square, keep it only if it falls in the disc, [Rejection sampling and Box-Muller](../../09-Probability%20and%20statistics/11-Simulation/03-rejection-sampling-and-box-muller.md)) used 25,552 draws to keep 10,000 points; nobody could have written that number down beforehand.
+
+The price is that the streams now land at random-looking places on the loop, so they could in principle collide. Step 3 bounds that chance. This card's workers use this method.
+
+An older trap belongs to the generator, not the method: with some generators, seeds 1 and 2 give streams tied together by simple algebra, as the minstd (minimal standard) generator example on [Random numbers from a computer](../../09-Probability%20and%20statistics/11-Simulation/01-pseudo-random-numbers.md) shows. SplitMix64's scrambler hides neighbouring seeds well, but deriving seeds from a master is the habit that does not depend on which generator is in use.
 
 ### Step 3: the overlap bound
 
@@ -117,7 +129,11 @@ Think of the loop as a circular running track with $P$ marked positions. A strea
 
 The checks test step 1 by brute force on a toy generator with a loop of 256: $x \to (5x + 3) \bmod 256$, segments of $L = 10$. Out of all 65,536 ordered pairs of seeds, the segments share a state in 4864 pairs. The formula predicts $256 \times 19 = 4864$: 19 clashing seeds for each of the 256 starting seeds, a probability of 0.0742.
 
-For this card's run the bound is $1.3 \times 10^{-13}$. But a bound is a promise about seeds in general. For the four seeds actually used, the checks measure the answer directly. A SplitMix64 state $t$ sits at position $t \cdot \gamma^{-1}$ on the loop, where $\gamma^{-1}$ is the number that, multiplied by $\gamma$, leaves remainder 1 after dividing by $2^{64}$. The checks find $\gamma^{-1}$ by Newton's rule for inverses (repeat $v \to v(2 - \gamma v)$, which doubles the number of correct low bits each time), confirm $\gamma \cdot \gamma^{-1}$ leaves 1, and place the four starts. The nearest two are 2144390933074202976 draws apart; each stream uses 200,000. These four streams cannot meet.
+For this card's run the bound is $1.3 \times 10^{-13}$. But a bound is a promise about seeds in general. For the four seeds actually used, the checks measure the answer directly.
+
+A SplitMix64 state $t$ sits at position $t \cdot \gamma^{-1}$ on the loop, where $\gamma^{-1}$ is the number that, multiplied by $\gamma$, leaves remainder 1 after dividing by $2^{64}$. The checks find $\gamma^{-1}$ by Newton's rule for inverses (repeat $v \to v(2 - \gamma v)$, which doubles the number of correct low bits each time), confirm $\gamma \cdot \gamma^{-1}$ leaves 1, and place the four starts.
+
+The nearest two are 2144390933074202976 draws apart; each stream uses 200,000. These four streams cannot meet.
 
 The bound also says when 64 bits stop being enough. A large job with 10,000 streams of a billion draws each has 49,995,000 pairs; the bound is 0.00542, about 1 in 184. With a 128-bit loop the same job's bound is $2.9 \times 10^{-22}$. That is why generators built for large parallel work keep 128 bits of state or more, or hand out streams by a key and a counter instead of by a seed.
 
@@ -154,7 +170,7 @@ The estimate sits 0.00095 below π = 3.14159, well inside one standard error, an
 | --- | --- | --- |
 | Every worker seeded with the master 20261111 | 3.14112, claimed se 0.00260, true se 0.00519 | four identical runs of 78,528 hits: 100,000 darts reported as 400,000, error bar half its true size |
 | Block splitting by darts, not draws: jump 100,000 instead of 200,000 | 3.14220 from 250,000 distinct darts of 400,000 | each block's second half is the next block's first half |
-| Seed recorded, generator not: 20261111 in the 32-bit LCG of [Monte Carlo pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md) | 3.13665 | a seed means nothing without its generator |
+| Seed recorded, generator not: 20261111 in the 32-bit linear congruential generator (LCG) of [Monte Carlo pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md) | 3.13665 | a seed means nothing without its generator |
 | Two parts on one shared stream, part A cut from 10,000 to 5,000 points | part B moves from 3.1548 to 3.1172 | part B's draws slid by part A's change |
 | Summing the 400,000 distances as four partial sums, not one pass | 0.7645605934070693 against 0.7645605934070648 | a different order rounds differently: 40 ulp apart |
 
@@ -511,6 +527,226 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line, including the bit pattern `40092007dd441355` and the sums printed to full precision.
+
+### Lean
+
+Lean proves Step 3's overlap bound for every number of streams, stream length and loop length, and checks the card's SplitMix64 numbers exactly.
+
+- Take $N$ streams of $L$ draws, each started independently at a uniform random place on a loop of $P$ positions. Then the chance that some two streams share a position is at most the number of pairs times $(2L - 1)/P$.
+- Take $L$ of at least 1 and $2L - 1 \le P$, and fix where stream A starts. Then exactly $2L - 1$ starts for stream B make it overlap A.
+- Suppose a counter steps by an odd number and keeps the remainder after dividing by a power of 2. Then it first returns to its start after exactly that many steps.
+- SplitMix64's first output from seed 0, the four stream seeds and $\gamma^{-1}$ are all right.
+- The nearest two of the four starts are 2144390933074202976 draws apart, far more than 200,000.
+- The worked numbers are right: 314,064 hits, 6 pairs, $2L - 1 = 399{,}999$, the toy formula's 4864, and 49,995,000 pairs.
+
+The darts, the π estimate, the floating-point sums and the toy generator's brute-force count are left to the Python and Rust checks.
+
+```lean
+-- Seeds: with N streams of L draws started at independent uniform places on a loop of P states, the chance that two streams share a state is at most N(N-1)/2 times (2L-1)/P.
+import Mathlib.Data.ZMod.Basic
+import Mathlib.Data.Fintype.Pi
+import Mathlib.Basic.Real.Basic
+import Mathlib.GroupTheory.OrderOfElement
+import Mathlib.Tactic.NormNum
+import Mathlib.Data.Int.Interval
+import Mathlib.Order.Interval.Finset.Fin
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Tactic
+
+theorem overlap_diff_mem (L P : ℕ) (a b : ZMod P) (h : ∃ i < L, ∃ j < L, a + (i : ZMod P) = b + (j : ZMod P)) :
+    b - a ∈ (Finset.Ioo (-(L : ℤ)) L).image (fun d : ℤ => (d : ZMod P)) := by
+  obtain ⟨i, hi, j, hj, h⟩ := h
+  refine Finset.mem_image.mpr ⟨(i : ℤ) - j, Finset.mem_Ioo.mpr ⟨by omega, by omega⟩, ?_⟩
+  push_cast
+  linear_combination h
+
+theorem card_Ioo_neg (L : ℕ) : (Finset.Ioo (-(L : ℤ)) L).card = 2 * L - 1 := by
+  rw [Int.card_Ioo]; omega
+
+theorem pair_overlap_card_le (N L P : ℕ) [NeZero P] (i j : Fin N) (hij : i ≠ j) :
+    (Finset.univ.filter (fun s : Fin N → ZMod P =>
+        ∃ a < L, ∃ b < L, s i + (a : ZMod P) = s j + (b : ZMod P))).card
+      ≤ (2 * L - 1) * P ^ (N - 1) := by
+  classical
+  set D := (Finset.Ioo (-(L : ℤ)) L).image (fun d : ℤ => (d : ZMod P))
+  have hD : D.card ≤ 2 * L - 1 := (Finset.card_image_le).trans (card_Ioo_neg L).le
+  let f : (Fin N → ZMod P) → ZMod P × ({k : Fin N // k ≠ j} → ZMod P) :=
+    fun s => (s j - s i, fun k => s k)
+  refine (Finset.card_le_card_of_injOn (t := D ×ˢ (Finset.univ)) f ?_ ?_).trans ?_
+  rotate_left 2
+  · rw [Finset.card_product, Finset.card_univ, Fintype.card_fun, ZMod.card]
+    have : Fintype.card {k : Fin N // k ≠ j} = N - 1 := by simp
+    rw [this]
+    exact Nat.mul_le_mul_right _ hD
+  · intro s hs
+    simp only [Finset.coe_filter, Finset.mem_univ, true_and, Set.mem_ofPred_eq] at hs
+    simp only [Finset.coe_product, Finset.coe_univ, Set.mem_prod, Finset.mem_coe, Set.mem_univ, and_true, f]
+    exact overlap_diff_mem L P (s i) (s j) hs
+  · intro s _ t _ hst
+    simp only [f, Prod.mk.injEq] at hst
+    obtain ⟨h1, h2⟩ := hst
+    have hi : s i = t i := congrFun h2 ⟨i, hij⟩
+    funext k
+    by_cases hk : k = j
+    · subst hk; rw [hi] at h1; simpa using h1
+    · exact congrFun h2 ⟨k, hk⟩
+
+theorem lt_sum_card_Ioi (N : ℕ) : (∑ i : Fin N, (Finset.Ioi i).card) * 2 = N * (N - 1) := by
+  simp only [Fin.card_Ioi]
+  rw [Fin.sum_univ_eq_sum_range (fun i => N - 1 - i) N, Finset.sum_range_reflect (fun i => i) N]
+  exact Finset.sum_range_id_mul_two N
+
+#print axioms overlap_diff_mem
+#print axioms card_Ioo_neg
+#print axioms pair_overlap_card_le
+#print axioms lt_sum_card_Ioi
+
+/-- The overlap bound. Put each of `N` streams at an independent, uniformly random start on a
+loop of `P` positions (`ZMod P`), and let each stream use the `L` positions from its start on.
+The share of all `P ^ N` choices of starts in which two different streams share a position
+is at most the number of pairs, `N(N-1)/2`, times `(2L - 1)/P`. -/
+theorem stream_overlap_probability_le (N L P : ℕ) [NeZero P] :
+    ((Finset.univ.filter (fun s : Fin N → ZMod P =>
+        ∃ i j : Fin N, i ≠ j ∧ ∃ a < L, ∃ b < L, s i + (a : ZMod P) = s j + (b : ZMod P))).card : ℝ)
+      / (P : ℝ) ^ N
+    ≤ ((N : ℝ) * ((N : ℝ) - 1) / 2) * ((2 * L - 1 : ℕ) : ℝ) / (P : ℝ) := by
+  classical
+  rcases Nat.eq_zero_or_pos N with rfl | hN
+  · simp
+  set S := Finset.univ.filter (fun s : Fin N → ZMod P =>
+        ∃ i j : Fin N, i ≠ j ∧ ∃ a < L, ∃ b < L, s i + (a : ZMod P) = s j + (b : ZMod P))
+  let T : Fin N → Fin N → Finset (Fin N → ZMod P) := fun i j =>
+    Finset.univ.filter (fun s : Fin N → ZMod P =>
+        ∃ a < L, ∃ b < L, s i + (a : ZMod P) = s j + (b : ZMod P))
+  have hsub : S ⊆ Finset.univ.biUnion (fun i => (Finset.Ioi i).biUnion (fun j => T i j)) := by
+    intro s hs
+    simp only [S, Finset.mem_filter, Finset.mem_univ, true_and] at hs
+    obtain ⟨i, j, hij, a, ha, b, hb, h⟩ := hs
+    simp only [Finset.mem_biUnion, Finset.mem_univ, true_and, Finset.mem_Ioi, T,
+      Finset.mem_filter]
+    rcases lt_or_gt_of_ne hij with hlt | hgt
+    · exact ⟨i, j, hlt, a, ha, b, hb, h⟩
+    · exact ⟨j, i, hgt, b, hb, a, ha, h.symm⟩
+  have hcard : S.card ≤ ∑ i : Fin N, (Finset.Ioi i).card * ((2 * L - 1) * P ^ (N - 1)) := by
+    refine (Finset.card_le_card hsub).trans ((Finset.card_biUnion_le).trans ?_)
+    refine Finset.sum_le_sum fun i _ => (Finset.card_biUnion_le).trans ?_
+    rw [← smul_eq_mul, ← Finset.sum_const]
+    refine Finset.sum_le_sum fun j hj => ?_
+    exact pair_overlap_card_le N L P i j (ne_of_lt (Finset.mem_Ioi.mp hj))
+  rw [← Finset.sum_mul] at hcard
+  have hnat : S.card * 2 ≤ N * (N - 1) * ((2 * L - 1) * P ^ (N - 1)) := by
+    rw [← lt_sum_card_Ioi N]; nlinarith
+  have hreal : (S.card : ℝ) * 2 ≤ (N : ℝ) * ((N : ℝ) - 1) * (((2 * L - 1 : ℕ) : ℝ) * (P : ℝ) ^ (N - 1)) := by
+    have := (Nat.cast_le (α := ℝ)).mpr hnat
+    push_cast [Nat.cast_sub (show 1 ≤ N from hN)] at this
+    simpa using this
+  have hP : (0 : ℝ) < P := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne P)
+  have hpow : (P : ℝ) ^ N = (P : ℝ) ^ (N - 1) * P := by
+    rw [← pow_succ]; congr 1; omega
+  rw [div_le_iff₀ (by positivity), hpow]
+  have : ((N : ℝ) * ((N : ℝ) - 1) / 2) * ((2 * L - 1 : ℕ) : ℝ) / (P : ℝ) * ((P : ℝ) ^ (N - 1) * P)
+      = (N : ℝ) * ((N : ℝ) - 1) * (((2 * L - 1 : ℕ) : ℝ) * (P : ℝ) ^ (N - 1)) / 2 := by
+    field_simp
+  rw [this]
+  linarith
+
+/-- One pair. Fix where stream A starts on a loop of `P` positions. Stream B, also `L` long,
+shares a position with A for exactly `2L - 1` starting places: within `L - 1` before A's start,
+at it, or within `L - 1` after it (as long as those places are all different, `2L - 1 ≤ P`). -/
+theorem one_pair_overlap_positions (L P : ℕ) [NeZero P] (hL : 0 < L) (hLP : 2 * L - 1 ≤ P)
+    (a : ZMod P) :
+    (Finset.univ.filter (fun b : ZMod P =>
+        ∃ i < L, ∃ j < L, a + (i : ZMod P) = b + (j : ZMod P))).card = 2 * L - 1 := by
+  classical
+  have hset : Finset.univ.filter (fun b : ZMod P =>
+        ∃ i < L, ∃ j < L, a + (i : ZMod P) = b + (j : ZMod P))
+      = (Finset.Ioo (-(L : ℤ)) L).image (fun d : ℤ => a + (d : ZMod P)) := by
+    ext b
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_image, Finset.mem_Ioo]
+    constructor
+    · intro h
+      obtain ⟨i, hi, j, hj, h⟩ := h
+      refine ⟨(i : ℤ) - j, ⟨by omega, by omega⟩, ?_⟩
+      push_cast
+      linear_combination h
+    · rintro ⟨d, ⟨h1, h2⟩, rfl⟩
+      rcases le_or_gt 0 d with hd | hd
+      · refine ⟨d.toNat, by omega, 0, hL, ?_⟩
+        have : ((d.toNat : ℕ) : ZMod P) = (d : ZMod P) := by
+          rw [← Int.cast_natCast, Int.toNat_of_nonneg hd]
+        simp [this]
+      · refine ⟨0, hL, (-d).toNat, by omega, ?_⟩
+        have : (((-d).toNat : ℕ) : ZMod P) = ((-d : ℤ) : ZMod P) := by
+          rw [← Int.cast_natCast, Int.toNat_of_nonneg (by omega)]
+        rw [this]; push_cast; ring
+  rw [hset, Finset.card_image_of_injOn, card_Ioo_neg]
+  intro x hx y hy hxy
+  simp only [Finset.coe_Ioo, Set.mem_Ioo] at hx hy
+  simp only [add_right_inj] at hxy
+  rw [ZMod.intCast_eq_intCast_iff_dvd_sub] at hxy
+  have := Int.eq_zero_of_abs_lt_dvd hxy (by rw [abs_lt]; constructor <;> omega)
+  omega
+
+/-- The counter's loop. A counter that steps by an odd number `γ` and keeps the remainder after
+dividing by `2 ^ k` comes back to its start only after `2 ^ k` steps, so its states form one loop
+of length `2 ^ k` (for SplitMix64, `k = 64`). -/
+theorem odd_step_counter_period (k γ : ℕ) (hγ : Odd γ) :
+    addOrderOf (γ : ZMod (2 ^ k)) = 2 ^ k := by
+  have hc : Nat.Coprime (2 ^ k) γ := (Nat.coprime_two_left.mpr hγ).pow_left k
+  rw [ZMod.addOrderOf_coe _ (by positivity), hc, Nat.div_one]
+
+/-- SplitMix64's scrambler, as in the card's code. -/
+def splitmixMix (z : ℕ) : ℕ :=
+  let z := ((z ^^^ (z >>> 30)) * 0xBF58476D1CE4E5B9) % 2 ^ 64
+  let z := ((z ^^^ (z >>> 27)) * 0x94D049BB133111EB) % 2 ^ 64
+  z ^^^ (z >>> 31)
+
+-- From seed 0, the first output is e220a8397b1dcdaf, as on the Random numbers card.
+example : splitmixMix ((0 + 0x9E3779B97F4A7C15) % 2 ^ 64) = 0xE220A8397B1DCDAF := by decide
+
+-- The step gamma is odd, and 0xF1DE83E19937733D is its inverse: the product leaves 1 after dividing by 2^64.
+example : Odd 0x9E3779B97F4A7C15 := by decide
+example : (0x9E3779B97F4A7C15 * 0xF1DE83E19937733D) % 2 ^ 64 = 1 := by norm_num
+
+-- The four stream seeds are the first four outputs from the master seed 20261111.
+example : [1, 2, 3, 4].map (fun k => splitmixMix ((20261111 + k * 0x9E3779B97F4A7C15) % 2 ^ 64))
+    = [0xFBFC5102A7266B8B, 0x4D299F0370E6186B, 0xE0300AA22B3714F3, 0x43207C09B5D5E859] := by decide
+
+-- Placed on the loop, the nearest two starts are 2144390933074202976 draws apart, far more than 200000.
+example :
+    let pos := [0xFBFC5102A7266B8B, 0x4D299F0370E6186B, 0xE0300AA22B3714F3, 0x43207C09B5D5E859].map
+      (fun s => s * 0xF1DE83E19937733D % 2 ^ 64)
+    ((List.finRange 4).flatMap fun i => (List.finRange 4).filterMap fun j =>
+        if i = j then none else some ((pos[j]! + 2 ^ 64 - pos[i]!) % 2 ^ 64)).min?
+      = some 2144390933074202976 := by decide
+
+-- Worked numbers, by hand.
+example : 78690 + 78519 + 78306 + 78549 = 314064 := by norm_num
+example : 4 * 100000 = 400000 ∧ 2 * 400000 = 800000 := by norm_num
+example : 4 * 3 / 2 = 6 := by norm_num
+example : 2 * 200000 - 1 = 399999 := by norm_num
+-- The toy loop of 256 with segments of 10: 19 clashing seeds for each of 256 seeds.
+example : 256 * (2 * 10 - 1) = 4864 := by norm_num
+-- 10,000 streams make 49,995,000 pairs.
+example : 10000 * 9999 / 2 = 49995000 := by norm_num
+
+#print axioms stream_overlap_probability_le
+#print axioms one_pair_overlap_positions
+#print axioms odd_step_counter_period
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'overlap_diff_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'card_Ioo_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pair_overlap_card_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lt_sum_card_Ioi' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stream_overlap_probability_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'one_pair_overlap_positions' depends on axioms: [propext, Classical.choice, Quot.sound]
+'odd_step_counter_period' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
