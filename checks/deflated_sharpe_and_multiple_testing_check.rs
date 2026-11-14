@@ -162,5 +162,5 @@ fn main() {
     assert!(pbo_s < 0.35); // real skill travels
     assert!((d_m - 0.964526).abs() < 1e-5); // independent earlier run
     assert_eq!(ranks, vec![1, 1, 4, 4, 4, 4]); // the hand enumeration
-    println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

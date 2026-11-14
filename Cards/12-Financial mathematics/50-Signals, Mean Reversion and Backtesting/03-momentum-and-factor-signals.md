@@ -12,7 +12,7 @@ In the market on this card, the top tenth beat the bottom tenth by **8.10 percen
 
 The market here is invented: every stock is given a slowly wandering drift that nobody can see. Inventing it buys one thing a real market cannot give. The hidden drifts are known, so the card can check whether the sort found them. It did: the hidden drift gap between the two tenths was 8.34 percent a year.
 
-Two questions do all the work. How is the signal built and the spread measured? And is 8.10 percent real, or luck? The second needs care, because good and bad months for momentum come in runs, and a standard error that ignores runs claims too much certainty. The fix is the **Newey-West** standard error, which counts the runs.
+Two questions do all the work. How is the signal built and the spread measured? And is 8.10 percent real, or luck? The second needs care, because good and bad months for momentum come in runs, and a standard error (the typical size of an average's wobble from sample to sample) that ignores runs claims too much certainty. The fix is the **Newey-West** standard error, which counts the runs.
 
 **Rank stocks on a signal, hold the top tenth against the bottom tenth, and judge the average monthly spread by a standard error that allows neighbouring months to lean on each other.**
 
@@ -318,9 +318,10 @@ assert bad == 0 and abs(A(sum(xb) / T) - A(xbar)) < 1e-9   # bisection cut == so
 assert abs(sqrt(win / T) - se_nw) < 1e-12 * se_nw + 1e-15       # autocovariances == window sums
 assert abs(se_boot / se_nw - 1) < 0.25         # resampling agrees with the formula
 assert abs(xbar - sum(xd) / T) < 2 * se_noise  # the sort found the hidden drift
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-28 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-14 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 example: signal 61/50 - 1                  0.220000
@@ -352,6 +353,7 @@ try: quintiles, top minus bottom           6.471557
 try: time-series momentum                  1.230810
 decile, percent a year: 0.85, 2.46, 3.23, 6.86, 5.43, 8.74, 4.55, 6.34, 7.31, 8.94
 cumulative spread by year, percent: 0.00, -1.58, 11.24, 22.09, 77.00, 81.93, 83.90, 80.98, 92.60, 128.27, 121.78, 135.97, 134.91, 145.13, 146.42, 153.51, 154.22, 154.99, 156.85, 156.98, 161.91
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -520,16 +522,16 @@ fn main() {
     println!("decile, percent a year: {}", dec.join(", "));
     let cum: Vec<String> = (0..21).map(|y| format!("{:.2}", 100.0 * x[..12 * y].iter().sum::<f64>() + 0.0)).collect();
     println!("cumulative spread by year, percent: {}", cum.join(", "));
-
     assert!(sgap < 1e-9); // price ratio == chained monthly returns
     assert!(bad == 0 && (ann(xbm) - ann(xbar)).abs() < 1e-9); // bisection cut == sorted cut
     assert!(((win / tf).sqrt() - se_nw).abs() < 1e-12 * se_nw + 1e-15); // autocovariances == window sums
     assert!((se_boot / se_nw - 1.0).abs() < 0.25); // resampling agrees with the formula
     assert!((xbar - xdm).abs() < 2.0 * se_noise); // the sort found the hidden drift
+    println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-28 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-14 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 example: signal 61/50 - 1                  0.220000
@@ -561,9 +563,299 @@ try: quintiles, top minus bottom           6.471557
 try: time-series momentum                  1.230810
 decile, percent a year: 0.85, 2.46, 3.23, 6.86, 5.43, 8.74, 4.55, 6.34, 7.31, 8.94
 cumulative spread by year, percent: 0.00, -1.58, 11.24, 22.09, 77.00, 81.93, 83.90, 80.98, 92.60, 128.27, 121.78, 135.97, 134.91, 145.13, 146.42, 153.51, 154.22, 154.99, 156.85, 156.98, 161.91
+ALL CHECKS PASS
 ```
 
 The two outputs agree line for line. The block bootstrap gives 0.2628 against the formula's 0.2517: a resampling estimate, close but not equal, which is what the 25 percent tolerance in its assert allows for. Both signal roads print a largest gap of 0.000000, and no stock is picked differently by the two decile roads.
+
+### Lean
+
+Lean proves the algebra behind Steps 1, 4 and 5, for any monthly spreads and any number of lags $L$.
+
+- Take any monthly spreads and any $L$, with window sums $W_s$ for every start $s$ from $1 - L$ to $T$. Then $\sum_s W_s^2 = (L+1)\,T\,\hat\sigma^2$, so the long-run variance is never negative.
+- Suppose every stock's return is $r_{i,t} = m_t + u_{i,t}$, and each decile holds $n$ stocks. Then the spread $x_t$ is the top decile's average $u_{i,t}$ minus the bottom decile's average $u_{i,t}$.
+- Suppose the covariance of months $s$ and $k$ depends only on their gap: $\operatorname{Cov}(x_s, x_k) = \gamma_{|s-k|}$. Then $\frac{1}{T^2}$ times the sum of every pair's covariance equals Step 4's formula, with weights $1 - j/T$.
+- The worked numbers are exact: signal 0.22, 30 stocks per decile, $L = 4$ for $T = 240$, and weights 0.8, 0.6, 0.4, 0.2.
+
+The invented market, its spread of 8.10 percent, and every standard error and t-statistic are left to the Python and Rust checks.
+
+```lean
+-- Momentum and factor signals: the Newey-West long-run variance with Bartlett weights equals an average of squared window sums and so is never negative, the long-short spread cancels the market's return, and the variance of an average counts each lag j exactly T - j times.
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+open Finset
+
+/-! Months are numbered by integers; the sample is months `1, …, T` of the spread `x`. -/
+
+/-- The average monthly spread `x̄ = (x₁ + ⋯ + x_T) / T`. -/
+noncomputable def spreadMean (x : ℤ → ℝ) (T : ℕ) : ℝ :=
+  (∑ k ∈ Icc (1 : ℤ) T, x k) / T
+
+/-- `d_k = x_k - x̄` for `k = 1, …, T`, and `d_k = 0` outside that range. -/
+noncomputable def spreadDev (x : ℤ → ℝ) (T : ℕ) (k : ℤ) : ℝ :=
+  if k ∈ Icc (1 : ℤ) T then x k - spreadMean x T else 0
+
+/-- The sample autocovariance at lag `j`:
+`γ̂_j = (1/T) ∑_{k=j+1}^{T} (x_k - x̄)(x_{k-j} - x̄)`. At `j = 0` it is the variance. -/
+noncomputable def autocov (x : ℤ → ℝ) (T : ℕ) (j : ℕ) : ℝ :=
+  (1 / (T : ℝ)) * ∑ k ∈ Icc ((j : ℤ) + 1) T, (x k - spreadMean x T) * (x (k - j) - spreadMean x T)
+
+/-- The Newey-West long-run variance with `L` lags and Bartlett weights:
+`σ̂² = γ̂₀ + 2 ∑_{j=1}^{L} (1 - j/(L+1)) γ̂_j`. -/
+noncomputable def nwLongRunVar (x : ℤ → ℝ) (T L : ℕ) : ℝ :=
+  autocov x T 0 + 2 * ∑ j ∈ Icc 1 L, (1 - (j : ℝ) / (L + 1)) * autocov x T j
+
+/-- The window sum `W_s = d_s + d_{s+1} + ⋯ + d_{s+L}`, a window `L + 1` months long. -/
+noncomputable def windowSum (x : ℤ → ℝ) (T L : ℕ) (s : ℤ) : ℝ :=
+  ∑ a ∈ range (L + 1), spreadDev x T (s + a)
+
+theorem lag_count_range (g : ℕ → ℝ) (n : ℕ) :
+    ∑ a ∈ range n, ∑ b ∈ range n, g ((a : ℤ) - b).natAbs
+      = 2 * ∑ j ∈ range n, ((n : ℝ) - j) * g j - n * g 0 := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    have h1 : ∀ a ∈ range n, g ((a : ℤ) - (n : ℕ)).natAbs = g (n - 1 - a + 1) := by
+      intro a ha
+      simp only [mem_range] at ha
+      congr 1
+      omega
+    have h2 : ∀ b ∈ range n, g (((n : ℕ) : ℤ) - b).natAbs = g (n - 1 - b + 1) := by
+      intro b hb
+      simp only [mem_range] at hb
+      congr 1
+      omega
+    have hr : ∑ a ∈ range n, g (n - 1 - a + 1) = ∑ j ∈ range n, g (j + 1) :=
+      sum_range_reflect (fun j => g (j + 1)) n
+    have hs : ∑ j ∈ range (n + 1), g j = ∑ j ∈ range n, g (j + 1) + g 0 := sum_range_succ' _ _
+    have hcoef : ∑ j ∈ range n, (((n + 1 : ℕ) : ℝ) - j) * g j
+        = ∑ j ∈ range n, ((n : ℝ) - j) * g j + ∑ j ∈ range n, g j := by
+      rw [← sum_add_distrib]
+      refine sum_congr rfl fun j _ => ?_
+      push_cast; ring
+    rw [sum_range_succ, sum_range_succ]
+    simp only [sum_range_succ]
+    rw [sum_add_distrib, ih, sum_congr rfl h1, sum_congr rfl h2, hr, hcoef]
+    rw [sum_range_succ] at hs
+    simp only [sub_self, Int.natAbs_zero]
+    push_cast
+    linarith
+
+#print axioms lag_count_range
+
+theorem sum_Icc_int_one_eq_range (T : ℕ) (f : ℤ → ℝ) :
+    ∑ s ∈ Icc (1 : ℤ) T, f s = ∑ a ∈ range T, f ((a : ℤ) + 1) := by
+  symm
+  apply sum_nbij' (fun a : ℕ => (a : ℤ) + 1) (fun s : ℤ => (s - 1).toNat)
+  · intro a ha; simp only [mem_range, mem_Icc] at ha ⊢; omega
+  · intro s hs; simp only [mem_range, mem_Icc] at hs ⊢; omega
+  · intro a _; simp
+  · intro s hs; simp only [mem_Icc] at hs; omega
+  · intro a _; rfl
+
+#print axioms sum_Icc_int_one_eq_range
+
+theorem sum_range_split_zero (f : ℕ → ℝ) (n : ℕ) (hn : 0 < n) :
+    ∑ j ∈ range n, f j = f 0 + ∑ j ∈ Icc 1 (n - 1), f j := by
+  rw [range_eq_Ico, sum_eq_sum_Ico_succ_bot hn]
+  congr 1
+
+#print axioms sum_range_split_zero
+
+/-- `T · γ̂_j` written with the zero-padded deviations `d`. -/
+theorem T_mul_autocov (x : ℤ → ℝ) (T j : ℕ) :
+    (T : ℝ) * autocov x T j
+      = ∑ k ∈ Icc ((j : ℤ) + 1) T, spreadDev x T k * spreadDev x T (k - j) := by
+  rcases Nat.eq_zero_or_pos T with hT | hT
+  · subst hT
+    simp [autocov]
+  · have hT' : (T : ℝ) ≠ 0 := by positivity
+    rw [autocov, ← mul_assoc, mul_one_div_cancel hT', one_mul]
+    refine sum_congr rfl fun k hk => ?_
+    simp only [mem_Icc] at hk
+    have h1 : k ∈ Icc (1 : ℤ) T := by simp only [mem_Icc]; omega
+    have h2 : k - j ∈ Icc (1 : ℤ) T := by simp only [mem_Icc]; omega
+    simp only [spreadDev, h1, h2, ite_true]
+
+#print axioms T_mul_autocov
+
+/-- One pair of window positions `a ≥ b` gives the lag-`(a - b)` cross product. -/
+theorem window_pair_sum (x : ℤ → ℝ) (T L a b : ℕ) (ha : a ≤ L) (hba : b ≤ a) :
+    ∑ s ∈ Icc (1 - (L : ℤ)) T, spreadDev x T (s + a) * spreadDev x T (s + b)
+      = ∑ k ∈ Icc (((a - b : ℕ) : ℤ) + 1) T,
+          spreadDev x T k * spreadDev x T (k - (a - b : ℕ)) := by
+  set d := spreadDev x T with hd_def
+  have hd : ∀ k, k ∉ Icc (1 : ℤ) T → d k = 0 := fun k hk => by
+    simp only [hd_def, spreadDev, hk, ite_false]
+  have hshift : ∑ s ∈ Icc (1 - (L : ℤ)) T, d (s + a) * d (s + b)
+      = ∑ k ∈ Icc (1 - (L : ℤ) + a) (T + a), d k * d (k - (a - b : ℕ)) := by
+    apply sum_nbij' (fun s : ℤ => s + a) (fun k : ℤ => k - a)
+    · intro s hs; simp only [mem_Icc] at hs ⊢; omega
+    · intro k hk; simp only [mem_Icc] at hk ⊢; omega
+    · intro s _; ring
+    · intro k _; ring
+    · intro s _
+      congr 2
+      push_cast [hba]
+      ring
+  rw [hshift]
+  symm
+  apply sum_subset
+  · intro k hk; simp only [mem_Icc] at hk ⊢; omega
+  · intro k hk hk'
+    simp only [mem_Icc, not_and_or, not_le] at hk hk'
+    rcases hk' with h | h
+    · rw [hd (k - (a - b : ℕ)) (by simp only [mem_Icc]; omega), mul_zero]
+    · rw [hd k (by simp only [mem_Icc]; omega), zero_mul]
+
+#print axioms window_pair_sum
+
+/-- The card's main claim (the folded proof in "Why it works", Step 5). For any monthly
+spreads `x₁, …, x_T` and any number of lags `L`, adding the squared window sums `W_s` over
+every start `s` from `1 - L` to `T` gives exactly `(L + 1) · T` times the Newey-West long-run
+variance. So the Bartlett-weighted long-run variance is an average of squares and is never
+negative. -/
+theorem nw_long_run_var_eq_window_sums_and_nonneg (x : ℤ → ℝ) (T L : ℕ) :
+    ∑ s ∈ Icc (1 - (L : ℤ)) T, (windowSum x T L s) ^ 2
+        = ((L : ℝ) + 1) * T * nwLongRunVar x T L ∧
+      0 ≤ nwLongRunVar x T L := by
+  set C : ℕ → ℝ := fun j => ∑ k ∈ Icc ((j : ℤ) + 1) T, spreadDev x T k * spreadDev x T (k - j)
+    with hC
+  have hpair : ∀ a ∈ range (L + 1), ∀ b ∈ range (L + 1),
+      ∑ s ∈ Icc (1 - (L : ℤ)) T, spreadDev x T (s + a) * spreadDev x T (s + b)
+        = C ((a : ℤ) - b).natAbs := by
+    intro a ha b hb
+    simp only [mem_range] at ha hb
+    rcases le_total b a with hba | hab
+    · rw [window_pair_sum x T L a b (by omega) hba]
+      have : ((a : ℤ) - b).natAbs = a - b := by omega
+      rw [this]
+    · rw [show ∑ s ∈ Icc (1 - (L : ℤ)) T, spreadDev x T (s + a) * spreadDev x T (s + b)
+          = ∑ s ∈ Icc (1 - (L : ℤ)) T, spreadDev x T (s + b) * spreadDev x T (s + a) from
+          sum_congr rfl fun _ _ => mul_comm _ _]
+      rw [window_pair_sum x T L b a (by omega) hab]
+      have : ((a : ℤ) - b).natAbs = b - a := by omega
+      rw [this]
+  have hlhs : ∑ s ∈ Icc (1 - (L : ℤ)) T, (windowSum x T L s) ^ 2
+      = 2 * ∑ j ∈ range (L + 1), (((L + 1 : ℕ) : ℝ) - j) * C j - ((L + 1 : ℕ) : ℝ) * C 0 := by
+    rw [← lag_count_range C (L + 1)]
+    simp only [windowSum, sq, sum_mul_sum]
+    rw [sum_comm]
+    refine sum_congr rfl fun a ha => ?_
+    rw [sum_comm]
+    exact sum_congr rfl fun b hb => hpair a ha b hb
+  have hrhs : ((L : ℝ) + 1) * T * nwLongRunVar x T L
+      = ((L : ℝ) + 1) * C 0 + 2 * ∑ j ∈ Icc 1 L, (((L : ℝ) + 1) - j) * C j := by
+    have hCj : ∀ j, C j = (T : ℝ) * autocov x T j := fun j => (T_mul_autocov x T j).symm
+    simp only [hCj, nwLongRunVar, mul_add, mul_sum]
+    have hL : ((L : ℝ) + 1) ≠ 0 := by positivity
+    congr 1
+    · ring
+    · refine sum_congr rfl fun j _ => ?_
+      field_simp
+  have heq : ∑ s ∈ Icc (1 - (L : ℤ)) T, (windowSum x T L s) ^ 2
+      = ((L : ℝ) + 1) * T * nwLongRunVar x T L := by
+    rw [hlhs, hrhs, sum_range_split_zero _ (L + 1) (by omega)]
+    simp only [Nat.add_sub_cancel]
+    push_cast
+    ring
+  refine ⟨heq, ?_⟩
+  rcases Nat.eq_zero_or_pos T with hT | hT
+  · subst hT
+    simp [nwLongRunVar, autocov]
+  · have hpos : (0 : ℝ) < ((L : ℝ) + 1) * T := by positivity
+    have hnn : 0 ≤ ∑ s ∈ Icc (1 - (L : ℤ)) T, (windowSum x T L s) ^ 2 :=
+      sum_nonneg fun _ _ => sq_nonneg _
+    rw [heq] at hnn
+    exact (mul_nonneg_iff_of_pos_left hpos).mp hnn
+
+/-- Step 1: the long-short spread removes the market. If every stock's return this month is
+the market's return `m` plus its own part `u i`, and the top and bottom deciles each hold `n`
+stocks, then the top decile's average return minus the bottom decile's average return equals
+the same difference of the stocks' own parts: the market's return cancels exactly. -/
+theorem long_short_spread_cancels_market {ι : Type*} (top bottom : Finset ι) (n : ℕ)
+    (htop : top.card = n) (hbot : bottom.card = n) (m : ℝ) (u r : ι → ℝ)
+    (hr : ∀ i, r i = m + u i) :
+    (1 / (n : ℝ)) * ∑ i ∈ top, r i - (1 / (n : ℝ)) * ∑ i ∈ bottom, r i
+      = (1 / (n : ℝ)) * ∑ i ∈ top, u i - (1 / (n : ℝ)) * ∑ i ∈ bottom, u i := by
+  simp only [hr, sum_add_distrib, sum_const, htop, hbot, nsmul_eq_mul]
+  ring
+
+/-- Step 4: the variance of an average when months lean on each other. If the covariance of
+months `s` and `k` depends only on how far apart they are, `Cov(x_s, x_k) = γ_{|s-k|}`, then
+`(1/T²) ∑_s ∑_k Cov(x_s, x_k) = (1/T) [γ₀ + 2 ∑_{j=1}^{T-1} (1 - j/T) γ_j]`, because pairs
+`j` months apart occur `T - j` times. -/
+theorem variance_of_average_counts_lags (T : ℕ) (Cov : ℤ → ℤ → ℝ) (γ : ℕ → ℝ)
+    (hCov : ∀ s k, Cov s k = γ (s - k).natAbs) :
+    (1 / (T : ℝ) ^ 2) * ∑ s ∈ Icc (1 : ℤ) T, ∑ k ∈ Icc (1 : ℤ) T, Cov s k
+      = (1 / (T : ℝ)) * (γ 0 + 2 * ∑ j ∈ Icc 1 (T - 1), (1 - (j : ℝ) / T) * γ j) := by
+  have hsum : ∑ s ∈ Icc (1 : ℤ) T, ∑ k ∈ Icc (1 : ℤ) T, Cov s k
+      = 2 * ∑ j ∈ range T, ((T : ℝ) - j) * γ j - T * γ 0 := by
+    rw [← lag_count_range γ T, sum_Icc_int_one_eq_range]
+    refine sum_congr rfl fun a _ => ?_
+    rw [sum_Icc_int_one_eq_range]
+    refine sum_congr rfl fun b _ => ?_
+    rw [hCov]
+    congr 2
+    ring
+  rw [hsum]
+  rcases Nat.eq_zero_or_pos T with hT | hT
+  · subst hT; simp
+  · have hT' : (T : ℝ) ≠ 0 := by positivity
+    rw [sum_range_split_zero _ T hT]
+    have hc : ∑ j ∈ Icc 1 (T - 1), ((T : ℝ) - j) * γ j
+        = T * ∑ j ∈ Icc 1 (T - 1), (1 - (j : ℝ) / T) * γ j := by
+      rw [mul_sum]
+      refine sum_congr rfl fun j _ => ?_
+      field_simp
+    rw [hc]
+    field_simp
+    ring
+
+-- The example stock's signal: $61.00 / $50.00 - 1 = 0.22 exactly.
+example : (61 : ℚ) / 50 - 1 = 22 / 100 := by norm_num
+
+-- 300 stocks cut into ten deciles hold 30 stocks each.
+example : 300 / 10 = 30 := by decide
+
+-- The Newey-West 1994 lag rule for T = 240 months: L = ⌊4 (240/100)^(2/9)⌋ = 4.
+example : ⌊(4 : ℝ) * ((240 : ℝ) / 100) ^ ((2 : ℝ) / 9)⌋₊ = 4 := by
+  rw [Nat.floor_eq_iff (by positivity)]
+  have h1 : (1 : ℝ) ≤ ((240 : ℝ) / 100) ^ ((2 : ℝ) / 9) :=
+    Real.one_le_rpow (by norm_num) (by norm_num)
+  have h9 : (((240 : ℝ) / 100) ^ ((2 : ℝ) / 9)) ^ (9 : ℕ) = ((240 : ℝ) / 100) ^ (2 : ℕ) := by
+    rw [← Real.rpow_natCast, ← Real.rpow_mul (by norm_num)]
+    norm_num
+  have h2 : ((240 : ℝ) / 100) ^ ((2 : ℝ) / 9) < 5 / 4 := by
+    by_contra h
+    push Not at h
+    have := pow_le_pow_left₀ (by norm_num) h 9
+    rw [h9] at this
+    norm_num at this
+  constructor <;> push_cast <;> linarith
+
+-- The Bartlett weights 1 - j/(L+1) for L = 4: 0.8, 0.6, 0.4, 0.2.
+example : [1, 2, 3, 4].map (fun j : ℕ => 1 - (j : ℚ) / (4 + 1)) = [8 / 10, 6 / 10, 4 / 10, 2 / 10] := by
+  norm_num
+
+#print axioms nw_long_run_var_eq_window_sums_and_nonneg
+#print axioms long_short_spread_cancels_market
+#print axioms variance_of_average_counts_lags
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'lag_count_range' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sum_Icc_int_one_eq_range' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sum_range_split_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'T_mul_autocov' depends on axioms: [propext, Classical.choice, Quot.sound]
+'window_pair_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'nw_long_run_var_eq_window_sums_and_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'long_short_spread_cancels_market' depends on axioms: [propext, Classical.choice, Quot.sound]
+'variance_of_average_counts_lags' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**
@@ -603,6 +895,7 @@ The two outputs agree line for line. The block bootstrap gives 0.2628 against th
 
 - [Pairs trading](02-pairs-trading-and-cointegration.md): a long-short position that cancels a shared tide, and the habit of testing a trading rule with statistics.
 - [Factor models](../37-Portfolio%20Theory/05-factor-models-and-apt.md): what a factor is, why a zero-cost spread is one, and how a fund's loadings on factors are measured.
+- [t-tests](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/05-t-tests-and-comparing-means.md): the standard error of an average and the t-statistic, which this card corrects for months that lean on each other.
 
 ## Where this goes next
 
@@ -614,7 +907,7 @@ The decile spread says whether a signal works; it does not say how good the sign
 
 ## Sources
 
-Verified 2026-09-28: each DOI checked on Crossref for title and first author.
+Verified 2026-11-14: every link below resolves to the publisher's page.
 
 - Jegadeesh, Narasimhan, and Sheridan Titman. "Returns to Buying Winners and Selling Losers: Implications for Stock Market Efficiency." *Journal of Finance* 48, no. 1 (1993): 65–91. [doi:10.1111/j.1540-6261.1993.tb04702.x](https://doi.org/10.1111/j.1540-6261.1993.tb04702.x). The original decile sort on past returns, including versions with a gap between ranking and holding.
 - Newey, Whitney K., and Kenneth D. West. "A Simple, Positive Semi-Definite, Heteroskedasticity and Autocorrelation Consistent Covariance Matrix." *Econometrica* 55, no. 3 (1987): 703–708. [doi:10.2307/1913610](https://doi.org/10.2307/1913610). The Bartlett-weighted error and its never-negative property.

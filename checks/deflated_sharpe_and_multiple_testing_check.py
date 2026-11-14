@@ -126,4 +126,4 @@ assert abs(pbo_n - 0.5) < 0.05                                       # symmetry 
 assert pbo_s < 0.35                                                  # real skill travels
 assert abs(d_m - 0.964526) < 1e-5                                    # independent earlier run
 assert ranks == [1, 1, 4, 4, 4, 4]                                   # the hand enumeration
-print("all checks passed")
+print("ALL CHECKS PASS")

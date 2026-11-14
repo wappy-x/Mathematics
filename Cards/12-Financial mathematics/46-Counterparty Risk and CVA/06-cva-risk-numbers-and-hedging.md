@@ -10,11 +10,16 @@ A bank buys one call option on Acme shares from a company called Northwind. The 
 
 CVA is a price, and prices move. If the market starts to doubt Northwind, the cost of insuring Northwind's debt rises, CVA rises, and the bank loses money though nobody has defaulted. If Acme rises, the option is worth more, more money sits with Northwind, and CVA rises again. In the 2007 to 2009 crisis, by the Basel Committee's count, roughly two-thirds of banks' counterparty losses came from CVA moving, and only about a third from actual defaults.
 
-So banks run CVA as a trading book. This card computes three risk numbers for the Acme option: **CS01**, the change in CVA when Northwind's credit spread, the yearly premium for insuring its debt, rises one basis point (a hundredth of a percent), here **$0.000904 per option**; and **delta** and **vega**, the change in CVA when Acme's price or volatility moves, here 0.011881 times the option's own. It then builds the hedges: buy about **$9.36 of one-year default insurance on Northwind per option**, close to the $9.23 at stake, and buy **0.0070 Acme shares per option**.
+So banks run CVA as a trading book. This card computes three risk numbers for the Acme option:
+
+- **CS01**: the change in CVA when Northwind's credit spread, the yearly premium for insuring its debt, rises one basis point (a hundredth of a percent). Here it is **$0.000904 per option**.
+- **Delta** and **vega**: the change in CVA when Acme's price or volatility moves. Here each is 0.011881 times the option's own.
+
+It then builds the hedges. Buy about **$9.36 of one-year default insurance on Northwind per option**, close to the $9.23 at stake. This insurance is a credit default swap, CDS. Then buy **0.0070 Acme shares per option**.
 
 **When the amount at stake does not depend on the counterparty's health, CVA is the recovery-adjusted exposure times the chance of default; its spread risk is hedged by buying default protection on the counterparty in the amount that matches the two spread sensitivities, and its market risk is the trade's own delta and vega scaled down by that same small factor.**
 
-**What kind of fact this is:** a method: each risk number is a definition (move one input, reprice CVA), and inside this card's model (one flat hazard, exposure independent of default) their formulas are theorems, proved on this card in Why it works.
+**What kind of fact this is:** a method. Each risk number is a definition: move one input, reprice CVA. Inside this card's model (one flat hazard, exposure independent of default), their formulas are theorems, proved on this card in Why it works.
 
 ### The picture: CVA as Northwind's spread moves
 
@@ -36,7 +41,15 @@ The first line (orange) is CVA repriced at each spread. The second (teal) is str
 
 ## The formula
 
-Notation first, in words. $C$ is the option's value if Northwind were riskless. $\lambda$ ("lambda") is Northwind's **hazard**: its default rate per year while it is still alive. $R$ is the recovery rate. $s$ is Northwind's credit spread, the yearly premium for default insurance on its debt. $E(t)$ is the **discounted expected exposure** at date $t$: the average, over every path Acme might take, of what Northwind would owe the bank at $t$, in today's dollars ([Expected exposure over time](02-expected-exposure-profiles.md)). The integral adds a quantity over every instant from today to expiry.
+Notation first, in words:
+
+- $C$ is the option's value if Northwind were riskless.
+- $\lambda$ ("lambda") is Northwind's **hazard**: its default rate per year while it is still alive.
+- $R$ is the recovery rate.
+- $s$ is Northwind's credit spread, the yearly premium for default insurance on its debt.
+- $E(t)$ is the **discounted expected exposure** at date $t$: the average, over every path Acme might take, of what Northwind would owe the bank at $t$, in today's dollars ([Expected exposure over time](02-expected-exposure-profiles.md)).
+
+The integral adds a quantity over every instant from today to expiry.
 
 $$\text{CVA} = (1-R)\int_0^T E(t)\,\lambda e^{-\lambda t}\,dt = (1-R)\,C\,\big(1 - e^{-\lambda T}\big), \qquad \lambda = \frac{s}{1-R}$$
 
@@ -48,7 +61,7 @@ The risk numbers differentiate that one line:
 
 $$\text{CS01} = \frac{\partial\,\text{CVA}}{\partial s}\times 1\text{ bp} = C\,T\,e^{-\lambda T}\times 1\text{ bp}, \qquad \Delta = (1-R)\big(1-e^{-\lambda T}\big)\,\Delta_C, \qquad \nu = (1-R)\big(1-e^{-\lambda T}\big)\,\nu_C$$
 
-**Read it aloud:** a basis point of spread costs the survival-weighted exposure over the option's life; Acme's price and volatility move CVA exactly as they move the option, scaled down by the loss fraction times the default chance.
+**Read it aloud:** a basis point of spread costs the survival-weighted exposure over the option's life. Acme's price and volatility move CVA exactly as they move the option, scaled down by the loss fraction times the default chance.
 
 The hedges set each sensitivity against an instrument with a known one:
 
@@ -67,6 +80,7 @@ $$M = \frac{\text{CS01}}{A \times 1\text{ bp}}, \qquad A = \frac{1 - e^{-(r+\lam
 | --- | --- | --- | --- |
 | $C$ | the option's value with a riskless seller | $9.23 | CVA and CS01 rise in proportion |
 | $S$ | Acme's share price today | $100 | $C$ rises, so CVA rises by its delta |
+| $K$ | strike: the price the option lets the bank pay for a share | $100 | $C$ falls, so CVA and CS01 fall |
 | $\sigma$ | Acme's volatility, how jumpy the price is | 20% | $C$ rises, so CVA rises by its vega |
 | $r$, $q$ | riskless rate, continuously compounded; Acme's dividend yield | 5%, 2% | $r$ up shrinks the annuity $A$ and raises $M$ |
 | $\lambda$ | Northwind's hazard: default chance per year among survivors | 2% | CVA rises, CS01 falls a little |
@@ -81,11 +95,11 @@ $$M = \frac{\text{CS01}}{A \times 1\text{ bp}}, \qquad A = \frac{1 - e^{-(r+\lam
 ### When it holds
 
 - **Exposure independent of default.** The formula multiplies the average exposure by the default chance. If Northwind tends to fail exactly when Acme soars, the two move together and CVA is larger than this; that is [Wrong-way risk](05-wrong-way-risk.md).
-- **One flat hazard, premium paid continuously.** Then spread equals hazard times loss fraction, exactly. A quarterly-paid CDS on a sloping curve needs a root finder and a curve, and CS01 is reported tenor by tenor ([CDS risk numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md)).
+- **One flat hazard, premium paid continuously.** Then spread equals hazard times loss fraction, exactly. A quarterly-paid CDS on a sloping curve needs a root finder and a curve, and CS01 is reported tenor by tenor, one number for each contract length ([CDS risk numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md)).
 - **Small moves.** CS01, delta and vega are slopes. When Acme and Northwind's spread move together, a cross term appears: after Acme +$5 and spread +100 bp, the hedged book is still down $0.0334 per option.
 - **A counterparty with a traded CDS.** Most counterparties have none. Desks then hedge with a CDS index or a similar name, and the gap between the proxy and Northwind is unhedged.
 
-Conventions verified 28 Sep 2026: the Basel Committee's CVA risk framework (targeted revisions of July 2020, effective 1 January 2023 in the Basel timetable; national start dates differ) offers a standardised approach, SA-CVA, whose capital is computed from the delta and vega sensitivities of regulatory CVA to counterparty credit spreads and market risk factors, eligible hedges included, and a basic approach, BA-CVA, for banks without that machinery.
+Conventions verified 28 Sep 2026: the Basel Committee's CVA risk framework has targeted revisions of July 2020, effective 1 January 2023 in the Basel timetable; national start dates differ. It offers a standardised approach, SA-CVA. Its capital is computed from the delta and vega sensitivities of regulatory CVA to counterparty credit spreads and market risk factors, eligible hedges included. It also offers a basic approach, BA-CVA, for banks without that machinery.
 
 ---
 
@@ -125,19 +139,19 @@ $$\frac{\partial\,\text{CVA}}{\partial s} = C\,T\,e^{-\lambda T}.$$
 
 Per basis point: 9.227006 × 1 × 0.980199 × 0.0001 = **0.000904 dollars per option**. The recovery has gone, as the rule of thumb promised.
 
-A CDS bought at today's spread $s_0$ is worth, per dollar of notional, $A \times (s - s_0)$ ([CDS risk numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md)). At par its CS01 is $A \times$ 1 bp, with $A$ the risky annuity. For a one-year contract with continuous premium, $A = (1 - e^{-0.07})/0.07$ = 0.965803. Setting the CDS's CS01 equal to CVA's:
+A CDS bought at today's spread $s_0$ is worth, per dollar of notional, $A \times (s - s_0)$ ([CDS risk numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md)). At par, when $s = s_0$ and the contract is worth zero, its CS01 is $A \times$ 1 bp, with $A$ the risky annuity. For a one-year contract with continuous premium, $A = (1 - e^{-0.07})/0.07$ = 0.965803. Setting the CDS's CS01 equal to CVA's:
 
 $$M = \frac{C\,T\,e^{-\lambda T}}{A} = \frac{9.227006 \times 0.980199}{0.965803} = 9.364542.$$
 
 Why a little more than the $9.23 exposure? CVA's slope carries the survival factor 0.980199 and nothing else; the CDS's annuity also discounts each premium at 5%, so it sits lower, at 0.965803. A basis point on the CDS is worth slightly less, and the hedge needs slightly more of it.
 
-The match holds far from today's spread too. CVA here is a contingent CDS on a flat exposure, so it bends with the spread almost exactly as a CDS does. The second chart below shows the hedged book staying at 0.00 cents from 0 to 360 bp.
+The match holds far from today's spread too. CVA here is a contingent CDS, one whose notional is the trade's value at default (Step 0), on a flat exposure. So it bends with the spread almost exactly as a CDS does. The second chart below shows the hedged book staying at 0.00 cents from 0 to 360 bp.
 
 ### Step 4: delta and vega, the option's own Greeks scaled down
 
 Hold Northwind's credit fixed. Then $(1-R)(1-e^{-\lambda T})$ is a fixed number, 0.011881, and CVA is that number times $C$. Anything that moves the option moves CVA by 0.011881 times as much:
 
-- **Delta.** The option's delta, $e^{-qT}N(d_1)$, is 0.586851 ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). CVA's is 0.011881 × 0.586851 = 0.006972. When Acme rises $1, CVA rises 0.006972 dollars, a loss to the bank. Buying 0.006972 Acme shares per option offsets it.
+- **Delta.** The option's delta, $e^{-qT}N(d_1)$, is 0.586851. Here $N$ is the bell curve's cumulative chance and $d_1$ is the Black–Scholes ratio for this option ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). CVA's is 0.011881 × 0.586851 = 0.006972. When Acme rises $1, CVA rises 0.006972 dollars, a loss to the bank. Buying 0.006972 Acme shares per option offsets it.
 - **Vega.** The option gains 0.379012 dollars per volatility point (20% to 21%); CVA gains 0.004503. Shares cannot hedge this. Buying 0.011881 Acme calls per option hedges delta and vega together, since the CVA's market risk is exactly that slice of the option.
 
 The two hedges interact. CS01 is proportional to $C$, so when Acme rises the right CDS notional rises too: at Acme $110 it is 16.199212. Desks call this **cross-gamma** and rebalance for it.
@@ -151,7 +165,7 @@ That is not 9.364542. One CDS cannot match both numbers: bought by CS01 it gains
 <details>
 <summary>Detailed proof: CVA, its CS01, the CDS annuity, and the jump-to-default notional</summary>
 
-**CVA.** Default at $\tau$ has density $\lambda e^{-\lambda t}$. Given default at $t$, the discounted loss is $(1-R)e^{-rt}V(t)$, where $V(t)$ is the option's value then; independence of default and Acme lets the average split, so $\text{CVA} = (1-R)\int_0^T \lambda e^{-\lambda t}\,E(t)\,dt$ with $E(t) = \mathbb{E}[e^{-rt}V(t)]$. The discounted option price is a martingale in the pricing world, so $E(t) = V(0) = C$, and $\int_0^T \lambda e^{-\lambda t}dt = 1 - e^{-\lambda T}$.
+**CVA.** Default at $\tau$ has density $\lambda e^{-\lambda t}$. Given default at $t$, the discounted loss is $(1-R)e^{-rt}V(t)$, where $V(t)$ is the option's value then; independence of default and Acme lets the average split, so $\text{CVA} = (1-R)\int_0^T \lambda e^{-\lambda t}\,E(t)\,dt$ with $E(t) = \mathbb{E}[e^{-rt}V(t)]$. The discounted option price is a martingale in the pricing world: its average future value equals its value today. So $E(t) = V(0) = C$, and $\int_0^T \lambda e^{-\lambda t}dt = 1 - e^{-\lambda T}$.
 
 **CS01.** With $\lambda = s/(1-R)$: $\partial\,\text{CVA}/\partial s = (1-R)\,C\,e^{-sT/(1-R)} \cdot T/(1-R) = C\,T\,e^{-\lambda T}$.
 
@@ -188,7 +202,7 @@ Per million options, the desk reports a loss of about $904 per basis point of No
 
 ### What the hedges do
 
-Moves happen instantly; dollars per option. "Unhedged" holds CVA alone. "CS01 hedge" adds $9.36 of CDS and 0.006972 shares; "JTD hedge" adds $9.04 of CDS and the same shares; the last column uses the option's own delta, a mistake.
+Moves happen instantly; dollars per option. "Unhedged" holds CVA alone. "CS01 hedge" adds $9.36 of CDS and 0.006972 shares; "JTD hedge", the jump-to-default hedge, adds $9.04 of CDS and the same shares; the last column uses the option's own delta, a mistake.
 
 | Scenario | Unhedged | CS01 hedge | JTD hedge | Option's delta |
 | --- | --- | --- | --- | --- |
@@ -233,7 +247,7 @@ by CS01             ████████████████████
 
 ## Code, from first principles, and it actually runs
 
-Both scripts take two independent roads. Road 1 is the closed form and its derivatives. Road 2 prices CVA as a double integral: at eleven dates it averages the option's discounted value over the bell curve of Acme's price (Simpson's rule), then integrates that exposure against the default density. It knows nothing of the closed form, and every risk number on road 2 is bump and revalue. The normal CDF is a power series written out, the CDS legs are integrated numerically, and the scenario table, the what-breaks numbers and every chart point are printed.
+Both scripts take two independent roads. Road 1 is the closed form and its derivatives. Road 2 prices CVA as a double integral: at eleven dates it averages the option's discounted value over the bell curve of Acme's price (Simpson's rule), then integrates that exposure against the default density. It knows nothing of the closed form, and every risk number on road 2 is bump and revalue. The normal CDF (cumulative distribution function, the bell curve's cumulative chance) is a power series written out, the CDS legs are integrated numerically, and the scenario table, the what-breaks numbers and every chart point are printed.
 
 ### Python
 
@@ -587,6 +601,123 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line, and every bumped sensitivity matches its analytic twin to the printed digit.
+
+### Lean
+
+Lean proves the card's three spread formulas exactly, for every exposure, rate and expiry, with any recovery except 100%.
+
+- Take a discounted expected exposure equal to $C$ at every date, and default at hazard $\lambda$. Then CVA is $(1-R)\,C\,(1-e^{-\lambda T})$.
+- Suppose the hazard is the spread over the loss fraction, $\lambda = s/(1-R)$. Then CVA's slope in the spread is $C\,T\,e^{-\lambda T}$, and the recovery cancels.
+- Take a CDS with premium $s_0$ paid continuously, a flat hazard and riskless rate $r$. Then at par its slope in the spread is the risky annuity $A$.
+- Hazard 2% and recovery 40% give a spread of 120 bp, and 120 bp gives back 2%.
+
+The flat exposure $E(t) = C$, delta, vega, the hedge sizes and every printed number are left to the Python and Rust checks.
+
+```lean
+-- CVA risk numbers: with a flat exposure and a flat hazard set by the spread, CVA's slope in the spread is exposure times life times survival, CVA is that exposure times the loss fraction times the default chance, and a par CDS's slope in the spread is its risky annuity.
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.MeasureTheory.Integral.DominatedConvergence
+import Mathlib.Analysis.Calculus.Deriv.Slope
+
+open Real intervalIntegral
+
+/-- CS01, the card's main formula. Write CVA as a function of the counterparty's
+credit spread `s`, with the hazard read off the credit triangle, `λ = s / (1 - R)`:
+`CVA(s) = (1 - R) · C · (1 - e^{-λ T})`. Then its slope in the spread is
+`C · T · e^{-λ T}`: exposure times years times the survival chance. The recovery
+`R` cancels. The only condition is that the loss fraction `1 - R` is not zero,
+so that the hazard `s / (1 - R)` makes sense. -/
+theorem cva_cs01_eq_exposure_times_life_times_survival
+    (C R T s : ℝ) (hR : R ≠ 1) :
+    HasDerivAt (fun x : ℝ => (1 - R) * C * (1 - exp (-(x / (1 - R)) * T)))
+      (C * T * exp (-(s / (1 - R)) * T)) s := by
+  have hk : (1 - R) ≠ 0 := sub_ne_zero.mpr (Ne.symm hR)
+  have h1 : HasDerivAt (fun x : ℝ => -(x / (1 - R)) * T) (-(1 / (1 - R)) * T) s := by
+    have := ((hasDerivAt_id s).div_const (1 - R)).neg.mul_const T
+    simpa using this
+  have h2 := ((h1.exp).const_sub 1).const_mul ((1 - R) * C)
+  convert h2 using 1
+  field_simp
+
+/-- The CVA formula with a flat discounted exposure. If the discounted expected
+exposure equals `C` at every date and default comes at rate `λ` (density
+`λ e^{-λ t}`), then `(1 - R) ∫₀ᵀ C · λ e^{-λ t} dt = (1 - R) · C · (1 - e^{-λ T})`:
+loss fraction times exposure times the chance of default before expiry. -/
+theorem cva_flat_exposure_integral (C R lam T : ℝ) :
+    (1 - R) * ∫ t in (0 : ℝ)..T, C * (lam * exp (-lam * t)) =
+      (1 - R) * C * (1 - exp (-lam * T)) := by
+  have hint : ∫ t in (0 : ℝ)..T, C * (lam * exp (-lam * t)) = C * (1 - exp (-lam * T)) := by
+    have hd : ∀ x ∈ Set.uIcc (0 : ℝ) T,
+        HasDerivAt (fun t : ℝ => -C * exp (-lam * t)) (C * (lam * exp (-lam * x))) x := by
+      intro x _
+      have h : HasDerivAt (fun t : ℝ => -lam * t) (-lam) x := by
+        simpa using (hasDerivAt_id x).const_mul (-lam)
+      have h2 := (h.exp).const_mul (-C)
+      convert h2 using 1
+      ring
+    rw [integral_eq_sub_of_hasDerivAt hd]
+    · simp; ring
+    · apply Continuous.intervalIntegrable; fun_prop
+  rw [hint]; ring
+
+/-- The CDS hedge instrument. A CDS with premium `s₀` paid continuously, flat hazard
+`λ = s / (1 - R)` and riskless rate `r` is worth, per dollar of notional, its
+protection leg `(1 - R) ∫₀ᵀ e^{-r t} λ e^{-λ t} dt` minus its premium leg
+`s₀ ∫₀ᵀ e^{-(r + λ) t} dt`. At par (`s = s₀`) its slope in the spread is the risky
+annuity `A = ∫₀ᵀ e^{-(r + λ) t} dt`. This is the CDS's CS01 per basis point that the
+CVA's CS01 is matched against to size the hedge. -/
+theorem cds_cs01_at_par_eq_risky_annuity (R r T s₀ : ℝ) (hR : R ≠ 1) :
+    HasDerivAt
+      (fun s : ℝ =>
+        (1 - R) * (∫ t in (0 : ℝ)..T, exp (-r * t) * ((s / (1 - R)) * exp (-(s / (1 - R)) * t)))
+          - s₀ * ∫ t in (0 : ℝ)..T, exp (-(r + s / (1 - R)) * t))
+      (∫ t in (0 : ℝ)..T, exp (-(r + s₀ / (1 - R)) * t)) s₀ := by
+  have hk : (1 - R) ≠ 0 := sub_ne_zero.mpr (Ne.symm hR)
+  have hfun : (fun s : ℝ =>
+        (1 - R) * (∫ t in (0 : ℝ)..T, exp (-r * t) * ((s / (1 - R)) * exp (-(s / (1 - R)) * t)))
+          - s₀ * ∫ t in (0 : ℝ)..T, exp (-(r + s / (1 - R)) * t))
+      = fun s : ℝ => (s - s₀) * ∫ t in (0 : ℝ)..T, exp (-(r + s / (1 - R)) * t) := by
+    funext s
+    have e : ∀ t : ℝ, exp (-r * t) * ((s / (1 - R)) * exp (-(s / (1 - R)) * t))
+        = (s / (1 - R)) * exp (-(r + s / (1 - R)) * t) := by
+      intro t
+      rw [mul_left_comm, ← exp_add]
+      ring_nf
+    simp_rw [e, intervalIntegral.integral_const_mul]
+    field_simp
+  rw [hfun]
+  have hc : Continuous fun s : ℝ => ∫ t in (0 : ℝ)..T, exp (-(r + s / (1 - R)) * t) :=
+    intervalIntegral.continuous_parametric_intervalIntegral_of_continuous'
+      (f := fun s t => exp (-(r + s / (1 - R)) * t)) (by fun_prop) 0 T
+  rw [hasDerivAt_iff_tendsto_slope]
+  refine ((hc.tendsto s₀).mono_left nhdsWithin_le_nhds).congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with y hy
+  have hy' : y - s₀ ≠ 0 := sub_ne_zero.mpr hy
+  rw [slope_def_field]
+  field_simp
+  ring
+
+-- The card's worked example: hazard 2% and recovery 40% give a spread of
+-- 0.02 × 0.6 = 0.012, that is 120 basis points.
+example : (2 / 100 : ℚ) * (1 - 40 / 100) = 120 / 10000 := by norm_num
+
+-- Back the other way: a 120 bp spread with recovery 40% gives hazard λ = s / (1 - R) = 2%.
+example : (120 / 10000 : ℚ) / (1 - 40 / 100) = 2 / 100 := by norm_num
+
+#print axioms cva_cs01_eq_exposure_times_life_times_survival
+#print axioms cva_flat_exposure_integral
+#print axioms cds_cs01_at_par_eq_risky_annuity
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'cva_cs01_eq_exposure_times_life_times_survival' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cva_flat_exposure_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cds_cs01_at_par_eq_risky_annuity' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

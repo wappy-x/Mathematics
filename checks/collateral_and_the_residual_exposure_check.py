@@ -137,4 +137,4 @@ assert abs(mc["thr_mpor"] - cva_mp) < 4 * se["thr_mpor"] + 2e-5
 assert abs(mc["zero_mpor"] - cva_zero) < 4 * se["zero_mpor"] + 2e-5
 assert cva_thr < cap; assert worst <= 1e-12                             # the two bounds proved on the card
 assert abs(envelope / cva_zero - 1) < 0.1; assert abs(move_mc - move_full) < 0.4
-print("all checks passed")
+print("ALL CHECKS PASS")

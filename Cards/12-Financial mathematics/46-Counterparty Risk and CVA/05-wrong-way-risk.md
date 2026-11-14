@@ -8,9 +8,11 @@
 
 A fund buys a one-year put on Northwind's shares. The shares trade at $100, the strike is $100, and the market is the house market: a 5% bank rate, a 2% dividend yield, 20% volatility. The put is worth $6.33. The fund bought it from Northwind itself.
 
-Northwind can fail. Its credit spread implies a hazard rate (the default chance per year, counted continuously) of 2%, so about a 1.98% chance of failing within the year. If it fails, the fund collects 40 cents on the dollar of whatever the put is owed. The price of that risk is the **CVA** (credit valuation adjustment): the average loss from the seller's default, counted in today's dollars ([CVA](03-cva.md)).
+Northwind can fail. Its credit spread (the extra yearly interest the market charges Northwind over the bank rate) implies a hazard rate (the default chance per year, counted continuously) of 2%, so about a 1.98% chance of failing within the year. If it fails, the fund collects 40 cents on the dollar of whatever the put is owed. The price of that risk is the **CVA** (credit valuation adjustment): the average loss from the seller's default, counted in today's dollars ([CVA](03-cva.md)).
 
-The CVA card multiplies three numbers: the loss share, 60%, the default chance, 1.98%, and the put's value, $6.33. That gives $0.0752. The multiplication assumes the put's payoff and Northwind's default have nothing to do with each other. Here they have everything to do with each other. The put pays most when Northwind's shares have fallen hard, and a firm whose shares have fallen hard is the firm most likely to be failing. The protection pays out in exactly the worlds where its seller cannot pay.
+The CVA card multiplies three numbers: the loss share, 60%, the default chance, 1.98%, and the put's value, $6.33. That gives $0.0752.
+
+The multiplication assumes the put's payoff and Northwind's default have nothing to do with each other. Here they have everything to do with each other. The put pays most when Northwind's shares have fallen hard, and a firm whose shares have fallen hard is the firm most likely to be failing. The protection pays out in exactly the worlds where its seller cannot pay.
 
 That coincidence is **wrong-way risk**: exposure (what the counterparty owes) tends to be large exactly when the counterparty is likely to default. Its mirror is **right-way risk**: exposure tends to be small then. A call on the same Northwind shares, from the same Northwind, is right-way: it pays when Northwind is doing well.
 
@@ -38,7 +40,9 @@ Steep curve: the default chance at 50% correlation, once the share price is know
 
 ## The formula
 
-Notation first, in words. Northwind's year-end share price is driven by one bell-curve draw $Y$, the **share score**: average 0, spread 1, a low value meaning a low price. Northwind's health is a second bell-curve draw $Z$, the **credit score**. Northwind defaults within the year when $Z$ falls below a cutoff $a$. The two scores have correlation $\rho$. The payoff the fund is owed is the **exposure** $X$; $B$ is 1 if Northwind defaults and 0 if not. $N$ is the bell-curve area to the left of a point, as on the Black-Scholes cards, $\varphi$ is the bell-curve height, and $\mathbb{E}$ is an average over all outcomes.
+Notation first, in words. Northwind's year-end share price is driven by one bell-curve draw $Y$, the **share score**: average 0, spread 1, a low value meaning a low price. Northwind's health is a second bell-curve draw $Z$, the **credit score**. Northwind defaults within the year when $Z$ falls below a cutoff $a$. The two scores have correlation $\rho$.
+
+The payoff the fund is owed is the **exposure** $X$; $B$ is 1 if Northwind defaults and 0 if not. $N$ is the bell-curve area to the left of a point, as on the Black-Scholes cards, $\varphi$ is the bell-curve height, and $\mathbb{E}$ is an average over all outcomes.
 
 $$\mathrm{CVA} = L\,\mathbb{E}\!\left[e^{-rT}XB\right] = L\int_{-\infty}^{\infty} e^{-rT}\,X(y)\,\varphi(y)\,p_\rho(y)\,dy, \qquad p_\rho(y) = N\!\left(\frac{a-\rho y}{\sqrt{1-\rho^2}}\right)$$
 
@@ -64,7 +68,7 @@ $$\mathrm{CVA}_{\text{call}}(\rho) = L\left[S e^{-qT} N_2\!\left(d_1,\,a-\rho\si
 | --- | --- | --- | --- |
 | $S$, $K$, $S_T$ | Northwind's share price today, the strike, the share price at year end | $100, $100, depends on $Y$ | higher $S$: the put and its CVA shrink |
 | $r$, $q$, $\sigma$, $T$ | bank rate, dividend yield, volatility, years to expiry | 5%, 2%, 20%, 1 | higher $\sigma$: the put is worth more, CVA rises |
-| $P$, $C$, $d_1$, $d_2$ | clean put and call (prices with no default risk), and the Black-Scholes distances as on the pilot | $6.33 and $9.23; 0.25 and 0.05 | CVA scales with the clean price |
+| $P$, $C$, $d_1$, $d_2$ | clean put and call (prices with no default risk), and the Black-Scholes distances as on the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) | $6.33 and $9.23; 0.25 and 0.05 | CVA scales with the clean price |
 | $\lambda$, $p$ | Northwind's hazard rate, and its one-year default chance $1 - e^{-\lambda T}$ | 2%, 1.9801% | CVA rises almost in proportion |
 | $R$, $L$ | recovery rate, and the loss share $L = 1 - R$ | 40%, 60% | higher $L$: CVA rises in proportion |
 | $Y$, $y$, $\varepsilon$ | the share score, one value of it, and Northwind's private credit noise | bell-curve draws | — |
@@ -113,7 +117,9 @@ Average in two stages: first over Northwind's private noise with the share score
 
 ### Step 5: the closed form, by splitting the payoff
 
-The put's payoff is $K$ in cash minus one share, in the worlds where $Y < -d_2$. The cash half contributes $K e^{-rT}$ times the chance that $Y < -d_2$ and $Z < a$ together, which is $N_2(-d_2, a; \rho)$. The share half is worth more in the worlds where the shares are high, so it is averaged under a slid bell curve, as in Step 3 of the Black-Scholes pilot. Sliding $Y$ up by one volatility unit, $\sigma\sqrt{T}$, slides $Z$ up by $\rho\sigma\sqrt{T}$, since $Z$ carries $\rho$ of $Y$. Both cutoffs move: $-d_2$ becomes $-d_1$, and $a$ becomes $a - \rho\sigma\sqrt{T}$.
+The put's payoff is $K$ in cash minus one share, in the worlds where $Y < -d_2$. The cash half contributes $K e^{-rT}$ times the chance that $Y < -d_2$ and $Z < a$ together, which is $N_2(-d_2, a; \rho)$. The share half is worth more in the worlds where the shares are high, so it is averaged under a slid bell curve, as in Step 3 of the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+
+Sliding $Y$ up by one volatility unit, $\sigma\sqrt{T}$, slides $Z$ up by $\rho\sigma\sqrt{T}$, since $Z$ carries $\rho$ of $Y$. Both cutoffs move: $-d_2$ becomes $-d_1$, and $a$ becomes $a - \rho\sigma\sqrt{T}$.
 
 <details>
 <summary>Detailed proof: the share half, by completing the square</summary>
@@ -147,9 +153,11 @@ Now $\mathrm{Cov}(e^{-rT}X, B) = \mathrm{Cov}(e^{-rT}X, p_\rho(Y))$, because ave
 
 At $\rho = 1$ the credit score is the share score, and Northwind defaults exactly when $Y < a$. The cutoff $a = -2.0579$ lies inside the put's paying region, so the CVA is $L[K e^{-rT} N(a) - S e^{-qT} N(a - \sigma\sqrt{T})] = 0.4258$, 5.66 times the independent figure. The call is then never owed anything in a default world, and its CVA is zero.
 
-No model can go past one bound. The put never pays more than $K$. So its CVA is at most $L K e^{-rT} p = 0.6 \times 95.1229 \times 0.019801 = 1.1301$, which is what the CVA would be if Northwind's shares went to zero at the moment it failed. That is the extreme case of a put on the counterparty's own shares: in every default world the protection is owed its maximum. A model in which the shares jump toward zero at default moves the CVA from the Gaussian figure toward this ceiling.
+No model can go past one bound. The put never pays more than $K$. So its CVA is at most $L K e^{-rT} p = 0.6 \times 95.1229 \times 0.019801 = 1.1301$, which is what the CVA would be if Northwind's shares went to zero at the moment it failed.
 
-The other route ties the hazard rate, not a score, to the exposure. Hull and White (2012) make Northwind's hazard rate an increasing function of the trade's value, fitted so that the average default chance still matches the credit spread; a simulation of the share path then averages exposure times the path's default chance. It answers the same question with default timing built in, at the cost of a simulation.
+That is the extreme case of a put on the counterparty's own shares: in every default world the protection is owed its maximum. A model in which the shares jump toward zero at default moves the CVA from the Gaussian figure toward this ceiling.
+
+The other route ties the hazard rate, not a score, to the exposure. Hull and White (2012) make Northwind's hazard rate an increasing function of the trade's value, fitted so that the average default chance still matches the credit spread. A simulation of the share path then averages exposure times the path's default chance. It answers the same question with default timing built in, at the cost of a simulation.
 
 ---
 
@@ -211,7 +219,9 @@ ceiling: shares go to 0    █████████████████�
 
 ## Code, from first principles, and it actually runs
 
-The code prices the Northwind put and call at eight correlations by two independent roads: the one-dimensional integral of Step 4 (Simpson's rule), and the closed form of Step 5, whose $N_2$ is built from Plackett's identity, which writes $N_2$ as $N(h)N(k)$ plus an integral of the pair's density over the correlation from 0 to $\rho$. A third road simulates a million pairs of scores at 50% correlation. A fourth checks an identity: put CVA minus call CVA equals $L[K e^{-rT}N(a) - S e^{-qT}N(a - \rho\sigma\sqrt{T})]$, since the put minus the call is cash minus a share in every world. Its own normal area, root finder, integrator and random numbers are written out.
+The code prices the Northwind put and call at eight correlations by two independent roads: the one-dimensional integral of Step 4 (Simpson's rule, which adds up an integral over many thin slices), and the closed form of Step 5. Its $N_2$ is built from Plackett's identity, which writes $N_2$ as $N(h)N(k)$ plus an integral of the pair's density over the correlation from 0 to $\rho$.
+
+A third road simulates a million pairs of scores at 50% correlation. A fourth checks an identity: put CVA minus call CVA equals $L[K e^{-rT}N(a) - S e^{-qT}N(a - \rho\sigma\sqrt{T})]$, since the put minus the call is cash minus a share in every world. Its own normal area, root finder, integrator and random numbers are written out.
 
 ### Python
 
@@ -625,6 +635,177 @@ ALL CHECKS PASS
 
 The two outputs agree line for line, including the simulation, since both use the same random-number recipe and seed.
 
+### Lean
+
+Lean proves the three facts on this card that need no model: the covariance split, the sign of the wrong-way term, and the put's ceiling.
+
+- Suppose the exposure $X$ has a finite average and $B$ marks any default event. Then $\mathrm{CVA} = L\,p\,P + L\,\mathrm{Cov}(e^{-rT}X,\,B)$ exactly.
+- Suppose $f$ and $g$ both fall as the share score $Y$ rises, with finite averages of $f$, $g$ and their product. Then $\mathrm{Cov}(f(Y),\,g(Y)) \ge 0$.
+- Take a put with strike $K \ge 0$ on shares never priced below zero, and recovery $R \le 1$. Then its CVA is at most $L K e^{-rT} p$, in any model.
+- The chart's put payoffs are right. It pays $40, $30, $20 and $10 at year-end prices of $60, $70, $80 and $90, and nothing from $100 to $140.
+
+Everything that needs the Gaussian link is left to the Python and Rust checks: the closed form, every number, and strictly positive covariance.
+
+```lean
+-- Wrong-way risk: CVA equals the independent CVA plus the loss share times a covariance, two falling functions of one score have nonnegative covariance, and a put's CVA never exceeds the loss share times the discounted strike times the default chance.
+import Mathlib.Probability.Moments.Covariance
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.Analysis.SpecialFunctions.Exp
+
+open MeasureTheory ProbabilityTheory
+
+/-- Covariance as "average of the product minus product of the averages", needing only
+that the two variables and their product have finite averages. -/
+lemma covariance_eq_integral_mul_sub_of_integrable
+    {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω} [IsProbabilityMeasure μ]
+    {F G : Ω → ℝ} (hF : Integrable F μ) (hG : Integrable G μ)
+    (hFG : Integrable (fun ω => F ω * G ω) μ) :
+    cov[F, G; μ] = ∫ ω, F ω * G ω ∂μ - (∫ ω, F ω ∂μ) * ∫ ω, G ω ∂μ := by
+  unfold covariance
+  set a := ∫ ω, F ω ∂μ
+  set b := ∫ ω, G ω ∂μ
+  have h : ∀ ω, (F ω - a) * (G ω - b) = (F ω * G ω - b * F ω) - (a * G ω - a * b) := by
+    intro ω; ring
+  simp_rw [h]
+  have j1 : Integrable (fun ω => F ω * G ω - b * F ω) μ := hFG.sub (hF.const_mul b)
+  have j2 : Integrable (fun ω => a * G ω - a * b) μ := (hG.const_mul a).sub (integrable_const _)
+  have j3 : Integrable (fun ω => b * F ω) μ := hF.const_mul b
+  have j4 : Integrable (fun ω => a * G ω) μ := hG.const_mul a
+  rw [integral_sub j1 j2, integral_sub hFG j3, integral_sub j4 (integrable_const _),
+    integral_const_mul, integral_const_mul, integral_const]
+  simp
+  ring
+
+/-- The covariance split of CVA. For any exposure `X` with a finite average, any default
+event `Def` with indicator `B`, any loss share `L`, rate `r` and horizon `T`:
+CVA = L · E[e^{-rT} X B] equals the independent CVA `L · p · P`, where `p` is the default
+chance and `P = E[e^{-rT} X]` is the clean price, plus the wrong-way term
+`L · Cov(e^{-rT} X, B)`. The split is exact and needs no model. -/
+theorem cva_eq_independent_cva_add_wrong_way_term
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (X : Ω → ℝ) (hX : Integrable X μ) (Def : Set Ω) (hDef : MeasurableSet Def)
+    (L r T : ℝ) :
+    L * ∫ ω, Real.exp (-r * T) * X ω * Def.indicator 1 ω ∂μ
+      = L * μ.real Def * (∫ ω, Real.exp (-r * T) * X ω ∂μ)
+        + L * cov[fun ω => Real.exp (-r * T) * X ω, Def.indicator 1; μ] := by
+  have hB : Integrable (Def.indicator (1 : Ω → ℝ)) μ :=
+    (integrable_const (1 : ℝ)).indicator hDef
+  have hcX : Integrable (fun ω => Real.exp (-r * T) * X ω) μ := hX.const_mul _
+  have hprod : Integrable (fun ω => Real.exp (-r * T) * X ω * Def.indicator 1 ω) μ := by
+    refine hcX.mul_bdd (c := 1) ?_ ?_
+    · exact (measurable_const.indicator hDef).aestronglyMeasurable
+    · refine Filter.Eventually.of_forall (fun ω => ?_)
+      by_cases h : ω ∈ Def <;> simp [h]
+  rw [covariance_eq_integral_mul_sub_of_integrable hcX hB hprod, integral_indicator_one hDef]
+  ring
+
+/-- Two falling functions have positive covariance (Step 6). If `f` and `g` are both
+non-increasing functions of the share score `Y`, with finite averages of `f(Y)`, `g(Y)`
+and their product, then `Cov(f(Y), g(Y)) ≥ 0`. With `f` the discounted put payoff and
+`g` the conditional default chance, this makes the wrong-way term nonnegative. -/
+theorem covariance_nonneg_of_antitone_antitone
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (Y : Ω → ℝ) (hY : Measurable Y) (f g : ℝ → ℝ) (hf : Antitone f) (hg : Antitone g)
+    (hfi : Integrable (fun ω => f (Y ω)) μ) (hgi : Integrable (fun ω => g (Y ω)) μ)
+    (hfgi : Integrable (fun ω => f (Y ω) * g (Y ω)) μ) :
+    0 ≤ cov[fun ω => f (Y ω), fun ω => g (Y ω); μ] := by
+  set F : Ω → ℝ := fun ω => f (Y ω)
+  set G : Ω → ℝ := fun ω => g (Y ω)
+  rw [covariance_eq_integral_mul_sub_of_integrable hfi hgi hfgi]
+  have hpt : ∀ z : Ω × Ω, 0 ≤ (F z.1 - F z.2) * (G z.1 - G z.2) := by
+    intro z
+    rcases le_total (Y z.1) (Y z.2) with h | h
+    · exact mul_nonneg (sub_nonneg.mpr (hf h)) (sub_nonneg.mpr (hg h))
+    · exact mul_nonneg_of_nonpos_of_nonpos (sub_nonpos.mpr (hf h)) (sub_nonpos.mpr (hg h))
+  have hnn : 0 ≤ ∫ z, (F z.1 - F z.2) * (G z.1 - G z.2) ∂(μ.prod μ) :=
+    integral_nonneg hpt
+  have hexp : ∀ z : Ω × Ω, (F z.1 - F z.2) * (G z.1 - G z.2)
+      = ((F z.1 * G z.1 - F z.1 * G z.2) - F z.2 * G z.1) + F z.2 * G z.2 := by
+    intro z; ring
+  have i1 : Integrable (fun z : Ω × Ω => F z.1 * G z.1) (μ.prod μ) := hfgi.comp_fst μ
+  have i2 : Integrable (fun z : Ω × Ω => F z.1 * G z.2) (μ.prod μ) := hfi.mul_prod hgi
+  have i3 : Integrable (fun z : Ω × Ω => F z.2 * G z.1) (μ.prod μ) := by
+    have := hgi.mul_prod (μ := μ) (ν := μ) hfi
+    simpa [mul_comm] using this
+  have i4 : Integrable (fun z : Ω × Ω => F z.2 * G z.2) (μ.prod μ) := hfgi.comp_snd μ
+  simp_rw [hexp] at hnn
+  have i12 : Integrable (fun z : Ω × Ω => F z.1 * G z.1 - F z.1 * G z.2) (μ.prod μ) :=
+    i1.sub i2
+  have i123 : Integrable
+      (fun z : Ω × Ω => F z.1 * G z.1 - F z.1 * G z.2 - F z.2 * G z.1) (μ.prod μ) :=
+    i12.sub i3
+  rw [integral_add i123 i4, integral_sub i12 i3, integral_sub i1 i2] at hnn
+  have e1 : ∫ z, F z.1 * G z.1 ∂(μ.prod μ) = ∫ ω, F ω * G ω ∂μ := by
+    rw [integral_fun_fst (fun ω => F ω * G ω)]; simp
+  have e4 : ∫ z, F z.2 * G z.2 ∂(μ.prod μ) = ∫ ω, F ω * G ω ∂μ := by
+    rw [integral_fun_snd (fun ω => F ω * G ω)]; simp
+  have e2 : ∫ z, F z.1 * G z.2 ∂(μ.prod μ) = (∫ ω, F ω ∂μ) * ∫ ω, G ω ∂μ :=
+    integral_prod_mul F G
+  have e3 : ∫ z, F z.2 * G z.1 ∂(μ.prod μ) = (∫ ω, F ω ∂μ) * ∫ ω, G ω ∂μ := by
+    have : ∫ z, F z.2 * G z.1 ∂(μ.prod μ) = ∫ z, G z.1 * F z.2 ∂(μ.prod μ) := by
+      congr 1; ext z; ring
+    rw [this, integral_prod_mul G F, mul_comm]
+  rw [e1, e2, e3, e4] at hnn
+  linarith
+
+/-- The ceiling no model can pass (Step 7). A put with strike `K ≥ 0` on a share price
+that is never negative never pays more than `K`, so with recovery `R ≤ 1` its CVA,
+`(1 - R) · E[e^{-rT} max(K - S_T, 0) · B]`, is at most `(1 - R) · K · e^{-rT} · p`,
+where `p` is the default chance. -/
+theorem put_cva_le_loss_share_mul_discounted_strike_mul_default_chance
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (S_T : Ω → ℝ) (hS : ∀ ω, 0 ≤ S_T ω) (K : ℝ) (hK : 0 ≤ K) (R : ℝ) (hR : R ≤ 1)
+    (r T : ℝ) (Def : Set Ω) (hDef : MeasurableSet Def) :
+    (1 - R) * ∫ ω, Real.exp (-r * T) * max (K - S_T ω) 0 * Def.indicator 1 ω ∂μ
+      ≤ (1 - R) * K * Real.exp (-r * T) * μ.real Def := by
+  have hLs : 0 ≤ 1 - R := by linarith
+  have hc : 0 ≤ Real.exp (-r * T) := (Real.exp_pos _).le
+  have hrhs : (1 - R) * K * Real.exp (-r * T) * μ.real Def
+      = (1 - R) * ∫ ω, Real.exp (-r * T) * K * Def.indicator 1 ω ∂μ := by
+    rw [integral_const_mul, integral_indicator_one hDef]
+    ring
+  rw [hrhs]
+  apply mul_le_mul_of_nonneg_left _ hLs
+  by_cases hi : Integrable
+      (fun ω => Real.exp (-r * T) * max (K - S_T ω) 0 * Def.indicator 1 ω) μ
+  · apply integral_mono hi
+    · exact ((integrable_const (1 : ℝ)).indicator hDef).const_mul _
+    · intro ω
+      have hm : max (K - S_T ω) 0 ≤ K := max_le (by linarith [hS ω]) hK
+      have hb : 0 ≤ Def.indicator (1 : Ω → ℝ) ω := by
+        by_cases h : ω ∈ Def <;> simp [h]
+      have := mul_le_mul_of_nonneg_left hm hc
+      exact mul_le_mul_of_nonneg_right this hb
+  · rw [integral_undef hi]
+    apply integral_nonneg
+    intro ω
+    have hb : 0 ≤ Def.indicator (1 : Ω → ℝ) ω := by
+      by_cases h : ω ∈ Def <;> simp [h]
+    exact mul_nonneg (mul_nonneg hc hK) hb
+
+-- The card's chart: the $100-strike put pays $40, $30, $20, $10 at year-end prices
+-- $60, $70, $80, $90, and nothing at $100 or above.
+example : max ((100 : ℤ) - 60) 0 = 40 := by decide
+example : max ((100 : ℤ) - 70) 0 = 30 := by decide
+example : max ((100 : ℤ) - 80) 0 = 20 := by decide
+example : max ((100 : ℤ) - 90) 0 = 10 := by decide
+example : ∀ s ∈ ([100, 110, 120, 130, 140] : List ℤ), max (100 - s) 0 = 0 := by decide
+
+#print axioms covariance_eq_integral_mul_sub_of_integrable
+#print axioms cva_eq_independent_cva_add_wrong_way_term
+#print axioms covariance_nonneg_of_antitone_antitone
+#print axioms put_cva_le_loss_share_mul_discounted_strike_mul_default_chance
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'covariance_eq_integral_mul_sub_of_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cva_eq_independent_cva_add_wrong_way_term' depends on axioms: [propext, Classical.choice, Quot.sound]
+'covariance_nonneg_of_antitone_antitone' depends on axioms: [propext, Classical.choice, Quot.sound]
+'put_cva_le_loss_share_mul_discounted_strike_mul_default_chance' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Correlation 75%.** Guess first: more or less than four times the independent CVA? Read the 0.75 row of the sweep: 4.37 times, a CVA of 0.3290.
@@ -669,6 +850,8 @@ The two outputs agree line for line, including the simulation, since both use th
 
 - [CVA risk numbers](06-cva-risk-numbers-and-hedging.md): the card after this one on the shelf. How CVA moves when the share price, volatility or credit spread moves, and how a desk hedges it; under wrong-way risk the share hedge and the credit hedge can no longer be set separately.
 - [Tail dependence](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/07-tail-dependence-and-the-t-copula.md): a copula that gives joint crashes more weight than the Gaussian, pushing the put's CVA toward its ceiling.
+
+This card leaves the correlation itself open: no market quotes $\rho$, so how should a bank choose it, and how much should it charge for getting it wrong?
 
 ---
 

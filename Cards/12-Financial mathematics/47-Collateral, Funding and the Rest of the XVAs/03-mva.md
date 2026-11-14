@@ -6,9 +6,11 @@
 
 ## General Overview
 
-A bank buys a one-year call option on Acme shares from Northwind. Acme trades at \$100, the strike is \$100, and in the house market the call is worth **\$9.23** ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). Northwind defaults at a rate of 2% a year and recovers 40 cents on the dollar, which costs the bank 10.96 cents of CVA ([CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md)).
+A bank buys a one-year call option on Acme shares from Northwind. Acme trades at \$100, the strike is \$100, and in the house market the call is worth **\$9.23** ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). Northwind defaults at a rate of 2% a year and recovers 40 cents on the dollar, which costs the bank 10.96 cents of CVA, the credit valuation adjustment that prices that default risk ([CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md)).
 
-Now the trade sits under modern margin rules. Each side hands the other a deposit on day one, sized to cover a bad ten-day move in the option's value: about **\$5.44**. The deposit goes to a third-party custodian, a bank that holds it on the receiver's behalf. The receiver may seize it only if the poster defaults; until then nobody may spend it. The bank received \$5.44 from Northwind that it cannot touch, and posted \$5.44 of its own that it had to borrow. That deposit is **initial margin**, IM for short, the term used from here on.
+Now the trade sits under modern margin rules. Each side hands the other a deposit on day one, sized to cover a bad ten-day move in the option's value: about **\$5.44**. The deposit goes to a third-party custodian, a bank that holds it on the receiver's behalf. The receiver may seize it only if the poster defaults; until then nobody may spend it. The bank received \$5.44 from Northwind that it cannot touch, and posted \$5.44 of its own that it had to borrow.
+
+That deposit is **initial margin**, IM for short, the term used from here on.
 
 Borrowed money costs the bank its funding rate. The margin earns only the lower rate the custodian pays. The gap, 50 basis points (0.5% a year) here, is paid on \$5.44 every day the trade is alive. Priced up front it comes to **0.0269 dollars per call, about 2.7 cents**: the **margin valuation adjustment**, MVA. That is a quarter of the CVA. It grows with maturity. And once collateral has wiped out most of the CVA, MVA is what is left.
 
@@ -34,7 +36,13 @@ Orange, rising: the average margin at each date, in that date's dollars. Green, 
 
 ## The formula
 
-Notation first, in words. $\mathrm{IM}(t)$ is the initial margin posted at date $t$, in years from today. $\mathbb{E}[\,\cdot\,]$ is an average over the pricing world, where every asset grows at the riskless rate ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)). $D(t) = e^{-rt}$ is the discount factor that shrinks a date-$t$ dollar to today. $Q(t) = e^{-\lambda t}$ is the chance Northwind is still alive at $t$ when it fails at the yearly rate $\lambda$ (Greek "lambda"), its **hazard**. $s_I$ is the **margin funding spread**: what the bank pays to borrow, minus what the posted margin earns.
+Notation first, in words.
+
+- $\mathrm{IM}(t)$ is the initial margin posted at date $t$, in years from today.
+- $\mathbb{E}[\,\cdot\,]$ is an average over the pricing world, where every asset grows at the riskless rate ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)).
+- $D(t) = e^{-rt}$ is the discount factor that shrinks a date-$t$ dollar to today.
+- $Q(t) = e^{-\lambda t}$ is the chance Northwind is still alive at $t$ when it fails at the yearly rate $\lambda$ (Greek "lambda"), its **hazard**.
+- $s_I$ is the **margin funding spread**: what the bank pays to borrow, minus what the posted margin earns.
 
 $$\mathrm{MVA} = s_I \int_0^T D(t)\,\mathbb{E}\bigl[\mathrm{IM}(t)\bigr]\,Q(t)\,dt$$
 
@@ -65,7 +73,7 @@ $$\mathrm{MVA} = s_I \times \mathrm{IM}_0 \times \frac{1 - e^{-\lambda T}}{\lamb
 | $D(t)$, $r$ | discount factor $e^{-rt}$; riskless rate | $r$ = 0.05 | — (drops out of the closed form) |
 | $Q(t)$, $\lambda$ | Northwind's survival chance to $t$; its hazard | $\lambda$ = 0.02 | falls slightly: the trade may end early |
 | $T$, $t$ | the trade's life in years; a date inside it | 1 | rises, a little less than in proportion |
-| $C_0$, $R$, $s_F$ | the clean call; recovery; unsecured funding spread (for CVA and FVA) | \$9.227006; 0.40; 0.01 | — (comparison only) |
+| $C_0$, $R$, $s_F$ | the clean call; recovery; unsecured funding spread (for CVA and FVA, the funding valuation adjustment) | \$9.227006; 0.40; 0.01 | — (comparison only) |
 
 ### When it holds
 
@@ -87,14 +95,14 @@ The whole idea is a cash flow. Posting \$5.44 means borrowing \$5.44 at the fund
 
 If Northwind stops paying, the bank needs time to notice, dispute, close out and re-hedge. The rules assume ten business days: the **margin period of risk**. Initial margin covers the option's move over that window with 99% confidence.
 
-Over ten days a call moves by about its dollar delta times Acme's percentage move. Acme's ten-day log move is normal with standard deviation $\sigma\sqrt{h}$. So the option's ten-day change is normal with standard deviation $\Delta S \sigma\sqrt{h}$, here \$2.338071. Its 99th percentile is 2.326348 of those: **\$5.439166**. This is delta-normal VaR on one position ([Parametric VaR](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/02-parametric-var-and-delta-normal.md)).
+Over ten days a call moves by about its dollar delta times Acme's percentage move. Acme's ten-day log move is normal with standard deviation $\sigma\sqrt{h}$. So the option's ten-day change is normal with standard deviation $\Delta S \sigma\sqrt{h}$, here \$2.338071. Its 99th percentile is 2.326348 of those: **\$5.439166**. This is delta-normal value at risk (VaR) on one position ([Parametric VaR](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/02-parametric-var-and-delta-normal.md)).
 
 The two margin engines in use are richer versions of this line.
 
-- **ISDA SIMM**, the Standard Initial Margin Model, is what most dealers use between themselves. It takes sensitivities (delta, vega, and a curvature term for gamma), multiplies each by a published risk weight, and aggregates them across risk types with published correlations. For a single equity delta, the risk weight plays the part of $z_{0.99}\sigma\sqrt{h}$.
+- **ISDA SIMM**, the Standard Initial Margin Model of the International Swaps and Derivatives Association, is what most dealers use between themselves. It takes sensitivities (delta, vega for sensitivity to volatility, and a curvature term for gamma), multiplies each by a published risk weight, and aggregates them across risk types with published correlations. For a single equity delta, the risk weight plays the part of $z_{0.99}\sigma\sqrt{h}$.
 - **A VaR-based model** reprices the whole netting set (all trades with one counterparty) under historical or stressed ten-day scenarios and takes the 99% loss. The international baseline asks for exactly this: a one-tailed 99% interval over ten days, calibrated on a period that includes stress, or a standard schedule of percentages of notional.
 
-Conventions verified 2026-09-28 against the BCBS-IOSCO text and MGN20: 99% one-tailed, ten business days with daily variation margin, segregated initial margin; 252 trading days a year is this card's choice.
+Conventions verified 2026-09-28 against the BCBS-IOSCO text and MGN20 (the first two Sources): 99% one-tailed, ten business days with daily variation margin, segregated initial margin; 252 trading days a year is this card's choice.
 
 The simulated check draws 200,000 ten-day moves, sorts them and reads off the 99% point: \$5.437698, against \$5.439166 by formula.
 
@@ -121,7 +129,7 @@ What remains is the survival integral: $\int_0^T e^{-\lambda t}\,dt = (1 - e^{-\
 <details>
 <summary>Detailed proof: the discounted expected margin equals today's margin</summary>
 
-Let $A(t) = S(t)\,e^{-q(T-t)}N(d_1(t))$. Write $V_A(t)$ for the date-$t$ price of the claim paying $S(T)$ at $T$ if $S(T) > K$, else nothing. Under the pricing world, with the share as the unit of account, the chance $S(T) > K$ given $S(t)$ is $N(d_1(t))$; the share, paying dividends at rate $q$, is worth $S(t)e^{-q(T-t)}$ in date-$t$ dollars as a claim on $S(T)$. So $V_A(t) = A(t)$ (the share-half step of the Black-Scholes derivation).
+Let $A(t) = S(t)\,e^{-q(T-t)}N(d_1(t))$. Write $V_A(t)$ for the date-$t$ price of the claim paying $S(T)$ at $T$ if $S(T) > K$ (the \$100 strike), else nothing. Under the pricing world, with the share as the unit of account, the chance $S(T) > K$ given $S(t)$ is $N(d_1(t))$; the share, paying dividends at rate $q$, is worth $S(t)e^{-q(T-t)}$ in date-$t$ dollars as a claim on $S(T)$. So $V_A(t) = A(t)$ (the share-half step of the Black-Scholes derivation).
 
 The claim pays nothing before $T$, so $D(t)V_A(t)$ is a martingale in the pricing world: $\mathbb{E}[D(t)V_A(t)] = V_A(0)$ for every $t \le T$. Multiply by the constant $z_{0.99}\sigma\sqrt{h}$: $D(t)\,\mathbb{E}[\mathrm{IM}(t)] = \mathrm{IM}_0$. At $t = T$ the margin is $z_{0.99}\sigma\sqrt{h}\,S(T)$ if Acme finishes above \$100, else zero, and the identity still holds.
 
@@ -133,7 +141,9 @@ Its slope in $T$, holding the margin fixed, is $s_I\,\mathrm{IM}_0\,e^{-\lambda 
 
 ### The other door: simulate it
 
-Pick a random date in the year, a random Acme price at that date, and a random default date for Northwind. If Northwind is still alive, record the discounted spread on that date's margin, times the year's length. Average 200,000 such draws: 0.026931, with a standard error (the typical size of the random miss) of 0.000038. The closed form, 0.026926, is well inside it. This route needs no flatness argument, so it works for any product and any margin rule a simulation can evaluate. Desks do it with regression, because repricing a whole netting set's margin on every path is expensive (the Green and Kenyon paper in Sources).
+Pick a random date in the year, a random Acme price at that date, and a random default date for Northwind. If Northwind is still alive, record the discounted spread on that date's margin, times the year's length. Average 200,000 such draws: 0.026931, with a standard error (the typical size of the random miss) of 0.000038. The closed form, 0.026926, is well inside it.
+
+This route needs no flatness argument, so it works for any product and any margin rule a simulation can evaluate. Desks do it with regression, because repricing a whole netting set's margin on every path is expensive (the Green and Kenyon paper in Sources).
 
 ---
 
@@ -164,7 +174,9 @@ All three share the survival factor, so the comparison reduces to one product ea
 - **Against CVA:** MVA wins when Northwind's hazard is below $s_I\,\mathrm{IM}_0/((1-R)C_0)$ = 0.004912, about 0.49% a year: a very safe counterparty. The checks find the same point by bisection on the two costs.
 - **Against FVA:** MVA wins when the unsecured funding spread is below $s_I\,\mathrm{IM}_0/C_0$ = 0.002947, about 29 bp.
 
-The decisive case is collateral. With daily variation margin (the daily cash that settles each change in the trade's value) and Northwind's \$5.44 of initial margin in hand, the bank loses only when a ten-day move overshoots the margin. That average overshoot, held at its day-one size, is $\sigma_{10}\bigl(\varphi(z_{0.99}) - z_{0.99}(1-N(z_{0.99}))\bigr)$ = \$0.007923, where $\sigma_{10}$ is the \$2.338071 ten-day standard deviation and $\varphi$ the bell curve's height, found again by integration. CVA falls to 0.60 × 0.007923 × (1 − e^{−0.02}) = \$0.000094. Variation margin also funds the hedge, so FVA falls toward zero ([Collateral](01-collateral-and-the-residual-exposure.md)). MVA does not fall at all: the margin that killed the CVA is the margin being funded.
+The decisive case is collateral. With daily variation margin (the daily cash that settles each change in the trade's value) and Northwind's \$5.44 of initial margin in hand, the bank loses only when a ten-day move overshoots the margin. That average overshoot, held at its day-one size, is $\sigma_{10}\bigl(\varphi(z_{0.99}) - z_{0.99}(1-N(z_{0.99}))\bigr)$ = \$0.007923, where $\sigma_{10}$ is the \$2.338071 ten-day standard deviation and $\varphi$ the bell curve's height, found again by integration.
+
+CVA falls to 0.60 × 0.007923 × (1 − e^{−0.02}) = \$0.000094. Variation margin also funds the hedge, so FVA falls toward zero ([Collateral](01-collateral-and-the-residual-exposure.md)). MVA does not fall at all: the margin that killed the CVA is the margin being funded.
 
 ```
 cents per call, one block = 0.25 cents
@@ -613,6 +625,119 @@ ALL CHECKS PASS
 
 The two outputs agree line for line.
 
+### Lean
+
+Lean proves the MVA closed form and its two consequences, for any positive hazard and any trade life.
+
+- Suppose $D(t)\,\mathbb{E}[\mathrm{IM}(t)] = \mathrm{IM}_0$ at every date $t$ from 0 to $T$. Then the MVA integral equals $s_I\,\mathrm{IM}_0\,(1 - e^{-\lambda T})/\lambda$.
+- Take a positive spread and a positive day-one margin. Then MVA rises with $T$, with slope $s_I\,\mathrm{IM}_0\,e^{-\lambda T}$.
+- Take the same spread and margin, and any $T > 0$. Then MVA stays below $s_I\,\mathrm{IM}_0\,T$, the charge with no survival weight.
+- Take $R < 1$, $C_0 > 0$ and $T > 0$. Then MVA exceeds CVA exactly when $\lambda < s_I\,\mathrm{IM}_0/((1-R)C_0)$.
+
+Python and Rust check that the discounted margin really is flat, the margin sizing, and every number on the card.
+
+```lean
+-- MVA: when the discounted expected margin stays at its day-one level, the margin valuation adjustment integral closes to spread times day-one margin times the survival annuity (1 - e^(-λT))/λ, which grows with maturity more slowly than in proportion and beats CVA exactly when the hazard is below a crossover.
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+
+open Real Set intervalIntegral
+
+/-- MVA closed form. Let `s` be the margin funding spread, `r` the riskless rate, `λ > 0`
+Northwind's hazard and `T ≥ 0` the trade's life. If the expected margin `EIM t` at every date
+`t` in `[0, T]`, shrunk to today by `D(t) = e^{-rt}`, equals the day-one margin `IM₀`
+(the green line: the dollar delta is a traded price), then
+`MVA = s ∫₀ᵀ D(t) E[IM(t)] Q(t) dt` with `Q(t) = e^{-λt}` equals `s · IM₀ · (1 - e^{-λT}) / λ`. -/
+theorem mva_closed_form (s r lam IM0 T : ℝ) (EIM : ℝ → ℝ) (hlam : 0 < lam) (hT : 0 ≤ T)
+    (hflat : ∀ t ∈ Icc 0 T, Real.exp (-r * t) * EIM t = IM0) :
+    s * ∫ t in (0)..T, Real.exp (-r * t) * EIM t * Real.exp (-lam * t)
+      = s * IM0 * (1 - Real.exp (-lam * T)) / lam := by
+  have h1 : (∫ t in (0)..T, Real.exp (-r * t) * EIM t * Real.exp (-lam * t))
+      = ∫ t in (0)..T, IM0 * Real.exp (-lam * t) := by
+    apply intervalIntegral.integral_congr
+    intro t ht
+    rw [uIcc_of_le hT] at ht
+    simp only
+    rw [hflat t ht]
+  have h2 : (∫ t in (0)..T, IM0 * Real.exp (-lam * t))
+      = IM0 * (1 - Real.exp (-lam * T)) / lam := by
+    have hd : ∀ x ∈ uIcc 0 T, HasDerivAt (fun t => -IM0 * Real.exp (-lam * t) / lam)
+        (IM0 * Real.exp (-lam * x)) x := by
+      intro x _
+      have h := ((((hasDerivAt_id x).const_mul (-lam)).exp).const_mul (-IM0)).div_const lam
+      convert h using 1
+      · funext t; simp
+      · simp; field_simp
+    have hi : IntervalIntegrable (fun t => IM0 * Real.exp (-lam * t)) MeasureTheory.volume 0 T :=
+      (by fun_prop : Continuous (fun t => IM0 * Real.exp (-lam * t))).intervalIntegrable _ _
+    rw [integral_eq_sub_of_hasDerivAt hd hi]
+    simp
+    field_simp
+    ring
+  rw [h1, h2]
+  ring
+
+/-- MVA grows with maturity, but more slowly than in proportion: with a positive spread,
+positive day-one margin and positive hazard, the closed form `s · IM₀ · (1 - e^{-λT}) / λ`
+is strictly increasing in `T`, its slope in `T` is `s · IM₀ · e^{-λT}`, and for every
+`T > 0` it is strictly below the no-survival-weight charge `s · IM₀ · T`. -/
+theorem mva_grows_with_maturity_less_than_proportionally (s IM0 lam : ℝ)
+    (hs : 0 < s) (hIM : 0 < IM0) (hlam : 0 < lam) :
+    StrictMono (fun T : ℝ => s * IM0 * (1 - Real.exp (-lam * T)) / lam) ∧
+    (∀ T : ℝ, HasDerivAt (fun T : ℝ => s * IM0 * (1 - Real.exp (-lam * T)) / lam)
+        (s * IM0 * Real.exp (-lam * T)) T) ∧
+    (∀ T : ℝ, 0 < T → s * IM0 * (1 - Real.exp (-lam * T)) / lam < s * IM0 * T) := by
+  have hsI : 0 < s * IM0 := mul_pos hs hIM
+  refine ⟨?_, ?_, ?_⟩
+  · intro a b hab
+    simp only
+    apply div_lt_div_of_pos_right _ hlam
+    apply mul_lt_mul_of_pos_left _ hsI
+    have : Real.exp (-lam * b) < Real.exp (-lam * a) := Real.exp_lt_exp.mpr (by nlinarith)
+    linarith
+  · intro T
+    have h := (((((hasDerivAt_id' T).const_mul (-lam)).exp).const_sub 1).const_mul (s * IM0)).div_const lam
+    convert h using 1
+    field_simp
+  · intro T hT
+    rw [div_lt_iff₀ hlam]
+    have hne : -lam * T ≠ 0 := by
+      have : 0 < lam * T := mul_pos hlam hT
+      intro h; linarith
+    have := Real.add_one_lt_exp hne
+    nlinarith
+
+/-- MVA against CVA: with the same survival factor, MVA `s · IM₀ · (1 - e^{-λT}) / λ`
+exceeds CVA `(1 - R) · C₀ · (1 - e^{-λT})` exactly when the hazard is below the crossover
+`s · IM₀ / ((1 - R) · C₀)`. -/
+theorem mva_exceeds_cva_iff_hazard_below_crossover (s IM0 C0 R lam T : ℝ)
+    (hlam : 0 < lam) (hT : 0 < T) (hC : 0 < C0) (hR : R < 1) :
+    (1 - R) * C0 * (1 - Real.exp (-lam * T)) < s * IM0 * (1 - Real.exp (-lam * T)) / lam ↔
+      lam < s * IM0 / ((1 - R) * C0) := by
+  have hA : 0 < 1 - Real.exp (-lam * T) := by
+    have : Real.exp (-lam * T) < 1 := by
+      have h := Real.exp_lt_exp.mpr (show -lam * T < 0 by nlinarith)
+      rwa [Real.exp_zero] at h
+    linarith
+  have hD : 0 < (1 - R) * C0 := mul_pos (by linarith) hC
+  rw [lt_div_iff₀ hlam, lt_div_iff₀ hD]
+  rw [show (1 - R) * C0 * (1 - Real.exp (-lam * T)) * lam
+      = lam * ((1 - R) * C0) * (1 - Real.exp (-lam * T)) by ring]
+  exact mul_lt_mul_iff_of_pos_right hA
+
+#print axioms mva_closed_form
+#print axioms mva_grows_with_maturity_less_than_proportionally
+#print axioms mva_exceeds_cva_iff_hazard_below_crossover
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'mva_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mva_grows_with_maturity_less_than_proportionally' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mva_exceeds_cva_iff_hazard_below_crossover' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Double the spread.** Guess first: does MVA double? Set `S_IM = 0.01`. It comes out at **0.053851**: exactly double, since the spread multiplies everything.
@@ -641,7 +766,7 @@ The two outputs agree line for line.
 - **The clearing house.** A cleared trade also carries initial margin, set by the clearing house's own VaR model. The same formula prices its funding; the difference is who sets the margin.
 - **Choosing where to trade.** A desk compares the MVA of clearing a swap against the MVA of keeping it bilateral, because the two margin models charge different amounts for the same risk.
 - **Portfolio margin.** SIMM margins the netting set, not the trade. A new trade that offsets existing risk can lower margin and carry a negative incremental MVA: the desk may pay the client for it.
-- **The rest of the XVA stack.** Capital held against the same trade has its own rent ([KVA](04-kva.md)), and the desk adds them without double counting in [Putting the adjustments together](05-the-xva-desk-view.md).
+- **The rest of the XVA stack.** Capital held against the same trade has its own rent ([KVA](04-kva.md), the capital valuation adjustment), and the desk adds them without double counting in [Putting the adjustments together](05-the-xva-desk-view.md).
 
 > **Say it back**
 > Under two-way margin rules each side posts a deposit sized to a 99% ten-day move, and neither may spend what it receives. The poster borrows that deposit at its funding rate and earns less on it, so it pays a spread for the life of the trade. MVA is that spread times the discounted expected margin times the chance the trade is still alive, added over the life. For the Acme call the discounted expected margin stays at its day-one \$5.44, so MVA is 50 bp times \$5.44 times 0.990066 years: 2.7 cents, a quarter of the uncollateralised CVA. Once margin has removed the credit risk, MVA is the adjustment that remains.

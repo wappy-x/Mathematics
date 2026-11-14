@@ -37,7 +37,9 @@ Top line (orange): the 95% potential future exposure. Middle line (green): expec
 
 ## The formula
 
-Notation first, in words. The letter $u$ is a future date, in years from today. $V(u)$ is the trade's value to the bank on that date, before any thought of default; it may be negative. The exposure on that date is $\max(V(u), 0)$: the value if the bank is owed, zero if the bank owes. $\mathbb{E}[\,\cdot\,]$ is an average over all the ways the market could move, weighted by their chances (see [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)).
+Notation first, in words. The letter $u$ is a future date, in years from today. $V(u)$ is the trade's value to the bank on that date, before any thought of default; it may be negative. The exposure on that date is $\max(V(u), 0)$: the value if the bank is owed, zero if the bank owes.
+
+$\mathbb{E}[\,\cdot\,]$ is an average over all the ways the market could move, weighted by their chances (see [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)). $\Pr(\,\cdot\,)$ is the chance that the statement inside is true.
 
 $$\mathrm{EE}(u) = \mathbb{E}\big[\max(V(u),\,0)\big]$$
 
@@ -78,7 +80,7 @@ $c(u,s)$ is the Black-Scholes call with $T - u$ years left ([Black–Scholes cal
 
 EE and PFE are definitions and hold for any trade. The call's two closed forms rest on assumptions:
 
-- **Paths from the pricing world.** Acme drifts at $r - q$, the bank rate less the dividend. Simulate with a real-world expected return of 8% instead and the average exposure no longer equals $C_0$ grown at the bank rate; the six-month PFE moves from \$28.26 to \$30.10.
+- **Paths from the pricing world.** The pricing world is the pretend world used for pricing (finance calls it "risk-neutral"), where every asset earns the bank rate in total. In it Acme drifts at $r - q$, the bank rate less the dividend. Simulate with a real-world expected return of 8% instead and the average exposure no longer equals $C_0$ grown at the bank rate; the six-month PFE moves from \$28.26 to \$30.10.
 - **Nothing paid before expiry.** The call pays once, at the end, and cannot be exercised early. A trade that pays coupons or can be cut short loses the flat line: each payment steps the profile down.
 - **Exposure and default unrelated.** The profile ignores whether Northwind is likelier to fail when Acme soars. When the two move together, the average exposure given default differs from EE; that is [Wrong-way risk](05-wrong-way-risk.md).
 - **No collateral, one trade.** Collateral posted by Northwind or netting against other trades changes $V(u)$ before the floor; the profile is then of the residual ([Collateral](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/01-collateral-and-the-residual-exposure.md)).
@@ -108,13 +110,13 @@ The order in the formula matters. Flooring a scenario can only raise its value: 
 
 $$\mathbb{E}\big[\max(V,0)\big] \;\ge\; \max\big(\mathbb{E}[V],\,0\big).$$
 
-The gap is large when the trade can go either way. The swap below is worth close to nothing on average at year two, \$0.08, yet its expected exposure is \$1.65: the scenarios where the bank owes Northwind do not cancel the ones where Northwind owes the bank, because a default in the first kind costs the bank nothing.
+The gap is large when the trade can go either way. The swap below is worth close to nothing on average at year two, \$0.08, yet its expected exposure is \$1.65. The scenarios where the bank owes Northwind do not cancel the ones where Northwind owes the bank, because a default in the first kind costs the bank nothing.
 
 ### Step 3: the call's expected exposure, shrunk to today, is its price
 
 A bought call is never worth less than zero, so its exposure is its value: $\max(c, 0) = c$. The floor does nothing.
 
-Now the pricing world's defining property ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)): any traded thing that pays nothing along the way, shrunk by the bank rate, has an average future value equal to its value today. The call qualifies. On date $u$ its value is the shrunk average of its final payoff given what is known then; averaging again over what might be known then gives the shrunk average of the final payoff, which is $C_0$. So
+Now the pricing world's defining property ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)): any traded thing that pays nothing along the way, shrunk by the bank rate, has an average future value equal to its value today. The call qualifies. On date $u$ its value is the shrunk average of its final payoff given what is known then. Averaging again over what might be known then gives the shrunk average of the final payoff, which is $C_0$. So
 
 $$e^{-ru}\,\mathrm{EE}(u) = C_0 \quad\text{for every } u \text{ up to expiry.}$$
 
@@ -176,7 +178,7 @@ The Acme call at six months: $S_0$ = \$100, $K$ = \$100, $r$ = 5%, $q$ = 2%, $\s
 
 If Northwind fails in six months, the bank expects to be owed about \$9.46, and in one scenario in twenty it is owed more than \$28.26. The average prices the risk; the tail sizes the limit a credit officer sets on Northwind.
 
-For the house cross-check: with Northwind's hazard of 2% a year and 40% recovery, the flat \$9.23 in today's dollars gives a credit charge of 0.6 × \$9.23 × (1 − $e^{-0.02}$) = \$0.1096, and a risky price of \$9.12. That computation belongs to [CVA](03-cva.md); it appears here only to show the profile feeding it.
+For the house cross-check, take Northwind's hazard of 2% a year (its rate of failing: roughly a 2% chance each year) and 40% recovery (the share of the claim the bankruptcy court returns). Then the flat \$9.23 in today's dollars gives a credit charge of 0.6 × \$9.23 × (1 − $e^{-0.02}$) = \$0.1096, and a risky price of \$9.12. That computation belongs to [CVA](03-cva.md); it appears here only to show the profile feeding it.
 
 ### What breaks if you drop a piece
 
@@ -196,7 +198,9 @@ The standard deviation of the six-month call value is \$9.25; the average plus 1
 
 The call's profile rises and stops at expiry. A swap's profile rises, peaks and falls to zero. The difference is what each trade still owes.
 
-The trade: a five-year swap with Northwind on \$100 of notional. The bank receives a fixed 5.13% each year and pays the floating rate, reset annually ([Interest rate swaps](../28-Swaps/01-interest-rate-swaps.md)). At a flat 5% rate, 5.13% is the par coupon ([The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md)), so the swap is worth zero today and exposure starts at zero. In the sketch model the whole curve moves up or down together by a bell-curve amount with a spread of 1% a year times the square root of the years elapsed. When rates fall, the bank's fixed receipts are worth more and Northwind owes; when rates rise, the bank owes. Values are read just after each annual payment.
+The trade: a five-year swap with Northwind on \$100 of notional (the amount the interest payments are figured on). The bank receives a fixed 5.13% each year and pays the floating rate, reset annually ([Interest rate swaps](../28-Swaps/01-interest-rate-swaps.md)). At a flat 5% rate, 5.13% is the par coupon ([The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md)), so the swap is worth zero today and exposure starts at zero.
+
+In the sketch model the whole curve moves up or down together by a bell-curve amount with a spread of 1% a year times the square root of the years elapsed. When rates fall, the bank's fixed receipts are worth more and Northwind owes; when rates rise, the bank owes. Values are read just after each annual payment.
 
 Two forces meet. **Uncertainty grows**: by year two the rate's spread is 1.41%, and the 5% tail sits at 2.67%. **Payments run out**: at year two three remain, at year four one, at year five none. Exposure is roughly the rate move times the payments left, so it rises then falls.
 
@@ -642,6 +646,106 @@ ALL CHECKS PASS
 ```
 
 The two outputs agree line for line at four decimals, including the simulated columns, because both languages run the same splitmix64 generator from the same seed.
+
+### Lean
+
+Lean proves the facts behind Steps 2, 3 and 4 in general, not just for Acme, plus two counts.
+
+- Take any trade value $V$ with a finite average. Then $\mathbb{E}[\max(V,0)] \ge \max(\mathbb{E}[V],0)$: flooring first never lowers the average.
+- Take a bought option whose payoff is never negative, valued as its shrunk average payoff given what is known. Then $e^{-ru}\,\mathrm{EE}(u) = C_0$ at every date $u$ up to expiry.
+- Suppose the revaluation map $g$ is continuous and never decreasing, and $s^*$ is the $\alpha$ percentile of the driving price. Then $g(s^*)$ is the $\alpha$ percentile of the revalued trade.
+- With 40,000 paths, the 95th percentile is the 38,000th sorted value.
+- At 95% confidence, one scenario in twenty is worse.
+
+The Black-Scholes prices, the profile numbers and the simulations are left to the Python and Rust checks.
+
+```lean
+-- Expected exposure over time: a bought option's expected exposure, shrunk to today, equals its price at every date; flooring before averaging never lowers the average; and the PFE of a rising revaluation is the revaluation at the driver's percentile.
+import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
+import Mathlib.Probability.Process.Filtration
+import Mathlib.Analysis.SpecialFunctions.Exp
+
+open MeasureTheory
+
+/-- The card's main theorem (Step 3). In the pricing world, a bought option that pays only its
+nonnegative payoff `H` at expiry `T` is worth `c(u) = e^{-r(T-u)} E[H | 𝓕_u]` on date `u`.
+Its expected exposure `EE(u) = E[max(c(u), 0)]`, shrunk back to today by `e^{-ru}`, equals
+today's price `C₀ = e^{-rT} E[H]` at every date `u` up to expiry. -/
+theorem discounted_expected_exposure_eq_price {Ω : Type*} {m0 : MeasurableSpace Ω}
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (𝓕 : Filtration ℝ m0)
+    (H : Ω → ℝ) (hH : ∀ ω, 0 ≤ H ω) (r T u : ℝ) (hu0 : 0 ≤ u) (huT : u ≤ T) :
+    Real.exp (-r * u) * ∫ ω, max (Real.exp (-r * (T - u)) * μ[H | 𝓕 u] ω) 0 ∂μ
+      = Real.exp (-r * T) * ∫ ω, H ω ∂μ := by
+  have hnn : 0 ≤ᵐ[μ] μ[H | 𝓕 u] := condExp_nonneg (Filter.Eventually.of_forall hH)
+  have hae : (fun ω => max (Real.exp (-r * (T - u)) * μ[H | 𝓕 u] ω) 0)
+      =ᵐ[μ] fun ω => Real.exp (-r * (T - u)) * μ[H | 𝓕 u] ω := by
+    filter_upwards [hnn] with ω hω
+    exact max_eq_left (mul_nonneg (Real.exp_pos _).le hω)
+  rw [integral_congr_ae hae, integral_const_mul, integral_condExp (𝓕.le u), ← mul_assoc,
+    ← Real.exp_add]
+  congr 2
+  ring
+
+/-- Step 2: floor first, then average. For any trade value `V` with a finite average, the
+expected exposure `E[max(V, 0)]` is at least `max(E[V], 0)`. -/
+theorem expected_exposure_ge_floor_of_mean {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (V : Ω → ℝ) (hV : Integrable V μ) :
+    max (∫ ω, V ω ∂μ) 0 ≤ ∫ ω, max (V ω) 0 ∂μ := by
+  refine max_le ?_ (integral_nonneg fun ω => le_max_right _ _)
+  exact integral_mono hV (hV.sup (integrable_zero _ _ _)) fun ω => le_max_left _ _
+
+/-- Step 4: the percentile passes through the revaluation. If the revaluation map `g` is
+continuous and never decreasing, and `s` is the `α` percentile of the driver `S` (the smallest
+level with `Pr(S ≤ s) ≥ α`), then `g(s)` is the `α` percentile of `g(S)`: the smallest `x`
+with `Pr(g(S) ≤ x) ≥ α`. -/
+theorem pfe_eq_revaluation_at_percentile {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (S : Ω → ℝ) (g : ℝ → ℝ)
+    (hg : Continuous g) (hmono : Monotone g) (α s : ℝ)
+    (hs : IsLeast {x : ℝ | α ≤ μ.real {ω | S ω ≤ x}} s) :
+    IsLeast {x : ℝ | α ≤ μ.real {ω | g (S ω) ≤ x}} (g s) := by
+  refine ⟨?_, ?_⟩
+  · show α ≤ μ.real {ω | g (S ω) ≤ g s}
+    exact hs.1.trans (measureReal_mono (s₁ := {ω | S ω ≤ s}) fun ω (hω : S ω ≤ s) => hmono hω)
+  · intro x hx
+    by_contra hlt
+    push Not at hlt
+    have hmem : g ⁻¹' Set.Ioi x ∈ nhds s := hg.continuousAt.preimage_mem_nhds (Ioi_mem_nhds hlt)
+    obtain ⟨l, hl, hsub⟩ := exists_Ioc_subset_of_mem_nhds hmem ⟨s - 1, by linarith⟩
+    have hset : {ω | g (S ω) ≤ x} ⊆ {ω | S ω ≤ l} := by
+      intro ω (hω : g (S ω) ≤ x)
+      show S ω ≤ l
+      by_contra h
+      push Not at h
+      rcases le_or_gt (S ω) s with h2 | h2
+      · have := hsub ⟨h, h2⟩
+        simp only [Set.mem_preimage, Set.mem_Ioi] at this
+        linarith
+      · have := hmono h2.le
+        linarith
+    have hl' : l ∉ {x : ℝ | α ≤ μ.real {ω | S ω ≤ x}} := fun h => absurd (hs.2 h) (not_le.2 hl)
+    simp only [Set.mem_ofPred_eq, not_le] at hl'
+    have : α ≤ μ.real {ω | S ω ≤ l} := (show α ≤ μ.real {ω | g (S ω) ≤ x} from hx).trans
+      (measureReal_mono hset)
+    linarith
+
+-- With 40,000 paths, the 95th percentile is the ceil(0.95 × 40,000)-th sorted value: the 38,000th.
+example : (95 * 40000 + 99) / 100 = 38000 := by norm_num
+
+-- At 95% confidence, one scenario in twenty is worse.
+example : (1 : ℚ) - 95 / 100 = 1 / 20 := by norm_num
+
+#print axioms discounted_expected_exposure_eq_price
+#print axioms expected_exposure_ge_floor_of_mean
+#print axioms pfe_eq_revaluation_at_percentile
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'discounted_expected_exposure_eq_price' depends on axioms: [propext, Classical.choice, Quot.sound]
+'expected_exposure_ge_floor_of_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pfe_eq_revaluation_at_percentile' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

@@ -154,4 +154,5 @@ fn main() {
         assert!((q99 - res[i].2[1]).abs() <= 2.0 * a);
         assert!((q999 - res[i].2[2]).abs() <= 3.0 * a);
     }
+    println!("ALL CHECKS PASS");
 }

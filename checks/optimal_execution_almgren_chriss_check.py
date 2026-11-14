@@ -135,3 +135,4 @@ assert worse == 2000                                # no nudge beats the optimum
 assert abs(slope / -LAM - 1) < 1e-4                 # lambda is the price of variance on the frontier
 assert ok and abs(prod(2 * a * (2 - 2 * cos(j * pi / N)) + 2 * b for j in range(1, N)) / D1 - 1) < 1e-9  # eigenvalues vs determinant
 assert min(U(closed_form(0.0)), U(closed_form(LAM, s=S0 * 0.20)), U(closed_form(LAM, discrete=False)), U(closed_form(LAM, et=eta))) > U(x_opt)  # every mistake scores worse
+print("ALL CHECKS PASS")

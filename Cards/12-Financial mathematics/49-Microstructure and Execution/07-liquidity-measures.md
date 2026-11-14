@@ -8,11 +8,15 @@
 
 Two stocks trade about a million shares a day. Acme is a large company at $100 a share. Cobble is a small one at $10. Share counts make them look equally easy to trade. They are not.
 
-A buyer of Acme pays about a cent above the fair price. A buyer of Cobble pays about a cent too, but a cent on a $10 share is ten times as much of the price. A day of $100 million in Acme trades moves its price about as much as $10 million in Cobble. A $1 million sale eats five price levels of Acme's order book and twenty of Cobble's. After the sale, Acme's book is half refilled in about a minute, Cobble's in about ten.
+A buyer of Acme pays about a cent above the fair price. A buyer of Cobble pays about a cent too, but a cent on a $10 share is ten times as much of the price. A day of $100 million in Acme trades moves its price about as much as $10 million in Cobble.
+
+A $1 million sale eats five price levels of Acme's order book and twenty of Cobble's. After the sale, Acme's book is half refilled in about a minute, Cobble's in about ten.
 
 That is **liquidity**: how cheaply, how much, and how quickly a stock can be traded without moving its price. No single number captures it. This card computes the standard ones from trade data and ranks three fictional stocks, with Beacon, a mid-sized company at $40, between the two.
 
-The **effective spread** is twice what a trade actually paid against the fair price, in basis points (hundredths of a percent). The **Amihud illiquidity** ratio is how far the price moves per million dollars traded, from daily data alone. **Depth** is the dollars of orders waiting near the price; **resilience** is how fast they come back after a big trade eats them.
+An order book lists the orders waiting to trade, by price level. The best bid is the highest price a buyer is waiting to pay; the best ask is the lowest price a seller is waiting to take. The midpoint sits halfway between them and stands in for the fair price. [The order book](01-the-limit-order-book.md) covers this in full.
+
+The **effective spread** is twice what a trade actually paid against the fair price, in basis points (bp, hundredths of a percent). The **Amihud illiquidity** ratio is how far the price moves per million dollars traded, from daily data alone. **Depth** is the dollars of orders waiting near the price; **resilience** is how fast they come back after a big trade eats them.
 
 **Liquidity has three faces, tightness, depth and resilience, and each measure on this card reads one of them: the effective spread reads tightness, Amihud's ratio reads price movement per dollar traded, and the order book read before and after a large sale shows depth and resilience.**
 
@@ -45,7 +49,7 @@ The effective spread of one trade, in basis points:
 
 $$E_j = 2\, s_j\, \frac{p_j - m_j}{m_j} \times 10{,}000$$
 
-**Read it aloud:** twice the distance from the trade price to the midpoint, signed so that paying up counts as a cost for a buyer and selling down counts as a cost for a seller, as a fraction of the midpoint, in basis points.
+**Read it aloud:** twice the distance from the trade price to the midpoint, as a fraction of the midpoint, in basis points. The sign makes paying up count as a cost for a buyer and selling down count as a cost for a seller.
 
 For a stock over many trades, weight each trade by its shares:
 
@@ -69,7 +73,7 @@ $$I = \frac{1}{D} \sum_{d=1}^{D} \frac{\lvert r_d \rvert}{V_d}$$
 | $r_d$, $d$ | close-to-close return on day $d$, bp | Acme day 1: +80 | $I$ rises |
 | $V_d$ | dollars traded on day $d$, $ millions | Acme day 1: 100 | $I$ falls |
 | $I$, $D$ | Amihud ratio, bp per $1 million; $D$ days in the window | Acme 1.0, Cobble 10.0; 5 days | the price is more fragile per dollar |
-| $h$ | half-spread actually paid, in dollars or cents | Acme: 0.8 bp of the price | Roll's estimate rises with it |
+| $h$ | half-spread: in Roll's model, what each trade pays beyond the fair price; in a book walk, the best bid's distance below the midpoint | Roll: Acme 0.8 bp of the price; book walk: Acme 1 cent | Roll's estimate rises with it |
 | $\Delta p_k$, $u_k$, $k$ | change in trade price from trade $k-1$ to trade $k$; $u_k$ is the fair price's own step; in a book walk, $k$ counts levels down from the best bid | cents, either sign | — |
 | $\delta$, $n$ | shares shown at each one-cent level; levels a sale walks | Acme 2,000; 5 levels for $1 million | deeper book, cheaper large sale |
 | $\kappa$, $t$ | refill rate of missing depth, per minute; minutes since the sale | Acme 0.7, Cobble 0.07 | the book heals faster |
@@ -79,6 +83,8 @@ Three helper results, each proved below.
 Roll's estimate of the spread from trade prices alone, with no quotes:
 
 $$2h = 2\sqrt{-\operatorname{Cov}(\Delta p_k,\ \Delta p_{k-1})}$$
+
+Here $\operatorname{Cov}$ is the covariance of each price change with the one before it: the average of their product, after subtracting each one's mean. It is negative when moves tend to reverse.
 
 In words: the price bounces between bid side and ask side, so each move tends to reverse the last one; the size of that reversal reveals the spread.
 
@@ -108,7 +114,13 @@ In words: the missing depth shrinks by the same fraction every minute, and the h
 
 ### Step 0: liquidity is the cost of trading now instead of waiting
 
-A seller who can wait gets roughly the fair price. A seller who must sell now pays for it, and the payment has three parts: the gap between bid and ask (**tightness**), the price levels a large order eats through (**depth**), and the time before the book recovers (**resiliency**). Albert Kyle named these three in 1985 ([Kyle's model](03-kyle-model-and-price-impact.md)). Each measure below reads one of them from data.
+A seller who can wait gets roughly the fair price. A seller who must sell now pays for it, and the payment has three parts:
+
+- the gap between bid and ask (**tightness**);
+- the price levels a large order eats through (**depth**);
+- the time before the book recovers (**resilience**).
+
+Albert Kyle named these three in 1985 ([Kyle's model](03-kyle-model-and-price-impact.md)). Each measure below reads one of them from data.
 
 ### Step 1: why twice the distance, and why the sign
 
@@ -120,11 +132,15 @@ Dividing by the midpoint turns cents into a fraction of the price. That is what 
 
 ### Step 2: why the effective spread sits below the quoted one
 
-The quoted spread assumes every trade pays the full half-spread. Real trades sometimes execute inside the quotes, at the midpoint or better, against hidden orders or a broker's own inventory. The share-weighted average of what was actually paid is the effective spread. On Acme's tape, 800 of 1,000 shares paid the full 2 bp and 200 paid nothing, so the effective spread is 1.6 bp against a quoted 2 bp.
+The quoted spread assumes every trade pays the full half-spread. Real trades sometimes execute inside the quotes, at the midpoint or better, against hidden orders or a broker's own inventory. The share-weighted average of what was actually paid is the effective spread.
+
+On Acme's tape, 800 of 1,000 shares paid the full 2 bp and 200 paid nothing, so the effective spread is 1.6 bp against a quoted 2 bp.
 
 ### Step 3: the spread without quotes, from prices alone (Roll)
 
-Richard Roll showed in 1984 that trade prices carry the spread in their bounce. Model the fair price as a random walk: each trade it moves by an independent step with average zero. Each trade is a buy or a sale with equal chance, independent of everything else, and trades at the fair price plus $h$ for a buy or minus $h$ for a sale.
+Richard Roll showed in 1984 that trade prices carry the spread in their bounce.
+
+Model the fair price as a random walk: each trade it moves by an independent step with average zero. Each trade is a buy or a sale with equal chance, independent of everything else. It trades at the fair price plus $h$ for a buy, or minus $h$ for a sale.
 
 Then a price change is a fair-price step plus a bounce term. Two consecutive changes both contain the sign of the trade between them, once with a minus and once with a plus, and nothing else in them is related. So consecutive price changes move against each other on average, by exactly $h^2$.
 
@@ -161,7 +177,7 @@ A sale sold straight into the book takes the best bid first, then the next level
 
 $$\delta\left(nh + (0 + 1 + \dots + (n-1))\right) = \delta\left(nh + \frac{n(n-1)}{2}\right)$$
 
-cents below the midpoint in total. Dividing by the $n\delta$ shares sold gives the average, $h + (n-1)/2$ cents. The code walks the book level by level as one road and uses this series as the second; they agree to the share, including a sale of 99,999 shares that ends partway into a level.
+cents below the midpoint in total. Dividing by the $n\delta$ shares sold gives the average, $h + (n-1)/2$ cents. The code walks the book level by level as one road and uses this series as the second. They agree to the share, including a sale of 99,999 shares that ends partway into a level.
 
 The cost grows with the number of levels, and the number of levels grows with size. That is why the picture's lines bend apart.
 
@@ -169,9 +185,11 @@ The cost grows with the number of levels, and the number of levels grows with si
 
 After a sale empties some levels, new orders arrive to refill them. The simplest model, used by Anna Obizhaeva and Jiang Wang, has the missing depth shrink at rate $\kappa$: each minute a fixed fraction of what is still missing comes back. Then the missing part after $t$ minutes is $e^{-\kappa t}$ of what was taken, and it halves when $e^{-\kappa t} = 1/2$, that is $t_{1/2} = \ln 2 / \kappa$.
 
-The second road looks at single orders. If each missing order returns after its own random waiting time, with a constant chance per minute of $\kappa$, then the fraction not yet back after $t$ minutes is again $e^{-\kappa t}$. The half-life is the median waiting time. The code draws 20,001 waiting times per stock and takes their median: 0.98 minutes for Acme against 0.99 from the formula, 9.87 for Cobble against 9.90.
+The second road looks at single orders. If each missing order returns after its own random waiting time, with a constant chance per minute of $\kappa$, then the fraction not yet back after $t$ minutes is again $e^{-\kappa t}$.
 
-A different road to the spread runs through adverse selection, the loss a market maker suffers to better-informed traders: [The spread](02-bid-ask-spread-and-adverse-selection.md) explains why the spread exists at all; this card measures how big it is.
+The half-life is the median waiting time. The code draws 20,001 waiting times per stock and takes their median: 0.98 minutes for Acme against 0.99 from the formula, 9.87 for Cobble against 9.90.
+
+A different road to the spread runs through adverse selection: the loss a market maker suffers to better-informed traders. [The spread](02-bid-ask-spread-and-adverse-selection.md) explains why the spread exists at all; this card measures how big it is.
 
 ---
 
@@ -261,7 +279,14 @@ Top line (orange), Acme: half back inside a minute. Middle line (green), Beacon:
 
 ## Code, from first principles, and it actually runs
 
-The programs compute every measure on the card for all three stocks, each by two roads. The spread: quote-matched trades, and Roll's bounce on a simulated 20,000-trade tape. Amihud: the hand table, and its scaling law. A sale's cost: walking the book, and the arithmetic series. The half-life: the formula, and the median of 20,001 simulated refill times. A small random generator is written out in both languages, so Python and Rust draw the same sequence.
+The programs compute every measure on the card for all three stocks, each by two roads:
+
+- The spread: quote-matched trades, and Roll's bounce on a simulated 20,000-trade tape.
+- Amihud: the hand table, and its scaling law.
+- A sale's cost: walking the book, and the arithmetic series.
+- The half-life: the formula, and the median of 20,001 simulated refill times.
+
+A small random generator is written out in both languages, so Python and Rust draw the same sequence.
 
 ### Python
 
@@ -677,6 +702,230 @@ ALL CHECKS PASS
 
 The two outputs agree line for line. The simulated rows agree too, because both programs run the same generator and add in the same order.
 
+### Lean
+
+Lean proves Roll's covariance, the book-walk average and the half-life in their models, and checks the hand table exactly.
+
+- Take Roll's model from Step 3: independent fair-price steps of average zero, and independent signs, +1 or −1 with equal chance. Then each price change has covariance $-h^2$ with the one before it.
+- Suppose also $h \ge 0$. Then Roll's estimate $2\sqrt{-\operatorname{Cov}}$ equals the spread $2h$.
+- Take $n$ full levels of $\delta$ shares, the first $h$ cents below the midpoint and each later level one cent lower. Then selling them collects $\delta\left(nh + n(n-1)/2\right)$ cents below the midpoint in total.
+- Suppose also $n$ and $\delta$ are both at least 1. Then the average is $h + (n-1)/2$ cents a share.
+- Take a refill rate $\kappa > 0$, with $e^{-\kappa t}$ of the depth still missing after $t$ minutes. Then the missing part is exactly half at $t = \ln 2 / \kappa$, and at no other time.
+- The hand table's effective spreads come out at 1.6, 8 and 16 bp, and its Amihud ratios at 1.0, 4.0 and 10.0.
+- The $1 million sale costs come out at 3, 16.25 and 105 bp, and Beacon's signed-return Amihud reads 0.0.
+- The house order of 100,000 Acme shares gives up 2,550,000 cents below the midpoint.
+
+Roll's estimate on split orders, the simulations, the median refill times and the depth figures are left to the Python and Rust checks.
+
+```lean
+-- Liquidity: in Roll's bid-ask bounce model consecutive price changes have covariance minus the squared half-spread, a book walk of n levels costs h + (n-1)/2 cents a share on average, and a book refilling at rate κ is half refilled after ln 2 / κ minutes.
+import Mathlib.Probability.Moments.Covariance
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Probability.Independence.Integration
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Algebra.BigOperators.Intervals
+
+open MeasureTheory ProbabilityTheory Finset
+
+lemma roll_aux_sign_integrable {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    [IsProbabilityMeasure P] (s : Ω → ℝ) (hs : Measurable s)
+    (hsign : ∀ ω, s ω = 1 ∨ s ω = -1) : Integrable s P := by
+  refine Integrable.of_bound hs.aestronglyMeasurable 1 (Filter.Eventually.of_forall fun ω => ?_)
+  rcases hsign ω with h | h <;> simp [h]
+
+lemma roll_aux_sign_mean {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    [IsProbabilityMeasure P] (s : Ω → ℝ) (hs : Measurable s)
+    (hsign : ∀ ω, s ω = 1 ∨ s ω = -1) (hhalf : P (s ⁻¹' {1}) = 1 / 2) :
+    ∫ ω, s ω ∂P = 0 := by
+  have hS : MeasurableSet (s ⁻¹' {1}) := hs (measurableSet_singleton 1)
+  have hpt : ∀ ω, s ω = (s ⁻¹' {1}).indicator (fun _ => (2 : ℝ)) ω - 1 := by
+    intro ω
+    rcases hsign ω with h | h
+    · rw [Set.indicator_of_mem (by simp [h])]; rw [h]; norm_num
+    · rw [Set.indicator_of_notMem (by simp [h]; norm_num)]; rw [h]; norm_num
+  simp_rw [hpt]
+  rw [integral_sub ((integrable_const (2 : ℝ)).indicator hS) (integrable_const 1),
+    integral_indicator_const _ hS]
+  simp [measureReal_def, hhalf]
+
+lemma roll_aux_pair {Ω ι : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+    (F : ι → Ω → ℝ) (hindep : iIndepFun F P) (hint : ∀ i, Integrable (F i) P)
+    (hmean : ∀ i, ∫ ω, F i ω ∂P = 0) {i j : ι} (hij : i ≠ j) :
+    Integrable (fun ω => F i ω * F j ω) P ∧ ∫ ω, F i ω * F j ω ∂P = 0 := by
+  have hI := hindep.indepFun hij
+  refine ⟨hI.integrable_mul (hint i) (hint j), ?_⟩
+  rw [hI.integral_fun_mul_eq_mul_integral (hint i).1 (hint j).1, hmean i, zero_mul]
+
+#print axioms roll_aux_sign_integrable
+#print axioms roll_aux_sign_mean
+#print axioms roll_aux_pair
+
+/-- Roll's spread estimate. The fair price is a random walk `m (k+1) = m k + u (k+1)` with
+independent steps of average zero; each trade is a buy or a sale (`s k = 1` or `-1`) with equal
+chance, independent of the steps and of the other signs; the trade price is `p k = m k + h * s k`.
+Then each price change has covariance `-h^2` with the one before it, so for a half-spread
+`h ≥ 0` the spread is `2h = 2 √(-Cov)`. -/
+theorem roll_covariance_eq_neg_sq
+    {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
+    (u s m p : ℕ → Ω → ℝ) (h : ℝ)
+    (hindep : iIndepFun (Sum.elim u s) P)
+    (hu_int : ∀ k, Integrable (u k) P) (hu_mean : ∀ k, ∫ ω, u k ω ∂P = 0)
+    (hs_meas : ∀ k, Measurable (s k))
+    (hs_sign : ∀ k ω, s k ω = 1 ∨ s k ω = -1)
+    (hs_half : ∀ k, P (s k ⁻¹' {1}) = 1 / 2)
+    (hm : ∀ k ω, m (k + 1) ω = m k ω + u (k + 1) ω)
+    (hp : ∀ k ω, p k ω = m k ω + h * s k ω) (k : ℕ) :
+    cov[fun ω => p (k + 2) ω - p (k + 1) ω, fun ω => p (k + 1) ω - p k ω; P] = -h ^ 2 ∧
+      (0 ≤ h → 2 * h =
+        2 * Real.sqrt (-cov[fun ω => p (k + 2) ω - p (k + 1) ω, fun ω => p (k + 1) ω - p k ω; P])) := by
+  have hs_int : ∀ k, Integrable (s k) P := fun k =>
+    roll_aux_sign_integrable (s k) (hs_meas k) (hs_sign k)
+  have hs_mean : ∀ k, ∫ ω, s k ω ∂P = 0 := fun k =>
+    roll_aux_sign_mean (s k) (hs_meas k) (hs_sign k) (hs_half k)
+  have hF_int : ∀ i, Integrable (Sum.elim u s i) P := by
+    rintro (i | i)
+    · exact hu_int i
+    · exact hs_int i
+  have hF_mean : ∀ i, ∫ ω, Sum.elim u s i ω ∂P = 0 := by
+    rintro (i | i)
+    · exact hu_mean i
+    · exact hs_mean i
+  have key := fun i j (hij : i ≠ j) => roll_aux_pair (Sum.elim u s) hindep hF_int hF_mean hij
+  obtain ⟨i1, e1⟩ := key (Sum.inl (k + 2)) (Sum.inl (k + 1)) (by simp)
+  obtain ⟨i2, e2⟩ := key (Sum.inl (k + 2)) (Sum.inr (k + 1)) (by simp)
+  obtain ⟨i3, e3⟩ := key (Sum.inl (k + 2)) (Sum.inr k) (by simp)
+  obtain ⟨i4, e4⟩ := key (Sum.inr (k + 2)) (Sum.inl (k + 1)) (by simp)
+  obtain ⟨i5, e5⟩ := key (Sum.inr (k + 2)) (Sum.inr (k + 1)) (by simp)
+  obtain ⟨i6, e6⟩ := key (Sum.inr (k + 2)) (Sum.inr k) (by simp)
+  obtain ⟨i7, e7⟩ := key (Sum.inr (k + 1)) (Sum.inl (k + 1)) (by simp)
+  obtain ⟨i8, e8⟩ := key (Sum.inr (k + 1)) (Sum.inr k) (by simp)
+  simp only [Sum.elim_inl, Sum.elim_inr] at i1 e1 i2 e2 i3 e3 i4 e4 i5 e5 i6 e6 i7 e7 i8 e8
+  have hX : (fun ω => p (k + 2) ω - p (k + 1) ω) =
+      fun ω => u (k + 2) ω + h * s (k + 2) ω - h * s (k + 1) ω := by
+    funext ω; rw [hp, hp, hm]; ring
+  have hY : (fun ω => p (k + 1) ω - p k ω) =
+      fun ω => u (k + 1) ω + h * s (k + 1) ω - h * s k ω := by
+    funext ω; rw [hp, hp, hm]; ring
+  have hXm : ∫ ω, (u (k + 2) ω + h * s (k + 2) ω - h * s (k + 1) ω) ∂P = 0 := by
+    rw [integral_sub (by fun_prop) (by fun_prop), integral_add (by fun_prop) (by fun_prop),
+      integral_const_mul, integral_const_mul, hu_mean, hs_mean, hs_mean]
+    ring
+  have hYm : ∫ ω, (u (k + 1) ω + h * s (k + 1) ω - h * s k ω) ∂P = 0 := by
+    rw [integral_sub (by fun_prop) (by fun_prop), integral_add (by fun_prop) (by fun_prop),
+      integral_const_mul, integral_const_mul, hu_mean, hs_mean, hs_mean]
+    ring
+  have hpt : ∀ ω, (u (k + 2) ω + h * s (k + 2) ω - h * s (k + 1) ω - 0) *
+      (u (k + 1) ω + h * s (k + 1) ω - h * s k ω - 0) =
+      ((((((((u (k + 2) ω * u (k + 1) ω + h * (u (k + 2) ω * s (k + 1) ω))
+        - h * (u (k + 2) ω * s k ω)) + h * (s (k + 2) ω * u (k + 1) ω))
+        + h ^ 2 * (s (k + 2) ω * s (k + 1) ω)) - h ^ 2 * (s (k + 2) ω * s k ω))
+        - h * (s (k + 1) ω * u (k + 1) ω)) + h ^ 2 * (s (k + 1) ω * s k ω)) - h ^ 2) := by
+    intro ω
+    have hsq : s (k + 1) ω * s (k + 1) ω = 1 := by
+      rcases hs_sign (k + 1) ω with e | e <;> rw [e] <;> norm_num
+    linear_combination (-h ^ 2) * hsq
+  have hcov : cov[fun ω => p (k + 2) ω - p (k + 1) ω, fun ω => p (k + 1) ω - p k ω; P]
+      = -h ^ 2 := by
+    rw [hX, hY, covariance, hXm, hYm]
+    simp_rw [hpt]
+    rw [integral_sub (by fun_prop) (by fun_prop), integral_add (by fun_prop) (by fun_prop),
+      integral_sub (by fun_prop) (by fun_prop), integral_sub (by fun_prop) (by fun_prop),
+      integral_add (by fun_prop) (by fun_prop), integral_add (by fun_prop) (by fun_prop),
+      integral_sub (by fun_prop) (by fun_prop), integral_add (by fun_prop) (by fun_prop),
+      integral_const_mul, integral_const_mul, integral_const_mul, integral_const_mul,
+      integral_const_mul, integral_const_mul, integral_const_mul,
+      e1, e2, e3, e4, e5, e6, e7, e8, integral_const]
+    simp
+  refine ⟨hcov, fun hh => ?_⟩
+  rw [hcov, neg_neg, Real.sqrt_sq hh]
+
+/-- Walking the book. Selling `n` full levels of `δ` shares, level `k` sitting `h + k` cents below
+the midpoint, collects `δ (n h + n (n-1)/2)` cents below the midpoint in total; when at least one
+share is sold the average is `h + (n-1)/2` cents a share. -/
+theorem book_walk_average_cost (δ n : ℕ) (h : ℝ) :
+    (∑ k ∈ range n, (δ : ℝ) * (h + k)) = δ * (n * h + n * (n - 1) / 2) ∧
+      (0 < n → 0 < δ → (∑ k ∈ range n, (δ : ℝ) * (h + k)) / (n * δ) = h + (n - 1) / 2) := by
+  have hsum : ∀ n : ℕ, (∑ k ∈ range n, (δ : ℝ) * (h + k)) = δ * (n * h + n * (n - 1) / 2) := by
+    intro n
+    induction n with
+    | zero => simp
+    | succ n ih => rw [sum_range_succ, ih]; push_cast; ring
+  refine ⟨hsum n, fun hn hδ => ?_⟩
+  rw [hsum n]
+  have hn' : (n : ℝ) ≠ 0 := by positivity
+  have hδ' : (δ : ℝ) ≠ 0 := by positivity
+  field_simp
+
+/-- The half-life of the book. When the missing depth shrinks to `e^{-κ t}` of what was taken
+after `t` minutes, with refill rate `κ > 0`, it is halved exactly at `t = ln 2 / κ`. -/
+theorem half_life_eq_log_two_div (κ : ℝ) (hκ : 0 < κ) (t : ℝ) :
+    Real.exp (-κ * t) = 1 / 2 ↔ t = Real.log 2 / κ := by
+  have hκ' : κ ≠ 0 := hκ.ne'
+  constructor
+  · intro he
+    have := congrArg Real.log he
+    rw [Real.log_exp, one_div, Real.log_inv] at this
+    field_simp
+    linarith
+  · intro ht
+    rw [ht, show -κ * (Real.log 2 / κ) = -Real.log 2 by field_simp, Real.exp_neg,
+      Real.exp_log (by norm_num), one_div]
+
+-- Effective spread on each three-trade tape (prices in cents: a 500-share buy at the ask,
+-- a 300-share sale at the bid, a 200-share buy at the midpoint), share-weighted, in bp.
+-- Acme: 1.6 bp.
+example : ((500 : ℚ) * (2 * 1 * (10001 - 10000) / 10000 * 10000)
+    + 300 * (2 * (-1) * (9999 - 10000) / 10000 * 10000)
+    + 200 * (2 * 1 * (10000 - 10000) / 10000 * 10000)) / 1000 = 8 / 5 := by norm_num
+-- Beacon: 8 bp.
+example : ((500 : ℚ) * (2 * 1 * (4002 - 4000) / 4000 * 10000)
+    + 300 * (2 * (-1) * (3998 - 4000) / 4000 * 10000)
+    + 200 * (2 * 1 * (4000 - 4000) / 4000 * 10000)) / 1000 = 8 := by norm_num
+-- Cobble: 16 bp.
+example : ((500 : ℚ) * (2 * 1 * (1001 - 1000) / 1000 * 10000)
+    + 300 * (2 * (-1) * (999 - 1000) / 1000 * 10000)
+    + 200 * (2 * 1 * (1000 - 1000) / 1000 * 10000)) / 1000 = 16 := by norm_num
+
+-- Amihud's ratio, bp per $1 million: Acme 1.0, Beacon 4.0, Cobble 10.0.
+example : (|(80 : ℚ)| / 100 + |(-150 : ℚ)| / 120 + |(60 : ℚ)| / 100 + |(-100 : ℚ)| / 100
+    + |(135 : ℚ)| / 100) / 5 = 1 := by norm_num
+example : (|(100 : ℚ)| / 25 + |(-160 : ℚ)| / 20 + |(60 : ℚ)| / 20 + |(-50 : ℚ)| / 25
+    + |(45 : ℚ)| / 15) / 5 = 4 := by norm_num
+example : (|(120 : ℚ)| / 10 + |(-200 : ℚ)| / 16 + |(70 : ℚ)| / 10 + |(-90 : ℚ)| / 12
+    + |(110 : ℚ)| / 10) / 5 = 10 := by norm_num
+-- The mistake: signed returns make Beacon read 0.
+example : ((100 : ℚ) / 25 + (-160) / 20 + 60 / 20 + (-50) / 25 + 45 / 15) / 5 = 0 := by norm_num
+
+-- A $1 million sale walked through the book, average cost in bp of the midpoint.
+-- Acme: 10,000 shares = 5 levels of 2,000, best bid 1 cent below a 10,000-cent midpoint: 3 bp.
+example : (∑ k ∈ range 5, (2000 : ℚ) * (1 + k)) / 10000 / 10000 * 10000 = 3 := by
+  norm_num [Finset.sum_range_succ]
+-- Beacon: 25,000 shares = 10 levels of 2,500, best bid 2 cents below 4,000: 16.25 bp.
+example : (∑ k ∈ range 10, (2500 : ℚ) * (2 + k)) / 25000 / 4000 * 10000 = 65 / 4 := by
+  norm_num [Finset.sum_range_succ]
+-- Cobble: 100,000 shares = 20 levels of 5,000, best bid 1 cent below 1,000: 105 bp.
+example : (∑ k ∈ range 20, (5000 : ℚ) * (1 + k)) / 100000 / 1000 * 10000 = 105 := by
+  norm_num [Finset.sum_range_succ]
+-- The house order: 100,000 Acme shares walk 50 levels and give up 2,550,000 cents = $25,500.
+example : (∑ k ∈ range 50, 2000 * (1 + k)) = 2550000 := by decide
+
+#print axioms roll_covariance_eq_neg_sq
+#print axioms book_walk_average_cost
+#print axioms half_life_eq_log_two_div
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'roll_aux_sign_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'roll_aux_sign_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+'roll_aux_pair' depends on axioms: [propext, Classical.choice, Quot.sound]
+'roll_covariance_eq_neg_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'book_walk_average_cost' depends on axioms: [propext, Classical.choice, Quot.sound]
+'half_life_eq_log_two_div' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
@@ -723,6 +972,8 @@ The two outputs agree line for line. The simulated rows agree too, because both 
 - [Kyle's model](03-kyle-model-and-price-impact.md): the model counterpart of Amihud's ratio. Kyle's lambda is the price move per unit of order flow, derived from informed trading rather than measured.
 - [Almgren-Chriss](04-optimal-execution-almgren-chriss.md): how to slice the 100,000-share Acme sale when each slice pays depth and the book refills in between.
 - [Market making](05-market-making-avellaneda-stoikov.md): the other side of the spread, where the quotes come from.
+
+This card measures how liquid a stock is; what it leaves open is how a seller should use those measures to plan a large order before sending it.
 
 ---
 

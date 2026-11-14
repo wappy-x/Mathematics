@@ -34,7 +34,17 @@ Orange, low and flat: the simple rule, 8% of 1.4 times the call's value. It cree
 
 ## The formula
 
-Notation first, in words. $T$ is the expiry, 1 year, and $t$ a date before it. $h$ is the hurdle rate. $D(t) = e^{-rt}$ is the discount factor at the riskless rate $r$. $\lambda$ ("lambda") is Northwind's hazard, its yearly default rate, and $Q(t) = e^{-\lambda t}$ the chance it is still alive at $t$. $C_0$ is today's call price. $V(t)$ is the call's value to the bank at date $t$ if nobody could fail. $\mathrm{EE}(t)$ is its average over the pricing world, the **expected exposure** ([Expected exposure over time](../46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md)). $\mathrm{EAD}(t)$, **exposure at default**, is the amount the regulator says the bank is owed for capital purposes. $K(t)$ is the capital held at date $t$: a random amount, since it depends on where Acme is by then. $\mathbb{E}[K(t)]$ is its average.
+Notation first, in words.
+
+- $T$ is the expiry, 1 year, and $t$ a date before it.
+- $h$ is the hurdle rate.
+- $D(t) = e^{-rt}$ is the discount factor at the riskless rate $r$.
+- $\lambda$ ("lambda") is Northwind's hazard, its yearly default rate, and $Q(t) = e^{-\lambda t}$ the chance it is still alive at $t$.
+- $C_0$ is today's call price.
+- $V(t)$ is the call's value to the bank at date $t$ if nobody could fail.
+- $\mathrm{EE}(t)$ is its average over the pricing world, the **expected exposure** ([Expected exposure over time](../46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md)).
+- $\mathrm{EAD}(t)$, **exposure at default**, is the amount the regulator says the bank is owed for capital purposes.
+- $K(t)$ is the capital held at date $t$: a random amount, since it depends on where Acme is by then. $\mathbb{E}[K(t)]$ is its average.
 
 $$\mathrm{KVA} = h\int_0^T D(t)\,\mathbb{E}[K(t)]\,Q(t)\,dt$$
 
@@ -71,7 +81,7 @@ $$\mathrm{KVA} = h\,c\,C_0\,\frac{1 - e^{-\lambda T}}{\lambda}$$
 
 - **Capital is proportional to exposure.** The simple rule and the IRB rule are both a fixed number times $\mathrm{EAD}$. Under SA-CCR the add-on bends with Acme's price, the integral no longer collapses, and only the bucketed sum and the simulation remain (Step 5).
 - **The trade stands alone.** Real capital is set on the bank's whole book with Northwind (the **netting set**, all trades that offset at default) and against the bank's total capital. A trade that offsets another needs less capital, sometimes negative. Pricing it alone overstates KVA for a hedge and understates it for a concentration.
-- **Today's rules hold for the life of the trade.** The integral projects capital under the current rulebook. Basel has rewritten its counterparty rules several times since 2010; a ten-year swap's KVA depends on rules nobody has written yet.
+- **Today's rules hold for the life of the trade.** The integral projects capital under the current rulebook. Basel (the Basel Committee, which writes the international capital rules for banks) has rewritten its counterparty rules several times since 2010; a ten-year swap's KVA depends on rules nobody has written yet.
 - **Default is independent of Acme.** As for CVA, the survival chance multiplies the expected capital only if Northwind's failure says nothing about Acme's price ([Wrong-way risk](../46-Counterparty%20Risk%20and%20CVA/05-wrong-way-risk.md)).
 - **The hurdle is a given number.** It is set by the board, not traded in a market. No hedge locks it in, so KVA cannot be replicated the way CVA can.
 
@@ -128,7 +138,14 @@ $$\mathrm{LGD}\times\Bigl[N\Bigl(\tfrac{N^{-1}(\mathrm{PD}) + \sqrt{\rho}\,N^{-1
 
 where $N$ is the bell-curve area to the left and $N^{-1}$ runs it backwards. Basel multiplies this by a maturity adjustment that equals exactly 1 for a one-year effective maturity, so it drops out here. Northwind's one-year default chance is 1.98% at a 2% hazard; take the rounded 2% a rating would carry, and 60% lost at default. Basel's correlation for that PD is 16.41%, the bad-year default rate 19.03%, and capital per dollar of EAD $0.60 \times (0.190259 - 0.02) = 0.102155$, against 0.08 under the simple rule. That is a risk weight of 127.69%. KVA rises in proportion, to **0.130652**.
 
-**SA-CCR.** Basel's standard way, published in 2014, to measure EAD for derivatives is the **standardised approach for counterparty credit risk**, SA-CCR. It keeps $\alpha = 1.4$ but applies it to two pieces: the **replacement cost**, today's value $V(t)$, plus a **potential future exposure add-on** $A(t)$ for how much the value could still grow. For one bought equity call without margin, the add-on is 32% (the regulator's factor for a single stock) times a supervisory delta (the call's sensitivity to Acme, recomputed with a fixed 120% volatility over the time to expiry) times Acme's price times the square root of the remaining maturity, capped at one year and floored at ten business days. Today that is \$23.22, so the EAD is $1.4 \times (9.227006 + 23.223900) = \$45.43$, three and a half times the simple rule's \$12.92.
+**SA-CCR.** Basel's standard way, published in 2014, to measure EAD for derivatives is the **standardised approach for counterparty credit risk**, SA-CCR. It keeps $\alpha = 1.4$ but applies it to two pieces: the **replacement cost**, today's value $V(t)$, plus a **potential future exposure add-on** $A(t)$ for how much the value could still grow. For one bought equity call without margin, the add-on multiplies four things:
+
+- 32%, the regulator's factor for a single stock;
+- a supervisory delta: the call's sensitivity to Acme, recomputed with a fixed 120% volatility over the time to expiry;
+- Acme's price;
+- the square root of the remaining maturity, capped at one year and floored at ten business days.
+
+Today that is \$23.22, so the EAD is $1.4 \times (9.227006 + 23.223900) = \$45.43$, three and a half times the simple rule's \$12.92.
 
 The add-on bends with Acme's price, through the delta, and fades with the square root of the time left. So $D(t)\,\mathbb{E}[K(t)]$ is no longer flat, the closed form fails, and the integral has to be done. Two roads do it. The first cuts the year into 52 weeks and, at each week's middle, averages the capital over every price Acme could have, by Simpson's rule (a weighted sum over thin slices of the bell curve). The second draws 100,000 random dates, each with a random Acme price, and averages the discounted capital. They give 0.263164 and 0.262747, within one standard error (0.000471) of each other.
 
@@ -136,7 +153,7 @@ Conventions verified 2026-09-28 against the Basel Framework (RBC20, CRE20, CRE31
 
 ### Step 6: why KVA moves more than any other adjustment
 
-CVA rests on a market price: Northwind's credit spread, which a CDS can hedge. KVA rests on three choices nobody can hedge: which capital rule, which hurdle, and how to charge it. Each is defensible, and each moves the number:
+CVA rests on a market price: Northwind's credit spread, which a credit default swap (a contract that pays out if Northwind fails) can hedge. KVA rests on three choices nobody can hedge: which capital rule, which hurdle, and how to charge it. Each is defensible, and each moves the number:
 
 ```
 KVA on the Acme call under different choices, $ per call
@@ -189,7 +206,15 @@ Every number in that table is printed by the checks.
 
 ## Code, from first principles, and it actually runs
 
-The script prices the call, then reaches KVA by three independent roads: the closed form of Step 3; 52 weekly buckets, each averaging the capital over Acme's bell curve by Simpson's rule; and 100,000 simulated dates and prices. It computes the IRB capital with its own bell-curve area and its own inverse (a bisection root finder), and SA-CCR capital by the two integral roads. It prints every number on the card, the chart points included. Five asserts: the weekly sum against the closed form, the simulation against the closed form within four standard errors, the two SA-CCR roads against each other, the averaged payoff at expiry against $C_0$ grown at $r$, and the IRB capital against the Vasicek card's \$10.22 per \$100. Breaking the survival weight, the discounting or the price drift trips the first; breaking the Basel correlation trips the last.
+The script prices the call, then reaches KVA by three independent roads: the closed form of Step 3; 52 weekly buckets, each averaging the capital over Acme's bell curve by Simpson's rule; and 100,000 simulated dates and prices. It computes the IRB capital with its own bell-curve area and its own inverse (a bisection root finder), and SA-CCR capital by the two integral roads. It prints every number on the card, the chart points included. Five asserts compare:
+
+1. the weekly sum against the closed form;
+2. the simulation against the closed form, within four standard errors;
+3. the two SA-CCR roads against each other;
+4. the averaged payoff at expiry against $C_0$ grown at $r$;
+5. the IRB capital against the Vasicek card's \$10.22 per \$100.
+
+Breaking the survival weight, the discounting or the price drift trips the first; breaking the Basel correlation trips the last.
 
 ### Python
 
@@ -599,6 +624,177 @@ chart, expected capital by month (t dollars)
 ALL CHECKS PASS
 ```
 
+### Lean
+
+Lean proves the KVA formula, its closed form for a bought option, and its link to CVA, for any rates, hazard and expiry.
+
+- Suppose capital is never negative, and Northwind's default date $\tau$ is independent of the capital $K(t)$ at each date. Then the average capital cost up to $\min(\tau, T)$ equals the KVA formula, with $Q(t)$ the chance of surviving past $t$.
+- Take a payoff $X$ that is never negative, capital $c\,V(t)$, and a hazard $\lambda > 0$. Then $\mathrm{KVA} = h\,c\,C_0\,(1 - e^{-\lambda T})/\lambda$, for any hurdle and any riskless rate.
+- Suppose $R < 1$ and $\lambda > 0$. Then KVA equals CVA times the ratio of running rates, $h\,c / ((1-R)\,\lambda)$.
+- Capital per dollar of value is exactly $0.08 \times 1 \times 1.4 = 0.112$.
+- The running rates are exactly 1.2% for CVA and 1.12% for KVA, and their ratio is $14/15$, which is 0.933333.
+- Charging the hurdle on the whole EAD gives exactly 12.5 times the KVA.
+
+The Black–Scholes price, the IRB and SA-CCR rules, and all simulated numbers are left to the Python and Rust checks.
+
+```lean
+-- KVA: under the simple capital rule, the KVA integral of a bought option collapses to hurdle times capital rate times today's price times the survival-weighted life, and the integral itself comes from averaging the capital cost stream over default and the market.
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
+import Mathlib.Probability.Process.Filtration
+import Mathlib.Probability.Independence.Integration
+
+open MeasureTheory ProbabilityTheory Real
+open scoped ENNReal
+
+/-- KVA closed form for a bought option (Steps 2 and 3). The option pays `X ≥ 0` at expiry `T`;
+its clean value at date `t` is `V(t) = e^{-r(T-t)} 𝔼[X | ℱ t]` and today's price is
+`C₀ = e^{-rT} 𝔼[X]`. Under the simple rule capital is a fixed multiple `c` of the exposure
+`max(V(t), 0)`. With hurdle `h`, discount `e^{-rt}` and survival `e^{-λt}` at a hazard `λ > 0`,
+the KVA integral `h ∫₀ᵀ D(t) 𝔼[K(t)] Q(t) dt` equals `h · c · C₀ · (1 - e^{-λT}) / λ`. -/
+theorem kva_closed_form_bought_option {Ω : Type*} {m0 : MeasurableSpace Ω}
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (ℱ : Filtration ℝ m0)
+    (X : Ω → ℝ) (hX : ∀ ω, 0 ≤ X ω) (h c r lam T : ℝ) (hlam : 0 < lam) :
+    h * ∫ t in (0)..T,
+        exp (-r * t) * (∫ ω, c * max (exp (-r * (T - t)) * μ[X | ℱ t] ω) 0 ∂μ) * exp (-lam * t)
+      = h * c * (exp (-r * T) * ∫ ω, X ω ∂μ) * ((1 - exp (-lam * T)) / lam) := by
+  set E := ∫ ω, X ω ∂μ with hEdef
+  have hE : ∀ t, ∫ ω, c * max (exp (-r * (T - t)) * μ[X | ℱ t] ω) 0 ∂μ
+      = c * (exp (-r * (T - t)) * E) := by
+    intro t
+    have hnn := condExp_nonneg (m := ℱ t) (μ := μ) (f := X) (ae_of_all _ hX)
+    rw [integral_congr_ae (g := fun ω => c * (exp (-r * (T - t)) * μ[X | ℱ t] ω))]
+    · rw [integral_const_mul, integral_const_mul, integral_condExp (ℱ.le t)]
+    · filter_upwards [hnn] with ω hω
+      rw [max_eq_left (mul_nonneg (exp_pos _).le hω)]
+  have hpt : ∀ t, exp (-r * t) * (c * (exp (-r * (T - t)) * E)) * exp (-lam * t)
+      = (c * exp (-r * T) * E) * exp (-lam * t) := by
+    intro t
+    have : exp (-r * T) = exp (-r * t) * exp (-r * (T - t)) := by
+      rw [← exp_add]; ring_nf
+    rw [this]; ring
+  have hI : ∫ t in (0)..T, exp (-lam * t) = (1 - exp (-lam * T)) / lam := by
+    rw [intervalIntegral.integral_comp_mul_left (fun x => exp x) (neg_ne_zero.2 hlam.ne')]
+    simp only [integral_exp, mul_zero, exp_zero, smul_eq_mul]
+    field_simp
+    ring
+  simp_rw [hE, hpt]
+  rw [intervalIntegral.integral_const_mul, hI]
+  ring
+
+/-- The KVA formula (Step 1). KVA is the average, over when the counterparty defaults (at `τ`)
+and over where the market goes, of the capital cost stream `D(t) · h · K(t)` run from today
+until the trade ends at `min(τ, T)`. When default is independent of the capital held, this
+equals the hurdle rate times the integral over the trade's life of the discount factor, the
+expected capital and the chance `Q(t) = P(t < τ)` that the counterparty is still alive. -/
+theorem kva_eq_hurdle_times_integral_of_expected_capital {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (τ : Ω → ℝ) (K : ℝ → Ω → ℝ≥0∞)
+    (hτ : Measurable τ) (hK : Measurable (Function.uncurry K))
+    (hind : ∀ t, IndepFun τ (K t) μ) (h r T : ℝ) :
+    ∫⁻ ω, (∫⁻ t in Set.Ioc 0 (min (τ ω) T), ENNReal.ofReal (exp (-r * t) * h) * K t ω) ∂μ
+      = ENNReal.ofReal h * ∫⁻ t in Set.Ioc 0 T,
+          ENNReal.ofReal (exp (-r * t)) * (∫⁻ ω, K t ω ∂μ) * μ {ω | t < τ ω} := by
+  set G : Ω → ℝ → ℝ≥0∞ := fun ω t =>
+    ENNReal.ofReal (exp (-r * t) * h) * ((if t < τ ω then 1 else 0) * K t ω) with hG
+  -- Step A: for each ω, rewrite the stopped integral as an integral over (0, T].
+  have hA : ∀ ω, ∫⁻ t in Set.Ioc 0 (min (τ ω) T), ENNReal.ofReal (exp (-r * t) * h) * K t ω
+      = ∫⁻ t in Set.Ioc 0 T, G ω t := by
+    intro ω
+    have hset : (Set.Ioc 0 (min (τ ω) T) : Set ℝ) =ᵐ[volume] Set.Iio (τ ω) ∩ Set.Ioc 0 T := by
+      rw [ae_eq_set]
+      constructor
+      · apply measure_mono_null _ (measure_singleton (τ ω))
+        intro t ht
+        obtain ⟨⟨h0, h1⟩, h3⟩ := ht
+        rw [Set.mem_singleton_iff]
+        by_contra hne
+        exact h3 ⟨lt_of_le_of_ne (h1.trans (min_le_left _ _)) hne, h0,
+          h1.trans (min_le_right _ _)⟩
+      · have hsub : Set.Iio (τ ω) ∩ Set.Ioc 0 T ⊆ Set.Ioc 0 (min (τ ω) T) := by
+          rintro t ⟨h1, h2, h3⟩
+          exact ⟨h2, le_min (le_of_lt h1) h3⟩
+        rw [Set.sdiff_eq_empty.2 hsub, measure_empty]
+    rw [Measure.restrict_congr_set hset, ← Measure.restrict_restrict measurableSet_Iio,
+      ← lintegral_indicator measurableSet_Iio]
+    apply lintegral_congr
+    intro t
+    by_cases ht : t < τ ω
+    · simp [Set.indicator, ht, hG]
+    · simp [Set.indicator, ht, hG]
+  have hmeas : AEMeasurable (Function.uncurry G) (μ.prod (volume.restrict (Set.Ioc 0 T))) := by
+    apply Measurable.aemeasurable
+    have hK' : Measurable (fun p : Ω × ℝ => K p.2 p.1) := hK.comp measurable_swap
+    have hs : MeasurableSet {p : Ω × ℝ | p.2 < τ p.1} :=
+      measurableSet_lt measurable_snd (hτ.comp measurable_fst)
+    have : Function.uncurry G = fun p : Ω × ℝ =>
+        ENNReal.ofReal (exp (-r * p.2) * h) * ((if p.2 < τ p.1 then 1 else 0) * K p.2 p.1) := rfl
+    rw [this]
+    refine Measurable.mul ?_ (Measurable.mul ?_ hK')
+    · exact ENNReal.measurable_ofReal.comp
+        (((measurable_const.mul measurable_snd).exp).mul measurable_const)
+    · exact Measurable.ite hs measurable_const measurable_const
+  have hB : ∀ t, ∫⁻ ω, G ω t ∂μ
+      = ENNReal.ofReal h * (ENNReal.ofReal (exp (-r * t)) * (∫⁻ ω, K t ω ∂μ) * μ {ω | t < τ ω}) := by
+    intro t
+    have hφ : Measurable (fun x : ℝ => if t < x then (1 : ℝ≥0∞) else 0) :=
+      Measurable.ite measurableSet_Ioi measurable_const measurable_const
+    have hind' := (hind t).comp hφ measurable_id
+    have hKt : Measurable (K t) := hK.comp (measurable_const.prodMk measurable_id)
+    have hmul := lintegral_mul_eq_lintegral_mul_lintegral_of_indepFun
+      (hφ.comp hτ) (measurable_id.comp hKt) hind'
+    have hone : ∫⁻ ω, ((fun x : ℝ => if t < x then (1 : ℝ≥0∞) else 0) ∘ τ) ω ∂μ
+        = μ {ω | t < τ ω} := by
+      have : ((fun x : ℝ => if t < x then (1 : ℝ≥0∞) else 0) ∘ τ)
+          = {ω | t < τ ω}.indicator 1 := by
+        ext ω; simp [Set.indicator]
+      rw [this, lintegral_indicator_one (measurableSet_lt measurable_const hτ)]
+    show ∫⁻ ω, ENNReal.ofReal (exp (-r * t) * h) * ((if t < τ ω then 1 else 0) * K t ω) ∂μ = _
+    rw [lintegral_const_mul' _ _ ENNReal.ofReal_ne_top]
+    have : (fun ω => (if t < τ ω then (1 : ℝ≥0∞) else 0) * K t ω)
+        = ((fun x : ℝ => if t < x then (1 : ℝ≥0∞) else 0) ∘ τ) * (id ∘ K t) := rfl
+    rw [this, hmul, hone, ENNReal.ofReal_mul (exp_pos _).le]
+    have hid : ∫⁻ ω, (id ∘ K t) ω ∂μ = ∫⁻ ω, K t ω ∂μ := rfl
+    rw [hid]
+    ring
+  calc _ = ∫⁻ ω, (∫⁻ t in Set.Ioc 0 T, G ω t) ∂μ := lintegral_congr hA
+    _ = ∫⁻ t in Set.Ioc 0 T, (∫⁻ ω, G ω t ∂μ) := lintegral_lintegral_swap hmeas
+    _ = _ := by
+      simp_rw [hB]
+      rw [lintegral_const_mul' _ _ ENNReal.ofReal_ne_top]
+
+/-- KVA is a CVA with a different running rate (Step 4). With recovery `R < 1` and hazard
+`λ > 0`, the KVA closed form equals the CVA closed form `(1 - R) C₀ (1 - e^{-λT})` scaled by
+the ratio of running rates `h c / ((1 - R) λ)`. -/
+theorem kva_eq_running_rate_ratio_times_cva (h c C₀ R lam T : ℝ) (hR : R < 1) (hlam : 0 < lam) :
+    h * c * C₀ * ((1 - exp (-lam * T)) / lam)
+      = (h * c) / ((1 - R) * lam) * ((1 - R) * C₀ * (1 - exp (-lam * T))) := by
+  have h1 : (1 - R) ≠ 0 := by linarith
+  have h2 : lam ≠ 0 := hlam.ne'
+  field_simp
+
+-- Capital per dollar of trade value: c = 8% × RW 100% × α 1.4 = 0.112.
+example : (8 / 100 : ℚ) * 1 * (14 / 10) = 112 / 1000 := by norm_num
+-- Running rates: CVA charges (1 - R) λ = 0.6 × 2% = 1.2%; KVA charges h c = 10% × 0.112 = 1.12%.
+example : (1 - 4 / 10 : ℚ) * (2 / 100) = 12 / 1000 := by norm_num
+example : (1 / 10 : ℚ) * (112 / 1000) = 112 / 10000 := by norm_num
+-- KVA / CVA = 0.0112 / 0.012 = 0.933333... = 14/15.
+example : ((1 / 10 : ℚ) * (112 / 1000)) / ((1 - 4 / 10) * (2 / 100)) = 14 / 15 := by norm_num
+-- Charging the hurdle on the whole EAD instead of the capital multiplies KVA by α / c = 12.5.
+example : (14 / 10 : ℚ) / (112 / 1000) = 25 / 2 := by norm_num
+
+#print axioms kva_closed_form_bought_option
+#print axioms kva_eq_hurdle_times_integral_of_expected_capital
+#print axioms kva_eq_running_rate_ratio_times_cva
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'kva_closed_form_bought_option' depends on axioms: [propext, Classical.choice, Quot.sound]
+'kva_eq_hurdle_times_integral_of_expected_capital' depends on axioms: [propext, Classical.choice, Quot.sound]
+'kva_eq_running_rate_ratio_times_cva' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > - **Hurdle to 15%.** Guess first. KVA is proportional to the hurdle: 0.153474.
@@ -621,7 +817,7 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Trade pricing at dealer banks.** Many large dealers quote a client price that includes KVA alongside CVA, FVA and MVA ([FVA](02-fva.md), [MVA](03-mva.md)). Long-dated uncollateralised swaps with companies carry the largest charges.
+- **Trade pricing at dealer banks.** Many large dealers quote a client price that includes KVA alongside CVA, the funding valuation adjustment (FVA, the cost of borrowing to fund the trade: [FVA](02-fva.md)) and the margin valuation adjustment (MVA, the cost of funding the initial margin posted against it: [MVA](03-mva.md)). Long-dated uncollateralised swaps with companies carry the largest charges.
 - **Clearing and collateral choices.** A trade cleared through a central counterparty draws a far lower risk weight. Part of the case for clearing, and for signing a margin agreement, is the KVA it saves.
 - **Return on capital targets.** When a bank's board raises its return target, KVA rises across the book at once, with no change in any market.
 - **Regulatory change.** The switch from the older current exposure method to SA-CCR moved capital on option trades, and with it KVA, before a single price changed.

@@ -80,7 +80,7 @@ A definition has no assumptions to fail, but each benchmark answers its question
 
 - **The order finished.** The formula counts only shares that traded. If 15,000 shares go unsold, dividing by the 85,000 that did sell hides a cost; a missed-shares term is needed (Step 5).
 - **Clean timestamps.** The decision time and the arrival time must be recorded when they happen. Move the recorded arrival and cost slides between timing and impact, one for one.
-- **A declared tape for VWAP.** "The market's trades" needs a venue list, hours, and a rule for the order's own fills. This fund is 10% of the day's volume; counting its own fills pulls VWAP 0.5 bp toward itself.
+- **A declared tape for VWAP.** The tape is the record of "the market's trades". It needs a venue list, hours, and a rule for the order's own fills. This fund is 10% of the day's volume; counting its own fills pulls VWAP 0.5 bp toward itself.
 - **Nothing else moved the price.** No dividend, split or currency change in the window. If one occurs, adjust every price to one basis first, or the gap is not a trading cost.
 
 ---
@@ -122,9 +122,13 @@ The 5 bp itself has two parts. Price each of the fund's fills at the hour's mark
 <details>
 <summary>Detailed proof: the ledger for any order, either side, with fees</summary>
 
-Let the paper trade happen at reference price $B$ with no fees, and let F be the commission paid, in dollars. For a purchase, paper cash out is $Q\,B$; real cash out is $\sum_i q_i\,p_i + F$. Real minus paper is $Q(\bar p - B) + F$. For a sale, paper cash in is $Q\,B$; real cash in is $\sum_i q_i\,p_i - F$. Paper minus real is $-Q(\bar p - B) + F$. Both cases are $s\,Q(\bar p - B) + F$ with $s = +1$ or $-1$.
+Let the paper trade happen at reference price $B$ with no fees, and let F be the commission paid, in dollars.
 
-Divide by the decision notional $Q\,p_D$, which is positive, and multiply by 10,000. The fee adds $10{,}000\,F/(Q\,p_D)$ to every benchmark alike: a $2,000 commission on this order adds 2 bp, and the shortfall becomes 14.
+For a purchase, paper cash out is $Q\,B$; real cash out is $\sum_i q_i\,p_i + F$. Real minus paper is $Q(\bar p - B) + F$.
+
+For a sale, paper cash in is $Q\,B$; real cash in is $\sum_i q_i\,p_i - F$. Paper minus real is $-Q(\bar p - B) + F$. Both cases are $s\,Q(\bar p - B) + F$ with $s = +1$ or $-1$.
+
+Divide by the decision notional $Q\,p_D$ (the order's value at the decision price), which is positive, and multiply by 10,000. The fee adds $10{,}000\,F/(Q\,p_D)$ to every benchmark alike: a $2,000 commission on this order adds 2 bp, and the shortfall becomes 14.
 
 For any two references $B_1$ and $B_2$, the fills and the fee cancel in the difference: $c(B_1) - c(B_2) = 10{,}000\,s\,(B_2 - B_1)/p_D$. Put $B_1 = p_D$, $B_2 = p_A$ for the timing leg; put $B_1 = p_A$, $B_2 = p_V$ for the drift. Nothing requires the prices to fall in any order: every leg may be negative.
 
@@ -134,7 +138,9 @@ For any two references $B_1$ and $B_2$, the fills and the fee cancel in the diff
 
 The 8 bp is a measurement, not a cause. Acme would have wandered on Tuesday with or without the fund. How big is that wander? A 20% yearly volatility, spread over 252 trading days, is $100 × 0.20 / √252 = $1.26 of random movement in one day. The fund's fills are spread across the day, so their average carries part of that wander.
 
-Over one day, a random walk in dollars ([Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md)) is close enough to the geometric one, and it says exactly how much. The price moves at times $t_j$ and $t_k$ share all their wander up to the earlier time, so their covariance is $\sigma^2 \min(t_j, t_k)$. The average fill weights the moves by $w_k$, the share of the order sold at time $t_k$. Its spread, in basis points, is
+Over one day, a random walk in dollars ([Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md)) is close enough to the geometric one (where each move is a percentage of the price), and it says exactly how much.
+
+The prices at times $t_j$ and $t_k$ (here $j$ and $k$ both count fills) share all their wander up to the earlier time. So their covariance, the amount by which the two move together, is $\sigma^2 \min(t_j, t_k)$. The average fill weights the moves by $w_k$, the share of the order sold at time $t_k$. Its spread (its standard deviation: the typical distance from the centre), in basis points, is
 
 $$\text{spread of one order's cost} = \frac{10{,}000}{p_D}\;\sigma\,\sqrt{\sum_j \sum_k w_j\,w_k\,\min(t_j, t_k)} = 75.36 \text{ bp}.$$
 
@@ -152,13 +158,19 @@ arrival cost of 20,000 simulated orders, true cost 8 bp; one █ = about 130 ord
     150 bp and up   █████                                       620
 ```
 
-The simulated spread is 74.58 bp against 75.36 exact; the simulated mean is 8.51 bp against the 8 built in, with a standard error of 0.53. And 45.55% of the simulated orders report a *negative* cost: they look as if the desk made money. Telling 8 bp from zero at two standard errors takes (2 × 75.36 / 8)^2 ≈ 355 orders like this one. That is why transaction cost analysis is done on hundreds of orders, and why one order's 12 bp is evidence of almost nothing.
+The simulated spread is 74.58 bp against 75.36 exact; the simulated mean is 8.51 bp against the 8 built in, with a standard error of 0.53. The standard error is the spread of an average: the spread divided by the square root of the number of orders, here 74.58 / √20,000.
+
+And 45.55% of the simulated orders report a *negative* cost: they look as if the desk made money.
+
+Telling 8 bp from zero at two standard errors takes (2 × 75.36 / 8)^2 ≈ 355 orders like this one. That is why transaction cost analysis is done on hundreds of orders, and why one order's 12 bp is evidence of almost nothing.
 
 ### Step 5: an order that does not finish
 
-Suppose the desk stops after 14:30 and 15,000 shares go unsold; Acme closes at $99.80. Counting only the 85,000 sold shares gives 11.65 bp on their own value. But the paper portfolio sold all 100,000. The unsold shares are still held, and they are now worth $99.80, not $100.00: $3,000 lost in all. Perold called this the **opportunity cost**. Added in, over the full $10,000,000 decision value, the shortfall is 12.90 bp. Leaving out the missed shares makes the order that stopped early look cheaper than the one that finished.
+Suppose the desk stops after 14:30 and 15,000 shares go unsold; Acme closes at $99.80. Counting only the 85,000 sold shares gives 11.65 bp on their own value. But the paper portfolio sold all 100,000.
 
-A different route to the same identities is the market-maker's view: every trade crosses some spread, and the cost is the spread paid plus the price move during the trade. That route measures cost from quotes rather than benchmarks, and belongs to [Liquidity](07-liquidity-measures.md).
+The unsold shares are still held, and they are now worth $99.80, not $100.00: $3,000 lost in all. Perold called this the **opportunity cost**. Added in, over the full $10,000,000 decision value, the shortfall is 12.90 bp. Leaving out the missed shares makes the order that stopped early look cheaper than the one that finished.
+
+A different route to the same identities is the market-maker's view: every trade crosses some bid-ask spread (the gap between the best price to buy and the best price to sell), and the cost is the spread paid plus the price move during the trade. That route measures cost from quotes rather than benchmarks, and belongs to [Liquidity](07-liquidity-measures.md).
 
 ---
 
@@ -205,7 +217,15 @@ Every number in this table is printed by both checks below.
 
 ## Code, from first principles, and it actually runs
 
-The code builds the order from its fills and reaches the shortfall by **five independent roads**: the benchmark formula on the average price; a fill-by-fill cash ledger in whole cents; the timing and impact legs, each from its own prices; VWAP by a direct sum and by a running update; and the noise in one order's cost, computed exactly and then by simulating 20,000 Tuesdays with a hand-written random-number generator (splitmix64) and bell-curve sampler (Box–Muller). It also prints every number from the what-breaks table and the charts.
+The code builds the order from its fills and reaches the shortfall by **five independent roads**:
+
+1. the benchmark formula on the average price;
+2. a fill-by-fill cash ledger in whole cents;
+3. the timing and impact legs, each from its own prices;
+4. VWAP by a direct sum and by a running update;
+5. the noise in one order's cost, computed exactly and then by simulating 20,000 Tuesdays with a hand-written random-number generator (splitmix64) and bell-curve sampler (Box–Muller).
+
+It also prints every number from the what-breaks table and the charts.
 
 ### Python
 
@@ -629,6 +649,153 @@ ALL CHECKS PASS
 
 The two outputs are identical.
 
+### Lean
+
+Lean proves the shortfall split, the fee ledger and the benchmark gap for any order, and checks the card's numbers.
+
+- Take any fills, either side, and any decision and arrival prices. Then $c(p_D) = 10{,}000\,s\,(p_A - p_D)/p_D + c(p_A)$: timing plus impact, exactly.
+- Suppose the order's shares $Q$ are not zero, and the desk pays a commission $F$. Then the ledger cost against any reference $B$ is $c(B)$ plus $10{,}000\,F/(Q\,p_D)$.
+- Take the same order and any two references $B_1$ and $B_2$. Then $c(B_1) - c(B_2) = 10{,}000\,s\,(B_2 - B_1)/p_D$: the fills and the fee cancel.
+- Take the card's order. Then the average fill is 99.88 dollars, VWAP is 99.93 dollars, and the costs are 12, 4, 8, 3 and 5 bp.
+- Take the cash ledger on the same fills. Then it also gives 12 bp, and a 2,000-dollar commission makes it 14.
+- Take the wrong roads. Then the buy sign gives −12 bp, and the plain average of the six fill prices gives 11.5.
+- Take the VWAP mistakes. Then counting the fund's own fills gives 4.5 bp, and the fund as the whole tape gives 0.
+- Take the order cut short, with 15,000 shares unsold. Then sold shares alone give about 11.65 bp, and with the missed shares the shortfall is 12.90.
+
+The noise in one order's cost, the simulated Tuesdays and the 4.35 and 0.65 bp split are left to the Python and Rust checks.
+
+```lean
+-- Measuring execution: the implementation shortfall against the decision price splits exactly into a timing leg plus the cost against the arrival price, the cash ledger with a fee gives the same cost plus the fee's share, and the gap between any two benchmarks' costs depends on neither the fills nor the fee.
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Data.Real.Basic
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
+
+open Finset
+
+/-! ## The objects
+
+An order is filled in pieces: piece `i` in the finite set `S` is `q i` shares at price `p i`.
+The order is `Q = ∑ q i` shares. The side `s` is `+1` for a buy and `-1` for a sale.
+`pD` is the decision price; every cost is quoted in basis points of it. -/
+
+/-- The share-weighted average price: cash over shares, `p̄ = (∑ q i * p i) / Q`. -/
+noncomputable def avgPrice {ι : Type*} (S : Finset ι) (q p : ι → ℝ) : ℝ :=
+  (∑ i ∈ S, q i * p i) / ∑ i ∈ S, q i
+
+/-- The card's cost against a reference price `B`, in basis points:
+`c(B) = 10,000 * s * (p̄ - B) / pD`. -/
+noncomputable def costBp (s pD B pbar : ℝ) : ℝ :=
+  10000 * (s * (pbar - B)) / pD
+
+/-- The cost read straight off the cash ledger, with a commission of `F` dollars:
+real against paper is `s * (∑ q i * p i - Q * B) + F`, over the decision notional `Q * pD`,
+times 10,000. -/
+noncomputable def ledgerCostBp {ι : Type*} (S : Finset ι) (q p : ι → ℝ) (s pD F B : ℝ) : ℝ :=
+  10000 * (s * (∑ i ∈ S, q i * p i - (∑ i ∈ S, q i) * B) + F) / ((∑ i ∈ S, q i) * pD)
+
+/-- **Implementation shortfall = timing + impact.** For any fills, either side and any decision
+and arrival prices, the cost against the decision price is the timing leg
+`10,000 * s * (pA - pD) / pD` plus the cost against the arrival price. Nothing is assumed:
+it is the add-and-subtract of `pA`. -/
+theorem implementation_shortfall_eq_timing_add_impact {ι : Type*} (S : Finset ι) (q p : ι → ℝ)
+    (s pD pA : ℝ) :
+    costBp s pD pD (avgPrice S q p)
+      = 10000 * (s * (pA - pD)) / pD + costBp s pD pA (avgPrice S q p) := by
+  unfold costBp
+  ring
+
+/-- **The ledger forces the weighted average, and a fee adds alike to every benchmark.**
+For an order of `Q = ∑ q i` shares (`Q ≠ 0`), the ledger cost against any reference `B`, with a
+commission `F`, equals the formula cost on the share-weighted average price plus
+`10,000 * F / (Q * pD)`. With `F = 0` this is the cash-ledger road to the shortfall. -/
+theorem ledger_cost_eq_cost_add_fee {ι : Type*} (S : Finset ι) (q p : ι → ℝ) (s pD F B : ℝ)
+    (hQ : ∑ i ∈ S, q i ≠ 0) :
+    ledgerCostBp S q p s pD F B
+      = costBp s pD B (avgPrice S q p) + 10000 * F / ((∑ i ∈ S, q i) * pD) := by
+  unfold ledgerCostBp costBp avgPrice
+  rcases eq_or_ne pD 0 with h | h
+  · subst h; simp
+  · field_simp
+
+/-- **The fills and the fee cancel between benchmarks.** For any two references `B₁`, `B₂`, any
+fills (with `Q ≠ 0`) and any fee, `c(B₁) - c(B₂) = 10,000 * s * (B₂ - B₁) / pD`. No order of the
+prices is required: every leg may be negative. -/
+theorem cost_sub_cost_eq_benchmark_gap {ι : Type*} (S : Finset ι) (q p : ι → ℝ)
+    (s pD F B₁ B₂ : ℝ) (hQ : ∑ i ∈ S, q i ≠ 0) :
+    ledgerCostBp S q p s pD F B₁ - ledgerCostBp S q p s pD F B₂
+      = 10000 * (s * (B₂ - B₁)) / pD := by
+  rw [ledger_cost_eq_cost_add_fee S q p s pD F B₁ hQ, ledger_cost_eq_cost_add_fee S q p s pD F B₂ hQ]
+  unfold costBp
+  ring
+
+/-! ## The card's worked numbers, in cents
+
+Sell 100,000 Acme (`s = -1`), decided at 10000 cents, arriving at 9996 cents.
+Basis points do not change when every price is scaled, so cents give the same bp as dollars. -/
+
+/-- The fund's six fills: shares. -/
+noncomputable def fillQ : Fin 6 → ℝ := ![10000, 15000, 20000, 20000, 20000, 15000]
+/-- The fund's six fills: prices in cents. -/
+noncomputable def fillP : Fin 6 → ℝ := ![9993, 9992, 9989, 9986, 9985, 9986]
+/-- Other traders' tape: shares per hour. -/
+noncomputable def tapeV : Fin 6 → ℝ := ![200000, 120000, 100000, 90000, 110000, 280000]
+/-- Other traders' tape: average price per hour, in cents. -/
+noncomputable def tapeM : Fin 6 → ℝ := ![9997, 9996, 9993, 9990, 9990, 9991]
+
+-- cash raised: 998,800,000 cents = $9,988,000
+example : (10000 * 9993 + 15000 * 9992 + 20000 * 9989 + 20000 * 9986 + 20000 * 9985
+    + 15000 * 9986 : ℕ) = 998800000 := by norm_num
+-- average fill $99.88 and market VWAP $99.93
+example : avgPrice univ fillQ fillP = 9988 := by
+  norm_num [avgPrice, Fin.sum_univ_succ, fillQ, fillP]
+example : avgPrice univ tapeV tapeM = 9993 := by
+  norm_num [avgPrice, Fin.sum_univ_succ, tapeV, tapeM]
+-- shortfall 12 bp, timing 4 bp, impact 8 bp, drift 3 bp, VWAP cost 5 bp
+example : costBp (-1) 10000 10000 9988 = 12 := by norm_num [costBp]
+example : 10000 * ((-1 : ℝ) * (9996 - 10000)) / 10000 = 4 := by norm_num
+example : costBp (-1) 10000 9996 9988 = 8 := by norm_num [costBp]
+example : 10000 * ((-1 : ℝ) * (9993 - 9996)) / 10000 = 3 := by norm_num
+example : costBp (-1) 10000 9993 9988 = 5 := by norm_num [costBp]
+-- the cash ledger gives the same 12 bp; a $2,000 (200,000-cent) commission makes it 14
+example : ledgerCostBp univ fillQ fillP (-1) 10000 0 10000 = 12 := by
+  norm_num [ledgerCostBp, Fin.sum_univ_succ, fillQ, fillP]
+example : ledgerCostBp univ fillQ fillP (-1) 10000 200000 10000 = 14 := by
+  norm_num [ledgerCostBp, Fin.sum_univ_succ, fillQ, fillP]
+-- what breaks: the buy sign gives -12; the plain average of the six prices gives 11.5
+example : costBp 1 10000 10000 9988 = -12 := by norm_num [costBp]
+example : costBp (-1) 10000 10000 ((9993 + 9992 + 9989 + 9986 + 9985 + 9986) / 6) = 23 / 2 := by
+  norm_num [costBp]
+-- what breaks: counting the fund's own fills in VWAP gives 4.5; the fund as the whole tape gives 0
+example : costBp (-1) 10000 ((900000 * 9993 + 100000 * 9988) / 1000000) 9988 = 9 / 2 := by
+  norm_num [costBp]
+example : costBp (-1) 10000 (avgPrice univ fillQ fillP) (avgPrice univ fillQ fillP) = 0 := by
+  norm_num [costBp]
+-- the fund is 10% of the day's volume: 100,000 of 1,000,000 shares
+example : (100000 : ℚ) / (100000 + 900000) = 1 / 10 := by norm_num
+-- partial order: 15,000 unsold, close at 9980 cents; missed shares lose $3,000;
+-- sold shares alone give 198/17 ≈ 11.65 bp; with the missed shares the shortfall is 12.90 bp
+example : (15000 * (10000 - 9980) : ℕ) = 300000 := by norm_num
+example : costBp (-1) 10000 10000 ((998800000 - 15000 * 9986) / 85000) = 198 / 17 := by
+  norm_num [costBp]
+example : 10000 * ((-1 : ℝ) * ((998800000 - 15000 * 9986 + 15000 * 9980) - 100000 * 10000))
+    / (100000 * 10000) = 129 / 10 := by norm_num
+
+#print axioms implementation_shortfall_eq_timing_add_impact
+#print axioms ledger_cost_eq_cost_add_fee
+#print axioms cost_sub_cost_eq_benchmark_gap
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'implementation_shortfall_eq_timing_add_impact' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ledger_cost_eq_cost_add_fee' depends on axioms: [propext, Classical.choice, Quot.sound]
+'cost_sub_cost_eq_benchmark_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
@@ -655,10 +822,10 @@ The two outputs are identical.
 ## Where you meet it in real life
 
 - **Broker scorecards.** Fund managers send brokers quarterly tables of shortfall, arrival cost and VWAP cost, averaged over thousands of orders and sorted by size, urgency and stock. The averaging in Step 4 is why the tables are over thousands.
-- **Execution algorithms.** Brokers sell "VWAP" and "arrival price" algorithms by name. Each is built to score well on its own benchmark: the VWAP algorithm follows the market's volume curve; the arrival algorithm trades faster, accepting more impact for less timing risk, which is the balance [Almgren-Chriss](04-optimal-execution-almgren-chriss.md) chooses.
+- **Execution algorithms.** Brokers sell "VWAP" and "arrival price" algorithms by name. Each is built to score well on its own benchmark. The VWAP algorithm follows the market's volume curve. The arrival algorithm trades faster, accepting more impact for less timing risk, which is the balance [Almgren-Chriss](04-optimal-execution-almgren-chriss.md) chooses.
 - **Best-execution rules.** Regulators require firms to show that client orders were executed well. Transaction cost reports are the evidence.
 - **Fund performance.** A strategy that trades often and pays 12 bp each time can lose several percent a year to execution. Perold's paper portfolio was built to show that gap between a strategy on paper and in reality.
-- **Pre-trade estimates.** Before trading, desks forecast the shortfall from the order's share of daily volume, 10% here, the spread ([The spread](02-bid-ask-spread-and-adverse-selection.md)) and volatility; afterwards, the measured cost is compared with the forecast.
+- **Pre-trade estimates.** Before trading, desks forecast the shortfall from the order's share of daily volume, 10% here, the spread ([The spread](02-bid-ask-spread-and-adverse-selection.md)) and volatility. Afterwards, the measured cost is compared with the forecast.
 
 > **Say it back**
 > Implementation shortfall compares a real trade with a paper trade done at the decision price for free; for the 100,000-share Acme sale it is 12 bp, $12,000. Adding and subtracting the arrival price splits it exactly into 4 bp of timing before the order arrived and 8 bp during the trading. The VWAP benchmark compares the fills with other traders' average price the same day and gives a narrower 5 bp. Every cost is a share-weighted average price minus a reference, signed for the side, over one denominator. One order's number sits inside 75 bp of noise, so conclusions need hundreds of orders.

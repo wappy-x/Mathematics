@@ -161,10 +161,10 @@ fn main() {
     println!("decile, percent a year: {}", dec.join(", "));
     let cum: Vec<String> = (0..21).map(|y| format!("{:.2}", 100.0 * x[..12 * y].iter().sum::<f64>() + 0.0)).collect();
     println!("cumulative spread by year, percent: {}", cum.join(", "));
-
     assert!(sgap < 1e-9); // price ratio == chained monthly returns
     assert!(bad == 0 && (ann(xbm) - ann(xbar)).abs() < 1e-9); // bisection cut == sorted cut
     assert!(((win / tf).sqrt() - se_nw).abs() < 1e-12 * se_nw + 1e-15); // autocovariances == window sums
     assert!((se_boot / se_nw - 1.0).abs() < 0.25); // resampling agrees with the formula
     assert!((xbar - xdm).abs() < 2.0 * se_noise); // the sort found the hidden drift
+    println!("ALL CHECKS PASS");
 }

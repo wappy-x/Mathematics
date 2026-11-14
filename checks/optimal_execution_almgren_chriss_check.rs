@@ -166,4 +166,5 @@ fn main() {
     assert!((slope / -LAM - 1.0).abs() < 1e-4);                            // lambda is the price of variance on the frontier
     assert!(ok && ((1..N).map(|j| 2.0 * a * (2.0 - 2.0 * (j as f64 * std::f64::consts::PI / N as f64).cos()) + 2.0 * b).product::<f64>() / d1 - 1.0).abs() < 1e-9); // eigenvalues vs determinant
     assert!([cf(0.0), closed_form(LAM, S0 * 0.20, eta_t, true), closed_form(LAM, sig, eta_t, false), closed_form(LAM, sig, ETA, true)].iter().all(|y| u(y) > u(&x_opt))); // every mistake scores worse
+    println!("ALL CHECKS PASS");
 }

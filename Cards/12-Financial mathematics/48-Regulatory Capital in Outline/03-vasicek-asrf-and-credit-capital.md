@@ -8,9 +8,13 @@
 
 A bank lends a family $200,000 to buy a house. The bank's own models say the family has a 2% chance of defaulting within a year. If they do, the bank sells the house and loses 40 cents in the dollar: $80,000 on this loan.
 
-The regulator wants to know how much of the bank's own money must stand behind this one loan. The answer comes from a formula the Basel Committee on Banking Supervision wrote down in 2004 and still uses. For this loan it says the loan counts as **78.16%** of its size, $156,328.94, of "risk-weighted assets". At the 8% minimum ratio, that is **$12,506.32** of capital. A different loan with the same 2% default chance can count for 25.71% or 126.89%, depending on what kind of borrower it is.
+The regulator wants to know how much of the bank's own money must stand behind this one loan. The answer comes from a formula the Basel Committee on Banking Supervision wrote down in 2004 and still uses.
 
-Where does 78.16% come from? From one bad year. Families default together when the economy turns, so the regulator asks: in the worst year out of a thousand, what share of loans like this one go bad? The answer, 17.63%, is Vasicek's large-pool formula. Subtract the 2% that goes bad in an average year, multiply by the 40% lost per default, and scale to fit the 8% ratio. The regulator fixes every piece of that recipe except the loan's own numbers.
+For this loan it says the loan counts as **78.16%** of its size, $156,328.94, of "risk-weighted assets". At the 8% minimum ratio, that is **$12,506.32** of capital. A different loan with the same 2% default chance can count for 25.71% or 126.89%, depending on what kind of borrower it is.
+
+Where does 78.16% come from? From one bad year. Families default together when the economy turns, so the regulator asks: in the worst year out of a thousand, what share of loans like this one go bad? The answer, 17.63%, is Vasicek's large-pool formula.
+
+Subtract the 2% that goes bad in an average year, multiply by the 40% lost per default, and scale to fit the 8% ratio. The regulator fixes every piece of that recipe except the loan's own numbers.
 
 **The Basel credit formula sets a loan's capital to its loss in the one-in-a-thousand economy minus its average loss, using the loan's own default chance and loss rate, a correlation and confidence level the regulator fixes, and a maturity factor for loans to companies; because one shared economy drives every loan, these loan-by-loan charges add up exactly to the capital of the whole book.**
 
@@ -66,7 +70,7 @@ The loans to households (home loans, credit cards, other retail) drop the maturi
 | $M$, $b$ | **effective maturity** in years, and the maturity slope that sets how much each extra year adds | companies only; $M = 2.5$, $b = 0.1108$ at 2% | rises: factor 1.1993 at 2.5 years, 1.5314 at 5 |
 | $K$ | **capital requirement**: capital per dollar lent | 6.2532% | — |
 | $\mathrm{RW}$, $\mathrm{RWA}$ | **risk weight**, $12.5K$; **risk-weighted assets**, weight times EAD | 78.16%; $156,328.94 | — |
-| $E_i$, $g_i$, $p_i$, $R_i$, $q_i$, $L$, $i$ | in the detailed proof: loan $i$'s exposure, LGD, PD, correlation and bad-year default rate; $L$ is the whole book's loss | the $1bn book | — |
+| $E_i$, $g_i$, $p_i$, $R_i$, $q_i$, $L$, $Z$, $i$ | in the detailed proof: loan $i$'s exposure, LGD, PD, correlation and bad-year default rate; $L$ is the whole book's loss; $Z$ is the economy as a random draw | the $1bn book | — |
 
 ### The prescribed inputs
 
@@ -103,7 +107,9 @@ Conventions verified 28 Sep 2026 against the Basel Framework, chapters CRE31 and
 
 ### Step 0: capital per loan only makes sense if loans add up
 
-A regulator cannot run every bank's portfolio model. It wants a price tag for each loan, set from that loan's own numbers, that adds up across the book. That works only if a loan's contribution to the book's bad year does not depend on what else is in the book: **portfolio invariance**. Michael Gordy showed in 2003 which model has it: one shared risk factor and a very large pool of small loans. That is the **asymptotic single risk factor** model, ASRF for short: "asymptotic" because the pool is taken as infinitely large. Vasicek's one-factor model is its engine.
+A regulator cannot run every bank's portfolio model. It wants a price tag for each loan, set from that loan's own numbers, that adds up across the book. That works only if a loan's contribution to the book's bad year does not depend on what else is in the book: **portfolio invariance**.
+
+Michael Gordy showed in 2003 which model has it: one shared risk factor and a very large pool of small loans. That is the **asymptotic single risk factor** model, ASRF for short: "asymptotic" because the pool is taken as infinitely large. Vasicek's one-factor model is its engine.
 
 ### Step 1: the bad-year default rate, from Vasicek
 
@@ -115,28 +121,34 @@ The derivation lives on [Vasicek's large-pool loss curve](../45-Portfolio%20Cred
 
 ### Step 2: the book's bad year is the sum of the loans' bad years
 
-Take any book of loans, each with its own PD, LGD, correlation and size. Given the economy $m$, each loan's pool loses its size times its LGD times its own $q(m)$. Every one of those falls as $m$ rises: a better economy means fewer defaults everywhere. A sum of falling functions falls too. So the book's worst 0.1% of years is the same stretch of economies for every loan, the stretch below $-3.0902$. The book's 99.9% loss is the sum of each loan's loss at that one economy.
+Take any book of loans, each with its own PD, LGD, correlation and size. Given the economy $m$, each loan's pool loses its size times its LGD times its own $q(m)$. Every one of those falls as $m$ rises: a better economy means fewer defaults everywhere. A sum of falling functions falls too.
 
-That is portfolio invariance, and it is why the capital of a book can be added loan by loan. The checks test it without the formula. The house bank holds $1 billion of loans: $600 million of home loans like the one above and $400 million of one-year company loans, same 2% PD and 40% LGD, company correlation 16.41%. They draw two million economies, compute the whole book's loss in each, sort, and read off the 99.9% point. Book capital from the simulation: $64,855,052.74. Loan by loan from the formula: $64,760,388.75. The gap is 0.15%, the noise of the simulation.
+So the book's worst 0.1% of years is the same stretch of economies for every loan, the stretch below $-3.0902$. The book's 99.9% loss is the sum of each loan's loss at that one economy.
+
+That is portfolio invariance, and it is why the capital of a book can be added loan by loan. The checks test it without the formula.
+
+The house bank, this card's example bank, holds $1 billion of loans. It has $600 million of home loans like the one above and $400 million of one-year company loans, same 2% PD and 40% LGD, company correlation 16.41%. The checks draw two million economies, compute the whole book's loss in each, sort, and read off the 99.9% point. Book capital from the simulation: $64,855,052.74. Loan by loan from the formula: $64,760,388.75. The gap is 0.15%, the noise of the simulation.
 
 <details>
 <summary>Detailed proof: portfolio invariance in a one-factor book</summary>
 
-Let loan $i$ have size $E_i$, loss rate $g_i$ and conditional default rate $q_i(m) = N\big((N^{-1}(p_i) - \sqrt{R_i}\,m)/\sqrt{1-R_i}\big)$, with $0 < p_i < 1$ and $0 < R_i < 1$. In the large-pool limit the book's loss is $L(M) = \sum_i E_i g_i q_i(M)$, where $M$ is a standard normal draw. Each $q_i$ is continuous and strictly decreasing in $m$, since $N$ is strictly increasing and $-\sqrt{R_i} < 0$. So $L$ is continuous and strictly decreasing.
+Let loan $i$ have size $E_i$, loss rate $g_i$ and conditional default rate $q_i(m) = N\big((N^{-1}(p_i) - \sqrt{R_i}\,m)/\sqrt{1-R_i}\big)$, with $0 < p_i < 1$ and $0 < R_i < 1$. In the large-pool limit the book's loss is $L(Z) = \sum_i E_i g_i q_i(Z)$, where $Z$ is the economy as a random standard normal draw. Each $q_i$ is continuous and strictly decreasing in $m$, since $N$ is strictly increasing and $-\sqrt{R_i} < 0$. So $L$ is continuous and strictly decreasing.
 
-For a strictly decreasing $L$, the event $L(M) > L(m)$ is exactly the event $M < m$. Its chance is $N(m)$. Setting $N(m) = 0.001$ gives $m^\ast = N^{-1}(0.001) = -N^{-1}(0.999)$, so the 99.9% point of the book's loss is $L(m^\ast) = \sum_i E_i g_i q_i(m^\ast)$. Each term depends only on loan $i$'s own inputs. Subtracting the book's average loss, $\sum_i E_i g_i p_i$, which is also a sum over loans, gives capital as a sum of loan charges.
+For a strictly decreasing $L$, the event $L(Z) > L(m)$ is exactly the event $Z < m$. Its chance is $N(m)$. Setting $N(m) = 0.001$ gives $m^\ast = N^{-1}(0.001) = -N^{-1}(0.999)$, so the 99.9% point of the book's loss is $L(m^\ast) = \sum_i E_i g_i q_i(m^\ast)$. Each term depends only on loan $i$'s own inputs. Subtracting the book's average loss, $\sum_i E_i g_i p_i$, which is also a sum over loans, gives capital as a sum of loan charges.
 
-With two factors the argument fails: one loan's pool may do badly when the other does well, the worst years of the book are not the worst years of each loan, and the 99.9% point of the sum is usually less than the sum of the 99.9% points. The sum of per-loan charges then tends to overstate diversified capital. With a finite pool, private luck adds noise that the sum leaves out, which understates it.
+With two factors the argument fails. One loan's pool may do badly when the other does well, so the worst years of the book are not the worst years of each loan. The 99.9% point of the sum is usually less than the sum of the 99.9% points. The sum of per-loan charges then tends to overstate diversified capital. With a finite pool, private luck adds noise that the sum leaves out, which understates it.
 
 </details>
 
 ### Step 3: subtract the average, because interest and provisions already cover it
 
-In an average year the home loan loses $\mathrm{PD} \times \mathrm{LGD} = 0.8\%$, $1,600. The bank prices that into its interest rate and sets aside provisions for it. Capital is for the loss nobody can budget for: bad-year loss minus average loss. The Basel text says it directly: risk-weighted assets "are designed to address unexpected losses" (CRE31.1), and expected losses are compared with provisions under separate rules. For the home loan: $0.40 \times 17.63\% = 7.05\%$ in the bad year, minus 0.80%, is $K = 6.25\%$.
+In an average year the home loan loses $\mathrm{PD} \times \mathrm{LGD} = 0.8\%$, $1,600. The bank prices that into its interest rate and sets aside provisions for it. Capital is for the loss nobody can budget for: bad-year loss minus average loss.
+
+The Basel text says it directly: risk-weighted assets "are designed to address unexpected losses" (CRE31.1), and expected losses are compared with provisions under separate rules. For the home loan: $0.40 \times 17.63\% = 7.05\%$ in the bad year, minus 0.80%, is $K = 6.25\%$.
 
 ### Step 4: why 99.9%, and why the regulator fixes it
 
-A 99.9% level means a bank holding exactly the minimum expects losses to exceed its capital about once in a thousand years. The Basel Committee chose it high on purpose: part of the capital that counts, the layer called Tier 2, absorbs losses less well than shareholders' equity, and the extra margin covers errors in the banks' own PD, LGD and EAD estimates. Fixing it matters. The level moves the answer a lot:
+A 99.9% level means a bank holding exactly the minimum expects losses to exceed its capital about once in a thousand years. The Basel Committee chose it high on purpose. Part of the capital that counts, the layer called Tier 2, absorbs losses less well than shareholders' equity. The extra margin also covers errors in the banks' own PD, LGD and EAD estimates. Fixing it matters. The level moves the answer a lot:
 
 ```
 home loan risk weight (%) by the confidence level
@@ -156,15 +168,23 @@ The company schedule falls as PD rises: a risky company tends to fail for its ow
 
 ### Step 6: the maturity factor, a patch from a different model
 
-The one-year model counts only defaults. A five-year company loan can also be downgraded, and its market value falls even if it never defaults. To charge for that, the Basel Committee ran a mark-to-market credit model at the same 99.9% level and the same correlations, recorded capital for each PD and maturity, divided by the capital at 2.5 years, and fitted a smooth formula to the ratios. The result is the factor $(1 + (M - 2.5)b)/(1 - 1.5b)$.
+The one-year model counts only defaults. A five-year company loan can also be downgraded, and its market value falls even if it never defaults. To charge for that, the Basel Committee ran a mark-to-market credit model, one that counts those falls in value, at the same 99.9% level and the same correlations. It recorded capital for each PD and maturity, divided by the capital at 2.5 years, and fitted a smooth formula to the ratios. The result is the factor $(1 + (M - 2.5)b)/(1 - 1.5b)$.
 
-Three properties were built in. It equals 1 at one year, so a one-year loan gets exactly the ASRF capital: put $M = 1$ and the top becomes $1 - 1.5b$. It rises in a straight line with maturity. And the slope $b$ falls as PD rises: a safe borrower has further to fall, so time adds more to its risk. At 2% PD, $b = 0.1108$; a 2.5-year loan carries 1.1993 times the one-year capital, a 5-year loan 1.5314 times. The company bar in the picture above rises from 85.13% at one year to 102.09% at the standard 2.5 years. Household loans have no factor at all (CRE31.13); their correlations were fitted to banks' own capital figures and historical losses for those products, not to the company model.
+Three properties were built in:
+
+- It equals 1 at one year, so a one-year loan gets exactly the ASRF capital: put $M = 1$ and the top becomes $1 - 1.5b$.
+- It rises in a straight line with maturity.
+- The slope $b$ falls as PD rises: a safe borrower has further to fall, so time adds more to its risk.
+
+At 2% PD, $b = 0.1108$; a 2.5-year loan carries 1.1993 times the one-year capital, a 5-year loan 1.5314 times. The company bar in the picture above rises from 85.13% at one year to 102.09% at the standard 2.5 years.
+
+Household loans have no factor at all (CRE31.13); their correlations were fitted to banks' own capital figures and historical losses for those products, not to the company model.
 
 ### Step 7: 12.5 turns capital into a risk weight
 
 The headline rule is capital of at least 8% of risk-weighted assets ([Basel capital](02-basel-capital-and-risk-weighted-assets.md)). If a loan needs capital $K \times \mathrm{EAD}$, its risk-weighted assets must be $K \times \mathrm{EAD} / 0.08 = 12.5 \times K \times \mathrm{EAD}$. The factor 12.5 is only 1 divided by 8%. It lets credit risk, market risk and operational risk share one denominator.
 
-So the bank estimates PD for every loan, and under the advanced approach LGD and EAD too. The rules fix the confidence level, the correlations, the maturity factor, the 12.5, and floors under the bank's estimates: the numbers that move capital most and are easiest to shade.
+So the bank estimates PD for every loan, and under the advanced approach LGD and EAD too. The rules fix the confidence level, the correlations, the maturity factor, the 12.5, and floors under the bank's estimates: the numbers that move capital most and are easiest to shade. This split is the internal ratings-based approach, IRB for short.
 
 The other route is the **standardised approach**, which skips the model and reads weights from a table; banks' own multi-factor models capture concentration but cannot be added loan by loan.
 
@@ -205,7 +225,9 @@ xychart-beta
     line [26.36, 43.97, 61.88, 82.06, 102.09, 114.17, 133.20, 171.63, 211.76]
 ```
 
-First line (orange): home loans, correlation 15%. Second line (green): large companies, correlation falling from 24% to 12% as PD rises, maturity 2.5 years. The company line is above for safe borrowers, where its correlation is higher and the maturity factor bites hardest, and below for risky ones. Every point on the company line matches the Basel Committee's published table (CRE99) to two decimals. Both curves bend over: doubling PD adds less than double the weight, because the bad year already assumes many defaults.
+First line (orange): home loans, correlation 15%. Second line (green): large companies, correlation falling from 24% to 12% as PD rises, maturity 2.5 years. The company line is above for safe borrowers, where its correlation is higher and the maturity factor bites hardest, and below for risky ones.
+
+Every point on the company line matches the Basel Committee's published table (CRE99) to two decimals. Both curves bend over: doubling PD adds less than double the weight, because the bad year already assumes many defaults.
 
 ### What breaks if you drop a piece
 
@@ -222,7 +244,11 @@ Correct answer: 78.16%, $12,506.32 of capital on the loan.
 
 ## Code, from first principles, and it actually runs
 
-Both programs build the bell-curve area themselves (Python from `math.erf`, Rust from a power series and a continued fraction), invert it by bisection, and generate their own random numbers. The 78.16% is reached **three independent ways**. Road 1 is the formula. Road 2 is the Basel Committee's own published table (CRE99, Table 1): the formula must reproduce six of its printed weights at PD 2%, and since the weight is proportional to LGD, three-quarters of the way from the table's 25% LGD column to its 45% column gives the weight at 40% without the formula. Road 3 simulates two million economies for the house bank's book and reads the 99.9% loss straight off the sorted results, which uses neither the quantile shortcut nor the adding-up.
+Both programs build the bell-curve area themselves (Python from `math.erf`, Rust from a power series and a continued fraction), invert it by bisection, and generate their own random numbers. The 78.16% is reached **three independent ways**:
+
+- Road 1 is the formula.
+- Road 2 is the Basel Committee's own published table (CRE99, Table 1): the formula must reproduce six of its printed weights at PD 2%, and since the weight is proportional to LGD, three-quarters of the way from the table's 25% LGD column to its 45% column gives the weight at 40% without the formula.
+- Road 3 simulates two million economies for the house bank's book and reads the 99.9% loss straight off the sorted results, which uses neither the quantile shortcut nor the adding-up.
 
 ### Python
 
@@ -611,6 +637,215 @@ ALL CHECKS PASS
 
 The two outputs agree line for line at the printed precision, from two different constructions of the bell-curve area.
 
+### Lean
+
+Lean proves that capital adds up loan by loan in any finite one-factor book, and that the maturity factor equals 1 at one year.
+
+- Take any book where each loan has positive size and LGD, and PD and correlation strictly between 0 and 1. Then the book's 99.9% loss equals the sum of each loan's loss in the one-in-a-thousand economy.
+- In that same book, subtract the book's average loss from its 99.9% loss. What is left is exactly the sum of the loan-by-loan charges.
+- Take $M = 1$, with the bottom $1 - 1.5\,b$ not zero. Then the maturity factor equals 1, so a one-year loan gets exactly the one-factor capital.
+
+Lean computes no numbers: the 78.16% weight, the published table and the simulated book are left to the Python and Rust checks.
+
+```lean
+-- The Basel credit formula: in a one-factor Vasicek book the 99.9% loss is the sum of each loan's loss in the one-in-a-thousand economy, so capital adds up loan by loan.
+import Mathlib.Probability.Distributions.Gaussian.Real
+import Mathlib.Probability.CDF
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+
+open MeasureTheory ProbabilityTheory
+
+namespace VasicekASRF
+
+/-- `N x`: the bell-curve area to the left of `x` (the standard normal distribution function). -/
+noncomputable def N (x : ℝ) : ℝ := cdf (gaussianReal 0 1) x
+
+/-- Loan `i`'s large-pool default rate when the economy is at `m`:
+`N ((N⁻¹(p) - √R · m) / √(1 - R))`, written with the default threshold `c = N⁻¹(p)`. -/
+noncomputable def condDefaultRate (c R m : ℝ) : ℝ :=
+  N ((c - Real.sqrt R * m) / Real.sqrt (1 - R))
+
+/-- The whole book's loss when the economy is at `m`: `L(m) = Σ_i E_i g_i q_i(m)`. -/
+noncomputable def bookLoss {ι : Type*} [Fintype ι] (E g c R : ι → ℝ) (m : ℝ) : ℝ :=
+  ∑ i, E i * g i * condDefaultRate (c i) (R i) m
+
+end VasicekASRF
+
+open VasicekASRF
+
+open Set Filter Topology in
+/-- The standard normal distribution function is continuous. -/
+lemma N_continuous : Continuous N := by
+  have hns : NullSingletonClass (gaussianReal 0 1) :=
+    nullSingletonClass_gaussianReal (by norm_num)
+  rw [continuous_iff_continuousAt]
+  intro a
+  set f := cdf (gaussianReal 0 1)
+  have hmono : Monotone f := monotone_cdf _
+  have h1 : f.measure {a} = 0 := by
+    rw [measure_cdf]; exact measure_singleton a
+  rw [StieltjesFunction.measure_singleton, ENNReal.ofReal_eq_zero] at h1
+  have h2 : Function.leftLim f a = f a :=
+    le_antisymm (hmono.leftLim_le le_rfl) (by linarith)
+  have hl : ContinuousWithinAt f (Iio a) a :=
+    (hmono.continuousWithinAt_Iio_iff_leftLim_eq).2 h2
+  have hr : ContinuousWithinAt f (Ici a) a := f.right_continuous a
+  exact continuousAt_iff_continuous_left_right.2
+    ⟨continuousWithinAt_Iio_iff_Iic.1 hl, hr⟩
+
+open Set in
+/-- The standard normal distribution function is strictly increasing. -/
+lemma N_strictMono : StrictMono N := by
+  intro a b hab
+  have hpos : (gaussianReal 0 1) (Ioc a b) ≠ 0 := by
+    intro h
+    have := gaussianReal_absolutelyContinuous' (0:ℝ) (v := 1) (by norm_num) h
+    rw [Real.volume_Ioc] at this
+    simp at this; linarith
+  have h := (cdf (gaussianReal 0 1)).measure_Ioc a b
+  rw [measure_cdf] at h
+  rw [h] at hpos
+  have : ¬ (cdf (gaussianReal 0 1) b - cdf (gaussianReal 0 1) a ≤ 0) := by
+    intro hle; exact hpos (ENNReal.ofReal_eq_zero.2 hle)
+  unfold N; linarith
+
+open Set in
+/-- The chance that `Z > a` is `1 - N a`. -/
+lemma real_Ioi_eq_one_sub_N (a : ℝ) : (gaussianReal 0 1).real (Ioi a) = 1 - N a := by
+  rw [← compl_Iic, probReal_compl_eq_one_sub measurableSet_Iic, N, cdf_eq_real]
+
+/-- The book's loss is strictly decreasing in the economy. -/
+lemma bookLoss_strictAnti {ι : Type*} [Fintype ι] [Nonempty ι]
+    (E g c R : ι → ℝ) (hE : ∀ i, 0 < E i) (hg : ∀ i, 0 < g i)
+    (hR : ∀ i, 0 < R i ∧ R i < 1) : StrictAnti (bookLoss E g c R) := by
+  intro z w hzw
+  unfold bookLoss
+  apply Finset.sum_lt_sum_of_nonempty Finset.univ_nonempty
+  intro i _
+  have hEg : 0 < E i * g i := mul_pos (hE i) (hg i)
+  apply mul_lt_mul_of_pos_left _ hEg
+  unfold condDefaultRate
+  apply N_strictMono
+  have h1 : 0 < Real.sqrt (1 - R i) := Real.sqrt_pos.2 (by linarith [(hR i).2])
+  have h2 : 0 < Real.sqrt (R i) := Real.sqrt_pos.2 (hR i).1
+  apply div_lt_div_of_pos_right _ h1
+  nlinarith
+
+/-- The book's loss is continuous in the economy. -/
+lemma bookLoss_continuous {ι : Type*} [Fintype ι]
+    (E g c R : ι → ℝ) : Continuous (bookLoss E g c R) := by
+  unfold bookLoss condDefaultRate
+  refine continuous_finsetSum _ (fun i _ => continuous_const.mul ?_)
+  exact N_continuous.comp ((continuous_const.sub (continuous_const.mul continuous_id)).div_const _)
+
+#print axioms N_continuous
+#print axioms N_strictMono
+#print axioms real_Ioi_eq_one_sub_N
+#print axioms bookLoss_strictAnti
+#print axioms bookLoss_continuous
+
+/-- Portfolio invariance. Take any finite book of loans, loan `i` with size `E_i > 0`,
+loss rate `g_i > 0`, default chance `0 < p_i < 1` (default threshold `c_i = N⁻¹(p_i)`) and
+correlation `0 < R_i < 1`, all driven by one standard normal economy `Z`. Let `m*` be the
+one-in-a-thousand bad economy, `N(m*) = 0.001`. Then the 99.9% point of the book's loss `L(Z)`
+(the smallest `x` with `P(L(Z) ≤ x) ≥ 0.999`) is exactly `Σ_i E_i g_i q_i(m*)`, the sum of each
+loan's own loss at that one economy. -/
+theorem book_loss_quantile_eq_sum_of_loan_stress_losses
+    {ι : Type*} [Fintype ι] [Nonempty ι]
+    (E g p R c : ι → ℝ)
+    (hE : ∀ i, 0 < E i) (hg : ∀ i, 0 < g i)
+    (hp : ∀ i, 0 < p i ∧ p i < 1) (hR : ∀ i, 0 < R i ∧ R i < 1)
+    (hc : ∀ i, N (c i) = p i)
+    (mstar : ℝ) (hm : N mstar = 1 / 1000) :
+    IsLeast {x : ℝ | 999 / 1000 ≤ (gaussianReal 0 1).real {z | bookLoss E g c R z ≤ x}}
+      (∑ i, E i * g i * condDefaultRate (c i) (R i) mstar) := by
+  have hL := bookLoss_strictAnti E g c R hE hg hR
+  have hLc := bookLoss_continuous E g c R
+  have hval : bookLoss E g c R mstar
+      = ∑ i, E i * g i * condDefaultRate (c i) (R i) mstar := rfl
+  rw [← hval]
+  constructor
+  · show 999 / 1000 ≤ (gaussianReal 0 1).real {z | bookLoss E g c R z ≤ bookLoss E g c R mstar}
+    calc (999 / 1000 : ℝ) = (gaussianReal 0 1).real (Set.Ioi mstar) := by
+          rw [real_Ioi_eq_one_sub_N, hm]; norm_num
+      _ ≤ _ := by
+          refine measureReal_mono ?_ (measure_ne_top _ _)
+          intro z hz
+          exact (hL (Set.mem_Ioi.1 hz)).le
+  · intro x hx
+    simp only [Set.mem_ofPred_eq] at hx
+    by_contra hlt
+    push Not at hlt
+    have hev : ∀ᶠ z in nhdsWithin mstar (Set.Ioi mstar), x < bookLoss E g c R z ∧ mstar < z :=
+      ((hLc.continuousAt.eventually (lt_mem_nhds hlt)).filter_mono nhdsWithin_le_nhds).and
+        self_mem_nhdsWithin
+    obtain ⟨a, ha1, ha2⟩ := hev.exists
+    have hsub : {z | bookLoss E g c R z ≤ x} ⊆ Set.Ioi a := by
+      intro z hz
+      simp only [Set.mem_ofPred_eq] at hz
+      by_contra hza
+      simp only [Set.mem_Ioi, not_lt] at hza
+      have := hL.antitone hza
+      linarith
+    have h1 := measureReal_mono (μ := gaussianReal 0 1) hsub
+    rw [real_Ioi_eq_one_sub_N] at h1
+    have h2 := N_strictMono ha2
+    rw [hm] at h2
+    linarith
+
+/-- Capital adds up loan by loan. In the same book, the book's capital, its 99.9% loss minus its
+average loss `Σ_i E_i g_i p_i`, equals the sum of the per-loan charges
+`E_i g_i (q_i(m*) - p_i)`, each set by loan `i`'s own numbers. -/
+theorem book_capital_eq_sum_of_loan_charges
+    {ι : Type*} [Fintype ι] [Nonempty ι]
+    (E g p R c : ι → ℝ)
+    (hE : ∀ i, 0 < E i) (hg : ∀ i, 0 < g i)
+    (hp : ∀ i, 0 < p i ∧ p i < 1) (hR : ∀ i, 0 < R i ∧ R i < 1)
+    (hc : ∀ i, N (c i) = p i)
+    (mstar : ℝ) (hm : N mstar = 1 / 1000) :
+    sInf {x : ℝ | 999 / 1000 ≤ (gaussianReal 0 1).real {z | bookLoss E g c R z ≤ x}}
+        - ∑ i, E i * g i * p i
+      = ∑ i, E i * g i * (condDefaultRate (c i) (R i) mstar - p i) := by
+  rw [(book_loss_quantile_eq_sum_of_loan_stress_losses E g p R c hE hg hp hR hc mstar hm).csInf_eq,
+    ← Finset.sum_sub_distrib]
+  refine Finset.sum_congr rfl (fun i _ => ?_)
+  ring
+
+/-- The maturity factor `(1 + (M - 2.5) b) / (1 - 1.5 b)` equals 1 for a one-year loan
+(`M = 1`), so a one-year loan gets exactly the one-factor capital. -/
+theorem maturity_factor_at_one_year (b : ℝ) (hb : 1 - 3 / 2 * b ≠ 0) :
+    (1 + ((1 : ℝ) - 5 / 2) * b) / (1 - 3 / 2 * b) = 1 := by
+  rw [div_eq_one_iff_eq hb]
+  ring
+
+-- The card's whole-number worked examples.
+-- Loss if the family defaults: 40% of $200,000 is $80,000.
+example : (200000 : ℚ) * (40 / 100) = 80000 := by norm_num
+-- Expected loss: 2% default chance times 40% of $200,000 is $1,600.
+example : (200000 : ℚ) * (2 / 100) * (40 / 100) = 1600 := by norm_num
+-- 12.5 is 1 divided by the 8% minimum ratio.
+example : (1 : ℚ) / (8 / 100) = 25 / 2 := by norm_num
+-- The house bank's book: $600 million of home loans plus $400 million of company loans is $1 billion.
+example : (600000000 : ℕ) + 400000000 = 1000000000 := by norm_num
+
+#print axioms book_loss_quantile_eq_sum_of_loan_stress_losses
+#print axioms book_capital_eq_sum_of_loan_charges
+#print axioms maturity_factor_at_one_year
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'N_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'N_strictMono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'real_Ioi_eq_one_sub_N' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bookLoss_strictAnti' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bookLoss_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'book_loss_quantile_eq_sum_of_loan_stress_losses' depends on axioms: [propext, Classical.choice, Quot.sound]
+'book_capital_eq_sum_of_loan_charges' depends on axioms: [propext, Classical.choice, Quot.sound]
+'maturity_factor_at_one_year' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Each answer is a `try:` or `conf` row in the output above; change the inputs in the `rows` list to see others.
@@ -635,7 +870,7 @@ The two outputs agree line for line at the printed precision, from two different
 
 ## Where you meet it in real life
 
-- **Bank annual reports.** The credit-risk tables in the Pillar 3 disclosures list exposures by PD band with average PD, average LGD and average risk weight. Each row is this formula applied and summed.
+- **Bank annual reports.** The credit-risk tables in the Pillar 3 disclosures, the risk reports Basel requires banks to publish, list exposures by PD band with average PD, average LGD and average risk weight. Each row is this formula applied and summed.
 - **Mortgage pricing.** The capital a home loan ties up is set by this weight, so two loans at the same interest rate can earn very different returns on capital.
 - **Expected and unexpected loss.** The subtraction in Step 3 is the split taught on [Expected and unexpected loss](01-expected-versus-unexpected-loss.md).
 - **The output floor.** Since the 2017 reforms, a bank's modelled risk-weighted assets cannot fall below a fixed share of what the standardised tables give, so a low PD can only cut capital so far.
@@ -655,7 +890,7 @@ The two outputs agree line for line at the printed precision, from two different
 
 - [Market-risk capital](04-frtb-and-the-shift-to-expected-shortfall.md): capital for the trading book, where Basel moved from a single quantile to the average loss beyond it.
 
-This card measured credit risk at one point of the loss curve, the 99.9% quantile; the trading book asks whether one point is enough, and what the tail beyond it should cost.
+This card measured credit risk at one point of the loss curve, the 99.9% quantile. The trading book asks whether one point is enough, and what the tail beyond it should cost.
 
 ---
 

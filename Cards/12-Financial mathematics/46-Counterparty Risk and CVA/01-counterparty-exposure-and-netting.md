@@ -10,7 +10,9 @@ A bank has three open trades with a company called Northwind. Marked at today's 
 
 Now suppose Northwind collapses this morning. What is the bank's money at risk?
 
-The answer depends on paperwork. If each trade stands alone, Northwind's bankruptcy estate collects the $3 million the bank owes, in full, while the bank queues as an ordinary creditor for the $5 million and the $2 million. At risk: **$7 million**. If all three trades sit under one signed **master agreement**, a contract that says every trade between the two firms collapses into a single amount on default, the three numbers are added first: 5 − 3 + 2 = 4. At risk: **$4 million**. The $3 million the bank owes has been used to cancel $3 million it is owed.
+The answer depends on paperwork. If each trade stands alone, Northwind's bankruptcy estate collects the $3 million the bank owes, in full, while the bank queues as an ordinary creditor for the $5 million and the $2 million. At risk: **$7 million**.
+
+A **master agreement** is a signed contract that says every trade between the two firms collapses into a single amount on default. If all three trades sit under one, the three numbers are added first: 5 − 3 + 2 = 4. At risk: **$4 million**. The $3 million the bank owes has been used to cancel $3 million it is owed.
 
 That amount at risk is the bank's **counterparty exposure** to Northwind, the word used from here on. The other side of a trade is its **counterparty**. Adding values under one agreement before asking who owes whom is **netting**. A group of trades that nets together is a **netting set**.
 
@@ -76,7 +78,7 @@ Conventions verified 28 Sep 2026: the Basel Committee's counterparty definitions
 ### When it holds
 
 - **The agreement is enforceable where Northwind goes bankrupt.** If a court refuses to net, each trade becomes its own set and exposure jumps from $4 million to $7 million. Banks obtain legal opinions country by country for this reason.
-- **The values are replacement values today.** $V_i$ is what another dealer would charge or pay to take the trade over. If the close-out valuation is disputed, every $V_i$ moves and so does $E$.
+- **The values are replacement values today.** $V_i$ is what another dealer would charge or pay to take the trade over. If the close-out valuation (the values fixed when the trades are ended on default) is disputed, every $V_i$ moves and so does $E$.
 - **No collateral is held.** Collateral the bank holds from Northwind would be subtracted inside the floor; this card sets it to zero.
 - **Default and close-out happen today, at today's values.** In practice close-out takes days, and values move in between. How large exposure may become later is [Expected exposure over time](02-expected-exposure-profiles.md).
 - **One currency.** Values in different currencies must be converted at today's rates before they can be added.
@@ -99,13 +101,17 @@ So a single trade puts $V^+$ at risk: its value if positive, zero if not. The lo
 
 ### Step 2: a master agreement closes every trade into one amount
 
-A master agreement, in derivatives markets usually the ISDA Master Agreement (the standard contract written by the International Swaps and Derivatives Association), treats all trades under it as one contract. On default, the surviving side ends every trade, values each at replacement cost, and adds the values into one close-out amount. If the amount is positive, the survivor holds one claim for it. If it is negative, the survivor pays it. Without such an agreement, an administrator could keep the trades that favour the failed firm and walk away from the rest, a practice called **cherry-picking**. Close-out netting is the contract term that blocks it.
+A master agreement, in derivatives markets usually the ISDA Master Agreement (the standard contract written by the International Swaps and Derivatives Association), treats all trades under it as one contract. On default, the surviving side ends every trade, values each at replacement cost, and adds the values into one close-out amount. If the amount is positive, the survivor holds one claim for it. If it is negative, the survivor pays it.
+
+Without such an agreement, an administrator could keep the trades that favour the failed firm and walk away from the rest, a practice called **cherry-picking**. Close-out netting is the contract term that blocks it.
 
 For Northwind the close-out amount is 5 − 3 + 2 = 4. The bank holds one claim of $4 million, recovers $1.60 million, and loses $2.40 million.
 
 ### Step 3: separate agreements do not talk to each other
 
-Suppose the −$3 million trade sits under a different agreement, say one signed by another branch of the bank. Now there are two netting sets. Set {1, 3} closes out at 5 + 2 = +7: a claim of $7 million. Set {2} closes out at −3: the bank pays $3 million in full. Exposure is 7 + 0 = $7 million. The bank recovers $2.80 million on its claim, pays $3 million, and ends $0.20 million out of pocket where it would have held $4 million had Northwind survived: a loss of $4.20 million.
+Suppose the −$3 million trade sits under a different agreement, say one signed by another branch of the bank. Now there are two netting sets. Set {1, 3} closes out at 5 + 2 = +7: a claim of $7 million. Set {2} closes out at −3: the bank pays $3 million in full.
+
+Exposure is 7 + 0 = $7 million. The bank recovers $2.80 million on its claim, pays $3 million, and ends $0.20 million out of pocket where it would have held $4 million had Northwind survived: a loss of $4.20 million.
 
 Which trade sits apart matters. Putting the +$2 million trade apart instead leaves {1, 2} at 5 − 3 = +2 and {3} at +2: exposure $4 million, the same as full netting. Putting the +$5 million trade apart leaves {2, 3} at −1, floored to zero, and {1} at +5: exposure $5 million.
 
@@ -115,7 +121,9 @@ The key fact is one line about two numbers $a$ and $b$:
 
 $$(a + b)^+ \;\le\; a^+ + b^+ .$$
 
-If $a + b$ is zero or negative, the left side is zero and the right side is never negative. If $a + b$ is positive, then $a + b \le a^+ + b^+$, because each number is at most its floored value. Merging two netting sets into one replaces $a^+ + b^+$ by $(a + b)^+$, so exposure falls or stays. Splitting a set does the reverse. Full netting and no netting are the two extremes, so every arrangement lies between the net and gross numbers: $4 \le E \le 7$ for Northwind.
+If $a + b$ is zero or negative, the left side is zero and the right side is never negative. If $a + b$ is positive, then $a + b \le a^+ + b^+$, because each number is at most its floored value.
+
+Merging two netting sets into one replaces $a^+ + b^+$ by $(a + b)^+$, so exposure falls or stays. Splitting a set does the reverse. Full netting and no netting are the two extremes, so every arrangement lies between the net and gross numbers: $4 \le E \le 7$ for Northwind.
 
 ### Step 5: the saving is the smaller side
 
@@ -160,7 +168,9 @@ Northwind: trades +5, −3, +2 ($ million), recovery 40%.
 
 One master agreement cuts the money at risk from $7 million to $4 million and the loss on a default today from $4.20 million to $2.40 million, without changing a single trade.
 
-The shelf's house trade gives a cross-check. A bank that **bought** the one-year Acme call from Northwind (strike $100, worth $9.23; see [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)) has exposure $9.23: a bought option is always owed to its holder. A bank that **sold** Northwind the matching put, worth $6.33, has exposure zero on it. Hold both under one agreement and exposure is 9.23 − 6.33 = $2.90, which is exactly the value of a forward on Acme by put–call parity ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)). Held apart, exposure is back to $9.23.
+The shelf's house trade gives a cross-check. A bank that **bought** the one-year Acme call from Northwind (strike $100, worth $9.23; see [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)) has exposure $9.23: a bought option is always owed to its holder. A bank that **sold** Northwind the matching put, worth $6.33, has exposure zero on it.
+
+Hold both under one agreement and exposure is 9.23 − 6.33 = $2.90, which is exactly the value of a forward on Acme by put–call parity ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)). Held apart, exposure is back to $9.23.
 
 ### What breaks if you drop a piece
 
@@ -175,7 +185,14 @@ The shelf's house trade gives a cross-check. A bank that **bought** the one-year
 
 ## Code, from first principles, and it actually runs
 
-The code reaches the exposure by three independent roads and tests the theorem on a fourth. Road 1 is the formula: add inside each set, floor, add. Road 2 follows the cash on the day of default: each set closes to one amount, a claim recovers $R$, a debt is paid in full, and the loss is what the trades were worth minus the cash the bank ends up with; it must equal $(1 - R)E$. Road 3 pairs cents owed against cents owing and counts what is left. Road 4 draws 20,000 random books of up to six trades, split at random into up to three agreements, and checks net ≤ exposure ≤ gross, that roads 1, 2 and 3 agree, and that merging two agreements never raises exposure. The Acme cross-check prices the call and put with a hand-built bell-curve area and compares the netted pair with put–call parity, which needs no bell curve. Mutation tests (removing the floor, letting debts recover, leaving debts unpaired, flooring trade by trade) each make an assert fail.
+The code reaches the exposure by three independent roads and tests the theorem on a fourth.
+
+- Road 1 is the formula: add inside each set, floor, add.
+- Road 2 follows the cash on the day of default. Each set closes to one amount, a claim recovers $R$, and a debt is paid in full. The loss is what the trades were worth minus the cash the bank ends up with; it must equal $(1 - R)E$.
+- Road 3 pairs cents owed against cents owing and counts what is left.
+- Road 4 draws 20,000 random books of up to six trades, split at random into up to three agreements. It checks net ≤ exposure ≤ gross, that roads 1, 2 and 3 agree, and that merging two agreements never raises exposure.
+
+The Acme cross-check prices the call and put with a hand-built bell-curve area and compares the netted pair with put–call parity, which needs no bell curve. Mutation tests (removing the floor, letting debts recover, leaving debts unpaired, flooring trade by trade) each make an assert fail.
 
 ### Python
 
@@ -555,6 +572,171 @@ ALL CHECKS PASS
 
 The two outputs agree line for line.
 
+### Lean
+
+Lean proves the netting facts on this card for any finite book of trades and any split into netting sets.
+
+- Suppose every netting set of one arrangement lies inside a single set of a second. Then exposure under the second is at most exposure under the first.
+- Take any arrangement of netting sets. Then net exposure is at most $E$, and $E$ is at most gross exposure $G$.
+- Take a single netting set, with $G$, $E$, $P$ and $Q$ worked out for that set alone. Then $G - E = \min(P, Q)$ exactly.
+- Take the Northwind trades +5, −3 and +2. Then gross is 7, net is 4, $P$ is 7, $Q$ is 3, and the saving is 3.
+- Take the same trades with one trade under its own agreement. Then exposure is 7 with −3 apart, 4 with +2 apart, and 5 with +5 apart.
+- Take the middle trade at −9 under one agreement. Then net exposure is 0, and gross exposure stays 7.
+
+The recovery and loss figures, the cent-pairing road, the Acme options and the random books are left to the Python and Rust checks.
+
+```lean
+-- Counterparty exposure: netting trades into sets never raises current exposure, every netting arrangement lies between full netting and no netting, and inside one set netting saves exactly the smaller of the amounts owed each way.
+import Mathlib.Algebra.Order.Group.PosPart
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Order.Partition.Finpartition
+import Mathlib.Basic.Real.Basic
+import Mathlib.Data.Fin.VecNotation
+
+/-! Trades are indexed by a finite type `ι`; `V i` is the value of trade `i` to the bank today
+(plus: the counterparty owes the bank, minus: the bank owes the counterparty).
+An arrangement of netting sets is a `Finpartition` of all trades: the sets do not overlap and
+cover every trade once. `x⁺ = max x 0` is Mathlib's positive part and `x⁻ = max (-x) 0` its
+negative part. Current exposure under arrangement `S` is
+`∑ A ∈ S.parts, (∑ i ∈ A, V i)⁺`: add inside each set, floor each total at zero, add the totals.
+In Mathlib, `fine ≤ coarse` for finpartitions means every set of `fine` lies inside one set
+of `coarse`, so `coarse` nets at least as much as `fine`. -/
+
+open Finset
+
+/-- The positive part of a sum is at most the sum of the positive parts. -/
+theorem posPart_sum_le_sum_posPart {ι : Type*} (s : Finset ι) (f : ι → ℝ) :
+    (∑ i ∈ s, f i)⁺ ≤ ∑ i ∈ s, (f i)⁺ := by
+  classical
+  induction s using Finset.induction_on with
+  | empty => simp
+  | insert a s ha ih =>
+    rw [sum_insert ha, sum_insert ha]
+    rw [posPart_def]
+    refine sup_le ?_ ?_
+    · exact add_le_add (le_posPart _) ((le_posPart _).trans ih)
+    · exact add_nonneg (posPart_nonneg _) (sum_nonneg fun i _ => posPart_nonneg _)
+
+/-- Summing over the parts of a finpartition and then inside each part gives the full sum. -/
+theorem sum_parts_sum_eq {ι : Type*} [DecidableEq ι] {s : Finset ι} (P : Finpartition s)
+    (f : ι → ℝ) : ∑ A ∈ P.parts, ∑ i ∈ A, f i = ∑ i ∈ s, f i := by
+  have h := (Finset.sum_biUnion (s := P.parts) (t := id) (f := f) P.disjoint)
+  rw [P.biUnion_parts] at h
+  simpa using h.symm
+
+#print axioms posPart_sum_le_sum_posPart
+#print axioms sum_parts_sum_eq
+
+/-- Netting never raises exposure: if every netting set of one arrangement lies inside a single
+netting set of another (the second nets more), then the exposure under the second arrangement
+is at most the exposure under the first. -/
+theorem netting_never_raises_exposure {ι : Type*} [Fintype ι] [DecidableEq ι] (V : ι → ℝ)
+    (fine coarse : Finpartition (univ : Finset ι)) (h : fine ≤ coarse) :
+    ∑ A ∈ coarse.parts, (∑ i ∈ A, V i)⁺ ≤ ∑ A ∈ fine.parts, (∑ i ∈ A, V i)⁺ := by
+  classical
+  have hsplit : ∀ B ∈ coarse.parts,
+      ∑ i ∈ B, V i = ∑ A ∈ fine.parts.filter (· ⊆ B), ∑ i ∈ A, V i := by
+    intro B hB
+    have hd : ((fine.parts.filter (· ⊆ B) : Finset (Finset ι)) : Set (Finset ι)).PairwiseDisjoint
+        id := fine.disjoint.subset (Finset.coe_subset.2 (filter_subset _ _))
+    have hb := Finset.sum_biUnion (t := id) (f := V) hd
+    simp only [id] at hb
+    rw [← hb]
+    congr 1
+    ext i
+    simp only [mem_biUnion, mem_filter, id]
+    constructor
+    · intro hi
+      obtain ⟨A, hA, hiA⟩ := fine.exists_mem (mem_univ i)
+      obtain ⟨B', hB', hAB'⟩ := h hA
+      have : B' = B := coarse.eq_of_mem_parts hB' hB (hAB' hiA) hi
+      subst this
+      exact ⟨A, ⟨hA, hAB'⟩, hiA⟩
+    · rintro ⟨A, ⟨_, hAB⟩, hiA⟩
+      exact hAB hiA
+  calc ∑ B ∈ coarse.parts, (∑ i ∈ B, V i)⁺
+      = ∑ B ∈ coarse.parts, (∑ A ∈ fine.parts.filter (· ⊆ B), ∑ i ∈ A, V i)⁺ :=
+        sum_congr rfl fun B hB => by rw [hsplit B hB]
+    _ ≤ ∑ B ∈ coarse.parts, ∑ A ∈ fine.parts.filter (· ⊆ B), (∑ i ∈ A, V i)⁺ :=
+        sum_le_sum fun B _ => posPart_sum_le_sum_posPart _ _
+    _ = ∑ A ∈ fine.parts, ∑ B ∈ coarse.parts.filter (A ⊆ ·), (∑ i ∈ A, V i)⁺ := by
+        refine Finset.sum_comm' ?_
+        intro B A
+        simp only [mem_filter]
+        tauto
+    _ = ∑ A ∈ fine.parts, (∑ i ∈ A, V i)⁺ := by
+        refine sum_congr rfl fun A hA => ?_
+        obtain ⟨B0, hB0, hAB0⟩ := h hA
+        rw [Finset.sum_eq_single_of_mem B0 (mem_filter.2 ⟨hB0, hAB0⟩)]
+        intro B hB hne
+        exfalso
+        obtain ⟨a, ha⟩ := fine.nonempty_of_mem_parts hA
+        rw [mem_filter] at hB
+        exact hne (coarse.eq_of_mem_parts hB.1 hB0 (hB.2 ha) (hAB0 ha))
+
+/-- Every arrangement of netting sets lies between the two extremes: the net exposure
+(one agreement over all trades, add then floor) is at most the exposure `E`, and `E` is at most
+the gross exposure `G` (no agreement, floor each trade then add). -/
+theorem exposure_between_net_and_gross {ι : Type*} [Fintype ι] [DecidableEq ι] (V : ι → ℝ)
+    (S : Finpartition (univ : Finset ι)) :
+    (∑ i, V i)⁺ ≤ ∑ A ∈ S.parts, (∑ i ∈ A, V i)⁺ ∧
+      ∑ A ∈ S.parts, (∑ i ∈ A, V i)⁺ ≤ ∑ i, (V i)⁺ := by
+  refine ⟨?_, ?_⟩
+  · rw [← sum_parts_sum_eq S V]
+    exact posPart_sum_le_sum_posPart _ _
+  · rw [← sum_parts_sum_eq S (fun i => (V i)⁺)]
+    exact sum_le_sum fun A _ => posPart_sum_le_sum_posPart _ _
+
+/-- Inside one netting set, the saving from netting is exactly the smaller side:
+gross minus net exposure equals `min P Q`, where `P` is the total the bank is owed trade by trade
+and `Q` the total it owes trade by trade. -/
+theorem netting_saving_eq_min {ι : Type*} (s : Finset ι) (V : ι → ℝ) :
+    ∑ i ∈ s, (V i)⁺ - (∑ i ∈ s, V i)⁺ = min (∑ i ∈ s, (V i)⁺) (∑ i ∈ s, (V i)⁻) := by
+  have hP : ∀ i ∈ s, (V i)⁺ - (V i)⁻ = V i := fun i _ => posPart_sub_negPart (V i)
+  have hsum : ∑ i ∈ s, V i = ∑ i ∈ s, (V i)⁺ - ∑ i ∈ s, (V i)⁻ := by
+    rw [← sum_sub_distrib]
+    exact (sum_congr rfl hP).symm
+  rw [hsum, posPart_def]
+  rcases le_total (∑ i ∈ s, (V i)⁺) (∑ i ∈ s, (V i)⁻) with hle | hle
+  · rw [min_eq_left hle, max_eq_right (sub_nonpos.2 hle), sub_zero]
+  · rw [min_eq_right hle, max_eq_left (sub_nonneg.2 hle), sub_sub_cancel]
+
+/-! The card's Northwind book: trades +5, -3, +2 ($ million). -/
+
+-- gross exposure, every trade floored on its own: 5 + 0 + 2 = 7
+example : ∑ i : Fin 3, (![(5 : ℤ), -3, 2] i)⁺ = 7 := by decide
+-- net exposure, one master agreement: (5 - 3 + 2)⁺ = 4
+example : (∑ i : Fin 3, ![(5 : ℤ), -3, 2] i)⁺ = 4 := by decide
+-- P, owed to the bank trade by trade: 7; Q, owed by the bank trade by trade: 3
+example : ∑ i : Fin 3, (![(5 : ℤ), -3, 2] i)⁻ = 3 := by decide
+-- saving from netting: 7 - 4 = min 7 3 = 3
+example : ∑ i : Fin 3, (![(5 : ℤ), -3, 2] i)⁺ - (∑ i : Fin 3, ![(5 : ℤ), -3, 2] i)⁺
+    = min (∑ i : Fin 3, (![(5 : ℤ), -3, 2] i)⁺) (∑ i : Fin 3, (![(5 : ℤ), -3, 2] i)⁻) := by
+  decide
+-- trade 2 under a separate agreement: sets {1, 3} and {2}: 7 + 0 = 7
+example : ((5 : ℤ) + 2)⁺ + (-3 : ℤ)⁺ = 7 := by decide
+-- the +2 trade apart instead: sets {1, 2} and {3}: 2 + 2 = 4
+example : ((5 : ℤ) + -3)⁺ + (2 : ℤ)⁺ = 4 := by decide
+-- the +5 trade apart instead: sets {2, 3} and {1}: 0 + 5 = 5
+example : ((-3 : ℤ) + 2)⁺ + (5 : ℤ)⁺ = 5 := by decide
+-- chart: trade 2 at -9, one agreement: (5 - 9 + 2)⁺ = 0, gross stays 7
+example : ((5 : ℤ) + -9 + 2)⁺ = 0 ∧ (5 : ℤ)⁺ + (-9 : ℤ)⁺ + (2 : ℤ)⁺ = 7 := by decide
+
+#print axioms netting_never_raises_exposure
+#print axioms exposure_between_net_and_gross
+#print axioms netting_saving_eq_min
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'posPart_sum_le_sum_posPart' depends on axioms: [propext, Classical.choice, Quot.sound]
+'sum_parts_sum_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'netting_never_raises_exposure' depends on axioms: [propext, Classical.choice, Quot.sound]
+'exposure_between_net_and_gross' depends on axioms: [propext, Classical.choice, Quot.sound]
+'netting_saving_eq_min' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first. Then run it.
@@ -570,7 +752,7 @@ The two outputs agree line for line.
 > [!warning]
 > **Flooring before adding.** The floor belongs to the netting set, not to the trade. Floor each trade first and the Northwind book shows $7 million at risk when the contract says $4 million. The reverse error is worse: adding across two agreements shows $4 million when a court will see $7 million, and the $3 million owed on the separate agreement is still paid in full.
 >
-> - **Reading notional as exposure.** A swap covering a large loan can be worth very little today. Exposure is today's replacement value, not the size of the contract.
+> - **Reading notional (the contract's face amount) as exposure.** A swap covering a large loan can be worth very little today. Exposure is today's replacement value, not the size of the contract.
 > - **Treating the floor as forgiveness.** A set with negative total has zero exposure, but the bank still pays what it owes. With the −$3 million trade apart, the bank pays $3 million and recovers $2.80 million: it ends $0.20 million down on cash.
 > - **Assuming one firm means one netting set.** Netting follows signed agreements, not company names. Two agreements with the same counterparty are two sets.
 > - **Using today's exposure as the whole story.** Zero exposure today can become large tomorrow when prices move. A bank that agrees to buy Acme forward at today's forward price holds a trade worth zero now; a rise in Acme makes Northwind owe on it. Future exposure is its own measurement.

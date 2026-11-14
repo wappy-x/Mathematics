@@ -6,9 +6,17 @@
 
 ## General Overview
 
-A mid-sized bank holds $1 billion of loans and a $100 million trading book. Its balance sheet totals $1.45 billion. Its capital ratio is a healthy 12%. On a Monday a rumour spreads. Other banks that lent it $100 million for a week decline to lend again. Companies start moving deposits elsewhere. Households drift out more slowly. None of this is a loss. The loans are still good. The bank can still fail, because it has run out of cash before the loans pay back.
+A mid-sized bank holds $1 billion of loans and a $100 million trading book. Its balance sheet totals $1.45 billion. Its capital ratio is a healthy 12%.
 
-Capital answers one question: can the bank absorb losses? This card adds three more rules, each a different question. The **Liquidity Coverage Ratio** (LCR) asks: can the bank pay out everything a severe 30-day run would take, from assets it can sell at once? The **Net Stable Funding Ratio** (NSFR) asks: over a year, is the bank's funding as long-lived as its assets? The **leverage ratio** asks: however safe the risk models say the assets are, is the bank borrowing too much in total?
+On a Monday a rumour spreads. Other banks that lent it $100 million for a week decline to lend again. Companies start moving deposits elsewhere. Households drift out more slowly.
+
+None of this is a loss. The loans are still good. The bank can still fail, because it has run out of cash before the loans pay back.
+
+Capital answers one question: can the bank absorb losses? This card adds three more rules, each a different question.
+
+- The **Liquidity Coverage Ratio** (LCR) asks: can the bank pay out everything a severe 30-day run would take, from assets it can sell at once?
+- The **Net Stable Funding Ratio** (NSFR) asks: over a year, is the bank's funding as long-lived as its assets?
+- The **leverage ratio** asks: however safe the risk models say the assets are, is the bank borrowing too much in total?
 
 The Basel Committee (the group of bank regulators that writes the international rulebook) published all three between 2013 and 2017, after the 2008 crisis.
 
@@ -103,7 +111,9 @@ The same line answers a sharper question: how much worse could the run be? Scale
 
 $$\lambda^{*} = \frac{H + I}{O} = \frac{302.50 + 20.00}{255.00} = 1.2647.$$
 
-That is the largest run the ratio passes, not the largest the bank lives through. The repayments arrive on day 30, so the stock is lowest on day 29, and the bank stays above zero every day only up to 1.1949 times the rulebook's run (derived in the 30-day section below). The checks find both numbers twice: by formula, and by running the month day by day and searching for the break point with bisection (halving the interval that contains the answer, again and again).
+That is the largest run the ratio passes, not the largest the bank lives through. The repayments arrive on day 30, so the stock is lowest on day 29, and the bank stays above zero every day only up to 1.1949 times the rulebook's run (derived in the 30-day section below).
+
+The checks find both numbers twice: by formula, and by running the month day by day and searching for the break point with bisection (halving the interval that contains the answer, again and again).
 
 ### Step 2: haircuts price the fire sale; the caps stop the stock being built from second-grade assets
 
@@ -142,7 +152,9 @@ The inflow rate $n_j$ is 50% for loans to companies and households: a bank that 
 
 The LCR covers a month. A bank can pass it and still fund 25-year mortgages with 3-month borrowing, rolled over four times a year. The NSFR looks a year ahead.
 
-Each funding source gets a factor $a_i$, the share assumed to stay through a year of stress: 100% for capital and bonds with over a year to run, 95% for insured household deposits, 50% for company deposits, 0% for money from other banks due within six months. Each asset gets a factor $s_j$, the share that cannot be turned into cash within a year without a large loss: 0% for cash, 5% for government bonds, 65% for low-risk mortgages, 85% for other loans over a year. Undrawn credit lines take 5%, since some will be drawn.
+Each funding source gets a factor $a_i$, the share assumed to stay through a year of stress: 100% for capital and bonds with over a year to run, 95% for insured household deposits, 50% for company deposits, 0% for money from other banks due within six months.
+
+Each asset gets a factor $s_j$, the share that cannot be turned into cash within a year without a large loss: 0% for cash, 5% for government bonds, 65% for low-risk mortgages, 85% for other loans over a year. Undrawn credit lines take 5%, since some will be drawn.
 
 A second road through the same numbers uses the balance sheet identity: total assets equal total funding. Write $\text{Total}$ for either. The funding that is not stable is $\sum_i (1 - a_i) F_i$, and the part of the assets that is liquid within a year is $\sum_j (1 - s_j) A_j$. Then
 
@@ -193,7 +205,9 @@ The bank, in millions of dollars:
 | other assets | 30 | | |
 | **total** | **1,450** | **total** | **1,450** |
 
-Off the balance sheet: $200m of undrawn committed credit lines to companies. Company loans repay $40m within the month. Risk-weighted assets are $500m, set by the bank's own risk models, which gives the 12% capital ratio. The bank on [Basel capital](02-basel-capital-and-risk-weighted-assets.md) holds the same loans at the standard weights: $1,000m of risk-weighted assets and $120m of capital for the same 12%. Low model weights let this bank run on half the capital, the case the leverage ratio exists for.
+Off the balance sheet: $200m of undrawn committed credit lines to companies. Company loans repay $40m within the month.
+
+Risk-weighted assets are $500m, set by the bank's own risk models, which gives the 12% capital ratio. The bank on [Basel capital](02-basel-capital-and-risk-weighted-assets.md) holds the same loans at the standard weights: $1,000m of risk-weighted assets and $120m of capital for the same 12%. Low model weights let this bank run on half the capital, the case the leverage ratio exists for.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -245,7 +259,9 @@ The LCR is a single number computed on day 0. The stress it describes happens ov
 | 25 | 56.67 | −66.25 |
 | 30 | 67.50 | −60.00 |
 
-Half the stock is gone within 5 days, because the fastest money is also the largest outflow. And the stock is lowest on day 29, at $49.33m, not on day 30, because the loan repayments arrive last. The ratio measures day 30: 302.50 − 235.00 = 67.50. Everything that leaves by day 29 totals $253.17m, so a run $\lambda$ times the rulebook's keeps the stock above zero every day only while $253.17\,\lambda \le 302.50$, that is $\lambda \le 1.1949$. The Basel text itself asks banks to watch for mismatches inside the 30 days.
+Half the stock is gone within 5 days, because the fastest money is also the largest outflow. And the stock is lowest on day 29, at $49.33m, not on day 30, because the loan repayments arrive last.
+
+The ratio measures day 30: 302.50 − 235.00 = 67.50. Everything that leaves by day 29 totals $253.17m, so a run $\lambda$ times the rulebook's keeps the stock above zero every day only while $253.17\,\lambda \le 302.50$, that is $\lambda \le 1.1949$. The Basel text itself asks banks to watch for mismatches inside the 30 days.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -676,6 +692,116 @@ ALL CHECKS PASS
 
 The two outputs agree line for line.
 
+### Lean
+
+Lean proves the algebra of Steps 1, 2, 3 and 5 for all real numbers, and checks the worked numbers as exact fractions.
+
+- Suppose the outflows $O$ are positive. Then the LCR is at least 100% exactly when the day-30 stock, with inflows capped at 75%, is not negative.
+- Suppose $O$ is positive and the LCR is at least 100%. Then $H \ge O/4$, whatever the inflows.
+- The 40% cap on level 2 is the same as $L_2 \le \tfrac{2}{3}L_1$.
+- The 15% cap on level 2B is the same as $L_{2B} \le \tfrac{15}{85}(L_1 + L_{2A})$.
+- Suppose the 40% cap binds, so $L_2 = \tfrac{2}{3}L_1$. Then 15% of the whole stock is $\tfrac{15}{60}L_1$.
+- Take a loss $x$ smaller than the exposure $E$, off capital and exposure together. Then the leverage ratio stays at or above 3% exactly when $x \le (T_1 - 0.03\,E)/0.97$.
+- The by-hand table checks: the LCR is $302.50/235$, the NSFR $1{,}105/846$, and the leverage ratio $60/1{,}530$.
+- The 67.50 left on day 30, the 1.2647 largest run, the 14.54 breach loss and the cap test case check too.
+
+The day-by-day run, the 1.1949 every-day limit, the NSFR's second road and the scenarios are left to the Python and Rust checks.
+
+```lean
+-- Liquidity and leverage: the LCR passes exactly when the 30-day stock stays non-negative and then covers a quarter of the run, the two HQLA caps become the card's fractions, and the leverage ratio holds exactly up to the breach loss.
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+
+/-- Steps 1 and 3 of the card. Let `H` be the liquid stock, `O > 0` the 30-day stressed
+outflows and `I` the inflows, counted only up to 75% of the outflows. The LCR
+`H / (O - min(I, 0.75 O))` is at least 100% exactly when the stock left on day 30,
+`H - O + min(I, 0.75 O)`, is at least zero. And when the LCR is at least 100%, the
+stock alone covers at least a quarter of the run: `H ≥ O / 4`, whatever the inflows. -/
+theorem lcr_ge_one_iff_day_thirty_stock_nonneg (H O I : ℝ) (hO : 0 < O) :
+    (1 ≤ H / (O - min I (3 / 4 * O)) ↔ 0 ≤ H - O + min I (3 / 4 * O)) ∧
+    (1 ≤ H / (O - min I (3 / 4 * O)) → O / 4 ≤ H) := by
+  have hm : min I (3 / 4 * O) ≤ 3 / 4 * O := min_le_right _ _
+  have hD : 0 < O - min I (3 / 4 * O) := by linarith
+  rw [one_le_div hD]
+  constructor
+  · constructor <;> intro h <;> linarith
+  · intro h; linarith
+
+/-- Step 2 of the card. With level 1 stock `L1`, level 2A `L2A` and level 2B `L2B` (after
+haircuts): the 40% cap `L2 ≤ 0.4 (L1 + L2)` on the level-2 total `L2 = L2A + L2B` is the same
+as `L2 ≤ (2/3) L1`; the 15% cap `L2B ≤ 0.15 (L1 + L2A + L2B)` is the same as
+`L2B ≤ (15/85)(L1 + L2A)`; and when the 40% cap binds, 15% of the whole stock is `(15/60) L1`. -/
+theorem hqla_caps_as_fractions_of_level_one (L1 L2A L2B : ℝ) :
+    (L2A + L2B ≤ 2 / 5 * (L1 + (L2A + L2B)) ↔ L2A + L2B ≤ 2 / 3 * L1) ∧
+    (L2B ≤ 15 / 100 * (L1 + L2A + L2B) ↔ L2B ≤ 15 / 85 * (L1 + L2A)) ∧
+    (L2A + L2B = 2 / 3 * L1 → 15 / 100 * (L1 + (L2A + L2B)) = 15 / 60 * L1) := by
+  refine ⟨⟨fun h => by linarith, fun h => by linarith⟩,
+    ⟨fun h => by linarith, fun h => by linarith⟩, fun h => by rw [h]; linarith⟩
+
+/-- Step 5 of the card. A loss `x` comes off Tier 1 capital `T1` and off the exposure `E`
+together (with `x < E`, so some exposure is left). The leverage ratio stays at or above 3%,
+`(T1 - x) / (E - x) ≥ 0.03`, exactly when `x ≤ (T1 - 0.03 E) / 0.97`. -/
+theorem leverage_floor_iff_loss_le_breach (T1 E x : ℝ) (hx : x < E) :
+    3 / 100 ≤ (T1 - x) / (E - x) ↔ x ≤ (T1 - 3 / 100 * E) / (97 / 100) := by
+  have hD : 0 < E - x := by linarith
+  rw [le_div_iff₀ hD, le_div_iff₀ (by norm_num : (0:ℝ) < 97 / 100)]
+  constructor <;> intro h <;> linarith
+
+-- The card's bank, in millions of dollars. Both sides of the balance sheet total 1,450.
+example : 80 + 170 + 50 + 20 + 600 + 100 + 300 + 100 + 30 = 1450 := by decide
+example : 500 + 300 + 200 + 100 + 200 + 90 + 60 = 1450 := by decide
+
+-- Liquid stock H = 302.50: level 1, then level 2A and 2B after 15% and 50% haircuts.
+example : (80 + 170 : ℝ) + 85 / 100 * 50 + 50 / 100 * 20 = 605 / 2 := by norm_num
+
+-- Outflows O = 255, counted inflows I = 20 (under the 75% cap), net outflows 235.
+example : (100 / 100 * 100 + 40 / 100 * 200 + 10 / 100 * 300 + 5 / 100 * 500
+    + 10 / 100 * 200 : ℝ) = 255 := by norm_num
+example : min (50 / 100 * 40 : ℝ) (3 / 4 * 255) = 20 := by norm_num
+example : (255 : ℝ) - 20 = 235 := by norm_num
+
+-- LCR = 302.50 / 235 = 121/94 (128.72%), and 67.50 is left on day 30.
+example : (605 / 2 : ℝ) / 235 = 121 / 94 := by norm_num
+example : (605 / 2 : ℝ) - 255 + 20 = 135 / 2 := by norm_num
+
+-- Largest run the day-30 test passes: (302.50 + 20) / 255 = 43/34 (1.2647).
+example : ((605 / 2 : ℝ) + 20) / 255 = 43 / 34 := by norm_num
+
+-- Available stable funding 1,105 and required stable funding 846: NSFR = 1105/846 (130.61%).
+example : (100 / 100 * (60 + 200) + 95 / 100 * 500 + 90 / 100 * 300 + 50 / 100 * 200 : ℝ)
+    = 1105 := by norm_num
+example : (0 / 100 * 80 + 5 / 100 * 170 + 15 / 100 * 50 + 50 / 100 * 20 + 65 / 100 * 600
+    + 50 / 100 * 100 + 85 / 100 * 300 + 85 / 100 * 100 + 100 / 100 * 30
+    + 5 / 100 * 200 : ℝ) = 846 := by norm_num
+
+-- Exposure E = 1,530; leverage ratio 60 / 1530 = 2/51 (3.92%); 1530 / 60 = 25.5 dollars per dollar.
+example : (1450 + 40 / 100 * 200 : ℝ) = 1530 := by norm_num
+example : (60 : ℝ) / 1530 = 2 / 51 := by norm_num
+example : (1530 : ℝ) / 60 = 51 / 2 := by norm_num
+
+-- Breach loss: (60 - 0.03 × 1530) / 0.97 = 1410/97 (14.54).
+example : ((60 : ℝ) - 3 / 100 * 1530) / (97 / 100) = 1410 / 97 := by norm_num
+
+-- The checks' cap test case L1 = 100, L2A = 100, L2B = 60: cut15 = 35, cut40 = 175/3, H = 500/3.
+example : max (max ((60 : ℝ) - 15 / 85 * (100 + 100)) (60 - 15 / 60 * 100)) 0 = 35 := by
+  norm_num [max_def]
+example : max ((100 : ℝ) + 60 - 35 - 2 / 3 * 100) 0 = 175 / 3 := by norm_num [max_def]
+example : (100 + 100 + 60 - 35 - 175 / 3 : ℝ) = 500 / 3 := by norm_num
+
+#print axioms lcr_ge_one_iff_day_thirty_stock_nonneg
+#print axioms hqla_caps_as_fractions_of_level_one
+#print axioms leverage_floor_iff_loss_le_breach
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'lcr_ge_one_iff_day_thirty_stock_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'hqla_caps_as_fractions_of_level_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'leverage_floor_iff_loss_le_breach' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first.
@@ -730,4 +856,4 @@ Verified 28 Sep 2026: every link below resolves to the publisher's page.
 - Basel Committee on Banking Supervision. *Basel III: The Liquidity Coverage Ratio and liquidity risk monitoring tools.* Bank for International Settlements, January 2013. [Publisher page](https://www.bis.org/publications/201301-standards-basel-iii-liquidity-coverage-ratio-and-liquidity-risk-monitoring-tools). The LCR: run-off and inflow rates, haircuts, the caps and their formula (Annex 1), the 75% inflow cap.
 - Basel Committee on Banking Supervision. *Basel III: the net stable funding ratio.* Bank for International Settlements, October 2014. [Publisher page](https://www.bis.org/publications/201410-standards-basel-iii-net-stable-funding-ratio). The NSFR: the ASF and RSF factor tables used here.
 - Basel Committee on Banking Supervision. *Basel III leverage ratio framework and disclosure requirements.* Bank for International Settlements, January 2014. [Publisher page](https://www.bis.org/publications/201401-standards-basel-iii-leverage-ratio-framework-and-disclosure-requirements). The leverage ratio's definition and its exposure measure.
-- Basel Committee on Banking Supervision. *Basel III: Finalising post-crisis reforms.* Bank for International Settlements, December 2017. [Publisher page](https://www.bis.org/publications/201712-standards-basel-iii-finalising-post-crisis-reforms). The revised leverage ratio: the 3% minimum at all times, the G-SIB buffer, and the 40% conversion factor for commitments.
+- Basel Committee on Banking Supervision. *Basel III: Finalising post-crisis reforms.* Bank for International Settlements, December 2017. [Publisher page](https://www.bis.org/publications/201712-standards-basel-iii-finalising-post-crisis-reforms). The revised leverage ratio: the 3% minimum at all times, the extra buffer for global systemically important banks (G-SIBs), and the 40% conversion factor for commitments.

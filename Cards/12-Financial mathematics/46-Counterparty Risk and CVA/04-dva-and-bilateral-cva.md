@@ -57,7 +57,7 @@ The risky value of the trade is the riskless value minus the bilateral adjustmen
 | $t$, $T$ | a date, and the trade's end date, in years | T = 1 | more years, more room to default |
 | $\text{CVA}$, $\text{DVA}$, $\text{BCVA}$ | the two adjustments and their difference | forward: 0.0614, 0.0307, 0.0307 | — |
 | $F$ | the forward's delivery price, set so the forward is worth 0 today | 103.05 | — |
-| $S$, $S_t$, $K$, $r$, $q$, $\sigma$, $C_0$ | house market: Acme today and at date t, strike, riskless rate, dividend yield, volatility; the call's riskless price | 100, 100, 5%, 2%, 20%; $C_0$ = 9.227 | $C_0$ up: the call's CVA rises in proportion |
+| $S$, $S_t$, $K$, $r$, $q$, $\sigma$, $C_0$ | house market: Acme today and at date t, strike, riskless rate, dividend yield, volatility; the call's riskless price | $S$ = $K$ = 100, $r$ = 5%, $q$ = 2%, $\sigma$ = 20%; $S_t$ unknown today; $C_0$ = 9.227 | $C_0$ up: the call's CVA rises in proportion |
 | $N(x)$, $\mathbb{E}$, $\mathbf{1}\{\cdot\}$ | bell-curve area left of x; the average over the pretend (risk-neutral) world; a switch, 1 if the event in braces happens and 0 if not | — | — |
 
 The exposures are averages in the pretend world where every asset grows at the riskless rate:
@@ -69,7 +69,7 @@ The weight $\lambda_C e^{-(\lambda_C+\lambda_O)t}$ is the chance, per unit of ti
 ### When it holds
 
 - **Defaults independent of Acme's price.** The hazard is the same whatever the market does. If Northwind is likelier to fail exactly when it owes the most, the CVA is too low: [Wrong-way risk](05-wrong-way-risk.md).
-- **Close-out at the riskless value.** At a default the trade is settled at $V_t$ with no credit adjustment in it. Real master agreements let the survivor claim a replacement cost, which can include its own adjustments; the numbers then shift, most for long trades between weak names.
+- **Close-out at the riskless value.** At a default the trade is settled at $V_t$ with no credit adjustment in it. Real master agreements (the standard contract that governs every trade between two firms) let the survivor claim a replacement cost, which can include its own adjustments; the numbers then shift, most for long trades between weak names.
 - **First default ends the trade.** The second party's later default does nothing, because nothing is left to owe. Drop the survival factor and the scenarios where both default before T are counted twice.
 - **Flat hazards and known recoveries.** A hazard curve replaces $\lambda e^{-\lambda t}$ with the curve's default density; a random recovery is replaced by its average when it is independent of everything else.
 - **One uncollateralised trade.** Netting across trades and posted collateral cut both EPE and ENE: [Counterparty exposure](01-counterparty-exposure-and-netting.md).
@@ -200,11 +200,13 @@ The forward shows the same effect on the bank's side. At a bank hazard of 1 perc
 
 ### The argument for booking it
 
-Fair value is the price at which a position could be exchanged between willing parties. A buyer taking over Northwind's obligation would pay less for a promise from a weaker firm, so the obligation is worth less. Fair-value accounting follows this: IFRS 13 and the US standard ASC 820 require a liability's fair value to reflect the risk that it is not paid. Step 3 gives the price-side reason: without DVA the two sides of one contract disagree.
+Fair value is the price at which a position could be exchanged between willing parties. A buyer taking over Northwind's obligation would pay less for a promise from a weaker firm, so the obligation is worth less. Fair-value accounting follows this: the international standard IFRS 13 and the US standard ASC 820 require a liability's fair value to reflect the risk that it is not paid. Step 3 gives the price-side reason: without DVA the two sides of one contract disagree.
 
 ### The argument against
 
-The gain can be collected in only two ways. One is to default. The other is to buy back one's own debt cheaply, which needs cash that a weakening firm rarely has. A firm cannot buy credit protection on itself, so desks hedged DVA by selling protection on similar banks, which adds exposure to exactly the crisis that would hurt them. In late 2011, as bank credit spreads widened, several large banks reported quarterly profits in which own-credit gains were a large part. Bank supervisors took the cautious side: in July 2012 the Basel Committee ruled that banks strip all DVA on derivatives out of the common equity counted as capital, and forbade netting it against CVA.
+The gain can be collected in only two ways. One is to default. The other is to buy back one's own debt cheaply, which needs cash that a weakening firm rarely has. A firm cannot buy credit protection (a contract that pays out if a named firm defaults) on itself, so desks hedged DVA by selling protection on similar banks, which adds exposure to exactly the crisis that would hurt them.
+
+A credit spread is the extra interest a borrower pays over the riskless rate because it might default. In late 2011, as bank credit spreads widened, several large banks reported quarterly profits in which own-credit gains were a large part. Bank supervisors took the cautious side: in July 2012 the Basel Committee ruled that banks strip all DVA on derivatives out of the common equity counted as capital, and forbade netting it against CVA.
 
 The result is a split still in force (conventions verified 2026-09-28): DVA sits in accounting prices and in the price two dealers agree on, and is removed from the capital that is supposed to absorb losses.
 
@@ -647,6 +649,210 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line. Both use the same random number stream, so the simulated rows match too. The −0.0000 in the bank-hazard 2 percent row is zero with its sign flipped: at equal hazards the two adjustments cancel exactly, and the code prints the negative of that zero.
 
+### Lean
+
+Starting from the card's formula, Lean proves Step 3's mirror for any trade and the option and forward results of Steps 4 and 5.
+
+- Take any trade, worth $V_t$ to the bank and $-V_t$ to Northwind. Then Northwind's CVA is the bank's DVA, and Northwind's DVA is the bank's CVA.
+- For that trade, the price Northwind books is exactly minus the price the bank books. Both desks agree on one price.
+- Suppose a bought option is never a debt of the bank, and its average discounted value is $C_0$ at every date. Then the bank's DVA is zero. Its CVA is $(1-R_C) C_0 \frac{\lambda_C}{\lambda_C+\lambda_O} (1 - e^{-(\lambda_C+\lambda_O)T})$.
+- Suppose a trade's average discounted value exists and is zero at every date, as for the forward. Then $(1-R_O)\lambda_O$ times its CVA equals $(1-R_C)\lambda_C$ times its DVA.
+- Lean checks Step 0's \$6 shortfall, the 2/3 chance that Northwind defaults before the bank, and the forward's CVA at twice its DVA.
+
+Step 2's averaging over default dates, the forward's bell-curve exposure and all the dollar figures are left to the Python and Rust checks.
+
+```lean
+-- DVA: with first-to-default weights, one party's CVA is the other party's DVA and both sides book the same price, and the card's closed forms for a bought call and for a forward follow.
+import Mathlib.Algebra.Order.Group.PosPart
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+
+open MeasureTheory
+
+/-! The bilateral formula, as on the card.
+
+A firm keeps its books on a trade whose clean (riskless) value to it at date `t` in the
+future `ω` is `U t ω`; `P` is the pricing-world measure and `D(t) = e^{-rt}` the discount
+factor. Its counterparty has recovery `R_C` and hazard `λ_C`; the firm itself has recovery
+`R_O` and hazard `λ_O`. With `x⁺ = max x 0` and `x⁻ = max (-x) 0` (Mathlib's `posPart` and
+`negPart`):
+
+* `EPE(t) = E[D(t) U_t⁺]`, `ENE(t) = E[D(t) U_t⁻]`;
+* `CVA = (1 - R_C) ∫₀ᵀ λ_C e^{-(λ_C + λ_O) t} EPE(t) dt`;
+* `DVA = (1 - R_O) ∫₀ᵀ λ_O e^{-(λ_C + λ_O) t} ENE(t) dt`;
+* `BCVA = CVA - DVA`, and the risky value is `V₀ - BCVA`. -/
+
+/-- The CVA term: loss fraction of the counterparty times the integral over the trade's life
+of the counterparty's first-to-default weight times the discounted expected positive
+exposure. Arguments: the counterparty's recovery `RC` and hazard `lamC`, then the firm's own
+hazard `lamO`. -/
+noncomputable def cvaTerm {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) (r T : ℝ)
+    (U : ℝ → Ω → ℝ) (RC lamC lamO : ℝ) : ℝ :=
+  (1 - RC) * ∫ t in (0 : ℝ)..T,
+    lamC * Real.exp (-(lamC + lamO) * t) * ∫ ω, Real.exp (-r * t) * (U t ω)⁺ ∂P
+
+/-- The DVA term: the firm's own loss fraction times the integral over the trade's life of
+its own first-to-default weight times the discounted expected negative exposure. Arguments:
+the firm's own recovery `RO` and hazard `lamO`, then the counterparty's hazard `lamC`. -/
+noncomputable def dvaTerm {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) (r T : ℝ)
+    (U : ℝ → Ω → ℝ) (RO lamO lamC : ℝ) : ℝ :=
+  (1 - RO) * ∫ t in (0 : ℝ)..T,
+    lamO * Real.exp (-(lamC + lamO) * t) * ∫ ω, Real.exp (-r * t) * (U t ω)⁻ ∂P
+
+/-- One party's CVA is the other's DVA, and netting gives both desks the same price.
+The bank values the trade at `V`, Northwind at `-V`. Northwind's counterparty is the bank
+(recovery `RO`, hazard `lamO`) and Northwind itself has recovery `RC`, hazard `lamC`. Then
+Northwind's CVA is the bank's DVA, Northwind's DVA is the bank's CVA, and the price Northwind
+books, `-V₀ - BCVA_N`, is exactly minus the price the bank books, `V₀ - BCVA_B`: one contract,
+one price. -/
+theorem one_partys_cva_is_the_others_dva
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) (r T : ℝ) (V : ℝ → Ω → ℝ)
+    (RC RO lamC lamO V₀ : ℝ) :
+    cvaTerm P r T (fun t ω => -V t ω) RO lamO lamC = dvaTerm P r T V RO lamO lamC ∧
+    dvaTerm P r T (fun t ω => -V t ω) RC lamC lamO = cvaTerm P r T V RC lamC lamO ∧
+    (-V₀) - (cvaTerm P r T (fun t ω => -V t ω) RO lamO lamC
+              - dvaTerm P r T (fun t ω => -V t ω) RC lamC lamO)
+      = -(V₀ - (cvaTerm P r T V RC lamC lamO - dvaTerm P r T V RO lamO lamC)) := by
+  have h1 : cvaTerm P r T (fun t ω => -V t ω) RO lamO lamC = dvaTerm P r T V RO lamO lamC := by
+    simp only [cvaTerm, dvaTerm, posPart_neg, add_comm lamO lamC]
+  have h2 : dvaTerm P r T (fun t ω => -V t ω) RC lamC lamO = cvaTerm P r T V RC lamC lamO := by
+    simp only [cvaTerm, dvaTerm, negPart_neg, add_comm lamO lamC]
+  refine ⟨h1, h2, ?_⟩
+  rw [h1, h2]
+  ring
+
+/-- The bought option (Step 4). Once the premium is paid the option is never a debt of the
+buyer (`V ≥ 0`), and the discounted average of its value is today's price `C₀` at every date
+of its life. Then the buyer's DVA is zero and its bilateral CVA has the closed form
+`(1 - R_C) C₀ · λ_C / (λ_C + λ_O) · (1 - e^{-(λ_C + λ_O) T})`, where the last two factors are
+the chance that the counterparty defaults first and before `T`. Hazards are rates of default,
+so they are not negative. -/
+theorem bought_option_bilateral_cva_closed_form_and_zero_dva
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) (r T : ℝ) (V : ℝ → Ω → ℝ)
+    (RC RO lamC lamO C₀ : ℝ) (hT : 0 ≤ T) (hC : 0 ≤ lamC) (hO : 0 ≤ lamO)
+    (hbought : ∀ t ω, 0 ≤ V t ω)
+    (hprice : ∀ t ∈ Set.Icc 0 T, ∫ ω, Real.exp (-r * t) * V t ω ∂P = C₀) :
+    cvaTerm P r T V RC lamC lamO
+        = (1 - RC) * C₀ * (lamC / (lamC + lamO)) * (1 - Real.exp (-(lamC + lamO) * T)) ∧
+      dvaTerm P r T V RO lamO lamC = 0 := by
+  have hpos : ∀ t ω, (V t ω)⁺ = V t ω := fun t ω => posPart_eq_self.mpr (hbought t ω)
+  have hneg : ∀ t ω, (V t ω)⁻ = 0 := fun t ω => negPart_eq_zero.mpr (hbought t ω)
+  constructor
+  · have hcongr : ∫ t in (0:ℝ)..T, lamC * Real.exp (-(lamC + lamO) * t)
+          * ∫ ω, Real.exp (-r * t) * (V t ω)⁺ ∂P
+        = ∫ t in (0:ℝ)..T, lamC * C₀ * Real.exp (-(lamC + lamO) * t) := by
+      apply intervalIntegral.integral_congr
+      intro t ht
+      rw [Set.uIcc_of_le hT] at ht
+      dsimp only
+      simp only [hpos, hprice t ht]
+      ring
+    unfold cvaTerm
+    rw [hcongr, intervalIntegral.integral_const_mul]
+    rcases eq_or_lt_of_le (add_nonneg hC hO) with h0 | hkpos
+    · have hC0 : lamC = 0 := by linarith
+      rw [← h0, hC0]
+      simp
+    · have hderiv : ∀ x ∈ Set.uIcc 0 T,
+          HasDerivAt (fun t => -Real.exp (-(lamC + lamO) * t) / (lamC + lamO))
+            (Real.exp (-(lamC + lamO) * x)) x := by
+        intro x _
+        have := (((hasDerivAt_id x).const_mul (-(lamC + lamO))).exp.neg).div_const (lamC + lamO)
+        convert this using 1
+        · funext y
+          simp only [id, Pi.neg_apply]
+        · simp only [id]
+          field_simp
+      have hint : IntervalIntegrable (fun t => Real.exp (-(lamC + lamO) * t)) volume 0 T :=
+        (Real.continuous_exp.comp (continuous_const.mul continuous_id)).intervalIntegrable 0 T
+      rw [intervalIntegral.integral_eq_sub_of_hasDerivAt hderiv hint]
+      simp only [mul_zero, Real.exp_zero]
+      field_simp
+      ring
+  · unfold dvaTerm
+    simp [hneg]
+
+/-- The forward (Step 5). If the trade's discounted average value stays at zero at every
+date of its life (as for a forward struck so it is worth zero today), its expected positive
+and negative exposures are equal, so CVA and DVA differ only through hazards and recoveries:
+`(1 - R_O) λ_O · CVA = (1 - R_C) λ_C · DVA`. -/
+theorem zero_value_trade_cva_dva_differ_only_by_hazard_and_recovery
+    {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) (r T : ℝ) (V : ℝ → Ω → ℝ)
+    (RC RO lamC lamO : ℝ) (hT : 0 ≤ T)
+    (hint : ∀ t ∈ Set.Icc 0 T, Integrable (V t) P)
+    (hzero : ∀ t ∈ Set.Icc 0 T, ∫ ω, Real.exp (-r * t) * V t ω ∂P = 0) :
+    (1 - RO) * lamO * cvaTerm P r T V RC lamC lamO
+      = (1 - RC) * lamC * dvaTerm P r T V RO lamO lamC := by
+  have heq : ∀ t ∈ Set.Icc 0 T, ∫ ω, Real.exp (-r * t) * (V t ω)⁺ ∂P
+      = ∫ ω, Real.exp (-r * t) * (V t ω)⁻ ∂P := by
+    intro t ht
+    have hi := hint t ht
+    have hp : Integrable (fun ω => (V t ω)⁺) P := hi.pos_part
+    have hn : Integrable (fun ω => (V t ω)⁻) P := hi.neg_part
+    have hsplit : ∫ ω, V t ω ∂P = ∫ ω, (V t ω)⁺ ∂P - ∫ ω, (V t ω)⁻ ∂P := by
+      rw [← integral_sub hp hn]
+      simp only [posPart_sub_negPart]
+    have hz := hzero t ht
+    rw [integral_const_mul] at hz
+    rw [integral_const_mul, integral_const_mul]
+    have hexp : Real.exp (-r * t) ≠ 0 := (Real.exp_pos _).ne'
+    have h0 : ∫ ω, V t ω ∂P = 0 := by
+      rcases mul_eq_zero.mp hz with h | h
+      · exact absurd h hexp
+      · exact h
+    rw [hsplit] at h0
+    rw [sub_eq_zero.mp h0]
+  have hcongr : ∫ t in (0:ℝ)..T, lamC * Real.exp (-(lamC + lamO) * t)
+        * ∫ ω, Real.exp (-r * t) * (V t ω)⁺ ∂P
+      = lamC * ∫ t in (0:ℝ)..T, Real.exp (-(lamC + lamO) * t)
+        * ∫ ω, Real.exp (-r * t) * (V t ω)⁻ ∂P := by
+    rw [← intervalIntegral.integral_const_mul]
+    apply intervalIntegral.integral_congr
+    intro t ht
+    rw [Set.uIcc_of_le hT] at ht
+    dsimp only
+    rw [heq t ht]
+    ring
+  have hcongr2 : ∫ t in (0:ℝ)..T, lamO * Real.exp (-(lamC + lamO) * t)
+        * ∫ ω, Real.exp (-r * t) * (V t ω)⁻ ∂P
+      = lamO * ∫ t in (0:ℝ)..T, Real.exp (-(lamC + lamO) * t)
+        * ∫ ω, Real.exp (-r * t) * (V t ω)⁻ ∂P := by
+    rw [← intervalIntegral.integral_const_mul]
+    apply intervalIntegral.integral_congr
+    intro t _
+    dsimp only
+    ring
+  unfold cvaTerm dvaTerm
+  rw [hcongr, hcongr2]
+  ring
+
+/-- Step 0: Northwind defaults owing $10 with recovery 40%; the bank collects $4 and loses
+$6, which is Northwind's saving. -/
+example : (40 : ℚ) / 100 * 10 = 4 ∧ (1 - (40 : ℚ) / 100) * 10 = 6 := by norm_num
+
+/-- Hazards 2% (Northwind) and 1% (the bank): Northwind defaults first in the fraction
+`λ_C / (λ_C + λ_O) = 2/3` of the default scenarios. -/
+example : ((2 : ℚ) / 100) / (2 / 100 + 1 / 100) = 2 / 3 := by norm_num
+
+/-- The forward with both recoveries 40% and hazards 2% and 1%: the relation of the last
+theorem makes the CVA exactly twice the DVA (0.0614 against 0.0307 on the card). -/
+example (cva dva : ℚ)
+    (h : (1 - 40 / 100) * (1 / 100) * cva = (1 - 40 / 100) * (2 / 100) * dva) :
+    cva = 2 * dva := by linarith
+
+#print axioms one_partys_cva_is_the_others_dva
+#print axioms bought_option_bilateral_cva_closed_form_and_zero_dva
+#print axioms zero_value_trade_cva_dva_differ_only_by_hazard_and_recovery
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'one_partys_cva_is_the_others_dva' depends on axioms: [propext, Classical.choice, Quot.sound]
+'bought_option_bilateral_cva_closed_form_and_zero_dva' depends on axioms: [propext, Classical.choice, Quot.sound]
+'zero_value_trade_cva_dva_differ_only_by_hazard_and_recovery' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -674,7 +880,7 @@ The two outputs are identical line for line. Both use the same random number str
 
 - **Dealer-to-dealer pricing.** Two banks trading an uncollateralised swap each compute CVA and DVA; the price they settle on sits near the bilateral figure, and the weaker credit pays.
 - **Quarterly results.** Banks report own-credit adjustments as a separate line so that readers can see how much of a period's profit came from their own credit spreads moving.
-- **Capital.** Basel III takes DVA on derivatives out of common equity, which is why capital and accounting figures for the same book differ.
+- **Capital.** Basel III, the Basel Committee's capital rules, takes DVA on derivatives out of common equity, which is why capital and accounting figures for the same book differ.
 - **Funding.** The gain from one's own default overlaps with the benefit of cheap funding from owing money; separating the two is the job of [FVA](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/02-fva.md).
 - **Hedging desks.** The sensitivity of CVA and DVA to each party's credit spread is what an xVA desk (the desk that manages all these adjustments) trades against: [CVA risk numbers](06-cva-risk-numbers-and-hedging.md).
 - **Exposure profiles.** The EPE and ENE curves fed into the formula come from [Expected exposure over time](02-expected-exposure-profiles.md).

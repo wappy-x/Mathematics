@@ -8,13 +8,13 @@
 
 A bank buys a one-year call option on Acme shares from Northwind. Acme trades at \$100, the strike is \$100, and in the house market the call costs **\$9.23** ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The bank pays that premium today. The \$9.23 has to come from somewhere, and a bank's cash is borrowed. It borrows unsecured, meaning with nothing pledged, at 1 percentage point a year above the rate that cash collateral earns. That extra 1% is the bank's **funding spread**.
 
-The \$9.23 price already pays for the money at the collateral rate, 5% in the house market: that rate is the one used to discount the payoff. What the price leaves out is the extra 1%. On \$9.23 held for a year it comes to about 9.2 cents. The bank only carries the loan while the trade lives, and the trade ends early if Northwind fails, so the charge is weighted by Northwind's survival: **9.14 cents**. That charge is the **funding cost adjustment**, FCA, and with its mirror image, the **funding benefit adjustment** FBA, it makes the **funding valuation adjustment**, FVA for short, the term used from here on.
+The \$9.23 price already pays for the money at the collateral rate, 5% in the house market: that rate is the one used to discount the payoff. What the price leaves out is the extra 1%. On \$9.23 held for a year it comes to about 9.2 cents. The bank only carries the loan while the trade lives, and the trade ends early if Northwind fails, so the charge is weighted by Northwind's survival: **9.14 cents**. That charge is the **funding cost adjustment**, FCA. With its mirror image, the **funding benefit adjustment**, FBA, it makes the **funding valuation adjustment**, FVA for short, the term used from here on.
 
 Now put the same trade under a collateral agreement. Northwind hands the bank \$9.23 of cash collateral the moment the premium is paid, and tops it up or takes it back daily as the call's value moves. The bank never borrows a cent, pays the collateral rate on the cash it holds, and its FVA is **zero**. Double the funding spread to 200 basis points (a basis point is a hundredth of a percent) and the uncollateralised charge doubles to **18.27 cents**.
 
 **A fully collateralised trade is discounted at the collateral rate; the uncollateralised part must be borrowed at the bank's own rate, and FVA is the funding spread times the discounted expected exposure times the counterparty's survival chance, summed over the trade's life.**
 
-**What kind of fact this is:** a model: the bank is taken to borrow and lend at one fixed spread over the collateral rate, and the cost is taken to first order in that spread. Inside that model, collateral-rate discounting and the FVA integral are proved on this card in Why it works. Whether FVA belongs in a price at all is still argued; Step 5 weighs the argument.
+**What kind of fact this is:** a model: the bank is taken to borrow and lend at one fixed spread over the collateral rate. The cost is taken to first order in that spread, meaning no spread is charged on spread already paid. Inside that model, collateral-rate discounting and the FVA integral are proved on this card in Why it works. Whether FVA belongs in a price at all is still argued; Step 5 weighs the argument.
 
 ### The picture: the funding bill building up over the year
 
@@ -34,13 +34,21 @@ Orange, lower: the running FCA at a 100 basis point funding spread, ending at 9.
 
 ## The formula
 
-Notation first, in words. $V(t)$ is the call's clean value to the bank at date $t$, in years from today: its value if nobody could fail. Its positive part $V^+(t) = \max(V(t), 0)$ is what Northwind owes the bank; its negative part $V^-(t) = \max(-V(t), 0)$ is what the bank owes Northwind. $\mathbb{E}[\,\cdot\,]$ is an average over the pricing world, where every asset grows on average at the collateral rate $r$. The **expected positive exposure** is $\mathrm{EPE}(t) = \mathbb{E}[V^+(t)]$ and the **expected negative exposure** is $\mathrm{ENE}(t) = \mathbb{E}[V^-(t)]$. The discount factor $D(t) = e^{-rt}$ turns a dollar at date $t$ into today's money. Northwind's **hazard** $\lambda_C$ ("lambda C") is its yearly default rate among survivors, and $Q_C(t) = e^{-\lambda_C t}$ is the chance it is still alive at $t$ ([The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)). The funding spread is $s_F$.
+Notation first, in words.
+
+- $V(t)$ is the call's clean value to the bank at date $t$, in years from today: its value if nobody could fail.
+- Its positive part $V^+(t) = \max(V(t), 0)$ is what Northwind owes the bank; its negative part $V^-(t) = \max(-V(t), 0)$ is what the bank owes Northwind.
+- $\mathbb{E}[\,\cdot\,]$ is an average over the pricing world, where every asset grows on average at the collateral rate $r$.
+- The **expected positive exposure** is $\mathrm{EPE}(t) = \mathbb{E}[V^+(t)]$ and the **expected negative exposure** is $\mathrm{ENE}(t) = \mathbb{E}[V^-(t)]$.
+- The discount factor $D(t) = e^{-rt}$ turns a dollar at date $t$ into today's money.
+- Northwind's **hazard** $\lambda_C$ ("lambda C") is its yearly default rate among survivors, and $Q_C(t) = e^{-\lambda_C t}$ is the chance it is still alive at $t$ ([The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)).
+- The funding spread is $s_F$.
 
 $$\mathrm{FCA} = s_F\int_0^T D(t)\,\mathrm{EPE}(t)\,Q_C(t)\,dt, \qquad \mathrm{FBA} = s_F\int_0^T D(t)\,\mathrm{ENE}(t)\,Q_C(t)\,dt, \qquad \mathrm{FVA} = \mathrm{FCA} - \mathrm{FBA}.$$
 
 **Read it aloud:** the funding cost is the spread, times what the bank is owed at each date in today's money, times the chance the trade is still alive then, added over the trade's life; the funding benefit is the same with what the bank owes; FVA is cost minus benefit, and it comes off the price.
 
-The funded price is the clean price minus FVA. The adjustments for default, CVA and DVA ([DVA](../46-Counterparty%20Risk%20and%20CVA/04-dva-and-bilateral-cva.md)), come off separately.
+The funded price is the clean price minus FVA. The adjustments for default come off separately: [CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md), the expected loss if Northwind fails, and [DVA](../46-Counterparty%20Risk%20and%20CVA/04-dva-and-bilateral-cva.md), the value to the bank of possibly not paying what it owes.
 
 For a bought option, $\mathrm{ENE} = 0$ and the discounted exposure $D(t)\,\mathrm{EPE}(t)$ is flat at today's price $C_0$, so the integral closes:
 
@@ -87,7 +95,7 @@ The collateral agreement fixes the rate on that cash, so the rate that makes the
 
 $$V(0) = \mathbb{E}\bigl[D(T)\,X\bigr], \qquad D(T) = e^{-rT}.$$
 
-The discount rate is the rate paid on collateral. It is why interest rate markets moved from discounting at a bank lending rate to discounting at the overnight rate once collateral became standard ([Collateral discounting](../28-Swaps/05-ois-discounting-and-collateral.md)). The checks confirm the discounting: 400,000 simulated payoffs, each discounted at $r$, average 9.217775 with a standard error of 0.021868, within half a standard error of $C_0$. The twin's funding need, trade value minus collateral held, is zero at every date, so its FVA is zero.
+The discount rate is the rate paid on collateral. It is why interest rate markets moved from discounting at a bank lending rate to discounting at the overnight rate once collateral became standard ([Collateral discounting](../28-Swaps/05-ois-discounting-and-collateral.md)). The checks confirm the discounting: 400,000 simulated payoffs, each discounted at $r$, average 9.217775 with a standard error (the typical size of its random miss) of 0.021868, within half a standard error of $C_0$. The twin's funding need, trade value minus collateral held, is zero at every date, so its FVA is zero.
 
 <details>
 <summary>Detailed proof: the collateral account telescopes</summary>
@@ -108,7 +116,7 @@ Discount each stretch's cost and saving to today, average over Acme's paths, and
 
 If Northwind fails at some date, the trade is closed out on that date. The bank collects what it can, repays its loan, and funds nothing afterward. So the cost at date $t$ is paid only in the futures where Northwind is alive at $t$. With default independent of Acme, the average of the product is the product of averages, and each date gets the weight $Q_C(t)$. That is the FCA integral in The formula.
 
-The checks compute it by brute force: 52 weekly buckets, each week's discounted exposure found by integrating the call's value over every price Acme could have that week (2,000 slices of the bell curve), times the spread, times the time Northwind is expected to survive within that week. The sum is **0.091353**.
+The checks compute it by brute force, in 52 weekly buckets. For each week they find the discounted exposure by integrating the call's value over every price Acme could have that week (2,000 slices of the bell curve). They multiply it by the spread and by the time Northwind is expected to survive within that week. The sum is **0.091353**.
 
 ### Step 4: a bought option's discounted exposure is flat, so the integral closes
 
@@ -116,7 +124,7 @@ In the pricing world, today's price of a traded claim is the discounted average 
 
 $$\mathrm{FCA} = s_F\,C_0\int_0^T e^{-\lambda_C t}\,dt = s_F\,C_0\,\frac{1-e^{-\lambda_C T}}{\lambda_C} = 0.01 \times 9.227006 \times 0.990066 = 0.091353.$$
 
-The same flat exposure makes the running total in the overview nearly a straight line. The third road is a simulation: draw a date in the year, Acme's price on that date, and Northwind's default date; charge the spread on the call's value if Northwind is still alive. Over 400,000 draws it averages 0.091449, with a standard error (the typical size of its random miss) of 0.000146: within one standard error of 0.091353.
+The same flat exposure makes the running total in the overview nearly a straight line. The third road is a simulation: draw a date in the year, Acme's price on that date, and Northwind's default date; charge the spread on the call's value if Northwind is still alive. Over 400,000 draws it averages 0.091449, with a standard error of 0.000146: within one standard error of 0.091353.
 
 ### Step 5: the funding benefit, and the part of it that is already DVA
 
@@ -141,7 +149,7 @@ So the same 5.45 cents appears twice: once as DVA, the gain from the bank's own 
 
 **Funding costs belong in the price.** A bank's shareholders do pay the spread, day after day, on every uncollateralised trade. Fair value in accounting is an exit price, the price at which another dealer would take the trade over, and dealers quote with their funding in it. Large dealers began booking FVA in the years after the 2008 crisis; JPMorgan's first FVA charge, in its results for the fourth quarter of 2013, was \$1.5 billion.
 
-**Funding costs do not belong in the price.** Hull and White argue that the credit part of the spread is a transfer from shareholders to the bank's lenders, who are compensated for the bank's own default: the lenders gain what shareholders lose, the firm as a whole does not. A trade should be valued at the riskless rate, and charging a funding spread in the price counts the bank's own credit a second time, the double count shown in Step 5.
+**Funding costs do not belong in the price.** Hull and White argue that the credit part of the spread is a transfer from shareholders to the bank's lenders. The lenders are compensated for the bank's own default: they gain what shareholders lose, so the firm as a whole neither gains nor loses. A trade should be valued at the riskless rate, and charging a funding spread in the price counts the bank's own credit a second time, the double count shown in Step 5.
 
 **What desks do.** Two conventions survive. Book CVA, DVA and only a cost, FCA, dropping the FBA. Or book CVA, FCA and FBA and drop the DVA. Either way the credit part of the spread is counted once. The liquidity part of the benefit, 3.65 cents here, is dropped by the first convention and kept by the second.
 
@@ -593,6 +601,132 @@ ALL CHECKS PASS
 
 The two outputs agree line for line. The simulations draw the same numbers in both languages because the generator is written out, not borrowed.
 
+### Lean
+
+Lean proves three results from Why it works: the flat-exposure FCA, the collateral account sum, and the cash stream's linear FVA.
+
+- Suppose $\lambda_C > 0$, $T \ge 0$, and $D(t)\,\mathrm{EPE}(t) = C_0$ at every date up to $T$. Then $\mathrm{FCA} = s_F\,C_0\,(1-e^{-\lambda_C T})/\lambda_C$.
+- Take any cut dates $t_k$ and values $V_k$, and discount each net collateral cash flow at the collateral rate $r$. Then the discounted flows add up to $D_n V_n - D_0 V_0$.
+- Take a stream paying the same amount each year, for any number of years, discounted at the collateral rate. Then the spread times the integrated discounted funding need equals the spread times each payment times its date times its discount factor, summed.
+
+The dollar figures, the DVA split and the simulations are left to the Python and Rust checks.
+
+```lean
+-- FVA: when a bought option's discounted exposure is flat the funding cost integral equals spread times price times Northwind's expected survival time, the collateral account telescopes to discounted payoff minus price, and a cash stream's linear funding cost is the spread times each payment times its date times its discount factor.
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+
+open Real intervalIntegral
+
+/-- Helper: a step function (constant `c` before date `k`, zero after) is interval integrable. -/
+theorem step_integrable (c k a b : ℝ) :
+    IntervalIntegrable (fun t : ℝ => if t < k then c else 0) MeasureTheory.volume a b := by
+  have : (fun t : ℝ => if t < k then c else 0) = Set.indicator (Set.Iio k) (fun _ => c) := by
+    ext t; simp [Set.indicator_apply]
+  rw [this, intervalIntegrable_iff]
+  exact (intervalIntegrable_iff.mp intervalIntegrable_const).indicator measurableSet_Iio
+
+/-- Helper: the integral over `[0, Y]` of a step paying `c` before date `k ∈ [0, Y]` is `k * c`. -/
+theorem step_integral (c k Y : ℝ) (h0 : 0 ≤ k) (hkY : k ≤ Y) :
+    ∫ t in (0:ℝ)..Y, (if t < k then c else 0) = k * c := by
+  rw [← integral_add_adjacent_intervals (step_integrable c k 0 k) (step_integrable c k k Y)]
+  have e1 : ∫ t in (0:ℝ)..k, (if t < k then c else 0) = ∫ t in (0:ℝ)..k, c := by
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume k] with t ht hmem
+    rw [Set.uIoc_of_le h0] at hmem
+    simp [lt_of_le_of_ne hmem.2 ht]
+  have e2 : ∫ t in k..Y, (if t < k then c else 0) = ∫ t in k..Y, (0:ℝ) := by
+    apply integral_congr
+    intro t ht
+    rw [Set.uIcc_of_le hkY] at ht
+    simp [not_lt.mpr ht.1]
+  rw [e1, e2]
+  simp
+
+/-- Step 4 of the card: the funding cost adjustment of a bought option.
+FCA is the funding spread `s_F` times the integral over the trade's life `[0, T]` of the
+discount factor `e^{-r t}`, times the expected positive exposure `EPE t`, times the
+counterparty's survival chance `e^{-λ_C t}`. If the discounted exposure `e^{-r t} EPE(t)` equals
+today's clean price `C₀` at every date (as it does for a bought option), and the hazard is
+positive, the integral closes: `FCA = s_F · C₀ · (1 - e^{-λ_C T}) / λ_C`. -/
+theorem fca_flat_discounted_exposure (sF r lamC C0 T : ℝ) (EPE : ℝ → ℝ)
+    (hT : 0 ≤ T) (hlam : 0 < lamC)
+    (hflat : ∀ t ∈ Set.Icc (0 : ℝ) T, exp (-r * t) * EPE t = C0) :
+    sF * ∫ t in (0 : ℝ)..T, exp (-r * t) * EPE t * exp (-lamC * t)
+      = sF * C0 * ((1 - exp (-lamC * T)) / lamC) := by
+  have h1 : ∫ t in (0:ℝ)..T, exp (-r * t) * EPE t * exp (-lamC * t)
+      = ∫ t in (0:ℝ)..T, C0 * exp (-lamC * t) := by
+    apply integral_congr
+    intro t ht
+    rw [Set.uIcc_of_le hT] at ht
+    simp only
+    rw [hflat t ht]
+  have h2 : ∫ t in (0:ℝ)..T, exp (-lamC * t) = (1 - exp (-lamC * T)) / lamC := by
+    rw [integral_eq_sub_of_hasDerivAt (f := fun t => -exp (-lamC * t) / lamC)]
+    · field_simp
+      simp
+      ring
+    · intro x _
+      have := (((hasDerivAt_id x).const_mul (-lamC)).exp.neg).div_const lamC
+      convert this using 1
+      · ext t; simp [neg_div]
+      · simp only [id]; field_simp
+    · exact (continuous_exp.comp (continuous_const.mul continuous_id)).intervalIntegrable _ _
+  rw [h1, intervalIntegral.integral_const_mul, h2]
+  ring
+
+/-- Step 1 of the card (the detailed proof): the collateral account telescopes.
+Cut the life at dates `t 0, t 1, …, t n`, with trade values `V 0, …, V n`. At date `t (k+1)` the
+bank receives `V (k+1) - V k · e^{r (t (k+1) - t k)}` (new collateral minus old collateral
+returned with interest at the collateral rate `r`). Discounted to today at `r` and added up,
+these net cash flows equal `e^{-r t n} V n - e^{-r t 0} V 0`: the discounted final value
+minus the starting value. The bank's own borrowing rate never appears. -/
+theorem collateral_account_telescopes (r : ℝ) (t V : ℕ → ℝ) (n : ℕ) :
+    ∑ k ∈ Finset.range n,
+        exp (-r * t (k + 1)) * (V (k + 1) - V k * exp (r * (t (k + 1) - t k)))
+      = exp (-r * t n) * V n - exp (-r * t 0) * V 0 := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [Finset.sum_range_succ, ih]
+    have key : exp (-r * t (n + 1)) * exp (r * (t (n + 1) - t n)) = exp (-r * t n) := by
+      rw [← exp_add]; ring_nf
+    linear_combination (-V n) * key
+
+/-- The card's second example: a bought stream paying `C` at each year `k = 1, …, Y`, discounted
+at the collateral rate `ρ`. The funding need at date `t` is the value of the payments still to
+come; its discounted value is the sum of the payments after `t`, each discounted to today.
+The linear FVA, the spread `s_F` times that need integrated over `[0, Y]`, equals the spread
+times each payment times its date times its discount factor. -/
+theorem stream_linear_fva (sF C ρ : ℝ) (Y : ℕ) :
+    sF * ∫ t in (0 : ℝ)..(Y : ℝ),
+        ∑ k ∈ Finset.Icc 1 Y, (if t < (k : ℝ) then C * exp (-ρ * k) else 0)
+      = sF * ∑ k ∈ Finset.Icc 1 Y, (k : ℝ) * C * exp (-ρ * k) := by
+  congr 1
+  rw [integral_finsetSum (fun k _ => step_integrable _ _ _ _)]
+  apply Finset.sum_congr rfl
+  intro k hk
+  rw [Finset.mem_Icc] at hk
+  rw [step_integral _ _ _ (by positivity) (by exact_mod_cast hk.2)]
+  ring
+
+#print axioms step_integrable
+#print axioms step_integral
+#print axioms fca_flat_discounted_exposure
+#print axioms collateral_account_telescopes
+#print axioms stream_linear_fva
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'step_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'step_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'fca_flat_discounted_exposure' depends on axioms: [propext, Classical.choice, Quot.sound]
+'collateral_account_telescopes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'stream_linear_fva' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
@@ -636,6 +770,8 @@ The two outputs agree line for line. The simulations draw the same numbers in bo
 ## Where this goes next
 
 - [MVA](03-mva.md): the funding cost of the initial margin a collateralised trade must post, the bill that replaces FVA once collateral removes it.
+
+The question this card leaves open: collateral removes FVA, but a margined trade must also post initial margin, and the bank has to fund that cash too; what does it cost?
 
 ---
 

@@ -8,9 +8,13 @@
 
 Take one bank. It has lent $1 billion: $400 million as home mortgages, $400 million to companies, $200 million to households and small firms. It also runs a trading book, a $100 million inventory of bonds and shares bought to sell on. Its owners' own money in the business, after the regulator's deductions, is $120 million. Everything else is borrowed, mostly from depositors.
 
-That $120 million stands between a bad year and the depositors. Is it enough? Dividing it by the $1.1 billion on the books gives 10.91 percent, and treats a mortgage on a house worth far more than the loan as just as risky as an unsecured loan to a company. The rules of the Basel Committee on Banking Supervision, the international body of bank supervisors that meets in Basel, divide instead by a risk-adjusted size of the bank. Each loan counts at a fraction of its face value, set by how much it could lose in a bad year. That adjusted size is the bank's **risk-weighted assets**, RWA for short. Here it comes to $1,000 million.
+That $120 million stands between a bad year and the depositors. Is it enough? Dividing it by the $1.1 billion on the books gives 10.91 percent, and treats a mortgage on a house worth far more than the loan as just as risky as an unsecured loan to a company.
 
-The capital that counts first is **Common Equity Tier 1**, CET1: ordinary shares plus profits kept in the business, minus items that would be worthless in a failure, such as goodwill (the premium paid for past acquisitions). The bank's CET1 ratio is $120 million over $1,000 million: 12 percent. Because this bank holds no other kind of capital, the rules ask it for 10.5 percent. It has 1.5 percentage points, $15 million, to spare. A loss of $15 million or more does not close the bank or even break a minimum. It does something more precise: it caps the dividends, share buybacks and bonuses the bank may pay until the capital is rebuilt.
+The rules of the Basel Committee on Banking Supervision, the international body of bank supervisors that meets in Basel, divide instead by a risk-adjusted size of the bank. Each loan counts at a fraction of its face value, set by how much it could lose in a bad year. That adjusted size is the bank's **risk-weighted assets**, RWA for short. Here it comes to $1,000 million.
+
+The capital that counts first is **Common Equity Tier 1**, CET1: ordinary shares plus profits kept in the business, minus items that would be worthless in a failure, such as goodwill (the premium paid for past acquisitions). The bank's CET1 ratio is $120 million over $1,000 million: 12 percent. Because this bank holds no other kind of capital, the rules ask it for 10.5 percent. It has 1.5 percentage points, $15 million, to spare.
+
+A loss of $15 million to $40 million does not close the bank or even break a minimum. It does something more precise: it caps the dividends, share buybacks and bonuses the bank may pay until the capital is rebuilt.
 
 **Weight every exposure by its riskiness, divide the owners' loss-absorbing capital by the weighted total, and compare that ratio with a stack of minimums plus a buffer whose shortfall limits payouts step by step.**
 
@@ -642,13 +646,160 @@ ALL CHECKS PASS
 
 The two outputs agree line for line.
 
+### Lean
+
+Lean proves the three rules behind Why it works, for any bank with positive RWA, and checks the worked numbers exactly.
+
+- Take any RWA $R$ and any amounts $A_1$ and $T_2$ of other capital. Then $F$ is the least CET1 that clears all three minimums.
+- Take $R$ above zero and any buffer rate $b$. Then $C \ge F + bR$ holds exactly when $C/R \ge (F + bR)/R$.
+- Take $R$ above zero and any whole number $n$. Then $q \le 4.5\% + nb/4$ holds exactly when $C - F \le nbR/4$. So the percent table and the dollar quarters are the same rule.
+- Take the example bank. Then RWA is $1,000m by both roads, and its CET1 ratio is 12 percent.
+- Take the same bank, with no other capital. Then $F = 80$, the CET1 need is 10.5 percent, and $q$ is 8.5 percent.
+- Take a bank that also holds $15m of Additional Tier 1 and $20m of Tier 2. Then its CET1 need is 7 percent.
+- Also checked: the $15m cushion, a buffer breach at a $15m loss or one-seventh more RWA, and the minimum at $40m.
+- Also checked: the payout limit after a $20m loss, the countercyclical-buffer numbers and the $50m cushion from reading 7 percent as the need.
+
+The Try changing ratios, the mistaken ratios, the CET1 scan, the bisections and the 401-loss comparison are left to the Python and Rust checks.
+
+```lean
+-- Basel capital: the CET1 that clears the 4.5, 6 and 8 percent minimums is at least the largest of the three shortfalls, the buffer requirement reads the same in dollars and as a ratio, and the payout table's percent edges match the dollar quarters of the buffer.
+import Mathlib.Order.Bounds.Basic
+import Mathlib.Algebra.Order.Field.Basic
+import Mathlib.Basic.Real.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+
+/-! Money is in millions of dollars and rates are exact fractions.
+`R` is risk-weighted assets, `C` is Common Equity Tier 1 (CET1),
+`A₁` is Additional Tier 1, `T₂` is Tier 2 and `b` is the buffer rate.
+The three minimums are `C ≥ 4.5% R`, `C + A₁ ≥ 6% R` and `C + A₁ + T₂ ≥ 8% R`.
+`F = max (4.5% R) (6% R - A₁) (8% R - A₁ - T₂)` is the CET1 used up meeting them,
+and the payout table reads `q = 4.5% + (C - F) / R`. -/
+
+/-- The CET1 used up by the minimums: the largest of the three shortfalls. -/
+noncomputable def cet1ForMinima (R A₁ T₂ : ℝ) : ℝ :=
+  max (max (45 / 1000 * R) (60 / 1000 * R - A₁)) (80 / 1000 * R - A₁ - T₂)
+
+/-- CET1 meets the minimums first: whatever the other tiers `A₁` and `T₂` are, the
+amounts of CET1 that clear all three minimums (4.5 percent CET1, 6 percent Tier 1,
+8 percent total capital) are exactly those at or above `F`, the largest of the three
+shortfalls, so `F` is the least CET1 that clears them. -/
+theorem cet1_for_minima_is_least (R A₁ T₂ : ℝ) :
+    IsLeast {C : ℝ | 45 / 1000 * R ≤ C ∧ 60 / 1000 * R ≤ C + A₁ ∧ 80 / 1000 * R ≤ C + A₁ + T₂}
+      (cet1ForMinima R A₁ T₂) := by
+  refine ⟨⟨?_, ?_, ?_⟩, ?_⟩
+  · unfold cet1ForMinima
+    exact le_trans (le_max_left _ _) (le_max_left _ _)
+  · unfold cet1ForMinima
+    have h : 60 / 1000 * R - A₁ ≤ max (max (45 / 1000 * R) (60 / 1000 * R - A₁)) (80 / 1000 * R - A₁ - T₂) :=
+      le_trans (le_max_right _ _) (le_max_left _ _)
+    linarith
+  · unfold cet1ForMinima
+    have h : 80 / 1000 * R - A₁ - T₂ ≤ max (max (45 / 1000 * R) (60 / 1000 * R - A₁)) (80 / 1000 * R - A₁ - T₂) :=
+      le_max_right _ _
+    linarith
+  · rintro C ⟨h1, h2, h3⟩
+    unfold cet1ForMinima
+    refine max_le (max_le h1 ?_) ?_ <;> linarith
+
+/-- The buffer sits on top of the minimums: for positive risk-weighted assets `R`,
+holding CET1 of at least `F + b R` in dollars is the same as a CET1 ratio `C / R`
+of at least `(F + b R) / R`. -/
+theorem buffer_requirement_as_ratio (R A₁ T₂ C b : ℝ) (hR : 0 < R) :
+    cet1ForMinima R A₁ T₂ + b * R ≤ C ↔
+      (cet1ForMinima R A₁ T₂ + b * R) / R ≤ C / R := by
+  exact (div_le_div_iff_of_pos_right hR).symm
+
+/-- The percent table and the dollar quarters are the same rule: for positive `R`,
+the payout-table ratio `q = 4.5% + (C - F) / R` is at most the band edge
+`4.5% + n b / 4` exactly when the CET1 left above the minimums, `C - F`,
+is at most `n` quarters of the dollar buffer `b R`. -/
+theorem payout_table_edge_iff_buffer_quarters (R A₁ T₂ C b : ℝ) (n : ℕ) (hR : 0 < R) :
+    45 / 1000 + (C - cet1ForMinima R A₁ T₂) / R ≤ 45 / 1000 + n * (b / 4) ↔
+      C - cet1ForMinima R A₁ T₂ ≤ n * (b * R / 4) := by
+  rw [add_le_add_iff_left, div_le_iff₀ hR]
+  constructor <;> intro h <;> linarith
+
+/-! Worked numbers from the card, exactly. -/
+
+-- credit RWA: 30% of 400 + 100% of 400 + 75% of 200 = 670
+example : (30 / 100 : ℝ) * 400 + 1 * 400 + 75 / 100 * 200 = 670 := by norm_num
+
+-- operational charge: 12% of a 120 business indicator is 14.40
+example : (12 / 100 : ℝ) * 120 = 1440 / 100 := by norm_num
+
+-- total RWA: 670 + 12.5 × 12 + 12.5 × 14.40 = 1,000
+example : (670 : ℝ) + 25 / 2 * 12 + 25 / 2 * (1440 / 100) = 1000 := by norm_num
+
+-- second road: 8% charges added up give 80, times 12.5 is again 1,000
+example : (8 / 100 : ℝ) * 670 + 12 + 1440 / 100 = 80 ∧ (25 / 2 : ℝ) * 80 = 1000 := by norm_num
+
+-- CET1 ratio: 120 over 1,000 is 12 percent
+example : (120 : ℝ) / 1000 = 12 / 100 := by norm_num
+
+-- F for the CET1-only bank: max(45, 60, 80) = 80
+example : cet1ForMinima 1000 0 0 = 80 := by
+  norm_num [cet1ForMinima, max_def]
+
+-- F for the bank with 15 of Additional Tier 1 and 20 of Tier 2: max(45, 45, 45) = 45
+example : cet1ForMinima 1000 15 20 = 45 := by
+  norm_num [cet1ForMinima, max_def]
+
+-- CET1 need: (80 + 25) / 1,000 = 10.5 percent; mixed bank: (45 + 25) / 1,000 = 7 percent
+example : ((80 : ℝ) + 25 / 1000 * 1000) / 1000 = 105 / 1000 ∧
+    ((45 : ℝ) + 25 / 1000 * 1000) / 1000 = 7 / 100 := by norm_num
+
+-- cushion: 120 − 80 − 25 = 15; buffer quarter 25 / 4 = 6.25
+example : (120 : ℝ) - 80 - 25 = 15 ∧ (25 : ℝ) / 4 = 625 / 100 := by norm_num
+
+-- payout-table ratio: q = 4.5% + (120 − 80) / 1,000 = 8.5%, above 7%, so no limit
+example : (45 / 1000 : ℝ) + (120 - 80) / 1000 = 85 / 1000 ∧ (7 / 100 : ℝ) < 85 / 1000 := by
+  norm_num
+
+-- a loss of exactly 15 gives q = 7.0%, which is inside the 40 percent row (not above 7%)
+example : (45 / 1000 : ℝ) + (105 - 80) / 1000 = 7 / 100 := by norm_num
+
+-- after a 20 loss, q = 6.5% is in the 40 percent row; of 10 of earnings, 6 may be paid out
+example : (6375 / 100000 : ℝ) < 45 / 1000 + (100 - 80) / 1000 ∧
+    (45 / 1000 : ℝ) + (100 - 80) / 1000 ≤ 7 / 100 ∧ (10 : ℝ) * (1 - 40 / 100) = 6 := by
+  norm_num
+
+-- breaking points: buffer breached at a loss of 120 − 80 − 25 = 15, minimum at 120 − 80 = 40
+example : (120 : ℝ) - 80 - 25 / 1000 * 1000 = 15 ∧ (120 : ℝ) - 80 = 40 := by norm_num
+
+-- RWA growth to breach: 120 / 10.5% = 1,000 × (1 + 1/7), RWA up by one seventh (14.29%)
+example : (120 : ℝ) / (105 / 1000) = 1000 * (1 + 1 / 7) := by norm_num
+
+-- a 1 percent countercyclical buffer: need 11.5 percent, cushion 5
+example : ((80 : ℝ) + 35 / 1000 * 1000) / 1000 = 115 / 1000 ∧
+    (120 : ℝ) - 80 - 35 / 1000 * 1000 = 5 := by norm_num
+
+-- a 10 loss with 5 percent RWA growth: 110 / 1,050 is below the 10.5 percent need
+example : (110 : ℝ) / (105 / 100 * 1000) < 105 / 1000 := by norm_num
+
+-- wrong stack (7% read as the need): cushion 50 instead of 15
+example : (120 : ℝ) - (45 / 1000 + 25 / 1000) * 1000 = 50 := by norm_num
+
+#print axioms cet1_for_minima_is_least
+#print axioms buffer_requirement_as_ratio
+#print axioms payout_table_edge_iff_buffer_quarters
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'cet1_for_minima_is_least' depends on axioms: [propext, Classical.choice, Quot.sound]
+'buffer_requirement_as_ratio' depends on axioms: [propext, Classical.choice, Quot.sound]
+'payout_table_edge_iff_buffer_quarters' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the direction first.
 > - **Switch on a 1 percent countercyclical buffer**, the extra buffer supervisors add when credit is booming. The need rises to **11.50 percent** and the cushion shrinks from $15m to **$5m**.
 > - **Give the bank $15m of Additional Tier 1 and $20m of Tier 2** (`cet1_for_minima(R, 15.0, 20.0)`). Its CET1 need falls from 10.5 to **7.00 percent**, because the cheaper capital now fills the Tier 1 and Tier 2 slots.
 > - **Lose $10m and grow RWA by 5 percent at once.** The ratio is **10.48 percent**: inside the buffer, 40 percent of earnings kept, though neither change alone would do it.
-> - **Reweight the corporate loans at 75 percent**, as for a company rated BBB. RWA falls and the ratio rises to **13.33 percent** with no new capital.
+> - **Reweight the corporate loans at 75 percent**, as for a company with a BBB credit rating. RWA falls and the ratio rises to **13.33 percent** with no new capital.
 
 ---
 

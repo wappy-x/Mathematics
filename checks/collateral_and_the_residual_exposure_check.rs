@@ -166,5 +166,5 @@ fn main() {
     assert!((mc[3] - cva_zero).abs() < 4.0 * se[3] + 2e-5);
     assert!(cva_thr < cap); assert!(worst <= 1e-12);                 // the two bounds proved on the card
     assert!((envelope / cva_zero - 1.0).abs() < 0.1); assert!((move_mc - move_full).abs() < 0.4);
-    println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

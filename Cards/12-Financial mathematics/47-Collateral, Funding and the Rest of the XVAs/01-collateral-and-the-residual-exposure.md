@@ -8,9 +8,13 @@
 
 A bank buys the one-year Acme call from Northwind. Acme trades at \$100, the strike is \$100, and in the house market the call is worth **\$9.23**. Northwind fails at 2% a year and would return 40 cents on the dollar. Unprotected, the bank's expected loss from that failure, the credit valuation adjustment or CVA, is **10.96 cents** ([CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md)).
 
-Now the two sides sign a collateral agreement. Every business day the bank values the call, and Northwind hands over cash to match, less a \$2 allowance. The cash works like a landlord's deposit: it sits with the bank, it goes back when the debt shrinks, and it is kept if the debtor walks away. The daily top-up that tracks the trade's value is called **variation margin**, the term used from here on. The \$2 allowance is the **threshold**. A small change below a set size is not sent at all: the **minimum transfer amount**. The contract that sets all three is the **credit support annex**, CSA for short.
+Now the two sides sign a collateral agreement. Every business day the bank values the call, and Northwind hands over cash to match, less a \$2 allowance. The cash works like a landlord's deposit: it sits with the bank, it goes back when the debt shrinks, and it is kept if the debtor walks away.
 
-If Northwind fails, the bank keeps the cash and claims only what the cash does not cover. That gap is not just the \$2. Northwind stops paying margin a while before anyone can call it a default, and the bank then needs days to close the trade out and replace it. Through that stretch the collateral is frozen and Acme keeps moving. The standard allowance for it is ten business days, the **margin period of risk**. With the \$2 threshold and the ten-day gap, CVA falls to **2.41 cents**. With no threshold at all it falls to **1.13 cents**, and no further: ten days of Acme's moves are left.
+The daily top-up that tracks the trade's value is called **variation margin**, the term used from here on. The \$2 allowance is the **threshold**. A small change below a set size is not sent at all: the **minimum transfer amount**. The contract that sets all three is the **credit support annex**, CSA for short.
+
+If Northwind fails, the bank keeps the cash and claims only what the cash does not cover. That gap is not just the \$2. Northwind stops paying margin a while before anyone can call it a default, and the bank then needs days to close the trade out and replace it. Through that stretch the collateral is frozen and Acme keeps moving.
+
+The standard allowance for it is ten business days, the **margin period of risk**. With the \$2 threshold and the ten-day gap, CVA falls to **2.41 cents**. With no threshold at all it falls to **1.13 cents**, and no further: ten days of Acme's moves are left.
 
 **Collateral that tracks the trade's value leaves the bank exposed only to the threshold plus whatever the trade gains while margin is frozen before closeout, and CVA recomputed on that residual falls sharply but stays above zero.**
 
@@ -136,7 +140,7 @@ Without a minimum transfer, the collateral is $\bigl(V(t-\delta) - H\bigr)^+ \ge
 
 $$X(t) \le H + M + \bigl(V(t) - V(t-\delta)\bigr)^+.$$
 
-The Monte Carlo road below checks this on every path and every default day, 1,260,000 residuals under a \$0.50 minimum transfer. The largest amount by which any residual exceeds its ceiling is −0.000002: none does, and the closest comes within two millionths.
+The Monte Carlo road below, an average over many simulated random paths of Acme, checks this on every path and every default day, 1,260,000 residuals under a \$0.50 minimum transfer. The largest amount by which any residual exceeds its ceiling is −0.000002: none does, and the closest comes within two millionths.
 
 <details>
 <summary>Detailed proof: the ceiling</summary>
@@ -167,17 +171,21 @@ The delta rule is a straight-line estimate. A bought call gains faster than delt
 
 ### Step 7: haircuts protect against the collateral itself
 
-Cash does not change value in ten days. A bond does. Today the \$2 threshold calls for \$7.227006 of margin. Paid in bonds with a 4% haircut, Northwind must post bonds worth \$7.528131, since only 96% of their value counts. If the bonds fall 3% while the bank waits to sell them, they fetch \$7.302287: still more than the margin they stood for. With no haircut, the same fall leaves the bank \$0.216810 short, on top of the residual. A haircut is a threshold run backwards: it is the part of the collateral the bank refuses to count.
+Cash does not change value in ten days. A bond does. Today the \$2 threshold calls for \$7.227006 of margin. Paid in bonds with a 4% haircut, Northwind must post bonds worth \$7.528131, since only 96% of their value counts. If the bonds fall 3% while the bank waits to sell them, they fetch \$7.302287: still more than the margin they stood for.
+
+With no haircut, the same fall leaves the bank \$0.216810 short, on top of the residual. A haircut is a threshold run backwards: it is the part of the collateral the bank refuses to count.
 
 ### The other road: simulate the agreement day by day
 
-Simulation follows Acme on 5,000 paths of 252 trading days each, half of them mirror images of the other half. On each path it values the call every day, runs the margin rule every day, and for each possible default day reads the residual from the collateral held ten days earlier. It weights each day by the chance Northwind fails on it and discounts. It gets 0.024001 for the \$2 threshold, against the Simpson figure of 0.024056, with a standard error of 0.000046; and 0.011134 for no threshold, against 0.011252, standard error 0.000055. The daily paths also carry the minimum transfer amount, which the formula road cannot: 0.023764 at \$0.50.
+Simulation follows Acme on 5,000 paths of 252 trading days each, half of them mirror images of the other half. On each path it values the call every day, runs the margin rule every day, and for each possible default day reads the residual from the collateral held ten days earlier. It weights each day by the chance Northwind fails on it and discounts.
+
+The formula road uses Simpson's rule: a weighted sum over a grid of Acme prices that stands in for the bell-curve average. The standard error is the likely size of the simulation's random error. The simulation gets 0.024001 for the \$2 threshold, against the Simpson figure of 0.024056, with a standard error of 0.000046; and 0.011134 for no threshold, against 0.011252, standard error 0.000055. The daily paths also carry the minimum transfer amount, which the formula road cannot: 0.023764 at \$0.50.
 
 ---
 
 ## Worked numbers, by hand
 
-The Acme call, $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$, bought from Northwind, $\lambda = 2\%$, $R = 40\%$; threshold \$2, margin period 10 trading days.
+The Acme call, $S = K = 100$ (price and strike), $r = 5\%$, $q = 2\%$ (Acme's dividend yield), $\sigma = 20\%$, $T = 1$, bought from Northwind, $\lambda = 2\%$, $R = 40\%$; threshold \$2, margin period 10 trading days.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -355,10 +363,10 @@ assert abs(mc["thr_mpor"] - cva_mp) < 4 * se["thr_mpor"] + 2e-5
 assert abs(mc["zero_mpor"] - cva_zero) < 4 * se["zero_mpor"] + 2e-5
 assert cva_thr < cap; assert worst <= 1e-12                             # the two bounds proved on the card
 assert abs(envelope / cva_zero - 1) < 0.1; assert abs(move_mc - move_full) < 0.4
-print("all checks passed")
+print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-28 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-14 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 clean call C0                                  9.227006
@@ -415,7 +423,7 @@ discounted expected residual, cents: instant thr 2 | thr 2 + 10d | thr 0 + 10d
   t = 0.7917   136.00   181.13    94.76
   t = 0.8750   123.63   172.76    94.93
   t = 0.9583   106.58   159.88    95.32
-all checks passed
+ALL CHECKS PASS
 ```
 
 ### Rust
@@ -589,11 +597,11 @@ fn main() {
     assert!((mc[3] - cva_zero).abs() < 4.0 * se[3] + 2e-5);
     assert!(cva_thr < cap); assert!(worst <= 1e-12);                 // the two bounds proved on the card
     assert!((envelope / cva_zero - 1.0).abs() < 0.1); assert!((move_mc - move_full).abs() < 0.4);
-    println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-28 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-14 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 clean call C0                                  9.227006
@@ -650,7 +658,7 @@ discounted expected residual, cents: instant thr 2 | thr 2 + 10d | thr 0 + 10d
   t = 0.7917   136.00   181.13    94.76
   t = 0.8750   123.63   172.76    94.93
   t = 0.9583   106.58   159.88    95.32
-all checks passed
+ALL CHECKS PASS
 ```
 
 The two outputs agree line for line: both use the same generator and seed, so their simulations draw the same paths.
@@ -669,9 +677,92 @@ xychart-beta
 
 Orange, rising: CVA under the agreement, by threshold. Green, flat: CVA with no collateral. The orange line starts at 1.13 cents, not zero, and climbs toward the green one as the threshold grows past the call's typical value.
 
+### Lean
+
+Lean proves the two ceilings on the residual and Step 2's integral, for any values of the inputs.
+
+- Suppose $H, M \ge 0$ and $C(t)$ equals its target $(V(t-\delta) - H)^+$, or lags it by less than $M$. Then $0 \le X(t) \le H + M + (V(t) - V(t-\delta))^+$.
+- Suppose margin is seized the instant Northwind fails, so $C(t) = (V(t) - H)^+$, with $V(t) \ge 0$ and $H \ge 0$. Then $X(t) = \min(V(t), H)$, so the residual is never more than the threshold.
+- Take $\lambda + r \ne 0$, and put $H$ in place of $X(t)$ in the CVA integral. Then it works out to Step 2's closed form, $(1-R)H\frac{\lambda}{\lambda+r}(1 - e^{-(\lambda+r)T})$.
+
+Step 1's loss rule, every CVA figure and the simulations are left to the Python and Rust checks.
+
+```lean
+-- Collateral: the residual exposure left by variation margin is never negative and never more than the threshold plus the minimum transfer plus the trade's gain over the margin period of risk.
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+
+open Real
+
+/-- The ceiling on the residual exposure (Step 4). Let `V t` be the trade's clean value at date
+`t`, `H ≥ 0` the threshold, `M ≥ 0` the minimum transfer amount and `δ` the margin period of risk.
+The collateral counted at date `t`, `C t`, was set at the last margin call `δ` earlier: it equals
+the target `(V (t - δ) - H)⁺`, or differs from it by less than `M` because the minimum transfer rule
+left it unmoved. Then the residual exposure `X t = (V t - C t)⁺` satisfies
+`0 ≤ X t ≤ H + M + (V t - V (t - δ))⁺`. -/
+theorem residual_exposure_le_threshold_add_mta_add_gain
+    (V C : ℝ → ℝ) (H M δ : ℝ) (hH : 0 ≤ H) (hM : 0 ≤ M)
+    (hC : ∀ t, C t = max (V (t - δ) - H) 0 ∨ |C t - max (V (t - δ) - H) 0| < M) (t : ℝ) :
+    0 ≤ max (V t - C t) 0 ∧
+      max (V t - C t) 0 ≤ H + M + max (V t - V (t - δ)) 0 := by
+  have hA : max (V (t - δ) - H) 0 - M ≤ C t := by
+    rcases hC t with h | h
+    · rw [h]; linarith
+    · have := (abs_lt.mp h).1; linarith
+  refine ⟨le_max_right _ _, max_le ?_ ?_⟩
+  · have h1 := le_max_left (V (t - δ) - H) 0
+    have h2 := le_max_left (V t - V (t - δ)) 0
+    linarith
+  · have h2 := le_max_right (V t - V (t - δ)) 0
+    linarith
+
+/-- Instant margin caps the residual at the threshold (Step 2). If margin could be seized the
+moment the counterparty fails, the collateral is `C t = (V t - H)⁺`; for a trade whose value is
+never negative (a bought call) and a threshold `H ≥ 0`, the residual `(V t - C t)⁺` is exactly the
+smaller of the value and the threshold, `min (V t) H`. -/
+theorem instant_margin_residual_eq_min_value_threshold
+    (V : ℝ → ℝ) (H : ℝ) (hV : ∀ t, 0 ≤ V t) (hH : 0 ≤ H) (t : ℝ) :
+    max (V t - max (V t - H) 0) 0 = min (V t) H := by
+  have hv := hV t
+  rcases le_total (V t) H with h | h
+  · rw [max_eq_right (show V t - H ≤ 0 by linarith), min_eq_left h, sub_zero, max_eq_left hv]
+  · rw [max_eq_left (show 0 ≤ V t - H by linarith), min_eq_right h, sub_sub_cancel,
+      max_eq_left hH]
+
+/-- The instant-margin CVA ceiling done by hand (Step 2): putting the threshold `H` in place of
+the residual in the CVA integral, with discount `e^{-r t}`, default density `λ e^{-λ t}` and
+recovery `R`, gives `(1 - R) H λ / (λ + r) (1 - e^{-(λ + r) T})`. -/
+theorem instant_margin_cva_ceiling_eq
+    (R H lam r T : ℝ) (hlr : lam + r ≠ 0) :
+    (1 - R) * H * ∫ t in (0 : ℝ)..T, exp (-r * t) * (lam * exp (-lam * t)) =
+      (1 - R) * H * (lam / (lam + r)) * (1 - exp (-(lam + r) * T)) := by
+  have h1 : ∀ t : ℝ, exp (-r * t) * (lam * exp (-lam * t)) = lam * exp ((-(lam + r)) * t) := by
+    intro t
+    rw [mul_left_comm, ← Real.exp_add]
+    ring_nf
+  simp_rw [h1]
+  have hc : (-(lam + r)) ≠ 0 := neg_ne_zero.mpr hlr
+  rw [intervalIntegral.integral_const_mul,
+    intervalIntegral.integral_comp_mul_left (fun x => exp x) hc, integral_exp]
+  simp only [mul_zero, Real.exp_zero, smul_eq_mul]
+  field_simp
+  ring
+
+#print axioms residual_exposure_le_threshold_add_mta_add_gain
+#print axioms instant_margin_residual_eq_min_value_threshold
+#print axioms instant_margin_cva_ceiling_eq
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'residual_exposure_le_threshold_add_mta_add_gain' depends on axioms: [propext, Classical.choice, Quot.sound]
+'instant_margin_residual_eq_min_value_threshold' depends on axioms: [propext, Classical.choice, Quot.sound]
+'instant_margin_cva_ceiling_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
-> - **Double the margin period to 20 days**, the Basel floor for large or hard-to-replace netting sets. Guess first. Threshold \$2: 0.027573. Zero threshold: 0.015652, close to $\sqrt{2}$ times 0.011252, because a move over twice the time is about $\sqrt{2}$ times as large.
+> - **Double the margin period to 20 days**, the Basel floor for large or hard-to-replace netting sets. A netting set is the group of trades with one counterparty that settle as one amount ([Counterparty exposure](../46-Counterparty%20Risk%20and%20CVA/01-counterparty-exposure-and-netting.md)). Guess first. Threshold \$2: 0.027573. Zero threshold: 0.015652, close to $\sqrt{2}$ times 0.011252, because a move over twice the time is about $\sqrt{2}$ times as large.
 > - **Double Northwind's hazard to 4%.** Guess first. The CVA goes to 0.047663, just under twice 0.024056: more defaults, but fewer survivors left to default late.
 > - **Add a \$0.50 minimum transfer amount.** Guess first. The CVA goes to 0.023764, slightly lower. The rule cuts both ways: when the call falls, Northwind waits longer to get cash back, and the bank holds a little extra.
 > - **Raise the threshold to \$10.** Guess first. The CVA is 7.53 cents: with the call worth about \$9.23, a \$10 threshold means most futures never trigger a call at all.
@@ -693,7 +784,7 @@ Orange, rising: CVA under the agreement, by threshold. Green, flat: CVA with no 
 ## Where you meet it in real life
 
 - **The credit support annex.** Most bilateral derivatives between banks and large firms sit under a CSA that fixes the threshold, the minimum transfer amount, the eligible collateral and its haircuts. The numbers on this card are what those clauses are worth.
-- **The uncleared margin rules.** Since 2016 the BCBS-IOSCO rules require large dealers to exchange variation margin on uncleared derivatives with, in effect, no threshold. That is the \$0 point on the threshold chart: the risk that remains is the margin period.
+- **The uncleared margin rules.** Since 2016 the BCBS-IOSCO rules (from the Basel Committee on Banking Supervision and the International Organization of Securities Commissions) require large dealers to exchange variation margin on uncleared derivatives with, in effect, no threshold. That is the \$0 point on the threshold chart: the risk that remains is the margin period.
 - **Capital.** Basel's counterparty rules floor the margin period of risk at ten business days for daily-margined uncleared trades, and at 20 for very large or illiquid netting sets.
 - **Initial margin and its cost.** Collateral posted in advance, sized on the 99% ten-day move, is what removes most of the remaining residual. Funding it has a price: [MVA](03-mva.md). The capital held against what is still left is priced in [KVA](04-kva.md), and the adjustments meet on one desk in [Putting the adjustments together](05-the-xva-desk-view.md).
 

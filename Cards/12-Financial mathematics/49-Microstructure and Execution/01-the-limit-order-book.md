@@ -8,15 +8,17 @@
 
 Acme shares trade on an exchange. Just after the opening, ten orders arrive, one after another. Some say "buy 300 shares, but pay no more than $99.98". Some say "sell 200 shares, but take no less than $100.02". One says "buy 350 shares now, at whatever price is on offer". By the tenth order, three trades have taken place.
 
-An order that names a price is a **limit order**. If nobody will meet that price yet, it waits. The waiting orders form a list, sorted by price, with the buyers on one side and the sellers on the other. That list is the **order book**. A waiting buy is a **bid**; a waiting sell is an **ask** (also called an offer). An order that names no price, "fill me now", is a **market order**.
+An order that names a price is a **limit order**. If nobody will meet that price yet, it waits. The waiting orders form a list, sorted by price, with the buyers on one side and the sellers on the other. That list is the **order book**.
+
+A waiting buy is a **bid**; a waiting sell is an **ask** (also called an offer). An order that names no price, "fill me now", is a **market order**.
 
 When a new order can trade against a waiting one, the exchange decides who trades first by a fixed **matching rule**. The common one is **price-time priority**: the best price goes first, and among orders at the same price, the one that arrived earliest goes first. The trade happens at the waiting order's price.
 
-From the book alone three readings follow. The **spread** is the gap between the cheapest ask and the dearest bid: what buying and then selling at once costs per share. The **depth** is how many shares wait near the top of the book. The **imbalance** says which side of the top holds more shares.
+From the book alone three readings follow. The **spread** is the gap between the cheapest ask and the highest bid: what buying and then selling at once costs per share. The **depth** is how many shares wait near the top of the book. The **imbalance** says which side of the top holds more shares.
 
 **An order book is two queues of waiting orders sorted by price and then by arrival time; each new order trades against the front of the opposite queue while prices cross, at the waiting order's price; spread, depth and imbalance are read straight off what remains.**
 
-**What kind of fact this is:** a convention. Price-time priority is a rule exchanges choose, and some markets choose another. Spread, depth and imbalance are definitions. What Why it works proves follows from the rule alone: the book never ends up crossed, and two very different ways of running the rule give the same trades.
+**What kind of fact this is:** a convention. Price-time priority is a rule exchanges choose, and some markets choose another. Spread, depth and imbalance are definitions. What *Why it works* proves follows from the rule alone: the book never ends up crossed, and two very different ways of running the rule give the same trades.
 
 ### The picture: Acme's book after seven orders
 
@@ -40,7 +42,9 @@ Nothing has traded yet: every buyer wants to pay less than every seller will tak
 
 Notation first, in words. At any moment $b$ is the **best bid**: the highest price any waiting buyer will pay. $a$ is the **best ask**: the lowest price any waiting seller will take. $Q_b$ and $Q_a$ count the shares waiting at exactly those two prices.
 
-**The matching rule.** Give every waiting order a key: its price, then its arrival number. An incoming buy meets the waiting sells in order of the smallest key, and keeps trading while the ask it meets is at or below its own limit (a market buy has no limit). An incoming sell meets the waiting buys highest price first, then earliest, while the bid is at or above its limit. Each trade happens at the **waiting** order's price. Whatever is left of a limit order joins the back of the queue at its price; whatever is left of a market order is dropped.
+**The matching rule.** Give every waiting order a key: its price, then its arrival number. An incoming buy meets the waiting sells in order of the smallest key, and keeps trading while the ask it meets is at or below its own limit. A market buy has no limit. An incoming sell meets the waiting buys highest price first, then earliest, while the bid is at or above its limit.
+
+Each trade happens at the **waiting** order's price. Whatever is left of a limit order joins the back of the queue at its price; whatever is left of a market order is dropped.
 
 The readings:
 
@@ -91,7 +95,7 @@ $$\text{OFI} = \sum_{n} e_n$$
 - **Continuous trading.** The rule runs order by order during the day. Opening and closing auctions instead collect orders and clear them all at one price; there the book is read differently.
 - **Price-time priority.** Some futures markets split each incoming order across everyone at the best price in proportion to size (pro-rata). Under that rule order 9 would share its 100 shares between orders 3 and 5, and arriving first earns less.
 - **One venue, visible orders.** The same stock trades on several exchanges, each with its own book, and some orders are hidden. The depth shown on one screen then understates what is really there.
-- **Conventions as of 2026-09-28** (Gould et al. 2013 in Sources): price-time priority is the usual rule in continuous stock trading; pro-rata and hybrid rules exist on some futures markets. The one-cent tick in the example is illustrative.
+- **Conventions as of 2026-09-28** (Gould et al. 2013 in Sources): price-time priority is the usual rule in continuous stock trading; pro-rata and hybrid rules exist on some futures markets. The one-cent tick (the smallest step a price can move by) in the example is illustrative.
 - **No cancellations in the story.** Real books see orders withdrawn all the time. A cancel is a removal from a queue; it changes depth and imbalance, and it counts in OFI exactly like a fill, but it prints no trade.
 
 ---
@@ -108,11 +112,19 @@ The rule also sets incentives. Price priority rewards a better price. Time prior
 
 A book is **crossed** when the best bid is at or above the best ask. The rule makes that impossible after any order finishes.
 
-Suppose the book is uncrossed, $b < a$, when an incoming buy with limit $p$ arrives. It trades while the best ask is at or below $p$, and removing asks can only raise $a$. It stops for one of two reasons. Either it is used up and nothing new rests, so $b$ is unchanged and still below $a$. Or the best ask is now above $p$; the rest joins the bids at $p$, below the new $a$, and the old $b$ was already below it. Either way $b < a$ afterwards. A sell is the mirror, and by induction (one order at a time) the book is never crossed. The random test in the code runs 2032 orders and counts crossed books after each one: zero.
+Suppose the book is uncrossed, $b < a$, when an incoming buy with limit $p$ arrives. It trades while the best ask is at or below $p$, and removing asks can only raise $a$.
+
+It stops for one of two reasons. Either it is used up and nothing new rests, so $b$ is unchanged and still below $a$. Or the best ask is now above $p$; the rest joins the bids at $p$, below the new $a$, and the old $b$ was already below it. Either way $b < a$ afterwards.
+
+A sell is the mirror, and by induction (one order at a time) the book is never crossed. The random test in the code runs 2032 orders and counts crossed books after each one: zero.
 
 ### Step 2: queues by level and one big sort give the same trades
 
-The code runs the rule two ways. The first keeps one queue per price and takes the front of the best level. The second keeps one flat list with no levels; for each incoming order it sorts the eligible waiting orders by (price, arrival number) and fills down the list. They must agree. Within a level, the queue only ever grows at the back, so its front is the earliest arrival there: the smallest arrival number at that price. Across levels, the best price comes first in both. So the first engine always takes the order with the smallest key, which is exactly the order the second engine's sort puts first. Filling it changes only its own size, so the same argument repeats until the incoming order stops. On the ten orders and on the random run, the two engines print identical trades and identical books.
+The code runs the rule two ways. The first keeps one queue per price and takes the front of the best level. The second keeps one flat list with no levels; for each incoming order it sorts the eligible waiting orders by (price, arrival number) and fills down the list. They must agree.
+
+Within a level, the queue only ever grows at the back, so its front is the earliest arrival there: the smallest arrival number at that price. Across levels, the best price comes first in both. So the first engine always takes the order with the smallest key, which is exactly the order the second engine's sort puts first.
+
+Filling it changes only its own size, so the same argument repeats until the incoming order stops. On the ten orders and on the random run, the two engines print identical trades and identical books.
 
 ### Step 3: every share is accounted for
 
@@ -126,26 +138,39 @@ Write $m_w$ with $a = m + s/2$ and $b = m - s/2$:
 
 $$m_w = \frac{(m + s/2)\,Q_b + (m - s/2)\,Q_a}{Q_b + Q_a} = m + \frac{s}{2}\cdot\frac{Q_b - Q_a}{Q_b + Q_a} = m + I\,\frac{s}{2}.$$
 
-The weights look backwards at first: the ask price gets the *bid* queue. The reason is what happens next. With 200 shares waiting to buy at $100.00 and only 50 waiting to sell at $100.01, a few small buys will empty the ask queue and the best ask moves up; the bid queue will take much longer to clear. The next mid move is more likely up, so the fair value sits closer to the ask.
+The weights look backwards at first: the ask price gets the *bid* queue. The reason is what happens next.
+
+With 200 shares waiting to buy at $100.00 and only 50 waiting to sell at $100.01, a few small buys will empty the ask queue and the best ask moves up. The bid queue will take much longer to clear. The next mid move is more likely up, so the fair value sits closer to the ask.
 
 ### Step 5: OFI can be read from the book or from the orders
 
-The table in The formula reads OFI from two snapshots of the top of the book. The same number can be read from each order's own action. A buy adds the shares it takes from the old best ask, plus whatever it leaves waiting at or above the old best bid. A sell subtracts the mirror amounts. Everything else counts zero: an order placed behind the best, or a fill deeper than the old best level.
+The table in *The formula* reads OFI from two snapshots of the top of the book. The same number can be read from each order's own action.
+
+A buy adds the shares it takes from the old best ask, plus whatever it leaves waiting at or above the old best bid. A sell subtracts the mirror amounts. Everything else counts zero: an order placed behind the best, or a fill deeper than the old best level.
 
 <details>
 <summary>Detailed proof: the two roads to $e_n$ agree</summary>
 
 Take a buy (a sell is the mirror). A buy never removes bids and never adds asks.
 
-**Ask side.** If it takes some but not all of the old best ask queue, $a$ stays put and the queue shrinks by the shares taken: the table's ask part is minus that, so $e_n$ gains plus that. If it empties the old best level, $a$ rises; the table's ask part for a rise is minus the old queue, so $e_n$ gains the whole old queue, which is exactly what the buy took at that price. Shares it takes at deeper prices appear in neither road. If it takes nothing, the ask side is unchanged in both.
+**Ask side.**
 
-**Bid side.** If nothing rests, the bids are unchanged: zero in both. If $r$ shares rest at limit $p$: when $p$ is above the old $b$, the bid rises and the table gives $+r$, the whole new queue; when $p$ equals the old $b$, the queue grows by $r$: $+r$; when $p$ is below the old $b$, nothing at the top changes: zero, and the order road also gives zero because the rest sits behind the best.
+- If it takes some but not all of the old best ask queue, $a$ stays put and the queue shrinks by the shares taken: the table's ask part is minus that, so $e_n$ gains plus that.
+- If it empties the old best level, $a$ rises; the table's ask part for a rise is minus the old queue, so $e_n$ gains the whole old queue, which is exactly what the buy took at that price.
+- Shares it takes at deeper prices appear in neither road.
+- If it takes nothing, the ask side is unchanged in both.
+
+**Bid side.** If nothing rests, the bids are unchanged: zero in both. If $r$ shares rest at limit $p$:
+
+- when $p$ is above the old $b$, the bid rises and the table gives $+r$, the whole new queue;
+- when $p$ equals the old $b$, the queue grows by $r$: $+r$;
+- when $p$ is below the old $b$, nothing at the top changes: zero, and the order road also gives zero because the rest sits behind the best.
 
 Every case matches, so the sums match. The code checks both roads on the ten orders (350 each) and on the random run (18500 each).
 
 </details>
 
-A second route models the book instead of replaying it: each price level becomes a queue with orders arriving and leaving at random rates, the approach of the Smith–Farmer model in Sources.
+A second route models the book instead of replaying it. Each price level becomes a queue with orders arriving and leaving at random rates, the approach of the Smith–Farmer model in Sources.
 
 ---
 
@@ -220,13 +245,22 @@ xychart-beta
     bar [100, -300, 200, -100, 0, 350, -100, 200]
 ```
 
-Each bar is one order's $e_n$: above zero is pressure to buy, below is pressure to sell. Over orders 3 to 10 they add to OFI = +350 shares, and the mid rose half a cent, from $100.000 after order 2 to $100.005 after order 10. On real data, Cont, Kukanov and Stoikov found that over short intervals the mid moves roughly in proportion to OFI divided by depth: a thin book moves further for the same pressure.
+Each bar is one order's $e_n$: above zero is pressure to buy, below is pressure to sell. Over orders 3 to 10 they add to OFI = +350 shares, and the mid rose half a cent, from $100.000 after order 2 to $100.005 after order 10.
+
+On real data, Cont, Kukanov and Stoikov found that over short intervals the mid moves roughly in proportion to OFI divided by depth. A thin book moves further for the same pressure.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts run the ten orders through the matching rule and print every number on this card, by four roads. **Road 1** keeps a queue per price level. **Road 2** sorts one flat list for every incoming order; the two must print the same trades and the same book after every order. **Road 3** rebuilds the final book from the trade tape alone. **Road 4** is a random stress test: 500 seconds of orders, the count each second drawn from a Poisson distribution with mean 4 by the script's own random number generator, run through both engines and checked for a crossed book after every order. OFI is computed from snapshots and from the orders, on the ten orders and on the random run.
+The scripts run the ten orders through the matching rule and print every number on this card, by four roads.
+
+- **Road 1** keeps a queue per price level.
+- **Road 2** sorts one flat list for every incoming order; the two must print the same trades and the same book after every order.
+- **Road 3** rebuilds the final book from the trade tape alone.
+- **Road 4** is a random stress test: 500 seconds of orders, the count each second drawn from a Poisson distribution with mean 4 by the script's own random number generator, run through both engines and checked for a crossed book after every order.
+
+OFI is computed from snapshots and from the orders, on the ten orders and on the random run.
 
 ### Python
 
@@ -628,6 +662,102 @@ ALL CHECKS PASS
 
 The two outputs are identical line for line: both languages run the same integer generator and the same Poisson draw.
 
+### Lean
+
+Lean proves the weighted-mid identity, the imbalance bounds and the no-crossing step for one buy, and checks the worked numbers.
+
+- Suppose both sides hold orders, so $Q_b > 0$ and $Q_a > 0$. Then the size-weighted mid is $m_w = m + I\,s/2$.
+- Suppose both sides hold orders. Then the top imbalance $I$ lies strictly between −1 and +1.
+- Take an uncrossed book and a buy with limit $p$ that only removes asks, then rests nothing or rests at $p$ below every remaining ask. Then the book is still uncrossed.
+- After order 10, the top imbalance is 0.600 and the weighted mid is $100.008 by both formulas. The depths are 700 and 650.
+- The top imbalance is −1/7, or −0.143, after order 6, and 5/7, or 0.714, after order 8.
+- Every share is accounted for: 2250 = 1350 + 2 × 450. OFI over orders 3 to 10 adds to +350.
+
+Running the matching rule, the mirror case for sells, and the two roads to OFI are left to the Python and Rust checks.
+
+```lean
+-- The order book: the size-weighted mid equals the mid plus imbalance times half the spread, the imbalance lies strictly between -1 and 1, and an incoming buy leaves the book uncrossed.
+import Mathlib.Data.Real.Basic
+import Mathlib.Data.Set.Insert
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
+import Mathlib.Algebra.Order.Field.Basic
+
+/-- Weighted mid identity. While both sides of the book hold orders (shares `Qb > 0` waiting at
+the best bid `b`, shares `Qa > 0` waiting at the best ask `a`), the size-weighted mid
+`(a Qb + b Qa) / (Qb + Qa)` equals the mid `m = (a + b) / 2` plus the imbalance
+`I = (Qb - Qa) / (Qb + Qa)` times half the spread `s = a - b`. -/
+theorem weighted_mid_eq_mid_add_imbalance_mul_half_spread (a b Qb Qa : ℝ)
+    (hQb : 0 < Qb) (hQa : 0 < Qa) :
+    (a * Qb + b * Qa) / (Qb + Qa)
+      = (a + b) / 2 + (Qb - Qa) / (Qb + Qa) * ((a - b) / 2) := by
+  have h : Qb + Qa ≠ 0 := by positivity
+  field_simp
+  ring
+
+/-- While both sides hold orders, the top imbalance `I = (Qb - Qa) / (Qb + Qa)` lies strictly
+between -1 and +1. -/
+theorem imbalance_strictly_between_neg_one_and_one (Qb Qa : ℝ) (hQb : 0 < Qb) (hQa : 0 < Qa) :
+    -1 < (Qb - Qa) / (Qb + Qa) ∧ (Qb - Qa) / (Qb + Qa) < 1 := by
+  have h : 0 < Qb + Qa := by linarith
+  constructor
+  · rw [lt_div_iff₀ h]; linarith
+  · rw [div_lt_one h]; linarith
+
+/-- Step 1 of the card: the book never ends up crossed after a buy. Start from an uncrossed book
+(every bid price `B` below every ask price `A`). An incoming buy with limit `p` only removes asks,
+so the asks left over `A'` are a subset of `A`. It stops either with nothing resting, so the bids
+are unchanged, or because every ask left is above `p`, and then its rest joins the bids at `p`.
+Either way every bid left is below every ask left. -/
+theorem buy_leaves_book_uncrossed (B A B' A' : Set ℝ) (p : ℝ)
+    (huncrossed : ∀ b ∈ B, ∀ a ∈ A, b < a) (hA' : A' ⊆ A)
+    (hstop : B' = B ∨ (B' = insert p B ∧ ∀ a ∈ A', p < a)) :
+    ∀ b ∈ B', ∀ a ∈ A', b < a := by
+  intro b hb a ha
+  rcases hstop with rfl | ⟨rfl, hp⟩
+  · exact huncrossed b hb a (hA' ha)
+  · rcases hb with rfl | hb
+    · exact hp a ha
+    · exact huncrossed b hb a (hA' ha)
+
+-- The card's book after order 10, prices in cents: bid 10000 x 200, ask 10001 x 50.
+-- Top imbalance (200 - 50) / (200 + 50) = 0.600.
+example : ((200 : ℚ) - 50) / (200 + 50) = 3 / 5 := by norm_num
+
+-- Weighted mid by weights and by mid + I s/2 are both 10000.8 cents ($100.008).
+example : ((10001 : ℚ) * 200 + 10000 * 50) / (200 + 50) = 50004 / 5 := by norm_num
+example : ((10001 : ℚ) + 10000) / 2 + 3 / 5 * ((10001 - 10000) / 2) = 50004 / 5 := by norm_num
+
+-- Depth over three levels: bids 200 + 200 + 300 = 700, asks 50 + 200 + 400 = 650.
+example : 200 + 200 + 300 = 700 ∧ 50 + 200 + 400 = 650 := by decide
+
+-- Every share accounted for: 2250 submitted = 1350 resting + 2 x 450 traded.
+example : 2250 = 1350 + 2 * 450 := by decide
+
+-- Order flow imbalance over orders 3 to 10 adds to +350 shares.
+example : (100 : ℤ) - 300 + 200 - 100 + 0 + 350 - 100 + 200 = 350 := by decide
+
+-- Imbalance snapshots: imbalance after order 6 is (300 - 400) / (300 + 400) = -1/7 (-0.143),
+-- and after order 8 it is (300 - 50) / (300 + 50) = 5/7 (0.714).
+example : ((300 : ℚ) - 400) / (300 + 400) = -1 / 7 := by norm_num
+example : ((300 : ℚ) - 50) / (300 + 50) = 5 / 7 := by norm_num
+
+#print axioms weighted_mid_eq_mid_add_imbalance_mul_half_spread
+#print axioms imbalance_strictly_between_neg_one_and_one
+#print axioms buy_leaves_book_uncrossed
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'weighted_mid_eq_mid_add_imbalance_mul_half_spread' depends on axioms: [propext, Classical.choice, Quot.sound]
+'imbalance_strictly_between_neg_one_and_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'buy_leaves_book_uncrossed' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess the answer first. Each case is printed in the output above.
@@ -671,7 +801,7 @@ The two outputs are identical line for line: both languages run the same integer
 - [Kyle's model](03-kyle-model-and-price-impact.md): how much an order moves the price, when the market cannot tell informed traders from the rest.
 - [Market making](05-market-making-avellaneda-stoikov.md): the traders who fill the book's two sides, and how they choose their prices.
 
-This card reads a spread of one cent off the book; it does not say why anyone posts a bid and an ask a gap apart, or what sets the size of the gap. The spread card answers that.
+This card reads a spread of one cent off the book. It does not say why anyone posts a bid and an ask a gap apart, or what sets the size of the gap. The spread card answers that.
 
 ---
 

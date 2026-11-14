@@ -135,3 +135,4 @@ for key, n, a, mixed in (("A", 10, 40.0, False), ("C", 1000, 0.4, True)):
     assert abs(el - res[key][0]) < 0.02 * res[key][0]              # mean within 2%
     assert abs(q99 - res[key][2][1]) <= 2 * a                      # 99% point within 2 defaults
     assert abs(q999 - res[key][2][2]) <= 3 * a                     # 99.9% point within 3 defaults
+print("ALL CHECKS PASS")

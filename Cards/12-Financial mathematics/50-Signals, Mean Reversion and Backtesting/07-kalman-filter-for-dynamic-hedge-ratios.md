@@ -6,9 +6,9 @@
 
 ## General Overview
 
-Two petrol retailers, A and B, trade on the same exchange. Last year one A share tracked 1.3 B shares, so a pairs trader held 1.3 B shares short against each A share owned ([Pairs trading](02-pairs-trading-and-cointegration.md)). That 1.3 is the **hedge ratio**.
+Two petrol retailers, A and B, trade on the same exchange. Last year one A share tracked 1.3 B shares, so a pairs trader held 1.3 B shares short (borrowed and sold) against each A share owned ([Pairs trading](02-pairs-trading-and-cointegration.md)). That 1.3 is the **hedge ratio**.
 
-This year the tie loosens. A opens more forecourts that sell coffee; B sells more fuel. Over 250 trading days the true ratio slides from 1.30 to 1.10. A trader who fixes one ratio for the whole year, the best single number being 1.20, watches the spread (A's price minus the ratio times B's price) start at $10.47 and end at −$9.60. It looks like a huge trading signal. It is only the wrong ratio.
+This year the tie loosens. A opens more petrol stations that sell coffee; B sells more fuel. Over 250 trading days the true ratio slides from 1.30 to 1.10. A trader who fixes one ratio for the whole year, the best single number being 1.20, watches the spread (A's price minus the ratio times B's price) start at $10.47 and end at −$9.60. It looks like a huge trading signal. It is only the wrong ratio.
 
 The ratio has to be re-estimated as prices arrive. The obvious fix is a **rolling regression**: fit the ratio on the last 60 days, drop the oldest day each morning, fit again. It works, but it lags, and it treats day 61 as worthless and day 60 as fully trusted.
 
@@ -84,7 +84,9 @@ $P_{t-1}+Q$ is the **prediction variance**: yesterday's uncertainty plus the roo
 
 ### Step 0: yesterday's belief plus one noisy reading
 
-The filter's belief about the ratio is a bell curve: centre $m_{t-1}$, variance $P_{t-1}$. Each day brings one new reading of the ratio: today's price pair. When a bell-curve belief meets a bell-curve reading, the combined belief is again a bell curve, and its centre is a weighted average of the two, each weighted by its **precision** (one over its variance) ([Normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md)). The Kalman filter is that one step, repeated every day, with one extra move: before each reading, the belief is widened because the ratio may have drifted.
+The filter's belief about the ratio is a bell curve: centre $m_{t-1}$, variance $P_{t-1}$. Each day brings one new reading of the ratio: today's price pair. When a bell-curve belief meets a bell-curve reading, the combined belief is again a bell curve, and its centre is a weighted average of the two, each weighted by its **precision** (one over its variance) ([Normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md)).
+
+The Kalman filter is that one step, repeated every day, with one extra move: before each reading, the belief is widened because the ratio may have drifted.
 
 ### Step 1: predict, by widening the belief
 
@@ -119,13 +121,15 @@ Write out every day's ratio, $\beta_0$ to $\beta_t$, as unknowns, and choose the
 
 $$\frac{(\beta_0 - m_0)^2}{P_0} + \sum_{j=1}^{t}\frac{(\beta_j-\beta_{j-1})^2}{Q} + \sum_{j=1}^{t}\frac{(A_j-\beta_jB_j)^2}{R}.$$
 
-The last sum is ordinary least squares, one coefficient per day. The middle sum charges for every change in the coefficient: small $Q$, dear changes. The first sum anchors the start. The last unknown of that minimiser, $\beta_t$, is exactly $m_t$: the exponent in the detailed proof, summed over every day, is this sum. The code solves this whole-path regression from scratch for every day and finds the filter's estimate each time, to within about $10^{-14}$.
+The last sum is ordinary least squares, one coefficient per day. The middle sum charges for every change in the coefficient: small $Q$, costly changes. The first sum anchors the start. The last unknown of that minimiser, $\beta_t$, is exactly $m_t$: the exponent in the detailed proof, summed over every day, is this sum. The code solves this whole-path regression from scratch for every day and finds the filter's estimate each time, to within about $10^{-14}$.
 
 Two edge cases make the title literal. With $Q = 0$ the coefficient is not allowed to move, and the filter becomes an **expanding regression**: least squares on every day so far, plus the prior. On the simulated year both give 1.195701567. With $Q > 0$ old days count for less. With $B_t$ held fixed, the weight settles to a constant $k$ and each day's reading carries $(1-k)$ times the weight of the next: an exponentially weighted regression.
 
 ### Step 5: why the rolling window lags more
 
-A 60-day rolling regression puts equal weight on the last 60 days and none before. Its average day is 29.5 days old. The ratio falls 0.0008 a day, so the window lags by about 0.023600. The filter's weights decay geometrically; with weight 0.103134 on the latest day, its average day is $(1-k)/k$ days old, a lag of 0.006957. Over days 60 to 250 the measured errors are 0.023788 for the window and 0.007755 for the filter. The lag rule explains almost all of the window's error.
+A 60-day rolling regression puts equal weight on the last 60 days and none before. Its average day is 29.5 days old. The ratio falls 0.0008 a day, so the window lags by about 0.023600.
+
+The filter's weights decay geometrically; with weight 0.103134 on the latest day, its average day is $(1-k)/k$ days old, a lag of 0.006957. Over days 60 to 250 the measured errors are 0.023788 for the window and 0.007755 for the filter. The lag rule explains almost all of the window's error.
 
 A 20-day window does nearly as well as the filter here, 0.008386. The filter's advantage is not magic accuracy. It is a weighting set by stated variances instead of a calendar, an error band that comes with every estimate, and a gain that adapts when $B_t$ moves.
 
@@ -155,7 +159,7 @@ The weights are ratios of Fibonacci numbers: 2/3, 5/8, 13/21, 34/55. With $Q$ eq
 
 ### What breaks if you drop a piece
 
-Same simulated year; error is the root mean square gap from the true ratio over days 60 to 250.
+Same simulated year; error is the root mean square gap from the true ratio over days 60 to 250: the square root of the average squared gap.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
@@ -207,7 +211,9 @@ Too small a $Q$ and the filter is a slow regression. Too large and it chases eve
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported contains the answer: random numbers come from a hand-written generator, and the regressions and solver are loops. The filter's estimate is reached by **three independent roads**. Road 1 is the four-line recursion. Road 2 solves the whole-path penalised regression of Step 4 for every day, by elimination on its three-band system of equations (the Thomas algorithm), and never uses a gain. Road 3 draws 2,000 worlds from the model itself and checks that the filter's own variance $P_t$ matches its real squared error. The hand example is checked against Fibonacci integers and the golden ratio, and the $Q = 0$ case against the expanding regression written in closed form.
+Nothing imported contains the answer: random numbers come from a hand-written generator, and the regressions and solver are loops. The filter's estimate is reached by **three independent roads**.
+
+Road 1 is the four-line recursion. Road 2 solves the whole-path penalised regression of Step 4 for every day, by elimination on its three-band system of equations (the Thomas algorithm), and never uses a gain. Road 3 draws 2,000 worlds from the model itself and checks that the filter's own variance $P_t$ matches its real squared error. The hand example is checked against Fibonacci integers and the golden ratio, and the $Q = 0$ case against the expanding regression written in closed form.
 
 ### Python
 
@@ -591,6 +597,401 @@ ALL CHECKS PASS
 
 The two outputs match line for line. On day 50 the filter's variance is 0.0000088829 and the real squared error across 2,000 simulated worlds is 0.0000088519: the error band the filter reports is the error it makes, when the model is true.
 
+### Lean
+
+Lean proves the filter's algebra exactly, for every day and any prices, when the variances are positive.
+
+- Take $P_{t-1}+Q > 0$ and $R > 0$. Then precisions add: $1/P_t = 1/(P_{t-1}+Q) + B_t^2/R$.
+- Under the same conditions, the detailed proof's exponent is one bell curve. Its centre is $m_t$ and its variance is $P_t$.
+- Suppose $B_t \ne 0$. Then $m_t$ is the weighted average of $m_{t-1}$ and the reading $A_t/B_t$, with weight $K_tB_t$.
+- Suppose $B_t = 0$. Then the reading gets zero weight: $m_t = m_{t-1}$ and $P_t = P_{t-1}+Q$.
+- Take $P_0$, $Q$ and $R$ all above zero. Then Step 4's whole-path regression has a minimiser, and every minimiser's last unknown $\beta_t$ equals $m_t$.
+- Hold $B_t$ fixed and nonzero, and take $P_0 = Q = R/B_t^2$. Then the weights are the Fibonacci ratios 2/3, 5/8, 13/21, 34/55, and so on.
+- Those weights tend to $k = (\sqrt5-1)/2$.
+- The four hand-worked days, run through the filter's own steps, end at exactly 6877/5500, the card's 1.250364.
+
+The random model, the simulated year and the match between $P_t$ and the real squared error are left to the Python and Rust checks.
+
+```lean
+-- A moving hedge ratio: each Kalman update is the exact precision-weighted combination of yesterday's belief and today's price reading, the filter's estimate is the last coefficient of the whole-path penalised regression, and with Q equal to the reading variance the weights are Fibonacci ratios that settle at (√5 - 1)/2.
+import Mathlib.Data.Nat.Fib.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Order.Filter.AtTopBot.Basic
+import Mathlib.Topology.Instances.Real.Lemmas
+import Mathlib.Analysis.SpecificLimits.Basic
+
+open Filter Topology Finset
+
+namespace KalmanHedge
+
+/-- One day of the filter. Yesterday's estimate `m` and variance `P`, today's prices `A` and `B`,
+step variance `Q` and price-noise variance `R`. With the prediction variance `p = P + Q`,
+`S = B² p + R`, gain `K = p B / S` and surprise `e = A - m B`, the new estimate is `m + K e`
+and the new variance is `p R / S`. -/
+noncomputable def kalmanStep (Q R m P A B : ℝ) : ℝ × ℝ :=
+  let p := P + Q
+  let S := B ^ 2 * p + R
+  (m + p * B / S * (A - m * B), p * R / S)
+
+/-- The filter run from the starting belief `(m₀, P₀)`; day `t + 1` uses the prices `A (t+1)`
+and `B (t+1)`. The first coordinate is the estimate `m_t`, the second its variance `P_t`. -/
+noncomputable def kalmanFilter (m₀ P₀ Q R : ℝ) (A B : ℕ → ℝ) : ℕ → ℝ × ℝ
+  | 0 => (m₀, P₀)
+  | t + 1 => kalmanStep Q R (kalmanFilter m₀ P₀ Q R A B t).1 (kalmanFilter m₀ P₀ Q R A B t).2
+      (A (t + 1)) (B (t + 1))
+
+/-- The weight on today's reading, `K B = (P + Q) B² / (B² (P + Q) + R)`. -/
+noncomputable def kalmanWeight (Q R P B : ℝ) : ℝ :=
+  (P + Q) * B ^ 2 / (B ^ 2 * (P + Q) + R)
+
+/-- The whole-path penalised regression of Step 4, over the ratios `β 0, …, β t`:
+`(β₀ - m₀)²/P₀ + Σ_{j=1}^{t} (β_j - β_{j-1})²/Q + Σ_{j=1}^{t} (A_j - β_j B_j)²/R`. -/
+noncomputable def pathCost (m₀ P₀ Q R : ℝ) (A B : ℕ → ℝ) (t : ℕ) (β : ℕ → ℝ) : ℝ :=
+  (β 0 - m₀) ^ 2 / P₀ +
+    ∑ j ∈ range t, ((β (j + 1) - β j) ^ 2 / Q + (A (j + 1) - β (j + 1) * B (j + 1)) ^ 2 / R)
+
+/-- **One day's update is the exact posterior (Step 3 and the detailed proof).** Take
+yesterday's estimate `m` and variance `P`, step variance `Q` and price-noise variance `R > 0`,
+with prediction variance `p = P + Q > 0`, and today's prices `A`, `B`. Let `(m', P')` be the
+filter's update and `S = B² p + R`. Then:
+precisions add, `1/P' = 1/p + B²/R`;
+the exponent of prior times likelihood is a single bell curve centred at `m'` with variance `P'`,
+`(b - m)²/p + (A - B b)²/R = (b - m')²/P' + (A - m B)²/S` for every candidate ratio `b`;
+when `B ≠ 0`, the new estimate is the weighted average of yesterday's estimate and today's
+reading `A/B`, with weight `w = p B²/S` on the reading;
+when `B = 0`, the reading gets zero weight: the estimate and variance after the update are
+`m` and `p`. -/
+theorem kalman_update_is_precision_weighted_posterior (Q R m P A B : ℝ)
+    (hp : 0 < P + Q) (hR : 0 < R) :
+    1 / (kalmanStep Q R m P A B).2 = 1 / (P + Q) + B ^ 2 / R ∧
+    (∀ b : ℝ, (b - m) ^ 2 / (P + Q) + (A - B * b) ^ 2 / R
+        = (b - (kalmanStep Q R m P A B).1) ^ 2 / (kalmanStep Q R m P A B).2
+          + (A - m * B) ^ 2 / (B ^ 2 * (P + Q) + R)) ∧
+    (B ≠ 0 → (kalmanStep Q R m P A B).1
+        = (1 - kalmanWeight Q R P B) * m + kalmanWeight Q R P B * (A / B)) ∧
+    (B = 0 → kalmanStep Q R m P A B = (m, P + Q)) := by
+  have hS : 0 < B ^ 2 * (P + Q) + R :=
+    add_pos_of_nonneg_of_pos (mul_nonneg (sq_nonneg B) hp.le) hR
+  have hp' := hp.ne'
+  have hS' := hS.ne'
+  have hR' := hR.ne'
+  simp only [kalmanStep, kalmanWeight]
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · field_simp
+    ring
+  · intro b
+    field_simp
+    ring
+  · intro hB
+    field_simp
+    ring
+  · intro hB
+    subst hB
+    simp only [ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow, zero_mul, zero_add,
+      mul_zero, zero_div, sub_zero, add_zero, Prod.mk.injEq, true_and]
+    field_simp
+
+lemma pathCost_succ (m₀ P₀ Q R : ℝ) (A B : ℕ → ℝ) (t : ℕ) (β : ℕ → ℝ) :
+    pathCost m₀ P₀ Q R A B (t + 1) β = pathCost m₀ P₀ Q R A B t β +
+      ((β (t + 1) - β t) ^ 2 / Q + (A (t + 1) - β (t + 1) * B (t + 1)) ^ 2 / R) := by
+  simp only [pathCost, Finset.sum_range_succ]
+  ring
+
+lemma pathCost_congr (m₀ P₀ Q R : ℝ) (A B : ℕ → ℝ) (t : ℕ) (β γ : ℕ → ℝ)
+    (h : ∀ j ≤ t, β j = γ j) :
+    pathCost m₀ P₀ Q R A B t β = pathCost m₀ P₀ Q R A B t γ := by
+  unfold pathCost
+  rw [h 0 (Nat.zero_le _)]
+  congr 1
+  refine Finset.sum_congr rfl fun j hj => ?_
+  have hj := Finset.mem_range.mp hj
+  rw [h j (by omega), h (j + 1) (by omega)]
+
+lemma kalman_dp (m₀ P₀ Q R : ℝ) (A B : ℕ → ℝ) (hP₀ : 0 < P₀) (hQ : 0 < Q) (hR : 0 < R) :
+    ∀ t : ℕ, 0 < (kalmanFilter m₀ P₀ Q R A B t).2 ∧ ∃ c : ℝ,
+      (∀ β : ℕ → ℝ, (β t - (kalmanFilter m₀ P₀ Q R A B t).1) ^ 2
+          / (kalmanFilter m₀ P₀ Q R A B t).2 + c ≤ pathCost m₀ P₀ Q R A B t β) ∧
+      ∀ x : ℝ, ∃ β : ℕ → ℝ, β t = x ∧ pathCost m₀ P₀ Q R A B t β
+          = (x - (kalmanFilter m₀ P₀ Q R A B t).1) ^ 2 / (kalmanFilter m₀ P₀ Q R A B t).2 + c := by
+  intro t
+  induction t with
+  | zero =>
+    refine ⟨by simpa [kalmanFilter] using hP₀, 0, ?_, ?_⟩
+    · intro β
+      simp [pathCost, kalmanFilter]
+    · intro x
+      exact ⟨fun _ => x, rfl, by simp [pathCost, kalmanFilter]⟩
+  | succ t ih =>
+    obtain ⟨hP, c, hlow, hatt⟩ := ih
+    have hstep : kalmanFilter m₀ P₀ Q R A B (t + 1) = kalmanStep Q R (kalmanFilter m₀ P₀ Q R A B t).1
+        (kalmanFilter m₀ P₀ Q R A B t).2 (A (t + 1)) (B (t + 1)) := rfl
+    rw [hstep]
+    set m := (kalmanFilter m₀ P₀ Q R A B t).1 with hm
+    set P := (kalmanFilter m₀ P₀ Q R A B t).2 with hPdef
+    have hpq : 0 < P + Q := by linarith
+    obtain ⟨_, hsq, _, _⟩ :=
+      kalman_update_is_precision_weighted_posterior Q R m P (A (t + 1)) (B (t + 1)) hpq hR
+    have hP' := hP.ne'
+    have hQ' := hQ.ne'
+    have hpq' := hpq.ne'
+    have key : ∀ y x : ℝ, (y - m) ^ 2 / P + (x - y) ^ 2 / Q
+        = (x - m) ^ 2 / (P + Q) + (P + Q) / (P * Q) * (y - (Q * m + P * x) / (P + Q)) ^ 2 := by
+      intro y x
+      field_simp
+      ring
+    have hS : 0 < B (t + 1) ^ 2 * (P + Q) + R :=
+      add_pos_of_nonneg_of_pos (mul_nonneg (sq_nonneg _) hpq.le) hR
+    refine ⟨?_, c + (A (t + 1) - m * B (t + 1)) ^ 2 / (B (t + 1) ^ 2 * (P + Q) + R), ?_, ?_⟩
+    · simp only [kalmanStep]
+      exact div_pos (mul_pos hpq hR) hS
+    · intro β
+      rw [pathCost_succ]
+      have h1 := hlow β
+      have h2 := key (β t) (β (t + 1))
+      have h3 := hsq (β (t + 1))
+      rw [mul_comm (B (t + 1)) (β (t + 1))] at h3
+      have hnn : 0 ≤ (P + Q) / (P * Q) * (β t - (Q * m + P * β (t + 1)) / (P + Q)) ^ 2 :=
+        mul_nonneg (div_nonneg hpq.le (mul_pos hP hQ).le) (sq_nonneg _)
+      linarith
+    · intro x
+      obtain ⟨β', hβ't, hβ'c⟩ := hatt ((Q * m + P * x) / (P + Q))
+      refine ⟨fun j => if j ≤ t then β' j else x, by simp, ?_⟩
+      rw [pathCost_succ, pathCost_congr m₀ P₀ Q R A B t _ β' (fun j hj => by simp [hj]), hβ'c]
+      simp only [show ¬ (t + 1 ≤ t) by omega, le_refl, ↓reduceIte, hβ't]
+      have h2 := key ((Q * m + P * x) / (P + Q)) x
+      simp only [sub_self, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow, mul_zero,
+        add_zero] at h2
+      have h3 := hsq x
+      rw [mul_comm (B (t + 1)) x] at h3
+      linarith
+
+#print axioms pathCost_succ
+#print axioms pathCost_congr
+#print axioms kalman_dp
+
+/-- **The filter is a regression (Step 4).** With a starting variance `P₀ > 0`, a step
+variance `Q > 0` and a price-noise variance `R > 0`, and any prices `A`, `B`: on every day `t`
+the whole-path penalised regression over `β 0, …, β t` has a minimiser, and every minimiser's
+last unknown `β t` is exactly the filter's estimate `m_t`. -/
+theorem kalman_estimate_is_whole_path_regression (m₀ P₀ Q R : ℝ) (A B : ℕ → ℝ)
+    (hP₀ : 0 < P₀) (hQ : 0 < Q) (hR : 0 < R) (t : ℕ) :
+    (∃ β : ℕ → ℝ, ∀ γ : ℕ → ℝ, pathCost m₀ P₀ Q R A B t β ≤ pathCost m₀ P₀ Q R A B t γ) ∧
+    ∀ β : ℕ → ℝ, (∀ γ : ℕ → ℝ, pathCost m₀ P₀ Q R A B t β ≤ pathCost m₀ P₀ Q R A B t γ) →
+      β t = (kalmanFilter m₀ P₀ Q R A B t).1 := by
+  obtain ⟨hP, c, hlow, hatt⟩ := kalman_dp m₀ P₀ Q R A B hP₀ hQ hR t
+  set m := (kalmanFilter m₀ P₀ Q R A B t).1 with hm
+  set P := (kalmanFilter m₀ P₀ Q R A B t).2 with hPdef
+  obtain ⟨β₀, _, hβ₀c⟩ := hatt m
+  simp only [sub_self, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow, zero_div,
+    zero_add] at hβ₀c
+  refine ⟨⟨β₀, fun γ => ?_⟩, fun β hβ => ?_⟩
+  · rw [hβ₀c]
+    have h1 := hlow γ
+    have h2 : 0 ≤ (γ t - m) ^ 2 / P := div_nonneg (sq_nonneg _) hP.le
+    linarith
+  · have h1 := hβ β₀
+    have h2 := hlow β
+    rw [hβ₀c] at h1
+    have h3 : 0 ≤ (β t - m) ^ 2 / P := div_nonneg (sq_nonneg _) hP.le
+    have h4 : (β t - m) ^ 2 / P = 0 := by linarith
+    have h5 : (β t - m) ^ 2 = 0 := by
+      rcases div_eq_zero_iff.mp h4 with h | h
+      · exact h
+      · exact absurd h hP.ne'
+    have h6 : β t - m = 0 := pow_eq_zero_iff (n := 2) (by norm_num) |>.mp h5
+    linarith
+
+lemma fib_ratio_succ (d : ℕ) :
+    (Nat.fib (2 * (d + 1) + 1) : ℝ) / Nat.fib (2 * (d + 1) + 2)
+      = ((Nat.fib (2 * d + 1) : ℝ) / Nat.fib (2 * d + 2) + 1)
+        / ((Nat.fib (2 * d + 1) : ℝ) / Nat.fib (2 * d + 2) + 2) := by
+  have e1 : Nat.fib (2 * (d + 1) + 1) = Nat.fib (2 * d + 1) + Nat.fib (2 * d + 2) := by
+    rw [show 2 * (d + 1) + 1 = (2 * d + 1) + 2 by ring, Nat.fib_add_two]
+  have e2 : Nat.fib (2 * (d + 1) + 2) = Nat.fib (2 * d + 2) + Nat.fib (2 * (d + 1) + 1) := by
+    rw [show 2 * (d + 1) + 2 = (2 * d + 2) + 2 by ring, Nat.fib_add_two,
+      show 2 * d + 2 + 1 = 2 * (d + 1) + 1 by ring]
+  have hb : (0 : ℝ) < Nat.fib (2 * d + 2) := by
+    exact_mod_cast Nat.fib_pos.mpr (by omega)
+  have ha : (0 : ℝ) ≤ Nat.fib (2 * d + 1) := Nat.cast_nonneg _
+  rw [e2, e1]
+  push_cast
+  have hb' := hb.ne'
+  have h1 : (Nat.fib (2 * d + 1) : ℝ) / Nat.fib (2 * d + 2) + 2 ≠ 0 := by positivity
+  field_simp
+  ring
+
+lemma fib_ratio_nonneg (d : ℕ) : (0 : ℝ) ≤ (Nat.fib (2 * d + 1) : ℝ) / Nat.fib (2 * d + 2) := by
+  positivity
+
+lemma fib_ratio_tendsto :
+    Tendsto (fun d : ℕ => (Nat.fib (2 * d + 1) : ℝ) / Nat.fib (2 * d + 2)) atTop
+      (𝓝 ((Real.sqrt 5 - 1) / 2)) := by
+  set k := (Real.sqrt 5 - 1) / 2 with hk
+  have h5 := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
+  have hs : 2 < Real.sqrt 5 := by
+    rw [show (2 : ℝ) = Real.sqrt (2 ^ 2) by rw [Real.sqrt_sq (by norm_num)]]
+    exact Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
+  have hkq : k ^ 2 + k - 1 = 0 := by rw [hk]; nlinarith
+  have hkpos : 0 < k := by rw [hk]; linarith
+  set r := fun d : ℕ => (Nat.fib (2 * d + 1) : ℝ) / Nat.fib (2 * d + 2) with hr
+  have bound : ∀ d : ℕ, |r d - k| ≤ |r 0 - k| * (1 / 4 : ℝ) ^ d := by
+    intro d
+    induction d with
+    | zero => simp
+    | succ d ih =>
+      have hrs : r (d + 1) = (r d + 1) / (r d + 2) := fib_ratio_succ d
+      have hx : 0 ≤ r d := fib_ratio_nonneg d
+      have hx2 : r d + 2 ≠ 0 := by positivity
+      have hk2 : k + 2 ≠ 0 := by positivity
+      have e : r (d + 1) - k = (r d - k) / ((r d + 2) * (k + 2)) := by
+        rw [hrs]
+        field_simp
+        linear_combination (-(r d + 2)) * hkq
+      have hpos : 0 < (r d + 2) * (k + 2) := by positivity
+      have h4 : 4 ≤ (r d + 2) * (k + 2) := by nlinarith
+      rw [e, abs_div, abs_of_pos hpos, div_le_iff₀ hpos, pow_succ]
+      have hM : 0 ≤ |r 0 - k| * (1 / 4 : ℝ) ^ d := by positivity
+      nlinarith [mul_le_mul_of_nonneg_left h4 hM]
+  have hlim : Tendsto (fun d : ℕ => |r 0 - k| * (1 / 4 : ℝ) ^ d) atTop (𝓝 0) := by
+    simpa using (tendsto_pow_atTop_nhds_zero_of_lt_one (by norm_num)
+      (by norm_num : (1 / 4 : ℝ) < 1)).const_mul |r 0 - k|
+  rw [tendsto_iff_norm_sub_tendsto_zero]
+  exact squeeze_zero (fun d => norm_nonneg _) (fun d => by rw [Real.norm_eq_abs]; exact bound d) hlim
+
+lemma kalman_var_fib (m₀ P₀ Q R b : ℝ) (A B : ℕ → ℝ)
+    (hB : ∀ t, B t = b) (hb : b ≠ 0) (hQ : 0 < Q) (hR : R = Q * b ^ 2) (hP₀ : P₀ = Q) :
+    ∀ t : ℕ, (kalmanFilter m₀ P₀ Q R A B t).2
+      = Q * ((Nat.fib (2 * t + 1) : ℝ) / Nat.fib (2 * t + 2)) := by
+  intro t
+  induction t with
+  | zero => simp [kalmanFilter, hP₀]
+  | succ t ih =>
+    show (kalmanStep Q R (kalmanFilter m₀ P₀ Q R A B t).1 (kalmanFilter m₀ P₀ Q R A B t).2
+      (A (t + 1)) (B (t + 1))).2 = _
+    simp only [kalmanStep]
+    rw [ih, hB, hR, fib_ratio_succ]
+    have hx := fib_ratio_nonneg t
+    have hb2 : 0 < b ^ 2 := by positivity
+    have hQ' := hQ.ne'
+    have hb2' := hb2.ne'
+    have h1 : (Nat.fib (2 * t + 1) : ℝ) / Nat.fib (2 * t + 2) + 2 ≠ 0 := by positivity
+    have h2 : b ^ 2 * (Q * ((Nat.fib (2 * t + 1) : ℝ) / Nat.fib (2 * t + 2)) + Q) + Q * b ^ 2 ≠ 0 := by
+      positivity
+    field_simp
+    ring
+
+lemma kalman_weight_fib (m₀ P₀ Q R b : ℝ) (A B : ℕ → ℝ)
+    (hB : ∀ t, B t = b) (hb : b ≠ 0) (hQ : 0 < Q) (hR : R = Q * b ^ 2) (hP₀ : P₀ = Q) (e : ℕ) :
+    kalmanWeight Q R (kalmanFilter m₀ P₀ Q R A B e).2 (B (e + 1))
+      = (Nat.fib (2 * (e + 1) + 1) : ℝ) / Nat.fib (2 * (e + 1) + 2) := by
+  rw [kalman_var_fib m₀ P₀ Q R b A B hB hb hQ hR hP₀ e, fib_ratio_succ, kalmanWeight, hB, hR]
+  have hx := fib_ratio_nonneg e
+  have hb2 : 0 < b ^ 2 := by positivity
+  have hQ' := hQ.ne'
+  have hb2' := hb2.ne'
+  have h1 : (Nat.fib (2 * e + 1) : ℝ) / Nat.fib (2 * e + 2) + 2 ≠ 0 := by positivity
+  have h2 : b ^ 2 * (Q * ((Nat.fib (2 * e + 1) : ℝ) / Nat.fib (2 * e + 2)) + Q) + Q * b ^ 2 ≠ 0 := by
+    positivity
+  field_simp
+  ring
+
+#print axioms fib_ratio_succ
+#print axioms fib_ratio_nonneg
+#print axioms fib_ratio_tendsto
+#print axioms kalman_var_fib
+#print axioms kalman_weight_fib
+
+/-- **Fibonacci weights and the golden ratio (Worked numbers).** Hold `B` fixed at `b ≠ 0`,
+take `Q > 0`, set the reading variance `R/b²` equal to `Q`, and start from `P₀ = Q`. Then for
+any prices `A`, the weight on day `d` (`d = 1, 2, …`) is `F(2d+1)/F(2d+2)`, a ratio of
+Fibonacci numbers: `2/3, 5/8, 13/21, 34/55, …`. These weights tend to `(√5 - 1)/2`. -/
+theorem kalman_weights_are_fibonacci_ratios (m₀ P₀ Q R b : ℝ) (A B : ℕ → ℝ)
+    (hB : ∀ t, B t = b) (hb : b ≠ 0) (hQ : 0 < Q) (hR : R = Q * b ^ 2) (hP₀ : P₀ = Q) :
+    (∀ d : ℕ, 1 ≤ d →
+      kalmanWeight Q R (kalmanFilter m₀ P₀ Q R A B (d - 1)).2 (B d)
+        = (Nat.fib (2 * d + 1) : ℝ) / Nat.fib (2 * d + 2)) ∧
+    Tendsto (fun d : ℕ => kalmanWeight Q R (kalmanFilter m₀ P₀ Q R A B d).2 (B (d + 1)))
+      atTop (𝓝 ((Real.sqrt 5 - 1) / 2)) := by
+  refine ⟨fun d hd => ?_, ?_⟩
+  · obtain ⟨e, rfl⟩ : ∃ e, d = e + 1 := ⟨d - 1, by omega⟩
+    rw [show e + 1 - 1 = e by omega]
+    exact kalman_weight_fib m₀ P₀ Q R b A B hB hb hQ hR hP₀ e
+  · have hw : (fun d : ℕ => kalmanWeight Q R (kalmanFilter m₀ P₀ Q R A B d).2 (B (d + 1)))
+        = fun d : ℕ => (Nat.fib (2 * (d + 1) + 1) : ℝ) / Nat.fib (2 * (d + 1) + 2) := by
+      funext d
+      exact kalman_weight_fib m₀ P₀ Q R b A B hB hb hQ hR hP₀ d
+    rw [hw]
+    exact (tendsto_add_atTop_iff_nat 1).mpr fib_ratio_tendsto
+
+/-! The card's hand example, as exact fractions: `B = 100` every day, `m₀ = 13/10`,
+`P₀ = Q = 1/10000`, `R = 1`, and A's prices 129, 127, 126, 124. -/
+
+-- Day 1 weight: prediction 2 units against a reading of 1 unit, 2/(2 + 1) = 2/3.
+example : ((1 : ℚ) / 10000 + 1 / 10000) * 100 ^ 2 / (100 ^ 2 * (1 / 10000 + 1 / 10000) + 1)
+    = 2 / 3 := by norm_num
+-- Each weight gives the next as (k + 1)/(k + 2): 2/3 → 5/8 → 13/21 → 34/55.
+example : ((2 : ℚ) / 3 + 1) / (2 / 3 + 2) = 5 / 8 := by norm_num
+example : ((5 : ℚ) / 8 + 1) / (5 / 8 + 2) = 13 / 21 := by norm_num
+example : ((13 : ℚ) / 21 + 1) / (13 / 21 + 2) = 34 / 55 := by norm_num
+-- Those are Fibonacci numbers F(3)/F(4), F(5)/F(6), F(7)/F(8), F(9)/F(10).
+example : Nat.fib 3 = 2 ∧ Nat.fib 4 = 3 ∧ Nat.fib 5 = 5 ∧ Nat.fib 6 = 8 ∧
+    Nat.fib 7 = 13 ∧ Nat.fib 8 = 21 ∧ Nat.fib 9 = 34 ∧ Nat.fib 10 = 55 := by decide
+-- Day 1: surprise 129 - 1.30 × 100 = -1; estimate 1.30 + (2/3)(-1)/100 = 97/75;
+-- variance (2/3)(1/10000) = 1/15000.
+example : (129 : ℚ) - 13 / 10 * 100 = -1 := by norm_num
+example : (13 : ℚ) / 10 + 2 / 3 * (-1) / 100 = 97 / 75 := by norm_num
+example : (2 : ℚ) / 3 * (1 / 10000) = 1 / 15000 := by norm_num
+-- Day 2: surprise 127 - (97/75) × 100 = -7/3; estimate 97/75 + (5/8)(-7/3)/100 = 1023/800.
+example : (127 : ℚ) - 97 / 75 * 100 = -7 / 3 := by norm_num
+example : (97 : ℚ) / 75 + 5 / 8 * (-7 / 3) / 100 = 1023 / 800 := by norm_num
+-- Day 3: surprise 126 - (1023/800) × 100 = -15/8; estimate 1023/800 + (13/21)(-15/8)/100 = 887/700.
+example : (126 : ℚ) - 1023 / 800 * 100 = -15 / 8 := by norm_num
+example : (1023 : ℚ) / 800 + 13 / 21 * (-15 / 8) / 100 = 887 / 700 := by norm_num
+-- Day 4: surprise 124 - (887/700) × 100 = -19/7; estimate 887/700 + (34/55)(-19/7)/100 = 6877/5500,
+-- the card's 1.250364.
+example : (124 : ℚ) - 887 / 700 * 100 = -19 / 7 := by norm_num
+example : (887 : ℚ) / 700 + 34 / 55 * (-19 / 7) / 100 = 6877 / 5500 := by norm_num
+-- The same four days run through the filter's definition give 6877/5500.
+example : (kalmanFilter (13 / 10) (1 / 10000) (1 / 10000) 1
+    (fun t => if t = 1 then 129 else if t = 2 then 127 else if t = 3 then 126 else 124)
+    (fun _ => 100) 4).1 = 6877 / 5500 := by
+  norm_num [kalmanFilter, kalmanStep]
+-- The two-day rolling window on day 4: (126 + 124)/(2 × 100) = 5/4.
+example : ((126 : ℚ) + 124) / (2 * 100) = 5 / 4 := by norm_num
+-- The steady weight k = (√5 - 1)/2 solves k² + k - 1 = 0.
+example : ((Real.sqrt 5 - 1) / 2) ^ 2 + (Real.sqrt 5 - 1) / 2 - 1 = 0 := by
+  have h := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
+  nlinarith [h]
+-- The 60-day window's average day is (0 + 1 + … + 59)/60 = 59/2 days old, and at a drift of
+-- 0.2/250 a day it lags by 59/2500 (the card's 0.023600).
+example : (∑ i ∈ range 60, i) = 1770 := by decide
+example : (1770 : ℚ) / 60 = 59 / 2 := by norm_num
+example : (1 : ℚ) / 5 / 250 * (59 / 2) = 59 / 2500 := by norm_num
+
+#print axioms kalman_update_is_precision_weighted_posterior
+#print axioms kalman_estimate_is_whole_path_regression
+#print axioms kalman_weights_are_fibonacci_ratios
+
+end KalmanHedge
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'KalmanHedge.pathCost_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KalmanHedge.pathCost_congr' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KalmanHedge.kalman_dp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KalmanHedge.fib_ratio_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KalmanHedge.fib_ratio_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KalmanHedge.fib_ratio_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KalmanHedge.kalman_var_fib' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KalmanHedge.kalman_weight_fib' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KalmanHedge.kalman_update_is_precision_weighted_posterior' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KalmanHedge.kalman_estimate_is_whole_path_regression' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KalmanHedge.kalman_weights_are_fibonacci_ratios' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
@@ -606,7 +1007,7 @@ The two outputs match line for line. On day 50 the filter's variance is 0.000008
 > **Believing the filter finds the true ratio.** It finds the ratio implied by its $Q$ and $R$. On one path, $Q$ = 0 gives an error of 0.064414 and $Q$ = 0.00001 gives 0.004862, from the same prices. The filter is exact arithmetic on assumptions; the assumptions carry the risk.
 >
 > - **Hedging today with a ratio that saw today's price.** The filtered $m_t$ has already used $A_t$. The spread $A_t - m_tB_t$ equals the surprise times $1 - K_tB_t$, 0.896866 of it on day 250: mechanically smaller, and a backtest built on it trades on information not yet available ([Backtesting](05-backtesting-pitfalls.md)). Hedge day $t$ with $m_{t-1}$.
-> - **Reading a filtered spread as proof of a tie.** A ratio that may move can fit almost any pair. The cointegration test belongs to a fixed ratio; a moving one needs its surprises checked on later data.
+> - **Reading a filtered spread as proof of a tie.** A ratio that may move can fit almost any pair. The cointegration test, which asks whether a fixed mix of the two prices keeps returning to a steady level ([Pairs trading](02-pairs-trading-and-cointegration.md)), belongs to a fixed ratio; a moving one needs its surprises checked on later data.
 > - **Letting the ratio swallow the spread.** If the spread wanders for weeks, a large $Q$ lets the ratio follow it and the trade signal vanishes into the hedge.
 > - **Reading the moving spread as profit.** When the ratio moves from $m_{t-1}$ to $m_t$, the hedge buys or sells $(m_t - m_{t-1})$ B shares at $B_t$. That cash belongs in the ledger. The day-to-day change in $A_t - m_tB_t$ is not what a held position earned.
 > - **Units.** $Q$ is in squared ratio units per day, $R$ in squared dollars. Move from daily to weekly prices and $Q$ must grow about fivefold.
@@ -615,7 +1016,7 @@ The two outputs match line for line. On day 50 the filter's variance is 0.000008
 
 ## Where you meet it in real life
 
-- **Pairs and basket trading desks.** A filtered hedge ratio for two shares, or a few, rebalanced daily, is a standard replacement for a fixed ratio in statistical arbitrage.
+- **Pairs and basket trading desks.** A filtered hedge ratio for two shares, or a few, rebalanced daily, is a standard replacement for a fixed ratio in statistical arbitrage: many small trades on price gaps expected to close.
 - **Hedging a fund against an index.** A fund's beta to the market, its sensitivity to index moves, drifts as holdings change; the same one-number filter tracks it.
 - **Where it began.** Navigation: the Apollo guidance computer ran a Kalman filter to estimate position from noisy measurements. The ratio here is a position that drifts; prices are the noisy radar.
 - **Signals on this shelf.** A filtered spread feeds the mean-reversion rules of [Mean reversion](01-ornstein-uhlenbeck-mean-reversion-trading.md), and its predictive power is scored as in [The fundamental law](04-information-coefficient-and-the-fundamental-law.md).
@@ -635,6 +1036,7 @@ The two outputs match line for line. On day 50 the filter's variance is 0.000008
 - [Backtesting](05-backtesting-pitfalls.md): why hedging day $t$ with $m_t$ is look-ahead, and how to test a filtered pair honestly.
 - [Trying many strategies](06-deflated-sharpe-and-multiple-testing.md): what trying five values of $Q$ does to the apparent quality of the best one.
 - [Mean reversion](01-ornstein-uhlenbeck-mean-reversion-trading.md): the entry and exit rules the filtered spread feeds.
+- [The Kalman filter](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/07-kalman-filter.md): the same predict-and-correct recursion in matrices, for several hidden numbers at once, such as a ratio plus a spread level.
 
 The filter says where the ratio is and how sure it is; whether a strategy built on it earns anything after the choice of $Q$ is tested on data it never saw is the question the backtesting cards answer.
 

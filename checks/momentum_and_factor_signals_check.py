@@ -116,3 +116,4 @@ assert bad == 0 and abs(A(sum(xb) / T) - A(xbar)) < 1e-9   # bisection cut == so
 assert abs(sqrt(win / T) - se_nw) < 1e-12 * se_nw + 1e-15       # autocovariances == window sums
 assert abs(se_boot / se_nw - 1) < 0.25         # resampling agrees with the formula
 assert abs(xbar - sum(xd) / T) < 2 * se_noise  # the sort found the hidden drift
+print("ALL CHECKS PASS")
