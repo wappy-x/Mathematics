@@ -125,3 +125,4 @@ assert abs(mc - V_pro) < 4 * se                 # simulation agrees within 4 sta
 assert abs(lhs - rhs) < 1e-6                    # one step of the recursion, by hand
 assert abs(V[0]) < 1e-6                         # equivalence: nothing owed at issue
 print("All checks passed.")
+print("ALL CHECKS PASS")

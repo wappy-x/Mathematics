@@ -8,7 +8,9 @@
 
 A motor insurer with 50,000 policies covers a delivery company's fleet of vans. Over the last three years the fleet reported 1, 1 and 2 claims: an average of 1.33 claims a year. Comparable fleets in the insurer's book average 2 claims a year. Next year's premium needs one number for this fleet's expected claims.
 
-Trusting the fleet's own three years alone gives 1.33. Three years is a short, noisy record: a lucky run looks like a safe fleet. Ignoring the record gives 2. That treats a careful operator like everyone else. The actuary's answer sits between: weight the fleet's own average 60 percent and the class average 40 percent, giving 1.6 claims a year. The 60 percent is not a judgement call. It comes out of a short calculation about two kinds of spread: how much fleets differ from each other, and how much one fleet's count jumps about from year to year. That weight is called the **credibility** of the fleet's record, the word used from here on.
+Trusting the fleet's own three years alone gives 1.33. Three years is a short, noisy record: a lucky run looks like a safe fleet. Ignoring the record gives 2. That treats a careful operator like everyone else.
+
+The actuary's answer sits between: weight the fleet's own average 60 percent and the class average 40 percent, giving 1.6 claims a year. The 60 percent is not a judgement call. It comes out of a short calculation about two kinds of spread: how much fleets differ from each other, and how much one fleet's count jumps about from year to year. That weight is called the **credibility** of the fleet's record, the word used from here on.
 
 The insurer then faces a second question. Most years are ordinary, but a bad year can hurt. It can pay another insurer, a **reinsurer**, to take the part of each claim above a threshold, or the part of the whole year's total above a threshold. The first contract is **excess of loss**; the second is **stop-loss**. Each has a fair price: the reinsurer's expected payment. With the fleet's claims costing $1,000 or $4,000, and 1.6 claims a year, the per-claim cover above $2,000 costs $1,600.00 a year, and the annual cover above $3,000 costs $1,993.33.
 
@@ -32,7 +34,7 @@ The forecast feeds both prices: the reinsurer prices the fleet at 1.6 claims a y
 
 ## The formula
 
-Notation first, in words. A bar over a letter is an average: $\bar X$ is the fleet's average yearly count. A hat marks an estimate: $\hat m$ is the forecast. The notation $(x)_+$ means "x if positive, otherwise zero", the same payoff shape as a call option. $E[\cdot]$ is expectation, the probability-weighted average, and $P(\cdot)$ is a probability.
+Notation first, in words. A bar over a letter is an average: $\bar X$ is the fleet's average yearly count. A hat marks an estimate: $\hat m$ is the forecast. The notation $(x)_+$ means "x if positive, otherwise zero", the same payoff shape as a call option, the right to buy at a fixed price called the strike. $E[\cdot]$ is expectation, the probability-weighted average, and $P(\cdot)$ is a probability.
 
 **Credibility** (Bühlmann, 1967):
 
@@ -40,7 +42,7 @@ $$Z = \frac{n}{n + s/a}, \qquad \hat m = Z\,\bar X + (1 - Z)\,\mu$$
 
 **Read it aloud:** the weight on the fleet's own record is its number of years, divided by that number plus the ratio of year-to-year noise to fleet-to-fleet difference; the forecast is that weighted blend of the fleet's average and the class average.
 
-**Reinsurance**, per claim and per year:
+**Reinsurance**, per claim and per year (XL is excess of loss, SL is stop-loss):
 
 $$E[(Y - d)_+] = \int_d^\infty P(Y > t)\,dt, \qquad \text{XL premium} = \lambda\,E[(Y-d)_+], \qquad \text{SL premium} = E[(S - D)_+] = \int_D^\infty P(S > t)\,dt$$
 
@@ -112,7 +114,7 @@ Credibility is the best *straight-line* forecast. The fully informed forecast is
 
 For two fleet types, it does. The record 1, 1, 2 points strongly at the low type, and the posterior mean comes to 1.33, not 1.6. Its expected squared error across all records is 0.296, below credibility's 0.4. The price of the straight line is that gap.
 
-When the risk levels follow a bell curve and each year is a bell-curve draw around the fleet's level, the Bayes answer is itself a straight line with exactly the weight $Z$ ([Normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md)). The code integrates that posterior numerically for a prior with mean 2 and variance 1 and years with variance 2. It lands on 1.6. The same exactness holds for Poisson counts with a gamma-distributed rate. Credibility is Bayes for those families, and the best available line for all others.
+When the risk levels follow a bell curve and each year is a bell-curve draw around the fleet's level, the Bayes answer is itself a straight line with exactly the weight $Z$ ([Normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md)). The code integrates that posterior numerically for a prior with mean 2 and variance 1 and years with variance 2. It lands on 1.6. The same exactness holds for Poisson counts with a gamma-distributed rate (the gamma law is a standard model for a positive, skewed quantity). Credibility is Bayes for those families, and the best available line for all others.
 
 ### Step 4: the reinsurer holds a call option on the loss
 
@@ -126,7 +128,7 @@ For the fleet with $d = \$2{,}000$: a claim passes every level between $2,000 an
 
 Excess of loss applies the cut to every claim, then adds: $\sum_{i=1}^{N} (Y_i - d)_+$. Given $N$ claims, the expected total is $N$ times the per-claim value. Average over $N$ and the premium is $\lambda E[(Y - d)_+] = 1.6 \times \$1{,}000 = \$1{,}600$.
 
-Stop-loss adds first, then cuts: $(S - D)_+$ with $S = Y_1 + \dots + Y_N$. The cut after the sum cannot be pushed inside it. The whole law of $S$ is needed.
+Stop-loss adds first, then cuts: $(S - D)_+$ with $S = Y_1 + \dots + Y_N$. The cut after the sum cannot be pushed inside it. The whole law of $S$, the probability of every possible total, is needed.
 
 A short route exists when the retention is low. Since $(S - D)_+ = S - D + (D - S)_+$, the premium is $E[S] - D$ plus a correction from years that finish below $D$. With $D = \$3{,}000$ and claims of $1,000 or $4,000, only totals of 0, 1 or 2 thousand fall short: no claims, one small claim, or two small ones. Their chances are $e^{-1.6} = 0.2019$, $1.6e^{-1.6}/2 = 0.1615$ and $(1.6^2/2)e^{-1.6}/4 = 0.0646$, where the halves and quarters are the chance each claim is the small one. So the premium, in thousands, is $4.0 - 3 + 3(0.2019) + 2(0.1615) + 1(0.0646) = 1.9933$.
 
@@ -200,7 +202,7 @@ credibility, Z=0.6  ████████              0.400
 two-type Bayes      ██████                0.296
 ```
 
-Reinsurance prices move with the retention. Raise the threshold and the reinsurer pays less.
+Reinsurance prices move with the retention. The chart shows the pure premium: the reinsurer's expected payment, before any loading. Raise the threshold and the reinsurer pays less.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -597,6 +599,225 @@ ALL CHECKS PASS
 ```
 
 The two outputs are identical line for line, simulations included, because both use the same generator and the same arithmetic order.
+
+### Lean
+
+Lean proves that $Z$ gives the best straight-line forecast, and both layer formulas for any claim law. It also checks the worked numbers.
+
+- Suppose $n \ge 1$, and $m(\Theta)$ and $\bar X$ both have mean $\mu$, variances $a > 0$ and $a + s/n$, covariance $a$. Then $\hat m$ has the smallest expected squared error of any line $c + z\bar X$. That error is $a(1 - Z)$.
+- Take any claim size $Y$ and retention $d$. Then $E[(Y - d)_+] = \int_d^\infty P(Y > t)\,dt$, even when both sides are infinite. With $S$ and $D$ in their place, this is the stop-loss formula.
+- Suppose the count $N$ is independent of the claim sizes, and the sizes are independent with one common law. Then $E[\sum_{i=1}^{N} (Y_i - d)_+] = \lambda\,E[(Y - d)_+]$, with no Poisson assumption.
+- Take the fleet. Then $\mu = 2$, $a = 1$, $Z = 0.6$, $\bar X = 4/3$, $\hat m = 1.6$, and the error is 0.4, exactly.
+- Take the claim sizes. Then the layer is worth $1,000 per claim, and the excess-of-loss premium is $1,600. The expected yearly total is $4,000.
+- The flipped ratio's 0.857 and the Try changing weights 0.833 and 0.273 also check.
+
+Step 1's two moments, the stop-loss premium of $1,993.33, the Bayes forecasts and the simulations are left to the Python and Rust checks.
+
+```lean
+-- Credibility and reinsurance: the credibility weight n/(n + s/a) gives the least-squared-error straight-line forecast with error a(1 - Z), a reinsurance layer's expected payment is the integral of tail chances, and the excess-of-loss price is the expected claim count times the per-claim layer value.
+import Mathlib.Probability.Moments.Variance
+import Mathlib.Probability.Moments.Covariance
+import Mathlib.Probability.Independence.Basic
+import Mathlib.Probability.IdentDistrib
+import Mathlib.MeasureTheory.Integral.Layercake
+
+open MeasureTheory ProbabilityTheory
+open scoped ENNReal
+
+
+variable {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
+
+/-- Helper: the mean squared error of the straight-line forecast `c + z * X` for `M`, written
+with the means, variances and covariance. -/
+theorem mean_sq_error_linear_forecast [IsProbabilityMeasure P]
+    (M X : Ω → ℝ) (hM : MemLp M 2 P) (hX : MemLp X 2 P) (c z : ℝ) :
+    ∫ ω, (M ω - (c + z * X ω)) ^ 2 ∂P
+      = Var[M; P] - 2 * z * cov[M, X; P] + z ^ 2 * Var[X; P] + (P[M] - c - z * P[X]) ^ 2 := by
+  have iM2 : Integrable (fun ω => M ω ^ 2) P := hM.integrable_sq
+  have iX2 : Integrable (fun ω => X ω ^ 2) P := hX.integrable_sq
+  have iMX : Integrable (fun ω => M ω * X ω) P := hM.integrable_mul hX
+  have iM : Integrable M P := hM.integrable one_le_two
+  have iX : Integrable X P := hX.integrable one_le_two
+  have e : (fun ω => (M ω - (c + z * X ω)) ^ 2) = fun ω =>
+      ((M ω ^ 2 + (-2 * z) * (M ω * X ω)) + z ^ 2 * X ω ^ 2)
+        + (((-2 * c) * M ω + (2 * c * z) * X ω) + c ^ 2) := by
+    ext ω; ring
+  rw [e, integral_add (by fun_prop) (by fun_prop), integral_add (by fun_prop) (by fun_prop),
+    integral_add (by fun_prop) (by fun_prop), integral_add (by fun_prop) (by fun_prop),
+    integral_add (by fun_prop) (by fun_prop), integral_const_mul, integral_const_mul,
+    integral_const_mul, integral_const_mul, integral_const,
+    variance_eq_sub hM, variance_eq_sub hX, covariance_eq_sub hM hX]
+  simp only [Pi.pow_apply, Pi.mul_apply, probReal_univ, smul_eq_mul, one_mul]
+  ring
+
+/-- Helper: a random-length sum of nonnegative terms, integrated, is the sum over `i` of the
+integral of term `i` on the event `{i < N}`. -/
+theorem lintegral_random_sum_eq_tsum (N : Ω → ℕ) (hN : Measurable N)
+    (g : ℕ → Ω → ℝ≥0∞) (hg : ∀ i, Measurable (g i)) :
+    ∫⁻ ω, ∑ i ∈ Finset.range (N ω), g i ω ∂P
+      = ∑' i, ∫⁻ ω, (Set.Ioi i).indicator (fun _ => (1 : ℝ≥0∞)) (N ω) * g i ω ∂P := by
+  have hpt : ∀ ω, ∑ i ∈ Finset.range (N ω), g i ω
+      = ∑' i, (Set.Ioi i).indicator (fun _ => (1 : ℝ≥0∞)) (N ω) * g i ω := by
+    intro ω
+    rw [sum_eq_tsum_indicator]
+    congr 1; ext i
+    simp only [Set.indicator, Finset.coe_range, Set.mem_Iio, Set.mem_Ioi]
+    split_ifs <;> simp
+  simp_rw [hpt]
+  rw [lintegral_tsum]
+  intro i
+  exact (((measurable_const.indicator measurableSet_Ioi).comp hN).mul (hg i)).aemeasurable
+
+/-- Bühlmann credibility. Let `M` be the policy's true long-run level and `Xbar` the average of
+its `n` years of record, both with finite variance. Suppose both have mean `μ` (the class mean),
+`M` has variance `a > 0` (spread between policies), `Xbar` has variance `a + s/n` (spread between
+policies plus year-to-year noise `s` averaged over `n` years), and their covariance is `a`.
+Put `Z = n / (n + s/a)`. Then among all straight-line forecasts `c + z * Xbar`, the blend
+`(1 - Z) * μ + Z * Xbar` has the smallest expected squared error, and that error is `a * (1 - Z)`. -/
+theorem credibility_weight_is_best_linear_forecast [IsProbabilityMeasure P]
+    (M Xbar : Ω → ℝ) (hM : MemLp M 2 P) (hX : MemLp Xbar 2 P)
+    (μ a s : ℝ) (n : ℕ) (hn : 0 < n) (ha : 0 < a)
+    (hMmean : P[M] = μ) (hXmean : P[Xbar] = μ)
+    (hVarM : Var[M; P] = a) (hVarX : Var[Xbar; P] = a + s / n)
+    (hCov : cov[M, Xbar; P] = a) :
+    let Z : ℝ := n / (n + s / a)
+    (∀ c z : ℝ, ∫ ω, (M ω - ((1 - Z) * μ + Z * Xbar ω)) ^ 2 ∂P
+        ≤ ∫ ω, (M ω - (c + z * Xbar ω)) ^ 2 ∂P) ∧
+      ∫ ω, (M ω - ((1 - Z) * μ + Z * Xbar ω)) ^ 2 ∂P = a * (1 - Z) := by
+  intro Z
+  have hf : ∀ c z : ℝ, ∫ ω, (M ω - (c + z * Xbar ω)) ^ 2 ∂P
+      = a - 2 * z * a + z ^ 2 * (a + s / n) + (μ - c - z * μ) ^ 2 := by
+    intro c z
+    rw [mean_sq_error_linear_forecast M Xbar hM hX c z, hVarM, hVarX, hCov, hMmean, hXmean]
+  set v : ℝ := a + s / n with hv_def
+  have hav : a ≤ v := by
+    have h0 : 0 ≤ ∫ ω, (M ω - (0 + 1 * Xbar ω)) ^ 2 ∂P :=
+      integral_nonneg fun ω => sq_nonneg _
+    rw [hf] at h0
+    nlinarith
+  have hvpos : 0 < v := lt_of_lt_of_le ha hav
+  have hnpos : (0 : ℝ) < n := by exact_mod_cast hn
+  have hZ : Z = a / v := by
+    have h1 : (n : ℝ) + s / a = (n / a) * v := by
+      rw [hv_def]; field_simp
+    show (n : ℝ) / (n + s / a) = a / v
+    rw [h1]
+    field_simp
+  have hZv : Z * v = a := by rw [hZ]; field_simp
+  refine ⟨fun c z => ?_, ?_⟩
+  · rw [hf, hf]
+    have key : (a - 2 * z * a + z ^ 2 * v + (μ - c - z * μ) ^ 2)
+        - (a - 2 * Z * a + Z ^ 2 * v + (μ - (1 - Z) * μ - Z * μ) ^ 2)
+        = v * (z - Z) ^ 2 + (μ - c - z * μ) ^ 2 := by
+      linear_combination (2 * z - 2 * Z) * hZv
+    nlinarith [mul_nonneg hvpos.le (sq_nonneg (z - Z)), sq_nonneg (μ - c - z * μ)]
+  · rw [hf]
+    have : μ - (1 - Z) * μ - Z * μ = 0 := by ring
+    rw [this]
+    nlinarith [hZv]
+
+/-- A reinsurance layer's fair price is a tail integral: for a loss `Y` and retention `d`,
+the expected payment `E[(Y - d)_+]` equals the integral over every level `t > d` of the
+chance `P(Y > t)` that the loss reaches that level (both sides may be infinite). -/
+theorem layer_price_eq_integral_of_tail_probability [IsProbabilityMeasure P]
+    (Y : Ω → ℝ) (hY : Measurable Y) (d : ℝ) :
+    ∫⁻ ω, ENNReal.ofReal (Y ω - d) ∂P = ∫⁻ t in Set.Ioi d, P {ω | t < Y ω} := by
+  have h1 : ∫⁻ ω, ENNReal.ofReal (Y ω - d) ∂P = ∫⁻ ω, ENNReal.ofReal (max (Y ω - d) 0) ∂P := by
+    congr 1; ext ω; rw [ENNReal.ofReal_max]; simp
+  have hm : Measurable (fun ω => max (Y ω - d) 0) := (hY.sub_const d).max measurable_const
+  rw [h1, lintegral_eq_lintegral_meas_lt P (f := fun ω => max (Y ω - d) 0)
+    (Filter.Eventually.of_forall fun ω => le_max_right _ _) hm.aemeasurable]
+  have h2 : ∀ t ∈ Set.Ioi (0:ℝ), P {ω | t < max (Y ω - d) 0} = P {ω | t + d < Y ω} := by
+    intro t ht
+    congr 1; ext ω
+    simp only [Set.mem_ofPred_eq, lt_max_iff]
+    simp only [Set.mem_Ioi] at ht
+    constructor
+    · rintro (h | h) <;> linarith
+    · intro h; left; linarith
+  rw [setLIntegral_congr_fun measurableSet_Ioi h2]
+  rw [← lintegral_indicator measurableSet_Ioi, ← lintegral_indicator measurableSet_Ioi]
+  rw [← lintegral_add_right_eq_self (μ := (MeasureTheory.volume : Measure ℝ))
+    (fun t => (Set.Ioi d).indicator (fun t => P {ω | t < Y ω}) t) d]
+  congr 1; ext t
+  simp only [Set.indicator, Set.mem_Ioi]
+  by_cases h : 0 < t
+  · simp [h, show d < t + d by linarith]
+  · simp [h, show ¬ d < t + d by linarith]
+
+/-- Excess of loss factorises: if the claim count `N` is independent of the claim sizes
+`Y 0, Y 1, ...`, and the sizes are independent of each other with a common law, then the
+expected yearly payment `E[∑_{i < N} (Y_i - d)_+]` is `E[N] * E[(Y - d)_+]`. -/
+theorem excess_of_loss_premium_eq_mean_count_mul_layer_value [IsProbabilityMeasure P]
+    (Y : ℕ → Ω → ℝ) (N : Ω → ℕ) (hY : ∀ i, Measurable (Y i)) (hN : Measurable N)
+    (hindepN : IndepFun N (fun ω i => Y i ω) P) (hindepY : iIndepFun Y P)
+    (hident : ∀ i, IdentDistrib (Y i) (Y 0) P P) (d : ℝ) :
+    ∫⁻ ω, ∑ i ∈ Finset.range (N ω), ENNReal.ofReal (Y i ω - d) ∂P
+      = (∫⁻ ω, (N ω : ℝ≥0∞) ∂P) * ∫⁻ ω, ENNReal.ofReal (Y 0 ω - d) ∂P := by
+  have hφ : Measurable (fun x : ℝ => ENNReal.ofReal (x - d)) :=
+    ENNReal.measurable_ofReal.comp (measurable_id.sub_const d)
+  have hNsum : ∀ ω, (N ω : ℝ≥0∞) = ∑ i ∈ Finset.range (N ω), (fun _ _ => (1 : ℝ≥0∞)) i ω := by
+    intro ω; simp
+  simp_rw [hNsum]
+  rw [lintegral_random_sum_eq_tsum N hN (fun i ω => ENNReal.ofReal (Y i ω - d))
+      (fun i => hφ.comp (hY i)),
+    lintegral_random_sum_eq_tsum N hN _ (fun _ => measurable_const), ← ENNReal.tsum_mul_right]
+  congr 1; ext i
+  have hind : Measurable (fun n : ℕ => (Set.Ioi i).indicator (fun _ => (1 : ℝ≥0∞)) n) :=
+    measurable_const.indicator measurableSet_Ioi
+  have hproj : Measurable (fun y : ℕ → ℝ => ENNReal.ofReal (y i - d)) :=
+    hφ.comp (measurable_pi_apply i)
+  have hI := (hindepN.comp hind hproj)
+  have hmul := lintegral_mul_eq_lintegral_mul_lintegral_of_indepFun'' (hind.comp hN).aemeasurable
+    (hproj.comp (measurable_pi_iff.mpr hY)).aemeasurable hI
+  simp only [Function.comp_def] at hmul
+  rw [hmul]
+  simp only [mul_one]
+  congr 1
+  exact ((hident i).comp hφ).lintegral_eq
+
+/-! The card's worked numbers, as exact fractions. -/
+
+-- class mean μ = (1 + 3)/2 = 2
+example : ((1 : ℚ) + 3) / 2 = 2 := by norm_num
+-- between-fleet spread a = ((1-2)^2 + (3-2)^2)/2 = 1
+example : (((1 : ℚ) - 2) ^ 2 + (3 - 2) ^ 2) / 2 = 1 := by norm_num
+-- credibility Z = 3/(3 + 2/1) = 0.6
+example : (3 : ℚ) / (3 + 2 / 1) = 3 / 5 := by norm_num
+-- fleet average (1 + 1 + 2)/3 and forecast 0.6 * 4/3 + 0.4 * 2 = 1.6
+example : ((1 : ℚ) + 1 + 2) / 3 = 4 / 3 := by norm_num
+example : (3 / 5 : ℚ) * (4 / 3) + (1 - 3 / 5) * 2 = 8 / 5 := by norm_num
+-- the error parabola a - 2za + z^2 (a + s/n) at z = Z equals a(1 - Z) = 0.4
+example : (1 : ℚ) - 2 * (3 / 5) * 1 + (3 / 5) ^ 2 * (1 + 2 / 3) = 2 / 5 := by norm_num
+example : (1 : ℚ) * (1 - 3 / 5) = 2 / 5 := by norm_num
+-- per-claim layer value 0.5 * (4000 - 2000) = 1000; excess-of-loss premium 1.6 * 1000 = 1600
+example : (1 / 2 : ℚ) * (4000 - 2000) = 1000 := by norm_num
+example : (8 / 5 : ℚ) * 1000 = 1600 := by norm_num
+-- expected yearly total 1.6 * 2500 = 4000
+example : (8 / 5 : ℚ) * ((1000 + 4000) / 2) = 4000 := by norm_num
+-- wrong flipped ratio n/(n + a/s) = 3/(3 + 1/2) = 0.857
+example : (3 : ℚ) / (3 + 1 / 2) = 6 / 7 := by norm_num
+-- Z with n = 10 years is 5/6; Z with types 1.5 and 2.5 (a = 1/4) is 3/11 = 0.273
+example : (10 : ℚ) / (10 + 2 / 1) = 5 / 6 := by norm_num
+example : (3 : ℚ) / (3 + 2 / (1 / 4)) = 3 / 11 := by norm_num
+
+
+#print axioms credibility_weight_is_best_linear_forecast
+#print axioms layer_price_eq_integral_of_tail_probability
+#print axioms excess_of_loss_premium_eq_mean_count_mul_layer_value
+#print axioms mean_sq_error_linear_forecast
+#print axioms lintegral_random_sum_eq_tsum
+```
+
+**Checked 2026-11-14 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'credibility_weight_is_best_linear_forecast' depends on axioms: [propext, Classical.choice, Quot.sound]
+'layer_price_eq_integral_of_tail_probability' depends on axioms: [propext, Classical.choice, Quot.sound]
+'excess_of_loss_premium_eq_mean_count_mul_layer_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+'mean_sq_error_linear_forecast' depends on axioms: [propext, Classical.choice, Quot.sound]
+'lintegral_random_sum_eq_tsum' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 > [!TIP]
 > **Try changing**

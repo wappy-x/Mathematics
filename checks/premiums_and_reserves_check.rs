@@ -166,4 +166,5 @@ fn main() {
     assert!((lhs - rhs).abs() < 1e-6); // one step of the recursion, by hand
     assert!(vr[0].abs() < 1e-6); // equivalence: nothing owed at issue
     println!("All checks passed.");
+    println!("ALL CHECKS PASS");
 }

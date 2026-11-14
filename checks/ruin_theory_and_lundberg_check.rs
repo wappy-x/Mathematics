@@ -139,4 +139,5 @@ fn main() {
         let rr = r as f64 / 1e6;
         println!("{:>6} {:>9.2} {:>9.2}", r, LAM * (mgf(rr, B) - 1.0), c * rr);
     }
+    println!("ALL CHECKS PASS");
 }

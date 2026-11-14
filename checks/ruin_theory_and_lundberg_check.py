@@ -114,3 +114,4 @@ print("chart: two sides of the adjustment equation, per year; r per $1M")
 print(f"{'r':>6} {'claims':>9} {'premium':>9}")
 for r in range(0, 15, 2):
     print(f"{r:>6} {LAM * (mgf(r / 1e6, B) - 1.0):>9.2f} {C * r / 1e6:>9.2f}")
+print("ALL CHECKS PASS")

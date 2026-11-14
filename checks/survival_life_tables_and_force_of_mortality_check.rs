@@ -128,4 +128,5 @@ fn main() {
     assert!((pg - p25).abs() < 0.01);                                            // the fit lands near
     assert!((cg.ln() - C.ln()).abs() < 0.01);                                    // and recovers c
     println!("all checks passed");
+    println!("ALL CHECKS PASS");
 }

@@ -112,3 +112,4 @@ assert abs(mu65_tab - mu(65)) < 1e-4                                   # slope o
 assert abs(pg - p25) < 0.01                                            # the fit lands near
 assert abs(log(cg) - log(C)) < 0.01                                    # and recovers the ageing rate
 print("all checks passed")
+print("ALL CHECKS PASS")
