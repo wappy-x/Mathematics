@@ -1,17 +1,18 @@
 <p align="center">
-  <img src=".github/banner.svg" alt="Mathematics: a comprehensive mathematics library, with every result checked in Rust and Python" width="100%">
+  <img src=".github/banner.svg" alt="Mathematics: a comprehensive mathematics library, with every number checked in Python and Rust and the key results proved in Lean" width="100%">
 </p>
 
 <p align="center">
-  <img alt="cards" src="https://img.shields.io/badge/cards-1%2C087%20of%201%2C866-7aa7ff?style=flat-square">
+  <img alt="cards" src="https://img.shields.io/badge/cards-1%2C350%20of%201%2C866-7aa7ff?style=flat-square">
   <img alt="wings" src="https://img.shields.io/badge/wings-25-67e8f9?style=flat-square">
   <img alt="checks" src="https://img.shields.io/badge/every%20card-Python%20%2B%20Rust%20checks-b48cff?style=flat-square">
+  <img alt="proofs" src="https://img.shields.io/badge/proofs-Lean%204%20%2B%20Mathlib-a78bfa?style=flat-square">
   <img alt="status" src="https://img.shields.io/badge/status-work%20in%20progress-f5a524?style=flat-square">
   <img alt="licence" src="https://img.shields.io/badge/licence-CC%20BY%204.0%20%2B%20Apache%202.0-8b949e?style=flat-square">
 </p>
 
 <p align="center"><b>A plain-English library of mathematics, from counting to the edge of research.</b><br>
-One idea per card. What it means, why it's true, a worked example with real numbers,<br>and code that checks every single number twice.</p>
+One idea per card. What it means, why it's true, a worked example with real numbers,<br>code that checks every single number twice,<br>and a Lean proof of the key results, checked by computer.</p>
 
 <p align="center">
   <a href="SYLLABUS.md"><img alt="Browse the syllabus: every wing, shelf and card" src="https://img.shields.io/badge/Browse_the_syllabus-every_wing%2C_shelf_and_card-7aa7ff?style=for-the-badge"></a>
@@ -39,6 +40,7 @@ Every card has the same shape, so you always know where to look:
 | **Why it works** | The reasoning, step by step. Longer proofs are folded away until you want them. |
 | **Worked numbers, by hand** | The example done in full, so you can follow every step with a pen. |
 | **The code** | Two small programs, one in Python and one in Rust, that compute every number on the card, each reaching the answer by at least two independent routes. |
+| **The proof** | A Lean proof of the card's key results, checked by computer. The card says in plain words what it proves, and which parts are left to the Python and Rust checks. |
 | **What breaks** | What goes wrong when an assumption fails, with the numbers to show it. |
 | **The usual mistake** | The trap most people fall into, and how to avoid it. |
 | **Where you meet it** | Where the idea turns up in real life. |
@@ -92,6 +94,7 @@ The library has 25 **wings**, each split into shelves of cards. Click a wing to 
 Mathematics should be right, so every card is checked in several ways:
 
 - **Every number is computed, not typed.** Each card's Python and Rust programs work out every number the card states, and the two must print exactly the same output.
+- **The key results are proved in Lean.** Almost every card carries a [Lean 4](https://lean-lang.org) proof, built on the [Mathlib](https://leanprover-community.github.io) library and checked by computer. Every proof is complete and uses only Lean's standard axioms. Lean proves the exact maths; the worked numbers and real-world models stay with the Python and Rust checks, and each card says which is which. A few cards have no Lean yet, because Mathlib does not cover their subject (planar drawings and polyhedra).
 - **Every check can fail.** The checks compare independent routes to the same answer (a formula against a brute-force count, a simulation, or an exact calculation), so a wrong formula trips them. They're tested by deliberately breaking the maths.
 - **Every card passes a strict linter** that checks its shape, links, symbols and sources, and every DOI in a source list is verified.
 - **Independent reviewers** recompute the numbers, test the proofs and look for anything misleading, and what they find gets fixed.
@@ -109,6 +112,16 @@ rustc --edition 2021 -O checks/place_value_check.rs -o /tmp/check && /tmp/check
 
 Each program prints its working, then confirms that every check passed.
 
+To check a Lean proof you need [elan](https://github.com/leanprover/elan), Lean's installer. The `lean/` folder pins the Lean and Mathlib versions:
+
+```bash
+cd lean
+lake exe cache get                          # fetch Mathlib, already compiled
+lake env lean ../checks/place_value_check.lean
+```
+
+It prints the axioms each theorem rests on. A complete proof rests only on `propext`, `Classical.choice` and `Quot.sound`.
+
 ## Reading it
 
 The cards are plain Markdown and read best right here on GitHub. Formulas, charts and diagrams display, the links between cards work, and the longer proofs stay folded until you open them. A card that isn't written yet is named in plain text.
@@ -121,6 +134,8 @@ Cards/<wing>/<shelf>/<card>.md    the cards
 Cards/<wing>/figures/             the diagrams drawn on the cards
 checks/<card>_check.py            each card's Python check
 checks/<card>_check.rs            each card's Rust check
+checks/<card>_check.lean          each card's Lean proof
+lean/                             the Lean project: pinned Lean and Mathlib versions
 SYLLABUS.md                       the contents: all 25 wings, each linked to its page
 .github/                          the contributing guide, the agent brief and the banner
 ```

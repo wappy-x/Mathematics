@@ -42,6 +42,7 @@ You need:
 - git and a GitHub account, with your own fork of this repository;
 - Python 3.10 or newer, standard library only;
 - Rust, installed with [rustup](https://rustup.rs), standard library only;
+- for a card's Lean proof, [elan](https://github.com/leanprover/elan), Lean's installer (the `lean/` folder pins the versions);
 - an AI coding agent that can read and write files and run commands in a terminal. Any capable one works.
 
 ```bash
@@ -74,6 +75,16 @@ rustc --edition 2021 -O checks/<slug>_check.rs -o /tmp/check && /tmp/check
 ```
 
 Both programs must finish cleanly and print identical output, and that output must match what is pasted on the card.
+
+If the card has a Lean section, check its proof too:
+
+```bash
+cd lean
+lake exe cache get
+lake env lean ../checks/<slug>_check.lean
+```
+
+Every theorem must rest only on `propext`, `Classical.choice` and `Quot.sound`. The [agent brief](AGENTS.md#the-lean-section) has the rules.
 
 ### 5. Send it
 

@@ -50,6 +50,7 @@ A **spec** for each card. The maintainers post the specs for a shelf when someon
 - The card: `Cards/<wing_dir>/<shelf_dir>/<NN>-<slug>.md`.
 - Its two checks: `checks/<slug>_check.py` and `checks/<slug>_check.rs`, with the slug's hyphens turned into underscores (for `place-value`: `checks/place_value_check.py`). If the spec says the slug is shared with a card in another wing, prefix the wing: `checks/w13_<slug>_check.py`.
 - A figure, only where the spec allows one: `Cards/<wing_dir>/figures/<slug>.svg`.
+- Its Lean proof, only when you add the card's Lean section: `checks/<slug>_check.lean` (see "The Lean section").
 
 Nothing else. Scratch work goes in a temporary folder of your own, outside the repository.
 
@@ -88,7 +89,7 @@ A card starts straight away with its title; there is no frontmatter block. Under
 - **Why it works.** `### Step 0`, `### Step 1` and so on, each titled by what it achieves. Step 0 is the idea that makes the result possible, in words. Give a real derivation. Heavy algebra or a long proof goes in a fold (below) while the body keeps the proof's shape in words, and a theorem stated without proof names the card that proves it.
 - **Worked numbers, by hand.** A table `Step | Arithmetic | Value` on the example, ending in the answer in bold, then one sentence on what the answer means. Then `### What breaks if you drop a piece`: a table `Mistake | Comes out at | What went wrong`, whose wrong answers are computed by the checks.
 - **How it moves** (optional). The puzzle in words, one story traced through a table, one force at a time as ASCII bars, then the combined picture as a chart.
-- **Code, from first principles.** One paragraph on what the code does and how many independent roads it takes to the answer. `### Python`: the whole script, the provenance line, the output. `### Rust`: the same. Then the "Try changing" box: three or four experiments, each with "guess first", the setting to change and the answer.
+- **Code, from first principles.** One paragraph on what the code does and how many independent roads it takes to the answer. `### Python`: the whole script, the provenance line, the output. `### Rust`: the same. `### Lean`, when the card has a Lean proof (see "The Lean section"). Then the "Try changing" box: three or four experiments, each with "guess first", the setting to change and the answer.
 - **The usual mistake.** A warning box. The biggest trap first, in bold, with why it is wrong, then three or four smaller traps, each with the wrong number it produces.
 - **Where you meet it in real life.** Bullets, each opening with a bold place name, then one or two sentences. End with the "Say it back" box: the whole card in four or five plain sentences, nothing new.
 - **What this builds on** and **Where this goes next.** The `needs_first` and `next` cards as bullets, with one line each on what the other card contributes or adds. "Where this goes next" ends with one sentence on the question this card leaves open.
@@ -175,6 +176,26 @@ python3 -B checks/<slug>_check.py
 rustc --edition 2021 -O checks/<slug>_check.rs -o /tmp/<slug> && /tmp/<slug>
 ```
 
+## The Lean section
+
+Most cards carry a Lean proof of their key results under `### Lean`, right after `### Rust`. Show it open, never in a fold. It has, in order:
+
+- One short sentence on what Lean proves, then bullets that state each proved result in plain words, mirroring the card's own claims.
+- One sentence naming what is left to the Python and Rust checks, such as worked decimals or a real-world model.
+- The whole file in a `lean` block, byte-for-byte `checks/<slug>_check.lean`.
+- The provenance line, then the output: the axiom report for every theorem.
+
+```
+**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+```
+
+The rules:
+
+- State the card's claims faithfully. A statement weaker than the card, or one that assumes what the card proves, does not count.
+- No `sorry`, `admit` or `native_decide`. Every theorem rests only on `propext`, `Classical.choice` and `Quot.sound`, shown by a `#print axioms` line for each.
+- Use the Lean and Mathlib versions pinned in `lean/`. Check from that folder: `lake env lean ../checks/<slug>_check.lean`.
+- If Mathlib cannot state a claim yet, prove what it can and say so on the card. A card with nothing Lean can state has no Lean section.
+
 ## Pictures
 
 - **Curves:** a Mermaid `xychart-beta` chart with a title, axis titles with units, and a caption under it naming each line. Start the block with this line, so the chart reads in light and dark mode:
@@ -222,6 +243,7 @@ You are a hostile checker who also fixes what it finds. You did not write this c
 - [ ] Every heading is present, in order, spelled exactly.
 - [ ] Every symbol on the card has a row in the symbol table.
 - [ ] Both checks pass and print identical output, matching what is pasted, and the code on the card equals the files.
+- [ ] If the card has a Lean section: the proof compiles with no `sorry`, every theorem rests only on the standard axioms, and the block on the card equals `checks/<slug>_check.lean`.
 - [ ] Every number on the card, in the text, tables, charts and bars, is printed by both checks.
 - [ ] At least three asserts can fail, and a mutation test made one fail each time.
 - [ ] The card is within its tier's limits.
