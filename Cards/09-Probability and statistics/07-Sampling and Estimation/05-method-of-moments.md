@@ -36,46 +36,52 @@ Bars: the ten claims, counted in $2,000 bands and spread per $1,000 (three claim
 
 ## The formula
 
-Notation first, in words. $X$ is the size of one claim, a random variable, in thousands of dollars; $x_i$ is the $i$-th observed claim and $n$ is how many there are. $\alpha$ (alpha) is the gamma law's shape and $\lambda$ (lambda) its rate, per thousand dollars. A bar means an average over the sample: $\bar{x}$ is the average claim. A hat marks an estimate: $\hat\alpha$ is the shape the data choose.
+Notation first, in words. $`X`$ is the size of one claim, a random variable, in thousands of dollars; $`x_i`$ is the $`i`$-th observed claim and $`n`$ is how many there are. $`\alpha`$ (alpha) is the gamma law's shape and $`\lambda`$ (lambda) its rate, per thousand dollars. A bar means an average over the sample: $`\bar{x}`$ is the average claim. A hat marks an estimate: $`\hat\alpha`$ is the shape the data choose.
 
 The gamma law's first two moments, from its own card:
 
-$$E[X] = \frac{\alpha}{\lambda}, \qquad E[X^2] = \frac{\alpha(\alpha+1)}{\lambda^2}, \qquad \mathrm{Var}(X) = \frac{\alpha}{\lambda^2}$$
+```math
+E[X] = \frac{\alpha}{\lambda}, \qquad E[X^2] = \frac{\alpha(\alpha+1)}{\lambda^2}, \qquad \mathrm{Var}(X) = \frac{\alpha}{\lambda^2}
+```
 
-The sample's two moments are $\bar{x} = \frac{1}{n}\sum x_i$ and $m_2 = \frac{1}{n}\sum x_i^2$; their difference $v = m_2 - \bar{x}^2$ is the sample variance, dividing by $n$. Set model equal to sample and solve:
+The sample's two moments are $`\bar{x} = \frac{1}{n}\sum x_i`$ and $`m_2 = \frac{1}{n}\sum x_i^2`$; their difference $`v = m_2 - \bar{x}^2`$ is the sample variance, dividing by $`n`$. Set model equal to sample and solve:
 
-$$\frac{\hat\alpha}{\hat\lambda} = \bar{x}, \quad \frac{\hat\alpha}{\hat\lambda^2} = v \qquad\Longrightarrow\qquad \hat\alpha = \frac{\bar{x}^2}{v}, \qquad \hat\lambda = \frac{\bar{x}}{v}$$
+```math
+\frac{\hat\alpha}{\hat\lambda} = \bar{x}, \quad \frac{\hat\alpha}{\hat\lambda^2} = v \qquad\Longrightarrow\qquad \hat\alpha = \frac{\bar{x}^2}{v}, \qquad \hat\lambda = \frac{\bar{x}}{v}
+```
 
 **Read it aloud:** the shape is the squared average divided by the variance, and the rate is the average divided by the variance.
 
-With one dial, one equation is enough. The exponential law is the gamma with shape fixed at 1; its mean is $1/\lambda$, so matching the mean gives $\hat\lambda = 1/\bar{x}$.
+With one dial, one equation is enough. The exponential law is the gamma with shape fixed at 1; its mean is $`1/\lambda`$, so matching the mean gives $`\hat\lambda = 1/\bar{x}`$.
 
 The method's standard error for the shape, from Step 4:
 
-$$\mathrm{SE}(\hat\alpha) \approx \sqrt{\frac{2\alpha(\alpha+1)}{n}}$$
+```math
+\mathrm{SE}(\hat\alpha) \approx \sqrt{\frac{2\alpha(\alpha+1)}{n}}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$, $x_i$, $i$ | one claim's size (random), and the $i$-th claim seen | $x_{10} = 8$ | a larger claim raises $v$ faster than $\bar{x}^2$, so the shape falls |
-| $n$ | number of claims | 10 | standard errors shrink like $1/\sqrt{n}$ |
-| $\alpha$ | the shape: how many exponential gaps the claim is built from; low means skewed | 2 | the law becomes less skewed, more like a bell |
-| $\lambda$ | the rate, per $1,000; its reciprocal $1/\lambda$ is the **scale** in thousands | 0.667, scale $1,500 | every claim shrinks in proportion |
-| $\bar{x}$ | the sample's first moment: the average claim | 3.0 ($3,000) | both estimates rise |
-| $m_2$ | the sample's second moment: the average squared claim | 13.5 | the variance rises, shape and rate fall |
-| $v$ | the sample variance, $m_2 - \bar{x}^2$, dividing by $n$ | 4.5 | shape and rate both fall |
-| $\hat\alpha$, $\hat\lambda$ | the estimates: the dial settings the data choose | 2.00, 0.667 | — |
-| $\overline{\ln x}$ | the average of the claims' natural logs; maximum likelihood matches this | 0.8209 | the likelihood shape rises |
-| $\Gamma$ | the gamma integral, the gamma law's constant | Γ(2) = 1 | — |
-| $\psi$, $\psi'$ | digamma, the slope of ln Γ; trigamma, the slope of $\psi$ | ψ'(2) = 0.6449 | — |
-| $\mathrm{SE}$ | standard error: the typical distance of an estimate from the truth over repeated samples | 1.10 for the shape | — |
+| $`X`$, $`x_i`$, $`i`$ | one claim's size (random), and the $`i`$-th claim seen | $`x_{10} = 8`$ | a larger claim raises $`v`$ faster than $`\bar{x}^2`$, so the shape falls |
+| $`n`$ | number of claims | 10 | standard errors shrink like $`1/\sqrt{n}`$ |
+| $`\alpha`$ | the shape: how many exponential gaps the claim is built from; low means skewed | 2 | the law becomes less skewed, more like a bell |
+| $`\lambda`$ | the rate, per $1,000; its reciprocal $`1/\lambda`$ is the **scale** in thousands | 0.667, scale $1,500 | every claim shrinks in proportion |
+| $`\bar{x}`$ | the sample's first moment: the average claim | 3.0 ($3,000) | both estimates rise |
+| $`m_2`$ | the sample's second moment: the average squared claim | 13.5 | the variance rises, shape and rate fall |
+| $`v`$ | the sample variance, $`m_2 - \bar{x}^2`$, dividing by $`n`$ | 4.5 | shape and rate both fall |
+| $`\hat\alpha`$, $`\hat\lambda`$ | the estimates: the dial settings the data choose | 2.00, 0.667 | — |
+| $`\overline{\ln x}`$ | the average of the claims' natural logs; maximum likelihood matches this | 0.8209 | the likelihood shape rises |
+| $`\Gamma`$ | the gamma integral, the gamma law's constant | Γ(2) = 1 | — |
+| $`\psi`$, $`\psi'`$ | digamma, the slope of ln Γ; trigamma, the slope of $`\psi`$ | ψ'(2) = 0.6449 | — |
+| $`\mathrm{SE}`$ | standard error: the typical distance of an estimate from the truth over repeated samples | 1.10 for the shape | — |
 
 ### When it holds
 
 - **Independent claims from one law.** Ten claims from one storm are one event counted ten times; the averages then settle slowly or not at all, and the standard error above is too small.
 - **The moments used exist.** The fit needs a finite variance; its standard error needs a finite fourth moment. A Pareto tail with index 2 or below has no variance, and the sample variance jumps each time a large claim arrives ([Heavy tails](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)).
-- **The equations have a solution inside the law's range.** If all ten claims were $3,000, then $v = 0$ and no gamma matches; for other families the solution can land outside the allowed values, such as a negative shape.
-- **The family is right.** The moment equations fit a gamma to any positive data with $v > 0$. They never test whether a gamma is sensible.
-- **Enough data for the error formula.** The standard error is a large-sample result; at $n = 10$ it is a rough guide, not a guarantee.
+- **The equations have a solution inside the law's range.** If all ten claims were $3,000, then $`v = 0`$ and no gamma matches; for other families the solution can land outside the allowed values, such as a negative shape.
+- **The family is right.** The moment equations fit a gamma to any positive data with $`v > 0`$. They never test whether a gamma is sensible.
+- **Enough data for the error formula.** The standard error is a large-sample result; at $`n = 10`$ it is a rough guide, not a guarantee.
 
 ---
 
@@ -87,71 +93,93 @@ The law of large numbers says an average of many independent draws settles on th
 
 ### Step 1: the gamma law's moments as formulas in its dials
 
-The gamma density is $\lambda^\alpha x^{\alpha-1} e^{-\lambda x}/\Gamma(\alpha)$ for $x > 0$. Multiplying by $x^k$ adds *k* to the power, and the substitution $u = \lambda x$ turns the area into a gamma integral:
+The gamma density is $`\lambda^\alpha x^{\alpha-1} e^{-\lambda x}/\Gamma(\alpha)`$ for $`x > 0`$. Multiplying by $`x^k`$ adds *k* to the power, and the substitution $`u = \lambda x`$ turns the area into a gamma integral:
 
-$$E[X^k] = \frac{\Gamma(\alpha + k)}{\Gamma(\alpha)\,\lambda^k} = \frac{\alpha(\alpha+1)\cdots(\alpha+k-1)}{\lambda^k}.$$
+```math
+E[X^k] = \frac{\Gamma(\alpha + k)}{\Gamma(\alpha)\,\lambda^k} = \frac{\alpha(\alpha+1)\cdots(\alpha+k-1)}{\lambda^k}.
+```
 
-The second equality is the step rule $\Gamma(a+1) = a\,\Gamma(a)$ used *k* times. So $E[X] = \alpha/\lambda$, $E[X^2] = \alpha(\alpha+1)/\lambda^2$, and the variance is their difference after squaring the first: $\alpha/\lambda^2$.
+The second equality is the step rule $`\Gamma(a+1) = a\,\Gamma(a)`$ used *k* times. So $`E[X] = \alpha/\lambda`$, $`E[X^2] = \alpha(\alpha+1)/\lambda^2`$, and the variance is their difference after squaring the first: $`\alpha/\lambda^2`$.
 
 ### Step 2: two equations, two unknowns, one solution
 
-Match $\bar{x}$ to $\alpha/\lambda$ and $v$ to $\alpha/\lambda^2$. Divide the first by the second: $\lambda$ is left alone, so $\hat\lambda = \bar{x}/v$. Put that back into the first: $\hat\alpha = \bar{x}\hat\lambda = \bar{x}^2/v$. Both are positive whenever $v > 0$, and the pair is the only solution, since each step was forced.
+Match $`\bar{x}`$ to $`\alpha/\lambda`$ and $`v`$ to $`\alpha/\lambda^2`$. Divide the first by the second: $`\lambda`$ is left alone, so $`\hat\lambda = \bar{x}/v`$. Put that back into the first: $`\hat\alpha = \bar{x}\hat\lambda = \bar{x}^2/v`$. Both are positive whenever $`v > 0`$, and the pair is the only solution, since each step was forced.
 
-Matching the variance instead of $m_2$ changes nothing: $m_2 = v + \bar{x}^2$, so the two pairs of equations carry the same information. The variance is easier to solve.
+Matching the variance instead of $`m_2`$ changes nothing: $`m_2 = v + \bar{x}^2`$, so the two pairs of equations carry the same information. The variance is easier to solve.
 
-One check is worth doing. The fitted law must return the sample's moments exactly. The code integrates $x$ and $x^2$ against the fitted gamma density and gets 3.0000 and 13.5000: the averages were matched, not approximated.
+One check is worth doing. The fitted law must return the sample's moments exactly. The code integrates $`x`$ and $`x^2`$ against the fitted gamma density and gets 3.0000 and 13.5000: the averages were matched, not approximated.
 
 ### Step 3: the estimate settles on the truth
 
-As $n$ grows, $\bar{x}$ settles on $\alpha/\lambda$ and $m_2$ on $\alpha(\alpha+1)/\lambda^2$ (Step 0). The estimates are smooth functions of those two averages, and smooth functions do not jump: a small change in the inputs makes a small change in the output, as long as the variance in the denominator stays away from 0. So $\hat\alpha$ settles on $\bar{x}^2/v$ evaluated at the true moments, which Step 2 showed is $\alpha$. An estimator that settles on the truth is consistent, the word from [Samples and estimators](01-populations-samples-and-estimators.md).
+As $`n`$ grows, $`\bar{x}`$ settles on $`\alpha/\lambda`$ and $`m_2`$ on $`\alpha(\alpha+1)/\lambda^2`$ (Step 0). The estimates are smooth functions of those two averages, and smooth functions do not jump: a small change in the inputs makes a small change in the output, as long as the variance in the denominator stays away from 0. So $`\hat\alpha`$ settles on $`\bar{x}^2/v`$ evaluated at the true moments, which Step 2 showed is $`\alpha`$. An estimator that settles on the truth is consistent, the word from [Samples and estimators](01-populations-samples-and-estimators.md).
 
 ### Step 4: how far off, by the slopes of the solution
 
-Consistency says the error shrinks. The size of the error at a given $n$ comes from slopes. Near the truth, $\hat\alpha$ moves by (its slope in $\bar{x}$) times the error in $\bar{x}$, plus (its slope in $m_2$) times the error in $m_2$; this first-order Taylor step is the delta method of [Delta method](../06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md). The two averages err together, since a big claim raises both, so the variance of $\hat\alpha$ collects both errors and their covariance. For the gamma law the terms collapse to
+Consistency says the error shrinks. The size of the error at a given $`n`$ comes from slopes. Near the truth, $`\hat\alpha`$ moves by (its slope in $`\bar{x}`$) times the error in $`\bar{x}`$, plus (its slope in $`m_2`$) times the error in $`m_2`$; this first-order Taylor step is the delta method of [Delta method](../06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md). The two averages err together, since a big claim raises both, so the variance of $`\hat\alpha`$ collects both errors and their covariance. For the gamma law the terms collapse to
 
-$$n\,\mathrm{Var}(\hat\alpha) \approx 2\alpha(\alpha+1) = 12 \text{ at shape } 2.$$
+```math
+n\,\mathrm{Var}(\hat\alpha) \approx 2\alpha(\alpha+1) = 12 \text{ at shape } 2.
+```
 
-So with ten claims the shape's standard error is about $\sqrt{12/10} = 1.10$. The estimate 2.00 is honest to roughly one unit either way.
+So with ten claims the shape's standard error is about $`\sqrt{12/10} = 1.10`$. The estimate 2.00 is honest to roughly one unit either way.
 
 <details>
 <summary>Detailed proof: the variance of the moment shape</summary>
 
-Write the true moments $\mu_k = E[X^k]$ and $d = \mu_2 - \mu_1^2 = \alpha/\lambda^2$. The shape is $g(\mu_1, \mu_2) = \mu_1^2/d$. Its slopes are
-$$\frac{\partial g}{\partial \mu_1} = \frac{2\mu_1\mu_2}{d^2} = 2(\alpha+1)\lambda, \qquad \frac{\partial g}{\partial \mu_2} = -\frac{\mu_1^2}{d^2} = -\lambda^2.$$
-One claim contributes $X$ to the first average and $X^2$ to the second. Their variances and covariance, from Step 1 with *k* up to 4, are
-$$\mathrm{Var}(X) = \frac{\alpha}{\lambda^2}, \quad \mathrm{Cov}(X, X^2) = \mu_3 - \mu_1\mu_2 = \frac{2\alpha(\alpha+1)}{\lambda^3}, \quad \mathrm{Var}(X^2) = \mu_4 - \mu_2^2 = \frac{\alpha(\alpha+1)(4\alpha+6)}{\lambda^4}.$$
-The averages of $n$ claims have these divided by $n$. The first-order change in the shape is a weighted sum of the two errors, so its variance is (slope 1)^2 Var + 2 (slope 1)(slope 2) Cov + (slope 2)^2 Var:
-$$n\,\mathrm{Var}(\hat\alpha) \approx 4\alpha(\alpha+1)^2 - 8\alpha(\alpha+1)^2 + \alpha(\alpha+1)(4\alpha+6) = \alpha(\alpha+1)\,[\,4\alpha + 4 - 8\alpha - 8 + 4\alpha + 6\,] = 2\alpha(\alpha+1).$$
-The neglected second-order terms shrink like $1/n$ against these, so the approximation improves with $n$. The code computes the same quadratic form numerically from the moments and gets 12.0000; a simulation of 2,000 samples of 200 claims gets 11.9801.
+Write the true moments $`\mu_k = E[X^k]`$ and $`d = \mu_2 - \mu_1^2 = \alpha/\lambda^2`$. The shape is $`g(\mu_1, \mu_2) = \mu_1^2/d`$. Its slopes are
+
+$`\displaystyle \frac{\partial g}{\partial \mu_1} = \frac{2\mu_1\mu_2}{d^2} = 2(\alpha+1)\lambda, \qquad \frac{\partial g}{\partial \mu_2} = -\frac{\mu_1^2}{d^2} = -\lambda^2.`$
+
+One claim contributes $`X`$ to the first average and $`X^2`$ to the second. Their variances and covariance, from Step 1 with *k* up to 4, are
+
+$`\displaystyle \mathrm{Var}(X) = \frac{\alpha}{\lambda^2}, \quad \mathrm{Cov}(X, X^2) = \mu_3 - \mu_1\mu_2 = \frac{2\alpha(\alpha+1)}{\lambda^3}, \quad \mathrm{Var}(X^2) = \mu_4 - \mu_2^2 = \frac{\alpha(\alpha+1)(4\alpha+6)}{\lambda^4}.`$
+
+The averages of $`n`$ claims have these divided by $`n`$. The first-order change in the shape is a weighted sum of the two errors, so its variance is (slope 1)^2 Var + 2 (slope 1)(slope 2) Cov + (slope 2)^2 Var:
+
+$`\displaystyle n\,\mathrm{Var}(\hat\alpha) \approx 4\alpha(\alpha+1)^2 - 8\alpha(\alpha+1)^2 + \alpha(\alpha+1)(4\alpha+6) = \alpha(\alpha+1)\,[\,4\alpha + 4 - 8\alpha - 8 + 4\alpha + 6\,] = 2\alpha(\alpha+1).`$
+
+The neglected second-order terms shrink like $`1/n`$ against these, so the approximation improves with $`n`$. The code computes the same quadratic form numerically from the moments and gets 12.0000; a simulation of 2,000 samples of 200 claims gets 11.9801.
 
 </details>
 
 ### Step 5: maximum likelihood is also moment matching, with a better moment
 
-Write the gamma log-likelihood of the claims ([Maximum likelihood](04-maximum-likelihood.md)), divided by $n$; $\overline{\ln x}$ is the average of the claims' natural logs:
+Write the gamma log-likelihood of the claims ([Maximum likelihood](04-maximum-likelihood.md)), divided by $`n`$; $`\overline{\ln x}`$ is the average of the claims' natural logs:
 
-$$\frac{1}{n}\ell(\alpha, \lambda) = \alpha \ln\lambda - \ln\Gamma(\alpha) + (\alpha - 1)\,\overline{\ln x} - \lambda\,\bar{x}.$$
+```math
+\frac{1}{n}\ell(\alpha, \lambda) = \alpha \ln\lambda - \ln\Gamma(\alpha) + (\alpha - 1)\,\overline{\ln x} - \lambda\,\bar{x}.
+```
 
-Set its slope in $\lambda$ to zero: $\alpha/\lambda = \bar{x}$. That is the first moment equation again. Set its slope in $\alpha$ to zero: $\ln\lambda - \psi(\alpha) + \overline{\ln x} = 0$, where $\psi$, the digamma function, is the slope of ln Γ. Since $E[\ln X] = \psi(\alpha) - \ln\lambda$ for a gamma law, this says: match the average log. Substituting $\lambda = \alpha/\bar{x}$ leaves one equation in the shape alone,
+Set its slope in $`\lambda`$ to zero: $`\alpha/\lambda = \bar{x}`$. That is the first moment equation again. Set its slope in $`\alpha`$ to zero: $`\ln\lambda - \psi(\alpha) + \overline{\ln x} = 0`$, where $`\psi`$, the digamma function, is the slope of ln Γ. Since $`E[\ln X] = \psi(\alpha) - \ln\lambda`$ for a gamma law, this says: match the average log. Substituting $`\lambda = \alpha/\bar{x}`$ leaves one equation in the shape alone,
 
-$$\ln\hat\alpha - \psi(\hat\alpha) = \ln\bar{x} - \overline{\ln x}.$$
+```math
+\ln\hat\alpha - \psi(\hat\alpha) = \ln\bar{x} - \overline{\ln x}.
+```
 
-So both methods match the mean. They differ in the second average. Moments match the average square; likelihood matches the average log. Squares give the largest claim enormous weight: the $8,000 claim is 64 of the 135 in $\sum x_i^2$, almost half. Logs tame it. That is why likelihood wastes less of the data. Its variance comes from the Fisher information ([Fisher information](07-fisher-information-and-cramer-rao.md)), which for two dials is a two-by-two table; the folded note below works it out. With $\psi'$, the trigamma function (the slope of $\psi$), it is
+So both methods match the mean. They differ in the second average. Moments match the average square; likelihood matches the average log. Squares give the largest claim enormous weight: the $8,000 claim is 64 of the 135 in $`\sum x_i^2`$, almost half. Logs tame it. That is why likelihood wastes less of the data. Its variance comes from the Fisher information ([Fisher information](07-fisher-information-and-cramer-rao.md)), which for two dials is a two-by-two table; the folded note below works it out. With $`\psi'`$, the trigamma function (the slope of $`\psi`$), it is
 
-$$n\,\mathrm{Var}(\hat\alpha_{\mathrm{ML}}) \approx \frac{\alpha}{\alpha\,\psi'(\alpha) - 1} = 6.8997 \text{ at shape } 2,$$
+```math
+n\,\mathrm{Var}(\hat\alpha_{\mathrm{ML}}) \approx \frac{\alpha}{\alpha\,\psi'(\alpha) - 1} = 6.8997 \text{ at shape } 2,
+```
 
 against 12 for moments. The ratio, 57.50 percent, is the moment method's **efficiency**: its answer is as precise as likelihood would be with 57.50 percent of the claims.
 
 <details>
 <summary>The algebra behind 6.8997: the information table for two dials</summary>
 
-One claim's log-likelihood is $\alpha\ln\lambda - \ln\Gamma(\alpha) + (\alpha - 1)\ln x - \lambda x$. Its second slopes are
-$$\frac{\partial^2}{\partial\alpha^2} = -\psi'(\alpha), \qquad \frac{\partial^2}{\partial\alpha\,\partial\lambda} = \frac{1}{\lambda}, \qquad \frac{\partial^2}{\partial\lambda^2} = -\frac{\alpha}{\lambda^2}.$$
+One claim's log-likelihood is $`\alpha\ln\lambda - \ln\Gamma(\alpha) + (\alpha - 1)\ln x - \lambda x`$. Its second slopes are
+
+$`\displaystyle \frac{\partial^2}{\partial\alpha^2} = -\psi'(\alpha), \qquad \frac{\partial^2}{\partial\alpha\,\partial\lambda} = \frac{1}{\lambda}, \qquad \frac{\partial^2}{\partial\lambda^2} = -\frac{\alpha}{\lambda^2}.`$
+
 None of them involves x, so their averages over claims are these same numbers. With two dials, the Fisher information of one claim is a table with a row and a column for each dial, holding minus these second slopes:
-$$\begin{pmatrix} \psi'(\alpha) & -1/\lambda \\ -1/\lambda & \alpha/\lambda^2 \end{pmatrix}, \qquad \text{determinant} = \frac{\alpha\,\psi'(\alpha) - 1}{\lambda^2}.$$
+
+$`\displaystyle \begin{pmatrix} \psi'(\alpha) & -1/\lambda \\ -1/\lambda & \alpha/\lambda^2 \end{pmatrix}, \qquad \text{determinant} = \frac{\alpha\,\psi'(\alpha) - 1}{\lambda^2}.`$
+
 The two-dial form of the Fisher result, stated here without proof, says two things: in large samples, n times the variance of each likelihood estimate is the matching diagonal entry of the inverse table; and no unbiased estimator of that dial does better. A two-by-two table is inverted by swapping its diagonal entries, changing the sign of the other two and dividing by the determinant. The shape's entry is therefore
-$$\frac{\alpha/\lambda^2}{(\alpha\,\psi'(\alpha) - 1)/\lambda^2} = \frac{\alpha}{\alpha\,\psi'(\alpha) - 1},$$
-which at shape 2, where ψ'(2) = π^2/6 − 1, is 6.8997. The rate's entry is $\lambda^2\psi'(\alpha)/(\alpha\,\psi'(\alpha) - 1)$. At the likelihood fit to the ten claims, these give the standard errors 0.81 and 0.307. Had the rate been known, the table would shrink to its top-left entry and the shape's figure would be the smaller 1/ψ'(α): the off-diagonal entries record that a change of shape can be partly mimicked by a change of rate, and not knowing the rate costs precision. The code's `mle_avar` evaluates these two formulas.
+
+$`\displaystyle \frac{\alpha/\lambda^2}{(\alpha\,\psi'(\alpha) - 1)/\lambda^2} = \frac{\alpha}{\alpha\,\psi'(\alpha) - 1},`$
+
+which at shape 2, where ψ'(2) = π^2/6 − 1, is 6.8997. The rate's entry is $`\lambda^2\psi'(\alpha)/(\alpha\,\psi'(\alpha) - 1)`$. At the likelihood fit to the ten claims, these give the standard errors 0.81 and 0.307. Had the rate been known, the table would shrink to its top-left entry and the shape's figure would be the smaller 1/ψ'(α): the off-diagonal entries record that a change of shape can be partly mimicked by a change of rate, and not knowing the rate costs precision. The code's `mle_avar` evaluates these two formulas.
 
 </details>
 
@@ -195,21 +223,21 @@ The ten claims, in thousands of dollars: 0.5, 1, 1, 2, 2.5, 3, 3.5, 3.5, 5, 8.
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | sum of claims | 0.5 + 1 + 1 + 2 + 2.5 + 3 + 3.5 + 3.5 + 5 + 8 | 30 |
-| $\bar{x}$, first moment | 30 / 10 | 3.0 |
+| $`\bar{x}`$, first moment | 30 / 10 | 3.0 |
 | sum of squares | 0.25 + 1 + 1 + 4 + 6.25 + 9 + 12.25 + 12.25 + 25 + 64 | 135 |
-| $m_2$, second moment | 135 / 10 | 13.5 |
-| $v$, variance | 13.5 − 3.0^2 | 4.5 |
-| $\hat\alpha$, shape | 3.0^2 / 4.5 | 2.00 |
-| $\hat\lambda$, rate | 3.0 / 4.5 | 0.667 per $1,000 |
-| scale $1/\hat\lambda$ | 4.5 / 3.0 | $1,500 |
+| $`m_2`$, second moment | 135 / 10 | 13.5 |
+| $`v`$, variance | 13.5 − 3.0^2 | 4.5 |
+| $`\hat\alpha`$, shape | 3.0^2 / 4.5 | 2.00 |
+| $`\hat\lambda`$, rate | 3.0 / 4.5 | 0.667 per $1,000 |
+| scale $`1/\hat\lambda`$ | 4.5 / 3.0 | $1,500 |
 | SE of the shape | √(2 × 2 × 3 / 10) | 1.10 |
 | **fit** | **shape 2.00 (SE 1.10), rate 0.667 (SE 0.394)** | **gamma(2, 0.667)** |
 
 A shape of 2 means a claim behaves like the sum of two independent exponential pieces, each averaging $1,500. The fitted law says about 1 claim in 100 (0.0098) exceeds $10,000. That figure is rough. Moving the shape one standard error either way, with the mean held at $3,000, moves it from 0.0404 down to 0.0025: anywhere from about 1 claim in 25 to 1 in 400. That range is a sensitivity check on the shape alone, not a confidence interval. At shape 1 the chance is 0.0357 (the first row of What breaks). The standard errors are large: ten claims pin the shape down only to "somewhere between 1 and 3".
 
-**One dial.** Fix the shape at 1, an exponential law, and match the mean alone: $\hat\lambda = 1/3.0 = 0.3333$ per $1,000 (SE 0.1054). Climbing the exponential log-likelihood gives the same 0.3333. For the shelf's poll, 520 of 1,000 voters on one side, matching the mean of the yes-or-no answers gives 0.52 (SE 0.0158), and the likelihood again gives 0.52. For one-dial laws like these, whose likelihood depends on the data only through the total, the two methods are the same method.
+**One dial.** Fix the shape at 1, an exponential law, and match the mean alone: $`\hat\lambda = 1/3.0 = 0.3333`$ per $1,000 (SE 0.1054). Climbing the exponential log-likelihood gives the same 0.3333. For the shelf's poll, 520 of 1,000 voters on one side, matching the mean of the yes-or-no answers gives 0.52 (SE 0.0158), and the likelihood again gives 0.52. For one-dial laws like these, whose likelihood depends on the data only through the total, the two methods are the same method.
 
-**Two dials, by likelihood.** The average log of the claims is 0.8209, so the right side of Step 5's equation is ln 3 − 0.8209 = 0.2777. Solving $\ln\alpha - \psi(\alpha) = 0.2777$ by bisection gives shape 1.9508 (SE 0.81) and rate 0.6503 (SE 0.307). On these ten claims the two methods land close together; the gap between them lies well inside either standard error. The difference is in how they behave over many samples (Step 5), and in how they react to one extreme claim (below).
+**Two dials, by likelihood.** The average log of the claims is 0.8209, so the right side of Step 5's equation is ln 3 − 0.8209 = 0.2777. Solving $`\ln\alpha - \psi(\alpha) = 0.2777`$ by bisection gives shape 1.9508 (SE 0.81) and rate 0.6503 (SE 0.307). On these ten claims the two methods land close together; the gap between them lies well inside either standard error. The difference is in how they behave over many samples (Step 5), and in how they react to one extreme claim (below).
 
 ### What breaks if you drop a piece
 
@@ -226,7 +254,7 @@ A shape of 2 means a claim behaves like the sum of two independent exponential p
 
 The check fits the ten claims by moments, then confirms every result by a second road:
 
-- **The fit.** It integrates $x$ and $x^2$ against the fitted density with Simpson's rule (adding up thin slices under the curve) and recovers the sample's 3.0 and 13.5.
+- **The fit.** It integrates $`x`$ and $`x^2`$ against the fitted density with Simpson's rule (adding up thin slices under the curve) and recovers the sample's 3.0 and 13.5.
 - **Likelihood, two independent ways.** Bisection on the digamma equation, and golden-section climbing of the log-likelihood itself (shrinking a bracket around the peak), which uses a log-gamma function and no digamma.
 - **The error.** It computes the moment method's error by the delta method as a quadratic form, checks it against the closed form 2α(α + 1), and checks both against a simulation of 2,000 samples of 200 claims. The claims come from the fitted law, drawn with SplitMix64, a small random-number generator, seed 20260928.
 - **The generator.** The 400,000 simulated claims average 3.0032 (SE 0.0034), the law's 3.
@@ -628,9 +656,9 @@ ALL CHECKS PASS
 
 Lean proves the moment formula and the two-dial fit for every gamma law and positive sample, and the hand arithmetic exactly.
 
-- Take a gamma law with shape $\alpha > 0$ and rate $\lambda > 0$. Then its k-th moment is $\alpha(\alpha+1)\cdots(\alpha+k-1)/\lambda^k$, for every whole number k.
-- Take n positive claims with sample variance $v > 0$. Then exactly one gamma law has mean $\bar{x}$ and second moment $m_2$: shape $\bar{x}^2/v$, rate $\bar{x}/v$.
-- Take Step 4's slopes, variances and covariance, built from the gamma law's moments. Then the delta-method sum equals $2\alpha(\alpha+1)$ exactly, for every shape and rate.
+- Take a gamma law with shape $`\alpha > 0`$ and rate $`\lambda > 0`$. Then its k-th moment is $`\alpha(\alpha+1)\cdots(\alpha+k-1)/\lambda^k`$, for every whole number k.
+- Take n positive claims with sample variance $`v > 0`$. Then exactly one gamma law has mean $`\bar{x}`$ and second moment $`m_2`$: shape $`\bar{x}^2/v`$, rate $`\bar{x}/v`$.
+- Take Step 4's slopes, variances and covariance, built from the gamma law's moments. Then the delta-method sum equals $`2\alpha(\alpha+1)`$ exactly, for every shape and rate.
 - The hand arithmetic holds exactly, as fractions: the sums 30 and 135, shape 2, rate 2/3, the one-dial answers and three of the breaks.
 
 The large-sample approximation itself, consistency, the likelihood fit, the tail chances and the simulation are left to the Python and Rust checks.

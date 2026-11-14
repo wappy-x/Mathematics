@@ -28,24 +28,28 @@ Drawn to scale, 1 m = 16 units. The dashed line extends the stick's ray, paralle
 
 ## The formula
 
-Notation first, in words. The stick's height is $h$ and its shadow $s$; the pole's height is $H$ and its shadow $S$. The scale factor, big over small, is $k$.
+Notation first, in words. The stick's height is $`h`$ and its shadow $`s`$; the pole's height is $`H`$ and its shadow $`S`$. The scale factor, big over small, is $`k`$.
 
-$$k = \frac{S}{s} = \frac{H}{h}, \qquad\text{so}\qquad H = h \times \frac{S}{s} = 1 \times \frac{9.6}{0.8} = 12 \text{ m}$$
+```math
+k = \frac{S}{s} = \frac{H}{h}, \qquad\text{so}\qquad H = h \times \frac{S}{s} = 1 \times \frac{9.6}{0.8} = 12 \text{ m}
+```
 
 **Read it aloud:** the pole's height is to the stick's as the pole's shadow is to the stick's shadow.
 
-$$\frac{\text{area of the pole's triangle}}{\text{area of the stick's triangle}} = k^2 = 144$$
+```math
+\frac{\text{area of the pole's triangle}}{\text{area of the stick's triangle}} = k^2 = 144
+```
 
 **Read it aloud:** scale every length by k and every area scales by k times k.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $h$ | the stick's height | 1 m | taller pole |
-| $s$ | the stick's shadow | 0.8 m | shorter pole |
-| $H$ | the pole's height, the unknown | 12 m | — |
-| $S$ | the pole's shadow | 9.6 m | taller pole, in proportion |
-| $k$ | the scale factor: big length over matching small one | 12 | every length grows by it |
-| $k^2$ | the area factor | 144 | areas grow by its square |
+| $`h`$ | the stick's height | 1 m | taller pole |
+| $`s`$ | the stick's shadow | 0.8 m | shorter pole |
+| $`H`$ | the pole's height, the unknown | 12 m | — |
+| $`S`$ | the pole's shadow | 9.6 m | taller pole, in proportion |
+| $`k`$ | the scale factor: big length over matching small one | 12 | every length grows by it |
+| $`k^2`$ | the area factor | 144 | areas grow by its square |
 
 The factor has no unit, metres over metres, so both shadows must be in the same unit.
 
@@ -87,7 +91,7 @@ Triangles TDE and DBE share the corner E, and their bases TD and DB lie on one l
 
 The second areas, DBE and DCE, are equal. So TD to DB equals TE to EC. Add 1 to each side: TB to DB equals TC to EC. Flip both ratios and take each from 1:
 
-$$\frac{TD}{TB} = \frac{TE}{TC}.$$
+$`\displaystyle \frac{TD}{TB} = \frac{TE}{TC}.`$
 
 The same argument runs in reverse: if a line cuts two sides proportionally, it is parallel to the third. That is Euclid's *Elements*, Book VI, Proposition 2.
 
@@ -95,11 +99,11 @@ The same argument runs in reverse: if a line cuts two sides proportionally, it i
 
 ### Step 4: the heights follow
 
-The heights need one more cut. From E draw a line level with the ground, meeting the pole at F. That line is parallel to TB, so Step 3 applies again, now in the corner at C: CF is the same fraction of CB as CE is of CT. Since TE is one twelfth of TC, CE is eleven twelfths of it, so CF is eleven twelfths of the pole and FB is the last twelfth. FB is level with the stick's top, so it equals the stick's height. All three pairs of sides share one ratio: $k$ = 12.
+The heights need one more cut. From E draw a line level with the ground, meeting the pole at F. That line is parallel to TB, so Step 3 applies again, now in the corner at C: CF is the same fraction of CB as CE is of CT. Since TE is one twelfth of TC, CE is eleven twelfths of it, so CF is eleven twelfths of the pole and FB is the last twelfth. FB is level with the stick's top, so it equals the stick's height. All three pairs of sides share one ratio: $`k`$ = 12.
 
 ### Step 5: areas scale by the square
 
-A triangle's area is half its base times its height. Scaling by $k$ multiplies the base by $k$ and the height by $k$, so the area gets $k$ twice: $k^2$. The stick's triangle covers 0.4 m^2, the pole's 0.4 × 144 = 57.6 m^2.
+A triangle's area is half its base times its height. Scaling by $`k`$ multiplies the base by $`k`$ and the height by $`k`$, so the area gets $`k`$ twice: $`k^2`$. The stick's triangle covers 0.4 m^2, the pole's 0.4 × 144 = 57.6 m^2.
 
 Two other tests are proved the same way: three sides in one ratio (Euclid VI.5), or two sides in one ratio with the angle between them equal (VI.6). Another road to the height is the angle itself: [Sine, cosine and tangent](../03-Trigonometry/01-right-triangle-trigonometry.md) calls the fixed ratio of height to shadow the **tangent** of the sun's angle.
 
@@ -323,7 +327,7 @@ The outputs agree line for line. The square count lands exactly on the formula b
 
 Lean proves the card's two main facts for every flat triangle, not just the flagpole and the stick.
 
-- If two angles of one triangle equal two angles of another, each side of the second is $k$ times its match in the first. Its area is $k^2$ times as large.
+- If two angles of one triangle equal two angles of another, each side of the second is $`k`$ times its match in the first. Its area is $`k^2`$ times as large.
 - A line parallel to one side of a triangle cuts the other two sides in the same ratio: TD over TB equals TE over TC.
 - The card's own sums: the factor 12, the 12 m pole, areas 144 times apart, the 18 m river, and the wrong 8 m.
 

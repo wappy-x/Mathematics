@@ -39,53 +39,61 @@ Single claims are wildly lopsided, from a few hundred dollars to a few hundred t
 
 ## The formula
 
-Notation first, in words. $E[\,\cdot\,]$ is the expectation, the long-run average; $\operatorname{Var}(\cdot)$ is the variance, the average squared distance from that average. $N$ is the year's claim count, $X_1, X_2, \dots$ the claim sizes in order, and $\lambda$ (say "lambda") the expected count. When $N$ is zero the sum below is zero.
+Notation first, in words. $`E[\,\cdot\,]`$ is the expectation, the long-run average; $`\mathrm{Var}(\cdot)`$ is the variance, the average squared distance from that average. $`N`$ is the year's claim count, $`X_1, X_2, \dots`$ the claim sizes in order, and $`\lambda`$ (say "lambda") the expected count. When $`N`$ is zero the sum below is zero.
 
-$$S = X_1 + X_2 + \dots + X_N, \qquad N \sim \text{Poisson}(\lambda)$$
+```math
+S = X_1 + X_2 + \dots + X_N, \qquad N \sim \text{Poisson}(\lambda)
+```
 
 **Read it aloud:** the year's total is the sum of a Poisson number of claims, each drawn from the same size law, independently.
 
-Write $\mu = E[X]$ for the average claim and $\sigma_X^2 = \operatorname{Var}(X)$ for its variance. Two formulas follow:
+Write $`\mu = E[X]`$ for the average claim and $`\sigma_X^2 = \mathrm{Var}(X)`$ for its variance. Two formulas follow:
 
-$$E[S] = \lambda\,\mu, \qquad \operatorname{Var}(S) = \lambda\,E[X^2] = \lambda\,(\sigma_X^2 + \mu^2)$$
+```math
+E[S] = \lambda\,\mu, \qquad \mathrm{Var}(S) = \lambda\,E[X^2] = \lambda\,(\sigma_X^2 + \mu^2)
+```
 
 **Read it aloud:** the average total is the expected count times the average claim; the variance of the total is the expected count times the average of the squared claim.
 
-The claim sizes are lognormal: the logarithm of a claim follows a bell curve with centre $m$ and spread $\sigma$ ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). Then
+The claim sizes are lognormal: the logarithm of a claim follows a bell curve with centre $`m`$ and spread $`\sigma`$ ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). Then
 
-$$\mu = e^{m + \sigma^2/2}, \qquad E[X^2] = e^{2m + 2\sigma^2}$$
+```math
+\mu = e^{m + \sigma^2/2}, \qquad E[X^2] = e^{2m + 2\sigma^2}
+```
 
-Above a threshold $u$ the large claims are fitted with a Pareto tail, where the chance a large claim exceeds $x$ is $(u/x)^{\alpha}$. The best-fitting tail index from $k$ large claims $x_1, \dots, x_k$ is
+Above a threshold $`u`$ the large claims are fitted with a Pareto tail, where the chance a large claim exceeds $`x`$ is $`(u/x)^{\alpha}`$. The best-fitting tail index from $`k`$ large claims $`x_1, \dots, x_k`$ is
 
-$$\hat\alpha = \frac{k}{\sum_{i=1}^{k} \ln(x_i / u)}$$
+```math
+\hat\alpha = \frac{k}{\sum_{i=1}^{k} \ln(x_i / u)}
+```
 
 **Read it aloud:** the tail index is the number of large claims divided by the sum of their logarithmic distances above the threshold.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$, $p$ | policies in the book, and the chance one of them claims in the year | 50,000 cars, 5 percent | more claims, higher total |
-| $\lambda$ | expected number of claims, $n \times p$. Say "lambda". | 2,500 | mean and variance both rise in step; the spread relative to the mean falls |
-| $N$ | the actual number of claims this year, random | around 2,500 | — |
-| $X_i$, $X$ | the size of the i-th claim; $X$ is a typical one | median $3,000 | — |
-| $S$ | the year's total claims | about $15.4 million | — |
-| $m$ | centre of the bell curve of log size, $\ln 3000$ | 8.006368 | every claim scales up by the same factor |
-| $\sigma$ | spread of the bell curve of log size | 1.2 | the mean rises, the variance rises much faster |
-| $\mu$ | average claim size, $E[X]$ | $6,163.30 | — |
-| $\sigma_X$ | standard deviation of one claim | $11,060.84 | — |
-| $u$ | threshold above which a claim counts as large | $25,000 | fewer large claims to fit, noisier fit |
-| $k$ | number of large claims the fit uses | 192,857 in 2,000 years; 98 in year 1 | smaller standard error |
-| $\alpha$ | Pareto tail index: small means a heavy tail. Say "alpha". | 2.07 | the tail thins; huge claims get rarer |
+| $`n`$, $`p`$ | policies in the book, and the chance one of them claims in the year | 50,000 cars, 5 percent | more claims, higher total |
+| $`\lambda`$ | expected number of claims, $`n \times p`$. Say "lambda". | 2,500 | mean and variance both rise in step; the spread relative to the mean falls |
+| $`N`$ | the actual number of claims this year, random | around 2,500 | — |
+| $`X_i`$, $`X`$ | the size of the i-th claim; $`X`$ is a typical one | median $3,000 | — |
+| $`S`$ | the year's total claims | about $15.4 million | — |
+| $`m`$ | centre of the bell curve of log size, $`\ln 3000`$ | 8.006368 | every claim scales up by the same factor |
+| $`\sigma`$ | spread of the bell curve of log size | 1.2 | the mean rises, the variance rises much faster |
+| $`\mu`$ | average claim size, $`E[X]`$ | $6,163.30 | — |
+| $`\sigma_X`$ | standard deviation of one claim | $11,060.84 | — |
+| $`u`$ | threshold above which a claim counts as large | $25,000 | fewer large claims to fit, noisier fit |
+| $`k`$ | number of large claims the fit uses | 192,857 in 2,000 years; 98 in year 1 | smaller standard error |
+| $`\alpha`$ | Pareto tail index: small means a heavy tail. Say "alpha". | 2.07 | the tail thins; huge claims get rarer |
 
-The hat on $\hat\alpha$ marks an estimate from data, as opposed to the true value. Its standard error is the typical size of that estimate's error ([Standard error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)).
+The hat on $`\hat\alpha`$ marks an estimate from data, as opposed to the true value. Its standard error is the typical size of that estimate's error ([Standard error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)).
 
 ### When it holds
 
-- **Count and sizes independent.** A hailstorm breaks this: it raises the number of claims and their sizes together, and the true variance is larger than $\lambda E[X^2]$.
+- **Count and sizes independent.** A hailstorm breaks this: it raises the number of claims and their sizes together, and the true variance is larger than $`\lambda E[X^2]`$.
 - **Claims independent of each other.** One motorway pile-up is thirty claims from one event. Counts cluster, the count's variance exceeds its mean, and the formula understates the spread; a negative binomial count, whose variance exceeds its mean ([Waiting for a success](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/02-geometric-and-negative-binomial.md)), is the usual repair.
-- **One size law for every claim.** If a new class of expensive cars joins mid-year, the mix changes and $\mu$ drifts.
+- **One size law for every claim.** If a new class of expensive cars joins mid-year, the mix changes and $`\mu`$ drifts.
 - **Poisson counts.** With 50,000 cars each claiming at most once with chance 5 percent, the exact count is binomial ([Binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md)), with variance 2,375 instead of 2,500. Poisson slightly overstates the spread, which errs on the safe side.
-- **Finite claim moments.** The variance formula needs $E[X^2]$ finite. A claim law with a Pareto tail of index $\alpha \le 2$ breaks this: $\operatorname{Var}(S)$ is infinite, and the sd rows below mean nothing.
-- **The Pareto fit describes only claims above $u$.** It says nothing about claims below the threshold, and its answer depends on where the threshold sits.
+- **Finite claim moments.** The variance formula needs $`E[X^2]`$ finite. A claim law with a Pareto tail of index $`\alpha \le 2`$ breaks this: $`\mathrm{Var}(S)`$ is infinite, and the sd rows below mean nothing.
+- **The Pareto fit describes only claims above $`u`$.** It says nothing about claims below the threshold, and its answer depends on where the threshold sits.
 
 ---
 
@@ -97,36 +105,42 @@ The trick is to average in two stages. Pretend for a moment the count is known, 
 
 ### Step 1: the average total
 
-If exactly $N$ claims arrive, the total averages $N$ times the average claim, $N\mu$. Now average over the count. Since the count averages $\lambda$,
+If exactly $`N`$ claims arrive, the total averages $`N`$ times the average claim, $`N\mu`$. Now average over the count. Since the count averages $`\lambda`$,
 
-$$E[S] = E[N\mu] = \lambda\mu = 2{,}500 \times \$6{,}163.30 = \$15{,}408{,}249.08.$$
+```math
+E[S] = E[N\mu] = \lambda\mu = 2{,}500 \times \$6{,}163.30 = \$15{,}408{,}249.08.
+```
 
-Nothing Poisson was used here. Any count with average $\lambda$, independent of the sizes, gives the same mean.
+Nothing Poisson was used here. Any count with average $`\lambda`$, independent of the sizes, gives the same mean.
 
 ### Step 2: the spread of the total has two sources
 
 The total can be high for two reasons. More claims than usual may have arrived. Or the usual number arrived, but they were bigger. The variance splits along exactly those lines:
 
-$$\operatorname{Var}(S) = \underbrace{E[N]\,\sigma_X^2}_{\text{sizes vary}} \;+\; \underbrace{\operatorname{Var}(N)\,\mu^2}_{\text{count varies}}.$$
+```math
+\mathrm{Var}(S) = \underbrace{E[N]\,\sigma_X^2}_{\text{sizes vary}} \;+\; \underbrace{\mathrm{Var}(N)\,\mu^2}_{\text{count varies}}.
+```
 
-The first term: with $N$ claims fixed, independent sizes contribute $N\sigma_X^2$; average over $N$. The second term: the conditional average $N\mu$ itself moves as $N$ moves, and its variance is $\mu^2 \operatorname{Var}(N)$.
+The first term: with $`N`$ claims fixed, independent sizes contribute $`N\sigma_X^2`$; average over $`N`$. The second term: the conditional average $`N\mu`$ itself moves as $`N`$ moves, and its variance is $`\mu^2 \mathrm{Var}(N)`$.
 
-A Poisson count has variance equal to its mean, both $\lambda$. So the two terms merge:
+A Poisson count has variance equal to its mean, both $`\lambda`$. So the two terms merge:
 
-$$\operatorname{Var}(S) = \lambda\sigma_X^2 + \lambda\mu^2 = \lambda E[X^2].$$
+```math
+\mathrm{Var}(S) = \lambda\sigma_X^2 + \lambda\mu^2 = \lambda E[X^2].
+```
 
 For the motor book, the size part is 76.3 percent of the variance and the count part 23.7 percent. Dropping either one is a real mistake with a real number attached (see What breaks, below).
 
 <details>
 <summary>Detailed proof: the variance split for any count</summary>
 
-Condition on $N = n$. The sizes are independent of $N$ and of each other, so $E[S \mid N = n] = n\mu$ and $\operatorname{Var}(S \mid N = n) = n\sigma_X^2$. Hence $E[S^2 \mid N = n] = n\sigma_X^2 + n^2\mu^2$.
+Condition on $`N = n`$. The sizes are independent of $`N`$ and of each other, so $`E[S \mid N = n] = n\mu`$ and $`\mathrm{Var}(S \mid N = n) = n\sigma_X^2`$. Hence $`E[S^2 \mid N = n] = n\sigma_X^2 + n^2\mu^2`$.
 
-Average over $n$: $E[S^2] = E[N]\sigma_X^2 + E[N^2]\mu^2$ and $E[S] = E[N]\mu$.
+Average over $`n`$: $`E[S^2] = E[N]\sigma_X^2 + E[N^2]\mu^2`$ and $`E[S] = E[N]\mu`$.
 
-Subtract the square of the mean: $\operatorname{Var}(S) = E[N]\sigma_X^2 + (E[N^2] - E[N]^2)\mu^2 = E[N]\sigma_X^2 + \operatorname{Var}(N)\mu^2$.
+Subtract the square of the mean: $`\mathrm{Var}(S) = E[N]\sigma_X^2 + (E[N^2] - E[N]^2)\mu^2 = E[N]\sigma_X^2 + \mathrm{Var}(N)\mu^2`$.
 
-This needs $E[X^2]$ finite. For a Poisson count, $E[N] = \operatorname{Var}(N) = \lambda$, which gives $\lambda(\sigma_X^2 + \mu^2) = \lambda E[X^2]$. At $n = 0$ the empty sum is zero, and both conditional formulas give zero, so no case is missed.
+This needs $`E[X^2]`$ finite. For a Poisson count, $`E[N] = \mathrm{Var}(N) = \lambda`$, which gives $`\lambda(\sigma_X^2 + \mu^2) = \lambda E[X^2]`$. At $`n = 0`$ the empty sum is zero, and both conditional formulas give zero, so no case is missed.
 
 </details>
 
@@ -138,39 +152,43 @@ The Poisson law also has a clock picture: claims arrive at random moments with g
 
 ### Step 4: the lognormal's moments
 
-A lognormal claim is $X = e^{m + \sigma Z}$, where $Z$ is a standard bell-curve draw. Its median is $e^m = \$3{,}000$: half of claims fall below. Its mean is larger:
+A lognormal claim is $`X = e^{m + \sigma Z}`$, where $`Z`$ is a standard bell-curve draw. Its median is $`e^m = \$3{,}000`$: half of claims fall below. Its mean is larger:
 
-$$\mu = e^{m}\,e^{\sigma^2/2} = \$3{,}000 \times 2.054433 = \$6{,}163.30.$$
+```math
+\mu = e^{m}\,e^{\sigma^2/2} = \$3{,}000 \times 2.054433 = \$6{,}163.30.
+```
 
-The factor $e^{\sigma^2/2}$ is the pull of the long right tail. A few large claims drag the average far above the typical claim. For the square, $X^2 = e^{2m + 2\sigma Z}$, so the same rule with $2\sigma$ in place of $\sigma$ gives $E[X^2] = e^{2m} e^{2\sigma^2} = 9{,}000{,}000 \times 17.814273$.
+The factor $`e^{\sigma^2/2}`$ is the pull of the long right tail. A few large claims drag the average far above the typical claim. For the square, $`X^2 = e^{2m + 2\sigma Z}`$, so the same rule with $`2\sigma`$ in place of $`\sigma`$ gives $`E[X^2] = e^{2m} e^{2\sigma^2} = 9{,}000{,}000 \times 17.814273`$.
 
 <details>
 <summary>The algebra behind this</summary>
 
-For any number t, $E[e^{tZ}] = \int e^{tz} \tfrac{1}{\sqrt{2\pi}} e^{-z^2/2}\,dz$. Complete the square: $tz - z^2/2 = t^2/2 - (z - t)^2/2$. The remaining integral is the area under a whole bell curve, shifted along by t, which is 1. So $E[e^{tZ}] = e^{t^2/2}$. Put $t = \sigma$ for the mean and $t = 2\sigma$ for the square.
+For any number t, $`E[e^{tZ}] = \int e^{tz} \tfrac{1}{\sqrt{2\pi}} e^{-z^2/2}\,dz`$. Complete the square: $`tz - z^2/2 = t^2/2 - (z - t)^2/2`$. The remaining integral is the area under a whole bell curve, shifted along by t, which is 1. So $`E[e^{tZ}] = e^{t^2/2}`$. Put $`t = \sigma`$ for the mean and $`t = 2\sigma`$ for the square.
 
 </details>
 
 ### Step 5: fitting a Pareto to the large claims
 
-A lognormal is a fair model of the typical claim. The insurer's worry is the tail: how often a $200,000 claim comes along. Tails are better studied on their own. Keep only the claims above $u = \$25{,}000$ and fit the Pareto law, whose survival (the chance of exceeding $x$, given the claim is above $u$) is $(u/x)^{\alpha}$ ([Heavy tails](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)).
+A lognormal is a fair model of the typical claim. The insurer's worry is the tail: how often a $200,000 claim comes along. Tails are better studied on their own. Keep only the claims above $`u = \$25{,}000`$ and fit the Pareto law, whose survival (the chance of exceeding $`x`$, given the claim is above $`u`$) is $`(u/x)^{\alpha}`$ ([Heavy tails](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)).
 
-Maximum likelihood picks the $\alpha$ that makes the observed claims most probable ([Maximum likelihood](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/04-maximum-likelihood.md)). The Pareto density above $u$ is $\alpha u^{\alpha} x^{-\alpha - 1}$. Multiply it over the $k$ large claims and take logs:
+Maximum likelihood picks the $`\alpha`$ that makes the observed claims most probable ([Maximum likelihood](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/04-maximum-likelihood.md)). The Pareto density above $`u`$ is $`\alpha u^{\alpha} x^{-\alpha - 1}`$. Multiply it over the $`k`$ large claims and take logs:
 
-$$\ell(\alpha) = k \ln\alpha - \alpha \sum_i \ln(x_i/u) - \sum_i \ln x_i.$$
+```math
+\ell(\alpha) = k \ln\alpha - \alpha \sum_i \ln(x_i/u) - \sum_i \ln x_i.
+```
 
-Set its slope in $\alpha$ to zero: $k/\alpha - \sum_i \ln(x_i/u) = 0$. That gives $\hat\alpha$ as in The formula. The slope falls as $\alpha$ grows (its own slope is $-k/\alpha^2$), so this is the one peak. It exists when at least one claim exceeds $u$; with none, there is nothing to fit. The same estimate, as a tail-index tool, is known as the Hill estimator.
+Set its slope in $`\alpha`$ to zero: $`k/\alpha - \sum_i \ln(x_i/u) = 0`$. That gives $`\hat\alpha`$ as in The formula. The slope falls as $`\alpha`$ grows (its own slope is $`-k/\alpha^2`$), so this is the one peak. It exists when at least one claim exceeds $`u`$; with none, there is nothing to fit. The same estimate, as a tail-index tool, is known as the Hill estimator.
 
-The Pareto's own moments explain why $\alpha$ matters. Its mean is finite only when $\alpha > 1$ and its variance only when $\alpha > 2$. Our fit over all 2,000 simulated years gives $\hat\alpha = 2.072422$: just above 2, meaning the large claims behave, near the threshold, like a law whose variance barely exists.
+The Pareto's own moments explain why $`\alpha`$ matters. Its mean is finite only when $`\alpha > 1`$ and its variance only when $`\alpha > 2`$. Our fit over all 2,000 simulated years gives $`\hat\alpha = 2.072422`$: just above 2, meaning the large claims behave, near the threshold, like a law whose variance barely exists.
 
 <details>
 <summary>Why a lognormal book produces a Pareto answer that drifts</summary>
 
-A true Pareto tail gives the same $\alpha$ at every threshold. A lognormal tail does not: it thins faster the further out it goes. Fit at $25,000 and endless data give 2.075264; fit at $50,000 and they give 2.471953. A fitted $\alpha$ that climbs as the threshold rises is the fingerprint of a tail lighter than Pareto. A flat $\alpha$ suggests the Pareto is right.
+A true Pareto tail gives the same $`\alpha`$ at every threshold. A lognormal tail does not: it thins faster the further out it goes. Fit at $25,000 and endless data give 2.075264; fit at $50,000 and they give 2.471953. A fitted $`\alpha`$ that climbs as the threshold rises is the fingerprint of a tail lighter than Pareto. A flat $`\alpha`$ suggests the Pareto is right.
 
 </details>
 
-The other route to the whole distribution of $S$, not just its mean and variance, is Panjer's recursion. It builds the probabilities step by step on a grid of claim sizes: [Panjer's recursion](05-panjer-recursion-and-aggregate-claims.md).
+The other route to the whole distribution of $`S`$, not just its mean and variance, is Panjer's recursion. It builds the probabilities step by step on a grid of claim sizes: [Panjer's recursion](05-panjer-recursion-and-aggregate-claims.md).
 
 ---
 
@@ -180,16 +198,16 @@ The other route to the whole distribution of $S$, not just its mean and variance
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| expected claims, $\lambda$ | $50{,}000 \times 0.05$ | 2,500 |
-| log centre, $m$ | $\ln 3000$ | 8.006368 |
-| tail pull, $e^{\sigma^2/2}$ | $e^{0.72}$ | 2.054433 |
-| mean claim, $\mu$ | $3000 \times 2.054433$ | $6,163.30 |
-| mean squared claim, $E[X^2]$ | $3000^2 \times e^{2.88} = 9{,}000{,}000 \times 17.814273$ | 160,328,458.62 dollars squared |
-| sd of one claim, $\sigma_X$ | $\sqrt{160{,}328{,}458.62 - 6{,}163.30^2}$ | $11,060.84 |
-| **expected total**, $E[S]$ | $2{,}500 \times 6{,}163.30$ | **$15,408,249.08** |
-| **sd of the total** | $\sqrt{2{,}500 \times 160{,}328{,}458.62}$ | **$633,104.37** |
-| relative spread | $633{,}104.37 / 15{,}408{,}249.08$ | 4.1 percent |
-| pure premium per car | $15{,}408{,}249.08 / 50{,}000$ | $308.16 |
+| expected claims, $`\lambda`$ | $`50{,}000 \times 0.05`$ | 2,500 |
+| log centre, $`m`$ | $`\ln 3000`$ | 8.006368 |
+| tail pull, $`e^{\sigma^2/2}`$ | $`e^{0.72}`$ | 2.054433 |
+| mean claim, $`\mu`$ | $`3000 \times 2.054433`$ | $6,163.30 |
+| mean squared claim, $`E[X^2]`$ | $`3000^2 \times e^{2.88} = 9{,}000{,}000 \times 17.814273`$ | 160,328,458.62 dollars squared |
+| sd of one claim, $`\sigma_X`$ | $`\sqrt{160{,}328{,}458.62 - 6{,}163.30^2}`$ | $11,060.84 |
+| **expected total**, $`E[S]`$ | $`2{,}500 \times 6{,}163.30`$ | **$15,408,249.08** |
+| **sd of the total** | $`\sqrt{2{,}500 \times 160{,}328{,}458.62}`$ | **$633,104.37** |
+| relative spread | $`633{,}104.37 / 15{,}408{,}249.08`$ | 4.1 percent |
+| pure premium per car | $`15{,}408{,}249.08 / 50{,}000`$ | $308.16 |
 
 A car costs the insurer $308.16 a year on average, before expenses, profit or any safety margin. The year's total typically lands within about $633,000 of $15.4 million.
 
@@ -197,17 +215,17 @@ The large claims, over all 2,000 simulated years:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| threshold in bell-curve units | $(\ln 25000 - 8.006368)/1.2$ | 1.766886 |
+| threshold in bell-curve units | $`(\ln 25000 - 8.006368)/1.2`$ | 1.766886 |
 | chance a claim is large | bell-curve area above 1.766886 | 0.038624 |
-| large claims a year | $2{,}500 \times 0.038624$ | 96.56 |
+| large claims a year | $`2{,}500 \times 0.038624`$ | 96.56 |
 | large claims in 2,000 years | simulated | 192,857 |
-| **fitted tail index** | $192{,}857 / \sum \ln(x_i/25{,}000)$ | **2.072422** |
-| its standard error | $2.072422 / \sqrt{192{,}857}$ | 0.004719 |
+| **fitted tail index** | $`192{,}857 / \sum \ln(x_i/25{,}000)`$ | **2.072422** |
+| its standard error | $`2.072422 / \sqrt{192{,}857}`$ | 0.004719 |
 | one year's data only | 98 large claims | 2.574486, standard error 0.260062 |
 
 One year of large claims, 98 of them, gives 2.574486 with standard error 0.260062, against 2.072422 from 2,000 years. A single year's tail fit is noisy, and in this example it made the tail look thinner than it is.
 
-What the fit is for: the mean of a large claim. Under the fitted Pareto it is $\alpha u / (\alpha - 1) = \$48{,}311.73$; the lognormal truth is $45,541.52. That makes the large claims' expected cost a year $4,664,936.63 under the Pareto against $4,397,448.39 under the lognormal: the Pareto builds in extra caution. Further out the gap widens:
+What the fit is for: the mean of a large claim. Under the fitted Pareto it is $`\alpha u / (\alpha - 1) = \$48{,}311.73`$; the lognormal truth is $45,541.52. That makes the large claims' expected cost a year $4,664,936.63 under the Pareto against $4,397,448.39 under the lognormal: the Pareto builds in extra caution. Further out the gap widens:
 
 ```
 Expected claims a year above each size, lognormal (L) against fitted Pareto (P)
@@ -231,10 +249,10 @@ Correct answers: expected total $15,408,249.08, sd of the total $633,104.37.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Variance as $\lambda\sigma_X^2$, sizes only | sd $553,042.03 | Forgot that the count itself varies; too little spread |
+| Variance as $`\lambda\sigma_X^2`$, sizes only | sd $553,042.03 | Forgot that the count itself varies; too little spread |
 | Every claim at its average size | sd $308,164.98 | Kept the count's randomness, dropped the sizes'; under half the true spread |
 | Median $3,000 used as the average claim | mean $7,500,000.00 | The median ignores the long right tail; the book is underpriced by more than half |
-| Adding standard deviations, $\lambda\sigma_X$ | sd $27,652,101.67 | Independent spreads add in variance, not in size; wildly too large |
+| Adding standard deviations, $`\lambda\sigma_X`$ | sd $27,652,101.67 | Independent spreads add in variance, not in size; wildly too large |
 
 ---
 
@@ -657,12 +675,12 @@ The two outputs agree line for line. The simulation uses the same generator and 
 
 ### Lean
 
-Lean proves the card's three results for any size law with finite $E[X^2]$, and for any large claims above $u$.
+Lean proves the card's three results for any size law with finite $`E[X^2]`$, and for any large claims above $`u`$.
 
-- Suppose the count is Poisson and independent of the sizes. Suppose the sizes are independent, share one law and have finite $E[X^2]$. Then $E[S] = \lambda\mu$ and $\operatorname{Var}(S) = \lambda E[X^2] = \lambda(\sigma_X^2 + \mu^2)$.
-- Take any count with finite $E[N^2]$, independent of the sizes, and sizes as above. Then $E[S] = E[N]\mu$ and $\operatorname{Var}(S) = E[N]\sigma_X^2 + \operatorname{Var}(N)\mu^2$.
-- Take at least one large claim, each above a threshold $u > 0$. Then $\hat\alpha$ is positive, and every other positive $\alpha$ gives a strictly smaller likelihood.
-- The exact steps of the worked numbers check out, such as $\lambda = 2{,}500$ and the binomial count variance of 2,375.
+- Suppose the count is Poisson and independent of the sizes. Suppose the sizes are independent, share one law and have finite $`E[X^2]`$. Then $`E[S] = \lambda\mu`$ and $`\mathrm{Var}(S) = \lambda E[X^2] = \lambda(\sigma_X^2 + \mu^2)`$.
+- Take any count with finite $`E[N^2]`$, independent of the sizes, and sizes as above. Then $`E[S] = E[N]\mu`$ and $`\mathrm{Var}(S) = E[N]\sigma_X^2 + \mathrm{Var}(N)\mu^2`$.
+- Take at least one large claim, each above a threshold $`u > 0`$. Then $`\hat\alpha`$ is positive, and every other positive $`\alpha`$ gives a strictly smaller likelihood.
+- The exact steps of the worked numbers check out, such as $`\lambda = 2{,}500`$ and the binomial count variance of 2,375.
 
 The lognormal moments, the simulation and fitted values such as 2.072422 are left to the Python and Rust checks.
 
@@ -1005,7 +1023,7 @@ example : (50000 : ℕ) = 2 * 25000 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Treating the total's spread as the sizes' spread alone.** The count is random too. Writing $\operatorname{Var}(S) = \lambda\sigma_X^2$ gives an sd of $553,042.03 instead of $633,104.37. The missing piece, $\lambda\mu^2$, is the spread that comes purely from getting more or fewer claims than expected; here it is 23.7 percent of the variance. It is exactly the piece that $E[X^2]$, rather than $\operatorname{Var}(X)$, remembers.
+> **Treating the total's spread as the sizes' spread alone.** The count is random too. Writing $`\mathrm{Var}(S) = \lambda\sigma_X^2`$ gives an sd of $553,042.03 instead of $633,104.37. The missing piece, $`\lambda\mu^2`$, is the spread that comes purely from getting more or fewer claims than expected; here it is 23.7 percent of the variance. It is exactly the piece that $`E[X^2]`$, rather than $`\mathrm{Var}(X)`$, remembers.
 >
 > - **Median for mean.** With lognormal sizes the median is $3,000 and the mean is $6,163.30. Price on the median and the expected total comes out at $7,500,000.00, less than half the true $15,408,249.08.
 > - **Adding standard deviations.** 2,500 claims with sd $11,060.84 each do not give an sd of $27,652,101.67. Variances add; the sd grows like the square root of the count.

@@ -38,43 +38,49 @@ Orange line: the shareholders, flat at zero up to $80m, then climbing one for on
 
 ## The formula
 
-$$E = V\,N(d_1) - F e^{-rT} N(d_2), \qquad B = V - E = F e^{-rT} - P$$
+```math
+E = V\,N(d_1) - F e^{-rT} N(d_2), \qquad B = V - E = F e^{-rT} - P
+```
 
 **Read it aloud:** the shares are worth the assets they might end up with minus the discounted debt they might pay off, each weighted by its own bell-curve chance; the bond is worth what is left of the assets, which is also a riskless bond less the put.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$, $V_T$ | the firm's assets: their market value today, and in $T$ years | $100m today | shares rise, bond rises toward the riskless bond |
-| $F$ | the **face value**: the one payment the bond promises | $80m | shares fall, bond rises but gets riskier |
-| $T$ | years until that payment | 1 | here, spread falls: at 5 years it is 84.9 bp |
-| $r$ | riskless rate, continuously compounded | 5% | shares rise, bond falls |
-| $\sigma$ | asset volatility: the yearly spread of the assets' log-returns | 20% | shares rise, bond falls, spread widens |
-| $E$ | equity: the shares, priced as a call | $24.59m | — |
-| $B$ | the risky bond's value today | $75.41m | — |
-| $P$ | the put on the assets struck at $F$: default insurance the lenders have sold | $0.687m | — |
-| $N(x)$ | bell-curve area to the left of $x$: a probability | $N(d_2) = 0.8972$ | — |
-| $d_1$, $d_2$ | the firm's distance from the default line in units of $\sigma\sqrt{T}$; $d_1$ one unit further | 1.4657 and 1.2657 | — |
-| $e^{-rT}$ | discount factor: today's price of $1 due in $T$ years | 0.9512 | — |
-| $y$, $s$ | the bond's yield, and its **credit spread** $s = y - r$ | 5.907% and 90.7 bp | — |
+| $`V`$, $`V_T`$ | the firm's assets: their market value today, and in $`T`$ years | $100m today | shares rise, bond rises toward the riskless bond |
+| $`F`$ | the **face value**: the one payment the bond promises | $80m | shares fall, bond rises but gets riskier |
+| $`T`$ | years until that payment | 1 | here, spread falls: at 5 years it is 84.9 bp |
+| $`r`$ | riskless rate, continuously compounded | 5% | shares rise, bond falls |
+| $`\sigma`$ | asset volatility: the yearly spread of the assets' log-returns | 20% | shares rise, bond falls, spread widens |
+| $`E`$ | equity: the shares, priced as a call | $24.59m | — |
+| $`B`$ | the risky bond's value today | $75.41m | — |
+| $`P`$ | the put on the assets struck at $`F`$: default insurance the lenders have sold | $0.687m | — |
+| $`N(x)`$ | bell-curve area to the left of $`x`$: a probability | $`N(d_2) = 0.8972`$ | — |
+| $`d_1`$, $`d_2`$ | the firm's distance from the default line in units of $`\sigma\sqrt{T}`$; $`d_1`$ one unit further | 1.4657 and 1.2657 | — |
+| $`e^{-rT}`$ | discount factor: today's price of $1 due in $`T`$ years | 0.9512 | — |
+| $`y`$, $`s`$ | the bond's yield, and its **credit spread** $`s = y - r`$ | 5.907% and 90.7 bp | — |
 
 The helpers, as on the Black-Scholes call with no dividend:
 
-$$d_2 = \frac{\ln(V/F) + (r - \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_1 = d_2 + \sigma\sqrt{T}$$
+```math
+d_2 = \frac{\ln(V/F) + (r - \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_1 = d_2 + \sigma\sqrt{T}
+```
 
-In words: $d_2$ counts how many units of the assets' spread stand between today's assets and the $80m line, after the pricing drift. $d_1$ is one unit further.
+In words: $`d_2`$ counts how many units of the assets' spread stand between today's assets and the $80m line, after the pricing drift. $`d_1`$ is one unit further.
 
 The put, the default probability and the spread:
 
-$$P = F e^{-rT} N(-d_2) - V\,N(-d_1), \qquad \text{PD} = N(-d_2), \qquad s = y - r = \frac{1}{T}\ln\frac{F e^{-rT}}{B}$$
+```math
+P = F e^{-rT} N(-d_2) - V\,N(-d_1), \qquad \text{PD} = N(-d_2), \qquad s = y - r = \frac{1}{T}\ln\frac{F e^{-rT}}{B}
+```
 
-PD is the probability of default. The yield $y$ is the rate at which the promised $80m, discounted, equals the bond's price: $B = F e^{-yT}$.
+PD is the probability of default. The yield $`y`$ is the rate at which the promised $80m, discounted, equals the bond's price: $`B = F e^{-yT}`$.
 
 ### When it holds
 
 - **One bond, one payment date, no payouts before it.** Coupons, dividends or share buybacks drain the assets the lenders rely on. With them the single call no longer describes the shares, and the card's numbers are off by the value paid out.
 - **Default is checked only on the payment date.** A firm deep underwater in month six survives if it recovers by month twelve. Real bonds often let lenders act the moment assets fall below a line, which raises the default chance: [Black-Cox](05-black-cox-first-passage-default.md).
-- **Assets wander like a Black-Scholes share, with constant $\sigma$.** If assets can jump, short-dated bonds carry spreads this model cannot produce: at one day to maturity it gives almost none.
-- **The assets could be traded, or copied by trading.** The call price is the cost of a copy. The assets of a real firm are not quoted, so $V$ and $\sigma$ must be estimated: [Backing out the unobservable](04-asset-value-and-volatility-from-the-share-price.md).
+- **Assets wander like a Black-Scholes share, with constant $`\sigma`$.** If assets can jump, short-dated bonds carry spreads this model cannot produce: at one day to maturity it gives almost none.
+- **The assets could be traded, or copied by trading.** The call price is the cost of a copy. The assets of a real firm are not quoted, so $`V`$ and $`\sigma`$ must be estimated: [Backing out the unobservable](04-asset-value-and-volatility-from-the-share-price.md).
 - **No bankruptcy costs.** In default the lenders get all the assets. Lawyers' fees and fire-sale discounts lower what they recover, so the true bond is worth less than $75.41m.
 
 ---
@@ -87,51 +93,59 @@ Nothing about options is assumed at the start. On the payment date the assets ar
 
 ### Step 1: the shareholders' payoff is a call
 
-Write $x^+$ for "$x$ if positive, otherwise 0". On the payment date the shares pay $(V_T - F)^+$. Check both cases. Assets at $140m: the shares get $60m. Assets at $60m: the shares get 0. A call on the assets struck at $F$ pays the same in every case, so the two are the same claim.
+Write $`x^+`$ for "$`x`$ if positive, otherwise 0". On the payment date the shares pay $`(V_T - F)^+`$. Check both cases. Assets at $140m: the shares get $60m. Assets at $60m: the shares get 0. A call on the assets struck at $`F`$ pays the same in every case, so the two are the same claim.
 
 ### Step 2: the lenders' payoff has two faces
 
-The lenders get $\min(V_T, F)$: all the assets if they are short, the full $80m otherwise. Two rewritings hold in every case:
+The lenders get $`\min(V_T, F)`$: all the assets if they are short, the full $80m otherwise. Two rewritings hold in every case:
 
-$$\min(V_T, F) = V_T - (V_T - F)^+ = F - (F - V_T)^+.$$
+```math
+\min(V_T, F) = V_T - (V_T - F)^+ = F - (F - V_T)^+.
+```
 
-The first says: the lenders own the assets and have sold the shareholders a call. The second says: the lenders own a riskless promise of $F$ and have sold a put. That put pays the shortfall $F - V_T$ exactly when the firm defaults. At $60m of assets the shortfall is $20m, and $80m - $20m = $60m, which is what the lenders get.
+The first says: the lenders own the assets and have sold the shareholders a call. The second says: the lenders own a riskless promise of $`F`$ and have sold a put. That put pays the shortfall $`F - V_T`$ exactly when the firm defaults. At $60m of assets the shortfall is $20m, and $80m - $20m = $60m, which is what the lenders get.
 
 ### Step 3: price the two faces
 
 Payoffs that agree on the payment date must have the same price today, or a trader could buy the cheap one, sell the dear one and pocket a riskless profit. So:
 
-- the shares are priced by the Black-Scholes call with share price $V$, strike $F$, no dividend: $E = V N(d_1) - F e^{-rT} N(d_2)$;
-- the bond, by the first face, is $B = V - E$;
-- the bond, by the second face, is $F e^{-rT} - P$, with $P$ the Black-Scholes put.
+- the shares are priced by the Black-Scholes call with share price $`V`$, strike $`F`$, no dividend: $`E = V N(d_1) - F e^{-rT} N(d_2)`$;
+- the bond, by the first face, is $`B = V - E`$;
+- the bond, by the second face, is $`F e^{-rT} - P`$, with $`P`$ the Black-Scholes put.
 
-The two bond prices agree because the call and the put obey put-call parity, $E - P = V - F e^{-rT}$: [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md). Using the symmetry of the bell curve, $1 - N(x) = N(-x)$, the bond splits into two legs:
+The two bond prices agree because the call and the put obey put-call parity, $`E - P = V - F e^{-rT}`$: [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md). Using the symmetry of the bell curve, $`1 - N(x) = N(-x)`$, the bond splits into two legs:
 
-$$B = V\,N(-d_1) + F e^{-rT} N(d_2).$$
+```math
+B = V\,N(-d_1) + F e^{-rT} N(d_2).
+```
 
 The second leg is the promised $80m, discounted, in the states where it is paid: $68.27m. The first is what the lenders recover in default states, counted in assets: $7.14m. Together: $75.41m.
 
 ### Step 4: N(−d2) is the pricing chance of default
 
-In the risk-neutral world (the pricing world where every asset is taken to grow at the riskless rate), the log of the assets in a year is bell-curve distributed. Its centre is $\ln V + (r - \tfrac12\sigma^2)T$ and its spread is $\sigma\sqrt{T}$. So $V_T = V e^{(r - \frac12\sigma^2)T + \sigma\sqrt{T} Z}$, with $Z$ a standard bell-curve draw. Default means $V_T < F$. Take logs and divide by the spread: that happens exactly when $Z < -d_2$. The chance is $N(-d_2) = 10.28\%$.
+In the risk-neutral world (the pricing world where every asset is taken to grow at the riskless rate), the log of the assets in a year is bell-curve distributed. Its centre is $`\ln V + (r - \tfrac12\sigma^2)T`$ and its spread is $`\sigma\sqrt{T}`$. So $`V_T = V e^{(r - \frac12\sigma^2)T + \sigma\sqrt{T} Z}`$, with $`Z`$ a standard bell-curve draw. Default means $`V_T < F`$. Take logs and divide by the spread: that happens exactly when $`Z < -d_2`$. The chance is $`N(-d_2) = 10.28\%`$.
 
 This is a pricing probability, not a forecast. The real-world assets grow faster than the riskless rate. At an 8% real drift the same calculation gives 7.84%. Turning the model into a forecast is [Distance to default](03-distance-to-default-and-expected-default-frequency.md).
 
 ### Step 5: the put is default chance times loss given default
 
-The put pays $F - V_T$ in default and nothing otherwise. Its price is the discounted average payoff, and an average over the default states is the default chance times the average payoff given default:
+The put pays $`F - V_T`$ in default and nothing otherwise. Its price is the discounted average payoff, and an average over the default states is the default chance times the average payoff given default:
 
-$$P = e^{-rT} \times \text{PD} \times \big(F - \text{mean of } V_T \text{ given default}\big).$$
+```math
+P = e^{-rT} \times \text{PD} \times \big(F - \text{mean of } V_T \text{ given default}\big).
+```
 
-In the example the assets left in an average default are $72.97m, so the lenders recover 91.2% of the $80m and lose 8.8%, the **loss given default**. That gives $0.9512 \times 0.1028 \times 7.027 = 0.687$: the put again, by a third road. This is the expected-loss rule of [Default probability, recovery and expected loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md), with recovery no longer a fixed guess: it comes out of the model.
+In the example the assets left in an average default are $72.97m, so the lenders recover 91.2% of the $80m and lose 8.8%, the **loss given default**. That gives $`0.9512 \times 0.1028 \times 7.027 = 0.687`$: the put again, by a third road. This is the expected-loss rule of [Default probability, recovery and expected loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md), with recovery no longer a fixed guess: it comes out of the model.
 
 ### Step 6: the price becomes a yield and a spread
 
-A bond priced $B$ that promises $F$ in $T$ years has the yield $y$ solving $B = F e^{-yT}$, so $y = -\ln(B/F)/T = 5.907\%$. The spread is $s = y - r$. Divide the two bond prices, $F e^{-rT} / B = e^{(y - r)T}$, and take logs:
+A bond priced $`B`$ that promises $`F`$ in $`T`$ years has the yield $`y`$ solving $`B = F e^{-yT}`$, so $`y = -\ln(B/F)/T = 5.907\%`$. The spread is $`s = y - r`$. Divide the two bond prices, $`F e^{-rT} / B = e^{(y - r)T}`$, and take logs:
 
-$$s = \frac{1}{T}\ln\frac{F e^{-rT}}{B} = -\frac{1}{T}\ln\Big(1 - \frac{P}{F e^{-rT}}\Big).$$
+```math
+s = \frac{1}{T}\ln\frac{F e^{-rT}}{B} = -\frac{1}{T}\ln\Big(1 - \frac{P}{F e^{-rT}}\Big).
+```
 
-The spread depends only on the put as a share of the riskless bond. Here the put is $0.687m out of $76.10m, and the spread is 90.7 bp. For small puts the log is close to its argument, so the spread is roughly PD times loss given default per year: $0.1028 \times 0.088$, or 90.3 bp.
+The spread depends only on the put as a share of the riskless bond. Here the put is $0.687m out of $76.10m, and the spread is 90.7 bp. For small puts the log is close to its argument, so the spread is roughly PD times loss given default per year: $`0.1028 \times 0.088`$, or 90.3 bp.
 
 Convention: the yield and spread here are continuously compounded, as in Merton's paper. Market quotes use other compounding and benchmarks, such as a Treasury or swap curve (conventions verified 2026-09-28).
 
@@ -152,17 +166,17 @@ Orange line: the shares, a smooth call curve. Green line: the bond, bending over
 <details>
 <summary>Detailed proof</summary>
 
-**Payoffs.** Fix $V_T \ge 0$. If $V_T > F$: $(V_T - F)^+ = V_T - F$, $(F - V_T)^+ = 0$, and $\min(V_T, F) = F = V_T - (V_T - F) = F - 0$. If $V_T \le F$: $(V_T - F)^+ = 0$, $(F - V_T)^+ = F - V_T$, and $\min(V_T, F) = V_T = V_T - 0 = F - (F - V_T)$. So equity plus debt pays $V_T$ in every state, and debt pays the riskless $F$ minus the put payoff in every state.
+**Payoffs.** Fix $`V_T \ge 0`$. If $`V_T > F`$: $`(V_T - F)^+ = V_T - F`$, $`(F - V_T)^+ = 0`$, and $`\min(V_T, F) = F = V_T - (V_T - F) = F - 0`$. If $`V_T \le F`$: $`(V_T - F)^+ = 0`$, $`(F - V_T)^+ = F - V_T`$, and $`\min(V_T, F) = V_T = V_T - 0 = F - (F - V_T)`$. So equity plus debt pays $`V_T`$ in every state, and debt pays the riskless $`F`$ minus the put payoff in every state.
 
-**Prices.** Under the stated model the Black-Scholes call and put theorems price $(V_T - F)^+$ and $(F - V_T)^+$, with share price $V$, strike $F$ and zero payout. Claims whose payoffs agree in every state have one price, so $B = V - E$ and $B = F e^{-rT} - P$; parity makes them equal. Substituting $1 - N(x) = N(-x)$ into $V - E$ gives $B = V N(-d_1) + F e^{-rT} N(d_2)$.
+**Prices.** Under the stated model the Black-Scholes call and put theorems price $`(V_T - F)^+`$ and $`(F - V_T)^+`$, with share price $`V`$, strike $`F`$ and zero payout. Claims whose payoffs agree in every state have one price, so $`B = V - E`$ and $`B = F e^{-rT} - P`$; parity makes them equal. Substituting $`1 - N(x) = N(-x)`$ into $`V - E`$ gives $`B = V N(-d_1) + F e^{-rT} N(d_2)`$.
 
-**Default probability.** $V_T < F$ exactly when $\ln V + (r - \tfrac12\sigma^2)T + \sigma\sqrt{T}Z < \ln F$, that is $Z < -d_2$. The bell curve is continuous, so $V_T = F$ has chance zero and "below" or "at or below" give the same $N(-d_2)$.
+**Default probability.** $`V_T < F`$ exactly when $`\ln V + (r - \tfrac12\sigma^2)T + \sigma\sqrt{T}Z < \ln F`$, that is $`Z < -d_2`$. The bell curve is continuous, so $`V_T = F`$ has chance zero and "below" or "at or below" give the same $`N(-d_2)`$.
 
-**Put as expected shortfall.** $P = e^{-rT}\,\mathbb{E}[(F - V_T)\,\mathbf{1}\{V_T < F\}] = e^{-rT}\,\text{PD}\,(F - \mathbb{E}[V_T \mid V_T < F])$, where $\mathbb{E}$ is the risk-neutral average and $\mathbf{1}\{\cdot\}$ is 1 when the bracket holds, 0 otherwise. The share-counted chance on the call card gives $\mathbb{E}[V_T\,\mathbf{1}\{V_T < F\}] = V e^{rT} N(-d_1)$, so the mean of $V_T$ given default is $V e^{rT} N(-d_1)/N(-d_2)$: $72.97m here.
+**Put as expected shortfall.** $`P = e^{-rT}\,\mathbb{E}[(F - V_T)\,\mathbf{1}\{V_T < F\}] = e^{-rT}\,\text{PD}\,(F - \mathbb{E}[V_T \mid V_T < F])`$, where $`\mathbb{E}`$ is the risk-neutral average and $`\mathbf{1}\{\cdot\}`$ is 1 when the bracket holds, 0 otherwise. The share-counted chance on the call card gives $`\mathbb{E}[V_T\,\mathbf{1}\{V_T < F\}] = V e^{rT} N(-d_1)`$, so the mean of $`V_T`$ given default is $`V e^{rT} N(-d_1)/N(-d_2)`$: $72.97m here.
 
-**Bounds.** With $T$, $\sigma$, $V$, $F$ all positive, both default and survival have positive chance. So $P > 0$ and $E > 0$, and since $\min(V_T, F)$ is below both $V_T$ and $F$, and strictly below each with positive chance, $0 < B < \min(V, F e^{-rT})$.
+**Bounds.** With $`T`$, $`\sigma`$, $`V`$, $`F`$ all positive, both default and survival have positive chance. So $`P > 0`$ and $`E > 0`$, and since $`\min(V_T, F)`$ is below both $`V_T`$ and $`F`$, and strictly below each with positive chance, $`0 < B < \min(V, F e^{-rT})`$.
 
-**Yield.** $y \mapsto F e^{-yT}$ is continuous and strictly decreasing from infinity to zero, so each $B > 0$ has exactly one yield. $B < F e^{-rT}$ makes the log in $s$ positive: the spread is strictly positive whenever default is possible.
+**Yield.** $`y \mapsto F e^{-yT}`$ is continuous and strictly decreasing from infinity to zero, so each $`B > 0`$ has exactly one yield. $`B < F e^{-rT}`$ makes the log in $`s`$ positive: the spread is strictly positive whenever default is possible.
 
 </details>
 
@@ -172,25 +186,25 @@ Merton's own route was the other road on the Black-Scholes card: he wrote the he
 
 ## Worked numbers, by hand
 
-The firm: $V = 100$, $F = 80$, $T = 1$, $\sigma = 20\%$, $r = 5\%$, all money in $m.
+The firm: $`V = 100`$, $`F = 80`$, $`T = 1`$, $`\sigma = 20\%`$, $`r = 5\%`$, all money in $m.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $\ln(V/F)$ | $\ln(100/80) = \ln 1.25$ | 0.2231 |
-| pricing drift, $r - \tfrac12\sigma^2$ | $0.05 - 0.02$ | 0.03 |
-| one spread unit, $\sigma\sqrt{T}$ | $0.20 \times 1$ | 0.20 |
-| $d_2$ | $(0.2231 + 0.03)/0.20$ | 1.2657 |
-| $d_1$ | $1.2657 + 0.20$ | 1.4657 |
-| $N(d_1)$, $N(d_2)$ | bell-curve table | 0.9286, 0.8972 |
-| riskless bond, $F e^{-rT}$ | $80 \times 0.9512$ | $76.10m |
-| share leg, $V N(d_1)$ | $100 \times 0.9286$ | $92.86m |
-| cash leg, $F e^{-rT} N(d_2)$ | $76.10 \times 0.8972$ | $68.27m |
-| **equity** | $92.86 - 68.27$ | **$24.59m** |
-| **risky bond** | $100 - 24.59$ | **$75.41m** |
-| put | $76.098 - 75.411$ | $0.687m |
-| **default probability** | $N(-d_2) = 1 - 0.8972$ | **10.28%** |
-| yield | $-\ln(75.41/80)$ | 5.907% |
-| **spread** | $5.907\% - 5\%$ | **90.7 bp** |
+| $`\ln(V/F)`$ | $`\ln(100/80) = \ln 1.25`$ | 0.2231 |
+| pricing drift, $`r - \tfrac12\sigma^2`$ | $`0.05 - 0.02`$ | 0.03 |
+| one spread unit, $`\sigma\sqrt{T}`$ | $`0.20 \times 1`$ | 0.20 |
+| $`d_2`$ | $`(0.2231 + 0.03)/0.20`$ | 1.2657 |
+| $`d_1`$ | $`1.2657 + 0.20`$ | 1.4657 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve table | 0.9286, 0.8972 |
+| riskless bond, $`F e^{-rT}`$ | $`80 \times 0.9512`$ | $76.10m |
+| share leg, $`V N(d_1)`$ | $`100 \times 0.9286`$ | $92.86m |
+| cash leg, $`F e^{-rT} N(d_2)`$ | $`76.10 \times 0.8972`$ | $68.27m |
+| **equity** | $`92.86 - 68.27`$ | **$24.59m** |
+| **risky bond** | $`100 - 24.59`$ | **$75.41m** |
+| put | $`76.098 - 75.411`$ | $0.687m |
+| **default probability** | $`N(-d_2) = 1 - 0.8972`$ | **10.28%** |
+| yield | $`-\ln(75.41/80)`$ | 5.907% |
+| **spread** | $`5.907\% - 5\%`$ | **90.7 bp** |
 
 Borrowing 80% of its assets at 20% asset volatility leaves a firm whose bond is worth 99.1% of a riskless one. The rest is the default insurance the lenders sold, and it costs the firm 90.7 bp a year in extra interest.
 
@@ -221,7 +235,7 @@ Every number in the table is printed by both checks below.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows the answer. The shares, bond and default chance are reached by **four independent roads**: the call and put formulas; a Simpson's-rule average of the payment-date payoffs over the bell curve, split where the assets just cover the debt (found by bisection, no $d_1$ or $d_2$); a 2,000-step coin-flip tree on the assets; and a 200,000-draw Monte Carlo run from a hand-written random-number generator. The yield is found twice, by the log and by bisection, and the put a third time as discounted default chance times loss given default. The bell-curve area is a series in Python and a sum of thin slices in Rust.
+Nothing imported knows the answer. The shares, bond and default chance are reached by **four independent roads**: the call and put formulas; a Simpson's-rule average of the payment-date payoffs over the bell curve, split where the assets just cover the debt (found by bisection, no $`d_1`$ or $`d_2`$); a 2,000-step coin-flip tree on the assets; and a 200,000-draw Monte Carlo run from a hand-written random-number generator. The yield is found twice, by the log and by bisection, and the put a third time as discounted default chance times loss given default. The bell-curve area is a series in Python and a sum of thin slices in Rust.
 
 ### Python
 
@@ -645,16 +659,16 @@ The two outputs match line for line.
 
 Lean proves the payoff split for every asset value, and the two pricing facts for every model input.
 
-- Take any assets $V_T$ on the payment date and any face value $F$. Then the shares get $(V_T - F)^+$, the payoff of a call struck at $F$.
-- Take the same $V_T$ and $F$. Then shares and lenders together get exactly $V_T$.
-- Take the same $V_T$ and $F$. Then the lenders get $\min(V_T, F) = V_T - (V_T - F)^+ = F - (F - V_T)^+$.
-- Suppose $V$, $F$, $\sigma$ and $T$ are positive, and the assets wander as in Step 4. Then pricing each payoff as its discounted risk-neutral average gives $B = V - E$ and $B = F e^{-rT} - P$.
-- Suppose the same model. Then the pricing chance of default, $V_T < F$, is exactly $N(-d_2)$.
+- Take any assets $`V_T`$ on the payment date and any face value $`F`$. Then the shares get $`(V_T - F)^+`$, the payoff of a call struck at $`F`$.
+- Take the same $`V_T`$ and $`F`$. Then shares and lenders together get exactly $`V_T`$.
+- Take the same $`V_T`$ and $`F`$. Then the lenders get $`\min(V_T, F) = V_T - (V_T - F)^+ = F - (F - V_T)^+`$.
+- Suppose $`V`$, $`F`$, $`\sigma`$ and $`T`$ are positive, and the assets wander as in Step 4. Then pricing each payoff as its discounted risk-neutral average gives $`B = V - E`$ and $`B = F e^{-rT} - P`$.
+- Suppose the same model. Then the pricing chance of default, $`V_T < F`$, is exactly $`N(-d_2)`$.
 - Take $80m owed and assets of $140m. Then the shares get $60m.
 - Take $80m owed and assets of $60m. Then the shares get 0, the lenders $60m, and the put $20m.
 - Take $80m owed. Then both rows of the payoff chart come out exactly as drawn, at every point from 0 to 160.
 
-The Black-Scholes formulas for $E$ and $P$, the yield, the spread and every dollar price today are left to the Python and Rust checks.
+The Black-Scholes formulas for $`E`$ and $`P`$, the yield, the spread and every dollar price today are left to the Python and Rust checks.
 
 ```lean
 -- Merton's model: on the payment date the shareholders' share of the assets is a call struck at the debt and the lenders' share is the assets minus that call, which is also a riskless payment minus a put; in the lognormal pricing model the same split holds for today's prices, and the pricing chance of default is N(-d2).
@@ -823,7 +837,7 @@ example : [debtPayoff 0 80, debtPayoff 20 80, debtPayoff 40 80, debtPayoff 60 80
 > [!warning]
 > **Reading the 10.28% as the chance the firm will default.** It is the chance in the pricing world, where the assets are assumed to grow at the riskless 5%. Real assets are expected to grow faster, so real defaults are rarer: 7.84% at an 8% real drift. The gap is the price lenders charge for bearing default risk, and it is why bond spreads look high next to historical default rates.
 >
-> - **Using the share price's volatility for $\sigma$.** The shares are a leveraged call on the assets, so they swing more than the assets do. Feeding the share volatility into $\sigma$ overstates default risk. The two are linked on [Backing out the unobservable](04-asset-value-and-volatility-from-the-share-price.md).
+> - **Using the share price's volatility for $`\sigma`$.** The shares are a leveraged call on the assets, so they swing more than the assets do. Feeding the share volatility into $`\sigma`$ overstates default risk. The two are linked on [Backing out the unobservable](04-asset-value-and-volatility-from-the-share-price.md).
 > - **Pricing the bond as riskless bond times survival chance.** That gives $68.27m and ignores the $7.14m the lenders recover when the firm fails.
 > - **Confusing the spread with the default chance.** The spread is a yearly rate, 90.7 bp; the default chance is a one-off probability, 10.28%. The spread is close to default chance times loss given default, and here loss given default is only 8.8%.
 > - **Mixing compounding conventions.** A simple-interest yield against a continuous riskless rate reports 108.5 bp instead of 90.7 bp.
@@ -846,10 +860,10 @@ example : [debtPayoff 0 80, debtPayoff 20 80, debtPayoff 40 80, debtPayoff 60 80
 ## What this builds on
 
 - [Default probability, recovery and expected loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md): default chance, recovery and loss given default, which Step 5 rebuilds from the balance sheet.
-- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the formula that prices the shares, and the share-counted chance behind $N(d_1)$.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the formula that prices the shares, and the share-counted chance behind $`N(d_1)`$.
 - [Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): the formula that prices the lenders' short put.
 - [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): why the two faces of the bond have one price.
-- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, $N(x)$, and the symmetry $1 - N(x) = N(-x)$.
+- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, $`N(x)`$, and the symmetry $`1 - N(x) = N(-x)`$.
 
 ## Where this goes next
 
@@ -858,7 +872,7 @@ example : [debtPayoff 0 80, debtPayoff 20 80, debtPayoff 40 80, debtPayoff 60 80
 - [Black-Cox](05-black-cox-first-passage-default.md): default the first moment assets touch a line, not only on the payment date.
 - [Backing out the unobservable](04-asset-value-and-volatility-from-the-share-price.md): recovers the assets and their volatility from the share price and its volatility.
 
-The question this card leaves open: the firm's assets and their volatility are not quoted anywhere, so where do $V$ and $\sigma$ come from?
+The question this card leaves open: the firm's assets and their volatility are not quoted anywhere, so where do $`V`$ and $`\sigma`$ come from?
 
 ---
 

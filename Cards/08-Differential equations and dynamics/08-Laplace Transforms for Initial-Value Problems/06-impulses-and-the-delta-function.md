@@ -34,36 +34,44 @@ Orange: the ideal blow, from the formula. Teal: the same push spread over 0.5 s,
 
 ## The formula
 
-Notation first, in words. A pulse of width $\varepsilon$ ("epsilon", a small time) starting at time $a$ is written $\delta_\varepsilon(t-a)$: its strength is $1/\varepsilon$ from $a$ to $a+\varepsilon$ and zero elsewhere, so its area is 1. The delta is what these pulses do to a continuous signal $g$ in the limit:
+Notation first, in words. A pulse of width $`\varepsilon`$ ("epsilon", a small time) starting at time $`a`$ is written $`\delta_\varepsilon(t-a)`$: its strength is $`1/\varepsilon`$ from $`a`$ to $`a+\varepsilon`$ and zero elsewhere, so its area is 1. The delta is what these pulses do to a continuous signal $`g`$ in the limit:
 
-$$\int_0^\infty \delta(t-a)\,g(t)\,dt \;=\; \lim_{\varepsilon\to 0}\int_0^\infty \delta_\varepsilon(t-a)\,g(t)\,dt \;=\; g(a)$$
+```math
+\int_0^\infty \delta(t-a)\,g(t)\,dt \;=\; \lim_{\varepsilon\to 0}\int_0^\infty \delta_\varepsilon(t-a)\,g(t)\,dt \;=\; g(a)
+```
 
 **Read it aloud:** weighting a signal by the delta at time a and adding up returns the signal's value at a.
 
-Take $g(t) = e^{-st}$ and the transform follows:
+Take $`g(t) = e^{-st}`$ and the transform follows:
 
-$$\mathcal{L}[\delta(t-a)](s) = e^{-as}$$
+```math
+\mathcal{L}[\delta(t-a)](s) = e^{-as}
+```
 
-In a rate law it forces a velocity jump and no position jump, with $a^-$ and $a^+$ meaning just before and just after $a$:
+In a rate law it forces a velocity jump and no position jump, with $`a^-`$ and $`a^+`$ meaning just before and just after $`a`$:
 
-$$y'(a^+) - y'(a^-) = 1, \qquad y(a^+) = y(a^-)$$
+```math
+y'(a^+) - y'(a^-) = 1, \qquad y(a^+) = y(a^-)
+```
 
-For the struck car, at rest before the blow, with $Y$ the transform of the height and the switch $u$ of [Step functions](05-step-functions-and-delays.md):
+For the struck car, at rest before the blow, with $`Y`$ the transform of the height and the switch $`u`$ of [Step functions](05-step-functions-and-delays.md):
 
-$$Y(s) = \frac{e^{-s}}{s^2+2s+5}, \qquad y(t) = u(t-1)\,\tfrac12\,e^{-(t-1)}\sin 2(t-1)$$
+```math
+Y(s) = \frac{e^{-s}}{s^2+2s+5}, \qquad y(t) = u(t-1)\,\tfrac12\,e^{-(t-1)}\sin 2(t-1)
+```
 
 **Read it aloud:** the car sits still until t = 1 s, then leaves level at 1 cm/s and rings down.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $y$, $y'$ | time (s); height above level (cm); velocity (cm/s) | peak 0.257099 cm at t = 1.553574 s | — |
-| $a$ | the moment of the blow, in s | 1 | the whole response slides later |
-| $\varepsilon$, $\delta_\varepsilon$ | a pulse's width (s); the pulse of strength $1/\varepsilon$ | widths 0.5, 0.2, 0.1, 0.05 s | the kick is rounded and late |
-| $\delta$ | the delta: the pulses' limit | δ(t − 1), impulse 1 cm/s | — |
-| $g$ | any continuous signal the delta acts on | $e^{-st}$ | — |
-| $s$, $\mathcal{L}$, $Y$ | fade rate of the weight e^(−st), per s; "the transform of"; the height's transform | s = 2: Y = 0.01041041 | the weight forgets sooner |
-| $u$ | the unit step: 0 before its switch time, 1 after | $u(t-1)$ | — |
-| $a^-$, $a^+$ | just before and just after the blow | velocity 0, then 1 cm/s | — |
+| $`t`$, $`y`$, $`y'`$ | time (s); height above level (cm); velocity (cm/s) | peak 0.257099 cm at t = 1.553574 s | — |
+| $`a`$ | the moment of the blow, in s | 1 | the whole response slides later |
+| $`\varepsilon`$, $`\delta_\varepsilon`$ | a pulse's width (s); the pulse of strength $`1/\varepsilon`$ | widths 0.5, 0.2, 0.1, 0.05 s | the kick is rounded and late |
+| $`\delta`$ | the delta: the pulses' limit | δ(t − 1), impulse 1 cm/s | — |
+| $`g`$ | any continuous signal the delta acts on | $`e^{-st}`$ | — |
+| $`s`$, $`\mathcal{L}`$, $`Y`$ | fade rate of the weight e^(−st), per s; "the transform of"; the height's transform | s = 2: Y = 0.01041041 | the weight forgets sooner |
+| $`u`$ | the unit step: 0 before its switch time, 1 after | $`u(t-1)`$ | — |
+| $`a^-`$, $`a^+`$ | just before and just after the blow | velocity 0, then 1 cm/s | — |
 
 ### When it holds
 
@@ -81,38 +89,40 @@ Per unit of mass, force is the rate of change of velocity, so its area over the 
 
 ### Step 1: the pulses and their limit
 
-Weighting a continuous signal $g$ by $\delta_\varepsilon(t-a)$ and adding up gives $g$'s average from $a$ to $a+\varepsilon$. As the interval closes, the average tends to $g(a)$.
+Weighting a continuous signal $`g`$ by $`\delta_\varepsilon(t-a)`$ and adding up gives $`g`$'s average from $`a`$ to $`a+\varepsilon`$. As the interval closes, the average tends to $`g(a)`$.
 
-The delta is not an ordinary function. Away from $a$ the pulses vanish, yet their area stays 1, and no function zero everywhere but one point has area 1. The delta is defined only by what it does inside an integral.
+The delta is not an ordinary function. Away from $`a`$ the pulses vanish, yet their area stays 1, and no function zero everywhere but one point has area 1. The delta is defined only by what it does inside an integral.
 
 ### Step 2: the transform is the weight read at the blow
 
-Put $g(t) = e^{-st}$ in Step 1. The pulse's own transform is exact:
+Put $`g(t) = e^{-st}`$ in Step 1. The pulse's own transform is exact:
 
-$$\mathcal{L}[\delta_\varepsilon(t-a)](s) = e^{-as}\,\frac{1-e^{-s\varepsilon}}{s\varepsilon}$$
+```math
+\mathcal{L}[\delta_\varepsilon(t-a)](s) = e^{-as}\,\frac{1-e^{-s\varepsilon}}{s\varepsilon}
+```
 
-The fraction tends to 1, since $e^{-x}$ is close to $1 - x$ for small $x$. At a = 1 and s = 2 the checks find 0.085548 for width 0.5 s, 0.122661 for 0.1 s, 0.133991 for 0.01 s, closing on $e^{-2}$ = 0.135335.
+The fraction tends to 1, since $`e^{-x}`$ is close to $`1 - x`$ for small $`x`$. At a = 1 and s = 2 the checks find 0.085548 for width 0.5 s, 0.122661 for 0.1 s, 0.133991 for 0.01 s, closing on $`e^{-2}`$ = 0.135335.
 
 ### Step 3: the blow makes the velocity jump by 1
 
-Add up both sides of $y'' + 2y' + 5y = \delta_\varepsilon(t-1)$ from 1 to $1+\varepsilon$. The left gives the change in velocity, plus 2 times the change in height, plus 5 times the height summed over the pulse. The right gives 1. The velocity stays bounded, so both height terms shrink with $\varepsilon$: in the limit the velocity jumps by exactly 1 and the height does not move. The stepped pulses show it: velocity 0.797072, 0.898817 and 0.949645 cm/s at the end of pulses 0.2, 0.1 and 0.05 s wide.
+Add up both sides of $`y'' + 2y' + 5y = \delta_\varepsilon(t-1)`$ from 1 to $`1+\varepsilon`$. The left gives the change in velocity, plus 2 times the change in height, plus 5 times the height summed over the pulse. The right gives 1. The velocity stays bounded, so both height terms shrink with $`\varepsilon`$: in the limit the velocity jumps by exactly 1 and the height does not move. The stepped pulses show it: velocity 0.797072, 0.898817 and 0.949645 cm/s at the end of pulses 0.2, 0.1 and 0.05 s wide.
 
 ### Step 4: after the blow, a free ring-down
 
-From t = 1 s on, the forcing is zero and the car starts from height 0 with velocity 1 cm/s. The characteristic roots of $s^2 + 2s + 5$ are $-1 \pm 2i$ ([Complex roots](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md)), so the motion is $e^{-(t-1)}$ times a mix of $\cos 2(t-1)$ and $\sin 2(t-1)$. Height 0 kills the cosine; velocity 1 fixes the sine's coefficient at 1/2.
+From t = 1 s on, the forcing is zero and the car starts from height 0 with velocity 1 cm/s. The characteristic roots of $`s^2 + 2s + 5`$ are $`-1 \pm 2i`$ ([Complex roots](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md)), so the motion is $`e^{-(t-1)}`$ times a mix of $`\cos 2(t-1)`$ and $`\sin 2(t-1)`$. Height 0 kills the cosine; velocity 1 fixes the sine's coefficient at 1/2.
 
-The transform gets there in one pass, with every starting value zero: $(s^2+2s+5)\,Y = e^{-s}$, inverted in Worked numbers by completing the square ([Inverting](03-inverting-by-partial-fractions.md)) and delaying by 1 s.
+The transform gets there in one pass, with every starting value zero: $`(s^2+2s+5)\,Y = e^{-s}`$, inverted in Worked numbers by completing the square ([Inverting](03-inverting-by-partial-fractions.md)) and delaying by 1 s.
 
-The routes agree for a reason: a velocity jump of 1 at t = 1 s adds an end term $e^{-s}$ to the integration by parts behind the derivative rule, exactly the delta's transform.
+The routes agree for a reason: a velocity jump of 1 at t = 1 s adds an end term $`e^{-s}`$ to the integration by parts behind the derivative rule, exactly the delta's transform.
 
 <details>
 <summary>Detailed proof</summary>
 
-**The pulse limit.** Let $g$ be continuous near $a$. The weighted sum is $g$'s average from $a$ to $a+\varepsilon$, so it lies within the largest $\lvert g(t) - g(a)\rvert$ on that interval of $g(a)$. By continuity, for every tolerance there is a width below which that is under the tolerance. For $g(t) = e^{-st}$ with real $s > 0$, $(1 - e^{-x})/x$ lies between $1 - x/2$ and 1 for $x > 0$.
+**The pulse limit.** Let $`g`$ be continuous near $`a`$. The weighted sum is $`g`$'s average from $`a`$ to $`a+\varepsilon`$, so it lies within the largest $`\lvert g(t) - g(a)\rvert`$ on that interval of $`g(a)`$. By continuity, for every tolerance there is a width below which that is under the tolerance. For $`g(t) = e^{-st}`$ with real $`s > 0`$, $`(1 - e^{-x})/x`$ lies between $`1 - x/2`$ and 1 for $`x > 0`$.
 
-**The jump.** Let $y_\varepsilon$ solve the equation with the pulse, from rest. Its speed stays at most $V = 1$: the energy $\tfrac12 y'^2 + \tfrac52 y^2$ changes at rate $y'$ times the forcing minus $2y'^2$, so the square root of twice the energy, which bounds the speed, grows no faster than the forcing, whose total is 1. The height then moves by at most $V\varepsilon$ over the pulse. Adding up the equation over the pulse gives $y_\varepsilon'(1+\varepsilon) = 1 - 2y_\varepsilon(1+\varepsilon) - 5\int_1^{1+\varepsilon} y_\varepsilon\,dt$, so the velocity at the pulse's end is within $2V\varepsilon + 5V\varepsilon^2$ of 1 and the height within $V\varepsilon$ of 0.
+**The jump.** Let $`y_\varepsilon`$ solve the equation with the pulse, from rest. Its speed stays at most $`V = 1`$: the energy $`\tfrac12 y'^2 + \tfrac52 y^2`$ changes at rate $`y'`$ times the forcing minus $`2y'^2`$, so the square root of twice the energy, which bounds the speed, grows no faster than the forcing, whose total is 1. The height then moves by at most $`V\varepsilon`$ over the pulse. Adding up the equation over the pulse gives $`y_\varepsilon'(1+\varepsilon) = 1 - 2y_\varepsilon(1+\varepsilon) - 5\int_1^{1+\varepsilon} y_\varepsilon\,dt`$, so the velocity at the pulse's end is within $`2V\varepsilon + 5V\varepsilon^2`$ of 1 and the height within $`V\varepsilon`$ of 0.
 
-**The motion converges.** After the pulse the car moves freely. Free motion depends linearly on its starting height and velocity and fades, so it differs from the ideal by at most a constant times $\varepsilon$, plus a start lagging by $\varepsilon$. Halving the width roughly halves the error: the checks print ratios 1.76 and 1.87.
+**The motion converges.** After the pulse the car moves freely. Free motion depends linearly on its starting height and velocity and fades, so it differs from the ideal by at most a constant times $`\varepsilon`$, plus a start lagging by $`\varepsilon`$. Halving the width roughly halves the error: the checks print ratios 1.76 and 1.87.
 
 </details>
 
@@ -124,13 +134,13 @@ Another route treats any forcing as a sum of small blows and the response as a s
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| transform the rate law, from rest | $(s^2+2s+5)\,Y = e^{-s}$ | $Y = e^{-s}/(s^2+2s+5)$ |
-| complete the square | $s^2+2s+5 = (s+1)^2+4$ | roots $-1 \pm 2i$ |
-| undelayed piece | $1/((s+1)^2+4)$, by the table of pairs | $\tfrac12 e^{-t}\sin 2t$ |
-| delay by the blow's time | replace t by t − 1, switch on with $u(t-1)$ | $y = u(t-1)\,\tfrac12 e^{-(t-1)}\sin 2(t-1)$ |
-| velocity just after | $\tfrac12(2\cos 0 - \sin 0)$ | **1 cm/s** |
-| top of the kick | $\tan 2(t-1) = 2$, the velocity's zero | **0.257099 cm at t = 1.553574 s** |
-| check at s = 2 | $e^{-2}/13$ against the weighted sum of y | 0.01041041 both ways |
+| transform the rate law, from rest | $`(s^2+2s+5)\,Y = e^{-s}`$ | $`Y = e^{-s}/(s^2+2s+5)`$ |
+| complete the square | $`s^2+2s+5 = (s+1)^2+4`$ | roots $`-1 \pm 2i`$ |
+| undelayed piece | $`1/((s+1)^2+4)`$, by the table of pairs | $`\tfrac12 e^{-t}\sin 2t`$ |
+| delay by the blow's time | replace t by t − 1, switch on with $`u(t-1)`$ | $`y = u(t-1)\,\tfrac12 e^{-(t-1)}\sin 2(t-1)`$ |
+| velocity just after | $`\tfrac12(2\cos 0 - \sin 0)`$ | **1 cm/s** |
+| top of the kick | $`\tan 2(t-1) = 2`$, the velocity's zero | **0.257099 cm at t = 1.553574 s** |
+| check at s = 2 | $`e^{-2}/13`$ against the weighted sum of y | 0.01041041 both ways |
 
 The pothole lifts the body a quarter of a centimetre, just over half a second after the blow.
 
@@ -140,7 +150,7 @@ The pothole lifts the body a quarter of a centimetre, just over half a second af
 | --- | --- | --- |
 | Pulse strength held at 1 while the width shrinks to 0.01 s | peak 0.002571 cm instead of 0.257099 | the area shrank to 0.01; a delta keeps area 1 |
 | Delay dropped: transform of δ(t − 1) taken as 1 | y(1.5) = 0.015744 cm instead of 0.255189 | the kick lands at t = 0, not at t = 1 s |
-| Switch $u(t-1)$ dropped from the answer | y(0.5) = −0.693676 cm instead of 0 | the formula runs backwards: the car moves before the pothole |
+| Switch $`u(t-1)`$ dropped from the answer | y(0.5) = −0.693676 cm instead of 0 | the formula runs backwards: the car moves before the pothole |
 
 The code prints all three.
 
@@ -333,14 +343,14 @@ The two outputs match line for line.
 
 Lean proves the pulse limit, the delta's transform and the struck car's velocity jump, for every blow after the start.
 
-- Take a continuous signal $g$ and a blow time $a > 0$. Then weighting $g$ by $\delta_\varepsilon(t-a)$ and adding up tends to $g(a)$ as $\varepsilon$ shrinks to zero.
-- Take $a > 0$, a real $s > 0$ and a width $\varepsilon > 0$. Then the pulse's transform is exactly $e^{-as}\,(1-e^{-s\varepsilon})/(s\varepsilon)$.
-- Take $a > 0$ and a real $s > 0$. Then the pulses' transforms tend to $e^{-as}$ as the width shrinks to zero.
-- Take the struck car's height $y = u(t-1)\,\tfrac12\,e^{-(t-1)}\sin 2(t-1)$. Then the height does not jump at t = 1 s.
+- Take a continuous signal $`g`$ and a blow time $`a > 0`$. Then weighting $`g`$ by $`\delta_\varepsilon(t-a)`$ and adding up tends to $`g(a)`$ as $`\varepsilon`$ shrinks to zero.
+- Take $`a > 0`$, a real $`s > 0`$ and a width $`\varepsilon > 0`$. Then the pulse's transform is exactly $`e^{-as}\,(1-e^{-s\varepsilon})/(s\varepsilon)`$.
+- Take $`a > 0`$ and a real $`s > 0`$. Then the pulses' transforms tend to $`e^{-as}`$ as the width shrinks to zero.
+- Take the struck car's height $`y = u(t-1)\,\tfrac12\,e^{-(t-1)}\sin 2(t-1)`$. Then the height does not jump at t = 1 s.
 - For the same height, the velocity is 0 just before t = 1 s and 1 cm/s just after.
-- Take any time $t > 1$ s. Then $y'' + 2y' + 5y = 0$: after the blow the car rings down freely.
+- Take any time $`t > 1`$ s. Then $`y'' + 2y' + 5y = 0`$: after the blow the car rings down freely.
 
-The transform $Y$, the peak, and the pulse-pushed motion closing on the ideal are left to the Python and Rust checks.
+The transform $`Y`$, the peak, and the pulse-pushed motion closing on the ideal are left to the Python and Rust checks.
 
 ```lean
 -- Impulses: unit-area pulses narrowing to zero width read off a continuous signal's value at the blow, their transforms tend to e^(-as), and the struck car's motion leaves level at velocity 1 and rings down by y'' + 2y' + 5y = 0.
@@ -547,7 +557,7 @@ end Impulses
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Hit the pothole later.** Set `A` to 2.0. The ring-down slides 1 s later and keeps its shape; the transform assert stops the program, because the right value is now $e^{-4}/13$, not $e^{-2}/13$.
+> - **Hit the pothole later.** Set `A` to 2.0. The ring-down slides 1 s later and keeps its shape; the transform assert stops the program, because the right value is now $`e^{-4}/13`$, not $`e^{-2}/13`$.
 > - **Widen the pulses.** Change the widths to `(0.4, 0.2, 0.1)`. The first error ratio falls below 1.7 and the order assert stops it: first-order behaviour needs pulses short next to the car's own times.
 > - **Double the blow.** Call `pulse_run(eps, area=2.0)` in the error loop. The velocity at the pulse's end nears 2 cm/s instead of 1, and an assert stops it: the jump equals the area.
 
@@ -558,8 +568,8 @@ end Impulses
 > [!warning]
 > **Thinking of the delta as a huge number at t = 1 s.** A value at one instant changes no integral, so it kicks nothing. What survives the limit is the area, a velocity jump of 1 cm/s. Keep the pulse's strength at 1 as it narrows and a pulse 0.01 s wide lifts the car only 0.002571 cm.
 >
-> - **Dropping the delay.** The transform of δ(t − 1) is $e^{-s}$, not 1; taking 1 moves the blow to t = 0.
-> - **Dropping the switch.** Without $u(t-1)$ the car moves before it reaches the pothole.
+> - **Dropping the delay.** The transform of δ(t − 1) is $`e^{-s}`$, not 1; taking 1 moves the blow to t = 0.
+> - **Dropping the switch.** Without $`u(t-1)`$ the car moves before it reaches the pothole.
 > - **Putting the jump in the height.** A blow changes velocity; a jump in height would need infinite velocity.
 
 ---
@@ -577,7 +587,7 @@ end Impulses
 
 ## What this builds on
 
-- [Step functions](05-step-functions-and-delays.md): the switch $u(t-a)$ and the delay rule that turns a factor $e^{-as}$ into a shift in time.
+- [Step functions](05-step-functions-and-delays.md): the switch $`u(t-a)`$ and the delay rule that turns a factor $`e^{-as}`$ into a shift in time.
 
 ## Where this goes next
 

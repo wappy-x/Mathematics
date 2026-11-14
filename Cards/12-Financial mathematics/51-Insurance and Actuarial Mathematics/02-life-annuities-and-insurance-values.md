@@ -35,49 +35,55 @@ The single line is the value today of the payment due that many years after 65. 
 
 ## The formula
 
-Notation first, in words. A life's age today is $x$. The chance that a life aged $x$ is still alive $k$ years later is written ${}_kp_x$, read "k-p-x", from the life-table card. The chance that someone alive at age $x+k$ dies before the next birthday is $q_{x+k}$. The yearly interest rate is $i$. Money due in one year is worth $v = 1/(1+i)$ today, so money due in $k$ years is worth $v^k$. Interest paid at the start of a year instead of the end is $d = i/(1+i)$, the **discount rate**: 1 dollar borrowed for a year costs $d$ up front.
+Notation first, in words. A life's age today is $`x`$. The chance that a life aged $`x`$ is still alive $`k`$ years later is written $`{}_kp_x`$, read "k-p-x", from the life-table card. The chance that someone alive at age $`x+k`$ dies before the next birthday is $`q_{x+k}`$. The yearly interest rate is $`i`$. Money due in one year is worth $`v = 1/(1+i)`$ today, so money due in $`k`$ years is worth $`v^k`$. Interest paid at the start of a year instead of the end is $`d = i/(1+i)`$, the **discount rate**: 1 dollar borrowed for a year costs $`d`$ up front.
 
-The value of the pension per dollar of payment, first payment today, is the **life annuity-due**, written $\ddot a_x$ ("a-double-dot-x"; "due" means each payment falls at the start of its year):
+The value of the pension per dollar of payment, first payment today, is the **life annuity-due**, written $`\ddot a_x`$ ("a-double-dot-x"; "due" means each payment falls at the start of its year):
 
-$$\ddot a_x \;=\; \sum_{k=0}^{\infty} v^k\,{}_kp_x$$
+```math
+\ddot a_x \;=\; \sum_{k=0}^{\infty} v^k\,{}_kp_x
+```
 
 **Read it aloud:** for every birthday from today on, the discount factor for that birthday times the chance of being alive on it, all added up.
 
-The value of 1 dollar paid at the end of the year of death is the **whole-life insurance** value $A_x$:
+The value of 1 dollar paid at the end of the year of death is the **whole-life insurance** value $`A_x`$:
 
-$$A_x \;=\; \sum_{k=0}^{\infty} v^{k+1}\,{}_kp_x\,q_{x+k}$$
+```math
+A_x \;=\; \sum_{k=0}^{\infty} v^{k+1}\,{}_kp_x\,q_{x+k}
+```
 
 **Read it aloud:** for every year, the chance of surviving to its start and then dying inside it, times the discount to its end, all added up.
 
 The relation between them:
 
-$$A_x \;+\; d\,\ddot a_x \;=\; 1$$
+```math
+A_x \;+\; d\,\ddot a_x \;=\; 1
+```
 
 **Read it aloud:** the insurance value plus the discount rate times the annuity value is exactly one dollar.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | age today, in years | 65 | annuity falls, insurance rises: fewer birthdays, death nearer |
-| $k$, $K$, $T$ | $k$ counts years from today; $T$ is the exact time she lives past $x$, unknown in advance; $K$ is $T$ rounded down to whole years | $k$ = 0, 1, 2, …; $K$ averages 22.24 | a longer life lifts the annuity |
-| $i$, $\delta$ | yearly interest rate; the same rate compounded continuously, $\delta = \ln(1+i)$ | 5%; 0.048790 | both values fall: later money is worth less |
-| $v$ | discount factor for one year, $1/(1+i)$ | 0.952381 | both values rise |
-| $d$ | discount rate, interest paid in advance, $i/(1+i)$ | 0.047619 | the annuity falls |
-| ${}_kp_x$ | chance a life aged $x$ is alive $k$ years later | 0.994085 for one year at 65 | annuity rises, insurance falls |
-| $q_{x+k}$ | chance of dying within the year after age $x+k$ | 0.005915 at age 65 | insurance rises |
-| $\mu$ | force of mortality: the death rate per year at one instant, $\mu(y) = 0.00022 + 0.0000027 \times 1.124^y$ at age y | 0.00022 + a term that grows 12.4% a year | annuity falls |
-| $\ddot a_x$ | life annuity-due: value of 1 a year, first payment today, while alive | 13.549790 | — |
-| $A_x$ | whole-life insurance: value of 1 at the end of the year of death | 0.354772 | — |
-| $\bar A_x$ | the same insurance paid at the moment of death | 0.363520 | — |
-| $Y$, $Z$ | what one life actually yields: $Y$ the annuity's payments, discounted; $Z = v^{K+1}$ the insurance payment, discounted | differ for every life | — |
+| $`x`$ | age today, in years | 65 | annuity falls, insurance rises: fewer birthdays, death nearer |
+| $`k`$, $`K`$, $`T`$ | $`k`$ counts years from today; $`T`$ is the exact time she lives past $`x`$, unknown in advance; $`K`$ is $`T`$ rounded down to whole years | $`k`$ = 0, 1, 2, …; $`K`$ averages 22.24 | a longer life lifts the annuity |
+| $`i`$, $`\delta`$ | yearly interest rate; the same rate compounded continuously, $`\delta = \ln(1+i)`$ | 5%; 0.048790 | both values fall: later money is worth less |
+| $`v`$ | discount factor for one year, $`1/(1+i)`$ | 0.952381 | both values rise |
+| $`d`$ | discount rate, interest paid in advance, $`i/(1+i)`$ | 0.047619 | the annuity falls |
+| $`{}_kp_x`$ | chance a life aged $`x`$ is alive $`k`$ years later | 0.994085 for one year at 65 | annuity rises, insurance falls |
+| $`q_{x+k}`$ | chance of dying within the year after age $`x+k`$ | 0.005915 at age 65 | insurance rises |
+| $`\mu`$ | force of mortality: the death rate per year at one instant, $`\mu(y) = 0.00022 + 0.0000027 \times 1.124^y`$ at age y | 0.00022 + a term that grows 12.4% a year | annuity falls |
+| $`\ddot a_x`$ | life annuity-due: value of 1 a year, first payment today, while alive | 13.549790 | — |
+| $`A_x`$ | whole-life insurance: value of 1 at the end of the year of death | 0.354772 | — |
+| $`\bar A_x`$ | the same insurance paid at the moment of death | 0.363520 | — |
+| $`Y`$, $`Z`$ | what one life actually yields: $`Y`$ the annuity's payments, discounted; $`Z = v^{K+1}`$ the insurance payment, discounted | differ for every life | — |
 
 The mortality in the example is **Makeham's law**: a constant background death rate plus a term that grows by a fixed percentage with each year of age. The constants above are those of the Standard Ultimate Life Table used in actuarial teaching, and the code reproduces that table's published 5 percent values, 13.5498 and 0.35477.
 
 ### When it holds
 
 - **The life table fits the people.** The values are averages over the table. If the ageing term of mortality were twice as strong, the annuity would be 11.703588 per dollar, not 13.549790. Pensioners who outlive the table cost the fund money.
-- **Interest is one fixed, known rate.** With a curve of rates, each $v^k$ becomes that date's discount factor $D(k)$ and the sums still work, but the identity in this form needs one flat $d$. At 3 percent the same annuity is worth 16.439658.
+- **Interest is one fixed, known rate.** With a curve of rates, each $`v^k`$ becomes that date's discount factor $`D(k)`$ and the sums still work, but the identity in this form needs one flat $`d`$. At 3 percent the same annuity is worth 16.439658.
 - **Payments fall on birthdays; the death benefit at the end of the year of death.** Paying at the moment of death is a different contract, worth 0.363520 per dollar here, not 0.354772.
-- **Interest is positive.** At zero interest $d = 0$ and the insurance is worth exactly 1, so the identity reads 1 = 1 and says nothing about the annuity.
+- **Interest is positive.** At zero interest $`d = 0`$ and the insurance is worth exactly 1, so the identity reads 1 = 1 and says nothing about the annuity.
 
 ---
 
@@ -91,31 +97,37 @@ Everything below is that one move, applied twice, and then a line of algebra tha
 
 ### Step 1: the annuity is a sum over birthdays alive
 
-Follow one life. If she lives $K$ more whole years, she collects on today's birthday and on $K$ more, so her payments discounted to today are
+Follow one life. If she lives $`K`$ more whole years, she collects on today's birthday and on $`K`$ more, so her payments discounted to today are
 
-$$Y = 1 + v + v^2 + \dots + v^K.$$
+```math
+Y = 1 + v + v^2 + \dots + v^K.
+```
 
-Write $Y$ as a sum over every birthday $k$, each term $v^k$ switched on if she is alive at $x+k$ and off if not. The switch for birthday $k$ is on with probability ${}_kp_x$. Averaging term by term gives $\ddot a_x = \sum_k v^k\,{}_kp_x$, the first formula. For her, that sum is 13.549790, so the pension is worth 135,497.90 dollars.
+Write $`Y`$ as a sum over every birthday $`k`$, each term $`v^k`$ switched on if she is alive at $`x+k`$ and off if not. The switch for birthday $`k`$ is on with probability $`{}_kp_x`$. Averaging term by term gives $`\ddot a_x = \sum_k v^k\,{}_kp_x`$, the first formula. For her, that sum is 13.549790, so the pension is worth 135,497.90 dollars.
 
 ### Step 2: the insurance is a sum over years of death
 
-The same life pays the insurance once, at the end of year $K+1$, so its discounted value is $Z = v^{K+1}$. She dies in year $k+1$ exactly when she survives to age $x+k$ and then dies within the year. That has probability ${}_kp_x\,q_{x+k}$. Averaging over the possible death years gives $A_x = \sum_k v^{k+1}\,{}_kp_x\,q_{x+k}$, the second formula. For her it is 0.354772: a 100,000-dollar death benefit is worth 35,477.19 dollars.
+The same life pays the insurance once, at the end of year $`K+1`$, so its discounted value is $`Z = v^{K+1}`$. She dies in year $`k+1`$ exactly when she survives to age $`x+k`$ and then dies within the year. That has probability $`{}_kp_x\,q_{x+k}`$. Averaging over the possible death years gives $`A_x = \sum_k v^{k+1}\,{}_kp_x\,q_{x+k}`$, the second formula. For her it is 0.354772: a 100,000-dollar death benefit is worth 35,477.19 dollars.
 
 Step 1 used only survival to birthdays. Step 2 used only the year of death. Neither borrowed from the other.
 
 ### Step 3: one life, one dollar, split two ways
 
-Put 1 dollar in the bank today and ask what it can pay for. Each year it earns interest; taken at the start of the year, that interest is $d$. Take $d$ on every birthday while she is alive. When she dies, take back the dollar itself at the end of that year. The account runs to exactly zero. So, for every possible lifetime,
+Put 1 dollar in the bank today and ask what it can pay for. Each year it earns interest; taken at the start of the year, that interest is $`d`$. Take $`d`$ on every birthday while she is alive. When she dies, take back the dollar itself at the end of that year. The account runs to exactly zero. So, for every possible lifetime,
 
-$$d\,Y + Z \;=\; d\,(1 + v + \dots + v^K) + v^{K+1} \;=\; 1.$$
+```math
+d\,Y + Z \;=\; d\,(1 + v + \dots + v^K) + v^{K+1} \;=\; 1.
+```
 
-The algebra is the finite geometric sum from the annuities card: $(1-v)(1 + v + \dots + v^K) = 1 - v^{K+1}$, and $1 - v = d$. Averaging both sides over all possible lives gives
+The algebra is the finite geometric sum from the annuities card: $`(1-v)(1 + v + \dots + v^K) = 1 - v^{K+1}`$, and $`1 - v = d`$. Averaging both sides over all possible lives gives
 
-$$A_x + d\,\ddot a_x = 1.$$
+```math
+A_x + d\,\ddot a_x = 1.
+```
 
-For her: 1 − 0.047619 × 13.549790 = 0.354772, the same number Step 2 reached from the years of death alone. The simulation in the code checks the one-life version, $dY + Z = 1$, on each of 100,000 simulated lives.
+For her: 1 − 0.047619 × 13.549790 = 0.354772, the same number Step 2 reached from the years of death alone. The simulation in the code checks the one-life version, $`dY + Z = 1`$, on each of 100,000 simulated lives.
 
-A toy basis makes it checkable by hand. Suppose 90 percent of the living survive every year, forever. Then ${}_kp_x = 0.9^k$ and $0.9\,v = 0.9/1.05 = 6/7$. The annuity is a geometric series, $1/(1 - 6/7) = 7$. The insurance is $0.1\,v \times 7 = (2/21) \times 7 = 2/3$. And $2/3 + (1/21) \times 7 = 1$.
+A toy basis makes it checkable by hand. Suppose 90 percent of the living survive every year, forever. Then $`{}_kp_x = 0.9^k`$ and $`0.9\,v = 0.9/1.05 = 6/7`$. The annuity is a geometric series, $`1/(1 - 6/7) = 7`$. The insurance is $`0.1\,v \times 7 = (2/21) \times 7 = 2/3`$. And $`2/3 + (1/21) \times 7 = 1`$.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -128,35 +140,35 @@ xychart-beta
     line [100.00, 100.00, 100.00, 100.00, 100.00, 100.00, 100.00]
 ```
 
-The rising line is 100 times the insurance value $A_x$. The falling line is 100 times $d\,\ddot a_x$, the annuity's share. The flat line is their sum, 100 at every age. At 40 death is far off and cheap to insure; at 100 it is near, and the annuity has little left to pay.
+The rising line is 100 times the insurance value $`A_x`$. The falling line is 100 times $`d\,\ddot a_x`$, the annuity's share. The flat line is their sum, 100 at every age. At 40 death is far off and cheap to insure; at 100 it is near, and the annuity has little left to pay.
 
 <details>
 <summary>Detailed proof: the two sums and the identity</summary>
 
-Let $K$ be the whole years lived past $x$, and assume the life ends with certainty, so the death-year probabilities ${}_kp_x\,q_{x+k}$ add to 1. For $0 < v < 1$ every quantity is bounded: $1 \le Y \le 1/d$ and $0 < Z \le v$.
+Let $`K`$ be the whole years lived past $`x`$, and assume the life ends with certainty, so the death-year probabilities $`{}_kp_x\,q_{x+k}`$ add to 1. For $`0 < v < 1`$ every quantity is bounded: $`1 \le Y \le 1/d`$ and $`0 < Z \le v`$.
 
-**Annuity.** $Y = \sum_{k \ge 0} v^k\,\mathbf 1\{K \ge k\}$, where $\mathbf 1\{\cdot\}$ is 1 when the event happens and 0 otherwise. The terms are not negative, so the average of the infinite sum is the sum of the averages (monotone convergence). The average of $\mathbf 1\{K \ge k\}$ is the chance of being alive at $x+k$, which is ${}_kp_x$. So $\ddot a_x = \sum_k v^k\,{}_kp_x$.
+**Annuity.** $`Y = \sum_{k \ge 0} v^k\,\mathbf 1\{K \ge k\}`$, where $`\mathbf 1\{\cdot\}`$ is 1 when the event happens and 0 otherwise. The terms are not negative, so the average of the infinite sum is the sum of the averages (monotone convergence). The average of $`\mathbf 1\{K \ge k\}`$ is the chance of being alive at $`x+k`$, which is $`{}_kp_x`$. So $`\ddot a_x = \sum_k v^k\,{}_kp_x`$.
 
-**Insurance.** The events $\{K = k\}$ for $k = 0, 1, 2, \dots$ do not overlap and cover every outcome. $P(K = k) = {}_kp_x\,q_{x+k}$ by the chain rule of conditional chances (survive to $x+k$, then die within a year). So $A_x = \sum_k v^{k+1}\,{}_kp_x\,q_{x+k}$.
+**Insurance.** The events $`\{K = k\}`$ for $`k = 0, 1, 2, \dots`$ do not overlap and cover every outcome. $`P(K = k) = {}_kp_x\,q_{x+k}`$ by the chain rule of conditional chances (survive to $`x+k`$, then die within a year). So $`A_x = \sum_k v^{k+1}\,{}_kp_x\,q_{x+k}`$.
 
-**Identity.** For every whole number $K$, $(1 - v)\sum_{j=0}^{K} v^j = 1 - v^{K+1}$: multiply out and all middle terms cancel. With $d = 1 - v$ this is $dY + Z = 1$ on every outcome. Both $Y$ and $Z$ are bounded, so averaging is legitimate and gives $A_x + d\,\ddot a_x = 1$. No independence between years was used, and no particular mortality law.
+**Identity.** For every whole number $`K`$, $`(1 - v)\sum_{j=0}^{K} v^j = 1 - v^{K+1}`$: multiply out and all middle terms cancel. With $`d = 1 - v`$ this is $`dY + Z = 1`$ on every outcome. Both $`Y`$ and $`Z`$ are bounded, so averaging is legitimate and gives $`A_x + d\,\ddot a_x = 1`$. No independence between years was used, and no particular mortality law.
 
-**Boundaries.** At $i = 0$, $v = 1$ and $d = 0$: the insurance is worth 1 and the annuity is the expected number of payments, which the identity cannot recover. For a fixed term the same cancellation gives term insurance (paid only if death comes within the term) plus a payment to survivors at the term's end plus $d$ times the annuity for the term equal to 1; dropping the survivors' payment breaks it.
+**Boundaries.** At $`i = 0`$, $`v = 1`$ and $`d = 0`$: the insurance is worth 1 and the annuity is the expected number of payments, which the identity cannot recover. For a fixed term the same cancellation gives term insurance (paid only if death comes within the term) plus a payment to survivors at the term's end plus $`d`$ times the annuity for the term equal to 1; dropping the survivors' payment breaks it.
 
 </details>
 
 ### Step 4: a second road, one year at a time
 
-Stand at age $x$. The annuity pays 1 now; then, with chance ${}_1p_x$, she reaches $x+1$ holding an annuity worth $\ddot a_{x+1}$ one year from now. So $\ddot a_x = 1 + v\,{}_1p_x\,\ddot a_{x+1}$. The insurance pays $v$ if she dies this year, otherwise it rolls on: $A_x = v\,q_x + v\,{}_1p_x\,A_{x+1}$. Starting from age 130, where nothing is left, and stepping back to 65 reproduces 13.549790 and 0.354772 without ever forming the long sums. This recursion is how reserves, the money an insurer holds back for future payments, are computed year by year ([Premiums and reserves](03-premiums-and-reserves.md)).
+Stand at age $`x`$. The annuity pays 1 now; then, with chance $`{}_1p_x`$, she reaches $`x+1`$ holding an annuity worth $`\ddot a_{x+1}`$ one year from now. So $`\ddot a_x = 1 + v\,{}_1p_x\,\ddot a_{x+1}`$. The insurance pays $`v`$ if she dies this year, otherwise it rolls on: $`A_x = v\,q_x + v\,{}_1p_x\,A_{x+1}`$. Starting from age 130, where nothing is left, and stepping back to 65 reproduces 13.549790 and 0.354772 without ever forming the long sums. This recursion is how reserves, the money an insurer holds back for future payments, are computed year by year ([Premiums and reserves](03-premiums-and-reserves.md)).
 
 ### Step 5: a pension bought young
 
-A 40-year-old buying the same pension, first payment at 65, needs the 65-year-old's value brought back 25 years. Two reductions again: discount $v^{25}$ and the chance of reaching 65, ${}_{25}p_{40}$ = 0.952098. Together they make 0.281157, so the deferred pension costs 0.281157 × 135,497.90 = 38,096.20 dollars. The code gets the same figure by summing the birthdays from 65 on, seen from 40.
+A 40-year-old buying the same pension, first payment at 65, needs the 65-year-old's value brought back 25 years. Two reductions again: discount $`v^{25}`$ and the chance of reaching 65, $`{}_{25}p_{40}`$ = 0.952098. Together they make 0.281157, so the deferred pension costs 0.281157 × 135,497.90 = 38,096.20 dollars. The code gets the same figure by summing the birthdays from 65 on, seen from 40.
 
 <details>
 <summary>Paying at the moment of death</summary>
 
-Most real policies pay within weeks of death, not at the end of the year. Discounting from the exact time of death, $T$ years from now, gives $\bar A_x$, the average of $e^{-\delta T}$. With the force of mortality $\mu$, $\bar A_x = \int_0^\infty e^{-\delta t}\,{}_tp_x\,\mu(x+t)\,dt$: the chance of dying in each short stretch of time, discounted to today. Since death comes after the start of its year but before the end, $v\,\bar A_x < A_x < \bar A_x$: here 0.346209 < 0.354772 < 0.363520. The yearly table alone cannot give $\bar A_x$; it needs to know when inside each year deaths fall.
+Most real policies pay within weeks of death, not at the end of the year. Discounting from the exact time of death, $`T`$ years from now, gives $`\bar A_x`$, the average of $`e^{-\delta T}`$. With the force of mortality $`\mu`$, $`\bar A_x = \int_0^\infty e^{-\delta t}\,{}_tp_x\,\mu(x+t)\,dt`$: the chance of dying in each short stretch of time, discounted to today. Since death comes after the start of its year but before the end, $`v\,\bar A_x < A_x < \bar A_x`$: here 0.346209 < 0.354772 < 0.363520. The yearly table alone cannot give $`\bar A_x`$; it needs to know when inside each year deaths fall.
 
 </details>
 
@@ -168,14 +180,14 @@ The retiree: 65 today, 10,000 dollars a year starting now, Standard Ultimate Lif
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| discount factor $v$ | 1 / 1.05 | 0.952381 |
-| discount rate $d$ | 0.05 / 1.05 | 0.047619 |
+| discount factor $`v`$ | 1 / 1.05 | 0.952381 |
+| discount rate $`d`$ | 0.05 / 1.05 | 0.047619 |
 | payment today | certain, not discounted | 10,000.00 |
-| chance of reaching 66 | ${}_1p_{65}$ from the table | 0.994085 |
-| payment at 70, today's money | 10,000 × $v^5$ × chance alive at 70 | 7,545.53 |
-| payment at 85, today's money | 10,000 × $v^{20}$ × chance alive at 85 | 2,438.15 |
-| all birthdays added | $\ddot a_{65}$ = 13.549790 | **135,497.90** |
-| 100,000 death benefit, from death years | 100,000 × $A_x$ at 65 | **35,477.19** |
+| chance of reaching 66 | $`{}_1p_{65}`$ from the table | 0.994085 |
+| payment at 70, today's money | 10,000 × $`v^5`$ × chance alive at 70 | 7,545.53 |
+| payment at 85, today's money | 10,000 × $`v^{20}`$ × chance alive at 85 | 2,438.15 |
+| all birthdays added | $`\ddot a_{65}`$ = 13.549790 | **135,497.90** |
+| 100,000 death benefit, from death years | 100,000 × $`A_x`$ at 65 | **35,477.19** |
 | the same, from the annuity | 1 − 0.047619 × 13.549790 = 0.354772 | 35,477.19 |
 
 The fund needs 135,497.90 dollars today, per retiree, to pay 10,000 a year for life, on average. It will pay out far more than that in total, since the average retiree collects about 23 payments; interest earned while waiting covers the gap.
@@ -187,14 +199,14 @@ The fund needs 135,497.90 dollars today, per retiree, to pay 10,000 a year for l
 | Value 1 + 22.24 payments as certain, ignoring when death falls | 142,432.81 | The discount of the average lifetime is not the average of the discounts |
 | First payment a year from now (annuity-immediate) | 125,497.90 | Today's 10,000 is missing: immediate = due − 1 |
 | No interest | 232,420.84 | That is just the expected number of payments, 23.24, times 10,000 |
-| Death benefit as 1 − $i$ × annuity | 32,251.05 (right: 35,477.19) | Interest paid at year-end, $i$, used where the in-advance rate $d$ belongs |
-| Death benefit as 1 − $d$ × annuity-immediate | 40,239.10 | The identity needs the annuity-due; the immediate one is short one payment |
+| Death benefit as 1 − $`i`$ × annuity | 32,251.05 (right: 35,477.19) | Interest paid at year-end, $`i`$, used where the in-advance rate $`d`$ belongs |
+| Death benefit as 1 − $`d`$ × annuity-immediate | 40,239.10 | The identity needs the annuity-due; the immediate one is short one payment |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code builds survival from Makeham's law and reaches the annuity and insurance by three independent roads: the two sums of the formula, the year-by-year backward recursion, and 100,000 simulated lives drawn with a home-made random number generator and a bisection root finder. The insurance is computed from death years alone, then compared with 1 − $d\ddot a_x$. Simpson's rule integrates the moment-of-death value, which the simulated lives check again. The deferred pension is found twice. The published table values are asserted, and so is the toy basis's 7 and 2/3.
+The code builds survival from Makeham's law and reaches the annuity and insurance by three independent roads: the two sums of the formula, the year-by-year backward recursion, and 100,000 simulated lives drawn with a home-made random number generator and a bisection root finder. The insurance is computed from death years alone, then compared with 1 − $`d\ddot a_x`$. Simpson's rule integrates the moment-of-death value, which the simulated lives check again. The deferred pension is found twice. The published table values are asserted, and so is the toy basis's 7 and 2/3.
 
 ### Python
 
@@ -379,7 +391,7 @@ chart, sum of the two        100.00   100.00   100.00   100.00   100.00   100.00
 ALL CHECKS PASS
 ```
 
-The sums and the recursion agree to six decimals. The simulated annuity, 13.535973, sits 1.2 standard errors from 13.549790, the simulated moment-of-death value 1.2 from its integral, and every one of the 100,000 lives satisfies $dY + Z = 1$ on its own. The insurance from death years and 1 − $d\ddot a_{65}$ agree to all printed digits.
+The sums and the recursion agree to six decimals. The simulated annuity, 13.535973, sits 1.2 standard errors from 13.549790, the simulated moment-of-death value 1.2 from its integral, and every one of the 100,000 lives satisfies $`dY + Z = 1`$ on its own. The insurance from death years and 1 − $`d\ddot a_{65}`$ agree to all printed digits.
 
 ### Rust
 
@@ -607,10 +619,10 @@ The two outputs are identical line for line: the same generator seeds the same 1
 
 Lean proves the card's identity for any life table and any positive interest, and checks the toy basis by hand.
 
-- Take any positive interest rate $i$ and any yearly death chances $q_{x+k}$ between 0 and 1. Then $A_x + d\,\ddot a_x = 1$.
-- Take one life that lives $K$ more whole years, at positive interest. Then $d\,(1 + v + \dots + v^K) + v^{K+1} = 1$.
-- Take 90 percent survival every year and 5 percent interest. Then $\ddot a_x = 7$ and $A_x = 2/3$.
-- The toy basis's hand steps check too: $0.9\,v = 6/7$ and $d = 1/21$.
+- Take any positive interest rate $`i`$ and any yearly death chances $`q_{x+k}`$ between 0 and 1. Then $`A_x + d\,\ddot a_x = 1`$.
+- Take one life that lives $`K`$ more whole years, at positive interest. Then $`d\,(1 + v + \dots + v^K) + v^{K+1} = 1`$.
+- Take 90 percent survival every year and 5 percent interest. Then $`\ddot a_x = 7`$ and $`A_x = 2/3`$.
+- The toy basis's hand steps check too: $`0.9\,v = 6/7`$ and $`d = 1/21`$.
 
 Makeham's law, its numbers, the recursion, the moment-of-death value and the simulated lives are left to the Python and Rust checks.
 
@@ -757,7 +769,7 @@ example : (1 / 21 : ℚ) * (1 + 20 / 21 + (20 / 21) ^ 2) + (20 / 21) ^ 3 = 1 := 
 >
 > Smaller traps:
 > - **Due versus immediate.** An annuity-due pays today; an annuity-immediate starts in a year. They differ by exactly one payment: 135,497.90 versus 125,497.90.
-> - **The wrong rate in the identity.** It is $d = i/(1+i)$, not $i$. Using $i$ turns the 35,477.19 death benefit into 32,251.05.
+> - **The wrong rate in the identity.** It is $`d = i/(1+i)`$, not $`i`$. Using $`i`$ turns the 35,477.19 death benefit into 32,251.05.
 > - **Year-end versus moment of death.** The yearly formula assumes the benefit is paid at the end of the year of death, 0.354772 per dollar. Paid at death it is 0.363520. The table alone does not settle the difference.
 > - **Treating the value as a premium.** 135,497.90 is the average cost with no expenses, profit or safety margin, and no allowance for the fund's own risk of a run of long lives. A quoted annuity price is higher.
 
@@ -765,20 +777,20 @@ example : (1 / 21 : ℚ) * (1 + 20 / 21 + (20 / 21) ^ 2) + (20 / 21) ^ 3 = 1 := 
 
 ## Where you meet it in real life
 
-- **Buying an annuity at retirement.** An insurer quotes a lump sum for a lifetime income. The core of the quote is $\ddot a_x$ on the insurer's table and rates, plus expenses and margin.
+- **Buying an annuity at retirement.** An insurer quotes a lump sum for a lifetime income. The core of the quote is $`\ddot a_x`$ on the insurer's table and rates, plus expenses and margin.
 - **Defined-benefit pension schemes.** A company's pension debt on its balance sheet is thousands of these values, one per member, each with its own age and deferral, as in the 40-year-old's 38,096.20.
-- **Whole-life insurance.** The single premium for a death benefit is $A_x$; annual premiums spread it over a life annuity of payments, which is where [Premiums and reserves](03-premiums-and-reserves.md) starts.
+- **Whole-life insurance.** The single premium for a death benefit is $`A_x`$; annual premiums spread it over a life annuity of payments, which is where [Premiums and reserves](03-premiums-and-reserves.md) starts.
 - **A life office with 10,000 pensioners.** The expected liability is 10,000 times the single value, but the actual outcome scatters around it; how widely is a question about sums of random claims ([Aggregate claims](04-collective-risk-and-compound-poisson.md)).
 - **History.** Edmond Halley priced life annuities from Breslau's birth and burial records in 1693, when governments sold them at one price for every age.
 
 > **Say it back**
-> A life annuity pays while a person is alive; whole-life insurance pays once, when they die. Each is priced by taking every possible payment, discounting it for time, weighting it by its chance, and adding. For any one life, the interest in advance on a dollar, paid each year while alive, plus the dollar returned at death, uses up exactly that dollar. Averaged, that gives $A_x + d\,\ddot a_x = 1$. For a 65-year-old at 5 percent, a 10,000 pension is worth 135,497.90 and a 100,000 death benefit 35,477.19, and each number follows from the other.
+> A life annuity pays while a person is alive; whole-life insurance pays once, when they die. Each is priced by taking every possible payment, discounting it for time, weighting it by its chance, and adding. For any one life, the interest in advance on a dollar, paid each year while alive, plus the dollar returned at death, uses up exactly that dollar. Averaged, that gives $`A_x + d\,\ddot a_x = 1`$. For a 65-year-old at 5 percent, a 10,000 pension is worth 135,497.90 and a 100,000 death benefit 35,477.19, and each number follows from the other.
 
 ---
 
 ## What this builds on
 
-- [Life tables](01-survival-life-tables-and-force-of-mortality.md): the chances ${}_kp_x$ and $q_{x+k}$, the force of mortality $\mu$, and Makeham's law that produces them.
+- [Life tables](01-survival-life-tables-and-force-of-mortality.md): the chances $`{}_kp_x`$ and $`q_{x+k}`$, the force of mortality $`\mu`$, and Makeham's law that produces them.
 - [Annuities](../01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md): discount factors, the certain annuity, and the geometric sum that Step 3 reuses.
 
 ## Where this goes next

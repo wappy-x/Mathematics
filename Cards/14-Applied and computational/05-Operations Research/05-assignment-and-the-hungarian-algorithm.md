@@ -42,40 +42,46 @@ Drivers on the left, rounds on the right, miles on each line. Thick lines are th
 
 ## The formula
 
-The table is the **cost matrix**: $c_{ij}$ is the miles if driver $i$ takes round $j$, with $n = 4$ drivers and 4 rounds. Write it as a **program** (a target to make as small as possible, under rules) with a yes-or-no switch $x_{ij}$, 1 if driver $i$ takes round $j$ and 0 if not:
+The table is the **cost matrix**: $`c_{ij}`$ is the miles if driver $`i`$ takes round $`j`$, with $`n = 4`$ drivers and 4 rounds. Write it as a **program** (a target to make as small as possible, under rules) with a yes-or-no switch $`x_{ij}`$, 1 if driver $`i`$ takes round $`j`$ and 0 if not:
 
-$$\min \sum_{i=1}^{n}\sum_{j=1}^{n} c_{ij}\,x_{ij} \quad\text{such that}\quad \sum_{j} x_{ij} = 1 \text{ for each driver},\quad \sum_{i} x_{ij} = 1 \text{ for each round},\quad x_{ij} \in \{0, 1\}$$
+```math
+\min \sum_{i=1}^{n}\sum_{j=1}^{n} c_{ij}\,x_{ij} \quad\text{such that}\quad \sum_{j} x_{ij} = 1 \text{ for each driver},\quad \sum_{i} x_{ij} = 1 \text{ for each round},\quad x_{ij} \in \{0, 1\}
+```
 
 **Read it aloud:** switch on exactly one cell in every row and every column, and make the switched-on miles as small as possible.
 
-The same thing as a **matching** (pairs with no one used twice, here driver to round): a plan is a pairing $\sigma$ that gives driver $i$ the round $\sigma(i)$, every round used once.
+The same thing as a **matching** (pairs with no one used twice, here driver to round): a plan is a pairing $`\sigma`$ that gives driver $`i`$ the round $`\sigma(i)`$, every round used once.
 
-$$\text{best} = \min_{\sigma} \sum_{i=1}^{n} c_{i\,\sigma(i)}$$
+```math
+\text{best} = \min_{\sigma} \sum_{i=1}^{n} c_{i\,\sigma(i)}
+```
 
 **Read it aloud:** over all pairings of drivers to rounds, the smallest total of the chosen cells.
 
-The receipt is two lists of numbers, the **dual values** of the program (one number per rule, as on [Shadow prices](02-shadow-prices-and-sensitivity.md)): $u_i$ for each driver and $v_j$ for each round, chosen so that no cell is beaten, $u_i + v_j \le c_{ij}$. From here on the card calls them dual values. The theorem the method proves, Egerváry's from 1931, says the best dual values meet the best plan exactly:
+The receipt is two lists of numbers, the **dual values** of the program (one number per rule, as on [Shadow prices](02-shadow-prices-and-sensitivity.md)): $`u_i`$ for each driver and $`v_j`$ for each round, chosen so that no cell is beaten, $`u_i + v_j \le c_{ij}`$. From here on the card calls them dual values. The theorem the method proves, Egerváry's from 1931, says the best dual values meet the best plan exactly:
 
-$$\min_{\sigma} \sum_{i=1}^{n} c_{i\,\sigma(i)} \;=\; \max\Big\{ \sum_{i} u_i + \sum_{j} v_j \;:\; u_i + v_j \le c_{ij} \text{ for every driver } i \text{ and round } j \Big\}$$
+```math
+\min_{\sigma} \sum_{i=1}^{n} c_{i\,\sigma(i)} \;=\; \max\Big\{ \sum_{i} u_i + \sum_{j} v_j \;:\; u_i + v_j \le c_{ij} \text{ for every driver } i \text{ and round } j \Big\}
+```
 
 **Read it aloud:** the fewest total miles equals the most you can hand out to drivers and rounds without any cell's miles being exceeded.
 
-For the bakery: $u = (21, 41, 40, 27)$, $v = (0, 3, 0, -17)$, total 115. A negative $v_j$ is allowed; the dual values only need the sum and the cell rule.
+For the bakery: $`u = (21, 41, 40, 27)`$, $`v = (0, 3, 0, -17)`$, total 115. A negative $`v_j`$ is allowed; the dual values only need the sum and the cell rule.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | how many drivers, and how many rounds | 4 | plans grow as $n!$: 24 here, the long number above at 30 |
-| $i$, $j$ | a driver (a row), a round (a column) | Ana is $i = 1$, Town is $j = 4$ | — |
-| $c_{ij}$ | miles if driver $i$ takes round $j$ | Ana on Town: 21 | the best total rises by at most that much |
-| $x_{ij}$ | the switch: 1 if driver $i$ takes round $j$, else 0 | 1 for Ana on Hills | — |
-| $\sigma$ | a pairing; $\sigma(i)$ is driver $i$'s round | Ana→Hills, Ben→Riverside, Cara→Town, Dev→Coast | — |
-| $u_i$ | driver $i$'s dual value: what came off row $i$ | 21, 41, 40, 27 | the dual-value total rises, until a cell would be beaten |
-| $v_j$ | round $j$'s dual value: what came off column $j$ | 0, 3, 0, −17 | the same |
-| $k$ | the fewest rows and columns that together cover every zero | 3 | at $k = n$ the method stops |
-| $r$, $s$ | how many of the $k$ lines are rows, and how many are columns | 2 rows (Ana, Dev), 1 column (Town) | — |
-| $\delta$ | the smallest cell no line covers, used to move the zeros | 17 | the bound jumps by $\delta(n - k)$ |
+| $`n`$ | how many drivers, and how many rounds | 4 | plans grow as $`n!`$: 24 here, the long number above at 30 |
+| $`i`$, $`j`$ | a driver (a row), a round (a column) | Ana is $`i = 1`$, Town is $`j = 4`$ | — |
+| $`c_{ij}`$ | miles if driver $`i`$ takes round $`j`$ | Ana on Town: 21 | the best total rises by at most that much |
+| $`x_{ij}`$ | the switch: 1 if driver $`i`$ takes round $`j`$, else 0 | 1 for Ana on Hills | — |
+| $`\sigma`$ | a pairing; $`\sigma(i)`$ is driver $`i`$'s round | Ana→Hills, Ben→Riverside, Cara→Town, Dev→Coast | — |
+| $`u_i`$ | driver $`i`$'s dual value: what came off row $`i`$ | 21, 41, 40, 27 | the dual-value total rises, until a cell would be beaten |
+| $`v_j`$ | round $`j`$'s dual value: what came off column $`j`$ | 0, 3, 0, −17 | the same |
+| $`k`$ | the fewest rows and columns that together cover every zero | 3 | at $`k = n`$ the method stops |
+| $`r`$, $`s`$ | how many of the $`k`$ lines are rows, and how many are columns | 2 rows (Ana, Dev), 1 column (Town) | — |
+| $`\delta`$ | the smallest cell no line covers, used to move the zeros | 17 | the bound jumps by $`\delta(n - k)`$ |
 
-Here $\delta$ ("delta") is only that step size; on the randomised shelf the same letter is a failure probability.
+Here $`\delta`$ ("delta") is only that step size; on the randomised shelf the same letter is a failure probability.
 
 ### When it holds
 
@@ -116,11 +122,11 @@ Here it finds only three: Ana-Hills, Ben-Town, Dev-Riverside. Ben and Cara both 
 
 ### Step 3: cover the zeros with the fewest lines
 
-[Konig's theorem](../../04-Combinatorics%20and%20graphs/13-Matchings%20and%20Flows/03-konigs-theorem-and-vertex-cover.md) says the fewest rows and columns that together cover every zero equals the most zeros with no two sharing a row or column. Here that is $k = 3$: row Ana, row Dev and column Town. The alternating walks that found the matching also name these lines: start from the unpaired driver, Cara, and follow zeros and pairings. The rows the walk reaches (Ben, Cara) stay uncovered; the columns it reaches (Town) are covered; every other row is covered.
+[Konig's theorem](../../04-Combinatorics%20and%20graphs/13-Matchings%20and%20Flows/03-konigs-theorem-and-vertex-cover.md) says the fewest rows and columns that together cover every zero equals the most zeros with no two sharing a row or column. Here that is $`k = 3`$: row Ana, row Dev and column Town. The alternating walks that found the matching also name these lines: start from the unpaired driver, Cara, and follow zeros and pairings. The rows the walk reaches (Ben, Cara) stay uncovered; the columns it reaches (Town) are covered; every other row is covered.
 
 ### Step 4: move the zeros, and the bound goes up
 
-Let $\delta$ be the smallest uncovered cell: Ben's Riverside, 17. Take 17 off each uncovered row (Ben and Cara), then give 17 back to each covered column (Town). Cell by cell:
+Let $`\delta`$ be the smallest uncovered cell: Ben's Riverside, 17. Take 17 off each uncovered row (Ben and Cara), then give 17 back to each covered column (Town). Cell by cell:
 
 - uncovered row, uncovered column: down 17. None goes below 0, since 17 was the smallest there. Ben's Riverside becomes a new zero.
 - uncovered row, covered column: down 17 and up 17, so unchanged.
@@ -134,11 +140,13 @@ Let $\delta$ be the smallest uncovered cell: Ben's Riverside, 17. Take 17 off ea
 | Cara | 5 | 21 | 11 | 0 |
 | Dev | 0 | 43 | 0 | 24 |
 
-Say $r$ rows and $s$ columns are covered, so $r + s = k$; here $r = 2$ (Ana, Dev) and $s = 1$ (Town). The total taken off rose by 17 for each of the $n - r$ uncovered rows and fell by 17 for each of the $s$ covered columns:
+Say $`r`$ rows and $`s`$ columns are covered, so $`r + s = k`$; here $`r = 2`$ (Ana, Dev) and $`s = 1`$ (Town). The total taken off rose by 17 for each of the $`n - r`$ uncovered rows and fell by 17 for each of the $`s`$ covered columns:
 
-$$\delta\,(n - r) - \delta\,s \;=\; \delta\,(n - k) \;=\; 17 \times (4 - 3) \;=\; 17$$
+```math
+\delta\,(n - r) - \delta\,s \;=\; \delta\,(n - k) \;=\; 17 \times (4 - 3) \;=\; 17
+```
 
-Because $k < n$, the bound rises: from 98 to 115.
+Because $`k < n`$, the bound rises: from 98 to 115.
 
 ```mermaid
 flowchart TD
@@ -149,17 +157,19 @@ flowchart TD
     E --> B
 ```
 
-The loop of the method. Each pass through the lower box raises the bound by $\delta(n - k)$.
+The loop of the method. Each pass through the lower box raises the bound by $`\delta(n - k)`$.
 
 ### Step 5: four zeros, and the dual values
 
-The moved table has four zeros with no two sharing a row or column: Ana-Hills, Ben-Riverside, Cara-Town, Dev-Coast. On the real table that is $24 + 41 + 23 + 27 = 115$ miles, exactly the bound. The amounts taken off each row and column are the dual values: $u = (21, 41, 40, 27)$ and $v = (0, 3, 0, -17)$.
+The moved table has four zeros with no two sharing a row or column: Ana-Hills, Ben-Riverside, Cara-Town, Dev-Coast. On the real table that is $`24 + 41 + 23 + 27 = 115`$ miles, exactly the bound. The amounts taken off each row and column are the dual values: $`u = (21, 41, 40, 27)`$ and $`v = (0, 3, 0, -17)`$.
 
-Why the dual values prove it. Every cell left is $c_{ij} - u_i - v_j \ge 0$, so $u_i + v_j \le c_{ij}$. Take any plan $\sigma$ and add its cells:
+Why the dual values prove it. Every cell left is $`c_{ij} - u_i - v_j \ge 0`$, so $`u_i + v_j \le c_{ij}`$. Take any plan $`\sigma`$ and add its cells:
 
-$$\sum_{i} c_{i\,\sigma(i)} \;\ge\; \sum_{i} \big(u_i + v_{\sigma(i)}\big) \;=\; \sum_i u_i + \sum_j v_j \;=\; 115$$
+```math
+\sum_{i} c_{i\,\sigma(i)} \;\ge\; \sum_{i} \big(u_i + v_{\sigma(i)}\big) \;=\; \sum_i u_i + \sum_j v_j \;=\; 115
+```
 
-The middle step holds because $\sigma$ uses every round exactly once, so each $v_j$ appears exactly once. No plan costs less than 115, and one costs exactly 115. Checking it needs no search: one comparison per cell.
+The middle step holds because $`\sigma`$ uses every round exactly once, so each $`v_j`$ appears exactly once. No plan costs less than 115, and one costs exactly 115. Checking it needs no search: one comparison per cell.
 
 This is the theorem in The formula. Any set of dual values totals at most any plan (the line above), and the method ends with a plan and dual values of equal total, so the smallest plan equals the largest dual-value total.
 
@@ -170,9 +180,9 @@ This is the theorem in The formula. Any set of dual values totals at most any pl
 
 **The zero matching survives.** Kőnig's cover from the alternating walk takes exactly one end of every matched zero, so no matched zero sits where a row and a column are both covered, the only cells that go up. The next search starts with at least as many independent zeros.
 
-**It stops.** With whole-number costs every cell stays a whole number, so $\delta \ge 1$ and each pass raises the bound by at least $n - k \ge 1$. The bound never passes the cheapest plan (Step 5's inequality), so there are at most (cheapest − first bound) passes. Here one pass did it: 115 − 98 = 17, in one jump of 17.
+**It stops.** With whole-number costs every cell stays a whole number, so $`\delta \ge 1`$ and each pass raises the bound by at least $`n - k \ge 1`$. The bound never passes the cheapest plan (Step 5's inequality), so there are at most (cheapest − first bound) passes. Here one pass did it: 115 − 98 = 17, in one jump of 17.
 
-**How fast.** That count depends on the miles, not just on $n$. Munkres showed in 1957 that a careful order of steps needs a number of operations bounded by a polynomial in $n$; Edmonds and Karp's shortest-path form needs at most about $n^3$ cell looks. The code's third road is that form and counts its looks; the $n^3$ ceiling is quoted from the source, not proved here.
+**How fast.** That count depends on the miles, not just on $`n`$. Munkres showed in 1957 that a careful order of steps needs a number of operations bounded by a polynomial in $`n`$; Edmonds and Karp's shortest-path form needs at most about $`n^3`$ cell looks. The code's third road is that form and counts its looks; the $`n^3`$ ceiling is quoted from the source, not proved here.
 
 </details>
 
@@ -186,8 +196,8 @@ This is the theorem in The formula. Any set of dual values totals at most any pl
 | column cut | Hills: Ana's 24 − 21 is the column's smallest | 3 |
 | first bound | 95 + 3 | 98 |
 | independent zeros | Ana-Hills, Ben-Town, Dev-Riverside; Cara's only zero is Town too | 3 |
-| fewest covering lines, $k$ | row Ana, row Dev, column Town | 3 |
-| smallest uncovered, $\delta$ | Ben's Riverside, 41 − 24 | 17 |
+| fewest covering lines, $`k`$ | row Ana, row Dev, column Town | 3 |
+| smallest uncovered, $`\delta`$ | Ben's Riverside, 41 − 24 | 17 |
 | new bound | 98 + 17 × (4 − 3) | 115 |
 | the zero plan | Ana-Hills 24 + Ben-Riverside 41 + Cara-Town 23 + Dev-Coast 27 | **115 miles** |
 
@@ -208,11 +218,11 @@ The dispatcher sends Ana to Hills, Ben to Riverside, Cara to Town and Dev to Coa
 
 Nothing is imported. The code takes three roads to the answer.
 
-- Road one is the Hungarian method exactly as above: the cuts, a zero matching grown by alternating paths, Kőnig's cover read off the walk, and the move by $\delta$. One assert checks that the cover uses exactly as many lines as there are matched zeros, and another that no cell goes negative. It prints the cut and moved tables and the dual values, on the lines marked receipt.
+- Road one is the Hungarian method exactly as above: the cuts, a zero matching grown by alternating paths, Kőnig's cover read off the walk, and the move by $`\delta`$. One assert checks that the cover uses exactly as many lines as there are matched zeros, and another that no cell goes negative. It prints the cut and moved tables and the dual values, on the lines marked receipt.
 - Road two tries all 24 plans.
 - Road three is a different method, shortest augmenting paths with running dual values, which counts every cell it looks at.
 
-On synthetic tables (miles 10 to 99 from SplitMix64, a small seeded generator written out in both languages), the methods are compared with each other and, at $8 \times 8$, with an exact search over all 256 sets of rounds. The asserts check the method against brute force, the dual values against the plan, every number of the walkthrough in Why it works (bounds 95 and 98, $k = 3$ lines, one move of 17, then 115, and the dual values), and the mistakes against their stated values.
+On synthetic tables (miles 10 to 99 from SplitMix64, a small seeded generator written out in both languages), the methods are compared with each other and, at $`8 \times 8`$, with an exact search over all 256 sets of rounds. The asserts check the method against brute force, the dual values against the plan, every number of the walkthrough in Why it works (bounds 95 and 98, $`k = 3`$ lines, one move of 17, then 115, and the dual values), and the mistakes against their stated values.
 
 ### Python
 
@@ -605,17 +615,17 @@ pairings to try by brute force for 30 vans: 30! = 265252859812191058636308480000
 ALL CHECKS PASS
 ```
 
-The two outputs match line for line. The cell counts are for these synthetic tables, a run count, not a worst case: 2801 looks at $30 \times 30$, against a ceiling of 27000.
+The two outputs match line for line. The cell counts are for these synthetic tables, a run count, not a worst case: 2801 looks at $`30 \times 30`$, against a ceiling of 27000.
 
 ### Lean
 
 Lean proves the theorem in The formula, and the two steps behind it, for every square table of whole-number costs.
 
 - Egerváry's theorem holds for every square table of whole-number costs. One number is both the cheapest plan's total and the largest dual-value total.
-- Suppose $u_i$ comes off every cell of row $i$, and $v_j$ off every cell of column $j$. Then every plan's total drops by $\sum_i u_i + \sum_j v_j$.
-- Suppose the dual values satisfy $u_i + v_j \le c_{ij}$ for every cell. Then every plan costs at least $\sum_i u_i + \sum_j v_j$.
+- Suppose $`u_i`$ comes off every cell of row $`i`$, and $`v_j`$ off every cell of column $`j`$. Then every plan's total drops by $`\sum_i u_i + \sum_j v_j`$.
+- Suppose the dual values satisfy $`u_i + v_j \le c_{ij}`$ for every cell. Then every plan costs at least $`\sum_i u_i + \sum_j v_j`$.
 - The bakery's best plan is Ana-Hills, Ben-Riverside, Cara-Town, Dev-Coast, at 115 miles. The 24 plans run from 115 to 221, and only one costs 115.
-- Take $u = (21, 41, 40, 27)$ and $v = (0, 3, 0, -17)$. Then no cell is beaten, and the total is 115.
+- Take $`u = (21, 41, 40, 27)`$ and $`v = (0, 3, 0, -17)`$. Then no cell is beaten, and the total is 115.
 - The cuts give 95, then the first bound 98. The move of 17 raises the bound to 115.
 - The driver-by-driver grab costs 186 miles, 71 more than the best plan.
 - A ban typed as 0 gives a best of 113, with Dev on Hills. Typed as 1000, the best is 115, with Dev on Coast.
@@ -810,7 +820,7 @@ example : Nat.factorial 30 = 265252859812191058636308480000000 := by decide
 > - **A diversion on Cara's Town round:** set `C[2][3]` (Rust: `c[2][3]`) to 40. Who moves? Ben takes Town and Cara takes Riverside: 120 miles, after one move of 5.
 > - **Ana's Hills round gets longer:** set `C[0][1]` to 60. Does Ana leave Hills? No. The plan stays, at 151 miles, but the method needs two moves, of 2 and then 15.
 > - **Dev's Coast round gets longer:** set `C[3][2]` to 60. The cuts alone now leave four independent zeros and no move is needed: 121 miles, Ben on Coast and Dev on Riverside.
-> - **Another synthetic seed:** in the loop, replace `2026 + n` with `7`. At $30 \times 30$ both methods agree on 439 miles, after 2171 cell looks. No assert is pinned to it, so it runs to the end.
+> - **Another synthetic seed:** in the loop, replace `2026 + n` with `7`. At $`30 \times 30`$ both methods agree on 439 miles, after 2171 cell looks. No assert is pinned to it, so it runs to the end.
 
 ---
 
@@ -822,7 +832,7 @@ example : Nat.factorial 30 = 265252859812191058636308480000000 := by decide
 > - **Reading the row cuts as the answer.** 95 is a floor, not a plan: three drivers would share Town.
 > - **Stopping at the first bound.** After the column cuts the floor is 98, but no plan sits on the zeros; the move by 17 is what reaches 115.
 > - **Typing a ban as zero.** A blank cell read as 0 becomes the most attractive cell in its row: the method returns 113 miles with Dev on the banned Hills. A ban is a huge number, here 1000, giving 115.
-> - **Covering the zeros with more lines than needed.** Use the fewest, $k$. With $n$ lines and no zero plan yet, that pass raises the bound by $\delta \times (n - n) = 0$, so the stopping proof no longer applies.
+> - **Covering the zeros with more lines than needed.** Use the fewest, $`k`$. With $`n`$ lines and no zero plan yet, that pass raises the bound by $`\delta \times (n - n) = 0`$, so the stopping proof no longer applies.
 
 ---
 
@@ -848,7 +858,7 @@ example : Nat.factorial 30 = 265252859812191058636308480000000 := by decide
 
 ## Where this goes next
 
-- [Total unimodularity](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/05-total-unimodularity.md): why the program's switches can be relaxed to any fraction from 0 to 1 and the answer still comes out whole, so $u$, $v$ are the dual values of a [Linear programs](01-modelling-with-linear-programs.md) model.
+- [Total unimodularity](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/05-total-unimodularity.md): why the program's switches can be relaxed to any fraction from 0 to 1 and the answer still comes out whole, so $`u`$, $`v`$ are the dual values of a [Linear programs](01-modelling-with-linear-programs.md) model.
 - [Four classic models](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/06-classic-integer-models-knapsack-assignment-and-covering.md): the assignment problem beside the transportation, shortest-path and flow models it belongs to.
 
 Left open: when a driver can take several rounds and rounds need several drivers, the table becomes a flow of counts, and the same cuts and dual values have to work on a network.
@@ -861,5 +871,5 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Kuhn, H. W. "The Hungarian method for the assignment problem." *Naval Research Logistics Quarterly* 2 (1955): 83–97. [doi:10.1002/nav.3800020109](https://doi.org/10.1002/nav.3800020109). The method, named for the 1931 work of Kőnig and Egerváry it builds on.
 - Munkres, J. "Algorithms for the Assignment and Transportation Problems." *Journal of the Society for Industrial and Applied Mathematics* 5, no. 1 (1957): 32–38. [doi:10.1137/0105003](https://doi.org/10.1137/0105003). The covering-lines version used here, and the proof that it ends in polynomial time.
-- Edmonds, J., and R. M. Karp. "Theoretical Improvements in Algorithmic Efficiency for Network Flow Problems." *Journal of the ACM* 19, no. 2 (1972): 248–264. [doi:10.1145/321694.321699](https://doi.org/10.1145/321694.321699). Shortest augmenting paths with running dual values, the $n^3$ form behind the code's third road.
+- Edmonds, J., and R. M. Karp. "Theoretical Improvements in Algorithmic Efficiency for Network Flow Problems." *Journal of the ACM* 19, no. 2 (1972): 248–264. [doi:10.1145/321694.321699](https://doi.org/10.1145/321694.321699). Shortest augmenting paths with running dual values, the $`n^3`$ form behind the code's third road.
 - Burkard, R., M. Dell'Amico and S. Martello. *Assignment Problems*, revised reprint. SIAM, 2012. [doi:10.1137/1.9781611972238](https://doi.org/10.1137/1.9781611972238). The standard reference: the program, the dual values, the methods and their costs.

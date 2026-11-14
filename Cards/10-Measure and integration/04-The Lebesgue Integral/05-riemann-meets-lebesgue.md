@@ -28,46 +28,56 @@ Drawn to scale: 1 km is 150 px across and 1 m of depth 150 px up; the right pane
 
 ## The formula
 
-Notation first. $\lambda$ is Lebesgue measure, length on the line. $\int_{[a,b]} f \, d\lambda$ is the integral of f against $\lambda$ over [a, b], from [The integral of a simple function](01-integral-of-a-simple-function.md) and [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md). $\int_a^b f(x)\,dx$ keeps its old meaning: the Riemann integral, the one number between every lower sum and every upper sum ([The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md)). The best lower sum, the sup of all lower sums, is written $\underline{I}$; the best upper sum, the inf of all upper sums, is $\overline{I}$. The **Lebesgue sets** are the sets $\lambda$ can measure: every Borel set, give or take any subset of a set of length zero ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)).
+Notation first. $`\lambda`$ is Lebesgue measure, length on the line. $`\int_{[a,b]} f \, d\lambda`$ is the integral of f against $`\lambda`$ over [a, b], from [The integral of a simple function](01-integral-of-a-simple-function.md) and [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md). $`\int_a^b f(x)\,dx`$ keeps its old meaning: the Riemann integral, the one number between every lower sum and every upper sum ([The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md)). The best lower sum, the sup of all lower sums, is written $`\underline{I}`$; the best upper sum, the inf of all upper sums, is $`\overline{I}`$. The **Lebesgue sets** are the sets $`\lambda`$ can measure: every Borel set, give or take any subset of a set of length zero ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)).
 
-One new word. The **oscillation** of f at a point x, written $\omega_f(x)$ (omega), is how far apart f's values spread in ever-smaller windows around x:
+One new word. The **oscillation** of f at a point x, written $`\omega_f(x)`$ (omega), is how far apart f's values spread in ever-smaller windows around x:
 
-$$\omega_f(x) = \lim_{\delta \to 0} \Big( \sup_{|y - x| < \delta} f(y) - \inf_{|y - x| < \delta} f(y) \Big)$$
+```math
+\omega_f(x) = \lim_{\delta \to 0} \Big( \sup_{|y - x| < \delta} f(y) - \inf_{|y - x| < \delta} f(y) \Big)
+```
 
-It is 0 exactly where f is continuous, and the size of the jump where f jumps. $D_f$ is the set where f is not continuous.
+It is 0 exactly where f is continuous, and the size of the jump where f jumps. $`D_f`$ is the set where f is not continuous.
 
 The engine, for any bounded f on [a, b]:
 
-$$\overline{I} - \underline{I} = \int_{[a,b]} \omega_f \, d\lambda$$
+```math
+\overline{I} - \underline{I} = \int_{[a,b]} \omega_f \, d\lambda
+```
 
 **Read it aloud:** the gap between Riemann's best upper sum and best lower sum is the Lebesgue integral of the jumps.
 
 Three theorems follow.
 
-$$\text{(i)}\quad f \text{ bounded and Riemann integrable on } [a, b] \implies \int_{[a,b]} f \, d\lambda = \int_a^b f(x)\,dx$$
+```math
+\text{(i)}\quad f \text{ bounded and Riemann integrable on } [a, b] \implies \int_{[a,b]} f \, d\lambda = \int_a^b f(x)\,dx
+```
 
-$$\text{(ii)}\quad f \text{ bounded on } [a, b] \text{ is Riemann integrable} \iff \lambda(D_f) = 0$$
+```math
+\text{(ii)}\quad f \text{ bounded on } [a, b] \text{ is Riemann integrable} \iff \lambda(D_f) = 0
+```
 
-$$\text{(iii)}\quad f \text{ Riemann integrable on each } [a, b'] \implies \Big( f \in L^1([a, \infty)) \iff \int_a^\infty |f(x)|\,dx < \infty \Big), \text{ and then the two integrals agree}$$
+```math
+\text{(iii)}\quad f \text{ Riemann integrable on each } [a, b'] \implies \Big( f \in L^1([a, \infty)) \iff \int_a^\infty |f(x)|\,dx < \infty \Big), \text{ and then the two integrals agree}
+```
 
 **Read them aloud:** a Riemann integral is a Lebesgue integral with the same value; Riemann works exactly when the jumps take up no length; an improper integral is a Lebesgue integral exactly when it survives absolute values.
 
-In (iii), $L^1$ is the collection of functions whose absolute value has a finite integral ([Integrable functions](04-integrable-functions-and-l1.md)), and $\int_a^\infty$ is the improper integral: the limit of $\int_a^b$ as b grows ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)).
+In (iii), $`L^1`$ is the collection of functions whose absolute value has a finite integral ([Integrable functions](04-integrable-functions-and-l1.md)), and $`\int_a^\infty`$ is the improper integral: the limit of $`\int_a^b`$ as b grows ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $d$ | the function integrated; $d$ is the river depth 4x(1 − x) m | depth at x km | deeper river, larger integral |
-| $x$, $y$ | points of the stretch, in km | 0 to 1 | — |
-| $a$, $b$, $b'$ | ends of the interval; $b'$ a finite cut-off on an infinite one | 0 and 1 km | longer stretch, more area |
-| $\lambda$ | Lebesgue measure: length | the stretch is 1 km | — |
-| $P_n$, $Q_n$, $n$, $k$ | the n-th slicing into strips, slicings used to build it, and a strip's number | 1,000 strips of 1 m | finer slicing, sums closer |
-| $g_n$, $h_n$ | step functions at each strip's lowest and highest value | lower sum 0.6656660, upper 0.6676660 | squeeze towards f |
-| $g$, $h$; $\underline{I}$, $\overline{I}$ | the limits of $g_n$ and $h_n$; their integrals, the best lower and upper sums | both equal the depth; both 2/3 | — |
-| $\omega_f(x)$, $\delta$, $\varepsilon$ | oscillation: the jump at x; $\delta$ is the window's half-width, $\varepsilon$ a tolerance on the spread | 0 for the depth; 1 everywhere for depth 1 at fractions | bigger jumps, bigger gap |
-| $D_f$ | where f is not continuous | empty; the whole stretch; the fractions | — |
-| $M$ | a bound: every value of f lies between −M and M | 1 m | — |
-| $f^+$, $f^-$ | positive and negative parts: f above zero, and minus f below zero | the positive and negative humps of sin(x)/x | — |
-| $m$, $t$, $C$, $Z$ | a truncation height; a depth level; the cut points; a null set | $t$ = 0.25, 0.5, 0.75 m | — |
+| $`f`$, $`d`$ | the function integrated; $`d`$ is the river depth 4x(1 − x) m | depth at x km | deeper river, larger integral |
+| $`x`$, $`y`$ | points of the stretch, in km | 0 to 1 | — |
+| $`a`$, $`b`$, $`b'`$ | ends of the interval; $`b'`$ a finite cut-off on an infinite one | 0 and 1 km | longer stretch, more area |
+| $`\lambda`$ | Lebesgue measure: length | the stretch is 1 km | — |
+| $`P_n`$, $`Q_n`$, $`n`$, $`k`$ | the n-th slicing into strips, slicings used to build it, and a strip's number | 1,000 strips of 1 m | finer slicing, sums closer |
+| $`g_n`$, $`h_n`$ | step functions at each strip's lowest and highest value | lower sum 0.6656660, upper 0.6676660 | squeeze towards f |
+| $`g`$, $`h`$; $`\underline{I}`$, $`\overline{I}`$ | the limits of $`g_n`$ and $`h_n`$; their integrals, the best lower and upper sums | both equal the depth; both 2/3 | — |
+| $`\omega_f(x)`$, $`\delta`$, $`\varepsilon`$ | oscillation: the jump at x; $`\delta`$ is the window's half-width, $`\varepsilon`$ a tolerance on the spread | 0 for the depth; 1 everywhere for depth 1 at fractions | bigger jumps, bigger gap |
+| $`D_f`$ | where f is not continuous | empty; the whole stretch; the fractions | — |
+| $`M`$ | a bound: every value of f lies between −M and M | 1 m | — |
+| $`f^+`$, $`f^-`$ | positive and negative parts: f above zero, and minus f below zero | the positive and negative humps of sin(x)/x | — |
+| $`m`$, $`t`$, $`C`$, $`Z`$ | a truncation height; a depth level; the cut points; a null set | $`t`$ = 0.25, 0.5, 0.75 m | — |
 
 ### When it holds
 
@@ -88,63 +98,67 @@ So Riemann's approximations are already Lebesgue objects. Refine the slicing and
 
 ### Step 1: one sequence of slicings that does every job
 
-Choose slicings $P_n$, each refining the one before, strips shrinking to width zero, lower sums rising to $\underline{I}$ and upper sums falling to $\overline{I}$. Adding cuts never lowers a lower sum or raises an upper sum ([The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md), Step 1), so this costs nothing.
+Choose slicings $`P_n`$, each refining the one before, strips shrinking to width zero, lower sums rising to $`\underline{I}`$ and upper sums falling to $`\overline{I}`$. Adding cuts never lowers a lower sum or raises an upper sum ([The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md), Step 1), so this costs nothing.
 
 On the river, 1,000 equal strips give lower sum 0.6656660 and upper sum 0.6676660, 0.002 apart: the depth rises 1 m and falls 1 m, and each strip's gap is its share of that, times the strip width.
 
 ### Step 2: the step functions and their limits
 
-Off the cut points, let $g_n(x)$ be the lowest value of f on x's strip of $P_n$ and $h_n(x)$ the highest. All the cut points together are countably many: a set $C$ of length zero, which changes no integral.
+Off the cut points, let $`g_n(x)`$ be the lowest value of f on x's strip of $`P_n`$ and $`h_n(x)`$ the highest. All the cut points together are countably many: a set $`C`$ of length zero, which changes no integral.
 
-Strips of $P_{n+1}$ lie inside strips of $P_n$, so $g_n \le g_{n+1} \le f \le h_{n+1} \le h_n$, and the bounded monotone sequences have limits $g$ and $h$. Let every value of f lie between −M and M. Then $g_n + M$ is a non-negative simple function rising to $g + M$, so [The monotone convergence theorem](03-monotone-convergence-theorem.md) gives $\int g \, d\lambda = \lim$ (lower sums) $= \underline{I}$. Likewise $\int h \, d\lambda = \overline{I}$.
+Strips of $`P_{n+1}`$ lie inside strips of $`P_n`$, so $`g_n \le g_{n+1} \le f \le h_{n+1} \le h_n`$, and the bounded monotone sequences have limits $`g`$ and $`h`$. Let every value of f lie between −M and M. Then $`g_n + M`$ is a non-negative simple function rising to $`g + M`$, so [The monotone convergence theorem](03-monotone-convergence-theorem.md) gives $`\int g \, d\lambda = \lim`$ (lower sums) $`= \underline{I}`$. Likewise $`\int h \, d\lambda = \overline{I}`$.
 
 ### Step 3: the gap at a point is the jump
 
-Fix x outside $C$. Its strip holds a small window around x, so the strip's spread is at least $\omega_f(x)$; the strip also lies within one shrinking strip-width of x, so the spread falls to $\omega_f(x)$. So $h(x) - g(x) = \omega_f(x)$ outside a set of length zero, and integrating gives the engine:
+Fix x outside $`C`$. Its strip holds a small window around x, so the strip's spread is at least $`\omega_f(x)`$; the strip also lies within one shrinking strip-width of x, so the spread falls to $`\omega_f(x)`$. So $`h(x) - g(x) = \omega_f(x)`$ outside a set of length zero, and integrating gives the engine:
 
-$$\overline{I} - \underline{I} = \int h \, d\lambda - \int g \, d\lambda = \int_{[a,b]} \omega_f \, d\lambda$$
+```math
+\overline{I} - \underline{I} = \int h \, d\lambda - \int g \, d\lambda = \int_{[a,b]} \omega_f \, d\lambda
+```
 
 <details>
 <summary>Detailed proof</summary>
 
 Let every value of f on [a, b] lie between −M and M.
 
-*Slicings.* By the definitions of $\underline{I}$ and $\overline{I}$, for each n there are slicings $Q_n$ with lower sum above $\underline{I} - 1/n$ and $Q'_n$ with upper sum below $\overline{I} + 1/n$. Let $P_n$ use all the cuts of $Q_1, Q'_1, \dots, Q_n, Q'_n$ and of the equal slicing into $2^n$ strips. Refinement raises lower sums and lowers upper sums (riemann-integral card), so the lower sums $L(P_n)$ rise to $\underline{I}$, the upper sums $U(P_n)$ fall to $\overline{I}$, and strips are no wider than $(b - a) 2^{-n}$.
+*Slicings.* By the definitions of $`\underline{I}`$ and $`\overline{I}`$, for each n there are slicings $`Q_n`$ with lower sum above $`\underline{I} - 1/n`$ and $`Q'_n`$ with upper sum below $`\overline{I} + 1/n`$. Let $`P_n`$ use all the cuts of $`Q_1, Q'_1, \dots, Q_n, Q'_n`$ and of the equal slicing into $`2^n`$ strips. Refinement raises lower sums and lowers upper sums (riemann-integral card), so the lower sums $`L(P_n)`$ rise to $`\underline{I}`$, the upper sums $`U(P_n)`$ fall to $`\overline{I}`$, and strips are no wider than $`(b - a) 2^{-n}`$.
 
-*Step functions.* Let $C$ be the union of all cut points: countable, so $\lambda(C) = 0$ ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). For x not in $C$, let $J_n(x)$ be the closed strip of $P_n$ containing x, and put $g_n(x) = \inf_{J_n(x)} f$ and $h_n(x) = \sup_{J_n(x)} f$; on $C$ put both to 0. Each is a simple function on intervals, so $\int g_n \, d\lambda = L(P_n)$ and $\int h_n \, d\lambda = U(P_n)$ (integral-of-a-simple-function card). $J_{n+1}(x) \subseteq J_n(x)$, so off $C$, $g_n \le g_{n+1} \le f \le h_{n+1} \le h_n$, all between −M and M. The limits $g$ and $h$ exist off $C$ (bounded monotone sequences); put them to 0 on $C$. They are Borel measurable, as limits of Borel simple functions.
+*Step functions.* Let $`C`$ be the union of all cut points: countable, so $`\lambda(C) = 0`$ ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). For x not in $`C`$, let $`J_n(x)`$ be the closed strip of $`P_n`$ containing x, and put $`g_n(x) = \inf_{J_n(x)} f`$ and $`h_n(x) = \sup_{J_n(x)} f`$; on $`C`$ put both to 0. Each is a simple function on intervals, so $`\int g_n \, d\lambda = L(P_n)`$ and $`\int h_n \, d\lambda = U(P_n)`$ (integral-of-a-simple-function card). $`J_{n+1}(x) \subseteq J_n(x)`$, so off $`C`$, $`g_n \le g_{n+1} \le f \le h_{n+1} \le h_n`$, all between −M and M. The limits $`g`$ and $`h`$ exist off $`C`$ (bounded monotone sequences); put them to 0 on $`C`$. They are Borel measurable, as limits of Borel simple functions.
 
-*Integrals.* Monotone convergence on $g_n + M \ge 0$, rising to $g + M$, then subtracting the finite $M(b - a)$, gives $\int g \, d\lambda = \lim_n L(P_n) = \underline{I}$; on $M - h_n$ it gives $\int h \, d\lambda = \overline{I}$.
+*Integrals.* Monotone convergence on $`g_n + M \ge 0`$, rising to $`g + M`$, then subtracting the finite $`M(b - a)`$, gives $`\int g \, d\lambda = \lim_n L(P_n) = \underline{I}`$; on $`M - h_n`$ it gives $`\int h \, d\lambda = \overline{I}`$.
 
-*Gap equals oscillation.* Fix x not in $C$ and n. x lies in the open strip, so $J_n(x)$ contains some window $(x - \delta, x + \delta)$, whose spread is at least $\omega_f(x)$, the limit of non-increasing spreads. So $h_n(x) - g_n(x) \ge \omega_f(x)$. Also $J_n(x) \subseteq [x - w_n, x + w_n]$, $w_n = (b - a) 2^{-n}$, so $h_n(x) - g_n(x)$ is at most the spread over $(x - 2w_n, x + 2w_n)$, which falls to $\omega_f(x)$. Hence $h(x) - g(x) = \omega_f(x)$ off $C$. So $\omega_f$ equals the Borel function $h - g$ except on a null set; it is measurable with respect to the Lebesgue sets, and functions equal almost everywhere have the same integral (integrable-functions-and-l1 card). So $\int \omega_f \, d\lambda = \int h \, d\lambda - \int g \, d\lambda = \overline{I} - \underline{I}$.
+*Gap equals oscillation.* Fix x not in $`C`$ and n. x lies in the open strip, so $`J_n(x)`$ contains some window $`(x - \delta, x + \delta)`$, whose spread is at least $`\omega_f(x)`$, the limit of non-increasing spreads. So $`h_n(x) - g_n(x) \ge \omega_f(x)`$. Also $`J_n(x) \subseteq [x - w_n, x + w_n]`$, $`w_n = (b - a) 2^{-n}`$, so $`h_n(x) - g_n(x)`$ is at most the spread over $`(x - 2w_n, x + 2w_n)`$, which falls to $`\omega_f(x)`$. Hence $`h(x) - g(x) = \omega_f(x)`$ off $`C`$. So $`\omega_f`$ equals the Borel function $`h - g`$ except on a null set; it is measurable with respect to the Lebesgue sets, and functions equal almost everywhere have the same integral (integrable-functions-and-l1 card). So $`\int \omega_f \, d\lambda = \int h \, d\lambda - \int g \, d\lambda = \overline{I} - \underline{I}`$.
 
 </details>
 
 ### Step 4: Lebesgue's criterion
 
-Riemann integrable means $\overline{I} = \underline{I}$, so by the engine it means $\int \omega_f \, d\lambda = 0$. A non-negative function with integral zero is zero except on a set of length zero, and $\omega_f(x) = 0$ says f is continuous at x. So f is Riemann integrable exactly when $\lambda(D_f) = 0$.
+Riemann integrable means $`\overline{I} = \underline{I}`$, so by the engine it means $`\int \omega_f \, d\lambda = 0`$. A non-negative function with integral zero is zero except on a set of length zero, and $`\omega_f(x) = 0`$ says f is continuous at x. So f is Riemann integrable exactly when $`\lambda(D_f) = 0`$.
 
-On the depth-1-at-fractions river every window holds depth 1 and depth 0, so every point has oscillation 1. $\lambda(D_f) = 1$, and the gap is 1: upper sums 1, lower sums 0, at 10, 100 and 1,000 strips.
+On the depth-1-at-fractions river every window holds depth 1 and depth 0, so every point has oscillation 1. $`\lambda(D_f) = 1`$, and the gap is 1: upper sums 1, lower sums 0, at 10, 100 and 1,000 strips.
 
 Thomae's function passes. It is 1/q at a fraction p/q in lowest terms and 0 elsewhere. It jumps at every fraction but is continuous everywhere else: near any other point only fractions with large denominators come close, and their values 1/q are small. The jumps take up no length, so it is Riemann integrable. Its upper sums confirm it: 0.456667 at 10 strips, 0.130811 at 100, 0.037365 at 1,000, 0.011081 at 10,000.
 
 <details>
 <summary>Detailed proof</summary>
 
-*Zero integral, zero almost everywhere.* Suppose $\omega_f \ge 0$ and $\int \omega_f \, d\lambda = 0$. For each whole number m, the simple function $\frac{1}{m} 1_{\{\omega_f \ge 1/m\}}$ lies below $\omega_f$, so its integral $\frac{1}{m} \lambda(\{\omega_f \ge 1/m\})$ is at most 0 (monotonicity, integral-of-a-nonnegative-function card). So each set $\{\omega_f \ge 1/m\}$ has length 0, and so does their countable union $\{\omega_f > 0\}$. Conversely, if $\omega_f = 0$ outside a null set, its integral is 0.
+*Zero integral, zero almost everywhere.* Suppose $`\omega_f \ge 0`$ and $`\int \omega_f \, d\lambda = 0`$. For each whole number m, the simple function $`\frac{1}{m} 1_{\{\omega_f \ge 1/m\}}`$ lies below $`\omega_f`$, so its integral $`\frac{1}{m} \lambda(\{\omega_f \ge 1/m\})`$ is at most 0 (monotonicity, integral-of-a-nonnegative-function card). So each set $`\{\omega_f \ge 1/m\}`$ has length 0, and so does their countable union $`\{\omega_f > 0\}`$. Conversely, if $`\omega_f = 0`$ outside a null set, its integral is 0.
 
-*Oscillation zero, continuous.* $\omega_f(x) = 0$ says every $\varepsilon > 0$ has a window $|y - x| < \delta$ where f spreads by less than $\varepsilon$, so $|f(y) - f(x)| < \varepsilon$ there: continuity at x. Conversely, continuity gives a window where every value is within $\varepsilon / 3$ of f(x), a spread below $\varepsilon$. So $D_f = \{\omega_f > 0\}$.
+*Oscillation zero, continuous.* $`\omega_f(x) = 0`$ says every $`\varepsilon > 0`$ has a window $`|y - x| < \delta`$ where f spreads by less than $`\varepsilon`$, so $`|f(y) - f(x)| < \varepsilon`$ there: continuity at x. Conversely, continuity gives a window where every value is within $`\varepsilon / 3`$ of f(x), a spread below $`\varepsilon`$. So $`D_f = \{\omega_f > 0\}`$.
 
-Putting these together with the engine: f is Riemann integrable ⟺ $\overline{I} = \underline{I}$ ⟺ $\int \omega_f \, d\lambda = 0$ ⟺ $\lambda(D_f) = 0$.
+Putting these together with the engine: f is Riemann integrable ⟺ $`\overline{I} = \underline{I}`$ ⟺ $`\int \omega_f \, d\lambda = 0`$ ⟺ $`\lambda(D_f) = 0`$.
 
 </details>
 
 ### Step 5: Riemann's value is Lebesgue's value
 
-Let f be Riemann integrable. Then $h = g$ outside a null set $Z$ (cut points and jumps), and f, squeezed between them, equals $g$ there. The set where f exceeds a level c is the Borel set where $g$ does, altered only inside $Z$. Every subset of a null set is a Lebesgue set ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)), so f is measurable with respect to the Lebesgue sets. It is bounded on an interval of finite length, so it is integrable, and
+Let f be Riemann integrable. Then $`h = g`$ outside a null set $`Z`$ (cut points and jumps), and f, squeezed between them, equals $`g`$ there. The set where f exceeds a level c is the Borel set where $`g`$ does, altered only inside $`Z`$. Every subset of a null set is a Lebesgue set ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)), so f is measurable with respect to the Lebesgue sets. It is bounded on an interval of finite length, so it is integrable, and
 
-$$\int_{[a,b]} f \, d\lambda = \int g \, d\lambda = \underline{I} = \int_a^b f(x)\,dx$$
+```math
+\int_{[a,b]} f \, d\lambda = \int g \, d\lambda = \underline{I} = \int_a^b f(x)\,dx
+```
 
-On the river: 0.6666670 from 1,000 strip midpoints, 0.6666590 from 65,536 depth levels, exactly 2/3 from the antiderivative $2x^2 - \tfrac{4}{3}x^3$.
+On the river: 0.6666670 from 1,000 strip midpoints, 0.6666590 from 65,536 depth levels, exactly 2/3 from the antiderivative $`2x^2 - \tfrac{4}{3}x^3`$.
 
 <details>
 <summary>A Riemann-integrable function that is not Borel measurable</summary>
@@ -157,31 +171,31 @@ The Cantor set has length 0 and as many points as the line, so it has more subse
 
 For a non-negative f, cut the stretch at a + 1, a + 2, and so on. The cut-off functions rise to f, so monotone convergence makes the Lebesgue integral the limit of the Riemann integrals: the improper integral, finite or infinite.
 
-For a signed f, apply that to $|f|$, whose jumps are no larger than f's: f is in $L^1$ exactly when the improper integral of $|f|$ is finite. Then $f^+$ and $f^-$ have finite improper integrals, and subtracting gives that of f.
+For a signed f, apply that to $`|f|`$, whose jumps are no larger than f's: f is in $`L^1`$ exactly when the improper integral of $`|f|`$ is finite. Then $`f^+`$ and $`f^-`$ have finite improper integrals, and subtracting gives that of f.
 
-sin(x)/x fails that test. On the k-th hump, from kπ to (k + 1)π, it keeps one sign, and its area is at least $2/((k+1)\pi)$: one arch of |sin| has area 2, and x is at most (k + 1)π. Over 1,000 humps that floor adds to $(2/\pi)(1 + 1/2 + \dots + 1/1000)$ = 4.7654; the true area is 6.2393, and both grow without limit. The positive humps alone, and the negative humps alone, still add to infinity: their floors are the odd and even terms of that divergent sum. So $f^+$ and $f^-$ each have infinite integral, and sin(x)/x has no Lebesgue integral.
+sin(x)/x fails that test. On the k-th hump, from kπ to (k + 1)π, it keeps one sign, and its area is at least $`2/((k+1)\pi)`$: one arch of |sin| has area 2, and x is at most (k + 1)π. Over 1,000 humps that floor adds to $`(2/\pi)(1 + 1/2 + \dots + 1/1000)`$ = 4.7654; the true area is 6.2393, and both grow without limit. The positive humps alone, and the negative humps alone, still add to infinity: their floors are the odd and even terms of that divergent sum. So $`f^+`$ and $`f^-`$ each have infinite integral, and sin(x)/x has no Lebesgue integral.
 
-The improper value π/2 belongs to one order of adding. Take two positive humps, then one negative, and repeat: these sets also fill (0, ∞), and the integrals over them tend to 1.79143, which is π/2 + (ln 2)/π. For a function in $L^1$, monotone convergence on $f^+$ and $f^-$ forces every such order to the same limit.
+The improper value π/2 belongs to one order of adding. Take two positive humps, then one negative, and repeat: these sets also fill (0, ∞), and the integrals over them tend to 1.79143, which is π/2 + (ln 2)/π. For a function in $`L^1`$, monotone convergence on $`f^+`$ and $`f^-`$ forces every such order to the same limit.
 
 <details>
 <summary>Detailed proof</summary>
 
-*Non-negative f.* Let $f \ge 0$ be Riemann integrable on each [a, b′]. By Step 5, each $f 1_{[a, a+n]}$ is measurable with respect to the Lebesgue sets with integral $\int_a^{a+n} f(x)\,dx$. They rise to f at every point, so monotone convergence gives $\int_{[a,\infty)} f \, d\lambda = \lim_n \int_a^{a+n} f(x)\,dx$. The running integral $F(b') = \int_a^{b'} f(x)\,dx$ never falls, so its limit along whole numbers is its limit as $b' \to \infty$: the improper integral, possibly infinite.
+*Non-negative f.* Let $`f \ge 0`$ be Riemann integrable on each [a, b′]. By Step 5, each $`f 1_{[a, a+n]}`$ is measurable with respect to the Lebesgue sets with integral $`\int_a^{a+n} f(x)\,dx`$. They rise to f at every point, so monotone convergence gives $`\int_{[a,\infty)} f \, d\lambda = \lim_n \int_a^{a+n} f(x)\,dx`$. The running integral $`F(b') = \int_a^{b'} f(x)\,dx`$ never falls, so its limit along whole numbers is its limit as $`b' \to \infty`$: the improper integral, possibly infinite.
 
-*|f| is Riemann integrable where f is.* $\big||f(y)| - |f(z)|\big| \le |f(y) - f(z)|$, so $\omega_{|f|} \le \omega_f$ and $D_{|f|} \subseteq D_f$. The criterion applies on each [a, b′]. So do $f^+ = (|f| + f)/2$ and $f^- = (|f| - f)/2$.
+*|f| is Riemann integrable where f is.* $`\big||f(y)| - |f(z)|\big| \le |f(y) - f(z)|`$, so $`\omega_{|f|} \le \omega_f`$ and $`D_{|f|} \subseteq D_f`$. The criterion applies on each [a, b′]. So do $`f^+ = (|f| + f)/2`$ and $`f^- = (|f| - f)/2`$.
 
-*Signed f.* f is in $L^1$ exactly when $\int |f| \, d\lambda < \infty$, which by the first part is the improper integral of |f|. Then $f^+, f^- \le |f|$ have finite improper integrals equal to their Lebesgue integrals, and $\int f \, d\lambda = \int f^+ \, d\lambda - \int f^- \, d\lambda = \lim_{b'} \big(\int_a^{b'} f^+ \,dx - \int_a^{b'} f^- \,dx\big) = \int_a^\infty f(x)\,dx$, by linearity of the Riemann integral on [a, b′].
+*Signed f.* f is in $`L^1`$ exactly when $`\int |f| \, d\lambda < \infty`$, which by the first part is the improper integral of |f|. Then $`f^+, f^- \le |f|`$ have finite improper integrals equal to their Lebesgue integrals, and $`\int f \, d\lambda = \int f^+ \, d\lambda - \int f^- \, d\lambda = \lim_{b'} \big(\int_a^{b'} f^+ \,dx - \int_a^{b'} f^- \,dx\big) = \int_a^\infty f(x)\,dx`$, by linearity of the Riemann integral on [a, b′].
 
-*Every order agrees in $L^1$.* If finite unions of intervals rise to fill $[a, \infty)$ and f is in $L^1$, monotone convergence carries the integrals of $f^+$ and $f^-$ over them to finite limits, so the integrals of f converge to $\int f \, d\lambda$.
+*Every order agrees in $`L^1`$.* If finite unions of intervals rise to fill $`[a, \infty)`$ and f is in $`L^1`$, monotone convergence carries the integrals of $`f^+`$ and $`f^-`$ over them to finite limits, so the integrals of f converge to $`\int f \, d\lambda`$.
 
-*sin(x)/x.* It extends continuously to 1 at 0, so it is Riemann integrable on every [0, b′]. On $[k\pi, (k+1)\pi]$, $|\sin x| / x \ge |\sin x| / ((k+1)\pi)$ and $\int_{k\pi}^{(k+1)\pi} |\sin x| \, dx = 2$, so the hump is at least $2/((k+1)\pi)$. The harmonic series diverges, so $\int |f| \, d\lambda = \infty$.
+*sin(x)/x.* It extends continuously to 1 at 0, so it is Riemann integrable on every [0, b′]. On $`[k\pi, (k+1)\pi]`$, $`|\sin x| / x \ge |\sin x| / ((k+1)\pi)`$ and $`\int_{k\pi}^{(k+1)\pi} |\sin x| \, dx = 2`$, so the hump is at least $`2/((k+1)\pi)`$. The harmonic series diverges, so $`\int |f| \, d\lambda = \infty`$.
 
 </details>
 
 <details>
 <summary>Where π/2 and 1.79143 come from</summary>
 
-The code's second road for π/2 is the classical identity: the integral of sin(x)/x over (0, ∞) equals that of 1/(1 + t^2), by writing 1/x as the integral of e^(−xt) over t and swapping; the swap needs a limit argument not given here, because sin(x)/x is not in $L^1$. The substitution t → 1/t makes the part over (1, ∞) equal the part over (0, 1). The humps shrink like 2/(πk), the alternating harmonic series scaled by 2/π; two positives per negative shift that series by (ln 2)/2, here by (ln 2)/π.
+The code's second road for π/2 is the classical identity: the integral of sin(x)/x over (0, ∞) equals that of 1/(1 + t^2), by writing 1/x as the integral of e^(−xt) over t and swapping; the swap needs a limit argument not given here, because sin(x)/x is not in $`L^1`$. The substitution t → 1/t makes the part over (1, ∞) equal the part over (0, 1). The humps shrink like 2/(πk), the alternating harmonic series scaled by 2/π; two positives per negative shift that series by (ln 2)/2, here by (ln 2)/π.
 
 </details>
 
@@ -224,8 +238,8 @@ The first line is the signed running integral: it swings about and settles at π
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Riemann sums for depth 1 at fractions | upper sum 1, lower sum 0, at 10, 100 and 1,000 strips | continuous nowhere: $\lambda(D_f) = 1$, not 0 |
-| The improper value π/2 taken as a Lebesgue integral | absolute area 6.2393 after 1,000 humps and climbing; another order of adding gives 1.79143 | $f^+$ and $f^-$ both have infinite integral |
+| Riemann sums for depth 1 at fractions | upper sum 1, lower sum 0, at 10, 100 and 1,000 strips | continuous nowhere: $`\lambda(D_f) = 1`$, not 0 |
+| The improper value π/2 taken as a Lebesgue integral | absolute area 6.2393 after 1,000 humps and climbing; another order of adding gives 1.79143 | $`f^+`$ and $`f^-`$ both have infinite integral |
 | The criterion applied to 1/√x on (0, 1] | lower sums 1.5878, 1.8590, 1.9543; the first strip has no highest value | unbounded; Lebesgue's value 2 comes from 1.900, 1.990, 1.999 by truncation |
 | "Equal almost everywhere to a continuous function" used for the criterion | depth 1 at fractions equals 0 almost everywhere, yet upper sums stay 1 | the criterion asks where f itself is continuous |
 
@@ -637,9 +651,9 @@ The two outputs are identical, byte for byte. Python's `sum()` adds floats with 
 Lean proves all three theorems for every bounded function, on every interval, and checks the hand arithmetic exactly.
 
 - Take a bounded function on [a, b] that has a Riemann integral. Then it is Lebesgue integrable there, and its Lebesgue integral equals its Riemann integral.
-- Take a bounded function on [a, b]. Then it is Riemann integrable exactly when $D_f$, the set where it is not continuous, has length zero.
-- Suppose f is bounded and Riemann integrable on each [a, b′]. Then f is in $L^1([a, \infty))$ exactly when the improper integral of |f| is finite.
-- Suppose also that f is in $L^1([a, \infty))$. Then the improper integral of f exists and equals its Lebesgue integral.
+- Take a bounded function on [a, b]. Then it is Riemann integrable exactly when $`D_f`$, the set where it is not continuous, has length zero.
+- Suppose f is bounded and Riemann integrable on each [a, b′]. Then f is in $`L^1([a, \infty))`$ exactly when the improper integral of |f| is finite.
+- Suppose also that f is in $`L^1([a, \infty))`$. Then the improper integral of f exists and equals its Lebesgue integral.
 - The hand arithmetic holds exactly, as fractions: the 8-strip table, the level-set ends, the 0.002 gap, the midpoint error and 2/3.
 - Thomae's upper sum at 10 strips is exactly 137/300, about 0.456667, and the counting bound there is 1.1.
 
@@ -1283,7 +1297,7 @@ example : (2 : ℚ) * 3 / 10 + 1 / 2 = 11 / 10 := by norm_num
 
 ## What this builds on
 
-- [Integrable functions](04-integrable-functions-and-l1.md): $L^1$, positive and negative parts, and equal-almost-everywhere functions having equal integrals.
+- [Integrable functions](04-integrable-functions-and-l1.md): $`L^1`$, positive and negative parts, and equal-almost-everywhere functions having equal integrals.
 - [The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md): lower and upper sums, refinement, and the best-sum definition of the Riemann integral.
 - [Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md): the improper integral as a limit of cut-off integrals, and the comparison test for non-negative rates.
 - [The monotone convergence theorem](03-monotone-convergence-theorem.md): the limit step in Steps 2 and 6.

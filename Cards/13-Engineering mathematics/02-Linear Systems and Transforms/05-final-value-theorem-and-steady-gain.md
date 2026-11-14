@@ -34,27 +34,35 @@ The rising line is the simulated speed. The flat line is 20 m/s, the final value
 
 ## The formula
 
-Two reminders first. The Laplace variable $s$ (from [The Laplace transform](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/01-the-laplace-transform.md)) stands in for "rate of change": a signal growing like e^(st) has derivative s times itself. The transfer function G(s) says what the system does to each such exponential ([Transfer functions](02-impulse-response-and-transfer-functions.md)).
+Two reminders first. The Laplace variable $`s`$ (from [The Laplace transform](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/01-the-laplace-transform.md)) stands in for "rate of change": a signal growing like e^(st) has derivative s times itself. The transfer function G(s) says what the system does to each such exponential ([Transfer functions](02-impulse-response-and-transfer-functions.md)).
 
 The car obeys Newton's second law, mass times acceleration equals push minus drag:
 
-$$m\,\frac{dv}{dt} = F\,u - b\,v \qquad\Longrightarrow\qquad G(s) = \frac{K}{\tau s + 1},\quad K = \frac{F}{b} = 25\ \tfrac{\text{m/s}}{\text{unit}},\quad \tau = \frac{m}{b} = 25\ \text{s}.$$
+```math
+m\,\frac{dv}{dt} = F\,u - b\,v \qquad\Longrightarrow\qquad G(s) = \frac{K}{\tau s + 1},\quad K = \frac{F}{b} = 25\ \tfrac{\text{m/s}}{\text{unit}},\quad \tau = \frac{m}{b} = 25\ \text{s}.
+```
 
-The final value theorem. Write $y(t)$ for the speed and $Y(s)$ for its Laplace transform. If $y$ settles,
+The final value theorem. Write $`y(t)`$ for the speed and $`Y(s)`$ for its Laplace transform. If $`y`$ settles,
 
-$$\lim_{t\to\infty} y(t) \;=\; \lim_{s\to 0}\, s\,Y(s).$$
+```math
+\lim_{t\to\infty} y(t) \;=\; \lim_{s\to 0}\, s\,Y(s).
+```
 
 **Read it aloud:** the value a signal settles at equals s times its transform, as s shrinks to zero.
 
-For a throttle step of size $u_0$ the transform of the input is u0/s, so Y(s) = G(s) u0/s and the s cancels:
+For a throttle step of size $`u_0`$ the transform of the input is u0/s, so Y(s) = G(s) u0/s and the s cancels:
 
-$$y(\infty) = G(0)\,u_0 = 25 \times 0.8 = 20\ \text{m/s}.$$
+```math
+y(\infty) = G(0)\,u_0 = 25 \times 0.8 = 20\ \text{m/s}.
+```
 
 **Read it aloud:** the speed settles at the zero-frequency gain times the size of the throttle step.
 
-Bandwidth. Engineers write $j$ for the square root of −1; the rest of the library writes i. Feed the car a throttle that wiggles like a sine wave of angular frequency $\omega$ in rad/s. Its speed wiggles at the same frequency, with the amplitude scaled by |G(jω)|. The bandwidth $\omega_b$ is where that gain has fallen to 1/√2 of its zero-frequency value:
+Bandwidth. Engineers write $`j`$ for the square root of −1; the rest of the library writes i. Feed the car a throttle that wiggles like a sine wave of angular frequency $`\omega`$ in rad/s. Its speed wiggles at the same frequency, with the amplitude scaled by |G(jω)|. The bandwidth $`\omega_b`$ is where that gain has fallen to 1/√2 of its zero-frequency value:
 
-$$\lvert G(j\omega_b)\rvert = \frac{\lvert G(0)\rvert}{\sqrt 2}, \qquad\text{for this car}\quad \omega_b = \frac{1}{\tau} = 0.04\ \text{rad/s}.$$
+```math
+\lvert G(j\omega_b)\rvert = \frac{\lvert G(0)\rvert}{\sqrt 2}, \qquad\text{for this car}\quad \omega_b = \frac{1}{\tau} = 0.04\ \text{rad/s}.
+```
 
 **Read it aloud:** the bandwidth is the frequency where the output's swing has shrunk to 0.7071 of the swing a very slow input would give.
 
@@ -62,18 +70,18 @@ On a decibel scale, 20 log10 of a gain (from [Bode plots](04-frequency-response-
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $y$, $v$, $t$ | road speed, a function of time t | settles at 20 m/s | — |
-| $u$, $u_0$ | throttle, 0 to 1; the size of its step | step to 0.8 | final speed rises in proportion |
-| $m$, $b$, $F$ | mass; drag per m/s; full-throttle push | 1500 kg, 60 N s/m, 1500 N | $m$ slows the car's response; $b$ lowers $K$ and speeds it; $F$ raises $K$ |
-| $K$ | steady gain, G(0) | 25 m/s per unit throttle | final speed rises |
-| $\tau$ | time constant m/b, the response's time scale | 25 s | slower response, smaller bandwidth |
-| $G$ | transfer function: output transform over input transform | 25/(25s + 1) | — |
-| $s$ | Laplace variable, the rate of an exponential | — | — |
-| $Y$ | Laplace transform of the speed | 20/(s(25s + 1)) | — |
-| $j$ | square root of −1, engineers' letter | — | — |
-| $\omega$, $\omega_b$ | angular frequency of a wiggle; the bandwidth | 0.04 rad/s | — |
-| $\tau_a$ | a second lag: the throttle actuator | 2 s | bandwidth falls a little |
-| $t_r$ | 10–90% rise time | 54.931 s | bandwidth falls |
+| $`y`$, $`v`$, $`t`$ | road speed, a function of time t | settles at 20 m/s | — |
+| $`u`$, $`u_0`$ | throttle, 0 to 1; the size of its step | step to 0.8 | final speed rises in proportion |
+| $`m`$, $`b`$, $`F`$ | mass; drag per m/s; full-throttle push | 1500 kg, 60 N s/m, 1500 N | $`m`$ slows the car's response; $`b`$ lowers $`K`$ and speeds it; $`F`$ raises $`K`$ |
+| $`K`$ | steady gain, G(0) | 25 m/s per unit throttle | final speed rises |
+| $`\tau`$ | time constant m/b, the response's time scale | 25 s | slower response, smaller bandwidth |
+| $`G`$ | transfer function: output transform over input transform | 25/(25s + 1) | — |
+| $`s`$ | Laplace variable, the rate of an exponential | — | — |
+| $`Y`$ | Laplace transform of the speed | 20/(s(25s + 1)) | — |
+| $`j`$ | square root of −1, engineers' letter | — | — |
+| $`\omega`$, $`\omega_b`$ | angular frequency of a wiggle; the bandwidth | 0.04 rad/s | — |
+| $`\tau_a`$ | a second lag: the throttle actuator | 2 s | bandwidth falls a little |
+| $`t_r`$ | 10–90% rise time | 54.931 s | bandwidth falls |
 
 ### When it holds
 
@@ -89,7 +97,7 @@ On a decibel scale, 20 log10 of a gain (from [Bode plots](04-frequency-response-
 
 ### Step 0: s marks change, so zero frequency means nothing changing
 
-In the transform world, for a signal starting from rest, multiplying by $s$ is taking a derivative. A settled speed has derivative zero. Set the derivative to zero in the car's equation: 0 = F u − b v, so v = (F/b) u = 25 × 0.8 = 20 m/s. Setting s = 0 in G(s) does exactly the same thing, which is why G(0) is called the steady gain, or DC gain, after direct current, the electrical signal that never changes.
+In the transform world, for a signal starting from rest, multiplying by $`s`$ is taking a derivative. A settled speed has derivative zero. Set the derivative to zero in the car's equation: 0 = F u − b v, so v = (F/b) u = 25 × 0.8 = 20 m/s. Setting s = 0 in G(s) does exactly the same thing, which is why G(0) is called the steady gain, or DC gain, after direct current, the electrical signal that never changes.
 
 That argument assumes the speed does settle. The theorem says when it does, and why the factor s appears.
 
@@ -97,7 +105,9 @@ That argument assumes the speed does settle. The theorem says when it does, and 
 
 For the car, partial fractions ([Inverting](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/03-inverting-by-partial-fractions.md)) give
 
-$$Y(s) = \frac{20}{s\,(25 s + 1)} = \frac{20}{s} - \frac{20}{s + 0.04}.$$
+```math
+Y(s) = \frac{20}{s\,(25 s + 1)} = \frac{20}{s} - \frac{20}{s + 0.04}.
+```
 
 The first piece is the transform of the constant 20. The second is the transform of 20 e^(−0.04 t), which dies away. So y(t) = 20 − 20 e^(−0.04 t), and the speed settles at 20 m/s.
 
@@ -116,9 +126,9 @@ A pole with positive real part makes a growing term in time, but s times its pie
 <details>
 <summary>Detailed proof, for any signal whose derivative is absolutely integrable</summary>
 
-The transform of a derivative is $\int_0^\infty e^{-st}\,y'(t)\,dt = sY(s) - y(0)$ ([Transforming a derivative](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/02-transforms-of-derivatives.md)). Suppose $\int_0^\infty \lvert y'(t)\rvert\,dt$ is finite. Then $y(T) = y(0) + \int_0^T y'\,dt$ has a limit as $T \to \infty$, so the final value exists. For real $s > 0$, $\lvert e^{-st} y'(t)\rvert \le \lvert y'(t)\rvert$, so the dominated convergence theorem (a limit may pass inside an integral when one fixed integrable bound holds for every s) lets the limit pass inside the integral: as $s \to 0^+$, the left side tends to $\int_0^\infty y'\,dt = y(\infty) - y(0)$. The $y(0)$ terms cancel and $\lim_{s\to 0^+} sY(s) = y(\infty)$.
+The transform of a derivative is $`\int_0^\infty e^{-st}\,y'(t)\,dt = sY(s) - y(0)`$ ([Transforming a derivative](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/02-transforms-of-derivatives.md)). Suppose $`\int_0^\infty \lvert y'(t)\rvert\,dt`$ is finite. Then $`y(T) = y(0) + \int_0^T y'\,dt`$ has a limit as $`T \to \infty`$, so the final value exists. For real $`s > 0`$, $`\lvert e^{-st} y'(t)\rvert \le \lvert y'(t)\rvert`$, so the dominated convergence theorem (a limit may pass inside an integral when one fixed integrable bound holds for every s) lets the limit pass inside the integral: as $`s \to 0^+`$, the left side tends to $`\int_0^\infty y'\,dt = y(\infty) - y(0)`$. The $`y(0)`$ terms cancel and $`\lim_{s\to 0^+} sY(s) = y(\infty)`$.
 
-When $Y$ is a ratio of polynomials, the condition on $y'$ holds exactly when every pole of $sY(s)$ has negative real part, since $y'$ is then a sum of decaying exponentials times powers of $t$. The theorem's converse fails: $sY(s)$ can have a limit while $y$ has none, as for a sine wave.
+When $`Y`$ is a ratio of polynomials, the condition on $`y'`$ holds exactly when every pole of $`sY(s)`$ has negative real part, since $`y'`$ is then a sum of decaying exponentials times powers of $`t`$. The theorem's converse fails: $`sY(s)`$ can have a limit while $`y`$ has none, as for a sine wave.
 
 </details>
 
@@ -126,7 +136,9 @@ When $Y$ is a ratio of polynomials, the condition on $y'$ holds exactly when eve
 
 At s = jω the car's transfer function is 25/(1 + j 25 ω). Its size is
 
-$$\lvert G(j\omega)\rvert = \frac{K}{\sqrt{1 + \tau^2 \omega^2}}.$$
+```math
+\lvert G(j\omega)\rvert = \frac{K}{\sqrt{1 + \tau^2 \omega^2}}.
+```
 
 At low frequency the 1 dominates and the gain is the steady gain, 25. At high frequency the τω term dominates and the gain falls in proportion to 1/ω: the car's mass cannot accelerate fast enough. The two terms are equal at τω = 1. There the gain is 25/√2 = 17.6777 m/s per unit throttle, the speed lags the throttle by 45° (π/4 rad), and ω = 1/τ = 0.04 rad/s.
 
@@ -134,7 +146,7 @@ Bandwidth and response time measure the same thing. The 10–90% rise time of th
 
 ### Step 5: more than one lag
 
-A throttle actuator that takes $\tau_a$ = 2 s to respond adds a second factor: G(s) = 25/((25s + 1)(2s + 1)). At s = 0 both factors are 1, so the steady gain stays 25. The bandwidth solves $(1 + \tau^2\omega^2)(1 + \tau_a^2\omega^2) = 2$, a quadratic in $\omega^2$, giving 0.039748 rad/s. Lags change how fast the car gets there, never where it ends up.
+A throttle actuator that takes $`\tau_a`$ = 2 s to respond adds a second factor: G(s) = 25/((25s + 1)(2s + 1)). At s = 0 both factors are 1, so the steady gain stays 25. The bandwidth solves $`(1 + \tau^2\omega^2)(1 + \tau_a^2\omega^2) = 2`$, a quadratic in $`\omega^2`$, giving 0.039748 rad/s. Lags change how fast the car gets there, never where it ends up.
 
 ### The gain across frequency
 
@@ -565,12 +577,12 @@ The two outputs match line for line.
 
 Lean proves the final value theorem, the car's final speed, and the bandwidth of a first-order lag in general, and checks the worked numbers.
 
-- Suppose $y$ is continuous from $t = 0$, with a derivative $y'$ for $t > 0$ that is absolutely integrable. Then $y$ settles at a final value, and $sY(s)$ tends to that same value as positive real $s$ shrinks to 0.
-- Take mass $m > 0$, drag $b > 0$, and a speed obeying $mv' = Fu_0 - bv$. Then the speed settles at $K u_0$, with $K = F/b$, from any starting speed.
-- Take $G(s) = K/(\tau s + 1)$ with $K \ne 0$, $\tau > 0$ and $\omega \ge 0$. Then $\lvert G(j\omega)\rvert = \lvert K\rvert/\sqrt 2$ exactly when $\omega = 1/\tau$.
-- The worked numbers hold: $K = 25$, $\tau = 25$ s, and the final speed is 20 m/s, which is 72 km/h.
-- At $s = 0.01$, $sY(s)$ is 16 m/s, and the bandwidth $1/\tau$ is 0.04 rad/s.
-- The partial fractions in Step 1 agree when checked at $s = 1$.
+- Suppose $`y`$ is continuous from $`t = 0`$, with a derivative $`y'`$ for $`t > 0`$ that is absolutely integrable. Then $`y`$ settles at a final value, and $`sY(s)`$ tends to that same value as positive real $`s`$ shrinks to 0.
+- Take mass $`m > 0`$, drag $`b > 0`$, and a speed obeying $`mv' = Fu_0 - bv`$. Then the speed settles at $`K u_0`$, with $`K = F/b`$, from any starting speed.
+- Take $`G(s) = K/(\tau s + 1)`$ with $`K \ne 0`$, $`\tau > 0`$ and $`\omega \ge 0`$. Then $`\lvert G(j\omega)\rvert = \lvert K\rvert/\sqrt 2`$ exactly when $`\omega = 1/\tau`$.
+- The worked numbers hold: $`K = 25`$, $`\tau = 25`$ s, and the final speed is 20 m/s, which is 72 km/h.
+- At $`s = 0.01`$, $`sY(s)`$ is 16 m/s, and the bandwidth $`1/\tau`$ is 0.04 rad/s.
+- The partial fractions in Step 1 agree when checked at $`s = 1`$.
 
 The simulations, the bisection, the 2 s actuator and the failure cases are left to the Python and Rust checks.
 

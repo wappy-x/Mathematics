@@ -42,28 +42,30 @@ Each box is a bank before a leg, with the cheapest cost from there to the city, 
 
 Notation first, in words.
 
-- The stage $k$ counts legs already driven, 0 to 3.
-- The **state** $x$ is whatever about the present matters for the future: here, the bank, N or S.
-- The **choice** $u$ is stay or cross.
-- The toll $c_k(x, u)$ is what that choice costs on the next leg, and $f(x, u)$ is the bank it leaves the car on.
-- The **value function** $V_k(x)$ is the cheapest cost of finishing the trip from bank $x$ with $k$ legs driven.
+- The stage $`k`$ counts legs already driven, 0 to 3.
+- The **state** $`x`$ is whatever about the present matters for the future: here, the bank, N or S.
+- The **choice** $`u`$ is stay or cross.
+- The toll $`c_k(x, u)`$ is what that choice costs on the next leg, and $`f(x, u)`$ is the bank it leaves the car on.
+- The **value function** $`V_k(x)`$ is the cheapest cost of finishing the trip from bank $`x`$ with $`k`$ legs driven.
 
-$$V_k(x) = \min_{u \,\in\, \{\text{stay},\ \text{cross}\}} \Big( c_k(x, u) + V_{k+1}\big(f(x, u)\big) \Big), \qquad V_3(x) = 0$$
+```math
+V_k(x) = \min_{u \,\in\, \{\text{stay},\ \text{cross}\}} \Big( c_k(x, u) + V_{k+1}\big(f(x, u)\big) \Big), \qquad V_3(x) = 0
+```
 
 **Read it aloud:** the cheapest cost from here is the smallest, over this leg's choices, of its toll plus the cheapest cost from where it lands; at the finish nothing is left to pay.
 
-This is the **Bellman equation**. Solving it from $k$ = 2 down to $k$ = 0 is **backward induction**. The choice achieving each minimum, stored beside $V_k(x)$, is the plan.
+This is the **Bellman equation**. Solving it from $`k`$ = 2 down to $`k`$ = 0 is **backward induction**. The choice achieving each minimum, stored beside $`V_k(x)`$, is the plan.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $k$ | stage: legs already driven | 0 at the start, 3 at the city | fewer legs left, smaller $V_k$ |
-| $x$ | state: what the future depends on | the bank, N or S | — |
-| $u$, $u_k$ | choice at this stage, at stage $k$ | stay or cross | — |
-| $c_k(x, u)$ | toll on the next leg for that bank and choice, dollars | north, cross, first leg: 16 | a dearer leg, a higher total or a detour |
-| $f(x, u)$ | the state the choice leads to | north then cross: south | — |
-| $V_k(x)$, $V_0$, $V_1$, $V_3$ | value function: cheapest cost to finish from $x$ at stage $k$, dollars | $V_0$(N) = 47, $V_1$(S) = 31, $V_3$ = 0 | — |
-| $n$, $s$, $m$ | stages, states per stage, choices per state | 3, 2, 2 | brute force grows as $m^n$ |
-| $d$ | numbers needed to describe one state | 1, the bank | states grow as $10^d$ with 10 levels each |
+| $`k`$ | stage: legs already driven | 0 at the start, 3 at the city | fewer legs left, smaller $`V_k`$ |
+| $`x`$ | state: what the future depends on | the bank, N or S | — |
+| $`u`$, $`u_k`$ | choice at this stage, at stage $`k`$ | stay or cross | — |
+| $`c_k(x, u)`$ | toll on the next leg for that bank and choice, dollars | north, cross, first leg: 16 | a dearer leg, a higher total or a detour |
+| $`f(x, u)`$ | the state the choice leads to | north then cross: south | — |
+| $`V_k(x)`$, $`V_0`$, $`V_1`$, $`V_3`$ | value function: cheapest cost to finish from $`x`$ at stage $`k`$, dollars | $`V_0`$(N) = 47, $`V_1`$(S) = 31, $`V_3`$ = 0 | — |
+| $`n`$, $`s`$, $`m`$ | stages, states per stage, choices per state | 3, 2, 2 | brute force grows as $`m^n`$ |
+| $`d`$ | numbers needed to describe one state | 1, the bank | states grow as $`10^d`$ with 10 levels each |
 
 ### When it holds
 
@@ -78,42 +80,42 @@ This is the **Bellman equation**. Solving it from $k$ = 2 down to $k$ = 0 is **b
 
 ### Step 0: the future depends on where the car is, not how it got there
 
-On the south bank before leg 2, the remaining tolls are the same however the car got there. So the cheapest way to finish from here is one number, $V_1$(S), and the method is a table of such numbers.
+On the south bank before leg 2, the remaining tolls are the same however the car got there. So the cheapest way to finish from here is one number, $`V_1`$(S), and the method is a table of such numbers.
 
 ### Step 1: the principle of optimality, by cut and paste
 
 The best plan from the north bank is cross, stay, stay: 16 + 12 + 19 = 47 dollars. Cut it after the first leg. The tail, stay then stay from the south bank, costs 12 + 19 = 31.
 
-Suppose another tail from the south bank cost less than 31. Paste it after the first leg's 16 dollars: the trip would cost less than 47, a contradiction. So the tail is a best plan, 31 = $V_1$(S). Nothing here used these particular tolls.
+Suppose another tail from the south bank cost less than 31. Paste it after the first leg's 16 dollars: the trip would cost less than 47, a contradiction. So the tail is a best plan, 31 = $`V_1`$(S). Nothing here used these particular tolls.
 
 ### Step 2: the Bellman equation follows
 
-Any plan from $x$ at stage $k$ is a first choice $u$ followed by a tail from $f(x, u)$. Fix $u$: the cheapest such plan pays $c_k(x, u)$ plus the cheapest tail, $V_{k+1}(f(x, u))$. Minimising over $u$ covers every plan.
+Any plan from $`x`$ at stage $`k`$ is a first choice $`u`$ followed by a tail from $`f(x, u)`$. Fix $`u`$: the cheapest such plan pays $`c_k(x, u)`$ plus the cheapest tail, $`V_{k+1}(f(x, u))`$. Minimising over $`u`$ covers every plan.
 
-The equation is a rule that turns one column of the table into the previous one. Backward induction applies it three times from $V_3$ = 0, iterating a map as on [Iteration](../11-Discrete%20Dynamics%20and%20Chaos/01-iteration-and-cobweb-plots.md), but run from the finish.
+The equation is a rule that turns one column of the table into the previous one. Backward induction applies it three times from $`V_3`$ = 0, iterating a map as on [Iteration](../11-Discrete%20Dynamics%20and%20Chaos/01-iteration-and-cobweb-plots.md), but run from the finish.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let $J_k(x; u_k, \dots, u_{n-1})$ be the total toll paid from state $x$ at stage $k$ under the choices $u_k, \dots, u_{n-1}$, with the state updated by $f$ after each leg. Claim: for every $k$ from $n$ down to 0 and every $x$, the number $V_k(x)$ defined by the recursion equals the minimum of $J_k(x; \cdot)$ over all choice sequences.
+Let $`J_k(x; u_k, \dots, u_{n-1})`$ be the total toll paid from state $`x`$ at stage $`k`$ under the choices $`u_k, \dots, u_{n-1}`$, with the state updated by $`f`$ after each leg. Claim: for every $`k`$ from $`n`$ down to 0 and every $`x`$, the number $`V_k(x)`$ defined by the recursion equals the minimum of $`J_k(x; \cdot)`$ over all choice sequences.
 
-Base, $k = n$: no legs are left, the only sequence is empty, $J_n = 0 = V_n$.
+Base, $`k = n`$: no legs are left, the only sequence is empty, $`J_n = 0 = V_n`$.
 
-Step: assume the claim at $k + 1$. Any sequence from $(x, k)$ is $u_k$ followed by a sequence from $(f(x, u_k), k+1)$, and $J_k(x; u_k, \dots) = c_k(x, u_k) + J_{k+1}(f(x, u_k); u_{k+1}, \dots)$ because costs add. For fixed $u_k$ the minimum over the rest is $c_k(x, u_k) + V_{k+1}(f(x, u_k))$ by the assumption. The minimum over everything is the minimum over $u_k$ of that, which is the recursion's $V_k(x)$. By induction ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)), run downward, the claim holds at $k = 0$.
+Step: assume the claim at $`k + 1`$. Any sequence from $`(x, k)`$ is $`u_k`$ followed by a sequence from $`(f(x, u_k), k+1)`$, and $`J_k(x; u_k, \dots) = c_k(x, u_k) + J_{k+1}(f(x, u_k); u_{k+1}, \dots)`$ because costs add. For fixed $`u_k`$ the minimum over the rest is $`c_k(x, u_k) + V_{k+1}(f(x, u_k))`$ by the assumption. The minimum over everything is the minimum over $`u_k`$ of that, which is the recursion's $`V_k(x)`$. By induction ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)), run downward, the claim holds at $`k = 0`$.
 
-The plan: choosing at each stage a $u$ that attains the minimum gives a sequence costing exactly $V_0(x)$, so it is cheapest.
+The plan: choosing at each stage a $`u`$ that attains the minimum gives a sequence costing exactly $`V_0(x)`$, so it is cheapest.
 
 </details>
 
 ### Step 3: fill the table backwards, read the plan forwards
 
-Each state at each stage needs one comparison. With $n$ stages, $s$ states and $m$ choices that is $n \cdot s \cdot (m - 1)$ comparisons: 3 × 2 × 1 = 6. Brute force prices $m^n$ = 8 routes and makes 7 comparisons. The table also holds the best plan from both banks: 47 from the north, 45 from the south.
+Each state at each stage needs one comparison. With $`n`$ stages, $`s`$ states and $`m`$ choices that is $`n \cdot s \cdot (m - 1)`$ comparisons: 3 × 2 × 1 = 6. Brute force prices $`m^n`$ = 8 routes and makes 7 comparisons. The table also holds the best plan from both banks: 47 from the north, 45 from the south.
 
 For 10 legs: 20 comparisons against 1,024 routes; for 30, 60 against 1,073,741,824. On a 12-leg river, 24 comparisons and 4,096 routes both find 168 dollars.
 
 ### Step 4: the curse of dimensionality
 
-The catch is $s$, the number of states. A bank is one of two. A delivery van tracking fuel, load and hour, each in 10 levels, has 1,000 states per stage; six such gauges give 1,000,000. Bellman called this the **curse of dimensionality**: dynamic programming tames the number of stages, not the size of the state.
+The catch is $`s`$, the number of states. A bank is one of two. A delivery van tracking fuel, load and hour, each in 10 levels, has 1,000 states per stage; six such gauges give 1,000,000. Bellman called this the **curse of dimensionality**: dynamic programming tames the number of stages, not the size of the state.
 
 On a network without stages the same principle is the Bellman-Ford algorithm ([Bellman-Ford](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/06-bellman-ford-and-arbitrage.md)). Pontryagin's route ([Pontryagin's principle](06-pontryagins-principle-and-bang-bang-control.md)) reaches continuous-time plans without a table, by conditions along one path.
 
@@ -125,7 +127,7 @@ Tolls in dollars are on the arrows of the picture above.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| at the city | nothing left to pay | $V_3$(N) = $V_3$(S) = 0 |
+| at the city | nothing left to pay | $`V_3`$(N) = $`V_3`$(S) = 0 |
 | before leg 3, north | min(21 + 0, 24 + 0) | 21, stay |
 | before leg 3, south | min(19 + 0, 20 + 0) | 19, stay |
 | before leg 2, north | min(19 + 21, 22 + 19) = min(40, 41) | 40, stay |
@@ -354,7 +356,7 @@ The two outputs match line for line.
 
 Lean proves the Bellman equation, the principle of optimality and reading the plan off the table, for every trip with finitely many stages and choices.
 
-- Take finitely many stages and choices, costs that add up leg by leg, and each choice landing in a known state. Then the cheapest cost to finish satisfies the Bellman equation, with $V_n(x) = 0$ at the finish.
+- Take finitely many stages and choices, costs that add up leg by leg, and each choice landing in a known state. Then the cheapest cost to finish satisfies the Bellman equation, with $`V_n(x) = 0`$ at the finish.
 - Cut a best plan after any number of legs. Then the remaining legs are a best plan from where the car then stands.
 - Suppose a plan picks, at every stage, a choice that attains the minimum in the Bellman equation. Then its total cost is the cheapest cost, so it is a best plan.
 - On the river, the table of best onward costs comes out 21 and 19, then 40 and 31, then 47 and 45.
@@ -649,11 +651,11 @@ end Bellman
 ## The usual mistake
 
 > [!warning]
-> **Choosing the cheapest next step.** Built forward one cheap leg at a time, the plan pays 11 dollars first and 51 in all, stuck on the bank with dear later legs. The Bellman equation charges each choice for its consequences through $V_{k+1}$, so it runs from the finish.
+> **Choosing the cheapest next step.** Built forward one cheap leg at a time, the plan pays 11 dollars first and 51 in all, stuck on the bank with dear later legs. The Bellman equation charges each choice for its consequences through $`V_{k+1}`$, so it runs from the finish.
 >
 > - **Dropping the state.** Adding each leg's cheapest toll gives 42, a route that does not exist: the leg-2 toll of 12 is on the south bank only.
 > - **Believing the table is always small.** Six gauges of 10 levels make 1,000,000 states per stage.
-> - **Forgetting the finish.** $V_3$ = 0 because the city charges nothing at either gate. A gate fee belongs in $V_3$ and changes every earlier column.
+> - **Forgetting the finish.** $`V_3`$ = 0 because the city charges nothing at either gate. A gate fee belongs in $`V_3`$ and changes every earlier column.
 
 ---
 

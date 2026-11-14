@@ -33,26 +33,30 @@ flowchart TB
 
 C(n, k), read "n choose k", counts the ways to take k things from n when order is not recorded; it is 0 when k is below 0 or above n ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
 
-$$C(m+n,\ n) = \frac{(m+n)!}{m!\ n!}$$
+```math
+C(m+n,\ n) = \frac{(m+n)!}{m!\ n!}
+```
 
 **Read it aloud:** a route is a row of m plus n steps; count the ways of saying which n go north.
 
-Naming the north steps names the east steps, so C(m+n, m) is the same 330. A named corner splits the walk. Write $a$ for its blocks east and $b$ for its blocks north, and pair every way of reaching it with every way of finishing:
+Naming the north steps names the east steps, so C(m+n, m) is the same 330. A named corner splits the walk. Write $`a`$ for its blocks east and $`b`$ for its blocks north, and pair every way of reaching it with every way of finishing:
 
-$$C(a+b,\ b)\ \times\ C\big((m-a)+(n-b),\ n-b\big)$$
+```math
+C(a+b,\ b)\ \times\ C\big((m-a)+(n-b),\ n-b\big)
+```
 
 Routes clear of that corner are the rest: the total minus the product. The tall Σ in Step 4 means add: write the term to its right once for each value of the letter beneath it, from that first value up to the number above.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $m$, $n$ | blocks east, blocks north to the museum | 7 and 4 | more steps to order, a larger count |
-| $m+n$ | steps in one route, alike for all | 11 | — |
-| $!$ | factorial: $n!$ is $n \times (n-1) \times \dots \times 1$, the orders of $n$ different things ([Factorials](../01-Counting%20Principles/03-factorial.md)) | 11!, 7! and 4! in the formula | — |
-| $C(m+n,n)$ | routes in all | 330 | — |
-| $a$, $b$ | a named corner: east, north | the cafe, 3 and 2 | moves the corner across the map |
-| $C(a+b,b)$ | routes from the start to that corner | 10 | more routes pass the corner |
-| $k$ | north steps in the first five blocks | 0 to 4 | picks one term of the sum |
-| $\sum_{k=0}^{4}$ | add the term over every $k$ | 15 + 100 + 150 + 60 + 5 | — |
+| $`m`$, $`n`$ | blocks east, blocks north to the museum | 7 and 4 | more steps to order, a larger count |
+| $`m+n`$ | steps in one route, alike for all | 11 | — |
+| $`!`$ | factorial: $`n!`$ is $`n \times (n-1) \times \dots \times 1`$, the orders of $`n`$ different things ([Factorials](../01-Counting%20Principles/03-factorial.md)) | 11!, 7! and 4! in the formula | — |
+| $`C(m+n,n)`$ | routes in all | 330 | — |
+| $`a`$, $`b`$ | a named corner: east, north | the cafe, 3 and 2 | moves the corner across the map |
+| $`C(a+b,b)`$ | routes from the start to that corner | 10 | more routes pass the corner |
+| $`k`$ | north steps in the first five blocks | 0 to 4 | picks one term of the sum |
+| $`\sum_{k=0}^{4}`$ | add the term over every $`k`$ | 15 + 100 + 150 + 60 + 5 | — |
 
 ### When it holds
 
@@ -98,9 +102,11 @@ The cafe sits 3 east and 2 north. Reaching it takes 5 blocks of which 2 go north
 
 After five blocks a walker has gone five blocks, whatever the route. So every route stands then on exactly one of the corners five blocks out: (5,0), (4,1), (3,2), (2,3) or (1,4), blocks east then north.
 
-If $k$ of the first five steps went north, that corner is 5−k east and k north, reached C(5, k) ways, and the remaining 6 blocks need 4−k north steps, C(6, 4−k) ways. The five groups hold 15, 100, 150, 60 and 5 routes, adding to 330.
+If $`k`$ of the first five steps went north, that corner is 5−k east and k north, reached C(5, k) ways, and the remaining 6 blocks need 4−k north steps, C(6, 4−k) ways. The five groups hold 15, 100, 150, 60 and 5 routes, adding to 330.
 
-$$C(11,\ 4)\ =\ \sum_{k=0}^{4} C(5,\ k)\ C(6,\ 4-k)$$
+```math
+C(11,\ 4)\ =\ \sum_{k=0}^{4} C(5,\ k)\ C(6,\ 4-k)
+```
 
 That is Vandermonde's identity ([Vandermonde's identity](../03-Binomial%20Coefficients%20and%20Identities/03-vandermonde-identity.md)) drawn on streets, and the middle group is the cafe's 150: counting through a corner and proving Vandermonde are one piece of work.
 

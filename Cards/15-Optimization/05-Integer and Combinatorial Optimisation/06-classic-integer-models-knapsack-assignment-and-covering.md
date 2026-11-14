@@ -33,27 +33,35 @@ Schematic. Real problems often mix two shapes, as Step 5 shows.
 
 ## The formula
 
-Here a **program** means a decision written as rules: something to make largest or smallest, plus the limits on it. It does not mean computer code. A **switch** $x_j$ is a variable that can only be 0 (no) or 1 (yes). Knapsack, the line-up, **maximises** tickets:
+Here a **program** means a decision written as rules: something to make largest or smallest, plus the limits on it. It does not mean computer code. A **switch** $`x_j`$ is a variable that can only be 0 (no) or 1 (yes). Knapsack, the line-up, **maximises** tickets:
 
-$$\max \sum_{j=1}^{60} v_j\,x_j \quad\text{subject to}\quad \sum_{j=1}^{60} w_j\,x_j \le B, \qquad x_j \in \{0, 1\}$$
+```math
+\max \sum_{j=1}^{60} v_j\,x_j \quad\text{subject to}\quad \sum_{j=1}^{60} w_j\,x_j \le B, \qquad x_j \in \{0, 1\}
+```
 
 **Read it aloud:** switch on the acts with the most tickets in total, keeping the sum of their fees within the budget.
 
-Assignment, the headliners, **maximises** crowd. The switch $x_{ij}$ is 1 if act $i$ plays slot $j$:
+Assignment, the headliners, **maximises** crowd. The switch $`x_{ij}`$ is 1 if act $`i`$ plays slot $`j`$:
 
-$$\max \sum_{i}\sum_{j} c_{ij}\,x_{ij} \quad\text{subject to}\quad \sum_{j} x_{ij} = 1 \text{ for each act } i, \qquad \sum_{i} x_{ij} = 1 \text{ for each slot } j, \qquad x_{ij} \in \{0, 1\}$$
+```math
+\max \sum_{i}\sum_{j} c_{ij}\,x_{ij} \quad\text{subject to}\quad \sum_{j} x_{ij} = 1 \text{ for each act } i, \qquad \sum_{i} x_{ij} = 1 \text{ for each slot } j, \qquad x_{ij} \in \{0, 1\}
+```
 
 **Read it aloud:** each act plays exactly one slot and each slot gets exactly one act, and the crowds of the chosen pairs add up to as much as possible.
 
 Covering, the first-aid posts, **minimises** cost:
 
-$$\min \sum_{j=1}^{6} q_j\,x_j \quad\text{subject to}\quad \sum_{j=1}^{6} a_{zj}\,x_j \ge 1 \text{ for each zone } z, \qquad x_j \in \{0, 1\}$$
+```math
+\min \sum_{j=1}^{6} q_j\,x_j \quad\text{subject to}\quad \sum_{j=1}^{6} a_{zj}\,x_j \ge 1 \text{ for each zone } z, \qquad x_j \in \{0, 1\}
+```
 
 **Read it aloud:** open the cheapest set of posts such that every zone has at least one open post that covers it.
 
-Routing, the van, **minimises** metres. The switch $x_{ij}$ is 1 if the van drives straight from stop $i$ to stop $j$:
+Routing, the van, **minimises** metres. The switch $`x_{ij}`$ is 1 if the van drives straight from stop $`i`$ to stop $`j`$:
 
-$$\min \sum_{i \ne j} d_{ij}\,x_{ij} \quad\text{subject to}\quad \sum_{j} x_{ij} = 1, \quad \sum_{i} x_{ij} = 1, \quad \sum_{i, j \in S} x_{ij} \le \lvert S\rvert - 1 \text{ for every group } S \text{ of 2 to } n-1 \text{ stops}, \quad x_{ij} \in \{0, 1\}$$
+```math
+\min \sum_{i \ne j} d_{ij}\,x_{ij} \quad\text{subject to}\quad \sum_{j} x_{ij} = 1, \quad \sum_{i} x_{ij} = 1, \quad \sum_{i, j \in S} x_{ij} \le \lvert S\rvert - 1 \text{ for every group } S \text{ of 2 to } n-1 \text{ stops}, \quad x_{ij} \in \{0, 1\}
+```
 
 **Read it aloud:** every stop has one leg out and one leg in, and no group of stops smaller than the whole site may hold a closed loop of its own.
 
@@ -61,18 +69,18 @@ The routing rules are the assignment rules plus one family of loop bans.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_j$, $x_{ij}$ | a switch: 1 for yes, 0 for no; one item $j$, or one pair from $i$ to $j$ | book act 46: $x_{46} = 1$ | — |
-| $v_j$ | act $j$'s draw, in tickets | act 46: 637 | the best total rises or stays |
-| $w_j$ | act $j$'s fee, in pounds | act 46: £4,500 | the best total falls or stays |
-| $B$ | the budget | £40,000 | rises: 5,704 tickets at £30,000, 8,456 at £50,000 |
-| $c_{ij}$ | crowd if act $i$ plays slot $j$, in hundreds of people | Lumen at Main 21:00: 88 | the best total rises or stays |
-| $q_j$ | the cost of first-aid post $j$ | P5: £5,700 | the best cost rises or stays |
-| $a_{zj}$, $z$ | 1 if post $j$ covers zone $z$, else 0; $z$ numbers the eight zones | P1 covers zones 3, 4 and 5 | more posts per zone: cheaper, or the same |
-| $d_{ij}$ | metres from stop $i$ to stop $j$ | gate to food court: 200 | the shortest route rises or stays |
-| $S$, $\lvert S\rvert$ | a group of stops, and how many it holds | gate, main stage, food court: 3 | — |
-| $n$ | how many stops | 6 | the number of routes grows as a factorial |
-| $p^*$ | the best value a whole-number plan reaches | 7,100 tickets | — |
-| $p_{\text{LP}}$ | the fractional bound: the best value when switches may take any value from 0 to 1 | 7,127 tickets | — |
+| $`x_j`$, $`x_{ij}`$ | a switch: 1 for yes, 0 for no; one item $`j`$, or one pair from $`i`$ to $`j`$ | book act 46: $`x_{46} = 1`$ | — |
+| $`v_j`$ | act $`j`$'s draw, in tickets | act 46: 637 | the best total rises or stays |
+| $`w_j`$ | act $`j`$'s fee, in pounds | act 46: £4,500 | the best total falls or stays |
+| $`B`$ | the budget | £40,000 | rises: 5,704 tickets at £30,000, 8,456 at £50,000 |
+| $`c_{ij}`$ | crowd if act $`i`$ plays slot $`j`$, in hundreds of people | Lumen at Main 21:00: 88 | the best total rises or stays |
+| $`q_j`$ | the cost of first-aid post $`j`$ | P5: £5,700 | the best cost rises or stays |
+| $`a_{zj}`$, $`z`$ | 1 if post $`j`$ covers zone $`z`$, else 0; $`z`$ numbers the eight zones | P1 covers zones 3, 4 and 5 | more posts per zone: cheaper, or the same |
+| $`d_{ij}`$ | metres from stop $`i`$ to stop $`j`$ | gate to food court: 200 | the shortest route rises or stays |
+| $`S`$, $`\lvert S\rvert`$ | a group of stops, and how many it holds | gate, main stage, food court: 3 | — |
+| $`n`$ | how many stops | 6 | the number of routes grows as a factorial |
+| $`p^*`$ | the best value a whole-number plan reaches | 7,100 tickets | — |
+| $`p_{\text{LP}}`$ | the fractional bound: the best value when switches may take any value from 0 to 1 | 7,127 tickets | — |
 
 ### When it holds
 
@@ -98,17 +106,17 @@ A booking is valid exactly when its fees fit the budget, which is what the singl
 
 **The bound.** Rank the acts by tickets per pound. Book them in that order until one does not fit. The best 16 by this ranking, listed in rank order in the output, use 75 of the 80 units of £500 and draw 6,782 tickets.
 
-The next act, number 43, costs £3,500 (7 units) and draws 483 tickets. Only 5 units are left, so the fractional plan books 5/7 of it, worth 345 tickets. That gives $p_{\text{LP}} = 7{,}127$.
+The next act, number 43, costs £3,500 (7 units) and draws 483 tickets. Only 5 units are left, so the fractional plan books 5/7 of it, worth 345 tickets. That gives $`p_{\text{LP}} = 7{,}127`$.
 
 [Branch and bound](03-branch-and-bound.md) proves that this fill, from the 1957 paper in Sources, is the best fractional plan, so by Step 0 no booking of whole acts can beat it.
 
-**The exact answer.** The [Dynamic programming](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/07-dynamic-programming.md) card solves a 15 kg rucksack with a table. Here the table has one row per act and one column per £500 of budget from 0 to 80: 4,860 cells. It gives $p^* = 7{,}100$ tickets from 16 acts, spending the whole £40,000, and since it covers every state it is a proof as well as an answer. A full list of bookings would need $2^{60}$, about $1.15 \times 10^{18}$, entries.
+**The exact answer.** The [Dynamic programming](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/07-dynamic-programming.md) card solves a 15 kg rucksack with a table. Here the table has one row per act and one column per £500 of budget from 0 to 80: 4,860 cells. It gives $`p^* = 7{,}100`$ tickets from 16 acts, spending the whole £40,000, and since it covers every state it is a proof as well as an answer. A full list of bookings would need $`2^{60}`$, about $`1.15 \times 10^{18}`$, entries.
 
 [Branch and bound](03-branch-and-bound.md), using the fractional bound to discard branches, visits 108 nodes and reaches the same 7,100. The bound sits only 27 tickets, 0.38 percent, above the best, which is why so much of the tree can be discarded.
 
 ### Step 2: assignment, exactly one per row and column
 
-Put the switches in a grid, one row per act and one column per slot. A grid with exactly one 1 in every row and every column is a pairing, and every pairing gives such a grid. Of the $2^{16} = 65{,}536$ possible grids of zeros and ones, 24 obey the rules, one for each of the 4! orderings.
+Put the switches in a grid, one row per act and one column per slot. A grid with exactly one 1 in every row and every column is a pairing, and every pairing gives such a grid. Of the $`2^{16} = 65{,}536`$ possible grids of zeros and ones, 24 obey the rules, one for each of the 4! orderings.
 
 | Crowd, hundreds | Main 21:00 | Main 19:00 | Tent 21:00 | Tent 19:00 |
 | --- | ---: | ---: | ---: | ---: |
@@ -166,9 +174,9 @@ Schematic: the legs and their metres, not the map.
 <details>
 <summary>Detailed proof: assignment plus every loop ban accepts exactly the routes</summary>
 
-Under "one out, one in" each stop has one successor and one predecessor, so following successors splits the stops into closed loops. If there are two or more, let $S$ be the stops of one of them: it has $\lvert S\rvert$ legs, all inside $S$, breaking the rule $\le \lvert S\rvert - 1$. So a setting obeying every rule is one loop through all $n$ stops: a route.
+Under "one out, one in" each stop has one successor and one predecessor, so following successors splits the stops into closed loops. If there are two or more, let $`S`$ be the stops of one of them: it has $`\lvert S\rvert`$ legs, all inside $`S`$, breaking the rule $`\le \lvert S\rvert - 1`$. So a setting obeying every rule is one loop through all $`n`$ stops: a route.
 
-Conversely, a route through all stops must leave any group $S$ of 2 to $n - 1$ stops, so at least one of the $\lvert S\rvert$ legs out of $S$ goes outside, and at most $\lvert S\rvert - 1$ stay inside. Every route obeys every rule. The bans come from the 1954 paper in Sources. Adding them only as loops appear, as in the table above, is still how large routing problems are solved.
+Conversely, a route through all stops must leave any group $`S`$ of 2 to $`n - 1`$ stops, so at least one of the $`\lvert S\rvert`$ legs out of $`S`$ goes outside, and at most $`\lvert S\rvert - 1`$ stay inside. Every route obeys every rule. The bans come from the 1954 paper in Sources. Adding them only as loops appear, as in the table above, is still how large routing problems are solved.
 
 </details>
 
@@ -198,7 +206,7 @@ The line-up: 60 acts, a budget of 80 units of £500, maximise tickets.
 | Rank by tickets per pound, book the best 16 | fees of the 16 listed in rank order in the output add to 75 units | 6,782 tickets |
 | Room left | 80 − 75 | 5 units |
 | Next act, number 43: 7 units, 483 tickets | 5/7 × 483 | 345 tickets |
-| Fractional bound $p_{\text{LP}}$ | 6,782 + 345 | 7,127 tickets |
+| Fractional bound $`p_{\text{LP}}`$ | 6,782 + 345 | 7,127 tickets |
 | Table, 60 acts by budget columns 0 to 80 | 4,860 cells | 7,100 tickets |
 | Branch and bound, as a check | 108 nodes | 7,100 tickets |
 | Gap | 7,127 − 7,100 | 27 tickets, 0.38 percent |
@@ -618,8 +626,8 @@ The two outputs match line for line.
 Lean proves the assignment and routing rules accept exactly the valid plans, at any size, and checks the festival's numbers.
 
 - A 0-1 grid with exactly one 1 in every row and every column is a pairing, and every pairing gives such a grid.
-- Of all the 0-1 grids with $n$ rows and $n$ columns, exactly $n!$ obey the assignment rules: 24 of 65,536 when $n = 4$.
-- Give every stop one next stop, never itself. The plan is one route through all $n$ stops exactly when it obeys every loop ban.
+- Of all the 0-1 grids with $`n`$ rows and $`n`$ columns, exactly $`n!`$ obey the assignment rules: 24 of 65,536 when $`n = 4`$.
+- Give every stop one next stop, never itself. The plan is one route through all $`n`$ stops exactly when it obeys every loop ban.
 - The 16 booked acts cost £40,000 and draw 7,100 tickets. The best 16 by tickets per pound use 75 units and draw 6,782.
 - 5/7 of act 43 is worth 345 tickets, so the fractional bound is 7,127, which is 27 above 7,100.
 - The best timetable draws 264 hundred, no timetable beats it, and none falls below 220. Each act grabbing its best free slot gets 252.
@@ -905,7 +913,7 @@ example : ∀ p ∈ ([1, 2, 3, 4, 5] : List (Fin 6)).permutations', 2450 ≤ tou
 
 - **Capital budgets.** Projects funded whole or not at all from a fixed sum: a knapsack, often with one limit per year.
 - **Airline crew scheduling.** Every flight must sit on at least one crew's costed sequence of duties: covering, with a row per flight.
-- **Ambulance and fire stations.** Every district within a target response time of an open station: covering, with the target time setting each $a_{zj}$.
+- **Ambulance and fire stations.** Every district within a target response time of an open station: covering, with the target time setting each $`a_{zj}`$.
 - **Junior doctors to posts, students to projects.** One person per post, scored by preference: assignment.
 - **Delivery rounds and school buses.** Each vehicle visits its stops once and returns: routing with loop bans, plus capacity and time limits.
 

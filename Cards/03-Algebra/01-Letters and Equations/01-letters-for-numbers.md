@@ -36,18 +36,20 @@ The lower line is one taxi, 3 + 2m. The upper line is two taxis on the same trip
 
 The fare, written F, in dollars for a ride of m miles:
 
-$$F = 3 + 2m$$
+```math
+F = 3 + 2m
+```
 
 **Read it aloud:** the fare is three dollars, plus two dollars for every mile.
 
 | Symbol | Plain meaning | In our example | Push it up and the fare… |
 | --- | --- | --- | --- |
-| $m$ | how many miles the ride is; you choose it | 6 | rises by $2 for each extra mile |
-| $2m$ | the mileage charge: 2 multiplied by m | $12 | — |
-| $3$ | the start fee, charged once however far you go | $3 | every fare lifts by the same amount, the line slides up |
-| $F$ | the fare on the meter | $15 | — |
-| $6 + 4m$ | two of these fares added together | $30 | — |
-| $2(3 + 2m)$ | the same two fares, written as double one fare | $30 | — |
+| $`m`$ | how many miles the ride is; you choose it | 6 | rises by $2 for each extra mile |
+| $`2m`$ | the mileage charge: 2 multiplied by m | $12 | — |
+| $`3`$ | the start fee, charged once however far you go | $3 | every fare lifts by the same amount, the line slides up |
+| $`F`$ | the fare on the meter | $15 | — |
+| $`6 + 4m`$ | two of these fares added together | $30 | — |
+| $`2(3 + 2m)`$ | the same two fares, written as double one fare | $30 | — |
 
 Each piece separated by a plus or minus sign is a **term**. So 3 + 2m has two terms: the number 3, and the term 2m. The 2 sitting in front of the m is the **coefficient**: how many of that letter you have.
 
@@ -97,7 +99,9 @@ Terms that carry the same letter — or no letter at all — are **like terms**,
 
 Two identical fares is also just double one fare:
 
-$$2(3 + 2m)$$
+```math
+2(3 + 2m)
+```
 
 A bracket means do that part first, and a number written against a bracket multiplies it. Doubling a total is the same as doubling each part of it: double the 3 to get 6, double the 2m to get 4m. So 2(3 + 2m) is 6 + 4m — the same expression Step 2 reached by a different route.
 

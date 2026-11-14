@@ -28,26 +28,32 @@ Drawn at 40°, not 5°, so the shapes separate; radius 1 = 200 units. Pivot O (1
 
 Notation first. The angle is x, in radians, so 180° is π radians. Sine, cosine and tangent are the right-triangle ratios of [Sine, cosine and tangent](01-right-triangle-trigonometry.md). The sign ≈ reads "is approximately".
 
-$$\sin x < x < \tan x \qquad \text{for } 0 < x < \tfrac{\pi}{2}$$
+```math
+\sin x < x < \tan x \qquad \text{for } 0 < x < \tfrac{\pi}{2}
+```
 
 **Read it aloud:** up to a right angle, in radians, the sine is less than the angle, and the angle less than the tangent.
 
 Dividing by x (Step 4) and putting a floor, a lower bound, under the cosine (Step 5) gives a chain whose links all sit near 1 when x is small, and so the small-angle rules:
 
-$$1 - \frac{x^2}{2} < \cos x < \frac{\sin x}{x} < 1 < \frac{\tan x}{x} < \frac{1}{\cos x}$$
+```math
+1 - \frac{x^2}{2} < \cos x < \frac{\sin x}{x} < 1 < \frac{\tan x}{x} < \frac{1}{\cos x}
+```
 
-$$\sin x \approx x, \qquad \tan x \approx x, \qquad \cos x \approx 1 - \frac{x^2}{2}$$
+```math
+\sin x \approx x, \qquad \tan x \approx x, \qquad \cos x \approx 1 - \frac{x^2}{2}
+```
 
-The chain bounds each error: the sine falls short of x by less than the share $x^2/2$ of x, the tangent overshoots x by less than the share $1/\cos x - 1$, and the cosine overshoots its rule by less than $x^4/8$. At 5°: bounds 0.003808, 0.003820, 0.0000072; true errors 0.001269, 0.002546, 0.0000024.
+The chain bounds each error: the sine falls short of x by less than the share $`x^2/2`$ of x, the tangent overshoots x by less than the share $`1/\cos x - 1`$, and the cosine overshoots its rule by less than $`x^4/8`$. At 5°: bounds 0.003808, 0.003820, 0.0000072; true errors 0.001269, 0.002546, 0.0000024.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | the angle in radians: the arc it cuts from a circle of radius 1 | 5° = 0.087266 | sine's and tangent's errors, as shares of x, grow roughly as x squared |
-| $\sin x$ | sideways offset of the arc's far end | 0.087156 | falls further below x |
-| $\cos x$ | depth of the arc's far end below the centre | 0.996195 | — |
-| $\tan x$ | sine ÷ cosine: the stretch AT along the level line | 0.087489 | climbs further above x |
-| $\pi$ | circumference over diameter | 180° is π radians | — |
-| $L$ | the pendulum's length | 1000 mm | lengths grow; ratios stay |
+| $`x`$ | the angle in radians: the arc it cuts from a circle of radius 1 | 5° = 0.087266 | sine's and tangent's errors, as shares of x, grow roughly as x squared |
+| $`\sin x`$ | sideways offset of the arc's far end | 0.087156 | falls further below x |
+| $`\cos x`$ | depth of the arc's far end below the centre | 0.996195 | — |
+| $`\tan x`$ | sine ÷ cosine: the stretch AT along the level line | 0.087489 | climbs further above x |
+| $`\pi`$ | circumference over diameter | 180° is π radians | — |
+| $`L`$ | the pendulum's length | 1000 mm | lengths grow; ratios stay |
 | O, A, B, C, T | pivot, lowest point, bob, foot of B's offset on OA, and where OB extended meets the level line | the picture | — |
 
 ### When it holds
@@ -66,47 +72,49 @@ Comparing the curved arc with the straight stretch AT needs a theory of measurin
 
 ### Step 1: three shapes on one circle
 
-Centre a circle of radius 1 on the pivot O. A is the lowest point, B the bob, turned x from OA. Drop a line from B square onto OA, at C. Triangle OCB has hypotenuse 1, so CB is $\sin x$ and OC is $\cos x$.
+Centre a circle of radius 1 on the pivot O. A is the lowest point, B the bob, turned x from OA. Drop a line from B square onto OA, at C. Triangle OCB has hypotenuse 1, so CB is $`\sin x`$ and OC is $`\cos x`$.
 
-The level line through A touches the circle, so it meets the radius OA square on ([Angles at a circle](../02-Circles%20and%20Solids/03-angles-in-a-circle.md)). Carry OB on to meet it at T. Triangle OAT is right-angled at A with OA = 1, so AT = $\tan x$.
+The level line through A touches the circle, so it meets the radius OA square on ([Angles at a circle](../02-Circles%20and%20Solids/03-angles-in-a-circle.md)). Carry OB on to meet it at T. Triangle OAT is right-angled at A with OA = 1, so AT = $`\tan x`$.
 
 ### Step 2: three areas
 
-- **Triangle OAB:** base OA = 1, height CB, area $\tfrac12 \sin x$ ([Area](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md)).
-- **Sector OAB:** half the radius squared times the angle, $\tfrac12 x$ ([Radians](../02-Circles%20and%20Solids/02-radians-arcs-and-sectors.md)).
-- **Triangle OAT:** legs 1 and $\tan x$, area $\tfrac12 \tan x$.
+- **Triangle OAB:** base OA = 1, height CB, area $`\tfrac12 \sin x`$ ([Area](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md)).
+- **Sector OAB:** half the radius squared times the angle, $`\tfrac12 x`$ ([Radians](../02-Circles%20and%20Solids/02-radians-arcs-and-sectors.md)).
+- **Triangle OAT:** legs 1 and $`\tan x`$, area $`\tfrac12 \tan x`$.
 
 At 5°: 0.043578, 0.043633 and 0.043744.
 
 ### Step 3: each shape sits inside the next
 
-Triangle OAB is the sector minus the sliver beyond chord AB. Triangle OAT is the sector plus the corner beyond the arc. Both pieces have area above zero, so $\tfrac12 \sin x < \tfrac12 x < \tfrac12 \tan x$. Double each part: $\sin x < x < \tan x$.
+Triangle OAB is the sector minus the sliver beyond chord AB. Triangle OAT is the sector plus the corner beyond the arc. Both pieces have area above zero, so $`\tfrac12 \sin x < \tfrac12 x < \tfrac12 \tan x`$. Double each part: $`\sin x < x < \tan x`$.
 
 <details>
 <summary>Detailed proof: why the shapes nest, and why strictly</summary>
 
 Call a point's **depth** its distance below O along OA. Depth never exceeds distance from O, as a leg never exceeds the hypotenuse.
 
-**Sector inside triangle OAT.** Both are points inside angle AOB: the sector those within 1 of O, the triangle those with depth at most 1. The first forces the second. The triangle's points near T lie about 1/$\cos x$ from O, more than 1, so they are a leftover of positive area.
+**Sector inside triangle OAT.** Both are points inside angle AOB: the sector those within 1 of O, the triangle those with depth at most 1. The first forces the second. The triangle's points near T lie about 1/$`\cos x`$ from O, more than 1, so they are a leftover of positive area.
 
-**Triangle OAB inside the sector.** A sector narrower than a half turn has no dents: the straight path between any two of its points stays inside. Holding O, A and B, it holds the whole triangle. The arc's midpoint is 1 from O, the chord's only $\cos(x/2)$: points between lie in the sector, not the triangle.
+**Triangle OAB inside the sector.** A sector narrower than a half turn has no dents: the straight path between any two of its points stays inside. Holding O, A and B, it holds the whole triangle. The arc's midpoint is 1 from O, the chord's only $`\cos(x/2)`$: points between lie in the sector, not the triangle.
 
 </details>
 
 ### Step 4: divide through
 
-Divide $\sin x < x$ by the positive x: $\sin x / x < 1$. Multiply $x < \sin x / \cos x$ by the positive $\cos x / x$: $\cos x < \sin x / x$. Divide that pair by $\cos x$: $1 < \tan x / x < 1/\cos x$. At 5°: 0.996195 < 0.998731 < 1 < 1.002546 < 1.003820.
+Divide $`\sin x < x`$ by the positive x: $`\sin x / x < 1`$. Multiply $`x < \sin x / \cos x`$ by the positive $`\cos x / x`$: $`\cos x < \sin x / x`$. Divide that pair by $`\cos x`$: $`1 < \tan x / x < 1/\cos x`$. At 5°: 0.996195 < 0.998731 < 1 < 1.002546 < 1.003820.
 
 ### Step 5: how far the cosine sits below 1
 
-The half-angle rule of [Trig identities](03-trig-identities.md) gives $1 - \cos x = 2\sin^2(x/2)$, twice the squared sine of half the angle. Step 3 at half the angle gives $\sin(x/2) < x/2$, so $1 - \cos x < x^2/2$: the floor, 0.996192 against 0.996195 at 5°. Halve the angle and the cosine's distance below 1 roughly quarters. The bob's rise, $L(1 - \cos x)$, is 3.805 mm; the rule gives 3.808 mm.
+The half-angle rule of [Trig identities](03-trig-identities.md) gives $`1 - \cos x = 2\sin^2(x/2)`$, twice the squared sine of half the angle. Step 3 at half the angle gives $`\sin(x/2) < x/2`$, so $`1 - \cos x < x^2/2`$: the floor, 0.996192 against 0.996195 at 5°. Halve the angle and the cosine's distance below 1 roughly quarters. The bob's rise, $`L(1 - \cos x)`$, is 3.805 mm; the rule gives 3.808 mm.
 
 <details>
 <summary>Detailed proof: the cosine's ceiling, $x^4/8$ above the rule</summary>
 
-Step 4 at half the angle gives $\sin(x/2) > (x/2)\cos(x/2)$. Square and double:
-$$1 - \cos x = 2\sin^2(x/2) > \frac{x^2}{2}\cos^2(x/2) = \frac{x^2}{2}\left(1 - \sin^2(x/2)\right) > \frac{x^2}{2}\left(1 - \frac{x^2}{4}\right),$$
-so $\cos x < 1 - x^2/2 + x^4/8$.
+Step 4 at half the angle gives $`\sin(x/2) > (x/2)\cos(x/2)`$. Square and double:
+
+$`\displaystyle 1 - \cos x = 2\sin^2(x/2) > \frac{x^2}{2}\cos^2(x/2) = \frac{x^2}{2}\left(1 - \sin^2(x/2)\right) > \frac{x^2}{2}\left(1 - \frac{x^2}{4}\right),`$
+
+so $`\cos x < 1 - x^2/2 + x^4/8`$.
 
 </details>
 
@@ -148,7 +156,7 @@ On the clock, the rules put the pull 0.127% high and the rise at 3.808 mm for 3.
 | --- | --- | --- |
 | Degrees for radians: sin 5° ≈ 5 | 5, which is 57.30 times x | Only radians make the angle an arc |
 | The angle for its sine at 40° | 0.698132 for 0.642788, 8.61% high | 40° is not small |
-| The rise by $x^2$, not $x^2/2$ | 7.615 mm, not 3.805 mm | The half comes from $2\sin^2(x/2)$ |
+| The rise by $`x^2`$, not $`x^2/2`$ | 7.615 mm, not 3.805 mm | The half comes from $`2\sin^2(x/2)`$ |
 
 The code prints all three.
 
@@ -362,9 +370,9 @@ The two outputs match line for line.
 
 Lean proves the card's three inequalities for every angle x in radians strictly between 0 and a right angle.
 
-- The sandwich: $\sin x < x < \tan x$.
-- The chain: $1 - x^2/2 < \cos x < \sin x / x < 1 < \tan x / x < 1/\cos x$.
-- The cosine's ceiling: the cosine overshoots its rule $1 - x^2/2$ by less than $x^4/8$.
+- The sandwich: $`\sin x < x < \tan x`$.
+- The chain: $`1 - x^2/2 < \cos x < \sin x / x < 1 < \tan x / x < 1/\cos x`$.
+- The cosine's ceiling: the cosine overshoots its rule $`1 - x^2/2`$ by less than $`x^4/8`$.
 
 The 5° and 40° decimals, the pendulum's lengths, both roads and Archimedes' 96 sides are left to the Python and Rust checks.
 
@@ -449,7 +457,7 @@ example : 96 * (π / 96) = π := by ring
 > Guess first, then run it.
 > - **Break the triple-angle rule.** Change `4 * s ** 3` to `3 * s ** 3`. Road one drifts to 0.086930 and the first assert stops the run.
 > - **Feed in degrees.** Change `5 * k * PI / 180` to `5 * k`. Road two walks 5 radians to a sine of −0.958924; the first assert stops it.
-> - **Tighten the cosine's ceiling.** Change `y ** 4 / 8` to `y ** 4 / 24`: it still passes; at `/ 25` the chain assert stops it. The sharp ceiling is $x^4/24$, beyond this card's geometry.
+> - **Tighten the cosine's ceiling.** Change `y ** 4 / 8` to `y ** 4 / 24`: it still passes; at `/ 25` the chain assert stops it. The sharp ceiling is $`x^4/24`$, beyond this card's geometry.
 
 ---
 
@@ -459,8 +467,8 @@ example : 96 * (π / 96) = π := by ring
 > **Using sin x ≈ x with the angle in degrees.** Only in radians is the angle an arc length. sin 5° is 0.087156, not 5, which is 57.30 times x. Multiply degrees by π ÷ 180 first.
 >
 > - **Trusting it at any angle.** At 40° the angle is 8.61% above its sine.
-> - **Dropping the half.** $\cos x \approx 1 - x^2$ puts the rise at 7.615 mm, not 3.805 mm.
-> - **Stopping at cos x ≈ 1.** It says the bob never rises; heights need the $x^2/2$.
+> - **Dropping the half.** $`\cos x \approx 1 - x^2`$ puts the rise at 7.615 mm, not 3.805 mm.
+> - **Stopping at cos x ≈ 1.** It says the bob never rises; heights need the $`x^2/2`$.
 > - **Carrying it past a right angle.** At 100° the tangent is −5.671282, below x = 1.745329.
 
 ---
@@ -468,11 +476,11 @@ example : 96 * (π / 96) = π := by ring
 ## Where you meet it in real life
 
 - **Pendulum clocks.** With the angle for its sine, the pull back grows in step with the distance along the arc, so a swing's timing stops depending on its size; clock pendulums keep to small, steady arcs.
-- **Sighting and surveying.** A width divided by its distance is nearly the angle it spans, in radians, because $\tan x \approx x$.
+- **Sighting and surveying.** A width divided by its distance is nearly the angle it spans, in radians, because $`\tan x \approx x`$.
 - **Archimedes' π.** At an angle of π ÷ 96, the sandwich times 96 puts π between the half-perimeters of regular 96-sided figures inside and outside a circle of radius 1: 3.141032 < π < 3.142715, from square roots alone. Archimedes, rounding safely, published 3 10/71 and 3 1/7: 3.140845 and 3.142857.
 
 > **Say it back**
-> On a circle of radius 1, a triangle, the slice of circle cut by an angle x in radians, and a larger triangle nest, with areas half of sin x, x and tan x, so sin x < x < tan x. Dividing by x traps sin x ÷ x between cos x and 1, and cos x lies within $x^2/2$ of 1. A 5° pendulum's angle, 0.0873 radians, stands in for its sine, 0.0872, at a cost of 0.127%.
+> On a circle of radius 1, a triangle, the slice of circle cut by an angle x in radians, and a larger triangle nest, with areas half of sin x, x and tan x, so sin x < x < tan x. Dividing by x traps sin x ÷ x between cos x and 1, and cos x lies within $`x^2/2`$ of 1. A 5° pendulum's angle, 0.0873 radians, stands in for its sine, 0.0872, at a cost of 0.127%.
 
 ---
 

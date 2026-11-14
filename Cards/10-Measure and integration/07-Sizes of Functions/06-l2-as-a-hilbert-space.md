@@ -41,48 +41,54 @@ Caption: the bars are the seven readings. The first line is the best constant, 5
 
 ## The formula
 
-Notation first, in words. A measure space $(\Omega,\mathcal F,\mu)$ is a set of points $\Omega$, the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ giving each such set a size ([Lp spaces](01-lp-spaces.md) has the reminder).
+Notation first, in words. A measure space $`(\Omega,\mathcal F,\mu)`$ is a set of points $`\Omega`$, the collection $`\mathcal F`$ of sets we allow ourselves to measure, and a measure $`\mu`$ giving each such set a size ([Lp spaces](01-lp-spaces.md) has the reminder).
 
-Here $\Omega$ is the seven days and $\mu$ is **counting measure**, weight 1 per day; a second run uses the uniform probability $P$, weight 1/7 per day. **L2** is the space of measurable functions whose square has a finite integral, with two functions counted as one when they agree almost everywhere, that is, except on a set of measure zero.
+Here $`\Omega`$ is the seven days and $`\mu`$ is **counting measure**, weight 1 per day; a second run uses the uniform probability $`P`$, weight 1/7 per day. **L2** is the space of measurable functions whose square has a finite integral, with two functions counted as one when they agree almost everywhere, that is, except on a set of measure zero.
 
 The **inner product** of two functions in L2 multiplies them point by point and integrates:
 
-$$\langle f, g\rangle = \int_\Omega f\,g \; d\mu, \qquad \|f\|_2 = \sqrt{\langle f, f\rangle}.$$
+```math
+\langle f, g\rangle = \int_\Omega f\,g \; d\mu, \qquad \|f\|_2 = \sqrt{\langle f, f\rangle}.
+```
 
 **Read it aloud:** the inner product of f and g is the integral of their product; the length of f is the square root of its inner product with itself.
 
-On the seven days under counting measure the integral is a plain sum: the dot product of two lists. Hölder's inequality at p = 2 ([Holder's inequality](02-holders-inequality.md)), here called the **Cauchy–Schwarz inequality**, keeps it finite: $|\langle f,g\rangle| \le \|f\|_2\,\|g\|_2$. Here p is the exponent of the Lp size: the p-th root of the integral of the p-th power.
+On the seven days under counting measure the integral is a plain sum: the dot product of two lists. Hölder's inequality at p = 2 ([Holder's inequality](02-holders-inequality.md)), here called the **Cauchy–Schwarz inequality**, keeps it finite: $`|\langle f,g\rangle| \le \|f\|_2\,\|g\|_2`$. Here p is the exponent of the Lp size: the p-th root of the integral of the p-th power.
 
 Two functions are **orthogonal**, or perpendicular, when their inner product is 0.
 
-A **subspace** $M$ is a family of functions closed under adding and scaling. It is **closed** when the limit, in L2 length, of any sequence of members is again a member. The **projection theorem**:
+A **subspace** $`M`$ is a family of functions closed under adding and scaling. It is **closed** when the limit, in L2 length, of any sequence of members is again a member. The **projection theorem**:
 
-$$\hat f \in M,\qquad \|f - \hat f\|_2 = \min_{h \in M} \|f - h\|_2, \qquad \langle f - \hat f,\, h\rangle = 0 \ \text{ for every } h \in M.$$
+```math
+\hat f \in M,\qquad \|f - \hat f\|_2 = \min_{h \in M} \|f - h\|_2, \qquad \langle f - \hat f,\, h\rangle = 0 \ \text{ for every } h \in M.
+```
 
 **Read it aloud:** for a closed subspace M, some member f-hat of M sits closest to f, it is the only one, and the miss f minus f-hat is perpendicular to every member of M.
 
-Consequently the length splits like the sides of a right triangle, $\|f\|_2^2 = \|\hat f\|_2^2 + \|f-\hat f\|_2^2$.
+Consequently the length splits like the sides of a right triangle, $`\|f\|_2^2 = \|\hat f\|_2^2 + \|f-\hat f\|_2^2`$.
 
-A **linear rule** $\varphi$ turns each function into a number and respects adding and scaling. It is **continuous**, or **bounded**, when some constant C has $|\varphi(f)| \le C\,\|f\|_2$ for every f; the smallest such C is the rule's size $\|\varphi\|$. The **Riesz representation theorem**:
+A **linear rule** $`\varphi`$ turns each function into a number and respects adding and scaling. It is **continuous**, or **bounded**, when some constant C has $`|\varphi(f)| \le C\,\|f\|_2`$ for every f; the smallest such C is the rule's size $`\|\varphi\|`$. The **Riesz representation theorem**:
 
-$$\varphi(f) = \langle f, g\rangle \ \text{ for every } f \text{ in L2}, \qquad \|\varphi\| = \|g\|_2 .$$
+```math
+\varphi(f) = \langle f, g\rangle \ \text{ for every } f \text{ in L2}, \qquad \|\varphi\| = \|g\|_2 .
+```
 
 **Read it aloud:** every continuous linear rule on L2 is the inner product with one function g, found once and for all, and the rule's size is the length of g.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\mathcal F$ | the points, and the sets we allow ourselves to measure | the seven days; every set of days | more days, more directions |
-| $\mu$, $P$, $\lambda$ | measures: counting, uniform probability, Lebesgue length | 1 per day; 1/7 per day; length on [0, 1] in What breaks | heavier weights stretch every length |
-| $f$, $h$, $u$, $v$ | functions in L2 | f is the wind week in m/s; h is any other week; u, v: any two | — |
-| $\langle f, g\rangle$ | the inner product: the integral of the product | ⟨f, f⟩ = 203 | — |
-| $\|f\|_2$ | the length: square root of ⟨f, f⟩ | 14.2478 | — |
-| $M$ | a closed subspace: the family of allowed fits | constant weeks; weeks with one weekday level and one weekend level | a bigger family, a shorter miss |
-| $\hat f$ | the projection: the member of M closest to f | 5 every day; or 24/5 on weekdays and 11/2 at the weekend | — |
-| $d$, $m_n$, $m_k$, $m_0$, $r$, $t$, $n$ | in the proof: the shortest distance from f to M, members of M closing in on it, a member whose miss is perpendicular, the miss $f - \hat f$, and a slide size; n also sets the ramp width 1/n | d = 5.2915 for the constants | — |
-| $\varphi$, $C$, $\|\varphi\|$ | a continuous linear rule; any constant with the rule at most C times the length; its size, the least such C | weekend mean minus weekday mean: 7/10 on f; size 0.8367 | — |
-| $g$ | the Riesz representer: the function whose inner product is the rule | −1/5 on each weekday, 1/2 on Saturday and Sunday | — |
-| $N$, $z$, $\hat u$, $g'$ | in the proof: the rule's kernel, where it gives 0, a direction perpendicular to it, u dropped onto N, and a rival representer | z is a multiple of g | — |
-| $\mathbf 1$, $w$, $c$ | the constant function 1, the weekend indicator (one on Saturday and Sunday, zero off them), and a constant | c = 5 is the best constant | — |
+| $`\Omega`$, $`\mathcal F`$ | the points, and the sets we allow ourselves to measure | the seven days; every set of days | more days, more directions |
+| $`\mu`$, $`P`$, $`\lambda`$ | measures: counting, uniform probability, Lebesgue length | 1 per day; 1/7 per day; length on [0, 1] in What breaks | heavier weights stretch every length |
+| $`f`$, $`h`$, $`u`$, $`v`$ | functions in L2 | f is the wind week in m/s; h is any other week; u, v: any two | — |
+| $`\langle f, g\rangle`$ | the inner product: the integral of the product | ⟨f, f⟩ = 203 | — |
+| $`\Vert f\Vert_2`$ | the length: square root of ⟨f, f⟩ | 14.2478 | — |
+| $`M`$ | a closed subspace: the family of allowed fits | constant weeks; weeks with one weekday level and one weekend level | a bigger family, a shorter miss |
+| $`\hat f`$ | the projection: the member of M closest to f | 5 every day; or 24/5 on weekdays and 11/2 at the weekend | — |
+| $`d`$, $`m_n`$, $`m_k`$, $`m_0`$, $`r`$, $`t`$, $`n`$ | in the proof: the shortest distance from f to M, members of M closing in on it, a member whose miss is perpendicular, the miss $`f - \hat f`$, and a slide size; n also sets the ramp width 1/n | d = 5.2915 for the constants | — |
+| $`\varphi`$, $`C`$, $`\Vert\varphi\Vert`$ | a continuous linear rule; any constant with the rule at most C times the length; its size, the least such C | weekend mean minus weekday mean: 7/10 on f; size 0.8367 | — |
+| $`g`$ | the Riesz representer: the function whose inner product is the rule | −1/5 on each weekday, 1/2 on Saturday and Sunday | — |
+| $`N`$, $`z`$, $`\hat u`$, $`g'`$ | in the proof: the rule's kernel, where it gives 0, a direction perpendicular to it, u dropped onto N, and a rival representer | z is a multiple of g | — |
+| $`\mathbf 1`$, $`w`$, $`c`$ | the constant function 1, the weekend indicator (one on Saturday and Sunday, zero off them), and a constant | c = 5 is the best constant | — |
 
 ### When it holds
 
@@ -97,23 +103,25 @@ $$\varphi(f) = \langle f, g\rangle \ \text{ for every } f \text{ in L2}, \qquad 
 
 ### Step 0: the length comes from an inner product, and that gives a right angle
 
-The L2 length is built from an inner product, so the expansion of arrow geometry holds for any two functions u and v: $\|u+v\|_2^2 = \|u\|_2^2 + 2\langle u,v\rangle + \|v\|_2^2$. Everything below is that expansion used three times, plus completeness to make a limit exist.
+The L2 length is built from an inner product, so the expansion of arrow geometry holds for any two functions u and v: $`\|u+v\|_2^2 = \|u\|_2^2 + 2\langle u,v\rangle + \|v\|_2^2`$. Everything below is that expansion used three times, plus completeness to make a limit exist.
 
 ### Step 1: the parallelogram law
 
 Add the expansions for u + v and u − v. The cross terms cancel:
 
-$$\|u+v\|_2^2 + \|u-v\|_2^2 = 2\|u\|_2^2 + 2\|v\|_2^2 .$$
+```math
+\|u+v\|_2^2 + \|u-v\|_2^2 = 2\|u\|_2^2 + 2\|v\|_2^2 .
+```
 
 With u and v the indicators of Monday and Tuesday, the left side is 4.0000 against 4 at p = 2, but 8.0000 at p = 1 and 3.1748 at p = 3. A size obeys the law exactly when it comes from an inner product, and among the Lp sizes only p = 2 does: that is why this card is about L2.
 
 ### Step 2: fits that close in on the best distance close in on each other
 
-Let d be the shortest distance from f to M, the value the misses approach from above. Pick members $m_n$ of M whose squared misses are within 1/n of $d^2$. The midpoint of any two of them is in M, so its miss is at least d, and the parallelogram law then forces the members themselves together: the squared distance between $m_n$ and $m_k$ is at most 2/n + 2/k. The sequence settles down.
+Let d be the shortest distance from f to M, the value the misses approach from above. Pick members $`m_n`$ of M whose squared misses are within 1/n of $`d^2`$. The midpoint of any two of them is in M, so its miss is at least d, and the parallelogram law then forces the members themselves together: the squared distance between $`m_n`$ and $`m_k`$ is at most 2/n + 2/k. The sequence settles down.
 
 ### Step 3: completeness supplies the limit, closedness keeps it in M
 
-By Riesz–Fischer ([Riesz-Fischer](05-completeness-of-lp.md)) the sequence has a limit $\hat f$ in L2. Because M is closed, the limit is in M, and its miss is exactly d.
+By Riesz–Fischer ([Riesz-Fischer](05-completeness-of-lp.md)) the sequence has a limit $`\hat f`$ in L2. Because M is closed, the limit is in M, and its miss is exactly d.
 
 ### Step 4: the miss is perpendicular to M
 
@@ -145,7 +153,9 @@ The proof's road does generalise. The **kernel** N of the rule, the functions it
 
 A rule that is not identically 0 leaves some function u outside N. Drop u onto N by the projection theorem; the miss z is perpendicular to N and not zero. Every function f splits as a member of N plus a multiple of z, the multiple being φ(f)/φ(z). Taking the inner product with z kills the N part and leaves
 
-$$\varphi(f) = \Big\langle f,\ \tfrac{\varphi(z)}{\|z\|_2^2}\, z\Big\rangle .$$
+```math
+\varphi(f) = \Big\langle f,\ \tfrac{\varphi(z)}{\|z\|_2^2}\, z\Big\rangle .
+```
 
 That bracketed multiple of z is g. The code does this in exact fractions, with u the Monday indicator and the kernel's basis made perpendicular by Gram–Schmidt ([Gram-Schmidt](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md)), and lands on the same g: −1/5 on weekdays, 1/2 at the weekend.
 
@@ -156,26 +166,26 @@ The representer depends on the measure. Under the uniform probability, each day'
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega,\mathcal F,\mu)$ is a measure space and L2 is the space of real measurable functions with $\int f^2\,d\mu < \infty$, functions equal almost everywhere counted as one.
+**Setting.** $`(\Omega,\mathcal F,\mu)`$ is a measure space and L2 is the space of real measurable functions with $`\int f^2\,d\mu < \infty`$, functions equal almost everywhere counted as one.
 
-**L2 is an inner product space.** For f, g in L2, $|fg| \le \tfrac12(f^2 + g^2)$ at each point, so the inner product is finite. It is symmetric, linear in each slot, and $\langle f,f\rangle = 0$ exactly when $f = 0$ almost everywhere, since a function of zero or more with integral zero vanishes almost everywhere. Cauchy–Schwarz is Hölder at p = q = 2 ([Holder's inequality](02-holders-inequality.md)). The length $\|f\|_2$ is the p = 2 norm, which obeys the triangle inequality by [Minkowski's inequality](03-minkowskis-inequality.md). By [Riesz-Fischer](05-completeness-of-lp.md), every Cauchy sequence in L2 (one whose members get as close to each other as you like) converges in L2. An inner product space complete in its length is a **Hilbert space**, so L2 is one.
+**L2 is an inner product space.** For f, g in L2, $`|fg| \le \tfrac12(f^2 + g^2)`$ at each point, so the inner product is finite. It is symmetric, linear in each slot, and $`\langle f,f\rangle = 0`$ exactly when $`f = 0`$ almost everywhere, since a function of zero or more with integral zero vanishes almost everywhere. Cauchy–Schwarz is Hölder at p = q = 2 ([Holder's inequality](02-holders-inequality.md)). The length $`\|f\|_2`$ is the p = 2 norm, which obeys the triangle inequality by [Minkowski's inequality](03-minkowskis-inequality.md). By [Riesz-Fischer](05-completeness-of-lp.md), every Cauchy sequence in L2 (one whose members get as close to each other as you like) converges in L2. An inner product space complete in its length is a **Hilbert space**, so L2 is one.
 
-**Expansion and parallelogram law.** By linearity and symmetry, $\|u \pm v\|_2^2 = \|u\|_2^2 \pm 2\langle u,v\rangle + \|v\|_2^2$. Adding the two signs gives the parallelogram law.
+**Expansion and parallelogram law.** By linearity and symmetry, $`\|u \pm v\|_2^2 = \|u\|_2^2 \pm 2\langle u,v\rangle + \|v\|_2^2`$. Adding the two signs gives the parallelogram law.
 
-**Projection theorem.** Let M be a closed subspace, f in L2, and $d = \inf_{h\in M}\|f-h\|_2$, the infimum (greatest lower bound) of the distances from f to members of M, finite since 0 is in M.
-1. *A minimising sequence.* For each n choose $m_n$ in M with $\|f-m_n\|_2^2 < d^2 + 1/n$, possible by the definition of an infimum.
-2. *It is Cauchy.* Apply the parallelogram law to $u = f - m_n$, $v = f - m_k$: $\|m_k - m_n\|_2^2 = 2\|f-m_n\|_2^2 + 2\|f-m_k\|_2^2 - 4\|f - \tfrac12(m_n+m_k)\|_2^2$. The midpoint $\tfrac12(m_n+m_k)$ is in M, a subspace, so the last norm is at least d. Hence $\|m_k-m_n\|_2^2 < 2(d^2+1/n) + 2(d^2+1/k) - 4d^2 = 2/n + 2/k$.
-3. *The limit exists and is in M.* L2 is complete, so $m_n \to \hat f$ in L2. M is closed, so $\hat f \in M$.
-4. *It attains d.* By Minkowski, $\big|\|f-m_n\|_2 - \|f-\hat f\|_2\big| \le \|m_n - \hat f\|_2 \to 0$, so $\|f - \hat f\|_2 = d$.
-5. *The miss is perpendicular.* Put $r = f - \hat f$ and take h in M with $h \ne 0$. For every real t, $\hat f + th \in M$, so $d^2 \le \|r - th\|_2^2 = d^2 - 2t\langle r,h\rangle + t^2\|h\|_2^2$. Choose $t = \langle r,h\rangle/\|h\|_2^2$: then $0 \le -\langle r,h\rangle^2/\|h\|_2^2$, which forces $\langle r,h\rangle = 0$.
-6. *Perpendicular implies closest, and unique.* If $m_0 \in M$ and $f - m_0$ is perpendicular to M, then for every h in M, $m_0 - h \in M$ and the expansion gives $\|f-h\|_2^2 = \|f-m_0\|_2^2 + \|m_0-h\|_2^2$. So $m_0$ is closest, and any other closest h has $\|m_0-h\|_2 = 0$, that is, $h = m_0$ almost everywhere. With h = 0 this is Pythagoras, $\|f\|_2^2 = \|\hat f\|_2^2 + \|f-\hat f\|_2^2$. ∎
+**Projection theorem.** Let M be a closed subspace, f in L2, and $`d = \inf_{h\in M}\|f-h\|_2`$, the infimum (greatest lower bound) of the distances from f to members of M, finite since 0 is in M.
+1. *A minimising sequence.* For each n choose $`m_n`$ in M with $`\|f-m_n\|_2^2 < d^2 + 1/n`$, possible by the definition of an infimum.
+2. *It is Cauchy.* Apply the parallelogram law to $`u = f - m_n`$, $`v = f - m_k`$: $`\|m_k - m_n\|_2^2 = 2\|f-m_n\|_2^2 + 2\|f-m_k\|_2^2 - 4\|f - \tfrac12(m_n+m_k)\|_2^2`$. The midpoint $`\tfrac12(m_n+m_k)`$ is in M, a subspace, so the last norm is at least d. Hence $`\|m_k-m_n\|_2^2 < 2(d^2+1/n) + 2(d^2+1/k) - 4d^2 = 2/n + 2/k`$.
+3. *The limit exists and is in M.* L2 is complete, so $`m_n \to \hat f`$ in L2. M is closed, so $`\hat f \in M`$.
+4. *It attains d.* By Minkowski, $`\big|\|f-m_n\|_2 - \|f-\hat f\|_2\big| \le \|m_n - \hat f\|_2 \to 0`$, so $`\|f - \hat f\|_2 = d`$.
+5. *The miss is perpendicular.* Put $`r = f - \hat f`$ and take h in M with $`h \ne 0`$. For every real t, $`\hat f + th \in M`$, so $`d^2 \le \|r - th\|_2^2 = d^2 - 2t\langle r,h\rangle + t^2\|h\|_2^2`$. Choose $`t = \langle r,h\rangle/\|h\|_2^2`$: then $`0 \le -\langle r,h\rangle^2/\|h\|_2^2`$, which forces $`\langle r,h\rangle = 0`$.
+6. *Perpendicular implies closest, and unique.* If $`m_0 \in M`$ and $`f - m_0`$ is perpendicular to M, then for every h in M, $`m_0 - h \in M`$ and the expansion gives $`\|f-h\|_2^2 = \|f-m_0\|_2^2 + \|m_0-h\|_2^2`$. So $`m_0`$ is closest, and any other closest h has $`\|m_0-h\|_2 = 0`$, that is, $`h = m_0`$ almost everywhere. With h = 0 this is Pythagoras, $`\|f\|_2^2 = \|\hat f\|_2^2 + \|f-\hat f\|_2^2`$. ∎
 
-**Riesz representation theorem.** Let φ be linear on L2 with $|\varphi(f)| \le C\|f\|_2$.
-1. *The kernel is a closed subspace.* $N = \{f : \varphi(f) = 0\}$ is closed under adding and scaling by linearity. If $f_n \in N$ and $f_n \to f$, then $|\varphi(f)| = |\varphi(f - f_n)| \le C\|f-f_n\|_2 \to 0$, so $f \in N$.
-2. *A perpendicular direction.* If $N$ is all of L2, take g = 0. Otherwise pick u with $\varphi(u) \ne 0$, let $\hat u$ be its projection onto N, and put $z = u - \hat u$. Then z is perpendicular to N by the projection theorem, and $\varphi(z) = \varphi(u) - \varphi(\hat u) = \varphi(u) \ne 0$, so $z \ne 0$.
-3. *Every function splits.* For f in L2, $f - \tfrac{\varphi(f)}{\varphi(z)}z$ is sent to $\varphi(f) - \varphi(f) = 0$, so it is in N and perpendicular to z. Hence $\langle f, z\rangle = \tfrac{\varphi(f)}{\varphi(z)}\|z\|_2^2$, that is, $\varphi(f) = \langle f, g\rangle$ with $g = \tfrac{\varphi(z)}{\|z\|_2^2}z$.
-4. *Size.* Cauchy–Schwarz gives $|\varphi(f)| \le \|g\|_2\|f\|_2$, so $\|\varphi\| \le \|g\|_2$; and $\varphi(g) = \|g\|_2^2$, so $\|\varphi\| \ge \|g\|_2$ when $g \ne 0$.
-5. *Uniqueness.* If $\langle f, g\rangle = \langle f, g'\rangle$ for every f, take $f = g - g'$: then $\|g-g'\|_2^2 = 0$ and $g = g'$ almost everywhere. ∎
+**Riesz representation theorem.** Let φ be linear on L2 with $`|\varphi(f)| \le C\|f\|_2`$.
+1. *The kernel is a closed subspace.* $`N = \{f : \varphi(f) = 0\}`$ is closed under adding and scaling by linearity. If $`f_n \in N`$ and $`f_n \to f`$, then $`|\varphi(f)| = |\varphi(f - f_n)| \le C\|f-f_n\|_2 \to 0`$, so $`f \in N`$.
+2. *A perpendicular direction.* If $`N`$ is all of L2, take g = 0. Otherwise pick u with $`\varphi(u) \ne 0`$, let $`\hat u`$ be its projection onto N, and put $`z = u - \hat u`$. Then z is perpendicular to N by the projection theorem, and $`\varphi(z) = \varphi(u) - \varphi(\hat u) = \varphi(u) \ne 0`$, so $`z \ne 0`$.
+3. *Every function splits.* For f in L2, $`f - \tfrac{\varphi(f)}{\varphi(z)}z`$ is sent to $`\varphi(f) - \varphi(f) = 0`$, so it is in N and perpendicular to z. Hence $`\langle f, z\rangle = \tfrac{\varphi(f)}{\varphi(z)}\|z\|_2^2`$, that is, $`\varphi(f) = \langle f, g\rangle`$ with $`g = \tfrac{\varphi(z)}{\|z\|_2^2}z`$.
+4. *Size.* Cauchy–Schwarz gives $`|\varphi(f)| \le \|g\|_2\|f\|_2`$, so $`\|\varphi\| \le \|g\|_2`$; and $`\varphi(g) = \|g\|_2^2`$, so $`\|\varphi\| \ge \|g\|_2`$ when $`g \ne 0`$.
+5. *Uniqueness.* If $`\langle f, g\rangle = \langle f, g'\rangle`$ for every f, take $`f = g - g'`$: then $`\|g-g'\|_2^2 = 0`$ and $`g = g'`$ almost everywhere. ∎
 
 </details>
 
@@ -204,7 +214,7 @@ The house example, counting measure.
 
 The steady 5 m/s leaves a miss of length 5.2915; letting the weekend have its own level removes only 7/10 of the 28, so this week's wind barely depends on the day type. Under the uniform probability, each squared miss is divided by 7: the constant fit's miss has length 2.0000, which is the week's standard deviation, and the two-level fit's is 1.9748.
 
-The step from the constant fit to the two-level fit is a multiple of Step 6's representer g: g is perpendicular to 1, and together they span the two-level weeks. The multiple is $\varphi(f)/\|g\|_2^2$ = (7/10)/(7/10) = 1 for this week, so here the two-level fit is exactly 5 + g. Another week gives another multiple.
+The step from the constant fit to the two-level fit is a multiple of Step 6's representer g: g is perpendicular to 1, and together they span the two-level weeks. The multiple is $`\varphi(f)/\|g\|_2^2`$ = (7/10)/(7/10) = 1 for this week, so here the two-level fit is exactly 5 + g. Another week gives another multiple.
 
 ### What breaks if you drop a piece
 

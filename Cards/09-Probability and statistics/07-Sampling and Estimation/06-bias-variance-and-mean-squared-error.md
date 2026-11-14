@@ -40,47 +40,53 @@ Orange: the plain average, 4 square grams whatever the true offset. Green: the a
 
 ## The formula
 
-A reminder of the wing's notation. $E[X]$ is the long-run average of a random variable $X$; $\mathrm{Var}(X)$ is its variance, the long-run average of its squared distance from $E[X]$. A letter with a bar, $\bar X$, is the average of a sample.
+A reminder of the wing's notation. $`E[X]`$ is the long-run average of a random variable $`X`$; $`\mathrm{Var}(X)`$ is its variance, the long-run average of its squared distance from $`E[X]`$. A letter with a bar, $`\bar X`$, is the average of a sample.
 
-Write $\theta$ (Greek theta) for the unknown number being guessed, here the offset, and $T$ for any rule that guesses it from the data. Before the readings are taken, $T$ is a random variable. Three numbers describe it:
+Write $`\theta`$ (Greek theta) for the unknown number being guessed, here the offset, and $`T`$ for any rule that guesses it from the data. Before the readings are taken, $`T`$ is a random variable. Three numbers describe it:
 
-$$\mathrm{bias}(T) = E[T] - \theta, \qquad \mathrm{Var}(T) = E\big[(T - E[T])^2\big], \qquad \mathrm{MSE}(T) = E\big[(T - \theta)^2\big]$$
+```math
+\mathrm{bias}(T) = E[T] - \theta, \qquad \mathrm{Var}(T) = E\big[(T - E[T])^2\big], \qquad \mathrm{MSE}(T) = E\big[(T - \theta)^2\big]
+```
 
 The first is the bias of [Samples and estimators](01-populations-samples-and-estimators.md): where the rule aims, measured from the truth. The second is how widely it scatters around its own aim. The third, the **mean squared error**, is the average squared miss from the truth. The theorem joins them:
 
-$$\mathrm{MSE}(T) = \mathrm{Var}(T) + \mathrm{bias}(T)^2$$
+```math
+\mathrm{MSE}(T) = \mathrm{Var}(T) + \mathrm{bias}(T)^2
+```
 
 **Read it aloud:** the average squared miss is the scatter around the rule's own aim, plus the square of how far that aim sits from the truth.
 
-A rule whose bias is zero for every possible $\theta$ is unbiased, as on that card; its mean squared error is its variance alone. For the scale, the readings' errors are $X_1, \dots, X_n$, each the offset $\mu$ plus noise of standard deviation $\sigma$. The plain average $\bar X$ and the shrunk rule $c\bar X$ give
+A rule whose bias is zero for every possible $`\theta`$ is unbiased, as on that card; its mean squared error is its variance alone. For the scale, the readings' errors are $`X_1, \dots, X_n`$, each the offset $`\mu`$ plus noise of standard deviation $`\sigma`$. The plain average $`\bar X`$ and the shrunk rule $`c\bar X`$ give
 
-$$\mathrm{MSE}(\bar X) = \frac{\sigma^2}{n}, \qquad \mathrm{MSE}(c\bar X) = c^2\,\frac{\sigma^2}{n} + (1 - c)^2 \mu^2$$
+```math
+\mathrm{MSE}(\bar X) = \frac{\sigma^2}{n}, \qquad \mathrm{MSE}(c\bar X) = c^2\,\frac{\sigma^2}{n} + (1 - c)^2 \mu^2
+```
 
 **Read it aloud:** the plain average misses only by scatter; the shrunk average scatters less, by the factor c squared, and pays for it with a lean of one minus c times the true offset, squared.
 
-With $\sigma = 4$, $n = 4$, $\mu = 2$ and $c = 0.8$: the average scores 16/4 = 4, and the shrunk rule 0.64 × 4 + 0.04 × 4 = 2.56 + 0.16 = 2.72.
+With $`\sigma = 4`$, $`n = 4`$, $`\mu = 2`$ and $`c = 0.8`$: the average scores 16/4 = 4, and the shrunk rule 0.64 × 4 + 0.04 × 4 = 2.56 + 0.16 = 2.72.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\mu$ | the true offset: how far the scale reads from the truth, on average; fixed and unknown | 2 g, fixed by the checks | the shrunk rule's lean grows; the plain average does not care |
-| $X$, $X_i$, $i$ | a random variable in general; reading number $i$'s error, reading minus 500 g | 3, −1, 5, 1 | — |
-| $n$ | the number of readings | 4 | both variances fall like $1/n$ |
-| $\sigma$ | the standard deviation of one reading's noise | 4 g | more scatter, more room for shrinking to help |
-| $\bar X$ | the average of the $X_i$: the plain rule | 2 g on this record | — |
-| $\theta$, $T$ | any unknown number, and any rule that guesses it | $\theta$ is $\mu$; $T$ is $\bar X$ or $c\bar X$ | — |
-| $E[T]$, $m$ | the rule's aim: where it lands on average over every possible test | 2 for the average, 1.6 for the shrunk rule | — |
-| $\mathrm{Var}(T)$ | the rule's scatter around its own average, in square grams | 4 and 2.56 | — |
-| $\mathrm{bias}(T)$ | $E[T] - \theta$: the systematic lean | 0 and −0.4 g | — |
-| $\mathrm{MSE}(T)$ | mean squared error: the average squared miss from the truth | 4 and 2.72 | — |
-| $c$, $c^*$ | the shrink factor, the fraction of $\bar X$ kept; and the factor that would be best if $\mu$ were known | 0.8; 0.5 | more scatter, less lean |
-| $S$, $a$ | the sum of squared distances of the readings from their own average; a divisor applied to it | 20 on this record; 3, 4 or 5 | — |
+| $`\mu`$ | the true offset: how far the scale reads from the truth, on average; fixed and unknown | 2 g, fixed by the checks | the shrunk rule's lean grows; the plain average does not care |
+| $`X`$, $`X_i`$, $`i`$ | a random variable in general; reading number $`i`$'s error, reading minus 500 g | 3, −1, 5, 1 | — |
+| $`n`$ | the number of readings | 4 | both variances fall like $`1/n`$ |
+| $`\sigma`$ | the standard deviation of one reading's noise | 4 g | more scatter, more room for shrinking to help |
+| $`\bar X`$ | the average of the $`X_i`$: the plain rule | 2 g on this record | — |
+| $`\theta`$, $`T`$ | any unknown number, and any rule that guesses it | $`\theta`$ is $`\mu`$; $`T`$ is $`\bar X`$ or $`c\bar X`$ | — |
+| $`E[T]`$, $`m`$ | the rule's aim: where it lands on average over every possible test | 2 for the average, 1.6 for the shrunk rule | — |
+| $`\mathrm{Var}(T)`$ | the rule's scatter around its own average, in square grams | 4 and 2.56 | — |
+| $`\mathrm{bias}(T)`$ | $`E[T] - \theta`$: the systematic lean | 0 and −0.4 g | — |
+| $`\mathrm{MSE}(T)`$ | mean squared error: the average squared miss from the truth | 4 and 2.72 | — |
+| $`c`$, $`c^*`$ | the shrink factor, the fraction of $`\bar X`$ kept; and the factor that would be best if $`\mu`$ were known | 0.8; 0.5 | more scatter, less lean |
+| $`S`$, $`a`$ | the sum of squared distances of the readings from their own average; a divisor applied to it | 20 on this record; 3, 4 or 5 | — |
 
 ### When it holds
 
 - **The split holds for any rule with a finite variance.** No bell curve, no independence, no particular sample size. A rule whose variance is infinite (an average of Cauchy draws, a law with tails so heavy it has no average; [Heavy tails](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)) has no finite mean squared error to split.
-- **Independent readings with the same noise.** That is what gives the average its variance $\sigma^2/n$. Readings taken while the scale warms up, each drifting with the last, carry less information than four independent ones, and the formula understates both rules' errors.
+- **Independent readings with the same noise.** That is what gives the average its variance $`\sigma^2/n`$. Readings taken while the scale warms up, each drifting with the last, carry less information than four independent ones, and the formula understates both rules' errors.
 - **Squared error as the score.** A miss of 2 g costs four times a miss of 1 g. Scored by the plain size of the miss instead, the rules can rank differently and the split into two parts no longer holds.
-- **A fixed shrink factor.** The formula for $c\bar X$ treats $c$ as a constant. A factor chosen from the same data is a different rule with a different mean squared error: 3.14, not 2.72, at an offset of 2 g.
+- **A fixed shrink factor.** The formula for $`c\bar X`$ treats $`c`$ as a constant. A factor chosen from the same data is a different rule with a different mean squared error: 3.14, not 2.72, at an offset of 2 g.
 - **The ranking of variance divisors in Step 6 needs bell-shaped noise.** With coin-flip noise the best divisor changes.
 
 ---
@@ -93,19 +99,20 @@ A miss from the truth has two legs: from the truth to where the rule aims on ave
 
 ### Step 1: the split, in one line of algebra
 
-Write $m = E[T]$ for the rule's aim. Then $T - \theta = (T - m) + (m - \theta)$. Squaring gives three terms: $(T - m)^2$, the cross term $2(T - m)(m - \theta)$, and $(m - \theta)^2$. Averaging over every possible test, the first becomes $\mathrm{Var}(T)$. The last is a fixed number, $\mathrm{bias}(T)^2$. The cross term averages to $2(m - \theta)\,E[T - m]$, and $E[T - m] = m - m = 0$.
+Write $`m = E[T]`$ for the rule's aim. Then $`T - \theta = (T - m) + (m - \theta)`$. Squaring gives three terms: $`(T - m)^2`$, the cross term $`2(T - m)(m - \theta)`$, and $`(m - \theta)^2`$. Averaging over every possible test, the first becomes $`\mathrm{Var}(T)`$. The last is a fixed number, $`\mathrm{bias}(T)^2`$. The cross term averages to $`2(m - \theta)\,E[T - m]`$, and $`E[T - m] = m - m = 0`$.
 
 <details>
 <summary>Detailed proof: mean squared error equals variance plus squared bias</summary>
 
-**Assumption.** $E[T^2]$ is finite. Then $E[T]$ exists, since $\lvert T\rvert \le 1 + T^2$, so $m = E[T]$ is a finite number.
+**Assumption.** $`E[T^2]`$ is finite. Then $`E[T]`$ exists, since $`\lvert T\rvert \le 1 + T^2`$, so $`m = E[T]`$ is a finite number.
 
-**Expansion.** For every outcome, $(T - \theta)^2 = (T - m)^2 + 2(m - \theta)(T - m) + (m - \theta)^2$. All three terms have finite averages, because $(T - m)^2 \le 2T^2 + 2m^2$. Expectation adds up and pulls out constants ([Expectation](../02-Random%20Variables/02-expectation.md)), so
-$$E[(T - \theta)^2] = E[(T - m)^2] + 2(m - \theta)\,E[T - m] + (m - \theta)^2.$$
+**Expansion.** For every outcome, $`(T - \theta)^2 = (T - m)^2 + 2(m - \theta)(T - m) + (m - \theta)^2`$. All three terms have finite averages, because $`(T - m)^2 \le 2T^2 + 2m^2`$. Expectation adds up and pulls out constants ([Expectation](../02-Random%20Variables/02-expectation.md)), so
 
-**The cross term.** $E[T - m] = E[T] - m = 0$.
+$`\displaystyle E[(T - \theta)^2] = E[(T - m)^2] + 2(m - \theta)\,E[T - m] + (m - \theta)^2.`$
 
-**Conclusion.** $\mathrm{MSE}(T) = \mathrm{Var}(T) + (E[T] - \theta)^2$. Nothing here used independence, the shape of the noise, or the sample size.
+**The cross term.** $`E[T - m] = E[T] - m = 0`$.
+
+**Conclusion.** $`\mathrm{MSE}(T) = \mathrm{Var}(T) + (E[T] - \theta)^2`$. Nothing here used independence, the shape of the noise, or the sample size.
 
 **Why centring on the aim matters.** Centred on any other point, the averaged cross term is twice that point's distance from the truth times the rule's average distance from that point. The second factor is no longer zero. The split belongs to the rule's own average.
 
@@ -115,11 +122,11 @@ On the coin-flip version of the scale (each reading's noise is +4 g or −4 g wi
 
 ### Step 2: the plain average has no lean
 
-Each reading's error averages $\mu$, so the average of four averages $\mu$: the bias is zero whatever the offset. Four independent readings of variance 16 give an average of variance 16/4 = 4, so its standard error, the standard deviation of the average, is 2 g ([Standard error](02-sample-mean-and-standard-error.md)). Unbiased, its mean squared error is its variance: 4 square grams.
+Each reading's error averages $`\mu`$, so the average of four averages $`\mu`$: the bias is zero whatever the offset. Four independent readings of variance 16 give an average of variance 16/4 = 4, so its standard error, the standard deviation of the average, is 2 g ([Standard error](02-sample-mean-and-standard-error.md)). Unbiased, its mean squared error is its variance: 4 square grams.
 
 ### Step 3: shrinking trades scatter for lean
 
-Multiplying a random variable by $c$ multiplies its average by $c$ and its variance by $c^2$ ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)). So $c\bar X$ aims at $c\mu$, a lean of $(c - 1)\mu$, and scatters with variance $c^2\sigma^2/n$. For $c = 0.8$ and $\mu = 2$: the lean is −0.4 g, the variance 2.56. Step 1 adds them: 2.56 + 0.16 = 2.72.
+Multiplying a random variable by $`c`$ multiplies its average by $`c`$ and its variance by $`c^2`$ ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)). So $`c\bar X`$ aims at $`c\mu`$, a lean of $`(c - 1)\mu`$, and scatters with variance $`c^2\sigma^2/n`$. For $`c = 0.8`$ and $`\mu = 2`$: the lean is −0.4 g, the variance 2.56. Step 1 adds them: 2.56 + 0.16 = 2.72.
 
 Compare the two in the same units, square grams, as the score does. Pull the factor down from 1 by 0.2: the variance falls from 4 to 2.56, a saving of 1.44, while the squared lean is (0.2 × 2)^2 = 0.16.
 
@@ -129,19 +136,23 @@ Halve the pull to 0.1: the variance falls only to 3.24, about half the saving, w
 
 The shrunk rule wins when its mean squared error is below the average's:
 
-$$c^2\frac{\sigma^2}{n} + (1 - c)^2\mu^2 < \frac{\sigma^2}{n} \quad\Longleftrightarrow\quad \mu^2 < \frac{\sigma^2}{n}\cdot\frac{1 + c}{1 - c}$$
+```math
+c^2\frac{\sigma^2}{n} + (1 - c)^2\mu^2 < \frac{\sigma^2}{n} \quad\Longleftrightarrow\quad \mu^2 < \frac{\sigma^2}{n}\cdot\frac{1 + c}{1 - c}
+```
 
-The step between is $1 - c^2 = (1 - c)(1 + c)$, then division by $(1 - c)^2$. With a standard error of 2 g and $c = 0.8$, the break-even offset is 2 × √9 = 6 g: three standard errors. A root finder run on the enumerated coin-flip scores lands on the same 6.
+The step between is $`1 - c^2 = (1 - c)(1 + c)`$, then division by $`(1 - c)^2`$. With a standard error of 2 g and $`c = 0.8`$, the break-even offset is 2 × √9 = 6 g: three standard errors. A root finder run on the enumerated coin-flip scores lands on the same 6.
 
 At an offset of 8 g the shrunk rule scores 5.12, worse than 4. Every fixed factor below 1 loses somewhere, because its lean grows without limit as the offset grows while the average's score stays flat.
 
 ### Step 5: the best factor needs the answer
 
-The mean squared error of $c\bar X$ is a bowl in $c$. Setting its slope to zero gives
+The mean squared error of $`c\bar X`$ is a bowl in $`c`$. Setting its slope to zero gives
 
-$$c^* = \frac{\mu^2}{\mu^2 + \sigma^2/n}$$
+```math
+c^* = \frac{\mu^2}{\mu^2 + \sigma^2/n}
+```
 
-At $\mu = 2$ that is 4/(4 + 4) = 0.5, with mean squared error 2. A search over the enumerated coin-flip scores finds the same 0.5. The second chart shows the bowl.
+At $`\mu = 2`$ that is 4/(4 + 4) = 0.5, with mean squared error 2. A search over the enumerated coin-flip scores finds the same 0.5. The second chart shows the bowl.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -156,9 +167,9 @@ xychart-beta
 
 Orange: variance, rising with the factor. Green: squared bias, falling. Dark blue: their sum, the mean squared error, lowest at 0.5. The plain average sits at the right end, the constant guess "zero" at the left, and both score 4.
 
-The catch: $c^*$ contains $\mu$, the number being guessed. It is not a rule anyone can run.
+The catch: $`c^*`$ contains $`\mu`$, the number being guessed. It is not a rule anyone can run.
 
-Putting the data's own $\bar X$ in place of $\mu$ gives a rule that can be run. But its factor now moves with the data, so Step 3's formula no longer applies. At an offset of 2 g its mean squared error, integrated over the bell curve of $\bar X$ by the midpoint rule (cut the range into thin slices and add each slice's middle height times its width), is 3.136980; simulated, 3.1428 (standard error 0.0086). Either way it is about 3.14: better than 4, worse than the fixed 0.8.
+Putting the data's own $`\bar X`$ in place of $`\mu`$ gives a rule that can be run. But its factor now moves with the data, so Step 3's formula no longer applies. At an offset of 2 g its mean squared error, integrated over the bell curve of $`\bar X`$ by the midpoint rule (cut the range into thin slices and add each slice's middle height times its width), is 3.136980; simulated, 3.1428 (standard error 0.0086). Either way it is about 3.14: better than 4, worse than the fixed 0.8.
 
 <details>
 <summary>Shrinking many averages at once</summary>
@@ -171,11 +182,11 @@ Efron and Morris's account in the Sources reads it through baseball batting aver
 
 ### Step 6: the same trade hides in the spread
 
-The scale's noise, 16 square grams, can be guessed from the readings too. Let $S$ be the sum of squared distances of the readings from their own average: on this record $1 + 9 + 9 + 1 = 20$. On average $S$ is $(n - 1)\sigma^2$, three times 16, because the readings sit slightly closer to their own average than to the true offset. So $S/3$ is unbiased and $S/4$ leans low ([Standard error](02-sample-mean-and-standard-error.md) explains the $n - 1$).
+The scale's noise, 16 square grams, can be guessed from the readings too. Let $`S`$ be the sum of squared distances of the readings from their own average: on this record $`1 + 9 + 9 + 1 = 20`$. On average $`S`$ is $`(n - 1)\sigma^2`$, three times 16, because the readings sit slightly closer to their own average than to the true offset. So $`S/3`$ is unbiased and $`S/4`$ leans low ([Standard error](02-sample-mean-and-standard-error.md) explains the $`n - 1`$).
 
-With bell-shaped noise, the unbiased divisor has the worst score of the three. Dividing by a larger $a$ pulls the guess toward zero, the same move as Step 3:
+With bell-shaped noise, the unbiased divisor has the worst score of the three. Dividing by a larger $`a`$ pulls the guess toward zero, the same move as Step 3:
 
-| Divisor $a$ | Guess on this record | Bias | Mean squared error, bell noise |
+| Divisor $`a`$ | Guess on this record | Bias | Mean squared error, bell noise |
 | --- | --- | --- | --- |
 | 3 | 6.6667 | 0 | 170.67 |
 | 4 | 5.0000 | −4 | 112.00 |
@@ -184,13 +195,15 @@ With bell-shaped noise, the unbiased divisor has the worst score of the three. D
 <details>
 <summary>Detailed proof: the divisor that minimises mean squared error</summary>
 
-For bell-shaped (normal) noise, $S/\sigma^2$ follows the chi-square law with $n - 1$ degrees of freedom, whose average is $n - 1$ and variance $2(n - 1)$ ([The reference distributions](03-chi-square-t-and-f-distributions.md)). So $S/a$ has average $(n - 1)\sigma^2/a$, bias $\sigma^2(n - 1 - a)/a$, and variance $2(n - 1)\sigma^4/a^2$. By Step 1,
-$$\mathrm{MSE}(S/a) = \frac{\sigma^4}{a^2}\Big(2(n - 1) + (n - 1 - a)^2\Big).$$
-Set the slope in $a$ to zero. Multiplying through by $a^3/(2\sigma^4)$ gives $-(n - 1 - a)a - 2(n - 1) - (n - 1 - a)^2 = 0$, that is $-(n - 1 - a)(n - 1) = 2(n - 1)$, so $a = n + 1$. For $n = 4$ and $\sigma^4 = 256$: 256 × 6 / 9 = 170.67, 256 × 7 / 16 = 112, and 256 × 10 / 25 = 102.4.
+For bell-shaped (normal) noise, $`S/\sigma^2`$ follows the chi-square law with $`n - 1`$ degrees of freedom, whose average is $`n - 1`$ and variance $`2(n - 1)`$ ([The reference distributions](03-chi-square-t-and-f-distributions.md)). So $`S/a`$ has average $`(n - 1)\sigma^2/a`$, bias $`\sigma^2(n - 1 - a)/a`$, and variance $`2(n - 1)\sigma^4/a^2`$. By Step 1,
+
+$`\displaystyle \mathrm{MSE}(S/a) = \frac{\sigma^4}{a^2}\Big(2(n - 1) + (n - 1 - a)^2\Big).`$
+
+Set the slope in $`a`$ to zero. Multiplying through by $`a^3/(2\sigma^4)`$ gives $`-(n - 1 - a)a - 2(n - 1) - (n - 1 - a)^2 = 0`$, that is $`-(n - 1 - a)(n - 1) = 2(n - 1)`$, so $`a = n + 1`$. For $`n = 4`$ and $`\sigma^4 = 256`$: 256 × 6 / 9 = 170.67, 256 × 7 / 16 = 112, and 256 × 10 / 25 = 102.4.
 
 </details>
 
-This ranking needs bell-shaped noise; the split and Steps 2 to 4 do not. With coin-flip noise the three scores are 42.67, 40.00 and 56.32: the divisor $n$ wins and $n + 1$ is worst. That noise has no extreme readings, so $S$ scatters $n$ times less (variance $2(n - 1)\sigma^4/n$), and the bias term dominates.
+This ranking needs bell-shaped noise; the split and Steps 2 to 4 do not. With coin-flip noise the three scores are 42.67, 40.00 and 56.32: the divisor $`n`$ wins and $`n + 1`$ is worst. That noise has no extreme readings, so $`S`$ scatters $`n`$ times less (variance $`2(n - 1)\sigma^4/n`$), and the bias term dominates.
 
 The same split, with the average taken over training samples instead of scale tests, is the bias-variance trade-off of machine learning; [Loss and empirical risk](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/01-loss-functions-and-empirical-risk.md) takes it there.
 
@@ -203,11 +216,11 @@ The same split, with the average taken over training samples instead of scale te
 | readings' errors | 503, 499, 505, 501 minus 500 | 3, −1, 5, 1 g |
 | plain average on this record | (3 − 1 + 5 + 1) / 4 | 2.00 g |
 | shrunk on this record | 0.8 × 2 | 1.60 g |
-| variance of the average | $\sigma^2/n$ = 16 / 4 | 4 |
-| its bias | the average aims at $\mu$ | 0 |
+| variance of the average | $`\sigma^2/n`$ = 16 / 4 | 4 |
+| its bias | the average aims at $`\mu`$ | 0 |
 | **MSE of the average** | 4 + 0 | **4** |
 | variance of the shrunk rule | 0.8 × 0.8 × 4 | 2.56 |
-| its bias at $\mu$ = 2 | (0.8 − 1) × 2 | −0.4 g |
+| its bias at $`\mu`$ = 2 | (0.8 − 1) × 2 | −0.4 g |
 | **MSE of the shrunk rule** | 2.56 + (−0.4) × (−0.4) | **2.72** |
 | break-even offset | 2 × √(1.8 / 0.2) | 6 g |
 
@@ -222,7 +235,7 @@ If the true offset is 2 g, this record's plain average is exactly right and the 
 | Shrinking a scale whose offset is 8 g | 5.12, worse than 4 | the offset is past the break-even point of 6 g |
 | Adding bias, not squared bias | 2.56 + 0.4 = 2.96, not 2.72 | grams added to square grams; the split needs the square |
 | Choosing the factor from the same data | 3.14 simulated, not 2.72 | the factor is now random, and Step 3's formula assumed it fixed |
-| Using the bell-curve divisor ranking on coin-flip noise | $n + 1$ scores 56.32, the worst of three | the $n + 1$ rule rests on the chi-square variance of bell noise |
+| Using the bell-curve divisor ranking on coin-flip noise | $`n + 1`$ scores 56.32, the worst of three | the $`n + 1`$ rule rests on the chi-square variance of bell noise |
 
 The code prints all four.
 
@@ -682,14 +695,14 @@ The two outputs match line for line.
 
 Lean proves the split for every rule with a finite variance, the shrunk rule's score for independent readings, and where shrinking pays.
 
-- Take any rule $T$ whose square has a finite average. Then its mean squared error equals its variance plus its squared bias.
-- Take $n$ independent readings, each with average $\mu$ and variance $\sigma^2$, and a fixed shrink factor $c$. Then $\mathrm{MSE}(c\bar X) = c^2\,\sigma^2/n + (1 - c)^2 \mu^2$.
-- Take $c = 1$. Then this is the plain average's score, $\sigma^2/n$.
-- Take a fixed shrink factor $c$ other than 1. Then the shrunk rule's score is below the plain average's exactly when $\mu^2 < (\sigma^2/n)(1 + c)/(1 - c)$.
-- The record's errors are 3, −1, 5 and 1 g. Their average is 2 g, and $S$ is 20.
-- Take $\mu = 2$ and $c = 0.8$. Then the shrunk rule scores 2.72 against the plain average's 4.
+- Take any rule $`T`$ whose square has a finite average. Then its mean squared error equals its variance plus its squared bias.
+- Take $`n`$ independent readings, each with average $`\mu`$ and variance $`\sigma^2`$, and a fixed shrink factor $`c`$. Then $`\mathrm{MSE}(c\bar X) = c^2\,\sigma^2/n + (1 - c)^2 \mu^2`$.
+- Take $`c = 1`$. Then this is the plain average's score, $`\sigma^2/n`$.
+- Take a fixed shrink factor $`c`$ other than 1. Then the shrunk rule's score is below the plain average's exactly when $`\mu^2 < (\sigma^2/n)(1 + c)/(1 - c)`$.
+- The record's errors are 3, −1, 5 and 1 g. Their average is 2 g, and $`S`$ is 20.
+- Take $`\mu = 2`$ and $`c = 0.8`$. Then the shrunk rule scores 2.72 against the plain average's 4.
 - The break-even offset is 6 g. At an offset of 8 g the shrunk rule scores 5.12.
-- The formula for $c^*$ gives 0.5 at an offset of 2 g, and that factor scores 2.
+- The formula for $`c^*`$ gives 0.5 at an offset of 2 g, and that factor scores 2.
 - The formula in Step 6 gives the divisor table's bell-noise scores: 512/3 (170.67), 112 and 512/5 (102.4).
 
 The simulations, the coin-flip patterns, the plug-in rule, the chi-square law behind Step 6 and the charts are left to the Python and Rust checks.
@@ -836,7 +849,7 @@ example : (256 : ℚ) * (2 * 3 + (3 - 5) ^ 2) / 5 ^ 2 = 512 / 5 := by norm_num
 - **Portfolio inputs.** Estimated average returns are noisy enough that pulling them toward a common value improves portfolios built on them ([Estimation error](../../12-Financial%20mathematics/37-Portfolio%20Theory/07-estimation-error-and-shrinkage.md)).
 - **Cleaning signals.** Wavelet denoising shrinks small coefficients to zero, accepting a little bias to remove most of the noise (Wavelet denoising).
 - **Sports averages.** Early-season batting averages pulled toward the league average predict the rest of the season better than the raw averages, the example Efron and Morris made famous.
-- **Calculators and spreadsheets.** The two standard deviation buttons divide by $n - 1$ and by $n$: the choice in Step 6.
+- **Calculators and spreadsheets.** The two standard deviation buttons divide by $`n - 1`$ and by $`n`$: the choice in Step 6.
 
 > **Say it back**
 > A rule for guessing an unknown number is judged by its mean squared error, the average squared miss over every test that could be run. That score splits exactly into the rule's variance, its scatter around its own aim, plus its squared bias, how far that aim sits from the truth. Pulling the scale's average offset toward zero by a factor of 0.8 cuts its variance from 4 to 2.56 and adds a squared bias of 0.16 when the truth is 2 g, so it scores 2.72 against 4. The win holds only while the true offset is under 6 g, and the factor that would be best depends on the answer itself. Unbiased is one virtue, not the whole score.
@@ -846,7 +859,7 @@ example : (256 : ℚ) * (2 * 3 + (3 - 5) ^ 2) / 5 ^ 2 = 512 / 5 := by norm_num
 ## What this builds on
 
 - [Samples and estimators](01-populations-samples-and-estimators.md): the words estimator, bias and unbiased that this card scores.
-- [Standard error](02-sample-mean-and-standard-error.md): the average's variance $\sigma^2/n$ and the $n - 1$ divisor that Step 6 re-judges.
+- [Standard error](02-sample-mean-and-standard-error.md): the average's variance $`\sigma^2/n`$ and the $`n - 1`$ divisor that Step 6 re-judges.
 
 ## Where this goes next
 

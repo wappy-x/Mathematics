@@ -39,36 +39,42 @@ Orange: the bond's model price at each flat hazard. Green: the house price, 98.2
 
 ## The formula
 
-Notation first. A trial hazard is $\lambda$ ("lambda"); the bond's model price at it is $B(\lambda)$, and the screen price is $B_{\text{mkt}}$. The coupon is $c$ dollars a year, the face $F$, the recovered share of face $R$, the riskless rate $r$; coupons fall at times $t_1, \dots, t_n$ (years 1 to 5), the last at maturity $T$.
+Notation first. A trial hazard is $`\lambda`$ ("lambda"); the bond's model price at it is $`B(\lambda)`$, and the screen price is $`B_{\text{mkt}}`$. The coupon is $`c`$ dollars a year, the face $`F`$, the recovered share of face $`R`$, the riskless rate $`r`$; coupons fall at times $`t_1, \dots, t_n`$ (years 1 to 5), the last at maturity $`T`$.
 
-Survival to time $t$ at a flat hazard is $e^{-\lambda t}$ ([The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)); discounting is $e^{-rt}$; the two multiply, so the card writes $u = r + \lambda$ for the combined decay rate.
+Survival to time $`t`$ at a flat hazard is $`e^{-\lambda t}`$ ([The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)); discounting is $`e^{-rt}`$; the two multiply, so the card writes $`u = r + \lambda`$ for the combined decay rate.
 
-$$B(\lambda) \;=\; \underbrace{c\sum_{i=1}^{n} e^{-u\,t_i}}_{\text{coupons, if alive}} \;+\; \underbrace{F\,e^{-uT}}_{\text{face, if alive}} \;+\; \underbrace{R\,F\,\frac{\lambda}{u}\bigl(1-e^{-uT}\bigr)}_{\text{recovery, at default}}, \qquad u = r+\lambda$$
+```math
+B(\lambda) \;=\; \underbrace{c\sum_{i=1}^{n} e^{-u\,t_i}}_{\text{coupons, if alive}} \;+\; \underbrace{F\,e^{-uT}}_{\text{face, if alive}} \;+\; \underbrace{R\,F\,\frac{\lambda}{u}\bigl(1-e^{-uT}\bigr)}_{\text{recovery, at default}}, \qquad u = r+\lambda
+```
 
-$$\text{implied hazard: the one } \lambda \text{ with } B(\lambda) = B_{\text{mkt}}$$
+```math
+\text{implied hazard: the one } \lambda \text{ with } B(\lambda) = B_{\text{mkt}}
+```
 
 **Read it aloud:** the bond is worth each coupon and the face, weighted by the chance Northwind is still alive to pay them and discounted, plus the recovery, weighted by the chance of default at each moment and discounted from that moment; the implied hazard is the one that makes this equal the screen price.
 
 The two numbers the basis compares:
 
-$$B_{\text{mkt}} = c\sum_{i=1}^{n} e^{-(r+z)\,t_i} + F\,e^{-(r+z)T} \quad\text{defines } z, \qquad b = s - z$$
+```math
+B_{\text{mkt}} = c\sum_{i=1}^{n} e^{-(r+z)\,t_i} + F\,e^{-(r+z)T} \quad\text{defines } z, \qquad b = s - z
+```
 
-In words: the **z-spread** $z$ is the one extra rate that, added to the riskless rate, reprices the bond's promised cash flows at the market price, with no mention of default or recovery ([Spreads over the curve](../02-Curves/06-z-spread-and-asset-swap-spread.md)). The **basis** $b$ is the CDS spread $s$ minus that bond spread.
+In words: the **z-spread** $`z`$ is the one extra rate that, added to the riskless rate, reprices the bond's promised cash flows at the market price, with no mention of default or recovery ([Spreads over the curve](../02-Curves/06-z-spread-and-asset-swap-spread.md)). The **basis** $`b`$ is the CDS spread $`s`$ minus that bond spread.
 
 | Symbol | Plain meaning | In our example | Push it up and the implied hazard… |
 | --- | --- | --- | --- |
-| $B_{\text{mkt}}$ | the bond's price on the screen, per 100 of face | 97.00 | falls: a dearer bond is a safer bond |
-| $B(\lambda)$ | the bond's model price at trial hazard $\lambda$ | 98.2807 at 2% | (the curve being inverted) |
-| $\lambda$ | the flat hazard, chance of default per year given survival (say "lambda") | 2.4956% | (the answer) |
-| $R$ | recovery: the share of face paid back at default | 40% | rises: each default costs less, so more defaults are needed to explain the price |
-| $F$ | face, repaid at the end | 100 | (scales everything) |
-| $c$ | the coupon, dollars a year per 100 of face | 6 | rises: a richer bond at the same price must be riskier |
-| $t$, $t_i$, $T$, $n$ | a point in time; the coupon dates (years 1 to 5), the last one, and how many | 1…5, 5, 5 | (a longer bond spreads the same discount over more years) |
-| $r$ | the riskless rate, continuously compounded | 5% | falls: more of the price gap is plain discounting |
-| $\tau$ | the random time of default (say "tau") | random: recovery is paid then | |
-| $z$ | the z-spread: the extra rate that reprices the promised cash flows | 150.98 bp | |
-| $s$ | the CDS par spread: the yearly premium (a decimal) that makes the contract worth zero | 121.06 bp | |
-| $b$ | the basis, $s - z$ | −29.92 bp | |
+| $`B_{\text{mkt}}`$ | the bond's price on the screen, per 100 of face | 97.00 | falls: a dearer bond is a safer bond |
+| $`B(\lambda)`$ | the bond's model price at trial hazard $`\lambda`$ | 98.2807 at 2% | (the curve being inverted) |
+| $`\lambda`$ | the flat hazard, chance of default per year given survival (say "lambda") | 2.4956% | (the answer) |
+| $`R`$ | recovery: the share of face paid back at default | 40% | rises: each default costs less, so more defaults are needed to explain the price |
+| $`F`$ | face, repaid at the end | 100 | (scales everything) |
+| $`c`$ | the coupon, dollars a year per 100 of face | 6 | rises: a richer bond at the same price must be riskier |
+| $`t`$, $`t_i`$, $`T`$, $`n`$ | a point in time; the coupon dates (years 1 to 5), the last one, and how many | 1…5, 5, 5 | (a longer bond spreads the same discount over more years) |
+| $`r`$ | the riskless rate, continuously compounded | 5% | falls: more of the price gap is plain discounting |
+| $`\tau`$ | the random time of default (say "tau") | random: recovery is paid then | |
+| $`z`$ | the z-spread: the extra rate that reprices the promised cash flows | 150.98 bp | |
+| $`s`$ | the CDS par spread: the yearly premium (a decimal) that makes the contract worth zero | 121.06 bp | |
+| $`b`$ | the basis, $`s - z`$ | −29.92 bp | |
 
 ### When it holds
 
@@ -96,29 +102,31 @@ The price is the average of those values, weighted by how likely each default ti
 
 ### Step 1: the price in closed form
 
-Each coupon is paid only if Northwind is alive, which has chance $e^{-\lambda t_i}$; discounting multiplies by $e^{-r t_i}$; together, $e^{-u t_i}$. The face works the same way at $T$.
+Each coupon is paid only if Northwind is alive, which has chance $`e^{-\lambda t_i}`$; discounting multiplies by $`e^{-r t_i}`$; together, $`e^{-u t_i}`$. The face works the same way at $`T`$.
 
-Recovery is paid at the default time $\tau$. The chance that $\tau$ lands in a short slice of time near $t$ is $\lambda e^{-\lambda t}$ times the slice's length. Paying 40 there and discounting multiplies by $R F e^{-rt}$. Adding the slices from 0 to $T$ gives $R F (\lambda/u)(1 - e^{-uT})$.
+Recovery is paid at the default time $`\tau`$. The chance that $`\tau`$ lands in a short slice of time near $`t`$ is $`\lambda e^{-\lambda t}`$ times the slice's length. Paying 40 there and discounting multiplies by $`R F e^{-rt}`$. Adding the slices from 0 to $`T`$ gives $`R F (\lambda/u)(1 - e^{-uT})`$.
 
 On the house example the three legs are 24.4368 for the coupons, 70.4688 for the face and 3.3750 for the recovery.
 
 ### Step 2: the two ends
 
-**No hazard.** At $\lambda = 0$ nothing defaults, and the price is the riskless 103.77.
+**No hazard.** At $`\lambda = 0`$ nothing defaults, and the price is the riskless 103.77.
 
-**Enormous hazard.** As $\lambda$ grows without limit, default comes almost at once and the holder gets 40 almost at once. The price tends to $R F = 40$: the **recovery-only value**. A useful rewrite makes both ends visible. Since $\lambda/u = 1 - r/u$,
+**Enormous hazard.** As $`\lambda`$ grows without limit, default comes almost at once and the holder gets 40 almost at once. The price tends to $`R F = 40`$: the **recovery-only value**. A useful rewrite makes both ends visible. Since $`\lambda/u = 1 - r/u`$,
 
-$$B = R F \;+\; c\sum_{i} e^{-u t_i} \;+\; (1-R)\,F\,e^{-uT} \;-\; R F\,r \int_0^T e^{-uv}\,dv.$$
+```math
+B = R F \;+\; c\sum_{i} e^{-u t_i} \;+\; (1-R)\,F\,e^{-uT} \;-\; R F\,r \int_0^T e^{-uv}\,dv.
+```
 
 The first term is the recovery floor. The next two are what surviving adds. The last is the interest lost by waiting for the recovery: 40 dollars received at a random future moment is worth less than 40 today.
 
 ### Step 3: existence, uniqueness and the boundary cases
 
-The rewrite shows why the fall is not automatic. Raising $u$ shrinks the survival terms, which lowers the price. It also shrinks the waiting-cost term, which raises it. Which wins?
+The rewrite shows why the fall is not automatic. Raising $`u`$ shrinks the survival terms, which lowers the price. It also shrinks the waiting-cost term, which raises it. Which wins?
 
-**The claim.** The price falls strictly as long as one year's coupon beats one year's interest on the recovery, grossed up for the year's decay: $c \ge R F r \cdot g(u)$, where $g(u) = (e^{u} - 1)/u$ is the timing factor from [The credit triangle](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/03-the-credit-triangle.md), always at least 1.
+**The claim.** The price falls strictly as long as one year's coupon beats one year's interest on the recovery, grossed up for the year's decay: $`c \ge R F r \cdot g(u)`$, where $`g(u) = (e^{u} - 1)/u`$ is the timing factor from [The credit triangle](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/03-the-credit-triangle.md), always at least 1.
 
-For Northwind, $R F r = 40 \times 0.05 = 2$ dollars a year against a coupon of 6, so the condition is $g(u) \le 3$. It holds for every hazard up to **185.38%** a year, a hazard at which default within the year is far more likely than not; no market quotes a bond there.
+For Northwind, $`R F r = 40 \times 0.05 = 2`$ dollars a year against a coupon of 6, so the condition is $`g(u) \le 3`$. It holds for every hazard up to **185.38%** a year, a hazard at which default within the year is far more likely than not; no market quotes a bond there.
 
 **What the proof gives.** At 185.38% the price is 40.0044. So every price from 40.0044 up to, but not including, 103.77 is reached by exactly one hazard in that range: at least one because the price is continuous and passes from above to below (the intermediate value theorem), at most one because it falls strictly.
 
@@ -131,19 +139,25 @@ For Northwind, $R F r = 40 \times 0.05 = 2$ dollars a year against a coupon of 6
 <details>
 <summary>Detailed proof: the slope, year by year</summary>
 
-Write the price as a function of $u = r + \lambda$, using the rewrite in Step 2. Its slope is
-$$\frac{dB}{du} = -\sum_i c\,t_i\,e^{-u t_i} \;-\; (1-R)F\,T\,e^{-uT} \;+\; R F r\int_0^T v\,e^{-uv}\,dv.$$
-Split the integral into the five coupon years. In the year ending at $t_i = i$, every time in the integral is at most that year's end, so
-$$\int_{i-1}^{i} v\,e^{-uv}\,dv \;\le\; i\int_{i-1}^{i} e^{-uv}\,dv \;=\; i\,e^{-ui}\,\frac{e^{u}-1}{u} \;=\; i\,e^{-ui}\,g(u).$$
+Write the price as a function of $`u = r + \lambda`$, using the rewrite in Step 2. Its slope is
+
+$`\displaystyle \frac{dB}{du} = -\sum_i c\,t_i\,e^{-u t_i} \;-\; (1-R)F\,T\,e^{-uT} \;+\; R F r\int_0^T v\,e^{-uv}\,dv.`$
+
+Split the integral into the five coupon years. In the year ending at $`t_i = i`$, every time in the integral is at most that year's end, so
+
+$`\displaystyle \int_{i-1}^{i} v\,e^{-uv}\,dv \;\le\; i\int_{i-1}^{i} e^{-uv}\,dv \;=\; i\,e^{-ui}\,\frac{e^{u}-1}{u} \;=\; i\,e^{-ui}\,g(u).`$
+
 Put that back:
-$$\frac{dB}{du} \;\le\; \sum_{i=1}^{5} i\,e^{-ui}\,\bigl(R F r\,g(u) - c\bigr) \;-\; (1-R)F\,T\,e^{-uT}.$$
-The last term is negative. When $R F r\,g(u) \le c$ every bracket is zero or negative, so the slope is negative. The timing factor rises with $u$ (it is the average of $e^{ux}$ for $x$ between 0 and 1), so the condition holds on a whole interval from $u = r$ up to where $g(u) = c/(RFr) = 3$, which is a hazard of 185.38%.
+
+$`\displaystyle \frac{dB}{du} \;\le\; \sum_{i=1}^{5} i\,e^{-ui}\,\bigl(R F r\,g(u) - c\bigr) \;-\; (1-R)F\,T\,e^{-uT}.`$
+
+The last term is negative. When $`R F r\,g(u) \le c`$ every bracket is zero or negative, so the slope is negative. The timing factor rises with $`u`$ (it is the average of $`e^{ux}`$ for $`x`$ between 0 and 1), so the condition holds on a whole interval from $`u = r`$ up to where $`g(u) = c/(RFr) = 3`$, which is a hazard of 185.38%.
 
 </details>
 
 ### Step 4: two roads to the number
 
-**Bisection** tests the middle of a range that straddles the answer and keeps the half that still straddles it; from $[0, 1.85]$, sixty halvings pin the hazard far past the printed digits.
+**Bisection** tests the middle of a range that straddles the answer and keeps the half that still straddles it; from $`[0, 1.85]`$, sixty halvings pin the hazard far past the printed digits.
 
 **Newton's method** follows the slope instead. For hazards up to 185% the price curve bends upward (it is convex), so Newton started at zero moves right and never overshoots: 0 → 2.3533% → 2.4952% → 2.4956%.
 
@@ -157,9 +171,11 @@ The CDS on Northwind trades at 121.06 bp. Solved backwards with [Implied hazard 
 
 Desks quote the gap in spread, because spreads are what they trade. The bond's spread is its z-spread: 150.98 bp at 97, found two ways (bisection on the spread, and Newton on the bond's yield minus 5%). The basis is
 
-$$b = s - z = 121.06 - 150.98 = -29.92 \text{ bp}.$$
+```math
+b = s - z = 121.06 - 150.98 = -29.92 \text{ bp}.
+```
 
-A rougher reading agrees: the hazard gap times the share lost, $0.6 \times (2.0000\% - 2.4956\%)$, is −29.74 bp. The credit triangle says a spread is roughly hazard times loss, so the two readings nearly coincide.
+A rougher reading agrees: the hazard gap times the share lost, $`0.6 \times (2.0000\% - 2.4956\%)`$, is −29.74 bp. The credit triangle says a spread is roughly hazard times loss, so the two readings nearly coincide.
 
 At the house price, where bond and CDS agree on 2%, the basis is not zero but −0.51 bp. The two spreads are built differently (annual coupons against quarterly premiums, recovery on a bond priced below 100), so perfect agreement on default still leaves a small gap. A basis matters only when it is large against that gap.
 
@@ -187,7 +203,7 @@ Buy the bond at 97. Buy five years of protection on 100 of face at 121.06 bp a y
 | at 4.999 years | −2.9894 | missed the final coupon; the 100 still arrives |
 | never | 1.4438 | five coupons and the face, less five years of premiums |
 
-The package is **not** riskless path by path: it swings with where default lands against the coupon dates. Averaged over default times at the CDS's 2% hazard, it is worth 1.2807 per 100 of face. Two roads agree to the digit: integrating the table's values against the chance of each default time, and the shortcut $B(2\%) - 97$, which works because protection bought at the par spread is worth zero.
+The package is **not** riskless path by path: it swings with where default lands against the coupon dates. Averaged over default times at the CDS's 2% hazard, it is worth 1.2807 per 100 of face. Two roads agree to the digit: integrating the table's values against the chance of each default time, and the shortcut $`B(2\%) - 97`$, which works because protection bought at the par spread is worth zero.
 
 ### Step 7: what drives the basis
 
@@ -216,18 +232,18 @@ Northwind: coupon 6 a year, face 100, five years, recovery 40, rate 5%. First th
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| combined decay at 2% | $u = 0.05 + 0.02$ | $0.07$ |
-| coupons, if alive | $6\,(e^{-0.07} + e^{-0.14} + \dots + e^{-0.35})$ | $24.4368$ |
-| face, if alive | $100\,e^{-0.35}$ | $70.4688$ |
-| recovery, at default | $40 \times (0.02/0.07) \times (1 - e^{-0.35})$ | $3.3750$ |
-| **house price** | sum of the three legs | **$98.2807$** |
-| slope at 2% | the derivative, from the code | $-261.4373$ per unit of hazard |
-| price gap to the quote | $98.2807 - 97$ | $1.2807$ |
-| one Newton step from 2% | $2\% + 1.2807/261.4373$ | $2.4899\%$ |
-| **implied hazard at 97** | Newton to convergence | **$2.4956\%$** |
-| z-spread at 97 | the rate over 5% that reprices the promised flows | $150.98$ bp |
-| CDS spread | the market quote, a 2.0000% hazard | $121.06$ bp |
-| **basis** | $121.06 - 150.98$ | **$-29.92$ bp** |
+| combined decay at 2% | $`u = 0.05 + 0.02`$ | $`0.07`$ |
+| coupons, if alive | $`6\,(e^{-0.07} + e^{-0.14} + \dots + e^{-0.35})`$ | $`24.4368`$ |
+| face, if alive | $`100\,e^{-0.35}`$ | $`70.4688`$ |
+| recovery, at default | $`40 \times (0.02/0.07) \times (1 - e^{-0.35})`$ | $`3.3750`$ |
+| **house price** | sum of the three legs | **$`98.2807`$** |
+| slope at 2% | the derivative, from the code | $`-261.4373`$ per unit of hazard |
+| price gap to the quote | $`98.2807 - 97`$ | $`1.2807`$ |
+| one Newton step from 2% | $`2\% + 1.2807/261.4373`$ | $`2.4899\%`$ |
+| **implied hazard at 97** | Newton to convergence | **$`2.4956\%`$** |
+| z-spread at 97 | the rate over 5% that reprices the promised flows | $`150.98`$ bp |
+| CDS spread | the market quote, a 2.0000% hazard | $`121.06`$ bp |
+| **basis** | $`121.06 - 150.98`$ | **$`-29.92`$ bp** |
 
 At 97 the bond market is charging for a 2.5% yearly hazard on Northwind, half a point more than the protection market. A desk that believes the CDS and funds at 5% sees 1.2807 per 100 of face in buying both.
 
@@ -237,7 +253,7 @@ House cross-check: the shelf quotes 98.28 and a 122 bp spread at 2%; the code pr
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Recovery left out ($R = 0$) | hazard 1.5098%: the z-spread, 150.98 bp, relabelled | With nothing recovered the hazard is just an extra discount rate; with 40 recovered each default costs only 60, so more are needed |
+| Recovery left out ($`R = 0`$) | hazard 1.5098%: the z-spread, 150.98 bp, relabelled | With nothing recovered the hazard is just an extra discount rate; with 40 recovered each default costs only 60, so more are needed |
 | Hazard gap quoted as the basis | −49.56 bp instead of −29.92 | The gap in default rates is not a gap in spreads; each default costs only the 60% lost |
 | Sign flipped: bond minus CDS | +29.92 bp: the bond looks dear | The trade goes on backwards, selling the cheap bond and selling protection, and gives away the 1.2807 |
 | A price of 104 fed to the solver | no hazard exists; 104 is above the riskless 103.77 | The solver runs to a negative hazard. Check the bracket before solving |
@@ -254,7 +270,7 @@ Nothing imported knows the answer. The implied hazard is found by **two independ
 - Road 2 runs Newton on the closed form with its slope worked out by hand.
 - Road 3 simulates 200,000 default times at the answer and reprices the bond to within its sampling error.
 
-The z-spread is found by bisection and again by Newton on the yield; the CDS spread is priced leg by leg and by the credit triangle's closed form; the basis trade is valued by integrating over default times and by the shortcut $B(2\%) - 97$. The checks then run Step 3's sweep and print every number the card quotes.
+The z-spread is found by bisection and again by Newton on the yield; the CDS spread is priced leg by leg and by the credit triangle's closed form; the basis trade is valued by integrating over default times and by the shortcut $`B(2\%) - 97`$. The checks then run Step 3's sweep and print every number the card quotes.
 
 ### Python
 
@@ -688,10 +704,10 @@ The two outputs are identical line for line.
 
 Lean proves the strict fall, the one-hazard answer and the two ends, for any bond paying coupons at whole years.
 
-- Suppose recovery is below face, and the coupon is at least $R F r\,g(u)$ at some top hazard. Then the price falls strictly for every hazard from 0 up to there.
+- Suppose recovery is below face, and the coupon is at least $`R F r\,g(u)`$ at some top hazard. Then the price falls strictly for every hazard from 0 up to there.
 - Under that same condition, every price between the top hazard's price and the riskless price comes from exactly one hazard in that range.
-- Take a positive rate. Then a zero hazard gives the riskless price, and as the hazard grows without limit the price tends to $R F$.
-- Take Northwind's numbers, where $R F r = 2$. Then $2\,g(u) \le 6$ at a hazard of 185% a year. So the proof covers every hazard up to there.
+- Take a positive rate. Then a zero hazard gives the riskless price, and as the hazard grows without limit the price tends to $`R F`$.
+- Take Northwind's numbers, where $`R F r = 2`$. Then $`2\,g(u) \le 6`$ at a hazard of 185% a year. So the proof covers every hazard up to there.
 
 The exact reach of 185.38%, the sweep beyond it, and every dollar figure are left to the Python and Rust checks.
 
@@ -939,7 +955,7 @@ example : (2 / 5 : ℚ) * 100 + (1 - 2 / 5) * 100 = 100 := by norm_num
 > The basis trade's value, 1.2807 per 100, is a value only at the buyer's funding rate, and path by path it runs from −2.99 to +3.00 depending on when default lands. A negative basis can widen for months before it closes.
 >
 > Four smaller traps:
-> - **Leaving recovery out of the bond solve.** With $R = 0$ the implied hazard is 1.5098%, which is just the z-spread relabelled. Any hazard compared with a CDS hazard must use the same recovery the CDS uses.
+> - **Leaving recovery out of the bond solve.** With $`R = 0`$ the implied hazard is 1.5098%, which is just the z-spread relabelled. Any hazard compared with a CDS hazard must use the same recovery the CDS uses.
 > - **Comparing a hazard gap with a spread gap.** The hazard gap is −49.56 bp; the basis is −29.92 bp. Multiply by the share lost (60%) before comparing.
 > - **Reading a small basis as a signal.** At the house price, with perfect agreement on 2%, the basis is already −0.51 bp; on a 2-dollar coupon it is +8.98 bp. Conventions and coupon size alone produce single-digit bases.
 > - **Solving outside the bracket.** Above 103.77 there is no hazard; below 40 there is no sensible one. A price near 40 is a recovery bet and belongs to [Recovery assumptions](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/05-recovery-assumptions-and-what-they-change.md).

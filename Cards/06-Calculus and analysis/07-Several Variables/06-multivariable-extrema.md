@@ -34,19 +34,25 @@ Orange keeps the base square (y = x); green holds the width at 2 metres. Both bo
 
 ## The formula
 
-Notation from this shelf: a curly $\partial$ marks a partial derivative, the rate as one input moves and the others hold still; the gradient $\nabla S$ lists those rates ([Gradient](03-gradient-and-directional-derivatives.md)); the Hessian $H$ is the square table of second partial derivatives.
+Notation from this shelf: a curly $`\partial`$ marks a partial derivative, the rate as one input moves and the others hold still; the gradient $`\nabla S`$ lists those rates ([Gradient](03-gradient-and-directional-derivatives.md)); the Hessian $`H`$ is the square table of second partial derivatives.
 
 The sheet used is the base plus four walls. Two walls are x long and 4/(xy) tall, 4/y each; the other two are 4/x each:
 
-$$S(x,y) = xy + \frac{2V}{x} + \frac{2V}{y}, \qquad V = 4.$$
+```math
+S(x,y) = xy + \frac{2V}{x} + \frac{2V}{y}, \qquad V = 4.
+```
 
 **Find the flat spots,** where both slopes vanish:
 
-$$\nabla S = \left(y - \frac{2V}{x^2},\; x - \frac{2V}{y^2}\right) = (0, 0).$$
+```math
+\nabla S = \left(y - \frac{2V}{x^2},\; x - \frac{2V}{y^2}\right) = (0, 0).
+```
 
 **Sort them** with the Hessian's entries at the spot: A, the second rate in x; C, the second rate in y; B, the mixed rate (x then y). Then
 
-$$D = AC - B^2.$$
+```math
+D = AC - B^2.
+```
 
 | At a flat spot | Verdict |
 | --- | --- |
@@ -57,22 +63,24 @@ $$D = AC - B^2.$$
 
 **Read it aloud:** D is the table's corner products, AC, minus the mixed rate squared; its sign, with A's, names the flat spot.
 
-"Local" means best nearby; "global", best of all allowed points; "strict", no nearby tie. Near a flat spot a small step $h$ = ($h_1$ in x, $h_2$ in y) changes S by about
+"Local" means best nearby; "global", best of all allowed points; "strict", no nearby tie. Near a flat spot a small step $`h`$ = ($`h_1`$ in x, $`h_2`$ in y) changes S by about
 
-$$\tfrac12\left(A h_1^2 + 2B h_1 h_2 + C h_2^2\right),$$
+```math
+\tfrac12\left(A h_1^2 + 2B h_1 h_2 + C h_2^2\right),
+```
 
-half the quadratic form $h^{\mathsf T}Hh$: one number built from the step and the table.
+half the quadratic form $`h^{\mathsf T}Hh`$: one number built from the step and the table.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | sheet steel used, square metres | 12 at the best bin | — |
-| $x$, $y$ | base length and width, metres | both 2 at the best bin | past 2, base outgrows wall savings |
-| $V$ | volume held, cubic metres | 4 | more steel |
-| $\nabla S$, $\partial$ | the two slopes, square metres per metre | (0, 0) at the best bin | nonzero: one way is cheaper |
-| $H$, $A$, $B$, $C$ | Hessian and its entries, square metres per square metre | 2, 1, 2 | larger A, C: a steeper pit |
-| $D$ | AC − B^2, the Hessian's determinant | 3 | below 0: a saddle |
-| $h$, $h_1$, $h_2$ | a small step, metres | (0.1, 0.1) | the quadratic picture drifts |
-| $\lambda$ | an eigenvalue: H's stretch along a square-on direction | 3 along (1, 1), 1 along (1, −1) | a firmer pit |
+| $`S`$ | sheet steel used, square metres | 12 at the best bin | — |
+| $`x`$, $`y`$ | base length and width, metres | both 2 at the best bin | past 2, base outgrows wall savings |
+| $`V`$ | volume held, cubic metres | 4 | more steel |
+| $`\nabla S`$, $`\partial`$ | the two slopes, square metres per metre | (0, 0) at the best bin | nonzero: one way is cheaper |
+| $`H`$, $`A`$, $`B`$, $`C`$ | Hessian and its entries, square metres per square metre | 2, 1, 2 | larger A, C: a steeper pit |
+| $`D`$ | AC − B^2, the Hessian's determinant | 3 | below 0: a saddle |
+| $`h`$, $`h_1`$, $`h_2`$ | a small step, metres | (0.1, 0.1) | the quadratic picture drifts |
+| $`\lambda`$ | an eigenvalue: H's stretch along a square-on direction | 3 along (1, 1), 1 along (1, −1) | a firmer pit |
 
 ### When it holds
 
@@ -102,7 +110,9 @@ On the bin, A = 4V/x^3 = 2, B = 1, C = 2. The step (0.1, 0.1) raises the steel b
 
 When A is not zero,
 
-$$A h_1^2 + 2B h_1 h_2 + C h_2^2 = A\left(h_1 + \frac{B}{A} h_2\right)^2 + \frac{D}{A}\, h_2^2 ,$$
+```math
+A h_1^2 + 2B h_1 h_2 + C h_2^2 = A\left(h_1 + \frac{B}{A} h_2\right)^2 + \frac{D}{A}\, h_2^2 ,
+```
 
 as multiplying out confirms.
 
@@ -114,14 +124,14 @@ The bin: A = 2, D = 3. A pit. Negate the cost and A = −2, D = 3: a peak.
 
 ### Step 3: the bowl beats the remainder
 
-The spectral theorem ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)) gives H two square-on directions along which it only stretches; the stretches, its eigenvalues, are 3 along (1, 1) and 1 along (1, −1). So the quadratic form is at least the smallest, $\lambda$ = 1, times the squared step length. The remainder shrinks faster, so for short steps it stays under a quarter of that floor and the rise stays positive: a strict pit. The picture's square-base road runs along (1, 1), the most sharply curved direction.
+The spectral theorem ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)) gives H two square-on directions along which it only stretches; the stretches, its eigenvalues, are 3 along (1, 1) and 1 along (1, −1). So the quadratic form is at least the smallest, $`\lambda`$ = 1, times the squared step length. The remainder shrinks faster, so for short steps it stays under a quarter of that floor and the rise stays positive: a strict pit. The picture's square-base road runs along (1, 1), the most sharply curved direction.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let S have continuous second partials near p, with ∇S(p) = 0, and A > 0, D > 0 at p. The eigenvalues have product D > 0 and sum A + C > 0, so both are positive; with λ the smaller, $h^{\mathsf T}H(p)h \ge \lambda\lvert h\rvert^2$.
+Let S have continuous second partials near p, with ∇S(p) = 0, and A > 0, D > 0 at p. The eigenvalues have product D > 0 and sum A + C > 0, so both are positive; with λ the smaller, $`h^{\mathsf T}H(p)h \ge \lambda\lvert h\rvert^2`$.
 
-With g(t) = S(p + th), [Taylor's theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md) gives S(p + h) − S(p) = ½g''(τ) = ½ $h^{\mathsf T}H(p + \tau h)h$ for some τ in (0, 1), since g'(0) = 0.
+With g(t) = S(p + th), [Taylor's theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md) gives S(p + h) − S(p) = ½g''(τ) = ½ $`h^{\mathsf T}H(p + \tau h)h`$ for some τ in (0, 1), since g'(0) = 0.
 
 Set ε = λ/2. Continuity gives δ > 0 with every entry of H(q) − H(p) within ε/2 of zero when |q − p| < δ, so their quadratic forms differ by at most (ε/2)(|h₁| + |h₂|)^2 ≤ ε|h|^2. For 0 < |h| < δ, S(p + h) − S(p) ≥ ½(λ − ε)|h|^2 = ¼λ|h|^2 > 0. Use −S for a peak; for D < 0, Step 2's two steps, scaled small, keep their signs by the same bound.
 

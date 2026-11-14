@@ -39,50 +39,58 @@ One line: the profit. It is flat at −12.85 dollars below the 110-dollar strike
 
 ## The formula
 
-Notation first. $V$ is the share's dollar value, the share's euro price times the exchange rate. The subscript $T$ marks expiry day: $V_T = S_T X_T$.
+Notation first. $`V`$ is the share's dollar value, the share's euro price times the exchange rate. The subscript $`T`$ marks expiry day: $`V_T = S_T X_T`$.
 
-$$C = V\,e^{-qT}\,N(d_1) \;-\; K\,e^{-r_d T}\,N(d_2), \qquad V = S\,X_0$$
+```math
+C = V\,e^{-qT}\,N(d_1) \;-\; K\,e^{-r_d T}\,N(d_2), \qquad V = S\,X_0
+```
 
 **Read it aloud:** the dollar value of the share the holder might receive, minus the dollars the holder might hand over, each weighted by its own chance and discounted at the dollar rate, exactly as in Black-Scholes.
 
-The one new ingredient is the volatility, written $\sigma_V$:
+The one new ingredient is the volatility, written $`\sigma_V`$:
 
-$$\sigma_V = \sqrt{\sigma_S^2 + \sigma_X^2 + 2\rho\,\sigma_S\,\sigma_X}$$
+```math
+\sigma_V = \sqrt{\sigma_S^2 + \sigma_X^2 + 2\rho\,\sigma_S\,\sigma_X}
+```
 
 **Read it aloud:** the spread of the product is the square root of the share's variance plus the currency's variance plus twice their co-movement.
 
 | Symbol | Plain meaning | In our example | Push it up and the call… |
 | --- | --- | --- | --- |
-| $C$, $P$ | the composite call's and put's price today, in dollars | 12.849392 and 8.579147 USD | — |
-| $S$, $S_T$ | the share's price in euros, today and on expiry day | 100 EUR | rises: more dollar value |
-| $X_0$, $X_T$, $\bar{X}$ | the market exchange rate in dollars per euro, today and on expiry day; $\bar{X}$ is the quanto's fixed rate | 1.10 today; $\bar{X}$ = 1.10 | $X_0$ rises: more dollar value |
-| $V$, $V_T$ | the share's dollar value, $S X_0$ today and $S_T X_T$ at expiry | 110 USD today | rises: the call is a call on $V$ |
-| $K$ | the strike, in dollars | 110 USD | falls: further to climb |
-| $r_d$, $r_f$ | the dollar (home) and euro (foreign) interest rates, continuously compounded | 5% and 3% | $r_d$ raises it, as in any call; $r_f$ does not appear |
-| $q$ | the share's dividend yield: cash paid out of the share each year | 1% | lowers it: dividends leave the share price |
-| $\sigma_S$, $\sigma_X$ | volatility of the share, and of the exchange rate: the yearly spread of log returns | 20% and 10% | both raise it: each widens the product |
-| $\rho$ | correlation of the share's moves with the dollars-per-euro moves, from −1 to +1 | 0.30 | raises it: moving together widens the product |
-| $\sigma_V$ | the composite volatility: the yearly spread of the dollar value's log returns | 24.8998% | raises it, the main dial |
-| $T$ | years to expiry | 1 | raises it: more room to move |
-| $N(x)$, $d_1$, $d_2$ | bell-curve area left of $x$; the two cut-offs, in standard deviations | $d_1$ = 0.285143, $d_2$ = 0.036145 | — |
+| $`C`$, $`P`$ | the composite call's and put's price today, in dollars | 12.849392 and 8.579147 USD | — |
+| $`S`$, $`S_T`$ | the share's price in euros, today and on expiry day | 100 EUR | rises: more dollar value |
+| $`X_0`$, $`X_T`$, $`\bar{X}`$ | the market exchange rate in dollars per euro, today and on expiry day; $`\bar{X}`$ is the quanto's fixed rate | 1.10 today; $`\bar{X}`$ = 1.10 | $`X_0`$ rises: more dollar value |
+| $`V`$, $`V_T`$ | the share's dollar value, $`S X_0`$ today and $`S_T X_T`$ at expiry | 110 USD today | rises: the call is a call on $`V`$ |
+| $`K`$ | the strike, in dollars | 110 USD | falls: further to climb |
+| $`r_d`$, $`r_f`$ | the dollar (home) and euro (foreign) interest rates, continuously compounded | 5% and 3% | $`r_d`$ raises it, as in any call; $`r_f`$ does not appear |
+| $`q`$ | the share's dividend yield: cash paid out of the share each year | 1% | lowers it: dividends leave the share price |
+| $`\sigma_S`$, $`\sigma_X`$ | volatility of the share, and of the exchange rate: the yearly spread of log returns | 20% and 10% | both raise it: each widens the product |
+| $`\rho`$ | correlation of the share's moves with the dollars-per-euro moves, from −1 to +1 | 0.30 | raises it: moving together widens the product |
+| $`\sigma_V`$ | the composite volatility: the yearly spread of the dollar value's log returns | 24.8998% | raises it, the main dial |
+| $`T`$ | years to expiry | 1 | raises it: more room to move |
+| $`N(x)`$, $`d_1`$, $`d_2`$ | bell-curve area left of $`x`$; the two cut-offs, in standard deviations | $`d_1`$ = 0.285143, $`d_2`$ = 0.036145 | — |
 
 The cut-offs are those of the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), run on the dollar value with the composite volatility:
 
-$$d_1 = \frac{\ln(V/K) + (r_d - q + \tfrac12\sigma_V^2)\,T}{\sigma_V\sqrt{T}}, \qquad d_2 = d_1 - \sigma_V\sqrt{T}$$
+```math
+d_1 = \frac{\ln(V/K) + (r_d - q + \tfrac12\sigma_V^2)\,T}{\sigma_V\sqrt{T}}, \qquad d_2 = d_1 - \sigma_V\sqrt{T}
+```
 
-In words: $d_2$ is how many standard deviations of room the dollar value has above the strike; $d_1$ is one standard deviation more. The euro rate $r_f$ appears nowhere.
+In words: $`d_2`$ is how many standard deviations of room the dollar value has above the strike; $`d_1`$ is one standard deviation more. The euro rate $`r_f`$ appears nowhere.
 
 The put and the call are tied by the usual parity, applied to the dollar value:
 
-$$C - P = V e^{-qT} - K e^{-r_d T}$$
+```math
+C - P = V e^{-qT} - K e^{-r_d T}
+```
 
 ### When it holds
 
-- **Constant volatilities and correlation.** Correlation is rarely quoted directly; it is estimated from history or backed out of quanto prices, and it drifts. The call moves 3.35 dollars per unit of correlation, so an error in $\rho$ is an error in the price.
+- **Constant volatilities and correlation.** Correlation is rarely quoted directly; it is estimated from history or backed out of quanto prices, and it drifts. The call moves 3.35 dollars per unit of correlation, so an error in $`\rho`$ is an error in the price.
 - **Two linked lognormal walks.** Share and exchange rate each move by compounding random percentages, joined by one correlation. A devaluation (an overnight jump in the currency) breaks the model.
 - **Dividends as a steady yield.** The share pays out 1% a year smoothly. Lumpy dividends need the known-dividend adjustment.
 - **Constant rates, European exercise.** One payment date. Early exercise needs a tree.
-- **The quote direction.** The formula takes the rate as dollars per euro, the market's EUR/USD quote (conventions verified 2026-09-27). A correlation measured against euros per dollar has the opposite sign; flip it back before it enters $\sigma_V$.
+- **The quote direction.** The formula takes the rate as dollars per euro, the market's EUR/USD quote (conventions verified 2026-09-27). A correlation measured against euros per dollar has the opposite sign; flip it back before it enters $`\sigma_V`$.
 
 ---
 
@@ -90,81 +98,85 @@ $$C - P = V e^{-qT} - K e^{-r_d T}$$
 
 ### Step 0: the dollar value is something a dollar investor can hold
 
-A New York fund can convert dollars to euros and buy the share. What it then holds is worth $S_t X_t$ dollars at every moment. So the dollar value $V$ is a traded dollar asset, like any American share. The composite call is an ordinary call on that asset, with a dollar strike. Black-Scholes needs two facts about the asset: how fast it grows in the pricing world, and how much it wobbles.
+A New York fund can convert dollars to euros and buy the share. What it then holds is worth $`S_t X_t`$ dollars at every moment. So the dollar value $`V`$ is a traded dollar asset, like any American share. The composite call is an ordinary call on that asset, with a dollar strike. Black-Scholes needs two facts about the asset: how fast it grows in the pricing world, and how much it wobbles.
 
 That is the whole difference from the quanto, whose underlying, "the euro price paid at 1.10", is not something a dollar investor can hold. Its growth had to be worked out, and came out bent by correlation. Here the growth is pinned at once.
 
 ### Step 1: its growth rate is the dollar rate less the dividend
 
-In the dollar pricing world (the risk-neutral world of [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), where every dollar asset earns the dollar rate), a holding worth $V$ that pays dividends at 1% must grow in price at $r_d - q$ = 4%. Dividends are paid in euros at a yield of 1% on the share's euro value, which is also 1% of its dollar value. No correlation term appears in the growth. The euro rate $r_f$ does not appear either: it governs a euro deposit, and the fund holds a share.
+In the dollar pricing world (the risk-neutral world of [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), where every dollar asset earns the dollar rate), a holding worth $`V`$ that pays dividends at 1% must grow in price at $`r_d - q`$ = 4%. Dividends are paid in euros at a yield of 1% on the share's euro value, which is also 1% of its dollar value. No correlation term appears in the growth. The euro rate $`r_f`$ does not appear either: it governs a euro deposit, and the fund holds a share.
 
 ### Step 2: its volatility is the volatility of a product
 
 Take logarithms. The log of a product is the sum of the logs:
 
-$$\ln V_T = \ln S_T + \ln X_T$$
+```math
+\ln V_T = \ln S_T + \ln X_T
+```
 
-So over the year, the dollar value's log return is the share's log return plus the currency's log return. The variance (the square of the spread) of a sum of two linked random quantities is the variance of each plus twice their covariance, the average product of their deviations ([Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). The covariance of the two log returns is $\rho\,\sigma_S\,\sigma_X$ per year. So
+So over the year, the dollar value's log return is the share's log return plus the currency's log return. The variance (the square of the spread) of a sum of two linked random quantities is the variance of each plus twice their covariance, the average product of their deviations ([Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). The covariance of the two log returns is $`\rho\,\sigma_S\,\sigma_X`$ per year. So
 
-$$\sigma_V^2 = \sigma_S^2 + \sigma_X^2 + 2\rho\,\sigma_S\,\sigma_X = 0.04 + 0.01 + 0.012 = 0.062$$
+```math
+\sigma_V^2 = \sigma_S^2 + \sigma_X^2 + 2\rho\,\sigma_S\,\sigma_X = 0.04 + 0.01 + 0.012 = 0.062
+```
 
-and $\sigma_V$ = 24.8998%. Correlation widens the spread when positive: the share and the euro tend to rise and fall together, and their moves pile up. When negative they partly cancel. At $\rho = -1$ the spread is 20% − 10% = 10%; at $\rho = +1$ it is 20% + 10% = 30%.
+and $`\sigma_V`$ = 24.8998%. Correlation widens the spread when positive: the share and the euro tend to rise and fall together, and their moves pile up. When negative they partly cancel. At $`\rho = -1`$ the spread is 20% − 10% = 10%; at $`\rho = +1`$ it is 20% + 10% = 30%.
 
-The code checks this without the formula. It averages $\ln V_T$ and its square over both bell curves on a grid, and the spread that comes out is 0.248998.
+The code checks this without the formula. It averages $`\ln V_T`$ and its square over both bell curves on a grid, and the spread that comes out is 0.248998.
 
 ### Step 3: a sum of two linked bell curves is a bell curve
 
-The two log returns are jointly bell-shaped (normally distributed), and any sum of a jointly bell-shaped pair is bell-shaped. So $V_T$ is lognormal: its log follows a bell curve with spread $\sigma_V\sqrt{T}$. A lognormal dollar asset growing at $r_d - q$ is what the Black-Scholes call was built for, and the formula above follows.
+The two log returns are jointly bell-shaped (normally distributed), and any sum of a jointly bell-shaped pair is bell-shaped. So $`V_T`$ is lognormal: its log follows a bell curve with spread $`\sigma_V\sqrt{T}`$. A lognormal dollar asset growing at $`r_d - q`$ is what the Black-Scholes call was built for, and the formula above follows.
 
 <details>
 <summary>Detailed proof</summary>
 
-In the dollar pricing world let $dS_t/S_t = \mu\,dt + \sigma_S\,dW^S_t$ and $dX_t/X_t = (r_d - r_f)\,dt + \sigma_X\,dW^X_t$, where $W^S$ and $W^X$ are standard Brownian motions with correlated increments, $d\langle W^S, W^X\rangle_t = \rho\,dt$, and $\mu = r_f - q - \rho\sigma_S\sigma_X$ is the quanto drift of [The quanto adjustment](01-quanto-forward-and-adjustment.md).
+In the dollar pricing world let $`dS_t/S_t = \mu\,dt + \sigma_S\,dW^S_t`$ and $`dX_t/X_t = (r_d - r_f)\,dt + \sigma_X\,dW^X_t`$, where $`W^S`$ and $`W^X`$ are standard Brownian motions with correlated increments, $`d\langle W^S, W^X\rangle_t = \rho\,dt`$, and $`\mu = r_f - q - \rho\sigma_S\sigma_X`$ is the quanto drift of [The quanto adjustment](01-quanto-forward-and-adjustment.md).
 
-**Logs.** Ito's lemma gives $d\ln S_t = (\mu - \tfrac12\sigma_S^2)\,dt + \sigma_S\,dW^S_t$ and $d\ln X_t = (r_d - r_f - \tfrac12\sigma_X^2)\,dt + \sigma_X\,dW^X_t$.
+**Logs.** Ito's lemma gives $`d\ln S_t = (\mu - \tfrac12\sigma_S^2)\,dt + \sigma_S\,dW^S_t`$ and $`d\ln X_t = (r_d - r_f - \tfrac12\sigma_X^2)\,dt + \sigma_X\,dW^X_t`$.
 
-**Sum.** $d\ln V_t = \big(r_d - q - \rho\sigma_S\sigma_X - \tfrac12\sigma_S^2 - \tfrac12\sigma_X^2\big)dt + \sigma_S\,dW^S_t + \sigma_X\,dW^X_t$. The noise term $\sigma_S\,dW^S_t + \sigma_X\,dW^X_t$ has variance $(\sigma_S^2 + \sigma_X^2 + 2\rho\sigma_S\sigma_X)\,dt = \sigma_V^2\,dt$, so it equals $\sigma_V\,dW^V_t$ for a standard Brownian motion $W^V$. The drift is $r_d - q - \tfrac12\sigma_V^2$, because $\tfrac12\sigma_V^2 = \tfrac12\sigma_S^2 + \tfrac12\sigma_X^2 + \rho\sigma_S\sigma_X$.
+**Sum.** $`d\ln V_t = \big(r_d - q - \rho\sigma_S\sigma_X - \tfrac12\sigma_S^2 - \tfrac12\sigma_X^2\big)dt + \sigma_S\,dW^S_t + \sigma_X\,dW^X_t`$. The noise term $`\sigma_S\,dW^S_t + \sigma_X\,dW^X_t`$ has variance $`(\sigma_S^2 + \sigma_X^2 + 2\rho\sigma_S\sigma_X)\,dt = \sigma_V^2\,dt`$, so it equals $`\sigma_V\,dW^V_t`$ for a standard Brownian motion $`W^V`$. The drift is $`r_d - q - \tfrac12\sigma_V^2`$, because $`\tfrac12\sigma_V^2 = \tfrac12\sigma_S^2 + \tfrac12\sigma_X^2 + \rho\sigma_S\sigma_X`$.
 
-**Result.** $dV_t/V_t = (r_d - q)\,dt + \sigma_V\,dW^V_t$: the correlation that bent the share's drift is exactly absorbed into the product's variance, and the product grows at $r_d - q$, as Step 1 required. The payoff $\max(V_T - K, 0)$ is then priced by the Black–Scholes argument with $S \to V$, $r \to r_d$, $\sigma \to \sigma_V$. $\blacksquare$
+**Result.** $`dV_t/V_t = (r_d - q)\,dt + \sigma_V\,dW^V_t`$: the correlation that bent the share's drift is exactly absorbed into the product's variance, and the product grows at $`r_d - q`$, as Step 1 required. The payoff $`\max(V_T - K, 0)`$ is then priced by the Black–Scholes argument with $`S \to V`$, $`r \to r_d`$, $`\sigma \to \sigma_V`$. $`\blacksquare`$
 
 </details>
 
 ### Step 4: from inside the euro world, the same price
 
-A European holder sees the contract differently. The payoff $\max(S_T X_T - K, 0)$ dollars is worth $\max(S_T - K/X_T, 0)$ euros on expiry day. For a European this is a call on the share whose strike, $K/X_T$ euros, is random: the fixed 110 dollars converted at the rate on the day.
+A European holder sees the contract differently. The payoff $`\max(S_T X_T - K, 0)`$ dollars is worth $`\max(S_T - K/X_T, 0)`$ euros on expiry day. For a European this is a call on the share whose strike, $`K/X_T`$ euros, is random: the fixed 110 dollars converted at the rate on the day.
 
-The code prices it that way. The share grows at its own euro rate $r_f - q$, the dollar (the foreign currency, seen from Frankfurt) grows at $r_f - r_d$, both are averaged on a grid over their joint bell curve, the result is discounted at the euro rate and converted at today's 1.10. No drift is adjusted anywhere. It lands on 12.849392 dollars, the formula's price to six decimals.
+The code prices it that way. The share grows at its own euro rate $`r_f - q`$, the dollar (the foreign currency, seen from Frankfurt) grows at $`r_f - r_d`$, both are averaged on a grid over their joint bell curve, the result is discounted at the euro rate and converted at today's 1.10. No drift is adjusted anywhere. It lands on 12.849392 dollars, the formula's price to six decimals.
 
 <details>
 <summary>Why the correlation moves the drift on one card and the spread on the other</summary>
 
-The quanto pays $\bar{X}(S_T - K)$: the currency enters only through the pricing world, never through the payoff. There it can only tilt the share's growth. The composite pays $S_T X_T - K$: the currency is inside the payoff, multiplied by the share. There the co-movement is part of how far the payoff can swing, which is spread, not drift. In the proof the same term $\rho\sigma_S\sigma_X$ appears on both sides of the ledger: once as the quanto drift's cut, once as the variance's bonus, and for the product they cancel in the drift.
+The quanto pays $`\bar{X}(S_T - K)`$: the currency enters only through the pricing world, never through the payoff. There it can only tilt the share's growth. The composite pays $`S_T X_T - K`$: the currency is inside the payoff, multiplied by the share. There the co-movement is part of how far the payoff can swing, which is spread, not drift. In the proof the same term $`\rho\sigma_S\sigma_X`$ appears on both sides of the ledger: once as the quanto drift's cut, once as the variance's bonus, and for the product they cancel in the drift.
 
 </details>
 
 ### The other door: a relabelled Black-Scholes call
 
-The formula is the Black–Scholes call with three substitutions: the share's dollar value $V$ for the share price, the dollar rate $r_d$ for the rate, the composite volatility $\sigma_V$ for the volatility. Any Black-Scholes routine prices a composite if fed those three numbers, and the proof of the call on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), is the proof of this one.
+The formula is the Black–Scholes call with three substitutions: the share's dollar value $`V`$ for the share price, the dollar rate $`r_d`$ for the rate, the composite volatility $`\sigma_V`$ for the volatility. Any Black-Scholes routine prices a composite if fed those three numbers, and the proof of the call on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), is the proof of this one.
 
 ---
 
 ## Worked numbers, by hand
 
-The house composite: $S$ = 100 euros, $X_0$ = 1.10, so $V$ = 110 dollars; $K$ = 110 dollars; $r_d$ = 5%, $q$ = 1%, $\sigma_S$ = 20%, $\sigma_X$ = 10%, $\rho$ = 0.30, $T$ = 1 year.
+The house composite: $`S`$ = 100 euros, $`X_0`$ = 1.10, so $`V`$ = 110 dollars; $`K`$ = 110 dollars; $`r_d`$ = 5%, $`q`$ = 1%, $`\sigma_S`$ = 20%, $`\sigma_X`$ = 10%, $`\rho`$ = 0.30, $`T`$ = 1 year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| cross term, $2\rho\sigma_S\sigma_X$ | $2 \times 0.30 \times 0.20 \times 0.10$ | $0.012$ |
-| composite variance | $0.04 + 0.01 + 0.012$ | $0.062$ |
-| $\sigma_V$ | $\sqrt{0.062}$ | $0.248998$ |
-| $\ln(V/K)$ | $\ln(110/110)$ | $0$ |
-| $d_1$ | $(0 + 0.05 - 0.01 + 0.031) / 0.248998$ | $0.285143$ |
-| $d_2$ | $0.285143 - 0.248998$ | $0.036145$ |
-| $N(d_1)$, $N(d_2)$ | bell-curve table | $0.612233$, $0.514417$ |
-| share side | $110 \times e^{-0.01} \times 0.612233$ | $66.675492$ |
-| cash side | $110 \times e^{-0.05} \times 0.514417$ | $53.826100$ |
-| **composite call** | $66.675492 - 53.826100$ | **12.849392 USD** |
-| breakeven dollar value | $110 + 12.849392$ | 122.85 USD |
+| cross term, $`2\rho\sigma_S\sigma_X`$ | $`2 \times 0.30 \times 0.20 \times 0.10`$ | $`0.012`$ |
+| composite variance | $`0.04 + 0.01 + 0.012`$ | $`0.062`$ |
+| $`\sigma_V`$ | $`\sqrt{0.062}`$ | $`0.248998`$ |
+| $`\ln(V/K)`$ | $`\ln(110/110)`$ | $`0`$ |
+| $`d_1`$ | $`(0 + 0.05 - 0.01 + 0.031) / 0.248998`$ | $`0.285143`$ |
+| $`d_2`$ | $`0.285143 - 0.248998`$ | $`0.036145`$ |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve table | $`0.612233`$, $`0.514417`$ |
+| share side | $`110 \times e^{-0.01} \times 0.612233`$ | $`66.675492`$ |
+| cash side | $`110 \times e^{-0.05} \times 0.514417`$ | $`53.826100`$ |
+| **composite call** | $`66.675492 - 53.826100`$ | **12.849392 USD** |
+| breakeven dollar value | $`110 + 12.849392`$ | 122.85 USD |
 
 So the fund pays 12.85 dollars for the right to the share's dollar value above 110. The put on the same terms costs 8.58 dollars, and call minus put is 4.27 dollars: the discounted dollar value less the discounted strike.
 
@@ -174,11 +186,11 @@ Same share, same market, same strike at today's rate (100 euros is 110 dollars a
 
 | Contract | Payoff in dollars | Price | Correlation's effect |
 | --- | --- | --- | --- |
-| Quanto call | $\bar{X}\,\max(S_T - 100, 0)$, at the fixed 1.10 | 9.15 | lowers it, through the drift (to 1.4% from 2%) |
-| Plain euro call, converted on the day | $X_T\,\max(S_T - 100, 0)$ | 9.71 | none |
-| Composite call | $\max(S_T X_T - 110, 0)$ | 12.85 | raises it, through the spread |
+| Quanto call | $`\bar{X}\,\max(S_T - 100, 0)`$, at the fixed 1.10 | 9.15 | lowers it, through the drift (to 1.4% from 2%) |
+| Plain euro call, converted on the day | $`X_T\,\max(S_T - 100, 0)`$ | 9.71 | none |
+| Composite call | $`\max(S_T X_T - 110, 0)`$ | 12.85 | raises it, through the spread |
 
-The plain call is the euro call's euro price converted at today's rate. A euro amount received later is worth its euro price today times $X_0$, whatever the currency does in between, so correlation cannot touch it.
+The plain call is the euro call's euro price converted at today's rate. A euro amount received later is worth its euro price today times $`X_0`$, whatever the currency does in between, so correlation cannot touch it.
 
 Which one does a dollar investor own? Four expiry days show it:
 
@@ -199,10 +211,10 @@ Correct answer 12.849392 dollars.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Volatility $\sqrt{\sigma_S^2 + \sigma_X^2}$, correlation dropped | 11.790911 | The cross term 0.012 is a fifth of the variance |
-| Share volatility $\sigma_S$ alone | 10.808928 | The currency is inside the payoff; its wobble widens the product |
-| Volatilities added, $\sigma_S + \sigma_X$ | 14.978059 | Only right at $\rho = +1$; spreads add in variance, not in size |
-| Growth at the euro rate $r_f - q$ | 11.562428 | The dollar value is a dollar asset; it grows at $r_d - q$ |
+| Volatility $`\sqrt{\sigma_S^2 + \sigma_X^2}`$, correlation dropped | 11.790911 | The cross term 0.012 is a fifth of the variance |
+| Share volatility $`\sigma_S`$ alone | 10.808928 | The currency is inside the payoff; its wobble widens the product |
+| Volatilities added, $`\sigma_S + \sigma_X`$ | 14.978059 | Only right at $`\rho = +1`$; spreads add in variance, not in size |
+| Growth at the euro rate $`r_f - q`$ | 11.562428 | The dollar value is a dollar asset; it grows at $`r_d - q`$ |
 
 ### How the price leans on correlation, and the Greeks
 
@@ -219,26 +231,26 @@ xychart-beta
     line [9.71, 9.71, 9.71, 9.71, 9.71, 9.71, 9.71, 9.71, 9.71]
 ```
 
-Orange, rising: the composite, from 6.73 to 14.98 dollars as its volatility runs from 10% to 30%. Green, falling: the quanto, from 10.81 to 8.33. Dark, flat: the plain euro call at 9.71. The composite and quanto move in opposite directions on the same dial. At $\rho = -0.25$ the composite volatility is exactly 20%, and the composite costs 10.81 dollars, the same as a call on the dollar value with the share's volatility alone.
+Orange, rising: the composite, from 6.73 to 14.98 dollars as its volatility runs from 10% to 30%. Green, falling: the quanto, from 10.81 to 8.33. Dark, flat: the plain euro call at 9.71. The composite and quanto move in opposite directions on the same dial. At $`\rho = -0.25`$ the composite volatility is exactly 20%, and the composite costs 10.81 dollars, the same as a call on the dollar value with the share's volatility alone.
 
 The Greeks (sensitivities of the price to each input) at the house point:
 
 | Greek | Value | Meaning |
 | --- | --- | --- |
-| Delta in shares, $e^{-qT}N(d_1)$ | 0.606141 | shares a seller holds to hedge, bought in euros |
-| Price per euro of share price | 0.666755 USD | delta in shares times $X_0$ |
-| Price per 1.00 of exchange rate | 60.61 USD | delta in shares times $S$ |
-| Vega (sensitivity to volatility), to $\sigma_V$ | 41.72 USD per unit | per percentage point, divide by 100 |
-| Sensitivity to $\sigma_S$ | 38.53 USD per unit | vega times $(\sigma_S + \rho\sigma_X)/\sigma_V$ |
-| Sensitivity to $\rho$ | 3.35 USD per unit | vega times $\sigma_S\sigma_X/\sigma_V$ |
+| Delta in shares, $`e^{-qT}N(d_1)`$ | 0.606141 | shares a seller holds to hedge, bought in euros |
+| Price per euro of share price | 0.666755 USD | delta in shares times $`X_0`$ |
+| Price per 1.00 of exchange rate | 60.61 USD | delta in shares times $`S`$ |
+| Vega (sensitivity to volatility), to $`\sigma_V`$ | 41.72 USD per unit | per percentage point, divide by 100 |
+| Sensitivity to $`\sigma_S`$ | 38.53 USD per unit | vega times $`(\sigma_S + \rho\sigma_X)/\sigma_V`$ |
+| Sensitivity to $`\rho`$ | 3.35 USD per unit | vega times $`\sigma_S\sigma_X/\sigma_V`$ |
 
-The first three rows carry the hedging story. A seller who holds 0.606141 shares, bought with dollars converted to euros, has a position worth 0.606141 times $S X$ dollars. It moves 0.666755 dollars per euro of share price and 60.61 dollars per unit of exchange rate, the call's own two deltas. One trade covers both risks. No separate currency hedge is needed, because the shares are held in euros and the euros carry the currency. The quanto's seller is not so lucky: [Hedging a quanto](03-quanto-greeks-and-hedging.md).
+The first three rows carry the hedging story. A seller who holds 0.606141 shares, bought with dollars converted to euros, has a position worth 0.606141 times $`S X`$ dollars. It moves 0.666755 dollars per euro of share price and 60.61 dollars per unit of exchange rate, the call's own two deltas. One trade covers both risks. No separate currency hedge is needed, because the shares are held in euros and the euros carry the currency. The quanto's seller is not so lucky: [Hedging a quanto](03-quanto-greeks-and-hedging.md).
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts build their own normal CDF (Simpson slices under the bell curve) and reach the composite price **three independent ways**: the formula with the composite volatility; a Simpson grid over the joint bell curve of share and currency in the dollar pricing world, which never computes $\sigma_V$; and a Simpson grid in the euro pricing world, where no drift is adjusted and the strike is converted at the rate on the day. The put is priced on its own grid and parity checked. The spread of $\ln V_T$ is measured on the grid and compared with $\sigma_V$. The same grid prices the quanto and the plain call; the Greeks are checked by bumping; every table and chart number is printed.
+The scripts build their own normal CDF (Simpson slices under the bell curve) and reach the composite price **three independent ways**: the formula with the composite volatility; a Simpson grid over the joint bell curve of share and currency in the dollar pricing world, which never computes $`\sigma_V`$; and a Simpson grid in the euro pricing world, where no drift is adjusted and the strike is converted at the rate on the day. The put is priced on its own grid and parity checked. The spread of $`\ln V_T`$ is measured on the grid and compared with $`\sigma_V`$. The same grid prices the quanto and the plain call; the Greeks are checked by bumping; every table and chart number is printed.
 
 ### Python
 
@@ -422,7 +434,7 @@ payoff, profit  -12.85 -12.85 -12.85  -2.85   7.15  17.15  27.15
 ALL CHECKS PASS
 ```
 
-Three roads land on 12.849392 to six decimals. The grid's spread for $\ln V_T$ matches the formula's 0.248998. The quanto from the grid is 9.151629, the sibling card's number.
+Three roads land on 12.849392 to six decimals. The grid's spread for $`\ln V_T`$ matches the formula's 0.248998. The quanto from the grid is 9.151629, the sibling card's number.
 
 ### Rust
 
@@ -626,11 +638,11 @@ The two outputs agree line for line.
 
 Lean proves three facts behind the price, for every input that meets each fact's conditions, and checks the house arithmetic.
 
-- Suppose $S_T, X_T > 0$ and their logs are jointly bell-shaped, with the variances and covariance of Step 2. Then $\ln V_T$ is bell-shaped, with mean the sum of the two means and variance $\sigma_V^2 T$.
-- Take $\sigma_S, \sigma_X \ge 0$ and $\rho$ from −1 to +1. Then $\sigma_V$ lies between $|\sigma_S - \sigma_X|$ and $\sigma_S + \sigma_X$.
-- Suppose $V_T$ has an average, and in the dollar pricing world it grows on average at $r_d - q$ from $V$. Then $C - P = V e^{-qT} - K e^{-r_d T}$.
+- Suppose $`S_T, X_T > 0`$ and their logs are jointly bell-shaped, with the variances and covariance of Step 2. Then $`\ln V_T`$ is bell-shaped, with mean the sum of the two means and variance $`\sigma_V^2 T`$.
+- Take $`\sigma_S, \sigma_X \ge 0`$ and $`\rho`$ from −1 to +1. Then $`\sigma_V`$ lies between $`|\sigma_S - \sigma_X|`$ and $`\sigma_S + \sigma_X`$.
+- Suppose $`V_T`$ has an average, and in the dollar pricing world it grows on average at $`r_d - q`$ from $`V`$. Then $`C - P = V e^{-qT} - K e^{-r_d T}`$.
 - The house numbers check out exactly: cross term 0.012, composite variance 0.062, and dollar value 110.
-- The composite volatility is 10% at $\rho = -1$, 30% at $\rho = +1$, and exactly 20% at $\rho = -0.25$.
+- The composite volatility is 10% at $`\rho = -1`$, 30% at $`\rho = +1`$, and exactly 20% at $`\rho = -0.25`$.
 - The four expiry-day payoffs in the table of three contracts check out exactly.
 
 The price formula, the Greeks, the integrals and every option price are left to the Python and Rust checks.
@@ -787,9 +799,9 @@ example : (11 / 10 : ℚ) * max (110 - 100) 0 = 11 := by norm_num
 > **Carrying the quanto's lesson across.** On the quanto card correlation lowers the price and the currency's volatility never widens the payoff. On this card both statements reverse. Correlation raises the composite call, 12.85 dollars against 11.79 at zero correlation, and the currency's volatility is half the story. The drift carries no correlation at all. Mixing the two, with the quanto's bent drift and the share's volatility, prices the quanto, 9.15, for a contract worth 12.85.
 >
 > Smaller traps:
-> - **Dropping the cross term.** $\sqrt{\sigma_S^2 + \sigma_X^2}$ gives 11.79 dollars. The cross term is a fifth of the variance.
-> - **Adding the volatilities.** $\sigma_S + \sigma_X$ = 30% gives 14.98, true only when share and currency move in lockstep.
-> - **Growing the dollar value at the euro rate.** The share alone grows at $r_f - q$ in its own currency; its dollar value is a dollar asset and grows at $r_d - q$. The wrong rate gives 11.56.
+> - **Dropping the cross term.** $`\sqrt{\sigma_S^2 + \sigma_X^2}`$ gives 11.79 dollars. The cross term is a fifth of the variance.
+> - **Adding the volatilities.** $`\sigma_S + \sigma_X`$ = 30% gives 14.98, true only when share and currency move in lockstep.
+> - **Growing the dollar value at the euro rate.** The share alone grows at $`r_f - q`$ in its own currency; its dollar value is a dollar asset and grows at $`r_d - q`$. The wrong rate gives 11.56.
 > - **Comparing strikes across contracts.** The quanto's 100-euro strike and the composite's 110-dollar strike match only at today's rate. At 0.90 dollars per euro on expiry day, a share at 120 euros clears the quanto's strike and misses the composite's (row two of the scenarios).
 
 ---
@@ -814,10 +826,10 @@ example : (11 / 10 : ℚ) * max (110 - 100) 0 = 11 := by norm_num
 
 ## Where this goes next
 
-- [Correlation from a quanto price](05-implied-correlation-from-a-quanto.md): every input here is quoted in a market except $\rho$. A quoted quanto price pins it, and that implied correlation then prices the composite.
+- [Correlation from a quanto price](05-implied-correlation-from-a-quanto.md): every input here is quoted in a market except $`\rho`$. A quoted quanto price pins it, and that implied correlation then prices the composite.
 - [Hedging a quanto](03-quanto-greeks-and-hedging.md): the hedge that the composite gets for free, one euro share position, is two positions for the quanto.
 
-The question this card leaves open: every input except $\rho$ is quoted in a market, so where does the correlation come from?
+The question this card leaves open: every input except $`\rho`$ is quoted in a market, so where does the correlation come from?
 
 ---
 

@@ -34,30 +34,36 @@ Orange: t^10 e^(−t), area exactly 3,628,800. Green: the bell with the same pea
 
 Reminder: the gamma function extends the factorial, Γ(s + 1) = s! ([The gamma function](02-gamma-function.md)):
 
-$$\Gamma(s+1) = \int_0^\infty t^{s}\,e^{-t}\,dt, \qquad \text{Re}\, s > -1.$$
+```math
+\Gamma(s+1) = \int_0^\infty t^{s}\,e^{-t}\,dt, \qquad \text{Re}\, s > -1.
+```
 
 A wavy equals sign, ~, means the ratio of the two sides heads for 1 as s grows:
 
-$$\Gamma(s+1) \sim \sqrt{2\pi s}\,\left(\frac{s}{e}\right)^{s}, \qquad \frac{\Gamma(s+1)}{\sqrt{2\pi s}\,(s/e)^{s}} \approx 1 + \frac{1}{12s}$$
+```math
+\Gamma(s+1) \sim \sqrt{2\pi s}\,\left(\frac{s}{e}\right)^{s}, \qquad \frac{\Gamma(s+1)}{\sqrt{2\pi s}\,(s/e)^{s}} \approx 1 + \frac{1}{12s}
+```
 
 **Read it aloud:** the factorial of s is, in ratio, root 2π s times s over e to the s; truth over formula is close to one plus one over 12 s.
 
 Laplace's method, for a smooth g with one highest point u0, a negative second derivative g''(u0) there (the bend), and a large number M:
 
-$$\int e^{M g(u)}\,du \;\sim\; e^{M g(u_0)}\sqrt{\frac{2\pi}{M\,|g''(u_0)|}}$$
+```math
+\int e^{M g(u)}\,du \;\sim\; e^{M g(u_0)}\sqrt{\frac{2\pi}{M\,|g''(u_0)|}}
+```
 
 **Read it aloud:** the integral is the peak value times root of 2π over M times the bend there.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$, $n$ | the number whose factorial is wanted; n if whole | 52, 10, 4.5, 0.5, 10i | the ratio closes on 1 |
-| $t$ | the variable integrated over | peak at t = s | — |
-| $\Gamma$ | the gamma function | Γ(53) = 52! | — |
-| $e$, $\pi$ | base of natural logs; circle constant | fixed | — |
-| $u$ | t measured in units of s: t = s u | peak at u = 1 | — |
-| $M$ | the large multiplier in the exponent | M = s | error falls like 1/M |
-| $g$ | the fixed shape in the exponent | g(u) = ln u − u | — |
-| $u_0$ | where g peaks; g'' there is the bend | u0 = 1, bend −1 | — |
+| $`s`$, $`n`$ | the number whose factorial is wanted; n if whole | 52, 10, 4.5, 0.5, 10i | the ratio closes on 1 |
+| $`t`$ | the variable integrated over | peak at t = s | — |
+| $`\Gamma`$ | the gamma function | Γ(53) = 52! | — |
+| $`e`$, $`\pi`$ | base of natural logs; circle constant | fixed | — |
+| $`u`$ | t measured in units of s: t = s u | peak at u = 1 | — |
+| $`M`$ | the large multiplier in the exponent | M = s | error falls like 1/M |
+| $`g`$ | the fixed shape in the exponent | g(u) = ln u − u | — |
+| $`u_0`$ | where g peaks; g'' there is the bend | u0 = 1, bend −1 | — |
 
 ### When it holds
 
@@ -82,7 +88,9 @@ The integrand's logarithm is s ln t − t. Its derivative, s/t − 1, is zero at
 
 The second derivative of s ln t − t is −s/t^2, which is −1/s at the peak. The Taylor polynomial to second order is
 
-$$s\ln t - t \;\approx\; (s\ln s - s) - \frac{(t-s)^2}{2s}.$$
+```math
+s\ln t - t \;\approx\; (s\ln s - s) - \frac{(t-s)^2}{2s}.
+```
 
 So near the peak the integrand is (s/e)^s times e^(−(t−s)^2/(2s)): a bell of width √s, 3.162278 at s = 10.
 
@@ -90,7 +98,9 @@ So near the peak the integrand is (s/e)^s times e^(−(t−s)^2/(2s)): a bell of
 
 The area under e^(−x^2/(2w^2)) is √(2π) w for any width w: the bell-curve integral, which is Γ(1/2) = √π rescaled. With w = √s:
 
-$$\int_{-\infty}^{\infty} \left(\frac{s}{e}\right)^{s} e^{-(t-s)^2/(2s)}\,dt = \sqrt{2\pi s}\,\left(\frac{s}{e}\right)^{s}.$$
+```math
+\int_{-\infty}^{\infty} \left(\frac{s}{e}\right)^{s} e^{-(t-s)^2/(2s)}\,dt = \sqrt{2\pi s}\,\left(\frac{s}{e}\right)^{s}.
+```
 
 At s = 10 that is 453999.2976 × 7.926655 = 3.598696 × 10^6. The bell's sliver below t = 0 is tiny and shrinks fast.
 
@@ -98,7 +108,9 @@ At s = 10 that is 453999.2976 × 7.926655 = 3.598696 × 10^6. The bell's sliver 
 
 Put t = s u, so u measures t in units of s:
 
-$$\Gamma(s+1) = s^{s+1}\int_0^\infty e^{\,s\,(\ln u - u)}\,du.$$
+```math
+\Gamma(s+1) = s^{s+1}\int_0^\infty e^{\,s\,(\ln u - u)}\,du.
+```
 
 The shape g(u) = ln u − u is now fixed, peaked at u = 1, and s multiplies it. A large multiplier makes everything off the peak exponentially small and squeezes the bell to width 1/√s, where the parabola fits ever better. Laplace's formula with M = s, g(1) = −1 and bend −1 gives s^(s+1) e^(−s) √(2π/s): Stirling's formula.
 

@@ -30,50 +30,58 @@ The beam is the temperature scale, 112 units to the degree. The blocks' heights 
 
 ## The formula
 
-Notation first, in words. The Greek letter $\theta$ (theta) is the room's true temperature, the unknown. A reminder from [Normal](../04-Continuous%20Distributions/04-normal-distribution.md): N(m, v) is the normal law with centre m and variance v, the variance in the second slot. A reminder from [Bayesian updating](01-priors-posteriors-and-updating.md): the **prior** is the belief before the readings, the **posterior** the belief after, and a vertical bar reads "given". The model is two lines:
+Notation first, in words. The Greek letter $`\theta`$ (theta) is the room's true temperature, the unknown. A reminder from [Normal](../04-Continuous%20Distributions/04-normal-distribution.md): N(m, v) is the normal law with centre m and variance v, the variance in the second slot. A reminder from [Bayesian updating](01-priors-posteriors-and-updating.md): the **prior** is the belief before the readings, the **posterior** the belief after, and a vertical bar reads "given". The model is two lines:
 
-$$\theta \sim N(m_0,\, v_0), \qquad y_i \mid \theta \sim N(\theta,\, s^2) \text{ independently, for } i = 1, \dots, n.$$
+```math
+\theta \sim N(m_0,\, v_0), \qquad y_i \mid \theta \sim N(\theta,\, s^2) \text{ independently, for } i = 1, \dots, n.
+```
 
-Here $m_0$ and $v_0$ are the prior centre and variance, $y_1, \dots, y_n$ are the n readings, and $s^2$ is one reading's noise variance. The update is two more, with $\bar y$ (y-bar) the readings' average:
+Here $`m_0`$ and $`v_0`$ are the prior centre and variance, $`y_1, \dots, y_n`$ are the n readings, and $`s^2`$ is one reading's noise variance. The update is two more, with $`\bar y`$ (y-bar) the readings' average:
 
-$$\theta \mid y_1, \dots, y_n \;\sim\; N(m_n,\, v_n), \qquad m_n = \frac{a_0\, m_0 + a_D\, \bar y}{a_0 + a_D}, \qquad v_n = \frac{1}{a_0 + a_D},$$
+```math
+\theta \mid y_1, \dots, y_n \;\sim\; N(m_n,\, v_n), \qquad m_n = \frac{a_0\, m_0 + a_D\, \bar y}{a_0 + a_D}, \qquad v_n = \frac{1}{a_0 + a_D},
+```
 
 with the two precisions
 
-$$a_0 = \frac{1}{v_0}, \qquad a_D = \frac{n}{s^2}.$$
+```math
+a_0 = \frac{1}{v_0}, \qquad a_D = \frac{n}{s^2}.
+```
 
 **Read it aloud:** after the readings, the true temperature is normal, centred at the average of the prior centre and the readings' average weighted by their precisions, with a precision equal to the two precisions added.
 
 The next reading, from the same sensor, has the **posterior predictive** law, the law of a reading not yet taken:
 
-$$Y_{\text{new}} \mid y_1, \dots, y_n \;\sim\; N(m_n,\; v_n + s^2).$$
+```math
+Y_{\text{new}} \mid y_1, \dots, y_n \;\sim\; N(m_n,\; v_n + s^2).
+```
 
 **Read it aloud:** the next reading is centred where the belief is centred, and its variance is the belief's variance plus one reading's noise.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\theta$ | the room's true temperature, unknown | about 20.61 °C after the update | — |
-| $m_0$ | the prior centre: the log's setting | 20.0 °C | $m_n$ rises by 0.44 per degree |
-| $v_0$ | the prior variance: the log's spread squared | 0.25 (spread 0.5 °C) | the prior counts for less; $m_n$ moves toward 21.1 |
-| $s^2$ | one reading's noise variance, known | 1.0 (spread 1.0 °C) | the readings count for less; the next reading spreads wider |
-| $n$ | the number of readings | 5 | $a_D$ grows; $v_n$ shrinks |
-| $y_i$ | the i-th reading | 21.3, 19.8, 22.1, 20.9, 21.4 | $m_n$ rises by 0.11 per degree on one reading |
-| $\bar y$ | the readings' average, $(y_1 + \dots + y_n)/n$ | 21.1 °C | $m_n$ rises by 0.56 per degree |
-| $a_0$ | the prior's precision, $1/v_0$ | 4 | $m_n$ leans toward 20.0 |
-| $a_D$ | the readings' precision, $n/s^2$ | 5 | $m_n$ leans toward 21.1 |
-| $m_n$ | the posterior centre | 20.6111 °C | — |
-| $v_n$ | the posterior variance | 0.1111 (spread 0.3333 °C) | — |
-| $Y_{\text{new}}$ | the next reading, not yet taken | centre 20.6111, spread 1.0541 | — |
-| $\Phi$ | the standard normal's area left of a point, from [Normal](../04-Continuous%20Distributions/04-normal-distribution.md) | Φ(1.96) = 0.9750 | — |
+| $`\theta`$ | the room's true temperature, unknown | about 20.61 °C after the update | — |
+| $`m_0`$ | the prior centre: the log's setting | 20.0 °C | $`m_n`$ rises by 0.44 per degree |
+| $`v_0`$ | the prior variance: the log's spread squared | 0.25 (spread 0.5 °C) | the prior counts for less; $`m_n`$ moves toward 21.1 |
+| $`s^2`$ | one reading's noise variance, known | 1.0 (spread 1.0 °C) | the readings count for less; the next reading spreads wider |
+| $`n`$ | the number of readings | 5 | $`a_D`$ grows; $`v_n`$ shrinks |
+| $`y_i`$ | the i-th reading | 21.3, 19.8, 22.1, 20.9, 21.4 | $`m_n`$ rises by 0.11 per degree on one reading |
+| $`\bar y`$ | the readings' average, $`(y_1 + \dots + y_n)/n`$ | 21.1 °C | $`m_n`$ rises by 0.56 per degree |
+| $`a_0`$ | the prior's precision, $`1/v_0`$ | 4 | $`m_n`$ leans toward 20.0 |
+| $`a_D`$ | the readings' precision, $`n/s^2`$ | 5 | $`m_n`$ leans toward 21.1 |
+| $`m_n`$ | the posterior centre | 20.6111 °C | — |
+| $`v_n`$ | the posterior variance | 0.1111 (spread 0.3333 °C) | — |
+| $`Y_{\text{new}}`$ | the next reading, not yet taken | centre 20.6111, spread 1.0541 | — |
+| $`\Phi`$ | the standard normal's area left of a point, from [Normal](../04-Continuous%20Distributions/04-normal-distribution.md) | Φ(1.96) = 0.9750 | — |
 
 The readings' precision is n/s^2, not 1/s^2, because it belongs to their average: the average of five independent readings has variance s^2/5.
 
 ### When it holds
 
-- **The noise variance is known.** If $s^2$ is estimated from the same five readings, the honest law of the next reading is wider, with heavier tails (a Student t, [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md)), and these formulas understate the spread.
+- **The noise variance is known.** If $`s^2`$ is estimated from the same five readings, the honest law of the next reading is wider, with heavier tails (a Student t, [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md)), and these formulas understate the spread.
 - **Readings are independent given the true temperature.** If the sensor shares an error across readings, a drift or a warm spot, five readings carry less than five readings' worth of information. With errors correlated 0.5 the formula still claims a spread of 0.3333 while the real error spread is 0.4843 (What breaks, below).
 - **Both laws are normal.** A normal prior allows any temperature, however unlikely; a sensor with occasional wild readings (heavy tails) drags the average and the normal update follows it blindly.
-- **The prior is proper and honest.** A prior variance of zero is certainty and ignores every reading; the formulas need $v_0 > 0$. A prior centre copied from the readings counts them twice.
+- **The prior is proper and honest.** A prior variance of zero is certainty and ignores every reading; the formulas need $`v_0 > 0`$. A prior centre copied from the readings counts them twice.
 - **The true temperature stands still.** If the room warms between readings, the belief must spread out between updates; that is the Kalman filter.
 
 ---
@@ -88,9 +96,11 @@ Every normal density is a constant times e raised to minus a quadratic in the va
 
 ### Step 1: write the exponent
 
-The prior contributes $(\theta - m_0)^2 / v_0$. Each reading contributes $(y_i - \theta)^2 / s^2$. The posterior density is a constant times
+The prior contributes $`(\theta - m_0)^2 / v_0`$. Each reading contributes $`(y_i - \theta)^2 / s^2`$. The posterior density is a constant times
 
-$$\exp\!\Big(-\tfrac12\Big[\frac{(\theta - m_0)^2}{v_0} + \sum_{i=1}^{n} \frac{(y_i - \theta)^2}{s^2}\Big]\Big).$$
+```math
+\exp\!\Big(-\tfrac12\Big[\frac{(\theta - m_0)^2}{v_0} + \sum_{i=1}^{n} \frac{(y_i - \theta)^2}{s^2}\Big]\Big).
+```
 
 Here Σ (capital sigma) means "add up over i from 1 to n".
 
@@ -98,36 +108,44 @@ Here Σ (capital sigma) means "add up over i from 1 to n".
 
 Split each reading into its distance from the average plus the average's distance from θ. The cross terms cancel because the distances from the average add to zero:
 
-$$\sum_{i=1}^{n} (y_i - \theta)^2 = \sum_{i=1}^{n} (y_i - \bar y)^2 + n\,(\bar y - \theta)^2.$$
+```math
+\sum_{i=1}^{n} (y_i - \theta)^2 = \sum_{i=1}^{n} (y_i - \bar y)^2 + n\,(\bar y - \theta)^2.
+```
 
-The first sum does not contain θ, so it folds into the constant. What remains is $n(\bar y - \theta)^2 / s^2 = a_D (\theta - \bar y)^2$. The five readings act as one reading of 21.1 with precision 5.
+The first sum does not contain θ, so it folds into the constant. What remains is $`n(\bar y - \theta)^2 / s^2 = a_D (\theta - \bar y)^2`$. The five readings act as one reading of 21.1 with precision 5.
 
 ### Step 3: complete the square
 
-The bracket is now $a_0(\theta - m_0)^2 + a_D(\theta - \bar y)^2$. Expand, collect the θ^2 terms, the θ terms and the rest:
+The bracket is now $`a_0(\theta - m_0)^2 + a_D(\theta - \bar y)^2`$. Expand, collect the θ^2 terms, the θ terms and the rest:
 
-$$a_0(\theta - m_0)^2 + a_D(\theta - \bar y)^2 = (a_0 + a_D)\,(\theta - m_n)^2 + \frac{a_0 a_D}{a_0 + a_D}\,(\bar y - m_0)^2,$$
+```math
+a_0(\theta - m_0)^2 + a_D(\theta - \bar y)^2 = (a_0 + a_D)\,(\theta - m_n)^2 + \frac{a_0 a_D}{a_0 + a_D}\,(\bar y - m_0)^2,
+```
 
-with $m_n$ exactly the precision-weighted average. The coefficient of θ^2 is $a_0 + a_D$: precisions add. The θ term fixes the centre at $m_n$. The last piece holds no θ and joins the constant.
+with $`m_n`$ exactly the precision-weighted average. The coefficient of θ^2 is $`a_0 + a_D`$: precisions add. The θ term fixes the centre at $`m_n`$. The last piece holds no θ and joins the constant.
 
 ### Step 4: read off the posterior
 
-The posterior density is a constant times $\exp(-(\theta - m_n)^2 / (2 v_n))$ with $v_n = 1/(a_0 + a_D)$. That is the shape of N(m_n, v_n). A density must have total area 1, and only one constant does that, so the posterior is exactly N(m_n, v_n). The prior was normal and so is the posterior; a prior family with this property is called **conjugate**.
+The posterior density is a constant times $`\exp(-(\theta - m_n)^2 / (2 v_n))`$ with $`v_n = 1/(a_0 + a_D)`$. That is the shape of N(m_n, v_n). A density must have total area 1, and only one constant does that, so the posterior is exactly N(m_n, v_n). The prior was normal and so is the posterior; a prior family with this property is called **conjugate**.
 
 ### Step 5: the next reading adds its own noise
 
-The next reading is the true temperature plus fresh noise: $Y_{\text{new}} = \theta + \text{noise}$, where the noise is N(0, s^2) and independent of everything before. Given the five readings, θ is N(m_n, v_n). The sum of two independent normals is normal, with centres added and variances added. So the next reading is N(m_n, v_n + s^2): 1/9 + 1 = 10/9, spread 1.0541 °C. The Detailed proof below derives the sum rule from the same square.
+The next reading is the true temperature plus fresh noise: $`Y_{\text{new}} = \theta + \text{noise}`$, where the noise is N(0, s^2) and independent of everything before. Given the five readings, θ is N(m_n, v_n). The sum of two independent normals is normal, with centres added and variances added. So the next reading is N(m_n, v_n + s^2): 1/9 + 1 = 10/9, spread 1.0541 °C. The Detailed proof below derives the sum rule from the same square.
 
 <details>
 <summary>Detailed proof</summary>
 
-**The identity in Step 3.** Expand the left side: $(a_0 + a_D)\theta^2 - 2(a_0 m_0 + a_D \bar y)\theta + a_0 m_0^2 + a_D \bar y^2$. Write $A = a_0 + a_D$ and $B = a_0 m_0 + a_D \bar y$, so $m_n = B/A$. Then the left side is $A(\theta - B/A)^2 + a_0 m_0^2 + a_D \bar y^2 - B^2/A$. The leftover, over the common denominator A, is
-$$\frac{(a_0 + a_D)(a_0 m_0^2 + a_D \bar y^2) - (a_0 m_0 + a_D \bar y)^2}{A} = \frac{a_0 a_D (m_0^2 - 2 m_0 \bar y + \bar y^2)}{A} = \frac{a_0 a_D}{a_0 + a_D}(\bar y - m_0)^2.$$
-**The constant.** The prior times the likelihood equals $c\,\exp(-A(\theta - m_n)^2/2)$ for a positive c free of θ. The Gaussian integral gives $\int \exp(-A(\theta - m_n)^2/2)\,d\theta = \sqrt{2\pi/A}$, so dividing by the total area leaves $\sqrt{A/(2\pi)}\exp(-A(\theta - m_n)^2/2)$: the N(m_n, 1/A) density. The total area, $c\sqrt{2\pi/A}$, is the **evidence**, the density of the readings averaged over the prior; its θ-free factor $\exp(-\tfrac12 \tfrac{a_0 a_D}{a_0 + a_D}(\bar y - m_0)^2)$ says the readings' average is N(m_0, v_0 + s^2/n) before θ is known, since $a_0 a_D/(a_0 + a_D) = 1/(v_0 + s^2/n)$.
+**The identity in Step 3.** Expand the left side: $`(a_0 + a_D)\theta^2 - 2(a_0 m_0 + a_D \bar y)\theta + a_0 m_0^2 + a_D \bar y^2`$. Write $`A = a_0 + a_D`$ and $`B = a_0 m_0 + a_D \bar y`$, so $`m_n = B/A`$. Then the left side is $`A(\theta - B/A)^2 + a_0 m_0^2 + a_D \bar y^2 - B^2/A`$. The leftover, over the common denominator A, is
+
+$`\displaystyle \frac{(a_0 + a_D)(a_0 m_0^2 + a_D \bar y^2) - (a_0 m_0 + a_D \bar y)^2}{A} = \frac{a_0 a_D (m_0^2 - 2 m_0 \bar y + \bar y^2)}{A} = \frac{a_0 a_D}{a_0 + a_D}(\bar y - m_0)^2.`$
+
+**The constant.** The prior times the likelihood equals $`c\,\exp(-A(\theta - m_n)^2/2)`$ for a positive c free of θ. The Gaussian integral gives $`\int \exp(-A(\theta - m_n)^2/2)\,d\theta = \sqrt{2\pi/A}`$, so dividing by the total area leaves $`\sqrt{A/(2\pi)}\exp(-A(\theta - m_n)^2/2)`$: the N(m_n, 1/A) density. The total area, $`c\sqrt{2\pi/A}`$, is the **evidence**, the density of the readings averaged over the prior; its θ-free factor $`\exp(-\tfrac12 \tfrac{a_0 a_D}{a_0 + a_D}(\bar y - m_0)^2)`$ says the readings' average is N(m_0, v_0 + s^2/n) before θ is known, since $`a_0 a_D/(a_0 + a_D) = 1/(v_0 + s^2/n)`$.
 
 **The next reading.** Its density at y is the average, over the posterior, of the noise density centred at θ:
-$$p(y) = \int \frac{e^{-(\theta - m_n)^2/(2 v_n)}}{\sqrt{2\pi v_n}}\,\frac{e^{-(y - \theta)^2/(2 s^2)}}{\sqrt{2\pi s^2}}\,d\theta.$$
-The exponent is Step 3's bracket again, with precisions 1/v_n and 1/s^2 and centres m_n and y. The same identity turns it into a square in θ plus $(y - m_n)^2/(v_n + s^2)$, because $\tfrac{(1/v_n)(1/s^2)}{1/v_n + 1/s^2} = \tfrac{1}{v_n + s^2}$. Integrating θ out leaves a constant times $\exp(-(y - m_n)^2/(2(v_n + s^2)))$. p is a density, so its area is 1, and it is the N(m_n, v_n + s^2) density.
+
+$`\displaystyle p(y) = \int \frac{e^{-(\theta - m_n)^2/(2 v_n)}}{\sqrt{2\pi v_n}}\,\frac{e^{-(y - \theta)^2/(2 s^2)}}{\sqrt{2\pi s^2}}\,d\theta.`$
+
+The exponent is Step 3's bracket again, with precisions 1/v_n and 1/s^2 and centres m_n and y. The same identity turns it into a square in θ plus $`(y - m_n)^2/(v_n + s^2)`$, because $`\tfrac{(1/v_n)(1/s^2)}{1/v_n + 1/s^2} = \tfrac{1}{v_n + s^2}`$. Integrating θ out leaves a constant times $`\exp(-(y - m_n)^2/(2(v_n + s^2)))`$. p is a density, so its area is 1, and it is the N(m_n, v_n + s^2) density.
 
 </details>
 
@@ -153,14 +171,14 @@ The log: centre 20.0 °C, variance 0.25. The sensor: noise variance 1.0. Five re
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| readings' average $\bar y$ | 105.5 / 5 | 21.1 |
-| prior precision $a_0$ | 1 / 0.25 | 4 |
-| readings' precision $a_D$ | 5 / 1.0 | 5 |
+| readings' average $`\bar y`$ | 105.5 / 5 | 21.1 |
+| prior precision $`a_0`$ | 1 / 0.25 | 4 |
+| readings' precision $`a_D`$ | 5 / 1.0 | 5 |
 | total precision | 4 + 5 | 9 |
 | weight on the log | 4 / 9 | 0.4444 |
 | weight on the readings | 5 / 9 | 0.5556 |
-| posterior centre $m_n$ | (4 × 20.0 + 5 × 21.1) / 9 | 20.6111 |
-| posterior variance $v_n$ | 1 / 9 | 0.1111 |
+| posterior centre $`m_n`$ | (4 × 20.0 + 5 × 21.1) / 9 | 20.6111 |
+| posterior variance $`v_n`$ | 1 / 9 | 0.1111 |
 | posterior spread | √0.1111 | 0.3333 |
 | predictive variance | 0.1111 + 1.0 | 1.1111 |
 | **predictive spread** | √1.1111 | **1.0541** |
@@ -174,8 +192,8 @@ A prior precision of 4 is worth four readings of this sensor. The log counts as 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Weight by variances, not precisions | centre 20.4889 | The noisier source got the bigger vote; the seesaw is loaded backwards |
-| Count five readings as one: $a_D = 1/s^2$ | centre 20.2200, spread 0.4472 | Four readings' worth of information thrown away |
-| Predict the next reading with $v_n$ alone | a ±0.6533 band that catches 46.46% of next readings, not 95% | The sensor's own noise left out |
+| Count five readings as one: $`a_D = 1/s^2`$ | centre 20.2200, spread 0.4472 | Four readings' worth of information thrown away |
+| Predict the next reading with $`v_n`$ alone | a ±0.6533 band that catches 46.46% of next readings, not 95% | The sensor's own noise left out |
 | Drop independence: errors correlated 0.5 | claimed spread 0.3333, actual 0.4843 | Shared error does not average out; the formula is overconfident |
 
 The last row is a hypothesis dropped, not an arithmetic slip. Each reading still strays with spread 1.0, but half its error variance is shared by all five. The average's error variance becomes 0.5 + 0.5/5 = 0.6 instead of 0.2, and the posterior centre's true error variance is (4/9)^2 × 0.25 + (5/9)^2 × 0.6 = 0.2346, spread 0.4843. The simulation below measures 0.2339.
@@ -594,9 +612,9 @@ The two outputs agree line for line. The simulation's mean squared error of the 
 
 Lean proves the posterior and the next reading's law for any normal prior, any known noise variance and any number of readings.
 
-- Suppose the prior is normal with variance above zero, and each reading adds independent normal noise of known variance to the true temperature. Then, given the readings, the true temperature is $N(m_n, v_n)$: centred at the precision-weighted average, with the two precisions added.
-- Suppose also that the next reading adds fresh normal noise of the same variance, independent of everything before. Then, given the readings, it is $N(m_n, v_n + s^2)$.
-- Take any prior precision $a_0 > 0$ and readings' precision $a_D \ge 0$. Then Step 3's completed square holds for any $m_0$, $\bar y$ and $\theta$.
+- Suppose the prior is normal with variance above zero, and each reading adds independent normal noise of known variance to the true temperature. Then, given the readings, the true temperature is $`N(m_n, v_n)`$: centred at the precision-weighted average, with the two precisions added.
+- Suppose also that the next reading adds fresh normal noise of the same variance, independent of everything before. Then, given the readings, it is $`N(m_n, v_n + s^2)`$.
+- Take any prior precision $`a_0 > 0`$ and readings' precision $`a_D \ge 0`$. Then Step 3's completed square holds for any $`m_0`$, $`\bar y`$ and $`\theta`$.
 - The hand arithmetic holds exactly as fractions: the average, both precisions, the centre, both variances and the What breaks centres.
 
 The spreads and 95 percent bands, the grid, the simulation, the charts and the figure are left to the Python and Rust checks.

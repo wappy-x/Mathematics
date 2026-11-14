@@ -33,58 +33,66 @@ xychart-beta
     line [2.00, 1.21, 0.74, 0.45, 0.27, 0.16, 0.10]
 ```
 
-Orange is model P's density, $e^{-x}$. Green is model Q's, $2e^{-2x}$. Dark blue is their ratio, $2e^{-x}$. The ratio crosses 1 at $\ln 2 = 0.6931$ minutes: shorter waits favour Q, longer ones favour P. Q's density starts at 2 per minute, above 1: a density is probability per minute, not a probability.
+Orange is model P's density, $`e^{-x}`$. Green is model Q's, $`2e^{-2x}`$. Dark blue is their ratio, $`2e^{-x}`$. The ratio crosses 1 at $`\ln 2 = 0.6931`$ minutes: shorter waits favour Q, longer ones favour P. Q's density starts at 2 per minute, above 1: a density is probability per minute, not a probability.
 
 ---
 
 ## The formula
 
-Notation first, in words. As on [The Radon-Nikodym derivative](04-radon-nikodym-derivative.md), $dQ/dP$ is read "the density of Q against P": the function that turns P into Q under an integral. Here the space $\Omega$ is the waits `[0, ∞)` and $\mathcal{F}$, the collection of sets we allow ourselves to measure, is its Borel sets: every set built from intervals by countable unions, intersections and complements ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)). P and Q are probability measures on them, and $\lambda$ is length.
+Notation first, in words. As on [The Radon-Nikodym derivative](04-radon-nikodym-derivative.md), $`dQ/dP`$ is read "the density of Q against P": the function that turns P into Q under an integral. Here the space $`\Omega`$ is the waits `[0, ∞)` and $`\mathcal{F}`$, the collection of sets we allow ourselves to measure, is its Borel sets: every set built from intervals by countable unions, intersections and complements ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)). P and Q are probability measures on them, and $`\lambda`$ is length.
 
-**Density.** A probability measure P has density $p$ against a reference measure $\nu$ when, for every set A in $\mathcal{F}$,
+**Density.** A probability measure P has density $`p`$ against a reference measure $`\nu`$ when, for every set A in $`\mathcal{F}`$,
 
-$$P(A) = \int_A p \, d\nu, \qquad \text{that is,} \qquad p = \frac{dP}{d\nu}.$$
+```math
+P(A) = \int_A p \, d\nu, \qquad \text{that is,} \qquad p = \frac{dP}{d\nu}.
+```
 
-With $\nu = \lambda$ this is the everyday density: $P(\text{wait} \le 1) = \int_0^1 e^{-x}\,dx = 0.632121$.
+With $`\nu = \lambda`$ this is the everyday density: $`P(\text{wait} \le 1) = \int_0^1 e^{-x}\,dx = 0.632121`$.
 
-**Likelihood ratio (the theorem).** If P and Q have densities $p$ and $q$ against the same $\nu$, and Q puts no mass where P puts none, then
+**Likelihood ratio (the theorem).** If P and Q have densities $`p`$ and $`q`$ against the same $`\nu`$, and Q puts no mass where P puts none, then
 
-$$\frac{dQ}{dP}(x) = L(x) = \frac{q(x)}{p(x)} \quad \text{wherever } p(x) > 0.$$
+```math
+\frac{dQ}{dP}(x) = L(x) = \frac{q(x)}{p(x)} \quad \text{wherever } p(x) > 0.
+```
 
 **Read it aloud:** the density of Q against P is Q's density divided by P's, whatever reference measure both were taken against.
 
 **Kullback-Leibler divergence.** The log-ratio, averaged under Q:
 
-$$D(Q\,\|\,P) = \int \ln L \, dQ = \int L \ln L \, dP \;\ge\; 0, \quad \text{with equality only when } Q = P.$$
+```math
+D(Q\,\|\,P) = \int \ln L \, dQ = \int L \ln L \, dP \;\ge\; 0, \quad \text{with equality only when } Q = P.
+```
 
-**Exponential tilt.** For a number $\theta$, reweight P by an exponential in the outcome:
+**Exponential tilt.** For a number $`\theta`$, reweight P by an exponential in the outcome:
 
-$$\frac{dQ_\theta}{dP}(x) = \frac{e^{\theta x}}{M(\theta)}, \qquad M(\theta) = \int e^{\theta x} \, dP(x).$$
+```math
+\frac{dQ_\theta}{dP}(x) = \frac{e^{\theta x}}{M(\theta)}, \qquad M(\theta) = \int e^{\theta x} \, dP(x).
+```
 
 **Read them aloud:** the divergence is the log-ratio averaged when Q is true; a tilt multiplies each outcome's weight by an exponential and rescales to total 1.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\mathcal{F}$, $A$ | the outcomes; the sets we may measure; one such set | waits `[0, ∞)` and its Borel sets; "wait over 1 minute" | — |
-| $x$, $X$, $k$ | one wait in minutes; the outcome as a measurable function; one face of a die | 0.3, 1, 2; the wait itself; faces 1 to 6 | a longer wait favours P |
-| $\lambda$, $\nu$ | Lebesgue measure, that is length; a reference measure for both models | $\lambda$ of `[0, 1]` is 1; $\nu$ is $\lambda$ for waits, counting measure for the die | $\nu$ cancels out of every ratio |
-| $P$, $Q$ | two probability measures: the two models | rate 1 a minute; rate 2 a minute | a faster Q moves the crossing left |
-| $F$, $f$ | distribution function, $F(x) = P(\text{wait} \le x)$; its slope, in the proof | $1 - e^{-x}$; 0.632121 at 1; $f = e^{-x}$ | its slope is the density |
-| $p$, $q$ | densities of P and Q against $\nu$ | $e^{-x}$ and $2e^{-2x}$ | may exceed 1: q is 2 at 0 |
-| $L$ | the likelihood ratio $dQ/dP = q/p$ | $2e^{-x}$; 1.4816 at 0.3, 0.2707 at 2 | above 1, the wait favours Q |
-| $D(Q\,\|\,P)$ | Kullback-Leibler divergence of Q from P | 0.193147; the other way round 0.306853 | grows as the models part |
-| $\theta$, $M$ | tilt strength; the normaliser $M(\theta)$ | $\theta = -1$ turns P into Q; the die needs 0.328605407, $M$ = 3.679036 | a bigger $\theta$ leans harder to large outcomes |
-| $Q_\theta$, $m$ | the tilted measure; its mean | the tilted die, mean 4.4 | $m$ rises with $\theta$ |
-| $R$, $h$ | any other model with the same mean; the half-width of a window around 6 | the loaded die (0.1, 0.1, 0.1, 0.1, 0.2, 0.4); h = 0.1, 0.01, 0.001 | — |
-| $N$, $B$, $Z$, $w$, $g$, $c$, $t$ | in the proofs: the set where $p = 0$; a set; the tilt's density $e^{\theta X}/M$; the function $1/L$; a function being averaged; a constant; a number between 0 and 1 | $N$ is empty for the bus; $Z = 2e^{-x}$ at $\theta = -1$ | — |
+| $`\Omega`$, $`\mathcal{F}`$, $`A`$ | the outcomes; the sets we may measure; one such set | waits `[0, ∞)` and its Borel sets; "wait over 1 minute" | — |
+| $`x`$, $`X`$, $`k`$ | one wait in minutes; the outcome as a measurable function; one face of a die | 0.3, 1, 2; the wait itself; faces 1 to 6 | a longer wait favours P |
+| $`\lambda`$, $`\nu`$ | Lebesgue measure, that is length; a reference measure for both models | $`\lambda`$ of `[0, 1]` is 1; $`\nu`$ is $`\lambda`$ for waits, counting measure for the die | $`\nu`$ cancels out of every ratio |
+| $`P`$, $`Q`$ | two probability measures: the two models | rate 1 a minute; rate 2 a minute | a faster Q moves the crossing left |
+| $`F`$, $`f`$ | distribution function, $`F(x) = P(\text{wait} \le x)`$; its slope, in the proof | $`1 - e^{-x}`$; 0.632121 at 1; $`f = e^{-x}`$ | its slope is the density |
+| $`p`$, $`q`$ | densities of P and Q against $`\nu`$ | $`e^{-x}`$ and $`2e^{-2x}`$ | may exceed 1: q is 2 at 0 |
+| $`L`$ | the likelihood ratio $`dQ/dP = q/p`$ | $`2e^{-x}`$; 1.4816 at 0.3, 0.2707 at 2 | above 1, the wait favours Q |
+| $`D(Q\,\Vert\,P)`$ | Kullback-Leibler divergence of Q from P | 0.193147; the other way round 0.306853 | grows as the models part |
+| $`\theta`$, $`M`$ | tilt strength; the normaliser $`M(\theta)`$ | $`\theta = -1`$ turns P into Q; the die needs 0.328605407, $`M`$ = 3.679036 | a bigger $`\theta`$ leans harder to large outcomes |
+| $`Q_\theta`$, $`m`$ | the tilted measure; its mean | the tilted die, mean 4.4 | $`m`$ rises with $`\theta`$ |
+| $`R`$, $`h`$ | any other model with the same mean; the half-width of a window around 6 | the loaded die (0.1, 0.1, 0.1, 0.1, 0.2, 0.4); h = 0.1, 0.01, 0.001 | — |
+| $`N`$, $`B`$, $`Z`$, $`w`$, $`g`$, $`c`$, $`t`$ | in the proofs: the set where $`p = 0`$; a set; the tilt's density $`e^{\theta X}/M`$; the function $`1/L`$; a function being averaged; a constant; a number between 0 and 1 | $`N`$ is empty for the bus; $`Z = 2e^{-x}`$ at $`\theta = -1`$ | — |
 
 ### When it holds
 
-- **Q puts no mass where P puts none**, written $Q \ll P$ and read "Q is absolutely continuous with respect to P" ([Absolutely continuous and singular measures](01-absolutely-continuous-and-singular-measures.md)). Drop it and the ratio loses mass: Q uniform on `[0, 2]` against P uniform on `[0, 1]` gives $\int (q/p)\,dP = 0.5$, not 1.
+- **Q puts no mass where P puts none**, written $`Q \ll P`$ and read "Q is absolutely continuous with respect to P" ([Absolutely continuous and singular measures](01-absolutely-continuous-and-singular-measures.md)). Drop it and the ratio loses mass: Q uniform on `[0, 2]` against P uniform on `[0, 1]` gives $`\int (q/p)\,dP = 0.5`$, not 1.
 - **Each model has a density against the reference.** A law has a density against length only if it gives zero to every set of length zero. The fair die puts 1/6 on the single point 6; its "probability per unit length" near 6 reads 0.8333, 8.3333, 83.3333 as the window shrinks, and grows without bound.
 - **The reference measure is σ-finite**: the space splits into countably many pieces of finite size, as for length. The Radon-Nikodym theorem needs it ([The Radon-Nikodym theorem](03-radon-nikodym-theorem.md)).
-- **The divergence needs $Q \ll P$ too.** Without it, $D(Q\,\|\,P)$ is defined to be $+\infty$: Q expects outcomes that P calls impossible.
-- **The tilt needs a finite $M(\theta)$.** For the bus under P, $M(\theta) = 1/(1 - \theta)$, finite only for $\theta < 1$. For the die, any $\theta$ works, but only means strictly between 1 and 6 can be reached.
+- **The divergence needs $`Q \ll P`$ too.** Without it, $`D(Q\,\|\,P)`$ is defined to be $`+\infty`$: Q expects outcomes that P calls impossible.
+- **The tilt needs a finite $`M(\theta)`$.** For the bus under P, $`M(\theta) = 1/(1 - \theta)`$, finite only for $`\theta < 1`$. For the die, any $`\theta`$ works, but only means strictly between 1 and 6 can be reached.
 
 ---
 
@@ -96,49 +104,53 @@ A density says how much probability sits per unit of the reference measure: agai
 
 ### Step 1: the everyday density is dP/dλ
 
-In wing 09 a density is a curve whose area over an interval is that interval's probability. Measure theory asks for area over every Borel set A, not only intervals: $P(A) = \int_A p \, d\lambda$. That is the definition of the Radon-Nikodym derivative $dP/d\lambda$.
+In wing 09 a density is a curve whose area over an interval is that interval's probability. Measure theory asks for area over every Borel set A, not only intervals: $`P(A) = \int_A p \, d\lambda`$. That is the definition of the Radon-Nikodym derivative $`dP/d\lambda`$.
 
 Two consequences follow. First, a density exists exactly when P gives zero to every set of length zero. The bus passes; the die fails, since the point 6 has length 0 and probability 1/6. Against counting measure the die does have a density: 1/6 at each face.
 
-Second, a density is fixed only almost everywhere: change it on a set of length zero and no integral moves. "The density at 0.3" means the continuous version, which is the slope of F. At 0.5, 1 and 2 minutes the slope of $1 - e^{-x}$ and the formula $e^{-x}$ agree: 0.606531, 0.367879, 0.135335.
+Second, a density is fixed only almost everywhere: change it on a set of length zero and no integral moves. "The density at 0.3" means the continuous version, which is the slope of F. At 0.5, 1 and 2 minutes the slope of $`1 - e^{-x}`$ and the formula $`e^{-x}`$ agree: 0.606531, 0.367879, 0.135335.
 
 ### Step 2: the ratio of densities is dQ/dP
 
-Take densities $p$ and $q$ against one reference $\nu$, and $Q \ll P$. Set $L = q/p$ where $p > 0$, and 0 elsewhere. The claim: $Q(A) = \int_A L \, dP$ for every A. Three moves:
+Take densities $`p`$ and $`q`$ against one reference $`\nu`$, and $`Q \ll P`$. Set $`L = q/p`$ where $`p > 0`$, and 0 elsewhere. The claim: $`Q(A) = \int_A L \, dP`$ for every A. Three moves:
 
-1. **Q ignores the places P ignores.** On the set where $p = 0$, P has mass $\int p \, d\nu = 0$. Since $Q \ll P$, Q has mass 0 there too.
-2. **Rewrite Q's density as ratio times P's density.** Off that set, $q = (q/p)\,p = L\,p$.
-3. **Move p into the measure.** The change-of-measure rule from [The Radon-Nikodym derivative](04-radon-nikodym-derivative.md) says $\int g\,p \, d\nu = \int g \, dP$. With $g = L$ on A, $Q(A) = \int_A L\,p\,d\nu = \int_A L\,dP$.
+1. **Q ignores the places P ignores.** On the set where $`p = 0`$, P has mass $`\int p \, d\nu = 0`$. Since $`Q \ll P`$, Q has mass 0 there too.
+2. **Rewrite Q's density as ratio times P's density.** Off that set, $`q = (q/p)\,p = L\,p`$.
+3. **Move p into the measure.** The change-of-measure rule from [The Radon-Nikodym derivative](04-radon-nikodym-derivative.md) says $`\int g\,p \, d\nu = \int g \, dP`$. With $`g = L`$ on A, $`Q(A) = \int_A L\,p\,d\nu = \int_A L\,dP`$.
 
-So $L$ satisfies the defining property of $dQ/dP$, and the Radon-Nikodym theorem says any two such functions agree P-almost everywhere. For the bus, $L(x) = 2e^{-2x}/e^{-x} = 2e^{-x}$.
+So $`L`$ satisfies the defining property of $`dQ/dP`$, and the Radon-Nikodym theorem says any two such functions agree P-almost everywhere. For the bus, $`L(x) = 2e^{-2x}/e^{-x} = 2e^{-x}`$.
 
-The reference has vanished from the answer. Timed in seconds, both densities shrink by 60 and $L$ does not change: 18 seconds still favours Q by 1.4816.
+The reference has vanished from the answer. Timed in seconds, both densities shrink by 60 and $`L`$ does not change: 18 seconds still favours Q by 1.4816.
 
-The working consequence is the reweighting rule: $\int g\,dQ = \int g\,L\,dP$ for any non-negative g. An average under Q can be computed from P's draws, each weighted by $L$. For "wait over 1 minute", $\int_1^\infty 2e^{-x}\,e^{-x}\,dx = e^{-2} = 0.135335$, exactly $Q(\text{wait} > 1)$.
+The working consequence is the reweighting rule: $`\int g\,dQ = \int g\,L\,dP`$ for any non-negative g. An average under Q can be computed from P's draws, each weighted by $`L`$. For "wait over 1 minute", $`\int_1^\infty 2e^{-x}\,e^{-x}\,dx = e^{-2} = 0.135335`$, exactly $`Q(\text{wait} > 1)`$.
 
 ### Step 3: the divergence is never negative
 
-Define $D(Q\,\|\,P) = \int \ln L \, dQ$ when $Q \ll P$, and $+\infty$ otherwise. By the reweighting rule it is also $\int L \ln L \, dP$.
+Define $`D(Q\,\|\,P) = \int \ln L \, dQ`$ when $`Q \ll P`$, and $`+\infty`$ otherwise. By the reweighting rule it is also $`\int L \ln L \, dP`$.
 
-The proof that $D \ge 0$ is one use of Jensen's inequality ([Jensen's inequality](../07-Sizes%20of%20Functions/04-jensens-inequality.md)). The logarithm bends downward, so the average of a logarithm is at most the logarithm of the average:
+The proof that $`D \ge 0`$ is one use of Jensen's inequality ([Jensen's inequality](../07-Sizes%20of%20Functions/04-jensens-inequality.md)). The logarithm bends downward, so the average of a logarithm is at most the logarithm of the average:
 
-$$-D(Q\,\|\,P) = \int \ln\frac{1}{L}\,dQ \;\le\; \ln \int \frac{1}{L}\,dQ = \ln P(L > 0) \;\le\; \ln 1 = 0.$$
+```math
+-D(Q\,\|\,P) = \int \ln\frac{1}{L}\,dQ \;\le\; \ln \int \frac{1}{L}\,dQ = \ln P(L > 0) \;\le\; \ln 1 = 0.
+```
 
-The middle equality is the reweighting rule: $\int (1/L)\,dQ = \int_{L>0} (1/L)\,L\,dP$. Equality in Jensen forces $L$ to be constant, and a constant density of total mass 1 is 1: $Q = P$.
+The middle equality is the reweighting rule: $`\int (1/L)\,dQ = \int_{L>0} (1/L)\,L\,dP`$. Equality in Jensen forces $`L`$ to be constant, and a constant density of total mass 1 is 1: $`Q = P`$.
 
-For the bus: $\ln L(x) = \ln 2 - x$, and Q's average wait is 1/2, so $D(Q\,\|\,P) = \ln 2 - 1/2 = 0.193147$. The other way round, $D(P\,\|\,Q) = \int (x - \ln 2)\,dP = 1 - \ln 2 = 0.306853$. The divergence is not symmetric, so it is not a distance; hence the name divergence.
+For the bus: $`\ln L(x) = \ln 2 - x`$, and Q's average wait is 1/2, so $`D(Q\,\|\,P) = \ln 2 - 1/2 = 0.193147`$. The other way round, $`D(P\,\|\,Q) = \int (x - \ln 2)\,dP = 1 - \ln 2 = 0.306853`$. The divergence is not symmetric, so it is not a distance; hence the name divergence.
 
 ### Step 4: an exponential tilt, and why it is the closest model with a given mean
 
-Set $Z = e^{\theta X}/M(\theta)$, with $X$ the outcome. It is positive with P-average 1, so $Q_\theta(A) = \int_A Z \, dP$ is a probability measure with the same null sets (sets of probability zero) as P. Its mean $m(\theta) = M'(\theta)/M(\theta)$ has derivative equal to the variance under $Q_\theta$, which is positive, so each reachable target mean is hit by exactly one $\theta$.
+Set $`Z = e^{\theta X}/M(\theta)`$, with $`X`$ the outcome. It is positive with P-average 1, so $`Q_\theta(A) = \int_A Z \, dP`$ is a probability measure with the same null sets (sets of probability zero) as P. Its mean $`m(\theta) = M'(\theta)/M(\theta)`$ has derivative equal to the variance under $`Q_\theta`$, which is positive, so each reachable target mean is hit by exactly one $`\theta`$.
 
-The bus model Q is itself a tilt of P. With $\theta = -1$, $M(-1) = 1/2$ and $Z = 2e^{-x}$: the likelihood ratio of Step 2. The tilt formula gives the divergence a third time: $D(Q_\theta\,\|\,P) = \int (\theta x - \ln M)\,dQ_\theta = \theta\,m - \ln M(\theta)$, here $-1/2 + \ln 2 = 0.193147$.
+The bus model Q is itself a tilt of P. With $`\theta = -1`$, $`M(-1) = 1/2`$ and $`Z = 2e^{-x}`$: the likelihood ratio of Step 2. The tilt formula gives the divergence a third time: $`D(Q_\theta\,\|\,P) = \int (\theta x - \ln M)\,dQ_\theta = \theta\,m - \ln M(\theta)`$, here $`-1/2 + \ln 2 = 0.193147`$.
 
-Now the die, fair with mean 3.5. Tilting by $e^{\theta k}$ with $\theta = 0.328605407$ gives mean 4.4 and weights 0.0629, 0.0874, 0.1214, 0.1686, 0.2342, 0.3254. The shelf's loaded die, (0.1, 0.1, 0.1, 0.1, 0.2, 0.4), also has mean 4.4; [The Radon-Nikodym derivative](04-radon-nikodym-derivative.md) calls it Q, and below it is R. The tilt lies closer to fair, by a fixed rule: for any model R with the same mean as $Q_\theta$,
+Now the die, fair with mean 3.5. Tilting by $`e^{\theta k}`$ with $`\theta = 0.328605407`$ gives mean 4.4 and weights 0.0629, 0.0874, 0.1214, 0.1686, 0.2342, 0.3254. The shelf's loaded die, (0.1, 0.1, 0.1, 0.1, 0.2, 0.4), also has mean 4.4; [The Radon-Nikodym derivative](04-radon-nikodym-derivative.md) calls it Q, and below it is R. The tilt lies closer to fair, by a fixed rule: for any model R with the same mean as $`Q_\theta`$,
 
-$$D(R\,\|\,P) = D(R\,\|\,Q_\theta) + D(Q_\theta\,\|\,P).$$
+```math
+D(R\,\|\,P) = D(R\,\|\,Q_\theta) + D(Q_\theta\,\|\,P).
+```
 
-The chain rule splits $\ln dR/dP$ into $\ln dR/dQ_\theta$ plus $\theta k - \ln M$, and the second part averages under R to $\theta m - \ln M$. The first term is never negative (Step 3). On the dice: 0.182322 = 0.039109 + 0.143213.
+The chain rule splits $`\ln dR/dP`$ into $`\ln dR/dQ_\theta`$ plus $`\theta k - \ln M`$, and the second part averages under R to $`\theta m - \ln M`$. The first term is never negative (Step 3). On the dice: 0.182322 = 0.039109 + 0.143213.
 
 ### The picture: the fair die, its tilt to mean 4.4, and the loaded die
 
@@ -153,30 +165,30 @@ xychart-beta
     line [0.10, 0.10, 0.10, 0.10, 0.20, 0.40]
 ```
 
-Orange is the fair die. Green is the tilt: each step up a face multiplies the weight by the same factor, $e^{\theta}$. Dark blue is the loaded die, flat for four faces, then jumping. Both have mean 4.4; divergence from fair 0.143213 for the tilt, 0.182322 for the loaded die.
+Orange is the fair die. Green is the tilt: each step up a face multiplies the weight by the same factor, $`e^{\theta}`$. Dark blue is the loaded die, flat for four faces, then jumping. Both have mean 4.4; divergence from fair 0.143213 for the tilt, 0.182322 for the loaded die.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal{F})$ is a measurable space, $\nu$ a σ-finite measure on it, and P, Q probability measures with $P = p\,\nu$ and $Q = q\,\nu$, meaning $P(A) = \int_A p\,d\nu$ and $Q(A) = \int_A q\,d\nu$, with $p, q \ge 0$ measurable with respect to $\mathcal{F}$.
+**Setting.** $`(\Omega, \mathcal{F})`$ is a measurable space, $`\nu`$ a σ-finite measure on it, and P, Q probability measures with $`P = p\,\nu`$ and $`Q = q\,\nu`$, meaning $`P(A) = \int_A p\,d\nu`$ and $`Q(A) = \int_A q\,d\nu`$, with $`p, q \ge 0`$ measurable with respect to $`\mathcal{F}`$.
 
-**1. Densities against length.** A probability measure P on the Borel sets of the line has a density against $\lambda$ if and only if $P(A) = 0$ whenever $\lambda(A) = 0$: this is the Radon-Nikodym theorem for the σ-finite $\lambda$ ([The Radon-Nikodym theorem](03-radon-nikodym-theorem.md)), and two densities agree $\lambda$-a.e. If F is continuous and has a continuous derivative f except at finitely many points, the fundamental theorem of calculus, applied piece by piece, gives $\int_{(-\infty, x]} f\,d\lambda = F(x)$, so the measures $A \mapsto \int_A f\,d\lambda$ and P agree on half-lines. Half-lines are closed under intersection and generate the Borel sets, so the two measures agree everywhere ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)). Hence $f = dP/d\lambda$.
+**1. Densities against length.** A probability measure P on the Borel sets of the line has a density against $`\lambda`$ if and only if $`P(A) = 0`$ whenever $`\lambda(A) = 0`$: this is the Radon-Nikodym theorem for the σ-finite $`\lambda`$ ([The Radon-Nikodym theorem](03-radon-nikodym-theorem.md)), and two densities agree $`\lambda`$-a.e. If F is continuous and has a continuous derivative f except at finitely many points, the fundamental theorem of calculus, applied piece by piece, gives $`\int_{(-\infty, x]} f\,d\lambda = F(x)`$, so the measures $`A \mapsto \int_A f\,d\lambda`$ and P agree on half-lines. Half-lines are closed under intersection and generate the Borel sets, so the two measures agree everywhere ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)). Hence $`f = dP/d\lambda`$.
 
-**2. P ignores $\{p = 0\}$, and so does Q.** Let $N = \{p = 0\}$. Then $P(N) = \int_N p\,d\nu = \int_N 0\,d\nu = 0$. Since $Q \ll P$, $Q(N) = 0$.
+**2. P ignores $`\{p = 0\}`$, and so does Q.** Let $`N = \{p = 0\}`$. Then $`P(N) = \int_N p\,d\nu = \int_N 0\,d\nu = 0`$. Since $`Q \ll P`$, $`Q(N) = 0`$.
 
-**3. $L$ is dQ/dP.** Define $L = q/p$ off N and $L = 0$ on N; it is measurable. For A in $\mathcal{F}$, step 2 and $q = L\,p$ off N give $Q(A) = Q(A \setminus N) = \int_{A \setminus N} L\,p\,d\nu$. The change-of-measure rule ([The Radon-Nikodym derivative](04-radon-nikodym-derivative.md): $\int g\,p\,d\nu = \int g\,dP$ for measurable $g \ge 0$) with $g = L\,1_{A \setminus N}$ turns this into $\int_{A \setminus N} L\,dP = \int_A L\,dP$, since $P(N) = 0$. Any other function with this property equals $L$ P-a.e., by the uniqueness in the Radon-Nikodym theorem. The reweighting rule $\int g\,dQ = \int g\,L\,dP$ follows from indicators by linearity and monotone convergence.
+**3. $`L`$ is dQ/dP.** Define $`L = q/p`$ off N and $`L = 0`$ on N; it is measurable. For A in $`\mathcal{F}`$, step 2 and $`q = L\,p`$ off N give $`Q(A) = Q(A \setminus N) = \int_{A \setminus N} L\,p\,d\nu`$. The change-of-measure rule ([The Radon-Nikodym derivative](04-radon-nikodym-derivative.md): $`\int g\,p\,d\nu = \int g\,dP`$ for measurable $`g \ge 0`$) with $`g = L\,1_{A \setminus N}`$ turns this into $`\int_{A \setminus N} L\,dP = \int_A L\,dP`$, since $`P(N) = 0`$. Any other function with this property equals $`L`$ P-a.e., by the uniqueness in the Radon-Nikodym theorem. The reweighting rule $`\int g\,dQ = \int g\,L\,dP`$ follows from indicators by linearity and monotone convergence.
 
-**4. Without $Q \ll P$.** The measure $A \mapsto \int_A L\,dP$ is still defined and equals $A \mapsto Q(A \setminus N)$: the absolutely continuous part of Q in the Lebesgue decomposition ([Lebesgue decomposition](05-lebesgue-decomposition.md)), and $Q(N) > 0$ is exactly the mass it misses.
+**4. Without $`Q \ll P`$.** The measure $`A \mapsto \int_A L\,dP`$ is still defined and equals $`A \mapsto Q(A \setminus N)`$: the absolutely continuous part of Q in the Lebesgue decomposition ([Lebesgue decomposition](05-lebesgue-decomposition.md)), and $`Q(N) > 0`$ is exactly the mass it misses.
 
-**5. The divergence is well defined.** Assume $Q \ll P$ and $L = dQ/dP$. Then $Q(L = 0) = \int_{\{L=0\}} L\,dP = 0$, so $\ln L$ is finite Q-a.s. Its negative part has $\int (\ln L)^- \,dQ = \int_{\{L<1\}} L \ln(1/L)\,dP \le 1/e$, because $t\ln(1/t) \le 1/e$ for $0 < t < 1$ (its derivative $\ln(1/t) - 1$ vanishes at $t = 1/e$) and $P(\Omega) = 1$. So $D(Q\,\|\,P) = \int \ln L\,dQ$ is defined in `[−1/e, ∞]`, and by the reweighting rule applied to the positive and negative parts it equals $\int L \ln L\,dP$.
+**5. The divergence is well defined.** Assume $`Q \ll P`$ and $`L = dQ/dP`$. Then $`Q(L = 0) = \int_{\{L=0\}} L\,dP = 0`$, so $`\ln L`$ is finite Q-a.s. Its negative part has $`\int (\ln L)^- \,dQ = \int_{\{L<1\}} L \ln(1/L)\,dP \le 1/e`$, because $`t\ln(1/t) \le 1/e`$ for $`0 < t < 1`$ (its derivative $`\ln(1/t) - 1`$ vanishes at $`t = 1/e`$) and $`P(\Omega) = 1`$. So $`D(Q\,\|\,P) = \int \ln L\,dQ`$ is defined in `[−1/e, ∞]`, and by the reweighting rule applied to the positive and negative parts it equals $`\int L \ln L\,dP`$.
 
-**6. Gibbs' inequality.** On the probability space $(\Omega, \mathcal{F}, Q)$ take $w = 1/L$, positive Q-a.s., with $\int w\,dQ = \int_{\{L>0\}} (1/L)\,L\,dP = P(L > 0) \le 1$, so $w$ is in $L^1(Q)$. The function $-\ln$ is convex on `(0, ∞)`, so Jensen's inequality gives $-\ln \int w\,dQ \le \int -\ln w\,dQ$, that is $\int \ln(1/L)\,dQ \le \ln P(L > 0) \le 0$. Hence $D(Q\,\|\,P) = -\int \ln(1/L)\,dQ \ge 0$.
+**6. Gibbs' inequality.** On the probability space $`(\Omega, \mathcal{F}, Q)`$ take $`w = 1/L`$, positive Q-a.s., with $`\int w\,dQ = \int_{\{L>0\}} (1/L)\,L\,dP = P(L > 0) \le 1`$, so $`w`$ is in $`L^1(Q)`$. The function $`-\ln`$ is convex on `(0, ∞)`, so Jensen's inequality gives $`-\ln \int w\,dQ \le \int -\ln w\,dQ`$, that is $`\int \ln(1/L)\,dQ \le \ln P(L > 0) \le 0`$. Hence $`D(Q\,\|\,P) = -\int \ln(1/L)\,dQ \ge 0`$.
 
-**7. Equality.** If $D = 0$, both inequalities in step 6 are equalities. The second gives $P(L > 0) = 1$. The first, since $-\ln$ is strictly convex, gives $1/L = c$ Q-a.s. for a constant c, by the equality case of Jensen. The set $B = \{L \ne 1/c\}$ has $0 = Q(B) = \int_B L\,dP$, with $L > 0$ P-a.s., so $P(B) = 0$ and $L = 1/c$ P-a.s. Then $1 = Q(\Omega) = \int L\,dP = 1/c$, so $L = 1$ P-a.s. and $Q = P$. Conversely $Q = P$ gives $L = 1$ and $D = 0$.
+**7. Equality.** If $`D = 0`$, both inequalities in step 6 are equalities. The second gives $`P(L > 0) = 1`$. The first, since $`-\ln`$ is strictly convex, gives $`1/L = c`$ Q-a.s. for a constant c, by the equality case of Jensen. The set $`B = \{L \ne 1/c\}`$ has $`0 = Q(B) = \int_B L\,dP`$, with $`L > 0`$ P-a.s., so $`P(B) = 0`$ and $`L = 1/c`$ P-a.s. Then $`1 = Q(\Omega) = \int L\,dP = 1/c`$, so $`L = 1`$ P-a.s. and $`Q = P`$. Conversely $`Q = P`$ gives $`L = 1`$ and $`D = 0`$.
 
-**8. The tilt.** Let X be a real measurable function with $M(\theta) = \int e^{\theta X}\,dP < \infty$. Then $Z = e^{\theta X}/M(\theta) > 0$ and $\int Z\,dP = 1$, so $Q_\theta = Z\,P$ is a probability measure, and $Q_\theta(A) = 0$ exactly when $P(A) = 0$ because $Z > 0$. For the die, $M(\theta) = \frac{1}{6}\sum_{k=1}^{6} e^{\theta k}$ is a finite sum, differentiated term by term: $M' = \int X e^{\theta X}\,dP$, $M'' = \int X^2 e^{\theta X}\,dP$. So $m(\theta) = \int X\,dQ_\theta = M'/M$ and $m' = M''/M - (M'/M)^2$, the variance of X under $Q_\theta$, positive because the faces differ. As $\theta \to \pm\infty$, $m \to 6$ or 1; by the intermediate value theorem and strict increase, each target in `(1, 6)` has exactly one $\theta$. Since $\ln Z = \theta X - \ln M(\theta)$, $D(Q_\theta\,\|\,P) = \int (\theta X - \ln M)\,dQ_\theta = \theta\,m(\theta) - \ln M(\theta)$.
+**8. The tilt.** Let X be a real measurable function with $`M(\theta) = \int e^{\theta X}\,dP < \infty`$. Then $`Z = e^{\theta X}/M(\theta) > 0`$ and $`\int Z\,dP = 1`$, so $`Q_\theta = Z\,P`$ is a probability measure, and $`Q_\theta(A) = 0`$ exactly when $`P(A) = 0`$ because $`Z > 0`$. For the die, $`M(\theta) = \frac{1}{6}\sum_{k=1}^{6} e^{\theta k}`$ is a finite sum, differentiated term by term: $`M' = \int X e^{\theta X}\,dP`$, $`M'' = \int X^2 e^{\theta X}\,dP`$. So $`m(\theta) = \int X\,dQ_\theta = M'/M`$ and $`m' = M''/M - (M'/M)^2`$, the variance of X under $`Q_\theta`$, positive because the faces differ. As $`\theta \to \pm\infty`$, $`m \to 6`$ or 1; by the intermediate value theorem and strict increase, each target in `(1, 6)` has exactly one $`\theta`$. Since $`\ln Z = \theta X - \ln M(\theta)`$, $`D(Q_\theta\,\|\,P) = \int (\theta X - \ln M)\,dQ_\theta = \theta\,m(\theta) - \ln M(\theta)`$.
 
-**9. The tilt minimises the divergence.** Let R be a probability measure with $R \ll P$ and $\int X\,dR = m(\theta)$. Since $Q_\theta$ and P have the same null sets, $R \ll Q_\theta$, and the chain rule ([The Radon-Nikodym derivative](04-radon-nikodym-derivative.md)) gives $dR/dP = (dR/dQ_\theta)\,Z$ P-a.s. Taking logarithms and integrating against R, $D(R\,\|\,P) = D(R\,\|\,Q_\theta) + \int (\theta X - \ln M)\,dR = D(R\,\|\,Q_\theta) + \theta\,m(\theta) - \ln M(\theta) = D(R\,\|\,Q_\theta) + D(Q_\theta\,\|\,P)$. By step 6 the first term is at least 0, with equality only when $R = Q_\theta$. Equivalently, the convex function $t \mapsto \ln M(t) - m\,t$ has derivative $m(t) - m$, so it is least at $t = \theta$, where its value is $-D(Q_\theta\,\|\,P)$.
+**9. The tilt minimises the divergence.** Let R be a probability measure with $`R \ll P`$ and $`\int X\,dR = m(\theta)`$. Since $`Q_\theta`$ and P have the same null sets, $`R \ll Q_\theta`$, and the chain rule ([The Radon-Nikodym derivative](04-radon-nikodym-derivative.md)) gives $`dR/dP = (dR/dQ_\theta)\,Z`$ P-a.s. Taking logarithms and integrating against R, $`D(R\,\|\,P) = D(R\,\|\,Q_\theta) + \int (\theta X - \ln M)\,dR = D(R\,\|\,Q_\theta) + \theta\,m(\theta) - \ln M(\theta) = D(R\,\|\,Q_\theta) + D(Q_\theta\,\|\,P)`$. By step 6 the first term is at least 0, with equality only when $`R = Q_\theta`$. Equivalently, the convex function $`t \mapsto \ln M(t) - m\,t`$ has derivative $`m(t) - m`$, so it is least at $`t = \theta`$, where its value is $`-D(Q_\theta\,\|\,P)`$.
 
 </details>
 
@@ -184,24 +196,24 @@ Orange is the fair die. Green is the tilt: each step up a face multiplies the we
 
 ## Worked numbers, by hand
 
-The bus: P at rate 1 a minute, density $e^{-x}$; Q at rate 2, density $2e^{-2x}$. The die: fair against a tilt to mean 4.4.
+The bus: P at rate 1 a minute, density $`e^{-x}`$; Q at rate 2, density $`2e^{-2x}`$. The die: fair against a tilt to mean 4.4.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| P(wait ≤ 1) | $1 - e^{-1}$, or the area under $e^{-x}$ from 0 to 1 | 0.632121 |
-| likelihood ratio | $2e^{-2x} / e^{-x}$ | $L(x) = 2e^{-x}$ |
-| L at 0.30 minutes | $2 \times e^{-0.3}$ | 1.4816 |
-| L at 2 minutes | $2 \times e^{-2}$ | 0.2707 |
-| the waits favour neither | $2e^{-x} = 1$, so $x = \ln 2$ | 0.6931 minutes |
-| Q(wait > 1), directly | $e^{-2 \times 1}$ | 0.135335 |
-| the same, through P | $\int_1^\infty 2e^{-x} \cdot e^{-x}\,dx = e^{-2}$ | **0.135335** |
-| P(wait > 1), for contrast | $e^{-1}$ | 0.367879 |
-| D(Q ‖ P) | average of $\ln 2 - x$ under Q, whose mean wait is 1/2 | **0.193147** |
-| D(P ‖ Q) | average of $x - \ln 2$ under P, whose mean wait is 1 | 0.306853 |
-| die tilt | solve $\sum k\,e^{\theta k} / \sum e^{\theta k} = 4.4$ | $\theta$ = 0.328605407 |
-| its normaliser | $\frac16 \sum e^{0.3286 k}$ | $M$ = 3.679036 |
-| D(tilt ‖ fair) | $0.328605407 \times 4.4 - \ln 3.679036$ | 0.143213 |
-| D(loaded ‖ fair) | $4 \times 0.1 \ln 0.6 + 0.2 \ln 1.2 + 0.4 \ln 2.4$ | 0.182322 |
+| P(wait ≤ 1) | $`1 - e^{-1}`$, or the area under $`e^{-x}`$ from 0 to 1 | 0.632121 |
+| likelihood ratio | $`2e^{-2x} / e^{-x}`$ | $`L(x) = 2e^{-x}`$ |
+| L at 0.30 minutes | $`2 \times e^{-0.3}`$ | 1.4816 |
+| L at 2 minutes | $`2 \times e^{-2}`$ | 0.2707 |
+| the waits favour neither | $`2e^{-x} = 1`$, so $`x = \ln 2`$ | 0.6931 minutes |
+| Q(wait > 1), directly | $`e^{-2 \times 1}`$ | 0.135335 |
+| the same, through P | $`\int_1^\infty 2e^{-x} \cdot e^{-x}\,dx = e^{-2}`$ | **0.135335** |
+| P(wait > 1), for contrast | $`e^{-1}`$ | 0.367879 |
+| D(Q ‖ P) | average of $`\ln 2 - x`$ under Q, whose mean wait is 1/2 | **0.193147** |
+| D(P ‖ Q) | average of $`x - \ln 2`$ under P, whose mean wait is 1 | 0.306853 |
+| die tilt | solve $`\sum k\,e^{\theta k} / \sum e^{\theta k} = 4.4`$ | $`\theta`$ = 0.328605407 |
+| its normaliser | $`\frac16 \sum e^{0.3286 k}`$ | $`M`$ = 3.679036 |
+| D(tilt ‖ fair) | $`0.328605407 \times 4.4 - \ln 3.679036`$ | 0.143213 |
+| D(loaded ‖ fair) | $`4 \times 0.1 \ln 0.6 + 0.2 \ln 1.2 + 0.4 \ln 2.4`$ | 0.182322 |
 | split through the tilt | 0.039109 + 0.143213 | **0.182322** |
 
 In the world: one wait of 0.30 minutes shifts the odds by a factor of 1.4816 towards the faster timetable. When that timetable is true, each wait supplies on average 0.193147 nats of evidence for it (a nat is the unit of a natural logarithm).
@@ -210,10 +222,10 @@ In the world: one wait of 0.30 minutes shifts the odds by a factor of 1.4816 tow
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| The die given a density against length | 0.8333, 8.3333, 83.3333 for h = 0.1, 0.01, 0.001 | Face 6 has probability 1/6 on a set of length 0; the die is not absolutely continuous with respect to $\lambda$ |
-| Q uniform on `[0, 2]`, P uniform on `[0, 1]` | $\int (q/p)\,dP$ = 0.500000, not 1 | Q puts 0.500000 where $p = 0$; the ratio carries only the absolutely continuous part of Q |
-| The log-ratio averaged under P, not Q | −0.306853 | That is $-D(P\,\|\,Q)$: negative, and the wrong divergence |
-| A density read as a probability | $q(0)$ = 2.0000 | A density is probability per minute; only its areas are probabilities |
+| The die given a density against length | 0.8333, 8.3333, 83.3333 for h = 0.1, 0.01, 0.001 | Face 6 has probability 1/6 on a set of length 0; the die is not absolutely continuous with respect to $`\lambda`$ |
+| Q uniform on `[0, 2]`, P uniform on `[0, 1]` | $`\int (q/p)\,dP`$ = 0.500000, not 1 | Q puts 0.500000 where $`p = 0`$; the ratio carries only the absolutely continuous part of Q |
+| The log-ratio averaged under P, not Q | −0.306853 | That is $`-D(P\,\Vert\,Q)`$: negative, and the wrong divergence |
+| A density read as a probability | $`q(0)`$ = 2.0000 | A density is probability per minute; only its areas are probabilities |
 
 ---
 
@@ -222,9 +234,9 @@ In the world: one wait of 0.30 minutes shifts the odds by a factor of 1.4816 tow
 Four roads:
 
 - **Road one:** the density is the slope of F, and its area over `[0, 1]` is F(1).
-- **Road two:** Q(wait > 1) by the closed form, by a Simpson's-rule integral of $L$ against P, and by 200000 waits drawn from P with a SplitMix64 generator (seed 20260929) weighted by $L$.
-- **Road three:** $D(Q\,\|\,P)$ by closed form, integral, draws from Q and the tilt formula, with $M(-1)$ and the tilt's mean integrated against P.
-- **Road four:** the die's tilt to mean 4.4 by bisection, by Newton's method (the mean's slope is the tilted variance), and by golden-section search on $\ln M(\theta) - 4.4\,\theta$, good to about seven digits; then the split of the divergence.
+- **Road two:** Q(wait > 1) by the closed form, by a Simpson's-rule integral of $`L`$ against P, and by 200000 waits drawn from P with a SplitMix64 generator (seed 20260929) weighted by $`L`$.
+- **Road three:** $`D(Q\,\|\,P)`$ by closed form, integral, draws from Q and the tilt formula, with $`M(-1)`$ and the tilt's mean integrated against P.
+- **Road four:** the die's tilt to mean 4.4 by bisection, by Newton's method (the mean's slope is the tilted variance), and by golden-section search on $`\ln M(\theta) - 4.4\,\theta`$, good to about seven digits; then the split of the divergence.
 
 The failures print beside them. The code shows one pair of models and one die; that the ratio is dQ/dP and the divergence non-negative for every pair is what the proof shows.
 
@@ -618,12 +630,12 @@ The two outputs match line for line. Python's `sum` adds floats with a compensat
 
 Lean proves the likelihood ratio and divergence claims for every pair of models, and checks the exact die and bus arithmetic.
 
-- Suppose P and Q have densities $p$ and $q$ against one σ-finite reference measure $\nu$, and $Q \ll P$. Then $dQ/dP = q/p$ at P-almost every point.
-- Take the same conditions, and set $L = q/p$ where $p > 0$ and $L = 0$ elsewhere. Then $\int g\,dQ = \int g\,L\,dP$ for every non-negative measurable $g$.
-- Take probability measures P and Q with $Q \ll P$. Then $D(Q\,\|\,P) \ge 0$, and it is 0 exactly when $Q = P$.
+- Suppose P and Q have densities $`p`$ and $`q`$ against one σ-finite reference measure $`\nu`$, and $`Q \ll P`$. Then $`dQ/dP = q/p`$ at P-almost every point.
+- Take the same conditions, and set $`L = q/p`$ where $`p > 0`$ and $`L = 0`$ elsewhere. Then $`\int g\,dQ = \int g\,L\,dP`$ for every non-negative measurable $`g`$.
+- Take probability measures P and Q with $`Q \ll P`$. Then $`D(Q\,\|\,P) \ge 0`$, and it is 0 exactly when $`Q = P`$.
 - The loaded die totals 1 and has mean 4.4; the fair die has mean 3.5.
 - The die's probability per unit length near 6 is exactly 5/6, 25/3 and 250/3 as the window shrinks.
-- Take the bus under P and $\theta = -1$. Then $M(\theta) = 1/2$.
+- Take the bus under P and $`\theta = -1`$. Then $`M(\theta) = 1/2`$.
 - For Q uniform on `[0, 2]` and P uniform on `[0, 1]`, the ratio integrates to exactly 1/2.
 
 The tilt, the split of the divergence, and the decimals from integrals, sampling and root-finding are left to the Python and Rust checks.
@@ -804,9 +816,9 @@ example : ((1/2) * (2 - 1) : ℚ) = 1/2 := by norm_num
 > **Try changing**
 > Guess first, then run the Python.
 > - **Another seed.** Set `SplitMix64(1)`. The reweighted estimate of Q(wait > 1) moves to 0.135057 and the sampled divergence to 0.193383. Both stay within four standard errors; the integrals do not move at all.
-> - **A target the fair die already meets.** Set the target to 3.5. Guess $\theta$. It is 0: the tilt is the fair die, its divergence is 0.000000, and D(loaded ‖ tilt) is D(loaded ‖ fair), 0.182322.
-> - **A target the loaded die does not share.** Set the target to 5.5 and raise Newton's steps from 5 to 9. $\theta$ becomes 1.086963747 and the tilt puts 0.6637 on face 6. The assert on the split (marked `Pythagoras for the tilt` in the code) now fails: 0.539573 + 0.838409 is not 0.182322, because the split holds only for models with the tilt's mean.
-> - **The ratio from the densities.** Replace the body of `lr` with `q(x) / p(x)`. Guess what changes. Nothing: every line of output is the same, because $2e^{-x}$ is the ratio of the two densities.
+> - **A target the fair die already meets.** Set the target to 3.5. Guess $`\theta`$. It is 0: the tilt is the fair die, its divergence is 0.000000, and D(loaded ‖ tilt) is D(loaded ‖ fair), 0.182322.
+> - **A target the loaded die does not share.** Set the target to 5.5 and raise Newton's steps from 5 to 9. $`\theta`$ becomes 1.086963747 and the tilt puts 0.6637 on face 6. The assert on the split (marked `Pythagoras for the tilt` in the code) now fails: 0.539573 + 0.838409 is not 0.182322, because the split holds only for models with the tilt's mean.
+> - **The ratio from the densities.** Replace the body of `lr` with `q(x) / p(x)`. Guess what changes. Nothing: every line of output is the same, because $`2e^{-x}`$ is the ratio of the two densities.
 
 ---
 
@@ -815,8 +827,8 @@ example : ((1/2) * (2 - 1) : ℚ) = 1/2 := by norm_num
 > [!warning]
 > **Reading a likelihood ratio as a ratio of probabilities.** At a wait of exactly 0.30 minutes both probabilities are 0. The ratio is of densities, and it is the Radon-Nikodym derivative dQ/dP. It does not depend on the units: timed in seconds, both densities shrink by 60 and the ratio stays 1.4816. The densities alone do depend on the units, and so neither is a probability.
 >
-> - **Averaging under the wrong model.** $D(Q\,\|\,P)$ averages $\ln(dQ/dP)$ under Q. Averaged under P, the same log-ratio gives −0.306853: negative, and it is $-D(P\,\|\,Q)$.
-> - **Treating the divergence as symmetric.** $D(P\,\|\,Q)$ is 0.306853; $D(Q\,\|\,P)$ is 0.193147. Which model is true changes the answer.
+> - **Averaging under the wrong model.** $`D(Q\,\|\,P)`$ averages $`\ln(dQ/dP)`$ under Q. Averaged under P, the same log-ratio gives −0.306853: negative, and it is $`-D(P\,\|\,Q)`$.
+> - **Treating the divergence as symmetric.** $`D(P\,\|\,Q)`$ is 0.306853; $`D(Q\,\|\,P)`$ is 0.193147. Which model is true changes the answer.
 > - **Ignoring where one model is zero.** Uniform on `[0, 2]` against uniform on `[0, 1]`: the ratio integrates to 0.500000, and weights built from it silently lose half of Q.
 > - **Taking any model with the right mean for the tilt.** The loaded die and the tilted die both average 4.4; only the tilt is the closest to fair, 0.143213 against 0.182322.
 
@@ -824,15 +836,15 @@ example : ((1/2) * (2 - 1) : ℚ) = 1/2 := by norm_num
 
 ## Where you meet it in real life
 
-- **Hypothesis tests.** The Neyman-Pearson lemma says the most powerful test between two simple models rejects when the likelihood ratio is large; the test statistic is $dQ/dP$ evaluated at the data ([Likelihood ratio tests](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/07-likelihood-ratio-tests.md)).
-- **Maximum likelihood.** The average log-likelihood of the data estimates $-D(\text{true law}\,\|\,\text{model})$ plus a term that does not involve the model, so maximising it aims at the model closest to the true law ([Maximum likelihood](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/04-maximum-likelihood.md)).
+- **Hypothesis tests.** The Neyman-Pearson lemma says the most powerful test between two simple models rejects when the likelihood ratio is large; the test statistic is $`dQ/dP`$ evaluated at the data ([Likelihood ratio tests](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/07-likelihood-ratio-tests.md)).
+- **Maximum likelihood.** The average log-likelihood of the data estimates $`-D(\text{true law}\,\|\,\text{model})`$ plus a term that does not involve the model, so maximising it aims at the model closest to the true law ([Maximum likelihood](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/04-maximum-likelihood.md)).
 - **Rare-event simulation.** Sampling from a tilted model that makes the rare event common, then weighting each draw by the likelihood ratio, is importance sampling ([Importance sampling](../../09-Probability%20and%20statistics/11-Simulation/06-importance-sampling.md)).
-- **Machine learning.** The cross-entropy loss that trains classifiers is $D(\text{true labels}\,\|\,\text{predictions})$ plus a constant.
+- **Machine learning.** The cross-entropy loss that trains classifiers is $`D(\text{true labels}\,\|\,\text{predictions})`$ plus a constant.
 - **Insurance.** The Esscher transform, an exponential tilt of the claims distribution, dates from 1932.
-- **Physics.** The Boltzmann distribution, weight proportional to $e^{-\text{energy}/\text{temperature}}$, is the tilt of the uniform distribution that fixes the average energy.
+- **Physics.** The Boltzmann distribution, weight proportional to $`e^{-\text{energy}/\text{temperature}}`$, is the tilt of the uniform distribution that fixes the average energy.
 
 > **Say it back**
-> A density is the Radon-Nikodym derivative of a probability against a reference measure such as length. The ratio of two densities against one reference is the derivative of one model against the other; the reference cancels. The Kullback-Leibler divergence averages the log of that ratio under the numerator model, and Jensen makes it non-negative, zero only for identical models. An exponential tilt reweights by $e^{\theta x}$, and the tilt to a given mean is the closest model to the original with that mean. For the bus: ratio $2e^{-x}$, divergence 0.193147.
+> A density is the Radon-Nikodym derivative of a probability against a reference measure such as length. The ratio of two densities against one reference is the derivative of one model against the other; the reference cancels. The Kullback-Leibler divergence averages the log of that ratio under the numerator model, and Jensen makes it non-negative, zero only for identical models. An exponential tilt reweights by $`e^{\theta x}`$, and the tilt to a given mean is the closest model to the original with that mean. For the bus: ratio $`2e^{-x}`$, divergence 0.193147.
 
 ---
 

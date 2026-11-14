@@ -37,64 +37,74 @@ From 0.5 to 2 the best miss barely moves, 0.7429 to 0.7330 and back to 0.7406; a
 
 ## The formula
 
-Notation first, in words. Acme's price is $S$ today and $S_T$ at expiry, $T$ years away; $K$ is the strike, $r$ the bank rate and $q$ the dividend yield, both continuously compounded.
+Notation first, in words. Acme's price is $`S`$ today and $`S_T`$ at expiry, $`T`$ years away; $`K`$ is the strike, $`r`$ the bank rate and $`q`$ the dividend yield, both continuously compounded.
 
-The five dials, at the anchor values of [The Heston model](01-heston-model.md): today's variance $v_0$ (0.04), the pull speed $\kappa$ ("kappa", 2 a year), the long-run variance $\theta$ ("theta", 0.04), the vol of vol $\xi$ ("xi", 0.3), which sets how hard variance wanders, and the correlation $\rho$ ("rho", −0.7) between the share's random kicks and variance's.
+The five dials, at the anchor values of [The Heston model](01-heston-model.md): today's variance $`v_0`$ (0.04), the pull speed $`\kappa`$ ("kappa", 2 a year), the long-run variance $`\theta`$ ("theta", 0.04), the vol of vol $`\xi`$ ("xi", 0.3), which sets how hard variance wanders, and the correlation $`\rho`$ ("rho", −0.7) between the share's random kicks and variance's.
 
-The forward $F = S e^{(r-q)T}$ is the price agreed today for Acme at expiry, and $k = \ln(K/F)$ is the strike's log distance from it. $i$ is the imaginary unit, $i^2 = -1$, and Re takes a complex number's real part.
+The forward $`F = S e^{(r-q)T}`$ is the price agreed today for Acme at expiry, and $`k = \ln(K/F)`$ is the strike's log distance from it. $`i`$ is the imaginary unit, $`i^2 = -1`$, and Re takes a complex number's real part.
 
-The model's fingerprint, its **characteristic function** at a frequency $z$, has a log that is a straight line in $v_0$ and in $\theta$:
+The model's fingerprint, its **characteristic function** at a frequency $`z`$, has a log that is a straight line in $`v_0`$ and in $`\theta`$:
 
-$$\varphi(z) = \mathbb{E}\!\left[e^{\,iz\ln(S_T/F)}\right] = e^{\,\theta H(z) + v_0 B(z)}$$
+```math
+\varphi(z) = \mathbb{E}\!\left[e^{\,iz\ln(S_T/F)}\right] = e^{\,\theta H(z) + v_0 B(z)}
+```
 
-$H$ and $B$ depend on $\kappa$, $\xi$, $\rho$, the expiry and $z$ only. $B$ is the $B$ of [Pricing Heston exactly](02-heston-pricing-by-characteristic-function.md), and $\theta H$ is its $A(u)$ less the drift, since the log price here is measured from the forward. The price is that card's Lewis integral over real frequencies $u$:
+$`H`$ and $`B`$ depend on $`\kappa`$, $`\xi`$, $`\rho`$, the expiry and $`z`$ only. $`B`$ is the $`B`$ of [Pricing Heston exactly](02-heston-pricing-by-characteristic-function.md), and $`\theta H`$ is its $`A(u)`$ less the drift, since the log price here is measured from the forward. The price is that card's Lewis integral over real frequencies $`u`$:
 
-$$C = S e^{-qT} - \frac{\sqrt{FK}\,e^{-rT}}{\pi}\int_0^\infty \mathrm{Re}\!\left[\frac{e^{-iuk}\,\varphi(u - \tfrac{i}{2})}{u^2 + \tfrac14}\right] du$$
+```math
+C = S e^{-qT} - \frac{\sqrt{FK}\,e^{-rT}}{\pi}\int_0^\infty \mathrm{Re}\!\left[\frac{e^{-iuk}\,\varphi(u - \tfrac{i}{2})}{u^2 + \tfrac14}\right] du
+```
 
-The Greeks, delta $\Delta$ and gamma $\Gamma$ (the rate delta itself moves), put one extra factor inside, with $\varphi$, $H$, $B$ all taken at $u - \tfrac{i}{2}$:
+The Greeks, delta $`\Delta`$ and gamma $`\Gamma`$ (the rate delta itself moves), put one extra factor inside, with $`\varphi`$, $`H`$, $`B`$ all taken at $`u - \tfrac{i}{2}`$:
 
-$$\Delta = e^{-qT} - \frac{\sqrt{FK}\,e^{-rT}}{\pi S}\int_0^\infty \mathrm{Re}\!\left[\frac{(\tfrac12 + iu)\,e^{-iuk}\,\varphi}{u^2 + \tfrac14}\right] du, \qquad \Gamma = \frac{\sqrt{FK}\,e^{-rT}}{\pi S^2}\int_0^\infty \mathrm{Re}\!\left[e^{-iuk}\,\varphi\right] du$$
+```math
+\Delta = e^{-qT} - \frac{\sqrt{FK}\,e^{-rT}}{\pi S}\int_0^\infty \mathrm{Re}\!\left[\frac{(\tfrac12 + iu)\,e^{-iuk}\,\varphi}{u^2 + \tfrac14}\right] du, \qquad \Gamma = \frac{\sqrt{FK}\,e^{-rT}}{\pi S^2}\int_0^\infty \mathrm{Re}\!\left[e^{-iuk}\,\varphi\right] du
+```
 
-$$\frac{\partial C}{\partial v_0} = -\frac{\sqrt{FK}\,e^{-rT}}{\pi}\int_0^\infty \mathrm{Re}\!\left[\frac{B\,e^{-iuk}\,\varphi}{u^2 + \tfrac14}\right] du, \qquad \frac{\partial C}{\partial \theta} = \text{the same with } H \text{ in place of } B$$
+```math
+\frac{\partial C}{\partial v_0} = -\frac{\sqrt{FK}\,e^{-rT}}{\pi}\int_0^\infty \mathrm{Re}\!\left[\frac{B\,e^{-iuk}\,\varphi}{u^2 + \tfrac14}\right] du, \qquad \frac{\partial C}{\partial \theta} = \text{the same with } H \text{ in place of } B
+```
 
 **Read it aloud:** the call is the discounted share less a weighted sum of the fingerprint over frequencies; each Greek is the same sum with one more factor inside.
 
-Calibration scores the dials against the quotes. Quote $j$'s dollar miss, model price $C_j$ less market price $C_j^{\mathrm{mkt}}$, is divided by its Black-Scholes vega $V_j$ (dollars per unit of volatility) and scaled to vol points. A prior, when used, charges at weight $\lambda$ for moving $\kappa$ away from a preferred $\kappa_0$; the loss $L$ adds it all up:
+Calibration scores the dials against the quotes. Quote $`j`$'s dollar miss, model price $`C_j`$ less market price $`C_j^{\mathrm{mkt}}`$, is divided by its Black-Scholes vega $`V_j`$ (dollars per unit of volatility) and scaled to vol points. A prior, when used, charges at weight $`\lambda`$ for moving $`\kappa`$ away from a preferred $`\kappa_0`$; the loss $`L`$ adds it all up:
 
-$$e_j = 100\,\frac{C_j - C_j^{\mathrm{mkt}}}{V_j}, \qquad L = \sum_{j=1}^{21} e_j^2 + \lambda^2(\kappa - \kappa_0)^2$$
+```math
+e_j = 100\,\frac{C_j - C_j^{\mathrm{mkt}}}{V_j}, \qquad L = \sum_{j=1}^{21} e_j^2 + \lambda^2(\kappa - \kappa_0)^2
+```
 
 **Read it aloud:** miss all 21 quotes by as few vol points as possible, and pay at a stated rate for straying from the preferred pull speed.
 
-The root-mean-square miss is $\sqrt{\sum e_j^2/21}$, over the quotes only. Fits without a prior use $\lambda = 0$; with one, $\lambda = 1$ and $\kappa_0 = 2$.
+The root-mean-square miss is $`\sqrt{\sum e_j^2/21}`$, over the quotes only. Fits without a prior use $`\lambda = 0`$; with one, $`\lambda = 1`$ and $`\kappa_0 = 2`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $K$, $T$, $S_T$ | Acme's price today, the strike, years to expiry, Acme's price at expiry | $100; $80 to $120; 0.25, 0.5, 1 | $S$: the call gains delta dollars per dollar |
-| $r$, $q$, $F$ | bank rate, dividend yield (both continuous), forward price | 5%, 2% | — |
-| $k$, $u$, $z$, $i$ | strike's log distance from the forward; the integral's frequency; any frequency, possibly complex; the imaginary unit | $u$ from 0 to 300 in steps of 0.1 | — |
-| $\varphi$, $H$, $B$, $\beta$, $d$, $g$ | the fingerprint; the two pieces of its log; three intermediate pieces (Step 3) | fresh at each frequency | — |
-| $v_0$ | today's variance | 0.04 anchor; 0.0259 fit B | price rises, 39.92 per unit |
-| $\kappa$, $\kappa_0$ | pull speed toward the long-run level; the prior's preferred value | 2 anchor; 0.3701 fit A, 1.2247 fit B; $\kappa_0 = 2$ | price rises, 0.0820 per unit |
-| $\theta$ | long-run variance | 0.04 anchor; 0.0888 fit B | price rises, 53.96 per unit |
-| $\xi$ | vol of vol: how hard variance wanders | 0.3 anchor; 0.6707 fit B | at-the-money price falls, −1.2411 per unit |
-| $\rho$ | correlation of the share's kicks with variance's | −0.7 anchor; −0.7277 fit B | smile tilts; price moves 0.0269 per unit |
-| $C$, $C_{\mathrm{BS}}$, $\sigma$ | the call's price; Black-Scholes's price; implied volatility | $9.06 and 19.558% | — |
-| $N$, $d_1$ | the normal cumulative distribution function and Black-Scholes's $d_1$, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) | $e^{-qT}N(d_1) = 0.5873$ | — |
-| $\Delta$, $\Gamma$, $P_1$, $P_2$, $p$, $a$ | delta, gamma; chance of finishing in the money counted in shares, in cash; density of $S_T$; a scaling factor (Step 1) | 0.6427; 0.01843; $e^{-qT}P_1 = 0.6427$ | — |
-| $e_j$, $j$, $C_j^{\mathrm{mkt}}$, $V_j$, $L$, $\lambda$ | miss on quote $j$ in vol points; the quote's number; its market price; its vega; the loss; the prior's weight | 21 misses; $\lambda$ = 0 or 1 | $\lambda$: starts agree more, quotes fit a little worse |
+| $`S`$, $`K`$, $`T`$, $`S_T`$ | Acme's price today, the strike, years to expiry, Acme's price at expiry | $100; $80 to $120; 0.25, 0.5, 1 | $`S`$: the call gains delta dollars per dollar |
+| $`r`$, $`q`$, $`F`$ | bank rate, dividend yield (both continuous), forward price | 5%, 2% | — |
+| $`k`$, $`u`$, $`z`$, $`i`$ | strike's log distance from the forward; the integral's frequency; any frequency, possibly complex; the imaginary unit | $`u`$ from 0 to 300 in steps of 0.1 | — |
+| $`\varphi`$, $`H`$, $`B`$, $`\beta`$, $`d`$, $`g`$ | the fingerprint; the two pieces of its log; three intermediate pieces (Step 3) | fresh at each frequency | — |
+| $`v_0`$ | today's variance | 0.04 anchor; 0.0259 fit B | price rises, 39.92 per unit |
+| $`\kappa`$, $`\kappa_0`$ | pull speed toward the long-run level; the prior's preferred value | 2 anchor; 0.3701 fit A, 1.2247 fit B; $`\kappa_0 = 2`$ | price rises, 0.0820 per unit |
+| $`\theta`$ | long-run variance | 0.04 anchor; 0.0888 fit B | price rises, 53.96 per unit |
+| $`\xi`$ | vol of vol: how hard variance wanders | 0.3 anchor; 0.6707 fit B | at-the-money price falls, −1.2411 per unit |
+| $`\rho`$ | correlation of the share's kicks with variance's | −0.7 anchor; −0.7277 fit B | smile tilts; price moves 0.0269 per unit |
+| $`C`$, $`C_{\mathrm{BS}}`$, $`\sigma`$ | the call's price; Black-Scholes's price; implied volatility | $9.06 and 19.558% | — |
+| $`N`$, $`d_1`$ | the normal cumulative distribution function and Black-Scholes's $`d_1`$, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) | $`e^{-qT}N(d_1) = 0.5873`$ | — |
+| $`\Delta`$, $`\Gamma`$, $`P_1`$, $`P_2`$, $`p`$, $`a`$ | delta, gamma; chance of finishing in the money counted in shares, in cash; density of $`S_T`$; a scaling factor (Step 1) | 0.6427; 0.01843; $`e^{-qT}P_1 = 0.6427`$ | — |
+| $`e_j`$, $`j`$, $`C_j^{\mathrm{mkt}}`$, $`V_j`$, $`L`$, $`\lambda`$ | miss on quote $`j`$ in vol points; the quote's number; its market price; its vega; the loss; the prior's weight | 21 misses; $`\lambda`$ = 0 or 1 | $`\lambda`$: starts agree more, quotes fit a little worse |
 
 ### When it holds
 
 - **Heston's shape fits the market.** It has no jumps, and at 3 months it cannot make the smile steep enough: fit B gives the $80 call 27.00% against 28.61%. Every Greek here is the model's and inherits its misses.
-- **The integral may be differentiated inside.** That needs the differentiated integrand to stay below one integrable function (dominated convergence). For $T > 0$ the fingerprint dies off exponentially in $u$, so it does; as $T$ shrinks the grid must reach further.
-- **A Greek holds every other input still.** Delta moves Acme with today's variance fixed. With $\rho = -0.7$ variance tends to fall as Acme rises, so a hedge expecting that holds fewer shares.
-- **The fitted dials depend on the stopping rule and the prior.** Change either and $\kappa$ changes, and so does every Greek computed from the fit.
+- **The integral may be differentiated inside.** That needs the differentiated integrand to stay below one integrable function (dominated convergence). For $`T > 0`$ the fingerprint dies off exponentially in $`u`$, so it does; as $`T`$ shrinks the grid must reach further.
+- **A Greek holds every other input still.** Delta moves Acme with today's variance fixed. With $`\rho = -0.7`$ variance tends to fall as Acme rises, so a hedge expecting that holds fewer shares.
+- **The fitted dials depend on the stopping rule and the prior.** Change either and $`\kappa`$ changes, and so does every Greek computed from the fit.
 
 ### Before solving: existence, uniqueness and the edges
 
-- **Existence.** No run finds an exact fit; the smallest root-mean-square miss reached is 0.7321. A best fit does exist: the dials live in a closed box ($v_0$ and $\theta$ from 0.0001 to 1, $\kappa$ from 0.05 to 20, $\xi$ from 0.05 to 5, $\rho$ from −0.999 to 0.999), the loss is continuous there, and a continuous function on a closed, bounded box reaches its lowest value.
-- **Uniqueness.** Barely. The profile shows one lowest point near $\kappa = 1.22$: fit B stops at 1.2247 and fit A, run to a far finer tolerance, at 1.2187, with the other four dials within 0.001 of each other. But the valley near it is nearly flat (Step 6).
-- **The edges.** As $\xi \to 0$ variance stops wandering, $\rho$ drops out of every price, and Heston becomes Black-Scholes at the average variance: with $\xi = 0.0001$, $v_0 = 0.02$ and $\theta = 0.06$, 9.479339 against 9.479325. As $\kappa \to 0$ variance is never pulled home and $\theta$ drops out. As $\kappa$ grows without bound variance sits at $\theta$ at once and $v_0$ drops out. Near each edge one dial is invisible to the quotes.
+- **Existence.** No run finds an exact fit; the smallest root-mean-square miss reached is 0.7321. A best fit does exist: the dials live in a closed box ($`v_0`$ and $`\theta`$ from 0.0001 to 1, $`\kappa`$ from 0.05 to 20, $`\xi`$ from 0.05 to 5, $`\rho`$ from −0.999 to 0.999), the loss is continuous there, and a continuous function on a closed, bounded box reaches its lowest value.
+- **Uniqueness.** Barely. The profile shows one lowest point near $`\kappa = 1.22`$: fit B stops at 1.2247 and fit A, run to a far finer tolerance, at 1.2187, with the other four dials within 0.001 of each other. But the valley near it is nearly flat (Step 6).
+- **The edges.** As $`\xi \to 0`$ variance stops wandering, $`\rho`$ drops out of every price, and Heston becomes Black-Scholes at the average variance: with $`\xi = 0.0001`$, $`v_0 = 0.02`$ and $`\theta = 0.06`$, 9.479339 against 9.479325. As $`\kappa \to 0`$ variance is never pulled home and $`\theta`$ drops out. As $`\kappa`$ grows without bound variance sits at $`\theta`$ at once and $`v_0`$ drops out. Near each edge one dial is invisible to the quotes.
 
 Conventions verified 24 Sep 2026 against [The volatility surface](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md): quotes are Black-Scholes implied volatilities of European calls in percent, rates continuously compounded; each vega is taken at its quote's own volatility.
 
@@ -104,65 +114,69 @@ Conventions verified 24 Sep 2026 against [The volatility surface](../12-The%20sm
 
 ### Step 0: every Greek is another integral of the same kind
 
-The price is a weighted sum, over frequencies, of the fingerprint times a wave. Inside the sum, Acme's price enters only through $\sqrt{F}$ and the wave $e^{-iuk}$, since $F$ is a fixed multiple of $S$. Today's variance and the long-run level enter only as multipliers in the fingerprint's exponent. So each Greek is one more integral on the same grid, from the same fingerprint values.
+The price is a weighted sum, over frequencies, of the fingerprint times a wave. Inside the sum, Acme's price enters only through $`\sqrt{F}`$ and the wave $`e^{-iuk}`$, since $`F`$ is a fixed multiple of $`S`$. Today's variance and the long-run level enter only as multipliers in the fingerprint's exponent. So each Greek is one more integral on the same grid, from the same fingerprint values.
 
 ### Step 1: delta and gamma come from the share-price factor
 
-Gather what depends on Acme's price: $\sqrt{F}\,e^{-iuk} = K^{-iu}F^{\frac12 + iu}$. Differentiating in $S$ brings down $(\tfrac12 + iu)/S$: the delta formula. Twice brings down $(\tfrac12 + iu)(-\tfrac12 + iu)/S^2 = -(u^2 + \tfrac14)/S^2$, which cancels the denominator, so gamma's integrand is the fingerprint and its wave alone. For the one-year $100 call: delta 0.642668, gamma 0.018429.
+Gather what depends on Acme's price: $`\sqrt{F}\,e^{-iuk} = K^{-iu}F^{\frac12 + iu}`$. Differentiating in $`S`$ brings down $`(\tfrac12 + iu)/S`$: the delta formula. Twice brings down $`(\tfrac12 + iu)(-\tfrac12 + iu)/S^2 = -(u^2 + \tfrac14)/S^2`$, which cancels the denominator, so gamma's integrand is the fingerprint and its wave alone. For the one-year $100 call: delta 0.642668, gamma 0.018429.
 
-Two more roads confirm both. Heston's own form is $C = S e^{-qT}P_1 - K e^{-rT}P_2$, where $P_1$ and $P_2$ are the chances of finishing above the strike counted in shares and in cash, found by Gil-Pelaez's inversion on the real line. Doubling Acme and the strike together doubles a Heston price. That makes delta $e^{-qT}P_1$, and gamma, with Acme at the strike, the discounted density of Acme's price there. Nudging Acme a cent each way and repricing gives both a third time.
+Two more roads confirm both. Heston's own form is $`C = S e^{-qT}P_1 - K e^{-rT}P_2`$, where $`P_1`$ and $`P_2`$ are the chances of finishing above the strike counted in shares and in cash, found by Gil-Pelaez's inversion on the real line. Doubling Acme and the strike together doubles a Heston price. That makes delta $`e^{-qT}P_1`$, and gamma, with Acme at the strike, the discounted density of Acme's price there. Nudging Acme a cent each way and repricing gives both a third time.
 
 <details>
 <summary>Detailed proof: the doubling rule gives delta and gamma</summary>
 
-**The rule.** Heston's variance ignores the share price, so $S_T$ is $S$ times a random factor free of $S$. Multiplying $S$ and $K$ by one positive factor $a$ multiplies every payoff by $a$, and so the price: $C(aS, aK) = a\,C(S, K)$.
+**The rule.** Heston's variance ignores the share price, so $`S_T`$ is $`S`$ times a random factor free of $`S`$. Multiplying $`S`$ and $`K`$ by one positive factor $`a`$ multiplies every payoff by $`a`$, and so the price: $`C(aS, aK) = a\,C(S, K)`$.
 
-**Delta.** Differentiate with respect to the factor and set it to 1: $C = S\,\partial C/\partial S + K\,\partial C/\partial K$ (Euler's relation). A call's strike derivative is minus the discounted chance of finishing in the money, $-e^{-rT}P_2$. Substituting Heston's form leaves $\Delta = e^{-qT}P_1$.
+**Delta.** Differentiate with respect to the factor and set it to 1: $`C = S\,\partial C/\partial S + K\,\partial C/\partial K`$ (Euler's relation). A call's strike derivative is minus the discounted chance of finishing in the money, $`-e^{-rT}P_2`$. Substituting Heston's form leaves $`\Delta = e^{-qT}P_1`$.
 
-**Gamma.** Both first derivatives are unchanged by the scaling, so Euler's relation gives $S\,\partial^2 C/\partial S^2 + K\,\partial^2 C/\partial S\,\partial K = 0$ and $S\,\partial^2 C/\partial K\,\partial S + K\,\partial^2 C/\partial K^2 = 0$. Eliminating the mixed term, $S^2\Gamma = K^2\,\partial^2 C/\partial K^2 = K^2 e^{-rT}p(K)$, where $p$ is the density of $S_T$; the last step is Breeden and Litzenberger's result. At $S = K$ this is $\Gamma = e^{-rT}p(K)$.
+**Gamma.** Both first derivatives are unchanged by the scaling, so Euler's relation gives $`S\,\partial^2 C/\partial S^2 + K\,\partial^2 C/\partial S\,\partial K = 0`$ and $`S\,\partial^2 C/\partial K\,\partial S + K\,\partial^2 C/\partial K^2 = 0`$. Eliminating the mixed term, $`S^2\Gamma = K^2\,\partial^2 C/\partial K^2 = K^2 e^{-rT}p(K)`$, where $`p`$ is the density of $`S_T`$; the last step is Breeden and Litzenberger's result. At $`S = K`$ this is $`\Gamma = e^{-rT}p(K)`$.
 
-**Inside the integral.** For $T > 0$ each integrand and its derivative in $S$, $v_0$ or $\theta$ is bounded, near the anchor, by a constant times $e^{-cu}$ for some $c > 0$. That bound is what dominated convergence needs to swap derivative and integral.
+**Inside the integral.** For $`T > 0`$ each integrand and its derivative in $`S`$, $`v_0`$ or $`\theta`$ is bounded, near the anchor, by a constant times $`e^{-cu}`$ for some $`c > 0`$. That bound is what dominated convergence needs to swap derivative and integral.
 
 </details>
 
 ### Step 2: today's variance and the long-run level, exactly
 
-The fingerprint's log is $\theta H + v_0 B$, so nudging $v_0$ multiplies the integrand by $B$ and nudging $\theta$ multiplies it by $H$, with no approximation. The integral gives $\partial C/\partial v_0 = 39.91844$ and $\partial C/\partial\theta = 53.95550$ dollars per unit of variance; bumps of 0.0001 either way give 39.91844 and 53.95551.
+The fingerprint's log is $`\theta H + v_0 B`$, so nudging $`v_0`$ multiplies the integrand by $`B`$ and nudging $`\theta`$ multiplies it by $`H`$, with no approximation. The integral gives $`\partial C/\partial v_0 = 39.91844`$ and $`\partial C/\partial\theta = 53.95550`$ dollars per unit of variance; bumps of 0.0001 either way give 39.91844 and 53.95551.
 
-The split is the model speaking. A change in today's variance fades at speed $\kappa$, so over a year it counts for less than the same change in the long-run level. A move of the whole surface moves both. At 20% volatility one vol point is about 0.004 of variance, and raising both $v_0$ and $\theta$ by that adds $0.3755, near the Black-Scholes vega of $0.3789. Raising $v_0$ alone adds $0.1597.
+The split is the model speaking. A change in today's variance fades at speed $`\kappa`$, so over a year it counts for less than the same change in the long-run level. A move of the whole surface moves both. At 20% volatility one vol point is about 0.004 of variance, and raising both $`v_0`$ and $`\theta`$ by that adds $0.3755, near the Black-Scholes vega of $0.3789. Raising $`v_0`$ alone adds $0.1597.
 
 ### Step 3: the other three dials, by bumps on a fixed grid
 
-The pull speed, vol of vol and correlation sit inside a square root and a logarithm, so the chain rule is long. Bumping is short: move the dial 0.0001 each way, reprice, divide by 0.0002. The frequency grid is the same both times, so its small error cancels in the difference, the integral's version of reusing random numbers ([Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)). The Lewis and Gil-Pelaez roads agree to every printed digit: $\partial C/\partial\kappa = 0.082013$, $\partial C/\partial\xi = -1.241130$, $\partial C/\partial\rho = 0.026929$. The exact road differentiates $H$ and $B$ through $\beta$, $d$ and $g$ by the chain rule, by hand or by machine ([Adjoint differentiation](../07-Greeks%20by%20Numbers%20and%20Calibration/03-adjoint-differentiation-in-outline.md)).
+The pull speed, vol of vol and correlation sit inside a square root and a logarithm, so the chain rule is long. Bumping is short: move the dial 0.0001 each way, reprice, divide by 0.0002. The frequency grid is the same both times, so its small error cancels in the difference, the integral's version of reusing random numbers ([Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)). The Lewis and Gil-Pelaez roads agree to every printed digit: $`\partial C/\partial\kappa = 0.082013`$, $`\partial C/\partial\xi = -1.241130`$, $`\partial C/\partial\rho = 0.026929`$. The exact road differentiates $`H`$ and $`B`$ through $`\beta`$, $`d`$ and $`g`$ by the chain rule, by hand or by machine ([Adjoint differentiation](../07-Greeks%20by%20Numbers%20and%20Calibration/03-adjoint-differentiation-in-outline.md)).
 
 The signs have reasons. An at-the-money call is nearly a straight line in volatility, so it bends downward in variance, and spreading variance out lowers the average of anything that bends down: more vol of vol, lower price. A faster pull damps the spreading. The correlation tilts the smile about a point near the money, so it barely moves this call.
 
 <details>
 <summary>The fingerprint written out</summary>
 
-With $\beta = \kappa - \rho\xi\,iz$, $d = \sqrt{\beta^2 + \xi^2(iz + z^2)}$ with real part not negative, and $g = (\beta - d)/(\beta + d)$:
-$$B(z) = \frac{\beta - d}{\xi^2}\cdot\frac{1 - e^{-dT}}{1 - g\,e^{-dT}}, \qquad H(z) = \frac{\kappa}{\xi^2}\left[(\beta - d)T - 2\ln\frac{1 - g\,e^{-dT}}{1 - g}\right]$$
+With $`\beta = \kappa - \rho\xi\,iz`$, $`d = \sqrt{\beta^2 + \xi^2(iz + z^2)}`$ with real part not negative, and $`g = (\beta - d)/(\beta + d)`$:
+
+$`\displaystyle B(z) = \frac{\beta - d}{\xi^2}\cdot\frac{1 - e^{-dT}}{1 - g\,e^{-dT}}, \qquad H(z) = \frac{\kappa}{\xi^2}\left[(\beta - d)T - 2\ln\frac{1 - g\,e^{-dT}}{1 - g}\right]`$
+
 This choice of root keeps the logarithm off its cut; Heston's 1993 layout takes the other root, the trap on [Pricing Heston exactly](02-heston-pricing-by-characteristic-function.md).
 
 </details>
 
 ### Step 4: why Heston's delta is larger than Black-Scholes delta
 
-By the doubling rule, a Heston implied volatility depends on the strike only through $K/S$. Raising Acme by a dollar lowers $K/S$ at a fixed strike, which moves that strike to where the downward-sloping smile is higher. Differentiating $C = C_{\mathrm{BS}}(S, K, \sigma(K/S))$ in $S$:
+By the doubling rule, a Heston implied volatility depends on the strike only through $`K/S`$. Raising Acme by a dollar lowers $`K/S`$ at a fixed strike, which moves that strike to where the downward-sloping smile is higher. Differentiating $`C = C_{\mathrm{BS}}(S, K, \sigma(K/S))`$ in $`S`$:
 
-$$\Delta_{\mathrm{Heston}} = \Delta_{\mathrm{BS}} - \frac{K}{S}\,\mathrm{vega}\,\frac{\partial \sigma}{\partial K}$$
+```math
+\Delta_{\mathrm{Heston}} = \Delta_{\mathrm{BS}} - \frac{K}{S}\,\mathrm{vega}\,\frac{\partial \sigma}{\partial K}
+```
 
 With vega $37.89 and the anchor's slope, −0.001461 per dollar of strike (about 0.15 vol points per dollar), the correction is +0.055370, and 0.587298 + 0.055370 = 0.642668, the integral's delta. This is the sticky-moneyness rule of [Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md), which Heston obeys exactly.
 
 ### Step 5: calibration is 21 Greeks at once
 
-The fit walks the dials downhill by Levenberg-Marquardt ([Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md)): the step that would minimise the squared misses if prices were straight lines in the dials, shortened by a damping that grows after a refused step. Its slope table has one row per quote and one column per dial, the sensitivities of Steps 2 and 3 at 21 options, taken by one-sided bumps of 0.0001. It stops when a step lowers $\sqrt{L/21}$ by less than 0.001 vol points.
+The fit walks the dials downhill by Levenberg-Marquardt ([Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md)): the step that would minimise the squared misses if prices were straight lines in the dials, shortened by a damping that grows after a refused step. Its slope table has one row per quote and one column per dial, the sensitivities of Steps 2 and 3 at 21 options, taken by one-sided bumps of 0.0001. It stops when a step lowers $`\sqrt{L/21}`$ by less than 0.001 vol points.
 
 ### Step 6: why the fit is ill-posed
 
-A smile is curved by how far variance can have wandered by its expiry. The vol of vol spreads variance; the pull speed damps the spread. Hard wandering pulled back fast ends a year near where gentle wandering pulled back slowly does, and the quotes stop at a year. Holding $\kappa$ and fitting the rest shows the trade:
+A smile is curved by how far variance can have wandered by its expiry. The vol of vol spreads variance; the pull speed damps the spread. Hard wandering pulled back fast ends a year near where gentle wandering pulled back slowly does, and the quotes stop at a year. Holding $`\kappa`$ and fitting the rest shows the trade:
 
-| $\kappa$ held at | best miss | $\xi$ fitted | $\theta$ fitted |
+| $`\kappa`$ held at | best miss | $`\xi`$ fitted | $`\theta`$ fitted |
 | --- | --- | --- | --- |
 | 0.25 | 0.7531 | 0.5647 | 0.2650 |
 | 0.5 | 0.7429 | 0.5914 | 0.1540 |
@@ -174,30 +188,30 @@ A smile is curved by how far variance can have wandered by its expiry. The vol o
 
 As the pull speed rises, the vol of vol rises to keep the spread and the long-run level falls to keep the term structure.
 
-Jacques Hadamard asked three things of a well-posed problem: a solution exists, it is unique, and it moves little when the inputs move a little. The first holds, the second narrowly. The third fails in practice. Moving $\kappa$ from 1 to 1.5 changes the best miss by 0.0004 vol points, a tenth of the rounding in quotes written to two decimals, so the quotes place the lowest point only loosely. A tolerance of a thousandth of a vol point leaves the answer wherever the walk had reached.
+Jacques Hadamard asked three things of a well-posed problem: a solution exists, it is unique, and it moves little when the inputs move a little. The first holds, the second narrowly. The third fails in practice. Moving $`\kappa`$ from 1 to 1.5 changes the best miss by 0.0004 vol points, a tenth of the rounding in quotes written to two decimals, so the quotes place the lowest point only loosely. A tolerance of a thousandth of a vol point leaves the answer wherever the walk had reached.
 
 ### Step 7: a prior gives the valley a floor
 
-Tikhonov regularisation adds one more miss, $\lambda(\kappa - \kappa_0)$, with $\kappa_0 = 2$ standing for yesterday's value and $\lambda = 1$: moving the pull speed one unit from 2 costs as much as missing one quote by one vol point. Both starts now stop at $\kappa = 1.7640$ and 1.7787, and the quotes' miss rises only from 0.7321 to 0.7365 and 0.7367. The three-year call from the two fits differs by $0.01 instead of $0.92.
+Tikhonov regularisation adds one more miss, $`\lambda(\kappa - \kappa_0)`$, with $`\kappa_0 = 2`$ standing for yesterday's value and $`\lambda = 1`$: moving the pull speed one unit from 2 costs as much as missing one quote by one vol point. Both starts now stop at $`\kappa = 1.7640`$ and 1.7787, and the quotes' miss rises only from 0.7321 to 0.7365 and 0.7367. The three-year call from the two fits differs by $0.01 instead of $0.92.
 
 ---
 
 ## Worked numbers, by hand
 
-The one-year $100 call at the anchor: $v_0 = \theta = 0.04$, $\kappa = 2$, $\xi = 0.3$, $\rho = -0.7$.
+The one-year $100 call at the anchor: $`v_0 = \theta = 0.04`$, $`\kappa = 2`$, $`\xi = 0.3`$, $`\rho = -0.7`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | price | Lewis integral; Gil-Pelaez agrees | $9.06 |
 | implied volatility | invert Black-Scholes by halving an interval | 19.558% |
-| Black-Scholes delta at 19.558% | $e^{-qT}N(d_1)$ | 0.5873 |
-| skew correction | $-(K/S) \times 37.89 \times (-0.001461)$ | +0.0554 |
-| delta, three roads | $(\tfrac12 + iu)$ integral; $e^{-qT}P_1$; a cent's bump | 0.6427 |
+| Black-Scholes delta at 19.558% | $`e^{-qT}N(d_1)`$ | 0.5873 |
+| skew correction | $`-(K/S) \times 37.89 \times (-0.001461)`$ | +0.0554 |
+| delta, three roads | $`(\tfrac12 + iu)`$ integral; $`e^{-qT}P_1`$; a cent's bump | 0.6427 |
 | gamma, three roads | bare integral; density; bump | 0.01843 |
-| $\partial C/\partial v_0$, $\partial C/\partial \theta$ | $B$, $H$ inside the integral | 39.92, 53.96 |
-| one vol point, whole surface | $0.004 \times (39.92 + 53.96)$ | $0.3755 |
-| one vol point, $v_0$ alone | $0.004 \times 39.92$ | $0.1597 |
-| $\partial C/\partial\kappa$, $\partial C/\partial\xi$, $\partial C/\partial\rho$ | bumps of 0.0001 | 0.0820, −1.2411, 0.0269 |
+| $`\partial C/\partial v_0`$, $`\partial C/\partial \theta`$ | $`B`$, $`H`$ inside the integral | 39.92, 53.96 |
+| one vol point, whole surface | $`0.004 \times (39.92 + 53.96)`$ | $0.3755 |
+| one vol point, $`v_0`$ alone | $`0.004 \times 39.92`$ | $0.1597 |
+| $`\partial C/\partial\kappa`$, $`\partial C/\partial\xi`$, $`\partial C/\partial\rho`$ | bumps of 0.0001 | 0.0820, −1.2411, 0.0269 |
 | **hedge ratio** | | **0.6427 shares per call** |
 
 A seller hedging with the Black-Scholes delta holds 0.0554 shares too few per call.
@@ -206,12 +220,12 @@ The fit to the 21 quotes:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| fit A, from the anchor | stop when a step gains under 0.001 | $\kappa$ 0.3701, $\xi$ 0.5779, $\theta$ 0.1914; miss 0.7490, 8 steps |
-| fit B, from $\kappa$, $\xi$ tripled | same rule | $\kappa$ 1.2247, $\xi$ 0.6707, $\theta$ 0.0888; miss 0.7321, 6 steps |
+| fit A, from the anchor | stop when a step gains under 0.001 | $`\kappa`$ 0.3701, $`\xi`$ 0.5779, $`\theta`$ 0.1914; miss 0.7490, 8 steps |
+| fit B, from $`\kappa`$, $`\xi`$ tripled | same rule | $`\kappa`$ 1.2247, $`\xi`$ 0.6707, $`\theta`$ 0.0888; miss 0.7321, 6 steps |
 | A minus B | the two misses | 0.0168 vol points |
 | misses re-measured | Gil-Pelaez price, each quote inverted | 0.7651 and 0.7380 |
 | 3-year $100 call | under each fit | $20.26 (25.73%), $19.35 (24.19%) |
-| with the prior, both starts | $\lambda = 1$, $\kappa_0 = 2$ | $\kappa$ 1.7640 and 1.7787 |
+| with the prior, both starts | $`\lambda = 1`$, $`\kappa_0 = 2`$ | $`\kappa`$ 1.7640 and 1.7787 |
 | **3-year call, with the prior** | | **$19.01 and $19.00** |
 
 Asked about a three-year option, which no quote prices, the two unregularised fits differ by $0.92. The re-measured misses sit a little higher because a price miss over vega is only the first-order volatility miss.
@@ -234,15 +248,15 @@ Orange: the quotes. Green: fit A. Dark blue: fit B. The fits lie almost on each 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Hedge with Black-Scholes delta at 19.558% | 0.5873 shares, not 0.6427 | Heston's smile moves with the share; the skew term is missing |
-| Call $\partial C/\partial v_0$ "the vega" | $0.1597 per vol point, not $0.3755 | Today's variance fades at speed $\kappa$; a surface move is $v_0$ and $\theta$ together |
-| Report fit A's dials as the market's | 3-year call $20.26, not fit B's $19.35 | The quotes stop at a year; the valley picked $\kappa$ |
-| Drop the prior, keep the tolerance | $\kappa$ 0.3701 or 1.2247, by start | With no floor the walk stops where its gains run out |
+| Call $`\partial C/\partial v_0`$ "the vega" | $0.1597 per vol point, not $0.3755 | Today's variance fades at speed $`\kappa`$; a surface move is $`v_0`$ and $`\theta`$ together |
+| Report fit A's dials as the market's | 3-year call $20.26, not fit B's $19.35 | The quotes stop at a year; the valley picked $`\kappa`$ |
+| Drop the prior, keep the tolerance | $`\kappa`$ 0.3701 or 1.2247, by start | With no floor the walk stops where its gains run out |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code prices the one-year call by two roads, Lewis's integral by the trapezoid rule and Gil-Pelaez's two probabilities by the midpoint rule. It takes each Greek by at least two roads: under the integral, by bumps on each pricing road, and for delta and gamma by the doubling identities. Both roads share the fingerprint, so a third tests it alone: as $\xi \to 0$ the price must become Black-Scholes. It fits the dials by Levenberg-Marquardt from two starts, with and without the prior, re-measures the misses on the second road, and holds $\kappa$ at seven values to trace the valley. Only complex arithmetic is borrowed, from Python's `cmath`; everything else is written out.
+The code prices the one-year call by two roads, Lewis's integral by the trapezoid rule and Gil-Pelaez's two probabilities by the midpoint rule. It takes each Greek by at least two roads: under the integral, by bumps on each pricing road, and for delta and gamma by the doubling identities. Both roads share the fingerprint, so a third tests it alone: as $`\xi \to 0`$ the price must become Black-Scholes. It fits the dials by Levenberg-Marquardt from two starts, with and without the prior, re-measures the misses on the second road, and holds $`\kappa`$ at seven values to trace the valley. Only complex arithmetic is borrowed, from Python's `cmath`; everything else is written out.
 
 ### Python
 
@@ -666,15 +680,15 @@ chart: best miss by kappa, 2 decimals       0.75  0.74  0.73  0.73  0.74  0.77  
 ALL CHECKS PASS
 ```
 
-The outputs agree line for line. The fits are the fragile part: with slope-table bumps of 0.000001, rounding differences between the languages move fit B's $\kappa$ in the fourth decimal.
+The outputs agree line for line. The fits are the fragile part: with slope-table bumps of 0.000001, rounding differences between the languages move fit B's $`\kappa`$ in the fourth decimal.
 
 ### Lean
 
 Lean proves the doubling rule's formulas for delta and gamma, for any price obeying that rule, and Step 1's gamma factor.
 
-- Suppose the doubling rule holds, the price is smooth with Heston's form, and its strike derivative is $-e^{-rT}P_2$. Then $\Delta = e^{-qT}P_1$.
-- Suppose the doubling rule holds and the price can be differentiated twice in $S$ and $K$. Then $S^2\Gamma = K^2\,\partial^2 C/\partial K^2$.
-- Take the factor $F^{\frac12 + iu}$, with $F$ a fixed positive multiple of $S$. Then two derivatives in $S$ multiply it by $-(u^2 + \tfrac14)/S^2$.
+- Suppose the doubling rule holds, the price is smooth with Heston's form, and its strike derivative is $`-e^{-rT}P_2`$. Then $`\Delta = e^{-qT}P_1`$.
+- Suppose the doubling rule holds and the price can be differentiated twice in $`S`$ and $`K`$. Then $`S^2\Gamma = K^2\,\partial^2 C/\partial K^2`$.
+- Take the factor $`F^{\frac12 + iu}`$, with $`F`$ a fixed positive multiple of $`S`$. Then two derivatives in $`S`$ multiply it by $`-(u^2 + \tfrac14)/S^2`$.
 - Take 3 expiries and 7 strikes. Then there are 21 quotes.
 
 Breeden and Litzenberger's density step, every price and Greek in numbers, and the fits are left to the Python and Rust checks.
@@ -906,8 +920,8 @@ example : 3 * 7 = 21 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess first, then read the row.
-> - **Tighten the stop.** The third fit runs fit A to a tolerance of 1e-7. Does it pass fit B or stop short? It stops just short, at $\kappa$ = 1.2187 after 23 steps against B's 1.2247, with the same 0.7321 miss.
-> - **Pin the pull speed high.** The last profile row holds $\kappa$ at 4. Guess the vol of vol needed: 0.9931, with the miss up to 0.7958.
+> - **Tighten the stop.** The third fit runs fit A to a tolerance of 1e-7. Does it pass fit B or stop short? It stops just short, at $`\kappa`$ = 1.2187 after 23 steps against B's 1.2247, with the same 0.7321 miss.
+> - **Pin the pull speed high.** The last profile row holds $`\kappa`$ at 4. Guess the vol of vol needed: 0.9931, with the miss up to 0.7958.
 > - **Price further out.** Do the regularised fits' three-year prices sit nearer fit A's $20.26 or fit B's $19.35? Nearer B's, and below both: $19.01 and $19.00.
 
 ---
@@ -917,9 +931,9 @@ example : 3 * 7 = 21 := by norm_num
 > [!warning]
 > **Reading calibrated dials as measurements of the market.** They are where one walk, from one start, under one stopping rule, stopped. Fits A and B match the quotes within 0.0168 vol points and disagree on the pull speed by 0.8547. Whatever depends on the pull speed inherits that: a three-year price, or the split of vega between today's variance and the long-run level, 61.51 and 14.29 per unit under fit A against 42.47 and 36.18 under fit B.
 >
-> - **Taking $\partial C/\partial v_0$ as vega.** It prices a fading move: $0.1597 per vol point where a surface move is $0.3755.
+> - **Taking $`\partial C/\partial v_0`$ as vega.** It prices a fading move: $0.1597 per vol point where a surface move is $0.3755.
 > - **Quoting a fit without its rules.** Tolerance, vega scales and prior are part of the answer.
-> - **Ignoring the Feller condition.** Fit B has $2\kappa\theta$ = 0.2174 below $\xi^2$ = 0.4498, so its variance can touch zero ([The Heston model](01-heston-model.md)). The integral does not care; a simulation of fit B must handle variance at zero.
+> - **Ignoring the Feller condition.** Fit B has $`2\kappa\theta`$ = 0.2174 below $`\xi^2`$ = 0.4498, so its variance can touch zero ([The Heston model](01-heston-model.md)). The integral does not care; a simulation of fit B must handle variance at zero.
 
 ---
 

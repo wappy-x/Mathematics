@@ -35,28 +35,32 @@ Orange: each kept step's length, over the time it ends. The labels sit evenly on
 
 Reminder: a step of length h moves the solution from t to t + h, and a method has order p when its error over a fixed time shrinks like h^p ([Order of a method](02-local-and-global-error-and-order.md)).
 
-An **embedded pair** is two step recipes, of orders p + 1 and p, built from the same stage rates. From speed $v$ they give $v_5$ and $v_4$ (orders 5 and 4 for Dormand-Prince). The error estimate, the allowance and the step rule are
+An **embedded pair** is two step recipes, of orders p + 1 and p, built from the same stage rates. From speed $`v`$ they give $`v_5`$ and $`v_4`$ (orders 5 and 4 for Dormand-Prince). The error estimate, the allowance and the step rule are
 
-$$E = |v_4 - v_5|,\qquad \tau = 10^{-6}\,\bigl(1 + \max(|v|, |v_5|)\bigr),\qquad h_{new} = h\cdot\min\!\Bigl(5,\ \max\bigl(0.2,\ \sigma\,(\tau/E)^{1/(p+1)}\bigr)\Bigr)$$
+```math
+E = |v_4 - v_5|,\qquad \tau = 10^{-6}\,\bigl(1 + \max(|v|, |v_5|)\bigr),\qquad h_{new} = h\cdot\min\!\Bigl(5,\ \max\bigl(0.2,\ \sigma\,(\tau/E)^{1/(p+1)}\bigr)\Bigr)
+```
 
 **Read it aloud:** the answers' gap is the estimate; keep the step if it is within the allowance; either way, scale the next step by a safety factor times the fifth root of allowance over estimate, by at most 5 and at least a fifth.
 
-The step kept is $v_5$, the better of the two. With step doubling instead of a pair, the same step is taken once at length h and twice at h/2, giving $Y_c$ and $Y_f$, and
+The step kept is $`v_5`$, the better of the two. With step doubling instead of a pair, the same step is taken once at length h and twice at h/2, giving $`Y_c`$ and $`Y_f`$, and
 
-$$Y_f - v_{exact} \approx \frac{Y_c - Y_f}{2^p - 1}.$$
+```math
+Y_f - v_{exact} \approx \frac{Y_c - Y_f}{2^p - 1}.
+```
 
 **Read it aloud:** the fine answer's error is the coarse-minus-fine gap divided by 2^p − 1; for Runge-Kutta four, by 15.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $v$, $v_{exact}$ | time in s; the solver's speed in m/s; the true speed | 0 to 25 s; v(0) = 0 | — |
-| $h$, $h_{new}$ | this step's length; the next one's | 1 s tried, 0.843 s kept | error grows like h^5 |
-| $v_5$, $v_4$ | the pair's order-5 and order-4 answers | 8.882192107 and 8.882205827 at h = 1 | — |
-| $Y_c$, $Y_f$ | step doubling: one step of h, two of h/2 | Runge-Kutta four, h = 1 | — |
-| $E$, $\tau$ | error estimate; the allowance per step | 1.3720e-5 against 9.8822e-6 | a bigger τ gives longer steps |
-| $p$ | order of the less accurate member | 4 for Dormand-Prince | the exponent 1/(p+1) shrinks |
-| $\sigma$ | safety factor, aiming below the line | 0.9 | 1.0 gives 12 rejections, not 1 |
-| $z$, $D$ | z = −0.2h; D(z), the pair's gap per unit of 49 − v | D(−0.2) = 2.8000e-7 | — |
+| $`t`$, $`v`$, $`v_{exact}`$ | time in s; the solver's speed in m/s; the true speed | 0 to 25 s; v(0) = 0 | — |
+| $`h`$, $`h_{new}`$ | this step's length; the next one's | 1 s tried, 0.843 s kept | error grows like h^5 |
+| $`v_5`$, $`v_4`$ | the pair's order-5 and order-4 answers | 8.882192107 and 8.882205827 at h = 1 | — |
+| $`Y_c`$, $`Y_f`$ | step doubling: one step of h, two of h/2 | Runge-Kutta four, h = 1 | — |
+| $`E`$, $`\tau`$ | error estimate; the allowance per step | 1.3720e-5 against 9.8822e-6 | a bigger τ gives longer steps |
+| $`p`$ | order of the less accurate member | 4 for Dormand-Prince | the exponent 1/(p+1) shrinks |
+| $`\sigma`$ | safety factor, aiming below the line | 0.9 | 1.0 gives 12 rejections, not 1 |
+| $`z`$, $`D`$ | z = −0.2h; D(z), the pair's gap per unit of 49 − v | D(−0.2) = 2.8000e-7 | — |
 
 ### When it holds
 
@@ -71,7 +75,7 @@ $$Y_f - v_{exact} \approx \frac{Y_c - Y_f}{2^p - 1}.$$
 
 ### Step 0: two answers, one much better, differ by the worse one's error
 
-Write each answer as truth plus error: $v_4$ = truth + e4 and $v_5$ = truth + e5. Then $v_4 - v_5$ = e4 − e5. For a small step e5 is smaller than e4 by roughly a factor h, so the gap is nearly e4.
+Write each answer as truth plus error: $`v_4`$ = truth + e4 and $`v_5`$ = truth + e5. Then $`v_4 - v_5`$ = e4 − e5. For a small step e5 is smaller than e4 by roughly a factor h, so the gap is nearly e4.
 
 ### Step 1: the pair shares its work
 
@@ -81,11 +85,15 @@ Dormand-Prince evaluates the rate at seven points in the step, the stages ([Rung
 
 The gap to terminal speed, 49 − v, obeys (49 − v)' = −0.2(49 − v). Any Runge-Kutta step multiplies that gap by a fixed polynomial in z = −0.2h, while the exact solution multiplies it by e^z. For the pair, working the stages through gives
 
-$$R_5(z) = 1 + z + \tfrac{z^2}{2} + \tfrac{z^3}{6} + \tfrac{z^4}{24} + \tfrac{z^5}{120} + \tfrac{z^6}{600},$$
+```math
+R_5(z) = 1 + z + \tfrac{z^2}{2} + \tfrac{z^3}{6} + \tfrac{z^4}{24} + \tfrac{z^5}{120} + \tfrac{z^6}{600},
+```
 
 and the order-4 polynomial matches it up to z^4 but carries 1097/120000 z^5 instead of 1/120 z^5, plus its own z^6 and z^7 terms. So the two answers differ by 49 − v times
 
-$$D(z) = -\tfrac{97}{120000}z^5 + \tfrac{39}{120000}z^6 - \tfrac{5}{120000}z^7.$$
+```math
+D(z) = -\tfrac{97}{120000}z^5 + \tfrac{39}{120000}z^6 - \tfrac{5}{120000}z^7.
+```
 
 The order-4 answer's true error starts with the same −97/120000 z^5, since e^z carries 1/120 z^5; the order-5 answer's starts at z^6. Step 0, in numbers.
 
@@ -96,11 +104,11 @@ The estimate grows like h^5: halving h = 1 s shrinks it by 33.28, against 2^5 = 
 <details>
 <summary>Detailed proof: the estimate is the lower-order error to leading order</summary>
 
-Let $u(t+h)$ be the exact solution through $v$ at the step's end. An order-p member has $v_4 - u(t+h) = C h^{p+1} + O(h^{p+2})$, with C smooth in t and v; the order-(p+1) member has $v_5 - u(t+h) = O(h^{p+2})$. Subtracting, $v_4 - v_5 = C h^{p+1} + O(h^{p+2})$: the order-p error, up to one power of h.
+Let $`u(t+h)`$ be the exact solution through $`v`$ at the step's end. An order-p member has $`v_4 - u(t+h) = C h^{p+1} + O(h^{p+2})`$, with C smooth in t and v; the order-(p+1) member has $`v_5 - u(t+h) = O(h^{p+2})`$. Subtracting, $`v_4 - v_5 = C h^{p+1} + O(h^{p+2})`$: the order-p error, up to one power of h.
 
-If C barely changes between steps, setting $C h_{new}^{p+1} = \tau$ and dividing by $E = C h^{p+1}$ gives $h_{new} = h(\tau/E)^{1/(p+1)}$; the safety factor absorbs the drift in C.
+If C barely changes between steps, setting $`C h_{new}^{p+1} = \tau`$ and dividing by $`E = C h^{p+1}`$ gives $`h_{new} = h(\tau/E)^{1/(p+1)}`$; the safety factor absorbs the drift in C.
 
-Step doubling: the coarse error is $C h^{p+1}$; two half steps add to $2C(h/2)^{p+1} = C h^{p+1}/2^p$. Their difference is $C h^{p+1}(1 - 2^{-p})$, so the fine error is $(Y_c - Y_f)/(2^p - 1)$, up to $O(h^{p+2})$.
+Step doubling: the coarse error is $`C h^{p+1}`$; two half steps add to $`2C(h/2)^{p+1} = C h^{p+1}/2^p`$. Their difference is $`C h^{p+1}(1 - 2^{-p})`$, so the fine error is $`(Y_c - Y_f)/(2^p - 1)`$, up to $`O(h^{p+2})`$.
 
 </details>
 
@@ -418,7 +426,7 @@ example : 2 ^ 4 - 1 = 15 ∧ 2 ^ 5 - 1 = 31 := by decide
 > [!warning]
 > **Treating the tolerance as the final answer's accuracy.** The controller bounds an estimate of each step's own error, from where the previous step left off, never the error already carried. Here every step met its allowance, the label said 10^−6, and the final speed is still off by −7.452e-6 m/s; on an equation that amplifies old errors the gap can be orders of magnitude.
 >
-> - **Keeping the fourth-order answer because "that is what was estimated".** Keeping $v_5$ is standard; keeping $v_4$ here makes the final error 3.847e-5 m/s.
+> - **Keeping the fourth-order answer because "that is what was estimated".** Keeping $`v_5`$ is standard; keeping $`v_4`$ here makes the final error 3.847e-5 m/s.
 > - **Dividing step doubling's gap by 2^(p+1) − 1.** For Runge-Kutta four that is 31, and the estimate halves to −3.8440e-6.
 
 ---

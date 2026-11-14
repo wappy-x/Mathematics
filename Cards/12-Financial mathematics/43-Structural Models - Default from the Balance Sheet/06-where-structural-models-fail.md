@@ -39,48 +39,56 @@ Orange: debt $65m. Green: the house firm, debt $80m. Dark blue: debt $90m. Every
 
 The spread comes from the price of the **default put**: what lenders give up, in today's money, because the firm may not repay in full. The put's own formula is on [Merton's model](01-merton-model-equity-as-a-call.md); here it is a building block.
 
-$$s(T) = -\frac{1}{T}\ln\!\left(1 - \frac{P(T)}{D e^{-rT}}\right), \qquad P(T) = D e^{-rT} N(-d_2) - V N(-d_1)$$
+```math
+s(T) = -\frac{1}{T}\ln\!\left(1 - \frac{P(T)}{D e^{-rT}}\right), \qquad P(T) = D e^{-rT} N(-d_2) - V N(-d_1)
+```
 
 **Read it aloud:** the spread is the yield lost, per year, when the riskless price of the debt is cut by the default put.
 
 The claim of the card is a limit and a ceiling:
 
-$$s(T) \le \frac{N(-d_2)}{T\,\bigl(1 - N(-d_2)\bigr)} \longrightarrow 0 \quad \text{as } T \to 0, \text{ whenever } V > D$$
+```math
+s(T) \le \frac{N(-d_2)}{T\,\bigl(1 - N(-d_2)\bigr)} \longrightarrow 0 \quad \text{as } T \to 0, \text{ whenever } V > D
+```
 
 **Read it aloud:** the spread is at most the default chance per year of waiting, and that chance shrinks faster than the waiting time, so the spread dies.
 
 The two models that keep a short spread:
 
-$$\text{flat hazard: } s(T) \to \lambda(1-R), \qquad \text{jumps: } s(T) \to \lambda_J\,\frac{E\bigl[(D - V e^{Y})^{+}\bigr]}{D}$$
+```math
+\text{flat hazard: } s(T) \to \lambda(1-R), \qquad \text{jumps: } s(T) \to \lambda_J\,\frac{E\bigl[(D - V e^{Y})^{+}\bigr]}{D}
+```
 
-**Read it aloud:** $(x)^{+}$ means $x$ when positive, else 0, and $E[\,\cdot\,]$ means the average over all possible jump sizes $Y$. With a constant failure rate, the short spread is that rate times the share lost; with jumps, it is the jump rate times the average loss one jump inflicts, as a share of the debt.
+**Read it aloud:** $`(x)^{+}`$ means $`x`$ when positive, else 0, and $`E[\,\cdot\,]`$ means the average over all possible jump sizes $`Y`$. With a constant failure rate, the short spread is that rate times the share lost; with jumps, it is the jump rate times the average loss one jump inflicts, as a share of the debt.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s(T)$ | credit spread for debt repaid at time $T$, per year | 90.71 bp at one year | — (the output) |
-| $T$ | years until the debt is repaid | 1/12 to 10 | spread first rises, then falls: the hump |
-| $V$ | market value of the firm's assets today | $100m | spread falls |
-| $D$ | face value of the debt, repaid at $T$ | $80m (also $65m, $90m) | spread rises, hump moves earlier |
-| $r$ | riskless rate, continuously compounded; $e^{-rT}$ is today's price of $1 paid at $T$ | 5% | spread falls a little |
-| $\sigma$ | asset volatility: typical yearly swing of $\ln V$ | 20% | spread rises |
-| $P$ | the default put: value lenders lose to possible default | $0.687189m at one year | spread rises |
-| $d_1$, $d_2$ | standardised distances of assets above debt; $d_2$ is the one for default | $d_2$ = 3.908261 at one month | default chance falls |
-| $N$, $\varphi$ | standard normal chance of landing below a value, and the bell-curve height | $N(-d_2)$ = 0.00004648 at one month | — |
-| $\lambda$ | hazard: chance of sudden default per year, in the flat-hazard model | 2% | short spread rises in step |
-| $R$ | recovery: share of face paid back after default | 40% | spread falls |
-| $\lambda_J$, $Y$, $\mu_J$, $\delta_J$ | jump rate per year; the log size of one jump; its mean and its spread | 0.10; normal; −0.30; 0.15 | short spread rises in step |
+| $`s(T)`$ | credit spread for debt repaid at time $`T`$, per year | 90.71 bp at one year | — (the output) |
+| $`T`$ | years until the debt is repaid | 1/12 to 10 | spread first rises, then falls: the hump |
+| $`V`$ | market value of the firm's assets today | $100m | spread falls |
+| $`D`$ | face value of the debt, repaid at $`T`$ | $80m (also $65m, $90m) | spread rises, hump moves earlier |
+| $`r`$ | riskless rate, continuously compounded; $`e^{-rT}`$ is today's price of $1 paid at $`T`$ | 5% | spread falls a little |
+| $`\sigma`$ | asset volatility: typical yearly swing of $`\ln V`$ | 20% | spread rises |
+| $`P`$ | the default put: value lenders lose to possible default | $0.687189m at one year | spread rises |
+| $`d_1`$, $`d_2`$ | standardised distances of assets above debt; $`d_2`$ is the one for default | $`d_2`$ = 3.908261 at one month | default chance falls |
+| $`N`$, $`\varphi`$ | standard normal chance of landing below a value, and the bell-curve height | $`N(-d_2)`$ = 0.00004648 at one month | — |
+| $`\lambda`$ | hazard: chance of sudden default per year, in the flat-hazard model | 2% | short spread rises in step |
+| $`R`$ | recovery: share of face paid back after default | 40% | spread falls |
+| $`\lambda_J`$, $`Y`$, $`\mu_J`$, $`\delta_J`$ | jump rate per year; the log size of one jump; its mean and its spread | 0.10; normal; −0.30; 0.15 | short spread rises in step |
 
 The helpers, as on the Merton card:
 
-$$d_1 = \frac{\ln(V/D) + (r + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+d_1 = \frac{\ln(V/D) + (r + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+```
 
-$d_2$ counts how many standard deviations of asset movement separate today's assets from the debt, after the risk-neutral drift. Risk-neutral means the pricing world, where every asset is taken to grow on average at the riskless rate. $d_1$ is the same count shifted by one volatility-times-root-time, used for the part of the loss paid in assets.
+$`d_2`$ counts how many standard deviations of asset movement separate today's assets from the debt, after the risk-neutral drift. Risk-neutral means the pricing world, where every asset is taken to grow on average at the riskless rate. $`d_1`$ is the same count shifted by one volatility-times-root-time, used for the part of the loss paid in assets.
 
 ### When it holds
 
 - **Assets move without jumps.** The ceiling above needs a continuous path. Allow jumps and the short spread stays positive: 95.75 bp at one month in this card's jump example.
-- **Assets are seen exactly.** If lenders only estimate $V$ from noisy accounts, the firm may already be closer to trouble than it looks, and the short spread is positive (Duffie and Lando's result, below).
-- **Assets above the debt today, $V > D$.** A firm already under water has $d_2$ running to minus infinity and a spread that explodes at the short end instead.
+- **Assets are seen exactly.** If lenders only estimate $`V`$ from noisy accounts, the firm may already be closer to trouble than it looks, and the short spread is positive (Duffie and Lando's result, below).
+- **Assets above the debt today, $`V > D`$.** A firm already under water has $`d_2`$ running to minus infinity and a spread that explodes at the short end instead.
 - **Default only at maturity, or at a fixed barrier.** Moving default to the first touch of a barrier, as on [Black-Cox](05-black-cox-first-passage-default.md), changes the constant but not the limit: the path still has to travel.
 
 ---
@@ -93,57 +101,63 @@ In Merton's model the firm defaults when the assets at repayment are below the f
 
 ### Step 1: the spread is capped by the default chance per year
 
-The put is the lenders' loss. In the worst case they lose the full face, so the put is at most the riskless value of the debt times the chance of default: $P \le D e^{-rT} N(-d_2)$, because the term $V N(-d_1)$ it subtracts is never negative.
+The put is the lenders' loss. In the worst case they lose the full face, so the put is at most the riskless value of the debt times the chance of default: $`P \le D e^{-rT} N(-d_2)`$, because the term $`V N(-d_1)`$ it subtracts is never negative.
 
-Write $x = P/(D e^{-rT})$, the loss as a share of the riskless value. The spread is $-\ln(1-x)/T$. For $x$ between 0 and 1, $-\ln(1-x) \le x/(1-x)$. So
+Write $`x = P/(D e^{-rT})`$, the loss as a share of the riskless value. The spread is $`-\ln(1-x)/T`$. For $`x`$ between 0 and 1, $`-\ln(1-x) \le x/(1-x)`$. So
 
-$$s(T) \le \frac{N(-d_2)}{T\,(1 - N(-d_2))}.$$
+```math
+s(T) \le \frac{N(-d_2)}{T\,(1 - N(-d_2))}.
+```
 
 At one month the right side is 5.5780 bp. The true spread, 0.073127 bp, sits well under it: the ceiling assumes a total loss, and most defaulting paths end only a little below $80m.
 
 ### Step 2: the default chance dies faster than the time
 
-As $T$ shrinks, $d_2$ grows like $\ln(V/D)/(\sigma\sqrt{T})$. The chance of landing that many standard deviations out falls like the bell curve's tail, roughly $e^{-d_2^2/2}$. Since $d_2^2$ grows like a constant over $T$, this is $e^{-c/T}$ for some $c > 0$. Divide by $T$ and it still goes to zero: the exponential beats any power. At one week the default chance is 3.621e-16, so the ceiling is 3.621e-16 × 52 × 10,000, about 0.0000000002 bp.
+As $`T`$ shrinks, $`d_2`$ grows like $`\ln(V/D)/(\sigma\sqrt{T})`$. The chance of landing that many standard deviations out falls like the bell curve's tail, roughly $`e^{-d_2^2/2}`$. Since $`d_2^2`$ grows like a constant over $`T`$, this is $`e^{-c/T}`$ for some $`c > 0`$. Divide by $`T`$ and it still goes to zero: the exponential beats any power. At one week the default chance is 3.621e-16, so the ceiling is 3.621e-16 × 52 × 10,000, about 0.0000000002 bp.
 
 <details>
 <summary>Detailed proof: the ceiling goes to zero</summary>
 
-Fix $V > D$ and write $a = \ln(V/D) > 0$ and $m = r - \tfrac12\sigma^2$. Then $d_2 = (a + mT)/(\sigma\sqrt{T})$. For $T$ small enough that $a + mT > a/2$, we have $d_2 > a/(2\sigma\sqrt{T})$, which grows without bound.
+Fix $`V > D`$ and write $`a = \ln(V/D) > 0`$ and $`m = r - \tfrac12\sigma^2`$. Then $`d_2 = (a + mT)/(\sigma\sqrt{T})`$. For $`T`$ small enough that $`a + mT > a/2`$, we have $`d_2 > a/(2\sigma\sqrt{T})`$, which grows without bound.
 
-For any $z > 0$ the normal tail satisfies $N(-z) \le \varphi(z)/z$, where $\varphi(z) = e^{-z^2/2}/\sqrt{2\pi}$ is the bell-curve height. Proof: for $u \ge z$, $\varphi(u) \le (u/z)\varphi(u)$, and $\int_z^\infty (u/z)\varphi(u)\,du = \varphi(z)/z$.
+For any $`z > 0`$ the normal tail satisfies $`N(-z) \le \varphi(z)/z`$, where $`\varphi(z) = e^{-z^2/2}/\sqrt{2\pi}`$ is the bell-curve height. Proof: for $`u \ge z`$, $`\varphi(u) \le (u/z)\varphi(u)`$, and $`\int_z^\infty (u/z)\varphi(u)\,du = \varphi(z)/z`$.
 
-So $N(-d_2)/T \le \varphi(d_2)/(d_2 T)$. With $d_2 > b/\sqrt{T}$, $b = a/(2\sigma)$, this is at most $e^{-b^2/(2T)}\sqrt{T}/(b\sqrt{2\pi}\,T)$. Put $u = 1/T$: the bound is a constant times $\sqrt{u}\,e^{-b^2 u/2}$, which goes to zero as $u$ grows. The factor $1/(1 - N(-d_2))$ goes to 1. Hence $s(T) \to 0$. The argument used only that the assets have a continuous path with a normal spread of log changes, so any smooth-diffusion structural model inherits it.
+So $`N(-d_2)/T \le \varphi(d_2)/(d_2 T)`$. With $`d_2 > b/\sqrt{T}`$, $`b = a/(2\sigma)`$, this is at most $`e^{-b^2/(2T)}\sqrt{T}/(b\sqrt{2\pi}\,T)`$. Put $`u = 1/T`$: the bound is a constant times $`\sqrt{u}\,e^{-b^2 u/2}`$, which goes to zero as $`u`$ grows. The factor $`1/(1 - N(-d_2))`$ goes to 1. Hence $`s(T) \to 0`$. The argument used only that the assets have a continuous path with a normal spread of log changes, so any smooth-diffusion structural model inherits it.
 
 </details>
 
 ### Step 3: in the middle the spread humps
 
-Lengthen the maturity and two forces pull opposite ways. More time lets the assets wander further, so default gets likelier: the spread rises. But the debt's face is fixed while the assets, priced risk-neutrally, drift up at the riskless rate; and dividing by $T$ spreads the lenders' loss over more years. Past some point these win and the spread falls. The two cross at 1.9696 years for the house firm, where the spread peaks at 105.2146 bp. The levered firm owing $90m peaks at six months, at 292.96 bp on the grid; the firm owing $65m climbs until about five years.
+Lengthen the maturity and two forces pull opposite ways. More time lets the assets wander further, so default gets likelier: the spread rises. But the debt's face is fixed while the assets, priced risk-neutrally, drift up at the riskless rate; and dividing by $`T`$ spreads the lenders' loss over more years. Past some point these win and the spread falls. The two cross at 1.9696 years for the house firm, where the spread peaks at 105.2146 bp. The levered firm owing $90m peaks at six months, at 292.96 bp on the grid; the firm owing $65m climbs until about five years.
 
-A firm with debt above its assets, $D > V$, starts at the top instead: its short spread is already high, since the model says it is already insolvent, and the curve mostly falls from there.
+A firm with debt above its assets, $`D > V`$, starts at the top instead: its short spread is already high, since the model says it is already insolvent, and the curve mostly falls from there.
 
 ### Step 4: a flat hazard keeps the short end alive
 
-The flat-hazard model ([The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)) drops the balance sheet. Default arrives like a random alarm: the chance it rings in a short spell is $\lambda$ times the spell's length, however short the spell. With survival $q = e^{-\lambda T}$ and recovery $R$ of face paid at maturity, the zero bond is worth $e^{-rT}(q + R(1-q))$, and
+The flat-hazard model ([The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)) drops the balance sheet. Default arrives like a random alarm: the chance it rings in a short spell is $`\lambda`$ times the spell's length, however short the spell. With survival $`q = e^{-\lambda T}`$ and recovery $`R`$ of face paid at maturity, the zero bond is worth $`e^{-rT}(q + R(1-q))`$, and
 
-$$s(T) = -\frac{1}{T}\ln\bigl(1 - (1-R)(1 - e^{-\lambda T})\bigr) \to \lambda(1-R).$$
+```math
+s(T) = -\frac{1}{T}\ln\bigl(1 - (1-R)(1 - e^{-\lambda T})\bigr) \to \lambda(1-R).
+```
 
-The limit holds because $1 - e^{-\lambda T} \approx \lambda T$ and minus the log of one minus a small number is about that small number. With a 2% hazard and 40% recovery that is 120.0000 bp. At one day the bond spread is 119.9987 bp; at ten years it has sagged to 115.14 bp, because a bond can default only once, so its total loss is capped. The same rate times loss, read from a credit default swap (CDS, insurance against the firm's default, paid for by a yearly premium), is [The credit triangle](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/03-the-credit-triangle.md).
+The limit holds because $`1 - e^{-\lambda T} \approx \lambda T`$ and minus the log of one minus a small number is about that small number. With a 2% hazard and 40% recovery that is 120.0000 bp. At one day the bond spread is 119.9987 bp; at ten years it has sagged to 115.14 bp, because a bond can default only once, so its total loss is capped. The same rate times loss, read from a credit default swap (CDS, insurance against the firm's default, paid for by a yearly premium), is [The credit triangle](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/03-the-credit-triangle.md).
 
 ### Step 5: jumps give the structural model a sudden-failure rate
 
-Keep the balance sheet, and add to the smooth motion rare jumps: on average one every ten years, rate $\lambda_J$ = 0.10, each moving $\ln V$ by a normal amount $Y$ with mean −0.30 and spread 0.15, roughly a quarter of the assets wiped off at a stroke. This is Merton's jump model, taught on [Merton jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md). Its price is a weighted sum of smooth puts, one for each possible number of jumps.
+Keep the balance sheet, and add to the smooth motion rare jumps: on average one every ten years, rate $`\lambda_J`$ = 0.10, each moving $`\ln V`$ by a normal amount $`Y`$ with mean −0.30 and spread 0.15, roughly a quarter of the assets wiped off at a stroke. This is Merton's jump model, taught on [Merton jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md). Its price is a weighted sum of smooth puts, one for each possible number of jumps.
 
-Over a short spell $T$, the smooth part still cannot reach the debt. But one jump arrives with chance about $\lambda_J T$, and one jump can carry the assets straight past $80m. The loss per unit of time is then the jump rate times the average shortfall one jump causes:
+Over a short spell $`T`$, the smooth part still cannot reach the debt. But one jump arrives with chance about $`\lambda_J T`$, and one jump can carry the assets straight past $80m. The loss per unit of time is then the jump rate times the average shortfall one jump causes:
 
-$$\lim_{T\to 0} s(T) = \lambda_J\,\frac{E\bigl[(D - V e^{Y})^{+}\bigr]}{D} = \lambda_J\,\frac{D\,N(-d_2') - V e^{\mu_J + \delta_J^2/2} N(-d_1')}{D},$$
+```math
+\lim_{T\to 0} s(T) = \lambda_J\,\frac{E\bigl[(D - V e^{Y})^{+}\bigr]}{D} = \lambda_J\,\frac{D\,N(-d_2') - V e^{\mu_J + \delta_J^2/2} N(-d_1')}{D},
+```
 
-with $d_1' = (\ln(V/D) + \mu_J + \delta_J^2)/\delta_J$ and $d_2' = d_1' - \delta_J$, where $\mu_J$ = −0.30 and $\delta_J$ = 0.15 are the jump's mean and spread. This is a put formula again, with the jump in place of the smooth motion. It gives 95.0750 bp. The full jump model at one day gives 95.0958 bp, and at one month 95.75 bp. The short end is back.
+with $`d_1' = (\ln(V/D) + \mu_J + \delta_J^2)/\delta_J`$ and $`d_2' = d_1' - \delta_J`$, where $`\mu_J`$ = −0.30 and $`\delta_J`$ = 0.15 are the jump's mean and spread. This is a put formula again, with the jump in place of the smooth motion. It gives 95.0750 bp. The full jump model at one day gives 95.0958 bp, and at one month 95.75 bp. The short end is back.
 
 <details>
 <summary>The algebra behind the jump limit</summary>
 
-The expectation is a one-period put on $V e^{Y}$ with $Y$ normal, mean $\mu_J$, spread $\delta_J$. Default needs $Y < \ln(D/V)$. The chance of that is $N(-d_2')$. The average of $V e^{Y}$ over those outcomes, times their chance, is $V e^{\mu_J + \delta_J^2/2} N(-d_1')$: shifting the normal by $\delta_J^2$ absorbs the $e^{Y}$. The jump model's asset drift is lowered by the jump rate times the average proportional jump, so that assets still grow at the riskless rate on average; that correction is second order at the short end and does not appear in the limit.
+The expectation is a one-period put on $`V e^{Y}`$ with $`Y`$ normal, mean $`\mu_J`$, spread $`\delta_J`$. Default needs $`Y < \ln(D/V)`$. The chance of that is $`N(-d_2')`$. The average of $`V e^{Y}`$ over those outcomes, times their chance, is $`V e^{\mu_J + \delta_J^2/2} N(-d_1')`$: shifting the normal by $`\delta_J^2`$ absorbs the $`e^{Y}`$. The jump model's asset drift is lowered by the jump rate times the average proportional jump, so that assets still grow at the riskless rate on average; that correction is second order at the short end and does not appear in the limit.
 
 </details>
 
@@ -165,13 +179,13 @@ The house firm at one month, then at one year, from the printed output.
 | --- | --- | --- |
 | 1 | Drop needed: ln(100/80) | 0.223144 |
 | 2 | One-month swing of log assets: 0.20 × √(1/12) | 0.057735 |
-| 3 | $d_2$: the drop plus the small risk-neutral drift, over the swing | 3.908261 |
-| 4 | One-month default chance $N(-d_2)$ | 0.00004648 |
-| 5 | Ceiling: $N(-d_2)$ ÷ (1/12) ÷ (1 − $N(-d_2)$), in bp | 5.5780 |
+| 3 | $`d_2`$: the drop plus the small risk-neutral drift, over the swing | 3.908261 |
+| 4 | One-month default chance $`N(-d_2)`$ | 0.00004648 |
+| 5 | Ceiling: $`N(-d_2)`$ ÷ (1/12) ÷ (1 − $`N(-d_2)`$), in bp | 5.5780 |
 | 6 | Actual one-month spread from the put | 0.073127 bp |
 | 7 | Same firm at one year: put | 0.687189 |
-| 8 | One-year default chance $N(-d_2)$ | 0.102807 |
-| 9 | One-year spread, $-\ln(1 - 0.687189/(80 e^{-0.05}))$ in bp | **90.7130** |
+| 8 | One-year default chance $`N(-d_2)`$ | 0.102807 |
+| 9 | One-year spread, $`-\ln(1 - 0.687189/(80 e^{-0.05}))`$ in bp | **90.7130** |
 
 **At one month the model charges 0.07 bp for lending $80m to a firm with a 10.28% risk-neutral chance of default over the year: the flat-hazard model, with a 2% yearly hazard, charges 119.96 bp.**
 
@@ -179,8 +193,8 @@ The house firm at one month, then at one year, from the printed output.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Quote the two-year yield gap without dividing by $T$ | 210.42 bp, not 105.21 | the spread is per year; the raw gap covers two |
-| Read the default chance $N(-d_2)$ as the one-year spread | 1028.07 bp, not 90.71 | a chance is not a yield: lenders get most of their money back |
+| Quote the two-year yield gap without dividing by $`T`$ | 210.42 bp, not 105.21 | the spread is per year; the raw gap covers two |
+| Read the default chance $`N(-d_2)`$ as the one-year spread | 1028.07 bp, not 90.71 | a chance is not a yield: lenders get most of their money back |
 | Add jumps but leave the asset drift uncorrected | 193.50 bp at one year, not 162.84 | the jumps pull average assets down, so assets no longer grow at the riskless rate |
 
 ---
@@ -624,11 +638,11 @@ The two outputs agree line for line, including the simulations: both run the sam
 
 ### Lean
 
-Lean proves Step 1's ceiling, the vanishing Merton spread whenever $V > D$, and Step 4's flat-hazard limit.
+Lean proves Step 1's ceiling, the vanishing Merton spread whenever $`V > D`$, and Step 4's flat-hazard limit.
 
-- Take assets $V > 0$, debt $D > 0$, volatility $\sigma > 0$ and maturity $T > 0$. Then $s(T) \le N(-d_2)/(T(1 - N(-d_2)))$.
-- Suppose the assets sit above the debt, $V > D > 0$, and the volatility $\sigma > 0$. Then, for any riskless rate $r$, the spread $s(T)$ tends to 0 as $T$ shrinks to 0.
-- Take any hazard $\lambda$ and recovery $R$. Then the flat-hazard spread tends to $\lambda(1-R)$ as $T$ shrinks to 0.
+- Take assets $`V > 0`$, debt $`D > 0`$, volatility $`\sigma > 0`$ and maturity $`T > 0`$. Then $`s(T) \le N(-d_2)/(T(1 - N(-d_2)))`$.
+- Suppose the assets sit above the debt, $`V > D > 0`$, and the volatility $`\sigma > 0`$. Then, for any riskless rate $`r`$, the spread $`s(T)`$ tends to 0 as $`T`$ shrinks to 0.
+- Take any hazard $`\lambda`$ and recovery $`R`$. Then the flat-hazard spread tends to $`\lambda(1-R)`$ as $`T`$ shrinks to 0.
 - A 2% hazard with 40% recovery gives a short-end spread of 120 bp.
 
 The jump limit, the hump, the worked numbers and the simulations are left to the Python and Rust checks.

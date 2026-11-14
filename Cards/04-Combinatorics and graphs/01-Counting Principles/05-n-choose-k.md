@@ -35,31 +35,35 @@ Notation first, in words. The count of picks with the order thrown away is writt
 
 The factorial n! — the orders of n different things, n × (n−1) × … × 1 — comes from [Factorials](03-factorial.md).
 
-$$C(n, k) = \frac{n!}{k!\,(n-k)!}$$
+```math
+C(n, k) = \frac{n!}{k!\,(n-k)!}
+```
 
 **Read it aloud:** the orders of everything, divided by the orders inside the pick and the orders of the part left behind.
 
-Nobody computes it that way. The $(n-k)!$ underneath cancels the tail of $n!$, leaving $k$ factors on top:
+Nobody computes it that way. The $`(n-k)!`$ underneath cancels the tail of $`n!`$, leaving $`k`$ factors on top:
 
-$$C(n, k) = \frac{n \times (n-1) \times \cdots \times (n-k+1)}{k!}$$
+```math
+C(n, k) = \frac{n \times (n-1) \times \cdots \times (n-k+1)}{k!}
+```
 
 That is the form used by hand and by the code: six factors over 720, never the full 49!.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | how many different things are available | 49 balls, or 20 players | more to pick from, a larger count |
-| $k$ | how many are picked | 6 balls, or 11 players | climbs to the middle, then falls |
-| $n!$ | factorial: the orders of all $n$ things | 49! and 20! | — |
-| $k!$ | the orders inside one pick | 6! = 720 | a bigger divisor, fewer picks |
-| $(n-k)!$ | the orders of the part left behind | 43! and 9! | — |
-| $C(n,k)$ | the count of picks, order thrown away | C(49,6) = 13,983,816 | — |
-| $P(n,k)$ | ordered picks: the same k in order | 10,068,347,520 | — |
+| $`n`$ | how many different things are available | 49 balls, or 20 players | more to pick from, a larger count |
+| $`k`$ | how many are picked | 6 balls, or 11 players | climbs to the middle, then falls |
+| $`n!`$ | factorial: the orders of all $`n`$ things | 49! and 20! | — |
+| $`k!`$ | the orders inside one pick | 6! = 720 | a bigger divisor, fewer picks |
+| $`(n-k)!`$ | the orders of the part left behind | 43! and 9! | — |
+| $`C(n,k)`$ | the count of picks, order thrown away | C(49,6) = 13,983,816 | — |
+| $`P(n,k)`$ | ordered picks: the same k in order | 10,068,347,520 | — |
 
-The helper is one card back: ordered picks, $P(n, k) = n!/(n-k)!$, the same k things counted with their order kept ([Ordered picks](04-ordered-picks.md)). C(n, k) is that divided by k!.
+The helper is one card back: ordered picks, $`P(n, k) = n!/(n-k)!`$, the same k things counted with their order kept ([Ordered picks](04-ordered-picks.md)). C(n, k) is that divided by k!.
 
 ### When it holds
 
-- **Whole numbers, with $k$ between 0 and $n$.** Outside that range nothing exists to count and the answer is zero; no factorial of a negative number is ever asked for.
+- **Whole numbers, with $`k`$ between 0 and $`n`$.** Outside that range nothing exists to count and the answer is zero; no factorial of a negative number is ever asked for.
 - **The things are all different.** Two balls stamped 17 would merge some tickets, dropping the true count below 13,983,816.
 - **Nothing is taken twice.** The balls are not returned. Put each one back and keep the order and the count is 49^6 = 13,841,287,201 ([Strings with repetition](02-strings-and-powers.md)); put each back and drop the order and it is a third count again ([Stars and bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md)).
 - **The order is genuinely thrown away.** If the six balls filled six different prizes, order pays and the answer is 10,068,347,520.
@@ -107,7 +111,9 @@ The quotient is whole, and not by luck: it is the number of piles. Writing P(n, 
 
 A squad of 20 fields a starting eleven. Name the eleven who play and the nine who sit are named too; name nine to rest and the eleven are fixed. The pairing runs both ways — apply it twice and the original eleven is back — so the two collections are the same size:
 
-$$C(n, k) = C(n, n-k)$$
+```math
+C(n, k) = C(n, n-k)
+```
 
 Here C(20, 11) = C(20, 9) = 167,960. This is the **symmetry identity**. It is visible in the formula too: swapping k for n−k swaps k! and (n−k)!, and multiplication ignores the order of two factors. It is also the shortcut: to count 11 from 20, count 9 from 20.
 

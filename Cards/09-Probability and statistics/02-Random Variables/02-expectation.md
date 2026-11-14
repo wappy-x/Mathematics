@@ -38,32 +38,36 @@ The wandering line is a seeded simulation: one ticket bought in each of N separa
 
 Notation first, in words. A capital letter such as X is a random variable: a number fixed by chance, here the payout of one ticket ([Random variables](01-random-variables-and-distributions.md)). A lower-case x is one value it can take, and P(X = x) is the chance it takes that value. The new symbol is E[X], read "the average value of X in the long run", or "the expectation of X". The Greek capital sigma, ∑, means "add up over every value listed underneath it".
 
-$$E[X] = \sum_{x} x \cdot P(X = x)$$
+```math
+E[X] = \sum_{x} x \cdot P(X = x)
+```
 
 **Read it aloud:** take each value the payout can have, multiply it by its chance, and add the results.
 
-For the ticket: $E[X] = 0 \times 0.99 + 100 \times 0.01 = 1$.
+For the ticket: $`E[X] = 0 \times 0.99 + 100 \times 0.01 = 1`$.
 
 The main property is **linearity**: for any two random variables X and Y on the same chance experiment, and any fixed numbers a and b,
 
-$$E[aX + bY] = a\,E[X] + b\,E[Y].$$
+```math
+E[aX + bY] = a\,E[X] + b\,E[Y].
+```
 
 **Read it aloud:** the average of a combination is the same combination of the averages, whether or not X and Y depend on each other.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$ | the random payout of one ticket | 0 or 100 dollars | — |
-| $x$ | one value the payout can take | 0, then 100 | a bigger prize raises E[X] by its chance per dollar |
-| $P(X = x)$ | the chance the payout is exactly x | 0.99 and 0.01 | more chance on the prize raises E[X] |
-| $E[X]$ | the expectation: the weighted sum, the long-run average | 1 dollar | — |
-| $G$ | net gain of one ticket, X − 2 | E[G] = −1 dollar | — |
-| $a$, $b$ | fixed numbers that scale or shift | for G: a = 1 on X, b = −2 on the constant 1 | E moves in step with them |
-| $Y$ | a second random variable on the same experiment | a second ticket's payout | — |
-| $X_1$, $X_5$, $T$ | payouts of tickets 1 to 5, and their total T | E[T] = 5 dollars | each extra ticket adds 1 dollar |
-| $\omega$ | one outcome of the whole experiment: which ticket is drawn | "ticket 37 wins" | — |
-| $P(\omega)$ | the chance of that outcome | 0.01 for each of 100 | — |
-| $1_W$ | the indicator of an event W: 1 if W happens, 0 if not | 1 if our ticket wins | E[1_W] = P(W) |
-| $N$ | how many tickets a simulation or a long run buys | up to 200,000 | the average hugs E[X] more tightly |
+| $`X`$ | the random payout of one ticket | 0 or 100 dollars | — |
+| $`x`$ | one value the payout can take | 0, then 100 | a bigger prize raises E[X] by its chance per dollar |
+| $`P(X = x)`$ | the chance the payout is exactly x | 0.99 and 0.01 | more chance on the prize raises E[X] |
+| $`E[X]`$ | the expectation: the weighted sum, the long-run average | 1 dollar | — |
+| $`G`$ | net gain of one ticket, X − 2 | E[G] = −1 dollar | — |
+| $`a`$, $`b`$ | fixed numbers that scale or shift | for G: a = 1 on X, b = −2 on the constant 1 | E moves in step with them |
+| $`Y`$ | a second random variable on the same experiment | a second ticket's payout | — |
+| $`X_1`$, $`X_5`$, $`T`$ | payouts of tickets 1 to 5, and their total T | E[T] = 5 dollars | each extra ticket adds 1 dollar |
+| $`\omega`$ | one outcome of the whole experiment: which ticket is drawn | "ticket 37 wins" | — |
+| $`P(\omega)`$ | the chance of that outcome | 0.01 for each of 100 | — |
+| $`1_W`$ | the indicator of an event W: 1 if W happens, 0 if not | 1 if our ticket wins | E[1_W] = P(W) |
+| $`N`$ | how many tickets a simulation or a long run buys | up to 200,000 | the average hugs E[X] more tightly |
 
 ### When it holds
 
@@ -86,13 +90,15 @@ The word "about" is doing work: the fraction of winners wanders, as the chart sh
 
 The raffle's real outcome is which ticket is drawn. Call one outcome ω (the Greek letter omega): "ticket 37 wins" is one ω, with chance P(ω) = 0.01. Our ticket is number 0, and X(ω) is what it pays when ω happens.
 
-Summing over outcomes gives $E[X] = \sum_{\omega} X(\omega)\,P(\omega)$: 100 terms, one of them 100 × 0.01, the rest zero, total $1. Summing over values groups those 100 outcomes into two piles, "pays 0" (99 outcomes) and "pays 100" (1 outcome). Grouping terms does not change a sum, so both give $1. The code runs both roads.
+Summing over outcomes gives $`E[X] = \sum_{\omega} X(\omega)\,P(\omega)`$: 100 terms, one of them 100 × 0.01, the rest zero, total $1. Summing over values groups those 100 outcomes into two piles, "pays 0" (99 outcomes) and "pays 100" (1 outcome). Grouping terms does not change a sum, so both give $1. The code runs both roads.
 
 <details>
 <summary>Detailed proof: the two sums agree</summary>
 
 Let the outcomes ω carry chances P(ω) that add to 1. For each value x, the outcomes with X(ω) = x have total chance P(X = x). Then
-$$\sum_{\omega} X(\omega)P(\omega) = \sum_{x}\ \sum_{\omega:\,X(\omega)=x} x\,P(\omega) = \sum_x x \sum_{\omega:\,X(\omega)=x} P(\omega) = \sum_x x\,P(X=x).$$
+
+$`\displaystyle \sum_{\omega} X(\omega)P(\omega) = \sum_{x}\ \sum_{\omega:\,X(\omega)=x} x\,P(\omega) = \sum_x x \sum_{\omega:\,X(\omega)=x} P(\omega) = \sum_x x\,P(X=x).`$
+
 The first step reorders terms into piles; the second pulls the common factor x out of each pile. With finitely many outcomes, reordering is always allowed. With infinitely many, reordering a series is safe exactly when the series of sizes |X(ω)| P(ω) converges, which is the "When it holds" condition. Without it a rearranged series can reach any total, and the expectation is left undefined.
 
 </details>
@@ -101,19 +107,23 @@ The first step reorders terms into piles; the second pulls the common factor x o
 
 Work on the outcome side. Each outcome ω gives numbers X(ω) and Y(ω), and the combination aX + bY gives aX(ω) + bY(ω). So
 
-$$E[aX + bY] = \sum_{\omega} \big(aX(\omega) + bY(\omega)\big)P(\omega) = a\sum_{\omega} X(\omega)P(\omega) + b\sum_{\omega} Y(\omega)P(\omega) = a\,E[X] + b\,E[Y].$$
+```math
+E[aX + bY] = \sum_{\omega} \big(aX(\omega) + bY(\omega)\big)P(\omega) = a\sum_{\omega} X(\omega)P(\omega) + b\sum_{\omega} Y(\omega)P(\omega) = a\,E[X] + b\,E[Y].
+```
 
 The middle step splits one sum into two and pulls out constants: nothing more than the rules of adding. Nowhere does the argument ask how X and Y are related. They may move together, against each other or not at all. That is why linearity survives dependence.
 
-A constant counts as a random variable that takes one value, and its expectation is itself. So for net gain, $E[G] = E[X - 2] = E[X] - 2 = -1$: the ticket loses $1 on average.
+A constant counts as a random variable that takes one value, and its expectation is itself. So for net gain, $`E[G] = E[X - 2] = E[X] - 2 = -1`$: the ticket loses $1 on average.
 
 ### Step 3: five tickets in one draw
 
-Buy tickets 0 to 4 in the same raffle. They are tied: if one wins, the other four lose. Let W be the event "ticket 0 wins" and $1_W$ its indicator, the number that is 1 when W happens and 0 when it does not. Then E[1_W] = 1 × P(W) + 0 × P(not W) = P(W): an indicator's expectation is a chance.
+Buy tickets 0 to 4 in the same raffle. They are tied: if one wins, the other four lose. Let W be the event "ticket 0 wins" and $`1_W`$ its indicator, the number that is 1 when W happens and 0 when it does not. Then E[1_W] = 1 × P(W) + 0 × P(not W) = P(W): an indicator's expectation is a chance.
 
 Call their payouts X_1 to X_5. Each is 100 times an indicator, so the total is
 
-$$T = X_1 + X_2 + X_3 + X_4 + X_5, \qquad E[T] = 5 \times 100 \times 0.01 = 5.$$
+```math
+T = X_1 + X_2 + X_3 + X_4 + X_5, \qquad E[T] = 5 \times 100 \times 0.01 = 5.
+```
 
 Counting the 100 draws directly agrees: 5 draws pay $100, 95 pay nothing, average $5. Five tickets in five separate raffles, which are independent, have a different spread of totals (two wins become possible) but the same $5. Linearity cannot tell the two apart, and does not need to.
 
@@ -504,14 +514,14 @@ The two outputs match line for line, including the simulated rows, because both 
 
 Lean proves linearity, the indicator rule, and the weighted-sum formula for finitely many values, on every chance experiment, plus the raffle's exact sums.
 
-- Take random variables X and Y on one experiment, each with a finite expectation, and fixed numbers a and b. Then $E[aX + bY] = a E[X] + b E[Y]$, with no independence assumed.
-- Suppose X takes only finitely many values. Then X has an expectation, and $E[X]$ is each value x times $P(X = x)$, added up.
-- Take an event W and its indicator $1_W$. Then $E[1_W] = P(W)$: an indicator's expectation is a chance.
+- Take random variables X and Y on one experiment, each with a finite expectation, and fixed numbers a and b. Then $`E[aX + bY] = a E[X] + b E[Y]`$, with no independence assumed.
+- Suppose X takes only finitely many values. Then X has an expectation, and $`E[X]`$ is each value x times $`P(X = x)`$, added up.
+- Take an event W and its indicator $`1_W`$. Then $`E[1_W] = P(W)`$: an indicator's expectation is a chance.
 - One ticket's weighted sum is 1 dollar, and the 100 draws pay 100 dollars in total. Its net gain is −1 dollar, and the organiser keeps 100 dollars.
 - Five tickets in one draw: the 100 draws pay 500 dollars in total, 5 dollars on average. None of the five wins in 95 draws.
-- Take five tickets in five separate raffles. Then the sum over all 32 win/lose patterns gives $E[T] = 5$ dollars.
-- Take two tickets in one draw. Then both never win together, so $E[X_1 X_2] = 0$.
-- Take one ticket. Then the weighted sum of squares gives $E[X^2] = 100$.
+- Take five tickets in five separate raffles. Then the sum over all 32 win/lose patterns gives $`E[T] = 5`$ dollars.
+- Take two tickets in one draw. Then both never win together, so $`E[X_1 X_2] = 0`$.
+- Take one ticket. Then the weighted sum of squares gives $`E[X^2] = 100`$.
 - The tail sum also gives 1 dollar: the payout exceeds each level from 0 to 99 with chance 0.01.
 - Each St Petersburg level adds exactly 1 to the sum. So 10, 20 and 40 levels give 10, 20 and 40.
 

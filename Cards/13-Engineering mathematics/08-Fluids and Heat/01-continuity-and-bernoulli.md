@@ -28,9 +28,11 @@ To scale: 10 units per millimetre of pipe; speed arrows 100 units per m/s. The w
 
 ## The formula
 
-Notation first, in words. Subscript 1 marks the wide pipe and subscript 2 the narrow one. $A$ is a cross-section's area, $v$ the water's mean speed through it, $p$ its pressure, $z$ its height, $\rho$ (say "rho") the water's density and $g$ the acceleration of gravity. A streamline is the path one parcel of water follows in steady flow, that is, flow that does not change with time.
+Notation first, in words. Subscript 1 marks the wide pipe and subscript 2 the narrow one. $`A`$ is a cross-section's area, $`v`$ the water's mean speed through it, $`p`$ its pressure, $`z`$ its height, $`\rho`$ (say "rho") the water's density and $`g`$ the acceleration of gravity. A streamline is the path one parcel of water follows in steady flow, that is, flow that does not change with time.
 
-$$A_1 v_1 = A_2 v_2 = Q \qquad\qquad p_1 + \tfrac12\rho v_1^2 + \rho g z_1 \;=\; p_2 + \tfrac12\rho v_2^2 + \rho g z_2$$
+```math
+A_1 v_1 = A_2 v_2 = Q \qquad\qquad p_1 + \tfrac12\rho v_1^2 + \rho g z_1 \;=\; p_2 + \tfrac12\rho v_2^2 + \rho g z_2
+```
 
 **Read it aloud:** the same volume crosses every section each second; and along a streamline, pressure plus kinetic energy per cubic metre plus height energy per cubic metre is the same at both ends.
 
@@ -38,20 +40,20 @@ Each Bernoulli term is in pascals, and a pascal is also a joule per cubic metre.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $Q$, $\dot m$ | volume flow, m^3/s; mass flow $\rho Q$, kg/s | 0.25 L/s; 0.2444 kg/s | both speeds rise in proportion, the drop with the square |
-| $D_1$, $D_2$; $A_1$, $A_2$ | bores, m; areas $\pi D^2/4$, m^2 | 22 and 15 mm; 380.13 and 176.71 mm^2 | bigger $A_2$: slower throat, smaller drop |
-| $v_1$, $v_2$; $v$ | mean speeds, m/s; the local velocity, a vector | 0.658 and 1.415 m/s | — |
-| $p_1$, $p_2$; $p_3$ | pressure, Pa (here gauge: above the outside air); $p_3$, the pressure after a sudden widening back to 22 mm | 150,000 and 149,233 Pa; $p_3 = p_2 + 486.8$ Pa | raising $p_1$ lifts $p_2$ by the same amount |
-| $\rho$ | density, kg/m^3 | 977.764 (water, 70 °C) | a denser fluid loses more pressure for the same speeds |
-| $g$, $z$, $\hat z$; $h$ | gravity, 9.80665 m/s^2; height, m; $\hat z$, the unit vector pointing up; $h$, depth below a free surface, m | pipe level: $z_1 = z_2$ | a rise in $z_2$ costs $\rho g$ per metre of pressure |
-| $s$, $x$ | distance along a streamline; along the taper, m | taper 0 to 20 mm | — |
-| $\operatorname{div} v$ | outflow per unit volume from a point, per second | 0 for water | — |
-| $t$, $a$ | time, s; a water parcel's acceleration, m/s^2 | 21.89 ms through; up to 75.32 m/s^2 | — |
-| $\mu$, $\mathrm{Re}$ | viscosity, Pa·s; Reynolds number $\rho v D/\mu$ | 0.000403548; 51,416 in 15 mm | higher Re: a flatter speed profile, so one mean speed per section fits better |
+| $`Q`$, $`\dot m`$ | volume flow, m^3/s; mass flow $`\rho Q`$, kg/s | 0.25 L/s; 0.2444 kg/s | both speeds rise in proportion, the drop with the square |
+| $`D_1`$, $`D_2`$; $`A_1`$, $`A_2`$ | bores, m; areas $`\pi D^2/4`$, m^2 | 22 and 15 mm; 380.13 and 176.71 mm^2 | bigger $`A_2`$: slower throat, smaller drop |
+| $`v_1`$, $`v_2`$; $`v`$ | mean speeds, m/s; the local velocity, a vector | 0.658 and 1.415 m/s | — |
+| $`p_1`$, $`p_2`$; $`p_3`$ | pressure, Pa (here gauge: above the outside air); $`p_3`$, the pressure after a sudden widening back to 22 mm | 150,000 and 149,233 Pa; $`p_3 = p_2 + 486.8`$ Pa | raising $`p_1`$ lifts $`p_2`$ by the same amount |
+| $`\rho`$ | density, kg/m^3 | 977.764 (water, 70 °C) | a denser fluid loses more pressure for the same speeds |
+| $`g`$, $`z`$, $`\hat z`$; $`h`$ | gravity, 9.80665 m/s^2; height, m; $`\hat z`$, the unit vector pointing up; $`h`$, depth below a free surface, m | pipe level: $`z_1 = z_2`$ | a rise in $`z_2`$ costs $`\rho g`$ per metre of pressure |
+| $`s`$, $`x`$ | distance along a streamline; along the taper, m | taper 0 to 20 mm | — |
+| $`\mathrm{div}\, v`$ | outflow per unit volume from a point, per second | 0 for water | — |
+| $`t`$, $`a`$ | time, s; a water parcel's acceleration, m/s^2 | 21.89 ms through; up to 75.32 m/s^2 | — |
+| $`\mu`$, $`\mathrm{Re}`$ | viscosity, Pa·s; Reynolds number $`\rho v D/\mu`$ | 0.000403548; 51,416 in 15 mm | higher Re: a flatter speed profile, so one mean speed per section fits better |
 
 ### When it holds
 
-- **The fluid does not compress.** Water's density barely changes with pressure. A gas moving faster than about 0.3 of its speed of sound changes density noticeably, and $A v$ is no longer constant: $\rho A v$ is.
+- **The fluid does not compress.** Water's density barely changes with pressure. A gas moving faster than about 0.3 of its speed of sound changes density noticeably, and $`A v`$ is no longer constant: $`\rho A v`$ is.
 - **No friction between the two points.** Over a 20 mm smooth taper friction is small. Over metres of pipe it is not, and the pressure falls even where the bore is constant: [Viscosity](02-viscosity-and-pipe-flow.md).
 - **The flow does not separate.** Water speeding up into a narrowing follows the wall. Water slowing down through a sudden widening breaks into eddies. Bernoulli promises the 767 Pa back when the 15 mm pipe opens into 22 mm again; a momentum balance gives only 486.8 Pa, because 280.2 Pa is lost to the eddies.
 - **Steady flow, no machine in between.** A pump adds energy and a valve slamming shut changes the flow in time. Neither is in this equation.
@@ -67,49 +69,57 @@ Two physical facts carry the whole card. Water is not created or destroyed, and 
 
 ### Step 1: continuity from the divergence
 
-The divergence of the velocity, $\operatorname{div} v$, is the volume flowing out of a tiny box around a point, per unit volume, per second ([Divergence and curl](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/03-divergence-and-curl.md)). Water that does not compress cannot leave a box faster than it enters, so
+The divergence of the velocity, $`\mathrm{div}\, v`$, is the volume flowing out of a tiny box around a point, per unit volume, per second ([Divergence and curl](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/03-divergence-and-curl.md)). Water that does not compress cannot leave a box faster than it enters, so
 
-$$\operatorname{div} v = 0 \quad\text{everywhere in the water.}$$
+```math
+\mathrm{div}\, v = 0 \quad\text{everywhere in the water.}
+```
 
 Add this up over the water between the two cross-sections. The [Divergence theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/07-divergence-theorem.md) says the total equals the net outflow through the boundary. The copper wall carries no flow across it. What remains is the outflow through section 2 minus the inflow through section 1, and it is zero:
 
-$$A_2 v_2 - A_1 v_1 = 0.$$
+```math
+A_2 v_2 - A_1 v_1 = 0.
+```
 
-Here $v_1$ and $v_2$ are mean speeds, since the integral over a section is its area times its mean speed. With 0.25 L/s, $v_1 = 0.25\times10^{-3}/(380.13\times10^{-6}) = 0.658$ m/s and $v_2 = 1.415$ m/s. The area ratio, 2.151, is the speed ratio. For a gas the same argument applied to mass gives $\rho_1 A_1 v_1 = \rho_2 A_2 v_2$.
+Here $`v_1`$ and $`v_2`$ are mean speeds, since the integral over a section is its area times its mean speed. With 0.25 L/s, $`v_1 = 0.25\times10^{-3}/(380.13\times10^{-6}) = 0.658`$ m/s and $`v_2 = 1.415`$ m/s. The area ratio, 2.151, is the speed ratio. For a gas the same argument applied to mass gives $`\rho_1 A_1 v_1 = \rho_2 A_2 v_2`$.
 
 ### Step 2: Newton's law for a fluid, along one streamline
 
-A **streamline** is the path a parcel of water follows in steady flow. Per cubic metre, Newton's law reads mass times acceleration equals the forces. The mass is $\rho$. The forces are the pressure pushing from high to low, $-\nabla p$, and gravity. Here $\nabla p$, the [Gradient](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md) of pressure, points the way pressure rises fastest, and its size is that rate in Pa per metre. Gravity is $-\rho g$ in the upward direction. This is **Euler's equation**, Newton's law for a fluid without friction.
+A **streamline** is the path a parcel of water follows in steady flow. Per cubic metre, Newton's law reads mass times acceleration equals the forces. The mass is $`\rho`$. The forces are the pressure pushing from high to low, $`-\nabla p`$, and gravity. Here $`\nabla p`$, the [Gradient](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md) of pressure, points the way pressure rises fastest, and its size is that rate in Pa per metre. Gravity is $`-\rho g`$ in the upward direction. This is **Euler's equation**, Newton's law for a fluid without friction.
 
-Take the part of it along the streamline, with $s$ the distance travelled. A parcel at speed $v$ that gains $dv$ over a distance $ds$ has acceleration $v\,dv/ds$, because it covers $ds$ in time $ds/v$. So
+Take the part of it along the streamline, with $`s`$ the distance travelled. A parcel at speed $`v`$ that gains $`dv`$ over a distance $`ds`$ has acceleration $`v\,dv/ds`$, because it covers $`ds`$ in time $`ds/v`$. So
 
-$$\rho\, v \frac{dv}{ds} \;=\; -\frac{dp}{ds} \;-\; \rho g \frac{dz}{ds}.$$
+```math
+\rho\, v \frac{dv}{ds} \;=\; -\frac{dp}{ds} \;-\; \rho g \frac{dz}{ds}.
+```
 
 At the taper, a parcel's acceleration peaks at 75.32 m/s^2, and it crosses in 21.89 ms. That acceleration is what the pressure difference pays for.
 
 <details>
 <summary>Detailed step: the along-streamline part of Euler's equation</summary>
 
-For steady flow the acceleration of a parcel is $(v\cdot\nabla)v$. A vector identity rewrites it as $\nabla(\tfrac12|v|^2) - v\times\operatorname{curl} v$. The second term is at right angles to $v$, so it has no part along the streamline; it only bends the path. The part of $\nabla(\tfrac12|v|^2)$ along the streamline is $d(\tfrac12 v^2)/ds = v\,dv/ds$. The same projection of $-\nabla p - \rho g\,\hat z$ gives $-dp/ds - \rho g\,dz/ds$. The curl of $v$ measures how fast the water spins about a point. If the curl is zero everywhere, the cross term vanishes in every direction and the Bernoulli constant is the same on every streamline, not only along one.
+For steady flow the acceleration of a parcel is $`(v\cdot\nabla)v`$. A vector identity rewrites it as $`\nabla(\tfrac12|v|^2) - v\times\mathrm{curl}\, v`$. The second term is at right angles to $`v`$, so it has no part along the streamline; it only bends the path. The part of $`\nabla(\tfrac12|v|^2)`$ along the streamline is $`d(\tfrac12 v^2)/ds = v\,dv/ds`$. The same projection of $`-\nabla p - \rho g\,\hat z`$ gives $`-dp/ds - \rho g\,dz/ds`$. The curl of $`v`$ measures how fast the water spins about a point. If the curl is zero everywhere, the cross term vanishes in every direction and the Bernoulli constant is the same on every streamline, not only along one.
 
 </details>
 
 ### Step 3: add up along the streamline
 
-The left side is $d(\tfrac12\rho v^2)/ds$, since $\rho$ is fixed. Every term is now a rate of change along $s$. Integrate from section 1 to section 2. The integral of a rate of change along a path is the change between its ends, whatever the path's shape. For $\nabla p$ this is the line integral of a gradient ([Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md)). So
+The left side is $`d(\tfrac12\rho v^2)/ds`$, since $`\rho`$ is fixed. Every term is now a rate of change along $`s`$. Integrate from section 1 to section 2. The integral of a rate of change along a path is the change between its ends, whatever the path's shape. For $`\nabla p`$ this is the line integral of a gradient ([Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md)). So
 
-$$\tfrac12\rho v_2^2 - \tfrac12\rho v_1^2 = -(p_2 - p_1) - \rho g (z_2 - z_1),$$
+```math
+\tfrac12\rho v_2^2 - \tfrac12\rho v_1^2 = -(p_2 - p_1) - \rho g (z_2 - z_1),
+```
 
 which rearranges to Bernoulli's equation. Notice what dropped out: the taper's shape and length. Only the end speeds matter. The code confirms this with two different taper shapes and two different lengths.
 
 ### Step 4: read it as energy
 
-Pushing one cubic metre of water into a pipe against pressure $p$ takes $p$ joules. That cubic metre carries $\tfrac12\rho v^2$ joules of motion and $\rho g z$ joules of height. Bernoulli's equation says the total is kept along a streamline. In the taper, 767 J of every cubic metre's pressure work becomes motion. Where the pipe widens smoothly again, the motion turns back into pressure. Where it widens suddenly, part of it becomes eddies and then heat.
+Pushing one cubic metre of water into a pipe against pressure $`p`$ takes $`p`$ joules. That cubic metre carries $`\tfrac12\rho v^2`$ joules of motion and $`\rho g z`$ joules of height. Bernoulli's equation says the total is kept along a streamline. In the taper, 767 J of every cubic metre's pressure work becomes motion. Where the pipe widens smoothly again, the motion turns back into pressure. Where it widens suddenly, part of it becomes eddies and then heat.
 
 <details>
 <summary>Detailed step: the loss at a sudden widening (Borda–Carnot)</summary>
 
-Where the 15 mm pipe opens straight into 22 mm, the jet keeps its pressure $p_2$ as it enters, and the water in the corners sits at the same pressure. A little downstream the flow fills the 22 mm bore again at speed $v_1$ and pressure $p_3$. Momentum per second in minus out equals the net pressure force: $(p_2 - p_3)A_1 = \rho Q (v_1 - v_2)$, so $p_3 - p_2 = \rho v_1 (v_2 - v_1)$ = 486.8 Pa. Bernoulli would give $\tfrac12\rho(v_2^2 - v_1^2)$ = 767.0 Pa. The difference is exactly $\tfrac12\rho (v_2 - v_1)^2$ = 280.2 Pa, the Borda–Carnot loss. Energy is not destroyed: it leaves the pressure budget as eddies, then as heat.
+Where the 15 mm pipe opens straight into 22 mm, the jet keeps its pressure $`p_2`$ as it enters, and the water in the corners sits at the same pressure. A little downstream the flow fills the 22 mm bore again at speed $`v_1`$ and pressure $`p_3`$. Momentum per second in minus out equals the net pressure force: $`(p_2 - p_3)A_1 = \rho Q (v_1 - v_2)`$, so $`p_3 - p_2 = \rho v_1 (v_2 - v_1)`$ = 486.8 Pa. Bernoulli would give $`\tfrac12\rho(v_2^2 - v_1^2)`$ = 767.0 Pa. The difference is exactly $`\tfrac12\rho (v_2 - v_1)^2`$ = 280.2 Pa, the Borda–Carnot loss. Energy is not destroyed: it leaves the pressure budget as eddies, then as heat.
 
 </details>
 
@@ -117,19 +127,19 @@ Where the 15 mm pipe opens straight into 22 mm, the jet keeps its pressure $p_2$
 
 ## Worked numbers, by hand
 
-Water at 70 °C, $\rho$ = 977.764 kg/m^3, $Q$ = 0.25 L/s, $p_1$ = 150,000 Pa, pipe level.
+Water at 70 °C, $`\rho`$ = 977.764 kg/m^3, $`Q`$ = 0.25 L/s, $`p_1`$ = 150,000 Pa, pipe level.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| area, 22 mm bore | $\pi \times 0.022^2 / 4$ | 380.13 mm^2 |
-| area, 15 mm bore | $\pi \times 0.015^2 / 4$ | 176.71 mm^2 |
-| speed in 22 mm | $0.25\times10^{-3} / 380.13\times10^{-6}$ | 0.658 m/s |
-| speed in 15 mm | $0.658 \times 2.151$, the area ratio | 1.415 m/s |
-| mass flow, both ends | $977.764 \times 0.25\times10^{-3}$ | 0.2444 kg/s |
-| kinetic term, wide | $\tfrac12 \times 977.764 \times 0.658^2$ | 211.45 Pa |
-| kinetic term, narrow | $\tfrac12 \times 977.764 \times 1.415^2$ | 978.45 Pa |
-| pressure drop | $978.45 - 211.45$ | 767.0 Pa |
-| **pressure in 15 mm** | $150{,}000 - 767.0$ | **149,233 Pa** |
+| area, 22 mm bore | $`\pi \times 0.022^2 / 4`$ | 380.13 mm^2 |
+| area, 15 mm bore | $`\pi \times 0.015^2 / 4`$ | 176.71 mm^2 |
+| speed in 22 mm | $`0.25\times10^{-3} / 380.13\times10^{-6}`$ | 0.658 m/s |
+| speed in 15 mm | $`0.658 \times 2.151`$, the area ratio | 1.415 m/s |
+| mass flow, both ends | $`977.764 \times 0.25\times10^{-3}`$ | 0.2444 kg/s |
+| kinetic term, wide | $`\tfrac12 \times 977.764 \times 0.658^2`$ | 211.45 Pa |
+| kinetic term, narrow | $`\tfrac12 \times 977.764 \times 1.415^2`$ | 978.45 Pa |
+| pressure drop | $`978.45 - 211.45`$ | 767.0 Pa |
+| **pressure in 15 mm** | $`150{,}000 - 767.0`$ | **149,233 Pa** |
 
 The water leaves the fitting at 1.415 m/s, a little over twice its speed in the main. Its pressure is 767 Pa lower: 8.0 cm of water, small beside the 150,000 Pa on the gauge.
 
@@ -155,7 +165,7 @@ xychart-beta
     line [0.0, 10.6, 44.5, 108.3, 211.4, 359.7, 539.6, 700.5, 767.0]
 ```
 
-One line: the pressure drop below $p_1$ at each point of the smooth taper, from Bernoulli with the local speed. The bore runs 22.00, 21.73, 20.97, 19.84, 18.50, 17.16, 16.03, 15.27, 15.00 mm and the speed 0.658, 0.674, 0.724, 0.809, 0.930, 1.081, 1.240, 1.366, 1.415 m/s at those points. Most of the drop comes in the narrow half, because the drop goes with speed squared and speed goes with one over the bore squared.
+One line: the pressure drop below $`p_1`$ at each point of the smooth taper, from Bernoulli with the local speed. The bore runs 22.00, 21.73, 20.97, 19.84, 18.50, 17.16, 16.03, 15.27, 15.00 mm and the speed 0.658, 0.674, 0.724, 0.809, 0.930, 1.081, 1.240, 1.366, 1.415 m/s at those points. Most of the drop comes in the narrow half, because the drop goes with speed squared and speed goes with one over the bore squared.
 
 ---
 
@@ -164,7 +174,7 @@ One line: the pressure drop below $p_1$ at each point of the smooth taper, from 
 The scripts reach the 767.0 Pa drop by three roads and run it backwards on a fourth.
 
 - Road 1 is continuity plus Bernoulli in closed form.
-- Road 2 never uses Bernoulli: it applies Newton's law to thin slices of the taper, $dp/dx = -\rho v\,dv/dx$, with $dv/dx$ taken from the slope of the wall, and adds the slices by Simpson's rule, for two different taper shapes. Simpson's rule is a weighted sum that fits a parabola through each pair of slices: [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md).
+- Road 2 never uses Bernoulli: it applies Newton's law to thin slices of the taper, $`dp/dx = -\rho v\,dv/dx`$, with $`dv/dx`$ taken from the slope of the wall, and adds the slices by Simpson's rule, for two different taper shapes. Simpson's rule is a weighted sum that fits a parabola through each pair of slices: [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md).
 - Road 3 follows one parcel of water through the taper in time, stepping its position with the fourth-order Runge–Kutta method (RK4), and adds up mass times its own acceleration times each step moved. RK4 samples the speed four times per step and takes a weighted average: [Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md).
 - Road 4 runs the venturi-meter formula backwards and recovers the 0.25 L/s from the drop.
 
@@ -546,9 +556,9 @@ The two outputs agree line for line.
 
 Lean proves Bernoulli's equation from Euler's equation, the narrow-pipe result and the Borda–Carnot loss, for all values meeting each bullet's conditions.
 
-- Suppose speed, pressure and height change without jumps or corners along a streamline, and Euler's equation holds at every point between two ends. Then $p + \tfrac12\rho v^2 + \rho g z$ is the same at both ends. Lean takes Euler's equation as given; it does not derive it from Newton's law.
-- Suppose water flows forward through a level pipe that narrows, with the same volume each second and Bernoulli's equation between both sections. Then the water in the narrow section is faster and its pressure is lower: $v_2 > v_1$ and $p_2 < p_1$.
-- Take a density $\rho \ge 0$ and any speeds $v_1$ and $v_2$ either side of a sudden widening. Then Bernoulli's rise minus the momentum rise is exactly $\tfrac12\rho(v_2 - v_1)^2$, which is never negative.
+- Suppose speed, pressure and height change without jumps or corners along a streamline, and Euler's equation holds at every point between two ends. Then $`p + \tfrac12\rho v^2 + \rho g z`$ is the same at both ends. Lean takes Euler's equation as given; it does not derive it from Newton's law.
+- Suppose water flows forward through a level pipe that narrows, with the same volume each second and Bernoulli's equation between both sections. Then the water in the narrow section is faster and its pressure is lower: $`v_2 > v_1`$ and $`p_2 < p_1`$.
+- Take a density $`\rho \ge 0`$ and any speeds $`v_1`$ and $`v_2`$ either side of a sudden widening. Then Bernoulli's rise minus the momentum rise is exactly $`\tfrac12\rho(v_2 - v_1)^2`$, which is never negative.
 
 Every number on the card, such as the 767.0 Pa drop and the 486.8 Pa recovery, is left to the Python and Rust checks.
 
@@ -662,7 +672,7 @@ theorem borda_carnot_loss (ρ v₁ v₂ : ℝ) :
 > [!TIP]
 > **Try changing**
 > - Guess first: double the flow to `Q = 0.5e-3`. What happens to the drop? It becomes 3,068.0 Pa, four times 767.0 Pa, because both speeds double and the drop goes with their squares.
-> - Guess first: the 15 mm pipe climbs 2.5 m to an upstairs radiator. The height term costs $\rho g \times 2.5$ = 23,971.5 Pa, against 767.0 Pa for the speed change. In a heating system, height dominates the pressure readings and speed is a correction.
+> - Guess first: the 15 mm pipe climbs 2.5 m to an upstairs radiator. The height term costs $`\rho g \times 2.5`$ = 23,971.5 Pa, against 767.0 Pa for the speed change. In a heating system, height dominates the pressure readings and speed is a correction.
 > - Guess first: shorten the taper from `L = 0.020` to 5 mm. The drop stays at 767.0 Pa: only the end speeds matter. The parcel now crosses in 5.47 ms instead of 21.89 ms, and its peak acceleration rises from 75.32 to 301.27 m/s^2.
 > - Guess first: narrow to a 10 mm bore instead of 15 mm. The speed reaches 3.183 m/s and the drop 4,742.0 Pa, against 767.0 Pa, from a bore only a third smaller.
 
@@ -675,7 +685,7 @@ theorem borda_carnot_loss (ρ v₁ v₂ : ℝ) :
 >
 > Smaller traps, each with the wrong number it gives:
 > - **Scaling speed by diameter, not area.** 0.965 m/s and 243.4 Pa, instead of 1.415 m/s and 767.0 Pa.
-> - **Using the speed in the narrow pipe alone.** $\tfrac12\rho v_2^2$ = 978.5 Pa. The drop is the *change* in kinetic energy per cubic metre, 767.0 Pa.
+> - **Using the speed in the narrow pipe alone.** $`\tfrac12\rho v_2^2`$ = 978.5 Pa. The drop is the *change* in kinetic energy per cubic metre, 767.0 Pa.
 > - **Cold-water density for hot water.** 1,000 kg/m^3 gives 784.4 Pa instead of 767.0 Pa. At 70 °C water is 977.764 kg/m^3.
 > - **Expecting the pressure back after a sudden widening.** Only 486.8 Pa of the 767.0 Pa returns. Smooth tapers recover most of it, which is why a venturi meter widens gently.
 
@@ -684,8 +694,8 @@ theorem borda_carnot_loss (ρ v₁ v₂ : ℝ) :
 ## Where you meet it in real life
 
 - **Venturi flow meters.** A pipe narrows, and a gauge measures the pressure difference between the wide part and the throat. Road 4 in the code turns 767.0 Pa back into 0.25 L/s. Water utilities and process plants meter flow this way.
-- **Aircraft airspeed.** A pitot tube brings air to rest in a small forward-facing hole and compares that pressure with the static pressure (the sideways pressure of the moving air), read at a port on the side of the fuselage. The difference is $\tfrac12\rho v^2$, and the instrument turns it into a speed.
-- **A draining tank.** Water leaving a hole a height $h$ below the surface comes out at $\sqrt{2gh}$: Bernoulli between the still surface and the jet, both at outside air pressure.
+- **Aircraft airspeed.** A pitot tube brings air to rest in a small forward-facing hole and compares that pressure with the static pressure (the sideways pressure of the moving air), read at a port on the side of the fuselage. The difference is $`\tfrac12\rho v^2`$, and the instrument turns it into a speed.
+- **A draining tank.** Water leaving a hole a height $`h`$ below the surface comes out at $`\sqrt{2gh}`$: Bernoulli between the still surface and the jet, both at outside air pressure.
 - **Heating and plumbing design.** Continuity sets pipe speeds from a required flow, and Bernoulli's height term explains why the pressure gauge reads lower at an upstairs radiator than at the boiler.
 - **Wings.** Faster air over the top of a wing goes with lower pressure there. Why the air is faster is the subject of [Lift and drag](04-lift-drag-and-boundary-layers.md).
 
@@ -698,7 +708,7 @@ theorem borda_carnot_loss (ρ v₁ v₂ : ℝ) :
 
 - [Divergence and curl](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/03-divergence-and-curl.md): divergence as outflow per unit volume, which is zero for water and gives continuity; curl, whose vanishing makes the Bernoulli constant the same on every streamline.
 - [Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md): adding a field along a path; for a gradient the answer depends only on the ends, which is why Bernoulli ignores the taper's shape.
-- [Divergence theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/07-divergence-theorem.md): the outflow through a closed surface equals the divergence added up inside, which turns zero divergence into $A_1 v_1 = A_2 v_2$.
+- [Divergence theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/07-divergence-theorem.md): the outflow through a closed surface equals the divergence added up inside, which turns zero divergence into $`A_1 v_1 = A_2 v_2`$.
 
 ## Where this goes next
 
@@ -716,4 +726,4 @@ Verified 2026-11-11: every link below resolves to the publisher's page, and the 
 - White, Frank M., and Henry Xue. *Fluid Mechanics*, 9th ed. McGraw-Hill. [Publisher page](https://www.mheducation.com/highered/product/fluid-mechanics-white.html). Continuity, Bernoulli along a streamline with its restrictions, venturi and pitot meters, and the sudden-expansion loss.
 - Batchelor, G. K. *An Introduction to Fluid Dynamics*. Cambridge University Press. [doi:10.1017/CBO9780511800955](https://doi.org/10.1017/CBO9780511800955). The mass-conservation equation and Euler's equation, and Bernoulli's theorem along a streamline and for flow without curl.
 - National Institute of Standards and Technology. *NIST Chemistry WebBook, Thermophysical Properties of Fluid Systems*. [webbook.nist.gov/chemistry/fluid](https://webbook.nist.gov/chemistry/fluid/). Water at 70 °C and 1 bar: density 977.764 kg/m^3, viscosity 0.000403548 Pa·s.
-- National Institute of Standards and Technology. *CODATA values: standard acceleration of gravity*. [physics.nist.gov](https://physics.nist.gov/cgi-bin/cuu/Value?gn). The conventional value 9.80665 m/s^2 used for $g$.
+- National Institute of Standards and Technology. *CODATA values: standard acceleration of gravity*. [physics.nist.gov](https://physics.nist.gov/cgi-bin/cuu/Value?gn). The conventional value 9.80665 m/s^2 used for $`g`$.

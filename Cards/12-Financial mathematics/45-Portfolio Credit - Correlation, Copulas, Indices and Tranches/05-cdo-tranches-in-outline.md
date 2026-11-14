@@ -41,46 +41,54 @@ Orange, leftmost: the equity tranche, wiped out once the pool loses 3%. Green: t
 
 ## The formula
 
-Notation first, in words. $(y)^+$ means "y if y is positive, otherwise zero": the payoff of a call option with strike zero. A call option with strike K pays the amount by which a price ends above K, and nothing otherwise; [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) prices one. $\mathbb{E}$ is the average over all outcomes the model allows. $\mathbb{P}(\text{event})$ is the chance of the event.
+Notation first, in words. $`(y)^+`$ means "y if y is positive, otherwise zero": the payoff of a call option with strike zero. A call option with strike K pays the amount by which a price ends above K, and nothing otherwise; [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) prices one. $`\mathbb{E}`$ is the average over all outcomes the model allows. $`\mathbb{P}(\text{event})`$ is the chance of the event.
 
-The loss of the tranche from $A$ to $D$, as a share of its own size:
+The loss of the tranche from $`A`$ to $`D`$, as a share of its own size:
 
-$$L_{[A,D]} = \frac{(L - A)^+ - (L - D)^+}{D - A}$$
+```math
+L_{[A,D]} = \frac{(L - A)^+ - (L - D)^+}{D - A}
+```
 
 **Read it aloud:** the tranche loses whatever the pool has lost above its attachment point, but never more than its own width, measured as a share of that width.
 
 Its expected loss, two ways:
 
-$$\mathbb{E}\big[L_{[A,D]}\big] \;=\; \frac{1}{D-A}\int_A^D \mathbb{P}(L > x)\,dx \;=\; \int_{-\infty}^{\infty} \frac{\big(L(m) - A\big)^+ - \big(L(m) - D\big)^+}{D - A}\;\varphi(m)\,dm$$
+```math
+\mathbb{E}\big[L_{[A,D]}\big] \;=\; \frac{1}{D-A}\int_A^D \mathbb{P}(L > x)\,dx \;=\; \int_{-\infty}^{\infty} \frac{\big(L(m) - A\big)^+ - \big(L(m) - D\big)^+}{D - A}\;\varphi(m)\,dm
+```
 
 **Read it aloud:** the area under the pool's "chance of losing more than x" curve between the two floors, over the width; or the tranche's loss in each state of the economy, averaged over the economy's bell curve.
 
 The large-pool loss once the economy is known, from the one-factor model:
 
-$$L(m) = (1 - R)\,q(m), \qquad q(m) = N\!\left(\frac{c - \sqrt{\rho}\,m}{\sqrt{1-\rho}}\right), \qquad c = N^{-1}(p)$$
+```math
+L(m) = (1 - R)\,q(m), \qquad q(m) = N\!\left(\frac{c - \sqrt{\rho}\,m}{\sqrt{1-\rho}}\right), \qquad c = N^{-1}(p)
+```
 
 **Read it aloud:** when the economy reads m, a fixed share q(m) of the borrowers default, and the pool loses that share times the loss per default.
 
 The price, as a running spread paid on what is left of the tranche:
 
-$$s = \frac{\sum_{i=1}^{20} e^{-r t_i}\,\big(E_i - E_{i-1}\big)}{\sum_{i=1}^{20} \Delta\, e^{-r t_i}\,\big(1 - \tfrac12(E_{i-1} + E_i)\big)}$$
+```math
+s = \frac{\sum_{i=1}^{20} e^{-r t_i}\,\big(E_i - E_{i-1}\big)}{\sum_{i=1}^{20} \Delta\, e^{-r t_i}\,\big(1 - \tfrac12(E_{i-1} + E_i)\big)}
+```
 
 **Read it aloud:** today's value of the losses the tranche expects to pay, quarter by quarter, divided by today's value of one unit of yearly premium paid on the part still standing.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $L$ | the pool's loss, as a share of the pool | average 3% over five years | every tranche loses more |
-| $A$, $D$ | attachment and detachment points | equity 0% and 3%; senior 10% and 100% | a higher A, a safer tranche |
-| $R$ | recovery: the share of a defaulted loan the bank gets back | 40% | less loss per default, every tranche safer |
-| $p$, $\lambda$ | one borrower's five-year default chance; the flat hazard rate (default chance per year over short intervals) behind it | 5%; 0.010259 | every tranche loses more |
-| $\rho$ | asset correlation: the share of each borrower's health driven by the shared economy | 20% | equity loses less, senior loses more |
-| $m$, $q(m)$ | the economy, a bell-curve draw with average 0; the share defaulting in that state | m = 0 gives 3.30% | lower m, more defaults |
-| $c$ | the default threshold: a borrower defaults when its health falls below c | −1.644854 | a higher c means more defaults |
-| $N(x)$, $\varphi(m)$ | the bell curve's area left of x, and its height at m; $N^{-1}(u)$ runs N backwards, giving the x whose area is u | N(−1.8390) = 3.30%; $N^{-1}(0.05)$ = −1.644854 | — |
-| $E_i$ | the tranche's expected loss by payment date i, as a share of its size; $E_0 = 0$ | equity 62.77% by year five | a bigger spread |
-| $t_i$, $\Delta$ | the quarterly payment dates and the gap between them | 0.25, 0.5, …, 5 years; 0.25 | — |
-| $r$ | the riskless rate, continuously compounded | 5% | both legs shrink; the spread barely moves |
-| $s$ | the tranche's par spread, per year, on its surviving size | equity 2006.1 bp | — |
+| $`L`$ | the pool's loss, as a share of the pool | average 3% over five years | every tranche loses more |
+| $`A`$, $`D`$ | attachment and detachment points | equity 0% and 3%; senior 10% and 100% | a higher A, a safer tranche |
+| $`R`$ | recovery: the share of a defaulted loan the bank gets back | 40% | less loss per default, every tranche safer |
+| $`p`$, $`\lambda`$ | one borrower's five-year default chance; the flat hazard rate (default chance per year over short intervals) behind it | 5%; 0.010259 | every tranche loses more |
+| $`\rho`$ | asset correlation: the share of each borrower's health driven by the shared economy | 20% | equity loses less, senior loses more |
+| $`m`$, $`q(m)`$ | the economy, a bell-curve draw with average 0; the share defaulting in that state | m = 0 gives 3.30% | lower m, more defaults |
+| $`c`$ | the default threshold: a borrower defaults when its health falls below c | −1.644854 | a higher c means more defaults |
+| $`N(x)`$, $`\varphi(m)`$ | the bell curve's area left of x, and its height at m; $`N^{-1}(u)`$ runs N backwards, giving the x whose area is u | N(−1.8390) = 3.30%; $`N^{-1}(0.05)`$ = −1.644854 | — |
+| $`E_i`$ | the tranche's expected loss by payment date i, as a share of its size; $`E_0 = 0`$ | equity 62.77% by year five | a bigger spread |
+| $`t_i`$, $`\Delta`$ | the quarterly payment dates and the gap between them | 0.25, 0.5, …, 5 years; 0.25 | — |
+| $`r`$ | the riskless rate, continuously compounded | 5% | both legs shrink; the spread barely moves |
+| $`s`$ | the tranche's par spread, per year, on its surviving size | equity 2006.1 bp | — |
 
 A basis point (bp) is one hundredth of a percent: 2006.1 bp is 20.061% a year.
 
@@ -105,31 +113,37 @@ A tranche is a rule applied to one number, the pool's loss. So pricing it splits
 
 Take the junior mezzanine, 3% to 7%. If the pool loses 5%, the tranche absorbs the 2 points above its floor. As a share of its 4-point width, that is 50%, the green line's value at 5 in the chart.
 
-Write the rule with the $(y)^+$ notation. Losses above the attachment point are $(L - A)^+$. That is a call option on the pool's loss with strike A. Losses above the detachment point, $(L - D)^+$, belong to the tranche above. Subtract them:
+Write the rule with the $`(y)^+`$ notation. Losses above the attachment point are $`(L - A)^+`$. That is a call option on the pool's loss with strike A. Losses above the detachment point, $`(L - D)^+`$, belong to the tranche above. Subtract them:
 
-$$(L - A)^+ - (L - D)^+ = \min\big(\max(L - A, 0),\; D - A\big).$$
+```math
+(L - A)^+ - (L - D)^+ = \min\big(\max(L - A, 0),\; D - A\big).
+```
 
-Check at 5%: $(5 - 3)^+ - (5 - 7)^+ = 2 - 0 = 2$ points. At 9%: $6 - 2 = 4$ points, the whole tranche. A long (owned) call at one strike and a short (sold) call at a higher strike is a **call spread**. Every tranche is one, on the pool's loss. The equity tranche is the special case A = 0, where the first call is just the loss itself.
+Check at 5%: $`(5 - 3)^+ - (5 - 7)^+ = 2 - 0 = 2`$ points. At 9%: $`6 - 2 = 4`$ points, the whole tranche. A long (owned) call at one strike and a short (sold) call at a higher strike is a **call spread**. Every tranche is one, on the pool's loss. The equity tranche is the special case A = 0, where the first call is just the loss itself.
 
 ### Step 2: the average of a call spread is an area under the pool's loss curve
 
 Write the tranche's loss as a sum of tiny slices. For each level x between A and D, ask one yes-or-no question: did the pool lose more than x? Counting "yes" answers across the whole stretch from A to D gives exactly the loss absorbed:
 
-$$(L - A)^+ - (L - D)^+ = \int_A^D [\,L > x\,]\,dx,$$
+```math
+(L - A)^+ - (L - D)^+ = \int_A^D [\,L > x\,]\,dx,
+```
 
-where $[\,L > x\,]$ is 1 when the pool lost more than x and 0 otherwise. At L = 5% and the 3-to-7 tranche, the bracket is 1 from 3 to 5 and 0 from 5 to 7: the integral is 2 points, as before.
+where $`[\,L > x\,]`$ is 1 when the pool lost more than x and 0 otherwise. At L = 5% and the 3-to-7 tranche, the bracket is 1 from 3 to 5 and 0 from 5 to 7: the integral is 2 points, as before.
 
 Average both sides. The average of a yes-or-no bracket is the chance it is yes, and averaging passes through the integral:
 
-$$\mathbb{E}\big[(L - A)^+ - (L - D)^+\big] = \int_A^D \mathbb{P}(L > x)\,dx.$$
+```math
+\mathbb{E}\big[(L - A)^+ - (L - D)^+\big] = \int_A^D \mathbb{P}(L > x)\,dx.
+```
 
-This is the loss-curve road. The large-pool loss curve from the Vasicek card supplies $\mathbb{P}(L > x)$ in closed form; the integral is then a single area.
+This is the loss-curve road. The large-pool loss curve from the Vasicek card supplies $`\mathbb{P}(L > x)`$ in closed form; the integral is then a single area.
 
 ### Step 3: in the large pool, the economy decides the loss outright
 
-The economy road averages over the economy instead of over loss levels. In the one-factor model each borrower's health is part shared economy m, part private luck. Once m is known, the private lucks are independent. With many small loans, the law of large numbers (averages of many independent draws settle on their expected value) makes the default rate settle on q(m) exactly. The pool's loss is then not random at all: it is $L(m) = (1 - R)\,q(m)$.
+The economy road averages over the economy instead of over loss levels. In the one-factor model each borrower's health is part shared economy m, part private luck. Once m is known, the private lucks are independent. With many small loans, the law of large numbers (averages of many independent draws settle on their expected value) makes the default rate settle on q(m) exactly. The pool's loss is then not random at all: it is $`L(m) = (1 - R)\,q(m)`$.
 
-So average the tranche's rule over m, weighting each state by the bell curve's height $\varphi(m)$. Two sample states, from the check's table:
+So average the tranche's rule over m, weighting each state by the bell curve's height $`\varphi(m)`$. Two sample states, from the check's table:
 
 - **A bad economy, m = −2.** Then q(m) = 20.07%, the pool loses 12.04%, the equity and junior mezzanine are wiped out, and the senior tranche loses 2.27% of its size.
 - **An average economy, m = 0.** Then q(m) = 3.30%, the pool loses 1.98%, and only the equity tranche is hit, losing 65.91%.
@@ -145,9 +159,11 @@ This is the **Andersen-Sidenius-Basu recursion**, after its 2003 authors, the in
 <details>
 <summary>The recursion, written out</summary>
 
-Fix the economy m and write q for q(m). Let $P_j(n)$ be the chance that exactly n of the first j loans have defaulted. Start with $P_0(0) = 1$. Adding loan j + 1:
-$$P_{j+1}(n) = P_j(n)\,(1 - q) + P_j(n - 1)\,q,$$
-with $P_j(-1) = 0$. After all 100 loans, the pool loss with n defaults is n × 0.6%, and the tranche's expected loss given m is the sum over n of $P_{100}(n)$ times the tranche's rule at that loss. For loans of different sizes, index the recursion by loss in units of a common lump instead of by count. The last step is the same average over m as the large pool.
+Fix the economy m and write q for q(m). Let $`P_j(n)`$ be the chance that exactly n of the first j loans have defaulted. Start with $`P_0(0) = 1`$. Adding loan j + 1:
+
+$`\displaystyle P_{j+1}(n) = P_j(n)\,(1 - q) + P_j(n - 1)\,q,`$
+
+with $`P_j(-1) = 0`$. After all 100 loans, the pool loss with n defaults is n × 0.6%, and the tranche's expected loss given m is the sum over n of $`P_{100}(n)`$ times the tranche's rule at that loss. For loans of different sizes, index the recursion by loss in units of a common lump instead of by count. The last step is the same average over m as the large pool.
 
 </details>
 
@@ -157,14 +173,14 @@ Whatever the correlation, the pool's average loss is 3%, since each loan's defau
 
 It moves it by spreading the pool's loss out. At zero correlation every large-pool outcome is exactly 3%: equity loses 100%, everyone else nothing. Raise the correlation and some economies lose far less than 3%, where equity keeps part of its money, while others lose far more, where equity cannot lose more than 100% and the excess goes upstairs.
 
-The payoff's shape makes this exact. The equity rule, $\min(L, 3\%)/3\%$, bends downward (**concave**: its average over two points sits below its value at their average), so spreading L around a fixed mean lowers its average. The senior rule, $(L - 10\%)^+/90\%$, bends upward (**convex**), so spreading raises it. That is Jensen's inequality. The mezzanines bend both ways; their expected loss rises with correlation, then falls.
+The payoff's shape makes this exact. The equity rule, $`\min(L, 3\%)/3\%`$, bends downward (**concave**: its average over two points sits below its value at their average), so spreading L around a fixed mean lowers its average. The senior rule, $`(L - 10\%)^+/90\%`$, bends upward (**convex**), so spreading raises it. That is Jensen's inequality. The mezzanines bend both ways; their expected loss rises with correlation, then falls.
 
 <details>
 <summary>Detailed proof: the tranches add back to the pool, and correlation moves equity and senior in opposite directions</summary>
 
-**Adding back.** For any loss level L between 0 and 1, and floors $0 = A_1 < D_1 = A_2 < D_2 = \dots < D_4 = 1$, each $(L - A_k)^+ - (L - D_k)^+$ is the part of L between two neighbouring floors. The sum telescopes: $(L - 0)^+ - (L - 1)^+ = L$. Multiply each tranche's share by its width, take averages, and the widths times expected tranche losses sum to $\mathbb{E}[L] = (1 - R)\,p$, for every ρ.
+**Adding back.** For any loss level L between 0 and 1, and floors $`0 = A_1 < D_1 = A_2 < D_2 = \dots < D_4 = 1`$, each $`(L - A_k)^+ - (L - D_k)^+`$ is the part of L between two neighbouring floors. The sum telescopes: $`(L - 0)^+ - (L - 1)^+ = L`$. Multiply each tranche's share by its width, take averages, and the widths times expected tranche losses sum to $`\mathbb{E}[L] = (1 - R)\,p`$, for every ρ.
 
-**Direction.** In the large pool, $L = (1 - R)\,q(m)$. As ρ rises, the distribution of L keeps its mean $(1-R)p$ and becomes more spread out in the convex order: for every convex payoff f, $\mathbb{E}[f(L)]$ rises with ρ. (Sketch: for ρ below ρ′, write the ρ′ economy as the ρ economy plus an independent bell-curve draw; averaging out that draw returns the ρ-pool's loss, so the ρ′ loss is the ρ loss plus noise with average zero, given the ρ loss. Adding average-zero noise raises the average of any convex function; that is Jensen's inequality applied inside the conditional average.) The senior rule $(L - 0.1)^+/0.9$ is convex, so its expected value rises. The equity rule $\min(L, 0.03)/0.03 = \big(L - (L - 0.03)^+\big)/0.03$ is the mean, which does not move, minus a convex function, which rises, so it falls. A mezzanine rule is the difference of two convex functions and has no fixed direction; the check's sweep shows the junior mezzanine peaking near ρ = 30%.
+**Direction.** In the large pool, $`L = (1 - R)\,q(m)`$. As ρ rises, the distribution of L keeps its mean $`(1-R)p`$ and becomes more spread out in the convex order: for every convex payoff f, $`\mathbb{E}[f(L)]`$ rises with ρ. (Sketch: for ρ below ρ′, write the ρ′ economy as the ρ economy plus an independent bell-curve draw; averaging out that draw returns the ρ-pool's loss, so the ρ′ loss is the ρ loss plus noise with average zero, given the ρ loss. Adding average-zero noise raises the average of any convex function; that is Jensen's inequality applied inside the conditional average.) The senior rule $`(L - 0.1)^+/0.9`$ is convex, so its expected value rises. The equity rule $`\min(L, 0.03)/0.03 = \big(L - (L - 0.03)^+\big)/0.03`$ is the mean, which does not move, minus a convex function, which rises, so it falls. A mezzanine rule is the difference of two convex functions and has no fixed direction; the check's sweep shows the junior mezzanine peaking near ρ = 30%.
 
 </details>
 
@@ -172,7 +188,7 @@ The payoff's shape makes this exact. The equity rule, $\min(L, 3\%)/3\%$, bends 
 
 A tranche trades like a credit default swap on its own slice. The **protection buyer** pays a premium s a year on the tranche's surviving size; the **protection seller** pays each loss as it lands. At the fair spread the two streams are worth the same today.
 
-Loss arrives over time, so Step 3 is run at every quarter. A flat hazard rate λ spreads the default chance over time: by time t it is $1 - e^{-\lambda t}$, which reaches 5% at five years when λ = −ln(0.95)/5 = 0.010259. Each quarter's chance, fed to the large-pool formula, gives $E_i$.
+Loss arrives over time, so Step 3 is run at every quarter. A flat hazard rate λ spreads the default chance over time: by time t it is $`1 - e^{-\lambda t}`$, which reaches 5% at five years when λ = −ln(0.95)/5 = 0.010259. Each quarter's chance, fed to the large-pool formula, gives $`E_i`$.
 
 The **protection leg** is each quarter's new expected loss, discounted from its payment date. The premium leg per unit of spread, the **risky annuity**, is a quarter's premium, discounted, on the average surviving size through the quarter. The par spread is their ratio. This is the credit default swap's par spread from [Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md), with the tranche's expected loss standing where the single name's default chance stood.
 
@@ -188,17 +204,17 @@ House pool: 100 loans, 5% five-year default chance, recovery 40%, correlation 20
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| default threshold c | $N^{-1}(0.05)$ | −1.644854 |
-| correlation weights | $\sqrt{0.2}$ and $\sqrt{0.8}$ | 0.447214 and 0.894427 |
-| economy at m = 0: z | $(−1.644854 − 0.447214 × 0) / 0.894427$ | −1.8390 |
-| share defaulting, q(0) | $N(−1.8390)$ | 3.30% |
-| pool loss at m = 0 | $0.6 × 3.30\%$ | 1.98% |
-| equity loss at m = 0 | $1.9774 / 3$ | 65.91% |
-| economy at m = −2: z | $(−1.644854 + 0.447214 × 2) / 0.894427$ | −0.8390 |
-| pool loss at m = −2 | $0.6 × N(−0.8390) = 0.6 × 20.07\%$ | 12.04% |
-| equity and senior at m = −2 | $\min(12.04, 3)/3$; $(12.04 − 10)/90$ | 100% and 2.27% |
+| default threshold c | $`N^{-1}(0.05)`$ | −1.644854 |
+| correlation weights | $`\sqrt{0.2}`$ and $`\sqrt{0.8}`$ | 0.447214 and 0.894427 |
+| economy at m = 0: z | $`(−1.644854 − 0.447214 × 0) / 0.894427`$ | −1.8390 |
+| share defaulting, q(0) | $`N(−1.8390)`$ | 3.30% |
+| pool loss at m = 0 | $`0.6 × 3.30\%`$ | 1.98% |
+| equity loss at m = 0 | $`1.9774 / 3`$ | 65.91% |
+| economy at m = −2: z | $`(−1.644854 + 0.447214 × 2) / 0.894427`$ | −0.8390 |
+| pool loss at m = −2 | $`0.6 × N(−0.8390) = 0.6 × 20.07\%`$ | 12.04% |
+| equity and senior at m = −2 | $`\min(12.04, 3)/3`$; $`(12.04 − 10)/90`$ | 100% and 2.27% |
 | average over the bell curve | Simpson's rule, 2,000 slices from m = −8 to 8 | **62.77%** |
-| adding back to the pool | $0.03 × 62.77\% + 0.04 × 19.47\% + 0.03 × 6.49\% + 0.90 × 0.16\%$ | 3.00% |
+| adding back to the pool | $`0.03 × 62.77\% + 0.04 × 19.47\% + 0.03 × 6.49\% + 0.90 × 0.16\%`$ | 3.00% |
 | equity par spread | protection 0.564815 ÷ annuity 2.815556 | **2006.1 bp** |
 
 The equity tranche expects to lose almost two-thirds of its money over five years, and a buyer of its protection pays about 20% a year for that cover. The senior tranche costs 3.0 bp, and the two mezzanines 406.0 bp and 126.1 bp.
@@ -690,9 +706,9 @@ The two outputs are identical line for line, Monte Carlo included: both programs
 
 Lean proves the tranche rules of Steps 1, 2 and 5 for any pool loss and any floors, with no copula model.
 
-- A tranche is a call spread. Suppose $A < D$. Then $(L - A)^+ - (L - D)^+ = \min((L - A)^+, D - A)$.
-- Its expected loss is an area. Take any pool loss $L$ and floors $A < D$. Then $\mathbb{E}[L_{[A,D]}] = \frac{1}{D-A}\int_A^D \mathbb{P}(L > x)\,dx$.
-- The tranches add back to the pool. Take floors $0 = a_0 < \dots < a_n = 1$ and a pool loss $L$ from 0 to 1. Then the widths times the tranche losses sum to $L$.
+- A tranche is a call spread. Suppose $`A < D`$. Then $`(L - A)^+ - (L - D)^+ = \min((L - A)^+, D - A)`$.
+- Its expected loss is an area. Take any pool loss $`L`$ and floors $`A < D`$. Then $`\mathbb{E}[L_{[A,D]}] = \frac{1}{D-A}\int_A^D \mathbb{P}(L > x)\,dx`$.
+- The tranches add back to the pool. Take floors $`0 = a_0 < \dots < a_n = 1`$ and a pool loss $`L`$ from 0 to 1. Then the widths times the tranche losses sum to $`L`$.
 - Lean checks the card's small cases: Step 1's 2 and 4 points, and the chart's values at 1%, 3%, 11% and 12%.
 
 The Gaussian copula figures, the 100-loan pool, the correlation sweep and the spreads are left to the Python and Rust checks.

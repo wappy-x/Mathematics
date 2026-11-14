@@ -35,13 +35,13 @@ xychart-beta
     line [48, 48, 48, 48, 48, 48, 48, 48, 48]
 ```
 
-Orange, top: the LP relaxation priced the same way, lowest at £53k. Green, middle: the Lagrangian bound $q(\lambda)$, lowest at £50k when a crew-hour costs £2k. Dark, flat: the best real booking, £48k. Every price gives a valid ceiling; the best ceiling sits at the bottom of the green V.
+Orange, top: the LP relaxation priced the same way, lowest at £53k. Green, middle: the Lagrangian bound $`q(\lambda)`$, lowest at £50k when a crew-hour costs £2k. Dark, flat: the best real booking, £48k. Every price gives a valid ceiling; the best ceiling sits at the bottom of the green V.
 
 ---
 
 ## The formula
 
-The acts, with $h_i$ the act's stage hours, $c_i$ its crew-hours and $p_i$ its profit:
+The acts, with $`h_i`$ the act's stage hours, $`c_i`$ its crew-hours and $`p_i`$ its profit:
 
 | Stage | Act: hours, crew-hours, £k | Act | Act |
 | --- | --- | --- | --- |
@@ -49,44 +49,50 @@ The acts, with $h_i$ the act's stage hours, $c_i$ its crew-hours and $p_i$ its p
 | Tent | T1: 4, 5, 8 | T2: 3, 3, 7 | T3: 3, 2, 9 |
 | Acoustic | A1: 2, 6, 10 | A2: 3, 4, 12 | A3: 4, 2, 8 |
 
-The integer program: choose $x_i = 1$ (book act $i$) or $0$ (do not) to
+The integer program: choose $`x_i = 1`$ (book act $`i`$) or $`0`$ (do not) to
 
-$$\text{maximise } \sum_i p_i x_i \quad\text{subject to}\quad x_s \in X_s \text{ for each stage } s, \qquad \sum_i c_i x_i \le C = 16.$$
+```math
+\text{maximise } \sum_i p_i x_i \quad\text{subject to}\quad x_s \in X_s \text{ for each stage } s, \qquad \sum_i c_i x_i \le C = 16.
+```
 
-Here $x_s$ is stage $s$'s part of the booking, and $X_s$ is the list of whole bookings for stage $s$ that fit its 6-hour evening. Price the crew rule at $\lambda \ge 0$, in £k (thousands of pounds) per crew-hour, and add the priced slack to the profit:
+Here $`x_s`$ is stage $`s`$'s part of the booking, and $`X_s`$ is the list of whole bookings for stage $`s`$ that fit its 6-hour evening. Price the crew rule at $`\lambda \ge 0`$, in £k (thousands of pounds) per crew-hour, and add the priced slack to the profit:
 
-$$q(\lambda) = \max_{x_s \in X_s} \Big[\sum_i p_i x_i + \lambda\Big(C - \sum_i c_i x_i\Big)\Big] = \lambda C + \sum_{s} \max_{x_s \in X_s} \sum_{i \in s} (p_i - \lambda c_i)\, x_i \;\ge\; z_{IP}.$$
+```math
+q(\lambda) = \max_{x_s \in X_s} \Big[\sum_i p_i x_i + \lambda\Big(C - \sum_i c_i x_i\Big)\Big] = \lambda C + \sum_{s} \max_{x_s \in X_s} \sum_{i \in s} (p_i - \lambda c_i)\, x_i \;\ge\; z_{IP}.
+```
 
-**Read it aloud:** give the stages the whole crew budget at price $\lambda$, let each stage book the acts whose profit beats their crew bill, and the total is at least the best real profit.
+**Read it aloud:** give the stages the whole crew budget at price $`\lambda`$, let each stage book the acts whose profit beats their crew bill, and the total is at least the best real profit.
 
-The best such bound is the Lagrangian dual, found by subgradient steps from $\lambda_0 = 0$:
+The best such bound is the Lagrangian dual, found by subgradient steps from $`\lambda_0 = 0`$:
 
-$$z_{LD} = \min_{\lambda \ge 0} q(\lambda), \qquad \lambda_{k+1} = \max\big(0,\; \lambda_k - \alpha_k\, g_k\big), \qquad g_k = C - \sum_i c_i x_i(\lambda_k),$$
+```math
+z_{LD} = \min_{\lambda \ge 0} q(\lambda), \qquad \lambda_{k+1} = \max\big(0,\; \lambda_k - \alpha_k\, g_k\big), \qquad g_k = C - \sum_i c_i x_i(\lambda_k),
+```
 
-and the three numbers stand in a fixed order: $z_{IP} \le z_{LD} \le z_{LP}$. Here, £48k ≤ £50k ≤ £53k.
+and the three numbers stand in a fixed order: $`z_{IP} \le z_{LD} \le z_{LP}`$. Here, £48k ≤ £50k ≤ £53k.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_i$ | book act $i$ (1) or not (0) | M1, M2, T2, T3, A3 booked | — |
-| $p_i$ | act $i$'s profit, £k | M1: 12 | bound and best booking rise or stay |
-| $c_i$ | crew-hours act $i$ needs; here $c$ is a weight in the crew limit, not the LP shelf's objective $c$, which is $p$ on this card | M2: 6 | the act gets dropped sooner as the price rises |
-| $h_i$ | stage hours act $i$ fills, of the 6 a stage has | A3: 4 | fewer whole plans fit |
-| $C$ | the shared crew budget, crew-hours | 16 | the price falls; at 23 it reaches 0 |
-| $X_s$, $\operatorname{conv} X_s$ | stage $s$'s whole plans that fit 6 hours; their blends | Main: 6 plans | — |
-| $\lambda$ | the price of one crew-hour, £k; the Lagrange multiplier | best: 2 | bound falls, then rises (the V) |
-| $q(\lambda)$ | the dual function: the priced total, an upper bound | $q(2) = 50$ | — |
-| $z_{IP}$, $z_{LD}$, $z_{LP}$ | best real booking; best Lagrangian bound; LP bound | 48, 50, 53 | — |
-| $g_k$ | crew budget minus crew the priced plans use: the slope of $q$ | $16 - 23 = -7$ at $k = 0$ | a negative slope pushes the price up |
-| $k$, $\lambda_k$, $\alpha_k$ | step number from 0; the price at step $k$; the step size | $\lambda_1 = 3.5$; $\alpha_k = 0.5/(k+1)$ | a constant step too large and the price cycles |
-| $w_{sj}$, $P_{sj}$, $K_{sj}$, $\mu_s$ | in the proof fold: weight on plan $j$ of stage $s$, its profit, its crew; stage $s$'s price | A2 and A3 at weight 1/2 each | — |
+| $`x_i`$ | book act $`i`$ (1) or not (0) | M1, M2, T2, T3, A3 booked | — |
+| $`p_i`$ | act $`i`$'s profit, £k | M1: 12 | bound and best booking rise or stay |
+| $`c_i`$ | crew-hours act $`i`$ needs; here $`c`$ is a weight in the crew limit, not the LP shelf's objective $`c`$, which is $`p`$ on this card | M2: 6 | the act gets dropped sooner as the price rises |
+| $`h_i`$ | stage hours act $`i`$ fills, of the 6 a stage has | A3: 4 | fewer whole plans fit |
+| $`C`$ | the shared crew budget, crew-hours | 16 | the price falls; at 23 it reaches 0 |
+| $`X_s`$, $`\mathrm{conv}\, X_s`$ | stage $`s`$'s whole plans that fit 6 hours; their blends | Main: 6 plans | — |
+| $`\lambda`$ | the price of one crew-hour, £k; the Lagrange multiplier | best: 2 | bound falls, then rises (the V) |
+| $`q(\lambda)`$ | the dual function: the priced total, an upper bound | $`q(2) = 50`$ | — |
+| $`z_{IP}`$, $`z_{LD}`$, $`z_{LP}`$ | best real booking; best Lagrangian bound; LP bound | 48, 50, 53 | — |
+| $`g_k`$ | crew budget minus crew the priced plans use: the slope of $`q`$ | $`16 - 23 = -7`$ at $`k = 0`$ | a negative slope pushes the price up |
+| $`k`$, $`\lambda_k`$, $`\alpha_k`$ | step number from 0; the price at step $`k`$; the step size | $`\lambda_1 = 3.5`$; $`\alpha_k = 0.5/(k+1)`$ | a constant step too large and the price cycles |
+| $`w_{sj}`$, $`P_{sj}`$, $`K_{sj}`$, $`\mu_s`$ | in the proof fold: weight on plan $`j`$ of stage $`s`$, its profit, its crew; stage $`s`$'s price | A2 and A3 at weight 1/2 each | — |
 
 ### When it holds
 
-- **The price must be zero or positive.** The crew rule is "at most 16", and a booking that obeys it leaves slack $C - \sum c_i x_i \ge 0$; only a non-negative price turns that slack into a non-negative bonus. A negative price can make the priced score of a legal booking fall below its profit, and the bound proof breaks.
-- **Each stage must be solved exactly.** The bound is the true maximum of the priced problem. A stage solved by a quick guess can report less than its true best, and then $q(\lambda)$ can fall below £48k, which is no bound at all.
+- **The price must be zero or positive.** The crew rule is "at most 16", and a booking that obeys it leaves slack $`C - \sum c_i x_i \ge 0`$; only a non-negative price turns that slack into a non-negative bonus. A negative price can make the priced score of a legal booking fall below its profit, and the bound proof breaks.
+- **Each stage must be solved exactly.** The bound is the true maximum of the priced problem. A stage solved by a quick guess can report less than its true best, and then $`q(\lambda)`$ can fall below £48k, which is no bound at all.
 - **The pieces must be harder than their LP, or there is no gain.** If the stage rule were "at most two acts" instead of "at most 6 hours", each stage's LP would already have whole-number corners, and the Lagrangian bound would equal the LP bound: £54k and £54k, against a best booking of £53k.
-- **The steps must shrink, but not too fast.** With $\alpha_k \to 0$ and $\sum_k \alpha_k = \infty$ the best bound found tends to $z_{LD}$. A constant step of 0.5 makes the price jump between 0 and 3.5 for ever, and the best bound stays at £62k.
-- **The bound need not be reached.** Even at the best price, $z_{LD}$ can sit above every real booking: a duality gap, here £2k. The priced plans may also break the crew rule, so they are not an answer on their own.
+- **The steps must shrink, but not too fast.** With $`\alpha_k \to 0`$ and $`\sum_k \alpha_k = \infty`$ the best bound found tends to $`z_{LD}`$. A constant step of 0.5 makes the price jump between 0 and 3.5 for ever, and the best bound stays at £62k.
+- **The bound need not be reached.** Even at the best price, $`z_{LD}`$ can sit above every real booking: a duality gap, here £2k. The priced plans may also break the crew rule, so they are not an answer on their own.
 
 ---
 
@@ -94,41 +100,43 @@ and the three numbers stand in a fixed order: $z_{IP} \le z_{LD} \le z_{LP}$. He
 
 ### Step 0: a price turns a hard rule into a refund
 
-A booking that obeys the crew rule uses at most 16 crew-hours. Pay it $\lambda$ for every crew-hour it leaves unused, and its priced score is its profit plus a refund that cannot be negative. So, for every legal booking, priced score ≥ profit.
+A booking that obeys the crew rule uses at most 16 crew-hours. Pay it $`\lambda`$ for every crew-hour it leaves unused, and its priced score is its profit plus a refund that cannot be negative. So, for every legal booking, priced score ≥ profit.
 
 Now drop the crew rule and let the stages book anything that fits their evenings. The priced maximum over this bigger list is at least the priced score of the best legal booking, which is at least £48k. That is the whole bound.
 
 ### Step 1: the bound, as two lines of algebra
 
-For any $\lambda \ge 0$ and any booking $x$ that obeys both rules,
+For any $`\lambda \ge 0`$ and any booking $`x`$ that obeys both rules,
 
-$$\sum_i p_i x_i \;\le\; \sum_i p_i x_i + \lambda\Big(C - \sum_i c_i x_i\Big) \;\le\; q(\lambda).$$
+```math
+\sum_i p_i x_i \;\le\; \sum_i p_i x_i + \lambda\Big(C - \sum_i c_i x_i\Big) \;\le\; q(\lambda).
+```
 
-The first inequality holds because $\lambda \ge 0$ and the slack is $\ge 0$; the second because $q(\lambda)$ maximises the same expression over a list that contains $x$. Take the best legal $x$ on the left: $z_{IP} \le q(\lambda)$ for every $\lambda \ge 0$. This is weak duality, the same fact [Lagrangian duality](../03-Constrained%20Optimisation/04-lagrangian-duality-weak-and-strong.md) proves for continuous problems, here with a list of bookings in place of a smooth set.
+The first inequality holds because $`\lambda \ge 0`$ and the slack is $`\ge 0`$; the second because $`q(\lambda)`$ maximises the same expression over a list that contains $`x`$. Take the best legal $`x`$ on the left: $`z_{IP} \le q(\lambda)`$ for every $`\lambda \ge 0`$. This is weak duality, the same fact [Lagrangian duality](../03-Constrained%20Optimisation/04-lagrangian-duality-weak-and-strong.md) proves for continuous problems, here with a list of bookings in place of a smooth set.
 
 ### Step 2: the priced problem falls apart by stage
 
-Once the crew rule is a price, nothing links the stages. The priced profit is a sum of one term per stage, and each stage's evening rule mentions only its own acts. So the maximum of the sum is the sum of three maxima, plus the constant $\lambda C$.
+Once the crew rule is a price, nothing links the stages. The priced profit is a sum of one term per stage, and each stage's evening rule mentions only its own acts. So the maximum of the sum is the sum of three maxima, plus the constant $`\lambda C`$.
 
-That is the decomposition. Main has 6 plans that fit, Tent 5, Acoustic 6, so one value of $q$ costs 6 + 5 + 6 plan scores, added. The joint problem multiplies them instead: every Main plan with every Tent plan with every Acoustic plan, 122 of them within the crew budget. Adding grows slowly with more stages; multiplying explodes.
+That is the decomposition. Main has 6 plans that fit, Tent 5, Acoustic 6, so one value of $`q`$ costs 6 + 5 + 6 plan scores, added. The joint problem multiplies them instead: every Main plan with every Tent plan with every Acoustic plan, 122 of them within the crew budget. Adding grows slowly with more stages; multiplying explodes.
 
-### Step 3: $q$ is a V with corners, and its slope says which way to move
+### Step 3: $`q`$ is a V with corners, and its slope says which way to move
 
-Each whole booking $x$ draws a straight line in $\lambda$: profit $+ \lambda \times$ (unused crew). The function $q(\lambda)$ is the highest of those lines at each price, so it is convex (no dents) and piecewise straight, with corners where the best booking changes. Its lowest point sits at a corner or at $\lambda = 0$.
+Each whole booking $`x`$ draws a straight line in $`\lambda`$: profit $`+ \lambda \times`$ (unused crew). The function $`q(\lambda)`$ is the highest of those lines at each price, so it is convex (no dents) and piecewise straight, with corners where the best booking changes. Its lowest point sits at a corner or at $`\lambda = 0`$.
 
-Where the priced bookings use crew $\sum c_i x_i(\lambda)$, the line they draw touches $q$ there and lies under it everywhere else. Its slope, $g = C - \sum c_i x_i(\lambda)$, is a **subgradient** of $q$: a slope that stays under the graph even at a corner (see [Subgradients](../01-Convexity/07-subgradients.md)). If the stages overuse crew, $g < 0$: the bound falls as the price rises, so raise the price. If they leave crew idle, $g > 0$: lower it.
+Where the priced bookings use crew $`\sum c_i x_i(\lambda)`$, the line they draw touches $`q`$ there and lies under it everywhere else. Its slope, $`g = C - \sum c_i x_i(\lambda)`$, is a **subgradient** of $`q`$: a slope that stays under the graph even at a corner (see [Subgradients](../01-Convexity/07-subgradients.md)). If the stages overuse crew, $`g < 0`$: the bound falls as the price rises, so raise the price. If they leave crew idle, $`g > 0`$: lower it.
 
-At $\lambda = 2$ the stages have tied choices that use anything from 9 to 17 crew-hours. The slopes run from $16 - 17 = -1$ to $16 - 9 = +7$. A slope of zero lies between, so nothing to either side is lower: £2k is the best price and £50k the best bound. The code confirms it by scoring $q$ at every corner.
+At $`\lambda = 2`$ the stages have tied choices that use anything from 9 to 17 crew-hours. The slopes run from $`16 - 17 = -1`$ to $`16 - 9 = +7`$. A slope of zero lies between, so nothing to either side is lower: £2k is the best price and £50k the best bound. The code confirms it by scoring $`q`$ at every corner.
 
 ### Step 4: subgradient steps find the bottom without drawing the V
 
-On a real problem nobody lists every corner. The subgradient method only needs one priced solve per step: solve the stages at $\lambda_k$, read the crew they use, step the price against the slope, $\lambda_{k+1} = \max(0, \lambda_k - \alpha_k g_k)$, and keep the lowest $q$ seen.
+On a real problem nobody lists every corner. The subgradient method only needs one priced solve per step: solve the stages at $`\lambda_k`$, read the crew they use, step the price against the slope, $`\lambda_{k+1} = \max(0, \lambda_k - \alpha_k g_k)`$, and keep the lowest $`q`$ seen.
 
-The classical rule, tested on integer programs by Held, Wolfe and Crowder: if the slopes stay bounded, $\alpha_k \to 0$ and $\sum_k \alpha_k = \infty$, the best bound found tends to $z_{LD}$. The steps must shrink so the price settles, and their sum must be endless so the price can travel any distance. The method makes no promise that any single step lowers $q$; that is why the best so far is kept. The card states this rule with its source and does not prove it.
+The classical rule, tested on integer programs by Held, Wolfe and Crowder: if the slopes stay bounded, $`\alpha_k \to 0`$ and $`\sum_k \alpha_k = \infty`$, the best bound found tends to $`z_{LD}`$. The steps must shrink so the price settles, and their sum must be endless so the price can travel any distance. The method makes no promise that any single step lowers $`q`$; that is why the best so far is kept. The card states this rule with its source and does not prove it.
 
-From $\lambda_0 = 0$ with $\alpha_k = 0.5/(k+1)$:
+From $`\lambda_0 = 0`$ with $`\alpha_k = 0.5/(k+1)`$:
 
-| $k$ | price $\lambda_k$ | crew used | $q(\lambda_k)$ | best bound so far |
+| $`k`$ | price $`\lambda_k`$ | crew used | $`q(\lambda_k)`$ | best bound so far |
 | --- | --- | --- | --- | --- |
 | 0 | 0.0000 | 23 | 62.0000 | 62.0000 |
 | 1 | 3.5000 | 6 | 64.0000 | 62.0000 |
@@ -145,24 +153,26 @@ The price overshoots, swings back and closes in on 2. After 30 steps the best bo
 
 The LP relaxation lets every act be fractional: seven-twelfths of a band. The Lagrangian dual is stricter. Geoffrion's theorem says it equals the best profit when each stage may blend **whole plans**, but not slice single acts:
 
-$$z_{LD} = \max\Big\{ \sum_i p_i x_i \;:\; x_s \in \operatorname{conv} X_s \text{ for each } s,\; \sum_i c_i x_i \le C \Big\}.$$
+```math
+z_{LD} = \max\Big\{ \sum_i p_i x_i \;:\; x_s \in \mathrm{conv}\, X_s \text{ for each } s,\; \sum_i c_i x_i \le C \Big\}.
+```
 
-Here $\operatorname{conv} X_s$ is the convex hull of stage $s$'s plans: every weighted average of them. Each stage's hull lies inside its LP region, so $z_{LD} \le z_{LP}$. The two match when every stage's LP region already has whole-number corners, the integrality property; then pricing gains nothing over the LP (see [Total unimodularity](05-total-unimodularity.md)).
+Here $`\mathrm{conv}\, X_s`$ is the convex hull of stage $`s`$'s plans: every weighted average of them. Each stage's hull lies inside its LP region, so $`z_{LD} \le z_{LP}`$. The two match when every stage's LP region already has whole-number corners, the integrality property; then pricing gains nothing over the LP (see [Total unimodularity](05-total-unimodularity.md)).
 
-In the festival, one blend that reaches £50k (the code prints it; there are others) books M1 and M2 on Main, T2 and T3 in the Tent, and on the Acoustic stage half of plan A2 and half of plan A3: crew $8 + 5 + 3 = 16$, profit $24 + 16 + 10 = 50$. The LP goes further. It books seven-twelfths of M2 and three-quarters of A3, a slice of each act, and reaches £53k with exactly 16 crew-hours.
+In the festival, one blend that reaches £50k (the code prints it; there are others) books M1 and M2 on Main, T2 and T3 in the Tent, and on the Acoustic stage half of plan A2 and half of plan A3: crew $`8 + 5 + 3 = 16`$, profit $`24 + 16 + 10 = 50`$. The LP goes further. It books seven-twelfths of M2 and three-quarters of A3, a slice of each act, and reaches £53k with exactly 16 crew-hours.
 
 <details>
 <summary>Detailed proof: the dual equals the best blend of whole plans</summary>
 
-Write the blend problem as a linear program over weights. For each stage $s$ and each plan $j$ in $X_s$, let $w_{sj} \ge 0$ be the weight on that plan, with $\sum_j w_{sj} = 1$ for each stage. Plan $j$ of stage $s$ has profit $P_{sj}$ and crew $K_{sj}$. The problem is
+Write the blend problem as a linear program over weights. For each stage $`s`$ and each plan $`j`$ in $`X_s`$, let $`w_{sj} \ge 0`$ be the weight on that plan, with $`\sum_j w_{sj} = 1`$ for each stage. Plan $`j`$ of stage $`s`$ has profit $`P_{sj}`$ and crew $`K_{sj}`$. The problem is
 
-$$\max \sum_{s,j} P_{sj} w_{sj} \quad\text{subject to}\quad \sum_{s,j} K_{sj} w_{sj} \le C,\quad \sum_j w_{sj} = 1 \text{ for each } s,\quad w \ge 0.$$
+$`\displaystyle \max \sum_{s,j} P_{sj} w_{sj} \quad\text{subject to}\quad \sum_{s,j} K_{sj} w_{sj} \le C,\quad \sum_j w_{sj} = 1 \text{ for each } s,\quad w \ge 0.`$
 
-This is the master program of Dantzig–Wolfe decomposition. Its LP dual has a price $\lambda \ge 0$ on the crew row and a free price $\mu_s$ on each stage's "weights sum to 1" row:
+This is the master program of Dantzig–Wolfe decomposition. Its LP dual has a price $`\lambda \ge 0`$ on the crew row and a free price $`\mu_s`$ on each stage's "weights sum to 1" row:
 
-$$\min\; \lambda C + \sum_s \mu_s \quad\text{subject to}\quad \mu_s \ge P_{sj} - \lambda K_{sj} \text{ for every stage } s \text{ and plan } j,\quad \lambda \ge 0.$$
+$`\displaystyle \min\; \lambda C + \sum_s \mu_s \quad\text{subject to}\quad \mu_s \ge P_{sj} - \lambda K_{sj} \text{ for every stage } s \text{ and plan } j,\quad \lambda \ge 0.`$
 
-For a fixed $\lambda$ the best $\mu_s$ is the smallest allowed, $\mu_s = \max_j (P_{sj} - \lambda K_{sj})$, which is stage $s$'s priced best. The dual objective becomes exactly $q(\lambda)$, and minimising over $\lambda$ gives $z_{LD}$. LP strong duality (the master is feasible, since booking nothing is legal, and bounded) says the two optimal values are equal; [LP duality](../04-Linear%20Programming/04-lp-duality-and-complementary-slackness.md) proves it. A blend of plans is the same as a point of $\operatorname{conv} X_s$, which gives the displayed formula.
+For a fixed $`\lambda`$ the best $`\mu_s`$ is the smallest allowed, $`\mu_s = \max_j (P_{sj} - \lambda K_{sj})`$, which is stage $`s`$'s priced best. The dual objective becomes exactly $`q(\lambda)`$, and minimising over $`\lambda`$ gives $`z_{LD}`$. LP strong duality (the master is feasible, since booking nothing is legal, and bounded) says the two optimal values are equal; [LP duality](../04-Linear%20Programming/04-lp-duality-and-complementary-slackness.md) proves it. A blend of plans is the same as a point of $`\mathrm{conv}\, X_s`$, which gives the displayed formula.
 
 </details>
 
@@ -170,24 +180,24 @@ For a fixed $\lambda$ the best $\mu_s$ is the smallest allowed, $\mu_s = \max_j 
 
 ## Worked numbers, by hand
 
-At the price $\lambda = 2$, each act's net value is $p_i - 2c_i$.
+At the price $`\lambda = 2`$, each act's net value is $`p_i - 2c_i`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Main: net of M1, M2, M3 | $12 - 4$, $12 - 12$, $5 - 12$ | 8, 0, −7 |
+| Main: net of M1, M2, M3 | $`12 - 4`$, $`12 - 12`$, $`5 - 12`$ | 8, 0, −7 |
 | Main: best plan fitting 6 hours | M1, or M1 + M2 (3 + 2 hours) | 8 |
-| Tent: net of T1, T2, T3 | $8 - 10$, $7 - 6$, $9 - 4$ | −2, 1, 5 |
+| Tent: net of T1, T2, T3 | $`8 - 10`$, $`7 - 6`$, $`9 - 4`$ | −2, 1, 5 |
 | Tent: best plan | T2 + T3 (6 hours) | 6 |
-| Acoustic: net of A1, A2, A3 | $10 - 12$, $12 - 8$, $8 - 4$ | −2, 4, 4 |
+| Acoustic: net of A1, A2, A3 | $`10 - 12`$, $`12 - 8`$, $`8 - 4`$ | −2, 4, 4 |
 | Acoustic: best plan | A2 alone or A3 alone (A2 + A3 needs 7 hours) | 4 |
-| crew budget at the price | $2 \times 16$ | 32 |
-| $q(2)$ | $32 + 8 + 6 + 4$ | 50 |
-| crew used by tied plans | low: $2 + 5 + 2$; high: $8 + 5 + 4$ | 9 to 17 |
-| slopes either side | $16 - 17$ and $16 - 9$ | −1 and +7 |
-| best real booking | M1 + M2, T2 + T3, A3: crew $8 + 5 + 2$ | 15 crew, £48k |
-| LP bound at the same price | best fractional plan per stage: $32 + 8 + 6 + 7$, Acoustic filling its 6 hours with A2 and 3/4 of A3 | 53 |
+| crew budget at the price | $`2 \times 16`$ | 32 |
+| $`q(2)`$ | $`32 + 8 + 6 + 4`$ | 50 |
+| crew used by tied plans | low: $`2 + 5 + 2`$; high: $`8 + 5 + 4`$ | 9 to 17 |
+| slopes either side | $`16 - 17`$ and $`16 - 9`$ | −1 and +7 |
+| best real booking | M1 + M2, T2 + T3, A3: crew $`8 + 5 + 2`$ | 15 crew, £48k |
+| LP bound at the same price | best fractional plan per stage: $`32 + 8 + 6 + 7`$, Acoustic filling its 6 hours with A2 and 3/4 of A3 | 53 |
 | an LP booking that meets it, with no price | M1, 7/12 of M2, T2, T3, A2, 3/4 of A3: crew exactly 16 | 53 |
-| **gaps** | $50 - 48$; $53 - 48$ | **£2k (4.2%); £5k (10.4%)** |
+| **gaps** | $`50 - 48`$; $`53 - 48`$ | **£2k (4.2%); £5k (10.4%)** |
 
 The price says no booking can make more than £50k, and a real booking makes £48k, so that booking is within £2k of the best before any search. Listing all 122 legal bookings closes the last £2k: £48k is optimal.
 
@@ -196,15 +206,15 @@ The price says no booking can make more than £50k, and a real booking makes £4
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Book what the priced stages chose at £2k, ties to more crew | £52k, needing 17 crew-hours | Breaks the 16-hour rule. A price certifies a bound, not a plan |
-| Drop the $\lambda C$ term | £18k | Below the £48k booking, so it bounds nothing: the refund was left out |
-| Constant step $\alpha_k = 0.5$ | best bound £62k after 30 steps | The price cycles 0, 3.5, 0, 3.5 and never nears 2 |
+| Drop the $`\lambda C`$ term | £18k | Below the £48k booking, so it bounds nothing: the refund was left out |
+| Constant step $`\alpha_k = 0.5`$ | best bound £62k after 30 steps | The price cycles 0, 3.5, 0, 3.5 and never nears 2 |
 | Stage rule "at most two acts" | Lagrangian £54k = LP £54k; best £53k | Each stage's LP is already whole, so pricing adds nothing over the LP |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The script lists every whole plan for each stage and prices them in exact fractions. It reaches £48k and £50k by independent roads. Road 1 enumerates the bookings, twice: through the stage plans, and again through all 512 raw yes-or-no patterns. Road 2 scores $q$ at every corner of the V. Road 3 solves the blend problem of Step 5 corner by corner, with no price at all, prints one best blend, and must meet road 2. Road 4 runs the subgradient method in ordinary decimals. The LP bound comes from fractional knapsacks (a stage's best fractional booking, filled in order of net value per stage hour), and is certified by a fractional booking that meets every rule and earns exactly £53k. At the nine chart prices it is checked again against every corner of each stage's LP region. Then the repair, the gaps, the mistakes, the two-acts variant and the chart's points are printed.
+The script lists every whole plan for each stage and prices them in exact fractions. It reaches £48k and £50k by independent roads. Road 1 enumerates the bookings, twice: through the stage plans, and again through all 512 raw yes-or-no patterns. Road 2 scores $`q`$ at every corner of the V. Road 3 solves the blend problem of Step 5 corner by corner, with no price at all, prints one best blend, and must meet road 2. Road 4 runs the subgradient method in ordinary decimals. The LP bound comes from fractional knapsacks (a stage's best fractional booking, filled in order of net value per stage hour), and is certified by a fractional booking that meets every rule and earns exactly £53k. At the nine chart prices it is checked again against every corner of each stage's LP region. Then the repair, the gaps, the mistakes, the two-acts variant and the chart's points are printed.
 
 ### Python
 
@@ -602,14 +612,14 @@ ALL CHECKS PASS
 
 Lean proves the bound, the split by stage and Geoffrion's theorem for any stages, plans, profits, crew-hours and budget, and the festival's key numbers.
 
-- Weak duality: for every price $\lambda \ge 0$, no booking that obeys the stage rules and the crew rule makes more profit than $q(\lambda)$.
-- When every stage has at least one plan that fits, $q(\lambda)$ equals $\lambda C$ plus each stage's best plan, scored by net value $p_i - \lambda c_i$.
-- Geoffrion's theorem, when at least one booking obeys every rule: the lowest bound $z_{LD}$ is reached at some price $\lambda \ge 0$.
+- Weak duality: for every price $`\lambda \ge 0`$, no booking that obeys the stage rules and the crew rule makes more profit than $`q(\lambda)`$.
+- When every stage has at least one plan that fits, $`q(\lambda)`$ equals $`\lambda C`$ plus each stage's best plan, scored by net value $`p_i - \lambda c_i`$.
+- Geoffrion's theorem, when at least one booking obeys every rule: the lowest bound $`z_{LD}`$ is reached at some price $`\lambda \ge 0`$.
 - That lowest bound equals the best profit from blends of whole plans that fit the crew budget, with no single act sliced.
 - In the festival, Main has 6 plans that fit, Tent 5 and Acoustic 6, and 122 bookings fit the crew budget.
 - M1 + M2, T2 + T3, A3 makes £48k with 15 crew-hours, and no legal booking makes more.
 - At £2k a crew-hour, no plan beats a net value of 8 on Main, 6 in the Tent or 4 on Acoustic.
-- $q(2) = 50$: no booking that fits the evenings scores more, and M1 + M2, T2 + T3, A2 scores exactly 50.
+- $`q(2) = 50`$: no booking that fits the evenings scores more, and M1 + M2, T2 + T3, A2 scores exactly 50.
 - The sums for the £50k blend and the £53k LP booking each come to exactly 16 crew-hours.
 
 The best price of £2k, the subgradient steps, the £53k LP bound and the "try" variants are left to the Python and Rust checks.
@@ -960,9 +970,9 @@ open LagrangianRelaxation
 > [!warning]
 > **Treating the priced plans as the answer.** At the best price, £2k, the stages' choices are tied, and the tie decides everything: one tie-break books £52k and needs 17 crew-hours, one too many; the other books £36k with 9 crew-hours, legal but poor. The price proves a bound. A real booking still has to be built, here by changing one stage's choice: swap A2 for A3 and the plan makes £48k with 15 crew-hours.
 >
-> - **Dropping the $\lambda C$ term.** The stages are charged for crew but never paid the budget, and the "bound" comes out at £18k, below a booking that really makes £48k.
+> - **Dropping the $`\lambda C`$ term.** The stages are charged for crew but never paid the budget, and the "bound" comes out at £18k, below a booking that really makes £48k.
 > - **A step that never shrinks.** A constant step of 0.5 swings the price between 0 and 3.5 for ever; the best bound stays at £62k.
-> - **Expecting every step to lower $q$.** At $k = 1$ the priced total rises to £64k from £62k. Subgradient steps are not descent steps; keep the best so far.
+> - **Expecting every step to lower $`q`$.** At $`k = 1`$ the priced total rises to £64k from £62k. Subgradient steps are not descent steps; keep the best so far.
 > - **Pricing when the pieces are easy.** If each stage's LP already has whole-number answers, the Lagrangian bound equals the LP bound (£54k and £54k in the two-acts variant), and solving the LP once is cheaper.
 
 ---
@@ -976,7 +986,7 @@ open LagrangianRelaxation
 - **Planning under uncertain demand.** Benders decomposition splits the other way: it fixes the hard decisions, solves the rest as an LP, and sends back its prices as new constraints.
 
 > **Say it back**
-> One rule, the shared 16 crew-hours, ties three stages' bookings together. Charging £$\lambda$k per crew-hour, and paying the stages the whole budget, removes the rule; each stage then books alone, and the priced total is a ceiling on any legal booking. The ceiling as a function of the price is a V, and subgradient steps walk to its bottom: £50k at £2k a crew-hour. That beats the LP relaxation's £53k because stages may blend whole plans but not slice acts. The best real booking, £48k, still has to be built and proved best, here by listing all 122 legal bookings.
+> One rule, the shared 16 crew-hours, ties three stages' bookings together. Charging £$`\lambda`$k per crew-hour, and paying the stages the whole budget, removes the rule; each stage then books alone, and the priced total is a ceiling on any legal booking. The ceiling as a function of the price is a V, and subgradient steps walk to its bottom: £50k at £2k a crew-hour. That beats the LP relaxation's £53k because stages may blend whole plans but not slice acts. The best real booking, £48k, still has to be built and proved best, here by listing all 122 legal bookings.
 
 ---
 

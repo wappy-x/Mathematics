@@ -45,44 +45,52 @@ The dark line bends toward the orange outside $90 and $120 and sits on the green
 
 ## The formula
 
-Notation first, in words. $S_T$ is Acme's price on expiry day, unknown today. $F$ is the forward price, the price agreed today for delivery at expiry. A payoff is a rule $g$ that turns $S_T$ into dollars. Its slope at a point is written $g'$ and its curvature $g''$. A superscript plus means "keep it if positive, otherwise zero": $(S_T - K)^+$ is what a call struck at $K$ pays.
+Notation first, in words. $`S_T`$ is Acme's price on expiry day, unknown today. $`F`$ is the forward price, the price agreed today for delivery at expiry. A payoff is a rule $`g`$ that turns $`S_T`$ into dollars. Its slope at a point is written $`g'`$ and its curvature $`g''`$. A superscript plus means "keep it if positive, otherwise zero": $`(S_T - K)^+`$ is what a call struck at $`K`$ pays.
 
-$$g(S_T) = g(F) + g'(F)\,(S_T - F) + \int_0^F g''(K)\,(K - S_T)^+\,dK + \int_F^\infty g''(K)\,(S_T - K)^+\,dK$$
+```math
+g(S_T) = g(F) + g'(F)\,(S_T - F) + \int_0^F g''(K)\,(K - S_T)^+\,dK + \int_F^\infty g''(K)\,(S_T - K)^+\,dK
+```
 
 **Read it aloud:** the payoff equals its value at the forward, plus its slope there times a forward position, plus puts at every strike below the forward and calls at every strike above, each bought in the amount of the payoff's curvature at that strike.
 
-Take today's price of each piece. Cash of $g(F)$ at expiry costs $D\,g(F)$ today, where $D = e^{-rT}$ is the discount factor. A forward struck at $F$ costs nothing. A put or call at strike $K$ costs $P(K)$ or $C(K)$. So the price $V$ is
+Take today's price of each piece. Cash of $`g(F)`$ at expiry costs $`D\,g(F)`$ today, where $`D = e^{-rT}`$ is the discount factor. A forward struck at $`F`$ costs nothing. A put or call at strike $`K`$ costs $`P(K)`$ or $`C(K)`$. So the price $`V`$ is
 
-$$V = D\,g(F) + \int_0^F g''(K)\,P(K)\,dK + \int_F^\infty g''(K)\,C(K)\,dK$$
+```math
+V = D\,g(F) + \int_0^F g''(K)\,P(K)\,dK + \int_F^\infty g''(K)\,C(K)\,dK
+```
 
 **Read it aloud:** the price of any payoff is discounted cash at the forward's payoff plus a curvature-weighted strip of out-of-the-money option prices. (Out of the money: a put below the forward, a call above it, each worth only its chance of a move.)
 
-For the log contract, $g(x) = 100\ln(x/100)$, so $g'(x) = 100/x$ and $g''(x) = -100/x^2$:
+For the log contract, $`g(x) = 100\ln(x/100)`$, so $`g'(x) = 100/x`$ and $`g''(x) = -100/x^2`$:
 
-$$V_{\log} = 100\,D\ln\frac{F}{100} \;-\; 100\left(\int_0^F \frac{P(K)}{K^2}\,dK + \int_F^\infty \frac{C(K)}{K^2}\,dK\right)$$
+```math
+V_{\log} = 100\,D\ln\frac{F}{100} \;-\; 100\left(\int_0^F \frac{P(K)}{K^2}\,dK + \int_F^\infty \frac{C(K)}{K^2}\,dK\right)
+```
 
 **Read it aloud:** the log contract is discounted cash of the log of the forward, minus a strip of puts and calls weighted one over strike squared.
 
-A book of listed strikes $K_1, K_2, \ldots$ spaced $\Delta K$ apart replaces each integral by a sum: at each strike, hold $g''(K)\,\Delta K$ of the out-of-the-money option.
+A book of listed strikes $`K_1, K_2, \ldots`$ spaced $`\Delta K`$ apart replaces each integral by a sum: at each strike, hold $`g''(K)\,\Delta K`$ of the out-of-the-money option.
 
-In the house lognormal model, the log of the finishing price has average $\ln F - \tfrac12\sigma^2 T$, which gives the closed form
+In the house lognormal model, the log of the finishing price has average $`\ln F - \tfrac12\sigma^2 T`$, which gives the closed form
 
-$$V_{\log} = 100\,D\left(\ln\frac{F}{100} - \tfrac12\sigma^2 T\right) = 100\,D\,(r - q - \tfrac12\sigma^2)\,T$$
+```math
+V_{\log} = 100\,D\left(\ln\frac{F}{100} - \tfrac12\sigma^2 T\right) = 100\,D\,(r - q - \tfrac12\sigma^2)\,T
+```
 
-Compare it with the strip formula: the options leg is worth exactly $100\,D\cdot\tfrac12\sigma^2 T$. The strip prices variance.
+Compare it with the strip formula: the options leg is worth exactly $`100\,D\cdot\tfrac12\sigma^2 T`$. The strip prices variance.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S_T$, $S$ | Acme's price on expiry day; Acme's price today | unknown; $100 | a higher $S$ raises the forward and the log contract's price |
-| $F$ | forward price, $S e^{(r-q)T}$: the price agreed now for delivery at expiry | $103.05 | the cash leg grows |
-| $K$, $\Delta K$ | an option's strike; the gap between neighbouring strikes in the book | 90 and 120; 30 | a wider gap leaves more of the curve unbuilt |
-| $g$, $g'$, $g''$ | the payoff rule; its slope; its curvature | 100 ln(x/100); 100/x; −100/x^2 | more curvature, more options |
-| $P(K)$, $C(K)$ | today's put and call prices at strike K | 90-put $2.71, 120-call $2.71 | the strip costs more |
-| $D$ | discount factor $e^{-rT}$: today's value of $1 paid at expiry | 0.951229 | every leg is worth more today |
-| $r$, $q$ | riskless rate; dividend yield, both continuously compounded | 5%; 2% | r up or q down raises the forward |
-| $\sigma$, $T$ | volatility per root year; years to expiry | 20%; 1 | the options leg grows as sigma squared times T |
-| $V$, $V_{\log}$ | today's price of the payoff; of the log contract | $0.95 | — |
-| $\Gamma$ | gamma: the curvature of today's price in today's share price | $-95.12/S^2$ for the log contract | — |
+| $`S_T`$, $`S`$ | Acme's price on expiry day; Acme's price today | unknown; $100 | a higher $`S`$ raises the forward and the log contract's price |
+| $`F`$ | forward price, $`S e^{(r-q)T}`$: the price agreed now for delivery at expiry | $103.05 | the cash leg grows |
+| $`K`$, $`\Delta K`$ | an option's strike; the gap between neighbouring strikes in the book | 90 and 120; 30 | a wider gap leaves more of the curve unbuilt |
+| $`g`$, $`g'`$, $`g''`$ | the payoff rule; its slope; its curvature | 100 ln(x/100); 100/x; −100/x^2 | more curvature, more options |
+| $`P(K)`$, $`C(K)`$ | today's put and call prices at strike K | 90-put $2.71, 120-call $2.71 | the strip costs more |
+| $`D`$ | discount factor $`e^{-rT}`$: today's value of $1 paid at expiry | 0.951229 | every leg is worth more today |
+| $`r`$, $`q`$ | riskless rate; dividend yield, both continuously compounded | 5%; 2% | r up or q down raises the forward |
+| $`\sigma`$, $`T`$ | volatility per root year; years to expiry | 20%; 1 | the options leg grows as sigma squared times T |
+| $`V`$, $`V_{\log}`$ | today's price of the payoff; of the log contract | $0.95 | — |
+| $`\Gamma`$ | gamma: the curvature of today's price in today's share price | $`-95.12/S^2`$ for the log contract | — |
 
 ### When it holds
 
@@ -99,71 +107,79 @@ Compare it with the strip formula: the options leg is worth exactly $100\,D\cdot
 
 A put or call has no curvature anywhere except at its strike, where its slope jumps by exactly 1. Hold a small amount of an option at each strike and the slope of the book changes by that amount at each strike.
 
-So to copy a curve, start with the straight line that matches its height and slope at one point. Then, at every strike, add an option in the amount the curve's slope changes there. Over a strike gap of width $\Delta K$, the slope changes by about $g''(K)\,\Delta K$. That is the weight.
+So to copy a curve, start with the straight line that matches its height and slope at one point. Then, at every strike, add an option in the amount the curve's slope changes there. Over a strike gap of width $`\Delta K`$, the slope changes by about $`g''(K)\,\Delta K`$. That is the weight.
 
 The anchor point is the forward, for two reasons. A forward struck at the forward costs nothing, so the line costs only its cash. And on each side of the forward the out-of-the-money option is the cheap one, so the strip carries no large cash pieces that cancel.
 
 ### Step 1: above the forward, integrate by parts
 
-Take a finishing price above the forward, $S_T > F$. Look at the calls between the forward and $S_T$, weighted by curvature. Each call at strike $K$ pays $S_T - K$. Their total payoff is
+Take a finishing price above the forward, $`S_T > F`$. Look at the calls between the forward and $`S_T`$, weighted by curvature. Each call at strike $`K`$ pays $`S_T - K`$. Their total payoff is
 
-$$\int_F^{S_T} g''(K)\,(S_T - K)\,dK.$$
+```math
+\int_F^{S_T} g''(K)\,(S_T - K)\,dK.
+```
 
-Integrate by parts ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)): let $S_T - K$ be the part to differentiate, whose slope in $K$ is $-1$, and $g''$ the part to integrate, whose integral is $g'$. The first pass removes one derivative:
+Integrate by parts ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)): let $`S_T - K`$ be the part to differentiate, whose slope in $`K`$ is $`-1`$, and $`g''`$ the part to integrate, whose integral is $`g'`$. The first pass removes one derivative:
 
-$$\Big[(S_T - K)\,g'(K)\Big]_F^{S_T} + \int_F^{S_T} g'(K)\,dK.$$
+```math
+\Big[(S_T - K)\,g'(K)\Big]_F^{S_T} + \int_F^{S_T} g'(K)\,dK.
+```
 
-The bracket is zero at the top, because $S_T - S_T = 0$, and $-(S_T - F)\,g'(F)$ at the bottom. The second pass removes the other derivative: integrating a slope gives back the rise, so the integral is $g(S_T) - g(F)$. Together:
+The bracket is zero at the top, because $`S_T - S_T = 0`$, and $`-(S_T - F)\,g'(F)`$ at the bottom. The second pass removes the other derivative: integrating a slope gives back the rise, so the integral is $`g(S_T) - g(F)`$. Together:
 
-$$\int_F^{S_T} g''(K)\,(S_T - K)\,dK = g(S_T) - g(F) - g'(F)\,(S_T - F).$$
+```math
+\int_F^{S_T} g''(K)\,(S_T - K)\,dK = g(S_T) - g(F) - g'(F)\,(S_T - F).
+```
 
-Move the two pieces across and $g(S_T)$ stands alone: its value at the forward, plus its slope times the move, plus the calls. Calls above $S_T$ pay nothing, so the upper limit may run to infinity. Puts below the forward also pay nothing when $S_T > F$, so adding them changes nothing. That is the spanning identity for $S_T > F$.
+Move the two pieces across and $`g(S_T)`$ stands alone: its value at the forward, plus its slope times the move, plus the calls. Calls above $`S_T`$ pay nothing, so the upper limit may run to infinity. Puts below the forward also pay nothing when $`S_T > F`$, so adding them changes nothing. That is the spanning identity for $`S_T > F`$.
 
 ### Step 2: below the forward, the same with puts
 
-For $S_T < F$ the puts between $S_T$ and $F$ pay $K - S_T$. The same two passes give
+For $`S_T < F`$ the puts between $`S_T`$ and $`F`$ pay $`K - S_T`$. The same two passes give
 
-$$\int_{S_T}^{F} g''(K)\,(K - S_T)\,dK = g(S_T) - g(F) - g'(F)\,(S_T - F).$$
+```math
+\int_{S_T}^{F} g''(K)\,(K - S_T)\,dK = g(S_T) - g(F) - g'(F)\,(S_T - F).
+```
 
-The calls above the forward pay nothing, so again one formula covers both sides. At $S_T = F$ every option pays nothing and the identity reads $g(F) = g(F)$.
+The calls above the forward pay nothing, so again one formula covers both sides. At $`S_T = F`$ every option pays nothing and the identity reads $`g(F) = g(F)`$.
 
 <details>
 <summary>Detailed proof: the spanning identity for every finishing price</summary>
 
-Let $g$ have a continuous curvature on the positive prices. Fix $S_T > 0$.
+Let $`g`$ have a continuous curvature on the positive prices. Fix $`S_T > 0`$.
 
-Case $S_T \ge F$. Every put with strike $K \le F$ pays $(K - S_T)^+ = 0$, and every call with $K > S_T$ pays 0. So the options leg is $\int_F^{S_T} g''(K)(S_T - K)\,dK$. Integration by parts with $u = S_T - K$, $du = -dK$, $dv = g''(K)\,dK$, $v = g'(K)$ gives $[(S_T - K)g'(K)]_F^{S_T} + \int_F^{S_T} g'(K)\,dK = -(S_T - F)g'(F) + g(S_T) - g(F)$, the last step by the fundamental theorem of calculus ([Fundamental theorem of calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md)). Rearranged, $g(S_T) = g(F) + g'(F)(S_T - F) + \text{options leg}$.
+Case $`S_T \ge F`$. Every put with strike $`K \le F`$ pays $`(K - S_T)^+ = 0`$, and every call with $`K > S_T`$ pays 0. So the options leg is $`\int_F^{S_T} g''(K)(S_T - K)\,dK`$. Integration by parts with $`u = S_T - K`$, $`du = -dK`$, $`dv = g''(K)\,dK`$, $`v = g'(K)`$ gives $`[(S_T - K)g'(K)]_F^{S_T} + \int_F^{S_T} g'(K)\,dK = -(S_T - F)g'(F) + g(S_T) - g(F)`$, the last step by the fundamental theorem of calculus ([Fundamental theorem of calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md)). Rearranged, $`g(S_T) = g(F) + g'(F)(S_T - F) + \text{options leg}`$.
 
-Case $S_T < F$. Every call with $K \ge F$ pays 0, and every put with $K < S_T$ pays 0. The options leg is $\int_{S_T}^F g''(K)(K - S_T)\,dK = [(K - S_T)g'(K)]_{S_T}^F - \int_{S_T}^F g'(K)\,dK = (F - S_T)g'(F) - g(F) + g(S_T)$. Rearranged, the same identity.
+Case $`S_T < F`$. Every call with $`K \ge F`$ pays 0, and every put with $`K < S_T`$ pays 0. The options leg is $`\int_{S_T}^F g''(K)(K - S_T)\,dK = [(K - S_T)g'(K)]_{S_T}^F - \int_{S_T}^F g'(K)\,dK = (F - S_T)g'(F) - g(F) + g(S_T)`$. Rearranged, the same identity.
 
-Both integrals are over a bounded range, so they exist. The infinite limits in the formula add only options that pay zero at this $S_T$. For a price, average the identity over finishing prices. The average and the strike integral may swap when $g''$ keeps one sign on each side of the forward (Tonelli's theorem), as it does for the log and the square; in general it suffices that $\int |g''(K)|$ times the option price is finite. Then the strip's price is the discounted average of the strip's payoff, which the identity says is the payoff minus the line. The log's average is finite for a lognormal price.
+Both integrals are over a bounded range, so they exist. The infinite limits in the formula add only options that pay zero at this $`S_T`$. For a price, average the identity over finishing prices. The average and the strike integral may swap when $`g''`$ keeps one sign on each side of the forward (Tonelli's theorem), as it does for the log and the square; in general it suffices that $`\int |g''(K)|`$ times the option price is finite. Then the strip's price is the discounted average of the strip's payoff, which the identity says is the payoff minus the line. The log's average is finite for a lognormal price.
 
 </details>
 
 ### Step 3: price each piece
 
-Every leg is a traded thing, so the copy's price is the sum of the legs' prices. Cash of $g(F)$ at expiry costs $D\,g(F)$. The forward costs zero. The options cost $g''(K)\,P(K)$ or $g''(K)\,C(K)$ per unit of strike. If the payoff sold for anything else, selling the dearer one and buying the cheaper would lock in a profit with no risk. This step uses no model: it uses the prices of options on the screen.
+Every leg is a traded thing, so the copy's price is the sum of the legs' prices. Cash of $`g(F)`$ at expiry costs $`D\,g(F)`$. The forward costs zero. The options cost $`g''(K)\,P(K)`$ or $`g''(K)\,C(K)`$ per unit of strike. If the payoff sold for anything else, selling the dearer one and buying the cheaper would lock in a profit with no risk. This step uses no model: it uses the prices of options on the screen.
 
 ### Step 4: the log payoff gives one over strike squared
 
-For $g(x) = 100\ln(x/100)$ the curvature is $-100/K^2$. It is negative, because the log bends down, so the options are **sold**: short puts below the forward and short calls above. The weight falls as the strike rises. With strikes 30 apart, the book sells $100 \times 30/90^2 = 0.370370$ of the 90-put and $100 \times 30/120^2 = 0.208333$ of the 120-call. The two options cost almost the same, yet the put counts nearly twice as much.
+For $`g(x) = 100\ln(x/100)`$ the curvature is $`-100/K^2`$. It is negative, because the log bends down, so the options are **sold**: short puts below the forward and short calls above. The weight falls as the strike rises. With strikes 30 apart, the book sells $`100 \times 30/90^2 = 0.370370`$ of the 90-put and $`100 \times 30/120^2 = 0.208333`$ of the 120-call. The two options cost almost the same, yet the put counts nearly twice as much.
 
-The same recipe rebuilds any other payoff. For $(S_T - 100)^2$ the curvature is 2 at every strike, so the book is **long** 60 of each option: cash of $(F - 100)^2$, a forward of $2(F - 100)$ units, and an equal-weight strip.
+The same recipe rebuilds any other payoff. For $`(S_T - 100)^2`$ the curvature is 2 at every strike, so the book is **long** 60 of each option: cash of $`(F - 100)^2`$, a forward of $`2(F - 100)`$ units, and an equal-weight strip.
 
 ### Step 5: why the log trades variance
 
-Look at today's price of the log contract as a function of today's share price $S$, with the house model: $100\,D\,(\ln(S/100) + (r - q - \tfrac12\sigma^2)T)$. Its **delta** (slope in $S$) is $100\,D/S$. Its **gamma** (curvature in $S$) is $-100\,D/S^2$. Multiply gamma by $S^2$ and the answer, $-95.12$, does not depend on $S$ at all.
+Look at today's price of the log contract as a function of today's share price $`S`$, with the house model: $`100\,D\,(\ln(S/100) + (r - q - \tfrac12\sigma^2)T)`$. Its **delta** (slope in $`S`$) is $`100\,D/S`$. Its **gamma** (curvature in $`S`$) is $`-100\,D/S^2`$. Multiply gamma by $`S^2`$ and the answer, $`-95.12`$, does not depend on $`S`$ at all.
 
-That product, dollar gamma, sets what a delta-hedged position earns or pays per move: about $\tfrac12 S^2\Gamma$ times the squared percent move ([Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md)).
+That product, dollar gamma, sets what a delta-hedged position earns or pays per move: about $`\tfrac12 S^2\Gamma`$ times the squared percent move ([Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md)).
 
-A call's dollar gamma peaks near its strike and fades away from it, so a hedged call earns from moves only while the price is nearby. The log contract's is flat, so a hedged short log contract collects the same amount from a 1% move at $60 or at $160. Summed over the year, its gains from moves add up to half the realised variance, times $100\,D$.
+A call's dollar gamma peaks near its strike and fades away from it, so a hedged call earns from moves only while the price is nearby. The log contract's is flat, so a hedged short log contract collects the same amount from a 1% move at $60 or at $160. Summed over the year, its gains from moves add up to half the realised variance, times $`100\,D`$.
 
-So the options leg of the strip, worth 1.902459, is $100\,D \times \tfrac12\sigma^2 T$. Solve for the variance: $2 \times 1.902459 / 95.1229 = 0.040000$, which is 20% squared. Reading the options leg as variance is what [The variance swap](03-variance-swap-fair-strike.md) does with market prices.
+So the options leg of the strip, worth 1.902459, is $`100\,D \times \tfrac12\sigma^2 T`$. Solve for the variance: $`2 \times 1.902459 / 95.1229 = 0.040000`$, which is 20% squared. Reading the options leg as variance is what [The variance swap](03-variance-swap-fair-strike.md) does with market prices.
 
 <details>
 <summary>Why not the square payoff, whose weights are flat?</summary>
 
-The square $(S_T - 100)^2$ has constant curvature in dollars, so it earns the same from every *dollar* move. A $1 move at $50 is a 2% move; at $150 it is under 1%. Measured in percent, the square contract cares more about high prices. Only the log, weighted one over strike squared, is indifferent to where the price sits when measured in percent.
+The square $`(S_T - 100)^2`$ has constant curvature in dollars, so it earns the same from every *dollar* move. A $1 move at $50 is a 2% move; at $150 it is under 1%. Measured in percent, the square contract cares more about high prices. Only the log, weighted one over strike squared, is indifferent to where the price sits when measured in percent.
 
 </details>
 
@@ -173,19 +189,19 @@ The same spanning, differentiated twice in strike, is the butterfly reading of t
 
 ## Worked numbers, by hand
 
-House market: $S = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$. The log contract pays $100\ln(S_T/100)$.
+House market: $`S = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$. The log contract pays $`100\ln(S_T/100)`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| forward $F$ | $100\,e^{0.03}$ | 103.045453 |
-| discount $D$ | $e^{-0.05}$ | 0.951229 |
-| cash leg | $100 \times 0.951229 \times \ln(1.030455)$ | 2.853688 |
+| forward $`F`$ | $`100\,e^{0.03}`$ | 103.045453 |
+| discount $`D`$ | $`e^{-0.05}`$ | 0.951229 |
+| cash leg | $`100 \times 0.951229 \times \ln(1.030455)`$ | 2.853688 |
 | 90-put, 120-call | Black–Scholes | 2.714489, 2.711776 |
-| weights | $100 \times 30 / 90^2$, $100 \times 30 / 120^2$ | 0.370370, 0.208333 |
-| options sold | $0.370370 \times 2.714489 + 0.208333 \times 2.711776$ | 1.005366 + 0.564953 = 1.570320 |
-| two-strike price | $2.853688 - 1.570320$ | 1.283369 |
-| exact price | $100 \times 0.951229 \times (0.05 - 0.02 - 0.02)$ | **0.951229** |
-| gap | $1.283369 - 0.951229$ | 0.332139 |
+| weights | $`100 \times 30 / 90^2`$, $`100 \times 30 / 120^2`$ | 0.370370, 0.208333 |
+| options sold | $`0.370370 \times 2.714489 + 0.208333 \times 2.711776`$ | 1.005366 + 0.564953 = 1.570320 |
+| two-strike price | $`2.853688 - 1.570320`$ | 1.283369 |
+| exact price | $`100 \times 0.951229 \times (0.05 - 0.02 - 0.02)`$ | **0.951229** |
+| gap | $`1.283369 - 0.951229`$ | 0.332139 |
 
 The two-strike book costs $1.28 against a true $0.95: it sells too few options, because two strikes cannot hold the curvature of the whole range. Finer and wider books close the gap:
 
@@ -200,7 +216,7 @@ log contract price, dollars; exact $0.95
 
 The 381-strike book lands at 0.950676, a hair under the truth; the 2,361-strike book at 0.951224. The same books rebuild the square payoff: 334.3984 with two strikes, 419.2779 from $50 to $200, 421.0328 with the finest book, against an exact 421.031743.
 
-Pathwise, at one finishing price the identity is exact, not approximate. At $S_T = 110$: the log pays 9.531018, the line through the forward pays 9.749009, and the continuum of calls between $103.05 and $110 pays −0.217991. The sum is the log. The two-strike book pays 9.749009 there, because both of its options expire worthless: it is the line.
+Pathwise, at one finishing price the identity is exact, not approximate. At $`S_T = 110`$: the log pays 9.531018, the line through the forward pays 9.749009, and the continuum of calls between $103.05 and $110 pays −0.217991. The sum is the log. The two-strike book pays 9.749009 there, because both of its options expire worthless: it is the line.
 
 ### What breaks if you drop a piece
 
@@ -209,9 +225,9 @@ The finest book, 2,361 strikes, correct price 0.951229:
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Strip bought instead of sold | 4.756152 | The log bends down, so its curvature is negative: the options are a short position |
-| One weight, $1/F^2$, for every strike | 0.912663 | That strip copies a parabola, not the log: it sells too few low-strike puts and too many high-strike calls |
-| Calls below the forward instead of puts | −673.402728 | A low-strike call is mostly a forward; with weights near $1/K^2$ that hidden forward is huge and the cash leg no longer offsets it |
-| Cash leg dropped | −1.902464 | That prices $100\ln(S_T/F)$, a different contract: the log measured from the forward, not from $100 |
+| One weight, $`1/F^2`$, for every strike | 0.912663 | That strip copies a parabola, not the log: it sells too few low-strike puts and too many high-strike calls |
+| Calls below the forward instead of puts | −673.402728 | A low-strike call is mostly a forward; with weights near $`1/K^2`$ that hidden forward is huge and the cash leg no longer offsets it |
+| Cash leg dropped | −1.902464 | That prices $`100\ln(S_T/F)`$, a different contract: the log measured from the forward, not from $100 |
 
 ---
 
@@ -563,9 +579,9 @@ ALL CHECKS PASS
 
 Lean proves the spanning identity, the log contract's weights and its flat dollar gamma, at every positive finishing price.
 
-- Suppose a payoff $g$ has a continuous curvature on the positive prices, and $F$ and $S_T$ are positive. Then $g(S_T)$ is $g(F)$ cash, plus $g'(F)$ forwards, plus puts below $F$ and calls above, held $g''(K)$.
-- Take the log contract, paying $100\ln(S_T/100)$, with $F$ and $S_T$ positive. Then the same holds with $100/F$ forwards, and the options are sold, $100/K^2$ at each strike $K$.
-- Take the house-model price $100\,D\,(\ln(S/100) + (r - q - \tfrac12\sigma^2)T)$ at a price $S > 0$. Then its dollar gamma, $S^2\Gamma$, is $-100\,D$, whatever $S$ is.
+- Suppose a payoff $`g`$ has a continuous curvature on the positive prices, and $`F`$ and $`S_T`$ are positive. Then $`g(S_T)`$ is $`g(F)`$ cash, plus $`g'(F)`$ forwards, plus puts below $`F`$ and calls above, held $`g''(K)`$.
+- Take the log contract, paying $`100\ln(S_T/100)`$, with $`F`$ and $`S_T`$ positive. Then the same holds with $`100/F`$ forwards, and the options are sold, $`100/K^2`$ at each strike $`K`$.
+- Take the house-model price $`100\,D\,(\ln(S/100) + (r - q - \tfrac12\sigma^2)T)`$ at a price $`S > 0`$. Then its dollar gamma, $`S^2\Gamma`$, is $`-100\,D`$, whatever $`S`$ is.
 - The hand weights check exactly: 10/27 of the 90-put and 5/24 of the 120-call. With curvature 2, the square payoff holds 60 of each.
 
 Option prices, the strip's dollar value, the discrete books and the link to realised variance are left to the Python and Rust checks.
@@ -775,9 +791,9 @@ example : (2 : ℤ) * 30 = 60 := by decide
 
 | Greek | Closed form | At S = 100 | Bumped bell-curve price |
 | --- | --- | --- | --- |
-| Delta, per $1 of Acme | $100\,D/S$ | 0.951229 | 0.951229 |
-| Dollar gamma, $S^2\Gamma$ | $-100\,D$ | −95.1229 | −95.1229 at 80, 100 and 125 |
-| Vega, per volatility point | $-100\,D\,\sigma T/100$ | −0.190246 | −0.190246 |
+| Delta, per $1 of Acme | $`100\,D/S`$ | 0.951229 | 0.951229 |
+| Dollar gamma, $`S^2\Gamma`$ | $`-100\,D`$ | −95.1229 | −95.1229 at 80, 100 and 125 |
+| Vega, per volatility point | $`-100\,D\,\sigma T/100`$ | −0.190246 | −0.190246 |
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%

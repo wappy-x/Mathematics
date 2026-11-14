@@ -10,7 +10,7 @@ Three cards lie face up in places 1, 2 and 3: a seven, an eight, a nine. Two mov
 
 Do t, then r, and the seven ends in place 3. Do r, then t, and it ends in place 1.
 
-Such a move is a **permutation**: every place sends its card to one place and receives one card. Nothing is lost or doubled, so it can be run backwards. Three places allow six, and those six, under "do one, then the next", obey every rule of a group ([Groups](01-groups.md)): the symmetric group on three places, written $S_3$.
+Such a move is a **permutation**: every place sends its card to one place and receives one card. Nothing is lost or doubled, so it can be run backwards. Three places allow six, and those six, under "do one, then the next", obey every rule of a group ([Groups](01-groups.md)): the symmetric group on three places, written $`S_3`$.
 
 **Reversible rearrangements of labelled places compose into further rearrangements, each has an undo, and together they form a group: the symmetric group.**
 
@@ -34,25 +34,31 @@ Upper road: t then r. Lower road: r then t. Order is part of the answer.
 
 Two rows of numbers fix a shuffle: the places along the top, under each the place its card goes to. That is **two-line notation**; beside it, **cycle notation**:
 
-$$r = \begin{pmatrix} 1 & 2 & 3 \\ 2 & 3 & 1 \end{pmatrix} = (1\ 2\ 3), \qquad t = \begin{pmatrix} 1 & 2 & 3 \\ 2 & 1 & 3 \end{pmatrix} = (1\ 2)$$
+```math
+r = \begin{pmatrix} 1 & 2 & 3 \\ 2 & 3 & 1 \end{pmatrix} = (1\ 2\ 3), \qquad t = \begin{pmatrix} 1 & 2 & 3 \\ 2 & 1 & 3 \end{pmatrix} = (1\ 2)
+```
 
 Read (1 2 3) as: 1's card to place 2, 2's to place 3, 3's back to place 1. A place left out keeps its own card, so t is (1 2), not (1 2)(3). A two-place cycle is a **swap**. Shuffles side by side mean do both, right-hand one first:
 
-$$(rt)(1) = r(t(1)) = r(2) = 3$$
+```math
+(rt)(1) = r(t(1)) = r(2) = 3
+```
 
 **Read it aloud:** the right-hand shuffle goes first, so follow each place through t, then through r.
 
 Then the count, and the fewest swaps a shuffle takes:
 
-$$n! = n \times (n - 1) \times \cdots \times 2 \times 1, \qquad \text{fewest swaps} = n - (\text{cycles, fixed places counted})$$
+```math
+n! = n \times (n - 1) \times \cdots \times 2 \times 1, \qquad \text{fewest swaps} = n - (\text{cycles, fixed places counted})
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | labelled places being shuffled | 3 | each place multiplies the count |
-| $S_n$ (so $S_3$, $S_4$) | all shuffles of n places, under "do one then the next" | $S_3$: six | 24 for four places, 120 for five |
-| $n!$ | that count, read "n factorial" | 3 × 2 × 1 = 6 | beats every fixed power of n |
-| $e$, $r$, $t$ | do-nothing; shift along; swap places 1 and 2 | e, (1 2 3), (1 2) | — |
-| $rt$, $tr$ | t then r; r then t | (1 3); (2 3) | — |
+| $`n`$ | labelled places being shuffled | 3 | each place multiplies the count |
+| $`S_n`$ (so $`S_3`$, $`S_4`$) | all shuffles of n places, under "do one then the next" | $`S_3`$: six | 24 for four places, 120 for five |
+| $`n!`$ | that count, read "n factorial" | 3 × 2 × 1 = 6 | beats every fixed power of n |
+| $`e`$, $`r`$, $`t`$ | do-nothing; shift along; swap places 1 and 2 | e, (1 2 3), (1 2) | — |
+| $`rt`$, $`tr`$ | t then r; r then t | (1 3); (2 3) | — |
 
 ### When it holds
 
@@ -70,7 +76,7 @@ A shuffle sends each place's card to one place and fills every place: one-to-one
 
 ### Step 1: the shuffles of n places form a group
 
-Shuffling has the four things a group needs ([Groups](01-groups.md)). One shuffle after another is a shuffle, since a bijection after a bijection is a bijection ([Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md)). Bracketing either way sends each place along the same arrows. The do-nothing shuffle e is the identity, Step 0 the undo. So $S_n$ is a group under composition.
+Shuffling has the four things a group needs ([Groups](01-groups.md)). One shuffle after another is a shuffle, since a bijection after a bijection is a bijection ([Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md)). Bracketing either way sends each place along the same arrows. The do-nothing shuffle e is the identity, Step 0 the undo. So $`S_n`$ is a group under composition.
 
 ### Step 2: counting the shuffles
 
@@ -89,7 +95,7 @@ The line counts shuffles: 1 of one place, then 2, 6, 24, 120.
 
 ### Step 3: order matters, and three cards already show it
 
-Through rt, t going first: 1 to 2, then 2 to 3; 2 to 1, then 1 to 2; 3 stays, then 3 to 1 — destinations 3, 2, 1, the swap (1 3). The same tracing through tr gives 1, 3, 2, the swap (2 3). A group whose operation never minds the order is **commutative**; $S_3$ is the smallest that is not.
+Through rt, t going first: 1 to 2, then 2 to 3; 2 to 1, then 1 to 2; 3 stays, then 3 to 1 — destinations 3, 2, 1, the swap (1 3). The same tracing through tr gives 1, 3, 2, the swap (2 3). A group whose operation never minds the order is **commutative**; $`S_3`$ is the smallest that is not.
 
 ### Step 4: cycles come from following one place round
 
@@ -116,14 +122,14 @@ The do-nothing list starts at zero, even, so the count is even exactly when the 
 
 Out-of-order pairs are a second road to the label: r has two, so it is even; the code checks both roads across all 24 shuffles of four places.
 
-Lengths add when chains join, so even with even is even. The even shuffles close under the operation and hold each other's undos. They form a group inside $S_n$, the **alternating group**, exactly half of it from two places up: in $S_3$, e with (1 2 3) and (1 3 2).
+Lengths add when chains join, so even with even is even. The even shuffles close under the operation and hold each other's undos. They form a group inside $`S_n`$, the **alternating group**, exactly half of it from two places up: in $`S_3`$, e with (1 2 3) and (1 3 2).
 
 Written as +1 for even and −1 for odd, the label multiplies when shuffles compose; the map it becomes belongs to [Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md).
 
 <details>
 <summary>Every finite group is a group of shuffles</summary>
 
-Cayley's theorem: each member of a finite group shuffles the group's own member list, so a group with n members sits inside $S_n$.
+Cayley's theorem: each member of a finite group shuffles the group's own member list, so a group with n members sits inside $`S_n`$.
 
 </details>
 
@@ -368,7 +374,7 @@ Lean proves the main claims for any finite number of labelled places, and checks
 - From three places up, some two shuffles give different results in the two orders.
 - On three cards, rt is (1 3), tr is (2 3), and the undo of r is (1 3 2).
 - r is two swaps and even, with two out-of-order pairs; t is odd; the four-cycle (1 2 3 4) is odd.
-- One to five places give 1, 2, 6, 24 and 120 shuffles; $S_3$ has 3 even ones.
+- One to five places give 1, 2, 6, 24 and 120 shuffles; $`S_3`$ has 3 even ones.
 - Exactly 8 of the tile's 24 corner shuffles keep neighbours neighbouring, and 2, 2, 1 is not a shuffle.
 
 The fewest-swaps formula, the parity match over all four-place shuffles, and the tile's turns and flips are left to the Python and Rust checks.
@@ -547,7 +553,7 @@ example : ¬ Function.Bijective (![1, 1, 0] : Fin 3 → Fin 3) := by decide
 - Computing a Galois group: the shuffles of a polynomial's roots.
 - Solvable by radicals: which equations have a formula in radicals.
 
-Even and odd is a label this card computes but cannot use: a later card makes it a map from $S_n$ onto a two-member group, and such maps are how groups are compared.
+Even and odd is a label this card computes but cannot use: a later card makes it a map from $`S_n`$ onto a two-member group, and such maps are how groups are compared.
 
 ---
 

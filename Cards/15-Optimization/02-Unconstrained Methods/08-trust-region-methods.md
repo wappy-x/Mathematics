@@ -8,7 +8,7 @@
 
 Two settings, x and y, are chosen to **minimise** one number, f(x, y) = (1 − x)² + 100(y − x²)². The surface is Rosenbrock's banana: a narrow valley whose floor bends along the curve y = x², with its lowest point at (1, 1), where f = 0. Nothing limits the choice. The search starts at (−1.2, 1), where f = 24.2.
 
-A fast method builds a quadratic stand-in for f at the current point, from the slope and the curvature there, and jumps to the stand-in's lowest point. One such jump takes the search to the point called $x_1$, (−1.175281, 1.380674), where f = 4.731884. From there the stand-in's lowest point lies 4.95 units away. It promises that f falls by 4.22. It actually rises by 1,407: the jump leaves the valley and climbs its far wall.
+A fast method builds a quadratic stand-in for f at the current point, from the slope and the curvature there, and jumps to the stand-in's lowest point. One such jump takes the search to the point called $`x_1`$, (−1.175281, 1.380674), where f = 4.731884. From there the stand-in's lowest point lies 4.95 units away. It promises that f falls by 4.22. It actually rises by 1,407: the jump leaves the valley and climbs its far wall.
 
 A trust region refuses to go that far. It draws a circle of radius 1 around the point and takes the stand-in's best step inside it. That step promises a fall of 1.54 and delivers a rise of 0.64. The ratio of delivered to promised fall is −0.41, so the step is refused and the radius is cut to a quarter, 0.25.
 
@@ -28,50 +28,58 @@ Drawn to scale, x across and y up, from the numbers the checks print. The solid 
 
 ## The formula
 
-Notation first, in words. The iterate $x_k$ is the current point after k tries, counted from $x_0 = (-1.2, 1)$; $g_k$ is the slope of f there, $\nabla f(x_k)$; $B_k$ is a symmetric matrix standing for its curvature, here the Hessian $\nabla^2 f(x_k)$ itself. The **model** $m_k$ is the quadratic stand-in, $d$ is a trial step, and $\Delta_k$ ("delta") is the **trust radius**: how far from $x_k$ the model is believed.
+Notation first, in words. The iterate $`x_k`$ is the current point after k tries, counted from $`x_0 = (-1.2, 1)`$; $`g_k`$ is the slope of f there, $`\nabla f(x_k)`$; $`B_k`$ is a symmetric matrix standing for its curvature, here the Hessian $`\nabla^2 f(x_k)`$ itself. The **model** $`m_k`$ is the quadratic stand-in, $`d`$ is a trial step, and $`\Delta_k`$ ("delta") is the **trust radius**: how far from $`x_k`$ the model is believed.
 
-$$m_k(d) = f(x_k) + g_k^{\mathsf T} d + \tfrac12\, d^{\mathsf T} B_k\, d, \qquad d_k \approx \operatorname{argmin}_{\lVert d\rVert \le \Delta_k} m_k(d)$$
+```math
+m_k(d) = f(x_k) + g_k^{\mathsf T} d + \tfrac12\, d^{\mathsf T} B_k\, d, \qquad d_k \approx \mathrm{argmin}_{\lVert d\rVert \le \Delta_k} m_k(d)
+```
 
 **Read it aloud:** the model is the value here, plus the slope times the step, plus half the curvature times the step twice; the step is roughly the model's lowest point inside the circle.
 
-The check after the step is one number, the ratio this wing writes $\rho_k$ ("rho"):
+The check after the step is one number, the ratio this wing writes $`\rho_k`$ ("rho"):
 
-$$\rho_k = \frac{f(x_k) - f(x_k + d_k)}{m_k(0) - m_k(d_k)} = \frac{\text{delivered fall}}{\text{promised fall}}$$
+```math
+\rho_k = \frac{f(x_k) - f(x_k + d_k)}{m_k(0) - m_k(d_k)} = \frac{\text{delivered fall}}{\text{promised fall}}
+```
 
 **Read it aloud:** how much f really fell, divided by how much the model said it would.
 
-Then the step is kept if $\rho_k > \eta$, where $\eta$ ("eta") is a small bar set in advance, 0.1 here, and the radius is resized:
+Then the step is kept if $`\rho_k > \eta`$, where $`\eta`$ ("eta") is a small bar set in advance, 0.1 here, and the radius is resized:
 
-$$\Delta_{k+1} = \begin{cases} \tfrac14\,\Delta_k & \text{if } \rho_k < \tfrac14 \\ \min(2\Delta_k,\ \Delta_{\max}) & \text{if } \rho_k > \tfrac34 \text{ and } \lVert d_k\rVert = \Delta_k \\ \Delta_k & \text{otherwise} \end{cases}$$
+```math
+\Delta_{k+1} = \begin{cases} \tfrac14\,\Delta_k & \text{if } \rho_k < \tfrac14 \\ \min(2\Delta_k,\ \Delta_{\max}) & \text{if } \rho_k > \tfrac34 \text{ and } \lVert d_k\rVert = \Delta_k \\ \Delta_k & \text{otherwise} \end{cases}
+```
 
 **Read it aloud:** a poor ratio cuts the circle to a quarter; a good ratio on a step that hit the edge doubles it, up to a cap; anything else leaves it alone.
 
-The step inside the circle comes from the **dogleg**, a path with one bend. Its first leg runs straight downhill, along $-g_k$, to the model's lowest point in that direction, $d^{\mathrm C}$. Its second leg turns towards the model's own lowest point, the Newton point $d^{\mathrm N}$:
+The step inside the circle comes from the **dogleg**, a path with one bend. Its first leg runs straight downhill, along $`-g_k`$, to the model's lowest point in that direction, $`d^{\mathrm C}`$. Its second leg turns towards the model's own lowest point, the Newton point $`d^{\mathrm N}`$:
 
-$$d^{\mathrm C} = -\frac{g_k^{\mathsf T} g_k}{g_k^{\mathsf T} B_k\, g_k}\, g_k, \qquad d^{\mathrm N} = -B_k^{-1} g_k$$
+```math
+d^{\mathrm C} = -\frac{g_k^{\mathsf T} g_k}{g_k^{\mathsf T} B_k\, g_k}\, g_k, \qquad d^{\mathrm N} = -B_k^{-1} g_k
+```
 
-If $d^{\mathrm N}$ fits in the circle it is the step. Otherwise the step is where the bent path crosses the circle.
+If $`d^{\mathrm N}`$ fits in the circle it is the step. Otherwise the step is where the bent path crosses the circle.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_k$ | the current point after k tries | $x_1 = (-1.175281, 1.380674)$ | — |
-| $f$ | the cost being minimised | 4.731884 at $x_1$ | — |
-| $g_k$ | the slope of f at $x_k$, a pair of numbers | $(-4.637816, -0.122207)$ at $x_1$ | longer early steps |
-| $B_k$ | the curvature matrix in the model, here the Hessian | entries 1107.2726, 470.1124, 200 at $x_1$ | shorter Newton steps |
-| $d = (u, v)$ | a trial step, added to $x_k$: u across, v up | $(0.394320, -0.918973)$ at radius 1 | — |
-| $m_k(d)$ | the quadratic model's value after step d | promises a fall of 1.535747 at radius 1 | — |
-| $\Delta_k$, $\Delta_{\max}$ | trust radius: the longest step allowed; and its cap | 1, then 0.25; cap 10 | the model is trusted further, and overpromises more |
-| $\rho_k$ | delivered fall over promised fall | −0.4143 at radius 1, then 1.0202 | — |
-| $\eta$ | the bar a step's ratio must clear to be kept | 0.1 | more refusals; above $\tfrac14$ the method can stall |
-| $d^{\mathrm N}$, $d^{\mathrm C}$ | the Newton point, the model's own lowest point; and the model's lowest point straight downhill | lengths 4.950945 and 0.004101 at $x_1$ | — |
-| $\lVert d\rVert$ | the length of a step | 1 at the first refusal | — |
-| $t$, $M$, $\lVert B\rVert$ | in the proof: how far along $-g$ a step goes; a bound on f's third derivatives; the most B stretches any vector | — | — |
+| $`x_k`$ | the current point after k tries | $`x_1 = (-1.175281, 1.380674)`$ | — |
+| $`f`$ | the cost being minimised | 4.731884 at $`x_1`$ | — |
+| $`g_k`$ | the slope of f at $`x_k`$, a pair of numbers | $`(-4.637816, -0.122207)`$ at $`x_1`$ | longer early steps |
+| $`B_k`$ | the curvature matrix in the model, here the Hessian | entries 1107.2726, 470.1124, 200 at $`x_1`$ | shorter Newton steps |
+| $`d = (u, v)`$ | a trial step, added to $`x_k`$: u across, v up | $`(0.394320, -0.918973)`$ at radius 1 | — |
+| $`m_k(d)`$ | the quadratic model's value after step d | promises a fall of 1.535747 at radius 1 | — |
+| $`\Delta_k`$, $`\Delta_{\max}`$ | trust radius: the longest step allowed; and its cap | 1, then 0.25; cap 10 | the model is trusted further, and overpromises more |
+| $`\rho_k`$ | delivered fall over promised fall | −0.4143 at radius 1, then 1.0202 | — |
+| $`\eta`$ | the bar a step's ratio must clear to be kept | 0.1 | more refusals; above $`\tfrac14`$ the method can stall |
+| $`d^{\mathrm N}`$, $`d^{\mathrm C}`$ | the Newton point, the model's own lowest point; and the model's lowest point straight downhill | lengths 4.950945 and 0.004101 at $`x_1`$ | — |
+| $`\lVert d\rVert`$ | the length of a step | 1 at the first refusal | — |
+| $`t`$, $`M`$, $`\lVert B\rVert`$ | in the proof: how far along $`-g`$ a step goes; a bound on f's third derivatives; the most B stretches any vector | — | — |
 
 ### When it holds
 
-- **f has continuous second derivatives near the iterates, and the model matches f's value and slope at $x_k$.** Then the model's error shrinks faster than the radius, so shrinking always ends in a kept step. If the model's slope is wrong, a tiny step can promise a fall that never comes, and the radius shrinks to nothing.
+- **f has continuous second derivatives near the iterates, and the model matches f's value and slope at $`x_k`$.** Then the model's error shrinks faster than the radius, so shrinking always ends in a kept step. If the model's slope is wrong, a tiny step can promise a fall that never comes, and the radius shrinks to nothing.
 - **The step achieves at least a fixed fraction of the straight-downhill fall inside the circle.** The dogleg does, and that is what the convergence theorem needs. A step that only lowers the model a little can make the run crawl.
-- **The bar $\eta$ sits below the shrink threshold $\tfrac14$.** With $\eta = 0.75$, a step with ratio 0.530 at $(-0.143951, 0.011739)$ is refused but does not trigger a shrink, so the identical step is proposed and refused for the rest of the run.
+- **The bar $`\eta`$ sits below the shrink threshold $`\tfrac14`$.** With $`\eta = 0.75`$, a step with ratio 0.530 at $`(-0.143951, 0.011739)`$ is refused but does not trigger a shrink, so the identical step is proposed and refused for the rest of the run.
 - **f is bounded below.** Rosenbrock's f is never negative. On a cost that falls without limit the method still never raises f, but there is nothing to converge to.
 - **The answer is a point where the slope is zero, not automatically the lowest point.** On a cost with several valleys the trust region settles in one of them. Here f is a sum of squares, so f = 0 at (1, 1) proves that point is the global minimum.
 
@@ -83,40 +91,48 @@ If $d^{\mathrm N}$ fits in the circle it is the step. Otherwise the step is wher
 
 The model is a second-order Taylor expansion of f: the value, the slope and the curvature at one point ([Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md)). Near that point it is very accurate. Far away it can be wildly wrong, and nothing inside the model says how far is too far. Line search ([Line search](04-line-search-armijo-and-wolfe.md)) handles this by fixing a direction first and then choosing a length. A trust region fixes a length first, the radius, and lets the model choose the direction inside it.
 
-The ratio $\rho_k$ is the measurement that keeps the radius honest. Near 1, the model told the truth, so it can be trusted a bit further. Small or negative, it overpromised, so it is trusted less. The radius becomes a running record of how far the model has earned trust.
+The ratio $`\rho_k`$ is the measurement that keeps the radius honest. Near 1, the model told the truth, so it can be trusted a bit further. Small or negative, it overpromised, so it is trusted less. The radius becomes a running record of how far the model has earned trust.
 
 ### Step 1: where the banana model fails, exactly
 
-Rosenbrock's f is a polynomial of degree four, so the model's error can be written out in full. With the step $d = (u, v)$ from $(x, y)$, the gap between the model's value and the true value is
+Rosenbrock's f is a polynomial of degree four, so the model's error can be written out in full. With the step $`d = (u, v)`$ from $`(x, y)`$, the gap between the model's value and the true value is
 
-$$f(x + u,\, y + v) - m(d) = 100\,u^4 - 200\,u^2\,(v - 2xu).$$
+```math
+f(x + u,\, y + v) - m(d) = 100\,u^4 - 200\,u^2\,(v - 2xu).
+```
 
-At $x_1$, the radius-1 dogleg step is $u = 0.394320$, $v = -0.918973$. The bracket $v - 2xu$ is almost zero: $-0.918973 + 2 \times 1.175281 \times 0.394320 = 0.007901$. So the step runs along the tangent line of the valley floor, and the model sees that tangent line as the floor itself. The term $100u^4$ is the real floor bending away from it. The whole leftover comes to 2.171962. Promised fall 1.535747, minus that 2.171962, gives −0.636215: exactly the rise the checks measure.
+At $`x_1`$, the radius-1 dogleg step is $`u = 0.394320`$, $`v = -0.918973`$. The bracket $`v - 2xu`$ is almost zero: $`-0.918973 + 2 \times 1.175281 \times 0.394320 = 0.007901`$. So the step runs along the tangent line of the valley floor, and the model sees that tangent line as the floor itself. The term $`100u^4`$ is the real floor bending away from it. The whole leftover comes to 2.171962. Promised fall 1.535747, minus that 2.171962, gives −0.636215: exactly the rise the checks measure.
 
 The first chart in How the radius moves draws the same story at ten radii. Out to about 0.5, delivered and promised stay close. Past 0.6 the delivered fall turns down, and at radius 1 it is negative.
 
 ### Step 2: solve the circle problem well enough, cheaply
 
-Finding the model's exact lowest point in the circle needs a search for a damping number that lengthens or shortens the step until it just touches the circle ([Nonlinear least squares](09-nonlinear-least-squares-gauss-newton-and-levenberg-marquardt.md) meets that damping as Levenberg-Marquardt). The dogleg replaces the search with one bend. It never does worse than the straight-downhill step, because its first leg is that step and the model keeps falling along the second leg when $B_k$ is a positive definite matrix (a bowl). At $x_1$:
+Finding the model's exact lowest point in the circle needs a search for a damping number that lengthens or shortens the step until it just touches the circle ([Nonlinear least squares](09-nonlinear-least-squares-gauss-newton-and-levenberg-marquardt.md) meets that damping as Levenberg-Marquardt). The dogleg replaces the search with one bend. It never does worse than the straight-downhill step, because its first leg is that step and the model keeps falling along the second leg when $`B_k`$ is a positive definite matrix (a bowl). At $`x_1`$:
 
-- straight downhill, capped at the circle, that is $d^{\mathrm C}$ cut short if it would leave the circle (the code and its output call this the Cauchy step; $d^{\mathrm C}$ itself has no cap): promised fall 0.009512;
+- straight downhill, capped at the circle, that is $`d^{\mathrm C}`$ cut short if it would leave the circle (the code and its output call this the Cauchy step; $`d^{\mathrm C}`$ itself has no cap): promised fall 0.009512;
 - dogleg: 1.535747 at radius 1, 0.421311 at radius 0.25;
 - the exact lowest point in the circle: 1.535859 and 0.421477.
 
-The dogleg's share of the exact fall is 0.9999 at radius 1 and 0.9996 at radius 0.25. The straight-downhill step stops at 0.009512 at both radii, because the model's lowest point in that direction is only 0.004101 away: the slope at $x_1$ points almost straight across the narrow valley.
+The dogleg's share of the exact fall is 0.9999 at radius 1 and 0.9996 at radius 0.25. The straight-downhill step stops at 0.009512 at both radii, because the model's lowest point in that direction is only 0.004101 away: the slope at $`x_1`$ points almost straight across the narrow valley.
 
 <details>
 <summary>Detailed proof: the straight-downhill guarantee, and why shrinking ends</summary>
 
-**The guarantee.** Step straight downhill by t times the slope, $d = -t\,g$, with $t \ge 0$ and $\lVert d\rVert \le \Delta$. The promised fall is
-$$m(0) - m(-t g) = t\,\lVert g\rVert^2 - \tfrac12\, t^2\, g^{\mathsf T} B g.$$
-If $g^{\mathsf T}Bg \le 0$, walk to the edge, $t = \Delta/\lVert g\rVert$, and the fall is at least $\Delta\lVert g\rVert$. Otherwise the best t is $\min(\lVert g\rVert^2 / g^{\mathsf T}Bg,\ \Delta/\lVert g\rVert)$. In the first case the fall is $\tfrac12\lVert g\rVert^4 / g^{\mathsf T}Bg \ge \tfrac12 \lVert g\rVert^2/\lVert B\rVert$, where $\lVert B\rVert$ is the largest stretch B applies to a vector. In the second case $t\, g^{\mathsf T}Bg \le \lVert g\rVert^2$, so the fall is at least $\tfrac12 t\lVert g\rVert^2 = \tfrac12\Delta\lVert g\rVert$. Every case gives
-$$m(0) - m(d) \ \ge\ \tfrac12\,\lVert g\rVert \min\!\left(\Delta,\ \frac{\lVert g\rVert}{\lVert B\rVert}\right).$$
+**The guarantee.** Step straight downhill by t times the slope, $`d = -t\,g`$, with $`t \ge 0`$ and $`\lVert d\rVert \le \Delta`$. The promised fall is
+
+$`\displaystyle m(0) - m(-t g) = t\,\lVert g\rVert^2 - \tfrac12\, t^2\, g^{\mathsf T} B g.`$
+
+If $`g^{\mathsf T}Bg \le 0`$, walk to the edge, $`t = \Delta/\lVert g\rVert`$, and the fall is at least $`\Delta\lVert g\rVert`$. Otherwise the best t is $`\min(\lVert g\rVert^2 / g^{\mathsf T}Bg,\ \Delta/\lVert g\rVert)`$. In the first case the fall is $`\tfrac12\lVert g\rVert^4 / g^{\mathsf T}Bg \ge \tfrac12 \lVert g\rVert^2/\lVert B\rVert`$, where $`\lVert B\rVert`$ is the largest stretch B applies to a vector. In the second case $`t\, g^{\mathsf T}Bg \le \lVert g\rVert^2`$, so the fall is at least $`\tfrac12 t\lVert g\rVert^2 = \tfrac12\Delta\lVert g\rVert`$. Every case gives
+
+$`\displaystyle m(0) - m(d) \ \ge\ \tfrac12\,\lVert g\rVert \min\!\left(\Delta,\ \frac{\lVert g\rVert}{\lVert B\rVert}\right).`$
+
 The dogleg's first leg is this step and the model does not rise along its second leg, so the dogleg meets the same bound.
 
-**Shrinking ends.** Take $B = \nabla^2 f(x)$ and suppose f's third derivatives are bounded by M near x. Taylor's theorem with remainder ([Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)) gives $|f(x + d) - m(d)| \le \tfrac{M}{6}\lVert d\rVert^3$. The delivered fall minus the promised fall is exactly $m(d) - f(x+d)$, so for $\Delta \le \lVert g\rVert/\lVert B\rVert$,
-$$|\rho - 1| = \frac{|m(d) - f(x + d)|}{m(0) - m(d)} \ \le\ \frac{(M/6)\,\Delta^3}{\tfrac12\lVert g\rVert\,\Delta} = \frac{M\,\Delta^2}{3\,\lVert g\rVert}.$$
-While the slope is not zero this goes to 0 with the radius. Each refusal divides the radius by 4, so after finitely many refusals $\rho > \tfrac34$, the step is kept, and the run moves on. At $x_1$ the checks print $\rho$ = 1.017905, 1.004347 and 1.000117 at radii 0.1, 0.01 and 0.001.
+**Shrinking ends.** Take $`B = \nabla^2 f(x)`$ and suppose f's third derivatives are bounded by M near x. Taylor's theorem with remainder ([Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)) gives $`|f(x + d) - m(d)| \le \tfrac{M}{6}\lVert d\rVert^3`$. The delivered fall minus the promised fall is exactly $`m(d) - f(x+d)`$, so for $`\Delta \le \lVert g\rVert/\lVert B\rVert`$,
+
+$`\displaystyle |\rho - 1| = \frac{|m(d) - f(x + d)|}{m(0) - m(d)} \ \le\ \frac{(M/6)\,\Delta^3}{\tfrac12\lVert g\rVert\,\Delta} = \frac{M\,\Delta^2}{3\,\lVert g\rVert}.`$
+
+While the slope is not zero this goes to 0 with the radius. Each refusal divides the radius by 4, so after finitely many refusals $`\rho > \tfrac34`$, the step is kept, and the run moves on. At $`x_1`$ the checks print $`\rho`$ = 1.017905, 1.004347 and 1.000117 at radii 0.1, 0.01 and 0.001.
 
 </details>
 
@@ -126,36 +142,36 @@ The guarantee and the ratio test together give the standard theorem, stated here
 
 - f is bounded below;
 - its slope changes at a bounded rate on the region below the starting value;
-- the matrices $B_k$ stay bounded;
-- $0 < \eta < \tfrac14$;
+- the matrices $`B_k`$ stay bounded;
+- $`0 < \eta < \tfrac14`$;
 - every step earns at least a fixed fraction of the straight-downhill guarantee.
 
 Then the slope at the iterates tends to zero. Every kept step lowers f, so the run cannot climb out of the region it started in.
 
-Near a minimum where the Hessian is a bowl, the Newton point becomes short enough to fit in the circle, the dogleg returns it unchanged, and the run becomes Newton's method ([Newton and BFGS](05-newton-and-quasi-newton-bfgs.md)), with its fast finish. The last four kept points have $\log_{10} f$ of −4.19, −6.40, −11.54 and −21.07: the digits roughly double each step.
+Near a minimum where the Hessian is a bowl, the Newton point becomes short enough to fit in the circle, the dogleg returns it unchanged, and the run becomes Newton's method ([Newton and BFGS](05-newton-and-quasi-newton-bfgs.md)), with its fast finish. The last four kept points have $`\log_{10} f`$ of −4.19, −6.40, −11.54 and −21.07: the digits roughly double each step.
 
 ---
 
 ## Worked numbers, by hand
 
-The example's heart: the first refusal and the retry at $x_1$, radius starting at 1.
+The example's heart: the first refusal and the retry at $`x_1`$, radius starting at 1.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| f at $x_1$ | $(1 + 1.175281)^2 + 100\,(1.380674 - 1.175281^2)^2$ | 4.731884 |
-| slope $g_1$ | $(-2(1 - x) - 400x(y - x^2),\ 200(y - x^2))$ | $(-4.637816, -0.122207)$ |
-| Newton point | solve $B_1 d = -g_1$ | length 4.950945, longer than 1 |
-| downhill turn $d^{\mathrm C}$ | $\lVert g\rVert^2 / g^{\mathsf T}B g$ times $\lVert g\rVert$ | length 0.004101, shorter than 1 |
-| dogleg step, radius 1 | second leg cut at the circle | $(0.394320, -0.918973)$ |
-| promised fall | $m(0) - m(d)$ | 1.535747 |
-| trial point | $x_1 + d$ | $(-0.7810, 0.4617)$, f = 5.368099 |
+| f at $`x_1`$ | $`(1 + 1.175281)^2 + 100\,(1.380674 - 1.175281^2)^2`$ | 4.731884 |
+| slope $`g_1`$ | $`(-2(1 - x) - 400x(y - x^2),\ 200(y - x^2))`$ | $`(-4.637816, -0.122207)`$ |
+| Newton point | solve $`B_1 d = -g_1`$ | length 4.950945, longer than 1 |
+| downhill turn $`d^{\mathrm C}`$ | $`\lVert g\rVert^2 / g^{\mathsf T}B g`$ times $`\lVert g\rVert`$ | length 0.004101, shorter than 1 |
+| dogleg step, radius 1 | second leg cut at the circle | $`(0.394320, -0.918973)`$ |
+| promised fall | $`m(0) - m(d)`$ | 1.535747 |
+| trial point | $`x_1 + d`$ | $`(-0.7810, 0.4617)`$, f = 5.368099 |
 | delivered fall | 4.731884 − 5.368099 | −0.636215 |
 | ratio | −0.636215 / 1.535747 | −0.4143: refuse, radius to 0.25 |
-| dogleg step, radius 0.25 | second leg cut at the smaller circle | $(0.101203, -0.228600)$ |
-| promised fall | $m(0) - m(d)$ | 0.421311 |
+| dogleg step, radius 0.25 | second leg cut at the smaller circle | $`(0.101203, -0.228600)`$ |
+| promised fall | $`m(0) - m(d)`$ | 0.421311 |
 | delivered fall | 4.731884 − 4.302044 | 0.429841 |
 | ratio | 0.429841 / 0.421311 | 1.0202: keep, on the edge, radius to 0.5 |
-| **new point** | $x_1 + d$ | **(−1.074078, 1.152074), f = 4.302044** |
+| **new point** | $`x_1 + d`$ | **(−1.074078, 1.152074), f = 4.302044** |
 
 The model overpromised at radius 1, so the method cut its trust to a quarter, and at that distance the model's promise was met in full: f fell from 4.731884 to 4.302044 instead of rising to 5.368099.
 
@@ -172,7 +188,7 @@ The model overpromised at radius 1, so the method cut its trust to a quarter, an
 
 ## How the radius moves
 
-The puzzle: the radius has to be small where the valley bends and large where the model is good, and nobody tells the method which is which. The ratio does. Here is the radius at every try of the run, from $x_0 = (-1.2, 1)$ with radius 1, $\eta = 0.1$ and cap $\Delta_{\max} = 10$.
+The puzzle: the radius has to be small where the valley bends and large where the model is good, and nobody tells the method which is which. The ratio does. Here is the radius at every try of the run, from $`x_0 = (-1.2, 1)`$ with radius 1, $`\eta = 0.1`$ and cap $`\Delta_{\max} = 10`$.
 
 ```
 k =  0  ########################  1.0000  rho  1.003  accept
@@ -207,7 +223,7 @@ Two kinds of good step: at k = 2, 3, 13 and 16 the step hit the edge with a rati
 
 At k = 9 and 11 the ratios were 0.530 and 0.374: good enough to keep, not good enough to grow.
 
-### The picture: the promise against the delivery, at $x_1$
+### The picture: the promise against the delivery, at $`x_1`$
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -232,18 +248,18 @@ xychart-beta
     line [1.38, 0.68, 0.63, 0.56, 0.47, 0.36, 0.28, 0.12, 0.04, -0.17, -0.23, -0.54, -0.73, -1.05, -1.27, -1.57, -2.15, -2.67, -4.19, -6.40, -11.54, -21.07]
 ```
 
-The one line is $\log_{10} f$, the error here since the minimum value is 0. It creeps down the long curved valley for most of the run, then plunges once Newton steps fit inside the circle.
+The one line is $`\log_{10} f`$, the error here since the minimum value is 0. It creeps down the long curved valley for most of the run, then plunges once Newton steps fit inside the circle.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code writes out the model, the dogleg, the ratio test and the resizing rule, with two-by-two linear systems solved by elimination. It reaches the example's answers by three independent roads, and certifies the end point by a fourth. The stopping test is a slope length below $10^{-8}$.
+The code writes out the model, the dogleg, the ratio test and the resizing rule, with two-by-two linear systems solved by elimination. It reaches the example's answers by three independent roads, and certifies the end point by a fourth. The stopping test is a slope length below $`10^{-8}`$.
 
 - **Road one** checks the slope and curvature formulas against central differences (tiny steps either side).
 - **Road two** solves the circle problem exactly, by bisection on the damping number (halving the range that holds it, again and again), and again by scanning 100,000 points round the circle, and confirms the dogleg sits between the straight-downhill step and the exact answer.
 - **Road three** predicts the delivered fall from the exact quartic leftover of Step 1 and matches the direct evaluation.
-- **The certificate:** the slope at the end is below $10^{-8}$, the Hessian there is a bowl, and f, a sum of squares, is 0 at (1, 1).
+- **The certificate:** the slope at the end is below $`10^{-8}`$, the Hessian there is a bowl, and f, a sum of squares, is 0 at (1, 1).
 
 ### Python
 
@@ -638,12 +654,12 @@ The two outputs match line for line.
 
 Lean proves the straight-downhill guarantee and that shrinking ends, for any number of variables, and the banana's model error at every point.
 
-- Take any slope $g$, any symmetric curvature matrix $B$ and any radius $\Delta$. Some straight-downhill step inside the circle promises a fall of at least $\tfrac12\lVert g\rVert \min(\Delta,\ \lVert g\rVert/\lVert B\rVert)$.
-- Let f have continuous second derivatives near $x$, with a slope that is not zero. Let every step stay inside its circle and earn a fixed fraction of that guarantee.
-- Then cutting the radius to a quarter after each refusal gives a ratio above $\tfrac34$ after finitely many cuts, and after every later cut too.
-- This holds for any symmetric $B$ in the model, not only the Hessian.
-- On Rosenbrock's f, for every point and every step $d = (u, v)$, f minus the model is exactly $100u^4 - 200u^2(v - 2xu)$.
-- The hand arithmetic holds exactly: f, slope and Hessian at $(-1.2, 1)$ and at $x_1$, and the Newton point's length of 4.95.
+- Take any slope $`g`$, any symmetric curvature matrix $`B`$ and any radius $`\Delta`$. Some straight-downhill step inside the circle promises a fall of at least $`\tfrac12\lVert g\rVert \min(\Delta,\ \lVert g\rVert/\lVert B\rVert)`$.
+- Let f have continuous second derivatives near $`x`$, with a slope that is not zero. Let every step stay inside its circle and earn a fixed fraction of that guarantee.
+- Then cutting the radius to a quarter after each refusal gives a ratio above $`\tfrac34`$ after finitely many cuts, and after every later cut too.
+- This holds for any symmetric $`B`$ in the model, not only the Hessian.
+- On Rosenbrock's f, for every point and every step $`d = (u, v)`$, f minus the model is exactly $`100u^4 - 200u^2(v - 2xu)`$.
+- The hand arithmetic holds exactly: f, slope and Hessian at $`(-1.2, 1)`$ and at $`x_1`$, and the Newton point's length of 4.95.
 - Pure Newton lands where f is between 1411 and 1412. At (1, 1), f and the slope are 0, the determinant is 400, and f is never lower.
 
 The dogleg, the 24-try run and the mistakes table are left to the Python and Rust checks; Step 3's theorem stays with its source.
@@ -915,7 +931,7 @@ example (x y : ℝ) : rosen 1 1 ≤ rosen x y := by
 > Guess first, then run it. An assert is a line that stops the program when a number comes out wrong.
 > - **Start with a small circle.** In `x, y, tr = run(-1.2, 1.0, 1.0)`, set the last number to `0.1`. Guess first: slower or faster? It takes 27 tries, 3 refused, and lands exactly on (1, 1), so the log line prints −300.00, the floor the code puts under log10 of zero. The checks still pass.
 > - **Start with a huge circle.** Set the same number to `5.0`. Guess first: how many extra refusals? One: 25 tries, 4 refused. A bad first radius costs a step or two, because the ratio corrects it at once.
-> - **Raise the bar above the shrink threshold.** In the same call add `eta=0.75`. Guess first: more careful, or stuck? Stuck: at $(-0.143951, 0.011739)$ a step with ratio 0.530 is refused without shrinking, 193 of 200 tries are refused, and an assert stops the program.
+> - **Raise the bar above the shrink threshold.** In the same call add `eta=0.75`. Guess first: more careful, or stuck? Stuck: at $`(-0.143951, 0.011739)`$ a step with ratio 0.530 is refused without shrinking, 193 of 200 tries are refused, and an assert stops the program.
 > - **Shrink by half instead of a quarter.** In `def run`, set `shrink=0.5`. Guess first: more refusals or fewer? More: 24 tries, 4 refused, since a half-size circle is sometimes still too big.
 
 ---
@@ -926,7 +942,7 @@ example (x y : ℝ) : rosen 1 1 ≤ rosen x y := by
 > **Reading a refused step as a wasted iteration, and "fixing" it by trusting the model more.** The refusal at k = 1 is the method working: f stayed at 4.731884 instead of rising to 5.368099, and the radius learned something. Removing the refusals (no ratio test) or the radius (pure Newton) can look faster on this start, 21 and 6 steps against 24. But pure Newton climbed to f = 1411.845179 on its way, and without the ratio test the guarantee that f never rises is gone. A trust region buys that guarantee, not speed.
 >
 > - **Shrinking when the ratio is above 1.** A ratio of 1.250 (k = 4) means f fell more than promised. That is a good step, not a suspicious one.
-> - **Setting the bar $\eta$ above $\tfrac14$.** With 0.75, the step with ratio 0.530 is refused forever: 193 of 200 tries.
+> - **Setting the bar $`\eta`$ above $`\tfrac14`$.** With 0.75, the step with ratio 0.530 is refused forever: 193 of 200 tries.
 > - **Growing the circle after every good ratio.** Only a step that hit the edge says the circle was the limit. From k = 17 the Newton step fitted inside, and the radius rightly stayed 0.25.
 > - **Calling (1, 1) optimal because the slope is zero there.** Zero slope and a bowl-shaped Hessian, a = 802 and determinant 400, certify a local minimum. The global claim comes from f being a sum of squares, with f(1, 1) = 0.
 
@@ -946,7 +962,7 @@ example (x y : ℝ) : rosen 1 1 ≤ rosen x y := by
 
 ## What this builds on
 
-- [Newton and BFGS](05-newton-and-quasi-newton-bfgs.md): the quadratic model, the Newton point that the dogleg aims at, and the curvature matrix $B_k$, which may be the Hessian or a BFGS estimate.
+- [Newton and BFGS](05-newton-and-quasi-newton-bfgs.md): the quadratic model, the Newton point that the dogleg aims at, and the curvature matrix $`B_k`$, which may be the Hessian or a BFGS estimate.
 - [Calibration](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): already trusts a straight-line stand-in only nearby, keeps a damped step only when the real loss falls, and tightens or loosens the leash by tripling or dividing the damping. This card makes the leash an explicit radius, solves the problem inside it approximately, and resizes it by the ratio of delivered to promised fall.
 
 ## Where this goes next

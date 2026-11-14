@@ -26,35 +26,39 @@ To scale, 9 units per km/h, 0 where the axes cross. The arc with the triangle is
 
 ## The formula
 
-Notation first, in words. The **argument** of $z$, written $\arg z$ and read "arg z", is the angle of the arrow from 0 to $z$, anticlockwise from the positive real axis, in radians. Here it means the **principal argument**: the angle above −π and at most π, the range written (−π, π].
+Notation first, in words. The **argument** of $`z`$, written $`\arg z`$ and read "arg z", is the angle of the arrow from 0 to $`z`$, anticlockwise from the positive real axis, in radians. Here it means the **principal argument**: the angle above −π and at most π, the range written (−π, π].
 
-Below, $r$ and $s$ are lengths, and $\theta$ (theta) and $\varphi$ (phi) are angles. 45 degrees is π/4 = 0.785398 radians ([The unit circle](../../05-Geometry%20and%20trig/03-Trigonometry/02-radians-and-the-unit-circle.md)).
+Below, $`r`$ and $`s`$ are lengths, and $`\theta`$ (theta) and $`\varphi`$ (phi) are angles. 45 degrees is π/4 = 0.785398 radians ([The unit circle](../../05-Geometry%20and%20trig/03-Trigonometry/02-radians-and-the-unit-circle.md)).
 
-$$z = a + bi = r(\cos\theta + i\sin\theta), \qquad a = r\cos\theta,\quad b = r\sin\theta,\quad r = \sqrt{a^2 + b^2}$$
+```math
+z = a + bi = r(\cos\theta + i\sin\theta), \qquad a = r\cos\theta,\quad b = r\sin\theta,\quad r = \sqrt{a^2 + b^2}
+```
 
 **Read it aloud:** a complex number is its length times the point at its angle on the circle of radius 1.
 
-$$r(\cos\theta + i\sin\theta)\cdot s(\cos\varphi + i\sin\varphi) = rs\,\bigl(\cos(\theta + \varphi) + i\sin(\theta + \varphi)\bigr)$$
+```math
+r(\cos\theta + i\sin\theta)\cdot s(\cos\varphi + i\sin\varphi) = rs\,\bigl(\cos(\theta + \varphi) + i\sin(\theta + \varphi)\bigr)
+```
 
 **Read it aloud:** to multiply, multiply the lengths and add the angles.
 
-Any angle $\theta + 2\pi k$, with $k$ a whole number, names the same point. The principal argument is the one that lands in (−π, π], so $\arg(zw)$ is $\arg z + \arg w$ plus whichever whole number of turns brings the sum back into range.
+Any angle $`\theta + 2\pi k`$, with $`k`$ a whole number, names the same point. The principal argument is the one that lands in (−π, π], so $`\arg(zw)`$ is $`\arg z + \arg w`$ plus whichever whole number of turns brings the sum back into range.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $z$ | a complex number: a point, or the arrow to it | wind A, 7.071068 + 7.071068i | — |
-| $a$, $b$ | real and imaginary parts: east and north | 7.071068 and 7.071068 | angle swings toward that axis |
-| $r$, $s$ | lengths: each number's modulus | 10 and 2 | product grows in proportion |
-| $\theta$, $\varphi$ | angles from the positive real axis, radians | π/4 and π/2 | product turns further |
-| $w$ | the multiplier: 2 at 90 degrees | 0 + 2i | — |
-| $i$ | the number whose square is −1; length 1 at 90 degrees | 0 + 1i | — |
-| $\arg z$ | the principal argument, in (−π, π] | 0.785398 | past π it wraps to near −π |
-| $k$ | a whole number of full turns | −1 turns 225° into −135° | same point, new label |
+| $`z`$ | a complex number: a point, or the arrow to it | wind A, 7.071068 + 7.071068i | — |
+| $`a`$, $`b`$ | real and imaginary parts: east and north | 7.071068 and 7.071068 | angle swings toward that axis |
+| $`r`$, $`s`$ | lengths: each number's modulus | 10 and 2 | product grows in proportion |
+| $`\theta`$, $`\varphi`$ | angles from the positive real axis, radians | π/4 and π/2 | product turns further |
+| $`w`$ | the multiplier: 2 at 90 degrees | 0 + 2i | — |
+| $`i`$ | the number whose square is −1; length 1 at 90 degrees | 0 + 1i | — |
+| $`\arg z`$ | the principal argument, in (−π, π] | 0.785398 | past π it wraps to near −π |
+| $`k`$ | a whole number of full turns | −1 turns 225° into −135° | same point, new label |
 
 ### When it holds
 
-- **Polar form is a definition:** every nonzero $z$ has one, with $r$ the modulus ([Conjugate and modulus](02-conjugate-and-modulus.md)).
-- **Zero has no angle:** with $r = 0$ every $\theta$ gives 0, so $\arg 0$ is undefined; code returning 0 for it is making a choice.
+- **Polar form is a definition:** every nonzero $`z`$ has one, with $`r`$ the modulus ([Conjugate and modulus](02-conjugate-and-modulus.md)).
+- **Zero has no angle:** with $`r = 0`$ every $`\theta`$ gives 0, so $`\arg 0`$ is undefined; code returning 0 for it is making a choice.
 - **Arguments add only up to whole turns:** two angles in range can sum past π.
 
 ---
@@ -63,13 +67,13 @@ Any angle $\theta + 2\pi k$, with $k$ a whole number, names the same point. The 
 
 ### Step 1: from length and angle to a + bi
 
-East-and-north is one address for a point; distance-and-direction is another ([Polar coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/03-polar-coordinates.md)). To pass between them, drop a line from the arrow's tip to the real axis. The right triangle has hypotenuse $r$ and angle $\theta$ at 0, so the east side is $r\cos\theta$ and the north side $r\sin\theta$.
+East-and-north is one address for a point; distance-and-direction is another ([Polar coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/03-polar-coordinates.md)). To pass between them, drop a line from the arrow's tip to the real axis. The right triangle has hypotenuse $`r`$ and angle $`\theta`$ at 0, so the east side is $`r\cos\theta`$ and the north side $`r\sin\theta`$.
 
 At π/4 cosine and sine are equal, so both parts of the wind are 7.071068 km/h.
 
 ### Step 2: from a + bi back to length and angle
 
-The length is Pythagoras: for the wind, 10. The angle needs care. The slope $b/a$ fixes a line through 0, but a line points two ways. The south-west wind, −7.071068 − 7.071068i, has slope 1, like the north-east wind. The signs settle it: both negative puts the arrow lower left, at −135°, or −2.356194 radians.
+The length is Pythagoras: for the wind, 10. The angle needs care. The slope $`b/a`$ fixes a line through 0, but a line points two ways. The south-west wind, −7.071068 − 7.071068i, has slope 1, like the north-east wind. The signs settle it: both negative puts the arrow lower left, at −135°, or −2.356194 radians.
 
 In code, the rule that reads both signs is atan2, short for "arctangent of two inputs"; it returns the principal argument.
 
@@ -77,21 +81,23 @@ One trap: computers store a signed zero, a zero that keeps a minus sign, written
 
 ### Step 3: lengths multiply, angles add
 
-Multiply the two polar forms out, using $i^2 = -1$:
+Multiply the two polar forms out, using $`i^2 = -1`$:
 
-$$(\cos\theta + i\sin\theta)(\cos\varphi + i\sin\varphi) = (\cos\theta\cos\varphi - \sin\theta\sin\varphi) + i(\sin\theta\cos\varphi + \cos\theta\sin\varphi)$$
+```math
+(\cos\theta + i\sin\theta)(\cos\varphi + i\sin\varphi) = (\cos\theta\cos\varphi - \sin\theta\sin\varphi) + i(\sin\theta\cos\varphi + \cos\theta\sin\varphi)
+```
 
-The brackets are the angle-addition identities ([Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md)): $\cos(\theta + \varphi)$ and $\sin(\theta + \varphi)$. The real lengths $r$ and $s$ multiply out front. That proves the rule.
+The brackets are the angle-addition identities ([Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md)): $`\cos(\theta + \varphi)`$ and $`\sin(\theta + \varphi)`$. The real lengths $`r`$ and $`s`$ multiply out front. That proves the rule.
 
-On the wind: 10 times 2 is 20, and 45° plus 90° is 135°. The pair rule of [Complex numbers](01-complex-numbers.md), which multiplies the parts out with $i^2 = -1$ and uses no angle, reaches the same −14.142136 + 14.142136i.
+On the wind: 10 times 2 is 20, and 45° plus 90° is 135°. The pair rule of [Complex numbers](01-complex-numbers.md), which multiplies the parts out with $`i^2 = -1`$ and uses no angle, reaches the same −14.142136 + 14.142136i.
 
 Division runs the rule backwards: divide lengths, subtract angles. The product divided by 2i is the wind again, 7.071068 + 7.071068i.
 
 ### Step 4: angles wrap, so the argument needs a range
 
-Turn the product another 90° by multiplying by $i$. The angles add to 225°, at −14.142136 − 14.142136i. But 225° is 3.926991 radians, past π; one turn less is −2.356194, or −135°, the principal argument.
+Turn the product another 90° by multiplying by $`i`$. The angles add to 225°, at −14.142136 − 14.142136i. But 225° is 3.926991 radians, past π; one turn less is −2.356194, or −135°, the principal argument.
 
-So $\arg(zw) = \arg z + \arg w$ holds only up to a whole turn; here $k = -1$. The same wrap gives −1 − i its principal argument, −2.356194.
+So $`\arg(zw) = \arg z + \arg w`$ holds only up to a whole turn; here $`k = -1`$. The same wrap gives −1 − i its principal argument, −2.356194.
 
 ### Step 5: the jump cannot be removed
 
@@ -102,11 +108,11 @@ Points a thousandth above and below −1 have arguments 3.140593 and −3.140593
 <details>
 <summary>Detailed proof: the principal argument is unique, and some jump is unavoidable</summary>
 
-**Uniqueness.** Two angles giving the same point on the unit circle differ by $2\pi k$ for a whole number $k$. The window (−π, π] has width 2π and is open at one end, so only $k = 0$ keeps both inside.
+**Uniqueness.** Two angles giving the same point on the unit circle differ by $`2\pi k`$ for a whole number $`k`$. The window (−π, π] has width 2π and is open at one end, so only $`k = 0`$ keeps both inside.
 
-**The formula.** For $z = a + bi \ne 0$: if $a > 0$, $\arg z = \arctan(b/a)$; if $a < 0$, add π when $b \ge 0$ and subtract π when $b < 0$; if $a = 0$, it is π/2 or −π/2 by the sign of $b$. Each case lands in the range with cosine and sine of the right signs, so by uniqueness it is the principal argument.
+**The formula.** For $`z = a + bi \ne 0`$: if $`a > 0`$, $`\arg z = \arctan(b/a)`$; if $`a < 0`$, add π when $`b \ge 0`$ and subtract π when $`b < 0`$; if $`a = 0`$, it is π/2 or −π/2 by the sign of $`b`$. Each case lands in the range with cosine and sine of the right signs, so by uniqueness it is the principal argument.
 
-**No continuous choice round a loop.** Suppose $f(\theta)$ were an angle for the point $\cos\theta + i\sin\theta$, varying continuously as $\theta$ runs from 0 to 2π. Then $f(\theta) - \theta$ is continuous and always a whole multiple of 2π. A continuous function cannot pass from one multiple to the next without taking the values between, so it is constant, and $f(2\pi) = f(0) + 2\pi$. But angles 0 and 2π give the same point, so a rule giving each point one angle needs $f(2\pi) = f(0)$. The contradiction shows every single-valued choice jumps somewhere on the loop.
+**No continuous choice round a loop.** Suppose $`f(\theta)`$ were an angle for the point $`\cos\theta + i\sin\theta`$, varying continuously as $`\theta`$ runs from 0 to 2π. Then $`f(\theta) - \theta`$ is continuous and always a whole multiple of 2π. A continuous function cannot pass from one multiple to the next without taking the values between, so it is constant, and $`f(2\pi) = f(0) + 2\pi`$. But angles 0 and 2π give the same point, so a rule giving each point one angle needs $`f(2\pi) = f(0)`$. The contradiction shows every single-valued choice jumps somewhere on the loop.
 
 </details>
 

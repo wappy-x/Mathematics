@@ -35,40 +35,44 @@ Orange: the real pool, whose borrowers prepay faster as rates fall. Green: the s
 
 ## The formula
 
-Four pieces of notation first, in words. A **basis point** (bp) is a hundredth of a percentage point, so 100 basis points is one point. The **bump** $\delta$ (small delta) is how far the yield is moved each way; the house bump is 100 basis points, $\delta = 0.01$. $V_0$ is the pool's price at today's yield, and $V_-$ and $V_+$ are its prices after the yield is bumped down and up. Each of the three is a full repricing: rerun the borrowers, rebuild 360 months of payments, discount them.
+Four pieces of notation first, in words. A **basis point** (bp) is a hundredth of a percentage point, so 100 basis points is one point. The **bump** $`\delta`$ (small delta) is how far the yield is moved each way; the house bump is 100 basis points, $`\delta = 0.01`$. $`V_0`$ is the pool's price at today's yield, and $`V_-`$ and $`V_+`$ are its prices after the yield is bumped down and up. Each of the three is a full repricing: rerun the borrowers, rebuild 360 months of payments, discount them.
 
-$$D_{\text{eff}} \;=\; \frac{V_- - V_+}{2\,V_0\,\delta}, \qquad C_{\text{eff}} \;=\; \frac{V_- + V_+ - 2V_0}{V_0\,\delta^2}$$
+```math
+D_{\text{eff}} \;=\; \frac{V_- - V_+}{2\,V_0\,\delta}, \qquad C_{\text{eff}} \;=\; \frac{V_- + V_+ - 2V_0}{V_0\,\delta^2}
+```
 
 **Read it aloud:** effective duration is the price swing across the two bumps, per unit of price and per unit of yield; effective convexity is how far the two bumped prices together miss twice today's price, per unit of price and per unit of yield squared.
 
 The word **effective** means the payments were allowed to change with the yield. When they cannot change, these two numbers are the modified duration and convexity of [Duration and convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md), measured by bumping instead of by formula.
 
-What makes the payments change is a **prepayment model**: a rule that says how fast borrowers pay off early at each market yield. Speed is quoted as a **CPR**, the conditional prepayment rate: the fraction of remaining loans paid off early over a year. The house rule is a straight line with a floor, where $y$ is the market yield:
+What makes the payments change is a **prepayment model**: a rule that says how fast borrowers pay off early at each market yield. Speed is quoted as a **CPR**, the conditional prepayment rate: the fraction of remaining loans paid off early over a year. The house rule is a straight line with a floor, where $`y`$ is the market yield:
 
-$$c(y) \;=\; \max\bigl(2\%,\; 8\% + b\,(6\% - y)\bigr), \qquad b = 2.55$$
+```math
+c(y) \;=\; \max\bigl(2\%,\; 8\% + b\,(6\% - y)\bigr), \qquad b = 2.55
+```
 
 **Read it aloud:** at 6 percent borrowers prepay 8 percent a year; every point rates fall adds 2.55 points of prepayment, every point they rise takes 2.55 away, and people who move house keep the speed from ever dropping below 2 percent. The slope 2.55 is an assumption, chosen so the pool lands on the shelf's example of −1.2; the checks show what doubling it does.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $y$ | the market yield, one rate for every month, compounded monthly | 6% | price falls |
-| $\delta$ | the bump: how far the yield is moved each way | 0.01, one point | convexity drifts: −119.00 at 100 bp, −118.59 at 25 bp |
-| $V$ | the pool's price, per $100 of loans, at a given yield | $100.00 at 6% | — |
-| $V_0$, $V_-$, $V_+$ | the price today, after a bump down, after a bump up | $100.00, $105.52, $93.29 | — |
-| $D_{\text{eff}}$ | effective duration: fraction of price lost per unit of yield | 6.117454 | — |
-| $C_{\text{eff}}$ | effective convexity, in years squared; divide by 100 for the screen figure | −119.003615, shown as −1.19 | — |
-| $L$ | the face: principal still owed | $100 | price scales with it |
-| $c$ | CPR: fraction of remaining loans prepaid in a year | 8% at 6%, 10.55% at 5%, 5.45% at 7% | the pool shortens |
-| $b$ | refinancing slope: points of CPR added per point of rate fall | 2.55 | convexity turns more negative: −315.34 at 5.10 |
-| $i$, $j$ | coupon per month, market yield per month | 0.5%, $y/12$ | — |
-| $B_m$, $m$ | loans still outstanding at the start of month $m$ | $100 in month 1 | — |
-| $F$ | every month's opening balance, discounted to today and added | the whole card's hinge | duration grows in step |
+| $`y`$ | the market yield, one rate for every month, compounded monthly | 6% | price falls |
+| $`\delta`$ | the bump: how far the yield is moved each way | 0.01, one point | convexity drifts: −119.00 at 100 bp, −118.59 at 25 bp |
+| $`V`$ | the pool's price, per $100 of loans, at a given yield | $100.00 at 6% | — |
+| $`V_0`$, $`V_-`$, $`V_+`$ | the price today, after a bump down, after a bump up | $100.00, $105.52, $93.29 | — |
+| $`D_{\text{eff}}`$ | effective duration: fraction of price lost per unit of yield | 6.117454 | — |
+| $`C_{\text{eff}}`$ | effective convexity, in years squared; divide by 100 for the screen figure | −119.003615, shown as −1.19 | — |
+| $`L`$ | the face: principal still owed | $100 | price scales with it |
+| $`c`$ | CPR: fraction of remaining loans prepaid in a year | 8% at 6%, 10.55% at 5%, 5.45% at 7% | the pool shortens |
+| $`b`$ | refinancing slope: points of CPR added per point of rate fall | 2.55 | convexity turns more negative: −315.34 at 5.10 |
+| $`i`$, $`j`$ | coupon per month, market yield per month | 0.5%, $`y/12`$ | — |
+| $`B_m`$, $`m`$ | loans still outstanding at the start of month $`m`$ | $100 in month 1 | — |
+| $`F`$ | every month's opening balance, discounted to today and added | the whole card's hinge | duration grows in step |
 
-The monthly prepayment fraction is $1-(1-c)^{1/12}$: 0.6924 percent at 6 percent. Compounding it twelve times reproduces the annual CPR. Each month the pool collects interest at $i$ on its balance, a level payment re-set over the months left, and the prepayments on top ([Mortgage pools](02-mortgage-cash-flows-and-prepayment.md)).
+The monthly prepayment fraction is $`1-(1-c)^{1/12}`$: 0.6924 percent at 6 percent. Compounding it twelve times reproduces the annual CPR. Each month the pool collects interest at $`i`$ on its balance, a level payment re-set over the months left, and the prepayments on top ([Mortgage pools](02-mortgage-cash-flows-and-prepayment.md)).
 
 ### When it holds
 
-- **The prepayment model is right.** It never is exactly. The slope $b$ is a guess about human behaviour; double it and convexity nearly triples, from −119 to −315. The number is only as good as the model inside it.
+- **The prepayment model is right.** It never is exactly. The slope $`b`$ is a guess about human behaviour; double it and convexity nearly triples, from −119 to −315. The number is only as good as the model inside it.
 - **The curve moves in parallel.** The bump shifts one flat yield. Real curves twist, and a mortgage is exposed at every point of the curve; separate bumps at separate maturities, called key-rate durations, handle that.
 - **The bump is small enough to stay on one branch of the model.** A 3-point bump up pushes the speed onto the 2 percent floor and the measured convexity jumps to −93.16. Finite bumps are scenario numbers, not derivatives.
 - **The investor receives the full 6 percent.** Real pools pass through less than the borrowers' rate, after servicing and guarantee fees, and then the pool is at par at a different yield. Default and payment delays are left out.
@@ -84,19 +88,23 @@ The fixed-payment convexity formula differentiates each payment's discount facto
 
 ### Step 1: three prices give a slope and a bend
 
-Write the price near today's yield as today's price, plus slope times the move, plus half the bend times the move squared, plus smaller terms ([Duration and convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md) uses the same expansion). Bump down by $\delta$ and up by $\delta$:
+Write the price near today's yield as today's price, plus slope times the move, plus half the bend times the move squared, plus smaller terms ([Duration and convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md) uses the same expansion). Bump down by $`\delta`$ and up by $`\delta`$:
 
-$$V_\pm \;=\; V_0 \;\pm\; V'\,\delta \;+\; \tfrac12\,V''\,\delta^2 \;\pm\; \tfrac16\,V'''\,\delta^3 \;+\;\dots$$
+```math
+V_\pm \;=\; V_0 \;\pm\; V'\,\delta \;+\; \tfrac12\,V''\,\delta^2 \;\pm\; \tfrac16\,V'''\,\delta^3 \;+\;\dots
+```
 
-Here $V'$, $V''$ and $V'''$ are the first, second and third derivatives of price with respect to yield at today's yield. Subtract the two lines: the even terms cancel, leaving $V_- - V_+ = -2V'\delta$ plus a $\delta^3$ term. Add them: the odd terms cancel, leaving $V_- + V_+ - 2V_0 = V''\delta^2$ plus a $\delta^4$ term. Divide by the price and the bump, and the two formulas measure $-V'/V_0$ and $V''/V_0$, each with an error that shrinks like $\delta^2$.
+Here $`V'`$, $`V''`$ and $`V'''`$ are the first, second and third derivatives of price with respect to yield at today's yield. Subtract the two lines: the even terms cancel, leaving $`V_- - V_+ = -2V'\delta`$ plus a $`\delta^3`$ term. Add them: the odd terms cancel, leaving $`V_- + V_+ - 2V_0 = V''\delta^2`$ plus a $`\delta^4`$ term. Divide by the price and the bump, and the two formulas measure $`-V'/V_0`$ and $`V''/V_0`$, each with an error that shrinks like $`\delta^2`$.
 
 The checks confirm the shrinking. At a 1-basis-point bump the pool's convexity is −118.557465; the exact bend, computed below without any bump, is −118.557419. At 100 basis points it is −119.003615. The house bump is a scenario number, close to the local bend but not equal to it.
 
 ### Step 2: at par, the price hides a simple identity
 
-Each month the pool's receipt is the interest on the opening balance plus every dollar of principal returned, scheduled or early. That is the opening balance grown by the coupon, minus the closing balance: $(1+i)B_m - B_{m+1}$. Discount every receipt at the market's monthly rate $j$ and add. The sum telescopes (each balance appears once with a plus and once with a minus) to
+Each month the pool's receipt is the interest on the opening balance plus every dollar of principal returned, scheduled or early. That is the opening balance grown by the coupon, minus the closing balance: $`(1+i)B_m - B_{m+1}`$. Discount every receipt at the market's monthly rate $`j`$ and add. The sum telescopes (each balance appears once with a plus and once with a minus) to
 
-$$V(y) \;=\; L \;+\; (i - j)\,F(y), \qquad F(y) \;=\; \sum_{m=1}^{360} \frac{B_m(y)}{(1+j)^{m}}$$
+```math
+V(y) \;=\; L \;+\; (i - j)\,F(y), \qquad F(y) \;=\; \sum_{m=1}^{360} \frac{B_m(y)}{(1+j)^{m}}
+```
 
 **Read it aloud:** the pool is worth its face, plus the coupon's excess over the market rate earned on every dollar outstanding, discounted.
 
@@ -105,42 +113,48 @@ At 6 percent the coupon and the market rate are equal, the second term is zero, 
 <details>
 <summary>Detailed proof: the telescoping sum</summary>
 
-Write $d_m = (1+j)^{-m}$ for the discount factor of month $m$, so $(1+j)\,d_m = d_{m-1}$ and $d_0 = 1$. The receipt in month $m$ is $X_m = (1+i)B_m - B_{m+1}$, where $B_m$ is the opening balance of month $m$ and $B_{361} = 0$. Split $1+i = (1+j) + (i-j)$:
-$$\sum_{m=1}^{360} d_m X_m = \sum_{m=1}^{360} d_{m-1} B_m - \sum_{m=1}^{360} d_m B_{m+1} + (i-j)\sum_{m=1}^{360} d_m B_m.$$
-The first sum is $B_1 + d_1B_2 + \dots + d_{359}B_{360}$. The second is $d_1B_2 + \dots + d_{359}B_{360} + d_{360}B_{361}$, and the last term is zero. Every term but $B_1 = L$ cancels. What remains is $L + (i-j)F$. The argument never used the prepayment rule, so the identity holds for any speed, including early payoff (later balances are zero).
+Write $`d_m = (1+j)^{-m}`$ for the discount factor of month $`m`$, so $`(1+j)\,d_m = d_{m-1}`$ and $`d_0 = 1`$. The receipt in month $`m`$ is $`X_m = (1+i)B_m - B_{m+1}`$, where $`B_m`$ is the opening balance of month $`m`$ and $`B_{361} = 0`$. Split $`1+i = (1+j) + (i-j)`$:
+
+$`\displaystyle \sum_{m=1}^{360} d_m X_m = \sum_{m=1}^{360} d_{m-1} B_m - \sum_{m=1}^{360} d_m B_{m+1} + (i-j)\sum_{m=1}^{360} d_m B_m.`$
+
+The first sum is $`B_1 + d_1B_2 + \dots + d_{359}B_{360}`$. The second is $`d_1B_2 + \dots + d_{359}B_{360} + d_{360}B_{361}`$, and the last term is zero. Every term but $`B_1 = L`$ cancels. What remains is $`L + (i-j)F`$. The argument never used the prepayment rule, so the identity holds for any speed, including early payoff (later balances are zero).
 
 </details>
 
 ### Step 3: differentiate at par, and the slope and bend fall out
 
-The coupon is fixed at $i = 0.5\%$ a month and $j = y/12$, so $i - j = (6\% - y)/12$. Differentiate $V = L + \tfrac{1}{12}(6\% - y)F$ once and twice, then set $y = 6\%$, where the factor $(6\% - y)$ is zero. The exact duration $D = -V'/V$ and convexity $C = V''/V$ come out as
+The coupon is fixed at $`i = 0.5\%`$ a month and $`j = y/12`$, so $`i - j = (6\% - y)/12`$. Differentiate $`V = L + \tfrac{1}{12}(6\% - y)F`$ once and twice, then set $`y = 6\%`$, where the factor $`(6\% - y)`$ is zero. The exact duration $`D = -V'/V`$ and convexity $`C = V''/V`$ come out as
 
-$$D \;=\; \frac{F}{12\,L}, \qquad C \;=\; -\,\frac{F'}{6\,L}$$
+```math
+D \;=\; \frac{F}{12\,L}, \qquad C \;=\; -\,\frac{F'}{6\,L}
+```
 
-Here $F'$ is the rate at which $F$ changes as the yield rises. Two facts follow at once. Duration at par depends only on today's balances, not on how the borrowers would react: the frozen pool and the real pool share the slope 6.077 there, which is why the three curves in the picture touch with one tangent. And the bend's sign is the opposite of the sign of $F'$.
+Here $`F'`$ is the rate at which $`F`$ changes as the yield rises. Two facts follow at once. Duration at par depends only on today's balances, not on how the borrowers would react: the frozen pool and the real pool share the slope 6.077 there, which is why the three curves in the picture touch with one tangent. And the bend's sign is the opposite of the sign of $`F'`$.
 
 <details>
 <summary>The algebra behind this</summary>
 
-$V' = -\tfrac{1}{12}F + \tfrac{1}{12}(6\% - y)F'$ and $V'' = -\tfrac{2}{12}F' + \tfrac{1}{12}(6\% - y)F''$. At $y = 6\%$ the bracket is zero and $V = L$, so $D = -V'/V = F/(12L)$ and $C = V''/V = -F'/(6L)$.
+$`V' = -\tfrac{1}{12}F + \tfrac{1}{12}(6\% - y)F'`$ and $`V'' = -\tfrac{2}{12}F' + \tfrac{1}{12}(6\% - y)F''`$. At $`y = 6\%`$ the bracket is zero and $`V = L`$, so $`D = -V'/V = F/(12L)`$ and $`C = V''/V = -F'/(6L)`$.
 
 </details>
 
 ### Step 4: two forces pull the bend in opposite directions
 
-When the yield rises, $F$ changes for two reasons.
+When the yield rises, $`F`$ changes for two reasons.
 
-- **Heavier discounting.** Every future balance is divided by a larger $(1+j)^m$. This pushes $F$ down, so it contributes positive convexity. Alone, it is the whole story for a fixed-payment bond: **+67.968696**.
-- **Slower paydown.** The speed $c$ falls by $b$ for each unit of yield, so every balance after month 1 stays larger. This pushes $F$ up, and contributes negative convexity: **−186.526115**.
+- **Heavier discounting.** Every future balance is divided by a larger $`(1+j)^m`$. This pushes $`F`$ down, so it contributes positive convexity. Alone, it is the whole story for a fixed-payment bond: **+67.968696**.
+- **Slower paydown.** The speed $`c`$ falls by $`b`$ for each unit of yield, so every balance after month 1 stays larger. This pushes $`F`$ up, and contributes negative convexity: **−186.526115**.
 
-For this pool the second force wins. Exact convexity at par is their sum, **−118.557419**. That is the proof that the house pool is negatively convex: not a picture, a sign. A pool whose borrowers ignored rates ($b = 0$) would keep only the first force; a pool whose borrowers refinance hard would go further negative.
+For this pool the second force wins. Exact convexity at par is their sum, **−118.557419**. That is the proof that the house pool is negatively convex: not a picture, a sign. A pool whose borrowers ignored rates ($`b = 0`$) would keep only the first force; a pool whose borrowers refinance hard would go further negative.
 
 <details>
 <summary>The two parts, written out</summary>
 
-Each opening balance has the closed form $B_m = L \cdot \dfrac{(1+i)^{360} - (1+i)^{m-1}}{(1+i)^{360} - 1} \cdot (1-c)^{(m-1)/12}$: the scheduled balance of a level-payment loan, times the chance of surviving $m-1$ months of prepayment. Differentiating $F = \sum B_m(1+j)^{-m}$ with respect to $y$ gives
-$$F' = \underbrace{-\sum \tfrac{m}{12}\,\frac{B_m}{(1+j)^{m+1}}}_{\text{discounting}} \;+\; \underbrace{\sum \frac{B_m}{(1+j)^m}\cdot\frac{m-1}{12}\cdot\frac{b}{1-c}}_{\text{slower paydown}},$$
-since $dc/dy = -b$ away from the floor. Multiply each part by $-1/(6L)$ to get the two contributions above.
+Each opening balance has the closed form $`B_m = L \cdot \dfrac{(1+i)^{360} - (1+i)^{m-1}}{(1+i)^{360} - 1} \cdot (1-c)^{(m-1)/12}`$: the scheduled balance of a level-payment loan, times the chance of surviving $`m-1`$ months of prepayment. Differentiating $`F = \sum B_m(1+j)^{-m}`$ with respect to $`y`$ gives
+
+$`\displaystyle F' = \underbrace{-\sum \tfrac{m}{12}\,\frac{B_m}{(1+j)^{m+1}}}_{\text{discounting}} \;+\; \underbrace{\sum \frac{B_m}{(1+j)^m}\cdot\frac{m-1}{12}\cdot\frac{b}{1-c}}_{\text{slower paydown}},`$
+
+since $`dc/dy = -b`$ away from the floor. Multiply each part by $`-1/(6L)`$ to get the two contributions above.
 
 </details>
 
@@ -169,16 +183,16 @@ The three prices are three full runs of the 360-month ledger, taken from the che
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| CPR at 5%, 6%, 7% | $8\% \pm 2.55 \times 1\%$ | 10.55%, 8%, 5.45% |
-| monthly prepay fraction at 6% | $1 - 0.92^{1/12}$ | 0.006924 |
-| price bumped down, $V_-$ | ledger at 5%, speed 10.55% | $105.522436 |
-| price today, $V_0$ | ledger at 6%, speed 8% | $100.000000 |
-| price bumped up, $V_+$ | ledger at 7%, speed 5.45% | $93.287528 |
-| price swing | $105.522436 - 93.287528$ | 12.234908 |
-| $D_{\text{eff}}$ | $12.234908 / (2 \times 100 \times 0.01)$ | 6.117454 |
-| the miss | $105.522436 + 93.287528 - 200$ | −1.190036 |
-| $C_{\text{eff}}$ | $-1.190036 / (100 \times 0.0001)$ | −119.003615 |
-| **as the screen shows it** | $-119.003615 / 100$ | **−1.19, the shelf's −1.2** |
+| CPR at 5%, 6%, 7% | $`8\% \pm 2.55 \times 1\%`$ | 10.55%, 8%, 5.45% |
+| monthly prepay fraction at 6% | $`1 - 0.92^{1/12}`$ | 0.006924 |
+| price bumped down, $`V_-`$ | ledger at 5%, speed 10.55% | $105.522436 |
+| price today, $`V_0`$ | ledger at 6%, speed 8% | $100.000000 |
+| price bumped up, $`V_+`$ | ledger at 7%, speed 5.45% | $93.287528 |
+| price swing | $`105.522436 - 93.287528`$ | 12.234908 |
+| $`D_{\text{eff}}`$ | $`12.234908 / (2 \times 100 \times 0.01)`$ | 6.117454 |
+| the miss | $`105.522436 + 93.287528 - 200`$ | −1.190036 |
+| $`C_{\text{eff}}`$ | $`-1.190036 / (100 \times 0.0001)`$ | −119.003615 |
+| **as the screen shows it** | $`-119.003615 / 100`$ | **−1.19, the shelf's −1.2** |
 
 The per-hundred figure is the one that reads straight into percent. Half of it is −0.595018. A one-point rise moves the price by −6.117454 − 0.595018 = −6.712472 percent; a one-point fall by 6.117454 − 0.595018 = 5.522436 percent. At a price of $100 those are the dollar moves the pool actually makes, exactly, because the two numbers were measured from those moves.
 
@@ -195,7 +209,7 @@ The per-hundred figure is the one that reads straight into percent. Half of it i
 
 ## Code, from first principles, and it actually runs
 
-The code prices the pool three independent ways. Road 1 runs the pool month by month, re-setting the payment, taking the prepayments, and discounting each receipt. Road 2 never runs a ledger: it writes each balance in closed form and prices with the par identity from Step 2. Road 3 never bumps: it computes the exact slope and bend at par from $D = F/(12L)$ and $C = -F'/(6L)$, with $F'$ split into its two forces. Roads 1 and 2 must agree on every bumped price; road 1 at a 1-basis-point bump must land on road 3's derivatives. The asserts were tested by breaking the maths: flip the sign of the paydown force, shift the closed-form survival by a month, or discount one month short, and an assert fails each time.
+The code prices the pool three independent ways. Road 1 runs the pool month by month, re-setting the payment, taking the prepayments, and discounting each receipt. Road 2 never runs a ledger: it writes each balance in closed form and prices with the par identity from Step 2. Road 3 never bumps: it computes the exact slope and bend at par from $`D = F/(12L)`$ and $`C = -F'/(6L)`$, with $`F'`$ split into its two forces. Roads 1 and 2 must agree on every bumped price; road 1 at a 1-basis-point bump must land on road 3's derivatives. The asserts were tested by breaking the maths: flip the sign of the paydown force, shift the closed-form survival by a month, or discount one month short, and an assert fails each time.
 
 ### Python
 
@@ -362,7 +376,7 @@ chart, tangent     118.23 115.19 112.15 109.12 106.08 103.04 100.00  96.96  93.9
 ALL CHECKS PASS
 ```
 
-Three roads, one pool. The ledger and the closed form agree on every bumped price to six decimals. The 1-basis-point bump and the exact convexity agree to six significant figures. The frozen pool's convexity, +68.126164 at 100 basis points, sits beside the discounting force alone, +67.968696: the gap is the bump's own $\delta^2$ error.
+Three roads, one pool. The ledger and the closed form agree on every bumped price to six decimals. The 1-basis-point bump and the exact convexity agree to six significant figures. The frozen pool's convexity, +68.126164 at 100 basis points, sits beside the discounting force alone, +67.968696: the gap is the bump's own $`\delta^2`$ error.
 
 ### Rust
 
@@ -553,13 +567,13 @@ The two outputs agree line for line at the printed precision.
 
 Lean proves the par identity, the slope and bend at par, and the bump formulas, for any balances and any smooth prepayment model.
 
-- Take any path of opening balances $B_m$, with $B_1 = L$ and nothing left after the last month. Then the discounted receipts add up to $L + (i - j)F$.
-- Take any discounted balances $F$ that change smoothly with the yield. Then at par the price is $L$ and the exact duration is $F/(12L)$.
-- Suppose the same holds. Then the exact convexity at par is $-F'/(6L)$.
-- Take any three prices $V_0$, $V_-$, $V_+$ and any bump $\delta$. Then $D_{\text{eff}}$ is the average of the down-side and up-side durations.
-- Suppose the same prices and bump. Then $C_{\text{eff}}$ is the down-side duration minus the up-side duration, divided by $\delta$.
+- Take any path of opening balances $`B_m`$, with $`B_1 = L`$ and nothing left after the last month. Then the discounted receipts add up to $`L + (i - j)F`$.
+- Take any discounted balances $`F`$ that change smoothly with the yield. Then at par the price is $`L`$ and the exact duration is $`F/(12L)`$.
+- Suppose the same holds. Then the exact convexity at par is $`-F'/(6L)`$.
+- Take any three prices $`V_0`$, $`V_-`$, $`V_+`$ and any bump $`\delta`$. Then $`D_{\text{eff}}`$ is the average of the down-side and up-side durations.
+- Suppose the same prices and bump. Then $`C_{\text{eff}}`$ is the down-side duration minus the up-side duration, divided by $`\delta`$.
 - The house rule gives a CPR of 10.55 percent at 5 percent and 5.45 percent at 7. At 9 percent it sits on the 2 percent floor.
-- The hand table's price swing, $D_{\text{eff}}$ and miss are exact. So are the one-point moves of 5.522436 and −6.712472 percent.
+- The hand table's price swing, $`D_{\text{eff}}`$ and miss are exact. So are the one-point moves of 5.522436 and −6.712472 percent.
 
 The three prices from the 360-month ledger, the two forces of Step 4 and the negative sign are left to the Python and Rust checks.
 

@@ -33,38 +33,44 @@ The line is the metal A(r) at eight radii: falling, flat between 3.5 and 4 cm, t
 
 ## The formula
 
-The radius $r$ runs from a lid's centre to its rim, in cm; the height $h$ is the wall's, in cm. The volume is fixed at $V$ = 330 cubic cm (330 ml), and a cylinder's volume is lid area times height, $\pi r^2 h$, so the radius pins the height:
+The radius $`r`$ runs from a lid's centre to its rim, in cm; the height $`h`$ is the wall's, in cm. The volume is fixed at $`V`$ = 330 cubic cm (330 ml), and a cylinder's volume is lid area times height, $`\pi r^2 h`$, so the radius pins the height:
 
-$$h = \frac{V}{\pi r^2}$$
+```math
+h = \frac{V}{\pi r^2}
+```
 
-The metal is two lids plus the wall, which unrolls into a rectangle $2\pi r$ long and $h$ high:
+The metal is two lids plus the wall, which unrolls into a rectangle $`2\pi r`$ long and $`h`$ high:
 
-$$A(r) = 2\pi r^2 + 2\pi r h = 2\pi r^2 + \frac{2V}{r}$$
+```math
+A(r) = 2\pi r^2 + 2\pi r h = 2\pi r^2 + \frac{2V}{r}
+```
 
 **Read it aloud:** two lids, growing with the radius squared, plus a wall that shrinks as the can widens.
 
-$$A'(r) = 4\pi r - \frac{2V}{r^2}, \qquad A''(r) = 4\pi + \frac{4V}{r^3}$$
+```math
+A'(r) = 4\pi r - \frac{2V}{r^2}, \qquad A''(r) = 4\pi + \frac{4V}{r^3}
+```
 
 **Read it aloud:** the rate of metal per cm of radius is the lids' growth minus the wall's saving; its own rate is always positive.
 
-Three tests, for a function $f$ on an interval:
+Three tests, for a function $`f`$ on an interval:
 
-- **Sign test.** If $f'(x) > 0$ at every inside point, $f$ rises: $x_1 < x_2$ gives $f(x_1) < f(x_2)$. Negative slope, it falls.
-- **First derivative test.** If the slope is negative just left of $c$ and positive just right, $c$ is a local minimum, lower than every nearby point. Reversed signs, a maximum.
-- **Second derivative test.** If $f'(c) = 0$ and $f''(c) > 0$, $c$ is a local minimum; $f''(c) < 0$, a local maximum; $f''(c) = 0$, no verdict.
+- **Sign test.** If $`f'(x) > 0`$ at every inside point, $`f`$ rises: $`x_1 < x_2`$ gives $`f(x_1) < f(x_2)`$. Negative slope, it falls.
+- **First derivative test.** If the slope is negative just left of $`c`$ and positive just right, $`c`$ is a local minimum, lower than every nearby point. Reversed signs, a maximum.
+- **Second derivative test.** If $`f'(c) = 0`$ and $`f''(c) > 0`$, $`c`$ is a local minimum; $`f''(c) < 0`$, a local maximum; $`f''(c) = 0`$, no verdict.
 
-For a continuous $f$ on a closed interval from $a$ to $b$, the lowest and highest values sit among the candidates: points where $f'$ is zero or does not exist, and the ends $a$ and $b$.
+For a continuous $`f`$ on a closed interval from $`a`$ to $`b`$, the lowest and highest values sit among the candidates: points where $`f'`$ is zero or does not exist, and the ends $`a`$ and $`b`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $r$ | radius, cm | best at 3.7449 | past 3.7449, more metal |
-| $h$ | height, cm, fixed by the volume | 7.4899 at best | wider means shorter |
-| $V$, $\pi$ | fixed volume, cubic cm; pi, rim over width | 330 | bigger can, same shape |
-| $A(r)$ | metal used, square cm | 264.3568 at best | — |
-| $A'(r)$ | metal per cm of radius, square cm per cm | -35.63 at r = 3, 23.96 at r = 4.5 | positive: widening costs |
-| $A''(r)$ | rate of that rate, square cm per cm per cm | 37.70 at best | a sharper-bottomed curve |
-| $f$, $f'$, $f''$ | any function, its slope, its slope's slope | A, A', A'' here | — |
-| $a$, $b$, $c$, $s$, $x_1$, $x_2$ | interval ends; a candidate; two inputs; a small step | slot ends 2.5 and 3.3 cm | — |
+| $`r`$ | radius, cm | best at 3.7449 | past 3.7449, more metal |
+| $`h`$ | height, cm, fixed by the volume | 7.4899 at best | wider means shorter |
+| $`V`$, $`\pi`$ | fixed volume, cubic cm; pi, rim over width | 330 | bigger can, same shape |
+| $`A(r)`$ | metal used, square cm | 264.3568 at best | — |
+| $`A'(r)`$ | metal per cm of radius, square cm per cm | -35.63 at r = 3, 23.96 at r = 4.5 | positive: widening costs |
+| $`A''(r)`$ | rate of that rate, square cm per cm per cm | 37.70 at best | a sharper-bottomed curve |
+| $`f`$, $`f'`$, $`f''`$ | any function, its slope, its slope's slope | A, A', A'' here | — |
+| $`a`$, $`b`$, $`c`$, $`s`$, $`x_1`$, $`x_2`$ | interval ends; a candidate; two inputs; a small step | slot ends 2.5 and 3.3 cm | — |
 
 ### When it holds
 
@@ -83,42 +89,46 @@ The [Mean value theorem](02-mean-value-theorem.md) says the average rate of chan
 
 ### Step 1: positive slope means rising
 
-For inputs $x_1 < x_2$ in the interval, the mean value theorem gives a point $c$ between them with
+For inputs $`x_1 < x_2`$ in the interval, the mean value theorem gives a point $`c`$ between them with
 
-$$f(x_2) - f(x_1) = f'(c)\,(x_2 - x_1)$$
+```math
+f(x_2) - f(x_1) = f'(c)\,(x_2 - x_1)
+```
 
-The gap $x_2 - x_1$ is positive, and so is $f'(c)$, so $f(x_2) > f(x_1)$. Negative slope gives falling. "No gaps" is used here: $c$ must lie in the domain.
+The gap $`x_2 - x_1`$ is positive, and so is $`f'(c)`$, so $`f(x_2) > f(x_1)`$. Negative slope gives falling. "No gaps" is used here: $`c`$ must lie in the domain.
 
 ### Step 2: a sign flip makes a minimum
 
-For the can, $A'(r) < 0$ exactly when $4\pi r < 2V/r^2$, that is when $r^3 < V/(2\pi)$ = 52.52. So the slope is negative below 3.7449 cm and positive above. By Step 1 the metal falls all the way to 3.7449 and rises after: a global minimum, lowest on the whole range. The first derivative test is Step 1 used on each side of $c$.
+For the can, $`A'(r) < 0`$ exactly when $`4\pi r < 2V/r^2`$, that is when $`r^3 < V/(2\pi)`$ = 52.52. So the slope is negative below 3.7449 cm and positive above. By Step 1 the metal falls all the way to 3.7449 and rises after: a global minimum, lowest on the whole range. The first derivative test is Step 1 used on each side of $`c`$.
 
 ### Step 3: the second derivative reads the flip at one point
 
-A positive second derivative at $c$ means the slope is rising through $c$. Zero at $c$ and rising, it is negative just left and positive just right: the flip of Step 2.
+A positive second derivative at $`c`$ means the slope is rising through $`c`$. Zero at $`c`$ and rising, it is negative just left and positive just right: the flip of Step 2.
 
-For the can, $A''(r)$ is positive at every radius. At the best one, $r^3 = V/(2\pi)$, so $4V/r^3 = 8\pi$ and $A'' = 12\pi$ = 37.70 square cm per cm per cm.
+For the can, $`A''(r)`$ is positive at every radius. At the best one, $`r^3 = V/(2\pi)`$, so $`4V/r^3 = 8\pi`$ and $`A'' = 12\pi`$ = 37.70 square cm per cm per cm.
 
 <details>
 <summary>Detailed proof: the second derivative test</summary>
 
-Suppose $f'(c) = 0$ and $f''(c) > 0$. $f''(c)$ is the limit of $\frac{f'(c+s)}{s}$ as the step $s$ shrinks to 0. Take the tolerance $\varepsilon = f''(c)/2$. There is a $\delta > 0$ such that $0 < |s| < \delta$ keeps that quotient within $\varepsilon$ of $f''(c)$, hence above $f''(c)/2 > 0$. So $f'(c+s)$ has the same sign as $s$: negative for $-\delta < s < 0$, positive for $0 < s < \delta$. Step 1 on each side gives $f(c+s) > f(c)$ for $0 < |s| < \delta$: a strict local minimum. With $f''(c) < 0$ every sign flips. With $f''(c) = 0$ nothing is fixed: $x^3$ and $x^4$ both occur.
+Suppose $`f'(c) = 0`$ and $`f''(c) > 0`$. $`f''(c)`$ is the limit of $`\frac{f'(c+s)}{s}`$ as the step $`s`$ shrinks to 0. Take the tolerance $`\varepsilon = f''(c)/2`$. There is a $`\delta > 0`$ such that $`0 < |s| < \delta`$ keeps that quotient within $`\varepsilon`$ of $`f''(c)`$, hence above $`f''(c)/2 > 0`$. So $`f'(c+s)`$ has the same sign as $`s`$: negative for $`-\delta < s < 0`$, positive for $`0 < s < \delta`$. Step 1 on each side gives $`f(c+s) > f(c)`$ for $`0 < |s| < \delta`$: a strict local minimum. With $`f''(c) < 0`$ every sign flips. With $`f''(c) = 0`$ nothing is fixed: $`x^3`$ and $`x^4`$ both occur.
 
 </details>
 
 ### Step 4: height equals diameter
 
-At the best radius, $4\pi r = 2V/r^2$, so $V = 2\pi r^3$. Into the height:
+At the best radius, $`4\pi r = 2V/r^2`$, so $`V = 2\pi r^3`$. Into the height:
 
-$$h = \frac{V}{\pi r^2} = \frac{2\pi r^3}{\pi r^2} = 2r$$
+```math
+h = \frac{V}{\pi r^2} = \frac{2\pi r^3}{\pi r^2} = 2r
+```
 
 The height is the diameter. The volume dropped out: any closed can of uniform metal is best as tall as it is wide.
 
 ### Step 5: a restricted range, and why the ends matter
 
-Suppose a filling line takes cans 5.0 to 6.6 cm across: radius $a$ = 2.5 to $b$ = 3.3 cm. Every radius there is below 3.7449, so the slope is negative throughout (-74.18 and -19.14 at the ends). The best allowed can is at the end $r$ = 3.3, with 268.42 square cm, where the slope is not zero: only checking the end finds it.
+Suppose a filling line takes cans 5.0 to 6.6 cm across: radius $`a`$ = 2.5 to $`b`$ = 3.3 cm. Every radius there is below 3.7449, so the slope is negative throughout (-74.18 and -19.14 at the ends). The best allowed can is at the end $`r`$ = 3.3, with 268.42 square cm, where the slope is not zero: only checking the end finds it.
 
-A second road, golden-section search, needs no derivative: it keeps an interval holding the lowest point and trims it each round by comparing two inside values, landing on the same 3.7449 cm. When $A'(r) = 0$ resists algebra, [Newton's method](06-newtons-method.md) solves it numerically.
+A second road, golden-section search, needs no derivative: it keeps an interval holding the lowest point and trims it each round by comparing two inside values, landing on the same 3.7449 cm. When $`A'(r) = 0`$ resists algebra, [Newton's method](06-newtons-method.md) solves it numerically.
 
 ---
 
@@ -157,7 +167,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Two roads to the best radius share no step: road 1 solves $A'(r) = 0$ by algebra, with a cube root built from exp and log; road 2, golden-section search, compares metal values only. Slopes are checked by a difference quotient, as on [Numerical derivatives](08-numerical-derivatives-and-sensitivity.md): the change in metal across a tiny step of radius, divided by the step. A scan of 801 radii finds the slot's answer. Four asserts: the roads agree, height equals diameter, the slope formula matches the quotient and flips upward, the slot's best is its end.
+Two roads to the best radius share no step: road 1 solves $`A'(r) = 0`$ by algebra, with a cube root built from exp and log; road 2, golden-section search, compares metal values only. Slopes are checked by a difference quotient, as on [Numerical derivatives](08-numerical-derivatives-and-sensitivity.md): the change in metal across a tiny step of radius, divided by the step. A scan of 801 radii finds the slot's answer. Four asserts: the roads agree, height equals diameter, the slope formula matches the quotient and flips upward, the slot's best is its end.
 
 ### Python
 

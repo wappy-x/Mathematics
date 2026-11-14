@@ -38,44 +38,50 @@ Orange curve: CIR, shock size 0.05 times the square root of the rate. Green line
 
 ## The formula
 
-Notation first, in words. The short rate $r$ is the interest rate for the next instant, continuously compounded. A small letter d in front of a quantity means its change over a tiny time step. $W$ is Brownian motion: a random walk whose change $dW$ over a step of length dt is a bell-curve draw with spread the square root of dt. Three settings drive the rate: $\kappa$ (kappa), the pull speed; $\theta$ (theta), the target; $\sigma$ (sigma), the noise per square root of the rate. The model says how $r$ moves:
+Notation first, in words. The short rate $`r`$ is the interest rate for the next instant, continuously compounded. A small letter d in front of a quantity means its change over a tiny time step. $`W`$ is Brownian motion: a random walk whose change $`dW`$ over a step of length dt is a bell-curve draw with spread the square root of dt. Three settings drive the rate: $`\kappa`$ (kappa), the pull speed; $`\theta`$ (theta), the target; $`\sigma`$ (sigma), the noise per square root of the rate. The model says how $`r`$ moves:
 
-$$dr = \kappa\,(\theta - r)\,dt + \sigma\sqrt{r}\,dW$$
+```math
+dr = \kappa\,(\theta - r)\,dt + \sigma\sqrt{r}\,dW
+```
 
 **Read it aloud:** each instant, the rate moves a fraction of the way toward its target, plus a random shock whose size is proportional to the square root of the rate.
 
-The price of a zero paying 1 at maturity, with $\tau$ (tau) years left and today's rate $r_0$, is
+The price of a zero paying 1 at maturity, with $`\tau`$ (tau) years left and today's rate $`r_0`$, is
 
-$$P(\tau) = A(\tau)\,e^{-B(\tau)\,r_0}$$
+```math
+P(\tau) = A(\tau)\,e^{-B(\tau)\,r_0}
+```
 
-with a helper number $\gamma = \sqrt{\kappa^2 + 2\sigma^2}$ and
+with a helper number $`\gamma = \sqrt{\kappa^2 + 2\sigma^2}`$ and
 
-$$B(\tau) = \frac{2\,(e^{\gamma\tau} - 1)}{(\gamma+\kappa)(e^{\gamma\tau}-1) + 2\gamma}, \qquad A(\tau) = \left[\frac{2\gamma\,e^{(\gamma+\kappa)\tau/2}}{(\gamma+\kappa)(e^{\gamma\tau}-1) + 2\gamma}\right]^{\nu}, \qquad \nu = \frac{2\kappa\theta}{\sigma^2}.$$
+```math
+B(\tau) = \frac{2\,(e^{\gamma\tau} - 1)}{(\gamma+\kappa)(e^{\gamma\tau}-1) + 2\gamma}, \qquad A(\tau) = \left[\frac{2\gamma\,e^{(\gamma+\kappa)\tau/2}}{(\gamma+\kappa)(e^{\gamma\tau}-1) + 2\gamma}\right]^{\nu}, \qquad \nu = \frac{2\kappa\theta}{\sigma^2}.
+```
 
 **Read it aloud:** the bond price is a level factor, set by the model's settings and the time left, times e to the minus (a sensitivity times today's rate).
 
 | Symbol | Plain meaning | In the example | Push it up and the bond price… |
 | --- | --- | --- | --- |
-| $r$, $r_0$ | the short rate; $r_0$ is its value today | 4% today | falls: money earns more elsewhere |
-| $\kappa$ | pull speed: the fraction of the gap to the target closed per year. Say "kappa". | 0.3 | falls here, since the rate is pulled up faster |
-| $\theta$ | the target the rate is pulled toward. Say "theta". | 5% | falls |
-| $\sigma$ | noise per square root of rate: shock size is $\sigma$ times the square root of $r$ | 0.05, so 1 point at 4% | rises a little: averaging discounts over wider paths |
-| $W$, $dW$ | Brownian motion and its change over one step | a random draw each step | — |
-| $t$, $T$, $\tau$ | time now, maturity, and years left, $\tau = T - t$ | 0, 5, 5 | falls: longer wait |
-| $P$, $P_r$, $P_{rr}$ | today's price of 1 paid at maturity; $P_r$ and $P_{rr}$ are its first and second rates of change as the rate moves | 0.799904 | — |
-| $B$ | sensitivity: how much the log price falls per unit of today's rate | 2.576655 | — |
-| $A$ | level factor: the price if today's rate were zero | 0.886745 | — |
-| $\gamma$ | helper number $\sqrt{\kappa^2 + 2\sigma^2}$. Say "gamma". | 0.308221 | — |
-| $\nu$ | Feller ratio $2\kappa\theta/\sigma^2$: pull power over noise power. Say "nu". | 12 | — |
-| $R$ | yield: the flat rate that reproduces the price, $R = -\ln P/\tau$ | 4.47% | — |
+| $`r`$, $`r_0`$ | the short rate; $`r_0`$ is its value today | 4% today | falls: money earns more elsewhere |
+| $`\kappa`$ | pull speed: the fraction of the gap to the target closed per year. Say "kappa". | 0.3 | falls here, since the rate is pulled up faster |
+| $`\theta`$ | the target the rate is pulled toward. Say "theta". | 5% | falls |
+| $`\sigma`$ | noise per square root of rate: shock size is $`\sigma`$ times the square root of $`r`$ | 0.05, so 1 point at 4% | rises a little: averaging discounts over wider paths |
+| $`W`$, $`dW`$ | Brownian motion and its change over one step | a random draw each step | — |
+| $`t`$, $`T`$, $`\tau`$ | time now, maturity, and years left, $`\tau = T - t`$ | 0, 5, 5 | falls: longer wait |
+| $`P`$, $`P_r`$, $`P_{rr}`$ | today's price of 1 paid at maturity; $`P_r`$ and $`P_{rr}`$ are its first and second rates of change as the rate moves | 0.799904 | — |
+| $`B`$ | sensitivity: how much the log price falls per unit of today's rate | 2.576655 | — |
+| $`A`$ | level factor: the price if today's rate were zero | 0.886745 | — |
+| $`\gamma`$ | helper number $`\sqrt{\kappa^2 + 2\sigma^2}`$. Say "gamma". | 0.308221 | — |
+| $`\nu`$ | Feller ratio $`2\kappa\theta/\sigma^2`$: pull power over noise power. Say "nu". | 12 | — |
+| $`R`$ | yield: the flat rate that reproduces the price, $`R = -\ln P/\tau`$ | 4.47% | — |
 
-Two companion facts come with the model. The expected rate after $t$ years is $\theta + (r_0 - \theta)\,e^{-\kappa t}$, the same curve as Vasicek, since the pull term is the same. And the long yield, the yield of a very long zero, settles at $2\kappa\theta/(\gamma + \kappa)$, a little below the target.
+Two companion facts come with the model. The expected rate after $`t`$ years is $`\theta + (r_0 - \theta)\,e^{-\kappa t}`$, the same curve as Vasicek, since the pull term is the same. And the long yield, the yield of a very long zero, settles at $`2\kappa\theta/(\gamma + \kappa)`$, a little below the target.
 
-The **Feller condition**, $2\kappa\theta \ge \sigma^2$, which is $\nu \ge 1$, is the line between a rate that never reaches zero and one that can.
+The **Feller condition**, $`2\kappa\theta \ge \sigma^2`$, which is $`\nu \ge 1`$, is the line between a rate that never reaches zero and one that can.
 
 ### When it holds
 
-- **One random driver.** Every maturity's yield moves with the single number $r$. Real curves also twist, with short and long yields moving opposite ways; a single factor cannot produce that, and [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md) adds a second.
+- **One random driver.** Every maturity's yield moves with the single number $`r`$. Real curves also twist, with short and long yields moving opposite ways; a single factor cannot produce that, and [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md) adds a second.
 - **Constant settings.** Three numbers cannot match every bond price on today's screen. Off-model bonds are mispriced by the fitting error; [Hull-White](04-hull-white-model.md) lets the target move with time to fit the curve exactly.
 - **Pricing settings, not history.** Pull speed and target are fitted to prices, in the pricing world where every asset earns the short rate on average. Taking them from a history of rates prices bonds with a risk premium left in.
 - **Rates that stay at or above zero.** Euro rates sat below zero from 2014 to 2022. CIR cannot put the rate there at all; a desk that needs it adds a fixed shift to the rate.
@@ -89,78 +95,94 @@ The **Feller condition**, $2\kappa\theta \ge \sigma^2$, which is $\nu \ge 1$, is
 
 Hold a dollar in an account that earns the short rate as it moves. After five years it has grown by e to the power of the rate added up over the five years. So 1 paid in five years is worth, today, e to the minus that sum, averaged over every path the rate can take in the pricing world:
 
-$$P = \mathrm{E}\!\left[e^{-\int_0^T r(s)\,ds}\right].$$
+```math
+P = \mathrm{E}\!\left[e^{-\int_0^T r(s)\,ds}\right].
+```
 
-$\mathrm{E}$ is the expectation (probability-weighted average) and $\int_0^T r(s)\,ds$ is the rate added up continuously from now to maturity.
+$`\mathrm{E}`$ is the expectation (probability-weighted average) and $`\int_0^T r(s)\,ds`$ is the rate added up continuously from now to maturity.
 
-That average obeys a partial differential equation, the [A short-rate model](01-the-term-structure-equation.md) card's result. With $P$ as a function of the time left and today's rate, and subscripts marking a derivative (rate of change) in that variable:
+That average obeys a partial differential equation, the [A short-rate model](01-the-term-structure-equation.md) card's result. With $`P`$ as a function of the time left and today's rate, and subscripts marking a derivative (rate of change) in that variable:
 
-$$P_\tau = \kappa(\theta - r)\,P_r + \tfrac12\sigma^2 r\,P_{rr} - r\,P, \qquad P(0, r) = 1.$$
+```math
+P_\tau = \kappa(\theta - r)\,P_r + \tfrac12\sigma^2 r\,P_{rr} - r\,P, \qquad P(0, r) = 1.
+```
 
-Each term has a job. The first carries the pull. The second is the noise; its coefficient is half the squared shock size, $\tfrac12\sigma^2 r$ for CIR. The last is discounting. At maturity the bond pays 1 whatever the rate.
+Each term has a job. The first carries the pull. The second is the noise; its coefficient is half the squared shock size, $`\tfrac12\sigma^2 r`$ for CIR. The last is discounting. At maturity the bond pays 1 whatever the rate.
 
 ### Step 1: guess the shape and split the equation in two
 
-Every coefficient in that equation is **affine** in $r$: a constant plus a constant times $r$. The drift $\kappa\theta - \kappa r$ is affine. The squared noise $\sigma^2 r$ is affine. That suggests trying
+Every coefficient in that equation is **affine** in $`r`$: a constant plus a constant times $`r`$. The drift $`\kappa\theta - \kappa r`$ is affine. The squared noise $`\sigma^2 r`$ is affine. That suggests trying
 
-$$P = A(\tau)\,e^{-B(\tau)\,r}.$$
+```math
+P = A(\tau)\,e^{-B(\tau)\,r}.
+```
 
-Then $P_r = -B\,P$, $P_{rr} = B^2 P$, and $P_\tau = (A'/A - B'\,r)\,P$, a prime marking a derivative in $\tau$. Put them in and divide by $P$:
+Then $`P_r = -B\,P`$, $`P_{rr} = B^2 P`$, and $`P_\tau = (A'/A - B'\,r)\,P`$, a prime marking a derivative in $`\tau`$. Put them in and divide by $`P`$:
 
-$$\frac{A'}{A} - B'\,r = -\kappa\theta B + \kappa B\,r + \tfrac12\sigma^2 B^2\,r - r.$$
+```math
+\frac{A'}{A} - B'\,r = -\kappa\theta B + \kappa B\,r + \tfrac12\sigma^2 B^2\,r - r.
+```
 
-Both sides are a constant plus a multiple of $r$. For that to hold at every rate, the constants must match and the multiples must match:
+Both sides are a constant plus a multiple of $`r`$. For that to hold at every rate, the constants must match and the multiples must match:
 
-$$B' = 1 - \kappa B - \tfrac12\sigma^2 B^2, \qquad \frac{A'}{A} = -\kappa\theta B, \qquad B(0) = 0,\; A(0) = 1.$$
+```math
+B' = 1 - \kappa B - \tfrac12\sigma^2 B^2, \qquad \frac{A'}{A} = -\kappa\theta B, \qquad B(0) = 0,\; A(0) = 1.
+```
 
 A partial differential equation has become two ordinary ones, in time only. The first is a **Riccati equation**: a rate of change that is a quadratic in the unknown.
 
-### Step 2: solve the Riccati equation, which is where $\gamma$ comes from
+### Step 2: solve the Riccati equation, which is where $`\gamma`$ comes from
 
-The right side of the $B$ equation is zero where $\tfrac12\sigma^2 B^2 + \kappa B - 1 = 0$. The quadratic formula gives roots $(-\kappa \pm \gamma)/\sigma^2$, and its discriminant is $\kappa^2 + 2\sigma^2$: that is $\gamma^2$. So $B$ starts at 0, rises with slope 1, and levels off at the positive root, $2/(\gamma + \kappa)$. Separating variables and splitting into partial fractions gives the closed form for $B$.
+The right side of the $`B`$ equation is zero where $`\tfrac12\sigma^2 B^2 + \kappa B - 1 = 0`$. The quadratic formula gives roots $`(-\kappa \pm \gamma)/\sigma^2`$, and its discriminant is $`\kappa^2 + 2\sigma^2`$: that is $`\gamma^2`$. So $`B`$ starts at 0, rises with slope 1, and levels off at the positive root, $`2/(\gamma + \kappa)`$. Separating variables and splitting into partial fractions gives the closed form for $`B`$.
 
 <details>
 <summary>Detailed proof: solving for B</summary>
 
-Write the positive root $b_+ = (\gamma - \kappa)/\sigma^2$ and the negative root $b_- = -(\gamma + \kappa)/\sigma^2$. The equation is $B' = -\tfrac12\sigma^2 (B - b_+)(B - b_-)$. Their difference is $b_+ - b_- = 2\gamma/\sigma^2$, so partial fractions give
-$$\frac{\sigma^2}{2\gamma}\,\ln\left|\frac{B - b_+}{B - b_-}\right| = -\tfrac12\sigma^2\,\tau + c,$$
-that is $(B - b_+)/(B - b_-) = C\,e^{-\gamma\tau}$. At $\tau = 0$, $B = 0$ fixes $C = b_+/b_- = -(\gamma - \kappa)/(\gamma + \kappa)$. Solve for $B$:
-$$B = \frac{(\gamma-\kappa)(\gamma+\kappa)\,(1 - e^{-\gamma\tau})}{\sigma^2\,[(\gamma+\kappa) + (\gamma-\kappa)\,e^{-\gamma\tau}]}.$$
-Since $(\gamma - \kappa)(\gamma + \kappa) = \gamma^2 - \kappa^2 = 2\sigma^2$, the $\sigma^2$ cancels to leave a 2. Multiply top and bottom by $e^{\gamma\tau}$ and write $\gamma - \kappa = 2\gamma - (\gamma + \kappa)$: the bottom becomes $(\gamma+\kappa)(e^{\gamma\tau} - 1) + 2\gamma$, the formula on this card.
+Write the positive root $`b_+ = (\gamma - \kappa)/\sigma^2`$ and the negative root $`b_- = -(\gamma + \kappa)/\sigma^2`$. The equation is $`B' = -\tfrac12\sigma^2 (B - b_+)(B - b_-)`$. Their difference is $`b_+ - b_- = 2\gamma/\sigma^2`$, so partial fractions give
+
+$`\displaystyle \frac{\sigma^2}{2\gamma}\,\ln\left|\frac{B - b_+}{B - b_-}\right| = -\tfrac12\sigma^2\,\tau + c,`$
+
+that is $`(B - b_+)/(B - b_-) = C\,e^{-\gamma\tau}`$. At $`\tau = 0`$, $`B = 0`$ fixes $`C = b_+/b_- = -(\gamma - \kappa)/(\gamma + \kappa)`$. Solve for $`B`$:
+
+$`\displaystyle B = \frac{(\gamma-\kappa)(\gamma+\kappa)\,(1 - e^{-\gamma\tau})}{\sigma^2\,[(\gamma+\kappa) + (\gamma-\kappa)\,e^{-\gamma\tau}]}.`$
+
+Since $`(\gamma - \kappa)(\gamma + \kappa) = \gamma^2 - \kappa^2 = 2\sigma^2`$, the $`\sigma^2`$ cancels to leave a 2. Multiply top and bottom by $`e^{\gamma\tau}`$ and write $`\gamma - \kappa = 2\gamma - (\gamma + \kappa)`$: the bottom becomes $`(\gamma+\kappa)(e^{\gamma\tau} - 1) + 2\gamma`$, the formula on this card.
 
 </details>
 
 ### Step 3: integrate for A
 
-The second equation says the log of $A$ falls at rate $\kappa\theta B$. So $\ln A(\tau) = -\kappa\theta \int_0^\tau B(s)\,ds$. That integral has a closed form, and raising e to it gives the bracket to the power $\nu$.
+The second equation says the log of $`A`$ falls at rate $`\kappa\theta B`$. So $`\ln A(\tau) = -\kappa\theta \int_0^\tau B(s)\,ds`$. That integral has a closed form, and raising e to it gives the bracket to the power $`\nu`$.
 
 <details>
 <summary>Detailed proof: the level factor</summary>
 
-Write the denominator as $D(\tau) = (\gamma+\kappa)(e^{\gamma\tau} - 1) + 2\gamma$, so $D' = \gamma(\gamma+\kappa)e^{\gamma\tau}$ and $D(0) = 2\gamma$. Claim: $\int_0^\tau B = \frac{2}{\sigma^2}\left[\ln\frac{D}{2\gamma} - \frac{(\gamma+\kappa)\tau}{2}\right]$. At $\tau = 0$ both sides are 0. The derivative of the right side is
-$$\frac{2}{\sigma^2}\left[\frac{D'}{D} - \frac{\gamma+\kappa}{2}\right] = \frac{(\gamma+\kappa)\left[2\gamma e^{\gamma\tau} - D\right]}{\sigma^2 D} = \frac{(\gamma+\kappa)(\gamma-\kappa)(e^{\gamma\tau} - 1)}{\sigma^2 D} = \frac{2(e^{\gamma\tau}-1)}{D} = B.$$
-Multiply by $-\kappa\theta$: $\ln A = \frac{2\kappa\theta}{\sigma^2}\left[\ln 2\gamma + \frac{(\gamma+\kappa)\tau}{2} - \ln D\right]$, which is $\nu$ times the log of the bracket.
+Write the denominator as $`D(\tau) = (\gamma+\kappa)(e^{\gamma\tau} - 1) + 2\gamma`$, so $`D' = \gamma(\gamma+\kappa)e^{\gamma\tau}`$ and $`D(0) = 2\gamma`$. Claim: $`\int_0^\tau B = \frac{2}{\sigma^2}\left[\ln\frac{D}{2\gamma} - \frac{(\gamma+\kappa)\tau}{2}\right]`$. At $`\tau = 0`$ both sides are 0. The derivative of the right side is
+
+$`\displaystyle \frac{2}{\sigma^2}\left[\frac{D'}{D} - \frac{\gamma+\kappa}{2}\right] = \frac{(\gamma+\kappa)\left[2\gamma e^{\gamma\tau} - D\right]}{\sigma^2 D} = \frac{(\gamma+\kappa)(\gamma-\kappa)(e^{\gamma\tau} - 1)}{\sigma^2 D} = \frac{2(e^{\gamma\tau}-1)}{D} = B.`$
+
+Multiply by $`-\kappa\theta`$: $`\ln A = \frac{2\kappa\theta}{\sigma^2}\left[\ln 2\gamma + \frac{(\gamma+\kappa)\tau}{2} - \ln D\right]`$, which is $`\nu`$ times the log of the bracket.
 
 </details>
 
 ### Step 4: why the square root keeps the rate positive
 
-Watch the rate as it falls toward zero. The pull is $\kappa(\theta - r)$; at zero it is $\kappa\theta$, a steady push upward that does not shrink. The shock is $\sigma\sqrt{r}$; at zero it is gone. Near zero the rate is a steady upward push plus a whisper of noise.
+Watch the rate as it falls toward zero. The pull is $`\kappa(\theta - r)`$; at zero it is $`\kappa\theta`$, a steady push upward that does not shrink. The shock is $`\sigma\sqrt{r}`$; at zero it is gone. Near zero the rate is a steady upward push plus a whisper of noise.
 
-Whether the whisper can still reach zero is a contest between two numbers with the same units: the pull power $2\kappa\theta$ and the noise power $\sigma^2$. Feller showed in 1951 that zero is never reached when $2\kappa\theta \ge \sigma^2$, and is reached with positive probability when $2\kappa\theta < \sigma^2$. In this market $0.03$ beats $0.0025$ twelve times over.
+Whether the whisper can still reach zero is a contest between two numbers with the same units: the pull power $`2\kappa\theta`$ and the noise power $`\sigma^2`$. Feller showed in 1951 that zero is never reached when $`2\kappa\theta \ge \sigma^2`$, and is reached with positive probability when $`2\kappa\theta < \sigma^2`$. In this market $`0.03`$ beats $`0.0025`$ twelve times over.
 
 <details>
 <summary>Detailed proof: zero is never reached when the Feller ratio is at least 1</summary>
 
-The tool is the **scale function**: a change of ruler under which the rate has no drift, so the chance of hitting one level before another becomes a ratio of distances. For a motion with pull $\mu(x)$ and squared shock $s^2(x)$, the ruler's slope at level x is $\exp\left(-\int 2\mu/s^2\right)$. For CIR, $2\mu/s^2 = \nu/x - 2\kappa/\sigma^2$, so the slope is $x^{-\nu}\,e^{2\kappa x/\sigma^2}$.
+The tool is the **scale function**: a change of ruler under which the rate has no drift, so the chance of hitting one level before another becomes a ratio of distances. For a motion with pull $`\mu(x)`$ and squared shock $`s^2(x)`$, the ruler's slope at level x is $`\exp\left(-\int 2\mu/s^2\right)`$. For CIR, $`2\mu/s^2 = \nu/x - 2\kappa/\sigma^2`$, so the slope is $`x^{-\nu}\,e^{2\kappa x/\sigma^2}`$.
 
-Start at $r_0$ and pick a low level a and a high level b around it. On the new ruler, the chance of hitting a before b is (distance from $r_0$ up to b) divided by (distance from a up to b). Near zero the slope behaves like $x^{-\nu}$. When $\nu \ge 1$, the integral of $x^{-\nu}$ down to zero is infinite, so the distance from a up to b grows without bound as a shrinks to zero, and the chance of reaching a first shrinks to zero. For every high level b, the rate hits b before 0 with certainty, so it never reaches zero. When $\nu < 1$ the integral is finite and this argument fails; that zero is then actually reached takes a second ingredient, the speed of the motion near zero, and is Feller's 1951 result, cited rather than proved here.
+Start at $`r_0`$ and pick a low level a and a high level b around it. On the new ruler, the chance of hitting a before b is (distance from $`r_0`$ up to b) divided by (distance from a up to b). Near zero the slope behaves like $`x^{-\nu}`$. When $`\nu \ge 1`$, the integral of $`x^{-\nu}`$ down to zero is infinite, so the distance from a up to b grows without bound as a shrinks to zero, and the chance of reaching a first shrinks to zero. For every high level b, the rate hits b before 0 with certainty, so it never reaches zero. When $`\nu < 1`$ the integral is finite and this argument fails; that zero is then actually reached takes a second ingredient, the speed of the motion near zero, and is Feller's 1951 result, cited rather than proved here.
 
 </details>
 
 ### Step 5: what changes from Vasicek, and what does not
 
-The pull term is identical (the Vasicek card writes its speed as a), so the expected rate path is identical: from 4 percent, 4.776870 percent expected after five years in both models. The noise differs. Vasicek's squared shock is a constant, so in Step 1 it lands in the constant part and adds a $B^2$ term to $A$; its $B$ is the plain $(1 - e^{-\kappa\tau})/\kappa$. CIR's squared shock is proportional to $r$, so it lands in the $r$ part and bends $B$ itself, through the $\tfrac12\sigma^2 B^2$ in the Riccati equation. Both are affine: [Vasicek](02-vasicek-model.md) and CIR are the two classic members of the family whose bond prices are e to an affine function of the rate.
+The pull term is identical (the Vasicek card writes its speed as a), so the expected rate path is identical: from 4 percent, 4.776870 percent expected after five years in both models. The noise differs. Vasicek's squared shock is a constant, so in Step 1 it lands in the constant part and adds a $`B^2`$ term to $`A`$; its $`B`$ is the plain $`(1 - e^{-\kappa\tau})/\kappa`$. CIR's squared shock is proportional to $`r`$, so it lands in the $`r`$ part and bends $`B`$ itself, through the $`\tfrac12\sigma^2 B^2`$ in the Riccati equation. Both are affine: [Vasicek](02-vasicek-model.md) and CIR are the two classic members of the family whose bond prices are e to an affine function of the rate.
 
 Matched at today's shock size, the two price the five-year zero almost identically, 0.799904 against 0.799856. They part company in the tails. After five years the CIR rate has spread 1.354680 points against Vasicek's 1.258447, because it spends more time above 4 percent where its shocks are larger. And on the same random draws, 6 Vasicek paths went below zero; no CIR path did.
 
@@ -170,19 +192,19 @@ The other door: skip the guess entirely. Solve the equation of Step 0 on a grid 
 
 ## Worked numbers, by hand
 
-CIR: pull speed $\kappa = 0.3$, target $\theta = 5\%$, noise $\sigma = 0.05$, today's rate $r_0 = 4\%$, five years.
+CIR: pull speed $`\kappa = 0.3`$, target $`\theta = 5\%`$, noise $`\sigma = 0.05`$, today's rate $`r_0 = 4\%`$, five years.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| pull power $2\kappa\theta$ | 2 × 0.3 × 0.05 | 0.03 |
-| noise power $\sigma^2$ | 0.05 × 0.05 | 0.0025 |
-| Feller ratio $\nu$ | 0.03 / 0.0025 | 12: holds |
-| $\gamma$ | square root of 0.09 + 0.005 | 0.308221 |
-| $e^{\gamma T}$ | e to the 5 × 0.308221 | 4.669740 |
+| pull power $`2\kappa\theta`$ | 2 × 0.3 × 0.05 | 0.03 |
+| noise power $`\sigma^2`$ | 0.05 × 0.05 | 0.0025 |
+| Feller ratio $`\nu`$ | 0.03 / 0.0025 | 12: holds |
+| $`\gamma`$ | square root of 0.09 + 0.005 | 0.308221 |
+| $`e^{\gamma T}`$ | e to the 5 × 0.308221 | 4.669740 |
 | denominator | 0.608221 × 3.669740 + 2 × 0.308221 | 2.848454 |
-| $B(5)$ | 2 × 3.669740 / 2.848454 | 2.576655 |
-| bracket in $A$ | 2 × 0.308221 × e to the 2.5 × 0.608221, over 2.848454 | 0.990034 |
-| $A(5)$ | 0.990034 to the power 12 | 0.886745 |
+| $`B(5)`$ | 2 × 3.669740 / 2.848454 | 2.576655 |
+| bracket in $`A`$ | 2 × 0.308221 × e to the 2.5 × 0.608221, over 2.848454 | 0.990034 |
+| $`A(5)`$ | 0.990034 to the power 12 | 0.886745 |
 | rate factor | e to the minus 2.576655 × 0.04 | 0.902067 |
 | **price per 1 of face** | 0.886745 × 0.902067 | **0.799904** |
 | yield | minus the log of 0.799904, over 5 | 4.465281% |
@@ -196,10 +218,10 @@ Correct price 0.799904.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Feed Vasicek's noise 0.01 into CIR's $\sigma$ | 0.799259 | CIR's $\sigma$ multiplies the square root of the rate: at 4 percent that is a fifth of the intended shock |
-| Drop the power $\nu$ on $A$ | 0.893077 | Power 1 instead of 12: the level factor acts as if the target were 0.42 percent, not 5 |
-| Write $\gamma$ with $\sigma^2$ instead of $2\sigma^2$ | 0.849164 | The Riccati roots move, so both $A$ and $B$ are wrong |
-| Discount flat at today's 4 percent | 0.818731 | Ignores the pull to 5 percent: $e^{-0.04 \times 5}$ |
+| Feed Vasicek's noise 0.01 into CIR's $`\sigma`$ | 0.799259 | CIR's $`\sigma`$ multiplies the square root of the rate: at 4 percent that is a fifth of the intended shock |
+| Drop the power $`\nu`$ on $`A`$ | 0.893077 | Power 1 instead of 12: the level factor acts as if the target were 0.42 percent, not 5 |
+| Write $`\gamma`$ with $`\sigma^2`$ instead of $`2\sigma^2`$ | 0.849164 | The Riccati roots move, so both $`A`$ and $`B`$ are wrong |
+| Discount flat at today's 4 percent | 0.818731 | Ignores the pull to 5 percent: $`e^{-0.04 \times 5}`$ |
 
 ### Both curves, maturity by maturity
 
@@ -642,11 +664,11 @@ The two outputs match line for line: both programs use the same generator, the s
 
 Lean proves the bond formula, the long yield and the integral test behind Feller's condition, for every positive pull speed, target and noise.
 
-- Suppose $\kappa$, $\theta$ and $\sigma$ are positive. Then $P = A(\tau)\,e^{-B(\tau)\,r}$ equals 1 at $\tau = 0$ for every rate $r \ge 0$.
-- Take the same settings, any $\tau \ge 0$ and any $r \ge 0$. Then $P_\tau = \kappa(\theta - r)\,P_r + \tfrac12\sigma^2 r\,P_{rr} - r\,P$ holds exactly.
-- Take the same settings and a rate $r \ge 0$ today. Then the yield $-\ln P/\tau$ tends to $2\kappa\theta/(\gamma + \kappa)$ as $\tau$ grows.
-- Take the same settings and a level $b > 0$. Then the scale integral $\int_0^b x^{-\nu} e^{2\kappa x/\sigma^2}\,dx$ is infinite exactly when Feller holds.
-- Take this card's market. Then $\nu = 12$, $2\kappa\theta = 0.03$, $\sigma^2 = 0.0025$ and $\gamma^2 = 0.095$, so Feller holds.
+- Suppose $`\kappa`$, $`\theta`$ and $`\sigma`$ are positive. Then $`P = A(\tau)\,e^{-B(\tau)\,r}`$ equals 1 at $`\tau = 0`$ for every rate $`r \ge 0`$.
+- Take the same settings, any $`\tau \ge 0`$ and any $`r \ge 0`$. Then $`P_\tau = \kappa(\theta - r)\,P_r + \tfrac12\sigma^2 r\,P_{rr} - r\,P`$ holds exactly.
+- Take the same settings and a rate $`r \ge 0`$ today. Then the yield $`-\ln P/\tau`$ tends to $`2\kappa\theta/(\gamma + \kappa)`$ as $`\tau`$ grows.
+- Take the same settings and a level $`b > 0`$. Then the scale integral $`\int_0^b x^{-\nu} e^{2\kappa x/\sigma^2}\,dx`$ is infinite exactly when Feller holds.
+- Take this card's market. Then $`\nu = 12`$, $`2\kappa\theta = 0.03`$, $`\sigma^2 = 0.0025`$ and $`\gamma^2 = 0.095`$, so Feller holds.
 - Take noise 0.2 instead. Then the pull power 0.03 is below the noise power 0.04, so Feller fails.
 
 The dollar prices, the simulations, and whether paths actually touch zero are left to the Python and Rust checks.
@@ -979,7 +1001,7 @@ example : 2 * (3 / 10 : ℚ) * (1 / 20) < (1 / 5) ^ 2 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Reading CIR's $\sigma$ as a rate volatility.** In Vasicek, noise 0.01 means shocks of 1 point a year. In CIR the shock is $\sigma$ times the square root of the rate, so $\sigma$ is in different units. The CIR number that gives a 1-point shock at 4 percent is 0.05. Putting 0.01 in gives 0.799259 instead of 0.799904, and far too narrow a spread of future rates.
+> **Reading CIR's $`\sigma`$ as a rate volatility.** In Vasicek, noise 0.01 means shocks of 1 point a year. In CIR the shock is $`\sigma`$ times the square root of the rate, so $`\sigma`$ is in different units. The CIR number that gives a 1-point shock at 4 percent is 0.05. Putting 0.01 in gives 0.799259 instead of 0.799904, and far too narrow a spread of future rates.
 >
 > - **Treating Feller as the condition for the bond formula.** The formula holds for any positive settings. Feller decides only whether the rate path can touch zero.
 > - **Expecting the square root to reshape the curve.** Matched at today's shock size, CIR and Vasicek price this zero 0.000048 apart. The square root changes the tails and the behaviour near zero, not the middle of the curve.

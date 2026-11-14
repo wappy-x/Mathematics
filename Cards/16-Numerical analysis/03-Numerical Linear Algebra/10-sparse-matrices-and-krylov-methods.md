@@ -42,42 +42,50 @@ Orange (steepest): GMRES with the Jacobi preconditioner. Green: plain Jacobi ite
 
 The model first. Link i holds x_i cars and takes t_i minutes to drive, so cars leave it at x_i / t_i a minute. A share e_i of them exits; a share w_ji of link j's leaving cars turns onto link i. In steady state, what leaves link i equals what joins it:
 
-$$\frac{x_i}{t_i} - \sum_{j \text{ next to } i} w_{ji}\,\frac{x_j}{t_j} = s_i \qquad\text{that is}\qquad A\,x = s.$$
+```math
+\frac{x_i}{t_i} - \sum_{j \text{ next to } i} w_{ji}\,\frac{x_j}{t_j} = s_i \qquad\text{that is}\qquad A\,x = s.
+```
 
 **Read it aloud:** the cars leaving link i each minute, less those turning in from its six neighbours, equal the cars joining from side streets.
 
 Compressed sparse row (CSR) storage keeps three arrays: val, the nonzero values row by row; col, the column of each; and ptr, where each row starts in val. A product then reads
 
-$$y_i = \sum_{p=\mathrm{ptr}_i}^{\mathrm{ptr}_{i+1}-1} \mathrm{val}_p\, x_{\mathrm{col}_p}, \qquad \text{bytes: dense } 8n^2, \quad \text{CSR } 8\,\mathrm{nnz} + 4\,\mathrm{nnz} + 4(n+1).$$
+```math
+y_i = \sum_{p=\mathrm{ptr}_i}^{\mathrm{ptr}_{i+1}-1} \mathrm{val}_p\, x_{\mathrm{col}_p}, \qquad \text{bytes: dense } 8n^2, \quad \text{CSR } 8\,\mathrm{nnz} + 4\,\mathrm{nnz} + 4(n+1).
+```
 
 **Read it aloud:** entry i of the product walks along row i's stored values only, each times the entry of x in its column.
 
 GMRES with a right preconditioner M solves B u = s with B = A M⁻¹, then sets x = M⁻¹ u. Step k picks
 
-$$u_k = \text{the } u \text{ in } \mathcal{K}_k = \mathrm{span}\{s,\ Bs,\ \dots,\ B^{k-1}s\} \text{ that makes } \lVert s - B\,u \rVert_2 \text{ smallest}.$$
+```math
+u_k = \text{the } u \text{ in } \mathcal{K}_k = \mathrm{span}\{s,\ Bs,\ \dots,\ B^{k-1}s\} \text{ that makes } \lVert s - B\,u \rVert_2 \text{ smallest}.
+```
 
 **Read it aloud:** among all mixes of the right-hand side and its first k − 1 products with B, take the one whose residual is shortest.
 
 Here M is the diagonal of A, so M⁻¹ multiplies entry i by t_i. Write W for the turning table of all the shares w_ji. Then A = (I − Wᵀ) M and B = I − Wᵀ, and the card proves
 
-$$\frac{\lVert r_k \rVert_2}{\lVert s \rVert_2} \;\le\; \frac{\lVert (W^{T})^{k} s \rVert_2}{\lVert s \rVert_2} \;\le\; \beta^{k}, \qquad \beta = \sqrt{\lVert W^{T}\rVert_1\,\lVert W^{T}\rVert_\infty}.$$
+```math
+\frac{\lVert r_k \rVert_2}{\lVert s \rVert_2} \;\le\; \frac{\lVert (W^{T})^{k} s \rVert_2}{\lVert s \rVert_2} \;\le\; \beta^{k}, \qquad \beta = \sqrt{\lVert W^{T}\rVert_1\,\lVert W^{T}\rVert_\infty}.
+```
 
 **Read it aloud:** GMRES's residual is no larger than plain Jacobi's, which shrinks at least by the factor β each step.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_i$, $s_i$ | cars on link i; cars a minute joining it from side streets (i, j number the links) | 11.5495 cars on link 0; s_i between 0.5 and 1.5 | more inflow, more cars |
-| $t_i$, $e_i$ | minutes to drive link i; share of its leaving cars that exit | 5 minutes for link 0; e_i between 0.3 and 0.5 | lower exits: more steps |
-| $W$, $w_{ji}$ | the turning table: w_ji, in row j and column i, is the share of link j's leaving cars that turn onto link i; Wᵀ is W with rows written as columns | six nonzeros per row, each row summing to 1 − e_j | — |
-| $A$, $n$ | the system matrix and its number of rows | 50,000 by 50,000 | dense cost grows as n² to store, n³ to factor |
-| nnz, val, col, ptr | the nonzero count and the three CSR arrays; p counts through val; $y$ is the product A x | 350,000; row 0 is val[0] to val[6] | storage and product cost grow with nnz |
-| $M$, $u$ | the preconditioner, here diag(A) with entries 1/t_i; the unknown GMRES works on, x = M⁻¹u | 0.2000 for link 0 | — |
-| $B$ | the preconditioned matrix A M⁻¹, here I − Wᵀ (I the identity) | eigenvalues within 0.7 of 1 | — |
-| $r_k$ | the residual s − A x_k after k steps | relative 3.690e-11 at k = 20 | — |
-| $\mathcal{K}_k$ | the Krylov space: every mix of s, Bs, …, B^(k−1)s | k = 20 directions at the end | bigger k, smaller residual |
-| $Q_k$, $\tilde H_k$ | the Arnoldi basis, k orthonormal vectors ($Q_{k+1}$ adds one more), and the small (k + 1)-by-k table that records B on it | $Q_{21}$: 21 vectors, 8,400,000 bytes at k = 20 | memory grows by 8n bytes a step |
-| $\beta$; ‖·‖₁, ‖·‖∞, ‖·‖₂ | the bound's rate, a bound on ‖Wᵀ‖₂ and not the spectral radius ρ of [Iterating instead of factoring](09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md); largest column sum, largest row sum, and length of a vector or the largest stretch of a matrix | ‖Wᵀ‖₁ = 0.699991, ‖Wᵀ‖∞ = 0.948363, β = 0.814767; plain Jacobi's observed factor 0.6025 a step | β near 1: a weak bound |
-| $\kappa_2(A)$ | the condition number in the 2-norm: how much A can magnify a relative error | at most 293.9 (a bound, Step 5); the known-answer run shows an amplification of 10.1 | bigger κ, larger true error for the same residual |
+| $`x_i`$, $`s_i`$ | cars on link i; cars a minute joining it from side streets (i, j number the links) | 11.5495 cars on link 0; s_i between 0.5 and 1.5 | more inflow, more cars |
+| $`t_i`$, $`e_i`$ | minutes to drive link i; share of its leaving cars that exit | 5 minutes for link 0; e_i between 0.3 and 0.5 | lower exits: more steps |
+| $`W`$, $`w_{ji}`$ | the turning table: w_ji, in row j and column i, is the share of link j's leaving cars that turn onto link i; Wᵀ is W with rows written as columns | six nonzeros per row, each row summing to 1 − e_j | — |
+| $`A`$, $`n`$ | the system matrix and its number of rows | 50,000 by 50,000 | dense cost grows as n² to store, n³ to factor |
+| nnz, val, col, ptr | the nonzero count and the three CSR arrays; p counts through val; $`y`$ is the product A x | 350,000; row 0 is val[0] to val[6] | storage and product cost grow with nnz |
+| $`M`$, $`u`$ | the preconditioner, here diag(A) with entries 1/t_i; the unknown GMRES works on, x = M⁻¹u | 0.2000 for link 0 | — |
+| $`B`$ | the preconditioned matrix A M⁻¹, here I − Wᵀ (I the identity) | eigenvalues within 0.7 of 1 | — |
+| $`r_k`$ | the residual s − A x_k after k steps | relative 3.690e-11 at k = 20 | — |
+| $`\mathcal{K}_k`$ | the Krylov space: every mix of s, Bs, …, B^(k−1)s | k = 20 directions at the end | bigger k, smaller residual |
+| $`Q_k`$, $`\tilde H_k`$ | the Arnoldi basis, k orthonormal vectors ($`Q_{k+1}`$ adds one more), and the small (k + 1)-by-k table that records B on it | $`Q_{21}`$: 21 vectors, 8,400,000 bytes at k = 20 | memory grows by 8n bytes a step |
+| $`\beta`$; ‖·‖₁, ‖·‖∞, ‖·‖₂ | the bound's rate, a bound on ‖Wᵀ‖₂ and not the spectral radius ρ of [Iterating instead of factoring](09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md); largest column sum, largest row sum, and length of a vector or the largest stretch of a matrix | ‖Wᵀ‖₁ = 0.699991, ‖Wᵀ‖∞ = 0.948363, β = 0.814767; plain Jacobi's observed factor 0.6025 a step | β near 1: a weak bound |
+| $`\kappa_2(A)`$ | the condition number in the 2-norm: how much A can magnify a relative error | at most 293.9 (a bound, Step 5); the known-answer run shows an amplification of 10.1 | bigger κ, larger true error for the same residual |
 
 The norms and κ come from [Matrix norms and the condition number](01-matrix-norms-and-the-condition-number.md). Flop counting comes from [Counting the work](../01-Floating%20Point%20and%20Error/08-operation-counts-and-cost.md).
 
@@ -121,7 +129,9 @@ Products s, Bs, B²s quickly point in nearly the same direction, so they make a 
 
 The numbers removed fill the small table H̃_k, so that B Q_k = Q_{k+1} H̃_k. Any u in the Krylov space is Q_k times a short vector of k weights. Q_{k+1} has orthonormal columns (each of length one, all at right angles to each other), so it preserves length, and
 
-$$\lVert s - B Q_k\,\text{weights} \rVert_2 = \lVert (\lVert s\rVert_2, 0, \dots, 0) - \tilde H_k\,\text{weights} \rVert_2 .$$
+```math
+\lVert s - B Q_k\,\text{weights} \rVert_2 = \lVert (\lVert s\rVert_2, 0, \dots, 0) - \tilde H_k\,\text{weights} \rVert_2 .
+```
 
 So each step solves a least-squares problem with k + 1 rows, not 50,000. Plane rotations (Givens rotations) bring H̃_k to triangular form one column at a time. The last entry of the rotated right-hand side is the residual length, so GMRES knows its residual without forming x.
 
@@ -133,7 +143,9 @@ Jacobi, started from x = 0, updates x_{k+1} = x_k + M⁻¹(s − A x_k). Multipl
 
 Jacobi's iterate is M⁻¹ times a mix of s, Bs, …, B^(k−1)s, so it lies in GMRES's search set. GMRES takes the best member of that set, so its residual is no longer than Jacobi's. Then
 
-$$\lVert (W^{T})^{k} s\rVert_2 \le \lVert W^{T}\rVert_2^{k}\,\lVert s\rVert_2 \le \beta^{k}\,\lVert s\rVert_2 .$$
+```math
+\lVert (W^{T})^{k} s\rVert_2 \le \lVert W^{T}\rVert_2^{k}\,\lVert s\rVert_2 \le \beta^{k}\,\lVert s\rVert_2 .
+```
 
 ‖Wᵀ‖₁ is the largest column sum of Wᵀ, which is the largest row sum of W: the most traffic any link sends on, 1 − e_j at most 0.699991. ‖Wᵀ‖∞ is the most traffic that turns into any one link: 0.948363. So β = 0.814767.
 

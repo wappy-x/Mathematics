@@ -47,34 +47,40 @@ In the coarse bands, the error sits on the flat line: those weights are kept and
 
 Mutual information I(X; X̂), from [Conditional entropy and mutual information](02-conditional-entropy-and-mutual-information.md), is the number of bits that the copy X̂ tells you about the original X.
 
-$$R(D) \;=\; \min_{\;\text{copies } \hat X \text{ with } E[(X-\hat X)^2] \,\le\, D} \; I(X;\hat X)$$
+```math
+R(D) \;=\; \min_{\;\text{copies } \hat X \text{ with } E[(X-\hat X)^2] \,\le\, D} \; I(X;\hat X)
+```
 
 **Read it aloud:** the rate-distortion function is the smallest amount of information a copy must carry about the original, among all ways of making a copy whose average squared error is at most D.
 
 For one bell-curve value with variance σ², the minimum has a closed form:
 
-$$R(D) = \tfrac12 \log_2 \frac{\sigma^2}{D} \ \text{ for } D < \sigma^2, \qquad R(D) = 0 \ \text{ for } D \ge \sigma^2.$$
+```math
+R(D) = \tfrac12 \log_2 \frac{\sigma^2}{D} \ \text{ for } D < \sigma^2, \qquad R(D) = 0 \ \text{ for } D \ge \sigma^2.
+```
 
 For many independent bell-curve values with variances σ_k², the bits are shared by **reverse water-filling**: pick a water level θ, give each value the error min(θ, σ_k²), and pay
 
-$$R = \sum_k \max\!\Big(0,\ \tfrac12 \log_2 \frac{\sigma_k^2}{\theta}\Big), \qquad D = \sum_k \min(\theta, \sigma_k^2).$$
+```math
+R = \sum_k \max\!\Big(0,\ \tfrac12 \log_2 \frac{\sigma_k^2}{\theta}\Big), \qquad D = \sum_k \min(\theta, \sigma_k^2).
+```
 
 On the photo these sums are averaged over a tile's 64 slots, to give bits and error per pixel.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$ | the original value: one bell-curve number, or one cosine weight | a weight in a tile | — |
-| $\hat X$ | "X-hat", the copy the receiver rebuilds | the weight after rounding | — |
-| $D$ | the allowed distortion: average squared error between X and X̂ | 0.25 for σ² = 1; 5.64 on the photo | R(D) falls |
-| $I(X;\hat X)$ | bits the copy carries about the original | 1 bit for the bell curve at D = 0.25 | — |
-| $R(D)$ | rate: the fewest bits per value that keep the error at D | 1 bit at D = 0.25 | — |
-| $n$ | how many values are coded together in one block | 1 for a value rounded on its own | the cost can fall towards R(D) |
-| $\sigma^2$ | the variance (spread, squared) of the source | 1 | R(D) rises by ½ log2 of the factor |
-| $h(\cdot)$ | differential entropy: the bit measure of a continuous spread, ½ log2(2πeσ²) for a bell curve (not the binary entropy h(p) of [Entropy](01-entropy.md)) | used in Step 2 | — |
-| $k$, $\sigma_k^2$, $D_k$ | a slot (u, v) of the tile, that slot's variance across tiles, and the error it is allowed | 48.5 dB in band 0 down to 9.8 dB in band 14 | that slot earns more bits |
-| $\theta$ | the water level: the error every slot above it is held to | Step 3 | R falls, D rises |
-| $\Delta$ | the rounding step | 12.14 | fewer bits, more error |
-| $Z$ | in Step 2, the bell-curve error added to the copy to rebuild X | variance D = 0.25 | more error, fewer bits |
+| $`X`$ | the original value: one bell-curve number, or one cosine weight | a weight in a tile | — |
+| $`\hat X`$ | "X-hat", the copy the receiver rebuilds | the weight after rounding | — |
+| $`D`$ | the allowed distortion: average squared error between X and X̂ | 0.25 for σ² = 1; 5.64 on the photo | R(D) falls |
+| $`I(X;\hat X)`$ | bits the copy carries about the original | 1 bit for the bell curve at D = 0.25 | — |
+| $`R(D)`$ | rate: the fewest bits per value that keep the error at D | 1 bit at D = 0.25 | — |
+| $`n`$ | how many values are coded together in one block | 1 for a value rounded on its own | the cost can fall towards R(D) |
+| $`\sigma^2`$ | the variance (spread, squared) of the source | 1 | R(D) rises by ½ log2 of the factor |
+| $`h(\cdot)`$ | differential entropy: the bit measure of a continuous spread, ½ log2(2πeσ²) for a bell curve (not the binary entropy h(p) of [Entropy](01-entropy.md)) | used in Step 2 | — |
+| $`k`$, $`\sigma_k^2`$, $`D_k`$ | a slot (u, v) of the tile, that slot's variance across tiles, and the error it is allowed | 48.5 dB in band 0 down to 9.8 dB in band 14 | that slot earns more bits |
+| $`\theta`$ | the water level: the error every slot above it is held to | Step 3 | R falls, D rises |
+| $`\Delta`$ | the rounding step | 12.14 | fewer bits, more error |
+| $`Z`$ | in Step 2, the bell-curve error added to the copy to rebuild X | variance D = 0.25 | more error, fewer bits |
 
 ### When it holds
 
@@ -109,11 +115,15 @@ It is the mirror of [Channel capacity](07-channel-capacity-and-the-noisy-channel
 
 Lower bound. Differential entropy h is entropy for a continuous value. A bell curve with variance σ² has h = ½ log2(2πeσ²), the largest of any value with that variance. Then
 
-$$I(X;\hat X) = h(X) - h(X \mid \hat X) = h(X) - h(X - \hat X \mid \hat X) \ge h(X) - h(X - \hat X).$$
+```math
+I(X;\hat X) = h(X) - h(X \mid \hat X) = h(X) - h(X - \hat X \mid \hat X) \ge h(X) - h(X - \hat X).
+```
 
 The error X − X̂ has mean square at most D. So its entropy is at most that of a bell curve with variance D. That gives
 
-$$I(X;\hat X) \ge \tfrac12 \log_2(2\pi e \sigma^2) - \tfrac12 \log_2(2\pi e D) = \tfrac12 \log_2 \frac{\sigma^2}{D}.$$
+```math
+I(X;\hat X) \ge \tfrac12 \log_2(2\pi e \sigma^2) - \tfrac12 \log_2(2\pi e D) = \tfrac12 \log_2 \frac{\sigma^2}{D}.
+```
 
 Reaching the bound. Build the copy X̂ as a bell curve with variance σ² − D, and set X = X̂ + Z, where Z is an independent bell-curve error with variance D. Then X has variance σ², the error is exactly D, and I(X; X̂) = ½ log2(σ²/D). The bound is met, so it is R(D). At σ² = 1 and D = 0.25, that is 1 bit.
 
@@ -625,14 +635,14 @@ The two outputs match line for line. Blahut-Arimoto meets the formula to six dec
 
 Lean proves the bell-curve formula, the water-filling split and the length-keeping transform, for every variance, allowed error and set of slots.
 
-- Take a bell curve with variance $\sigma^2$ and an allowed error $D < \sigma^2$. Then $R(D) = \tfrac12 \log_2(\sigma^2/D)$, and some copy reaches it.
-- Take an allowed error $D \ge \sigma^2$. Then $R(D) = 0$, reached by the copy that always guesses the average.
-- Take slots with variances $\sigma_k^2$ and a water level $\theta$, and let $D = \sum_k \min(\theta, \sigma_k^2)$. Then giving each slot the error $\min(\theta, \sigma_k^2)$ costs the fewest bits of any split of $D$.
-- Take the same slots. Then that fewest is $R = \sum_k \max(0, \tfrac12 \log_2(\sigma_k^2/\theta))$, as in The formula.
+- Take a bell curve with variance $`\sigma^2`$ and an allowed error $`D < \sigma^2`$. Then $`R(D) = \tfrac12 \log_2(\sigma^2/D)`$, and some copy reaches it.
+- Take an allowed error $`D \ge \sigma^2`$. Then $`R(D) = 0`$, reached by the copy that always guesses the average.
+- Take slots with variances $`\sigma_k^2`$ and a water level $`\theta`$, and let $`D = \sum_k \min(\theta, \sigma_k^2)`$. Then giving each slot the error $`\min(\theta, \sigma_k^2)`$ costs the fewest bits of any split of $`D`$.
+- Take the same slots. Then that fewest is $`R = \sum_k \max(0, \tfrac12 \log_2(\sigma_k^2/\theta))`$, as in The formula.
 - Take a tile and a transform matrix with perpendicular rows of length 1, such as the 8 by 8 cosine transform. Then any change to the weights leaves the same sum of squared errors in the rebuilt pixels.
-- Take $\sigma^2 = 1$ and $D = 0.25$. Then the formula gives 1 bit.
+- Take $`\sigma^2 = 1`$ and $`D = 0.25`$. Then the formula gives 1 bit.
 - Take the weather station's spread of 4 °C and error of 1 °C. Then the formula gives 2 bits a day.
-- Take $D = 2\sigma^2$. Then the formula, read past its limit, gives −0.5 bits.
+- Take $`D = 2\sigma^2`$. Then the formula, read past its limit, gives −0.5 bits.
 - Take the 128 by 128 photo in 8 by 8 tiles. Then it has 256 tiles of 63 detail weights each, and 8 bits sent as 0.8 is 10 to 1.
 
 The measured numbers, from Blahut-Arimoto's 0.999992 bits to the photo's 0.80 bits a pixel, are left to the Python and Rust checks.

@@ -38,36 +38,42 @@ The steep orange line is the sum written out. The teal line is the route through
 
 The discrete Fourier transform, DFT, of N samples, and its even–odd split:
 
-$$X_k = \sum_{j=0}^{N-1} x_j\, w^{jk}, \qquad w = e^{-2\pi i/N},$$
+```math
+X_k = \sum_{j=0}^{N-1} x_j\, w^{jk}, \qquad w = e^{-2\pi i/N},
+```
 
-$$X_k = E_k + w^k O_k, \qquad X_{k+N/2} = E_k - w^k O_k, \qquad 0 \le k < N/2.$$
+```math
+X_k = E_k + w^k O_k, \qquad X_{k+N/2} = E_k - w^k O_k, \qquad 0 \le k < N/2.
+```
 
 The cost, and convolution through the transform:
 
-$$F(N) = 5N\log_2 N \text{ flops}, \qquad c = \mathrm{FFT}^{-1}\big(\mathrm{FFT}(a)\cdot\mathrm{FFT}(b)\big) \text{ with both padded to } N \ge 2n - 1.$$
+```math
+F(N) = 5N\log_2 N \text{ flops}, \qquad c = \mathrm{FFT}^{-1}\big(\mathrm{FFT}(a)\cdot\mathrm{FFT}(b)\big) \text{ with both padded to } N \ge 2n - 1.
+```
 
 **Read it aloud:** each output is the even half's transform plus a turned copy of the odd half's, so each of the log2 N levels costs 5N flops.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | samples in each signal | 4096 | the sum's cost grows like $n^2$, the route's like $n \log_2 n$ |
-| $N$ | transform size, a power of 2, at least $2n - 1$ | 8192 | one more halving level per doubling |
-| $x_j$, $X_k$ | sample number $j$ of the signal being transformed; output number $k$, how much of the wave with $k$ cycles per block it holds | clap or echo samples; complex numbers | |
-| $w$ | the **twiddle**: $e^{-2\pi i/N}$, one $N$-th of a turn round the unit circle; $i$ is the square root of $-1$ | $-i$ when $N = 4$ | a smaller turn per step |
-| $E_k$, $O_k$, $t$ | output $k$ of the half-size transforms of the even-numbered and odd-numbered samples; $t = w^k O_k$, the turned odd part | | |
-| $F(N)$ | flops in one transform of size $N$ | 532,480 at $N = 8192$ | grows a little faster than $N$ |
-| $a_j$, $b_j$ | the clap and the echo, as 16-bit integers | 4096 of each | larger outputs, same relative error |
-| $c_j$ | output $j$ of the convolution, $\sum_i a_i\, b_{j-i}$ | 8191 exact integers, the largest 19,345,708,798 | |
-| $u$, $\gamma_4$ | the unit roundoff, $2^{-53}$, the largest relative error of one rounding; $\gamma_4 = 4u/(1-4u)$, four roundings' worth | | |
-| $\mu$ | how far each computed twiddle can sit from the true one | $2u$, assumed | the bound grows with it |
-| $\eta$ | rounding allowance for one butterfly level, built from $u$ and $\mu$ | | the bound grows with it |
-| $\lVert\cdot\rVert_2$ | the length of a list of numbers: the square root of the sum of squares | | |
+| $`n`$ | samples in each signal | 4096 | the sum's cost grows like $`n^2`$, the route's like $`n \log_2 n`$ |
+| $`N`$ | transform size, a power of 2, at least $`2n - 1`$ | 8192 | one more halving level per doubling |
+| $`x_j`$, $`X_k`$ | sample number $`j`$ of the signal being transformed; output number $`k`$, how much of the wave with $`k`$ cycles per block it holds | clap or echo samples; complex numbers | |
+| $`w`$ | the **twiddle**: $`e^{-2\pi i/N}`$, one $`N`$-th of a turn round the unit circle; $`i`$ is the square root of $`-1`$ | $`-i`$ when $`N = 4`$ | a smaller turn per step |
+| $`E_k`$, $`O_k`$, $`t`$ | output $`k`$ of the half-size transforms of the even-numbered and odd-numbered samples; $`t = w^k O_k`$, the turned odd part | | |
+| $`F(N)`$ | flops in one transform of size $`N`$ | 532,480 at $`N = 8192`$ | grows a little faster than $`N`$ |
+| $`a_j`$, $`b_j`$ | the clap and the echo, as 16-bit integers | 4096 of each | larger outputs, same relative error |
+| $`c_j`$ | output $`j`$ of the convolution, $`\sum_i a_i\, b_{j-i}`$ | 8191 exact integers, the largest 19,345,708,798 | |
+| $`u`$, $`\gamma_4`$ | the unit roundoff, $`2^{-53}`$, the largest relative error of one rounding; $`\gamma_4 = 4u/(1-4u)`$, four roundings' worth | | |
+| $`\mu`$ | how far each computed twiddle can sit from the true one | $`2u`$, assumed | the bound grows with it |
+| $`\eta`$ | rounding allowance for one butterfly level, built from $`u`$ and $`\mu`$ | | the bound grows with it |
+| $`\lVert\cdot\rVert_2`$ | the length of a list of numbers: the square root of the sum of squares | | |
 
 ### When it holds
 
 - **N is a power of 2.** The halving must reach single samples. For other sizes, pad with zeros or use a mixed-radix split (below); a prime size needs another trick entirely.
 - **Both signals are padded to N ≥ 2n − 1.** The transform's product is a *circular* convolution: outputs past the end wrap round to the start. Without padding, the echo's tail lands on the clap's start, and the largest error is 604,448,004.
-- **The twiddles are accurate.** Each $w^k$ is taken from cosine and sine. Built by repeated multiplication, the error grows with N: 241 times worse on this example.
+- **The twiddles are accurate.** Each $`w^k`$ is taken from cosine and sine. Built by repeated multiplication, the error grows with N: 241 times worse on this example.
 - **The outputs stay well inside double precision.** The integers come back exactly only while the rounding error stays below 0.5. Here it is 4.05e-06; much longer or louder signals need a check, or an exact transform over integers.
 - **Flops are not time.** A transform touches each number only a few times per level, so memory traffic often decides its speed ([Counting the work](../01-Floating%20Point%20and%20Error/08-operation-counts-and-cost.md)). This card counts flops; it times nothing.
 
@@ -77,43 +83,47 @@ $$F(N) = 5N\log_2 N \text{ flops}, \qquad c = \mathrm{FFT}^{-1}\big(\mathrm{FFT}
 
 ### Step 0: half the samples give half the outputs, twice over
 
-The DFT sum uses the powers of one twiddle $w$. Square the twiddle and you get the twiddle of a transform half as long. So the even-numbered samples, on their own, form a half-size DFT. The odd-numbered samples form another. Two half-size transforms cost a quarter each, half in total. Repeat the trick on each half, and the work falls from $N^2$ to $N \log_2 N$.
+The DFT sum uses the powers of one twiddle $`w`$. Square the twiddle and you get the twiddle of a transform half as long. So the even-numbered samples, on their own, form a half-size DFT. The odd-numbered samples form another. Two half-size transforms cost a quarter each, half in total. Repeat the trick on each half, and the work falls from $`N^2`$ to $`N \log_2 N`$.
 
 ### Step 1: the split
 
-Split the sum by the parity of $j$. Write $j = 2m$ for even samples and $j = 2m + 1$ for odd ones:
+Split the sum by the parity of $`j`$. Write $`j = 2m`$ for even samples and $`j = 2m + 1`$ for odd ones:
 
-$$X_k = \sum_{m=0}^{N/2-1} x_{2m}\,(w^2)^{mk} \;+\; w^k \sum_{m=0}^{N/2-1} x_{2m+1}\,(w^2)^{mk} = E_k + w^k O_k.$$
+```math
+X_k = \sum_{m=0}^{N/2-1} x_{2m}\,(w^2)^{mk} \;+\; w^k \sum_{m=0}^{N/2-1} x_{2m+1}\,(w^2)^{mk} = E_k + w^k O_k.
+```
 
-Here $w^2 = e^{-2\pi i/(N/2)}$ is the twiddle of size $N/2$, so $E_k$ and $O_k$ are half-size DFTs.
+Here $`w^2 = e^{-2\pi i/(N/2)}`$ is the twiddle of size $`N/2`$, so $`E_k`$ and $`O_k`$ are half-size DFTs.
 
 Two facts give the other half of the outputs free:
 
-1. $E_k$ and $O_k$ repeat every $N/2$ steps of $k$, because $(w^2)^{N/2} = 1$.
-2. $w^{k+N/2} = -w^k$, because $w^{N/2}$ is half a turn, which is $-1$.
+1. $`E_k`$ and $`O_k`$ repeat every $`N/2`$ steps of $`k`$, because $`(w^2)^{N/2} = 1`$.
+2. $`w^{k+N/2} = -w^k`$, because $`w^{N/2}`$ is half a turn, which is $`-1`$.
 
-So $X_{k+N/2} = E_k - w^k O_k$. One product $t = w^k O_k$ serves two outputs, $E_k + t$ and $E_k - t$. This pair is a **butterfly**.
+So $`X_{k+N/2} = E_k - w^k O_k`$. One product $`t = w^k O_k`$ serves two outputs, $`E_k + t`$ and $`E_k - t`$. This pair is a **butterfly**.
 
 ### Step 2: count the flops
 
-A complex number is two real ones. One complex multiplication, $(p + iq)(r + is) = (pr - qs) + i(ps + qr)$, takes 4 multiplications and 2 additions: 6 flops. A complex addition takes 2. So one butterfly costs $6 + 2 + 2 = 10$ flops.
+A complex number is two real ones. One complex multiplication, $`(p + iq)(r + is) = (pr - qs) + i(ps + qr)`$, takes 4 multiplications and 2 additions: 6 flops. A complex addition takes 2. So one butterfly costs $`6 + 2 + 2 = 10`$ flops.
 
-A size-$N$ transform does $N/2$ butterflies after its two half-size transforms:
+A size-$`N`$ transform does $`N/2`$ butterflies after its two half-size transforms:
 
-$$F(N) = 2F(N/2) + 5N, \qquad F(1) = 0.$$
+```math
+F(N) = 2F(N/2) + 5N, \qquad F(1) = 0.
+```
 
-This is the even-split case of [Divide-and-conquer recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/07-divide-and-conquer-recurrences.md): equal work $5N$ on each of the $\log_2 N$ levels. So $F(N) = 5N\log_2 N$. The plain sum takes $N^2$ complex multiplications and $N(N-1)$ complex additions, about $8N^2$ flops. The code counts every flop at N = 2, 4, …, 8192 and matches the formula each time.
+This is the even-split case of [Divide-and-conquer recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/07-divide-and-conquer-recurrences.md): equal work $`5N`$ on each of the $`\log_2 N`$ levels. So $`F(N) = 5N\log_2 N`$. The plain sum takes $`N^2`$ complex multiplications and $`N(N-1)`$ complex additions, about $`8N^2`$ flops. The code counts every flop at N = 2, 4, …, 8192 and matches the formula each time.
 
 <details>
 <summary>Detailed proof: F(N) = 5N log2 N for every power of 2</summary>
 
-By induction on $L = \log_2 N$. For $L = 0$: $F(1) = 0 = 5 \cdot 1 \cdot 0$.
+By induction on $`L = \log_2 N`$. For $`L = 0`$: $`F(1) = 0 = 5 \cdot 1 \cdot 0`$.
 
-Suppose $F(2^{L-1}) = 5 \cdot 2^{L-1}(L-1)$. Then
+Suppose $`F(2^{L-1}) = 5 \cdot 2^{L-1}(L-1)`$. Then
 
-$$F(2^L) = 2 \cdot 5 \cdot 2^{L-1}(L-1) + 5 \cdot 2^L = 5 \cdot 2^L (L - 1 + 1) = 5 \cdot 2^L L.$$
+$`\displaystyle F(2^L) = 2 \cdot 5 \cdot 2^{L-1}(L-1) + 5 \cdot 2^L = 5 \cdot 2^L (L - 1 + 1) = 5 \cdot 2^L L.`$
 
-So the formula holds for every $L$. The split itself is exact algebra, so the FFT returns the same numbers as the sum in exact arithmetic.
+So the formula holds for every $`L`$. The split itself is exact algebra, so the FFT returns the same numbers as the sum in exact arithmetic.
 
 </details>
 
@@ -121,31 +131,33 @@ So the formula holds for every $L$. The split itself is exact algebra, so the FF
 
 [Convolution](../../07-Complex%20analysis/08-Transforms%20in%20Outline/04-convolution-theorem.md) proves that the transform of a convolution is the product of the transforms. For lists of N numbers, the theorem holds for the **circular** convolution: indices are counted modulo N, so anything past the end wraps to the start.
 
-The cure is zero padding. The true output has $2n - 1$ samples. Pad both signals with zeros to $N \ge 2n - 1$, and nothing reaches the end, so nothing wraps. Circular and ordinary convolution then agree.
+The cure is zero padding. The true output has $`2n - 1`$ samples. Pad both signals with zeros to $`N \ge 2n - 1`$, and nothing reaches the end, so nothing wraps. Circular and ordinary convolution then agree.
 
 The route has five parts:
 
 1. Pad the clap and the echo to N = 8192.
 2. Transform both: two FFTs.
-3. Multiply the two spectra, frequency by frequency: N complex products, $6N$ flops.
-4. Transform back: the same FFT with $w$ replaced by its conjugate $\bar w = e^{+2\pi i/N}$.
+3. Multiply the two spectra, frequency by frequency: N complex products, $`6N`$ flops.
+4. Transform back: the same FFT with $`w`$ replaced by its conjugate $`\bar w = e^{+2\pi i/N}`$.
 5. Divide each real part by N: N flops.
 
-Total: $15N\log_2 N + 7N$ flops. The same splitting multiplies two polynomials. A polynomial's coefficients are a signal, and the product's coefficients are their convolution. The worked numbers below do one by hand.
+Total: $`15N\log_2 N + 7N`$ flops. The same splitting multiplies two polynomials. A polynomial's coefficients are a signal, and the product's coefficients are their convolution. The worked numbers below do one by hand.
 
 ### Step 4: why the rounding error grows only like log2 N
 
-One butterfly level never stretches errors. Its outputs $E_k + t$ and $E_k - t$ have $|E_k + t|^2 + |E_k - t|^2 = 2(|E_k|^2 + |t|^2)$, and $|t| = |O_k|$ because $|w^k| = 1$. So each level multiplies the length of the whole vector by exactly $\sqrt 2$. A rounding error carried into a level grows by that same factor as the signal, so its relative size stays put.
+One butterfly level never stretches errors. Its outputs $`E_k + t`$ and $`E_k - t`$ have $`|E_k + t|^2 + |E_k - t|^2 = 2(|E_k|^2 + |t|^2)`$, and $`|t| = |O_k|`$ because $`|w^k| = 1`$. So each level multiplies the length of the whole vector by exactly $`\sqrt 2`$. A rounding error carried into a level grows by that same factor as the signal, so its relative size stays put.
 
-Each level adds at most a fixed relative error of its own, $\eta$. After $\log_2 N$ levels, the relative errors add up. Higham's Theorem 24.2 makes this precise for the computed transform $\hat X$:
+Each level adds at most a fixed relative error of its own, $`\eta`$. After $`\log_2 N`$ levels, the relative errors add up. Higham's Theorem 24.2 makes this precise for the computed transform $`\hat X`$:
 
-$$\frac{\lVert \hat X - X\rVert_2}{\lVert X\rVert_2} \le \frac{\log_2 N \cdot \eta}{1 - \log_2 N \cdot \eta}, \qquad \eta = \mu + \gamma_4(\sqrt 2 + \mu), \quad \gamma_4 = \frac{4u}{1 - 4u}.$$
+```math
+\frac{\lVert \hat X - X\rVert_2}{\lVert X\rVert_2} \le \frac{\log_2 N \cdot \eta}{1 - \log_2 N \cdot \eta}, \qquad \eta = \mu + \gamma_4(\sqrt 2 + \mu), \quad \gamma_4 = \frac{4u}{1 - 4u}.
+```
 
-A transform there and back doubles the bound, to about $2\log_2 N\cdot\eta$ to first order. The plain sum has no such structure: each output adds N terms in a row, and its bound grows in proportion to N.
+A transform there and back doubles the bound, to about $`2\log_2 N\cdot\eta`$ to first order. The plain sum has no such structure: each output adds N terms in a row, and its bound grows in proportion to N.
 
-The code checks the bound, with each twiddle assumed within $\mu = 2u$:
+The code checks the bound, with each twiddle assumed within $`\mu = 2u`$:
 
-| N | Error there and back, true | Bound $2\log_2 N\cdot\eta$ | Ratio | Twiddles by repeated multiplication |
+| N | Error there and back, true | Bound $`2\log_2 N\cdot\eta`$ | Ratio | Twiddles by repeated multiplication |
 | ---: | ---: | ---: | ---: | ---: |
 | 32 | 1.96e-16 | 8.50e-15 | 0.023 | 4.47e-16 |
 | 128 | 2.33e-16 | 1.19e-14 | 0.020 | 1.13e-15 |
@@ -153,9 +165,9 @@ The code checks the bound, with each twiddle assumed within $\mu = 2u$:
 | 2048 | 3.90e-16 | 1.87e-14 | 0.021 | 1.29e-14 |
 | 8192 | 4.34e-16 | 2.21e-14 | 0.020 | 4.11e-14 |
 
-The ratio stays near 0.02: the true error sits far under the bound, because rounding errors partly cancel. The true error creeps up slowly with N, as $\log_2 N$ predicts.
+The ratio stays near 0.02: the true error sits far under the bound, because rounding errors partly cancel. The true error creeps up slowly with N, as $`\log_2 N`$ predicts.
 
-The last column breaks the twiddle assumption. Each $w^{k+1}$ is computed as $w^k \cdot w$, so its error grows with $k$, and $\mu$ grows with N. At N = 8192 its error is 4.11e-14 against 4.34e-16, already above the accurate bound of 2.21e-14.
+The last column breaks the twiddle assumption. Each $`w^{k+1}`$ is computed as $`w^k \cdot w`$, so its error grows with $`k`$, and $`\mu`$ grows with N. At N = 8192 its error is 4.11e-14 against 4.34e-16, already above the accurate bound of 2.21e-14.
 
 ### Step 5: the variants a library chooses between
 
@@ -164,14 +176,14 @@ Every variant below gives the same outputs; they differ in flops, memory and acc
 | Variant | What changes | Flops for one transform at N = 8192 |
 | --- | --- | ---: |
 | Radix-2, every twiddle multiplied | this card's recursive code | 532,480 |
-| Skip the multiplications by $w^0 = 1$ | 8191 butterflies need no multiply | 483,334 |
+| Skip the multiplications by $`w^0 = 1`$ | 8191 butterflies need no multiply | 483,334 |
 | Split-radix | one half-size transform of the even samples, two quarter-size ones of the odd samples | 376,840 |
 
 - **Decimation in time or in frequency.** This card splits the *inputs* into even and odd samples. Splitting the *outputs* instead gives the same count, with the butterflies run in reverse order.
 - **Recursive or in-place.** A library avoids recursion and copies. It first moves each sample to the slot whose binary number is its own reversed, then runs the butterflies in one array, level by level. The code's third road does this.
-- **Split radix.** Split-radix costs $4N\log_2 N - 6N + 8$ real flops (Duhamel and Vetterli). A 2007 refinement by Johnson and Frigo lowers the count again.
+- **Split radix.** Split-radix costs $`4N\log_2 N - 6N + 8`$ real flops (Duhamel and Vetterli). A 2007 refinement by Johnson and Frigo lowers the count again.
 - **Real input.** Real signals waste half a complex transform. Pack the clap into the real part and the echo into the imaginary part, transform once, then separate the two spectra by symmetry. The code's third road does this: 1,187,840 flops, a saving of 28.24.
-- **Other sizes.** A size such as $N = 2^a 3^b 5^c$ splits by 2, 3 and 5 in turn: the mixed-radix FFT. A prime size needs another method, such as Bluestein's algorithm, which rewrites the transform as a convolution.
+- **Other sizes.** A size such as $`N = 2^a 3^b 5^c`$ splits by 2, 3 and 5 in turn: the mixed-radix FFT. A prime size needs another method, such as Bluestein's algorithm, which rewrites the transform as a convolution.
 - **Twiddle tables.** Libraries compute each twiddle from cosine and sine, or by a recurrence that is restarted often, for the reason in Step 4.
 
 A library such as FFTW times several of these plans on the actual machine and keeps the fastest. Flop counts narrow the choice; memory traffic settles it.
@@ -199,17 +211,17 @@ At this length the transform route does a twentieth of the work, and every outpu
 
 ### The route on a product small enough to do by hand
 
-Multiply $(1 + 2x + 3x^2)(4 + 5x)$. The coefficient lists are 1, 2, 3 and 4, 5; the product has 4 coefficients, so N = 4 and $w = e^{-2\pi i/4} = -i$. The transform evaluates each polynomial at the four powers of $w$: 1, $-i$, $-1$ and $i$.
+Multiply $`(1 + 2x + 3x^2)(4 + 5x)`$. The coefficient lists are 1, 2, 3 and 4, 5; the product has 4 coefficients, so N = 4 and $`w = e^{-2\pi i/4} = -i`$. The transform evaluates each polynomial at the four powers of $`w`$: 1, $`-i`$, $`-1`$ and $`i`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $A$ at 1, $-i$, $-1$, $i$ | $1 + 2x + 3x^2$ at each point | 6, −2 − 2i, 2, −2 + 2i |
-| $B$ at the same points | $4 + 5x$ at each point | 9, 4 − 5i, −1, 4 + 5i |
+| $`A`$ at 1, $`-i`$, $`-1`$, $`i`$ | $`1 + 2x + 3x^2`$ at each point | 6, −2 − 2i, 2, −2 + 2i |
+| $`B`$ at the same points | $`4 + 5x`$ at each point | 9, 4 − 5i, −1, 4 + 5i |
 | product, point by point | e.g. (−2 − 2i)(4 − 5i) = −8 + 10i − 8i − 10 | 54, −18 + 2i, −2, −18 − 2i |
-| back: $c_0$ | (54 − 18 + 2i − 2 − 18 − 2i) ÷ 4 | 4 |
+| back: $`c_0`$ | (54 − 18 + 2i − 2 − 18 − 2i) ÷ 4 | 4 |
 | back: all four | the inverse transform, divided by 4 | **4, 13, 22, 15** |
 
-So the product is $4 + 13x + 22x^2 + 15x^3$, which the sum written out confirms. Transforming is evaluating at the roots of unity; multiplying spectra is multiplying values; the inverse transform reads the coefficients back.
+So the product is $`4 + 13x + 22x^2 + 15x^3`$, which the sum written out confirms. Transforming is evaluating at the roots of unity; multiplying spectra is multiplying values; the inverse transform reads the coefficients back.
 
 ### What breaks if you drop a piece
 
@@ -219,7 +231,7 @@ The correct route gives every output exactly, with the largest rounding error 4.
 | --- | --- | --- |
 | No zero padding, N = 4096 | largest error 604,448,004 | the product of transforms is circular, so the echo's tail wrapped onto the clap's start |
 | No division by N on the way back | largest output 158,480,046,473,216, not 19,345,708,798 | the inverse sum adds N copies; 8192 times too big |
-| Twiddles by repeated multiplication | largest error 9.77e-04, 241 times worse | each $w^{k+1} = w^k \cdot w$ carries the error of all the steps before it |
+| Twiddles by repeated multiplication | largest error 9.77e-04, 241 times worse | each $`w^{k+1} = w^k \cdot w`$ carries the error of all the steps before it |
 | Complex multiplications counted as flops | 167,936 against 16,777,216: a saving of 99.9 claimed | one complex multiplication is 6 flops; the true saving is 20.27 |
 
 ---
@@ -612,10 +624,10 @@ ALL CHECKS PASS
 
 Lean proves the split, the flop count and convolution through the transform, in exact arithmetic, for every power of 2.
 
-- For N a power of 2 and $0 \le k < N/2$, the split is exact: $X_k = E_k + w^k O_k$ and $X_{k+N/2} = E_k - w^k O_k$.
-- If $F(1) = 0$ and $F(2M) = 2F(M) + 5 \cdot 2M$, then $F(N) = 5N\log_2 N$ exactly for every power of 2.
-- Pad two signals of n samples with zeros to a power of 2, $N \ge 2n - 1$. Then the route's output $j$ is exactly $c_j = \sum_{i=0}^{j} a_i\, b_{j-i}$ for every $j < N$: nothing wraps round.
-- By hand, 1, 2, 3 convolved with 4, 5 gives 4, 13, 22, 15. Four spectrum values, the product $(-2 - 2i)(4 - 5i) = -18 + 2i$ and $c_0 = 4$ check too.
+- For N a power of 2 and $`0 \le k < N/2`$, the split is exact: $`X_k = E_k + w^k O_k`$ and $`X_{k+N/2} = E_k - w^k O_k`$.
+- If $`F(1) = 0`$ and $`F(2M) = 2F(M) + 5 \cdot 2M`$, then $`F(N) = 5N\log_2 N`$ exactly for every power of 2.
+- Pad two signals of n samples with zeros to a power of 2, $`N \ge 2n - 1`$. Then the route's output $`j`$ is exactly $`c_j = \sum_{i=0}^{j} a_i\, b_{j-i}`$ for every $`j < N`$: nothing wraps round.
+- By hand, 1, 2, 3 convolved with 4, 5 gives 4, 13, 22, 15. Four spectrum values, the product $`(-2 - 2i)(4 - 5i) = -18 + 2i`$ and $`c_0 = 4`$ check too.
 - The worked counts hold: 33,546,241 flops for the sum, 1,654,784 for the route, a saving between 20.27 and 20.28.
 
 Rounding error, twiddle accuracy, flops counted in running code and the signals themselves are left to the Python and Rust checks.
@@ -943,7 +955,7 @@ example : 8192 + 3 * (8192 / 2) * 13 = 167936 := by norm_num
 - [Counting the work](../01-Floating%20Point%20and%20Error/08-operation-counts-and-cost.md): the flop, and the warning that memory traffic, not flops alone, sets speed.
 - [The discrete Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): the sum being computed, its roots of unity and its inverse.
 - [Convolution](../../07-Complex%20analysis/08-Transforms%20in%20Outline/04-convolution-theorem.md): the theorem that turns convolution into a product of transforms.
-- [Divide-and-conquer recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/07-divide-and-conquer-recurrences.md): solves $F(N) = 2F(N/2) + 5N$.
+- [Divide-and-conquer recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/07-divide-and-conquer-recurrences.md): solves $`F(N) = 2F(N/2) + 5N`$.
 - [The DFT and the FFT](../../13-Engineering%20mathematics/05-Signals/02-discrete-fourier-transform-and-the-fft.md): the FFT built and used to read spectra; this card adds its flop count, its rounding error and its variants.
 
 ---

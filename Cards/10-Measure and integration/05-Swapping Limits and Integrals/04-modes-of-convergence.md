@@ -43,64 +43,80 @@ Orange: the integral of the typewriter, its lit length, falling to 0. Green: the
 
 ## The formula
 
-Notation first, in words. A **measure space** $(\Omega, \mathcal{F}, \mu)$ is a set of points, the subsets we allow ourselves to measure, and a measure giving each a size. Here the points are the seats of [0, 1), the unit interval without its right end, and the size is length, the Lebesgue measure $\lambda$. The indicator $\mathbf{1}_A$ is one on the set A and zero off it. Every function below is measurable, so each set in braces has a size.
+Notation first, in words. A **measure space** $`(\Omega, \mathcal{F}, \mu)`$ is a set of points, the subsets we allow ourselves to measure, and a measure giving each a size. Here the points are the seats of [0, 1), the unit interval without its right end, and the size is length, the Lebesgue measure $`\lambda`$. The indicator $`\mathbf{1}_A`$ is one on the set A and zero off it. Every function below is measurable, so each set in braces has a size.
 
-The typewriter at step $n$: write $n = 2^m + k$ with $0 \le k < 2^m$, and let $M = 2^m$. Then
+The typewriter at step $`n`$: write $`n = 2^m + k`$ with $`0 \le k < 2^m`$, and let $`M = 2^m`$. Then
 
-$$f_n = \mathbf{1}_{[k/M,\ (k+1)/M)}, \qquad g_n = n\,\mathbf{1}_{[0,\ 1/n)}$$
+```math
+f_n = \mathbf{1}_{[k/M,\ (k+1)/M)}, \qquad g_n = n\,\mathbf{1}_{[0,\ 1/n)}
+```
 
 **Read it aloud:** at step n the typewriter is one on the k-th strip of pass m and zero elsewhere; the spike is n high on the first 1/n of the stage.
 
-Four tests of whether a sequence $f_n$ approaches a limit $f$. **Uniformly:** the worst gap over all points shrinks to zero ([Uniform convergence](../../06-Calculus%20and%20analysis/06-Series/07-uniform-convergence.md)):
+Four tests of whether a sequence $`f_n`$ approaches a limit $`f`$. **Uniformly:** the worst gap over all points shrinks to zero ([Uniform convergence](../../06-Calculus%20and%20analysis/06-Series/07-uniform-convergence.md)):
 
-$$\sup_{x \in \Omega} |f_n(x) - f(x)| \to 0$$
+```math
+\sup_{x \in \Omega} |f_n(x) - f(x)| \to 0
+```
 
 **Almost everywhere**, written a.e., read "except on a set of size zero" ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)):
 
-$$\mu\big(\{x : f_n(x) \not\to f(x)\}\big) = 0$$
+```math
+\mu\big(\{x : f_n(x) \not\to f(x)\}\big) = 0
+```
 
 **In measure:** for every tolerance, the set where the gap exceeds it shrinks to size zero:
 
-$$\text{for every } \varepsilon > 0: \quad \mu\big(\{x : |f_n(x) - f(x)| > \varepsilon\}\big) \to 0$$
+```math
+\text{for every } \varepsilon > 0: \quad \mu\big(\{x : |f_n(x) - f(x)| > \varepsilon\}\big) \to 0
+```
 
-**In mean**, or in $L^1$: the total gap (an average when the space has size 1) shrinks to zero; in $L^p$ for a power $p \ge 1$, the total of the gap raised to the power p does:
+**In mean**, or in $`L^1`$: the total gap (an average when the space has size 1) shrinks to zero; in $`L^p`$ for a power $`p \ge 1`$, the total of the gap raised to the power p does:
 
-$$\int |f_n - f|\, d\mu \to 0, \qquad \int |f_n - f|^p\, d\mu \to 0$$
+```math
+\int |f_n - f|\, d\mu \to 0, \qquad \int |f_n - f|^p\, d\mu \to 0
+```
 
 **Read it aloud:** uniformly means one worst gap for every point; almost everywhere means each point settles on its own, apart from a null set; in measure means the badly-off set gets small; in mean means the total gap gets small.
 
-When $\mu$ is a probability $P$, a.e. is called **almost surely** (a.s.) and in measure is called **in probability**. A fifth mode, **in distribution**, compares only laws, meaning the chances of each range of values, $P(f_n \le t) \to P(f \le t)$ where the limit's distribution function does not jump ([Convergence in distribution](../10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md)).
+When $`\mu`$ is a probability $`P`$, a.e. is called **almost surely** (a.s.) and in measure is called **in probability**. A fifth mode, **in distribution**, compares only laws, meaning the chances of each range of values, $`P(f_n \le t) \to P(f \le t)`$ where the limit's distribution function does not jump ([Convergence in distribution](../10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md)).
 
-The three theorems. Write $B_n = \{x : |f_n(x) - f(x)| > \varepsilon\}$ for the **bad set** at step n.
+The three theorems. Write $`B_n = \{x : |f_n(x) - f(x)| > \varepsilon\}`$ for the **bad set** at step n.
 
-$$\mu(B_n) \le \frac{1}{\varepsilon} \int |f_n - f|\, d\mu \qquad \text{(in mean forces in measure)}$$
+```math
+\mu(B_n) \le \frac{1}{\varepsilon} \int |f_n - f|\, d\mu \qquad \text{(in mean forces in measure)}
+```
 
-$$\mu(\Omega) < \infty,\ f_n \to f \text{ a.e.} \;\Longrightarrow\; \mu(E_N) \to 0, \quad E_N = \bigcup_{n \ge N} B_n \qquad \text{(a.e. forces in measure)}$$
+```math
+\mu(\Omega) < \infty,\ f_n \to f \text{ a.e.} \;\Longrightarrow\; \mu(E_N) \to 0, \quad E_N = \bigcup_{n \ge N} B_n \qquad \text{(a.e. forces in measure)}
+```
 
-$$\mu\big(\{|f_{n_j} - f| > 2^{-j}\}\big) \le 2^{-j} \text{ for each } j \;\Longrightarrow\; f_{n_j} \to f \text{ a.e.} \qquad \text{(a subsequence settles)}$$
+```math
+\mu\big(\{|f_{n_j} - f| > 2^{-j}\}\big) \le 2^{-j} \text{ for each } j \;\Longrightarrow\; f_{n_j} \to f \text{ a.e.} \qquad \text{(a subsequence settles)}
+```
 
 **Read it aloud:** the bad set is never bigger than the total gap over the tolerance; on a space of finite size, if almost every point settles, the points still misbehaving after step N shrink to nothing; and a subsequence whose bad sets shrink fast settles at almost every point.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\mathcal{F}$, $\mu$ | the points, the sets we may measure, and the measure giving them sizes | the stage [0, 1), its Borel sets, length | a bigger total size can break the second arrow |
-| $\lambda$, $P$ | Lebesgue measure, meaning length; a probability, a measure of total size 1 | length on [0, 1), which is also a probability | — |
-| $f_n$, $f$ | the n-th function, and the proposed limit | the typewriter; the limit 0 | — |
-| $n$, $N$, $N_r$ | step number; a cut-off step | 16; 4 | later steps, smaller bad sets |
-| $m$, $M$, $k$ | pass number; strips in the pass, M = 2^m; which strip, counting from 0 | step 10: m = 3, M = 8, k = 2 | a later pass, a narrower strip |
-| $\mathbf{1}_A$, $A$ | the indicator of a set A: one on A, zero off it | the lit strip | — |
-| $g_n$, $h_n$, $w_n$ | the growing spike, the sliding bump, the flat spread | g_16 is 16 high on [0, 1/16); w_32 is 1/32 on [0, 32) | — |
-| $\varepsilon$ | the tolerance for "far off" | 1/2 | a bigger tolerance, a smaller bad set |
-| $p$ | the power in $L^p$, 1 or more | 1 and 2 | a bigger p punishes tall spikes more |
-| $B_n$, $E_N$, $F_J$ | the bad set at step n; the union of the bad sets from step N on; the same for a subsequence from j = J on | E_4 for the spike is [0, 1/4) | — |
-| $n_j$, $n_1$, $j$, $J$ | the j-th step picked for a subsequence; a starting index | n_j = 2^j: 2, 4, 8, 16 | — |
-| $\delta$ | a bound on the thrown-away set's size, in Egorov's theorem | above 0.1, to throw away [0, 0.1) | smaller δ, a later start for uniform settling |
+| $`\Omega`$, $`\mathcal{F}`$, $`\mu`$ | the points, the sets we may measure, and the measure giving them sizes | the stage [0, 1), its Borel sets, length | a bigger total size can break the second arrow |
+| $`\lambda`$, $`P`$ | Lebesgue measure, meaning length; a probability, a measure of total size 1 | length on [0, 1), which is also a probability | — |
+| $`f_n`$, $`f`$ | the n-th function, and the proposed limit | the typewriter; the limit 0 | — |
+| $`n`$, $`N`$, $`N_r`$ | step number; a cut-off step | 16; 4 | later steps, smaller bad sets |
+| $`m`$, $`M`$, $`k`$ | pass number; strips in the pass, M = 2^m; which strip, counting from 0 | step 10: m = 3, M = 8, k = 2 | a later pass, a narrower strip |
+| $`\mathbf{1}_A`$, $`A`$ | the indicator of a set A: one on A, zero off it | the lit strip | — |
+| $`g_n`$, $`h_n`$, $`w_n`$ | the growing spike, the sliding bump, the flat spread | g_16 is 16 high on [0, 1/16); w_32 is 1/32 on [0, 32) | — |
+| $`\varepsilon`$ | the tolerance for "far off" | 1/2 | a bigger tolerance, a smaller bad set |
+| $`p`$ | the power in $`L^p`$, 1 or more | 1 and 2 | a bigger p punishes tall spikes more |
+| $`B_n`$, $`E_N`$, $`F_J`$ | the bad set at step n; the union of the bad sets from step N on; the same for a subsequence from j = J on | E_4 for the spike is [0, 1/4) | — |
+| $`n_j`$, $`n_1`$, $`j`$, $`J`$ | the j-th step picked for a subsequence; a starting index | n_j = 2^j: 2, 4, 8, 16 | — |
+| $`\delta`$ | a bound on the thrown-away set's size, in Egorov's theorem | above 0.1, to throw away [0, 0.1) | smaller δ, a later start for uniform settling |
 
 ### When it holds
 
 - **One measure space and measurable functions.** The sets in the definitions need sizes. With two measures in play, "a.e." and "in measure" each name which one.
-- **Finite total size, for a.e. to force in measure, and uniform to force in mean.** The sliding bump $h_n = \mathbf{1}_{[n,\,n+1)}$ on the half-line settles to 0 at every point, yet its bad set always has length 1. The flat spread $w_n = \tfrac{1}{n}\mathbf{1}_{[0,\,n)}$ settles uniformly, yet its integral stays 1.
-- **Integrable gaps, for in mean.** The integral of $|f_n - f|$ must be finite for the test to say anything.
+- **Finite total size, for a.e. to force in measure, and uniform to force in mean.** The sliding bump $`h_n = \mathbf{1}_{[n,\,n+1)}`$ on the half-line settles to 0 at every point, yet its bad set always has length 1. The flat spread $`w_n = \tfrac{1}{n}\mathbf{1}_{[0,\,n)}`$ settles uniformly, yet its integral stays 1.
+- **Integrable gaps, for in mean.** The integral of $`|f_n - f|`$ must be finite for the test to say anything.
 - **A subsequence only, for in measure to give a.e.** The full typewriter settles at no point; only a chosen subsequence settles.
 - **A dominating function, for a.e. to give in mean.** The spike has no single integrable function above all its terms, and its average gap stays at 1 ([Dominated convergence](02-dominated-convergence-theorem.md)).
 
@@ -110,54 +126,54 @@ $$\mu\big(\{|f_{n_j} - f| > 2^{-j}\}\big) \le 2^{-j} \text{ for each } j \;\Long
 
 ### Step 0: every mode is a statement about the bad set
 
-Fix a tolerance, say 1/2. At each step, the bad set $B_n$ is where the function is more than 1/2 away from its limit. The modes differ in what they ask of that set. In measure asks that its size shrink. Almost everywhere asks that each point leave the bad sets for good, apart from a null set. In mean weighs each bad point by how bad it is, and asks that the total shrink. Uniformly asks that the bad set be empty from some step on.
+Fix a tolerance, say 1/2. At each step, the bad set $`B_n`$ is where the function is more than 1/2 away from its limit. The modes differ in what they ask of that set. In measure asks that its size shrink. Almost everywhere asks that each point leave the bad sets for good, apart from a null set. In mean weighs each bad point by how bad it is, and asks that the total shrink. Uniformly asks that the bad set be empty from some step on.
 
 Read the two stages this way. The typewriter's bad set is the lit strip: its size shrinks, and no seat leaves it for good. The spike's bad set is [0, 1/n): its size shrinks, every seat right of 0 leaves it for good, and the paint on it stays 1 unit. Fatou's spotlight ([Fatou's lemma](01-fatous-lemma.md)) is this spike, mirrored.
 
 ### Step 1: in mean forces in measure
 
-On the bad set the gap is more than $\varepsilon$, so $\varepsilon \mathbf{1}_{B_n} \le |f_n - f|$ at every point. Integrate both sides: $\varepsilon\, \mu(B_n) \le \int |f_n - f|\, d\mu$. This is Markov's inequality ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) in measure language. If the total gap goes to zero, so does the size of the bad set, for every fixed tolerance.
+On the bad set the gap is more than $`\varepsilon`$, so $`\varepsilon \mathbf{1}_{B_n} \le |f_n - f|`$ at every point. Integrate both sides: $`\varepsilon\, \mu(B_n) \le \int |f_n - f|\, d\mu`$. This is Markov's inequality ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) in measure language. If the total gap goes to zero, so does the size of the bad set, for every fixed tolerance.
 
-Typewriter at step 10, tolerance 1/2: the average gap is 1/8, so the lit length is at most 2 × 1/8 = 1/4. It is 1/8. For $L^p$ the same move gives $\varepsilon^p \mu(B_n) \le \int |f_n - f|^p\, d\mu$.
+Typewriter at step 10, tolerance 1/2: the average gap is 1/8, so the lit length is at most 2 × 1/8 = 1/4. It is 1/8. For $`L^p`$ the same move gives $`\varepsilon^p \mu(B_n) \le \int |f_n - f|^p\, d\mu`$.
 
 The inequality alone does not give the reverse. The spike's bad set has length 1/16 at step 16 while its average gap is 1: the bound 2 is true and useless.
 
 ### Step 2: on a space of finite size, almost everywhere forces in measure
 
-Fix $\varepsilon$. Let $E_N$ be the union of the bad sets from step N on: the points that are still more than $\varepsilon$ off at some later step. These sets shrink as N grows. A point in all of them is off by more than $\varepsilon$ infinitely often, so it does not settle, and the points that do not settle form a null set.
+Fix $`\varepsilon`$. Let $`E_N`$ be the union of the bad sets from step N on: the points that are still more than $`\varepsilon`$ off at some later step. These sets shrink as N grows. A point in all of them is off by more than $`\varepsilon`$ infinitely often, so it does not settle, and the points that do not settle form a null set.
 
-Continuity from above ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) says the sizes of shrinking sets fall to the size of their intersection, provided the first has finite size. Here the intersection is null, so $\mu(E_N) \to 0$. The bad set at step N sits inside $E_N$, so its size goes to 0 too.
+Continuity from above ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) says the sizes of shrinking sets fall to the size of their intersection, provided the first has finite size. Here the intersection is null, so $`\mu(E_N) \to 0`$. The bad set at step N sits inside $`E_N`$, so its size goes to 0 too.
 
-For the spike with tolerance 1/2, $E_N = [0, 1/N)$, of length 1, 1/2, 1/4, 1/8 at N = 1, 2, 4, 8. For the sliding bump on the half-line, $E_4 = [4, \infty)$ has infinite length, and continuity from above fails: inside [0, 64) it has length 60, inside [0, 128), 124.
+For the spike with tolerance 1/2, $`E_N = [0, 1/N)`$, of length 1, 1/2, 1/4, 1/8 at N = 1, 2, 4, 8. For the sliding bump on the half-line, $`E_4 = [4, \infty)`$ has infinite length, and continuity from above fails: inside [0, 64) it has length 60, inside [0, 128), 124.
 
-Removing $E_N$ leaves a set on which every later step is within $\varepsilon$. Doing this for a list of shrinking tolerances at once, with removed sets of small total size, makes settling uniform off a small set: **Egorov's theorem**, proved in the Detailed proof. For the spike, throwing away [0, 0.1) leaves a set where the spike is exactly 0 from step 10 on; throwing away [0, 0.01) needs step 100. Step 10 is the first that works: the ninth spike still reaches 9 on [0.1, 1/9). On the full stage the worst gap is n, so settling there is never uniform.
+Removing $`E_N`$ leaves a set on which every later step is within $`\varepsilon`$. Doing this for a list of shrinking tolerances at once, with removed sets of small total size, makes settling uniform off a small set: **Egorov's theorem**, proved in the Detailed proof. For the spike, throwing away [0, 0.1) leaves a set where the spike is exactly 0 from step 10 on; throwing away [0, 0.01) needs step 100. Step 10 is the first that works: the ninth spike still reaches 9 on [0.1, 1/9). On the full stage the worst gap is n, so settling there is never uniform.
 
 ### Step 3: in measure forces almost everywhere along a subsequence
 
-Convergence in measure says the bad sets shrink, not how fast. Pick steps $n_1 < n_2 < \dots$ where they shrink fast enough to add up: the bad set for tolerance $2^{-j}$ at step $n_j$ has size at most $2^{-j}$.
+Convergence in measure says the bad sets shrink, not how fast. Pick steps $`n_1 < n_2 < \dots`$ where they shrink fast enough to add up: the bad set for tolerance $`2^{-j}`$ at step $`n_j`$ has size at most $`2^{-j}`$.
 
-Let $F_J$ be the union of these bad sets from $j = J$ on. Its size is at most $2^{-J} + 2^{-J-1} + \dots = 2^{1-J}$. A point outside $F_J$ is within $2^{-j}$ of the limit at every step $n_j$ with $j \ge J$, so it settles along the subsequence. A point that does not settle lies in every $F_J$, a set of size at most $2^{1-J}$ for every J: a null set.
+Let $`F_J`$ be the union of these bad sets from $`j = J`$ on. Its size is at most $`2^{-J} + 2^{-J-1} + \dots = 2^{1-J}`$. A point outside $`F_J`$ is within $`2^{-j}`$ of the limit at every step $`n_j`$ with $`j \ge J`$, so it settles along the subsequence. A point that does not settle lies in every $`F_J`$, a set of size at most $`2^{1-J}`$ for every J: a null set.
 
-The typewriter: the first step whose lit length is at most $2^{-j}$ is $n_j = 2^j$, the strip $[0, 2^{-j})$. The subsequence $f_2, f_4, f_8, f_{16}, \dots$ is one on ever shorter strips at the left edge, and every seat right of 0 is dark from some j on. The unions of bad sets from J on, taken to j = 4, have lengths 1/2, 1/4, 1/8, 1/16 against the bounds 1, 1/2, 1/4, 1/8. The same summing trick is the first Borel-Cantelli lemma ([The Borel-Cantelli lemmas](../10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md)).
+The typewriter: the first step whose lit length is at most $`2^{-j}`$ is $`n_j = 2^j`$, the strip $`[0, 2^{-j})`$. The subsequence $`f_2, f_4, f_8, f_{16}, \dots`$ is one on ever shorter strips at the left edge, and every seat right of 0 is dark from some j on. The unions of bad sets from J on, taken to j = 4, have lengths 1/2, 1/4, 1/8, 1/16 against the bounds 1, 1/2, 1/4, 1/8. The same summing trick is the first Borel-Cantelli lemma ([The Borel-Cantelli lemmas](../10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md)).
 
 <details>
 <summary>Detailed proof</summary>
 
-Throughout, $(\Omega, \mathcal{F}, \mu)$ is a measure space, the $f_n$ and $f$ are measurable real functions, and $B_n(\varepsilon) = \{|f_n - f| > \varepsilon\}$, which is in $\mathcal{F}$ because $|f_n - f|$ is measurable.
+Throughout, $`(\Omega, \mathcal{F}, \mu)`$ is a measure space, the $`f_n`$ and $`f`$ are measurable real functions, and $`B_n(\varepsilon) = \{|f_n - f| > \varepsilon\}`$, which is in $`\mathcal{F}`$ because $`|f_n - f|`$ is measurable.
 
-**Lemma 0.** The non-convergence set $\{f_n \not\to f\} = \bigcup_r \bigcap_N \bigcup_{n \ge N} B_n(1/r)$, over $r, N = 1, 2, \dots$, is built by countable operations, so it is in $\mathcal{F}$.
+**Lemma 0.** The non-convergence set $`\{f_n \not\to f\} = \bigcup_r \bigcap_N \bigcup_{n \ge N} B_n(1/r)`$, over $`r, N = 1, 2, \dots`$, is built by countable operations, so it is in $`\mathcal{F}`$.
 
-**Theorem 1 (in $L^p$ implies in measure).** For $\varepsilon > 0$ and $p \ge 1$, $\varepsilon^p \mathbf{1}_{B_n(\varepsilon)} \le |f_n - f|^p$ pointwise: on $B_n(\varepsilon)$ the right side exceeds $\varepsilon^p$, off it the left side is 0. Integrate, using that the integral keeps order and that an indicator integrates to its set's size: $\mu(B_n(\varepsilon)) \le \varepsilon^{-p} \int |f_n - f|^p d\mu \to 0$.
+**Theorem 1 (in $`L^p`$ implies in measure).** For $`\varepsilon > 0`$ and $`p \ge 1`$, $`\varepsilon^p \mathbf{1}_{B_n(\varepsilon)} \le |f_n - f|^p`$ pointwise: on $`B_n(\varepsilon)`$ the right side exceeds $`\varepsilon^p`$, off it the left side is 0. Integrate, using that the integral keeps order and that an indicator integrates to its set's size: $`\mu(B_n(\varepsilon)) \le \varepsilon^{-p} \int |f_n - f|^p d\mu \to 0`$.
 
-**Theorem 2 (a.e. implies in measure when $\mu(\Omega) < \infty$).** Fix $\varepsilon$. Put $E_N = \bigcup_{n \ge N} B_n(\varepsilon)$, a decreasing sequence of sets in $\mathcal{F}$. If $x$ lies in every $E_N$, then $|f_n(x) - f(x)| > \varepsilon$ for infinitely many n, so $x \in \{f_n \not\to f\}$, a null set by hypothesis. By continuity from above, valid because $\mu(E_1) \le \mu(\Omega) < \infty$, $\mu(E_N) \to \mu(\bigcap_N E_N) = 0$. Since $B_N(\varepsilon) \subseteq E_N$, $\mu(B_N(\varepsilon)) \to 0$.
+**Theorem 2 (a.e. implies in measure when $`\mu(\Omega) < \infty`$).** Fix $`\varepsilon`$. Put $`E_N = \bigcup_{n \ge N} B_n(\varepsilon)`$, a decreasing sequence of sets in $`\mathcal{F}`$. If $`x`$ lies in every $`E_N`$, then $`|f_n(x) - f(x)| > \varepsilon`$ for infinitely many n, so $`x \in \{f_n \not\to f\}`$, a null set by hypothesis. By continuity from above, valid because $`\mu(E_1) \le \mu(\Omega) < \infty`$, $`\mu(E_N) \to \mu(\bigcap_N E_N) = 0`$. Since $`B_N(\varepsilon) \subseteq E_N`$, $`\mu(B_N(\varepsilon)) \to 0`$.
 
-**Theorem 3 (Egorov).** If $\mu(\Omega) < \infty$ and $f_n \to f$ a.e., then for every $\delta > 0$ there is a set $A$ with $\mu(A) < \delta$ such that $f_n \to f$ uniformly off $A$. *Proof.* For each $r = 1, 2, \dots$ apply Theorem 2's argument with $\varepsilon = 1/r$: $\mu(E_N(1/r)) \to 0$, so choose $N_r$ with $\mu(E_{N_r}(1/r)) < \delta 2^{-r}$. Let $A = \bigcup_r E_{N_r}(1/r)$. By countable subadditivity $\mu(A) < \delta \sum_r 2^{-r} = \delta$. Off $A$, for each r and every $n \ge N_r$, $|f_n - f| \le 1/r$ at every point: one step $N_r$ serves the whole set, which is uniform convergence.
+**Theorem 3 (Egorov).** If $`\mu(\Omega) < \infty`$ and $`f_n \to f`$ a.e., then for every $`\delta > 0`$ there is a set $`A`$ with $`\mu(A) < \delta`$ such that $`f_n \to f`$ uniformly off $`A`$. *Proof.* For each $`r = 1, 2, \dots`$ apply Theorem 2's argument with $`\varepsilon = 1/r`$: $`\mu(E_N(1/r)) \to 0`$, so choose $`N_r`$ with $`\mu(E_{N_r}(1/r)) < \delta 2^{-r}`$. Let $`A = \bigcup_r E_{N_r}(1/r)`$. By countable subadditivity $`\mu(A) < \delta \sum_r 2^{-r} = \delta`$. Off $`A`$, for each r and every $`n \ge N_r`$, $`|f_n - f| \le 1/r`$ at every point: one step $`N_r`$ serves the whole set, which is uniform convergence.
 
-**Theorem 4 (Riesz: in measure implies a.e. along a subsequence).** Suppose $\mu(B_n(\varepsilon)) \to 0$ for every $\varepsilon$. Choose $n_1$ with $\mu(B_{n_1}(1/2)) \le 1/2$, then inductively $n_j > n_{j-1}$ with $\mu(B_{n_j}(2^{-j})) \le 2^{-j}$; each choice exists because the sizes tend to 0. Put $F_J = \bigcup_{j \ge J} B_{n_j}(2^{-j})$; by subadditivity $\mu(F_J) \le \sum_{j \ge J} 2^{-j} = 2^{1-J}$. If $x \notin F_J$ then $|f_{n_j}(x) - f(x)| \le 2^{-j}$ for all $j \ge J$, so $f_{n_j}(x) \to f(x)$. The points where the subsequence fails lie in $\bigcap_J F_J$, whose size is at most $2^{1-J}$ for every J, hence 0. No finiteness of $\mu(\Omega)$ was used.
+**Theorem 4 (Riesz: in measure implies a.e. along a subsequence).** Suppose $`\mu(B_n(\varepsilon)) \to 0`$ for every $`\varepsilon`$. Choose $`n_1`$ with $`\mu(B_{n_1}(1/2)) \le 1/2`$, then inductively $`n_j > n_{j-1}`$ with $`\mu(B_{n_j}(2^{-j})) \le 2^{-j}`$; each choice exists because the sizes tend to 0. Put $`F_J = \bigcup_{j \ge J} B_{n_j}(2^{-j})`$; by subadditivity $`\mu(F_J) \le \sum_{j \ge J} 2^{-j} = 2^{1-J}`$. If $`x \notin F_J`$ then $`|f_{n_j}(x) - f(x)| \le 2^{-j}`$ for all $`j \ge J`$, so $`f_{n_j}(x) \to f(x)`$. The points where the subsequence fails lie in $`\bigcap_J F_J`$, whose size is at most $`2^{1-J}`$ for every J, hence 0. No finiteness of $`\mu(\Omega)`$ was used.
 
-**Theorem 5 (uniform).** If $\sup |f_n - f| \to 0$ then $B_n(\varepsilon)$ is empty from some step on, giving convergence everywhere and in measure. If also $\mu(\Omega) < \infty$, then $\int |f_n - f| d\mu \le \mu(\Omega) \sup |f_n - f| \to 0$.
+**Theorem 5 (uniform).** If $`\sup |f_n - f| \to 0`$ then $`B_n(\varepsilon)`$ is empty from some step on, giving convergence everywhere and in measure. If also $`\mu(\Omega) < \infty`$, then $`\int |f_n - f| d\mu \le \mu(\Omega) \sup |f_n - f| \to 0`$.
 
-**The counterexamples.** (a) Typewriter: $\int f_n d\lambda = \lambda(B_n(\varepsilon)) = 1/M \to 0$ for $0 < \varepsilon < 1$. Each pass's strips partition [0, 1), so every x has $f_n(x) = 1$ for one n and $f_n(x) = 0$ for another n in each pass from m = 1 on; $f_n(x)$ converges at no x. (b) Spike: $g_n(x) = 0$ once $n \ge 1/x$ when x > 0, so $g_n \to 0$ a.e., while $\int g_n d\lambda = n \cdot (1/n) = 1$. (c) Bump: $h_n(x) = 0$ once $n > x$, while $\lambda(B_n(1/2)) = 1$; Theorem 2 needs $\lambda(\Omega) < \infty$. (d) Spread: $\sup w_n = 1/n$, while $\int w_n d\lambda = 1$; Theorem 5's second part needs $\lambda(\Omega) < \infty$.
+**The counterexamples.** (a) Typewriter: $`\int f_n d\lambda = \lambda(B_n(\varepsilon)) = 1/M \to 0`$ for $`0 < \varepsilon < 1`$. Each pass's strips partition [0, 1), so every x has $`f_n(x) = 1`$ for one n and $`f_n(x) = 0`$ for another n in each pass from m = 1 on; $`f_n(x)`$ converges at no x. (b) Spike: $`g_n(x) = 0`$ once $`n \ge 1/x`$ when x > 0, so $`g_n \to 0`$ a.e., while $`\int g_n d\lambda = n \cdot (1/n) = 1`$. (c) Bump: $`h_n(x) = 0`$ once $`n > x`$, while $`\lambda(B_n(1/2)) = 1`$; Theorem 2 needs $`\lambda(\Omega) < \infty`$. (d) Spread: $`\sup w_n = 1/n`$, while $`\int w_n d\lambda = 1`$; Theorem 5's second part needs $`\lambda(\Omega) < \infty`$.
 
 </details>
 
@@ -167,10 +183,10 @@ An arrow missing from the map needs an example where one mode holds and another 
 
 | Example | a.e. | in measure | in mean |
 | --- | --- | --- | --- |
-| typewriter $f_n$, on [0, 1) | no: settles at no point | yes: lit length 1/M | yes: integral 1/M |
-| growing spike $g_n$, on [0, 1) | yes: every point but 0 | yes: bad length 1/n | no: integral 1 |
-| sliding bump $h_n$, on [0, ∞) | yes: every point | no: bad length 1 | no: integral 1 |
-| flat spread $w_n$, on [0, ∞) | yes, and uniformly | yes: bad set empty from n = 2 | no: integral 1 |
+| typewriter $`f_n`$, on [0, 1) | no: settles at no point | yes: lit length 1/M | yes: integral 1/M |
+| growing spike $`g_n`$, on [0, 1) | yes: every point but 0 | yes: bad length 1/n | no: integral 1 |
+| sliding bump $`h_n`$, on [0, ∞) | yes: every point | no: bad length 1 | no: integral 1 |
+| flat spread $`w_n`$, on [0, ∞) | yes, and uniformly | yes: bad set empty from n = 2 | no: integral 1 |
 
 Read down the columns: in mean does not force a.e. (typewriter); a.e. does not force in mean, even on a space of size 1 (spike); on an infinite space a.e. does not force in measure (bump), and even uniform settling does not force in mean (spread).
 
@@ -187,7 +203,7 @@ flowchart LR
     M -->|"on a probability space"| D["in distribution"]
 ```
 
-Every arrow is proved here except two: the dominated one from a.e., on [Dominated convergence](02-dominated-convergence-theorem.md), and the last, on [Convergence in distribution](../10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md). The one from in measure follows. Suppose one integrable function lies above every $|f_n|$. Every subsequence still converges in measure, so by Step 3 it has a further subsequence settling a.e. Along that one, dominated convergence sends $\int |f_n - f|\, d\mu$ to 0. A list of numbers in which every subsequence has a further subsequence tending to 0 itself tends to 0. On a space of finite size, the exact condition for in measure to give in mean is uniform integrability ([Uniform integrability](05-uniform-integrability.md)).
+Every arrow is proved here except two: the dominated one from a.e., on [Dominated convergence](02-dominated-convergence-theorem.md), and the last, on [Convergence in distribution](../10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md). The one from in measure follows. Suppose one integrable function lies above every $`|f_n|`$. Every subsequence still converges in measure, so by Step 3 it has a further subsequence settling a.e. Along that one, dominated convergence sends $`\int |f_n - f|\, d\mu`$ to 0. A list of numbers in which every subsequence has a further subsequence tending to 0 itself tends to 0. On a space of finite size, the exact condition for in measure to give in mean is uniform integrability ([Uniform integrability](05-uniform-integrability.md)).
 
 <details>
 <summary>Why a subsequence is the best possible</summary>
@@ -196,7 +212,7 @@ On a space of finite size, a sequence converges in measure exactly when every su
 
 </details>
 
-A second road to Step 1 runs through $L^2$: the Chebyshev form $\varepsilon^2 \mu(B_n) \le \int |f_n - f|^2 d\mu$ is the version wing 09 used for the law of large numbers, done there without measure ([Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)).
+A second road to Step 1 runs through $`L^2`$: the Chebyshev form $`\varepsilon^2 \mu(B_n) \le \int |f_n - f|^2 d\mu`$ is the version wing 09 used for the law of large numbers, done there without measure ([Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)).
 
 ---
 
@@ -583,11 +599,11 @@ The two outputs are identical line for line.
 
 Lean proves the three theorems of the formula for measurable real functions on any measure space, and the typewriter and spike examples on [0, 1).
 
-- Suppose $|f_n - f|^p$ is integrable at every step for a power $p \ge 1$, and its integral tends to 0. Then $f_n \to f$ in measure.
-- Suppose the whole space has finite size and $f_n \to f$ almost everywhere. Then $f_n \to f$ in measure.
-- Suppose $f_n \to f$ in measure; the space need not have finite size. Then some subsequence $n_1 < n_2 < \dots$ settles almost everywhere.
+- Suppose $`|f_n - f|^p`$ is integrable at every step for a power $`p \ge 1`$, and its integral tends to 0. Then $`f_n \to f`$ in measure.
+- Suppose the whole space has finite size and $`f_n \to f`$ almost everywhere. Then $`f_n \to f`$ in measure.
+- Suppose $`f_n \to f`$ in measure; the space need not have finite size. Then some subsequence $`n_1 < n_2 < \dots`$ settles almost everywhere.
 - The typewriter tends to 0 in measure and in mean on [0, 1). Yet at every seat of [0, 1) it settles on no limit.
-- The growing spike tends to 0 almost everywhere and in measure on [0, 1). Yet its integral is 1 at every step from $n = 1$ on.
+- The growing spike tends to 0 almost everywhere and in measure on [0, 1). Yet its integral is 1 at every step from $`n = 1`$ on.
 - The hand numbers hold exactly. They cover the strip at step 10, the seat 1/3, the subsequence, the Markov bound, the spike at step 16 and the Egorov cut-off.
 
 The sliding bump, the flat spread, the grid counts and the Egorov cut-offs for the spike are left to the Python and Rust checks.
@@ -910,7 +926,7 @@ example : (1 : ℚ) / 10 ≤ 1 / 10 ∧ ¬ ((1 : ℚ) / 9 ≤ 1 / 10) ∧ (1 : �
 ## Where you meet it in real life
 
 - **Statistical estimation.** A consistent estimator converges in probability to the true value: the chance of a large error shrinks. The weak law of large numbers gives this for a running average ([The weak law of large numbers](../10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md)); the strong law promises more, almost sure convergence.
-- **Simulation.** A Monte Carlo average is judged by its mean squared error, convergence in $L^2$; by Step 1 this bounds the chance of a large error, a crude but safe error bar.
+- **Simulation.** A Monte Carlo average is judged by its mean squared error, convergence in $`L^2`$; by Step 1 this bounds the chance of a large error, a crude but safe error bar.
 - **Signal processing.** A Fourier series of a square-integrable signal converges to it in mean square; a.e. convergence is a far deeper theorem.
 - **Approximation schemes.** Approximations that converge in mean have, by Steps 1 and 3, a subsequence converging at almost every point, which identifies the limit as a function ([Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md)).
 
@@ -929,7 +945,7 @@ example : (1 : ℚ) / 10 ≤ 1 / 10 ∧ ¬ ((1 : ℚ) / 9 ≤ 1 / 10) ∧ (1 : �
 ## Where this goes next
 
 - [Uniform integrability](05-uniform-integrability.md): on a space of finite size, the exact extra condition under which in measure gives in mean.
-- [Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md): the subsequence trick of Step 3 building limits in $L^p$.
+- [Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md): the subsequence trick of Step 3 building limits in $`L^p`$.
 - [The Borel-Cantelli lemmas](../10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md): the summing argument of Step 3 as a statement about events.
 - [The weak law of large numbers](../10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md): convergence in probability of averages, from Step 1's inequality.
 - [Convergence in distribution](../10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md): the weakest mode, comparing laws only.

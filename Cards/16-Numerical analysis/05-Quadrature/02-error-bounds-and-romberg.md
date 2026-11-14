@@ -37,52 +37,60 @@ Orange is the plain trapezoid (column 0), green one extrapolation (column 1), da
 
 ## The formula
 
-Notation first, in words. The interval from a to b is cut into n equal slices of width h = (b − a)/n. $T_n$ is the trapezoid sum with n slices, and $I$ is the true integral. $f^{(k)}$ is the k-th derivative of f. $D_k = f^{(k)}(b) - f^{(k)}(a)$ is how much that derivative changes from one end to the other. The code writes $T_n$ as `T(n)`.
+Notation first, in words. The interval from a to b is cut into n equal slices of width h = (b − a)/n. $`T_n`$ is the trapezoid sum with n slices, and $`I`$ is the true integral. $`f^{(k)}`$ is the k-th derivative of f. $`D_k = f^{(k)}(b) - f^{(k)}(a)`$ is how much that derivative changes from one end to the other. The code writes $`T_n`$ as `T(n)`.
 
-The trapezoid and Simpson error bounds are proved on [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md): with $K_2$ and $K_4$ ceilings on the size of $f''$ and $f^{(4)}$,
+The trapezoid and Simpson error bounds are proved on [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md): with $`K_2`$ and $`K_4`$ ceilings on the size of $`f''`$ and $`f^{(4)}`$,
 
-$$|T_n - I| \le \frac{K_2\,(b-a)\,h^2}{12}, \qquad |S_n - I| \le \frac{K_4\,(b-a)\,h^4}{180}$$
+```math
+|T_n - I| \le \frac{K_2\,(b-a)\,h^2}{12}, \qquad |S_n - I| \le \frac{K_4\,(b-a)\,h^4}{180}
+```
 
-where $S_n$ is Simpson's rule on n slices ([Trapezoid, midpoint and Simpson](01-newton-cotes-and-composite-rules.md)). This card adds the exact shape of the trapezoid error, the **Euler–Maclaurin expansion**:
+where $`S_n`$ is Simpson's rule on n slices ([Trapezoid, midpoint and Simpson](01-newton-cotes-and-composite-rules.md)). This card adds the exact shape of the trapezoid error, the **Euler–Maclaurin expansion**:
 
-$$T_n - I = \frac{h^2}{12}\,D_1 - \frac{h^4}{720}\,D_3 + \frac{h^6}{30240}\,D_5 - \cdots$$
+```math
+T_n - I = \frac{h^2}{12}\,D_1 - \frac{h^4}{720}\,D_3 + \frac{h^6}{30240}\,D_5 - \cdots
+```
 
 **Read it aloud:** the trapezoid's error is h squared over 12 times the change in slope from end to end, minus h to the fourth over 720 times the change in the third derivative, and so on, with only even powers of h.
 
-The general term is $\frac{B_{2k}}{(2k)!}h^{2k}D_{2k-1}$, where the **Bernoulli numbers** $B_2 = 1/6$, $B_4 = -1/30$, $B_6 = 1/42$ are fixed constants defined in the proof. The series is asymptotic: cut it after any term and the leftover is of the size of the next power of h, as h → 0.
+The general term is $`\frac{B_{2k}}{(2k)!}h^{2k}D_{2k-1}`$, where the **Bernoulli numbers** $`B_2 = 1/6`$, $`B_4 = -1/30`$, $`B_6 = 1/42`$ are fixed constants defined in the proof. The series is asymptotic: cut it after any term and the leftover is of the size of the next power of h, as h → 0.
 
 **Romberg's table.** Column 0 holds the trapezoid sums at n, 2n, 4n, … slices. Each later column cancels the next even power:
 
-$$R_{n,0} = T_n, \qquad R_{n,j} = R_{n,j-1} + \frac{R_{n,j-1} - R_{n/2,\,j-1}}{4^j - 1}$$
+```math
+R_{n,0} = T_n, \qquad R_{n,j} = R_{n,j-1} + \frac{R_{n,j-1} - R_{n/2,\,j-1}}{4^j - 1}
+```
 
 **Read it aloud:** an entry is the entry to its left, plus the change from the coarser row, divided by four to the power j, minus one.
 
-Column j has error of size $h^{2j+2}$, so each halving of h cuts it by $4^{j+1}$. Column 1 is Simpson's rule. The first correction is also the **free error estimate**:
+Column j has error of size $`h^{2j+2}`$, so each halving of h cuts it by $`4^{j+1}`$. Column 1 is Simpson's rule. The first correction is also the **free error estimate**:
 
-$$T_n - I \approx \frac{T_{n/2} - T_n}{3}$$
+```math
+T_n - I \approx \frac{T_{n/2} - T_n}{3}
+```
 
 **Read it aloud:** the error in the finer sum is about a third of the gap between the two sums.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $t$ | wind speed at hour t, in km/h | $8 + 16\sin(\pi t/24)$: 8 at 0 and 24, 24 at 12 | more wind run |
-| $a$, $b$ | start and end of the day, in hours | 0 and 24 | longer interval, larger error |
-| $n$, $h$ | slice count; step $(b-a)/n$ in hours | n = 24, h = 1 | larger n, smaller error |
-| $I$ | the true wind run, in km | 436.461993 | — |
-| $T_n$ | trapezoid sum with n slices | $T_{24}$ = 436.112827 | — |
-| $S_n$ | Simpson's rule with n slices | $S_{24}$ = 436.462392 | — |
-| $R_{n,j}$ | Romberg entry: column j, finest row n slices | $R_{24,1}$ = 436.462392 | higher j, faster fall |
-| $f^{(k)}$, $D_k$ | k-th derivative; its change from a to b | $D_1$ makes the one-term error −0.3490658504 km at h = 1 | larger error term |
-| $B_{2k}$ | Bernoulli numbers, fixed constants | 1/6, −1/30, 1/42 | — |
-| $K_2$, $K_4$ | ceilings on the size of $f''$, $f^{(4)}$ | reached at noon | looser bound |
-| $m$, $m_i$, $E$, $c$, $c_k$ | slice centre (of slice i); one slice's error; the unknown coefficients of $h^2$ and $h^{2k}$ | $c = D_1/12$ = −0.3490658504 km per hour squared | larger error |
-| $p$, $g$, $J_k$, $i$, $x$ | proof helpers: terms kept, one slice rescaled to [0, 1], its integrals by parts, slice number, position in the slice | — | — |
+| $`f`$, $`t`$ | wind speed at hour t, in km/h | $`8 + 16\sin(\pi t/24)`$: 8 at 0 and 24, 24 at 12 | more wind run |
+| $`a`$, $`b`$ | start and end of the day, in hours | 0 and 24 | longer interval, larger error |
+| $`n`$, $`h`$ | slice count; step $`(b-a)/n`$ in hours | n = 24, h = 1 | larger n, smaller error |
+| $`I`$ | the true wind run, in km | 436.461993 | — |
+| $`T_n`$ | trapezoid sum with n slices | $`T_{24}`$ = 436.112827 | — |
+| $`S_n`$ | Simpson's rule with n slices | $`S_{24}`$ = 436.462392 | — |
+| $`R_{n,j}`$ | Romberg entry: column j, finest row n slices | $`R_{24,1}`$ = 436.462392 | higher j, faster fall |
+| $`f^{(k)}`$, $`D_k`$ | k-th derivative; its change from a to b | $`D_1`$ makes the one-term error −0.3490658504 km at h = 1 | larger error term |
+| $`B_{2k}`$ | Bernoulli numbers, fixed constants | 1/6, −1/30, 1/42 | — |
+| $`K_2`$, $`K_4`$ | ceilings on the size of $`f''`$, $`f^{(4)}`$ | reached at noon | looser bound |
+| $`m`$, $`m_i`$, $`E`$, $`c`$, $`c_k`$ | slice centre (of slice i); one slice's error; the unknown coefficients of $`h^2`$ and $`h^{2k}`$ | $`c = D_1/12`$ = −0.3490658504 km per hour squared | larger error |
+| $`p`$, $`g`$, $`J_k`$, $`i`$, $`x`$ | proof helpers: terms kept, one slice rescaled to [0, 1], its integrals by parts, slice number, position in the slice | — | — |
 
 ### When it holds
 
-- **The curve has enough smooth derivatives.** Column j needs $2j + 2$ of them across the whole interval. A speed rising from calm like √t has an infinite slope at the start; there every column falls by only 2.83 per halving, the rate of $h^{1.5}$, and extrapolation buys almost nothing.
-- **The steps are exactly halved.** The factor $4^j$ assumes a ratio of 2. Steps of 1.5 h and 1 h need the factor 2.25 instead; using 4 there leaves the answer 0.2036 km short, against 2.25e-04 km with the right factor.
-- **The ends do not match.** Every term of the expansion lives in the end differences $D_k$. If the curve and all its derivatives repeat from end to end, as a daily cycle does, every term is zero, and there is nothing for Romberg to cancel. The error is still not zero: the series is asymptotic, so a leftover remains, but it falls faster than any power of h. The smooth periodic day $30/(2 + \cos(\pi t/12))$ km/h has an exact run of $720/\sqrt3$ = 415.692194 km; 6, 12 and 24 slices miss it by +3.08e-01, +1.14e-04 and +1.56e-11 km. A pure cosine is the special case: the trapezoid is exact on any sum of sines and cosines with fewer than n cycles over the interval (Trefethen and Weideman, in Sources). So six slices of $16 - 8\cos(\pi t/12)$, one cycle a day, give 384.000000000000 km, the exact value.
+- **The curve has enough smooth derivatives.** Column j needs $`2j + 2`$ of them across the whole interval. A speed rising from calm like √t has an infinite slope at the start; there every column falls by only 2.83 per halving, the rate of $`h^{1.5}`$, and extrapolation buys almost nothing.
+- **The steps are exactly halved.** The factor $`4^j`$ assumes a ratio of 2. Steps of 1.5 h and 1 h need the factor 2.25 instead; using 4 there leaves the answer 0.2036 km short, against 2.25e-04 km with the right factor.
+- **The ends do not match.** Every term of the expansion lives in the end differences $`D_k`$. If the curve and all its derivatives repeat from end to end, as a daily cycle does, every term is zero, and there is nothing for Romberg to cancel. The error is still not zero: the series is asymptotic, so a leftover remains, but it falls faster than any power of h. The smooth periodic day $`30/(2 + \cos(\pi t/12))`$ km/h has an exact run of $`720/\sqrt3`$ = 415.692194 km; 6, 12 and 24 slices miss it by +3.08e-01, +1.14e-04 and +1.56e-11 km. A pure cosine is the special case: the trapezoid is exact on any sum of sines and cosines with fewer than n cycles over the interval (Trefethen and Weideman, in Sources). So six slices of $`16 - 8\cos(\pi t/12)`$, one cycle a day, give 384.000000000000 km, the exact value.
 - **h is small enough for the first term to lead.** At the coarsest steps, the first ratio in each column reads 4.06, 16.40 and 65.78, not 4, 16 and 64. The estimate is trustworthy once the ratios settle.
 - **Errors above rounding.** A double carries about 16 digits. Down the diagonal the relative error reaches −1.8e-14 at n = 48 and then sits at the rounding floor, between −1.0e-15 and +1.3e-15.
 
@@ -100,43 +108,49 @@ That is the whole reason Romberg works. A known power with an unknown coefficien
 
 Take a slice of width h centred at m. Its error is
 
-$$E(h) = \frac{h}{2}\Bigl[f(m - \tfrac h2) + f(m + \tfrac h2)\Bigr] - \int_{m-h/2}^{m+h/2} f(x)\,dx.$$
+```math
+E(h) = \frac{h}{2}\Bigl[f(m - \tfrac h2) + f(m + \tfrac h2)\Bigr] - \int_{m-h/2}^{m+h/2} f(x)\,dx.
+```
 
-Replace h by −h. The first term changes sign. The integral runs backwards, which also changes its sign. So $E(-h) = -E(h)$.
+Replace h by −h. The first term changes sign. The integral runs backwards, which also changes its sign. So $`E(-h) = -E(h)`$.
 
 Expand both terms with [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md) about m. The odd derivatives cancel between the two heights, and
 
-$$E(h) = \frac{h^3}{12}f''(m) + \frac{h^5}{480}f^{(4)}(m) + \cdots$$
+```math
+E(h) = \frac{h^3}{12}f''(m) + \frac{h^5}{480}f^{(4)}(m) + \cdots
+```
 
-The fractions come from $\tfrac18 - \tfrac1{24} = \tfrac1{12}$ and $\tfrac1{384} - \tfrac1{1920} = \tfrac1{480}$: the average of the two heights against the exact area.
+The fractions come from $`\tfrac18 - \tfrac1{24} = \tfrac1{12}`$ and $`\tfrac1{384} - \tfrac1{1920} = \tfrac1{480}`$: the average of the two heights against the exact area.
 
 ### Step 2: adding slices gives even powers, and only the ends matter
 
-Sum E over all n slices. The h³ terms give $\tfrac{h^2}{12}\cdot h\sum f''(m_i)$. The sum $h\sum f''(m_i)$ is the midpoint rule applied to f″, which is close to $\int_a^b f'' = f'(b) - f'(a) = D_1$. So the leading error is $\tfrac{h^2}{12}D_1$.
+Sum E over all n slices. The h³ terms give $`\tfrac{h^2}{12}\cdot h\sum f''(m_i)`$. The sum $`h\sum f''(m_i)`$ is the midpoint rule applied to f″, which is close to $`\int_a^b f'' = f'(b) - f'(a) = D_1`$. So the leading error is $`\tfrac{h^2}{12}D_1`$.
 
-The midpoint rule is symmetric too, so its own error has only even powers: $h\sum f''(m_i) = D_1 - \tfrac{h^2}{24}D_3 + \cdots$. Collect the h⁴ terms: $-\tfrac1{288} + \tfrac1{480} = -\tfrac1{720}$. That is the second coefficient of the expansion.
+The midpoint rule is symmetric too, so its own error has only even powers: $`h\sum f''(m_i) = D_1 - \tfrac{h^2}{24}D_3 + \cdots`$. Collect the h⁴ terms: $`-\tfrac1{288} + \tfrac1{480} = -\tfrac1{720}`$. That is the second coefficient of the expansion.
 
 Every interior point has dropped out. Only the derivatives at the two ends survive, because each integral of a derivative telescopes to its end values.
 
-For the wind, the slope at midnight is rising and at the next midnight falling by the same amount, so $D_1$ is negative and the trapezoid runs low. At n = 24 the one-term prediction is −0.3490658504 km, three terms give −0.3491655769 km, and the measured error is −0.3491655769 km: agreement to all ten decimals printed.
+For the wind, the slope at midnight is rising and at the next midnight falling by the same amount, so $`D_1`$ is negative and the trapezoid runs low. At n = 24 the one-term prediction is −0.3490658504 km, three terms give −0.3491655769 km, and the measured error is −0.3491655769 km: agreement to all ten decimals printed.
 
 ### Step 3: the bounds are the first term with a ceiling
 
-Stop the expansion after its first term, with the leftover written exactly, and the result is the trapezoid bound: $|T_n - I| \le K_2(b-a)h^2/12$. For the wind at h = 1 hour, the bound is 0.5483 km against a true error of 0.3492 km, ratio 1.57. Simpson's bound is 6.26e-04 km against a true error of 4.00e-04 km, ratio 1.57. The bound guarantees; the expansion predicts.
+Stop the expansion after its first term, with the leftover written exactly, and the result is the trapezoid bound: $`|T_n - I| \le K_2(b-a)h^2/12`$. For the wind at h = 1 hour, the bound is 0.5483 km against a true error of 0.3492 km, ratio 1.57. Simpson's bound is 6.26e-04 km against a true error of 4.00e-04 km, ratio 1.57. The bound guarantees; the expansion predicts.
 
 ### Step 4: cancel the h² term
 
-Write the two hourly sums with the expansion. Call the first coefficient c, so $T_{24} - I \approx c\cdot 1^2$ and $T_{12} - I \approx c\cdot 2^2 = 4c$. Four times the first minus the second removes c:
+Write the two hourly sums with the expansion. Call the first coefficient c, so $`T_{24} - I \approx c\cdot 1^2`$ and $`T_{12} - I \approx c\cdot 2^2 = 4c`$. Four times the first minus the second removes c:
 
-$$R_{24,1} = \frac{4T_{24} - T_{12}}{3} = T_{24} + \frac{T_{24} - T_{12}}{3}$$
+```math
+R_{24,1} = \frac{4T_{24} - T_{12}}{3} = T_{24} + \frac{T_{24} - T_{12}}{3}
+```
 
 This is **Richardson extrapolation**: use the known power to remove the unknown coefficient. What remains starts at h⁴.
 
-Spread over the readings, $4T_{n} - T_{n/2}$ gives weights h × (1, 4, 2, 4, …, 4, 1), and dividing by 3 is exactly Simpson's rule. The code confirms it: $R_{24,1}$ = 436.462392147 and Simpson on the same 25 readings = 436.462392147. Simpson's rule is the trapezoid rule with its h² error cancelled.
+Spread over the readings, $`4T_{n} - T_{n/2}`$ gives weights h × (1, 4, 2, 4, …, 4, 1), and dividing by 3 is exactly Simpson's rule. The code confirms it: $`R_{24,1}`$ = 436.462392147 and Simpson on the same 25 readings = 436.462392147. Simpson's rule is the trapezoid rule with its h² error cancelled.
 
 ### Step 5: repeat on each even power
 
-Column 1 has error $c_4h^4 + c_6h^6 + \cdots$. Halving h divides its leading term by 16, so $(16R_{n,1} - R_{n/2,1})/15$ removes it. Column 2 removes h⁶ with 64 and 63, and so on: $4^j$ and $4^j - 1$ in column j. Each column needs two more derivatives than the last. The table on the log:
+Column 1 has error $`c_4h^4 + c_6h^6 + \cdots`$. Halving h divides its leading term by 16, so $`(16R_{n,1} - R_{n/2,1})/15`$ removes it. Column 2 removes h⁶ with 64 and 63, and so on: $`4^j`$ and $`4^j - 1`$ in column j. Each column needs two more derivatives than the last. The table on the log:
 
 | n | h, hours | column 0 (trapezoid) | column 1 | column 2 |
 | ---: | ---: | --- | --- | --- |
@@ -151,37 +165,39 @@ Errors in km are in brackets. The error ratios per halving, read down each colum
 <details>
 <summary>Detailed proof: the Euler–Maclaurin expansion with its remainder</summary>
 
-**Bernoulli polynomials.** Define $B_0(x) = 1$ and, for k ≥ 1, $B_k$ by $B_k' = kB_{k-1}$ with $\int_0^1 B_k = 0$. So $B_1 = x - \tfrac12$ and $B_2 = x^2 - x + \tfrac16$. For k ≥ 2, $B_k(1) - B_k(0) = \int_0^1 kB_{k-1} = 0$; call the common value the Bernoulli number $B_k$.
+**Bernoulli polynomials.** Define $`B_0(x) = 1`$ and, for k ≥ 1, $`B_k`$ by $`B_k' = kB_{k-1}`$ with $`\int_0^1 B_k = 0`$. So $`B_1 = x - \tfrac12`$ and $`B_2 = x^2 - x + \tfrac16`$. For k ≥ 2, $`B_k(1) - B_k(0) = \int_0^1 kB_{k-1} = 0`$; call the common value the Bernoulli number $`B_k`$.
 
-**Odd ones vanish.** $(-1)^kB_k(1 - x)$ obeys the same two rules as $B_k(x)$, so the two are equal. At x = 0 this gives $B_k(0) = (-1)^kB_k(1)$. For odd k ≥ 3, $B_k(0) = B_k(1)$ as well, so both are 0. This is Step 0's symmetry in algebra.
+**Odd ones vanish.** $`(-1)^kB_k(1 - x)`$ obeys the same two rules as $`B_k(x)`$, so the two are equal. At x = 0 this gives $`B_k(0) = (-1)^kB_k(1)`$. For odd k ≥ 3, $`B_k(0) = B_k(1)`$ as well, so both are 0. This is Step 0's symmetry in algebra.
 
-**One unit slice.** Let g be smooth on [0, 1] and $J_k = \int_0^1 \frac{B_k(x)}{k!}g^{(k)}(x)\,dx$. Integration by parts, using $(B_{k+1}/(k+1)!)' = B_k/k!$, gives $J_0 = \tfrac12(g(0) + g(1)) - J_1$ and, for k ≥ 1, $J_k = \frac{B_{k+1}}{(k+1)!}\bigl(g^{(k)}(1) - g^{(k)}(0)\bigr) - J_{k+1}$. The odd Bernoulli numbers are 0, so after 2p steps
+**One unit slice.** Let g be smooth on [0, 1] and $`J_k = \int_0^1 \frac{B_k(x)}{k!}g^{(k)}(x)\,dx`$. Integration by parts, using $`(B_{k+1}/(k+1)!)' = B_k/k!`$, gives $`J_0 = \tfrac12(g(0) + g(1)) - J_1`$ and, for k ≥ 1, $`J_k = \frac{B_{k+1}}{(k+1)!}\bigl(g^{(k)}(1) - g^{(k)}(0)\bigr) - J_{k+1}`$. The odd Bernoulli numbers are 0, so after 2p steps
 
-$$\int_0^1 g = \tfrac12\bigl(g(0) + g(1)\bigr) - \sum_{k=1}^{p}\frac{B_{2k}}{(2k)!}\bigl(g^{(2k-1)}(1) - g^{(2k-1)}(0)\bigr) + J_{2p}.$$
+$`\displaystyle \int_0^1 g = \tfrac12\bigl(g(0) + g(1)\bigr) - \sum_{k=1}^{p}\frac{B_{2k}}{(2k)!}\bigl(g^{(2k-1)}(1) - g^{(2k-1)}(0)\bigr) + J_{2p}.`$
 
-**All slices.** On slice i put $g(x) = f(a + ih + hx)$, so $g^{(k)} = h^kf^{(k)}$, and multiply by h. Summing over the slices, the interior end values cancel in pairs (they telescope), leaving
+**All slices.** On slice i put $`g(x) = f(a + ih + hx)`$, so $`g^{(k)} = h^kf^{(k)}`$, and multiply by h. Summing over the slices, the interior end values cancel in pairs (they telescope), leaving
 
-$$I = T_n - \sum_{k=1}^{p}\frac{B_{2k}}{(2k)!}h^{2k}D_{2k-1} + h^{2p}\sum_i h\int_0^1\frac{B_{2p}(x)}{(2p)!}f^{(2p)}(a + ih + hx)\,dx.$$
+$`\displaystyle I = T_n - \sum_{k=1}^{p}\frac{B_{2k}}{(2k)!}h^{2k}D_{2k-1} + h^{2p}\sum_i h\int_0^1\frac{B_{2p}(x)}{(2p)!}f^{(2p)}(a + ih + hx)\,dx.`$
 
-The last term is at most $h^{2p}(b-a)K_{2p}\max|B_{2p}|/(2p)!$, where $K_{2p}$ bounds $|f^{(2p)}|$. Run the expansion one term further and the leftover is of size $h^{2p+2}$. With p = 1, the $D_1$ term and the remainder merge into $h^2\sum_i h\int_0^1 \frac{x^2 - x}{2}f''(a + ih + hx)\,dx$. Since $x^2 - x$ never changes sign on [0, 1] and its integral is −1/6, this is at most $K_2(b-a)h^2/12$ in size: the trapezoid bound of Step 3.
+The last term is at most $`h^{2p}(b-a)K_{2p}\max|B_{2p}|/(2p)!`$, where $`K_{2p}`$ bounds $`|f^{(2p)}|`$. Run the expansion one term further and the leftover is of size $`h^{2p+2}`$. With p = 1, the $`D_1`$ term and the remainder merge into $`h^2\sum_i h\int_0^1 \frac{x^2 - x}{2}f''(a + ih + hx)\,dx`$. Since $`x^2 - x`$ never changes sign on [0, 1] and its integral is −1/6, this is at most $`K_2(b-a)h^2/12`$ in size: the trapezoid bound of Step 3.
 
-**Romberg's columns.** Suppose column j − 1 has error $\sum_{k\ge j} c_kh^{2k}$ with fixed $c_k$. Then $R_{n,j-1} - I$ and $R_{n/2,j-1} - I$ carry $c_jh^{2j}$ and $4^jc_jh^{2j}$. The combination $(4^jR_{n,j-1} - R_{n/2,j-1})/(4^j - 1)$ keeps I, removes the $h^{2j}$ term, and leaves fixed coefficients on the higher powers. By induction, column j has error of size $h^{2j+2}$. $\blacksquare$
+**Romberg's columns.** Suppose column j − 1 has error $`\sum_{k\ge j} c_kh^{2k}`$ with fixed $`c_k`$. Then $`R_{n,j-1} - I`$ and $`R_{n/2,j-1} - I`$ carry $`c_jh^{2j}`$ and $`4^jc_jh^{2j}`$. The combination $`(4^jR_{n,j-1} - R_{n/2,j-1})/(4^j - 1)`$ keeps I, removes the $`h^{2j}`$ term, and leaves fixed coefficients on the higher powers. By induction, column j has error of size $`h^{2j+2}`$. $`\blacksquare`$
 
 </details>
 
 ### Step 6: the error estimate comes free
 
-The same two sums that cancel the h² term also measure it. If $T_{24} - I = c$ and $T_{12} - I = 4c$, then $T_{12} - T_{24} = 3c$. So
+The same two sums that cancel the h² term also measure it. If $`T_{24} - I = c`$ and $`T_{12} - I = 4c`$, then $`T_{12} - T_{24} = 3c`$. So
 
-$$T_{24} - I \approx \frac{T_{12} - T_{24}}{3} = -0.349565 \text{ km}$$
+```math
+T_{24} - I \approx \frac{T_{12} - T_{24}}{3} = -0.349565 \text{ km}
+```
 
 The true error is −0.349166 km: estimate over truth, 1.00114. It is an **estimate**, not a bound: it is right only when the h² term leads.
 
-The same idea one column on: $R_{24,1} - R_{24,2}$ = +4.022e-04 km estimates the error of $R_{24,1}$, whose true error is +3.996e-04 km, ratio 1.00657. A Romberg program stops when two neighbouring diagonal entries agree to the tolerance wanted.
+The same idea one column on: $`R_{24,1} - R_{24,2}`$ = +4.022e-04 km estimates the error of $`R_{24,1}`$, whose true error is +3.996e-04 km, ratio 1.00657. A Romberg program stops when two neighbouring diagonal entries agree to the tolerance wanted.
 
 ### Step 7: what it costs, and where rounding stops it
 
-Cost is counted in readings, since each costs one function value. $R_{24,1}$ uses 25 readings; the plain trapezoid needs about 709 slices to match it. Every coarser sum is a subset of the finer one, so a full table costs only the readings of its finest row.
+Cost is counted in readings, since each costs one function value. $`R_{24,1}`$ uses 25 readings; the plain trapezoid needs about 709 slices to match it. Every coarser sum is a subset of the finer one, so a full table costs only the readings of its finest row.
 
 Going down the diagonal on the model curve, the relative error falls −5.2e-02, +2.4e-04, −4.0e-07, +1.7e-10, −1.8e-14 at n = 3 to 48. After that it sits at +0.0e+00, +1.3e-15 and −1.0e-15 for n = 96, 192 and 384: rounding, not method.
 
@@ -193,10 +209,10 @@ From the code's Romberg table: the trapezoid sums on every 12th and every 6th re
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| trapezoid, h = 2 hours | $T_{12}$, every 12th reading | 435.064132 km |
-| trapezoid, h = 1 hour | $T_{24}$, every 6th reading, 25 in all | 436.112827 km |
+| trapezoid, h = 2 hours | $`T_{12}`$, every 12th reading | 435.064132 km |
+| trapezoid, h = 1 hour | $`T_{24}`$, every 6th reading, 25 in all | 436.112827 km |
 | gap between them | 436.112827 − 435.064132 | 1.048695 km |
-| error estimate for $T_{24}$ | −1.048695 / 3 | −0.349565 km |
+| error estimate for $`T_{24}`$ | −1.048695 / 3 | −0.349565 km |
 | extrapolate | 436.112827 + 0.349565 | **436.462392 km** |
 | true error | 436.462392 − 436.461993 | +4.00e-04 km, 9.2e-07 relative |
 
@@ -206,8 +222,8 @@ The hourly readings, combined with every second one of themselves, give the day'
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Error treated as size h, not h²: $2T_{24} - T_{12}$ | 437.161522, off +0.6995 km | the wrong power; worse than the hourly sum it started from |
-| Factor 4 on steps of 1.5 h and 1 h | 436.258406, off −0.2036 km | the factor is $(1.5)^2 = 2.25$; with it, 436.462217, off +2.25e-04 |
+| Error treated as size h, not h²: $`2T_{24} - T_{12}`$ | 437.161522, off +0.6995 km | the wrong power; worse than the hourly sum it started from |
+| Factor 4 on steps of 1.5 h and 1 h | 436.258406, off −0.2036 km | the factor is $`(1.5)^2 = 2.25`$; with it, 436.462217, off +2.25e-04 |
 | Second column divided by 3, not 15 | 436.460381, off −1.61e-03 | the h² factor reused on the h⁴ term |
 | Romberg on √t over [0, 1] | column 2 off −4.92e-05 at n = 128, ratio 2.83 | no smooth derivatives at 0: the expansion does not exist |
 
@@ -528,11 +544,11 @@ The two outputs match line for line.
 
 Lean proves the expansion with its leftover, column 1 as Simpson's rule, and each column's step, for every smooth enough curve and every n.
 
-- If f has 2p continuous derivatives on [a, b], then $I$ is $T_n$ minus the terms $\frac{B_{2k}}{(2k)!}h^{2k}D_{2k-1}$ for k = 1 to p, plus a leftover. The leftover is at most $h^{2p}(b-a)K_{2p}\max|B_{2p}|/(2p)!$, where $K_{2p}$ bounds $|f^{(2p)}|$.
+- If f has 2p continuous derivatives on [a, b], then $`I`$ is $`T_n`$ minus the terms $`\frac{B_{2k}}{(2k)!}h^{2k}D_{2k-1}`$ for k = 1 to p, plus a leftover. The leftover is at most $`h^{2p}(b-a)K_{2p}\max|B_{2p}|/(2p)!`$, where $`K_{2p}`$ bounds $`|f^{(2p)}|`$.
 - Only even powers of h appear in the expansion, and only the derivatives at the two ends.
-- For any curve and any even n, $(4T_n - T_{n/2})/3$ is exactly Simpson's rule $S_n$ on the same readings.
-- Suppose column j − 1 has error $c_jh^{2j} + \cdots + c_qh^{2q}$ with fixed $c_k$, plus a leftover of size $h^{2q+2}$ as h → 0. Then column j keeps I and loses its $h^{2j}$ term. The higher powers keep fixed coefficients, and the leftover stays of size $h^{2q+2}$.
-- The hand arithmetic holds exactly: the coefficients, the slice fractions, the weights $4^j$ and $4^j - 1$, the factor 2.25, Simpson's weights and the reading counts.
+- For any curve and any even n, $`(4T_n - T_{n/2})/3`$ is exactly Simpson's rule $`S_n`$ on the same readings.
+- Suppose column j − 1 has error $`c_jh^{2j} + \cdots + c_qh^{2q}`$ with fixed $`c_k`$, plus a leftover of size $`h^{2q+2}`$ as h → 0. Then column j keeps I and loses its $`h^{2j}`$ term. The higher powers keep fixed coefficients, and the leftover stays of size $`h^{2q+2}`$.
+- The hand arithmetic holds exactly: the coefficients, the slice fractions, the weights $`4^j`$ and $`4^j - 1`$, the factor 2.25, Simpson's weights and the reading counts.
 
 The wind numbers, bound ratios, column ratios, free estimate, rounding floor and failure cases are left to the Python and Rust checks.
 
@@ -994,7 +1010,7 @@ example : ((1 : ℚ) / 3 - 1 / 2) / 2 = -1 / 12 := by norm_num
 > [!warning]
 > **Extrapolating without checking the ratios.** Romberg assumes the error is a series in h², h⁴, …. The ratios of successive differences tell whether that is true. For the wind they settle at 4.00, 16.02 and 64.44. For a speed rising like √t they stay at 2.83 in every column, and the extra columns only rearrange the same error.
 >
-> - **The gap is not the error.** $T_{24} - T_{12}$ = +1.048695 km, while the true error of $T_{24}$ is −0.349166 km. Divide by 3 and mind the sign.
+> - **The gap is not the error.** $`T_{24} - T_{12}`$ = +1.048695 km, while the true error of $`T_{24}`$ is −0.349166 km. Divide by 3 and mind the sign.
 > - **Factor 4 on steps that were not halved.** Steps of 1.5 h and 1 h with the factor 4 give 436.258406, off −0.2036 km.
 > - **The same factor in every column.** Dividing column 2 by 3 instead of 15 gives 436.460381, off −1.61e-03 km, worse than column 1's +4.00e-04 km.
 > - **Extrapolating past rounding.** Beyond n = 48 the diagonal's relative error sits at about 1e-15, the rounding floor. More rows cost readings and add nothing.
@@ -1011,7 +1027,7 @@ example : ((1 : ℚ) / 3 - 1 / 2) / 2 = -1 / 12 := by norm_num
 
 > **Say it back**
 > The trapezoid rule's error is a fixed coefficient times h², plus one times h⁴, and so on, each coefficient set only by the derivatives at the two ends, plus a leftover smaller than the last term kept.
-> Halving h divides the h² part by exactly 4, so $(4T_n - T_{n/2})/3$ removes it, and that combination is Simpson's rule.
+> Halving h divides the h² part by exactly 4, so $`(4T_n - T_{n/2})/3`$ removes it, and that combination is Simpson's rule.
 > Repeating with 16, 64, … removes h⁴, h⁶, …: that is Romberg's table.
 > A third of the gap between two sums estimates the error for free.
 > For the wind, 25 hourly readings give 436.462392 km, one part in a million from the truth, where the plain rule was one part in a thousand.

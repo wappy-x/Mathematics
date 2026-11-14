@@ -38,40 +38,48 @@ Orange: the boundary from the early-exercise integral equation (road 2 in the co
 
 ## The formula
 
-Notation first, in words. Write $\tau$ ("tau") for the years left until expiry, $V$ for the put's value as a function of Acme's price and $\tau$, and $B$ for the boundary, also a function of $\tau$. $\Delta$ and $\Gamma$ are the first and second rates of change of $V$ with Acme's price. The free-boundary problem is four lines:
+Notation first, in words. Write $`\tau`$ ("tau") for the years left until expiry, $`V`$ for the put's value as a function of Acme's price and $`\tau`$, and $`B`$ for the boundary, also a function of $`\tau`$. $`\Delta`$ and $`\Gamma`$ are the first and second rates of change of $`V`$ with Acme's price. The free-boundary problem is four lines:
 
-$$\frac{\partial V}{\partial \tau} = \tfrac12\sigma^2 S^2\,\frac{\partial^2 V}{\partial S^2} + (r-q)\,S\,\frac{\partial V}{\partial S} - rV \qquad \text{for } S > B(\tau)$$
+```math
+\frac{\partial V}{\partial \tau} = \tfrac12\sigma^2 S^2\,\frac{\partial^2 V}{\partial S^2} + (r-q)\,S\,\frac{\partial V}{\partial S} - rV \qquad \text{for } S > B(\tau)
+```
 
-$$V(S,\tau) = K - S \qquad \text{for } S \le B(\tau)$$
+```math
+V(S,\tau) = K - S \qquad \text{for } S \le B(\tau)
+```
 
-$$V\big(B(\tau),\tau\big) = K - B(\tau) \qquad\qquad \frac{\partial V}{\partial S}\big(B(\tau),\tau\big) = -1$$
+```math
+V\big(B(\tau),\tau\big) = K - B(\tau) \qquad\qquad \frac{\partial V}{\partial S}\big(B(\tau),\tau\big) = -1
+```
 
-$$V(S,0) = \max(K - S,\,0), \qquad B(0) = K$$
+```math
+V(S,0) = \max(K - S,\,0), \qquad B(0) = K
+```
 
 **Read it aloud:** above the line the put obeys the Black–Scholes equation; on and below the line it is worth exactly its payoff; on the line the two pieces meet at the same height and the same slope; on the last day it pays its payoff, and the line starts at the strike.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | Acme's price | $100 today | the put loses at most a dollar per dollar |
-| $K$ | the strike: the price the put sells at | $100 | the line rises with it, in proportion |
-| $r$ | the riskless rate, continuously compounded | 5% | the line rises: cash from exercising earns more |
-| $q$ | Acme's dividend yield | 2% | the line falls: the carry of exercising, rK − qS, shrinks |
-| $\sigma$ | volatility, the yearly spread of log-returns | 20% | the line falls: a jumpier share is worth waiting on |
-| $\tau$ | years left until expiry | 1 today | the line falls, toward the perpetual floor of $64.92 |
-| $V$ | the American put's value, a function of Acme's price and $\tau$ | $6.66 today | — |
-| $B$ | the exercise boundary: exercise at or below it, wait above | $77.85 today | — |
-| $\Delta$ | delta, $\partial V/\partial S$: dollars of put value per dollar of Acme | −1 on the line | — |
-| $\Gamma$ | gamma, $\partial^2 V/\partial S^2$: how fast delta changes | just above the line, set by rK − qB | — |
-| $L$ | the pricing operator: $\partial V/\partial \tau$ minus the right-hand side of the equation | zero above the line | — |
-| $h$ | a small step in Acme's price, used to measure slopes | 2, 1, 0.5 dollars | — |
+| $`S`$ | Acme's price | $100 today | the put loses at most a dollar per dollar |
+| $`K`$ | the strike: the price the put sells at | $100 | the line rises with it, in proportion |
+| $`r`$ | the riskless rate, continuously compounded | 5% | the line rises: cash from exercising earns more |
+| $`q`$ | Acme's dividend yield | 2% | the line falls: the carry of exercising, rK − qS, shrinks |
+| $`\sigma`$ | volatility, the yearly spread of log-returns | 20% | the line falls: a jumpier share is worth waiting on |
+| $`\tau`$ | years left until expiry | 1 today | the line falls, toward the perpetual floor of $64.92 |
+| $`V`$ | the American put's value, a function of Acme's price and $`\tau`$ | $6.66 today | — |
+| $`B`$ | the exercise boundary: exercise at or below it, wait above | $77.85 today | — |
+| $`\Delta`$ | delta, $`\partial V/\partial S`$: dollars of put value per dollar of Acme | −1 on the line | — |
+| $`\Gamma`$ | gamma, $`\partial^2 V/\partial S^2`$: how fast delta changes | just above the line, set by rK − qB | — |
+| $`L`$ | the pricing operator: $`\partial V/\partial \tau`$ minus the right-hand side of the equation | zero above the line | — |
+| $`h`$ | a small step in Acme's price, used to measure slopes | 2, 1, 0.5 dollars | — |
 
-The first line is the Black–Scholes equation written in years left, so $\partial V/\partial \tau$ is how much more the put is worth with a little more time.
+The first line is the Black–Scholes equation written in years left, so $`\partial V/\partial \tau`$ is how much more the put is worth with a little more time.
 
 ### When it holds
 
 - **Acme moves without jumps.** Smooth pasting needs a path that, started just above the line, crosses it at once. If the price can gap down past the line, the value can meet the payoff at a genuine corner, and only value matching survives.
 - **Exercise is allowed at every instant.** A Bermudan put, exercisable on listed dates only, has a boundary on each date but no slope condition: the value there is the larger of two curves and carries a kink ([Bermudan options](03-bermudan-options.md)).
-- **The rate exceeds the dividend yield.** Then the line starts at the strike, $B(0) = K$. If the dividend yield were higher, exercising just before expiry would cost more in dividends than it earns in interest, and the line would start lower, at $rK/q$.
+- **The rate exceeds the dividend yield.** Then the line starts at the strike, $`B(0) = K`$. If the dividend yield were higher, exercising just before expiry would cost more in dividends than it earns in interest, and the line would start lower, at $`rK/q`$.
 - **The payoff has a slope at the line.** A put's payoff is a straight line there. A payoff with its own kink at the boundary, such as a digital, breaks the slope condition.
 
 ---
@@ -84,7 +92,7 @@ An American put is worth the best the holder can do by choosing when to stop, av
 
 ### Step 1: the exercise region is everything below one price
 
-Start Acme a dollar higher and follow the same rule. At exercise the share is more expensive by one dollar times Acme's growth since today, and that growth, discounted in the pricing world, averages at most one. So the put loses at most a dollar per dollar Acme rises, and $V - (K - S)$, the value above the payoff, never falls as Acme rises.
+Start Acme a dollar higher and follow the same rule. At exercise the share is more expensive by one dollar times Acme's growth since today, and that growth, discounted in the pricing world, averages at most one. So the put loses at most a dollar per dollar Acme rises, and $`V - (K - S)`$, the value above the payoff, never falls as Acme rises.
 
 The value above the payoff is zero where the holder exercises and positive where the holder waits, so the exercise region is one stretch at the bottom, ending at the boundary. The tree finds it with one test per node: exercise when the payoff beats the discounted average of the next step.
 
@@ -96,45 +104,49 @@ With a year left the carry wins only deep in the money (Acme far below the strik
 
 ### Step 3: value matching is continuity
 
-On the line the value equals the payoff: $V(B,\tau) = K - B$. Step 1 showed the value moves at most a dollar per dollar of Acme, so it cannot jump; just above the line it tends to the payoff on the line. Value matching alone does not locate the line: any candidate line can be glued to a solution of the equation at matching height.
+On the line the value equals the payoff: $`V(B,\tau) = K - B`$. Step 1 showed the value moves at most a dollar per dollar of Acme, so it cannot jump; just above the line it tends to the payoff on the line. Value matching alone does not locate the line: any candidate line can be glued to a solution of the equation at matching height.
 
 ### Step 4: smooth pasting is optimality
 
-Look at the slope just above the line, measured from the line out a small step $h$.
+Look at the slope just above the line, measured from the line out a small step $`h`$.
 
 - **Steeper than −1 is impossible.** The value would dip below the payoff just above the line. But the holder can always exercise, so the put is never worth less than its payoff. Slope from the line outward is therefore at least −1.
 - **Shallower than −1 is impossible too.** A holder starting on the line may copy the best rule for a start just above it. The copy hands over a slightly cheaper share at exercise and is otherwise identical, so the value gap per dollar of step is the discounted average growth of Acme until exercise. Started just above the line, the path crosses it almost at once, so that average tends to 1. The slope is therefore at most −1.
 
-Both bounds meet: $\Delta = -1$ on the line. The code measures it without imposing it. The integral equation (road 2) enforces only value matching, yet its slope from the line outward is −0.9716 over two dollars, −0.9857 over one and −0.9926 over fifty cents. The gap to −1 halves each time the step halves: the contact is a tangent, not a corner.
+Both bounds meet: $`\Delta = -1`$ on the line. The code measures it without imposing it. The integral equation (road 2) enforces only value matching, yet its slope from the line outward is −0.9716 over two dollars, −0.9857 over one and −0.9926 over fifty cents. The gap to −1 halves each time the step halves: the contact is a tangent, not a corner.
 
 <details>
 <summary>Detailed proof: the slope on the line is exactly −1</summary>
 
-Fix the years left and write $V(x)$ for the put's value at Acme price x. Under geometric Brownian motion the price path started at x is x times a random growth factor Z, whose law does not depend on x. The value is the best, over stopping times no later than expiry, of the average of $e^{-r\theta}(K - xZ_\theta)^+$, where $\theta \le \tau$ is the moment of exercise.
+Fix the years left and write $`V(x)`$ for the put's value at Acme price x. Under geometric Brownian motion the price path started at x is x times a random growth factor Z, whose law does not depend on x. The value is the best, over stopping times no later than expiry, of the average of $`e^{-r\theta}(K - xZ_\theta)^+`$, where $`\theta \le \tau`$ is the moment of exercise.
 
-*Lower bound.* The holder can exercise at once, so $V(x) \ge K - x$ everywhere, with equality at B. For small positive $h$, $V(B+h) - V(B) \ge (K - B - h) - (K - B) = -h$. Divide by $h$: the slope from the line outward is at least −1.
+*Lower bound.* The holder can exercise at once, so $`V(x) \ge K - x`$ everywhere, with equality at B. For small positive $`h`$, $`V(B+h) - V(B) \ge (K - B - h) - (K - B) = -h`$. Divide by $`h`$: the slope from the line outward is at least −1.
 
-*Upper bound.* Take the best stopping time for a start at $B + h$, and write it $\theta_h \le \tau$. Using the same rule from B is allowed and cannot beat the best, so $V(B)$ is at least the average of $e^{-r\theta_h}(K - BZ_{\theta_h})$. Subtract that from $V(B+h)$, the average of $e^{-r\theta_h}(K - (B+h)Z_{\theta_h})$: the strikes cancel, and $V(B+h) - V(B) \le -h$ times the average of $e^{-r\theta_h}Z_{\theta_h}$. A Brownian path started a distance $h$ above a line that does not drop suddenly hits it within a time that shrinks to zero with $h$, so $\theta_h \to 0$. In the pricing world $e^{-(r-q)t}Z_t$ averages exactly 1 at any stopping time, and the leftover factor $e^{-q\theta_h}$ tends to 1, so the average tends to 1. The slope from the line outward is at most −1.
+*Upper bound.* Take the best stopping time for a start at $`B + h`$, and write it $`\theta_h \le \tau`$. Using the same rule from B is allowed and cannot beat the best, so $`V(B)`$ is at least the average of $`e^{-r\theta_h}(K - BZ_{\theta_h})`$. Subtract that from $`V(B+h)`$, the average of $`e^{-r\theta_h}(K - (B+h)Z_{\theta_h})`$: the strikes cancel, and $`V(B+h) - V(B) \le -h`$ times the average of $`e^{-r\theta_h}Z_{\theta_h}`$. A Brownian path started a distance $`h`$ above a line that does not drop suddenly hits it within a time that shrinks to zero with $`h`$, so $`\theta_h \to 0`$. In the pricing world $`e^{-(r-q)t}Z_t`$ averages exactly 1 at any stopping time, and the leftover factor $`e^{-q\theta_h}`$ tends to 1, so the average tends to 1. The slope from the line outward is at most −1.
 
-The two bounds squeeze it to −1. Below the line $V = K - S$, so the slope from the other side is −1 too: $\Delta$ is continuous across the line. Where the proof used continuous paths is the hitting-time step; a jump could carry the path past the line and leave the hitting time away from zero, which is the case in When it holds.
+The two bounds squeeze it to −1. Below the line $`V = K - S`$, so the slope from the other side is −1 too: $`\Delta`$ is continuous across the line. Where the proof used continuous paths is the hitting-time step; a jump could carry the path past the line and leave the hitting time away from zero, which is the case in When it holds.
 
 </details>
 
 ### Step 5: what the tangent buys, measured at the line
 
-Put the three facts about the line, $V = K - B$, $\Delta = -1$, and $\partial V/\partial \tau = 0$, into the Black–Scholes equation. The third follows from the first two. As $\tau$ changes, the value on the line changes by $\Delta$ times the line's move plus $\partial V/\partial \tau$. The payoff changes by minus the line's move. With $\Delta = -1$ the two agree only if $\partial V/\partial \tau = 0$. Everything cancels except
+Put the three facts about the line, $`V = K - B`$, $`\Delta = -1`$, and $`\partial V/\partial \tau = 0`$, into the Black–Scholes equation. The third follows from the first two. As $`\tau`$ changes, the value on the line changes by $`\Delta`$ times the line's move plus $`\partial V/\partial \tau`$. The payoff changes by minus the line's move. With $`\Delta = -1`$ the two agree only if $`\partial V/\partial \tau = 0`$. Everything cancels except
 
-$$\tfrac12\sigma^2 B^2\,\Gamma = rK - qB.$$
+```math
+\tfrac12\sigma^2 B^2\,\Gamma = rK - qB.
+```
 
 On the left, the gain from waiting: curvature times Acme's wobble. On the right, the net carry of exercising: interest on the strike minus dividends on the share. **The boundary is the price where the value of the wobble exactly pays the carry.** Today rK − qB is 3.4430; the integral road measures the left side as 3.4340 and the grid as 3.4339, both measured a little above the line where gamma is already slightly smaller.
 
 ### Step 6: the complementarity form, which needs no boundary at all
 
-Write $L$ for the pricing operator: $\partial V/\partial \tau$ minus the right-hand side of the Black–Scholes equation. Above the line $LV = 0$. Below it the value is the payoff, and $L(K - S) = rK - qS$, positive there because S is below K and r exceeds q. Everywhere the value is at least the payoff, and at every price one of the two is tight. Three conditions, no boundary:
+Write $`L`$ for the pricing operator: $`\partial V/\partial \tau`$ minus the right-hand side of the Black–Scholes equation. Above the line $`LV = 0`$. Below it the value is the payoff, and $`L(K - S) = rK - qS`$, positive there because S is below K and r exceeds q. Everywhere the value is at least the payoff, and at every price one of the two is tight. Three conditions, no boundary:
 
-$$LV \ge 0, \qquad V - (K - S) \ge 0, \qquad LV \times \big(V - (K - S)\big) = 0.$$
+```math
+LV \ge 0, \qquad V - (K - S) \ge 0, \qquad LV \times \big(V - (K - S)\big) = 0.
+```
 
-This is the **linear complementarity problem**: two inequalities, at each point at least one an equality. On a grid, $L$ becomes the tridiagonal matrix (each row links a node only to its two neighbors) of the implicit finite-difference scheme ([Pricing on a grid](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md)), and each date asks for a vector meeting the three conditions node by node.
+This is the **linear complementarity problem**: two inequalities, at each point at least one an equality. On a grid, $`L`$ becomes the tridiagonal matrix (each row links a node only to its two neighbors) of the implicit finite-difference scheme ([Pricing on a grid](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md)), and each date asks for a vector meeting the three conditions node by node.
 
 Projected successive over-relaxation, PSOR, solves it: [American options on a grid](../06-Numerical%20Methods%20for%20Pricing/08-american-options-by-psor-and-lcp.md) teaches the solver.
 
@@ -147,9 +159,11 @@ Kim (1990) and Carr, Jarrow and Myneni (1992) split the American put into the Eu
 <details>
 <summary>The integral equation</summary>
 
-With N the bell-curve area to the left of its argument, and for a price S, a boundary level b and a horizon u, $d_1 = \big(\ln(S/b) + (r - q + \tfrac12\sigma^2)u\big)/(\sigma\sqrt{u})$ and $d_2 = d_1 - \sigma\sqrt{u}$. The boundary satisfies, at every $\tau$,
-$$K - B(\tau) = p_E\big(B(\tau),\tau\big) + \int_0^{\tau} \Big[rK e^{-ru} N(-d_2) - qB(\tau) e^{-qu} N(-d_1)\Big]\,du,$$
-where the first term on the right is the European put, and inside the integral S is $B(\tau)$ and b is $B(\tau - u)$. The first term inside is the interest earned on the strike in the futures where the holder has exercised by time u; the second is the dividend given up. Putting any S in place of $B(\tau)$ gives the American price itself. The code solves it on 200 dates bunched toward expiry, where the line bends hardest.
+With N the bell-curve area to the left of its argument, and for a price S, a boundary level b and a horizon u, $`d_1 = \big(\ln(S/b) + (r - q + \tfrac12\sigma^2)u\big)/(\sigma\sqrt{u})`$ and $`d_2 = d_1 - \sigma\sqrt{u}`$. The boundary satisfies, at every $`\tau`$,
+
+$`\displaystyle K - B(\tau) = p_E\big(B(\tau),\tau\big) + \int_0^{\tau} \Big[rK e^{-ru} N(-d_2) - qB(\tau) e^{-qu} N(-d_1)\Big]\,du,`$
+
+where the first term on the right is the European put, and inside the integral S is $`B(\tau)`$ and b is $`B(\tau - u)`$. The first term inside is the interest earned on the strike in the futures where the holder has exercised by time u; the second is the dividend given up. Putting any S in place of $`B(\tau)`$ gives the American price itself. The code solves it on 200 dates bunched toward expiry, where the line bends hardest.
 
 </details>
 
@@ -565,9 +579,9 @@ The two outputs agree line for line.
 
 Lean proves Steps 4 to 6 of Why it works for any market, taking Step 4's hitting-time step as given.
 
-- Take a value never below the payoff, equal to it at or below the line, with the copy's average growth tending to 1. Then $\Delta = -1$ on the line, from both sides: no corner.
-- Suppose $V$ and $B$ change smoothly, $V = K - B$ along the line, $\Delta = -1$ there, and the Black–Scholes equation holds there. Then $\partial V/\partial \tau = 0$ on the line, and $\tfrac12\sigma^2 B^2\,\Gamma = rK - qB$.
-- Take a price $S$ with $0 < S < K$, and $0 \le q < r$. Then $L$ applied to the payoff gives $rK - qS$, and this carry is positive.
+- Take a value never below the payoff, equal to it at or below the line, with the copy's average growth tending to 1. Then $`\Delta = -1`$ on the line, from both sides: no corner.
+- Suppose $`V`$ and $`B`$ change smoothly, $`V = K - B`$ along the line, $`\Delta = -1`$ there, and the Black–Scholes equation holds there. Then $`\partial V/\partial \tau = 0`$ on the line, and $`\tfrac12\sigma^2 B^2\,\Gamma = rK - qB`$.
+- Take a price $`S`$ with $`0 < S < K`$, and $`0 \le q < r`$. Then $`L`$ applied to the payoff gives $`rK - qS`$, and this carry is positive.
 
 The boundary numbers, the prices and the measured slopes are left to the Python and Rust checks.
 

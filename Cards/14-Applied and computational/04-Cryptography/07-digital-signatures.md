@@ -47,36 +47,42 @@ Notation first, in words.
 
 To sign:
 
-$$R = kG, \qquad r = x(R) \bmod n, \qquad s = k^{-1}\,(z + r\,d) \bmod n$$
+```math
+R = kG, \qquad r = x(R) \bmod n, \qquad s = k^{-1}\,(z + r\,d) \bmod n
+```
 
 **Read it aloud:** pick a secret multiplier, take the x-coordinate of that multiple of G as r, then mix the hash and the key into s, divided by the multiplier.
 
 To verify the signature (r, s) on the file:
 
-$$w = s^{-1}, \quad u_1 = z\,w, \quad u_2 = r\,w \pmod n; \qquad \text{accept exactly when } x(u_1 G + u_2 Q) \bmod n = r$$
+```math
+w = s^{-1}, \quad u_1 = z\,w, \quad u_2 = r\,w \pmod n; \qquad \text{accept exactly when } x(u_1 G + u_2 Q) \bmod n = r
+```
 
 **Read it aloud:** undo s, use it to make two multipliers from the hash and from r, add those multiples of G and of the public key, and accept if the result lands on the point whose x-coordinate is r.
 
 If two files, numbered 1 and 2, are signed with the same nonce, anyone can compute
 
-$$k = \frac{z_1 - z_2}{s_1 - s_2}, \qquad d = \frac{s_1 k - z_1}{r} \pmod n$$
+```math
+k = \frac{z_1 - z_2}{s_1 - s_2}, \qquad d = \frac{s_1 k - z_1}{r} \pmod n
+```
 
 where dividing means multiplying by the inverse mod n.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p$ | the prime the curve's arithmetic wraps round at | 1,000,003 (toy, insecure) | bigger curve, harder to break; P-256, a standard curve in wide use, has a prime near 2^256 |
-| $G$ | the base point, public | (100, 2) | — |
-| $n$ | how many multiples of G there are; a prime | 999,007, 20 bits | a forger's work grows like its square root: about 2^128 at 256 bits |
-| $d$ | the private key | 512,377 | — |
-| $Q = dG$ | the public key, a point | (407658, 775843) | — |
-| $m$ | the message: the update file | 65,536 synthetic bytes | any length: only z enters the sum |
-| $h(m)$, $z$ | the hash, 256 bits; z its leftmost 20 bits as a number; $z_1, z_2$ for files 1 and 2 | z1 = 744,550, z2 = 302,248 | — |
-| $k$, $k^{-1}$ | the nonce, and its inverse mod n | 90,210 and 418,130 | must be fresh: reuse it and d falls out |
-| $R$, $x(R)$, $r$ | the point kG, its x-coordinate, and that mod n | (998774, 736591); r = 998,774 | — |
-| $s$ | the signature's second half; $s_1, s_2$ for files 1 and 2 | s1 = 889,862, s2 = 327,463 | — |
-| $w = s^{-1}$, $u_1$, $u_2$ | the verifier's three numbers mod n | 962,102; 69,785; 606,809 | — |
-| $a$, $b$ | any two numbers a forger picks, in the no-hash attack | 1,234 and 5,678 | — |
+| $`p`$ | the prime the curve's arithmetic wraps round at | 1,000,003 (toy, insecure) | bigger curve, harder to break; P-256, a standard curve in wide use, has a prime near 2^256 |
+| $`G`$ | the base point, public | (100, 2) | — |
+| $`n`$ | how many multiples of G there are; a prime | 999,007, 20 bits | a forger's work grows like its square root: about 2^128 at 256 bits |
+| $`d`$ | the private key | 512,377 | — |
+| $`Q = dG`$ | the public key, a point | (407658, 775843) | — |
+| $`m`$ | the message: the update file | 65,536 synthetic bytes | any length: only z enters the sum |
+| $`h(m)`$, $`z`$ | the hash, 256 bits; z its leftmost 20 bits as a number; $`z_1, z_2`$ for files 1 and 2 | z1 = 744,550, z2 = 302,248 | — |
+| $`k`$, $`k^{-1}`$ | the nonce, and its inverse mod n | 90,210 and 418,130 | must be fresh: reuse it and d falls out |
+| $`R`$, $`x(R)`$, $`r`$ | the point kG, its x-coordinate, and that mod n | (998774, 736591); r = 998,774 | — |
+| $`s`$ | the signature's second half; $`s_1, s_2`$ for files 1 and 2 | s1 = 889,862, s2 = 327,463 | — |
+| $`w = s^{-1}`$, $`u_1`$, $`u_2`$ | the verifier's three numbers mod n | 962,102; 69,785; 606,809 | — |
+| $`a`$, $`b`$ | any two numbers a forger picks, in the no-hash attack | 1,234 and 5,678 | — |
 
 ### When it holds
 
@@ -100,7 +106,9 @@ That is the whole design. Each fresh k adds a new unknown along with each new eq
 
 Start from the laptop's sum and replace Q by dG:
 
-$$u_1G + u_2Q = (z\,w)\,G + (r\,w)\,d\,G = w\,(z + r\,d)\,G$$
+```math
+u_1G + u_2Q = (z\,w)\,G + (r\,w)\,d\,G = w\,(z + r\,d)\,G
+```
 
 The signing rule says z + r·d = s·k (mod n), and w = s⁻¹, so w(z + r·d) = k. The sum is kG = R, whose x-coordinate mod n is r. The check passes.
 
@@ -144,7 +152,9 @@ By the birthday bound the search grows like the square root of 2^20 hashes, not 
 
 Two updates, one nonce. Both signatures carry the same r, because r comes only from k. Write the two equations:
 
-$$s_1 k = z_1 + r\,d, \qquad s_2 k = z_2 + r\,d \pmod n$$
+```math
+s_1 k = z_1 + r\,d, \qquad s_2 k = z_2 + r\,d \pmod n
+```
 
 Subtract and d vanishes: (s1 − s2)·k = z1 − z2. Divide, and k is known. Put k back into the first equation and solve for d. Two equations, two unknowns: Step 0's margin of one is gone.
 
@@ -568,11 +578,11 @@ ALL CHECKS PASS
 
 Lean proves Steps 1 and 4 and the no-hash forgery on any elliptic curve mod a prime p, and checks the worked numbers.
 
-- Take n prime, G with exactly n multiples, and $s = k^{-1}(z + r\,d) \bmod n$, with r and s not 0. Then the laptop's sum $u_1 G + u_2 Q$ is $kG = R$, so the check passes.
-- Take two files with $z_1 \ne z_2$, signed with one nonce k and $r \ne 0$. Then $k = (z_1 - z_2)/(s_1 - s_2)$ and $d = (s_1 k - z_1)/r$, mod n.
-- Take any a and $b \ne 0$, $R = aG + bQ$, $r = x(R) \bmod n \ne 0$ and $s = r\,b^{-1}$. Then the check accepts (r, s) for the number $z = a\,s$, made from the public key alone.
+- Take n prime, G with exactly n multiples, and $`s = k^{-1}(z + r\,d) \bmod n`$, with r and s not 0. Then the laptop's sum $`u_1 G + u_2 Q`$ is $`kG = R`$, so the check passes.
+- Take two files with $`z_1 \ne z_2`$, signed with one nonce k and $`r \ne 0`$. Then $`k = (z_1 - z_2)/(s_1 - s_2)`$ and $`d = (s_1 k - z_1)/r`$, mod n.
+- Take any a and $`b \ne 0`$, $`R = aG + bQ`$, $`r = x(R) \bmod n \ne 0`$ and $`s = r\,b^{-1}`$. Then the check accepts (r, s) for the number $`z = a\,s`$, made from the public key alone.
 - It checks that 1,000,003 and 999,007 are prime, and that G, Q and R lie on the curve.
-- It checks the signing and checking arithmetic in Worked numbers: $k^{-1}$, s1, w, u1, u2 and s2.
+- It checks the signing and checking arithmetic in Worked numbers: $`k^{-1}`$, s1, w, u1, u2 and s2.
 - It checks that k = 90,210 and d = 512,377 satisfy the nonce-reuse equations, and the forgery's s and z.
 
 Point addition and the points it gives, SHA-256, the brute-force walk and the collision search are left to the Python and Rust checks.

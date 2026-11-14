@@ -38,34 +38,42 @@ Reminders: ∂V/∂T, with the curly d, is litres gained per kelvin with pressur
 
 Write the gas law as one expression that must be zero:
 
-$$F(p, V, T) = pV - nRT = 0$$
+```math
+F(p, V, T) = pV - nRT = 0
+```
 
-**Inverse function theorem.** Let $G$ take several numbers to as many numbers, with continuous partial derivatives near a point $x_0$. If its Jacobian $J$ there is invertible, then near $x_0$ the map has an undo $G^{-1}$ with continuous partials, and
+**Inverse function theorem.** Let $`G`$ take several numbers to as many numbers, with continuous partial derivatives near a point $`x_0`$. If its Jacobian $`J`$ there is invertible, then near $`x_0`$ the map has an undo $`G^{-1}`$ with continuous partials, and
 
-$$J_{G^{-1}}\big(G(x_0)\big) = J_G(x_0)^{-1}$$
+```math
+J_{G^{-1}}\big(G(x_0)\big) = J_G(x_0)^{-1}
+```
 
 **Read it aloud:** where the rate grid can be inverted, the map can be undone nearby, and the undo's rate grid is the inverse grid.
 
-**Implicit function theorem.** Split the variables into $x$, left free, and $y$, the $m$ unknowns. Take $m$ equations $F(x, y) = 0$ holding at a known state $x_0$, $y_0$. If the square block ∂F/∂y, the equations' rates in the unknowns, is invertible there, then near $x_0$ exactly one nearby $y$ solves them, with continuous partials in $x$, and
+**Implicit function theorem.** Split the variables into $`x`$, left free, and $`y`$, the $`m`$ unknowns. Take $`m`$ equations $`F(x, y) = 0`$ holding at a known state $`x_0`$, $`y_0`$. If the square block ∂F/∂y, the equations' rates in the unknowns, is invertible there, then near $`x_0`$ exactly one nearby $`y`$ solves them, with continuous partials in $`x`$, and
 
-$$\frac{\partial y}{\partial x} = -\left(\frac{\partial F}{\partial y}\right)^{-1}\frac{\partial F}{\partial x}$$
+```math
+\frac{\partial y}{\partial x} = -\left(\frac{\partial F}{\partial y}\right)^{-1}\frac{\partial F}{\partial x}
+```
 
 **Read it aloud:** the unknowns' rates are minus the inverse of their own block times the free variables' block.
 
-For the gas, one equation and one unknown $V$: the block is the number ∂F/∂V = p, and inverting it is dividing.
+For the gas, one equation and one unknown $`V`$: the block is the number ∂F/∂V = p, and inverting it is dividing.
 
-$$\frac{\partial V}{\partial T} = -\frac{\partial F/\partial T}{\partial F/\partial V} = \frac{nR}{p}, \qquad \frac{\partial V}{\partial p} = -\frac{\partial F/\partial p}{\partial F/\partial V} = -\frac{V}{p}$$
+```math
+\frac{\partial V}{\partial T} = -\frac{\partial F/\partial T}{\partial F/\partial V} = \frac{nR}{p}, \qquad \frac{\partial V}{\partial p} = -\frac{\partial F/\partial p}{\partial F/\partial V} = -\frac{V}{p}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p$, $V$, $T$ | pressure, volume, temperature | 100 kPa, 24.942 L, 300 K | more pressure: smaller rates |
-| $n$, $R$ | amount of gas in moles; the gas constant | 1 mol; 8.314 kPa L per mol per K | — |
-| $F$ | the law as one expression, zero on every real state | pV − nRT | — |
-| $\partial F/\partial V$, $\partial F/\partial p$, $\partial F/\partial T$ | the rates of F in each variable, others held | 100, 24.942, −8.314 | ∂F/∂V near 0: the rates of V blow up |
-| $G$, $H$, $J$ | maps from several numbers to as many numbers; a Jacobian | G: (V, T) to (p, T), `[[-4.009302, 0.333333], [0, 1]]` | — |
-| $x$, $y$, $m$, $x_0$, $y_0$ | free variables, the m unknowns, the known state | x = (p, T), y = V, m = 1 | — |
-| $a$, $b$ | van der Waals constants: attraction, molecule volume | 364 kPa L^2 per mol^2; 0.04267 L per mol | — |
-| $k$ | a small pressure step | 1 kPa down to 0.001 kPa | larger k: the quotient drifts from −0.249420 |
+| $`p`$, $`V`$, $`T`$ | pressure, volume, temperature | 100 kPa, 24.942 L, 300 K | more pressure: smaller rates |
+| $`n`$, $`R`$ | amount of gas in moles; the gas constant | 1 mol; 8.314 kPa L per mol per K | — |
+| $`F`$ | the law as one expression, zero on every real state | pV − nRT | — |
+| $`\partial F/\partial V`$, $`\partial F/\partial p`$, $`\partial F/\partial T`$ | the rates of F in each variable, others held | 100, 24.942, −8.314 | ∂F/∂V near 0: the rates of V blow up |
+| $`G`$, $`H`$, $`J`$ | maps from several numbers to as many numbers; a Jacobian | G: (V, T) to (p, T), `[[-4.009302, 0.333333], [0, 1]]` | — |
+| $`x`$, $`y`$, $`m`$, $`x_0`$, $`y_0`$ | free variables, the m unknowns, the known state | x = (p, T), y = V, m = 1 | — |
+| $`a`$, $`b`$ | van der Waals constants: attraction, molecule volume | 364 kPa L^2 per mol^2; 0.04267 L per mol | — |
+| $`k`$ | a small pressure step | 1 kPa down to 0.001 kPa | larger k: the quotient drifts from −0.249420 |
 
 ### When it holds
 
@@ -84,15 +92,15 @@ Close up, a map with continuous partials differs from its tangent-plane version 
 
 ### Step 1: the inverse theorem on the gas
 
-Let $G$ send (V, T) to (p, T), with p = nRT/V. Its Jacobian has rows (∂p/∂V, ∂p/∂T) and (0, 1): ∂p/∂V = −nRT/V^2 = −4.009302 kPa per litre, ∂p/∂T = nR/V = 0.333333 kPa per kelvin.
+Let $`G`$ send (V, T) to (p, T), with p = nRT/V. Its Jacobian has rows (∂p/∂V, ∂p/∂T) and (0, 1): ∂p/∂V = −nRT/V^2 = −4.009302 kPa per litre, ∂p/∂T = nR/V = 0.333333 kPa per kelvin.
 
-The determinant is −4.009302, not zero, so $G$ can be undone near the state. Call these s and c. The matrix `[[s, c], [0, 1]]` has inverse `[[1/s, -c/s], [0, 1]]` ([The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md)), whose top row is −0.249420 and 0.083140: ∂V/∂p and ∂V/∂T, read off without solving for V.
+The determinant is −4.009302, not zero, so $`G`$ can be undone near the state. Call these s and c. The matrix `[[s, c], [0, 1]]` has inverse `[[1/s, -c/s], [0, 1]]` ([The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md)), whose top row is −0.249420 and 0.083140: ∂V/∂p and ∂V/∂T, read off without solving for V.
 
 Given the undo, the formula is the chain rule: undoing then doing returns the input, so the two Jacobians multiply to the identity.
 
 ### Step 2: why the undo exists
 
-To reach an output near $G(x_0)$, start at $x_0$ and correct repeatedly by the inverse Jacobian times what the output still misses. The Jacobian barely changes nearby, so each correction at least halves the gap, closing on exactly one input: the contraction principle of [Fixed points](../03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md).
+To reach an output near $`G(x_0)`$, start at $`x_0`$ and correct repeatedly by the inverse Jacobian times what the output still misses. The Jacobian barely changes nearby, so each correction at least halves the gap, closing on exactly one input: the contraction principle of [Fixed points](../03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md).
 
 <details>
 <summary>Detailed proof</summary>
@@ -105,7 +113,7 @@ If |y − G(x_0)| < δ = r/(2||J^{-1}||), φ maps the ball into itself, so it ha
 
 ### Step 3: the implicit theorem is the inverse theorem in disguise
 
-Let $H$ keep the free variables and record the equation: (p, T, V) to (p, T, F). Its Jacobian has rows (1, 0, 0), (0, 1, 0) and (∂F/∂p, ∂F/∂T, ∂F/∂V), so its determinant is ∂F/∂V = p = 100. Not zero, so $H$ can be undone. Feed the undo (p, T, 0): it returns the one nearby (p, T, V) with F = 0. With several unknowns the determinant is that of the block ∂F/∂y.
+Let $`H`$ keep the free variables and record the equation: (p, T, V) to (p, T, F). Its Jacobian has rows (1, 0, 0), (0, 1, 0) and (∂F/∂p, ∂F/∂T, ∂F/∂V), so its determinant is ∂F/∂V = p = 100. Not zero, so $`H`$ can be undone. Feed the undo (p, T, 0): it returns the one nearby (p, T, V) with F = 0. With several unknowns the determinant is that of the block ∂F/∂y.
 
 ### Step 4: the rate formula, and the tolerance game
 

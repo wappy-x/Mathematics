@@ -39,52 +39,55 @@ The one line is the bound. It starts loose at 10^4.68 °C, because the raw readi
 
 ## The formula
 
-Notation first, in words. The readings are $T_1, \dots, T_n$ in °C, with $n$ = 50,000. The smoothed values are $c_1, \dots, c_n$. The cost to minimise is
+Notation first, in words. The readings are $`T_1, \dots, T_n`$ in °C, with $`n`$ = 50,000. The smoothed values are $`c_1, \dots, c_n`$. The cost to minimise is
 
-$$f(c) = \sum_{i=1}^{n} (c_i - T_i)^2 \;+\; \lambda \sum_{i=1}^{n-1} (c_{i+1} - c_i)^2$$
+```math
+f(c) = \sum_{i=1}^{n} (c_i - T_i)^2 \;+\; \lambda \sum_{i=1}^{n-1} (c_{i+1} - c_i)^2
+```
 
-The first sum is the misfit. The second is the roughness, weighted by $\lambda$ (lambda) = 100.
+The first sum is the misfit. The second is the roughness, weighted by $`\lambda`$ (lambda) = 100.
 
-From [Gradient descent](02-gradient-descent-and-its-rate.md): $x_k$ is the iterate at step $k$ (here the whole list of 50,000 values), $d_k$ the search direction and $\alpha_k$ the step length. $\nabla f(x_k)$ is the gradient, the slope of the cost in every coordinate at once. From [Newton and BFGS](05-newton-and-quasi-newton-bfgs.md): the step pair is
+From [Gradient descent](02-gradient-descent-and-its-rate.md): $`x_k`$ is the iterate at step $`k`$ (here the whole list of 50,000 values), $`d_k`$ the search direction and $`\alpha_k`$ the step length. $`\nabla f(x_k)`$ is the gradient, the slope of the cost in every coordinate at once. From [Newton and BFGS](05-newton-and-quasi-newton-bfgs.md): the step pair is
 
-$$s_k = x_{k+1} - x_k, \qquad y_k = \nabla f(x_{k+1}) - \nabla f(x_k)$$
+```math
+s_k = x_{k+1} - x_k, \qquad y_k = \nabla f(x_{k+1}) - \nabla f(x_k)
+```
 
-and $B_k$ is BFGS's curvature table. This card works with its inverse, $B_k^{-1}$, because the direction is $d_k = -B_k^{-1} \nabla f(x_k)$. With $\sigma_k$ (sigma) $= 1 / (y_k^{\mathsf T} s_k)$, the BFGS update of the inverse is
+and $`B_k`$ is BFGS's curvature table. This card works with its inverse, $`B_k^{-1}`$, because the direction is $`d_k = -B_k^{-1} \nabla f(x_k)`$. With $`\sigma_k`$ (sigma) $`= 1 / (y_k^{\mathsf T} s_k)`$, the BFGS update of the inverse is
 
-$$B_{k+1}^{-1} = V_k^{\mathsf T} B_k^{-1} V_k + \sigma_k s_k s_k^{\mathsf T}, \qquad V_k = I - \sigma_k y_k s_k^{\mathsf T}$$
+```math
+B_{k+1}^{-1} = V_k^{\mathsf T} B_k^{-1} V_k + \sigma_k s_k s_k^{\mathsf T}, \qquad V_k = I - \sigma_k y_k s_k^{\mathsf T}
+```
 
-where $I$ is the identity matrix. L-BFGS starts each step from the plain guess $B^{-1} = \gamma_k I$, with $\gamma_k = s_{k-1}^{\mathsf T} y_{k-1} / y_{k-1}^{\mathsf T} y_{k-1}$, and applies this update for the last $m$ pairs only. It never forms the matrix. It runs the **two-loop recursion** on $q = \nabla f(x_k)$:
+where $`I`$ is the identity matrix. L-BFGS starts each step from the plain guess $`B^{-1} = \gamma_k I`$, with $`\gamma_k = s_{k-1}^{\mathsf T} y_{k-1} / y_{k-1}^{\mathsf T} y_{k-1}`$, and applies this update for the last $`m`$ pairs only. It never forms the matrix. It runs the **two-loop recursion** on $`q = \nabla f(x_k)`$:
 
-$$\begin{aligned}
-&\text{newest pair to oldest:} && a_i = \sigma_i\, s_i^{\mathsf T} q, \qquad q \leftarrow q - a_i y_i \\
-&\text{then:} && z = \gamma_k\, q \\
-&\text{oldest pair to newest:} && b_i = \sigma_i\, y_i^{\mathsf T} z, \qquad z \leftarrow z + (a_i - b_i)\, s_i \\
-&\text{finally:} && d_k = -z
-\end{aligned}$$
+```math
+\begin{aligned} &\text{newest pair to oldest:} && a_i = \sigma_i\, s_i^{\mathsf T} q, \qquad q \leftarrow q - a_i y_i \\ &\text{then:} && z = \gamma_k\, q \\ &\text{oldest pair to newest:} && b_i = \sigma_i\, y_i^{\mathsf T} z, \qquad z \leftarrow z + (a_i - b_i)\, s_i \\ &\text{finally:} && d_k = -z \end{aligned}
+```
 
 **Read it aloud:** take the current slope; newest pair first, remove the part of it that each remembered slope change explains; scale what is left by the latest curvature guess; then, oldest pair first, add back the matching remembered steps; flip the sign, and that is the BFGS direction.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $T_i$, $c_i$, $c^*$, $n$ | reading $i$; its smoothed value; the best curve; how many readings | 50,000 readings; at reading 25,000, raw 14.046 °C, smoothed 15.856 °C | more readings: more memory per pair; the curvature bounds 2 and 802 do not change |
-| $\lambda$ | weight on roughness | 100 | smoother curve; more steps |
-| $f(c)$, $f^*$ | the cost: misfit plus weighted roughness, °C²; its lowest value | $f^*$ = 99,322.2350, at the best curve | — |
-| $x_k$, $d_k$, $\alpha_k$; $u$, $v$ | iterate, direction, step length at step $k$; on the banana, the point's two coordinates | $x_0$ = the raw readings; on the banana, (−1.2, 1) | — |
-| $\nabla f(x_k)$, $g$ | the gradient, written $g$ in the proofs; its length $\lVert \nabla f \rVert$ | length 94,741.5 at $k$ = 0; 0.001519 at the end | — |
-| $s_k$, $y_k$ | one step taken; the change in slope across it | two lists of 50,000 numbers per pair | — |
-| $\sigma_k$ | one over $y_k^{\mathsf T} s_k$; must be positive (textbooks write $\rho_k$, which this wing keeps for the trust-region ratio) | — | — |
-| $B_k^{-1}$, $W_j$, $V_k$, $I$ | the inverse curvature table, never stored; the same table after $j$ of the stored updates; one update's correction; the identity | 2,500,000,000 entries if stored | — |
-| $\gamma_k$ | the starting guess for $B^{-1}$: one over the latest curvature | between 1/802 and 1/2 here | longer trial steps |
-| $m$ | how many pairs are kept | 10 | more memory; here barely fewer steps |
-| $a_i$, $b_i$, $q$, $z$ | the two-loop's working numbers and lists | at the banana's step 1: $a$ = 0.216318, $b$ = 0.000506 | — |
-| $\mu$, $L$, $r$ | least and greatest curvature of $f$; the fixed factor in the rate theorem | 2 and 802; the theorem does not give $r$ | — |
+| $`T_i`$, $`c_i`$, $`c^*`$, $`n`$ | reading $`i`$; its smoothed value; the best curve; how many readings | 50,000 readings; at reading 25,000, raw 14.046 °C, smoothed 15.856 °C | more readings: more memory per pair; the curvature bounds 2 and 802 do not change |
+| $`\lambda`$ | weight on roughness | 100 | smoother curve; more steps |
+| $`f(c)`$, $`f^*`$ | the cost: misfit plus weighted roughness, °C²; its lowest value | $`f^*`$ = 99,322.2350, at the best curve | — |
+| $`x_k`$, $`d_k`$, $`\alpha_k`$; $`u`$, $`v`$ | iterate, direction, step length at step $`k`$; on the banana, the point's two coordinates | $`x_0`$ = the raw readings; on the banana, (−1.2, 1) | — |
+| $`\nabla f(x_k)`$, $`g`$ | the gradient, written $`g`$ in the proofs; its length $`\lVert \nabla f \rVert`$ | length 94,741.5 at $`k`$ = 0; 0.001519 at the end | — |
+| $`s_k`$, $`y_k`$ | one step taken; the change in slope across it | two lists of 50,000 numbers per pair | — |
+| $`\sigma_k`$ | one over $`y_k^{\mathsf T} s_k`$; must be positive (textbooks write $`\rho_k`$, which this wing keeps for the trust-region ratio) | — | — |
+| $`B_k^{-1}`$, $`W_j`$, $`V_k`$, $`I`$ | the inverse curvature table, never stored; the same table after $`j`$ of the stored updates; one update's correction; the identity | 2,500,000,000 entries if stored | — |
+| $`\gamma_k`$ | the starting guess for $`B^{-1}`$: one over the latest curvature | between 1/802 and 1/2 here | longer trial steps |
+| $`m`$ | how many pairs are kept | 10 | more memory; here barely fewer steps |
+| $`a_i`$, $`b_i`$, $`q`$, $`z`$ | the two-loop's working numbers and lists | at the banana's step 1: $`a`$ = 0.216318, $`b`$ = 0.000506 | — |
+| $`\mu`$, $`L`$, $`r`$ | least and greatest curvature of $`f`$; the fixed factor in the rate theorem | 2 and 802; the theorem does not give $`r`$ | — |
 
 ### When it holds
 
-- **Every stored pair has $y_i^{\mathsf T} s_i > 0$**: the slope rose along the step. Then every rebuilt direction points downhill (proof below). On the banana valley, a line search that checks only sufficient decrease (the Armijo test) lets a bad pair in, and the next direction points uphill: the run sticks at step 7. Skip bad pairs, as the code does, and it reaches (1, 1) in 45 steps. The Wolfe test of [Line search](04-line-search-armijo-and-wolfe.md), which also asks the slope along the step to rise enough, rules them out.
+- **Every stored pair has $`y_i^{\mathsf T} s_i > 0`$**: the slope rose along the step. Then every rebuilt direction points downhill (proof below). On the banana valley, a line search that checks only sufficient decrease (the Armijo test) lets a bad pair in, and the next direction points uphill: the run sticks at step 7. Skip bad pairs, as the code does, and it reaches (1, 1) in 45 steps. The Wolfe test of [Line search](04-line-search-armijo-and-wolfe.md), which also asks the slope along the step to rise enough, rules them out.
 - **The gradient is exact and cheap.** Here it costs a few passes over the list. Estimated by small nudges, it would cost two evaluations per value, 50,000 times over.
-- **The start guess $\gamma_k$ has the right size.** With $\gamma_k = 1$ instead, at step 40 the first trial step is 64.9 long instead of 0.443, and the line search must halve it 8 times.
-- **For a rate, the curvature is bounded.** If every curvature of $f$ lies between $\mu > 0$ and $L$ and every step passes the Wolfe tests, the cost's excess over its lowest value obeys $f(x_k) - f^* \le r^k\,(f(x_0) - f^*)$ for some fixed $r < 1$ (Liu and Nocedal, 1989, Theorem 6.1; stated, not proved here). This **R-linear** rate caps the whole history; it does not promise a fixed shrink at every step. Here $\mu$ = 2 and $L$ = 802. This card's runs backtrack (halve the trial step until the cost falls enough) instead of testing Wolfe. The paper notes the proof can be adapted to backtracking. On the quadratic fit every pair has $y^{\mathsf T} s > 0$, so every direction points downhill. Unlike full BFGS, no faster rate is promised.
+- **The start guess $`\gamma_k`$ has the right size.** With $`\gamma_k = 1`$ instead, at step 40 the first trial step is 64.9 long instead of 0.443, and the line search must halve it 8 times.
+- **For a rate, the curvature is bounded.** If every curvature of $`f`$ lies between $`\mu > 0`$ and $`L`$ and every step passes the Wolfe tests, the cost's excess over its lowest value obeys $`f(x_k) - f^* \le r^k\,(f(x_0) - f^*)`$ for some fixed $`r < 1`$ (Liu and Nocedal, 1989, Theorem 6.1; stated, not proved here). This **R-linear** rate caps the whole history; it does not promise a fixed shrink at every step. Here $`\mu`$ = 2 and $`L`$ = 802. This card's runs backtrack (halve the trial step until the cost falls enough) instead of testing Wolfe. The paper notes the proof can be adapted to backtracking. On the quadratic fit every pair has $`y^{\mathsf T} s > 0`$, so every direction points downhill. Unlike full BFGS, no faster rate is promised.
 - **No limits on the values.** Bounds, such as a floor under the values, need a variant that projects each step back inside them.
 
 ---
@@ -93,46 +96,48 @@ $$\begin{aligned}
 
 ### Step 0: the BFGS update is a recipe, so it can be replayed instead of stored
 
-Look at the update again. The new table is the old table wrapped in $V_k$ on both sides, plus one extra term. $V_k$ is the identity minus a single product $y_k s_k^{\mathsf T}$. So multiplying a list by $V_k$ needs only two lists, $s_k$ and $y_k$: one dot product and one subtraction. The whole table is the start guess with $m$ such wrappings around it. Keep the $m$ pairs, and you can apply the table to any list without writing it down.
+Look at the update again. The new table is the old table wrapped in $`V_k`$ on both sides, plus one extra term. $`V_k`$ is the identity minus a single product $`y_k s_k^{\mathsf T}`$. So multiplying a list by $`V_k`$ needs only two lists, $`s_k`$ and $`y_k`$: one dot product and one subtraction. The whole table is the start guess with $`m`$ such wrappings around it. Keep the $`m`$ pairs, and you can apply the table to any list without writing it down.
 
 ### Step 1: unwrapping one layer gives the two loops
 
-Apply the updated table to a slope $g$:
+Apply the updated table to a slope $`g`$:
 
-$$B_{k+1}^{-1} g = V_k^{\mathsf T} \big( B_k^{-1} (V_k g) \big) + \sigma_k s_k (s_k^{\mathsf T} g)$$
+```math
+B_{k+1}^{-1} g = V_k^{\mathsf T} \big( B_k^{-1} (V_k g) \big) + \sigma_k s_k (s_k^{\mathsf T} g)
+```
 
 Work from the inside out.
 
-1. $V_k g = g - \sigma_k y_k (s_k^{\mathsf T} g) = g - a\, y_k$, with $a = \sigma_k s_k^{\mathsf T} g$. That is one line of the first loop.
-2. Apply the older table $B_k^{-1}$ to the result. It is itself wrapped by older pairs, so the same move repeats, pair by pair, back to the start guess $\gamma_k I$. That is why the first loop runs newest to oldest.
-3. Coming back out, $V_k^{\mathsf T} z = z - \sigma_k s_k (y_k^{\mathsf T} z) = z - b\, s_k$, with $b = \sigma_k y_k^{\mathsf T} z$. The extra term adds $a\, s_k$. Together, $z \leftarrow z + (a - b) s_k$: one line of the second loop. The layers close in the reverse order they opened, oldest to newest.
+1. $`V_k g = g - \sigma_k y_k (s_k^{\mathsf T} g) = g - a\, y_k`$, with $`a = \sigma_k s_k^{\mathsf T} g`$. That is one line of the first loop.
+2. Apply the older table $`B_k^{-1}`$ to the result. It is itself wrapped by older pairs, so the same move repeats, pair by pair, back to the start guess $`\gamma_k I`$. That is why the first loop runs newest to oldest.
+3. Coming back out, $`V_k^{\mathsf T} z = z - \sigma_k s_k (y_k^{\mathsf T} z) = z - b\, s_k`$, with $`b = \sigma_k y_k^{\mathsf T} z`$. The extra term adds $`a\, s_k`$. Together, $`z \leftarrow z + (a - b) s_k`$: one line of the second loop. The layers close in the reverse order they opened, oldest to newest.
 
-Each pair costs two dot products and two list updates, so the direction costs about $4mn$ multiply-adds, plus $n$ for the scaling.
+Each pair costs two dot products and two list updates, so the direction costs about $`4mn`$ multiply-adds, plus $`n`$ for the scaling.
 
-In numbers, on the shelf's house example, the banana valley $f(u, v) = (1 - u)^2 + 100\,(v - u^2)^2$ of [Newton and BFGS](05-newton-and-quasi-newton-bfgs.md), minimised at (1, 1). Start at the classic point $x_0$ = (−1.2, 1), rather than that card's (0, 1), because from here a careless run fails (What breaks, below).
+In numbers, on the shelf's house example, the banana valley $`f(u, v) = (1 - u)^2 + 100\,(v - u^2)^2`$ of [Newton and BFGS](05-newton-and-quasi-newton-bfgs.md), minimised at (1, 1). Start at the classic point $`x_0`$ = (−1.2, 1), rather than that card's (0, 1), because from here a careless run fails (What breaks, below).
 
-With no pairs yet, the code takes the downhill slope scaled to length 1 as the first direction. The line search lands at $x_1$ = (−0.9685, 1.0945), where the slope is $g_1$ = (56.6579, 31.2816). The one pair is $s_0$ = (0.23146, 0.09447) and $y_0$ = (272.2579, 119.2816), with $s_0^{\mathsf T} y_0$ = 74.2864, $y_0^{\mathsf T} y_0$ = 88,352.45 and $s_0^{\mathsf T} g_1$ = 16.0694.
+With no pairs yet, the code takes the downhill slope scaled to length 1 as the first direction. The line search lands at $`x_1`$ = (−0.9685, 1.0945), where the slope is $`g_1`$ = (56.6579, 31.2816). The one pair is $`s_0`$ = (0.23146, 0.09447) and $`y_0`$ = (272.2579, 119.2816), with $`s_0^{\mathsf T} y_0`$ = 74.2864, $`y_0^{\mathsf T} y_0`$ = 88,352.45 and $`s_0^{\mathsf T} g_1`$ = 16.0694.
 
-Then $a$ = 16.0694 / 74.2864 = 0.216318, and $q = g_1 - a y_0$ = (−2.2363, 5.4789). The guess is $\gamma$ = 74.2864 / 88,352.45 = 0.0008408. Then $b$ = 0.000506, and the direction is $d_1$ = (−0.048072, −0.024995).
+Then $`a`$ = 16.0694 / 74.2864 = 0.216318, and $`q = g_1 - a y_0`$ = (−2.2363, 5.4789). The guess is $`\gamma`$ = 74.2864 / 88,352.45 = 0.0008408. Then $`b`$ = 0.000506, and the direction is $`d_1`$ = (−0.048072, −0.024995).
 
 <details>
 <summary>Detailed proof: the two loops give exactly the BFGS direction, and it points downhill</summary>
 
-Write $W_{0} = \gamma I$ and $W_{j} = V_j^{\mathsf T} W_{j-1} V_j + \sigma_j s_j s_j^{\mathsf T}$ for the stored pairs $j = 1, \dots, m$, oldest first. L-BFGS's direction is $-W_{m} g$.
+Write $`W_{0} = \gamma I`$ and $`W_{j} = V_j^{\mathsf T} W_{j-1} V_j + \sigma_j s_j s_j^{\mathsf T}`$ for the stored pairs $`j = 1, \dots, m`$, oldest first. L-BFGS's direction is $`-W_{m} g`$.
 
-**Claim.** For any list $g$, the two loops return $W_{m} g$.
+**Claim.** For any list $`g`$, the two loops return $`W_{m} g`$.
 
-**Proof by induction on $m$.** For $m = 0$ there are no loops and the result is $\gamma g = W_{0} g$. Suppose the claim holds for $m - 1$ pairs. With $m$ pairs, the first loop's first line uses the newest pair: $a_m = \sigma_m s_m^{\mathsf T} g$ and $q = g - a_m y_m = V_m g$. The rest of the first loop, the scaling and the second loop up to pair $m - 1$ are exactly the two loops for pairs $1, \dots, m - 1$ applied to $V_m g$. By the hypothesis they give $z = W_{m-1} V_m g$. The last line of the second loop gives
+**Proof by induction on $`m`$.** For $`m = 0`$ there are no loops and the result is $`\gamma g = W_{0} g`$. Suppose the claim holds for $`m - 1`$ pairs. With $`m`$ pairs, the first loop's first line uses the newest pair: $`a_m = \sigma_m s_m^{\mathsf T} g`$ and $`q = g - a_m y_m = V_m g`$. The rest of the first loop, the scaling and the second loop up to pair $`m - 1`$ are exactly the two loops for pairs $`1, \dots, m - 1`$ applied to $`V_m g`$. By the hypothesis they give $`z = W_{m-1} V_m g`$. The last line of the second loop gives
 
-$$z + (a_m - b_m) s_m = z - \sigma_m s_m (y_m^{\mathsf T} z) + \sigma_m s_m (s_m^{\mathsf T} g) = V_m^{\mathsf T} z + \sigma_m s_m s_m^{\mathsf T} g = W_{m} g.$$
+$`\displaystyle z + (a_m - b_m) s_m = z - \sigma_m s_m (y_m^{\mathsf T} z) + \sigma_m s_m (s_m^{\mathsf T} g) = V_m^{\mathsf T} z + \sigma_m s_m s_m^{\mathsf T} g = W_{m} g.`$
 
-**Downhill.** Suppose $\gamma > 0$ and every $\sigma_j > 0$. If $W_{j-1}$ is positive definite (it curves up in every direction: $g^{\mathsf T} W_{j-1} g > 0$ for every list $g \neq 0$), then for any $g \neq 0$,
+**Downhill.** Suppose $`\gamma > 0`$ and every $`\sigma_j > 0`$. If $`W_{j-1}`$ is positive definite (it curves up in every direction: $`g^{\mathsf T} W_{j-1} g > 0`$ for every list $`g \neq 0`$), then for any $`g \neq 0`$,
 
-$$g^{\mathsf T} W_{j} g = (V_j g)^{\mathsf T} W_{j-1} (V_j g) + \sigma_j (s_j^{\mathsf T} g)^2 \ge 0.$$
+$`\displaystyle g^{\mathsf T} W_{j} g = (V_j g)^{\mathsf T} W_{j-1} (V_j g) + \sigma_j (s_j^{\mathsf T} g)^2 \ge 0.`$
 
-Both terms are zero only if $V_j g = 0$ and $s_j^{\mathsf T} g = 0$. But then $V_j g = g - \sigma_j y_j (s_j^{\mathsf T} g) = g$, so $g = 0$. Hence $W_{j}$ is positive definite, and by induction so is $W_{m}$. The slope along $d = -W_{m} g$ is $g^{\mathsf T} d = -g^{\mathsf T} W_{m} g < 0$: downhill.
+Both terms are zero only if $`V_j g = 0`$ and $`s_j^{\mathsf T} g = 0`$. But then $`V_j g = g - \sigma_j y_j (s_j^{\mathsf T} g) = g`$, so $`g = 0`$. Hence $`W_{j}`$ is positive definite, and by induction so is $`W_{m}`$. The slope along $`d = -W_{m} g`$ is $`g^{\mathsf T} d = -g^{\mathsf T} W_{m} g < 0`$: downhill.
 
-If some $\sigma_j < 0$, the second term can be negative and the argument fails. That is the banana's stuck run.
+If some $`\sigma_j < 0`$, the second term can be negative and the argument fails. That is the banana's stuck run.
 
 </details>
 
@@ -140,15 +145,15 @@ The code checks the claim directly on the banana. At step 6, with six pairs, it 
 
 ### Step 2: keep the newest pairs, and start from the latest curvature
 
-Each pair records the curvature along one direction: after the update, $B_{k+1}^{-1} y_k = s_k$, the secant equation of [Newton and BFGS](05-newton-and-quasi-newton-bfgs.md). Older pairs describe the ground the iterate has left, so the oldest is dropped first.
+Each pair records the curvature along one direction: after the update, $`B_{k+1}^{-1} y_k = s_k`$, the secant equation of [Newton and BFGS](05-newton-and-quasi-newton-bfgs.md). Older pairs describe the ground the iterate has left, so the oldest is dropped first.
 
-The start guess covers every direction the pairs say nothing about. Here the curvature along any step lies between $\mu$ = 2 and $L$ = 802, so $\gamma_k$, one over the latest curvature, lies between 1/802 and 1/2. It sets the size of each trial step. Without it the step at $k$ = 40 is 64.9 long instead of 0.443.
+The start guess covers every direction the pairs say nothing about. Here the curvature along any step lies between $`\mu`$ = 2 and $`L`$ = 802, so $`\gamma_k`$, one over the latest curvature, lies between 1/802 and 1/2. It sets the size of each trial step. Without it the step at $`k`$ = 40 is 64.9 long instead of 0.443.
 
 ### Step 3: what ten pairs buy, and what they do not
 
 Ten pairs hold curvature along at most ten of 50,000 directions, so the rebuilt direction is nowhere near Newton's full step. At step 40 the code solves for Newton's step exactly and compares each direction with it in two ways: the cosine of the angle between them (1 when they point the same way), and the length as a fraction of Newton's.
 
-With no pairs, L-BFGS would use the slope scaled by $\gamma_{40}$: cosine 0.549, length 0.032. Ten pairs turn the direction a little towards Newton's, cosine 0.681, and lengthen it to 0.163. Twenty pairs give 0.675 and 0.162, nothing more than ten.
+With no pairs, L-BFGS would use the slope scaled by $`\gamma_{40}`$: cosine 0.549, length 0.032. Ten pairs turn the direction a little towards Newton's, cosine 0.681, and lengthen it to 0.163. Twenty pairs give 0.675 and 0.162, nothing more than ten.
 
 The steps tell the same story. The same run with different memory, to the same certificate:
 
@@ -167,15 +172,17 @@ L-BFGS works here because successive directions cooperate, each one not undoing 
 
 This sweep therefore says nothing about a cost whose curvature changes from place to place, where old pairs go stale and the memory has to be weighed on the problem itself.
 
-Gradient descent with step $1/L$ is guaranteed to reach the same certificate only within 7,079 steps, an estimate from its rate rather than a run.
+Gradient descent with step $`1/L`$ is guaranteed to reach the same certificate only within 7,079 steps, an estimate from its rate rather than a run.
 
 ### Step 4: a certificate that the curve is the best one
 
-The cost's curvature is at least $\mu$ = 2 in every direction, because the misfit alone contributes 2 and the roughness term only adds. For such a cost, the slope grows at least as fast as $\mu$ times the distance from the minimiser $c^*$. So
+The cost's curvature is at least $`\mu`$ = 2 in every direction, because the misfit alone contributes 2 and the roughness term only adds. For such a cost, the slope grows at least as fast as $`\mu`$ times the distance from the minimiser $`c^*`$. So
 
-$$\lVert c - c^* \rVert \le \frac{\lVert \nabla f(c) \rVert}{\mu}$$
+```math
+\lVert c - c^* \rVert \le \frac{\lVert \nabla f(c) \rVert}{\mu}
+```
 
-and no single value can be off by more than the length of the whole error list. The cost is strictly convex (it curves up in every direction), so $c^*$ is the only minimiser. At the end, $\lVert \nabla f \rVert$ = 0.001519, so every smoothed value lies within 0.000759 °C of the best curve. Because the cost is quadratic, the code can also solve for $c^*$ directly by elimination. The true largest gap is 1.41e-05 °C, well inside the bound.
+and no single value can be off by more than the length of the whole error list. The cost is strictly convex (it curves up in every direction), so $`c^*`$ is the only minimiser. At the end, $`\lVert \nabla f \rVert`$ = 0.001519, so every smoothed value lies within 0.000759 °C of the best curve. Because the cost is quadratic, the code can also solve for $`c^*`$ directly by elimination. The true largest gap is 1.41e-05 °C, well inside the bound.
 
 ---
 
@@ -191,7 +198,7 @@ The bill for one direction, on the 50,000-reading fit with ten pairs:
 | their memory | 1,000,000 × 8 | 8.0 MB |
 | multiply-adds, table times slope | 50,000 × 50,000 | 2,500,000,000 |
 | multiply-adds, two loops | 4 × 10 × 50,000 + 50,000 | 2,050,000 |
-| steps from the raw readings to the certificate | the run, $k$ = 0 to 138 | 138 steps, 144 cost evaluations |
+| steps from the raw readings to the certificate | the run, $`k`$ = 0 to 138 | 138 steps, 144 cost evaluations |
 | guaranteed error at the end | 0.001519 / 2 | 0.000759 °C |
 | **the answer** | ten pairs instead of the table | **8.0 MB and 2,050,000 multiply-adds per direction; every value within 0.000759 °C of the best curve after 138 steps** |
 
@@ -201,8 +208,8 @@ The station gets the smooth curve in 8.0 MB with a printed guarantee, where plai
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Storing a pair with $y^{\mathsf T} s \le 0$ (banana, Armijo-only line search) | stuck at step 7, slope +2.0443, cost 3.3379 | A negative $\sigma$ breaks the downhill proof: the direction points uphill |
-| Starting from $\gamma_k = 1$ (the fit, at step 40) | first trial step 64.9 long instead of 0.443; cost 366,168 instead of 99,343.8; 8 halvings | The start guess has the wrong size, so every step must be cut back |
+| Storing a pair with $`y^{\mathsf T} s \le 0`$ (banana, Armijo-only line search) | stuck at step 7, slope +2.0443, cost 3.3379 | A negative $`\sigma`$ breaks the downhill proof: the direction points uphill |
+| Starting from $`\gamma_k = 1`$ (the fit, at step 40) | first trial step 64.9 long instead of 0.443; cost 366,168 instead of 99,343.8; 8 halvings | The start guess has the wrong size, so every step must be cut back |
 | Reversing each loop: the first oldest first, the second newest first (banana) | 127 steps and 286 evaluations instead of 45 and 55 | The layers close in the wrong order: the direction is not BFGS's |
 | Keeping the full BFGS table | 20.0 GB | The method is right; the memory is not there |
 
@@ -596,12 +603,12 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the two-loop and downhill claims for any number of pairs, and the certificate for any cost with least curvature $\mu$.
+Lean proves the two-loop and downhill claims for any number of pairs, and the certificate for any cost with least curvature $`\mu`$.
 
-- For any start guess, any stored pairs and any slope, the two loops return exactly the table $W_m$ applied to the slope.
-- If the start guess $\gamma$ is positive and every stored pair has $y^{\mathsf T} s > 0$, the direction points downhill for every nonzero slope.
-- If the cost's curvature is at least $\mu > 0$ in every direction, every value lies within $\lVert \nabla f \rVert / \mu$ of the best curve.
-- The bill for one direction holds exactly: 20.0 GB for the table, 8.0 MB for ten pairs, 2,050,000 multiply-adds, the sweep's memory and $L$ = 802.
+- For any start guess, any stored pairs and any slope, the two loops return exactly the table $`W_m`$ applied to the slope.
+- If the start guess $`\gamma`$ is positive and every stored pair has $`y^{\mathsf T} s > 0`$, the direction points downhill for every nonzero slope.
+- If the cost's curvature is at least $`\mu > 0`$ in every direction, every value lies within $`\lVert \nabla f \rVert / \mu`$ of the best curve.
+- The bill for one direction holds exactly: 20.0 GB for the table, 8.0 MB for ten pairs, 2,050,000 multiply-adds, the sweep's memory and $`L`$ = 802.
 
 The runs are left to the Python and Rust checks: the 138 steps, the 0.000759 °C bound, the banana valley and the memory sweep.
 
@@ -929,7 +936,7 @@ end LBFGS
 > [!warning]
 > **Thinking that L-BFGS approximates Newton's step.** Ten pairs see ten directions out of 50,000. At step 40 the rebuilt direction is only 0.163 of the length of Newton's step, and the cosine of the angle between them is 0.681, against 0.549 for the slope alone. Twenty pairs give 0.162 and 0.675. What L-BFGS gets right is the curvature along its recent steps, which is enough for the steps to work together. On this quadratic fit, memory past ten pairs bought nothing: twenty pairs took 140 steps, ten took 138.
 >
-> - **Storing every pair.** One pair with $y^{\mathsf T} s \le 0$ sends the banana run uphill; it sticks at cost 3.3379.
+> - **Storing every pair.** One pair with $`y^{\mathsf T} s \le 0`$ sends the banana run uphill; it sticks at cost 3.3379.
 > - **Running the loops in the wrong order.** Nothing crashes, but the banana takes 127 steps instead of 45.
 > - **Reading the stopping test as the error.** A gradient length becomes an error bound only after dividing by the least curvature: 0.001519 / 2 = 0.000759 °C.
 
@@ -949,7 +956,7 @@ end LBFGS
 
 ## What this builds on
 
-- [Newton and BFGS](05-newton-and-quasi-newton-bfgs.md): the BFGS update, the step pair $s_k$, $y_k$, the curvature table $B_k$ and the secant equation, which this card replays from memory instead of storing.
+- [Newton and BFGS](05-newton-and-quasi-newton-bfgs.md): the BFGS update, the step pair $`s_k`$, $`y_k`$, the curvature table $`B_k`$ and the secant equation, which this card replays from memory instead of storing.
 
 ## Where this goes next
 
@@ -967,6 +974,6 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Nocedal, Jorge. "Updating Quasi-Newton Matrices with Limited Storage." *Mathematics of Computation* 35, no. 151 (1980): 773–782. [doi:10.1090/S0025-5718-1980-0572855-7](https://doi.org/10.1090/S0025-5718-1980-0572855-7). The original limited-memory update and the recursion that applies it without storing the matrix.
 - Liu, Dong C., and Jorge Nocedal. "On the Limited Memory BFGS Method for Large Scale Optimization." *Mathematical Programming* 45 (1989): 503–528. [doi:10.1007/BF01589116](https://doi.org/10.1007/BF01589116). Theorem 6.1, the R-linear convergence of the cost for bounded curvature with Wolfe steps, and tests of how the number of pairs affects the work.
-- Nocedal, Jorge, and Stephen J. Wright. *Numerical Optimization*, 2nd ed. Springer, 2006. [doi:10.1007/978-0-387-40065-5](https://doi.org/10.1007/978-0-387-40065-5). Chapter 7 gives the two-loop recursion, the scaling $\gamma_k$ and practical advice on how many pairs to keep.
+- Nocedal, Jorge, and Stephen J. Wright. *Numerical Optimization*, 2nd ed. Springer, 2006. [doi:10.1007/978-0-387-40065-5](https://doi.org/10.1007/978-0-387-40065-5). Chapter 7 gives the two-loop recursion, the scaling $`\gamma_k`$ and practical advice on how many pairs to keep.
 - Whittaker, E. T. "On a New Method of Graduation." *Proceedings of the Edinburgh Mathematical Society* 41 (1922): 63–75. [doi:10.1017/S0013091500077853](https://doi.org/10.1017/S0013091500077853). The misfit-plus-roughness cost used here to smooth the readings.
 - Eilers, Paul H. C. "A Perfect Smoother." *Analytical Chemistry* 75, no. 14 (2003): 3631–3636. [doi:10.1021/ac034173t](https://doi.org/10.1021/ac034173t). The Whittaker smoother in modern use, and its banded direct solve.

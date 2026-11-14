@@ -26,34 +26,40 @@ Scale: 900 units per capacity-per-year across from 60; 160 units per capacity up
 
 ## The formula
 
-A dash on a letter means its rate: $x'$ is how fast the stock changes, in capacities per year. The fishery's rate law is
+A dash on a letter means its rate: $`x'`$ is how fast the stock changes, in capacities per year. The fishery's rate law is
 
-$$x' = f(x) = x(1 - x) - h$$
+```math
+x' = f(x) = x(1 - x) - h
+```
 
 **Read it aloud:** the stock's rate of change is logistic growth minus a fixed yearly catch.
 
 Setting the rate to zero gives the rests:
 
-$$x = \tfrac12 \pm \sqrt{\tfrac14 - h}$$
+```math
+x = \tfrac12 \pm \sqrt{\tfrac14 - h}
+```
 
 **Read it aloud:** the rests sit either side of half capacity and close in as the catch nears a quarter.
 
-The square root needs a number zero or more: two rests for $h$ below 1/4, one at 1/4, none above. Three short formulas, the **normal forms**, capture every typical way a rest changes as a dial $\mu$ passes zero:
+The square root needs a number zero or more: two rests for $`h`$ below 1/4, one at 1/4, none above. Three short formulas, the **normal forms**, capture every typical way a rest changes as a dial $`\mu`$ passes zero:
 
-$$\text{saddle-node: } u' = \mu - u^2 \qquad \text{transcritical: } u' = \mu u - u^2 \qquad \text{pitchfork: } u' = \mu u - u^3$$
+```math
+\text{saddle-node: } u' = \mu - u^2 \qquad \text{transcritical: } u' = \mu u - u^2 \qquad \text{pitchfork: } u' = \mu u - u^3
+```
 
 **Read it aloud:** two rests meet and vanish; two rests cross and trade stability; one rest splits into three.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $x_0$ | stock as a share of capacity; $x_0$ a starting value | rests 0.3 and 0.7 at catch 0.21 | above the upper rest, it falls back |
-| $h$, $h_0$ | fixed catch, capacities per year; $h_0$ a starting value | 0.21; fold at 0.25 | rests draw together, then vanish |
-| $t$ | time, in years | 24.805 to collapse at catch 0.26 | — |
-| $f$ | the rate law, growth minus catch | $x(1-x) - h$ | — |
-| $u$ | stock minus one half | 0 at half capacity | — |
-| $a$, $\pi$ | distance past the fold, $\sqrt{h - \tfrac14}$; $\pi$ the circle constant | 0.1 at catch 0.26 | collapse within $\pi/a$ years, sooner |
-| $\mu$ | the dial in a normal form | 0.25 and −0.25 | crossing zero changes the rests |
-| $E$ | catch as a share of the stock, per year | 0.5 | above 1, the stock dies out |
+| $`x`$, $`x_0`$ | stock as a share of capacity; $`x_0`$ a starting value | rests 0.3 and 0.7 at catch 0.21 | above the upper rest, it falls back |
+| $`h`$, $`h_0`$ | fixed catch, capacities per year; $`h_0`$ a starting value | 0.21; fold at 0.25 | rests draw together, then vanish |
+| $`t`$ | time, in years | 24.805 to collapse at catch 0.26 | — |
+| $`f`$ | the rate law, growth minus catch | $`x(1-x) - h`$ | — |
+| $`u`$ | stock minus one half | 0 at half capacity | — |
+| $`a`$, $`\pi`$ | distance past the fold, $`\sqrt{h - \tfrac14}`$; $`\pi`$ the circle constant | 0.1 at catch 0.26 | collapse within $`\pi/a`$ years, sooner |
+| $`\mu`$ | the dial in a normal form | 0.25 and −0.25 | crossing zero changes the rests |
+| $`E`$ | catch as a share of the stock, per year | 0.5 | above 1, the stock dies out |
 
 ### When it holds
 
@@ -73,40 +79,44 @@ Near a rest the rate is nearly a straight line: slope times distance from the re
 <details>
 <summary>Detailed proof: the rest persists when the slope is not zero</summary>
 
-Let $f(x_0, h_0) = 0$ with slope $s < 0$ there. By continuity the slope stays below $s/2$ in a box around the point, so the rate is negative a little above $x_0$ and positive a little below. Continuity keeps both signs for catches near $h_0$. The intermediate value theorem gives a zero between; the slope below $s/2$ makes it unique and stable. The case $s > 0$ is the same. This is the implicit function theorem in one dimension.
+Let $`f(x_0, h_0) = 0`$ with slope $`s < 0`$ there. By continuity the slope stays below $`s/2`$ in a box around the point, so the rate is negative a little above $`x_0`$ and positive a little below. Continuity keeps both signs for catches near $`h_0`$. The intermediate value theorem gives a zero between; the slope below $`s/2`$ makes it unique and stable. The case $`s > 0`$ is the same. This is the implicit function theorem in one dimension.
 
 </details>
 
 ### Step 1: complete the square to see the fold
 
-With $u = x - \tfrac12$,
+With $`u = x - \tfrac12`$,
 
-$$x(1 - x) - h = \left(\tfrac14 - h\right) - u^2 .$$
+```math
+x(1 - x) - h = \left(\tfrac14 - h\right) - u^2 .
+```
 
-This is the saddle-node normal form exactly, with dial $\mu = \tfrac14 - h$. Below catch 1/4 there are two rests, $u = \pm\sqrt{\tfrac14 - h}$; at 1/4 they meet at half capacity; above it the rate is negative for every stock.
+This is the saddle-node normal form exactly, with dial $`\mu = \tfrac14 - h`$. Below catch 1/4 there are two rests, $`u = \pm\sqrt{\tfrac14 - h}`$; at 1/4 they meet at half capacity; above it the rate is negative for every stock.
 
 ### Step 2: the sign of the slope decides stability
 
-The slope of the rate is $1 - 2x$. At the upper rest it is negative: a stock above falls back, one below rises, so the rest attracts ([Linearisation](02-linearisation-and-the-jacobian.md) makes the test exact). The lower rest has the opposite slope and repels. At catch 0.21 the slopes are −0.40 and +0.40; at 0.24, −0.20 and +0.20. Both shrink toward zero: Step 0's warning sign.
+The slope of the rate is $`1 - 2x`$. At the upper rest it is negative: a stock above falls back, one below rises, so the rest attracts ([Linearisation](02-linearisation-and-the-jacobian.md) makes the test exact). The lower rest has the opposite slope and repels. At catch 0.21 the slopes are −0.40 and +0.40; at 0.24, −0.20 and +0.20. Both shrink toward zero: Step 0's warning sign.
 
 ### Step 3: past the fold, the collapse time in closed form
 
-Above the fold write $a = \sqrt{h - \tfrac14}$, and the law is $u' = -(a^2 + u^2)$. The angle $\arctan(u/a)$ then changes at rate $(u'/a)/(1 + u^2/a^2) = -a$, a steady fall. The time from a starting stock $x_0$ down to a stock $x$ is
+Above the fold write $`a = \sqrt{h - \tfrac14}`$, and the law is $`u' = -(a^2 + u^2)`$. The angle $`\arctan(u/a)`$ then changes at rate $`(u'/a)/(1 + u^2/a^2) = -a`$, a steady fall. The time from a starting stock $`x_0`$ down to a stock $`x`$ is
 
-$$t = \frac{\arctan\!\big((x_0 - \tfrac12)/a\big) - \arctan\!\big((x - \tfrac12)/a\big)}{a}.$$
+```math
+t = \frac{\arctan\!\big((x_0 - \tfrac12)/a\big) - \arctan\!\big((x - \tfrac12)/a\big)}{a}.
+```
 
-The angle stays between $-\pi/2$ and $\pi/2$, so no stock survives $\pi / a$ years. Near the fold most of that time is spent near half capacity, where the rest was.
+The angle stays between $`-\pi/2`$ and $`\pi/2`$, so no stock survives $`\pi / a`$ years. Near the fold most of that time is spent near half capacity, where the rest was.
 
 ### Step 4: the other two normal forms
 
-**Transcritical.** Take a fixed share $E$ of the stock a year instead. The law $x' = x(1 - E - x)$ is the form $\mu x - x^2$ with $\mu = 1 - E$. Zero is always a rest; the other is $1 - E$. As $E$ passes 1 they cross and trade stability; the stock fades gradually.
+**Transcritical.** Take a fixed share $`E`$ of the stock a year instead. The law $`x' = x(1 - E - x)`$ is the form $`\mu x - x^2`$ with $`\mu = 1 - E`$. Zero is always a rest; the other is $`1 - E`$. As $`E`$ passes 1 they cross and trade stability; the stock fades gradually.
 
-**Pitchfork.** If the law treats $u$ and $-u$ alike, its simplest form is $\mu u - u^3$. Below $\mu = 0$ the only rest is 0, stable. Above, 0 turns unstable and stable rests appear at $\pm\sqrt{\mu}$: a loaded column buckling left or right.
+**Pitchfork.** If the law treats $`u`$ and $`-u`$ alike, its simplest form is $`\mu u - u^3`$. Below $`\mu = 0`$ the only rest is 0, stable. Above, 0 turns unstable and stable rests appear at $`\pm\sqrt{\mu}`$: a loaded column buckling left or right.
 
 <details>
 <summary>Why these three are all the typical cases</summary>
 
-Expand the rate in $u$ and the dial at a rest with zero slope. If the dial moves the rate and the rate curves, a dial term minus a $u^2$ term leads: after rescaling, the saddle-node. If the rest survives every dial value, the dial term is gone: $\mu u - u^2$, transcritical. If the law is also odd, the $u^2$ term is gone too: pitchfork.
+Expand the rate in $`u`$ and the dial at a rest with zero slope. If the dial moves the rate and the rate curves, a dial term minus a $`u^2`$ term leads: after rescaling, the saddle-node. If the rest survives every dial value, the dial term is gone: $`\mu u - u^2`$, transcritical. If the law is also odd, the $`u^2`$ term is gone too: pitchfork.
 
 </details>
 
@@ -116,7 +126,7 @@ With two variables a rest can be a **spiral point**: nearby motion winds around 
 
 Typically a small stable limit cycle (a closed loop that nearby motion settles onto) is born, its radius growing like the square root of the dial's distance past the crossing. Otherwise a small unstable cycle shrinks onto the point and vanishes. The cubic terms decide which (Kuznetsov). That is the **Hopf bifurcation**.
 
-The polar model of [Limit cycles](08-limit-cycles-and-van-der-pol.md) with a dial, $r' = r(\mu - r^2)$, $\theta' = 1$, shows the first case: a cycle of radius $\sqrt{\mu}$ once $\mu > 0$. Here $r$ is the distance from the rest and $\theta$ the angle around it. Van der Pol's cycle appears at full size, radius about 2: a degenerate case.
+The polar model of [Limit cycles](08-limit-cycles-and-van-der-pol.md) with a dial, $`r' = r(\mu - r^2)`$, $`\theta' = 1`$, shows the first case: a cycle of radius $`\sqrt{\mu}`$ once $`\mu > 0`$. Here $`r`$ is the distance from the rest and $`\theta`$ the angle around it. Van der Pol's cycle appears at full size, radius about 2: a degenerate case.
 
 ---
 
@@ -355,13 +365,13 @@ Lean proves Step 0 for every rate law meeting its conditions, the fishery's rest
 
 - Let the rate and its slope be continuous in the stock and the dial together. A rest with a nonzero slope survives a small turn of the dial.
 - Near that rest there is then exactly one rest for each nearby dial value. The slope keeps its sign there, so the rest keeps its stability.
-- Below catch 1/4 the fishery has exactly two rests, $\tfrac12 \pm \sqrt{\tfrac14 - h}$. The upper one has negative slope and is stable; the lower one has positive slope and is unstable.
+- Below catch 1/4 the fishery has exactly two rests, $`\tfrac12 \pm \sqrt{\tfrac14 - h}`$. The upper one has negative slope and is stable; the lower one has positive slope and is unstable.
 - At catch 1/4 the only rest is half capacity. Above 1/4 there is no rest at all.
-- Above catch 1/4, with $a = \sqrt{h - \tfrac14}$, no stock following the law lasts $\pi / a$ years.
-- Completing the square: $x(1 - x) - h = (\tfrac14 - h) - (x - \tfrac12)^2$.
+- Above catch 1/4, with $`a = \sqrt{h - \tfrac14}`$, no stock following the law lasts $`\pi / a`$ years.
+- Completing the square: $`x(1 - x) - h = (\tfrac14 - h) - (x - \tfrac12)^2`$.
 - At catch 0.21 the rests are 0.3 and 0.7, slopes +0.40 and −0.40. At 0.24 they are 0.4 and 0.6, slopes +0.20 and −0.20.
-- At catch 0.25 the rest is 0.5. At catch 0.26, $a$ = 0.1, and the arctangent arguments from 0.7 are 2 and −5.
-- Share rule with $E$ = 0.5: rests 0 and 0.5, yield 0.25. Pitchfork with $\mu$ = 0.25: rests 0 and ±0.5, slope −0.5 at ±0.5.
+- At catch 0.25 the rest is 0.5. At catch 0.26, $`a`$ = 0.1, and the arctangent arguments from 0.7 are 2 and −5.
+- Share rule with $`E`$ = 0.5: rests 0 and 0.5, yield 0.25. Pitchfork with $`\mu`$ = 0.25: rests 0 and ±0.5, slope −0.5 at ±0.5.
 
 Collapse times such as 24.805 years, the RK4 runs, the cut-back runs, the chart and the figure are left to the Python and Rust checks.
 
@@ -587,7 +597,7 @@ example : (1 / 4 : ℚ) * (1 / 2) - (1 / 2) ^ 3 = 0 ∧ (1 / 4 : ℚ) * (-1 / 2)
 
 > [!TIP]
 > **Try changing**
-> - **Catch 0.2501.** How long does a stock at 0.7 last? Answer: 307.2 years, just under $\pi/a$ = 314.2.
+> - **Catch 0.2501.** How long does a stock at 0.7 last? Answer: 307.2 years, just under $`\pi/a`$ = 314.2.
 > - **Cut-back start 0.29 or 0.31.** Answer: from 0.31 the stock climbs to 0.7000 by year 60; from 0.29 it collapses. The unstable rest 0.3 is the threshold.
 > - **Share rule, E from 0.5 to 1.2.** Is the collapse sudden? Answer: no; the rest 1 − E reaches zero at E = 1, and zero turns stable, slope −0.20.
 > - **Pitchfork dial 0.25 to −0.25.** Answer: rests ±0.50 vanish; zero's slope goes from +0.25 to −0.25.

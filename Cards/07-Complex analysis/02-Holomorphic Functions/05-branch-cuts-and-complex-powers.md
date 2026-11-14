@@ -26,35 +26,39 @@ Drawn to scale at 40 units per 1, 0 at the centre. The dots are the cube roots o
 
 ## The formula
 
-Reminder: a logarithm $\log z$ of a nonzero z is any number whose exponential is z: real part ln|z|, imaginary part an angle of z, known up to whole turns ([The complex logarithm](04-complex-logarithm.md)). The principal logarithm $\operatorname{Log} z$ uses the principal argument $\operatorname{Arg} z$, the angle in (−π, π].
+Reminder: a logarithm $`\log z`$ of a nonzero z is any number whose exponential is z: real part ln|z|, imaginary part an angle of z, known up to whole turns ([The complex logarithm](04-complex-logarithm.md)). The principal logarithm $`\mathrm{Log}\, z`$ uses the principal argument $`\mathrm{Arg}\, z`$, the angle in (−π, π].
 
-$$z^a = e^{a \log z} = e^{a(\ln|z| + i\operatorname{Arg} z + 2\pi i k)}, \qquad k = 0, \pm 1, \pm 2, \dots$$
+```math
+z^a = e^{a \log z} = e^{a(\ln|z| + i\mathrm{Arg}\, z + 2\pi i k)}, \qquad k = 0, \pm 1, \pm 2, \dots
+```
 
 **Read it aloud:** z to the a is e to the a times a logarithm of z; each whole number k of extra turns is a branch, and k = 0 is the principal value.
 
-Branches differ by the factor $e^{2\pi i a k}$. Across the cut the principal value jumps by one such factor:
+Branches differ by the factor $`e^{2\pi i a k}`$. Across the cut the principal value jumps by one such factor:
 
-$$\frac{\text{principal value just above the cut}}{\text{principal value just below the cut}} = e^{2\pi i a}$$
+```math
+\frac{\text{principal value just above the cut}}{\text{principal value just below the cut}} = e^{2\pi i a}
+```
 
 **Read it aloud:** stepping up across the negative real axis multiplies the principal power by e to the 2 pi i a.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $z$ | the number raised to a power | −8; i; 4 | — |
-| $a$ | the exponent, any complex number | 1/3; i; 1/2 | — |
-| $\log z$, $\operatorname{Log} z$ | any logarithm; the principal one | ln 8 + iπ for −8 | — |
-| $\operatorname{Arg} z$ | the principal argument, in (−π, π] | π for −8 | the power turns further |
-| $k$ | extra whole turns in the logarithm | 0 principal; 1 gives −2 | the next branch |
-| $p$, $q$ | a fractional exponent's top and bottom, lowest terms | 1 and 3 | more values |
-| $e^{2\pi i a}$ | the jump at the cut; one loop's factor | −0.5 + 0.866025i | — |
-| $u$ | one step's small change, z_new/z_old − 1 | at most 0.0005 on the diamond walk | more series terms |
+| $`z`$ | the number raised to a power | −8; i; 4 | — |
+| $`a`$ | the exponent, any complex number | 1/3; i; 1/2 | — |
+| $`\log z`$, $`\mathrm{Log}\, z`$ | any logarithm; the principal one | ln 8 + iπ for −8 | — |
+| $`\mathrm{Arg}\, z`$ | the principal argument, in (−π, π] | π for −8 | the power turns further |
+| $`k`$ | extra whole turns in the logarithm | 0 principal; 1 gives −2 | the next branch |
+| $`p`$, $`q`$ | a fractional exponent's top and bottom, lowest terms | 1 and 3 | more values |
+| $`e^{2\pi i a}`$ | the jump at the cut; one loop's factor | −0.5 + 0.866025i | — |
+| $`u`$ | one step's small change, z_new/z_old − 1 | at most 0.0005 on the diamond walk | more series terms |
 
 ### When it holds
 
 - **z not 0.** Zero has no logarithm. 0 is the **branch point**: the point a loop must circle to change the value.
 - **The principal value is a convention.** Angles in [0, 2π) give another function, equal in the upper half-plane, different below.
 - **Off the cut the principal power is holomorphic** (it has a complex derivative at each point: [The complex derivative](01-complex-derivative-and-cauchy-riemann.md)), with derivative a z^a / z. On the cut it is not even continuous.
-- **Laws of exponents lose their guarantee.** (zw)^a = z^a w^a can fail by a factor $e^{2\pi i a k}$.
+- **Laws of exponents lose their guarantee.** (zw)^a = z^a w^a can fail by a factor $`e^{2\pi i a k}`$.
 
 ---
 
@@ -68,25 +72,27 @@ For positive x, x^a = e^(a ln x), as 8^(1/3) = e^(ln 8 / 3) = 2. Nothing else ca
 
 The exponential repeats every 2πi ([The elementary functions](03-exponential-sine-and-cosine-in-the-plane.md)), so the logarithms of z are Log z + 2πik, and
 
-$$e^{a(\operatorname{Log} z + 2\pi i k)} = e^{a \operatorname{Log} z} \cdot e^{2\pi i a k}$$
+```math
+e^{a(\mathrm{Log}\, z + 2\pi i k)} = e^{a \mathrm{Log}\, z} \cdot e^{2\pi i a k}
+```
 
 For i^i: Log i = iπ/2, so i · Log i = −π/2 and the principal value is e^(−π/2) = 0.207880, a real number. The other values are e^(−π/2 − 2πk): e^(−5π/2) = 0.000388 for k = 1, e^(3π/2) = 111.317778 for k = −1. All real.
 
 ### Step 2: count the values
 
-Branch k repeats the principal value when $e^{2\pi i a k} = 1$, that is, when ak is a whole number. Whole a: one value. a = p/q in lowest terms: the factors repeat every q steps of k, so q values: the q-th roots of z^p ([Powers and roots](../01-Complex%20Numbers%20and%20the%20Plane/05-powers-roots-and-roots-of-unity.md)). Any other a: infinitely many, as i^i shows.
+Branch k repeats the principal value when $`e^{2\pi i a k} = 1`$, that is, when ak is a whole number. Whole a: one value. a = p/q in lowest terms: the factors repeat every q steps of k, so q values: the q-th roots of z^p ([Powers and roots](../01-Complex%20Numbers%20and%20the%20Plane/05-powers-roots-and-roots-of-unity.md)). Any other a: infinitely many, as i^i shows.
 
 For (−8)^(1/3): Log(−8) = ln 8 + iπ, and a third of it is ln 2 + iπ/3. The principal value is 2(cos π/3 + i sin π/3) = 1 + 1.732051i. k = 1 adds a turn: 2(cos π + i sin π) = −2. k = −1 gives 1 − 1.732051i. The real cube root is a branch, not the principal one.
 
 ### Step 3: the cut is where the principal angle jumps
 
-Approaching −8 from above, the angle climbs to π; from below, it falls to −π. Arg z jumps by 2π across the negative real axis and nowhere else, so the principal power jumps by $e^{2\pi i a}$ there. At −8 the cube root reads 1 + 1.732051i above and 1 − 1.732051i below: ratio −0.5 + 0.866025i. For the square root the factor is −1: a sign flip.
+Approaching −8 from above, the angle climbs to π; from below, it falls to −π. Arg z jumps by 2π across the negative real axis and nowhere else, so the principal power jumps by $`e^{2\pi i a}`$ there. At −8 the cube root reads 1 + 1.732051i above and 1 − 1.732051i below: ratio −0.5 + 0.866025i. For the square root the factor is −1: a sign flip.
 
 The cut must run from 0 to infinity, so that every loop round 0 crosses it. Which ray is a choice; the negative real axis spares the positive reals.
 
 ### Step 4: follow a value instead of recomputing it
 
-Walk a path in small steps. Each step multiplies z by 1 + u, with u small, so it multiplies the power by $(1 + u)^a$. For small u that is the binomial series 1 + au + a(a − 1)u^2/2 + …, which needs no logarithm and no choice ([Power series in the plane](02-complex-power-series.md)). The product is the value **followed continuously**; it depends on the path only through how often it circled 0.
+Walk a path in small steps. Each step multiplies z by 1 + u, with u small, so it multiplies the power by $`(1 + u)^a`$. For small u that is the binomial series 1 + au + a(a − 1)u^2/2 + …, which needs no logarithm and no choice ([Power series in the plane](02-complex-power-series.md)). The product is the value **followed continuously**; it depends on the path only through how often it circled 0.
 
 Walk the diamond 4 → 4i → −4 → −4i → 4 from √4 = 2. The followed square root runs 2 → 1.414214 + 1.414214i → 2i → −1.414214 + 1.414214i → −2. The principal value agrees until the walk crosses the cut, then reads 1.414214 − 1.414214i at −4i and 2 at the end.
 

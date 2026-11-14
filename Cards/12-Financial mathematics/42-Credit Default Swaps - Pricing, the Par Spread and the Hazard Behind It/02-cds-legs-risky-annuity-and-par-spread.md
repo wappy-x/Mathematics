@@ -36,51 +36,55 @@ Orange, rising: the premium leg, what the fund's premiums are worth today at eac
 
 Notation first, in words.
 
-- The default date is $\tau$ (Greek "tau"), a random number of years from today.
-- The premium dates are $t_j$, read "t sub j": the first, second, and so on, up to the last, $t_n$.
+- The default date is $`\tau`$ (Greek "tau"), a random number of years from today.
+- The premium dates are $`t_j`$, read "t sub j": the first, second, and so on, up to the last, $`t_n`$.
 - A capital sigma, Σ, means "add up the terms for every date".
-- The integral $\int_0^T$ means the area under a curve from today to year T, the contract's end ([The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md)).
-- $D(t)$ is today's value of \$1 due at date t.
-- $Q(t)$ is the chance the company survives to t.
-- $\lambda(t)$ is the hazard, the yearly default rate among survivors.
-- $R$ is the recovery.
-- $\delta$ is the slice of a year each premium covers.
+- The integral $`\int_0^T`$ means the area under a curve from today to year T, the contract's end ([The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md)).
+- $`D(t)`$ is today's value of \$1 due at date t.
+- $`Q(t)`$ is the chance the company survives to t.
+- $`\lambda(t)`$ is the hazard, the yearly default rate among survivors.
+- $`R`$ is the recovery.
+- $`\delta`$ is the slice of a year each premium covers.
 
 The table below gives each one's Northwind value. All amounts are per \$1 of notional (the amount insured); multiply by \$10 million for Northwind.
 
-$$A = \sum_{j=1}^{n} \delta\, D(t_j)\, Q(t_j), \qquad P = (1-R)\int_0^T D(t)\,\lambda(t)\,Q(t)\,dt, \qquad s^* = \frac{P}{A}.$$
+```math
+A = \sum_{j=1}^{n} \delta\, D(t_j)\, Q(t_j), \qquad P = (1-R)\int_0^T D(t)\,\lambda(t)\,Q(t)\,dt, \qquad s^* = \frac{P}{A}.
+```
 
 **Read it aloud:** the risky annuity adds up each quarter's slice of a year, shrunk to today and weighted by the chance the company is still alive to pay it; the protection leg adds up the loss on default at every instant, weighted by the chance default lands in that instant and shrunk to today; the fair spread is protection divided by annuity.
 
-The premium leg is $s\,A$: the spread times the annuity. That is the whole reason the annuity is worth naming. It is the price of one unit of spread, so any spread's premium leg is one multiplication away.
+The premium leg is $`s\,A`$: the spread times the annuity. That is the whole reason the annuity is worth naming. It is the price of one unit of spread, so any spread's premium leg is one multiplication away.
 
-For a flat hazard and a flat interest rate, both legs have closed forms. Write $c = r + \lambda$ and $x = e^{-c\delta}$. Then $D(t)Q(t) = e^{-ct}$, the dated sum is a geometric series, and the protection integral is the area under one exponential:
+For a flat hazard and a flat interest rate, both legs have closed forms. Write $`c = r + \lambda`$ and $`x = e^{-c\delta}`$. Then $`D(t)Q(t) = e^{-ct}`$, the dated sum is a geometric series, and the protection integral is the area under one exponential:
 
-$$A = \delta\,\frac{x\,(1 - x^{n})}{1 - x}, \qquad P = (1-R)\,\lambda\,\frac{1 - e^{-cT}}{c}.$$
+```math
+A = \delta\,\frac{x\,(1 - x^{n})}{1 - x}, \qquad P = (1-R)\,\lambda\,\frac{1 - e^{-cT}}{c}.
+```
 
 **Read it aloud:** survival and discounting shrink each payment by the same factor x per quarter, so the annuity is a shrinking series of equal steps; the protection leg is the loss times the hazard times the discounted time the company is alive.
 
 | Symbol | Plain meaning | In our example | Push it up and the par spread… |
 | --- | --- | --- | --- |
-| $\tau$ | the default date, in years from today; random | unknown; 9.52% chance it falls inside 5 years | — |
-| $t$, $t_j$, $t_n$, $n$ | a date in years; the premium dates, the last of them, and how many there are | 0.25, 0.5, …, 5; n = 20 | — |
-| $\delta$ | the slice of a year each premium covers ("delta") | 0.25, quarterly | rises: later payments, see Why it works |
-| $T$ | the contract's length, in years | 5 | — |
-| $r$, $D(t)$ | riskless rate, continuously compounded; the discount factor $e^{-rt}$, today's value of \$1 due at t | 5%; D(5) = 0.778801 | almost unchanged: both legs shrink together |
-| $\lambda$, $Q(t)$ | the hazard ("lambda"): chance of default per year among survivors; survival chance $e^{-\lambda t}$ | 2%; Q(5) = 0.904837 | rises about one for one with $(1-R)\lambda$ |
-| $R$ | recovery: the fraction of notional recovered on default | 40% | falls: a smaller loss to cover |
-| $A$ | the **risky annuity** (also "risky PV01", present value of 1 bp a year): value of premiums of 1 a year paid only while alive | 4.181935 | falls |
-| $P$ | the **protection leg**: value today of the payout on default | 0.050625 | rises |
-| $s$, $s^*$ | a premium rate per year; the par spread | 121.06 bp | — |
-| $c$, $x$ | the combined shrink rate $r + \lambda$; one quarter's shrink factor $e^{-c\delta}$ | 0.07; 0.982652 | — |
+| $`\tau`$ | the default date, in years from today; random | unknown; 9.52% chance it falls inside 5 years | — |
+| $`t`$, $`t_j`$, $`t_n`$, $`n`$ | a date in years; the premium dates, the last of them, and how many there are | 0.25, 0.5, …, 5; n = 20 | — |
+| $`\delta`$ | the slice of a year each premium covers ("delta") | 0.25, quarterly | rises: later payments, see Why it works |
+| $`T`$ | the contract's length, in years | 5 | — |
+| $`r`$, $`D(t)`$ | riskless rate, continuously compounded; the discount factor $`e^{-rt}`$, today's value of \$1 due at t | 5%; D(5) = 0.778801 | almost unchanged: both legs shrink together |
+| $`\lambda`$, $`Q(t)`$ | the hazard ("lambda"): chance of default per year among survivors; survival chance $`e^{-\lambda t}`$ | 2%; Q(5) = 0.904837 | rises about one for one with $`(1-R)\lambda`$ |
+| $`R`$ | recovery: the fraction of notional recovered on default | 40% | falls: a smaller loss to cover |
+| $`A`$ | the **risky annuity** (also "risky PV01", present value of 1 bp a year): value of premiums of 1 a year paid only while alive | 4.181935 | falls |
+| $`P`$ | the **protection leg**: value today of the payout on default | 0.050625 | rises |
+| $`s`$, $`s^*`$ | a premium rate per year; the par spread | 121.06 bp | — |
+| $`c`$, $`x`$ | the combined shrink rate $`r + \lambda`$; one quarter's shrink factor $`e^{-c\delta}`$ | 0.07; 0.982652 | — |
 
-The survival curve is written $S(t)$ on [The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md). This card writes $Q(t)$, because $s$ is taken by the spread.
+The survival curve is written $`S(t)`$ on [The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md). This card writes $`Q(t)`$, because $`s`$ is taken by the spread.
 
 ### When it holds
 
 - **Default arrives at a known hazard.** The formulas need a survival curve fixed today. If the hazard itself moves at random, survival becomes an average over paths; see [A random hazard](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md).
-- **Default and interest rates are unrelated.** The protection integrand multiplies $D(t)$ by $\lambda(t)Q(t)$ as if the two were independent. If defaults cluster when rates fall, the product of averages is not the average of the product, and both legs shift.
-- **Recovery is a fixed number.** A recovery that is random but unrelated to everything else can be replaced by its average. One that falls when defaults are many cannot; [Recovery assumptions](05-recovery-assumptions-and-what-they-change.md) measures what $R$ moves.
+- **Default and interest rates are unrelated.** The protection integrand multiplies $`D(t)`$ by $`\lambda(t)Q(t)`$ as if the two were independent. If defaults cluster when rates fall, the product of averages is not the average of the product, and both legs shift.
+- **Recovery is a fixed number.** A recovery that is random but unrelated to everything else can be replaced by its average. One that falls when defaults are many cannot; [Recovery assumptions](05-recovery-assumptions-and-what-they-change.md) measures what $`R`$ moves.
 - **The seller pays.** The card ignores the chance the protection seller fails first. That gap, the credit valuation adjustment, is priced on [CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md).
 - **Premiums fall on fixed dates, a quarter apart.** The card's quarter is exactly 0.25 years and the payout lands at the moment of default. Live contracts count days and settle a few weeks later. Conventions verified 2026-09-28 against the ISDA (International Swaps and Derivatives Association) CDS Standard Model: premiums fall on 20 March, June, September and December, count actual days over 360, include accrued premium on default, and run at a fixed coupon (100 or 500 bp in North America) with an upfront payment. The contract's own rules are on [The credit default swap](01-credit-default-swap-contract.md).
 
@@ -96,13 +100,15 @@ These chances are the ones implied by market prices, not the historical default 
 
 ### Step 1: the premium leg is a spread times an annuity
 
-On each date $t_j$ the fund pays $s \times \delta$ per \$1 of notional: a quarter of the yearly rate. It pays only if Northwind has not defaulted by then, which has chance $Q(t_j)$. So the quarter's premium is worth $s\,\delta\,D(t_j)\,Q(t_j)$ today. Add over the twenty dates:
+On each date $`t_j`$ the fund pays $`s \times \delta`$ per \$1 of notional: a quarter of the yearly rate. It pays only if Northwind has not defaulted by then, which has chance $`Q(t_j)`$. So the quarter's premium is worth $`s\,\delta\,D(t_j)\,Q(t_j)`$ today. Add over the twenty dates:
 
-$$\text{premium leg} = \sum_{j=1}^{n} s\,\delta\,D(t_j)\,Q(t_j) = s \times A.$$
+```math
+\text{premium leg} = \sum_{j=1}^{n} s\,\delta\,D(t_j)\,Q(t_j) = s \times A.
+```
 
-The spread comes out of every term, so the premium leg is a straight line in the spread. The factor left behind, $A$, depends only on dates, rates and survival. It is the value of receiving 1 a year, in quarterly slices, only while the company lives. Finance calls it the **risky annuity**.
+The spread comes out of every term, so the premium leg is a straight line in the spread. The factor left behind, $`A`$, depends only on dates, rates and survival. It is the value of receiving 1 a year, in quarterly slices, only while the company lives. Finance calls it the **risky annuity**.
 
-For Northwind the first quarter's weight $D(t_1)Q(t_1)$ is 0.982652, and the checks add all twenty terms. The year-end weights $D(t)Q(t)$ fall from 0.93 at one year to 0.70 at five. Without the survival factor they would be $D(t)$ alone, 0.95 down to 0.78, and the annuity would be the riskless 4.396392 instead of 4.181935.
+For Northwind the first quarter's weight $`D(t_1)Q(t_1)`$ is 0.982652, and the checks add all twenty terms. The year-end weights $`D(t)Q(t)`$ fall from 0.93 at one year to 0.70 at five. Without the survival factor they would be $`D(t)`$ alone, 0.95 down to 0.78, and the annuity would be the riskless 4.396392 instead of 4.181935.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -114,48 +120,58 @@ xychart-beta
     line [0.93, 0.87, 0.81, 0.76, 0.70]
 ```
 
-Orange, upper: discounting only, $D(t)$, what \$1 from a company that cannot fail is worth. Green, lower: discounting and survival, $D(t)Q(t)$, what the fund's premium is worth when Northwind may be gone before it falls due. The gap widens with time, because survival and discount both compound.
+Orange, upper: discounting only, $`D(t)`$, what \$1 from a company that cannot fail is worth. Green, lower: discounting and survival, $`D(t)Q(t)`$, what the fund's premium is worth when Northwind may be gone before it falls due. The gap widens with time, because survival and discount both compound.
 
 ### Step 2: the protection leg is an integral over the default date
 
-The payout happens once, at the default date $\tau$, and is $1 - R$ per \$1. Default can land on any day, not on a grid. So slice the five years into short stretches, each dt years long. For the default to land in the stretch starting at $t$, Northwind must survive to $t$, chance $Q(t)$, and then fail in the stretch, chance about $\lambda(t)\,dt$ among survivors. That is exactly what the hazard measures. So
+The payout happens once, at the default date $`\tau`$, and is $`1 - R`$ per \$1. Default can land on any day, not on a grid. So slice the five years into short stretches, each dt years long. For the default to land in the stretch starting at $`t`$, Northwind must survive to $`t`$, chance $`Q(t)`$, and then fail in the stretch, chance about $`\lambda(t)\,dt`$ among survivors. That is exactly what the hazard measures. So
 
-$$\text{chance default lands in } [t, t + dt] \approx \lambda(t)\,Q(t)\,dt.$$
+```math
+\text{chance default lands in } [t, t + dt] \approx \lambda(t)\,Q(t)\,dt.
+```
 
-A payout of $1 - R$ in that stretch is worth $(1-R)\,D(t)\,\lambda(t)\,Q(t)\,dt$ today. Add over the stretches and let them shrink: the sum becomes the integral $P$. The product $\lambda(t)Q(t)$ is the **default density**, the rate at which default probability piles up at date t. Its area from 0 to 5 is the 9.52% chance of default inside the contract.
+A payout of $`1 - R`$ in that stretch is worth $`(1-R)\,D(t)\,\lambda(t)\,Q(t)\,dt`$ today. Add over the stretches and let them shrink: the sum becomes the integral $`P`$. The product $`\lambda(t)Q(t)`$ is the **default density**, the rate at which default probability piles up at date t. Its area from 0 to 5 is the 9.52% chance of default inside the contract.
 
-For Northwind, $\lambda Q(t)D(t) = 0.02\,e^{-0.07t}$. Its area from 0 to 5 is $0.02 \times (1 - e^{-0.35}) / 0.07 = 0.02 \times 0.295312 / 0.07$, and times $0.6$ that is $P = 0.050625$. On \$10 million: \$506,248.99.
+For Northwind, $`\lambda Q(t)D(t) = 0.02\,e^{-0.07t}`$. Its area from 0 to 5 is $`0.02 \times (1 - e^{-0.35}) / 0.07 = 0.02 \times 0.295312 / 0.07`$, and times $`0.6`$ that is $`P = 0.050625`$. On \$10 million: \$506,248.99.
 
 ### Step 3: equal legs, and there is only one spread that does it
 
 At the start neither side pays anything to enter, so a fair contract makes the two legs equal:
 
-$$s \times A = P.$$
+```math
+s \times A = P.
+```
 
-The left side is a straight line through zero with slope $A$. The right side does not depend on $s$. The annuity is a sum of positive terms, so the slope is positive as long as the company has any chance of surviving to the first premium date. A rising line meets a flat level exactly once, at $s^* = P / A$. That settles the three questions every inverse asks:
+The left side is a straight line through zero with slope $`A`$. The right side does not depend on $`s`$. The annuity is a sum of positive terms, so the slope is positive as long as the company has any chance of surviving to the first premium date. A rising line meets a flat level exactly once, at $`s^* = P / A`$. That settles the three questions every inverse asks:
 
-- **Existence.** There is always a solution while $A > 0$, since $P$ is finite.
+- **Existence.** There is always a solution while $`A > 0`$, since $`P`$ is finite.
 - **Uniqueness.** One solution, because a line with positive slope takes each value once.
-- **Boundaries.** A hazard of zero makes $P = 0$ and the par spread 0. A recovery of 100% does the same. A company certain to default before the first premium date has $A = 0$: no running premium can pay for its cover, and the contract has to be paid for up front ([Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md)).
+- **Boundaries.** A hazard of zero makes $`P = 0`$ and the par spread 0. A recovery of 100% does the same. A company certain to default before the first premium date has $`A = 0`$: no running premium can pay for its cover, and the contract has to be paid for up front ([Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md)).
 
-For Northwind, $s^* = 0.050625 / 4.181935$, which is 121.06 bp. The checks also find it by bisection (halving an interval that brackets the root until it is tiny) on the value $P - sA$, without dividing, and land on the same 121.056152.
+For Northwind, $`s^* = 0.050625 / 4.181935`$, which is 121.06 bp. The checks also find it by bisection (halving an interval that brackets the root until it is tiny) on the value $`P - sA`$, without dividing, and land on the same 121.056152.
 
 <details>
 <summary>Detailed proof: the flat-curve closed forms</summary>
 
-With $D(t) = e^{-rt}$ and $Q(t) = e^{-\lambda t}$, the product is $e^{-ct}$ with $c = r + \lambda$. At $t_j = j\delta$ that is $x^{j}$ with $x = e^{-c\delta}$. So
-$$A = \delta\,(x + x^2 + \cdots + x^n) = \delta\,x\,\frac{1 - x^n}{1 - x},$$
-the sum of a geometric series: multiply the sum by $x$, subtract, and all but two terms cancel. For the protection leg, $\lambda(t) = \lambda$ is constant, so
-$$P = (1-R)\,\lambda \int_0^T e^{-ct}\,dt = (1-R)\,\lambda\,\frac{1 - e^{-cT}}{c},$$
-because $e^{-ct}$ is the rate of change of $-e^{-ct}/c$. For Northwind, $x = 0.982652$, $1 - x = 0.017348$, $x^{20} = e^{-0.35} = 0.704688$, so $A = 0.25 \times 0.982652 \times 0.295312 / 0.017348 = 4.181935$.
+With $`D(t) = e^{-rt}`$ and $`Q(t) = e^{-\lambda t}`$, the product is $`e^{-ct}`$ with $`c = r + \lambda`$. At $`t_j = j\delta`$ that is $`x^{j}`$ with $`x = e^{-c\delta}`$. So
+
+$`\displaystyle A = \delta\,(x + x^2 + \cdots + x^n) = \delta\,x\,\frac{1 - x^n}{1 - x},`$
+
+the sum of a geometric series: multiply the sum by $`x`$, subtract, and all but two terms cancel. For the protection leg, $`\lambda(t) = \lambda`$ is constant, so
+
+$`\displaystyle P = (1-R)\,\lambda \int_0^T e^{-ct}\,dt = (1-R)\,\lambda\,\frac{1 - e^{-cT}}{c},`$
+
+because $`e^{-ct}`$ is the rate of change of $`-e^{-ct}/c`$. For Northwind, $`x = 0.982652`$, $`1 - x = 0.017348`$, $`x^{20} = e^{-0.35} = 0.704688`$, so $`A = 0.25 \times 0.982652 \times 0.295312 / 0.017348 = 4.181935`$.
 
 </details>
 
 ### Step 4: why 121.06 bp and not 120 bp
 
-Suppose the fund paid its premium continuously, a trickle every instant rather than a lump each quarter. The annuity becomes an area, $\int_0^T D(t)Q(t)\,dt = (1 - e^{-cT})/c = 4.218742$. The protection leg is $(1-R)\lambda$ times that same area. Divide, and the area cancels:
+Suppose the fund paid its premium continuously, a trickle every instant rather than a lump each quarter. The annuity becomes an area, $`\int_0^T D(t)Q(t)\,dt = (1 - e^{-cT})/c = 4.218742`$. The protection leg is $`(1-R)\lambda`$ times that same area. Divide, and the area cancels:
 
-$$s^*_{\text{continuous}} = (1-R)\,\lambda = 0.6 \times 0.02 = 120 \text{ bp exactly}.$$
+```math
+s^*_{\text{continuous}} = (1-R)\,\lambda = 0.6 \times 0.02 = 120 \text{ bp exactly}.
+```
 
 That clean result gets its own card: [The credit triangle](03-the-credit-triangle.md).
 
@@ -176,16 +192,18 @@ continuous   ████████████                            120
 <summary>Accrued premium on default</summary>
 
 Standard contracts close part of that gap themselves. When default lands mid-quarter, the fund pays the premium for the days it was covered, called the **accrued premium**. Its value per unit of spread is
-$$\sum_{j=1}^{n} \int_{t_{j-1}}^{t_j} (t - t_{j-1})\,D(t)\,\lambda(t)\,Q(t)\,dt,$$
+
+$`\displaystyle \sum_{j=1}^{n} \int_{t_{j-1}}^{t_j} (t - t_{j-1})\,D(t)\,\lambda(t)\,Q(t)\,dt,`$
+
 the covered fraction of the quarter, paid at default, weighted by the default density. For Northwind it is 0.010516. Adding it to the annuity gives a par spread of 120.75 bp, closing 0.30 of the 1.06 bp gap. The rest of the gap to 120 is the end-of-quarter discounting, which accrual does not touch.
 
 </details>
 
 ### The other roads: any curve, and a simulation
 
-Nothing in Steps 1 to 3 needed the curves to be flat. The checks price a second contract where the interest rate rises from 3% by 0.6% a year of maturity, so $D(t) = e^{-(0.03 + 0.006t)t}$, and the hazard rises from 1% by 0.4% a year, so $\lambda(t) = 0.01 + 0.004t$. There is no closed form, so the annuity is the dated sum and the protection leg is Simpson's rule (an area found from parabolas fitted through equally spaced points). The par spread is 117.20 bp.
+Nothing in Steps 1 to 3 needed the curves to be flat. The checks price a second contract where the interest rate rises from 3% by 0.6% a year of maturity, so $`D(t) = e^{-(0.03 + 0.006t)t}`$, and the hazard rises from 1% by 0.4% a year, so $`\lambda(t) = 0.01 + 0.004t`$. There is no closed form, so the annuity is the dated sum and the protection leg is Simpson's rule (an area found from parabolas fitted through equally spaced points). The par spread is 117.20 bp.
 
-The third road never writes an integral. It draws 400,000 random default dates from the hazard, runs each contract to its end, and counts the cash: premiums paid before default, the $1 - R$ payout if default comes before year five. The averages are the two legs. For Northwind the simulation gives 121.63 bp, with a standard error (the typical size of its random miss) of 0.63 bp, so it sits within one standard error of 121.06. For the rising curves it gives 116.31 bp against 117.20, with a standard error of 0.60 bp: inside two. How each road's error behaves is the subject of [A risky bond from the hazard curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md), where the same survival-weighted sums price a bond.
+The third road never writes an integral. It draws 400,000 random default dates from the hazard, runs each contract to its end, and counts the cash: premiums paid before default, the $`1 - R`$ payout if default comes before year five. The averages are the two legs. For Northwind the simulation gives 121.63 bp, with a standard error (the typical size of its random miss) of 0.63 bp, so it sits within one standard error of 121.06. For the rising curves it gives 116.31 bp against 117.20, with a standard error of 0.60 bp: inside two. How each road's error behaves is the subject of [A risky bond from the hazard curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md), where the same survival-weighted sums price a bond.
 
 ---
 
@@ -195,17 +213,17 @@ Northwind: notional $10 million, five years, quarterly premiums, hazard 2%, reco
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| combined shrink rate $c$ | $0.05 + 0.02$ | 0.07 |
-| one quarter's shrink $x$ | $e^{-0.07 \times 0.25}$ | 0.982652 |
-| $1 - x$ | $1 - 0.982652$ | 0.017348 |
-| twenty quarters, $x^{20}$ | $e^{-0.35}$ | 0.704688 |
-| risky annuity $A$ | $0.25 \times 0.982652 \times (1 - 0.704688) / 0.017348$ | 4.181935 |
-| protection leg $P$ | $0.6 \times 0.02 \times 0.295312 / 0.07$ | 0.050625 |
-| **par spread** $s^*$ | $0.050625 / 4.181935$ | **121.06 bp** |
-| protection leg on $10m | $0.050625 \times 10{,}000{,}000$ | $506,248.99 |
-| value of 1 bp of premium | $4.181935 \times 10{,}000{,}000 / 10{,}000$ | $4,181.94 |
-| quarterly premium at par | 121.056152 bp $\times\ 0.25 \times$ \$10m | \$30,264.04 |
-| continuous-premium check | $0.6 \times 0.02$ | 120 bp |
+| combined shrink rate $`c`$ | $`0.05 + 0.02`$ | 0.07 |
+| one quarter's shrink $`x`$ | $`e^{-0.07 \times 0.25}`$ | 0.982652 |
+| $`1 - x`$ | $`1 - 0.982652`$ | 0.017348 |
+| twenty quarters, $`x^{20}`$ | $`e^{-0.35}`$ | 0.704688 |
+| risky annuity $`A`$ | $`0.25 \times 0.982652 \times (1 - 0.704688) / 0.017348`$ | 4.181935 |
+| protection leg $`P`$ | $`0.6 \times 0.02 \times 0.295312 / 0.07`$ | 0.050625 |
+| **par spread** $`s^*`$ | $`0.050625 / 4.181935`$ | **121.06 bp** |
+| protection leg on $10m | $`0.050625 \times 10{,}000{,}000`$ | $506,248.99 |
+| value of 1 bp of premium | $`4.181935 \times 10{,}000{,}000 / 10{,}000`$ | $4,181.94 |
+| quarterly premium at par | 121.056152 bp $`\times\ 0.25 \times`$ \$10m | \$30,264.04 |
+| continuous-premium check | $`0.6 \times 0.02`$ | 120 bp |
 
 At 121.06 bp the fund pays $30,264.04 a quarter until Northwind defaults or five years pass, and on the day it signs, what it expects to pay and what it expects to receive are worth the same $506,248.99.
 
@@ -216,9 +234,9 @@ Same contract, correct answer 121.06 bp.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Annuity without survival: premiums as if certain | 115.15 bp | Riskless annuity 4.396392 counts premiums a defaulted company never pays |
-| Protection leg without discounting | 136.53 bp | $0.6 \times 9.52\%$ treats a payout in year five as cash today |
-| $R$ in place of $1 - R$ | 80.70 bp | Insures the recovered 40 cents instead of the lost 60 |
-| Full yearly spread charged every quarter | 30.26 bp | Forgot $\delta$: the annuity comes out four times too big |
+| Protection leg without discounting | 136.53 bp | $`0.6 \times 9.52\%`$ treats a payout in year five as cash today |
+| $`R`$ in place of $`1 - R`$ | 80.70 bp | Insures the recovered 40 cents instead of the lost 60 |
+| Full yearly spread charged every quarter | 30.26 bp | Forgot $`\delta`$: the annuity comes out four times too big |
 
 Every number in that table is printed by the checks.
 
@@ -634,11 +652,11 @@ The two outputs match line for line, the simulation included, because both langu
 
 Lean proves the premium leg and the par spread for any curves, and both closed forms for flat curves.
 
-- Take any curves and any spread $s$. Then the premium leg is $s\,A$.
-- Suppose $n \ge 1$, $\delta > 0$, $D > 0$ and $Q \ge 0$ at every date, and $Q(t_1) > 0$. Then the premium leg equals $P$ exactly when $s = P/A$, so the par spread exists and is unique.
-- Take a flat rate and hazard with $c > 0$, $\delta > 0$, and premium dates $t_j = j\delta$. Then $A = \delta\,x\,(1 - x^n)/(1 - x)$ with $x = e^{-c\delta}$.
-- Take a flat rate and hazard with $c > 0$. Then $P = (1-R)\,\lambda\,(1 - e^{-cT})/c$ for every contract length $T$.
-- Lean also checks the Northwind arithmetic: $c = 0.07$, $n = 20$, $c\,\delta\,n = 0.35$, and the continuous-premium spread of 120 bp.
+- Take any curves and any spread $`s`$. Then the premium leg is $`s\,A`$.
+- Suppose $`n \ge 1`$, $`\delta > 0`$, $`D > 0`$ and $`Q \ge 0`$ at every date, and $`Q(t_1) > 0`$. Then the premium leg equals $`P`$ exactly when $`s = P/A`$, so the par spread exists and is unique.
+- Take a flat rate and hazard with $`c > 0`$, $`\delta > 0`$, and premium dates $`t_j = j\delta`$. Then $`A = \delta\,x\,(1 - x^n)/(1 - x)`$ with $`x = e^{-c\delta}`$.
+- Take a flat rate and hazard with $`c > 0`$. Then $`P = (1-R)\,\lambda\,(1 - e^{-cT})/c`$ for every contract length $`T`$.
+- Lean also checks the Northwind arithmetic: $`c = 0.07`$, $`n = 20`$, $`c\,\delta\,n = 0.35`$, and the continuous-premium spread of 120 bp.
 
 The decimal values, such as 121.06 bp, the rising curves and the simulation are left to the Python and Rust checks.
 
@@ -778,7 +796,7 @@ example : ((40 : ℚ) / 100) / (1 - 40 / 100) = 2 / 3 := by norm_num
 >
 > - **Reading the spread as a default probability.** 121.06 bp is a yearly premium, near loss times hazard. The five-year default chance is 9.52%, a different number on a different clock.
 > - **Forgetting to discount the payout.** Undiscounted protection gives 136.53 bp: a default in year five is paid in year-five money.
-> - **Mixing up recovery and loss.** Using $R$ where $1 - R$ belongs gives 80.70 bp.
+> - **Mixing up recovery and loss.** Using $`R`$ where $`1 - R`$ belongs gives 80.70 bp.
 > - **Expecting exactly 120 bp.** Loss times hazard is the continuous-premium answer. Quarterly premiums give 121.06 bp; the difference is timing, not error.
 
 ---
@@ -801,7 +819,7 @@ example : ((40 : ℚ) / 100) / (1 - 40 / 100) = 2 / 3 := by norm_num
 - [The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): the hazard, the survival curve, and the chance of default in a short stretch.
 - [Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): why a dollar later is worth less today.
 - [The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md): the sum of thin slices that becomes the protection leg.
-- [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): the discount factor $e^{-rt}$ and continuous compounding.
+- [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): the discount factor $`e^{-rt}`$ and continuous compounding.
 
 ## Where this goes next
 

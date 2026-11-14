@@ -30,32 +30,38 @@ To scale: 25 units per 1, 0 at (180, 120). The banks are drawn at angle 0.08 eit
 
 ## The formula
 
-A branch of the power $z^{a-1}$ is fixed by choosing the angle $\theta$ of z; here it runs from 0 to 2π:
+A branch of the power $`z^{a-1}`$ is fixed by choosing the angle $`\theta`$ of z; here it runs from 0 to 2π:
 
-$$z^{a-1} = |z|^{a-1}\, e^{i(a-1)\theta}, \qquad 0 < \theta < 2\pi.$$
+```math
+z^{a-1} = |z|^{a-1}\, e^{i(a-1)\theta}, \qquad 0 < \theta < 2\pi.
+```
 
 Reminder: Res, the residue at a pole p (a point where the function blows up), is the coefficient of 1/(z − p) there; a loop integral is 2πi times the residues inside ([The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)).
 
-$$I(a) = \int_0^\infty \frac{x^{a-1}}{1+x}\,dx = \frac{\pi}{\sin(\pi a)}, \qquad 0 < a < 1.$$
+```math
+I(a) = \int_0^\infty \frac{x^{a-1}}{1+x}\,dx = \frac{\pi}{\sin(\pi a)}, \qquad 0 < a < 1.
+```
 
 **Read it aloud:** the area under x to the a minus 1, over 1 plus x, from 0 to infinity, is π over the sine of π a.
 
 The engine is one exact equation, for every r below 1 and R above 1:
 
-$$\big(1 - e^{2\pi i a}\big)\int_r^R \frac{x^{a-1}}{1+x}\,dx \;+\; \oint_{|z|=R} F \;+\; \oint_{|z|=r} F \;=\; 2\pi i\,\operatorname{Res}(F, -1), \qquad F(z) = \frac{z^{a-1}}{1+z}.$$
+```math
+\big(1 - e^{2\pi i a}\big)\int_r^R \frac{x^{a-1}}{1+x}\,dx \;+\; \oint_{|z|=R} F \;+\; \oint_{|z|=r} F \;=\; 2\pi i\,\mathrm{Res}(F, -1), \qquad F(z) = \frac{z^{a-1}}{1+z}.
+```
 
 **Read it aloud:** the banks give one minus e to the 2πia, times the real integral; add both circles; the total is 2πi times the residue at −1.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a$ | the power, strictly between 0 and 1 | 1/2, then 1/4 and 3/4 | falls to π at 1/2, then rises |
-| $x$ | a point on the positive real axis | from 0 to infinity | — |
-| $z$, $\theta$ | a point of the plane; its angle, in (0, 2π) | −1 has angle π | — |
-| $F$ | the complex integrand $z^{a-1}/(1+z)$ | pole at −1 only | — |
-| $I$ | the real area being sought | π at a = 1/2 | — |
-| $r$, $R$ | radii of the small and big circles | 0.5 and 4 | R up, or r down: that circle's share shrinks towards 0 |
-| $e^{2\pi i a}$ | the bottom bank's factor | −1 at a = 1/2 | — |
-| Res | the residue of F at −1: the value of $z^{a-1}$ there | $e^{i\pi(a-1)}$, which is −i at a = 1/2 | — |
+| $`a`$ | the power, strictly between 0 and 1 | 1/2, then 1/4 and 3/4 | falls to π at 1/2, then rises |
+| $`x`$ | a point on the positive real axis | from 0 to infinity | — |
+| $`z`$, $`\theta`$ | a point of the plane; its angle, in (0, 2π) | −1 has angle π | — |
+| $`F`$ | the complex integrand $`z^{a-1}/(1+z)`$ | pole at −1 only | — |
+| $`I`$ | the real area being sought | π at a = 1/2 | — |
+| $`r`$, $`R`$ | radii of the small and big circles | 0.5 and 4 | R up, or r down: that circle's share shrinks towards 0 |
+| $`e^{2\pi i a}`$ | the bottom bank's factor | −1 at a = 1/2 | — |
+| Res | the residue of F at −1: the value of $`z^{a-1}`$ there | $`e^{i\pi(a-1)}`$, which is −i at a = 1/2 | — |
 
 ### When it holds
 
@@ -74,15 +80,17 @@ Out along a line and back along it cancels. Across a branch cut the power jumps 
 
 ### Step 1: choose the branch, read the two banks
 
-With the angle in (0, 2π), the power is holomorphic (has a complex derivative) everywhere off the positive real axis. Approach a point x > 0 from above: the angle tends to 0 and $z^{a-1}$ tends to the real power x^(a−1). From below the angle tends to 2π and the value tends to
+With the angle in (0, 2π), the power is holomorphic (has a complex derivative) everywhere off the positive real axis. Approach a point x > 0 from above: the angle tends to 0 and $`z^{a-1}`$ tends to the real power x^(a−1). From below the angle tends to 2π and the value tends to
 
-$$x^{a-1} e^{2\pi i (a-1)} = x^{a-1} e^{2\pi i a}.$$
+```math
+x^{a-1} e^{2\pi i (a-1)} = x^{a-1} e^{2\pi i a}.
+```
 
 At a = 1/2 the factor is e^(iπ) = −1: the square root flips sign.
 
 ### Step 2: price the loop by its one pole
 
-The keyhole encloses one pole, −1, where 1 + z vanishes. It is simple (1 + z vanishes to first order), so the residue is the rest of F there: $z^{a-1}$ at z = −1, angle π, size 1. So Res = e^(iπ(a−1)) = −e^(iπa). At a = 1/2 that is −i, and the loop is worth 2πi × (−i) = 2π = 6.283185.
+The keyhole encloses one pole, −1, where 1 + z vanishes. It is simple (1 + z vanishes to first order), so the residue is the rest of F there: $`z^{a-1}`$ at z = −1, angle π, size 1. So Res = e^(iπ(a−1)) = −e^(iπa). At a = 1/2 that is −i, and the loop is worth 2πi × (−i) = 2π = 6.283185.
 
 ### Step 3: add up the four pieces
 
@@ -102,7 +110,9 @@ The banks agree because −e^(iπ) = +1. At a = 1/4 the pieces total 4.442883 �
 
 The **ML bound**: a path integral is at most M, the integrand's largest size on the path, times L, the path's length. On |z| = R the power has size R^(a−1) and |1 + z| ≥ R − 1. So
 
-$$\left|\oint_{|z|=R} F\right| \le \frac{2\pi R^{a}}{R-1}, \qquad \left|\oint_{|z|=r} F\right| \le \frac{2\pi r^{a}}{1-r}.$$
+```math
+\left|\oint_{|z|=R} F\right| \le \frac{2\pi R^{a}}{R-1}, \qquad \left|\oint_{|z|=r} F\right| \le \frac{2\pi r^{a}}{1-r}.
+```
 
 The first tends to 0 because a < 1; the second because a > 0. At a = 1/2 the big circle measures 1.854590, 0.497420, 0.124959 at R = 4, 64, 1024, each under its bound; the small circle 2.461919, 0.497420, 0.124959 at r = 1/2, 1/64, 1/1024.
 
@@ -110,11 +120,15 @@ The first tends to 0 because a < 1; the second because a > 0. At a = 1/2 the big
 
 Let r shrink and R grow. The banks' integral tends to I(a), the circles to 0:
 
-$$\big(1 - e^{2\pi i a}\big)\, I(a) = -2\pi i\, e^{i\pi a}.$$
+```math
+\big(1 - e^{2\pi i a}\big)\, I(a) = -2\pi i\, e^{i\pi a}.
+```
 
 Factor out e^(iπa): 1 − e^(2πia) = e^(iπa)(e^(−iπa) − e^(iπa)) = −2i e^(iπa) sin(πa). Divide:
 
-$$I(a) = \frac{-2\pi i\, e^{i\pi a}}{-2i\, e^{i\pi a} \sin(\pi a)} = \frac{\pi}{\sin(\pi a)}.$$
+```math
+I(a) = \frac{-2\pi i\, e^{i\pi a}}{-2i\, e^{i\pi a} \sin(\pi a)} = \frac{\pi}{\sin(\pi a)}.
+```
 
 For 0 < a < 1, sin(πa) > 0, so the answer is positive and real, as an area must be.
 

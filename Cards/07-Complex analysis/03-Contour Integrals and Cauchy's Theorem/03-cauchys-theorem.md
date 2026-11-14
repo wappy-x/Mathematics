@@ -26,34 +26,40 @@ To scale: 50 units per kilometre, 0 at (140, 150). Shaded course: (140, 150), (2
 
 ## The formula
 
-Reminder: $\oint_\gamma f(z)\,dz$ is the contour integral once anticlockwise round the loop γ; holomorphic means having a complex derivative at every point ([The complex derivative](../02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md)). A region is **simply connected** when it is open (each point has a small disc round it inside the region), joined up, and every loop shrinks to a point without leaving it: it has no holes. A disc qualifies; the plane without 0 does not.
+Reminder: $`\oint_\gamma f(z)\,dz`$ is the contour integral once anticlockwise round the loop γ; holomorphic means having a complex derivative at every point ([The complex derivative](../02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md)). A region is **simply connected** when it is open (each point has a small disc round it inside the region), joined up, and every loop shrinks to a point without leaving it: it has no holes. A disc qualifies; the plane without 0 does not.
 
-$$\oint_\gamma f(z)\,dz = 0$$
+```math
+\oint_\gamma f(z)\,dz = 0
+```
 
 **Read it aloud:** round any closed loop in a region with no holes, a function holomorphic throughout it integrates to zero.
 
 The proof's engine, Green's theorem in complex form:
 
-$$\oint_\gamma f(z)\,dz = i \iint_D \left(f_x + i\,f_y\right) dA$$
+```math
+\oint_\gamma f(z)\,dz = i \iint_D \left(f_x + i\,f_y\right) dA
+```
 
 **Read it aloud:** the loop integral is i times the area integral of f's eastward slope plus i times its northward slope.
 
 The consequence, an antiderivative:
 
-$$F(z) = \int_{z_0}^{z} f(w)\,dw, \qquad F'(z) = f(z)$$
+```math
+F(z) = \int_{z_0}^{z} f(w)\,dw, \qquad F'(z) = f(z)
+```
 
 **Read it aloud:** integrating f from a base point to z, by any path, gives a function whose derivative is f.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $z$, $x$, $y$ | a point x + iy: x km east, y north | buoys 0, 2, 1 + i | — |
-| $f$, $u$, $v$ | the function; its real and imaginary parts | z^2: u = x^2 − y^2, v = 2xy | still 0, if holomorphic |
-| $f'$, $f_x$, $f_y$ | complex derivative; f's slopes east and north | for z^2: 2z, 2z, 2iz | — |
-| $u_x$, $u_y$, $v_x$, $v_y$ | the four real slopes of u and v | 2x, −2y, 2y, 2x | — |
-| $\gamma$, $dz$ | the closed loop; one small step along it | the course | reversed: sign flips |
-| $D$, $dA$ | the region the loop encloses; a small patch of its area | the course's water, area 1 | bigger, same 0 |
-| $F$, $z_0$, $w$ | antiderivative; base point; point moving along the path | e^z − 1, base 0 | — |
-| $\bar{z}$ | the conjugate, read "z-bar": x − iy | not holomorphic: 2i round the course | 2i times the area |
+| $`z`$, $`x`$, $`y`$ | a point x + iy: x km east, y north | buoys 0, 2, 1 + i | — |
+| $`f`$, $`u`$, $`v`$ | the function; its real and imaginary parts | z^2: u = x^2 − y^2, v = 2xy | still 0, if holomorphic |
+| $`f'`$, $`f_x`$, $`f_y`$ | complex derivative; f's slopes east and north | for z^2: 2z, 2z, 2iz | — |
+| $`u_x`$, $`u_y`$, $`v_x`$, $`v_y`$ | the four real slopes of u and v | 2x, −2y, 2y, 2x | — |
+| $`\gamma`$, $`dz`$ | the closed loop; one small step along it | the course | reversed: sign flips |
+| $`D`$, $`dA`$ | the region the loop encloses; a small patch of its area | the course's water, area 1 | bigger, same 0 |
+| $`F`$, $`z_0`$, $`w`$ | antiderivative; base point; point moving along the path | e^z − 1, base 0 | — |
+| $`\bar{z}`$ | the conjugate, read "z-bar": x − iy | not holomorphic: 2i round the course | 2i times the area |
 
 ### When it holds
 
@@ -74,7 +80,9 @@ A complex loop integral is two real line integrals. Green's theorem turns each i
 
 Write f = u + iv and dz = dx + i dy, and multiply out:
 
-$$f\,dz = (u\,dx - v\,dy) + i\,(v\,dx + u\,dy)$$
+```math
+f\,dz = (u\,dx - v\,dy) + i\,(v\,dx + u\,dy)
+```
 
 Each bracket is a real line integral of the kind Green's theorem handles: the loop integral of P dx + Q dy equals the area integral of Q_x − P_y, for real functions P and Q.
 
@@ -82,15 +90,17 @@ Each bracket is a real line integral of the kind Green's theorem handles: the lo
 
 Real part: P = u, Q = −v, so the area integrand is −v_x − u_y. Imaginary part: P = v, Q = u, so it is u_x − v_y. Together:
 
-$$\oint_\gamma f\,dz = \iint_D \left(-v_x - u_y\right) dA + i \iint_D \left(u_x - v_y\right) dA$$
+```math
+\oint_\gamma f\,dz = \iint_D \left(-v_x - u_y\right) dA + i \iint_D \left(u_x - v_y\right) dA
+```
 
 Green's theorem needs the four slopes to be continuous, so this proof does too.
 
 ### Step 3: Cauchy-Riemann kills both integrands
 
-A complex derivative is the same from every direction. Eastward, $f_x = f'$; a northward step h moves z by ih, so $f_y = i f'$. In parts, these are the Cauchy-Riemann equations $u_x = v_y$ and $u_y = -v_x$, so both integrands in Step 2 vanish. On z^2: u_x = 2x = v_y and u_y = −2y = −v_x.
+A complex derivative is the same from every direction. Eastward, $`f_x = f'`$; a northward step h moves z by ih, so $`f_y = i f'`$. In parts, these are the Cauchy-Riemann equations $`u_x = v_y`$ and $`u_y = -v_x`$, so both integrands in Step 2 vanish. On z^2: u_x = 2x = v_y and u_y = −2y = −v_x.
 
-Compactly, the two integrands are the parts of i(f_x + i f_y), and $f_x + i f_y = f' + i \cdot i f' = 0$: the code's second road.
+Compactly, the two integrands are the parts of i(f_x + i f_y), and $`f_x + i f_y = f' + i \cdot i f' = 0`$: the code's second road.
 
 For z-bar, f_x = 1 and f_y = −i, so f_x + i f_y = 2. The loop integral is 2i times the area: 2i round the course.
 
@@ -103,9 +113,9 @@ The proof skips Green. Joining midpoints cuts the triangle into four, and one ca
 <details>
 <summary>Detailed proof: Goursat's subdivision</summary>
 
-Let I be the size of the edge integral of T, with perimeter p and diameter d (longest distance across). The four midpoint triangles' edge integrals add to the original, so one, T1, has size at least I/4. Repeating gives nested triangles Tn with edge integral at least $I/4^n$, perimeter $p/2^n$, diameter $d/2^n$.
+Let I be the size of the edge integral of T, with perimeter p and diameter d (longest distance across). The four midpoint triangles' edge integrals add to the original, so one, T1, has size at least I/4. Repeating gives nested triangles Tn with edge integral at least $`I/4^n`$, perimeter $`p/2^n`$, diameter $`d/2^n`$.
 
-They share a point z* in T, where $f(z) = f(z^*) + f'(z^*)(z - z^*) + \psi(z)(z - z^*)$ with ψ(z) → 0: given ε > 0 there is δ > 0 with $|\psi(z)| < \varepsilon$ whenever $|z - z^*| < \delta$. The first two terms have an antiderivative, so integrate to 0. Once $d/2^n < \delta$, the third is at most ε times $d/2^n$ on the edge of Tn, so $I/4^n \le \varepsilon\,dp/4^n$. Thus $I \le \varepsilon\,dp$ for every ε > 0, and I = 0.
+They share a point z* in T, where $`f(z) = f(z^*) + f'(z^*)(z - z^*) + \psi(z)(z - z^*)`$ with ψ(z) → 0: given ε > 0 there is δ > 0 with $`|\psi(z)| < \varepsilon`$ whenever $`|z - z^*| < \delta`$. The first two terms have an antiderivative, so integrate to 0. Once $`d/2^n < \delta`$, the third is at most ε times $`d/2^n`$ on the edge of Tn, so $`I/4^n \le \varepsilon\,dp/4^n`$. Thus $`I \le \varepsilon\,dp`$ for every ε > 0, and I = 0.
 
 </details>
 
@@ -115,14 +125,14 @@ A closed polygon that does not cross itself, in a simply connected region, cuts 
 
 ### Step 6: an antiderivative on every region with no holes
 
-Let F(z) be the integral from a base point $z_0$ to z along any path in the region. Two paths to z, one reversed, make a loop, so they agree. F(z + h) − F(z) is the integral along a short segment, h f(z) plus something smaller than h, so F' = f, as in [Antiderivatives](02-antiderivatives-and-path-independence.md).
+Let F(z) be the integral from a base point $`z_0`$ to z along any path in the region. Two paths to z, one reversed, make a loop, so they agree. F(z + h) − F(z) is the integral along a short segment, h f(z) plus something smaller than h, so F' = f, as in [Antiderivatives](02-antiderivatives-and-path-independence.md).
 
 On the course, e^z from 0 to 1 + i gives 0.468694 + 2.287355i straight and via buoy 2: e^(1+i) − 1.
 
 <details>
 <summary>A holomorphic logarithm for a function that is never zero</summary>
 
-If f is holomorphic and never 0 on a simply connected region, f'/f is holomorphic, so it has an antiderivative L, shifted so that $e^{L(z_0)} = f(z_0)$. The derivative of $f e^{-L}$ is $f' e^{-L} - f L' e^{-L} = 0$, so $f e^{-L}$ stays 1 and $f = e^{L}$. For f(z) = z on the plane cut along a ray from 0, this is a branch of [The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md); with only 0 removed it fails, since 1/z round the tripled course gives 2πi.
+If f is holomorphic and never 0 on a simply connected region, f'/f is holomorphic, so it has an antiderivative L, shifted so that $`e^{L(z_0)} = f(z_0)`$. The derivative of $`f e^{-L}`$ is $`f' e^{-L} - f L' e^{-L} = 0`$, so $`f e^{-L}`$ stays 1 and $`f = e^{L}`$. For f(z) = z on the plane cut along a ray from 0, this is a branch of [The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md); with only 0 removed it fails, since 1/z round the tripled course gives 2πi.
 
 </details>
 

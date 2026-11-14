@@ -38,49 +38,55 @@ Orange: the remaining swap with no right, a gently bent line through zero at 5%.
 
 ## The formula
 
-Notation first, in words. $N$ is the notional, the amount the rates are paid on. $K$ is the fixed rate. $D(t)$ is the discount factor, today's price of $1 paid in year t. A plus sign as a superscript, $x^+$, means "x if positive, else zero".
+Notation first, in words. $`N`$ is the notional, the amount the rates are paid on. $`K`$ is the fixed rate. $`D(t)`$ is the discount factor, today's price of $1 paid in year t. A plus sign as a superscript, $`x^+`$, means "x if positive, else zero".
 
-$$V_{\rm callable} = V_{\rm swap} + B_R \qquad\qquad V_{\rm cancellable\ by\ bank} = V_{\rm swap} - B_P$$
+```math
+V_{\rm callable} = V_{\rm swap} + B_R \qquad\qquad V_{\rm cancellable\ by\ bank} = V_{\rm swap} - B_P
+```
 
 **Read it aloud:** the swap with the company's exit is the plain swap plus a receiver Bermudan swaption; the swap with the bank's exit is the plain swap minus a payer Bermudan swaption.
 
-A **receiver swaption** is the right to enter a swap receiving the fixed rate; a **payer swaption** is the right to enter one paying it ([Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md)). **Bermudan** means usable on any one of a list of dates ([Bermudan options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md)). Here both are struck at the swap's own $K$ and each ends the swap at year 10.
+A **receiver swaption** is the right to enter a swap receiving the fixed rate; a **payer swaption** is the right to enter one paying it ([Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md)). **Bermudan** means usable on any one of a list of dates ([Bermudan options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md)). Here both are struck at the swap's own $`K`$ and each ends the swap at year 10.
 
 The plain swap, to the fixed payer, from the curve alone:
 
-$$V_{\rm swap} = N\,\bigl[\,1 - D(10) - K\,A\,\bigr], \qquad A = \sum_{t=1}^{10} D(t)$$
+```math
+V_{\rm swap} = N\,\bigl[\,1 - D(10) - K\,A\,\bigr], \qquad A = \sum_{t=1}^{10} D(t)
+```
 
-In words: the floating payments are worth $1 - D(10)$ per dollar of notional, the fixed payments are worth $K$ times the **annuity** $A$, the value of $1 a year for ten years ([The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md)).
+In words: the floating payments are worth $`1 - D(10)`$ per dollar of notional, the fixed payments are worth $`K`$ times the **annuity** $`A`$, the value of $1 a year for ten years ([The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md)).
 
-The option's value comes from rolling back on a rate tree. On a listed year $i$, at a tree node where the one-year rate is $r_i$:
+The option's value comes from rolling back on a rate tree. On a listed year $`i`$, at a tree node where the one-year rate is $`r_i`$:
 
-$$B_i = \max\bigl(\,(-M_i)^+,\; W_i\,\bigr), \qquad W_i = \frac{\tfrac12\bigl(B_{i+1}^{\rm up} + B_{i+1}^{\rm down}\bigr)}{1 + r_i}$$
+```math
+B_i = \max\bigl(\,(-M_i)^+,\; W_i\,\bigr), \qquad W_i = \frac{\tfrac12\bigl(B_{i+1}^{\rm up} + B_{i+1}^{\rm down}\bigr)}{1 + r_i}
+```
 
-In words: at each node, cancel if what cancelling saves beats what waiting is worth. $M_i$ is the value of the swap's remaining payments at that node; $W_i$ is the discounted average of the option's value one year on.
+In words: at each node, cancel if what cancelling saves beats what waiting is worth. $`M_i`$ is the value of the swap's remaining payments at that node; $`W_i`$ is the discounted average of the option's value one year on.
 
 | Symbol | Plain meaning | In our example | Push it up and the callable's value… |
 | --- | --- | --- | --- |
-| $N$ | notional: the amount the rates are paid on | $10 million | scales in proportion |
-| $K$ | the fixed rate the company pays | 5% | falls: the swap costs more, though the exit gets more valuable |
-| $D(t)$ | discount factor: today's price of $1 paid in year t | 1.05 to the power −t | — |
-| $A$ | annuity: today's value of $1 a year for ten years | 7.7217 | — |
-| $r_i$ | the one-year rate set at year i, paid at year i+1 | 3.24% to 7.21% at year 2 | — |
-| $i$ | a year on the tree; the cancel dates are listed years | 2, 3, … 9 | — |
-| $M_i$ | remaining swap: value at year i of payments i+1 to 10 | −$1,175,916.03 at the lowest year-2 node | — |
-| $W_i$ | wait value: the option kept alive one more year | from the tree | — |
-| $B_R$ | receiver Bermudan swaption: the company's exit | $452,750.81 | — |
-| $B_P$ | payer Bermudan swaption: the bank's exit | $459,398.62 | — |
-| $V_{\rm swap}$, $V_{\rm callable}$ | today's values to the fixed payer | $0.00 and $452,750.81 | — |
-| $\sigma$ | volatility of the tree's rate, per year, on a log scale | 20% | rises: $21,460.70 per point |
-| $\delta$ | a small rise in the fixed rate $K$, used in the break-even argument | — | — |
+| $`N`$ | notional: the amount the rates are paid on | $10 million | scales in proportion |
+| $`K`$ | the fixed rate the company pays | 5% | falls: the swap costs more, though the exit gets more valuable |
+| $`D(t)`$ | discount factor: today's price of $1 paid in year t | 1.05 to the power −t | — |
+| $`A`$ | annuity: today's value of $1 a year for ten years | 7.7217 | — |
+| $`r_i`$ | the one-year rate set at year i, paid at year i+1 | 3.24% to 7.21% at year 2 | — |
+| $`i`$ | a year on the tree; the cancel dates are listed years | 2, 3, … 9 | — |
+| $`M_i`$ | remaining swap: value at year i of payments i+1 to 10 | −$1,175,916.03 at the lowest year-2 node | — |
+| $`W_i`$ | wait value: the option kept alive one more year | from the tree | — |
+| $`B_R`$ | receiver Bermudan swaption: the company's exit | $452,750.81 | — |
+| $`B_P`$ | payer Bermudan swaption: the bank's exit | $459,398.62 | — |
+| $`V_{\rm swap}`$, $`V_{\rm callable}`$ | today's values to the fixed payer | $0.00 and $452,750.81 | — |
+| $`\sigma`$ | volatility of the tree's rate, per year, on a log scale | 20% | rises: $21,460.70 per point |
+| $`\delta`$ | a small rise in the fixed rate $`K`$, used in the break-even argument | — | — |
 
 ### When it holds
 
 - **No fee and a clean date.** Cancelling just after a payment, with nothing owed on exit. A break fee lowers each exercise reward by the fee; notice given between payment dates leaves a stub period that the formula misses.
-- **The option is struck at the swap's own rate.** The offsetting swap must pay exactly $K$. A swaption struck at the new market rate on the exercise date does not cancel the old payments and prices a different thing.
-- **One curve prices and projects.** The floating rate is the same rate used to discount. With a separate projection curve, $1 - D(10)$ no longer values the floating leg ([Multi-curve](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md)).
+- **The option is struck at the swap's own rate.** The offsetting swap must pay exactly $`K`$. A swaption struck at the new market rate on the exercise date does not cancel the old payments and prices a different thing.
+- **One curve prices and projects.** The floating rate is the same rate used to discount. With a separate projection curve, $`1 - D(10)`$ no longer values the floating leg ([Multi-curve](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md)).
 - **The rate model is right.** The decomposition holds in any model; the dollar price does not. A one-factor tree moves every rate together. Real curves twist, and the Bermudan's price depends on how the European options on each date hang together.
-- **The holder exercises well.** $B_R$ assumes the best stopping rule. Cancelling by a simpler rule, such as "whenever the swap is underwater", is worth less: $306,871.10 here.
+- **The holder exercises well.** $`B_R`$ assumes the best stopping rule. Cancelling by a simpler rule, such as "whenever the swap is underwater", is worth less: $306,871.10 here.
 
 ---
 
@@ -94,28 +100,28 @@ So the right to cancel on year 4 is the right, on year 4, to enter the opposite 
 
 ### Step 1: what the remaining swap is worth at a node
 
-At a node in year $i$, the company still owes payments $i+1$ to 10. Each floating payment pays the one-year rate set a year earlier; call it $r_i$ for the payment due a year after year $i$. Paid a year later and discounted by that same rate, it is worth $r_i/(1+r_i) = 1 - 1/(1+r_i)$ per dollar at its start: a dollar now minus a dollar a year on. Chain the years and everything in the middle cancels. The floating leg is worth $1 - D_i(10)$, a dollar now minus a dollar at year 10, where $D_i(10)$ is the price at that node of $1 paid at year 10. The fixed leg is $K$ times the node's own annuity. Their difference is $M_i$.
+At a node in year $`i`$, the company still owes payments $`i+1`$ to 10. Each floating payment pays the one-year rate set a year earlier; call it $`r_i`$ for the payment due a year after year $`i`$. Paid a year later and discounted by that same rate, it is worth $`r_i/(1+r_i) = 1 - 1/(1+r_i)`$ per dollar at its start: a dollar now minus a dollar a year on. Chain the years and everything in the middle cancels. The floating leg is worth $`1 - D_i(10)`$, a dollar now minus a dollar at year 10, where $`D_i(10)`$ is the price at that node of $1 paid at year 10. The fixed leg is $`K`$ times the node's own annuity. Their difference is $`M_i`$.
 
 At the lowest year-2 node the one-year rate is 3.24%, and the remaining eight years are worth −$1,175,916.03 to the company. Cancelling there saves that amount.
 
 <details>
 <summary>Detailed proof: the floating leg telescopes, and the decomposition holds on every path</summary>
 
-**Floating leg.** Write $d_k = 1/(1+r_k)$ for the one-year discount set at year k. The floating payment at year k+1, discounted to year $i$, is $d_i d_{i+1} \cdots d_k \, r_k = d_i \cdots d_{k-1} - d_i \cdots d_k$, since $d_k r_k = 1 - d_k$. Sum over $k = i$ to 9: the terms telescope to $1 - d_i d_{i+1} \cdots d_9$. That holds on every path. Averaging over paths with the tree's pricing weights turns the product into $D_i(10)$.
+**Floating leg.** Write $`d_k = 1/(1+r_k)`$ for the one-year discount set at year k. The floating payment at year k+1, discounted to year $`i`$, is $`d_i d_{i+1} \cdots d_k \, r_k = d_i \cdots d_{k-1} - d_i \cdots d_k`$, since $`d_k r_k = 1 - d_k`$. Sum over $`k = i`$ to 9: the terms telescope to $`1 - d_i d_{i+1} \cdots d_9`$. That holds on every path. Averaging over paths with the tree's pricing weights turns the product into $`D_i(10)`$.
 
-**Decomposition.** Fix any stopping rule τ (tau): a rule that picks a listed year, or none, using only what is known by then. On a path where the company stops at τ, the cash it receives is the full swap's cash minus the payments after τ. Removing those payments is the same as adding the opposite swap's payments after τ, whose value at τ is $-M_\tau$. So the value of the cancelled contract under rule τ is $V_{\rm swap}$ plus the value of receiving $-M_\tau$ at τ. The holder chooses the best τ, and never stops where $-M_\tau$ is negative, since not stopping is also allowed. The largest value of receiving $(-M_\tau)^+$ over all rules is the Bermudan receiver's price, by definition. Hence $V_{\rm callable} = V_{\rm swap} + B_R$. When the bank holds the right it picks the rule that is worst for the company, reward $M_\tau^+$ taken away, giving $V_{\rm swap} - B_P$.
+**Decomposition.** Fix any stopping rule τ (tau): a rule that picks a listed year, or none, using only what is known by then. On a path where the company stops at τ, the cash it receives is the full swap's cash minus the payments after τ. Removing those payments is the same as adding the opposite swap's payments after τ, whose value at τ is $`-M_\tau`$. So the value of the cancelled contract under rule τ is $`V_{\rm swap}`$ plus the value of receiving $`-M_\tau`$ at τ. The holder chooses the best τ, and never stops where $`-M_\tau`$ is negative, since not stopping is also allowed. The largest value of receiving $`(-M_\tau)^+`$ over all rules is the Bermudan receiver's price, by definition. Hence $`V_{\rm callable} = V_{\rm swap} + B_R`$. When the bank holds the right it picks the rule that is worst for the company, reward $`M_\tau^+`$ taken away, giving $`V_{\rm swap} - B_P`$.
 
 </details>
 
 ### Step 2: a tree for the one-year rate
 
-The option's value depends on how rates can move. The card uses a **Black–Derman–Toy tree**: each year the one-year rate steps up or down, each with probability one half. These are pricing weights, not forecasts. The rate at year i, after j up-steps, equals $a_i e^{2\sigma j}$, a level fitted for that year times a factor for the node. Neighbouring nodes differ by the factor $e^{2\sigma}$, so the rate's log moves by $\sigma$ each way. Rates stay positive, and they swing more when they are high.
+The option's value depends on how rates can move. The card uses a **Black–Derman–Toy tree**: each year the one-year rate steps up or down, each with probability one half. These are pricing weights, not forecasts. The rate at year i, after j up-steps, equals $`a_i e^{2\sigma j}`$, a level fitted for that year times a factor for the node. Neighbouring nodes differ by the factor $`e^{2\sigma}`$, so the rate's log moves by $`\sigma`$ each way. Rates stay positive, and they swing more when they are high.
 
-Each year's level is solved by bisection (halving an interval until it pins the root) so that the tree reprices today's ten discount factors, $D(1)$ to $D(10)$ on the flat 5% curve, exactly. A tree that did not match the curve would misprice the plain swap before any option entered. At year 2 the three nodes run from 3.24% at the bottom to 7.21% at the top.
+Each year's level is solved by bisection (halving an interval until it pins the root) so that the tree reprices today's ten discount factors, $`D(1)`$ to $`D(10)`$ on the flat 5% curve, exactly. A tree that did not match the curve would misprice the plain swap before any option entered. At year 2 the three nodes run from 3.24% at the bottom to 7.21% at the top.
 
 ### Step 3: roll the option back
 
-Start at year 10, where nothing remains and the option is worth zero. Step back one year at a time. At each node, the wait value $W_i$ is the average of the two nodes one year on, discounted by the node's own rate. On a listed year, compare it with the saving from cancelling, $(-M_i)^+$, and keep the larger. On an unlisted year, keep the wait value. At year 0 the tree returns $B_R$ = $452,750.81. The same loop with $M_i^+$ as the reward returns $B_P$ = $459,398.62.
+Start at year 10, where nothing remains and the option is worth zero. Step back one year at a time. At each node, the wait value $`W_i`$ is the average of the two nodes one year on, discounted by the node's own rate. On a listed year, compare it with the saving from cancelling, $`(-M_i)^+`$, and keep the larger. On an unlisted year, keep the wait value. At year 0 the tree returns $`B_R`$ = $452,750.81. The same loop with $`M_i^+`$ as the reward returns $`B_P`$ = $459,398.62.
 
 The comparison is the heart of it. A negative remaining swap does not force exercise. At a node where the swap is slightly underwater but rates could fall further, waiting keeps the right to cancel later at a bigger saving, and waiting wins.
 
@@ -135,19 +141,19 @@ Company pays 5% fixed on $10 million for ten years, curve flat at 5% with yearly
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| floating leg per dollar | $1 - D(10) = 1 - 1.05^{-10}$ | 0.3861 |
-| annuity | $A = 1.05^{-1} + \cdots + 1.05^{-10}$ | 7.7217 |
-| fixed leg per dollar | $0.05 \times 7.7217$ | 0.3861 |
-| plain swap | $10{,}000{,}000 \times (0.3861 - 0.3861)$ | $0.00 |
+| floating leg per dollar | $`1 - D(10) = 1 - 1.05^{-10}`$ | 0.3861 |
+| annuity | $`A = 1.05^{-1} + \cdots + 1.05^{-10}`$ | 7.7217 |
+| fixed leg per dollar | $`0.05 \times 7.7217`$ | 0.3861 |
+| plain swap | $`10{,}000{,}000 \times (0.3861 - 0.3861)`$ | $0.00 |
 | receiver Bermudan, tree | Step 3 rolled back | $452,750.81 |
-| **callable swap** | $0.00 + 452{,}750.81$ | **$452,750.81** |
+| **callable swap** | $`0.00 + 452{,}750.81`$ | **$452,750.81** |
 | same, rolled as one contract | Road 2 below | $452,750.81 |
 | same, over all 512 paths | Road 3 below | $452,750.81 |
-| exit paid by a higher fixed rate | solve callable value = 0 for $K$ | **6.0988%** |
+| exit paid by a higher fixed rate | solve callable value = 0 for $`K`$ | **6.0988%** |
 
 So the right to walk away is worth $452,750.81 today. A company that will not pay cash up front pays for it by paying 6.0988% fixed instead of 5% every year.
 
-**Does the break-even rate exist, and is it unique?** Yes, on both sides. Under any cancel rule the company makes at least the payments of years 1 and 2, so raising $K$ by $\delta$ lowers the callable's value by at least $N\delta\,[D(1)+D(2)]$, whichever rule is best. The value therefore falls strictly and without limit as $K$ rises. At $K = 0$ it is positive: the company only receives. So exactly one $K$ gives zero, 6.0988%. The bank-cancellable version falls the same way, is positive at $K = 0$ and −$459,398.62 at 5%, and crosses zero once, at 4.0578%. Both checks confirm each root prices to zero.
+**Does the break-even rate exist, and is it unique?** Yes, on both sides. Under any cancel rule the company makes at least the payments of years 1 and 2, so raising $`K`$ by $`\delta`$ lowers the callable's value by at least $`N\delta\,[D(1)+D(2)]`$, whichever rule is best. The value therefore falls strictly and without limit as $`K`$ rises. At $`K = 0`$ it is positive: the company only receives. So exactly one $`K`$ gives zero, 6.0988%. The bank-cancellable version falls the same way, is positive at $`K = 0`$ and −$459,398.62 at 5%, and crosses zero once, at 4.0578%. Both checks confirm each root prices to zero.
 
 ### What breaks if you drop a piece
 
@@ -198,14 +204,14 @@ Early dates have many years left to escape but little time for rates to fall; la
 
 ### How the price moves: the Greeks
 
-Rate delta is the change in value when the whole curve rises by one **basis point**, one hundredth of a percent; vega is the change when $\sigma$ rises by one percentage point. Both are central differences: move the input up and down by the step, refit the tree each time, and halve the change in value.
+Rate delta is the change in value when the whole curve rises by one **basis point**, one hundredth of a percent; vega is the change when $`\sigma`$ rises by one percentage point. Both are central differences: move the input up and down by the step, refit the tree each time, and halve the change in value.
 
-| | Plain swap | Company's exit $B_R$ | Callable swap |
+| | Plain swap | Company's exit $`B_R`$ | Callable swap |
 | --- | --- | --- | --- |
 | Rate delta per basis point | +$7,721.74 | −$2,813.90 | +$4,907.83 |
 | Vega per volatility point | none: the curve fixes it | +$21,460.70 | +$21,460.70 |
 
-The plain swap's delta is about $N \times A \times 0.0001$ = $10 million × 7.7217 × 0.0001. The exit cuts the rate exposure by more than a third: as rates fall, the right to leave gains what the swap loses. That is **negative convexity** for whoever sold the right: the bank's hedge must be topped up as rates move, which is why the bank charges for it.
+The plain swap's delta is about $`N \times A \times 0.0001`$ = $10 million × 7.7217 × 0.0001. The exit cuts the rate exposure by more than a third: as rates fall, the right to leave gains what the swap loses. That is **negative convexity** for whoever sold the right: the bank's hedge must be topped up as rates move, which is why the bank charges for it.
 
 ---
 
@@ -629,11 +635,11 @@ The two outputs agree byte for byte.
 
 Lean proves both decompositions and the floating-leg sum, on any up-or-down rate tree with half weights and any list of cancel dates.
 
-- Suppose every one-year rate stays above −100%, with no fee and the option struck at $K$. Then at every node, the callable swap, rolled back as one contract, equals the remaining swap plus the receiver Bermudan swaption.
+- Suppose every one-year rate stays above −100%, with no fee and the option struck at $`K`$. Then at every node, the callable swap, rolled back as one contract, equals the remaining swap plus the receiver Bermudan swaption.
 - Suppose the bank holds the right instead, on the same tree. Then at every node, the swap rolled back as one contract equals the remaining swap minus the payer Bermudan swaption.
-- Take any path of one-year rates, none equal to −100%. Then the discounted floating payments from year $i$ on add up to $1 - d_i \cdots d_9$.
-- Take the flat 5% curve and $K$ = 5%. Then the plain swap is worth exactly $0.00.
-- The tree has $2^9 = 512$ rate paths through year 9.
+- Take any path of one-year rates, none equal to −100%. Then the discounted floating payments from year $`i`$ on add up to $`1 - d_i \cdots d_9`$.
+- Take the flat 5% curve and $`K`$ = 5%. Then the plain swap is worth exactly $0.00.
+- The tree has $`2^9 = 512`$ rate paths through year 9.
 
 The tree's fitting, the dollar prices, the bounds, the break-even rates and the Greeks are left to the Python and Rust checks.
 
@@ -835,7 +841,7 @@ example : 2 ^ 9 = 512 := by decide
 > - **Pricing the exit as the best European.** $362,494.53 misses a fifth of the value. A Bermudan is worth more than any one date, and less than all of them together.
 > - **Exercising whenever the swap is underwater.** The rule looks sensible and gives $306,871.10, a third below the best rule. Waiting has value until the saving is large enough.
 > - **Turning the premium into a rate by dividing by the annuity.** That gives 5.5863%. But raising the fixed rate makes the exit richer, so the true break-even is 6.0988%. The break-even is a root to solve, not a division.
-> - **Striking the offsetting swaption at the new market rate.** Cancelling needs a swaption at the old rate, $K$. One struck at the market rate on the day leaves the difference running for the rest of the swap.
+> - **Striking the offsetting swaption at the new market rate.** Cancelling needs a swaption at the old rate, $`K`$. One struck at the market rate on the day leaves the difference running for the rest of the swap.
 
 ---
 

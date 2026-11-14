@@ -35,46 +35,54 @@ One line: the elevation, straight between the turning points at km 4, 6 and 10.
 
 ## The formula
 
-Notation first. The elevation is a function $f$: f(x) is the height in metres at km x, on an interval from $a$ to $b$, here 0 to 12. A **partition** of the interval is a list of points a = x_0 < x_1 < ⋯ < x_n = b; $n$ counts the pieces and $x_k$ is the k-th point. Each piece contributes the size of its change, |f(x_k) − f(x_{k−1})|.
+Notation first. The elevation is a function $`f`$: f(x) is the height in metres at km x, on an interval from $`a`$ to $`b`$, here 0 to 12. A **partition** of the interval is a list of points a = x_0 < x_1 < ⋯ < x_n = b; $`n`$ counts the pieces and $`x_k`$ is the k-th point. Each piece contributes the size of its change, |f(x_k) − f(x_{k−1})|.
 
-$$V_a^b(f) = \sup\Big\{ \sum_{k=1}^{n} \big\lvert f(x_k) - f(x_{k-1}) \big\rvert \;:\; a = x_0 < x_1 < \cdots < x_n = b,\ n = 1, 2, \dots \Big\}$$
+```math
+V_a^b(f) = \sup\Big\{ \sum_{k=1}^{n} \big\lvert f(x_k) - f(x_{k-1}) \big\rvert \;:\; a = x_0 < x_1 < \cdots < x_n = b,\ n = 1, 2, \dots \Big\}
+```
 
 **Read it aloud:** the total variation of f from a to b is the most that any partition can collect by adding up the sizes of the changes across its pieces.
 
-f has **bounded variation** on [a, b] when this supremum (least upper bound: [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)) is finite. The **positive variation** $P$ and **negative variation** $N$ collect only the rises, or only the falls, over [a, x], again as a supremum over partitions:
+f has **bounded variation** on [a, b] when this supremum (least upper bound: [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)) is finite. The **positive variation** $`P`$ and **negative variation** $`N`$ collect only the rises, or only the falls, over [a, x], again as a supremum over partitions:
 
-$$P(x) = \sup \sum_{k} \max\big(f(x_k) - f(x_{k-1}),\, 0\big), \qquad N(x) = \sup \sum_{k} \max\big(f(x_{k-1}) - f(x_k),\, 0\big).$$
+```math
+P(x) = \sup \sum_{k} \max\big(f(x_k) - f(x_{k-1}),\, 0\big), \qquad N(x) = \sup \sum_{k} \max\big(f(x_{k-1}) - f(x_k),\, 0\big).
+```
 
 **Jordan decomposition.** If f has bounded variation on [a, b], then for every x in [a, b]
 
-$$f(x) = \big(f(a) + P(x)\big) - N(x), \qquad P(x) + N(x) = V_a^x(f),$$
+```math
+f(x) = \big(f(a) + P(x)\big) - N(x), \qquad P(x) + N(x) = V_a^x(f),
+```
 
-and $f(a) + P$ and $N$ are increasing, meaning never going down. Conversely, any difference $g - h$ of increasing functions $g$ and $h$ on [a, b] has bounded variation.
+and $`f(a) + P`$ and $`N`$ are increasing, meaning never going down. Conversely, any difference $`g - h`$ of increasing functions $`g`$ and $`h`$ on [a, b] has bounded variation.
 
 **Read it aloud:** the height now is the start height, plus all the climbing so far, minus all the descending so far; climbing plus descending is the movement so far.
 
 **One-sided limits.** If f has bounded variation, then at every point x the limits
 
-$$f(x-) = \lim_{t \uparrow x} f(t), \qquad f(x+) = \lim_{t \downarrow x} f(t)$$
+```math
+f(x-) = \lim_{t \uparrow x} f(t), \qquad f(x+) = \lim_{t \downarrow x} f(t)
+```
 
-exist, as $t$ approaches x from below and from above (only one of them at an endpoint), and f jumps at no more than countably many points, meaning points that can be listed as a first, a second, a third, and so on.
+exist, as $`t`$ approaches x from below and from above (only one of them at an endpoint), and f jumps at no more than countably many points, meaning points that can be listed as a first, a second, a third, and so on.
 
 **Read it aloud:** approaching any point from either side, the values settle down.
 
-Three quick cases. An increasing f has $V_a^b(f) = f(b) - f(a)$. A piecewise-monotone f has variation equal to the sum of the sizes of its rises and falls. A **Lipschitz** f, with $\lvert f(x) - f(t) \rvert \le K \lvert x - t \rvert$ for a fixed $K$ ([Uniform continuity](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md)), has $V_a^b(f) \le K(b - a)$.
+Three quick cases. An increasing f has $`V_a^b(f) = f(b) - f(a)`$. A piecewise-monotone f has variation equal to the sum of the sizes of its rises and falls. A **Lipschitz** f, with $`\lvert f(x) - f(t) \rvert \le K \lvert x - t \rvert`$ for a fixed $`K`$ ([Uniform continuity](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md)), has $`V_a^b(f) \le K(b - a)`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | the function whose movement is measured | elevation in metres at km x | more or bigger swings raise the variation |
-| $a$, $b$, $c$ | ends of the interval; a point between | a = 0 km, b = 12 km | a longer interval can only add variation |
-| $x$, $t$ | points of the interval | km 8 | — |
-| $x_k$, $n$ | the k-th point of a partition; the number of pieces | km 0, 4, 6, 10, 12, so n = 4 | adding points never lowers the sum |
-| $V_a^b(f)$ | total variation | 1,600 m | — |
-| $P$, $N$ | climb so far, descent so far, from a up to x | P(12) = 900 m, N(12) = 700 m | each only rises as x moves right |
-| $g$, $h$ | increasing functions whose difference is f | g = 1,000 + P, h = N | — |
-| $f(x-)$, $f(x+)$ | limit from the left, from the right | both 1,450 m at km 8; with a ladder, 1,450 and 1,500 | a jump makes them differ |
-| $K$ | a Lipschitz constant: a cap on steepness | 200 m per km | the cap K(b − a) grows with it |
-| $\varepsilon$, $s$, $m$ | in the proofs: a small positive number, a supremum, a whole number | — | — |
+| $`f`$ | the function whose movement is measured | elevation in metres at km x | more or bigger swings raise the variation |
+| $`a`$, $`b`$, $`c`$ | ends of the interval; a point between | a = 0 km, b = 12 km | a longer interval can only add variation |
+| $`x`$, $`t`$ | points of the interval | km 8 | — |
+| $`x_k`$, $`n`$ | the k-th point of a partition; the number of pieces | km 0, 4, 6, 10, 12, so n = 4 | adding points never lowers the sum |
+| $`V_a^b(f)`$ | total variation | 1,600 m | — |
+| $`P`$, $`N`$ | climb so far, descent so far, from a up to x | P(12) = 900 m, N(12) = 700 m | each only rises as x moves right |
+| $`g`$, $`h`$ | increasing functions whose difference is f | g = 1,000 + P, h = N | — |
+| $`f(x-)`$, $`f(x+)`$ | limit from the left, from the right | both 1,450 m at km 8; with a ladder, 1,450 and 1,500 | a jump makes them differ |
+| $`K`$ | a Lipschitz constant: a cap on steepness | 200 m per km | the cap K(b − a) grows with it |
+| $`\varepsilon`$, $`s`$, $`m`$ | in the proofs: a small positive number, a supremum, a whole number | — | — |
 
 ### When it holds
 
@@ -97,7 +105,7 @@ Put a new point t between two partition points u < v. The old piece contributed 
 
 On the trail: the partition {0, 12} collects |1200 − 1000| = 200. Adding km 6 gives 300 + 100 = 400. Adding km 4 and km 10 gives 600 + 300 + 300 + 400 = 1,600. No further point adds anything: each piece now climbs all the way or falls all the way.
 
-So a partition may always be assumed to contain any chosen point c. That gives **additivity**, $V_a^b(f) = V_a^c(f) + V_c^b(f)$ for $a < c < b$.
+So a partition may always be assumed to contain any chosen point c. That gives **additivity**, $`V_a^b(f) = V_a^c(f) + V_c^b(f)`$ for $`a < c < b`$.
 
 ### Step 2: monotone pieces are counted by their ends
 
@@ -107,7 +115,9 @@ If f is increasing, every change is at least 0, and the partition sum telescopes
 
 Take f(x) = x sin(1/x) on [0, 2/π], with f(0) = 0. It touches y = x and y = −x in turn at the points x_k = 2/((2k + 1)π), k = 0, 1, 2, …, where f(x_k) is +x_k, −x_k, +x_k, …. On the partition 0 < x_n < ⋯ < x_1 < x_0, consecutive peaks have opposite signs, so each piece collects x_k + x_{k+1}, and the total is
 
-$$x_0 + 2\,(x_1 + x_2 + \cdots + x_n) = \frac{2}{\pi} + \frac{4}{\pi}\Big(\frac13 + \frac15 + \cdots + \frac{1}{2n+1}\Big).$$
+```math
+x_0 + 2\,(x_1 + x_2 + \cdots + x_n) = \frac{2}{\pi} + \frac{4}{\pi}\Big(\frac13 + \frac15 + \cdots + \frac{1}{2n+1}\Big).
+```
 
 The bracket is at least a third of the harmonic series 1 + 1/2 + ⋯ + 1/n, which passes every bound ([Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)). So the variation is infinite. The sums grow like (2/π) ln n: 1.06 at n = 1, 7.94 at n = 100,000.
 
@@ -131,7 +141,7 @@ For any number d, d = max(d, 0) − max(−d, 0) and |d| = max(d, 0) + max(−d,
 
 Rises minus falls telescopes to f(x) − f(a) for every partition; rises plus falls is the partition sum. So every partition sum equals twice its rises minus (f(x) − f(a)).
 
-Taking suprema, $V_a^x(f) = 2P(x) - (f(x) - f(a))$, and likewise $V_a^x(f) = 2N(x) + (f(x) - f(a))$. Subtracting and adding the two: P − N = f(x) − f(a) and P + N = V_a^x(f).
+Taking suprema, $`V_a^x(f) = 2P(x) - (f(x) - f(a))`$, and likewise $`V_a^x(f) = 2N(x) + (f(x) - f(a))`$. Subtracting and adding the two: P − N = f(x) − f(a) and P + N = V_a^x(f).
 
 At km 12: P = 900, N = 700, P − N = 200 = 1,200 − 1,000, P + N = 1,600. At km 5, partway down the first descent: P = 600, N = 150, P − N = 450 = 1,450 − 1,000.
 
@@ -154,9 +164,9 @@ First line: the climb so far, P. Second line: the descent so far, N. Third line:
 
 ### Step 6: increasing functions have one-sided limits, so f does too
 
-Let g be increasing and approach x from the left. The values g(t) for t < x are at most g(x), so they have a least upper bound s. For any small $\varepsilon > 0$ some earlier value exceeds s − ε, and every later value before x lies between it and s. So the values settle at s: that is g(x−). The right limit is the mirror image, a greatest lower bound. Then f(x±) = g(x±) − h(x±).
+Let g be increasing and approach x from the left. The values g(t) for t < x are at most g(x), so they have a least upper bound s. For any small $`\varepsilon > 0`$ some earlier value exceeds s − ε, and every later value before x lies between it and s. So the values settle at s: that is g(x−). The right limit is the mirror image, a greatest lower bound. Then f(x±) = g(x±) − h(x±).
 
-Each jump of g is a gap g(x+) − g(x−) that uses up its own stretch of the total rise g(b) − g(a). So at most $m$ jumps exceed (g(b) − g(a))/m, for each whole number m, and all the jumps fit in one countable list.
+Each jump of g is a gap g(x+) − g(x−) that uses up its own stretch of the total rise g(b) − g(a). So at most $`m`$ jumps exceed (g(b) − g(a))/m, for each whole number m, and all the jumps fit in one countable list.
 
 With a 50 m ladder bolted on at km 8 the trail jumps. From the left it approaches 1,450 m (1,442.5 at 0.1 km before, 1,449.9999 at a millionth of a km before); from the right, 1,500 m. The climb becomes 950 m and the variation 1,650 m.
 

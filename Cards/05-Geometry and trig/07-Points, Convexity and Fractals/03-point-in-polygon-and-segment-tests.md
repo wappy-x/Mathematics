@@ -26,42 +26,48 @@ Drawn at 1 m = 1.8 units, corner A at the bottom left. The drone's dashed ray me
 
 ## The formula
 
-Positions are grid coordinates in metres, east then north ([Distance and midpoint](../04-Coordinates%20and%20Curves/01-distance-and-midpoint.md)). For a point $a$, $a_x$ is its east coordinate and $a_y$ its north coordinate; the small letter below, a subscript, names the part.
+Positions are grid coordinates in metres, east then north ([Distance and midpoint](../04-Coordinates%20and%20Curves/01-distance-and-midpoint.md)). For a point $`a`$, $`a_x`$ is its east coordinate and $`a_y`$ its north coordinate; the small letter below, a subscript, names the part.
 
 The corners, in order round the fence, are A (0, 0), B (150, 0), C (170, 60), D (140, 100), E (70, 50) and F (0, 100).
 
 The one tool is the orientation of three points, from [Shoelace formula](01-polygon-area-and-orientation.md):
 
-$$\operatorname{orient}(a, b, c) = (b_x - a_x)(c_y - a_y) - (b_y - a_y)(c_x - a_x)$$
+```math
+\mathrm{orient}(a, b, c) = (b_x - a_x)(c_y - a_y) - (b_y - a_y)(c_x - a_x)
+```
 
-**Read it aloud:** walking from $a$ towards $b$, the number is positive if $c$ lies on the left, negative if on the right, zero if all three are in line.
+**Read it aloud:** walking from $`a`$ towards $`b`$, the number is positive if $`c`$ lies on the left, negative if on the right, zero if all three are in line.
 
-It is the cross product of the arrows from $a$ to $b$ and from $a$ to $c$; only its sign is used here.
+It is the cross product of the arrows from $`a`$ to $`b`$ and from $`a`$ to $`c`$; only its sign is used here.
 
-**Inside or outside.** A fence edge from corner $a$ to corner $b$ counts as a crossing of the eastward ray from $p$ when
+**Inside or outside.** A fence edge from corner $`a`$ to corner $`b`$ counts as a crossing of the eastward ray from $`p`$ when
 
-$$(a_y > p_y) \ne (b_y > p_y) \quad\text{and}\quad \operatorname{orient}(a, b, p)\,(b_y - a_y) > 0$$
+```math
+(a_y > p_y) \ne (b_y > p_y) \quad\text{and}\quad \mathrm{orient}(a, b, p)\,(b_y - a_y) > 0
+```
 
 **Read it aloud:** exactly one end of the edge lies strictly north of the point, and the point lies west of the edge.
 
-The point is inside when the count $n$ of such edges is odd, outside when it is even.
+The point is inside when the count $`n`$ of such edges is odd, outside when it is even.
 
-**Two segments.** The segment from $p$ to $q$ and the segment from $r$ to $s$ cross when
+**Two segments.** The segment from $`p`$ to $`q`$ and the segment from $`r`$ to $`s`$ cross when
 
-$$\operatorname{orient}(p, q, r)\,\operatorname{orient}(p, q, s) < 0 \quad\text{and}\quad \operatorname{orient}(r, s, p)\,\operatorname{orient}(r, s, q) < 0$$
+```math
+\mathrm{orient}(p, q, r)\,\mathrm{orient}(p, q, s) < 0 \quad\text{and}\quad \mathrm{orient}(r, s, p)\,\mathrm{orient}(r, s, q) < 0
+```
 
 **Read it aloud:** each segment's two ends lie on opposite sides of the other segment's line. A product is negative exactly when the two signs differ.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p$ | the point tested; in the crossing test, one end of the flight line | drone (70, 80), pilot (126, 60) | — |
-| $a$, $b$, $c$ | points fed to orient; $a$, $b$ also a fence edge's ends | D (140, 100), E (70, 50) | — |
-| $a_x$, $a_y$, $p_x$, $p_y$ | east and north coordinates, in metres | E: 70 east, 50 north | — |
-| $\operatorname{orient}$ | twice a triangle's signed area; its sign says left or right | orient(D, E, drone) = −2100 | larger size: further from the line |
-| $n$ | edges met by the eastward ray | 2 for the drone, 1 for the pilot | each extra crossing flips the verdict |
-| $q$, $r$, $s$ | segment ends in the crossing test | $p$ the pilot, $q$ the drone; $r$, $s$ = D, E | — |
-| $t$, $u$ | where the lines meet, as a fraction along each segment | 0.5 and 0.6 | outside 0 to 1: off the segment |
-| $w$ | winding angle: total turn of the sight line from $p$ to a runner circling the fence | 0° drone, 360° pilot | — |
+| $`p`$ | the point tested; in the crossing test, one end of the flight line | drone (70, 80), pilot (126, 60) | — |
+| $`a`$, $`b`$, $`c`$ | points fed to orient; $`a`$, $`b`$ also a fence edge's ends | D (140, 100), E (70, 50) | — |
+| $`a_x`$, $`a_y`$, $`p_x`$, $`p_y`$ | east and north coordinates, in metres | E: 70 east, 50 north | — |
+| $`\mathrm{orient}`$ | twice a triangle's signed area; its sign says left or right | orient(D, E, drone) = −2100 | larger size: further from the line |
+| $`n`$ | edges met by the eastward ray | 2 for the drone, 1 for the pilot | each extra crossing flips the verdict |
+| $`q`$, $`r`$, $`s`$ | segment ends in the crossing test | $`p`$ the pilot, $`q`$ the drone; $`r`$, $`s`$ = D, E | — |
+| $`t`$, $`u`$ | where the lines meet, as a fraction along each segment | 0.5 and 0.6 | outside 0 to 1: off the segment |
+| $`w`$ | winding angle: total turn of the sight line from $`p`$ to a runner circling the fence | 0° drone, 360° pilot | — |
 
 ### When it holds
 
@@ -81,13 +87,13 @@ Far enough east a ray is clear of the paddock: outside. Walking back to the poin
 
 ### Step 1: an edge crosses the ray east of the point
 
-An edge meets the horizontal line through $p$ only if one end is north of $p$ and the other is not: the rule's first half.
+An edge meets the horizontal line through $`p`$ only if one end is north of $`p`$ and the other is not: the rule's first half.
 
-For an edge running north, the crossing is east of $p$ exactly when $p$ is on the walk's left, orientation positive; running south, the sides swap. Multiplying by $b_y - a_y$, positive going north and negative going south, folds both into one sign. For the drone on D–E, orientation −2100 and the drop from 100 m to 50 m are both negative: the product is positive, and the crossing counts, at 112 m east. The decision never divides.
+For an edge running north, the crossing is east of $`p`$ exactly when $`p`$ is on the walk's left, orientation positive; running south, the sides swap. Multiplying by $`b_y - a_y`$, positive going north and negative going south, folds both into one sign. For the drone on D–E, orientation −2100 and the drop from 100 m to 50 m are both negative: the product is positive, and the crossing counts, at 112 m east. The decision never divides.
 
 ### Step 2: a corner on the ray counts once or not at all
 
-The pilot's ray passes exactly through corner C, at (170, 60), where the fence runs on north: one crossing. Edge B–C has neither end strictly north of 60 m, so it does not count; C–D does. The pilot gets $n$ = 1, inside.
+The pilot's ray passes exactly through corner C, at (170, 60), where the fence runs on north: one crossing. Edge B–C has neither end strictly north of 60 m, so it does not count; C–D does. The pilot gets $`n`$ = 1, inside.
 
 So a corner at the ray's height counts as if just south of it (the half-open rule): passed through, it counts once; touched and turned back from, twice or not at all. Parity is right either way.
 
@@ -98,7 +104,7 @@ If flight and fence cross, each straddles the other's line. Conversely, if D and
 <details>
 <summary>Detailed proof: the fence has exactly two sides</summary>
 
-Move $p$ along a path that never touches the fence. Its count changes only when a corner passes through the ray's height, and the half-open rule makes that change 0 or 2. So parity is constant along the path.
+Move $`p`$ along a path that never touches the fence. Its count changes only when a corner passes through the ray's height, and the half-open rule makes that change 0 or 2. So parity is constant along the path.
 
 Two points close together either side of one edge, away from corners, have rays meeting the same edges except that one: their parities differ.
 
@@ -106,7 +112,7 @@ Far away the count is 0. So points joined to far away without touching the fence
 
 </details>
 
-A second road needs no counting. Watch a runner go once round the fence: from inside, the sight line turns a full 360°; from outside it swings and returns, 0° in all. That total is the winding angle $w$, computed in the code from the inverse tangent ([Inverse trig](../03-Trigonometry/05-inverse-trig-and-solving-equations.md)). The segment test is checked by solving the two lines' equations for $t$ and $u$.
+A second road needs no counting. Watch a runner go once round the fence: from inside, the sight line turns a full 360°; from outside it swings and returns, 0° in all. That total is the winding angle $`w`$, computed in the code from the inverse tangent ([Inverse trig](../03-Trigonometry/05-inverse-trig-and-solving-equations.md)). The segment test is checked by solving the two lines' equations for $`t`$ and $`u`$.
 
 
 ---
@@ -141,7 +147,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Two roads each. Inside or outside: crossing counts against the winding angle, on the drone, the pilot and the grid. Crossing: the straddle test on every fence against solving for $t$ and $u$ by Cramer's rule (a ratio of two determinants). The distance formula then confirms the meeting point lies on both segments.
+Two roads each. Inside or outside: crossing counts against the winding angle, on the drone, the pilot and the grid. Crossing: the straddle test on every fence against solving for $`t`$ and $`u`$ by Cramer's rule (a ratio of two determinants). The distance formula then confirms the meeting point lies on both segments.
 
 ### Python
 

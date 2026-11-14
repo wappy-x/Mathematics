@@ -32,9 +32,11 @@ The left branch loses a box with the tool; the right keeps all three and charges
 
 ## The formula
 
-S(n, k) — the **Stirling numbers of the second kind**, tabulated by James Stirling in 1730 — counts splits of n named items into exactly k unnamed non-empty groups. Some books print them in braces, $\left\{ n \atop k \right\}$. Reminders: n! is n × (n−1) × … × 1; C(n, k), "n choose k", picks k of n items, order ignored.
+S(n, k) — the **Stirling numbers of the second kind**, tabulated by James Stirling in 1730 — counts splits of n named items into exactly k unnamed non-empty groups. Some books print them in braces, $`\left\{ n \atop k \right\}`$. Reminders: n! is n × (n−1) × … × 1; C(n, k), "n choose k", picks k of n items, order ignored.
 
-$$S(n,k) = k\,S(n-1,k) + S(n-1,k-1)$$
+```math
+S(n,k) = k\,S(n-1,k) + S(n-1,k-1)
+```
 
 **Read it aloud:** the last item either joins one of the k groups standing — k choices on top of a split of the rest into k — or stands alone, the rest filling k−1.
 
@@ -47,12 +49,12 @@ The recurrence runs from n = 1, k = 1 outward. The edges start the table:
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | how many named items | 5 tools | bigger numbers in the row |
-| $k$ | how many groups, none empty | 2 or 3 boxes | rises, peaks, back to 1 |
-| $S(n,k)$ | splits into exactly k unnamed non-empty groups | S(5, 3) = 25 | — |
-| $B(n)$ | the row's total: any number of groups | B(5) = 52 | — |
-| $k!$ | ways to hang k name tags on k groups | 3! = 6 | named groups cost more |
-| $C(n,k)$ | ways to choose k of n items | C(5, 3) = 10 | — |
+| $`n`$ | how many named items | 5 tools | bigger numbers in the row |
+| $`k`$ | how many groups, none empty | 2 or 3 boxes | rises, peaks, back to 1 |
+| $`S(n,k)`$ | splits into exactly k unnamed non-empty groups | S(5, 3) = 25 | — |
+| $`B(n)`$ | the row's total: any number of groups | B(5) = 52 | — |
+| $`k!`$ | ways to hang k name tags on k groups | 3! = 6 | named groups cost more |
+| $`C(n,k)`$ | ways to choose k of n items | C(5, 3) = 10 | — |
 
 ### When it holds
 

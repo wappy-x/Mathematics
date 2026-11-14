@@ -38,9 +38,13 @@ Same track damage on both branches. Hamming's budget is one bit per block; Reed-
 
 Notation first, in words. An **(n, k) code** turns k message symbols into n stored symbols. Its **minimum distance** d is the fewest places in which two different codewords differ; the distance between two words is a count of positions that disagree (Hamming distance). On this shelf H(X) is entropy; on this card H is a matrix, below.
 
-$$c = G\,m, \qquad s = H\,r = H\,e, \qquad t = \left\lfloor \frac{d-1}{2} \right\rfloor$$
+```math
+c = G\,m, \qquad s = H\,r = H\,e, \qquad t = \left\lfloor \frac{d-1}{2} \right\rfloor
+```
 
-$$\text{Reed-Solomon:}\quad c = \big(m(1),\, m(a),\, m(a^2),\, \dots,\, m(a^{n-1})\big), \qquad d = n - k + 1$$
+```math
+\text{Reed-Solomon:}\quad c = \big(m(1),\, m(a),\, m(a^2),\, \dots,\, m(a^{n-1})\big), \qquad d = n - k + 1
+```
 
 **Read it aloud:** the codeword is the generator matrix times the message; the receiver multiplies what it read by the check matrix, and the answer depends only on the error; a code whose codewords sit d apart repairs any t errors, half of d − 1 rounded down. For Reed-Solomon the codeword is a list of values of the message polynomial, and its distance is n − k + 1.
 
@@ -48,18 +52,18 @@ Hamming's arithmetic is on bits, adding without carry: 1 + 1 = 0. Reed-Solomon's
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$, $k$ | symbols stored per block, and message symbols among them | Hamming 7 and 4 bits; Reed-Solomon 8 and 4 nibbles | more n: more room for checks; more k: more data, less protection |
-| $d$ | minimum distance: fewest places two codewords differ | 3; 5 | more repairs |
-| $t$ | the repair budget, ⌊(d − 1)/2⌋ | 1 bit; 2 nibbles | — |
-| $m$, $m(x)$ | the message: 4 bits m1 to m4, or 4 nibbles read as a polynomial's coefficients | 0, 1, 0, 0; m(x) = 4 + 3x + 4x² + 4x³ | — |
-| $G$ | generator matrix: 7 rows by 4 columns, message in, codeword out | below | — |
-| $c$ | the codeword written to the disc | 1001100; 7, 7, 1, 4, 15, 5, 12, 13 | — |
-| $e$ | the error: 1 where a bit flipped | a 1 at position 6 | more 1s than t, and repair fails |
-| $r$ | the word read back, c + e | 1001110 | — |
-| $H$ | check matrix: 3 rows by 7 columns; column j is j in binary | below | — |
-| $s$ | the syndrome: H r, read as a binary number | 6 | names the flipped position |
-| $p$ | flip chance: how often the link flips one bit | 0.01 | more blocks fail; at 0.1, about 15% |
-| $a$ | the GF(16) symbol whose powers are the evaluation points | a = 2, points 1, 2, 4, 8, 3, 6, 12, 11 | — |
+| $`n`$, $`k`$ | symbols stored per block, and message symbols among them | Hamming 7 and 4 bits; Reed-Solomon 8 and 4 nibbles | more n: more room for checks; more k: more data, less protection |
+| $`d`$ | minimum distance: fewest places two codewords differ | 3; 5 | more repairs |
+| $`t`$ | the repair budget, ⌊(d − 1)/2⌋ | 1 bit; 2 nibbles | — |
+| $`m`$, $`m(x)`$ | the message: 4 bits m1 to m4, or 4 nibbles read as a polynomial's coefficients | 0, 1, 0, 0; m(x) = 4 + 3x + 4x² + 4x³ | — |
+| $`G`$ | generator matrix: 7 rows by 4 columns, message in, codeword out | below | — |
+| $`c`$ | the codeword written to the disc | 1001100; 7, 7, 1, 4, 15, 5, 12, 13 | — |
+| $`e`$ | the error: 1 where a bit flipped | a 1 at position 6 | more 1s than t, and repair fails |
+| $`r`$ | the word read back, c + e | 1001110 | — |
+| $`H`$ | check matrix: 3 rows by 7 columns; column j is j in binary | below | — |
+| $`s`$ | the syndrome: H r, read as a binary number | 6 | names the flipped position |
+| $`p`$ | flip chance: how often the link flips one bit | 0.01 | more blocks fail; at 0.1, about 15% |
+| $`a`$ | the GF(16) symbol whose powers are the evaluation points | a = 2, points 1, 2, 4, 8, 3, 6, 12, 11 | — |
 
 The two matrices. Positions 1 to 7 hold chk1, chk2, m1, chk4, m2, m3, m4: the three check bits sit at positions 1, 2 and 4, and the message bits m1 to m4 fill the rest.
 
@@ -104,7 +108,9 @@ Encoding is a [Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times
 
 The disc returns r = c + e. Multiply by H, and since H c = 0, the codeword drops out:
 
-$$s = H r = H c + H e = H e.$$
+```math
+s = H r = H c + H e = H e.
+```
 
 When e has a single 1, at position j, H e is column j of H, which is j in binary. Read as a number, the syndrome *is* the position. The player never needs to know what was sent: the checks see only the damage.
 

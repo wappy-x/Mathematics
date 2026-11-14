@@ -34,45 +34,53 @@ The ten circles are the days, drawn to scale. The solid line is the fit. The sha
 
 ## The formula
 
-Notation first. Greek letters are the true, unknown numbers; a hat marks an estimate of one from the data (shelf 07). Capital $Y_i$ is day i's sales before the day happens, a random variable; lower-case $y_i$ is the number recorded. The model says each day is the true line plus noise drawn from the normal law with mean 0 and variance $\sigma^2$, written $N(0, \sigma^2)$:
+Notation first. Greek letters are the true, unknown numbers; a hat marks an estimate of one from the data (shelf 07). Capital $`Y_i`$ is day i's sales before the day happens, a random variable; lower-case $`y_i`$ is the number recorded. The model says each day is the true line plus noise drawn from the normal law with mean 0 and variance $`\sigma^2`$, written $`N(0, \sigma^2)`$:
 
-$$Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i, \qquad \varepsilon_1, \dots, \varepsilon_n \text{ independent, each } N(0, \sigma^2).$$
+```math
+Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i, \qquad \varepsilon_1, \dots, \varepsilon_n \text{ independent, each } N(0, \sigma^2).
+```
 
-Two sums carry everything. $S_{xx} = \sum (x_i - \bar x)^2$ measures how spread out the temperatures are, with $\bar x$ their average. SSE is the sum of the squared leftovers, each day's recorded sales minus the line's value. Then:
+Two sums carry everything. $`S_{xx} = \sum (x_i - \bar x)^2`$ measures how spread out the temperatures are, with $`\bar x`$ their average. SSE is the sum of the squared leftovers, each day's recorded sales minus the line's value. Then:
 
-$$\mathrm{Var}(\hat\beta_1) = \frac{\sigma^2}{S_{xx}}, \qquad s^2 = \frac{\mathrm{SSE}}{n-2}, \qquad \mathrm{SE}(\hat\beta_1) = \frac{s}{\sqrt{S_{xx}}}, \qquad t = \frac{\hat\beta_1 - \beta_1}{\mathrm{SE}(\hat\beta_1)} \sim t_{n-2}.$$
+```math
+\mathrm{Var}(\hat\beta_1) = \frac{\sigma^2}{S_{xx}}, \qquad s^2 = \frac{\mathrm{SSE}}{n-2}, \qquad \mathrm{SE}(\hat\beta_1) = \frac{s}{\sqrt{S_{xx}}}, \qquad t = \frac{\hat\beta_1 - \beta_1}{\mathrm{SE}(\hat\beta_1)} \sim t_{n-2}.
+```
 
 **Read it aloud:** the slope wobbles by the noise's spread divided by the root of how spread out the temperatures are; replace the unknown noise spread by the one estimated from the leftovers, with n − 2 in the divisor, and the slope's distance from the truth, counted in standard errors, follows Student's t law with n − 2 degrees of freedom.
 
-Write $t_*$ for the 95 percent cutoff of that law: the number with 95 percent of its area between $-t_*$ and $t_*$. The interval for the slope, and the test of "slope zero", are that sentence turned round:
+Write $`t_*`$ for the 95 percent cutoff of that law: the number with 95 percent of its area between $`-t_*`$ and $`t_*`$. The interval for the slope, and the test of "slope zero", are that sentence turned round:
 
-$$\hat\beta_1 \pm t_* \,\mathrm{SE}(\hat\beta_1), \qquad \text{reject slope zero when } \left|\hat\beta_1\right| / \mathrm{SE}(\hat\beta_1) > t_*.$$
+```math
+\hat\beta_1 \pm t_* \,\mathrm{SE}(\hat\beta_1), \qquad \text{reject slope zero when } \left|\hat\beta_1\right| / \mathrm{SE}(\hat\beta_1) > t_*.
+```
 
-At a new temperature $x_0$ the line predicts $\hat y_0 = \hat\beta_0 + \hat\beta_1 x_0$, and two intervals come from one number $h_0$:
+At a new temperature $`x_0`$ the line predicts $`\hat y_0 = \hat\beta_0 + \hat\beta_1 x_0`$, and two intervals come from one number $`h_0`$:
 
-$$h_0 = \frac1n + \frac{(x_0 - \bar x)^2}{S_{xx}}, \qquad \text{mean sales: } \hat y_0 \pm t_*\, s\sqrt{h_0}, \qquad \text{one new day: } \hat y_0 \pm t_*\, s\sqrt{1 + h_0}.$$
+```math
+h_0 = \frac1n + \frac{(x_0 - \bar x)^2}{S_{xx}}, \qquad \text{mean sales: } \hat y_0 \pm t_*\, s\sqrt{h_0}, \qquad \text{one new day: } \hat y_0 \pm t_*\, s\sqrt{1 + h_0}.
+```
 
 **Read it aloud:** the line is least sure far from the average temperature; one new day adds its own full noise, the 1 under the root.
 
-The intercept is the line's height at 0 °C, so its standard error is the mean-sales one with $x_0 = 0$: $\mathrm{SE}(\hat\beta_0) = s\sqrt{1/n + \bar x^2/S_{xx}}$.
+The intercept is the line's height at 0 °C, so its standard error is the mean-sales one with $`x_0 = 0`$: $`\mathrm{SE}(\hat\beta_0) = s\sqrt{1/n + \bar x^2/S_{xx}}`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_i$, $y_i$, $Y_i$, $n$ | day i's temperature; its sales as recorded; its sales as a random variable; the number of days | 16 °C and 37 coffees on day 1; n = 10 | more days: every error bar shrinks |
-| $\bar x$, $\bar y$, $\bar Y$ | average temperature, average sales; $\bar Y$ is the average sales as a random variable | 25 °C, 40 coffees | — |
-| $S_{xx}$ | sum of squared distances of the temperatures from their average: how spread out the days were | 330 | the slope's error bar shrinks as one over its root |
-| $S_{yy}$ | sum of squared distances of the sales from their average: the flat line's squared leftovers | 554 | with SSE held, the slope removes more and F rises |
-| $F$ | the F ratio: what the slope removes from the flat line's squared leftovers, $S_{yy} - \mathrm{SSE}$, divided by $s^2$ | 4.929 | t rises with it, since F is $t^2$ |
-| $w_i$ | the weight day i gets in the fitted slope, $(x_i - \bar x)/S_{xx}$ | −0.0273 at 16 °C, 0.0273 at 34 °C | — |
-| $\beta_0$, $\beta_1$ | the true intercept and slope, never seen | unknown | — |
-| $\hat\beta_0$, $\hat\beta_1$ | the fitted intercept and slope | 20 coffees, 0.8 coffees per degree | a bigger slope: a bigger t |
-| $\varepsilon_i$, $\bar\varepsilon$, $\sigma$ | day i's noise; the average of the ten noises; the noise's true spread (standard deviation) | unknown; the simulation uses 6.546 | every error bar grows in step |
-| $e_i$, $\mathrm{SSE}$ | day i's leftover (residual), recorded minus fitted; the sum of their squares | 4.2 on day 1; 342.8 | — |
-| $s$ | the estimated noise spread, the root of SSE over n − 2 | 6.546 coffees | every interval widens in step |
-| $\mathrm{SE}$ | standard error: the estimated standard deviation of an estimate | 0.3603 for the slope, 9.243 for the intercept | t falls |
-| $t$, $t_*$ | the slope in standard errors; the 95 percent cutoff of Student's t on n − 2 degrees of freedom | 2.220; 2.306, on 8 degrees | more degrees: the cutoff falls towards 1.96 |
-| $x_0$, $\hat y_0$, $h_0$, $Y_0$ | a new temperature; the line's forecast there; its distance factor; that day's actual sales, still to come | 30 °C; 44 coffees; 0.1758; unknown | $x_0$ far from 25: both intervals widen |
-| $u_k$, $Z_k$ | in the folded proof: n perpendicular directions of length one, the first along the 1s and the second along the temperature gaps; the noise measured along direction k, in units of σ | — | — |
+| $`x_i`$, $`y_i`$, $`Y_i`$, $`n`$ | day i's temperature; its sales as recorded; its sales as a random variable; the number of days | 16 °C and 37 coffees on day 1; n = 10 | more days: every error bar shrinks |
+| $`\bar x`$, $`\bar y`$, $`\bar Y`$ | average temperature, average sales; $`\bar Y`$ is the average sales as a random variable | 25 °C, 40 coffees | — |
+| $`S_{xx}`$ | sum of squared distances of the temperatures from their average: how spread out the days were | 330 | the slope's error bar shrinks as one over its root |
+| $`S_{yy}`$ | sum of squared distances of the sales from their average: the flat line's squared leftovers | 554 | with SSE held, the slope removes more and F rises |
+| $`F`$ | the F ratio: what the slope removes from the flat line's squared leftovers, $`S_{yy} - \mathrm{SSE}`$, divided by $`s^2`$ | 4.929 | t rises with it, since F is $`t^2`$ |
+| $`w_i`$ | the weight day i gets in the fitted slope, $`(x_i - \bar x)/S_{xx}`$ | −0.0273 at 16 °C, 0.0273 at 34 °C | — |
+| $`\beta_0`$, $`\beta_1`$ | the true intercept and slope, never seen | unknown | — |
+| $`\hat\beta_0`$, $`\hat\beta_1`$ | the fitted intercept and slope | 20 coffees, 0.8 coffees per degree | a bigger slope: a bigger t |
+| $`\varepsilon_i`$, $`\bar\varepsilon`$, $`\sigma`$ | day i's noise; the average of the ten noises; the noise's true spread (standard deviation) | unknown; the simulation uses 6.546 | every error bar grows in step |
+| $`e_i`$, $`\mathrm{SSE}`$ | day i's leftover (residual), recorded minus fitted; the sum of their squares | 4.2 on day 1; 342.8 | — |
+| $`s`$ | the estimated noise spread, the root of SSE over n − 2 | 6.546 coffees | every interval widens in step |
+| $`\mathrm{SE}`$ | standard error: the estimated standard deviation of an estimate | 0.3603 for the slope, 9.243 for the intercept | t falls |
+| $`t`$, $`t_*`$ | the slope in standard errors; the 95 percent cutoff of Student's t on n − 2 degrees of freedom | 2.220; 2.306, on 8 degrees | more degrees: the cutoff falls towards 1.96 |
+| $`x_0`$, $`\hat y_0`$, $`h_0`$, $`Y_0`$ | a new temperature; the line's forecast there; its distance factor; that day's actual sales, still to come | 30 °C; 44 coffees; 0.1758; unknown | $`x_0`$ far from 25: both intervals widen |
+| $`u_k`$, $`Z_k`$ | in the folded proof: n perpendicular directions of length one, the first along the 1s and the second along the temperature gaps; the noise measured along direction k, in units of σ | — | — |
 
 ### When it holds
 
@@ -92,42 +100,42 @@ The fitted slope is fixed arithmetic on the ten sales figures, and each figure i
 
 ### Step 1: the slope's weights
 
-The least-squares slope is $\hat\beta_1 = \sum (x_i - \bar x)\, y_i / S_{xx}$. Written as weights, $\hat\beta_1 = \sum w_i Y_i$ with $w_i = (x_i - \bar x)/S_{xx}$. The 16 °C day gets weight −9/330, which is −0.0273; the 34 °C day gets +0.0273; the days at 24 and 26 °C barely count. Days far from the average temperature steer the slope.
+The least-squares slope is $`\hat\beta_1 = \sum (x_i - \bar x)\, y_i / S_{xx}`$. Written as weights, $`\hat\beta_1 = \sum w_i Y_i`$ with $`w_i = (x_i - \bar x)/S_{xx}`$. The 16 °C day gets weight −9/330, which is −0.0273; the 34 °C day gets +0.0273; the days at 24 and 26 °C barely count. Days far from the average temperature steer the slope.
 
-The weights add to zero, and $\sum w_i x_i = 1$. Put the model in: $\sum w_i(\beta_0 + \beta_1 x_i) = \beta_1$. So $\hat\beta_1 = \beta_1 + \sum w_i \varepsilon_i$. The noise averages to zero, so the fitted slope is right on average: unbiased.
+The weights add to zero, and $`\sum w_i x_i = 1`$. Put the model in: $`\sum w_i(\beta_0 + \beta_1 x_i) = \beta_1`$. So $`\hat\beta_1 = \beta_1 + \sum w_i \varepsilon_i`$. The noise averages to zero, so the fitted slope is right on average: unbiased.
 
 ### Step 2: the variances add
 
-Independent noises add their variances, each scaled by its weight squared: $\mathrm{Var}(\hat\beta_1) = \sigma^2 \sum w_i^2 = \sigma^2 S_{xx}/S_{xx}^2 = \sigma^2/S_{xx}$. Spreading the temperatures out, a bigger $S_{xx}$, is the cheap way to a tight slope: ten days from 16 to 34 °C beat ten days from 24 to 26.
+Independent noises add their variances, each scaled by its weight squared: $`\mathrm{Var}(\hat\beta_1) = \sigma^2 \sum w_i^2 = \sigma^2 S_{xx}/S_{xx}^2 = \sigma^2/S_{xx}`$. Spreading the temperatures out, a bigger $`S_{xx}`$, is the cheap way to a tight slope: ten days from 16 to 34 °C beat ten days from 24 to 26.
 
-The line's height at $x_0$ is $\hat y_0 = \bar Y + \hat\beta_1 (x_0 - \bar x)$. The average $\bar Y$ has variance $\sigma^2/n$. Its covariance with the slope is $\sigma^2 \sum w_i / n = 0$, because the weights add to zero. So the two variances add: $\mathrm{Var}(\hat y_0) = \sigma^2 h_0$. A new day's sales $Y_0$ bring fresh noise, independent of the ten, so $\mathrm{Var}(Y_0 - \hat y_0) = \sigma^2 (1 + h_0)$. That is the 1 under the root.
+The line's height at $`x_0`$ is $`\hat y_0 = \bar Y + \hat\beta_1 (x_0 - \bar x)`$. The average $`\bar Y`$ has variance $`\sigma^2/n`$. Its covariance with the slope is $`\sigma^2 \sum w_i / n = 0`$, because the weights add to zero. So the two variances add: $`\mathrm{Var}(\hat y_0) = \sigma^2 h_0`$. A new day's sales $`Y_0`$ bring fresh noise, independent of the ten, so $`\mathrm{Var}(Y_0 - \hat y_0) = \sigma^2 (1 + h_0)`$. That is the 1 under the root.
 
 ### Step 3: estimate the noise, dividing by n − 2
 
-The noise spread is unknown. The leftovers estimate it. Fitting two numbers, an intercept and a slope, forces two constraints on the leftovers: they add to zero, and they have no slope against temperature. Only n − 2 of them are free. The sum of their squares is too small by exactly two noise variances on average: the expected SSE is $(n-2)\sigma^2$. Dividing by n − 2 makes $s^2$ right on average. Dividing by n gives s = 5.855 here instead of 6.546; in the simulation that divisor averages 34.25 in squares when the truth is 42.85.
+The noise spread is unknown. The leftovers estimate it. Fitting two numbers, an intercept and a slope, forces two constraints on the leftovers: they add to zero, and they have no slope against temperature. Only n − 2 of them are free. The sum of their squares is too small by exactly two noise variances on average: the expected SSE is $`(n-2)\sigma^2`$. Dividing by n − 2 makes $`s^2`$ right on average. Dividing by n gives s = 5.855 here instead of 6.546; in the simulation that divisor averages 34.25 in squares when the truth is 42.85.
 
 ### Step 4: the ratio is Student's t
 
-The slope is a weighted sum of normals, so it is normal: $(\hat\beta_1 - \beta_1)/(\sigma/\sqrt{S_{xx}})$ is standard normal. The leftovers' sum of squares over $\sigma^2$ is a chi-square variable with n − 2 degrees of freedom, and it is independent of the slope. A standard normal divided by the root of an independent chi-square over its degrees is Student's t by definition ([The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md)). The unknown σ cancels between top and bottom. What is left uses only data: that is t. The same argument with $\hat y_0$ or $Y_0 - \hat y_0$ on top gives the two forecast intervals.
+The slope is a weighted sum of normals, so it is normal: $`(\hat\beta_1 - \beta_1)/(\sigma/\sqrt{S_{xx}})`$ is standard normal. The leftovers' sum of squares over $`\sigma^2`$ is a chi-square variable with n − 2 degrees of freedom, and it is independent of the slope. A standard normal divided by the root of an independent chi-square over its degrees is Student's t by definition ([The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md)). The unknown σ cancels between top and bottom. What is left uses only data: that is t. The same argument with $`\hat y_0`$ or $`Y_0 - \hat y_0`$ on top gives the two forecast intervals.
 
 <details>
 <summary>Detailed proof</summary>
 
-**The expected SSE.** The leftovers satisfy $\mathrm{SSE} = S_{yy} - \hat\beta_1^2 S_{xx}$, where $S_{yy} = \sum (Y_i - \bar Y)^2$: the flat line's squared leftovers, minus what the slope removes. Under the model, $Y_i - \bar Y = \beta_1(x_i - \bar x) + (\varepsilon_i - \bar\varepsilon)$, so $E[S_{yy}] = \beta_1^2 S_{xx} + (n-1)\sigma^2$, using the sample-variance fact $E\big[\sum(\varepsilon_i - \bar\varepsilon)^2\big] = (n-1)\sigma^2$. And $E[\hat\beta_1^2] = \mathrm{Var}(\hat\beta_1) + \beta_1^2 = \sigma^2/S_{xx} + \beta_1^2$. Subtract: $E[\mathrm{SSE}] = (n-2)\sigma^2$.
+**The expected SSE.** The leftovers satisfy $`\mathrm{SSE} = S_{yy} - \hat\beta_1^2 S_{xx}`$, where $`S_{yy} = \sum (Y_i - \bar Y)^2`$: the flat line's squared leftovers, minus what the slope removes. Under the model, $`Y_i - \bar Y = \beta_1(x_i - \bar x) + (\varepsilon_i - \bar\varepsilon)`$, so $`E[S_{yy}] = \beta_1^2 S_{xx} + (n-1)\sigma^2`$, using the sample-variance fact $`E\big[\sum(\varepsilon_i - \bar\varepsilon)^2\big] = (n-1)\sigma^2`$. And $`E[\hat\beta_1^2] = \mathrm{Var}(\hat\beta_1) + \beta_1^2 = \sigma^2/S_{xx} + \beta_1^2`$. Subtract: $`E[\mathrm{SSE}] = (n-2)\sigma^2`$.
 
-**Chi-square, and independent of the slope.** Write the ten days as a list of ten numbers, a vector. Take $u_1 = (1, \dots, 1)/\sqrt n$ and $u_2 = (x_1 - \bar x, \dots, x_n - \bar x)/\sqrt{S_{xx}}$. They have length one and are at right angles, since the deviations add to zero. Complete them with $u_3, \dots, u_n$ to a set of n mutually perpendicular unit vectors. Set $Z_k = (u_k \cdot \varepsilon)/\sigma$. A rotation of independent standard normals is again independent standard normals ([Multivariate normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)), so $Z_1, \dots, Z_n$ are independent standard normals.
+**Chi-square, and independent of the slope.** Write the ten days as a list of ten numbers, a vector. Take $`u_1 = (1, \dots, 1)/\sqrt n`$ and $`u_2 = (x_1 - \bar x, \dots, x_n - \bar x)/\sqrt{S_{xx}}`$. They have length one and are at right angles, since the deviations add to zero. Complete them with $`u_3, \dots, u_n`$ to a set of n mutually perpendicular unit vectors. Set $`Z_k = (u_k \cdot \varepsilon)/\sigma`$. A rotation of independent standard normals is again independent standard normals ([Multivariate normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)), so $`Z_1, \dots, Z_n`$ are independent standard normals.
 
-The fitted values are the projection of the data onto the plane spanned by the first two unit vectors; that is what least squares does. The true line $\beta_0 + \beta_1 x$ already lies in that plane, so the leftovers are the part of the noise off the plane: $e = \sigma \sum_{k \ge 3} Z_k u_k$. Hence $\mathrm{SSE}/\sigma^2 = Z_3^2 + \dots + Z_n^2$, a chi-square with n − 2 degrees.
+The fitted values are the projection of the data onto the plane spanned by the first two unit vectors; that is what least squares does. The true line $`\beta_0 + \beta_1 x`$ already lies in that plane, so the leftovers are the part of the noise off the plane: $`e = \sigma \sum_{k \ge 3} Z_k u_k`$. Hence $`\mathrm{SSE}/\sigma^2 = Z_3^2 + \dots + Z_n^2`$, a chi-square with n − 2 degrees.
 
-Meanwhile $\hat\beta_1 - \beta_1 = \sigma Z_2/\sqrt{S_{xx}}$ and $\bar Y = \beta_0 + \beta_1 \bar x + \sigma Z_1/\sqrt n$ use only the first two coordinates. Different independent coordinates: independent. A new day's noise is independent of all n of them, which covers the prediction interval.
+Meanwhile $`\hat\beta_1 - \beta_1 = \sigma Z_2/\sqrt{S_{xx}}`$ and $`\bar Y = \beta_0 + \beta_1 \bar x + \sigma Z_1/\sqrt n`$ use only the first two coordinates. Different independent coordinates: independent. A new day's noise is independent of all n of them, which covers the prediction interval.
 
 </details>
 
 ### Step 5: the test, the interval and the F ratio are one fact
 
-"Zero lies outside $\hat\beta_1 \pm t_*\mathrm{SE}$" and "$\left|\hat\beta_1\right|/\mathrm{SE} > t_*$" are the same inequality rearranged. So the test at 5 percent and the 95 percent interval always agree. Here t = 2.220 falls short of 2.306, and zero sits just inside the interval.
+"Zero lies outside $`\hat\beta_1 \pm t_*\mathrm{SE}`$" and "$`\left|\hat\beta_1\right|/\mathrm{SE} > t_*`$" are the same inequality rearranged. So the test at 5 percent and the 95 percent interval always agree. Here t = 2.220 falls short of 2.306, and zero sits just inside the interval.
 
-A second road reaches the same t. Drop the slope and fit a flat line at 40 coffees: its squared leftovers are $S_{yy} = 554$. The slope removes 554 − 342.8 = 211.2 of that. Divided by $s^2$ = 42.85, the removal is 4.929, the F ratio. It equals $t^2$ exactly, because the removal is $\hat\beta_1^2 S_{xx}$ and $s^2/S_{xx}$ is $\mathrm{SE}^2$. The matrix form of the same variances, $\sigma^2$ times the inverse of a 2 × 2 table of sums, is the route [Multiple regression](03-multiple-regression-and-gauss-markov.md) takes to many predictors; the checks compute it as a third road.
+A second road reaches the same t. Drop the slope and fit a flat line at 40 coffees: its squared leftovers are $`S_{yy} = 554`$. The slope removes 554 − 342.8 = 211.2 of that. Divided by $`s^2`$ = 42.85, the removal is 4.929, the F ratio. It equals $`t^2`$ exactly, because the removal is $`\hat\beta_1^2 S_{xx}`$ and $`s^2/S_{xx}`$ is $`\mathrm{SE}^2`$. The matrix form of the same variances, $`\sigma^2`$ times the inverse of a 2 × 2 table of sums, is the route [Multiple regression](03-multiple-regression-and-gauss-markov.md) takes to many predictors; the checks compute it as a third road.
 
 ---
 
@@ -136,13 +144,13 @@ A second road reaches the same t. Drop the slope and fit a flat line at 40 coffe
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | averages | 250 / 10 and 400 / 10 | 25 °C and 40 coffees |
-| $S_{xx}$ | 81 + 49 + 25 + 9 + 1, doubled | 330 |
+| $`S_{xx}`$ | 81 + 49 + 25 + 9 + 1, doubled | 330 |
 | cross sum | −9 × 37 − 7 × 33 − … + 9 × 38 | 264 |
 | slope | 264 / 330 | **0.8** coffees per degree |
 | intercept | 40 − 0.8 × 25 | 20 |
 | leftovers | 37 − 32.8, 33 − 34.4, … , 38 − 47.2 | 4.2, −1.4, −2.0, −6.6, −4.2, 8.2, −2.4, 9.0, 4.4, −9.2 |
 | SSE | 17.64 + 1.96 + … + 84.64 | 342.8 |
-| $s^2$, s | 342.8 / 8, then the root | 42.85; 6.546 |
+| $`s^2`$, s | 342.8 / 8, then the root | 42.85; 6.546 |
 | slope's SE | 6.546 / √330 = 6.546 / 18.166 | 0.3603 |
 | t | 0.8 / 0.3603 | **2.220** |
 | cutoff, 8 degrees | table of Student's t, or the checks' bisection | 2.306 |
@@ -168,7 +176,7 @@ Ten days put the slope at 0.8 coffees per degree with a standard error of 0.36. 
 
 ## Code, from first principles, and it actually runs
 
-The scripts fit the ten days, then reach every number by at least two roads. The slope's standard error comes from the deviations and from the inverse of the 2 × 2 table of raw sums; t comes from the slope and, as $t^2$, from the F ratio of dropping the slope; the p-value and the cutoff come from a finite series for Student's t and from Simpson's rule on its density.
+The scripts fit the ten days, then reach every number by at least two roads. The slope's standard error comes from the deviations and from the inverse of the 2 × 2 table of raw sums; t comes from the slope and, as $`t^2`$, from the F ratio of dropping the slope; the p-value and the cutoff come from a finite series for Student's t and from Simpson's rule on its density.
 
 A seeded simulation then refits 20,000 imaginary cafés whose true line is 20 + 0.8x with noise spread 6.546, and counts how often each interval holds its target; a second run drops independence. Random numbers come from SplitMix64 and the Box-Muller recipe, written out in both languages, so Python and Rust draw the same stream.
 
@@ -567,14 +575,14 @@ The two outputs match line for line, simulation included, because both draw the 
 
 Lean proves the card's results for any three or more days at fixed temperatures, not all equal, and checks the café's sums exactly.
 
-- Suppose each day's sales are the true line plus independent noise, each $N(0, \sigma^2)$ with $\sigma$ above 0. Then the fitted slope is unbiased, and $\mathrm{Var}(\hat\beta_1) = \sigma^2/S_{xx}$.
-- Take the same model. Then $s^2 = \mathrm{SSE}/(n-2)$ is right on average: its mean is $\sigma^2$.
-- Take the same model. Then $(\hat\beta_1 - \beta_1)/\mathrm{SE}(\hat\beta_1)$ follows Student's t law with n − 2 degrees of freedom.
-- Take the same model and a new temperature $x_0$. Then $(\hat y_0 - \beta_0 - \beta_1 x_0)/(s\sqrt{h_0})$ follows Student's t law with n − 2 degrees.
-- Take a new day's sales $Y_0$ at $x_0$, whose own $N(0, \sigma^2)$ noise is independent of the other days' noise. Then $(Y_0 - \hat y_0)/(s\sqrt{1 + h_0})$ follows Student's t law with n − 2 degrees.
-- The café's sums hold exactly: averages 25 °C and 40 coffees, $S_{xx} = 330$, slope 0.8 and intercept 20.
-- SSE is 342.8, so $s^2 = 42.85$. At 30 °C the line gives 44, and $h_0 = 29/165$.
-- The F ratio's removal checks too: 554 − 342.8 = 211.2, which is $0.8^2 \times 330$.
+- Suppose each day's sales are the true line plus independent noise, each $`N(0, \sigma^2)`$ with $`\sigma`$ above 0. Then the fitted slope is unbiased, and $`\mathrm{Var}(\hat\beta_1) = \sigma^2/S_{xx}`$.
+- Take the same model. Then $`s^2 = \mathrm{SSE}/(n-2)`$ is right on average: its mean is $`\sigma^2`$.
+- Take the same model. Then $`(\hat\beta_1 - \beta_1)/\mathrm{SE}(\hat\beta_1)`$ follows Student's t law with n − 2 degrees of freedom.
+- Take the same model and a new temperature $`x_0`$. Then $`(\hat y_0 - \beta_0 - \beta_1 x_0)/(s\sqrt{h_0})`$ follows Student's t law with n − 2 degrees.
+- Take a new day's sales $`Y_0`$ at $`x_0`$, whose own $`N(0, \sigma^2)`$ noise is independent of the other days' noise. Then $`(Y_0 - \hat y_0)/(s\sqrt{1 + h_0})`$ follows Student's t law with n − 2 degrees.
+- The café's sums hold exactly: averages 25 °C and 40 coffees, $`S_{xx} = 330`$, slope 0.8 and intercept 20.
+- SSE is 342.8, so $`s^2 = 42.85`$. At 30 °C the line gives 44, and $`h_0 = 29/165`$.
+- The F ratio's removal checks too: 554 − 342.8 = 211.2, which is $`0.8^2 \times 330`$.
 
 The cutoff 2.306, the p-values, the interval ends, the matrix form, the simulations and the figure are left to the Python and Rust checks.
 
@@ -1466,7 +1474,7 @@ end RegressionInference
 
 ## What this builds on
 
-- [Least squares](01-least-squares-regression.md): the fitted line, its slope as a cross sum over $S_{xx}$, and the leftovers that add to zero.
+- [Least squares](01-least-squares-regression.md): the fitted line, its slope as a cross sum over $`S_{xx}`$, and the leftovers that add to zero.
 - [Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md): the t interval for one mean, and what "95 percent" promises; this card runs the same recipe on a slope.
 
 ## Where this goes next

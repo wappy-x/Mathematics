@@ -41,24 +41,28 @@ The line touches zero at 1, 2 and 3 — the three edges. It never does so a four
 
 Two statements. The first is the factor theorem:
 
-$$p(r) = 0 \quad\text{exactly when}\quad p(x) = (x - r)\,q(x) \text{ for some polynomial } q$$
+```math
+p(r) = 0 \quad\text{exactly when}\quad p(x) = (x - r)\,q(x) \text{ for some polynomial } q
+```
 
 **Read it aloud:** if the polynomial comes out zero at the number r, then the bracket x - r divides it exactly with nothing left over — and if x - r divides it, the polynomial comes out zero at r.
 
 The second is the ceiling that follows:
 
-$$\text{a polynomial of degree } n \text{, not the flat zero, has at most } n \text{ different roots}$$
+```math
+\text{a polynomial of degree } n \text{, not the flat zero, has at most } n \text{ different roots}
+```
 
 **Read it aloud:** the highest power caps how many different inputs can give zero.
 
 | Symbol | Plain meaning | In our tank | Change it and the answer… |
 | --- | --- | --- | --- |
-| $p$ | the polynomial in hand | x^3 - 6x^2 + 11x - 6 | different tank, different roots |
-| $n$ | its degree: the highest power of x in it | 3 | a higher degree allows more roots |
-| $r$ | a root: an input where the polynomial comes out zero | 1, 2 and 3 metres | — |
-| $x - r$ | the linear factor that root forces | x - 1, x - 2, x - 3 | — |
-| $q$ | the quotient: what is left after peeling one factor off | x^2 - 5x + 6 after peeling x - 1 | its degree is always one below $n$ |
-| $c$ | the remainder: the plain number left after dividing by x - r | 0 at r = 1, -24 at r = -1 | anything but zero and x - r is not a factor |
+| $`p`$ | the polynomial in hand | x^3 - 6x^2 + 11x - 6 | different tank, different roots |
+| $`n`$ | its degree: the highest power of x in it | 3 | a higher degree allows more roots |
+| $`r`$ | a root: an input where the polynomial comes out zero | 1, 2 and 3 metres | — |
+| $`x - r`$ | the linear factor that root forces | x - 1, x - 2, x - 3 | — |
+| $`q`$ | the quotient: what is left after peeling one factor off | x^2 - 5x + 6 after peeling x - 1 | its degree is always one below $`n`$ |
+| $`c`$ | the remainder: the plain number left after dividing by x - r | 0 at r = 1, -24 at r = -1 | anything but zero and x - r is not a factor |
 
 ### When it holds
 
@@ -73,13 +77,17 @@ $$\text{a polynomial of degree } n \text{, not the flat zero, has at most } n \t
 
 ### Step 0: dividing by x - r always leaves a plain number
 
-Polynomial long division ([Polynomial long division](04-polynomial-division.md)) hands you a quotient and a remainder whose degree sits below the divisor's. The bracket x - r has degree 1, so the remainder has degree 0: a plain number, no x in it. Call it $c$.
+Polynomial long division ([Polynomial long division](04-polynomial-division.md)) hands you a quotient and a remainder whose degree sits below the divisor's. The bracket x - r has degree 1, so the remainder has degree 0: a plain number, no x in it. Call it $`c`$.
 
-$$p(x) = (x - r)\,q(x) + c$$
+```math
+p(x) = (x - r)\,q(x) + c
+```
 
-Now feed in r. The bracket becomes r - r, which is 0, so the whole first term is 0 whatever $q$ is. What survives is
+Now feed in r. The bracket becomes r - r, which is 0, so the whole first term is 0 whatever $`q`$ is. What survives is
 
-$$p(r) = c.$$
+```math
+p(r) = c.
+```
 
 The remainder is the value at r. That is the remainder theorem, already on the division card.
 
@@ -87,9 +95,9 @@ The remainder is the value at r. That is the remainder theorem, already on the d
 
 Read that identity in each direction.
 
-If $p(r) = 0$, then $c$ is 0, so the identity reads $p(x) = (x - r)q(x)$. The bracket divides exactly. A root produces a factor.
+If $`p(r) = 0`$, then $`c`$ is 0, so the identity reads $`p(x) = (x - r)q(x)`$. The bracket divides exactly. A root produces a factor.
 
-If instead x - r divides $p$, feed in r: the bracket is 0, so $p(r) = 0$. A factor produces a root.
+If instead x - r divides $`p`$, feed in r: the bracket is 0, so $`p(r) = 0`$. A factor produces a root.
 
 The tank, twice through: the cubic at 1 is 1 - 6 + 11 - 6 = 0, so x - 1 is a factor and dividing leaves x^2 - 5x + 6. The cubic at -1 is -24, not zero, so x + 1 is not a factor.
 
@@ -97,9 +105,9 @@ The tank, twice through: the cubic at 1 is 1 - 6 + 11 - 6 = 0, so x - 1 is a fac
 
 This is a direct proof ([Direct proof](../../01-Foundations/06-Proof/01-direct-proof.md)), and it is peeling.
 
-Take a polynomial $p$ of degree $n$. If it has no root at all, 0 is under the ceiling and there is nothing to argue. If it has a root r, peel: $p(x) = (x - r)q(x)$, and $q$ has degree n - 1, because degrees add when brackets are multiplied.
+Take a polynomial $`p`$ of degree $`n`$. If it has no root at all, 0 is under the ceiling and there is nothing to argue. If it has a root r, peel: $`p(x) = (x - r)q(x)`$, and $`q`$ has degree n - 1, because degrees add when brackets are multiplied.
 
-Now take any other root s, a different number from r. Then $0 = p(s) = (s - r)\,q(s)$. The first bracket is not zero, because s and r differ. A product is zero only when one factor is zero ([Factoring](02-factoring-quadratics.md)), so $q(s) = 0$. Every remaining root of $p$ is a root of the shorter $q$.
+Now take any other root s, a different number from r. Then $`0 = p(s) = (s - r)\,q(s)`$. The first bracket is not zero, because s and r differ. A product is zero only when one factor is zero ([Factoring](02-factoring-quadratics.md)), so $`q(s) = 0`$. Every remaining root of $`p`$ is a root of the shorter $`q`$.
 
 Repeat. Each peel costs one root and one degree. After n peels you hold a plain number that is not zero, and so nothing is left to be a root. At most n roots.
 

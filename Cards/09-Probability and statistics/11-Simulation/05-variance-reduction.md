@@ -52,62 +52,72 @@ Orange, flat at 2.70: plain darts. Green, 1.96: mirror pairs. Dark blue, 1.16: t
 
 ## The formula
 
-Notation, as on earlier cards: $E[X]$ is the long-run average of a reading X, $\mathrm{Var}(X)$ its variance, $\mathrm{Cov}(X, Y)$ the covariance of two readings, and a hat marks an estimate, so $\hat\pi$ is an estimate of π. The covariance is the long-run average of $(X - E[X])(Y - E[Y])$: negative when one reading tends to be high while the other is low.
+Notation, as on earlier cards: $`E[X]`$ is the long-run average of a reading X, $`\mathrm{Var}(X)`$ its variance, $`\mathrm{Cov}(X, Y)`$ the covariance of two readings, and a hat marks an estimate, so $`\hat\pi`$ is an estimate of π. The covariance is the long-run average of $`(X - E[X])(Y - E[Y])`$: negative when one reading tends to be high while the other is low.
 
-A dart lands at $(U, V)$: $U$ across, $V$ up, each uniform between 0 and 1. Its score is $H = 4$ when $U^2 + V^2 \le 1$ and $H = 0$ otherwise. Then $E[H] = \pi$, and the per-dart variance is $\sigma^2 = \mathrm{Var}(H) = 16 \cdot \tfrac{\pi}{4}(1 - \tfrac{\pi}{4})$. Plain sampling averages $N$ independent scores, with variance $\sigma^2 / N$.
+A dart lands at $`(U, V)`$: $`U`$ across, $`V`$ up, each uniform between 0 and 1. Its score is $`H = 4`$ when $`U^2 + V^2 \le 1`$ and $`H = 0`$ otherwise. Then $`E[H] = \pi`$, and the per-dart variance is $`\sigma^2 = \mathrm{Var}(H) = 16 \cdot \tfrac{\pi}{4}(1 - \tfrac{\pi}{4})`$. Plain sampling averages $`N`$ independent scores, with variance $`\sigma^2 / N`$.
 
-**Antithetic.** Pair each dart with its mirror $(1 - U, 1 - V)$, scored $H'$. Use $N/2$ pairs:
+**Antithetic.** Pair each dart with its mirror $`(1 - U, 1 - V)`$, scored $`H'`$. Use $`N/2`$ pairs:
 
-$$\hat\pi_{\text{anti}} = \frac{1}{N}\sum_{i=1}^{N/2}\left(H_i + H_i'\right), \qquad \mathrm{Var}(\hat\pi_{\text{anti}}) = \frac{\sigma^2 + \mathrm{Cov}(H, H')}{N}.$$
+```math
+\hat\pi_{\text{anti}} = \frac{1}{N}\sum_{i=1}^{N/2}\left(H_i + H_i'\right), \qquad \mathrm{Var}(\hat\pi_{\text{anti}}) = \frac{\sigma^2 + \mathrm{Cov}(H, H')}{N}.
+```
 
 **Read it aloud:** average each dart with its mirror; the variance is the plain one plus the pair's covariance, over the number of darts.
 
-**Control variate.** Let $Y = U^2 + V^2$, whose mean $\nu = 2/3$ is known. Pick a fixed number $c$:
+**Control variate.** Let $`Y = U^2 + V^2`$, whose mean $`\nu = 2/3`$ is known. Pick a fixed number $`c`$:
 
-$$\hat\pi_{\text{ctrl}} = \frac{1}{N}\sum_{i=1}^{N}\Big(H_i - c\,(Y_i - \nu)\Big), \qquad \mathrm{Var}(\hat\pi_{\text{ctrl}}) = \frac{\sigma^2 - 2c\,\mathrm{Cov}(H, Y) + c^2\,\mathrm{Var}(Y)}{N}.$$
+```math
+\hat\pi_{\text{ctrl}} = \frac{1}{N}\sum_{i=1}^{N}\Big(H_i - c\,(Y_i - \nu)\Big), \qquad \mathrm{Var}(\hat\pi_{\text{ctrl}}) = \frac{\sigma^2 - 2c\,\mathrm{Cov}(H, Y) + c^2\,\mathrm{Var}(Y)}{N}.
+```
 
-**Read it aloud:** from each score, take away $c$ times how far the side reading missed its known average; the variance is a bowl in $c$.
+**Read it aloud:** from each score, take away $`c`$ times how far the side reading missed its known average; the variance is a bowl in $`c`$.
 
 The bowl is lowest at
 
-$$c^* = \frac{\mathrm{Cov}(H, Y)}{\mathrm{Var}(Y)}, \qquad \mathrm{Var}(\hat\pi_{\text{ctrl}}) = \frac{\sigma^2\,(1 - \rho^2)}{N},$$
+```math
+c^* = \frac{\mathrm{Cov}(H, Y)}{\mathrm{Var}(Y)}, \qquad \mathrm{Var}(\hat\pi_{\text{ctrl}}) = \frac{\sigma^2\,(1 - \rho^2)}{N},
+```
 
-where $\rho$ is the correlation of $H$ and $Y$: their covariance divided by the product of their spreads, always between −1 and 1.
+where $`\rho`$ is the correlation of $`H`$ and $`Y`$: their covariance divided by the product of their spreads, always between −1 and 1.
 
-**Stratified.** Cut the board into cells. Cell $j$ has share $p_j$ of the board, and $n_j$ darts land in it, each drawn uniformly inside the cell. With $\bar H_j$ the average score in cell $j$:
+**Stratified.** Cut the board into cells. Cell $`j`$ has share $`p_j`$ of the board, and $`n_j`$ darts land in it, each drawn uniformly inside the cell. With $`\bar H_j`$ the average score in cell $`j`$:
 
-$$\hat\pi_{\text{strat}} = \sum_j p_j\,\bar H_j, \qquad \mathrm{Var}(\hat\pi_{\text{strat}}) = \sum_j \frac{p_j^2\,\sigma_j^2}{n_j}.$$
+```math
+\hat\pi_{\text{strat}} = \sum_j p_j\,\bar H_j, \qquad \mathrm{Var}(\hat\pi_{\text{strat}}) = \sum_j \frac{p_j^2\,\sigma_j^2}{n_j}.
+```
 
 **Read it aloud:** weight each cell's average by the cell's share of the board; each cell adds its own variance, times its weight squared, over its dart count.
 
-With darts in proportion to the shares, $n_j = N p_j$ (one per cell on the 10 by 10 grid), the variance is
+With darts in proportion to the shares, $`n_j = N p_j`$ (one per cell on the 10 by 10 grid), the variance is
 
-$$\mathrm{Var}(\hat\pi_{\text{strat}}) = \frac{1}{N}\Big(\sigma^2 - \sum_j p_j\,(\mu_j - \mu)^2\Big),$$
+```math
+\mathrm{Var}(\hat\pi_{\text{strat}}) = \frac{1}{N}\Big(\sigma^2 - \sum_j p_j\,(\mu_j - \mu)^2\Big),
+```
 
-where $\mu_j$ is cell $j$'s mean score and $\mu = \pi$ is the target.
+where $`\mu_j`$ is cell $`j`$'s mean score and $`\mu = \pi`$ is the target.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $N$ | darts per estimate | 100 | error falls as one over its square root |
-| $U$, $V$; values $u$, $v$ | a dart's coordinates, across and up | uniform, 0 to 1 | — |
-| $H$ | one dart's score: 4 inside the arc, 0 outside | average π | — |
-| $\sigma$ | spread of one plain score; $\sigma^2$ is its variance | $\sigma^2$ = 2.696766 | every error grows with it |
-| $H'$ | the mirror dart's score, at $(1 - U, 1 - V)$ | Cov with $H$: −0.736863 | a more negative covariance cancels more |
-| $Y$ | the dart's squared distance from the corner, $U^2 + V^2$ | Cov with $H$: −0.523599 | — |
-| $\nu$ | the known mean of $Y$ | 2/3 | a wrong value shifts the estimate |
-| $c$ | the control coefficient; $c^*$ is the best one | −3; $c^*$ = −2.945243 | off the bottom, variance climbs as a parabola |
-| $\rho$ | correlation of $H$ and $Y$, between −1 and 1 | −0.756203 | further from 0, bigger gain |
-| $k$ | cells per side of the grid | 10 | per-dart variance falls about as 1 over $k$ |
-| $p_j$, $n_j$ for cell $j$ | cell $j$'s share of the board, and its dart count | 0.01 and 1 | — |
-| $\mu_j$, $\sigma_j$, $\mu$ | cell $j$'s mean score and spread; the overall target | $\mu$ = π | the more the $\mu_j$ differ, the more stratifying removes |
+| $`N`$ | darts per estimate | 100 | error falls as one over its square root |
+| $`U`$, $`V`$; values $`u`$, $`v`$ | a dart's coordinates, across and up | uniform, 0 to 1 | — |
+| $`H`$ | one dart's score: 4 inside the arc, 0 outside | average π | — |
+| $`\sigma`$ | spread of one plain score; $`\sigma^2`$ is its variance | $`\sigma^2`$ = 2.696766 | every error grows with it |
+| $`H'`$ | the mirror dart's score, at $`(1 - U, 1 - V)`$ | Cov with $`H`$: −0.736863 | a more negative covariance cancels more |
+| $`Y`$ | the dart's squared distance from the corner, $`U^2 + V^2`$ | Cov with $`H`$: −0.523599 | — |
+| $`\nu`$ | the known mean of $`Y`$ | 2/3 | a wrong value shifts the estimate |
+| $`c`$ | the control coefficient; $`c^*`$ is the best one | −3; $`c^*`$ = −2.945243 | off the bottom, variance climbs as a parabola |
+| $`\rho`$ | correlation of $`H`$ and $`Y`$, between −1 and 1 | −0.756203 | further from 0, bigger gain |
+| $`k`$ | cells per side of the grid | 10 | per-dart variance falls about as 1 over $`k`$ |
+| $`p_j`$, $`n_j`$ for cell $`j`$ | cell $`j`$'s share of the board, and its dart count | 0.01 and 1 | — |
+| $`\mu_j`$, $`\sigma_j`$, $`\mu`$ | cell $`j`$'s mean score and spread; the overall target | $`\mu`$ = π | the more the $`\mu_j`$ differ, the more stratifying removes |
 
 ### When it holds
 
 - **Independent draws.** Mirror darts depend on each other inside a pair on purpose; pair to pair, and cell to cell, they are independent. Break that and no error bar here applies.
-- **Antithetic: the score moves one way in each coordinate.** Here it falls as either coordinate grows, so the mirror covariance is negative. Mirror across the diagonal instead, $(V, U)$, and the mirror scores the same as the dart: the pair is one dart counted twice, and the variance doubles.
-- **Control: the mean $\nu$ is known exactly and $c$ is fixed before the darts fly.** A wrong $\nu$ of 1/2 moves the average to 3.641593. A $c$ fitted on the same darts adds a small bias, shrinking as the batch grows.
-- **Stratified: the cell shares $p_j$ are known and used as the weights.** Pool the darts with no weights after giving some cells more darts, and the average moves: 3.484019 in the example under What breaks.
-- **Finite variance.** Every formula divides a variance by $N$. Scores of 0 or 4 guarantee it here.
+- **Antithetic: the score moves one way in each coordinate.** Here it falls as either coordinate grows, so the mirror covariance is negative. Mirror across the diagonal instead, $`(V, U)`$, and the mirror scores the same as the dart: the pair is one dart counted twice, and the variance doubles.
+- **Control: the mean $`\nu`$ is known exactly and $`c`$ is fixed before the darts fly.** A wrong $`\nu`$ of 1/2 moves the average to 3.641593. A $`c`$ fitted on the same darts adds a small bias, shrinking as the batch grows.
+- **Stratified: the cell shares $`p_j`$ are known and used as the weights.** Pool the darts with no weights after giving some cells more darts, and the average moves: 3.484019 in the example under What breaks.
+- **Finite variance.** Every formula divides a variance by $`N`$. Scores of 0 or 4 guarantee it here.
 
 ---
 
@@ -115,80 +125,86 @@ where $\mu_j$ is cell $j$'s mean score and $\mu = \pi$ is the target.
 
 ### Step 0: the error has two levers, and these methods pull the second
 
-The error of an average of $N$ independent draws is $\sqrt{\sigma^2 / N}$. More darts pull the first lever, slowly. Each method below keeps the average exactly on π, so no bias is traded for the gain, and shrinks the variance each dart contributes. The fair comparison is at equal darts: the **gain** is the plain variance divided by the method's variance, both for $N = 100$. A gain of 2 means the method does with 100 darts what plain sampling does with 200, provided a dart costs about the same under each method.
+The error of an average of $`N`$ independent draws is $`\sqrt{\sigma^2 / N}`$. More darts pull the first lever, slowly. Each method below keeps the average exactly on π, so no bias is traded for the gain, and shrinks the variance each dart contributes. The fair comparison is at equal darts: the **gain** is the plain variance divided by the method's variance, both for $`N = 100`$. A gain of 2 means the method does with 100 darts what plain sampling does with 200, provided a dart costs about the same under each method.
 
 ### Step 1: a mirror dart is a fair dart, and a negatively correlated one
 
-The mirror $(1 - U, 1 - V)$ of a uniform dart is again uniform on the board, so $H'$ has mean π and variance $\sigma^2$, and the pair average is on target.
+The mirror $`(1 - U, 1 - V)`$ of a uniform dart is again uniform on the board, so $`H'`$ has mean π and variance $`\sigma^2`$, and the pair average is on target.
 
-Its variance follows from the rule for sums ([Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md)): $\mathrm{Var}(H + H') = 2\sigma^2 + 2\,\mathrm{Cov}(H, H')$. Divide by 4 for the pair average, then by the $N/2$ pairs, and the formula above appears.
+Its variance follows from the rule for sums ([Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md)): $`\mathrm{Var}(H + H') = 2\sigma^2 + 2\,\mathrm{Cov}(H, H')`$. Divide by 4 for the pair average, then by the $`N/2`$ pairs, and the formula above appears.
 
-The covariance needs $E[H H']$: both darts score only when the dart lies inside both the arc about the lower-left corner and the arc about the upper-right corner. Those two quarter discs together cover the whole board, so by inclusion–exclusion their overlap, a lens, has area $\pi/4 + \pi/4 - 1 = 0.570796$. So $\mathrm{Cov}(H, H') = 16\,(0.570796 - 0.785398^2) = -0.736863$. Negative, as promised: the pair variance is 0.979952 against 1.348383 for two independent darts, and the gain is 1.38.
+The covariance needs $`E[H H']`$: both darts score only when the dart lies inside both the arc about the lower-left corner and the arc about the upper-right corner. Those two quarter discs together cover the whole board, so by inclusion–exclusion their overlap, a lens, has area $`\pi/4 + \pi/4 - 1 = 0.570796`$. So $`\mathrm{Cov}(H, H') = 16\,(0.570796 - 0.785398^2) = -0.736863`$. Negative, as promised: the pair variance is 0.979952 against 1.348383 for two independent darts, and the gain is 1.38.
 
 Why negative in general: moving the dart right or up can only turn a hit into a miss, and it moves the mirror left or down, which can only turn a miss into a hit. Every change of the dart pushes the two scores opposite ways.
 
 <details>
 <summary>Detailed proof: a score that falls in each coordinate has a negative mirror covariance</summary>
 
-Let $f(u, v)$ fall (or stay level) as $u$ grows and as $v$ grows, with $f^2$ integrable. Write $g(u, v) = f(1 - u, 1 - v)$, which rises in each coordinate.
+Let $`f(u, v)`$ fall (or stay level) as $`u`$ grows and as $`v`$ grows, with $`f^2`$ integrable. Write $`g(u, v) = f(1 - u, 1 - v)`$, which rises in each coordinate.
 
-**One coordinate.** Fix the second coordinate at a value $v$. For any two points $u$ and $u'$, $f(u, v) - f(u', v)$ and $g(u, v) - g(u', v)$ have opposite signs, so their product is at most 0. Integrate over independent uniform $u$ and $u'$. Expanding the product gives $2\big(E_U[f g] - E_U[f]\,E_U[g]\big) \le 0$, with $v$ held fixed.
+**One coordinate.** Fix the second coordinate at a value $`v`$. For any two points $`u`$ and $`u'`$, $`f(u, v) - f(u', v)`$ and $`g(u, v) - g(u', v)`$ have opposite signs, so their product is at most 0. Integrate over independent uniform $`u`$ and $`u'`$. Expanding the product gives $`2\big(E_U[f g] - E_U[f]\,E_U[g]\big) \le 0`$, with $`v`$ held fixed.
 
-**Second coordinate.** Take the average over $V$ of that inequality: $E[f g] \le E[a(V)\,b(V)]$, where $a(v) = E_U[f(U, v)]$ and $b(v) = E_U[g(U, v)]$. Averaging over $U$ keeps directions, so $a(v)$ falls as $v$ grows and $b(v)$ rises. The one-coordinate argument, applied to these two, gives $E[a(V)\,b(V)] \le E[a(V)]\,E[b(V)] = E[f]\,E[g]$.
+**Second coordinate.** Take the average over $`V`$ of that inequality: $`E[f g] \le E[a(V)\,b(V)]`$, where $`a(v) = E_U[f(U, v)]`$ and $`b(v) = E_U[g(U, v)]`$. Averaging over $`U`$ keeps directions, so $`a(v)`$ falls as $`v`$ grows and $`b(v)`$ rises. The one-coordinate argument, applied to these two, gives $`E[a(V)\,b(V)] \le E[a(V)]\,E[b(V)] = E[f]\,E[g]`$.
 
-Together, $\mathrm{Cov}(f(U, V), g(U, V)) \le 0$. The score $H$ is 4 or 0 and falls in each coordinate, so it qualifies.
+Together, $`\mathrm{Cov}(f(U, V), g(U, V)) \le 0`$. The score $`H`$ is 4 or 0 and falls in each coordinate, so it qualifies.
 
 </details>
 
 ### Step 2: a control variate subtracts a noise whose average is known
 
-$Y = U^2 + V^2$ has mean $1/3 + 1/3 = 2/3$, since the average of $U^2$ is the integral of $u^2$ from 0 to 1. So $Y - \nu$ averages zero, and $H - c(Y - \nu)$ averages π for every fixed $c$.
+$`Y = U^2 + V^2`$ has mean $`1/3 + 1/3 = 2/3`$, since the average of $`U^2`$ is the integral of $`u^2`$ from 0 to 1. So $`Y - \nu`$ averages zero, and $`H - c(Y - \nu)`$ averages π for every fixed $`c`$.
 
-Its variance, by the rule for a difference, is $\sigma^2 - 2c\,\mathrm{Cov}(H, Y) + c^2\,\mathrm{Var}(Y)$: a parabola in $c$ opening upward. Its lowest point is at $c^* = \mathrm{Cov}(H, Y)/\mathrm{Var}(Y)$, and the lowest value is $\sigma^2(1 - \rho^2)$.
+Its variance, by the rule for a difference, is $`\sigma^2 - 2c\,\mathrm{Cov}(H, Y) + c^2\,\mathrm{Var}(Y)`$: a parabola in $`c`$ opening upward. Its lowest point is at $`c^* = \mathrm{Cov}(H, Y)/\mathrm{Var}(Y)`$, and the lowest value is $`\sigma^2(1 - \rho^2)`$.
 
 <details>
 <summary>The algebra: completing the square</summary>
 
-Write $b = \mathrm{Cov}(H, Y)$ and $w = \mathrm{Var}(Y) > 0$. Complete the square:
-$$\sigma^2 - 2cb + c^2 w = \sigma^2 - \frac{b^2}{w} + w\left(c - \frac{b}{w}\right)^2.$$
-The last term is never negative and is zero only at $c = b/w = c^*$. The first two terms are $\sigma^2(1 - \rho^2)$, since $\rho^2 = b^2/(\sigma^2 w)$. The correlation lies between −1 and 1 (the Cauchy–Schwarz inequality), so the minimum is never below zero.
+Write $`b = \mathrm{Cov}(H, Y)`$ and $`w = \mathrm{Var}(Y) > 0`$. Complete the square:
+
+$`\displaystyle \sigma^2 - 2cb + c^2 w = \sigma^2 - \frac{b^2}{w} + w\left(c - \frac{b}{w}\right)^2.`$
+
+The last term is never negative and is zero only at $`c = b/w = c^*`$. The first two terms are $`\sigma^2(1 - \rho^2)`$, since $`\rho^2 = b^2/(\sigma^2 w)`$. The correlation lies between −1 and 1 (the Cauchy–Schwarz inequality), so the minimum is never below zero.
 
 </details>
 
-The numbers. $\mathrm{Var}(U^2) = 1/5 - 1/9 = 4/45$, so $\mathrm{Var}(Y) = 8/45$. The average of $H Y$ is 4 times the integral of $x^2 + y^2$ over the quarter disc; in polar coordinates that integral is $\pi/8$. So $\mathrm{Cov}(H, Y) = 4(\pi/8) - \pi \cdot 2/3 = -\pi/6 = -0.523599$. Far darts miss: the reading and the score move against each other, $\rho = -0.756203$.
+The numbers. $`\mathrm{Var}(U^2) = 1/5 - 1/9 = 4/45`$, so $`\mathrm{Var}(Y) = 8/45`$. The average of $`H Y`$ is 4 times the integral of $`x^2 + y^2`$ over the quarter disc; in polar coordinates that integral is $`\pi/8`$. So $`\mathrm{Cov}(H, Y) = 4(\pi/8) - \pi \cdot 2/3 = -\pi/6 = -0.523599`$. Far darts miss: the reading and the score move against each other, $`\rho = -0.756203`$.
 
-Then $c^* = -2.945243$, which is $-15\pi/16$: the best coefficient contains the very number being estimated. The bowl is flat at the bottom, so a rough value costs almost nothing. With $c = -3$ the variance is 1.155174 against 1.154641 at the best $c$. The gain is 2.33.
+Then $`c^* = -2.945243`$, which is $`-15\pi/16`$: the best coefficient contains the very number being estimated. The bowl is flat at the bottom, so a rough value costs almost nothing. With $`c = -3`$ the variance is 1.155174 against 1.154641 at the best $`c`$. The gain is 2.33.
 
-A negative $c$ reads naturally: darts that landed far from the corner (large $Y$) scored too few hits, so the correction adds a little back.
+A negative $`c`$ reads naturally: darts that landed far from the corner (large $`Y`$) scored too few hits, so the correction adds a little back.
 
 ### Step 3: stratification removes the variation between cells
 
-In one cell, darts drawn uniformly inside it have mean $\mu_j$. Averaging the cell means with the shares as weights gives $\sum_j p_j \mu_j = \mu$: the board's average, split by region. So the weighted estimate is on target.
+In one cell, darts drawn uniformly inside it have mean $`\mu_j`$. Averaging the cell means with the shares as weights gives $`\sum_j p_j \mu_j = \mu`$: the board's average, split by region. So the weighted estimate is on target.
 
-The cells are sampled independently, so their variances add, each scaled by its weight squared: $\sum_j p_j^2 \sigma_j^2 / n_j$.
+The cells are sampled independently, so their variances add, each scaled by its weight squared: $`\sum_j p_j^2 \sigma_j^2 / n_j`$.
 
 The gain comes from the split of variance into spread within groups plus spread between group means ([Conditional expectation](../02-Random%20Variables/05-conditional-expectation-in-tables.md)):
 
-$$\sigma^2 = \sum_j p_j\,\sigma_j^2 + \sum_j p_j\,(\mu_j - \mu)^2.$$
+```math
+\sigma^2 = \sum_j p_j\,\sigma_j^2 + \sum_j p_j\,(\mu_j - \mu)^2.
+```
 
 A plain dart pays for both parts. A stratified design fixes how many darts each cell gets, so the between part never enters.
 
 <details>
 <summary>Detailed proof: proportional allocation never does worse</summary>
 
-Put $n_j = N p_j$ darts in cell $j$, all independent. Each cell average $\bar H_j$ has mean $\mu_j$ and variance $\sigma_j^2 / n_j$. The estimate $\sum_j p_j \bar H_j$ has mean $\sum_j p_j \mu_j = \mu$ and, with no covariance between cells,
-$$\sum_j \frac{p_j^2 \sigma_j^2}{N p_j} = \frac{1}{N}\sum_j p_j\,\sigma_j^2.$$
-By the variance split above this equals $\big(\sigma^2 - \sum_j p_j(\mu_j - \mu)^2\big)/N$, which is at most $\sigma^2 / N$, the plain variance. Equality holds only when every cell has the same mean. Other allocations need their own comparison: they can do better (more darts where $\sigma_j$ is large) or worse.
+Put $`n_j = N p_j`$ darts in cell $`j`$, all independent. Each cell average $`\bar H_j`$ has mean $`\mu_j`$ and variance $`\sigma_j^2 / n_j`$. The estimate $`\sum_j p_j \bar H_j`$ has mean $`\sum_j p_j \mu_j = \mu`$ and, with no covariance between cells,
+
+$`\displaystyle \sum_j \frac{p_j^2 \sigma_j^2}{N p_j} = \frac{1}{N}\sum_j p_j\,\sigma_j^2.`$
+
+By the variance split above this equals $`\big(\sigma^2 - \sum_j p_j(\mu_j - \mu)^2\big)/N`$, which is at most $`\sigma^2 / N`$, the plain variance. Equality holds only when every cell has the same mean. Other allocations need their own comparison: they can do better (more darts where $`\sigma_j`$ is large) or worse.
 
 </details>
 
 ### Step 4: on the board, stratification changes the rate itself
 
-In a cell wholly inside the arc every dart scores 4, so $\sigma_j = 0$; wholly outside, every dart scores 0. Only the 17 cells the arc crosses have any spread, and a 4-or-0 score has variance at most 4. With one dart per cell and $p_j = 0.01$, the variance is at most $17 \times 4 \times 0.01^2$; the actual value is 0.003731. Plain darts give 0.026968, a gain of 7.23.
+In a cell wholly inside the arc every dart scores 4, so $`\sigma_j = 0`$; wholly outside, every dart scores 0. Only the 17 cells the arc crosses have any spread, and a 4-or-0 score has variance at most 4. With one dart per cell and $`p_j = 0.01`$, the variance is at most $`17 \times 4 \times 0.01^2`$; the actual value is 0.003731. Plain darts give 0.026968, a gain of 7.23.
 
-Why 17? The arc runs from the top-left corner to the bottom-right, always moving right and down. Moving into a new cell means crossing one grid line, and there are 9 vertical and 9 horizontal lines inside the board, so it visits at most 19 cells. It passes exactly through two grid corners, $(0.6, 0.8)$ and $(0.8, 0.6)$, where one step crosses two lines at once: 19 − 2 = 17.
+Why 17? The arc runs from the top-left corner to the bottom-right, always moving right and down. Moving into a new cell means crossing one grid line, and there are 9 vertical and 9 horizontal lines inside the board, so it visits at most 19 cells. It passes exactly through two grid corners, $`(0.6, 0.8)`$ and $`(0.8, 0.6)`$, where one step crosses two lines at once: 19 − 2 = 17.
 
-With $k$ cells per side, about $2k$ cells are crossed, each with weight $1/k^2$. The variance is then about a constant times $2k/k^4$, which is a constant over $N^{3/2}$ since $N = k^2$. The error falls like $N^{-3/4}$, not $N^{-1/2}$. The checks print $k$ times the per-dart variance: 2.70, 2.99, 3.32, 3.55, 3.73, 3.84, 3.90 as $k$ runs from 1 to 40, levelling off, as a rate of $1/k$ requires.
+With $`k`$ cells per side, about $`2k`$ cells are crossed, each with weight $`1/k^2`$. The variance is then about a constant times $`2k/k^4`$, which is a constant over $`N^{3/2}`$ since $`N = k^2`$. The error falls like $`N^{-3/4}`$, not $`N^{-1/2}`$. The checks print $`k`$ times the per-dart variance: 2.70, 2.99, 3.32, 3.55, 3.73, 3.84, 3.90 as $`k`$ runs from 1 to 40, levelling off, as a rate of $`1/k`$ requires.
 
 The antithetic and control gains are fixed ratios; stratification, in few dimensions, improves the rate. A fourth road changes the law the darts are drawn from (the rule for where they tend to land) and reweights the scores: [Importance sampling](06-importance-sampling.md).
 
@@ -196,19 +212,19 @@ The antithetic and control gains are fixed ratios; stratification, in few dimens
 
 ## Worked numbers, by hand
 
-All for $N = 100$ darts.
+All for $`N = 100`$ darts.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | share of darts that hit | π/4 | 0.785398 |
-| plain per-dart variance $\sigma^2$ | 16 × 0.785398 × (1 − 0.785398) | 2.696766 |
+| plain per-dart variance $`\sigma^2`$ | 16 × 0.785398 × (1 − 0.785398) | 2.696766 |
 | plain standard error | square root of 2.696766 / 100 | 0.1642 |
 | lens where dart and mirror both hit | π/2 − 1 | 0.570796 |
 | mirror covariance | 16 × (0.570796 − 0.785398^2) | −0.736863 |
 | antithetic standard error | square root of (2.696766 − 0.736863) / 100 | 0.1400 |
 | covariance of score and squared distance | 4 × π/8 − π × 2/3 | −0.523599 |
-| best coefficient $c^*$ | −0.523599 ÷ (8/45) | −2.945243 |
-| control variance, $c = -3$ | 2.696766 − 2 × (−3) × (−0.523599) + 9 × 8/45 | 1.155174 |
+| best coefficient $`c^*`$ | −0.523599 ÷ (8/45) | −2.945243 |
+| control variance, $`c = -3`$ | 2.696766 − 2 × (−3) × (−0.523599) + 9 × 8/45 | 1.155174 |
 | control standard error | square root of 1.155174 / 100 | 0.1075 |
 | stratified variance, 10 by 10 | sum over the 17 crossed cells of 16 q(1 − q) × 0.01^2 | 0.003731 |
 | stratified standard error | square root of 0.003731 | **0.0611** |
@@ -222,8 +238,8 @@ On this board, 100 darts thrown one per cell estimate π with a standard error o
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Mirror across the diagonal, $(V, U)$, and quote the plain error bar | true standard error 0.2322, claimed 0.1642; gain 0.50 | the score ignores the swap, so each pair is one dart counted twice |
-| Control mean taken as 1/2 instead of 2/3 | average 3.641593 (simulated 3.6374 ± 0.0034) | the correction no longer averages zero: it adds $-c(\nu - 1/2) = 0.5$ |
+| Mirror across the diagonal, $`(V, U)`$, and quote the plain error bar | true standard error 0.2322, claimed 0.1642; gain 0.50 | the score ignores the swap, so each pair is one dart counted twice |
+| Control mean taken as 1/2 instead of 2/3 | average 3.641593 (simulated 3.6374 ± 0.0034) | the correction no longer averages zero: it adds $`-c(\nu - 1/2) = 0.5`$ |
 | 75 darts in the left half, 25 in the right, pooled with no weights | average 3.484019 (simulated 3.4782 ± 0.0038) | the left half, mean score 3.826446, gets three quarters of the weight instead of half; the right half's mean is 2.456739 |
 
 The first row breaks the reversal in Step 1: the swap turns neither coordinate around, so when the dart moves away from the corner its mirror does too. The second and third break the known-mean and known-weight hypotheses of Steps 2 and 3.
@@ -663,18 +679,18 @@ The two outputs agree line for line.
 
 Lean proves the fact behind each of the three methods, for any score with finite variance, plus the card's exact arithmetic.
 
-- Take any reading with finite variance, and cells that cover the board with no overlap. Then $\sum_j p_j \sigma_j^2 = \sigma^2 - \sum_j p_j (\mu_j - \mu)^2$.
-- So darts in proportion to the shares never do worse than plain darts. The two tie exactly when every cell with a positive share has mean $\mu$.
+- Take any reading with finite variance, and cells that cover the board with no overlap. Then $`\sum_j p_j \sigma_j^2 = \sigma^2 - \sum_j p_j (\mu_j - \mu)^2`$.
+- So darts in proportion to the shares never do worse than plain darts. The two tie exactly when every cell with a positive share has mean $`\mu`$.
 - Take a score that falls, or stays level, as either coordinate grows, with finite variance. Then the dart's score and its mirror's score have covariance at most 0.
-- Take readings $H$ and $Y$ with finite variance, where $Y$ has known mean $\nu$. Then $H - c(Y - \nu)$ has mean $E[H]$ for every fixed $c$.
-- Suppose also $\mathrm{Var}(Y) > 0$. Then the variance of $H - c(Y - \nu)$ is the bowl $\mathrm{Var}(H) - 2c\,\mathrm{Cov}(H, Y) + c^2\,\mathrm{Var}(Y)$.
-- Under the same conditions, that variance is never below $\mathrm{Var}(H) - \mathrm{Cov}(H, Y)^2 / \mathrm{Var}(Y)$. It reaches that floor exactly at $c = c^*$.
+- Take readings $`H`$ and $`Y`$ with finite variance, where $`Y`$ has known mean $`\nu`$. Then $`H - c(Y - \nu)`$ has mean $`E[H]`$ for every fixed $`c`$.
+- Suppose also $`\mathrm{Var}(Y) > 0`$. Then the variance of $`H - c(Y - \nu)`$ is the bowl $`\mathrm{Var}(H) - 2c\,\mathrm{Cov}(H, Y) + c^2\,\mathrm{Var}(Y)`$.
+- Under the same conditions, that variance is never below $`\mathrm{Var}(H) - \mathrm{Cov}(H, Y)^2 / \mathrm{Var}(Y)`$. It reaches that floor exactly at $`c = c^*`$.
 - On the 10 by 10 grid, the whole-number corner test finds exactly 17 cells the arc crosses, and 19 − 2 = 17.
-- The hand arithmetic holds exactly: $\nu = 2/3$, $\mathrm{Var}(U^2) = 4/45$, $\mathrm{Var}(Y) = 8/45$, and the last control term 1.6.
-- Also exact: $4 \cdot \pi/8 - \pi \cdot 2/3 = -\pi/6$, and dividing by 8/45 gives $c^* = -15\pi/16$.
-- Also exact: the lens $\pi/2 - 1$, the control row's middle term $\pi$, the wrong-$\nu$ shift 0.5, and the bound $17 \times 4 \times 0.01^2$.
+- The hand arithmetic holds exactly: $`\nu = 2/3`$, $`\mathrm{Var}(U^2) = 4/45`$, $`\mathrm{Var}(Y) = 8/45`$, and the last control term 1.6.
+- Also exact: $`4 \cdot \pi/8 - \pi \cdot 2/3 = -\pi/6`$, and dividing by 8/45 gives $`c^* = -15\pi/16`$.
+- Also exact: the lens $`\pi/2 - 1`$, the control row's middle term $`\pi`$, the wrong-$`\nu`$ shift 0.5, and the bound $`17 \times 4 \times 0.01^2`$.
 
-The division by $N$, the decimals, the midpoint sums, the cell areas, the simulated batches and the gains are left to the Python and Rust checks.
+The division by $`N`$, the decimals, the midpoint sums, the cell areas, the simulated batches and the gains are left to the Python and Rust checks.
 
 ```lean
 -- Variance reduction: stratifying with weights equal to the cell shares never raises the per-draw variance, a mirror dart is negatively correlated with its partner when the score falls in each coordinate, and a control variate with a known mean stays on target with a variance that is a bowl in c, lowest at c* = Cov(H, Y)/Var(Y).
@@ -1033,9 +1049,9 @@ example : 75 + 25 = 100 := by decide
 > [!warning]
 > **Quoting the plain error bar for a design that is not plain.** The plain formula assumes independent darts from one uniform law; stratified and paired designs break that on purpose. On 100 darts it claims 0.1642 whatever the design. The truth is 0.0611 for one dart per cell and 0.2322 for the diagonal mirror: far too pessimistic in one case, overconfident in the other. The error bar must come from the design's own formula, or from repeating whole batches.
 >
-> - **Fitting the control coefficient on the same darts.** The fitted $c$ leans on the batch's own noise and adds a small bias. Fix $c$ in advance or from a separate pilot run.
+> - **Fitting the control coefficient on the same darts.** The fitted $`c`$ leans on the batch's own noise and adds a small bias. Fix $`c`$ in advance or from a separate pilot run.
 > - **Trusting a mirror without checking the direction.** The diagonal swap leaves the score unchanged, so its gain is 0.50: worse than plain.
-> - **Forgetting the weights.** Giving some cells more darts is allowed; pooling them without the $p_j$ weights is not. The 75/25 split averages 3.484019, not π.
+> - **Forgetting the weights.** Giving some cells more darts is allowed; pooling them without the $`p_j`$ weights is not. The 75/25 split averages 3.484019, not π.
 > - **Judging by one batch.** The first antithetic batch read 3.0000, further from π than the first plain batch, 3.2000. Only the spread over many batches judges a method.
 
 ---

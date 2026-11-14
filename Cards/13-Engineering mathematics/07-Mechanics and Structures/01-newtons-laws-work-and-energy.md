@@ -36,45 +36,51 @@ Orange: no air, a symmetric arch that lands at 91.77 m. Green: with drag, a lowe
 
 ## The formula
 
-Notation first, in words. A bold letter is a vector, an arrow with a size and a direction: $\mathbf{v}$ is the ball's velocity, and plain $v = |\mathbf{v}|$ is its speed. A dot over a letter is its rate of change in time, so $\dot{\mathbf{v}}$ is the acceleration.
+Notation first, in words. A bold letter is a vector, an arrow with a size and a direction: $`\mathbf{v}`$ is the ball's velocity, and plain $`v = |\mathbf{v}|`$ is its speed. A dot over a letter is its rate of change in time, so $`\dot{\mathbf{v}}`$ is the acceleration.
 
-$$m\,\dot{\mathbf{v}} = m\,\mathbf{g} \;-\; \tfrac12 \rho\, C_d\, A\; v\,\mathbf{v}$$
+```math
+m\,\dot{\mathbf{v}} = m\,\mathbf{g} \;-\; \tfrac12 \rho\, C_d\, A\; v\,\mathbf{v}
+```
 
 **Read it aloud:** mass times acceleration equals the weight, pulling straight down, plus the drag, which points straight back along the path and grows with the square of the speed.
 
-Divide by $m$ and the drag collects into one constant:
+Divide by $`m`$ and the drag collects into one constant:
 
-$$\dot{\mathbf{v}} = \mathbf{g} - k\,v\,\mathbf{v}, \qquad k = \frac{\rho\, C_d\, A}{2m}$$
+```math
+\dot{\mathbf{v}} = \mathbf{g} - k\,v\,\mathbf{v}, \qquad k = \frac{\rho\, C_d\, A}{2m}
+```
 
 Two balances follow from it, for any stretch of the flight from state 0 to state 1:
 
-$$W = \int_C \mathbf{F}\cdot d\mathbf{r} = \tfrac12 m v_1^2 - \tfrac12 m v_0^2, \qquad \mathbf{J} = \int_{t_0}^{t_1} \mathbf{F}\,dt = m\mathbf{v}_1 - m\mathbf{v}_0$$
+```math
+W = \int_C \mathbf{F}\cdot d\mathbf{r} = \tfrac12 m v_1^2 - \tfrac12 m v_0^2, \qquad \mathbf{J} = \int_{t_0}^{t_1} \mathbf{F}\,dt = m\mathbf{v}_1 - m\mathbf{v}_0
+```
 
 **Read them aloud:** the work done by all the forces along the path equals the change in kinetic energy; the impulse of all the forces over the time equals the change in momentum.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $m$ | the ball's mass, kg | 0.160 kg | drag matters less: a heavier ball flies further |
-| $\mathbf{g}$, $g$ | gravity's pull per kilogram, straight down, m/s² | 9.80665 m/s² | shorter flight, lower arch |
-| $\mathbf{v}$, $v$, $v_0$ | velocity (vector), speed, speed at release, m/s | $v_0$ = 30 m/s | longer throw, but drag grows as $v^2$ |
-| $\theta$ | release angle above level | 45°, $\pi/4$ rad | higher and shorter past about 42° |
-| $\rho$, $\nu$ | the air's density, kg/m³, and kinematic viscosity, how sticky it is, m²/s | 1.225 kg/m³; 1.46e-5 m²/s | $\rho$: more drag, shorter throw; $\nu$: lower Re, same drag at fixed $C_d$ |
-| $C_d$, $\text{Re}$ | drag coefficient, how blunt the shape is to the air; Reynolds number $vD/\nu$; both pure numbers | 0.40; 147,945 at release | $C_d$: more drag; Re: nearer the drag crisis |
-| $A$, $D$ | frontal area, the disc the ball shows the air, m²; diameter, m | 0.004072 m²; 0.072 m | more drag |
-| $k$ | drag constant, deceleration per (m/s)², 1/m | 0.006234 1/m | shorter throw |
-| $\mathbf{F}$ | total force on the ball: weight plus drag, N | 0.8978 N drag and 1.5691 N weight at release | bigger acceleration |
-| $W$, $C$, $d\mathbf{r}$ | work, J; the path; a small step along it | drag work −33.24 J | bigger change in kinetic energy |
-| $\mathbf{J}$, $\mathbf{p} = m\mathbf{v}$ | impulse, the force added up over time, and momentum, both kg m/s | across: −1.2985 kg m/s | bigger change in momentum |
-| $t$, $T$; $x$, $y$, $H$ | time and flight time, s; distance across, height above release and peak height, m | $T$ = 3.91 s; peak 18.80 m | — |
+| $`m`$ | the ball's mass, kg | 0.160 kg | drag matters less: a heavier ball flies further |
+| $`\mathbf{g}`$, $`g`$ | gravity's pull per kilogram, straight down, m/s² | 9.80665 m/s² | shorter flight, lower arch |
+| $`\mathbf{v}`$, $`v`$, $`v_0`$ | velocity (vector), speed, speed at release, m/s | $`v_0`$ = 30 m/s | longer throw, but drag grows as $`v^2`$ |
+| $`\theta`$ | release angle above level | 45°, $`\pi/4`$ rad | higher and shorter past about 42° |
+| $`\rho`$, $`\nu`$ | the air's density, kg/m³, and kinematic viscosity, how sticky it is, m²/s | 1.225 kg/m³; 1.46e-5 m²/s | $`\rho`$: more drag, shorter throw; $`\nu`$: lower Re, same drag at fixed $`C_d`$ |
+| $`C_d`$, $`\text{Re}`$ | drag coefficient, how blunt the shape is to the air; Reynolds number $`vD/\nu`$; both pure numbers | 0.40; 147,945 at release | $`C_d`$: more drag; Re: nearer the drag crisis |
+| $`A`$, $`D`$ | frontal area, the disc the ball shows the air, m²; diameter, m | 0.004072 m²; 0.072 m | more drag |
+| $`k`$ | drag constant, deceleration per (m/s)², 1/m | 0.006234 1/m | shorter throw |
+| $`\mathbf{F}`$ | total force on the ball: weight plus drag, N | 0.8978 N drag and 1.5691 N weight at release | bigger acceleration |
+| $`W`$, $`C`$, $`d\mathbf{r}`$ | work, J; the path; a small step along it | drag work −33.24 J | bigger change in kinetic energy |
+| $`\mathbf{J}`$, $`\mathbf{p} = m\mathbf{v}`$ | impulse, the force added up over time, and momentum, both kg m/s | across: −1.2985 kg m/s | bigger change in momentum |
+| $`t`$, $`T`$; $`x`$, $`y`$, $`H`$ | time and flight time, s; distance across, height above release and peak height, m | $`T`$ = 3.91 s; peak 18.80 m | — |
 
-Kinetic energy $\tfrac12 m v^2$ is the energy of motion, in joules (J, newton metres). A newton (N) is the force that gives 1 kg an acceleration of 1 m/s².
+Kinetic energy $`\tfrac12 m v^2`$ is the energy of motion, in joules (J, newton metres). A newton (N) is the force that gives 1 kg an acceleration of 1 m/s².
 
 ### When it holds
 
 - **An inertial frame**: one that is not itself accelerating or turning. The ground is close enough for a throw of 3.91 s; the Earth's spin bends long-range artillery shells, where the frame fails.
 - **Speeds far below light's, bodies far above atoms.** Both hold here by many powers of ten. Outside them the second law needs relativity or quantum mechanics.
-- **Fixed mass.** A cricket ball keeps its 160 g. A rocket burning fuel does not, and then neither $m\dot{\mathbf{v}} = \mathbf{F}$ nor $\dot{\mathbf{p}} = \mathbf{F}$ works as written: the rocket needs an extra thrust term, the rate it throws out mass times the exhaust speed relative to the rocket.
-- **Drag as $\tfrac12\rho C_d A v^2$ with a fixed $C_d$.** This holds while the Reynolds number (this wing's ratio of inertia to viscosity, $\text{Re} = vD/\nu$) stays below the drag crisis, a sudden fall in $C_d$ at a few hundred thousand for a smooth sphere. At release here $\text{Re}$ = 147,945. The model also ignores spin and the seam, which make a real ball swing sideways.
+- **Fixed mass.** A cricket ball keeps its 160 g. A rocket burning fuel does not, and then neither $`m\dot{\mathbf{v}} = \mathbf{F}`$ nor $`\dot{\mathbf{p}} = \mathbf{F}`$ works as written: the rocket needs an extra thrust term, the rate it throws out mass times the exhaust speed relative to the rocket.
+- **Drag as $`\tfrac12\rho C_d A v^2`$ with a fixed $`C_d`$.** This holds while the Reynolds number (this wing's ratio of inertia to viscosity, $`\text{Re} = vD/\nu`$) stays below the drag crisis, a sudden fall in $`C_d`$ at a few hundred thousand for a smooth sphere. At release here $`\text{Re}`$ = 147,945. The model also ignores spin and the seam, which make a real ball swing sideways.
 - **The no-air formula** holds only when drag is small beside weight. For a gentle 10 m/s lob it gives 10.20 m against 9.72 m with drag; for the 30 m/s throw it gives 91.77 m against 64.83 m.
 
 ---
@@ -85,83 +91,87 @@ Kinetic energy $\tfrac12 m v^2$ is the energy of motion, in joules (J, newton me
 
 Newton's first law: a body with no net force on it keeps its velocity, in a straight line at a steady speed. So a force is not needed to keep the ball moving, only to change how it moves.
 
-The second law says how much: the rate of change of momentum equals the total force, $\dot{\mathbf{p}} = \mathbf{F}$; with fixed mass that is $m\dot{\mathbf{v}} = \mathbf{F}$. The third law says forces come in opposite pairs: the air pushes the ball back with 0.8978 N at release, and the ball pushes the air forward with the same 0.8978 N.
+The second law says how much: the rate of change of momentum equals the total force, $`\dot{\mathbf{p}} = \mathbf{F}`$; with fixed mass that is $`m\dot{\mathbf{v}} = \mathbf{F}`$. The third law says forces come in opposite pairs: the air pushes the ball back with 0.8978 N at release, and the ball pushes the air forward with the same 0.8978 N.
 
 Because force fixes a rate, the second law is a differential equation, a rule for the rate plus a starting value, as on [A differential equation](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md). The starting value here is the release: position at the hand, velocity 30 m/s at 45°.
 
 ### Step 1: the equation of motion for the ball
 
-Two forces act. The weight $m\mathbf{g}$ points down. The drag points against the velocity; wind-tunnel tests give its size as $\tfrac12\rho C_d A v^2$. Point it along $-\mathbf{v}/v$ and it becomes $-\tfrac12\rho C_d A\, v\,\mathbf{v}$. Write $x$ for the distance across, $y$ for the height, and the vector law splits into two lines. Two dots over a letter mean the rate of change taken twice, so $\ddot x$ is the acceleration across:
+Two forces act. The weight $`m\mathbf{g}`$ points down. The drag points against the velocity; wind-tunnel tests give its size as $`\tfrac12\rho C_d A v^2`$. Point it along $`-\mathbf{v}/v`$ and it becomes $`-\tfrac12\rho C_d A\, v\,\mathbf{v}`$. Write $`x`$ for the distance across, $`y`$ for the height, and the vector law splits into two lines. Two dots over a letter mean the rate of change taken twice, so $`\ddot x`$ is the acceleration across:
 
-$$\ddot x = -k\,v\,\dot x, \qquad \ddot y = -g - k\,v\,\dot y, \qquad v = \sqrt{\dot x^2 + \dot y^2}$$
+```math
+\ddot x = -k\,v\,\dot x, \qquad \ddot y = -g - k\,v\,\dot y, \qquad v = \sqrt{\dot x^2 + \dot y^2}
+```
 
-Without air ($k = 0$) the lines separate. Across, the speed stays at $v_0\cos\theta$ = 21.2132 m/s. Up, the speed $v_0\sin\theta$ = 21.2132 m/s falls by $g$ each second, so the ball is back down after $T = 2v_0\sin\theta/g$ = 4.3263 s, and the range is $v_0\cos\theta \cdot T = v_0^2\sin 2\theta / g$ = 91.7745 m.
+Without air ($`k = 0`$) the lines separate. Across, the speed stays at $`v_0\cos\theta`$ = 21.2132 m/s. Up, the speed $`v_0\sin\theta`$ = 21.2132 m/s falls by $`g`$ each second, so the ball is back down after $`T = 2v_0\sin\theta/g`$ = 4.3263 s, and the range is $`v_0\cos\theta \cdot T = v_0^2\sin 2\theta / g`$ = 91.7745 m.
 
-With air the speed $v$ appears in both lines, so each depends on the other. There is no formula for the range. The code steps the equations forward with RK4, the fourth-order Runge–Kutta method of [Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md): it samples the rate four times inside each 1 ms step and takes a weighted average.
+With air the speed $`v`$ appears in both lines, so each depends on the other. There is no formula for the range. The code steps the equations forward with RK4, the fourth-order Runge–Kutta method of [Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md): it samples the rate four times inside each 1 ms step and takes a weighted average.
 
 ### Step 2: work equals the change in kinetic energy
 
-Dot the second law with the velocity. On the left, $m\,\dot{\mathbf{v}}\cdot\mathbf{v}$ is exactly the rate of change of $\tfrac12 m v^2$, by the chain rule. So
+Dot the second law with the velocity. On the left, $`m\,\dot{\mathbf{v}}\cdot\mathbf{v}`$ is exactly the rate of change of $`\tfrac12 m v^2`$, by the chain rule. So
 
-$$\frac{d}{dt}\Big(\tfrac12 m v^2\Big) = \mathbf{F}\cdot\mathbf{v}.$$
+```math
+\frac{d}{dt}\Big(\tfrac12 m v^2\Big) = \mathbf{F}\cdot\mathbf{v}.
+```
 
-The right side is the **power**, force times velocity along the motion, in watts. Add it up over the flight. Because $\mathbf{v}\,dt = d\mathbf{r}$, the small step along the path, the sum is the line integral of the force along the path, as on [Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md). That is the work–energy theorem: $W = \Delta\big(\tfrac12 m v^2\big)$.
+The right side is the **power**, force times velocity along the motion, in watts. Add it up over the flight. Because $`\mathbf{v}\,dt = d\mathbf{r}`$, the small step along the path, the sum is the line integral of the force along the path, as on [Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md). That is the work–energy theorem: $`W = \Delta\big(\tfrac12 m v^2\big)`$.
 
 The two forces behave very differently along the path.
 
-- **Weight** has work $-mg\,\Delta y$. That depends only on the change in height, not the route, so it can be stored as **potential energy** $mgy$. On a throw that lands at release height it adds up to zero.
-- **Drag** always points against the motion, so its power, $-mkv^3$, is negative at every instant. Its work depends on the whole route and can never be won back.
+- **Weight** has work $`-mg\,\Delta y`$. That depends only on the change in height, not the route, so it can be stored as **potential energy** $`mgy`$. On a throw that lands at release height it adds up to zero.
+- **Drag** always points against the motion, so its power, $`-mkv^3`$, is negative at every instant. Its work depends on the whole route and can never be won back.
 
-So kinetic energy, plus potential energy, plus the energy already lost to drag, stays at the 72 J the ball started with. For the throw, drag's work is −33.2443 J and the kinetic energy falls from 72 J to 38.7557 J: the same −33.2443 J. At the peak, kinetic energy has fallen by 50.2704 J: weight took $mg \times$ 18.7957 m, and drag took the rest.
+So kinetic energy, plus potential energy, plus the energy already lost to drag, stays at the 72 J the ball started with. For the throw, drag's work is −33.2443 J and the kinetic energy falls from 72 J to 38.7557 J: the same −33.2443 J. At the peak, kinetic energy has fallen by 50.2704 J: weight took $`mg \times`$ 18.7957 m, and drag took the rest.
 
 ### Step 3: impulse equals the change in momentum
 
-Add the second law up over time instead of along the path. The left side is a rate, so its total is the change: $\int \mathbf{F}\,dt = m\mathbf{v}_1 - m\mathbf{v}_0$. No dot product this time, so this balance keeps its direction: one equation across and one up.
+Add the second law up over time instead of along the path. The left side is a rate, so its total is the change: $`\int \mathbf{F}\,dt = m\mathbf{v}_1 - m\mathbf{v}_0`$. No dot product this time, so this balance keeps its direction: one equation across and one up.
 
-- **Across**, only drag acts. Its impulse is −1.2985 kg m/s, and the ball's sideways speed falls from 21.2132 m/s to 13.0973 m/s: $0.160 \times (13.0973 - 21.2132)$ = −1.2985 kg m/s.
-- **Up**, weight gives $-mgT$ = −6.1330 kg m/s and drag only −0.0914 kg m/s. Drag pushes down while the ball rises and up while it falls, so the two halves nearly cancel. Together: −6.2244 kg m/s.
+- **Across**, only drag acts. Its impulse is −1.2985 kg m/s, and the ball's sideways speed falls from 21.2132 m/s to 13.0973 m/s: $`0.160 \times (13.0973 - 21.2132)`$ = −1.2985 kg m/s.
+- **Up**, weight gives $`-mgT`$ = −6.1330 kg m/s and drag only −0.0914 kg m/s. Drag pushes down while the ball rises and up while it falls, so the two halves nearly cancel. Together: −6.2244 kg m/s.
 
 By the third law the air receives the opposite of the drag impulse, and the Earth the opposite of weight's. That is momentum conservation: what the ball loses to drag, the air gains; what it loses to weight, the Earth gains.
 
 ### Step 4: one throw with drag that has a formula
 
-Straight up, the motion is along one line, so the speed is just $\dot y$ and a formula exists. This is the check on the drag code: the simulation must reproduce it.
+Straight up, the motion is along one line, so the speed is just $`\dot y`$ and a formula exists. This is the check on the drag code: the simulation must reproduce it.
 
 <details>
 <summary>Detailed proof: the peak height of a ball thrown straight up into air</summary>
 
-On the way up, $\dot v = -g - kv^2$. Change the variable from time to height: $\dot v = v\,\dfrac{dv}{dy}$, so
+On the way up, $`\dot v = -g - kv^2`$. Change the variable from time to height: $`\dot v = v\,\dfrac{dv}{dy}`$, so
 
-$$v\,\frac{dv}{dy} = -(g + kv^2), \qquad \frac{v\,dv}{g + kv^2} = -dy.$$
+$`\displaystyle v\,\frac{dv}{dy} = -(g + kv^2), \qquad \frac{v\,dv}{g + kv^2} = -dy.`$
 
-The left side integrates to $\frac{1}{2k}\ln(g + kv^2)$. Run the speed from $v_0$ down to 0 at the peak $H$:
+The left side integrates to $`\frac{1}{2k}\ln(g + kv^2)`$. Run the speed from $`v_0`$ down to 0 at the peak $`H`$:
 
-$$H = \frac{1}{2k}\ln\!\Big(1 + \frac{k v_0^2}{g}\Big).$$
+$`\displaystyle H = \frac{1}{2k}\ln\!\Big(1 + \frac{k v_0^2}{g}\Big).`$
 
-For time, $\dfrac{dv}{g + kv^2} = -dt$ integrates to $\dfrac{1}{\sqrt{gk}}\arctan\!\Big(v\sqrt{k/g}\Big)$, so the time to the peak is $\dfrac{1}{\sqrt{gk}}\arctan\!\Big(v_0\sqrt{k/g}\Big)$.
+For time, $`\dfrac{dv}{g + kv^2} = -dt`$ integrates to $`\dfrac{1}{\sqrt{gk}}\arctan\!\Big(v\sqrt{k/g}\Big)`$, so the time to the peak is $`\dfrac{1}{\sqrt{gk}}\arctan\!\Big(v_0\sqrt{k/g}\Big)`$.
 
 </details>
 
-For the cricket ball thrown straight up at 30 m/s, $H$ = 36.2864 m, reached after 2.6190 s.
+For the cricket ball thrown straight up at 30 m/s, $`H`$ = 36.2864 m, reached after 2.6190 s.
 
 ---
 
 ## Worked numbers, by hand
 
-The fielder's throw: $m$ = 0.160 kg, diameter 0.072 m, $C_d$ = 0.40, $\rho$ = 1.225 kg/m³, $g$ = 9.80665 m/s², $v_0$ = 30 m/s, $\theta$ = 45°.
+The fielder's throw: $`m`$ = 0.160 kg, diameter 0.072 m, $`C_d`$ = 0.40, $`\rho`$ = 1.225 kg/m³, $`g`$ = 9.80665 m/s², $`v_0`$ = 30 m/s, $`\theta`$ = 45°.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| frontal area $A$ | $\pi \times 0.072^2 / 4$ | 0.004072 m² |
-| drag constant $k$ | $1.225 \times 0.40 \times 0.004072 / (2 \times 0.160)$ | 0.006234 1/m |
-| drag at release | $0.160 \times 0.006234 \times 30^2$ | 0.8978 N |
-| weight | $0.160 \times 9.80665$ | 1.5691 N |
-| terminal speed, where drag equals weight | $\sqrt{9.80665 / 0.006234}$ | 39.6607 m/s |
-| launch velocity, each part | $30 \times \cos 45°$ | 21.2132 m/s |
-| range with no air | $30^2 \times \sin 90° / 9.80665$ | 91.7745 m |
-| kinetic energy at release | $\tfrac12 \times 0.160 \times 30^2$ | 72.0000 J |
-| kinetic energy at landing | $\tfrac12 \times 0.160 \times 22.0101^2$ | 38.7557 J |
-| change in kinetic energy | $38.7557 - 72$ | −33.2443 J |
+| frontal area $`A`$ | $`\pi \times 0.072^2 / 4`$ | 0.004072 m² |
+| drag constant $`k`$ | $`1.225 \times 0.40 \times 0.004072 / (2 \times 0.160)`$ | 0.006234 1/m |
+| drag at release | $`0.160 \times 0.006234 \times 30^2`$ | 0.8978 N |
+| weight | $`0.160 \times 9.80665`$ | 1.5691 N |
+| terminal speed, where drag equals weight | $`\sqrt{9.80665 / 0.006234}`$ | 39.6607 m/s |
+| launch velocity, each part | $`30 \times \cos 45°`$ | 21.2132 m/s |
+| range with no air | $`30^2 \times \sin 90° / 9.80665`$ | 91.7745 m |
+| kinetic energy at release | $`\tfrac12 \times 0.160 \times 30^2`$ | 72.0000 J |
+| kinetic energy at landing | $`\tfrac12 \times 0.160 \times 22.0101^2`$ | 38.7557 J |
+| change in kinetic energy | $`38.7557 - 72`$ | −33.2443 J |
 | drag work along the path | from the simulation | −33.2443 J |
 | **range with drag** | from the simulation, 1 ms steps | **64.83 m** |
 
@@ -172,15 +182,15 @@ The throw carries 64.83 m on the full, that is, before its first bounce: 26.9462
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Leave out the air | 91.7745 m | Drag at release is more than half the weight; it cannot be dropped at 30 m/s |
-| Drag without the ½, $\rho C_d A v^2$ | 51.2930 m | Twice the real drag, so the ball stops too soon |
-| Drag linear in speed, matched at 30 m/s | 58.3680 m | Too much drag at the slower speeds later in the flight; real drag falls as $v^2$ |
+| Drag without the ½, $`\rho C_d A v^2`$ | 51.2930 m | Twice the real drag, so the ball stops too soon |
+| Drag linear in speed, matched at 30 m/s | 58.3680 m | Too much drag at the slower speeds later in the flight; real drag falls as $`v^2`$ |
 | Assume energy is kept, so it lands at release speed | 30.0000 m/s, really 22.0101 m/s | Only weight's work is stored; drag's work is gone |
 
 ---
 
 ## Where the energy goes during the flight
 
-The ball starts with 72 J, all as motion. Three accounts then share it: kinetic energy (motion), potential energy (height, $mgy$), and the energy already handed to the air. Follow the throw half a second at a time:
+The ball starts with 72 J, all as motion. Three accounts then share it: kinetic energy (motion), potential energy (height, $`mgy`$), and the energy already handed to the air. Follow the throw half a second at a time:
 
 | Time (s) | Height (m) | Speed (m/s) | Kinetic (J) | Potential (J) | Lost to drag (J) | Total (J) |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -194,7 +204,7 @@ The ball starts with 72 J, all as motion. Three accounts then share it: kinetic 
 | 3.50 | 6.60 | 20.06 | 32.21 | 10.35 | 29.45 | 72.00 |
 | 3.91 | 0.00 | 22.01 | 38.76 | 0.00 | 33.24 | 72.00 |
 
-The drag account fills fastest early on: 10.05 J in the first half second, when the ball is fastest, because drag's power grows as $v^3$. Near the top the ball is slow and the account barely moves. Weight's account fills on the way up and empties again on the way down. One bar per account, 1 character per 2 J:
+The drag account fills fastest early on: 10.05 J in the first half second, when the ball is fastest, because drag's power grows as $`v^3`$. Near the top the ball is slow and the account barely moves. Weight's account fills on the way up and empties again on the way down. One bar per account, 1 character per 2 J:
 
 ```
 release, 0.00 s
@@ -649,9 +659,9 @@ Lean proves the two balances for any fixed-mass body and any two times, and the 
 
 - Suppose a body of fixed mass has total force equal to its rate of change of momentum, and the force has no jumps. Then the work between any two times equals the change in kinetic energy.
 - Take the same body. Then the impulse between any two times equals the change in momentum, in each direction.
-- Suppose a ball is thrown straight up at speed $v_0$, with $\dot v = -g - kv^2$ and $g, k > 0$. Then it peaks at height $H = \frac{1}{2k}\ln(1 + k v_0^2/g)$.
-- Take the same throw. Then the time to the peak is $\arctan(v_0\sqrt{k/g})/\sqrt{gk}$.
-- The kinetic energy at release, $\tfrac12 \times 0.160 \times 30^2$, is 72 J.
+- Suppose a ball is thrown straight up at speed $`v_0`$, with $`\dot v = -g - kv^2`$ and $`g, k > 0`$. Then it peaks at height $`H = \frac{1}{2k}\ln(1 + k v_0^2/g)`$.
+- Take the same throw. Then the time to the peak is $`\arctan(v_0\sqrt{k/g})/\sqrt{gk}`$.
+- The kinetic energy at release, $`\tfrac12 \times 0.160 \times 30^2`$, is 72 J.
 
 The angled throw has no formula, so its range and its energy and impulse numbers are left to the Python and Rust checks.
 
@@ -818,11 +828,11 @@ example : (1 / 2 : ℚ) * (160 / 1000) * 30 ^ 2 = 72 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Using the no-air range formula, $v_0^2 \sin 2\theta / g$, for a hard throw.** It assumes the only force is weight. At 30 m/s the drag is already 0.8978 N against a weight of 1.5691 N, so the formula's 91.7745 m overshoots the real 64.8283 m by 26.9462 m. The formula is fine for a gentle 10 m/s lob, 10.1972 m against 9.7178 m. Check drag against weight before using it.
+> **Using the no-air range formula, $`v_0^2 \sin 2\theta / g`$, for a hard throw.** It assumes the only force is weight. At 30 m/s the drag is already 0.8978 N against a weight of 1.5691 N, so the formula's 91.7745 m overshoots the real 64.8283 m by 26.9462 m. The formula is fine for a gentle 10 m/s lob, 10.1972 m against 9.7178 m. Check drag against weight before using it.
 >
 > - **Assuming mechanical energy is conserved.** Only forces like weight, whose work depends on height alone, store energy. Drag does not. Assume it does and the ball lands at 30.0000 m/s instead of 22.0101 m/s.
-> - **Dropping the ½ in the drag law.** $\tfrac12\rho C_d A v^2$ is how $C_d$ is defined. Without the ½ the drag doubles and the range falls to 51.2930 m.
-> - **Drag linear in speed.** Matched at release, a drag proportional to $v$ gives 58.3680 m. Air drag on a ball this size and speed grows as $v^2$; linear drag belongs to tiny or very slow bodies.
+> - **Dropping the ½ in the drag law.** $`\tfrac12\rho C_d A v^2`$ is how $`C_d`$ is defined. Without the ½ the drag doubles and the range falls to 51.2930 m.
+> - **Drag linear in speed.** Matched at release, a drag proportional to $`v`$ gives 58.3680 m. Air drag on a ball this size and speed grows as $`v^2`$; linear drag belongs to tiny or very slow bodies.
 > - **Forgetting weight's impulse because the ball lands at release height.** Weight's work over the throw is zero; its impulse is not. The upward momentum changes by −6.2244 kg m/s, almost all of it the −6.1330 kg m/s from weight.
 
 ---

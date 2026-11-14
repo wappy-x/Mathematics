@@ -26,20 +26,22 @@ Drawn to scale, 1 m = 140 units. Solid: the valve. Dashed: a pebble in the tread
 
 ## The formula
 
-Notation first, in words. Here $x$ is metres along the road from the valve's lowest point and $y$ metres above the road. The Greek letter $\theta$, "theta", is the angle turned since then, in radians ([The unit circle](../03-Trigonometry/02-radians-and-the-unit-circle.md)): a full turn is 2π, about 6.2832. Writing $x(\theta)$ means "x, worked out from theta".
+Notation first, in words. Here $`x`$ is metres along the road from the valve's lowest point and $`y`$ metres above the road. The Greek letter $`\theta`$, "theta", is the angle turned since then, in radians ([The unit circle](../03-Trigonometry/02-radians-and-the-unit-circle.md)): a full turn is 2π, about 6.2832. Writing $`x(\theta)`$ means "x, worked out from theta".
 
-$$x(\theta) = R\,\theta - b\sin\theta, \qquad y(\theta) = R - b\cos\theta$$
+```math
+x(\theta) = R\,\theta - b\sin\theta, \qquad y(\theta) = R - b\cos\theta
+```
 
 **Read it aloud:** the valve is as far along as the hub has rolled, less a swing back of b sine theta, and as high as the hub, less a drop of b cosine theta.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | distance along the road | 0.2498 m after a quarter turn | — |
-| $y$ | height above the road | 0.35 m after a quarter turn | — |
-| $\theta$ | the parameter: angle turned, radians | 0 to 6.2832 for one turn | the valve moves on |
-| $R$ | the wheel's radius, hub to road | 0.35 m | longer arches, 2π R of road per turn |
-| $b$ | the valve's distance from the hub | 0.30 m | taller arches: lowest R − b, highest R + b |
-| $t$ | time since the valve was lowest, seconds | 0.6283 s per turn at 3.5 m/s | — |
+| $`x`$ | distance along the road | 0.2498 m after a quarter turn | — |
+| $`y`$ | height above the road | 0.35 m after a quarter turn | — |
+| $`\theta`$ | the parameter: angle turned, radians | 0 to 6.2832 for one turn | the valve moves on |
+| $`R`$ | the wheel's radius, hub to road | 0.35 m | longer arches, 2π R of road per turn |
+| $`b`$ | the valve's distance from the hub | 0.30 m | taller arches: lowest R − b, highest R + b |
+| $`t`$ | time since the valve was lowest, seconds | 0.6283 s per turn at 3.5 m/s | — |
 
 At 3.5 m/s the hub covers 3.5t metres in t seconds, so θ = 3.5t/R: time drives the curve through the turn.
 
@@ -49,7 +51,9 @@ Removing the parameter leaves one shape per moving part.
 - **The valve seen from the hub,** (−b sinθ, −b cosθ): across^2 + up^2 = b^2, a circle of radius 0.30 m ([Circles and parabolas](04-circles-and-parabolas.md)).
 - **The valve seen from the kerb,** on the rising half of each arch:
 
-$$x = R\arccos\!\Big(\frac{R - y}{b}\Big) - \sqrt{b^2 - (R - y)^2}, \qquad \text{for } 0 \le \theta \le \pi$$
+```math
+x = R\arccos\!\Big(\frac{R - y}{b}\Big) - \sqrt{b^2 - (R - y)^2}, \qquad \text{for } 0 \le \theta \le \pi
+```
 
 Here arccos, the inverse cosine, returns the angle from 0 to π with the given cosine ([Inverse trig](../03-Trigonometry/05-inverse-trig-and-solving-equations.md)). With b equal to R the point is on the tread and the arch is a **cycloid**, named by Galileo in 1599. With b less than R it is a **curtate** (shortened) **cycloid**, never reaching the road.
 

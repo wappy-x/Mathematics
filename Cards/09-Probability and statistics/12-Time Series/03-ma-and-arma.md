@@ -34,52 +34,58 @@ The line that drops to zero after month 2 is the moving-average shop: 100, 60, 3
 
 ## The formula
 
-Notation first, in words. Months are counted by $t$. Sales in month $t$ are $X_t$, a random variable (capital letter, as on the rest of this wing). The surprise that arrives in month $t$ is $\varepsilon_t$ (the Greek letter epsilon). A subscript $t-1$ means "one month earlier".
+Notation first, in words. Months are counted by $`t`$. Sales in month $`t`$ are $`X_t`$, a random variable (capital letter, as on the rest of this wing). The surprise that arrives in month $`t`$ is $`\varepsilon_t`$ (the Greek letter epsilon). A subscript $`t-1`$ means "one month earlier".
 
-The moving-average model of order $q$, written MA($q$), lets each surprise echo for $q$ months:
+The moving-average model of order $`q`$, written MA($`q`$), lets each surprise echo for $`q`$ months:
 
-$$X_t = \mu + \varepsilon_t + \theta_1\varepsilon_{t-1} + \theta_2\varepsilon_{t-2} + \dots + \theta_q\varepsilon_{t-q}$$
+```math
+X_t = \mu + \varepsilon_t + \theta_1\varepsilon_{t-1} + \theta_2\varepsilon_{t-2} + \dots + \theta_q\varepsilon_{t-q}
+```
 
-**Read it aloud:** sales this month are the normal level, plus this month's surprise, plus a fixed fraction of each of the last $q$ surprises.
+**Read it aloud:** sales this month are the normal level, plus this month's surprise, plus a fixed fraction of each of the last $`q`$ surprises.
 
-The shop is MA(2) with $\mu = 500$, $\theta_1 = 0.6$, $\theta_2 = 0.3$ and surprises of standard deviation $\sigma = 40$.
+The shop is MA(2) with $`\mu = 500`$, $`\theta_1 = 0.6`$, $`\theta_2 = 0.3`$ and surprises of standard deviation $`\sigma = 40`$.
 
-The ARMA($p$, $q$) model adds $p$ carried-forward shares of past sales, measured from the normal level:
+The ARMA($`p`$, $`q`$) model adds $`p`$ carried-forward shares of past sales, measured from the normal level:
 
-$$X_t - \mu = \phi_1(X_{t-1} - \mu) + \dots + \phi_p(X_{t-p} - \mu) + \varepsilon_t + \theta_1\varepsilon_{t-1} + \dots + \theta_q\varepsilon_{t-q}$$
+```math
+X_t - \mu = \phi_1(X_{t-1} - \mu) + \dots + \phi_p(X_{t-p} - \mu) + \varepsilon_t + \theta_1\varepsilon_{t-1} + \dots + \theta_q\varepsilon_{t-q}
+```
 
 **Read it aloud:** this month's distance from normal is a share of recent months' distances, plus this month's surprise, plus the echoes of recent surprises.
 
-With $q = 0$ it is the autoregression of [Autoregression](02-ar-models.md); with $p = 0$ it is MA($q$). The card's second shop is ARMA(1, 1) with $\phi_1 = 0.5$ and $\theta_1 = 0.3$. Fitted to a series after taking month-on-month changes $d$ times, the same model is called ARIMA($p$, $d$, $q$), the I for integrated; [Unit roots](04-differencing-and-unit-roots.md) says when changes are needed.
+With $`q = 0`$ it is the autoregression of [Autoregression](02-ar-models.md); with $`p = 0`$ it is MA($`q`$). The card's second shop is ARMA(1, 1) with $`\phi_1 = 0.5`$ and $`\theta_1 = 0.3`$. Fitted to a series after taking month-on-month changes $`d`$ times, the same model is called ARIMA($`p`$, $`d`$, $`q`$), the I for integrated; [Unit roots](04-differencing-and-unit-roots.md) says when changes are needed.
 
-What the model predicts about data is its autocovariance, $\gamma(h)$: the covariance between sales in two months $h$ apart ([Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md)). Write $\theta_0 = 1$ for this month's own surprise. For MA($q$):
+What the model predicts about data is its autocovariance, $`\gamma(h)`$: the covariance between sales in two months $`h`$ apart ([Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md)). Write $`\theta_0 = 1`$ for this month's own surprise. For MA($`q`$):
 
-$$\gamma(h) = \sigma^2\sum_{j=0}^{q-h}\theta_j\,\theta_{j+h}\quad\text{for } h \le q, \qquad \gamma(h) = 0 \quad\text{for } h > q$$
+```math
+\gamma(h) = \sigma^2\sum_{j=0}^{q-h}\theta_j\,\theta_{j+h}\quad\text{for } h \le q, \qquad \gamma(h) = 0 \quad\text{for } h > q
+```
 
-**Read it aloud:** two months $h$ apart share the surprises that both still feel; multiply their weights on each shared surprise, add, scale by the surprise variance; months too far apart share nothing.
+**Read it aloud:** two months $`h`$ apart share the surprises that both still feel; multiply their weights on each shared surprise, add, scale by the surprise variance; months too far apart share nothing.
 
-The autocorrelation is $\rho(h) = \gamma(h)/\gamma(0)$, a number between −1 and 1. Its plot against $h$ is the **correlogram**.
+The autocorrelation is $`\rho(h) = \gamma(h)/\gamma(0)`$, a number between −1 and 1. Its plot against $`h`$ is the **correlogram**.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $h$, $j$, $k$ | month number; gap in months between two months; counters over past surprises | $h$ = 1, 2, 3 | larger $h$: correlation falls, to exactly 0 past $q$ for MA |
-| $X_t$ | sales in month $t$, a random variable | about 500 sets | — |
-| $\mu$ | the normal level: long-run average sales | 500 sets | every month shifts up; correlations unchanged |
-| $\varepsilon_t$, $\varepsilon_{t-1}$ | the surprise arriving in month $t$, in month $t-1$; independent, average 0 | +100 for the advert | — |
-| $\sigma$ | standard deviation of one surprise; $\sigma^2$ its variance | 40 sets | all covariances scale by $\sigma^2$; correlations unchanged |
-| $\theta_0$, $\theta_1$, $\theta_2$, $\theta_j$, $\theta_q$ | echo weights: the share of a surprise felt $j$ months on; $\theta_0 = 1$ | 1, 0.6, 0.3 | longer, louder echo; larger $\rho(1)$, $\rho(2)$ |
-| $q$, $p$, $d$ | how many months the echo lasts; how many past months of sales are carried forward; how many times the series is differenced first (ARIMA) | $q = 2$, $p = 0$, $d = 0$ (second shop: 1, 1, 0) | correlations reach further |
-| $\phi$, $\phi_1$, $\phi_p$ | carried-forward shares of past sales (the autoregressive part) | 0.5 in the second shop | echo fades more slowly, never stops |
-| $\gamma(h)$ | autocovariance: covariance of sales $h$ months apart | 2320, 1248, 480, 0 | — |
-| $\rho(h)$ | autocorrelation: $\gamma(h)/\gamma(0)$ | 0.5379, 0.2069, 0 | — |
-| $\psi_j$ | total weight of a surprise $j$ months later, echo and carry-over together | MA(2): 1, 0.6, 0.3; ARMA: 1, 0.8, 0.4, 0.2 | — |
-| $z$; $\lambda$ | the number the echo polynomial is written in; a root of the recovery recursion (Step 5) | roots of size 1.8257 in $z$, 0.5477 in $\lambda$ | — |
-| $n$, $\hat\theta_1$, $S$ | months in the record; the fitted echo weight (a hat marks an estimate); the sum of squared recovered surprises | 240 months; 0.6228 | larger $n$: standard error shrinks like $1/\sqrt{n}$ |
+| $`t`$, $`h`$, $`j`$, $`k`$ | month number; gap in months between two months; counters over past surprises | $`h`$ = 1, 2, 3 | larger $`h`$: correlation falls, to exactly 0 past $`q`$ for MA |
+| $`X_t`$ | sales in month $`t`$, a random variable | about 500 sets | — |
+| $`\mu`$ | the normal level: long-run average sales | 500 sets | every month shifts up; correlations unchanged |
+| $`\varepsilon_t`$, $`\varepsilon_{t-1}`$ | the surprise arriving in month $`t`$, in month $`t-1`$; independent, average 0 | +100 for the advert | — |
+| $`\sigma`$ | standard deviation of one surprise; $`\sigma^2`$ its variance | 40 sets | all covariances scale by $`\sigma^2`$; correlations unchanged |
+| $`\theta_0`$, $`\theta_1`$, $`\theta_2`$, $`\theta_j`$, $`\theta_q`$ | echo weights: the share of a surprise felt $`j`$ months on; $`\theta_0 = 1`$ | 1, 0.6, 0.3 | longer, louder echo; larger $`\rho(1)`$, $`\rho(2)`$ |
+| $`q`$, $`p`$, $`d`$ | how many months the echo lasts; how many past months of sales are carried forward; how many times the series is differenced first (ARIMA) | $`q = 2`$, $`p = 0`$, $`d = 0`$ (second shop: 1, 1, 0) | correlations reach further |
+| $`\phi`$, $`\phi_1`$, $`\phi_p`$ | carried-forward shares of past sales (the autoregressive part) | 0.5 in the second shop | echo fades more slowly, never stops |
+| $`\gamma(h)`$ | autocovariance: covariance of sales $`h`$ months apart | 2320, 1248, 480, 0 | — |
+| $`\rho(h)`$ | autocorrelation: $`\gamma(h)/\gamma(0)`$ | 0.5379, 0.2069, 0 | — |
+| $`\psi_j`$ | total weight of a surprise $`j`$ months later, echo and carry-over together | MA(2): 1, 0.6, 0.3; ARMA: 1, 0.8, 0.4, 0.2 | — |
+| $`z`$; $`\lambda`$ | the number the echo polynomial is written in; a root of the recovery recursion (Step 5) | roots of size 1.8257 in $`z`$, 0.5477 in $`\lambda`$ | — |
+| $`n`$, $`\hat\theta_1`$, $`S`$ | months in the record; the fitted echo weight (a hat marks an estimate); the sum of squared recovered surprises | 240 months; 0.6228 | larger $`n`$: standard error shrinks like $`1/\sqrt{n}`$ |
 
 ### When it holds
 
-- **Surprises are uncorrelated, with average 0 and one fixed variance.** If one month's surprise carries part of the last, the cut-off fails: the code gives $\rho(3) = 0.0579$ where the model says 0, and the record looks like MA(3).
-- **The normal level stays put.** A shop that is growing has no fixed $\mu$; the correlogram then decays slowly at every lag and the model misreads the trend as a long echo. Differencing first is [Unit roots](04-differencing-and-unit-roots.md).
+- **Surprises are uncorrelated, with average 0 and one fixed variance.** If one month's surprise carries part of the last, the cut-off fails: the code gives $`\rho(3) = 0.0579`$ where the model says 0, and the record looks like MA(3).
+- **The normal level stays put.** A shop that is growing has no fixed $`\mu`$; the correlogram then decays slowly at every lag and the model misreads the trend as a long echo. Differencing first is [Unit roots](04-differencing-and-unit-roots.md).
 - **Echoes add up in straight lines.** A surprise twice as big leaves an echo twice as big. Saturation (a second advert in a month when the shop is sold out) breaks this.
 - **The echo weights can be undone.** For fitting, the surprises must be recoverable from past sales; Step 5 says when, and the second row of What breaks shows the failure.
 - **Surprise sizes are steady.** In a share's daily returns calm and wild weeks alternate; the variance itself then needs a model, [GARCH](06-garch-and-volatility-clustering.md).
@@ -90,72 +96,82 @@ The autocorrelation is $\rho(h) = \gamma(h)/\gamma(0)$, a number between −1 an
 
 ### Step 0: covariance counts shared surprises
 
-Surprises in different months are independent. So the covariance of two sums of surprises comes only from surprises that appear in both sums; every cross term between different months averages to zero. Each shared surprise contributes the product of its two weights times $\sigma^2$. The whole card follows from that one rule.
+Surprises in different months are independent. So the covariance of two sums of surprises comes only from surprises that appear in both sums; every cross term between different months averages to zero. Each shared surprise contributes the product of its two weights times $`\sigma^2`$. The whole card follows from that one rule.
 
 ### Step 1: the average and the spread
 
-The average of each surprise is 0, so $E[X_t] = \mu$: the long-run average of sales is 500. The variance adds one term per surprise, each weight squared:
+The average of each surprise is 0, so $`E[X_t] = \mu`$: the long-run average of sales is 500. The variance adds one term per surprise, each weight squared:
 
-$$\gamma(0) = \sigma^2(1 + \theta_1^2 + \theta_2^2) = 1600 \times (1 + 0.36 + 0.09) = 2320.$$
+```math
+\gamma(0) = \sigma^2(1 + \theta_1^2 + \theta_2^2) = 1600 \times (1 + 0.36 + 0.09) = 2320.
+```
 
-The standard deviation of monthly sales is $\sqrt{2320} = 48.1664$ sets. The echo makes sales more variable than one surprise (40 sets) alone.
+The standard deviation of monthly sales is $`\sqrt{2320} = 48.1664`$ sets. The echo makes sales more variable than one surprise (40 sets) alone.
 
 ### Step 2: the correlogram stops after lag q
 
 March sales contain the surprises of March, February and January. April sales contain those of April, March and February. They share two: March's (weight 1 in March, 0.6 in April) and February's (0.6 in March, 0.3 in April). So
 
-$$\gamma(1) = \sigma^2(1 \times 0.6 + 0.6 \times 0.3) = 1600 \times 0.78 = 1248.$$
+```math
+\gamma(1) = \sigma^2(1 \times 0.6 + 0.6 \times 0.3) = 1600 \times 0.78 = 1248.
+```
 
-March and May share only March's surprise, weight 1 then 0.3: $\gamma(2) = 1600 \times 0.3 = 480$. March and June share nothing: $\gamma(3) = 0$, and every larger gap too. That is the signature of a moving average. **The correlogram of MA($q$) is exactly zero from lag $q+1$ on.**
+March and May share only March's surprise, weight 1 then 0.3: $`\gamma(2) = 1600 \times 0.3 = 480`$. March and June share nothing: $`\gamma(3) = 0`$, and every larger gap too. That is the signature of a moving average. **The correlogram of MA($`q`$) is exactly zero from lag $`q+1`$ on.**
 
 <details>
 <summary>Detailed proof: the autocovariance of MA(q), every lag</summary>
 
-Write $X_t - \mu = \sum_{j=0}^{q}\theta_j\varepsilon_{t-j}$ and $X_{t-h} - \mu = \sum_{k=0}^{q}\theta_k\varepsilon_{t-h-k}$, with $h \ge 0$.
+Write $`X_t - \mu = \sum_{j=0}^{q}\theta_j\varepsilon_{t-j}`$ and $`X_{t-h} - \mu = \sum_{k=0}^{q}\theta_k\varepsilon_{t-h-k}`$, with $`h \ge 0`$.
 Covariance is linear in each argument, so
-$$\gamma(h) = \sum_{j=0}^{q}\sum_{k=0}^{q}\theta_j\theta_k\,\mathrm{Cov}(\varepsilon_{t-j}, \varepsilon_{t-h-k}).$$
-The surprises are uncorrelated with variance $\sigma^2$, so the inner covariance is $\sigma^2$ when $t - j = t - h - k$, that is $j = k + h$, and 0 otherwise.
-Keep only those terms: $k$ runs from 0 to $q - h$ and $j = k + h$, giving $\gamma(h) = \sigma^2\sum_{k=0}^{q-h}\theta_k\theta_{k+h}$.
-When $h > q$ the range of $k$ is empty and $\gamma(h) = 0$. Negative gaps follow from $\gamma(-h) = \gamma(h)$.
-Nothing here depends on $t$: the mean and every covariance are the same in every month, so any finite MA is stationary, whatever its weights. Only uncorrelatedness was used, not independence or a normal law.
+
+$`\displaystyle \gamma(h) = \sum_{j=0}^{q}\sum_{k=0}^{q}\theta_j\theta_k\,\mathrm{Cov}(\varepsilon_{t-j}, \varepsilon_{t-h-k}).`$
+
+The surprises are uncorrelated with variance $`\sigma^2`$, so the inner covariance is $`\sigma^2`$ when $`t - j = t - h - k`$, that is $`j = k + h`$, and 0 otherwise.
+Keep only those terms: $`k`$ runs from 0 to $`q - h`$ and $`j = k + h`$, giving $`\gamma(h) = \sigma^2\sum_{k=0}^{q-h}\theta_k\theta_{k+h}`$.
+When $`h > q`$ the range of $`k`$ is empty and $`\gamma(h) = 0`$. Negative gaps follow from $`\gamma(-h) = \gamma(h)`$.
+Nothing here depends on $`t`$: the mean and every covariance are the same in every month, so any finite MA is stationary, whatever its weights. Only uncorrelatedness was used, not independence or a normal law.
 
 </details>
 
 ### Step 3: add a carried-forward share and the echo never stops
 
-In ARMA(1, 1) the shop also carries half of each month's excess into the next: $X_t - \mu = 0.5(X_{t-1} - \mu) + \varepsilon_t + 0.3\varepsilon_{t-1}$. Follow a +100 surprise. Month 0: 100. Month 1: half of 100 carried, plus the 30 echo: 80. Month 2: half of 80, no echo left: 40. Then 20, 10, 5. The total weight of a surprise $j$ months on is
+In ARMA(1, 1) the shop also carries half of each month's excess into the next: $`X_t - \mu = 0.5(X_{t-1} - \mu) + \varepsilon_t + 0.3\varepsilon_{t-1}`$. Follow a +100 surprise. Month 0: 100. Month 1: half of 100 carried, plus the 30 echo: 80. Month 2: half of 80, no echo left: 40. Then 20, 10, 5. The total weight of a surprise $`j`$ months on is
 
-$$\psi_0 = 1, \qquad \psi_j = \phi^{\,j-1}(\phi + \theta_1) \quad (j \ge 1).$$
+```math
+\psi_0 = 1, \qquad \psi_j = \phi^{\,j-1}(\phi + \theta_1) \quad (j \ge 1).
+```
 
-So ARMA is a moving average with infinitely many weights, shrinking by $\phi$ each month. Step 0 still applies, now with an infinite sum: $\gamma(h) = \sigma^2\sum_j \psi_j\psi_{j+h}$. It converges because $|\phi| < 1$. The result has a closed form:
+So ARMA is a moving average with infinitely many weights, shrinking by $`\phi`$ each month. Step 0 still applies, now with an infinite sum: $`\gamma(h) = \sigma^2\sum_j \psi_j\psi_{j+h}`$. It converges because $`|\phi| < 1`$. The result has a closed form:
 
-$$\rho(1) = \frac{(1 + \phi\theta_1)(\phi + \theta_1)}{1 + 2\phi\theta_1 + \theta_1^2}, \qquad \rho(h) = \phi\,\rho(h-1) \quad (h \ge 2).$$
+```math
+\rho(1) = \frac{(1 + \phi\theta_1)(\phi + \theta_1)}{1 + 2\phi\theta_1 + \theta_1^2}, \qquad \rho(h) = \phi\,\rho(h-1) \quad (h \ge 2).
+```
 
-For the second shop $\rho(1) = 1.15 \times 0.8 / 1.39 = 0.6619$, then 0.3309, 0.1655: halving forever. **ARMA's correlogram does not cut off. After lag $q$ it decays by the factor $\phi$ each step, like an autoregression's.**
+For the second shop $`\rho(1) = 1.15 \times 0.8 / 1.39 = 0.6619`$, then 0.3309, 0.1655: halving forever. **ARMA's correlogram does not cut off. After lag $`q`$ it decays by the factor $`\phi`$ each step, like an autoregression's.**
 
 <details>
 <summary>The algebra behind the closed form</summary>
 
-Multiply the ARMA(1, 1) equation by $X_{t-h} - \mu$ and take averages. For $h \ge 2$ neither $\varepsilon_t$ nor $\varepsilon_{t-1}$ has reached month $t - h$, so $\gamma(h) = \phi\gamma(h-1)$.
-For $h = 1$: $\gamma(1) = \phi\gamma(0) + \theta_1\sigma^2$, since $X_{t-1}$ contains $\varepsilon_{t-1}$ with weight 1.
-For $h = 0$: $\gamma(0) = \phi\gamma(1) + \sigma^2 + \theta_1(\phi + \theta_1)\sigma^2$, since $X_t$ contains $\varepsilon_{t-1}$ with weight $\psi_1 = \phi + \theta_1$.
-Solve the last two together: $\gamma(0) = \sigma^2(1 + 2\phi\theta_1 + \theta_1^2)/(1 - \phi^2)$, which is 2965.3333 for the second shop, and dividing $\gamma(1)$ by it gives the $\rho(1)$ above.
+Multiply the ARMA(1, 1) equation by $`X_{t-h} - \mu`$ and take averages. For $`h \ge 2`$ neither $`\varepsilon_t`$ nor $`\varepsilon_{t-1}`$ has reached month $`t - h`$, so $`\gamma(h) = \phi\gamma(h-1)`$.
+For $`h = 1`$: $`\gamma(1) = \phi\gamma(0) + \theta_1\sigma^2`$, since $`X_{t-1}`$ contains $`\varepsilon_{t-1}`$ with weight 1.
+For $`h = 0`$: $`\gamma(0) = \phi\gamma(1) + \sigma^2 + \theta_1(\phi + \theta_1)\sigma^2`$, since $`X_t`$ contains $`\varepsilon_{t-1}`$ with weight $`\psi_1 = \phi + \theta_1`$.
+Solve the last two together: $`\gamma(0) = \sigma^2(1 + 2\phi\theta_1 + \theta_1^2)/(1 - \phi^2)`$, which is 2965.3333 for the second shop, and dividing $`\gamma(1)`$ by it gives the $`\rho(1)`$ above.
 
 </details>
 
 ### Step 4: the second correlogram tells AR from MA
 
-An autoregression's correlogram never cuts off either, so one plot cannot separate AR from ARMA. A second plot can. The **partial autocorrelation** at lag $h$ is the correlation between two months $h$ apart that is left after the months in between have been used as well as possible, by least squares. It equals the last coefficient of the best autoregression of order $h$, and a short recursion (Durbin–Levinson, in the code) computes it from the correlogram.
+An autoregression's correlogram never cuts off either, so one plot cannot separate AR from ARMA. A second plot can. The **partial autocorrelation** at lag $`h`$ is the correlation between two months $`h`$ apart that is left after the months in between have been used as well as possible, by least squares. It equals the last coefficient of the best autoregression of order $`h`$, and a short recursion (Durbin–Levinson, in the code) computes it from the correlogram.
 
-- **AR($p$):** the best autoregression of any order above $p$ is the true one, whose extra coefficients are 0. So the partial correlogram cuts off after lag $p$.
-- **MA($q$):** Step 5 shows an MA can be rewritten as an autoregression with infinitely many terms, so no finite order is ever complete. The partial correlogram never cuts off; it shrinks, often alternating in sign.
+- **AR($`p`$):** the best autoregression of any order above $`p`$ is the true one, whose extra coefficients are 0. So the partial correlogram cuts off after lag $`p`$.
+- **MA($`q`$):** Step 5 shows an MA can be rewritten as an autoregression with infinitely many terms, so no finite order is ever complete. The partial correlogram never cuts off; it shrinks, often alternating in sign.
 - **ARMA:** both plots tail off.
 
 | Model | Correlogram | Partial correlogram |
 | --- | --- | --- |
-| AR($p$) | tails off | zero after lag $p$ |
-| MA($q$) | zero after lag $q$ | tails off |
-| ARMA($p$, $q$) | tails off after lag $q$ | tails off after lag $p$ |
+| AR($`p`$) | tails off | zero after lag $`p`$ |
+| MA($`q`$) | zero after lag $`q`$ | tails off |
+| ARMA($`p`$, $`q`$) | tails off after lag $`q`$ | tails off after lag $`p`$ |
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -183,29 +199,33 @@ In both charts, first line (orange): an AR(1) with carry-over 0.5; second (green
 
 ### Step 5: two models, one correlogram; keep the one that can be undone
 
-Many sets of echo weights give the same correlogram. Take weights 1, 2, 3.3333 with surprises of standard deviation 12. By Step 2, $\gamma(0) = 144 \times (1 + 4 + 11.1111) = 2320$, $\gamma(1) = 144 \times (2 + 6.6667) = 1248$, $\gamma(2) = 144 \times 3.3333 = 480$: identical to the shop's. No record of sales can tell the two apart.
+Many sets of echo weights give the same correlogram. Take weights 1, 2, 3.3333 with surprises of standard deviation 12. By Step 2, $`\gamma(0) = 144 \times (1 + 4 + 11.1111) = 2320`$, $`\gamma(1) = 144 \times (2 + 6.6667) = 1248`$, $`\gamma(2) = 144 \times 3.3333 = 480`$: identical to the shop's. No record of sales can tell the two apart.
 
 They differ in one way that matters. To fit a model, the surprises must be recovered from the sales, one month at a time:
 
-$$\varepsilon_t = X_t - \mu - \theta_1\varepsilon_{t-1} - \theta_2\varepsilon_{t-2}.$$
+```math
+\varepsilon_t = X_t - \mu - \theta_1\varepsilon_{t-1} - \theta_2\varepsilon_{t-2}.
+```
 
 Any error in the starting guess is fed back through the weights. With 0.6 and 0.3 the error shrinks each month; with 2 and 3.3333 it grows each month.
 
-The test is the echo polynomial $1 + \theta_1 z + \theta_2 z^2$, the echo weights as coefficients of a number $z$. The model is **invertible** (its surprises can be recovered from past sales) when every root of that polynomial has size greater than 1. The roots here are complex numbers, and size means distance from 0. The shop's roots have size 1.8257; the twin's 0.5477, the reciprocal.
+The test is the echo polynomial $`1 + \theta_1 z + \theta_2 z^2`$, the echo weights as coefficients of a number $`z`$. The model is **invertible** (its surprises can be recovered from past sales) when every root of that polynomial has size greater than 1. The roots here are complex numbers, and size means distance from 0. The shop's roots have size 1.8257; the twin's 0.5477, the reciprocal.
 
-Equivalently, the recursion's own roots, the solutions of $\lambda^2 + 0.6\lambda + 0.3 = 0$, have size 0.5477, below 1: the form [Autoregression](02-ar-models.md) uses, and roughly the factor by which the starting error shrinks each month. Unless a root has size exactly 1, every MA correlogram has exactly one invertible version, and that is the one fitted and reported.
+Equivalently, the recursion's own roots, the solutions of $`\lambda^2 + 0.6\lambda + 0.3 = 0`$, have size 0.5477, below 1: the form [Autoregression](02-ar-models.md) uses, and roughly the factor by which the starting error shrinks each month. Unless a root has size exactly 1, every MA correlogram has exactly one invertible version, and that is the one fitted and reported.
 
-Invertibility is also why an MA is an autoregression of infinite order. Substitute the recursion into itself: $\varepsilon_t$ becomes today's sales minus a weighted sum of all past sales, with weights shrinking roughly like $1.8257^{-j}$. That infinite tail is what keeps the MA's partial correlogram from cutting off.
+Invertibility is also why an MA is an autoregression of infinite order. Substitute the recursion into itself: $`\varepsilon_t`$ becomes today's sales minus a weighted sum of all past sales, with weights shrinking roughly like $`1.8257^{-j}`$. That infinite tail is what keeps the MA's partial correlogram from cutting off.
 
 ### Step 6: fit the weights by least squares on recovered surprises
 
 For an autoregression the inputs are past sales, which are on record, and ordinary least squares fits it ([Least squares](../09-Regression/01-least-squares-regression.md)). For an MA the inputs are past surprises, which nobody recorded. The way round: guess the weights, recover the surprises with the Step 5 recursion (starting from surprises of 0 before month 1), and score the guess by the sum of squared recovered surprises,
 
-$$S(\theta_1, \theta_2) = \sum_{t=1}^{n}\varepsilon_t(\theta_1, \theta_2)^2.$$
+```math
+S(\theta_1, \theta_2) = \sum_{t=1}^{n}\varepsilon_t(\theta_1, \theta_2)^2.
+```
 
-The best weights make $S$ smallest: they leave the least unexplained. This is **conditional least squares**, conditional on the starting zeros. $S$ is not a quadratic in the weights, because each recovered surprise feeds on earlier ones, so there is no one-line formula. Gauss–Newton finds the minimum: straighten each recovered surprise into a line in the weights near the current guess, solve that ordinary least-squares problem for a step, and halve the step if $S$ does not fall. The derivatives needed come from a second recursion, differentiating the first.
+The best weights make $`S`$ smallest: they leave the least unexplained. This is **conditional least squares**, conditional on the starting zeros. $`S`$ is not a quadratic in the weights, because each recovered surprise feeds on earlier ones, so there is no one-line formula. Gauss–Newton finds the minimum: straighten each recovered surprise into a line in the weights near the current guess, solve that ordinary least-squares problem for a step, and halve the step if $`S`$ does not fall. The derivatives needed come from a second recursion, differentiating the first.
 
-The same straightened problem gives the standard errors: its least-squares covariance, scaled by the average squared surprise. Theory offers a check: for MA(2) each weight's standard error is close to $\sqrt{(1 - \theta_2^2)/n}$, which is 0.0616 for 240 months. ARMA is fitted the same way, with $\phi_1(X_{t-1} - \mu)$ also subtracted in the recursion. The code fits only the MA(2) shop, which stands in for both: an ARMA(1, 1) fit runs the same Gauss–Newton loop on the pair $\phi_1$, $\theta_1$, with the two derivative recursions changed to match.
+The same straightened problem gives the standard errors: its least-squares covariance, scaled by the average squared surprise. Theory offers a check: for MA(2) each weight's standard error is close to $`\sqrt{(1 - \theta_2^2)/n}`$, which is 0.0616 for 240 months. ARMA is fitted the same way, with $`\phi_1(X_{t-1} - \mu)`$ also subtracted in the recursion. The code fits only the MA(2) shop, which stands in for both: an ARMA(1, 1) fit runs the same Gauss–Newton loop on the pair $`\phi_1`$, $`\theta_1`$, with the two derivative recursions changed to match.
 
 Maximum likelihood with normal surprises gives nearly the same answers on a long record; only the first few months are treated differently.
 
@@ -213,29 +233,29 @@ Maximum likelihood with normal surprises gives nearly the same answers on a long
 
 ## Worked numbers, by hand
 
-The shop: $\mu = 500$, $\sigma = 40$, echo weights 0.6 and 0.3.
+The shop: $`\mu = 500`$, $`\sigma = 40`$, echo weights 0.6 and 0.3.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| surprise variance $\sigma^2$ | $40^2$ | 1600 |
-| $\gamma(0)$, variance of sales | $1600 \times (1 + 0.36 + 0.09)$ | 2320 |
-| standard deviation of sales | $\sqrt{2320}$ | 48.1664 sets |
-| $\gamma(1)$ | $1600 \times (0.6 + 0.6 \times 0.3)$ | 1248 |
-| $\gamma(2)$ | $1600 \times 0.3$ | 480 |
-| $\gamma(3)$ | no shared surprise | 0 |
-| $\rho(1)$, $\rho(2)$ | $1248/2320$, $480/2320$ | 0.5379, 0.2069 |
-| month 1 surprise, from sales of 535.73 | $535.73 - 500$ | 35.73 |
-| month 2 surprise, from 549.95 | $49.95 - 0.6 \times 35.73$ | 28.51 |
-| month 3 surprise, from 512.25 | $12.25 - 0.6 \times 28.51 - 0.3 \times 35.73$ | −15.57 |
+| surprise variance $`\sigma^2`$ | $`40^2`$ | 1600 |
+| $`\gamma(0)`$, variance of sales | $`1600 \times (1 + 0.36 + 0.09)`$ | 2320 |
+| standard deviation of sales | $`\sqrt{2320}`$ | 48.1664 sets |
+| $`\gamma(1)`$ | $`1600 \times (0.6 + 0.6 \times 0.3)`$ | 1248 |
+| $`\gamma(2)`$ | $`1600 \times 0.3`$ | 480 |
+| $`\gamma(3)`$ | no shared surprise | 0 |
+| $`\rho(1)`$, $`\rho(2)`$ | $`1248/2320`$, $`480/2320`$ | 0.5379, 0.2069 |
+| month 1 surprise, from sales of 535.73 | $`535.73 - 500`$ | 35.73 |
+| month 2 surprise, from 549.95 | $`49.95 - 0.6 \times 35.73`$ | 28.51 |
+| month 3 surprise, from 512.25 | $`12.25 - 0.6 \times 28.51 - 0.3 \times 35.73`$ | −15.57 |
 | **correlogram of the shop** | | **0.5379, 0.2069, then 0 at every lag** |
 
 Read back in the shop: sales in neighbouring months move together with correlation about 0.54, two months apart about 0.21, and three or more months apart not at all.
 
 The last three rows run the Step 5 recursion on the first months of a simulated 240-month record (the code's seed 26). The true surprises were 64.24, 15.88 and −16.55; the recovered ones start wrong, because the recursion assumed no surprises before month 1, and the error shrinks each month. By month 6 the recovered surprise is 60.31 against a true 60.39, and by month 24 they agree to the cent.
 
-On that record the fit gives $\hat\theta_1 = 0.6228$ (standard error 0.0623) and $\hat\theta_2 = 0.3110$ (standard error 0.0623), normal level 496.1104 (standard error 5.1736) and surprise standard deviation 41.4467. Both weights sit within one standard error of the truth. Across 200 simulated records the fitted weights averaged 0.6002 and 0.3009 and spread with standard deviations 0.0594 and 0.0576, close to the textbook 0.0616.
+On that record the fit gives $`\hat\theta_1 = 0.6228`$ (standard error 0.0623) and $`\hat\theta_2 = 0.3110`$ (standard error 0.0623), normal level 496.1104 (standard error 5.1736) and surprise standard deviation 41.4467. Both weights sit within one standard error of the truth. Across 200 simulated records the fitted weights averaged 0.6002 and 0.3009 and spread with standard deviations 0.0594 and 0.0576, close to the textbook 0.0616.
 
-The record's correlogram reads 0.5263, 0.1805, −0.0078, 0.0582, 0.0416, −0.0459. The noise band for a lag with no true correlation is $\pm 2/\sqrt{240} = \pm 0.1291$ (the 1.96 of [Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md), rounded to 2): lags 1 and 2 stand clear, lags 3 to 6 sit inside. That points to MA(2). The partial correlogram, 0.5263, −0.1334, −0.0638, 0.1607, −0.0723, −0.0963, shrinks and changes sign, with one stray at lag 4; twelve values against a two-standard-error band often give one. After the fit, the recovered surprises correlate −0.0072, −0.0187, −0.0309 at lags 1 to 3: no echo left.
+The record's correlogram reads 0.5263, 0.1805, −0.0078, 0.0582, 0.0416, −0.0459. The noise band for a lag with no true correlation is $`\pm 2/\sqrt{240} = \pm 0.1291`$ (the 1.96 of [Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md), rounded to 2): lags 1 and 2 stand clear, lags 3 to 6 sit inside. That points to MA(2). The partial correlogram, 0.5263, −0.1334, −0.0638, 0.1607, −0.0723, −0.0963, shrinks and changes sign, with one stray at lag 4; twelve values against a two-standard-error band often give one. After the fit, the recovered surprises correlate −0.0072, −0.0187, −0.0309 at lags 1 to 3: no echo left.
 
 ### What breaks if you drop a piece
 
@@ -243,8 +263,8 @@ The record's correlogram reads 0.5263, 0.1805, −0.0078, 0.0582, 0.0416, −0.0
 | --- | --- | --- |
 | Fit an AR(1) to the echoing shop | one-month forecast error variance 1648.66 in theory, 1641.42 on a 120,000-month run, against 1600 for the true model | Carrying forward last month's sales cannot copy a two-month echo; part of the pattern stays in the errors. |
 | Use the twin weights 1, 2, 3.3333 (surprises of sd 12) | same correlogram 0.5379, 0.2069; recovered surprise in month 24 is 18,062,489.75 instead of −32.15 | The twin is not invertible: its recursion amplifies the starting error by about 1.8257 a month. |
-| Let each surprise share half of the previous one | $\rho(3) = 0.0579$ instead of 0 | Surprises are no longer uncorrelated; the echo gains a month and the record reads as MA(3). |
-| Read $\rho(2)$ as the second echo weight | 0.2069 instead of 0.3 | A correlation mixes all shared surprises and divides by the variance; the weights come from the fit, not from the correlogram directly. |
+| Let each surprise share half of the previous one | $`\rho(3) = 0.0579`$ instead of 0 | Surprises are no longer uncorrelated; the echo gains a month and the record reads as MA(3). |
+| Read $`\rho(2)`$ as the second echo weight | 0.2069 instead of 0.3 | A correlation mixes all shared surprises and divides by the variance; the weights come from the fit, not from the correlogram directly. |
 
 ---
 
@@ -674,17 +694,17 @@ The two outputs agree line for line.
 
 ### Lean
 
-Lean proves the moving-average covariance formula and its cut-off for every order $q$, the ARMA(1, 1) echo weights, and the twin's matching correlogram.
+Lean proves the moving-average covariance formula and its cut-off for every order $`q`$, the ARMA(1, 1) echo weights, and the twin's matching correlogram.
 
-- Take an MA($q$) whose surprises are uncorrelated, with average 0 and one fixed variance $\sigma^2$. Then $\gamma(h) = \sigma^2\sum_{k=0}^{q-h}\theta_k\theta_{k+h}$ for each gap $h \le q$, in every month.
-- Take the same model. Then $\gamma(h) = 0$ for every gap $h > q$: the correlogram cuts off.
-- Suppose a surprise's weight is 1 in month 0, $\phi + \theta_1$ in month 1, then $\phi$ times the month before. Then $\psi_j = \phi^{\,j-1}(\phi + \theta_1)$ for every $j \ge 1$.
-- Take an MA(2) with $\theta_2 \ne 0$, and its twin with weights 1, $\theta_1/\theta_2$ and $1/\theta_2$. Then the twin, with surprises of standard deviation $\sigma\theta_2$, has the same $\gamma(0)$, $\gamma(1)$ and $\gamma(2)$.
-- The hand arithmetic holds exactly: $\gamma(0) = 2320$, $\gamma(1) = 1248$, $\gamma(2) = 480$, and $\rho(1) = 78/145$, $\rho(2) = 6/29$.
+- Take an MA($`q`$) whose surprises are uncorrelated, with average 0 and one fixed variance $`\sigma^2`$. Then $`\gamma(h) = \sigma^2\sum_{k=0}^{q-h}\theta_k\theta_{k+h}`$ for each gap $`h \le q`$, in every month.
+- Take the same model. Then $`\gamma(h) = 0`$ for every gap $`h > q`$: the correlogram cuts off.
+- Suppose a surprise's weight is 1 in month 0, $`\phi + \theta_1`$ in month 1, then $`\phi`$ times the month before. Then $`\psi_j = \phi^{\,j-1}(\phi + \theta_1)`$ for every $`j \ge 1`$.
+- Take an MA(2) with $`\theta_2 \ne 0`$, and its twin with weights 1, $`\theta_1/\theta_2`$ and $`1/\theta_2`$. Then the twin, with surprises of standard deviation $`\sigma\theta_2`$, has the same $`\gamma(0)`$, $`\gamma(1)`$ and $`\gamma(2)`$.
+- The hand arithmetic holds exactly: $`\gamma(0) = 2320`$, $`\gamma(1) = 1248`$, $`\gamma(2) = 480`$, and $`\rho(1) = 78/145`$, $`\rho(2) = 6/29`$.
 - Also exact: the twin's 2320, 1248 and 480, with weights 1, 2, 10/3 and standard deviation 12.
-- Also exact: the ARMA echo 80, 40, 20, 10, 5, its variance 8896/3 and its $\rho(1) = 92/139$.
+- Also exact: the ARMA echo 80, 40, 20, 10, 5, its variance 8896/3 and its $`\rho(1) = 92/139`$.
 
-The general ARMA formula for $\rho(h)$, the partial correlogram, invertibility, the simulation and the fit are left to the Python and Rust checks.
+The general ARMA formula for $`\rho(h)`$, the partial correlogram, invertibility, the simulation and the fit are left to the Python and Rust checks.
 
 ```lean
 -- Moving average and ARMA: in an MA(q) model the covariance of sales h months apart is sigma squared times the sum of shared echo-weight products and is exactly zero beyond lag q, an ARMA(1,1) echo shrinks by the factor phi each month, and the twin weights give the same correlogram.
@@ -817,7 +837,7 @@ example : (1600 : ℚ) * (1 + 2 * (1 / 2) * (3 / 10) + (3 / 10) ^ 2) / (1 - (1 /
 > - **Silence the second echo.** Guess first: which correlations change? Change `[1.0, 0.6, 0.3]` to `[1.0, 0.6, 0.0]`. Answer: the correlogram stops after lag 1 instead of lag 2, the partial correlogram still tails off, and the fit's assert fails: the record has no second echo, so the fitted second weight is no longer near the 0.3 the assert expects.
 > - **Drop the carry-over.** Guess first: what does ARMA(1, 1) become with `PHI = 0.0`? Answer: MA(1) with weight 0.3; its correlogram is zero from lag 2, and the ARMA echo line reads 100, 30, then zeros.
 > - **Another record.** Guess first: does a different seed change the verdict? Change `Rng(26)` to `Rng(7)`. Answer: on that record the lag-2 correlation falls inside the noise band, so the correlogram alone would suggest MA(1); the fit still finds a second weight more than four standard errors from zero. One record is one draw.
-> - **Ten times the data.** Guess first: how much do the standard errors shrink? Change 240 to 2400 in `ma2_path(Rng(26), 240, TH)`. Answer: by a factor close to $\sqrt{10}$, a little over 3.
+> - **Ten times the data.** Guess first: how much do the standard errors shrink? Change 240 to 2400 in `ma2_path(Rng(26), 240, TH)`. Answer: by a factor close to $`\sqrt{10}`$, a little over 3.
 
 ---
 
@@ -826,8 +846,8 @@ example : (1600 : ℚ) * (1 + 2 * (1 / 2) * (3 / 10) + (3 / 10) ^ 2) / (1 - (1 /
 > [!warning]
 > **A moving-average model is not a moving average.** The smoothing average, the last three months of sales added and divided by three, draws a calmer line through data. The MA model is a claim about how the data were made: a weighted sum of surprises, none of which are on record. Smoothing the shop's sales does not fit its MA(2); it makes a new series with an echo of its own.
 >
-> - **Reading a correlation as an echo weight.** $\rho(2) = 0.2069$, the weight is 0.3. The weights come from the fit.
-> - **Calling a small lag-3 correlation a signal.** On the 240-month record lag 3 reads −0.0078 inside a band of ±0.1291. For lags beyond the true order the band itself should be about 29% wider here, since the correlations at earlier lags add to its noise: by Bartlett's formula the factor is $\sqrt{1 + 2(0.5379^2 + 0.2069^2)}$ = 1.2901.
+> - **Reading a correlation as an echo weight.** $`\rho(2) = 0.2069`$, the weight is 0.3. The weights come from the fit.
+> - **Calling a small lag-3 correlation a signal.** On the 240-month record lag 3 reads −0.0078 inside a band of ±0.1291. For lags beyond the true order the band itself should be about 29% wider here, since the correlations at earlier lags add to its noise: by Bartlett's formula the factor is $`\sqrt{1 + 2(0.5379^2 + 0.2069^2)}`$ = 1.2901.
 > - **Fitting an MA by regressing sales on past sales.** That is an autoregression; with one lag the forecast error variance stays at 1648.66 instead of 1600.
 > - **Reporting a non-invertible fit.** Weights 2 and 3.3333 describe the same correlogram, but their recovered surprises explode to 18,062,489.75 by month 24; software that fits an MA reports the invertible version.
 
@@ -847,7 +867,7 @@ example : (1600 : ℚ) * (1 + 2 * (1 / 2) * (3 / 10) + (3 / 10) ^ 2) / (1 - (1 /
 
 ## What this builds on
 
-- [Autoregression](02-ar-models.md): the carried-forward share, the condition $|\phi| < 1$, and the geometric correlogram that ARMA inherits after lag $q$.
+- [Autoregression](02-ar-models.md): the carried-forward share, the condition $`|\phi| < 1`$, and the geometric correlogram that ARMA inherits after lag $`q`$.
 
 ## Where this goes next
 

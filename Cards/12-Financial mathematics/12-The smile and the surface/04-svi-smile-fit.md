@@ -36,41 +36,47 @@ The orange line is the crash market's implied volatility at nine strikes. The gr
 
 Two changes of variable come first, because SVI is written in them.
 
-**Log-moneyness** measures a strike's distance from the forward price as a log ratio: $k = \ln(K/F)$. The **forward** $F$ is the price agreed today for delivery at expiry, $F = S e^{(r-q)T}$ with share price $S$ = $100, interest rate $r$ = 5% and dividend yield $q$ = 2%; here $F$ = $103.05. So $k = 0$ is the forward itself, negative $k$ is below it, positive above.
+**Log-moneyness** measures a strike's distance from the forward price as a log ratio: $`k = \ln(K/F)`$. The **forward** $`F`$ is the price agreed today for delivery at expiry, $`F = S e^{(r-q)T}`$ with share price $`S`$ = $100, interest rate $`r`$ = 5% and dividend yield $`q`$ = 2%; here $`F`$ = $103.05. So $`k = 0`$ is the forward itself, negative $`k`$ is below it, positive above.
 
-**Total implied variance** is implied volatility squared, times time to expiry: $w = \sigma_{\text{imp}}^2\, T$. At one year $w$ is the volatility squared: the $100 strike's 20.0008% becomes 0.040003.
+**Total implied variance** is implied volatility squared, times time to expiry: $`w = \sigma_{\text{imp}}^2\, T`$. At one year $`w`$ is the volatility squared: the $100 strike's 20.0008% becomes 0.040003.
 
 SVI says total variance, as a function of log-moneyness, is
 
-$$w(k) = a + b\left(\rho\,(k - m) + \sqrt{(k - m)^2 + s^2}\right)$$
+```math
+w(k) = a + b\left(\rho\,(k - m) + \sqrt{(k - m)^2 + s^2}\right)
+```
 
-**Read it aloud:** total variance is a floor $a$, plus $b$ times a tilted, rounded V centred at $m$, whose corner is rounded off by $s$.
+**Read it aloud:** total variance is a floor $`a`$, plus $`b`$ times a tilted, rounded V centred at $`m`$, whose corner is rounded off by $`s`$.
 
-The volatility to quote at strike $K$ comes back out as $\sigma_{\text{imp}} = \sqrt{w(k)/T}$.
+The volatility to quote at strike $`K`$ comes back out as $`\sigma_{\text{imp}} = \sqrt{w(k)/T}`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $K$ | strike, the price written into the option | $80 to $120 | moves along the curve |
-| $F$, $S$, $r$, $q$ | forward price for delivery at expiry, $S e^{(r-q)T}$, from share price $S$, interest rate $r$ and dividend yield $q$ | $103.05, from $100, 5% and 2% | every strike's $k$ falls |
-| $k$, $k_i$ | log-moneyness, $\ln(K/F)$: 0 at the forward; $k_i$ is quote number i's | −0.2531 to +0.1523 | — |
-| $S_T$ | Acme's share price at expiry, unknown today | spread by the density in Step 4 | — |
-| $T$ | time to expiry, in years | 1 | same $w$ means lower volatility |
-| $\sigma_{\text{imp}}$ | implied volatility, quoted in percent | 17.90% to 26.12% | — |
-| $w$, $w_i$ | total implied variance, $\sigma_{\text{imp}}^2 T$; $w_i$ is quote number i's market value | 0.032040 to 0.068222 | option prices rise |
-| $a$ | vertical level: shifts every strike's variance equally | 0.016719 | whole smile lifts |
-| $b$ | how steeply both wings climb | 0.126769 | wings open wider |
-| $\rho$ | tilt, between −1 and 1; negative loads the low strikes | −0.912282 | smile tilts toward high strikes |
-| $m$ | where the V is centred, in $k$ | −0.118207 | smile slides right |
-| $s$ | how rounded the bottom is; 0 gives a sharp corner | 0.248954 | bottom flattens and rises |
-| $g$, $d_2$ | Gatheral's butterfly function, built from $w$, its slope $w'$ and its bend $w''$; the density is $g$ times a positive factor that contains $d_2 = -k/\sqrt{w} - \sqrt{w}/2$, the $d_2$ of [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) in these coordinates | smallest $g$ 0.182823 | density thicker |
+| $`K`$ | strike, the price written into the option | $80 to $120 | moves along the curve |
+| $`F`$, $`S`$, $`r`$, $`q`$ | forward price for delivery at expiry, $`S e^{(r-q)T}`$, from share price $`S`$, interest rate $`r`$ and dividend yield $`q`$ | $103.05, from $100, 5% and 2% | every strike's $`k`$ falls |
+| $`k`$, $`k_i`$ | log-moneyness, $`\ln(K/F)`$: 0 at the forward; $`k_i`$ is quote number i's | −0.2531 to +0.1523 | — |
+| $`S_T`$ | Acme's share price at expiry, unknown today | spread by the density in Step 4 | — |
+| $`T`$ | time to expiry, in years | 1 | same $`w`$ means lower volatility |
+| $`\sigma_{\text{imp}}`$ | implied volatility, quoted in percent | 17.90% to 26.12% | — |
+| $`w`$, $`w_i`$ | total implied variance, $`\sigma_{\text{imp}}^2 T`$; $`w_i`$ is quote number i's market value | 0.032040 to 0.068222 | option prices rise |
+| $`a`$ | vertical level: shifts every strike's variance equally | 0.016719 | whole smile lifts |
+| $`b`$ | how steeply both wings climb | 0.126769 | wings open wider |
+| $`\rho`$ | tilt, between −1 and 1; negative loads the low strikes | −0.912282 | smile tilts toward high strikes |
+| $`m`$ | where the V is centred, in $`k`$ | −0.118207 | smile slides right |
+| $`s`$ | how rounded the bottom is; 0 gives a sharp corner | 0.248954 | bottom flattens and rises |
+| $`g`$, $`d_2`$ | Gatheral's butterfly function, built from $`w`$, its slope $`w'`$ and its bend $`w''`$; the density is $`g`$ times a positive factor that contains $`d_2 = -k/\sqrt{w} - \sqrt{w}/2`$, the $`d_2`$ of [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) in these coordinates | smallest $`g`$ 0.182823 | density thicker |
 
 Two helper formulas read the shape straight off the parameters. The wings are straight lines with slopes
 
-$$\text{left slope} = b(1 - \rho), \qquad \text{right slope} = b(1 + \rho)$$
+```math
+\text{left slope} = b(1 - \rho), \qquad \text{right slope} = b(1 + \rho)
+```
 
-In words: far below the forward, total variance climbs by $b(1-\rho)$ per unit of $k$; far above, by $b(1+\rho)$. The bottom of the curve sits at
+In words: far below the forward, total variance climbs by $`b(1-\rho)`$ per unit of $`k`$; far above, by $`b(1+\rho)`$. The bottom of the curve sits at
 
-$$k^{*} = m - \frac{\rho\, s}{\sqrt{1-\rho^2}}, \qquad w_{\min} = a + b\, s\sqrt{1-\rho^2}$$
+```math
+k^{*} = m - \frac{\rho\, s}{\sqrt{1-\rho^2}}, \qquad w_{\min} = a + b\, s\sqrt{1-\rho^2}
+```
 
 In words: the lowest total variance on the curve, and the log-moneyness where it occurs.
 
@@ -78,10 +84,10 @@ In words: the lowest total variance on the curve, and the log-moneyness where it
 
 SVI is a shape, so "holds" means "is safe to use". Four conditions, each with what goes wrong without it:
 
-- **$b \ge 0$, $\rho$ strictly between −1 and 1, $s > 0$.** Outside these the curve is not a smile: a negative $b$ turns it upside down; $\rho$ at ±1 flattens one wing completely.
-- **Total variance never negative: $w_{\min} \ge 0$.** A negative total variance has no square root, so no volatility exists at those strikes. This is necessary, not sufficient: the Vogt curve below passes it and still breaks.
-- **Butterfly test: $g(k) \ge 0$ at every $k$.** Where $g$ is negative the implied probability density is negative, and a butterfly spread (long one option at each outer strike, short two at the middle one) costs less than nothing.
-- **Lee's wing bound: both slopes at most 2.** Steeper wings stop far-out call prices, and far-out put prices divided by the strike, from falling toward zero, which no probability distribution can produce. SVI's condition is $b(1 + |\rho|) \le 2$.
+- **$`b \ge 0`$, $`\rho`$ strictly between −1 and 1, $`s > 0`$.** Outside these the curve is not a smile: a negative $`b`$ turns it upside down; $`\rho`$ at ±1 flattens one wing completely.
+- **Total variance never negative: $`w_{\min} \ge 0`$.** A negative total variance has no square root, so no volatility exists at those strikes. This is necessary, not sufficient: the Vogt curve below passes it and still breaks.
+- **Butterfly test: $`g(k) \ge 0`$ at every $`k`$.** Where $`g`$ is negative the implied probability density is negative, and a butterfly spread (long one option at each outer strike, short two at the middle one) costs less than nothing.
+- **Lee's wing bound: both slopes at most 2.** Steeper wings stop far-out call prices, and far-out put prices divided by the strike, from falling toward zero, which no probability distribution can produce. SVI's condition is $`b(1 + |\rho|) \le 2`$.
 
 One expiry only. Matching several expiries against each other (calendar arbitrage) is the job of the surface on [The volatility surface](03-volatility-surface-and-its-arbitrage-rules.md); the SVI family built for that is SSVI, named in Step 6.
 
@@ -93,19 +99,19 @@ One expiry only. Matching several expiries against each other (calendar arbitrag
 
 In strike and volatility, the no-arbitrage rules are awkward. In log-moneyness and total variance they become simple:
 
-- The far wings of any arbitrage-free smile grow at most linearly in $k$ (Lee's theorem, Step 5).
+- The far wings of any arbitrage-free smile grow at most linearly in $`k`$ (Lee's theorem, Step 5).
 - Two expiries cannot cross (total variance rises with time).
-- Black-Scholes prices depend on strike and volatility only through $k$ and $w$.
+- Black-Scholes prices depend on strike and volatility only through $`k`$ and $`w`$.
 
-So the natural model for one expiry is a curve in $(k, w)$ that is a straight line in each wing and smooth in the middle. The simplest such curve is a hyperbola, and SVI is exactly a hyperbola, tilted and shifted.
+So the natural model for one expiry is a curve in $`(k, w)`$ that is a straight line in each wing and smooth in the middle. The simplest such curve is a hyperbola, and SVI is exactly a hyperbola, tilted and shifted.
 
 The name records a second reason. In the Heston model, where volatility itself moves at random, the smile tends to exactly this formula as the expiry grows (Gatheral and Jacquier, 2011).
 
 ### Step 1: the square root is a rounded V
 
-Set $s = 0$. Then $\sqrt{(k-m)^2} = |k - m|$, and the formula is a V with its corner at $m$: slope $b(1+\rho)$ on the right and $b(1-\rho)$, climbing leftward, on the left. With $s > 0$ the square root never reaches 0; it bottoms out at $s$ and the corner is rounded. Far from $m$, $s^2$ is negligible next to $(k-m)^2$, so the curve hugs the V.
+Set $`s = 0`$. Then $`\sqrt{(k-m)^2} = |k - m|`$, and the formula is a V with its corner at $`m`$: slope $`b(1+\rho)`$ on the right and $`b(1-\rho)`$, climbing leftward, on the left. With $`s > 0`$ the square root never reaches 0; it bottoms out at $`s`$ and the corner is rounded. Far from $`m`$, $`s^2`$ is negligible next to $`(k-m)^2`$, so the curve hugs the V.
 
-The minimum comes from setting the slope to zero. The slope is $w'(k) = b\left(\rho + (k-m)/\sqrt{(k-m)^2 + s^2}\right)$. The fraction runs between −1 and 1, so the slope is zero where that fraction equals $-\rho$. Solving gives $k^* = m - \rho s/\sqrt{1-\rho^2}$, and substituting back gives $w_{\min} = a + b s \sqrt{1-\rho^2}$.
+The minimum comes from setting the slope to zero. The slope is $`w'(k) = b\left(\rho + (k-m)/\sqrt{(k-m)^2 + s^2}\right)`$. The fraction runs between −1 and 1, so the slope is zero where that fraction equals $`-\rho`$. Solving gives $`k^* = m - \rho s/\sqrt{1-\rho^2}`$, and substituting back gives $`w_{\min} = a + b s \sqrt{1-\rho^2}`$.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -117,31 +123,33 @@ xychart-beta
     line [23.05, 16.99, 10.93, 4.87, 1.80, 2.08, 2.36, 2.64, 2.92]
 ```
 
-The orange line is the fitted Acme curve. The green line is the same curve with $s = 0$: a V with its corner at $m$ = −0.118207. Far out on the left the two run parallel, with slope 0.242418; on the right both are nearly flat, slope 0.011120. Near the corner $s$ lifts the curve: at $k = 0$ the fit sits at 3.80 hundredths and the V at 1.80.
+The orange line is the fitted Acme curve. The green line is the same curve with $`s = 0`$: a V with its corner at $`m`$ = −0.118207. Far out on the left the two run parallel, with slope 0.242418; on the right both are nearly flat, slope 0.011120. Near the corner $`s`$ lifts the curve: at $`k = 0`$ the fit sits at 3.80 hundredths and the V at 1.80.
 
 ### Step 2: what each parameter does
 
 Each of the five moves one feature, which is why a fit can be read.
 
-- **$a$** adds the same amount of total variance at every strike. Raising it by 0.01 lifts the $100 volatility from 20.00% to 22.36%.
-- **$b$** scales the whole V. Doubling it takes the $80 volatility from 26.12% to 34.60%.
-- **$\rho$** tilts the V. At −0.912282 the left wing climbs far faster than the right: slope 0.242418 against 0.011120. Setting $\rho = 0$ makes the wings equal and turns the skew into a smile: 22.94%, 22.41%, 25.16% at $80, $100, $120.
-- **$m$** slides the curve sideways without changing its shape.
-- **$s$** rounds the corner. Shrinking it to 0.01 drops the $100 volatility from 20.00% to 13.33%, because the rounding was holding the bottom up.
+- **$`a`$** adds the same amount of total variance at every strike. Raising it by 0.01 lifts the $100 volatility from 20.00% to 22.36%.
+- **$`b`$** scales the whole V. Doubling it takes the $80 volatility from 26.12% to 34.60%.
+- **$`\rho`$** tilts the V. At −0.912282 the left wing climbs far faster than the right: slope 0.242418 against 0.011120. Setting $`\rho = 0`$ makes the wings equal and turns the skew into a smile: 22.94%, 22.41%, 25.16% at $80, $100, $120.
+- **$`m`$** slides the curve sideways without changing its shape.
+- **$`s`$** rounds the corner. Shrinking it to 0.01 drops the $100 volatility from 20.00% to 13.33%, because the rounding was holding the bottom up.
 
-The Acme fit has $\rho$ close to −1. The crash market is almost pure skew between $80 and $120: the bottom of the smile, at $k^*$ = 0.436326, lies above the highest quoted strike.
+The Acme fit has $`\rho`$ close to −1. The crash market is almost pure skew between $80 and $120: the bottom of the smile, at $`k^*`$ = 0.436326, lies above the highest quoted strike.
 
 ### Step 3: fitting is least squares, and one trick makes it easy
 
 Fitting means choosing the five numbers that make the curve pass as close as possible to the seven quoted total variances. "Close" is measured by the sum of squared misses, as on [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md):
 
-$$\text{minimise } \sum_{i=1}^{7} \big(w(k_i) - w_i\big)^2$$
+```math
+\text{minimise } \sum_{i=1}^{7} \big(w(k_i) - w_i\big)^2
+```
 
-where $k_i$ is the log-moneyness of quote number i and $w_i$ its market total variance.
+where $`k_i`$ is the log-moneyness of quote number i and $`w_i`$ its market total variance.
 
-**Existence, uniqueness and the boundary cases, before solving.** A minimum exists on a bounded box: $b$ from 0 to 2 (Lee's bound, Step 5), $\rho$ from −1 to 1, $m$ and $s$ in fixed ranges with $s \ge 0$. The sum of squares is continuous, and a continuous function on a closed, bounded set reaches its minimum.
+**Existence, uniqueness and the boundary cases, before solving.** A minimum exists on a bounded box: $`b`$ from 0 to 2 (Lee's bound, Step 5), $`\rho`$ from −1 to 1, $`m`$ and $`s`$ in fixed ranges with $`s \ge 0`$. The sum of squares is continuous, and a continuous function on a closed, bounded set reaches its minimum.
 
-Without bounds it need not. Pushing $b$ and $s$ up together, with $a$ falling, turns the curve into a parabola. Pushing $m$ far away turns it into a straight line. So the best fit can sit at such a limit and never be reached. The check's grid stays inside a box.
+Without bounds it need not. Pushing $`b`$ and $`s`$ up together, with $`a`$ falling, turns the curve into a parabola. Pushing $`m`$ far away turns it into a straight line. So the best fit can sit at such a limit and never be reached. The check's grid stays inside a box.
 
 Uniqueness is not guaranteed. The sum of squares can have several dips, so a single optimiser can stop in the wrong one. Two different methods from different starts agreeing is evidence, not proof.
 
@@ -149,53 +157,59 @@ Boundary cases:
 
 - With fewer than five quotes, infinitely many curves pass through every point.
 - With exactly five, SVI usually interpolates them with zero miss and tells nothing about fit quality.
-- A strip that is pure skew pushes $\rho$ toward ±1, as here.
-- A strip with a sharp kink pushes $s$ toward 0.
+- A strip that is pure skew pushes $`\rho`$ toward ±1, as here.
+- A strip with a sharp kink pushes $`s`$ toward 0.
 
-**The trick (the "quasi-explicit" method published by Zeliade Systems).** Hold $m$ and $s$ fixed. Then
+**The trick (the "quasi-explicit" method published by Zeliade Systems).** Hold $`m`$ and $`s`$ fixed. Then
 
-$$w(k) = a + (b\rho)\,(k - m) + b\,\sqrt{(k-m)^2 + s^2}$$
+```math
+w(k) = a + (b\rho)\,(k - m) + b\,\sqrt{(k-m)^2 + s^2}
+```
 
-is a straight-line combination of three known columns: 1, $k - m$ and the square root. Finding $a$, $b\rho$ and $b$ is ordinary linear least squares, solved exactly by the normal equations. That leaves a search over two numbers, $m$ and $s$, instead of five. The check searches a shrinking grid over $(m, s)$ and solves the linear problem at each grid point.
+is a straight-line combination of three known columns: 1, $`k - m`$ and the square root. Finding $`a`$, $`b\rho`$ and $`b`$ is ordinary linear least squares, solved exactly by the normal equations. That leaves a search over two numbers, $`m`$ and $`s`$, instead of five. The check searches a shrinking grid over $`(m, s)`$ and solves the linear problem at each grid point.
 
 **The second road** fits all five at once by Levenberg-Marquardt, the standard method of [Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md). Each step does three things: linearise the misses around the current guess, take the step that minimises the linearised sum of squares, and damp the step when it overshoots.
 
-It starts from a flat guess and knows nothing of the linear trick. It writes $b$ and $s$ as exponentials and $\rho$ as a hyperbolic tangent, so that no step can leave the legal range. Both roads land on the same five numbers, apart by at most one unit in the sixth decimal, with a sum of squared misses of 7.168e-11.
+It starts from a flat guess and knows nothing of the linear trick. It writes $`b`$ and $`s`$ as exponentials and $`\rho`$ as a hyperbolic tangent, so that no step can leave the legal range. Both roads land on the same five numbers, apart by at most one unit in the sixth decimal, with a sum of squared misses of 7.168e-11.
 
-### Step 4: the butterfly test, and why $g$ is the density in disguise
+### Step 4: the butterfly test, and why $`g`$ is the density in disguise
 
-A butterfly spread buys one call at strike $K - h$, sells two at $K$ and buys one at $K + h$, where h is a small step in strike. It pays nothing or something, never less. So its price must be non-negative, and as the step shrinks, price divided by $h^2$ tends to the second derivative of the call price in strike. Breeden and Litzenberger's result, on [The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md), makes that second derivative, grown at the bank rate, the market's probability density for the share price at expiry.
+A butterfly spread buys one call at strike $`K - h`$, sells two at $`K`$ and buys one at $`K + h`$, where h is a small step in strike. It pays nothing or something, never less. So its price must be non-negative, and as the step shrinks, price divided by $`h^2`$ tends to the second derivative of the call price in strike. Breeden and Litzenberger's result, on [The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md), makes that second derivative, grown at the bank rate, the market's probability density for the share price at expiry.
 
 Push the SVI curve through Black-Scholes and differentiate twice. The density that comes out factors into a positive bell-curve piece times one bracket:
 
-$$g(k) = \left(1 - \frac{k\, w'}{2w}\right)^2 - \frac{(w')^2}{4}\left(\frac{1}{w} + \frac{1}{4}\right) + \frac{w''}{2}$$
+```math
+g(k) = \left(1 - \frac{k\, w'}{2w}\right)^2 - \frac{(w')^2}{4}\left(\frac{1}{w} + \frac{1}{4}\right) + \frac{w''}{2}
+```
 
-$$\text{density of } \ln(S_T/F) \text{ at } k \;=\; \frac{g(k)}{\sqrt{2\pi\, w}}\, \exp\!\left(-\tfrac12 d_2^2\right), \qquad d_2 = -\frac{k}{\sqrt{w}} - \frac{\sqrt{w}}{2}$$
+```math
+\text{density of } \ln(S_T/F) \text{ at } k \;=\; \frac{g(k)}{\sqrt{2\pi\, w}}\, \exp\!\left(-\tfrac12 d_2^2\right), \qquad d_2 = -\frac{k}{\sqrt{w}} - \frac{\sqrt{w}}{2}
+```
 
-In words: $S_T$ is the share price at expiry; $w'$ is the slope of the curve and $w''$ its bend; $d_2$ is the Black–Scholes $d_2$ written in $k$ and $w$. Since everything outside $g$ is positive, **the density is non-negative exactly where $g$ is non-negative.** One function of the fitted curve answers the butterfly question at every strike at once.
+In words: $`S_T`$ is the share price at expiry; $`w'`$ is the slope of the curve and $`w''`$ its bend; $`d_2`$ is the Black–Scholes $`d_2`$ written in $`k`$ and $`w`$. Since everything outside $`g`$ is positive, **the density is non-negative exactly where $`g`$ is non-negative.** One function of the fitted curve answers the butterfly question at every strike at once.
 
 <details>
 <summary>Detailed proof: the density is $g$ times a positive factor</summary>
 
-Work per unit of forward and undiscounted: the call price is $c(k) = N(d_1) - e^{k} N(d_2)$ with $d_1 = d_2 + \sqrt{w}$, where $N(x)$ is the normal distribution's area to the left of x. Write $x = K/F = e^{k}$. The density of $x$ is the second derivative $c_{xx}(x)$, and changing variable to $k$ gives density of $k$ = $e^{-k}(c_{kk} - c_k)$.
+Work per unit of forward and undiscounted: the call price is $`c(k) = N(d_1) - e^{k} N(d_2)`$ with $`d_1 = d_2 + \sqrt{w}`$, where $`N(x)`$ is the normal distribution's area to the left of x. Write $`x = K/F = e^{k}`$. The density of $`x`$ is the second derivative $`c_{xx}(x)`$, and changing variable to $`k`$ gives density of $`k`$ = $`e^{-k}(c_{kk} - c_k)`$.
 
-Now $c(k)$ depends on $k$ twice: directly, and through $w(k)$. Four Black-Scholes facts do the work, each checked by differentiating $N(d_1) - e^k N(d_2)$ and using $N'(d_1) = e^{k} N'(d_2)$:
-- $\partial c/\partial k = -e^{k} N(d_2)$;
-- $\partial^2 c/\partial k^2 - \partial c/\partial k = e^{k} N'(d_2)/\sqrt{w}$, the flat-volatility density;
-- $\partial c/\partial w = e^{k} N'(d_2)/(2\sqrt{w})$, which is vega (the price's sensitivity to volatility) written for total variance;
-- $\partial^2 c/\partial k\,\partial w = \partial c/\partial w \cdot (\tfrac12 - k/w)$ and $\partial^2 c/\partial w^2 = \partial c/\partial w \cdot \left(\tfrac{k^2}{2w^2} - \tfrac{1}{2w} - \tfrac18\right)$.
+Now $`c(k)`$ depends on $`k`$ twice: directly, and through $`w(k)`$. Four Black-Scholes facts do the work, each checked by differentiating $`N(d_1) - e^k N(d_2)`$ and using $`N'(d_1) = e^{k} N'(d_2)`$:
+- $`\partial c/\partial k = -e^{k} N(d_2)`$;
+- $`\partial^2 c/\partial k^2 - \partial c/\partial k = e^{k} N'(d_2)/\sqrt{w}`$, the flat-volatility density;
+- $`\partial c/\partial w = e^{k} N'(d_2)/(2\sqrt{w})`$, which is vega (the price's sensitivity to volatility) written for total variance;
+- $`\partial^2 c/\partial k\,\partial w = \partial c/\partial w \cdot (\tfrac12 - k/w)`$ and $`\partial^2 c/\partial w^2 = \partial c/\partial w \cdot \left(\tfrac{k^2}{2w^2} - \tfrac{1}{2w} - \tfrac18\right)`$.
 
-By the chain rule, $c_k = \partial_k c + w' \partial_w c$ and $c_{kk} = \partial_{kk} c + 2 w' \partial_{kw} c + (w')^2 \partial_{ww} c + w'' \partial_w c$. Subtract, substitute the four facts, and factor out $e^{k} N'(d_2)/\sqrt{w}$:
+By the chain rule, $`c_k = \partial_k c + w' \partial_w c`$ and $`c_{kk} = \partial_{kk} c + 2 w' \partial_{kw} c + (w')^2 \partial_{ww} c + w'' \partial_w c`$. Subtract, substitute the four facts, and factor out $`e^{k} N'(d_2)/\sqrt{w}`$:
 
-$$c_{kk} - c_k = \frac{e^{k} N'(d_2)}{\sqrt{w}}\left[1 - \frac{k w'}{w} + \frac{(w')^2}{4}\left(\frac{k^2}{w^2} - \frac{1}{w} - \frac14\right) + \frac{w''}{2}\right]$$
+$`\displaystyle c_{kk} - c_k = \frac{e^{k} N'(d_2)}{\sqrt{w}}\left[1 - \frac{k w'}{w} + \frac{(w')^2}{4}\left(\frac{k^2}{w^2} - \frac{1}{w} - \frac14\right) + \frac{w''}{2}\right]`$
 
-The bracket is $g$: expand $(1 - k w'/(2w))^2$ and the terms match one for one. Multiplying by $e^{-k}$ gives the density formula above. The check confirms it at three strikes, comparing $g$ against a second difference of call prices, and agrees to six decimals.
+The bracket is $`g`$: expand $`(1 - k w'/(2w))^2`$ and the terms match one for one. Multiplying by $`e^{-k}`$ gives the density formula above. The check confirms it at three strikes, comparing $`g`$ against a second difference of call prices, and agrees to six decimals.
 
 </details>
 
-Gatheral and Jacquier add one more condition for a full no-arbitrage slice: call prices must fall to zero as the strike grows, which holds when $d_1 \to -\infty$ as $k$ grows. SVI's linear wings with slope below 2 guarantee it.
+Gatheral and Jacquier add one more condition for a full no-arbitrage slice: call prices must fall to zero as the strike grows, which holds when $`d_1 \to -\infty`$ as $`k`$ grows. SVI's linear wings with slope below 2 guarantee it.
 
-The Acme fit passes: the smallest $g$ on $k$ from −1.5 to 1.5 is 0.182823, at $k$ = −0.817. The picture compares the density the fit implies with the crash market's true density.
+The Acme fit passes: the smallest $`g`$ on $`k`$ from −1.5 to 1.5 is 0.182823, at $`k`$ = −0.817. The picture compares the density the fit implies with the crash market's true density.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -207,38 +221,40 @@ xychart-beta
     line [0.13, 0.19, 0.20, 0.24, 0.63, 1.53, 2.24, 2.12, 1.42, 0.74, 0.32, 0.12, 0.04]
 ```
 
-The orange line is the density implied by the SVI fit, from $g$. The green line is the crash market's true density. From $90 up they nearly coincide. Below $80 they part: the market carries a fat crash shoulder, 0.13 against SVI's 0.08 at $40, that no strike from $80 up could reveal, and the SVI curve replaces it with a thinner, smoother tail.
+The orange line is the density implied by the SVI fit, from $`g`$. The green line is the crash market's true density. From $90 up they nearly coincide. Below $80 they part: the market carries a fat crash shoulder, 0.13 against SVI's 0.08 at $40, that no strike from $80 up could reveal, and the SVI curve replaces it with a thinner, smoother tail.
 
 ### Step 5: Lee's bound on the wings
 
-Roger Lee proved in 2004 that for any arbitrage-free market, total variance divided by $|k|$ has a limit superior (the largest value it keeps returning to) of at most 2 in each wing. The exact number is tied to moments: the right wing's slope fixes how many powers of the share price have finite average, and the left wing's slope does the same for powers of one over the share price. The card states the theorem; Lee's paper proves it.
+Roger Lee proved in 2004 that for any arbitrage-free market, total variance divided by $`|k|`$ has a limit superior (the largest value it keeps returning to) of at most 2 in each wing. The exact number is tied to moments: the right wing's slope fixes how many powers of the share price have finite average, and the left wing's slope does the same for powers of one over the share price. The card states the theorem; Lee's paper proves it.
 
-SVI's wings are straight lines, so the bound is a condition on two numbers: $b(1-\rho) \le 2$ and $b(1+\rho) \le 2$. Acme's are 0.242418 and 0.011120, far inside. The check measures the slopes a second way, from the curve itself between $k$ = 10 and 12 on each side: 0.242385 and 0.011088, closing on the formula as $k$ grows.
+SVI's wings are straight lines, so the bound is a condition on two numbers: $`b(1-\rho) \le 2`$ and $`b(1+\rho) \le 2`$. Acme's are 0.242418 and 0.011120, far inside. The check measures the slopes a second way, from the curve itself between $`k`$ = 10 and 12 on each side: 0.242385 and 0.011088, closing on the formula as $`k`$ grows.
 
-A parabola in $k$, the other obvious curve to fit, fails this at once: its total variance grows like $k^2$, so its ratio to $|k|$ grows without bound.
+A parabola in $`k`$, the other obvious curve to fit, fails this at once: its total variance grows like $`k^2`$, so its ratio to $`|k|`$ grows without bound.
 
 ### Step 6: many expiries at once, named
 
 Fitting SVI separately at each expiry can produce two curves that cross, which is calendar arbitrage. Gatheral and Jacquier's **SSVI** ("surface SVI") writes every expiry with the same shape, scaled by that expiry's at-the-money total variance:
 
-$$w(k, \theta) = \frac{\theta}{2}\left(1 + \rho\,\varphi(\theta)\,k + \sqrt{\big(\varphi(\theta)\,k + \rho\big)^2 + 1 - \rho^2}\right)$$
+```math
+w(k, \theta) = \frac{\theta}{2}\left(1 + \rho\,\varphi(\theta)\,k + \sqrt{\big(\varphi(\theta)\,k + \rho\big)^2 + 1 - \rho^2}\right)
+```
 
-Here θ (theta) is the at-the-money total variance at that expiry, the value at $k = 0$, and φ (phi) is a chosen function saying how the smile's curvature shrinks as θ grows. Simple inequalities on θ, φ and ρ rule out both butterfly and calendar arbitrage for the whole surface. Fitting a stochastic volatility model directly, instead of a curve, is the business of [Heston Greeks and calibration](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/03-heston-greeks-and-calibration.md).
+Here θ (theta) is the at-the-money total variance at that expiry, the value at $`k = 0`$, and φ (phi) is a chosen function saying how the smile's curvature shrinks as θ grows. Simple inequalities on θ, φ and ρ rule out both butterfly and calendar arbitrage for the whole surface. Fitting a stochastic volatility model directly, instead of a curve, is the business of [Heston Greeks and calibration](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/03-heston-greeks-and-calibration.md).
 
 ---
 
 ## Worked numbers, by hand
 
-The $90 strike, with the fitted parameters $a$ = 0.016719, $b$ = 0.126769, $\rho$ = −0.912282, $m$ = −0.118207, $s$ = 0.248954 and the forward $103.05.
+The $90 strike, with the fitted parameters $`a`$ = 0.016719, $`b`$ = 0.126769, $`\rho`$ = −0.912282, $`m`$ = −0.118207, $`s`$ = 0.248954 and the forward $103.05.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| log-moneyness $k$ | $\ln(90 / 103.045453)$ | −0.135361 |
-| distance from centre, $k - m$ | $-0.135361 + 0.118207$ | −0.017154 |
-| rounded distance | $\sqrt{0.017154^2 + 0.248954^2}$ | 0.249545 |
-| bracket, $\rho(k-m)$ + rounded distance | $(-0.912282)(-0.017154) + 0.249545$ | 0.265194 |
-| total variance $w$ | $0.016719 + 0.126769 \times 0.265194$ | 0.050338 |
-| volatility | $\sqrt{0.050338 / 1}$ | **22.4361%** |
+| log-moneyness $`k`$ | $`\ln(90 / 103.045453)`$ | −0.135361 |
+| distance from centre, $`k - m`$ | $`-0.135361 + 0.118207`$ | −0.017154 |
+| rounded distance | $`\sqrt{0.017154^2 + 0.248954^2}`$ | 0.249545 |
+| bracket, $`\rho(k-m)`$ + rounded distance | $`(-0.912282)(-0.017154) + 0.249545`$ | 0.265194 |
+| total variance $`w`$ | $`0.016719 + 0.126769 \times 0.265194`$ | 0.050338 |
+| volatility | $`\sqrt{0.050338 / 1}`$ | **22.4361%** |
 
 The market quote at $90 is 22.4366%. The fitted curve misses it by 0.0005 of a volatility point.
 
@@ -246,30 +262,30 @@ The shape numbers, by the helper formulas:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $\sqrt{1-\rho^2}$ | $\sqrt{1 - 0.912282^2}$ | 0.409564 |
-| left wing slope $b(1-\rho)$ | $0.126769 \times 1.912282$ | 0.242418 |
-| right wing slope $b(1+\rho)$ | $0.126769 \times 0.087718$ | 0.011120 |
-| bottom $k^*$ | $-0.118207 + 0.912282 \times 0.248954 / 0.409564$ | 0.436326 |
-| lowest total variance $w_{\min}$ | $0.016719 + 0.126769 \times 0.248954 \times 0.409564$ | 0.029645 |
-| volatility at the forward, $k = 0$ | $\sqrt{w(0)} = \sqrt{0.037986}$ | **19.4899%** |
+| $`\sqrt{1-\rho^2}`$ | $`\sqrt{1 - 0.912282^2}`$ | 0.409564 |
+| left wing slope $`b(1-\rho)`$ | $`0.126769 \times 1.912282`$ | 0.242418 |
+| right wing slope $`b(1+\rho)`$ | $`0.126769 \times 0.087718`$ | 0.011120 |
+| bottom $`k^*`$ | $`-0.118207 + 0.912282 \times 0.248954 / 0.409564`$ | 0.436326 |
+| lowest total variance $`w_{\min}`$ | $`0.016719 + 0.126769 \times 0.248954 \times 0.409564`$ | 0.029645 |
+| volatility at the forward, $`k = 0`$ | $`\sqrt{w(0)} = \sqrt{0.037986}`$ | **19.4899%** |
 
-Both slopes sit far below Lee's ceiling of 2, and $w_{\min}$ is positive. The volatility at the forward, 19.49%, matches the value read off the same market on [The volatility smile and skew](01-volatility-smile-and-skew.md).
+Both slopes sit far below Lee's ceiling of 2, and $`w_{\min}`$ is positive. The volatility at the forward, 19.49%, matches the value read off the same market on [The volatility smile and skew](01-volatility-smile-and-skew.md).
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Take a positive floor $w_{\min}$ as proof of no arbitrage (Vogt's curve) | floor 0.011625, yet $g$ = −0.032864 at $k$ = +0.879 ($248.18); density −0.4691 per million per $1 | positivity of variance is not positivity of probability |
-| Fit a parabola in $k$ to the same seven quotes | $w/\lvert k\rvert$ = 0.6983 at $k$ = −3 and 0.5639 at +3 against SVI's 0.2389 and 0.0176; 53.48% at the $40 strike | a parabola's wings grow like $k^2$ and must cross Lee's bound |
-| Measure $k$ from the share price, not the forward | 19.4899% at the $100 strike instead of 20.0001% | $\ln(K/S)$ treats the forward, $103.05, as if it were $100 |
+| Take a positive floor $`w_{\min}`$ as proof of no arbitrage (Vogt's curve) | floor 0.011625, yet $`g`$ = −0.032864 at $`k`$ = +0.879 ($248.18); density −0.4691 per million per $1 | positivity of variance is not positivity of probability |
+| Fit a parabola in $`k`$ to the same seven quotes | $`w/\lvert k\rvert`$ = 0.6983 at $`k`$ = −3 and 0.5639 at +3 against SVI's 0.2389 and 0.0176; 53.48% at the $40 strike | a parabola's wings grow like $`k^2`$ and must cross Lee's bound |
+| Measure $`k`$ from the share price, not the forward | 19.4899% at the $100 strike instead of 20.0001% | $`\ln(K/S)`$ treats the forward, $103.05, as if it were $100 |
 
-The Vogt row is checked two ways: from $g$, −0.4691 per million per $1; from a second difference of SVI call prices, −0.4692. Both roads see the negative density.
+The Vogt row is checked two ways: from $`g`$, −0.4691 per million per $1; from a second difference of SVI call prices, −0.4692. Both roads see the negative density.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The script rebuilds the crash market of [The volatility smile and skew](01-volatility-smile-and-skew.md): a 12% chance of a year centred at 0.70 of the forward with 40% volatility, and an 88% chance of a calm year at 15%. It prices the seven calls and inverts each to a volatility by bisection. It fits SVI by two independent roads: the linear trick on a grid over $(m, s)$, and five-parameter Levenberg-Marquardt. It checks the density two ways ($g$ against second differences of call prices). It confirms by Simpson's rule (a numerical integration rule) that the density sums to 1 and averages to the forward. It measures the wing slopes far out, and cross-checks the market's own prices by integrating payoffs against its density. The normal distribution, the solver, both optimisers and the integrator are written from scratch.
+The script rebuilds the crash market of [The volatility smile and skew](01-volatility-smile-and-skew.md): a 12% chance of a year centred at 0.70 of the forward with 40% volatility, and an 88% chance of a calm year at 15%. It prices the seven calls and inverts each to a volatility by bisection. It fits SVI by two independent roads: the linear trick on a grid over $`(m, s)`$, and five-parameter Levenberg-Marquardt. It checks the density two ways ($`g`$ against second differences of call prices). It confirms by Simpson's rule (a numerical integration rule) that the density sums to 1 and averages to the forward. It measures the wing slopes far out, and cross-checks the market's own prices by integrating payoffs against its density. The normal distribution, the solver, both optimisers and the integrator are written from scratch.
 
 ### Python
 
@@ -701,14 +717,14 @@ The two outputs agree line for line.
 
 ### Lean
 
-Lean proves Step 4's density formula for any smooth positive $w$, and Steps 1 and 5 for every SVI curve allowed by When it holds.
+Lean proves Step 4's density formula for any smooth positive $`w`$, and Steps 1 and 5 for every SVI curve allowed by When it holds.
 
-- Suppose $w$ is positive at every $k$ and has a continuous bend $w''$. Then the density of $\ln(S_T/F)$ at $k$ equals $g(k)/\sqrt{2\pi w} \exp(-\tfrac12 d_2^2)$.
-- Take the same $w$. Then the density is non-negative exactly where $g(k) \ge 0$.
-- Take $b \ge 0$, $\rho$ strictly between −1 and 1, and $s > 0$. Then $w(k) \ge a + b s\sqrt{1-\rho^2}$ at every $k$.
-- Take the same SVI curve. Then it reaches $w_{\min}$ at $k^* = m - \rho s/\sqrt{1-\rho^2}$.
-- Take the same SVI curve. Then far right it hugs a line of slope $b(1+\rho)$, and far left one of slope $b(1-\rho)$.
-- Take the same SVI curve. Then both wing slopes are at most 2 exactly when $b(1 + \lvert\rho\rvert) \le 2$.
+- Suppose $`w`$ is positive at every $`k`$ and has a continuous bend $`w''`$. Then the density of $`\ln(S_T/F)`$ at $`k`$ equals $`g(k)/\sqrt{2\pi w} \exp(-\tfrac12 d_2^2)`$.
+- Take the same $`w`$. Then the density is non-negative exactly where $`g(k) \ge 0`$.
+- Take $`b \ge 0`$, $`\rho`$ strictly between −1 and 1, and $`s > 0`$. Then $`w(k) \ge a + b s\sqrt{1-\rho^2}`$ at every $`k`$.
+- Take the same SVI curve. Then it reaches $`w_{\min}`$ at $`k^* = m - \rho s/\sqrt{1-\rho^2}`$.
+- Take the same SVI curve. Then far right it hugs a line of slope $`b(1+\rho)`$, and far left one of slope $`b(1-\rho)`$.
+- Take the same SVI curve. Then both wing slopes are at most 2 exactly when $`b(1 + \lvert\rho\rvert) \le 2`$.
 
 The fit, the worked numbers, Vogt's curve and the parabola are left to the Python and Rust checks.
 
@@ -965,21 +981,21 @@ theorem svi_wings_straight_and_lee_bound
 
 > [!TIP]
 > **Try changing**
-> - **Set $\rho$ to 0.** Guess first: does the skew survive? No: the wings climb equally and the skew becomes a smile, 22.94%, 22.41% and 25.16% at $80, $100 and $120.
-> - **Double $b$.** Guess first: which strike moves most? The $80 strike, from 26.12% to 34.60%; the $120 strike only reaches 21.76%, because the right wing is nearly flat.
-> - **Shrink $s$ to 0.01.** Guess first: up or down at the money? Down, from 20.00% to 13.33%: the rounding was holding the bottom up, and a sharp V sits lower near its corner.
-> - **Add 0.01 to $a$.** Guess first: equal moves in volatility? No. Equal moves in total variance: 27.97%, 22.36% and 20.50%, so low volatilities rise most in percentage points.
+> - **Set $`\rho`$ to 0.** Guess first: does the skew survive? No: the wings climb equally and the skew becomes a smile, 22.94%, 22.41% and 25.16% at $80, $100 and $120.
+> - **Double $`b`$.** Guess first: which strike moves most? The $80 strike, from 26.12% to 34.60%; the $120 strike only reaches 21.76%, because the right wing is nearly flat.
+> - **Shrink $`s`$ to 0.01.** Guess first: up or down at the money? Down, from 20.00% to 13.33%: the rounding was holding the bottom up, and a sharp V sits lower near its corner.
+> - **Add 0.01 to $`a`$.** Guess first: equal moves in volatility? No. Equal moves in total variance: 27.97%, 22.36% and 20.50%, so low volatilities rise most in percentage points.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Checking that total variance stays positive and calling the fit arbitrage-free.** The floor $w_{\min} \ge 0$ only says a volatility exists at every strike. The butterfly test is about the curve's slope and bend, through $g$. Vogt's parameters, published by Gatheral and Jacquier, keep total variance at least 0.011625 everywhere and still give $g$ = −0.032864 near the $248.18 strike: a negative probability that a butterfly spread there would turn into free money.
+> **Checking that total variance stays positive and calling the fit arbitrage-free.** The floor $`w_{\min} \ge 0`$ only says a volatility exists at every strike. The butterfly test is about the curve's slope and bend, through $`g`$. Vogt's parameters, published by Gatheral and Jacquier, keep total variance at least 0.011625 everywhere and still give $`g`$ = −0.032864 near the $248.18 strike: a negative probability that a butterfly spread there would turn into free money.
 >
 > - **Trusting the fit outside the quotes.** Inside $80 to $120 the fit is within 0.0078 of a point, even at strikes it never saw. At $40 it says 47.13% against the market's 40.18%. SVI keeps the wings legal, not correct.
-> - **Log-moneyness from spot.** Using $\ln(K/S)$ shifts every strike by $\ln(F/S)$ and gives 19.4899% at the $100 strike instead of 20.0001%.
-> - **Reading $m$ as the at-the-money point or $a$ as the at-the-money variance.** The bottom is at $k^*$ = 0.436326, not $m$ = −0.118207, and the variance at the forward is 0.037986, not $a$ = 0.016719.
+> - **Log-moneyness from spot.** Using $`\ln(K/S)`$ shifts every strike by $`\ln(F/S)`$ and gives 19.4899% at the $100 strike instead of 20.0001%.
+> - **Reading $`m`$ as the at-the-money point or $`a`$ as the at-the-money variance.** The bottom is at $`k^*`$ = 0.436326, not $`m`$ = −0.118207, and the variance at the forward is 0.037986, not $`a`$ = 0.016719.
 > - **One optimiser, one start.** The least-squares problem can have several dips. A second road from a different start, as in the check, is the cheap insurance.
 
 ---
@@ -987,13 +1003,13 @@ theorem svi_wings_straight_and_lee_bound
 ## Where you meet it in real life
 
 - **Equity index option desks.** SVI or one of its variants is the standard way to turn a day's listed option quotes into a smile per expiry. The fitted curve prices every unlisted strike.
-- **Risk systems.** A fitted smile's five numbers are stored daily; a jump in $\rho$ or $b$ flags a change in how the market prices crashes, before any single quote looks odd.
+- **Risk systems.** A fitted smile's five numbers are stored daily; a jump in $`\rho`$ or $`b`$ flags a change in how the market prices crashes, before any single quote looks odd.
 - **Hedging with the smile.** The fitted curve's slope in strike feeds the delta correction on [Smile-adjusted delta](05-smile-adjusted-delta.md).
 - **Local volatility.** Dupire's formula, on [Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md), needs the first and second derivatives of total variance in strike. SVI gives them in closed form, with no noise from differencing quotes.
 - **Surfaces.** SSVI, or SVI slices checked for crossing, turn many expiries into one arbitrage-free surface, the object of [The volatility surface](03-volatility-surface-and-its-arbitrage-rules.md).
 
 > **Say it back**
-> SVI writes one expiry's total variance as a tilted hyperbola in log-moneyness, with five numbers: level, wing steepness, tilt, centre and rounding. For fixed centre and rounding it is linear in the rest, so fitting reduces to a two-number search plus ordinary least squares. Fitted to Acme's seven quotes it misses by at most 0.0012 of a volatility point. A fit is safe when $g$, which carries the sign of the implied density, stays non-negative and both wing slopes stay at or below Lee's 2. A positive total variance is not enough, and a legal wing is not a correct one.
+> SVI writes one expiry's total variance as a tilted hyperbola in log-moneyness, with five numbers: level, wing steepness, tilt, centre and rounding. For fixed centre and rounding it is linear in the rest, so fitting reduces to a two-number search plus ordinary least squares. Fitted to Acme's seven quotes it misses by at most 0.0012 of a volatility point. A fit is safe when $`g`$, which carries the sign of the implied density, stays non-negative and both wing slopes stay at or below Lee's 2. A positive total variance is not enough, and a legal wing is not a correct one.
 
 ---
 
@@ -1020,6 +1036,6 @@ SVI describes the smile without explaining it; the question it leaves open is wh
 Verified 2026-09-19: every link below resolves to the publisher's page.
 
 - Jim Gatheral, *The Volatility Surface: A Practitioner's Guide*, Wiley, 2006. [Publisher page](https://www.wiley.com/en-us/The+Volatility+Surface%3A+A+Practitioner%27s+Guide-p-9780471792512). SVI's origin, total variance in log-moneyness, and the butterfly density in practice.
-- Jim Gatheral and Antoine Jacquier, "Arbitrage-free SVI volatility surfaces", *Quantitative Finance* 14(1), 2014. [doi:10.1080/14697688.2013.819986](https://doi.org/10.1080/14697688.2013.819986); preprint [arXiv:1204.0646](https://arxiv.org/abs/1204.0646). The function $g$, the Vogt example, and SSVI.
+- Jim Gatheral and Antoine Jacquier, "Arbitrage-free SVI volatility surfaces", *Quantitative Finance* 14(1), 2014. [doi:10.1080/14697688.2013.819986](https://doi.org/10.1080/14697688.2013.819986); preprint [arXiv:1204.0646](https://arxiv.org/abs/1204.0646). The function $`g`$, the Vogt example, and SSVI.
 - Roger W. Lee, "The moment formula for implied volatility at extreme strikes", *Mathematical Finance* 14(3), 2004, pp. 469–480. [doi:10.1111/j.0960-1627.2004.00200.x](https://doi.org/10.1111/j.0960-1627.2004.00200.x). The wing bound of 2 and its link to moments.
 - Jim Gatheral and Antoine Jacquier, "Convergence of Heston to SVI", 2011. [arXiv:1002.3633](https://arxiv.org/abs/1002.3633). Why the curve is "stochastic volatility inspired".

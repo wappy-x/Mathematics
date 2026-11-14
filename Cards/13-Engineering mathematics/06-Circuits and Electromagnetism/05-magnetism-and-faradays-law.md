@@ -30,46 +30,50 @@ To scale, 1.6 px per mm. The top row of wire carries current out of the page, th
 
 Notation first, in words.
 
-- $B$ is the **magnetic field** (strictly the flux density) in teslas, T.
-- $\mu_0$ is the magnetic constant: how much field one amp makes in empty space.
-- $I$ is the current in the wire, in amps.
-- $N$ is the number of turns and $\ell$ the coil's length, so $n = N/\ell$ is the number of turns per metre of coil.
-- $A$ is the area inside one turn.
-- $\Phi$ is the **flux** through one turn: field times the area it crosses, in webers, Wb.
-- $L$ is the inductance, in henries, H.
-- The **emf** $\mathcal E$ (from "electromotive force", though it is a voltage, in volts) is the voltage a changing field drives round a loop.
+- $`B`$ is the **magnetic field** (strictly the flux density) in teslas, T.
+- $`\mu_0`$ is the magnetic constant: how much field one amp makes in empty space.
+- $`I`$ is the current in the wire, in amps.
+- $`N`$ is the number of turns and $`\ell`$ the coil's length, so $`n = N/\ell`$ is the number of turns per metre of coil.
+- $`A`$ is the area inside one turn.
+- $`\Phi`$ is the **flux** through one turn: field times the area it crosses, in webers, Wb.
+- $`L`$ is the inductance, in henries, H.
+- The **emf** $`\mathcal E`$ (from "electromotive force", though it is a voltage, in volts) is the voltage a changing field drives round a loop.
 
-$$B = \mu_0\, n\, I, \qquad L = \frac{N\Phi}{I} = \frac{\mu_0 N^2 A}{\ell}, \qquad \mathcal E = -\frac{d(N\Phi)}{dt} = -L\,\frac{dI}{dt}$$
+```math
+B = \mu_0\, n\, I, \qquad L = \frac{N\Phi}{I} = \frac{\mu_0 N^2 A}{\ell}, \qquad \mathcal E = -\frac{d(N\Phi)}{dt} = -L\,\frac{dI}{dt}
+```
 
 **Read it aloud:** the field inside is the magnetic constant times the turns per metre times the current; the inductance is the flux linking all the turns per amp; and the voltage induced is minus the rate that linked flux changes, which is minus the inductance times the rate the current changes.
 
-The third leg, the push on a moving charge, is the **Lorentz force**, with $\times$ the [Cross product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md):
+The third leg, the push on a moving charge, is the **Lorentz force**, with $`\times`$ the [Cross product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md):
 
-$$\mathbf F = q\,\mathbf v \times \mathbf B$$
+```math
+\mathbf F = q\,\mathbf v \times \mathbf B
+```
 
 **Read it aloud:** the force on a charge is its charge times its velocity crossed with the field: square to both, so it bends the path and never speeds the charge up.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $B$ | magnetic field inside the coil, teslas (T) | 15.08 mT | more flux per turn, so more voltage when it changes |
-| $\mu_0$ | the magnetic constant, how much field one amp makes in empty space | 1.25663706127 × 10⁻⁶ N/A² (NIST CODATA 2022) | fixed by nature |
-| $N, \ell, n$ | number of turns; coil length, m; turns per metre, $N/\ell$ | 1000; 0.25 m; 4000 per m | $N$ up: $L$ grows as $N^2$; $\ell$ up at fixed $N$: weaker field, less $L$ |
-| $I, I_0$ | current in the wire, amps (A); its value when the switch opens | 3 A; 3 A | $B$ and the stored energy grow |
-| $r, A, z, \alpha_1, \alpha_2$ | coil radius; its cross-section $\pi r^2$; position along the axis from the centre; angles between the axis and the lines from that point to the two rims | 25 mm; 19.63 cm²; −200 to 200 mm | $r$ up: $L$ grows as $r^2$ |
-| $\Phi, N\Phi$ | flux through one turn, $BA$, webers (Wb); flux linkage, the same summed over all turns | 29.61 µWb; 29.61 mWb | more induced voltage when it changes |
-| $L, K_N$ | inductance, henries (H): linked flux per amp; the finite-length factor (Nagaoka's) | 9.87 mH ideal; 0.920 | bigger $L$: bigger voltage for the same switch-off |
-| $\mathcal E, t, \Delta t$ | induced voltage (emf), V; time, s; the switch-off time | 2.96 V; 10 ms | $\Delta t$ down: the voltage soars |
-| $\mathbf E, d\mathbf r, S, \partial S, \mathbf n$ | electric field; a short step round a loop; a surface spanning the loop; its edge, the loop itself; its unit normal | the loop is one turn | — |
-| $W, R, V_D, \tau$ | energy stored in the field, joules (J); coil resistance; a diode's forward drop; the time constant $L/R$ | 0.0444 J; 4 Ω; 0.7 V; 2.47 ms | $W$ must all leave at switch-off; $R$ up: the current dies faster |
-| $M, u, k, K, E$ | in the fold only: mutual inductance of two turns a distance $u$ apart; the elliptic modulus; the complete elliptic integrals (this $E$ is not the electric field) | $u$ from 0 to 0.25 m | $u$ up: $M$ falls |
-| $q, m, \mathbf v, \mathbf F$ | a charge and its mass; its velocity; the force on it | electron, 5931 km/s | faster or lighter: wider circle |
+| $`B`$ | magnetic field inside the coil, teslas (T) | 15.08 mT | more flux per turn, so more voltage when it changes |
+| $`\mu_0`$ | the magnetic constant, how much field one amp makes in empty space | 1.25663706127 × 10⁻⁶ N/A² (NIST CODATA 2022) | fixed by nature |
+| $`N, \ell, n`$ | number of turns; coil length, m; turns per metre, $`N/\ell`$ | 1000; 0.25 m; 4000 per m | $`N`$ up: $`L`$ grows as $`N^2`$; $`\ell`$ up at fixed $`N`$: weaker field, less $`L`$ |
+| $`I, I_0`$ | current in the wire, amps (A); its value when the switch opens | 3 A; 3 A | $`B`$ and the stored energy grow |
+| $`r, A, z, \alpha_1, \alpha_2`$ | coil radius; its cross-section $`\pi r^2`$; position along the axis from the centre; angles between the axis and the lines from that point to the two rims | 25 mm; 19.63 cm²; −200 to 200 mm | $`r`$ up: $`L`$ grows as $`r^2`$ |
+| $`\Phi, N\Phi`$ | flux through one turn, $`BA`$, webers (Wb); flux linkage, the same summed over all turns | 29.61 µWb; 29.61 mWb | more induced voltage when it changes |
+| $`L, K_N`$ | inductance, henries (H): linked flux per amp; the finite-length factor (Nagaoka's) | 9.87 mH ideal; 0.920 | bigger $`L`$: bigger voltage for the same switch-off |
+| $`\mathcal E, t, \Delta t`$ | induced voltage (emf), V; time, s; the switch-off time | 2.96 V; 10 ms | $`\Delta t`$ down: the voltage soars |
+| $`\mathbf E, d\mathbf r, S, \partial S, \mathbf n`$ | electric field; a short step round a loop; a surface spanning the loop; its edge, the loop itself; its unit normal | the loop is one turn | — |
+| $`W, R, V_D, \tau`$ | energy stored in the field, joules (J); coil resistance; a diode's forward drop; the time constant $`L/R`$ | 0.0444 J; 4 Ω; 0.7 V; 2.47 ms | $`W`$ must all leave at switch-off; $`R`$ up: the current dies faster |
+| $`M, u, k, K, E`$ | in the fold only: mutual inductance of two turns a distance $`u`$ apart; the elliptic modulus; the complete elliptic integrals (this $`E`$ is not the electric field) | $`u`$ from 0 to 0.25 m | $`u`$ up: $`M`$ falls |
+| $`q, m, \mathbf v, \mathbf F`$ | a charge and its mass; its velocity; the force on it | electron, 5931 km/s | faster or lighter: wider circle |
 
 ### When it holds
 
-- **The coil is long beside its width.** The formula $B = \mu_0 n I$ assumes an endless coil. This one is 250 mm long and 50 mm across, so the centre field is 0.9806 of the ideal and the inductance 0.920 of it. A 5 cm coil of the same turns and width breaks it: the formula says 75.40 mT, the true centre field is 53.31 mT.
-- **No iron, only air inside.** Iron multiplies the field many times over and stops being linear when it saturates; $\mu_0$ alone no longer describes it.
+- **The coil is long beside its width.** The formula $`B = \mu_0 n I`$ assumes an endless coil. This one is 250 mm long and 50 mm across, so the centre field is 0.9806 of the ideal and the inductance 0.920 of it. A 5 cm coil of the same turns and width breaks it: the formula says 75.40 mT, the true centre field is 53.31 mT.
+- **No iron, only air inside.** Iron multiplies the field many times over and stops being linear when it saturates; $`\mu_0`$ alone no longer describes it.
 - **The current changes slowly beside the light-crossing time** (the time light takes to cross the coil). At 10 ms the field everywhere in the coil keeps pace with the current; at radio frequencies the coil's turn-to-turn capacitance and wave effects join in ([Electromagnetic waves](08-electromagnetic-waves.md)).
-- **The switch-off is the stated ramp.** $\mathcal E = -L\,dI/dt$ needs $dI/dt$. A contact that opens "instantly" has no finite $dI/dt$; the voltage climbs until something breaks down, which is why the switch sees thousands of volts.
+- **The switch-off is the stated ramp.** $`\mathcal E = -L\,dI/dt`$ needs $`dI/dt`$. A contact that opens "instantly" has no finite $`dI/dt`$; the voltage climbs until something breaks down, which is why the switch sees thousands of volts.
 
 ---
 
@@ -83,23 +87,29 @@ So a long coil packs its field inside, uniform and along the axis. Two laws turn
 
 ### Step 1: Ampère's loop gives the field
 
-**Ampère's law** says that the field added round any closed loop equals $\mu_0$ times the current passing through the loop:
+**Ampère's law** says that the field added round any closed loop equals $`\mu_0`$ times the current passing through the loop:
 
-$$\oint \mathbf B\cdot d\mathbf r = \mu_0\, I_{\text{through}}$$
+```math
+\oint \mathbf B\cdot d\mathbf r = \mu_0\, I_{\text{through}}
+```
 
-The left side is a line integral round the loop ([Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md)). Take the dashed rectangle in the picture, 75 mm long. Along the side inside, $\mathbf B$ is along the step, giving $B \times 0.075$. The two short sides cross the field square on, so they add nothing. The side outside sits where the field is close to zero. On the right, $4000 \times 0.075 = 300$ turns pass through the rectangle, each carrying 3 A: 900 A in all. So
+The left side is a line integral round the loop ([Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md)). Take the dashed rectangle in the picture, 75 mm long. Along the side inside, $`\mathbf B`$ is along the step, giving $`B \times 0.075`$. The two short sides cross the field square on, so they add nothing. The side outside sits where the field is close to zero. On the right, $`4000 \times 0.075 = 300`$ turns pass through the rectangle, each carrying 3 A: 900 A in all. So
 
-$$B \times 0.075 = \mu_0 \times 900, \qquad B = \mu_0 n I = 15.08\ \text{mT}.$$
+```math
+B \times 0.075 = \mu_0 \times 900, \qquad B = \mu_0 n I = 15.08\ \text{mT}.
+```
 
-The rectangle's length cancelled. That is why, in the ideal long coil, the field is the same all along the inside: any length gives the same $B$. Step 2 shows how far a real coil falls short.
+The rectangle's length cancelled. That is why, in the ideal long coil, the field is the same all along the inside: any length gives the same $`B`$. Step 2 shows how far a real coil falls short.
 
 ### Step 2: add the turns one by one, and see where the ideal fails
 
-The ideal coil is endless. A real one ends, and Ampère's law alone can't say how much that costs. The per-piece law, **Biot–Savart**, can: each short piece of current adds its own small field. Added round one turn of radius $r$, it gives the field on that turn's axis, a distance $z$ away:
+The ideal coil is endless. A real one ends, and Ampère's law alone can't say how much that costs. The per-piece law, **Biot–Savart**, can: each short piece of current adds its own small field. Added round one turn of radius $`r`$, it gives the field on that turn's axis, a distance $`z`$ away:
 
-$$B_{\text{one turn}} = \frac{\mu_0 I r^2}{2\,(r^2 + z^2)^{3/2}}$$
+```math
+B_{\text{one turn}} = \frac{\mu_0 I r^2}{2\,(r^2 + z^2)^{3/2}}
+```
 
-Adding the 1000 turns one by one gives 14.79 mT at the centre: 0.9806 of the ideal. Done as an integral, the same sum has a closed form, $\mu_0 n I(\cos\alpha_1 + \cos\alpha_2)/2$, where $\alpha_1, \alpha_2$ are the angles between the axis and the lines from the point to the two rims. Deep inside, both cosines are near 1. At an end, one is near 1 and the other 0: the field halves, to 7.50 mT.
+Adding the 1000 turns one by one gives 14.79 mT at the centre: 0.9806 of the ideal. Done as an integral, the same sum has a closed form, $`\mu_0 n I(\cos\alpha_1 + \cos\alpha_2)/2`$, where $`\alpha_1, \alpha_2`$ are the angles between the axis and the lines from the point to the two rims. Deep inside, both cosines are near 1. At an end, one is near 1 and the other 0: the field halves, to 7.50 mT.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -114,26 +124,28 @@ The single line is the Biot–Savart sum. The coil runs from −125 to 125 mm. T
 
 ### Step 3: flux linkage gives the inductance
 
-The flux through one turn is the field times its area: $\Phi = BA = 15.08\ \text{mT} \times 19.63\ \text{cm}^2 = 29.61$ µWb. Every one of the 1000 turns encloses that flux, so the **flux linkage** is $N\Phi = 29.61$ mWb. Divide by the current that made it:
+The flux through one turn is the field times its area: $`\Phi = BA = 15.08\ \text{mT} \times 19.63\ \text{cm}^2 = 29.61`$ µWb. Every one of the 1000 turns encloses that flux, so the **flux linkage** is $`N\Phi = 29.61`$ mWb. Divide by the current that made it:
 
-$$L = \frac{N\Phi}{I} = \frac{\mu_0 N^2 A}{\ell} = 9.87\ \text{mH}.$$
+```math
+L = \frac{N\Phi}{I} = \frac{\mu_0 N^2 A}{\ell} = 9.87\ \text{mH}.
+```
 
-**Why $N^2$:** $N$ enters once because more turns make more field, and once more because more turns each catch that field. Double the turns on the same tube and the inductance quadruples.
+**Why $`N^2`$:** $`N`$ enters once because more turns make more field, and once more because more turns each catch that field. Double the turns on the same tube and the inductance quadruples.
 
-The ideal formula takes the full field to the ends. The real field sags there (Step 2), so the real coil links less flux. For a uniform sheet of current, Nagaoka's factor captures that: $K_N = 0.920$ for this coil's shape, so $L = 9.08$ mH. The centre field kept 0.9806 of the ideal; the inductance keeps only 0.920, losing more because it counts the weak ends as fully as the strong middle.
+The ideal formula takes the full field to the ends. The real field sags there (Step 2), so the real coil links less flux. For a uniform sheet of current, Nagaoka's factor captures that: $`K_N = 0.920`$ for this coil's shape, so $`L = 9.08`$ mH. The centre field kept 0.9806 of the ideal; the inductance keeps only 0.920, losing more because it counts the weak ends as fully as the strong middle.
 
 <details>
 <summary>The full calculation: every slice of winding linking every other</summary>
 
-Treat the winding as a sheet of current, $N/\ell$ turns per metre. Two single turns of radius $r$ a distance $u$ apart share a **mutual inductance** $M(u)$: the flux one current sends through the other turn, per amp. Maxwell found it in closed form:
+Treat the winding as a sheet of current, $`N/\ell`$ turns per metre. Two single turns of radius $`r`$ a distance $`u`$ apart share a **mutual inductance** $`M(u)`$: the flux one current sends through the other turn, per amp. Maxwell found it in closed form:
 
-$$M(u) = \mu_0 r\left[\left(\frac{2}{k} - k\right)K(k) - \frac{2}{k}E(k)\right], \qquad k^2 = \frac{4r^2}{4r^2 + u^2},$$
+$`\displaystyle M(u) = \mu_0 r\left[\left(\frac{2}{k} - k\right)K(k) - \frac{2}{k}E(k)\right], \qquad k^2 = \frac{4r^2}{4r^2 + u^2},`$
 
-where $K$ and $E$ are the complete elliptic integrals, two standard functions computed in the code by the arithmetic–geometric mean (average two numbers both ways, arithmetic and geometric, and repeat until they agree). The coil's inductance adds $M$ over every pair of slices. Pairs a distance $u$ apart occupy a length $\ell - u$ of the coil, so
+where $`K`$ and $`E`$ are the complete elliptic integrals, two standard functions computed in the code by the arithmetic–geometric mean (average two numbers both ways, arithmetic and geometric, and repeat until they agree). The coil's inductance adds $`M`$ over every pair of slices. Pairs a distance $`u`$ apart occupy a length $`\ell - u`$ of the coil, so
 
-$$L = \left(\frac{N}{\ell}\right)^2 \, 2\int_0^\ell (\ell - u)\, M(u)\, du.$$
+$`\displaystyle L = \left(\frac{N}{\ell}\right)^2 \, 2\int_0^\ell (\ell - u)\, M(u)\, du.`$
 
-$M(u)$ grows like $-\ln u$ as $u \to 0$, which is still integrable; substituting $u = \ell s^2$ removes the trouble. The integral gives 9.080956 mH; Nagaoka's closed formula gives 9.080951 mH.
+$`M(u)`$ grows like $`-\ln u`$ as $`u \to 0`$, which is still integrable; substituting $`u = \ell s^2`$ removes the trouble. The integral gives 9.080956 mH; Nagaoka's closed formula gives 9.080951 mH.
 
 </details>
 
@@ -141,19 +153,23 @@ $M(u)$ grows like $-\ln u$ as $u \to 0$, which is still integrable; substituting
 
 **Faraday's law** says that the electric field added round a loop equals minus the rate of change of the flux through it:
 
-$$\oint_{\partial S} \mathbf E\cdot d\mathbf r = -\frac{d}{dt}\iint_S \mathbf B\cdot\mathbf n\,dS.$$
+```math
+\oint_{\partial S} \mathbf E\cdot d\mathbf r = -\frac{d}{dt}\iint_S \mathbf B\cdot\mathbf n\,dS.
+```
 
-[Stokes' theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/08-stokes-theorem.md) turns this into the point-by-point form $\operatorname{curl}\mathbf E = -\partial\mathbf B/\partial t$ (curl measures how much a field circles round each point); this card needs only the loop form. The left side, the push on charge round one turn, is that turn's emf. Each of the $N$ turns is in series, so the coil's voltage is $N$ times one turn's:
+[Stokes' theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/08-stokes-theorem.md) turns this into the point-by-point form $`\mathrm{curl}\,\mathbf E = -\partial\mathbf B/\partial t`$ (curl measures how much a field circles round each point); this card needs only the loop form. The left side, the push on charge round one turn, is that turn's emf. Each of the $`N`$ turns is in series, so the coil's voltage is $`N`$ times one turn's:
 
-$$\mathcal E = -N\frac{d\Phi}{dt} = -L\frac{dI}{dt}.$$
+```math
+\mathcal E = -N\frac{d\Phi}{dt} = -L\frac{dI}{dt}.
+```
 
-Ramping 3 A to zero in 10 ms is $dI/dt = -300$ A/s, so $\mathcal E = 9.87\ \text{mH} \times 300 = 2.96$ V. The checks also get it from the field side, $NA\,\Delta B/\Delta t$, and the two agree.
+Ramping 3 A to zero in 10 ms is $`dI/dt = -300`$ A/s, so $`\mathcal E = 9.87\ \text{mH} \times 300 = 2.96`$ V. The checks also get it from the field side, $`NA\,\Delta B/\Delta t`$, and the two agree.
 
 **The minus sign is Lenz's law:** the induced voltage pushes to keep the old current flowing. While the current falls, the coil acts as a small battery trying to hold it up. So at switch-off the coil's voltage adds to the supply's, and the sum lands across the opening contact as the coil tries to push its current through it.
 
 ### Step 5: the energy has to go somewhere
 
-The voltage at switch-off is the coil handing back the energy it stored. Building the current up from zero against $\mathcal E$ costs power $L I\,dI/dt$; added up, that is $W = \tfrac12 L I^2 = 0.0444$ J. The same energy sits in the field: $B^2/(2\mu_0)$ joules per cubic metre, over the coil's 490.87 cm³ volume. During the ramp, 2.96 V times the falling current, added over 10 ms, delivers exactly 0.0444 J. Three different sums, one number.
+The voltage at switch-off is the coil handing back the energy it stored. Building the current up from zero against $`\mathcal E`$ costs power $`L I\,dI/dt`$; added up, that is $`W = \tfrac12 L I^2 = 0.0444`$ J. The same energy sits in the field: $`B^2/(2\mu_0)`$ joules per cubic metre, over the coil's 490.87 cm³ volume. During the ramp, 2.96 V times the falling current, added over 10 ms, delivers exactly 0.0444 J. Three different sums, one number.
 
 That fixes the trade-off. The energy is set; a faster switch-off delivers it in less time, which takes more voltage.
 
@@ -161,7 +177,7 @@ That fixes the trade-off. The energy is set; a faster switch-off delivers it in 
 
 The same field pushes on anything moving through it. Fire an electron across the inside of the coil, square to its axis, after a 100 V accelerating gap: it travels at 5931 km/s.
 
-The push $q\mathbf v\times\mathbf B$ is always square to its motion, so it bends the path into a circle without changing speed. Setting the push equal to what a circle demands, $qvB = mv^2/\text{radius}$, gives a radius of $mv/(qB) = 2.24$ mm, and one lap takes 2.37 ns.
+The push $`q\mathbf v\times\mathbf B`$ is always square to its motion, so it bends the path into a circle without changing speed. Setting the push equal to what a circle demands, $`qvB = mv^2/\text{radius}`$, gives a radius of $`mv/(qB) = 2.24`$ mm, and one lap takes 2.37 ns.
 
 The checks step the electron round with RK4 (the fourth-order Runge–Kutta stepping method for differential equations) and measure the same 2.24 mm.
 
@@ -173,15 +189,15 @@ Summed over the electrons in a wire, the same push is the force on a current-car
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| turns per metre $n$ | 1000 ÷ 0.25 m | 4000 per m |
-| field $B = \mu_0 n I$ | 1.2566 × 10⁻⁶ × 4000 × 3 | 15.08 mT |
-| area $A = \pi r^2$ | π × 0.025² | 19.63 cm² |
-| flux per turn $\Phi = BA$ | 0.01508 × 0.001963 | 29.61 µWb |
-| flux linkage $N\Phi$ | 1000 × 29.61 µWb | 29.61 mWb |
-| inductance $L = N\Phi/I$ | 29.61 mWb ÷ 3 A | 9.87 mH |
-| rate of fall $dI/dt$ | 3 A ÷ 0.010 s | 300 A/s |
-| **voltage $\mathcal E = L\,dI/dt$** | 0.00987 × 300 | **2.96 V** |
-| stored energy $\tfrac12 L I^2$ | 0.5 × 0.00987 × 9 | 0.0444 J |
+| turns per metre $`n`$ | 1000 ÷ 0.25 m | 4000 per m |
+| field $`B = \mu_0 n I`$ | 1.2566 × 10⁻⁶ × 4000 × 3 | 15.08 mT |
+| area $`A = \pi r^2`$ | π × 0.025² | 19.63 cm² |
+| flux per turn $`\Phi = BA`$ | 0.01508 × 0.001963 | 29.61 µWb |
+| flux linkage $`N\Phi`$ | 1000 × 29.61 µWb | 29.61 mWb |
+| inductance $`L = N\Phi/I`$ | 29.61 mWb ÷ 3 A | 9.87 mH |
+| rate of fall $`dI/dt`$ | 3 A ÷ 0.010 s | 300 A/s |
+| **voltage $`\mathcal E = L\,dI/dt`$** | 0.00987 × 300 | **2.96 V** |
+| stored energy $`\tfrac12 L I^2`$ | 0.5 × 0.00987 × 9 | 0.0444 J |
 | finite-length check | 0.920 × 9.87 mH; × 300 A/s | 9.08 mH; 2.72 V |
 
 The coil pushes back with 2.96 V (2.72 V with the finite-length correction) for the 10 ms the current takes to die. That push adds to the supply across the opening switch: the switch sees 12 V, less the drop in the 4 Ω wire, plus 2.96 V, which reaches 14.96 V as the current reaches zero. Any switch rated above that handles it easily; the danger is only in switching faster.
@@ -190,9 +206,9 @@ The coil pushes back with 2.96 V (2.72 V with the finite-length correction) for 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Total turns $N$ used for turns per metre $n$ | 3.77 mT, not 15.08 | $n$ is per metre; dropping the 0.25 m changes the units, not just the number |
-| $N$ instead of $N^2$ in the inductance | 9.87 µH, emf 2.96 mV | The turns both make the flux and catch it; one $N$ misses the catching |
-| Diameter put in for the radius | 39.48 mH, emf 11.84 V | Area goes as radius squared, so a doubled radius quadruples $L$ |
+| Total turns $`N`$ used for turns per metre $`n`$ | 3.77 mT, not 15.08 | $`n`$ is per metre; dropping the 0.25 m changes the units, not just the number |
+| $`N`$ instead of $`N^2`$ in the inductance | 9.87 µH, emf 2.96 mV | The turns both make the flux and catch it; one $`N`$ misses the catching |
+| Diameter put in for the radius | 39.48 mH, emf 11.84 V | Area goes as radius squared, so a doubled radius quadruples $`L`$ |
 | Long-coil formula on a 5 cm coil, same turns and width | 75.40 mT, true 53.31 mT | Outside the model's range: a coil as long as it is wide loses field out of its open ends, and the formula overstates its centre field by a factor of 1.414 |
 
 ---
@@ -210,11 +226,13 @@ switch-off time   voltage the coil drives
 
 At 10 µs the voltage is 2961 V, enough to break down the air across a contact that has only just begun to open. The arc carries the current on, and the contact burns a little each time.
 
-The usual fix is a **flyback diode**: a diode across the coil, pointed so it carries nothing while the supply drives the coil. When the switch opens, the coil's current swaps into the diode and circles through the coil and diode. The coil's voltage clamps at the diode's 0.7 V, so the switch sees the supply plus that: 12.7 V. The current then dies on its own, by $L\,dI/dt = -(RI + V_D)$:
+The usual fix is a **flyback diode**: a diode across the coil, pointed so it carries nothing while the supply drives the coil. When the switch opens, the coil's current swaps into the diode and circles through the coil and diode. The coil's voltage clamps at the diode's 0.7 V, so the switch sees the supply plus that: 12.7 V. The current then dies on its own, by $`L\,dI/dt = -(RI + V_D)`$:
 
-$$I(t) = \left(I_0 + \frac{V_D}{R}\right)e^{-t/\tau} - \frac{V_D}{R}, \qquad \tau = \frac{L}{R} = 2.47\ \text{ms},$$
+```math
+I(t) = \left(I_0 + \frac{V_D}{R}\right)e^{-t/\tau} - \frac{V_D}{R}, \qquad \tau = \frac{L}{R} = 2.47\ \text{ms},
+```
 
-reaching zero at $t = \tau\ln(1 + RI_0/V_D) = 7.15$ ms. An RK4 simulation of the same equation agrees to the microsecond.
+reaching zero at $`t = \tau\ln(1 + RI_0/V_D) = 7.15`$ ms. An RK4 simulation of the same equation agrees to the microsecond.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -232,7 +250,7 @@ Orange, straight: the controlled 10 ms ramp, with 2.96 V across the coil through
 
 ## Code, from first principles, and it actually runs
 
-The script reaches the field by two roads: $\mu_0 nI$, which Ampère's rectangle reduces to once its length cancels, and Biot–Savart with all 1000 turns added one by one, checked against the closed-form integral at the centre and at an end. It finds the inductance as flux linkage per amp, then the finite-length value two ways: Nagaoka's formula, and a double integral of Maxwell's turn-to-turn mutual inductance, with the elliptic integrals written out by the arithmetic–geometric mean. The voltage comes as $L\,dI/dt$ and as $NA\,dB/dt$. The stored energy is reached three ways: $\tfrac12 LI^2$, field energy times volume, and the emf times the falling current added over the ramp. The flyback decay and the electron's circle are each simulated with RK4 and compared with their formulas. Every wrong answer above is computed too.
+The script reaches the field by two roads: $`\mu_0 nI`$, which Ampère's rectangle reduces to once its length cancels, and Biot–Savart with all 1000 turns added one by one, checked against the closed-form integral at the centre and at an end. It finds the inductance as flux linkage per amp, then the finite-length value two ways: Nagaoka's formula, and a double integral of Maxwell's turn-to-turn mutual inductance, with the elliptic integrals written out by the arithmetic–geometric mean. The voltage comes as $`L\,dI/dt`$ and as $`NA\,dB/dt`$. The stored energy is reached three ways: $`\tfrac12 LI^2`$, field energy times volume, and the emf times the falling current added over the ramp. The flyback decay and the electron's circle are each simulated with RK4 and compared with their formulas. Every wrong answer above is computed too.
 
 ### Python
 
@@ -655,11 +673,11 @@ The two outputs are identical, line for line.
 
 Lean proves the voltage and inductance formulas from the long-coil field, and the Lorentz force fact, for every value.
 
-- Take $B = \mu_0 n I$ and $\Phi = BA$, and suppose $I$ has a finite $dI/dt$. Then $\mathcal E = -d(N\Phi)/dt = -L\,dI/dt$, with $L = \mu_0 N^2 A/\ell$.
-- Suppose the current $I$ is not zero. Then $L = N\Phi/I = \mu_0 N^2 A/\ell$, the same for every current.
-- Take any charge $q$, velocity $\mathbf v$ and field $\mathbf B$. Then $\mathbf F = q\,\mathbf v \times \mathbf B$ is square to $\mathbf v$, so it never speeds the charge up.
+- Take $`B = \mu_0 n I`$ and $`\Phi = BA`$, and suppose $`I`$ has a finite $`dI/dt`$. Then $`\mathcal E = -d(N\Phi)/dt = -L\,dI/dt`$, with $`L = \mu_0 N^2 A/\ell`$.
+- Suppose the current $`I`$ is not zero. Then $`L = N\Phi/I = \mu_0 N^2 A/\ell`$, the same for every current.
+- Take any charge $`q`$, velocity $`\mathbf v`$ and field $`\mathbf B`$. Then $`\mathbf F = q\,\mathbf v \times \mathbf B`$ is square to $`\mathbf v`$, so it never speeds the charge up.
 - The hand arithmetic holds: 4000 turns per metre, 900 A through the loop, and 300, 3000 and 300000 A/s.
-- Doubling the turns or the radius quadruples $N^2$ or $r^2$. And 12 V plus the 0.7 V diode drop is 12.7 V.
+- Doubling the turns or the radius quadruples $`N^2`$ or $`r^2`$. And 12 V plus the 0.7 V diode drop is 12.7 V.
 
 The field law itself, the Biot–Savart sums, the energy, the electron's path and every decimal are left to the Python and Rust checks.
 
@@ -728,7 +746,7 @@ example : (12 : ℚ) + 7 / 10 = 127 / 10 := by norm_num
 > [!TIP]
 > **Try changing**
 > - Guess first: how does the voltage change if the switch-off takes 1 ms instead of 10? Set `DT = 0.001`. The emf becomes **29.61 V**: ten times faster, ten times the voltage, same energy.
-> - Guess first: what does a fatter tube do? Set `R_IN = 0.05`, a 10 cm tube. $L$ becomes **39.48 mH** and the 10 ms emf **11.84 V**: four times, because area goes as radius squared. The range assert trips here too: the fatter coil is less long for its width.
+> - Guess first: what does a fatter tube do? Set `R_IN = 0.05`, a 10 cm tube. $`L`$ becomes **39.48 mH** and the 10 ms emf **11.84 V**: four times, because area goes as radius squared. The range assert trips here too: the fatter coil is less long for its width.
 > - Guess first: is the long-coil formula still fine for a coil 5 cm long? Set `ELL = 0.05`. The formula gives **75.40 mT**; the closed-form centre field gives **53.31 mT**, and the range assert fails: the coil is no longer long.
 
 ---
@@ -738,23 +756,23 @@ example : (12 : ℚ) + 7 / 10 = 127 / 10 := by norm_num
 > [!warning]
 > **Thinking a coil's voltage is set by its current.** It is set by how fast the current *changes*. The coil at a steady 3 A has 12 V across it only because of its 4 Ω wire; the inductance adds nothing. Cut that same 3 A in 10 µs and the inductance drives 2961 V. Every relay, motor and solenoid valve driven from a transistor needs a path for that current, usually a flyback diode, or the transistor dies on the first switch-off.
 >
-> - **Total turns for turns per metre.** $B = \mu_0 n I$ wants $n = N/\ell$. Using $N = 1000$ gives 3.77 mT instead of 15.08 mT.
-> - **One factor of $N$ in the inductance.** $L$ goes as $N^2$. Writing $\mu_0 N A/\ell$ gives 9.87 µH and an emf of 2.96 mV, a thousand times too small.
-> - **Diameter for radius.** The tube is 5 cm across, so $r = 25$ mm. Using 50 mm gives 39.48 mH and 11.84 V.
-> - **The long-coil formula on a stubby coil.** For a coil as long as it is wide, $\mu_0 n I$ overstates the centre field by a factor of 1.414: 75.40 mT against 53.31 mT.
+> - **Total turns for turns per metre.** $`B = \mu_0 n I`$ wants $`n = N/\ell`$. Using $`N = 1000`$ gives 3.77 mT instead of 15.08 mT.
+> - **One factor of $`N`$ in the inductance.** $`L`$ goes as $`N^2`$. Writing $`\mu_0 N A/\ell`$ gives 9.87 µH and an emf of 2.96 mV, a thousand times too small.
+> - **Diameter for radius.** The tube is 5 cm across, so $`r = 25`$ mm. Using 50 mm gives 39.48 mH and 11.84 V.
+> - **The long-coil formula on a stubby coil.** For a coil as long as it is wide, $`\mu_0 n I`$ overstates the centre field by a factor of 1.414: 75.40 mT against 53.31 mT.
 
 ---
 
 ## Where you meet it in real life
 
-- **Relays, solenoid valves and door locks.** Each is a coil like this one pulling an iron plunger. Every one driven by a transistor carries a flyback diode across it, sized from $L$ and the current.
-- **A radio's tuner.** The coil in the tuning circuit of [RLC resonance](03-rlc-circuits-and-resonance.md) is a small air-cored solenoid; its $L = \mu_0 N^2 A/\ell$ and a capacitor set the station it picks out.
+- **Relays, solenoid valves and door locks.** Each is a coil like this one pulling an iron plunger. Every one driven by a transistor carries a flyback diode across it, sized from $`L`$ and the current.
+- **A radio's tuner.** The coil in the tuning circuit of [RLC resonance](03-rlc-circuits-and-resonance.md) is a small air-cored solenoid; its $`L = \mu_0 N^2 A/\ell`$ and a capacitor set the station it picks out.
 - **Car ignition.** The ignition coil does on purpose what this card warns against: it cuts a coil's current in microseconds, and the induced voltage, stepped up further, jumps the spark-plug gap.
 - **Electric guitars and induction sensors.** A vibrating steel string changes the flux through a pickup's coil; Faraday's law turns the vibration into a voltage.
-- **MRI scanners and particle beams.** A long superconducting solenoid makes the even field, and $q\mathbf v\times\mathbf B$ is what steers each particle round a circle of radius $mv/(qB)$.
+- **MRI scanners and particle beams.** A long superconducting solenoid makes the even field, and $`q\mathbf v\times\mathbf B`$ is what steers each particle round a circle of radius $`mv/(qB)`$.
 
 > **Say it back**
-> A current makes a magnetic field, and inside a long coil Ampère's law gives it as $\mu_0 n I$: 15.08 mT for 1000 turns on 25 cm at 3 A. The flux through every turn, per amp, is the inductance, $\mu_0 N^2 A/\ell$, here 9.87 mH (9.08 mH once the weak ends are counted). Faraday's law says a changing flux drives a voltage $-L\,dI/dt$, so cutting 3 A in 10 ms gives 2.96 V, and in 10 µs about 3000 V. That voltage is the stored 0.0444 J leaving, and a flyback diode gives it a gentle way out. Charges moving through the field are pushed sideways, $q\mathbf v\times\mathbf B$, which bends an electron into a 2.24 mm circle.
+> A current makes a magnetic field, and inside a long coil Ampère's law gives it as $`\mu_0 n I`$: 15.08 mT for 1000 turns on 25 cm at 3 A. The flux through every turn, per amp, is the inductance, $`\mu_0 N^2 A/\ell`$, here 9.87 mH (9.08 mH once the weak ends are counted). Faraday's law says a changing flux drives a voltage $`-L\,dI/dt`$, so cutting 3 A in 10 ms gives 2.96 V, and in 10 µs about 3000 V. That voltage is the stored 0.0444 J leaving, and a flyback diode gives it a gentle way out. Charges moving through the field are pushed sideways, $`q\mathbf v\times\mathbf B`$, which bends an electron into a 2.24 mm circle.
 
 ---
 
@@ -762,7 +780,7 @@ example : (12 : ℚ) + 7 / 10 = 127 / 10 := by norm_num
 
 - [Electric fields](04-electrostatics-gauss-and-potential.md): fields, flux through a surface, and voltage as the field added along a path, all used here for the magnetic side.
 - [Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md): the "add the field along the loop" on the left of both Ampère's and Faraday's laws.
-- [Stokes' theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/08-stokes-theorem.md): it turns the loop form of Faraday's law into $\operatorname{curl}\mathbf E = -\partial\mathbf B/\partial t$, and the loop form of Ampère's into its point form.
+- [Stokes' theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/08-stokes-theorem.md): it turns the loop form of Faraday's law into $`\mathrm{curl}\,\mathbf E = -\partial\mathbf B/\partial t`$, and the loop form of Ampère's into its point form.
 - [Cross product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md): the direction of the Lorentz push, square to both the velocity and the field.
 
 ## Where this goes next

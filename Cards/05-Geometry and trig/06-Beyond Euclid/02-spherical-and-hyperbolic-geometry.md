@@ -26,42 +26,48 @@ To scale: rim radius 1 = 110 units, centre (180, 120), fish ends at x = 230.8, 2
 
 ## The formula
 
-A half-turn is $\pi$ radians, about 3.14159 ([Radians](../02-Circles%20and%20Solids/02-radians-arcs-and-sectors.md)). $e$, about 2.718, is the base of the natural log $\ln$ ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
+A half-turn is $`\pi`$ radians, about 3.14159 ([Radians](../02-Circles%20and%20Solids/02-radians-arcs-and-sectors.md)). $`e`$, about 2.718, is the base of the natural log $`\ln`$ ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
 
-New here: (e^ρ − e^(−ρ))/2 is written $\sinh$, the **hyperbolic sine**.
+New here: (e^ρ − e^(−ρ))/2 is written $`\sinh`$, the **hyperbolic sine**.
 
-A circle of true radius $\rho$ (rho), measured inside the world, has rim, or circumference, $C$:
+A circle of true radius $`\rho`$ (rho), measured inside the world, has rim, or circumference, $`C`$:
 
-$$C = 2\pi\rho \ \text{(flat)}, \qquad C = 2\pi\sin\rho \ \text{(sphere of radius 1)}, \qquad C = 2\pi\sinh\rho \ \text{(hyperbolic)}$$
+```math
+C = 2\pi\rho \ \text{(flat)}, \qquad C = 2\pi\sin\rho \ \text{(sphere of radius 1)}, \qquad C = 2\pi\sinh\rho \ \text{(hyperbolic)}
+```
 
 **Read it aloud:** the same circle has a rim of two pi times its radius on flat ground, less on a ball, more in the hyperbolic plane.
 
-The disc's ruler is a definition. A short drawn piece at drawn distance $r$ from the centre counts 2/(1 − r^2) times its drawn length: 2 at the centre, growing without limit toward the rim. Adding thin slices outward gives the true distance $d$:
+The disc's ruler is a definition. A short drawn piece at drawn distance $`r`$ from the centre counts 2/(1 − r^2) times its drawn length: 2 at the centre, growing without limit toward the rim. Adding thin slices outward gives the true distance $`d`$:
 
-$$d = \ln\frac{1+r}{1-r}, \qquad r = \frac{e^{d}-1}{e^{d}+1}$$
+```math
+d = \ln\frac{1+r}{1-r}, \qquad r = \frac{e^{d}-1}{e^{d}+1}
+```
 
 **Read it aloud:** true distance is the log of one plus the drawn distance over one minus it; the second form turns that round.
 
-A triangle whose sides are the world's straight lines has angle sum $S$:
+A triangle whose sides are the world's straight lines has angle sum $`S`$:
 
-$$S = 180^\circ \ \text{(flat)}, \qquad S > 180^\circ \ \text{(sphere)}, \qquad S < 180^\circ \ \text{(hyperbolic)}$$
+```math
+S = 180^\circ \ \text{(flat)}, \qquad S > 180^\circ \ \text{(sphere)}, \qquad S < 180^\circ \ \text{(hyperbolic)}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\rho$ | true radius of a circle | 1, 2, 3 fish lengths | hyperbolic rims grow fastest |
-| $C$ | circumference: length of the rim | 62.94 at radius 3, hyperbolic | — |
-| $\sin$, $\sinh$ | sine; hyperbolic sine | sinh 3 = 10.02 | sinh never turns back |
-| $r$ | drawn distance from the disc's centre, rim at 1 | 0.462 at the first fish's end | the ruler's factor grows |
-| $d$ | true distance from the disc's centre | 1 at the first fish's end | $r$ nears 1, never reaching it |
-| $e$, $\ln$ | 2.718; the log that undoes powers of $e$ | e^3 = 20.086 | — |
-| $S$ | a triangle's three angles added | 151.93° in the disc | — |
-| $\pi$ | a half-turn in radians | 2π × 3 = 18.85 | — |
+| $`\rho`$ | true radius of a circle | 1, 2, 3 fish lengths | hyperbolic rims grow fastest |
+| $`C`$ | circumference: length of the rim | 62.94 at radius 3, hyperbolic | — |
+| $`\sin`$, $`\sinh`$ | sine; hyperbolic sine | sinh 3 = 10.02 | sinh never turns back |
+| $`r`$ | drawn distance from the disc's centre, rim at 1 | 0.462 at the first fish's end | the ruler's factor grows |
+| $`d`$ | true distance from the disc's centre | 1 at the first fish's end | $`r`$ nears 1, never reaching it |
+| $`e`$, $`\ln`$ | 2.718; the log that undoes powers of $`e`$ | e^3 = 20.086 | — |
+| $`S`$ | a triangle's three angles added | 151.93° in the disc | — |
+| $`\pi`$ | a half-turn in radians | 2π × 3 = 18.85 | — |
 
 ### When it holds
 
 - **Straight in the world.** Sphere lines are great circles, the ball's biggest circles; disc lines are diameters and arcs meeting the rim square, at right angles. A drawn chord gives back 180°.
 - **Equal bending everywhere.** A potato or a saddle bends unevenly, and the formulas hold only roughly.
-- **The world's own units.** On the ball $\rho$ is the angle at its centre in radians; in the disc $d$ is true distance.
+- **The world's own units.** On the ball $`\rho`$ is the angle at its centre in radians; in the disc $`d`$ is true distance.
 - **Sphere triangles inside a half-sphere.** Opposite points, such as the poles, lie on endless great circles, so a side between them is not pinned down.
 
 ---
@@ -78,7 +84,7 @@ A great circle is where a plane through the ball's centre cuts the surface. Two 
 
 The north pole and two equator points a quarter-turn apart make a triangle of three right angles: 270°. The excess over 180°, in radians, is its area on a ball of radius 1 ([Triangles on a sphere](01-triangles-on-a-sphere.md)).
 
-A circle of true radius $\rho$ round the pole lies sin ρ from the pole-to-pole axis, the unit-circle sine, valid past a quarter-turn too ([The unit circle](../03-Trigonometry/02-radians-and-the-unit-circle.md)). So its rim is 2π sin ρ: 0.89 at ρ = 3, past the equator.
+A circle of true radius $`\rho`$ round the pole lies sin ρ from the pole-to-pole axis, the unit-circle sine, valid past a quarter-turn too ([The unit circle](../03-Trigonometry/02-radians-and-the-unit-circle.md)). So its rim is 2π sin ρ: 0.89 at ρ = 3, past the equator.
 
 ### Step 2: the disc keeps angles and rescales lengths
 

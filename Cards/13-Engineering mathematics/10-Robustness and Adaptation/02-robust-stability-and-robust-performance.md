@@ -25,7 +25,7 @@ xychart-beta
     line [0.420, 0.476, 0.540, 0.623, 0.701, 0.740, 0.753, 0.775, 0.825, 0.879, 0.829, 0.677, 0.569, 0.523, 0.508]
 ```
 
-Orange: the stability term $\lvert WT\rvert$, how much the load's model error could hurt. Green: the performance term $\lvert W_P S\rvert$, how much of the error budget the empty-belt loop uses. Dark: their sum, the robust performance test. The top of the chart is the limit, 1. The two terms peak almost a decade (a factor of 10 in frequency) apart, at 4.73 rad/s and 35.81 rad/s, so their sum stays clear of the top. Labels are rounded; the points are a quarter-decade apart.
+Orange: the stability term $`\lvert WT\rvert`$, how much the load's model error could hurt. Green: the performance term $`\lvert W_P S\rvert`$, how much of the error budget the empty-belt loop uses. Dark: their sum, the robust performance test. The top of the chart is the limit, 1. The two terms peak almost a decade (a factor of 10 in frequency) apart, at 4.73 rad/s and 35.81 rad/s, so their sum stays clear of the top. Labels are rounded; the points are a quarter-decade apart.
 
 **Robust stability holds when the model error, weighted by how strongly the loop passes it round, stays under 1 at every frequency; robust performance holds when that term plus the model's performance term stays under 1 at every frequency, because the worst plant can be a different plant at each frequency.**
 
@@ -37,45 +37,51 @@ Orange: the stability term $\lvert WT\rvert$, how much the load's model error co
 
 Notation first, in words.
 
-- The loop gain $L$, the sensitivity $S = 1/(1+L)$ and the complementary sensitivity $T = L/(1+L)$ are from [Sensitivity functions](../03-Feedback%20Control/02-sensitivity-and-the-gang-of-four.md): $S$ is how much of an error survives the loop, $T$ how much of a signal goes round it.
-- Engineers write $j$ for the square root of −1; the rest of the library writes i.
-- [Writing down model error](01-model-uncertainty-and-the-small-gain-theorem.md) writes every real plant as the model times one plus an error inside an envelope $W$, and introduces the H-infinity norm, the peak gain over all frequencies.
-- This card adds a performance weight $W_P$: the specification turned into a curve over frequency.
+- The loop gain $`L`$, the sensitivity $`S = 1/(1+L)`$ and the complementary sensitivity $`T = L/(1+L)`$ are from [Sensitivity functions](../03-Feedback%20Control/02-sensitivity-and-the-gang-of-four.md): $`S`$ is how much of an error survives the loop, $`T`$ how much of a signal goes round it.
+- Engineers write $`j`$ for the square root of −1; the rest of the library writes i.
+- [Writing down model error](01-model-uncertainty-and-the-small-gain-theorem.md) writes every real plant as the model times one plus an error inside an envelope $`W`$, and introduces the H-infinity norm, the peak gain over all frequencies.
+- This card adds a performance weight $`W_P`$: the specification turned into a curve over frequency.
 
 The conveyor, torque in N·m to belt speed in rad/s, and its PI controller (proportional plus integral), as on the small-gain card:
 
-$$P_J(s) = \frac{1}{(Js + b)(\tau s + 1)}, \qquad C(s) = K_p + \frac{K_i}{s}.$$
+```math
+P_J(s) = \frac{1}{(Js + b)(\tau s + 1)}, \qquad C(s) = K_p + \frac{K_i}{s}.
+```
 
 The family, the envelope and the specification:
 
-$$P_J = P_0\,(1 + W\Delta),\ \ \lvert\Delta\rvert \le 1, \qquad W(s) = \frac{0.5\,s}{s + 1}, \qquad W_P(s) = \frac{s/M + \omega_B}{s + \omega_B A}.$$
+```math
+P_J = P_0\,(1 + W\Delta),\ \ \lvert\Delta\rvert \le 1, \qquad W(s) = \frac{0.5\,s}{s + 1}, \qquad W_P(s) = \frac{s/M + \omega_B}{s + \omega_B A}.
+```
 
-The three tests, each required at every angular frequency $\omega$, with $S$ and $T$ computed from the model $P_0$:
+The three tests, each required at every angular frequency $`\omega`$, with $`S`$ and $`T`$ computed from the model $`P_0`$:
 
-$$\text{robust stability: } \lvert WT\rvert < 1, \qquad \text{nominal performance: } \lvert W_P S\rvert < 1, \qquad \text{robust performance: } \lvert W_P S\rvert + \lvert WT\rvert < 1.$$
+```math
+\text{robust stability: } \lvert WT\rvert < 1, \qquad \text{nominal performance: } \lvert W_P S\rvert < 1, \qquad \text{robust performance: } \lvert W_P S\rvert + \lvert WT\rvert < 1.
+```
 
 **Read it aloud:** at every frequency, the model error passed round the loop must stay below one for stability, and the error budget the model uses plus the model error passed round the loop must stay below one for performance on every plant.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s$, $j$, $\omega$ | the Laplace variable; the square root of −1; angular frequency in rad/s, with $s = j\omega$ for a steady wobble | 0.01 to 10,000 rad/s scanned | — |
-| $J$, $J_0$ | inertia of motor, belt and load, kg·m²; $J_0$ the empty belt, the model | 0.20, 0.30, 0.40; $J_0$ = 0.20 | more inertia: bigger model error |
-| $b$, $\tau$ | belt friction, N·m·s/rad; the drive's torque lag, s | 0.40 N·m·s/rad, 0.02 s | — |
-| $P_0$, $P_J$ | the model (empty belt) and the real plant with inertia $J$, (rad/s) per N·m | — | — |
-| $C$, $K_p$, $K_i$ | the PI controller: N·m per rad/s of speed error, N·m per rad of built-up error | 3.0 and 4.0 | $K_i$ to 8: the sum rises to 0.925; but $K_p$ down to 1.5 with $K_i$ = 5 fails at 1.060 |
-| $L$, $S$, $T$, $S_J$ | loop gain $P_0C$; sensitivity; complementary sensitivity; $S_J$ the sensitivity with the real plant $J$ | at 10 rad/s: $\lvert S\rvert$ = 0.6049, $\lvert T\rvert$ = 0.8802 | — |
-| $W$, $\Delta$ | the envelope, the largest relative model error at each frequency (here the full belt's); any stable unknown of size at most 1 | $\lvert W\rvert$ = 0.4975 at 10 rad/s, up to 0.5 | harder to pass both robust tests |
-| $W_P$, $M$, $\omega_B$, $A$ | the specification: $\lvert S\rvert$ must stay below $1/\lvert W_P\rvert$; the largest $\lvert S\rvert$ allowed (not the $M$ of Writing down model error, the loop seen by the error); the frequency below which errors must be cut; the steady error allowed | $M$ = 2, $\omega_B$ = 4 rad/s, $A$ = 0.01 | a harder specification |
-| $u$, $y$, $r$ | torque command, N·m; belt speed, rad/s; a step in the speed command, rad/s | $r$ = 5 rad/s | — |
-| $a_0 \ldots a_3$, $h$ | coefficients of the closed-loop polynomial; the Hurwitz ratio $a_2a_1/(a_3a_0)$, stable when above 1 | $h$ = 43.350 for the full belt | — |
+| $`s`$, $`j`$, $`\omega`$ | the Laplace variable; the square root of −1; angular frequency in rad/s, with $`s = j\omega`$ for a steady wobble | 0.01 to 10,000 rad/s scanned | — |
+| $`J`$, $`J_0`$ | inertia of motor, belt and load, kg·m²; $`J_0`$ the empty belt, the model | 0.20, 0.30, 0.40; $`J_0`$ = 0.20 | more inertia: bigger model error |
+| $`b`$, $`\tau`$ | belt friction, N·m·s/rad; the drive's torque lag, s | 0.40 N·m·s/rad, 0.02 s | — |
+| $`P_0`$, $`P_J`$ | the model (empty belt) and the real plant with inertia $`J`$, (rad/s) per N·m | — | — |
+| $`C`$, $`K_p`$, $`K_i`$ | the PI controller: N·m per rad/s of speed error, N·m per rad of built-up error | 3.0 and 4.0 | $`K_i`$ to 8: the sum rises to 0.925; but $`K_p`$ down to 1.5 with $`K_i`$ = 5 fails at 1.060 |
+| $`L`$, $`S`$, $`T`$, $`S_J`$ | loop gain $`P_0C`$; sensitivity; complementary sensitivity; $`S_J`$ the sensitivity with the real plant $`J`$ | at 10 rad/s: $`\lvert S\rvert`$ = 0.6049, $`\lvert T\rvert`$ = 0.8802 | — |
+| $`W`$, $`\Delta`$ | the envelope, the largest relative model error at each frequency (here the full belt's); any stable unknown of size at most 1 | $`\lvert W\rvert`$ = 0.4975 at 10 rad/s, up to 0.5 | harder to pass both robust tests |
+| $`W_P`$, $`M`$, $`\omega_B`$, $`A`$ | the specification: $`\lvert S\rvert`$ must stay below $`1/\lvert W_P\rvert`$; the largest $`\lvert S\rvert`$ allowed (not the $`M`$ of Writing down model error, the loop seen by the error); the frequency below which errors must be cut; the steady error allowed | $`M`$ = 2, $`\omega_B`$ = 4 rad/s, $`A`$ = 0.01 | a harder specification |
+| $`u`$, $`y`$, $`r`$ | torque command, N·m; belt speed, rad/s; a step in the speed command, rad/s | $`r`$ = 5 rad/s | — |
+| $`a_0 \ldots a_3`$, $`h`$ | coefficients of the closed-loop polynomial; the Hurwitz ratio $`a_2a_1/(a_3a_0)`$, stable when above 1 | $`h`$ = 43.350 for the full belt | — |
 
 ### When it holds
 
-- **The family sits inside the envelope.** The tests speak only for plants whose relative error stays under $\lvert W\rvert$ at every frequency. An envelope drawn from the half-loaded belt allows 0.330 at 10 rad/s, while the full belt's real error there is 0.498. The full belt is outside, and a pass says nothing about it.
+- **The family sits inside the envelope.** The tests speak only for plants whose relative error stays under $`\lvert W\rvert`$ at every frequency. An envelope drawn from the half-loaded belt allows 0.330 at 10 rad/s, while the full belt's real error there is 0.498. The full belt is outside, and a pass says nothing about it.
 - **Linear and unsaturated.** The drive is taken never to hit its torque limit. Each rad/s of speed error asks for 3.0 N·m at once, so a 10 rad/s step asks for 30 N·m; a 20 N·m drive clips, and none of these tests describes the clipped loop. This card's 5 rad/s step asks for 15 N·m.
 - **The load changes slowly.** Each plant in the family is fixed in time. A belt loaded within a fraction of a second is a time-varying plant, which frequency tests on frozen plants do not cover; [Adapting as you go](04-gain-scheduling-and-adaptive-control.md) treats loads that move.
 - **The model loop is stable.** Every test starts from a stable empty-belt loop. Its Hurwitz ratio is 44.200, well above 1.
-- **One input, one output.** With several motors coupled through one belt, $\Delta$ becomes a matrix and the sum of two sizes is no longer exact; the tool then is the structured singular value (the size of the smallest error of the allowed shape that breaks the loop), which is beyond this shelf.
+- **One input, one output.** With several motors coupled through one belt, $`\Delta`$ becomes a matrix and the sum of two sizes is no longer exact; the tool then is the structured singular value (the size of the smallest error of the allowed shape that breaks the loop), which is beyond this shelf.
 
 ---
 
@@ -83,100 +89,110 @@ $$\text{robust stability: } \lvert WT\rvert < 1, \qquad \text{nominal performanc
 
 ### Step 0: every plant is the model plus an extra loop
 
-Write each real plant as the model times $(1 + W\Delta)$. The error $W\Delta$ then acts like an extra path wrapped round the model's closed loop. A signal entering that path comes back through the loop scaled by $T$, goes through the error scaled by at most $\lvert W\rvert$, and returns. If that round trip shrinks every signal at every frequency, the extra loop cannot sustain anything: that is the small gain rule. Performance is the same argument with one more signal in the round trip, the error the specification cares about.
+Write each real plant as the model times $`(1 + W\Delta)`$. The error $`W\Delta`$ then acts like an extra path wrapped round the model's closed loop. A signal entering that path comes back through the loop scaled by $`T`$, goes through the error scaled by at most $`\lvert W\rvert`$, and returns. If that round trip shrinks every signal at every frequency, the extra loop cannot sustain anything: that is the small gain rule. Performance is the same argument with one more signal in the round trip, the error the specification cares about.
 
 ### Step 1: the envelope for the conveyor
 
-For a plant with inertia $J$ the ratio to the model is $P_J/P_0 = (J_0 s + b)/(Js + b)$, so the relative error is
+For a plant with inertia $`J`$ the ratio to the model is $`P_J/P_0 = (J_0 s + b)/(Js + b)`$, so the relative error is
 
-$$\frac{P_J}{P_0} - 1 = \frac{(J_0 - J)\,s}{Js + b}.$$
+```math
+\frac{P_J}{P_0} - 1 = \frac{(J_0 - J)\,s}{Js + b}.
+```
 
-Its size is zero for slow changes, grows with frequency, and grows with the load. The full belt has the largest, $-0.2s/(0.4s + 0.4)$, whose size is exactly $\lvert 0.5s/(s+1)\rvert$: that is $W$. At 10 rad/s it is 0.4975. Every load in between lies inside it.
+Its size is zero for slow changes, grows with frequency, and grows with the load. The full belt has the largest, $`-0.2s/(0.4s + 0.4)`$, whose size is exactly $`\lvert 0.5s/(s+1)\rvert`$: that is $`W`$. At 10 rad/s it is 0.4975. Every load in between lies inside it.
 
-### Step 2: robust stability, $\lvert WT\rvert < 1$
+### Step 2: robust stability, $`\lvert WT\rvert < 1`$
 
-Factor the return difference (the $1 + PC$ whose zeros are the closed-loop poles):
+Factor the return difference (the $`1 + PC`$ whose zeros are the closed-loop poles):
 
-$$1 + P_J C = 1 + L(1 + W\Delta) = (1 + L)\,(1 + W\Delta\,T).$$
+```math
+1 + P_J C = 1 + L(1 + W\Delta) = (1 + L)\,(1 + W\Delta\,T).
+```
 
-The closed-loop poles are the values of $s$ that set the loop's natural responses. A pole in the right half-plane (positive real part) is a response that grows, so the loop is unstable.
+The closed-loop poles are the values of $`s`$ that set the loop's natural responses. A pole in the right half-plane (positive real part) is a response that grows, so the loop is unstable.
 
-The first factor is the model loop, stable. Now grow the error from $\Delta = 0$ to its full size. The closed-loop poles move continuously, so to reach the right half-plane a pole must cross the imaginary axis at some $s = j\omega$.
+The first factor is the model loop, stable. Now grow the error from $`\Delta = 0`$ to its full size. The closed-loop poles move continuously, so to reach the right half-plane a pole must cross the imaginary axis at some $`s = j\omega`$.
 
-There the second factor would be zero, which needs $\lvert W\Delta T\rvert = 1$. If $\lvert WT\rvert < 1$ at every $\omega$ that cannot happen, so every plant in the family is stable.
+There the second factor would be zero, which needs $`\lvert W\Delta T\rvert = 1`$. If $`\lvert WT\rvert < 1`$ at every $`\omega`$ that cannot happen, so every plant in the family is stable.
 
-If instead $\lvert WT\rvert \ge 1$ somewhere, some $\Delta$ of size at most 1, with the right phase, puts a pole on the axis. For the envelope's family the test is exact.
+If instead $`\lvert WT\rvert \ge 1`$ somewhere, some $`\Delta`$ of size at most 1, with the right phase, puts a pole on the axis. For the envelope's family the test is exact.
 
-For the gentle controller the peak is 0.460, at 4.73 rad/s. For the controller on the small-gain card, $K_p$ = 10 and $K_i$ = 50, it is 0.6288, the same number that card found.
+For the gentle controller the peak is 0.460, at 4.73 rad/s. For the controller on the small-gain card, $`K_p`$ = 10 and $`K_i`$ = 50, it is 0.6288, the same number that card found.
 
-### Step 3: nominal performance, $\lvert W_P S\rvert < 1$
+### Step 3: nominal performance, $`\lvert W_P S\rvert < 1`$
 
-The specification says the error left at frequency $\omega$ may be at most $1/\lvert W_P\rvert$ of what came in. At zero frequency that is $A$, 1%, and integral action makes it 0. The allowance rises through about $\omega_B$, 4 rad/s, and levels off at $M = 2$: at high frequency the loop may amplify a disturbance, but not by more than 2. Dividing through, the specification is $\lvert W_P S\rvert < 1$. For the empty-belt model the peak is 0.600, at 35.81 rad/s.
+The specification says the error left at frequency $`\omega`$ may be at most $`1/\lvert W_P\rvert`$ of what came in. At zero frequency that is $`A`$, 1%, and integral action makes it 0. The allowance rises through about $`\omega_B`$, 4 rad/s, and levels off at $`M = 2`$: at high frequency the loop may amplify a disturbance, but not by more than 2. Dividing through, the specification is $`\lvert W_P S\rvert < 1`$. For the empty-belt model the peak is 0.600, at 35.81 rad/s.
 
 ### Step 4: robust performance, the sum
 
 Divide one by the factored return difference. The real plant's sensitivity is the model's divided by the extra factor:
 
-$$S_J = \frac{1}{(1 + L)(1 + W\Delta\,T)} = \frac{S}{1 + W\Delta\,T}.$$
+```math
+S_J = \frac{1}{(1 + L)(1 + W\Delta\,T)} = \frac{S}{1 + W\Delta\,T}.
+```
 
-The worst $\Delta$ at frequency $\omega$ has size 1 and the phase that makes the bottom as small as possible, $1 - \lvert WT\rvert$. So the worst plant's performance term is
+The worst $`\Delta`$ at frequency $`\omega`$ has size 1 and the phase that makes the bottom as small as possible, $`1 - \lvert WT\rvert`$. So the worst plant's performance term is
 
-$$\max_{\lvert\Delta\rvert\le 1}\lvert W_P S_J\rvert = \frac{\lvert W_P S\rvert}{1 - \lvert WT\rvert},$$
+```math
+\max_{\lvert\Delta\rvert\le 1}\lvert W_P S_J\rvert = \frac{\lvert W_P S\rvert}{1 - \lvert WT\rvert},
+```
 
-which is under 1 exactly when $\lvert W_P S\rvert + \lvert WT\rvert < 1$. The worst $\Delta$ is chosen afresh at each frequency, so the two terms add at the same $\omega$, never peak to peak. For the conveyor the largest sum is 0.881, at 19.72 rad/s.
+which is under 1 exactly when $`\lvert W_P S\rvert + \lvert WT\rvert < 1`$. The worst $`\Delta`$ is chosen afresh at each frequency, so the two terms add at the same $`\omega`$, never peak to peak. For the conveyor the largest sum is 0.881, at 19.72 rad/s.
 
-Note what the sum sees that the two separate tests miss. Robust stability alone allows $\lvert WT\rvert$ close to 1. Then the bottom, $1 - \lvert WT\rvert$, is close to 0, and the worst plant's error is huge even though the plant is stable.
+Note what the sum sees that the two separate tests miss. Robust stability alone allows $`\lvert WT\rvert`$ close to 1. Then the bottom, $`1 - \lvert WT\rvert`$, is close to 0, and the worst plant's error is huge even though the plant is stable.
 
 <details>
 <summary>The two lines of algebra behind Steps 2 and 4</summary>
 
-With $P_J = P_0(1 + W\Delta)$ and $L = P_0C$:
+With $`P_J = P_0(1 + W\Delta)`$ and $`L = P_0C`$:
 
-$1 + P_JC = 1 + L + LW\Delta = (1 + L)\left(1 + \dfrac{L}{1 + L}W\Delta\right) = (1 + L)(1 + TW\Delta).$
+$`1 + P_JC = 1 + L + LW\Delta = (1 + L)\left(1 + \dfrac{L}{1 + L}W\Delta\right) = (1 + L)(1 + TW\Delta).`$
 
-For the worst phase: $\lvert 1 + W\Delta T\rvert \ge 1 - \lvert WT\rvert$ by the triangle inequality, with equality when $W\Delta T$ is a negative real number of size $\lvert WT\rvert$, which a $\Delta$ of size 1 can always reach. Then $\lvert W_P S\rvert/(1 - \lvert WT\rvert) < 1$ rearranges to $\lvert W_P S\rvert + \lvert WT\rvert < 1$ whenever $\lvert WT\rvert < 1$.
+For the worst phase: $`\lvert 1 + W\Delta T\rvert \ge 1 - \lvert WT\rvert`$ by the triangle inequality, with equality when $`W\Delta T`$ is a negative real number of size $`\lvert WT\rvert`$, which a $`\Delta`$ of size 1 can always reach. Then $`\lvert W_P S\rvert/(1 - \lvert WT\rvert) < 1`$ rearranges to $`\lvert W_P S\rvert + \lvert WT\rvert < 1`$ whenever $`\lvert WT\rvert < 1`$.
 
 </details>
 
 ### Step 5: the real family is smaller than the envelope's
 
-The real conveyor's error is not any complex number inside the envelope. It is one curve, fixed by the inertia, with its own phase at each frequency. So the tests are safe but pessimistic for it. Checked directly, plant by plant across 21 inertias from 0.20 to 0.40 kg·m², the worst $\lvert W_P S_J\rvert$ is 0.600, under the bound 0.881, and at every frequency each real value stays under $\lvert W_P S\rvert/(1 - \lvert WT\rvert)$.
+The real conveyor's error is not any complex number inside the envelope. It is one curve, fixed by the inertia, with its own phase at each frequency. So the tests are safe but pessimistic for it. Checked directly, plant by plant across 21 inertias from 0.20 to 0.40 kg·m², the worst $`\lvert W_P S_J\rvert`$ is 0.600, under the bound 0.881, and at every frequency each real value stays under $`\lvert W_P S\rvert/(1 - \lvert WT\rvert)`$.
 
 The small-gain card's controller shows the gap the other way. Its sum is 1.308, so the test cannot prove robust performance. Yet the three real belts score 0.775, 0.717 and 0.686: all inside the specification. A failed test means "not proved", and calls for the direct check.
 
 ### Step 6: why the specification must allow a hump
 
-Why allow $\lvert S\rvert$ up to 2 at all? Because no controller can make it small everywhere. For a loop gain with no poles in the right half-plane that falls off at least as fast as $1/s^2$, as this one does, Bode's sensitivity integral, proved on [Loop shaping](../03-Feedback%20Control/09-lead-lag-compensation-and-loop-shaping.md), says
+Why allow $`\lvert S\rvert`$ up to 2 at all? Because no controller can make it small everywhere. For a loop gain with no poles in the right half-plane that falls off at least as fast as $`1/s^2`$, as this one does, Bode's sensitivity integral, proved on [Loop shaping](../03-Feedback%20Control/09-lead-lag-compensation-and-loop-shaping.md), says
 
-$$\int_0^\infty \ln\lvert S(j\omega)\rvert\,d\omega = 0.$$
+```math
+\int_0^\infty \ln\lvert S(j\omega)\rvert\,d\omega = 0.
+```
 
-Every bit of attenuation at low frequency ($\ln\lvert S\rvert < 0$) is paid back as amplification somewhere else: the "waterbed". For the conveyor the area below zero is −15.760 rad/s and the area above is 15.760 rad/s. A specification asking for $\lvert S\rvert < 1$ at every frequency would be impossible, whatever the controller.
+Every bit of attenuation at low frequency ($`\ln\lvert S\rvert < 0`$) is paid back as amplification somewhere else: the "waterbed". For the conveyor the area below zero is −15.760 rad/s and the area above is 15.760 rad/s. A specification asking for $`\lvert S\rvert < 1`$ at every frequency would be impossible, whatever the controller.
 
 ---
 
 ## Worked numbers, by hand
 
-One frequency, 10 rad/s, on the empty-belt model: $J_0$ = 0.20 kg·m², $b$ = 0.40 N·m·s/rad, $\tau$ = 0.02 s, $K_p$ = 3.0, $K_i$ = 4.0.
+One frequency, 10 rad/s, on the empty-belt model: $`J_0`$ = 0.20 kg·m², $`b`$ = 0.40 N·m·s/rad, $`\tau`$ = 0.02 s, $`K_p`$ = 3.0, $`K_i`$ = 4.0.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| plant's bottom, $(J_0 s + b)(\tau s + 1)$ | $(0.40 + 2j)(1 + 0.2j) = 0.40 - 0.40 + (0.08 + 2)j$ | $0.00 + 2.08j$ |
-| controller, $K_p + K_i/s$ | $3.0 + 4.0/(10j)$ | $3.0 - 0.4j$ |
-| loop gain $L$ | $(3.0 - 0.4j)/(2.08j)$ | $-0.1923 - 1.4423j$ |
-| $\lvert L\rvert$ and $\lvert 1 + L\rvert$ | $\lvert -0.1923 - 1.4423j\rvert$, $\lvert 0.8077 - 1.4423j\rvert$ | $1.4551$, $1.6531$ |
-| $\lvert S\rvert = 1/\lvert 1 + L\rvert$ | $1/1.6531$ | $0.6049$ |
-| $\lvert T\rvert = \lvert L\rvert/\lvert 1 + L\rvert$ | $1.4551/1.6531$ | $0.8802$ |
-| envelope $\lvert W\rvert$ | $\lvert 5j\rvert/\lvert 1 + 10j\rvert$ | $0.4975$ |
-| weight $\lvert W_P\rvert$ | $\lvert 4 + 5j\rvert/\lvert 0.04 + 10j\rvert$ | $0.6403$ |
-| stability term $\lvert WT\rvert$ | $0.4975 \times 0.8802$ | $0.438$ |
-| performance term $\lvert W_P S\rvert$ | $0.6403 \times 0.6049$ | $0.387$ |
-| **robust performance sum** | $0.438 + 0.387$ | **$0.825$** |
+| plant's bottom, $`(J_0 s + b)(\tau s + 1)`$ | $`(0.40 + 2j)(1 + 0.2j) = 0.40 - 0.40 + (0.08 + 2)j`$ | $`0.00 + 2.08j`$ |
+| controller, $`K_p + K_i/s`$ | $`3.0 + 4.0/(10j)`$ | $`3.0 - 0.4j`$ |
+| loop gain $`L`$ | $`(3.0 - 0.4j)/(2.08j)`$ | $`-0.1923 - 1.4423j`$ |
+| $`\lvert L\rvert`$ and $`\lvert 1 + L\rvert`$ | $`\lvert -0.1923 - 1.4423j\rvert`$, $`\lvert 0.8077 - 1.4423j\rvert`$ | $`1.4551`$, $`1.6531`$ |
+| $`\lvert S\rvert = 1/\lvert 1 + L\rvert`$ | $`1/1.6531`$ | $`0.6049`$ |
+| $`\lvert T\rvert = \lvert L\rvert/\lvert 1 + L\rvert`$ | $`1.4551/1.6531`$ | $`0.8802`$ |
+| envelope $`\lvert W\rvert`$ | $`\lvert 5j\rvert/\lvert 1 + 10j\rvert`$ | $`0.4975`$ |
+| weight $`\lvert W_P\rvert`$ | $`\lvert 4 + 5j\rvert/\lvert 0.04 + 10j\rvert`$ | $`0.6403`$ |
+| stability term $`\lvert WT\rvert`$ | $`0.4975 \times 0.8802`$ | $`0.438`$ |
+| performance term $`\lvert W_P S\rvert`$ | $`0.6403 \times 0.6049`$ | $`0.387`$ |
+| **robust performance sum** | $`0.438 + 0.387`$ | **$`0.825`$** |
 
 At 10 rad/s even the worst plant the envelope allows uses 0.825 of its error budget. Repeat at every frequency and the largest sum, 0.881 at 19.72 rad/s, is the verdict: robust performance holds for every load from empty to full.
 
 The three real belts, checked one by one:
 
-| Belt | Hurwitz ratio | Peak $\lvert W_P S_J\rvert$ | Peak $\lvert S_J\rvert$ | 5 rad/s step: overshoot, 2% settling |
+| Belt | Hurwitz ratio | Peak $`\lvert W_P S_J\rvert`$ | Peak $`\lvert S_J\rvert`$ | 5 rad/s step: overshoot, 2% settling |
 | --- | --- | --- | --- | --- |
 | empty, 0.20 kg·m² | 44.200 | 0.600 at 35.81 rad/s | 1.173 at 38.73 rad/s | 0.0%, 0.70 s |
 | half, 0.30 kg·m² | 43.633 | 0.584 at 26.55 rad/s | 1.128 at 32.89 rad/s | 0.0%, 0.32 s |
@@ -189,15 +205,15 @@ Each belt is stretched at a different frequency: the empty one at 35.81 rad/s, t
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Add the two peaks instead of summing at each frequency | 1.060: a false "fail" | The peaks sit at 4.73 and 35.81 rad/s; no plant suffers both at once |
-| Less damping, $K_p$ = 1.5 and $K_i$ = 5, checking only stability and the empty belt | 0.504 and 0.611, both "pass"; the sum is 1.060, by coincidence the same figure as the row above | The full belt's $\lvert W_P S_J\rvert$ reaches 1.021 at 3.89 rad/s: there it cuts speed errors slightly less than the specification demands, and a 5 rad/s step overshoots 16.6% |
+| Less damping, $`K_p`$ = 1.5 and $`K_i`$ = 5, checking only stability and the empty belt | 0.504 and 0.611, both "pass"; the sum is 1.060, by coincidence the same figure as the row above | The full belt's $`\lvert W_P S_J\rvert`$ reaches 1.021 at 3.89 rad/s: there it cuts speed errors slightly less than the specification demands, and a 5 rad/s step overshoots 16.6% |
 | Envelope drawn from the half-loaded belt | stability peak 0.303, looks safer | It allows 0.330 at 10 rad/s; the full belt's real error is 0.498, outside the envelope |
-| Treat a failed sum as a failed design: the small-gain card's $K_p$ = 10, $K_i$ = 50 | sum 1.308, "fails" | The real belts score 0.775, 0.717, 0.686, all inside the specification; the test is only sufficient |
+| Treat a failed sum as a failed design: the small-gain card's $`K_p`$ = 10, $`K_i`$ = 50 | sum 1.308, "fails" | The real belts score 0.775, 0.717, 0.686, all inside the specification; the test is only sufficient |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts write complex arithmetic, the loop and both weights by hand, and scan 6,001 frequencies from 0.01 to 10,000 rad/s. They reach the verdict by **four independent roads**: the frequency-by-frequency tests on the model; a direct scan of 21 real belts, each checked against the bound from Step 4; the Hurwitz test on each belt's closed-loop polynomial, which uses no frequencies at all; and a time simulation of each belt by RK4 (the fourth-order Runge–Kutta method), which must settle. Bode's integral is checked as well, by summing $\ln\lvert S\rvert$ on a log-spaced grid.
+The scripts write complex arithmetic, the loop and both weights by hand, and scan 6,001 frequencies from 0.01 to 10,000 rad/s. They reach the verdict by **four independent roads**: the frequency-by-frequency tests on the model; a direct scan of 21 real belts, each checked against the bound from Step 4; the Hurwitz test on each belt's closed-loop polynomial, which uses no frequencies at all; and a time simulation of each belt by RK4 (the fourth-order Runge–Kutta method), which must settle. Bode's integral is checked as well, by summing $`\ln\lvert S\rvert`$ on a log-spaced grid.
 
 ### Python
 
@@ -566,12 +582,12 @@ ALL CHECKS PASS
 
 Lean proves the algebra of Why it works at each frequency, for any loop, and checks the worked numbers.
 
-- Suppose $1 + L \ne 0$ at every frequency, and each $\Delta$ has size at most 1, chosen afresh at each frequency. Then no such $\Delta$ makes the return difference $1 + L(1 + W\Delta)$ zero exactly when $\lvert WT\rvert < 1$ at every frequency.
-- Take the same $L$ and $\Delta$, and any weight $W_P$. Then every such plant meets the specification with a nonzero return difference exactly when $\lvert W_P S\rvert + \lvert WT\rvert < 1$ everywhere.
-- Take $a = W_P S$ and $b = WT$ at one frequency, with $\lvert b\rvert < 1$. Then over all $\Delta$ of size at most 1, the largest $\lvert a/(1 + b\Delta)\rvert$ is $\lvert a\rvert/(1 - \lvert b\rvert)$.
-- Take the empty belt at $s = 10j$. Then the plant's bottom $(J_0 s + b)(\tau s + 1)$ is exactly $2.08j$.
+- Suppose $`1 + L \ne 0`$ at every frequency, and each $`\Delta`$ has size at most 1, chosen afresh at each frequency. Then no such $`\Delta`$ makes the return difference $`1 + L(1 + W\Delta)`$ zero exactly when $`\lvert WT\rvert < 1`$ at every frequency.
+- Take the same $`L`$ and $`\Delta`$, and any weight $`W_P`$. Then every such plant meets the specification with a nonzero return difference exactly when $`\lvert W_P S\rvert + \lvert WT\rvert < 1`$ everywhere.
+- Take $`a = W_P S`$ and $`b = WT`$ at one frequency, with $`\lvert b\rvert < 1`$. Then over all $`\Delta`$ of size at most 1, the largest $`\lvert a/(1 + b\Delta)\rvert`$ is $`\lvert a\rvert/(1 - \lvert b\rvert)`$.
+- Take the empty belt at $`s = 10j`$. Then the plant's bottom $`(J_0 s + b)(\tau s + 1)`$ is exactly $`2.08j`$.
 - The Hurwitz ratios for the empty, half and full belts are 221/5, 1309/30 and 867/20. These are 44.200, 43.633 and 43.350 to three places.
-- With $K_p$ = 3.0, a 10 rad/s step asks for 30 N·m, over a 20 N·m drive. A 5 rad/s step asks for 15 N·m, within it.
+- With $`K_p`$ = 3.0, a 10 rad/s step asks for 30 N·m, over a 20 N·m drive. A 5 rad/s step asks for 15 N·m, within it.
 
 The frequency scans, the real belts' Hurwitz tests, Bode's integral and the simulations are left to the Python and Rust checks.
 
@@ -741,22 +757,22 @@ example : 3 * 10 = 30 ∧ 20 < 3 * 10 ∧ 3 * 5 = 15 ∧ 3 * 5 ≤ 20 := by deci
 
 > [!TIP]
 > **Try changing**
-> - Guess first: a stronger integral, $K_i$ = 8, to cut slow errors faster. Does it still pass? The sum rises to 0.925: a pass, with less room.
-> - Guess first: $K_p$ = 5 and $K_i$ = 10, a faster loop. The sum is 0.994: a pass by a hair.
-> - Guess first: demand that errors be cut up to $\omega_B$ = 6 rad/s instead of 4. The sum is 0.931: still a pass.
+> - Guess first: a stronger integral, $`K_i`$ = 8, to cut slow errors faster. Does it still pass? The sum rises to 0.925: a pass, with less room.
+> - Guess first: $`K_p`$ = 5 and $`K_i`$ = 10, a faster loop. The sum is 0.994: a pass by a hair.
+> - Guess first: demand that errors be cut up to $`\omega_B`$ = 6 rad/s instead of 4. The sum is 0.931: still a pass.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Checking robust stability and the model's performance, and calling the job done.** Each test can pass while their sum fails. With $K_p$ = 1.5 and $K_i$ = 5 the stability peak is 0.504 and the empty belt's performance peak 0.611, both under 1. The sum is 1.060, and the full belt really misses the specification: its $\lvert W_P S_J\rvert$ reaches 1.021 at 3.89 rad/s. A plant can be stable and still miss the specification, and only the sum sees it.
+> **Checking robust stability and the model's performance, and calling the job done.** Each test can pass while their sum fails. With $`K_p`$ = 1.5 and $`K_i`$ = 5 the stability peak is 0.504 and the empty belt's performance peak 0.611, both under 1. The sum is 1.060, and the full belt really misses the specification: its $`\lvert W_P S_J\rvert`$ reaches 1.021 at 3.89 rad/s. A plant can be stable and still miss the specification, and only the sum sees it.
 >
 > Smaller traps:
 > - **Adding peaks.** The sum is taken at each frequency. Adding the two peaks gives 1.060, by coincidence the same figure as above, and rejects a design that passes at 0.881.
 > - **Drawing the envelope from a middle load.** The heaviest belt has the biggest error. An envelope from the half-loaded belt gives a stability peak of 0.303, but at 10 rad/s it allows 0.330 against the full belt's real 0.498.
 > - **Reading a failed test as a failed plant.** The tests are sufficient, not necessary, for a real family. The small-gain card's controller fails the sum at 1.308 while every real belt passes, the worst at 0.775.
-> - **Asking for small $\lvert S\rvert$ everywhere.** Bode's integral forbids it: −15.760 rad/s of attenuation is paid back as +15.760 rad/s of amplification.
+> - **Asking for small $`\lvert S\rvert`$ everywhere.** Bode's integral forbids it: −15.760 rad/s of attenuation is paid back as +15.760 rad/s of amplification.
 
 ---
 
@@ -769,14 +785,14 @@ example : 3 * 10 = 30 ∧ 20 < 3 * 10 ∧ 3 * 5 = 15 ∧ 3 * 5 ≤ 20 := by deci
 - **Process plants.** Gains drift with throughput and temperature, and robust performance is how one tuning is checked across the operating range.
 
 > **Say it back**
-> A real plant differs from its model by an error bounded by an envelope $W$ at each frequency. The loop is robustly stable when $\lvert WT\rvert$ stays under 1 at every frequency. It performs robustly when $\lvert W_P S\rvert + \lvert WT\rvert$ stays under 1 at every frequency, because the worst plant at one frequency need not be the worst at another. For the conveyor the largest sum is 0.881, so empty, half and full belts all meet the specification; checked one by one, the worst uses 0.600 of its budget. The tests are pessimistic for a real family, so a failed test calls for a direct check, not a verdict.
+> A real plant differs from its model by an error bounded by an envelope $`W`$ at each frequency. The loop is robustly stable when $`\lvert WT\rvert`$ stays under 1 at every frequency. It performs robustly when $`\lvert W_P S\rvert + \lvert WT\rvert`$ stays under 1 at every frequency, because the worst plant at one frequency need not be the worst at another. For the conveyor the largest sum is 0.881, so empty, half and full belts all meet the specification; checked one by one, the worst uses 0.600 of its budget. The tests are pessimistic for a real family, so a failed test calls for a direct check, not a verdict.
 
 ---
 
 ## What this builds on
 
-- [Writing down model error](01-model-uncertainty-and-the-small-gain-theorem.md): the envelope $W$, the H-infinity norm and the small gain rule, which Step 2 applies frequency by frequency.
-- [Sensitivity functions](../03-Feedback%20Control/02-sensitivity-and-the-gang-of-four.md): $S$ and $T$, the two terms in every test on this card.
+- [Writing down model error](01-model-uncertainty-and-the-small-gain-theorem.md): the envelope $`W`$, the H-infinity norm and the small gain rule, which Step 2 applies frequency by frequency.
+- [Sensitivity functions](../03-Feedback%20Control/02-sensitivity-and-the-gang-of-four.md): $`S`$ and $`T`$, the two terms in every test on this card.
 - [Routh-Hurwitz](../03-Feedback%20Control/04-routh-hurwitz-criterion.md): the algebraic stability test used as an independent road for each belt.
 - [Nyquist and margins](../03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): stability read from the frequency response, and why a pole can only become unstable by crossing the imaginary axis.
 
@@ -793,7 +809,7 @@ The question this card leaves open: when the family is one real number, like thi
 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
-- Doyle, John C., and Gunter Stein. "Multivariable Feedback Design: Concepts for a Classical/Modern Synthesis." *IEEE Transactions on Automatic Control* 26, no. 1 (1981): 4–16. [doi:10.1109/TAC.1981.1102555](https://doi.org/10.1109/TAC.1981.1102555). The multiplicative envelope and the robust stability test $\lvert WT\rvert < 1$.
+- Doyle, John C., and Gunter Stein. "Multivariable Feedback Design: Concepts for a Classical/Modern Synthesis." *IEEE Transactions on Automatic Control* 26, no. 1 (1981): 4–16. [doi:10.1109/TAC.1981.1102555](https://doi.org/10.1109/TAC.1981.1102555). The multiplicative envelope and the robust stability test $`\lvert WT\rvert < 1`$.
 - Freudenberg, James S., and Douglas P. Looze. "Right Half Plane Poles and Zeros and Design Tradeoffs in Feedback Systems." *IEEE Transactions on Automatic Control* 30, no. 6 (1985): 555–565. [doi:10.1109/TAC.1985.1104004](https://doi.org/10.1109/TAC.1985.1104004). Bode's sensitivity integral and the trade-offs it forces, used in Step 6.
-- Skogestad, Sigurd, and Ian Postlethwaite. *Multivariable Feedback Control: Analysis and Design*, 2nd ed. Wiley, 2005. [Publisher page](https://www.wiley.com/en-us/Multivariable+Feedback+Control%3A+Analysis+and+Design%2C+2nd+Edition-p-9780470011683). The weights in this form and the robust performance condition $\lvert W_P S\rvert + \lvert WT\rvert < 1$ for one input and one output.
+- Skogestad, Sigurd, and Ian Postlethwaite. *Multivariable Feedback Control: Analysis and Design*, 2nd ed. Wiley, 2005. [Publisher page](https://www.wiley.com/en-us/Multivariable+Feedback+Control%3A+Analysis+and+Design%2C+2nd+Edition-p-9780470011683). The weights in this form and the robust performance condition $`\lvert W_P S\rvert + \lvert WT\rvert < 1`$ for one input and one output.
 - Åström, Karl Johan, and Richard M. Murray. *Feedback Systems: An Introduction for Scientists and Engineers*, 2nd ed. Princeton University Press, 2021. [Publisher page](https://press.princeton.edu/books/hardcover/9780691193984/feedback-systems). Robust stability and robust performance for one loop, at an engineering level.

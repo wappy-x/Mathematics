@@ -34,43 +34,49 @@ Orange: the house surface, every call priced at 20%, read back as 20.00% at ever
 
 ## The formula
 
-Notation first, in words. $C$ is today's price of a call with strike $K$ and expiry $T$ years away, a function of both. A letter written small beside $C$ names the one input being moved while the others are held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). $C_T$ is the slope in expiry: extra dollars per extra year of life. $C_K$ is the slope in strike. $C_{KK}$ is the slope of that slope: the bend of the price curve in strike.
+Notation first, in words. $`C`$ is today's price of a call with strike $`K`$ and expiry $`T`$ years away, a function of both. A letter written small beside $`C`$ names the one input being moved while the others are held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). $`C_T`$ is the slope in expiry: extra dollars per extra year of life. $`C_K`$ is the slope in strike. $`C_{KK}`$ is the slope of that slope: the bend of the price curve in strike.
 
-$$\sigma_{\text{loc}}^2(K, T) \;=\; \frac{C_T \;+\; (r - q)\,K\,C_K \;+\; q\,C}{\tfrac12\,K^2\,C_{KK}}$$
+```math
+\sigma_{\text{loc}}^2(K, T) \;=\; \frac{C_T \;+\; (r - q)\,K\,C_K \;+\; q\,C}{\tfrac12\,K^2\,C_{KK}}
+```
 
 **Read it aloud:** the local variance at a strike and an expiry is the calendar slope plus two corrections for interest and dividends, divided by half the strike squared times the bend.
 
 It inverts one model of the stock, the **local-volatility diffusion**:
 
-$$dS_t \;=\; (r - q)\,S_t\,dt \;+\; \sigma_{\text{loc}}(S_t, t)\,S_t\,dW_t$$
+```math
+dS_t \;=\; (r - q)\,S_t\,dt \;+\; \sigma_{\text{loc}}(S_t, t)\,S_t\,dW_t
+```
 
-In words: over a short time step $dt$, Acme's price $S_t$ drifts up at the rate $r - q$ and takes a random kick $dW$, scaled by the local volatility where it now stands. Fixed at 20%, this is geometric Brownian motion, the house model ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)).
+In words: over a short time step $`dt`$, Acme's price $`S_t`$ drifts up at the rate $`r - q`$ and takes a random kick $`dW`$, scaled by the local volatility where it now stands. Fixed at 20%, this is geometric Brownian motion, the house model ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)).
 
 Multiplied out, the formula is **Dupire's forward equation**. It starts from the payoff at expiry zero and builds every call price as expiry lengthens, all strikes at once:
 
-$$C_T \;=\; \tfrac12\,\sigma_{\text{loc}}^2\,K^2\,C_{KK} \;-\; (r - q)\,K\,C_K \;-\; q\,C, \qquad C(K, 0) = \max(S - K,\,0)$$
+```math
+C_T \;=\; \tfrac12\,\sigma_{\text{loc}}^2\,K^2\,C_{KK} \;-\; (r - q)\,K\,C_K \;-\; q\,C, \qquad C(K, 0) = \max(S - K,\,0)
+```
 
-The density: undo one expiry's worth of discounting on the bend and the chance per dollar of Acme finishing at $K$ comes out, $p(K, T) = e^{rT}\,C_{KK}(K, T)$.
+The density: undo one expiry's worth of discounting on the bend and the chance per dollar of Acme finishing at $`K`$ comes out, $`p(K, T) = e^{rT}\,C_{KK}(K, T)`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $S_t$, $x$ | Acme's price today; its price at a later date $t$; $x$ is any price Acme might have on a later date | $100 | — |
-| $K$, $m$ | strike, and the price level where local volatility is read; $m$ is the strike with the forward price's growth taken out, $K e^{-(r-q)T}$; the forward price, $S e^{(r-q)T}$, is the price agreed today to buy Acme at expiry ([Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md)) | $100 and $110 | reads the surface further right |
-| $T$, $t$ | expiry in years, and the date being read; a date along the way | 1 and 0.5 | — |
-| $C$ | today's price of the call at strike $K$ and expiry $T$ | 9.227006 at (100, 1); 2.585913 at (110, 0.5) | — |
-| $C_T$ | calendar slope: extra price per extra year of expiry | 5.089319 at (100, 1) | local volatility rises |
-| $C_K$ | strike slope: minus the discounted chance of finishing above $K$ | −0.494581 | — |
-| $C_{KK}$, $p$ | strike bend; the density $p$, chance per dollar of finishing at $K$ | 0.018951; 0.019922 | local volatility falls: the same gain is shared by more paths |
-| $r$, $q$ | riskless rate and dividend yield, continuously compounded | 5% and 2% | — |
-| $\sigma_{\text{loc}}$, $\sigma$ | local volatility at one price and date; the single volatility of the house surface | 20% everywhere | — |
-| $dt$, $dW$ | a short time step; the random kick in it, normal with mean 0 and variance $dt$ | — | — |
-| $h$, $\delta$ | grid steps in strike and in expiry, for reading slopes off a grid of prices | 1 dollar and 0.01 year | the reading drifts off by roughly the step squared |
-| $N$, $\phi$, $d_1$, $d_2$, $\Gamma$ | bell-curve area and height; the house formula's standardized distances; spot gamma, the bend in today's price | as on the black-scholes-call card | — |
+| $`S`$, $`S_t`$, $`x`$ | Acme's price today; its price at a later date $`t`$; $`x`$ is any price Acme might have on a later date | $100 | — |
+| $`K`$, $`m`$ | strike, and the price level where local volatility is read; $`m`$ is the strike with the forward price's growth taken out, $`K e^{-(r-q)T}`$; the forward price, $`S e^{(r-q)T}`$, is the price agreed today to buy Acme at expiry ([Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md)) | $100 and $110 | reads the surface further right |
+| $`T`$, $`t`$ | expiry in years, and the date being read; a date along the way | 1 and 0.5 | — |
+| $`C`$ | today's price of the call at strike $`K`$ and expiry $`T`$ | 9.227006 at (100, 1); 2.585913 at (110, 0.5) | — |
+| $`C_T`$ | calendar slope: extra price per extra year of expiry | 5.089319 at (100, 1) | local volatility rises |
+| $`C_K`$ | strike slope: minus the discounted chance of finishing above $`K`$ | −0.494581 | — |
+| $`C_{KK}`$, $`p`$ | strike bend; the density $`p`$, chance per dollar of finishing at $`K`$ | 0.018951; 0.019922 | local volatility falls: the same gain is shared by more paths |
+| $`r`$, $`q`$ | riskless rate and dividend yield, continuously compounded | 5% and 2% | — |
+| $`\sigma_{\text{loc}}`$, $`\sigma`$ | local volatility at one price and date; the single volatility of the house surface | 20% everywhere | — |
+| $`dt`$, $`dW`$ | a short time step; the random kick in it, normal with mean 0 and variance $`dt`$ | — | — |
+| $`h`$, $`\delta`$ | grid steps in strike and in expiry, for reading slopes off a grid of prices | 1 dollar and 0.01 year | the reading drifts off by roughly the step squared |
+| $`N`$, $`\phi`$, $`d_1`$, $`d_2`$, $`\Gamma`$ | bell-curve area and height; the house formula's standardized distances; spot gamma, the bend in today's price | as on the black-scholes-call card | — |
 
 ### When it holds
 
 - **Continuous paths.** A jump carries probability between distant prices in one step and adds terms the formula lacks; jumps get their own model in [Merton jump-diffusion](04-merton-jump-diffusion.md).
-- **One source of randomness.** If volatility is itself random, the formula returns the average random variance over paths ending at $K$ on date $T$ (tip in Why it works). That fits every vanilla call and misprices path-dependent contracts such as barriers.
+- **One source of randomness.** If volatility is itself random, the formula returns the average random variance over paths ending at $`K`$ on date $`T`$ (tip in Why it works). That fits every vanilla call and misprices path-dependent contracts such as barriers.
 - **Known rates and a proportional dividend.** Cash dividends on fixed dates, or random rates, add terms the formula lacks.
 - **A smooth, arbitrage-free surface.** Listed quotes must first be joined into a smooth surface that passes the butterfly and calendar tests. A negative bend gives a negative variance.
 
@@ -99,42 +105,50 @@ So once the straight-line pieces are removed, the calendar gain is the local var
 
 ### Step 1: the density of Acme's price spreads by the forward equation
 
-Let $p(x, t)$ be the risk-neutral density of Acme's price on date $t$: the density that today's prices imply. Under the local-volatility diffusion it obeys the forward (Fokker-Planck) equation ([Fokker-Planck](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/03-fokker-planck-forward-equation.md)):
+Let $`p(x, t)`$ be the risk-neutral density of Acme's price on date $`t`$: the density that today's prices imply. Under the local-volatility diffusion it obeys the forward (Fokker-Planck) equation ([Fokker-Planck](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/03-fokker-planck-forward-equation.md)):
 
-$$\frac{\partial p}{\partial t} \;=\; \frac12\,\frac{\partial^2}{\partial x^2}\Big(\sigma_{\text{loc}}^2(x, t)\,x^2\,p\Big) \;-\; \frac{\partial}{\partial x}\Big((r - q)\,x\,p\Big)$$
+```math
+\frac{\partial p}{\partial t} \;=\; \frac12\,\frac{\partial^2}{\partial x^2}\Big(\sigma_{\text{loc}}^2(x, t)\,x^2\,p\Big) \;-\; \frac{\partial}{\partial x}\Big((r - q)\,x\,p\Big)
+```
 
 The first term spreads probability out, at a rate set by the local variance at each price. The second carries it along with the drift.
 
 ### Step 2: a call price is an average over that density
 
-$$C(K, T) \;=\; e^{-rT}\int_K^\infty (x - K)\,p(x, T)\,dx$$
+```math
+C(K, T) \;=\; e^{-rT}\int_K^\infty (x - K)\,p(x, T)\,dx
+```
 
-Differentiating in strike, as on the butterfly card: $C_K = -e^{-rT}\int_K^\infty p\,dx$, minus the discounted chance of finishing above $K$, and $C_{KK} = e^{-rT}\,p(K, T)$.
+Differentiating in strike, as on the butterfly card: $`C_K = -e^{-rT}\int_K^\infty p\,dx`$, minus the discounted chance of finishing above $`K`$, and $`C_{KK} = e^{-rT}\,p(K, T)`$.
 
 ### Step 3: differentiate in expiry, and only the strike survives
 
-A later expiry changes the price three ways: more discounting, the density spreading, the density drifting. Discounting gives $-rC$.
+A later expiry changes the price three ways: more discounting, the density spreading, the density drifting. Discounting gives $`-rC`$.
 
-For the spreading term, integrate by parts twice against the payoff. Above the strike the payoff is a straight line with no bend, so everything cancels except the contribution at the strike itself: $\tfrac12\,\sigma_{\text{loc}}^2(K, T)\,K^2\,p(K, T)$, discounted. That is Step 0 as algebra.
+For the spreading term, integrate by parts twice against the payoff. Above the strike the payoff is a straight line with no bend, so everything cancels except the contribution at the strike itself: $`\tfrac12\,\sigma_{\text{loc}}^2(K, T)\,K^2\,p(K, T)`$, discounted. That is Step 0 as algebra.
 
-The drift term, integrated by parts once, gives $(r - q)(C - K\,C_K)$. Add the three, replace the density by $e^{rT}C_{KK}$, and Dupire's forward equation appears; its $-q\,C$ is the $-rC$ of discounting plus $+(r - q)C$ from the drift.
+The drift term, integrated by parts once, gives $`(r - q)(C - K\,C_K)`$. Add the three, replace the density by $`e^{rT}C_{KK}`$, and Dupire's forward equation appears; its $`-q\,C`$ is the $`-rC`$ of discounting plus $`+(r - q)C`$ from the drift.
 
 <details>
 <summary>Detailed proof: from the density's equation to Dupire's</summary>
 
-Assume $p(x, t)$ is smooth for $t > 0$, and that $p$, $x\,p$, $x^2 p$ and their slopes in $x$ vanish at infinity faster than $x$ grows; bounded local volatility gives this. Write $L = \sigma_{\text{loc}}^2(x, T)\,x^2\,p(x, T)$. Differentiating the call price in $T$:
-$$C_T = -rC + e^{-rT}\int_K^\infty (x - K)\Big(\tfrac12 L_{xx} - \big((r - q)\,x\,p\big)_x\Big)\,dx.$$
-Spreading term, by parts twice: $\int_K^\infty (x - K)\,\tfrac12 L_{xx}\,dx = \big[(x - K)\,\tfrac12 L_x\big]_K^\infty - \big[\tfrac12 L\big]_K^\infty = \tfrac12 L(K)$. The first bracket is zero at $x = K$ and at infinity.
+Assume $`p(x, t)`$ is smooth for $`t > 0`$, and that $`p`$, $`x\,p`$, $`x^2 p`$ and their slopes in $`x`$ vanish at infinity faster than $`x`$ grows; bounded local volatility gives this. Write $`L = \sigma_{\text{loc}}^2(x, T)\,x^2\,p(x, T)`$. Differentiating the call price in $`T`$:
 
-Drift term, by parts once: $-\int_K^\infty (x - K)\big((r - q)\,x\,p\big)_x\,dx = (r - q)\int_K^\infty x\,p\,dx$, the bracket again zero at both ends. Split $x = (x - K) + K$: $\int_K^\infty x\,p\,dx = e^{rT}(C - K\,C_K)$, by both facts of Step 2. Collect:
-$$C_T = -rC + \tfrac12\,\sigma_{\text{loc}}^2 K^2\,e^{-rT}p(K, T) + (r - q)(C - K\,C_K).$$
-Replace $e^{-rT}p(K, T)$ by $C_{KK}$ and $-rC + (r - q)C$ by $-q\,C$: the forward equation. Where $C_{KK} > 0$, divide by $\tfrac12 K^2 C_{KK}$ and the formula follows. $\blacksquare$
+$`\displaystyle C_T = -rC + e^{-rT}\int_K^\infty (x - K)\Big(\tfrac12 L_{xx} - \big((r - q)\,x\,p\big)_x\Big)\,dx.`$
+
+Spreading term, by parts twice: $`\int_K^\infty (x - K)\,\tfrac12 L_{xx}\,dx = \big[(x - K)\,\tfrac12 L_x\big]_K^\infty - \big[\tfrac12 L\big]_K^\infty = \tfrac12 L(K)`$. The first bracket is zero at $`x = K`$ and at infinity.
+
+Drift term, by parts once: $`-\int_K^\infty (x - K)\big((r - q)\,x\,p\big)_x\,dx = (r - q)\int_K^\infty x\,p\,dx`$, the bracket again zero at both ends. Split $`x = (x - K) + K`$: $`\int_K^\infty x\,p\,dx = e^{rT}(C - K\,C_K)`$, by both facts of Step 2. Collect:
+
+$`\displaystyle C_T = -rC + \tfrac12\,\sigma_{\text{loc}}^2 K^2\,e^{-rT}p(K, T) + (r - q)(C - K\,C_K).`$
+
+Replace $`e^{-rT}p(K, T)`$ by $`C_{KK}`$ and $`-rC + (r - q)C`$ by $`-q\,C`$: the forward equation. Where $`C_{KK} > 0`$, divide by $`\tfrac12 K^2 C_{KK}`$ and the formula follows. $`\blacksquare`$
 
 </details>
 
 ### Step 4: solve for the local variance
 
-Move the interest and dividend terms, the carry terms, left and divide by $\tfrac12 K^2 C_{KK}$: the formula at the top of the card. The denominator counts the paths at the strike. The numerator is the calendar slope with its straight-line pieces removed: $(r - q)K\,C_K$ takes out what the call gains because the forward price grows at $r - q$ while the strike stays put, and $q\,C$ puts back what the call loses as Acme pays its dividends away.
+Move the interest and dividend terms, the carry terms, left and divide by $`\tfrac12 K^2 C_{KK}`$: the formula at the top of the card. The denominator counts the paths at the strike. The numerator is the calendar slope with its straight-line pieces removed: $`(r - q)K\,C_K`$ takes out what the call gains because the forward price grows at $`r - q`$ while the strike stays put, and $`q\,C`$ puts back what the call loses as Acme pays its dividends away.
 
 ### Step 5: when the answer is unique, when it exists, and where it fails
 
@@ -144,7 +158,9 @@ The formula is an inverse, prices in and volatility out, so three statements com
 
 **Exists.** A real local volatility needs a positive denominator and a numerator that is not negative. The denominator is positive when every butterfly costs more than nothing. The numerator is a calendar slope with the strike carried along with the forward price and dividends reinvested:
 
-$$C_T + (r - q)\,K\,C_K + q\,C \;=\; e^{-qT}\,\frac{d}{dT}\Big[e^{qT}\,C\big(m\,e^{(r - q)T},\,T\big)\Big], \qquad m \text{ held fixed}$$
+```math
+C_T + (r - q)\,K\,C_K + q\,C \;=\; e^{-qT}\,\frac{d}{dT}\Big[e^{qT}\,C\big(m\,e^{(r - q)T},\,T\big)\Big], \qquad m \text{ held fixed}
+```
 
 It is not negative exactly when the calendar test passes. So a surface passing both tests, every butterfly strictly positive, has exactly one real local volatility at every point. Conversely, a smooth, bounded, positive local volatility run through the forward equation gives a surface that passes both tests.
 
@@ -155,18 +171,20 @@ It is not negative exactly when the calendar test passes. So a surface passing b
 
 ### Step 6: why a flat surface hands back its own volatility
 
-For the house formula the three slopes have closed forms, with $d_1$ and $d_2$ as on the black-scholes-call card:
+For the house formula the three slopes have closed forms, with $`d_1`$ and $`d_2`$ as on the black-scholes-call card:
 
-$$C_T = S e^{-qT}\phi(d_1)\frac{\sigma}{2\sqrt{T}} - qSe^{-qT}N(d_1) + rKe^{-rT}N(d_2), \quad C_K = -e^{-rT}N(d_2), \quad C_{KK} = \frac{e^{-rT}\phi(d_2)}{K\sigma\sqrt{T}}$$
+```math
+C_T = S e^{-qT}\phi(d_1)\frac{\sigma}{2\sqrt{T}} - qSe^{-qT}N(d_1) + rKe^{-rT}N(d_2), \quad C_K = -e^{-rT}N(d_2), \quad C_{KK} = \frac{e^{-rT}\phi(d_2)}{K\sigma\sqrt{T}}
+```
 
-In the numerator the carry pieces cancel exactly, which is what they are for, leaving $S e^{-qT}\phi(d_1)\,\sigma/(2\sqrt{T})$. The denominator is $K e^{-rT}\phi(d_2)/(2\sigma\sqrt{T})$. The ratio is $\sigma^2$, because $S e^{-qT}\phi(d_1) = K e^{-rT}\phi(d_2)$.
+In the numerator the carry pieces cancel exactly, which is what they are for, leaving $`S e^{-qT}\phi(d_1)\,\sigma/(2\sqrt{T})`$. The denominator is $`K e^{-rT}\phi(d_2)/(2\sigma\sqrt{T})`$. The ratio is $`\sigma^2`$, because $`S e^{-qT}\phi(d_1) = K e^{-rT}\phi(d_2)`$.
 
 <details>
 <summary>The algebra behind this</summary>
 
-The $N(d_1)$ pieces, $-qSe^{-qT}N(d_1)$ from $C_T$ and $+qSe^{-qT}N(d_1)$ from $q\,C$, cancel. The $N(d_2)$ pieces, $+rKe^{-rT}N(d_2)$, $-(r - q)Ke^{-rT}N(d_2)$ and $-qKe^{-rT}N(d_2)$, sum to zero.
+The $`N(d_1)`$ pieces, $`-qSe^{-qT}N(d_1)`$ from $`C_T`$ and $`+qSe^{-qT}N(d_1)`$ from $`q\,C`$, cancel. The $`N(d_2)`$ pieces, $`+rKe^{-rT}N(d_2)`$, $`-(r - q)Ke^{-rT}N(d_2)`$ and $`-qKe^{-rT}N(d_2)`$, sum to zero.
 
-The identity: $\phi(d_1)/\phi(d_2) = e^{-(d_1 - d_2)(d_1 + d_2)/2}$, with $d_1 - d_2 = \sigma\sqrt{T}$ and $d_1 + d_2 = 2\big(\ln(S/K) + (r - q)T\big)/(\sigma\sqrt{T})$. So the ratio is $(K/S)\,e^{-(r - q)T}$, and multiplying by $Se^{-qT}$ gives $Ke^{-rT}\phi(d_2)$.
+The identity: $`\phi(d_1)/\phi(d_2) = e^{-(d_1 - d_2)(d_1 + d_2)/2}`$, with $`d_1 - d_2 = \sigma\sqrt{T}`$ and $`d_1 + d_2 = 2\big(\ln(S/K) + (r - q)T\big)/(\sigma\sqrt{T})`$. So the ratio is $`(K/S)\,e^{-(r - q)T}`$, and multiplying by $`Se^{-qT}`$ gives $`Ke^{-rT}\phi(d_2)`$.
 
 </details>
 
@@ -175,7 +193,7 @@ The same cancellation works on any surface whose volatility depends on expiry al
 <details>
 <summary>Local volatility as a conditional expectation</summary>
 
-If the true volatility is itself random, Gyöngy proved in 1986 that a diffusion of the local-volatility kind has the same distribution of the price at every single date. Its local variance at $(K, T)$ is the average of the random variance on date $T$ over the paths with $S_T = K$. Vanilla calls see only one date's distribution, so Dupire's formula on the random-volatility prices returns exactly that average. Barriers see whole paths, so the two models price them differently.
+If the true volatility is itself random, Gyöngy proved in 1986 that a diffusion of the local-volatility kind has the same distribution of the price at every single date. Its local variance at $`(K, T)`$ is the average of the random variance on date $`T`$ over the paths with $`S_T = K`$. Vanilla calls see only one date's distribution, so Dupire's formula on the random-volatility prices returns exactly that average. Barriers see whole paths, so the two models price them differently.
 
 </details>
 
@@ -185,15 +203,15 @@ A second road to the forward equation applies [Ito's lemma](../../11-Stochastic%
 
 ## Worked numbers, by hand
 
-House market, every call at 20%: $S$ = 100, $r$ = 5%, $q$ = 2%. Read at $K$ = 100, $T$ = 1, from a grid with steps of one dollar in strike ($h$ = 1) and 0.01 year in expiry ($\delta$ = 0.01).
+House market, every call at 20%: $`S`$ = 100, $`r`$ = 5%, $`q`$ = 2%. Read at $`K`$ = 100, $`T`$ = 1, from a grid with steps of one dollar in strike ($`h`$ = 1) and 0.01 year in expiry ($`\delta`$ = 0.01).
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | prices at strikes 99, 100, 101, one year | house formula at 20% | 9.731084, 9.227006, 8.741874 |
 | prices at expiries 0.99 and 1.01, strike 100 | house formula at 20% | 9.176000, 9.277787 |
-| calendar slope $C_T$ | (9.277787 − 9.176000) / 0.02, at full precision | 5.089370 |
-| strike slope $C_K$ | (8.741874 − 9.731084) / 2 | −0.494605 |
-| strike bend $C_{KK}$ | 9.731084 − 2 × 9.227006 + 8.741874, at full precision | 0.018947 |
+| calendar slope $`C_T`$ | (9.277787 − 9.176000) / 0.02, at full precision | 5.089370 |
+| strike slope $`C_K`$ | (8.741874 − 9.731084) / 2 | −0.494605 |
+| strike bend $`C_{KK}`$ | 9.731084 − 2 × 9.227006 + 8.741874, at full precision | 0.018947 |
 | forward-slide term | 0.03 × 100 × (−0.494605), at full precision | −1.483814 |
 | dividend term | 0.02 × 9.227006 | 0.184540 |
 | numerator | 5.089370 − 1.483814 + 0.184540 | 3.790096 |
@@ -207,7 +225,7 @@ Prices made at 20% hand back 20% at both points, to four places. The closed-form
 
 ### A surface that is not flat
 
-The harder test needs a stock whose local volatility is known before any option is priced. Take a second stock whose price plus a cushion of $100, growing at $r - q$ = 3% a year, moves exactly like the house model at 10% volatility. Its swings in dollars are 10% of price plus cushion, so in percent its volatility is higher when the price is low. Its call prices are the house formula applied to the cushioned price: Mark Rubinstein's displaced diffusion (1983). The reading sees only those prices.
+The harder test needs a stock whose local volatility is known before any option is priced. Take a second stock whose price plus a cushion of $100, growing at $`r - q`$ = 3% a year, moves exactly like the house model at 10% volatility. Its swings in dollars are 10% of price plus cushion, so in percent its volatility is higher when the price is low. Its call prices are the house formula applied to the cushioned price: Mark Rubinstein's displaced diffusion (1983). The reading sees only those prices.
 
 | Strike ($) | 70 | 80 | 90 | 100 | 110 | 120 | 130 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -223,10 +241,10 @@ Correct answer at (100, 1): 0.2000, read with the closed-form slopes.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Drop the ½ in the denominator | 0.141421 | the variance is halved: short by the square root of 2 |
-| Zero-rate formula, $C_T$ over $\tfrac12 K^2 C_{KK}$, on today's prices | 0.231757 | interest and dividends in the calendar slope are read as volatility |
-| Leave out $q\,C$ | 0.195070 | value leaking out through dividends is counted against volatility |
-| Flip the sign of $(r - q)K\,C_K$ | 0.267055 | the forward's growth past the strike is added instead of removed |
-| Spot gamma $\Gamma$ for the bend, at (110, 0.5) | 0.181818 | the two bends agree only when $S$ = $K$; here gamma is larger by (110/100) squared, so the reading is 20% × 100/110 |
+| Zero-rate formula, $`C_T`$ over $`\tfrac12 K^2 C_{KK}`$, on today's prices | 0.231757 | interest and dividends in the calendar slope are read as volatility |
+| Leave out $`q\,C`$ | 0.195070 | value leaking out through dividends is counted against volatility |
+| Flip the sign of $`(r - q)K\,C_K`$ | 0.267055 | the forward's growth past the strike is added instead of removed |
+| Spot gamma $`\Gamma`$ for the bend, at (110, 0.5) | 0.181818 | the two bends agree only when $`S`$ = $`K`$; here gamma is larger by (110/100) squared, so the reading is 20% × 100/110 |
 
 ---
 
@@ -663,7 +681,7 @@ Lean proves the algebra of Steps 4, 5 and 6, at any one strike and expiry, for a
 
 - Suppose the call prices obey Dupire's forward equation at a positive strike, and the bend there is positive. Then the local variance is the formula at the top of the card.
 - Suppose the bend is positive and the numerator is not negative, so the butterfly and calendar tests pass. Then exactly one local volatility of zero or more fits the forward equation.
-- Take the house formula at any volatility $\sigma$, with a positive price, strike and expiry. Then Step 6's closed-form slopes, put into the formula, give exactly $\sigma^2$.
+- Take the house formula at any volatility $`\sigma`$, with a positive price, strike and expiry. Then Step 6's closed-form slopes, put into the formula, give exactly $`\sigma^2`$.
 
 The grid readings, the marched forward equation, the sloping second case and every number are left to the Python and Rust checks.
 
@@ -804,7 +822,7 @@ theorem dupire_flat_surface_returns_sigma (S K r q σ T : ℝ)
 > **Reading local volatility as implied volatility.** Implied volatility is one number per option: the single constant volatility that reprices that option. Local volatility is one number per price and date: the volatility the stock has when it stands there. On a flat surface they agree. On a sloping one, an option's implied volatility is roughly an average of local volatilities along the paths to its strike, so local volatility slopes more steeply; the conversion is [Local volatility in implied-vol terms](02-local-volatility-from-implied-volatility.md).
 >
 > - **Dropping the carry terms.** The zero-rate formula holds only once interest and dividends are stripped out: prices undiscounted, each strike measured against its forward. On today's house prices it reads 0.231757.
-> - **Spot gamma for the strike bend.** They agree only at $S$ = $K$. At (110, 0.5) the swap reads 0.181818.
+> - **Spot gamma for the strike bend.** They agree only at $`S`$ = $`K`$. At (110, 0.5) the swap reads 0.181818.
 > - **Differencing raw quotes.** Quotes sit at scattered strikes and expiries. A grid of strikes $5 apart and expiries three months apart reads 0.201317 even on perfect prices, and any quote error is divided by the step squared in the bend. Fit a smooth surface that passes both arbitrage tests first.
 > - **Taking a perfect fit for a forecast.** Local volatility reprices today's surface exactly; how it makes the smile move later is another question, usually answered wrongly: [Pricing with local volatility](03-pricing-under-local-volatility-and-the-forward-smile.md).
 

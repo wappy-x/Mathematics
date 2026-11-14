@@ -41,39 +41,45 @@ The euros go out and come back unchanged. The dollars go out as 11,000,000 and c
 
 ## The formula
 
-Notation first, in words. A small letter written low after a symbol labels its currency: $r_d$ is the **domestic** rate, on the currency prices are counted in (dollars); $r_f$ is the **foreign** rate, on the currency being priced (euros). Both are continuously compounded: a deposit of 1 grows to $e^{rT}$ in $T$ years. Dates are written in desk shorthand: 3M is three months, 6M six months, 1Y one year.
+Notation first, in words. A small letter written low after a symbol labels its currency: $`r_d`$ is the **domestic** rate, on the currency prices are counted in (dollars); $`r_f`$ is the **foreign** rate, on the currency being priced (euros). Both are continuously compounded: a deposit of 1 grows to $`e^{rT}`$ in $`T`$ years. Dates are written in desk shorthand: 3M is three months, 6M six months, 1Y one year.
 
-$$P = \frac{F - S}{p} = \frac{S\,\bigl(e^{(r_d - r_f)T} - 1\bigr)}{p}, \qquad F = S + P\,p$$
+```math
+P = \frac{F - S}{p} = \frac{S\,\bigl(e^{(r_d - r_f)T} - 1\bigr)}{p}, \qquad F = S + P\,p
+```
 
 **Read it aloud:** the points are the forward minus spot, counted in pips; and they come from spot times the carry factor minus one, where the carry factor grows spot by the gap between the two rates.
 
 | Symbol | Plain meaning | In our example | Push it up and the points… |
 | --- | --- | --- | --- |
-| $S$ | spot rate: dollars for one euro, exchanged on the spot date | 1.1000 | rise in proportion: 224.23 at 1.1100 |
-| $F$ | outright forward rate: dollars for one euro, agreed today, exchanged at $T$ | 1.105514 (3M), 1.122221 (1Y) | (the answer, in full) |
-| $P$ | forward points: $F - S$ counted in pips; positive is a **premium**, negative a **discount** | +55.14 (3M), +222.21 (1Y) | (the answer, as quoted) |
-| $p$ | pip size: the smallest customary step in the rate | 0.0001 for EURUSD | (fixed by convention) |
-| $r_d$ | dollar deposit rate, per year, continuously compounded | 5% | rise |
-| $r_f$ | euro deposit rate, same basis | 3% | fall, and turn negative once above $r_d$ |
-| $T$ | years from the spot date to the forward date | 0.25 and 1 | grow a little faster than in proportion |
-| $e^{(r_d - r_f)T}$ | the carry factor: the forward as a multiple of spot | 1.020201 (1Y) | (built from the three above) |
-| $N$ | the swap's amount in euros, the same on both legs | 10,000,000 | scale the dollar amounts |
-| $R_d$, $R_f$ | the same two rates quoted as simple interest, the way a deposit desk quotes them | (see the money-market form) | |
-| $\tau$ | day-count fraction: the deposit's days over the convention's year | 0.25 | |
+| $`S`$ | spot rate: dollars for one euro, exchanged on the spot date | 1.1000 | rise in proportion: 224.23 at 1.1100 |
+| $`F`$ | outright forward rate: dollars for one euro, agreed today, exchanged at $`T`$ | 1.105514 (3M), 1.122221 (1Y) | (the answer, in full) |
+| $`P`$ | forward points: $`F - S`$ counted in pips; positive is a **premium**, negative a **discount** | +55.14 (3M), +222.21 (1Y) | (the answer, as quoted) |
+| $`p`$ | pip size: the smallest customary step in the rate | 0.0001 for EURUSD | (fixed by convention) |
+| $`r_d`$ | dollar deposit rate, per year, continuously compounded | 5% | rise |
+| $`r_f`$ | euro deposit rate, same basis | 3% | fall, and turn negative once above $`r_d`$ |
+| $`T`$ | years from the spot date to the forward date | 0.25 and 1 | grow a little faster than in proportion |
+| $`e^{(r_d - r_f)T}`$ | the carry factor: the forward as a multiple of spot | 1.020201 (1Y) | (built from the three above) |
+| $`N`$ | the swap's amount in euros, the same on both legs | 10,000,000 | scale the dollar amounts |
+| $`R_d`$, $`R_f`$ | the same two rates quoted as simple interest, the way a deposit desk quotes them | (see the money-market form) | |
+| $`\tau`$ | day-count fraction: the deposit's days over the convention's year | 0.25 | |
 
-**The rule of thumb.** For short dates and small rate gaps, $e^{x} - 1$ is close to $x$, so
+**The rule of thumb.** For short dates and small rate gaps, $`e^{x} - 1`$ is close to $`x`$, so
 
-$$P \approx \frac{S\,(r_d - r_f)\,T}{p}.$$
+```math
+P \approx \frac{S\,(r_d - r_f)\,T}{p}.
+```
 
 In words: spot, times the rate gap, times the years, in pips. It gives 55.00 for three months and 220.00 for a year, against the exact 55.14 and 222.21.
 
 **The money-market form.** With deposit rates quoted as simple interest over a day count,
 
-$$F - S = S\,\frac{(R_d - R_f)\,\tau}{1 + R_f\,\tau}.$$
+```math
+F - S = S\,\frac{(R_d - R_f)\,\tau}{1 + R_f\,\tau}.
+```
 
-In words: spot times the gap in the two deposits' interest, shrunk by the euro deposit's growth. It is the same forward in a desk's units. With $R = (e^{rT} - 1)/\tau$, the simple rate that grows a deposit as much as the continuous one, it returns 55.14 again.
+In words: spot times the gap in the two deposits' interest, shrunk by the euro deposit's growth. It is the same forward in a desk's units. With $`R = (e^{rT} - 1)/\tau`$, the simple rate that grows a deposit as much as the continuous one, it returns 55.14 again.
 
-**The swap.** On the near date one side hands over $N$ euros for $N S$ dollars. On the far date the euros come back for $N F$ dollars. The dollar lender's gain on the dollars is $N(F - S) = N P p$: points times pip size times the euro amount.
+**The swap.** On the near date one side hands over $`N`$ euros for $`N S`$ dollars. On the far date the euros come back for $`N F`$ dollars. The dollar lender's gain on the dollars is $`N(F - S) = N P p`$: points times pip size times the euro amount.
 
 **Conventions verified 27 Sep 2026:**
 
@@ -97,9 +103,11 @@ Markets could change these conventions; the formula does not depend on them.
 
 ### Step 0: the forward is spot plus carry, and carry is what gets quoted
 
-Covered interest parity says the forward is spot grown by the gap between the two deposit rates: $F = S\,e^{(r_d - r_f)T}$. Split that into two parts. Spot moves with every trade. The growth part moves only when an interest rate moves. Dealers price the two parts separately, on separate desks, and the points are the growth part on its own:
+Covered interest parity says the forward is spot grown by the gap between the two deposit rates: $`F = S\,e^{(r_d - r_f)T}`$. Split that into two parts. Spot moves with every trade. The growth part moves only when an interest rate moves. Dealers price the two parts separately, on separate desks, and the points are the growth part on its own:
 
-$$F - S = S\,e^{(r_d - r_f)T} - S = S\,\bigl(e^{(r_d - r_f)T} - 1\bigr).$$
+```math
+F - S = S\,e^{(r_d - r_f)T} - S = S\,\bigl(e^{(r_d - r_f)T} - 1\bigr).
+```
 
 Divide by the pip size and the result is the quoted points. At the house numbers, 1.1000 times 0.020201, over 0.0001, is 222.21.
 
@@ -107,11 +115,13 @@ The points are proportional to spot, so they move with it, a little: spot up 100
 
 ### Step 1: the rule of thumb, and what it drops
 
-The exponential written as a sum is $e^{x} = 1 + x + x^2/2 + \dots$ So $e^{x} - 1 = x + x^2/2 + \dots$ With $x = (r_d - r_f)T$, the first term gives the rule of thumb, and the second gives its error:
+The exponential written as a sum is $`e^{x} = 1 + x + x^2/2 + \dots`$ So $`e^{x} - 1 = x + x^2/2 + \dots`$ With $`x = (r_d - r_f)T`$, the first term gives the rule of thumb, and the second gives its error:
 
-$$P - \frac{S\,x}{p} \approx \frac{S\,x^2}{2p}.$$
+```math
+P - \frac{S\,x}{p} \approx \frac{S\,x^2}{2p}.
+```
 
-For one year, $x$ = 0.02, and the square term is 1.1 times 0.0004 over 2, over 0.0001: 2.20 pips. The actual gap is 2.21. The small rest is the cube term. At three months the square term is far smaller, which is why 55.00 and 55.14 look almost equal. At five years they do not: 1156.88 exact, 1100.00 by the rule.
+For one year, $`x`$ = 0.02, and the square term is 1.1 times 0.0004 over 2, over 0.0001: 2.20 pips. The actual gap is 2.21. The small rest is the cube term. At three months the square term is far smaller, which is why 55.00 and 55.14 look almost equal. At five years they do not: 1156.88 exact, 1100.00 by the rule.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -127,11 +137,11 @@ Orange: the exact points. Green: the rule of thumb, a straight line. The two agr
 
 ### Step 2: the sign says which currency pays more
 
-$e^{x} - 1$ has the sign of $x$. So the points are positive exactly when the dollar rate is above the euro rate, and negative when it is below.
+$`e^{x} - 1`$ has the sign of $`x`$. So the points are positive exactly when the dollar rate is above the euro rate, and negative when it is below.
 
 Positive points mean the euro costs more forward than today: the euro trades at a **forward premium**. That is compensation, not a forecast. Whoever gives up dollars to hold euros earns the lower rate, and the forward rate is where the gap is paid back.
 
-Swap the two rates, euros at 5 and dollars at 3, and the three-month points are −54.86: a **forward discount**. The size is not 55.14 again, because $e^{-x} - 1$ is not the mirror of $e^{x} - 1$. It is smaller by the square term, which now has the opposite effect.
+Swap the two rates, euros at 5 and dollars at 3, and the three-month points are −54.86: a **forward discount**. The size is not 55.14 again, because $`e^{-x} - 1`$ is not the mirror of $`e^{x} - 1`$. It is smaller by the square term, which now has the opposite effect.
 
 ### Step 3: from a points quote to an outright, for any date
 
@@ -161,7 +171,9 @@ Compare lending the 11,000,000 dollars without security at 5 percent for the qua
 
 The swap earns two things instead. The points leg pays 55,137.73. The euro interest, sold forward at 1.105514, is worth 83,225.24 dollars. Together they make 138,362.97: the full 5 percent. So the swap lender earns the dollar rate, collected in two pieces, and the points piece is exactly the gap between the two rates:
 
-$$N\,(F - S) = N S\,\bigl(e^{r_d T} - 1\bigr) - N\,\bigl(e^{r_f T} - 1\bigr)\,F.$$
+```math
+N\,(F - S) = N S\,\bigl(e^{r_d T} - 1\bigr) - N\,\bigl(e^{r_f T} - 1\bigr)\,F.
+```
 
 The rule of thumb, the 2 percent gap on 11,000,000 dollars for a quarter, gives 55,000.00; the exact figure is 55,137.73.
 
@@ -170,15 +182,17 @@ The European bank has, from its side, borrowed dollars at 5 percent and lent eur
 <details>
 <summary>Detailed proof: the points leg is the dollar interest minus the euro interest at the forward rate</summary>
 
-Let one continuously compounded rate apply to borrowing and lending in each currency, and let covered interest parity hold: $F = S\,e^{(r_d - r_f)T}$, so $F\,e^{r_f T} = S\,e^{r_d T}$.
+Let one continuously compounded rate apply to borrowing and lending in each currency, and let covered interest parity hold: $`F = S\,e^{(r_d - r_f)T}`$, so $`F\,e^{r_f T} = S\,e^{r_d T}`$.
 
-The dollar lender's position at $T$, in dollars, when the euros received at the start are deposited at $r_f$ and the interest on them is sold forward at $F$: $N F$ from the far leg, plus $N(e^{r_f T} - 1)F$ from the euro interest. The total is $N F e^{r_f T} = N S e^{r_d T}$, which is what $N S$ dollars lent at $r_d$ returns. So the swap, with the collateral invested, is a dollar deposit at $r_d$.
+The dollar lender's position at $`T`$, in dollars, when the euros received at the start are deposited at $`r_f`$ and the interest on them is sold forward at $`F`$: $`N F`$ from the far leg, plus $`N(e^{r_f T} - 1)F`$ from the euro interest. The total is $`N F e^{r_f T} = N S e^{r_d T}`$, which is what $`N S`$ dollars lent at $`r_d`$ returns. So the swap, with the collateral invested, is a dollar deposit at $`r_d`$.
 
-Subtract the principal $N S$ from both sides and move the euro interest across:
-$$N F - N S = N S\,(e^{r_d T} - 1) - N\,(e^{r_f T} - 1)\,F.$$
-The left side is the points leg, $N P p$. The right side is dollar interest on the loan minus euro interest on the collateral, valued at the forward. At the house numbers: 138,362.97 minus 83,225.24 is 55,137.73.
+Subtract the principal $`N S`$ from both sides and move the euro interest across:
 
-At inception the swap costs nothing to enter. The near leg exchanges equal values at spot. The far leg is worth $N F e^{-r_d T} - N S e^{-r_f T}$ today, which is zero by the same parity identity.
+$`\displaystyle N F - N S = N S\,(e^{r_d T} - 1) - N\,(e^{r_f T} - 1)\,F.`$
+
+The left side is the points leg, $`N P p`$. The right side is dollar interest on the loan minus euro interest on the collateral, valued at the forward. At the house numbers: 138,362.97 minus 83,225.24 is 55,137.73.
+
+At inception the swap costs nothing to enter. The near leg exchanges equal values at spot. The far leg is worth $`N F e^{-r_d T} - N S e^{-r_f T}`$ today, which is zero by the same parity identity.
 
 </details>
 
@@ -222,7 +236,7 @@ Correct three-month points: +55.14, outright 1.105514. Correct one-year points: 
 | High/low points "55.3/55.0" added to spot | 1.105430 / 1.105600 (right: 1.094370 / 1.094600) | The euro is at a discount; the points must come off. The narrow spread gives it away. |
 | Points read with pip 0.001 | 1.155138 (right: 1.105514) | A EURUSD pip is 0.0001; the wrong pip size multiplies the points by ten. |
 | Straight line for a six-month broken date | 110.83 pips (right: 110.55) | The points curve bends up; the line between 3M and 1Y sits above it. |
-| Flipped rates taken as −55.14 | −55.14 (right: −54.86) | The discount is not the premium with its sign changed; $e^{-x} - 1$ is smaller in size than $x$. |
+| Flipped rates taken as −55.14 | −55.14 (right: −54.86) | The discount is not the premium with its sign changed; $`e^{-x} - 1`$ is smaller in size than $`x`$. |
 
 Every number in that table is printed by both checks below.
 
@@ -230,7 +244,7 @@ Every number in that table is printed by both checks below.
 
 ## Code, from first principles, and it actually runs
 
-The script reaches the points by **four independent roads**. Road 1 is the formula with the library exponential. Road 2 never calls it: it sums $e^{x}$ by hand as a series, writes the dollar lender's ledger for any far-leg rate, and finds by bisection (halving an interval until it is a point) the rate at which the swap with its collateral invested pays exactly what an unsecured dollar loan pays. Road 3 uses the money-market form with simple rates. Road 4 rolls the three-month carry four times into a year. Then it builds two-way outrights, the broken date, the swap's legs, the two-loan split, the swap's reaction to a jump in spot against an outright's, and every wrong number in the table. Eleven asserts compare values reached by different routes.
+The script reaches the points by **four independent roads**. Road 1 is the formula with the library exponential. Road 2 never calls it: it sums $`e^{x}`$ by hand as a series, writes the dollar lender's ledger for any far-leg rate, and finds by bisection (halving an interval until it is a point) the rate at which the swap with its collateral invested pays exactly what an unsecured dollar loan pays. Road 3 uses the money-market form with simple rates. Road 4 rolls the three-month carry four times into a year. Then it builds two-way outrights, the broken date, the swap's legs, the two-loan split, the swap's reaction to a jump in spot against an outright's, and every wrong number in the table. Eleven asserts compare values reached by different routes.
 
 ### Python
 
@@ -597,11 +611,11 @@ The two outputs agree line for line.
 
 Lean proves the points formula, the swap ledger and the sign rule for every spot rate, pip size, interest rate and term.
 
-- Take a fair forward $F = S\,e^{(r_d - r_f)T}$ and a nonzero pip size $p$. Then $(F - S)/p = S\,(e^{(r_d - r_f)T} - 1)/p$, and $F = S + P\,p$.
-- Take the same fair forward and any swap amount $N$ in euros. Then the far leg plus the euro interest sold forward, $N F e^{r_f T}$, equals $N S e^{r_d T}$.
-- Take the same numbers. Then the points leg $N(F - S)$ is the dollar interest minus the euro interest valued at $F$.
-- Take the same numbers. Then the swap is worth nothing at inception: $N F e^{-r_d T} - N S e^{-r_f T} = 0$.
-- Take $S > 0$, $p > 0$ and $T > 0$, with the fair forward. Then the points are a premium exactly when $r_d > r_f$, and a discount exactly when $r_d < r_f$.
+- Take a fair forward $`F = S\,e^{(r_d - r_f)T}`$ and a nonzero pip size $`p`$. Then $`(F - S)/p = S\,(e^{(r_d - r_f)T} - 1)/p`$, and $`F = S + P\,p`$.
+- Take the same fair forward and any swap amount $`N`$ in euros. Then the far leg plus the euro interest sold forward, $`N F e^{r_f T}`$, equals $`N S e^{r_d T}`$.
+- Take the same numbers. Then the points leg $`N(F - S)`$ is the dollar interest minus the euro interest valued at $`F`$.
+- Take the same numbers. Then the swap is worth nothing at inception: $`N F e^{-r_d T} - N S e^{-r_f T} = 0`$.
+- Take $`S > 0`$, $`p > 0`$ and $`T > 0`$, with the fair forward. Then the points are a premium exactly when $`r_d > r_f`$, and a discount exactly when $`r_d < r_f`$.
 - Take spot 1.1000, dollars at 5% and euros at 3%. Then the rule of thumb gives 55.00 pips at 3M and 220.00 at 1Y.
 - At 1Y the square term is 2.20 pips.
 - One pip on the 10 million euro swap is 1,000 dollars, and the near leg is 11,000,000 dollars.
@@ -745,7 +759,7 @@ example : (11001 / 10000 : ℚ) + 550 / 10 * (1 / 10000) - ((10999 / 10000) + 55
 
 ## What this builds on
 
-- [Covered interest parity](02-covered-interest-parity.md): the forward rate itself, $F = S e^{(r_d - r_f)T}$, and why no other rate survives arbitrage. Every point on this card is that forward minus spot.
+- [Covered interest parity](02-covered-interest-parity.md): the forward rate itself, $`F = S e^{(r_d - r_f)T}`$, and why no other rate survives arbitrage. Every point on this card is that forward minus spot.
 - [Percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): rates as fractions of an amount, and the difference between percent and percentage points, which is the rate gap the points carry.
 
 ## Where this goes next

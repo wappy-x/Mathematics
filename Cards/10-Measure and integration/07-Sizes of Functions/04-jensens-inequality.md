@@ -41,53 +41,57 @@ Averaging a straight line over the week lands on the line at the mean, 125. The 
 
 Notation, as a reminder:
 
-- A measure space $(\Omega, \mathcal{F}, \mu)$ is a set of points, the sets we allow ourselves to measure, and a measure giving each a size.
-- A probability measure $P$ has total size $P(\Omega) = 1$.
-- The integral $\int f \, dP$, read "the integral of f against P", is also written $E[f]$, the mean of f ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)).
-- $L^1(P)$ is the set of measurable functions with $\int \lvert f \rvert \, dP$ finite.
-- A function $\varphi$ on an interval is **convex** when each chord between two points of its graph lies on or above the graph ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)); **strictly convex** when the chord lies strictly above except at its ends.
-- $\varphi \circ f$, read "phi after f", is the function that sends a point $\omega$ to $\varphi(f(\omega))$.
+- A measure space $`(\Omega, \mathcal{F}, \mu)`$ is a set of points, the sets we allow ourselves to measure, and a measure giving each a size.
+- A probability measure $`P`$ has total size $`P(\Omega) = 1`$.
+- The integral $`\int f \, dP`$, read "the integral of f against P", is also written $`E[f]`$, the mean of f ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)).
+- $`L^1(P)`$ is the set of measurable functions with $`\int \lvert f \rvert \, dP`$ finite.
+- A function $`\varphi`$ on an interval is **convex** when each chord between two points of its graph lies on or above the graph ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)); **strictly convex** when the chord lies strictly above except at its ends.
+- $`\varphi \circ f`$, read "phi after f", is the function that sends a point $`\omega`$ to $`\varphi(f(\omega))`$.
 
-On the turbine, $\Omega$ is the seven days, $\mathcal{F}$ is every subset of them, $P$ gives each day 1/7, and $f$ is the day's speed; its integral is a weighted sum of seven values.
+On the turbine, $`\Omega`$ is the seven days, $`\mathcal{F}`$ is every subset of them, $`P`$ gives each day 1/7, and $`f`$ is the day's speed; its integral is a weighted sum of seven values.
 
-**Jensen's inequality.** Let $(\Omega, \mathcal{F}, P)$ be a probability space, $I$ an interval, $\varphi$ convex on $I$, and $f$ in $L^1(P)$ with every value in $I$. Then the integral of $\varphi \circ f$ exists (it may be $+\infty$) and
+**Jensen's inequality.** Let $`(\Omega, \mathcal{F}, P)`$ be a probability space, $`I`$ an interval, $`\varphi`$ convex on $`I`$, and $`f`$ in $`L^1(P)`$ with every value in $`I`$. Then the integral of $`\varphi \circ f`$ exists (it may be $`+\infty`$) and
 
-$$\varphi\Big(\int f \, dP\Big) \;\le\; \int \varphi \circ f \, dP.$$
+```math
+\varphi\Big(\int f \, dP\Big) \;\le\; \int \varphi \circ f \, dP.
+```
 
-If $\varphi$ is strictly convex and the right side is finite, equality holds exactly when $f$ equals its mean almost surely, written a.s.: except on a set of probability zero.
+If $`\varphi`$ is strictly convex and the right side is finite, equality holds exactly when $`f`$ equals its mean almost surely, written a.s.: except on a set of probability zero.
 
 **Read it aloud:** on a probability space, the convex function of the integral is at most the integral of the convex function.
 
-Three corollaries, each Jensen with one chosen $\varphi$:
+Three corollaries, each Jensen with one chosen $`\varphi`$:
 
-$$\Big(\int f \, dP\Big)^2 \le \int f^2 \, dP, \qquad \exp\Big(\int \ln f \, dP\Big) \le \int f \, dP \ \ (f > 0), \qquad \lVert f \rVert_p \le \lVert f \rVert_q \ \ (0 < p < q).$$
+```math
+\Big(\int f \, dP\Big)^2 \le \int f^2 \, dP, \qquad \exp\Big(\int \ln f \, dP\Big) \le \int f \, dP \ \ (f > 0), \qquad \lVert f \rVert_p \le \lVert f \rVert_q \ \ (0 < p < q).
+```
 
 **Read them aloud:** the square of the mean is at most the mean of the square; the geometric mean, e raised to the mean logarithm, is at most the ordinary mean; the p-norm grows with p.
 
-The p-norm, from [Lp spaces](01-lp-spaces.md), is $\lVert f \rVert_p = \big(\int \lvert f \rvert^p \, dP\big)^{1/p}$. The third inequality is **Lyapunov's inequality**: on a probability space $L^q(P)$ sits inside $L^p(P)$ whenever $p < q$.
+The p-norm, from [Lp spaces](01-lp-spaces.md), is $`\lVert f \rVert_p = \big(\int \lvert f \rvert^p \, dP\big)^{1/p}`$. The third inequality is **Lyapunov's inequality**: on a probability space $`L^q(P)`$ sits inside $`L^p(P)`$ whenever $`p < q`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\omega$, $\mathcal{F}$ | the space; one point of it; the sets we allow ourselves to measure | the seven days; one day; every subset of them | — |
-| $\mu$, $P$, $\lambda$ | a measure; one of total size 1; Lebesgue measure, length | counting measure, 1 per day; $P$, 1/7 per day; $\lambda$ on `[1, ∞)` in What breaks | total size above 1 can reverse the inequality |
-| $f$ | a measurable function | the day's speed in m/s | a windier top day widens the gap |
-| $\varphi$ | a convex function on $I$ | $x^3$, $x^2$, $-\ln x$, $x^{q/p}$ | a sharper bend, a bigger gap |
-| $I$ | an interval holding every value of $f$ | `[0, ∞)`, or `(0, ∞)` for the logarithm | — |
-| $m$ | the mean, $\int f \, dP$ | 5 m/s | — |
-| $s$, $\ell$ | a slope, and the supporting line $\ell(x) = \varphi(m) + s(x - m)$ | 75; $\ell(x) = 125 + 75(x - 5)$ | — |
-| $g$ | in the proofs, the gap $\varphi \circ f - \ell \circ f$, never negative | 52, 0, 162, 108, 16, 14, 68 day by day | its mean is the Jensen gap, 60 |
-| $p$, $q$ | powers, with $0 < p < q$ | 1, 2, 3 | the norm rises with the power |
-| $\lVert f \rVert_p$ | the p-norm, $(\int \lvert f \rvert^p \, dP)^{1/p}$ | 5.00, 5.39, 5.70 for p = 1, 2, 3 | climbs toward the largest speed, 8 |
-| $N$, $c$ | a cut-off on the line; a total size $\mu(\Omega)$ | N = 10 to 10000; c = 7 for counting measure | — |
-| $\alpha$, $\beta$ | in Step 0, a line's height at 0 and its slope | — | — |
-| $a$, $t$, $u$, $v$, $y$, $n$, $w_i$, $a_i$ | in the Detailed proof: an end of $I$; a level; points of $I$; a count of points, their weights and values | — | — |
+| $`\Omega`$, $`\omega`$, $`\mathcal{F}`$ | the space; one point of it; the sets we allow ourselves to measure | the seven days; one day; every subset of them | — |
+| $`\mu`$, $`P`$, $`\lambda`$ | a measure; one of total size 1; Lebesgue measure, length | counting measure, 1 per day; $`P`$, 1/7 per day; $`\lambda`$ on `[1, ∞)` in What breaks | total size above 1 can reverse the inequality |
+| $`f`$ | a measurable function | the day's speed in m/s | a windier top day widens the gap |
+| $`\varphi`$ | a convex function on $`I`$ | $`x^3`$, $`x^2`$, $`-\ln x`$, $`x^{q/p}`$ | a sharper bend, a bigger gap |
+| $`I`$ | an interval holding every value of $`f`$ | `[0, ∞)`, or `(0, ∞)` for the logarithm | — |
+| $`m`$ | the mean, $`\int f \, dP`$ | 5 m/s | — |
+| $`s`$, $`\ell`$ | a slope, and the supporting line $`\ell(x) = \varphi(m) + s(x - m)`$ | 75; $`\ell(x) = 125 + 75(x - 5)`$ | — |
+| $`g`$ | in the proofs, the gap $`\varphi \circ f - \ell \circ f`$, never negative | 52, 0, 162, 108, 16, 14, 68 day by day | its mean is the Jensen gap, 60 |
+| $`p`$, $`q`$ | powers, with $`0 < p < q`$ | 1, 2, 3 | the norm rises with the power |
+| $`\lVert f \rVert_p`$ | the p-norm, $`(\int \lvert f \rvert^p \, dP)^{1/p}`$ | 5.00, 5.39, 5.70 for p = 1, 2, 3 | climbs toward the largest speed, 8 |
+| $`N`$, $`c`$ | a cut-off on the line; a total size $`\mu(\Omega)`$ | N = 10 to 10000; c = 7 for counting measure | — |
+| $`\alpha`$, $`\beta`$ | in Step 0, a line's height at 0 and its slope | — | — |
+| $`a`$, $`t`$, $`u`$, $`v`$, $`y`$, $`n`$, $`w_i`$, $`a_i`$ | in the Detailed proof: an end of $`I`$; a level; points of $`I`$; a count of points, their weights and values | — | — |
 
 ### When it holds
 
-- **Total size 1.** The proof integrates a constant, $\varphi(m)$, and gets $\varphi(m)$ back; that needs $P(\Omega) = 1$. Under counting measure the week has total size 7: the integral of the speed is 35, its cube 42875, far above the integral of the cubes, 1295.
-- **The function is integrable.** With no finite $\int f \, dP$ there is no mean to feed into $\varphi$. The right side needs no assumption: it may be $+\infty$, and the inequality still holds.
+- **Total size 1.** The proof integrates a constant, $`\varphi(m)`$, and gets $`\varphi(m)`$ back; that needs $`P(\Omega) = 1`$. Under counting measure the week has total size 7: the integral of the speed is 35, its cube 42875, far above the integral of the cubes, 1295.
+- **The function is integrable.** With no finite $`\int f \, dP`$ there is no mean to feed into $`\varphi`$. The right side needs no assumption: it may be $`+\infty`$, and the inequality still holds.
 - **Convex on an interval holding every value.** The cube is convex on `[0, ∞)` but bends the other way below 0. A concave function such as the square root reverses the inequality: the mean root speed is 2.1866 against 2.2361, the root of the mean.
-- **Equality means no spread.** For strictly convex $\varphi$, any spread in $f$ on a set of positive probability opens a gap. A steady 5 m/s all week gives mean cube 125, cube of mean 125.
+- **Equality means no spread.** For strictly convex $`\varphi`$, any spread in $`f`$ on a set of positive probability opens a gap. A steady 5 m/s all week gives mean cube 125, cube of mean 125.
 
 ---
 
@@ -95,39 +99,41 @@ The p-norm, from [Lp spaces](01-lp-spaces.md), is $\lVert f \rVert_p = \big(\int
 
 ### Step 0: a straight line passes through an integral unchanged
 
-For a line $\ell(x) = \alpha + \beta x$, with height $\alpha$ at 0 and slope $\beta$, integrating against $P$ gives $\int (\alpha + \beta f) \, dP = \alpha\,P(\Omega) + \beta \int f \, dP$ by linearity ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)). When $P(\Omega) = 1$, that is $\ell$ of the mean.
+For a line $`\ell(x) = \alpha + \beta x`$, with height $`\alpha`$ at 0 and slope $`\beta`$, integrating against $`P`$ gives $`\int (\alpha + \beta f) \, dP = \alpha\,P(\Omega) + \beta \int f \, dP`$ by linearity ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)). When $`P(\Omega) = 1`$, that is $`\ell`$ of the mean.
 
 Only bending breaks the swap. So slide a straight line under the convex curve, touching it at the mean, and let the line do the integrating.
 
 ### Step 1: a convex curve has a line under it at the mean
 
-A **supporting line** at $m$ meets the graph of $\varphi$ at $m$ and lies on or below it everywhere on $I$. For the cube at $m = 5$ the tangent does it: slope $3 \times 5^2 = 75$, so $\ell(x) = 125 + 75(x - 5)$.
+A **supporting line** at $`m`$ meets the graph of $`\varphi`$ at $`m`$ and lies on or below it everywhere on $`I`$. For the cube at $`m = 5`$ the tangent does it: slope $`3 \times 5^2 = 75`$, so $`\ell(x) = 125 + 75(x - 5)`$.
 
-The gap $x^3 - \ell(x)$ factorises as $(x - 5)^2 (x + 10)$, never negative for $x \ge 0$. Day by day it is 52, 0, 162, 108, 16, 14 and 68.
+The gap $`x^3 - \ell(x)`$ factorises as $`(x - 5)^2 (x + 10)`$, never negative for $`x \ge 0`$. Day by day it is 52, 0, 162, 108, 16, 14 and 68.
 
-A curve with a corner, like $\lvert x \rvert$ at 0, has no tangent there, but a supporting line still exists at every point inside the interval: every slope from the left is at most every slope to the right, and any number between them works. The probability wing's [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md) proves this in full; part 3 of the Detailed proof below repeats it.
+A curve with a corner, like $`\lvert x \rvert`$ at 0, has no tangent there, but a supporting line still exists at every point inside the interval: every slope from the left is at most every slope to the right, and any number between them works. The probability wing's [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md) proves this in full; part 3 of the Detailed proof below repeats it.
 
 ### Step 2: integrate the line, and watch where total size 1 enters
 
-The curve sits on or above the line at every point, so $\varphi \circ f \ge \ell \circ f$ on all of $\Omega$. The integral respects order, so
+The curve sits on or above the line at every point, so $`\varphi \circ f \ge \ell \circ f`$ on all of $`\Omega`$. The integral respects order, so
 
-$$\int \varphi \circ f \, dP \;\ge\; \int \ell \circ f \, dP \;=\; \varphi(m)\,P(\Omega) + s\Big(\int f \, dP - m\,P(\Omega)\Big) \;=\; \varphi(m).$$
+```math
+\int \varphi \circ f \, dP \;\ge\; \int \ell \circ f \, dP \;=\; \varphi(m)\,P(\Omega) + s\Big(\int f \, dP - m\,P(\Omega)\Big) \;=\; \varphi(m).
+```
 
-The last step uses $P(\Omega) = 1$ twice: once to integrate the constant $\varphi(m)$ back to itself, once to make the slope term vanish. That is the whole proof.
+The last step uses $`P(\Omega) = 1`$ twice: once to integrate the constant $`\varphi(m)`$ back to itself, once to make the slope term vanish. That is the whole proof.
 
 On the week: the line averages to 125, the gaps average to 60, and 125 + 60 = 185, the mean cube found directly. That is the second road the code takes, and it never cubes a daily speed.
 
 ### Step 3: equality forces the function to sit still
 
-The gap $g = \varphi \circ f - \ell \circ f$ is never negative, and its integral is $\int \varphi \circ f \, dP - \varphi(m)$. If Jensen is an equality with a finite right side, $g$ has integral zero, so $g = 0$ almost surely ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)).
+The gap $`g = \varphi \circ f - \ell \circ f`$ is never negative, and its integral is $`\int \varphi \circ f \, dP - \varphi(m)`$. If Jensen is an equality with a finite right side, $`g`$ has integral zero, so $`g = 0`$ almost surely ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)).
 
-A strictly convex curve meets a supporting line only at $m$, so $f = m$ almost surely. For the cube, the week's gaps are zero only on the day that blew exactly 5 m/s.
+A strictly convex curve meets a supporting line only at $`m`$, so $`f = m`$ almost surely. For the cube, the week's gaps are zero only on the day that blew exactly 5 m/s.
 
 ### Step 4: three corollaries, three choices of curve
 
-- **The square.** Take $\varphi(x) = x^2$. The gap $x^2 - m^2 - 2m(x - m)$ is $(x - m)^2$, so the Jensen gap is exactly the variance, $\int (f - m)^2 \, dP$. On the week: 29 against 25, and the variance is 4. Jensen needs a finite mean first; a function in $L^2(P)$ has one, since $\lvert f \rvert \le 1 + f^2$ and $P(\Omega) = 1$.
-- **The geometric mean.** The logarithm bends downward, so $-\ln$ is convex on `(0, ∞)`. Jensen gives $-\ln m \le \int (-\ln f) \, dP$; flip the signs and raise e to both sides, which keeps order because the exponential only rises. On a finite space with weights that sum to 1, this is the arithmetic-geometric mean inequality. On the week, the product of the speeds is 40320, its seventh root is 4.549163, and 4.549163 is below 5.
-- **Lyapunov.** For $0 < p < q$, the function $x^{q/p}$ is convex on `[0, ∞)`, since $q/p > 1$. Apply Jensen to $\lvert f \rvert^p$: $\big(\int \lvert f \rvert^p \, dP\big)^{q/p} \le \int \lvert f \rvert^q \, dP$. Take the q-th root of both sides. On the week, in exact fractions: 25 ≤ 29 for p = 1, q = 2; 125 ≤ 185 for p = 1, q = 3; 841 ≤ 1253 for p = 2, q = 4.
+- **The square.** Take $`\varphi(x) = x^2`$. The gap $`x^2 - m^2 - 2m(x - m)`$ is $`(x - m)^2`$, so the Jensen gap is exactly the variance, $`\int (f - m)^2 \, dP`$. On the week: 29 against 25, and the variance is 4. Jensen needs a finite mean first; a function in $`L^2(P)`$ has one, since $`\lvert f \rvert \le 1 + f^2`$ and $`P(\Omega) = 1`$.
+- **The geometric mean.** The logarithm bends downward, so $`-\ln`$ is convex on `(0, ∞)`. Jensen gives $`-\ln m \le \int (-\ln f) \, dP`$; flip the signs and raise e to both sides, which keeps order because the exponential only rises. On a finite space with weights that sum to 1, this is the arithmetic-geometric mean inequality. On the week, the product of the speeds is 40320, its seventh root is 4.549163, and 4.549163 is below 5.
+- **Lyapunov.** For $`0 < p < q`$, the function $`x^{q/p}`$ is convex on `[0, ∞)`, since $`q/p > 1`$. Apply Jensen to $`\lvert f \rvert^p`$: $`\big(\int \lvert f \rvert^p \, dP\big)^{q/p} \le \int \lvert f \rvert^q \, dP`$. Take the q-th root of both sides. On the week, in exact fractions: 25 ≤ 29 for p = 1, q = 2; 125 ≤ 185 for p = 1, q = 3; 841 ≤ 1253 for p = 2, q = 4.
 
 ### The picture: the week's norms climbing with the power
 
@@ -141,34 +147,34 @@ xychart-beta
     line [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
 ```
 
-Orange is the p-norm under $P$, with the geometric mean 4.55 at the left: it is the limit of the p-norm as p falls to 0, and the first step, from 4.55 to 5.00, is the arithmetic-geometric mean inequality. Green is the largest speed, 8 m/s, which the norm approaches as p grows ([Lp spaces](01-lp-spaces.md)). Every later step up is Lyapunov's inequality.
+Orange is the p-norm under $`P`$, with the geometric mean 4.55 at the left: it is the limit of the p-norm as p falls to 0, and the first step, from 4.55 to 5.00, is the arithmetic-geometric mean inequality. Green is the largest speed, 8 m/s, which the norm approaches as p grows ([Lp spaces](01-lp-spaces.md)). Every later step up is Lyapunov's inequality.
 
 The axis spaces the powers evenly although they are not (after 4 they jump to 6, 8, 12, 16, 24, 32), so the curve looks straighter than it is against p.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal{F}, P)$ is a probability space. $I$ is an interval, $\varphi : I \to \mathbb{R}$ is convex, and $f : \Omega \to I$ is measurable with respect to $\mathcal{F}$ with $\int \lvert f \rvert \, dP < \infty$. Put $m = \int f \, dP$.
+**Setting.** $`(\Omega, \mathcal{F}, P)`$ is a probability space. $`I`$ is an interval, $`\varphi : I \to \mathbb{R}`$ is convex, and $`f : \Omega \to I`$ is measurable with respect to $`\mathcal{F}`$ with $`\int \lvert f \rvert \, dP < \infty`$. Put $`m = \int f \, dP`$.
 
-**1. The mean lies in $I$.** If $I$ has a lower end $a$, then $f \ge a$, and monotonicity with $P(\Omega) = 1$ gives $m \ge a$. If $a$ is excluded from $I$ and $m = a$, then $f - a \ge 0$ has integral 0, so $f = a$ a.s. ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), impossible since $f > a$ everywhere and $P(\Omega) = 1 > 0$. The upper end is the same. If $m$ is an included end, the same argument gives $f = m$ a.s., both sides equal $\varphi(m)$, and the theorem holds. From here $m$ is inside $I$.
+**1. The mean lies in $`I`$.** If $`I`$ has a lower end $`a`$, then $`f \ge a`$, and monotonicity with $`P(\Omega) = 1`$ gives $`m \ge a`$. If $`a`$ is excluded from $`I`$ and $`m = a`$, then $`f - a \ge 0`$ has integral 0, so $`f = a`$ a.s. ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), impossible since $`f > a`$ everywhere and $`P(\Omega) = 1 > 0`$. The upper end is the same. If $`m`$ is an included end, the same argument gives $`f = m`$ a.s., both sides equal $`\varphi(m)`$, and the theorem holds. From here $`m`$ is inside $`I`$.
 
-**2. $\varphi \circ f$ is measurable.** For $x < y < z$ in $I$, writing $y$ as a weighted average of $x$ and $z$ in the chord inequality gives $\frac{\varphi(y) - \varphi(x)}{y - x} \le \frac{\varphi(z) - \varphi(x)}{z - x} \le \frac{\varphi(z) - \varphi(y)}{z - y}$. On a closed interval $[u, v]$ strictly inside $I$, with points $u' < u$ and $v' > v$ of $I$, every slope between two points of $[u, v]$ is therefore at least the slope from $u'$ to $u$ and at most the slope from $v$ to $v'$. So the slopes of $\varphi$ on $[u, v]$ are bounded (it is Lipschitz there), hence $\varphi$ is continuous on the inside of $I$. The set $\{\varphi > t\}$ is then an open subset of the inside of $I$ together with at most the two ends, a Borel set; so $\varphi$ is Borel measurable and $\varphi \circ f$ is measurable with respect to $\mathcal{F}$.
+**2. $`\varphi \circ f`$ is measurable.** For $`x < y < z`$ in $`I`$, writing $`y`$ as a weighted average of $`x`$ and $`z`$ in the chord inequality gives $`\frac{\varphi(y) - \varphi(x)}{y - x} \le \frac{\varphi(z) - \varphi(x)}{z - x} \le \frac{\varphi(z) - \varphi(y)}{z - y}`$. On a closed interval $`[u, v]`$ strictly inside $`I`$, with points $`u' < u`$ and $`v' > v`$ of $`I`$, every slope between two points of $`[u, v]`$ is therefore at least the slope from $`u'`$ to $`u`$ and at most the slope from $`v`$ to $`v'`$. So the slopes of $`\varphi`$ on $`[u, v]`$ are bounded (it is Lipschitz there), hence $`\varphi`$ is continuous on the inside of $`I`$. The set $`\{\varphi > t\}`$ is then an open subset of the inside of $`I`$ together with at most the two ends, a Borel set; so $`\varphi`$ is Borel measurable and $`\varphi \circ f`$ is measurable with respect to $`\mathcal{F}`$.
 
-**3. A supporting line at $m$.** By the slope inequality of part 2, every slope from a point left of $m$ to $m$ is at most every slope from $m$ to a point right of it. The left slopes are bounded above, so they have a least upper bound $s$, and $s$ is at most every right slope. Rearranged, $\varphi(x) \ge \ell(x) = \varphi(m) + s(x - m)$ for every $x$ in $I$, with equality at $m$.
+**3. A supporting line at $`m`$.** By the slope inequality of part 2, every slope from a point left of $`m`$ to $`m`$ is at most every slope from $`m`$ to a point right of it. The left slopes are bounded above, so they have a least upper bound $`s`$, and $`s`$ is at most every right slope. Rearranged, $`\varphi(x) \ge \ell(x) = \varphi(m) + s(x - m)`$ for every $`x`$ in $`I`$, with equality at $`m`$.
 
-**4. The integral of $\varphi \circ f$ exists.** $\lvert \ell \circ f \rvert \le \lvert \varphi(m) \rvert + \lvert s \rvert\,\lvert m \rvert + \lvert s \rvert\,\lvert f \rvert$, whose integral is finite because $P(\Omega) = 1$ and $f \in L^1(P)$. Since $\varphi \circ f \ge \ell \circ f$, the negative part of $\varphi \circ f$ is at most $\lvert \ell \circ f \rvert$ and has finite integral. So $\int \varphi \circ f \, dP$ is defined, as a number or $+\infty$.
+**4. The integral of $`\varphi \circ f`$ exists.** $`\lvert \ell \circ f \rvert \le \lvert \varphi(m) \rvert + \lvert s \rvert\,\lvert m \rvert + \lvert s \rvert\,\lvert f \rvert`$, whose integral is finite because $`P(\Omega) = 1`$ and $`f \in L^1(P)`$. Since $`\varphi \circ f \ge \ell \circ f`$, the negative part of $`\varphi \circ f`$ is at most $`\lvert \ell \circ f \rvert`$ and has finite integral. So $`\int \varphi \circ f \, dP`$ is defined, as a number or $`+\infty`$.
 
-**5. Jensen.** If the right side is $+\infty$ there is nothing to prove. Otherwise $\varphi \circ f$ and $\ell \circ f$ are both integrable, and monotonicity with linearity ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)) gives $\int \varphi \circ f \, dP \ge \int \ell \circ f \, dP = \varphi(m) + s(m - m) = \varphi(m)$.
+**5. Jensen.** If the right side is $`+\infty`$ there is nothing to prove. Otherwise $`\varphi \circ f`$ and $`\ell \circ f`$ are both integrable, and monotonicity with linearity ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)) gives $`\int \varphi \circ f \, dP \ge \int \ell \circ f \, dP = \varphi(m) + s(m - m) = \varphi(m)`$.
 
-**6. Equality.** Let $\varphi$ be strictly convex. The function $g = \varphi \circ f - \ell \circ f \ge 0$ has integral $\int \varphi \circ f \, dP - \varphi(m)$. If this is 0, then $g = 0$ a.s. If $\varphi(x) = \ell(x)$ at some $x \ne m$, the chord from $m$ to $x$ lies on or above $\varphi$, and $\varphi$ lies on or above $\ell$, which is that chord; so $\varphi$ is straight between $m$ and $x$, against strict convexity. Hence $g(\omega) = 0$ only where $f(\omega) = m$, and $f = m$ a.s. Conversely $f = m$ a.s. makes both sides $\varphi(m)$.
+**6. Equality.** Let $`\varphi`$ be strictly convex. The function $`g = \varphi \circ f - \ell \circ f \ge 0`$ has integral $`\int \varphi \circ f \, dP - \varphi(m)`$. If this is 0, then $`g = 0`$ a.s. If $`\varphi(x) = \ell(x)`$ at some $`x \ne m`$, the chord from $`m`$ to $`x`$ lies on or above $`\varphi`$, and $`\varphi`$ lies on or above $`\ell`$, which is that chord; so $`\varphi`$ is straight between $`m`$ and $`x`$, against strict convexity. Hence $`g(\omega) = 0`$ only where $`f(\omega) = m`$, and $`f = m`$ a.s. Conversely $`f = m`$ a.s. makes both sides $`\varphi(m)`$.
 
-**7. Corollaries.** (a) $\varphi(x) = x^2$ on $\mathbb{R}$, with $\int f^2 \, dP$ finite. Since $\lvert f \rvert \le 1 + f^2$ and $P(\Omega) = 1$, $f \in L^1(P)$, so Jensen applies: $m^2 \le \int f^2 \, dP$, and the difference is $\int (f - m)^2 \, dP$ by expanding the square and linearity. (b) For $f > 0$ with $f \in L^1(P)$, take $\varphi = -\ln$ on `(0, ∞)`. Part 4 shows $\int \ln f \, dP$ exists in `[−∞, ∞)`, and Jensen gives $\int \ln f \, dP \le \ln m$; the exponential is increasing, with $\exp(-\infty) = 0$. For weights $w_i > 0$ summing to 1 on points $1, \dots, n$ and values $a_i > 0$, this reads $\prod a_i^{w_i} \le \sum w_i a_i$. (c) Let $0 < p < q$ and $\lVert f \rVert_q < \infty$. Since $\lvert f \rvert^p \le 1 + \lvert f \rvert^q$ and $P(\Omega) = 1$, $\lvert f \rvert^p \in L^1(P)$. The function $x^{q/p}$ is convex on `[0, ∞)`, so Jensen gives $\big(\int \lvert f \rvert^p \, dP\big)^{q/p} \le \int \lvert f \rvert^q \, dP$. Raising both sides to the power $1/q$ keeps the order, giving $\lVert f \rVert_p \le \lVert f \rVert_q$ and $L^q(P) \subseteq L^p(P)$.
+**7. Corollaries.** (a) $`\varphi(x) = x^2`$ on $`\mathbb{R}`$, with $`\int f^2 \, dP`$ finite. Since $`\lvert f \rvert \le 1 + f^2`$ and $`P(\Omega) = 1`$, $`f \in L^1(P)`$, so Jensen applies: $`m^2 \le \int f^2 \, dP`$, and the difference is $`\int (f - m)^2 \, dP`$ by expanding the square and linearity. (b) For $`f > 0`$ with $`f \in L^1(P)`$, take $`\varphi = -\ln`$ on `(0, ∞)`. Part 4 shows $`\int \ln f \, dP`$ exists in `[−∞, ∞)`, and Jensen gives $`\int \ln f \, dP \le \ln m`$; the exponential is increasing, with $`\exp(-\infty) = 0`$. For weights $`w_i > 0`$ summing to 1 on points $`1, \dots, n`$ and values $`a_i > 0`$, this reads $`\prod a_i^{w_i} \le \sum w_i a_i`$. (c) Let $`0 < p < q`$ and $`\lVert f \rVert_q < \infty`$. Since $`\lvert f \rvert^p \le 1 + \lvert f \rvert^q`$ and $`P(\Omega) = 1`$, $`\lvert f \rvert^p \in L^1(P)`$. The function $`x^{q/p}`$ is convex on `[0, ∞)`, so Jensen gives $`\big(\int \lvert f \rvert^p \, dP\big)^{q/p} \le \int \lvert f \rvert^q \, dP`$. Raising both sides to the power $`1/q`$ keeps the order, giving $`\lVert f \rVert_p \le \lVert f \rVert_q`$ and $`L^q(P) \subseteq L^p(P)`$.
 
 </details>
 
-A second road to Lyapunov goes through Hölder's inequality with the exponents $q/p$ and $q/(q - p)$, applied to $\lvert f \rvert^p$ times the constant 1: $\int \lvert f \rvert^p \, dP \le \big(\int \lvert f \rvert^q \, dP\big)^{p/q} P(\Omega)^{(q - p)/q}$, and the last factor is 1. Take the p-th root of both sides.
+A second road to Lyapunov goes through Hölder's inequality with the exponents $`q/p`$ and $`q/(q - p)`$, applied to $`\lvert f \rvert^p`$ times the constant 1: $`\int \lvert f \rvert^p \, dP \le \big(\int \lvert f \rvert^q \, dP\big)^{p/q} P(\Omega)^{(q - p)/q}`$, and the last factor is 1. Take the p-th root of both sides.
 
-It uses $P(\Omega) = 1$ in the same place, through the integral of the constant. The case p = 1 is worked on [Holder's inequality](02-holders-inequality.md).
+It uses $`P(\Omega) = 1`$ in the same place, through the integral of the constant. The case p = 1 is worked on [Holder's inequality](02-holders-inequality.md).
 
 ---
 
@@ -178,11 +184,11 @@ The week: 3, 5, 8, 2, 6, 4, 7 m/s, each day weighted 1/7.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| mean speed $m$ | (3 + 5 + 8 + 2 + 6 + 4 + 7) / 7 = 35 / 7 | 5 |
+| mean speed $`m`$ | (3 + 5 + 8 + 2 + 6 + 4 + 7) / 7 = 35 / 7 | 5 |
 | cube of the mean | 5 × 5 × 5 | 125 |
 | mean of the cubes | (27 + 125 + 512 + 8 + 216 + 64 + 343) / 7 = 1295 / 7 | **185** |
-| supporting line at 5 | slope 3 × 5 × 5 | $\ell(x) = 125 + 75(x - 5)$ |
-| gaps $(x - 5)^2(x + 10)$ | 4 × 13, 0, 9 × 18, 9 × 12, 1 × 16, 1 × 14, 4 × 17 | 52, 0, 162, 108, 16, 14, 68 |
+| supporting line at 5 | slope 3 × 5 × 5 | $`\ell(x) = 125 + 75(x - 5)`$ |
+| gaps $`(x - 5)^2(x + 10)`$ | 4 × 13, 0, 9 × 18, 9 × 12, 1 × 16, 1 × 14, 4 × 17 | 52, 0, 162, 108, 16, 14, 68 |
 | mean gap | 420 / 7 | 60 |
 | line plus gap | 125 + 60 | **185** |
 | steady-wind power | 0.5 × 1.225 × 125 | 76.56 W per square metre |
@@ -197,12 +203,12 @@ The ratio 185 / 125 is 1.4800: this week carried 1.48 times the energy that a st
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Counting measure, total size 7, in place of $P$ | integral of the speed 35, cubed 42875; integral of the cubes 1295 | The constant $\varphi(m)$ integrates to $7\varphi(m)$; the proof's last line fails |
-| Nesting norms under counting measure | 35.00, 14.25, 10.90 for p = 1, 2, 3: falling, not rising | Each day has size 1, not 1/7; dividing by $7^{1/p}$ gives back 5.00, 5.39, 5.70 |
-| Nesting norms on the line, $\lambda$ of infinite size | $f(x) = 1/x$ on `[1, N]`: $\int f^2 \, d\lambda$ = 0.9000, 0.9900, 0.9990, 0.9999; $\int f \, d\lambda$ = 2.3026, 4.6052, 6.9078, 9.2103 for N = 10, 100, 1000, 10000 | $f$ is in $L^2(\lambda)$ with norm 1 but not in $L^1(\lambda)$: the integral grows like ln N without end |
+| Counting measure, total size 7, in place of $`P`$ | integral of the speed 35, cubed 42875; integral of the cubes 1295 | The constant $`\varphi(m)`$ integrates to $`7\varphi(m)`$; the proof's last line fails |
+| Nesting norms under counting measure | 35.00, 14.25, 10.90 for p = 1, 2, 3: falling, not rising | Each day has size 1, not 1/7; dividing by $`7^{1/p}`$ gives back 5.00, 5.39, 5.70 |
+| Nesting norms on the line, $`\lambda`$ of infinite size | $`f(x) = 1/x`$ on `[1, N]`: $`\int f^2 \, d\lambda`$ = 0.9000, 0.9900, 0.9990, 0.9999; $`\int f \, d\lambda`$ = 2.3026, 4.6052, 6.9078, 9.2103 for N = 10, 100, 1000, 10000 | $`f`$ is in $`L^2(\lambda)`$ with norm 1 but not in $`L^1(\lambda)`$: the integral grows like ln N without end |
 | A concave curve read as convex | mean root speed 2.1866, below 2.2361, the root of the mean | The square root bends down; Jensen flips |
 
-On a space of finite total size $c$, Jensen survives for the rescaled measure $\mu / c$, of total size 1: dividing the counting integrals by 7 gives back 5 and 185. On a space of infinite size there is nothing to divide by.
+On a space of finite total size $`c`$, Jensen survives for the rescaled measure $`\mu / c`$, of total size 1: dividing the counting integrals by 7 gives back 5 and 185. On a space of infinite size there is nothing to divide by.
 
 ---
 
@@ -211,10 +217,10 @@ On a space of finite total size $c$, Jensen survives for the rescaled measure $\
 The code does the week three ways:
 
 - Road one sums both sides of Jensen in exact fractions.
-- Road two builds the supporting line at the mean and integrates it against $P$, which gives back the cube of the mean only because $P(\Omega) = 1$. It then averages the factorised gaps, never cubing a day's speed, and must land on the same 185.
-- Road three draws 70000 days from $P$ with SplitMix64, a short random-number generator written out in both languages, seed 20260929. It checks the sampled mean cube against 185 within four standard errors, where a standard error is the typical size of a sampling error; the sample lands low, inside that tolerance.
+- Road two builds the supporting line at the mean and integrates it against $`P`$, which gives back the cube of the mean only because $`P(\Omega) = 1`$. It then averages the factorised gaps, never cubing a day's speed, and must land on the same 185.
+- Road three draws 70000 days from $`P`$ with SplitMix64, a short random-number generator written out in both languages, seed 20260929. It checks the sampled mean cube against 185 within four standard errors, where a standard error is the typical size of a sampling error; the sample lands low, inside that tolerance.
 
-The geometric mean comes by logarithms and by bisection; Lyapunov in floating point and in exact integers. The failures print beside the working cases, with $1/x$ integrated by a hand-written midpoint rule against the closed forms ln N and 1 − 1/N.
+The geometric mean comes by logarithms and by bisection; Lyapunov in floating point and in exact integers. The failures print beside the working cases, with $`1/x`$ integrated by a hand-written midpoint rule against the closed forms ln N and 1 − 1/N.
 
 What the code shows is one week and a few cut-offs; that Jensen holds for every probability space, every convex curve and every integrable function is what the proof shows.
 
@@ -553,12 +559,12 @@ The two outputs match line for line.
 
 Lean proves Jensen's inequality, its equality case and Lyapunov's inequality, for every probability space, interval, convex curve and integrable function.
 
-- Take a probability space, a curve $\varphi$ convex on an interval $I$, and $f$ in $L^1(P)$ with every value in $I$. Then the integral of $\varphi \circ f$ exists, possibly $+\infty$, and is at least $\varphi$ of the mean.
-- Suppose $\varphi$ is strictly convex on $I$ and the integral of $\varphi \circ f$ is finite. Then equality holds exactly when $f$ equals its mean almost surely.
-- Take powers $0 < p < q$ and any measurable $f$ on a probability space. Then the p-norm of $f$ is at most its q-norm.
+- Take a probability space, a curve $`\varphi`$ convex on an interval $`I`$, and $`f`$ in $`L^1(P)`$ with every value in $`I`$. Then the integral of $`\varphi \circ f`$ exists, possibly $`+\infty`$, and is at least $`\varphi`$ of the mean.
+- Suppose $`\varphi`$ is strictly convex on $`I`$ and the integral of $`\varphi \circ f`$ is finite. Then equality holds exactly when $`f`$ equals its mean almost surely.
+- Take powers $`0 < p < q`$ and any measurable $`f`$ on a probability space. Then the p-norm of $`f`$ is at most its q-norm.
 - The week's sums hold exactly: mean 5, mean cube 185, gaps 52, 0, 162, 108, 16, 14, 68, and mean gap 60.
 - The square side holds exactly: 29 against 25, with the variance 4.
-- The product of the speeds, 40320, is below $5^7$, so the geometric mean is below 5.
+- The product of the speeds, 40320, is below $`5^7`$, so the geometric mean is below 5.
 - The square and geometric-mean corollaries are checked only on the week's numbers.
 - Lyapunov's exact checks hold: 25 ≤ 29, 125 ≤ 185 and 841 ≤ 1253.
 - Under counting measure the integral of the speed is 35, and its cube 42875 far exceeds 1295, the integral of the cubes.
@@ -892,18 +898,18 @@ example : (35 : ℕ) ^ 3 = 42875 ∧ 1295 < 42875 := by decide
 > **Using the average input as if it gave the average output.** A turbine sited on a 5 m/s average does not see 125 units of cubed speed; this week it saw 185. Anything that bends upward in its input, from wind power to a squared error, is understated by plugging in the mean.
 >
 > - **Forgetting total size 1.** Jensen with counting measure on the week gives 42875 against 1295: the wrong way round. Rescale to a probability first.
-> - **Expecting the norms to nest on every space.** On the line, $1/x$ on `[1, ∞)` has 2-norm 1 and no finite 1-norm; under counting measure the norms fall with p, 35.00, 14.25, 10.90.
+> - **Expecting the norms to nest on every space.** On the line, $`1/x`$ on `[1, ∞)` has 2-norm 1 and no finite 1-norm; under counting measure the norms fall with p, 35.00, 14.25, 10.90.
 > - **Flipping the direction.** A curve that bends down, such as the square root or the logarithm, gives the reverse: the mean root speed 2.1866 is below 2.2361.
-> - **Reading "strictly" out of equality.** A straight line gives equality for every spread; only a strictly convex curve forces $f$ to be constant almost surely.
+> - **Reading "strictly" out of equality.** A straight line gives equality for every spread; only a strictly convex curve forces $`f`$ to be constant almost surely.
 
 ---
 
 ## Where you meet it in real life
 
 - **Wind resource assessment.** Energy estimates cube each measured speed and then average; the ratio of the two orders, 1.4800 for this week, is what wind engineers call the energy pattern factor.
-- **Variance is never negative.** The square case is $\int f^2 \, dP \ge (\int f \, dP)^2$, and its gap is the variance, 4 on the week.
+- **Variance is never negative.** The square case is $`\int f^2 \, dP \ge (\int f \, dP)^2`$, and its gap is the variance, 4 on the week.
 - **Growth rates.** A portfolio's long-run growth factor is the geometric mean of its yearly factors, at or below their average.
-- **Moments in probability.** Lyapunov's inequality says a random variable with a finite variance has a finite mean, and with a finite fourth moment a finite variance; it is why $L^2(P) \subseteq L^1(P)$ on every probability space ([Lp spaces](01-lp-spaces.md)).
+- **Moments in probability.** Lyapunov's inequality says a random variable with a finite variance has a finite mean, and with a finite fourth moment a finite variance; it is why $`L^2(P) \subseteq L^1(P)`$ on every probability space ([Lp spaces](01-lp-spaces.md)).
 - **Comparing two probability measures.** A density between two probability measures has mean 1, and Jensen on its logarithm shows the relative entropy between them is never negative ([Densities and likelihood ratios](../08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md)).
 
 > **Say it back**
@@ -913,7 +919,7 @@ example : (35 : ℕ) ^ 3 = 42875 ∧ 1295 < 42875 := by decide
 
 ## What this builds on
 
-- [Lp spaces](01-lp-spaces.md): the p-norm and the spaces $L^p$ that Lyapunov nests.
+- [Lp spaces](01-lp-spaces.md): the p-norm and the spaces $`L^p`$ that Lyapunov nests.
 - [Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md): the mean as an integral against a probability measure.
 - [Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md): the chord definition of convexity and the ordering of slopes.
 - [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md): the same inequality for random variables with a list of values or a density, with the supporting line built in full.

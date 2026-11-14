@@ -34,32 +34,38 @@ The curve is the temperature, T(t) = 10 + t(24 − t)/10 °C at t hours after mi
 
 ## The formula
 
-Notation first, in words. A bar marks an average: $\bar{f}$, read "f bar". The Greek letter $\lambda$ (lambda) is a **linear density**: mass per metre, here per metre of height.
+Notation first, in words. A bar marks an average: $`\bar{f}`$, read "f bar". The Greek letter $`\lambda`$ (lambda) is a **linear density**: mass per metre, here per metre of height.
 
-$$\bar{f} = \frac{1}{b-a}\int_a^b f(t)\,dt$$
+```math
+\bar{f} = \frac{1}{b-a}\int_a^b f(t)\,dt
+```
 
 **Read it aloud:** the average of f from a to b is the total of f over that stretch, divided by the stretch's length.
 
-$$M = \int_a^b \lambda(y)\,dy \qquad\qquad W = \int_a^b F(x)\,dx$$
+```math
+M = \int_a^b \lambda(y)\,dy \qquad\qquad W = \int_a^b F(x)\,dx
+```
 
 **Read it aloud:** mass is linear density added up over the length; work is force added up over the distance moved.
 
 For the pump, each thin layer has its own lift, from its height y to the rim at 4 m. Its weight is g times its mass, where g = 9.81 newtons per kilogram is gravity's pull (a newton, N, is the unit of force):
 
-$$W = \int_0^4 g\,\lambda(y)\,(4 - y)\,dy$$
+```math
+W = \int_0^4 g\,\lambda(y)\,(4 - y)\,dy
+```
 
 **Read it aloud:** the pump's work is each layer's weight times that layer's lift, added from the tip to the rim.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | the quantity being averaged, a function of the input | temperature T(t), in °C | the average rises |
-| $t$, $x$, $a$, $b$ | the input (time t, position x) and the stretch's start and end | t from 0 to 24 hours | a longer stretch divides by more |
-| $\bar{f}$ | the average value: the constant with the same total | 19.6 °C | — |
-| $c$ | an input where f equals its average | t = 5.0718 h and 18.9282 h | — |
-| $y$, $r$ | height above the cone's tip; the water's radius there, r = y/2 | 0 to 4 m; 1 m at y = 2 m | wider layers, more mass |
-| $\lambda$, $M$ | mass per metre of height; total mass | 1000π(y/2)^2 kg/m; 16,755.2 kg | heavier water, more mass and work |
-| $F$, $W$ | a force along a line; the work it does, in joules (newton-metres) | the weight of each layer; 164,368.1 J | more work |
-| $g$, $\rho$ | pull of gravity per kilogram; mass per cubic metre | 9.81 N/kg; water, 1000 kg/m^3 | work rises in proportion |
+| $`f`$ | the quantity being averaged, a function of the input | temperature T(t), in °C | the average rises |
+| $`t`$, $`x`$, $`a`$, $`b`$ | the input (time t, position x) and the stretch's start and end | t from 0 to 24 hours | a longer stretch divides by more |
+| $`\bar{f}`$ | the average value: the constant with the same total | 19.6 °C | — |
+| $`c`$ | an input where f equals its average | t = 5.0718 h and 18.9282 h | — |
+| $`y`$, $`r`$ | height above the cone's tip; the water's radius there, r = y/2 | 0 to 4 m; 1 m at y = 2 m | wider layers, more mass |
+| $`\lambda`$, $`M`$ | mass per metre of height; total mass | 1000π(y/2)^2 kg/m; 16,755.2 kg | heavier water, more mass and work |
+| $`F`$, $`W`$ | a force along a line; the work it does, in joules (newton-metres) | the weight of each layer; 164,368.1 J | more work |
+| $`g`$, $`\rho`$ | pull of gravity per kilogram; mass per cubic metre | 9.81 N/kg; water, 1000 kg/m^3 | work rises in proportion |
 
 Units multiply: kg per metre times metres is kg; newtons times metres is joules.
 
@@ -67,7 +73,7 @@ Units multiply: kg per metre times metres is kg; newtons times metres is joules.
 
 - **The interval has length.** b must exceed a; a zero-length stretch has no average.
 - **A continuous quantity, for the "reached somewhere" claim.** A heater that switches the room from 10 °C to 20 °C at noon averages 15 °C over the day, yet the room is never at 15 °C.
-- **Each thin piece is uniform.** Density and lift are treated as constant within a layer; salty water, denser at the bottom, needs that variation inside $\lambda$.
+- **Each thin piece is uniform.** Density and lift are treated as constant within a layer; salty water, denser at the bottom, needs that variation inside $`\lambda`$.
 - **Work counts only lifting.** The integral is the least energy that raises the water to the rim. A real pump also loses energy to friction and heat, so its meter reads more.
 
 ---
@@ -95,11 +101,11 @@ A continuous quantity passes through every value between its minimum and maximum
 
 Let f be continuous on the closed interval from a to b, with a < b. By the [Extreme value theorem](../01-Limits%20and%20Continuity/07-extreme-value-theorem.md), f has a least value, lo, taken at some point p, and a greatest value, hi, taken at some point q. Since lo ≤ f(t) ≤ hi for every t, comparing integrals gives
 
-$$\text{lo}\,(b-a) \le \int_a^b f(t)\,dt \le \text{hi}\,(b-a),$$
+$`\displaystyle \text{lo}\,(b-a) \le \int_a^b f(t)\,dt \le \text{hi}\,(b-a),`$
 
-so lo ≤ $\bar{f}$ ≤ hi after dividing by the positive length b − a.
+so lo ≤ $`\bar{f}`$ ≤ hi after dividing by the positive length b − a.
 
-On the closed interval between p and q, f is continuous and runs from lo to hi, so the intermediate value theorem gives a point c with f(c) = $\bar{f}$. Then $\int_a^b f(t)\,dt = f(c)(b-a)$.
+On the closed interval between p and q, f is continuous and runs from lo to hi, so the intermediate value theorem gives a point c with f(c) = $`\bar{f}`$. Then $`\int_a^b f(t)\,dt = f(c)(b-a)`$.
 
 The step function 10 before noon, 20 after, shows continuity cannot be dropped: its average is 15 and it never takes that value.
 
@@ -107,11 +113,13 @@ The step function 10 before noon, 20 after, shows continuity cannot be dropped: 
 
 ### Step 3: mass is density added up over height
 
-Slice the water into flat layers. The layer at height y above the tip is a thin disc. The cone widens 2 m over 4 m of height, so by similar triangles the disc's radius is y/2 metres and its area π(y/2)^2 square metres. A layer dy metres thick holds 1000π(y/2)^2 dy kilograms: the linear density is $\lambda(y) = 250\pi y^2$ kg per metre of height.
+Slice the water into flat layers. The layer at height y above the tip is a thin disc. The cone widens 2 m over 4 m of height, so by similar triangles the disc's radius is y/2 metres and its area π(y/2)^2 square metres. A layer dy metres thick holds 1000π(y/2)^2 dy kilograms: the linear density is $`\lambda(y) = 250\pi y^2`$ kg per metre of height.
 
 Adding the layers from the tip to the rim:
 
-$$M = \int_0^4 250\pi y^2\,dy = 250\pi \cdot \frac{4^3}{3} \approx 16{,}755.2 \text{ kg}.$$
+```math
+M = \int_0^4 250\pi y^2\,dy = 250\pi \cdot \frac{4^3}{3} \approx 16{,}755.2 \text{ kg}.
+```
 
 A second road needs no calculus: a cone holds one third of the cylinder with its base and height, π · 2^2 · 4 / 3 cubic metres, which at 1000 kg per cubic metre is 16,755.2 kg again.
 
@@ -125,11 +133,13 @@ Scale: 40 units per metre in both directions; the tip sits at (180, 210) and the
 
 Adding weight times lift over all layers:
 
-$$W = \int_0^4 9.81 \cdot 250\pi y^2 (4 - y)\,dy = 9.81 \cdot 250\pi\left[\frac{4y^3}{3} - \frac{y^4}{4}\right]_0^4 \approx 164{,}368.1 \text{ J}.$$
+```math
+W = \int_0^4 9.81 \cdot 250\pi y^2 (4 - y)\,dy = 9.81 \cdot 250\pi\left[\frac{4y^3}{3} - \frac{y^4}{4}\right]_0^4 \approx 164{,}368.1 \text{ J}.
+```
 
 Four 1 m layers, each lifted from its middle, give 169,504.6 J; 40 layers give 164,419.5 J; 400 give 164,368.6 J.
 
-The rule $W = \int_a^b F(x)\,dx$ also covers one object pushed along a line by a changing force. Stretching a spring that resists with 200 N per metre of stretch takes F(x) = 200x newtons at stretch x metres. Over the first 0.3 m, W = 100 × 0.3^2 = 9 J. The spring's own pull, −200x, points against the stretch, so over the same trip it does −9 J: a force opposing the motion does negative work.
+The rule $`W = \int_a^b F(x)\,dx`$ also covers one object pushed along a line by a changing force. Stretching a spring that resists with 200 N per metre of stretch takes F(x) = 200x newtons at stretch x metres. Over the first 0.3 m, W = 100 × 0.3^2 = 9 J. The spring's own pull, −200x, points against the stretch, so over the same trip it does −9 J: a force opposing the motion does negative work.
 
 A third road waits one shelf on. Lifting the whole 16,755.2 kg through 1 m gives the same 164,368.1 J, because the water's balance point sits 1 m below the rim. Finding that point is [Centre of mass](../05-Curves%20and%20Solids/05-centre-of-mass-and-pappus.md).
 

@@ -34,50 +34,58 @@ Orange is the exact chance of each total, from the convolution, in thousandths. 
 
 ## The formula
 
-Notation, as a reminder. $(\Omega, \mathcal{F}, P)$ is a probability space: outcomes, the sets we allow ourselves to measure, and a measure of total size 1. A random variable X is a measurable function on $\Omega$; its law is $P \circ X^{-1}$, the chance it gives each set of values.
+Notation, as a reminder. $`(\Omega, \mathcal{F}, P)`$ is a probability space: outcomes, the sets we allow ourselves to measure, and a measure of total size 1. A random variable X is a measurable function on $`\Omega`$; its law is $`P \circ X^{-1}`$, the chance it gives each set of values.
 
-Random variables are **independent** when their joint law is the product of their laws ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)). The **distribution function** of X gives, at each level x, the chance $P(X \le x)$. **Convergence in distribution** means the distribution functions converge at every level where the limit is continuous ([Convergence in distribution](05-convergence-in-distribution.md)). i.i.d. means independent, each with the same law.
+Random variables are **independent** when their joint law is the product of their laws ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)). The **distribution function** of X gives, at each level x, the chance $`P(X \le x)`$. **Convergence in distribution** means the distribution functions converge at every level where the limit is continuous ([Convergence in distribution](05-convergence-in-distribution.md)). i.i.d. means independent, each with the same law.
 
-Let $X_1, X_2, \dots$ be i.i.d. with mean $\mu$ and variance $\sigma^2$, where $0 < \sigma^2 < \infty$. Write
+Let $`X_1, X_2, \dots`$ be i.i.d. with mean $`\mu`$ and variance $`\sigma^2`$, where $`0 < \sigma^2 < \infty`$. Write
 
-$$S_n = X_1 + \dots + X_n, \qquad Z_n = \frac{S_n - n\mu}{\sigma\sqrt{n}}, \qquad \Phi(x) = \int_{-\infty}^{x} \frac{e^{-y^2/2}}{\sqrt{2\pi}}\, dy.$$
+```math
+S_n = X_1 + \dots + X_n, \qquad Z_n = \frac{S_n - n\mu}{\sigma\sqrt{n}}, \qquad \Phi(x) = \int_{-\infty}^{x} \frac{e^{-y^2/2}}{\sqrt{2\pi}}\, dy.
+```
 
-**The central limit theorem.** For every real $x$,
+**The central limit theorem.** For every real $`x`$,
 
-$$P(Z_n \le x) \;\longrightarrow\; \Phi(x) \quad \text{as } n \to \infty.$$
+```math
+P(Z_n \le x) \;\longrightarrow\; \Phi(x) \quad \text{as } n \to \infty.
+```
 
 **Read it aloud:** subtract the expected total, divide by the total's standard deviation, and the chance of landing at or below any level tends to the bell-curve chance.
 
-In measure language: the laws $P \circ Z_n^{-1}$ converge in distribution to the standard normal law, with density $e^{-y^2/2}/\sqrt{2\pi}$ against Lebesgue measure ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)).
+In measure language: the laws $`P \circ Z_n^{-1}`$ converge in distribution to the standard normal law, with density $`e^{-y^2/2}/\sqrt{2\pi}`$ against Lebesgue measure ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)).
 
-Take a test function h whose third derivative is bounded, $\lVert h''' \rVert$ being its largest size, and a standard normal variable G. With a finite third moment $\rho = E\lvert X_1 - \mu \rvert^3$, the proof gives:
+Take a test function h whose third derivative is bounded, $`\lVert h''' \rVert`$ being its largest size, and a standard normal variable G. With a finite third moment $`\rho = E\lvert X_1 - \mu \rvert^3`$, the proof gives:
 
-$$\big\lvert E\,h(Z_n) - E\,h(G) \big\rvert \;\le\; \frac{\lVert h''' \rVert}{6\sqrt{n}} \Big( \frac{\rho}{\sigma^3} + E\lvert G \rvert^3 \Big).$$
+```math
+\big\lvert E\,h(Z_n) - E\,h(G) \big\rvert \;\le\; \frac{\lVert h''' \rVert}{6\sqrt{n}} \Big( \frac{\rho}{\sigma^3} + E\lvert G \rvert^3 \Big).
+```
 
 **Read it aloud:** the average of h over the standardized sum is within a constant over the square root of n of its average over G.
 
 The rate for the distribution function itself is the **Berry–Esseen theorem**, stated here, proved in the sources:
 
-$$\sup_{x} \big\lvert P(Z_n \le x) - \Phi(x) \big\rvert \;\le\; \frac{C\,\rho}{\sigma^3 \sqrt{n}} \quad \text{for every } n \ge 1, \text{ with } C < 0.4748.$$
+```math
+\sup_{x} \big\lvert P(Z_n \le x) - \Phi(x) \big\rvert \;\le\; \frac{C\,\rho}{\sigma^3 \sqrt{n}} \quad \text{for every } n \ge 1, \text{ with } C < 0.4748.
+```
 
 **Read it aloud:** at every level at once, the gap is at most a fixed constant times the third-moment ratio, over the square root of n.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $P$, $X_i$ | outcomes; the probability measure; the i-th copy | roll sequences; 6^(-100) each; the i-th face | — |
-| $n$, $S_n$ | number of copies; their sum | 100; the total | the total's spread grows like the square root of n |
-| $\mu$, $\sigma$ | mean and standard deviation of one copy | 3.5; 1.7078 | larger $\sigma$ widens the bell; $Z_n$ is unchanged |
-| $Y_i$, $Y_k$, $Y_1$ | one standardized copy, $(X_i - \mu)/\sigma$: mean 0, variance 1 | (face − 3.5)/1.7078 | — |
-| $Z_n$, $Z_{100}$ | the standardized sum | (total − 350)/17.0783 | — |
-| $\Phi$ | the standard normal distribution function | $\Phi(-1.1711)$ = 0.120783 | — |
-| $G$, $G_i$, $G_k$ | standard normal variables, independent of the copies | the replacements; $E\lvert G \rvert^3$ = 1.595769 | — |
-| $h$, $M_2$, $M_3$, $R$ | a test function; $\lVert h''' \rVert$ (called $M_3$ in the proof) and $M_2$ bound its third and second derivatives; $R$ is the Taylor remainder | a smooth step of width 0.5 at −1.1711 | a sharper step makes $\lVert h''' \rVert$ grow like one over the width cubed |
-| $W_k$, $U_k$ | the hybrid sum, k copies kept, the rest normal; its part shared with the next hybrid | — | — |
-| $\rho$, $C$ | the third absolute central moment of one copy; the Berry–Esseen constant | 51/8; below 0.4748 | a heavier tail raises $\rho$ and loosens the bound |
-| $\varphi_Y$, $t$ | the characteristic function $E\,e^{itY}$; its argument | $Z_{100}$ at t = 1: 0.606210 | — |
-| $x$, $\delta$, $\varepsilon$, $\psi$, $q$, $\xi$ | a level; a ramp width; a cut-off; a smooth ramp and its polynomial; a point between u and u + y | 330 on the total's scale; 0.5 | — |
-| $u$, $y$, $\eta$, $J$ | Taylor base point and step; a point between them; a jump's height | $U_k$, $Y_k/\sqrt{n}$ | — |
-| $a$, $b$, $s$ | the standardized cut; second road: two complex numbers of size at most 1, an argument | a = −1.1711 | — |
+| $`\Omega`$, $`P`$, $`X_i`$ | outcomes; the probability measure; the i-th copy | roll sequences; 6^(-100) each; the i-th face | — |
+| $`n`$, $`S_n`$ | number of copies; their sum | 100; the total | the total's spread grows like the square root of n |
+| $`\mu`$, $`\sigma`$ | mean and standard deviation of one copy | 3.5; 1.7078 | larger $`\sigma`$ widens the bell; $`Z_n`$ is unchanged |
+| $`Y_i`$, $`Y_k`$, $`Y_1`$ | one standardized copy, $`(X_i - \mu)/\sigma`$: mean 0, variance 1 | (face − 3.5)/1.7078 | — |
+| $`Z_n`$, $`Z_{100}`$ | the standardized sum | (total − 350)/17.0783 | — |
+| $`\Phi`$ | the standard normal distribution function | $`\Phi(-1.1711)`$ = 0.120783 | — |
+| $`G`$, $`G_i`$, $`G_k`$ | standard normal variables, independent of the copies | the replacements; $`E\lvert G \rvert^3`$ = 1.595769 | — |
+| $`h`$, $`M_2`$, $`M_3`$, $`R`$ | a test function; $`\lVert h''' \rVert`$ (called $`M_3`$ in the proof) and $`M_2`$ bound its third and second derivatives; $`R`$ is the Taylor remainder | a smooth step of width 0.5 at −1.1711 | a sharper step makes $`\lVert h''' \rVert`$ grow like one over the width cubed |
+| $`W_k`$, $`U_k`$ | the hybrid sum, k copies kept, the rest normal; its part shared with the next hybrid | — | — |
+| $`\rho`$, $`C`$ | the third absolute central moment of one copy; the Berry–Esseen constant | 51/8; below 0.4748 | a heavier tail raises $`\rho`$ and loosens the bound |
+| $`\varphi_Y`$, $`t`$ | the characteristic function $`E\,e^{itY}`$; its argument | $`Z_{100}`$ at t = 1: 0.606210 | — |
+| $`x`$, $`\delta`$, $`\varepsilon`$, $`\psi`$, $`q`$, $`\xi`$ | a level; a ramp width; a cut-off; a smooth ramp and its polynomial; a point between u and u + y | 330 on the total's scale; 0.5 | — |
+| $`u`$, $`y`$, $`\eta`$, $`J`$ | Taylor base point and step; a point between them; a jump's height | $`U_k`$, $`Y_k/\sqrt{n}`$ | — |
+| $`a`$, $`b`$, $`s`$ | the standardized cut; second road: two complex numbers of size at most 1, an argument | a = −1.1711 | — |
 
 ### When it holds
 
@@ -92,65 +100,69 @@ $$\sup_{x} \big\lvert P(Z_n \le x) - \Phi(x) \big\rvert \;\le\; \frac{C\,\rho}{\
 
 ### Step 0: two variables with the same mean and variance look alike to a smooth function
 
-Expand a smooth function around a point, as in [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): $h(u + y) = h(u) + h'(u)\,y + \tfrac12 h''(u)\,y^2 + R$, with the remainder $R$ at most $\lVert h''' \rVert\,\lvert y \rvert^3/6$ in size.
+Expand a smooth function around a point, as in [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): $`h(u + y) = h(u) + h'(u)\,y + \tfrac12 h''(u)\,y^2 + R`$, with the remainder $`R`$ at most $`\lVert h''' \rVert\,\lvert y \rvert^3/6`$ in size.
 
 Average over a small random step y. The first two terms depend on the step only through its mean and its mean square. A standardized roll, (face − 3.5)/1.7078, and a standard normal variable, both scaled down by the square root of n, share both.
 
-So they differ only in the remainder, of order $n^{-3/2}$. Swap all n rolls one at a time and the total cost is of order $n \cdot n^{-3/2} = n^{-1/2}$.
+So they differ only in the remainder, of order $`n^{-3/2}`$. Swap all n rolls one at a time and the total cost is of order $`n \cdot n^{-3/2} = n^{-1/2}`$.
 
 ### Step 1: test with smooth functions, not with a cut
 
-The event "total at most 330" is an indicator: one below the cut, zero above. It jumps, and a jump has no Taylor expansion. Two rolls show the cost. Of the 36 equally likely pairs, 21 total 7 or less, so $P(Z_2 \le 0) = 7/12$, against $\Phi(0) = 0.5$: the six pairs landing exactly on 7 sit on the cut. A smooth test function spreads the cut over a short ramp. The proof compares smooth averages first, then squeezes the cut between two of them (Step 5).
+The event "total at most 330" is an indicator: one below the cut, zero above. It jumps, and a jump has no Taylor expansion. Two rolls show the cost. Of the 36 equally likely pairs, 21 total 7 or less, so $`P(Z_2 \le 0) = 7/12`$, against $`\Phi(0) = 0.5`$: the six pairs landing exactly on 7 sit on the cut. A smooth test function spreads the cut over a short ramp. The proof compares smooth averages first, then squeezes the cut between two of them (Step 5).
 
 ### Step 2: the swap, one summand at a time
 
-Put independent standard normals $G_1, \dots, G_n$ beside the copies on one space, by a product measure ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)). Let $W_k$ be the sum, divided by the square root of n, of the first k standardized copies and the last n − k normals:
+Put independent standard normals $`G_1, \dots, G_n`$ beside the copies on one space, by a product measure ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)). Let $`W_k`$ be the sum, divided by the square root of n, of the first k standardized copies and the last n − k normals:
 
-$$W_k = \frac{Y_1 + \dots + Y_k + G_{k+1} + \dots + G_n}{\sqrt{n}}.$$
+```math
+W_k = \frac{Y_1 + \dots + Y_k + G_{k+1} + \dots + G_n}{\sqrt{n}}.
+```
 
-At k = n this is $Z_n$. At k = 0 it is a sum of independent normals divided by the square root of n, which is exactly standard normal ([Convolution](../06-Product%20Measures%20and%20Fubini/05-convolution-and-sums.md)). Neighbours $W_k$ and $W_{k-1}$ differ in one place only: slot k holds $Y_k$ in one and $G_k$ in the other. Everything else is a shared part $U_k$, independent of both.
+At k = n this is $`Z_n`$. At k = 0 it is a sum of independent normals divided by the square root of n, which is exactly standard normal ([Convolution](../06-Product%20Measures%20and%20Fubini/05-convolution-and-sums.md)). Neighbours $`W_k`$ and $`W_{k-1}`$ differ in one place only: slot k holds $`Y_k`$ in one and $`G_k`$ in the other. Everything else is a shared part $`U_k`$, independent of both.
 
 ### Step 3: each swap costs a third-order remainder
 
-Expand h around $U_k$ with step $Y_k/\sqrt{n}$, and again with step $G_k/\sqrt{n}$. Independence turns averages of products into products of averages. The first-order terms are $E\,h'(U_k)$ times the step's mean, zero in both. The second-order terms are $\tfrac12 E\,h''(U_k)$ times the step's mean square, $1/n$ in both. They cancel. Only the remainders survive:
+Expand h around $`U_k`$ with step $`Y_k/\sqrt{n}`$, and again with step $`G_k/\sqrt{n}`$. Independence turns averages of products into products of averages. The first-order terms are $`E\,h'(U_k)`$ times the step's mean, zero in both. The second-order terms are $`\tfrac12 E\,h''(U_k)`$ times the step's mean square, $`1/n`$ in both. They cancel. Only the remainders survive:
 
-$$\big\lvert E\,h(W_k) - E\,h(W_{k-1}) \big\rvert \;\le\; \frac{\lVert h''' \rVert}{6\,n^{3/2}} \Big( E\lvert Y_1 \rvert^3 + E\lvert G \rvert^3 \Big).$$
+```math
+\big\lvert E\,h(W_k) - E\,h(W_{k-1}) \big\rvert \;\le\; \frac{\lVert h''' \rVert}{6\,n^{3/2}} \Big( E\lvert Y_1 \rvert^3 + E\lvert G \rvert^3 \Big).
+```
 
-For the die, $E\lvert Y_1 \rvert^3 = \rho/\sigma^3$ = 1.2798 and $E\lvert G \rvert^3 = 2\sqrt{2/\pi}$ = 1.595769.
+For the die, $`E\lvert Y_1 \rvert^3 = \rho/\sigma^3`$ = 1.2798 and $`E\lvert G \rvert^3 = 2\sqrt{2/\pi}`$ = 1.595769.
 
 ### Step 4: add up the swaps
 
-The gap between the two ends is the sum of the n neighbour differences, so at most n times the bound of Step 3. That is the formula's bound; it falls like one over the square root of n, so $E\,h(Z_n) \to E\,h(G)$.
+The gap between the two ends is the sum of the n neighbour differences, so at most n times the bound of Step 3. That is the formula's bound; it falls like one over the square root of n, so $`E\,h(Z_n) \to E\,h(G)`$.
 
-The code runs the swap on the die with the smooth step $h(u) = \Phi((a - u)/0.5)$, a = −1.1711 being the standardized cut, and computes every hybrid average exactly. The bound allows 0.001530 per swap and 0.1530 in all. The largest actual swap moves the average by 1.56e-06, and all 100 together by 1.56e-04: from $E\,h(G)$ = 0.147447 to $E\,h(Z_{100})$ = 0.147603. The bound is loose; its job is to go to zero.
+The code runs the swap on the die with the smooth step $`h(u) = \Phi((a - u)/0.5)`$, a = −1.1711 being the standardized cut, and computes every hybrid average exactly. The bound allows 0.001530 per swap and 0.1530 in all. The largest actual swap moves the average by 1.56e-06, and all 100 together by 1.56e-04: from $`E\,h(G)`$ = 0.147447 to $`E\,h(Z_{100})`$ = 0.147603. The bound is loose; its job is to go to zero.
 
 ### Step 5: from smooth steps back to the cut, and down to finite variance
 
-Fix a level x and a width $\delta > 0$. A smooth ramp equal to 1 up to x and 0 from $x + \delta$ on lies between the indicators of "at most x" and "at most $x + \delta$". So $P(Z_n \le x)$ is at most the ramp's average, which tends to its normal average, at most $\Phi(x + \delta)$. A ramp shifted left gives the lower side, $\Phi(x - \delta)$. The bell curve has no jumps, so letting $\delta$ shrink pins the limit at $\Phi(x)$.
+Fix a level x and a width $`\delta > 0`$. A smooth ramp equal to 1 up to x and 0 from $`x + \delta`$ on lies between the indicators of "at most x" and "at most $`x + \delta`$". So $`P(Z_n \le x)`$ is at most the ramp's average, which tends to its normal average, at most $`\Phi(x + \delta)`$. A ramp shifted left gives the lower side, $`\Phi(x - \delta)`$. The bell curve has no jumps, so letting $`\delta`$ shrink pins the limit at $`\Phi(x)`$.
 
-Without a third moment, split each copy at a level $\varepsilon$ times the square root of n. Small values obey the third-order bound; large values obey a second-order one, and their share of the variance tends to zero by dominated convergence: a limit passes inside an average when one integrable function bounds every term ([Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md)). That truncation is part 4 of the Detailed proof, and the origin of Lindeberg's condition.
+Without a third moment, split each copy at a level $`\varepsilon`$ times the square root of n. Small values obey the third-order bound; large values obey a second-order one, and their share of the variance tends to zero by dominated convergence: a limit passes inside an average when one integrable function bounds every term ([Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md)). That truncation is part 4 of the Detailed proof, and the origin of Lindeberg's condition.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $X_1, X_2, \dots$ are i.i.d. on $(\Omega, \mathcal{F}, P)$ with $E X_1^2 < \infty$ and $\sigma^2 > 0$; $Y_i = (X_i - \mu)/\sigma$ has $E Y_i = 0$, $E Y_i^2 = 1$, and $Z_n = (Y_1 + \dots + Y_n)/\sqrt{n}$. For each n, take the product of $(\Omega, \mathcal{F}, P)$ with $\mathbb{R}^n$ under the standard normal law in each coordinate; the coordinates $G_1, \dots, G_n$ are then standard normal, independent of each other and of the $X_i$, and the joint law of the $X_i$ is unchanged ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)).
+**Setting.** $`X_1, X_2, \dots`$ are i.i.d. on $`(\Omega, \mathcal{F}, P)`$ with $`E X_1^2 < \infty`$ and $`\sigma^2 > 0`$; $`Y_i = (X_i - \mu)/\sigma`$ has $`E Y_i = 0`$, $`E Y_i^2 = 1`$, and $`Z_n = (Y_1 + \dots + Y_n)/\sqrt{n}`$. For each n, take the product of $`(\Omega, \mathcal{F}, P)`$ with $`\mathbb{R}^n`$ under the standard normal law in each coordinate; the coordinates $`G_1, \dots, G_n`$ are then standard normal, independent of each other and of the $`X_i`$, and the joint law of the $`X_i`$ is unchanged ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)).
 
-**1. Taylor with two remainder bounds.** Let h have bounded derivatives up to order 3, with $M_2 = \sup \lvert h'' \rvert$ and $M_3 = \sup \lvert h''' \rvert$. For real u and y put $R(u, y) = h(u + y) - h(u) - h'(u) y - \tfrac12 h''(u) y^2$. The Lagrange remainder of order 3 gives $R = h'''(\xi) y^3/6$ for some $\xi$, so $\lvert R \rvert \le M_3 \lvert y \rvert^3/6$. The Lagrange remainder of order 2 gives $h(u + y) = h(u) + h'(u) y + \tfrac12 h''(\eta) y^2$, so $R = \tfrac12 (h''(\eta) - h''(u)) y^2$ and $\lvert R \rvert \le M_2 y^2$ ([Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)). Hence $\lvert R(u, y) \rvert \le \min(M_2 y^2, M_3 \lvert y \rvert^3/6)$.
+**1. Taylor with two remainder bounds.** Let h have bounded derivatives up to order 3, with $`M_2 = \sup \lvert h'' \rvert`$ and $`M_3 = \sup \lvert h''' \rvert`$. For real u and y put $`R(u, y) = h(u + y) - h(u) - h'(u) y - \tfrac12 h''(u) y^2`$. The Lagrange remainder of order 3 gives $`R = h'''(\xi) y^3/6`$ for some $`\xi`$, so $`\lvert R \rvert \le M_3 \lvert y \rvert^3/6`$. The Lagrange remainder of order 2 gives $`h(u + y) = h(u) + h'(u) y + \tfrac12 h''(\eta) y^2`$, so $`R = \tfrac12 (h''(\eta) - h''(u)) y^2`$ and $`\lvert R \rvert \le M_2 y^2`$ ([Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)). Hence $`\lvert R(u, y) \rvert \le \min(M_2 y^2, M_3 \lvert y \rvert^3/6)`$.
 
-**2. One swap.** For $1 \le k \le n$ let $U_k = (Y_1 + \dots + Y_{k-1} + G_{k+1} + \dots + G_n)/\sqrt{n}$, so $W_k = U_k + Y_k/\sqrt{n}$ and $W_{k-1} = U_k + G_k/\sqrt{n}$. $U_k$ is a measurable function of variables other than $Y_k$ and $G_k$, so it is independent of each; h, h', h'' are bounded, so every term below is integrable, and independence factors averages of products:
-$E\,h(W_k) = E\,h(U_k) + E\,h'(U_k)\,E Y_k/\sqrt{n} + \tfrac12 E\,h''(U_k)\,E Y_k^2/n + E\,R(U_k, Y_k/\sqrt{n})$,
-and the same with $G_k$ in place of $Y_k$. Since $E Y_k = E G_k = 0$ and $E Y_k^2 = E G_k^2 = 1$, the first three terms agree, and
-$\lvert E\,h(W_k) - E\,h(W_{k-1}) \rvert \le E\lvert R(U_k, Y_k/\sqrt{n}) \rvert + E\lvert R(U_k, G_k/\sqrt{n}) \rvert$.
+**2. One swap.** For $`1 \le k \le n`$ let $`U_k = (Y_1 + \dots + Y_{k-1} + G_{k+1} + \dots + G_n)/\sqrt{n}`$, so $`W_k = U_k + Y_k/\sqrt{n}`$ and $`W_{k-1} = U_k + G_k/\sqrt{n}`$. $`U_k`$ is a measurable function of variables other than $`Y_k`$ and $`G_k`$, so it is independent of each; h, h', h'' are bounded, so every term below is integrable, and independence factors averages of products:
+$`E\,h(W_k) = E\,h(U_k) + E\,h'(U_k)\,E Y_k/\sqrt{n} + \tfrac12 E\,h''(U_k)\,E Y_k^2/n + E\,R(U_k, Y_k/\sqrt{n})`$,
+and the same with $`G_k`$ in place of $`Y_k`$. Since $`E Y_k = E G_k = 0`$ and $`E Y_k^2 = E G_k^2 = 1`$, the first three terms agree, and
+$`\lvert E\,h(W_k) - E\,h(W_{k-1}) \rvert \le E\lvert R(U_k, Y_k/\sqrt{n}) \rvert + E\lvert R(U_k, G_k/\sqrt{n}) \rvert`$.
 
-**3. The third-moment case.** If $E \lvert Y_1 \rvert^3 < \infty$, part 1 bounds the two remainders by $M_3 E\lvert Y_1 \rvert^3/(6 n^{3/2})$ and $M_3 E\lvert G \rvert^3/(6 n^{3/2})$, for every k. $W_n = Z_n$, and $W_0 = (G_1 + \dots + G_n)/\sqrt{n}$ is standard normal, since a sum of independent normals is normal with the summed variance ([Convolution](../06-Product%20Measures%20and%20Fubini/05-convolution-and-sums.md)). Summing part 2 over k by the triangle inequality gives $\lvert E\,h(Z_n) - E\,h(G) \rvert \le M_3 (E\lvert Y_1 \rvert^3 + E\lvert G \rvert^3)/(6\sqrt{n})$, which is the displayed bound since $E\lvert Y_1 \rvert^3 = \rho/\sigma^3$.
+**3. The third-moment case.** If $`E \lvert Y_1 \rvert^3 < \infty`$, part 1 bounds the two remainders by $`M_3 E\lvert Y_1 \rvert^3/(6 n^{3/2})`$ and $`M_3 E\lvert G \rvert^3/(6 n^{3/2})`$, for every k. $`W_n = Z_n`$, and $`W_0 = (G_1 + \dots + G_n)/\sqrt{n}`$ is standard normal, since a sum of independent normals is normal with the summed variance ([Convolution](../06-Product%20Measures%20and%20Fubini/05-convolution-and-sums.md)). Summing part 2 over k by the triangle inequality gives $`\lvert E\,h(Z_n) - E\,h(G) \rvert \le M_3 (E\lvert Y_1 \rvert^3 + E\lvert G \rvert^3)/(6\sqrt{n})`$, which is the displayed bound since $`E\lvert Y_1 \rvert^3 = \rho/\sigma^3`$.
 
-**4. Finite variance only.** Fix $\varepsilon > 0$. On the set where $\lvert Y_k \rvert \le \varepsilon \sqrt{n}$, part 1 gives $\lvert R(U_k, Y_k/\sqrt{n}) \rvert \le M_3 \lvert Y_k \rvert^3/(6 n^{3/2}) \le M_3\,\varepsilon\,Y_k^2/(6n)$. Off it, $\lvert R \rvert \le M_2 Y_k^2/n$. Taking expectations, with the $Y_k$ sharing one law,
-$n\,E\lvert R(U_k, Y_k/\sqrt{n}) \rvert \le M_3 \varepsilon/6 + M_2\,E[Y_1^2\,1_{\{\lvert Y_1 \rvert > \varepsilon\sqrt{n}\}}]$.
-The functions $Y_1^2\,1_{\{\lvert Y_1 \rvert > \varepsilon\sqrt{n}\}}$ are dominated by the integrable $Y_1^2$ and tend to 0 at every point, since $Y_1$ is finite; by dominated convergence their integrals tend to 0 ([Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md)). The normal remainders sum to at most $M_3 E\lvert G \rvert^3/(6\sqrt{n})$. Summing part 2 over k, $\limsup_n \lvert E\,h(Z_n) - E\,h(G) \rvert \le M_3 \varepsilon/6$ for every $\varepsilon > 0$, so $E\,h(Z_n) \to E\,h(G)$.
+**4. Finite variance only.** Fix $`\varepsilon > 0`$. On the set where $`\lvert Y_k \rvert \le \varepsilon \sqrt{n}`$, part 1 gives $`\lvert R(U_k, Y_k/\sqrt{n}) \rvert \le M_3 \lvert Y_k \rvert^3/(6 n^{3/2}) \le M_3\,\varepsilon\,Y_k^2/(6n)`$. Off it, $`\lvert R \rvert \le M_2 Y_k^2/n`$. Taking expectations, with the $`Y_k`$ sharing one law,
+$`n\,E\lvert R(U_k, Y_k/\sqrt{n}) \rvert \le M_3 \varepsilon/6 + M_2\,E[Y_1^2\,1_{\{\lvert Y_1 \rvert > \varepsilon\sqrt{n}\}}]`$.
+The functions $`Y_1^2\,1_{\{\lvert Y_1 \rvert > \varepsilon\sqrt{n}\}}`$ are dominated by the integrable $`Y_1^2`$ and tend to 0 at every point, since $`Y_1`$ is finite; by dominated convergence their integrals tend to 0 ([Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md)). The normal remainders sum to at most $`M_3 E\lvert G \rvert^3/(6\sqrt{n})`$. Summing part 2 over k, $`\limsup_n \lvert E\,h(Z_n) - E\,h(G) \rvert \le M_3 \varepsilon/6`$ for every $`\varepsilon > 0`$, so $`E\,h(Z_n) \to E\,h(G)`$.
 
-**5. A smooth ramp.** Let $q(t) = 35t^4 - 84t^5 + 70t^6 - 20t^7$. Then $q(0) = 0$, $q(1) = 1$ and $q'(t) = 140\,t^3 (1 - t)^3$, so the first three derivatives of q vanish at 0 and at 1. Define $\psi(t) = 1$ for $t \le 0$, $\psi(t) = 1 - q(t)$ on $[0, 1]$, $\psi(t) = 0$ for $t \ge 1$. The pieces meet with matching derivatives, so $\psi$ has bounded derivatives up to order 3.
+**5. A smooth ramp.** Let $`q(t) = 35t^4 - 84t^5 + 70t^6 - 20t^7`$. Then $`q(0) = 0`$, $`q(1) = 1`$ and $`q'(t) = 140\,t^3 (1 - t)^3`$, so the first three derivatives of q vanish at 0 and at 1. Define $`\psi(t) = 1`$ for $`t \le 0`$, $`\psi(t) = 1 - q(t)`$ on $`[0, 1]`$, $`\psi(t) = 0`$ for $`t \ge 1`$. The pieces meet with matching derivatives, so $`\psi`$ has bounded derivatives up to order 3.
 
-**6. The cut.** Fix x and $\delta > 0$. The function $u \mapsto \psi((u - x)/\delta)$ lies between the indicators of $(-\infty, x]$ and $(-\infty, x + \delta]$, so by part 4 and monotonicity of the integral, $\limsup_n P(Z_n \le x) \le \lim_n E\,\psi((Z_n - x)/\delta) = E\,\psi((G - x)/\delta) \le \Phi(x + \delta)$. The function $u \mapsto \psi((u - x + \delta)/\delta)$ lies between the indicators of $(-\infty, x - \delta]$ and $(-\infty, x]$, so $\liminf_n P(Z_n \le x) \ge \Phi(x - \delta)$. $\Phi$ is continuous, so letting $\delta \to 0$ gives $P(Z_n \le x) \to \Phi(x)$ at every x: convergence in distribution to the standard normal law.
+**6. The cut.** Fix x and $`\delta > 0`$. The function $`u \mapsto \psi((u - x)/\delta)`$ lies between the indicators of $`(-\infty, x]`$ and $`(-\infty, x + \delta]`$, so by part 4 and monotonicity of the integral, $`\limsup_n P(Z_n \le x) \le \lim_n E\,\psi((Z_n - x)/\delta) = E\,\psi((G - x)/\delta) \le \Phi(x + \delta)`$. The function $`u \mapsto \psi((u - x + \delta)/\delta)`$ lies between the indicators of $`(-\infty, x - \delta]`$ and $`(-\infty, x]`$, so $`\liminf_n P(Z_n \le x) \ge \Phi(x - \delta)`$. $`\Phi`$ is continuous, so letting $`\delta \to 0`$ gives $`P(Z_n \le x) \to \Phi(x)`$ at every x: convergence in distribution to the standard normal law.
 
 </details>
 
@@ -177,11 +189,11 @@ For whole-number totals the gap cannot fall faster. The distribution function ju
 <details>
 <summary>The second road: characteristic functions</summary>
 
-The characteristic function of Y is $\varphi_Y(s) = E\,e^{isY}$ ([Characteristic functions](06-characteristic-functions.md)). For real y, $\lvert e^{iy} - (1 + iy - y^2/2) \rvert \le \min(\lvert y \rvert^3/6,\, y^2)$, by Taylor's theorem with the remainder in integral form, applied to $e^{iy}$. With $E Y = 0$, $E Y^2 = 1$, this gives $\lvert \varphi_Y(s) - (1 - s^2/2) \rvert \le s^2\,E \min(\lvert s \rvert\,\lvert Y \rvert^3/6,\, Y^2)$, and the last expectation tends to 0 as s → 0 by dominated convergence, with $Y^2$ as the bound.
+The characteristic function of Y is $`\varphi_Y(s) = E\,e^{isY}`$ ([Characteristic functions](06-characteristic-functions.md)). For real y, $`\lvert e^{iy} - (1 + iy - y^2/2) \rvert \le \min(\lvert y \rvert^3/6,\, y^2)`$, by Taylor's theorem with the remainder in integral form, applied to $`e^{iy}`$. With $`E Y = 0`$, $`E Y^2 = 1`$, this gives $`\lvert \varphi_Y(s) - (1 - s^2/2) \rvert \le s^2\,E \min(\lvert s \rvert\,\lvert Y \rvert^3/6,\, Y^2)`$, and the last expectation tends to 0 as s → 0 by dominated convergence, with $`Y^2`$ as the bound.
 
-Independence turns the characteristic function of a sum into a product, so $\varphi_{Z_n}(t) = \varphi_Y(t/\sqrt{n})^n$. For complex a and b of size at most 1, $\lvert a^n - b^n \rvert \le n \lvert a - b \rvert$, by writing $a^n - b^n$ as a telescoping sum of n terms. Take $a = \varphi_Y(t/\sqrt{n})$ and $b = 1 - t^2/(2n)$, which lies in $[0, 1]$ once n is at least $t^2/2$. Then $\lvert \varphi_{Z_n}(t) - b^n \rvert \le n \cdot (t^2/n) \cdot o(1) \to 0$, where $o(1)$ is the expectation from the first paragraph at $s = t/\sqrt{n}$, a quantity that tends to 0; and $b^n \to e^{-t^2/2}$, the characteristic function of the standard normal law. Lévy's continuity theorem, from the same card, turns convergence of characteristic functions at every t into convergence in distribution.
+Independence turns the characteristic function of a sum into a product, so $`\varphi_{Z_n}(t) = \varphi_Y(t/\sqrt{n})^n`$. For complex a and b of size at most 1, $`\lvert a^n - b^n \rvert \le n \lvert a - b \rvert`$, by writing $`a^n - b^n`$ as a telescoping sum of n terms. Take $`a = \varphi_Y(t/\sqrt{n})`$ and $`b = 1 - t^2/(2n)`$, which lies in $`[0, 1]`$ once n is at least $`t^2/2`$. Then $`\lvert \varphi_{Z_n}(t) - b^n \rvert \le n \cdot (t^2/n) \cdot o(1) \to 0`$, where $`o(1)`$ is the expectation from the first paragraph at $`s = t/\sqrt{n}`$, a quantity that tends to 0; and $`b^n \to e^{-t^2/2}`$, the characteristic function of the standard normal law. Lévy's continuity theorem, from the same card, turns convergence of characteristic functions at every t into convergence in distribution.
 
-For the die the code prints $\varphi_{Z_n}(1)$ = 0.567548, 0.603269, 0.606210, 0.606499 at n = 1, 10, 100, 1000, against the limit 0.606531. The die's law is symmetric, so its characteristic function is an average of cosines; with the fourth moment $E Y^4$ = 1.7314 the same telescoping gives the explicit bound $(E Y^4/24 + 1/8)\,t^4/n$, 0.001971 at t = 1, n = 100, and every printed value sits inside it.
+For the die the code prints $`\varphi_{Z_n}(1)`$ = 0.567548, 0.603269, 0.606210, 0.606499 at n = 1, 10, 100, 1000, against the limit 0.606531. The die's law is symmetric, so its characteristic function is an average of cosines; with the fourth moment $`E Y^4`$ = 1.7314 the same telescoping gives the explicit bound $`(E Y^4/24 + 1/8)\,t^4/n`$, 0.001971 at t = 1, n = 100, and every printed value sits inside it.
 
 </details>
 
@@ -195,18 +207,18 @@ One fair die, 100 rolls, the question: a total of 330 or less.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| mean of one roll $\mu$ | (1 + 2 + 3 + 4 + 5 + 6)/6 | 7/2 |
+| mean of one roll $`\mu`$ | (1 + 2 + 3 + 4 + 5 + 6)/6 | 7/2 |
 | variance of one roll | (2.5^2 + 1.5^2 + 0.5^2) × 2/6 = 17.5/6 | 35/12 |
-| $\sigma$ | square root of 35/12 | 1.7078 |
+| $`\sigma`$ | square root of 35/12 | 1.7078 |
 | mean of the total | 100 × 3.5 | 350 |
 | variance of the total | 100 × 35/12, since variances of independent rolls add | 875/3 |
 | standard deviation of the total | square root of 875/3 | 17.0783 |
 | standardized cut | (330 − 350)/17.0783 | −1.1711 |
-| normal chance | $\Phi(-1.1711)$ | 0.120783 |
+| normal chance | $`\Phi(-1.1711)`$ | 0.120783 |
 | half-step cut | (330.5 − 350)/17.0783 = −1.1418 | 0.126768 |
 | exact chance | convolution of 100 rolls | **0.126948** |
-| $\rho$ | (2.5^3 + 1.5^3 + 0.5^3) × 2/6 | 51/8 |
-| moment ratio | $\rho/\sigma^3$ | 1.2798 |
+| $`\rho`$ | (2.5^3 + 1.5^3 + 0.5^3) × 2/6 | 51/8 |
+| moment ratio | $`\rho/\sigma^3`$ | 1.2798 |
 | Berry–Esseen allowance | 0.4748 × 1.2798 / 10 | 0.0608 |
 | actual gap at 330 | 0.126948 − 0.120783 | **0.006164** |
 
@@ -216,10 +228,10 @@ About one hundred-roll session in eight ends at 330 or below. The bell curve mis
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Rolls not independent: one roll copied 100 times | chance of 330 or less = P(one roll ≤ 3) = 1/2, against 0.126948 | $Z_n$ is one standardized roll for every n |
+| Rolls not independent: one roll copied 100 times | chance of 330 or less = P(one roll ≤ 3) = 1/2, against 0.126948 | $`Z_n`$ is one standardized roll for every n |
 | Infinite variance: Cauchy steps, divided by the square root of n | characteristic function at t = 1: 0.3679, 0.1353, 0.000045 at n = 1, 4, 100, falling to 0 instead of 0.606531 | A Cauchy sum divided by n is again Cauchy, so divided by the square root of n it spreads without limit ([Heavy tails](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)) |
 | Standard deviation of the total taken as 100 × 1.7078 | 170.78, and a normal chance of 0.4534 | Variances add, not standard deviations |
-| Treating the limit as a guarantee at n = 100: rare event, p = 1/10000 | chance the count is at most its mean = chance of no event = 0.9900, against $\Phi(0)$ = 0.5 | The theorem fixes the law and lets n grow; with successes this rare the moment ratio is enormous and Berry–Esseen gives no useful bound |
+| Treating the limit as a guarantee at n = 100: rare event, p = 1/10000 | chance the count is at most its mean = chance of no event = 0.9900, against $`\Phi(0)`$ = 0.5 | The theorem fixes the law and lets n grow; with successes this rare the moment ratio is enormous and Berry–Esseen gives no useful bound |
 
 ---
 
@@ -227,7 +239,7 @@ About one hundred-roll session in eight ends at 330 or below. The bell curve mis
 
 The code reaches the chance of 330 or less by two exact roads: convolution, one roll at a time, and an inclusion-exclusion formula for the count of roll sequences. Python compares the counts as whole numbers; Rust, with no big integers, compares them modulo the prime 2^61 − 1. The normal distribution function comes from its own Taylor series.
 
-Then the code runs the proof: Lindeberg's swap over all 101 hybrid sums against the per-swap bound, the largest gap at seven values of n from 1 to 100 against Berry–Esseen, and the characteristic function of $Z_n$ against its limit. The failures print last. The code shows one law at finite n; that the limit holds for every law with finite variance is what the proof shows.
+Then the code runs the proof: Lindeberg's swap over all 101 hybrid sums against the per-swap bound, the largest gap at seven values of n from 1 to 100 against Berry–Esseen, and the characteristic function of $`Z_n`$ against its limit. The failures print last. The code shows one law at finite n; that the limit holds for every law with finite variance is what the proof shows.
 
 ### Python
 
@@ -609,11 +621,11 @@ The two outputs match line for line.
 
 Lean proves the limit and the third-moment swap bound for i.i.d. copies with finite positive variance, and the telescoping step.
 
-- Suppose $X_1, X_2, \dots$ are i.i.d. with $0 < \sigma^2 < \infty$. Then $P(Z_n \le x) \to \Phi(x)$ for every real x.
-- Suppose also $\rho$ is finite, $n \ge 1$, and h has a continuous third derivative with $|h'''| \le M_3$ everywhere. Then $|E h(Z_n) - E h(G)|$ is at most $M_3/(6\sqrt{n})$ times $(\rho/\sigma^3 + E|G|^3)$.
-- Take complex numbers a and b of size at most 1. Then $|a^n - b^n| \le n|a - b|$ for every n.
-- The die's hand arithmetic holds exactly as fractions: mean 7/2, variance 35/12, and $\rho$ = 51/8. For 100 rolls, the total has mean 350 and variance 875/3.
-- Two rolls: 21 of the 36 pairs total 7 or less, so $P(Z_2 \le 0)$ = 7/12. Six pairs total exactly 7.
+- Suppose $`X_1, X_2, \dots`$ are i.i.d. with $`0 < \sigma^2 < \infty`$. Then $`P(Z_n \le x) \to \Phi(x)`$ for every real x.
+- Suppose also $`\rho`$ is finite, $`n \ge 1`$, and h has a continuous third derivative with $`|h'''| \le M_3`$ everywhere. Then $`|E h(Z_n) - E h(G)|`$ is at most $`M_3/(6\sqrt{n})`$ times $`(\rho/\sigma^3 + E|G|^3)`$.
+- Take complex numbers a and b of size at most 1. Then $`|a^n - b^n| \le n|a - b|`$ for every n.
+- The die's hand arithmetic holds exactly as fractions: mean 7/2, variance 35/12, and $`\rho`$ = 51/8. For 100 rolls, the total has mean 350 and variance 875/3.
+- Two rolls: 21 of the 36 pairs total 7 or less, so $`P(Z_2 \le 0)`$ = 7/12. Six pairs total exactly 7.
 - For one roll copied 100 times, 3 of the 6 faces are at most 3, giving the chance 1/2.
 
 The decimals, the swap run, the Berry–Esseen gaps, the characteristic-function values and the breaks are left to the Python and Rust checks.
@@ -1065,7 +1077,7 @@ example : ((Finset.univ : Finset (Fin 6)).filter (fun i => i.val + 1 ≤ 3)).car
 > [!TIP]
 > **Try changing**
 > Guess first, then run the Python.
-> - **Cut at the centre.** Set `CUT` to 350. Guess the exact chance. It is 0.511661 against $\Phi(0)$ = 0.5: a gap of 0.011661, nearly the largest gap 0.0117, because the cut sits on the tallest jump. The half-step answer, 0.511678, misses by 0.000017.
+> - **Cut at the centre.** Set `CUT` to 350. Guess the exact chance. It is 0.511661 against $`\Phi(0)`$ = 0.5: a gap of 0.011661, nearly the largest gap 0.0117, because the cut sits on the tallest jump. The half-step answer, 0.511678, misses by 0.000017.
 > - **A sharper smooth step.** Set `DELTA` to 0.25. Guess how the bound changes. It grows eightfold, to 0.012237 per swap and 1.2237 in all, useless for a probability; the actual total movement is 1.91e-04.
 > - **Too small a constant.** Set `C_SHEV` to 0.08. The run stops at n = 1: the largest gap, 0.1434, exceeds 0.08 × 1.2798 = 0.1024. No constant that small can serve even the die.
 
@@ -1089,7 +1101,7 @@ example : ((Finset.univ : Finset (Fin 6)).filter (fun i => i.val + 1 ≤ 3)).car
 - **Averages converge, then fluctuate.** [The weak law of large numbers](03-weak-law-of-large-numbers.md) and [The strong law of large numbers](04-strong-law-of-large-numbers.md) say the average of the rolls settles at 3.5; this theorem says the size and shape of what is left over, on the scale of one over the square root of n.
 
 > **Say it back**
-> Centre a sum of n independent copies of a law with finite positive variance and divide by its standard deviation; its distribution function tends to the bell curve at every level. The proof swaps the copies for normal variables one at a time; each swap changes a smooth average only through a third-order remainder, because the two share mean and variance. n swaps of size $n^{-3/2}$ cost $n^{-1/2}$, truncation removes the need for a third moment, and smooth ramps squeezed around a cut turn averages back into chances. Berry–Esseen bounds the gap by a constant times the third-moment ratio over the square root of n. For 100 die rolls the chance of 330 or less is 0.126948 exactly, 0.120783 from the bell curve, with an allowance of 0.0608.
+> Centre a sum of n independent copies of a law with finite positive variance and divide by its standard deviation; its distribution function tends to the bell curve at every level. The proof swaps the copies for normal variables one at a time; each swap changes a smooth average only through a third-order remainder, because the two share mean and variance. n swaps of size $`n^{-3/2}`$ cost $`n^{-1/2}`$, truncation removes the need for a third moment, and smooth ramps squeezed around a cut turn averages back into chances. Berry–Esseen bounds the gap by a constant times the third-moment ratio over the square root of n. For 100 die rolls the chance of 330 or less is 0.126948 exactly, 0.120783 from the bell curve, with an allowance of 0.0608.
 
 ---
 

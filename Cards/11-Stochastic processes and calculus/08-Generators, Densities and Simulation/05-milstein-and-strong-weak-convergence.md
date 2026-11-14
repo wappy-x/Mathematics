@@ -14,7 +14,7 @@ How good is a loop? There are two honest questions, and they have different answ
 
 On this ounce, each halving of the step halves Milstein's path error: 15.71 cents, 7.94, 3.99, 2.00, 1.00. Euler's falls only by a factor of about 1.41 each time. On averages, both loops improve at the same rate, and Milstein buys nothing in kind.
 
-**Milstein adds the term $\tfrac12\sigma\sigma'(\Delta W^2 - \Delta t)$ to each Euler step, which raises the path error's rate from the square root of the step to the step itself; the average error shrinks in proportion to the step for both schemes.**
+**Milstein adds the term $`\tfrac12\sigma\sigma'(\Delta W^2 - \Delta t)`$ to each Euler step, which raises the path error's rate from the square root of the step to the step itself; the average error shrinks in proportion to the step for both schemes.**
 
 **What kind of fact this is:** a method. Its convergence orders are theorems. For silver they are proved on this card from an exact error formula (Detailed proof, under Why it works). For general equations the key steps are given and the complete proofs are cited to Kloeden and Platen.
 
@@ -37,38 +37,44 @@ Orange: Euler-Maruyama. Green: Milstein. Dark blue: the exact price on the same 
 
 ## The formula
 
-Reminder from [Euler-Maruyama](04-euler-maruyama-scheme.md): time $t$ is in years, and $W_t$ is Brownian motion. A stochastic differential equation (SDE) $dX_t = \mu(X_t)\,dt + \sigma(X_t)\,dW_t$ is shorthand for an integral equation, never a derivative, because a Brownian path has no slope. The year is cut into $n$ steps of length $\Delta t$, and $\Delta W_k$ is the Brownian change over step $k$, a normal draw with mean 0 and variance $\Delta t$. Below, $\sigma'(x)$ is the slope of the noise-size function: how fast the jumpiness changes as the price moves.
+Reminder from [Euler-Maruyama](04-euler-maruyama-scheme.md): time $`t`$ is in years, and $`W_t`$ is Brownian motion. A stochastic differential equation (SDE) $`dX_t = \mu(X_t)\,dt + \sigma(X_t)\,dW_t`$ is shorthand for an integral equation, never a derivative, because a Brownian path has no slope. The year is cut into $`n`$ steps of length $`\Delta t`$, and $`\Delta W_k`$ is the Brownian change over step $`k`$, a normal draw with mean 0 and variance $`\Delta t`$. Below, $`\sigma'(x)`$ is the slope of the noise-size function: how fast the jumpiness changes as the price moves.
 
-$$Y_{k+1} \;=\; Y_k + \mu(Y_k)\,\Delta t + \sigma(Y_k)\,\Delta W_k \;+\; \tfrac12\,\sigma(Y_k)\,\sigma'(Y_k)\,\big(\Delta W_k^2 - \Delta t\big)$$
+```math
+Y_{k+1} \;=\; Y_k + \mu(Y_k)\,\Delta t + \sigma(Y_k)\,\Delta W_k \;+\; \tfrac12\,\sigma(Y_k)\,\sigma'(Y_k)\,\big(\Delta W_k^2 - \Delta t\big)
+```
 
 **Read it aloud:** take the Euler step, then add half the noise size times its slope times the amount by which this step's squared shove beat its average.
 
-For silver, $\mu(x) = 0.05x$ and $\sigma(x) = 0.30x$, so $\sigma'(x) = 0.30$ and the product $\sigma\sigma'$ is $0.09x$. Each step multiplies the price:
+For silver, $`\mu(x) = 0.05x`$ and $`\sigma(x) = 0.30x`$, so $`\sigma'(x) = 0.30`$ and the product $`\sigma\sigma'`$ is $`0.09x`$. Each step multiplies the price:
 
-$$Y_{k+1} = Y_k\Big(1 + \mu\,\Delta t + \sigma\,\Delta W_k + \tfrac12\sigma^2\big(\Delta W_k^2 - \Delta t\big)\Big), \qquad S_T = S_0\, e^{(\mu - \frac12\sigma^2)T + \sigma W_T}.$$
+```math
+Y_{k+1} = Y_k\Big(1 + \mu\,\Delta t + \sigma\,\Delta W_k + \tfrac12\sigma^2\big(\Delta W_k^2 - \Delta t\big)\Big), \qquad S_T = S_0\, e^{(\mu - \frac12\sigma^2)T + \sigma W_T}.
+```
 
-The right-hand formula is the exact price on the same Brownian path ([Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md)). The two kinds of error, at the horizon $T$:
+The right-hand formula is the exact price on the same Brownian path ([Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md)). The two kinds of error, at the horizon $`T`$:
 
-$$\varepsilon_{\mathrm{s}}(\Delta t) = \sqrt{E\big[(Y_n - S_T)^2\big]} \;\le\; C\,\Delta t^{\gamma}, \qquad \varepsilon_{\mathrm{w}}(\Delta t) = E\big[f(Y_n)\big] - E\big[f(S_T)\big], \quad |\varepsilon_{\mathrm{w}}| \le C\,\Delta t^{\beta}.$$
+```math
+\varepsilon_{\mathrm{s}}(\Delta t) = \sqrt{E\big[(Y_n - S_T)^2\big]} \;\le\; C\,\Delta t^{\gamma}, \qquad \varepsilon_{\mathrm{w}}(\Delta t) = E\big[f(Y_n)\big] - E\big[f(S_T)\big], \quad |\varepsilon_{\mathrm{w}}| \le C\,\Delta t^{\beta}.
+```
 
-**Read it aloud:** the path error is the typical size of the gap between scheme and truth on a shared path. The average error is how far the scheme's average of some quantity lands from the true average. The powers $\gamma$ and $\beta$ are the **strong order** and the **weak order**: how fast each error falls with the step.
+**Read it aloud:** the path error is the typical size of the gap between scheme and truth on a shared path. The average error is how far the scheme's average of some quantity lands from the true average. The powers $`\gamma`$ and $`\beta`$ are the **strong order** and the **weak order**: how fast each error falls with the step.
 
 | Symbol | Plain meaning | In our example | Push it up and the error… |
 | --- | --- | --- | --- |
-| $t$, $T$ | time from today, in years; the horizon | $T$ = 1 year | grows |
-| $S_t$, $S_0$, $S_T$ | the exact silver price at time t, today, at the horizon | $S_0$ = $30; average of $S_T$ $31.5381 | grows in proportion |
-| $\mu$, $\sigma$ | drift per year, and volatility (the spread of yearly moves) | 0.05 and 0.30 | grows like $\sigma^2$ |
-| $X$, $\mu(x)$, $\sigma(x)$, $\sigma'(x)$ | a general SDE's solution, drift function, noise-size function, and that function's slope | 0.05x, 0.30x, 0.30 | a steeper slope means a bigger correction |
-| $W_t$, $\Delta W_k$ | Brownian motion; its change over step k | variance $\Delta t$, spread 0.2887 for a month | — |
-| $n$, $\Delta t$, $k$, $t_k$ | number of steps; step length in years; the step counter; the time step k starts | n = 1 to 64; a month is 0.083333 | more steps, less error, more work |
-| $Y_k$, $Y_n$ | the scheme's price after k steps; at the horizon | Euler $19.27, Milstein $20.01 on the pictured year | — |
-| $\varepsilon_{\mathrm{s}}$, $\varepsilon_{\mathrm{w}}$ | path error (root-mean-square gap on a shared path); average error | at 4 steps, Euler 1.0495 dollars and −4.104 square dollars | — |
-| $f$ | the quantity whose average is compared, called the test function | $f(x) = x^2$, the average squared price | — |
-| $\gamma$, $\beta$, $C$ | strong order; weak order; the constant in front | Euler ½ and 1; Milstein 1 and 1 | a larger order means faster improvement |
-| $A_k$, $G_k$ | the scheme's one-step factor and the exact one-step factor | 0.836617 and 0.835618 on the worked month | — |
-| $M$, $K$, $\kappa$ | in the proof: the averages of $A_k^2$ and of $A_k G_k$, and a constant built from μ and σ | — | — |
-| $h$, $\eta$, $a$, $c$ | in the proof: the step $\Delta t$; the extra $\sigma^4h^2/2$ that Milstein adds to M and K (0 for Euler); $2\mu + \sigma^2$, the growth rate of the exact average squared price; $\mu + \sigma^2$ | $a$ = 0.19, $c$ = 0.14 | a larger $\eta$ is a bigger correction |
-| $u$, $v(x, t)$ | in Step 1, the exact one-step change in the log price; in Step 4, the true average of f at the horizon from price x at time t | — | — |
+| $`t`$, $`T`$ | time from today, in years; the horizon | $`T`$ = 1 year | grows |
+| $`S_t`$, $`S_0`$, $`S_T`$ | the exact silver price at time t, today, at the horizon | $`S_0`$ = $30; average of $`S_T`$ $31.5381 | grows in proportion |
+| $`\mu`$, $`\sigma`$ | drift per year, and volatility (the spread of yearly moves) | 0.05 and 0.30 | grows like $`\sigma^2`$ |
+| $`X`$, $`\mu(x)`$, $`\sigma(x)`$, $`\sigma'(x)`$ | a general SDE's solution, drift function, noise-size function, and that function's slope | 0.05x, 0.30x, 0.30 | a steeper slope means a bigger correction |
+| $`W_t`$, $`\Delta W_k`$ | Brownian motion; its change over step k | variance $`\Delta t`$, spread 0.2887 for a month | — |
+| $`n`$, $`\Delta t`$, $`k`$, $`t_k`$ | number of steps; step length in years; the step counter; the time step k starts | n = 1 to 64; a month is 0.083333 | more steps, less error, more work |
+| $`Y_k`$, $`Y_n`$ | the scheme's price after k steps; at the horizon | Euler $19.27, Milstein $20.01 on the pictured year | — |
+| $`\varepsilon_{\mathrm{s}}`$, $`\varepsilon_{\mathrm{w}}`$ | path error (root-mean-square gap on a shared path); average error | at 4 steps, Euler 1.0495 dollars and −4.104 square dollars | — |
+| $`f`$ | the quantity whose average is compared, called the test function | $`f(x) = x^2`$, the average squared price | — |
+| $`\gamma`$, $`\beta`$, $`C`$ | strong order; weak order; the constant in front | Euler ½ and 1; Milstein 1 and 1 | a larger order means faster improvement |
+| $`A_k`$, $`G_k`$ | the scheme's one-step factor and the exact one-step factor | 0.836617 and 0.835618 on the worked month | — |
+| $`M`$, $`K`$, $`\kappa`$ | in the proof: the averages of $`A_k^2`$ and of $`A_k G_k`$, and a constant built from μ and σ | — | — |
+| $`h`$, $`\eta`$, $`a`$, $`c`$ | in the proof: the step $`\Delta t`$; the extra $`\sigma^4h^2/2`$ that Milstein adds to M and K (0 for Euler); $`2\mu + \sigma^2`$, the growth rate of the exact average squared price; $`\mu + \sigma^2`$ | $`a`$ = 0.19, $`c`$ = 0.14 | a larger $`\eta`$ is a bigger correction |
+| $`u`$, $`v(x, t)`$ | in Step 1, the exact one-step change in the log price; in Step 4, the true average of f at the horizon from price x at time t | — | — |
 
 The average error here is in square dollars, because the test function squares the price.
 
@@ -86,80 +92,88 @@ The average error here is in square dollars, because the test function squares t
 
 ### Step 0: the Euler step froze the noise size, and the noise size moves
 
-Euler freezes the noise size at the start of each step. Within the step the price moves, and the noise size moves with it, by about $\sigma'\,\sigma\,(W_s - W_{t_k})$ at time s. Integrating that move against the path gives the missing term. It is as large as the step itself: the path moves about $\sqrt{\Delta t}$, and integrating against it contributes another $\sqrt{\Delta t}$.
+Euler freezes the noise size at the start of each step. Within the step the price moves, and the noise size moves with it, by about $`\sigma'\,\sigma\,(W_s - W_{t_k})`$ at time s. Integrating that move against the path gives the missing term. It is as large as the step itself: the path moves about $`\sqrt{\Delta t}`$, and integrating against it contributes another $`\sqrt{\Delta t}`$.
 
 ### Step 1: the missing integral, computed
 
-Write $X$ for the true solution. On step $k$,
+Write $`X`$ for the true solution. On step $`k`$,
 
-$$\int_{t_k}^{t_{k+1}} \sigma(X_s)\,dW_s \;\approx\; \sigma(X_{t_k})\,\Delta W_k \;+\; \sigma(X_{t_k})\,\sigma'(X_{t_k}) \int_{t_k}^{t_{k+1}} \big(W_s - W_{t_k}\big)\,dW_s .$$
+```math
+\int_{t_k}^{t_{k+1}} \sigma(X_s)\,dW_s \;\approx\; \sigma(X_{t_k})\,\Delta W_k \;+\; \sigma(X_{t_k})\,\sigma'(X_{t_k}) \int_{t_k}^{t_{k+1}} \big(W_s - W_{t_k}\big)\,dW_s .
+```
 
-The last integral is Brownian motion integrated against itself, started afresh at $t_k$. The Ito integral gives $\int_0^{\tau} W\,dW = \tfrac12 W_{\tau}^2 - \tfrac12 \tau$, proved by left-end sums in [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md). Over one step, that is $\tfrac12(\Delta W_k^2 - \Delta t)$. Multiply in and the Milstein correction appears.
+The last integral is Brownian motion integrated against itself, started afresh at $`t_k`$. The Ito integral gives $`\int_0^{\tau} W\,dW = \tfrac12 W_{\tau}^2 - \tfrac12 \tau`$, proved by left-end sums in [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md). Over one step, that is $`\tfrac12(\Delta W_k^2 - \Delta t)`$. Multiply in and the Milstein correction appears.
 
-The code checks this over one month cut into 100,000 pieces. The left-end sum is −0.041889. The Ito value $\tfrac12(\Delta W^2 - \Delta t)$ is −0.041666. Ordinary calculus would say $\tfrac12\Delta W^2$, here 0.000001, and miss by about Δt/2. The −Δt comes from the squared pieces, which add up to 0.083780 against Δt = 0.083333: the path's quadratic variation ([Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md)).
+The code checks this over one month cut into 100,000 pieces. The left-end sum is −0.041889. The Ito value $`\tfrac12(\Delta W^2 - \Delta t)`$ is −0.041666. Ordinary calculus would say $`\tfrac12\Delta W^2`$, here 0.000001, and miss by about Δt/2. The −Δt comes from the squared pieces, which add up to 0.083780 against Δt = 0.083333: the path's quadratic variation ([Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md)).
 
-For silver the same term falls out of the exact factor. Expand $e^u$ with $u = (\mu - \tfrac12\sigma^2)\Delta t + \sigma\Delta W$: the square $u^2$ is $\sigma^2\Delta W^2$ plus pieces of order $\Delta t^{3/2}$, so $e^u = 1 + \mu\Delta t + \sigma\Delta W + \tfrac12\sigma^2(\Delta W^2 - \Delta t)$ plus order $\Delta t^{3/2}$. The Euler card found the first three terms and named the fourth as the one dropped. Milstein keeps it.
+For silver the same term falls out of the exact factor. Expand $`e^u`$ with $`u = (\mu - \tfrac12\sigma^2)\Delta t + \sigma\Delta W`$: the square $`u^2`$ is $`\sigma^2\Delta W^2`$ plus pieces of order $`\Delta t^{3/2}`$, so $`e^u = 1 + \mu\Delta t + \sigma\Delta W + \tfrac12\sigma^2(\Delta W^2 - \Delta t)`$ plus order $`\Delta t^{3/2}`$. The Euler card found the first three terms and named the fourth as the one dropped. Milstein keeps it.
 
 ### Step 2: one step's own error, before and after
 
-The local error is the gap after one step from the same start, $A_k - G_k$, where $A_k$ is the scheme's factor and $G_k$ the exact one. Its root-mean-square size can be computed exactly (Step 5). For a dollar of silver:
+The local error is the gap after one step from the same start, $`A_k - G_k`$, where $`A_k`$ is the scheme's factor and $`G_k`$ the exact one. Its root-mean-square size can be computed exactly (Step 5). For a dollar of silver:
 
 - Step of 1/16 year: Euler 0.004001, Milstein 0.000292.
 - Step of 1/64 year: Euler 0.000996, Milstein 0.000036.
 
-Quartering the step divides Euler's local error by about 4: it is of order $\Delta t$. It divides Milstein's by about 8: order $\Delta t^{3/2}$.
+Quartering the step divides Euler's local error by about 4: it is of order $`\Delta t`$. It divides Milstein's by about 8: order $`\Delta t^{3/2}`$.
 
 ### Step 3: from local error to path error
 
-The [Euler-Maruyama](04-euler-maruyama-scheme.md) card showed how local errors with zero average add up: like a random walk, as the square root of their number. There are $n = T/\Delta t$ steps.
+The [Euler-Maruyama](04-euler-maruyama-scheme.md) card showed how local errors with zero average add up: like a random walk, as the square root of their number. There are $`n = T/\Delta t`$ steps.
 
-- Euler's local error has near-zero average (of order $\Delta t^2$) and size $\Delta t$. Summed, $\sqrt{n}\,\Delta t = \sqrt{T\,\Delta t}$. Strong order ½.
-- Milstein's leftover has a zero-average part of size $\Delta t^{3/2}$, which sums to $\sqrt{n}\,\Delta t^{3/2} = \sqrt{T}\,\Delta t$, and a part with nonzero average of size $\Delta t^2$, which sums to $n\,\Delta t^2 = T\,\Delta t$. Strong order 1.
+- Euler's local error has near-zero average (of order $`\Delta t^2`$) and size $`\Delta t`$. Summed, $`\sqrt{n}\,\Delta t = \sqrt{T\,\Delta t}`$. Strong order ½.
+- Milstein's leftover has a zero-average part of size $`\Delta t^{3/2}`$, which sums to $`\sqrt{n}\,\Delta t^{3/2} = \sqrt{T}\,\Delta t`$, and a part with nonzero average of size $`\Delta t^2`$, which sums to $`n\,\Delta t^2 = T\,\Delta t`$. Strong order 1.
 
-For Euler the constant follows too. The dropped term $\tfrac12\sigma^2 S(\Delta W^2 - \Delta t)$ has spread $\sigma^2 S\,\Delta t/\sqrt2$, since $\Delta W^2 - \Delta t$ has spread $\sqrt2\,\Delta t$. Add n of them in quadrature (square them, add, take the square root) and use silver's root-mean-square size at the horizon, $S_0 e^{(2\mu + \sigma^2)T/2}$:
+For Euler the constant follows too. The dropped term $`\tfrac12\sigma^2 S(\Delta W^2 - \Delta t)`$ has spread $`\sigma^2 S\,\Delta t/\sqrt2`$, since $`\Delta W^2 - \Delta t`$ has spread $`\sqrt2\,\Delta t`$. Add n of them in quadrature (square them, add, take the square root) and use silver's root-mean-square size at the horizon, $`S_0 e^{(2\mu + \sigma^2)T/2}`$:
 
-$$\varepsilon_{\mathrm{s}} \approx S_0\, e^{(2\mu+\sigma^2)T/2}\,\sigma^2\sqrt{T\Delta t/2}.$$
+```math
+\varepsilon_{\mathrm{s}} \approx S_0\, e^{(2\mu+\sigma^2)T/2}\,\sigma^2\sqrt{T\Delta t/2}.
+```
 
-That predicts 2.0995 times $\sqrt{\Delta t}$. The exact formula at 1,024 steps gives 2.0995 too. The Euler card measured the average absolute gap rather than the root-mean-square one, so its constant differs; the order is the same.
+That predicts 2.0995 times $`\sqrt{\Delta t}`$. The exact formula at 1,024 steps gives 2.0995 too. The Euler card measured the average absolute gap rather than the root-mean-square one, so its constant differs; the order is the same.
 
 ### Step 4: why averages are kinder
 
-An average forgives errors that average to zero. Milstein's correction has average zero, because $E[\Delta W^2] = \Delta t$. So it cannot change the average price at all: both schemes give $S_0(1 + \mu\Delta t)^n$, which is $31.5284 at 4 steps against the exact $31.5381.
+An average forgives errors that average to zero. Milstein's correction has average zero, because $`E[\Delta W^2] = \Delta t`$. So it cannot change the average price at all: both schemes give $`S_0(1 + \mu\Delta t)^n`$, which is $31.5284 at 4 steps against the exact $31.5381.
 
-For a general test function the argument runs through the backward equation ([Kolmogorov backward equation](02-kolmogorov-backward-equation.md)). Let v(x, t) be the true average of f at the horizon, started from x at time t. The weak error is a sum over steps of the average change in v along one scheme step. For both schemes that change is of order $\Delta t^2$, because the step's low moments match the generator's prediction to that order ([The generator](01-infinitesimal-generator.md)). Summed over n steps, the average error is $n\,\Delta t^2 = T\,\Delta t$. Weak order 1, for both. The complete argument, for smooth coefficients and smooth f, is in Kloeden and Platen, chapter 14; this card states it and checks it numerically.
+For a general test function the argument runs through the backward equation ([Kolmogorov backward equation](02-kolmogorov-backward-equation.md)). Let v(x, t) be the true average of f at the horizon, started from x at time t. The weak error is a sum over steps of the average change in v along one scheme step. For both schemes that change is of order $`\Delta t^2`$, because the step's low moments match the generator's prediction to that order ([The generator](01-infinitesimal-generator.md)). Summed over n steps, the average error is $`n\,\Delta t^2 = T\,\Delta t`$. Weak order 1, for both. The complete argument, for smooth coefficients and smooth f, is in Kloeden and Platen, chapter 14; this card states it and checks it numerically.
 
 A loop can converge weakly and not strongly. Replace each Gaussian shove by a coin flip of ±√Δt. The coin matches the shove's average and variance, so on silver its average error equals Euler's exactly: −4.104 at 4 steps and −1.050 at 16, by enumerating every path. Its path error does not shrink at all: 6.2282 ± 0.0402 dollars at 4 steps, 6.2467 ± 0.0385 at 64.
 
 ### Step 5: for silver, the path error has an exact formula
 
-Silver needs no simulation to measure its path error. The scheme's horizon value is $S_0$ times a product of independent factors $A_k$, and so is the exact value, with factors $G_k$ built from the same shoves. Expand the square of the gap and average:
+Silver needs no simulation to measure its path error. The scheme's horizon value is $`S_0`$ times a product of independent factors $`A_k`$, and so is the exact value, with factors $`G_k`$ built from the same shoves. Expand the square of the gap and average:
 
-$$\varepsilon_{\mathrm{s}}^2 = S_0^2\big(M^n - 2K^n + e^{(2\mu+\sigma^2)T}\big), \qquad M = E[A_k^2],\quad K = E[A_k G_k].$$
+```math
+\varepsilon_{\mathrm{s}}^2 = S_0^2\big(M^n - 2K^n + e^{(2\mu+\sigma^2)T}\big), \qquad M = E[A_k^2],\quad K = E[A_k G_k].
+```
 
-The averages M and K come from the normal moments of one shove. The formula holds for every n. From it, Euler's path error falls like $\sqrt{\Delta t}$ and Milstein's like $\Delta t$. The Detailed proof below gives the algebra.
+The averages M and K come from the normal moments of one shove. The formula holds for every n. From it, Euler's path error falls like $`\sqrt{\Delta t}`$ and Milstein's like $`\Delta t`$. The Detailed proof below gives the algebra.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** Steps of length $h = \Delta t = T/n$. Each $\Delta W_k$ is normal with mean 0 and variance h, independent of the others. Euler's factor is $A_k = 1 + \mu h + \sigma\Delta W_k$; Milstein's adds $\tfrac12\sigma^2(\Delta W_k^2 - h)$. The exact factor is $G_k = e^{(\mu - \sigma^2/2)h + \sigma\Delta W_k}$. Then $Y_n = S_0\prod A_k$ and $S_T = S_0 \prod G_k$.
+**Setting.** Steps of length $`h = \Delta t = T/n`$. Each $`\Delta W_k`$ is normal with mean 0 and variance h, independent of the others. Euler's factor is $`A_k = 1 + \mu h + \sigma\Delta W_k`$; Milstein's adds $`\tfrac12\sigma^2(\Delta W_k^2 - h)`$. The exact factor is $`G_k = e^{(\mu - \sigma^2/2)h + \sigma\Delta W_k}`$. Then $`Y_n = S_0\prod A_k`$ and $`S_T = S_0 \prod G_k`$.
 
-**Moments of one shove.** $E\Delta W = E\Delta W^3 = 0$, $E\Delta W^2 = h$, $E\Delta W^4 = 3h^2$. Completing the square in the normal density gives $E e^{\sigma\Delta W} = e^{\sigma^2 h/2}$, $E[\Delta W e^{\sigma\Delta W}] = \sigma h\,e^{\sigma^2 h/2}$ and $E[\Delta W^2 e^{\sigma \Delta W}] = (h + \sigma^2h^2)\,e^{\sigma^2h/2}$.
+**Moments of one shove.** $`E\Delta W = E\Delta W^3 = 0`$, $`E\Delta W^2 = h`$, $`E\Delta W^4 = 3h^2`$. Completing the square in the normal density gives $`E e^{\sigma\Delta W} = e^{\sigma^2 h/2}`$, $`E[\Delta W e^{\sigma\Delta W}] = \sigma h\,e^{\sigma^2 h/2}`$ and $`E[\Delta W^2 e^{\sigma \Delta W}] = (h + \sigma^2h^2)\,e^{\sigma^2h/2}`$.
 
-**The two averages.** Write $\eta = 0$ for Euler and $\eta = \sigma^4h^2/2$ for Milstein. Expanding and using the moments:
-$$M = (1 + \mu h)^2 + \sigma^2 h + \eta, \qquad K = e^{\mu h}\big(1 + (\mu + \sigma^2)h + \eta\big).$$
-For Milstein, the correction's square averages to $\tfrac14\sigma^4 \cdot 2h^2$, and its cross term with $\sigma \Delta W$ averages to zero because $E\Delta W^3 = 0$. With $G_k$, the correction contributes $\tfrac12\sigma^2(h + \sigma^2 h^2 - h)\,e^{\sigma^2h/2}$ times $e^{(\mu - \sigma^2/2)h}$, which is $e^{\mu h}\sigma^4h^2/2$.
+**The two averages.** Write $`\eta = 0`$ for Euler and $`\eta = \sigma^4h^2/2`$ for Milstein. Expanding and using the moments:
 
-**The formula.** Factors at different steps are independent, so averages of products are products of averages: $E[Y_n^2] = S_0^2M^n$, $E[Y_nS_T] = S_0^2K^n$, $E[S_T^2] = S_0^2e^{(2\mu+\sigma^2)T}$. Expanding $(Y_n - S_T)^2$ gives the formula in Step 5, for every n. The average error with $f(x) = x^2$ is $S_0^2(M^n - e^{(2\mu+\sigma^2)T})$.
+$`\displaystyle M = (1 + \mu h)^2 + \sigma^2 h + \eta, \qquad K = e^{\mu h}\big(1 + (\mu + \sigma^2)h + \eta\big).`$
 
-**The rates.** Write $a = 2\mu + \sigma^2$ and $c = \mu + \sigma^2$. Divide the bracket by $e^{aT}$. It becomes $e^{n\log M - aT} - 2e^{n \log K - aT} + 1$. Expand the logarithms to order $h^2$ per step, then multiply by $n = T/h$.
+For Milstein, the correction's square averages to $`\tfrac14\sigma^4 \cdot 2h^2`$, and its cross term with $`\sigma \Delta W`$ averages to zero because $`E\Delta W^3 = 0`$. With $`G_k`$, the correction contributes $`\tfrac12\sigma^2(h + \sigma^2 h^2 - h)\,e^{\sigma^2h/2}`$ times $`e^{(\mu - \sigma^2/2)h}`$, which is $`e^{\mu h}\sigma^4h^2/2`$.
 
-*Euler.* $n\log M - aT = Th(\mu^2 - a^2/2) + O(h^2)$ and $n\log K - aT = -Thc^2/2 + O(h^2)$. To first order the bracket is $Th(\mu^2 - a^2/2 + c^2) = Th\,\sigma^4/2$. So $\varepsilon_{\mathrm{s}}^2 \approx S_0^2e^{aT}\sigma^4Th/2$, the constant of Step 3, and the order is ½.
+**The formula.** Factors at different steps are independent, so averages of products are products of averages: $`E[Y_n^2] = S_0^2M^n`$, $`E[Y_nS_T] = S_0^2K^n`$, $`E[S_T^2] = S_0^2e^{(2\mu+\sigma^2)T}`$. Expanding $`(Y_n - S_T)^2`$ gives the formula in Step 5, for every n. The average error with $`f(x) = x^2`$ is $`S_0^2(M^n - e^{(2\mu+\sigma^2)T})`$.
 
-*Milstein.* The extra $\sigma^4h^2/2$ in both M and K changes the first-order terms to $n \log M - aT = 2\kappa Th$ and $n \log K - aT = \kappa Th$, with $\kappa = -\mu^2/2 - \mu\sigma^2$. The bracket's first-order part is $2\kappa Th - 2\kappa Th = 0$. What survives is of order $h^2$, so $\varepsilon_{\mathrm{s}}$ is of order h: strong order 1. The constant needs the second-order terms. The code prints $\varepsilon_{\mathrm{s}}/\Delta t$ settling at 0.6391, 0.6418, 0.6427 for 16, 64 and 1,024 steps. At 1,024 steps the bracket is a tiny difference of large terms. So the code computes it with log1p and expm1, which keep the digits that a plain subtraction loses.
+**The rates.** Write $`a = 2\mu + \sigma^2`$ and $`c = \mu + \sigma^2`$. Divide the bracket by $`e^{aT}`$. It becomes $`e^{n\log M - aT} - 2e^{n \log K - aT} + 1`$. Expand the logarithms to order $`h^2`$ per step, then multiply by $`n = T/h`$.
 
-*Average error.* It is $S_0^2e^{aT}(e^{n\log M - aT} - 1)$, whose first-order part is $S_0^2e^{aT}\,Th(\mu^2 - a^2/2)$ for Euler and $S_0^2e^{aT}\,2\kappa Th$ for Milstein. Both are proportional to h: weak order 1, with Milstein's constant equal to Euler's times the ratio of $2\kappa$ to $\mu^2 - a^2/2$: about three quarters of Euler's here.
+*Euler.* $`n\log M - aT = Th(\mu^2 - a^2/2) + O(h^2)`$ and $`n\log K - aT = -Thc^2/2 + O(h^2)`$. To first order the bracket is $`Th(\mu^2 - a^2/2 + c^2) = Th\,\sigma^4/2`$. So $`\varepsilon_{\mathrm{s}}^2 \approx S_0^2e^{aT}\sigma^4Th/2`$, the constant of Step 3, and the order is ½.
 
-**General equations.** For Lipschitz coefficients with linear growth, and σσ′ Lipschitz as well, Kloeden and Platen prove strong order 1 for Milstein (chapter 10). They follow the route of the Euler card's proof: write the scheme as a continuous process, bound the per-step leftover in mean square by $Ch^3$, and carry it to the horizon with Ito's isometry and Gronwall's lemma. That complete argument is not reproduced here.
+*Milstein.* The extra $`\sigma^4h^2/2`$ in both M and K changes the first-order terms to $`n \log M - aT = 2\kappa Th`$ and $`n \log K - aT = \kappa Th`$, with $`\kappa = -\mu^2/2 - \mu\sigma^2`$. The bracket's first-order part is $`2\kappa Th - 2\kappa Th = 0`$. What survives is of order $`h^2`$, so $`\varepsilon_{\mathrm{s}}`$ is of order h: strong order 1. The constant needs the second-order terms. The code prints $`\varepsilon_{\mathrm{s}}/\Delta t`$ settling at 0.6391, 0.6418, 0.6427 for 16, 64 and 1,024 steps. At 1,024 steps the bracket is a tiny difference of large terms. So the code computes it with log1p and expm1, which keep the digits that a plain subtraction loses.
+
+*Average error.* It is $`S_0^2e^{aT}(e^{n\log M - aT} - 1)`$, whose first-order part is $`S_0^2e^{aT}\,Th(\mu^2 - a^2/2)`$ for Euler and $`S_0^2e^{aT}\,2\kappa Th`$ for Milstein. Both are proportional to h: weak order 1, with Milstein's constant equal to Euler's times the ratio of $`2\kappa`$ to $`\mu^2 - a^2/2`$: about three quarters of Euler's here.
+
+**General equations.** For Lipschitz coefficients with linear growth, and σσ′ Lipschitz as well, Kloeden and Platen prove strong order 1 for Milstein (chapter 10). They follow the route of the Euler card's proof: write the scheme as a continuous process, bound the per-step leftover in mean square by $`Ch^3`$, and carry it to the horizon with Ito's isometry and Gronwall's lemma. That complete argument is not reproduced here.
 
 </details>
 
@@ -171,16 +185,16 @@ The Milstein term is the first rung of the Ito-Taylor expansion, the Taylor seri
 
 ## Worked numbers, by hand
 
-One month, $\Delta t = 1/12$ = 0.083333 year, from $30. The shove is $\Delta W$ = −0.60, about two spreads down.
+One month, $`\Delta t = 1/12`$ = 0.083333 year, from $30. The shove is $`\Delta W`$ = −0.60, about two spreads down.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| drift part, $\mu\Delta t$ | 0.05 × 0.083333 | 0.004167 |
-| noise part, $\sigma\Delta W$ | 0.30 × (−0.60) | −0.18 |
+| drift part, $`\mu\Delta t`$ | 0.05 × 0.083333 | 0.004167 |
+| noise part, $`\sigma\Delta W`$ | 0.30 × (−0.60) | −0.18 |
 | Euler factor | 1 + 0.004167 − 0.18 | 0.824167 |
-| correction, $\tfrac12\sigma^2(\Delta W^2 - \Delta t)$ | 0.045 × (0.36 − 0.083333) | 0.012450 |
+| correction, $`\tfrac12\sigma^2(\Delta W^2 - \Delta t)`$ | 0.045 × (0.36 − 0.083333) | 0.012450 |
 | Milstein factor | 0.824167 + 0.012450 | 0.836617 |
-| exact factor, $e^{(\mu - \frac12\sigma^2)\Delta t + \sigma\Delta W}$ | e^(0.000417 − 0.18) | 0.835618 |
+| exact factor, $`e^{(\mu - \frac12\sigma^2)\Delta t + \sigma\Delta W}`$ | e^(0.000417 − 0.18) | 0.835618 |
 | Euler price | 30 × 0.824167 | $24.7250 |
 | Milstein price | 30 × 0.836617 | $25.0985 |
 | exact price | 30 × 0.835618 | $25.0685 |
@@ -220,7 +234,7 @@ Orange: Euler. Green: Milstein. Both halve with each doubling: orders 0.997 and 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Correction written as $\tfrac12\sigma^2\Delta W^2$, no −Δt (ordinary calculus) | average price $32.9874 at 64 steps, heading to $32.9898, not $31.5381 | each step gains $\tfrac12\sigma^2\Delta t$ on average: a new drift, so the loop converges to a different equation |
+| Correction written as $`\tfrac12\sigma^2\Delta W^2`$, no −Δt (ordinary calculus) | average price $32.9874 at 64 steps, heading to $32.9898, not $31.5381 | each step gains $`\tfrac12\sigma^2\Delta t`$ on average: a new drift, so the loop converges to a different equation |
 | Scheme and truth driven by different noise | path "error" $13.5979 at 4 steps, $13.6816 at 64 | it measures two independent silver prices, not a scheme's error |
 | Coin-flip shoves, judged by path error | $6.2282 ± 0.0402 at 4 steps, $6.2467 ± 0.0385 at 64 | right averages (−4.104 at 4 steps, Euler's exactly), no path tracked |
 | Euler's average error measured on 20,000 paths at 64 steps | −0.062 ± 0.145, against the exact −0.264 | the bias is under two standard errors, so the run cannot resolve it |
@@ -645,9 +659,9 @@ The two outputs agree line for line, including every simulated digit: both langu
 
 Lean proves the three error rates for silver on geometric Brownian motion, for any starting price, drift, volatility and horizon.
 
-- Take Milstein's loop with $n$ steps of length $\Delta t = T/n$, on shoves shared with the exact price. Then $\varepsilon_{\mathrm{s}} \le C\,\Delta t$, with one constant $C$ for every $n$.
-- Take Euler's loop on the same shared shoves, with a starting price $S_0 > 0$. Then $\varepsilon_{\mathrm{s}}$ over $\sqrt{\Delta t}$ tends to $S_0 e^{aT/2}\sigma^2\sqrt{T/2}$.
-- Take either loop and the test function $f(x) = x^2$. Then $|\varepsilon_{\mathrm{w}}| \le C\,\Delta t$, with one constant $C$ for both loops and every $n$.
+- Take Milstein's loop with $`n`$ steps of length $`\Delta t = T/n`$, on shoves shared with the exact price. Then $`\varepsilon_{\mathrm{s}} \le C\,\Delta t`$, with one constant $`C`$ for every $`n`$.
+- Take Euler's loop on the same shared shoves, with a starting price $`S_0 > 0`$. Then $`\varepsilon_{\mathrm{s}}`$ over $`\sqrt{\Delta t}`$ tends to $`S_0 e^{aT/2}\sigma^2\sqrt{T/2}`$.
+- Take either loop and the test function $`f(x) = x^2`$. Then $`|\varepsilon_{\mathrm{w}}| \le C\,\Delta t`$, with one constant $`C`$ for both loops and every $`n`$.
 - In the worked month the correction is exactly 0.01245, and the prices are \$24.7250 for Euler and \$25.0985 for Milstein.
 - With the shove +0.60 the same correction is added: Euler \$35.5250 and Milstein \$35.8985.
 
@@ -1473,7 +1487,7 @@ example : (30 : ℚ) * (1 + 1 / 240 + 9 / 50) = 355250 / 10000 ∧
 > **Expecting Milstein to make prices more accurate.** A price is an average, and the average error is weak error. Milstein's correction has average zero, so it leaves the average price untouched: $31.5284 for both schemes at 4 steps. On the squared price it shrinks the constant by about a quarter and keeps the rate. Path accuracy and price accuracy are different targets.
 >
 > Smaller traps:
-> - **Writing the correction with ordinary calculus.** $\tfrac12\sigma^2\Delta W^2$ without −Δt adds a drift. The average price heads to $32.9898 instead of $31.5381.
+> - **Writing the correction with ordinary calculus.** $`\tfrac12\sigma^2\Delta W^2`$ without −Δt adds a drift. The average price heads to $32.9898 instead of $31.5381.
 > - **Reading an order off simulated errors without standard errors.** At 64 steps Euler's simulated average error, −0.062 ± 0.145, is noise; a slope fitted through it means nothing.
 > - **Carrying the correction to two noises unchanged.** With two Brownian motions and noise coefficients that do not commute, the missing Lévy area puts the strong order back at ½.
 
@@ -1487,7 +1501,7 @@ example : (30 : ℚ) * (1 + 1 / 240 + 9 / 50) = 355250 / 10000 ∧
 - **Exact simulation instead.** For silver and the OU rate there is an exact one-step rule, and neither scheme is needed ([Exact simulation](06-exact-simulation-of-gbm-and-ou.md)).
 
 > **Say it back**
-> Euler freezes the noise size over a step, and the noise size moves. Integrating its move against the path gives the Milstein term, $\tfrac12\sigma\sigma'(\Delta W^2 - \Delta t)$. Path error asks whether the scheme follows the true path; average error asks whether averages come out right. Milstein raises the path order from ½ to 1, so each halving of the step halves the path error. For averages both schemes have order 1, and on the average price the correction changes nothing.
+> Euler freezes the noise size over a step, and the noise size moves. Integrating its move against the path gives the Milstein term, $`\tfrac12\sigma\sigma'(\Delta W^2 - \Delta t)`$. Path error asks whether the scheme follows the true path; average error asks whether averages come out right. Milstein raises the path order from ½ to 1, so each halving of the step halves the path error. For averages both schemes have order 1, and on the average price the correction changes nothing.
 
 ---
 

@@ -26,25 +26,29 @@ Drawn to scale, 1 m = 8 units. The boom runs from pivot A to tip B, the hook lin
 
 Seen from the corner A, the **hypotenuse** c faces the right angle (the boom), the **opposite** side a faces A (the height), and the **adjacent** side b touches A without being the hypotenuse (the reach). "sin A", read "the sine of A", names one number fixed by the angle, not sin times A; cos A and tan A read the same way.
 
-$$\sin A = \frac{a}{c}, \qquad \cos A = \frac{b}{c}, \qquad \tan A = \frac{a}{b}$$
+```math
+\sin A = \frac{a}{c}, \qquad \cos A = \frac{b}{c}, \qquad \tan A = \frac{a}{b}
+```
 
 **Read it aloud:** sine is opposite over hypotenuse, cosine adjacent over hypotenuse, tangent opposite over adjacent: SOH-CAH-TOA, one initial per word.
 
 Multiplied by the boom, they answer the crane:
 
-$$a = c \times \sin A = 30 \times 0.6428 = 19.28 \text{ m}, \qquad b = c \times \cos A = 30 \times 0.7660 = 22.98 \text{ m}$$
+```math
+a = c \times \sin A = 30 \times 0.6428 = 19.28 \text{ m}, \qquad b = c \times \cos A = 30 \times 0.7660 = 22.98 \text{ m}
+```
 
 **Read it aloud:** height is boom times sine; reach is boom times cosine.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$ | angle at the pivot, boom to level | 40° | tip rises, reach shrinks |
-| $B$ | angle at the tip, boom to hook line | 50°: the angles total 180° | the reverse of A |
-| $C$ | the right angle, hook line to level | 90° | fixed: the ratios need it |
-| $a$ | side facing A: the height, **opposite** | 19.28 m | — |
-| $b$ | side facing B: the reach, **adjacent** | 22.98 m | — |
-| $c$ | side facing C: the boom, **hypotenuse** | 30 m | all sides grow; no ratio moves |
-| $\sin A$, $\cos A$, $\tan A$ | ratios of sides: pure numbers, no unit | 0.6428, 0.7660, 0.8391 | move only when A does |
+| $`A`$ | angle at the pivot, boom to level | 40° | tip rises, reach shrinks |
+| $`B`$ | angle at the tip, boom to hook line | 50°: the angles total 180° | the reverse of A |
+| $`C`$ | the right angle, hook line to level | 90° | fixed: the ratios need it |
+| $`a`$ | side facing A: the height, **opposite** | 19.28 m | — |
+| $`b`$ | side facing B: the reach, **adjacent** | 22.98 m | — |
+| $`c`$ | side facing C: the boom, **hypotenuse** | 30 m | all sides grow; no ratio moves |
+| $`\sin A`$, $`\cos A`$, $`\tan A`$ | ratios of sides: pure numbers, no unit | 0.6428, 0.7660, 0.8391 | move only when A does |
 
 Tangent is sine over cosine: (a ÷ c) ÷ (b ÷ c) = a ÷ b.
 

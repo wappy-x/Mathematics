@@ -35,40 +35,46 @@ The first line is one simulated gambler, a single sample drawn from a seeded gen
 
 ## The formula
 
-Notation first, in words. A process written $(X_n)$ is a list of random quantities, one per round, read "the value after round $n$". Here $X_n$ is the fortune after $n$ rounds, with $X_0 = 10$. The filtration $\mathcal F_n$ is what is known after $n$ rounds: the full record of the first $n$ tosses ([Filtrations](../01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md)). $E[\,\cdot \mid \mathcal F_n]$ is the best forecast given that record: an average over every future still possible, each weighted by its chance ([Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md)).
+Notation first, in words. A process written $`(X_n)`$ is a list of random quantities, one per round, read "the value after round $`n`$". Here $`X_n`$ is the fortune after $`n`$ rounds, with $`X_0 = 10`$. The filtration $`\mathcal F_n`$ is what is known after $`n`$ rounds: the full record of the first $`n`$ tosses ([Filtrations](../01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md)). $`E[\,\cdot \mid \mathcal F_n]`$ is the best forecast given that record: an average over every future still possible, each weighted by its chance ([Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md)).
 
-A process $(X_n)$ is a **martingale** with respect to $(\mathcal F_n)$ when three things hold: each $X_n$ can be read off the record at round $n$ (it is **adapted**); each has a finite average size, $E\lvert X_n\rvert < \infty$; and
+A process $`(X_n)`$ is a **martingale** with respect to $`(\mathcal F_n)`$ when three things hold: each $`X_n`$ can be read off the record at round $`n`$ (it is **adapted**); each has a finite average size, $`E\lvert X_n\rvert < \infty`$; and
 
-$$E[X_{n+1} \mid \mathcal F_n] = X_n \quad \text{for every round } n .$$
+```math
+E[X_{n+1} \mid \mathcal F_n] = X_n \quad \text{for every round } n .
+```
 
-**Read it aloud:** given everything seen after round $n$, the forecast of the next value is the present value.
+**Read it aloud:** given everything seen after round $`n`$, the forecast of the next value is the present value.
 
 Change the equals sign and the name changes with it:
 
-$$E[X_{n+1} \mid \mathcal F_n] \le X_n \ \ \text{(supermartingale)}, \qquad E[X_{n+1} \mid \mathcal F_n] \ge X_n \ \ \text{(submartingale)} .$$
+```math
+E[X_{n+1} \mid \mathcal F_n] \le X_n \ \ \text{(supermartingale)}, \qquad E[X_{n+1} \mid \mathcal F_n] \ge X_n \ \ \text{(submartingale)} .
+```
 
 **Read it aloud:** a supermartingale is a game tilted against the holder, its forecast falling or level; a submartingale is tilted in the holder's favour.
 
 The two facts this card proves, for the fair gambler:
 
-$$E[X_{n+1} \mid \mathcal F_n] = X_n , \qquad E[X_{n+1}^2 - (n+1) \mid \mathcal F_n] = X_n^2 - n .$$
+```math
+E[X_{n+1} \mid \mathcal F_n] = X_n , \qquad E[X_{n+1}^2 - (n+1) \mid \mathcal F_n] = X_n^2 - n .
+```
 
 **Read them aloud:** the fortune is a martingale; the squared fortune is not, since its forecast rises by exactly 1 each round, but subtract the rounds played and what is left is a martingale.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$, $m$ | rounds played so far; a later round | 0 to 100 | more spread in the fortune |
-| $X_n$, $X_0$ | the fortune after $n$ rounds; the starting fortune | $10 at the start, $16 after 40 rounds on the path above | a higher start shifts every forecast equally |
-| $\mathcal F_n$ | the filtration: the record of the first $n$ tosses | 1024 possible records after 10 rounds | sharper forecasts |
-| $E[\,\cdot \mid \mathcal F_n]$ | the forecast given the record: an average over the futures still possible | from $12, the average of $13 and $11 | — |
-| $\xi_n$ | the result of round $n$: +1 for a win, −1 for a loss | +1 or −1, each with chance 0.5 | — |
-| $p$ | the chance of winning a round | 0.5 fair; 18/37 on red at roulette | above 0.5 the fortune is a submartingale |
-| $\mu$ | the average gain per round, $2p - 1$ | 0 fair; −1/37 at roulette | the fortune drifts by $\mu$ a round |
-| $Y_n$ | the squared fortune minus the rounds, $X_n^2 - n$ | 100 at the start | — |
-| $A_n$ | the part of a submartingale that rises by a known amount each round | $n$ for the squared fortune | — |
-| $s$ | net winnings, $X_n - 10$, used in the figure | −1, 0 or +1 | — |
-| $W_t$, $t$ | Brownian motion, the random walk seen from far away; $t$ is time | met on shelf 05 | — |
-| $M_n$, $Z_n$, $\varphi$, $r$ | the detailed proof's general martingale, general process, bent function, and ratio $(1-p)/p$ | $r$ = 19/18 at roulette | — |
+| $`n`$, $`m`$ | rounds played so far; a later round | 0 to 100 | more spread in the fortune |
+| $`X_n`$, $`X_0`$ | the fortune after $`n`$ rounds; the starting fortune | $10 at the start, $16 after 40 rounds on the path above | a higher start shifts every forecast equally |
+| $`\mathcal F_n`$ | the filtration: the record of the first $`n`$ tosses | 1024 possible records after 10 rounds | sharper forecasts |
+| $`E[\,\cdot \mid \mathcal F_n]`$ | the forecast given the record: an average over the futures still possible | from $12, the average of $13 and $11 | — |
+| $`\xi_n`$ | the result of round $`n`$: +1 for a win, −1 for a loss | +1 or −1, each with chance 0.5 | — |
+| $`p`$ | the chance of winning a round | 0.5 fair; 18/37 on red at roulette | above 0.5 the fortune is a submartingale |
+| $`\mu`$ | the average gain per round, $`2p - 1`$ | 0 fair; −1/37 at roulette | the fortune drifts by $`\mu`$ a round |
+| $`Y_n`$ | the squared fortune minus the rounds, $`X_n^2 - n`$ | 100 at the start | — |
+| $`A_n`$ | the part of a submartingale that rises by a known amount each round | $`n`$ for the squared fortune | — |
+| $`s`$ | net winnings, $`X_n - 10`$, used in the figure | −1, 0 or +1 | — |
+| $`W_t`$, $`t`$ | Brownian motion, the random walk seen from far away; $`t`$ is time | met on shelf 05 | — |
+| $`M_n`$, $`Z_n`$, $`\varphi`$, $`r`$ | the detailed proof's general martingale, general process, bent function, and ratio $`(1-p)/p`$ | $`r`$ = 19/18 at roulette | — |
 
 ### When it holds
 
@@ -77,9 +83,9 @@ A definition has no hypotheses: it names a property, relative to a stated filtra
 - **Rounds independent of the past.** The next toss must not depend on the record. A coin that tends to repeat its last face breaks the argument: after a win, the forecast of the next fortune would sit above the present one.
 - **Fair odds.** Win chance exactly 0.5. At roulette, with 18 winning pockets of 37, the forecast drops by $1/37 a round and the fortune is a supermartingale.
 - **The gambler's own record as the filtration.** Relative to a record that includes the next toss, nothing random is left to average, and the forecast is the next fortune itself, never the present one.
-- **Fixed rounds.** Both theorems speak of fixed rounds $n$ and $m$. Stopping at a round chosen by watching the path, "quit when ahead", needs the extra conditions of [Stopping times](03-stopping-times-and-optional-stopping.md).
+- **Fixed rounds.** Both theorems speak of fixed rounds $`n`$ and $`m`$. Stopping at a round chosen by watching the path, "quit when ahead", needs the extra conditions of [Stopping times](03-stopping-times-and-optional-stopping.md).
 
-Integrability is automatic here: after $n$ rounds the fortune lies between $10 - n$ and $10 + n$.
+Integrability is automatic here: after $`n`$ rounds the fortune lies between $`10 - n`$ and $`10 + n`$.
 
 ---
 
@@ -87,72 +93,80 @@ Integrability is automatic here: after $n$ rounds the fortune lies between $10 -
 
 ### Step 0: the next toss ignores the record
 
-The next toss is independent of the record, and it averages zero: $0.5 \times (+1) + 0.5 \times (-1) = 0$. Conditioning on the record cannot change the average of something that ignores it. Every forecast below is the present value plus that zero, or something built from it.
+The next toss is independent of the record, and it averages zero: $`0.5 \times (+1) + 0.5 \times (-1) = 0`$. Conditioning on the record cannot change the average of something that ignores it. Every forecast below is the present value plus that zero, or something built from it.
 
 ### Step 1: the fortune is a martingale
 
-Write the next fortune as the present fortune plus the next toss: $X_{n+1} = X_n + \xi_{n+1}$. Two rules of conditional expectation, from [The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md), do the rest. The present fortune is known at round $n$, so it comes out of the forecast unchanged: "taking out what is known". The next toss is independent of the record, so its forecast is its plain average: "independence drops the condition". Hence
+Write the next fortune as the present fortune plus the next toss: $`X_{n+1} = X_n + \xi_{n+1}`$. Two rules of conditional expectation, from [The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md), do the rest. The present fortune is known at round $`n`$, so it comes out of the forecast unchanged: "taking out what is known". The next toss is independent of the record, so its forecast is its plain average: "independence drops the condition". Hence
 
-$$E[X_{n+1} \mid \mathcal F_n] = X_n + E[\xi_{n+1}] = X_n + 0 = X_n .$$
+```math
+E[X_{n+1} \mid \mathcal F_n] = X_n + E[\xi_{n+1}] = X_n + 0 = X_n .
+```
 
 From $12 the next fortune is $13 or $11; each has chance 0.5; the average is $12.
 
 ### Step 2: the square gains exactly 1 a round
 
-Square the same split: $X_{n+1}^2 = X_n^2 + 2X_n \xi_{n+1} + \xi_{n+1}^2$. Forecast each piece. The first is known. The middle one is a known number times the next toss, so its forecast is $2X_n \times 0 = 0$. The last is always 1, since $(+1)^2 = (-1)^2 = 1$. So
+Square the same split: $`X_{n+1}^2 = X_n^2 + 2X_n \xi_{n+1} + \xi_{n+1}^2`$. Forecast each piece. The first is known. The middle one is a known number times the next toss, so its forecast is $`2X_n \times 0 = 0`$. The last is always 1, since $`(+1)^2 = (-1)^2 = 1`$. So
 
-$$E[X_{n+1}^2 \mid \mathcal F_n] = X_n^2 + 1 .$$
+```math
+E[X_{n+1}^2 \mid \mathcal F_n] = X_n^2 + 1 .
+```
 
-From $12, the squares are 169 and 121, averaging 145, which is 144 + 1. The square rises by exactly 1 in forecast, every round, from every history. Subtract $n + 1$ from both sides and the rise disappears: $Y_n = X_n^2 - n$ is a martingale.
+From $12, the squares are 169 and 121, averaging 145, which is 144 + 1. The square rises by exactly 1 in forecast, every round, from every history. Subtract $`n + 1`$ from both sides and the rise disappears: $`Y_n = X_n^2 - n`$ is a martingale.
 
 ### The picture: why squaring adds 1
 
 <p align="center"><img src="../figures/martingales.svg" alt="The square of net winnings against net winnings, drawn to scale: from zero the next value is minus one or plus one, their squares average to one, while the square of their average is zero" width="420"></p>
 
-The curve is the square of net winnings, $s$ times itself, to scale. From $s = 0$ one round leads to −1 or +1. Their squares, both 1, average to the point on the chord: height 1. The square of their average, 0, is the bottom of the curve. The dashed gap is 1 wherever the gambler stands, because the curve bends the same amount everywhere. That gap is the spread one round adds, and $-n$ is the bill for it.
+The curve is the square of net winnings, $`s`$ times itself, to scale. From $`s = 0`$ one round leads to −1 or +1. Their squares, both 1, average to the point on the chord: height 1. The square of their average, 0, is the bottom of the curve. The dashed gap is 1 wherever the gambler stands, because the curve bends the same amount everywhere. That gap is the spread one round adds, and $`-n`$ is the bill for it.
 
 ### Step 3: sub and super, from the same computation
 
-Step 2 already shows that $X_n^2$ on its own is a submartingale: its forecast rises by 1. That is no accident of squares. Any function that bends upwards, applied to a martingale, gives a submartingale, by the conditional form of Jensen's inequality ([The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md); the plain form is [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md)): the average of the bent values sits above the bent average, exactly the chord in the picture.
+Step 2 already shows that $`X_n^2`$ on its own is a submartingale: its forecast rises by 1. That is no accident of squares. Any function that bends upwards, applied to a martingale, gives a submartingale, by the conditional form of Jensen's inequality ([The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md); the plain form is [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md)): the average of the bent values sits above the bent average, exactly the chord in the picture.
 
-Now tilt the game. On red at European roulette, with one green zero, the gambler wins with chance $p = 18/37$ and loses with chance $19/37$. The average gain per round is $\mu = 2p - 1 = -1/37$. Step 1 goes through word for word, with that average in place of zero:
+Now tilt the game. On red at European roulette, with one green zero, the gambler wins with chance $`p = 18/37`$ and loses with chance $`19/37`$. The average gain per round is $`\mu = 2p - 1 = -1/37`$. Step 1 goes through word for word, with that average in place of zero:
 
-$$E[X_{n+1} \mid \mathcal F_n] = X_n - \tfrac{1}{37} .$$
+```math
+E[X_{n+1} \mid \mathcal F_n] = X_n - \tfrac{1}{37} .
+```
 
-From $12 the forecast is $11.9730. The fortune is a supermartingale. Add back what the house takes and the martingale returns: $X_n + n/37$ is one.
+From $12 the forecast is $11.9730. The fortune is a supermartingale. Add back what the house takes and the martingale returns: $`X_n + n/37`$ is one.
 
-A bent function can also straighten a tilted game. Raise $19/18$ to the power of the roulette fortune. Its forecast one round ahead multiplies it by $\tfrac{18}{37} \cdot \tfrac{19}{18} + \tfrac{19}{37} \cdot \tfrac{18}{19} = \tfrac{19}{37} + \tfrac{18}{37} = 1$, so it is a martingale, although the fortune itself is not. That trick is the engine of ruin probabilities ([Ruin](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/06-ruin-theory-and-lundberg.md)).
+A bent function can also straighten a tilted game. Raise $`19/18`$ to the power of the roulette fortune. Its forecast one round ahead multiplies it by $`\tfrac{18}{37} \cdot \tfrac{19}{18} + \tfrac{19}{37} \cdot \tfrac{18}{19} = \tfrac{19}{37} + \tfrac{18}{37} = 1`$, so it is a martingale, although the fortune itself is not. That trick is the engine of ruin probabilities ([Ruin](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/06-ruin-theory-and-lundberg.md)).
 
 ### Step 4: forecasts reach every later round
 
-The definition speaks of one round ahead. The tower rule, forecasting a forecast gives the forecast, stretches it to any later round $m$: forecast round $m$ from round $m - 1$, then that from round $m - 2$, and so on back to $n$. Each step returns the present value, so
+The definition speaks of one round ahead. The tower rule, forecasting a forecast gives the forecast, stretches it to any later round $`m`$: forecast round $`m`$ from round $`m - 1`$, then that from round $`m - 2`$, and so on back to $`n`$. Each step returns the present value, so
 
-$$E[X_m \mid \mathcal F_n] = X_n , \qquad E[X_m^2 - m \mid \mathcal F_n] = X_n^2 - n .$$
+```math
+E[X_m \mid \mathcal F_n] = X_n , \qquad E[X_m^2 - m \mid \mathcal F_n] = X_n^2 - n .
+```
 
-Subtract the square of the first from the second. Given the record at round $n$, the spread of the fortune at round $m$ is $m - n$. From the start, the variance after 100 rounds is 100, a standard deviation of $10: the whole stake. That is where the square-root band in the first picture comes from.
+Subtract the square of the first from the second. Given the record at round $`n`$, the spread of the fortune at round $`m`$ is $`m - n`$. From the start, the variance after 100 rounds is 100, a standard deviation of $10: the whole stake. That is where the square-root band in the first picture comes from.
 
-So $X_n^2 = (X_n^2 - n) + n$: a martingale plus a part that rises by an amount known one round ahead. Every submartingale splits this way, into a martingale plus such a rising part $A_n$: the **Doob decomposition**, proved in the fold below.
+So $`X_n^2 = (X_n^2 - n) + n`$: a martingale plus a part that rises by an amount known one round ahead. Every submartingale splits this way, into a martingale plus such a rising part $`A_n`$: the **Doob decomposition**, proved in the fold below.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $\xi_1, \xi_2, \dots$ independent, each +1 with chance $p$ and −1 with chance $1 - p$. $X_n = X_0 + \xi_1 + \dots + \xi_n$ with $X_0 = 10$, and $\mathcal F_n$ the sigma-algebra generated by $\xi_1, \dots, \xi_n$, with $\mathcal F_0$ trivial. Each $X_n$ is a function of $\xi_1, \dots, \xi_n$, so it is $\mathcal F_n$-measurable: adapted. $\lvert X_n\rvert \le 10 + n$, so it is integrable.
+**Setting.** $`\xi_1, \xi_2, \dots`$ independent, each +1 with chance $`p`$ and −1 with chance $`1 - p`$. $`X_n = X_0 + \xi_1 + \dots + \xi_n`$ with $`X_0 = 10`$, and $`\mathcal F_n`$ the sigma-algebra generated by $`\xi_1, \dots, \xi_n`$, with $`\mathcal F_0`$ trivial. Each $`X_n`$ is a function of $`\xi_1, \dots, \xi_n`$, so it is $`\mathcal F_n`$-measurable: adapted. $`\lvert X_n\rvert \le 10 + n`$, so it is integrable.
 
-**Theorem 1 (fair fortune).** Let $p = 0.5$. $\xi_{n+1}$ is independent of $\mathcal F_n$, so $E[\xi_{n+1} \mid \mathcal F_n] = E[\xi_{n+1}] = 0$ almost surely (with probability 1). $X_n$ is $\mathcal F_n$-measurable and integrable, so $E[X_n \mid \mathcal F_n] = X_n$. By linearity, $E[X_{n+1} \mid \mathcal F_n] = X_n + 0 = X_n$ almost surely.
+**Theorem 1 (fair fortune).** Let $`p = 0.5`$. $`\xi_{n+1}`$ is independent of $`\mathcal F_n`$, so $`E[\xi_{n+1} \mid \mathcal F_n] = E[\xi_{n+1}] = 0`$ almost surely (with probability 1). $`X_n`$ is $`\mathcal F_n`$-measurable and integrable, so $`E[X_n \mid \mathcal F_n] = X_n`$. By linearity, $`E[X_{n+1} \mid \mathcal F_n] = X_n + 0 = X_n`$ almost surely.
 
-**Theorem 2 (square minus rounds).** $X_{n+1}^2 = X_n^2 + 2X_n\xi_{n+1} + 1$, since $\xi_{n+1}^2 = 1$. Every term is bounded, so integrable. Taking out what is known, $E[X_n \xi_{n+1} \mid \mathcal F_n] = X_n E[\xi_{n+1} \mid \mathcal F_n] = 0$. So $E[X_{n+1}^2 \mid \mathcal F_n] = X_n^2 + 1$, and subtracting the constant $n + 1$ gives $E[Y_{n+1} \mid \mathcal F_n] = Y_n$ with $Y_n = X_n^2 - n$, which is adapted and integrable.
+**Theorem 2 (square minus rounds).** $`X_{n+1}^2 = X_n^2 + 2X_n\xi_{n+1} + 1`$, since $`\xi_{n+1}^2 = 1`$. Every term is bounded, so integrable. Taking out what is known, $`E[X_n \xi_{n+1} \mid \mathcal F_n] = X_n E[\xi_{n+1} \mid \mathcal F_n] = 0`$. So $`E[X_{n+1}^2 \mid \mathcal F_n] = X_n^2 + 1`$, and subtracting the constant $`n + 1`$ gives $`E[Y_{n+1} \mid \mathcal F_n] = Y_n`$ with $`Y_n = X_n^2 - n`$, which is adapted and integrable.
 
-**Theorem 3 (tilted fortune).** For general $p$, $E[\xi_{n+1}] = \mu = 2p - 1$, and the same lines give $E[X_{n+1} \mid \mathcal F_n] = X_n + \mu$. So $X_n$ is a supermartingale when $\mu \le 0$, a submartingale when $\mu \ge 0$, and $X_n - n\mu$ is a martingale. With $r = (1 - p)/p$ and $0 < p < 1$, $E[r^{X_{n+1}} \mid \mathcal F_n] = r^{X_n}\,(p r + (1 - p)/r) = r^{X_n}\,((1 - p) + p) = r^{X_n}$: a martingale.
+**Theorem 3 (tilted fortune).** For general $`p`$, $`E[\xi_{n+1}] = \mu = 2p - 1`$, and the same lines give $`E[X_{n+1} \mid \mathcal F_n] = X_n + \mu`$. So $`X_n`$ is a supermartingale when $`\mu \le 0`$, a submartingale when $`\mu \ge 0`$, and $`X_n - n\mu`$ is a martingale. With $`r = (1 - p)/p`$ and $`0 < p < 1`$, $`E[r^{X_{n+1}} \mid \mathcal F_n] = r^{X_n}\,(p r + (1 - p)/r) = r^{X_n}\,((1 - p) + p) = r^{X_n}`$: a martingale.
 
-**Theorem 4 (later rounds).** If $(M_n)$ is a martingale and $m \ge n$, then $E[M_m \mid \mathcal F_n] = M_n$. For $m = n$ this is measurability. If it holds for $m$, the tower rule with $\mathcal F_n \subseteq \mathcal F_m$ gives $E[M_{m+1} \mid \mathcal F_n] = E[E[M_{m+1} \mid \mathcal F_m] \mid \mathcal F_n] = E[M_m \mid \mathcal F_n] = M_n$. Induction finishes it. Applied to the fortune and to $Y_n$: $E[X_m^2 \mid \mathcal F_n] - (E[X_m \mid \mathcal F_n])^2 = X_n^2 - n + m - X_n^2 = m - n$.
+**Theorem 4 (later rounds).** If $`(M_n)`$ is a martingale and $`m \ge n`$, then $`E[M_m \mid \mathcal F_n] = M_n`$. For $`m = n`$ this is measurability. If it holds for $`m`$, the tower rule with $`\mathcal F_n \subseteq \mathcal F_m`$ gives $`E[M_{m+1} \mid \mathcal F_n] = E[E[M_{m+1} \mid \mathcal F_m] \mid \mathcal F_n] = E[M_m \mid \mathcal F_n] = M_n`$. Induction finishes it. Applied to the fortune and to $`Y_n`$: $`E[X_m^2 \mid \mathcal F_n] - (E[X_m \mid \mathcal F_n])^2 = X_n^2 - n + m - X_n^2 = m - n`$.
 
-**Theorem 5 (sub from convex).** If $(M_n)$ is a martingale, $\varphi(x)$ is a convex function (one that bends upwards), and $\varphi(M_n)$ is integrable, then the conditional Jensen inequality gives $E[\varphi(M_{n+1}) \mid \mathcal F_n] \ge \varphi(E[M_{n+1} \mid \mathcal F_n]) = \varphi(M_n)$: a submartingale.
+**Theorem 5 (sub from convex).** If $`(M_n)`$ is a martingale, $`\varphi(x)`$ is a convex function (one that bends upwards), and $`\varphi(M_n)`$ is integrable, then the conditional Jensen inequality gives $`E[\varphi(M_{n+1}) \mid \mathcal F_n] \ge \varphi(E[M_{n+1} \mid \mathcal F_n]) = \varphi(M_n)`$: a submartingale.
 
-**Theorem 6 (Doob decomposition).** Let $(Z_n)$ be adapted and integrable. Put $A_0 = 0$ and $A_n = \sum_{k=1}^{n} E[Z_k - Z_{k-1} \mid \mathcal F_{k-1}]$, and $M_n = Z_n - A_n$. Each term of $A_n$ is $\mathcal F_{k-1}$-measurable, so $A_n$ is known at round $n - 1$ ("predictable"). And $E[M_{n+1} - M_n \mid \mathcal F_n] = E[Z_{n+1} - Z_n \mid \mathcal F_n] - (A_{n+1} - A_n) = 0$, so $(M_n)$ is a martingale. If $(Z_n)$ is a submartingale each term of $A_n$ is nonnegative, so $A_n$ rises. For $Z_n = X_n^2$ on the fair game, each term is 1, so $A_n = n$.
+**Theorem 6 (Doob decomposition).** Let $`(Z_n)`$ be adapted and integrable. Put $`A_0 = 0`$ and $`A_n = \sum_{k=1}^{n} E[Z_k - Z_{k-1} \mid \mathcal F_{k-1}]`$, and $`M_n = Z_n - A_n`$. Each term of $`A_n`$ is $`\mathcal F_{k-1}`$-measurable, so $`A_n`$ is known at round $`n - 1`$ ("predictable"). And $`E[M_{n+1} - M_n \mid \mathcal F_n] = E[Z_{n+1} - Z_n \mid \mathcal F_n] - (A_{n+1} - A_n) = 0`$, so $`(M_n)`$ is a martingale. If $`(Z_n)`$ is a submartingale each term of $`A_n`$ is nonnegative, so $`A_n`$ rises. For $`Z_n = X_n^2`$ on the fair game, each term is 1, so $`A_n = n`$.
 
 </details>
 
-A second road, for a fixed horizon: the fortune after round $n$ is the forecast of the fortune at any fixed final round, $X_n = E[X_{100} \mid \mathcal F_n]$ for $n \le 100$, and a forecast of a fixed result, updated as information arrives, is always a martingale. That theorem is proved on [Filtrations and martingales](../../10-Measure%20and%20integration/09-Conditional%20Expectation/06-filtrations-and-martingales.md).
+A second road, for a fixed horizon: the fortune after round $`n`$ is the forecast of the fortune at any fixed final round, $`X_n = E[X_{100} \mid \mathcal F_n]`$ for $`n \le 100`$, and a forecast of a fixed result, updated as information arrives, is always a martingale. That theorem is proved on [Filtrations and martingales](../../10-Measure%20and%20integration/09-Conditional%20Expectation/06-filtrations-and-martingales.md).
 
 ---
 
@@ -160,11 +174,11 @@ A second road, for a fixed horizon: the fortune after round $n$ is the forecast 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the start | $X_0$ | $10 |
+| the start | $`X_0`$ | $10 |
 | from $12, the next fortune | $13 or $11, each with chance 0.5 | average **$12** |
 | its square | 169 or 121, averaging | 145 = 144 + 1 |
-| square minus rounds, round $n$ to $n + 1$ | $(144 - n)$ against $(145 - (n + 1))$ | unchanged |
-| all 1024 records of 10 rounds | average of $X_{10}^2$ | 110 |
+| square minus rounds, round $`n`$ to $`n + 1`$ | $`(144 - n)`$ against $`(145 - (n + 1))`$ | unchanged |
+| all 1024 records of 10 rounds | average of $`X_{10}^2`$ | 110 |
 | spread after 10 rounds | 110 − 10 × 10 | variance 10 |
 | spread after 100 rounds | variance = rounds | 100, standard deviation **$10** |
 | roulette, one round from $10 | 10 − 1/37 | $9.9730 |
@@ -176,8 +190,8 @@ A fair gambler's fortune after 100 rounds averages exactly the $10 it started wi
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Roulette odds taken as fair | forecast $9.9730 after one round from $10; $7.2973 after 100 | $p = 18/37$: the fortune is a supermartingale |
-| The squared fortune taken as a martingale | forecast of $X_{100}^2$ is 200, not 100; simulated 199.6236, standard error 1.7211 | the square gains 1 a round; subtract $n$ |
+| Roulette odds taken as fair | forecast $9.9730 after one round from $10; $7.2973 after 100 | $`p = 18/37`$: the fortune is a supermartingale |
+| The squared fortune taken as a martingale | forecast of $`X_{100}^2`$ is 200, not 100; simulated 199.6236, standard error 1.7211 | the square gains 1 a round; subtract $`n`$ |
 | An insider who sees the next toss | the forecast differs from the present fortune on 1024 of 1024 records | relative to that filtration nothing is left to average |
 
 The code prints every entry.
@@ -186,7 +200,7 @@ The code prints every entry.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported except the square root. The two theorems are reached by three roads. Road 1 is the one-round forecast by formula. Road 2 lists all 1024 records of 10 rounds and, for every record at every round $n$ and every later round $m$, sums the fortune over the records that extend it, in exact integers. That is 4083 checks each of the fortune, the square minus the rounds, the square's rise, and the roulette drift, weighted by powers of 18 and 19. Road 3 simulates 20000 gamblers for 100 rounds each with SplitMix64, a short random-number generator written out in both languages, seed 2026, and prints every average with its standard error. The code checks these finite cases; the proof covers every round.
+Nothing is imported except the square root. The two theorems are reached by three roads. Road 1 is the one-round forecast by formula. Road 2 lists all 1024 records of 10 rounds and, for every record at every round $`n`$ and every later round $`m`$, sums the fortune over the records that extend it, in exact integers. That is 4083 checks each of the fortune, the square minus the rounds, the square's rise, and the roulette drift, weighted by powers of 18 and 19. Road 3 simulates 20000 gamblers for 100 rounds each with SplitMix64, a short random-number generator written out in both languages, seed 2026, and prints every average with its standard error. The code checks these finite cases; the proof covers every round.
 
 ### Python
 
@@ -554,17 +568,17 @@ The two outputs match line for line. Each simulated average sits within about on
 
 Lean proves both martingales and the tilted-game result for every starting fortune and every win chance, plus the hand-worked numbers.
 
-- Suppose the rounds are independent, and each is +1 or −1 with chance 0.5. Then the fortune $X_n$ is a martingale for the gambler's own record, from any starting fortune.
-- Take the same fair game and the same record. Then $Y_n = X_n^2 - n$ is a martingale too.
-- Suppose each independent round is won with chance $p$ and lost with chance $1 - p$. Then $X_n - n\mu$ is a martingale, with $\mu = 2p - 1$.
+- Suppose the rounds are independent, and each is +1 or −1 with chance 0.5. Then the fortune $`X_n`$ is a martingale for the gambler's own record, from any starting fortune.
+- Take the same fair game and the same record. Then $`Y_n = X_n^2 - n`$ is a martingale too.
+- Suppose each independent round is won with chance $`p`$ and lost with chance $`1 - p`$. Then $`X_n - n\mu`$ is a martingale, with $`\mu = 2p - 1`$.
 - Suppose also the win chance is at most 0.5, as on red at roulette. Then the fortune is a supermartingale.
-- Take any round $n$ and any later round $m$. Then each of these martingales forecasts its value at round $m$ as its value at round $n$.
+- Take any round $`n`$ and any later round $`m`$. Then each of these martingales forecasts its value at round $`m`$ as its value at round $`n`$.
 - From $12 the next fortune averages $12, and its square averages 145, which is 144 + 1.
 - All 1024 records of 10 rounds give an average squared fortune of 110, so the spread is 10.
 - At roulette the average gain per round is −1/37, and 100 rounds from $10 forecast exactly 270/37 dollars.
 - The one-round forecast factor of 19/18 raised to the roulette fortune is exactly 1.
 
-The simulated gamblers, the insider's record and the squared fortune's rise of $m - n$ are left to the Python and Rust checks.
+The simulated gamblers, the insider's record and the squared fortune's rise of $`m - n`$ are left to the Python and Rust checks.
 
 ```lean
 -- Martingales: a gambler's fortune under fair ±1 coin-toss bets is a martingale for the gambler's own record, so is its square minus the rounds played, and at unfair odds the fortune minus its drift is a martingale while odds at or below even make the fortune a supermartingale.
@@ -931,7 +945,7 @@ example : (18 / 37 : ℚ) * (19 / 18) + (19 / 37) * (18 / 19) = 1 := by norm_num
 > **Try changing**
 > Guess first, then run it.
 > - **Tilt the forecast formula.** In `fair_next`, weight the win by 0.6 and the loss by 0.4. Road 1 now says the fortune drifts up, road 2 finds no cell where it does, the count of agreeing cells falls to zero and the fifth assert stops the run.
-> - **Forget the minus $n$.** In road 2, test whether the squared fortune alone keeps its forecast. Only the trivial pairs, where the later round is the same round, still pass, and the second assert stops the run.
+> - **Forget the minus $`n`$.** In road 2, test whether the squared fortune alone keeps its forecast. Only the trivial pairs, where the later round is the same round, still pass, and the second assert stops the run.
 > - **Fair roulette.** Set `P_RED` to 0.5. The simulated roulette mean moves to about $10, but road 2 still weights wins and losses 18 to 19, so road 1's roulette forecast no longer matches it and the fifth assert stops the run.
 > - **Another seed.** Set the seed to 7. Every simulated average moves, by a few standard errors at most, and all asserts still pass; the label still reads 2026, since it is fixed text.
 
@@ -943,7 +957,7 @@ example : (18 / 37 : ℚ) * (19 / 18) + (19 / 37) * (18 / 19) = 1 := by norm_num
 > **Reading "fair" as "cannot win" or "stays put".** A martingale's forecast is its present value; its path is free. The fair gambler above reached $16 in 40 rounds, and after 100 rounds the fortune has a standard deviation of $10. Fair says the average gain is zero, not that gains are small, and not that a winner must give the winnings back.
 >
 > - **Reading "fair" as "even chances".** Fair means the next step averages zero. A step of +$1 with chance 2/3 and −$2 with chance 1/3 averages zero too, so that fortune is also a martingale.
-> - **Dropping the condition.** $E[X_{n+1}] = X_n$ compares a number with a random quantity. The definition conditions on the record; a constant average alone is weaker and does not make a martingale.
+> - **Dropping the condition.** $`E[X_{n+1}] = X_n`$ compares a number with a random quantity. The definition conditions on the record; a constant average alone is weaker and does not make a martingale.
 > - **Swapping sub and super.** At roulette the fortune is a *super*martingale, forecast $9.9730 from $10. "Super": the present sits above the forecast of the future; "sub": below it.
 > - **Forgetting whose information.** Martingale is relative to a filtration. Against a record that includes the next toss the fortune is no martingale: its forecast is off on every one of the 1024 records.
 > - **Stopping at a chosen moment.** "Quit when ahead by $1" is not a fixed round, and the theorems here say nothing about it; the doubling strategy of [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md) shows what can go wrong.
@@ -954,11 +968,11 @@ example : (18 / 37 : ℚ) * (19 / 18) + (19 / 37) * (18 / 19) = 1 := by norm_num
 
 - **Casinos.** Roulette, craps and slot machines are supermartingales for the player and submartingales for the house, which needs only the tilt per round: $1/37 per dollar on red.
 - **Betting systems.** No rule for choosing stakes from past results gives fair bets a positive forecast at a fixed round; the stake just multiplies a toss that averages zero. The proof is [Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md).
-- **Measuring spread.** $X_n^2 - n$ is the discrete ancestor of $W_t^2 - t$ for Brownian motion, $W_t$ the random walk seen from far away: [Brownian martingales](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md).
+- **Measuring spread.** $`X_n^2 - n`$ is the discrete ancestor of $`W_t^2 - t`$ for Brownian motion, $`W_t`$ the random walk seen from far away: [Brownian martingales](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md).
 - **Insurance ruin.** An insurer's surplus, a tilted game in its favour, is turned into a martingale by exponentiating, as Step 3 did with 19/18: [Ruin](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/06-ruin-theory-and-lundberg.md).
 
 > **Say it back**
-> A martingale is a process whose best forecast of the next value, given everything seen so far, is the present value. A fair gambler's fortune is one, because the next toss averages zero whatever has happened. The squared fortune gains exactly 1 in forecast each round, so the square minus the rounds played is a martingale, and the spread after $n$ rounds is $n$. Tilt the odds against the gambler and the fortune becomes a supermartingale, falling $1/37 a round at roulette. All of this holds at fixed rounds and relative to the gambler's own record.
+> A martingale is a process whose best forecast of the next value, given everything seen so far, is the present value. A fair gambler's fortune is one, because the next toss averages zero whatever has happened. The squared fortune gains exactly 1 in forecast each round, so the square minus the rounds played is a martingale, and the spread after $`n`$ rounds is $`n`$. Tilt the odds against the gambler and the fortune becomes a supermartingale, falling $1/37 a round at roulette. All of this holds at fixed rounds and relative to the gambler's own record.
 
 ---
 
@@ -971,7 +985,7 @@ example : (18 / 37 : ℚ) * (19 / 18) + (19 / 37) * (18 / 19) = 1 := by norm_num
 ## Where this goes next
 
 - [Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md): stakes chosen from the record, and why they cannot tilt a fair game.
-- [Brownian martingales](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md): $W_t$, $W_t^2 - t$ and the exponential martingale, the continuous-time versions of this card's three.
+- [Brownian martingales](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md): $`W_t`$, $`W_t^2 - t`$ and the exponential martingale, the continuous-time versions of this card's three.
 - [Feynman-Kac](../07-Changing%20Measure/06-feynman-kac-formula.md): a martingale built from a function of a diffusion, turning an expectation into a differential equation.
 - [Ruin](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/06-ruin-theory-and-lundberg.md): the exponential martingale of a tilted game, bounding the chance of ruin.
 

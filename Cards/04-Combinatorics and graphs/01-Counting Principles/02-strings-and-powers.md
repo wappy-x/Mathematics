@@ -40,15 +40,17 @@ Three branches, then three again from each: 3 × 3 = 9 endings, which are the ni
 
 A raised number counts multiplies: 10^4 means four 10s multiplied together ([Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)). The options are the base; the positions say how many multiplies.
 
-$$n^k \;=\; \underbrace{n \times n \times \cdots \times n}_{k \text{ positions}}$$
+```math
+n^k \;=\; \underbrace{n \times n \times \cdots \times n}_{k \text{ positions}}
+```
 
 **Read it aloud:** one factor of n for every position, because every position is decided from the same n options no matter what the other positions did.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | how many options one position offers | 10 digits; 26 letters; 2 for in-or-out | climbs steeply: every position gains at once |
-| $k$ | how many positions there are to fill | 4 in the PIN, 20 in the squad | each added position multiplies the count by $n$ |
-| $n^k$ | the count of strings: $n$ multiplied in $k$ times | 10^4 = 10,000 PINs | — |
+| $`n`$ | how many options one position offers | 10 digits; 26 letters; 2 for in-or-out | climbs steeply: every position gains at once |
+| $`k`$ | how many positions there are to fill | 4 in the PIN, 20 in the squad | each added position multiplies the count by $`n`$ |
+| $`n^k`$ | the count of strings: $`n`$ multiplied in $`k`$ times | 10^4 = 10,000 PINs | — |
 
 ### When it holds
 

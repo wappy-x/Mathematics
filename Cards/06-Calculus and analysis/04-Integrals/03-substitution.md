@@ -36,26 +36,30 @@ Orange: x e^(x^2) plotted against x. Teal: e^u / 2 plotted against u = x^2. The 
 
 Reminders: the integral sign with limits a and b accumulates from a to b, and dx names the variable ([The integral](01-riemann-integral.md)); an antiderivative of a function is any function whose rate it is; g'(x) is the rate of g per unit of x.
 
-$$\int_a^b f\big(g(x)\big)\,g'(x)\,dx \;=\; \int_{g(a)}^{g(b)} f(u)\,du$$
+```math
+\int_a^b f\big(g(x)\big)\,g'(x)\,dx \;=\; \int_{g(a)}^{g(b)} f(u)\,du
+```
 
 **Read it aloud:** the outer function of the inner function, times the inner rate, accumulated as x runs from a to b, equals the outer function alone accumulated as u runs from g(a) to g(b).
 
 On the example, g(x) = x^2, g'(x) = 2x and f(u) = e^u / 2:
 
-$$\int_0^1 x\,e^{x^2}\,dx \;=\; \int_0^1 \tfrac12 e^{u}\,du \;=\; \tfrac12\,(e-1) \;=\; 0.859141$$
+```math
+\int_0^1 x\,e^{x^2}\,dx \;=\; \int_0^1 \tfrac12 e^{u}\,du \;=\; \tfrac12\,(e-1) \;=\; 0.859141
+```
 
 Without limits, the same step gives an antiderivative: e^(x^2)/2 + C, for any constant C.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | the original variable | 0 to 1 | — |
-| $a$, $b$ | the original limits, in order | 0 and 1 | b = 2 from a = 1 gives 25.939934 |
-| $g$ | the inner function, renamed | x^2 | — |
-| $g'$ | its rate per unit of x | 2x | stretches each strip more |
-| $u$ | the new variable, g(x) | x^2 | — |
-| $f$ | the outer function of u | e^u / 2 | — |
-| $F$, $C$ | an antiderivative of f; any constant | e^u / 2; C cancels | — |
-| $dx$, $du$ | strip widths on the x and u rulers | du = 2x dx | — |
+| $`x`$ | the original variable | 0 to 1 | — |
+| $`a`$, $`b`$ | the original limits, in order | 0 and 1 | b = 2 from a = 1 gives 25.939934 |
+| $`g`$ | the inner function, renamed | x^2 | — |
+| $`g'`$ | its rate per unit of x | 2x | stretches each strip more |
+| $`u`$ | the new variable, g(x) | x^2 | — |
+| $`f`$ | the outer function of u | e^u / 2 | — |
+| $`F`$, $`C`$ | an antiderivative of f; any constant | e^u / 2; C cancels | — |
+| $`dx`$, $`du`$ | strip widths on the x and u rulers | du = 2x dx | — |
 
 The line du = g'(x) dx is bookkeeping: a strip of width dx on the x ruler becomes a strip of width g'(x) times dx on the u ruler. It is shorthand for the theorem, not a division.
 

@@ -26,36 +26,42 @@ Scale: 60 units per metre, pivot at (180, 30); at 30 degrees the seat sits 0.268
 
 ## The formula
 
-Reminder: a functional takes a whole path and returns one number. New notation, in words first: a **generalised coordinate** $q$ is any number that pins down where the system is, such as the swing's angle; its rate is $q'$. Kinetic energy $T$ minus potential energy $V$, written in $q$ and $q'$, is the **Lagrangian** $L$; its total over time is the **action** $S$:
+Reminder: a functional takes a whole path and returns one number. New notation, in words first: a **generalised coordinate** $`q`$ is any number that pins down where the system is, such as the swing's angle; its rate is $`q'`$. Kinetic energy $`T`$ minus potential energy $`V`$, written in $`q`$ and $`q'`$, is the **Lagrangian** $`L`$; its total over time is the **action** $`S`$:
 
-$$L(q, q') = T - V, \qquad S[q] = \int_{t_0}^{t_1} L(q, q')\,dt$$
+```math
+L(q, q') = T - V, \qquad S[q] = \int_{t_0}^{t_1} L(q, q')\,dt
+```
 
-**Read it aloud:** the Lagrangian is kinetic minus potential energy; the action adds it up from time $t_0$ to time $t_1$.
+**Read it aloud:** the Lagrangian is kinetic minus potential energy; the action adds it up from time $`t_0`$ to time $`t_1`$.
 
-Hamilton's principle: the true motion between two fixed positions makes $S$ stationary, so no small change of path shifts $S$ to first order. The Euler-Lagrange equation turns that into one equation per coordinate:
+Hamilton's principle: the true motion between two fixed positions makes $`S`$ stationary, so no small change of path shifts $`S`$ to first order. The Euler-Lagrange equation turns that into one equation per coordinate:
 
-$$\frac{d}{dt}\,\frac{\partial L}{\partial q'} = \frac{\partial L}{\partial q}$$
+```math
+\frac{d}{dt}\,\frac{\partial L}{\partial q'} = \frac{\partial L}{\partial q}
+```
 
 **Read it aloud:** the rate of change of the slope of L in the speed equals the slope of L in the position.
 
 This is the functionals card's equation, with time in place of distance.
 
-The slope $p = \partial L/\partial q'$ is the coordinate's **momentum**; on this card $p$ always means momentum. For the swing, $\theta$ is the angle from straight down and the seat moves at $l\theta'$:
+The slope $`p = \partial L/\partial q'`$ is the coordinate's **momentum**; on this card $`p`$ always means momentum. For the swing, $`\theta`$ is the angle from straight down and the seat moves at $`l\theta'`$:
 
-$$L = \tfrac12 m l^2 \theta'^2 + m g l \cos\theta \quad\Longrightarrow\quad \theta'' + \frac{g}{l}\sin\theta = 0$$
+```math
+L = \tfrac12 m l^2 \theta'^2 + m g l \cos\theta \quad\Longrightarrow\quad \theta'' + \frac{g}{l}\sin\theta = 0
+```
 
 **Read it aloud:** the swing's Lagrangian, fed through Euler-Lagrange, gives the pendulum equation.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $q$, $t$, $t_0$, $t_1$ | a coordinate; time, s; start, end | $\theta$; 0 to 1 s | — |
-| $\theta$, $\varphi$ | angle from straight down; hoop's angle | 30° at release | faster start back, up to 90° |
-| $T$, $V$ | kinetic, potential energy, J | $V = -m g l\cos\theta$ | — |
-| $L$ | Lagrangian $T - V$, J | $60\theta'^2 + 588.6\cos\theta$ | — |
-| $S$, $\eta$, $\varepsilon$ | action, J s; nudge shape; size, rad | 604.926936; $\sin(\pi t)$; 0.01 | — |
-| $m$, $l$, $g$ | swing mass; rod; gravity | 30 kg, 2 m, 9.81 m/s^2 | $m$: no effect |
-| $m_b$, $R$, $I$ | bead mass; hoop radius; hoop's resistance to spinning | 0.5 kg, 0.5 m, 0.25 kg m^2 | $I$: steadier spin |
-| $p$, $E$ | momentum; energy $T + V$ | hoop: 1.565499 kg m^2/s | — |
+| $`q`$, $`t`$, $`t_0`$, $`t_1`$ | a coordinate; time, s; start, end | $`\theta`$; 0 to 1 s | — |
+| $`\theta`$, $`\varphi`$ | angle from straight down; hoop's angle | 30° at release | faster start back, up to 90° |
+| $`T`$, $`V`$ | kinetic, potential energy, J | $`V = -m g l\cos\theta`$ | — |
+| $`L`$ | Lagrangian $`T - V`$, J | $`60\theta'^2 + 588.6\cos\theta`$ | — |
+| $`S`$, $`\eta`$, $`\varepsilon`$ | action, J s; nudge shape; size, rad | 604.926936; $`\sin(\pi t)`$; 0.01 | — |
+| $`m`$, $`l`$, $`g`$ | swing mass; rod; gravity | 30 kg, 2 m, 9.81 m/s^2 | $`m`$: no effect |
+| $`m_b`$, $`R`$, $`I`$ | bead mass; hoop radius; hoop's resistance to spinning | 0.5 kg, 0.5 m, 0.25 kg m^2 | $`I`$: steadier spin |
+| $`p`$, $`E`$ | momentum; energy $`T + V`$ | hoop: 1.565499 kg m^2/s | — |
 
 ### When it holds
 
@@ -73,44 +79,50 @@ Every way the seat could get from its release at 0 s to its true place at 1 s ge
 
 ### Step 1: the swing's equation, without a force diagram
 
-The seat moves at $l\theta'$, so $T = \tfrac12 m l^2\theta'^2$. Its height below the pivot is $l\cos\theta$, so $V = -m g l\cos\theta$. The two slopes of $L$:
+The seat moves at $`l\theta'`$, so $`T = \tfrac12 m l^2\theta'^2`$. Its height below the pivot is $`l\cos\theta`$, so $`V = -m g l\cos\theta`$. The two slopes of $`L`$:
 
-$$\frac{\partial L}{\partial \theta'} = m l^2\theta', \qquad \frac{\partial L}{\partial \theta} = -m g l\sin\theta.$$
+```math
+\frac{\partial L}{\partial \theta'} = m l^2\theta', \qquad \frac{\partial L}{\partial \theta} = -m g l\sin\theta.
+```
 
-Euler-Lagrange sets the rate of the first equal to the second: $m l^2\theta'' = -m g l\sin\theta$. Divide by $m l^2$: the pendulum equation of [The pendulum](../06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md). The mass cancels, and the rods' pull never entered, because $\theta$ already obeys the rod. The force diagram gives the same: gravity's part along the arc, $-m g\sin\theta$, equals $m l\theta''$.
+Euler-Lagrange sets the rate of the first equal to the second: $`m l^2\theta'' = -m g l\sin\theta`$. Divide by $`m l^2`$: the pendulum equation of [The pendulum](../06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md). The mass cancels, and the rods' pull never entered, because $`\theta`$ already obeys the rod. The force diagram gives the same: gravity's part along the arc, $`-m g\sin\theta`$, equals $`m l\theta''`$.
 
 ### Step 2: why this is Newton's law in disguise
 
-For one body on a line at position $x$, $L = \tfrac12 m x'^2 - V(x)$. The slope in the speed is $m x'$, the momentum; the slope in the position is $-dV/dx$, the force. Euler-Lagrange reads: rate of momentum equals force, Newton's second law.
+For one body on a line at position $`x`$, $`L = \tfrac12 m x'^2 - V(x)`$. The slope in the speed is $`m x'`$, the momentum; the slope in the position is $`-dV/dx`$, the force. Euler-Lagrange reads: rate of momentum equals force, Newton's second law.
 
 The action does not care which coordinates describe the motion, so stationary in across-and-up means stationary in the angle. The rods' pull, at right angles to the seat's path, does no work and drops out.
 
 <details>
 <summary>Detailed proof: the equations keep their form under a change of coordinates</summary>
 
-Let $x = x(q)$, with $x_q = dx/dq$, so $x' = x_q\,q'$. Set $\tilde L(q, q') = L(x(q), x_q q')$. The chain rule gives $\tilde L_{q'} = L_{x'}\,x_q$ and $\tilde L_q = L_x\,x_q + L_{x'}\,x_{qq}\,q'$. Differentiating the first in time, $\frac{d}{dt}\tilde L_{q'} = \big(\frac{d}{dt}L_{x'}\big)x_q + L_{x'}\,x_{qq}\,q'$. Subtracting, $\frac{d}{dt}\tilde L_{q'} - \tilde L_q = \big(\frac{d}{dt}L_{x'} - L_x\big)\,dx/dq$: one side vanishes exactly when the other does, wherever $dx/dq \ne 0$. With several coordinates the factor is the Jacobian matrix. A constraint force is at right angles to every allowed motion, so it has no component along coordinates that obey the constraint.
+Let $`x = x(q)`$, with $`x_q = dx/dq`$, so $`x' = x_q\,q'`$. Set $`\tilde L(q, q') = L(x(q), x_q q')`$. The chain rule gives $`\tilde L_{q'} = L_{x'}\,x_q`$ and $`\tilde L_q = L_x\,x_q + L_{x'}\,x_{qq}\,q'`$. Differentiating the first in time, $`\frac{d}{dt}\tilde L_{q'} = \big(\frac{d}{dt}L_{x'}\big)x_q + L_{x'}\,x_{qq}\,q'`$. Subtracting, $`\frac{d}{dt}\tilde L_{q'} - \tilde L_q = \big(\frac{d}{dt}L_{x'} - L_x\big)\,dx/dq`$: one side vanishes exactly when the other does, wherever $`dx/dq \ne 0`$. With several coordinates the factor is the Jacobian matrix. A constraint force is at right angles to every allowed motion, so it has no component along coordinates that obey the constraint.
 
 </details>
 
 ### Step 3: the action really is stationary on the true swing
 
-Nudge the true path by $\varepsilon\,\eta(t)$, with $\eta = \sin(\pi t)$ zero at both ends and $\varepsilon$ = ±0.01 rad. The first-order change is 0.001001 J s per rad, a higher-order residue; on a straight line between the same ends it is −41.245344. The second-order change, 154.8110, matches the second variation $\tfrac12\int (m l^2\eta'^2 - m g l\cos\theta\,\eta^2)\,dt$ = 154.8101. Positive: this nudge raises the action. Over this second every nudge does, because 1 s is shorter than half the small-swing period, $\pi\sqrt{l/g}$ = 1.42 s. Over longer windows the true path can be a saddle; the principle promises stationary, not least.
+Nudge the true path by $`\varepsilon\,\eta(t)`$, with $`\eta = \sin(\pi t)`$ zero at both ends and $`\varepsilon`$ = ±0.01 rad. The first-order change is 0.001001 J s per rad, a higher-order residue; on a straight line between the same ends it is −41.245344. The second-order change, 154.8110, matches the second variation $`\tfrac12\int (m l^2\eta'^2 - m g l\cos\theta\,\eta^2)\,dt`$ = 154.8101. Positive: this nudge raises the action. Over this second every nudge does, because 1 s is shorter than half the small-swing period, $`\pi\sqrt{l/g}`$ = 1.42 s. Over longer windows the true path can be a saddle; the principle promises stationary, not least.
 
 ### Step 4: a missing coordinate is a conserved momentum
 
-A bead of mass $m_b$ slides without friction on a hoop of radius $R$ that spins freely about its vertical diameter. Coordinates: the bead's angle $\theta$ from the bottom, the hoop's turning angle $\varphi$. The bead sits $R\sin\theta$ from the axis, so
+A bead of mass $`m_b`$ slides without friction on a hoop of radius $`R`$ that spins freely about its vertical diameter. Coordinates: the bead's angle $`\theta`$ from the bottom, the hoop's turning angle $`\varphi`$. The bead sits $`R\sin\theta`$ from the axis, so
 
-$$L = \tfrac12 I\varphi'^2 + \tfrac12 m_b R^2\left(\theta'^2 + \sin^2\theta\,\varphi'^2\right) + m_b g R\cos\theta.$$
+```math
+L = \tfrac12 I\varphi'^2 + \tfrac12 m_b R^2\left(\theta'^2 + \sin^2\theta\,\varphi'^2\right) + m_b g R\cos\theta.
+```
 
-Only the rate of $\varphi$ appears, never $\varphi$ itself. Its Euler-Lagrange equation is $\frac{d}{dt}\,\partial L/\partial\varphi' = 0$, so the momentum
+Only the rate of $`\varphi`$ appears, never $`\varphi`$ itself. Its Euler-Lagrange equation is $`\frac{d}{dt}\,\partial L/\partial\varphi' = 0`$, so the momentum
 
-$$p = \frac{\partial L}{\partial \varphi'} = \left(I + m_b R^2\sin^2\theta\right)\varphi'$$
+```math
+p = \frac{\partial L}{\partial \varphi'} = \left(I + m_b R^2\sin^2\theta\right)\varphi'
+```
 
-never changes. As the bead climbs, the bracket grows and the spin falls. A coordinate missing from $L$ is **cyclic**, and its momentum is conserved.
+never changes. As the bead climbs, the bracket grows and the spin falls. A coordinate missing from $`L`$ is **cyclic**, and its momentum is conserved.
 
 ### Step 5: time missing means energy conserved
 
-Neither Lagrangian contains $t$ itself, so the Beltrami identity of [The brachistochrone](02-the-brachistochrone-and-the-beltrami-identity.md) keeps $q'\,\partial L/\partial q' - L$, summed over coordinates, fixed; here that is $T + V = E$, the energy. Both laws are cases of Noether's theorem: every continuous symmetry of the action (turning the hoop, shifting the clock) conserves a quantity.
+Neither Lagrangian contains $`t`$ itself, so the Beltrami identity of [The brachistochrone](02-the-brachistochrone-and-the-beltrami-identity.md) keeps $`q'\,\partial L/\partial q' - L`$, summed over coordinates, fixed; here that is $`T + V = E`$, the energy. Both laws are cases of Noether's theorem: every continuous symmetry of the action (turning the hoop, shifting the clock) conserves a quantity.
 
 ---
 
@@ -118,8 +130,8 @@ Neither Lagrangian contains $t$ itself, so the Beltrami identity of [The brachis
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| swing constants | $m l^2$ = 30 × 2^2; $m g l$ = 30 × 9.81 × 2 | 120 kg m^2; 588.6 J |
-| slopes of $L$ | in θ': 120 θ'; in θ: −588.6 sin θ | — |
+| swing constants | $`m l^2`$ = 30 × 2^2; $`m g l`$ = 30 × 9.81 × 2 | 120 kg m^2; 588.6 J |
+| slopes of $`L`$ | in θ': 120 θ'; in θ: −588.6 sin θ | — |
 | Euler-Lagrange | 120 θ'' = −588.6 sin θ | θ'' = −(9.81 ÷ 2) sin θ |
 | at release, 30° | −(9.81 ÷ 2) × 0.5 | **−2.4525 rad/s^2** |
 | hoop momentum at start | (0.25 + 0.125 × sin^2 0.3) × 6 = 0.260917 × 6 | **1.565499 kg m^2/s** |
@@ -131,16 +143,16 @@ A child of any weight released from 30 degrees starts back at 2.4525 rad/s^2. On
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| $L = T + V$ | +2.452500 rad/s^2 at 30°, away from the bottom | Gravity's sign flips |
-| The hoop's spin alone, $I\varphi'$, as conserved | 1.1334 to 1.5000 kg m^2/s over the run | The bead carries momentum too |
+| $`L = T + V`$ | +2.452500 rad/s^2 at 30°, away from the bottom | Gravity's sign flips |
+| The hoop's spin alone, $`I\varphi'`$, as conserved | 1.1334 to 1.5000 kg m^2/s over the run | The bead carries momentum too |
 | A guessed path, straight in θ | first-order change −41.245344 J s per rad | Only the true motion is stationary |
-| A motor holds the hoop at 6 rad/s | bead to 1.4357 rad; $p$ from 1.565499 to 2.236398 kg m^2/s | $\varphi$ is no longer free: the motor's torque feeds momentum in |
+| A motor holds the hoop at 6 rad/s | bead to 1.4357 rad; $`p`$ from 1.565499 to 2.236398 kg m^2/s | $`\varphi`$ is no longer free: the motor's torque feeds momentum in |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Road one knows only the Lagrangian: at each state it measures the slopes of $L$ numerically and solves Euler-Lagrange for the accelerations. Road two steps the equations derived in Steps 1 and 4. Both use Runge-Kutta 4 ([Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)). A third check weighs the action on nudged paths against the second-variation integral. Four asserts test these agreements; each fails if the physics in either road is altered. The code also prints the motor-held hoop.
+Road one knows only the Lagrangian: at each state it measures the slopes of $`L`$ numerically and solves Euler-Lagrange for the accelerations. Road two steps the equations derived in Steps 1 and 4. Both use Runge-Kutta 4 ([Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)). A third check weighs the action on nudged paths against the second-variation integral. Four asserts test these agreements; each fails if the physics in either road is altered. The code also prints the motor-held hoop.
 
 ### Python
 
@@ -334,10 +346,10 @@ The two outputs match line for line.
 
 Lean proves the card's three laws, for every Lagrangian, motion, mass and rod length that meet the conditions below.
 
-- Suppose $x = X(q)$ is a smooth change of coordinates, and $L$ and the path $q(t)$ are smooth. Then the Euler-Lagrange equation in $q$, as one side minus the other, equals the one in $x$ times $dx/dq$.
-- Suppose a coordinate is cyclic, and a motion obeys the Euler-Lagrange equation in every coordinate. Then that coordinate's momentum $p$ has the same value at every time.
-- Take the swing's Lagrangian with $m > 0$ and $l > 0$, and a motion $\theta(t)$ that obeys Euler-Lagrange. Then $\theta'' + \frac{g}{l}\sin\theta = 0$ at every time: the pendulum equation.
-- Two hand sums hold exactly: $m l^2$ is 120 kg m^2, and the release acceleration is −2.4525 rad/s^2.
+- Suppose $`x = X(q)`$ is a smooth change of coordinates, and $`L`$ and the path $`q(t)`$ are smooth. Then the Euler-Lagrange equation in $`q`$, as one side minus the other, equals the one in $`x`$ times $`dx/dq`$.
+- Suppose a coordinate is cyclic, and a motion obeys the Euler-Lagrange equation in every coordinate. Then that coordinate's momentum $`p`$ has the same value at every time.
+- Take the swing's Lagrangian with $`m > 0`$ and $`l > 0`$, and a motion $`\theta(t)`$ that obeys Euler-Lagrange. Then $`\theta'' + \frac{g}{l}\sin\theta = 0`$ at every time: the pendulum equation.
+- Two hand sums hold exactly: $`m l^2`$ is 120 kg m^2, and the release acceleration is −2.4525 rad/s^2.
 
 Step 3's nudged actions, the two roads' runs, the hoop's numbers and the mistakes table are left to the Python and Rust checks.
 
@@ -569,11 +581,11 @@ The orange line is the hoop's spin, from road two: 4.53 when the bead is highest
 ## The usual mistake
 
 > [!warning]
-> **Adding the energies instead of subtracting.** $T + V$ is conserved, so it looks like the natural thing to total up. It is the wrong functional: making it stationary flips gravity's sign, and the seat accelerates away from the bottom at 2.452500 rad/s^2.
+> **Adding the energies instead of subtracting.** $`T + V`$ is conserved, so it looks like the natural thing to total up. It is the wrong functional: making it stationary flips gravity's sign, and the seat accelerates away from the bottom at 2.452500 rad/s^2.
 >
 > - **Reading "least action" literally.** Past half a small-swing period the true path can be a saddle.
-> - **Calling a coordinate cyclic because it changes little.** Cyclic means absent from $L$, like the hoop's $\varphi$.
-> - **Treating a driven coordinate as free.** A motor-held spin makes $\varphi$ prescribed: no Euler-Lagrange equation, no conserved momentum.
+> - **Calling a coordinate cyclic because it changes little.** Cyclic means absent from $`L`$, like the hoop's $`\varphi`$.
+> - **Treating a driven coordinate as free.** A motor-held spin makes $`\varphi`$ prescribed: no Euler-Lagrange equation, no conserved momentum.
 
 ---
 
@@ -599,7 +611,7 @@ The orange line is the hoop's spin, from road two: 4.53 when the bead is highest
 - [Lagrangian and Hamiltonian mechanics](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/04-lagrangian-and-hamiltonian-mechanics-for-engineers.md): the same recipe for linkages and vibrating structures.
 - Noether: every continuous symmetry of the action, and the quantity it conserves.
 
-Left open: the hoop's momentum appeared only at the end, as a slope of $L$. What changes if momentum is a working variable from the start, beside position?
+Left open: the hoop's momentum appeared only at the end, as a slope of $`L`$. What changes if momentum is a working variable from the start, beside position?
 
 ---
 

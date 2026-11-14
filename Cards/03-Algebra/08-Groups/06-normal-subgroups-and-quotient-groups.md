@@ -33,40 +33,46 @@ Every integer lands in one pile, and the piles add. Z is the usual letter for th
 
 ## The formula
 
-A **coset** is a pile: apply a member $g$ of the group $G$ in front of every member of the subgroup $N$, giving $gN$ — $g + N$ under addition. Cosets cut a group into equal piles: [Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md).
+A **coset** is a pile: apply a member $`g`$ of the group $`G`$ in front of every member of the subgroup $`N`$, giving $`gN`$ — $`g + N`$ under addition. Cosets cut a group into equal piles: [Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md).
 
-The **conjugate** of a move by $g$ is three steps: undo $g$, do the move, do $g$ again — $g^{-1}$ is the undo of $g$, rightmost factor first. Conjugate every move of $N$ and the set $gNg^{-1}$ comes out: $N$ seen from another position. $N$ is **normal** in $G$ when that set is $N$ again:
+The **conjugate** of a move by $`g`$ is three steps: undo $`g`$, do the move, do $`g`$ again — $`g^{-1}`$ is the undo of $`g`$, rightmost factor first. Conjugate every move of $`N`$ and the set $`gNg^{-1}`$ comes out: $`N`$ seen from another position. $`N`$ is **normal** in $`G`$ when that set is $`N`$ again:
 
-$$gNg^{-1} = N \quad\text{for every } g \text{ in } G$$
+```math
+gNg^{-1} = N \quad\text{for every } g \text{ in } G
+```
 
 **Read it aloud:** from every position in the group, the subgroup is the same subgroup.
 
-Equivalently, writing $g$ after each member of $N$ gives that same pile. Either way, piles combine by combining names:
+Equivalently, writing $`g`$ after each member of $`N`$ gives that same pile. Either way, piles combine by combining names:
 
-$$(gN)(kN) = (gk)N$$
+```math
+(gN)(kN) = (gk)N
+```
 
-These piles are the **quotient group** $G/N$, said "G over N", with $N$ as identity; a finite $G$ gives as many piles as its size divided by that of $N$.
+These piles are the **quotient group** $`G/N`$, said "G over N", with $`N`$ as identity; a finite $`G`$ gives as many piles as its size divided by that of $`N`$.
 
-A homomorphism $\varphi$ maps one group to another, respecting the operation ([Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md)). Its **kernel** is all it sends to the identity, its **image** all it reaches. Then:
+A homomorphism $`\varphi`$ maps one group to another, respecting the operation ([Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md)). Its **kernel** is all it sends to the identity, its **image** all it reaches. Then:
 
-$$G/\ker\varphi \;\cong\; \operatorname{im}\varphi$$
+```math
+G/\ker\varphi \;\cong\; \mathrm{im}\,\varphi
+```
 
 That is the **first isomorphism theorem**; the sign means isomorphic, one group under two sets of names.
 
 | Symbol | Plain meaning | In our example | Change it and… |
 | --- | --- | --- | --- |
-| $G$ | the group collapsed | the integers; the tile's 8 moves | another group |
-| $N$ | the subgroup thrown away | multiples of 12; the 4 turns | piles resize |
-| $g$, $k$, $h$ | pile names, $h$ from $N$ | 15, -9, a quarter turn | nothing, the point |
-| $gN$, $kN$ | the coset, $g$ before all $N$ | pile 3: ... -9, 3, 15 ... | another of the 12 |
-| $G/N$ | the quotient: piles plus operation | Z mod 12; the 2-clock | another quotient |
-| $\varphi$, $\ker\varphi$, $\operatorname{im}\varphi$ | the map; what it kills; what it reaches | 24-clock to 12-clock; 0, 12; 12 hours | still paired |
+| $`G`$ | the group collapsed | the integers; the tile's 8 moves | another group |
+| $`N`$ | the subgroup thrown away | multiples of 12; the 4 turns | piles resize |
+| $`g`$, $`k`$, $`h`$ | pile names, $`h`$ from $`N`$ | 15, -9, a quarter turn | nothing, the point |
+| $`gN`$, $`kN`$ | the coset, $`g`$ before all $`N`$ | pile 3: ... -9, 3, 15 ... | another of the 12 |
+| $`G/N`$ | the quotient: piles plus operation | Z mod 12; the 2-clock | another quotient |
+| $`\varphi`$, $`\ker\varphi`$, $`\mathrm{im}\,\varphi`$ | the map; what it kills; what it reaches | 24-clock to 12-clock; 0, 12; 12 hours | still paired |
 
 ### When it holds
 
-- $N$ must be a subgroup first, or its piles differ in size.
-- The test covers every member of $G$: the tile's flip subgroup survives the half turn, dies at the quarter turn.
-- Normality concerns $N$ inside $G$, never $N$ alone, and needs no finiteness: the integers do not run out.
+- $`N`$ must be a subgroup first, or its piles differ in size.
+- The test covers every member of $`G`$: the tile's flip subgroup survives the half turn, dies at the quarter turn.
+- Normality concerns $`N`$ inside $`G`$, never $`N`$ alone, and needs no finiteness: the integers do not run out.
 - Where moves commute, giving one result in either order, every subgroup passes, a conjugate being the original move, so the clock could not fail.
 
 ---
@@ -75,11 +81,13 @@ That is the **first isomorphism theorem**; the sign means isomorphic, one group 
 
 ### Step 0: normality removes the choice of name
 
-Pile 3 is the set ... -9, 3, 15, 27 ... and every member names the whole pile, so "pile 15 plus pile 8" and "pile 3 plus pile 8" must agree. That is **well-defined**: the answer belongs to the piles, not the names. So rename $gN$ as $g$ then a subgroup member $h$, and $kN$ as $k$ then $h'$, and combine, slipping the undo of $k$ beside $k$:
+Pile 3 is the set ... -9, 3, 15, 27 ... and every member names the whole pile, so "pile 15 plus pile 8" and "pile 3 plus pile 8" must agree. That is **well-defined**: the answer belongs to the piles, not the names. So rename $`gN`$ as $`g`$ then a subgroup member $`h`$, and $`kN`$ as $`k`$ then $`h'`$, and combine, slipping the undo of $`k`$ beside $`k`$:
 
-$$(gh)(kh') = (gk)\,(k^{-1}hk)\,h'$$
+```math
+(gh)(kh') = (gk)\,(k^{-1}hk)\,h'
+```
 
-The middle bracket is $h$ conjugated by the undo of $k$. Normality returns it to $N$, and with $h'$ it stays there, so the product sits in $(gk)N$: the pile the first names gave. Let one conjugate escape and two names for one pile push to different piles, leaving no operation. Associativity, identity and inverses come free from $G$.
+The middle bracket is $`h`$ conjugated by the undo of $`k`$. Normality returns it to $`N`$, and with $`h'`$ it stays there, so the product sits in $`(gk)N`$: the pile the first names gave. Let one conjugate escape and two names for one pile push to different piles, leaving no operation. Associativity, identity and inverses come free from $`G`$.
 
 ### Step 1: the clock passes for free, the tile does not
 
@@ -102,22 +110,22 @@ Conjugate moves are one move seen from different positions; a family of them is 
 
 ### Step 2: every homomorphism hands over a quotient
 
-The 24-hour clock maps to the 12-hour clock by the remainder after 12: 13:00 is 1 o'clock, and addition survives. Its kernel is 0 and 12, a subgroup of 2; its image is all 12 hours. Kernels are always normal, since the map sends a conjugate to the image of $g$, the identity, then the undo of that image.
+The 24-hour clock maps to the 12-hour clock by the remainder after 12: 13:00 is 1 o'clock, and addition survives. Its kernel is 0 and 12, a subgroup of 2; its image is all 12 hours. Kernels are always normal, since the map sends a conjugate to the image of $`g`$, the identity, then the undo of that image.
 
 Collapse by the kernel: 24 over 2 is 12 piles, each labelled by the value its members share — one-to-one, onto the image, addition-respecting on 576 pairs. The 12-clock, renamed.
 
 <details>
 <summary>Detailed proof of the first isomorphism theorem</summary>
 
-Let $\varphi$ run from $G$ to a second group, with kernel $N$.
+Let $`\varphi`$ run from $`G`$ to a second group, with kernel $`N`$.
 
-1. **$N$ is normal.** $\varphi$ sends $ghg^{-1}$ to the image of $g$, the identity, then the undo of that image, so $gNg^{-1}$ lies in $N$; the same line with $g^{-1}$ gives the reverse.
-2. **Labelling $gN$ by the image of $g$ is well-defined and one-to-one.** If $gN$ and $kN$ are one pile, the undo of $k$ with $g$ lies in $N$, so the two share an image; equal images force the reverse.
-3. **Onto and operation-keeping.** Every value reached is some $g$'s image, the label of $gN$, and $(gk)N$ carries the images of $g$ and $k$ combined. An isomorphism.
+1. **$`N`$ is normal.** $`\varphi`$ sends $`ghg^{-1}`$ to the image of $`g`$, the identity, then the undo of that image, so $`gNg^{-1}`$ lies in $`N`$; the same line with $`g^{-1}`$ gives the reverse.
+2. **Labelling $`gN`$ by the image of $`g`$ is well-defined and one-to-one.** If $`gN`$ and $`kN`$ are one pile, the undo of $`k`$ with $`g`$ lies in $`N`$, so the two share an image; equal images force the reverse.
+3. **Onto and operation-keeping.** Every value reached is some $`g`$'s image, the label of $`gN`$, and $`(gk)N`$ carries the images of $`g`$ and $`k`$ combined. An isomorphism.
 
 </details>
 
-Every normal subgroup is a kernel too: the map sending $g$ to $gN$ forgets exactly $N$.
+Every normal subgroup is a kernel too: the map sending $`g`$ to $`gN`$ forgets exactly $`N`$.
 
 ---
 
@@ -341,10 +349,10 @@ The two outputs match line for line.
 
 Lean proves the card's facts for every group, every homomorphism and every clock size, not just these examples.
 
-- A subgroup $N$ is normal exactly when $gNg^{-1} = N$ for every $g$ in $G$, with no finiteness needed.
-- $N$ is normal exactly when piles combine by combining names, no answer depending on which member named a pile.
+- A subgroup $`N`$ is normal exactly when $`gNg^{-1} = N`$ for every $`g`$ in $`G`$, with no finiteness needed.
+- $`N`$ is normal exactly when piles combine by combining names, no answer depending on which member named a pile.
 - Collapse a group by a map's kernel and a copy of its image is left: the first isomorphism theorem.
-- The integers collapsed by the multiples of any $n$ give Z mod $n$, each pile landing on its remainder.
+- The integers collapsed by the multiples of any $`n`$ give Z mod $`n`$, each pile landing on its remainder.
 - It also re-checks the card's numbers: 15 and -9 on the clock, the 12 piles, the tile's 32 conjugates, its 2 answers, and the 24-clock.
 
 The road through the corners, the families of look-alikes, and the four mistakes are left to the Python and Rust checks.

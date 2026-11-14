@@ -39,41 +39,49 @@ One line: the posterior density, peaking at 0.7. The 95% equal-tailed credible i
 
 ## The formula
 
-Notation first, in words. The unknown chance of heads is $\theta$ (theta). The data, 7 heads in 10 flips, are $x$. The posterior density is written $f(\theta \mid x)$, read "the density of theta given the data"; its area over a stretch is the posterior probability of that stretch. For this coin:
+Notation first, in words. The unknown chance of heads is $`\theta`$ (theta). The data, 7 heads in 10 flips, are $`x`$. The posterior density is written $`f(\theta \mid x)`$, read "the density of theta given the data"; its area over a stretch is the posterior probability of that stretch. For this coin:
 
-$$f(\theta \mid x) = 1320\,\theta^{7}(1-\theta)^{3}, \qquad 0 < \theta < 1$$
+```math
+f(\theta \mid x) = 1320\,\theta^{7}(1-\theta)^{3}, \qquad 0 < \theta < 1
+```
 
-A **credible interval** at level $1-\alpha$ is any stretch from $\theta_{lo}$ to $\theta_{hi}$ holding that share of the posterior:
+A **credible interval** at level $`1-\alpha`$ is any stretch from $`\theta_{lo}`$ to $`\theta_{hi}`$ holding that share of the posterior:
 
-$$P(\theta_{lo} \le \theta \le \theta_{hi} \mid x) \;=\; \int_{\theta_{lo}}^{\theta_{hi}} f(\theta \mid x)\,d\theta \;=\; 1-\alpha$$
+```math
+P(\theta_{lo} \le \theta \le \theta_{hi} \mid x) \;=\; \int_{\theta_{lo}}^{\theta_{hi}} f(\theta \mid x)\,d\theta \;=\; 1-\alpha
+```
 
 **Read it aloud:** the chance, given the data, that theta lies between the two ends is the area under the posterior between them, and that area is 95%.
 
-The **equal-tailed** interval picks the ends that leave $\alpha/2$ in each tail, where $F$ is the posterior's cumulative area:
+The **equal-tailed** interval picks the ends that leave $`\alpha/2`$ in each tail, where $`F`$ is the posterior's cumulative area:
 
-$$F(\theta_{lo}) = \tfrac{\alpha}{2}, \qquad F(\theta_{hi}) = 1 - \tfrac{\alpha}{2}$$
+```math
+F(\theta_{lo}) = \tfrac{\alpha}{2}, \qquad F(\theta_{hi}) = 1 - \tfrac{\alpha}{2}
+```
 
-A **decision** $d$ is an action. A **loss** $L(d,\theta)$ is the money lost by taking $d$ when the chance is theta (a gain counts as a negative loss). The **posterior expected loss** is its average over the posterior, and the **Bayes action** is the $d$ that makes it smallest:
+A **decision** $`d`$ is an action. A **loss** $`L(d,\theta)`$ is the money lost by taking $`d`$ when the chance is theta (a gain counts as a negative loss). The **posterior expected loss** is its average over the posterior, and the **Bayes action** is the $`d`$ that makes it smallest:
 
-$$\rho(d) \;=\; E[\,L(d,\theta) \mid x\,] \;=\; \int_0^1 L(d,\theta)\, f(\theta \mid x)\,d\theta, \qquad \text{choose the } d \text{ with the smallest } \rho(d)$$
+```math
+\rho(d) \;=\; E[\,L(d,\theta) \mid x\,] \;=\; \int_0^1 L(d,\theta)\, f(\theta \mid x)\,d\theta, \qquad \text{choose the } d \text{ with the smallest } \rho(d)
+```
 
 **Read it aloud:** for each action, average its loss over every chance the coin might have, weighted by how believable that chance is; take the action with the smallest average.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\theta$ | the coin's unknown chance of heads | somewhere in 0 to 1 | — |
-| $x$ | the data | 7 heads in 10 flips | more heads: the posterior slides right |
-| $a$, $b$ | the posterior Beta(a, b): 1 + heads, 1 + tails under a flat prior | 8 and 4 | a + b larger: a narrower posterior |
-| $m$ | posterior mean, a/(a + b) | 0.6667 | betting heads pays more |
-| $v$ | posterior variance, the spread squared | 0.017094 (standard deviation, sd, 0.1307) | wider intervals |
-| $f(\theta \mid x)$ | posterior density: believability per unit of chance | peaks at 0.7, height 2.94 | — |
-| $F$ | posterior cumulative area up to a point | F(0.5) = 0.1133 | — |
-| $\alpha$ | the share left outside the interval | 0.05 | a shorter interval |
-| $\theta_{lo}$, $\theta_{hi}$ | the interval's ends | 0.3903 and 0.8907 | — |
-| $d$ | an action | bet heads, bet tails, decline | — |
-| $L(d,\theta)$ | money lost by action d at chance theta | bet heads: −10(2θ − 1) dollars | — |
-| $\rho(d)$ | posterior expected loss of d | −$3.33 for bet heads | the action looks worse |
-| $t$, $j$, $h$, B(8, 4) | helpers: t a mark on the line from 0 to 1; j a count of points in Step 1's sum; h a small step in the median proof; B(8, 4) the beta integral | F(t) at t = 1/2; B(8, 4) = 1/1320 | — |
+| $`\theta`$ | the coin's unknown chance of heads | somewhere in 0 to 1 | — |
+| $`x`$ | the data | 7 heads in 10 flips | more heads: the posterior slides right |
+| $`a`$, $`b`$ | the posterior Beta(a, b): 1 + heads, 1 + tails under a flat prior | 8 and 4 | a + b larger: a narrower posterior |
+| $`m`$ | posterior mean, a/(a + b) | 0.6667 | betting heads pays more |
+| $`v`$ | posterior variance, the spread squared | 0.017094 (standard deviation, sd, 0.1307) | wider intervals |
+| $`f(\theta \mid x)`$ | posterior density: believability per unit of chance | peaks at 0.7, height 2.94 | — |
+| $`F`$ | posterior cumulative area up to a point | F(0.5) = 0.1133 | — |
+| $`\alpha`$ | the share left outside the interval | 0.05 | a shorter interval |
+| $`\theta_{lo}`$, $`\theta_{hi}`$ | the interval's ends | 0.3903 and 0.8907 | — |
+| $`d`$ | an action | bet heads, bet tails, decline | — |
+| $`L(d,\theta)`$ | money lost by action d at chance theta | bet heads: −10(2θ − 1) dollars | — |
+| $`\rho(d)`$ | posterior expected loss of d | −$3.33 for bet heads | the action looks worse |
+| $`t`$, $`j`$, $`h`$, B(8, 4) | helpers: t a mark on the line from 0 to 1; j a count of points in Step 1's sum; h a small step in the median proof; B(8, 4) the beta integral | F(t) at t = 1/2; B(8, 4) = 1/1320 | — |
 
 Two helpers. The density's constant 1320 is 1/B(8, 4), the reciprocal of the beta integral from [Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md), so the whole area is 1. The mean and variance of Beta(a, b) are a/(a + b) and ab/((a + b)^2 (a + b + 1)), from the same card.
 
@@ -97,17 +105,21 @@ The posterior is a complete probability law for theta. The chance that theta lie
 
 Beta(8, 4) is the law of the 8th smallest of 11 points dropped independently and uniformly on 0 to 1 ([Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md) proves it by counting). The 8th smallest point sits at or below some mark exactly when at least 8 of the 11 points do. Each point lands below the mark independently, with chance equal to the mark. So the cumulative area is a binomial tail:
 
-$$F(t) \;=\; \sum_{j=8}^{11} \binom{11}{j}\, t^{j} (1-t)^{11-j}$$
+```math
+F(t) \;=\; \sum_{j=8}^{11} \binom{11}{j}\, t^{j} (1-t)^{11-j}
+```
 
 At the mark 1/2 every term has the same factor (1/2)^11 = 1/2048, and the counts are 165, 55, 11 and 1:
 
-$$F(\tfrac12) = \frac{165 + 55 + 11 + 1}{2048} = \frac{232}{2048} = \frac{29}{256} = 0.1133$$
+```math
+F(\tfrac12) = \frac{165 + 55 + 11 + 1}{2048} = \frac{232}{2048} = \frac{29}{256} = 0.1133
+```
 
 The posterior puts 0.1133 on "tails is the better side" and 0.8867 on "heads is". Integrating the density from 0 to 1/2 by Simpson's rule (adding up thin slices of area, each topped by a parabola) gives the same 0.113281.
 
 ### Step 2: the credible interval is two cut points
 
-$F$ climbs smoothly from 0 to 1 and never flattens inside 0 to 1, because the density is positive there. So for each share, one cut point has exactly that much area to its left (the intermediate value theorem). Take the cut points at 0.025 and 0.975. The area between them is 0.975 − 0.025 = 0.95, exactly. That is the whole proof that the equal-tailed interval holds 95%.
+$`F`$ climbs smoothly from 0 to 1 and never flattens inside 0 to 1, because the density is positive there. So for each share, one cut point has exactly that much area to its left (the intermediate value theorem). Take the cut points at 0.025 and 0.975. The area between them is 0.975 − 0.025 = 0.95, exactly. That is the whole proof that the equal-tailed interval holds 95%.
 
 Finding the cut points means solving F(t) = 0.025 and F(t) = 0.975. No formula gives them, so the code halves the search range 60 times (bisection). Both roads, the binomial sum and the Simpson area, give 0.3903 to 0.8907.
 
@@ -124,7 +136,9 @@ If the density is lower at the left end, move the left end right a little; the a
 
 Betting $10 on heads at even money makes, per flip, $10 with chance theta and −$10 otherwise: 10(2θ − 1) dollars on average at a known theta. The loss is the negative of that. Average over the posterior. Because the loss is a straight line in theta, the average of the line is the line at the average:
 
-$$\rho(\text{heads}) = -10\,(2m - 1) = -10\,(2 \times 0.6667 - 1) = -3.33$$
+```math
+\rho(\text{heads}) = -10\,(2m - 1) = -10\,(2 \times 0.6667 - 1) = -3.33
+```
 
 Betting tails has the mirror loss, +$3.33; declining loses nothing. The smallest expected loss is betting heads: a profit of $3.33 a flip on average.
 
@@ -138,11 +152,13 @@ The rule itself, "take the smallest posterior expected loss", is the definition 
 
 ### Step 4: reporting one number is a decision too
 
-A report $d$ of the chance of heads, judged by squared miss (d − θ)^2, has expected loss
+A report $`d`$ of the chance of heads, judged by squared miss (d − θ)^2, has expected loss
 
-$$\rho(d) = E[(d-\theta)^2 \mid x] = v + (d - m)^2$$
+```math
+\rho(d) = E[(d-\theta)^2 \mid x] = v + (d - m)^2
+```
 
-Expand (d − θ)^2 as ((d − m) − (θ − m))^2. The cross term averages to zero, because theta averages to m under the posterior. What remains is the variance $v$ plus the squared distance from the mean. The smallest value is at d = m. So under squared loss the best single number is the **posterior mean**, 0.6667, with expected loss 0.017094, which is v = 2/117.
+Expand (d − θ)^2 as ((d − m) − (θ − m))^2. The cross term averages to zero, because theta averages to m under the posterior. What remains is the variance $`v`$ plus the squared distance from the mean. The smallest value is at d = m. So under squared loss the best single number is the **posterior mean**, 0.6667, with expected loss 0.017094, which is v = 2/117.
 
 Other losses pick other numbers. Under absolute miss |d − θ| the best report is the **posterior median**, 0.6762. Under a loss of 0 inside a tiny window around the truth and 1 outside it, the best report tends to the **posterior mode**, the peak, 0.7000, as the window shrinks. Judged by squared loss, the median scores 0.017185 and the mode 0.018205. The mode is also the maximum-likelihood estimate here, since the prior is flat: the chance that makes 7 heads in 10 most likely ([Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)).
 
@@ -637,9 +653,9 @@ The two outputs match line for line. The simulation keeps 20,116 of 220,000 runs
 
 Lean proves the card's three theorems: average coverage for any number of flips, the mean under squared loss, and Step 1's binomial tail.
 
-- Suppose the prior is flat and every count's interval, inside 0 to 1, holds share $1-\alpha$ of its posterior. Then the recipe's coverage at a fixed coin, averaged over the prior, is exactly $1-\alpha$.
-- Take any posterior with a finite variance, and any report $d$. Then its expected squared miss is $v + (d - m)^2$, so the posterior mean is the best report.
-- Take any mark $t$. Then the Beta(8, 4) area from 0 to $t$ equals Step 1's binomial tail $F(t)$.
+- Suppose the prior is flat and every count's interval, inside 0 to 1, holds share $`1-\alpha`$ of its posterior. Then the recipe's coverage at a fixed coin, averaged over the prior, is exactly $`1-\alpha`$.
+- Take any posterior with a finite variance, and any report $`d`$. Then its expected squared miss is $`v + (d - m)^2`$, so the posterior mean is the best report.
+- Take any mark $`t`$. Then the Beta(8, 4) area from 0 to $`t`$ equals Step 1's binomial tail $`F(t)`$.
 - The hand counts check: 1320, the counts 165, 55, 11 and 1, F(1/2) = 29/256, the mean 2/3 and the variance 2/117.
 - The bet numbers check: 10/3 dollars a flip for heads, 2 at the worse offer, a break-even payout of 5, and 4 for the plug-in mistake.
 

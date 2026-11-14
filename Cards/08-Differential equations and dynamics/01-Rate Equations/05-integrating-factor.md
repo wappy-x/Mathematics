@@ -39,32 +39,40 @@ Orange: the room. Teal: outdoors. Dark blue: the forced part alone, which the ro
 
 Reminder: y' = f(t, y) reads "the rate of y at time t is f(t, y)", with a start y(0) = y0. An equation is **linear first-order** when y and y' appear only to the first power and never multiply each other. The standard form puts every y on the left:
 
-$$y' + p(t)\,y = q(t), \qquad y(0) = y_0$$
+```math
+y' + p(t)\,y = q(t), \qquad y(0) = y_0
+```
 
 Here p(t), the **coefficient**, is how hard y is pulled back; q(t), the **forcing**, is what is pushed in. The integrating factor is
 
-$$\mu(t) = e^{\int_0^t p(s)\,ds}$$
+```math
+\mu(t) = e^{\int_0^t p(s)\,ds}
+```
 
 and the solution is
 
-$$y(t) = \frac{y_0 + \int_0^t \mu(s)\,q(s)\,ds}{\mu(t)}$$
+```math
+y(t) = \frac{y_0 + \int_0^t \mu(s)\,q(s)\,ds}{\mu(t)}
+```
 
 **Read it aloud:** weight each moment's input by the integrating factor then, add it all to the starting value, and divide by the factor now. For a start at time t0, run both integrals from t0.
 
 The room's law, with the T terms moved left, is T' + 0.5T = 10 + 2.5 sin t. So p = 0.5 per hour, q = 10 + 2.5 sin t in C per hour, and μ = e^(0.5t). The formula gives
 
-$$T(t) = 20 + \sin t - 2\cos t - 8e^{-0.5t}$$
+```math
+T(t) = 20 + \sin t - 2\cos t - 8e^{-0.5t}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $s$ | time in hours; s runs over earlier moments inside the integral | 0 to 12 h | — |
-| $y$, $T$ | the unknown; here the room's temperature, in C | starts at 10 C | — |
-| $y'$, $T'$ | the unknown's rate, in C per hour | T' + 0.5T = 10 + 2.5 sin t | — |
-| $p$ | the coefficient: the leak rate, per hour | 0.5 | faster fade, bigger swing, shorter lag |
-| $q$ | the forcing, in C per hour | 10 + 2.5 sin t | a warmer forced part |
-| $\mu$ | the integrating factor, e^(integral of p) | e^(0.5t) | — |
-| $y_0$ | the starting value | 10 C | moves only the transient |
-| $C$ | the transient's size, fixed by the start | −8 C | — |
+| $`t`$, $`s`$ | time in hours; s runs over earlier moments inside the integral | 0 to 12 h | — |
+| $`y`$, $`T`$ | the unknown; here the room's temperature, in C | starts at 10 C | — |
+| $`y'`$, $`T'`$ | the unknown's rate, in C per hour | T' + 0.5T = 10 + 2.5 sin t | — |
+| $`p`$ | the coefficient: the leak rate, per hour | 0.5 | faster fade, bigger swing, shorter lag |
+| $`q`$ | the forcing, in C per hour | 10 + 2.5 sin t | a warmer forced part |
+| $`\mu`$ | the integrating factor, e^(integral of p) | e^(0.5t) | — |
+| $`y_0`$ | the starting value | 10 C | moves only the transient |
+| $`C`$ | the transient's size, fixed by the start | −8 C | — |
 
 ### When it holds
 

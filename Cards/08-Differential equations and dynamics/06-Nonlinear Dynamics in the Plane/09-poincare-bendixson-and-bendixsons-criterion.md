@@ -26,45 +26,51 @@ Scale: 50 units per volt, origin at the centre. Dashed: the rims; thick: the loo
 
 ## The formula
 
-Notation from [Phase portraits and nullclines](01-phase-portraits-and-nullclines.md): a planar system $x' = f(x, y)$, $y' = g(x, y)$ puts an arrow $F = (f, g)$ at every point, the vector field; a path is one solution traced in the plane.
+Notation from [Phase portraits and nullclines](01-phase-portraits-and-nullclines.md): a planar system $`x' = f(x, y)`$, $`y' = g(x, y)`$ puts an arrow $`F = (f, g)`$ at every point, the vector field; a path is one solution traced in the plane.
 
 The oscillator, with voltages in volts and time in milliseconds, all constants set to 1:
 
-$$x' = x - y - x(x^2 + y^2), \qquad y' = x + y - y(x^2 + y^2).$$
+```math
+x' = x - y - x(x^2 + y^2), \qquad y' = x + y - y(x^2 + y^2).
+```
 
-In polar form, with $r$ the distance from the origin and $\theta$ the angle, it splits in two:
+In polar form, with $`r`$ the distance from the origin and $`\theta`$ the angle, it splits in two:
 
-$$r' = r(1 - r^2), \qquad \theta' = 1.$$
+```math
+r' = r(1 - r^2), \qquad \theta' = 1.
+```
 
-**Read it aloud:** the swing's size changes at the rate $r$ times one minus $r$ squared; the phase turns at one radian per millisecond.
+**Read it aloud:** the swing's size changes at the rate $`r`$ times one minus $`r`$ squared; the phase turns at one radian per millisecond.
 
-**Poincaré-Bendixson.** Let $R$ be a closed (edge included), bounded region of the plane that holds no resting point (an equilibrium, where $f = g = 0$). If a path enters $R$ and never leaves, then $R$ contains a closed loop (a periodic path) that the trapped path approaches.
+**Poincaré-Bendixson.** Let $`R`$ be a closed (edge included), bounded region of the plane that holds no resting point (an equilibrium, where $`f = g = 0`$). If a path enters $`R`$ and never leaves, then $`R`$ contains a closed loop (a periodic path) that the trapped path approaches.
 
 **Bendixson's criterion.** The divergence of the field is
 
-$$f_x + g_y,$$
+```math
+f_x + g_y,
+```
 
-where $f_x$ is how fast $f$ changes as $x$ moves with $y$ held fixed, and $g_y$ likewise ([Divergence and curl](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/03-divergence-and-curl.md)). If on a region $D$ with no holes the divergence keeps one sign and is not zero throughout any patch, no closed loop lies in $D$.
+where $`f_x`$ is how fast $`f`$ changes as $`x`$ moves with $`y`$ held fixed, and $`g_y`$ likewise ([Divergence and curl](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/03-divergence-and-curl.md)). If on a region $`D`$ with no holes the divergence keeps one sign and is not zero throughout any patch, no closed loop lies in $`D`$.
 
 **Read it aloud:** a flow that shrinks area everywhere, or grows it everywhere, cannot go round in a loop.
 
-The shock absorber, car body offset $p$ in cm and speed $v$ in cm/s, is $p'' + 2p' + 5p = 0$, or $p' = v$, $v' = -5p - 2v$. Its divergence is 0 + (−2) = −2 per second everywhere.
+The shock absorber, car body offset $`p`$ in cm and speed $`v`$ in cm/s, is $`p'' + 2p' + 5p = 0`$, or $`p' = v`$, $`v' = -5p - 2v`$. Its divergence is 0 + (−2) = −2 per second everywhere.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$ | the two capacitor voltages, in V | start at (0.5, 0) or (2, 0) | — |
-| $r$, $r_0$ | size of the swing: distance from the origin, in V; $r_0$ at the start | rims 0.5 and 2, loop at 1 | above 1 it shrinks |
-| $\theta$ | phase: the angle, in radians | turns at 1 per ms | — |
-| $t$ | time, in ms (in s for the car) | 2, 4, 8 ms | closer to the loop |
-| $f$, $g$, $F$ | rates of $x$ and $y$; together the vector field | as displayed | — |
-| $f_x$, $g_y$ | slope of $f$ along $x$, of $g$ along $y$; their sum is the divergence | 2 at the origin, −2 on the loop | area grows faster |
-| $R$, $D$, $C$, $A$ | trapping region; a region with no holes; a loop and the patch it encloses | the ring from 0.5 to 2 | — |
-| $p$, $v$ | car body offset, cm; its speed, cm/s | start (√5, 0); $5p^2 + v^2 = 25$, twice the energy per unit mass | — |
+| $`x`$, $`y`$ | the two capacitor voltages, in V | start at (0.5, 0) or (2, 0) | — |
+| $`r`$, $`r_0`$ | size of the swing: distance from the origin, in V; $`r_0`$ at the start | rims 0.5 and 2, loop at 1 | above 1 it shrinks |
+| $`\theta`$ | phase: the angle, in radians | turns at 1 per ms | — |
+| $`t`$ | time, in ms (in s for the car) | 2, 4, 8 ms | closer to the loop |
+| $`f`$, $`g`$, $`F`$ | rates of $`x`$ and $`y`$; together the vector field | as displayed | — |
+| $`f_x`$, $`g_y`$ | slope of $`f`$ along $`x`$, of $`g`$ along $`y`$; their sum is the divergence | 2 at the origin, −2 on the loop | area grows faster |
+| $`R`$, $`D`$, $`C`$, $`A`$ | trapping region; a region with no holes; a loop and the patch it encloses | the ring from 0.5 to 2 | — |
+| $`p`$, $`v`$ | car body offset, cm; its speed, cm/s | start (√5, 0); $`5p^2 + v^2 = 25`$, twice the energy per unit mass | — |
 
 ### When it holds
 
 - **The plane only.** On a doughnut, two angles turning at rates 1 and √2 stay trapped, never rest, and never close.
-- **A smooth field.** $f$ and $g$ need continuous slopes, so paths never cross or merge.
+- **A smooth field.** $`f`$ and $`g`$ need continuous slopes, so paths never cross or merge.
 - **No resting point inside.** Drop it and the trapped path may stop: the shock absorber, trapped in its energy ellipse, spirals into rest at (0, 0).
 - **For Bendixson, one sign on a region with no holes.** On the ring the sign changes, so the test is silent; round a hole, a loop encloses points the test never checked.
 
@@ -78,7 +84,7 @@ A loop in the plane splits it into inside and outside, and paths cannot cross. B
 
 ### Step 1: the ring traps every path that enters it
 
-On the inner rim, $r = 0.5$, the rate $r' = 0.5 × (1 − 0.25) = 0.375$ is positive: every arrow points outward, into the ring. On the outer rim, $r = 2$, it is $2 × (1 − 4) = −6$: every arrow points inward. No path can leave. The check asserts this at 360 points per rim.
+On the inner rim, $`r = 0.5`$, the rate $`r' = 0.5 × (1 − 0.25) = 0.375`$ is positive: every arrow points outward, into the ring. On the outer rim, $`r = 2`$, it is $`2 × (1 − 4) = −6`$: every arrow points inward. No path can leave. The check asserts this at 360 points per rim.
 
 ### Step 2: nothing in the ring can rest
 
@@ -99,17 +105,19 @@ Take q in L, and z in the limit set of q's path; F(z) ≠ 0 gives a transversal 
 
 </details>
 
-The theorem gives a loop, not how many. The polar form shows exactly one, at $r = 1$, where $r' = 0$; a path on it returns to its start after $2\pi$ = 6.283185 ms. For the Van der Pol circuit, whose loop has no formula, the trap is the proof ([Limit cycles](08-limit-cycles-and-van-der-pol.md)).
+The theorem gives a loop, not how many. The polar form shows exactly one, at $`r = 1`$, where $`r' = 0`$; a path on it returns to its start after $`2\pi`$ = 6.283185 ms. For the Van der Pol circuit, whose loop has no formula, the trap is the proof ([Limit cycles](08-limit-cycles-and-van-der-pol.md)).
 
 ### Step 4: Bendixson, by Green's theorem
 
-Suppose a closed loop $C$ lay in $D$, enclosing the patch $A$. Green's theorem ([Green's theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/06-greens-theorem.md)) turns the divergence over the patch into a sum round its edge:
+Suppose a closed loop $`C`$ lay in $`D`$, enclosing the patch $`A`$. Green's theorem ([Green's theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/06-greens-theorem.md)) turns the divergence over the patch into a sum round its edge:
 
-$$\iint_A (f_x + g_y)\,dA = \oint_C (f\,dy - g\,dx).$$
+```math
+\iint_A (f_x + g_y)\,dA = \oint_C (f\,dy - g\,dx).
+```
 
-The right side is flow out through the edge. Along the loop, $dx = f\,dt$ and $dy = g\,dt$, so $f\,dy - g\,dx = (fg - gf)\,dt = 0$: nothing crosses a loop made of the flow. The left side, divergence of one sign added over the patch, is not zero. Contradiction: no loop. "No holes" keeps the patch inside $D$.
+The right side is flow out through the edge. Along the loop, $`dx = f\,dt`$ and $`dy = g\,dt`$, so $`f\,dy - g\,dx = (fg - gf)\,dt = 0`$: nothing crosses a loop made of the flow. The left side, divergence of one sign added over the patch, is not zero. Contradiction: no loop. "No holes" keeps the patch inside $`D`$.
 
-For the shock absorber the left side is −2 times the area. Round the energy ellipse $5p^2 + v^2 = 25$ the edge sum is −70.248147, exactly that: flow leaks inward, so this curve is no loop, and nor is any other.
+For the shock absorber the left side is −2 times the area. Round the energy ellipse $`5p^2 + v^2 = 25`$ the edge sum is −70.248147, exactly that: flow leaks inward, so this curve is no loop, and nor is any other.
 
 ### Step 5: why chaos needs a third dimension
 
@@ -118,7 +126,7 @@ Steps 0 and 3 used the fence. In three dimensions a curve fences nothing: a path
 <details>
 <summary>Divergence as shrinkage, seen directly</summary>
 
-Carry a small triangle of starting states along the shock absorber's flow for 1 s. Its area is multiplied by 0.135335, which is $e^{-2}$: area shrinks at the rate the divergence gives.
+Carry a small triangle of starting states along the shock absorber's flow for 1 s. Its area is multiplied by 0.135335, which is $`e^{-2}`$: area shrinks at the rate the divergence gives.
 
 </details>
 
@@ -135,7 +143,7 @@ Carry a small triangle of starting states along the shock absorber's flow for 1 
 | shock divergence | slope of v along p, plus slope of −5p − 2v along v: 0 − 2 | **−2 per s** |
 | edge sum round the ellipse | −2 × π × √5 × 5 | −70.248147, not 0 |
 
-The alarm settles to a 1-volt swing repeating every 6.283185 ms; the shock absorber cannot ring on forever. Row 3 solves $r' = r(1 - r^2)$ as a separable equation: $r^2 = 1 / (1 + (1/r_0^2 - 1)e^{-2t})$.
+The alarm settles to a 1-volt swing repeating every 6.283185 ms; the shock absorber cannot ring on forever. Row 3 solves $`r' = r(1 - r^2)`$ as a separable equation: $`r^2 = 1 / (1 + (1/r_0^2 - 1)e^{-2t})`$.
 
 ### What breaks if you drop a piece
 
@@ -149,7 +157,7 @@ The alarm settles to a 1-volt swing repeating every 6.283185 ms; the shock absor
 
 ## Code, from first principles, and it actually runs
 
-Road one is the closed form for the swing; road two steps the $x, y$ system by Runge-Kutta 4 (four slope samples per step, [Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)) and never uses polar form. Halving the step cuts the error about 16-fold: fourth order. For Bendixson, divergence by differences meets a flowed triangle's area ratio, and Green's edge sum meets its area sum.
+Road one is the closed form for the swing; road two steps the $`x, y`$ system by Runge-Kutta 4 (four slope samples per step, [Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)) and never uses polar form. Halving the step cuts the error about 16-fold: fourth order. For Bendixson, divergence by differences meets a flowed triangle's area ratio, and Green's edge sum meets its area sum.
 
 ### Python
 
@@ -348,12 +356,12 @@ ALL CHECKS PASS
 
 Lean proves the card's facts about its oscillator and shock absorber, but not the two general theorems, which Mathlib cannot reach yet.
 
-- Take the path $(\cos t, \sin t)$. Then it solves the oscillator at every time and stays on the circle of radius 1.
-- That path returns to its start after one lap of $2\pi$ ms, and it really moves.
-- Take a point on the inner rim, $r = 0.5$. Then its arrow points outward, into the ring.
-- Take a point on the outer rim, $r = 2$. Then its arrow points inward, into the ring.
-- Suppose $f = g = 0$ at some point. Then that point is the origin, in the ring's hole.
-- Take any point at distance $r$ from the origin. Then the oscillator's divergence there is $2 - 4r^2$.
+- Take the path $`(\cos t, \sin t)`$. Then it solves the oscillator at every time and stays on the circle of radius 1.
+- That path returns to its start after one lap of $`2\pi`$ ms, and it really moves.
+- Take a point on the inner rim, $`r = 0.5`$. Then its arrow points outward, into the ring.
+- Take a point on the outer rim, $`r = 2`$. Then its arrow points inward, into the ring.
+- Suppose $`f = g = 0`$ at some point. Then that point is the origin, in the ring's hole.
+- Take any point at distance $`r`$ from the origin. Then the oscillator's divergence there is $`2 - 4r^2`$.
 - The shock absorber's divergence is −2 per second at every point.
 - The hand numbers check: rims 0.375 and −6, and divergence 2, 1, −2, −14 at r = 0, 0.5, 1, 2.
 - The edge sum round the ellipse, −2 × π × √5 × 5, is not 0.

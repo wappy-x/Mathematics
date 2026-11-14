@@ -26,7 +26,7 @@ Schematic, not to scale. Mills on the left with what they can cut; the spare col
 
 ## The formula
 
-Number the mills $i$ and the workshops $j$. The spare column is an extra "workshop" that takes the 10 t nobody needs, at no cost; with it, total supply equals total demand and every row can be an equation. The haulage cost per tonne is $c_{ij}$:
+Number the mills $`i`$ and the workshops $`j`$. The spare column is an extra "workshop" that takes the 10 t nobody needs, at no cost; with it, total supply equals total demand and every row can be an equation. The haulage cost per tonne is $`c_{ij}`$:
 
 | £ per tonne | W1 | W2 | W3 | spare |
 | --- | ---: | ---: | ---: | ---: |
@@ -34,37 +34,43 @@ Number the mills $i$ and the workshops $j$. The spare column is an extra "worksh
 | South (30 t) | 7 | 6 | 7 | 0 |
 | needs | 25 t | 20 t | 15 t | 10 t |
 
-The **transportation problem**, a linear program in the shelf's form $c^T x$ (each route's cost per tonne times its tonnage, added up) made smallest under $Ax = b$, $x \ge 0$:
+The **transportation problem**, a linear program in the shelf's form $`c^T x`$ (each route's cost per tonne times its tonnage, added up) made smallest under $`Ax = b`$, $`x \ge 0`$:
 
-$$\min \sum_{i}\sum_{j} c_{ij}\,x_{ij} \quad\text{such that}\quad \sum_{j} x_{ij} = a_i \ \text{for each mill},\qquad \sum_{i} x_{ij} = b_j \ \text{for each column},\qquad x_{ij} \ge 0$$
+```math
+\min \sum_{i}\sum_{j} c_{ij}\,x_{ij} \quad\text{such that}\quad \sum_{j} x_{ij} = a_i \ \text{for each mill},\qquad \sum_{i} x_{ij} = b_j \ \text{for each column},\qquad x_{ij} \ge 0
+```
 
 **Read it aloud:** choose a tonnage for every route so that each mill ships out exactly what it has and each workshop receives exactly what it needs, and make the total haulage bill as small as possible.
 
 Two companion facts carry the rest of the card. The integrality theorem:
 
-$$a_i,\ b_j \ \text{whole numbers} \;\Longrightarrow\; \text{every corner has every } x_{ij} \text{ whole}$$
+```math
+a_i,\ b_j \ \text{whole numbers} \;\Longrightarrow\; \text{every corner has every } x_{ij} \text{ whole}
+```
 
-and the certificate, with one dual price $u_i$ per mill and $v_j$ per column (the prices $y$ of [LP duality](04-lp-duality-and-complementary-slackness.md), split by row group):
+and the certificate, with one dual price $`u_i`$ per mill and $`v_j`$ per column (the prices $`y`$ of [LP duality](04-lp-duality-and-complementary-slackness.md), split by row group):
 
-$$\bar c_{ij} = c_{ij} - u_i - v_j \;\ge\; 0 \ \text{on every route},\qquad \bar c_{ij} = 0 \ \text{wherever } x_{ij} > 0 \;\Longrightarrow\; x \text{ is a cheapest plan}$$
+```math
+\bar c_{ij} = c_{ij} - u_i - v_j \;\ge\; 0 \ \text{on every route},\qquad \bar c_{ij} = 0 \ \text{wherever } x_{ij} > 0 \;\Longrightarrow\; x \text{ is a cheapest plan}
+```
 
 **Read it aloud:** if no route costs less than the prices at its two ends add up to, and every route in use costs exactly that, nothing beats the plan.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $i$, $j$ | a mill (row), a column: a workshop or the spare | North, South; W1, W2, W3, spare | — |
-| $m$, $n$ | number of mills, number of columns | 2, 4 | — |
-| $x_{ij}$ | tonnes a week sent from mill $i$ to column $j$ | North to W1: 25 t | — |
-| $c_{ij}$ | haulage cost on that route, £ per tonne | North to W1: £6 | the bill rises, at most by $x_{ij}$ per £1 |
-| $a_i$ | what mill $i$ can cut, tonnes a week | 40, 30 | South: −£1 a tonne, South's price $u_i$ |
-| $b_j$ | what column $j$ takes, tonnes a week | 25, 20, 15; spare 10 | W2: +£7 a tonne, the price $v_2$ |
-| $A$, $b$ | the constraint table and its right-hand side: one row per mill and per column, one column per route; $b$ stacks the $a_i$ and the $b_j$ | 6 rows, 8 routes | — |
-| $u_i$, $v_j$ | dual prices at each mill and each column | $u$ = 0, −1; $v$ = 6, 7, 8, 0 | — |
-| $\bar c_{ij}$ | reduced cost: how much the bill changes per tonne sent round the loop a new route opens | South to W1: 2 | above 0 keeps the plan |
-| $\theta$ | tonnes shifted round that loop in one simplex step | 10 t | — |
-| $d$ | a loop's pattern of change: +1 or −1 on its routes, 0 elsewhere (proof only) | North-W2 +1, South-W2 −1, South-W3 +1, North-W3 −1 | — |
+| $`i`$, $`j`$ | a mill (row), a column: a workshop or the spare | North, South; W1, W2, W3, spare | — |
+| $`m`$, $`n`$ | number of mills, number of columns | 2, 4 | — |
+| $`x_{ij}`$ | tonnes a week sent from mill $`i`$ to column $`j`$ | North to W1: 25 t | — |
+| $`c_{ij}`$ | haulage cost on that route, £ per tonne | North to W1: £6 | the bill rises, at most by $`x_{ij}`$ per £1 |
+| $`a_i`$ | what mill $`i`$ can cut, tonnes a week | 40, 30 | South: −£1 a tonne, South's price $`u_i`$ |
+| $`b_j`$ | what column $`j`$ takes, tonnes a week | 25, 20, 15; spare 10 | W2: +£7 a tonne, the price $`v_2`$ |
+| $`A`$, $`b`$ | the constraint table and its right-hand side: one row per mill and per column, one column per route; $`b`$ stacks the $`a_i`$ and the $`b_j`$ | 6 rows, 8 routes | — |
+| $`u_i`$, $`v_j`$ | dual prices at each mill and each column | $`u`$ = 0, −1; $`v`$ = 6, 7, 8, 0 | — |
+| $`\bar c_{ij}`$ | reduced cost: how much the bill changes per tonne sent round the loop a new route opens | South to W1: 2 | above 0 keeps the plan |
+| $`\theta`$ | tonnes shifted round that loop in one simplex step | 10 t | — |
+| $`d`$ | a loop's pattern of change: +1 or −1 on its routes, 0 elsewhere (proof only) | North-W2 +1, South-W2 −1, South-W3 +1, North-W3 −1 | — |
 
-Simplex, on this card, means the LP shelf's corner-walking method, not a triangle-shaped set. The table $A$ has a 1 in mill $i$'s row and a 1 in column $j$'s row for route $(i, j)$, and nothing else.
+Simplex, on this card, means the LP shelf's corner-walking method, not a triangle-shaped set. The table $`A`$ has a 1 in mill $`i`$'s row and a 1 in column $`j`$'s row for route $`(i, j)`$, and nothing else.
 
 ### When it holds
 
@@ -83,7 +89,7 @@ Every row says "these tonnages add to that total", with every coefficient 1. A c
 
 ### Step 1: a corner never uses a loop of routes
 
-Picture mills and columns as dots and each used route as a line between a mill and a column. Suppose the used routes contained a loop, such as North → W2 → South → W3 → North. Walking it, add $\theta$ tonnes on every other route and take $\theta$ off the rest. Each dot on the loop gains $\theta$ on one line and loses $\theta$ on another, so every row still holds. For a small enough $\theta$ both the "add" plan and the "take off" plan stay at or above 0, and the original plan is the midpoint of the two. A corner is never the midpoint of two other points of the region, so a corner's routes contain no loop.
+Picture mills and columns as dots and each used route as a line between a mill and a column. Suppose the used routes contained a loop, such as North → W2 → South → W3 → North. Walking it, add $`\theta`$ tonnes on every other route and take $`\theta`$ off the rest. Each dot on the loop gains $`\theta`$ on one line and loses $`\theta`$ on another, so every row still holds. For a small enough $`\theta`$ both the "add" plan and the "take off" plan stay at or above 0, and the original plan is the midpoint of the two. A corner is never the midpoint of two other points of the region, so a corner's routes contain no loop.
 
 ### Step 2: loop-free routes are filled in leaf by leaf
 
@@ -93,34 +99,36 @@ On the cheapest plan the leaves go like this. W1 is touched only by North, so No
 
 ### Step 3: the simplex step only moves whole tonnes
 
-The shipping form of the simplex method keeps a tree of $m + n - 1 = 5$ routes. To try an unused route it adds that route, which closes exactly one loop in the tree, and pushes $\theta$ tonnes round the loop, adding and taking off alternately. $\theta$ is the smallest tonnage on a "take off" route, so it is whole, and the route it empties leaves the tree. Every plan the method visits is whole, which is Step 2 seen from the method's side.
+The shipping form of the simplex method keeps a tree of $`m + n - 1 = 5`$ routes. To try an unused route it adds that route, which closes exactly one loop in the tree, and pushes $`\theta`$ tonnes round the loop, adding and taking off alternately. $`\theta`$ is the smallest tonnage on a "take off" route, so it is whole, and the route it empties leaves the tree. Every plan the method visits is whole, which is Step 2 seen from the method's side.
 
 ### Step 4: prices certify the answer
 
-Set the spare column's price to $v_\text{spare} = 0$ and solve $u_i + v_j = c_{ij}$ along the tree's routes. That is again leaf by leaf, so the prices are whole too. For any plan $x$ that meets every row, with every $\bar c_{ij} \ge 0$:
+Set the spare column's price to $`v_\text{spare} = 0`$ and solve $`u_i + v_j = c_{ij}`$ along the tree's routes. That is again leaf by leaf, so the prices are whole too. For any plan $`x`$ that meets every row, with every $`\bar c_{ij} \ge 0`$:
 
-$$\sum_{i,j} c_{ij}\,x_{ij} \;\ge\; \sum_{i,j} (u_i + v_j)\,x_{ij} \;=\; \sum_i a_i u_i + \sum_j b_j v_j .$$
+```math
+\sum_{i,j} c_{ij}\,x_{ij} \;\ge\; \sum_{i,j} (u_i + v_j)\,x_{ij} \;=\; \sum_i a_i u_i + \sum_j b_j v_j .
+```
 
-The inequality uses $x_{ij} \ge 0$; the equality regroups by row. The right-hand side is the same number for every plan. On the simplex's plan every used route has $\bar c_{ij} = 0$, so the inequality is an equality and that plan's cost meets the floor. This is weak duality from [LP duality](04-lp-duality-and-complementary-slackness.md), with the floor met exactly: £380 on both sides here.
+The inequality uses $`x_{ij} \ge 0`$; the equality regroups by row. The right-hand side is the same number for every plan. On the simplex's plan every used route has $`\bar c_{ij} = 0`$, so the inequality is an equality and that plan's cost meets the floor. This is weak duality from [LP duality](04-lp-duality-and-complementary-slackness.md), with the floor met exactly: £380 on both sides here.
 
 ### Step 5: every network, not just two rows of mills
 
 A general network, with junctions that pass timber on, has one row per junction: what leaves minus what arrives equals that junction's supply. Each route column then holds +1 at its start and −1 at its end, and a route may have a capacity, the most it can carry.
 
-Step 1's loop argument needs one change, because routes now have directions. Walk any loop of routes that each sit strictly between 0 and their capacity. Add $\theta$ on routes walked in their own direction and take $\theta$ off routes walked against it. At each junction on the loop the walk then brings in as much as it carries out, so every junction still balances. (On the shipping network every route points from a mill to a column, so a loop walks routes forwards and backwards in turn: Step 1's alternating pattern.)
+Step 1's loop argument needs one change, because routes now have directions. Walk any loop of routes that each sit strictly between 0 and their capacity. Add $`\theta`$ on routes walked in their own direction and take $`\theta`$ off routes walked against it. At each junction on the loop the walk then brings in as much as it carries out, so every junction still balances. (On the shipping network every route points from a mill to a column, so a loop walks routes forwards and backwards in turn: Step 1's alternating pattern.)
 
 So the corners of any **minimum-cost flow** problem (cheapest shipping through a network with junctions and route capacities) are whole when supplies and capacities are. The largest flow from a source to a sink is one of these linear programs, which is why [Max-flow min-cut](../../04-Combinatorics%20and%20graphs/13-Matchings%20and%20Flows/06-max-flow-min-cut.md) can promise whole flows from whole capacities. The general rule for which tables have only whole corners is [Total unimodularity](../05-Integer%20and%20Combinatorial%20Optimisation/05-total-unimodularity.md).
 
 <details>
 <summary>Detailed proof: whole supplies give whole corners</summary>
 
-**Setup.** The region is $\{x : \sum_j x_{ij} = a_i,\ \sum_i x_{ij} = b_j,\ x \ge 0\}$ with $\sum a_i = \sum b_j$. Let $x$ be a corner, and call the routes with $x_{ij} > 0$ the used routes.
+**Setup.** The region is $`\{x : \sum_j x_{ij} = a_i,\ \sum_i x_{ij} = b_j,\ x \ge 0\}`$ with $`\sum a_i = \sum b_j`$. Let $`x`$ be a corner, and call the routes with $`x_{ij} > 0`$ the used routes.
 
-**No loop.** If the used routes held a loop $(i_1, j_1), (i_2, j_1), (i_2, j_2), \dots, (i_1, j_k)$, it alternates mill and column, so it has an even number of routes. Let $d$ be $+1$ on the odd-numbered routes, $-1$ on the even-numbered ones and 0 elsewhere. Every mill and column on the loop meets one $+1$ and one $-1$, so $Ad = 0$. With $\theta$ the smallest $x_{ij}$ on the loop, $x + \theta d$ and $x - \theta d$ are both in the region and $x$ is their midpoint, contradicting that $x$ is a corner.
+**No loop.** If the used routes held a loop $`(i_1, j_1), (i_2, j_1), (i_2, j_2), \dots, (i_1, j_k)`$, it alternates mill and column, so it has an even number of routes. Let $`d`$ be $`+1`$ on the odd-numbered routes, $`-1`$ on the even-numbered ones and 0 elsewhere. Every mill and column on the loop meets one $`+1`$ and one $`-1`$, so $`Ad = 0`$. With $`\theta`$ the smallest $`x_{ij}`$ on the loop, $`x + \theta d`$ and $`x - \theta d`$ are both in the region and $`x`$ is their midpoint, contradicting that $`x`$ is a corner.
 
-**Leaf by leaf.** So the used routes form a forest. Take a leaf: a mill or column met by exactly one used route, say $(i, j)$ with leaf $j$. Every other route at $j$ carries 0, so $x_{ij} = b_j$, whole. Remove $j$ and replace $a_i$ by $a_i - b_j$, still whole. The remaining tonnages form a corner of the smaller problem, since any midpoint splitting there would also split the original. Induct on the number of routes. A leaf at a mill works the same way.
+**Leaf by leaf.** So the used routes form a forest. Take a leaf: a mill or column met by exactly one used route, say $`(i, j)`$ with leaf $`j`$. Every other route at $`j`$ carries 0, so $`x_{ij} = b_j`$, whole. Remove $`j`$ and replace $`a_i`$ by $`a_i - b_j`$, still whole. The remaining tonnages form a corner of the smaller problem, since any midpoint splitting there would also split the original. Induct on the number of routes. A leaf at a mill works the same way.
 
-**Certificate.** For any feasible $x$ and prices with $c_{ij} \ge u_i + v_j$ on every route, $\sum c_{ij} x_{ij} \ge \sum_i a_i u_i + \sum_j b_j v_j$, and equality holds when $c_{ij} = u_i + v_j$ wherever $x_{ij} > 0$. That is all Step 4 needs. Strong duality, which says such prices always exist at the optimum, is proved on [LP duality](04-lp-duality-and-complementary-slackness.md); here the simplex method hands the prices over directly.
+**Certificate.** For any feasible $`x`$ and prices with $`c_{ij} \ge u_i + v_j`$ on every route, $`\sum c_{ij} x_{ij} \ge \sum_i a_i u_i + \sum_j b_j v_j`$, and equality holds when $`c_{ij} = u_i + v_j`$ wherever $`x_{ij} > 0`$. That is all Step 4 needs. Strong duality, which says such prices always exist at the optimum, is proved on [LP duality](04-lp-duality-and-complementary-slackness.md); here the simplex method hands the prices over directly.
 
 </details>
 
@@ -135,9 +143,9 @@ The shipping simplex starts from the **northwest-corner plan**: fill the table f
 | northwest start | North: W1 25, W2 15; South: W2 5, W3 15, spare 10 | 5 routes, a tree |
 | its cost | 25 × 6 + 15 × 7 + 5 × 6 + 15 × 7 + 10 × 0 | £390 |
 | try North → spare | loop: +North-spare, −South-spare, +South-W2, −North-W2; per tonne 0 − 0 + 6 − 7 | −1 a tonne |
-| how far | smallest "take off" tonnage: South-spare 10, North-W2 15 | $\theta$ = 10 t |
+| how far | smallest "take off" tonnage: South-spare 10, North-W2 15 | $`\theta`$ = 10 t |
 | new cost | 390 − 10 × 1 | £380 |
-| prices on the new tree | spare 0; North 0; W1 6, W2 7; South 6 − 7; W3 7 + 1 | $u$ = 0, −1; $v$ = 6, 7, 8 |
+| prices on the new tree | spare 0; North 0; W1 6, W2 7; South 6 − 7; W3 7 + 1 | $`u`$ = 0, −1; $`v`$ = 6, 7, 8 |
 | reduced costs of unused routes | North-W3 10 − 0 − 8; South-W1 7 + 1 − 6; South-spare 0 + 1 − 0 | 2, 2, 1: none below 0 |
 | price floor | 40 × 0 + 30 × (−1) + 25 × 6 + 20 × 7 + 15 × 8 + 10 × 0 | £380 |
 | **cheapest plan** | North: W1 25, W2 5, keeps 10; South: W2 15, W3 15 | **£380 a week, all whole tonnes** |

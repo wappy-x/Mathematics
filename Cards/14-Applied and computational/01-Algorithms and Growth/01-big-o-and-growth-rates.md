@@ -42,31 +42,35 @@ The steep line is the scan: it doubles with every doubling of the library. The f
 
 A **cost** here is a count of one named operation, a comparison of two titles, made by a method on an input of size n. Every claim below compares a cost f(n) with a simple yardstick g(n), such as n or log n.
 
-$$f(n) = O(g(n)) \iff \text{there are constants } c > 0 \text{ and } n_0 \text{ with } f(n) \le c \cdot g(n) \text{ for every } n \ge n_0$$
+```math
+f(n) = O(g(n)) \iff \text{there are constants } c > 0 \text{ and } n_0 \text{ with } f(n) \le c \cdot g(n) \text{ for every } n \ge n_0
+```
 
 **Read it aloud:** f grows at most like g: past some size, a fixed multiple of g stays above f.
 
 Turn the inequality round and you get the floor. Ask for both and you get the exact rate:
 
-$$f(n) = \Omega(g(n)) \iff f(n) \ge c \cdot g(n) \text{ for every } n \ge n_0, \qquad f(n) = \Theta(g(n)) \iff c_1 \cdot g(n) \le f(n) \le c_2 \cdot g(n) \text{ for every } n \ge n_0$$
+```math
+f(n) = \Omega(g(n)) \iff f(n) \ge c \cdot g(n) \text{ for every } n \ge n_0, \qquad f(n) = \Theta(g(n)) \iff c_1 \cdot g(n) \le f(n) \le c_2 \cdot g(n) \text{ for every } n \ge n_0
+```
 
 **Read it aloud:** Ω says f grows at least like g; Θ says f grows exactly like g, up to a constant, for large n.
 
-For halving, $f(n) = \lfloor \log_2 n \rfloor + 1$ and $g(n) = \log n$, so halving is $\Theta(\log n)$. Inside O( ) the log carries no base: changing the base multiplies a log by a fixed number, and the constant c absorbs it. Outside O( ), this card writes log2 for halving counts. [Regular perturbation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/05-regular-perturbation.md) uses O( ) for an error that shrinks toward zero; here n grows.
+For halving, $`f(n) = \lfloor \log_2 n \rfloor + 1`$ and $`g(n) = \log n`$, so halving is $`\Theta(\log n)`$. Inside O( ) the log carries no base: changing the base multiplies a log by a fixed number, and the constant c absorbs it. Outside O( ), this card writes log2 for halving counts. [Regular perturbation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/05-regular-perturbation.md) uses O( ) for an error that shrinks toward zero; here n grows.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | the input size: tracks in the library | 1,000,000 | every cost grows, each at its own rate |
-| $f(n)$ | the cost: comparisons the method makes on n tracks, in its worst case | scan 1,000,000; halving 20 | — |
-| $g(n)$ | the yardstick: a plain shape such as 1, log n, n, n log n, n², 2ⁿ | n for the scan | a faster-growing yardstick makes O easier to claim and Ω harder |
-| $c$, $c_1$, $c_2$ | fixed positive multipliers, the same for every n | 2 and 3 for a scan costing 2n + 3 | a larger c covers more, but may not depend on n |
-| $n_0$ | the size from which the claim must hold | 3 | small sizes are excused |
-| $O$, $\Omega$, $\Theta$ | grows at most, at least, exactly like g | the scan is O(n) and Ω(n), so Θ(n) | — |
-| $\log_2 n$ | how many halvings take n down to 1 | just under 20 for a million | one more per doubling of n |
-| $\lfloor x \rfloor$, $\lceil x \rceil$ | x rounded down, and rounded up, to a whole number | ⌊log2 1,000,000⌋ + 1 = 20 | — |
-| $m$, $W(m)$ | titles still in play, and halving's worst-case comparisons on them | W(1,000,000) = 20 | one more per doubling of m |
-| $k$ | in the proof fold: one less than the number of binary digits of m | 19 when m is a million | — |
-| $2^n$ | n twos multiplied together | 1,024 subsets of 10 tracks | doubles with each extra track |
+| $`n`$ | the input size: tracks in the library | 1,000,000 | every cost grows, each at its own rate |
+| $`f(n)`$ | the cost: comparisons the method makes on n tracks, in its worst case | scan 1,000,000; halving 20 | — |
+| $`g(n)`$ | the yardstick: a plain shape such as 1, log n, n, n log n, n², 2ⁿ | n for the scan | a faster-growing yardstick makes O easier to claim and Ω harder |
+| $`c`$, $`c_1`$, $`c_2`$ | fixed positive multipliers, the same for every n | 2 and 3 for a scan costing 2n + 3 | a larger c covers more, but may not depend on n |
+| $`n_0`$ | the size from which the claim must hold | 3 | small sizes are excused |
+| $`O`$, $`\Omega`$, $`\Theta`$ | grows at most, at least, exactly like g | the scan is O(n) and Ω(n), so Θ(n) | — |
+| $`\log_2 n`$ | how many halvings take n down to 1 | just under 20 for a million | one more per doubling of n |
+| $`\lfloor x \rfloor`$, $`\lceil x \rceil`$ | x rounded down, and rounded up, to a whole number | ⌊log2 1,000,000⌋ + 1 = 20 | — |
+| $`m`$, $`W(m)`$ | titles still in play, and halving's worst-case comparisons on them | W(1,000,000) = 20 | one more per doubling of m |
+| $`k`$ | in the proof fold: one less than the number of binary digits of m | 19 when m is a million | — |
+| $`2^n`$ | n twos multiplied together | 1,024 subsets of 10 tracks | doubles with each extra track |
 
 ### When it holds
 
@@ -98,7 +102,9 @@ For the upper bound, 2n + 3 ≤ 3n once n ≥ 3, so it is O(n) with c = 3 and n�
 
 Picture m titles still in play. Halving compares with the middle one. If that misses, the target lies on one side, and the larger side holds at most ⌊m/2⌋ titles. In the worst case the target is always on the larger side, so
 
-$$W(m) = 1 + W(\lfloor m/2 \rfloor), \qquad W(0) = 0,$$
+```math
+W(m) = 1 + W(\lfloor m/2 \rfloor), \qquad W(0) = 0,
+```
 
 where W(m) is the worst-case number of comparisons on m titles. Unwind it: W(n) counts how many times n can be halved, rounding down, before it reaches 0. That count is the number of binary digits of n, which is ⌊log2 n⌋ + 1. For 1,000,000 it is 20; for 2,000,000, 21.
 
@@ -107,7 +113,7 @@ where W(m) is the worst-case number of comparisons on m titles. Unwind it: W(n) 
 
 The sides left by a miss on m titles hold ⌊(m − 1)/2⌋ and ⌈(m − 1)/2⌉ titles, and the larger is ⌊m/2⌋. A target falling in a gap between titles always continues. So the worst-case target can be chosen to fall into the larger side every time: the worst case obeys the recurrence above with equality.
 
-Now suppose $2^k \le m < 2^{k+1}$, so m has k + 1 binary digits. Then $2^{k-1} \le \lfloor m/2 \rfloor < 2^k$: halving removes exactly one digit. By induction on k, W(m) = k + 1. With k = ⌊log2 m⌋ this is the formula.
+Now suppose $`2^k \le m < 2^{k+1}`$, so m has k + 1 binary digits. Then $`2^{k-1} \le \lfloor m/2 \rfloor < 2^k`$: halving removes exactly one digit. By induction on k, W(m) = k + 1. With k = ⌊log2 m⌋ this is the formula.
 
 Since ⌊log2 n⌋ + 1 lies between log2 n and 2 · log2 n for n ≥ 2, halving is Θ(log n).
 

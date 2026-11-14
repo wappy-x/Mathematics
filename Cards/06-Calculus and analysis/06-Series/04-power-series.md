@@ -35,34 +35,42 @@ Orange is ln(1 + x), computed as an area; teal, the series cut after x^4; dark b
 
 ## The formula
 
-A power series has a centre c, fixed numbers $a_n$ called coefficients, and an input x. The bars in $|x - c|$ mean the distance from x to c. A sigma sign running to infinity means the limit of partial sums ([Infinite series](01-series-convergence.md)).
+A power series has a centre c, fixed numbers $`a_n`$ called coefficients, and an input x. The bars in $`|x - c|`$ mean the distance from x to c. A sigma sign running to infinity means the limit of partial sums ([Infinite series](01-series-convergence.md)).
 
-$$f(x) = \sum_{n=0}^{\infty} a_n (x-c)^n = a_0 + a_1 (x-c) + a_2 (x-c)^2 + \cdots$$
+```math
+f(x) = \sum_{n=0}^{\infty} a_n (x-c)^n = a_0 + a_1 (x-c) + a_2 (x-c)^2 + \cdots
+```
 
 **Read it aloud:** f of x is where the sums of more and more terms head, each term a fixed number times a power of the distance from the centre.
 
-$$R = \frac{1}{L}, \qquad L = \lim_{n\to\infty} \left| \frac{a_{n+1}}{a_n} \right|$$
+```math
+R = \frac{1}{L}, \qquad L = \lim_{n\to\infty} \left| \frac{a_{n+1}}{a_n} \right|
+```
 
 **Read it aloud:** the radius is one over the limit of neighbouring coefficient ratios; L = 0 means no fence, and L infinite means only the centre works.
 
-$$f'(x) = \sum_{n=1}^{\infty} n\, a_n (x-c)^{n-1}, \qquad \int_c^x f(t)\,dt = \sum_{n=0}^{\infty} \frac{a_n}{n+1} (x-c)^{n+1}, \qquad |x - c| < R$$
+```math
+f'(x) = \sum_{n=1}^{\infty} n\, a_n (x-c)^{n-1}, \qquad \int_c^x f(t)\,dt = \sum_{n=0}^{\infty} \frac{a_n}{n+1} (x-c)^{n+1}, \qquad |x - c| < R
+```
 
 **Read it aloud:** strictly inside the radius, differentiate or integrate each term; both new series have radius R.
 
 The card's two series, centred at c = 0:
 
-$$\frac{1}{1-x} = \sum_{n=0}^{\infty} x^n, \qquad \ln(1+x) = \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n}\, x^n$$
+```math
+\frac{1}{1-x} = \sum_{n=0}^{\infty} x^n, \qquad \ln(1+x) = \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n}\, x^n
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $t$ | the input; t is a stand-in input inside an integral | x = 0.5; endpoints −1 and 1 | nearer an endpoint, slower convergence |
-| $n$, $N$ | n counts terms; N is the last power kept | N = 20 | larger N, smaller gap inside |
-| $a_n$ | the coefficient of the n-th power | 1; and (−1)^(n+1)/n for the log | faster growth, smaller radius |
-| $c$ | the centre | 0 | slides the fence |
-| $f$ | the function the series adds up to | 1/(1 − x), ln(1 + x) | — |
-| $S_N$ | partial sum: terms through the N-th power | S_20(0.5) = 0.405465093, log | heads for f(x) inside |
-| $R$, $L$ | radius; limit of coefficient ratios, R = 1/L | L = 1, R = 1 | larger L, smaller R |
-| $d$, $M$ | in the proof: a working distance, and a ceiling on the terms there | d below 1 | — |
+| $`x`$, $`t`$ | the input; t is a stand-in input inside an integral | x = 0.5; endpoints −1 and 1 | nearer an endpoint, slower convergence |
+| $`n`$, $`N`$ | n counts terms; N is the last power kept | N = 20 | larger N, smaller gap inside |
+| $`a_n`$ | the coefficient of the n-th power | 1; and (−1)^(n+1)/n for the log | faster growth, smaller radius |
+| $`c`$ | the centre | 0 | slides the fence |
+| $`f`$ | the function the series adds up to | 1/(1 − x), ln(1 + x) | — |
+| $`S_N`$ | partial sum: terms through the N-th power | S_20(0.5) = 0.405465093, log | heads for f(x) inside |
+| $`R`$, $`L`$ | radius; limit of coefficient ratios, R = 1/L | L = 1, R = 1 | larger L, smaller R |
+| $`d`$, $`M`$ | in the proof: a working distance, and a ceiling on the terms there | d below 1 | — |
 
 ### When it holds
 
@@ -86,7 +94,7 @@ So the working inputs fill a stretch around c with no holes. Let R be the least 
 
 ### Step 2: the ratio test measures the fence
 
-Neighbouring terms have ratio $|a_{n+1}/a_n|$ times |x − c|, heading for L times |x − c|. Below 1 converges, above 1 diverges, so R = 1/L. For the log the ratio n/(n + 1) is 0.999001 at n = 1,000, heading for 1; for 1/(1 − x) it is 1. Both radii are 1.
+Neighbouring terms have ratio $`|a_{n+1}/a_n|`$ times |x − c|, heading for L times |x − c|. Below 1 converges, above 1 diverges, so R = 1/L. For the log the ratio n/(n + 1) is 0.999001 at n = 1,000, heading for 1; for 1/(1 − x) it is 1. Both radii are 1.
 
 ### Step 3: the endpoints are separate questions
 
@@ -108,13 +116,13 @@ For integration, the tail beyond N terms is small at every point from c to x at 
 <details>
 <summary>Detailed proof</summary>
 
-Take c = 0, and a distance r between |x| and d: |x| < r < d < R. Convergence at d gives $|a_n| d^n \le M$.
+Take c = 0, and a distance r between |x| and d: |x| < r < d < R. Convergence at d gives $`|a_n| d^n \le M`$.
 
-**Slope.** For a small step h with |x + h| ≤ r, the mean value theorem applied twice to $y^n$ gives $|((x+h)^n - x^n)/h - n x^{n-1}| \le |h|\, n(n-1)\, r^{n-2}$. Summed, the gap between f's difference quotient and $\sum n a_n x^{n-1}$ is at most $|h| (M/r^2) \sum n(n-1)(r/d)^n$. That sum converges by the ratio test, so the gap is a constant times |h|; for any tolerance ε, |h| below ε over the constant works.
+**Slope.** For a small step h with |x + h| ≤ r, the mean value theorem applied twice to $`y^n`$ gives $`|((x+h)^n - x^n)/h - n x^{n-1}| \le |h|\, n(n-1)\, r^{n-2}`$. Summed, the gap between f's difference quotient and $`\sum n a_n x^{n-1}`$ is at most $`|h| (M/r^2) \sum n(n-1)(r/d)^n`$. That sum converges by the ratio test, so the gap is a constant times |h|; for any tolerance ε, |h| below ε over the constant works.
 
-**Same radius.** Convergence of the differentiated series at a point y with |y| > R would, by Step 1, give absolute convergence at some z with R < |z| < |y|; since $|a_n z^n| \le |z| \cdot n |a_n| |z|^{n-1}$, the original would converge beyond R. The integrated series has the original as its derivative series, so its radius is R too.
+**Same radius.** Convergence of the differentiated series at a point y with |y| > R would, by Step 1, give absolute convergence at some z with R < |z| < |y|; since $`|a_n z^n| \le |z| \cdot n |a_n| |z|^{n-1}`$, the original would converge beyond R. The integrated series has the original as its derivative series, so its radius is R too.
 
-**Integral.** For |t| ≤ |x| the tail beyond N terms is at most $\sum_{n>N} M (|x|/d)^n$, a number independent of t that heads for 0; its integral is at most |x| times that.
+**Integral.** For |t| ≤ |x| the tail beyond N terms is at most $`\sum_{n>N} M (|x|/d)^n`$, a number independent of t that heads for 0; its integral is at most |x| times that.
 
 </details>
 
@@ -122,7 +130,7 @@ Take c = 0, and a distance r between |x| and d: |x| < r < d < R. Convergence at 
 
 Replace x by −t: 1/(1 + t) = 1 − t + t^2 − … for |t| < 1. Integrate each term from 0 to x. The antiderivative of 1/(1 + t) is ln(1 + t), so ln(1 + x) = x − x^2/2 + x^3/3 − …
 
-A finite version gives the error. The finite geometric sum says 1/(1 + t) is 1 − t + … ± t^(N−1) plus a remainder ±t^N/(1 + t). Integrating from 0 to x, for x from 0 to 1, ln(1 + x) is $S_N(x)$ plus at most the area under t^N: x^(N+1)/(N + 1).
+A finite version gives the error. The finite geometric sum says 1/(1 + t) is 1 − t + … ± t^(N−1) plus a remainder ±t^N/(1 + t). Integrating from 0 to x, for x from 0 to 1, ln(1 + x) is $`S_N(x)`$ plus at most the area under t^N: x^(N+1)/(N + 1).
 
 At x = 0.5, N = 20 the bound is 0.000000023. At x = 1 it is 1/(N + 1), heading for 0, so the log series at 1 equals ln 2. To land within 0.001 of ln 2, N = 1,000 is enough: the actual gap is 0.000500.
 
@@ -333,7 +341,7 @@ Lean proves the radius, the ratio formula and term-by-term calculus for every po
 - Strictly inside R, the series of differentiated terms converges, and its sum is the slope of f.
 - Strictly inside R, the series of integrated terms converges, and its sum is the area under f from c to x.
 - Farther than R, the differentiated and integrated series fail too, so both have radius R.
-- If no coefficient is zero and the ratios $|a_{n+1}/a_n|$ head for a number L, then R = 1/L. L = 0 means no fence; L infinite is not covered.
+- If no coefficient is zero and the ratios $`|a_{n+1}/a_n|`$ head for a number L, then R = 1/L. L = 0 means no fence; L infinite is not covered.
 - 1 + x + x^2 + … converges exactly when −1 < x < 1, and then to 1/(1 − x).
 - x − x^2/2 + x^3/3 − … converges exactly when −1 < x ≤ 1, and then to ln(1 + x). At x = 1 that is ln 2.
 - At x = 1 the sum through x^99 is 100; at x = −1 the sums of 1 + x + x^2 + … run 1, 0, 1, 0, 1, 0.

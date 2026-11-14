@@ -39,19 +39,25 @@ Orange: the prior Beta(2, 2), wide and centred on 0.5. Green: what the 10 flips 
 
 Notation first, in words. θ is not known, so it carries a distribution. "θ ~ Beta(a, b)" reads "theta follows the beta law with numbers a and b". A vertical bar reads "given": θ | data is theta's law once the flips are known. The flips give s heads in n.
 
-$$\theta \sim \mathrm{Beta}(a, b) \quad\text{and}\quad s \text{ heads in } n \text{ flips} \quad\Longrightarrow\quad \theta \mid \text{data} \sim \mathrm{Beta}(a + s,\; b + n - s)$$
+```math
+\theta \sim \mathrm{Beta}(a, b) \quad\text{and}\quad s \text{ heads in } n \text{ flips} \quad\Longrightarrow\quad \theta \mid \text{data} \sim \mathrm{Beta}(a + s,\; b + n - s)
+```
 
 **Read it aloud:** heads go into the first number, tails into the second, and the law stays a beta law.
 
 Its average, and the chance the next flip lands heads, are one number:
 
-$$P(\text{next flip heads} \mid \text{data}) \;=\; E[\theta \mid \text{data}] \;=\; \frac{a + s}{a + b + n} \;=\; \frac{a + b}{a + b + n}\cdot\frac{a}{a + b} \;+\; \frac{n}{a + b + n}\cdot\frac{s}{n}$$
+```math
+P(\text{next flip heads} \mid \text{data}) \;=\; E[\theta \mid \text{data}] \;=\; \frac{a + s}{a + b + n} \;=\; \frac{a + b}{a + b + n}\cdot\frac{a}{a + b} \;+\; \frac{n}{a + b + n}\cdot\frac{s}{n}
+```
 
 **Read it aloud:** the next flip's chance of heads is the posterior average, which is a weighted average of the prior's average and the observed fraction, the weights being the prior's total a + b against the number of flips n.
 
 For m more flips, with K the number of heads among them, the count follows the **beta-binomial law**:
 
-$$P(K = k \mid \text{data}) \;=\; \binom{m}{k}\,\frac{B(a + s + k,\; b + n - s + m - k)}{B(a + s,\; b + n - s)} \;=\; \binom{m}{k}\,\frac{\alpha(\alpha+1)\cdots(\alpha+k-1)\;\cdot\;\beta(\beta+1)\cdots(\beta+m-k-1)}{(\alpha+\beta)(\alpha+\beta+1)\cdots(\alpha+\beta+m-1)}$$
+```math
+P(K = k \mid \text{data}) \;=\; \binom{m}{k}\,\frac{B(a + s + k,\; b + n - s + m - k)}{B(a + s,\; b + n - s)} \;=\; \binom{m}{k}\,\frac{\alpha(\alpha+1)\cdots(\alpha+k-1)\;\cdot\;\beta(\beta+1)\cdots(\beta+m-k-1)}{(\alpha+\beta)(\alpha+\beta+1)\cdots(\alpha+\beta+m-1)}
+```
 
 where α = a + s and β = b + n − s are the posterior's two numbers, 9 and 5 here, and B is the beta integral, the area that scales a beta curve to total 1.
 
@@ -59,18 +65,18 @@ where α = a + s and β = b + n − s are the posterior's two numbers, 9 and 5 h
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\theta$ | the coin's unknown chance of heads | believed near 0.6429 after the flips | — |
-| $a$, $b$ | the prior's two numbers | 2 and 2 | a up: prior average up; both up: prior held more firmly |
-| $n$, $s$ | flips made, heads seen | 10 and 7 | s up: posterior shifts right; n up: data outweigh the prior |
-| $\alpha$, $\beta$ | the posterior's two numbers, a + s and b + n − s | 9 and 5 | — |
-| $B(a, b)$ | the beta integral, the area that makes a beta curve's total 1 | 1/B(9, 5) = 6435 | — |
-| $\Gamma$ | the gamma integral, used in the folded proof of Step 5: the factorial extended to every positive number, Γ(k) = (k − 1)! for whole k | B(9, 5) = Γ(9)Γ(5)/Γ(14) = 8! 4!/13! = 1/6435 | — |
-| $f(\theta)$ | a density: chance per unit of θ | posterior 3.00 at θ = 0.7; highest at the mode, 0.6667 | — |
-| $E$, $\mathrm{Var}$ | the long-run average, and the variance | E[θ \| data] = 0.6429, sd 0.1237 | — |
-| $m$, $K$, $k$ | future flips, the heads among them, and one value of that count | m = 2: k = 0, 1, 2 | m up: the predictive spreads beyond the binomial |
-| $\binom{m}{k}$ | orders of k heads among m flips, C(m, k) | m = 2, k = 1: C(2, 1) = 2 | — |
-| $\mu$, $I_j$, $j$ | the posterior average α/(α + β), used in Step 5; and a flag equal to 1 when future flip number j lands heads | μ = 0.6429 | — |
-| $L(\theta)$ | the likelihood: the chance of the observed flips if the chance of heads were θ | θ^7 (1 − θ)^3 | — |
+| $`\theta`$ | the coin's unknown chance of heads | believed near 0.6429 after the flips | — |
+| $`a`$, $`b`$ | the prior's two numbers | 2 and 2 | a up: prior average up; both up: prior held more firmly |
+| $`n`$, $`s`$ | flips made, heads seen | 10 and 7 | s up: posterior shifts right; n up: data outweigh the prior |
+| $`\alpha`$, $`\beta`$ | the posterior's two numbers, a + s and b + n − s | 9 and 5 | — |
+| $`B(a, b)`$ | the beta integral, the area that makes a beta curve's total 1 | 1/B(9, 5) = 6435 | — |
+| $`\Gamma`$ | the gamma integral, used in the folded proof of Step 5: the factorial extended to every positive number, Γ(k) = (k − 1)! for whole k | B(9, 5) = Γ(9)Γ(5)/Γ(14) = 8! 4!/13! = 1/6435 | — |
+| $`f(\theta)`$ | a density: chance per unit of θ | posterior 3.00 at θ = 0.7; highest at the mode, 0.6667 | — |
+| $`E`$, $`\mathrm{Var}`$ | the long-run average, and the variance | E[θ \| data] = 0.6429, sd 0.1237 | — |
+| $`m`$, $`K`$, $`k`$ | future flips, the heads among them, and one value of that count | m = 2: k = 0, 1, 2 | m up: the predictive spreads beyond the binomial |
+| $`\binom{m}{k}`$ | orders of k heads among m flips, C(m, k) | m = 2, k = 1: C(2, 1) = 2 | — |
+| $`\mu`$, $`I_j`$, $`j`$ | the posterior average α/(α + β), used in Step 5; and a flag equal to 1 when future flip number j lands heads | μ = 0.6429 | — |
+| $`L(\theta)`$ | the likelihood: the chance of the observed flips if the chance of heads were θ | θ^7 (1 − θ)^3 | — |
 
 ### When it holds
 
@@ -92,7 +98,9 @@ Bayes' rule says the posterior is the prior times the likelihood, divided by one
 
 The record was H T H H H T H H T H. If the chance of heads were θ, independence gives its chance as a product of ten factors: θ for each head, 1 − θ for each tail.
 
-$$L(\theta) = \theta^{7}\,(1 - \theta)^{3}$$
+```math
+L(\theta) = \theta^{7}\,(1 - \theta)^{3}
+```
 
 Order is irrelevant: any record with 7 heads and 3 tails gives the same product. Reporting only the count multiplies L by C(10, 7) = 120, a number that does not depend on θ and so cancels in Step 2.
 
@@ -100,7 +108,9 @@ Order is irrelevant: any record with 7 heads and 3 tails gives the same product.
 
 The prior Beta(2, 2) has density 6 θ (1 − θ); the 6 is 1/B(2, 2). Multiply:
 
-$$f(\theta \mid \text{data}) \;\propto\; \theta\,(1-\theta)\;\cdot\;\theta^{7}(1-\theta)^{3} \;=\; \theta^{8}\,(1-\theta)^{4}$$
+```math
+f(\theta \mid \text{data}) \;\propto\; \theta\,(1-\theta)\;\cdot\;\theta^{7}(1-\theta)^{3} \;=\; \theta^{8}\,(1-\theta)^{4}
+```
 
 The sign ∝ reads "is a constant multiple of". The curve θ^8 (1 − θ)^4 is the shape of Beta(9, 5), since a beta law with numbers α and β has powers α − 1 and β − 1. A density must have area 1, and only one constant does that: 1/B(9, 5) = 6435. So the posterior is Beta(9, 5), exactly.
 
@@ -109,9 +119,11 @@ The constant thrown away along the way is worth keeping once. Before any flip, t
 <details>
 <summary>Detailed proof: the update, for any beta prior and any record</summary>
 
-Let the prior be $f(\theta) = \theta^{a-1}(1-\theta)^{b-1}/B(a,b)$ on $0 < \theta < 1$, with $a, b > 0$. A record of $n$ flips with $s$ heads, independent given θ, has likelihood $L(\theta) = \theta^s(1-\theta)^{n-s}$. Bayes' rule for a density gives
-$$f(\theta \mid \text{data}) = \frac{L(\theta) f(\theta)}{\int_0^1 L(u) f(u)\,du} = \frac{\theta^{a+s-1}(1-\theta)^{b+n-s-1}/B(a,b)}{B(a+s,\,b+n-s)/B(a,b)} = \frac{\theta^{a+s-1}(1-\theta)^{b+n-s-1}}{B(a+s,\,b+n-s)}.$$
-The middle step uses the definition of the beta integral, $B(\alpha,\beta) = \int_0^1 u^{\alpha-1}(1-u)^{\beta-1}\,du$, which is finite because $a + s > 0$ and $b + n - s > 0$. The right side is the Beta(a + s, b + n − s) density. The denominator of the first fraction is the evidence for the ordered record; for the count alone multiply by $\binom{n}{s}$, which cancels between top and bottom and leaves the posterior unchanged. Both B values are ratios of factorials when the numbers are whole: $B(\alpha,\beta) = (\alpha-1)!\,(\beta-1)!/(\alpha+\beta-1)!$, from [Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md).
+Let the prior be $`f(\theta) = \theta^{a-1}(1-\theta)^{b-1}/B(a,b)`$ on $`0 < \theta < 1`$, with $`a, b > 0`$. A record of $`n`$ flips with $`s`$ heads, independent given θ, has likelihood $`L(\theta) = \theta^s(1-\theta)^{n-s}`$. Bayes' rule for a density gives
+
+$`\displaystyle f(\theta \mid \text{data}) = \frac{L(\theta) f(\theta)}{\int_0^1 L(u) f(u)\,du} = \frac{\theta^{a+s-1}(1-\theta)^{b+n-s-1}/B(a,b)}{B(a+s,\,b+n-s)/B(a,b)} = \frac{\theta^{a+s-1}(1-\theta)^{b+n-s-1}}{B(a+s,\,b+n-s)}.`$
+
+The middle step uses the definition of the beta integral, $`B(\alpha,\beta) = \int_0^1 u^{\alpha-1}(1-u)^{\beta-1}\,du`$, which is finite because $`a + s > 0`$ and $`b + n - s > 0`$. The right side is the Beta(a + s, b + n − s) density. The denominator of the first fraction is the evidence for the ordered record; for the count alone multiply by $`\binom{n}{s}`$, which cancels between top and bottom and leaves the posterior unchanged. Both B values are ratios of factorials when the numbers are whole: $`B(\alpha,\beta) = (\alpha-1)!\,(\beta-1)!/(\alpha+\beta-1)!`$, from [Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md).
 
 </details>
 
@@ -119,7 +131,9 @@ The middle step uses the definition of the beta integral, $B(\alpha,\beta) = \in
 
 A beta law's average is its first number over the total: E[θ | data] = 9/14 = 0.6429. Split the 14 into its sources, the prior's 4 and the data's 10:
 
-$$\frac{9}{14} = \frac{4}{14}\cdot 0.5 + \frac{10}{14}\cdot 0.7 = 0.2857 \times 0.5 + 0.7143 \times 0.7$$
+```math
+\frac{9}{14} = \frac{4}{14}\cdot 0.5 + \frac{10}{14}\cdot 0.7 = 0.2857 \times 0.5 + 0.7143 \times 0.7
+```
 
 The prior pulls with the weight of a + b = 4 flips, the data with the weight of their 10. A helpful picture: the prior acts like 2 heads and 2 tails already seen. The picture is only bookkeeping; a and b may be fractions, and no such flips took place. The proper name for a + b is the prior's **concentration**: the larger it is, the more flips it takes to move the average.
 
@@ -131,7 +145,9 @@ One more reading: how sure is the coin to favour heads? For whole numbers, a Bet
 
 If θ were known, the next flip would land heads with chance θ. It is not known, so average over the belief, the law of total probability with a density:
 
-$$P(\text{next flip heads} \mid \text{data}) = \int_0^1 \theta\, f(\theta \mid \text{data})\,d\theta = E[\theta \mid \text{data}] = \frac{9}{14} = 0.6429$$
+```math
+P(\text{next flip heads} \mid \text{data}) = \int_0^1 \theta\, f(\theta \mid \text{data})\,d\theta = E[\theta \mid \text{data}] = \frac{9}{14} = 0.6429
+```
 
 The posterior average, not the peak, prices a bet on the next flip. With a flat prior, Beta(1, 1), the same rule gives (s + 1)/(n + 2) = 8/12 = 0.6667, **Laplace's rule of succession**.
 
@@ -139,13 +155,17 @@ The posterior average, not the peak, prices a bet on the next flip. With a flat 
 
 Two more flips. Given θ they are independent, with chance θ^2 of two heads. Averaged over the posterior:
 
-$$P(K = 2 \mid \text{data}) = E[\theta^2 \mid \text{data}] = \frac{9 \cdot 10}{14 \cdot 15} = \frac{3}{7} = 0.4286$$
+```math
+P(K = 2 \mid \text{data}) = E[\theta^2 \mid \text{data}] = \frac{9 \cdot 10}{14 \cdot 15} = \frac{3}{7} = 0.4286
+```
 
 and likewise P(K = 1) = 2 × 9 × 5/210 = 0.4286 and P(K = 0) = 5 × 6/210 = 0.1429. Plugging the single number 9/14 into a binomial instead gives 0.1276, 0.4592, 0.4133: too few runs of all heads and all tails.
 
 The reason is shared ignorance. If the first new flip lands heads, that is evidence θ is high, so the second flip is more likely to be heads too. Given θ the flips are independent; averaged over θ they are positively linked. Over m flips the variance picks up a second term:
 
-$$\mathrm{Var}(K \mid \text{data}) = m\,\mu(1-\mu) + m(m-1)\,\mathrm{Var}(\theta \mid \text{data}) = \frac{m\,\alpha\beta\,(\alpha+\beta+m)}{(\alpha+\beta)^2(\alpha+\beta+1)}, \qquad \mu = \frac{\alpha}{\alpha+\beta}$$
+```math
+\mathrm{Var}(K \mid \text{data}) = m\,\mu(1-\mu) + m(m-1)\,\mathrm{Var}(\theta \mid \text{data}) = \frac{m\,\alpha\beta\,(\alpha+\beta+m)}{(\alpha+\beta)^2(\alpha+\beta+1)}, \qquad \mu = \frac{\alpha}{\alpha+\beta}
+```
 
 For the next ten flips: variance 3.6735 against the binomial's 2.2959, standard deviation 1.9166 against 1.5152. The chance of ten heads in ten is 0.0382, not 0.0121.
 
@@ -153,10 +173,12 @@ For the next ten flips: variance 3.6735 against the binomial's 2.2959, standard 
 <summary>Detailed proof: the predictive law and its variance</summary>
 
 Given θ, the count K in m flips is Binomial(m, θ). Average over the posterior Beta(α, β):
-$$P(K = k \mid \text{data}) = \int_0^1 \binom{m}{k}\theta^k(1-\theta)^{m-k}\,\frac{\theta^{\alpha-1}(1-\theta)^{\beta-1}}{B(\alpha,\beta)}\,d\theta = \binom{m}{k}\frac{B(\alpha+k,\,\beta+m-k)}{B(\alpha,\beta)}.$$
-Here Γ is the gamma integral of [Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md), the factorial extended to every positive number, with Γ(k) = (k − 1)! for whole k. For any positive numbers u, v and z, $B(u,v) = \Gamma(u)\Gamma(v)/\Gamma(u+v)$ and $\Gamma(z+1) = z\,\Gamma(z)$; with these, the ratio of beta integrals collapses to the rising products in The formula. Summing over $k$ inside the integral gives $(\theta + 1 - \theta)^m = 1$, so the chances total 1.
 
-For the variance, write $K = I_1 + \cdots + I_m$, with $I_j$ equal to 1 when future flip $j$ is heads. Each has average $\mu = E[\theta]$ and variance $\mu(1-\mu)$. For $i \neq j$, $E[I_i I_j] = E[\theta^2]$, so $\mathrm{Cov}(I_i, I_j) = E[\theta^2] - \mu^2 = \mathrm{Var}(\theta)$, all under the posterior. Adding the $m$ variances and the $m(m-1)$ covariances gives the formula in Step 5. With $E[\theta^2] = \alpha(\alpha+1)/((\alpha+\beta)(\alpha+\beta+1))$ the right side simplifies to $m\alpha\beta(\alpha+\beta+m)/((\alpha+\beta)^2(\alpha+\beta+1))$.
+$`\displaystyle P(K = k \mid \text{data}) = \int_0^1 \binom{m}{k}\theta^k(1-\theta)^{m-k}\,\frac{\theta^{\alpha-1}(1-\theta)^{\beta-1}}{B(\alpha,\beta)}\,d\theta = \binom{m}{k}\frac{B(\alpha+k,\,\beta+m-k)}{B(\alpha,\beta)}.`$
+
+Here Γ is the gamma integral of [Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md), the factorial extended to every positive number, with Γ(k) = (k − 1)! for whole k. For any positive numbers u, v and z, $`B(u,v) = \Gamma(u)\Gamma(v)/\Gamma(u+v)`$ and $`\Gamma(z+1) = z\,\Gamma(z)`$; with these, the ratio of beta integrals collapses to the rising products in The formula. Summing over $`k`$ inside the integral gives $`(\theta + 1 - \theta)^m = 1`$, so the chances total 1.
+
+For the variance, write $`K = I_1 + \cdots + I_m`$, with $`I_j`$ equal to 1 when future flip $`j`$ is heads. Each has average $`\mu = E[\theta]`$ and variance $`\mu(1-\mu)`$. For $`i \neq j`$, $`E[I_i I_j] = E[\theta^2]`$, so $`\mathrm{Cov}(I_i, I_j) = E[\theta^2] - \mu^2 = \mathrm{Var}(\theta)`$, all under the posterior. Adding the $`m`$ variances and the $`m(m-1)`$ covariances gives the formula in Step 5. With $`E[\theta^2] = \alpha(\alpha+1)/((\alpha+\beta)(\alpha+\beta+1))`$ the right side simplifies to $`m\alpha\beta(\alpha+\beta+m)/((\alpha+\beta)^2(\alpha+\beta+1))`$.
 
 </details>
 

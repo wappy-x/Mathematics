@@ -41,48 +41,54 @@ The bill's error is 1,799,504 times the loan's. Same tolerance, same cent, two d
 
 ## The formula
 
-Some notation from the [Newton and secant](02-newton-and-secant-with-convergence-orders.md) card. The root is $x^*$. The guess after $k$ steps is $x_k$. Its error is $e_k = x_k - x^*$. The **residual** is $f(x_k)$: the equation evaluated at the guess, zero exactly at the root. The **step** is $x_k - x_{k-1}$: how far the last guess moved.
+Some notation from the [Newton and secant](02-newton-and-secant-with-convergence-orders.md) card. The root is $`x^*`$. The guess after $`k`$ steps is $`x_k`$. Its error is $`e_k = x_k - x^*`$. The **residual** is $`f(x_k)`$: the equation evaluated at the guess, zero exactly at the root. The **step** is $`x_k - x_{k-1}`$: how far the last guess moved.
 
 The error is never known, so the stopping test uses an estimate of it. There are two estimates:
 
-$$|e_k| \;\approx\; \frac{|f(x_k)|}{|f'(x_k)|} \qquad\qquad |e_k| \;\approx\; \frac{\hat q}{1-\hat q}\,|x_k - x_{k-1}|, \quad \hat q = \frac{x_k - x_{k-1}}{x_{k-1} - x_{k-2}}$$
+```math
+|e_k| \;\approx\; \frac{|f(x_k)|}{|f'(x_k)|} \qquad\qquad |e_k| \;\approx\; \frac{\hat q}{1-\hat q}\,|x_k - x_{k-1}|, \quad \hat q = \frac{x_k - x_{k-1}}{x_{k-1} - x_{k-2}}
+```
 
 The test then compares the estimate with an allowance that has a fixed part and a part that grows with the answer:
 
-$$\text{stop when}\quad \text{estimated } |e_k| \;\le\; \tau_a + \tau_r\,|x_k|$$
+```math
+\text{stop when}\quad \text{estimated } |e_k| \;\le\; \tau_a + \tau_r\,|x_k|
+```
 
 A sequence that crawls can be sped up by adding the estimated error back. That is **Aitken's method**:
 
-$$a_k = x_k + \frac{\hat q}{1-\hat q}\,(x_k - x_{k-1})$$
+```math
+a_k = x_k + \frac{\hat q}{1-\hat q}\,(x_k - x_{k-1})
+```
 
 **Read it aloud:** the error is about the residual divided by the slope, or about the last step times q-hat over one minus q-hat. Stop when that estimate is below a fixed floor plus a share of the answer. Add the step estimate back to the guess, and the guess gets better.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f(x)$, $f'(x)$, $F(i)$ | the residual, and its slope; $F$ is the mortgage's residual | bill: price at the guess minus the quote; slope −1.915053 dollars per unit of yield | a steeper slope makes the same residual a smaller error |
-| $x_k$, $x^*$ | the guess after $k$ steps, and the root | bill: 3.75 percent after 3 steps; root 4.000000 percent | — |
-| $e_k$ | the error, $x_k - x^*$ | bill: −0.25 percentage points at the stop | — |
-| $\tau_a$ | absolute tolerance: a fixed floor on the allowance. Say "tau a". | 1e-12 | the floor allows more near zero |
-| $\tau_r$ | relative tolerance: the allowance as a share of the answer. Say "tau r". | 1e-9 for the bill; 1e-6 for the mortgage | fewer steps, a looser answer |
-| $q$, $\hat q$ | how much each error shrinks per step; "q-hat" is its estimate from the last two steps | mortgage: 0.770281; estimate 0.770280 at step 47 | nearer 1 means a slower crawl and a larger factor $\hat q/(1-\hat q)$ |
-| $a_k$ | Aitken's improved guess | mortgage, from steps 20 to 22: error 9.765e-9 against 2.981e-6 | — |
-| $g$ | the rule pressed again and again in a fixed-point iteration | $g(i) = \frac{M}{L}\left(1 - (1+i)^{-N}\right)$ | — |
-| $\kappa$ | condition number: the relative error in the answer per relative error in the data. Say "kappa". | bill 1304.6; mortgage 4.35 | a tiny residual says less about the answer |
-| $y$, $t$, $Q$ | the bill's yearly yield, its life in years, the quoted price | 4 percent; 7 ÷ 365 = 0.019178082; \$99.923346474 | — |
-| $\xi$, $d_k$, $\delta_k$ | helpers in the proofs: a point between the guess and the root; the step $x_k - x_{k-1}$; how far step $k$'s error ratio is from $q$ | — | — |
-| $i$, $i^*$, $L$, $M$, $N$ | the mortgage's monthly rate (on this card a rate, not $\sqrt{-1}$) and its root, loan, monthly payment and number of payments | root 0.001666649458585; \$300,000; \$1,271.56; 300 | — |
+| $`f(x)`$, $`f'(x)`$, $`F(i)`$ | the residual, and its slope; $`F`$ is the mortgage's residual | bill: price at the guess minus the quote; slope −1.915053 dollars per unit of yield | a steeper slope makes the same residual a smaller error |
+| $`x_k`$, $`x^*`$ | the guess after $`k`$ steps, and the root | bill: 3.75 percent after 3 steps; root 4.000000 percent | — |
+| $`e_k`$ | the error, $`x_k - x^*`$ | bill: −0.25 percentage points at the stop | — |
+| $`\tau_a`$ | absolute tolerance: a fixed floor on the allowance. Say "tau a". | 1e-12 | the floor allows more near zero |
+| $`\tau_r`$ | relative tolerance: the allowance as a share of the answer. Say "tau r". | 1e-9 for the bill; 1e-6 for the mortgage | fewer steps, a looser answer |
+| $`q`$, $`\hat q`$ | how much each error shrinks per step; "q-hat" is its estimate from the last two steps | mortgage: 0.770281; estimate 0.770280 at step 47 | nearer 1 means a slower crawl and a larger factor $`\hat q/(1-\hat q)`$ |
+| $`a_k`$ | Aitken's improved guess | mortgage, from steps 20 to 22: error 9.765e-9 against 2.981e-6 | — |
+| $`g`$ | the rule pressed again and again in a fixed-point iteration | $`g(i) = \frac{M}{L}\left(1 - (1+i)^{-N}\right)`$ | — |
+| $`\kappa`$ | condition number: the relative error in the answer per relative error in the data. Say "kappa". | bill 1304.6; mortgage 4.35 | a tiny residual says less about the answer |
+| $`y`$, $`t`$, $`Q`$ | the bill's yearly yield, its life in years, the quoted price | 4 percent; 7 ÷ 365 = 0.019178082; \$99.923346474 | — |
+| $`\xi`$, $`d_k`$, $`\delta_k`$ | helpers in the proofs: a point between the guess and the root; the step $`x_k - x_{k-1}`$; how far step $`k`$'s error ratio is from $`q`$ | — | — |
+| $`i`$, $`i^*`$, $`L`$, $`M`$, $`N`$ | the mortgage's monthly rate (on this card a rate, not $`\sqrt{-1}`$) and its root, loan, monthly payment and number of payments | root 0.001666649458585; \$300,000; \$1,271.56; 300 | — |
 
-The bill's price is $100 / (1 + y\,t)$, so its residual is $f(y) = 100 / (1 + y\,t) - Q$.
+The bill's price is $`100 / (1 + y\,t)`$, so its residual is $`f(y) = 100 / (1 + y\,t) - Q`$.
 
-The mortgage's residual is the value of the payments minus the loan: $F(i) = M\,(1 - (1+i)^{-N}) / i - L$. Multiply $F(i) = 0$ by $i / L$ and it becomes the fixed-point form $i = g(i)$ in the table.
+The mortgage's residual is the value of the payments minus the loan: $`F(i) = M\,(1 - (1+i)^{-N}) / i - L`$. Multiply $`F(i) = 0`$ by $`i / L`$ and it becomes the fixed-point form $`i = g(i)`$ in the table.
 
 ### When it holds
 
 - **The slope is not near zero at the root.** The residual estimate divides by it. Where the slope is zero, as at a double root, the estimate fails and Newton slows down too ([Newton's bad days](04-when-newton-fails.md)).
-- **The method converges faster than linearly for the plain step test.** For Newton, the step is the error to first order. For a linear crawl with $q$ above one half, the raw step understates the error, and the mortgage stops at 2.62 times the error promised.
-- **The steps shrink by a steady ratio for the $\hat q$ estimate and for Aitken.** Early on the ratio has not settled, and at step 2 the true error is 1.7 times the step, not 3.35.
-- **The steps are bigger than rounding noise.** Once they shrink to rounding noise, $\hat q$ and Aitken's correction are noise too. Aitken applied there is hundreds of times worse than the plain guess, and a few steps later divides by zero.
-- **The floor $\tau_a$ is above zero when the root can be zero.** With the relative part alone, a zero-yield quote never stops, because $\tau_r |x_k|$ falls below the rounding noise.
+- **The method converges faster than linearly for the plain step test.** For Newton, the step is the error to first order. For a linear crawl with $`q`$ above one half, the raw step understates the error, and the mortgage stops at 2.62 times the error promised.
+- **The steps shrink by a steady ratio for the $`\hat q`$ estimate and for Aitken.** Early on the ratio has not settled, and at step 2 the true error is 1.7 times the step, not 3.35.
+- **The steps are bigger than rounding noise.** Once they shrink to rounding noise, $`\hat q`$ and Aitken's correction are noise too. Aitken applied there is hundreds of times worse than the plain guess, and a few steps later divides by zero.
+- **The floor $`\tau_a`$ is above zero when the root can be zero.** With the relative part alone, a zero-yield quote never stops, because $`\tau_r |x_k|`$ falls below the rounding noise.
 
 ---
 
@@ -100,11 +106,13 @@ A stopping test wants the error. The residual is in the wrong units. The step is
 
 ### Step 1: residual to error, through the slope
 
-The mean value theorem links them. Between the guess and the root there is a point $\xi$ ("xi") where the slope of $f$ equals the slope of the chord:
+The mean value theorem links them. Between the guess and the root there is a point $`\xi`$ ("xi") where the slope of $`f`$ equals the slope of the chord:
 
-$$f(x_k) - f(x^*) = f'(\xi)\,(x_k - x^*)$$
+```math
+f(x_k) - f(x^*) = f'(\xi)\,(x_k - x^*)
+```
 
-The residual at the root is zero, so $e_k = f(x_k) / f'(\xi)$. Near the root, $f'(\xi)$ is close to $f'(x_k)$, which gives the first estimate.
+The residual at the root is zero, so $`e_k = f(x_k) / f'(\xi)`$. Near the root, $`f'(\xi)`$ is close to $`f'(x_k)`$, which gives the first estimate.
 
 On the bill the slope is about −1.915 dollars per unit of yield. A residual of 0.004787 dollars therefore means an error of about 0.249988 percentage points. The true error is 0.250000 points.
 
@@ -112,41 +120,41 @@ A safe bound replaces the slope by the flattest slope between guess and root. [S
 
 In the wing's language, the residual is a **backward error**: the guess 3.75 percent is the exact yield of a slightly different quote, \$99.928134. The error in the answer, the **forward error**, is about the condition number times that, both counted as relative errors.
 
-For the bill, $\kappa$ = 1304.6: a relative miss in the price is multiplied about 1304.6 times in the yield. The trouble here is conditioning, a property of the problem, not of the solver.
+For the bill, $`\kappa`$ = 1304.6: a relative miss in the price is multiplied about 1304.6 times in the yield. The trouble here is conditioning, a property of the problem, not of the solver.
 
 ### Step 2: Newton's step already did that division
 
-Newton's step is $-f(x_k) / f'(x_k)$: the residual divided by the slope. So the Newton step is the Step 1 estimate of the error, already in the answer's units.
+Newton's step is $`-f(x_k) / f'(x_k)`$: the residual divided by the slope. So the Newton step is the Step 1 estimate of the error, already in the answer's units.
 
-More precisely, the step from $x_k$ is $x_{k+1} - x_k = e_{k+1} - e_k$. For Newton, $e_{k+1}$ is far smaller than $e_k$ near the root. So the step equals $-e_k$ up to a much smaller term. This is why a step test survives a nearly flat curve: a flat slope makes the step large, and the test keeps going.
+More precisely, the step from $`x_k`$ is $`x_{k+1} - x_k = e_{k+1} - e_k`$. For Newton, $`e_{k+1}`$ is far smaller than $`e_k`$ near the root. So the step equals $`-e_k`$ up to a much smaller term. This is why a step test survives a nearly flat curve: a flat slope makes the step large, and the test keeps going.
 
 On the bill, one Newton step from the false stop at 3.75 percent moves 0.249988 points, to 3.999988 percent. Two more steps reach 4.000000000 percent, with error −1.221e-15, and the step test passes.
 
 ### Step 3: when the steps crawl, a step understates the error
 
-A fixed-point iteration presses $x_{k+1} = g(x_k)$ until nothing moves (the calculus card [Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md)). Near the root each error is about $q$ times the one before, with $q = |g'(x^*)|$.
+A fixed-point iteration presses $`x_{k+1} = g(x_k)`$ until nothing moves (the calculus card [Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md)). Near the root each error is about $`q`$ times the one before, with $`q = |g'(x^*)|`$.
 
-The mortgage's $g$ starts from the payment as a share of the loan, $M/L$, and its slope at the root is $q$ = 0.770281. Each step removes only 23 percent of the error. The payment, \$1,271.56 for a rate near 2 percent, is chosen for this: the lower the rate, the nearer $q$ is to 1, and at 6 percent $q$ is only 0.430752 (Try changing). The steps still to come add up to $q + q^2 + q^3 + \dots = q/(1-q)$ times the last step. Here that is 3.353152 times.
+The mortgage's $`g`$ starts from the payment as a share of the loan, $`M/L`$, and its slope at the root is $`q`$ = 0.770281. Each step removes only 23 percent of the error. The payment, \$1,271.56 for a rate near 2 percent, is chosen for this: the lower the rate, the nearer $`q`$ is to 1, and at 6 percent $`q`$ is only 0.430752 (Try changing). The steps still to come add up to $`q + q^2 + q^3 + \dots = q/(1-q)`$ times the last step. Here that is 3.353152 times.
 
-The code shows this. By step 40 the error is 3.3531 times the step in size, as predicted. The calculus Fixed points card proves the same factor as a bound, using the worst $q$ on an interval; here $\hat q$ estimates it from the last two steps.
+The code shows this. By step 40 the error is 3.3531 times the step in size, as predicted. The calculus Fixed points card proves the same factor as a bound, using the worst $`q`$ on an interval; here $`\hat q`$ estimates it from the last two steps.
 
-So a plain step test with $\tau_r$ = 1e-6 promises an error under 1.668e-9 in the monthly rate. It stops at step 47, where the step is 1.301e-9. The true error is 4.363e-9, which is 2.62 times the promise.
+So a plain step test with $`\tau_r`$ = 1e-6 promises an error under 1.668e-9 in the monthly rate. It stops at step 47, where the step is 1.301e-9. The true error is 4.363e-9, which is 2.62 times the promise.
 
-Multiply the step by $\hat q/(1-\hat q)$ first, and the test stops at step 51 instead, with relative error 9.217e-7, inside the promise. The estimate at step 47 was 4.363e-9, equal to the true error to four digits.
+Multiply the step by $`\hat q/(1-\hat q)`$ first, and the test stops at step 51 instead, with relative error 9.217e-7, inside the promise. The estimate at step 47 was 4.363e-9, equal to the true error to four digits.
 
 ### Step 4: two tolerances, because size and zero both matter
 
-A double (the standard 64-bit floating-point number) carries about 16 significant digits. So an absolute tolerance below about 1e-16 times the answer's size can never be met, and one far above the answer's size accepts nonsense. A relative tolerance $\tau_r |x_k|$ scales with the answer, which is why it does most of the work.
+A double (the standard 64-bit floating-point number) carries about 16 significant digits. So an absolute tolerance below about 1e-16 times the answer's size can never be met, and one far above the answer's size accepts nonsense. A relative tolerance $`\tau_r |x_k|`$ scales with the answer, which is why it does most of the work.
 
 A relative tolerance fails when the root is zero. Quote the bill at exactly \$100, so the yield is 0. Newton ends up flipping back and forth around zero, with steps of 1.482e-14.
 
-The relative allowance $\tau_r |x_k|$ is 1e-9 times a guess that is itself that small, far below the rounding noise, so the test never passes. The run ends at its cap of 50 steps. Add the floor $\tau_a$ = 1e-12 and it stops after 4 steps.
+The relative allowance $`\tau_r |x_k|`$ is 1e-9 times a guess that is itself that small, far below the rounding noise, so the test never passes. The run ends at its cap of 50 steps. Add the floor $`\tau_a`$ = 1e-12 and it stops after 4 steps.
 
 How to size each part, from the rounding noise and the smallest error that matters, is on the [Tolerances](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/05-tolerances-and-comparing-computed-numbers.md) card. This card adds one thing: the quantity tested must be an error estimate in the answer's units.
 
 ### Step 5: Aitken adds back the error it estimated
 
-If the errors shrank by exactly $q$ every step, three guesses would pin down the root. The step from $x_{k-1}$ to $x_k$ is $e_k - e_{k-1}$, and $e_{k-1} = e_k / q$. Solve for $e_k$, subtract it from $x_k$, and the result is $x^*$ exactly. That is the Aitken formula, with $\hat q$ standing in for $q$.
+If the errors shrank by exactly $`q`$ every step, three guesses would pin down the root. The step from $`x_{k-1}`$ to $`x_k`$ is $`e_k - e_{k-1}`$, and $`e_{k-1} = e_k / q`$. Solve for $`e_k`$, subtract it from $`x_k`$, and the result is $`x^*`$ exactly. That is the Aitken formula, with $`\hat q`$ standing in for $`q`$.
 
 In practice the ratio is only nearly steady, so Aitken's value is not exact, but it is much closer. From the mortgage's steps 20, 21 and 22 it gives an error of 9.765e-9, while step 22 itself is off by 2.981e-6.
 
@@ -155,25 +163,25 @@ Aitken's errors gain about twice as many digits per step as the plain guesses. T
 <details>
 <summary>Detailed proof: Aitken's value beats the guess it came from</summary>
 
-Suppose $e_{k} = (q + \delta_k)\,e_{k-1}$ with $0 < |q| < 1$ and $\delta_k \to 0$. Write $d_k = x_k - x_{k-1} = e_k - e_{k-1}$.
+Suppose $`e_{k} = (q + \delta_k)\,e_{k-1}`$ with $`0 < |q| < 1`$ and $`\delta_k \to 0`$. Write $`d_k = x_k - x_{k-1} = e_k - e_{k-1}`$.
 
-Aitken's value is $a_k = x_k - d_k^2 / (d_k - d_{k-1})$. Subtract $x^*$ and put everything over one denominator:
+Aitken's value is $`a_k = x_k - d_k^2 / (d_k - d_{k-1})`$. Subtract $`x^*`$ and put everything over one denominator:
 
-$$a_k - x^* = \frac{e_k\,(d_k - d_{k-1}) - d_k^2}{d_k - d_{k-1}} = \frac{e_k e_{k-2} - e_{k-1}^2}{e_k - 2e_{k-1} + e_{k-2}}$$
+$`\displaystyle a_k - x^* = \frac{e_k\,(d_k - d_{k-1}) - d_k^2}{d_k - d_{k-1}} = \frac{e_k e_{k-2} - e_{k-1}^2}{e_k - 2e_{k-1} + e_{k-2}}`$
 
-(expand both $d$'s; the $e_k^2$ and cross terms cancel). Now divide top and bottom by $e_{k-2}$ and use the ratios. The numerator becomes $e_{k-1}\big((q+\delta_k) - (q+\delta_{k-1})\big)$, which is $e_{k-1}(\delta_k - \delta_{k-1})$. The denominator becomes $(q+\delta_k)(q+\delta_{k-1}) - 2(q+\delta_{k-1}) + 1$, which tends to $(1-q)^2$, not zero. So
+(expand both $`d`$'s; the $`e_k^2`$ and cross terms cancel). Now divide top and bottom by $`e_{k-2}`$ and use the ratios. The numerator becomes $`e_{k-1}\big((q+\delta_k) - (q+\delta_{k-1})\big)`$, which is $`e_{k-1}(\delta_k - \delta_{k-1})`$. The denominator becomes $`(q+\delta_k)(q+\delta_{k-1}) - 2(q+\delta_{k-1}) + 1`$, which tends to $`(1-q)^2`$, not zero. So
 
-$$\frac{a_k - x^*}{e_{k-1}} = \frac{\delta_k - \delta_{k-1}}{(q+\delta_k)(q+\delta_{k-1}) - 2(q+\delta_{k-1}) + 1} \;\to\; \frac{0}{(1-q)^2} = 0.$$
+$`\displaystyle \frac{a_k - x^*}{e_{k-1}} = \frac{\delta_k - \delta_{k-1}}{(q+\delta_k)(q+\delta_{k-1}) - 2(q+\delta_{k-1}) + 1} \;\to\; \frac{0}{(1-q)^2} = 0.`$
 
-Aitken's error is a vanishing fraction of the error it started from. If the errors are exactly geometric, all $\delta$'s are zero and $a_k = x^*$ exactly.
+Aitken's error is a vanishing fraction of the error it started from. If the errors are exactly geometric, all $`\delta`$'s are zero and $`a_k = x^*`$ exactly.
 
 </details>
 
-**Steffensen's method** goes one step further. It takes two presses of $g$, forms Aitken's value, and restarts from it. Near a simple root this converges quadratically. On the mortgage it meets the 1e-6 promise after 10 evaluations of $g$, against 51 for the plain crawl, and lands at relative error 5.946e-13.
+**Steffensen's method** goes one step further. It takes two presses of $`g`$, forms Aitken's value, and restarts from it. Near a simple root this converges quadratically. On the mortgage it meets the 1e-6 promise after 10 evaluations of $`g`$, against 51 for the plain crawl, and lands at relative error 5.946e-13.
 
 ### Step 6: where every test runs out
 
-All these estimates use differences of nearby guesses. On the mortgage the noise comes early: $g$ computes $1 + i$, which keeps $i$ only to about 1e-16, so the guesses stop improving at about 13 significant digits, not the 16 a double holds. From there the differences are rounding noise. The step test then sees noise, $\hat q$ is meaningless, and Aitken divides noise by noise.
+All these estimates use differences of nearby guesses. On the mortgage the noise comes early: $`g`$ computes $`1 + i`$, which keeps $`i`$ only to about 1e-16, so the guesses stop improving at about 13 significant digits, not the 16 a double holds. From there the differences are rounding noise. The step test then sees noise, $`\hat q`$ is meaningless, and Aitken divides noise by noise.
 
 On the mortgage, Aitken from steps 104 to 106 is off by 1.790e-13, while step 106 itself is off by only 5.456e-16. From steps 112 to 114, the two differences are equal and Aitken divides by 0.000e0. So accelerate while the steps are large, and stop before they reach the noise.
 
@@ -185,7 +193,7 @@ The bill: 7 days to a \$100 payment, quoted at \$99.923346474.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| life in years, $t$ | 7 ÷ 365 | 0.019178082 |
+| life in years, $`t`$ | 7 ÷ 365 | 0.019178082 |
 | guess 1: 5 percent | 100 ÷ (1 + 0.05 × 0.019178082) = 99.904201 | residual −0.019145 |
 | guess 2: 2.5 percent | 100 ÷ (1 + 0.025 × 0.019178082) = 99.952078 | residual 0.028731 |
 | guess 3: 3.75 percent | 100 ÷ (1 + 0.0375 × 0.019178082) = 99.928134 | residual 0.004787, under one cent: stop |
@@ -196,16 +204,16 @@ The bill: 7 days to a \$100 payment, quoted at \$99.923346474.
 
 A price within half a cent left the yield a quarter of a point wrong. Dividing the residual by the slope saw the error before anything else was computed.
 
-The mortgage: \$300,000 over 300 months at \$1,271.56 a month, tolerance $\tau_r$ = 1e-6. The payment is rounded to the cent, so the exact rate is 1.999979 percent a year, not 2.
+The mortgage: \$300,000 over 300 months at \$1,271.56 a month, tolerance $`\tau_r`$ = 1e-6. The payment is rounded to the cent, so the exact rate is 1.999979 percent a year, not 2.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| slow factor, $q = g'(i^*)$ | $(M/L)\,N\,(1+i^*)^{-N-1}$ | 0.770281 |
-| steps still to come, as a multiple of the last | $q / (1 - q)$ | 3.353152 |
+| slow factor, $`q = g'(i^*)`$ | $`(M/L)\,N\,(1+i^*)^{-N-1}`$ | 0.770281 |
+| steps still to come, as a multiple of the last | $`q / (1 - q)`$ | 3.353152 |
 | error promised | 1e-12 + 1e-6 × 0.001666649 | 1.668e-9 |
 | plain step test stops | step 47, step size 1.301e-9 | true error 4.363e-9 |
 | **times the promise** | 4.363e-9 ÷ 1.668e-9 | **2.62** |
-| corrected test stops | step 51, $\hat q$ = 0.770281 | relative error 9.217e-7 |
+| corrected test stops | step 51, $`\hat q`$ = 0.770281 | relative error 9.217e-7 |
 
 The plain test stopped four steps early and broke its promise by a factor of 2.62. The corrected test cost four more presses and kept it.
 
@@ -215,8 +223,8 @@ The plain test stopped four steps early and broke its promise by a factor of 2.6
 | --- | --- | --- |
 | Stop when the bill's price is within one cent | 3.750000 percent, 0.250000 points off | The residual is in dollars; the slope of 1.915 dollars per unit yield turns half a cent into a quarter point |
 | Stop on the raw step for the mortgage | step 47, relative error 2.618e-6: 2.62 times the promise | The steps shrink by 0.770281 each time, so the steps still to come add up to 3.35 times the last |
-| Relative tolerance only, on a zero-yield quote | 50 steps, the cap; Newton flips with steps of 1.482e-14 | $\tau_r \lvert x_k\rvert$ shrinks with the root, below rounding noise |
-| Aitken applied in the rounding noise | error 1.790e-13 against the plain guess's 5.456e-16; division by 0 at step 112 | The differences it divides are rounding noise: $g$ forms $1 + i$, which keeps $i$ only to about 1e-16 |
+| Relative tolerance only, on a zero-yield quote | 50 steps, the cap; Newton flips with steps of 1.482e-14 | $`\tau_r \lvert x_k\rvert`$ shrinks with the root, below rounding noise |
+| Aitken applied in the rounding noise | error 1.790e-13 against the plain guess's 5.456e-16; division by 0 at step 112 | The differences it divides are rounding noise: $`g`$ forms $`1 + i`$, which keeps $`i`$ only to about 1e-16 |
 
 The code prints all four.
 
@@ -233,13 +241,13 @@ xychart-beta
     line [-4.12, -5.28, -6.42, -7.56, -8.69, -9.82, -10.96, -12.09]
 ```
 
-Orange: log10 of the true error. Green: log10 of the step. From step 15 on, the green line runs a steady log10 of 3.35 below the orange one: the step understates the error by a fixed factor, $q/(1-q)$. Dark blue: log10 of Aitken's error from steps $k-2$, $k-1$ and $k$, falling about twice as steeply.
+Orange: log10 of the true error. Green: log10 of the step. From step 15 on, the green line runs a steady log10 of 3.35 below the orange one: the step understates the error by a fixed factor, $`q/(1-q)`$. Dark blue: log10 of Aitken's error from steps $`k-2`$, $`k-1`$ and $`k`$, falling about twice as steeply.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code solves the bill and the mortgage and prints every number on this card. It takes three roads to each root. For the bill: the closed form $(100 - Q) / (Q\,t)$, Newton, and bisection. For the mortgage: Newton on the dollar residual, 60 halvings of a bracket, and the limit of the fixed-point steps. It then checks $\hat q$ against $q = g'(i^*)$ from its formula, and Aitken and Steffensen against the root. Powers are computed by repeated multiplying, so both languages do the same arithmetic and print the same digits.
+The code solves the bill and the mortgage and prints every number on this card. It takes three roads to each root. For the bill: the closed form $`(100 - Q) / (Q\,t)`$, Newton, and bisection. For the mortgage: Newton on the dollar residual, 60 halvings of a bracket, and the limit of the fixed-point steps. It then checks $`\hat q`$ against $`q = g'(i^*)`$ from its formula, and Aitken and Steffensen against the root. Powers are computed by repeated multiplying, so both languages do the same arithmetic and print the same digits.
 
 ### Python
 
@@ -587,9 +595,9 @@ The two outputs match line for line.
 
 Lean proves the residual bound, the step bound and Aitken's speed-up, for every case that meets their conditions.
 
-- Suppose the slope between a guess and the root is never flatter than some $m > 0$. Then the error is at most the residual divided by $m$.
-- Suppose $g$ shrinks the gap between any two points of a range to at most $q$ times what it was, with $0 \le q < 1$. The range holds the old guess and the root, and $g$ leaves the root fixed. Then the new guess's error is at most $q/(1-q)$ times the last step.
-- Suppose each error is $q + \delta_k$ times the one before, with $0 < |q| < 1$ and $\delta_k$ tending to zero. Then Aitken's error, as a fraction of the error it started from, tends to zero.
+- Suppose the slope between a guess and the root is never flatter than some $`m > 0`$. Then the error is at most the residual divided by $`m`$.
+- Suppose $`g`$ shrinks the gap between any two points of a range to at most $`q`$ times what it was, with $`0 \le q < 1`$. The range holds the old guess and the root, and $`g`$ leaves the root fixed. Then the new guess's error is at most $`q/(1-q)`$ times the last step.
+- Suppose each error is $`q + \delta_k`$ times the one before, with $`0 < |q| < 1`$ and $`\delta_k`$ tending to zero. Then Aitken's error, as a fraction of the error it started from, tends to zero.
 - The bill's hand arithmetic holds exactly. Bisection guesses 5, 2.5 and 3.75 percent, and the closed form gives back 4 percent. At 3.75 percent the residual is under one cent, yet the yield is a quarter point off.
 
 Newton's step as an error estimate, Steffensen's speed, the mortgage's numbers and the rounding noise are left to the Python and Rust checks.
@@ -754,8 +762,8 @@ example : (1 : ℚ) / 25 - 3 / 80 = 1 / 400 := by norm_num
 > **Try changing**
 > The last three lines of the output run these three changes, so each answer can be checked without editing the code.
 > - **Guess first: does a longer bill make the one-cent test safer?** Change the 7 days to 91. The price curve is about 13 times steeper, and the one-cent test stops at 3.984375 percent, only 0.015625 points off.
-> - **Guess first: is the raw step test ever safe on a crawl?** Use a 6 percent mortgage, payment 1932.90. Now $q$ = 0.430752, below one half, so $q/(1-q)$ is below 1. The plain test stops at step 15 at 0.67 times the error promised, the same step as the corrected test.
-> - **Guess first: does a tighter tolerance fix the plain test?** Set $\tau_r$ to 1e-9. The plain test stops at step 71, still 3.11 times the error promised; the corrected test stops at step 76. A tighter tolerance only moves the false stop.
+> - **Guess first: is the raw step test ever safe on a crawl?** Use a 6 percent mortgage, payment 1932.90. Now $`q`$ = 0.430752, below one half, so $`q/(1-q)`$ is below 1. The plain test stops at step 15 at 0.67 times the error promised, the same step as the corrected test.
+> - **Guess first: does a tighter tolerance fix the plain test?** Set $`\tau_r`$ to 1e-9. The plain test stops at step 71, still 3.11 times the error promised; the corrected test stops at step 76. A tighter tolerance only moves the false stop.
 
 ---
 
@@ -776,7 +784,7 @@ example : (1 : ℚ) / 25 - 3 / 80 = 1 / 400 := by norm_num
 - **Spreadsheet rate functions.** The function that finds a loan's rate or an investment's internal rate of return iterates until the change in the rate falls below a fixed tolerance, with a cap on the number of tries. That is the step test on this card.
 - **Money-market desks.** Short bills and overnight loans have nearly flat price curves. A yield solver there needs its tolerance on the yield, not on the price.
 - **Numerical libraries.** Root finders take both an absolute and a relative tolerance on the step, and a cap on iterations, for the reasons in Step 4.
-- **Economic models.** A model solved by repeating a rule with a yearly discount factor near 1 crawls with $q$ equal to that factor. Its stopping rule multiplies the step by $q/(1-q)$, the factor of Step 3.
+- **Economic models.** A model solved by repeating a rule with a yearly discount factor near 1 crawls with $`q`$ equal to that factor. Its stopping rule multiplies the step by $`q/(1-q)`$, the factor of Step 3.
 - **Slowly converging sums.** Aitken's method and its relatives speed up series and iterations in physics and chemistry codes, wherever the error shrinks by a nearly fixed ratio.
 
 > **Say it back**
@@ -786,19 +794,19 @@ example : (1 : ℚ) / 25 - 3 / 80 = 1 / 400 := by norm_num
 
 ## What this builds on
 
-- [Newton and secant](02-newton-and-secant-with-convergence-orders.md): the notation $x^*$, $x_k$, $e_k$, and the fact that Newton's error falls faster than linearly, which makes its step a good error estimate.
+- [Newton and secant](02-newton-and-secant-with-convergence-orders.md): the notation $`x^*`$, $`x_k`$, $`e_k`$, and the fact that Newton's error falls faster than linearly, which makes its step a good error estimate.
 - [Tolerances](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/05-tolerances-and-comparing-computed-numbers.md): how to size an absolute and a relative tolerance from the rounding noise and the smallest error that matters.
 - [Solving backwards](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): the first use of a residual-to-error bound through the flattest slope, on an option's volatility.
-- [Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md): the proof that the last step times $q/(1-q)$ bounds the error of a contraction, used here as the corrected step test.
+- [Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md): the proof that the last step times $`q/(1-q)`$ bounds the error of a contraction, used here as the corrected step test.
 
 ## Where this goes next
 
 - [Newton's bad days](04-when-newton-fails.md): the next card. Where the slope vanishes at the root and Newton itself slows to a crawl, so the step test needs the correction from Step 3.
 - [Brent's method](05-brent-and-safeguarded-methods.md): a solver that keeps a bracket, so its stopping test is the bracket's width, an error bound rather than an estimate.
-- [Fixed points](06-fixed-point-iteration-and-contraction.md): this shelf's card on contraction maps, with the cost of a slow $q$ in full.
+- [Fixed points](06-fixed-point-iteration-and-contraction.md): this shelf's card on contraction maps, with the cost of a slow $`q`$ in full.
 - [Newton in several unknowns, and Broyden when a Jacobian is too expensive](07-newton-for-systems-and-broyden.md): the same tests with norms in place of absolute values, where the residual and the step can disagree in direction as well as size.
 
-The question left open: how to stop when the slope is unknown and the sequence is not steady enough for $\hat q$ to settle.
+The question left open: how to stop when the slope is unknown and the sequence is not steady enough for $`\hat q`$ to settle.
 
 ---
 

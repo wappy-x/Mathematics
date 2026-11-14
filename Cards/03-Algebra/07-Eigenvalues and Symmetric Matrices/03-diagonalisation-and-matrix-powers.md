@@ -38,23 +38,27 @@ An eigenvector is a direction a matrix does not turn, only stretches; its eigenv
 
 Write them as the columns of a matrix P, and their stretches on the diagonal of a second matrix — the top-left to bottom-right line, zeros elsewhere — called D. A matrix like that is **diagonal**, which is where diagonalisation gets its name.
 
-$$A = PDP^{-1}, \qquad A^n = PD^nP^{-1}$$
+```math
+A = PDP^{-1}, \qquad A^n = PD^nP^{-1}
+```
 
-**Read it aloud:** translate the fleet into eigenvector amounts, stretch each amount alone, translate back; n times over only raises the stretches to the n-th power. Matrices act right to left: $P^{-1}$, then $D$, then $P$.
+**Read it aloud:** translate the fleet into eigenvector amounts, stretch each amount alone, translate back; n times over only raises the stretches to the n-th power. Matrices act right to left: $`P^{-1}`$, then $`D`$, then $`P`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$ | one month of the shuffle, 2 × 2 | `[[0.8, 0.3], [0.2, 0.7]]` | another fleet story |
-| $P$ | the eigenvectors as columns | `[[3, 1], [2, -1]]` | swap its columns and D must swap |
-| $D$ | the stretches on the diagonal | `[[1, 0], [0, 0.5]]` | nearer 1, the imbalance fades slower |
-| $D^n$ | each diagonal entry to the n-th power | `[[1, 0], [0, 0.5^12]]` at a year | — |
-| $P^{-1}$ | the inverse of P: counts in, amounts out | `[[0.2, 0.2], [0.4, -0.6]]` | — |
-| $n$ | months applied, a whole number from 0 | 12 | halves the imbalance again |
-| $I$ | the identity, the do-nothing matrix | `[[1, 0], [0, 1]]` | — |
+| $`A`$ | one month of the shuffle, 2 × 2 | `[[0.8, 0.3], [0.2, 0.7]]` | another fleet story |
+| $`P`$ | the eigenvectors as columns | `[[3, 1], [2, -1]]` | swap its columns and D must swap |
+| $`D`$ | the stretches on the diagonal | `[[1, 0], [0, 0.5]]` | nearer 1, the imbalance fades slower |
+| $`D^n`$ | each diagonal entry to the n-th power | `[[1, 0], [0, 0.5^12]]` at a year | — |
+| $`P^{-1}`$ | the inverse of P: counts in, amounts out | `[[0.2, 0.2], [0.4, -0.6]]` | — |
+| $`n`$ | months applied, a whole number from 0 | 12 | halves the imbalance again |
+| $`I`$ | the identity, the do-nothing matrix | `[[1, 0], [0, 1]]` | — |
 
 After n months city A holds
 
-$$600 + 400 \times 0.5^n$$
+```math
+600 + 400 \times 0.5^n
+```
 
 cars and city B holds 400 − 400 × 0.5^n. The 600 and 400 are the split that never moves, 0.5^n is the imbalance halving, and the two add to 1,000.
 
@@ -62,7 +66,7 @@ cars and city B holds 400 − 400 × 0.5^n. The 600 and 400 are the split that n
 
 - **Enough independent eigenvectors.** Two for a 2 × 2, neither a multiple of the other, or P has no inverse.
 - **Different eigenvalues guarantee it.** A repeated one is checked, not rejected: the identity has eigenvalue 1 twice and every direction is an eigenvector.
-- **Real eigenvectors, and whole powers.** A quarter-turn has no real eigenvector and needs complex numbers, absent from this wing. Negative powers need $A$ invertible; here neither eigenvalue is 0.
+- **Real eigenvectors, and whole powers.** A quarter-turn has no real eigenvector and needs complex numbers, absent from this wing. Negative powers need $`A`$ invertible; here neither eigenvalue is 0.
 - **The fleet model.** The percentages hold every month and no car is scrapped, so 600.1 is a fleet average.
 
 ---
@@ -77,36 +81,42 @@ Feed the matrix (3, 2): out comes (0.8 × 3 + 0.3 × 2, 0.2 × 3 + 0.7 × 2), wh
 
 With P and D as above, multiplying by P on the right works one column at a time. So the product A P holds A applied to each eigenvector: 1 times the first, 0.5 times the second. Multiplying P by D scales those same columns by the same numbers:
 
-$$AP = PD$$
+```math
+AP = PD
+```
 
-The columns point different ways, so P has an inverse ([Change of basis](01-change-of-basis.md)); multiply on the right by it and $A = PDP^{-1}$. Backwards, AP = PD says each column of P is an eigenvector, so this factorisation exists exactly when enough independent eigenvectors do.
+The columns point different ways, so P has an inverse ([Change of basis](01-change-of-basis.md)); multiply on the right by it and $`A = PDP^{-1}`$. Backwards, AP = PD says each column of P is an eigenvector, so this factorisation exists exactly when enough independent eigenvectors do.
 
 ### Step 2: the middle cancels, so the power lands on D alone
 
 Two months is the matrix twice:
 
-$$A^2 = PDP^{-1}PDP^{-1}$$
+```math
+A^2 = PDP^{-1}PDP^{-1}
+```
 
-The inner $P^{-1}$ and $P$ are neighbours, and a matrix beside its inverse is the identity $I$, which changes nothing. They vanish, leaving $PD^2P^{-1}$, and each month adds another pair to cancel:
+The inner $`P^{-1}`$ and $`P`$ are neighbours, and a matrix beside its inverse is the identity $`I`$, which changes nothing. They vanish, leaving $`PD^2P^{-1}`$, and each month adds another pair to cancel:
 
-$$A^n = PD^nP^{-1}$$
+```math
+A^n = PD^nP^{-1}
+```
 
-$D^n$ costs nothing: a diagonal matrix never mixes the coordinates, so multiplying it by itself multiplies each diagonal entry by itself, leaving `[[1, 0], [0, 0.5^n]]` ([Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)). One trap: $A^n$ is the matrix applied n times, not each entry to the power. For $D$ they agree from the first power up.
+$`D^n`$ costs nothing: a diagonal matrix never mixes the coordinates, so multiplying it by itself multiplies each diagonal entry by itself, leaving `[[1, 0], [0, 0.5^n]]` ([Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)). One trap: $`A^n`$ is the matrix applied n times, not each entry to the power. For $`D`$ they agree from the first power up.
 
 <details>
 <summary>Detailed proof</summary>
 
-Step 1 settles the factorisation; this is the power, by induction on n. At n = 0 both sides are $I$. Suppose $A^k = PD^kP^{-1}$; then $A^{k+1}$ is $(PDP^{-1})(PD^kP^{-1})$, which regroups to $PD(P^{-1}P)D^kP^{-1}$, and that is $PD^{k+1}P^{-1}$. True at 0 and inherited at every step, so true for every whole n.
+Step 1 settles the factorisation; this is the power, by induction on n. At n = 0 both sides are $`I`$. Suppose $`A^k = PD^kP^{-1}`$; then $`A^{k+1}`$ is $`(PDP^{-1})(PD^kP^{-1})`$, which regroups to $`PD(P^{-1}P)D^kP^{-1}`$, and that is $`PD^{k+1}P^{-1}`$. True at 0 and inherited at every step, so true for every whole n.
 
 </details>
 
 ### Step 3: read the fleet in the new coordinates
 
-The fleet starts at (1000, 0). Multiply by $P^{-1}$: `[[0.2, 0.2], [0.4, -0.6]]` applied to (1000, 0) gives (200, 400), the amount of each eigenvector.
+The fleet starts at (1000, 0). Multiply by $`P^{-1}`$: `[[0.2, 0.2], [0.4, -0.6]]` applied to (1000, 0) gives (200, 400), the amount of each eigenvector.
 
 Rebuilding checks it: 200 lots of (3, 2) is (600, 400), 400 lots of (1, −1) is (400, −400), adding back to (1000, 0).
 
-The first amount is multiplied by 1 each month and stays 200; the second by 0.5, so after n months it is 400 × 0.5^n. Translate back with $P$: the fleet is (600 + 400 × 0.5^n, 400 − 400 × 0.5^n).
+The first amount is multiplied by 1 each month and stays 200; the second by 0.5, so after n months it is 400 × 0.5^n. Translate back with $`P`$: the fleet is (600 + 400 × 0.5^n, 400 − 400 × 0.5^n).
 
 ```mermaid
 flowchart LR
@@ -119,7 +129,7 @@ Three multiplications, whatever n is. One month gives (800, 200); twelve give (6
 
 ### Step 4: the matrix this cannot be done to
 
-The shear `[[1, 1], [0, 1]]` slides points sideways in proportion to their height. Its eigenvalue equation is (1 − stretch)^2 = 0: eigenvalue 1, twice over. Subtract $I$ and `[[0, 1], [0, 0]]` is left, sending (x, y) to (y, 0), zero only when y is 0.
+The shear `[[1, 1], [0, 1]]` slides points sideways in proportion to their height. Its eigenvalue equation is (1 − stretch)^2 = 0: eigenvalue 1, twice over. Subtract $`I`$ and `[[0, 1], [0, 0]]` is left, sending (x, y) to (y, 0), zero only when y is 0.
 
 Every eigenvector lies along (1, 0): one direction where two are needed, so P's columns would be multiples of each other, P would have no inverse, and there is no factorisation. Such a matrix is **defective**, and its replacement, the Jordan form, belongs to the applied and computational wing.
 
@@ -152,14 +162,14 @@ Each wrong answer is the same twelve months; the fleet really reaches (600.09765
 | --- | --- | --- |
 | Eigenvectors as P's rows | (600.097656, 199.951172) | The wrong translation, even with the right inverse |
 | P where P inverse belongs | (9000.488281, 5999.511719) | Builds a fleet instead of measuring amounts |
-| D left at the first power | (800, 200) | One month, not twelve: $D^n$ holds the calendar |
+| D left at the first power | (800, 200) | One month, not twelve: $`D^n`$ holds the calendar |
 | P's columns swapped, D not | (400.146484, −399.902344) | Each eigenvector has the other's eigenvalue |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The fleet goes a year forward by three roads that share no arithmetic: the matrix multiplied by itself month after month, $PD^nP^{-1}$ built afresh each month, and the hand formula 600 + 400 × 0.5^n. The asserts play the roads against each other.
+Nothing is imported. The fleet goes a year forward by three roads that share no arithmetic: the matrix multiplied by itself month after month, $`PD^nP^{-1}`$ built afresh each month, and the hand formula 600 + 400 × 0.5^n. The asserts play the roads against each other.
 
 ### Python
 
@@ -365,7 +375,7 @@ The two outputs match line for line.
 
 Lean proves the power formula for every real square matrix with a full set of independent eigenvectors, and every whole power.
 
-- Put independent eigenvectors in the columns of P and their eigenvalues on the diagonal of D. Then $A^n = PD^nP^{-1}$ for every whole number n.
+- Put independent eigenvectors in the columns of P and their eigenvalues on the diagonal of D. Then $`A^n = PD^nP^{-1}`$ for every whole number n.
 - From 1,000 cars in city A, city A holds 600 + 400 × 0.5^n cars after n months. City B holds 400 − 400 × 0.5^n.
 - The shear `[[1, 1], [0, 1]]` after n months is `[[1, n], [0, 1]]`. It has no two independent eigenvectors, so no P can be built for it.
 - Both eigenvectors, P inverse and A rebuilt from P D P inverse come out exactly as the card says. So do the amounts (200, 400), one month, and 600.1 cars after a year.

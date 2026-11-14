@@ -38,32 +38,36 @@ The upper line is A A B A B A B A, above zero from the first vote on. The lower 
 
 Draw a count as a path: start at zero, a vote for A steps up one, a vote for B down one. The height after each vote is A's lead, A's votes so far minus B's ([Lattice paths](01-lattice-paths.md)). Ahead throughout means the line never touches zero again.
 
-Write $a$ for the votes for A, $b$ for B, and $n$ for the total. The number of ways to choose which of the $n$ slots hold the A's is the binomial coefficient $C(n, a)$, read "n choose a".
+Write $`a`$ for the votes for A, $`b`$ for B, and $`n`$ for the total. The number of ways to choose which of the $`n`$ slots hold the A's is the binomial coefficient $`C(n, a)`$, read "n choose a".
 
-$$\text{orders keeping A ahead} \;=\; \frac{a - b}{a + b} \times C(a + b,\; a)$$
+```math
+\text{orders keeping A ahead} \;=\; \frac{a - b}{a + b} \times C(a + b,\; a)
+```
 
-**Read it aloud:** the share of orders keeping A in front all the way is the winning margin, $a - b$, over the total vote.
+**Read it aloud:** the share of orders keeping A in front all the way is the winning margin, $`a - b`$, over the total vote.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a$ | votes for the winner, A | 5 | more orders keep A ahead |
-| $b$ | votes for the runner-up, B | 3 | fewer do; at $a = b$ none can |
-| $n$ | every vote cast, $a + b$ | 8 | more orders, same share |
-| $C(n, a)$ | ways to place $a$ A's in $n$ slots | $C(8, 5) = 56$ | more orders to sort |
+| $`a`$ | votes for the winner, A | 5 | more orders keep A ahead |
+| $`b`$ | votes for the runner-up, B | 3 | fewer do; at $`a = b`$ none can |
+| $`n`$ | every vote cast, $`a + b`$ | 8 | more orders, same share |
+| $`C(n, a)`$ | ways to place $`a`$ A's in $`n`$ slots | $`C(8, 5) = 56`$ | more orders to sort |
 | the lead | A's votes so far minus B's | 1, 2, 1, 2, 1, 2, 1, 2 | — |
 
 The proof reaches the same count through a subtraction:
 
-$$\text{orders keeping A ahead} \;=\; C(n - 1,\; a - 1) - C(n - 1,\; a)$$
+```math
+\text{orders keeping A ahead} \;=\; C(n - 1,\; a - 1) - C(n - 1,\; a)
+```
 
 **Read it aloud:** the orders opening with a vote for A, less the ones that open with A and go level later.
 
-The second term does double duty: it counts the orders opening with B, and through the mirror the A-openers that go level later. Here $C(7, 4) - C(7, 5) = 35 - 21 = 14$, the same as $(2/8) \times 56$.
+The second term does double duty: it counts the orders opening with B, and through the mirror the A-openers that go level later. Here $`C(7, 4) - C(7, 5) = 35 - 21 = 14`$, the same as $`(2/8) \times 56`$.
 
 ### When it holds
 
 - **Strictly ahead, from the first vote on.** Counting a level score as "still ahead" gives 28 orders, not 14.
-- **A wins, so $a$ is larger than $b$.** At $a = b$ the formula gives zero, rightly: the last vote levels the score. With $b$ larger it turns negative, though the count is zero.
+- **A wins, so $`a`$ is larger than $`b`$.** At $`a = b`$ the formula gives zero, rightly: the last vote levels the score. With $`b`$ larger it turns negative, though the count is zero.
 - **One vote at a time.** In batches a lead can jump from 1 to −1 without landing on zero, and the argument breaks.
 - **Orders, not chances.** These count orders; "one in four" is favourable over possible, nothing more.
 
@@ -77,7 +81,7 @@ A running total that moves by one at each step is a path. Each of the 56 orders 
 
 ### Step 1: the first vote splits 56 into 21 and 35
 
-A first vote for B leaves A level or behind at once: spoiled, whatever follows. Those orders place five A's in the seven remaining slots, $C(7, 5) = 21$. The other 35 open with A, $C(7, 4) = 35$, and are spoiled only if the score goes level later.
+A first vote for B leaves A level or behind at once: spoiled, whatever follows. Those orders place five A's in the seven remaining slots, $`C(7, 5) = 21`$. The other 35 open with A, $`C(7, 4) = 35`$, and are spoiled only if the score goes level later.
 
 ### Step 2: mirror the part before the first level score
 
@@ -94,16 +98,16 @@ Before the tie the leads are equal and opposite: that piece is reflected in the 
 
 An order opening with B sits at −1 after one vote and 2 at the finish. Steps of one cannot cross zero without landing on it, so it has a first level score too. Mirroring that piece returns a spoiled A-opener.
 
-Each map undoes the other, so the two piles are the same size ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)): 21 B-openers, 21 spoiled A-openers. Nothing used 5 and 3: the argument runs on any $a$ larger than $b$.
+Each map undoes the other, so the two piles are the same size ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)): 21 B-openers, 21 spoiled A-openers. Nothing used 5 and 3: the argument runs on any $`a`$ larger than $`b`$.
 
 ### Step 4: subtract, then put letters where the numbers are
 
-Of the 35 orders opening with A, 21 go level later, leaving 35 − 21 = 14 in which A leads from first vote to last. In letters the A-openers are $C(n - 1, a - 1)$ and the B-openers $C(n - 1, a)$, so the count is their difference.
+Of the 35 orders opening with A, 21 go level later, leaving 35 − 21 = 14 in which A leads from first vote to last. In letters the A-openers are $`C(n - 1, a - 1)`$ and the B-openers $`C(n - 1, a)`$, so the count is their difference.
 
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-The factorial $n!$ is the product of the whole numbers from 1 up to $n$, and $C(n, a) = n! / (a!\,b!)$ when $b = n - a$. So $C(n-1, a-1) = (n-1)! / ((a-1)!\,b!)$ is $a$ times $(n-1)! / (a!\,b!)$, and $C(n-1, a) = (n-1)! / (a!\,(b-1)!)$ is $b$ times it. Their difference is $(a - b) \times (n-1)! / (a!\,b!)$; multiplying above and below by $n$ makes that $\frac{a-b}{n} \times C(n, a)$.
+The factorial $`n!`$ is the product of the whole numbers from 1 up to $`n`$, and $`C(n, a) = n! / (a!\,b!)`$ when $`b = n - a`$. So $`C(n-1, a-1) = (n-1)! / ((a-1)!\,b!)`$ is $`a`$ times $`(n-1)! / (a!\,b!)`$, and $`C(n-1, a) = (n-1)! / (a!\,(b-1)!)`$ is $`b`$ times it. Their difference is $`(a - b) \times (n-1)! / (a!\,b!)`$; multiplying above and below by $`n`$ makes that $`\frac{a-b}{n} \times C(n, a)`$.
 
 </details>
 
@@ -115,12 +119,12 @@ The other road to 14 is to list all 56 orders and test each, as the code does fi
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| every counting order | $C(8, 5)$ | 56 |
-| orders opening with B | five A's in seven slots, $C(7, 5)$ | 21 |
-| orders opening with A | four A's in seven slots, $C(7, 4)$ | 35 |
+| every counting order | $`C(8, 5)`$ | 56 |
+| orders opening with B | five A's in seven slots, $`C(7, 5)`$ | 21 |
+| orders opening with A | four A's in seven slots, $`C(7, 4)`$ | 35 |
 | of those, the ones going level later | mirrored onto the B-openers | 21 |
 | A ahead after every vote | 35 − 21 | **14** |
-| the same by the share form | $(5 - 3) / (5 + 3) \times 56$ | **14** |
+| the same by the share form | $`(5 - 3) / (5 + 3) \times 56`$ | **14** |
 | ten-step paths, mirror one level lower | 252 − 210 | **42** |
 
 Fourteen of the 56 orders keep A in front from first vote to last: favourable over possible, one in four. The last row drops the mirror a step, on the shelf's house example: of 252 ten-step paths back to the start, 42 never dip below it.
@@ -338,8 +342,8 @@ The two outputs match line for line.
 
 Lean proves the count for every election in which A gets more votes than B, read out one vote at a time.
 
-- The orders keeping A strictly ahead after every vote are the winning margin over the total vote, $(a - b)/(a + b)$, of all $C(a + b, a)$ orders.
-- The same count is $C(n - 1, a - 1) - C(n - 1, a)$: the orders opening with A, less the orders opening with B.
+- The orders keeping A strictly ahead after every vote are the winning margin over the total vote, $`(a - b)/(a + b)`$, of all $`C(a + b, a)`$ orders.
+- The same count is $`C(n - 1, a - 1) - C(n - 1, a)`$: the orders opening with A, less the orders opening with B.
 - The A-openers that go level later are exactly as many as the B-openers, and the proof pairs them by the mirror.
 - On the 5–3 election: 56 orders, 21 open with B, 21 A-openers go level later, and 14 keep A ahead throughout.
 - The three mistakes give 28 orders, 35 orders, and a share of 56 that is not a whole count.

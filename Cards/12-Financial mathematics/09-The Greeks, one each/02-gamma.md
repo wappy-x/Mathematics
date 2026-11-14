@@ -10,7 +10,7 @@ A desk has sold 10,000 one-year call options on Acme. Acme trades at $100, the s
 
 The hedge is right for one price only. Acme rises to $105, and each option now behaves like 0.675680 of a share. The desk's 5,869 shares are 888 short of the new hedge. It must buy them, at $105, for $93,270.20. Had Acme fallen, it would have had to sell, at the lower price. The option price is a curve, and the hedge is a straight line touching it at one point.
 
-How fast the hedge goes stale is one number: **gamma**, the change in delta for each dollar Acme moves. For the Acme option it is 0.018951. A \$5 move shifts delta by about five times that, 0.095. With volatility at 40% instead of 20%, gamma at the strike is 0.009413, about half. Its unit is delta per dollar. Desks often quote it per 1% move, $\Gamma \times S/100$; at \$100 the two readings coincide.
+How fast the hedge goes stale is one number: **gamma**, the change in delta for each dollar Acme moves. For the Acme option it is 0.018951. A \$5 move shifts delta by about five times that, 0.095. With volatility at 40% instead of 20%, gamma at the strike is 0.009413, about half. Its unit is delta per dollar. Desks often quote it per 1% move, $`\Gamma \times S/100`$; at \$100 the two readings coincide.
 
 **Gamma is the bend in the option's price: the rate at which its hedge ratio changes as the share moves, the same for a call and a put, largest near the strike and near expiry.**
 
@@ -36,37 +36,41 @@ Orange: the option's price. Green: the hedge line, the tangent (the straight lin
 
 ## The formula
 
-$$\Gamma \;=\; \frac{\partial \Delta}{\partial S} \;=\; \frac{\partial^2 C}{\partial S^2} \;=\; \frac{e^{-qT}\,\varphi(d_1)}{S\,\sigma\sqrt{T}}$$
+```math
+\Gamma \;=\; \frac{\partial \Delta}{\partial S} \;=\; \frac{\partial^2 C}{\partial S^2} \;=\; \frac{e^{-qT}\,\varphi(d_1)}{S\,\sigma\sqrt{T}}
+```
 
-The curly ∂ marks a partial derivative: the rate of change in one input while every other input is held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). $\partial^2 C/\partial S^2$ is that rate taken twice: the slope of the slope.
+The curly ∂ marks a partial derivative: the rate of change in one input while every other input is held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). $`\partial^2 C/\partial S^2`$ is that rate taken twice: the slope of the slope.
 
 **Read it aloud:** gamma is the height of the bell curve at the share-side cut-off, shrunk by the dividend drag, divided by how many dollars Acme typically moves over the option's life.
 
 | Symbol | Plain meaning | In our example | Push it up and gamma… |
 | --- | --- | --- | --- |
-| $\Gamma$ | gamma: change in delta per \$1 move in the share | 0.018951 | is the answer |
-| $\Delta$ | delta: shares held per option to hedge it | 0.586851 | — |
-| $C$, $P$ | the call's and the put's price | call \$9.23 | — |
-| $S$ | Acme's price today | \$100 | slides along a hump that peaks at \$91.39: gamma falls either side of the peak |
-| $K$ | the strike | \$100 | carries the hump with it |
-| $T$ | years left to expiry | 1 | at the strike, falls: 0.0275 with six months left, 0.0190 with a year |
-| $r$, $q$ | the bank rate and the dividend yield, continuously compounded | 5% and 2% | move the hump's peak; each changes gamma at the strike only slightly |
-| $\sigma$ | volatility: how jumpy Acme is, per year | 20% | at the strike, falls: 0.009413 at 40%; far from it, rises (chart below) |
-| $\varphi$, $N$ | the bell curve's height, and the area under it to the left of a point | $\varphi(d_1)$ = 0.386668 | — |
-| $d_1$, $d_2$ | the share-side and cash-side distance to the strike, in units of $\sigma\sqrt{T}$ | 0.25 and 0.05 | — |
-| $e^{-qT}$, $e^{-rT}$ | dividend drag, and the discount on a dollar due at expiry | 0.980199 and 0.951229 | — |
-| $m$ | a move in Acme's price, in dollars | \$5 | — |
+| $`\Gamma`$ | gamma: change in delta per \$1 move in the share | 0.018951 | is the answer |
+| $`\Delta`$ | delta: shares held per option to hedge it | 0.586851 | — |
+| $`C`$, $`P`$ | the call's and the put's price | call \$9.23 | — |
+| $`S`$ | Acme's price today | \$100 | slides along a hump that peaks at \$91.39: gamma falls either side of the peak |
+| $`K`$ | the strike | \$100 | carries the hump with it |
+| $`T`$ | years left to expiry | 1 | at the strike, falls: 0.0275 with six months left, 0.0190 with a year |
+| $`r`$, $`q`$ | the bank rate and the dividend yield, continuously compounded | 5% and 2% | move the hump's peak; each changes gamma at the strike only slightly |
+| $`\sigma`$ | volatility: how jumpy Acme is, per year | 20% | at the strike, falls: 0.009413 at 40%; far from it, rises (chart below) |
+| $`\varphi`$, $`N`$ | the bell curve's height, and the area under it to the left of a point | $`\varphi(d_1)`$ = 0.386668 | — |
+| $`d_1`$, $`d_2`$ | the share-side and cash-side distance to the strike, in units of $`\sigma\sqrt{T}`$ | 0.25 and 0.05 | — |
+| $`e^{-qT}`$, $`e^{-rT}`$ | dividend drag, and the discount on a dollar due at expiry | 0.980199 and 0.951229 | — |
+| $`m`$ | a move in Acme's price, in dollars | \$5 | — |
 
 The helpers are the ones from [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), unchanged:
 
-$$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \varphi(x) = \frac{e^{-x^2/2}}{\sqrt{2\pi}}$$
+```math
+d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \varphi(x) = \frac{e^{-x^2/2}}{\sqrt{2\pi}}
+```
 
-In words: $d_1$ counts how many "wiggle units" of $\sigma\sqrt{T}$ separate Acme from the strike, plus a drift allowance: here 0 + 0.15 + 0.10 = 0.25. $\varphi$ is the bell curve's height at a point, not an area under it.
+In words: $`d_1`$ counts how many "wiggle units" of $`\sigma\sqrt{T}`$ separate Acme from the strike, plus a drift allowance: here 0 + 0.15 + 0.10 = 0.25. $`\varphi`$ is the bell curve's height at a point, not an area under it.
 
 ### When it holds
 
 - **Volatility is a constant.** On a real desk, implied volatility (the volatility that market prices imply) moves when the share moves, and differs by strike (the smile). Then the hedge ratio changes by gamma plus a volatility term, and this formula understates or overstates the drift of the hedge.
-- **The share moves continuously.** A jump skips the curve; the loss on a jump of $m$ dollars is the full reprice, not the small-move estimate, and the gap between them grows with the jump.
+- **The share moves continuously.** A jump skips the curve; the loss on a jump of $`m`$ dollars is the full reprice, not the small-move estimate, and the gap between them grows with the jump.
 - **A plain call or put.** A digital or a barrier option has gamma that changes sign and explodes near a price level; this formula does not apply to it.
 - **Time is left.** At expiry the payoff has a kink at the strike and no second derivative there; gamma at the strike grows without limit as expiry approaches.
 
@@ -76,58 +80,66 @@ In words: $d_1$ counts how many "wiggle units" of $\sigma\sqrt{T}$ separate Acme
 
 ### Step 0: gamma is a slope of a slope
 
-Delta is the slope of the price curve: how many dollars the option moves per dollar of Acme. Gamma is how fast that slope turns. Nothing new is needed to find it. Take delta's formula and differentiate it once more in $S$.
+Delta is the slope of the price curve: how many dollars the option moves per dollar of Acme. Gamma is how fast that slope turns. Nothing new is needed to find it. Take delta's formula and differentiate it once more in $`S`$.
 
 ### Step 1: delta is an area under the bell curve
 
-Delta for a call is $\Delta = e^{-qT}N(d_1)$ ([Delta](01-delta.md)). $N(d_1)$ is an area: the part of the bell curve to the left of the cut-off $d_1$. Acme rises, so $d_1$ slides right, and the area grows by a thin strip at its right edge.
+Delta for a call is $`\Delta = e^{-qT}N(d_1)`$ ([Delta](01-delta.md)). $`N(d_1)`$ is an area: the part of the bell curve to the left of the cut-off $`d_1`$. Acme rises, so $`d_1`$ slides right, and the area grows by a thin strip at its right edge.
 
 ### Step 2: the strip's height is the bell curve's height
 
-A thin strip at the edge adds its height times its width, and its height is $\varphi(d_1)$. So the area grows at the rate $\varphi(d_1)$ per unit that $d_1$ moves. That is why gamma carries a height, $\varphi$, where delta carries an area, $N$. This is the fundamental theorem of calculus in one line: the rate of growth of an area is the height at its moving edge.
+A thin strip at the edge adds its height times its width, and its height is $`\varphi(d_1)`$. So the area grows at the rate $`\varphi(d_1)`$ per unit that $`d_1`$ moves. That is why gamma carries a height, $`\varphi`$, where delta carries an area, $`N`$. This is the fundamental theorem of calculus in one line: the rate of growth of an area is the height at its moving edge.
 
 ### Step 3: how fast the cut-off moves per dollar
 
-Only $\ln(S/K)$ in $d_1$ depends on $S$, and $\ln S$ grows at the rate $1/S$. Divide by the wiggle unit $\sigma\sqrt{T}$: $d_1$ moves $1/(S\sigma\sqrt{T})$ per dollar. At Acme's numbers that is 1/20 per dollar.
+Only $`\ln(S/K)`$ in $`d_1`$ depends on $`S`$, and $`\ln S`$ grows at the rate $`1/S`$. Divide by the wiggle unit $`\sigma\sqrt{T}`$: $`d_1`$ moves $`1/(S\sigma\sqrt{T})`$ per dollar. At Acme's numbers that is 1/20 per dollar.
 
 ### Step 4: multiply
 
-The chain rule (rate of an outer thing times rate of the inner thing) joins Steps 2 and 3, and the drag $e^{-qT}$ rides along because it does not depend on $S$:
+The chain rule (rate of an outer thing times rate of the inner thing) joins Steps 2 and 3, and the drag $`e^{-qT}`$ rides along because it does not depend on $`S`$:
 
-$$\Gamma = e^{-qT}\,\varphi(d_1)\cdot\frac{1}{S\sigma\sqrt{T}}.$$
+```math
+\Gamma = e^{-qT}\,\varphi(d_1)\cdot\frac{1}{S\sigma\sqrt{T}}.
+```
 
 ### Step 5: the put has the same gamma
 
-[Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md) (the fixed relation between call and put prices) says $C - P = Se^{-qT} - Ke^{-rT}$. The right side is a straight line in $S$. A straight line has a constant slope, so its slope of slope is zero: the call and the put differ by nothing in gamma. The put's delta is the call's minus $e^{-qT}$; the constant disappears on the next differentiation.
+[Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md) (the fixed relation between call and put prices) says $`C - P = Se^{-qT} - Ke^{-rT}`$. The right side is a straight line in $`S`$. A straight line has a constant slope, so its slope of slope is zero: the call and the put differ by nothing in gamma. The put's delta is the call's minus $`e^{-qT}`$; the constant disappears on the next differentiation.
 
 <details>
 <summary>Detailed proof: delta first, then gamma, then the density at the strike</summary>
 
-**Delta.** Differentiate $C = Se^{-qT}N(d_1) - Ke^{-rT}N(d_2)$ in $S$. Three terms appear: $e^{-qT}N(d_1)$, plus $Se^{-qT}\varphi(d_1)\,\partial d_1/\partial S$, minus $Ke^{-rT}\varphi(d_2)\,\partial d_2/\partial S$. Since $d_2 = d_1 - \sigma\sqrt{T}$, the two partials are equal. The identity $Se^{-qT}\varphi(d_1) = Ke^{-rT}\varphi(d_2)$ holds: expand $\varphi(d_2)=\varphi(d_1)\,e^{d_1\sigma\sqrt{T} - \sigma^2T/2}$, and $d_1\sigma\sqrt{T} - \sigma^2 T/2 = \ln(S/K) + (r-q)T$. So the last two terms cancel and $\Delta = e^{-qT}N(d_1)$.
+**Delta.** Differentiate $`C = Se^{-qT}N(d_1) - Ke^{-rT}N(d_2)`$ in $`S`$. Three terms appear: $`e^{-qT}N(d_1)`$, plus $`Se^{-qT}\varphi(d_1)\,\partial d_1/\partial S`$, minus $`Ke^{-rT}\varphi(d_2)\,\partial d_2/\partial S`$. Since $`d_2 = d_1 - \sigma\sqrt{T}`$, the two partials are equal. The identity $`Se^{-qT}\varphi(d_1) = Ke^{-rT}\varphi(d_2)`$ holds: expand $`\varphi(d_2)=\varphi(d_1)\,e^{d_1\sigma\sqrt{T} - \sigma^2T/2}`$, and $`d_1\sigma\sqrt{T} - \sigma^2 T/2 = \ln(S/K) + (r-q)T`$. So the last two terms cancel and $`\Delta = e^{-qT}N(d_1)`$.
 
-**Gamma.** $N' = \varphi$, and $\partial d_1/\partial S = 1/(S\sigma\sqrt{T})$, so $\partial\Delta/\partial S = e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})$.
+**Gamma.** $`N' = \varphi`$, and $`\partial d_1/\partial S = 1/(S\sigma\sqrt{T})`$, so $`\partial\Delta/\partial S = e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})`$.
 
-**The density at the strike.** Write the call as the discounted average of its payoff $S e^{\mu_0 + vz} - K$ over a standard bell-curve variable $z$, where $\mu_0 = (r - q - \tfrac12\sigma^2)T$ and $v = \sigma\sqrt{T}$. The payoff is positive only above a cut-off in $z$ that moves with $S$. Differentiating once in $S$, the moving cut-off contributes nothing, because the payoff is zero there. What is left is an integral of $e^{\mu_0+vz}$, which no longer depends on $S$. Differentiating again, only the cut-off moves, and it leaves one term: the density of Acme's finishing price at $K$ in the risk-neutral world (the pretend world where everything grows at the bank rate), which is $f(K) = \varphi\big((\ln K - \ln S - \mu_0)/v\big)/(Kv)$. The result is
-$$\Gamma = e^{-rT}\Big(\frac{K}{S}\Big)^2 f(K) = \frac{Ke^{-rT}\varphi(d_2)}{S^2\sigma\sqrt{T}},$$
-and the identity above turns the last form into $e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})$. At Acme, $f(K) = 0.019922$ per dollar, and since $S = K$ here, gamma is the discounted pretend-world chance per dollar of finishing exactly at the strike. The payoff is two straight pieces; all its bend lives at the joint.
+**The density at the strike.** Write the call as the discounted average of its payoff $`S e^{\mu_0 + vz} - K`$ over a standard bell-curve variable $`z`$, where $`\mu_0 = (r - q - \tfrac12\sigma^2)T`$ and $`v = \sigma\sqrt{T}`$. The payoff is positive only above a cut-off in $`z`$ that moves with $`S`$. Differentiating once in $`S`$, the moving cut-off contributes nothing, because the payoff is zero there. What is left is an integral of $`e^{\mu_0+vz}`$, which no longer depends on $`S`$. Differentiating again, only the cut-off moves, and it leaves one term: the density of Acme's finishing price at $`K`$ in the risk-neutral world (the pretend world where everything grows at the bank rate), which is $`f(K) = \varphi\big((\ln K - \ln S - \mu_0)/v\big)/(Kv)`$. The result is
+
+$`\displaystyle \Gamma = e^{-rT}\Big(\frac{K}{S}\Big)^2 f(K) = \frac{Ke^{-rT}\varphi(d_2)}{S^2\sigma\sqrt{T}},`$
+
+and the identity above turns the last form into $`e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})`$. At Acme, $`f(K) = 0.019922`$ per dollar, and since $`S = K`$ here, gamma is the discounted pretend-world chance per dollar of finishing exactly at the strike. The payoff is two straight pieces; all its bend lives at the joint.
 
 </details>
 
 ### Step 6: why a hedged option gains from a move either way
 
-Near $S$, the price curve is its tangent plus a bend. The Taylor expansion (a function written as its value, plus slope times step, plus half the second derivative times step squared) gives
+Near $`S`$, the price curve is its tangent plus a bend. The Taylor expansion (a function written as its value, plus slope times step, plus half the second derivative times step squared) gives
 
-$$C(S+m) \approx C(S) + \Delta\, m + \tfrac12\,\Gamma\, m^2.$$
+```math
+C(S+m) \approx C(S) + \Delta\, m + \tfrac12\,\Gamma\, m^2.
+```
 
-The hedge removes $\Delta\,m$. What remains is $\tfrac12\Gamma m^2$, positive for $m$ up or down. The half is the area of a triangle: across the move, delta climbs a ramp of slope $\Gamma$ from its old value, and the extra profit is the area under that ramp, half of the rectangle $\Gamma m \times m$.
+The hedge removes $`\Delta\,m`$. What remains is $`\tfrac12\Gamma m^2`$, positive for $`m`$ up or down. The half is the area of a triangle: across the move, delta climbs a ramp of slope $`\Gamma`$ from its old value, and the extra profit is the area under that ramp, half of the rectangle $`\Gamma m \times m`$.
 
 ### Step 7: where the hump peaks
 
-$\varphi(d_1)$ is tallest at $d_1 = 0$, but the $1/S$ in front tilts the hump toward lower prices. Setting the slope of $\ln\Gamma$ in $S$ to zero gives $d_1 = -\sigma\sqrt{T}$, that is
+$`\varphi(d_1)`$ is tallest at $`d_1 = 0`$, but the $`1/S`$ in front tilts the hump toward lower prices. Setting the slope of $`\ln\Gamma`$ in $`S`$ to zero gives $`d_1 = -\sigma\sqrt{T}`$, that is
 
-$$S^{*} = K e^{-(r - q + \frac32\sigma^2)T}.$$
+```math
+S^{*} = K e^{-(r - q + \frac32\sigma^2)T}.
+```
 
-For Acme, $S^{*}$ = \$91.39, and gamma there is 0.020970. "Gamma peaks at the money" is true only for short-dated options; with a year left the peak sits nearly \$9 below the strike.
+For Acme, $`S^{*}`$ = \$91.39, and gamma there is 0.020970. "Gamma peaks at the money" is true only for short-dated options; with a year left the peak sits nearly \$9 below the strike.
 
 A second road leads to the same number. [The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md) ties gamma to theta, delta and the price. Theta is how fast the option's price changes as time passes with Acme held still ([Theta](04-theta.md)). Solve the equation for gamma, feed it a bumped theta, and gamma comes out without a bell-curve height in sight. That trade-off, gamma paid for by time decay, is [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md).
 
@@ -135,14 +147,14 @@ A second road leads to the same number. [The Black-Scholes equation](../08-The%2
 
 ## Worked numbers, by hand
 
-Acme: $S$ = \$100, $K$ = \$100, $r$ = 5%, $q$ = 2%, $\sigma$ = 20%, $T$ = 1 year.
+Acme: $`S`$ = \$100, $`K`$ = \$100, $`r`$ = 5%, $`q`$ = 2%, $`\sigma`$ = 20%, $`T`$ = 1 year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $d_1$ | (ln 1 + (0.05 − 0.02 + 0.02) × 1) / 0.20 | 0.25 |
-| bell height $\varphi(d_1)$ | e^(−0.03125) / √(2π) | 0.386668 |
-| dividend drag $e^{-qT}$ | e^(−0.02) | 0.980199 |
-| dollar wiggle $S\sigma\sqrt{T}$ | 100 × 0.20 × 1 | 20 |
+| $`d_1`$ | (ln 1 + (0.05 − 0.02 + 0.02) × 1) / 0.20 | 0.25 |
+| bell height $`\varphi(d_1)`$ | e^(−0.03125) / √(2π) | 0.386668 |
+| dividend drag $`e^{-qT}`$ | e^(−0.02) | 0.980199 |
+| dollar wiggle $`S\sigma\sqrt{T}`$ | 100 × 0.20 × 1 | 20 |
 | **gamma** | 0.980199 × 0.386668 / 20 | **0.018951** |
 | delta shift for a 5-dollar move | 0.018951 × 5 | 0.094753 |
 | hedged gain on a 5-dollar move | ½ × 0.018951 × 25 | \$0.236882 |
@@ -162,7 +174,7 @@ The desk is short 10,000 calls and long the hedge.
 | cash spent | 888.29 × 105 | **\$93,270.20** |
 | loss on the hedged book | 10,000 × 0.227231 | \$2,272.31 |
 
-The desk buys after a rise and sells after a fall. That is the rebalance gamma forces: buying high and selling low, 888 shares at a time, and the \$2,272.31 is what the bend cost before the rebuild. On a quiet day the move is smaller. A typical daily move, with 252 trading days in a year, is $S\sigma/\sqrt{252}$ = \$1.26, which shifts the hedge by 239 shares.
+The desk buys after a rise and sells after a fall. That is the rebalance gamma forces: buying high and selling low, 888 shares at a time, and the \$2,272.31 is what the bend cost before the rebuild. On a quiet day the move is smaller. A typical daily move, with 252 trading days in a year, is $`S\sigma/\sqrt{252}`$ = \$1.26, which shifts the hedge by 239 shares.
 
 ### What breaks if you drop a piece
 
@@ -170,11 +182,11 @@ Correct answer 0.018951.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| $N(d_1)$ in place of $\varphi(d_1)$ | 0.029343 | an area where a height belongs: half as big again |
-| $\varphi(d_2)$ in place of $\varphi(d_1)$ | 0.019528 | the cash-side cut-off; that version needs $Ke^{-rT}/S^2$ in front |
-| $S$ missing from the bottom | 1.895058 | a hundred times too big: a dollar is a small step on a \$100 share |
-| $\sigma T$ for $\sigma\sqrt{T}$, 3 months | 0.076948 (right: 0.039386) | spread grows with root time; short options come out nearly double |
-| P&L as $\Gamma m^2$, no half, \$5 move | \$0.473764 (full reprice: \$0.227231) | the gain is a triangle, not a rectangle |
+| $`N(d_1)`$ in place of $`\varphi(d_1)`$ | 0.029343 | an area where a height belongs: half as big again |
+| $`\varphi(d_2)`$ in place of $`\varphi(d_1)`$ | 0.019528 | the cash-side cut-off; that version needs $`Ke^{-rT}/S^2`$ in front |
+| $`S`$ missing from the bottom | 1.895058 | a hundred times too big: a dollar is a small step on a \$100 share |
+| $`\sigma T`$ for $`\sigma\sqrt{T}`$, 3 months | 0.076948 (right: 0.039386) | spread grows with root time; short options come out nearly double |
+| P&L as $`\Gamma m^2`$, no half, \$5 move | \$0.473764 (full reprice: \$0.227231) | the gain is a triangle, not a rectangle |
 
 ---
 
@@ -220,13 +232,13 @@ xychart-beta
     line [0.02, 0.12, 0.54, 1.52, 2.87, 3.88, 3.94, 3.13, 2.02, 1.08, 0.50, 0.20, 0.07]
 ```
 
-The chart plots gamma times 100: the shares a book of 100 options must trade per dollar Acme moves. Orange: one year left, 20% volatility, the house option, peaking near \$91. Green: one year left, 40% volatility: the hump is lower and much wider, so gamma falls at the strike and rises far from it. Dark blue: three months left, 20% volatility: taller, narrower, its peak closer to the strike. Volatility and time do the same job, because gamma depends on them mainly through the wiggle $\sigma\sqrt{T}$. More of either spreads the same bend over a wider band of prices.
+The chart plots gamma times 100: the shares a book of 100 options must trade per dollar Acme moves. Orange: one year left, 20% volatility, the house option, peaking near \$91. Green: one year left, 40% volatility: the hump is lower and much wider, so gamma falls at the strike and rises far from it. Dark blue: three months left, 20% volatility: taller, narrower, its peak closer to the strike. Volatility and time do the same job, because gamma depends on them mainly through the wiggle $`\sigma\sqrt{T}`$. More of either spreads the same bend over a wider band of prices.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The checks compute gamma seven ways at the house option: the formula; the call price bumped twice (a one-cent nudge each side); delta bumped once; the put bumped twice; the density of the finishing price at the strike, with no $d_1$ anywhere; a 2,000-step coin-flip tree, gamma read from its nodes; and the Black-Scholes equation solved for gamma with theta from a bumped expiry. Then they price the \$5 rebalance, find the hump's peak by scanning every cent from \$60 to \$140, and reproduce every wrong number above. Python builds the bell-curve area $N$ from its power series (an endless sum of powers of $x$, stopped once the terms are too small to matter); Rust builds it by Simpson's rule (adding up thin strips of area under the bell curve). Two different roads to $N$, and the outputs agree byte for byte.
+The checks compute gamma seven ways at the house option: the formula; the call price bumped twice (a one-cent nudge each side); delta bumped once; the put bumped twice; the density of the finishing price at the strike, with no $`d_1`$ anywhere; a 2,000-step coin-flip tree, gamma read from its nodes; and the Black-Scholes equation solved for gamma with theta from a bumped expiry. Then they price the \$5 rebalance, find the hump's peak by scanning every cent from \$60 to \$140, and reproduce every wrong number above. Python builds the bell-curve area $`N`$ from its power series (an endless sum of powers of $`x`$, stopped once the terms are too small to matter); Rust builds it by Simpson's rule (adding up thin strips of area under the bell curve). Two different roads to $`N`$, and the outputs agree byte for byte.
 
 ### Python
 
@@ -587,12 +599,12 @@ The two outputs are identical at every printed digit. The tree lands at 0.018958
 
 Lean proves the gamma formula, the hump's peak and the growth at expiry for every positive share price, strike, volatility and time left.
 
-- Take $S$, $K$, $\sigma$ and $T$ all above zero, at any rate and dividend yield. Then the call's delta changes per dollar at the rate $e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})$.
+- Take $`S`$, $`K`$, $`\sigma`$ and $`T`$ all above zero, at any rate and dividend yield. Then the call's delta changes per dollar at the rate $`e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})`$.
 - Take the same inputs. Then the call price's slope of the slope in the share price equals that same formula.
 - Take the same inputs. Then the put price's slope of the slope equals it too.
-- Take $K$, $\sigma$ and $T$ above zero, at any rates. Then gamma rises up to $S^{*} = Ke^{-(r-q+\frac32\sigma^2)T}$ and falls beyond it.
-- Take the share at the strike, $S = K$, with $K$ and $\sigma$ above zero. Then gamma grows without limit as the time left shrinks to zero.
-- For Acme, $d_1$ is exactly 0.25, $d_2$ is exactly 0.05, and the dollar wiggle $S\sigma\sqrt{T}$ is exactly 20.
+- Take $`K`$, $`\sigma`$ and $`T`$ above zero, at any rates. Then gamma rises up to $`S^{*} = Ke^{-(r-q+\frac32\sigma^2)T}`$ and falls beyond it.
+- Take the share at the strike, $`S = K`$, with $`K`$ and $`\sigma`$ above zero. Then gamma grows without limit as the time left shrinks to zero.
+- For Acme, $`d_1`$ is exactly 0.25, $`d_2`$ is exactly 0.05, and the dollar wiggle $`S\sigma\sqrt{T}`$ is exactly 20.
 
 The six-place values, the tree, the density at the strike and the hedged gain on a move are left to the Python and Rust checks.
 
@@ -954,10 +966,10 @@ example : (0 : ℚ) + 3 / 20 + 1 / 10 = 1 / 4 := by norm_num
 > **Treating the hedge as set and forget.** Delta is correct at one price. After a $5 move the desk's 5,869 shares are 888 short, and the book has already lost $2,272.31. Gamma is the rate at which the hedge goes wrong, so a large gamma means rebuilding often, at a cost in spreads (the gap between the buying and the selling price) and in buying high and selling low. The rebuilding cost is what theta pays for: [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md).
 >
 > Four smaller traps:
-> - **Area for height.** $N(d_1)$ in place of $\varphi(d_1)$ gives 0.029343, half as big again as the right answer. Delta is the area; gamma is the height.
+> - **Area for height.** $`N(d_1)`$ in place of $`\varphi(d_1)`$ gives 0.029343, half as big again as the right answer. Delta is the area; gamma is the height.
 > - **"Put gamma is negative."** It is not. Call and put gamma are equal and positive for a long plain option; parity is a straight line.
 > - **"Gamma peaks at the money."** Only as expiry nears. With a year left the house option's gamma peaks at $91.39, not $100.
-> - **Forgetting the half.** The hedged gain on a \$5 move is about $\tfrac12\Gamma m^2$ = \$0.236882, not $\Gamma m^2$ = \$0.473764. The full reprice says \$0.227231.
+> - **Forgetting the half.** The hedged gain on a \$5 move is about $`\tfrac12\Gamma m^2`$ = \$0.236882, not $`\Gamma m^2`$ = \$0.473764. The full reprice says \$0.227231.
 
 ---
 
@@ -965,25 +977,25 @@ example : (0 : ℚ) + 3 / 20 + 1 / 10 = 1 / 4 := by norm_num
 
 - **Market-maker rebalancing.** A desk short options is short gamma: every move costs it, and it trades shares after each one. The table above says how many, 239 on a typical day with a year left, thousands near expiry.
 - **Pin risk at expiry.** When a large open position sits near its strike on the last day, gamma at the strike is 0.3810 and the hedge flips between none and all. The same effect, sharper still, is on [Digital Greeks and pin risk](../10-Digitals%20and%20the%20implied%20density/03-digital-greeks-and-pin-risk.md).
-- **Gamma scalping.** A trader long options and delta-hedged buys after falls and sells after rises, pocketing about $\tfrac12\Gamma m^2$ per move, and pays for it in time decay ([Theta](04-theta.md)).
+- **Gamma scalping.** A trader long options and delta-hedged buys after falls and sells after rises, pocketing about $`\tfrac12\Gamma m^2`$ per move, and pays for it in time decay ([Theta](04-theta.md)).
 - **Risk reports.** Value at Risk (the loss a book should exceed only one day in a hundred) for an options book adds the gamma term to the delta term, because a hedged book's loss is curved in the move: [Options in the book](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/04-delta-gamma-var-and-cornish-fisher.md).
-- **Currency options.** The same formula with the foreign interest rate in place of $q$: [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md).
+- **Currency options.** The same formula with the foreign interest rate in place of $`q`$: [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md).
 - **The whole shelf.** Gamma's companions measure the price's response to volatility ([Vega](03-vega.md)) and the drift of delta with time ([Charm](08-charm.md)); [The Greeks together](09-greeks-together-taylor-pnl.md) adds them into one profit-and-loss line.
 
 > **Say it back**
-> Gamma is the change in delta for each dollar the share moves: the bend in the option's price curve. In Black-Scholes it is the bell curve's height at $d_1$, times the dividend drag, over the dollar wiggle $S\sigma\sqrt{T}$. Call and put share it, because parity is a straight line. It peaks a little below the strike, shrinks with more volatility or more time, and explodes at the strike as expiry nears. A hedge must be rebuilt after every move by gamma times the move, and the hedged gain or loss is about half gamma times the move squared.
+> Gamma is the change in delta for each dollar the share moves: the bend in the option's price curve. In Black-Scholes it is the bell curve's height at $`d_1`$, times the dividend drag, over the dollar wiggle $`S\sigma\sqrt{T}`$. Call and put share it, because parity is a straight line. It peaks a little below the strike, shrinks with more volatility or more time, and explodes at the strike as expiry nears. A hedge must be rebuilt after every move by gamma times the move, and the hedged gain or loss is about half gamma times the move squared.
 
 ---
 
 ## What this builds on
 
-- [Delta](01-delta.md): the hedge ratio $e^{-qT}N(d_1)$ and why its density terms cancel. Gamma is its slope.
+- [Delta](01-delta.md): the hedge ratio $`e^{-qT}N(d_1)`$ and why its density terms cancel. Gamma is its slope.
 - [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): differentiating in one input with the others held still, taken twice.
 
 ## Where this goes next
 
 - [Theta](04-theta.md): what the option loses each day the share stays still.
-- [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md): why the $\tfrac12\Gamma m^2$ gain is exactly paid for by theta, on average.
+- [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md): why the $`\tfrac12\Gamma m^2`$ gain is exactly paid for by theta, on average.
 - [Digital Greeks and pin risk](../10-Digitals%20and%20the%20implied%20density/03-digital-greeks-and-pin-risk.md): a payoff with a jump, where gamma changes sign at the strike.
 - [Barrier Greeks](../16-Barriers%2C%20touches%20and%20lookbacks/04-barrier-greeks-at-the-wall.md): gamma that blows up at a price level other than the strike.
 - [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): the same gamma in currency markets, with desk quoting conventions.
@@ -998,7 +1010,7 @@ Gamma says a hedged option gains about half gamma times the move squared from ev
 Verified 2026-09-24: every link below resolves to the publisher's page.
 
 - Black, Fischer, and Myron Scholes. "The Pricing of Options and Corporate Liabilities." *Journal of Political Economy* 81, no. 3 (1973): 637–654. [doi:10.1086/260062](https://doi.org/10.1086/260062). The hedge and the pricing equation used in road 7.
-- Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). The dividend yield $q$, which puts $e^{-qT}$ into gamma.
+- Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). The dividend yield $`q`$, which puts $`e^{-qT}`$ into gamma.
 - Breeden, Douglas T., and Robert H. Litzenberger. "Prices of State-Contingent Claims Implicit in Option Prices." *Journal of Business* 51, no. 4 (1978): 621–651. [doi:10.1086/296025](https://doi.org/10.1086/296025). The second derivative of option prices as the density of the finishing price: road 5.
 - Cox, John C., Stephen A. Ross, and Mark Rubinstein. "Option Pricing: A Simplified Approach." *Journal of Financial Economics* 7, no. 3 (1979): 229–263. [doi:10.1016/0304-405X(79)90015-1](https://doi.org/10.1016/0304-405X(79)90015-1). The coin-flip tree of road 6.
 - Taleb, Nassim Nicholas. *Dynamic Hedging: Managing Vanilla and Exotic Options*. Wiley, 1997. [Publisher page](https://www.wiley.com/en-us/Dynamic+Hedging%3A+Managing+Vanilla+and+Exotic+Options-p-9780471152804). A trader's account of gamma, rebalancing and pin risk.

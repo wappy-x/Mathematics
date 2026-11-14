@@ -35,54 +35,62 @@ One line: the price, one sample path (one run of the process drawn against time)
 
 ## The formula
 
-Reminders first. Time $t$ is in days. $W_t$ is Brownian motion, "the random walk seen from far away", and $dW_t$ is shorthand for an Ito integral, never a derivative, because the path has no slope. $N_t$ counts the spikes by day $t$: a Poisson process at rate $\lambda$ per day ([Poisson process](../04-Poisson%20and%20Jump%20Processes/01-poisson-process.md)). Its step $dN_t$ is 1 at a spike instant and 0 otherwise.
+Reminders first. Time $`t`$ is in days. $`W_t`$ is Brownian motion, "the random walk seen from far away", and $`dW_t`$ is shorthand for an Ito integral, never a derivative, because the path has no slope. $`N_t`$ counts the spikes by day $`t`$: a Poisson process at rate $`\lambda`$ per day ([Poisson process](../04-Poisson%20and%20Jump%20Processes/01-poisson-process.md)). Its step $`dN_t`$ is 1 at a spike instant and 0 otherwise.
 
-New notation, in words. $S_{t-}$ is the price just before day $t$: the value the path was approaching from the left. At a spike instant $S_t$ is the price after the spike and $S_{t-}$ the price before. Away from spikes the two agree. The jump of a process $X$ at a spike is $\Delta X = X_t - X_{t-}$.
+New notation, in words. $`S_{t-}`$ is the price just before day $`t`$: the value the path was approaching from the left. At a spike instant $`S_t`$ is the price after the spike and $`S_{t-}`$ the price before. Away from spikes the two agree. The jump of a process $`X`$ at a spike is $`\Delta X = X_t - X_{t-}`$.
 
 Merton's rule for the price:
 
-$$dS_t = \mu\, S_{t-}\,dt + \sigma\, S_{t-}\,dW_t + S_{t-}\,(Y - 1)\,dN_t$$
+```math
+dS_t = \mu\, S_{t-}\,dt + \sigma\, S_{t-}\,dW_t + S_{t-}\,(Y - 1)\,dN_t
+```
 
-**Read it aloud:** in each short slice of time the price drifts by $\mu$ of itself and is kicked by $\sigma$ of itself; and when a spike arrives, the price just before it is multiplied by a random factor $Y$.
+**Read it aloud:** in each short slice of time the price drifts by $`\mu`$ of itself and is kicked by $`\sigma`$ of itself; and when a spike arrives, the price just before it is multiplied by a random factor $`Y`$.
 
-The spike factors $Y_1, Y_2, \dots$ are independent of each other, of the arrivals and of the wobble. Their logs $J_i = \log Y_i$ are normal with mean $\mu_J$ and standard deviation $\delta$. The average spike adds the fraction $k = E[Y] - 1 = e^{\mu_J + \delta^2/2} - 1$ to the price.
+The spike factors $`Y_1, Y_2, \dots`$ are independent of each other, of the arrivals and of the wobble. Their logs $`J_i = \log Y_i`$ are normal with mean $`\mu_J`$ and standard deviation $`\delta`$. The average spike adds the fraction $`k = E[Y] - 1 = e^{\mu_J + \delta^2/2} - 1`$ to the price.
 
-Ito's formula with jumps, for a general jump diffusion $dX_t = \alpha_t\,dt + \beta_t\,dW_t + \Delta X\,dN_t$ and a function $f$ with continuous slope $f'$ and curvature $f''$, where the spikes arrive at times $\tau_1 < \tau_2 < \dots$:
+Ito's formula with jumps, for a general jump diffusion $`dX_t = \alpha_t\,dt + \beta_t\,dW_t + \Delta X\,dN_t`$ and a function $`f`$ with continuous slope $`f'`$ and curvature $`f''`$, where the spikes arrive at times $`\tau_1 < \tau_2 < \dots`$:
 
-$$f(X_T) = f(X_0) + \int_0^T f'(X_{t-})\big(\alpha_t\,dt + \beta_t\,dW_t\big) + \tfrac12\int_0^T f''(X_{t})\,\beta_t^2\,dt + \sum_{\tau_i \le T}\Big(f(X_{\tau_i}) - f(X_{\tau_i-})\Big)$$
+```math
+f(X_T) = f(X_0) + \int_0^T f'(X_{t-})\big(\alpha_t\,dt + \beta_t\,dW_t\big) + \tfrac12\int_0^T f''(X_{t})\,\beta_t^2\,dt + \sum_{\tau_i \le T}\Big(f(X_{\tau_i}) - f(X_{\tau_i-})\Big)
+```
 
 **Read it aloud:** the function changes by its slope times the smooth step, plus half its curvature times the squared kick size, as on the Ito card; plus, at every jump, the exact amount the function moves from just before the jump to just after.
 
-In shorthand: $df(X_t) = \big(f'\alpha_t + \tfrac12 f''\beta_t^2\big)\,dt + f'\beta_t\,dW_t + \big(f(X_{t-} + \Delta X) - f(X_{t-})\big)\,dN_t$.
+In shorthand: $`df(X_t) = \big(f'\alpha_t + \tfrac12 f''\beta_t^2\big)\,dt + f'\beta_t\,dW_t + \big(f(X_{t-} + \Delta X) - f(X_{t-})\big)\,dN_t`$.
 
-Applied to the log of the price, where $f(x) = \log x$, $\alpha_t = \mu S_{t-}$, $\beta_t = \sigma S_{t-}$ and a spike moves the log by $\log(S_{t-} Y) - \log S_{t-} = J$:
+Applied to the log of the price, where $`f(x) = \log x`$, $`\alpha_t = \mu S_{t-}`$, $`\beta_t = \sigma S_{t-}`$ and a spike moves the log by $`\log(S_{t-} Y) - \log S_{t-} = J`$:
 
-$$\log S_T = \log S_0 + \big(\mu - \tfrac12\sigma^2\big)T + \sigma W_T + \sum_{i=1}^{N_T} J_i.$$
+```math
+\log S_T = \log S_0 + \big(\mu - \tfrac12\sigma^2\big)T + \sigma W_T + \sum_{i=1}^{N_T} J_i.
+```
 
-Write $c = \mu - \tfrac12\sigma^2$, the log drift between spikes. Averaging, with $E[N_T] = \lambda T$:
+Write $`c = \mu - \tfrac12\sigma^2`$, the log drift between spikes. Averaging, with $`E[N_T] = \lambda T`$:
 
-$$E\big[\log(S_T/S_0)\big] = cT + \lambda T \mu_J, \qquad \mathrm{Var}\,\log(S_T/S_0) = \sigma^2 T + \lambda T\,(\mu_J^2 + \delta^2).$$
+```math
+E\big[\log(S_T/S_0)\big] = cT + \lambda T \mu_J, \qquad \mathrm{Var}\,\log(S_T/S_0) = \sigma^2 T + \lambda T\,(\mu_J^2 + \delta^2).
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S_t$, $S_0$, $S_T$ | the price at day $t$ (after any spike at $t$); at the start; at the horizon; $S_{t-}$ is the price just before $t$ | $S_0$ = $50 a megawatt-hour | — |
-| $t$, $T$, $dt$ | time in days; the horizon; a short slice of time | $T$ = 30 days | more spikes, more spread |
-| $\mu$, $c$ | the price's drift per day; the log drift between spikes, $\mu - \tfrac12\sigma^2$ | −0.035663 and −0.036113 a day | the typical price rises |
-| $\sigma$ | wobble size, per square-root day | 0.03 | log drift falls by $\sigma$ times the rise |
-| $W_t$, $W$, $W_T$, $dW_t$, $dW$ | Brownian motion; at the horizon; its step, shorthand inside an Ito integral | — | — |
-| $N_t$, $N$, $N_T$, $dN_t$, $\lambda$ | spikes counted by day $t$; by the horizon; 1 at a spike instant and 0 otherwise; the spike rate | $\lambda$ = 0.1 a day, so 3 expected in 30 days | more spikes, a heavier upper tail |
-| $Y$, $Y_i$, $J$, $J_i$ | the factor a spike multiplies the price by, and its log | $J$ normal, mean 0.30, sd 0.10 | bigger leaps |
-| $\mu_J$, $\delta$, $k$ | mean and spread of a spike's log; the average proportional spike $E[Y] - 1$ | 0.30, 0.10; $k$ = 0.356625 | $k$ rises faster than $\mu_J$ |
-| $\tau_i$, $\Delta X$ | time of spike i; the jump of a process there | path 1: days 15.55, 16.04, 19.05, 28.25 | — |
-| $X_t$, $X$, $X_s$, $\alpha_t$, $\alpha$, $\beta_t$, $\beta$, $f$ | a general jump diffusion, its drift and kick size; a smooth function of it, with slope $f'$ and curvature $f''$ | $X = S$, $f = \log x$ or $x^2$ | — |
-| $[X]_t$ | quadratic variation: the sum of squared steps up to $t$ | $[\log S]_{30}$ = 0.37537 on path 1 | — |
-| $n$, $p_n$, $m_n$, $v_n$, $\Phi$, $h_s$, $ds$ | a spike count; its Poisson chance; the log's mean and variance given n spikes; bell-curve area to the left; in the proof, a bet fixed just before each instant, and a time slice | at n = 3: 0.2240 | — |
+| $`S_t`$, $`S_0`$, $`S_T`$ | the price at day $`t`$ (after any spike at $`t`$); at the start; at the horizon; $`S_{t-}`$ is the price just before $`t`$ | $`S_0`$ = $50 a megawatt-hour | — |
+| $`t`$, $`T`$, $`dt`$ | time in days; the horizon; a short slice of time | $`T`$ = 30 days | more spikes, more spread |
+| $`\mu`$, $`c`$ | the price's drift per day; the log drift between spikes, $`\mu - \tfrac12\sigma^2`$ | −0.035663 and −0.036113 a day | the typical price rises |
+| $`\sigma`$ | wobble size, per square-root day | 0.03 | log drift falls by $`\sigma`$ times the rise |
+| $`W_t`$, $`W`$, $`W_T`$, $`dW_t`$, $`dW`$ | Brownian motion; at the horizon; its step, shorthand inside an Ito integral | — | — |
+| $`N_t`$, $`N`$, $`N_T`$, $`dN_t`$, $`\lambda`$ | spikes counted by day $`t`$; by the horizon; 1 at a spike instant and 0 otherwise; the spike rate | $`\lambda`$ = 0.1 a day, so 3 expected in 30 days | more spikes, a heavier upper tail |
+| $`Y`$, $`Y_i`$, $`J`$, $`J_i`$ | the factor a spike multiplies the price by, and its log | $`J`$ normal, mean 0.30, sd 0.10 | bigger leaps |
+| $`\mu_J`$, $`\delta`$, $`k`$ | mean and spread of a spike's log; the average proportional spike $`E[Y] - 1`$ | 0.30, 0.10; $`k`$ = 0.356625 | $`k`$ rises faster than $`\mu_J`$ |
+| $`\tau_i`$, $`\Delta X`$ | time of spike i; the jump of a process there | path 1: days 15.55, 16.04, 19.05, 28.25 | — |
+| $`X_t`$, $`X`$, $`X_s`$, $`\alpha_t`$, $`\alpha`$, $`\beta_t`$, $`\beta`$, $`f`$ | a general jump diffusion, its drift and kick size; a smooth function of it, with slope $`f'`$ and curvature $`f''`$ | $`X = S`$, $`f = \log x`$ or $`x^2`$ | — |
+| $`[X]_t`$ | quadratic variation: the sum of squared steps up to $`t`$ | $`[\log S]_{30}`$ = 0.37537 on path 1 | — |
+| $`n`$, $`p_n`$, $`m_n`$, $`v_n`$, $`\Phi`$, $`h_s`$, $`ds`$ | a spike count; its Poisson chance; the log's mean and variance given n spikes; bell-curve area to the left; in the proof, a bet fixed just before each instant, and a time slice | at n = 3: 0.2240 | — |
 
 ### When it holds
 
 - **Finitely many jumps in any finite time.** A Poisson stream has that. A Lévy process with infinitely many tiny jumps ([Levy processes](01-levy-processes.md)) can make the sum of jump terms diverge, as it does for the measure in that card's Step 6, and then the small jumps must be compensated first (their average subtracted, as the compensator of Step 6 does for the spikes); the general statement is on [Semimartingales](05-semimartingales-in-outline.md).
-- **The coefficients use the price just before.** The drift, kick and spike all multiply $S_{t-}$. A spike sized by the price after itself would be defined in a circle.
-- **$f$ has a continuous curvature.** At a kink, such as a payoff $\max(x - 60, 0)$, the wobble part needs local time, as on [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md). The jump term needs no smoothness at all: it is a plain difference.
+- **The coefficients use the price just before.** The drift, kick and spike all multiply $`S_{t-}`$. A spike sized by the price after itself would be defined in a circle.
+- **$`f`$ has a continuous curvature.** At a kink, such as a payoff $`\max(x - 60, 0)`$, the wobble part needs local time, as on [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md). The jump term needs no smoothness at all: it is a plain difference.
 - **Spike sizes independent of the arrivals and the wobble.** If bigger spikes came in clusters, the averaged formulas fail; the path-by-path formula still holds.
 - **Merton's spikes are permanent.** Each leap stays in the price for good; the drift lowers the whole price, not the leap alone. Real electricity spikes fade within hours or days. A model that pulls the log back to a level, as on [Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md), with jumps added, fits better. The formula on this card applies to it unchanged.
 
@@ -96,46 +104,48 @@ Taylor's expansion is for small steps. Ito's lemma needs it because Brownian ste
 
 ### Step 1: the jumps are finite in number
 
-The spike count $N_T$ is Poisson with mean $\lambda T$ = 3. It is finite on every path: a month with no spikes happens with chance 0.0498, with three, 0.2240. So the cuts are finitely many, and every sum on this card has finitely many terms. Each spike time $\tau_i$ is a stopping time: whether spike i has happened by day $t$ is known on day $t$.
+The spike count $`N_T`$ is Poisson with mean $`\lambda T`$ = 3. It is finite on every path: a month with no spikes happens with chance 0.0498, with three, 0.2240. So the cuts are finitely many, and every sum on this card has finitely many terms. Each spike time $`\tau_i`$ is a stopping time: whether spike i has happened by day $`t`$ is known on day $`t`$.
 
 ### Step 2: Ito's lemma on each piece
 
-Between $\tau_i$ and $\tau_{i+1}$ the path solves the continuous rule $dX = \alpha\,dt + \beta\,dW$, started from $X_{\tau_i}$. On that stretch Ito's lemma gives
+Between $`\tau_i`$ and $`\tau_{i+1}`$ the path solves the continuous rule $`dX = \alpha\,dt + \beta\,dW`$, started from $`X_{\tau_i}`$. On that stretch Ito's lemma gives
 
-$$f(X_{\tau_{i+1}-}) - f(X_{\tau_i}) = \int_{\tau_i}^{\tau_{i+1}} f'(X_{t-})\big(\alpha_t\,dt + \beta_t\,dW_t\big) + \tfrac12\int_{\tau_i}^{\tau_{i+1}} f''(X_t)\,\beta_t^2\,dt.$$
+```math
+f(X_{\tau_{i+1}-}) - f(X_{\tau_i}) = \int_{\tau_i}^{\tau_{i+1}} f'(X_{t-})\big(\alpha_t\,dt + \beta_t\,dW_t\big) + \tfrac12\int_{\tau_i}^{\tau_{i+1}} f''(X_t)\,\beta_t^2\,dt.
+```
 
 The first term on the left is the value just before the next spike, the limit of the continuous piece.
 
 ### Step 3: the jump pieces
 
-At $\tau_{i+1}$ the function moves from $f(X_{\tau_{i+1}-})$ to $f(X_{\tau_{i+1}})$. That difference goes into the sum exactly as it is.
+At $`\tau_{i+1}`$ the function moves from $`f(X_{\tau_{i+1}-})`$ to $`f(X_{\tau_{i+1}})`$. That difference goes into the sum exactly as it is.
 
 ### Step 4: add everything
 
-The pieces telescope: each ends where the next jump starts, and each jump ends where the next piece starts. The integrals over the pieces join into integrals over $[0, T]$, since the finitely many spike instants carry no $dt$ weight and no $dW$ weight. The result is the formula.
+The pieces telescope: each ends where the next jump starts, and each jump ends where the next piece starts. The integrals over the pieces join into integrals over $`[0, T]`$, since the finitely many spike instants carry no $`dt`$ weight and no $`dW`$ weight. The result is the formula.
 
 ### Step 5: why Taylor fails at a jump
 
-The quadratic variation of the log price makes the point. Its squared steps add up to $\sigma^2 T$ from the wobble plus $J_i^2$ for each spike. On path 1 the grid sum is 0.36831 against $\sigma^2 T + \sum J_i^2$ = 0.37537.
+The quadratic variation of the log price makes the point. Its squared steps add up to $`\sigma^2 T`$ from the wobble plus $`J_i^2`$ for each spike. On path 1 the grid sum is 0.36831 against $`\sigma^2 T + \sum J_i^2`$ = 0.37537.
 
-The jumps' squares do not shrink to $dt$; they stay the size of a jump squared. Ito's half-curvature term turns squared Brownian steps into time, but a squared jump is a single big number. A second-order Taylor term on it is still an approximation, and higher terms do not vanish.
+The jumps' squares do not shrink to $`dt`$; they stay the size of a jump squared. Ito's half-curvature term turns squared Brownian steps into time, but a squared jump is a single big number. A second-order Taylor term on it is still an approximation, and higher terms do not vanish.
 
-For the log, the slope rule credits each spike with $Y - 1$ instead of $J$, an average error of 0.056625 a spike. Adding half the curvature gives $Y - 1 - \tfrac12(Y-1)^2$, which errs the other way. Only the exact difference is right.
+For the log, the slope rule credits each spike with $`Y - 1`$ instead of $`J`$, an average error of 0.056625 a spike. Adding half the curvature gives $`Y - 1 - \tfrac12(Y-1)^2`$, which errs the other way. Only the exact difference is right.
 
 <details>
 <summary>Detailed proof, for finitely many jumps</summary>
 
-Setting. $(\Omega, \mathcal F, \mathcal F_t, P)$ carries a Brownian motion $W$, a Poisson process $N$ of rate $\lambda$ with jump times $\tau_1 < \tau_2 < \dots$, and jump marks, all independent. $X$ is right-continuous with left limits and satisfies $X_t = X_0 + \int_0^t \alpha_s\,ds + \int_0^t \beta_s\,dW_s + \sum_{\tau_i \le t}\Delta X_{\tau_i}$, with $\alpha$, $\beta$ adapted and $\int_0^T(\lvert\alpha\rvert + \beta^2)\,ds < \infty$ almost surely. Write $\tau_0 = 0$.
+Setting. $`(\Omega, \mathcal F, \mathcal F_t, P)`$ carries a Brownian motion $`W`$, a Poisson process $`N`$ of rate $`\lambda`$ with jump times $`\tau_1 < \tau_2 < \dots`$, and jump marks, all independent. $`X`$ is right-continuous with left limits and satisfies $`X_t = X_0 + \int_0^t \alpha_s\,ds + \int_0^t \beta_s\,dW_s + \sum_{\tau_i \le t}\Delta X_{\tau_i}`$, with $`\alpha`$, $`\beta`$ adapted and $`\int_0^T(\lvert\alpha\rvert + \beta^2)\,ds < \infty`$ almost surely. Write $`\tau_0 = 0`$.
 
-**Pieces are Ito processes.** For each i define $Z^{(i)}_t = X_{\tau_i} + \int_{\tau_i}^{t}\alpha_s\,ds + \int_{\tau_i}^{t}\beta_s\,dW_s$ for $t \ge \tau_i$. Because $\tau_i$ is a stopping time, the integrands $\alpha_s 1_{s > \tau_i}$ and $\beta_s 1_{s > \tau_i}$ are adapted, so $Z^{(i)}$ is a continuous Ito process. On $[\tau_i, \tau_{i+1})$, $X = Z^{(i)}$, and by continuity $Z^{(i)}_{\tau_{i+1}} = X_{\tau_{i+1}-}$.
+**Pieces are Ito processes.** For each i define $`Z^{(i)}_t = X_{\tau_i} + \int_{\tau_i}^{t}\alpha_s\,ds + \int_{\tau_i}^{t}\beta_s\,dW_s`$ for $`t \ge \tau_i`$. Because $`\tau_i`$ is a stopping time, the integrands $`\alpha_s 1_{s > \tau_i}`$ and $`\beta_s 1_{s > \tau_i}`$ are adapted, so $`Z^{(i)}`$ is a continuous Ito process. On $`[\tau_i, \tau_{i+1})`$, $`X = Z^{(i)}`$, and by continuity $`Z^{(i)}_{\tau_{i+1}} = X_{\tau_{i+1}-}`$.
 
-**Ito on each piece.** Apply Ito's lemma for continuous Ito processes ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)) to $f(Z^{(i)})$ between the stopping times $\tau_i \wedge T$ and $\tau_{i+1} \wedge T$: $f(Z^{(i)}_{\tau_{i+1}\wedge T}) - f(X_{\tau_i \wedge T}) = \int f'(Z^{(i)}_s)(\alpha_s\,ds + \beta_s\,dW_s) + \tfrac12\int f''(Z^{(i)}_s)\beta_s^2\,ds$, both integrals over $(\tau_i \wedge T, \tau_{i+1} \wedge T]$. On that whole interval $Z^{(i)}_s = X_{s-}$, its right end included.
+**Ito on each piece.** Apply Ito's lemma for continuous Ito processes ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)) to $`f(Z^{(i)})`$ between the stopping times $`\tau_i \wedge T`$ and $`\tau_{i+1} \wedge T`$: $`f(Z^{(i)}_{\tau_{i+1}\wedge T}) - f(X_{\tau_i \wedge T}) = \int f'(Z^{(i)}_s)(\alpha_s\,ds + \beta_s\,dW_s) + \tfrac12\int f''(Z^{(i)}_s)\beta_s^2\,ds`$, both integrals over $`(\tau_i \wedge T, \tau_{i+1} \wedge T]`$. On that whole interval $`Z^{(i)}_s = X_{s-}`$, its right end included.
 
-**Jumps.** If $\tau_{i+1} \le T$, add $f(X_{\tau_{i+1}}) - f(X_{\tau_{i+1}-})$; this takes the value from $f(Z^{(i)}_{\tau_{i+1}})$ to $f(X_{\tau_{i+1}})$, the start of the next piece.
+**Jumps.** If $`\tau_{i+1} \le T`$, add $`f(X_{\tau_{i+1}}) - f(X_{\tau_{i+1}-})`$; this takes the value from $`f(Z^{(i)}_{\tau_{i+1}})`$ to $`f(X_{\tau_{i+1}})`$, the start of the next piece.
 
-**Assembling.** $N_T < \infty$ almost surely, so only the pieces $i = 0, \dots, N_T$ are non-empty. Summing telescopes the left sides to $f(X_T) - f(X_0)$. The piece integrals add, by additivity of the Ito integral over adjacent stochastic intervals, to integrals over $[0, T]$ with integrand $f'(X_{s-})$ and $f''(X_{s-})\beta_s^2$; replacing $X_{s-}$ by $X_s$ in the $ds$ integral changes it at finitely many instants only. This is the formula. ∎
+**Assembling.** $`N_T < \infty`$ almost surely, so only the pieces $`i = 0, \dots, N_T`$ are non-empty. Summing telescopes the left sides to $`f(X_T) - f(X_0)`$. The piece integrals add, by additivity of the Ito integral over adjacent stochastic intervals, to integrals over $`[0, T]`$ with integrand $`f'(X_{s-})`$ and $`f''(X_{s-})\beta_s^2`$; replacing $`X_{s-}`$ by $`X_s`$ in the $`ds`$ integral changes it at finitely many instants only. This is the formula. ∎
 
-**Averages.** For the averaged forms in the next step one more fact is used: for a bounded integrand $h_s$ that is left-continuous and adapted (predictable), $E\int_0^T h_s\,dN_s = \lambda\,E\int_0^T h_s\,ds$. In words, $N_t - \lambda t$ is a martingale, and a predictable bet against a fair game has average zero. With marks independent of the past, the jump sum's average is $\lambda\,E\int_0^T \big(E_Y f(X_{s-} + \Delta X) - f(X_{s-})\big)\,ds$. Both are proved in Cont and Tankov, Chapter 8, and Øksendal and Sulem, Chapter 1, in Sources.
+**Averages.** For the averaged forms in the next step one more fact is used: for a bounded integrand $`h_s`$ that is left-continuous and adapted (predictable), $`E\int_0^T h_s\,dN_s = \lambda\,E\int_0^T h_s\,ds`$. In words, $`N_t - \lambda t`$ is a martingale, and a predictable bet against a fair game has average zero. With marks independent of the past, the jump sum's average is $`\lambda\,E\int_0^T \big(E_Y f(X_{s-} + \Delta X) - f(X_{s-})\big)\,ds`$. Both are proved in Cont and Tankov, Chapter 8, and Øksendal and Sulem, Chapter 1, in Sources.
 
 **What this card does not prove.** Infinitely many small jumps in finite time. There the jump sum need not converge, the small jumps must be compensated before summing, and the formula is the general one for semimartingales, proved in Protter, Chapter II.
 
@@ -143,47 +153,51 @@ Setting. $(\Omega, \mathcal F, \mathcal F_t, P)$ carries a Brownian motion $W$, 
 
 ### Step 6: the averaged form, and the compensator
 
-Average the jump term. A spike arrives in a slice $dt$ with chance $\lambda\,dt$, independent of the past, and moves $f$ by $f(S_{t-} Y) - f(S_{t-})$ on average over $Y$. So the average change of $f$ per day is
+Average the jump term. A spike arrives in a slice $`dt`$ with chance $`\lambda\,dt`$, independent of the past, and moves $`f`$ by $`f(S_{t-} Y) - f(S_{t-})`$ on average over $`Y`$. So the average change of $`f`$ per day is
 
-$$\mu x f'(x) + \tfrac12\sigma^2 x^2 f''(x) + \lambda\big(E[f(xY)] - f(x)\big), \quad x = S_{t-}.$$
+```math
+\mu x f'(x) + \tfrac12\sigma^2 x^2 f''(x) + \lambda\big(E[f(xY)] - f(x)\big), \quad x = S_{t-}.
+```
 
-This is the generator $L f(x)$, the average rate of change of $f$ per day from the point $x$ ([The generator](../08-Generators%2C%20Densities%20and%20Simulation/01-infinitesimal-generator.md)), with a jump part added.
+This is the generator $`L f(x)`$, the average rate of change of $`f`$ per day from the point $`x`$ ([The generator](../08-Generators%2C%20Densities%20and%20Simulation/01-infinitesimal-generator.md)), with a jump part added.
 
-For $f(x) = x$ this is $(\mu + \lambda k)\,x$, so $E[S_T] = S_0\,e^{(\mu + \lambda k)T}$. The spikes add $\lambda k$ to the average growth. To keep the average price flat at $50, the drift must cancel it: $\mu = -\lambda k$ = −0.035663 a day. That cancelling term is the **compensator**. The slide between spikes in the picture is the compensator at work.
+For $`f(x) = x`$ this is $`(\mu + \lambda k)\,x`$, so $`E[S_T] = S_0\,e^{(\mu + \lambda k)T}`$. The spikes add $`\lambda k`$ to the average growth. To keep the average price flat at $50, the drift must cancel it: $`\mu = -\lambda k`$ = −0.035663 a day. That cancelling term is the **compensator**. The slide between spikes in the picture is the compensator at work.
 
-For $f(x) = x^2$ the rate is $(2\mu + \sigma^2 + \lambda(E[Y^2] - 1))\,x^2$, so
+For $`f(x) = x^2`$ the rate is $`(2\mu + \sigma^2 + \lambda(E[Y^2] - 1))\,x^2`$, so
 
-$$E[S_T^2] = S_0^2\,e^{(2\mu + \sigma^2 + \lambda(E[Y^2]-1))T},$$
+```math
+E[S_T^2] = S_0^2\,e^{(2\mu + \sigma^2 + \lambda(E[Y^2]-1))T},
+```
 
-with $E[Y^2] = e^{2\mu_J + 2\delta^2}$. Ordinary Ito would supply the $\sigma^2$; the spikes supply $\lambda(E[Y^2] - 1)$.
+with $`E[Y^2] = e^{2\mu_J + 2\delta^2}`$. Ordinary Ito would supply the $`\sigma^2`$; the spikes supply $`\lambda(E[Y^2] - 1)`$.
 
 ### Step 7: a second road, conditioning on the spike count
 
-Condition on the number of spikes, $n$. Given $n$, $\log(S_T/S_0)$ is a sum of independent normals: $cT + \sigma W_T$ plus $n$ spike logs. So it is normal with mean $m_n = cT + n\mu_J$ and variance $v_n = \sigma^2 T + n\delta^2$. Weight each case by its Poisson chance $p_n = e^{-\lambda T}(\lambda T)^n/n!$ and add.
+Condition on the number of spikes, $`n`$. Given $`n`$, $`\log(S_T/S_0)`$ is a sum of independent normals: $`cT + \sigma W_T`$ plus $`n`$ spike logs. So it is normal with mean $`m_n = cT + n\mu_J`$ and variance $`v_n = \sigma^2 T + n\delta^2`$. Weight each case by its Poisson chance $`p_n = e^{-\lambda T}(\lambda T)^n/n!`$ and add.
 
-The code does this for n from 0 to 39 and matches every average above to the printed digits. It also gives the chance the month ends above $50: $\sum p_n\,\Phi(m_n/\sqrt{v_n})$ = 0.3433, where $\Phi$ is the bell-curve area to the left. The Merton option price on [Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md) is this same split, applied to a payoff.
+The code does this for n from 0 to 39 and matches every average above to the printed digits. It also gives the chance the month ends above $50: $`\sum p_n\,\Phi(m_n/\sqrt{v_n})`$ = 0.3433, where $`\Phi`$ is the bell-curve area to the left. The Merton option price on [Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md) is this same split, applied to a payoff.
 
-This road is not free of Ito. It uses the log formula above, and $c$ carries Ito's $-\tfrac12\sigma^2$. What it never uses is the jump term's average, the rate of Step 6. So its agreement with Step 6 on $E[S_T]$ and $E[S_T^2]$ is a real test. Its agreement on the log's mean and variance only checks the Poisson averaging. The test of the formula itself, path by path, is the simulation in the code.
+This road is not free of Ito. It uses the log formula above, and $`c`$ carries Ito's $`-\tfrac12\sigma^2`$. What it never uses is the jump term's average, the rate of Step 6. So its agreement with Step 6 on $`E[S_T]`$ and $`E[S_T^2]`$ is a real test. Its agreement on the log's mean and variance only checks the Poisson averaging. The test of the formula itself, path by path, is the simulation in the code.
 
 ---
 
 ## Worked numbers, by hand
 
-The price: $S_0$ = $50, $\sigma$ = 0.03 per root day, $\lambda$ = 0.1 a day, $\mu_J$ = 0.30, $\delta$ = 0.10, $T$ = 30 days.
+The price: $`S_0`$ = $50, $`\sigma`$ = 0.03 per root day, $`\lambda`$ = 0.1 a day, $`\mu_J`$ = 0.30, $`\delta`$ = 0.10, $`T`$ = 30 days.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| average spike factor less 1 | e^(0.30 + 0.005) − 1 | $k$ = 0.356625 |
-| compensator | −0.1 × 0.356625 | $\mu$ = −0.035663 a day |
-| log drift between spikes | −0.035663 − 0.000450 | $c$ = −0.036113 a day |
+| average spike factor less 1 | e^(0.30 + 0.005) − 1 | $`k`$ = 0.356625 |
+| compensator | −0.1 × 0.356625 | $`\mu`$ = −0.035663 a day |
+| log drift between spikes | −0.035663 − 0.000450 | $`c`$ = −0.036113 a day |
 | over the month | 30 × −0.036113 | −1.083375 |
 | spikes' share of the log | 0.1 × 30 × 0.30 | +0.900000 |
-| average log of $S_T/S_0$ | −1.083375 + 0.900000 | **−0.183375** |
+| average log of $`S_T/S_0`$ | −1.083375 + 0.900000 | **−0.183375** |
 | typical price | 50 × e^(−0.183375) | **$41.62** |
 | variance of the log | 0.027000 + 3 × (0.090000 + 0.010000) | 0.327000 |
 | average squared factor | e^(2 × 0.30 + 2 × 0.010000) | 1.858928 |
 | exponent for the average square | 30 × (−0.071325 + 0.000900 + 0.085893) | 0.464034 |
-| average of $S_T$ squared | 2500 × e^0.464034 | 3976.1930 |
+| average of $`S_T`$ squared | 2500 × e^0.464034 | 3976.1930 |
 | spread of the month-end price | square root of (3976.1930 − 2500) | **$38.42** |
 
 The average month ends at $50.00, but the typical month ends at $41.62 and only about 34 months in 100 end above $50. A few months with many spikes hold the average up: the 18 percent of months with five or more spikes carry 38 percent of it. When the spikes come does not matter, because the month-end log depends only on how many spikes came and how big they were.
@@ -193,10 +207,10 @@ The average month ends at $50.00, but the typical month ends at $41.62 and only 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Drop the jump term: plain Ito | average log −1.083375 | the spikes' +0.9 is lost; only the slide remains |
-| Slope times the jump: each spike adds $Y - 1$ to the log | average log −0.013500 | a spike is not small: $Y - 1$ overstates its log by 0.056625 on average |
-| Taylor to second order on each spike | average log −0.232017 | a squared jump is not $dt$; the series does not stop |
-| No compensator, $\mu = 0$ | average price $145.75 instead of $50.00 | the spikes' average lift of $\lambda k$ a day is never paid back |
-| Drop "finitely many jumps": the Lévy measure (the rate of jumps of each size) $x^{-2.5}\,dx$ on sizes 0 to 1, no compensator | average jump sum a day 18.0, 198.0, 1998.0, 19998.0 as the smallest size counted falls from 1e-2 to 1e-8 | the sum of jump terms has no limit; the small jumps must be compensated before summing |
+| Slope times the jump: each spike adds $`Y - 1`$ to the log | average log −0.013500 | a spike is not small: $`Y - 1`$ overstates its log by 0.056625 on average |
+| Taylor to second order on each spike | average log −0.232017 | a squared jump is not $`dt`$; the series does not stop |
+| No compensator, $`\mu = 0`$ | average price $145.75 instead of $50.00 | the spikes' average lift of $`\lambda k`$ a day is never paid back |
+| Drop "finitely many jumps": the Lévy measure (the rate of jumps of each size) $`x^{-2.5}\,dx`$ on sizes 0 to 1, no compensator | average jump sum a day 18.0, 198.0, 1998.0, 19998.0 as the smallest size counted falls from 1e-2 to 1e-8 | the sum of jump terms has no limit; the small jumps must be compensated before summing |
 
 ---
 
@@ -206,7 +220,7 @@ The code takes three roads.
 
 - **Road 1** is Ito's formula with jumps, giving the averages of the log, the price and its square.
 - **Road 2** conditions on the spike count and adds Poisson-weighted normal cases; it uses the log formula but not the jump term's average, so its match with road 1 on the average price and its square is the test of Step 6.
-- **Road 3** runs 4000 seeded months (SplitMix64; normals by Box-Muller; spike gaps exponential, drawn as minus the log of a uniform over $\lambda$).
+- **Road 3** runs 4000 seeded months (SplitMix64; normals by Box-Muller; spike gaps exponential, drawn as minus the log of a uniform over $`\lambda`$).
 
 Each month is stepped by Euler's rule (add the drift times the step and the kick times the Brownian step, as on [Euler-Maruyama](../08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md)) on grids of 1, 4 and 16 steps a day, with each spike applied exactly in the step it falls in, and compared path by path with the closed form for the log and with the slope rule: that comparison is the test of Ito's formula with jumps itself. Every simulated average is printed with its standard error.
 
@@ -620,19 +634,19 @@ xychart-beta
     line [20.42, 5.02, 1.31]
 ```
 
-The upper line is the slope rule, $\log S_0 + cT + \sigma W_T + \sum(Y_i - 1)$: it settles near 170 thousandths, a spike count times 0.0566, however fine the grid.
+The upper line is the slope rule, $`\log S_0 + cT + \sigma W_T + \sum(Y_i - 1)`$: it settles near 170 thousandths, a spike count times 0.0566, however fine the grid.
 
-The lower line is Ito's formula with jumps, $\log S_0 + cT + \sigma W_T + \sum J_i$: its gap is only Euler's step error, and it falls about fourfold each time the steps are cut by four, from 20.42 thousandths at one step a day to 1.31 at sixteen. Each point is an average over the same 4000 sampled months, with a standard error of at most 0.12 thousandths on the lower line and 1.84 on the upper.
+The lower line is Ito's formula with jumps, $`\log S_0 + cT + \sigma W_T + \sum J_i`$: its gap is only Euler's step error, and it falls about fourfold each time the steps are cut by four, from 20.42 thousandths at one step a day to 1.31 at sixteen. Each point is an average over the same 4000 sampled months, with a standard error of at most 0.12 thousandths on the lower line and 1.84 on the upper.
 
 ### Lean
 
 Lean proves Ito's formula with jumps on every path without wobble, plus the spike averages and the worked numbers.
 
-- Suppose a path has drift $\alpha$, no wobble, and finitely many jumps up to day $T$, and $f$ has a continuous curvature. Then $f$ changes by its slope times the drift, integrated up to day $T$, plus its exact before-and-after difference at each jump.
-- Take a spike log $J$, normal with mean $\mu_J$ and standard deviation $\delta$, and $Y = e^J$. Then $E[Y] = e^{\mu_J + \delta^2/2}$ and $E[Y^2] = e^{2\mu_J + 2\delta^2}$.
-- Take the Lévy measure $x^{-2.5}\,dx$ on jump sizes 0 to 1, with no compensator. Then the average jump sum a day, from the smallest size counted $\epsilon$ up to 1, is $2(\epsilon^{-1/2} - 1)$. It grows without bound as $\epsilon$ falls to 0.
-- Take $\lambda$ = 0.1, $T$ = 30, $\mu_J$ = 0.30, $\delta$ = 0.10 and $\sigma$ = 0.03. Then $\lambda T$ = 3 spikes are expected, the spikes' share of the average log is 0.9, and the log's variance is 0.327.
-- Take $\epsilon$ = 1e-2, 1e-4, 1e-6 and 1e-8. Then $\epsilon^{-1/2}$ is 10, 100, 1000 and 10000, and the jump sum a day 18, 198, 1998 and 19998.
+- Suppose a path has drift $`\alpha`$, no wobble, and finitely many jumps up to day $`T`$, and $`f`$ has a continuous curvature. Then $`f`$ changes by its slope times the drift, integrated up to day $`T`$, plus its exact before-and-after difference at each jump.
+- Take a spike log $`J`$, normal with mean $`\mu_J`$ and standard deviation $`\delta`$, and $`Y = e^J`$. Then $`E[Y] = e^{\mu_J + \delta^2/2}`$ and $`E[Y^2] = e^{2\mu_J + 2\delta^2}`$.
+- Take the Lévy measure $`x^{-2.5}\,dx`$ on jump sizes 0 to 1, with no compensator. Then the average jump sum a day, from the smallest size counted $`\epsilon`$ up to 1, is $`2(\epsilon^{-1/2} - 1)`$. It grows without bound as $`\epsilon`$ falls to 0.
+- Take $`\lambda`$ = 0.1, $`T`$ = 30, $`\mu_J`$ = 0.30, $`\delta`$ = 0.10 and $`\sigma`$ = 0.03. Then $`\lambda T`$ = 3 spikes are expected, the spikes' share of the average log is 0.9, and the log's variance is 0.327.
+- Take $`\epsilon`$ = 1e-2, 1e-4, 1e-6 and 1e-8. Then $`\epsilon^{-1/2}`$ is 10, 100, 1000 and 10000, and the jump sum a day 18, 198, 1998 and 19998.
 
 Lean has no Ito integral, so the wobble term, Steps 6 and 7 and the simulations are left to the Python and Rust checks.
 
@@ -886,11 +900,11 @@ example : (10000 : ℚ) ^ 2 = 10 ^ 8 ∧ 2 * ((10000 : ℚ) - 1) = 19998 := by n
 ## The usual mistake
 
 > [!warning]
-> **Treating a jump as one more small step.** The chain rule's slope, and Ito's half-curvature, are tools for steps that shrink. A spike does not shrink. Applying the slope to it puts the month's average log at −0.0135 instead of −0.1834; adding the second-order term overshoots to −0.2320. The jump term is an exact difference, $f(\text{after}) - f(\text{before})$, and needs no expansion.
+> **Treating a jump as one more small step.** The chain rule's slope, and Ito's half-curvature, are tools for steps that shrink. A spike does not shrink. Applying the slope to it puts the month's average log at −0.0135 instead of −0.1834; adding the second-order term overshoots to −0.2320. The jump term is an exact difference, $`f(\text{after}) - f(\text{before})`$, and needs no expansion.
 >
-> - **Forgetting the compensator.** Spikes that lift the price on average make the average grow by $\lambda k$ a day. Without $\mu = -\lambda k$ the month's average price is $145.75, not $50.
-> - **Using the price after the spike.** The spike multiplies $S_{t-}$. Writing $S_t$ in the coefficients makes the rule circular at the spike instant.
-> - **Reading $dN_t$ as $\lambda\,dt$.** $dN_t$ is 0 almost always and 1 at a spike. Only its average is $\lambda\,dt$; the difference $dN_t - \lambda\,dt$ is the fair-game part that the averaged formulas drop.
+> - **Forgetting the compensator.** Spikes that lift the price on average make the average grow by $`\lambda k`$ a day. Without $`\mu = -\lambda k`$ the month's average price is $145.75, not $50.
+> - **Using the price after the spike.** The spike multiplies $`S_{t-}`$. Writing $`S_t`$ in the coefficients makes the rule circular at the spike instant.
+> - **Reading $`dN_t`$ as $`\lambda\,dt`$.** $`dN_t`$ is 0 almost always and 1 at a spike. Only its average is $`\lambda\,dt`$; the difference $`dN_t - \lambda\,dt`$ is the fair-game part that the averaged formulas drop.
 > - **Believing Merton's spikes fade.** They do not. Between spikes the price slides by the compensator's 3.6 percent a day, on every path, spike or no spike; a real electricity spike decays by itself.
 
 ---
@@ -903,7 +917,7 @@ example : (10000 : ℚ) ^ 2 = 10 ^ 8 ∧ 2 * ((10000 : ℚ) - 1) = 19998 := by n
 - **Control with jumps.** Choosing actions when the state can leap, such as stocking a warehouse against sudden demand, uses this formula inside the equation of [Stochastic control](03-stochastic-control-and-the-hjb-equation.md).
 
 > **Say it back**
-> A jump diffusion wobbles like Brownian motion and leaps at Poisson times. Between leaps, Ito's lemma applies unchanged. At a leap, a function moves by exactly its value after minus its value before, with no Taylor expansion, because a leap is not small. For the log of Merton's price that gives the wobble's log drift plus the sum of the spike logs. Averaging the jump term at rate $\lambda$ gives the compensator, the drift that keeps the average price flat.
+> A jump diffusion wobbles like Brownian motion and leaps at Poisson times. Between leaps, Ito's lemma applies unchanged. At a leap, a function moves by exactly its value after minus its value before, with no Taylor expansion, because a leap is not small. For the log of Merton's price that gives the wobble's log drift plus the sum of the spike logs. Averaging the jump term at rate $`\lambda`$ gives the compensator, the drift that keeps the average price flat.
 
 ---
 
@@ -915,7 +929,7 @@ example : (10000 : ℚ) ^ 2 = 10 ^ 8 ∧ 2 * ((10000 : ℚ) - 1) = 19998 := by n
 ## Where this goes next
 
 - [Semimartingales](05-semimartingales-in-outline.md): the one class of processes on which Ito's formula holds, jumps of every size and number included.
-- When prices jump: the averaged rate of Step 6, with its $E[f(xY)] - f(x)$ term, as an equation for prices and expectations.
+- When prices jump: the averaged rate of Step 6, with its $`E[f(xY)] - f(x)`$ term, as an equation for prices and expectations.
 - Stable laws: jump laws with tails so heavy that the variance on this card is infinite.
 
 This card handles finitely many jumps, cut out one at a time; what Ito's formula becomes when infinitely many small jumps arrive in every second, and what a stochastic integral against such a path means, is the question [Semimartingales](05-semimartingales-in-outline.md) answers.

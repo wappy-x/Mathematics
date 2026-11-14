@@ -12,13 +12,13 @@ Subtract Tuesday's slip from Monday's. The pastries cancel, one coffee is left, 
 
 That worked because each price is only multiplied by a count and added on: such an equation is **linear**, and a pile that must all hold at once is a **system**.
 
-Strip the words off the slips and only the counts are left, written row by row in square brackets, one row per day: `[[2, 1], [1, 1]]`, a matrix of size 2 by 2. The prices are a list, $(x, y)$, the takings another, $(11, 7)$; multiplying counts into prices rebuilds both totals ([Matrix times vector](../04-Matrices/02-matrix-times-vector.md)). The cafe is one line:
+Strip the words off the slips and only the counts are left, written row by row in square brackets, one row per day: `[[2, 1], [1, 1]]`, a matrix of size 2 by 2. The prices are a list, $`(x, y)`$, the takings another, $`(11, 7)`$; multiplying counts into prices rebuilds both totals ([Matrix times vector](../04-Matrices/02-matrix-times-vector.md)). The cafe is one line:
 
-**counts × prices = takings**, or in letters, $A x = b$.
+**counts × prices = takings**, or in letters, $`A x = b`$.
 
-**That line asks one question: which mix of $A$'s columns lands exactly on $b$? One mix, a whole line of mixes, or none — and the columns of $A$ settle which case before $b$ is read.**
+**That line asks one question: which mix of $`A`$'s columns lands exactly on $`b`$? One mix, a whole line of mixes, or none — and the columns of $`A`$ settle which case before $`b`$ is read.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works; $A x = b$ itself is a definition.
+**What kind of fact this is:** a theorem, proved on this card in Why it works; $`A x = b`$ itself is a definition.
 
 ### The picture: three days, three lines
 
@@ -41,32 +41,36 @@ The steeper line is Monday: the price pairs with 2 coffees and 1 pastry adding t
 
 The cafe, as one equation:
 
-$$[[2,\,1],\,[1,\,1]]\,(x,\,y) \;=\; (11,\,7)$$
+```math
+[[2,\,1],\,[1,\,1]]\,(x,\,y) \;=\; (11,\,7)
+```
 
 Put letters where the numbers are and every system has this shape:
 
-$$A x = b$$
+```math
+A x = b
+```
 
 **Read it aloud:** the counts, multiplied into the unknown prices, give the takings.
 
 | Symbol | Plain meaning | In our example | Change it and the answer… |
 | --- | --- | --- | --- |
-| $A$ | the counts: a row per equation, a column per unknown | `[[2, 1], [1, 1]]` | different slips, different prices |
-| $x$ | the unknowns being solved for | $(4, 3)$: coffee $4.00, pastry $3.00 | the answer, not an input |
-| $y$ | the pastry price, the second entry of $x$ | $3.00 | fixed by the slips too |
-| $b$ | the totals, one per row of $A$ | $(11, 7)$ | move $b$, the answer moves |
-| $A x$ | $A$'s columns mixed, with $x$'s entries as the amounts | $(11, 7)$, the takings rebuilt | — |
-| $A^{-1}$ | the matrix that undoes $A$, when it exists | exists here, not needed here | [The inverse matrix](03-inverse-matrix.md) |
+| $`A`$ | the counts: a row per equation, a column per unknown | `[[2, 1], [1, 1]]` | different slips, different prices |
+| $`x`$ | the unknowns being solved for | $`(4, 3)`$: coffee $4.00, pastry $3.00 | the answer, not an input |
+| $`y`$ | the pastry price, the second entry of $`x`$ | $3.00 | fixed by the slips too |
+| $`b`$ | the totals, one per row of $`A`$ | $`(11, 7)`$ | move $`b`$, the answer moves |
+| $`A x`$ | $`A`$'s columns mixed, with $`x`$'s entries as the amounts | $`(11, 7)`$, the takings rebuilt | — |
+| $`A^{-1}`$ | the matrix that undoes $`A`$, when it exists | exists here, not needed here | [The inverse matrix](03-inverse-matrix.md) |
 
-Two words do the classifying, both about $A$ alone. The **span** of the columns is every list their mixes reach; the columns are **independent** when neither is a multiple of the other ([Linear independence](../03-Vectors/04-linear-independence.md)).
+Two words do the classifying, both about $`A`$ alone. The **span** of the columns is every list their mixes reach; the columns are **independent** when neither is a multiple of the other ([Linear independence](../03-Vectors/04-linear-independence.md)).
 
-One warning about $x$: alone it is the coffee price, but in $A x = b$ the letter means the whole list $(x, y)$.
+One warning about $`x`$: alone it is the coffee price, but in $`A x = b`$ the letter means the whole list $`(x, y)`$.
 
 ### When it holds
 
 - **Each total is a price times a count, added up.** A two-for-one deal is not linear, and no matrix holds it.
 - **The prices hold still across the days.** If coffee rose on Tuesday, three unknowns face two rows and nothing is pinned.
-- **The totals are exact.** With more days than prices, or one column a multiple of the other, rounded takings leave $b$ just off the span, so nothing fits at all.
+- **The totals are exact.** With more days than prices, or one column a multiple of the other, rounded takings leave $`b`$ just off the span, so nothing fits at all.
 
 ---
 
@@ -74,13 +78,13 @@ One warning about $x$: alone it is the coffee price, but in $A x = b$ the letter
 
 ### Step 0: the columns are the things being mixed
 
-Multiply $A$ into $(4, 3)$ the column way ([Matrix times vector](../04-Matrices/02-matrix-times-vector.md)):
+Multiply $`A`$ into $`(4, 3)`$ the column way ([Matrix times vector](../04-Matrices/02-matrix-times-vector.md)):
 
 **4.00 × (2, 1) + 3.00 × (1, 1) = (11.00, 7.00)**
 
-Read the first column, $(2, 1)$, as *one coffee*: twice in Monday's total, once in Tuesday's. The second, $(1, 1)$, is *one pastry*, once each day. $A x$ mixes one coffee with one pastry, the amounts being the prices.
+Read the first column, $`(2, 1)`$, as *one coffee*: twice in Monday's total, once in Tuesday's. The second, $`(1, 1)`$, is *one pastry*, once each day. $`A x`$ mixes one coffee with one pastry, the amounts being the prices.
 
-Solving $A x = b$ is that sentence backwards: **find the amounts that mix the columns onto the takings.**
+Solving $`A x = b`$ is that sentence backwards: **find the amounts that mix the columns onto the takings.**
 
 ### Step 1: elimination knocks one unknown out
 
@@ -94,32 +98,32 @@ The till-slip subtraction at the top is the code's second road: Tuesday says y =
 
 Suppose Tuesday had been 4 coffees and 2 pastries for $22. The counts are `[[2, 1], [4, 2]]`, row two exactly twice row one: Tuesday adds nothing, it is Monday said louder.
 
-Look at the columns, $(2, 4)$ and $(1, 2)$: the first is twice the second. Both lie along one line, so they are **dependent**, and every mix lands on that line, the multiples of $(1, 2)$: the span has collapsed from the plane to a line.
+Look at the columns, $`(2, 4)`$ and $`(1, 2)`$: the first is twice the second. Both lie along one line, so they are **dependent**, and every mix lands on that line, the multiples of $`(1, 2)`$: the span has collapsed from the plane to a line.
 
-Now the takings decide. $(11, 22)$ is 11 × $(1, 2)$, so it sits on the line: mixes exist, and once one does, a whole line does. Any prices with 2x + y = 11 fit — the code prints $(0.00, 11.00)$, $(2.00, 7.00)$, $(4.00, 3.00)$, $(5.50, 0.00)$ — and row two vanishes to 0 = 0.
+Now the takings decide. $`(11, 22)`$ is 11 × $`(1, 2)`$, so it sits on the line: mixes exist, and once one does, a whole line does. Any prices with 2x + y = 11 fit — the code prints $`(0.00, 11.00)`$, $`(2.00, 7.00)`$, $`(4.00, 3.00)`$, $`(5.50, 0.00)`$ — and row two vanishes to 0 = 0.
 
-Change that total to $23 and $(11, 23)$ is off the line: no mix reaches it, and elimination ends at 0 = 1.00, which nothing can satisfy.
+Change that total to $23 and $`(11, 23)`$ is off the line: no mix reaches it, and elimination ends at 0 = 1.00, which nothing can satisfy.
 
 ### Step 3: the three outcomes, in one table
 
-| The columns of $A$ | Where $b$ sits | Outcome | The cafe |
+| The columns of $`A`$ | Where $`b`$ sits | Outcome | The cafe |
 | --- | --- | --- | --- |
 | independent, neither a multiple of the other | anywhere: they span the whole plane | exactly one answer | prices (4.00, 3.00) |
 | dependent, one a multiple of the other | on their line | a line of answers | takings (11, 22) |
 | dependent, one a multiple of the other | off their line | no answer | takings (11, 23) |
 
-That is the "before you start" in the title: for a square system, independent columns give one answer for every $b$, while dependent columns give none or infinitely many, and only then does $b$ matter. One number runs the test: top-left times bottom-right, minus top-right times bottom-left — 1 for the cafe, 0 for the doubled Tuesday, and zero is the collapse. That number is the determinant, [Determinants](04-determinants.md).
+That is the "before you start" in the title: for a square system, independent columns give one answer for every $`b`$, while dependent columns give none or infinitely many, and only then does $`b`$ matter. One number runs the test: top-left times bottom-right, minus top-right times bottom-left — 1 for the cafe, 0 for the doubled Tuesday, and zero is the collapse. That number is the determinant, [Determinants](04-determinants.md).
 
 <details>
 <summary>Detailed proof: why there is no fourth outcome</summary>
 
-Suppose two price pairs both fit, $(x, y)$ and $(x', y')$. Monday gives 2x + y = 11 and 2x' + y' = 11; subtracting, 2(x − x') + (y − y') = 0, and every row does the same. So the difference $d$, not itself zero, mixes the columns onto $(0, 0)$: the columns are dependent. Backwards: independent columns allow at most one answer, and they span the plane, so every $b$ is reached.
+Suppose two price pairs both fit, $`(x, y)`$ and $`(x', y')`$. Monday gives 2x + y = 11 and 2x' + y' = 11; subtracting, 2(x − x') + (y − y') = 0, and every row does the same. So the difference $`d`$, not itself zero, mixes the columns onto $`(0, 0)`$: the columns are dependent. Backwards: independent columns allow at most one answer, and they span the plane, so every $`b`$ is reached.
 
-Adding any multiple of $d$ to a pair that fits changes no total, so two answers force infinitely many — a line along $d$. For the doubled Tuesday $d = (1, -2)$, one more coffee and two fewer pastries: the code adds it to (4.00, 3.00), landing on (5.00, 1.00).
+Adding any multiple of $`d`$ to a pair that fits changes no total, so two answers force infinitely many — a line along $`d`$. For the doubled Tuesday $`d = (1, -2)`$, one more coffee and two fewer pastries: the code adds it to (4.00, 3.00), landing on (5.00, 1.00).
 
 </details>
 
-The top row has a shortcut: with independent columns and $A$ square, one matrix undoes $A$, written $A^{-1}$, so $x = A^{-1} b$ in one multiplication ([The inverse matrix](03-inverse-matrix.md)). Counting the surviving columns, and the directions squashed flat, is [Rank and nullity](05-rank-nullity.md).
+The top row has a shortcut: with independent columns and $`A`$ square, one matrix undoes $`A`$, written $`A^{-1}`$, so $`x = A^{-1} b`$ in one multiplication ([The inverse matrix](03-inverse-matrix.md)). Counting the surviving columns, and the directions squashed flat, is [Rank and nullity](05-rank-nullity.md).
 
 ---
 
@@ -145,7 +149,7 @@ A coffee is $4.00 and a pastry is $3.00 — the only pair that fits both days.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Dividing takings by coffee counts, 11 / 2 and 7 / 1 | (5.50, 7.00) | No dividing by a matrix, and each total mixes both prices. |
-| Feeding the totals in the wrong order, $b$ = (7, 11) | (-4.00, 15.00) | Rows of $A$ and entries of $b$ are days in the same order; swapped, a different cafe. |
+| Feeding the totals in the wrong order, $`b`$ = (7, 11) | (-4.00, 15.00) | Rows of $`A`$ and entries of $`b`$ are days in the same order; swapped, a different cafe. |
 | Reporting one answer for the doubled Tuesday | (4.00, 3.00) | They fit, but so do (0.00, 11.00), (2.00, 7.00) and (5.50, 0.00) — one point is not *the* answer. |
 
 The code prints all three.
@@ -346,9 +350,9 @@ The two outputs match line for line.
 
 Lean proves the card's theorem for every matrix of real numbers, of any size.
 
-- A square $A$ with independent columns gives exactly one answer for every $b$.
-- A square $A$ with dependent columns gives infinitely many answers when $b$ is on the span, and none when it is off.
-- Two different answers force dependent columns and a whole line of answers, whatever the shape of $A$.
+- A square $`A`$ with independent columns gives exactly one answer for every $`b`$.
+- A square $`A`$ with dependent columns gives infinitely many answers when $`b`$ is on the span, and none when it is off.
+- Two different answers force dependent columns and a whole line of answers, whatever the shape of $`A`$.
 - For 2 by 2, the columns are independent exactly when top-left times bottom-right, minus top-right times bottom-left, is not zero.
 - The cafe's prices, the doubled Tuesday's fitting pairs and the impossible $23 day, all exact.
 
@@ -542,7 +546,7 @@ example : !![(2 : ℝ), 1; 1, 1] *ᵥ ![-4, 15] = ![7, 11] := by
 > [!warning]
 > **Two equations and two unknowns do not guarantee one answer.** The doubled Tuesday has two of each and a square block of counts, yet its answers number infinitely many or none. What decides is whether the columns are independent.
 >
-> - **"Just divide by $A$."** There is no dividing by a matrix; the nearest thing is the inverse, [The inverse matrix](03-inverse-matrix.md), which exists only when the columns are independent.
+> - **"Just divide by $`A`$."** There is no dividing by a matrix; the nearest thing is the inverse, [The inverse matrix](03-inverse-matrix.md), which exists only when the columns are independent.
 > - **"No answer means I slipped up."** No: the $23 day is impossible, two days contradicting each other, and 0 = 1.00 says so.
 > - **"A line of answers means any prices at all."** They still satisfy 2x + y = 11: one choice is free, the other follows.
 
@@ -551,32 +555,32 @@ example : !![(2 : ℝ), 1; 1, 1] *ᵥ ![-4, 15] = ![7, 11] := by
 ## Where you meet it in real life
 
 - **Recovering prices from totals.** Splitting a bill from each order and each round's total is this card exactly.
-- **Circuits and pipe networks.** The rule for currents at a junction is linear, so a circuit is one $A x = b$.
-- **Fitting a line to data.** More rows than unknowns, so $b$ almost never lands on the span: no exact answer, and the closest miss is taken by least squares.
+- **Circuits and pipe networks.** The rule for currents at a junction is linear, so a circuit is one $`A x = b`$.
+- **Fitting a line to data.** More rows than unknowns, so $`b`$ almost never lands on the span: no exact answer, and the closest miss is taken by least squares.
 
 > **Say it back**
-> A pile of linear equations is one matrix equation, $A x = b$: counts in $A$, unknowns in $x$, totals in $b$. Multiplying $A$ into $x$ mixes $A$'s columns, so solving means finding the mix that lands on $b$. Elimination does it: subtract a multiple of one row from another to kill an unknown, then read the answers back up. Independent columns in a square $A$ give one answer whatever $b$ is — the cafe's $4.00 coffee and $3.00 pastry. Collapsed onto one line, $b$ on the line gives a line of answers, $b$ off it none.
+> A pile of linear equations is one matrix equation, $`A x = b`$: counts in $`A`$, unknowns in $`x`$, totals in $`b`$. Multiplying $`A`$ into $`x`$ mixes $`A`$'s columns, so solving means finding the mix that lands on $`b`$. Elimination does it: subtract a multiple of one row from another to kill an unknown, then read the answers back up. Independent columns in a square $`A`$ give one answer whatever $`b`$ is — the cafe's $4.00 coffee and $3.00 pastry. Collapsed onto one line, $`b`$ on the line gives a line of answers, $`b`$ off it none.
 
 ---
 
 ## What this builds on
 
-- [Matrix times vector](../04-Matrices/02-matrix-times-vector.md): why $A x$ mixes $A$'s columns.
+- [Matrix times vector](../04-Matrices/02-matrix-times-vector.md): why $`A x`$ mixes $`A`$'s columns.
 - [Two equations, two unknowns](../01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): the same job with no matrices.
 - [Linear independence](../03-Vectors/04-linear-independence.md): the test that picks the outcome.
 
 ## Where this goes next
 
 - [Gaussian elimination](02-gaussian-elimination.md): the same row moves, organised, past 2 by 2.
-- [Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the other question, $b$ a multiple of $x$.
+- [Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the other question, $`b`$ a multiple of $`x`$.
 - [Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md): far more rows than unknowns.
-- [Hedging three Greeks at once](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/02-delta-gamma-vega-hedging.md): the Greeks are a price's sensitivities to market moves, and the hedge sizes are the cancelling $x$.
+- [Hedging three Greeks at once](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/02-delta-gamma-vega-hedging.md): the Greeks are a price's sensitivities to market moves, and the hedge sizes are the cancelling $`x`$.
 - [Kirchhoff's laws](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/01-kirchhoffs-laws-and-equivalent-circuits.md): junction and loop rules, one system.
 - [Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md): a heat or stress field, chopped up.
 - [Linear programs](../../14-Applied%20and%20computational/05-Operations%20Research/01-modelling-with-linear-programs.md): the same rows, plus inequalities and a cost; rows as walls, answers as corners.
-- [Conjugate gradient](../../15-Optimization/02-Unconstrained%20Methods/07-conjugate-gradient-method.md): huge systems by descent, no $A^{-1}$.
-- [Newton in several unknowns, and Broyden when a Jacobian is too expensive](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/07-newton-for-systems-and-broyden.md): a curved system, one solve per step, with the Jacobian (the table of slopes) as $A$.
-- [Matrix norms and the condition number](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/01-matrix-norms-and-the-condition-number.md): how far $x$ moves when $b$ is rounded.
+- [Conjugate gradient](../../15-Optimization/02-Unconstrained%20Methods/07-conjugate-gradient-method.md): huge systems by descent, no $`A^{-1}`$.
+- [Newton in several unknowns, and Broyden when a Jacobian is too expensive](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/07-newton-for-systems-and-broyden.md): a curved system, one solve per step, with the Jacobian (the table of slopes) as $`A`$.
+- [Matrix norms and the condition number](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/01-matrix-norms-and-the-condition-number.md): how far $`x`$ moves when $`b`$ is rounded.
 - [One polynomial through n points](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/02-lagrange-and-newton-interpolation.md): a curve through points, solved for coefficients.
 
 Which outcome holds is settled here; reaching the answer when the counts fill a page is the bookkeeping of [Gaussian elimination](02-gaussian-elimination.md).

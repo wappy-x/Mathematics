@@ -37,36 +37,40 @@ This is one sample: the first of 20000 games the code plays at a fair table, see
 
 ## The formula
 
-Notation first, in words. The chips after round n are written $X_n$, the value of the process at time n, with time counted in rounds ([Stochastic processes](01-processes-and-paths.md)). Between the walls, $X_n$ is a simple random walk ([Simple random walk](02-simple-random-walk.md)): each round adds 1 with chance $p$ and subtracts 1 with chance $q = 1 - p$, independently of every other round. The game ends at the round $T$, the first round at which the chips reach 0 or the target $L$.
+Notation first, in words. The chips after round n are written $`X_n`$, the value of the process at time n, with time counted in rounds ([Stochastic processes](01-processes-and-paths.md)). Between the walls, $`X_n`$ is a simple random walk ([Simple random walk](02-simple-random-walk.md)): each round adds 1 with chance $`p`$ and subtracts 1 with chance $`q = 1 - p`$, independently of every other round. The game ends at the round $`T`$, the first round at which the chips reach 0 or the target $`L`$.
 
-Start with $k$ chips. Write $h_k$ for the chance of reaching $L$ before 0, and $t_k$ for the expected number of rounds, $E[T]$. Then
+Start with $`k`$ chips. Write $`h_k`$ for the chance of reaching $`L`$ before 0, and $`t_k`$ for the expected number of rounds, $`E[T]`$. Then
 
-$$h_k = \frac{k}{L} \quad \text{if } p = q, \qquad h_k = \frac{1 - r^k}{1 - r^L}, \quad r = \frac{q}{p}, \quad \text{if } p \ne q.$$
+```math
+h_k = \frac{k}{L} \quad \text{if } p = q, \qquad h_k = \frac{1 - r^k}{1 - r^L}, \quad r = \frac{q}{p}, \quad \text{if } p \ne q.
+```
 
 **Read it aloud:** at a fair table the chance of doubling up is the fraction of the way to the target already held; at a tilted table each chip nearer the target adds r times the chance the chip below it added, and the answer is the share of those growing steps already climbed.
 
 The expected length follows from the chance:
 
-$$t_k = k\,(L - k) \quad \text{if } p = q, \qquad t_k = \frac{k - L\,h_k}{q - p} \quad \text{if } p \ne q.$$
+```math
+t_k = k\,(L - k) \quad \text{if } p = q, \qquad t_k = \frac{k - L\,h_k}{q - p} \quad \text{if } p \ne q.
+```
 
 **Read it aloud:** a fair game lasts, on average, the distance to the floor times the distance to the target; a tilted game lasts the expected chips lost, divided by the chips lost per round.
 
-The chance of ruin is $1 - h_k$, because the game ends at one wall or the other (Step 1 proves it ends).
+The chance of ruin is $`1 - h_k`$, because the game ends at one wall or the other (Step 1 proves it ends).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X_n$, $n$ | chips held after round n; the round count | 10 at round 0 | — |
-| $k$ | chips at the start | 10 | $h_k$ rises towards 1 |
-| $L$ | the target, where she leaves | 20 | $h_k$ falls, $t_k$ grows |
-| $p$ | chance of winning one round | 0.50 or 0.49 | $h_k$ rises |
-| $q$ | chance of losing one round, $1 - p$ | 0.50 or 0.51 | $h_k$ falls |
-| $r$ | the tilt, $q/p$ | 1 or 1.040816 | $h_k$ falls |
-| $h_k$ | chance of reaching $L$ before 0 from $k$ chips | 0.5 or 0.4013 | — |
-| $t_k$ | expected rounds until either wall, $E[T]$ | 100 or 98.70 | — |
-| $T$ | the round the game ends | 112 in the pictured game | — |
-| $d_k$ | the step up in chance from $k - 1$ chips to $k$, $h_k - h_{k-1}$ | 1/20 each, fair | — |
-| $g_k$ | the duration minus its drift part, $t_k - k/(q-p)$ | used in Step 5 | — |
-| $\xi_1$, $B_j$, $u_k$, $P_k$, $E_k$ | in the Detailed proof only: the first round's +1 or −1; block j all wins; a difference of two solutions; chance and average from start k | — | — |
+| $`X_n`$, $`n`$ | chips held after round n; the round count | 10 at round 0 | — |
+| $`k`$ | chips at the start | 10 | $`h_k`$ rises towards 1 |
+| $`L`$ | the target, where she leaves | 20 | $`h_k`$ falls, $`t_k`$ grows |
+| $`p`$ | chance of winning one round | 0.50 or 0.49 | $`h_k`$ rises |
+| $`q`$ | chance of losing one round, $`1 - p`$ | 0.50 or 0.51 | $`h_k`$ falls |
+| $`r`$ | the tilt, $`q/p`$ | 1 or 1.040816 | $`h_k`$ falls |
+| $`h_k`$ | chance of reaching $`L`$ before 0 from $`k`$ chips | 0.5 or 0.4013 | — |
+| $`t_k`$ | expected rounds until either wall, $`E[T]`$ | 100 or 98.70 | — |
+| $`T`$ | the round the game ends | 112 in the pictured game | — |
+| $`d_k`$ | the step up in chance from $`k - 1`$ chips to $`k`$, $`h_k - h_{k-1}`$ | 1/20 each, fair | — |
+| $`g_k`$ | the duration minus its drift part, $`t_k - k/(q-p)`$ | used in Step 5 | — |
+| $`\xi_1`$, $`B_j`$, $`u_k`$, $`P_k`$, $`E_k`$ | in the Detailed proof only: the first round's +1 or −1; block j all wins; a difference of two solutions; chance and average from start k | — | — |
 
 The chance as a function of the starting chips, at both tables:
 
@@ -95,37 +99,43 @@ Orange: the fair table, a straight line. Green: the table at 0.49, which sags be
 
 ### Step 0: the first round restarts the game
 
-After one round she holds 11 chips with chance $p$ or 9 with chance $q$. Each round is a fresh, independent bet, so from 11 chips the rest of the game is the same game, started at 11. Averaging over the first round turns one question about whole paths into one question per chip count, each about its two neighbours.
+After one round she holds 11 chips with chance $`p`$ or 9 with chance $`q`$. Each round is a fresh, independent bet, so from 11 chips the rest of the game is the same game, started at 11. Averaging over the first round turns one question about whole paths into one question per chip count, each about its two neighbours.
 
 ### Step 1: the game ends
 
-Before any average is taken, the game must be known to stop. From any chip count, $L$ wins in a row reach the target, wherever she stands.
+Before any average is taken, the game must be known to stop. From any chip count, $`L`$ wins in a row reach the target, wherever she stands.
 
-Split the rounds into blocks of $L$. Each block, whatever came before, is all wins with chance $p^L$, which is more than 0. So the game is still running after m blocks with chance at most $(1 - p^L)^m$.
+Split the rounds into blocks of $`L`$. Each block, whatever came before, is all wins with chance $`p^L`$, which is more than 0. So the game is still running after m blocks with chance at most $`(1 - p^L)^m`$.
 
-That shrinks geometrically: the game ends with probability 1, and $E[T]$ is finite. The bound is crude; in the code, less than one in $10^{16}$ of the chance is unresolved after 3000 rounds.
+That shrinks geometrically: the game ends with probability 1, and $`E[T]`$ is finite. The bound is crude; in the code, less than one in $`10^{16}`$ of the chance is unresolved after 3000 rounds.
 
 ### Step 2: the chance equations
 
-Condition on the first round. With chance $p$ she moves to $k + 1$ and then reaches $L$ first with chance $h_{k+1}$; with chance $q$ she moves to $k - 1$. The law of total probability adds the chances of the two cases, each weighted by the chance of that case ([Conditional probability](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/05-conditional-probability.md)). Here it gives, for every $k$ from 1 to $L - 1$,
+Condition on the first round. With chance $`p`$ she moves to $`k + 1`$ and then reaches $`L`$ first with chance $`h_{k+1}`$; with chance $`q`$ she moves to $`k - 1`$. The law of total probability adds the chances of the two cases, each weighted by the chance of that case ([Conditional probability](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/05-conditional-probability.md)). Here it gives, for every $`k`$ from 1 to $`L - 1`$,
 
-$$h_k = p\,h_{k+1} + q\,h_{k-1}, \qquad h_0 = 0, \quad h_L = 1.$$
+```math
+h_k = p\,h_{k+1} + q\,h_{k-1}, \qquad h_0 = 0, \quad h_L = 1.
+```
 
-At 0 she has already lost, at $L$ already won: $L - 1$ equations in $L - 1$ unknowns.
+At 0 she has already lost, at $`L`$ already won: $`L - 1`$ equations in $`L - 1`$ unknowns.
 
 ### Step 3: the steps between neighbours form a first-order recurrence
 
-Write $d_k = h_k - h_{k-1}$ for the step up in chance from $k - 1$ chips to $k$. Write $h_k = p\,h_k + q\,h_k$, since $p + q = 1$, and subtract from the equation of Step 2:
+Write $`d_k = h_k - h_{k-1}`$ for the step up in chance from $`k - 1`$ chips to $`k`$. Write $`h_k = p\,h_k + q\,h_k`$, since $`p + q = 1`$, and subtract from the equation of Step 2:
 
-$$p\,(h_{k+1} - h_k) = q\,(h_k - h_{k-1}), \qquad \text{so} \qquad d_{k+1} = r\,d_k.$$
+```math
+p\,(h_{k+1} - h_k) = q\,(h_k - h_{k-1}), \qquad \text{so} \qquad d_{k+1} = r\,d_k.
+```
 
-Each step up the ladder of chances is the tilt $r$ times the previous one: a first-order recurrence with no added constant ([First-order recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/03-first-order-recurrences-and-loans.md)). So $d_k = r^{k-1} d_1$. The steps from 0 to $L$ add up to $h_L - h_0 = 1$:
+Each step up the ladder of chances is the tilt $`r`$ times the previous one: a first-order recurrence with no added constant ([First-order recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/03-first-order-recurrences-and-loans.md)). So $`d_k = r^{k-1} d_1`$. The steps from 0 to $`L`$ add up to $`h_L - h_0 = 1`$:
 
-$$d_1\,(1 + r + \dots + r^{L-1}) = 1, \qquad h_k = d_1\,(1 + r + \dots + r^{k-1}).$$
+```math
+d_1\,(1 + r + \dots + r^{L-1}) = 1, \qquad h_k = d_1\,(1 + r + \dots + r^{k-1}).
+```
 
-Divide the two sums. At a fair table $r = 1$, every step is the same, $1/L$, and $h_k = k/L$: a twentieth per chip, 0.5 at 10 chips. Otherwise the geometric sum $1 + r + \dots + r^{k-1}$ equals $(1 - r^k)/(1 - r)$, and the ratio is the formula.
+Divide the two sums. At a fair table $`r = 1`$, every step is the same, $`1/L`$, and $`h_k = k/L`$: a twentieth per chip, 0.5 at 10 chips. Otherwise the geometric sum $`1 + r + \dots + r^{k-1}`$ equals $`(1 - r^k)/(1 - r)`$, and the ratio is the formula.
 
-At 0.49 the tilt is $r$ = 1.040816, so each chip nearer the target is worth about 4 percent more chance than the chip below it. Most of the climb from 0 to 1 happens near the top, which is why the green curve sags.
+At 0.49 the tilt is $`r`$ = 1.040816, so each chip nearer the target is worth about 4 percent more chance than the chip below it. Most of the climb from 0 to 1 happens near the top, which is why the green curve sags.
 
 ### Step 4: only one answer fits
 
@@ -139,48 +149,52 @@ So the difference is never positive, and by the same argument never negative. Th
 
 The same conditioning, with one round counted for the round just played:
 
-$$t_k = 1 + p\,t_{k+1} + q\,t_{k-1}, \qquad t_0 = t_L = 0.$$
+```math
+t_k = 1 + p\,t_{k+1} + q\,t_{k-1}, \qquad t_0 = t_L = 0.
+```
 
-This step uses Step 1: an equation between expectations says nothing if $t_k$ could be infinite.
+This step uses Step 1: an equation between expectations says nothing if $`t_k`$ could be infinite.
 
-At a fair table, rearranging gives $(t_{k+1} - t_k) - (t_k - t_{k-1}) = -2$. The steps fall by 2 each time, so $t_k$ is a downward parabola with zeros at 0 and $L$: $t_k = k(L - k)$. Check it: $k(L - k)$ is 0 at both walls, and $\tfrac12(k+1)(L-k-1) + \tfrac12(k-1)(L-k+1) = k(L-k) - 1$. At 10 chips, 10 × 10 = 100 rounds.
+At a fair table, rearranging gives $`(t_{k+1} - t_k) - (t_k - t_{k-1}) = -2`$. The steps fall by 2 each time, so $`t_k`$ is a downward parabola with zeros at 0 and $`L`$: $`t_k = k(L - k)`$. Check it: $`k(L - k)`$ is 0 at both walls, and $`\tfrac12(k+1)(L-k-1) + \tfrac12(k-1)(L-k+1) = k(L-k) - 1`$. At 10 chips, 10 × 10 = 100 rounds.
 
-At a tilted table, each round loses $q - p$ chips on average, so $k/(q - p)$ solves the equation away from the walls: the drift part. It misses the walls, so correct it. Let $g_k = t_k - k/(q - p)$. Substituting, the 1 cancels against the drift, and
+At a tilted table, each round loses $`q - p`$ chips on average, so $`k/(q - p)`$ solves the equation away from the walls: the drift part. It misses the walls, so correct it. Let $`g_k = t_k - k/(q - p)`$. Substituting, the 1 cancels against the drift, and
 
-$$g_k = p\,g_{k+1} + q\,g_{k-1}, \qquad g_0 = 0, \quad g_L = -\frac{L}{q - p}.$$
+```math
+g_k = p\,g_{k+1} + q\,g_{k-1}, \qquad g_0 = 0, \quad g_L = -\frac{L}{q - p}.
+```
 
-That is the chance equation again, scaled: $g_k = -L\,h_k/(q - p)$, by Step 4's uniqueness. Adding back the drift part gives $t_k = (k - L\,h_k)/(q - p)$. The numerator is her expected loss of chips, $k$ minus the expected chips at the end, $L\,h_k$; dividing by the loss per round gives rounds. At 0.49: $(10 - 8.025990)/0.02$ = 98.7005.
+That is the chance equation again, scaled: $`g_k = -L\,h_k/(q - p)`$, by Step 4's uniqueness. Adding back the drift part gives $`t_k = (k - L\,h_k)/(q - p)`$. The numerator is her expected loss of chips, $`k`$ minus the expected chips at the end, $`L\,h_k`$; dividing by the loss per round gives rounds. At 0.49: $`(10 - 8.025990)/0.02`$ = 98.7005.
 
 ### Step 6: move the target away
 
-Hold 10 chips and raise the target at a fair table. The chance of reaching it is $10/L$: 0.5, 0.3333, 0.25, down to 0.01 at a target of 1000, and to 0 as the target leaves altogether. With no upper wall, ruin is certain.
+Hold 10 chips and raise the target at a fair table. The chance of reaching it is $`10/L`$: 0.5, 0.3333, 0.25, down to 0.01 at a target of 1000, and to 0 as the target leaves altogether. With no upper wall, ruin is certain.
 
-Yet the expected length, $10(L - 10)$, runs 100, 200, 300 and on to 9900: it has no finite limit. Playing until ruin lasts at least as long as playing until ruin or $L$, so its mean is at least $10(L - 10)$ for every $L$.
+Yet the expected length, $`10(L - 10)`$, runs 100, 200, 300 and on to 9900: it has no finite limit. Playing until ruin lasts at least as long as playing until ruin or $`L`$, so its mean is at least $`10(L - 10)`$ for every $`L`$.
 
 A fair game played until ruin ends with probability 1 and has an infinite expected length. Fair does not mean safe: the expected length is carried by rare, very long games that climb far before they fall.
 
-Tilt the table her way instead, 0.51 a round. Then $r = 0.49/0.51 < 1$, $r^L$ vanishes as $L$ grows, and $h_k \to 1 - r^k$. From 10 chips the chance of never going broke is 0.3297, about one in three. At 0.49, $r > 1$, $h_k \to 0$ and ruin is certain.
+Tilt the table her way instead, 0.51 a round. Then $`r = 0.49/0.51 < 1`$, $`r^L`$ vanishes as $`L`$ grows, and $`h_k \to 1 - r^k`$. From 10 chips the chance of never going broke is 0.3297, about one in three. At 0.49, $`r > 1`$, $`h_k \to 0`$ and ruin is certain.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** Let $\xi_1, \xi_2, \dots$ be independent, each $+1$ with probability $p \in (0, 1)$ and $-1$ with probability $q = 1 - p$. For a start $k \in \{0, \dots, L\}$ put $X_0 = k$, $X_n = k + \xi_1 + \dots + \xi_n$ until the first $n$ with $X_n \in \{0, L\}$, and $T$ that first $n$ (infinite if no such $n$ exists). Write $P_k$, $E_k$ for probability and expectation from start $k$.
+**Setting.** Let $`\xi_1, \xi_2, \dots`$ be independent, each $`+1`$ with probability $`p \in (0, 1)`$ and $`-1`$ with probability $`q = 1 - p`$. For a start $`k \in \{0, \dots, L\}`$ put $`X_0 = k`$, $`X_n = k + \xi_1 + \dots + \xi_n`$ until the first $`n`$ with $`X_n \in \{0, L\}`$, and $`T`$ that first $`n`$ (infinite if no such $`n`$ exists). Write $`P_k`$, $`E_k`$ for probability and expectation from start $`k`$.
 
-**1. Finite exit time.** For $j \ge 0$ let $B_j$ be the event that $\xi_{jL+1}, \dots, \xi_{(j+1)L}$ are all $+1$. If $T > jL$ and $B_j$ happens then $T \le (j+1)L$, since $L$ up-steps from any interior point reach $L$. The $B_j$ are independent with probability $p^L$, so $P_k(T > mL) \le P(B_0^c \cap \dots \cap B_{m-1}^c) = (1 - p^L)^m$. Hence the game ends with $P_k$-probability 1 and $E_k T = \sum_{n \ge 0} P_k(T > n) \le L \sum_{m \ge 0} (1 - p^L)^m = L/p^L < \infty$.
+**1. Finite exit time.** For $`j \ge 0`$ let $`B_j`$ be the event that $`\xi_{jL+1}, \dots, \xi_{(j+1)L}`$ are all $`+1`$. If $`T > jL`$ and $`B_j`$ happens then $`T \le (j+1)L`$, since $`L`$ up-steps from any interior point reach $`L`$. The $`B_j`$ are independent with probability $`p^L`$, so $`P_k(T > mL) \le P(B_0^c \cap \dots \cap B_{m-1}^c) = (1 - p^L)^m`$. Hence the game ends with $`P_k`$-probability 1 and $`E_k T = \sum_{n \ge 0} P_k(T > n) \le L \sum_{m \ge 0} (1 - p^L)^m = L/p^L < \infty`$.
 
-**2. First-step identities.** For $0 < k < L$, on $\{\xi_1 = +1\}$ the shifted sequence $\xi_2, \xi_3, \dots$ is independent of $\xi_1$ with the same law, and the game it drives from $k + 1$ is the remaining game. So $P_k(X_T = L \mid \xi_1 = +1) = P_{k+1}(X_T = L)$, likewise for $-1$, and the law of total probability gives $h_k = p h_{k+1} + q h_{k-1}$. For duration, $T = 1 + T'$ with $T'$ the exit time of the shifted game, so conditioning on $\xi_1$ (all terms finite by part 1) gives $t_k = 1 + p t_{k+1} + q t_{k-1}$. The boundary values are immediate from $T = 0$ at a wall.
+**2. First-step identities.** For $`0 < k < L`$, on $`\{\xi_1 = +1\}`$ the shifted sequence $`\xi_2, \xi_3, \dots`$ is independent of $`\xi_1`$ with the same law, and the game it drives from $`k + 1`$ is the remaining game. So $`P_k(X_T = L \mid \xi_1 = +1) = P_{k+1}(X_T = L)`$, likewise for $`-1`$, and the law of total probability gives $`h_k = p h_{k+1} + q h_{k-1}`$. For duration, $`T = 1 + T'`$ with $`T'`$ the exit time of the shifted game, so conditioning on $`\xi_1`$ (all terms finite by part 1) gives $`t_k = 1 + p t_{k+1} + q t_{k-1}`$. The boundary values are immediate from $`T = 0`$ at a wall.
 
-**3. Uniqueness.** Let $u$ satisfy $u_k = p u_{k+1} + q u_{k-1}$ for $0 < k < L$ with $u_0 = u_L = 0$. Suppose its largest value is positive, at some interior $k$. Then $u_k = p u_{k+1} + q u_{k-1}$ with both weights positive and both neighbours at most $u_k$ forces both neighbours to equal $u_k$. Repeating, $u_{k+1} = u_{k+2} = \dots = u_L = 0$, a contradiction. So $u \le 0$; applied to $-u$, $u \ge 0$. The difference of two solutions of either the chance or the duration system is such a $u$, so each system has one solution.
+**3. Uniqueness.** Let $`u`$ satisfy $`u_k = p u_{k+1} + q u_{k-1}`$ for $`0 < k < L`$ with $`u_0 = u_L = 0`$. Suppose its largest value is positive, at some interior $`k`$. Then $`u_k = p u_{k+1} + q u_{k-1}`$ with both weights positive and both neighbours at most $`u_k`$ forces both neighbours to equal $`u_k`$. Repeating, $`u_{k+1} = u_{k+2} = \dots = u_L = 0`$, a contradiction. So $`u \le 0`$; applied to $`-u`$, $`u \ge 0`$. The difference of two solutions of either the chance or the duration system is such a $`u`$, so each system has one solution.
 
-**4. Solving.** Step 3 of Why it works gives $h_k = \sum_{j<k} r^j / \sum_{j<L} r^j$, which is $k/L$ at $r = 1$ and $(1 - r^k)/(1 - r^L)$ otherwise; it satisfies the system, so by part 3 it is the chance. For duration, $v_k = k(L - k)$ at $p = q$, and $v_k = (k - L h_k)/(q - p)$ otherwise, satisfy the duration system, as checked in Step 5; by part 3, $t_k = v_k$.
+**4. Solving.** Step 3 of Why it works gives $`h_k = \sum_{j<k} r^j / \sum_{j<L} r^j`$, which is $`k/L`$ at $`r = 1`$ and $`(1 - r^k)/(1 - r^L)`$ otherwise; it satisfies the system, so by part 3 it is the chance. For duration, $`v_k = k(L - k)`$ at $`p = q`$, and $`v_k = (k - L h_k)/(q - p)`$ otherwise, satisfy the duration system, as checked in Step 5; by part 3, $`t_k = v_k`$.
 
-**5. Ruin.** Part 1 gives $P_k(X_T \in \{0, L\}) = 1$, so $P_k(\text{ruin}) = 1 - h_k$.
+**5. Ruin.** Part 1 gives $`P_k(X_T \in \{0, L\}) = 1`$, so $`P_k(\text{ruin}) = 1 - h_k`$.
 
 </details>
 
-**Another road.** At a fair table the chips are a fair game, a martingale ([Martingales](../02-Martingales/01-martingales.md)) in the language of this wing's second shelf: the expected chips after the next round equal the chips now. Stopping a fair game when it leaves a finite range keeps the average, so $10 = 20\,h_{10} + 0$, and $h_{10} = 0.5$ in one line.
+**Another road.** At a fair table the chips are a fair game, a martingale ([Martingales](../02-Martingales/01-martingales.md)) in the language of this wing's second shelf: the expected chips after the next round equal the chips now. Stopping a fair game when it leaves a finite range keeps the average, so $`10 = 20\,h_{10} + 0`$, and $`h_{10} = 0.5`$ in one line.
 
-At a tilted table the same trick works on $r^{X_n}$, de Moivre's choice, and on $X_n + (q - p)n$ for the duration. The martingale cards of that shelf state when stopping keeps the average ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)), and show the doubling strategy, where it does not.
+At a tilted table the same trick works on $`r^{X_n}`$, de Moivre's choice, and on $`X_n + (q - p)n`$ for the duration. The martingale cards of that shelf state when stopping keeps the average ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)), and show the doubling strategy, where it does not.
 
 ---
 
@@ -190,9 +204,9 @@ The tilted table: 10 chips, target 20, each round won with chance 0.49.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the tilt $r$ | 0.51 / 0.49 | 1.040816 |
-| $r^{10}$ | 1.040816 multiplied by itself ten times | 1.491904 |
-| shortcut | $1 - r^{20} = (1 - r^{10})(1 + r^{10})$, so $h_{10} = 1/(1 + r^{10})$ | — |
+| the tilt $`r`$ | 0.51 / 0.49 | 1.040816 |
+| $`r^{10}`$ | 1.040816 multiplied by itself ten times | 1.491904 |
+| shortcut | $`1 - r^{20} = (1 - r^{10})(1 + r^{10})`$, so $`h_{10} = 1/(1 + r^{10})`$ | — |
 | chance of doubling | 1 / 2.491904 | **0.401300** |
 | chance of ruin | 1 − 0.401300 | 0.598700 |
 | expected chips at the end | 20 × the chance of doubling, unrounded | 8.025990 |
@@ -206,7 +220,7 @@ At the tilted table she doubles up about 40 times in 100 evenings and is ruined 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Fair formula k/L at 0.49 | 0.5000, against 0.4013 | The tilt compounds over about 99 rounds; it is not a rounding error |
-| Tilt upside down, $p/q$ for $q/p$ | 0.5987 | That is the ruin chance, or the chance at 0.51: the two walls swapped |
+| Tilt upside down, $`p/q`$ for $`q/p`$ | 0.5987 | That is the ruin chance, or the chance at 0.51: the two walls swapped |
 | All 10 chips on one round at 0.49 | 0.49, simulated 0.4934 ± 0.0035 | Fixed stakes dropped: at a table tilted against her, fewer rounds means less tilt |
 | Top wall raised to 1000, fair | chance 0.0100, 9900 rounds | Two walls dropped in the limit: ruin certain, expected length infinite |
 
@@ -582,16 +596,16 @@ The two outputs match line for line, including the simulated ones: the generator
 
 ### Lean
 
-Lean proves the formulas for $h_k$, ruin and $t_k$, for every start, target and win chance between 0 and 1.
+Lean proves the formulas for $`h_k`$, ruin and $`t_k`$, for every start, target and win chance between 0 and 1.
 
-- Suppose the rounds are independent, each won with chance $p$ between 0 and 1, and she starts with $k \le L$ chips. Then the chance of reaching $L$ before 0 is $k/L$ when $p = q$, and $(1 - r^k)/(1 - r^L)$ otherwise.
-- Take the same game. Then the chance of reaching 0 first, ruin, is $1 - h_k$.
-- Take the same game. Then it ends at a wall with chance 1, and $E[T]$ is finite.
-- Take the same game. Then $E[T]$ is $k(L - k)$ when $p = q$, and $(k - L\,h_k)/(q - p)$ otherwise.
-- Take any $p$ between 0 and 1. Then the chance equations of Step 2 have exactly one solution, the formula for $h_k$.
+- Suppose the rounds are independent, each won with chance $`p`$ between 0 and 1, and she starts with $`k \le L`$ chips. Then the chance of reaching $`L`$ before 0 is $`k/L`$ when $`p = q`$, and $`(1 - r^k)/(1 - r^L)`$ otherwise.
+- Take the same game. Then the chance of reaching 0 first, ruin, is $`1 - h_k`$.
+- Take the same game. Then it ends at a wall with chance 1, and $`E[T]`$ is finite.
+- Take the same game. Then $`E[T]`$ is $`k(L - k)`$ when $`p = q`$, and $`(k - L\,h_k)/(q - p)`$ otherwise.
+- Take any $`p`$ between 0 and 1. Then the chance equations of Step 2 have exactly one solution, the formula for $`h_k`$.
 - From 10 chips to 20 at a fair table, the chance is 1/2 and the length is 10 × 10 = 100 rounds.
-- Take the table at 0.49. Then the tilt $r$ is exactly 51/49, and the shortcut $h_{10} = 1/(1 + r^{10})$ holds.
-- Take a fair table. Then $k(L - k)$ passes the check in Step 5, for every $k$ and $L$.
+- Take the table at 0.49. Then the tilt $`r`$ is exactly 51/49, and the shortcut $`h_{10} = 1/(1 + r^{10})`$ holds.
+- Take a fair table. Then $`k(L - k)`$ passes the check in Step 5, for every $`k`$ and $`L`$.
 - Raise the fair target from 20 to 30, 40, 80, 160 and 1000. The chance from 10 chips falls to 1/3, 1/4, 1/8, 1/16 and 1/100.
 - Over the same targets, the lengths are 200, 300, 700, 1500 and 9900 rounds.
 - From 10 chips to 40 at a fair table, 40 × 1/4 = 10: the average chips at the end equal the start.
@@ -1408,7 +1422,7 @@ example : (40 : ℚ) * (1 / 4) = 10 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **A higher target.** Set `L` to 30. Guess the fair chance from 10 chips. It is 0.3333 with 200 rounds, as the top-wall rows show. The run then stops at the mass-flow length assert: the longer game leaves about 8 in 100 million of its chance unresolved after 3000 rounds. Raise the 3000 in the `mass_flow` call to 6000 and it stops at the shortcut assert instead, because $1/(1 + r^{10})$ holds only when the target is twice the start.
+> - **A higher target.** Set `L` to 30. Guess the fair chance from 10 chips. It is 0.3333 with 200 rounds, as the top-wall rows show. The run then stops at the mass-flow length assert: the longer game leaves about 8 in 100 million of its chance unresolved after 3000 rounds. Raise the 3000 in the `mass_flow` call to 6000 and it stops at the shortcut assert instead, because $`1/(1 + r^{10})`$ holds only when the target is twice the start.
 > - **Turn the tilt round.** Change the first loop to `(0.5, 0.51)`. The chance becomes 0.5987 and the length stays 98.7005: the game at 0.51 from 10 is the game at 0.49 seen upside down.
 > - **Fewer games.** Set `GAMES` to 2000. The standard errors grow by a factor of about the square root of 10, and the simulated numbers wander further from the formulas while staying within the 4-standard-error asserts.
 > - **Break the formula.** Swap `r = q / p` for `r = p / q`. The first assert stops the run at 0.49: elimination knows nothing of the formula and disagrees.
@@ -1422,7 +1436,7 @@ example : (40 : ℚ) * (1 / 4) = 10 := by norm_num
 >
 > - **"Fair means an even chance."** Only from halfway. From 10 chips with a target of 40 the fair chance is 0.25: the average chips at the end still equal the start, 40 × 0.25 = 10, but the likely outcome is ruin. Fair never means she cannot win, and never means she is likely to.
 > - **Reading the expected length as a typical length.** The pictured fair game took 112 rounds against an average of 100, and the simulated average, 100.80 ± 0.58, carries its own error; single games vary widely around it.
-> - **Using $k(L - k)$ at a tilted table.** It gives 100, against 98.7005; the tilted duration needs $h_k$.
+> - **Using $`k(L - k)`$ at a tilted table.** It gives 100, against 98.7005; the tilted duration needs $`h_k`$.
 
 ---
 
@@ -1430,7 +1444,7 @@ example : (40 : ℚ) * (1 / 4) = 10 := by norm_num
 
 - **Casino bankrolls.** A bet on red at an American roulette wheel wins with chance 18/38. From 10 chips to 20, one chip a spin, the chance of doubling is 0.2585, over about 91.76 spins.
 - **Sequential testing.** A test that stops when a running score first crosses one of two thresholds is a walk between two walls; its error rates are chances of hitting the wrong wall first.
-- **Electrical networks.** Hold node 0 at 0 volts and node 20 at 1 volt along a chain of equal resistors: the voltage at node k solves the same averaging equation, so it equals $h_k$ at a fair table ([Random walks as circuits](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/08-random-walks-and-electrical-networks.md)).
+- **Electrical networks.** Hold node 0 at 0 volts and node 20 at 1 volt along a chain of equal resistors: the voltage at node k solves the same averaging equation, so it equals $`h_k`$ at a fair table ([Random walks as circuits](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/08-random-walks-and-electrical-networks.md)).
 - **Insurance.** An insurer's surplus rising with premiums and falling with claims faces the same question with one wall, ruin, and the tilted-table limit of Step 6 is its first model.
 
 > **Say it back**
@@ -1441,7 +1455,7 @@ example : (40 : ℚ) * (1 / 4) = 10 := by norm_num
 ## What this builds on
 
 - [Simple random walk](02-simple-random-walk.md): the walk that moves one step up or down each round, here stopped at two walls.
-- [First-order recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/03-first-order-recurrences-and-loans.md): the recurrence $d_{k+1} = r\,d_k$ and its geometric sum.
+- [First-order recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/03-first-order-recurrences-and-loans.md): the recurrence $`d_{k+1} = r\,d_k`$ and its geometric sum.
 
 ## Where this goes next
 

@@ -24,27 +24,29 @@ To scale, 6 units per metre; wind arrows run from their dots, 1 m per newton. So
 
 ## The formula
 
-Notation first, in words. A **field** $F$ puts a vector at every point: the wind's push, with east part $P$ and north part $Q$. The route $C$ is traced by a position $r(t)$ as a clock $t$ runs from $a$ to $b$; $r'(t)$ is the velocity.
+Notation first, in words. A **field** $`F`$ puts a vector at every point: the wind's push, with east part $`P`$ and north part $`Q`$. The route $`C`$ is traced by a position $`r(t)`$ as a clock $`t`$ runs from $`a`$ to $`b`$; $`r'(t)`$ is the velocity.
 
-$$W = \int_C F \cdot dr = \int_a^b F(r(t)) \cdot r'(t)\, dt$$
+```math
+W = \int_C F \cdot dr = \int_a^b F(r(t)) \cdot r'(t)\, dt
+```
 
 **Read it aloud:** at each clock reading, take the wind where the cart is, dot it with the cart's velocity, and add over the clock.
 
-In parts, the same integral is $\int_C P\,dx + Q\,dy$: east push times eastward steps, plus north push times northward steps. With $T$ the direction of travel (length 1) and $ds$ a small length, $F \cdot dr = (F \cdot T)\, ds$: push along the motion times distance.
+In parts, the same integral is $`\int_C P\,dx + Q\,dy`$: east push times eastward steps, plus north push times northward steps. With $`T`$ the direction of travel (length 1) and $`ds`$ a small length, $`F \cdot dr = (F \cdot T)\, ds`$: push along the motion times distance.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$, $P$, $Q$ | the field, and its east and north parts, newtons | $(y/10, -1)$ N | more help where it points along the route |
-| $C$ | the route, including its direction | A to B | reversing it flips the sign |
-| $r(t)$, $x$, $y$ | the cart's position at clock reading t: metres east and north of A | straight: $(40t, 30t)$ | — |
-| $t$, $a$, $b$; $s$, $\varphi$ | the clock and its start and end; a second clock and the rule turning it into the first | 0 to 1; $t = s^2$ | a new clock leaves the answer alone |
-| $r'(t)$ | velocity: metres per unit of clock | straight: $(40, 30)$ | — |
-| $dr$ | a small step along the route, velocity times a small clock step | — | — |
-| $\cdot$ | the dot product: east parts multiplied, plus north parts multiplied | straight, at clock t: $3t \times 40 + (-1) \times 30$ | — |
-| $T$, $ds$ | direction of travel, length 1; a small length along the route | straight: $(0.8, 0.6)$, 50 m in all | — |
-| $W$ | the work done by the wind, joules | straight: 30 J | — |
+| $`F`$, $`P`$, $`Q`$ | the field, and its east and north parts, newtons | $`(y/10, -1)`$ N | more help where it points along the route |
+| $`C`$ | the route, including its direction | A to B | reversing it flips the sign |
+| $`r(t)`$, $`x`$, $`y`$ | the cart's position at clock reading t: metres east and north of A | straight: $`(40t, 30t)`$ | — |
+| $`t`$, $`a`$, $`b`$; $`s`$, $`\varphi`$ | the clock and its start and end; a second clock and the rule turning it into the first | 0 to 1; $`t = s^2`$ | a new clock leaves the answer alone |
+| $`r'(t)`$ | velocity: metres per unit of clock | straight: $`(40, 30)`$ | — |
+| $`dr`$ | a small step along the route, velocity times a small clock step | — | — |
+| $`\cdot`$ | the dot product: east parts multiplied, plus north parts multiplied | straight, at clock t: $`3t \times 40 + (-1) \times 30`$ | — |
+| $`T`$, $`ds`$ | direction of travel, length 1; a small length along the route | straight: $`(0.8, 0.6)`$, 50 m in all | — |
+| $`W`$ | the work done by the wind, joules | straight: 30 J | — |
 
-Newtons times metres are joules. With the clock in seconds, $F(r(t)) \cdot r'(t)$ is power in watts.
+Newtons times metres are joules. With the clock in seconds, $`F(r(t)) \cdot r'(t)`$ is power in watts.
 
 ### When it holds
 
@@ -69,30 +71,34 @@ Cut the route into short pieces. Dot the wind at each piece's middle with its ch
 
 On the curve, 4 pieces give 9.375000 J, short by 0.625000 J; 16 pieces, short by 0.039062 J. To land within 0.01 J, 32 pieces suffice: short by 0.009766 J. With 64, 0.002441 J.
 
-Over a short clock step the chord is almost $r'(t)$ times the step, so the sum is almost a sum of $F(r(t)) \cdot r'(t)$ times clock steps. That is a Riemann sum ([The integral](../04-Integrals/01-riemann-integral.md)), and it closes in on the integral.
+Over a short clock step the chord is almost $`r'(t)`$ times the step, so the sum is almost a sum of $`F(r(t)) \cdot r'(t)`$ times clock steps. That is a Riemann sum ([The integral](../04-Integrals/01-riemann-integral.md)), and it closes in on the integral.
 
 <details>
 <summary>Detailed proof: every fine force-times-chord sum tends to the integral</summary>
 
-Let $r$ have a continuous velocity, and $F$ be continuous along the route. Cut the clock at $a = t_0 < t_1 < \dots < t_n = b$, widest step h, and pick any reading τ_i in each step. The sum is $S = \sum F(r(\tau_i)) \cdot (r(t_i) - r(t_{i-1}))$.
+Let $`r`$ have a continuous velocity, and $`F`$ be continuous along the route. Cut the clock at $`a = t_0 < t_1 < \dots < t_n = b`$, widest step h, and pick any reading τ_i in each step. The sum is $`S = \sum F(r(\tau_i)) \cdot (r(t_i) - r(t_{i-1}))`$.
 
-By the fundamental theorem of calculus, applied to each coordinate, $r(t_i) - r(t_{i-1}) = \int_{t_{i-1}}^{t_i} r'(t)\,dt$. So
-$$S - W = \sum \int_{t_{i-1}}^{t_i} \big(F(r(\tau_i)) - F(r(t))\big) \cdot r'(t)\,dt.$$
-$F(r(t))$ is continuous on a closed interval, so uniformly continuous: for every ε > 0 some δ > 0 keeps readings less than δ apart within ε in field. Take h < δ. A dot product is at most the product of lengths, so
-$$|S - W| \le \varepsilon \int_a^b \lVert r'(t) \rVert\, dt = \varepsilon L,$$
+By the fundamental theorem of calculus, applied to each coordinate, $`r(t_i) - r(t_{i-1}) = \int_{t_{i-1}}^{t_i} r'(t)\,dt`$. So
+
+$`\displaystyle S - W = \sum \int_{t_{i-1}}^{t_i} \big(F(r(\tau_i)) - F(r(t))\big) \cdot r'(t)\,dt.`$
+
+$`F(r(t))`$ is continuous on a closed interval, so uniformly continuous: for every ε > 0 some δ > 0 keeps readings less than δ apart within ε in field. Take h < δ. A dot product is at most the product of lengths, so
+
+$`\displaystyle |S - W| \le \varepsilon \int_a^b \lVert r'(t) \rVert\, dt = \varepsilon L,`$
+
 with L the route's length. As ε shrinks, S tends to W, whatever readings are picked. Corners are handled piece by piece.
 
 </details>
 
 ### Step 2: the pace does not matter, the direction does
 
-Push straight from A to B, starting slowly: position $(40s^2, 30s^2)$ as a new clock s runs from 0 to 1. The chain rule multiplies the velocity by $2s$, the rate of $t = s^2$; the substitution rule ([Substitution](../04-Integrals/03-substitution.md)) removes exactly that factor, so the work is 30 J again.
+Push straight from A to B, starting slowly: position $`(40s^2, 30s^2)`$ as a new clock s runs from 0 to 1. The chain rule multiplies the velocity by $`2s`$, the rate of $`t = s^2`$; the substitution rule ([Substitution](../04-Integrals/03-substitution.md)) removes exactly that factor, so the work is 30 J again.
 
-In general, a forward clock change $t = \varphi(s)$ leaves the integral unchanged. A backward one, B to A, swaps the limits, which flips the sign: −30 J. Reversing the route reverses every chord, so the Step 1 sums flip sign too. On [Line integrals of a function](01-scalar-line-integrals.md) each small length counts positive either way; here each step carries a direction.
+In general, a forward clock change $`t = \varphi(s)`$ leaves the integral unchanged. A backward one, B to A, swaps the limits, which flips the sign: −30 J. Reversing the route reverses every chord, so the Step 1 sums flip sign too. On [Line integrals of a function](01-scalar-line-integrals.md) each small length counts positive either way; here each step carries a direction.
 
 ### Step 3: the curve, by hand
 
-**The curve.** Position $(40t, 30t^2)$, velocity $(40, 60t)$, wind $(3t^2, -1)$. The dot product is $120t^2 - 60t$; its antiderivative $40t^3 - 30t^2$ gives 40 − 30 = **10 J** from 0 to 1.
+**The curve.** Position $`(40t, 30t^2)`$, velocity $`(40, 60t)`$, wind $`(3t^2, -1)`$. The dot product is $`120t^2 - 60t`$; its antiderivative $`40t^3 - 30t^2`$ gives 40 − 30 = **10 J** from 0 to 1.
 
 **The other three.** The straight route and both L-shaped routes are worked in the table below: 30 J, −30 J and 90 J. On the L-shaped routes each leg is a steady push on a straight step, so Step 0 alone does it.
 
@@ -110,13 +116,13 @@ A gradient field is made of one function's rates of change, east and north ([Gra
 
 ## Worked numbers, by hand
 
-The wind at $(x, y)$ is $(y/10, -1)$ N; the cart goes from A $(0, 0)$ to B $(40, 30)$, in metres.
+The wind at $`(x, y)`$ is $`(y/10, -1)`$ N; the cart goes from A $`(0, 0)`$ to B $`(40, 30)`$, in metres.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| straight route | length sqrt(40^2 + 30^2), direction 40/50 and 30/50 | 50 m, $(0.8, 0.6)$ |
-| wind on it at clock t | $(30t/10, -1)$ | $(3t, -1)$ N |
-| push along motion per unit of clock | $3t \times 40 + (-1) \times 30$ | 120t − 30 |
+| straight route | length sqrt(40^2 + 30^2), direction 40/50 and 30/50 | 50 m, $`(0.8, 0.6)`$ |
+| wind on it at clock t | $`(30t/10, -1)`$ | $`(3t, -1)`$ N |
+| push along motion per unit of clock | $`3t \times 40 + (-1) \times 30`$ | 120t − 30 |
 | add over the clock, 0 to 1 | 120/2 − 30 | **30 J** |
 | north leg, either edge | −1 N × 30 m | −30 J |
 | east leg along the top | 3 N × 40 m | 120 J |
@@ -130,7 +136,7 @@ Straight across, the wind supplies 30 J the pusher would otherwise provide; alon
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Go B to A but keep the A-to-B velocity | 30 J, not −30 J | The direction lives in the velocity; reversing the route reverses it |
-| Use the direction $(0.8, 0.6)$ instead of the velocity $(40, 30)$ | 0.600 J, not 30 J | The clock step is not a metre: 1 unit of clock covers 50 m |
+| Use the direction $`(0.8, 0.6)`$ instead of the velocity $`(40, 30)`$ | 0.600 J, not 30 J | The clock step is not a metre: 1 unit of clock covers 50 m |
 | Add the wind's strength times length | 94.211, not 30 J | Strength ignores direction: the drift works against the cart |
 | Same ends, so same work | 30 J for north-then-east, truly 90 J | This wind is no gradient field |
 
@@ -138,7 +144,7 @@ Straight across, the wind supplies 30 J the pusher would otherwise provide; alon
 
 ## Code, from first principles, and it actually runs
 
-Two roads for all four routes, each checked against the hand values. Road one, the formula: Simpson's rule (a strip sum fitting a parabola over each pair of strips) on $F(r(t)) \cdot r'(t)$. Road two, the definition: mid-piece wind dotted with each chord, 1,024 pieces, no derivative. A second case checks a new clock, the reversal, and the loop against 0.1 N/m times the area.
+Two roads for all four routes, each checked against the hand values. Road one, the formula: Simpson's rule (a strip sum fitting a parabola over each pair of strips) on $`F(r(t)) \cdot r'(t)`$. Road two, the definition: mid-piece wind dotted with each chord, 1,024 pieces, no derivative. A second case checks a new clock, the reversal, and the loop against 0.1 N/m times the area.
 
 ### Python
 

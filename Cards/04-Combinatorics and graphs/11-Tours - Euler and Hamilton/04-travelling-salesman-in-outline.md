@@ -14,7 +14,7 @@ Greed comes close and loses: always drive to the nearest town not yet called on 
 
 **The cost of a round is the sum of its legs, so a few towns are settled by listing every round and reading off the cheapest; past a couple of dozen towns nobody knows a method that stays quick on every chart.**
 
-**What kind of fact this is:** a method, carrying a theorem proved below ($n$ towns hold $(n-1)!/2$ rounds), an approximation with no fixed guarantee (the nearest-town rule), and an open question, unsettled as of 19 September 2026: whether a fast exact method can exist.
+**What kind of fact this is:** a method, carrying a theorem proved below ($`n`$ towns hold $`(n-1)!/2`$ rounds), an approximation with no fixed guarantee (the nearest-town rule), and an open question, unsettled as of 19 September 2026: whether a fast exact method can exist.
 
 ### The picture: the cheapest of the sixty rounds
 
@@ -34,7 +34,7 @@ The six legs add to 148 miles; driven the other way, the same round.
 
 ## The formula
 
-Notation first, in words. The chart is $d$: $d(i, j)$ is the miles between towns i and j, so $d(A, D)$ is 18.
+Notation first, in words. The chart is $`d`$: $`d(i, j)`$ is the miles between towns i and j, so $`d(A, D)`$ is 18.
 
 ```
 The rep's chart: miles between every pair, rows and columns A to F
@@ -48,31 +48,35 @@ E   28  26  14  44   0  42
 F   19  35  54  25  42   0
 ```
 
-A round calling at every town once and returning home is a **tour**: a Hamiltonian cycle ([Hamiltonian cycles](03-hamiltonian-cycles.md)) priced leg by leg. Write it as the order it calls in, $t$, with $t_1$ home and $t_k$ the k-th town called at.
+A round calling at every town once and returning home is a **tour**: a Hamiltonian cycle ([Hamiltonian cycles](03-hamiltonian-cycles.md)) priced leg by leg. Write it as the order it calls in, $`t`$, with $`t_1`$ home and $`t_k`$ the k-th town called at.
 
-$$\text{cost}(t) = d(t_1, t_2) + d(t_2, t_3) + \cdots + d(t_5, t_6) + d(t_6, t_1)$$
+```math
+\text{cost}(t) = d(t_1, t_2) + d(t_2, t_3) + \cdots + d(t_5, t_6) + d(t_6, t_1)
+```
 
 **Read it aloud:** add the miles of each leg in turn, then the miles home from the last town.
 
-The smallest cost any tour can have is written $L$: 148 miles here. With $n$ towns, how many tours must be searched:
+The smallest cost any tour can have is written $`L`$: 148 miles here. With $`n`$ towns, how many tours must be searched:
 
-$$\text{tours} = \frac{(n-1)!}{2}$$
+```math
+\text{tours} = \frac{(n-1)!}{2}
+```
 
-Here $n!$ is the factorial: $n$ times every whole number below it ([Factorials](../01-Counting%20Principles/03-factorial.md)). **Read it aloud:** hold home still, order the other towns every way, then halve, since a round driven backwards is the same round.
+Here $`n!`$ is the factorial: $`n`$ times every whole number below it ([Factorials](../01-Counting%20Principles/03-factorial.md)). **Read it aloud:** hold home still, order the other towns every way, then halve, since a round driven backwards is the same round.
 
-One more quantity is needed below: the **cheapest connecting tree**, joining all six towns with five legs and no loop for the least miles ([The cheapest skeleton](../10-Trees%20and%20Cheapest%20Routes/04-minimum-spanning-trees.md)). Write $T$ for it, 105 here.
+One more quantity is needed below: the **cheapest connecting tree**, joining all six towns with five legs and no loop for the least miles ([The cheapest skeleton](../10-Trees%20and%20Cheapest%20Routes/04-minimum-spanning-trees.md)). Write $`T`$ for it, 105 here.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$, $n!$ | towns on the round, home included; $n!$ is the factorial | 6; 5! = 120 | the search outgrows any computer |
-| $d$ | the chart; $d(i, j)$ is the miles between two towns | $d(A, D)$ = 18 | every tour costs more |
-| $t$, $t_1$, $t_k$ | a tour, as the order it calls in; $t_k$ is its k-th town | A, D, F, B, C, E | — |
-| $L$ | the cheapest tour's miles | 148 | — |
-| $T$ | the cheapest tree's miles | 105 | floor and ceiling rise |
+| $`n`$, $`n!`$ | towns on the round, home included; $`n!`$ is the factorial | 6; 5! = 120 | the search outgrows any computer |
+| $`d`$ | the chart; $`d(i, j)`$ is the miles between two towns | $`d(A, D)`$ = 18 | every tour costs more |
+| $`t`$, $`t_1`$, $`t_k`$ | a tour, as the order it calls in; $`t_k`$ is its k-th town | A, D, F, B, C, E | — |
+| $`L`$ | the cheapest tour's miles | 148 | — |
+| $`T`$ | the cheapest tree's miles | 105 | floor and ceiling rise |
 
 ### When it holds
 
-- **The chart is symmetric:** B to C equals C to B. Where one-way systems break that, the halving fails and the count rises to $(n-1)!$, 120 rounds.
+- **The chart is symmetric:** B to C equals C to B. Where one-way systems break that, the halving fails and the count rises to $`(n-1)!`$, 120 rounds.
 - **Every pair has a direct road:** no cell is blank. Where one is, orders needing that leg are not tours, and the count includes undrivable rounds.
 - **No detour beats the direct road:** A to C is 42 miles, A to E to C also 42, never less. Charts breaking this keep the floor, lose the ceiling.
 
@@ -98,13 +102,15 @@ It gives A-D-F-B and then stumbles. At B the nearest uncalled town is E at 26 mi
 
 ### Step 3: the cheapest connecting tree traps the answer from both sides
 
-$$T \le L \le 2T$$
+```math
+T \le L \le 2T
+```
 
 **Read it aloud:** the cheapest tour is never shorter than the cheapest tree, nor longer than twice it: 105 ≤ 148 ≤ 210.
 
 The floor: delete one leg from any tour and five legs remain, still connected and with no room for a loop — a spanning tree, costing the tour less that leg. The cheapest tree is no dearer, so 105 sits below 148 before a single tour is costed.
 
-The ceiling: walk the cheapest tree from A, each leg once out and once back. That is 210 miles and calls at every town, but towns repeat, so it is no tour. Repair it in one pass: wherever the walk would return to a town already called on, drive straight to the next town not yet called on. Each skip trades a chain of legs for one direct road, no dearer since no detour beats a direct road. The repaired round calls once at each town for at most 210 miles, so $L$ is at most 210 too.
+The ceiling: walk the cheapest tree from A, each leg once out and once back. That is 210 miles and calls at every town, but towns repeat, so it is no tour. Repair it in one pass: wherever the walk would return to a town already called on, drive straight to the next town not yet called on. Each skip trades a chain of legs for one direct road, no dearer since no detour beats a direct road. The repaired round calls once at each town for at most 210 miles, so $`L`$ is at most 210 too.
 
 Sharper floors than the tree exist, and inside a search that prunes they solve real instances ([Integer programs](../../14-Applied%20and%20computational/05-Operations%20Research/03-integer-programming-and-branch-and-bound.md)).
 
@@ -369,9 +375,9 @@ The two outputs match line for line.
 
 Lean proves the tour count and both ends of the bracket for any number of towns, then checks the six-town chart.
 
-- With $n$ towns and a two-way road between every pair, there are exactly $(n-1)!/2$ tours.
-- For every tour, some connecting tree costs no more. So $T \le L$, with or without the detour rule.
-- With three or more towns and no detour beating the direct road, some tour costs at most twice any connecting tree. So $L \le 2T$.
+- With $`n`$ towns and a two-way road between every pair, there are exactly $`(n-1)!/2`$ tours.
+- For every tour, some connecting tree costs no more. So $`T \le L`$, with or without the detour rule.
+- With three or more towns and no detour beating the direct road, some tour costs at most twice any connecting tree. So $`L \le 2T`$.
 - The chart is symmetric, and no detour on it beats the direct road.
 - All 120 orders of the five towns after A cost between 148 and 267 miles. Keeping those whose first town comes before the last leaves 60.
 - The round A-D-F-B-E-C-A costs 160 miles, 12 more than the cheapest. The tree's five legs add to 105 miles.

@@ -28,34 +28,40 @@ To scale, 20 pixels per metre. Dashed: north; θ: the post's bearing, 36.87°. T
 
 ## The formula
 
-Recall from [The derivative](01-the-derivative.md): $y'$, or dy/dx, is the rate of y per unit of x. Treat y as a function of x along the northern shore and differentiate both sides:
+Recall from [The derivative](01-the-derivative.md): $`y'`$, or dy/dx, is the rate of y per unit of x. Treat y as a function of x along the northern shore and differentiate both sides:
 
-$$x^2 + y^2 = 25 \quad\Longrightarrow\quad 2x + 2y\,y' = 0 \quad\Longrightarrow\quad y' = -\frac{x}{y} \quad (y \neq 0)$$
+```math
+x^2 + y^2 = 25 \quad\Longrightarrow\quad 2x + 2y\,y' = 0 \quad\Longrightarrow\quad y' = -\frac{x}{y} \quad (y \neq 0)
+```
 
 **Read it aloud:** the shore's slope is minus the eastward distance over the northward one: −0.75 m north per m east at the post.
 
-For the inverse rule, recall from [Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md) that $f^{-1}$ is the undo of f, not one over f. Call it g, with b = f(a).
+For the inverse rule, recall from [Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md) that $`f^{-1}`$ is the undo of f, not one over f. Call it g, with b = f(a).
 
-$$g'(b) = \frac{1}{f'(a)} = \frac{1}{f'(g(b))} \qquad (f'(a) \neq 0)$$
+```math
+g'(b) = \frac{1}{f'(a)} = \frac{1}{f'(g(b))} \qquad (f'(a) \neq 0)
+```
 
 **Read it aloud:** the undo's rate at an output is one over the original rate at the input that produced it.
 
 For arcsin, f is sine on the window from −π/2 to π/2, and sine's rate is cosine ([Derivatives of sine and cosine](04-derivatives-of-trig-functions.md)):
 
-$$\frac{d}{du}\arcsin u = \frac{1}{\cos(\arcsin u)} = \frac{1}{\sqrt{1 - u^2}} \qquad (-1 < u < 1)$$
+```math
+\frac{d}{du}\arcsin u = \frac{1}{\cos(\arcsin u)} = \frac{1}{\sqrt{1 - u^2}} \qquad (-1 < u < 1)
+```
 
 On tangent, whose rate is 1 + tan^2, the rule gives arctan the rate 1/(1 + u^2): 0.5 at u = 1.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$ | metres east and north of the centre | 3 m, 4 m | larger x: steeper; larger y: flatter |
-| $y'$ | slope of the shore, dy/dx: metres north per metre east | −0.75 | — |
-| $R$ | pond radius | 5 m | — |
-| $f$, $g$ | a function and its undo, g = f^{-1} | sine and arcsin | — |
-| $a$, $b$ | matching input and output, b = f(a) | 0.643501 rad and 0.6 | — |
-| $u$, $\theta$ | a sine value; the angle with that sine, the bearing | 0.6; 0.643501 rad = 36.87° | near u = 1, arcsin's rate blows up |
-| $h$, $k$ | an input step, and the output step it causes | k from 0.1 to 0.0001 | the quotient drifts from 1.25 |
-| $\arcsin$, $\arctan$, $\arccos$ | undos of sine, tangent, cosine on their windows | rates 1.25 at 0.6, 0.5 at 1, −1.25 at 0.6 | — |
+| $`x`$, $`y`$ | metres east and north of the centre | 3 m, 4 m | larger x: steeper; larger y: flatter |
+| $`y'`$ | slope of the shore, dy/dx: metres north per metre east | −0.75 | — |
+| $`R`$ | pond radius | 5 m | — |
+| $`f`$, $`g`$ | a function and its undo, g = f^{-1} | sine and arcsin | — |
+| $`a`$, $`b`$ | matching input and output, b = f(a) | 0.643501 rad and 0.6 | — |
+| $`u`$, $`\theta`$ | a sine value; the angle with that sine, the bearing | 0.6; 0.643501 rad = 36.87° | near u = 1, arcsin's rate blows up |
+| $`h`$, $`k`$ | an input step, and the output step it causes | k from 0.1 to 0.0001 | the quotient drifts from 1.25 |
+| $`\arcsin`$, $`\arctan`$, $`\arccos`$ | undos of sine, tangent, cosine on their windows | rates 1.25 at 0.6, 0.5 at 1, −1.25 at 0.6 | — |
 
 ### When it holds
 
@@ -90,7 +96,9 @@ Arcsin's graph is sine's flipped across the diagonal where height equals input. 
 
 Take a small nonzero output step k from b = 0.6, and let h = g(b + k) − a be the input step producing it. Then k = f(a + h) − f(a), and h is not 0, else k would be. So
 
-$$\frac{g(b + k) - g(b)}{k} = \frac{h}{f(a + h) - f(a)} = \frac{1}{\,(f(a + h) - f(a))/h\,}$$
+```math
+\frac{g(b + k) - g(b)}{k} = \frac{h}{f(a + h) - f(a)} = \frac{1}{\,(f(a + h) - f(a))/h\,}
+```
 
 Does h shrink when k does? Yes: the undo of a continuous, steadily rising function on an interval is continuous (proved below). So the bottom heads for f'(a), not 0, and the whole for 1/f'(a).
 

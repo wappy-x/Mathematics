@@ -33,48 +33,54 @@ The line is the power of every split that meets the 100 L/s. It bottoms out at 1
 
 ## The formula
 
-Notation first, in words. The plan is a list of $n$ numbers $x = (x_1, \dots, x_n)$, here the pumps' flows. The cost $f(x)$ is minimised. There are $m$ rules, each written $g_j(x) = b_j$: a function of the plan must equal a fixed amount. Each rule gets a multiplier $\lambda_j$ ("lambda j"). The **Jacobian** $J$ is the grid whose row $j$ is the gradient $\nabla g_j$ at the plan ([Chain rule in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)).
+Notation first, in words. The plan is a list of $`n`$ numbers $`x = (x_1, \dots, x_n)`$, here the pumps' flows. The cost $`f(x)`$ is minimised. There are $`m`$ rules, each written $`g_j(x) = b_j`$: a function of the plan must equal a fixed amount. Each rule gets a multiplier $`\lambda_j`$ ("lambda j"). The **Jacobian** $`J`$ is the grid whose row $`j`$ is the gradient $`\nabla g_j`$ at the plan ([Chain rule in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)).
 
-If $x^*$ is a local minimum of $f$ among plans obeying every rule, and the rows of $J$ at $x^*$ are linearly independent, then there are numbers $\lambda_1, \dots, \lambda_m$, exactly one list of them, with
+If $`x^*`$ is a local minimum of $`f`$ among plans obeying every rule, and the rows of $`J`$ at $`x^*`$ are linearly independent, then there are numbers $`\lambda_1, \dots, \lambda_m`$, exactly one list of them, with
 
-$$\nabla f(x^*) = \lambda_1 \nabla g_1(x^*) + \dots + \lambda_m \nabla g_m(x^*), \qquad g_j(x^*) = b_j.$$
+```math
+\nabla f(x^*) = \lambda_1 \nabla g_1(x^*) + \dots + \lambda_m \nabla g_m(x^*), \qquad g_j(x^*) = b_j.
+```
 
-If also the best plan moves smoothly as the amounts change, each multiplier is a price. Write $p^*(b)$ for the least cost when the amounts are $b = (b_1, \dots, b_m)$; then
+If also the best plan moves smoothly as the amounts change, each multiplier is a price. Write $`p^*(b)`$ for the least cost when the amounts are $`b = (b_1, \dots, b_m)`$; then
 
-$$\lambda_j = \frac{\partial p^*}{\partial b_j}.$$
+```math
+\lambda_j = \frac{\partial p^*}{\partial b_j}.
+```
 
 **Read it aloud:** at the best plan, the arrow of steepest cost rise is a weighted sum of the rules' arrows, the plan obeys every rule, and each weight is what one more unit of that rule's amount costs.
 
 The independence condition has a name: **LICQ**, the linear independence constraint qualification (a "constraint qualification" is any condition on the rules that makes multipliers exist). The last equation, the price reading, is the **envelope theorem** for this problem.
 
-For the three pumps, $f = 0.02x_1^2 + 0.03x_2^2 + 0.05x_3^2$ kW. Rule 1 is total flow, $x_1 + x_2 + x_3 = 150$ L/s. Rule 2 is head at the hill tank: near today's operating point, each L/s from pump A adds 0.1 m there, from B 0.2 m and from C 0.4 m, being nearer the hill. So $0.1x_1 + 0.2x_2 + 0.4x_3 = 35$ m. The formula becomes three equations, one per pump, plus the two rules:
+For the three pumps, $`f = 0.02x_1^2 + 0.03x_2^2 + 0.05x_3^2`$ kW. Rule 1 is total flow, $`x_1 + x_2 + x_3 = 150`$ L/s. Rule 2 is head at the hill tank: near today's operating point, each L/s from pump A adds 0.1 m there, from B 0.2 m and from C 0.4 m, being nearer the hill. So $`0.1x_1 + 0.2x_2 + 0.4x_3 = 35`$ m. The formula becomes three equations, one per pump, plus the two rules:
 
-$$2a_i x_i = \lambda_1 + \lambda_2 k_i \quad (i = 1, 2, 3).$$
+```math
+2a_i x_i = \lambda_1 + \lambda_2 k_i \quad (i = 1, 2, 3).
+```
 
 Each pump's marginal cost equals the price of a litre plus the price of the head that litre adds.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x = (x_1, x_2, x_3)$, $x^*$ | the flows of pumps A, B, C; $x^*$ the best plan | (50, 50, 50) L/s | — |
-| $f$ | the cost being minimised: power drawn | 250 kW, £50 an hour | — |
-| $a_i$ | pump $i$'s power coefficient | 0.02, 0.03, 0.05 kW per (L/s)^2 | that pump is given less flow |
-| $k_i$ | head at the hill tank per L/s from pump $i$ | 0.1, 0.2, 0.4 m per L/s | the best power falls, and so does the head price $\lambda_2$ |
-| $g_j$, $b_j$ | rule $j$'s function and the amount it must equal | total flow = 150 L/s; head = 35 m | the best power rises by about $\lambda_j$ per unit |
-| $n$, $m$ | how many choices; how many rules | 3, 2 | each rule removes one direction of free movement |
-| $\nabla f$, $\nabla g_j$ | gradients: the arrows of partial rates | (2, 3, 5); (1, 1, 1) and (0.1, 0.2, 0.4) | — |
-| $J$ | the rules' Jacobian, row $j$ = $\nabla g_j$ | `[[1, 1, 1], [0.1, 0.2, 0.4]]` | — |
-| $\lambda_j$ | rule $j$'s multiplier, its price | 1 kW per L/s; 10 kW per m | — |
-| $t$, $s$ | an allowed step (one with $Jt = 0$), and how far along it | $t = (2, -3, 1)$ | — |
-| $p^*(b)$ | the least power, as a function of the amounts | 250 kW at (150 L/s, 35 m) | — |
-| $u$, $w$, $W$, $\varphi$ | in the proof: free choices, solved choices, the function that solves them, and the cost as a function of the free choices | $u = x_1$, $w = (x_2, x_3)$ | — |
+| $`x = (x_1, x_2, x_3)`$, $`x^*`$ | the flows of pumps A, B, C; $`x^*`$ the best plan | (50, 50, 50) L/s | — |
+| $`f`$ | the cost being minimised: power drawn | 250 kW, £50 an hour | — |
+| $`a_i`$ | pump $`i`$'s power coefficient | 0.02, 0.03, 0.05 kW per (L/s)^2 | that pump is given less flow |
+| $`k_i`$ | head at the hill tank per L/s from pump $`i`$ | 0.1, 0.2, 0.4 m per L/s | the best power falls, and so does the head price $`\lambda_2`$ |
+| $`g_j`$, $`b_j`$ | rule $`j`$'s function and the amount it must equal | total flow = 150 L/s; head = 35 m | the best power rises by about $`\lambda_j`$ per unit |
+| $`n`$, $`m`$ | how many choices; how many rules | 3, 2 | each rule removes one direction of free movement |
+| $`\nabla f`$, $`\nabla g_j`$ | gradients: the arrows of partial rates | (2, 3, 5); (1, 1, 1) and (0.1, 0.2, 0.4) | — |
+| $`J`$ | the rules' Jacobian, row $`j`$ = $`\nabla g_j`$ | `[[1, 1, 1], [0.1, 0.2, 0.4]]` | — |
+| $`\lambda_j`$ | rule $`j`$'s multiplier, its price | 1 kW per L/s; 10 kW per m | — |
+| $`t`$, $`s`$ | an allowed step (one with $`Jt = 0`$), and how far along it | $`t = (2, -3, 1)`$ | — |
+| $`p^*(b)`$ | the least power, as a function of the amounts | 250 kW at (150 L/s, 35 m) | — |
+| $`u`$, $`w`$, $`W`$, $`\varphi`$ | in the proof: free choices, solved choices, the function that solves them, and the cost as a function of the free choices | $`u = x_1`$, $`w = (x_2, x_3)`$ | — |
 
 ### When it holds
 
-- **Smooth cost and rules.** $f$ and every $g_j$ need continuous partial rates near $x^*$. A kink, such as a pump that switches on at a threshold, has no gradient there.
-- **LICQ: the rules' gradients are independent.** Write the demand rule twice, once as $2x_1 + 2x_2 + 2x_3 = 300$, and the multipliers stop being unique, so no single price exists. On a rule with a cusp, multipliers fail to exist at all (What breaks, below).
+- **Smooth cost and rules.** $`f`$ and every $`g_j`$ need continuous partial rates near $`x^*`$. A kink, such as a pump that switches on at a threshold, has no gradient there.
+- **LICQ: the rules' gradients are independent.** Write the demand rule twice, once as $`2x_1 + 2x_2 + 2x_3 = 300`$, and the multipliers stop being unique, so no single price exists. On a rule with a cusp, multipliers fail to exist at all (What breaks, below).
 - **Equalities only.** A ceiling such as "head at most 40 m" adds sign conditions and a switch between binding and slack: [KKT conditions](02-kkt-conditions.md).
 - **Necessary, not sufficient.** The equations list candidates. Here the cost is convex (it curves up in every direction) and the rules are straight, so the candidate is the global minimum ([Convexity pays off](../01-Convexity/04-local-minima-are-global-when-convex.md)). In general, curvature along the allowed directions decides: [Second-order conditions under constraints](03-second-order-conditions-for-constrained-problems.md).
-- **The price needs a smoothly moving answer.** $\lambda_j = \partial p^*/\partial b_j$ assumes $x^*$ shifts smoothly as $b$ changes, and it is a first-order rate, not the exact cost of a whole unit.
+- **The price needs a smoothly moving answer.** $`\lambda_j = \partial p^*/\partial b_j`$ assumes $`x^*`$ shifts smoothly as $`b`$ changes, and it is a first-order rate, not the exact cost of a whole unit.
 
 ---
 
@@ -82,97 +88,99 @@ Each pump's marginal cost equals the price of a litre plus the price of the head
 
 ### Step 0: no allowed step can lower the cost, and the allowed steps are exactly those the rules cannot see
 
-Start from the best plan. A step $t$ changes rule $j$ at the rate $\nabla g_j \cdot t$, so a step that keeps every rule satisfied, to first order, has $Jt = 0$. At a minimum, no such step can lower the cost to first order, so $\nabla f \cdot t = 0$ for all of them. Linear algebra then says: an arrow at right angles to everything the rows of $J$ are at right angles to must be built from those rows. That is the formula.
+Start from the best plan. A step $`t`$ changes rule $`j`$ at the rate $`\nabla g_j \cdot t`$, so a step that keeps every rule satisfied, to first order, has $`Jt = 0`$. At a minimum, no such step can lower the cost to first order, so $`\nabla f \cdot t = 0`$ for all of them. Linear algebra then says: an arrow at right angles to everything the rows of $`J`$ are at right angles to must be built from those rows. That is the formula.
 
-The step that needs care is the middle one. $Jt = 0$ is a statement about straight lines, but the rules may bend. The implicit function theorem is what turns each straight step $t$ into a real path that obeys the rules, and it needs LICQ to do so.
+The step that needs care is the middle one. $`Jt = 0`$ is a statement about straight lines, but the rules may bend. The implicit function theorem is what turns each straight step $`t`$ into a real path that obeys the rules, and it needs LICQ to do so.
 
-### Step 1: the allowed steps form a flat space of $n - m$ directions
+### Step 1: the allowed steps form a flat space of $`n - m`$ directions
 
-$J$ is $m$ rows by $n$ columns. If its rows are independent, the steps with $Jt = 0$ form a flat space of exactly $n - m$ directions. For the pumps, $n - m = 1$: one direction. It is at right angles to both $(1, 1, 1)$ and $(0.1, 0.2, 0.4)$. The cross product (the standard recipe for an arrow at right angles to two arrows in three dimensions), scaled to whole numbers, gives $t = (2, -3, 1)$. In words: pump A up 2 L/s, B down 3, C up 1. Total flow changes by $2 - 3 + 1 = 0$. Head changes by $0.2 - 0.6 + 0.4 = 0$.
+$`J`$ is $`m`$ rows by $`n`$ columns. If its rows are independent, the steps with $`Jt = 0`$ form a flat space of exactly $`n - m`$ directions. For the pumps, $`n - m = 1`$: one direction. It is at right angles to both $`(1, 1, 1)`$ and $`(0.1, 0.2, 0.4)`$. The cross product (the standard recipe for an arrow at right angles to two arrows in three dimensions), scaled to whole numbers, gives $`t = (2, -3, 1)`$. In words: pump A up 2 L/s, B down 3, C up 1. Total flow changes by $`2 - 3 + 1 = 0`$. Head changes by $`0.2 - 0.6 + 0.4 = 0`$.
 
 ### Step 2: the implicit function theorem turns each allowed step into a real path
 
-Pick $m$ of the choices whose columns of $J$ form an invertible square block (one whose equations have exactly one solution). Independence of the rows guarantees such a block exists. For the pumps, take $w = (x_2, x_3)$: the block `[[1, 1], [0.2, 0.4]]` has determinant $0.4 - 0.2 = 0.2$, not zero. The determinant of a 2-by-2 block is the product of its main diagonal minus the product of the other two entries; the block is invertible exactly when it is not zero. The remaining choices $u$, here $u = x_1$, are free.
+Pick $`m`$ of the choices whose columns of $`J`$ form an invertible square block (one whose equations have exactly one solution). Independence of the rows guarantees such a block exists. For the pumps, take $`w = (x_2, x_3)`$: the block `[[1, 1], [0.2, 0.4]]` has determinant $`0.4 - 0.2 = 0.2`$, not zero. The determinant of a 2-by-2 block is the product of its main diagonal minus the product of the other two entries; the block is invertible exactly when it is not zero. The remaining choices $`u`$, here $`u = x_1`$, are free.
 
-The [Inverse and implicit function theorems](../../06-Calculus%20and%20analysis/07-Several%20Variables/07-inverse-and-implicit-function-theorems.md) card then gives a smooth function $W$ with $g(u, W(u)) = b$ near the best plan. Every nearby plan that obeys the rules is $(u, W(u))$ for some $u$. The rules have been solved for $w$, without writing the solution down.
+The [Inverse and implicit function theorems](../../06-Calculus%20and%20analysis/07-Several%20Variables/07-inverse-and-implicit-function-theorems.md) card then gives a smooth function $`W`$ with $`g(u, W(u)) = b`$ near the best plan. Every nearby plan that obeys the rules is $`(u, W(u))`$ for some $`u`$. The rules have been solved for $`w`$, without writing the solution down.
 
 ### Step 3: the free choices face no rule, so their rates are zero
 
-Put $W$ into the cost: $\varphi(u) = f(u, W(u))$. This is a function of the free choices alone, with no rules left, and it has a local minimum at $u^*$. So its gradient is zero there ([Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md)). For the pumps, $\varphi$ is the power along the line through $(50, 50, 50)$ in direction $(2, -3, 1)$: $250 + 0.4s^2$ kW after a step of $s$. Its slope at $s = 0$ is $\nabla f \cdot t = 4 - 9 + 5 = 0$.
+Put $`W`$ into the cost: $`\varphi(u) = f(u, W(u))`$. This is a function of the free choices alone, with no rules left, and it has a local minimum at $`u^*`$. So its gradient is zero there ([Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md)). For the pumps, $`\varphi`$ is the power along the line through $`(50, 50, 50)`$ in direction $`(2, -3, 1)`$: $`250 + 0.4s^2`$ kW after a step of $`s`$. Its slope at $`s = 0`$ is $`\nabla f \cdot t = 4 - 9 + 5 = 0`$.
 
 ### Step 4: solve for the multipliers on the solved choices, and the free choices follow
 
-Define $\lambda$ by the solved choices alone. Write $\nabla_w f$ for the cost's rates in those choices and $J_w$ for their columns of $J$ (the invertible block). Their rows of the formula, $\nabla_w f = J_w^{\mathsf T} \lambda$ ($^{\mathsf T}$ turns rows into columns), are $m$ equations in $m$ unknowns with an invertible matrix. For pumps B and C that is $\lambda_1 + 0.2\lambda_2 = 3$ and $\lambda_1 + 0.4\lambda_2 = 5$, so $\lambda_2 = 10$ and $\lambda_1 = 1$.
+Define $`\lambda`$ by the solved choices alone. Write $`\nabla_w f`$ for the cost's rates in those choices and $`J_w`$ for their columns of $`J`$ (the invertible block). Their rows of the formula, $`\nabla_w f = J_w^{\mathsf T} \lambda`$ ($`^{\mathsf T}`$ turns rows into columns), are $`m`$ equations in $`m`$ unknowns with an invertible matrix. For pumps B and C that is $`\lambda_1 + 0.2\lambda_2 = 3`$ and $`\lambda_1 + 0.4\lambda_2 = 5`$, so $`\lambda_2 = 10`$ and $`\lambda_1 = 1`$.
 
-Step 3's zero rate then forces the free rows to agree. Pump A's row asks for $2 = \lambda_1 + 0.1\lambda_2 = 1 + 1$. It holds. Nothing was chosen to make it hold; the minimum did that.
+Step 3's zero rate then forces the free rows to agree. Pump A's row asks for $`2 = \lambda_1 + 0.1\lambda_2 = 1 + 1`$. It holds. Nothing was chosen to make it hold; the minimum did that.
 
-The list $\lambda$ is unique: two lists giving the same combination of independent rows must be the same list.
+The list $`\lambda`$ is unique: two lists giving the same combination of independent rows must be the same list.
 
 <details>
 <summary>Detailed proof: n choices, m independent rules</summary>
 
-Let $f$ and $g = (g_1, \dots, g_m)$ have continuous partial rates near $x^*$, with $g(x^*) = b$ and $x^*$ a local minimum of $f$ on $\{x : g(x) = b\}$. Let $J$, the $m \times n$ Jacobian of $g$ at $x^*$, have independent rows, so rank $m$.
+Let $`f`$ and $`g = (g_1, \dots, g_m)`$ have continuous partial rates near $`x^*`$, with $`g(x^*) = b`$ and $`x^*`$ a local minimum of $`f`$ on $`\{x : g(x) = b\}`$. Let $`J`$, the $`m \times n`$ Jacobian of $`g`$ at $`x^*`$, have independent rows, so rank $`m`$.
 
-Rank $m$ means some $m$ columns are independent. Reorder the choices so these come last, $x = (u, w)$ with $u$ holding $n - m$ numbers and $w$ holding $m$, and split $J = [J_u \; J_w]$ with $J_w$ square and invertible.
+Rank $`m`$ means some $`m`$ columns are independent. Reorder the choices so these come last, $`x = (u, w)`$ with $`u`$ holding $`n - m`$ numbers and $`w`$ holding $`m`$, and split $`J = [J_u \; J_w]`$ with $`J_w`$ square and invertible.
 
-By the implicit function theorem there is a neighbourhood of $u^*$ and a function $W$ with continuous partials, $W(u^*) = w^*$ and $g(u, W(u)) = b$, whose Jacobian is $DW(u^*) = -J_w^{-1} J_u$. Points $(u, W(u))$ obey the rules, so $\varphi(u) = f(u, W(u))$ has a local minimum at the inner point $u^*$, and its gradient is zero:
+By the implicit function theorem there is a neighbourhood of $`u^*`$ and a function $`W`$ with continuous partials, $`W(u^*) = w^*`$ and $`g(u, W(u)) = b`$, whose Jacobian is $`DW(u^*) = -J_w^{-1} J_u`$. Points $`(u, W(u))`$ obey the rules, so $`\varphi(u) = f(u, W(u))`$ has a local minimum at the inner point $`u^*`$, and its gradient is zero:
 
-$$\nabla_u f + DW(u^*)^{\mathsf T} \nabla_w f = 0.$$
+$`\displaystyle \nabla_u f + DW(u^*)^{\mathsf T} \nabla_w f = 0.`$
 
-Set $\lambda = (J_w^{\mathsf T})^{-1} \nabla_w f$, so $\nabla_w f = J_w^{\mathsf T}\lambda$. Then
+Set $`\lambda = (J_w^{\mathsf T})^{-1} \nabla_w f`$, so $`\nabla_w f = J_w^{\mathsf T}\lambda`$. Then
 
-$$\nabla_u f = -DW^{\mathsf T} \nabla_w f = J_u^{\mathsf T} (J_w^{-1})^{\mathsf T} J_w^{\mathsf T} \lambda = J_u^{\mathsf T} \lambda.$$
+$`\displaystyle \nabla_u f = -DW^{\mathsf T} \nabla_w f = J_u^{\mathsf T} (J_w^{-1})^{\mathsf T} J_w^{\mathsf T} \lambda = J_u^{\mathsf T} \lambda.`$
 
-Stacking the two pieces, $\nabla f(x^*) = J^{\mathsf T} \lambda = \sum_j \lambda_j \nabla g_j(x^*)$. If $J^{\mathsf T}\lambda = J^{\mathsf T}\lambda'$ then $J^{\mathsf T}(\lambda - \lambda') = 0$, and independent rows force $\lambda = \lambda'$.
+Stacking the two pieces, $`\nabla f(x^*) = J^{\mathsf T} \lambda = \sum_j \lambda_j \nabla g_j(x^*)`$. If $`J^{\mathsf T}\lambda = J^{\mathsf T}\lambda'`$ then $`J^{\mathsf T}(\lambda - \lambda') = 0`$, and independent rows force $`\lambda = \lambda'`$.
 
 </details>
 
 ### Step 5: each multiplier is the price of its rule
 
-Let the amounts $b$ move, and suppose the best plan $x^*(b)$ moves smoothly with them. This holds when the full system of Lagrange equations has an invertible matrix, by the implicit function theorem again. That matrix is invertible when LICQ holds and the cost curves upward along the allowed steps, as it does for the pumps ($0.4s^2$ in Step 3); [Second-order conditions under constraints](03-second-order-conditions-for-constrained-problems.md) says which curvature to measure when the rules bend. The least cost is $p^*(b) = f(x^*(b))$.
+Let the amounts $`b`$ move, and suppose the best plan $`x^*(b)`$ moves smoothly with them. This holds when the full system of Lagrange equations has an invertible matrix, by the implicit function theorem again. That matrix is invertible when LICQ holds and the cost curves upward along the allowed steps, as it does for the pumps ($`0.4s^2`$ in Step 3); [Second-order conditions under constraints](03-second-order-conditions-for-constrained-problems.md) says which curvature to measure when the rules bend. The least cost is $`p^*(b) = f(x^*(b))`$.
 
-By the chain rule, the rate of $p^*$ in $b_j$ is $\nabla f$ dotted with the plan's velocity $\partial x^*/\partial b_j$. Swap in $\nabla f = J^{\mathsf T}\lambda$: the rate becomes $\lambda^{\mathsf T}$ times $J\,\partial x^*/\partial b_j$. Now differentiate $g(x^*(b)) = b$ in $b_j$: $J\,\partial x^*/\partial b_j$ is the list with 1 in place $j$ and 0 elsewhere. So
+By the chain rule, the rate of $`p^*`$ in $`b_j`$ is $`\nabla f`$ dotted with the plan's velocity $`\partial x^*/\partial b_j`$. Swap in $`\nabla f = J^{\mathsf T}\lambda`$: the rate becomes $`\lambda^{\mathsf T}`$ times $`J\,\partial x^*/\partial b_j`$. Now differentiate $`g(x^*(b)) = b`$ in $`b_j`$: $`J\,\partial x^*/\partial b_j`$ is the list with 1 in place $`j`$ and 0 elsewhere. So
 
-$$\frac{\partial p^*}{\partial b_j} = \lambda_j.$$
+```math
+\frac{\partial p^*}{\partial b_j} = \lambda_j.
+```
 
-For the pumps, one more L/s of demand costs about 1 kW (£0.20 an hour). One more metre of head at the hill tank costs about 10 kW (£2 an hour). Re-solving confirms it: 151 L/s needs 251.0377 kW, and 36 m needs 260.7750 kW. The extra 0.0377 and 0.7750 are the curvature of $p^*$, which a first-order price ignores.
+For the pumps, one more L/s of demand costs about 1 kW (£0.20 an hour). One more metre of head at the hill tank costs about 10 kW (£2 an hour). Re-solving confirms it: 151 L/s needs 251.0377 kW, and 36 m needs 260.7750 kW. The extra 0.0377 and 0.7750 are the curvature of $`p^*`$, which a first-order price ignores.
 
 ---
 
 ## Worked numbers, by hand
 
-Three pumps, 150 L/s in total, 35 m at the hill tank. Each pump's equation $2a_i x_i = \lambda_1 + \lambda_2 k_i$ gives its flow from the prices: $x_i = (\lambda_1 + \lambda_2 k_i)/(2a_i)$. Put those flows into the two rules and multiply by 6 to clear fractions.
+Three pumps, 150 L/s in total, 35 m at the hill tank. Each pump's equation $`2a_i x_i = \lambda_1 + \lambda_2 k_i`$ gives its flow from the prices: $`x_i = (\lambda_1 + \lambda_2 k_i)/(2a_i)`$. Put those flows into the two rules and multiply by 6 to clear fractions.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| total-flow rule in prices | $25(\lambda_1 + 0.1\lambda_2) + \tfrac{50}{3}(\lambda_1 + 0.2\lambda_2) + 10(\lambda_1 + 0.4\lambda_2) = 150$, times 6 | $310\lambda_1 + 59\lambda_2 = 900$ |
-| head rule in prices | the same flows weighted by 0.1, 0.2, 0.4, $= 35$, times 6 | $59\lambda_1 + 15.1\lambda_2 = 210$ |
-| determinant | $310 \times 15.1 - 59 \times 59 = 4681 - 3481$ | 1200 |
-| price of a litre | $(900 \times 15.1 - 59 \times 210)/1200 = 1200/1200$ | **$\lambda_1 = 1$ kW per L/s** |
-| price of a metre | $(310 \times 210 - 59 \times 900)/1200 = 12000/1200$ | **$\lambda_2 = 10$ kW per m** |
-| flows | $x_1 = 25 \times 2$, $x_2 = 3/0.06$, $x_3 = 10 \times 5$ | **50, 50, 50 L/s** |
-| check the rules | $50 + 50 + 50$; $5 + 10 + 20$ | 150 L/s; 35 m |
-| power | $0.02 \times 2500 + 0.03 \times 2500 + 0.05 \times 2500 = 50 + 75 + 125$ | **250 kW**, £50 an hour |
-| along the allowed line | $f(50 + 2s, 50 - 3s, 50 + s)$ | $250 + 0.4s^2$ |
+| total-flow rule in prices | $`25(\lambda_1 + 0.1\lambda_2) + \tfrac{50}{3}(\lambda_1 + 0.2\lambda_2) + 10(\lambda_1 + 0.4\lambda_2) = 150`$, times 6 | $`310\lambda_1 + 59\lambda_2 = 900`$ |
+| head rule in prices | the same flows weighted by 0.1, 0.2, 0.4, $`= 35`$, times 6 | $`59\lambda_1 + 15.1\lambda_2 = 210`$ |
+| determinant | $`310 \times 15.1 - 59 \times 59 = 4681 - 3481`$ | 1200 |
+| price of a litre | $`(900 \times 15.1 - 59 \times 210)/1200 = 1200/1200`$ | **$`\lambda_1 = 1`$ kW per L/s** |
+| price of a metre | $`(310 \times 210 - 59 \times 900)/1200 = 12000/1200`$ | **$`\lambda_2 = 10`$ kW per m** |
+| flows | $`x_1 = 25 \times 2`$, $`x_2 = 3/0.06`$, $`x_3 = 10 \times 5`$ | **50, 50, 50 L/s** |
+| check the rules | $`50 + 50 + 50`$; $`5 + 10 + 20`$ | 150 L/s; 35 m |
+| power | $`0.02 \times 2500 + 0.03 \times 2500 + 0.05 \times 2500 = 50 + 75 + 125`$ | **250 kW**, £50 an hour |
+| along the allowed line | $`f(50 + 2s, 50 - 3s, 50 + s)`$ | $`250 + 0.4s^2`$ |
 
-Run all three pumps at 50 L/s: 250 kW, the least any plan meeting both rules can draw, since every other plan on the line costs $0.4s^2$ more. One more L/s of demand would cost about £0.20 an hour, one more metre of head about £2.
+Run all three pumps at 50 L/s: 250 kW, the least any plan meeting both rules can draw, since every other plan on the line costs $`0.4s^2`$ more. One more L/s of demand would cost about £0.20 an hour, one more metre of head about £2.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Drop the head rule | 72.5806, 48.3871, 29.0323 L/s; 217.7419 kW; head 28.5484 m | Cheaper, but the hill tank is 6.4516 m short; the rule had a price of 10 kW per m for a reason |
-| Write demand twice: add $2x_1 + 2x_2 + 2x_3 = 300$ | Lagrange system singular; (1, 0, 10) and (0, 0.5, 10) both fit exactly | LICQ fails: the rows of $J$ are dependent, so the demand price splits any way you like |
-| A cusp: minimise $x_1$ on $x_2^2 = x_1^3$ | best plan (0, 0); $\nabla g = (0, 0)$; smallest residual over every $\lambda$ is 1 | LICQ fails: $\nabla f = (1, 0)$ is no multiple of the zero arrow, so no multiplier exists at a true minimum |
+| Write demand twice: add $`2x_1 + 2x_2 + 2x_3 = 300`$ | Lagrange system singular; (1, 0, 10) and (0, 0.5, 10) both fit exactly | LICQ fails: the rows of $`J`$ are dependent, so the demand price splits any way you like |
+| A cusp: minimise $`x_1`$ on $`x_2^2 = x_1^3`$ | best plan (0, 0); $`\nabla g = (0, 0)`$; smallest residual over every $`\lambda`$ is 1 | LICQ fails: $`\nabla f = (1, 0)`$ is no multiple of the zero arrow, so no multiplier exists at a true minimum |
 | Split two pumps evenly, matching flows not marginal costs | 125 kW against 120 | Pump B's marginal cost, 3 kW per L/s, beats A's 2; moving flow to A saves power |
 
-The cusp is the curve $x_2^2 = x_1^3$, which has a sharp point at the origin. On it $x_1 = |x_2|^{2/3}$ is never below 0, so the origin is the minimum; the code confirms it by solving the rule for $x_1$ at 21 values of $x_2$, each by bisection (halving a bracket). The implicit function theorem fails there, Step 2 has no path to offer, and the formula fails with it.
+The cusp is the curve $`x_2^2 = x_1^3`$, which has a sharp point at the origin. On it $`x_1 = |x_2|^{2/3}`$ is never below 0, so the origin is the minimum; the code confirms it by solving the rule for $`x_1`$ at 21 values of $`x_2`$, each by bisection (halving a bracket). The implicit function theorem fails there, Step 2 has no path to offer, and the formula fails with it.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code reaches the answer by three independent roads. Road 1 builds the Lagrange equations as one linear system, 5 equations by 5 unknowns for the three pumps, and solves it by elimination with row swaps. Road 2 never uses a multiplier: it walks the line of allowed plans in direction $t$ and finds its lowest point by golden-section search (a bracket shrunk by the golden ratio each step). A cross-check solves for the multipliers from pumps B and C alone, as in the proof, and confirms pump A's row. Road 3 re-solves with each amount nudged up and down by one unit and compares the central difference (the change across the two nudges, halved) with $\lambda$. It ends with the three failures from the table.
+The code reaches the answer by three independent roads. Road 1 builds the Lagrange equations as one linear system, 5 equations by 5 unknowns for the three pumps, and solves it by elimination with row swaps. Road 2 never uses a multiplier: it walks the line of allowed plans in direction $`t`$ and finds its lowest point by golden-section search (a bracket shrunk by the golden ratio each step). A cross-check solves for the multipliers from pumps B and C alone, as in the proof, and confirms pump A's row. Road 3 re-solves with each amount nudged up and down by one unit and compares the central difference (the change across the two nudges, halved) with $`\lambda`$. It ends with the three failures from the table.
 
 ### Python
 
@@ -477,15 +485,15 @@ Lean proves the formula and the price reading for any number of choices and rule
 - There is exactly one list of them: the cost's gradient is a weighted sum of the rules' gradients in only one way.
 - Suppose also that the best plan moves smoothly as the amounts change, and stays a local minimum that obeys the rules.
 - Then each multiplier is the rate at which the least cost changes as its rule's amount changes.
-- On the cusp $x_2^2 = x_1^3$, the origin has the lowest $x_1$ on the curve, yet no multiplier exists there.
+- On the cusp $`x_2^2 = x_1^3`$, the origin has the lowest $`x_1`$ on the curve, yet no multiplier exists there.
 - Two pumps: the 60/40 split draws 120 kW, the even split 125 kW.
 - At 60/40 both marginal costs are 2.4 kW per L/s; at 50/50 they are 2 and 3.
 - The chart's first three points are 300, 245 and 200 kW.
 - Three pumps at 50 L/s each meet both rules, 150 L/s and 35 m, and draw 250 kW.
 - The gradient (2, 3, 5) equals 1 times (1, 1, 1) plus 10 times (0.1, 0.2, 0.4).
-- The step $t = (2, -3, 1)$ changes neither rule, and the cost's gradient dotted with it is 0.
-- Along the allowed line the power is $250 + 0.4s^2$ kW.
-- The hand elimination has determinant 1200, and $\lambda_1 = 1$, $\lambda_2 = 10$ satisfy both of its equations.
+- The step $`t = (2, -3, 1)`$ changes neither rule, and the cost's gradient dotted with it is 0.
+- Along the allowed line the power is $`250 + 0.4s^2`$ kW.
+- The hand elimination has determinant 1200, and $`\lambda_1 = 1`$, $`\lambda_2 = 10`$ satisfy both of its equations.
 - These multipliers also satisfy pump B's and pump C's equations, and those pumps' block has determinant 0.2.
 - With demand written twice, multipliers (1, 0, 10) and (0, 0.5, 10) both rebuild the gradient (2, 3, 5).
 
@@ -668,7 +676,7 @@ example : ∀ i : Fin 3,
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to this network, so expect some to stop it.
 > - **Guess first: does a cheaper pump C take more flow?** Change `0.05` in `A` to `0.04`. Flows become 52.5641, 46.1538 and 51.2821 L/s, power 224.3590 kW, prices 1.4359 kW per L/s and 6.6667 kW per m. The line's curvature changes, so an assert stops it.
-> - **Guess first: can more demand ever be cheaper?** Change `[150, 35]` to `[150, 40]`. Power rises to 319.3750 kW and $\lambda_1$ turns negative, −0.4750 kW per L/s: an extra L/s, sent through pump A, lets the plan lean less on pump C, the dearest. An equality rule's price can have either sign.
+> - **Guess first: can more demand ever be cheaper?** Change `[150, 35]` to `[150, 40]`. Power rises to 319.3750 kW and $`\lambda_1`$ turns negative, −0.4750 kW per L/s: an extra L/s, sent through pump A, lets the plan lean less on pump C, the dearest. An equality rule's price can have either sign.
 > - **Guess first: what if every pump lifts the hill tank equally?** Set `K` to `[0.2, 0.2, 0.2]`. Head becomes 0.2 times total flow, so 150 L/s fixes it at 0.2 × 150 = 30 m, and it can never reach 35 m: the two rules contradict each other. Their gradients are parallel, so the system is singular and the script stops at the three-pump solve.
 > - **Guess first: what does dearer electricity change?** Set `KWH` to `0.30`. The flows and kilowatt prices stay put; the bill becomes £75 an hour, and the prices £0.30 and £3 an hour.
 
@@ -677,9 +685,9 @@ example : ∀ i : Fin 3,
 ## The usual mistake
 
 > [!warning]
-> **Assuming every minimum satisfies the multiplier equations.** They are guaranteed only where the rules are regular (here, where LICQ holds); elsewhere they may fail. At the cusp $x_2^2 = x_1^3$ the minimum is the origin, the rule's gradient is $(0, 0)$, and no multiplier makes $\nabla f = (1, 0)$ balance: the smallest mismatch over all $\lambda$ is 1. A solver that only looks for Lagrange points will never find that minimum, so check the rule's gradients at the answer.
+> **Assuming every minimum satisfies the multiplier equations.** They are guaranteed only where the rules are regular (here, where LICQ holds); elsewhere they may fail. At the cusp $`x_2^2 = x_1^3`$ the minimum is the origin, the rule's gradient is $`(0, 0)`$, and no multiplier makes $`\nabla f = (1, 0)`$ balance: the smallest mismatch over all $`\lambda`$ is 1. A solver that only looks for Lagrange points will never find that minimum, so check the rule's gradients at the answer.
 >
-> - **Ignoring which way a rule is written.** Write the head rule as $-0.1x_1 - 0.2x_2 - 0.4x_3 = -35$ and the same plan comes back with $\lambda_2 = -10$. The price is per unit of $b_j$ as written.
+> - **Ignoring which way a rule is written.** Write the head rule as $`-0.1x_1 - 0.2x_2 - 0.4x_3 = -35`$ and the same plan comes back with $`\lambda_2 = -10`$. The price is per unit of $`b_j`$ as written.
 > - **Reading a price off a duplicated rule.** With demand stated twice, (1, 0, 10) and (0, 0.5, 10) fit equally well. Only independent rules have prices.
 > - **Taking the price as exact.** One more metre of head is priced at 10 kW but costs 10.7750; the price is a slope.
 > - **Matching flows instead of marginal costs.** The even two-pump split draws 125 kW against 120.

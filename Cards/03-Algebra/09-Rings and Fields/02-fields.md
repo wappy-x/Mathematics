@@ -33,23 +33,27 @@ flowchart TD
 
 ## The formula
 
-The ring rules give addition, subtraction and multiplication. A field adds two demands. Multiplication must commute, ab = ba. And for every element a of the set apart from 0, the set holds an element written $a^{-1}$, the reciprocal of a, with
+The ring rules give addition, subtraction and multiplication. A field adds two demands. Multiplication must commute, ab = ba. And for every element a of the set apart from 0, the set holds an element written $`a^{-1}`$, the reciprocal of a, with
 
-$$a\,a^{-1} = 1$$
+```math
+a\,a^{-1} = 1
+```
 
-where 1 leaves everything unchanged under multiplication and is not 0. Division is shorthand: b/a means b times $a^{-1}$, written only when a is nonzero. What it buys:
+where 1 leaves everything unchanged under multiplication and is not 0. Division is shorthand: b/a means b times $`a^{-1}`$, written only when a is nonzero. What it buys:
 
-$$ax = b,\ a \ne 0 \qquad\Longrightarrow\qquad x = a^{-1}b$$
+```math
+ax = b,\ a \ne 0 \qquad\Longrightarrow\qquad x = a^{-1}b
+```
 
 **Read it aloud:** to undo a multiplication by anything but zero, multiply by its reciprocal — and that answer is the only one.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a$ | the coefficient, the thing divided by | 3, the three gaps | — |
-| $a^{-1}$ | the reciprocal of a, its partner in multiplication | 5, since 3 × 5 ≡ 1 (mod 7) | — |
-| $b$ | the target to hit | 4, Friday | — |
-| $x$ | the unknown | 6 days | — |
-| $n$ | the labels on the cycle, as in Z mod n | 7 | prime keeps a field, composite breaks one |
+| $`a`$ | the coefficient, the thing divided by | 3, the three gaps | — |
+| $`a^{-1}`$ | the reciprocal of a, its partner in multiplication | 5, since 3 × 5 ≡ 1 (mod 7) | — |
+| $`b`$ | the target to hit | 4, Friday | — |
+| $`x`$ | the unknown | 6 days | — |
+| $`n`$ | the labels on the cycle, as in Z mod n | 7 | prime keeps a field, composite breaks one |
 
 ### When it holds
 
@@ -69,7 +73,7 @@ Among whole numbers 2x = 1 has no answer: twice a whole number is even, 1 is odd
 
 ### Step 1: one reciprocal gives one answer, and never a second
 
-Take ax = b with a nonzero. An answer exists: $a^{-1}b$. Multiply it by a and regroup, which the ring rules allow; the a meets its reciprocal and b is left. No second exists: multiply ax = b by $a^{-1}$ and regroup, and the left collapses to x, the right to $a^{-1}b$. Searching could never show that. The code solves all 42 equations on the week with a nonzero coefficient, each with one answer.
+Take ax = b with a nonzero. An answer exists: $`a^{-1}b`$. Multiply it by a and regroup, which the ring rules allow; the a meets its reciprocal and b is left. No second exists: multiply ax = b by $`a^{-1}`$ and regroup, and the left collapses to x, the right to $`a^{-1}b`$. Searching could never show that. The code solves all 42 equations on the week with a nonzero coefficient, each with one answer.
 
 ### Step 2: zero can never be handed a reciprocal
 
@@ -77,7 +81,7 @@ In any ring 0 times anything is 0, never 1 ([Rings](01-rings.md)), so "every non
 
 ### Step 3: no zero divisors, so a composite cycle is out
 
-Suppose ab = 0 with a nonzero. Multiply by $a^{-1}$: the left collapses to b, the right to 0. In a field two nonzero elements never multiply to zero; one that breaks this is a **zero divisor**. The six-day cycle has a pair, 2 × 3 ≡ 0 (mod 6), and every composite size splits the same way, into two numbers between 1 and itself whose product is one whole cycle. The clock: 3 × 4 ≡ 0 (mod 12).
+Suppose ab = 0 with a nonzero. Multiply by $`a^{-1}`$: the left collapses to b, the right to 0. In a field two nonzero elements never multiply to zero; one that breaks this is a **zero divisor**. The six-day cycle has a pair, 2 × 3 ≡ 0 (mod 6), and every composite size splits the same way, into two numbers between 1 and itself whose product is one whole cycle. The clock: 3 × 4 ≡ 0 (mod 12).
 
 ### Step 4: a prime cycle supplies every reciprocal
 

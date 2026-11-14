@@ -40,37 +40,41 @@ Orange: Black's formula under the payment-date bond. Green: 200,000 simulated pa
 
 ## The formula
 
-Notation first, in words. $P(t,T)$ is the price at time $t$ of a bond paying $1 at time $T$. The quarter runs from $T_1$ to $T_2$. The forward rate $F(t)$ is the simple (not compounded) rate for that quarter that can be locked in at time $t$ using those two bonds. A superscript on an expectation, $\mathbb{E}^{T_2}$, names the unit whose odds are used: the average is taken under the forward measure of date $T_2$, written $Q^{T_2}$.
+Notation first, in words. $`P(t,T)`$ is the price at time $`t`$ of a bond paying $1 at time $`T`$. The quarter runs from $`T_1`$ to $`T_2`$. The forward rate $`F(t)`$ is the simple (not compounded) rate for that quarter that can be locked in at time $`t`$ using those two bonds. A superscript on an expectation, $`\mathbb{E}^{T_2}`$, names the unit whose odds are used: the average is taken under the forward measure of date $`T_2`$, written $`Q^{T_2}`$.
 
-$$F(t) = \frac{1}{\tau}\left(\frac{P(t,T_1)}{P(t,T_2)} - 1\right), \qquad \mathbb{E}^{T_2}\big[F(T_1)\big] = F(0),$$
+```math
+F(t) = \frac{1}{\tau}\left(\frac{P(t,T_1)}{P(t,T_2)} - 1\right), \qquad \mathbb{E}^{T_2}\big[F(T_1)\big] = F(0),
+```
 
-$$V = P(0,T_2)\,\mathbb{E}^{T_2}\!\big[\tau\,(F(T_1) - K)^+\big] = \tau\,P(0,T_2)\,\big[F(0)\,N(d_1) - K\,N(d_2)\big].$$
+```math
+V = P(0,T_2)\,\mathbb{E}^{T_2}\!\big[\tau\,(F(T_1) - K)^+\big] = \tau\,P(0,T_2)\,\big[F(0)\,N(d_1) - K\,N(d_2)\big].
+```
 
 **Read it aloud:** the forward rate is the growth from the fixing-date bond to the payment-date bond, per year; under the payment-date bond's odds it averages to today's value; so the caplet is that bond's price times the average payoff, which for a lognormal forward is Black's bracket.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$ | the caplet's value today | $14,793.71 on $10 million | — |
-| $P(t,T)$, $t$, $T$ | price at time $t$ (years from today) of $1 paid at time $T$; a **zero-coupon bond** | $P(0,1.75) = 0.923878$, $P(0,2.00) = 0.913036$ | a dearer payment-date bond raises $V$ in proportion |
-| $T_1$, $T_2$ | fixing date (rate looked up) and payment date (interest paid) | 1.75 and 2.00 years | later fixing: more time to wander, dearer caplet |
-| $\tau$ | the **accrual fraction**: the quarter's length in years | 0.25 | payment scales with it |
-| $F(t)$, $F(0)$ | the forward rate for the quarter as seen at time $t$; today's value | $F(0) = 4.75\%$ | caplet dearer |
-| $K$ | the strike: the capped rate | 5% | caplet cheaper |
-| $\sigma$ | volatility: the yearly spread of the log of the forward rate | 30% | caplet dearer |
-| $d_1$, $d_2$ | standardised distances of forward from strike, as for Black-76: $d_1 = [\ln(F(0)/K) + \tfrac12\sigma^2 T_1]/(\sigma\sqrt{T_1})$, $d_2 = d_1 - \sigma\sqrt{T_1}$ | 0.069184 and −0.327678 | — |
-| $N(x)$ | the normal CDF: the chance a standard bell-curve draw lands below $x$ | $N(d_1) = 0.527579$, $N(d_2) = 0.371577$ | — |
-| $Q^{T}$, $\mathbb{E}^{T}$, $X$, $Y$ | the forward measure of date $T$ (odds under which every traded price $X$, divided by $P(t,T)$, is a fair bet) and the average under it; $Y$ is any payoff being averaged | $T = 2.00$ for this caplet | — |
-| $B(t)$, $Q$ | the bank account ($1 rolled at the overnight rate) and its odds, the risk-neutral measure | needs a full rate model; this card avoids it | — |
-| $\mu$, $W$, $dW$ | extra drift of the forward per year, as a fraction of its level, under another unit; $W$ is the Brownian motion (random shock) under the odds in use, $dW$ its kick over a tiny time step | $\mu = \sigma^2\tau F/(1+\tau F)$ under $Q^{T_1}$ | a larger $\mu$ lifts the average forward |
+| $`V`$ | the caplet's value today | $14,793.71 on $10 million | — |
+| $`P(t,T)`$, $`t`$, $`T`$ | price at time $`t`$ (years from today) of $1 paid at time $`T`$; a **zero-coupon bond** | $`P(0,1.75) = 0.923878`$, $`P(0,2.00) = 0.913036`$ | a dearer payment-date bond raises $`V`$ in proportion |
+| $`T_1`$, $`T_2`$ | fixing date (rate looked up) and payment date (interest paid) | 1.75 and 2.00 years | later fixing: more time to wander, dearer caplet |
+| $`\tau`$ | the **accrual fraction**: the quarter's length in years | 0.25 | payment scales with it |
+| $`F(t)`$, $`F(0)`$ | the forward rate for the quarter as seen at time $`t`$; today's value | $`F(0) = 4.75\%`$ | caplet dearer |
+| $`K`$ | the strike: the capped rate | 5% | caplet cheaper |
+| $`\sigma`$ | volatility: the yearly spread of the log of the forward rate | 30% | caplet dearer |
+| $`d_1`$, $`d_2`$ | standardised distances of forward from strike, as for Black-76: $`d_1 = [\ln(F(0)/K) + \tfrac12\sigma^2 T_1]/(\sigma\sqrt{T_1})`$, $`d_2 = d_1 - \sigma\sqrt{T_1}`$ | 0.069184 and −0.327678 | — |
+| $`N(x)`$ | the normal CDF: the chance a standard bell-curve draw lands below $`x`$ | $`N(d_1) = 0.527579`$, $`N(d_2) = 0.371577`$ | — |
+| $`Q^{T}`$, $`\mathbb{E}^{T}`$, $`X`$, $`Y`$ | the forward measure of date $`T`$ (odds under which every traded price $`X`$, divided by $`P(t,T)`$, is a fair bet) and the average under it; $`Y`$ is any payoff being averaged | $`T = 2.00`$ for this caplet | — |
+| $`B(t)`$, $`Q`$ | the bank account ($1 rolled at the overnight rate) and its odds, the risk-neutral measure | needs a full rate model; this card avoids it | — |
+| $`\mu`$, $`W`$, $`dW`$ | extra drift of the forward per year, as a fraction of its level, under another unit; $`W`$ is the Brownian motion (random shock) under the odds in use, $`dW`$ its kick over a tiny time step | $`\mu = \sigma^2\tau F/(1+\tau F)`$ under $`Q^{T_1}`$ | a larger $`\mu`$ lifts the average forward |
 
 A **fair bet** (the technical word is *martingale*) is a quantity whose average future value, given everything known now, equals its value now. A basis point (bp) is one hundredth of a percent.
 
 ### When it holds
 
-- **Both bonds trade and are positive.** The unit must be a traded price that never hits zero, and the forward must be a ratio of traded prices. If the rate the contract fixes on comes off a different curve from the bonds used for discounting (the usual case since 2008), $F$ is no longer that ratio, and the fair-bet property needs a separate model of the spread between the curves.
-- **The payment falls on $T_2$.** The unit must match the payment date. Pay the same amount at the fixing date instead and the payoff no longer lives in $T_2$ bonds; the price picks up a convexity adjustment (a correction from the curvature of the payoff in the rate).
-- **The rate fixes at the start of the quarter.** That is how term rates work: the old LIBOR (London Interbank Offered Rate) and Term SOFR (a three-month rate built from SOFR, the US Secured Overnight Financing Rate). A caplet on overnight SOFR compounded through the quarter is known only at $T_2$; $F$ is still a fair bet under $Q^{T_2}$, but it keeps moving, more and more slowly, until $T_2$. Conventions verified 2026-09-28.
-- **The forward is lognormal with constant $\sigma$.** This is the model half. The fair-bet property is exact in any model; only Black's closed form needs the bell curve in logs. A market that prices each strike at its own volatility (a smile) is outside it.
+- **Both bonds trade and are positive.** The unit must be a traded price that never hits zero, and the forward must be a ratio of traded prices. If the rate the contract fixes on comes off a different curve from the bonds used for discounting (the usual case since 2008), $`F`$ is no longer that ratio, and the fair-bet property needs a separate model of the spread between the curves.
+- **The payment falls on $`T_2`$.** The unit must match the payment date. Pay the same amount at the fixing date instead and the payoff no longer lives in $`T_2`$ bonds; the price picks up a convexity adjustment (a correction from the curvature of the payoff in the rate).
+- **The rate fixes at the start of the quarter.** That is how term rates work: the old LIBOR (London Interbank Offered Rate) and Term SOFR (a three-month rate built from SOFR, the US Secured Overnight Financing Rate). A caplet on overnight SOFR compounded through the quarter is known only at $`T_2`$; $`F`$ is still a fair bet under $`Q^{T_2}`$, but it keeps moving, more and more slowly, until $`T_2`$. Conventions verified 2026-09-28.
+- **The forward is lognormal with constant $`\sigma`$.** This is the model half. The fair-bet property is exact in any model; only Black's closed form needs the bell curve in logs. A market that prices each strike at its own volatility (a smile) is outside it.
 - **Rates stay positive.** A lognormal forward cannot go below zero. Where rates can, desks switch to a normal or shifted-lognormal spread ([Rate volatilities](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)); the fair-bet property survives the switch.
 
 ---
@@ -85,91 +89,107 @@ Each unit has its own odds. The price is always the unit's price today times the
 
 ### Step 1: switching unit reweights the paths by the unit's growth
 
-Start from the bank account $B(t)$ and its odds $Q$, the risk-neutral measure ([Changing the unit of account](../05-Black-Scholes%20from%20the%20Ground%20Up/05-change-of-numeraire-in-pricing.md)). Under $Q$, every price divided by $B(t)$ is a fair bet. To use the payment-date bond as the unit instead, reweight each path (one possible history of prices) by how well that bond did against the bank, relative to the start:
+Start from the bank account $`B(t)`$ and its odds $`Q`$, the risk-neutral measure ([Changing the unit of account](../05-Black-Scholes%20from%20the%20Ground%20Up/05-change-of-numeraire-in-pricing.md)). Under $`Q`$, every price divided by $`B(t)`$ is a fair bet. To use the payment-date bond as the unit instead, reweight each path (one possible history of prices) by how well that bond did against the bank, relative to the start:
 
-$$\text{weight of a path} = \frac{P(t,T_2)/B(t)}{P(0,T_2)/B(0)}.$$
+```math
+\text{weight of a path} = \frac{P(t,T_2)/B(t)}{P(0,T_2)/B(0)}.
+```
 
-These weights average to one under $Q$, because the bond counted in bank units is itself a fair bet. So they turn $Q$ into new odds, $Q^{T_2}$. Under $Q^{T_2}$, every price divided by $P(t,T_2)$ is a fair bet.
+These weights average to one under $`Q`$, because the bond counted in bank units is itself a fair bet. So they turn $`Q`$ into new odds, $`Q^{T_2}`$. Under $`Q^{T_2}`$, every price divided by $`P(t,T_2)`$ is a fair bet.
 
 <details>
 <summary>Detailed proof: every price in bond units is a fair bet under the reweighted odds</summary>
 
-Write $Z(t) = \dfrac{P(t,T_2)/B(t)}{P(0,T_2)/B(0)}$. It is positive, starts at 1, and is a fair bet under $Q$ because $P(t,T_2)/B(t)$ is. Define $Q^{T_2}$ by giving each outcome up to time $T_2$ the weight $Z(T_2)$. Averages given what is known at time $t$ then change by Bayes' rule (the rule for reweighting a conditional average): for any payoff $Y$ settled at time $s \ge t$,
-$$\mathbb{E}^{T_2}[Y \mid \text{now}] = \frac{\mathbb{E}^{Q}[Z(s)\,Y \mid \text{now}]}{Z(t)}.$$
-Take $Y = X(s)/P(s,T_2)$ for a traded price $X$. Then $Z(s)\,Y = \dfrac{X(s)/B(s)}{P(0,T_2)/B(0)}$, a fair bet under $Q$, so its average is $\dfrac{X(t)/B(t)}{P(0,T_2)/B(0)}$. Divide by $Z(t)$: the answer is $X(t)/P(t,T_2)$. So $X/P(\cdot,T_2)$ is a fair bet under $Q^{T_2}$. The same three lines work for any positive traded unit; that is the change-of-numeraire theorem of Geman, El Karoui and Rochet (1995) ([Change of numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md)).
+Write $`Z(t) = \dfrac{P(t,T_2)/B(t)}{P(0,T_2)/B(0)}`$. It is positive, starts at 1, and is a fair bet under $`Q`$ because $`P(t,T_2)/B(t)`$ is. Define $`Q^{T_2}`$ by giving each outcome up to time $`T_2`$ the weight $`Z(T_2)`$. Averages given what is known at time $`t`$ then change by Bayes' rule (the rule for reweighting a conditional average): for any payoff $`Y`$ settled at time $`s \ge t`$,
+
+$`\displaystyle \mathbb{E}^{T_2}[Y \mid \text{now}] = \frac{\mathbb{E}^{Q}[Z(s)\,Y \mid \text{now}]}{Z(t)}.`$
+
+Take $`Y = X(s)/P(s,T_2)`$ for a traded price $`X`$. Then $`Z(s)\,Y = \dfrac{X(s)/B(s)}{P(0,T_2)/B(0)}`$, a fair bet under $`Q`$, so its average is $`\dfrac{X(t)/B(t)}{P(0,T_2)/B(0)}`$. Divide by $`Z(t)`$: the answer is $`X(t)/P(t,T_2)`$. So $`X/P(\cdot,T_2)`$ is a fair bet under $`Q^{T_2}`$. The same three lines work for any positive traded unit; that is the change-of-numeraire theorem of Geman, El Karoui and Rochet (1995) ([Change of numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md)).
 
 </details>
 
 ### Step 2: the forward rate is a traded price in bond units
 
-Buy one bond paying $1 at 1.75 years and sell one paying $1 at 2.00 years. At 1.75 years, deposit the dollar received for one quarter at the rate then fixed. At 2.00 years the deposit returns more than the dollar owed, by the quarter's interest. So this pair of bonds is a traded portfolio worth $P(t,T_1) - P(t,T_2)$, and by the definition of $F(t)$ that equals $\tau\,F(t)\,P(t,T_2)$. Divide by the unit $P(t,T_2)$:
+Buy one bond paying $1 at 1.75 years and sell one paying $1 at 2.00 years. At 1.75 years, deposit the dollar received for one quarter at the rate then fixed. At 2.00 years the deposit returns more than the dollar owed, by the quarter's interest. So this pair of bonds is a traded portfolio worth $`P(t,T_1) - P(t,T_2)`$, and by the definition of $`F(t)`$ that equals $`\tau\,F(t)\,P(t,T_2)`$. Divide by the unit $`P(t,T_2)`$:
 
-$$\frac{P(t,T_1) - P(t,T_2)}{P(t,T_2)} = \tau\,F(t).$$
+```math
+\frac{P(t,T_1) - P(t,T_2)}{P(t,T_2)} = \tau\,F(t).
+```
 
-The left side is a traded price in bond units, a fair bet under $Q^{T_2}$ by Step 1. So $\tau F(t)$ is a fair bet, and so is $F(t)$: $\mathbb{E}^{T_2}[F(T_1)] = F(0)$. No rate model was used, only the fact that both bonds trade.
+The left side is a traded price in bond units, a fair bet under $`Q^{T_2}`$ by Step 1. So $`\tau F(t)`$ is a fair bet, and so is $`F(t)`$: $`\mathbb{E}^{T_2}[F(T_1)] = F(0)`$. No rate model was used, only the fact that both bonds trade.
 
 ### Step 3: the payoff in bond units is the payoff itself
 
-The caplet pays $\tau\,(F(T_1) - K)^+$ dollars at $T_2$ (the $^+$ means "or zero, if negative"). At $T_2$ the unit bond is worth exactly $1, so in bond units the payoff is the same number. The price today is the unit's price times the average payoff in units:
+The caplet pays $`\tau\,(F(T_1) - K)^+`$ dollars at $`T_2`$ (the $`^+`$ means "or zero, if negative"). At $`T_2`$ the unit bond is worth exactly $1, so in bond units the payoff is the same number. The price today is the unit's price times the average payoff in units:
 
-$$V = P(0,T_2)\,\mathbb{E}^{T_2}\big[\tau\,(F(T_1) - K)^+\big].$$
+```math
+V = P(0,T_2)\,\mathbb{E}^{T_2}\big[\tau\,(F(T_1) - K)^+\big].
+```
 
-All the randomness of discounting has gone into the unit. What is left to average is a call payoff on one number, $F(T_1)$, which by Step 2 has no drift.
+All the randomness of discounting has gone into the unit. What is left to average is a call payoff on one number, $`F(T_1)`$, which by Step 2 has no drift.
 
 ### Step 4: add Black's model
 
-Now the one modelling assumption: under $Q^{T_2}$ the forward moves as $dF = \sigma\,F\,dW$ with constant $\sigma$. No drift term appears, because Step 2 forbids one. So $\ln F(T_1)$ is a bell curve with centre $\ln F(0) - \tfrac12\sigma^2 T_1$ and spread $\sigma\sqrt{T_1}$. The average of a call payoff on such a number is the Black-76 bracket ([Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)):
+Now the one modelling assumption: under $`Q^{T_2}`$ the forward moves as $`dF = \sigma\,F\,dW`$ with constant $`\sigma`$. No drift term appears, because Step 2 forbids one. So $`\ln F(T_1)`$ is a bell curve with centre $`\ln F(0) - \tfrac12\sigma^2 T_1`$ and spread $`\sigma\sqrt{T_1}`$. The average of a call payoff on such a number is the Black-76 bracket ([Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)):
 
-$$\mathbb{E}^{T_2}\big[(F(T_1) - K)^+\big] = F(0)\,N(d_1) - K\,N(d_2).$$
+```math
+\mathbb{E}^{T_2}\big[(F(T_1) - K)^+\big] = F(0)\,N(d_1) - K\,N(d_2).
+```
 
-Multiply by $\tau\,P(0,T_2)$ and the caplet formula is proved. The two dates now have separate jobs, and the unit explains why: volatility runs to $T_1$, when the forward stops moving; discounting runs to $T_2$, the date of the unit.
+Multiply by $`\tau\,P(0,T_2)`$ and the caplet formula is proved. The two dates now have separate jobs, and the unit explains why: volatility runs to $`T_1`$, when the forward stops moving; discounting runs to $`T_2`$, the date of the unit.
 
 ### Step 5: a different unit gives the forward a drift
 
-Use the fixing-date bond $P(t,T_1)$ as the unit instead. Under its odds, $Q^{T_1}$, the forward is no longer a fair bet. The two sets of odds differ by the ratio of the two units, which is $P(t,T_1)/P(t,T_2) = 1 + \tau F(t)$. Paths with a high forward rate get more weight under $Q^{T_1}$, so the forward's average rises. The rise has an exact size:
+Use the fixing-date bond $`P(t,T_1)`$ as the unit instead. Under its odds, $`Q^{T_1}`$, the forward is no longer a fair bet. The two sets of odds differ by the ratio of the two units, which is $`P(t,T_1)/P(t,T_2) = 1 + \tau F(t)`$. Paths with a high forward rate get more weight under $`Q^{T_1}`$, so the forward's average rises. The rise has an exact size:
 
-$$\mathbb{E}^{T_1}[F(T_1)] = \frac{F(0) + \tau\,F(0)^2\,e^{\sigma^2 T_1}}{1 + \tau F(0)} = 4.7595\%,$$
+```math
+\mathbb{E}^{T_1}[F(T_1)] = \frac{F(0) + \tau\,F(0)^2\,e^{\sigma^2 T_1}}{1 + \tau F(0)} = 4.7595\%,
+```
 
 a lift of 0.9509 bp over today's 4.75 percent. The simulation, which knows nothing of this formula and only moves the forward step by step with the drift below, lands on 0.9486 bp, with a standard error of 0.0014 bp. In continuous time the reweighting adds to the forward's log a drift
 
-$$\mu = \frac{\sigma^2\,\tau\,F}{1 + \tau F}\quad\text{per year}.$$
+```math
+\mu = \frac{\sigma^2\,\tau\,F}{1 + \tau F}\quad\text{per year}.
+```
 
-What is a fair bet under $Q^{T_1}$ is the traded pair of Step 2 divided by the new unit: $F/(1 + \tau F)$. The simulation's average of it misses $F(0)/(1+\tau F(0))$ by 0.0023 bp, well inside its standard error of 0.0074 bp.
+What is a fair bet under $`Q^{T_1}`$ is the traded pair of Step 2 divided by the new unit: $`F/(1 + \tau F)`$. The simulation's average of it misses $`F(0)/(1+\tau F(0))`$ by 0.0023 bp, well inside its standard error of 0.0074 bp.
 
 <details>
 <summary>The algebra behind the drift</summary>
 
-Relative to $Q^{T_2}$, the odds $Q^{T_1}$ weight a path by $\dfrac{P(T_1,T_1)/P(T_1,T_2)}{P(0,T_1)/P(0,T_2)} = \dfrac{1 + \tau F(T_1)}{1 + \tau F(0)}$, by Step 1 with $P(t,T_2)$ in the place of the bank account. So $\mathbb{E}^{T_1}[F] = \mathbb{E}^{T_2}[F(1 + \tau F)]/(1 + \tau F(0))$. Under $Q^{T_2}$, $F$ is lognormal with mean $F(0)$, so $\mathbb{E}^{T_2}[F^2] = F(0)^2 e^{\sigma^2 T_1}$; that gives the exact mean above. For the drift: the weight's own shocks are $\tau\,\sigma F/(1 + \tau F)$ times $dW$. Girsanov's theorem (a change of odds shifts a Brownian motion by its covariance with the weight) replaces $dW^{T_2}$ by $dW^{T_1} + \sigma\tau F/(1 + \tau F)\,dt$. Put that into $dF = \sigma F\,dW^{T_2}$: $dF = \sigma^2 \tau F^2/(1 + \tau F)\,dt + \sigma F\,dW^{T_1}$, whose relative drift is $\mu$.
+Relative to $`Q^{T_2}`$, the odds $`Q^{T_1}`$ weight a path by $`\dfrac{P(T_1,T_1)/P(T_1,T_2)}{P(0,T_1)/P(0,T_2)} = \dfrac{1 + \tau F(T_1)}{1 + \tau F(0)}`$, by Step 1 with $`P(t,T_2)`$ in the place of the bank account. So $`\mathbb{E}^{T_1}[F] = \mathbb{E}^{T_2}[F(1 + \tau F)]/(1 + \tau F(0))`$. Under $`Q^{T_2}`$, $`F`$ is lognormal with mean $`F(0)`$, so $`\mathbb{E}^{T_2}[F^2] = F(0)^2 e^{\sigma^2 T_1}`$; that gives the exact mean above. For the drift: the weight's own shocks are $`\tau\,\sigma F/(1 + \tau F)`$ times $`dW`$. Girsanov's theorem (a change of odds shifts a Brownian motion by its covariance with the weight) replaces $`dW^{T_2}`$ by $`dW^{T_1} + \sigma\tau F/(1 + \tau F)\,dt`$. Put that into $`dF = \sigma F\,dW^{T_2}`$: $`dF = \sigma^2 \tau F^2/(1 + \tau F)\,dt + \sigma F\,dW^{T_1}`$, whose relative drift is $`\mu`$.
 
 </details>
 
-The price under $Q^{T_1}$ is the fixing-date bond times the average payoff counted in fixing-date bonds. The payoff paid at $T_2$ is worth $1/(1 + \tau F(T_1))$ fixing-date bonds per dollar at $T_1$, so
+The price under $`Q^{T_1}`$ is the fixing-date bond times the average payoff counted in fixing-date bonds. The payoff paid at $`T_2`$ is worth $`1/(1 + \tau F(T_1))`$ fixing-date bonds per dollar at $`T_1`$, so
 
-$$V = P(0,T_1)\,\mathbb{E}^{T_1}\!\left[\frac{\tau\,(F(T_1) - K)^+}{1 + \tau F(T_1)}\right].$$
+```math
+V = P(0,T_1)\,\mathbb{E}^{T_1}\!\left[\frac{\tau\,(F(T_1) - K)^+}{1 + \tau F(T_1)}\right].
+```
 
 The simulation gives $14,744.51 (standard error $66.94). Paired path by path with the same random draws under the payment-date unit, the two roads differ by −$0.27, standard error $0.84. Same price, different odds, as the chart showed.
 
 ### Step 6: the same fact for the instantaneous forward
 
-The HJM card ([Heath-Jarrow-Morton](01-hjm-framework-and-the-drift-condition.md)) found that under the bank-account odds the instantaneous forward for date $T$ (the rate for a loan over the tiny instant at $T$) drifts at its volatility times $\int_t^T\sigma(t,u)\,du$. Here $\sigma(t,u)$ is that card's volatility of the instantaneous forward for date $u$, and the integral is the size of the $T$-bond's volatility. Switching to $Q^{T}$ shifts the Brownian motion by the bond's volatility, which removes exactly that drift. So every forward rate, instantaneous or over a quarter, is a fair bet under the forward measure of its own payment date. The bank-account unit needs the whole curve's volatility to set the drift; the payment-date unit needs none of it.
+The HJM card ([Heath-Jarrow-Morton](01-hjm-framework-and-the-drift-condition.md)) found that under the bank-account odds the instantaneous forward for date $`T`$ (the rate for a loan over the tiny instant at $`T`$) drifts at its volatility times $`\int_t^T\sigma(t,u)\,du`$. Here $`\sigma(t,u)`$ is that card's volatility of the instantaneous forward for date $`u`$, and the integral is the size of the $`T`$-bond's volatility. Switching to $`Q^{T}`$ shifts the Brownian motion by the bond's volatility, which removes exactly that drift. So every forward rate, instantaneous or over a quarter, is a fair bet under the forward measure of its own payment date. The bank-account unit needs the whole curve's volatility to set the drift; the payment-date unit needs none of it.
 
 ---
 
 ## Worked numbers, by hand
 
-The shelf's curve: quarterly forwards 4.40% + 0.05% × i for quarters 0 to 7, each discount factor the previous one divided by $1 + \tau F$. Caplet 7: fixed at 1.75, paid at 2.00, strike 5%, $\sigma$ = 30%, $10 million.
+The shelf's curve: quarterly forwards 4.40% + 0.05% × i for quarters 0 to 7, each discount factor the previous one divided by $`1 + \tau F`$. Caplet 7: fixed at 1.75, paid at 2.00, strike 5%, $`\sigma`$ = 30%, $10 million.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| fixing-date bond $P(0,1.75)$ | chained from the curve | 0.923878 |
-| payment-date bond $P(0,2.00)$ | $0.923878 / (1 + 0.25 \times 0.0475)$ | 0.913036 |
-| forward $F(0)$ | $(0.923878 / 0.913036 - 1) / 0.25$ | 4.75% |
-| spread to the fixing date, $\sigma\sqrt{T_1}$ | $0.30 \times \sqrt{1.75}$ | 0.396863 |
-| $d_1$ | $[\ln(4.75/5) + 0.396863^2/2] / 0.396863$ | 0.069184 |
-| $d_2$ | $0.069184 - 0.396863$ | −0.327678 |
-| $N(d_1)$, $N(d_2)$ | bell-curve areas | 0.527579, 0.371577 |
-| Black bracket | $4.75\% \times 0.527579 - 5\% \times 0.371577$ | 0.648111% |
-| **caplet** | $\$10{,}000{,}000 \times 0.25 \times 0.913036 \times 0.648111\%$ | **$14,793.71** |
+| fixing-date bond $`P(0,1.75)`$ | chained from the curve | 0.923878 |
+| payment-date bond $`P(0,2.00)`$ | $`0.923878 / (1 + 0.25 \times 0.0475)`$ | 0.913036 |
+| forward $`F(0)`$ | $`(0.923878 / 0.913036 - 1) / 0.25`$ | 4.75% |
+| spread to the fixing date, $`\sigma\sqrt{T_1}`$ | $`0.30 \times \sqrt{1.75}`$ | 0.396863 |
+| $`d_1`$ | $`[\ln(4.75/5) + 0.396863^2/2] / 0.396863`$ | 0.069184 |
+| $`d_2`$ | $`0.069184 - 0.396863`$ | −0.327678 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve areas | 0.527579, 0.371577 |
+| Black bracket | $`4.75\% \times 0.527579 - 5\% \times 0.371577`$ | 0.648111% |
+| **caplet** | $`\$10{,}000{,}000 \times 0.25 \times 0.913036 \times 0.648111\%`$ | **$14,793.71** |
 
 The insurer charges $14,793.71 today for one quarter's cover. No view on where rates will go enters, only their spread.
 
@@ -177,9 +197,9 @@ The insurer charges $14,793.71 today for one quarter's cover. No view on where r
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Discount from the fixing date, $P(0,1.75)$ | $14,969.39 | The unit and the payment date disagree: cash paid at 2.00 years was valued as if paid at 1.75 |
-| Leave out the accrual fraction $\tau$ | $59,174.84 | A rate is not a payment: 5 percent for a quarter is a quarter of 5 percent |
-| Run the volatility to the payment date, $\sqrt{2.00}$ | $15,975.10 | The forward stops moving when it fixes at 1.75; the last quarter adds no uncertainty |
+| Discount from the fixing date, $`P(0,1.75)`$ | $14,969.39 | The unit and the payment date disagree: cash paid at 2.00 years was valued as if paid at 1.75 |
+| Leave out the accrual fraction $`\tau`$ | $59,174.84 | A rate is not a payment: 5 percent for a quarter is a quarter of 5 percent |
+| Run the volatility to the payment date, $`\sqrt{2.00}`$ | $15,975.10 | The forward stops moving when it fixes at 1.75; the last quarter adds no uncertainty |
 | Fixing-date unit, forward left driftless | $14,663.64 | A fair bet under one unit is not one under another; the missing drift costs $130.07 |
 
 The last error is also found by simulation, paired path by path against the correct road: −$129.31, against −$130.07 by quadrature.
@@ -199,10 +219,10 @@ Volatility to pay date       ███████████████      
 The code prices the caplet by **three independent roads** and tests the fair-bet claims directly.
 
 - Road 1 is Black's formula, with the bell-curve area built by a series in Python and by Simpson's rule (adding thin slices under the curve) in Rust.
-- Road 2 averages the payoff over the driftless lognormal law by Simpson's rule, with no $d_1$ or $d_2$.
+- Road 2 averages the payoff over the driftless lognormal law by Simpson's rule, with no $`d_1`$ or $`d_2`$.
 - Road 3 changes the unit to the fixing-date bond and simulates 200,000 paths (100,000 antithetic pairs: each set of random draws is used once as drawn and once with its signs flipped) in 35 steps, with the drift from Step 5 and a random-number generator written in the script.
 
-The same draws also run under the payment-date unit, so the two units can be compared path by path. Then the drift's exact size, the new fair bet $F/(1+\tau F)$, every what-breaks number and every chart point are printed.
+The same draws also run under the payment-date unit, so the two units can be compared path by path. Then the drift's exact size, the new fair bet $`F/(1+\tau F)`$, every what-breaks number and every chart point are printed.
 
 ### Python
 
@@ -544,10 +564,10 @@ The two outputs agree line for line, the simulations included: both scripts use 
 
 Lean proves Steps 2, 3 and 4 for any positive bonds and bank account, in discrete or continuous time.
 
-- Suppose both bonds and the bank account stay positive, and both bonds counted in bank units are fair bets under $Q$. Then the forward rate is a fair bet under $Q^{T_2}$, so $\mathbb{E}^{T_2}[F(T_1)] = F(0)$.
-- Take the same setting, and let the payment-date bond be worth exactly one dollar at $T_2$. Then the caplet's price under the bank's odds equals $P(0,T_2)$ times its plain average payoff under $Q^{T_2}$.
-- Suppose the strike is positive and $\ln F(T_1)$ is a bell curve with Step 4's centre and spread. Then the average call payoff is Black's bracket, $F(0) N(d_1) - K N(d_2)$.
-- Exact fractions also confirm that the two bonds give today's forward of 4.75 percent, and that $\sigma^2 T_1 = 63/400$.
+- Suppose both bonds and the bank account stay positive, and both bonds counted in bank units are fair bets under $`Q`$. Then the forward rate is a fair bet under $`Q^{T_2}`$, so $`\mathbb{E}^{T_2}[F(T_1)] = F(0)`$.
+- Take the same setting, and let the payment-date bond be worth exactly one dollar at $`T_2`$. Then the caplet's price under the bank's odds equals $`P(0,T_2)`$ times its plain average payoff under $`Q^{T_2}`$.
+- Suppose the strike is positive and $`\ln F(T_1)`$ is a bell curve with Step 4's centre and spread. Then the average call payoff is Black's bracket, $`F(0) N(d_1) - K N(d_2)`$.
+- Exact fractions also confirm that the two bonds give today's forward of 4.75 percent, and that $`\sigma^2 T_1 = 63/400`$.
 
 The decimal values, the dollar price, the simulation and Step 5's drift are left to the Python and Rust checks.
 

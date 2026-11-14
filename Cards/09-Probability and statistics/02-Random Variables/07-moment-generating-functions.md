@@ -39,48 +39,56 @@ Orange: the coin's moment generating function. Green: its tangent line at zero, 
 
 ## The formula
 
-A reminder of the notation. $X$ is a random variable, here the coin's score, and its values are written in lower case, $x$. $P(X = x)$ is the chance that $X$ equals $x$, and $E[\,\cdot\,]$ is the long-run average ([Expectation](02-expectation.md)). New on this card: $M_X(t)$, read "the moment generating function of X at t", and $M_X^{(k)}(0)$, its k-th derivative at t = 0.
+A reminder of the notation. $`X`$ is a random variable, here the coin's score, and its values are written in lower case, $`x`$. $`P(X = x)`$ is the chance that $`X`$ equals $`x`$, and $`E[\,\cdot\,]`$ is the long-run average ([Expectation](02-expectation.md)). New on this card: $`M_X(t)`$, read "the moment generating function of X at t", and $`M_X^{(k)}(0)`$, its k-th derivative at t = 0.
 
-$$M_X(t) = E\big[e^{tX}\big] = \sum_x e^{tx}\,P(X = x)$$
+```math
+M_X(t) = E\big[e^{tX}\big] = \sum_x e^{tx}\,P(X = x)
+```
 
 **Read it aloud:** for each value the variable can take, raise e to the dial times that value, weight it by its chance, and add.
 
-$$E[X^k] = M_X^{(k)}(0)$$
+```math
+E[X^k] = M_X^{(k)}(0)
+```
 
 **Read it aloud:** the k-th moment is the k-th derivative of the function, taken at a dial setting of zero.
 
-$$M_X(t) = \sum_{k=0}^{\infty} \frac{E[X^k]}{k!}\,t^k$$
+```math
+M_X(t) = \sum_{k=0}^{\infty} \frac{E[X^k]}{k!}\,t^k
+```
 
 **Read it aloud:** written as a power series in the dial, the function's k-th coefficient is the k-th moment divided by k factorial.
 
 That last line says the moment generating function is the exponential generating function of the moment sequence ([Exponential generating functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/04-exponential-generating-functions.md)). The moments are packed into a power series with k! under each term, exactly as the combinatorics wing packs a counting sequence.
 
-$$M_{X+Y}(t) = M_X(t)\,M_Y(t) \qquad \text{for independent } X \text{ and } Y$$
+```math
+M_{X+Y}(t) = M_X(t)\,M_Y(t) \qquad \text{for independent } X \text{ and } Y
+```
 
 **Read it aloud:** the function of a sum of two independent variables is the product of their two functions.
 
-For the coin, with chance of heads $p$ = 0.5, the definition gives $M_X(t) = (1 - p) + p\,e^t = 0.5 + 0.5e^t$. For $S$, the heads in $n$ = 10 independent tosses, the product rule gives $M_S(t) = (0.5 + 0.5e^t)^{10}$.
+For the coin, with chance of heads $`p`$ = 0.5, the definition gives $`M_X(t) = (1 - p) + p\,e^t = 0.5 + 0.5e^t`$. For $`S`$, the heads in $`n`$ = 10 independent tosses, the product rule gives $`M_S(t) = (0.5 + 0.5e^t)^{10}`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$, $Y$ | random variables: one toss's score, and a second toss independent of it | 1 for heads, 0 for tails | — |
-| $x$ | one value $X$ can take | 0, then 1 | a larger value weighs in as e^(tx) |
-| $p$ | the chance of heads | 0.5 | the mean of $S$ rises as 10 times $p$ |
-| $t$ | the dial: a free real number, not a probability or a time | read at 0 | $M_X(t)$ rises for $t$ above 0, falls below |
-| $M_X$, $M_S$ | the moment generating functions of $X$ and $S$ | 0.5 + 0.5e^t, and its tenth power | — |
-| $k$ | which moment: first, second, … | 1 to 4 | moments grow fast: 5, 27.5, 162.5, 1,017.5 for $S$ |
-| $E[X^k]$ | the k-th moment: the average of the k-th power | 0.5 for every $k$ from 1 | — |
-| $M_X^{(k)}(0)$ | the k-th derivative of $M_X$ at $t$ = 0 | 0.5 for every $k$ from 1 | equals $E[X^k]$ |
-| $k!$ | k factorial: 1 × 2 × … × k | 2 for $k$ = 2 | shrinks the k-th coefficient |
-| $S$ | heads in ten independent tosses | 0 to 10, averaging 5 | — |
-| $n$ | the number of tosses | 10 | $M_S$ is $M_X$ to the power $n$ |
-| $L$ | a count whose chance of the value $k$ is proportional to $e^{-\sqrt{k}}$ | average 4.47 | its function is infinite for every $t$ above 0 |
+| $`X`$, $`Y`$ | random variables: one toss's score, and a second toss independent of it | 1 for heads, 0 for tails | — |
+| $`x`$ | one value $`X`$ can take | 0, then 1 | a larger value weighs in as e^(tx) |
+| $`p`$ | the chance of heads | 0.5 | the mean of $`S`$ rises as 10 times $`p`$ |
+| $`t`$ | the dial: a free real number, not a probability or a time | read at 0 | $`M_X(t)`$ rises for $`t`$ above 0, falls below |
+| $`M_X`$, $`M_S`$ | the moment generating functions of $`X`$ and $`S`$ | 0.5 + 0.5e^t, and its tenth power | — |
+| $`k`$ | which moment: first, second, … | 1 to 4 | moments grow fast: 5, 27.5, 162.5, 1,017.5 for $`S`$ |
+| $`E[X^k]`$ | the k-th moment: the average of the k-th power | 0.5 for every $`k`$ from 1 | — |
+| $`M_X^{(k)}(0)`$ | the k-th derivative of $`M_X`$ at $`t`$ = 0 | 0.5 for every $`k`$ from 1 | equals $`E[X^k]`$ |
+| $`k!`$ | k factorial: 1 × 2 × … × k | 2 for $`k`$ = 2 | shrinks the k-th coefficient |
+| $`S`$ | heads in ten independent tosses | 0 to 10, averaging 5 | — |
+| $`n`$ | the number of tosses | 10 | $`M_S`$ is $`M_X`$ to the power $`n`$ |
+| $`L`$ | a count whose chance of the value $`k`$ is proportional to $`e^{-\sqrt{k}}`$ | average 4.47 | its function is infinite for every $`t`$ above 0 |
 
 ### When it holds
 
-- **The function must be finite on an interval around $t$ = 0.** Every variable with finitely many values passes: the coin, the ten-toss count, any die. A count $L$ whose chance of the value $k$ is proportional to $e^{-\sqrt{k}}$ fails. Its moments are finite (average 4.47, average square 89.87), yet for any positive dial the sum defining $M_L(t)$ runs off to infinity, and no derivative at zero exists to read.
-- **Derivatives are read at zero, not elsewhere.** At $t$ = 1 the coin's slope is 0.5e = 1.359, which is no moment of anything.
-- **The product rule needs independence.** One toss copied ten times has function 0.5 + 0.5e^(10t), not (0.5 + 0.5e^t)^10: at $t$ = 0.1 it reads 1.859 against 1.669. What breaks, below, shows the gap.
+- **The function must be finite on an interval around $`t`$ = 0.** Every variable with finitely many values passes: the coin, the ten-toss count, any die. A count $`L`$ whose chance of the value $`k`$ is proportional to $`e^{-\sqrt{k}}`$ fails. Its moments are finite (average 4.47, average square 89.87), yet for any positive dial the sum defining $`M_L(t)`$ runs off to infinity, and no derivative at zero exists to read.
+- **Derivatives are read at zero, not elsewhere.** At $`t`$ = 1 the coin's slope is 0.5e = 1.359, which is no moment of anything.
+- **The product rule needs independence.** One toss copied ten times has function 0.5 + 0.5e^(10t), not (0.5 + 0.5e^t)^10: at $`t`$ = 0.1 it reads 1.859 against 1.669. What breaks, below, shows the gap.
 - **Uniqueness needs the interval, not just the moments.** Two variables whose functions agree on an interval around zero have the same law: same chances, value for value. The proof runs through the complex-valued cousin of this function and lives in [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md). Without that interval, two different laws can share every moment. The standard example is the lognormal law (e raised to a normal variable): every moment is finite, and other laws share all of them, yet its function is infinite for every positive dial.
 
 ---
@@ -89,55 +97,59 @@ For the coin, with chance of heads $p$ = 0.5, the definition gives $M_X(t) = (1 
 
 ### Step 0: e^(tx) carries every power of x, each tagged by its own power of t
 
-The exponential is a power series: e^(tx) = 1 + tx + (tx)^2/2! + (tx)^3/3! + … ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). Every power of $x$ appears once, and the matching power of $t$ labels it. Averaging over $X$ turns each $x^k$ into the moment $E[X^k]$ and leaves the labels alone. Differentiating at zero is the way to strip the labels off one at a time.
+The exponential is a power series: e^(tx) = 1 + tx + (tx)^2/2! + (tx)^3/3! + … ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). Every power of $`x`$ appears once, and the matching power of $`t`$ labels it. Averaging over $`X`$ turns each $`x^k`$ into the moment $`E[X^k]`$ and leaves the labels alone. Differentiating at zero is the way to strip the labels off one at a time.
 
 Multiplying exponentials adds their exponents, e^(tx) e^(ty) = e^(t(x+y)), and that is why sums turn into products.
 
 ### Step 1: the k-th derivative at zero is the k-th moment
 
-For a variable with finitely many values, $M_X(t)$ is a finite sum of terms e^(tx) $P(X = x)$. Differentiate each term: the derivative of e^(tx) with respect to $t$ is $x$ e^(tx). After $k$ derivatives each term is $x^k$ e^(tx) $P(X = x)$. At $t$ = 0, e^0 = 1, so what remains is the sum of $x^k P(X = x)$ over every value: $E[X^k]$.
+For a variable with finitely many values, $`M_X(t)`$ is a finite sum of terms e^(tx) $`P(X = x)`$. Differentiate each term: the derivative of e^(tx) with respect to $`t`$ is $`x`$ e^(tx). After $`k`$ derivatives each term is $`x^k`$ e^(tx) $`P(X = x)`$. At $`t`$ = 0, e^0 = 1, so what remains is the sum of $`x^k P(X = x)`$ over every value: $`E[X^k]`$.
 
-On the coin: $M_X(t)$ = 0.5 + 0.5e^t. Every derivative of 0.5e^t is 0.5e^t, and the constant 0.5 vanishes after one derivative. So every derivative at zero is 0.5, matching the fact that 0^k = 0 and 1^k = 1 for every power. The variance is 0.5 − 0.5^2 = 0.25.
+On the coin: $`M_X(t)`$ = 0.5 + 0.5e^t. Every derivative of 0.5e^t is 0.5e^t, and the constant 0.5 vanishes after one derivative. So every derivative at zero is 0.5, matching the fact that 0^k = 0 and 1^k = 1 for every power. The variance is 0.5 − 0.5^2 = 0.25.
 
 ### Step 2: the series is the exponential generating function of the moments
 
-Put the series of Step 0 inside the average. Each term is a number times a power of $t$, and the average of a sum is the sum of the averages, so
+Put the series of Step 0 inside the average. Each term is a number times a power of $`t`$, and the average of a sum is the sum of the averages, so
 
-$$M_X(t) = 1 + E[X]\,t + \frac{E[X^2]}{2!}t^2 + \frac{E[X^3]}{3!}t^3 + \cdots$$
+```math
+M_X(t) = 1 + E[X]\,t + \frac{E[X^2]}{2!}t^2 + \frac{E[X^3]}{3!}t^3 + \cdots
+```
 
-A power series's k-th coefficient is its k-th derivative at zero divided by k!, which is Step 1 read the other way. The division by k! is the price of the exponential: the t^2 coefficient of $M_S$ is 13.75, and it takes 2! × 13.75 = 27.5 to get the second moment.
+A power series's k-th coefficient is its k-th derivative at zero divided by k!, which is Step 1 read the other way. The division by k! is the price of the exponential: the t^2 coefficient of $`M_S`$ is 13.75, and it takes 2! × 13.75 = 27.5 to get the second moment.
 
 ### Step 3: independent sums multiply
 
-Take independent $X$ and $Y$ with finitely many values each. Independence means $P(X = x, Y = y) = P(X = x)\,P(Y = y)$ for every pair ([Two variables at once](04-joint-distributions-and-covariance.md)). Then
+Take independent $`X`$ and $`Y`$ with finitely many values each. Independence means $`P(X = x, Y = y) = P(X = x)\,P(Y = y)`$ for every pair ([Two variables at once](04-joint-distributions-and-covariance.md)). Then
 
-$$E\big[e^{t(X+Y)}\big] = \sum_x \sum_y e^{tx}\,e^{ty}\,P(X = x)\,P(Y = y) = \Big(\sum_x e^{tx} P(X = x)\Big)\Big(\sum_y e^{ty} P(Y = y)\Big)$$
+```math
+E\big[e^{t(X+Y)}\big] = \sum_x \sum_y e^{tx}\,e^{ty}\,P(X = x)\,P(Y = y) = \Big(\sum_x e^{tx} P(X = x)\Big)\Big(\sum_y e^{ty} P(Y = y)\Big)
+```
 
-The double sum splits into a product because each term splits. Without independence the joint chance does not split, and neither does the sum. Adding one toss at a time, ten times over, gives $M_S(t) = M_X(t)^{10}$.
+The double sum splits into a product because each term splits. Without independence the joint chance does not split, and neither does the sum. Adding one toss at a time, ten times over, gives $`M_S(t) = M_X(t)^{10}`$.
 
 ### Step 4: the ten-toss moments, read off the product
 
-Differentiate $M_S(t) = (0.5 + 0.5e^t)^{10}$ with the chain rule: $M_S'(t)$ = 10 (0.5 + 0.5e^t)^9 × 0.5e^t. At zero the bracket is 1, so the mean is 10 × 0.5 = 5. One more derivative, by the product rule for derivatives, gives 90 × 0.5^2 + 10 × 0.5 = 27.5 at zero. The variance is 27.5 − 5^2 = 2.5, exactly ten times the coin's 0.25.
+Differentiate $`M_S(t) = (0.5 + 0.5e^t)^{10}`$ with the chain rule: $`M_S'(t)`$ = 10 (0.5 + 0.5e^t)^9 × 0.5e^t. At zero the bracket is 1, so the mean is 10 × 0.5 = 5. One more derivative, by the product rule for derivatives, gives 90 × 0.5^2 + 10 × 0.5 = 27.5 at zero. The variance is 27.5 − 5^2 = 2.5, exactly ten times the coin's 0.25.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Finitely many values.** Let $X$ take the values $x_1, \dots, x_m$. Then $M_X(t)$ is a finite sum of smooth functions of $t$, finite for every $t$, and may be differentiated term by term any number of times. The k-th derivative is $\sum_i x_i^k e^{t x_i} P(X = x_i)$; at $t = 0$ it is $E[X^k]$. Taylor's theorem for this smooth function then gives the series of Step 2, and here it converges for every $t$.
+**Finitely many values.** Let $`X`$ take the values $`x_1, \dots, x_m`$. Then $`M_X(t)`$ is a finite sum of smooth functions of $`t`$, finite for every $`t`$, and may be differentiated term by term any number of times. The k-th derivative is $`\sum_i x_i^k e^{t x_i} P(X = x_i)`$; at $`t = 0`$ it is $`E[X^k]`$. Taylor's theorem for this smooth function then gives the series of Step 2, and here it converges for every $`t`$.
 
-**Product rule.** For independent $X$, $Y$ with finitely many values, $P(X + Y = s)$ is the sum of $P(X = x)P(Y = y)$ over pairs with $x + y = s$. So $E[e^{t(X+Y)}] = \sum_s e^{ts} P(X + Y = s) = \sum_x \sum_y e^{t(x + y)} P(X = x) P(Y = y)$, a finite double sum, which factors as shown in Step 3. By induction on the number of tosses, $M_S = M_X^n$ for $n$ independent copies.
+**Product rule.** For independent $`X`$, $`Y`$ with finitely many values, $`P(X + Y = s)`$ is the sum of $`P(X = x)P(Y = y)`$ over pairs with $`x + y = s`$. So $`E[e^{t(X+Y)}] = \sum_s e^{ts} P(X + Y = s) = \sum_x \sum_y e^{t(x + y)} P(X = x) P(Y = y)`$, a finite double sum, which factors as shown in Step 3. By induction on the number of tosses, $`M_S = M_X^n`$ for $`n`$ independent copies.
 
-**Infinitely many values.** Suppose $M_X(t)$ is finite for every $t$ in an interval $(-a, a)$ with $a > 0$. For $|t| < b < a$, each term $|x|^k e^{t x}$ is at most a constant times $e^{bx} + e^{-bx}$, whose average is finite. That bound is what allows the derivative to pass inside the infinite sum, and it is proved in wing 10 with the dominated convergence theorem; the moments by differentiation, the series and the product rule then hold unchanged on the interval. For a variable with a density the sums become integrals, again with no change to the conclusions.
+**Infinitely many values.** Suppose $`M_X(t)`$ is finite for every $`t`$ in an interval $`(-a, a)`$ with $`a > 0`$. For $`|t| < b < a`$, each term $`|x|^k e^{t x}`$ is at most a constant times $`e^{bx} + e^{-bx}`$, whose average is finite. That bound is what allows the derivative to pass inside the infinite sum, and it is proved in wing 10 with the dominated convergence theorem; the moments by differentiation, the series and the product rule then hold unchanged on the interval. For a variable with a density the sums become integrals, again with no change to the conclusions.
 
 </details>
 
 <details>
 <summary>The logarithm turns the product into a sum</summary>
 
-Take the natural logarithm: ln $M_S$ = 10 ln $M_X$. Its first derivative at zero is the mean and its second the variance, so both add across independent tosses: 10 × 0.5 = 5 and 10 × 0.25 = 2.5. These derivatives are the **cumulants**; Moments and cumulants develops them.
+Take the natural logarithm: ln $`M_S`$ = 10 ln $`M_X`$. Its first derivative at zero is the mean and its second the variance, so both add across independent tosses: 10 × 0.5 = 5 and 10 × 0.25 = 2.5. These derivatives are the **cumulants**; Moments and cumulants develops them.
 
 </details>
 
-A second road packs the probabilities rather than the moments. The average of s^S, as a polynomial in a new variable s, is (0.5 + 0.5s)^10. Its coefficients are the chances $P(S = k)$, so it is the ordinary generating function of the law ([Generating functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/01-ordinary-generating-functions.md)). The coefficient of s^5 is 252/1,024, about 0.246, the chance of exactly five heads.
+A second road packs the probabilities rather than the moments. The average of s^S, as a polynomial in a new variable s, is (0.5 + 0.5s)^10. Its coefficients are the chances $`P(S = k)`$, so it is the ordinary generating function of the law ([Generating functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/01-ordinary-generating-functions.md)). The coefficient of s^5 is 252/1,024, about 0.246, the chance of exactly five heads.
 
 Putting s = e^t turns it into the moment generating function. Counts built this way are the business of [Adding counts](../03-Discrete%20Distributions/06-sums-of-discrete-variables.md).
 
@@ -162,7 +174,7 @@ Ten tosses average 5 heads, and a run of ten typically lands about 1.6 heads awa
 
 ### A second case: the third and fourth moments
 
-The third derivative of $M_S$ at zero is 720 × 0.5^3 + 270 × 0.5^2 + 10 × 0.5 = 90 + 67.5 + 5 = 162.5. The third moment about the mean is 162.5 − 3 × 5 × 27.5 + 2 × 5^3 = 0: the count of heads leans neither way from 5, as a fair coin should. The fourth moment is 1,017.5. The code reaches all four moments by four roads.
+The third derivative of $`M_S`$ at zero is 720 × 0.5^3 + 270 × 0.5^2 + 10 × 0.5 = 90 + 67.5 + 5 = 162.5. The third moment about the mean is 162.5 − 3 × 5 × 27.5 + 2 × 5^3 = 0: the count of heads leans neither way from 5, as a fair coin should. The fourth moment is 1,017.5. The code reaches all four moments by four roads.
 
 ### What breaks if you drop a piece
 
@@ -171,7 +183,7 @@ The third derivative of $M_S$ at zero is 720 × 0.5^3 + 270 × 0.5^2 + 10 × 0.5
 | One toss copied ten times, treated as ten tosses | function 1.859 at t = 0.1, not 1.669; average square 50, not 27.5; variance 25, not 2.5 | The product rule needs independence |
 | Slope read at t = 1 | 1.359, not the mean 0.5 | Moments live at the dial's zero |
 | The t^2 coefficient read as the second moment | 13.75, not 27.5 | The k! under each coefficient was dropped |
-| The heavy-tailed count $L$ | the log of the partial sums at t = 0.01 climbs 0.049, 4.34, 203.9 as the sum runs to 2,500, 10,000 and 40,000 | Finite moments (4.47 and 89.87) do not make the function finite |
+| The heavy-tailed count $`L`$ | the log of the partial sums at t = 0.01 climbs 0.049, 4.34, 203.9 as the sum runs to 2,500, 10,000 and 40,000 | Finite moments (4.47 and 89.87) do not make the function finite |
 
 The code prints all four.
 
@@ -590,19 +602,19 @@ The derivative road is off by 0.0017 at the third moment: a third difference div
 
 Lean proves the three rules for any random variable that meets the card's conditions, and the card's exact coin numbers.
 
-- Suppose $M_X$ is finite on an interval around $t$ = 0. Then $M_X^{(k)}(0) = E[X^k]$ for every $k$.
-- Suppose $M_X$ is finite on an interval around $t$ = 0, and take $t$ in it. Then $\sum_{k=0}^{\infty} \frac{E[X^k]}{k!}\,t^k$ adds up exactly to $M_X(t)$.
-- Suppose $X$ and $Y$ are independent. Then $M_{X+Y}(t) = M_X(t)\,M_Y(t)$ at every dial setting $t$.
+- Suppose $`M_X`$ is finite on an interval around $`t`$ = 0. Then $`M_X^{(k)}(0) = E[X^k]`$ for every $`k`$.
+- Suppose $`M_X`$ is finite on an interval around $`t`$ = 0, and take $`t`$ in it. Then $`\sum_{k=0}^{\infty} \frac{E[X^k]}{k!}\,t^k`$ adds up exactly to $`M_X(t)`$.
+- Suppose $`X`$ and $`Y`$ are independent. Then $`M_{X+Y}(t) = M_X(t)\,M_Y(t)`$ at every dial setting $`t`$.
 - One coin toss has every moment equal to 0.5, and variance 0.25.
 - Of the 1,024 ten-toss sequences, 252 have exactly five heads.
 - Averaged over those sequences, the count of heads has moments 5, 27.5, 162.5 and 1,017.5.
-- The derivatives of $M_S$ at zero, worked by hand, give 5, 27.5 and 162.5.
+- The derivatives of $`M_S`$ at zero, worked by hand, give 5, 27.5 and 162.5.
 - The ten-toss variance is 2.5, ten times the coin's 0.25. The third moment about the mean is 0.
-- The $t^2$ coefficient of $M_S$ is 13.75, and 2! times that gives the second moment, 27.5.
+- The $`t^2`$ coefficient of $`M_S`$ is 13.75, and 2! times that gives the second moment, 27.5.
 - One toss copied ten times has average square 50 and variance 25.
 - The cumulants add: 10 × 0.5 = 5 and 10 × 0.25 = 2.5.
 
-The decimals, the copied toss's 1.859, the heavy-tailed count $L$, the simulation and the charts are left to the Python and Rust checks.
+The decimals, the copied toss's 1.859, the heavy-tailed count $`L`$, the simulation and the charts are left to the Python and Rust checks.
 
 ```lean
 -- Moment generating functions: when M_X(t) = E[e^(tX)] is finite on an interval around t = 0 its k-th derivative at 0 is the k-th moment and its power series has coefficients E[X^k]/k!, and for independent X and Y the function of X + Y is the product of their functions.
@@ -749,17 +761,17 @@ example : (10 : ℚ) * (1 / 2) = 5 ∧ (10 : ℚ) * (1 / 4) = 5 / 2 := by norm_n
 > [!warning]
 > **Multiplying the functions of variables that are not independent.** The product rule is a fact about independent variables only. Ten tosses of one coin multiply; ten readings of one toss, or ten stocks that move together, do not. One toss copied ten times has the same mean, 5, but its function at t = 0.1 is 1.859, not 1.669, and its variance is 25, not 2.5. Multiplying anyway understates the variance tenfold.
 >
-> - **Reading the function's value as a chance or an average payout.** $M_S$(0.1) = 1.669 is neither. The dial has no meaning in the world; only the derivatives at zero, and the function's shape as a whole, carry information.
+> - **Reading the function's value as a chance or an average payout.** $`M_S`$(0.1) = 1.669 is neither. The dial has no meaning in the world; only the derivatives at zero, and the function's shape as a whole, carry information.
 > - **Differentiating somewhere other than zero.** The coin's slope at t = 1 is 1.359, not the mean 0.5.
-> - **Forgetting the factorial.** The t^2 coefficient of $M_S$ is 13.75; the second moment is 2! times that, 27.5.
-> - **Assuming finite moments make the function finite.** The count $L$ has average 4.47 and average square 89.87, and every other moment finite too, yet its function is infinite for every positive dial.
+> - **Forgetting the factorial.** The t^2 coefficient of $`M_S`$ is 13.75; the second moment is 2! times that, 27.5.
+> - **Assuming finite moments make the function finite.** The count $`L`$ has average 4.47 and average square 89.87, and every other moment finite too, yet its function is infinite for every positive dial.
 
 ---
 
 ## Where you meet it in real life
 
 - **Sums of independent counts.** Multiplying functions identifies the law of a sum without adding up every pair of outcomes: [Adding counts](../03-Discrete%20Distributions/06-sums-of-discrete-variables.md) for counts, [Adding continuous variables](../05-Transformations%20and%20Joint%20Laws/04-sums-and-convolution.md) for measurements.
-- **Tail bounds.** The chance that ten tosses give nine or more heads is at most e^(−9t) times $M_S(t)$ for every positive dial; choosing the best dial gives the Chernoff bound of [Concentration](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md).
+- **Tail bounds.** The chance that ten tosses give nine or more heads is at most e^(−9t) times $`M_S(t)`$ for every positive dial; choosing the best dial gives the Chernoff bound of [Concentration](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md).
 - **Insurance totals.** A year's claims are a random number of random amounts; their total's function comes from composing two functions, as [Compound Poisson](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md) shows.
 - **Asset prices.** When a stock's log-return (the natural logarithm of the future price divided by today's price) is normal, its average future price is today's price times the normal law's moment generating function at a dial of 1.
 

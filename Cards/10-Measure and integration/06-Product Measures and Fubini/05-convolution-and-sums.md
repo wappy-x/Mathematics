@@ -32,63 +32,71 @@ Caption: to scale, 200 units to the metre. The shaded corner is every dart with 
 
 Notation first, in words.
 
-- $P$ is a probability measure on a space $\Omega$ of outcomes, here the dart throws.
-- The law of a reading $X$, written $\mu_X$ and read "the law of X", gives each Borel set $B$ of values the chance that $X$ lands in it: $\mu_X(B)=P(X\in B)$ ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)). A Borel set is any set of numbers built from intervals by countable unions, intersections and complements.
-- The product measure $\mu\otimes\nu$, read "mu times nu", is the measure on the plane that gives a rectangle the product of its two side measures ([Product measure](02-product-measure.md)).
-- Writing $\nu(dy)$ under an integral means integrating in y against $\nu$, the same as $\int\cdots\,d\nu(y)$.
-- Lebesgue measure $\lambda$ is length.
+- $`P`$ is a probability measure on a space $`\Omega`$ of outcomes, here the dart throws.
+- The law of a reading $`X`$, written $`\mu_X`$ and read "the law of X", gives each Borel set $`B`$ of values the chance that $`X`$ lands in it: $`\mu_X(B)=P(X\in B)`$ ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)). A Borel set is any set of numbers built from intervals by countable unions, intersections and complements.
+- The product measure $`\mu\otimes\nu`$, read "mu times nu", is the measure on the plane that gives a rectangle the product of its two side measures ([Product measure](02-product-measure.md)).
+- Writing $`\nu(dy)`$ under an integral means integrating in y against $`\nu`$, the same as $`\int\cdots\,d\nu(y)`$.
+- Lebesgue measure $`\lambda`$ is length.
 
-One new piece of notation. For a set $B$ of numbers and a number x, $B-x$ is $B$ slid left by x: every b − x with b in $B$. If $B$ is the totals below 0.5 and x = 0.2, then $B-x$ is the numbers below 0.3.
+One new piece of notation. For a set $`B`$ of numbers and a number x, $`B-x`$ is $`B`$ slid left by x: every b − x with b in $`B`$. If $`B`$ is the totals below 0.5 and x = 0.2, then $`B-x`$ is the numbers below 0.3.
 
-**Definition.** The convolution of two probability measures $\mu$ and $\nu$ on the line is the measure
+**Definition.** The convolution of two probability measures $`\mu`$ and $`\nu`$ on the line is the measure
 
-$$(\mu*\nu)(B)\;=\;(\mu\otimes\nu)\big(\{(x,y):x+y\in B\}\big)\;=\;\int_{\mathbb R}\nu(B-x)\,\mu(dx),\qquad B\ \text{Borel}.$$
+```math
+(\mu*\nu)(B)\;=\;(\mu\otimes\nu)\big(\{(x,y):x+y\in B\}\big)\;=\;\int_{\mathbb R}\nu(B-x)\,\mu(dx),\qquad B\ \text{Borel}.
+```
 
 **Read it aloud:** the convolution gives a set of totals the product-law chance of all pairs that add up into it; equivalently, fix the first value x, ask the second to land in the set slid back by x, and average that chance over x.
 
-**Theorem.** If $X$ and $Y$ are independent real readings with laws $\mu$ and $\nu$, and $S=X+Y$, then
+**Theorem.** If $`X`$ and $`Y`$ are independent real readings with laws $`\mu`$ and $`\nu`$, and $`S=X+Y`$, then
 
-$$\mu_S\;=\;\mu*\nu .$$
+```math
+\mu_S\;=\;\mu*\nu .
+```
 
 **Read it aloud:** the law of an independent sum is the convolution of the two laws, whatever those laws are.
 
-**Densities.** If $\mu$ has density $f$ and $\nu$ has density $g$ against $\lambda$ (that is, $\mu(B)=\int_B f\,d\lambda$), then $\mu*\nu$ has density
+**Densities.** If $`\mu`$ has density $`f`$ and $`\nu`$ has density $`g`$ against $`\lambda`$ (that is, $`\mu(B)=\int_B f\,d\lambda`$), then $`\mu*\nu`$ has density
 
-$$h(s)\;=\;(f*g)(s)\;=\;\int_{\mathbb R} f(x)\,g(s-x)\,\lambda(dx).$$
+```math
+h(s)\;=\;(f*g)(s)\;=\;\int_{\mathbb R} f(x)\,g(s-x)\,\lambda(dx).
+```
 
 **Read it aloud:** the density of the total at s adds, over every first value x, the density of x times the density of the remainder s − x.
 
-**Steps.** If $\mu$ and $\nu$ sit on whole numbers with chances $p$ and $q$ (a law in steps), the same definition with counting measure (each whole number has measure 1) in place of $\lambda$ gives
+**Steps.** If $`\mu`$ and $`\nu`$ sit on whole numbers with chances $`p`$ and $`q`$ (a law in steps), the same definition with counting measure (each whole number has measure 1) in place of $`\lambda`$ gives
 
-$$(p*q)(k)\;=\;\sum_a p(a)\,q(k-a).$$
+```math
+(p*q)(k)\;=\;\sum_a p(a)\,q(k-a).
+```
 
-**The algebra.** $\mu*\nu=\nu*\mu$, and $(\mu*\nu)*\rho=\mu*(\nu*\rho)$ for a third law $\rho$: the order and the grouping of independent summands do not matter.
+**The algebra.** $`\mu*\nu=\nu*\mu`$, and $`(\mu*\nu)*\rho=\mu*(\nu*\rho)`$ for a third law $`\rho`$: the order and the grouping of independent summands do not matter.
 
-On the dart, $\mu=\nu$ is length on [0, 1], $f=g=1$ on [0, 1] and 0 elsewhere, and $h(s)=s$ on [0, 1], $h(s)=2-s$ on [1, 2], 0 outside.
+On the dart, $`\mu=\nu`$ is length on [0, 1], $`f=g=1`$ on [0, 1] and 0 elsewhere, and $`h(s)=s`$ on [0, 1], $`h(s)=2-s`$ on [1, 2], 0 outside.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $P$ | the outcomes and the probability measure on them | dart throws; chance equals area | — |
-| $X$, $Y$, $S$ | two independent readings and their sum | x and y in metres; S = x + y | — |
-| $x$, $y$, $s$, $a$, $b$, $k$ | values of the first reading, the second, the total; whole-number values in the step case | x = 0.2, s = 0.5; tenths of a metre | — |
-| $\mu$, $\nu$, $\rho$ | laws of the summands: measures on the line with total 1 | length on [0, 1], twice | a wider law widens the total |
-| $\mu_X$, $\mu_S$ | the law of a reading, $B$ ↦ $P(X\in B)$ | $\mu_S$ = the triangle law | — |
-| $\mu\otimes\nu$ | product measure: rectangle gets the product of its sides | area on the board | — |
-| $\mu*\nu$ | the convolution: product measure of the pairs whose sum lands in $B$ | the triangle law on [0, 2] | — |
-| $B$, $B-x$ | a Borel set of totals; the same set slid left by x | totals below 0.5; below 0.3 when x = 0.2 | a bigger $B$ gets more chance |
-| $f$, $g$, $\lambda$ | densities of $\mu$ and $\nu$ against $\lambda$, Lebesgue measure (length) | 1 on [0, 1], 0 elsewhere | — |
-| $h$ | density of the total, $f*g$ | $h(0.5)=0.5$, peak $h(1)=1$ | — |
-| $A$, $T$, $E$, $U$, $N$, $\varphi$ | in the Detailed proof: addition as a map of the plane; the coordinate swap; a Borel set; an open set; the totals where h is infinite; a non-negative test function | A(x, y) = x + y | — |
-| $p$, $q$ | chances of a law in steps | tenths ruler 0.1 each; fifths ruler 0.2 each | — |
-| $F$ | the distribution function (CDF) of one reading, F(t) = P(x ≤ t); in Detailed proof 8, a second Borel set beside $E$ | F(0.5) = 0.5 | a larger t, a larger F(t) |
+| $`\Omega`$, $`P`$ | the outcomes and the probability measure on them | dart throws; chance equals area | — |
+| $`X`$, $`Y`$, $`S`$ | two independent readings and their sum | x and y in metres; S = x + y | — |
+| $`x`$, $`y`$, $`s`$, $`a`$, $`b`$, $`k`$ | values of the first reading, the second, the total; whole-number values in the step case | x = 0.2, s = 0.5; tenths of a metre | — |
+| $`\mu`$, $`\nu`$, $`\rho`$ | laws of the summands: measures on the line with total 1 | length on [0, 1], twice | a wider law widens the total |
+| $`\mu_X`$, $`\mu_S`$ | the law of a reading, $`B`$ ↦ $`P(X\in B)`$ | $`\mu_S`$ = the triangle law | — |
+| $`\mu\otimes\nu`$ | product measure: rectangle gets the product of its sides | area on the board | — |
+| $`\mu*\nu`$ | the convolution: product measure of the pairs whose sum lands in $`B`$ | the triangle law on [0, 2] | — |
+| $`B`$, $`B-x`$ | a Borel set of totals; the same set slid left by x | totals below 0.5; below 0.3 when x = 0.2 | a bigger $`B`$ gets more chance |
+| $`f`$, $`g`$, $`\lambda`$ | densities of $`\mu`$ and $`\nu`$ against $`\lambda`$, Lebesgue measure (length) | 1 on [0, 1], 0 elsewhere | — |
+| $`h`$ | density of the total, $`f*g`$ | $`h(0.5)=0.5`$, peak $`h(1)=1`$ | — |
+| $`A`$, $`T`$, $`E`$, $`U`$, $`N`$, $`\varphi`$ | in the Detailed proof: addition as a map of the plane; the coordinate swap; a Borel set; an open set; the totals where h is infinite; a non-negative test function | A(x, y) = x + y | — |
+| $`p`$, $`q`$ | chances of a law in steps | tenths ruler 0.1 each; fifths ruler 0.2 each | — |
+| $`F`$ | the distribution function (CDF) of one reading, F(t) = P(x ≤ t); in Detailed proof 8, a second Borel set beside $`E`$ | F(0.5) = 0.5 | a larger t, a larger F(t) |
 
 ### When it holds
 
-- **Independence.** The joint law must be the product $\mu\otimes\nu$. With y = 1 − x both readings are still uniform on [0, 1], but the total is always 1: the chance of a total below 0.5 is 0, not 1/8.
-- **Measurable readings.** $X$ and $Y$ must be measurable, so that their laws exist; addition then keeps $S$ measurable.
+- **Independence.** The joint law must be the product $`\mu\otimes\nu`$. With y = 1 − x both readings are still uniform on [0, 1], but the total is always 1: the chance of a total below 0.5 is 0, not 1/8.
+- **Measurable readings.** $`X`$ and $`Y`$ must be measurable, so that their laws exist; addition then keeps $`S`$ measurable.
 - **Values on the line.** The proof uses only that addition is measurable and that length does not change when a set slides, so it works unchanged in the plane or on a circle.
-- **Densities, only for the density formula.** The theorem for laws needs no density. The formula for $h$ needs both, or at least one: if only $\mu$ has a density $f$, the total still has density $\int f(s-y)\,\nu(dy)$.
-- **No integrability condition.** Every integrand here is non-negative, so Tonelli's theorem applies with no finiteness check. The density $h$ may be infinite at some totals, but only on a set of length zero.
+- **Densities, only for the density formula.** The theorem for laws needs no density. The formula for $`h`$ needs both, or at least one: if only $`\mu`$ has a density $`f`$, the total still has density $`\int f(s-y)\,\nu(dy)`$.
+- **No integrability condition.** Every integrand here is non-negative, so Tonelli's theorem applies with no finiteness check. The density $`h`$ may be infinite at some totals, but only on a set of length zero.
 
 ---
 
@@ -96,74 +104,78 @@ On the dart, $\mu=\nu$ is length on [0, 1], $f=g=1$ on [0, 1] and 0 elsewhere, a
 
 ### Step 0: a sum is a function of the pair, and independence fixes the pair's law
 
-The total is the pair (X, Y) sent through one fixed map, addition. So the chance that the total lands in $B$ is the chance that the pair lands in the region of the plane where x + y is in $B$. That is a question about the pair's joint law, and independence says the joint law is $\mu\otimes\nu$ ([Independence as a product](04-independence-as-a-product-measure.md)).
+The total is the pair (X, Y) sent through one fixed map, addition. So the chance that the total lands in $`B`$ is the chance that the pair lands in the region of the plane where x + y is in $`B`$. That is a question about the pair's joint law, and independence says the joint law is $`\mu\otimes\nu`$ ([Independence as a product](04-independence-as-a-product-measure.md)).
 
-A product measure of a region is computed slice by slice, which is Tonelli's theorem ([Tonelli and Fubini](03-tonelli-and-fubini.md)). Slicing the region at a fixed x leaves the slid set $B-x$. The density formula is the same slicing done inside an integral.
+A product measure of a region is computed slice by slice, which is Tonelli's theorem ([Tonelli and Fubini](03-tonelli-and-fubini.md)). Slicing the region at a fixed x leaves the slid set $`B-x`$. The density formula is the same slicing done inside an integral.
 
 ### Step 1: the region "x + y in B" is one the product measure can measure
 
-Addition, (x, y) ↦ x + y, is continuous on the plane. The preimage of an open set under a continuous map is open, so the preimage of every Borel set is a Borel set of the plane ([Measurable functions](../03-Measurable%20Functions/01-measurable-functions.md)). The Borel sets of the plane are exactly the product sigma-algebra of the Borel sets of the line ([Product sigma-algebras](01-product-sigma-algebras.md)). So the region is in the collection of sets $\mu\otimes\nu$ measures, and $S$ is a measurable reading.
+Addition, (x, y) ↦ x + y, is continuous on the plane. The preimage of an open set under a continuous map is open, so the preimage of every Borel set is a Borel set of the plane ([Measurable functions](../03-Measurable%20Functions/01-measurable-functions.md)). The Borel sets of the plane are exactly the product sigma-algebra of the Borel sets of the line ([Product sigma-algebras](01-product-sigma-algebras.md)). So the region is in the collection of sets $`\mu\otimes\nu`$ measures, and $`S`$ is a measurable reading.
 
 ### Step 2: the law of the sum is the product law of that region
 
-For a Borel set $B$ of totals, $S$ lands in $B$ exactly when the pair lands in the region $\{(x,y):x+y\in B\}$. So $P(S\in B)$ is the joint law of that region. By independence, the joint law is $\mu\otimes\nu$. That gives the first form of the definition: $\mu_S(B)=(\mu\otimes\nu)(\{x+y\in B\})$.
+For a Borel set $`B`$ of totals, $`S`$ lands in $`B`$ exactly when the pair lands in the region $`\{(x,y):x+y\in B\}`$. So $`P(S\in B)`$ is the joint law of that region. By independence, the joint law is $`\mu\otimes\nu`$. That gives the first form of the definition: $`\mu_S(B)=(\mu\otimes\nu)(\{x+y\in B\})`$.
 
 ### Step 3: slice the region at each x
 
-Tonelli's theorem computes the product measure of a region as an iterated integral: measure the slice at each x with $\nu$, then integrate over x with $\mu$. The slice at x is the set of y with x + y in $B$, which is $B-x$. So $\mu_S(B)=\int\nu(B-x)\,\mu(dx)$, the second form.
+Tonelli's theorem computes the product measure of a region as an iterated integral: measure the slice at each x with $`\nu`$, then integrate over x with $`\mu`$. The slice at x is the set of y with x + y in $`B`$, which is $`B-x`$. So $`\mu_S(B)=\int\nu(B-x)\,\mu(dx)`$, the second form.
 
-On the dart, with $B$ the totals below 0.5: the slice at x is the y below 0.5 − x, which has length 0.5 − x for x below 0.5 and is empty after. Integrating, $\int_0^{0.5}(0.5-x)\,dx=0.125$. That is the corner area again, now as a sum of slice lengths.
+On the dart, with $`B`$ the totals below 0.5: the slice at x is the y below 0.5 − x, which has length 0.5 − x for x below 0.5 and is empty after. Integrating, $`\int_0^{0.5}(0.5-x)\,dx=0.125`$. That is the corner area again, now as a sum of slice lengths.
 
 ### Step 4: when both laws have densities, the slices become the density formula
 
-Write $\nu(B-x)$ with the density $g$: it is $\int\mathbf 1_B(x+y)\,g(y)\,dy$, where $\mathbf 1_B$ is one on $B$ and zero off it. Substitute s = x + y. Length does not change when a set slides ([Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)), so this is $\int\mathbf 1_B(s)\,g(s-x)\,ds$. Put it into Step 3 and use Tonelli once more to integrate over x first:
+Write $`\nu(B-x)`$ with the density $`g`$: it is $`\int\mathbf 1_B(x+y)\,g(y)\,dy`$, where $`\mathbf 1_B`$ is one on $`B`$ and zero off it. Substitute s = x + y. Length does not change when a set slides ([Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)), so this is $`\int\mathbf 1_B(s)\,g(s-x)\,ds`$. Put it into Step 3 and use Tonelli once more to integrate over x first:
 
-$$\mu_S(B)=\int\!\!\int \mathbf 1_B(s)\,f(x)\,g(s-x)\,ds\,dx=\int_B\Big(\int f(x)\,g(s-x)\,dx\Big)ds=\int_B h(s)\,ds.$$
+```math
+\mu_S(B)=\int\!\!\int \mathbf 1_B(s)\,f(x)\,g(s-x)\,ds\,dx=\int_B\Big(\int f(x)\,g(s-x)\,dx\Big)ds=\int_B h(s)\,ds.
+```
 
-So $h$ is a density of the total. Nothing here needed the integrals to be finite: the integrand is non-negative, which is all Tonelli asks.
+So $`h`$ is a density of the total. Nothing here needed the integrals to be finite: the integrand is non-negative, which is all Tonelli asks.
 
 For the dart, f(x) g(s − x) is 1 exactly when x is in [0, 1] and s − x is in [0, 1], that is, x in [s − 1, s] as well. The inner integral is the length of the overlap of [0, 1] and [s − 1, s]: s for s in [0, 1], 2 − s for s in [1, 2]. That is the triangle: the density is proportional to the length of the line x + y = s across the board.
 
 ### Step 5: laws in steps, and a mix of the two
 
-With counting measure in place of length, integrals become sums and Step 4 reads $(p*q)(k)=\sum_a p(a)q(k-a)$.
+With counting measure in place of length, integrals become sums and Step 4 reads $`(p*q)(k)=\sum_a p(a)q(k-a)`$.
 
 Read x off a ruler marked in tenths and y off a ruler marked in fifths, both in tenths of a metre: p puts 0.1 on each of 0, 1, …, 9, and q puts 0.2 on each of 0, 2, 4, 6, 8.
 
 Their convolution, in chances times 50, is 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 4, 4, 3, 3, 2, 2, 1, 1 on totals 0 to 17 tenths. The same numbers come from listing all 50 pairs and adding their chances, which is the product-measure form of the definition.
 
-The theorem covers a mix too. Keep x exact, uniform on [0, 1], and read y off the fifths ruler. Step 3 with $\nu$ the fifths law gives $P(S<0.5)=\sum_b 0.2\times\lambda([0,0.5-b))$, over the marks b = 0, 0.2 and 0.4 that leave room: 0.2 × (0.5 + 0.3 + 0.1) = 0.18. The two-density formula $f*g$ does not apply, since $\nu$ has no density; the one-density form does, and the measure version needs none.
+The theorem covers a mix too. Keep x exact, uniform on [0, 1], and read y off the fifths ruler. Step 3 with $`\nu`$ the fifths law gives $`P(S<0.5)=\sum_b 0.2\times\lambda([0,0.5-b))`$, over the marks b = 0, 0.2 and 0.4 that leave room: 0.2 × (0.5 + 0.3 + 0.1) = 0.18. The two-density formula $`f*g`$ does not apply, since $`\nu`$ has no density; the one-density form does, and the measure version needs none.
 
 ### Step 6: order and grouping do not matter
 
-Swapping the coordinates, (x, y) ↦ (y, x), carries $\mu\otimes\nu$ to $\nu\otimes\mu$, because it carries each rectangle to its mirror image with the same product of sides, and a measure is fixed by its rectangles ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)). The swap does not change x + y. So $\mu*\nu=\nu*\mu$.
+Swapping the coordinates, (x, y) ↦ (y, x), carries $`\mu\otimes\nu`$ to $`\nu\otimes\mu`$, because it carries each rectangle to its mirror image with the same product of sides, and a measure is fixed by its rectangles ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)). The swap does not change x + y. So $`\mu*\nu=\nu*\mu`$.
 
-For grouping, take three independent readings with laws $\mu$, $\nu$, $\rho$. (X + Y) + Z and X + (Y + Z) are the same reading. Applying the theorem to the first grouping gives $(\mu*\nu)*\rho$, and to the second $\mu*(\nu*\rho)$, so they are equal. The tenths and fifths rulers confirm both in exact fractions.
+For grouping, take three independent readings with laws $`\mu`$, $`\nu`$, $`\rho`$. (X + Y) + Z and X + (Y + Z) are the same reading. Applying the theorem to the first grouping gives $`(\mu*\nu)*\rho`$, and to the second $`\mu*(\nu*\rho)`$, so they are equal. The tenths and fifths rulers confirm both in exact fractions.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega,\mathcal F,P)$ is a probability space. $X,Y:\Omega\to\mathbb R$ are measurable with respect to $\mathcal F$ and the Borel sets $\mathcal B(\mathbb R)$, with laws $\mu$ and $\nu$, and they are independent. $A:\mathbb R^2\to\mathbb R$ is addition, $A(x,y)=x+y$.
+**Setting.** $`(\Omega,\mathcal F,P)`$ is a probability space. $`X,Y:\Omega\to\mathbb R`$ are measurable with respect to $`\mathcal F`$ and the Borel sets $`\mathcal B(\mathbb R)`$, with laws $`\mu`$ and $`\nu`$, and they are independent. $`A:\mathbb R^2\to\mathbb R`$ is addition, $`A(x,y)=x+y`$.
 
-**1. The sum is measurable.** $A$ is continuous, so $A^{-1}(U)$ is open for open $U$. The sets $E$ with $A^{-1}(E)$ Borel form a sigma-algebra containing the open sets, hence all of $\mathcal B(\mathbb R)$ ([Measurable functions](../03-Measurable%20Functions/01-measurable-functions.md)). And $\mathcal B(\mathbb R^2)=\mathcal B(\mathbb R)\otimes\mathcal B(\mathbb R)$ ([Product sigma-algebras](01-product-sigma-algebras.md)). The pair map $\omega\mapsto(X(\omega),Y(\omega))$ is measurable into the product sigma-algebra because both coordinates are. So $S=A\circ(X,Y)$ is measurable, a composition of measurable maps.
+**1. The sum is measurable.** $`A`$ is continuous, so $`A^{-1}(U)`$ is open for open $`U`$. The sets $`E`$ with $`A^{-1}(E)`$ Borel form a sigma-algebra containing the open sets, hence all of $`\mathcal B(\mathbb R)`$ ([Measurable functions](../03-Measurable%20Functions/01-measurable-functions.md)). And $`\mathcal B(\mathbb R^2)=\mathcal B(\mathbb R)\otimes\mathcal B(\mathbb R)`$ ([Product sigma-algebras](01-product-sigma-algebras.md)). The pair map $`\omega\mapsto(X(\omega),Y(\omega))`$ is measurable into the product sigma-algebra because both coordinates are. So $`S=A\circ(X,Y)`$ is measurable, a composition of measurable maps.
 
-**2. The law of S.** For $B\in\mathcal B(\mathbb R)$, $\{S\in B\}=\{(X,Y)\in A^{-1}(B)\}$. So $\mu_S(B)=\mu_{(X,Y)}(A^{-1}(B))$. Independence means $\mu_{(X,Y)}=\mu\otimes\nu$ on $\mathcal B(\mathbb R)\otimes\mathcal B(\mathbb R)$ ([Independence as a product](04-independence-as-a-product-measure.md)). Hence $\mu_S(B)=(\mu\otimes\nu)(A^{-1}(B))=(\mu*\nu)(B)$, by the first form of the definition. This proves the theorem.
+**2. The law of S.** For $`B\in\mathcal B(\mathbb R)`$, $`\{S\in B\}=\{(X,Y)\in A^{-1}(B)\}`$. So $`\mu_S(B)=\mu_{(X,Y)}(A^{-1}(B))`$. Independence means $`\mu_{(X,Y)}=\mu\otimes\nu`$ on $`\mathcal B(\mathbb R)\otimes\mathcal B(\mathbb R)`$ ([Independence as a product](04-independence-as-a-product-measure.md)). Hence $`\mu_S(B)=(\mu\otimes\nu)(A^{-1}(B))=(\mu*\nu)(B)`$, by the first form of the definition. This proves the theorem.
 
-**3. The two forms of the definition agree.** The function $(x,y)\mapsto\mathbf 1_B(x+y)=\mathbf 1_{A^{-1}(B)}(x,y)$ is non-negative and product-measurable by 1. Tonelli's theorem for the finite measures $\mu,\nu$ ([Tonelli and Fubini](03-tonelli-and-fubini.md)) gives $(\mu\otimes\nu)(A^{-1}(B))=\int\big(\int\mathbf 1_B(x+y)\,\nu(dy)\big)\mu(dx)$, and the inner integral is $\nu(\{y:x+y\in B\})=\nu(B-x)$. Tonelli also says $x\mapsto\nu(B-x)$ is measurable, so the outer integral is defined.
+**3. The two forms of the definition agree.** The function $`(x,y)\mapsto\mathbf 1_B(x+y)=\mathbf 1_{A^{-1}(B)}(x,y)`$ is non-negative and product-measurable by 1. Tonelli's theorem for the finite measures $`\mu,\nu`$ ([Tonelli and Fubini](03-tonelli-and-fubini.md)) gives $`(\mu\otimes\nu)(A^{-1}(B))=\int\big(\int\mathbf 1_B(x+y)\,\nu(dy)\big)\mu(dx)`$, and the inner integral is $`\nu(\{y:x+y\in B\})=\nu(B-x)`$. Tonelli also says $`x\mapsto\nu(B-x)`$ is measurable, so the outer integral is defined.
 
-**4. It is a probability measure.** $\mu*\nu$ is the pushforward of the probability measure $\mu\otimes\nu$ under the measurable map $A$, and a pushforward of a measure is a measure with the same total ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)). Its total is $(\mu\otimes\nu)(\mathbb R^2)=1$.
+**4. It is a probability measure.** $`\mu*\nu`$ is the pushforward of the probability measure $`\mu\otimes\nu`$ under the measurable map $`A`$, and a pushforward of a measure is a measure with the same total ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)). Its total is $`(\mu\otimes\nu)(\mathbb R^2)=1`$.
 
-**5. The density.** Suppose $\mu(E)=\int_E f\,d\lambda$ and $\nu(E)=\int_E g\,d\lambda$ with $f,g\ge0$ Borel. Then integrating against $\nu$ is integrating against $g\,d\lambda$ (true for indicators by definition, for simple functions by linearity, for non-negative measurable functions by monotone convergence; [The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)), and likewise for $\mu$. So $\nu(B-x)=\int\mathbf 1_B(x+y)g(y)\,\lambda(dy)$. Lebesgue measure is translation invariant, so $\int\varphi(x+y)\,\lambda(dy)=\int\varphi(s)\,\lambda(ds)$ for non-negative Borel $\varphi$ (for indicators this is $\lambda(E-x)=\lambda(E)$; then simple functions and monotone limits as before). With $\varphi(s)=\mathbf 1_B(s)g(s-x)$: $\nu(B-x)=\int\mathbf 1_B(s)g(s-x)\,\lambda(ds)$. The map $(x,s)\mapsto f(x)g(s-x)\mathbf 1_B(s)$ is non-negative and Borel on the plane, because $(x,s)\mapsto s-x$ is continuous and products of Borel functions are Borel. Step 3 and Tonelli for $\lambda\otimes\lambda$ (both sigma-finite) give
-$$(\mu*\nu)(B)=\int f(x)\Big(\int\mathbf 1_B(s)g(s-x)\,\lambda(ds)\Big)\lambda(dx)=\int_B\Big(\int f(x)g(s-x)\,\lambda(dx)\Big)\lambda(ds)=\int_B h\,d\lambda.$$
-Tonelli also makes $h$ Borel, with values in [0, ∞].
+**5. The density.** Suppose $`\mu(E)=\int_E f\,d\lambda`$ and $`\nu(E)=\int_E g\,d\lambda`$ with $`f,g\ge0`$ Borel. Then integrating against $`\nu`$ is integrating against $`g\,d\lambda`$ (true for indicators by definition, for simple functions by linearity, for non-negative measurable functions by monotone convergence; [The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)), and likewise for $`\mu`$. So $`\nu(B-x)=\int\mathbf 1_B(x+y)g(y)\,\lambda(dy)`$. Lebesgue measure is translation invariant, so $`\int\varphi(x+y)\,\lambda(dy)=\int\varphi(s)\,\lambda(ds)`$ for non-negative Borel $`\varphi`$ (for indicators this is $`\lambda(E-x)=\lambda(E)`$; then simple functions and monotone limits as before). With $`\varphi(s)=\mathbf 1_B(s)g(s-x)`$: $`\nu(B-x)=\int\mathbf 1_B(s)g(s-x)\,\lambda(ds)`$. The map $`(x,s)\mapsto f(x)g(s-x)\mathbf 1_B(s)`$ is non-negative and Borel on the plane, because $`(x,s)\mapsto s-x`$ is continuous and products of Borel functions are Borel. Step 3 and Tonelli for $`\lambda\otimes\lambda`$ (both sigma-finite) give
 
-**6. h is finite almost everywhere.** Take $B=\mathbb R$: $\int h\,d\lambda=1$. Let $N=\{h=\infty\}$. For every whole number m, $m\mathbf 1_N\le h$, so $m\,\lambda(N)\le1$, and $\lambda(N)=0$. Setting $h=0$ on $N$ changes no integral ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). The exception is real: with $f(x)=1/(2\sqrt x)$ on (0, 1) and $g(y)=1/(2\sqrt{-y})$ on (−1, 0), the integrand at s = 0 is $1/(4x)$ on (0, 1), whose integral is infinite.
+$`\displaystyle (\mu*\nu)(B)=\int f(x)\Big(\int\mathbf 1_B(s)g(s-x)\,\lambda(ds)\Big)\lambda(dx)=\int_B\Big(\int f(x)g(s-x)\,\lambda(dx)\Big)\lambda(ds)=\int_B h\,d\lambda.`$
 
-**7. One density is enough.** If only $\mu$ has a density $f$, use the commuted form $\mu*\nu=\nu*\mu$ (proved in 8) and slice the other way: $(\mu*\nu)(B)=\int\mu(B-y)\,\nu(dy)=\int\!\int\mathbf 1_B(s)f(s-y)\,\lambda(ds)\,\nu(dy)=\int_B\big(\int f(s-y)\,\nu(dy)\big)\lambda(ds)$, by the same translation step and Tonelli for $\lambda\otimes\nu$.
+Tonelli also makes $`h`$ Borel, with values in [0, ∞].
 
-**8. Commutativity.** Let $T(x,y)=(y,x)$. For a rectangle, $(\mu\otimes\nu)(T^{-1}(E\times F))=(\mu\otimes\nu)(F\times E)=\mu(F)\nu(E)=(\nu\otimes\mu)(E\times F)$. Rectangles are closed under intersection and generate the product sigma-algebra, and both measures are finite with equal totals, so the pushforward of $\mu\otimes\nu$ under $T$ is $\nu\otimes\mu$ ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)). Since $A\circ T=A$, $(\nu*\mu)(B)=(\nu\otimes\mu)(A^{-1}B)=(\mu\otimes\nu)(T^{-1}A^{-1}B)=(\mu\otimes\nu)((A\circ T)^{-1}B)=(\mu*\nu)(B)$.
+**6. h is finite almost everywhere.** Take $`B=\mathbb R`$: $`\int h\,d\lambda=1`$. Let $`N=\{h=\infty\}`$. For every whole number m, $`m\mathbf 1_N\le h`$, so $`m\,\lambda(N)\le1`$, and $`\lambda(N)=0`$. Setting $`h=0`$ on $`N`$ changes no integral ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). The exception is real: with $`f(x)=1/(2\sqrt x)`$ on (0, 1) and $`g(y)=1/(2\sqrt{-y})`$ on (−1, 0), the integrand at s = 0 is $`1/(4x)`$ on (0, 1), whose integral is infinite.
 
-**9. Associativity.** On the product space $\mathbb R^3$ with $\mu\otimes\nu\otimes\rho$ (built as $(\mu\otimes\nu)\otimes\rho$, and equal to $\mu\otimes(\nu\otimes\rho)$ because both give a box the product of its three sides, with 8's uniqueness argument), the coordinates X, Y, Z are independent with laws $\mu,\nu,\rho$. The pair (X + Y, Z) is independent with laws $\mu*\nu$ and $\rho$: X + Y is a measurable function of (X, Y), and independent blocks stay independent after measurable functions. By the theorem, X + Y + Z has law $(\mu*\nu)*\rho$. Grouping as X + (Y + Z) gives $\mu*(\nu*\rho)$. They are the laws of the same reading, so they are equal. ∎
+**7. One density is enough.** If only $`\mu`$ has a density $`f`$, use the commuted form $`\mu*\nu=\nu*\mu`$ (proved in 8) and slice the other way: $`(\mu*\nu)(B)=\int\mu(B-y)\,\nu(dy)=\int\!\int\mathbf 1_B(s)f(s-y)\,\lambda(ds)\,\nu(dy)=\int_B\big(\int f(s-y)\,\nu(dy)\big)\lambda(ds)`$, by the same translation step and Tonelli for $`\lambda\otimes\nu`$.
+
+**8. Commutativity.** Let $`T(x,y)=(y,x)`$. For a rectangle, $`(\mu\otimes\nu)(T^{-1}(E\times F))=(\mu\otimes\nu)(F\times E)=\mu(F)\nu(E)=(\nu\otimes\mu)(E\times F)`$. Rectangles are closed under intersection and generate the product sigma-algebra, and both measures are finite with equal totals, so the pushforward of $`\mu\otimes\nu`$ under $`T`$ is $`\nu\otimes\mu`$ ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)). Since $`A\circ T=A`$, $`(\nu*\mu)(B)=(\nu\otimes\mu)(A^{-1}B)=(\mu\otimes\nu)(T^{-1}A^{-1}B)=(\mu\otimes\nu)((A\circ T)^{-1}B)=(\mu*\nu)(B)`$.
+
+**9. Associativity.** On the product space $`\mathbb R^3`$ with $`\mu\otimes\nu\otimes\rho`$ (built as $`(\mu\otimes\nu)\otimes\rho`$, and equal to $`\mu\otimes(\nu\otimes\rho)`$ because both give a box the product of its three sides, with 8's uniqueness argument), the coordinates X, Y, Z are independent with laws $`\mu,\nu,\rho`$. The pair (X + Y, Z) is independent with laws $`\mu*\nu`$ and $`\rho`$: X + Y is a measurable function of (X, Y), and independent blocks stay independent after measurable functions. By the theorem, X + Y + Z has law $`(\mu*\nu)*\rho`$. Grouping as X + (Y + Z) gives $`\mu*(\nu*\rho)`$. They are the laws of the same reading, so they are equal. ∎
 
 </details>
 
@@ -207,7 +219,7 @@ xychart-beta
     line [0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50]
 ```
 
-Caption: orange is the independent dart, the triangle $h$; green is y = x, whose total 2x is flat at 0.5. Both readings are uniform on [0, 1] in each case. Only the joint law differs, and the sum's law follows it.
+Caption: orange is the independent dart, the triangle $`h`$; green is y = x, whose total 2x is flat at 0.5. Both readings are uniform on [0, 1] in each case. Only the joint law differs, and the sum's law follows it.
 
 ---
 
@@ -567,12 +579,12 @@ ALL CHECKS PASS
 
 Lean proves the theorem, both density formulas and the algebra for all laws on the line, and the card's step and grid numbers.
 
-- Take independent measurable readings $X$ and $Y$ with laws $\mu$ and $\nu$. Then the law of their sum $S=X+Y$ is $\mu*\nu$.
-- For every Borel set $B$ of totals, both forms of the definition give $P(S\in B)$.
-- Suppose $\mu$ has a density $f$ against length. Then the total has density $\int f(s-y)\,\nu(dy)$, with no density needed for $\nu$.
-- Suppose $\nu$ also has a density $g$. Then the total has density $h(s)=\int f(x)\,g(s-x)\,\lambda(dx)$.
+- Take independent measurable readings $`X`$ and $`Y`$ with laws $`\mu`$ and $`\nu`$. Then the law of their sum $`S=X+Y`$ is $`\mu*\nu`$.
+- For every Borel set $`B`$ of totals, both forms of the definition give $`P(S\in B)`$.
+- Suppose $`\mu`$ has a density $`f`$ against length. Then the total has density $`\int f(s-y)\,\nu(dy)`$, with no density needed for $`\nu`$.
+- Suppose $`\nu`$ also has a density $`g`$. Then the total has density $`h(s)=\int f(x)\,g(s-x)\,\lambda(dx)`$.
 - The densities need only be non-negative and Borel, even infinite in places; no finiteness check is needed.
-- Take any three laws $\mu$, $\nu$ and $\rho$ on the line. Then $\mu*\nu=\nu*\mu$ and $(\mu*\nu)*\rho=\mu*(\nu*\rho)$.
+- Take any three laws $`\mu`$, $`\nu`$ and $`\rho`$ on the line. Then $`\mu*\nu=\nu*\mu`$ and $`(\mu*\nu)*\rho=\mu*(\nu*\rho)`$.
 - On the tenths and fifths rulers, listing all 50 pairs gives the same 18 chances as the step formula.
 - On the rulers, swapping the order or the grouping changes no chance.
 - The 10 by 10 grid has 10 pairs of cells with a + b ≤ 3.
@@ -749,7 +761,7 @@ example : (1 : ℚ) / 2 * (1 / 2) = 1 / 4 ∧ (1 : ℚ) / 4 ≠ 1 / 8 := by norm
 ## The usual mistake
 
 > [!warning]
-> **Convolving the two laws without checking independence.** Convolution uses only the two separate laws, so it cannot see how the readings are tied together. y = 1 − x and y = x both leave each reading uniform on [0, 1], and the convolution still predicts 1/8 for a total below 0.5. The true chances are 0 and 0.25. The theorem's hypothesis is that the joint law is the product $\mu\otimes\nu$; two correct margins are not enough.
+> **Convolving the two laws without checking independence.** Convolution uses only the two separate laws, so it cannot see how the readings are tied together. y = 1 − x and y = x both leave each reading uniform on [0, 1], and the convolution still predicts 1/8 for a total below 0.5. The true chances are 0 and 0.25. The theorem's hypothesis is that the joint law is the product $`\mu\otimes\nu`$; two correct margins are not enough.
 >
 > - **Multiplying distribution functions.** F(0.5) × F(0.5) = 1/4 is the chance that both readings are below 0.5, which is the law of the larger reading. The sum needs the convolution, 1/8.
 > - **Reading a density as a chance.** h(1) = 1 does not mean the total is 1 for certain. It is chance per metre; the chance of any single total is 0.

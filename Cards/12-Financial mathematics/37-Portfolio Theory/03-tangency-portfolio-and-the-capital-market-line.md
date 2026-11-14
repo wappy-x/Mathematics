@@ -44,43 +44,47 @@ The two meet at the tangency portfolio, at 6.27 percent standard deviation and 4
 
 Notation first, in words.
 
-- A list of numbers is a vector: $\mu$ lists the three expected returns.
-- The covariance matrix $\Sigma$ ("capital sigma") is the three-by-three table whose entry in row i, column j is the correlation of assets i and j times their two standard deviations. Its diagonal holds each asset's variance, the square of its standard deviation.
-- $\Sigma^{-1}$ is its inverse: $z = \Sigma^{-1} d$ means the list $z$ that solves $\Sigma z = d$, three linear equations in three unknowns.
-- A dot between two lists, $d \cdot z$, means multiply matching entries and add.
-- $r_f$ is the bank rate, 2 percent.
-- $\mathbf{1}$ is the list of three ones, so $\mathbf{1}\cdot z$ is the sum of the entries of $z$.
+- A list of numbers is a vector: $`\mu`$ lists the three expected returns.
+- The covariance matrix $`\Sigma`$ ("capital sigma") is the three-by-three table whose entry in row i, column j is the correlation of assets i and j times their two standard deviations. Its diagonal holds each asset's variance, the square of its standard deviation.
+- $`\Sigma^{-1}`$ is its inverse: $`z = \Sigma^{-1} d`$ means the list $`z`$ that solves $`\Sigma z = d`$, three linear equations in three unknowns.
+- A dot between two lists, $`d \cdot z`$, means multiply matching entries and add.
+- $`r_f`$ is the bank rate, 2 percent.
+- $`\mathbf{1}`$ is the list of three ones, so $`\mathbf{1}\cdot z`$ is the sum of the entries of $`z`$.
 
-The tangency weights are $w_T$:
+The tangency weights are $`w_T`$:
 
-$$w_T = \frac{\Sigma^{-1}(\mu - r_f \mathbf{1})}{\mathbf{1}\cdot\Sigma^{-1}(\mu - r_f \mathbf{1})}$$
+```math
+w_T = \frac{\Sigma^{-1}(\mu - r_f \mathbf{1})}{\mathbf{1}\cdot\Sigma^{-1}(\mu - r_f \mathbf{1})}
+```
 
 **Read it aloud:** solve the covariance equations with each asset's excess return on the right-hand side, then rescale the answer so its entries add to one.
 
-For a portfolio p with expected return $\mu_p$ and standard deviation $\sigma_p$, the line every efficient investor sits on is
+For a portfolio p with expected return $`\mu_p`$ and standard deviation $`\sigma_p`$, the line every efficient investor sits on is
 
-$$\mu_p = r_f + \sqrt{H}\,\sigma_p, \qquad H = d \cdot \Sigma^{-1} d, \qquad d = \mu - r_f\mathbf{1}.$$
+```math
+\mu_p = r_f + \sqrt{H}\,\sigma_p, \qquad H = d \cdot \Sigma^{-1} d, \qquad d = \mu - r_f\mathbf{1}.
+```
 
 **Read it aloud:** expected return equals the bank rate plus the best Sharpe ratio times the risk taken.
 
-And the theorem that ties them, **two-fund separation**: every portfolio on the line is a fraction $y$ of wealth in the tangency portfolio and $1 - y$ in the bank.
+And the theorem that ties them, **two-fund separation**: every portfolio on the line is a fraction $`y`$ of wealth in the tangency portfolio and $`1 - y`$ in the bank.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\mu_i$, $\mu$ | expected one-year return of asset i; $\mu$ lists all three | 8%, 4%, 5% | that asset's weight in $w_T$ rises |
-| $\sigma_i$, $\rho_{ij}$ | standard deviation of asset i; correlation of i and j | 20%, 6%, 15%; 0.2, 0.1, 0 | a riskier or more correlated asset gets less weight |
-| $\Sigma$ | covariance matrix: entry $\rho_{ij}\sigma_i\sigma_j$ | diagonal 0.04, 0.0036, 0.0225 | the line flattens |
-| $r_f$ | the riskless one-year return, lend or borrow | 2% | the tangency mix tilts to shares and the Sharpe ratio falls |
-| $d$ | excess returns, $\mu - r_f\mathbf{1}$: what each asset pays above the bank | 6%, 2%, 3% | — |
-| $z$ | the solution of $\Sigma z = d$: the best direction, before rescaling | 1.12, 4.81, 1.18 | — |
-| $D$ | the sum of the entries of $z$; must be positive for a tangency portfolio to exist | 7.11 | — |
-| $w_T$, $\mu_T$, $\sigma_T$ | tangency weights, $z/D$, adding to one; the tangency portfolio's expected return and standard deviation | 15.8%, 67.6%, 16.6%; 4.80%, 6.27% | — |
-| $H$ | $d \cdot z$; its square root is the best Sharpe ratio | 0.199; root 0.446 | — |
-| $y$, $\mu_p$, $\sigma_p$ | fraction of wealth in the tangency portfolio (above one means borrowing); the whole portfolio's expected return and standard deviation | cautious investor: 0.357, 3%, 2.24% | risk and expected excess return both rise in proportion to $y$ |
-| $a$, $b$, $c$ | the frontier's constants, defined below the table | 323.27, 13.58, 0.6129 | — |
-| $q$, $h$ | in the proofs: a target excess return; a position adding no excess return | 1% for the cautious investor | — |
+| $`\mu_i`$, $`\mu`$ | expected one-year return of asset i; $`\mu`$ lists all three | 8%, 4%, 5% | that asset's weight in $`w_T`$ rises |
+| $`\sigma_i`$, $`\rho_{ij}`$ | standard deviation of asset i; correlation of i and j | 20%, 6%, 15%; 0.2, 0.1, 0 | a riskier or more correlated asset gets less weight |
+| $`\Sigma`$ | covariance matrix: entry $`\rho_{ij}\sigma_i\sigma_j`$ | diagonal 0.04, 0.0036, 0.0225 | the line flattens |
+| $`r_f`$ | the riskless one-year return, lend or borrow | 2% | the tangency mix tilts to shares and the Sharpe ratio falls |
+| $`d`$ | excess returns, $`\mu - r_f\mathbf{1}`$: what each asset pays above the bank | 6%, 2%, 3% | — |
+| $`z`$ | the solution of $`\Sigma z = d`$: the best direction, before rescaling | 1.12, 4.81, 1.18 | — |
+| $`D`$ | the sum of the entries of $`z`$; must be positive for a tangency portfolio to exist | 7.11 | — |
+| $`w_T`$, $`\mu_T`$, $`\sigma_T`$ | tangency weights, $`z/D`$, adding to one; the tangency portfolio's expected return and standard deviation | 15.8%, 67.6%, 16.6%; 4.80%, 6.27% | — |
+| $`H`$ | $`d \cdot z`$; its square root is the best Sharpe ratio | 0.199; root 0.446 | — |
+| $`y`$, $`\mu_p`$, $`\sigma_p`$ | fraction of wealth in the tangency portfolio (above one means borrowing); the whole portfolio's expected return and standard deviation | cautious investor: 0.357, 3%, 2.24% | risk and expected excess return both rise in proportion to $`y`$ |
+| $`a`$, $`b`$, $`c`$ | the frontier's constants, defined below the table | 323.27, 13.58, 0.6129 | — |
+| $`q`$, $`h`$ | in the proofs: a target excess return; a position adding no excess return | 1% for the cautious investor | — |
 
-The frontier's own constants appear once, in Step 5: $a = \mathbf{1}\cdot\Sigma^{-1}\mathbf{1}$, $b = \mathbf{1}\cdot\Sigma^{-1}\mu$, $c = \mu\cdot\Sigma^{-1}\mu$, the three numbers the previous card used to draw the frontier. Here $a$ = 323.27, $b$ = 13.58, $c$ = 0.6129, and the minimum-variance portfolio (the fully invested mix with the least risk of all) has expected return $b/a$ = 4.20 percent.
+The frontier's own constants appear once, in Step 5: $`a = \mathbf{1}\cdot\Sigma^{-1}\mathbf{1}`$, $`b = \mathbf{1}\cdot\Sigma^{-1}\mu`$, $`c = \mu\cdot\Sigma^{-1}\mu`$, the three numbers the previous card used to draw the frontier. Here $`a`$ = 323.27, $`b`$ = 13.58, $`c`$ = 0.6129, and the minimum-variance portfolio (the fully invested mix with the least risk of all) has expected return $`b/a`$ = 4.20 percent.
 
 ### When it holds
 
@@ -88,8 +92,8 @@ The frontier's own constants appear once, in Step 5: $a = \mathbf{1}\cdot\Sigma^
 - **One period, fixed weights, one horizon for every asset and the bank.** Over many periods, with rebalancing and changing rates, the problem changes shape.
 - **Investors care only about expected return and standard deviation.** If they also care about crashes or lopsided outcomes, the best mix can differ between them.
 - **No limits on positions.** Here every tangency weight is positive, so a ban on short selling (selling what one does not own) changes nothing; with other inputs it can.
-- **The inputs are known.** In practice $\mu$ and $\Sigma$ are estimates, and small errors in $\mu$ move the weights a lot; see [Estimation error](07-estimation-error-and-shrinkage.md).
-- **Existence:** $\Sigma$ has an inverse (no mix of the risky assets is riskless), and the bank rate sits below the minimum-variance portfolio's expected return, 4.20 percent here. Step 3 shows what happens otherwise.
+- **The inputs are known.** In practice $`\mu`$ and $`\Sigma`$ are estimates, and small errors in $`\mu`$ move the weights a lot; see [Estimation error](07-estimation-error-and-shrinkage.md).
+- **Existence:** $`\Sigma`$ has an inverse (no mix of the risky assets is riskless), and the bank rate sits below the minimum-variance portfolio's expected return, 4.20 percent here. Step 3 shows what happens otherwise.
 
 ---
 
@@ -97,87 +101,93 @@ The frontier's own constants appear once, in Step 5: $a = \mathbf{1}\cdot\Sigma^
 
 ### Step 0: the bank turns every portfolio into a straight line
 
-Put a fraction $y$ of wealth in some risky portfolio P and the rest, $1 - y$, in the bank. The bank's return is certain, so it adds expected return but no risk:
+Put a fraction $`y`$ of wealth in some risky portfolio P and the rest, $`1 - y`$, in the bank. The bank's return is certain, so it adds expected return but no risk:
 
-$$\mu_p = r_f + y(\mu_P - r_f), \qquad \sigma_p = y\,\sigma_P \quad (y \ge 0).$$
+```math
+\mu_p = r_f + y(\mu_P - r_f), \qquad \sigma_p = y\,\sigma_P \quad (y \ge 0).
+```
 
-Both grow in proportion to $y$. So the pairs (risk, expected return) reachable from P lie on a straight line starting at the bank, $(0, r_f)$, and passing through P. Below $y = 1$ the saver lends; above it the saver borrows.
+Both grow in proportion to $`y`$. So the pairs (risk, expected return) reachable from P lie on a straight line starting at the bank, $`(0, r_f)`$, and passing through P. Below $`y = 1`$ the saver lends; above it the saver borrows.
 
-The line's slope is $(\mu_P - r_f)/\sigma_P$: the Sharpe ratio of P. It does not depend on $y$. So choosing a risky portfolio and choosing how much of it to hold are separate decisions. The first is settled by one rule: pick the risky portfolio whose line is steepest. Every other line lies below it at every level of risk.
+The line's slope is $`(\mu_P - r_f)/\sigma_P`$: the Sharpe ratio of P. It does not depend on $`y`$. So choosing a risky portfolio and choosing how much of it to hold are separate decisions. The first is settled by one rule: pick the risky portfolio whose line is steepest. Every other line lies below it at every level of risk.
 
 ### Step 1: the steepest line comes from solving the covariance equations
 
-Write a risky position as a list $x$ of amounts in each asset, as fractions of wealth. Its excess expected return is $d \cdot x$ and its variance is $x \cdot \Sigma x$. Its Sharpe ratio is
+Write a risky position as a list $`x`$ of amounts in each asset, as fractions of wealth. Its excess expected return is $`d \cdot x`$ and its variance is $`x \cdot \Sigma x`$. Its Sharpe ratio is
 
-$$\frac{d \cdot x}{\sqrt{x \cdot \Sigma x}}.$$
+```math
+\frac{d \cdot x}{\sqrt{x \cdot \Sigma x}}.
+```
 
-Double every entry of $x$ and the top and bottom both double: the ratio is unchanged. So the requirement that weights add to one can be dropped while hunting for the best direction and restored afterwards.
+Double every entry of $`x`$ and the top and bottom both double: the ratio is unchanged. So the requirement that weights add to one can be dropped while hunting for the best direction and restored afterwards.
 
-The best direction is $z = \Sigma^{-1} d$, and the best ratio is $\sqrt{H} = \sqrt{d \cdot z}$.
+The best direction is $`z = \Sigma^{-1} d`$, and the best ratio is $`\sqrt{H} = \sqrt{d \cdot z}`$.
 
-The reason, in words: split any position into a part along $z$ and a part that adds no excess return. The two parts are uncorrelated, because $\Sigma z = d$ turns their covariance into the second part's excess return, which is zero. So the second part adds variance and nothing else. Removing it can only raise the ratio.
+The reason, in words: split any position into a part along $`z`$ and a part that adds no excess return. The two parts are uncorrelated, because $`\Sigma z = d`$ turns their covariance into the second part's excess return, which is zero. So the second part adds variance and nothing else. Removing it can only raise the ratio.
 
 <details>
 <summary>Detailed proof: no direction beats z</summary>
 
-Fix a target excess return $q > 0$. Any $x$ with $d \cdot x = q$ can be written $x = (q/H) z + h$, where $d \cdot h = 0$, because $d \cdot z = H$. Then
-$$x \cdot \Sigma x = \frac{q^2}{H^2}\, z \cdot \Sigma z + \frac{2q}{H}\, z \cdot \Sigma h + h \cdot \Sigma h.$$
-Since $\Sigma z = d$: the first term is $q^2 H / H^2 = q^2/H$, and the middle term is $(2q/H)(d \cdot h) = 0$. The covariance matrix gives every nonzero position a positive variance, so $h \cdot \Sigma h \ge 0$, with equality only when $h$ is zero. Hence $x \cdot \Sigma x \ge q^2/H$, which says the Sharpe ratio $q/\sqrt{x \cdot \Sigma x}$ is at most $\sqrt{H}$. Equality holds exactly when $x$ is a positive multiple of $z$. This is the Cauchy–Schwarz inequality, measured in the geometry the covariance matrix sets up.
+Fix a target excess return $`q > 0`$. Any $`x`$ with $`d \cdot x = q`$ can be written $`x = (q/H) z + h`$, where $`d \cdot h = 0`$, because $`d \cdot z = H`$. Then
+
+$`\displaystyle x \cdot \Sigma x = \frac{q^2}{H^2}\, z \cdot \Sigma z + \frac{2q}{H}\, z \cdot \Sigma h + h \cdot \Sigma h.`$
+
+Since $`\Sigma z = d`$: the first term is $`q^2 H / H^2 = q^2/H`$, and the middle term is $`(2q/H)(d \cdot h) = 0`$. The covariance matrix gives every nonzero position a positive variance, so $`h \cdot \Sigma h \ge 0`$, with equality only when $`h`$ is zero. Hence $`x \cdot \Sigma x \ge q^2/H`$, which says the Sharpe ratio $`q/\sqrt{x \cdot \Sigma x}`$ is at most $`\sqrt{H}`$. Equality holds exactly when $`x`$ is a positive multiple of $`z`$. This is the Cauchy–Schwarz inequality, measured in the geometry the covariance matrix sets up.
 
 </details>
 
 ### Step 2: rescale to a portfolio
 
-A portfolio's weights add to one. Divide $z$ by the sum of its entries, $D$: $w_T = z/D$. For the house market $z$ is 1.12, 4.81, 1.18, their sum is 7.11, and the tangency weights are 15.8, 67.6 and 16.6 percent. Rescaling by a positive number keeps the Sharpe ratio at 0.446.
+A portfolio's weights add to one. Divide $`z`$ by the sum of its entries, $`D`$: $`w_T = z/D`$. For the house market $`z`$ is 1.12, 4.81, 1.18, their sum is 7.11, and the tangency weights are 15.8, 67.6 and 16.6 percent. Rescaling by a positive number keeps the Sharpe ratio at 0.446.
 
 ### Step 3: when a tangency portfolio exists
 
-The division needs $D > 0$. The sum of the entries of $\Sigma^{-1}(\mu - r_f\mathbf{1})$ is $b - r_f a$, with $a$ and $b$ the frontier constants above. So $D > 0$ exactly when $r_f < b/a$: the bank rate is below the minimum-variance portfolio's expected return, 4.20 percent.
+The division needs $`D > 0`$. The sum of the entries of $`\Sigma^{-1}(\mu - r_f\mathbf{1})`$ is $`b - r_f a`$, with $`a`$ and $`b`$ the frontier constants above. So $`D > 0`$ exactly when $`r_f < b/a`$: the bank rate is below the minimum-variance portfolio's expected return, 4.20 percent.
 
-- **$r_f$ below 4.20 percent:** a unique tangency portfolio, with positive Sharpe ratio. This is the normal case.
-- **$r_f$ equal to 4.20 percent:** $D = 0$. The best direction is a long-short position whose amounts add to zero; no fully invested portfolio lies on the line. The line is the frontier's asymptote: the upper branch (the part above the minimum-variance portfolio) approaches it and never touches it.
-- **$r_f$ above 4.20 percent:** $D < 0$. Dividing by it flips the direction, and the "tangency" point lands on the frontier's lower branch, with a negative excess return. At 5 percent the checks give $D$ = −2.58 and an excess return of −2.44 percent. The best line then means going short that portfolio, which the formula alone does not say.
+- **$`r_f`$ below 4.20 percent:** a unique tangency portfolio, with positive Sharpe ratio. This is the normal case.
+- **$`r_f`$ equal to 4.20 percent:** $`D = 0`$. The best direction is a long-short position whose amounts add to zero; no fully invested portfolio lies on the line. The line is the frontier's asymptote: the upper branch (the part above the minimum-variance portfolio) approaches it and never touches it.
+- **$`r_f`$ above 4.20 percent:** $`D < 0`$. Dividing by it flips the direction, and the "tangency" point lands on the frontier's lower branch, with a negative excess return. At 5 percent the checks give $`D`$ = −2.58 and an excess return of −2.44 percent. The best line then means going short that portfolio, which the formula alone does not say.
 
 ### Step 4: two-fund separation
 
-Take any target expected return $\mu_p$ above the bank rate and ask for the least variance that reaches it, bank allowed. Step 1's proof already answered: the position is $x = (q/H)z$ with $q = \mu_p - r_f$. That is a multiple of $z$, so its risky part is in the proportions of $w_T$. The fraction held is $y = qD/H$ and the risk is $\sigma_p = q/\sqrt{H}$, exactly the capital market line.
+Take any target expected return $`\mu_p`$ above the bank rate and ask for the least variance that reaches it, bank allowed. Step 1's proof already answered: the position is $`x = (q/H)z`$ with $`q = \mu_p - r_f`$. That is a multiple of $`z`$, so its risky part is in the proportions of $`w_T`$. The fraction held is $`y = qD/H`$ and the risk is $`\sigma_p = q/\sqrt{H}`$, exactly the capital market line.
 
-So every efficient portfolio is made of two funds: the tangency portfolio and the bank. Investors differ only in $y$. James Tobin proved this in 1958; it is called **two-fund separation**, or Tobin separation.
+So every efficient portfolio is made of two funds: the tangency portfolio and the bank. Investors differ only in $`y`$. James Tobin proved this in 1958; it is called **two-fund separation**, or Tobin separation.
 
 ### Step 5: why "tangency"
 
 The tangency portfolio is fully invested in the three risky assets, so it lies in the region the previous card drew. It lies on the frontier: a fully invested mix with the same expected return and less variance would have a higher Sharpe ratio, which Step 1 rules out. And the line touches the frontier there without crossing it, because no risky portfolio lies above the steepest line.
 
-On the frontier, variance at expected return $\mu_p$ is $(a \mu_p^2 - 2 b \mu_p + c)/(ac - b^2)$. The tangency point is at $\mu_p = (c - b\,r_f)/(b - a\,r_f)$, which gives 4.80 percent, and the frontier's slope there equals 0.446, the line's slope. The checks compute both from $a$, $b$ and $c$ alone, with no weights.
+On the frontier, variance at expected return $`\mu_p`$ is $`(a \mu_p^2 - 2 b \mu_p + c)/(ac - b^2)`$. The tangency point is at $`\mu_p = (c - b\,r_f)/(b - a\,r_f)`$, which gives 4.80 percent, and the frontier's slope there equals 0.446, the line's slope. The checks compute both from $`a`$, $`b`$ and $`c`$ alone, with no weights.
 
-One step further: if every investor holds $w_T$ and the market must clear (every asset on offer is held by someone), $w_T$ must be the market portfolio itself. That turns this card into a statement about prices, which is [CAPM](04-capm-and-beta.md).
+One step further: if every investor holds $`w_T`$ and the market must clear (every asset on offer is held by someone), $`w_T`$ must be the market portfolio itself. That turns this card into a statement about prices, which is [CAPM](04-capm-and-beta.md).
 
 ---
 
 ## Worked numbers, by hand
 
-House market, bank rate $r_f$ = 2 percent.
+House market, bank rate $`r_f`$ = 2 percent.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | covariance of shares and bonds | 0.2 × 0.20 × 0.06 | 0.0024 |
 | covariance of shares and gold | 0.1 × 0.20 × 0.15 | 0.0030 |
-| excess returns $d$ | 8 − 2, 4 − 2, 5 − 2 | 6%, 2%, 3% |
-| solve $\Sigma z = d$ | three equations, three unknowns | $z$ = 1.122807, 4.807018, 1.183626 |
-| $D$ | 1.122807 + 4.807018 + 1.183626 | 7.113450 |
-| tangency weights | each entry of $z$ divided by 7.113450 | **15.8%, 67.6%, 16.6%** |
-| expected return $\mu_T$ | 0.157843 × 8 + 0.675765 × 4 + 0.166393 × 5 = 1.2627 + 2.7031 + 0.8320 | 4.80% |
-| standard deviation $\sigma_T$ | square root of $w_T \cdot \Sigma w_T$ = 0.003933 | 6.27% |
+| excess returns $`d`$ | 8 − 2, 4 − 2, 5 − 2 | 6%, 2%, 3% |
+| solve $`\Sigma z = d`$ | three equations, three unknowns | $`z`$ = 1.122807, 4.807018, 1.183626 |
+| $`D`$ | 1.122807 + 4.807018 + 1.183626 | 7.113450 |
+| tangency weights | each entry of $`z`$ divided by 7.113450 | **15.8%, 67.6%, 16.6%** |
+| expected return $`\mu_T`$ | 0.157843 × 8 + 0.675765 × 4 + 0.166393 × 5 = 1.2627 + 2.7031 + 0.8320 | 4.80% |
+| standard deviation $`\sigma_T`$ | square root of $`w_T \cdot \Sigma w_T`$ = 0.003933 | 6.27% |
 | Sharpe ratio | (4.80 − 2) / 6.27 | **0.446** |
-| second road: $H = d \cdot z$ | 0.067368 + 0.096140 + 0.035509 | 0.199018 |
-| $\sqrt{H}$ | square root of 0.199018 | **0.446** |
+| second road: $`H = d \cdot z`$ | 0.067368 + 0.096140 + 0.035509 | 0.199018 |
+| $`\sqrt{H}`$ | square root of 0.199018 | **0.446** |
 
-The two roads never share a step after $z$: one goes through the weights, the other never forms them.
+The two roads never share a step after $`z`$: one goes through the weights, the other never forms them.
 
 **Two investors, $10,000 each.**
 
-- The cautious one wants 3 percent expected return: $y = (3 - 2)/(4.80 - 2)$ = 0.357. That is $564.17 in shares, $2,415.37 in bonds, $594.73 in gold and $6,425.72 in the bank, at 2.24 percent risk.
-- The bold one wants 8 percent, the shares' own expected return: $y$ = 2.14. That is $3,385.05 in shares, $14,492.24 in bonds, $3,568.41 in gold, paid for by borrowing $11,445.70. The risk is 13.45 percent, against 20 percent for holding shares alone at the same expected return.
+- The cautious one wants 3 percent expected return: $`y = (3 - 2)/(4.80 - 2)`$ = 0.357. That is $564.17 in shares, $2,415.37 in bonds, $594.73 in gold and $6,425.72 in the bank, at 2.24 percent risk.
+- The bold one wants 8 percent, the shares' own expected return: $`y`$ = 2.14. That is $3,385.05 in shares, $14,492.24 in bonds, $3,568.41 in gold, paid for by borrowing $11,445.70. The risk is 13.45 percent, against 20 percent for holding shares alone at the same expected return.
 
 Both hold shares, bonds and gold in the proportions 15.8 : 67.6 : 16.6.
 
@@ -203,7 +213,7 @@ Each mistake builds a different risky fund, then levers it to the bold investor'
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Solve $\Sigma z = \mu$, forgetting to subtract the bank rate | weights 9.0 / 75.8 / 15.2; Sharpe 0.4360; 7.86% | that is the tangency for a bank paying 0 percent, the wrong line's starting point |
+| Solve $`\Sigma z = \mu`$, forgetting to subtract the bank rate | weights 9.0 / 75.8 / 15.2; Sharpe 0.4360; 7.86% | that is the tangency for a bank paying 0 percent, the wrong line's starting point |
 | Use only the variances, ignoring correlations | weights 17.9 / 66.2 / 15.9; Sharpe 0.4454; 7.99% | small here because the correlations are small; the method is still wrong |
 | Lever the minimum-variance portfolio instead | Sharpe 0.3956; 7.32% | least risk is not the best reward per unit of risk |
 | Borrow at 4 percent, not 2 | 5.71% (the curve gives 6.72%) | the line is straight only if borrowing costs the lending rate |
@@ -214,10 +224,10 @@ Each mistake builds a different risky fund, then levers it to the bold investor'
 
 The scripts build the covariance matrix, then reach the tangency portfolio and its Sharpe ratio by five roads:
 
-1. Solve $\Sigma z = d$ by elimination and rescale.
-2. $\sqrt{d \cdot z}$, with no weights formed.
+1. Solve $`\Sigma z = d`$ by elimination and rescale.
+2. $`\sqrt{d \cdot z}`$, with no weights formed.
 3. A zooming grid search that tries weights directly and keeps the best Sharpe ratio, with no linear algebra.
-4. The frontier's constants $a$, $b$, $c$, giving the touching point and the frontier's slope there.
+4. The frontier's constants $`a`$, $`b`$, $`c`$, giving the touching point and the frontier's slope there.
 5. For two target returns, the least-variance position with the bank allowed, solved as a four-equation system, whose risky part must come out in the tangency proportions.
 
 Then the what-breaks funds, the try-changing rates, and every chart point. Both scripts write their own linear solver.
@@ -639,13 +649,13 @@ The two outputs agree line for line.
 
 Lean proves Steps 1, 3 and 4 for any number of risky assets with no riskless mix, and checks the house market exactly.
 
-- Take any risky position $x$ with positive excess return. Then its Sharpe ratio is at most $\sqrt{H}$, with equality exactly when $x$ is a positive multiple of $z$.
-- Take at least one risky asset. Then $D = b - r_f a$. So $D$ is positive exactly when the bank rate is below $b/a$, the minimum-variance portfolio's expected return.
-- Suppose the bank rate is below $b/a$ and the target expected return $\mu_p$ is above the bank rate. Then the tangency weights add to one. A position reaching $\mu_p$ has the least variance exactly when it puts $y = qD/H$ in the tangency portfolio.
-- Take that least-variance position, under the same conditions. Then $\mu_p = r_f + \sqrt{H}\sigma_p$: it sits on the capital market line.
+- Take any risky position $`x`$ with positive excess return. Then its Sharpe ratio is at most $`\sqrt{H}`$, with equality exactly when $`x`$ is a positive multiple of $`z`$.
+- Take at least one risky asset. Then $`D = b - r_f a`$. So $`D`$ is positive exactly when the bank rate is below $`b/a`$, the minimum-variance portfolio's expected return.
+- Suppose the bank rate is below $`b/a`$ and the target expected return $`\mu_p`$ is above the bank rate. Then the tangency weights add to one. A position reaching $`\mu_p`$ has the least variance exactly when it puts $`y = qD/H`$ in the tangency portfolio.
+- Take that least-variance position, under the same conditions. Then $`\mu_p = r_f + \sqrt{H}\sigma_p`$: it sits on the capital market line.
 - For the house market, the tangency weights are exactly 480/3041, 2055/3041 and 506/3041, adding to one.
-- Its exact $z$, $D$, $H$, $a$ and $b$ check, and the bank rate of 2 percent is below $b/a$, about 4.20 percent.
-- The covariance entries and the cautious investor's fraction $y$ = 3041/8508, about 0.357, also check.
+- Its exact $`z`$, $`D`$, $`H`$, $`a`$ and $`b`$ check, and the bank rate of 2 percent is below $`b/a`$, about 4.20 percent.
+- The covariance entries and the cautious investor's fraction $`y`$ = 3041/8508, about 0.357, also check.
 
 The decimal roots, the grid search, the frontier's slope, the dollar amounts and the chart points are left to the Python and Rust checks.
 
@@ -1006,7 +1016,7 @@ example : (1 / 100 : ℚ) * (6082 / 855) / (1418 / 7125) = 3041 / 8508 := by
 > **Try changing**
 > - **Lower the bank rate to 1 percent.** Guess first: more shares or fewer? The line starts lower, so the steepest one leans on the safest asset: weights 11.36 / 72.97 / 15.67, Sharpe 0.6112.
 > - **Raise the bank rate to 3 percent.** The start point climbs towards the minimum-variance portfolio, and the touching point slides up the frontier: weights 27.58 / 53.19 / 19.23, Sharpe 0.2985.
-> - **Raise it to 5 percent,** above the minimum-variance return of 4.20 percent. Guess first: what does the formula return? $D$ = −2.58, and the rescaled "tangency" has excess return −2.44 percent: a point on the frontier's lower branch, Step 3's third case.
+> - **Raise it to 5 percent,** above the minimum-variance return of 4.20 percent. Guess first: what does the formula return? $`D`$ = −2.58, and the rescaled "tangency" has excess return −2.44 percent: a point on the frontier's lower branch, Step 3's third case.
 
 ---
 
@@ -1015,10 +1025,10 @@ example : (1 / 100 : ℚ) * (6082 / 855) / (1418 / 7125) = 3041 / 8508 := by
 > [!warning]
 > **A bolder investor does not need a riskier mix.** The instinct is to hold more shares for more return. In this model the bold investor holds the same 15.8 / 67.6 / 16.6 mix as the cautious one and borrows to hold more of it. Tilting toward shares instead lands below the line: the shares alone give 8 percent at 20 percent risk, where the line gives 8 percent at 13.45 percent.
 >
-> - **Forgetting to subtract the bank rate.** $\Sigma^{-1}\mu$ rescaled is the tangency for a zero bank rate: weights 9.0 / 75.8 / 15.2, and 7.86 percent where 8 percent was on offer.
+> - **Forgetting to subtract the bank rate.** $`\Sigma^{-1}\mu`$ rescaled is the tangency for a zero bank rate: weights 9.0 / 75.8 / 15.2, and 7.86 percent where 8 percent was on offer.
 > - **Levering the minimum-variance portfolio.** The least-risk portfolio has Sharpe ratio 0.3956, not 0.4461; at 13.45 percent risk it expects 7.32 percent.
 > - **Extending the line when borrowing costs more than lending.** Levering the tangency mix at 4 percent gives 5.71 percent, not 8; past the tangency point the best choices lie on the curve, 6.72 percent at that risk.
-> - **Dividing by a negative $D$.** With the bank rate above 4.20 percent the formula still returns weights adding to one, but on the lower branch, with excess return −2.44 percent at a 5 percent bank rate.
+> - **Dividing by a negative $`D`$.** With the bank rate above 4.20 percent the formula still returns weights adding to one, but on the lower branch, with excess return −2.44 percent at a 5 percent bank rate.
 
 ---
 
@@ -1037,7 +1047,7 @@ example : (1 / 100 : ℚ) * (6082 / 855) / (1418 / 7125) = 3041 / 8508 := by
 
 ## What this builds on
 
-- [The efficient frontier](02-efficient-frontier-and-minimum-variance.md): the frontier curve, the minimum-variance portfolio and the constants $a$, $b$, $c$ that the tangency line touches and uses. Behind it, [Two assets](01-two-asset-portfolio-risk-and-return.md) shows why correlation, not only each asset's risk, sets a mix's risk.
+- [The efficient frontier](02-efficient-frontier-and-minimum-variance.md): the frontier curve, the minimum-variance portfolio and the constants $`a`$, $`b`$, $`c`$ that the tangency line touches and uses. Behind it, [Two assets](01-two-asset-portfolio-risk-and-return.md) shows why correlation, not only each asset's risk, sets a mix's risk.
 
 ---
 
@@ -1058,4 +1068,4 @@ Verified 2026-09-28: every link below resolves to the publisher's page.
 - James Tobin, "Liquidity Preference as Behavior Towards Risk", *The Review of Economic Studies* 25(2), 65–86, 1958. [doi:10.2307/2296205](https://doi.org/10.2307/2296205). Adds the riskless asset and proves the separation theorem.
 - William F. Sharpe, "Capital Asset Prices: A Theory of Market Equilibrium under Conditions of Risk", *The Journal of Finance* 19(3), 425–442, 1964. [doi:10.1111/j.1540-6261.1964.tb02865.x](https://doi.org/10.1111/j.1540-6261.1964.tb02865.x). The capital market line and its step to market equilibrium.
 - William F. Sharpe, "Mutual Fund Performance", *The Journal of Business* 39(1), part 2, 119–138, 1966. [doi:10.1086/294846](https://doi.org/10.1086/294846). The reward-to-variability ratio, now the Sharpe ratio.
-- Robert C. Merton, "An Analytic Derivation of the Efficient Portfolio Frontier", *Journal of Financial and Quantitative Analysis* 7(4), 1851–1872, 1972. [doi:10.2307/2329621](https://doi.org/10.2307/2329621). The closed forms in $a$, $b$, $c$ used in Steps 3 and 5.
+- Robert C. Merton, "An Analytic Derivation of the Efficient Portfolio Frontier", *Journal of Financial and Quantitative Analysis* 7(4), 1851–1872, 1972. [doi:10.2307/2329621](https://doi.org/10.2307/2329621). The closed forms in $`a`$, $`b`$, $`c`$ used in Steps 3 and 5.

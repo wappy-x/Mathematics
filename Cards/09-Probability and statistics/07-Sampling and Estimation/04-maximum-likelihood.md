@@ -38,45 +38,51 @@ First line (orange): the real poll, 520 yeses in 1,000 calls. Second line (green
 
 ## The formula
 
-Notation first, in words. The unknown number the model needs is written $\theta$ (theta); for the poll it is the share $p$. The data are $x_1, x_2, \ldots, x_n$: for the poll, $x_i$ is 1 if voter number i said yes and 0 if not. The model supplies $f(x;\theta)$, the chance of one observation $x$ when the unknown is $\theta$; for a measurement on a continuous scale it is the density height ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)).
+Notation first, in words. The unknown number the model needs is written $`\theta`$ (theta); for the poll it is the share $`p`$. The data are $`x_1, x_2, \ldots, x_n`$: for the poll, $`x_i`$ is 1 if voter number i said yes and 0 if not. The model supplies $`f(x;\theta)`$, the chance of one observation $`x`$ when the unknown is $`\theta`$; for a measurement on a continuous scale it is the density height ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)).
 
-A capital pi, ∏, means multiply the terms together, as a capital sigma, Σ, means add them. A hat marks a guess, as on [Samples and estimators](01-populations-samples-and-estimators.md): $\hat\theta$ is read "theta-hat".
+A capital pi, ∏, means multiply the terms together, as a capital sigma, Σ, means add them. A hat marks a guess, as on [Samples and estimators](01-populations-samples-and-estimators.md): $`\hat\theta`$ is read "theta-hat".
 
-$$L(\theta) = \prod_{i=1}^{n} f(x_i;\theta), \qquad \ell(\theta) = \ln L(\theta) = \sum_{i=1}^{n} \ln f(x_i;\theta), \qquad \hat\theta = \text{the allowed } \theta \text{ with the largest } L(\theta)$$
+```math
+L(\theta) = \prod_{i=1}^{n} f(x_i;\theta), \qquad \ell(\theta) = \ln L(\theta) = \sum_{i=1}^{n} \ln f(x_i;\theta), \qquad \hat\theta = \text{the allowed } \theta \text{ with the largest } L(\theta)
+```
 
 **Read it aloud:** the likelihood multiplies the chances of every observation under a candidate value; its logarithm adds their logarithms; the estimate is the allowed candidate that makes the likelihood largest.
 
-For the poll, with $k$ yeses out of $n$ calls:
+For the poll, with $`k`$ yeses out of $`n`$ calls:
 
-$$L(p) = p^{k}(1-p)^{n-k}, \qquad \hat p = \frac{k}{n} = \frac{520}{1000} = 0.52$$
+```math
+L(p) = p^{k}(1-p)^{n-k}, \qquad \hat p = \frac{k}{n} = \frac{520}{1000} = 0.52
+```
 
 **Read it aloud:** each yes contributes a factor p and each no a factor 1 − p; the peak is the share of yeses.
 
-For $n$ measurements from a normal law with centre $\mu$ and variance $v$ (so $v = \sigma^2$, the square of the standard deviation $\sigma$), with average $\bar x$ and total squared gap $Q = \sum (x_i - \bar x)^2$:
+For $`n`$ measurements from a normal law with centre $`\mu`$ and variance $`v`$ (so $`v = \sigma^2`$, the square of the standard deviation $`\sigma`$), with average $`\bar x`$ and total squared gap $`Q = \sum (x_i - \bar x)^2`$:
 
-$$\hat\mu = \bar x, \qquad \hat v = \frac{Q}{n}$$
+```math
+\hat\mu = \bar x, \qquad \hat v = \frac{Q}{n}
+```
 
 **Read it aloud:** the best centre is the average of the data; the best variance is the average squared distance from that average, dividing by n, not n − 1.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\theta$ | the unknown number the model needs, in general (theta) | the share p, or the pair μ, v | — |
-| $x_i$ | observation number i | 1 for a yes, 0 for a no; or one earlier poll's share | — |
-| $n$ | the number of observations | 1,000 calls; 5 earlier polls | the peak's curvature grows in proportion; the standard error shrinks like 1/√n |
-| $f(x;\theta)$ | the chance (or density height) of one observation under θ | p for a yes, 1 − p for a no | — |
-| $L$ | the likelihood: the chance of all the data, as a function of θ | about 10^(−300.7) at the peak | — |
-| $\ell$ | the log-likelihood, ln L; same peak, sums instead of products | −692.35 at the peak | — |
-| $\hat\theta$, $\hat p$, $\hat\mu$, $\hat v$ | the maximum likelihood estimates | 0.52; 0.52; 0.52; 0.00036 | — |
-| $p$ | the electorate's true share of yes voters | unknown; estimate 0.52 | more yeses expected |
-| $k$ | the number of yeses in the sample | 520 | the estimate rises one-for-one with k/n |
-| $\mu$ | the centre of a normal law (mu) | the race's true average poll share | — |
-| $v$, $\sigma$ | the variance of a normal law, and its square root, the standard deviation (sigma) | estimates 0.00036 and 0.018974 | the bell curve widens |
-| $\bar x$, $Q$ | the data's average, and its total squared gap from that average | 0.52 and 0.0018 | Q up: a larger variance estimate |
-| $\prod$, $\sum$ | capital pi: multiply the terms that follow; capital sigma: add them | ∏ multiplies 1,000 chances, one per call; Σ adds the 5 squared gaps in Q | — |
-| $\ln$ | the natural logarithm; it turns products into sums and keeps bigger numbers bigger | ln L = −692.35 at the peak | — |
-| $\pi$ | the circle constant, the ratio of a circle's circumference to its diameter | inside the normal density's $(2\pi v)^{-1/2}$ | — |
-| $C(n, k)$ | the number of orders in which k yeses can fall among n calls | C(1000, 520) | — |
-| $g(v)$ | the normal log-likelihood with the centre fixed at $\bar x$, as a function of the variance alone | highest at v = Q/n = 0.00036 | — |
+| $`\theta`$ | the unknown number the model needs, in general (theta) | the share p, or the pair μ, v | — |
+| $`x_i`$ | observation number i | 1 for a yes, 0 for a no; or one earlier poll's share | — |
+| $`n`$ | the number of observations | 1,000 calls; 5 earlier polls | the peak's curvature grows in proportion; the standard error shrinks like 1/√n |
+| $`f(x;\theta)`$ | the chance (or density height) of one observation under θ | p for a yes, 1 − p for a no | — |
+| $`L`$ | the likelihood: the chance of all the data, as a function of θ | about 10^(−300.7) at the peak | — |
+| $`\ell`$ | the log-likelihood, ln L; same peak, sums instead of products | −692.35 at the peak | — |
+| $`\hat\theta`$, $`\hat p`$, $`\hat\mu`$, $`\hat v`$ | the maximum likelihood estimates | 0.52; 0.52; 0.52; 0.00036 | — |
+| $`p`$ | the electorate's true share of yes voters | unknown; estimate 0.52 | more yeses expected |
+| $`k`$ | the number of yeses in the sample | 520 | the estimate rises one-for-one with k/n |
+| $`\mu`$ | the centre of a normal law (mu) | the race's true average poll share | — |
+| $`v`$, $`\sigma`$ | the variance of a normal law, and its square root, the standard deviation (sigma) | estimates 0.00036 and 0.018974 | the bell curve widens |
+| $`\bar x`$, $`Q`$ | the data's average, and its total squared gap from that average | 0.52 and 0.0018 | Q up: a larger variance estimate |
+| $`\prod`$, $`\sum`$ | capital pi: multiply the terms that follow; capital sigma: add them | ∏ multiplies 1,000 chances, one per call; Σ adds the 5 squared gaps in Q | — |
+| $`\ln`$ | the natural logarithm; it turns products into sums and keeps bigger numbers bigger | ln L = −692.35 at the peak | — |
+| $`\pi`$ | the circle constant, the ratio of a circle's circumference to its diameter | inside the normal density's $`(2\pi v)^{-1/2}`$ | — |
+| $`C(n, k)`$ | the number of orders in which k yeses can fall among n calls | C(1000, 520) | — |
+| $`g(v)`$ | the normal log-likelihood with the centre fixed at $`\bar x`$, as a function of the variance alone | highest at v = Q/n = 0.00036 | — |
 
 ### When it holds
 
@@ -97,7 +103,9 @@ The chance formula for the poll has two inputs: the data and the unknown share. 
 
 Each call is a yes with chance p and a no with chance 1 − p, and the calls are independent, so chances multiply ([Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). The recorded list of 520 yeses and 480 nos, in the order they came, has chance
 
-$$L(p) = p^{520}(1-p)^{480}.$$
+```math
+L(p) = p^{520}(1-p)^{480}.
+```
 
 At p = 0.52 this is about 10^(−300.7): a decimal point, 300 zeros, then digits. That does not matter. Any one exact list of 1,000 answers is improbable; only comparisons between candidates carry information. At p = 0.50 the same list is 0.449 times as likely as at 0.52; at p = 0.55 it is 0.163 times as likely.
 
@@ -107,7 +115,9 @@ Recording only the count, not the order, multiplies L(p) by the number of orders
 
 A product of a thousand small factors is tiny. At the peak it is about 10^(−300.7), close to the smallest positive number that ordinary computer arithmetic can hold; a poll ten times larger falls below that floor, and its product rounds to zero. The logarithm turns the product into a sum, which stays a modest number:
 
-$$\ell(p) = 520\ln p + 480\ln(1-p).$$
+```math
+\ell(p) = 520\ln p + 480\ln(1-p).
+```
 
 The logarithm is an increasing function: a bigger likelihood always has a bigger logarithm. So the two curves peak at the same place, and from here the card works with ℓ. At the peak, ℓ = −692.35. The chart plots ℓ minus that peak value.
 
@@ -115,19 +125,23 @@ The logarithm is an increasing function: a bigger likelihood always has a bigger
 
 The slope of ℓ in p is
 
-$$\frac{d\ell}{dp} = \frac{k}{p} - \frac{n-k}{1-p} = \frac{k - np}{p(1-p)}.$$
+```math
+\frac{d\ell}{dp} = \frac{k}{p} - \frac{n-k}{1-p} = \frac{k - np}{p(1-p)}.
+```
 
 The bottom, p(1 − p), is positive for every p strictly between 0 and 1. So the sign of the slope is the sign of k − np. Below p = k/n the slope is positive and ℓ climbs; above it the slope is negative and ℓ falls. A function that rises up to a point and falls after it has its highest value there ([Optimisation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md)).
 
-This sign argument proves a global maximum, which "slope equals zero" alone does not: a flat point can be a valley or a ledge. For the poll, $\hat p$ = 520/1000 = 0.52.
+This sign argument proves a global maximum, which "slope equals zero" alone does not: a flat point can be a valley or a ledge. For the poll, $`\hat p`$ = 520/1000 = 0.52.
 
 ### Step 4: when the peak sits at an edge
 
 A second poll asks 20 voters about a fringe measure. None says yes. Now k = 0 and
 
-$$\ell(p) = 20\ln(1-p), \qquad \frac{d\ell}{dp} = -\frac{20}{1-p}.$$
+```math
+\ell(p) = 20\ln(1-p), \qquad \frac{d\ell}{dp} = -\frac{20}{1-p}.
+```
 
-The slope is negative everywhere; at p = 0 it is −20. It is never zero, so the recipe "set the slope to zero and solve" returns nothing. Yet ℓ is falling from the start, so its highest value is at the left edge: $\hat p = 0$. (The likelihood there is (1 − 0)^20 = 1: under a share of zero, twenty nos were certain.) The second chart shows the fall.
+The slope is negative everywhere; at p = 0 it is −20. It is never zero, so the recipe "set the slope to zero and solve" returns nothing. Yet ℓ is falling from the start, so its highest value is at the left edge: $`\hat p = 0`$. (The likelihood there is (1 − 0)^20 = 1: under a share of zero, twenty nos were certain.) The second chart shows the fall.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -144,38 +158,40 @@ The allowed range matters: if p = 0 is excluded, every candidate is beaten by a 
 
 ### Step 5: the normal model, two unknowns at once
 
-Before this poll, five earlier polls of the same race reported shares 0.49, 0.51, 0.52, 0.54 and 0.54. Treat them as five draws from a normal law with unknown centre μ and unknown variance v, the bell curve of [Normal](../04-Continuous%20Distributions/04-normal-distribution.md). Its density height at x is $(2\pi v)^{-1/2}\exp(-(x-\mu)^2/(2v))$. Multiply five of them and take logarithms:
+Before this poll, five earlier polls of the same race reported shares 0.49, 0.51, 0.52, 0.54 and 0.54. Treat them as five draws from a normal law with unknown centre μ and unknown variance v, the bell curve of [Normal](../04-Continuous%20Distributions/04-normal-distribution.md). Its density height at x is $`(2\pi v)^{-1/2}\exp(-(x-\mu)^2/(2v))`$. Multiply five of them and take logarithms:
 
-$$\ell(\mu, v) = -\frac{n}{2}\ln(2\pi v) - \frac{1}{2v}\sum_{i}(x_i - \mu)^2.$$
+```math
+\ell(\mu, v) = -\frac{n}{2}\ln(2\pi v) - \frac{1}{2v}\sum_{i}(x_i - \mu)^2.
+```
 
-The centre first. The squared gaps split into two parts, $\sum (x_i-\mu)^2 = Q + n(\mu - \bar x)^2$. Only the second part involves μ, and it is smallest, zero, at μ = $\bar x$. That holds whatever v is. So $\hat\mu = \bar x$, the average of the five, 0.52.
+The centre first. The squared gaps split into two parts, $`\sum (x_i-\mu)^2 = Q + n(\mu - \bar x)^2`$. Only the second part involves μ, and it is smallest, zero, at μ = $`\bar x`$. That holds whatever v is. So $`\hat\mu = \bar x`$, the average of the five, 0.52.
 
-Then the spread. With the centre fixed at $\bar x$, the log-likelihood in v alone is $-\tfrac{n}{2}\ln(2\pi v) - Q/(2v)$. Its two terms pull opposite ways. The first prefers a narrow bell, which is tall. The second punishes a narrow bell for leaving the data in its thin tails. The slope in v is $(Q - nv)/(2v^2)$: positive below v = Q/n, negative above. So $\hat v = Q/n$.
+Then the spread. With the centre fixed at $`\bar x`$, the log-likelihood in v alone is $`-\tfrac{n}{2}\ln(2\pi v) - Q/(2v)`$. Its two terms pull opposite ways. The first prefers a narrow bell, which is tall. The second punishes a narrow bell for leaving the data in its thin tails. The slope in v is $`(Q - nv)/(2v^2)`$: positive below v = Q/n, negative above. So $`\hat v = Q/n`$.
 
-For the five polls the squared gaps from 0.52 add to Q = 0.0018, and $\hat v$ = 0.0018 / 5 = 0.00036, a standard deviation of 0.018974. That is close to the 0.0158 that one 1,000-voter poll should scatter by, with polls of other sizes and dates mixed in. The standard error of the centre is 0.018974 / √5 = 0.008485; that of the variance is about 0.000228, rough with only five numbers.
+For the five polls the squared gaps from 0.52 add to Q = 0.0018, and $`\hat v`$ = 0.0018 / 5 = 0.00036, a standard deviation of 0.018974. That is close to the 0.0158 that one 1,000-voter poll should scatter by, with polls of other sizes and dates mixed in. The standard error of the centre is 0.018974 / √5 = 0.008485; that of the variance is about 0.000228, rough with only five numbers.
 
-Density heights are not chances, so ℓ here can be positive. If all five polls read 0.52 exactly, then Q = 0 and ℓ at the centre is $-\tfrac{5}{2}\ln(2\pi v)$: 12.67 at v = 0.001, 24.19 at v = 0.00001, 35.70 at v = 0.0000001, and on without limit. No allowed variance is best.
+Density heights are not chances, so ℓ here can be positive. If all five polls read 0.52 exactly, then Q = 0 and ℓ at the centre is $`-\tfrac{5}{2}\ln(2\pi v)`$: 12.67 at v = 0.001, 24.19 at v = 0.00001, 35.70 at v = 0.0000001, and on without limit. No allowed variance is best.
 
 <details>
 <summary>Detailed proof: the normal estimates, and the case with no maximum</summary>
 
-**Splitting the squared gaps.** Write $x_i - \mu = (x_i - \bar x) + (\bar x - \mu)$ and square: $\sum (x_i-\mu)^2 = \sum (x_i - \bar x)^2 + 2(\bar x - \mu)\sum (x_i - \bar x) + n(\bar x - \mu)^2$. The middle sum is zero, because the gaps from the average add to zero by the definition of the average. So $\sum (x_i-\mu)^2 = Q + n(\mu - \bar x)^2$.
+**Splitting the squared gaps.** Write $`x_i - \mu = (x_i - \bar x) + (\bar x - \mu)`$ and square: $`\sum (x_i-\mu)^2 = \sum (x_i - \bar x)^2 + 2(\bar x - \mu)\sum (x_i - \bar x) + n(\bar x - \mu)^2`$. The middle sum is zero, because the gaps from the average add to zero by the definition of the average. So $`\sum (x_i-\mu)^2 = Q + n(\mu - \bar x)^2`$.
 
-**The centre.** For any fixed v > 0, ℓ(μ, v) = $-\tfrac{n}{2}\ln(2\pi v) - \tfrac{Q}{2v} - \tfrac{n(\mu - \bar x)^2}{2v}$. The last term is at most zero and equals zero only at μ = $\bar x$. So for every v the best centre is $\bar x$, and the pair's maximum, if it exists, has μ = $\bar x$.
+**The centre.** For any fixed v > 0, ℓ(μ, v) = $`-\tfrac{n}{2}\ln(2\pi v) - \tfrac{Q}{2v} - \tfrac{n(\mu - \bar x)^2}{2v}`$. The last term is at most zero and equals zero only at μ = $`\bar x`$. So for every v the best centre is $`\bar x`$, and the pair's maximum, if it exists, has μ = $`\bar x`$.
 
-**The spread, when Q > 0.** Put μ = $\bar x$. Then $g(v) = -\tfrac{n}{2}\ln(2\pi v) - \tfrac{Q}{2v}$, with slope $g'(v) = -\tfrac{n}{2v} + \tfrac{Q}{2v^2} = \tfrac{Q - nv}{2v^2}$. The bottom is positive. The top is positive for v < Q/n and negative for v > Q/n. So g rises then falls, and v = Q/n is its unique highest point. The pair ($\bar x$, Q/n) beats every other pair: any (μ, v) is at most ($\bar x$, v), which is at most ($\bar x$, Q/n).
+**The spread, when Q > 0.** Put μ = $`\bar x`$. Then $`g(v) = -\tfrac{n}{2}\ln(2\pi v) - \tfrac{Q}{2v}`$, with slope $`g'(v) = -\tfrac{n}{2v} + \tfrac{Q}{2v^2} = \tfrac{Q - nv}{2v^2}`$. The bottom is positive. The top is positive for v < Q/n and negative for v > Q/n. So g rises then falls, and v = Q/n is its unique highest point. The pair ($`\bar x`$, Q/n) beats every other pair: any (μ, v) is at most ($`\bar x`$, v), which is at most ($`\bar x`$, Q/n).
 
-**The spread, when Q = 0.** Every observation equals $\bar x$. Then $g(v) = -\tfrac{n}{2}\ln(2\pi v)$, which increases without bound as v falls towards 0. For every allowed v there is a smaller one with a larger likelihood, so no maximum exists.
+**The spread, when Q = 0.** Every observation equals $`\bar x`$. Then $`g(v) = -\tfrac{n}{2}\ln(2\pi v)`$, which increases without bound as v falls towards 0. For every allowed v there is a smaller one with a larger likelihood, so no maximum exists.
 
-**Why the factor matters.** The term $-\tfrac{n}{2}\ln(2\pi v)$ comes from the $(2\pi v)^{-1/2}$ in front of each density. It depends on v, so it cannot be dropped when v is being fitted. Drop it and $g(v) = -Q/(2v)$ rises for ever as v grows.
+**Why the factor matters.** The term $`-\tfrac{n}{2}\ln(2\pi v)`$ comes from the $`(2\pi v)^{-1/2}`$ in front of each density. It depends on v, so it cannot be dropped when v is being fitted. Drop it and $`g(v) = -Q/(2v)`$ rises for ever as v grows.
 
 </details>
 
 ### Step 6: the curvature of the peak gives the standard error
 
-A narrow peak means the data rule out nearby values firmly. The narrowness is the curvature: minus the second derivative of ℓ at the peak, the rate at which its slope falls. For the poll it is $k/\hat p^2 + (n-k)/(1-\hat p)^2$, about 4,006. One over its square root is 0.015799, the same standard error that $\sqrt{p(1-p)/n}$ gives on [Standard error](02-sample-mean-and-standard-error.md).
+A narrow peak means the data rule out nearby values firmly. The narrowness is the curvature: minus the second derivative of ℓ at the peak, the rate at which its slope falls. For the poll it is $`k/\hat p^2 + (n-k)/(1-\hat p)^2`$, about 4,006. One over its square root is 0.015799, the same standard error that $`\sqrt{p(1-p)/n}`$ gives on [Standard error](02-sample-mean-and-standard-error.md).
 
-That this match is no accident, and that no unbiased rule can do better, is proved on [Fisher information](07-fisher-information-and-cramer-rao.md). The same recipe gave the variance's standard error above, $\hat v\sqrt{2/n}$.
+That this match is no accident, and that no unbiased rule can do better, is proved on [Fisher information](07-fisher-information-and-cramer-rao.md). The same recipe gave the variance's standard error above, $`\hat v\sqrt{2/n}`$.
 
 ### The other door
 
@@ -189,14 +205,14 @@ The poll: n = 1,000 calls, k = 520 yeses.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| log-likelihood | $520\ln p + 480\ln(1-p)$ | a curve in p |
-| set the slope to zero | $520/p = 480/(1-p)$, so $520(1-p) = 480p$ | $1000p = 520$ |
+| log-likelihood | $`520\ln p + 480\ln(1-p)`$ | a curve in p |
+| set the slope to zero | $`520/p = 480/(1-p)`$, so $`520(1-p) = 480p`$ | $`1000p = 520`$ |
 | check the signs | slope positive below 0.52, negative above | a true maximum |
-| estimate | $520/1000$ | $\hat p$ = 0.52 |
-| height at the peak | $520\ln 0.52 + 480\ln 0.48$ | −692.35 |
-| height at a fair split, from the peak | $1000\ln 0.5 - (-692.35)$ | −0.80, a ratio of 0.449 |
-| curvature | $520/0.52^2 + 480/0.48^2$ | about 4,006 |
-| standard error | $1/\sqrt{4006}$, or $\sqrt{0.52 \times 0.48 / 1000}$ | 0.0158 |
+| estimate | $`520/1000`$ | $`\hat p`$ = 0.52 |
+| height at the peak | $`520\ln 0.52 + 480\ln 0.48`$ | −692.35 |
+| height at a fair split, from the peak | $`1000\ln 0.5 - (-692.35)`$ | −0.80, a ratio of 0.449 |
+| curvature | $`520/0.52^2 + 480/0.48^2`$ | about 4,006 |
+| standard error | $`1/\sqrt{4006}`$, or $`\sqrt{0.52 \times 0.48 / 1000}`$ | 0.0158 |
 | **answer** | | **0.52, standard error 0.0158** |
 
 The electorate's yes share is estimated at 52 percent, give or take about 1.6 points. A fair split, 0.50, lies within two standard errors of the estimate: the poll leans yes, not decisively.
@@ -207,8 +223,8 @@ The electorate's yes share is estimated at 52 percent, give or take about 1.6 po
 | --- | --- | --- |
 | Reading the 2.5 percent chance of exactly 520 yeses as the chance that p = 0.52 | 0.025245, a chance about the data | likelihood ranks candidates; it puts no probability on them |
 | Setting the slope to zero for 0 yeses out of 20 | no solution; a search walled at 0.001 stops at 0.001 | the peak is at the edge p = 0, where the slope is −20 |
-| Quoting $\sqrt{\hat p(1-\hat p)/n}$ for 0 out of 20 | 0: "exactly zero, no doubt at all" | that formula comes from the curvature at a flat peak, and this peak is not flat |
-| Dropping the $(2\pi v)^{-n/2}$ factor when fitting the variance | the best v runs to the top of the search range, 1.0 | that factor is what penalises a wide bell |
+| Quoting $`\sqrt{\hat p(1-\hat p)/n}`$ for 0 out of 20 | 0: "exactly zero, no doubt at all" | that formula comes from the curvature at a flat peak, and this peak is not flat |
+| Dropping the $`(2\pi v)^{-n/2}`$ factor when fitting the variance | the best v runs to the top of the search range, 1.0 | that factor is what penalises a wide bell |
 | Treating calls from two-person households who always agree as independent | standard error 0.0158 reported; truth 0.0223, simulated 0.0227 | the model's independence was false, and the likelihood trusted it |
 
 The first four are slips in the calculation. The fifth is a wrong model, which no maximising repairs.
@@ -638,7 +654,7 @@ Lean proves the poll's answer for every k and n, and both normal answers for any
 
 - Take k yeses out of n calls, with n at least 1. Then k/n lies between 0 and 1, and every other share from 0 to 1 gives a smaller likelihood.
 - This includes 0 yeses, where the top sits at the edge, p = 0.
-- Take n measurements with total squared gap Q > 0. Then the pair centre $\bar x$, variance Q/n beats every other pair with a variance above 0.
+- Take n measurements with total squared gap Q > 0. Then the pair centre $`\bar x`$, variance Q/n beats every other pair with a variance above 0.
 - Take n ≥ 1 measurements that are all equal, so Q = 0. Then every pair with a variance above 0 is beaten by another: no maximum exists.
 - The hand arithmetic holds exactly, as fractions. That covers the share 0.52, the curvature between 4,006 and 4,007, and the five polls' 0.52, 0.0018, 0.00036 and 0.00045.
 

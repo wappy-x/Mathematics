@@ -35,34 +35,42 @@ The one line is π^(n/2)/Γ(n/2 + 1). The code gets the same ten values by slici
 
 ## The formula
 
-Γ is the Greek capital gamma; the input z is complex, with real part Re z. For t > 0 the power $t^{z-1}$ means $e^{(z-1)\ln t}$, with the real logarithm, so no branch cut (a line where a complex logarithm jumps) is involved.
+Γ is the Greek capital gamma; the input z is complex, with real part Re z. For t > 0 the power $`t^{z-1}`$ means $`e^{(z-1)\ln t}`$, with the real logarithm, so no branch cut (a line where a complex logarithm jumps) is involved.
 
-$$\Gamma(z) = \int_0^\infty t^{z-1} e^{-t}\, dt, \qquad \operatorname{Re} z > 0.$$
+```math
+\Gamma(z) = \int_0^\infty t^{z-1} e^{-t}\, dt, \qquad \mathrm{Re}\, z > 0.
+```
 
 **Read it aloud:** gamma of z is the area under t to the z minus 1, times e to the minus t, from 0 to infinity.
 
 Proved below:
 
-$$\Gamma(z+1) = z\,\Gamma(z), \qquad \Gamma(n+1) = n!, \qquad \Gamma\!\left(\tfrac12\right) = \sqrt{\pi}.$$
+```math
+\Gamma(z+1) = z\,\Gamma(z), \qquad \Gamma(n+1) = n!, \qquad \Gamma\!\left(\tfrac12\right) = \sqrt{\pi}.
+```
 
 The recurrence, turned round, continues gamma to the left. For any whole number m ≥ 1,
 
-$$\Gamma(z) = \frac{\Gamma(z+m)}{z(z+1)\cdots(z+m-1)}, \qquad \operatorname{Re} z > -m,\; z \ne 0, -1, \ldots, -(m-1).$$
+```math
+\Gamma(z) = \frac{\Gamma(z+m)}{z(z+1)\cdots(z+m-1)}, \qquad \mathrm{Re}\, z > -m,\; z \ne 0, -1, \ldots, -(m-1).
+```
 
 The reflection formula links gamma at z with gamma at 1 − z, and the example's ball volume uses gamma once:
 
-$$\Gamma(z)\,\Gamma(1-z) = \frac{\pi}{\sin \pi z}, \qquad V_n = \frac{\pi^{n/2}}{\Gamma(n/2 + 1)}.$$
+```math
+\Gamma(z)\,\Gamma(1-z) = \frac{\pi}{\sin \pi z}, \qquad V_n = \frac{\pi^{n/2}}{\Gamma(n/2 + 1)}.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Gamma(z)$ | the gamma function at z | Γ(5) = 24, Γ(1/2) = 1.772454 | along the real line it eventually outgrows any power |
-| $z$ | the input, a complex number | 5, 1/2, −1/2, 0.75 + 0.5i | — |
-| $t$ | the integration variable, over the positive reals | 0 to infinity | — |
-| $n$, $n!$ | a whole number, its factorial | n = 3 for the football; 4! = 24 | — |
-| $m$ | recurrence steps needed to reach Re z > 0 | 1 for −1/2 | reaches one strip further left |
-| $V_n$ | volume of the ball of radius 1 in n dimensions | V_3 = 4.188790 | rises to n = 5, then falls toward 0 |
-| $a$ | a real number strictly between 0 and 1 | 1/4 | — |
-| $\operatorname{Res}$ | the residue: the coefficient of 1/(z − p) at a pole p | (−1)^n/n! at −n | — |
+| $`\Gamma(z)`$ | the gamma function at z | Γ(5) = 24, Γ(1/2) = 1.772454 | along the real line it eventually outgrows any power |
+| $`z`$ | the input, a complex number | 5, 1/2, −1/2, 0.75 + 0.5i | — |
+| $`t`$ | the integration variable, over the positive reals | 0 to infinity | — |
+| $`n`$, $`n!`$ | a whole number, its factorial | n = 3 for the football; 4! = 24 | — |
+| $`m`$ | recurrence steps needed to reach Re z > 0 | 1 for −1/2 | reaches one strip further left |
+| $`V_n`$ | volume of the ball of radius 1 in n dimensions | V_3 = 4.188790 | rises to n = 5, then falls toward 0 |
+| $`a`$ | a real number strictly between 0 and 1 | 1/4 | — |
+| $`\mathrm{Res}`$ | the residue: the coefficient of 1/(z − p) at a pole p | (−1)^n/n! at −n | — |
 
 ### When it holds
 
@@ -77,11 +85,11 @@ $$\Gamma(z)\,\Gamma(1-z) = \frac{\pi}{\sin \pi z}, \qquad V_n = \frac{\pi^{n/2}}
 
 ### Step 0: integration by parts shifts a power into a factor
 
-The factorial rule is n! = n × (n − 1)!. Differentiating $t^z$ brings down a factor z and lowers the power by one, and integration by parts ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)) turns that into the same rule.
+The factorial rule is n! = n × (n − 1)!. Differentiating $`t^z`$ brings down a factor z and lowers the power by one, and integration by parts ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)) turns that into the same rule.
 
 ### Step 1: the integral converges and is holomorphic for Re z > 0
 
-Write σ for Re z. The integrand has size $t^{\sigma-1}e^{-t}$. On (0, 1] its area is at most 1/σ; on [1, ∞) the factor e^(−t) beats any power of t. So the improper integral ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)) converges.
+Write σ for Re z. The integrand has size $`t^{\sigma-1}e^{-t}`$. On (0, 1] its area is at most 1/σ; on [1, ∞) the factor e^(−t) beats any power of t. So the improper integral ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)) converges.
 
 Cut the integral off to run from 1/k to k; each cut-off is holomorphic (has a complex derivative) in z. On any strip a ≤ Re z ≤ b with a > 0, the discarded tails have bounds free of z, so the cut-offs approach Γ uniformly, at one rate for every z in the strip. A uniform limit of holomorphic functions is holomorphic ([Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)).
 
@@ -94,9 +102,11 @@ Let 0 < a ≤ σ ≤ b. The left tail below ε ≤ 1 is at most the integral of 
 
 ### Step 2: the recurrence, and the factorials
 
-For Re z > 0, integrate by parts with $t^z$ differentiated and $e^{-t}$ integrated:
+For Re z > 0, integrate by parts with $`t^z`$ differentiated and $`e^{-t}`$ integrated:
 
-$$\int_\varepsilon^R t^{z} e^{-t}\,dt = \Big[-t^{z}e^{-t}\Big]_\varepsilon^R + z\int_\varepsilon^R t^{z-1}e^{-t}\,dt.$$
+```math
+\int_\varepsilon^R t^{z} e^{-t}\,dt = \Big[-t^{z}e^{-t}\Big]_\varepsilon^R + z\int_\varepsilon^R t^{z-1}e^{-t}\,dt.
+```
 
 The bracket tends to 0 at both ends, leaving Γ(z + 1) = z Γ(z).
 
@@ -106,7 +116,9 @@ The start is Γ(1) = area under e^(−t) = 1, so Γ(n + 1) = n!, and Γ(5) = 4 �
 
 At z = 1/2, substitute t = u^2, so dt = 2u du and t^(−1/2) = 1/u:
 
-$$\Gamma\!\left(\tfrac12\right) = \int_0^\infty \frac{e^{-u^2}}{u}\,2u\,du = 2\int_0^\infty e^{-u^2}\,du = \sqrt{\pi}.$$
+```math
+\Gamma\!\left(\tfrac12\right) = \int_0^\infty \frac{e^{-u^2}}{u}\,2u\,du = 2\int_0^\infty e^{-u^2}\,du = \sqrt{\pi}.
+```
 
 The last step is the Gaussian integral ([The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)): the full bell's area is √π, half of it √π/2. The recurrence then climbs: Γ(3/2) = √π/2 = 0.886227, Γ(5/2) = (3/2)(√π/2) = 1.329340, the football's (3/2)!.
 
@@ -128,7 +140,9 @@ To scale: 40 units per 1, with 0 at (230, 120). Shaded: Re z > 0, where the inte
 
 Near z = −n use m = n + 1:
 
-$$\Gamma(z) = \frac{1}{z+n}\cdot\frac{\Gamma(z+n+1)}{z(z+1)\cdots(z+n-1)}.$$
+```math
+\Gamma(z) = \frac{1}{z+n}\cdot\frac{\Gamma(z+n+1)}{z(z+1)\cdots(z+n-1)}.
+```
 
 The second factor is holomorphic near −n and at −n equals Γ(1)/((−n)(−n + 1)⋯(−1)) = (−1)^n/n!, not zero. So Γ has a simple pole at −n, with residue ([Residues](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/04-residues.md)) (−1)^n/n!: 1, −1, 1/2, −1/6 at 0, −1, −2, −3. The code prints ε Γ(−n + ε) at ε = 10^−6: 0.999999, −1.000000, 0.500000, −0.166667.
 

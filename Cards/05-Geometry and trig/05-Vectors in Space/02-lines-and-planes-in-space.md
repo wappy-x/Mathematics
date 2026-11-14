@@ -26,33 +26,37 @@ Drawn at 1 m = 40 units, looking along the 10 m edge: across is y, up is z. The 
 
 ## The formula
 
-A point or an arrow in space is a list of three numbers ([Vectors](../../03-Algebra/03-Vectors/01-vectors.md)). Reminders: $a \cdot b$, the dot product, is zero exactly at a right angle ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)); $a \times b$, the cross product, is perpendicular to both, its length their parallelogram's area ([Cross product](01-cross-product-and-oriented-area.md)). Bars give a length: $\lvert a\rvert = \sqrt{a \cdot a}$.
+A point or an arrow in space is a list of three numbers ([Vectors](../../03-Algebra/03-Vectors/01-vectors.md)). Reminders: $`a \cdot b`$, the dot product, is zero exactly at a right angle ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)); $`a \times b`$, the cross product, is perpendicular to both, its length their parallelogram's area ([Cross product](01-cross-product-and-oriented-area.md)). Bars give a length: $`\lvert a\rvert = \sqrt{a \cdot a}`$.
 
-$$X = p + t\,d \qquad\qquad n \cdot X = c, \quad c = n \cdot A, \quad n = u \times v$$
+```math
+X = p + t\,d \qquad\qquad n \cdot X = c, \quad c = n \cdot A, \quad n = u \times v
+```
 
 **Read it aloud:** the line is the drone plus any multiple of the direction; the plane is every point whose dot product with the normal matches the corner's.
 
-The gap of a point $p$ is $n \cdot p - c$: it is zero on the plane, and its sign shows which side $p$ is on. Substitution and the normal give three working formulas:
+The gap of a point $`p`$ is $`n \cdot p - c`$: it is zero on the plane, and its sign shows which side $`p`$ is on. Substitution and the normal give three working formulas:
 
-$$t = \frac{c - n \cdot p}{n \cdot d}, \qquad D = \frac{\lvert n \cdot p - c\rvert}{\lvert n\rvert}, \qquad E = \frac{\lvert (q - p) \times d\rvert}{\lvert d\rvert}$$
+```math
+t = \frac{c - n \cdot p}{n \cdot d}, \qquad D = \frac{\lvert n \cdot p - c\rvert}{\lvert n\rvert}, \qquad E = \frac{\lvert (q - p) \times d\rvert}{\lvert d\rvert}
+```
 
 **Read it aloud:** meeting time is the gap to close over the gap closed per step; distance to the plane is the gap over the normal's length; distance to a line is area over base.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$, $Y$ | any point, coordinates (x, y, z) in metres | touchdown (4, 4, 3) | — |
-| $p$, $d$ | the line's start, and its step per unit of t | drone (2, 3, 5); dive (2, 1, -2), 3 m long | a longer step meets the panel at a smaller t |
-| $t$ | how many steps of $d$ from $p$ | 1 at touchdown | slides the point along the line |
-| $A$, $u$, $v$ | the panel's low corner and two edges | (0, 0, 0); (10, 0, 0), (0, 4.8, 3.6) | a steeper $v$ tilts the plane |
-| $n$ | the normal, $u \times v$ | (0, -36, 48), length 60 | scaling changes nothing: (0, -3, 4) is the same plane |
-| $c$ | the plane's level, $n \cdot A$ | 0 | shifts the plane along $n$ |
-| $D$, $F$ | drone-to-plane distance, and the foot where it lands | 2.2 m; (2, 4.32, 3.24) | — |
-| $q$, $E$ | a camera mast's tip, and its distance to the flight line | (5, 1.5, 5); 3 m | — |
+| $`X`$, $`Y`$ | any point, coordinates (x, y, z) in metres | touchdown (4, 4, 3) | — |
+| $`p`$, $`d`$ | the line's start, and its step per unit of t | drone (2, 3, 5); dive (2, 1, -2), 3 m long | a longer step meets the panel at a smaller t |
+| $`t`$ | how many steps of $`d`$ from $`p`$ | 1 at touchdown | slides the point along the line |
+| $`A`$, $`u`$, $`v`$ | the panel's low corner and two edges | (0, 0, 0); (10, 0, 0), (0, 4.8, 3.6) | a steeper $`v`$ tilts the plane |
+| $`n`$ | the normal, $`u \times v`$ | (0, -36, 48), length 60 | scaling changes nothing: (0, -3, 4) is the same plane |
+| $`c`$ | the plane's level, $`n \cdot A`$ | 0 | shifts the plane along $`n`$ |
+| $`D`$, $`F`$ | drone-to-plane distance, and the foot where it lands | 2.2 m; (2, 4.32, 3.24) | — |
+| $`q`$, $`E`$ | a camera mast's tip, and its distance to the flight line | (5, 1.5, 5); 3 m | — |
 
 ### When it holds
 
-- **A direction and a normal that are not all zeros.** A zero $d$ never leaves $p$; parallel edges give a zero $n$, which every point passes.
-- **A line not level with the plane.** When $n \cdot d = 0$ the formula for t divides by zero: the flight (1, 4, 3) stays 2.2 m off for ever.
+- **A direction and a normal that are not all zeros.** A zero $`d`$ never leaves $`p`$; parallel edges give a zero $`n`$, which every point passes.
+- **A line not level with the plane.** When $`n \cdot d = 0`$ the formula for t divides by zero: the flight (1, 4, 3) stays 2.2 m off for ever.
 - **An endless sheet, a two-way line.** The formulas ignore the panel's edges and allow negative t, behind the drone; a real touchdown needs t ≥ 0 and a point inside the rectangle.
 - **Square axes in one unit.** Otherwise the dot product misreads right angles and lengths.
 
@@ -66,52 +70,56 @@ A point fixes where; one arrow fixes which way: where a line goes next, or which
 
 ### Step 1: the plane is exactly the points that pass the test
 
-An arrow from the corner $A$ to a panel point lies flat, so its dot product with $n$ is zero. Conversely, $u$, $v$ and $n$ point three independent ways, so every arrow is a mix of them. One perpendicular to $n$ has no share of $n$, so it is a mix of $u$ and $v$ alone and lies in the panel's plane.
+An arrow from the corner $`A`$ to a panel point lies flat, so its dot product with $`n`$ is zero. Conversely, $`u`$, $`v`$ and $`n`$ point three independent ways, so every arrow is a mix of them. One perpendicular to $`n`$ has no share of $`n`$, so it is a mix of $`u`$ and $`v`$ alone and lies in the panel's plane.
 
-Expanding $n \cdot (X - A) = 0$ gives $n \cdot X = c$.
+Expanding $`n \cdot (X - A) = 0`$ gives $`n \cdot X = c`$.
 
-Here $c = 0$, and $n$ divided by 12 gives the plane $-3y + 4z = 0$: height is three quarters of the distance back.
+Here $`c = 0`$, and $`n`$ divided by 12 gives the plane $`-3y + 4z = 0`$: height is three quarters of the distance back.
 
 ### Step 2: substitute the line and solve for t
 
-A line point is on the plane when $n \cdot (p + t\,d) = c$:
+A line point is on the plane when $`n \cdot (p + t\,d) = c`$:
 
-$$n \cdot p + t\,(n \cdot d) = c.$$
+```math
+n \cdot p + t\,(n \cdot d) = c.
+```
 
 One equation in t, three cases:
 
-- $n \cdot d$ not zero: exactly one t. The drone's gap is 132 and falls by 132 per step, so $t = 1$.
-- $n \cdot d$ zero and $n \cdot p = c$: 0 = 0 for every t. The line lies in the plane.
-- $n \cdot d$ zero and $n \cdot p$ not $c$: zero must equal something else. The line never meets.
+- $`n \cdot d`$ not zero: exactly one t. The drone's gap is 132 and falls by 132 per step, so $`t = 1`$.
+- $`n \cdot d`$ zero and $`n \cdot p = c`$: 0 = 0 for every t. The line lies in the plane.
+- $`n \cdot d`$ zero and $`n \cdot p`$ not $`c`$: zero must equal something else. The line never meets.
 
 ### Step 3: the shortest way to the plane runs along the normal
 
 Move from the drone along the normal until the test is passed, reaching the **foot** of the perpendicular:
 
-$$F = p - \frac{n \cdot p - c}{n \cdot n}\, n$$
+```math
+F = p - \frac{n \cdot p - c}{n \cdot n}\, n
+```
 
-It passes the test, and its distance from the drone is the gap over $\lvert n\rvert$: that is $D$. Any other point of the plane is further, by Pythagoras ([Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)): the route to it is a leg along the normal plus a leg in the plane, at right angles.
+It passes the test, and its distance from the drone is the gap over $`\lvert n\rvert`$: that is $`D`$. Any other point of the plane is further, by Pythagoras ([Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)): the route to it is a leg along the normal plus a leg in the plane, at right angles.
 
 <details>
 <summary>Detailed proof: the foot is closest, and D ignores the normal's size</summary>
 
-Write $g = n \cdot p - c$, so $F = p - (g / (n \cdot n))\,n$ and $n \cdot F = n \cdot p - g = c$.
+Write $`g = n \cdot p - c`$, so $`F = p - (g / (n \cdot n))\,n`$ and $`n \cdot F = n \cdot p - g = c`$.
 
-Take any $Y$ with $n \cdot Y = c$. Then $n \cdot (Y - F) = 0$, so $Y - F$ is perpendicular to $p - F$, a multiple of $n$. Splitting $p - Y = (p - F) + (F - Y)$ and dotting it with itself, the cross term vanishes:
+Take any $`Y`$ with $`n \cdot Y = c`$. Then $`n \cdot (Y - F) = 0`$, so $`Y - F`$ is perpendicular to $`p - F`$, a multiple of $`n`$. Splitting $`p - Y = (p - F) + (F - Y)`$ and dotting it with itself, the cross term vanishes:
 
-$\lvert p - Y\rvert^2 = \lvert p - F\rvert^2 + \lvert F - Y\rvert^2 \ge \lvert p - F\rvert^2$,
+$`\lvert p - Y\rvert^2 = \lvert p - F\rvert^2 + \lvert F - Y\rvert^2 \ge \lvert p - F\rvert^2`$,
 
-with equality only at $Y = F$. And $\lvert p - F\rvert = (\lvert g\rvert / (n \cdot n))\,\lvert n\rvert = \lvert g\rvert / \lvert n\rvert = D$.
+with equality only at $`Y = F`$. And $`\lvert p - F\rvert = (\lvert g\rvert / (n \cdot n))\,\lvert n\rvert = \lvert g\rvert / \lvert n\rvert = D`$.
 
-Scaling $n$ and $c$ by a non-zero number scales the gap and the length alike, so $D$ is unchanged.
+Scaling $`n`$ and $`c`$ by a non-zero number scales the gap and the length alike, so $`D`$ is unchanged.
 
 </details>
 
 ### Step 4: the distance to a line is area over base
 
-A camera mast's tip is at $q$ = (5, 1.5, 5). Stand $q - p$ and $d$ at the drone: they span a parallelogram with base $d$ and height the mast tip's distance from the line. The cross product's length is the area, so area over base is height: $E = 9 / 3 = 3$ m, reached at $t = 0.5$.
+A camera mast's tip is at $`q`$ = (5, 1.5, 5). Stand $`q - p`$ and $`d`$ at the drone: they span a parallelogram with base $`d`$ and height the mast tip's distance from the line. The cross product's length is the area, so area over base is height: $`E = 9 / 3 = 3`$ m, reached at $`t = 0.5`$.
 
-Projecting $q - p$ onto $d$ is a second route, in [Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md).
+Projecting $`q - p`$ onto $`d`$ is a second route, in [Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md).
 
 ---
 
@@ -120,8 +128,8 @@ Projecting $q - p$ onto $d$ is a second route, in [Projection](../../03-Algebra/
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | normal from the edges | (10, 0, 0) × (0, 4.8, 3.6) | (0, -36, 48), length 60 |
-| drone's gap, $n \cdot p - c$ | -36 × 3 + 48 × 5 - 0 | 132 |
-| gap per step, $n \cdot d$ | -36 × 1 + 48 × (-2) | -132 |
+| drone's gap, $`n \cdot p - c`$ | -36 × 3 + 48 × 5 - 0 | 132 |
+| gap per step, $`n \cdot d`$ | -36 × 1 + 48 × (-2) | -132 |
 | touchdown | t = (0 - 132) / (-132) = 1; (2, 3, 5) + (2, 1, -2) | **(4, 4, 3)** |
 | on the panel? | 4 m along the 10 m edge, 5 m up the 6 m edge | yes |
 | drone to plane | 132 / 60 | **D = 2.2 m** |
@@ -134,7 +142,7 @@ The drone lands at (4, 4, 3) after 3 m of flight, inside the panel; it started 2
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | The raw gap read as a distance | 132 instead of 2.2 m | not divided by the normal's length, 60 |
-| t read as metres flown | 1 instead of 3 m | t counts steps of $d$, each 3 m |
+| t read as metres flown | 1 instead of 3 m | t counts steps of $`d`$, each 3 m |
 | Straight down taken as shortest | 2.75 instead of 2.2 m | on a tilted panel, down is not along the normal |
 
 ---
@@ -331,10 +339,10 @@ The two outputs match line for line.
 
 Lean proves the card's three claims for every line, plane and point, not just the drone and the panel.
 
-- A line not level with the plane meets it at exactly one t: $t = (c - n \cdot p) / (n \cdot d)$.
-- The foot $F$ passes the plane's test, and its distance from $p$ is $D = \lvert n \cdot p - c\rvert / \lvert n\rvert$. Every other point of the plane is further away.
-- When $u \times v$ is not all zeros, the points reached from $A$ along the two edges are exactly the points that pass the test $n \cdot X = c$.
-- The worked numbers come out exactly: the normal, the touchdown at (4, 4, 3), $D$ = 2.2 m and $E$ = 3 m. So do the level flight and the 2.75 m drop.
+- A line not level with the plane meets it at exactly one t: $`t = (c - n \cdot p) / (n \cdot d)`$.
+- The foot $`F`$ passes the plane's test, and its distance from $`p`$ is $`D = \lvert n \cdot p - c\rvert / \lvert n\rvert`$. Every other point of the plane is further away.
+- When $`u \times v`$ is not all zeros, the points reached from $`A`$ along the two edges are exactly the points that pass the test $`n \cdot X = c`$.
+- The worked numbers come out exactly: the normal, the touchdown at (4, 4, 3), $`D`$ = 2.2 m and $`E`$ = 3 m. So do the level flight and the 2.75 m drop.
 
 The general point-to-line distance and the searches that never use the formulas are left to the Python and Rust checks.
 
@@ -535,7 +543,7 @@ example : (![0, -3, 4] : Fin 3 → ℚ) ⬝ᵥ ![2, 3, 9 / 4] = 0 ∧ (5 : ℚ) 
 > **Try changing**
 > Guess first, then run it.
 > - **Double the dive.** Set `d` to `(4, 2, -4)`. t halves to 0.5; the touchdown stays (4, 4, 3) and every assert holds.
-> - **Fly level.** Set `d` to `(1, 4, 3)`. Now $n \cdot d$ is 0, so the line that sets `t` divides by zero and Python stops: there is no touchdown.
+> - **Fly level.** Set `d` to `(1, 4, 3)`. Now $`n \cdot d`$ is 0, so the line that sets `t` divides by zero and Python stops: there is no touchdown.
 > - **Forget the length.** Delete ` / length(n)` from the line that sets `D`. The formula now says 132, the grid still says 2.2, and the second assert stops the run.
 
 ---
@@ -545,8 +553,8 @@ example : (![0, -3, 4] : Fin 3 → ℚ) ⬝ᵥ ![2, 3, 9 / 4] = 0 ∧ (5 : ℚ) 
 > [!warning]
 > **Measuring the gap straight down.** On a tilted panel the shortest way runs along the normal, not the vertical. Straight down, the panel is 2.75 m from the drone; along the normal, 2.2 m. Only a level panel makes the two agree.
 >
-> - **Skipping the division by the normal's length.** The gap $n \cdot p - c$ is 132 with the raw cross product and 11 with (0, -3, 4); the distance is 2.2 m either way.
-> - **Calling a zero $n \cdot d$ "no meeting".** If the start point passes the plane's test, the whole line lies in the plane.
+> - **Skipping the division by the normal's length.** The gap $`n \cdot p - c`$ is 132 with the raw cross product and 11 with (0, -3, 4); the distance is 2.2 m either way.
+> - **Calling a zero $`n \cdot d`$ "no meeting".** If the start point passes the plane's test, the whole line lies in the plane.
 > - **Forgetting the panel's edges.** The plane is endless; a touchdown past the 10 m edge is on the plane and off the panel.
 
 ---
@@ -572,7 +580,7 @@ example : (![0, -3, 4] : Fin 3 → ℚ) ⬝ᵥ ![2, 3, 9 / 4] = 0 ∧ (5 : ℚ) 
 - [Triple product](03-triple-product-and-volume.md): the normal dotted with a third arrow, a signed volume.
 - Regular surface: a curved surface has a plane like this one at every point, its tangent plane.
 
-The gap $n \cdot p - c$ is secretly a box's volume; why, and what it says about three arrows lying flat, is the triple product.
+The gap $`n \cdot p - c`$ is secretly a box's volume; why, and what it says about three arrows lying flat, is the triple product.
 
 ---
 

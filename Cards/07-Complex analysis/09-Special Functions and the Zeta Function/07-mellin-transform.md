@@ -26,34 +26,40 @@ To scale: 40 units per 1, s = 0 at (140, 120). Shaded: Re s > 1, where the integ
 
 ## The formula
 
-Notation first, in words. A script M in front of a function names its Mellin transform: $\mathcal{M}f(s)$ is read "the Mellin transform of f, at s". Re s is the real part of s.
+Notation first, in words. A script M in front of a function names its Mellin transform: $`\mathcal{M}f(s)`$ is read "the Mellin transform of f, at s". Re s is the real part of s.
 
-$$\mathcal{M}f(s) = \int_0^\infty t^{s-1} f(t)\,dt$$
+```math
+\mathcal{M}f(s) = \int_0^\infty t^{s-1} f(t)\,dt
+```
 
 **Read it aloud:** the Mellin transform of f at s is the area under f weighted by t to the s minus 1, over the positive axis.
 
 It converges in a vertical **strip**, a < Re s < b, set by how f behaves near 0 and near infinity. Three facts carry the card:
 
-$$\mathcal{M}\big[f(kt)\big](s) = k^{-s}\,\mathcal{M}f(s), \qquad \mathcal{M}f(s) = \int_{-\infty}^{\infty} e^{-sx} f(e^{-x})\,dx, \qquad \Gamma(s)\,\zeta(s) = \int_0^\infty \frac{t^{s-1}}{e^t - 1}\,dt \quad (\text{Re } s > 1).$$
+```math
+\mathcal{M}\big[f(kt)\big](s) = k^{-s}\,\mathcal{M}f(s), \qquad \mathcal{M}f(s) = \int_{-\infty}^{\infty} e^{-sx} f(e^{-x})\,dx, \qquad \Gamma(s)\,\zeta(s) = \int_0^\infty \frac{t^{s-1}}{e^t - 1}\,dt \quad (\text{Re } s > 1).
+```
 
 **Read it aloud:** stretching by k multiplies the transform by k to the minus s; the transform is the two-sided Laplace transform of f(e^(−x)); gamma times zeta is the transform of one over e to the t minus 1.
 
 Inversion, for any c inside the strip:
 
-$$f(t) = \frac{1}{2\pi i}\int_{c-i\infty}^{c+i\infty} t^{-s}\,\mathcal{M}f(s)\,ds$$
+```math
+f(t) = \frac{1}{2\pi i}\int_{c-i\infty}^{c+i\infty} t^{-s}\,\mathcal{M}f(s)\,ds
+```
 
 **Read it aloud:** integrate t to the minus s times the transform up the line Re s = c, divide by 2πi, and f comes back.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | the function transformed, for t > 0 | e^(−t), then 1/(e^t − 1) | — |
-| $t$, $x$ | the input; its log-scale twin, t = e^(−x) | t over (0, ∞), x over the whole line | — |
-| $s$ | the complex exponent in the weight t^(s−1) | 2, then 4 | Γ(s)ζ(s) grows, 1.644934 to 6.493939 |
-| $\mathcal{M}f(s)$ | the Mellin transform of f at s | 1.644934 at s = 2 | — |
-| $k$ | a stretch factor; a city's rank | 1, 2, 3, … | weight 1/k^s shrinks |
-| $\Gamma(s)$ | gamma: the transform of e^(−t) | Γ(2) = 1, Γ(4) = 6 | grows like a factorial |
-| $\zeta(s)$ | zeta: the Zipf total of 1/k^s | ζ(2) = 1.644934, ζ(4) = 1.082323 | falls towards 1 |
-| $c$ | the inversion line's real part | 2 | any c in the strip gives the same f |
+| $`f`$ | the function transformed, for t > 0 | e^(−t), then 1/(e^t − 1) | — |
+| $`t`$, $`x`$ | the input; its log-scale twin, t = e^(−x) | t over (0, ∞), x over the whole line | — |
+| $`s`$ | the complex exponent in the weight t^(s−1) | 2, then 4 | Γ(s)ζ(s) grows, 1.644934 to 6.493939 |
+| $`\mathcal{M}f(s)`$ | the Mellin transform of f at s | 1.644934 at s = 2 | — |
+| $`k`$ | a stretch factor; a city's rank | 1, 2, 3, … | weight 1/k^s shrinks |
+| $`\Gamma(s)`$ | gamma: the transform of e^(−t) | Γ(2) = 1, Γ(4) = 6 | grows like a factorial |
+| $`\zeta(s)`$ | zeta: the Zipf total of 1/k^s | ζ(2) = 1.644934, ζ(4) = 1.082323 | falls towards 1 |
+| $`c`$ | the inversion line's real part | 2 | any c in the strip gives the same f |
 
 ### When it holds
 
@@ -74,7 +80,9 @@ Put u = kt. The piece dt/t equals du/u, since top and bottom both grow by k. Onl
 
 Take the transform of f(kt) and substitute u = kt, so t = u/k and dt = du/k:
 
-$$\int_0^\infty t^{s-1} f(kt)\,dt = \int_0^\infty \Big(\frac{u}{k}\Big)^{s-1} f(u)\,\frac{du}{k} = k^{-s}\,\mathcal{M}f(s).$$
+```math
+\int_0^\infty t^{s-1} f(kt)\,dt = \int_0^\infty \Big(\frac{u}{k}\Big)^{s-1} f(u)\,\frac{du}{k} = k^{-s}\,\mathcal{M}f(s).
+```
 
 The code checks it on e^(−2t) at s = 2: the transform is 0.250000, and Γ(2)/2^2 = 0.250000.
 
@@ -90,7 +98,9 @@ Stretching t by k shifts x by ln k, which is why Step 1's stretch comes out as a
 
 With f(t) = e^(−t) the transform is the gamma integral itself ([The gamma function](02-gamma-function.md)):
 
-$$\mathcal{M}\big[e^{-t}\big](s) = \int_0^\infty t^{s-1} e^{-t}\,dt = \Gamma(s), \qquad \text{Re } s > 0.$$
+```math
+\mathcal{M}\big[e^{-t}\big](s) = \int_0^\infty t^{s-1} e^{-t}\,dt = \Gamma(s), \qquad \text{Re } s > 0.
+```
 
 It converges for Re s > 0. The code finds Γ(2) = 1.000000 = 1!, Γ(4) = 6.000000 = 3!, and Γ(2.5) = 1.329340 = (3/4)√π, each by both roads.
 
@@ -98,11 +108,15 @@ It converges for Re s > 0. The code finds Γ(2) = 1.000000 = 1!, Γ(4) = 6.00000
 
 For t > 0, e^(−t) is below 1, so the geometric series applies:
 
-$$\frac{1}{e^t - 1} = \frac{e^{-t}}{1 - e^{-t}} = e^{-t} + e^{-2t} + e^{-3t} + \cdots$$
+```math
+\frac{1}{e^t - 1} = \frac{e^{-t}}{1 - e^{-t}} = e^{-t} + e^{-2t} + e^{-3t} + \cdots
+```
 
 Each term is e^(−t) stretched by k. By Steps 1 and 3 its transform is Γ(s)/k^s. Transform term by term and add:
 
-$$\int_0^\infty \frac{t^{s-1}}{e^t - 1}\,dt = \sum_{k=1}^\infty \frac{\Gamma(s)}{k^s} = \Gamma(s)\,\zeta(s), \qquad \text{Re } s > 1.$$
+```math
+\int_0^\infty \frac{t^{s-1}}{e^t - 1}\,dt = \sum_{k=1}^\infty \frac{\Gamma(s)}{k^s} = \Gamma(s)\,\zeta(s), \qquad \text{Re } s > 1.
+```
 
 The sigma sign adds the terms for k = 1, 2, 3, and on: rank k contributes Γ(s) times its Zipf weight. The real work: the sum of infinitely many transforms is the transform of the sum.
 

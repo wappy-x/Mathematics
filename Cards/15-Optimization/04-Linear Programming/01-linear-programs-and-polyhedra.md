@@ -32,11 +32,11 @@ Drawn to scale, tables a week across and chairs a week up. The steep line is tim
 
 [Linear programs](../../14-Applied%20and%20computational/05-Operations%20Research/01-modelling-with-linear-programs.md) in the computing wing builds such models and adds slacks in passing. This card makes the form exact and introduces the wing's notation for it, in words first.
 
-The **cost** is a weighted sum $c^{\mathsf T}x$: each variable times its cost, added (the small T, "transpose", lines the list of costs up against the list of variables). The limits are equations $Ax = b$: row $i$ of the table $A$ says how much of resource $i$ each variable uses, and $b_i$ is how much there is. Every variable is at least zero, $x \ge 0$, entry by entry.
+The **cost** is a weighted sum $`c^{\mathsf T}x`$: each variable times its cost, added (the small T, "transpose", lines the list of costs up against the list of variables). The limits are equations $`Ax = b`$: row $`i`$ of the table $`A`$ says how much of resource $`i`$ each variable uses, and $`b_i`$ is how much there is. Every variable is at least zero, $`x \ge 0`$, entry by entry.
 
-$$
+```math
 \text{minimise}\quad c^{\mathsf T}x \qquad \text{subject to}\quad Ax = b, \quad x \ge 0
-$$
+```
 
 **Read it aloud:** choose non-negative amounts that use exactly the resources available, at the lowest total cost.
 
@@ -44,49 +44,43 @@ This is **standard form**. The word "programming" here means planning, as in a s
 
 The workshop does not look like this yet. It maximises, and its limits are "at most". Two moves fix that.
 
-1. **Maximise becomes minimise.** Making profit $19x_1 + 20x_2$ largest is the same as making $-19x_1 - 20x_2$ smallest. The best plan is the same; the value comes back with its sign flipped.
-2. **Each "at most" gets a slack.** The slack is what is left over. Timber left is $s_1 = 160 - 4x_1 - 2x_2$, so the limit becomes an equation plus $s_1 \ge 0$.
+1. **Maximise becomes minimise.** Making profit $`19x_1 + 20x_2`$ largest is the same as making $`-19x_1 - 20x_2`$ smallest. The best plan is the same; the value comes back with its sign flipped.
+2. **Each "at most" gets a slack.** The slack is what is left over. Timber left is $`s_1 = 160 - 4x_1 - 2x_2`$, so the limit becomes an equation plus $`s_1 \ge 0`$.
 
-With $x_1$ tables, $x_2$ chairs and slacks $s_1, s_2, s_3$ for timber, labour and finish:
+With $`x_1`$ tables, $`x_2`$ chairs and slacks $`s_1, s_2, s_3`$ for timber, labour and finish:
 
-$$
-\begin{aligned}
-\text{minimise}\quad & -19x_1 - 20x_2\\
-\text{subject to}\quad & 4x_1 + 2x_2 + s_1 = 160 && \text{timber, metres}\\
-& 3x_1 + x_2 + s_2 = 120 && \text{labour, hours}\\
-& x_1 + 2x_2 + s_3 = 64 && \text{finish, litres}\\
-& x_1, x_2, s_1, s_2, s_3 \ge 0
-\end{aligned}
-$$
+```math
+\begin{aligned} \text{minimise}\quad & -19x_1 - 20x_2\\ \text{subject to}\quad & 4x_1 + 2x_2 + s_1 = 160 && \text{timber, metres}\\ & 3x_1 + x_2 + s_2 = 120 && \text{labour, hours}\\ & x_1 + 2x_2 + s_3 = 64 && \text{finish, litres}\\ & x_1, x_2, s_1, s_2, s_3 \ge 0 \end{aligned}
+```
 
-So $x = (x_1, x_2, s_1, s_2, s_3)$, $c = (-19, -20, 0, 0, 0)$, $b = (160, 120, 64)$, and $A$ is `[[4, 2, 1, 0, 0], [3, 1, 0, 1, 0], [1, 2, 0, 0, 1]]`. There are $m = 3$ equations and $n = 5$ variables.
+So $`x = (x_1, x_2, s_1, s_2, s_3)`$, $`c = (-19, -20, 0, 0, 0)`$, $`b = (160, 120, 64)`$, and $`A`$ is `[[4, 2, 1, 0, 0], [3, 1, 0, 1, 0], [1, 2, 0, 0, 1]]`. There are $`m = 3`$ equations and $`n = 5`$ variables.
 
-The allowed points form a **polyhedron**: a set cut out by finitely many flat walls, $P = \{x : Ax = b,\ x \ge 0\}$. In the picture it is the quadrilateral $\{(x_1, x_2) : 4x_1 + 2x_2 \le 160,\ 3x_1 + x_2 \le 120,\ x_1 + 2x_2 \le 64,\ x_1, x_2 \ge 0\}$, a set cut out by straight-line inequalities as on [Convex sets](../01-Convexity/02-convex-sets.md), so it has no dents.
+The allowed points form a **polyhedron**: a set cut out by finitely many flat walls, $`P = \{x : Ax = b,\ x \ge 0\}`$. In the picture it is the quadrilateral $`\{(x_1, x_2) : 4x_1 + 2x_2 \le 160,\ 3x_1 + x_2 \le 120,\ x_1 + 2x_2 \le 64,\ x_1, x_2 \ge 0\}`$, a set cut out by straight-line inequalities as on [Convex sets](../01-Convexity/02-convex-sets.md), so it has no dents.
 
-A **face** of $P$ is the set of its points where some chosen walls are **tight** (met with no room to spare). A face that is one point is a **corner**, or vertex. A face that is a segment is an **edge**. A face one dimension below the whole shape is a **facet**; in two dimensions facets are edges.
+A **face** of $`P`$ is the set of its points where some chosen walls are **tight** (met with no room to spare). A face that is one point is a **corner**, or vertex. A face that is a segment is an **edge**. A face one dimension below the whole shape is a **facet**; in two dimensions facets are edges.
 
-A **basic solution** picks $m$ of the $n$ variables, called the **basis** $B$, sets the other $n - m$ to zero, and solves the $m$ equations for the rest. It is **feasible** when none of its entries is negative.
+A **basic solution** picks $`m`$ of the $`n`$ variables, called the **basis** $`B`$, sets the other $`n - m`$ to zero, and solves the $`m`$ equations for the rest. It is **feasible** when none of its entries is negative.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_1$, $x_2$ | tables and chairs a week | 32 and 16 at the best plan | — (chosen) |
-| $s_1$, $s_2$, $s_3$ | slacks: timber, labour and finish left over | 0 m, 8 h, 0 litres at the best plan | — (follow from $x_1$, $x_2$) |
-| $x$ | all five variables in one list | (32, 16, 0, 8, 0) | — |
-| $c$ | cost of one unit of each variable; profit carries a minus | (−19, −20, 0, 0, 0) | raise a chair's profit to £38 and a whole edge ties |
-| $A$ | resources used: one row per resource, one column per variable | the 3 by 5 table above | hungrier products shrink the shape |
-| $b$ | resources available | (160, 120, 64) | walls move outward, the shape grows |
-| $m$, $n$ | number of equations, number of variables | 3 and 5 | more possible bases: $\binom{n}{m}$, "n choose m", the ways to pick $m$ of $n$: 10 here |
-| $P$ | the polyhedron: every allowed $x$ | the shaded quadrilateral | — |
-| $B$ | a basis: the $m$ variables solved for | $x_1$, $x_2$, $s_2$ at the best corner | — |
-| $p^\star$ | the optimal value of the minimisation | −928, so £928 profit | — |
-| $y$ | prices on the three resources, the certificate | (3, 0, 7) £ per metre, hour, litre | — |
-| $w$, $u$, $\varepsilon$ | in Step 2's proof: a best plan with every variable above zero that any best plan has above zero, another point of $P$, a small step | with chairs at £38, $w$ is any plan inside the finish edge | — |
+| $`x_1`$, $`x_2`$ | tables and chairs a week | 32 and 16 at the best plan | — (chosen) |
+| $`s_1`$, $`s_2`$, $`s_3`$ | slacks: timber, labour and finish left over | 0 m, 8 h, 0 litres at the best plan | — (follow from $`x_1`$, $`x_2`$) |
+| $`x`$ | all five variables in one list | (32, 16, 0, 8, 0) | — |
+| $`c`$ | cost of one unit of each variable; profit carries a minus | (−19, −20, 0, 0, 0) | raise a chair's profit to £38 and a whole edge ties |
+| $`A`$ | resources used: one row per resource, one column per variable | the 3 by 5 table above | hungrier products shrink the shape |
+| $`b`$ | resources available | (160, 120, 64) | walls move outward, the shape grows |
+| $`m`$, $`n`$ | number of equations, number of variables | 3 and 5 | more possible bases: $`\binom{n}{m}`$, "n choose m", the ways to pick $`m`$ of $`n`$: 10 here |
+| $`P`$ | the polyhedron: every allowed $`x`$ | the shaded quadrilateral | — |
+| $`B`$ | a basis: the $`m`$ variables solved for | $`x_1`$, $`x_2`$, $`s_2`$ at the best corner | — |
+| $`p^\star`$ | the optimal value of the minimisation | −928, so £928 profit | — |
+| $`y`$ | prices on the three resources, the certificate | (3, 0, 7) £ per metre, hour, litre | — |
+| $`w`$, $`u`$, $`\varepsilon`$ | in Step 2's proof: a best plan with every variable above zero that any best plan has above zero, another point of $`P`$, a small step | with chairs at £38, $`w`$ is any plan inside the finish edge | — |
 
 ### When it holds
 
 - **Costs and uses scale in straight lines.** Twice the tables use twice the timber and earn twice the profit. A bulk discount on timber bends a wall or the cost, and the best plan can then sit inside an edge, away from every corner.
-- **Every variable is at least zero.** A variable allowed to go negative is written as one non-negative variable minus another. Leave it free and the shape can contain a whole straight line, and a shape with a line through it has no corner at all: timber alone, with $x_1$ and $x_2$ free, is a half-plane.
-- **The rows of $A$ are independent.** If the same equation appeared twice in $Ax = b$, every basis would give a square system with a repeated row and no unique solution. Drop repeated rows first; slacks guarantee this, since their columns alone are independent.
+- **Every variable is at least zero.** A variable allowed to go negative is written as one non-negative variable minus another. Leave it free and the shape can contain a whole straight line, and a shape with a line through it has no corner at all: timber alone, with $`x_1`$ and $`x_2`$ free, is a half-plane.
+- **The rows of $`A`$ are independent.** If the same equation appeared twice in $`Ax = b`$, every basis would give a square system with a repeated row and no unique solution. Drop repeated rows first; slacks guarantee this, since their columns alone are independent.
 - **Fractions are allowed.** Half a table is a legal plan here. If only whole tables count, the shape is the same but the allowed points are the whole-number dots inside it: [Integer programs](../05-Integer%20and%20Combinatorial%20Optimisation/01-integer-programs-and-relaxations.md).
 - **One basis per corner needs nondegeneracy.** The shape is fine regardless, but at (40, 0) three walls meet where two would do, and three different bases name that one corner.
 
@@ -96,79 +90,79 @@ A **basic solution** picks $m$ of the $n$ variables, called the **basis** $B$, s
 
 ### Step 0: a slack turns a wall into a coordinate
 
-The timber wall is "at most 160 metres". Standing on it means no timber is left: $s_1 = 0$. In standard form every wall is the same kind of statement, "this variable is zero", because the original "no negative tables" walls already say $x_1 = 0$ and $x_2 = 0$ on them.
+The timber wall is "at most 160 metres". Standing on it means no timber is left: $`s_1 = 0`$. In standard form every wall is the same kind of statement, "this variable is zero", because the original "no negative tables" walls already say $`x_1 = 0`$ and $`x_2 = 0`$ on them.
 
 That is the whole trick. Questions about walls become questions about which of the five numbers are zero. A face is "these variables are zero". A corner is "enough of them are zero to pin the point down", which is a system of equations to solve.
 
 ### Step 1: the slack form and the picture are the same shape
 
-Take any allowed week $(x_1, x_2)$ in the picture. Compute the three slacks from the equations; each is at least zero, because the week fits each stock. So the five numbers are a point of $P$. Going back, drop the slacks. Each point of the picture matches exactly one point of $P$, and walking along a straight segment in one matches a straight segment in the other, since the slacks are straight-line functions of $x_1$ and $x_2$. Corners, edges and costs carry across unchanged.
+Take any allowed week $`(x_1, x_2)`$ in the picture. Compute the three slacks from the equations; each is at least zero, because the week fits each stock. So the five numbers are a point of $`P`$. Going back, drop the slacks. Each point of the picture matches exactly one point of $`P`$, and walking along a straight segment in one matches a straight segment in the other, since the slacks are straight-line functions of $`x_1`$ and $`x_2`$. Corners, edges and costs carry across unchanged.
 
 An "at least" limit instead subtracts a **surplus**, the amount over the floor; an "exactly" limit needs nothing. Mix up slack and surplus and the wall faces the wrong way (see What breaks).
 
 ### Step 2: list the faces by making walls tight
 
-Pick any set of the five walls and make them tight. The points of $P$ that meet them form a face. Five walls give 32 sets; most give nothing or repeat. The distinct non-empty faces are nine:
+Pick any set of the five walls and make them tight. The points of $`P`$ that meet them form a face. Five walls give 32 sets; most give nothing or repeat. The distinct non-empty faces are nine:
 
 | Face | Dimension | Variables that are zero on it |
 | --- | --- | --- |
-| (0, 0) | 0, a corner | $x_1$, $x_2$ |
-| (40, 0) | 0, a corner | $x_2$, $s_1$, $s_2$ |
-| (32, 16) | 0, a corner | $s_1$, $s_3$ |
-| (0, 32) | 0, a corner | $x_1$, $s_3$ |
-| (0, 0) to (40, 0) | 1, the floor edge | $x_2$ |
-| (40, 0) to (32, 16) | 1, the timber edge | $s_1$ |
-| (32, 16) to (0, 32) | 1, the finish edge | $s_3$ |
-| (0, 32) to (0, 0) | 1, the left edge | $x_1$ |
+| (0, 0) | 0, a corner | $`x_1`$, $`x_2`$ |
+| (40, 0) | 0, a corner | $`x_2`$, $`s_1`$, $`s_2`$ |
+| (32, 16) | 0, a corner | $`s_1`$, $`s_3`$ |
+| (0, 32) | 0, a corner | $`x_1`$, $`s_3`$ |
+| (0, 0) to (40, 0) | 1, the floor edge | $`x_2`$ |
+| (40, 0) to (32, 16) | 1, the timber edge | $`s_1`$ |
+| (32, 16) to (0, 32) | 1, the finish edge | $`s_3`$ |
+| (0, 32) to (0, 0) | 1, the left edge | $`x_1`$ |
 | the whole quadrilateral | 2 | none |
 
-Four walls each give an edge, so the shape is a quadrilateral. Labour's face, "$s_2 = 0$", is only the point (40, 0).
+Four walls each give an edge, so the shape is a quadrilateral. Labour's face, "$`s_2 = 0`$", is only the point (40, 0).
 
-A wall whose face is smaller than an edge cuts nothing off, and here a one-line sum proves it. Three quarters of the timber limit is $3x_1 + 1.5x_2 \le 120$, and adding half of "$-x_2 \le 0$" gives $3x_1 + x_2 \le 120$. The labour limit follows from the others, so it is **redundant**. The labour hours are not wasted: at the best plan 8 hours are spare.
+A wall whose face is smaller than an edge cuts nothing off, and here a one-line sum proves it. Three quarters of the timber limit is $`3x_1 + 1.5x_2 \le 120`$, and adding half of "$`-x_2 \le 0`$" gives $`3x_1 + x_2 \le 120`$. The labour limit follows from the others, so it is **redundant**. The labour hours are not wasted: at the best plan 8 hours are spare.
 
 A face is also the set of best plans for some straight-line profit. Raise a chair's profit to £38 and the profit lines run parallel to the finish wall. Both (0, 32) and (32, 16) earn £1,216, and so does every plan on the finish edge between them.
 
-The set of best plans is always a face, never a scatter of points, and the proof is short. Averaging best plans gives a best plan, so some best plan $w$ keeps above zero every variable that any best plan keeps above zero. Take any point $u$ of $P$ that is zero wherever $w$ is.
+The set of best plans is always a face, never a scatter of points, and the proof is short. Averaging best plans gives a best plan, so some best plan $`w`$ keeps above zero every variable that any best plan keeps above zero. Take any point $`u`$ of $`P`$ that is zero wherever $`w`$ is.
 
-A small step $\varepsilon$ from $w$ directly away from $u$, to $w + \varepsilon(w - u)$, still meets every equation and keeps every variable at least zero. Where $w$ is zero, so is $u$, and where $w$ is above zero a small step keeps it there.
+A small step $`\varepsilon`$ from $`w`$ directly away from $`u`$, to $`w + \varepsilon(w - u)`$, still meets every equation and keeps every variable at least zero. Where $`w`$ is zero, so is $`u`$, and where $`w`$ is above zero a small step keeps it there.
 
-The step's profit is the best plus $\varepsilon$ times (the best minus $u$'s profit). Nothing beats the best, so $u$ earns the best too. So the best plans are exactly the points of $P$ where $w$'s zero variables are zero: a face.
+The step's profit is the best plus $`\varepsilon`$ times (the best minus $`u`$'s profit). Nothing beats the best, so $`u`$ earns the best too. So the best plans are exactly the points of $`P`$ where $`w`$'s zero variables are zero: a face.
 
 ### Step 3: corners in algebra, as basic feasible solutions
 
-A point of $P$ is a corner exactly when it is a basic feasible solution. [Corners are enough](02-corners-and-the-fundamental-theorem.md) proves this for any standard-form program; here it is on the workshop. The basis $x_1$, $x_2$, $s_2$ sets $s_1 = s_3 = 0$: timber and finish are tight, the two walls cross at (32, 16), and $s_2 = 8$ hours of labour are left. That is the corner (32, 16) in the face table.
+A point of $`P`$ is a corner exactly when it is a basic feasible solution. [Corners are enough](02-corners-and-the-fundamental-theorem.md) proves this for any standard-form program; here it is on the workshop. The basis $`x_1`$, $`x_2`$, $`s_2`$ sets $`s_1 = s_3 = 0`$: timber and finish are tight, the two walls cross at (32, 16), and $`s_2 = 8`$ hours of labour are left. That is the corner (32, 16) in the face table.
 
-Five variables, three in each basis, give $\binom{5}{3} = 10$ bases, and all ten give a solvable system here. Six are feasible, and they name the four corners.
+Five variables, three in each basis, give $`\binom{5}{3} = 10`$ bases, and all ten give a solvable system here. Six are feasible, and they name the four corners.
 
-The corner (40, 0) is named three times, by $\{x_1, x_2, s_3\}$, $\{x_1, s_1, s_3\}$ and $\{x_1, s_2, s_3\}$, because three walls meet there where two would pin it down. Its row in the face table has three variables at zero. A corner like this is **degenerate**. It does no harm to the shape, but a method that walks from basis to basis can change basis there without moving, which is the degenerate pivot on [The simplex method](03-simplex-method.md).
+The corner (40, 0) is named three times, by $`\{x_1, x_2, s_3\}`$, $`\{x_1, s_1, s_3\}`$ and $`\{x_1, s_2, s_3\}`$, because three walls meet there where two would pin it down. Its row in the face table has three variables at zero. A corner like this is **degenerate**. It does no harm to the shape, but a method that walks from basis to basis can change basis there without moving, which is the degenerate pivot on [The simplex method](03-simplex-method.md).
 
 The picture gives the same four corners with no algebra: five walls cross in 10 pairs at 8 distinct points (three pairs meet at (40, 0)), and 4 of the 8 satisfy every wall.
 
 ### Step 4: why the corners are the right thing to compute
 
-A straight-line profit is best at a corner of the shape, if it has a best value at all ([Corners are enough](02-corners-and-the-fundamental-theorem.md) proves it). The four corners earn £0, £760, £928 and £640, so the best is (32, 16), £928, and in standard form $p^\star = -928$. The later cards on this shelf keep the workshop as a maximum, with $c = (19, 20, 0, 0, 0)$ and $p^\star = 928$: the same plan, with the signs flipped back.
+A straight-line profit is best at a corner of the shape, if it has a best value at all ([Corners are enough](02-corners-and-the-fundamental-theorem.md) proves it). The four corners earn £0, £760, £928 and £640, so the best is (32, 16), £928, and in standard form $`p^\star = -928`$. The later cards on this shelf keep the workshop as a maximum, with $`c = (19, 20, 0, 0, 0)`$ and $`p^\star = 928`$: the same plan, with the signs flipped back.
 
-"Best among four corners" relies on that theorem. Separate evidence comes from prices. Charge £3 a metre for timber, nothing for labour and £7 a litre for finish. A table then "costs" $3 \times 4 + 7 \times 1 = 19$ and a chair $3 \times 2 + 7 \times 2 = 20$, exactly their profits.
+"Best among four corners" relies on that theorem. Separate evidence comes from prices. Charge £3 a metre for timber, nothing for labour and £7 a litre for finish. A table then "costs" $`3 \times 4 + 7 \times 1 = 19`$ and a chair $`3 \times 2 + 7 \times 2 = 20`$, exactly their profits.
 
-So any plan's profit is at most what its resources would fetch at those prices, which is at most $3 \times 160 + 7 \times 64 = 928$. Where such prices come from, and why they always exist, is [LP duality](04-lp-duality-and-complementary-slackness.md).
+So any plan's profit is at most what its resources would fetch at those prices, which is at most $`3 \times 160 + 7 \times 64 = 928`$. Where such prices come from, and why they always exist, is [LP duality](04-lp-duality-and-complementary-slackness.md).
 
 ---
 
 ## Worked numbers, by hand
 
-The best corner, from its basis $x_1$, $x_2$, $s_2$, with $s_1$ and $s_3$ set to zero.
+The best corner, from its basis $`x_1`$, $`x_2`$, $`s_2`$, with $`s_1`$ and $`s_3`$ set to zero.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| timber tight | $4x_1 + 2x_2 = 160$ | — |
-| finish tight | $x_1 + 2x_2 = 64$ | — |
-| subtract the two | $3x_1 = 160 - 64 = 96$ | $x_1 = 32$ |
-| back into finish | $2x_2 = 64 - 32$ | $x_2 = 16$ |
-| labour left over | $s_2 = 120 - 3 \times 32 - 16$ | 8 hours |
-| all five, none negative | $x = (32, 16, 0, 8, 0)$ | feasible, a corner |
-| profit | $19 \times 32 + 20 \times 16 = 608 + 320$ | 928 |
+| timber tight | $`4x_1 + 2x_2 = 160`$ | — |
+| finish tight | $`x_1 + 2x_2 = 64`$ | — |
+| subtract the two | $`3x_1 = 160 - 64 = 96`$ | $`x_1 = 32`$ |
+| back into finish | $`2x_2 = 64 - 32`$ | $`x_2 = 16`$ |
+| labour left over | $`s_2 = 120 - 3 \times 32 - 16`$ | 8 hours |
+| all five, none negative | $`x = (32, 16, 0, 8, 0)`$ | feasible, a corner |
+| profit | $`19 \times 32 + 20 \times 16 = 608 + 320`$ | 928 |
 | other corners | (0, 0), (40, 0), (0, 32) | £0, £760, £640 |
-| price check | $3 \times 160 + 0 \times 120 + 7 \times 64 = 480 + 448$ | 928 |
+| price check | $`3 \times 160 + 0 \times 120 + 7 \times 64 = 480 + 448`$ | 928 |
 | **best plan** | the bound is met | **32 tables, 16 chairs: £928 a week** |
 
 The workshop should use all its timber and finish, leave 8 labour hours spare, and make 32 tables and 16 chairs; no allowed week earns more.
@@ -177,7 +171,7 @@ The workshop should use all its timber and finish, leave 8 labour hours spare, a
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Timber written with a surplus, $4x_1 + 2x_2 - s_1 = 160$ | (35.2, 14.4), "£956.80" | The wall faces the wrong way: the plan needs 169.6 metres of timber, and 160 exist |
+| Timber written with a surplus, $`4x_1 + 2x_2 - s_1 = 160`$ | (35.2, 14.4), "£956.80" | The wall faces the wrong way: the plan needs 169.6 metres of timber, and 160 exist |
 | Every wall taken as an edge | 5 edges, "a pentagon" | Labour's wall is tight only at the corner (40, 0); only 4 walls are tight along an edge, so the shape is a quadrilateral |
 | Every set of tight walls counted as a face | 32 faces | 19 of the 32 sets meet the shape nowhere, and the other 13 give only 9 distinct faces |
 | Limits written as equations with no slacks | no plan at all | Timber and labour force (40, 0), which uses 40 litres of finish, not 64 |
@@ -559,10 +553,10 @@ The two outputs match line for line.
 
 Lean proves the card's three general facts for every standard-form program, then checks the workshop's numbers exactly.
 
-- If a standard-form program has a best plan, its best plans are exactly the points of $P$ where some chosen variables are zero: a face.
-- Adding one slack per "at most" limit matches each allowed plan with exactly one point of $P$, and every point of $P$ is matched.
+- If a standard-form program has a best plan, its best plans are exactly the points of $`P`$ where some chosen variables are zero: a face.
+- Adding one slack per "at most" limit matches each allowed plan with exactly one point of $`P`$, and every point of $`P`$ is matched.
 - Take prices on the resources, each at least zero, that value every product at its profit or more. Then no allowed plan earns more than the stock would fetch.
-- The best corner (32, 16, 0, 8, 0) and the other three corners all meet $Ax = b$. The best corner costs −928 in standard form.
+- The best corner (32, 16, 0, 8, 0) and the other three corners all meet $`Ax = b`$. The best corner costs −928 in standard form.
 - The four corners earn £0, £760, £928 and £640, and five variables with three in each basis give 10 bases.
 - Prices (3, 0, 7) value a table at £19 and a chair at £20, and the whole stock at £928.
 - Labour is redundant: three quarters of the timber limit plus half of "no negative chairs" gives the labour limit.
@@ -801,7 +795,7 @@ example : 19 * 0 + 38 * 32 = 1216 ∧ 19 * 32 + 38 * 16 = 1216 := by norm_num
 > [!warning]
 > **Taking every wall for an edge.** Five walls do not make a five-sided shape. A wall gives an edge only if it is tight along a whole segment of the shape. Labour's wall is tight only at (40, 0), so its face is a corner, only 4 walls give edges, and the shape is a quadrilateral, not a pentagon. The labour limit is redundant: three quarters of the timber limit plus half of "no negative chairs" already says it. Before drawing the shape, find each wall's face.
 >
-> - **Slack or surplus, wrong way round.** Writing timber as $4x_1 + 2x_2 - s_1 = 160$ turns "at most" into "at least", and the "best" plan claims £956.80 on 169.6 metres of timber.
+> - **Slack or surplus, wrong way round.** Writing timber as $`4x_1 + 2x_2 - s_1 = 160`$ turns "at most" into "at least", and the "best" plan claims £956.80 on 169.6 metres of timber.
 > - **Counting sets of walls as faces.** Five walls give 32 sets to make tight, but 19 meet the shape nowhere and the other 13 give only 9 distinct faces.
 > - **Dropping the slacks.** Three equations in two unknowns have no solution here: timber and labour force (40, 0), finish then says 40, not 64.
 
@@ -812,10 +806,10 @@ example : 19 * 0 + 38 * 32 = 1216 ∧ 19 * 32 + 38 * 16 = 1216 := by norm_num
 - **Production planning.** Refineries, mills and food plants plan a week this way, with thousands of products. Kantorovich set out such plans for plywood trusts in 1939.
 - **Solvers.** A solver first converts whatever is typed into standard form, adding slacks and surpluses, before any method runs.
 - **Diet and blending.** The cheapest feed or fuel mix meeting nutrient or quality floors gets a surplus variable on every floor.
-- **Shipping and networks.** A flow along each road, at least zero, with goods in equal to goods out at every depot, is $Ax = b$, $x \ge 0$ exactly: [Network flows](06-network-flows-as-linear-programs.md).
+- **Shipping and networks.** A flow along each road, at least zero, with goods in equal to goods out at every depot, is $`Ax = b`$, $`x \ge 0`$ exactly: [Network flows](06-network-flows-as-linear-programs.md).
 
 > **Say it back**
-> A linear program makes a straight-line cost as small as possible over a shape cut out by flat walls, and standard form writes it as $Ax = b$ with every variable at least zero. A slack records what each limit leaves over, so standing on a wall means that slack is zero. A face is the set of allowed points where some walls are tight, which is some variables set to zero, and the best plans always form one. A corner is a basic feasible solution: choose three variables, set the rest to zero, solve, and check nothing is negative. The workshop's shape has four corners, six feasible bases because (40, 0) is degenerate, and its best corner is 32 tables and 16 chairs for £928.
+> A linear program makes a straight-line cost as small as possible over a shape cut out by flat walls, and standard form writes it as $`Ax = b`$ with every variable at least zero. A slack records what each limit leaves over, so standing on a wall means that slack is zero. A face is the set of allowed points where some walls are tight, which is some variables set to zero, and the best plans always form one. A corner is a basic feasible solution: choose three variables, set the rest to zero, solve, and check nothing is negative. The workshop's shape has four corners, six feasible bases because (40, 0) is degenerate, and its best corner is 32 tables and 16 chairs for £928.
 
 ---
 

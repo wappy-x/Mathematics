@@ -45,54 +45,62 @@ Orange: the true spectrum. Green: the plain periodogram, shown at every 16th of 
 
 ## The formula
 
-Notation first, in words. The record is $x[n]$, sample number $n$ from 0 to $N-1$, taken $f_s$ times a second ([Sampling](01-sampling-and-the-nyquist-theorem.md)); frequencies $f$ run from 0 to the Nyquist frequency $f_s/2$. As on the rest of this wing, $j$ is the square root of −1 (the rest of the library writes $i$). On its own, $e$ is Euler's number, 2.718…; with a sample number, $e[n]$ is the AR (autoregressive) model's noise.
+Notation first, in words. The record is $`x[n]`$, sample number $`n`$ from 0 to $`N-1`$, taken $`f_s`$ times a second ([Sampling](01-sampling-and-the-nyquist-theorem.md)); frequencies $`f`$ run from 0 to the Nyquist frequency $`f_s/2`$. As on the rest of this wing, $`j`$ is the square root of −1 (the rest of the library writes $`i`$). On its own, $`e`$ is Euler's number, 2.718…; with a sample number, $`e[n]`$ is the AR (autoregressive) model's noise.
 
-The **autocovariance** $\gamma(h)$ is the covariance between the signal and itself $h$ samples later ([Stationarity and autocorrelation](../../09-Probability%20and%20statistics/12-Time%20Series/01-stationarity-and-autocorrelation.md)).
+The **autocovariance** $`\gamma(h)`$ is the covariance between the signal and itself $`h`$ samples later ([Stationarity and autocorrelation](../../09-Probability%20and%20statistics/12-Time%20Series/01-stationarity-and-autocorrelation.md)).
 
-The **power spectral density** is the Fourier transform of the autocovariance (the Wiener–Khinchin theorem). Written one-sided, for $0 < f < f_s/2$, as engineers quote it:
+The **power spectral density** is the Fourier transform of the autocovariance (the Wiener–Khinchin theorem). Written one-sided, for $`0 < f < f_s/2`$, as engineers quote it:
 
-$$S(f) = \frac{2}{f_s}\sum_{h=-\infty}^{\infty} \gamma(h)\,e^{-j2\pi f h/f_s}.$$
+```math
+S(f) = \frac{2}{f_s}\sum_{h=-\infty}^{\infty} \gamma(h)\,e^{-j2\pi f h/f_s}.
+```
 
-**Read it aloud:** the spectrum at frequency $f$ is how strongly the signal's memory of itself oscillates at that frequency. The area under $S$ from 0 to $f_s/2$ is the variance, the mean square: for the panel's rumble the check gets 0.04919 (m/s²)² both ways.
+**Read it aloud:** the spectrum at frequency $`f`$ is how strongly the signal's memory of itself oscillates at that frequency. The area under $`S`$ from 0 to $`f_s/2`$ is the variance, the mean square: for the panel's rumble the check gets 0.04919 (m/s²)² both ways.
 
-A **window** $w[n]$ tapers a segment of $L$ samples; here it is Hann, $w[n] = \tfrac12 - \tfrac12\cos(2\pi n/L)$, a single hump that starts at 0 ([Windows](03-windows-and-spectral-leakage.md)). The **periodogram** of the tapered segment, at the frequencies $f_k = k f_s/L$, is
+A **window** $`w[n]`$ tapers a segment of $`L`$ samples; here it is Hann, $`w[n] = \tfrac12 - \tfrac12\cos(2\pi n/L)`$, a single hump that starts at 0 ([Windows](03-windows-and-spectral-leakage.md)). The **periodogram** of the tapered segment, at the frequencies $`f_k = k f_s/L`$, is
 
-$$\hat S(f_k) = \frac{2}{f_s\,U}\,\Bigl|\sum_{n=0}^{L-1} w[n]\,x[n]\,e^{-j2\pi kn/L}\Bigr|^2, \qquad U = \sum_{n=0}^{L-1} w[n]^2 .$$
+```math
+\hat S(f_k) = \frac{2}{f_s\,U}\,\Bigl|\sum_{n=0}^{L-1} w[n]\,x[n]\,e^{-j2\pi kn/L}\Bigr|^2, \qquad U = \sum_{n=0}^{L-1} w[n]^2 .
+```
 
-**Read it aloud:** taper the segment, run the DFT (discrete Fourier transform), square the size of each output, and divide by the window's power and the sampling rate so the answer comes out in units per hertz. The plain periodogram is the case $L = N$ with no taper, $w[n] = 1$.
+**Read it aloud:** taper the segment, run the DFT (discrete Fourier transform), square the size of each output, and divide by the window's power and the sampling rate so the answer comes out in units per hertz. The plain periodogram is the case $`L = N`$ with no taper, $`w[n] = 1`$.
 
-**Welch's estimate** $\bar S$ averages the periodograms of $K$ segments, each starting half a segment after the last. Its scatter, as a fraction of the true value, is about
+**Welch's estimate** $`\bar S`$ averages the periodograms of $`K`$ segments, each starting half a segment after the last. Its scatter, as a fraction of the true value, is about
 
-$$\frac{\text{standard deviation of } \bar S}{S} \approx \sqrt{\frac{1 + 2\rho\,(1 - 1/K)}{K}}, \qquad \rho = \Bigl(\frac{1}{U}\sum_{n=0}^{L/2-1} w[n]\,w[n+L/2]\Bigr)^2 .$$
+```math
+\frac{\text{standard deviation of } \bar S}{S} \approx \sqrt{\frac{1 + 2\rho\,(1 - 1/K)}{K}}, \qquad \rho = \Bigl(\frac{1}{U}\sum_{n=0}^{L/2-1} w[n]\,w[n+L/2]\Bigr)^2 .
+```
 
-**Read it aloud:** averaging $K$ segments shrinks the scatter by the square root of $K$, slightly less because neighbouring segments share half their samples, which correlates them by $\rho$.
+**Read it aloud:** averaging $`K`$ segments shrinks the scatter by the square root of $`K`$, slightly less because neighbouring segments share half their samples, which correlates them by $`\rho`$.
 
-The **autoregressive (AR) estimate** fits the model $x[n] = a_1x[n-1] + \dots + a_px[n-p] + e[n]$, white noise $e$ of power $E_p$ driving a $p$-pole filter, one that feeds back its last $p$ outputs ([Autoregression](../../09-Probability%20and%20statistics/12-Time%20Series/02-ar-models.md)), and reads off that filter's output spectrum:
+The **autoregressive (AR) estimate** fits the model $`x[n] = a_1x[n-1] + \dots + a_px[n-p] + e[n]`$, white noise $`e`$ of power $`E_p`$ driving a $`p`$-pole filter, one that feeds back its last $`p`$ outputs ([Autoregression](../../09-Probability%20and%20statistics/12-Time%20Series/02-ar-models.md)), and reads off that filter's output spectrum:
 
-$$\hat S_{\text{AR}}(f) = \frac{2E_p/f_s}{\bigl|1 - \sum_{i=1}^{p} a_i\,e^{-j2\pi f i/f_s}\bigr|^2}.$$
+```math
+\hat S_{\text{AR}}(f) = \frac{2E_p/f_s}{\bigl|1 - \sum_{i=1}^{p} a_i\,e^{-j2\pi f i/f_s}\bigr|^2}.
+```
 
 **Read it aloud:** a flat noise floor, divided by how much the fitted filter lets each frequency through.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x[n]$, $n$, $N$ | the record, sample number, number of samples | cabinet acceleration, 8192 samples | longer $N$: finer grid, not less scatter |
-| $f_s$, $f$, $j$ | samples per second; a frequency; the square root of −1 | 1000 Hz; 0 to 500 Hz | — |
-| $S(f)$, $\sigma^2$ | true one-sided PSD; the variance of white noise, in Step 2 | peak 0.004872 (m/s²)²/Hz at 149.98 Hz | — |
-| $\gamma(h)$, $h$, $c(h)$ | autocovariance at lag $h$ samples; its sample version from the record | true variance $\gamma(0)$ = 0.04919 (m/s²)² | — |
-| $w[n]$, $U$, $v(h)$ | the taper; its total power; its overlap with itself shifted by $h$ | Hann; $U$ = 192.0000 at $L$ = 512 | — |
-| $L$, $k$, $f_k$ | segment length; bin number; bin frequency $kf_s/L$ | 512 samples; bins 1.953 Hz apart | finer grid, more scatter, less blur |
-| $\hat S(f_k)$, $\mathbb{E}$ | periodogram of one segment; average over many repeated records | 0.001390 at the bin nearest 150 Hz (plain) | — |
-| $K$, $\bar S$ | number of segments; Welch's average | 31; 0.005305 at 150.39 Hz | scatter falls as $1/\sqrt K$ |
-| $\rho$ | correlation between half-overlapped segments' periodograms | 0.0278 | scatter rises a little |
-| $p$, $a_i$, $i$, $\kappa_m$, $m$ | AR order; coefficients, numbered by $i$; reflection coefficient at order $m$ | order 20 | more peaks possible, more scatter |
-| $e[n]$, $E_p$, $E_m$ | the white noise driving the AR filter; its power at order $p$ or $m$ | 0.002882 (m/s²)² at $p$ = 20 | the whole AR curve scales up |
-| $C$, $D$, $\theta_n$, $s$, $t$, $r$ | in Step 2's proof: real and imaginary parts of one DFT value, its angles, their spread, a threshold, a radius | — | — |
+| $`x[n]`$, $`n`$, $`N`$ | the record, sample number, number of samples | cabinet acceleration, 8192 samples | longer $`N`$: finer grid, not less scatter |
+| $`f_s`$, $`f`$, $`j`$ | samples per second; a frequency; the square root of −1 | 1000 Hz; 0 to 500 Hz | — |
+| $`S(f)`$, $`\sigma^2`$ | true one-sided PSD; the variance of white noise, in Step 2 | peak 0.004872 (m/s²)²/Hz at 149.98 Hz | — |
+| $`\gamma(h)`$, $`h`$, $`c(h)`$ | autocovariance at lag $`h`$ samples; its sample version from the record | true variance $`\gamma(0)`$ = 0.04919 (m/s²)² | — |
+| $`w[n]`$, $`U`$, $`v(h)`$ | the taper; its total power; its overlap with itself shifted by $`h`$ | Hann; $`U`$ = 192.0000 at $`L`$ = 512 | — |
+| $`L`$, $`k`$, $`f_k`$ | segment length; bin number; bin frequency $`kf_s/L`$ | 512 samples; bins 1.953 Hz apart | finer grid, more scatter, less blur |
+| $`\hat S(f_k)`$, $`\mathbb{E}`$ | periodogram of one segment; average over many repeated records | 0.001390 at the bin nearest 150 Hz (plain) | — |
+| $`K`$, $`\bar S`$ | number of segments; Welch's average | 31; 0.005305 at 150.39 Hz | scatter falls as $`1/\sqrt K`$ |
+| $`\rho`$ | correlation between half-overlapped segments' periodograms | 0.0278 | scatter rises a little |
+| $`p`$, $`a_i`$, $`i`$, $`\kappa_m`$, $`m`$ | AR order; coefficients, numbered by $`i`$; reflection coefficient at order $`m`$ | order 20 | more peaks possible, more scatter |
+| $`e[n]`$, $`E_p`$, $`E_m`$ | the white noise driving the AR filter; its power at order $`p`$ or $`m`$ | 0.002882 (m/s²)² at $`p`$ = 20 | the whole AR curve scales up |
+| $`C`$, $`D`$, $`\theta_n`$, $`s`$, $`t`$, $`r`$ | in Step 2's proof: real and imaginary parts of one DFT value, its angles, their spread, a threshold, a radius | — | — |
 
 ### When it holds
 
 - **The record is stationary** (its statistics do not drift over the 8.192 s). The spin speed must be steady. If the drum ramps up during the record, the 20 Hz line smears across every frequency it passed through; a time-varying record needs [Spectrograms](09-short-time-fourier-and-spectrograms.md).
-- **A segment is long compared with the features it must resolve.** Welch's grid must be finer than the resonance's half-power width, 6.43 Hz: the band where the true spectrum is at least half its peak. At $L$ = 512 (1.953 Hz bins) the expected reading near 150 Hz is 0.004362, close to the truth. At $L$ = 128 (7.812 Hz bins) the expected reading at the top is 0.002559, about half the true peak (0.53). At $L$ = 64 the highest value, 0.001464, sits at 156.25 Hz: the wrong place, at 0.30 of the true height.
-- **The spectrum is roughly flat across one bin**, for the scatter formula. Measured scatter matches it: 0.187 against 0.184 at $L$ = 512. At $L$ = 64 the measured figure, 0.095, runs above the formula's 0.064, because each 15.625 Hz bin also catches leakage from the resonance, a bias that changes from bin to bin.
+- **A segment is long compared with the features it must resolve.** Welch's grid must be finer than the resonance's half-power width, 6.43 Hz: the band where the true spectrum is at least half its peak. At $`L`$ = 512 (1.953 Hz bins) the expected reading near 150 Hz is 0.004362, close to the truth. At $`L`$ = 128 (7.812 Hz bins) the expected reading at the top is 0.002559, about half the true peak (0.53). At $`L`$ = 64 the highest value, 0.001464, sits at 156.25 Hz: the wrong place, at 0.30 of the true height.
+- **The spectrum is roughly flat across one bin**, for the scatter formula. Measured scatter matches it: 0.187 against 0.184 at $`L`$ = 512. At $`L`$ = 64 the measured figure, 0.095, runs above the formula's 0.064, because each 15.625 Hz bin also catches leakage from the resonance, a bias that changes from bin to bin.
 - **A line is not a density.** The drum's pure tone has power (0.045 (m/s²)², its amplitude squared over two) but no width, so its height on a PSD depends on the bin width. Read its power as the sum over its bins.
 - **The AR model needs enough poles.** Each resonance or line needs a pair. An AR(2) fit of this record has one pair for two features and puts the "resonance" at 104.65 Hz, where there is none.
 
@@ -102,46 +110,50 @@ $$\hat S_{\text{AR}}(f) = \frac{2E_p/f_s}{\bigl|1 - \sum_{i=1}^{p} a_i\,e^{-j2\p
 
 ### Step 0: one record, half as many unknowns as numbers
 
-A record of $N$ samples gives $N/2$ spectrum values, one per frequency bin. Each periodogram value is built from all $N$ samples, but it is a single number squared from a single complex Fourier coefficient: two random numbers, its real and imaginary parts. A longer record makes more bins; it never puts more data behind any one bin. So the plain periodogram never settles down. Every fix trades away some bins, either by averaging neighbouring information (Welch) or by assuming a shape with few parameters (AR).
+A record of $`N`$ samples gives $`N/2`$ spectrum values, one per frequency bin. Each periodogram value is built from all $`N`$ samples, but it is a single number squared from a single complex Fourier coefficient: two random numbers, its real and imaginary parts. A longer record makes more bins; it never puts more data behind any one bin. So the plain periodogram never settles down. Every fix trades away some bins, either by averaging neighbouring information (Welch) or by assuming a shape with few parameters (AR).
 
 ### Step 1: the periodogram is the transform of the sample autocovariance
 
-Expand the squared size of the DFT as a double sum over pairs of samples and group the pairs by their gap $h$. What comes out is exact:
+Expand the squared size of the DFT as a double sum over pairs of samples and group the pairs by their gap $`h`$. What comes out is exact:
 
-$$\hat S_{\text{plain}}(f) = \frac{2}{f_s}\sum_{h=-(N-1)}^{N-1} c(h)\,e^{-j2\pi fh/f_s}, \qquad c(h) = \frac1N\sum_{n=0}^{N-1-h} x[n]\,x[n+h],$$
+```math
+\hat S_{\text{plain}}(f) = \frac{2}{f_s}\sum_{h=-(N-1)}^{N-1} c(h)\,e^{-j2\pi fh/f_s}, \qquad c(h) = \frac1N\sum_{n=0}^{N-1-h} x[n]\,x[n+h],
+```
 
-with $c(-h) = c(h)$ and the record's mean taken as zero.
+with $`c(-h) = c(h)`$ and the record's mean taken as zero.
 
 This is the Wiener–Khinchin formula with the sample autocovariance in place of the true one. The check computes one 512-sample segment both ways, by the FFT (fast Fourier transform, a quick way to compute the DFT) and by this sum, and the largest relative gap over all bins is 5.92e-9 (rounding).
 
-It shows where the noise comes from. Each long lag is an average of only a few products: $c(N-1)$ is a single pair, $x[0]\,x[N-1]$, divided by $N$. The $1/N$ shrinks such lags, but the periodogram adds hundreds of these noisy values into every bin with no further taper.
+It shows where the noise comes from. Each long lag is an average of only a few products: $`c(N-1)`$ is a single pair, $`x[0]\,x[N-1]`$, divided by $`N`$. The $`1/N`$ shrinks such lags, but the periodogram adds hundreds of these noisy values into every bin with no further taper.
 
 ### Step 2: each periodogram value is an exponential random draw
 
-Take white noise of variance $\sigma^2$ first. The real part of the DFT at bin $k$ is $\sum x[n]\cos(2\pi kn/N)$, a sum of many independent terms, so it is close to normal. So is the imaginary part. They have the same variance, $\sigma^2N/2$, and are uncorrelated. The squared size of two such parts is an **exponential** random variable: its standard deviation equals its mean, and its chance of exceeding $t$ times the mean is $e^{-t}$. The record length $N$ appears in the mean and in the variance and cancels from their ratio.
+Take white noise of variance $`\sigma^2`$ first. The real part of the DFT at bin $`k`$ is $`\sum x[n]\cos(2\pi kn/N)`$, a sum of many independent terms, so it is close to normal. So is the imaginary part. They have the same variance, $`\sigma^2N/2`$, and are uncorrelated. The squared size of two such parts is an **exponential** random variable: its standard deviation equals its mean, and its chance of exceeding $`t`$ times the mean is $`e^{-t}`$. The record length $`N`$ appears in the mean and in the variance and cancels from their ratio.
 
 <details>
 <summary>Detailed proof: the moments and the exponential law</summary>
 
-Write $C = \sum_n x[n]\cos\theta_n$ and $D = \sum_n x[n]\sin\theta_n$ with $\theta_n = 2\pi kn/N$ and $0 < k < N/2$. The $x[n]$ are independent with mean 0 and variance $\sigma^2$, so $\operatorname{Var}C = \sigma^2\sum\cos^2\theta_n = \sigma^2N/2$, $\operatorname{Var}D = \sigma^2N/2$, and $\operatorname{Cov}(C, D) = \sigma^2\sum\cos\theta_n\sin\theta_n = \tfrac12\sigma^2\sum\sin 2\theta_n = 0$, since the sines of $2\theta_n$ go round the circle a whole number of times. By the central limit theorem, $C$ and $D$ are jointly normal for large $N$, and being uncorrelated they are independent. With $s^2 = \sigma^2N/2$, the pair $(C, D)$ has density $e^{-(c^2+d^2)/2s^2}/(2\pi s^2)$. In polar form, with $r$ the distance of $(C, D)$ from the origin, the chance that $C^2 + D^2 > t$ is $\int_{\sqrt t}^\infty e^{-r^2/2s^2}\,r\,dr/s^2 = e^{-t/2s^2}$. That is an exponential law with mean $2s^2 = \sigma^2N$; its standard deviation is also $\sigma^2N$. For coloured noise the same holds approximately, with $\sigma^2$ replaced by the spectrum's level near $f_k$, provided the spectrum changes little across a few bins.
+Write $`C = \sum_n x[n]\cos\theta_n`$ and $`D = \sum_n x[n]\sin\theta_n`$ with $`\theta_n = 2\pi kn/N`$ and $`0 < k < N/2`$. The $`x[n]`$ are independent with mean 0 and variance $`\sigma^2`$, so $`\mathrm{Var}\,C = \sigma^2\sum\cos^2\theta_n = \sigma^2N/2`$, $`\mathrm{Var}\,D = \sigma^2N/2`$, and $`\mathrm{Cov}(C, D) = \sigma^2\sum\cos\theta_n\sin\theta_n = \tfrac12\sigma^2\sum\sin 2\theta_n = 0`$, since the sines of $`2\theta_n`$ go round the circle a whole number of times. By the central limit theorem, $`C`$ and $`D`$ are jointly normal for large $`N`$, and being uncorrelated they are independent. With $`s^2 = \sigma^2N/2`$, the pair $`(C, D)`$ has density $`e^{-(c^2+d^2)/2s^2}/(2\pi s^2)`$. In polar form, with $`r`$ the distance of $`(C, D)`$ from the origin, the chance that $`C^2 + D^2 > t`$ is $`\int_{\sqrt t}^\infty e^{-r^2/2s^2}\,r\,dr/s^2 = e^{-t/2s^2}`$. That is an exponential law with mean $`2s^2 = \sigma^2N`$; its standard deviation is also $`\sigma^2N`$. For coloured noise the same holds approximately, with $`\sigma^2`$ replaced by the spectrum's level near $`f_k`$, provided the spectrum changes little across a few bins.
 
 </details>
 
-The check tests this on the washing machine. Between 200 and 480 Hz, far from the drum line and the resonance, the plain periodogram divided by the truth has scatter 0.935 (theory 1.000). The share of values above three times the truth is 0.0427, against $e^{-3}$ = 0.0498. The first 2.048 s alone give scatter 0.960: a quarter of the record, the same scatter.
+The check tests this on the washing machine. Between 200 and 480 Hz, far from the drum line and the resonance, the plain periodogram divided by the truth has scatter 0.935 (theory 1.000). The share of values above three times the truth is 0.0427, against $`e^{-3}`$ = 0.0498. The first 2.048 s alone give scatter 0.960: a quarter of the record, the same scatter.
 
 This also explains the sixfold peak. Dozens of bins sit inside the resonance's 6.43 Hz half-power width, each an independent exponential draw. The largest of dozens of such draws is routinely several times their mean. Reading "the highest point" off a plain periodogram reads that largest draw.
 
 ### Step 3: averaging segments shrinks the scatter by √K
 
-Cut the record into $K$ segments and average their periodograms. If the segments were independent, the variance of the average would be $1/K$ of one segment's, and the scatter $1/\sqrt K$.
+Cut the record into $`K`$ segments and average their periodograms. If the segments were independent, the variance of the average would be $`1/K`$ of one segment's, and the scatter $`1/\sqrt K`$.
 
-Neighbouring segments that share half their samples are not independent. For noise that is locally white, the correlation of their periodograms at the same bin is $\rho$. To get it, take the window's overlap with itself shifted by half a segment, divide it by the window's power, and square the result. For Hann at 512 samples that overlap is 32.0000 against $U$ = 192.0000, so $\rho = (32/192)^2$ = 0.0278. Each of the $K - 1$ neighbouring pairs adds $2\rho$ to the variance sum:
+Neighbouring segments that share half their samples are not independent. For noise that is locally white, the correlation of their periodograms at the same bin is $`\rho`$. To get it, take the window's overlap with itself shifted by half a segment, divide it by the window's power, and square the result. For Hann at 512 samples that overlap is 32.0000 against $`U`$ = 192.0000, so $`\rho = (32/192)^2`$ = 0.0278. Each of the $`K - 1`$ neighbouring pairs adds $`2\rho`$ to the variance sum:
 
-$$\operatorname{Var}\bar S = \frac{S^2}{K^2}\bigl(K + 2(K-1)\rho\bigr) = \frac{S^2}{K}\Bigl(1 + 2\rho\bigl(1 - \tfrac1K\bigr)\Bigr).$$
+```math
+\mathrm{Var}\,\bar S = \frac{S^2}{K^2}\bigl(K + 2(K-1)\rho\bigr) = \frac{S^2}{K}\Bigl(1 + 2\rho\bigl(1 - \tfrac1K\bigr)\Bigr).
+```
 
-The taper fades out the ends of each segment, which would waste data; overlapping by half brings those samples back in the middle of the next segment, for a small cost in $\rho$. The measured scatter follows the formula down the table: 0.385 against 0.387 at $K$ = 7, 0.187 against 0.184 at $K$ = 31, 0.087 against 0.091 at $K$ = 127.
+The taper fades out the ends of each segment, which would waste data; overlapping by half brings those samples back in the middle of the next segment, for a small cost in $`\rho`$. The measured scatter follows the formula down the table: 0.385 against 0.387 at $`K`$ = 7, 0.187 against 0.184 at $`K`$ = 31, 0.087 against 0.091 at $`K`$ = 127.
 
-That confirms the $1/\sqrt K$ law, but not the small $\rho$ term. The table's 1/sqrtK column, the formula without $\rho$, reads 0.378, 0.180 and 0.089, and one record measures a scatter too roughly to tell the two apart. The overlap term is derived here, not confirmed by the check.
+That confirms the $`1/\sqrt K`$ law, but not the small $`\rho`$ term. The table's 1/sqrtK column, the formula without $`\rho`$, reads 0.378, 0.180 and 0.089, and one record measures a scatter too roughly to tell the two apart. The overlap term is derived here, not confirmed by the check.
 
 ### Step 4: the taper stops strong features leaking into weak ones
 
@@ -149,34 +161,36 @@ A 512-sample segment is short, so each bin is a wide net. Without a taper, the s
 
 ### Step 5: the price is blur, and it can be computed exactly
 
-Take the expected value of a segment's periodogram and use Step 1's sum on the tapered segment. The expected product of samples $h$ apart is $\gamma(h)$, so
+Take the expected value of a segment's periodogram and use Step 1's sum on the tapered segment. The expected product of samples $`h`$ apart is $`\gamma(h)`$, so
 
-$$\mathbb{E}\,\hat S(f_k) = \frac{2}{f_s U}\sum_{h=-(L-1)}^{L-1} \gamma(h)\,v(h)\,e^{-j2\pi kh/L}, \qquad v(h) = \sum_{n=0}^{L-1-|h|} w[n]\,w[n+|h|].$$
+```math
+\mathbb{E}\,\hat S(f_k) = \frac{2}{f_s U}\sum_{h=-(L-1)}^{L-1} \gamma(h)\,v(h)\,e^{-j2\pi kh/L}, \qquad v(h) = \sum_{n=0}^{L-1-|h|} w[n]\,w[n+|h|].
+```
 
-Only lags shorter than the segment survive, and the window's self-overlap $v(h)$ tapers the long ones to zero. Those are exactly the badly estimated lags of Step 1. In frequency terms the expected reading is the true spectrum blurred by the window's own power spectrum, a hump about two bins wide. The check computes this expected reading from the model's exact $\gamma(h)$, with no simulation, and confirms each simulated reading lies within three scatters of it.
+Only lags shorter than the segment survive, and the window's self-overlap $`v(h)`$ tapers the long ones to zero. Those are exactly the badly estimated lags of Step 1. In frequency terms the expected reading is the true spectrum blurred by the window's own power spectrum, a hump about two bins wide. The check computes this expected reading from the model's exact $`\gamma(h)`$, with no simulation, and confirms each simulated reading lies within three scatters of it.
 
-At $L$ = 512 the blur costs little: expected 0.004362 against a true 0.004792 at 150.39 Hz. At $L$ = 128 the bins are wider than the resonance and the expected reading near the top, 0.002559, is about half the peak. That is the trade: shorter segments, more of them, less scatter, more blur.
+At $`L`$ = 512 the blur costs little: expected 0.004362 against a true 0.004792 at 150.39 Hz. At $`L`$ = 128 the bins are wider than the resonance and the expected reading near the top, 0.002559, is about half the peak. That is the trade: shorter segments, more of them, less scatter, more blur.
 
 ### Step 6: an AR fit spends its freedom on a shape instead
 
-An AR model says the record is white noise passed through a filter with $p$ feedback taps. A filter multiplies the power at each frequency by its squared gain, and this filter's gain is $1/|1 - \sum a_i e^{-j2\pi fi/f_s}|$, which gives the formula for $\hat S_{\text{AR}}$. The coefficients come from the Yule–Walker equations: $p$ linear equations that make the model reproduce the record's $c(1)$ to $c(p)$. They use only $c(0)$ to $c(p)$, the short and well-estimated lags ([Autoregression](../../09-Probability%20and%20statistics/12-Time%20Series/02-ar-models.md)). The model then extends the autocovariance to every longer lag by its own recursion, instead of using the noisy sample values.
+An AR model says the record is white noise passed through a filter with $`p`$ feedback taps. A filter multiplies the power at each frequency by its squared gain, and this filter's gain is $`1/|1 - \sum a_i e^{-j2\pi fi/f_s}|`$, which gives the formula for $`\hat S_{\text{AR}}`$. The coefficients come from the Yule–Walker equations: $`p`$ linear equations that make the model reproduce the record's $`c(1)`$ to $`c(p)`$. They use only $`c(0)`$ to $`c(p)`$, the short and well-estimated lags ([Autoregression](../../09-Probability%20and%20statistics/12-Time%20Series/02-ar-models.md)). The model then extends the autocovariance to every longer lag by its own recursion, instead of using the noisy sample values.
 
-The equations are solved by the **Levinson–Durbin recursion**, which builds the order-$p$ fit from the order-$(p-1)$ fit in about $p$ steps, so the whole fit takes about $p^2$ operations instead of $p^3$. The check solves the order-20 equations a second way, by Gaussian elimination, and the largest gap between the two sets of coefficients prints as 0.00e-9, below rounding.
+The equations are solved by the **Levinson–Durbin recursion**, which builds the order-$`p`$ fit from the order-$`(p-1)`$ fit in about $`p`$ steps, so the whole fit takes about $`p^2`$ operations instead of $`p^3`$. The check solves the order-20 equations a second way, by Gaussian elimination, and the largest gap between the two sets of coefficients prints as 0.00e-9, below rounding.
 
 <details>
 <summary>The Levinson–Durbin step, in full</summary>
 
-Suppose the order-$(m-1)$ coefficients $a_1, \dots, a_{m-1}$ and their prediction-error power $E_{m-1}$ are known, starting from $E_0 = c(0)$. The new coefficient, the **reflection coefficient**, is the part of $c(m)$ the old fit cannot predict, scaled by the old error:
+Suppose the order-$`(m-1)`$ coefficients $`a_1, \dots, a_{m-1}`$ and their prediction-error power $`E_{m-1}`$ are known, starting from $`E_0 = c(0)`$. The new coefficient, the **reflection coefficient**, is the part of $`c(m)`$ the old fit cannot predict, scaled by the old error:
 
-$$\kappa_m = \frac{c(m) - \sum_{i=1}^{m-1} a_i\,c(m-i)}{E_{m-1}}.$$
+$`\displaystyle \kappa_m = \frac{c(m) - \sum_{i=1}^{m-1} a_i\,c(m-i)}{E_{m-1}}.`$
 
-The old coefficients are corrected by the same fit run backwards in time, $a_i \leftarrow a_i - \kappa_m a_{m-i}$, then $a_m = \kappa_m$, and the error shrinks to $E_m = E_{m-1}(1 - \kappa_m^2)$. The backward correction works because the Yule–Walker matrix has the same entries along every diagonal, so the equations read the same forwards and backwards. Every $\kappa_m$ lies between −1 and 1 when the $c(h)$ come from a record, so $E_m$ never goes negative and the fitted filter is stable.
+The old coefficients are corrected by the same fit run backwards in time, $`a_i \leftarrow a_i - \kappa_m a_{m-i}`$, then $`a_m = \kappa_m`$, and the error shrinks to $`E_m = E_{m-1}(1 - \kappa_m^2)`$. The backward correction works because the Yule–Walker matrix has the same entries along every diagonal, so the equations read the same forwards and backwards. Every $`\kappa_m`$ lies between −1 and 1 when the $`c(h)`$ come from a record, so $`E_m`$ never goes negative and the fitted filter is stable.
 
 </details>
 
 The order is the AR version of the segment length. The check fits five orders to the washing-machine record:
 
-| Order $p$ | Noise power $E_p$ | Scatter, 200–480 Hz | Panel peak | Height | Drum line found at |
+| Order $`p`$ | Noise power $`E_p`$ | Scatter, 200–480 Hz | Panel peak | Height | Drum line found at |
 | --- | --- | --- | --- | --- | --- |
 | 2 | 0.016124 | 0.988 | 104.65 Hz | 0.001492 | none |
 | 4 | 0.004467 | 0.080 | 151.10 Hz | 0.003573 | none |
@@ -188,11 +202,11 @@ Too few poles and the fit cannot place both features: AR(2) invents a peak at 10
 
 AR(8) still has too few to make the line sharp. It smears the drum into a broad hump whose top, at 10.15 Hz, is only 1.02 times the curve's level at 5 Hz. The code's top/5 Hz column prints this ratio; AR(20)'s top at 20.15 Hz is 1489.36 times its level at 5 Hz. AR(8) also overshoots the panel peak, 0.008458 against the true 0.004872.
 
-Too many poles and the curve starts to chase the noise: AR(53) overshoots to 0.006277. Order 53 is what the standard order rule, Akaike's information criterion (AIC: $N$ times the log of $E_p$, plus a penalty of 2 per coefficient), picks. A pure tone is an infinitely sharp resonance, and the criterion keeps adding poles to sharpen it.
+Too many poles and the curve starts to chase the noise: AR(53) overshoots to 0.006277. Order 53 is what the standard order rule, Akaike's information criterion (AIC: $`N`$ times the log of $`E_p`$, plus a penalty of 2 per coefficient), picks. A pure tone is an infinitely sharp resonance, and the criterion keeps adding poles to sharpen it.
 
 AR(20) reads 0.89 of the true peak at 150.20 Hz and finds the drum at 20.15 Hz.
 
-When the model is right, AR is hard to beat. Fitted to the panel's rumble alone, AR(2) returns $a_1$ = 1.1558 and $a_2$ = −0.9628 against the true 1.1521 and −0.9604, with standard error 0.0031.
+When the model is right, AR is hard to beat. Fitted to the panel's rumble alone, AR(2) returns $`a_1`$ = 1.1558 and $`a_2`$ = −0.9628 against the true 1.1521 and −0.9604, with standard error 0.0031.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -210,15 +224,15 @@ Orange: the true spectrum. Green: the AR(20) estimate, from 20 fitted coefficien
 
 ## Worked numbers, by hand
 
-The washing machine: $f_s$ = 1000 Hz, $N$ = 8192 samples, Hann segments of $L$ = 512 samples, each starting half a segment after the last.
+The washing machine: $`f_s`$ = 1000 Hz, $`N`$ = 8192 samples, Hann segments of $`L`$ = 512 samples, each starting half a segment after the last.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | plain periodogram's bin width | 1000 / 8192 | 0.122 Hz |
 | plain periodogram's scatter | one exponential draw per bin | 1.000 (measured 0.935) |
 | Welch's bin width | 1000 / 512 | 1.953 Hz |
-| number of segments $K$ | (8192 − 512) / (512 / 2) + 1 | 31 |
-| overlap correlation $\rho$ | (32.0000 / 192.0000)² | 0.0278 |
+| number of segments $`K`$ | (8192 − 512) / (512 / 2) + 1 | 31 |
+| overlap correlation $`\rho`$ | (32.0000 / 192.0000)² | 0.0278 |
 | Welch's scatter | √((1 + 2 × 0.0278 × (1 − 1/31)) / 31) | 0.184 (measured 0.187) |
 | expected reading near the peak | Step 5's sum at 150.39 Hz | 0.004362 |
 | true value there | the model | 0.004792 |
@@ -233,7 +247,7 @@ So the panel resonates at 150 Hz, give or take one 1.953 Hz bin, with a vibratio
 | Read the highest value of the plain periodogram | 0.029305 at 151.12 Hz, 6.02 times the true peak | The largest of dozens of exponential draws, not the spectrum |
 | Record a longer spin to steady the periodogram | scatter 0.960 from 2.048 s, 0.935 from 8.192 s | More bins, not more data per bin |
 | Average segments without a taper | 7.01 times the truth at 29.30 Hz | The drum line leaks through the untapered segments' side lobes |
-| Cut the segments too short, $L$ = 64 | highest value 0.001464 at 156.25 Hz, 0.30 of the true peak | The 15.625 Hz blur is wider than the 6.43 Hz resonance |
+| Cut the segments too short, $`L`$ = 64 | highest value 0.001464 at 156.25 Hz, 0.30 of the true peak | The 15.625 Hz blur is wider than the 6.43 Hz resonance |
 | Fit an AR(2) to a record with two features | a peak at 104.65 Hz; scatter 0.988 against the truth | One pole pair placed between the drum line and the resonance |
 
 ---
@@ -243,7 +257,7 @@ So the panel resonates at 150 Hz, give or take one 1.953 Hz bin, with a vibratio
 The script simulates the record (the panel as an AR(2) resonance driven by noise, plus the drum's sine), writes its own FFT, and estimates the spectrum three ways: plain periodogram, Welch at four segment lengths, and AR fits by Levinson–Durbin. It checks along **four independent roads**:
 
 1. The FFT periodogram is matched against the transform of the sample autocovariance.
-2. The measured scatter is matched against Welch's formula, and the share of plain-periodogram values above three times the truth against $e^{-3}$.
+2. The measured scatter is matched against Welch's formula, and the share of plain-periodogram values above three times the truth against $`e^{-3}`$.
 3. Every simulated reading near 150 Hz is matched against its expected value, computed from the model's exact autocovariance with no simulation.
 4. The AR coefficients from Levinson–Durbin are matched against a direct linear solve, and an AR(2) fit to the rumble alone against the true coefficients.
 
@@ -640,12 +654,12 @@ ALL CHECKS PASS
 
 Lean proves Steps 1, 2 and 3 exactly, for any record, any number of segments and any normal pair, plus the worked numbers.
 
-- Suppose each of $K$ segment periodograms has variance $S^2$, neighbours have correlation $\rho$, and segments two or more apart are uncorrelated. Then Welch's average has variance $(S^2/K)(1 + 2\rho(1 - 1/K))$.
-- Take any record $x[0]$ to $x[N-1]$, any sampling rate $f_s$ and any frequency $f$. Then the plain periodogram equals Step 1's sum over lags of $c(h)$, exactly, with no rounding.
-- Suppose $C$ and $D$ are independent normal variables with mean 0 and the same variance $s^2 > 0$. Then the chance that $C^2 + D^2 > t$ is $e^{-t/2s^2}$ for every $t \ge 0$.
+- Suppose each of $`K`$ segment periodograms has variance $`S^2`$, neighbours have correlation $`\rho`$, and segments two or more apart are uncorrelated. Then Welch's average has variance $`(S^2/K)(1 + 2\rho(1 - 1/K))`$.
+- Take any record $`x[0]`$ to $`x[N-1]`$, any sampling rate $`f_s`$ and any frequency $`f`$. Then the plain periodogram equals Step 1's sum over lags of $`c(h)`$, exactly, with no rounding.
+- Suppose $`C`$ and $`D`$ are independent normal variables with mean 0 and the same variance $`s^2 > 0`$. Then the chance that $`C^2 + D^2 > t`$ is $`e^{-t/2s^2}`$ for every $`t \ge 0`$.
 - The drum's 1200 rpm is 20 revolutions a second, so its line sits at 20 Hz.
-- Take $N$ = 8192 and $L$ = 512. Then $K$ = 31 half-overlapped segments, on a grid 16 times coarser, and $31 = 2 \times 16 - 1$.
-- Take $\rho = (32/192)^2$, which is 1/36, and $K$ = 31. Then Welch's squared scatter $(1 + 2\rho(1 - 1/K))/K$ is exactly 98/2883.
+- Take $`N`$ = 8192 and $`L`$ = 512. Then $`K`$ = 31 half-overlapped segments, on a grid 16 times coarser, and $`31 = 2 \times 16 - 1`$.
+- Take $`\rho = (32/192)^2`$, which is 1/36, and $`K`$ = 31. Then Welch's squared scatter $`(1 + 2\rho(1 - 1/K))/K`$ is exactly 98/2883.
 
 The central limit step, the blur, the taper's leakage and the AR fit stay with the Python and Rust checks.
 
@@ -959,8 +973,8 @@ example : (1 + 2 * (1 / 36 : ℚ) * (1 - 1 / 31)) / 31 = 98 / 2883 := by norm_nu
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to this record, so some changes stop the script on purpose.
 > - **Another spin.** Change the seed from 2026 to 7. Does the plain periodogram's highest value land near the truth this time? No: 0.020612 at 150.15 Hz, 4.23 times the peak. Welch reads 0.003095 (0.64): a low draw, within two scatters of its expected value.
-> - **Record four times longer.** Set `N = 32768`. Guess the plain periodogram's scatter. Still about 1 (1.001). Welch at $L$ = 512 now averages 127 segments and its scatter halves, to 0.097.
-> - **A sharper panel.** Set `R = 0.995`; the half-power width falls to 1.59 Hz. Welch at $L$ = 512 now under-reads the peak: 0.53 of it. The resonance is narrower than the blur, and the segment must grow.
+> - **Record four times longer.** Set `N = 32768`. Guess the plain periodogram's scatter. Still about 1 (1.001). Welch at $`L`$ = 512 now averages 127 segments and its scatter halves, to 0.097.
+> - **A sharper panel.** Set `R = 0.995`; the half-power width falls to 1.59 Hz. Welch at $`L`$ = 512 now under-reads the peak: 0.53 of it. The resonance is narrower than the blur, and the segment must grow.
 > - **Stop the drum.** Set `A = 0.0`. The drum-line assert fails, as it should: there is no line to find. Delete that assert and AIC now picks order 3, and AR(2) finds the panel at 149.75 Hz. Without a tone, two poles are enough.
 
 ---
@@ -971,7 +985,7 @@ example : (1 + 2 * (1 / 36 : ℚ) * (1 - 1 / 31)) / 31 = 98 / 2883 := by norm_nu
 > **Trusting a single periodogram because it looks detailed.** Its fine grid is not information. Every value is one exponential draw that scatters by its own size, whatever the record length, and the highest of many draws sits far above the truth: 0.029305 against 0.004872 here, six times too high. Average segments, or fit a model, before reading any height off a spectrum.
 >
 > - **Reading a tone's strength off the PSD height.** The drum line peaks at 0.01441 (m/s²)²/Hz with 512-sample segments and at 0.06187 with 2048-sample ones: the narrower the bins, the taller the same line. Its power is the sum over its bins times the bin width: 0.04546 and 0.04551, against a true 0.04500 (m/s²)².
-> - **Shortening segments to buy steadiness.** At $L$ = 64 the scatter is small, but the peak reads 0.30 of the truth and sits at 156.25 Hz. Pick $L$ so the bin width is a fraction of the narrowest feature.
+> - **Shortening segments to buy steadiness.** At $`L`$ = 64 the scatter is small, but the peak reads 0.30 of the truth and sits at 156.25 Hz. Pick $`L`$ so the bin width is a fraction of the narrowest feature.
 > - **Letting the order rule choose the AR order with a tone in the record.** AIC asks for 53 poles and the peak overshoots to 0.006277. A pure tone is best removed or measured separately before fitting the broadband part.
 > - **Mixing one-sided and two-sided spectra.** A two-sided spectrum spreads the same power over negative frequencies too and reads half the value at every frequency. Say which one a number is.
 
@@ -994,7 +1008,7 @@ example : (1 + 2 * (1 / 36 : ℚ) * (1 - 1 / 31)) / 31 = 98 / 2883 := by norm_nu
 
 - [The DFT and the FFT](02-discrete-fourier-transform-and-the-fft.md): the transform every periodogram on this card is built from, and the fast algorithm the check writes out.
 - [Windows](03-windows-and-spectral-leakage.md): why a segment must be tapered, and the side lobes that let a strong line leak. This card uses Hann and adds the overlap that wins back the tapered-out samples.
-- [Stationarity and autocorrelation](../../09-Probability%20and%20statistics/12-Time%20Series/01-stationarity-and-autocorrelation.md): the autocovariance $\gamma(h)$ and its sample version $c(h)$. The power spectrum is their Fourier transform.
+- [Stationarity and autocorrelation](../../09-Probability%20and%20statistics/12-Time%20Series/01-stationarity-and-autocorrelation.md): the autocovariance $`\gamma(h)`$ and its sample version $`c(h)`$. The power spectrum is their Fourier transform.
 - [Autoregression](../../09-Probability%20and%20statistics/12-Time%20Series/02-ar-models.md): the AR model and the Yule–Walker equations. This card reads the fitted model as a filter and its gain as a spectrum.
 
 ## Where this goes next

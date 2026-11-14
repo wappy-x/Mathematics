@@ -26,31 +26,37 @@ Scale: 10 units per second across, 2 units per m/s up; the dashed line is 49 m/s
 
 ## The formula
 
-Notation from [A differential equation](01-what-a-differential-equation-says.md): $v'$ is the rate of $v$, read "the rate of v at time t is …". An equation whose right side mentions only the unknown, not the time, is called **autonomous**. The skydiver's is:
+Notation from [A differential equation](01-what-a-differential-equation-says.md): $`v'`$ is the rate of $`v`$, read "the rate of v at time t is …". An equation whose right side mentions only the unknown, not the time, is called **autonomous**. The skydiver's is:
 
-$$v' = f(v) = 9.8 - 0.2\,v$$
+```math
+v' = f(v) = 9.8 - 0.2\,v
+```
 
 **Read it aloud:** the rate of speed is 9.8 minus a fifth of the speed.
 
-The **slope field** puts, at each point $(t, v)$, a tick of slope $f(v)$. The **phase line** is the $v$ axis alone, with three marks:
+The **slope field** puts, at each point $`(t, v)`$, a tick of slope $`f(v)`$. The **phase line** is the $`v`$ axis alone, with three marks:
 
-$$f(v^*) = 0 \quad\text{marks a rest,}\qquad f(v) > 0 \text{ an arrow up,}\qquad f(v) < 0 \text{ an arrow down.}$$
+```math
+f(v^*) = 0 \quad\text{marks a rest,}\qquad f(v) > 0 \text{ an arrow up,}\qquad f(v) < 0 \text{ an arrow down.}
+```
 
-Arrows pointing in from both sides make a rest **stable**; arrows pointing away, **unstable**. The quick test is the slope of $f$ at the rest:
+Arrows pointing in from both sides make a rest **stable**; arrows pointing away, **unstable**. The quick test is the slope of $`f`$ at the rest:
 
-$$f'(v^*) < 0 \;\Rightarrow\; \text{stable},\qquad f'(v^*) > 0 \;\Rightarrow\; \text{unstable}.$$
+```math
+f'(v^*) < 0 \;\Rightarrow\; \text{stable},\qquad f'(v^*) > 0 \;\Rightarrow\; \text{unstable}.
+```
 
-Here $f'(v) = -0.2$ everywhere, so 49 m/s attracts.
+Here $`f'(v) = -0.2`$ everywhere, so 49 m/s attracts.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time since leaving the plane, in s | 0 to 20 s | closer to 49 |
-| $v$ | downward speed, in m/s | 0 to 80 | the rate falls |
-| $v'$ | rate of speed: m/s gained per s | 9.8 at the door | the curve climbs faster |
-| $f$ | the rate law, as a rule on $v$ | 9.8 − 0.2v | — |
-| $v^*$ | a rest: a speed where $f$ is zero | 49 m/s | — |
-| $f'$ | slope of the rate law; at a rest, the pull back | −0.2 per s | past zero: unstable |
-| $v_0$ | starting speed, at time 0 | 0, or 70 | same destination |
+| $`t`$ | time since leaving the plane, in s | 0 to 20 s | closer to 49 |
+| $`v`$ | downward speed, in m/s | 0 to 80 | the rate falls |
+| $`v'`$ | rate of speed: m/s gained per s | 9.8 at the door | the curve climbs faster |
+| $`f`$ | the rate law, as a rule on $`v`$ | 9.8 − 0.2v | — |
+| $`v^*`$ | a rest: a speed where $`f`$ is zero | 49 m/s | — |
+| $`f'`$ | slope of the rate law; at a rest, the pull back | −0.2 per s | past zero: unstable |
+| $`v_0`$ | starting speed, at time 0 | 0, or 70 | same destination |
 
 The 0.2 is the drag constant, in units of one over seconds.
 
@@ -58,8 +64,8 @@ The 0.2 is the drag constant, in units of one over seconds.
 
 - **The rate ignores the clock.** If a parachute opens at 10 s, the drag constant jumps from 0.2 to 1.96 per s. The law now depends on the time, and the diver settles at 9.8 ÷ 1.96 = 5 m/s, not 49: at 12 s the speed is 5.74 m/s.
 - **The rate law is continuous.** Otherwise arrows could reverse without a rest between them.
-- **Solutions are unique.** Two solutions must never share a point, which holds when $f$ has a bounded slope (the Lipschitz condition, from [The Picard-Lindelof theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md)). Without it, the tank law $h' = -\sqrt{h}$, with $h$ the water depth, drains a tank to empty in finite time, so the empty tank has two different histories: one that was always empty and one that just finished draining.
-- **The slope test needs a nonzero slope.** If $f'(v^*) = 0$ the test is silent and the arrows must be read directly.
+- **Solutions are unique.** Two solutions must never share a point, which holds when $`f`$ has a bounded slope (the Lipschitz condition, from [The Picard-Lindelof theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md)). Without it, the tank law $`h' = -\sqrt{h}`$, with $`h`$ the water depth, drains a tank to empty in finite time, so the empty tank has two different histories: one that was always empty and one that just finished draining.
+- **The slope test needs a nonzero slope.** If $`f'(v^*) = 0`$ the test is silent and the arrows must be read directly.
 
 ---
 
@@ -67,21 +73,21 @@ The 0.2 is the drag constant, in units of one over seconds.
 
 ### Step 0: the equation hands out slopes before anyone solves it
 
-A solution's rate at each moment equals $f$ at its current value. So its graph, wherever it passes, has the slope printed there. Draw ticks everywhere and the solutions are the curves that run along them, like iron filings along a magnet's field.
+A solution's rate at each moment equals $`f`$ at its current value. So its graph, wherever it passes, has the slope printed there. Draw ticks everywhere and the solutions are the curves that run along them, like iron filings along a magnet's field.
 
 ### Step 1: autonomous means every row is the same
 
 At 5 m/s the slope is 8.80 at every time; at 75 m/s, −5.20. Curves of equal slope are **isoclines**.
 
-For a law that reads the clock, such as $y' = t - y$, they tilt: slope 1 holds along the line $y = t - 1$. For an autonomous law they are horizontal, so one column of ticks tells the whole field. Shrink that column to arrows: the phase line.
+For a law that reads the clock, such as $`y' = t - y`$, they tilt: slope 1 holds along the line $`y = t - 1`$. For an autonomous law they are horizontal, so one column of ticks tells the whole field. Shrink that column to arrows: the phase line.
 
 ### Step 2: a rest is a constant solution
 
-If $f(v^*) = 0$, the constant $v(t) = v^*$ has rate 0, as the law asks. So 49 m/s held forever is a solution: the dashed line.
+If $`f(v^*) = 0`$, the constant $`v(t) = v^*`$ has rate 0, as the law asks. So 49 m/s held forever is a solution: the dashed line.
 
 ### Step 3: between rests, the motion is one way
 
-A continuous $f$ that is never zero on an interval keeps one sign there, by the [Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md): a continuous function cannot skip a value, so it cannot change sign without passing zero. Below 49, $f > 0$, so every solution there rises; above 49, $f < 0$, so it falls. The signs are read off one test point each: 9.80 at 0, and −4.20 at 70.
+A continuous $`f`$ that is never zero on an interval keeps one sign there, by the [Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md): a continuous function cannot skip a value, so it cannot change sign without passing zero. Below 49, $`f > 0`$, so every solution there rises; above 49, $`f < 0`$, so it falls. The signs are read off one test point each: 9.80 at 0, and −4.20 at 70.
 
 ### Step 4: no solution crosses a rest
 
@@ -94,22 +100,22 @@ From 0 the speed rises and never passes 49, so it climbs toward some limit no la
 <details>
 <summary>Detailed proof</summary>
 
-Let $v$ increase on `[0, ∞)` with $v(t) < v^*$, where $v^*$ is the nearest rest above $v_0$. A bounded increasing function has a limit, call it L, with L ≤ $v^*$. Suppose L < $v^*$. Then f(L) > 0, and by continuity some δ > 0 gives f(w) > f(L)/2 for every w within δ below L. Some time T0 has $v(t)$ ≥ L − δ for all later t. For t > T0, $v(t)$ − v(T0) is the integral of f(v(s)) from T0 to t, which exceeds (t − T0) f(L)/2 and grows without bound, contradicting $v(t) < v^*$. So L = $v^*$. The case above a rest is the mirror image.
+Let $`v`$ increase on `[0, ∞)` with $`v(t) < v^*`$, where $`v^*`$ is the nearest rest above $`v_0`$. A bounded increasing function has a limit, call it L, with L ≤ $`v^*`$. Suppose L < $`v^*`$. Then f(L) > 0, and by continuity some δ > 0 gives f(w) > f(L)/2 for every w within δ below L. Some time T0 has $`v(t)`$ ≥ L − δ for all later t. For t > T0, $`v(t)`$ − v(T0) is the integral of f(v(s)) from T0 to t, which exceeds (t − T0) f(L)/2 and grows without bound, contradicting $`v(t) < v^*`$. So L = $`v^*`$. The case above a rest is the mirror image.
 
 </details>
 
 ### Step 6: the slope test measures the pull
 
-Near a rest, $f(v) \approx f'(v^*)(v - v^*)$: when $f'(v^*) < 0$ the gap from the rest shrinks at a rate proportional to itself. For the skydiver this is exact: the gap is multiplied by $e^{-0.2t}$, so the curves close in on 49 without touching it. From 0 the speed is 30.97 m/s at 5 s and 42.37 at 10 s; from 70, 56.73 and 51.84.
+Near a rest, $`f(v) \approx f'(v^*)(v - v^*)`$: when $`f'(v^*) < 0`$ the gap from the rest shrinks at a rate proportional to itself. For the skydiver this is exact: the gap is multiplied by $`e^{-0.2t}`$, so the curves close in on 49 without touching it. From 0 the speed is 30.97 m/s at 5 s and 42.37 at 10 s; from 70, 56.73 and 51.84.
 
 <details>
 <summary>When the slope test is silent</summary>
 
-The law $v' = (v - 49)^2$ has slope zero at its rest. Arrows point up on both sides: a start below creeps up to 49, a start above runs away. Such a rest is **semi-stable**.
+The law $`v' = (v - 49)^2`$ has slope zero at its rest. Arrows point up on both sides: a start below creeps up to 49, a start above runs away. Such a rest is **semi-stable**.
 
 </details>
 
-Solving gives the same answer, $v = 49 + (v_0 - 49)\,e^{-0.2t}$, by the method of [Separable equations](03-separable-equations.md).
+Solving gives the same answer, $`v = 49 + (v_0 - 49)\,e^{-0.2t}`$, by the method of [Separable equations](03-separable-equations.md).
 
 ---
 
@@ -346,7 +352,7 @@ Lean proves the phase-line facts for every rate law with a bounded slope, and th
 - If its arrow points up, it rises at every moment and settles on the rest above. If its arrow points down, it falls and settles on the rest below.
 - At a rest where the rate law has a negative slope, the arrows point in from both sides: the rest is stable.
 - Where that slope is positive, the arrows point away on both sides: the rest is unstable.
-- Every solution of v' = 9.8 − 0.2v is $v = 49 + (v_0 - 49)\,e^{-0.2t}$, so every diver closes in on 49 m/s.
+- Every solution of v' = 9.8 − 0.2v is $`v = 49 + (v_0 - 49)\,e^{-0.2t}`$, so every diver closes in on 49 m/s.
 - The rest is 49. The rate is 9.8 at 0, −4.2 at 70, 0.8 at 45, 8.8 at 5 and −5.2 at 75.
 - 90% of 49 is 44.1. The parachute rest is 5 m/s, the coffee rests at 20 C, and halving the drag moves the rest to 98.
 - Euler steps of 10 s from 70 go 70, 28, 70. One 5 s step lands on 49. A 12 s step gives 19.6, multiplying the gap by −1.4.
@@ -707,7 +713,7 @@ example : (49 / 5 : ℚ) + 1 / 5 * (-49) = 0 := by norm_num
 > **Reading the phase line as a picture of time.** It shows where speed goes, not when. From 0 the diver is still short of 49 at 20 s (48.10): the rest is approached, never reached.
 >
 > - **Drawing a curve across the rest.** No solution crosses 49; a walk with 10 s steps does, printing 70.00, 28.00, 70.00 for ever.
-> - **Judging a rest by how slowly things move near it.** Every rest has rate zero. Stability comes from the sign of $f$ on each side: with the drag sign flipped the rest at −49 repels.
+> - **Judging a rest by how slowly things move near it.** Every rest has rate zero. Stability comes from the sign of $`f`$ on each side: with the drag sign flipped the rest at −49 repels.
 > - **One phase line for a law that changes in time.** After the chute opens the rest is 5 m/s; the diver is at 5.74 m/s by 12 s.
 
 ---

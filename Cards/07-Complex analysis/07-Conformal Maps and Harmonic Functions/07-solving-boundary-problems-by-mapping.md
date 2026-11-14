@@ -26,41 +26,47 @@ To scale, 30 units per unit length. The dashed line y = 1 lands on the ray at an
 
 ## The formula
 
-Let f be a holomorphic map and U a real function with continuous second partial derivatives. The **Laplacian** of U, written $\Delta U$, adds its two second partial derivatives, in x and in y; U is harmonic exactly when $\Delta U = 0$. $U \circ f$, read "U after f", has value U(f(z)) at z.
+Let f be a holomorphic map and U a real function with continuous second partial derivatives. The **Laplacian** of U, written $`\Delta U`$, adds its two second partial derivatives, in x and in y; U is harmonic exactly when $`\Delta U = 0`$. $`U \circ f`$, read "U after f", has value U(f(z)) at z.
 
-$$\Delta(U \circ f)(z) = \lvert f'(z)\rvert^2 \,(\Delta U)(f(z))$$
+```math
+\Delta(U \circ f)(z) = \lvert f'(z)\rvert^2 \,(\Delta U)(f(z))
+```
 
 **Read it aloud:** the Laplacian of U after f equals the Laplacian of U at the image point, times the square of the map's local stretch.
 
-When U is harmonic the right side is 0, so $u = U \circ f$ is harmonic too. On the upper half plane, the points w with positive imaginary part, the temperature that is 0 on the positive real axis and 100 on the negative one is
+When U is harmonic the right side is 0, so $`u = U \circ f`$ is harmonic too. On the upper half plane, the points w with positive imaginary part, the temperature that is 0 on the positive real axis and 100 on the negative one is
 
-$$U(w) = \frac{100}{\pi}\arg w,$$
+```math
+U(w) = \frac{100}{\pi}\arg w,
+```
 
 **Read it aloud:** the temperature is the angle of w, measured from the positive real axis, scaled so that the angle π reads 100.
 
 Here arg w lies in (0, π). Let g(t) be the temperature at each wall point t of the real axis. The half plane's Poisson integral gives the answer at w = a + ib. It is the disc's formula from [The Poisson formula](06-poisson-integral-formula.md), carried over by a Möbius map, a ratio of two first-degree polynomials ([Mobius transformations](02-mobius-transformations-and-the-point-at-infinity.md)):
 
-$$U(a + ib) = \frac{1}{\pi}\int_{-\infty}^{\infty} \frac{b\,g(t)}{(t - a)^2 + b^2}\,dt$$
+```math
+U(a + ib) = \frac{1}{\pi}\int_{-\infty}^{\infty} \frac{b\,g(t)}{(t - a)^2 + b^2}\,dt
+```
 
 **Read it aloud:** a weighted average of the wall temperatures, heaviest near w.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $z$, $x$, $y$ | a point of the hard region; its real and imaginary parts | 1 + i; 1 + 2i | larger y, warmer corridor |
-| $w$ | a point of the half plane | e^(1+i) = 1.468694 + 2.287355i | larger angle, warmer |
-| $f$ | the conformal map from the hard region onto the half plane | e^z; z^2 | — |
-| $f'$ | the complex derivative of f; its modulus is the local stretch | e^(1+i), modulus 2.718282 | a non-zero Laplacian grows by its square |
-| $U$ | the temperature on the half plane, known | (100/π) arg w | — |
-| $u$ | the temperature wanted, u(z) = U(f(z)) | 100y/π; (200/π) arg z | — |
-| $\Delta$ | the Laplacian | 0 for any steady temperature | — |
-| $a$, $b$, $t$, $g$ | parts of w; a wall point; its temperature | g = 100 for t < 0, else 0 | hotter wall, hotter inside |
+| $`z`$, $`x`$, $`y`$ | a point of the hard region; its real and imaginary parts | 1 + i; 1 + 2i | larger y, warmer corridor |
+| $`w`$ | a point of the half plane | e^(1+i) = 1.468694 + 2.287355i | larger angle, warmer |
+| $`f`$ | the conformal map from the hard region onto the half plane | e^z; z^2 | — |
+| $`f'`$ | the complex derivative of f; its modulus is the local stretch | e^(1+i), modulus 2.718282 | a non-zero Laplacian grows by its square |
+| $`U`$ | the temperature on the half plane, known | (100/π) arg w | — |
+| $`u`$ | the temperature wanted, u(z) = U(f(z)) | 100y/π; (200/π) arg z | — |
+| $`\Delta`$ | the Laplacian | 0 for any steady temperature | — |
+| $`a`$, $`b`$, $`t`$, $`g`$ | parts of w; a wall point; its temperature | g = 100 for t < 0, else 0 | hotter wall, hotter inside |
 
 ### When it holds
 
 - **f one-to-one and onto the easy region.** A folding map asks one point for two temperatures: z^2 on the half plane sends 2 and −2 both to 4.
 - **Walls go to walls, continuously.** At a corner the map may stop being conformal (z^2 at 0, where f' = 0) and the wall value may jump; the answer stays bounded but has no value at that point.
 - **The answer is bounded.** 100y/π + e^x sin y has the same wall values and grows without limit.
-- **No heat sources.** A non-zero Laplacian is multiplied by $\lvert f' \rvert^2$; only 0 crosses unchanged.
+- **No heat sources.** A non-zero Laplacian is multiplied by $`\lvert f' \rvert^2`$; only 0 crosses unchanged.
 
 ---
 
@@ -74,7 +80,7 @@ Near any point, a holomorphic f moves a small step h to roughly f'(z) times h: t
 
 Write f = φ + iψ, with φ and ψ its real and imaginary parts. Differentiate U(φ, ψ) twice by the chain rule and add.
 
-The Cauchy–Riemann equations are φ_x = ψ_y and φ_y = −ψ_x, where a subscript marks a partial derivative. They collapse the result: cross terms cancel, both squared-slope terms equal $\lvert f' \rvert^2$, and the terms carrying $\Delta\varphi$ and $\Delta\psi$ vanish, since φ and ψ are harmonic.
+The Cauchy–Riemann equations are φ_x = ψ_y and φ_y = −ψ_x, where a subscript marks a partial derivative. They collapse the result: cross terms cancel, both squared-slope terms equal $`\lvert f' \rvert^2`$, and the terms carrying $`\Delta\varphi`$ and $`\Delta\psi`$ vanish, since φ and ψ are harmonic.
 
 At 1 + i with f = e^z and U = (Re w)^2, whose Laplacian is 2 everywhere, finite differences give 14.778113; the formula gives 2 e^2 = 14.778112.
 
@@ -83,14 +89,15 @@ At 1 + i with f = e^z and U = (Re w)^2, whose Laplacian is 2 everywhere, finite 
 
 Let v(x, y) = U(φ, ψ), and write U_1, U_2 for U's partial derivatives in its first and second slots. Then
 
-$$v_x = U_1\varphi_x + U_2\psi_x,$$
-$$v_{xx} = U_{11}\varphi_x^2 + 2U_{12}\varphi_x\psi_x + U_{22}\psi_x^2 + U_1\varphi_{xx} + U_2\psi_{xx},$$
+$`\displaystyle v_x = U_1\varphi_x + U_2\psi_x,`$
+
+$`\displaystyle v_{xx} = U_{11}\varphi_x^2 + 2U_{12}\varphi_x\psi_x + U_{22}\psi_x^2 + U_1\varphi_{xx} + U_2\psi_{xx},`$
 
 and the same with y in place of x. Adding,
 
-$$\Delta v = U_{11}(\varphi_x^2 + \varphi_y^2) + 2U_{12}(\varphi_x\psi_x + \varphi_y\psi_y) + U_{22}(\psi_x^2 + \psi_y^2) + U_1\Delta\varphi + U_2\Delta\psi.$$
+$`\displaystyle \Delta v = U_{11}(\varphi_x^2 + \varphi_y^2) + 2U_{12}(\varphi_x\psi_x + \varphi_y\psi_y) + U_{22}(\psi_x^2 + \psi_y^2) + U_1\Delta\varphi + U_2\Delta\psi.`$
 
-Cauchy–Riemann gives φ_x ψ_x + φ_y ψ_y = φ_x ψ_x − ψ_x φ_x = 0. It also gives φ_x^2 + φ_y^2 = ψ_x^2 + ψ_y^2 = φ_x^2 + ψ_x^2 = $\lvert f' \rvert^2$, since f' = φ_x + iψ_x. Differentiating Cauchy–Riemann once more gives φ_xx + φ_yy = ψ_yx − ψ_xy = 0, and likewise Δψ = 0. What remains is $\Delta v = \lvert f' \rvert^2 (U_{11} + U_{22})$, evaluated at f(z). Only holomorphy was used; one-to-one matters in Step 2.
+Cauchy–Riemann gives φ_x ψ_x + φ_y ψ_y = φ_x ψ_x − ψ_x φ_x = 0. It also gives φ_x^2 + φ_y^2 = ψ_x^2 + ψ_y^2 = φ_x^2 + ψ_x^2 = $`\lvert f' \rvert^2`$, since f' = φ_x + iψ_x. Differentiating Cauchy–Riemann once more gives φ_xx + φ_yy = ψ_yx − ψ_xy = 0, and likewise Δψ = 0. What remains is $`\Delta v = \lvert f' \rvert^2 (U_{11} + U_{22})`$, evaluated at f(z). Only holomorphy was used; one-to-one matters in Step 2.
 
 </details>
 
@@ -114,7 +121,9 @@ The quarter plane holds the points with positive real and imaginary parts. Hold 
 
 Squaring doubles angles, so z^2 sends angles in (0, π/2) one-to-one onto (0, π): the quarter plane onto the half plane. The wall 2 goes to 4, at 0 degrees; the wall 2i goes to −4, at 100. Carried back:
 
-$$u(z) = \frac{100}{\pi}\arg(z^2) = \frac{200}{\pi}\arg z.$$
+```math
+u(z) = \frac{100}{\pi}\arg(z^2) = \frac{200}{\pi}\arg z.
+```
 
 At 1 + 2i: z^2 = −3 + 4i and u = 70.483276. At the corner, f' = 2z = 0, so z^2 is not conformal there. The corner lies on the wall, not inside, so Step 1 still holds inside; but u nears every value from 0 to 100 along different rays into 0.
 

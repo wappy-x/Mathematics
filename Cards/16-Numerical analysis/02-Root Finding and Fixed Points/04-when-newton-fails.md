@@ -8,13 +8,13 @@
 
 An options desk backs out each option's implied volatility by running Newton's method on the pricing formula. On a one-week option far from the money the price barely moves with volatility, so the tangent is nearly flat, and one Newton step throws the guess to an absurd volatility ([Solving for implied volatility](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md)). A collision code that asks when a ball just touches a wall solves an equation whose root is repeated, and there Newton crawls. Near an ordinary root Newton doubles its correct digits every step, as [Newton and secant](02-newton-and-secant-with-convergence-orders.md) proves. This card is about the days that promise fails.
 
-Two small functions are clean models of all three failures. $x^3$ has a repeated root. $\arctan x$ is S-shaped, like an option's price against volatility: it flattens far from its root, so tangents there are shallow and aim too far.
+Two small functions are clean models of all three failures. $`x^3`$ has a repeated root. $`\arctan x`$ is S-shaped, like an option's price against volatility: it flattens far from its root, so tangents there are shallow and aim too far.
 
-**A root where the curve only touches the axis.** Solve $x^3 = 0$ from a start of 1. The answer is plainly 0. Newton needs 52 steps to get within $10^{-9}$ of it, because each step only removes a third of the error. A known factor of 3 in the step cures it in 1 step.
+**A root where the curve only touches the axis.** Solve $`x^3 = 0`$ from a start of 1. The answer is plainly 0. Newton needs 52 steps to get within $`10^{-9}`$ of it, because each step only removes a third of the error. A known factor of 3 in the step cures it in 1 step.
 
-**A tangent that overshoots.** Solve $\arctan x = 0$ (the angle whose tangent is $x$; its root is 0). From 1.39 Newton crosses the root every step and slowly closes in. From 1.5 each step crosses further: 1.500, −1.694, 2.321, −5.114, 32.296. From 10 the fifth step is $-1.50 \times 10^{37}$.
+**A tangent that overshoots.** Solve $`\arctan x = 0`$ (the angle whose tangent is $`x`$; its root is 0). From 1.39 Newton crosses the root every step and slowly closes in. From 1.5 each step crosses further: 1.500, −1.694, 2.321, −5.114, 32.296. From 10 the fifth step is $`-1.50 \times 10^{37}`$.
 
-**A start that never settles.** Between those two starts sits $x_c = 1.39174520027$. From exactly there, the tangent lands on $-x_c$, and the tangent there lands back on $x_c$. Newton cycles for ever, in exact arithmetic. In floating point the cycle survives 30 steps.
+**A start that never settles.** Between those two starts sits $`x_c = 1.39174520027`$. From exactly there, the tangent lands on $`-x_c`$, and the tangent there lands back on $`x_c`$. Newton cycles for ever, in exact arithmetic. In floating point the cycle survives 30 steps.
 
 The cures are cheap. A known **multiplicity** (how many times the root repeats) restores the fast rate. A **line search** (shrink the step until the miss really falls) tames the overshoot: from 10 it reaches the root in 12 steps. And simple tests on the slope and the bend say in advance when a start is safe.
 
@@ -26,47 +26,51 @@ The cures are cheap. A known **multiplicity** (how many times the root repeats) 
 
 <p align="center"><img src="../figures/when-newton-fails.svg" alt="The curve y = arctan x from x = -2.4 to 2.4. A dashed tangent at the point above x = 1.392 runs down to the axis at x = -1.392. A second dashed tangent at the point below x = -1.392 runs up to the axis at x = 1.392. Dotted uprights join each landing to the curve, closing a loop." width="420"></p>
 
-Drawn to scale from the coordinates on the checks' `figure,` line: 70 units per unit of $x$ and of $y$. The curve flattens as it climbs, so the tangent at 1.392 is shallow and runs past the root to −1.392. The picture is symmetric, so the next tangent runs straight back.
+Drawn to scale from the coordinates on the checks' `figure,` line: 70 units per unit of $`x`$ and of $`y`$. The curve flattens as it climbs, so the tangent at 1.392 is shallow and runs past the root to −1.392. The picture is symmetric, so the next tangent runs straight back.
 
 ---
 
 ## The formula
 
-Notation from [Newton and secant](02-newton-and-secant-with-convergence-orders.md), in one line: the root is $x^*$, the guesses are $x_k$, and the error is $e_k = x_k - x^*$. Newton's step is $x_{k+1} = x_k - f(x_k)/f'(x_k)$.
+Notation from [Newton and secant](02-newton-and-secant-with-convergence-orders.md), in one line: the root is $`x^*`$, the guesses are $`x_k`$, and the error is $`e_k = x_k - x^*`$. Newton's step is $`x_{k+1} = x_k - f(x_k)/f'(x_k)`$.
 
-A root has **multiplicity** $m$ when $f(x) = (x - x^*)^m g(x)$ with $g(x^*) \neq 0$: the factor $x - x^*$ appears $m$ times. For $x^3$, $m = 3$ and $g = 1$. At such a root, plain Newton and the **modified Newton** step behave like this:
+A root has **multiplicity** $`m`$ when $`f(x) = (x - x^*)^m g(x)`$ with $`g(x^*) \neq 0`$: the factor $`x - x^*`$ appears $`m`$ times. For $`x^3`$, $`m = 3`$ and $`g = 1`$. At such a root, plain Newton and the **modified Newton** step behave like this:
 
-$$\frac{e_{k+1}}{e_k} \to \frac{m-1}{m} \;\;\text{(plain)}, \qquad x_{k+1} = x_k - m\,\frac{f(x_k)}{f'(x_k)}, \quad \frac{e_{k+1}}{e_k^{2}} \to \frac{g'(x^*)}{m\,g(x^*)} \;\;\text{(modified)}$$
+```math
+\frac{e_{k+1}}{e_k} \to \frac{m-1}{m} \;\;\text{(plain)}, \qquad x_{k+1} = x_k - m\,\frac{f(x_k)}{f'(x_k)}, \quad \frac{e_{k+1}}{e_k^{2}} \to \frac{g'(x^*)}{m\,g(x^*)} \;\;\text{(modified)}
+```
 
 **Read it aloud:** plain Newton keeps a fixed share (m − 1)/m of the error each step; stretch the step by m and the next error is again a constant times the current error squared.
 
-The **damped step** keeps Newton's direction $d_k = -f(x_k)/f'(x_k)$ but takes only a fraction $\lambda$ of it. Start at $\lambda = 1$ and halve until
+The **damped step** keeps Newton's direction $`d_k = -f(x_k)/f'(x_k)`$ but takes only a fraction $`\lambda`$ of it. Start at $`\lambda = 1`$ and halve until
 
-$$|f(x_k + \lambda d_k)| \le (1 - c_1\lambda)\,|f(x_k)|$$
+```math
+|f(x_k + \lambda d_k)| \le (1 - c_1\lambda)\,|f(x_k)|
+```
 
-**Read it aloud:** accept the step once the new miss is below the old one by at least the share $c_1\lambda$ of the old miss.
+**Read it aloud:** accept the step once the new miss is below the old one by at least the share $`c_1\lambda`$ of the old miss.
 
 This is the Armijo test from [Line search](../../15-Optimization/02-Unconstrained%20Methods/04-line-search-armijo-and-wolfe.md), applied to the size of the miss instead of a cost.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $f'$, $f''$ | the function whose zero is wanted, its slope, and the rate the slope changes (the bend) | $x^3$; $\arctan x$, with slope $1/(1+x^2)$ | — |
-| $x^*$, $x_k$, $e_k$ | the root; the guess after $k$ steps; its error $x_k - x^*$ | root 0; $x_0 = 1$ or 10 | — |
-| $q$ | the error ratio $e_{k}/e_{k-1}$ | 0.666667 on $x^3$ | slower: $q$ near 1 is a crawl |
-| $m$, $g$ | the multiplicity; the factor left after taking out $(x - x^*)^m$ | 3; $g = 1$ for $x^3$, $g = 1 + x$ for $x^3 + x^4$ | plain Newton slows towards ratio 1 |
-| $N$, $x_c$ | Newton's step as a map, $N(x) = x - f(x)/f'(x)$; the start where arctan cycles | $x_c$ = 1.39174520027 | a start above $x_c$ runs away |
-| $d_k$, $\lambda$, $c_1$ | Newton's full step; the share of it taken; the share of decrease demanded; in the proof, $\bar\lambda$ is the largest share sure to pass and $\lambda_{\min}$ the floor on accepted shares | $c_1 = 10^{-4}$; $\lambda$ = 0.125 at first from 10 | larger $c_1$ halves more often |
-| $\mu$, $M$ | a floor on the slope's size and a ceiling on the bend's size, used in the damping proof | $\mu = 1/101$ on $[-10, 10]$; $M$ = 0.649519 | larger $M$ or smaller $\mu$: shorter safe steps |
-| $\beta$, $\eta$, $L$, $h$, $t^*$ | Kantorovich's inputs: $1/\lvert f'(x_0)\rvert$, the first step's length, a bend bound, their product $h = \beta L \eta$, and the radius that must hold a root | $h \le 1/2$ for $\lvert x_0\rvert \le$ 0.5184 | $h > 1/2$: no promise |
-| $u$, $\delta$ | the unit roundoff, $2^{-53}$: the largest relative rounding error of one operation; $\delta$, the rounding noise in one computed value of $f$ | $u$ = 1.11e-16; $\delta$ about $u$ | larger $\delta$: a wider band that looks like a root |
-| $\xi$, $\ell$ | a point between two others that Taylor's theorem says exists; the limit of the guesses, in the proof | — | — |
+| $`f`$, $`f'`$, $`f''`$ | the function whose zero is wanted, its slope, and the rate the slope changes (the bend) | $`x^3`$; $`\arctan x`$, with slope $`1/(1+x^2)`$ | — |
+| $`x^*`$, $`x_k`$, $`e_k`$ | the root; the guess after $`k`$ steps; its error $`x_k - x^*`$ | root 0; $`x_0 = 1`$ or 10 | — |
+| $`q`$ | the error ratio $`e_{k}/e_{k-1}`$ | 0.666667 on $`x^3`$ | slower: $`q`$ near 1 is a crawl |
+| $`m`$, $`g`$ | the multiplicity; the factor left after taking out $`(x - x^*)^m`$ | 3; $`g = 1`$ for $`x^3`$, $`g = 1 + x`$ for $`x^3 + x^4`$ | plain Newton slows towards ratio 1 |
+| $`N`$, $`x_c`$ | Newton's step as a map, $`N(x) = x - f(x)/f'(x)`$; the start where arctan cycles | $`x_c`$ = 1.39174520027 | a start above $`x_c`$ runs away |
+| $`d_k`$, $`\lambda`$, $`c_1`$ | Newton's full step; the share of it taken; the share of decrease demanded; in the proof, $`\bar\lambda`$ is the largest share sure to pass and $`\lambda_{\min}`$ the floor on accepted shares | $`c_1 = 10^{-4}`$; $`\lambda`$ = 0.125 at first from 10 | larger $`c_1`$ halves more often |
+| $`\mu`$, $`M`$ | a floor on the slope's size and a ceiling on the bend's size, used in the damping proof | $`\mu = 1/101`$ on $`[-10, 10]`$; $`M`$ = 0.649519 | larger $`M`$ or smaller $`\mu`$: shorter safe steps |
+| $`\beta`$, $`\eta`$, $`L`$, $`h`$, $`t^*`$ | Kantorovich's inputs: $`1/\lvert f'(x_0)\rvert`$, the first step's length, a bend bound, their product $`h = \beta L \eta`$, and the radius that must hold a root | $`h \le 1/2`$ for $`\lvert x_0\rvert \le`$ 0.5184 | $`h > 1/2`$: no promise |
+| $`u`$, $`\delta`$ | the unit roundoff, $`2^{-53}`$: the largest relative rounding error of one operation; $`\delta`$, the rounding noise in one computed value of $`f`$ | $`u`$ = 1.11e-16; $`\delta`$ about $`u`$ | larger $`\delta`$: a wider band that looks like a root |
+| $`\xi`$, $`\ell`$ | a point between two others that Taylor's theorem says exists; the limit of the guesses, in the proof | — | — |
 
 ### When it holds
 
-- **The multiplicity is known.** The modified step needs the true $m$; on a simple root, $m = 3$ triples a good step into an overshoot. The code estimates $m$ from the ratio: $1/(1 - q)$ = 3.0000.
-- **The rounding noise is below the curve.** Near a triple root $f$ is about $e^3$, tiny. Multiplied out as $x^3 - 3x^2 + 3x - 1$, the computed value is pure rounding noise within about 4.81e-6 of the root, and Newton stops there with a residual of exactly 0. No step rule fixes this; the problem itself is badly conditioned.
+- **The multiplicity is known.** The modified step needs the true $`m`$; on a simple root, $`m = 3`$ triples a good step into an overshoot. The code estimates $`m`$ from the ratio: $`1/(1 - q)`$ = 3.0000.
+- **The rounding noise is below the curve.** Near a triple root $`f`$ is about $`e^3`$, tiny. Multiplied out as $`x^3 - 3x^2 + 3x - 1`$, the computed value is pure rounding noise within about 4.81e-6 of the root, and Newton stops there with a residual of exactly 0. No step rule fixes this; the problem itself is badly conditioned.
 - **The slope stays away from zero on the way.** The damping proof divides by the slope. If the slope can vanish between the start and the root, the damped step can stall at a point where the miss has a local minimum that is not zero.
-- **The bend is bounded.** The step-length floor in the proof uses a ceiling $M$ on $|f''|$. Without one, no fixed floor exists.
+- **The bend is bounded.** The step-length floor in the proof uses a ceiling $`M`$ on $`|f''|`$. Without one, no fixed floor exists.
 
 ---
 
@@ -80,25 +84,29 @@ Two things spoil it. At a repeated root the curve is flat, so each tangent lands
 
 ### Step 1: at a multiple root, a fixed share of the error survives
 
-Write $f(x) = e^m g(x)$ with $e = x - x^*$. Its slope is $f'(x) = e^{m-1}\,(m g + e g')$. Put both into Newton's step:
+Write $`f(x) = e^m g(x)`$ with $`e = x - x^*`$. Its slope is $`f'(x) = e^{m-1}\,(m g + e g')`$. Put both into Newton's step:
 
-$$e_{k+1} = e_k - \frac{e_k\,g}{m g + e_k g'} = e_k\,\frac{(m-1)\,g + e_k\,g'}{m g + e_k\,g'}$$
+```math
+e_{k+1} = e_k - \frac{e_k\,g}{m g + e_k g'} = e_k\,\frac{(m-1)\,g + e_k\,g'}{m g + e_k\,g'}
+```
 
-As $e_k \to 0$ the fraction tends to $(m-1)/m$. For $x^3$ it is exactly $2/3$ at every step, so $x_k = (2/3)^k$.
+As $`e_k \to 0`$ the fraction tends to $`(m-1)/m`$. For $`x^3`$ it is exactly $`2/3`$ at every step, so $`x_k = (2/3)^k`$.
 
-Each step then gains only $\log_{10}(3/2)$ = 0.176 digits. Nine digits need $9/0.176$, so 52 steps. The code measures 52, and its iterates match $(2/3)^k$ to a relative gap of 2.00e-15.
+Each step then gains only $`\log_{10}(3/2)`$ = 0.176 digits. Nine digits need $`9/0.176`$, so 52 steps. The code measures 52, and its iterates match $`(2/3)^k`$ to a relative gap of 2.00e-15.
 
-The halving error at a double root, shown on [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md), is the case $m = 2$.
+The halving error at a double root, shown on [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md), is the case $`m = 2`$.
 
 ### Step 2: stretching the step by m restores order 2
 
-Multiply the step by $m$. The same algebra gives
+Multiply the step by $`m`$. The same algebra gives
 
-$$e_{k+1} = e_k - \frac{m\,e_k\,g}{m g + e_k g'} = e_k^{2}\,\frac{g'}{m g + e_k\,g'}$$
+```math
+e_{k+1} = e_k - \frac{m\,e_k\,g}{m g + e_k g'} = e_k^{2}\,\frac{g'}{m g + e_k\,g'}
+```
 
-The next error is a constant times the current error squared: order 2 again. For $x^3$, $g' = 0$, so one step lands exactly on 0. For $x^3 + x^4$, $g = 1 + x$ and the law is exactly $e_{k+1} = e_k^2/(3 + 4e_k)$. The code's ratios 0.142857, 0.280000, 0.330813, 0.333329 match that law and close in on 1/3.
+The next error is a constant times the current error squared: order 2 again. For $`x^3`$, $`g' = 0`$, so one step lands exactly on 0. For $`x^3 + x^4`$, $`g = 1 + x`$ and the law is exactly $`e_{k+1} = e_k^2/(3 + 4e_k)`$. The code's ratios 0.142857, 0.280000, 0.330813, 0.333329 match that law and close in on 1/3.
 
-When $m$ is unknown, read it off the plain run: a steady ratio $q$ means $m = 1/(1-q)$. A second cure needs no $m$ at all: apply Newton to $f/f'$, which has a simple root at the same place.
+When $`m`$ is unknown, read it off the plain run: a steady ratio $`q`$ means $`m = 1/(1-q)`$. A second cure needs no $`m`$ at all: apply Newton to $`f/f'`$, which has a simple root at the same place.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -110,79 +118,81 @@ xychart-beta
     line [0.00, -0.85, -2.24, -4.97, -10.41, -21.30]
 ```
 
-Upper line: plain Newton on $x^3$, losing 0.176 of a digit per step, a straight line. Lower line: the modified step on $x^3 + x^4$, whose digit count roughly doubles each step.
+Upper line: plain Newton on $`x^3`$, losing 0.176 of a digit per step, a straight line. Lower line: the modified step on $`x^3 + x^4`$, whose digit count roughly doubles each step.
 
 ### Step 3: the triple root also has a precision floor
 
-The rate is a property of the method; the floor is a property of the problem. Near a root of multiplicity $m$, $f$ is about a constant times $e^m$. If evaluating $f$ carries rounding noise of size $\delta$, every point with $|e|^m$ below $\delta$ looks like a root. So no evaluation-based method can resolve the root better than about $\delta^{1/m}$.
+The rate is a property of the method; the floor is a property of the problem. Near a root of multiplicity $`m`$, $`f`$ is about a constant times $`e^m`$. If evaluating $`f`$ carries rounding noise of size $`\delta`$, every point with $`|e|^m`$ below $`\delta`$ looks like a root. So no evaluation-based method can resolve the root better than about $`\delta^{1/m}`$.
 
-For $(x-1)^3$ multiplied out, the terms near $x = 1$ are of size 1, so $\delta$ is about $u$. The estimate is $u^{1/3}$ = 4.81e-6. Newton stops after 30 steps with a computed residual of exactly 0 and a true error of 4.67e-6. A residual of zero is a small backward error, not a small forward error. In the terms of [Conditioning and stability](../01-Floating%20Point%20and%20Error/05-conditioning-and-stability.md), the trouble is conditioning, not stability: a multiple root's condition number is infinite.
+For $`(x-1)^3`$ multiplied out, the terms near $`x = 1`$ are of size 1, so $`\delta`$ is about $`u`$. The estimate is $`u^{1/3}`$ = 4.81e-6. Newton stops after 30 steps with a computed residual of exactly 0 and a true error of 4.67e-6. A residual of zero is a small backward error, not a small forward error. In the terms of [Conditioning and stability](../01-Floating%20Point%20and%20Error/05-conditioning-and-stability.md), the trouble is conditioning, not stability: a multiple root's condition number is infinite.
 
 ### Step 4: on arctan every step crosses the root
 
-For $x > 0$, $\arctan x > x/(1 + x^2)$: both sides are 0 at 0, and the left side's slope exceeds the right side's by $2x^2/(1+x^2)^2$. So $(1 + x^2)\arctan x > x$, and $N(x) = x - (1+x^2)\arctan x$ is negative. By symmetry, every Newton step on arctan lands on the other side of the root.
+For $`x > 0`$, $`\arctan x > x/(1 + x^2)`$: both sides are 0 at 0, and the left side's slope exceeds the right side's by $`2x^2/(1+x^2)^2`$. So $`(1 + x^2)\arctan x > x`$, and $`N(x) = x - (1+x^2)\arctan x`$ is negative. By symmetry, every Newton step on arctan lands on the other side of the root.
 
-So the size $|x_k|$ decides everything. It shrinks when $(1+x^2)\arctan x < 2x$ and grows when it is larger. The boundary is $x_c$, the root of $(1+x^2)\arctan x = 2x$. The code finds it two ways, by bisection and by the secant step, and both give 1.39174520027.
+So the size $`|x_k|`$ decides everything. It shrinks when $`(1+x^2)\arctan x < 2x`$ and grows when it is larger. The boundary is $`x_c`$, the root of $`(1+x^2)\arctan x = 2x`$. The code finds it two ways, by bisection and by the secant step, and both give 1.39174520027.
 
-- Below $x_c$, $|x_k|$ falls each step, so the run converges. From 1.39: 1.390, −1.387, 1.380, −1.360, 1.309, −1.184, 0.905.
-- Above $x_c$, $|x_k|$ grows each step, and grows faster the further out it is.
-- At $x_c$, $N(x_c) = -x_c$ exactly: the 2-cycle in the picture.
+- Below $`x_c`$, $`|x_k|`$ falls each step, so the run converges. From 1.39: 1.390, −1.387, 1.380, −1.360, 1.309, −1.184, 0.905.
+- Above $`x_c`$, $`|x_k|`$ grows each step, and grows faster the further out it is.
+- At $`x_c`$, $`N(x_c) = -x_c`$ exactly: the 2-cycle in the picture.
 
-The cycle is unstable. The slope of the step map there is $N'(x_c) = -2x_c\arctan x_c$ = −2.6380. A slip from the cycle grows by $2.6380^2$ = 6.9593 per round trip. From a rounding slip of $10^{-16}$ to $10^{-3}$ takes about 30.9 steps, and the code's float run breaks away after 30. The exact count depends on the last bits of the arctan routine.
+The cycle is unstable. The slope of the step map there is $`N'(x_c) = -2x_c\arctan x_c`$ = −2.6380. A slip from the cycle grows by $`2.6380^2`$ = 6.9593 per round trip. From a rounding slip of $`10^{-16}`$ to $`10^{-3}`$ takes about 30.9 steps, and the code's float run breaks away after 30. The exact count depends on the last bits of the arctan routine.
 
 ### Step 5: a condition that guarantees convergence
 
-**Theorem.** Let $x_0 > x^*$, with $f$ twice differentiable on $[x^*, x_0]$, $f' > 0$ on $(x^*, x_0]$ and $f'' \ge 0$ there. Then Newton's guesses fall steadily and converge to $x^*$. The mirror cases hold too. In one line: **$f$ and $f''$ share a sign at the start, $f''$ keeps that sign, and $f'$ does not vanish, all the way to the root.**
+**Theorem.** Let $`x_0 > x^*`$, with $`f`$ twice differentiable on $`[x^*, x_0]`$, $`f' > 0`$ on $`(x^*, x_0]`$ and $`f'' \ge 0`$ there. Then Newton's guesses fall steadily and converge to $`x^*`$. The mirror cases hold too. In one line: **$`f`$ and $`f''`$ share a sign at the start, $`f''`$ keeps that sign, and $`f'`$ does not vanish, all the way to the root.**
 
 The idea: a curve bending towards the axis lies above its tangents. So each tangent lands between the root and the guess. The guesses fall but never pass the root, so they must settle, and they can only settle on a root.
 
 <details>
 <summary>Detailed proof: monotone convergence from the convex side</summary>
 
-Suppose $x^* < x_k \le x_0$. Then $f(x_k) > 0$, because $f$ is strictly increasing on $[x^*, x_0]$ and $f(x^*) = 0$. With $f'(x_k) > 0$, the step $-f(x_k)/f'(x_k)$ is negative, so $x_{k+1} < x_k$.
+Suppose $`x^* < x_k \le x_0`$. Then $`f(x_k) > 0`$, because $`f`$ is strictly increasing on $`[x^*, x_0]`$ and $`f(x^*) = 0`$. With $`f'(x_k) > 0`$, the step $`-f(x_k)/f'(x_k)`$ is negative, so $`x_{k+1} < x_k`$.
 
-Since $f'' \ge 0$, the curve lies above its tangent at $x_k$ (Taylor's theorem with a remainder $\tfrac12 f''(\xi)(x - x_k)^2 \ge 0$). At $x^*$ this reads $0 = f(x^*) \ge f(x_k) + f'(x_k)(x^* - x_k)$. Divide by $f'(x_k) > 0$ and rearrange: $x_{k+1} = x_k - f(x_k)/f'(x_k) \ge x^*$.
+Since $`f'' \ge 0`$, the curve lies above its tangent at $`x_k`$ (Taylor's theorem with a remainder $`\tfrac12 f''(\xi)(x - x_k)^2 \ge 0`$). At $`x^*`$ this reads $`0 = f(x^*) \ge f(x_k) + f'(x_k)(x^* - x_k)`$. Divide by $`f'(x_k) > 0`$ and rearrange: $`x_{k+1} = x_k - f(x_k)/f'(x_k) \ge x^*`$.
 
-So the guesses fall and stay at or above $x^*$. A falling sequence bounded below has a limit $\ell \ge x^*$. The steps $x_k - x_{k+1} = f(x_k)/f'(x_k)$ tend to 0, and $f'$ is bounded on $[x^*, x_0]$, so $f(x_k) \to 0$ and $f(\ell) = 0$. The only zero of $f$ on $[x^*, x_0]$ is $x^*$, so $\ell = x^*$. $\blacksquare$
+So the guesses fall and stay at or above $`x^*`$. A falling sequence bounded below has a limit $`\ell \ge x^*`$. The steps $`x_k - x_{k+1} = f(x_k)/f'(x_k)`$ tend to 0, and $`f'`$ is bounded on $`[x^*, x_0]`$, so $`f(x_k) \to 0`$ and $`f(\ell) = 0`$. The only zero of $`f`$ on $`[x^*, x_0]`$ is $`x^*`$, so $`\ell = x^*`$. $`\blacksquare`$
 
 </details>
 
-For $x^3$ from any positive start, $f > 0$ and $f'' = 6x > 0$: the theorem applies, and the code confirms the 52 guesses fall steadily. It promises convergence, not speed.
+For $`x^3`$ from any positive start, $`f > 0`$ and $`f'' = 6x > 0`$: the theorem applies, and the code confirms the 52 guesses fall steadily. It promises convergence, not speed.
 
-For arctan the test fails at every start. For $x > 0$, $f > 0$ but $f'' = -2x/(1+x^2)^2 < 0$. The curve bends away from the axis, which is exactly why every step overshoots. The [Solving for implied volatility](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md) card uses this same theorem: its safe start sits where the option price changes bend.
+For arctan the test fails at every start. For $`x > 0`$, $`f > 0`$ but $`f'' = -2x/(1+x^2)^2 < 0`$. The curve bends away from the axis, which is exactly why every step overshoots. The [Solving for implied volatility](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md) card uses this same theorem: its safe start sits where the option price changes bend.
 
 ### Step 6: damping guarantees convergence from far away
 
-**Theorem.** Suppose $|f''| \le M$ everywhere, and $|f'| \ge \mu > 0$ on the interval where $|f| \le |f(x_0)|$. Then the damped step always finds an acceptable $\lambda$, never smaller than $\min\!\left(1, (1-c_1)\mu^2 / (M|f(x_0)|)\right)$. The miss shrinks by a fixed factor each step, so the guesses converge to the root. Near the root $\lambda = 1$ is accepted, and plain Newton's order 2 returns.
+**Theorem.** Suppose $`|f''| \le M`$ everywhere, and $`|f'| \ge \mu > 0`$ on the interval where $`|f| \le |f(x_0)|`$. Then the damped step always finds an acceptable $`\lambda`$, never smaller than $`\min\!\left(1, (1-c_1)\mu^2 / (M|f(x_0)|)\right)`$. The miss shrinks by a fixed factor each step, so the guesses converge to the root. Near the root $`\lambda = 1`$ is accepted, and plain Newton's order 2 returns.
 
-The idea: along Newton's direction the miss falls at the full rate to first order. Only the bend can spoil that, and the bend's effect shrinks like $\lambda^2$. So a short enough step always wins.
+The idea: along Newton's direction the miss falls at the full rate to first order. Only the bend can spoil that, and the bend's effect shrinks like $`\lambda^2`$. So a short enough step always wins.
 
 <details>
 <summary>Detailed proof: the damped step is accepted, and the miss falls geometrically</summary>
 
-Write $f = f(x_k)$ and $d = -f/f'(x_k)$, so $|d| \le |f|/\mu$. Taylor's theorem gives a point $\xi$ with
+Write $`f = f(x_k)`$ and $`d = -f/f'(x_k)`$, so $`|d| \le |f|/\mu`$. Taylor's theorem gives a point $`\xi`$ with
 
-$$f(x_k + \lambda d) = f + \lambda f'(x_k)\,d + \tfrac12\lambda^2 f''(\xi)\,d^2 = (1 - \lambda) f + \tfrac12\lambda^2 f''(\xi)\,d^2.$$
+$`\displaystyle f(x_k + \lambda d) = f + \lambda f'(x_k)\,d + \tfrac12\lambda^2 f''(\xi)\,d^2 = (1 - \lambda) f + \tfrac12\lambda^2 f''(\xi)\,d^2.`$
 
-For $0 < \lambda \le 1$ this gives $|f(x_k + \lambda d)| \le |f|\,\bigl(1 - \lambda + \tfrac12\lambda^2 M |f| / \mu^2\bigr)$. The Armijo test holds whenever the bracket is at most $1 - c_1\lambda$, which is whenever $\lambda \le \bar\lambda = 2(1 - c_1)\mu^2/(M|f|)$.
+For $`0 < \lambda \le 1`$ this gives $`|f(x_k + \lambda d)| \le |f|\,\bigl(1 - \lambda + \tfrac12\lambda^2 M |f| / \mu^2\bigr)`$. The Armijo test holds whenever the bracket is at most $`1 - c_1\lambda`$, which is whenever $`\lambda \le \bar\lambda = 2(1 - c_1)\mu^2/(M|f|)`$.
 
-Halving from 1 stops at the first $\lambda \le \bar\lambda$ or earlier, so the accepted $\lambda$ is at least $\min(1, \bar\lambda/2)$. Each accepted step keeps $|f|$ below $|f(x_0)|$, so the guesses stay where $\mu$ applies, and $|f|$ only falls, so $\bar\lambda$ only grows. Call the first floor $\lambda_{\min}$. Then $|f(x_{k+1})| \le (1 - c_1\lambda_{\min})\,|f(x_k)|$, so $|f(x_k)| \to 0$ geometrically.
+Halving from 1 stops at the first $`\lambda \le \bar\lambda`$ or earlier, so the accepted $`\lambda`$ is at least $`\min(1, \bar\lambda/2)`$. Each accepted step keeps $`|f|`$ below $`|f(x_0)|`$, so the guesses stay where $`\mu`$ applies, and $`|f|`$ only falls, so $`\bar\lambda`$ only grows. Call the first floor $`\lambda_{\min}`$. Then $`|f(x_{k+1})| \le (1 - c_1\lambda_{\min})\,|f(x_k)|`$, so $`|f(x_k)| \to 0`$ geometrically.
 
-The mean value theorem converts the miss into an error: $|x_k - x^*| \le |f(x_k)|/\mu \to 0$. Once $|f(x_k)| \le 2(1 - c_1)\mu^2/M$, $\bar\lambda \ge 1$ and the full step passes, so the run ends as plain Newton. $\blacksquare$
+The mean value theorem converts the miss into an error: $`|x_k - x^*| \le |f(x_k)|/\mu \to 0`$. Once $`|f(x_k)| \le 2(1 - c_1)\mu^2/M`$, $`\bar\lambda \ge 1`$ and the full step passes, so the run ends as plain Newton. $`\blacksquare`$
 
 </details>
 
-For arctan from 10: $\mu = 1/101$ on $[-10, 10]$, and the largest bend is $M = 3\sqrt3/8$ = 0.649519, at $x = 1/\sqrt3$. The code checks $M$ against a fine scan. The theorem's floor is 1.03e-4. The run's smallest step length is 0.125, which is 1219 times the floor: a worst-case bound is safe but pessimistic. The step lengths were 0.125, 0.125, 0.25, 0.25, then eight full steps.
+For arctan from 10: $`\mu = 1/101`$ on $`[-10, 10]`$, and the largest bend is $`M = 3\sqrt3/8`$ = 0.649519, at $`x = 1/\sqrt3`$. The code checks $`M`$ against a fine scan. The theorem's floor is 1.03e-4. The run's smallest step length is 0.125, which is 1219 times the floor: a worst-case bound is safe but pessimistic. The step lengths were 0.125, 0.125, 0.25, 0.25, then eight full steps.
 
 ### Step 7: Newton–Kantorovich, a guarantee that also proves a root exists
 
-The theorems above assume a root. The **Newton–Kantorovich theorem** proves one exists, from numbers at the start only. It also works in many unknowns. In one variable, set $\beta = 1/|f'(x_0)|$, $\eta = |f(x_0)/f'(x_0)|$ (the first step's length), and let $L$ bound $|f''|$ on an interval around $x_0$ that reaches at least $t^*$ (below) on each side. If
+The theorems above assume a root. The **Newton–Kantorovich theorem** proves one exists, from numbers at the start only. It also works in many unknowns. In one variable, set $`\beta = 1/|f'(x_0)|`$, $`\eta = |f(x_0)/f'(x_0)|`$ (the first step's length), and let $`L`$ bound $`|f''|`$ on an interval around $`x_0`$ that reaches at least $`t^*`$ (below) on each side. If
 
-$$h = \beta\,L\,\eta \le \tfrac12,$$
+```math
+h = \beta\,L\,\eta \le \tfrac12,
+```
 
-then $f$ has a root within $t^* = (1 - \sqrt{1 - 2h})/(\beta L)$ of $x_0$, and Newton from $x_0$ converges to it. This card states it without proof. The proof bounds the true run by a simple quadratic's Newton run; the second source gives it in full.
+then $`f`$ has a root within $`t^* = (1 - \sqrt{1 - 2h})/(\beta L)`$ of $`x_0`$, and Newton from $`x_0`$ converges to it. This card states it without proof. The proof bounds the true run by a simple quadratic's Newton run; the second source gives it in full.
 
-On arctan with $L$ = 0.649519, $h \le 1/2$ holds exactly for $|x_0| \le$ 0.5184. Newton actually converges for $|x_0| <$ 1.3917, so the guarantee covers a region 2.685 times smaller than the truth. At the edge it promises a root within $t^*$ = 1.2135 of $x_0$; the true distance is 0.5184.
+On arctan with $`L`$ = 0.649519, $`h \le 1/2`$ holds exactly for $`|x_0| \le`$ 0.5184. Newton actually converges for $`|x_0| <`$ 1.3917, so the guarantee covers a region 2.685 times smaller than the truth. At the edge it promises a root within $`t^*`$ = 1.2135 of $`x_0`$; the true distance is 0.5184.
 
 ---
 
@@ -192,15 +202,15 @@ The two functions, a few steps each.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $x^3$, plain step 1 | $1 - 1^3/(3 \times 1^2) = 1 - 1/3$ | 0.666667 |
-| $x^3$, plain step 2 | $\tfrac23 - (\tfrac23)^3 / (3 \times (\tfrac23)^2) = \tfrac23 \times \tfrac23$ | 0.444444 |
-| $x^3$, steps to $10^{-9}$ | $9 \div \log_{10} 1.5 = 9 \div 0.176$, rounded up | 52 |
-| multiplicity from the ratio | $1/(1 - 0.666667)$ | 3.0000 |
-| $x^3$, modified step | $1 - 3 \times 1^3/(3 \times 1^2)$ | 0 |
-| $x^3 + x^4$, modified step | $1 - 3 \times 2/7 = 1/7$ | 0.142857 |
-| arctan from 1.5 | $1.5 - (1 + 2.25) \times \arctan 1.5$ | −1.694 |
-| slip growth per round trip | $(2 \times 1.39174520027 \times \arctan 1.39174520027)^2$ | 6.9593 |
-| arctan from 10, damped | 12 steps, step lengths 0.125, 0.125, 0.25, 0.25, then 1 | **error 0 in floats, against $-1.50 \times 10^{37}$ undamped** |
+| $`x^3`$, plain step 1 | $`1 - 1^3/(3 \times 1^2) = 1 - 1/3`$ | 0.666667 |
+| $`x^3`$, plain step 2 | $`\tfrac23 - (\tfrac23)^3 / (3 \times (\tfrac23)^2) = \tfrac23 \times \tfrac23`$ | 0.444444 |
+| $`x^3`$, steps to $`10^{-9}`$ | $`9 \div \log_{10} 1.5 = 9 \div 0.176`$, rounded up | 52 |
+| multiplicity from the ratio | $`1/(1 - 0.666667)`$ | 3.0000 |
+| $`x^3`$, modified step | $`1 - 3 \times 1^3/(3 \times 1^2)`$ | 0 |
+| $`x^3 + x^4`$, modified step | $`1 - 3 \times 2/7 = 1/7`$ | 0.142857 |
+| arctan from 1.5 | $`1.5 - (1 + 2.25) \times \arctan 1.5`$ | −1.694 |
+| slip growth per round trip | $`(2 \times 1.39174520027 \times \arctan 1.39174520027)^2`$ | 6.9593 |
+| arctan from 10, damped | 12 steps, step lengths 0.125, 0.125, 0.25, 0.25, then 1 | **error 0 in floats, against $`-1.50 \times 10^{37}`$ undamped** |
 
 All errors are true errors: the roots here are known exactly. Knowing the multiplicity turns 52 steps into 1. Halving the step turns a run that overflows towards infinity into one that lands on the root.
 
@@ -208,16 +218,16 @@ All errors are true errors: the roots here are known exactly. Knowing the multip
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Plain Newton at the triple root of $x^3$ | 52 steps, ratio 0.666667 | The slope is zero at the root, so the order falls to 1 |
-| Full steps on arctan from 10 | $-1.50 \times 10^{37}$ after 5 steps | The curve bends away from the axis, so every tangent overshoots |
-| Start exactly on the cycle point $x_c$ | the 2-cycle holds for 30 steps, then $x$ = 1.3897 | An unstable cycle: rounding slips grow 6.9593 times per round trip |
-| Trust a zero residual on $(x-1)^3$ multiplied out | residual 0.00e0, true error 4.67e-6 | Rounding noise hides the root: bad conditioning, not a bad method |
+| Plain Newton at the triple root of $`x^3`$ | 52 steps, ratio 0.666667 | The slope is zero at the root, so the order falls to 1 |
+| Full steps on arctan from 10 | $`-1.50 \times 10^{37}`$ after 5 steps | The curve bends away from the axis, so every tangent overshoots |
+| Start exactly on the cycle point $`x_c`$ | the 2-cycle holds for 30 steps, then $`x`$ = 1.3897 | An unstable cycle: rounding slips grow 6.9593 times per round trip |
+| Trust a zero residual on $`(x-1)^3`$ multiplied out | residual 0.00e0, true error 4.67e-6 | Rounding noise hides the root: bad conditioning, not a bad method |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code runs six experiments and checks each by a second road. Plain Newton on $x^3$ is checked against the closed form $(2/3)^k$ and the step-count formula. The modified step on $x^3 + x^4$ is checked against its exact error law. The precision floor is checked against the estimate $u^{1/3}$. The cycle point is found by bisection and by the secant step, and its breakup time against the growth estimate. Damped Newton is checked against the theorem's step-length floor, with the bend bound $M$ found by formula and by a scan. Kantorovich's edge is found by bisection on $h = 1/2$, and checked by recomputing $h = \beta L \eta$ from the slope. Two damped runs, at $c_1 = 10^{-4}$ and $c_1 = 0.5$, are checked to cut the miss at every step.
+The code runs six experiments and checks each by a second road. Plain Newton on $`x^3`$ is checked against the closed form $`(2/3)^k`$ and the step-count formula. The modified step on $`x^3 + x^4`$ is checked against its exact error law. The precision floor is checked against the estimate $`u^{1/3}`$. The cycle point is found by bisection and by the secant step, and its breakup time against the growth estimate. Damped Newton is checked against the theorem's step-length floor, with the bend bound $`M`$ found by formula and by a scan. Kantorovich's edge is found by bisection on $`h = 1/2`$, and checked by recomputing $`h = \beta L \eta`$ from the slope. Two damped runs, at $`c_1 = 10^{-4}`$ and $`c_1 = 0.5`$, are checked to cut the miss at every step.
 
 ### Python
 
@@ -583,13 +593,13 @@ The two outputs match line for line.
 
 Lean proves the three theorems for every function that meets their conditions, and checks the hand arithmetic exactly, as fractions.
 
-- At a root of multiplicity $m$, with $g'$ continuous, plain Newton's error ratio $e_{k+1}/e_k$ tends to $(m-1)/m$ as the error shrinks.
-- The modified step $x - m f(x)/f'(x)$ has $e_{k+1}/e_k^2$ tending to $g'(x^*)/(m\,g(x^*))$: order 2 again.
-- Start above the root, with $f$ twice differentiable, $f' > 0$ and $f'' \ge 0$ up to the start. Newton's guesses then fall steadily, never pass the root, and converge to it.
-- Damped Newton: let $|f''| \le M$ everywhere and $|f'| \ge \mu > 0$ wherever $|f| \le |f(x_0)|$, with $0 < c_1 < 1$. Halving from $\lambda = 1$ then always finds a share that passes the Armijo test.
-- Along the damped run, every accepted share is at least $\min(1, (1-c_1)\mu^2/(M|f(x_0)|))$. So the miss shrinks by a fixed factor each step.
-- From some step on, the full step $\lambda = 1$ passes, and the guesses converge to a root.
-- The hand arithmetic holds exactly, as fractions: 2/3 and 4/9 on $x^3$, the multiplicity 3, 52 and 19 steps, and 1/7 then 1/175 on $x^3 + x^4$.
+- At a root of multiplicity $`m`$, with $`g'`$ continuous, plain Newton's error ratio $`e_{k+1}/e_k`$ tends to $`(m-1)/m`$ as the error shrinks.
+- The modified step $`x - m f(x)/f'(x)`$ has $`e_{k+1}/e_k^2`$ tending to $`g'(x^*)/(m\,g(x^*))`$: order 2 again.
+- Start above the root, with $`f`$ twice differentiable, $`f' > 0`$ and $`f'' \ge 0`$ up to the start. Newton's guesses then fall steadily, never pass the root, and converge to it.
+- Damped Newton: let $`|f''| \le M`$ everywhere and $`|f'| \ge \mu > 0`$ wherever $`|f| \le |f(x_0)|`$, with $`0 < c_1 < 1`$. Halving from $`\lambda = 1`$ then always finds a share that passes the Armijo test.
+- Along the damped run, every accepted share is at least $`\min(1, (1-c_1)\mu^2/(M|f(x_0)|))`$. So the miss shrinks by a fixed factor each step.
+- From some step on, the full step $`\lambda = 1`$ passes, and the guesses converge to a root.
+- The hand arithmetic holds exactly, as fractions: 2/3 and 4/9 on $`x^3`$, the multiplicity 3, 52 and 19 steps, and 1/7 then 1/175 on $`x^3 + x^4`$.
 
 The Python and Rust checks cover the rest: order 2 returning under damping, the precision floor, the arctan cycle, Kantorovich's guarantee and every decimal.
 
@@ -1054,22 +1064,22 @@ example : let x : ℚ := 1 / 7
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. Some changes stop the run at an assert that is pinned to this card's numbers; the answer is still printed above the assert.
-> - **A root repeated five times.** Guess first: how many plain steps to $10^{-9}$? In the line that sets `cube`, change `x * x * x` to `x ** 5` and `3 * x * x` to `5 * x ** 4`, and in the next line change `60` to `100`. The ratio becomes 0.8 and the count 93, and the step-count assert stops it.
-> - **The wrong multiplicity.** Guess first: does $m = 2$ on $x^3$ help at all? Change `m=3` to `m=2` in the line that sets `mx`. It prints $x_1$ = 3.33e-1, and the assert on `mx` stops it. Each step now leaves a third of the error: still linear, so 19 steps to $10^{-9}$.
+> - **A root repeated five times.** Guess first: how many plain steps to $`10^{-9}`$? In the line that sets `cube`, change `x * x * x` to `x ** 5` and `3 * x * x` to `5 * x ** 4`, and in the next line change `60` to `100`. The ratio becomes 0.8 and the count 93, and the step-count assert stops it.
+> - **The wrong multiplicity.** Guess first: does $`m = 2`$ on $`x^3`$ help at all? Change `m=3` to `m=2` in the line that sets `mx`. It prints $`x_1`$ = 3.33e-1, and the assert on `mx` stops it. Each step now leaves a third of the error: still linear, so 19 steps to $`10^{-9}`$.
 > - **Start the damped run further out.** Guess first: does a start of 100 cost more steps than 10? Change `damped(10.0)` to `damped(100.0)`. It takes 7 steps, not 12. The first two steps are cut, to 1/128 and 1/32; the second lands inside the region where full steps converge, and five full steps finish.
-> - **Demand more decrease.** Guess first: with $c_1 = 0.5$ from 10, more halvings or fewer steps? Change `c1=1e-4` to `c1=0.5`. The first step halves four times, to 0.0625, and the run takes 5 steps; the assert on the last three step lengths still passes.
+> - **Demand more decrease.** Guess first: with $`c_1 = 0.5`$ from 10, more halvings or fewer steps? Change `c1=1e-4` to `c1=0.5`. The first step halves four times, to 0.0625, and the run takes 5 steps; the assert on the last three step lengths still passes.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Reading "it converged" as "it is accurate".** On $(x-1)^3$ multiplied out, Newton stops with a residual of exactly 0, and the answer is still wrong by 4.67e-6. A zero residual says the computed $f$ is zero there. At a multiple root, rounding makes $f$ look zero across a whole band, about 4.81e-6 wide on each side. The trouble is the problem's conditioning, and no cleverer step fixes it.
+> **Reading "it converged" as "it is accurate".** On $`(x-1)^3`$ multiplied out, Newton stops with a residual of exactly 0, and the answer is still wrong by 4.67e-6. A zero residual says the computed $`f`$ is zero there. At a multiple root, rounding makes $`f`$ look zero across a whole band, about 4.81e-6 wide on each side. The trouble is the problem's conditioning, and no cleverer step fixes it.
 >
-> - **Stopping on the step size at a multiple root.** At $x^3$'s step 52 the last step is 3.49e-10, but the true error is 6.97e-10, twice as large. With ratio $q$, the remaining error is $q/(1-q)$ times the last step; [When to stop](03-stopping-criteria-and-error-estimates.md) derives that correction.
-> - **Guessing the multiplicity.** Too small an $m$ leaves the rate linear: $m = 2$ on $x^3$ still keeps a third of the error each step. Estimate $m$ from the ratio first: here $1/(1 - q)$ = 3.0000.
-> - **Taking a run that crosses the root as a run that is closing in.** On arctan every step crosses. From 1.39 the sizes fall; from 1.5 they rise, 1.500, 1.694, 2.321, 5.114. Watch $|x_k|$, not the sign.
-> - **Damping with no slope floor.** The guarantee needs $|f'| \ge \mu > 0$ on the way. Where the slope can reach zero, a damped run can stall at a low point of $|f|$ that is not a root.
+> - **Stopping on the step size at a multiple root.** At $`x^3`$'s step 52 the last step is 3.49e-10, but the true error is 6.97e-10, twice as large. With ratio $`q`$, the remaining error is $`q/(1-q)`$ times the last step; [When to stop](03-stopping-criteria-and-error-estimates.md) derives that correction.
+> - **Guessing the multiplicity.** Too small an $`m`$ leaves the rate linear: $`m = 2`$ on $`x^3`$ still keeps a third of the error each step. Estimate $`m`$ from the ratio first: here $`1/(1 - q)`$ = 3.0000.
+> - **Taking a run that crosses the root as a run that is closing in.** On arctan every step crosses. From 1.39 the sizes fall; from 1.5 they rise, 1.500, 1.694, 2.321, 5.114. Watch $`|x_k|`$, not the sign.
+> - **Damping with no slope floor.** The guarantee needs $`|f'| \ge \mu > 0`$ on the way. Where the slope can reach zero, a damped run can stall at a low point of $`|f|`$ that is not a root.
 
 ---
 
@@ -1081,7 +1091,7 @@ example : let x : ℚ := 1 / 7
 - **Touching contact.** A ray that just grazes a curved surface, or a ball that just touches a wall, is a double root of the distance equation. Plain Newton crawls there, which is why such codes treat tangency as a special case.
 
 > **Say it back**
-> At a root repeated $m$ times, Newton keeps a fixed share (m − 1)/m of the error each step; on $x^3$ that is 2/3, and 52 steps reach $10^{-9}$. Multiplying the step by $m$ restores order 2, and on $x^3$ it lands in one step. On arctan the curve bends away from the axis, so every step overshoots: from below 1.392 the run converges, at 1.392 it cycles, and above it runs away. Halving each step until the miss really falls converges from any start where the slope stays away from zero: from 10, in 12 steps. Newton is guaranteed to converge from a start where $f$ and its bend share a sign, and Kantorovich's test guarantees it from starting data alone, at the price of caution.
+> At a root repeated $`m`$ times, Newton keeps a fixed share (m − 1)/m of the error each step; on $`x^3`$ that is 2/3, and 52 steps reach $`10^{-9}`$. Multiplying the step by $`m`$ restores order 2, and on $`x^3`$ it lands in one step. On arctan the curve bends away from the axis, so every step overshoots: from below 1.392 the run converges, at 1.392 it cycles, and above it runs away. Halving each step until the miss really falls converges from any start where the slope stays away from zero: from 10, in 12 steps. Newton is guaranteed to converge from a start where $`f`$ and its bend share a sign, and Kantorovich's test guarantees it from starting data alone, at the price of caution.
 
 ---
 
@@ -1095,7 +1105,7 @@ example : let x : ℚ := 1 / 7
 ## Where this goes next
 
 - [Brent's method](05-brent-and-safeguarded-methods.md): the next card. It keeps a bracket and takes fast steps only while they stay inside, so overshoot can cost a step but never the answer.
-- [Fixed points](06-fixed-point-iteration-and-contraction.md): Newton's step as a rule "next guess = $N$(current guess)", and the contraction test that says when such a rule settles; arctan's cycle is a fixed point of $N$ applied twice.
+- [Fixed points](06-fixed-point-iteration-and-contraction.md): Newton's step as a rule "next guess = $`N`$(current guess)", and the contraction test that says when such a rule settles; arctan's cycle is a fixed point of $`N`$ applied twice.
 - [Newton in several unknowns, and Broyden when a Jacobian is too expensive](07-newton-for-systems-and-broyden.md): damping and Kantorovich's test in many unknowns, where they matter most.
 - [Every root at once](08-polynomial-roots-and-companion-matrices.md): repeated roots of polynomials, where the precision floor of Step 3 returns.
 

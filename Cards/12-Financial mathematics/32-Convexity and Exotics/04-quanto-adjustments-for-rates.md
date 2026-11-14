@@ -14,7 +14,7 @@ The gap has one source. The yen forward rate is an average of possible future ye
 
 **A foreign rate paid in home currency at a fixed conversion has a fair value equal to its foreign forward reweighted by the inverse of the forward exchange rate; when the rate and the exchange rate are lognormal, that reweighting is a drift of minus correlation times the two volatilities.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works: the reweighting is exact in any model without free money. The closed form $K_q = F e^{-\rho\sigma_F\sigma_G T}$ on top of it is a model, an assumption about how rates and currency move together.
+**What kind of fact this is:** a theorem, proved on this card in Why it works: the reweighting is exact in any model without free money. The closed form $`K_q = F e^{-\rho\sigma_F\sigma_G T}`$ on top of it is a model, an assumption about how rates and currency move together.
 
 ### The picture: what the coupon pays
 
@@ -37,53 +37,59 @@ One line: the dollar payment for each yen fixing. It is straight, with slope $2,
 
 Notation first, in words.
 
-- $T$ is the fixing date and $U$ the payment date.
-- $L$ is the yen rate fixed at $T$; $F$ is its yen forward today.
-- $G_T$ is the forward exchange rate at $T$, in dollars per yen, for delivery at $U$.
+- $`T`$ is the fixing date and $`U`$ the payment date.
+- $`L`$ is the yen rate fixed at $`T`$; $`F`$ is its yen forward today.
+- $`G_T`$ is the forward exchange rate at $`T`$, in dollars per yen, for delivery at $`U`$.
 - A subscript d marks dollars (domestic) and f marks yen (foreign).
-- $D_d(t,U)$ is the price at a date t of one dollar paid at date $U$; $D_f(t,U)$ is the same for one yen.
-- An average written $\mathbb{E}^{f,U}[\cdot]$ is taken with the probabilities that make every yen price, counted in yen bonds maturing at $U$, driftless: the **yen forward measure**, the device of [Timing adjustments](03-timing-and-in-arrears-adjustments.md) set in yen.
-- $\mathbb{E}^{d,U}$ is the dollar forward measure, and $\mathbb{E}^{f,A}$ counts in a yen annuity: the **annuity measure** of [The annuity measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md).
+- $`D_d(t,U)`$ is the price at a date t of one dollar paid at date $`U`$; $`D_f(t,U)`$ is the same for one yen.
+- An average written $`\mathbb{E}^{f,U}[\cdot]`$ is taken with the probabilities that make every yen price, counted in yen bonds maturing at $`U`$, driftless: the **yen forward measure**, the device of [Timing adjustments](03-timing-and-in-arrears-adjustments.md) set in yen.
+- $`\mathbb{E}^{d,U}`$ is the dollar forward measure, and $`\mathbb{E}^{f,A}`$ counts in a yen annuity: the **annuity measure** of [The annuity measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md).
 
 The exact statement, for any joint behaviour of rates and currency:
 
-$$K_q \;=\; \mathbb{E}^{d,U}[L] \;=\; \frac{\mathbb{E}^{f,U}\!\left[L / G_T\right]}{\mathbb{E}^{f,U}\!\left[1 / G_T\right]} \;=\; F + \frac{\operatorname{Cov}^{f,U}\!\left(L,\; 1/G_T\right)}{\mathbb{E}^{f,U}\!\left[1/G_T\right]}$$
+```math
+K_q \;=\; \mathbb{E}^{d,U}[L] \;=\; \frac{\mathbb{E}^{f,U}\!\left[L / G_T\right]}{\mathbb{E}^{f,U}\!\left[1 / G_T\right]} \;=\; F + \frac{\mathrm{Cov}^{f,U}\!\left(L,\; 1/G_T\right)}{\mathbb{E}^{f,U}\!\left[1/G_T\right]}
+```
 
 **Read it aloud:** the fair dollar strike is the yen rate averaged over futures, each future weighted by one over the forward exchange rate; equivalently, the yen forward plus the covariance of the rate with that weight, per unit of average weight.
 
-Under the model where the yen forward rate and the forward exchange rate are both lognormal, with yearly volatilities $\sigma_F$ and $\sigma_G$ and correlation $\rho$ between their random drivers $W^F$ and $W^G$:
+Under the model where the yen forward rate and the forward exchange rate are both lognormal, with yearly volatilities $`\sigma_F`$ and $`\sigma_G`$ and correlation $`\rho`$ between their random drivers $`W^F`$ and $`W^G`$:
 
-$$\frac{dF_t}{F_t} = -\rho\,\sigma_F\,\sigma_G\,dt + \sigma_F\,dW^F_t \quad\text{under } \mathbb{E}^{d,U}, \qquad K_q = F\,e^{-\rho\,\sigma_F\,\sigma_G\,T}$$
+```math
+\frac{dF_t}{F_t} = -\rho\,\sigma_F\,\sigma_G\,dt + \sigma_F\,dW^F_t \quad\text{under } \mathbb{E}^{d,U}, \qquad K_q = F\,e^{-\rho\,\sigma_F\,\sigma_G\,T}
+```
 
 **Read it aloud:** counted in dollars, the yen forward rate drifts down at correlation times rate volatility times currency volatility, so the fair dollar strike is the yen forward shrunk by that drift over the time to fixing.
 
-For a yen swap rate paid in dollars (a quanto CMS coupon; CMS is a constant-maturity swap, a leg paying a long swap rate), the weight gains the swap's annuity. $S_T$ is the yen 10-year swap rate at $T$ and $A_T$ its yen annuity:
+For a yen swap rate paid in dollars (a quanto CMS coupon; CMS is a constant-maturity swap, a leg paying a long swap rate), the weight gains the swap's annuity. $`S_T`$ is the yen 10-year swap rate at $`T`$ and $`A_T`$ its yen annuity:
 
-$$K_q^{\text{CMS}} = \frac{\mathbb{E}^{f,A}\!\left[S_T\, m(S_T) / G_T\right]}{\mathbb{E}^{f,A}\!\left[m(S_T) / G_T\right]}, \qquad m = \frac{D_f(T,U)}{A_T}$$
+```math
+K_q^{\text{CMS}} = \frac{\mathbb{E}^{f,A}\!\left[S_T\, m(S_T) / G_T\right]}{\mathbb{E}^{f,A}\!\left[m(S_T) / G_T\right]}, \qquad m = \frac{D_f(T,U)}{A_T}
+```
 
-In words: average the swap rate in annuity units, reweighted once by $m$ for the payment date (the CMS convexity of [Constant-maturity swaps](02-cms-and-the-convexity-adjustment.md)) and once by $1/G_T$ for the currency.
+In words: average the swap rate in annuity units, reweighted once by $`m`$ for the payment date (the CMS convexity of [Constant-maturity swaps](02-cms-and-the-convexity-adjustment.md)) and once by $`1/G_T`$ for the currency.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $L$ | the yen 3-month rate as fixed at $T$, a decimal per year | unknown today | the payment rises $2,500 per percentage point |
-| $F$ | the yen forward rate: the fair value of $L$ counted in yen | 3.00% | $K_q$ rises in proportion |
-| $K$, $K_q$ | a strike (the fixed rate the fund pays); the fair quanto strike | 3.00%; 2.9642% | a higher $K$ lowers the fund's value by $245,000 per unit of rate |
-| $\mu$ | the drift of $F$ counted in dollars, per year | −0.012 | — |
-| $T$, $U$ | fixing date and payment date, in years | 1 and 1.25 | a later $T$ widens the gap: 0.012 of $F$ per year |
-| $\delta$, $\chi$, $N$ | accrual fraction of a year; fixed conversion, dollars per yen; yen notional | 0.25; 0.01; ¥100,000,000 | scale the payment, not $K_q$ |
-| $X_t$, $X_0$, $X_T$, $G_t$, $G_T$ | spot and forward exchange rate for delivery at $U$, dollars per yen; $G_t = X_t D_f(t,U)/D_d(t,U)$ | spot 0.01 | today's level cancels from $K_q$ |
-| $D_d$, $D_f$ | dollar and yen discount factors to $U$ | 0.98 and 0.96 | $D_d$ scales the value, not $K_q$ |
-| $\sigma_F$, $\sigma_G$, $\sigma_S$ | yearly volatility of the yen forward rate, of the forward exchange rate, of the yen swap rate | 30%, 10%, 25% | widen the gap when $\rho \ne 0$ |
-| $\rho$, $W^F$, $W^G$ | correlation between the random drivers $W^F$ and $W^G$ of the yen rate and of the yen's dollar value; say "rho" | 0.40 | lowers $K_q$; the fund's value falls $2.18 per 0.01 |
-| $S$, $S_T$, $A$, $A_T$, $m$ | yen 10-year swap rate; yen annuity (value of 1 yen a year on the swap's payment dates); the ratio $m = D_f(T,U)/A_T$ | 3.00% forward | — |
-| $\mathbb{E}^{f,U}$, $\mathbb{E}^{d,U}$, $\mathbb{E}^{f,A}$, $Q$, $Y$ | averages under the yen forward, dollar forward and yen annuity measures; $Q^{f,U}$, $Q^{d,U}$ name the measures themselves; $Y$ is any dollar amount fixed at $T$ | — | — |
+| $`L`$ | the yen 3-month rate as fixed at $`T`$, a decimal per year | unknown today | the payment rises $2,500 per percentage point |
+| $`F`$ | the yen forward rate: the fair value of $`L`$ counted in yen | 3.00% | $`K_q`$ rises in proportion |
+| $`K`$, $`K_q`$ | a strike (the fixed rate the fund pays); the fair quanto strike | 3.00%; 2.9642% | a higher $`K`$ lowers the fund's value by $245,000 per unit of rate |
+| $`\mu`$ | the drift of $`F`$ counted in dollars, per year | −0.012 | — |
+| $`T`$, $`U`$ | fixing date and payment date, in years | 1 and 1.25 | a later $`T`$ widens the gap: 0.012 of $`F`$ per year |
+| $`\delta`$, $`\chi`$, $`N`$ | accrual fraction of a year; fixed conversion, dollars per yen; yen notional | 0.25; 0.01; ¥100,000,000 | scale the payment, not $`K_q`$ |
+| $`X_t`$, $`X_0`$, $`X_T`$, $`G_t`$, $`G_T`$ | spot and forward exchange rate for delivery at $`U`$, dollars per yen; $`G_t = X_t D_f(t,U)/D_d(t,U)`$ | spot 0.01 | today's level cancels from $`K_q`$ |
+| $`D_d`$, $`D_f`$ | dollar and yen discount factors to $`U`$ | 0.98 and 0.96 | $`D_d`$ scales the value, not $`K_q`$ |
+| $`\sigma_F`$, $`\sigma_G`$, $`\sigma_S`$ | yearly volatility of the yen forward rate, of the forward exchange rate, of the yen swap rate | 30%, 10%, 25% | widen the gap when $`\rho \ne 0`$ |
+| $`\rho`$, $`W^F`$, $`W^G`$ | correlation between the random drivers $`W^F`$ and $`W^G`$ of the yen rate and of the yen's dollar value; say "rho" | 0.40 | lowers $`K_q`$; the fund's value falls $2.18 per 0.01 |
+| $`S`$, $`S_T`$, $`A`$, $`A_T`$, $`m`$ | yen 10-year swap rate; yen annuity (value of 1 yen a year on the swap's payment dates); the ratio $`m = D_f(T,U)/A_T`$ | 3.00% forward | — |
+| $`\mathbb{E}^{f,U}`$, $`\mathbb{E}^{d,U}`$, $`\mathbb{E}^{f,A}`$, $`Q`$, $`Y`$ | averages under the yen forward, dollar forward and yen annuity measures; $`Q^{f,U}`$, $`Q^{d,U}`$ name the measures themselves; $`Y`$ is any dollar amount fixed at $`T`$ | — | — |
 
 ### When it holds
 
 - **The conversion is frozen in the contract.** A coupon converted at the market exchange rate on the payment day is a plain yen payment and its fair strike is the yen forward, 3.00 percent. Treating it as a quanto misprices it by the full 3.58 basis points.
-- **The exact formula needs only no free money.** The weight $1/G_T$ follows from the definition of the forward exchange rate. What it does not supply is the joint law of $L$ and $G_T$: the covariance must come from a model or from quotes.
+- **The exact formula needs only no free money.** The weight $`1/G_T`$ follows from the definition of the forward exchange rate. What it does not supply is the joint law of $`L`$ and $`G_T`$: the covariance must come from a model or from quotes.
 - **Lognormal, constant volatilities and correlation.** The exponential needs both. If the correlation moves, its average over the life is what counts; every 0.01 of error in it moves the value by $2.18 here.
-- **Forward, not spot, exchange-rate volatility.** $\sigma_G$ belongs to $G_t$, which also moves with the two interest-rate curves. Using spot volatility is an approximation whose error grows with the time to payment.
+- **Forward, not spot, exchange-rate volatility.** $`\sigma_G`$ belongs to $`G_t`$, which also moves with the two interest-rate curves. Using spot volatility is an approximation whose error grows with the time to payment.
 - **Payment at the natural date.** Paying at any other date adds the timing weight of [Timing adjustments](03-timing-and-in-arrears-adjustments.md) on top; the two multiply inside one weight.
 
 Conventions verified 2026-09-28: the market quotes the pair as yen per dollar (a USD/JPY quote is the number of yen one dollar buys). This card uses dollars per yen, the inverse, so a correlation measured on the market quote enters with the opposite sign.
@@ -94,63 +100,73 @@ Conventions verified 2026-09-28: the market quotes the pair as yen per dollar (a
 
 ### Step 0: price the coupon where it is natural, then change the unit
 
-A yen rate has one unit of account in which its average is known without any model: yen bonds maturing on the payment date. Counted that way, the yen forward rate $F$ is driftless, which is the content of a forward rate agreement being free to enter. The dollar coupon needs the average in a different unit, dollar bonds maturing on the payment date. Changing the unit reweights the futures ([The quanto adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md) does this for a share). The whole card is the size of that reweighting.
+A yen rate has one unit of account in which its average is known without any model: yen bonds maturing on the payment date. Counted that way, the yen forward rate $`F`$ is driftless, which is the content of a forward rate agreement being free to enter. The dollar coupon needs the average in a different unit, dollar bonds maturing on the payment date. Changing the unit reweights the futures ([The quanto adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md) does this for a share). The whole card is the size of that reweighting.
 
-The same fact seen by a hedger. The bank that pays the quanto coupon hedges it by receiving the yen rate in yen. With $\rho > 0$, when yen rates rise the yen tends to rise too, so the hedge's yen gain converts into more dollars than the coupon costs. When rates fall the yen tends to fall, so the hedge's loss converts into fewer dollars than the coupon saves. The hedge beats the coupon both ways. Competition passes that edge to the fund as a lower fixed rate.
+The same fact seen by a hedger. The bank that pays the quanto coupon hedges it by receiving the yen rate in yen. With $`\rho > 0`$, when yen rates rise the yen tends to rise too, so the hedge's yen gain converts into more dollars than the coupon costs. When rates fall the yen tends to fall, so the hedge's loss converts into fewer dollars than the coupon saves. The hedge beats the coupon both ways. Competition passes that edge to the fund as a lower fixed rate.
 
 ### Step 1: the yen forward rate is an average in yen bonds
 
-The 3-month yen rate for $[T,U]$ satisfies $1 + \delta L = 1/D_f(T,U)$: lending one yen for the quarter returns $1+\delta L$. Today's version is $1 + \delta F = D_f(0,T)/D_f(0,U)$. The ratio $D_f(t,T)/D_f(t,U)$ is one yen asset divided by another, so counted in yen $U$-bonds it has no drift. That is exactly the statement $\mathbb{E}^{f,U}[L] = F$.
+The 3-month yen rate for $`[T,U]`$ satisfies $`1 + \delta L = 1/D_f(T,U)`$: lending one yen for the quarter returns $`1+\delta L`$. Today's version is $`1 + \delta F = D_f(0,T)/D_f(0,U)`$. The ratio $`D_f(t,T)/D_f(t,U)`$ is one yen asset divided by another, so counted in yen $`U`$-bonds it has no drift. That is exactly the statement $`\mathbb{E}^{f,U}[L] = F`$.
 
-### Step 2: the dollar payment, counted in yen bonds, carries the weight $1/G_T$
+### Step 2: the dollar payment, counted in yen bonds, carries the weight $`1/G_T`$
 
-The payment is known at $T$: $\chi N \delta (L - K)$ dollars due at $U$. At $T$ that promise is worth $D_d(T,U)$ dollars per dollar. Convert to yen at $X_T$ and count in yen $U$-bonds:
+The payment is known at $`T`$: $`\chi N \delta (L - K)`$ dollars due at $`U`$. At $`T`$ that promise is worth $`D_d(T,U)`$ dollars per dollar. Convert to yen at $`X_T`$ and count in yen $`U`$-bonds:
 
-$$\frac{D_d(T,U)}{X_T\, D_f(T,U)} = \frac{1}{G_T}.$$
+```math
+\frac{D_d(T,U)}{X_T\, D_f(T,U)} = \frac{1}{G_T}.
+```
 
-So the coupon's value in yen bonds is $\chi N \delta\,(L - K)/G_T$, and its value today is today's yen bond times the $\mathbb{E}^{f,U}$ average of that. Setting the value to zero and solving for $K$ gives the exact formula. The denominator is pinned by the same argument applied to a plain dollar bond: $\mathbb{E}^{f,U}[1/G_T] = 1/G_0$. The spot level $X_0$ never enters $K_q$.
+So the coupon's value in yen bonds is $`\chi N \delta\,(L - K)/G_T`$, and its value today is today's yen bond times the $`\mathbb{E}^{f,U}`$ average of that. Setting the value to zero and solving for $`K`$ gives the exact formula. The denominator is pinned by the same argument applied to a plain dollar bond: $`\mathbb{E}^{f,U}[1/G_T] = 1/G_0`$. The spot level $`X_0`$ never enters $`K_q`$.
 
 <details>
 <summary>Detailed proof: the unit change as a density</summary>
 
-Write $Q^{f,U}$ for the yen forward measure and $Q^{d,U}$ for the dollar one. For any dollar amount $Y$ known at $T$ and paid at $U$, its dollar value today is $D_d(0,U)\,\mathbb{E}^{d,U}[Y]$ by the definition of the dollar forward measure, and $X_0 D_f(0,U)\,\mathbb{E}^{f,U}[Y/G_T]$ by Step 2 read in yen and converted at today's spot. Both are the price of the same claim, so for every such $Y$
-$$\mathbb{E}^{d,U}[Y] = \mathbb{E}^{f,U}\!\left[Y \cdot \frac{G_0}{G_T}\right], \qquad G_0 = \frac{X_0 D_f(0,U)}{D_d(0,U)}.$$
-That is the density $dQ^{d,U}/dQ^{f,U} = G_0/G_T$: positive, with average one (take $Y = 1$). Put $Y = L$ to get the first equality of the formula. Expand $\mathbb{E}^{f,U}[L/G_T] = \operatorname{Cov}(L, 1/G_T) + F\,\mathbb{E}^{f,U}[1/G_T]$ and divide to get the covariance form. The argument needs $L/G_T$ to have a finite average and the payment amount $\chi N \delta$ to be nonzero; otherwise any strike prices the same zero coupon.
+Write $`Q^{f,U}`$ for the yen forward measure and $`Q^{d,U}`$ for the dollar one. For any dollar amount $`Y`$ known at $`T`$ and paid at $`U`$, its dollar value today is $`D_d(0,U)\,\mathbb{E}^{d,U}[Y]`$ by the definition of the dollar forward measure, and $`X_0 D_f(0,U)\,\mathbb{E}^{f,U}[Y/G_T]`$ by Step 2 read in yen and converted at today's spot. Both are the price of the same claim, so for every such $`Y`$
+
+$`\displaystyle \mathbb{E}^{d,U}[Y] = \mathbb{E}^{f,U}\!\left[Y \cdot \frac{G_0}{G_T}\right], \qquad G_0 = \frac{X_0 D_f(0,U)}{D_d(0,U)}.`$
+
+That is the density $`dQ^{d,U}/dQ^{f,U} = G_0/G_T`$: positive, with average one (take $`Y = 1`$). Put $`Y = L`$ to get the first equality of the formula. Expand $`\mathbb{E}^{f,U}[L/G_T] = \mathrm{Cov}(L, 1/G_T) + F\,\mathbb{E}^{f,U}[1/G_T]`$ and divide to get the covariance form. The argument needs $`L/G_T`$ to have a finite average and the payment amount $`\chi N \delta`$ to be nonzero; otherwise any strike prices the same zero coupon.
 
 </details>
 
 ### Step 3: lognormal rate and currency give the drift
 
-Now take $\ln F_T$ and $\ln G_T$ jointly normal under $Q^{f,U}$, with volatilities $\sigma_F$ and $\sigma_G$ and correlation $\rho$, and $F$ driftless there. The weight $1/G_T$ is the exponential of a normal variable whose covariance with $\ln F_T$ is $-\rho\sigma_F\sigma_G T$. For jointly normal $x$ and $z$, $\mathbb{E}[e^{x}e^{z}]/\mathbb{E}[e^{z}] = \mathbb{E}[e^{x}]\,e^{\operatorname{Cov}(x,z)}$ (complete the square in the joint density). Therefore
+Now take $`\ln F_T`$ and $`\ln G_T`$ jointly normal under $`Q^{f,U}`$, with volatilities $`\sigma_F`$ and $`\sigma_G`$ and correlation $`\rho`$, and $`F`$ driftless there. The weight $`1/G_T`$ is the exponential of a normal variable whose covariance with $`\ln F_T`$ is $`-\rho\sigma_F\sigma_G T`$. For jointly normal $`x`$ and $`z`$, $`\mathbb{E}[e^{x}e^{z}]/\mathbb{E}[e^{z}] = \mathbb{E}[e^{x}]\,e^{\mathrm{Cov}(x,z)}`$ (complete the square in the joint density). Therefore
 
-$$K_q = F\,e^{-\rho\sigma_F\sigma_G T}.$$
+```math
+K_q = F\,e^{-\rho\sigma_F\sigma_G T}.
+```
 
-Read through Girsanov's theorem (a change of weights shows up as a drift on a random driver; see [Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md)), the density $G_0/G_T$ shifts the driver $W^F$ by $-\rho\sigma_G\,dt$, which is the drift $\mu = -\rho\sigma_F\sigma_G$ on the formula line. For the example, $\rho\sigma_F\sigma_G T = 0.40 \times 0.30 \times 0.10 \times 1 = 0.012$.
+Read through Girsanov's theorem (a change of weights shows up as a drift on a random driver; see [Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md)), the density $`G_0/G_T`$ shifts the driver $`W^F`$ by $`-\rho\sigma_G\,dt`$, which is the drift $`\mu = -\rho\sigma_F\sigma_G`$ on the formula line. For the example, $`\rho\sigma_F\sigma_G T = 0.40 \times 0.30 \times 0.10 \times 1 = 0.012`$.
 
 ### Step 4: the same answer from the dollar side
 
-Under the dollar forward measure the forward exchange rate $G_t$ is driftless: it is a yen bond priced in dollars, counted in dollar bonds. A yen forward rate agreement settled in yen and converted at the market rate must still be free to enter. In dollar-bond units it pays $G_T\,\delta(L - F)$, so
+Under the dollar forward measure the forward exchange rate $`G_t`$ is driftless: it is a yen bond priced in dollars, counted in dollar bonds. A yen forward rate agreement settled in yen and converted at the market rate must still be free to enter. In dollar-bond units it pays $`G_T\,\delta(L - F)`$, so
 
-$$\mathbb{E}^{d,U}\!\left[G_T\,(L - F)\right] = 0.$$
+```math
+\mathbb{E}^{d,U}\!\left[G_T\,(L - F)\right] = 0.
+```
 
-With $L$ lognormal of unknown drift $\mu$, this one equation fixes $\mu$. The code solves it by bisection, with the average done as a two-dimensional integral, and lands on $\mu = -0.0120000000$. No yen measure is used on this road.
+With $`L`$ lognormal of unknown drift $`\mu`$, this one equation fixes $`\mu`$. The code solves it by bisection, with the average done as a two-dimensional integral, and lands on $`\mu = -0.0120000000`$. No yen measure is used on this road.
 
 ### Step 5: a swap rate uses the annuity instead of the bond
 
-A yen 10-year swap rate $S$ is driftless when counted in the swap's yen annuity $A$. A coupon paying $S_T$ in dollars at $U$ needs the dollar $U$-bond. Repeat Step 2 with $A_T$ in place of $D_f(T,U)$:
+A yen 10-year swap rate $`S`$ is driftless when counted in the swap's yen annuity $`A`$. A coupon paying $`S_T`$ in dollars at $`U`$ needs the dollar $`U`$-bond. Repeat Step 2 with $`A_T`$ in place of $`D_f(T,U)`$:
 
-$$\frac{D_d(T,U)}{X_T\,A_T} = \frac{1}{G_T}\cdot\frac{D_f(T,U)}{A_T} = \frac{m(S_T)}{G_T}.$$
+```math
+\frac{D_d(T,U)}{X_T\,A_T} = \frac{1}{G_T}\cdot\frac{D_f(T,U)}{A_T} = \frac{m(S_T)}{G_T}.
+```
 
-The weight splits into a currency factor and a payment-date factor $m$. Taking $\ln S_T$ and $\ln G_T$ jointly normal under the annuity measure, the currency factor again shifts the swap rate's driver, so the quanto CMS rate is the plain yen CMS rate computed on the shifted forward $S_0 e^{-\rho\sigma_S\sigma_G T}$. That is exact in the model.
+The weight splits into a currency factor and a payment-date factor $`m`$. Taking $`\ln S_T`$ and $`\ln G_T`$ jointly normal under the annuity measure, the currency factor again shifts the swap rate's driver, so the quanto CMS rate is the plain yen CMS rate computed on the shifted forward $`S_0 e^{-\rho\sigma_S\sigma_G T}`$. That is exact in the model.
 
-Multiplying the yen CMS rate by $e^{-\rho\sigma_S\sigma_G T}$ instead is close but not exact, because the CMS convexity grows with the level of the forward it is computed on.
+Multiplying the yen CMS rate by $`e^{-\rho\sigma_S\sigma_G T}`$ instead is close but not exact, because the CMS convexity grows with the level of the forward it is computed on.
 
-A single-period swap has $A_T = \delta D_f(T,U)$, $m$ constant, and Step 5 collapses back to Step 2: the forward measure is the annuity measure of a one-payment swap.
+A single-period swap has $`A_T = \delta D_f(T,U)`$, $`m`$ constant, and Step 5 collapses back to Step 2: the forward measure is the annuity measure of a one-payment swap.
 
 <details>
 <summary>Why a flat curve for $m$?</summary>
 
-The ratio $m = D_f(T,U)/A_T$ depends on the whole yen curve at $T$. The code ties it to the swap rate alone by assuming the curve is flat at $S_T$, annually compounded: $m(S) = \dfrac{S/(1+S)}{1 - (1+S)^{-10}}$ for a coupon paid one year after fixing. This is the usual annuity mapping of [Constant-maturity swaps](02-cms-and-the-convexity-adjustment.md); the quanto factor does not depend on it.
+The ratio $`m = D_f(T,U)/A_T`$ depends on the whole yen curve at $`T`$. The code ties it to the swap rate alone by assuming the curve is flat at $`S_T`$, annually compounded: $`m(S) = \dfrac{S/(1+S)}{1 - (1+S)^{-10}}`$ for a coupon paid one year after fixing. This is the usual annuity mapping of [Constant-maturity swaps](02-cms-and-the-convexity-adjustment.md); the quanto factor does not depend on it.
 
 </details>
 
@@ -160,33 +176,33 @@ The other door is replication: build the yen rate payoff from yen instruments an
 
 ## Worked numbers, by hand
 
-The yen coupon: $F = 3\%$, $\sigma_F = 30\%$, $\sigma_G = 10\%$, $\rho = 0.40$, $T = 1$, $U = 1.25$, $\delta = 0.25$, 100 million yen at 0.01 dollars per yen, $D_d(0,U) = 0.98$.
+The yen coupon: $`F = 3\%`$, $`\sigma_F = 30\%`$, $`\sigma_G = 10\%`$, $`\rho = 0.40`$, $`T = 1`$, $`U = 1.25`$, $`\delta = 0.25`$, 100 million yen at 0.01 dollars per yen, $`D_d(0,U) = 0.98`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| correlation times the two volatilities, times $T$ | $0.40 \times 0.30 \times 0.10 \times 1$ | 0.012 |
-| shrink factor | $e^{-0.012}$ | 0.98807 |
-| fair quanto rate | $3\% \times 0.98807$ | **2.9642%** |
-| adjustment | $2.9642\% - 3\%$ | −3.58 bp |
-| dollars at $U$ per unit of rate | $0.01 \times 100{,}000{,}000 \times 0.25$ | $250,000 |
-| dollars today per unit of rate | $250{,}000 \times 0.98$ | $245,000 |
-| value of the fund's side struck at 3% | $245{,}000 \times (0.029642 - 0.03)$ | −$87.67 |
+| correlation times the two volatilities, times $`T`$ | $`0.40 \times 0.30 \times 0.10 \times 1`$ | 0.012 |
+| shrink factor | $`e^{-0.012}`$ | 0.98807 |
+| fair quanto rate | $`3\% \times 0.98807`$ | **2.9642%** |
+| adjustment | $`2.9642\% - 3\%`$ | −3.58 bp |
+| dollars at $`U`$ per unit of rate | $`0.01 \times 100{,}000{,}000 \times 0.25`$ | $250,000 |
+| dollars today per unit of rate | $`250{,}000 \times 0.98`$ | $245,000 |
+| value of the fund's side struck at 3% | $`245{,}000 \times (0.029642 - 0.03)`$ | −$87.67 |
 
 Paying the yen forward gives away $87.67 on this one coupon, and the gap grows with each later fixing.
 
 ### The same reweighting in three states
 
-A deliberately wide three-state world shows the weight at work with fractions. Counted in yen bonds, the yen rate finishes at 1, 3 or 5 percent with probabilities 1/4, 1/2, 1/4, so $F = 3\%$. The exchange rate at fixing is 0.008, 0.010 or 0.012 dollars per yen in those states: the yen is strong exactly when rates are high. Take both curves equal at fixing, so $G_T = X_T$, with $X_0 = 0.01$ and $D_f(0,U) = 0.96$.
+A deliberately wide three-state world shows the weight at work with fractions. Counted in yen bonds, the yen rate finishes at 1, 3 or 5 percent with probabilities 1/4, 1/2, 1/4, so $`F = 3\%`$. The exchange rate at fixing is 0.008, 0.010 or 0.012 dollars per yen in those states: the yen is strong exactly when rates are high. Take both curves equal at fixing, so $`G_T = X_T`$, with $`X_0 = 0.01`$ and $`D_f(0,U) = 0.96`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| weights $1/X_T$ | $1/0.008,\ 1/0.010,\ 1/0.012$ | 125, 100, 83.33 |
-| average weight | $\tfrac14(125) + \tfrac12(100) + \tfrac14(83.33)$ | 102.08 |
-| dollar bond implied | $0.01 \times 0.96 \times 102.08$ | 0.98 |
-| dollar probabilities | $\tfrac14 \cdot 125/102.08$, and so on | 15/49, 24/49, 10/49 |
-| fair quanto rate | $(15 \times 1\% + 24 \times 3\% + 10 \times 5\%)/49$ | **2.7959%** |
-| covariance route | $3\% + (-0.2083)/102.08$ | 2.7959% |
-| value struck at 3% | $245{,}000 \times (0.027959 - 0.03)$ | −$500.00 |
+| weights $`1/X_T`$ | $`1/0.008,\ 1/0.010,\ 1/0.012`$ | 125, 100, 83.33 |
+| average weight | $`\tfrac14(125) + \tfrac12(100) + \tfrac14(83.33)`$ | 102.08 |
+| dollar bond implied | $`0.01 \times 0.96 \times 102.08`$ | 0.98 |
+| dollar probabilities | $`\tfrac14 \cdot 125/102.08`$, and so on | 15/49, 24/49, 10/49 |
+| fair quanto rate | $`(15 \times 1\% + 24 \times 3\% + 10 \times 5\%)/49`$ | **2.7959%** |
+| covariance route | $`3\% + (-0.2083)/102.08`$ | 2.7959% |
+| value struck at 3% | $`245{,}000 \times (0.027959 - 0.03)`$ | −$500.00 |
 
 The high-rate state loses probability (1/4 becomes 10/49) because it is the strong-yen state. The swings are wide on purpose, so the gap is 20.41 basis points; the lognormal numbers above are the realistic size.
 
@@ -195,8 +211,8 @@ The high-rate state loses probability (1/4 becomes 10/49) because it is the stro
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Strike at the yen forward | 3.0000% | The yen average is the wrong unit for a dollar payment: $87.67 given away |
-| Sign flipped | 3.0362% | The weight is $1/G_T$, not $G_T$; or the correlation was measured on the yen-per-dollar quote |
-| Clock runs to payment, $U = 1.25$ | 2.9553% | The rate stops moving at fixing; after $T$ only discounting remains |
+| Sign flipped | 3.0362% | The weight is $`1/G_T`$, not $`G_T`$; or the correlation was measured on the yen-per-dollar quote |
+| Clock runs to payment, $`U = 1.25`$ | 2.9553% | The rate stops moving at fixing; after $`T`$ only discounting remains |
 | Quanto CMS: ignore the currency | 3.0241% | Right yen CMS rate, wrong currency; the quanto CMS is 2.9938% |
 | Quanto CMS: multiply the two corrections | 2.9940% | Close: 0.02 bp high, because convexity scales with the shifted forward |
 
@@ -211,7 +227,7 @@ Sensitivities of the fund's side (receive the yen rate, pay 3%), analytic and by
 | currency volatility up 1 point | −$8.71 |
 | rate volatility up 1 point | −$2.90 |
 
-The currency volatility matters three times as much as the rate volatility here only because $\sigma_F = 30\%$ is three times $\sigma_G = 10\%$: each one's sensitivity carries the other's size.
+The currency volatility matters three times as much as the rate volatility here only because $`\sigma_F = 30\%`$ is three times $`\sigma_G = 10\%`$: each one's sensitivity carries the other's size.
 
 ### The adjustment grows with the time to fixing
 
@@ -232,7 +248,7 @@ Bottom line (orange): correlation +0.40. Middle line (green): correlation 0, no 
 
 ## Code, from first principles, and it actually runs
 
-The scripts build their own normal density, a Simpson integrator on a 161-by-161 grid and a bisection root finder. The yen coupon's fair rate is reached three ways: the drift formula; the yen-measure average reweighted by $1/G_T$ as a two-dimensional integral; and the dollar-measure drift found by root-finding the free-to-enter yen FRA, with no yen measure used. The three-state world is solved separately and checked against the exact fractions 137/4900 and −$500. The quanto CMS rate is reached by a two-dimensional integral with weight $m/G$ and by the shifted-forward route, which must agree; setting the correlation to zero must return the plain yen CMS rate. Every figure on the card is printed by both.
+The scripts build their own normal density, a Simpson integrator on a 161-by-161 grid and a bisection root finder. The yen coupon's fair rate is reached three ways: the drift formula; the yen-measure average reweighted by $`1/G_T`$ as a two-dimensional integral; and the dollar-measure drift found by root-finding the free-to-enter yen FRA, with no yen measure used. The three-state world is solved separately and checked against the exact fractions 137/4900 and −$500. The quanto CMS rate is reached by a two-dimensional integral with weight $`m/G`$ and by the shifted-forward route, which must agree; setting the correlation to zero must return the plain yen CMS rate. Every figure on the card is printed by both.
 
 ### Python
 
@@ -628,12 +644,12 @@ The two outputs are identical line for line.
 
 ### Lean
 
-Lean proves the exact formula and its covariance form for any positive $G_T$, and the closed form in the lognormal model.
+Lean proves the exact formula and its covariance form for any positive $`G_T`$, and the closed form in the lognormal model.
 
-- Suppose $G_T$ is always positive, $1/G_T$ has a finite yen average, and that average is $1/G_0$. Then weighting each future by $G_0/G_T$ gives probabilities that add up to one.
-- Suppose also that $L/G_T$ has a finite yen average. Then the average of $L$ under those weights equals $\mathbb{E}^{f,U}[L/G_T] / \mathbb{E}^{f,U}[1/G_T]$.
-- Suppose $G_T$ is always positive, and $L$, $1/G_T$ and $L/G_T$ have finite yen averages. Then the ratio equals the yen average of $L$, plus the covariance of $L$ with $1/G_T$ divided by the average weight.
-- Take the model of Step 3: $\ln F_T$ and $\ln G_T$ jointly normal, $F$ driftless, any time $T \ge 0$. Then $K_q = F e^{-\rho\sigma_F\sigma_G T}$.
+- Suppose $`G_T`$ is always positive, $`1/G_T`$ has a finite yen average, and that average is $`1/G_0`$. Then weighting each future by $`G_0/G_T`$ gives probabilities that add up to one.
+- Suppose also that $`L/G_T`$ has a finite yen average. Then the average of $`L`$ under those weights equals $`\mathbb{E}^{f,U}[L/G_T] / \mathbb{E}^{f,U}[1/G_T]`$.
+- Suppose $`G_T`$ is always positive, and $`L`$, $`1/G_T`$ and $`L/G_T`$ have finite yen averages. Then the ratio equals the yen average of $`L`$, plus the covariance of $`L`$ with $`1/G_T`$ divided by the average weight.
+- Take the model of Step 3: $`\ln F_T`$ and $`\ln G_T`$ jointly normal, $`F`$ driftless, any time $`T \ge 0`$. Then $`K_q = F e^{-\rho\sigma_F\sigma_G T}`$.
 - The worked numbers check exactly as fractions, including the three-state world's 137/49 percent and its −$500 value.
 
 Steps 4 and 5, the Greeks and every decimal figure are left to the Python and Rust checks.

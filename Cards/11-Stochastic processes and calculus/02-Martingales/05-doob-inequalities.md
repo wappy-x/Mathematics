@@ -36,45 +36,49 @@ The rising line is the exact chance, in percent, computed by both checks for eac
 
 Notation first, in words.
 
-- The fortune after round n is $X_n$, so $X_0$ is the starting $10.
-- $P(\cdot)$ is a chance and $E[\cdot]$ is an average over all paths; $E[\,\cdot \mid \mathcal F_n]$ is the average given what is known after round n.
-- Reminder from [Martingales](01-martingales.md): $\mathcal F_n$ is what is known after round n, and a martingale is a fair game, $E[X_{n+1} \mid \mathcal F_n] = X_n$.
-- A submartingale is a game tilted in the player's favour or fair: $E[X_{n+1} \mid \mathcal F_n] \ge X_n$.
-- The running peak is the highest value seen so far, written with a star: $X^*_N = \max_{0 \le n \le N} X_n$.
-- A semicolon inside an average means "counted only on this event": $E[X_N;\, X^*_N \ge \lambda]$ is the average of $X_N \mathbf 1\{X^*_N \ge \lambda\}$, where the indicator $\mathbf 1\{\cdot\}$ is 1 when the event happens and 0 when it does not.
+- The fortune after round n is $`X_n`$, so $`X_0`$ is the starting $10.
+- $`P(\cdot)`$ is a chance and $`E[\cdot]`$ is an average over all paths; $`E[\,\cdot \mid \mathcal F_n]`$ is the average given what is known after round n.
+- Reminder from [Martingales](01-martingales.md): $`\mathcal F_n`$ is what is known after round n, and a martingale is a fair game, $`E[X_{n+1} \mid \mathcal F_n] = X_n`$.
+- A submartingale is a game tilted in the player's favour or fair: $`E[X_{n+1} \mid \mathcal F_n] \ge X_n`$.
+- The running peak is the highest value seen so far, written with a star: $`X^*_N = \max_{0 \le n \le N} X_n`$.
+- A semicolon inside an average means "counted only on this event": $`E[X_N;\, X^*_N \ge \lambda]`$ is the average of $`X_N \mathbf 1\{X^*_N \ge \lambda\}`$, where the indicator $`\mathbf 1\{\cdot\}`$ is 1 when the event happens and 0 when it does not.
 
-Doob's maximal inequality. For a submartingale that is never negative, any level $\lambda > 0$ and any number of rounds $N$:
+Doob's maximal inequality. For a submartingale that is never negative, any level $`\lambda > 0`$ and any number of rounds $`N`$:
 
-$$\lambda \, P\big(X^*_N \ge \lambda\big) \;\le\; E\big[X_N;\ X^*_N \ge \lambda\big] \;\le\; E[X_N]$$
+```math
+\lambda \, P\big(X^*_N \ge \lambda\big) \;\le\; E\big[X_N;\ X^*_N \ge \lambda\big] \;\le\; E[X_N]
+```
 
 **Read it aloud:** the level times the chance of reaching it is at most the final fortune averaged over the paths that reached it, which is at most the final fortune averaged over all paths.
 
-Doob's L2 inequality. For a martingale, with the peak taken of the size $\lvert X_n\rvert$:
+Doob's L2 inequality. For a martingale, with the peak taken of the size $`\lvert X_n\rvert`$:
 
-$$E\Big[\big(\max_{0 \le n \le N} \lvert X_n\rvert\big)^2\Big] \;\le\; 4\,E\big[X_N^2\big]$$
+```math
+E\Big[\big(\max_{0 \le n \le N} \lvert X_n\rvert\big)^2\Big] \;\le\; 4\,E\big[X_N^2\big]
+```
 
 **Read it aloud:** the average squared peak is at most four times the average squared endpoint.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X_n$, $X_N$, $X_k$ | the fortune after round n; $X_N$ is the final one | dollars, 0 or more | a bigger average final fortune loosens the bound |
-| $X_0$ | the starting fortune | $10 | the bound grows in proportion |
-| $N$ | the number of rounds allowed | 100 | the true chance rises toward the bound; the bound stays put |
-| $\lambda$ | the level the peak is tested against | $31 | the bound falls as 1 over the level |
-| $X^*_N$ | the running peak: the highest fortune in rounds 0 to N | at least $10 | — |
-| $\mathcal F_n$ | what is known after round n: the first n tosses | — | — |
-| $\tau$ | the first round at which the fortune reaches $\lambda$; a stopping time | round 21 at the earliest | — |
-| $E[X_N;\ \cdot\,]$, $\mathbf 1$ | an average counted only on an event; the indicator of the event | $1.090209 on the peak event | — |
-| $M_n$, $M_N$ | net winnings, $X_n - 10$; can be negative | $0 on average | — |
-| $\theta$ | the tilt in the exponential bound | 0.213171 | past the best tilt the bound worsens again |
-| $\cosh$, $\tanh$ | hyperbolic cosine: the average of $e^{\theta}$ and $e^{-\theta}$; hyperbolic tangent: half their difference over their average (atanh undoes it) | $\tanh\theta = 21/100$ at the best tilt | — |
-| $k$ | a whole-number level, used in the layer-cake sum | 1 to 110 | — |
+| $`X_n`$, $`X_N`$, $`X_k`$ | the fortune after round n; $`X_N`$ is the final one | dollars, 0 or more | a bigger average final fortune loosens the bound |
+| $`X_0`$ | the starting fortune | $10 | the bound grows in proportion |
+| $`N`$ | the number of rounds allowed | 100 | the true chance rises toward the bound; the bound stays put |
+| $`\lambda`$ | the level the peak is tested against | $31 | the bound falls as 1 over the level |
+| $`X^*_N`$ | the running peak: the highest fortune in rounds 0 to N | at least $10 | — |
+| $`\mathcal F_n`$ | what is known after round n: the first n tosses | — | — |
+| $`\tau`$ | the first round at which the fortune reaches $`\lambda`$; a stopping time | round 21 at the earliest | — |
+| $`E[X_N;\ \cdot\,]`$, $`\mathbf 1`$ | an average counted only on an event; the indicator of the event | $1.090209 on the peak event | — |
+| $`M_n`$, $`M_N`$ | net winnings, $`X_n - 10`$; can be negative | $0 on average | — |
+| $`\theta`$ | the tilt in the exponential bound | 0.213171 | past the best tilt the bound worsens again |
+| $`\cosh`$, $`\tanh`$ | hyperbolic cosine: the average of $`e^{\theta}`$ and $`e^{-\theta}`$; hyperbolic tangent: half their difference over their average (atanh undoes it) | $`\tanh\theta = 21/100`$ at the best tilt | — |
+| $`k`$ | a whole-number level, used in the layer-cake sum | 1 to 110 | — |
 
 ### When it holds
 
-- **Never negative, or take the size.** The maximal inequality needs a submartingale that is 0 or more. Net winnings $M_n$ go negative; applied to them, the bound reads 0 while the true chance is 0.035168. For a martingale that can go negative, apply it to $\lvert M_n\rvert$ or to the positive part $\max(M_n, 0)$ instead.
+- **Never negative, or take the size.** The maximal inequality needs a submartingale that is 0 or more. Net winnings $`M_n`$ go negative; applied to them, the bound reads 0 while the true chance is 0.035168. For a martingale that can go negative, apply it to $`\lvert M_n\rvert`$ or to the positive part $`\max(M_n, 0)`$ instead.
 - **Fair or favourable, not unfavourable.** A game tilted against the player (a supermartingale) needs the starting value in place of the final one. The house edge lowers the final average, so a bound built on it would be too small.
-- **A fixed number of rounds.** $N$ is fixed in advance. Letting $N$ grow is allowed and keeps the bound as long as the averages $E[X_N]$ stay bounded, which is how the chart's flat line holds for every horizon.
+- **A fixed number of rounds.** $`N`$ is fixed in advance. Letting $`N`$ grow is allowed and keeps the bound as long as the averages $`E[X_N]`$ stay bounded, which is how the chart's flat line holds for every horizon.
 - **L2 needs a finite average square, and the constant 4.** With constant 1 in place of 4 the inequality is false here: the average squared peak is 339.38, the average squared final fortune 185.01. No smaller constant than 4 works for every martingale. No constant works for the peak itself against the average final fortune; the square, or any power above 1, is what makes the argument close.
 
 ---
@@ -87,23 +91,23 @@ Watch each path and stop the clock at the first round it touches $31. At that mo
 
 ### Step 1: the peak event is a stopping-time event
 
-Let $\tau$ be the first round $n \le N$ with $X_n \ge \lambda$. Whether $\tau = k$ is decided by the first k tosses, so $\tau$ is a stopping time ([Stopping times](03-stopping-times-and-optional-stopping.md)). The peak reaches $\lambda$ exactly when $\tau \le N$. So the event "the peak reached the level" splits into the pieces "it first did so at round k", for k = 0 to N, and nothing is counted twice.
+Let $`\tau`$ be the first round $`n \le N`$ with $`X_n \ge \lambda`$. Whether $`\tau = k`$ is decided by the first k tosses, so $`\tau`$ is a stopping time ([Stopping times](03-stopping-times-and-optional-stopping.md)). The peak reaches $`\lambda`$ exactly when $`\tau \le N`$. So the event "the peak reached the level" splits into the pieces "it first did so at round k", for k = 0 to N, and nothing is counted twice.
 
 ### Step 2: on each piece, the end is worth at least the level
 
-Fix one k. On the piece $\{\tau = k\}$ the fortune at round k is at least $\lambda$. The piece is known at round k, and from round k to round N the game is fair or favourable. So the final fortune, averaged over this piece, is at least the round-k fortune averaged over it, which is at least $\lambda$ times the chance of the piece. In symbols, $E[X_N \mathbf 1\{\tau = k\}] \ge E[X_k \mathbf 1\{\tau = k\}] \ge \lambda\, P(\tau = k)$.
+Fix one k. On the piece $`\{\tau = k\}`$ the fortune at round k is at least $`\lambda`$. The piece is known at round k, and from round k to round N the game is fair or favourable. So the final fortune, averaged over this piece, is at least the round-k fortune averaged over it, which is at least $`\lambda`$ times the chance of the piece. In symbols, $`E[X_N \mathbf 1\{\tau = k\}] \ge E[X_k \mathbf 1\{\tau = k\}] \ge \lambda\, P(\tau = k)`$.
 
 ### Step 3: add the pieces, then use non-negativity
 
-Summing over k gives the left inequality: $\lambda \, P(X^*_N \ge \lambda) \le E[X_N;\ X^*_N \ge \lambda]$. The paths that never reached the level still hold money at round N, and that money is 0 or more. Adding it can only raise the total, which gives $E[X_N]$ on the right. This is where non-negativity is used, and only here.
+Summing over k gives the left inequality: $`\lambda \, P(X^*_N \ge \lambda) \le E[X_N;\ X^*_N \ge \lambda]`$. The paths that never reached the level still hold money at round N, and that money is 0 or more. Adding it can only raise the total, which gives $`E[X_N]`$ on the right. This is where non-negativity is used, and only here.
 
 Our gambler shows both steps in numbers. The paths that touched $31 end with $1.090209 of the $10 average, which is exactly 31 × 0.035168: after touching $31, a fair game keeps $31 on average, so Step 2 holds with equality here. The other $8.909791 is held by paths that never got there. That $8.91 is the whole of the slack between 0.035168 and 0.3226.
 
 ### Step 4: the L2 inequality from the maximal one
 
-Take the peak of the sizes $\lvert X_n\rvert$; the fortune is never negative, so here it is $X^*_N$. Three moves finish it.
+Take the peak of the sizes $`\lvert X_n\rvert`$; the fortune is never negative, so here it is $`X^*_N`$. Three moves finish it.
 
-1. The average of a square can be counted in layers: for a whole-number peak, the squared peak averages to the sum over each level $k$ of $(2k - 1)$ times the chance the peak reaches $k$ (the layer-cake identity). The checks compute 339.382291 both ways.
+1. The average of a square can be counted in layers: for a whole-number peak, the squared peak averages to the sum over each level $`k`$ of $`(2k - 1)`$ times the chance the peak reaches $`k`$ (the layer-cake identity). The checks compute 339.382291 both ways.
 2. Bound each layer's chance by Step 3's middle term.
 3. The layers add up to at most twice the average of final fortune times peak, and the Cauchy–Schwarz inequality splits that product into square roots: the root of the average squared peak is at most twice the root of the average squared final fortune.
 
@@ -112,30 +116,34 @@ Squaring gives the 4. Here 339.38 against 4 × 185.01 = 740.05: the ratio is 1.8
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(X_n)$ for n = 0 to N is adapted to the filtration $(\mathcal F_n)$, integrable, and a submartingale: $E[X_N \mid \mathcal F_k] \ge X_k$ for every k ≤ N, which follows from the one-step property by the tower rule for conditional expectation ([The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md)).
+**Setting.** $`(X_n)`$ for n = 0 to N is adapted to the filtration $`(\mathcal F_n)`$, integrable, and a submartingale: $`E[X_N \mid \mathcal F_k] \ge X_k`$ for every k ≤ N, which follows from the one-step property by the tower rule for conditional expectation ([The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md)).
 
-**Maximal inequality.** Assume $X_n \ge 0$. Let $\tau = \min\{n \le N : X_n \ge \lambda\}$, with $\tau = \infty$ if there is no such n. The event $\{\tau = k\}$ is in $\mathcal F_k$, and on it $X_k \ge \lambda$. The events for k = 0 to N are disjoint and their union is $\{X^*_N \ge \lambda\}$. For each k, by the defining property of conditional expectation and the submartingale property,
-$$E[X_N \mathbf 1\{\tau = k\}] = E\big[E[X_N \mid \mathcal F_k]\,\mathbf 1\{\tau = k\}\big] \ge E[X_k \mathbf 1\{\tau = k\}] \ge \lambda\, P(\tau = k).$$
-Sum over k to get $\lambda P(X^*_N \ge \lambda) \le E[X_N;\ X^*_N \ge \lambda]$. Since $X_N \ge 0$, this is at most $E[X_N]$.
+**Maximal inequality.** Assume $`X_n \ge 0`$. Let $`\tau = \min\{n \le N : X_n \ge \lambda\}`$, with $`\tau = \infty`$ if there is no such n. The event $`\{\tau = k\}`$ is in $`\mathcal F_k`$, and on it $`X_k \ge \lambda`$. The events for k = 0 to N are disjoint and their union is $`\{X^*_N \ge \lambda\}`$. For each k, by the defining property of conditional expectation and the submartingale property,
 
-**The size of a martingale is a submartingale.** If $(X_n)$ is a martingale, conditional Jensen with the convex function $\lvert x\rvert$ gives $E[\lvert X_{n+1}\rvert \mid \mathcal F_n] \ge \lvert E[X_{n+1} \mid \mathcal F_n]\rvert = \lvert X_n\rvert$. The same holds for $x^2$ and $e^{\theta x}$ whenever they are integrable, and for the positive part $\max(x, 0)$. So the maximal inequality applies to $\lvert X_n\rvert$.
+$`\displaystyle E[X_N \mathbf 1\{\tau = k\}] = E\big[E[X_N \mid \mathcal F_k]\,\mathbf 1\{\tau = k\}\big] \ge E[X_k \mathbf 1\{\tau = k\}] \ge \lambda\, P(\tau = k).`$
 
-**L2 inequality.** Let $Y = \max_{n \le N} \lvert X_n\rvert$ and assume $E[X_N^2] < \infty$. Each $E[X_n^2] \le E[X_N^2]$ by Jensen, and $Y^2 \le \sum_n X_n^2$, so $E[Y^2]$ is finite. For any non-negative variable, $E[Y^2] = \int_0^\infty 2\lambda\, P(Y \ge \lambda)\, d\lambda$ (Tonelli's theorem applied to $Y^2 = \int_0^Y 2\lambda\, d\lambda$). By the maximal inequality for $\lvert X_n\rvert$,
-$$E[Y^2] \le \int_0^\infty 2\, E\big[\lvert X_N\rvert\, \mathbf 1\{Y \ge \lambda\}\big]\, d\lambda = 2\, E\big[\lvert X_N\rvert\, Y\big] \le 2\,\sqrt{E[X_N^2]}\,\sqrt{E[Y^2]},$$
-the equality by Tonelli again and the last step by Cauchy–Schwarz. If $E[Y^2] = 0$ there is nothing to prove; otherwise divide by $\sqrt{E[Y^2]}$ and square: $E[Y^2] \le 4 E[X_N^2]$.
+Sum over k to get $`\lambda P(X^*_N \ge \lambda) \le E[X_N;\ X^*_N \ge \lambda]`$. Since $`X_N \ge 0`$, this is at most $`E[X_N]`$.
 
-**The same argument for p > 1.** Replacing $2\lambda$ by $p\lambda^{p-1}$ and Cauchy–Schwarz by Hölder's inequality gives $E[Y^p] \le (p/(p-1))^p E[\lvert X_N\rvert^p]$. At p = 1 the constant is infinite, and no inequality of this form holds.
+**The size of a martingale is a submartingale.** If $`(X_n)`$ is a martingale, conditional Jensen with the convex function $`\lvert x\rvert`$ gives $`E[\lvert X_{n+1}\rvert \mid \mathcal F_n] \ge \lvert E[X_{n+1} \mid \mathcal F_n]\rvert = \lvert X_n\rvert`$. The same holds for $`x^2`$ and $`e^{\theta x}`$ whenever they are integrable, and for the positive part $`\max(x, 0)`$. So the maximal inequality applies to $`\lvert X_n\rvert`$.
+
+**L2 inequality.** Let $`Y = \max_{n \le N} \lvert X_n\rvert`$ and assume $`E[X_N^2] < \infty`$. Each $`E[X_n^2] \le E[X_N^2]`$ by Jensen, and $`Y^2 \le \sum_n X_n^2`$, so $`E[Y^2]`$ is finite. For any non-negative variable, $`E[Y^2] = \int_0^\infty 2\lambda\, P(Y \ge \lambda)\, d\lambda`$ (Tonelli's theorem applied to $`Y^2 = \int_0^Y 2\lambda\, d\lambda`$). By the maximal inequality for $`\lvert X_n\rvert`$,
+
+$`\displaystyle E[Y^2] \le \int_0^\infty 2\, E\big[\lvert X_N\rvert\, \mathbf 1\{Y \ge \lambda\}\big]\, d\lambda = 2\, E\big[\lvert X_N\rvert\, Y\big] \le 2\,\sqrt{E[X_N^2]}\,\sqrt{E[Y^2]},`$
+
+the equality by Tonelli again and the last step by Cauchy–Schwarz. If $`E[Y^2] = 0`$ there is nothing to prove; otherwise divide by $`\sqrt{E[Y^2]}`$ and square: $`E[Y^2] \le 4 E[X_N^2]`$.
+
+**The same argument for p > 1.** Replacing $`2\lambda`$ by $`p\lambda^{p-1}`$ and Cauchy–Schwarz by Hölder's inequality gives $`E[Y^p] \le (p/(p-1))^p E[\lvert X_N\rvert^p]`$. At p = 1 the constant is infinite, and no inequality of this form holds.
 
 </details>
 
 ### Step 5: sharper bounds from the same theorem
 
-The maximal inequality applies to any non-negative submartingale, and a convex function of a martingale is one (conditional Jensen, in the proof above). A convex function is one whose graph bends upward, such as $x^2$ or $e^{\theta x}$. Choosing the function well tightens the bound for the same question.
+The maximal inequality applies to any non-negative submartingale, and a convex function of a martingale is one (conditional Jensen, in the proof above). A convex function is one whose graph bends upward, such as $`x^2`$ or $`e^{\theta x}`$. Choosing the function well tightens the bound for the same question.
 
-- **Squares.** Net winnings $M_n = X_n - 10$ form a martingale, so $M_n^2$ is a submartingale. The fortune reaches $31 only if $M_n^2$ reaches $21^2 = 441$. The bound is the average of $M_N^2$ over 441. That average equals the mean number of rounds actually played, 85.013575, because $M_n^2$ minus the rounds played is itself a martingale. The bound is 0.192775; without the stop at $0 the average would be all 100 rounds, giving 0.226757. For sums of independent steps this is Kolmogorov's inequality, a standard route to the strong law of large numbers.
-- **Exponentials.** Drop the stop at $0 for a moment and let the walk run into debt. Every path on which the stopped fortune reaches $31 is a path on which the free walk gains $21, since the two agree until ruin. For the free walk, $e^{\theta M_n}$ is a submartingale with average $\cosh(\theta)^{100}$ after 100 rounds: each ±1 step multiplies it by $e^{\theta}$ or $e^{-\theta}$, and the average of those two is the hyperbolic cosine $\cosh\theta$ ([Hyperbolic functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md)).
+- **Squares.** Net winnings $`M_n = X_n - 10`$ form a martingale, so $`M_n^2`$ is a submartingale. The fortune reaches $31 only if $`M_n^2`$ reaches $`21^2 = 441`$. The bound is the average of $`M_N^2`$ over 441. That average equals the mean number of rounds actually played, 85.013575, because $`M_n^2`$ minus the rounds played is itself a martingale. The bound is 0.192775; without the stop at $0 the average would be all 100 rounds, giving 0.226757. For sums of independent steps this is Kolmogorov's inequality, a standard route to the strong law of large numbers.
+- **Exponentials.** Drop the stop at $0 for a moment and let the walk run into debt. Every path on which the stopped fortune reaches $31 is a path on which the free walk gains $21, since the two agree until ruin. For the free walk, $`e^{\theta M_n}`$ is a submartingale with average $`\cosh(\theta)^{100}`$ after 100 rounds: each ±1 step multiplies it by $`e^{\theta}`$ or $`e^{-\theta}`$, and the average of those two is the hyperbolic cosine $`\cosh\theta`$ ([Hyperbolic functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md)).
 
-  So the chance of gaining $21 is at most $\cosh(\theta)^{100} e^{-21\theta}$ for every tilt $\theta > 0$. Setting the slope in $\theta$ to zero gives $\tanh\theta = 21/100$, where the hyperbolic tangent tanh is half the difference of $e^{\theta}$ and $e^{-\theta}$ over their average; undoing it (atanh) gives $\theta = 0.213171$. The bound is 0.108446.
+  So the chance of gaining $21 is at most $`\cosh(\theta)^{100} e^{-21\theta}`$ for every tilt $`\theta > 0`$. Setting the slope in $`\theta`$ to zero gives $`\tanh\theta = 21/100`$, where the hyperbolic tangent tanh is half the difference of $`e^{\theta}`$ and $`e^{-\theta}`$ over their average; undoing it (atanh) gives $`\theta = 0.213171`$. The bound is 0.108446.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -160,13 +168,13 @@ The gambler: $10 to start, $1 fair bets, stops at $0, 100 rounds, level $31.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| average final fortune | fair game, stopped at $0: $E[X_{100}] = X_0$ | 10.000000 |
+| average final fortune | fair game, stopped at $0: $`E[X_{100}] = X_0`$ | 10.000000 |
 | Doob's bound | 10 / 31 | 0.322581 |
 | exact chance of touching $31 | every path, counted three ways | 0.035168 |
 | final fortune on the peak event | 31 × 0.035168 | 1.090209 |
 | final fortune off it (the slack) | 10 − 1.090209 | 8.909791 |
 | squares bound | 85.013575 / 441 | 0.192775 |
-| exponential bound | $\cosh(0.213171)^{100} e^{-21 \times 0.213171}$ | 0.108446 |
+| exponential bound | $`\cosh(0.213171)^{100} e^{-21 \times 0.213171}`$ | 0.108446 |
 | average squared peak | layer-cake sum over the exact law | 339.382291 |
 | L2 bound | 4 × 185.013575 | 740.054302 |
 | **chance the fortune ever exceeds $30** | exact | **0.035168** |
@@ -177,7 +185,7 @@ About 1 in 28.4 gamblers see $31 at some point in the 100 rounds. Doob's bound, 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Apply the maximal inequality to net winnings $M_n$ | 0.000000 (truth 0.035168) | $M_n$ goes negative; the losers' debts cancel the winners' gains in the average. The valid version uses the positive part: 0.185605. |
+| Apply the maximal inequality to net winnings $`M_n`$ | 0.000000 (truth 0.035168) | $`M_n`$ goes negative; the losers' debts cancel the winners' gains in the average. The valid version uses the positive part: 0.185605. |
 | Use the end instead of the peak: chance the final fortune is $31 or more | 0.017584 | About half the paths that touch $31 drift back below it by round 100. |
 | L2 with constant 1: bound the squared peak by the squared end | 185.013575 (truth 339.382291) | The peak is never below the end and is often well above it; the 4 pays for that. |
 
@@ -605,13 +613,13 @@ The two outputs agree line for line. The Rust path count uses 128-bit whole numb
 
 Lean proves both inequalities for every game meeting the conditions above, at every level and number of rounds, plus three facts about the gambler.
 
-- Suppose $X$ is a submartingale that is never negative, $\lambda > 0$, and $N$ is any number of rounds. Then $\lambda \, P(X^*_N \ge \lambda) \le E[X_N;\ X^*_N \ge \lambda] \le E[X_N]$.
-- The size $\lvert M_n\rvert$ of any martingale is a submartingale.
-- Suppose $M$ is any martingale, even one that goes negative, and $\lambda > 0$. Then $\lambda \, P(\max_{0 \le n \le N} \lvert M_n\rvert \ge \lambda) \le E[\lvert M_N\rvert]$.
-- Suppose $X$ is a martingale and $E[X_N^2]$ is finite. Then the average squared peak of the sizes $\lvert X_n\rvert$ is finite, and at most $4\,E[X_N^2]$.
+- Suppose $`X`$ is a submartingale that is never negative, $`\lambda > 0`$, and $`N`$ is any number of rounds. Then $`\lambda \, P(X^*_N \ge \lambda) \le E[X_N;\ X^*_N \ge \lambda] \le E[X_N]`$.
+- The size $`\lvert M_n\rvert`$ of any martingale is a submartingale.
+- Suppose $`M`$ is any martingale, even one that goes negative, and $`\lambda > 0`$. Then $`\lambda \, P(\max_{0 \le n \le N} \lvert M_n\rvert \ge \lambda) \le E[\lvert M_N\rvert]`$.
+- Suppose $`X`$ is a martingale and $`E[X_N^2]`$ is finite. Then the average squared peak of the sizes $`\lvert X_n\rvert`$ is finite, and at most $`4\,E[X_N^2]`$.
 - For the gambler, Doob's bound 10/31 lies between 1 in 4 and 1 in 3.
 - Reaching $31 from $10 takes a $21 gain, so round 21 at the earliest, and 21 squared is 441.
-- Take a whole-number peak $m$ up to 110. Then the layers $2k - 1$, for $k$ from 1 to $m$, add up to $m^2$.
+- Take a whole-number peak $`m`$ up to 110. Then the layers $`2k - 1`$, for $`k`$ from 1 to $`m`$, add up to $`m^2`$.
 
 The exact chances, the simulation, the sharper bounds and the gambler's averages are left to the Python and Rust checks.
 

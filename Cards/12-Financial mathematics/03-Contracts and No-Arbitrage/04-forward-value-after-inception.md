@@ -40,36 +40,40 @@ The sloping line is the mark with eleven months still to run; the flat line is z
 
 Three prices sit on this card and the subject turns on keeping them apart.
 
-- $S_t$ is the **spot price**: what one Acme share costs right now, for delivery right now.
-- $F_t$ is today's **forward price**: the figure a brand-new contract for that same delivery day would name, signed this morning for nothing.
-- $K$ is the **delivery price** on the old paperwork, fixed at signing and never moving again.
+- $`S_t`$ is the **spot price**: what one Acme share costs right now, for delivery right now.
+- $`F_t`$ is today's **forward price**: the figure a brand-new contract for that same delivery day would name, signed this morning for nothing.
+- $`K`$ is the **delivery price** on the old paperwork, fixed at signing and never moving again.
 
-A small $t$ means "read today"; $T$ is delivery day; the time still to run is $\tau = T - t$, said "tau", in years. Two rates work underneath: the bank rate $r$ and the dividend yield $q$, both continuously compounded. That means interest is added at every instant, so a dollar left at rate $r$ for $\tau$ years grows to $e^{r\tau}$.
+A small $`t`$ means "read today"; $`T`$ is delivery day; the time still to run is $`\tau = T - t`$, said "tau", in years. Two rates work underneath: the bank rate $`r`$ and the dividend yield $`q`$, both continuously compounded. That means interest is added at every instant, so a dollar left at rate $`r`$ for $`\tau`$ years grows to $`e^{r\tau}`$.
 
-$$V_t = (F_t - K)\,e^{-r\tau}$$
+```math
+V_t = (F_t - K)\,e^{-r\tau}
+```
 
 **Read it aloud:** the old contract is worth today's forward price minus the price written on it, shrunk back to today's money, because that difference is not collected until delivery day.
 
 The same statement written in the share price rather than the forward price:
 
-$$V_t = S_t\,e^{-q\tau} - K\,e^{-r\tau}$$
+```math
+V_t = S_t\,e^{-q\tau} - K\,e^{-r\tau}
+```
 
-In words: the shares that must be bought today to end up holding one on delivery day, less the cash that must be set aside today to cover the payment. The two lines say one thing, because today's forward price is today's spot price carried to delivery day, $F_t = S_t e^{(r-q)\tau}$, which is the previous card's result.
+In words: the shares that must be bought today to end up holding one on delivery day, less the cash that must be set aside today to cover the payment. The two lines say one thing, because today's forward price is today's spot price carried to delivery day, $`F_t = S_t e^{(r-q)\tau}`$, which is the previous card's result.
 
 | Symbol | Plain meaning | In our example | Push it up and the mark… |
 | --- | --- | --- | --- |
-| $V_t$ | the mark: what the old contract is worth today | 2.82 | — it is the answer |
-| $K$ | the delivery price on the paperwork, fixed at signing; traders also call it the strike | 103.05 | falls by 0.96 a dollar |
-| $F_t$ | today's forward price for that same delivery day | 106.00 | rises by 0.96 a dollar |
-| $S_t$ | the spot price: one share, for delivery right now | 103.12 | rises by 0.98 a dollar |
-| $S_T$ | Acme's price on delivery day, unknown until it arrives | never used | — it is not in the formula |
-| $r$ | the bank rate: what safe money earns and costs, continuously compounded | 5 percent | rises: a payment due later shrinks in today's money |
-| $q$ | the dividend yield: cash the share pays its holder yearly, as a fraction of its price | 2 percent | falls: a forward's buyer collects no dividends |
-| $T$, $t$, $\tau$ | delivery day, today, and the years still to run: $\tau = T - t$ | one year out, one month in, 0.9167 | rises, while interest on the delayed payment beats the dividends given up |
-| $D$ | the discount factor $e^{-r\tau}$: what a dollar due on delivery day costs today | 0.9552 | — |
-| $\sigma$ | volatility: how wildly the share price swings | absent | nothing at all, and Why it works says why |
+| $`V_t`$ | the mark: what the old contract is worth today | 2.82 | — it is the answer |
+| $`K`$ | the delivery price on the paperwork, fixed at signing; traders also call it the strike | 103.05 | falls by 0.96 a dollar |
+| $`F_t`$ | today's forward price for that same delivery day | 106.00 | rises by 0.96 a dollar |
+| $`S_t`$ | the spot price: one share, for delivery right now | 103.12 | rises by 0.98 a dollar |
+| $`S_T`$ | Acme's price on delivery day, unknown until it arrives | never used | — it is not in the formula |
+| $`r`$ | the bank rate: what safe money earns and costs, continuously compounded | 5 percent | rises: a payment due later shrinks in today's money |
+| $`q`$ | the dividend yield: cash the share pays its holder yearly, as a fraction of its price | 2 percent | falls: a forward's buyer collects no dividends |
+| $`T`$, $`t`$, $`\tau`$ | delivery day, today, and the years still to run: $`\tau = T - t`$ | one year out, one month in, 0.9167 | rises, while interest on the delayed payment beats the dividends given up |
+| $`D`$ | the discount factor $`e^{-r\tau}`$: what a dollar due on delivery day costs today | 0.9552 | — |
+| $`\sigma`$ | volatility: how wildly the share price swings | absent | nothing at all, and Why it works says why |
 
-The second exponential is the **share fraction**, $e^{-q\tau} = 0.9818$: the piece of a share that grows into one whole share by delivery day, dividends reinvested.
+The second exponential is the **share fraction**, $`e^{-q\tau} = 0.9818`$: the piece of a share that grows into one whole share by delivery day, dividends reinvested.
 
 ### When it holds
 
@@ -112,11 +116,11 @@ Deposit 0.9552 today at 5 percent and it is exactly a dollar by delivery day, so
 <details>
 <summary>Detailed proof: why no other number can stand</summary>
 
-Suppose a contract on the old paperwork's terms changes hands above $V_t$. Take the short side, the seller's, at that price, sign a fresh long forward at $F_t$ for nothing, and bank the proceeds: nothing is paid today. On delivery day the two forward positions pay $-(S_T - K) + (S_T - F_t) = K - F_t$. The banked cash has grown by the factor $1/D$, so the total is the sale price over $D$, less the gap $F_t - K$ — positive in every future, from a position that cost nothing.
+Suppose a contract on the old paperwork's terms changes hands above $`V_t`$. Take the short side, the seller's, at that price, sign a fresh long forward at $`F_t`$ for nothing, and bank the proceeds: nothing is paid today. On delivery day the two forward positions pay $`-(S_T - K) + (S_T - F_t) = K - F_t`$. The banked cash has grown by the factor $`1/D`$, so the total is the sale price over $`D`$, less the gap $`F_t - K`$ — positive in every future, from a position that cost nothing.
 
-That is an arbitrage, and prices offering one do not last. Below $V_t$ the mirror trade does it: buy the contract, sign a fresh short at $F_t$, borrow the purchase price.
+That is an arbitrage, and prices offering one do not last. Below $`V_t`$ the mirror trade does it: buy the contract, sign a fresh short at $`F_t`$, borrow the purchase price.
 
-Neither trade needed an opinion about $S_T$: it cancels between the contracts before the bank is involved. Both are shut only at $V_t = (F_t - K)D$. Both lean on shorting, on one rate for deposit and loan, and on both contracts paying — the When it holds assumptions, doing real work.
+Neither trade needed an opinion about $`S_T`$: it cancels between the contracts before the bank is involved. Both are shut only at $`V_t = (F_t - K)D`$. Both lean on shorting, on one rate for deposit and loan, and on both contracts paying — the When it holds assumptions, doing real work.
 
 </details>
 
@@ -128,7 +132,9 @@ Buy 0.9818 of a share today and reinvest every dividend in more shares. Dividend
 
 That fraction of a share costs 101.25 today. On delivery day the package holds one share and owes 103.05 — the old contract's position, in every future — so it must cost the same today:
 
-$$101.25 \;-\; 98.43 \;=\; 2.82.$$
+```math
+101.25 \;-\; 98.43 \;=\; 2.82.
+```
 
 The code steps that package hour by hour, adding interest to the loan and buying shares with each hour's dividend. It ends holding 1.000000 shares and owing 103.045440, a thousandth of a cent short of the paperwork's 103.045453. Its cash on delivery day matches the contract's payoff to within 0.000012 in all four scenarios.
 
@@ -142,7 +148,7 @@ Step 3 says the same thing: the copy is bought once and never touched, and a hed
 
 The code tests it bluntly, averaging Acme's delivery-day price over the whole bell curve at 20 percent a year and again at 60 percent. Both times the average is 106.000000, exactly today's forward price, and the mark 2.822186.
 
-That average belongs to a pretend pricing world, where every asset earns the bank rate in total return, which has a card of its own: [State prices](07-state-prices-and-risk-neutral-pricing-in-one-period.md). Taking that as read, the whole derivation is one line: the average payoff is $F_t - K$, discounted.
+That average belongs to a pretend pricing world, where every asset earns the bank rate in total return, which has a card of its own: [State prices](07-state-prices-and-risk-neutral-pricing-in-one-period.md). Taking that as read, the whole derivation is one line: the average payoff is $`F_t - K`$, discounted.
 
 ---
 
@@ -156,7 +162,7 @@ Acme at signing: spot 100.00, bank rate 5 percent, dividend yield 2 percent, one
 | today's forward price, same day | quoted by the market | 106.000000 |
 | the gap | 106.000000 − 103.045453 | 2.954547 |
 | the years still to run | 11 months out of 12 | 0.916667 |
-| the discount factor, $D$ | 5 percent for 0.916667 of a year | 0.955201 |
+| the discount factor, $`D`$ | 5 percent for 0.916667 of a year | 0.955201 |
 | **the mark** | 2.954547 × 0.955201 | **2.822186** |
 | the same by the share form | 101.251322 − 98.429135 | 2.822186 |
 | the spot that puts the mark at zero | 103.045453 shrunk by 3 percent carry for 0.916667 years | 100.250313 |
@@ -185,7 +191,7 @@ Two forces move a mark, and only one of them is the share. Pin Acme at 103.12 fo
 
 ### Force one: Acme moves
 
-That is the overview chart: with the clock held still, every dollar on Acme's price adds 0.98 to the mark, the share fraction $e^{-q\tau} = 0.981834$. Traders call the slope the **delta**.
+That is the overview chart: with the clock held still, every dollar on Acme's price adds 0.98 to the mark, the share fraction $`e^{-q\tau} = 0.981834`$. Traders call the slope the **delta**.
 
 ### Force two: the clock runs down
 
@@ -218,7 +224,7 @@ xychart-beta
 
 The wandering line is the mark, month by month, along the Acme path printed in the run below; the flat line is zero. It starts at zero because that is how the delivery price was chosen, and lands on the payoff at the right-hand edge. An account that read only the two ends would report −2.05 and miss the 4.20 the contract was worth in month nine.
 
-The mark is a straight line in the spot with slope $e^{-q\tau}$, a positive number, so it crosses zero exactly once, at the break-even $K e^{-(r-q)\tau}$. Below that it runs negative without limit: no floor sits under a forward.
+The mark is a straight line in the spot with slope $`e^{-q\tau}`$, a positive number, so it crosses zero exactly once, at the break-even $`K e^{-(r-q)\tau}`$. Below that it runs negative without limit: no floor sits under a forward.
 
 That break-even moves as the clock runs, from 100.25 with eleven months left to 103.05 on delivery day, as the carry left to earn runs out. Hence month eleven, marked −0.29 with Acme at 102.50. On the last day discounting has nothing left to do, the forward price for delivery is the spot price of 101.00, and the mark is the raw payoff.
 
@@ -228,7 +234,7 @@ Each row moves one input and holds the rest still; the trading names are in brac
 
 | Nudge | What the mark does | In this contract |
 | --- | --- | --- |
-| Acme's spot up a dollar (delta) | rises by the share fraction $e^{-q\tau}$ | 0.981834 |
+| Acme's spot up a dollar (delta) | rises by the share fraction $`e^{-q\tau}`$ | 0.981834 |
 | the spot up a dollar, twice over (gamma) | nothing: the mark is a straight line in the spot | 0.000000 |
 | volatility up (vega) | nothing: it is not in the formula | 0.000000 |
 | a day gone, spot held still (theta) | falls by the interest earned on the delayed payment, less the dividends given up | −2.896431 a year, −0.007935 a day |
@@ -668,7 +674,7 @@ The two outputs agree line for line.
 Lean proves the card's formulas for every delivery price, bank rate and time still to run, inside the market model of When it holds.
 
 - The old contract's mark is the gap between today's forward price and the delivery price, times the discount factor.
-- Suppose the share fraction costs $S_t e^{-q\tau}$ today. Then the mark is that cost less the discounted delivery price, and today's forward price is $S_t e^{(r-q)\tau}$.
+- Suppose the share fraction costs $`S_t e^{-q\tau}`$ today. Then the mark is that cost less the discounted delivery price, and today's forward price is $`S_t e^{(r-q)\tau}`$.
 - Any other price for the old contract leaves a sure profit, whatever Acme's delivery-day price turns out to be.
 - In all four rows of the cancelling ledger, the two contracts together pay 2.95.
 - With no time left to run, the mark is the raw payoff: Acme at 101.00 gives −2.045453.
@@ -824,7 +830,7 @@ example : ((101 : ℝ) - 103045453 / 1000000) * exp (-((5 / 100) * 0)) = -204545
 
 ## What this builds on
 
-- [Forward price](03-forward-price-by-cash-and-carry.md): where today's 106.00 comes from, and why 103.05 made the contract free at signing. Every $F_t$ here is that card's result.
+- [Forward price](03-forward-price-by-cash-and-carry.md): where today's 106.00 comes from, and why 103.05 made the contract free at signing. Every $`F_t`$ here is that card's result.
 - [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): the discount factor 0.9552, and what "continuously compounded" does to a rate.
 
 ## Where this goes next

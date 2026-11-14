@@ -42,27 +42,31 @@ Each place is a two-digit window, each arrow a three-digit code: leaving a place
 
 ## The formula
 
-Two letters, both plain counts. $n$ is how many digits are available, 2 for the ring and 10 for the lock; $k$ is how long a code is, 3 and 4. A **window** is a code with one digit trimmed off, so $k-1$ digits long. There are $n^k$ codes ([Strings with repetition](../01-Counting%20Principles/02-strings-and-powers.md)), and $n^{k-1}$ windows.
+Two letters, both plain counts. $`n`$ is how many digits are available, 2 for the ring and 10 for the lock; $`k`$ is how long a code is, 3 and 4. A **window** is a code with one digit trimmed off, so $`k-1`$ digits long. There are $`n^k`$ codes ([Strings with repetition](../01-Counting%20Principles/02-strings-and-powers.md)), and $`n^{k-1}`$ windows.
 
-$$\text{length of the ring} = n^k$$
+```math
+\text{length of the ring} = n^k
+```
 
 **Read it aloud:** one digit per code, because each digit finishes exactly one code.
 
-Typed flat rather than bent round, the string repeats its first $k-1$ digits at the end, so presses come to $n^k$ plus $k-1$: 10, and 10,003 on the lock.
+Typed flat rather than bent round, the string repeats its first $`k-1`$ digits at the end, so presses come to $`n^k`$ plus $`k-1`$: 10, and 10,003 on the lock.
 
-How many rings exist is a second formula, in which $n!$ is the factorial, 1 × 2 × … × n:
+How many rings exist is a second formula, in which $`n!`$ is the factorial, 1 × 2 × … × n:
 
-$$\text{how many rings} = \frac{(n!)^{\,n^{k-1}}}{n^k}$$
+```math
+\text{how many rings} = \frac{(n!)^{\,n^{k-1}}}{n^k}
+```
 
-**Read it aloud:** a factorial per window, since its $n$ arrows can leave in $n!$ orders, multiplied over the $n^{k-1}$ windows, then divided by the length, since a ring starts anywhere. Most such orders split the arrows into several small circuits, not one, so this reads the formula rather than proving it.
+**Read it aloud:** a factorial per window, since its $`n`$ arrows can leave in $`n!`$ orders, multiplied over the $`n^{k-1}`$ windows, then divided by the length, since a ring starts anywhere. Most such orders split the arrows into several small circuits, not one, so this reads the formula rather than proving it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | how many digits are available | 2, and 10 | more arrows out of each window |
-| $k$ | how long one code is | 3, and 4 | the ring grows $n$-fold per step |
-| $n^k$ | how many codes, and the ring's length | 8, and 10,000 | — |
-| $n^{k-1}$ | how many windows, so how many places | 4, and 1,000 | more places, $n$ arrows each |
-| $n!$ | the factorial: orders $n$ arrows can be taken in | 2, from 1 × 2 | far more rings to choose from |
+| $`n`$ | how many digits are available | 2, and 10 | more arrows out of each window |
+| $`k`$ | how long one code is | 3, and 4 | the ring grows $`n`$-fold per step |
+| $`n^k`$ | how many codes, and the ring's length | 8, and 10,000 | — |
+| $`n^{k-1}`$ | how many windows, so how many places | 4, and 1,000 | more places, $`n`$ arrows each |
+| $`n!`$ | the factorial: orders $`n`$ arrows can be taken in | 2, from 1 × 2 | far more rings to choose from |
 
 ### When it holds
 
@@ -82,9 +86,9 @@ Drop a level. The places become the four two-digit windows, the arrows the codes
 
 ### Step 1: every window has as many arrows in as out
 
-Two arrows leave window 01, 010 and 011, one per digit appended; two arrive, 001 and 101, one per digit put in front. The count is $n$ both ways at every window. The checks tally both off the list of codes, not off the construction: in-degree (arrows arriving) and out-degree (arrows leaving) run 2 to 2 everywhere.
+Two arrows leave window 01, 010 and 011, one per digit appended; two arrive, 001 and 101, one per digit put in front. The count is $`n`$ both ways at every window. The checks tally both off the list of codes, not off the construction: in-degree (arrows arriving) and out-degree (arrows leaving) run 2 to 2 everywhere.
 
-Connected, too: pressing another window's digits reaches it within $k-1$ presses. Equal degrees plus connected is the condition for a closed walk using every arrow once ([Euler circuits](01-euler-circuits.md)), so one exists for every graph of this shape, with no search.
+Connected, too: pressing another window's digits reaches it within $`k-1`$ presses. Equal degrees plus connected is the condition for a closed walk using every arrow once ([Euler circuits](01-euler-circuits.md)), so one exists for every graph of this shape, with no search.
 
 ### Step 2: the walk spells the string
 
@@ -94,7 +98,7 @@ From 00 the checks' circuit takes 000, 001, 010, 101, 011, 111, 110, 100. Those 
 
 ### Step 3: nothing shorter can work
 
-Every position of a circular string starts one code, so a ring holds at most as many codes as digits. Holding all $n^k$ codes needs at least $n^k$ digits, and the circuit uses exactly that many.
+Every position of a circular string starts one code, so a ring holds at most as many codes as digits. Holding all $`n^k`$ codes needs at least $`n^k`$ digits, and the circuit uses exactly that many.
 
 ### Step 4: how many rings there are
 
@@ -103,11 +107,11 @@ Two, not one, at this size. Brute force over all 256 eight-digit strings finds 1
 <details>
 <summary>Detailed proof: the ring exists for every alphabet and every code length</summary>
 
-Places: the $n^{k-1}$ windows; arrows: each code, from its first $k-1$ digits to its last $k-1$. For any $n$ and $k$, every window has $n$ arrows out and $n$ in, so the degrees match, and typing a window's digits reaches it from any other in $k-1$ steps, so the graph is connected. A connected directed graph with matching degrees has a closed walk using every arrow once ([Euler circuits](01-euler-circuits.md)). Steps 2 and 3 are written for any $n$ and $k$ already, so the ring exists and is shortest at every size.
+Places: the $`n^{k-1}`$ windows; arrows: each code, from its first $`k-1`$ digits to its last $`k-1`$. For any $`n`$ and $`k`$, every window has $`n`$ arrows out and $`n`$ in, so the degrees match, and typing a window's digits reaches it from any other in $`k-1`$ steps, so the graph is connected. A connected directed graph with matching degrees has a closed walk using every arrow once ([Euler circuits](01-euler-circuits.md)). Steps 2 and 3 are written for any $`n`$ and $`k`$ already, so the ring exists and is shortest at every size.
 
 </details>
 
-A second route draws no graph: start with $k$ zeros and keep appending the largest digit that repeats no code, M. H. Martin's 1934 rule, which always reaches a full ring. Not every greedy rule does: the one in the checks strands at four codes.
+A second route draws no graph: start with $`k`$ zeros and keep appending the largest digit that repeats no code, M. H. Martin's 1934 rule, which always reaches a full ring. Not every greedy rule does: the one in the checks strands at four codes.
 
 ---
 
@@ -335,9 +339,9 @@ The two outputs match line for line.
 
 Lean proves the ring facts for every number of digits and every code length, and checks the binary ring's numbers.
 
-- With at least one digit to use, a ring of $n^k$ digits exists that reads every code exactly once.
-- A ring that holds every code is at least $n^k$ digits long, since each position starts one code.
-- Typed flat, $n^k + k - 1$ presses hold every code.
+- With at least one digit to use, a ring of $`n^k`$ digits exists that reads every code exactly once.
+- A ring that holds every code is at least $`n^k`$ digits long, since each position starts one code.
+- Typed flat, $`n^k + k - 1`$ presses hold every code.
 - The ring 00010111 reads all eight codes once; typed flat with no wrap, it gives 6 codes of 8, missing 100 and 110.
 - Typed flat as 0001011100, ten presses hold all eight codes.
 - Of the 256 eight-digit strings, 16 hold every code round the ring, and the counting formula gives 2, 16 and 24.
@@ -690,7 +694,7 @@ example : 10 ^ 4 + 4 - 1 = 10003 ∧ 4 * 10 ^ 4 = 40000 ∧ 40000 - 10003 = 2999
 
 - [Euler circuits](01-euler-circuits.md): the test for a closed walk using every arrow once, and the splicing method that finds one.
 - [Directed graphs](../09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md): arrows with a direction, counted in and out of a place.
-- [Strings with repetition](../01-Counting%20Principles/02-strings-and-powers.md): why $n$ digits in $k$ slots give $n^k$ codes.
+- [Strings with repetition](../01-Counting%20Principles/02-strings-and-powers.md): why $`n`$ digits in $`k`$ slots give $`n^k`$ codes.
 
 ## Where this goes next
 

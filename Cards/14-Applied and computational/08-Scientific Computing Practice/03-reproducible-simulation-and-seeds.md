@@ -41,36 +41,40 @@ The four hit counts and the total are printed by both checks. Each dart takes tw
 
 ## The formula
 
-The generator on this card is **SplitMix64**: a 64-bit counter that steps by a fixed odd number $\gamma$ (gamma, `0x9E3779B97F4A7C15`), followed by a scrambler that turns each count into a random-looking 64-bit output. The counter wraps round after $2^{64}$ steps, so the states form one loop of length $P = 2^{64}$. A **stream** is a run of consecutive states round that loop, starting from its seed.
+The generator on this card is **SplitMix64**: a 64-bit counter that steps by a fixed odd number $`\gamma`$ (gamma, `0x9E3779B97F4A7C15`), followed by a scrambler that turns each count into a random-looking 64-bit output. The counter wraps round after $`2^{64}`$ steps, so the states form one loop of length $`P = 2^{64}`$. A **stream** is a run of consecutive states round that loop, starting from its seed.
 
-Give each of $N$ independent parts its own stream of $L$ draws, each started from a seed that lands at a random-looking place on the loop. The one thing that can go wrong is two streams running into each other, so that two "independent" parts reuse the same numbers. The chance of that is bounded:
+Give each of $`N`$ independent parts its own stream of $`L`$ draws, each started from a seed that lands at a random-looking place on the loop. The one thing that can go wrong is two streams running into each other, so that two "independent" parts reuse the same numbers. The chance of that is bounded:
 
-$$p_{\text{overlap}} \;\le\; \frac{N(N-1)}{2}\cdot\frac{2L-1}{P}$$
+```math
+p_{\text{overlap}} \;\le\; \frac{N(N-1)}{2}\cdot\frac{2L-1}{P}
+```
 
-**Read it aloud:** the chance that any two of the streams share a state is at most the number of pairs of streams, times the chance that one given pair overlaps, which is $2L - 1$ positions out of the $P$ on the loop.
+**Read it aloud:** the chance that any two of the streams share a state is at most the number of pairs of streams, times the chance that one given pair overlaps, which is $`2L - 1`$ positions out of the $`P`$ on the loop.
 
-For this card's run: $N = 4$ streams, $L = 200{,}000$ draws each, $P = 2^{64}$. The bound is $1.3 \times 10^{-13}$.
+For this card's run: $`N = 4`$ streams, $`L = 200{,}000`$ draws each, $`P = 2^{64}`$. The bound is $`1.3 \times 10^{-13}`$.
 
 The answer itself, the π estimate, is the share of darts that land inside the quarter circle, times 4:
 
-$$\hat\pi = \frac{4h}{n}, \qquad \text{se} = 4\sqrt{\frac{(h/n)(1 - h/n)}{n}}$$
+```math
+\hat\pi = \frac{4h}{n}, \qquad \text{se} = 4\sqrt{\frac{(h/n)(1 - h/n)}{n}}
+```
 
 **Read it aloud:** four times the hits over the darts, with a standard error of four times the square root of the hit share, times the miss share, over the number of darts ([Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_0$ | the master seed: the one number written in the code | 20261111 | a different, equally valid run |
-| $s_k$ | stream $k$'s seed, the $k$-th output of a generator started from $x_0$ | `fbfc5102a7266b8b` for worker 0 | — |
-| $\gamma$ | the counter's step, an odd 64-bit number | `0x9E3779B97F4A7C15` | — |
-| $\gamma^{-1}$ | the step's inverse: times $\gamma$ it leaves remainder 1 after dividing by $2^{64}$; state $t$ sits at position $t \cdot \gamma^{-1}$ on the loop | found by Newton's rule in the checks | — |
-| $P$ | the loop length: how many states before the counter repeats | $2^{64}$ | overlap far less likely |
-| $N$ | the number of independent streams | 4 workers | overlap chance grows like $N^2$ |
-| $L$ | the draws each stream uses | 200,000 | overlap chance grows in step |
-| $p_{\text{overlap}}$ | the chance that some two streams share a state | at most $1.3 \times 10^{-13}$ | — |
-| $n$ | the number of darts | 400,000 | standard error shrinks like $1/\sqrt{n}$ |
-| $h$ | darts landing inside the quarter circle | 314,064 | estimate rises |
-| $\hat\pi$ | the estimate of π, $4h/n$ | 3.14064 | — |
-| se | the standard error of $\hat\pi$: its typical distance from π | 0.00260 | — |
+| $`x_0`$ | the master seed: the one number written in the code | 20261111 | a different, equally valid run |
+| $`s_k`$ | stream $`k`$'s seed, the $`k`$-th output of a generator started from $`x_0`$ | `fbfc5102a7266b8b` for worker 0 | — |
+| $`\gamma`$ | the counter's step, an odd 64-bit number | `0x9E3779B97F4A7C15` | — |
+| $`\gamma^{-1}`$ | the step's inverse: times $`\gamma`$ it leaves remainder 1 after dividing by $`2^{64}`$; state $`t`$ sits at position $`t \cdot \gamma^{-1}`$ on the loop | found by Newton's rule in the checks | — |
+| $`P`$ | the loop length: how many states before the counter repeats | $`2^{64}`$ | overlap far less likely |
+| $`N`$ | the number of independent streams | 4 workers | overlap chance grows like $`N^2`$ |
+| $`L`$ | the draws each stream uses | 200,000 | overlap chance grows in step |
+| $`p_{\text{overlap}}`$ | the chance that some two streams share a state | at most $`1.3 \times 10^{-13}`$ | — |
+| $`n`$ | the number of darts | 400,000 | standard error shrinks like $`1/\sqrt{n}`$ |
+| $`h`$ | darts landing inside the quarter circle | 314,064 | estimate rises |
+| $`\hat\pi`$ | the estimate of π, $`4h/n`$ | 3.14064 | — |
+| se | the standard error of $`\hat\pi`$: its typical distance from π | 0.00260 | — |
 
 ### When it holds
 
@@ -88,7 +92,9 @@ $$\hat\pi = \frac{4h}{n}, \qquad \text{se} = 4\sqrt{\frac{(h/n)(1 - h/n)}{n}}$$
 
 A pseudo-random generator is a fixed rule. Started from the same seed it hands out the same list of numbers, in the same order, every time. So a simulation is an ordinary deterministic program whose inputs include the generator and its seed:
 
-$$\text{answer} = F(\text{inputs},\ \text{code},\ \text{generator},\ \text{seed}).$$
+```math
+\text{answer} = F(\text{inputs},\ \text{code},\ \text{generator},\ \text{seed}).
+```
 
 Write all four down and the answer is pinned. The three habits are what that means once there are several streams and two languages.
 
@@ -96,8 +102,8 @@ Write all four down and the answer is pinned. The three habits are what that mea
 
 Two separate programs agree to the last bit only if every operation they perform is defined to the last bit.
 
-- **The generator is integer arithmetic.** SplitMix64 adds $\gamma$, then XORs (compares two numbers digit by digit, 1 where they differ), shifts and multiplies, all keeping the remainder after dividing by $2^{64}$. Integer arithmetic is exact in every language: from seed 0, Python and Rust both give the first output `e220a8397b1dcdaf`, the same value as the separately written generator on [Random numbers from a computer](../../09-Probability%20and%20statistics/11-Simulation/01-pseudo-random-numbers.md).
-- **The conversion to a number between 0 and 1 is exact.** The top 53 bits of an output, divided by $2^{53}$, give a draw between 0 and 1. A double (the 64-bit floating-point number both languages use) holds 53 significant bits, so this division loses nothing.
+- **The generator is integer arithmetic.** SplitMix64 adds $`\gamma`$, then XORs (compares two numbers digit by digit, 1 where they differ), shifts and multiplies, all keeping the remainder after dividing by $`2^{64}`$. Integer arithmetic is exact in every language: from seed 0, Python and Rust both give the first output `e220a8397b1dcdaf`, the same value as the separately written generator on [Random numbers from a computer](../../09-Probability%20and%20statistics/11-Simulation/01-pseudo-random-numbers.md).
+- **The conversion to a number between 0 and 1 is exact.** The top 53 bits of an output, divided by $`2^{53}`$, give a draw between 0 and 1. A double (the 64-bit floating-point number both languages use) holds 53 significant bits, so this division loses nothing.
 - **The dart test uses only correctly rounded operations.** Multiply, add, compare and square root are each required by IEEE 754 to give the exactly rounded true result. Same inputs, same bits, on any conforming machine.
 
 What the standard does not pin down is where reproducibility usually breaks. Functions such as `exp`, `log` and `sin` are not required to be correctly rounded, so two maths libraries may differ in the last bit. A compiler may fuse a multiply and an add into one step with one rounding instead of two.
@@ -108,11 +114,11 @@ A parallel program that adds results in whatever order its workers finish can ch
 
 ### Step 2: two ways to give each part its own stream
 
-All streams live on the same loop of $2^{64}$ states. Giving each part a stream means giving it a stretch of that loop that no other part touches. There are two standard ways.
+All streams live on the same loop of $`2^{64}`$ states. Giving each part a stream means giving it a stretch of that loop that no other part touches. There are two standard ways.
 
-**Block splitting.** Start part $k$ exactly $k \times L$ steps along from the master seed. SplitMix64 makes the jump free: its state after $j$ steps is the seed plus $j\gamma$. The blocks then sit end to end and cannot overlap, by construction. The catch: $L$ must be known before the run, and must count draws, not darts or points.
+**Block splitting.** Start part $`k`$ exactly $`k \times L`$ steps along from the master seed. SplitMix64 makes the jump free: its state after $`j`$ steps is the seed plus $`j\gamma`$. The blocks then sit end to end and cannot overlap, by construction. The catch: $`L`$ must be known before the run, and must count draws, not darts or points.
 
-**Seeding from a master.** Start a generator from the master seed and use its first $N$ outputs as the stream seeds $s_k$. No draw counts are needed in advance, which matters when a part's needs depend on its own numbers.
+**Seeding from a master.** Start a generator from the master seed and use its first $`N`$ outputs as the stream seeds $`s_k`$. No draw counts are needed in advance, which matters when a part's needs depend on its own numbers.
 
 A part that keeps points in a disc by **rejection** (draw a point in the square, keep it only if it falls in the disc, [Rejection sampling and Box-Muller](../../09-Probability%20and%20statistics/11-Simulation/03-rejection-sampling-and-box-muller.md)) used 25,552 draws to keep 10,000 points; nobody could have written that number down beforehand.
 
@@ -122,20 +128,20 @@ An older trap belongs to the generator, not the method: with some generators, se
 
 ### Step 3: the overlap bound
 
-Think of the loop as a circular running track with $P$ marked positions. A stream occupies the $L$ positions after its start.
+Think of the loop as a circular running track with $`P`$ marked positions. A stream occupies the $`L`$ positions after its start.
 
-1. **One pair.** Fix where stream A starts. Stream B overlaps A exactly when B's start lies within $L - 1$ positions before A's start, at A's start, or within $L - 1$ positions after it. That is $2L - 1$ positions. If B's start is uniform over all $P$ positions, the chance is $(2L - 1)/P$.
-2. **Many pairs.** $N$ streams make $N(N-1)/2$ pairs. The chance that at least one pair overlaps is at most the sum of the pairs' chances (the **union bound**: the probability of "this or that" never exceeds the two probabilities added). That gives the formula.
+1. **One pair.** Fix where stream A starts. Stream B overlaps A exactly when B's start lies within $`L - 1`$ positions before A's start, at A's start, or within $`L - 1`$ positions after it. That is $`2L - 1`$ positions. If B's start is uniform over all $`P`$ positions, the chance is $`(2L - 1)/P`$.
+2. **Many pairs.** $`N`$ streams make $`N(N-1)/2`$ pairs. The chance that at least one pair overlaps is at most the sum of the pairs' chances (the **union bound**: the probability of "this or that" never exceeds the two probabilities added). That gives the formula.
 
-The checks test step 1 by brute force on a toy generator with a loop of 256: $x \to (5x + 3) \bmod 256$, segments of $L = 10$. Out of all 65,536 ordered pairs of seeds, the segments share a state in 4864 pairs. The formula predicts $256 \times 19 = 4864$: 19 clashing seeds for each of the 256 starting seeds, a probability of 0.0742.
+The checks test step 1 by brute force on a toy generator with a loop of 256: $`x \to (5x + 3) \bmod 256`$, segments of $`L = 10`$. Out of all 65,536 ordered pairs of seeds, the segments share a state in 4864 pairs. The formula predicts $`256 \times 19 = 4864`$: 19 clashing seeds for each of the 256 starting seeds, a probability of 0.0742.
 
-For this card's run the bound is $1.3 \times 10^{-13}$. But a bound is a promise about seeds in general. For the four seeds actually used, the checks measure the answer directly.
+For this card's run the bound is $`1.3 \times 10^{-13}`$. But a bound is a promise about seeds in general. For the four seeds actually used, the checks measure the answer directly.
 
-A SplitMix64 state $t$ sits at position $t \cdot \gamma^{-1}$ on the loop, where $\gamma^{-1}$ is the number that, multiplied by $\gamma$, leaves remainder 1 after dividing by $2^{64}$. The checks find $\gamma^{-1}$ by Newton's rule for inverses (repeat $v \to v(2 - \gamma v)$, which doubles the number of correct low bits each time), confirm $\gamma \cdot \gamma^{-1}$ leaves 1, and place the four starts.
+A SplitMix64 state $`t`$ sits at position $`t \cdot \gamma^{-1}`$ on the loop, where $`\gamma^{-1}`$ is the number that, multiplied by $`\gamma`$, leaves remainder 1 after dividing by $`2^{64}`$. The checks find $`\gamma^{-1}`$ by Newton's rule for inverses (repeat $`v \to v(2 - \gamma v)`$, which doubles the number of correct low bits each time), confirm $`\gamma \cdot \gamma^{-1}`$ leaves 1, and place the four starts.
 
 The nearest two are 2144390933074202976 draws apart; each stream uses 200,000. These four streams cannot meet.
 
-The bound also says when 64 bits stop being enough. A large job with 10,000 streams of a billion draws each has 49,995,000 pairs; the bound is 0.00542, about 1 in 184. With a 128-bit loop the same job's bound is $2.9 \times 10^{-22}$. That is why generators built for large parallel work keep 128 bits of state or more, or hand out streams by a key and a counter instead of by a seed.
+The bound also says when 64 bits stop being enough. A large job with 10,000 streams of a billion draws each has 49,995,000 pairs; the bound is 0.00542, about 1 in 184. With a 128-bit loop the same job's bound is $`2.9 \times 10^{-22}`$. That is why generators built for large parallel work keep 128 bits of state or more, or hand out streams by a key and a counter instead of by a seed.
 
 ### Step 4: own streams keep an edit in one part from moving another
 
@@ -156,10 +162,10 @@ The four workers' hits, combined, then the overlap bound for their streams.
 | --- | --- | --- |
 | total hits | 78,690 + 78,519 + 78,306 + 78,549 | 314,064 |
 | hit share | 314,064 / 400,000 | 0.78516 |
-| estimate $\hat\pi$ | 4 × 0.78516 | 3.14064 |
+| estimate $`\hat\pi`$ | 4 × 0.78516 | 3.14064 |
 | standard error | 4 × √(0.78516 × (1 − 0.78516) / 400,000) | 0.00260 |
 | pairs of streams | 4 × 3 / 2 | 6 |
-| one pair's overlap chance | (2 × 200,000 − 1) / $2^{64}$ = 399,999 / $2^{64}$ | 2.2 × 10⁻¹⁴ |
+| one pair's overlap chance | (2 × 200,000 − 1) / $`2^{64}`$ = 399,999 / $`2^{64}`$ | 2.2 × 10⁻¹⁴ |
 | any pair's overlap chance | 6 × 2.2 × 10⁻¹⁴ | **at most 1.3 × 10⁻¹³** |
 
 The estimate sits 0.00095 below π = 3.14159, well inside one standard error, and the chance that any two of the four streams shared a number is far too small to matter; for these four seeds, the measured gap rules it out entirely.
@@ -178,7 +184,7 @@ The estimate sits 0.00095 below π = 3.14159, well inside one standard error, an
 
 ## Code, from first principles, and it actually runs
 
-Both programs write out SplitMix64 and a 32-bit linear congruential generator, and import no random module. They throw the 400,000 darts, derive and place the four streams, run every mistake in the table, and run the two-part experiment. The roads to the answer are four. The Python and Rust runs pin each other: each program asserts the other's hit count and the estimate's 64-bit pattern. The overlap formula meets brute force over every pair of seeds of a toy generator. SplitMix64's first output meets the value printed by the separately written generator on Random numbers from a computer. And the simulated estimates are held to their exact values, π, 2/3 and $(\sqrt{2} + \ln(1 + \sqrt{2}))/3 = 0.76520$, within four standard errors.
+Both programs write out SplitMix64 and a 32-bit linear congruential generator, and import no random module. They throw the 400,000 darts, derive and place the four streams, run every mistake in the table, and run the two-part experiment. The roads to the answer are four. The Python and Rust runs pin each other: each program asserts the other's hit count and the estimate's 64-bit pattern. The overlap formula meets brute force over every pair of seeds of a toy generator. SplitMix64's first output meets the value printed by the separately written generator on Random numbers from a computer. And the simulated estimates are held to their exact values, π, 2/3 and $`(\sqrt{2} + \ln(1 + \sqrt{2}))/3 = 0.76520`$, within four standard errors.
 
 ### Python
 
@@ -532,12 +538,12 @@ The two outputs agree line for line, including the bit pattern `40092007dd441355
 
 Lean proves Step 3's overlap bound for every number of streams, stream length and loop length, and checks the card's SplitMix64 numbers exactly.
 
-- Take $N$ streams of $L$ draws, each started independently at a uniform random place on a loop of $P$ positions. Then the chance that some two streams share a position is at most the number of pairs times $(2L - 1)/P$.
-- Take $L$ of at least 1 and $2L - 1 \le P$, and fix where stream A starts. Then exactly $2L - 1$ starts for stream B make it overlap A.
+- Take $`N`$ streams of $`L`$ draws, each started independently at a uniform random place on a loop of $`P`$ positions. Then the chance that some two streams share a position is at most the number of pairs times $`(2L - 1)/P`$.
+- Take $`L`$ of at least 1 and $`2L - 1 \le P`$, and fix where stream A starts. Then exactly $`2L - 1`$ starts for stream B make it overlap A.
 - Suppose a counter steps by an odd number and keeps the remainder after dividing by a power of 2. Then it first returns to its start after exactly that many steps.
-- SplitMix64's first output from seed 0, the four stream seeds and $\gamma^{-1}$ are all right.
+- SplitMix64's first output from seed 0, the four stream seeds and $`\gamma^{-1}`$ are all right.
 - The nearest two of the four starts are 2144390933074202976 draws apart, far more than 200,000.
-- The worked numbers are right: 314,064 hits, 6 pairs, $2L - 1 = 399{,}999$, the toy formula's 4864, and 49,995,000 pairs.
+- The worked numbers are right: 314,064 hits, 6 pairs, $`2L - 1 = 399{,}999`$, the toy formula's 4864, and 49,995,000 pairs.
 
 The darts, the π estimate, the floating-point sums and the toy generator's brute-force count are left to the Python and Rust checks.
 
@@ -754,7 +760,7 @@ example : 10000 * 9999 / 2 = 49995000 := by norm_num
 > - **Neighbouring seeds.** In the Python, replace `s = seeds(MASTER, WORKERS)` with `s = [MASTER + k for k in range(WORKERS)]`. Guess: the `loop` line still shows the nearest two starts about 10^18 draws apart, far more than 200,000; the estimate changes, and the assert that pins the Rust run's hits stops the script. The record line must now say how the seeds were made.
 > - **Part B first.** In `two_parts`, run part B's darts before part A. Guess: on the shared stream, part B no longer moves when part A is cut, because nothing comes before it; the assert that expects it to move stops the run. Order on a shared stream decides who is disturbed.
 > - **Python's own sum.** Replace `total(` with `sum(` in the `d_ser` line. Guess: Python's built-in `sum` compensates for rounding, the Rust loop does not, so the last digits of the one-pass mean no longer match between the two programs. A reproducible result must say how it sums.
-> - **Longer toy segments.** Change `range(10)` in the toy line to `range(20)`. Guess: the clash count becomes 256 × 39, as the formula with $L = 20$ says, and the assert written for $L = 10$ stops the run.
+> - **Longer toy segments.** Change `range(10)` in the toy line to `range(20)`. Guess: the clash count becomes 256 × 39, as the formula with $`L = 20`$ says, and the assert written for $`L = 10`$ stops the run.
 
 ---
 
@@ -778,7 +784,7 @@ example : 10000 * 9999 / 2 = 49995000 := by norm_num
 - **Software testing.** Tests that feed random inputs print their seed when they fail, so the failing case replays exactly on the developer's machine.
 
 > **Say it back**
-> A computer's random numbers come from a fixed rule and a seed, so a simulation is a deterministic program whose inputs include the generator and the seed. Write both in the code, and print them beside the answer. Give each independent part its own stream, by jumping ahead in blocks or by seeding each stream from a master; with seeded streams, the chance of overlap is at most the number of pairs times $2L - 1$ over the loop length. Fix the order of every floating-point sum, because a different order changes the last digits. Then a second run, in another language or on another computer, gives the same answer bit for bit.
+> A computer's random numbers come from a fixed rule and a seed, so a simulation is a deterministic program whose inputs include the generator and the seed. Write both in the code, and print them beside the answer. Give each independent part its own stream, by jumping ahead in blocks or by seeding each stream from a master; with seeded streams, the chance of overlap is at most the number of pairs times $`2L - 1`$ over the loop length. Fix the order of every floating-point sum, because a different order changes the last digits. Then a second run, in another language or on another computer, gives the same answer bit for bit.
 
 ---
 

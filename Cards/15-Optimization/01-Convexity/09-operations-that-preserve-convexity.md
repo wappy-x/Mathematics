@@ -40,36 +40,42 @@ Every arrow is one of the operations on this card. Each one keeps a bowl a bowl,
 
 ## The formula
 
-A recipe is a list of three shares $x = (x_1, x_2, x_3)$: Brazil, Colombia, Ethiopia, each at least 0, adding to 1. The quotes are straight-line functions of the shares, for example $q_A(x) = 8x_1 + 12x_2 + 11x_3$. The built cost is
+A recipe is a list of three shares $`x = (x_1, x_2, x_3)`$: Brazil, Colombia, Ethiopia, each at least 0, adding to 1. The quotes are straight-line functions of the shares, for example $`q_A(x) = 8x_1 + 12x_2 + 11x_3`$. The built cost is
 
-$$F(x) \;=\; h\big(Q(x)\big) + w\,\big(s(x) - 7\big)^2, \qquad Q(x) = \max\{q_A(x),\, q_B(x),\, q_C(x)\}, \qquad h(c) = c + \tfrac12 \max\{0,\, c - 10\}.$$
+```math
+F(x) \;=\; h\big(Q(x)\big) + w\,\big(s(x) - 7\big)^2, \qquad Q(x) = \max\{q_A(x),\, q_B(x),\, q_C(x)\}, \qquad h(c) = c + \tfrac12 \max\{0,\, c - 10\}.
+```
 
 **Read it aloud:** the worst of three quotes, with half as much again added to any part above £10, plus £2 for every squared point the strength misses 7.
 
-The five rules that certify it, for convex functions $\varphi$ and $\psi$ (read "phi" and "psi"):
+The five rules that certify it, for convex functions $`\varphi`$ and $`\psi`$ (read "phi" and "psi"):
 
-$$\varphi + \psi, \quad a\varphi \ (a \ge 0), \qquad \max\{\varphi, \psi\}, \qquad \varphi(Ax + b), \qquad h\big(\varphi(x)\big) \text{ with } h \text{ convex and rising}, \qquad \min_{y \in K} \varphi(x, y) \text{ with } K \text{ convex}$$
+```math
+\varphi + \psi, \quad a\varphi \ (a \ge 0), \qquad \max\{\varphi, \psi\}, \qquad \varphi(Ax + b), \qquad h\big(\varphi(x)\big) \text{ with } h \text{ convex and rising}, \qquad \min_{y \in K} \varphi(x, y) \text{ with } K \text{ convex}
+```
 
 **Read it aloud:** add with weights that are not negative, take the larger, feed in a straight-line change of variable, pass through a convex function that never falls, or minimise away some variables over a convex set, and the result is still convex.
 
 The last rule, used on the coffee, fixes the Brazil share (signed months ahead on a forward contract) and lets the roaster choose the rest:
 
-$$V(x_1) = \min_{0 \le x_2 \le 1 - x_1} F(x_1,\, x_2,\, 1 - x_1 - x_2).$$
+```math
+V(x_1) = \min_{0 \le x_2 \le 1 - x_1} F(x_1,\, x_2,\, 1 - x_1 - x_2).
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x = (x_1, x_2, x_3)$ | the recipe: shares of Brazil, Colombia, Ethiopia in one kilo | best: 0.5234375, 0.4296875, 0.046875 | — |
-| $q_A, q_B, q_C$ | each supplier's price for the blend, £ per kilo | 9.86, 9.66, 9.86 at the best recipe | a higher quote can only raise $Q$ |
-| $Q(x)$ | the worst quote, the largest of the three | £9.86 | cost rises one for one below £10 |
-| $s(x)$ | the blend's strength score, $5x_1 + 9x_2 + 7x_3$ | 6.8125 | nearer 7 cuts the penalty |
-| $w$ | taste weight, £ per squared strength point | 2 | recipes pulled harder toward strength 7 |
-| $h(c)$ | the credit surcharge on a cost $c$: slope 1 up to £10, slope 1.5 above | $h(9.86) = 9.86$, below budget | — |
-| $F(x)$ | the built cost per kilo, minimised | £9.9296875 at the best recipe | — |
-| $V(x_1)$ | best cost once the Brazil share is fixed | £9.97 at $x_1 = 0.5$ | — |
-| $\theta$, $x'$, $m$ | a mixing weight between 0 and 1, read "theta"; a second recipe, read "x prime"; and the mixed recipe $\theta x + (1-\theta)x'$ | 0.5, the halfway blend | — |
-| $\varphi, \psi$, $a$ | any convex functions, the inputs to a rule, and a weight at least 0 | $q_A$, the taste penalty, $w = 2$ | — |
-| $Ax + b$ | an affine map: a matrix times $x$, plus a fixed vector | $s(x) - 7$ | — |
-| $y$, $K$, $\varepsilon$ | the variables minimised away, the convex set they range over, and a small slack used in the proof | $x_2$, from 0 to $1 - x_1$ | — |
+| $`x = (x_1, x_2, x_3)`$ | the recipe: shares of Brazil, Colombia, Ethiopia in one kilo | best: 0.5234375, 0.4296875, 0.046875 | — |
+| $`q_A, q_B, q_C`$ | each supplier's price for the blend, £ per kilo | 9.86, 9.66, 9.86 at the best recipe | a higher quote can only raise $`Q`$ |
+| $`Q(x)`$ | the worst quote, the largest of the three | £9.86 | cost rises one for one below £10 |
+| $`s(x)`$ | the blend's strength score, $`5x_1 + 9x_2 + 7x_3`$ | 6.8125 | nearer 7 cuts the penalty |
+| $`w`$ | taste weight, £ per squared strength point | 2 | recipes pulled harder toward strength 7 |
+| $`h(c)`$ | the credit surcharge on a cost $`c`$: slope 1 up to £10, slope 1.5 above | $`h(9.86) = 9.86`$, below budget | — |
+| $`F(x)`$ | the built cost per kilo, minimised | £9.9296875 at the best recipe | — |
+| $`V(x_1)`$ | best cost once the Brazil share is fixed | £9.97 at $`x_1 = 0.5`$ | — |
+| $`\theta`$, $`x'`$, $`m`$ | a mixing weight between 0 and 1, read "theta"; a second recipe, read "x prime"; and the mixed recipe $`\theta x + (1-\theta)x'`$ | 0.5, the halfway blend | — |
+| $`\varphi, \psi`$, $`a`$ | any convex functions, the inputs to a rule, and a weight at least 0 | $`q_A`$, the taste penalty, $`w = 2`$ | — |
+| $`Ax + b`$ | an affine map: a matrix times $`x`$, plus a fixed vector | $`s(x) - 7`$ | — |
+| $`y`$, $`K`$, $`\varepsilon`$ | the variables minimised away, the convex set they range over, and a small slack used in the proof | $`x_2`$, from 0 to $`1 - x_1`$ | — |
 
 ### When it holds
 
@@ -77,7 +83,7 @@ $$V(x_1) = \min_{0 \le x_2 \le 1 - x_1} F(x_1,\, x_2,\, 1 - x_1 - x_2).$$
 - **Maximum, not minimum.** The best of three quotes dents by £1.00 at the blend of half Brazil, half Colombia.
 - **Outer function convex and never falling.** Squaring the miss from the £10 budget dents by 0.0625, because the square falls as the cost climbs toward £10; a discount above £10 is not convex and dents by £0.075.
 - **Partial minimisation over a convex set of a jointly convex function.** Colombia at 0 or all the rest dents the best-cost curve by £0.66.
-- **Only straight-line maps are free inside.** $\varphi(Ax+b)$ needs no condition; a curved inner function needs a rising outer one.
+- **Only straight-line maps are free inside.** $`\varphi(Ax+b)`$ needs no condition; a curved inner function needs a rising outer one.
 
 ---
 
@@ -87,60 +93,64 @@ $$V(x_1) = \min_{0 \le x_2 \le 1 - x_1} F(x_1,\, x_2,\, 1 - x_1 - x_2).$$
 
 A function is convex exactly when its **epigraph**, everything on or above its graph, is a convex set: a chord staying above the graph is the same as a segment between two points of the epigraph staying inside it ([Convex sets](02-convex-sets.md) defines convex sets; [Convex functions](03-convex-functions-and-their-tests.md) gives the chord test).
 
-Convex regions survive overlapping, casting a shadow on fewer axes, and pulling back through a straight-line map. Every rule below is one of these, or a direct chord argument using the chord test: for any recipes $x$, $x'$ and weight $\theta$ between 0 and 1,
+Convex regions survive overlapping, casting a shadow on fewer axes, and pulling back through a straight-line map. Every rule below is one of these, or a direct chord argument using the chord test: for any recipes $`x`$, $`x'`$ and weight $`\theta`$ between 0 and 1,
 
-$$\varphi\big(\theta x + (1-\theta) x'\big) \;\le\; \theta\,\varphi(x) + (1-\theta)\,\varphi(x').$$
+```math
+\varphi\big(\theta x + (1-\theta) x'\big) \;\le\; \theta\,\varphi(x) + (1-\theta)\,\varphi(x').
+```
 
 ### Step 1: sums with weights that are not negative
 
-Write the chord test for $\varphi$ and for $\psi$, and add: the inequalities point the same way, so the sum obeys the chord test too. Multiplying by a weight $a \ge 0$ keeps an inequality's direction; a negative weight would flip it.
+Write the chord test for $`\varphi`$ and for $`\psi`$, and add: the inequalities point the same way, so the sum obeys the chord test too. Multiplying by a weight $`a \ge 0`$ keeps an inequality's direction; a negative weight would flip it.
 
 ### Step 2: the maximum is the overlap of the regions
 
-The point (recipe, amount) lies above the worst quote exactly when it lies above all three quotes. So the epigraph of $Q$ is the overlap of three epigraphs. Each is a half-space above a sloping plane, which is convex, and an overlap of convex sets is convex: a segment inside all three is inside their overlap.
+The point (recipe, amount) lies above the worst quote exactly when it lies above all three quotes. So the epigraph of $`Q`$ is the overlap of three epigraphs. Each is a half-space above a sloping plane, which is convex, and an overlap of convex sets is convex: a segment inside all three is inside their overlap.
 
 The minimum gets no such rule. Its epigraph is the union of three regions, and a union can have a dent between its parts, which is exactly the £1 bulge in the best-quote example.
 
 ### Step 3: straight-line maps inside are free
 
-The strength miss $s(x) - 7$ is an affine map: multiply the shares by fixed numbers and add. It sends a mixed recipe to the same mix of outputs, so the chord test for the square at the two outputs is the chord test for the penalty at the two recipes. The square is convex, so the penalty is. Each quote is affine too, with its chord exactly on its graph.
+The strength miss $`s(x) - 7`$ is an affine map: multiply the shares by fixed numbers and add. It sends a mixed recipe to the same mix of outputs, so the chord test for the square at the two outputs is the chord test for the penalty at the two recipes. The square is convex, so the penalty is. Each quote is affine too, with its chord exactly on its graph.
 
 ### Step 4: a convex function that never falls, applied on top
 
-The surcharge $h$ has slope 1 up to £10, then 1.5: its slopes rise, so it is convex, and they are positive, so it never falls. Let $\varphi$ be convex and $m = \theta x + (1-\theta)x'$ a mixed recipe. Then
+The surcharge $`h`$ has slope 1 up to £10, then 1.5: its slopes rise, so it is convex, and they are positive, so it never falls. Let $`\varphi`$ be convex and $`m = \theta x + (1-\theta)x'`$ a mixed recipe. Then
 
-$$h\big(\varphi(m)\big) \;\le\; h\big(\theta\varphi(x) + (1-\theta)\varphi(x')\big) \;\le\; \theta\,h\big(\varphi(x)\big) + (1-\theta)\,h\big(\varphi(x')\big).$$
+```math
+h\big(\varphi(m)\big) \;\le\; h\big(\theta\varphi(x) + (1-\theta)\varphi(x')\big) \;\le\; \theta\,h\big(\varphi(x)\big) + (1-\theta)\,h\big(\varphi(x')\big).
+```
 
-The first step uses that $h$ never falls: $\varphi(m)$ is at most its chord, so $h$ of it is at most $h$ of the chord. The second step is the chord test for $h$. Drop the first hypothesis and a falling $h$ turns a valley into a hump, as the squared budget miss does; drop the second and the chord bends down, as the bulk discount does.
+The first step uses that $`h`$ never falls: $`\varphi(m)`$ is at most its chord, so $`h`$ of it is at most $`h`$ of the chord. The second step is the chord test for $`h`$. Drop the first hypothesis and a falling $`h`$ turns a valley into a hump, as the squared budget miss does; drop the second and the chord bends down, as the bulk discount does.
 
-The same proof covers several inner functions, if $h$ never falls in any input; the maximum of Step 2 is this rule with $h$ = the largest input.
+The same proof covers several inner functions, if $`h`$ never falls in any input; the maximum of Step 2 is this rule with $`h`$ = the largest input.
 
 ### Step 5: minimising away some variables
 
-Fix the Brazil share $x_1$; the roaster picks the Colombia share and Ethiopia fills the rest. Take two Brazil shares and the best Colombia share for each. Mix both the Brazil shares and their Colombia shares with the same weight $\theta$. The mixed recipe is allowed, because the allowed set is convex. Its cost is at most the chord of the two best costs, because $F$ is convex in all its shares together. And $V$ at the mixed Brazil share is at most the cost of this one allowed choice. So $V$ obeys the chord test.
+Fix the Brazil share $`x_1`$; the roaster picks the Colombia share and Ethiopia fills the rest. Take two Brazil shares and the best Colombia share for each. Mix both the Brazil shares and their Colombia shares with the same weight $`\theta`$. The mixed recipe is allowed, because the allowed set is convex. Its cost is at most the chord of the two best costs, because $`F`$ is convex in all its shares together. And $`V`$ at the mixed Brazil share is at most the cost of this one allowed choice. So $`V`$ obeys the chord test.
 
-In regions: the epigraph of $V$ is the shadow of the epigraph of $F$, and a shadow of a convex set is convex.
+In regions: the epigraph of $`V`$ is the shadow of the epigraph of $`F`$, and a shadow of a convex set is convex.
 
 <details>
 <summary>Detailed proof: partial minimisation keeps convexity</summary>
 
-Let $\varphi(x, y)$ be convex in the pair $(x, y)$, let $K$ be a convex set, and let $V(x) = \inf_{y \in K} \varphi(x, y)$, where inf is the greatest lower bound, the minimum when one is reached. Suppose $V$ is never $-\infty$.
+Let $`\varphi(x, y)`$ be convex in the pair $`(x, y)`$, let $`K`$ be a convex set, and let $`V(x) = \inf_{y \in K} \varphi(x, y)`$, where inf is the greatest lower bound, the minimum when one is reached. Suppose $`V`$ is never $`-\infty`$.
 
-Take $x$, $x'$, a weight $\theta$, and any small $\varepsilon > 0$. Choose $y$, $y'$ in $K$ with $\varphi(x, y) \le V(x) + \varepsilon$ and $\varphi(x', y') \le V(x') + \varepsilon$. The point $\theta y + (1-\theta)y'$ is in $K$ because $K$ is convex. Then
+Take $`x`$, $`x'`$, a weight $`\theta`$, and any small $`\varepsilon > 0`$. Choose $`y`$, $`y'`$ in $`K`$ with $`\varphi(x, y) \le V(x) + \varepsilon`$ and $`\varphi(x', y') \le V(x') + \varepsilon`$. The point $`\theta y + (1-\theta)y'`$ is in $`K`$ because $`K`$ is convex. Then
 
-$$V\big(\theta x + (1-\theta)x'\big) \le \varphi\big(\theta x + (1-\theta)x',\ \theta y + (1-\theta)y'\big) \le \theta\varphi(x, y) + (1-\theta)\varphi(x', y') \le \theta V(x) + (1-\theta)V(x') + \varepsilon.$$
+$`\displaystyle V\big(\theta x + (1-\theta)x'\big) \le \varphi\big(\theta x + (1-\theta)x',\ \theta y + (1-\theta)y'\big) \le \theta\varphi(x, y) + (1-\theta)\varphi(x', y') \le \theta V(x) + (1-\theta)V(x') + \varepsilon.`$
 
-The first inequality holds because $V$ is the lowest value over all of $K$; the second is joint convexity. Since $\varepsilon$ was any positive number, the chord test holds with $\varepsilon = 0$.
+The first inequality holds because $`V`$ is the lowest value over all of $`K`$; the second is joint convexity. Since $`\varepsilon`$ was any positive number, the chord test holds with $`\varepsilon = 0`$.
 
-On the coffee the allowed $y$ depends on $x$ ($0 \le y \le 1 - x$); the proof still works because the allowed pairs $(x, y)$ form a convex set.
+On the coffee the allowed $`y`$ depends on $`x`$ ($`0 \le y \le 1 - x`$); the proof still works because the allowed pairs $`(x, y)`$ form a convex set.
 
 </details>
 
 ### Step 6: the certificate for the coffee cost
 
-Read the build tree upward. Each quote is affine, so convex (Step 3). The worst quote is a maximum, so convex (Step 2). The surcharge is convex and never falls, so $h(Q)$ is convex (Step 4). The strength miss is affine and the square is convex, so the penalty is convex (Step 3), and £2 times it is a weight that is not negative. The sum is convex (Step 1). $V$ is a partial minimum of it over an interval, so convex (Step 5).
+Read the build tree upward. Each quote is affine, so convex (Step 3). The worst quote is a maximum, so convex (Step 2). The surcharge is convex and never falls, so $`h(Q)`$ is convex (Step 4). The strength miss is affine and the square is convex, so the penalty is convex (Step 3), and £2 times it is a weight that is not negative. The sum is convex (Step 1). $`V`$ is a partial minimum of it over an interval, so convex (Step 5).
 
-That is the whole certificate, with no derivatives, which $F$ lacks at its kinks. Modelling software runs the same check, called **disciplined convex programming**: it builds this tree and refuses any step not on the list.
+That is the whole certificate, with no derivatives, which $`F`$ lacks at its kinks. Modelling software runs the same check, called **disciplined convex programming**: it builds this tree and refuses any step not on the list.
 
 The payoff: every local bottom of a convex function is the lowest ([Convexity pays off](04-local-minima-are-global-when-convex.md)). So a search that only ever walks downhill, here a ternary search that keeps the lower two thirds of an interval, is entitled to trust its answer.
 
@@ -165,7 +175,7 @@ The best recipe sits where suppliers A and C quote the same, with the strength a
 
 **Why nothing is cheaper.** Average the price lists of the two tied suppliers: half of A plus half of C is (£8.50, £11.50, £10.00) per kilo of each bean. Add the slope of the taste penalty, 2w times the miss times each bean's score: (−3.75, −6.75, −5.25). The sum is (4.75, 4.75, 4.75), the same for every bean.
 
-That sum is a **subgradient** of $F$ at this recipe: a slope that the bowl lies above everywhere ([Subgradients](07-subgradients.md)).
+That sum is a **subgradient** of $`F`$ at this recipe: a slope that the bowl lies above everywhere ([Subgradients](07-subgradients.md)).
 
 It qualifies for two reasons. Any average of the tied suppliers' price lists is a subgradient of the worst quote, by the maximum rule on that card. And the surcharge has slope 1 below £10, so it passes that slope through unchanged, while the taste penalty adds its own.
 
@@ -183,7 +193,7 @@ xychart-beta
     line [13.00, 12.78, 12.72, 12.48, 10.92, 10.00, 10.12, 10.98, 12.68, 15.02, 18.00]
 ```
 
-The orange line is $V(x_1)$, with the Colombia share chosen freely: a bowl, as Step 5 promised. A second difference is the two neighbouring values minus twice the middle one; a bowl never gives a negative one. Its smallest second difference on this grid is +0.09. The green line allows Colombia only at 0 or at all the rest. That choice is not a convex set, and the line dents at Brazil 0.3, second difference −1.32. From Brazil 0.6 on, the two lines agree: there all the rest goes to Colombia anyway.
+The orange line is $`V(x_1)`$, with the Colombia share chosen freely: a bowl, as Step 5 promised. A second difference is the two neighbouring values minus twice the middle one; a bowl never gives a negative one. Its smallest second difference on this grid is +0.09. The green line allows Colombia only at 0 or at all the rest. That choice is not a convex set, and the line dents at Brazil 0.3, second difference −1.32. From Brazil 0.6 on, the two lines agree: there all the rest goes to Colombia anyway.
 
 ### What breaks if you drop a piece
 
@@ -192,7 +202,7 @@ Each row breaks one rule and measures the bulge: the midpoint value minus the ch
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Best quote instead of worst | Brazil-only £8, Colombia-only £9, half-and-half £9.50 against a chord of £8.50: bulge £1.00 | A minimum is a union of regions, not an overlap |
-| Squared miss of the £10 budget | two recipes exactly on budget (Brazil only; half Brazil, half Colombia) score 0, their midpoint 0.0625: bulge 0.0625 | The outer square falls below £10, so a valley of $Q$ becomes a hump |
+| Squared miss of the £10 budget | two recipes exactly on budget (Brazil only; half Brazil, half Colombia) score 0, their midpoint 0.0625: bulge 0.0625 | The outer square falls below £10, so a valley of $`Q`$ becomes a hump |
 | Bulk discount, slope 0.5 above £10 | recipes at £9.70 and £10.20, midpoint £10.025 against a chord of £9.95: bulge £0.075 | Slopes that fall make a concave outer function |
 | Colombia all or nothing | Brazil 0.2, 0.3, 0.4 cost £12.72, £12.48, £10.92: bulge £0.66 at 0.3 | Minimising over a set that is not convex |
 
@@ -526,16 +536,16 @@ Lean proves the five rules for every function that meets their conditions, and t
 
 - Adding two convex functions, or multiplying one by a weight at least 0, gives a convex function.
 - The larger of two convex functions is convex.
-- A convex function fed a straight-line change of variable, $\varphi(Ax + b)$, is convex, with no further condition.
+- A convex function fed a straight-line change of variable, $`\varphi(Ax + b)`$, is convex, with no further condition.
 - A convex function that never falls, applied on top of a convex function, gives a convex function.
-- Minimising away some variables of a jointly convex function over a convex set $K$, not empty, gives a convex $V$, if $V$ is never $-\infty$.
-- The built cost $F$ is convex on the allowed recipes: shares at least 0 that add to 1.
+- Minimising away some variables of a jointly convex function over a convex set $`K`$, not empty, gives a convex $`V`$, if $`V`$ is never $`-\infty`$.
+- The built cost $`F`$ is convex on the allowed recipes: shares at least 0 that add to 1.
 - The recipe 67/128 Brazil, 55/128 Colombia, 6/128 Ethiopia costs exactly £9.9296875 a kilo, and no allowed recipe costs less.
 - In 128ths of a pound, quotes A, B and C come to 1262, 1237 and 1262; the strength is 872 in 128ths of a point.
 - The taste penalty is 9/128, so the built cost is 1271/128, and the 1/128 grid holds 8,385 recipes.
 - The certificate's three entries are all equal, 4.75 each.
 
-The dents from broken rules, the coffee's best-cost curve $V$, the searches and the random chord tests are left to the Python and Rust checks.
+The dents from broken rules, the coffee's best-cost curve $`V`$, the searches and the random chord tests are left to the Python and Rust checks.
 
 ```lean
 -- Building convex functions: sums with weights that are not negative, maxima, affine changes of variable, convex rising outer functions and partial minimisation over a convex set keep convex functions convex, and the coffee cost built this way is convex with least value 1271/128 at the recipe (67/128, 55/128, 6/128).
@@ -733,7 +743,7 @@ example : ((8 + 9 : ℚ) + 2 * (2 * 2 * (872 / 128 - 7) * 5)) = 19 / 2 ∧
 ## The usual mistake
 
 > [!warning]
-> **Treating "convex of convex" as convex.** A convex function of a convex function is convex only when the outer one never falls. Squaring the worst quote's miss from the £10 budget looks harmless, since both pieces are bowls. Yet two recipes exactly on budget score 0 while the recipe halfway between them scores 0.0625. The outer square falls on the way down to £10, and that flips a valley of $Q$ into a hump.
+> **Treating "convex of convex" as convex.** A convex function of a convex function is convex only when the outer one never falls. Squaring the worst quote's miss from the £10 budget looks harmless, since both pieces are bowls. Yet two recipes exactly on budget score 0 while the recipe halfway between them scores 0.0625. The outer square falls on the way down to £10, and that flips a valley of $`Q`$ into a hump.
 >
 > - **Best case instead of worst case.** Planning on the cheapest of three quotes gives a cost that is not convex: £9.50 at the half-and-half blend against a chord of £8.50. A local search can then stop in the wrong dip.
 > - **Slopes that fall.** A bulk discount, slope 1 up to £10 and 0.5 above, is concave; the composition bulges by £0.075. A piecewise-linear cost is convex only if its slopes rise.

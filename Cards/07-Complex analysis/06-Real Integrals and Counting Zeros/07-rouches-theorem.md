@@ -34,26 +34,30 @@ Reminders.
 - A closed path's winding number round 0 counts its net anticlockwise turns about 0 ([Deforming a loop](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md)).
 - The argument principle: a function holomorphic on and inside a loop, with no zero on it, has as many zeros inside as its image of the loop winds round 0 ([The argument principle](06-the-argument-principle.md)).
 
-Let $f$ and $g$ be holomorphic on and inside a simple closed loop $C$ (one that does not cross itself), walked once anticlockwise. Write $N$ for the number of zeros inside $C$, each counted as often as its multiplicity (z^3 has one zero, at 0, counted three times). Then
+Let $`f`$ and $`g`$ be holomorphic on and inside a simple closed loop $`C`$ (one that does not cross itself), walked once anticlockwise. Write $`N`$ for the number of zeros inside $`C`$, each counted as often as its multiplicity (z^3 has one zero, at 0, counted three times). Then
 
-$$|g(z)| < |f(z)| \ \text{ for every } z \text{ on } C \quad\Longrightarrow\quad N(f + g) = N(f).$$
+```math
+|g(z)| < |f(z)| \ \text{ for every } z \text{ on } C \quad\Longrightarrow\quad N(f + g) = N(f).
+```
 
 **Read it aloud:** if the added function is smaller than the main one at every point of the loop, the sum has exactly as many zeros inside as the main one.
 
 The metaphor hands over here: the owner is f(z), the dog f(z) + g(z), the lead g(z), the lamppost 0. The proof uses one helper, the dog divided by the owner:
 
-$$h(z) = \frac{f(z) + g(z)}{f(z)} = 1 + \frac{g(z)}{f(z)}.$$
+```math
+h(z) = \frac{f(z) + g(z)}{f(z)} = 1 + \frac{g(z)}{f(z)}.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $z$ | a point of the plane | a point on the circle | — |
-| $f$ | the owner: the function whose zeros are known | 3z on radius 1; z^5 on radius 2 | more margin |
-| $g$ | the lead: the added function | z^5 + 1; then 3z + 1 | once it reaches f, no conclusion |
-| $C$ | the loop, walked once anticlockwise | the circles of radius 1 and 2 | — |
-| $N$ | zeros inside the loop, with multiplicity | 1 inside radius 1; 5 inside radius 2 | — |
-| $h$ | the ratio 1 + g/f | always within 1 of the point 1 | — |
-| $p$, $a_k$ | a polynomial; its coefficients | z^5 + 3z + 1; a_1 = 3, a_0 = 1 | a larger circle needed |
-| $R$, $n$ | a circle's radius; a polynomial's degree | R = 1, 2, 5; n = 5 | large R holds all n roots |
+| $`z`$ | a point of the plane | a point on the circle | — |
+| $`f`$ | the owner: the function whose zeros are known | 3z on radius 1; z^5 on radius 2 | more margin |
+| $`g`$ | the lead: the added function | z^5 + 1; then 3z + 1 | once it reaches f, no conclusion |
+| $`C`$ | the loop, walked once anticlockwise | the circles of radius 1 and 2 | — |
+| $`N`$ | zeros inside the loop, with multiplicity | 1 inside radius 1; 5 inside radius 2 | — |
+| $`h`$ | the ratio 1 + g/f | always within 1 of the point 1 | — |
+| $`p`$, $`a_k`$ | a polynomial; its coefficients | z^5 + 3z + 1; a_1 = 3, a_0 = 1 | a larger circle needed |
+| $`R`$, $`n`$ | a circle's radius; a polynomial's degree | R = 1, 2, 5; n = 5 | large R holds all n roots |
 
 ### When it holds
 
@@ -88,11 +92,11 @@ By the argument principle, the owner's turns are N(f) and the dog's are N(f + g)
 <details>
 <summary>Detailed proof, in integrals</summary>
 
-Let $f$ and $g$ be holomorphic on an open set containing $C$ and its inside, with |g| < |f| on $C$. Steps 1 and 2 give f + g = f · h on a neighbourhood of $C$, with $h$ holomorphic there, since f is not 0 near the loop. Differentiating the product and dividing by it:
+Let $`f`$ and $`g`$ be holomorphic on an open set containing $`C`$ and its inside, with |g| < |f| on $`C`$. Steps 1 and 2 give f + g = f · h on a neighbourhood of $`C`$, with $`h`$ holomorphic there, since f is not 0 near the loop. Differentiating the product and dividing by it:
 
-$$\frac{(f+g)'}{f+g} = \frac{f'}{f} + \frac{h'}{h}.$$
+$`\displaystyle \frac{(f+g)'}{f+g} = \frac{f'}{f} + \frac{h'}{h}.`$
 
-On $C$, and by continuity on a thinner neighbourhood of it, $h$ takes values in the right half-plane. There the principal logarithm Log, built from ln|w| and the principal argument, is holomorphic with derivative 1/w, so Log h has derivative h'/h near $C$. A derivative integrates to 0 round a closed loop ([Antiderivatives](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md)), so the h'/h term contributes 0. Dividing by 2πi, the argument principle's integral gives N(f + g) = N(f) + 0.
+On $`C`$, and by continuity on a thinner neighbourhood of it, $`h`$ takes values in the right half-plane. There the principal logarithm Log, built from ln|w| and the principal argument, is holomorphic with derivative 1/w, so Log h has derivative h'/h near $`C`$. A derivative integrates to 0 round a closed loop ([Antiderivatives](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md)), so the h'/h term contributes 0. Dividing by 2πi, the argument principle's integral gives N(f + g) = N(f) + 0.
 
 </details>
 
@@ -104,7 +108,7 @@ On radius 2, take f = z^5 and g = 3z + 1: |g| ≤ 7 < 32 = |f|. The owner has fi
 
 ### Step 6: the fundamental theorem of algebra, in two lines
 
-Let $p$ be z^n + a_(n−1) z^(n−1) + … + a_0, with the coefficients $a_k$, and let A be the sum of their sizes |a_k|. On a circle of radius $R$ greater than both 1 and A, the lower terms have size at most A R^(n−1) < R^n = |z^n|. So $p$ has as many zeros inside as z^n: all $n$ of them.
+Let $`p`$ be z^n + a_(n−1) z^(n−1) + … + a_0, with the coefficients $`a_k`$, and let A be the sum of their sizes |a_k|. On a circle of radius $`R`$ greater than both 1 and A, the lower terms have size at most A R^(n−1) < R^n = |z^n|. So $`p`$ has as many zeros inside as z^n: all $`n`$ of them.
 
 For the quintic A = 4, so radius 5 suffices; Step 5 did better. [Liouville's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md) proves a root exists by another road; Rouché adds the count and a disc holding them.
 

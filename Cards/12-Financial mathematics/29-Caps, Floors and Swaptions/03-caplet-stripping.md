@@ -36,48 +36,54 @@ Orange: the quoted flat volatility of the cap whose last caplet fixes on that da
 
 ## The formula
 
-Notation first, in words. Caplets are numbered 1 to 8 in date order; the letter *i* names one caplet and the letter *k* names the cap made of caplets 1 to *k*. A capital sigma, $\Sigma_k$, is the flat volatility quoted for cap *k*. A small sigma, $\sigma_i$, is the volatility of caplet *i* alone. A summation sign adds a term for each caplet from 1 to *k*.
+Notation first, in words. Caplets are numbered 1 to 8 in date order; the letter *i* names one caplet and the letter *k* names the cap made of caplets 1 to *k*. A capital sigma, $`\Sigma_k`$, is the flat volatility quoted for cap *k*. A small sigma, $`\sigma_i`$, is the volatility of caplet *i* alone. A summation sign adds a term for each caplet from 1 to *k*.
 
-The price of caplet *i* at a volatility $\sigma$ is Black's formula for rates ([Caplets and floorlets](01-caplets-and-floorlets.md)):
+The price of caplet *i* at a volatility $`\sigma`$ is Black's formula for rates ([Caplets and floorlets](01-caplets-and-floorlets.md)):
 
-$$c_i(\sigma) = L\,\tau\,D(T_i+\tau)\,\big[F_i\,N(d_1) - K\,N(d_2)\big], \qquad d_{1,2} = \frac{\ln(F_i/K) \pm \tfrac12\sigma^2 T_i}{\sigma\sqrt{T_i}}$$
+```math
+c_i(\sigma) = L\,\tau\,D(T_i+\tau)\,\big[F_i\,N(d_1) - K\,N(d_2)\big], \qquad d_{1,2} = \frac{\ln(F_i/K) \pm \tfrac12\sigma^2 T_i}{\sigma\sqrt{T_i}}
+```
 
 A flat quote is converted to a price by using one volatility for every caplet in the cap:
 
-$$C_k = \sum_{i=1}^{k} c_i(\Sigma_k)$$
+```math
+C_k = \sum_{i=1}^{k} c_i(\Sigma_k)
+```
 
 Stripping asks for caplet volatilities that reproduce every cap price at once:
 
-$$\sum_{i=1}^{k} c_i(\sigma_i) = C_k \quad\text{for } k = 1,\dots,8 \qquad\Longrightarrow\qquad c_k(\sigma_k) = C_k - C_{k-1}$$
+```math
+\sum_{i=1}^{k} c_i(\sigma_i) = C_k \quad\text{for } k = 1,\dots,8 \qquad\Longrightarrow\qquad c_k(\sigma_k) = C_k - C_{k-1}
+```
 
 **Read it aloud:** price each cap at its own flat volatility; subtract the previous cap's price to isolate the newest caplet's price; find the one volatility that gives that caplet that price.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $L$ | notional: the loan amount the rate is applied to | $1,000,000 | every price scales with it; the volatilities do not move |
-| $K$ | strike: the capped rate | 5% | caplets cheapen; stripped volatilities shift because volatility depends on strike |
-| $T_i$, $\tau$ | fixing date of caplet *i*, in years; accrual length, the quarter it pays for | 0.25 to 2.00; 0.25 | a later fix gives the rate longer to spread |
-| $D(t)$ | discount factor: today's value of $1 paid at time *t* | 0.89109 at 2.25 years | caplet prices rise in proportion |
-| $F_i$ | forward rate: today's fair fixed rate for caplet *i*'s quarter | 4.3990% to 6.1721% | caplet worth more |
-| $\Sigma_k$ | flat volatility quoted for cap *k* | 29.40% for cap 8 | cap price rises |
-| $\sigma_i$, $\sigma$ | caplet volatility: the one number for caplet *i* alone | 26.3744% for caplet 8 | that caplet's price rises |
-| $C_k$ | price of cap *k*, from its flat quote | $14,908.96 for cap 8 | caplet *k* worth more, and caplet *k*+1 worth less |
-| $c_i$ | price of caplet *i* at a given volatility | $3,427.96 for caplet 8 | — |
-| $N(x)$, $\varphi$ | bell-curve area to the left of *x*, a probability; bell-curve height | — | — |
-| $d_1$, $d_2$ | the forward's distance from the strike in units of $\sigma\sqrt{T_i}$, one half-unit either side | — | — |
-| $\nu_i$ | vega of caplet *i*: its price rise per unit of volatility | used in Step 5 | that caplet weighs more in the flat volatility |
+| $`L`$ | notional: the loan amount the rate is applied to | $1,000,000 | every price scales with it; the volatilities do not move |
+| $`K`$ | strike: the capped rate | 5% | caplets cheapen; stripped volatilities shift because volatility depends on strike |
+| $`T_i`$, $`\tau`$ | fixing date of caplet *i*, in years; accrual length, the quarter it pays for | 0.25 to 2.00; 0.25 | a later fix gives the rate longer to spread |
+| $`D(t)`$ | discount factor: today's value of $1 paid at time *t* | 0.89109 at 2.25 years | caplet prices rise in proportion |
+| $`F_i`$ | forward rate: today's fair fixed rate for caplet *i*'s quarter | 4.3990% to 6.1721% | caplet worth more |
+| $`\Sigma_k`$ | flat volatility quoted for cap *k* | 29.40% for cap 8 | cap price rises |
+| $`\sigma_i`$, $`\sigma`$ | caplet volatility: the one number for caplet *i* alone | 26.3744% for caplet 8 | that caplet's price rises |
+| $`C_k`$ | price of cap *k*, from its flat quote | $14,908.96 for cap 8 | caplet *k* worth more, and caplet *k*+1 worth less |
+| $`c_i`$ | price of caplet *i* at a given volatility | $3,427.96 for caplet 8 | — |
+| $`N(x)`$, $`\varphi`$ | bell-curve area to the left of *x*, a probability; bell-curve height | — | — |
+| $`d_1`$, $`d_2`$ | the forward's distance from the strike in units of $`\sigma\sqrt{T_i}`$, one half-unit either side | — | — |
+| $`\nu_i`$ | vega of caplet *i*: its price rise per unit of volatility | used in Step 5 | that caplet weighs more in the flat volatility |
 
-$D(T_i+\tau)$ discounts from the payment date, a quarter after the fixing: the rate is known at $T_i$ but the money moves at $T_i + \tau$.
+$`D(T_i+\tau)`$ discounts from the payment date, a quarter after the fixing: the rate is known at $`T_i`$ but the money moves at $`T_i + \tau`$.
 
 ### When it holds
 
 The inverse first: when a caplet volatility exists, when it is unique, and what happens at the edges.
 
-- **Existence.** Caplet *k*'s price must lie strictly between its **floor**, the value at zero volatility, $L\tau D(T_k+\tau)\max(F_k-K,0)$, and its **ceiling**, the value as volatility grows without limit, $L\tau D(T_k+\tau)F_k$. For caplet 8 that window is $2,611.19 to $13,749.78, and the quotes put it at $3,427.96. A difference below the floor has no volatility; exactly at the floor the answer is zero volatility; at or above the ceiling there is none.
+- **Existence.** Caplet *k*'s price must lie strictly between its **floor**, the value at zero volatility, $`L\tau D(T_k+\tau)\max(F_k-K,0)`$, and its **ceiling**, the value as volatility grows without limit, $`L\tau D(T_k+\tau)F_k`$. For caplet 8 that window is $2,611.19 to $13,749.78, and the quotes put it at $3,427.96. A difference below the floor has no volatility; exactly at the floor the answer is zero volatility; at or above the ceiling there is none.
 - **Uniqueness.** Each caplet's price rises strictly with its volatility, because vega is positive. A strictly rising curve crosses a level once at most. Cap *k* depends only on caplets 1 to *k*, so the eight equations are solved in order and each has one answer.
 - **Enough quotes.** One cap per caplet date. With quotes only at 1 year and 2 years, eight unknowns face two equations, and an interpolation rule (a choice, not a consequence) fills the gap. Different rules give different caplet volatilities.
 - **One strike across the strip.** All eight caps here are struck at 5%. Market cap quotes are often at-the-money, each struck at its own swap rate (the fair fixed rate over that cap's life); then neighbouring caps hold caplets at different strikes and the difference is no longer one caplet. The strike dimension needs a smile model, one that lets volatility vary with strike ([SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md)).
-- **Lognormal quoting.** Black's formula needs positive forwards and strikes. Where rates sit near or below zero, quotes are in normal or shifted volatility ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)). The stripping logic is unchanged; only $c_i$ is swapped.
+- **Lognormal quoting.** Black's formula needs positive forwards and strikes. Where rates sit near or below zero, quotes are in normal or shifted volatility ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)). The stripping logic is unchanged; only $`c_i`$ is swapped.
 
 **Conventions, as of 28 Sep 2026.** This card takes each accrual as exactly 0.25 years and uses one curve for forwards and discounting. Market caps differ in four ways:
 
@@ -86,7 +92,7 @@ The inverse first: when a caplet volatility exists, when it is unique, and what 
 - They project forwards and discount on separate curves.
 - In US dollars they now reference SOFR (the Secured Overnight Financing Rate, the US overnight benchmark), compounded over the period rather than fixed at its start.
 
-None of these changes the stripping; each changes the inputs to $c_i$.
+None of these changes the stripping; each changes the inputs to $`c_i`$.
 
 ---
 
@@ -98,23 +104,25 @@ A cap pays the sum of its caplets' payments, so its price is the sum of their pr
 
 ### Step 1: turn every quote into a price
 
-Each flat quote $\Sigma_k$ is the market's shorthand for the price $C_k = \sum c_i(\Sigma_k)$. The 2-year cap at 30% is worth $11,481.00 on this curve and notional. The 2.25-year cap at 29.40% is worth $14,908.96. These two prices are market facts; the volatilities used to compute them are not facts about any caplet.
+Each flat quote $`\Sigma_k`$ is the market's shorthand for the price $`C_k = \sum c_i(\Sigma_k)`$. The 2-year cap at 30% is worth $11,481.00 on this curve and notional. The 2.25-year cap at 29.40% is worth $14,908.96. These two prices are market facts; the volatilities used to compute them are not facts about any caplet.
 
 ### Step 2: neighbouring caps differ by exactly one caplet
 
 Cap 8 holds caplets 1 to 8. Cap 7 holds caplets 1 to 7. Whatever the true caplet volatilities, the first seven caplets are the same contracts in both caps, so their true prices cancel:
 
-$$C_8 - C_7 = c_8(\sigma_8) = 14{,}908.96 - 11{,}481.00 = 3{,}427.96.$$
+```math
+C_8 - C_7 = c_8(\sigma_8) = 14{,}908.96 - 11{,}481.00 = 3{,}427.96.
+```
 
 That subtraction is in dollars, and it is exact. It never asks what volatility the first seven caplets carry.
 
 ### Step 3: one price has exactly one volatility
 
-Now solve $c_8(\sigma) = 3{,}427.96$. Three facts about the curve $c_8(\sigma)$ settle it.
+Now solve $`c_8(\sigma) = 3{,}427.96`$. Three facts about the curve $`c_8(\sigma)`$ settle it.
 
-- **It starts at the floor.** As $\sigma$ shrinks to zero, the forward stops spreading, and the caplet is worth its discounted intrinsic value, $2,611.19.
-- **It climbs toward the ceiling.** As $\sigma$ grows without limit, the price approaches $L\tau D F_8$, $13,749.78: the value of receiving the whole floating payment.
-- **It climbs strictly in between.** Its slope is vega, $\nu = L\tau D(T_i+\tau) F_i\sqrt{T_i}\,\varphi(d_1)$, where $\varphi$ is the bell curve's height, which is positive everywhere.
+- **It starts at the floor.** As $`\sigma`$ shrinks to zero, the forward stops spreading, and the caplet is worth its discounted intrinsic value, $2,611.19.
+- **It climbs toward the ceiling.** As $`\sigma`$ grows without limit, the price approaches $`L\tau D F_8`$, $13,749.78: the value of receiving the whole floating payment.
+- **It climbs strictly in between.** Its slope is vega, $`\nu = L\tau D(T_i+\tau) F_i\sqrt{T_i}\,\varphi(d_1)`$, where $`\varphi`$ is the bell curve's height, which is positive everywhere.
 
 A continuous curve that runs from $2,611.19 to $13,749.78 crosses $3,427.96 at least once (the intermediate value theorem). A strictly rising curve crosses it at most once. So there is exactly one caplet 8 volatility. The chart shows the crossing between 20% and 30%; the root finder places it at 26.3744%.
 
@@ -135,16 +143,16 @@ Orange: caplet 8's Black price as its volatility runs from 10% to 60%. Green: th
 
 Cap 1 involves only caplet 1. Cap 2 involves caplets 1 and 2. Cap *k* involves caplets 1 to *k*. Written as a system, each new equation adds one new unknown: a **triangular** system, solvable top to bottom. Step 3 gives each rung one answer, so the whole ladder of eight has one answer.
 
-The staircase also says which quotes move which caplets. Raise cap 7's quote from 30.00% to 30.10% and hold the rest. Caplets 1 to 6 move by +0.0000 points: they never saw cap 7. Caplet 7 rises by +0.5214 points, because $C_7 - C_6$ grew. Caplet 8 falls by −0.5136 points, because $C_8 - C_7$ shrank by the same dollars. One quote, two caplets, opposite signs. That sawtooth is how a rates desk reads the volatility risk of a cap book, bucket by bucket.
+The staircase also says which quotes move which caplets. Raise cap 7's quote from 30.00% to 30.10% and hold the rest. Caplets 1 to 6 move by +0.0000 points: they never saw cap 7. Caplet 7 rises by +0.5214 points, because $`C_7 - C_6`$ grew. Caplet 8 falls by −0.5136 points, because $`C_8 - C_7`$ shrank by the same dollars. One quote, two caplets, opposite signs. That sawtooth is how a rates desk reads the volatility risk of a cap book, bucket by bucket.
 
 <details>
 <summary>Detailed proof: the caplet volatilities are unique</summary>
 
-Claim: if, for every *k* from 1 to 8, the difference $C_k - C_{k-1}$ (with $C_0 = 0$) lies strictly between caplet *k*'s floor and ceiling, then exactly one list $\sigma_1, \dots, \sigma_8$ of positive numbers satisfies $\sum_{i \le k} c_i(\sigma_i) = C_k$ for all *k*.
+Claim: if, for every *k* from 1 to 8, the difference $`C_k - C_{k-1}`$ (with $`C_0 = 0`$) lies strictly between caplet *k*'s floor and ceiling, then exactly one list $`\sigma_1, \dots, \sigma_8`$ of positive numbers satisfies $`\sum_{i \le k} c_i(\sigma_i) = C_k`$ for all *k*.
 
-**Each caplet curve.** Write $v = \sigma\sqrt{T_k}$. Black's bracket $F N(d_1) - K N(d_2)$ has derivative with respect to that product equal to $F\varphi(d_1)$, by the identity $F\varphi(d_1) = K\varphi(d_2)$ that follows from $d_1^2 - d_2^2 = 2\ln(F/K)$. That derivative is positive, so each caplet price is continuous and strictly increasing in $\sigma$. As $v \to 0$, $d_1$ and $d_2$ go to $+\infty$ together if $F > K$, to $-\infty$ together if $F < K$, and to 0 together if $F = K$, giving $\max(F-K,0)$ in every case. As $v \to \infty$, $d_1 \to +\infty$ and $d_2 \to -\infty$, giving the forward itself. By the intermediate value theorem each level strictly inside $(\text{floor}, \text{ceiling})$ is hit, and by strict increase it is hit once.
+**Each caplet curve.** Write $`v = \sigma\sqrt{T_k}`$. Black's bracket $`F N(d_1) - K N(d_2)`$ has derivative with respect to that product equal to $`F\varphi(d_1)`$, by the identity $`F\varphi(d_1) = K\varphi(d_2)`$ that follows from $`d_1^2 - d_2^2 = 2\ln(F/K)`$. That derivative is positive, so each caplet price is continuous and strictly increasing in $`\sigma`$. As $`v \to 0`$, $`d_1`$ and $`d_2`$ go to $`+\infty`$ together if $`F > K`$, to $`-\infty`$ together if $`F < K`$, and to 0 together if $`F = K`$, giving $`\max(F-K,0)`$ in every case. As $`v \to \infty`$, $`d_1 \to +\infty`$ and $`d_2 \to -\infty`$, giving the forward itself. By the intermediate value theorem each level strictly inside $`(\text{floor}, \text{ceiling})`$ is hit, and by strict increase it is hit once.
 
-**Induction on *k*.** For $k = 1$ the equation is $c_1(\sigma_1) = C_1$: one unknown, one solution. Suppose $\sigma_1, \dots, \sigma_{k-1}$ are uniquely fixed by the first $k-1$ equations. Subtract equation $k-1$ from equation *k*: every term with $i < k$ cancels, leaving $c_k(\sigma_k) = C_k - C_{k-1}$, which has exactly one solution. Any list satisfying all eight equations must agree with this one at every rung, so it is the same list.
+**Induction on *k*.** For $`k = 1`$ the equation is $`c_1(\sigma_1) = C_1`$: one unknown, one solution. Suppose $`\sigma_1, \dots, \sigma_{k-1}`$ are uniquely fixed by the first $`k-1`$ equations. Subtract equation $`k-1`$ from equation *k*: every term with $`i < k`$ cancels, leaving $`c_k(\sigma_k) = C_k - C_{k-1}`$, which has exactly one solution. Any list satisfying all eight equations must agree with this one at every rung, so it is the same list.
 
 **Existence fails at the edges.** If some difference is at or below caplet *k*'s floor, no positive volatility reproduces it, whatever the other caplets do: buying cap *k*, selling cap *k*−1 and agreeing to receive the strike against the floating rate for that quarter then costs nothing or less up front and never pays out a negative amount. If a difference is at or above the ceiling, the reverse trade (sell cap *k*, buy cap *k*−1, receive the floating payment) does the same.
 
@@ -152,12 +160,12 @@ Claim: if, for every *k* from 1 to 8, the difference $C_k - C_{k-1}$ (with $C_0 
 
 ### Step 5: what a flat volatility is, roughly
 
-For a small spread of caplet volatilities, the flat volatility is close to a vega-weighted average of them: $\Sigma_k \approx \sum \nu_i\sigma_i / \sum \nu_i$, with each vega taken at $\Sigma_k$. For cap 7 the weighted average of the stripped caplet volatilities is 29.9853%, against a quote of 30.0000%. Long-dated caplets have the largest vegas (more time, larger $\sqrt{T_i}$), so they dominate the average. That is why the caplet line in the first chart overshoots: a flat line that bends only a little needs its newest, heaviest member to bend a lot.
+For a small spread of caplet volatilities, the flat volatility is close to a vega-weighted average of them: $`\Sigma_k \approx \sum \nu_i\sigma_i / \sum \nu_i`$, with each vega taken at $`\Sigma_k`$. For cap 7 the weighted average of the stripped caplet volatilities is 29.9853%, against a quote of 30.0000%. Long-dated caplets have the largest vegas (more time, larger $`\sqrt{T_i}`$), so they dominate the average. That is why the caplet line in the first chart overshoots: a flat line that bends only a little needs its newest, heaviest member to bend a lot.
 
 <details>
 <summary>Why not strip by subtracting volatilities?</summary>
 
-If flat volatility were a plain average, $8\Sigma_8 - 7\Sigma_7$ would be caplet 8's volatility. It gives 25.2000%, not 26.3744%. The weights are not equal, and prices are not straight lines in volatility. The approximation in Step 5 is for reading a quote, never for stripping one.
+If flat volatility were a plain average, $`8\Sigma_8 - 7\Sigma_7`$ would be caplet 8's volatility. It gives 25.2000%, not 26.3744%. The weights are not equal, and prices are not straight lines in volatility. The approximation in Step 5 is for reading a quote, never for stripping one.
 
 </details>
 
@@ -167,20 +175,20 @@ A second road reaches the same eight numbers without differencing. It solves eac
 
 ## Worked numbers, by hand
 
-Stripping caplet 8. Curve: discount factor $D(t) = e^{-(0.04 + 0.005t)t}$. Notional $1,000,000, strike 5%, quarterly accrual 0.25.
+Stripping caplet 8. Curve: discount factor $`D(t) = e^{-(0.04 + 0.005t)t}`$. Notional $1,000,000, strike 5%, quarterly accrual 0.25.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| Caplet 8 fixes, pays | $T_8 = 2.00$, paid at $2.25$ | |
-| Discount to payment | $D(2.25)$ | 0.89109 |
-| Forward for the quarter | $(D(2.00)/D(2.25) - 1)/0.25$ | 6.1721% |
+| Caplet 8 fixes, pays | $`T_8 = 2.00`$, paid at $`2.25`$ | |
+| Discount to payment | $`D(2.25)`$ | 0.89109 |
+| Forward for the quarter | $`(D(2.00)/D(2.25) - 1)/0.25`$ | 6.1721% |
 | Cap 8 price at its flat 29.40% | sum of 8 Black caplets at 29.40% | $14,908.96 |
 | Cap 7 price at its flat 30.00% | sum of 7 Black caplets at 30.00% | $11,481.00 |
-| Caplet 8 price | $14,908.96 − 11,481.00$ | $3,427.96 |
-| Floor (zero volatility) | $1{,}000{,}000 \times 0.25 \times 0.89109 \times (6.1721\% - 5\%)$ | $2,611.19 |
-| Ceiling (volatility without limit) | $1{,}000{,}000 \times 0.25 \times 0.89109 \times 6.1721\%$ | $13,749.78 |
-| Inside the window? | $2,611.19 < 3,427.96 < 13,749.78$ | yes: one answer |
-| Bracket | $c_8(20\%) = 3,071.94$, $c_8(30\%) = 3,643.68$ | root between 20% and 30% |
+| Caplet 8 price | $`14,908.96 − 11,481.00`$ | $3,427.96 |
+| Floor (zero volatility) | $`1{,}000{,}000 \times 0.25 \times 0.89109 \times (6.1721\% - 5\%)`$ | $2,611.19 |
+| Ceiling (volatility without limit) | $`1{,}000{,}000 \times 0.25 \times 0.89109 \times 6.1721\%`$ | $13,749.78 |
+| Inside the window? | $`2,611.19 < 3,427.96 < 13,749.78`$ | yes: one answer |
+| Bracket | $`c_8(20\%) = 3,071.94`$, $`c_8(30\%) = 3,643.68`$ | root between 20% and 30% |
 | Bisection | halve a 0% to 500% bracket 100 times | **26.3744%** |
 
 Caplet 8 carries 26.37% volatility, three points below the 29.40% the 2.25-year cap is quoted at. Any other contract that depends on the rate for the quarter from 2.00 to 2.25 years, such as a single caplet or a cap starting later, is priced with 26.37%, not with 29.40%.
@@ -192,7 +200,7 @@ The other seven rows run the same way: the table in the code output lists each c
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Price caplet 7 on its own at the 2-year cap's flat 30% | $3,151.12 (right: $3,006.16) | The flat volatility belongs to the cap. Caplet 7's own volatility is 27.4919%. |
-| Strip by subtracting volatilities, $8 \times 29.4 - 7 \times 30.0$ | 25.2000% (right: 26.3744%) | Volatilities are not prices. They do not add, and caplets carry unequal weights. |
+| Strip by subtracting volatilities, $`8 \times 29.4 - 7 \times 30.0`$ | 25.2000% (right: 26.3744%) | Volatilities are not prices. They do not add, and caplets carry unequal weights. |
 | Quote cap 8 at 20% with cap 7 left at 30% | caplet 8 must be worth $148.99, below its floor of $2,611.19 | No volatility, even zero, gives that price. The two quotes contradict each other. |
 | Quote cap 8 below 27.1140% | no caplet 8 volatility exists | 27.1140% is the lowest cap 8 quote that the cap 7 quote allows; there caplet 8's volatility is exactly zero. |
 
@@ -494,10 +502,10 @@ Lean proves the card's existence and uniqueness claims for any number of caplets
 - Take one caplet. Then at every positive volatility its price lies strictly between its floor and its ceiling.
 - Take the same caplet. Then its price rises strictly with volatility. It tends to the floor as volatility shrinks to zero, and to the ceiling as volatility grows without limit.
 - Take a price strictly between one caplet's floor and ceiling. Then exactly one positive volatility gives that caplet that price.
-- Suppose every neighbouring cap price difference, $C_k - C_{k-1}$, lies strictly between caplet *k*'s floor and ceiling. Then exactly one list of positive caplet volatilities reproduces every cap price.
+- Suppose every neighbouring cap price difference, $`C_k - C_{k-1}`$, lies strictly between caplet *k*'s floor and ceiling. Then exactly one list of positive caplet volatilities reproduces every cap price.
 - Suppose one neighbouring price difference sits at or below its caplet's floor, or at or above its ceiling. Then no list of positive caplet volatilities reproduces every cap price.
 - Take cap 8 at $14,908.96 and cap 7 at $11,481.00. Then caplet 8 is worth $3,427.96, inside its window of $2,611.19 to $13,749.78.
-- Take the wrong road, subtracting volatilities. Then $8 \times 29.4 - 7 \times 30.0 = 25.2$.
+- Take the wrong road, subtracting volatilities. Then $`8 \times 29.4 - 7 \times 30.0 = 25.2`$.
 
 The cap prices themselves, the eight stripped volatilities and the bumped-quote sawtooth are left to the Python and Rust checks.
 
@@ -958,7 +966,7 @@ example : (7 : ℚ) * (1 / 4) = 7 / 4 ∧ (7 : ℚ) / 4 + 1 / 4 = 2 := by norm_n
 > **Pricing a caplet at its cap's flat volatility.** The flat volatility is a device for quoting a whole cap in one number. Caplet 7 inside the 2-year cap is worth $3,006.16, not the $3,151.12 that 30% gives it. The error grows with the slope of the term structure and is largest for the newest caplet in a cap.
 >
 > Smaller traps:
-> - **Stripping volatilities instead of prices.** $8\Sigma_8 - 7\Sigma_7$ gives 25.2000% instead of 26.3744%. Only dollar prices subtract.
+> - **Stripping volatilities instead of prices.** $`8\Sigma_8 - 7\Sigma_7`$ gives 25.2000% instead of 26.3744%. Only dollar prices subtract.
 > - **Differencing two caps at one volatility.** Pricing cap 8 and cap 7 both at 29.40% and subtracting returns caplet 8 at 29.40%, the flat quote again. Each cap must be priced at its own quote before the subtraction.
 > - **Forcing a solution the quotes do not allow.** A root finder given a price below the floor either fails or returns garbage near zero. Check the window first: here caplet 8 needs between $2,611.19 and $13,749.78.
 > - **Mixing strikes.** Differencing an at-the-money 2-year cap and an at-the-money 2.25-year cap subtracts caplets struck at different rates. The result is not a caplet price, and its volatility belongs to no strike.

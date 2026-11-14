@@ -36,41 +36,45 @@ Lower line (orange): today's curve, 3.00% for one year up to 4.05% for four. Upp
 
 ## The formula
 
-Notation first, in words. $y(t)$ is today's **zero yield** for money due in $t$ years, continuously compounded. A payment of 1 due in $t$ years is worth $D(t) = e^{-t\,y(t)}$ today, where $D(t)$ is the **discount factor** and $e$ is the exponential base ([What a curve says](04-term-premium-and-expectations.md) reads the same curve).
+Notation first, in words. $`y(t)`$ is today's **zero yield** for money due in $`t`$ years, continuously compounded. A payment of 1 due in $`t`$ years is worth $`D(t) = e^{-t\,y(t)}`$ today, where $`D(t)`$ is the **discount factor** and $`e`$ is the exponential base ([What a curve says](04-term-premium-and-expectations.md) reads the same curve).
 
-The bond matures in $T$ years and is held for $h$ years. Returns are **log returns**, the natural log of sale price over purchase price, because those add exactly.
+The bond matures in $`T`$ years and is held for $`h`$ years. Returns are **log returns**, the natural log of sale price over purchase price, because those add exactly.
 
-$$C = h\,y(T), \qquad R = (T-h)\,\bigl(y(T) - y(T-h)\bigr), \qquad \ln\frac{P_h}{P_0} = C + R$$
+```math
+C = h\,y(T), \qquad R = (T-h)\,\bigl(y(T) - y(T-h)\bigr), \qquad \ln\frac{P_h}{P_0} = C + R
+```
 
 **Read it aloud:** carry is the bond's own yield earned for the holding period; roll-down is the fall in yield from sliding down the curve, times the years still left; together they are the whole return if the curve stands still.
 
-The breakeven move, set against cash earning $y(h)$ for the holding period:
+The breakeven move, set against cash earning $`y(h)`$ for the holding period:
 
-$$\delta^{*} = \frac{C + R - h\,y(h)}{T - h} = f - y(T-h), \qquad f = \frac{T\,y(T) - h\,y(h)}{T - h}$$
+```math
+\delta^{*} = \frac{C + R - h\,y(h)}{T - h} = f - y(T-h), \qquad f = \frac{T\,y(T) - h\,y(h)}{T - h}
+```
 
 **Read it aloud:** the edge over cash, divided by the years left at sale, is how far the sale-date yield can rise; and that is exactly the gap between the forward yield and today's yield at the same years left.
 
 | Symbol | Plain meaning | In our example | Push it up and the year's return… |
 | --- | --- | --- | --- |
-| $N$, $c_t$ | face: what the zero pays at maturity; $c_t$ is any bond's payment at time $t$ | \$100; a coupon of \$4.50 | scales every dollar figure, no percentage |
-| $T$ | years to maturity when bought | 5 | depends on the curve's slope there |
-| $h$ | holding period, in years | 1 | more carry; the roll depends on the curve |
-| $y(t)$, $t$, $y(5)$, $y(4)$ | zero yield for money due in $t$ years, continuously compounded | 4.50%, 4.05% | $y(5)$ up: more carry and roll; $y(4)$ up: less roll |
-| $y(h)$ | the cash rate: the one-year yield | 3.00% | unchanged; the edge over cash shrinks |
-| $D(t)$, $e$ | discount factor, $e^{-t\,y(t)}$: today's value of 1 due in $t$ years; $e$ is the exponential base | 100 × $D(5)$ = \$79.85 | — |
-| $P_0$, $P_h$ | price today; sale price after $h$ years on the unchanged curve | \$79.85, \$85.04 | — |
-| $C$ | carry: the bond's own yield for the holding period | 4.50% | adds one for one |
-| $R$ | roll-down: price gain from the lower yield at a shorter maturity | 1.80% | adds one for one |
-| $\delta$ | the actual change in the four-year yield by the sale date | 0 in the scenario | each basis point costs 4 basis points of return |
-| $\delta^{*}$ | breakeven: the rise in $\delta$ that leaves the bond level with cash | 82.5 bp | — |
-| $f$ | forward yield: the rate for years 1 to 5 locked in by today's curve | 4.875% | — |
+| $`N`$, $`c_t`$ | face: what the zero pays at maturity; $`c_t`$ is any bond's payment at time $`t`$ | \$100; a coupon of \$4.50 | scales every dollar figure, no percentage |
+| $`T`$ | years to maturity when bought | 5 | depends on the curve's slope there |
+| $`h`$ | holding period, in years | 1 | more carry; the roll depends on the curve |
+| $`y(t)`$, $`t`$, $`y(5)`$, $`y(4)`$ | zero yield for money due in $`t`$ years, continuously compounded | 4.50%, 4.05% | $`y(5)`$ up: more carry and roll; $`y(4)`$ up: less roll |
+| $`y(h)`$ | the cash rate: the one-year yield | 3.00% | unchanged; the edge over cash shrinks |
+| $`D(t)`$, $`e`$ | discount factor, $`e^{-t\,y(t)}`$: today's value of 1 due in $`t`$ years; $`e`$ is the exponential base | 100 × $`D(5)`$ = \$79.85 | — |
+| $`P_0`$, $`P_h`$ | price today; sale price after $`h`$ years on the unchanged curve | \$79.85, \$85.04 | — |
+| $`C`$ | carry: the bond's own yield for the holding period | 4.50% | adds one for one |
+| $`R`$ | roll-down: price gain from the lower yield at a shorter maturity | 1.80% | adds one for one |
+| $`\delta`$ | the actual change in the four-year yield by the sale date | 0 in the scenario | each basis point costs 4 basis points of return |
+| $`\delta^{*}`$ | breakeven: the rise in $`\delta`$ that leaves the bond level with cash | 82.5 bp | — |
+| $`f`$ | forward yield: the rate for years 1 to 5 locked in by today's curve | 4.875% | — |
 
 ### When it holds
 
-- **The curve is held still by years left, not by calendar date.** This is a scenario, not a forecast. If the four-year yield moves by $\delta$ by the sale date, the return changes by $-(T-h)\,\delta$: four basis points of return per basis point of yield here.
+- **The curve is held still by years left, not by calendar date.** This is a scenario, not a forecast. If the four-year yield moves by $`\delta`$ by the sale date, the return changes by $`-(T-h)\,\delta`$: four basis points of return per basis point of yield here.
 - **No coupons, no default, no change in credit spread.** A coupon bond adds cash during the year and needs its own yield for the carry leg; the coupon case below does it. A corporate bond whose spread widens loses on top of any curve move.
 - **Continuous compounding.** Log returns make carry and roll add exactly. With annually compounded yields or simple returns, the pieces carry a small cross term: 6.30% of log return is 6.50% of simple return.
-- **Cash earns a rate known today.** The breakeven is against one-year cash at $y(h)$ = 3.00%. A bond financed at a repo rate (the rate for borrowing against the bond as collateral) breaks even against that rate instead.
+- **Cash earns a rate known today.** The breakeven is against one-year cash at $`y(h)`$ = 3.00%. A bond financed at a repo rate (the rate for borrowing against the bond as collateral) breaks even against that rate instead.
 - **Yields between maturities.** At whole years the curve's points are enough. Between them, a rule is needed; the checks use straight lines, and a fitted curve gives slightly different roll.
 
 ---
@@ -79,21 +83,25 @@ $$\delta^{*} = \frac{C + R - h\,y(h)}{T - h} = f - y(T-h), \qquad f = \frac{T\,y
 
 ### Step 0: a zero's price depends on two numbers, and a year changes both
 
-A zero's price is $N\,e^{-(\text{years left})\times(\text{yield})}$. After a year, the years left drop from 5 to 4, and the yield that applies drops from $y(5)$ to $y(4)$ because the bond now sits at the four-year point. Carry is the first change alone. Roll-down is the second.
+A zero's price is $`N\,e^{-(\text{years left})\times(\text{yield})}`$. After a year, the years left drop from 5 to 4, and the yield that applies drops from $`y(5)`$ to $`y(4)`$ because the bond now sits at the four-year point. Carry is the first change alone. Roll-down is the second.
 
 ### Step 1: carry is the first change
 
-Keep the old yield and cut one year. The price goes from \$79.85, which is 100 times $e^{-5 \times 0.045}$, to \$83.53, which is 100 times $e^{-4 \times 0.045}$. The log of the ratio is $5 \times 0.045 - 4 \times 0.045 = 0.045$. In general
+Keep the old yield and cut one year. The price goes from \$79.85, which is 100 times $`e^{-5 \times 0.045}`$, to \$83.53, which is 100 times $`e^{-4 \times 0.045}`$. The log of the ratio is $`5 \times 0.045 - 4 \times 0.045 = 0.045`$. In general
 
-$$\ln\frac{N e^{-(T-h)\,y(T)}}{N e^{-T\,y(T)}} = h\,y(T) = C.$$
+```math
+\ln\frac{N e^{-(T-h)\,y(T)}}{N e^{-T\,y(T)}} = h\,y(T) = C.
+```
 
 A bond held at a fixed yield grows at that yield: \$3.68 of the year's gain.
 
 ### Step 2: roll-down is the second change
 
-Now reprice those four remaining years at the four-year yield instead: from \$83.53 to \$85.04, which is 100 times $e^{-4 \times 0.0405}$. The log ratio is $4 \times (0.045 - 0.0405) = 0.018$:
+Now reprice those four remaining years at the four-year yield instead: from \$83.53 to \$85.04, which is 100 times $`e^{-4 \times 0.0405}`$. The log ratio is $`4 \times (0.045 - 0.0405) = 0.018`$:
 
-$$\ln\frac{N e^{-(T-h)\,y(T-h)}}{N e^{-(T-h)\,y(T)}} = (T-h)\,\bigl(y(T) - y(T-h)\bigr) = R.$$
+```math
+\ln\frac{N e^{-(T-h)\,y(T-h)}}{N e^{-(T-h)\,y(T)}} = (T-h)\,\bigl(y(T) - y(T-h)\bigr) = R.
+```
 
 The 45-basis-point fall in yield is multiplied by 4 because a zero's price moves by its years left for each unit of yield: its **duration** (the price's sensitivity to its yield) is its remaining life. That is \$1.52 of the gain.
 
@@ -101,30 +109,36 @@ The 45-basis-point fall in yield is multiplied by 4 because a zero's price moves
 
 Add the two logs and the middle price cancels:
 
-$$C + R = T\,y(T) - (T-h)\,y(T-h).$$
+```math
+C + R = T\,y(T) - (T-h)\,y(T-h).
+```
 
-That right side is a forward rate. Borrowing for five years costs $T\,y(T)$ in log terms; borrowing for four costs $(T-h)\,y(T-h)$; the difference is the rate for the extra stretch from year 4 to year 5, times its length. So a bond held on a still curve earns the forward rate for the stretch of maturities it slides through: 6.30% for the slide from 5 years to 4.
+That right side is a forward rate. Borrowing for five years costs $`T\,y(T)`$ in log terms; borrowing for four costs $`(T-h)\,y(T-h)`$; the difference is the rate for the extra stretch from year 4 to year 5, times its length. So a bond held on a still curve earns the forward rate for the stretch of maturities it slides through: 6.30% for the slide from 5 years to 4.
 
-The code confirms this without the closed form. It builds the instantaneous forward rate (the rate for an instant of borrowing at maturity $t$, the slope of $t\,y(t)$) at every point between 4 and 5 years and adds up 4,000 thin slices of it. The sum is 6.30%.
+The code confirms this without the closed form. It builds the instantaneous forward rate (the rate for an instant of borrowing at maturity $`t`$, the slope of $`t\,y(t)`$) at every point between 4 and 5 years and adds up 4,000 thin slices of it. The sum is 6.30%.
 
 ### Step 4: the breakeven move lands on the forward curve
 
-Let the four-year yield at sale be $y(4) + \delta$. The return becomes $C + R - (T-h)\,\delta$. Cash earns $h\,y(h)$. Setting the two equal:
+Let the four-year yield at sale be $`y(4) + \delta`$. The return becomes $`C + R - (T-h)\,\delta`$. Cash earns $`h\,y(h)`$. Setting the two equal:
 
-$$\delta^{*} = \frac{C + R - h\,y(h)}{T-h} = \frac{T\,y(T) - h\,y(h)}{T-h} - y(T-h) = f - y(T-h).$$
+```math
+\delta^{*} = \frac{C + R - h\,y(h)}{T-h} = \frac{T\,y(T) - h\,y(h)}{T-h} - y(T-h) = f - y(T-h).
+```
 
-The middle fraction is $f$, the forward yield: the four-year rate starting in one year that today's curve locks in. It comes from one fact: five years at $y(5)$ must cost the same as one year at $y(1)$ followed by four at $f$, since both are ways of lending the same money for the same five years. Here $f = (0.225 - 0.03)/4$ = 4.875%, and $\delta^{*}$ = 4.875% − 4.05% = 82.5 basis points.
+The middle fraction is $`f`$, the forward yield: the four-year rate starting in one year that today's curve locks in. It comes from one fact: five years at $`y(5)`$ must cost the same as one year at $`y(1)`$ followed by four at $`f`$, since both are ways of lending the same money for the same five years. Here $`f = (0.225 - 0.03)/4`$ = 4.875%, and $`\delta^{*}`$ = 4.875% − 4.05% = 82.5 basis points.
 
-The return is a straight line in $\delta$ with slope $-(T-h)$, so $\delta^{*}$ always exists and is unique. If carry plus roll-down is below cash, $\delta^{*}$ is negative: yields must fall for the bond to match cash.
+The return is a straight line in $`\delta`$ with slope $`-(T-h)`$, so $`\delta^{*}`$ always exists and is unique. If carry plus roll-down is below cash, $`\delta^{*}`$ is negative: yields must fall for the bond to match cash.
 
 So the breakeven is not a new number. It is the distance from today's curve up to the forward curve, read at the bond's years left at sale.
 
 <details>
 <summary>Detailed proof: on the forward curve, every bond earns cash</summary>
 
-Let the curve a year from now be the forward curve: a payment due $u$ years after the sale date is discounted by $D(h+u)/D(h)$. Any bond, zero or coupon, with fixed payments $c_t$ at times $t$ after today, is worth $P_0 = \sum_t c_t D(t)$ today. At the sale date it holds the payments already received, each valued at the horizon, plus the rest priced on the forward curve. With the one coupon received exactly at the sale date, the horizon wealth is
-$$c_h + \sum_{t>h} c_t \frac{D(t)}{D(h)} = \frac{1}{D(h)} \sum_t c_t D(t) = \frac{P_0}{D(h)} = P_0\, e^{h\,y(h)}.$$
-That is cash's growth. For a zero the only term is $N\,D(T)/D(h)$, and $D(T)/D(h) = e^{-(T-h) f}$ by the definition of $f$, so a sale yield of $f$ is breakeven; since the zero's price falls strictly as its yield rises, it is the only one. The code checks the coupon case: a 4.5% coupon bond priced on the forward curve grows by 1.0304545340, the same as $e^{0.03}$.
+Let the curve a year from now be the forward curve: a payment due $`u`$ years after the sale date is discounted by $`D(h+u)/D(h)`$. Any bond, zero or coupon, with fixed payments $`c_t`$ at times $`t`$ after today, is worth $`P_0 = \sum_t c_t D(t)`$ today. At the sale date it holds the payments already received, each valued at the horizon, plus the rest priced on the forward curve. With the one coupon received exactly at the sale date, the horizon wealth is
+
+$`\displaystyle c_h + \sum_{t>h} c_t \frac{D(t)}{D(h)} = \frac{1}{D(h)} \sum_t c_t D(t) = \frac{P_0}{D(h)} = P_0\, e^{h\,y(h)}.`$
+
+That is cash's growth. For a zero the only term is $`N\,D(T)/D(h)`$, and $`D(T)/D(h) = e^{-(T-h) f}`$ by the definition of $`f`$, so a sale yield of $`f`$ is breakeven; since the zero's price falls strictly as its yield rises, it is the only one. The code checks the coupon case: a 4.5% coupon bond priced on the forward curve grows by 1.0304545340, the same as $`e^{0.03}`$.
 
 </details>
 
@@ -139,16 +153,16 @@ The five-year zero, face \$100, held one year; today's curve 3.00%, 3.30%, 3.65%
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | roll-down in yield | 4.50% − 4.05% | 45 bp |
-| price today, $P_0$ | 100 × $e^{-5 \times 0.045}$ = 100 × $e^{-0.225}$ | \$79.85 |
-| sale price at the old yield | 100 × $e^{-4 \times 0.045}$ | \$83.53 |
-| sale price at the four-year yield, $P_h$ | 100 × $e^{-4 \times 0.0405}$ | \$85.04 |
-| carry, $C$ | 1 × 4.50% | 4.50% (\$3.68) |
-| roll-down, $R$ | 4 × 0.45% | 1.80% (\$1.52) |
+| price today, $`P_0`$ | 100 × $`e^{-5 \times 0.045}`$ = 100 × $`e^{-0.225}`$ | \$79.85 |
+| sale price at the old yield | 100 × $`e^{-4 \times 0.045}`$ | \$83.53 |
+| sale price at the four-year yield, $`P_h`$ | 100 × $`e^{-4 \times 0.0405}`$ | \$85.04 |
+| carry, $`C`$ | 1 × 4.50% | 4.50% (\$3.68) |
+| roll-down, $`R`$ | 4 × 0.45% | 1.80% (\$1.52) |
 | total, log | 4.50% + 1.80% | **6.30%** (\$5.19) |
-| total, simple | $e^{0.063} - 1$ | 6.50% |
+| total, simple | $`e^{0.063} - 1`$ | 6.50% |
 | excess over one-year cash | 6.30% − 3.00% | 3.30% |
-| forward four-year yield, $f$ | (5 × 4.50% − 1 × 3.00%) / 4 | 4.875% |
-| **breakeven rise, $\delta^{*}$** | 3.30% / 4, or 4.875% − 4.05% | **82.5 bp** |
+| forward four-year yield, $`f`$ | (5 × 4.50% − 1 × 3.00%) / 4 | 4.875% |
+| **breakeven rise, $`\delta^{*}`$** | 3.30% / 4, or 4.875% − 4.05% | **82.5 bp** |
 
 The bond beats a year of cash unless the four-year yield climbs more than 82.5 basis points, to 4.875%, by the sale date.
 
@@ -581,12 +595,12 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the card's three general results for any curve $y$, any maturity $T$ and any holding period $h$.
+Lean proves the card's three general results for any curve $`y`$, any maturity $`T`$ and any holding period $`h`$.
 
-- Suppose a zero is held $h$ years on a curve held still by years left. Then its log return is $C + R$, which equals $T y(T) - (T-h) y(T-h)$.
-- Suppose the sale-date yield is $y(T-h) + \delta$, with $h < T$. Then the bond's log return equals cash's $h y(h)$ exactly when $\delta = \delta^{*}$.
-- Take $\delta^{*}$ and $f$ as in The formula. Then $\delta^{*} = f - y(T-h)$: the breakeven is the gap up to the forward curve.
-- Suppose a bond has fixed payments, none before the sale date, and the curve then is the forward curve. Then its horizon wealth is $P_0 e^{h y(h)}$, cash's growth.
+- Suppose a zero is held $`h`$ years on a curve held still by years left. Then its log return is $`C + R`$, which equals $`T y(T) - (T-h) y(T-h)`$.
+- Suppose the sale-date yield is $`y(T-h) + \delta`$, with $`h < T`$. Then the bond's log return equals cash's $`h y(h)`$ exactly when $`\delta = \delta^{*}`$.
+- Take $`\delta^{*}`$ and $`f`$ as in The formula. Then $`\delta^{*} = f - y(T-h)`$: the breakeven is the gap up to the forward curve.
+- Suppose a bond has fixed payments, none before the sale date, and the curve then is the forward curve. Then its horizon wealth is $`P_0 e^{h y(h)}`$, cash's growth.
 - Lean also checks the worked numbers exactly: 6.30%, 4.875%, 82.5 bp, 157.5 bp and the other zeros' rows.
 
 The dollar prices, the bisection, the thin-slice sum and the coupon bond's own numbers are left to the Python and Rust checks.
@@ -743,8 +757,8 @@ example : (2 * (330 : ℚ) / 10000 - 300 / 10000) / 1 = 360 / 10000 ∧
 ## What this builds on
 
 - [What a curve says](04-term-premium-and-expectations.md): forward rates as expectations plus a premium; this card turns that premium into a holding return and a breakeven.
-- [Spot, forward and par rates](../02-Curves/01-spot-forward-and-par-rates.md): the forward rate as the rate for a later stretch that today's spot rates lock in, the $f$ the breakeven lands on.
-- [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): discount factors and continuous compounding, the $D(t) = e^{-t\,y(t)}$ used throughout.
+- [Spot, forward and par rates](../02-Curves/01-spot-forward-and-par-rates.md): the forward rate as the rate for a later stretch that today's spot rates lock in, the $`f`$ the breakeven lands on.
+- [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): discount factors and continuous compounding, the $`D(t) = e^{-t\,y(t)}`$ used throughout.
 - [Duration and convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md): why a zero's price moves by its years left for each unit of yield, the multiplier in roll-down.
 
 ## Where this goes next

@@ -26,39 +26,43 @@ To scale: 40 units per 1, 0 at (140, 160). Steps of 0.5 leave 1 + i at (180, 120
 
 ## The formula
 
-A function $f$ takes a complex number $z$ to a complex number. Its **complex derivative** at a point $z_0$, written $f'(z_0)$ and read "f-prime of z-nought", is a limit over a complex step $h$:
+A function $`f`$ takes a complex number $`z`$ to a complex number. Its **complex derivative** at a point $`z_0`$, written $`f'(z_0)`$ and read "f-prime of z-nought", is a limit over a complex step $`h`$:
 
-$$f'(z_0) = \lim_{h \to 0} \frac{f(z_0 + h) - f(z_0)}{h}$$
+```math
+f'(z_0) = \lim_{h \to 0} \frac{f(z_0 + h) - f(z_0)}{h}
+```
 
 **Read it aloud:** change over step, with one answer however h shrinks to 0.
 
-Write $z = x + iy$ and split the output into real part $u$ and imaginary part $v$, each a real function of $x$ and $y$. A subscript names a partial derivative: $u_x$ is the rate $u$ changes as $x$ alone moves ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). The **Cauchy-Riemann equations** are
+Write $`z = x + iy`$ and split the output into real part $`u`$ and imaginary part $`v`$, each a real function of $`x`$ and $`y`$. A subscript names a partial derivative: $`u_x`$ is the rate $`u`$ changes as $`x`$ alone moves ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). The **Cauchy-Riemann equations** are
 
-$$u_x = v_y, \qquad u_y = -v_x, \qquad f'(z_0) = u_x + i\,v_x$$
+```math
+u_x = v_y, \qquad u_y = -v_x, \qquad f'(z_0) = u_x + i\,v_x
+```
 
 **Read it aloud:** u grows eastward as v grows northward, and grows northward as v shrinks eastward.
 
-Conversely, if the partial derivatives of $u$ and $v$ are continuous near $z_0$ and satisfy the equations at $z_0$, then $f'(z_0)$ exists.
+Conversely, if the partial derivatives of $`u`$ and $`v`$ are continuous near $`z_0`$ and satisfy the equations at $`z_0`$, then $`f'(z_0)`$ exists.
 
 A function is **holomorphic** on an open region, one where every point has a small disc round it still inside, when it has a complex derivative at every point of the region ([Limits and regions in the plane](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $z$ | a complex function; the point it acts on | square, mirror, $\lvert z\rvert^2$, $\sqrt{\lvert xy\rvert}$ | — |
-| $z_0$ | the point being tested | 1 + i, and 0 | — |
-| $h$, $t$, $\theta$, $a$, $b$ | the step: length t, direction θ; h = a + ib | t = 0.1 to 0.001; θ = 0, 45, 90 degrees | the square's quotient drifts by h |
-| $x$, $y$, $u$, $v$ | real and imaginary parts of input and output | x = 1, y = 1; u = x^2 − y^2, v = 2xy | — |
-| $u_x$, $u_y$, $v_x$, $v_y$ | partial derivatives: each part's rate east and north | 2, −2, 2, 2 at 1 + i | — |
-| $f'(z_0)$ | the complex derivative | 2 + 2i: stretch 2.828427, turn 45 degrees | — |
-| $\bar z$, $\lvert z\rvert$ | the conjugate, read "z-bar" (the mirror); the length | mirror of 1 + i is 1 − i | — |
-| $\varepsilon$, $\delta$ | a tolerance and a step size that meets it | Detailed proof | — |
+| $`f`$, $`z`$ | a complex function; the point it acts on | square, mirror, $`\lvert z\rvert^2`$, $`\sqrt{\lvert xy\rvert}`$ | — |
+| $`z_0`$ | the point being tested | 1 + i, and 0 | — |
+| $`h`$, $`t`$, $`\theta`$, $`a`$, $`b`$ | the step: length t, direction θ; h = a + ib | t = 0.1 to 0.001; θ = 0, 45, 90 degrees | the square's quotient drifts by h |
+| $`x`$, $`y`$, $`u`$, $`v`$ | real and imaginary parts of input and output | x = 1, y = 1; u = x^2 − y^2, v = 2xy | — |
+| $`u_x`$, $`u_y`$, $`v_x`$, $`v_y`$ | partial derivatives: each part's rate east and north | 2, −2, 2, 2 at 1 + i | — |
+| $`f'(z_0)`$ | the complex derivative | 2 + 2i: stretch 2.828427, turn 45 degrees | — |
+| $`\bar z`$, $`\lvert z\rvert`$ | the conjugate, read "z-bar" (the mirror); the length | mirror of 1 + i is 1 − i | — |
+| $`\varepsilon`$, $`\delta`$ | a tolerance and a step size that meets it | Detailed proof | — |
 
 ### When it holds
 
-- **Every direction, not two.** $\sqrt{\lvert xy\rvert}$ agrees east and north at 0, then gives 0.5 − 0.5i along 45 degrees.
+- **Every direction, not two.** $`\sqrt{\lvert xy\rvert}`$ agrees east and north at 0, then gives 0.5 − 0.5i along 45 degrees.
 - **Continuous partials for the converse.** Without them the equations at a point do not suffice: see Step 5.
-- **An open region for holomorphic.** $\lvert z\rvert^2$ has a derivative at 0 alone; a point holds no disc, so it is holomorphic nowhere.
-- **The minus sign.** Written $u_y = v_x$, the test rejects the square filter: −2 against 2.
+- **An open region for holomorphic.** $`\lvert z\rvert^2`$ has a derivative at 0 alone; a point holds no disc, so it is holomorphic nowhere.
+- **The minus sign.** Written $`u_y = v_x`$, the test rejects the square filter: −2 against 2.
 
 ---
 
@@ -66,67 +70,73 @@ A function is **holomorphic** on an open region, one where every point has a sma
 
 ### Step 0: a derivative is one multiplier
 
-A real derivative is the number that, times a small step, gives the change ([The derivative](../../06-Calculus%20and%20analysis/02-Derivatives/01-the-derivative.md)). In the plane, multiplying turns and stretches. So a complex derivative asks the function to treat every small step round $z_0$ with one turn-and-stretch, and the quotient must settle on one number from every direction.
+A real derivative is the number that, times a small step, gives the change ([The derivative](../../06-Calculus%20and%20analysis/02-Derivatives/01-the-derivative.md)). In the plane, multiplying turns and stretches. So a complex derivative asks the function to treat every small step round $`z_0`$ with one turn-and-stretch, and the quotient must settle on one number from every direction.
 
 ### Step 1: the eastward direction gives u_x + i v_x
 
-Take $h = t$, a small real number. The quotient is
+Take $`h = t`$, a small real number. The quotient is
 
-$$\frac{u(x+t, y) - u(x, y)}{t} + i\,\frac{v(x+t, y) - v(x, y)}{t} \;\longrightarrow\; u_x + i\,v_x$$
+```math
+\frac{u(x+t, y) - u(x, y)}{t} + i\,\frac{v(x+t, y) - v(x, y)}{t} \;\longrightarrow\; u_x + i\,v_x
+```
 
-Each piece is a real difference quotient in $x$ alone, so each tends to a partial derivative.
+Each piece is a real difference quotient in $`x`$ alone, so each tends to a partial derivative.
 
 ### Step 2: the northward direction gives v_y − i u_y
 
-Take $h = it$, and write $\Delta u$, $\Delta v$ for the changes in u and v as y moves by t. Dividing by i is multiplying by −i, since i × (−i) = 1. So
+Take $`h = it`$, and write $`\Delta u`$, $`\Delta v`$ for the changes in u and v as y moves by t. Dividing by i is multiplying by −i, since i × (−i) = 1. So
 
-$$\frac{\Delta u + i\,\Delta v}{it} = -i\,\frac{\Delta u}{t} + \frac{\Delta v}{t} \;\longrightarrow\; v_y - i\,u_y$$
+```math
+\frac{\Delta u + i\,\Delta v}{it} = -i\,\frac{\Delta u}{t} + \frac{\Delta v}{t} \;\longrightarrow\; v_y - i\,u_y
+```
 
 The equations' minus sign comes from this 1/i.
 
 ### Step 3: equal answers give two equations
 
-If $f'(z_0)$ exists, both directions give it. Equal complex numbers have equal real parts and equal imaginary parts:
+If $`f'(z_0)`$ exists, both directions give it. Equal complex numbers have equal real parts and equal imaginary parts:
 
-- real parts: $u_x = v_y$;
-- imaginary parts: $v_x = -u_y$.
+- real parts: $`u_x = v_y`$;
+- imaginary parts: $`v_x = -u_y`$.
 
-That proves the necessary half, and gives $f'(z_0) = u_x + i\,v_x$ from partials alone.
+That proves the necessary half, and gives $`f'(z_0) = u_x + i\,v_x`$ from partials alone.
 
 ### Step 4: three filters put to the test
 
-**The square** passes everywhere: $u_x = 2x = v_y$ and $u_y = -2y = -v_x$. Directly, $(z_0 + h)^2 - z_0^2 = 2z_0h + h^2$, so the quotient is $2z_0 + h$, missing $2z_0$ by the step itself.
+**The square** passes everywhere: $`u_x = 2x = v_y`$ and $`u_y = -2y = -v_x`$. Directly, $`(z_0 + h)^2 - z_0^2 = 2z_0h + h^2`$, so the quotient is $`2z_0 + h`$, missing $`2z_0`$ by the step itself.
 
-**The mirror** fails everywhere: $u = x$, $v = -y$, so $u_x = 1$, $v_y = -1$. With $h = t e^{i\theta}$ its quotient is $\bar h / h = e^{-2i\theta}$: 1, −i, −1 at 0, 45, 90 degrees, at every step length.
+**The mirror** fails everywhere: $`u = x`$, $`v = -y`$, so $`u_x = 1`$, $`v_y = -1`$. With $`h = t e^{i\theta}`$ its quotient is $`\bar h / h = e^{-2i\theta}`$: 1, −i, −1 at 0, 45, 90 degrees, at every step length.
 
-**The size squared**, $x^2 + y^2$, has $u_x = 2x$, $u_y = 2y$, $v_x = v_y = 0$: the equations hold at 0 alone. There the quotient $\lvert h\rvert^2/h = \bar h$ shrinks to 0.
+**The size squared**, $`x^2 + y^2`$, has $`u_x = 2x`$, $`u_y = 2y`$, $`v_x = v_y = 0`$: the equations hold at 0 alone. There the quotient $`\lvert h\rvert^2/h = \bar h`$ shrinks to 0.
 
 ### Step 5: with continuous partials, the equations suffice
 
-Write $h = a + ib$. With continuous partials, each part is close to its tangent plane for small steps:
+Write $`h = a + ib`$. With continuous partials, each part is close to its tangent plane for small steps:
 
-$$\Delta u \approx u_x a + u_y b, \qquad \Delta v \approx v_x a + v_y b$$
+```math
+\Delta u \approx u_x a + u_y b, \qquad \Delta v \approx v_x a + v_y b
+```
 
-Swap in $u_y = -v_x$ and $v_y = u_x$: $\Delta u + i\,\Delta v \approx (u_x + i\,v_x)(a + ib)$. The change is one number times the step, so the quotient tends to $u_x + i\,v_x$ from every direction.
+Swap in $`u_y = -v_x`$ and $`v_y = u_x`$: $`\Delta u + i\,\Delta v \approx (u_x + i\,v_x)(a + ib)`$. The change is one number times the step, so the quotient tends to $`u_x + i\,v_x`$ from every direction.
 
-Without continuity this fails. $\sqrt{\lvert xy\rvert}$ is 0 on both axes, so its partials at 0 are all 0. On the diagonal $h = s(1 + i)$, s > 0, it equals s, and the quotient is $1/(1 + i) = 0.5 - 0.5i$.
+Without continuity this fails. $`\sqrt{\lvert xy\rvert}`$ is 0 on both axes, so its partials at 0 are all 0. On the diagonal $`h = s(1 + i)`$, s > 0, it equals s, and the quotient is $`1/(1 + i) = 0.5 - 0.5i`$.
 
 <details>
 <summary>Detailed proof: the converse, with tolerances</summary>
 
-Take a tolerance $\varepsilon > 0$ and $\delta > 0$ so all four partials stay within $\varepsilon$ of their values at $z_0$ on the disc of radius $\delta$. For $\lvert h\rvert < \delta$, split the change in u into an eastward move, then a northward one. The [Mean value theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md) (somewhere along a move, the rate equals the average rate) makes them $a$ times $u_x$ and $b$ times $u_y$, each taken at a point within $\delta$.
+Take a tolerance $`\varepsilon > 0`$ and $`\delta > 0`$ so all four partials stay within $`\varepsilon`$ of their values at $`z_0`$ on the disc of radius $`\delta`$. For $`\lvert h\rvert < \delta`$, split the change in u into an eastward move, then a northward one. The [Mean value theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md) (somewhere along a move, the rate equals the average rate) makes them $`a`$ times $`u_x`$ and $`b`$ times $`u_y`$, each taken at a point within $`\delta`$.
 
-So $\Delta u = u_x a + u_y b + E_1$ with $\lvert E_1\rvert \le 2\varepsilon\lvert h\rvert$; likewise $\Delta v = v_x a + v_y b + E_2$.
+So $`\Delta u = u_x a + u_y b + E_1`$ with $`\lvert E_1\rvert \le 2\varepsilon\lvert h\rvert`$; likewise $`\Delta v = v_x a + v_y b + E_2`$.
 
-With the equations at $z_0$, $\Delta u + i\Delta v = (u_x + i v_x)h + E_1 + iE_2$, so
-$\lvert (f(z_0 + h) - f(z_0))/h - (u_x + i v_x)\rvert \le 4\varepsilon$.
-The tolerance was arbitrary, so the limit is $u_x + i v_x$.
+With the equations at $`z_0`$, $`\Delta u + i\Delta v = (u_x + i v_x)h + E_1 + iE_2`$, so
+$`\lvert (f(z_0 + h) - f(z_0))/h - (u_x + i v_x)\rvert \le 4\varepsilon`$.
+The tolerance was arbitrary, so the limit is $`u_x + i v_x`$.
 
 </details>
 
 ### Step 6: holomorphic means a derivative on an open region
 
-Every disc round 0 holds points where $\lvert z\rvert^2$ has no derivative. Holomorphic asks for a derivative throughout an open region: the square filter is holomorphic on the whole plane, the mirror and $\lvert z\rvert^2$ on no region.
+Every disc round 0 holds points where $`\lvert z\rvert^2`$ has no derivative. Holomorphic asks for a derivative throughout an open region: the square filter is holomorphic on the whole plane, the mirror and $`\lvert z\rvert^2`$ on no region.
 
 An alternative route reads the equations as geometry, angles kept, on [Conformal maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md).
 
@@ -154,9 +164,9 @@ Near 1 + i the square filter enlarges every small patch 2.828427 times and turns
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Testing the mirror eastward only | derivative 1 | northward gives −1, and 45 degrees gives −i |
-| Sign slip, $u_y = v_x$ | rejects the square: −2 against 2 | the minus comes from dividing by i |
-| $\lvert z\rvert^2$ at 1 + i | 2.001000 east, −2.001000i north, step 0.001 | equations hold at 0 only |
-| The equations at one point, no continuity | $\sqrt{\lvert xy\rvert}$ at 0: partials 0, diagonal 0.5 − 0.5i | no continuous partials near 0 |
+| Sign slip, $`u_y = v_x`$ | rejects the square: −2 against 2 | the minus comes from dividing by i |
+| $`\lvert z\rvert^2`$ at 1 + i | 2.001000 east, −2.001000i north, step 0.001 | equations hold at 0 only |
+| The equations at one point, no continuity | $`\sqrt{\lvert xy\rvert}`$ at 0: partials 0, diagonal 0.5 − 0.5i | no continuous partials near 0 |
 
 The code prints all four.
 
@@ -164,7 +174,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Two roads to the derivative: the difference quotient along 0, 45 and 90 degrees as the step shrinks, and the four partials by central differences (the change across a tiny step either side, over the step's width) assembled into $u_x + i\,v_x$. The asserts check the square's miss equals the step, the partials road meets the closed form 2z0, the mirror's quotient equals $e^{-2i\theta}$, and the two warning cases behave as Steps 4 and 5 say.
+Two roads to the derivative: the difference quotient along 0, 45 and 90 degrees as the step shrinks, and the four partials by central differences (the change across a tiny step either side, over the step's width) assembled into $`u_x + i\,v_x`$. The asserts check the square's miss equals the step, the partials road meets the closed form 2z0, the mirror's quotient equals $`e^{-2i\theta}`$, and the two warning cases behave as Steps 4 and 5 say.
 
 ### Python
 
@@ -366,9 +376,9 @@ Lean proves the Cauchy-Riemann equations and their converse for every complex fu
 - A complex derivative at a point forces all four partials to exist there, with u_x = v_y and u_y = −v_x.
 - That derivative then equals u_x + i v_x.
 - If the four partials are continuous near the point and meet the equations there, the complex derivative exists and equals u_x + i v_x.
-- $\sqrt{\lvert xy\rvert}$ has all four partials 0 at 0, so it passes the equations there.
+- $`\sqrt{\lvert xy\rvert}`$ has all four partials 0 at 0, so it passes the equations there.
 - Yet on the diagonal h = s(1 + i), s > 0, its quotient is exactly 0.5 − 0.5i, and it has no complex derivative at 0.
-- $\lvert z\rvert^2$ has a complex derivative at 0 and at no other point, so it is holomorphic on no open region.
+- $`\lvert z\rvert^2`$ has a complex derivative at 0 and at no other point, so it is holomorphic on no open region.
 - The hand arithmetic holds exactly: (1 + i)^2 = 2i, the partials 2, −2, 2, 2, the equations, and the derivative 2 + 2i.
 - The square's miss is exactly the step: (z0 + h)^2 − z0^2 = 2 z0 h + h^2.
 - The mirror's quotient is exactly 1, −i and −1 at 0, 45 and 90 degrees.
@@ -705,11 +715,11 @@ example : (1 : ℂ) / (1 + I) = 1 / 2 - I / 2 := by
 ## The usual mistake
 
 > [!warning]
-> **Checking two directions and calling it a derivative.** The equations are only necessary: $\sqrt{\lvert xy\rvert}$ passes them at 0, then gives 0.5 − 0.5i on the diagonal. They suffice only with continuous partials nearby.
+> **Checking two directions and calling it a derivative.** The equations are only necessary: $`\sqrt{\lvert xy\rvert}`$ passes them at 0, then gives 0.5 − 0.5i on the diagonal. They suffice only with continuous partials nearby.
 >
 > - **Smooth taken for differentiable.** The perfectly smooth mirror gives 1 eastward and −1 northward.
-> - **Dropping the minus.** $u_y = v_x$ rejects the square filter, −2 against 2.
-> - **One point taken for holomorphic.** $\lvert z\rvert^2$ has a derivative at 0 alone.
+> - **Dropping the minus.** $`u_y = v_x`$ rejects the square filter, −2 against 2.
+> - **One point taken for holomorphic.** $`\lvert z\rvert^2`$ has a derivative at 0 alone.
 
 ---
 

@@ -28,46 +28,52 @@ Squares are 32 units wide, so the ladder runs from 116 to 244 and the snake from
 
 ## The formula
 
-Notation first, in words. $X_n$ is the square after turn $n$, with time counted in turns ([Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md)). The transition matrix $P$ holds $p_{ij}$, the chance that one turn moves square $i$ to square $j$ ([Markov chains](01-markov-chains.md)). A climb or slide happens inside the turn, so a turn never ends on 3 or 8: the chain lives on the eight **resting squares** 0, 1, 2, 4, 5, 6, 7 and 9, plus the finish.
+Notation first, in words. $`X_n`$ is the square after turn $`n`$, with time counted in turns ([Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md)). The transition matrix $`P`$ holds $`p_{ij}`$, the chance that one turn moves square $`i`$ to square $`j`$ ([Markov chains](01-markov-chains.md)). A climb or slide happens inside the turn, so a turn never ends on 3 or 8: the chain lives on the eight **resting squares** 0, 1, 2, 4, 5, 6, 7 and 9, plus the finish.
 
-An absorbing state $a$ has $p_{aa} = 1$. The resting squares are **transient**: left for good sooner or later ([Classifying states](03-classifying-states.md)). List them first and the absorbing states last, and $P$ splits into four blocks:
+An absorbing state $`a`$ has $`p_{aa} = 1`$. The resting squares are **transient**: left for good sooner or later ([Classifying states](03-classifying-states.md)). List them first and the absorbing states last, and $`P`$ splits into four blocks:
 
-$$P = \begin{pmatrix} Q & R \\ 0 & I \end{pmatrix}$$
+```math
+P = \begin{pmatrix} Q & R \\ 0 & I \end{pmatrix}
+```
 
-$Q$ holds moves between transient squares, with entries $q_{ij}$. $R$ holds moves from a transient square straight into an absorbing state. The zero block says a trap is never left, and the identity block $I$ keeps each trap put. ($Q$ is the standard letter for this block; it is unrelated to the second probability measure $Q$ met later in this wing.) The game ends at turn $\tau$, the first turn in an absorbing state: a stopping time, recognised when it arrives without seeing the future ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)).
+$`Q`$ holds moves between transient squares, with entries $`q_{ij}`$. $`R`$ holds moves from a transient square straight into an absorbing state. The zero block says a trap is never left, and the identity block $`I`$ keeps each trap put. ($`Q`$ is the standard letter for this block; it is unrelated to the second probability measure $`Q`$ met later in this wing.) The game ends at turn $`\tau`$, the first turn in an absorbing state: a stopping time, recognised when it arrives without seeing the future ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)).
 
-Write $t_i$ for the expected number of turns until the game ends, starting from transient square $i$. Fix one trap; $h_i$ is the chance of ending there from $i$, and $r_i$ the chance that one turn steps straight into it. The first-step equations, one per transient square $i$, summing over transient squares $j$:
+Write $`t_i`$ for the expected number of turns until the game ends, starting from transient square $`i`$. Fix one trap; $`h_i`$ is the chance of ending there from $`i`$, and $`r_i`$ the chance that one turn steps straight into it. The first-step equations, one per transient square $`i`$, summing over transient squares $`j`$:
 
-$$t_i = 1 + \sum_j q_{ij}\, t_j, \qquad h_i = r_i + \sum_j q_{ij}\, h_j$$
+```math
+t_i = 1 + \sum_j q_{ij}\, t_j, \qquad h_i = r_i + \sum_j q_{ij}\, h_j
+```
 
 **Read it aloud:** the expected wait from a square is one turn, plus the average of the expected waits from wherever that turn lands; the chance of ending in a given trap is the chance of stepping straight into it, plus the average of the same chance from wherever the turn lands.
 
-The same equations in matrix form, with $\mathbf{1}$ a column of ones, $N$ the **fundamental matrix** and $B$ the table of chances of ending in each trap:
+The same equations in matrix form, with $`\mathbf{1}`$ a column of ones, $`N`$ the **fundamental matrix** and $`B`$ the table of chances of ending in each trap:
 
-$$N = (I - Q)^{-1} = I + Q + Q^2 + Q^3 + \cdots, \qquad t = N\,\mathbf{1}, \qquad B = N R$$
+```math
+N = (I - Q)^{-1} = I + Q + Q^2 + Q^3 + \cdots, \qquad t = N\,\mathbf{1}, \qquad B = N R
+```
 
 **Read it aloud:** the fundamental matrix counts expected visits; a row sum is the expected number of turns, and times the one-step exits it gives the chance of ending in each trap.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X_n$, $n$ | the square after turn n; the turn count | square 0 at turn 0 | — |
-| $P$, $p_{ij}$, $i$, $j$, $a$ | transition matrix; chance one turn moves square i to j; a an absorbing state | 1/6 from 0 to 7 (roll 3, climb) | — |
-| $Q$, $q_{ij}$ | the block of $P$ among the eight resting squares | rows sum below 1 where the game can end | longer waits |
-| $R$, $r_i$ | one-step chances from a square into each trap; $r_i$ for the trap in question | from 6: finish 3/6; snake 1/6 once the head is a trap | more games end there |
-| $I$, $\mathbf{1}$ | the identity matrix; a column of ones | — | — |
-| $N$, $N_{ij}$ | the board's fundamental matrix; expected visits to j before the game ends, from i | 0.5738 visits to 7 from 0 | — |
-| $Q'$, $q'_{ij}$, $R'$, $N'$ | the same blocks and fundamental matrix for the second chain, the snake's head a trap and no slide | 0.4204 visits to 7 from 0 | — |
-| $B$ | $N R$: chance of ending in each trap; for the snake question, $N' R'$ | snake 0.2359, finish 0.7641 from 0 | — |
-| $\tau$ | the turn the game first reaches a trap | at least 2; 3.5635 on average | — |
-| $t_i$, $t_j$, $t_s$, $t_0$, $t_2$ | expected turns until the game ends, from a square | 3.5635 from 0 | — |
-| $h_i$, $h_s$, $h_0$ | chance of meeting the snake before finishing, from a square | 0.2359 from 0 | — |
-| $x$, $s$ | the unknown carried by hand, $t_2$; s a square | 3.2997 | — |
-| $\eta$, $m$, $k$, $K$, $v$, $\sigma$ | Steps 1 and 4 and the proof: a floor on the chance of ending within m turns; blocks; a cut-off turn; a difference of two solutions; the first turn meeting snake or finish | 10/36 with m = 2 | faster finish |
+| $`X_n`$, $`n`$ | the square after turn n; the turn count | square 0 at turn 0 | — |
+| $`P`$, $`p_{ij}`$, $`i`$, $`j`$, $`a`$ | transition matrix; chance one turn moves square i to j; a an absorbing state | 1/6 from 0 to 7 (roll 3, climb) | — |
+| $`Q`$, $`q_{ij}`$ | the block of $`P`$ among the eight resting squares | rows sum below 1 where the game can end | longer waits |
+| $`R`$, $`r_i`$ | one-step chances from a square into each trap; $`r_i`$ for the trap in question | from 6: finish 3/6; snake 1/6 once the head is a trap | more games end there |
+| $`I`$, $`\mathbf{1}`$ | the identity matrix; a column of ones | — | — |
+| $`N`$, $`N_{ij}`$ | the board's fundamental matrix; expected visits to j before the game ends, from i | 0.5738 visits to 7 from 0 | — |
+| $`Q'`$, $`q'_{ij}`$, $`R'`$, $`N'`$ | the same blocks and fundamental matrix for the second chain, the snake's head a trap and no slide | 0.4204 visits to 7 from 0 | — |
+| $`B`$ | $`N R`$: chance of ending in each trap; for the snake question, $`N' R'`$ | snake 0.2359, finish 0.7641 from 0 | — |
+| $`\tau`$ | the turn the game first reaches a trap | at least 2; 3.5635 on average | — |
+| $`t_i`$, $`t_j`$, $`t_s`$, $`t_0`$, $`t_2`$ | expected turns until the game ends, from a square | 3.5635 from 0 | — |
+| $`h_i`$, $`h_s`$, $`h_0`$ | chance of meeting the snake before finishing, from a square | 0.2359 from 0 | — |
+| $`x`$, $`s`$ | the unknown carried by hand, $`t_2`$; s a square | 3.2997 | — |
+| $`\eta`$, $`m`$, $`k`$, $`K`$, $`v`$, $`\sigma`$ | Steps 1 and 4 and the proof: a floor on the chance of ending within m turns; blocks; a cut-off turn; a difference of two solutions; the first turn meeting snake or finish | 10/36 with m = 2 | faster finish |
 
 ### When it holds
 
 - **Finitely many squares.** With infinitely many, the equations can have many solutions; the right one is the smallest non-negative one (Norris, below).
-- **Every transient square can reach a trap.** Swap the snake for a pit that holds the player forever, counted as a board square: its row of $I - Q$ is all zeros and the equations have no unique solution.
+- **Every transient square can reach a trap.** Swap the snake for a pit that holds the player forever, counted as a board square: its row of $`I - Q`$ is all zeros and the equations have no unique solution.
 - **The same die every turn, nothing remembered.** Otherwise the first roll does not restart the game.
 - **One turn per roll.** A climb or slide belongs to the turn that caused it; charging it a turn of its own gives 4.2051, not 3.5635.
 
@@ -81,25 +87,29 @@ From square 0 a roll of 3 climbs to 7, and from there the game is the same game 
 
 ### Step 1: the game ends, and fast
 
-Before averaging, the game must be known to end. From every resting square the chance of finishing within $m = 2$ turns is at least $\eta = 10/36$. So each two-turn block, whatever came before, ends the game with chance at least 10/36, and the game survives $k$ blocks with chance at most $(1 - 10/36)^k$. The expected wait is the sum, over turns, of the chance the game is still running; adding the block bounds caps it at 2 × 36/10 = 7.2 turns. Crude, about twice the true 3.5635, but finite, which is all the algebra needs.
+Before averaging, the game must be known to end. From every resting square the chance of finishing within $`m = 2`$ turns is at least $`\eta = 10/36`$. So each two-turn block, whatever came before, ends the game with chance at least 10/36, and the game survives $`k`$ blocks with chance at most $`(1 - 10/36)^k`$. The expected wait is the sum, over turns, of the chance the game is still running; adding the block bounds caps it at 2 × 36/10 = 7.2 turns. Crude, about twice the true 3.5635, but finite, which is all the algebra needs.
 
 ### Step 2: the first-step equations
 
-Condition on the first roll (the law of total expectation). With chance $q_{ij}$ the turn lands on transient square $j$, and the rest of the game lasts $t_j$ on average; otherwise it ends. Either way one turn has passed:
+Condition on the first roll (the law of total expectation). With chance $`q_{ij}`$ the turn lands on transient square $`j`$, and the rest of the game lasts $`t_j`$ on average; otherwise it ends. Either way one turn has passed:
 
-$$t_i = 1 + \sum_j q_{ij}\, t_j.$$
+```math
+t_i = 1 + \sum_j q_{ij}\, t_j.
+```
 
-For the snake question, make the head absorbing. That is a second chain: a roll onto 8 now ends the game instead of sliding to 2, so its block of moves between resting squares, $Q'$, loses the slides. The first roll lands on the head with chance $r_i$, on square $j$ with chance $q'_{ij}$, or on the finish:
+For the snake question, make the head absorbing. That is a second chain: a roll onto 8 now ends the game instead of sliding to 2, so its block of moves between resting squares, $`Q'`$, loses the slides. The first roll lands on the head with chance $`r_i`$, on square $`j`$ with chance $`q'_{ij}`$, or on the finish:
 
-$$h_i = r_i + \sum_j q'_{ij}\, h_j.$$
+```math
+h_i = r_i + \sum_j q'_{ij}\, h_j.
+```
 
-In matrix form, $(I - Q)\,t = \mathbf{1}$ and $(I - Q')\,h = r$: the matrix changes as well as the right-hand side.
+In matrix form, $`(I - Q)\,t = \mathbf{1}`$ and $`(I - Q')\,h = r`$: the matrix changes as well as the right-hand side.
 
 ### Step 3: powers of Q count the survivors, and N counts visits
 
-Row $i$ of $Q^n$ gives, for each transient square $j$, the chance that the game is still running after $n$ turns and sits on $j$. Summing over turns counts visits: $N_{ij} = \sum_n (Q^n)_{ij}$. From 0 the game visits 7 on 0.5738 turns on average and 2 on 0.5499, mostly after a slide. Every turn starts on some transient square, so a row sum of $N$ is the expected number of turns, $t = N\,\mathbf{1}$. Step 1 makes the series converge, and $(I - Q)(I + Q + \dots + Q^k) = I - Q^{k+1}$ tends to $I$: the series is the inverse ([The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md)).
+Row $`i`$ of $`Q^n`$ gives, for each transient square $`j`$, the chance that the game is still running after $`n`$ turns and sits on $`j`$. Summing over turns counts visits: $`N_{ij} = \sum_n (Q^n)_{ij}`$. From 0 the game visits 7 on 0.5738 turns on average and 2 on 0.5499, mostly after a slide. Every turn starts on some transient square, so a row sum of $`N`$ is the expected number of turns, $`t = N\,\mathbf{1}`$. Step 1 makes the series converge, and $`(I - Q)(I + Q + \dots + Q^k) = I - Q^{k+1}`$ tends to $`I`$: the series is the inverse ([The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md)).
 
-The same mass pushed forward one turn at a time gives the whole law of $\tau$:
+The same mass pushed forward one turn at a time gives the whole law of $`\tau`$:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -114,32 +124,32 @@ Bars: the exact percent of games ending on each turn (road 2 in the code); the l
 
 ### Step 4: only one answer
 
-Two finite solutions of $(I - Q)\,t = \mathbf{1}$ differ by some $v$ with $(I - Q)\,v = 0$; multiply by $N$ and $v = 0$. So the solution is unique, for $t$ and for $h$. With the pit it fails: $t$ at the pit would satisfy "wait = 1 + wait", which no finite number does.
+Two finite solutions of $`(I - Q)\,t = \mathbf{1}`$ differ by some $`v`$ with $`(I - Q)\,v = 0`$; multiply by $`N`$ and $`v = 0`$. So the solution is unique, for $`t`$ and for $`h`$. With the pit it fails: $`t`$ at the pit would satisfy "wait = 1 + wait", which no finite number does.
 
 ### Step 5: the two questions meet
 
-In the hand solve below, the wait from each square comes out as a number plus a multiple of $x$, the wait from square 2. The multiple is exactly $h$ there: 1/6 at 7, 7/36 at 6, 49/216 at 5, 343/1296 at 4, 2617/7776 at 2. A game from square $s$ either finishes first or meets the snake first; if it meets the snake, with chance $h_s$, it restarts at 2 with $x$ turns to go on average. So $t_s$ is the expected turns until the first of the two, plus $h_s$ times $x$: absorption chances and waiting times are one calculation.
+In the hand solve below, the wait from each square comes out as a number plus a multiple of $`x`$, the wait from square 2. The multiple is exactly $`h`$ there: 1/6 at 7, 7/36 at 6, 49/216 at 5, 343/1296 at 4, 2617/7776 at 2. A game from square $`s`$ either finishes first or meets the snake first; if it meets the snake, with chance $`h_s`$, it restarts at 2 with $`x`$ turns to go on average. So $`t_s`$ is the expected turns until the first of the two, plus $`h_s`$ times $`x`$: absorption chances and waiting times are one calculation.
 
-The chance of ending in each trap comes from the second chain's own fundamental matrix, $N' = (I - Q')^{-1}$, with $R'$ its one-step exits into the head and the finish. Row 0 of $N'$ counts 0.4204 visits to 7, not the board's 0.5738, because no slide sends the player back. Then $B = N' R'$: from 0, snake 0.2359, finish 0.7641. The code also solves each column as its own system and gets the same fractions, and the two add to exactly 1, as Step 1 guarantees: every game ends.
+The chance of ending in each trap comes from the second chain's own fundamental matrix, $`N' = (I - Q')^{-1}`$, with $`R'`$ its one-step exits into the head and the finish. Row 0 of $`N'`$ counts 0.4204 visits to 7, not the board's 0.5738, because no slide sends the player back. Then $`B = N' R'`$: from 0, snake 0.2359, finish 0.7641. The code also solves each column as its own system and gets the same fractions, and the two add to exactly 1, as Step 1 guarantees: every game ends.
 
 <details>
 <summary>Detailed proof</summary>
 
-Setting: a finite set of transient squares T, a non-empty set of absorbing states A, transition matrix $P$ constant in time, and from every square in T a path of positive-chance moves into A. Let $\tau$ be the first turn with $X_n$ in A.
+Setting: a finite set of transient squares T, a non-empty set of absorbing states A, transition matrix $`P`$ constant in time, and from every square in T a path of positive-chance moves into A. Let $`\tau`$ be the first turn with $`X_n`$ in A.
 
-**The wait has a geometric tail.** Pick one positive-chance path into A from each square in T; let $m$ be the longest and $\eta$ the smallest path chance. From any square in T, the next $m$ turns reach A with chance at least $\eta$. By the Markov property at the fixed time $k \cdot m$, summed over the finitely many squares the game may occupy then, $P(\tau > (k+1)m) \le (1-\eta)\,P(\tau > km)$. Iterating, $P(\tau > km) \le (1-\eta)^k$. Since $\tau = \sum_{n \ge 0} \mathbf{1}\{\tau > n\}$, monotone convergence (for non-negative terms increasing to a limit, the average of the limit is the limit of the averages; [The monotone convergence theorem](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) gives $E[\tau] = \sum_n P(\tau > n) \le m/\eta$, finite. In particular $\tau$ is finite almost surely.
+**The wait has a geometric tail.** Pick one positive-chance path into A from each square in T; let $`m`$ be the longest and $`\eta`$ the smallest path chance. From any square in T, the next $`m`$ turns reach A with chance at least $`\eta`$. By the Markov property at the fixed time $`k \cdot m`$, summed over the finitely many squares the game may occupy then, $`P(\tau > (k+1)m) \le (1-\eta)\,P(\tau > km)`$. Iterating, $`P(\tau > km) \le (1-\eta)^k`$. Since $`\tau = \sum_{n \ge 0} \mathbf{1}\{\tau > n\}`$, monotone convergence (for non-negative terms increasing to a limit, the average of the limit is the limit of the averages; [The monotone convergence theorem](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) gives $`E[\tau] = \sum_n P(\tau > n) \le m/\eta`$, finite. In particular $`\tau`$ is finite almost surely.
 
-**The series is the inverse.** By induction on paths, $(Q^n)_{ij}$ is the chance of being at $j$ at turn $n$ with $\tau > n$, so row sums of $Q^n$ are $P_i(\tau > n)$ and the non-negative series $N = \sum_n Q^n$ has row sums $E_i[\tau]$, finite. Every entry is therefore finite. $QN = NQ = N - I$ by shifting the index of a convergent non-negative series, so $(I - Q)N = N(I - Q) = I$. The expected number of turns spent on $j$ is $E_i \sum_n \mathbf{1}\{X_n = j, \tau > n\} = N_{ij}$, again by monotone convergence.
+**The series is the inverse.** By induction on paths, $`(Q^n)_{ij}`$ is the chance of being at $`j`$ at turn $`n`$ with $`\tau > n`$, so row sums of $`Q^n`$ are $`P_i(\tau > n)`$ and the non-negative series $`N = \sum_n Q^n`$ has row sums $`E_i[\tau]`$, finite. Every entry is therefore finite. $`QN = NQ = N - I`$ by shifting the index of a convergent non-negative series, so $`(I - Q)N = N(I - Q) = I`$. The expected number of turns spent on $`j`$ is $`E_i \sum_n \mathbf{1}\{X_n = j, \tau > n\} = N_{ij}`$, again by monotone convergence.
 
-**The first-step equations hold.** Truncate: let $t^{(K)}_i = E_i[\min(\tau, K)]$. Splitting every path of length $K+1$ after its first move, a finite sum, gives $t^{(K+1)}_i = 1 + \sum_j q_{ij}\, t^{(K)}_j$. As $K$ grows, $\min(\tau, K)$ increases to $\tau$, so by monotone convergence both sides converge and $t_i = 1 + \sum_j q_{ij}\, t_j$. For a trap $a$, let $h^{(K)}_i$ be the chance of entering A by turn $K$ and entering it at $a$; the same split gives $h^{(K+1)}_i = r_i + \sum_j q_{ij}\, h^{(K)}_j$, and the events increase to "enter A at $a$", so continuity of probability gives the limit equation.
+**The first-step equations hold.** Truncate: let $`t^{(K)}_i = E_i[\min(\tau, K)]`$. Splitting every path of length $`K+1`$ after its first move, a finite sum, gives $`t^{(K+1)}_i = 1 + \sum_j q_{ij}\, t^{(K)}_j`$. As $`K`$ grows, $`\min(\tau, K)`$ increases to $`\tau`$, so by monotone convergence both sides converge and $`t_i = 1 + \sum_j q_{ij}\, t_j`$. For a trap $`a`$, let $`h^{(K)}_i`$ be the chance of entering A by turn $`K`$ and entering it at $`a`$; the same split gives $`h^{(K+1)}_i = r_i + \sum_j q_{ij}\, h^{(K)}_j`$, and the events increase to "enter A at $`a`$", so continuity of probability gives the limit equation.
 
-**Uniqueness.** Both equations are $(I - Q)y = c$ with $I - Q$ invertible, so $y = Nc$ is the only finite solution: $t = N\mathbf{1}$ and $h = Nr$. Summed over all traps, $R\mathbf{1} + Q\mathbf{1} = \mathbf{1}$, so $NR\mathbf{1} = N(I - Q)\mathbf{1} = \mathbf{1}$: the trap chances from each square add to 1.
+**Uniqueness.** Both equations are $`(I - Q)y = c`$ with $`I - Q`$ invertible, so $`y = Nc`$ is the only finite solution: $`t = N\mathbf{1}`$ and $`h = Nr`$. Summed over all traps, $`R\mathbf{1} + Q\mathbf{1} = \mathbf{1}`$, so $`NR\mathbf{1} = N(I - Q)\mathbf{1} = \mathbf{1}`$: the trap chances from each square add to 1.
 
-**Step 5's identity.** Let $\sigma$ be the first turn the game meets the snake or finishes, a stopping time. On meeting the snake the game stands on square 2; the strong Markov property at $\sigma$ (the Markov property at a stopping time: from $\sigma$ on, the game runs afresh from where it stands, whatever happened before) gives $t_s = E_s[\sigma] + h_s\, t_2$. The hand solve recovers this identity numerically.
+**Step 5's identity.** Let $`\sigma`$ be the first turn the game meets the snake or finishes, a stopping time. On meeting the snake the game stands on square 2; the strong Markov property at $`\sigma`$ (the Markov property at a stopping time: from $`\sigma`$ on, the game runs afresh from where it stands, whatever happened before) gives $`t_s = E_s[\sigma] + h_s\, t_2`$. The hand solve recovers this identity numerically.
 
 </details>
 
-A second road runs through martingales: $h(X_n)$ stopped at $\tau$ is a bounded martingale by the first-step equation, and $\tau$ is finite, so optional stopping gives $h_0 = E[h(X_\tau)]$, the chance of stopping at the snake ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)). The two-wall version, where the equations become a recurrence with a closed form, is [Gambler's ruin](../01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md).
+A second road runs through martingales: $`h(X_n)`$ stopped at $`\tau`$ is a bounded martingale by the first-step equation, and $`\tau`$ is finite, so optional stopping gives $`h_0 = E[h(X_\tau)]`$, the chance of stopping at the snake ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)). The two-wall version, where the equations become a recurrence with a closed form, is [Gambler's ruin](../01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md).
 
 ---
 
@@ -149,40 +159,40 @@ A second road runs through martingales: $h(X_n)$ stopped at $\tau$ is a bounded 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $h$ at 9 | every roll finishes | 0 |
-| $h$ at 7 | roll 1 meets the snake: 1/6 | 1/6 |
-| $h$ at 6 | (1/6 + 1 + 0) / 6 | 7/36 |
-| $h$ at 5 | (7/36 + 1/6 + 1 + 0) / 6 | 49/216 |
-| $h$ at 4 | (49/216 + 7/36 + 1/6 + 1 + 0) / 6 | 343/1296 |
-| $h$ at 2 | (1/6 + 343/1296 + 49/216 + 7/36 + 1/6 + 1) / 6 | 2617/7776 |
-| $h$ at 1 | (2617/7776 + 1/6 + 343/1296 + 49/216 + 7/36 + 1/6) / 6 | 10543/46656 |
-| $h$ at 0 | the same, over rolls to 1, 2, 7, 4, 5, 6 | **66025/279936 = 0.2359** |
+| $`h`$ at 9 | every roll finishes | 0 |
+| $`h`$ at 7 | roll 1 meets the snake: 1/6 | 1/6 |
+| $`h`$ at 6 | (1/6 + 1 + 0) / 6 | 7/36 |
+| $`h`$ at 5 | (7/36 + 1/6 + 1 + 0) / 6 | 49/216 |
+| $`h`$ at 4 | (49/216 + 7/36 + 1/6 + 1 + 0) / 6 | 343/1296 |
+| $`h`$ at 2 | (1/6 + 343/1296 + 49/216 + 7/36 + 1/6 + 1) / 6 | 2617/7776 |
+| $`h`$ at 1 | (2617/7776 + 1/6 + 343/1296 + 49/216 + 7/36 + 1/6) / 6 | 10543/46656 |
+| $`h`$ at 0 | the same, over rolls to 1, 2, 7, 4, 5, 6 | **66025/279936 = 0.2359** |
 
-**The expected turns, carrying one unknown.** The snake sends 8 back to 2, so every wait above 2 depends on the wait from 2. Call it $x$ and carry it:
+**The expected turns, carrying one unknown.** The snake sends 8 back to 2, so every wait above 2 depends on the wait from 2. Call it $`x`$ and carry it:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $t$ at 9 | one turn, then finished | 1 |
-| $t$ at 7 | 1 + (x + 1) / 6 | 1.1667 + 0.1667 x |
-| $t$ at 6 | 1 + (t at 7 + x + 1) / 6 | 1.3611 + 0.1944 x |
-| $t$ at 5 | 1 + (t at 6 + t at 7 + x + 1) / 6 | 1.5880 + 0.2269 x |
-| $t$ at 4 | 1 + (t at 5 + t at 6 + t at 7 + x + 1) / 6 | 1.8526 + 0.2647 x |
-| $x$, from square 2 | 1 + (2 × t at 7 + t at 4 + t at 5 + t at 6 + x) / 6 | 2.1892 + 0.3365 x |
-| solve for $x$ | 2.1892 / (1 − 0.3365) | 17023/5159 = 3.2997 |
+| $`t`$ at 9 | one turn, then finished | 1 |
+| $`t`$ at 7 | 1 + (x + 1) / 6 | 1.1667 + 0.1667 x |
+| $`t`$ at 6 | 1 + (t at 7 + x + 1) / 6 | 1.3611 + 0.1944 x |
+| $`t`$ at 5 | 1 + (t at 6 + t at 7 + x + 1) / 6 | 1.5880 + 0.2269 x |
+| $`t`$ at 4 | 1 + (t at 5 + t at 6 + t at 7 + x + 1) / 6 | 1.8526 + 0.2647 x |
+| $`x`$, from square 2 | 1 + (2 × t at 7 + t at 4 + t at 5 + t at 6 + x) / 6 | 2.1892 + 0.3365 x |
+| solve for $`x`$ | 2.1892 / (1 − 0.3365) | 17023/5159 = 3.2997 |
 | back-substitute | 7, 6, 5, 4 | 1.7166, 2.0027, 2.3365, 2.7259 |
-| $t$ at 1 | lands on 2, 7, 4, 5, 6, 7: the same six squares as from 2 | 3.2997 |
-| $t$ at 0 | 1 + (3.2997 + 3.2997 + 1.7166 + 2.7259 + 2.3365 + 2.0027) / 6 | **3.5635** |
+| $`t`$ at 1 | lands on 2, 7, 4, 5, 6, 7: the same six squares as from 2 | 3.2997 |
+| $`t`$ at 0 | 1 + (3.2997 + 3.2997 + 1.7166 + 2.7259 + 2.3365 + 2.0027) / 6 | **3.5635** |
 
-A game lasts three and a half turns on average, and a little under a quarter of games meet the snake. The multiples of $x$ repeat the first table's chances: Step 5.
+A game lasts three and a half turns on average, and a little under a quarter of games meet the snake. The multiples of $`x`$ repeat the first table's chances: Step 5.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Leave out the 1 for the turn just played | 0 turns | $t = Qt$ has only the zero solution: no turn is ever counted |
+| Leave out the 1 for the turn just played | 0 turns | $`t = Qt`$ has only the zero solution: no turn is ever counted |
 | Board length over the average roll, 10 / 3.5 | 2.8571 turns | ignores the snake, the ladder and the rolls wasted past the finish; the plain board alone takes 3.3237 |
 | Spend a turn on each climb or slide | 4.2051 turns | squares 3 and 8 are not places where a turn ends |
-| A pit on 8, counted as a board square | row 8 of $I - Q$ is all zeros; no unique solution | the finish cannot be reached from the pit, so $I - Q$ has no inverse |
+| A pit on 8, counted as a board square | row 8 of $`I - Q`$ is all zeros; no unique solution | the finish cannot be reached from the pit, so $`I - Q`$ has no inverse |
 
 Treat the pit as a trap instead and the question is sound again: the finish is reached with chance 0.7641, the real board's chance of finishing before the snake. The code prints every row.
 
@@ -190,7 +200,7 @@ Treat the pit as a trap instead and the question is sound again: the finish is r
 
 ## Code, from first principles, and it actually runs
 
-Three independent roads. Road 1 solves the first-step equations in exact fractions by Gauss-Jordan elimination, builds the fundamental matrix column by column, and checks $N(I - Q) = I$ exactly; it builds the second chain's $N'$ the same way and checks $B = N'R'$ against the two solved columns. Road 2 solves nothing: it pushes the probability forward for 199 turns and adds up the chance still in play, $E[\tau] = \sum_n P(\tau > n)$. Road 3 plays 100000 games with a SplitMix64 generator, seed 20260929, each average printed with its standard error. Python uses the standard `Fraction`; Rust writes its own fraction type on 128-bit integers, overflow checked. The asserts tie the three roads together and also check the hand table, Step 5's identity and the chart's law.
+Three independent roads. Road 1 solves the first-step equations in exact fractions by Gauss-Jordan elimination, builds the fundamental matrix column by column, and checks $`N(I - Q) = I`$ exactly; it builds the second chain's $`N'`$ the same way and checks $`B = N'R'`$ against the two solved columns. Road 2 solves nothing: it pushes the probability forward for 199 turns and adds up the chance still in play, $`E[\tau] = \sum_n P(\tau > n)`$. Road 3 plays 100000 games with a SplitMix64 generator, seed 20260929, each average printed with its standard error. Python uses the standard `Fraction`; Rust writes its own fraction type on 128-bit integers, overflow checked. The asserts tie the three roads together and also check the hand table, Step 5's identity and the chart's law.
 
 ### Python
 
@@ -605,14 +615,14 @@ The outputs match line for line. Road 2 lands on road 1 to six decimals, with 1.
 
 Lean proves the main theorem for every finite chain where each transient square can reach a trap, and checks the board's numbers.
 
-- Suppose every transient square can reach a trap. Then $I - Q$ has an inverse $N$, and $N = I + Q + Q^2 + Q^3 + \cdots$.
-- Suppose every transient square can reach a trap. Then the first-step equations have exactly one solution: $t = N\,\mathbf{1}$, and $h = N r$ for each trap.
-- Suppose every transient square can reach a trap. Then each row of $B = N R$ adds to 1: every game ends in some trap.
-- Suppose every transient square can reach a trap. Then for some $m$ and $\eta > 0$, surviving $k$ blocks of $m$ turns has chance at most $(1 - \eta)^k$.
-- Take the same $m$ and $\eta$. Then each row sum of $N$ is at most $m / \eta$.
+- Suppose every transient square can reach a trap. Then $`I - Q`$ has an inverse $`N`$, and $`N = I + Q + Q^2 + Q^3 + \cdots`$.
+- Suppose every transient square can reach a trap. Then the first-step equations have exactly one solution: $`t = N\,\mathbf{1}`$, and $`h = N r`$ for each trap.
+- Suppose every transient square can reach a trap. Then each row of $`B = N R`$ adds to 1: every game ends in some trap.
+- Suppose every transient square can reach a trap. Then for some $`m`$ and $`\eta > 0`$, surviving $`k`$ blocks of $`m`$ turns has chance at most $`(1 - \eta)^k`$.
+- Take the same $`m`$ and $`\eta`$. Then each row sum of $`N`$ is at most $`m / \eta`$.
 - On the board, each resting square's row of chances adds to 1.
-- Take the board's resting squares. Then the waits, with $t_0$ = 110305/30954, solve $t = \mathbf{1} + Q t$.
-- Take the second chain, the snake's head a trap. Then the snake chances, with $h_0$ = 66025/279936, solve $h = r + Q' h$.
+- Take the board's resting squares. Then the waits, with $`t_0`$ = 110305/30954, solve $`t = \mathbf{1} + Q t`$.
+- Take the second chain, the snake's head a trap. Then the snake chances, with $`h_0`$ = 66025/279936, solve $`h = r + Q' h`$.
 - The finish chances solve the same equations with the finish column, and from 0 the two chances add to 1.
 - Each row of the two hand tables, for the snake chance and for the wait, gives the value shown.
 - From every resting square, the chance of finishing within 2 turns is at least 10/36, and 2 × 36/10 = 7.2.
@@ -1026,11 +1036,11 @@ end AbsorptionAndFirstStepAnalysis
 ## The usual mistake
 
 > [!warning]
-> **Reading the chance of meeting the snake as the number of slides.** The chance is 0.2359 per game. The expected number of slides is 0.3555, because a player who slides lands on 2, where the chance of meeting the snake again is 2617/7776 = 0.3365. The expected slides come out two ways: row 0 of the board's $N$ times the one-turn chance of landing on the head, or $h_0 / (1 - h_2)$ from the second chain. The code gets 0.355501 both ways.
+> **Reading the chance of meeting the snake as the number of slides.** The chance is 0.2359 per game. The expected number of slides is 0.3555, because a player who slides lands on 2, where the chance of meeting the snake again is 2617/7776 = 0.3365. The expected slides come out two ways: row 0 of the board's $`N`$ times the one-turn chance of landing on the head, or $`h_0 / (1 - h_2)`$ from the second chain. The code gets 0.355501 both ways.
 >
 > - **Treating the average as a typical game.** No game ends on turn 1, 33.33 percent end on turn 3, and 0.52 percent run past turn 10. The mean 3.5635 is an average over a skewed law, not a deadline.
-> - **Leaving the traps inside Q.** $Q$ keeps only transient squares. Put the finish in with its $p_{aa} = 1$ and $I - Q$ gets a zero row, the pit's failure by accident.
-> - **Changing the rule at the end without changing the equations.** "Reach or pass" and "land exactly" are different games with different rows in $Q$; the 3.5635 belongs to the first.
+> - **Leaving the traps inside Q.** $`Q`$ keeps only transient squares. Put the finish in with its $`p_{aa} = 1`$ and $`I - Q`$ gets a zero row, the pit's failure by accident.
+> - **Changing the rule at the end without changing the equations.** "Reach or pass" and "land exactly" are different games with different rows in $`Q`$; the 3.5635 belongs to the first.
 
 ---
 
@@ -1038,18 +1048,18 @@ end AbsorptionAndFirstStepAnalysis
 
 - **Board games.** Althoen, King and Schilling treated the full commercial board as an absorbing chain to find its expected playing time (Sources). Any game with a finish and a die with no memory is one.
 - **Gambling and ruin.** A gambler's chips are a chain absorbed at zero or at the target; [Gambler's ruin](../01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md) solves the same two equations in closed form.
-- **Credit and reliability.** A bond's rating moves between grades until default; a machine between working states until failure. $N$ gives the expected time to the end, and $B$ the chance of each ending.
+- **Credit and reliability.** A bond's rating moves between grades until default; a machine between working states until failure. $`N`$ gives the expected time to the end, and $`B`$ the chance of each ending.
 - **Population genetics.** A gene variant drifts until it disappears or takes over: two absorbing states, each reached with a chance computed as on this card.
 
 > **Say it back**
-> An absorbing state is a trap: once reached, never left. The first roll restarts the game, so the expected wait from a square is one turn plus the average wait from where the turn lands, and the chance of ending in a trap is the chance of stepping straight in plus the average chance from where the turn lands. If every square can reach a trap, these equations have exactly one solution, given by the fundamental matrix $N = (I - Q)^{-1}$, whose entries count expected visits. On the small board a game lasts 3.5635 turns on average and meets the snake with chance 0.2359.
+> An absorbing state is a trap: once reached, never left. The first roll restarts the game, so the expected wait from a square is one turn plus the average wait from where the turn lands, and the chance of ending in a trap is the chance of stepping straight in plus the average chance from where the turn lands. If every square can reach a trap, these equations have exactly one solution, given by the fundamental matrix $`N = (I - Q)^{-1}`$, whose entries count expected visits. On the small board a game lasts 3.5635 turns on average and meets the snake with chance 0.2359.
 
 ---
 
 ## What this builds on
 
 - [Classifying states](03-classifying-states.md): absorbing and transient states, and why a finite chain leaves its transient squares for good.
-- [The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md): what $(I - Q)^{-1}$ means, and when a square matrix has one.
+- [The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md): what $`(I - Q)^{-1}`$ means, and when a square matrix has one.
 
 ## Where this goes next
 
@@ -1065,7 +1075,7 @@ Here every move takes one turn of a die; the question this card leaves open is w
 
 Verified 2026-11-13: every link below resolves to the publisher's page.
 
-- Grinstead, Charles M., and J. Laurie Snell. *Introduction to Probability*, 2nd rev. ed. American Mathematical Society, 1997. [Full text, Dartmouth](https://math.dartmouth.edu/~prob/prob/prob.pdf). Section 11.2, Absorbing Markov Chains: the canonical form, the fundamental matrix, $t = N\mathbf{1}$ and $B = NR$.
+- Grinstead, Charles M., and J. Laurie Snell. *Introduction to Probability*, 2nd rev. ed. American Mathematical Society, 1997. [Full text, Dartmouth](https://math.dartmouth.edu/~prob/prob/prob.pdf). Section 11.2, Absorbing Markov Chains: the canonical form, the fundamental matrix, $`t = N\mathbf{1}`$ and $`B = NR`$.
 - Kemeny, John G., and J. Laurie Snell. *Finite Markov Chains*. Springer, 1976. [Publisher page](https://link.springer.com/book/9780387901923). The book that named the fundamental matrix and built the theory of absorbing chains on it.
 - Norris, J. R. *Markov Chains*. Cambridge University Press, 1997. [Publisher page](https://www.cambridge.org/core/books/markov-chains/A3F966B10633A32C8F06F37158031739). Section 1.3: hitting probabilities and mean hitting times as minimal non-negative solutions, the version that survives infinite state spaces.
 - Althoen, S. C., L. King, and K. Schilling. "How long is a game of snakes and ladders?" *The Mathematical Gazette* 77, no. 478 (1993): 71–76. [doi:10.2307/3619261](https://doi.org/10.2307/3619261). The full board treated as an absorbing chain.

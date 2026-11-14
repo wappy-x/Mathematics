@@ -37,25 +37,35 @@ Orange: the lower edge of each month's 95% range. Green: the upper edge. Dark bl
 
 ## The formula
 
-Notation first. The series is written $y_t$: the natural logarithm (ln) of the passenger count in month $t$. Logarithms turn the growing summer peak into a fixed-size bump: July runs about the same percentage above the level every year, and a percentage becomes a fixed amount after taking ln. A subscript names the month, so $\ell_t$ is the level after month $t$ has been seen, $b_t$ the trend and $s_t$ the season. $m$ = 12 is the months in one season, and $\alpha$, $\beta$, $\gamma$ (alpha, beta, gamma) are fixed weights between 0 and 1: the share by which level, trend and season move toward each new month. A hat marks an estimate, as on the estimation shelf: $\hat y_{t+h|t}$ is the forecast of the log count for month $t+h$, made at the end of month $t$.
+Notation first. The series is written $`y_t`$: the natural logarithm (ln) of the passenger count in month $`t`$. Logarithms turn the growing summer peak into a fixed-size bump: July runs about the same percentage above the level every year, and a percentage becomes a fixed amount after taking ln. A subscript names the month, so $`\ell_t`$ is the level after month $`t`$ has been seen, $`b_t`$ the trend and $`s_t`$ the season. $`m`$ = 12 is the months in one season, and $`\alpha`$, $`\beta`$, $`\gamma`$ (alpha, beta, gamma) are fixed weights between 0 and 1: the share by which level, trend and season move toward each new month. A hat marks an estimate, as on the estimation shelf: $`\hat y_{t+h|t}`$ is the forecast of the log count for month $`t+h`$, made at the end of month $`t`$.
 
 Each month, three updates, in this order:
 
-$$\ell_t = \alpha\,(y_t - s_{t-m}) + (1-\alpha)\,(\ell_{t-1} + b_{t-1})$$
+```math
+\ell_t = \alpha\,(y_t - s_{t-m}) + (1-\alpha)\,(\ell_{t-1} + b_{t-1})
+```
 
-$$b_t = \beta\,(\ell_t - \ell_{t-1}) + (1-\beta)\,b_{t-1}$$
+```math
+b_t = \beta\,(\ell_t - \ell_{t-1}) + (1-\beta)\,b_{t-1}
+```
 
-$$s_t = \gamma\,(y_t - \ell_{t-1} - b_{t-1}) + (1-\gamma)\,s_{t-m}$$
+```math
+s_t = \gamma\,(y_t - \ell_{t-1} - b_{t-1}) + (1-\gamma)\,s_{t-m}
+```
 
 **Read it aloud:** the new level is a blend of what this month says the level is and what the old level plus trend predicted; the new trend is a blend of the latest rise in level and the old trend; the new season for this calendar month is a blend of what this month says and what the same month last year said.
 
-The forecast, for $h$ from 1 to 12 months ahead:
+The forecast, for $`h`$ from 1 to 12 months ahead:
 
-$$\hat y_{t+h|t} = \ell_t + h\,b_t + s_{t+h-m}$$
+```math
+\hat y_{t+h|t} = \ell_t + h\,b_t + s_{t+h-m}
+```
 
 and the 95% forecast interval, on the log scale:
 
-$$\hat y_{t+h|t} \;\pm\; 1.96\,\sigma\sqrt{v_h}, \qquad v_h = 1 + \sum_{j=1}^{h-1} c_j^2, \qquad c_j = \alpha\,(1 + j\beta)$$
+```math
+\hat y_{t+h|t} \;\pm\; 1.96\,\sigma\sqrt{v_h}, \qquad v_h = 1 + \sum_{j=1}^{h-1} c_j^2, \qquad c_j = \alpha\,(1 + j\beta)
+```
 
 **Read it aloud:** the range is the forecast plus or minus 1.96 typical one-month misses, stretched by a factor that grows with how many unseen months lie between now and the target.
 
@@ -63,25 +73,27 @@ Raising e to both ends turns the log range into passengers. The number 1.96 is t
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $y_t$, $t$ | ln of passengers in month $t$; $t$ counts months | January 1960: ln 417 | — |
-| $\ell_t$, $\ell_0$ | level: where the log traffic stands, season removed; $\ell_0$ is its starting value | 6.105755 in December 1959 | every forecast rises |
-| $b_t$ | trend: rise in level per month | 0.009438 | later months rise more |
-| $s_t$ | season: this calendar month's distance above the level | July 0.286970, January −0.080124 | that month's forecast rises |
-| $m$ | months in one season | 12 | — |
-| $\alpha$, $\beta$, $\gamma$ | smoothing weights for level, trend, season, each from 0 to 1 | 0.33, 0.01, 0.53 | the estimate chases recent months harder |
-| $h$ | months ahead | 1 to 12 | the interval widens |
-| $\hat y_{t+h\mid t}$ | forecast of the log count for month $t+h$, made at month $t$ | January 1960: 6.035068 | — |
-| $e_t$ | one-month miss: $y_t$ minus the forecast made one month earlier | 120 of them, 1950 to 1959 | — |
-| $\sigma$ | typical size of a one-month miss (their root mean square) | 0.039897, roughly 4% of the count | every interval widens in proportion |
-| $c_j$, $j$ | how much a miss $j$ months before the target moves the target's forecast error | 0.3333 for one month back | the interval widens faster |
-| $v_h$ | the widening factor, squared | 1 at $h = 1$, 1.70013 at $h = 7$ | — |
-| $\varepsilon_t$, $\theta$ | Step 1 only: in an MA(1) model of the monthly changes, the month's independent surprise, and the share of last month's surprise carried into this month's change | a simple-smoothing $\alpha$ of 0.33 would mean $\theta = -0.67$ | $\alpha = 1 + \theta$ rises: the forecast chases the latest month harder |
+| $`y_t`$, $`t`$ | ln of passengers in month $`t`$; $`t`$ counts months | January 1960: ln 417 | — |
+| $`\ell_t`$, $`\ell_0`$ | level: where the log traffic stands, season removed; $`\ell_0`$ is its starting value | 6.105755 in December 1959 | every forecast rises |
+| $`b_t`$ | trend: rise in level per month | 0.009438 | later months rise more |
+| $`s_t`$ | season: this calendar month's distance above the level | July 0.286970, January −0.080124 | that month's forecast rises |
+| $`m`$ | months in one season | 12 | — |
+| $`\alpha`$, $`\beta`$, $`\gamma`$ | smoothing weights for level, trend, season, each from 0 to 1 | 0.33, 0.01, 0.53 | the estimate chases recent months harder |
+| $`h`$ | months ahead | 1 to 12 | the interval widens |
+| $`\hat y_{t+h\mid t}`$ | forecast of the log count for month $`t+h`$, made at month $`t`$ | January 1960: 6.035068 | — |
+| $`e_t`$ | one-month miss: $`y_t`$ minus the forecast made one month earlier | 120 of them, 1950 to 1959 | — |
+| $`\sigma`$ | typical size of a one-month miss (their root mean square) | 0.039897, roughly 4% of the count | every interval widens in proportion |
+| $`c_j`$, $`j`$ | how much a miss $`j`$ months before the target moves the target's forecast error | 0.3333 for one month back | the interval widens faster |
+| $`v_h`$ | the widening factor, squared | 1 at $`h = 1`$, 1.70013 at $`h = 7`$ | — |
+| $`\varepsilon_t`$, $`\theta`$ | Step 1 only: in an MA(1) model of the monthly changes, the month's independent surprise, and the share of last month's surprise carried into this month's change | a simple-smoothing $`\alpha`$ of 0.33 would mean $`\theta = -0.67`$ | $`\alpha = 1 + \theta`$ rises: the forecast chases the latest month harder |
 
 The three weights were chosen by least squares on a grid of hundredths: the triple that makes the sum of squared one-month misses over 1950 to 1959 smallest. The starting values come from 1949: level is that year's average log count, trend is the rise from the 1949 average to the 1950 average spread over 12 months, and each season is the 1949 month minus the 1949 average.
 
 A closed form for the widening factor follows by summing squares and powers:
 
-$$v_h = 1 + (h-1)\Big[\alpha^2 + \alpha^2\beta\,h + \tfrac16\,\alpha^2\beta^2\,h\,(2h-1)\Big]$$
+```math
+v_h = 1 + (h-1)\Big[\alpha^2 + \alpha^2\beta\,h + \tfrac16\,\alpha^2\beta^2\,h\,(2h-1)\Big]
+```
 
 ### When it holds
 
@@ -89,7 +101,7 @@ $$v_h = 1 + (h-1)\Big[\alpha^2 + \alpha^2\beta\,h + \tfrac16\,\alpha^2\beta^2\,h
 - **One-month misses are independent, with a constant spread.** If misses come in runs, the interval is too narrow; the check is the autocorrelation of the misses, from [Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md).
 - **Misses are roughly normal on the log scale.** The 1.96 comes from the normal law. Heavy-tailed misses put more than 5% outside.
 - **The season adds on the log scale.** That is, it multiplies the passenger count by a fixed percentage. A season of fixed size in passengers calls for the same equations on the raw counts.
-- **The weights and $\sigma$ are treated as known.** They are estimated: $\sigma$ = 0.039897 carries a standard error of about 0.002575. The interval ignores that uncertainty, so it runs a little narrow.
+- **The weights and $`\sigma`$ are treated as known.** They are estimated: $`\sigma`$ = 0.039897 carries a standard error of about 0.002575. The interval ignores that uncertainty, so it runs a little narrow.
 
 ---
 
@@ -97,15 +109,17 @@ $$v_h = 1 + (h-1)\Big[\alpha^2 + \alpha^2\beta\,h + \tfrac16\,\alpha^2\beta^2\,h
 
 ### Step 0: a running average that forgets at a fixed rate
 
-A forecast should lean on recent months more than on old ones. The cleanest way to do that is to give the month $j$ steps back a weight that shrinks by the same factor, $1-\alpha$, for every step. Such weights need no memory of the past: one running number carries the whole weighted average, and each new month updates it in one line. Every equation on this card applies that idea to the level, the trend or the season.
+A forecast should lean on recent months more than on old ones. The cleanest way to do that is to give the month $`j`$ steps back a weight that shrinks by the same factor, $`1-\alpha`$, for every step. Such weights need no memory of the past: one running number carries the whole weighted average, and each new month updates it in one line. Every equation on this card applies that idea to the level, the trend or the season.
 
 ### Step 1: one running number is a weighted average of every past month
 
-Take the level alone, with no trend and no season: $\ell_t = \alpha\,y_t + (1-\alpha)\,\ell_{t-1}$. Substitute the same rule for $\ell_{t-1}$, then for $\ell_{t-2}$, and so on back to a starting value $\ell_0$:
+Take the level alone, with no trend and no season: $`\ell_t = \alpha\,y_t + (1-\alpha)\,\ell_{t-1}`$. Substitute the same rule for $`\ell_{t-1}`$, then for $`\ell_{t-2}`$, and so on back to a starting value $`\ell_0`$:
 
-$$\ell_t = \alpha\,y_t + \alpha(1-\alpha)\,y_{t-1} + \alpha(1-\alpha)^2\,y_{t-2} + \cdots + (1-\alpha)^t\,\ell_0$$
+```math
+\ell_t = \alpha\,y_t + \alpha(1-\alpha)\,y_{t-1} + \alpha(1-\alpha)^2\,y_{t-2} + \cdots + (1-\alpha)^t\,\ell_0
+```
 
-The weight on the month $j$ steps back is $\alpha(1-\alpha)^j$. With $\alpha$ = 0.33:
+The weight on the month $`j`$ steps back is $`\alpha(1-\alpha)^j`$. With $`\alpha`$ = 0.33:
 
 ```
 weight on the month j steps back, alpha = 0.33
@@ -119,59 +133,63 @@ weight on the month j steps back, alpha = 0.33
 
 Each bar is two thirds of the one above. The weights add up to 1 once the starting value's share is counted, so the level is a genuine average. The code runs the one-line update 131 times over the log counts of 1949 to 1959 and also sums the 131 weighted terms directly; both give 6.0305227383.
 
-This is **simple exponential smoothing**, the base of the family. It is also the best forecast for one model from [Moving average and ARMA](03-ma-and-arma.md). Suppose the monthly changes are MA(1): $y_{t+1} - y_t = \varepsilon_{t+1} + \theta\,\varepsilon_t$, with independent surprises $\varepsilon$ of mean 0. Standing at month $t$, the unseen $\varepsilon_{t+1}$ averages 0, so the best forecast is $\hat y_{t+1} = y_t + \theta\,\varepsilon_t$. The surprise $\varepsilon_t$ is last month's miss, $y_t - \hat y_t$. Substituting, $\hat y_{t+1} = (1+\theta)\,y_t - \theta\,\hat y_t$: simple smoothing with $\alpha = 1 + \theta$. A simple-smoothing $\alpha$ of 0.33 would correspond to $\theta = -0.67$.
+This is **simple exponential smoothing**, the base of the family. It is also the best forecast for one model from [Moving average and ARMA](03-ma-and-arma.md). Suppose the monthly changes are MA(1): $`y_{t+1} - y_t = \varepsilon_{t+1} + \theta\,\varepsilon_t`$, with independent surprises $`\varepsilon`$ of mean 0. Standing at month $`t`$, the unseen $`\varepsilon_{t+1}`$ averages 0, so the best forecast is $`\hat y_{t+1} = y_t + \theta\,\varepsilon_t`$. The surprise $`\varepsilon_t`$ is last month's miss, $`y_t - \hat y_t`$. Substituting, $`\hat y_{t+1} = (1+\theta)\,y_t - \theta\,\hat y_t`$: simple smoothing with $`\alpha = 1 + \theta`$. A simple-smoothing $`\alpha`$ of 0.33 would correspond to $`\theta = -0.67`$.
 
 ### Step 2: the same blend, three times
 
 Each Holt-Winters equation has one shape: new estimate = weight × (what this month says) + (1 − weight) × (what was expected).
 
-- **Level.** This month says the level is $y_t - s_{t-m}$: the log count with last year's season for this month taken out. The old level plus one month of trend expected $\ell_{t-1} + b_{t-1}$.
-- **Trend.** This month says the monthly rise is $\ell_t - \ell_{t-1}$. The old trend expected $b_{t-1}$.
-- **Season.** This month says the season is $y_t - \ell_{t-1} - b_{t-1}$: the log count minus where the level was expected to be. Last year's value for this month expected $s_{t-m}$.
+- **Level.** This month says the level is $`y_t - s_{t-m}`$: the log count with last year's season for this month taken out. The old level plus one month of trend expected $`\ell_{t-1} + b_{t-1}`$.
+- **Trend.** This month says the monthly rise is $`\ell_t - \ell_{t-1}`$. The old trend expected $`b_{t-1}`$.
+- **Season.** This month says the season is $`y_t - \ell_{t-1} - b_{t-1}`$: the log count minus where the level was expected to be. Last year's value for this month expected $`s_{t-m}`$.
 
-The fitted weights read directly. $\alpha$ = 0.33: the level moves a third of the way toward each month's news. $\beta$ = 0.01: the trend hardly moves, so eleven years of steady growth dominate. $\gamma$ = 0.53: each calendar month's season is rebuilt about half from its latest value.
+The fitted weights read directly. $`\alpha`$ = 0.33: the level moves a third of the way toward each month's news. $`\beta`$ = 0.01: the trend hardly moves, so eleven years of steady growth dominate. $`\gamma`$ = 0.53: each calendar month's season is rebuilt about half from its latest value.
 
 ### Step 3: every update is old prediction plus a share of the miss
 
-Call the one-month miss $e_t = y_t - (\ell_{t-1} + b_{t-1} + s_{t-m})$: the actual log count minus the forecast made a month earlier. Rearranging the three updates gives
+Call the one-month miss $`e_t = y_t - (\ell_{t-1} + b_{t-1} + s_{t-m})`$: the actual log count minus the forecast made a month earlier. Rearranging the three updates gives
 
-$$\ell_t = \ell_{t-1} + b_{t-1} + \alpha\,e_t, \qquad b_t = b_{t-1} + \alpha\beta\,e_t, \qquad s_t = s_{t-m} + \gamma\,e_t.$$
+```math
+\ell_t = \ell_{t-1} + b_{t-1} + \alpha\,e_t, \qquad b_t = b_{t-1} + \alpha\beta\,e_t, \qquad s_t = s_{t-m} + \gamma\,e_t.
+```
 
 So each update is a fixed rule plus a correction proportional to the latest surprise. The code runs this form separately and reaches the same December 1959 state to 12 decimals.
 
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-Level: $\alpha(y_t - s_{t-m}) + (1-\alpha)(\ell_{t-1} + b_{t-1}) = \ell_{t-1} + b_{t-1} + \alpha\,(y_t - s_{t-m} - \ell_{t-1} - b_{t-1})$, and the bracket is $e_t$.
+Level: $`\alpha(y_t - s_{t-m}) + (1-\alpha)(\ell_{t-1} + b_{t-1}) = \ell_{t-1} + b_{t-1} + \alpha\,(y_t - s_{t-m} - \ell_{t-1} - b_{t-1})`$, and the bracket is $`e_t`$.
 
-Trend: $\beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1} = b_{t-1} + \beta(\ell_t - \ell_{t-1} - b_{t-1})$, and by the level line the bracket is $\alpha e_t$.
+Trend: $`\beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1} = b_{t-1} + \beta(\ell_t - \ell_{t-1} - b_{t-1})`$, and by the level line the bracket is $`\alpha e_t`$.
 
-Season: $\gamma(y_t - \ell_{t-1} - b_{t-1}) + (1-\gamma)s_{t-m} = s_{t-m} + \gamma\,(y_t - \ell_{t-1} - b_{t-1} - s_{t-m})$, and the bracket is $e_t$.
+Season: $`\gamma(y_t - \ell_{t-1} - b_{t-1}) + (1-\gamma)s_{t-m} = s_{t-m} + \gamma\,(y_t - \ell_{t-1} - b_{t-1} - s_{t-m})`$, and the bracket is $`e_t`$.
 
 </details>
 
 ### Step 4: how misses pile up, and the width of the interval
 
-Now the model. Assume the future misses are independent draws from a normal law with centre 0 and spread $\sigma$, N(0, $\sigma^2$). This is the **innovations model** of Hyndman, Koehler, Ord and Snyder: the smoothing equations become the law of motion of the series itself.
+Now the model. Assume the future misses are independent draws from a normal law with centre 0 and spread $`\sigma`$, N(0, $`\sigma^2`$). This is the **innovations model** of Hyndman, Koehler, Ord and Snyder: the smoothing equations become the law of motion of the series itself.
 
-Stand at December 1959 and target month $h$. The error of the forecast $\hat y_{t+h|t}$ is the target month's own miss plus the effect of every miss in between. A miss $j$ months before the target does three things. It lifts the level by $\alpha$ times itself, which lifts the target by the same amount. It lifts the trend by $\alpha\beta$ times itself, and the trend is then added $j$ more times before the target. It changes the season for its own calendar month, which touches the target only if the two are a whole year apart, never within 12 months. Total effect:
+Stand at December 1959 and target month $`h`$. The error of the forecast $`\hat y_{t+h|t}`$ is the target month's own miss plus the effect of every miss in between. A miss $`j`$ months before the target does three things. It lifts the level by $`\alpha`$ times itself, which lifts the target by the same amount. It lifts the trend by $`\alpha\beta`$ times itself, and the trend is then added $`j`$ more times before the target. It changes the season for its own calendar month, which touches the target only if the two are a whole year apart, never within 12 months. Total effect:
 
-$$c_j = \alpha + j\,\alpha\beta = \alpha\,(1 + j\beta).$$
+```math
+c_j = \alpha + j\,\alpha\beta = \alpha\,(1 + j\beta).
+```
 
-So the forecast error at horizon $h$ is the target's miss, weight 1, plus $h-1$ earlier misses with weights $c_1, \dots, c_{h-1}$. Independent pieces add their variances (from [Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)), so the variance is $\sigma^2(1 + c_1^2 + \cdots + c_{h-1}^2) = \sigma^2 v_h$. A sum of independent normals is normal, so 95% of the error lies within $1.96\,\sigma\sqrt{v_h}$.
+So the forecast error at horizon $`h`$ is the target's miss, weight 1, plus $`h-1`$ earlier misses with weights $`c_1, \dots, c_{h-1}`$. Independent pieces add their variances (from [Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)), so the variance is $`\sigma^2(1 + c_1^2 + \cdots + c_{h-1}^2) = \sigma^2 v_h`$. A sum of independent normals is normal, so 95% of the error lies within $`1.96\,\sigma\sqrt{v_h}`$.
 
-With $\beta$ = 0, no trend and no season, every $c_j$ is $\alpha$. Set $\alpha$ = 1 as well and the level is always the latest value: the forecast is this month's value, the random-walk forecast of [Unit roots](04-differencing-and-unit-roots.md), and $v_h = 1 + (h-1) = h$, so the band grows as the square root of the horizon.
+With $`\beta`$ = 0, no trend and no season, every $`c_j`$ is $`\alpha`$. Set $`\alpha`$ = 1 as well and the level is always the latest value: the forecast is this month's value, the random-walk forecast of [Unit roots](04-differencing-and-unit-roots.md), and $`v_h = 1 + (h-1) = h`$, so the band grows as the square root of the horizon.
 
 <details>
 <summary>Detailed proof: the closed form for the widening factor</summary>
 
-$\sum_{j=1}^{h-1} (\alpha + \alpha\beta j)^2 = (h-1)\alpha^2 + 2\alpha^2\beta \sum_{j=1}^{h-1} j + \alpha^2\beta^2 \sum_{j=1}^{h-1} j^2$.
+$`\sum_{j=1}^{h-1} (\alpha + \alpha\beta j)^2 = (h-1)\alpha^2 + 2\alpha^2\beta \sum_{j=1}^{h-1} j + \alpha^2\beta^2 \sum_{j=1}^{h-1} j^2`$.
 
-The two sums are $\tfrac12 (h-1)h$ and $\tfrac16 (h-1)h(2h-1)$. Substituting and taking out the common factor $h-1$ gives $(h-1)\big[\alpha^2 + \alpha^2\beta h + \tfrac16\alpha^2\beta^2 h(2h-1)\big]$, which is the closed form under The formula. For $h$ beyond 12, a miss exactly a year before the target also works through the season, and $c_j$ gains $\gamma$ at $j$ = 12, 24 and so on.
+The two sums are $`\tfrac12 (h-1)h`$ and $`\tfrac16 (h-1)h(2h-1)`$. Substituting and taking out the common factor $`h-1`$ gives $`(h-1)\big[\alpha^2 + \alpha^2\beta h + \tfrac16\alpha^2\beta^2 h(2h-1)\big]`$, which is the closed form under The formula. For $`h`$ beyond 12, a miss exactly a year before the target also works through the season, and $`c_j`$ gains $`\gamma`$ at $`j`$ = 12, 24 and so on.
 
 </details>
 
-The code reaches the width three ways: a loop over the $c_j$, the closed form, and 20,000 simulated years. Each simulated year draws twelve normal misses of spread $\sigma$ and runs the smoothing equations forward on them, exactly as the real months would. The spread of the simulated errors matches the formula at every horizon, and the formula's band catches 0.9498 of the simulated Decembers.
+The code reaches the width three ways: a loop over the $`c_j`$, the closed form, and 20,000 simulated years. Each simulated year draws twelve normal misses of spread $`\sigma`$ and runs the smoothing equations forward on them, exactly as the real months would. The spread of the simulated errors matches the formula at every horizon, and the formula's band catches 0.9498 of the simulated Decembers.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -184,7 +202,7 @@ xychart-beta
     line [0.03990, 0.03990, 0.03990, 0.03990, 0.03990, 0.03990, 0.03990, 0.03990, 0.03990, 0.03990, 0.03990, 0.03990]
 ```
 
-Orange: $\sigma\sqrt{v_h}$ from the formula. Green: the standard deviation of 20,000 simulated errors; it lies on the formula line to within its own sampling wobble. Dark blue: the one-month $\sigma$ held flat, the width a forecaster gets by forgetting that misses pile up.
+Orange: $`\sigma\sqrt{v_h}`$ from the formula. Green: the standard deviation of 20,000 simulated errors; it lies on the formula line to within its own sampling wobble. Dark blue: the one-month $`\sigma`$ held flat, the width a forecaster gets by forgetting that misses pile up.
 
 ### Step 5: the year's total, where months share their misses
 
@@ -195,7 +213,7 @@ Two roads give the range. The simulation adds up each simulated year and reads o
 <details>
 <summary>The covariance the linearised road uses</summary>
 
-Take two target months, the earlier one $h$ months ahead. Both contain the misses of months 1 to $h$. Each weights an earlier miss by the $c_j$ for the gap between them, and its own miss by 1. So their covariance is $\sigma^2$ times the sum, over months 1 to $h$, of the product of the two weights. The total's variance is then approximately the sum, over every pair of months, of the two forecast counts times their covariance.
+Take two target months, the earlier one $`h`$ months ahead. Both contain the misses of months 1 to $`h`$. Each weights an earlier miss by the $`c_j`$ for the gap between them, and its own miss by 1. So their covariance is $`\sigma^2`$ times the sum, over months 1 to $`h`$, of the product of the two weights. The total's variance is then approximately the sum, over every pair of months, of the two forecast counts times their covariance.
 
 </details>
 
@@ -207,13 +225,13 @@ State at the end of December 1959, from the fitted run: level 6.105755, trend 0.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| January log forecast, $h$ = 1 | 6.105755 + 0.009438 − 0.080124 | 6.035068 |
+| January log forecast, $`h`$ = 1 | 6.105755 + 0.009438 − 0.080124 | 6.035068 |
 | January forecast | e^6.035068 | 417.83 thousand |
-| half-width, $h$ = 1 | 1.96 × 0.039897 × 1 | 0.078199 |
+| half-width, $`h`$ = 1 | 1.96 × 0.039897 × 1 | 0.078199 |
 | January range | e^(6.035068 − 0.078199) to e^(6.035068 + 0.078199) | 386.40 to 451.81 |
-| July log forecast, $h$ = 7 | 6.105755 + 7 × 0.009438 + 0.286970 | 6.458790 |
-| widening factor $v_h$, $h$ = 7 | 1 + sum over j = 1 to 6 of (0.33 × (1 + 0.01 j))^2 | 1.70013 |
-| half-width, $h$ = 7 | 1.96 × 0.039897 × √1.70013 | 0.101962 |
+| July log forecast, $`h`$ = 7 | 6.105755 + 7 × 0.009438 + 0.286970 | 6.458790 |
+| widening factor $`v_h`$, $`h`$ = 7 | 1 + sum over j = 1 to 6 of (0.33 × (1 + 0.01 j))^2 | 1.70013 |
+| half-width, $`h`$ = 7 | 1.96 × 0.039897 × √1.70013 | 0.101962 |
 | July forecast | e^6.458790 | **638.29 thousand** |
 | July range | e^(6.458790 − 0.101962) to e^(6.458790 + 0.101962) | **576.41 to 706.80** |
 
@@ -226,14 +244,14 @@ Same data; the Holt-Winters forecast of the 1960 total is 5914.0 thousand agains
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Forecast each month as the same month last year | 1960 total 5140, short by 574 | No trend: eleven years of growth thrown away. Holt-Winters is over by 200.0 |
-| Drop the season, keep $\alpha$ and $\beta$ | July 450.82 against 622 actual | The summer peak is the largest feature of the series; level plus trend alone forecasts a year with no peak |
-| Use the one-month width at every horizon | the December band covers 0.7996 of simulated years, not 0.95 | Misses pile up; the width at $h$ = 12 is $\sqrt{v_h}$ times the one-month width |
+| Drop the season, keep $`\alpha`$ and $`\beta`$ | July 450.82 against 622 actual | The summer peak is the largest feature of the series; level plus trend alone forecasts a year with no peak |
+| Use the one-month width at every horizon | the December band covers 0.7996 of simulated years, not 0.95 | Misses pile up; the width at $`h`$ = 12 is $`\sqrt{v_h}`$ times the one-month width |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Both programs hold the 144 monthly counts, take logs, fit $\alpha$, $\beta$ and $\gamma$ by a grid search in tenths and then hundredths, and forecast 1960. The interval width is reached by three independent roads: the loop over the weights $c_j$, the closed form, and 20,000 simulated years from a SplitMix64 generator (a short, fixed recipe for pseudo-random numbers, seed 0x2026092905) with the Box–Muller step turning uniform draws into normal ones. The year's total gets two roads, simulated and linearised. Simple smoothing is checked as a recursion against its explicit weighted sum, and the three updates against their error-correction form from Step 3. The 1960 actuals then test the method. Every number in the tables and charts above is printed.
+Both programs hold the 144 monthly counts, take logs, fit $`\alpha`$, $`\beta`$ and $`\gamma`$ by a grid search in tenths and then hundredths, and forecast 1960. The interval width is reached by three independent roads: the loop over the weights $`c_j`$, the closed form, and 20,000 simulated years from a SplitMix64 generator (a short, fixed recipe for pseudo-random numbers, seed 0x2026092905) with the Box–Muller step turning uniform draws into normal ones. The year's total gets two roads, simulated and linearised. Simple smoothing is checked as a recursion against its explicit weighted sum, and the three updates against their error-correction form from Step 3. The 1960 actuals then test the method. Every number in the tables and charts above is printed.
 
 ### Python
 
@@ -622,14 +640,14 @@ The two outputs agree line for line, including every simulated number: both prog
 
 Lean proves the forecast error's spread for every horizon up to one season, the error-correction form, and simple smoothing's fading weights.
 
-- Suppose future one-month misses are independent and normal, with centre 0 and spread $\sigma$, and drive the three updates. Then the forecast error $h$ months ahead, for $h$ from 1 to $m$, is normal with variance $\sigma^2 v_h$.
-- The widening factor $v_h$, a sum of squares of the $c_j$, equals the closed form under The formula.
+- Suppose future one-month misses are independent and normal, with centre 0 and spread $`\sigma`$, and drive the three updates. Then the forecast error $`h`$ months ahead, for $`h`$ from 1 to $`m`$, is normal with variance $`\sigma^2 v_h`$.
+- The widening factor $`v_h`$, a sum of squares of the $`c_j`$, equals the closed form under The formula.
 - Each update is the old prediction plus a share of the one-month miss, as in Step 3.
-- Take simple smoothing, $\ell_t = \alpha y_t + (1-\alpha) \ell_{t-1}$, with any starting value $\ell_0$. Then $\ell_t$ is the weighted sum of Step 1, and the weights, counting the starting value's share, add up to 1.
-- Take $\alpha$ = 1 and $\beta$ = 0, the random-walk case. Then $v_h$ = 12 at $h$ = 12.
+- Take simple smoothing, $`\ell_t = \alpha y_t + (1-\alpha) \ell_{t-1}`$, with any starting value $`\ell_0`$. Then $`\ell_t`$ is the weighted sum of Step 1, and the weights, counting the starting value's share, add up to 1.
+- Take $`\alpha`$ = 1 and $`\beta`$ = 0, the random-walk case. Then $`v_h`$ = 12 at $`h`$ = 12.
 - The 1959 counts add up to 5140 thousand and the 1960 counts to 5714, so last year's months fall short by 574.
 
-The fitted weights, $\sigma$, the forecasts, the 1.96 ranges, the simulations and the year's total range are left to the Python and Rust checks.
+The fitted weights, $`\sigma`$, the forecasts, the 1.96 ranges, the simulations and the year's total range are left to the Python and Rust checks.
 
 ```lean
 -- Forecasting: under the innovations model with independent normal misses, the Holt-Winters forecast error h months ahead (h at most one season) is normal with variance σ² times 1 + Σ (α(1 + jβ))², which has a closed form; the updates have an error-correction form, and simple smoothing is a fading weighted average.
@@ -845,7 +863,7 @@ example : 1 + ∑ j ∈ Ico (1 : ℕ) 12, ((1 : ℝ) * (1 + (j : ℝ) * 0)) ^ 2 
 > **Try changing**
 > Guess first, then check the printed line.
 > - **Ask for an 80% range instead of 95%.** Replace 1.96 by 1.2816. An 80% range should miss about one month in five. In 1960 it holds 11 of 12 and misses only March.
-> - **Force $\alpha$ = 0.9.** The level now chases every month. The one-month miss grows from 0.039897 to 0.046471. The fit chose 0.33 to make this number smallest on these months, so any other $\alpha$ loses here; 0.9 loses by 16%, because it chases noise.
+> - **Force $`\alpha`$ = 0.9.** The level now chases every month. The one-month miss grows from 0.039897 to 0.046471. The fit chose 0.33 to make this number smallest on these months, so any other $`\alpha`$ loses here; 0.9 loses by 16%, because it chases noise.
 > - **Run the same method one year earlier.** Fit to 1949 to 1958 and forecast 1959. The weights come out 0.34, 0.01, 0.54, close to the 1960 fit, and all 12 months of 1959 land inside their ranges.
 > - **Smooth the raw counts instead of their logs.** The fit moves to 0.37, 0.03, 0.92: the season weight jumps, because a fixed-size season has to be rebuilt every year to keep up with a growing peak. Its 1960 average miss is 2.86%, below the log version's 3.62%. One year of twelve months cannot rank two methods; the log version earns its place in the intervals, whose width in percent stays steady as the traffic grows.
 
@@ -854,12 +872,12 @@ example : 1 + ∑ j ∈ Ico (1 : ℕ) 12, ((1 : ℝ) * (1 + (j : ℝ) * 0)) ^ 2 
 ## The usual mistake
 
 > [!warning]
-> **Reading the 95% as unconditional.** Inside the model, with independent normal misses of spread $\sigma$ and the weights and $\sigma$ taken as known, the range is a 95% chance for the outcome: given the months seen so far, the target month lands inside with probability 0.95. The simulation confirms that inside the model (0.9498 at twelve months). Outside it, nothing guarantees it: the weights and $\sigma$ are estimates, and the next Easter, strike or recession is not in the model. Twelve months of 1960, with 11 inside, is a check, not a proof.
+> **Reading the 95% as unconditional.** Inside the model, with independent normal misses of spread $`\sigma`$ and the weights and $`\sigma`$ taken as known, the range is a 95% chance for the outcome: given the months seen so far, the target month lands inside with probability 0.95. The simulation confirms that inside the model (0.9498 at twelve months). Outside it, nothing guarantees it: the weights and $`\sigma`$ are estimates, and the next Easter, strike or recession is not in the model. Twelve months of 1960, with 11 inside, is a check, not a proof.
 >
 > - **Using the one-month width for a year ahead.** The December range would catch 0.7996 of simulated outcomes instead of 0.95.
 > - **Adding the monthly ranges to get the year's range.** Months share their misses through the level; the year's range comes from the joint spread, 5512.7 to 6358.6 thousand by simulation.
 > - **Reading e raised to the log forecast as the average.** It is the middle value, the median. The average passenger count sits slightly higher, because raising e to a normal error stretches the upper tail.
-> - **Judging the weights on the months they were fitted to.** $\sigma$ = 0.039897 is measured on the same months that chose $\alpha$, $\beta$ and $\gamma$, so it flatters the method. Honest checks forecast months the fit never saw, as 1960 is here.
+> - **Judging the weights on the months they were fitted to.** $`\sigma`$ = 0.039897 is measured on the same months that chose $`\alpha`$, $`\beta`$ and $`\gamma`$, so it flatters the method. Honest checks forecast months the fit never saw, as 1960 is here.
 
 ---
 
@@ -881,7 +899,7 @@ example : 1 + ∑ j ∈ Ico (1 : ℕ) 12, ((1 : ℝ) * (1 + (j : ℝ) * 0)) ^ 2 
 
 ## Where this goes next
 
-- [GARCH](06-garch-and-volatility-clustering.md): when the size of the misses itself changes over time, as in a share's daily returns with calm and wild weeks in clusters, a constant $\sigma$ fails, and the spread gets a forecast of its own.
+- [GARCH](06-garch-and-volatility-clustering.md): when the size of the misses itself changes over time, as in a share's daily returns with calm and wild weeks in clusters, a constant $`\sigma`$ fails, and the spread gets a forecast of its own.
 - [Cointegration](07-cointegration-in-outline.md): two trending series that share a trend, and forecasts that use the tie between them.
 
 Holt-Winters gives every month the same spread of misses and treats each series alone; whether that spread can itself be forecast, and whether a tie between two series can be put to use, are the questions those two cards answer.
@@ -894,6 +912,6 @@ Verified 2026-09-29: every link below resolves to the publisher's page.
 
 - Holt, Charles C. "Forecasting seasonals and trends by exponentially weighted moving averages." *International Journal of Forecasting* 20, no. 1 (2004): 5–10. [doi:10.1016/j.ijforecast.2003.09.015](https://doi.org/10.1016/j.ijforecast.2003.09.015). The 1957 Office of Naval Research memorandum, reprinted: level and trend smoothing, with a seasonal extension.
 - Winters, Peter R. "Forecasting Sales by Exponentially Weighted Moving Averages." *Management Science* 6, no. 3 (1960): 324–342. [doi:10.1287/mnsc.6.3.324](https://doi.org/10.1287/mnsc.6.3.324). The seasonal method that completes Holt-Winters.
-- Hyndman, Rob J., Anne B. Koehler, J. Keith Ord, and Ralph D. Snyder. *Forecasting with Exponential Smoothing: The State Space Approach*. Springer, 2008. [doi:10.1007/978-3-540-71918-2](https://doi.org/10.1007/978-3-540-71918-2). The innovations model and the forecast variance formulas, including the weights $c_j$.
+- Hyndman, Rob J., Anne B. Koehler, J. Keith Ord, and Ralph D. Snyder. *Forecasting with Exponential Smoothing: The State Space Approach*. Springer, 2008. [doi:10.1007/978-3-540-71918-2](https://doi.org/10.1007/978-3-540-71918-2). The innovations model and the forecast variance formulas, including the weights $`c_j`$.
 - Hyndman, Rob J., and George Athanasopoulos. *Forecasting: Principles and Practice*, 3rd ed. OTexts. [Section 8.3, methods with seasonality](https://otexts.com/fpp3/holt-winters.html) and [section 8.7, forecasting with ETS models](https://otexts.com/fpp3/ets-forecasting.html). The update equations in this card's form and the variance table for additive models.
 - Box, George E. P., Gwilym M. Jenkins, Gregory C. Reinsel, and Greta M. Ljung. *Time Series Analysis: Forecasting and Control*, 5th ed. Wiley, 2015. [Publisher page](https://www.wiley.com/en-us/Time+Series+Analysis%3A+Forecasting+and+Control%2C+5th+Edition-p-9781118675021). The airline passenger series used throughout, and the moving-average view of smoothing.

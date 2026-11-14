@@ -34,56 +34,62 @@ Orange: one simulated path, recorded at whole seconds and joined by straight lin
 
 ## The formula
 
-Notation, as [Brownian motion](01-brownian-motion.md) set it up. $W_t$ is the grain's position at time $t$ seconds, in micrometres (μm), starting from $W_0 = 0$. Its steps over separate stretches of time are independent, and the step over a stretch of length $t$ is normal with mean 0 and variance $t$.
+Notation, as [Brownian motion](01-brownian-motion.md) set it up. $`W_t`$ is the grain's position at time $`t`$ seconds, in micrometres (μm), starting from $`W_0 = 0`$. Its steps over separate stretches of time are independent, and the step over a stretch of length $`t`$ is normal with mean 0 and variance $`t`$.
 
 Four more pieces of notation:
 
 - A law is a probability distribution: which values a quantity can take, and how likely each is.
-- A vertical bar reads "given": the law of $W_t \mid W_T = b$ is the law of the position at time t among paths that are at $b$ at time $T$.
-- $E$ is the average, or expected value, and $\operatorname{Var}$ is the variance. $\operatorname{Cov}$ is the covariance: how much two quantities move together. A quantity's covariance with itself is its variance.
-- $N(m, v)$ is the normal law with mean m and variance v, and $\sim$ reads "has the law".
+- A vertical bar reads "given": the law of $`W_t \mid W_T = b`$ is the law of the position at time t among paths that are at $`b`$ at time $`T`$.
+- $`E`$ is the average, or expected value, and $`\mathrm{Var}`$ is the variance. $`\mathrm{Cov}`$ is the covariance: how much two quantities move together. A quantity's covariance with itself is its variance.
+- $`N(m, v)`$ is the normal law with mean m and variance v, and $`\sim`$ reads "has the law".
 
-Pin the path at the start and at time $T$: $W_0 = 0$ and $W_T = b$. For times $s \le t$ between 0 and T:
+Pin the path at the start and at time $`T`$: $`W_0 = 0`$ and $`W_T = b`$. For times $`s \le t`$ between 0 and T:
 
-$$E[W_t \mid W_T = b] = \frac{t}{T}\, b, \qquad \operatorname{Cov}(W_s, W_t \mid W_T = b) = \frac{s\,(T - t)}{T}$$
+```math
+E[W_t \mid W_T = b] = \frac{t}{T}\, b, \qquad \mathrm{Cov}(W_s, W_t \mid W_T = b) = \frac{s\,(T - t)}{T}
+```
 
 **Read it aloud:** the average position runs along the straight line from 0 to b, and the shared wobble of two times is the earlier time multiplied by the time left after the later one, divided by the whole span.
 
-With $s = t$ the covariance is the variance, $t(T - t)/T$: zero at both ends, largest at the middle, where it is $T/4$.
+With $`s = t`$ the covariance is the variance, $`t(T - t)/T`$: zero at both ends, largest at the middle, where it is $`T/4`$.
 
-The same law between any two pinned points. If the path is at $a$ at time $t_1$ and at b at time $t_2$, then for $t$ between them
+The same law between any two pinned points. If the path is at $`a`$ at time $`t_1`$ and at b at time $`t_2`$, then for $`t`$ between them
 
-$$W_t \mid W_{t_1} = a,\; W_{t_2} = b \;\sim\; N\!\left(a + \frac{t - t_1}{t_2 - t_1}\,(b - a),\;\; \frac{(t - t_1)(t_2 - t)}{t_2 - t_1}\right)$$
+```math
+W_t \mid W_{t_1} = a,\; W_{t_2} = b \;\sim\; N\!\left(a + \frac{t - t_1}{t_2 - t_1}\,(b - a),\;\; \frac{(t - t_1)(t_2 - t)}{t_2 - t_1}\right)
+```
 
-**Read it aloud:** go the same fraction of the way from a to b as the time has gone from $t_1$ to $t_2$; the variance is the time since the left pin, times the time to the right pin, over the gap.
+**Read it aloud:** go the same fraction of the way from a to b as the time has gone from $`t_1`$ to $`t_2`$; the variance is the time since the left pin, times the time to the right pin, over the gap.
 
-Written as a process, the bridge from 0 to b over $[0, T]$ is
+Written as a process, the bridge from 0 to b over $`[0, T]`$ is
 
-$$B_t = W_t - \frac{t}{T}\, W_T + \frac{t}{T}\, b$$
+```math
+B_t = W_t - \frac{t}{T}\, W_T + \frac{t}{T}\, b
+```
 
 **Read it aloud:** take a free path, subtract the straight line through its own end, and add the straight line to the pin.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $W$, $W_t$, $W_4$, $W_{10}$, $W_T$, $W_u$ | the grain's path; its position at time t (at 4 s, 10 s, T, u) | $W_4$ has variance 4 when free | — |
-| $t$, $s$ | times, in seconds | t = 4, s = 3 | the mean slides along the line; the variance rises then falls |
-| $T$ | the time of the far pin | 10 seconds | a wider gap, more room to wander |
-| $b$ | where the path is pinned at time T | 2 μm | the whole mean line tilts up; the variance does not change |
-| $a$ | where the path is pinned at time $t_1$ | 1.3 μm at 4 seconds | the mean line's left end rises |
-| $t_1$, $t_2$ | the times of the left and right pins | 4 and 5 seconds | — |
-| $B_t$, $B_3$, $B_7$ | the bridge: the path at time t, pinned at both ends | mean 0.8, variance 2.4 at t = 4 | — |
-| $B^0_t$ | the wiggle: the free path minus the straight line through its own end | 0 at both ends | — |
-| $\sigma$ | the spread rate: variance per second is $\sigma^2$ | 1 | every variance and covariance scales by $\sigma^2$ |
-| $n$, $h$ | in Step 5: coin-flip steps over 10 seconds, and their size | n = 90, h = 1/3 | the walk bridge closes in on the Brownian one |
-| $\Phi$ | the chance a standard normal falls below a value | $\Phi(-0.516398)$ = 0.302788 | — |
-| $X$, $X_u$ | in the proof: the path minus the straight line between the pins, at time u | variance 0.25 at 4.5 seconds | — |
-| $\Delta$, $t_i$, $W_{t_i}$, $W_{t_j}$ | in the proof: the gap's length; the pin times and the pinned values | 1 second | — |
-| $D$, $p$, $q$, $u$, $v$, $r$, $m$ | helpers in the proof: D the move across the gap; u and v times inside it, with p and q the fractions of the gap they have gone; r the number of fill-in times and m the number of pins | — | — |
+| $`W`$, $`W_t`$, $`W_4`$, $`W_{10}`$, $`W_T`$, $`W_u`$ | the grain's path; its position at time t (at 4 s, 10 s, T, u) | $`W_4`$ has variance 4 when free | — |
+| $`t`$, $`s`$ | times, in seconds | t = 4, s = 3 | the mean slides along the line; the variance rises then falls |
+| $`T`$ | the time of the far pin | 10 seconds | a wider gap, more room to wander |
+| $`b`$ | where the path is pinned at time T | 2 μm | the whole mean line tilts up; the variance does not change |
+| $`a`$ | where the path is pinned at time $`t_1`$ | 1.3 μm at 4 seconds | the mean line's left end rises |
+| $`t_1`$, $`t_2`$ | the times of the left and right pins | 4 and 5 seconds | — |
+| $`B_t`$, $`B_3`$, $`B_7`$ | the bridge: the path at time t, pinned at both ends | mean 0.8, variance 2.4 at t = 4 | — |
+| $`B^0_t`$ | the wiggle: the free path minus the straight line through its own end | 0 at both ends | — |
+| $`\sigma`$ | the spread rate: variance per second is $`\sigma^2`$ | 1 | every variance and covariance scales by $`\sigma^2`$ |
+| $`n`$, $`h`$ | in Step 5: coin-flip steps over 10 seconds, and their size | n = 90, h = 1/3 | the walk bridge closes in on the Brownian one |
+| $`\Phi`$ | the chance a standard normal falls below a value | $`\Phi(-0.516398)`$ = 0.302788 | — |
+| $`X`$, $`X_u`$ | in the proof: the path minus the straight line between the pins, at time u | variance 0.25 at 4.5 seconds | — |
+| $`\Delta`$, $`t_i`$, $`W_{t_i}`$, $`W_{t_j}`$ | in the proof: the gap's length; the pin times and the pinned values | 1 second | — |
+| $`D`$, $`p`$, $`q`$, $`u`$, $`v`$, $`r`$, $`m`$ | helpers in the proof: D the move across the gap; u and v times inside it, with p and q the fractions of the gap they have gone; r the number of fill-in times and m the number of pins | — | — |
 
 ### When it holds
 
 - **Brownian motion underneath: independent, normal steps.** A coin-flip walk pinned at both ends is not normal, and its variance is off. With 10 steps of 1 unit over the 10 seconds, pinned at 2, the variance at 4 seconds is 2.560000, not 2.4. The error shrinks as the steps shrink (Step 5).
-- **A known spread rate.** If the grain's variance grows at $\sigma^2$ per second instead of 1, every variance and covariance on the card is multiplied by $\sigma^2$. At $\sigma^2$ = 4 the variance at 4 seconds is 9.600000.
+- **A known spread rate.** If the grain's variance grows at $`\sigma^2`$ per second instead of 1, every variance and covariance on the card is multiplied by $`\sigma^2`$. At $`\sigma^2`$ = 4 the variance at 4 seconds is 9.600000.
 - **Drift does not matter.** A steady push changes how likely the grain is to end at 2, not how it gets there given that it does. The code adds a drift of 0.3 μm per second and finds the same bridge.
 - **Pins at fixed times.** Pinning at a time chosen by watching the path, such as the first time the grain reaches 2, gives a different law: before that time the path cannot be above 2.
 - **Independent steps make the fill-in local.** For a process with memory, such as a grain with momentum, pins further away also carry information.
@@ -100,33 +106,41 @@ For jointly normal quantities, zero covariance already means independent ([Bivar
 
 ### Step 1: the position at 4 seconds and at 10 seconds are a bivariate normal pair
 
-$W_4$ is normal with variance 4. $W_{10}$ is normal with variance 10. Both are sums of the same independent normal steps, so the pair is jointly normal. Their covariance is the variance of what they share. Write $W_{10} = W_4 + (W_{10} - W_4)$: the second piece is the step from 4 to 10 seconds, independent of $W_4$. So
+$`W_4`$ is normal with variance 4. $`W_{10}`$ is normal with variance 10. Both are sums of the same independent normal steps, so the pair is jointly normal. Their covariance is the variance of what they share. Write $`W_{10} = W_4 + (W_{10} - W_4)`$: the second piece is the step from 4 to 10 seconds, independent of $`W_4`$. So
 
-$$\operatorname{Cov}(W_4, W_{10}) = \operatorname{Var}(W_4) + \operatorname{Cov}(W_4, W_{10} - W_4) = 4 + 0 = 4.$$
+```math
+\mathrm{Cov}(W_4, W_{10}) = \mathrm{Var}(W_4) + \mathrm{Cov}(W_4, W_{10} - W_4) = 4 + 0 = 4.
+```
 
-In general $\operatorname{Cov}(W_s, W_t) = \min(s, t)$, the earlier of the two times.
+In general $`\mathrm{Cov}(W_s, W_t) = \min(s, t)`$, the earlier of the two times.
 
 ### Step 2: condition one normal on another
 
 The bivariate normal card gives the rule. For a jointly normal pair, given the second, the first is normal. Its mean moves by the covariance over the second's variance, times how far the second is from its mean. Its variance drops by the covariance squared over the second's variance. Here:
 
-$$E[W_4 \mid W_{10} = 2] = \frac{4}{10} \times 2 = 0.8, \qquad \operatorname{Var}(W_4 \mid W_{10} = 2) = 4 - \frac{4^2}{10} = 2.4.$$
+```math
+E[W_4 \mid W_{10} = 2] = \frac{4}{10} \times 2 = 0.8, \qquad \mathrm{Var}(W_4 \mid W_{10} = 2) = 4 - \frac{4^2}{10} = 2.4.
+```
 
-With 4 replaced by t and 10 by T, this is $t\,b/T$ and $t - t^2/T = t(T - t)/T$: the formula. The variance does not depend on b. Knowing the end point moves the centre and narrows the spread by the same amount wherever the end point is.
+With 4 replaced by t and 10 by T, this is $`t\,b/T`$ and $`t - t^2/T = t(T - t)/T`$: the formula. The variance does not depend on b. Knowing the end point moves the centre and narrows the spread by the same amount wherever the end point is.
 
 ### Step 3: the wiggle is independent of the end, and the covariance follows
 
-Let $B^0_t = W_t - (t/T)\,W_T$, the free path minus the straight line through its own end. Its covariance with the end is
+Let $`B^0_t = W_t - (t/T)\,W_T`$, the free path minus the straight line through its own end. Its covariance with the end is
 
-$$\operatorname{Cov}(B^0_t, W_T) = \min(t, T) - \frac{t}{T}\,T = t - t = 0.$$
+```math
+\mathrm{Cov}(B^0_t, W_T) = \min(t, T) - \frac{t}{T}\,T = t - t = 0.
+```
 
-The wiggle and the end are jointly normal, so zero covariance makes them independent. Pinning $W_T = b$ therefore leaves the wiggle's law alone, and the pinned path is $B_t = B^0_t + (t/T)\,b$. Its covariance at two times $s \le t$ is the wiggle's:
+The wiggle and the end are jointly normal, so zero covariance makes them independent. Pinning $`W_T = b`$ therefore leaves the wiggle's law alone, and the pinned path is $`B_t = B^0_t + (t/T)\,b`$. Its covariance at two times $`s \le t`$ is the wiggle's:
 
-$$\operatorname{Cov}(B_s, B_t) = \min(s,t) - \frac{s\,t}{T} - \frac{t\,s}{T} + \frac{s\,t}{T^2}\,T = s - \frac{s\,t}{T} = \frac{s\,(T - t)}{T}.$$
+```math
+\mathrm{Cov}(B_s, B_t) = \min(s,t) - \frac{s\,t}{T} - \frac{t\,s}{T} + \frac{s\,t}{T^2}\,T = s - \frac{s\,t}{T} = \frac{s\,(T - t)}{T}.
+```
 
-For the grain, $\operatorname{Cov}(B_3, B_7) = 3 \times 3 / 10 = 0.9$.
+For the grain, $`\mathrm{Cov}(B_3, B_7) = 3 \times 3 / 10 = 0.9`$.
 
-The code reaches these numbers two more ways. Road 2 never uses the bridge formula: it writes the free path's covariance matrix from min(s, t) and conditions by Gaussian elimination. It returns 0.900000 for the covariance, and every variance on the arch, equal to the formula to twelve decimals. Road 4b builds 100000 bridges by the recipe above, a free path minus its straight line plus the line to the pin. The simulated covariance of $B_3$ and $B_7$ is 0.908034, standard error 0.007255. The standard error is the typical size of a simulation's random error.
+The code reaches these numbers two more ways. Road 2 never uses the bridge formula: it writes the free path's covariance matrix from min(s, t) and conditions by Gaussian elimination. It returns 0.900000 for the covariance, and every variance on the arch, equal to the formula to twelve decimals. Road 4b builds 100000 bridges by the recipe above, a free path minus its straight line plus the line to the pin. The simulated covariance of $`B_3`$ and $`B_7`$ is 0.908034, standard error 0.007255. The standard error is the typical size of a simulation's random error.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -145,29 +159,30 @@ Orange: the free path, variance t, growing without limit. Green: the bridge form
 
 The recorded path has a pin at every whole second, not just at 10. Given all of them, the position at 4.5 seconds depends only on the pins at 4 and 5 seconds. The steps inside the gap are independent of every step outside it. So the wiggle inside the gap, the path minus the straight line between the 4- and 5-second pins, has zero covariance with all ten pins, and is independent of them. Inside the gap the path is a 1-second bridge between its two pins.
 
-Road 2 checks this without knowing it. Conditioning the position at 4.5 seconds on all ten recorded positions, at 1 to 10 seconds, the linear algebra puts weights 0.500 on the 4-second and 5-second values and 0.000 on the other eight, and leaves variance 0.250000. Fed a record with 1.3 μm at 4 seconds and 0.5 μm at 5, it returns mean 0.900000. That is the bridge formula with a gap of 1 second: $(0.5 \times 0.5)/1$ = 0.25.
+Road 2 checks this without knowing it. Conditioning the position at 4.5 seconds on all ten recorded positions, at 1 to 10 seconds, the linear algebra puts weights 0.500 on the 4-second and 5-second values and 0.000 on the other eight, and leaves variance 0.250000. Fed a record with 1.3 μm at 4 seconds and 0.5 μm at 5, it returns mean 0.900000. That is the bridge formula with a gap of 1 second: $`(0.5 \times 0.5)/1`$ = 0.25.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Claim.** Let $W$ be a Brownian motion with $W_0 = 0$, and let $0 = t_0 < t_1 < \cdots < t_m$ be fixed times. Fix a gap $[t_i, t_{i+1}]$ with $\Delta = t_{i+1} - t_i$, and times $u_1, \ldots, u_r$ inside it. Then, given $W_{t_0}, \ldots, W_{t_m}$, the vector $(W_{u_1}, \ldots, W_{u_r})$ is normal with means $W_{t_i} + \frac{u_j - t_i}{\Delta}(W_{t_{i+1}} - W_{t_i})$ and covariances $\frac{(\min(u_j, u_k) - t_i)(t_{i+1} - \max(u_j, u_k))}{\Delta}$, and it depends on no pin outside the gap. Fill-ins in different gaps are independent given the pins.
+**Claim.** Let $`W`$ be a Brownian motion with $`W_0 = 0`$, and let $`0 = t_0 < t_1 < \cdots < t_m`$ be fixed times. Fix a gap $`[t_i, t_{i+1}]`$ with $`\Delta = t_{i+1} - t_i`$, and times $`u_1, \ldots, u_r`$ inside it. Then, given $`W_{t_0}, \ldots, W_{t_m}`$, the vector $`(W_{u_1}, \ldots, W_{u_r})`$ is normal with means $`W_{t_i} + \frac{u_j - t_i}{\Delta}(W_{t_{i+1}} - W_{t_i})`$ and covariances $`\frac{(\min(u_j, u_k) - t_i)(t_{i+1} - \max(u_j, u_k))}{\Delta}`$, and it depends on no pin outside the gap. Fill-ins in different gaps are independent given the pins.
 
-**The wiggle.** For u in the gap set $X_u = W_u - W_{t_i} - \frac{u - t_i}{\Delta}(W_{t_{i+1}} - W_{t_i})$. Every $X_u$ and every pin $W_{t_j}$ is linear in the same independent normal increments, so together they are jointly normal.
+**The wiggle.** For u in the gap set $`X_u = W_u - W_{t_i} - \frac{u - t_i}{\Delta}(W_{t_{i+1}} - W_{t_i})`$. Every $`X_u`$ and every pin $`W_{t_j}`$ is linear in the same independent normal increments, so together they are jointly normal.
 
-**Zero covariance with every pin.** For $j \le i$, $W_{t_j}$ is built from increments before $t_i$, which are independent of every increment over the gap, so $\operatorname{Cov}(X_u, W_{t_j}) = 0$. For $j \ge i + 1$ write $W_{t_j} = W_{t_i} + (W_{t_{i+1}} - W_{t_i}) + (W_{t_j} - W_{t_{i+1}})$. The first and third pieces are independent of the gap's increments. For the middle piece, with $D = W_{t_{i+1}} - W_{t_i}$ of variance $\Delta$, $\operatorname{Cov}(W_u - W_{t_i}, D) = u - t_i$, the overlap of the two stretches, so $\operatorname{Cov}(X_u, D) = (u - t_i) - \frac{u - t_i}{\Delta}\,\Delta = 0$.
+**Zero covariance with every pin.** For $`j \le i`$, $`W_{t_j}`$ is built from increments before $`t_i`$, which are independent of every increment over the gap, so $`\mathrm{Cov}(X_u, W_{t_j}) = 0`$. For $`j \ge i + 1`$ write $`W_{t_j} = W_{t_i} + (W_{t_{i+1}} - W_{t_i}) + (W_{t_j} - W_{t_{i+1}})`$. The first and third pieces are independent of the gap's increments. For the middle piece, with $`D = W_{t_{i+1}} - W_{t_i}`$ of variance $`\Delta`$, $`\mathrm{Cov}(W_u - W_{t_i}, D) = u - t_i`$, the overlap of the two stretches, so $`\mathrm{Cov}(X_u, D) = (u - t_i) - \frac{u - t_i}{\Delta}\,\Delta = 0`$.
 
-**Independence.** In a jointly normal vector, uncorrelated blocks are independent: the covariance matrix is block diagonal, so the density factors ([Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)). So $(X_{u_1}, \ldots, X_{u_r})$ is independent of all the pins, and given the pins it keeps its unconditional law. The conditional mean of $W_u$ is then the straight-line term, which uses only $W_{t_i}$ and $W_{t_{i+1}}$.
+**Independence.** In a jointly normal vector, uncorrelated blocks are independent: the covariance matrix is block diagonal, so the density factors ([Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)). So $`(X_{u_1}, \ldots, X_{u_r})`$ is independent of all the pins, and given the pins it keeps its unconditional law. The conditional mean of $`W_u`$ is then the straight-line term, which uses only $`W_{t_i}`$ and $`W_{t_{i+1}}`$.
 
-**The covariance.** For $t_i \le u \le v \le t_{i+1}$, write $p = (u - t_i)/\Delta$ and $q = (v - t_i)/\Delta$. Using $\operatorname{Cov}(W_u - W_{t_i}, W_v - W_{t_i}) = u - t_i$ and the overlaps with D,
-$$\operatorname{Cov}(X_u, X_v) = (u - t_i) - q(u - t_i) - p(v - t_i) + p\,q\,\Delta = (u - t_i)(1 - q) = \frac{(u - t_i)(t_{i+1} - v)}{\Delta}.$$
+**The covariance.** For $`t_i \le u \le v \le t_{i+1}`$, write $`p = (u - t_i)/\Delta`$ and $`q = (v - t_i)/\Delta`$. Using $`\mathrm{Cov}(W_u - W_{t_i}, W_v - W_{t_i}) = u - t_i`$ and the overlaps with D,
 
-**Different gaps, and one value.** Wiggles in different gaps use increments over disjoint stretches, so they are independent of each other too. The event $W_T = b$ has chance 0, so "given" means the conditional density, as on the bivariate normal card. With $t_i = 0$ and $t_{i+1} = T$ the claim is this card's single-gap formula.
+$`\displaystyle \mathrm{Cov}(X_u, X_v) = (u - t_i) - q(u - t_i) - p(v - t_i) + p\,q\,\Delta = (u - t_i)(1 - q) = \frac{(u - t_i)(t_{i+1} - v)}{\Delta}.`$
+
+**Different gaps, and one value.** Wiggles in different gaps use increments over disjoint stretches, so they are independent of each other too. The event $`W_T = b`$ has chance 0, so "given" means the conditional density, as on the bivariate normal card. With $`t_i = 0`$ and $`t_{i+1} = T`$ the claim is this card's single-gap formula.
 
 </details>
 
 ### Step 5: the continuous claim, checked on coin-flip walks
 
-A Brownian path is the limit of a coin-flip walk with small steps ([Brownian paths](02-scaling-and-path-roughness.md) shows the scaling). So the bridge should be the limit of a walk pinned at both ends. Road 3 tests that by exact counting, with no simulation. Take n steps of size $h = \sqrt{10/n}$ over 10 seconds, keep only the walks that end at 2, and count every one of them to get the law at 4 seconds.
+A Brownian path is the limit of a coin-flip walk with small steps ([Brownian paths](02-scaling-and-path-roughness.md) shows the scaling). So the bridge should be the limit of a walk pinned at both ends. Road 3 tests that by exact counting, with no simulation. Take n steps of size $`h = \sqrt{10/n}`$ over 10 seconds, keep only the walks that end at 2, and count every one of them to get the law at 4 seconds.
 
 | Steps n | Step size h | Mean at 4 s | Variance at 4 s | Error against 2.4 |
 | --- | --- | --- | --- | --- |
@@ -179,7 +194,7 @@ The mean is exactly on the straight line at every n: every order of the up and d
 
 ### Step 6: refinement, the job the bridge does in a simulation
 
-The recipe for the half-second picture: for each recorded gap of 1 second, draw the midpoint as the average of its two ends plus 0.5 times a standard normal. Then repeat on the half-second gaps, with spread $\sqrt{0.5/4} = \sqrt{0.125}$, to reach quarter-seconds. By Step 4 each draw has exactly the law of the path given the coarser points, so the refined path is a Brownian path on the finer grid, not an approximation.
+The recipe for the half-second picture: for each recorded gap of 1 second, draw the midpoint as the average of its two ends plus 0.5 times a standard normal. Then repeat on the half-second gaps, with spread $`\sqrt{0.5/4} = \sqrt{0.125}`$, to reach quarter-seconds. By Step 4 each draw has exactly the law of the path given the coarser points, so the refined path is a Brownian path on the finer grid, not an approximation.
 
 Road 4c checks the result on 20000 coarse paths. A Brownian path's steps on a grid of size dt are independent with variance dt, so the squared steps summed over 10 seconds average 10 whatever the grid ([Quadratic variation](03-quadratic-variation.md)). The refined paths give 9.993230 at the half-second level, standard error 0.022371, and 9.999583 at the quarter-second level, standard error 0.015763. Neighbouring quarter-second steps have correlation −0.000945, standard error 0.001132: no trace of the construction remains. Halving forever is Lévy's construction of Brownian motion itself; the proof that it converges to a continuous path is in Mörters and Peres, chapter 1, and is not repeated here.
 
@@ -634,15 +649,15 @@ The two outputs agree line for line, simulations included: both run the same gen
 
 ### Lean
 
-Lean proves the bridge law, the bridge covariance and the wiggle's independence, for the card's $W$ and any fixed record times.
+Lean proves the bridge law, the bridge covariance and the wiggle's independence, for the card's $`W`$ and any fixed record times.
 
-- Suppose $W$ is recorded at finitely many fixed times, and $t$ lies between two neighbouring record times $t_1$ and $t_2$. Then, given the whole record, $W_t$ is normal, with mean on the straight line from $W_{t_1}$ to $W_{t_2}$.
-- Take the same record. Then the variance of $W_t$ is $(t - t_1)(t_2 - t)/(t_2 - t_1)$.
-- Take the same record. Then the mean and variance use only $W_{t_1}$ and $W_{t_2}$: the rest of the record has no say.
-- Take a pin $b$ at a time $T > 0$, and times $s \le t \le T$. Then $\operatorname{Cov}(B_s, B_t) = s(T - t)/T$.
-- Take a time $T > 0$. Then the wiggle $B^0_t$, for $t$ from 0 to $T$, is independent of the end $W_T$.
+- Suppose $`W`$ is recorded at finitely many fixed times, and $`t`$ lies between two neighbouring record times $`t_1`$ and $`t_2`$. Then, given the whole record, $`W_t`$ is normal, with mean on the straight line from $`W_{t_1}`$ to $`W_{t_2}`$.
+- Take the same record. Then the variance of $`W_t`$ is $`(t - t_1)(t_2 - t)/(t_2 - t_1)`$.
+- Take the same record. Then the mean and variance use only $`W_{t_1}`$ and $`W_{t_2}`$: the rest of the record has no say.
+- Take a pin $`b`$ at a time $`T > 0`$, and times $`s \le t \le T`$. Then $`\mathrm{Cov}(B_s, B_t) = s(T - t)/T`$.
+- Take a time $`T > 0`$. Then the wiggle $`B^0_t`$, for $`t`$ from 0 to $`T`$, is independent of the end $`W_T`$.
 - Take the pin at 2 μm at 10 seconds. Then the mean at 4 seconds is exactly 0.8, the variance 2.4, and the peak variance 2.5.
-- Take the same pin. Then $\operatorname{Cov}(B_3, B_7)$ is exactly 0.9.
+- Take the same pin. Then $`\mathrm{Cov}(B_3, B_7)`$ is exactly 0.9.
 - The fill-in at 4.5 seconds, between 1.3 and 0.5, has mean exactly 0.9, variance 0.25 and spread 0.5.
 
 The coin-flip walks, drift, the crossing chance, the refinement and every simulation are left to the Python and Rust checks.
@@ -959,7 +974,7 @@ example : ((4 : ℝ≥0) - 0) * (10 - 4) / (10 - 0) = 12 / 5 := by
 
 ## What this builds on
 
-- [Brownian motion](01-brownian-motion.md): the process $W_t$, its independent normal steps, and the covariance min(s, t) that every road here starts from.
+- [Brownian motion](01-brownian-motion.md): the process $`W_t`$, its independent normal steps, and the covariance min(s, t) that every road here starts from.
 - [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): the rule for one normal given another, and the fact that uncorrelated jointly normal variables are independent.
 
 ## Where this goes next

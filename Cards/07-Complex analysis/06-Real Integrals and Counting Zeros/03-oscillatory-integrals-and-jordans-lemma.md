@@ -35,30 +35,34 @@ One line: π e^(−|a|), to two decimals. The peak at a = 0 is π, the pulse's a
 
 A reminder from [Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): e^(iθ) = cos θ + i sin θ, so on the real line cos(ax) is the real part of e^(iax). Off the line, at z = x + iy, the size of e^(iaz) is e^(−ay): for a > 0 it shrinks as y grows.
 
-**Jordan's lemma.** Let $a > 0$. Let $C_R$ be the upper half-circle of radius R about 0, and let $M_R$ be the largest size on it of a continuous function g. Then
+**Jordan's lemma.** Let $`a > 0`$. Let $`C_R`$ be the upper half-circle of radius R about 0, and let $`M_R`$ be the largest size on it of a continuous function g. Then
 
-$$\left|\int_{C_R} g(z)\,e^{iaz}\,dz\right| \le \frac{\pi}{a}\,M_R.$$
+```math
+\left|\int_{C_R} g(z)\,e^{iaz}\,dz\right| \le \frac{\pi}{a}\,M_R.
+```
 
 **Read it aloud:** on the upper arc, the wave's decay makes the integral no bigger than π over a times g's largest size there; the arc's length R has cancelled.
 
-So if $M_R \to 0$, the arc vanishes. The ML bound (arc length πR times $M_R$) needs $M_R$ to fall faster than 1/R.
+So if $`M_R \to 0`$, the arc vanishes. The ML bound (arc length πR times $`M_R`$) needs $`M_R`$ to fall faster than 1/R.
 
 Applied to the click, with the one pole i above the axis:
 
-$$\int_{-\infty}^{\infty} \frac{\cos ax}{1 + x^2}\,dx = \operatorname{Re}\left[2\pi i\,\operatorname{Res}\!\left(\frac{e^{iaz}}{1 + z^2},\, i\right)\right] = \pi e^{-a}, \qquad a > 0.$$
+```math
+\int_{-\infty}^{\infty} \frac{\cos ax}{1 + x^2}\,dx = \mathrm{Re}\left[2\pi i\,\mathrm{Res}\!\left(\frac{e^{iaz}}{1 + z^2},\, i\right)\right] = \pi e^{-a}, \qquad a > 0.
+```
 
 **Read it aloud:** the cosine integral is the real part of 2πi times the residue of the wave-times-pulse at i, which is π e^(−a).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $z$ | time in microseconds; a point x + iy of the plane | the real line, then the half-plane above | — |
-| $y$ | height above the real axis, Im z | R sin t on the arc | e^(iaz) shrinks as e^(−ay) |
-| $a$ | frequency, radians per microsecond | 1 | the content falls as e^(−a) |
-| $g$ | the part of the integrand that does not oscillate | 1/(1 + z^2); then z/(1 + z^2) | — |
-| $R$, $C_R$, $t$ | the arc's radius; the arc z = Re^(it); its angle, 0 to π | R = 2, 4, 8, 16 | the arc shrinks |
-| $M_R$ | g's largest size on the arc | at most R/(R^2 − 1) for z/(1 + z^2) | a bigger arc bound |
-| $\operatorname{Res}$ | the residue: coefficient of 1/(z − i) near the pole | −0.183940i | — |
-| $i$, $\pi$, $e$ | the quarter turn, i^2 = −1; the half-turn; the base of natural logs | pole at i | — |
+| $`x`$, $`z`$ | time in microseconds; a point x + iy of the plane | the real line, then the half-plane above | — |
+| $`y`$ | height above the real axis, Im z | R sin t on the arc | e^(iaz) shrinks as e^(−ay) |
+| $`a`$ | frequency, radians per microsecond | 1 | the content falls as e^(−a) |
+| $`g`$ | the part of the integrand that does not oscillate | 1/(1 + z^2); then z/(1 + z^2) | — |
+| $`R`$, $`C_R`$, $`t`$ | the arc's radius; the arc z = Re^(it); its angle, 0 to π | R = 2, 4, 8, 16 | the arc shrinks |
+| $`M_R`$ | g's largest size on the arc | at most R/(R^2 − 1) for z/(1 + z^2) | a bigger arc bound |
+| $`\mathrm{Res}`$ | the residue: coefficient of 1/(z − i) near the pole | −0.183940i | — |
+| $`i`$, $`\pi`$, $`e`$ | the quarter turn, i^2 = −1; the half-turn; the base of natural logs | pole at i | — |
 
 ### When it holds
 
@@ -83,7 +87,9 @@ Close the segment from −R to R with the upper arc, as on [The semicircle conto
 
 On the arc z = Re^(it), so y = R sin t and the step |dz| = R dt. Then
 
-$$\left|\int_{C_R} g\,e^{iaz}\,dz\right| \le \int_0^\pi M_R\, e^{-aR\sin t}\, R\,dt = M_R R \int_0^\pi e^{-aR\sin t}\,dt.$$
+```math
+\left|\int_{C_R} g\,e^{iaz}\,dz\right| \le \int_0^\pi M_R\, e^{-aR\sin t}\, R\,dt = M_R R \int_0^\pi e^{-aR\sin t}\,dt.
+```
 
 ML would replace e^(−aR sin t) by its largest value, 1, throwing the decay away. The wave is near size 1 only at the arc's ends; elsewhere it is tiny.
 
@@ -107,22 +113,26 @@ The upper line is sin t; the lower is the chord 2t/π. They meet only at the end
 
 By symmetry about t = π/2, the integral to π is twice the one to π/2. There sin t ≥ 2t/π gives e^(−aR sin t) ≤ e^(−2aRt/π), which integrates exactly:
 
-$$\int_0^\pi e^{-aR\sin t}\,dt \le 2\int_0^{\pi/2} e^{-2aRt/\pi}\,dt = \frac{\pi}{aR}\left(1 - e^{-aR}\right) < \frac{\pi}{aR}.$$
+```math
+\int_0^\pi e^{-aR\sin t}\,dt \le 2\int_0^{\pi/2} e^{-2aRt/\pi}\,dt = \frac{\pi}{aR}\left(1 - e^{-aR}\right) < \frac{\pi}{aR}.
+```
 
-Multiply by $M_R R$ from Step 2: the R cancels, leaving π$M_R$/a. That is Jordan's lemma. At aR = 8 the integral is 0.254724 against the bound 0.392699.
+Multiply by $`M_R R`$ from Step 2: the R cancels, leaving π$`M_R`$/a. That is Jordan's lemma. At aR = 8 the integral is 0.254724 against the bound 0.392699.
 
 ### Step 5: let R grow
 
-For the click, $M_R$ ≤ 1/(R^2 − 1), so even ML suffices, and the real part gives π e^(−a).
+For the click, $`M_R`$ ≤ 1/(R^2 − 1), so even ML suffices, and the real part gives π e^(−a).
 
-Jordan earns its keep on the tilted pulse z e^(iaz)/(1 + z^2), where $M_R$ ≤ R/(R^2 − 1) falls only like 1/R. ML gives about π for every R, 3.153913 at R = 16. Jordan gives πR/(a(R^2 − 1)), 0.197120 at R = 16, tending to 0. The residue at i is e^(−a)/2, so the loop is πi e^(−a), and its imaginary part is the sine integral:
+Jordan earns its keep on the tilted pulse z e^(iaz)/(1 + z^2), where $`M_R`$ ≤ R/(R^2 − 1) falls only like 1/R. ML gives about π for every R, 3.153913 at R = 16. Jordan gives πR/(a(R^2 − 1)), 0.197120 at R = 16, tending to 0. The residue at i is e^(−a)/2, so the loop is πi e^(−a), and its imaginary part is the sine integral:
 
-$$\int_{-\infty}^{\infty} \frac{x \sin ax}{1 + x^2}\,dx = \pi e^{-a} = 1.155727 \text{ at } a = 1.$$
+```math
+\int_{-\infty}^{\infty} \frac{x \sin ax}{1 + x^2}\,dx = \pi e^{-a} = 1.155727 \text{ at } a = 1.
+```
 
 <details>
 <summary>Detailed proof: from the loop to the improper integral</summary>
 
-Fix a > 0; let g = p/q, q with no real zeros, degree of q at least degree of p plus 1. As on the semicircle card, |g(z)| ≤ C/|z| for large |z|, so $M_R$ ≤ C/R → 0.
+Fix a > 0; let g = p/q, q with no real zeros, degree of q at least degree of p plus 1. As on the semicircle card, |g(z)| ≤ C/|z| for large |z|, so $`M_R`$ ≤ C/R → 0.
 
 For R beyond every pole, segment plus arc equals 2πi times the residues of g e^(iaz) above the axis. By Jordan the arc is at most πC/(aR), so the segment tends to the residue sum.
 
@@ -153,7 +163,7 @@ A filter tuned to 1 radian per microsecond picks up 1.155727 from the click: a s
 | --- | --- | --- |
 | cos(az) kept in the loop | 4.847731 (π cosh 1); arc at R = 8 still 3.662814 | e^(−iz) inside cos z grows upward; the arc never fades |
 | a = −1 closed upward | 8.539734 (π e) | e^(−iz) grows upward; close below for a < 0 |
-| g = 1, which does not shrink | arc −1.978717 at R = 8, 0.575807 at R = 16 | Jordan needs $M_R$ → 0 |
+| g = 1, which does not shrink | arc −1.978717 at R = 8, 0.575807 at R = 16 | Jordan needs $`M_R`$ → 0 |
 | Real part taken for the sine integral | 0 | x sin(ax) is the imaginary part of x e^(iax) |
 
 ---
@@ -355,7 +365,7 @@ The two outputs match line for line.
 
 Lean proves Jordan's lemma for every a > 0 and every radius, and both real-line integrals exactly.
 
-- For a > 0 and any radius R, the arc integral of g e^(iaz) is at most π/a times $M_R$, or any larger bound.
+- For a > 0 and any radius R, the arc integral of g e^(iaz) is at most π/a times $`M_R`$, or any larger bound.
 - For every frequency a, the click's integral of cos(ax)/(1 + x^2) over the real line is π e^(−|a|).
 - For a > 0, the tilted pulse's sine integral, x sin(ax)/(1 + x^2) from A to B, tends to π e^(−a) as A → −∞ and B → ∞ independently.
 - The hand steps hold exactly: 1 + z^2 = (z − i)(z + i), the residue at i, the loop value, and Jordan's bound at R = 16.

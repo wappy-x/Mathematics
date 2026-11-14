@@ -33,36 +33,40 @@ One line: the gambler's net winnings after each toss, playing session after sess
 
 ## The formula
 
-Notation first, in words. The fair game is a **martingale** ([Martingales](01-martingales.md)): $M_n$ is what $1 bet on every round would have won after $n$ rounds, and the best forecast of tomorrow's value, given everything known today, is today's value. The information known after round $k - 1$ is written $\mathcal F_{k-1}$, read "what is known by time $k - 1$": here, the first $k - 1$ tosses.
+Notation first, in words. The fair game is a **martingale** ([Martingales](01-martingales.md)): $`M_n`$ is what $1 bet on every round would have won after $`n`$ rounds, and the best forecast of tomorrow's value, given everything known today, is today's value. The information known after round $`k - 1`$ is written $`\mathcal F_{k-1}`$, read "what is known by time $`k - 1`$": here, the first $`k - 1`$ tosses.
 
-A stake $H_k$ for round $k$ is **predictable** when it is fixed by $\mathcal F_{k-1}$: it may use every toss already seen, never the toss it is betting on. The gain from round $k$ is the stake times what $1 won on that round, $\Delta M_k = M_k - M_{k-1}$. Adding the rounds gives the **martingale transform**:
+A stake $`H_k`$ for round $`k`$ is **predictable** when it is fixed by $`\mathcal F_{k-1}`$: it may use every toss already seen, never the toss it is betting on. The gain from round $`k`$ is the stake times what $1 won on that round, $`\Delta M_k = M_k - M_{k-1}`$. Adding the rounds gives the **martingale transform**:
 
-$$G_n = \sum_{k=1}^{n} H_k\,\Delta M_k = \sum_{k=1}^{n} H_k\,(M_k - M_{k-1}), \qquad G_0 = 0.$$
+```math
+G_n = \sum_{k=1}^{n} H_k\,\Delta M_k = \sum_{k=1}^{n} H_k\,(M_k - M_{k-1}), \qquad G_0 = 0.
+```
 
-**Read it aloud:** the gambler's net gain after $n$ rounds is each round's stake times that round's result, added up.
+**Read it aloud:** the gambler's net gain after $`n`$ rounds is each round's stake times that round's result, added up.
 
-The theorem is one line. If $M$ is a martingale and every $H_k$ is predictable and bounded, then $G$ is a martingale, and so its average, written $E[G_n]$, is zero:
+The theorem is one line. If $`M`$ is a martingale and every $`H_k`$ is predictable and bounded, then $`G`$ is a martingale, and so its average, written $`E[G_n]`$, is zero:
 
-$$E[G_n] = 0 \quad \text{for every } n.$$
+```math
+E[G_n] = 0 \quad \text{for every } n.
+```
 
 **Read it aloud:** a fair game stays fair under any stake-choosing rule that cannot see the future, so the average gain is zero at every round.
 
-Many books write $G_n$ as $(H \cdot M)_n$, "H dotted into M", because it is a sum of products like a dot product. The same sum with continuous time and a random walk seen from far away becomes the Ito integral.
+Many books write $`G_n`$ as $`(H \cdot M)_n`$, "H dotted into M", because it is a sum of products like a dot product. The same sum with continuous time and a random walk seen from far away becomes the Ito integral.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $M$, $M_n$ | the fair game: what $1 a round would have won by round $n$ | goes up or down $1 each toss | — |
-| $\Delta M_k$ | the result of round $k$ for a $1 stake, $M_k - M_{k-1}$ | +1 on heads, −1 on tails | — |
-| $\mathcal F_{k-1}$ | what is known after round $k - 1$: the tosses so far | the first $k - 1$ tosses | more to base the stake on; the mean stays 0 |
-| $H_k$, $H_n$ | the stake on round $k$ (or $n$), fixed by $\mathcal F_{k-1}$ | $1, $2, $4, $8 while losing, then 0 | a bigger swing either way; the mean stays 0 |
-| $G$, $G_n$, $G_k$ | the gambler's net gain after $n$ rounds | +1 in 15 of 16 sessions, −15 in 1 | — |
-| $n$, $k$ | a round count, and the round being bet on | $n$ runs to 4 | — |
-| $N$ | the most rounds the pocket pays for; the pocket is $2^N - 1$ dollars | 4, pocket $15 | the chance of finishing ahead nears 1; the worst loss about doubles |
-| $c$, $c_k$ | a fixed bound on every stake (on round $k$) | $8 | — |
-| $B$ | an event already decided by round $k - 1$, used in the proof | "the first toss was tails" | — |
-| $\mathbf 1_B$ | 1 if $B$ happened, else 0: the stake in the converse | 1 when the first toss was tails | — |
-| $p$ | the chance the gambler wins a round | 0.5; roulette red 18/37 | above 0.5 the game favours the gambler |
-| $A_n$ | the drift of an unfair game: the predictable part of its movement | $-n/37$ after $n$ rounds of $1 on red | — |
+| $`M`$, $`M_n`$ | the fair game: what $1 a round would have won by round $`n`$ | goes up or down $1 each toss | — |
+| $`\Delta M_k`$ | the result of round $`k`$ for a $1 stake, $`M_k - M_{k-1}`$ | +1 on heads, −1 on tails | — |
+| $`\mathcal F_{k-1}`$ | what is known after round $`k - 1`$: the tosses so far | the first $`k - 1`$ tosses | more to base the stake on; the mean stays 0 |
+| $`H_k`$, $`H_n`$ | the stake on round $`k`$ (or $`n`$), fixed by $`\mathcal F_{k-1}`$ | $1, $2, $4, $8 while losing, then 0 | a bigger swing either way; the mean stays 0 |
+| $`G`$, $`G_n`$, $`G_k`$ | the gambler's net gain after $`n`$ rounds | +1 in 15 of 16 sessions, −15 in 1 | — |
+| $`n`$, $`k`$ | a round count, and the round being bet on | $`n`$ runs to 4 | — |
+| $`N`$ | the most rounds the pocket pays for; the pocket is $`2^N - 1`$ dollars | 4, pocket $15 | the chance of finishing ahead nears 1; the worst loss about doubles |
+| $`c`$, $`c_k`$ | a fixed bound on every stake (on round $`k`$) | $8 | — |
+| $`B`$ | an event already decided by round $`k - 1`$, used in the proof | "the first toss was tails" | — |
+| $`\mathbf 1_B`$ | 1 if $`B`$ happened, else 0: the stake in the converse | 1 when the first toss was tails | — |
+| $`p`$ | the chance the gambler wins a round | 0.5; roulette red 18/37 | above 0.5 the game favours the gambler |
+| $`A_n`$ | the drift of an unfair game: the predictable part of its movement | $`-n/37`$ after $`n`$ rounds of $1 on red | — |
 
 ### When it holds
 
@@ -76,60 +80,68 @@ Many books write $G_n$ as $(H \cdot M)_n$, "H dotted into M", because it is a su
 
 ### Step 0: a known number times a fair bet is still a fair bet
 
-Before round $k$ the stake is already settled. Given what is known, it is a fixed number. A fair round multiplied by a fixed number is still fair: $8 on a fair coin has average gain zero, just as $1 does. Choosing the number by looking at the past changes which fixed number is used, never the fairness.
+Before round $`k`$ the stake is already settled. Given what is known, it is a fixed number. A fair round multiplied by a fixed number is still fair: $8 on a fair coin has average gain zero, just as $1 does. Choosing the number by looking at the past changes which fixed number is used, never the fairness.
 
 ### Step 1: one round averages to zero
 
-Stand just before round $k$. The information $\mathcal F_{k-1}$ fixes the stake $H_k$, so the stake comes outside the conditional average $E[\,\cdot \mid \mathcal F_{k-1}]$ (the average given what is known by time $k - 1$), the "taking out what is known" rule from [The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md):
+Stand just before round $`k`$. The information $`\mathcal F_{k-1}`$ fixes the stake $`H_k`$, so the stake comes outside the conditional average $`E[\,\cdot \mid \mathcal F_{k-1}]`$ (the average given what is known by time $`k - 1`$), the "taking out what is known" rule from [The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md):
 
-$$E[H_k\,\Delta M_k \mid \mathcal F_{k-1}] = H_k\,E[\Delta M_k \mid \mathcal F_{k-1}] = H_k \times 0 = 0.$$
+```math
+E[H_k\,\Delta M_k \mid \mathcal F_{k-1}] = H_k\,E[\Delta M_k \mid \mathcal F_{k-1}] = H_k \times 0 = 0.
+```
 
-The zero is the martingale property of $M$: the next round's result averages to nothing, whatever has happened.
+The zero is the martingale property of $`M`$: the next round's result averages to nothing, whatever has happened.
 
 ### Step 2: add the rounds
 
-$G_k = G_{k-1} + H_k\,\Delta M_k$, and $G_{k-1}$ is already known before round $k$. So the best forecast of $G_k$ is $G_{k-1}$, which is the martingale property for $G$. Averaging over what is known (the tower rule) gives $E[G_k] = E[G_{k-1}]$, and stepping back to $G_0 = 0$ gives $E[G_n] = 0$.
+$`G_k = G_{k-1} + H_k\,\Delta M_k`$, and $`G_{k-1}`$ is already known before round $`k`$. So the best forecast of $`G_k`$ is $`G_{k-1}`$, which is the martingale property for $`G`$. Averaging over what is known (the tower rule) gives $`E[G_k] = E[G_{k-1}]`$, and stepping back to $`G_0 = 0`$ gives $`E[G_n] = 0`$.
 
 ### Step 3: why the stakes must be bounded
 
-Step 1 multiplies inside an average, and an average must exist before it can be zero. With $\lvert H_k \rvert \le c$, the round's gain is at most $c$ times the size of the move, so its average exists. Doubling capped at four rounds has stakes at most $8, bounded. The full argument, with integrability, adaptedness and a converse, is in the fold below.
+Step 1 multiplies inside an average, and an average must exist before it can be zero. With $`\lvert H_k \rvert \le c`$, the round's gain is at most $`c`$ times the size of the move, so its average exists. Doubling capped at four rounds has stakes at most $8, bounded. The full argument, with integrability, adaptedness and a converse, is in the fold below.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** A probability space with a filtration $\mathcal F_0 \subseteq \mathcal F_1 \subseteq \dots$; $M$ is a martingale for it: each $M_n$ is integrable, fixed by $\mathcal F_n$, and $E[M_n \mid \mathcal F_{n-1}] = M_{n-1}$. Each $H_k$ is fixed by $\mathcal F_{k-1}$ and $\lvert H_k \rvert \le c_k$ for constants $c_k$.
+**Setting.** A probability space with a filtration $`\mathcal F_0 \subseteq \mathcal F_1 \subseteq \dots`$; $`M`$ is a martingale for it: each $`M_n`$ is integrable, fixed by $`\mathcal F_n`$, and $`E[M_n \mid \mathcal F_{n-1}] = M_{n-1}`$. Each $`H_k`$ is fixed by $`\mathcal F_{k-1}`$ and $`\lvert H_k \rvert \le c_k`$ for constants $`c_k`$.
 
-**Integrable.** $\lvert H_k\,\Delta M_k \rvert \le c_k(\lvert M_k \rvert + \lvert M_{k-1} \rvert)$, which is integrable. A finite sum of integrable terms is integrable, so each $G_n$ has a finite average.
+**Integrable.** $`\lvert H_k\,\Delta M_k \rvert \le c_k(\lvert M_k \rvert + \lvert M_{k-1} \rvert)`$, which is integrable. A finite sum of integrable terms is integrable, so each $`G_n`$ has a finite average.
 
-**Adapted.** $H_k$ is fixed by $\mathcal F_{k-1} \subseteq \mathcal F_k$, and $\Delta M_k$ by $\mathcal F_k$, so their product is fixed by $\mathcal F_k$; so is every earlier term, so $G_n$ is fixed by $\mathcal F_n$.
+**Adapted.** $`H_k`$ is fixed by $`\mathcal F_{k-1} \subseteq \mathcal F_k`$, and $`\Delta M_k`$ by $`\mathcal F_k`$, so their product is fixed by $`\mathcal F_k`$; so is every earlier term, so $`G_n`$ is fixed by $`\mathcal F_n`$.
 
-**Fair.** $E[G_n \mid \mathcal F_{n-1}] = G_{n-1} + E[H_n\,\Delta M_n \mid \mathcal F_{n-1}]$, since $G_{n-1}$ is known. Taking out what is known (allowed because $H_n$ is bounded and $\Delta M_n$ integrable) gives $H_n\,E[\Delta M_n \mid \mathcal F_{n-1}] = H_n (E[M_n \mid \mathcal F_{n-1}] - M_{n-1}) = 0$. So $G$ is a martingale, and the tower rule gives $E[G_n] = E[G_0] = 0$.
+**Fair.** $`E[G_n \mid \mathcal F_{n-1}] = G_{n-1} + E[H_n\,\Delta M_n \mid \mathcal F_{n-1}]`$, since $`G_{n-1}`$ is known. Taking out what is known (allowed because $`H_n`$ is bounded and $`\Delta M_n`$ integrable) gives $`H_n\,E[\Delta M_n \mid \mathcal F_{n-1}] = H_n (E[M_n \mid \mathcal F_{n-1}] - M_{n-1}) = 0`$. So $`G`$ is a martingale, and the tower rule gives $`E[G_n] = E[G_0] = 0`$.
 
-**No sure win.** If $G_n \ge 0$ on every outcome, then $G_n = 0$ almost surely (with probability 1): a gain that is never negative and positive with positive chance would have a positive average, not 0.
+**No sure win.** If $`G_n \ge 0`$ on every outcome, then $`G_n = 0`$ almost surely (with probability 1): a gain that is never negative and positive with positive chance would have a positive average, not 0.
 
-**Converse.** Suppose an adapted integrable $M$ has $E[G_n] = 0$ for every bounded predictable strategy. Fix $k$ and an event $B$ in $\mathcal F_{k-1}$, and stake $1 on round $k$ only when $B$ has happened, nothing otherwise. Then $0 = E[G_k] = E[\mathbf 1_B\,\Delta M_k]$ for every such $B$, which is the defining property of $E[\Delta M_k \mid \mathcal F_{k-1}] = 0$. So $M$ is a martingale. Being fair and being unbeatable by predictable bets are the same property.
+**Converse.** Suppose an adapted integrable $`M`$ has $`E[G_n] = 0`$ for every bounded predictable strategy. Fix $`k`$ and an event $`B`$ in $`\mathcal F_{k-1}`$, and stake $1 on round $`k`$ only when $`B`$ has happened, nothing otherwise. Then $`0 = E[G_k] = E[\mathbf 1_B\,\Delta M_k]`$ for every such $`B`$, which is the defining property of $`E[\Delta M_k \mid \mathcal F_{k-1}] = 0`$. So $`M`$ is a martingale. Being fair and being unbeatable by predictable bets are the same property.
 
-**Unfair games.** If $M$ is a supermartingale (it drifts down on average, $E[M_n \mid \mathcal F_{n-1}] \le M_{n-1}$) and every $H_k \ge 0$, the same computation gives $E[H_n\,\Delta M_n \mid \mathcal F_{n-1}] \le 0$: $G$ is a supermartingale and $E[G_n] \le 0$. Betting only on the gambler's side of an unfavourable game cannot make it favourable.
+**Unfair games.** If $`M`$ is a supermartingale (it drifts down on average, $`E[M_n \mid \mathcal F_{n-1}] \le M_{n-1}`$) and every $`H_k \ge 0`$, the same computation gives $`E[H_n\,\Delta M_n \mid \mathcal F_{n-1}] \le 0`$: $`G`$ is a supermartingale and $`E[G_n] \le 0`$. Betting only on the gambler's side of an unfavourable game cannot make it favourable.
 
 </details>
 
 ### Step 4: doubling, capped and uncapped
 
-With a pocket of $2^N - 1$ dollars the gambler can bet $1, 2, 4, …, 2^{N-1}$. The first win at round $k$ comes with chance $2^{-k}$ and leaves $1 ahead, since the earlier losses total $2^{k-1} - 1$. All $N$ tosses are tails with chance $2^{-N}$, a loss of $2^N - 1$. The average is
+With a pocket of $`2^N - 1`$ dollars the gambler can bet $`1, 2, 4, …, 2^{N-1}`$. The first win at round $`k`$ comes with chance $`2^{-k}`$ and leaves $1 ahead, since the earlier losses total $`2^{k-1} - 1`$. All $`N`$ tosses are tails with chance $`2^{-N}`$, a loss of $`2^N - 1`$. The average is
 
-$$(1 - 2^{-N}) \times 1 - 2^{-N}\,(2^N - 1) = 1 - 2^{-N} - 1 + 2^{-N} = 0,$$
+```math
+(1 - 2^{-N}) \times 1 - 2^{-N}\,(2^N - 1) = 1 - 2^{-N} - 1 + 2^{-N} = 0,
+```
 
-as Step 2 promised. Now the money. The deepest debt, the most the gambler is ever down during a session, is $2^{k-1} - 1$ when the first win comes at round $k$, and $2^N - 1$ if it never comes. Its average is
+as Step 2 promised. Now the money. The deepest debt, the most the gambler is ever down during a session, is $`2^{k-1} - 1`$ when the first win comes at round $`k`$, and $`2^N - 1`$ if it never comes. Its average is
 
-$$\sum_{k=1}^{N} 2^{-k}(2^{k-1} - 1) + 2^{-N}(2^N - 1) = \Big(\frac{N}{2} - 1 + 2^{-N}\Big) + \big(1 - 2^{-N}\big) = \frac{N}{2}.$$
+```math
+\sum_{k=1}^{N} 2^{-k}(2^{k-1} - 1) + 2^{-N}(2^N - 1) = \Big(\frac{N}{2} - 1 + 2^{-N}\Big) + \big(1 - 2^{-N}\big) = \frac{N}{2}.
+```
 
-Each extra doubling allowed adds 50 cents to the average debt, without end. Remove the cap and two things happen. The gambler finishes $1 ahead with probability 1, since a run of tails that never ends has chance zero. And the average debt along the way is infinite. For each fixed round $n$ the average gain is still exactly 0; the probability-1 gain of $1 appears only in the limit, and averages need not pass to limits. When they may is the subject of [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md).
+Each extra doubling allowed adds 50 cents to the average debt, without end. Remove the cap and two things happen. The gambler finishes $1 ahead with probability 1, since a run of tails that never ends has chance zero. And the average debt along the way is infinite. For each fixed round $`n`$ the average gain is still exactly 0; the probability-1 gain of $1 appears only in the limit, and averages need not pass to limits. When they may is the subject of [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md).
 
 ### Step 5: an unfair game passes its drift through
 
-Roulette red wins with chance $p = 18/37$. The result of a $1 bet averages $2p - 1 = -1/37$ dollars, so the game is not a martingale. Split each round's result into a fair part and a known drift, $\Delta M_k = (\Delta M_k + 1/37) - 1/37$: the first part averages zero, the second is fixed in advance. That split, a martingale plus a predictable drift $A_n$, is the Doob decomposition ([Martingales](01-martingales.md) proves it). The fair part contributes nothing by Step 2, so
+Roulette red wins with chance $`p = 18/37`$. The result of a $1 bet averages $`2p - 1 = -1/37`$ dollars, so the game is not a martingale. Split each round's result into a fair part and a known drift, $`\Delta M_k = (\Delta M_k + 1/37) - 1/37`$: the first part averages zero, the second is fixed in advance. That split, a martingale plus a predictable drift $`A_n`$, is the Doob decomposition ([Martingales](01-martingales.md) proves it). The fair part contributes nothing by Step 2, so
 
-$$E[G_n] = -\tfrac{1}{37}\,E\Big[\sum_{k=1}^{n} H_k\Big].$$
+```math
+E[G_n] = -\tfrac{1}{37}\,E\Big[\sum_{k=1}^{n} H_k\Big].
+```
 
 **Every dollar staked costs 2.7 cents on average, whatever the pattern of staking.** Doubling with the $15 pocket stakes $4.165104 on average, so it loses $0.112570 a session. A strategy can move the house edge around; it cannot remove it.
 
@@ -177,7 +189,7 @@ xychart-beta
     bar [1, 3, 7, 15, 31, 63, 127, 255, 511, 1023]
 ```
 
-Bars: the pocket $2^N - 1$, which is also the loss when every toss is tails. Over the same range the chance of a winning session climbs only from 0.500000 to 0.999023, and the average deepest debt from $0.50 to $5: the gain is always $1, the risk doubles with each step.
+Bars: the pocket $`2^N - 1`$, which is also the loss when every toss is tails. Over the same range the chance of a winning session climbs only from 0.500000 to 0.999023, and the average deepest debt from $0.50 to $5: the gain is always $1, the risk doubles with each step.
 
 ---
 
@@ -553,9 +565,9 @@ The two outputs match line for line.
 
 Lean proves the theorem and its converse for every game and strategy, and doubling's averages for every pocket size.
 
-- Suppose $M$ is a martingale and every stake $H_k$ is predictable and bounded, $\lvert H_k \rvert \le c_k$. Then the martingale transform $G$ is a martingale, and $E[G_n] = 0$ for every $n$.
-- Suppose each $M_n$ is known by round $n$, with a finite average, and every bounded predictable strategy has $E[G_n] = 0$. Then $M$ is a martingale.
-- Take doubling with a pocket of $2^N - 1$ dollars on a fair coin, for any $N$. Then the average gain is exactly 0, and the average deepest debt is $N/2$.
+- Suppose $`M`$ is a martingale and every stake $`H_k`$ is predictable and bounded, $`\lvert H_k \rvert \le c_k`$. Then the martingale transform $`G`$ is a martingale, and $`E[G_n] = 0`$ for every $`n`$.
+- Suppose each $`M_n`$ is known by round $`n`$, with a finite average, and every bounded predictable strategy has $`E[G_n] = 0`$. Then $`M`$ is a martingale.
+- Take doubling with a pocket of $`2^N - 1`$ dollars on a fair coin, for any $`N`$. Then the average gain is exactly 0, and the average deepest debt is $`N/2`$.
 - The $15 pocket pays for four bets: each first win leaves $1, and four losses cost $15.
 - The chance of finishing ahead is 15/16, the average gain $0, the average money staked $4 and the average deepest debt $2.
 - Ten doublings need a $1,023 pocket and finish ahead with chance 1023/1024.
@@ -766,7 +778,7 @@ example : ∀ w : Fin 4 → Bool,
 > **"It wins 15 times in 16, so it has an edge."** Winning often and winning on average are different things. Doubling sells frequent small wins for rare large losses, at a price the arithmetic fixes exactly: 15 wins of $1 against one loss of $15. Fair does not mean the gambler cannot finish ahead; it means the average is zero.
 >
 > - **Reading a simulation as a verdict.** The fair simulation averaged −$0.0106 with a standard error of $0.0087: a gap from zero that chance alone produces routinely. A simulation this size cannot separate a fair game from a slightly unfair one; the exact enumeration can.
-> - **Taking the uncapped limit inside the average.** Uncapped doubling ends $1 ahead with probability 1, but $E[G_n] = 0$ at every round. The $1 lives only in the limit, paid for by a debt whose average is infinite.
+> - **Taking the uncapped limit inside the average.** Uncapped doubling ends $1 ahead with probability 1, but $`E[G_n] = 0`$ at every round. The $1 lives only in the limit, paid for by a debt whose average is infinite.
 > - **Quitting while ahead.** Stopping is a stake of zero from then on, so a stopping rule is a strategy and gets no edge either, as long as it must stop by a fixed round.
 
 ---
@@ -774,7 +786,7 @@ example : ∀ w : Fin 4 → Bool,
 ## Where you meet it in real life
 
 - **The casino doubling system.** Gamblers called doubling after a loss a martingale long before probability took the word for fair games. Table limits cap the stake, which caps the number of doublings, which is exactly the bounded case on this card.
-- **Trading.** A portfolio holding $H_k$ shares over day $k$ gains $H_k$ times the day's price change: a martingale transform. Where prices, measured against the bank account, form a martingale, no trading rule has an average edge; that is the engine of [Replication](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/06-replication-and-self-financing.md).
+- **Trading.** A portfolio holding $`H_k`$ shares over day $`k`$ gains $`H_k`$ times the day's price change: a martingale transform. Where prices, measured against the bank account, form a martingale, no trading rule has an average edge; that is the engine of [Replication](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/06-replication-and-self-financing.md).
 - **Card counting.** A blackjack counter bets more when the remaining deck favours the player. That works because, given the count, the next hand is not a fair game: the hypothesis that the game underneath is fair fails. No staking pattern alone would do it.
 
 > **Say it back**
@@ -784,7 +796,7 @@ example : ∀ w : Fin 4 → Bool,
 
 ## What this builds on
 
-- [Martingales](01-martingales.md): the fair game, $E[M_{n+1} \mid \mathcal F_n] = M_n$, and the filtration that says what is known when.
+- [Martingales](01-martingales.md): the fair game, $`E[M_{n+1} \mid \mathcal F_n] = M_n`$, and the filtration that says what is known when.
 - [The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md): taking out what is known and the tower rule, the two moves in Steps 1 and 2.
 
 ## Where this goes next

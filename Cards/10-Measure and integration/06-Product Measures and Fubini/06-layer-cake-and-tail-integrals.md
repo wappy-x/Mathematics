@@ -26,51 +26,57 @@ To scale: 160 drawing units per metre, the board's corner (0, 0) at (40, 180) an
 
 ## The formula
 
-Notation first, in words. A measure space $(\Omega, \mathcal F, \mu)$ is a set $\Omega$ (omega), the collection $\mathcal F$ of its subsets we allow ourselves to measure, and a measure $\mu$ (mu) giving each such set a size. Here $\Omega$ is the board, $\mathcal F$ its Borel sets (the smallest such collection that holds every rectangle, [Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)), and $\mu$ is area. The **tail set** at height $t$ is $\{f > t\}$, short for the set of points where f exceeds t; its size $\mu(f > t)$ is the **tail size**. The letter $\lambda$ (lambda) is length on the height axis.
+Notation first, in words. A measure space $`(\Omega, \mathcal F, \mu)`$ is a set $`\Omega`$ (omega), the collection $`\mathcal F`$ of its subsets we allow ourselves to measure, and a measure $`\mu`$ (mu) giving each such set a size. Here $`\Omega`$ is the board, $`\mathcal F`$ its Borel sets (the smallest such collection that holds every rectangle, [Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)), and $`\mu`$ is area. The **tail set** at height $`t`$ is $`\{f > t\}`$, short for the set of points where f exceeds t; its size $`\mu(f > t)`$ is the **tail size**. The letter $`\lambda`$ (lambda) is length on the height axis.
 
-The layer-cake formula, for every measurable $f \ge 0$ (the value $+\infty$ allowed):
+The layer-cake formula, for every measurable $`f \ge 0`$ (the value $`+\infty`$ allowed):
 
-$$\int_\Omega f\,d\mu \;=\; \int_0^\infty \mu(f > t)\,dt .$$
+```math
+\int_\Omega f\,d\mu \;=\; \int_0^\infty \mu(f > t)\,dt .
+```
 
 **Read it aloud:** the integral of f equals the area under the curve that gives, at each height, the size of the set where f is above that height.
 
-For a non-negative random variable $X$ on a probability space, with probability $P$ and expectation $E$ (the integral against P, [Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)), this is the **tail formula**. Its weighted form, for the average of $X^p$ (the **p-th moment**), is the **moment formula**, for every power $p > 0$:
+For a non-negative random variable $`X`$ on a probability space, with probability $`P`$ and expectation $`E`$ (the integral against P, [Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)), this is the **tail formula**. Its weighted form, for the average of $`X^p`$ (the **p-th moment**), is the **moment formula**, for every power $`p > 0`$:
 
-$$E[X] = \int_0^\infty P(X > t)\,dt, \qquad E[X^p] = \int_0^\infty p\,t^{p-1}\,P(X > t)\,dt .$$
+```math
+E[X] = \int_0^\infty P(X > t)\,dt, \qquad E[X^p] = \int_0^\infty p\,t^{p-1}\,P(X > t)\,dt .
+```
 
 **Read it aloud:** the average of X is the area under its tail; the average of X to the power p is the same area with each height weighted by p t^(p−1).
 
-Starting the area at a height $K$ gives the average excess over K; a signed quantity splits into an upper and a lower tail:
+Starting the area at a height $`K`$ gives the average excess over K; a signed quantity splits into an upper and a lower tail:
 
-$$E[(X - K)^+] = \int_K^\infty P(X > t)\,dt, \qquad E[X] = \int_0^\infty P(X > t)\,dt - \int_0^\infty P(X < -t)\,dt .$$
+```math
+E[(X - K)^+] = \int_K^\infty P(X > t)\,dt, \qquad E[X] = \int_0^\infty P(X > t)\,dt - \int_0^\infty P(X < -t)\,dt .
+```
 
-Here $(X - K)^+$ means max(X − K, 0), the part of X above K. The signed formula needs at least one of the two areas finite.
+Here $`(X - K)^+`$ means max(X − K, 0), the part of X above K. The signed formula needs at least one of the two areas finite.
 
-On the board, $x$ and $y$ are the coordinates and $M$ = max(x, y). The dart misses the tail set exactly when both coordinates are at most t, a square of area t^2, so $P(M > t) = 1 - t^2$ for t between 0 and 1, and 0 from 1 on.
+On the board, $`x`$ and $`y`$ are the coordinates and $`M`$ = max(x, y). The dart misses the tail set exactly when both coordinates are at most t, a square of area t^2, so $`P(M > t) = 1 - t^2`$ for t between 0 and 1, and 0 from 1 on.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\mathcal F$, $\mu$ | a space, the sets we allow ourselves to measure, a measure on them | the board; its Borel sets; area | a larger measure, a larger integral |
-| $f$ | a non-negative measurable function on the space | the larger coordinate of the dart, in metres | a taller f, a larger integral |
-| $t$, $\lambda$ | a height on the value axis; length along that axis | t = 0.5 m | a higher t, a smaller tail |
-| $\{f > t\}$, $\mu(f > t)$ | the tail set: where f exceeds t; its size | the shaded L; area 0.75 at t = 0.5 | — |
-| $x$, $y$ | the dart's coordinates, across and up | (0.3, 0.8) | — |
-| $X$, $M$ | a non-negative random variable; the one on this card, max(x, y) | E[M] = 2/3 m | — |
-| $P$, $E$ | a probability; expectation, the integral against P | P is area on the board | — |
-| $p$ | the power in a moment E[X^p] | 1, 2, 3 | weight moves to large heights |
-| $H$ | the region under the graph of f, in the space times the height axis | its volume is 2/3 | — |
-| $K$ | the height where a shifted tail area starts | 0.5 m | smaller average excess |
-| $D$, $Y$ | two warning cases: D = x − y, which can be negative; Y = 1/x, with a heavy tail | E[D] = 0; E[Y] infinite | — |
-| $n$, $T$, $s$, $s_n$ | grid size; a cut-off height; simple functions rising to f | n = 4; T = 1000 | finer grids, nearer 2/3 |
-| $\omega$, $a$, $k$, $r$, $H'$, $b_j$, $B_j$, $m$, $u$ | in the steps and proofs: a point of the space; a non-negative number, such as a value of f (in Step 6, the power in a tail $t^{-a}$); a whole-number counter (k/4 in Step 3, 1/k in Claim 1); a positive rational height; the region under the graph with its top edge, $0 \le t \le f$; the values of a simple function, the sets where it takes them, and how many values there are; the height $u = t^p$ | ω = the dart at (0.3, 0.8); a = 0.8 | — |
+| $`\Omega`$, $`\mathcal F`$, $`\mu`$ | a space, the sets we allow ourselves to measure, a measure on them | the board; its Borel sets; area | a larger measure, a larger integral |
+| $`f`$ | a non-negative measurable function on the space | the larger coordinate of the dart, in metres | a taller f, a larger integral |
+| $`t`$, $`\lambda`$ | a height on the value axis; length along that axis | t = 0.5 m | a higher t, a smaller tail |
+| $`\{f > t\}`$, $`\mu(f > t)`$ | the tail set: where f exceeds t; its size | the shaded L; area 0.75 at t = 0.5 | — |
+| $`x`$, $`y`$ | the dart's coordinates, across and up | (0.3, 0.8) | — |
+| $`X`$, $`M`$ | a non-negative random variable; the one on this card, max(x, y) | E[M] = 2/3 m | — |
+| $`P`$, $`E`$ | a probability; expectation, the integral against P | P is area on the board | — |
+| $`p`$ | the power in a moment E[X^p] | 1, 2, 3 | weight moves to large heights |
+| $`H`$ | the region under the graph of f, in the space times the height axis | its volume is 2/3 | — |
+| $`K`$ | the height where a shifted tail area starts | 0.5 m | smaller average excess |
+| $`D`$, $`Y`$ | two warning cases: D = x − y, which can be negative; Y = 1/x, with a heavy tail | E[D] = 0; E[Y] infinite | — |
+| $`n`$, $`T`$, $`s`$, $`s_n`$ | grid size; a cut-off height; simple functions rising to f | n = 4; T = 1000 | finer grids, nearer 2/3 |
+| $`\omega`$, $`a`$, $`k`$, $`r`$, $`H'`$, $`b_j`$, $`B_j`$, $`m`$, $`u`$ | in the steps and proofs: a point of the space; a non-negative number, such as a value of f (in Step 6, the power in a tail $`t^{-a}`$); a whole-number counter (k/4 in Step 3, 1/k in Claim 1); a positive rational height; the region under the graph with its top edge, $`0 \le t \le f`$; the values of a simple function, the sets where it takes them, and how many values there are; the height $`u = t^p`$ | ω = the dart at (0.3, 0.8); a = 0.8 | — |
 
 ### When it holds
 
 - **f non-negative and measurable.** Measurable makes each tail set measurable, so its size exists. Drop non-negativity and the formula counts only the upper part: D = x − y has upper-tail area 1/6 but average 0.
-- **Any measure.** The Tonelli proof needs $\mu$ σ-finite: the space is a countable union of pieces of finite measure, as every probability space is. The second proof, from simple functions, needs nothing, so the formula holds for every measure.
-- **Infinite values allowed.** Both sides may be $+\infty$, and then both are. Y = 1/x (x read as a plain number) has tail 1/t above 1, whose area grows like 1 + ln T up to height T: the mean is infinite on both roads.
-- **Strict or not.** The tail $\mu(f \ge t)$ gives the same area as $\mu(f > t)$, even when some value carries positive probability; the proof handles both at once.
-- **The weight p t^(p−1) is part of the moment formula.** Leave it out and $\int_0^\infty P(M > t)\,dt$ returns E[M] = 2/3, not E[M^2] = 1/2.
+- **Any measure.** The Tonelli proof needs $`\mu`$ σ-finite: the space is a countable union of pieces of finite measure, as every probability space is. The second proof, from simple functions, needs nothing, so the formula holds for every measure.
+- **Infinite values allowed.** Both sides may be $`+\infty`$, and then both are. Y = 1/x (x read as a plain number) has tail 1/t above 1, whose area grows like 1 + ln T up to height T: the mean is infinite on both roads.
+- **Strict or not.** The tail $`\mu(f \ge t)`$ gives the same area as $`\mu(f > t)`$, even when some value carries positive probability; the proof handles both at once.
+- **The weight p t^(p−1) is part of the moment formula.** Leave it out and $`\int_0^\infty P(M > t)\,dt`$ returns E[M] = 2/3, not E[M^2] = 1/2.
 
 ---
 
@@ -78,21 +84,23 @@ On the board, $x$ and $y$ are the coordinates and $M$ = max(x, y). The dart miss
 
 ### Step 0: a height is the length of the stack of levels below it
 
-A number $a \ge 0$ is the length of the interval [0, a): the set of heights t with t < a. So at every point ω (omega) of the space,
+A number $`a \ge 0`$ is the length of the interval [0, a): the set of heights t with t < a. So at every point ω (omega) of the space,
 
-$$f(\omega) = \int_0^\infty \mathbf 1\{t < f(\omega)\}\,dt ,$$
+```math
+f(\omega) = \int_0^\infty \mathbf 1\{t < f(\omega)\}\,dt ,
+```
 
-where $\mathbf 1\{\cdot\}$ is 1 when the condition holds and 0 when it fails. Integrate this over the space. The result is a double integral, over the space and over heights, of an indicator. Do it in the other order: fix the height t first, and the inner integral over the space is the size of the set where t < f, the tail size. Tonelli's theorem says the two orders give the same number. That is the whole proof; the rest is checking that Tonelli's hypotheses hold.
+where $`\mathbf 1\{\cdot\}`$ is 1 when the condition holds and 0 when it fails. Integrate this over the space. The result is a double integral, over the space and over heights, of an indicator. Do it in the other order: fix the height t first, and the inner integral over the space is the size of the set where t < f, the tail size. Tonelli's theorem says the two orders give the same number. That is the whole proof; the rest is checking that Tonelli's hypotheses hold.
 
 ### Step 1: the region under the graph is measurable
 
-The region under the graph is $H = \{(\omega, t) : 0 \le t < f(\omega)\}$, a subset of the space times the half-line. Tonelli needs $H$ measurable for the product sigma-algebra ([Product sigma-algebras](01-product-sigma-algebras.md)). Whenever t < f(ω), some rational number r sits strictly between them, so $H$ is the union, over positive rationals r, of the rectangles $\{f > r\} \times [0, r)$: countably many measurable rectangles, so a measurable set. On the board, $H$ is a solid over the square of height max(x, y); both orders compute its volume under the product of area and length ([Product measure](02-product-measure.md)).
+The region under the graph is $`H = \{(\omega, t) : 0 \le t < f(\omega)\}`$, a subset of the space times the half-line. Tonelli needs $`H`$ measurable for the product sigma-algebra ([Product sigma-algebras](01-product-sigma-algebras.md)). Whenever t < f(ω), some rational number r sits strictly between them, so $`H`$ is the union, over positive rationals r, of the rectangles $`\{f > r\} \times [0, r)`$: countably many measurable rectangles, so a measurable set. On the board, $`H`$ is a solid over the square of height max(x, y); both orders compute its volume under the product of area and length ([Product measure](02-product-measure.md)).
 
 ### Step 2: slice vertically, slice horizontally
 
-Slice $H$ above one point ω: the heights under f(ω) form [0, f(ω)), of length f(ω). Integrating over the space gives $\int f\,d\mu$. Slice $H$ at one height t: the points with f above t form the tail set, of size $\mu(f > t)$. Integrating over heights gives $\int_0^\infty \mu(f > t)\,dt$. Tonelli: both equal the product measure of $H$.
+Slice $`H`$ above one point ω: the heights under f(ω) form [0, f(ω)), of length f(ω). Integrating over the space gives $`\int f\,d\mu`$. Slice $`H`$ at one height t: the points with f above t form the tail set, of size $`\mu(f > t)`$. Integrating over heights gives $`\int_0^\infty \mu(f > t)\,dt`$. Tonelli: both equal the product measure of $`H`$.
 
-On the board both slicings are done by hand. Vertically, split at the diagonal: where y < x the maximum is x, the strip of y below has length x, and the other half mirrors it, so the integral is $2\int_0^1 x \cdot x\,dx = 2/3$. Horizontally, $\int_0^1 (1 - t^2)\,dt = 1 - 1/3 = 2/3$. Neither road uses the other.
+On the board both slicings are done by hand. Vertically, split at the diagonal: where y < x the maximum is x, the strip of y below has length x, and the other half mirrors it, so the integral is $`2\int_0^1 x \cdot x\,dx = 2/3`$. Horizontally, $`\int_0^1 (1 - t^2)\,dt = 1 - 1/3 = 2/3`$. Neither road uses the other.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -104,56 +112,62 @@ xychart-beta
     line [0.00, 0.20, 0.38, 0.55, 0.67, 0.75, 0.77, 0.71, 0.58, 0.34, 0.00]
 ```
 
-Caption: the orange curve is the tail $P(M > t) = 1 - t^2$; the area under it is E[M] = 2/3. The green curve is the weighted tail 2t(1 − t^2); the area under it is E[M^2] = 1/2. Both are plotted to two decimals, as both checks print them. The two curves cross at t = 0.5, where the weight 2t equals 1.
+Caption: the orange curve is the tail $`P(M > t) = 1 - t^2`$; the area under it is E[M] = 2/3. The green curve is the weighted tail 2t(1 − t^2); the area under it is E[M^2] = 1/2. Both are plotted to two decimals, as both checks print them. The two curves cross at t = 0.5, where the weight 2t equals 1.
 
 ### Step 3: the same argument on sixteen points
 
 The measure-free version is a finite count. Round the dart's coordinates up to the next multiple of 1/4 m. The board becomes 16 equally likely points, each coordinate one of 1/4, 2/4, 3/4, 1. The larger coordinate takes the value k/4 on 2k − 1 points: 1, 3, 5, 7 of them. Averaging directly:
 
-$$E[M_4] = \frac{1 \cdot 1 + 2 \cdot 3 + 3 \cdot 5 + 4 \cdot 7}{4 \times 16} = \frac{50}{64} = \frac{25}{32}.$$
+```math
+E[M_4] = \frac{1 \cdot 1 + 2 \cdot 3 + 3 \cdot 5 + 4 \cdot 7}{4 \times 16} = \frac{50}{64} = \frac{25}{32}.
+```
 
-By layers: the points with max above 0, 1/4, 2/4, 3/4 number 16, 15, 12, 7. Each layer is 1/4 m thick, so the area under the tail is $\tfrac14\left(\tfrac{16}{16} + \tfrac{15}{16} + \tfrac{12}{16} + \tfrac{7}{16}\right) = \tfrac{25}{32}$. The two sums count the same blocks by columns and by rows. On an n by n grid both give (n + 1)(4n − 1)/(6n^2), checked for n = 2, 4, 10 and 100; rounding up raises the coordinates, so this overshoots 2/3 by (3n − 1)/(6n^2), less than 1/(2n).
+By layers: the points with max above 0, 1/4, 2/4, 3/4 number 16, 15, 12, 7. Each layer is 1/4 m thick, so the area under the tail is $`\tfrac14\left(\tfrac{16}{16} + \tfrac{15}{16} + \tfrac{12}{16} + \tfrac{7}{16}\right) = \tfrac{25}{32}`$. The two sums count the same blocks by columns and by rows. On an n by n grid both give (n + 1)(4n − 1)/(6n^2), checked for n = 2, 4, 10 and 100; rounding up raises the coordinates, so this overshoots 2/3 by (3n − 1)/(6n^2), less than 1/(2n).
 
 ### Step 4: moments, by weighting the layers
 
-For the p-th power, write the height $f(\omega)^p$ as a stack too, but with layers of varying thickness: $a^p = \int_0^a p\,t^{p-1}\,dt$, since p t^(p−1) is the slope of t^p. Run Steps 0 to 2 with the measure $p\,t^{p-1}\,dt$ on the height axis in place of plain length:
+For the p-th power, write the height $`f(\omega)^p`$ as a stack too, but with layers of varying thickness: $`a^p = \int_0^a p\,t^{p-1}\,dt`$, since p t^(p−1) is the slope of t^p. Run Steps 0 to 2 with the measure $`p\,t^{p-1}\,dt`$ on the height axis in place of plain length:
 
-$$\int_\Omega f^p\,d\mu = \int_0^\infty p\,t^{p-1}\,\mu(f > t)\,dt .$$
+```math
+\int_\Omega f^p\,d\mu = \int_0^\infty p\,t^{p-1}\,\mu(f > t)\,dt .
+```
 
-On the board, $E[M^2] = \int_0^1 2t(1 - t^2)\,dt = 1 - 1/2 = 1/2$, and the diagonal split gives $2\int_0^1 x^2 \cdot x\,dx = 1/2$ again. So the variance, the average squared distance from the mean, is 1/2 − 4/9 = 1/18. For every p, both roads give E[M^p] = 2/(p + 2): 2/3, 1/2, 2/5 for p = 1, 2, 3.
+On the board, $`E[M^2] = \int_0^1 2t(1 - t^2)\,dt = 1 - 1/2 = 1/2`$, and the diagonal split gives $`2\int_0^1 x^2 \cdot x\,dx = 1/2`$ again. So the variance, the average squared distance from the mean, is 1/2 − 4/9 = 1/18. For every p, both roads give E[M^p] = 2/(p + 2): 2/3, 1/2, 2/5 for p = 1, 2, 3.
 
 ### Step 5: shifted and signed versions
 
-The part of a height a above K is the length of the heights between K and a: $(a - K)^+ = \int_K^\infty \mathbf 1\{t < a\}\,dt$. The same swap gives $E[(X - K)^+] = \int_K^\infty P(X > t)\,dt$. On the board with K = 0.5 m, the tail road gives $\int_{0.5}^1 (1 - t^2)\,dt = 5/24$, and the diagonal split gives $2\int_{0.5}^1 (x - 0.5)\,x\,dx = 5/24$.
+The part of a height a above K is the length of the heights between K and a: $`(a - K)^+ = \int_K^\infty \mathbf 1\{t < a\}\,dt`$. The same swap gives $`E[(X - K)^+] = \int_K^\infty P(X > t)\,dt`$. On the board with K = 0.5 m, the tail road gives $`\int_{0.5}^1 (1 - t^2)\,dt = 5/24`$, and the diagonal split gives $`2\int_{0.5}^1 (x - 0.5)\,x\,dx = 5/24`$.
 
-A signed X is its positive part minus its negative part, X = X^+ − X^−. Each part is non-negative, and $X^- > t$ exactly when $X < -t$. Apply the formula to each part and subtract, which is allowed when at least one part has finite integral.
+A signed X is its positive part minus its negative part, X = X^+ − X^−. Each part is non-negative, and $`X^- > t`$ exactly when $`X < -t`$. Apply the formula to each part and subtract, which is allowed when at least one part has finite integral.
 
 ### Step 6: reading moments off tails
 
-Two readings of the formula are used constantly. First, a tail bound limits the mean. The tail is non-increasing, so the rectangle of width t and height $P(X > t)$ fits under it: $t\,P(X > t) \le E[X]$. That is Markov's inequality ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) read as a picture. On the board, 0.5 × 0.75 = 3/8, below 2/3.
+Two readings of the formula are used constantly. First, a tail bound limits the mean. The tail is non-increasing, so the rectangle of width t and height $`P(X > t)`$ fits under it: $`t\,P(X > t) \le E[X]`$. That is Markov's inequality ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) read as a picture. On the board, 0.5 × 0.75 = 3/8, below 2/3.
 
-Second, the speed at which a tail dies decides which moments are finite. If $P(X > t)$ falls like $t^{-a}$ for large t, then the weighted tail $p\,t^{p-1} t^{-a}$ has finite area exactly when p < a. Y = 1/x has a = 1: its tail area up to height T is 1 + ln T, which passes every bound, so E[Y] is infinite.
+Second, the speed at which a tail dies decides which moments are finite. If $`P(X > t)`$ falls like $`t^{-a}`$ for large t, then the weighted tail $`p\,t^{p-1} t^{-a}`$ has finite area exactly when p < a. Y = 1/x has a = 1: its tail area up to height T is 1 + ln T, which passes every bound, so E[Y] is infinite.
 
 <details>
 <summary>Detailed proof</summary>
 
-Setting: $(\Omega, \mathcal F, \mu)$ a measure space, $f : \Omega \to [0, \infty]$ measurable, $\lambda$ Lebesgue measure on the Borel sets of $[0, \infty)$.
+Setting: $`(\Omega, \mathcal F, \mu)`$ a measure space, $`f : \Omega \to [0, \infty]`$ measurable, $`\lambda`$ Lebesgue measure on the Borel sets of $`[0, \infty)`$.
 
-**Claim 1: the region is measurable.** Let $H = \{(\omega, t) : 0 \le t < f(\omega)\}$. If $t < f(\omega)$, the rationals are dense, so some rational $r > t$ has $r < f(\omega)$ (also when $f(\omega) = \infty$). Hence $H = \bigcup_{r \in \mathbb Q,\, r > 0} \{f > r\} \times [0, r)$. Each $\{f > r\}$ is in $\mathcal F$ because f is measurable, and each $[0, r)$ is Borel, so each term is a measurable rectangle and the countable union is in the product sigma-algebra ([Product sigma-algebras](01-product-sigma-algebras.md)). The same holds for $H' = \{(\omega, t) : 0 \le t \le f(\omega)\} = \bigcap_{k \ge 1} \{(\omega, t) : 0 \le t < f(\omega) + 1/k\}$, each term measurable by the same argument for the measurable function $f + 1/k$.
+**Claim 1: the region is measurable.** Let $`H = \{(\omega, t) : 0 \le t < f(\omega)\}`$. If $`t < f(\omega)`$, the rationals are dense, so some rational $`r > t`$ has $`r < f(\omega)`$ (also when $`f(\omega) = \infty`$). Hence $`H = \bigcup_{r \in \mathbb Q,\, r > 0} \{f > r\} \times [0, r)`$. Each $`\{f > r\}`$ is in $`\mathcal F`$ because f is measurable, and each $`[0, r)`$ is Borel, so each term is a measurable rectangle and the countable union is in the product sigma-algebra ([Product sigma-algebras](01-product-sigma-algebras.md)). The same holds for $`H' = \{(\omega, t) : 0 \le t \le f(\omega)\} = \bigcap_{k \ge 1} \{(\omega, t) : 0 \le t < f(\omega) + 1/k\}`$, each term measurable by the same argument for the measurable function $`f + 1/k`$.
 
-**Claim 2: the formula, for σ-finite $\mu$.** $\lambda$ on $[0, \infty)$ is σ-finite. Tonelli's theorem ([Tonelli and Fubini](03-tonelli-and-fubini.md)) applies to the non-negative measurable function $\mathbf 1_H$ and gives
-$$\int_\Omega \left(\int_0^\infty \mathbf 1_H(\omega, t)\,dt\right) d\mu(\omega) = \int_0^\infty \left(\int_\Omega \mathbf 1_H(\omega, t)\,d\mu(\omega)\right) dt .$$
-The inner integral on the left is $\lambda([0, f(\omega))) = f(\omega)$. The inner integral on the right is $\mu(\{\omega : f(\omega) > t\})$. This is the formula, with $+\infty$ allowed on both sides. The same computation with $H'$ gives $\lambda([0, f(\omega)]) = f(\omega)$ on the left and $\mu(f \ge t)$ on the right, so $\int_0^\infty \mu(f \ge t)\,dt = \int f\,d\mu$ as well.
+**Claim 2: the formula, for σ-finite $`\mu`$.** $`\lambda`$ on $`[0, \infty)`$ is σ-finite. Tonelli's theorem ([Tonelli and Fubini](03-tonelli-and-fubini.md)) applies to the non-negative measurable function $`\mathbf 1_H`$ and gives
 
-**Claim 3: the formula, for any measure.** First let $s$ be a non-negative simple function taking distinct values $0 < b_1 < \dots < b_m$ on disjoint sets $B_1, \dots, B_m$ in $\mathcal F$ and 0 elsewhere. For each t, $\mu(s > t) = \sum_{j : b_j > t} \mu(B_j) = \sum_j \mu(B_j)\,\mathbf 1\{t < b_j\}$, a finite sum of non-negative functions of t. Integrating term by term, $\int_0^\infty \mu(s > t)\,dt = \sum_j \mu(B_j)\,b_j = \int s\,d\mu$ ([The integral of a simple function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md)). For general f take simple $s_n \uparrow f$ pointwise ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). Each $t \mapsto \mu(s_n > t)$ and $t \mapsto \mu(f > t)$ is non-increasing, hence Borel measurable. For fixed t, the sets $\{s_n > t\}$ increase, and their union is $\{f > t\}$: if $f(\omega) > t$ then $s_n(\omega) > t$ for large n. Continuity of measure from below ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) gives $\mu(s_n > t) \uparrow \mu(f > t)$ for every t. The monotone convergence theorem ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)), once on $[0, \infty)$ and once on $\Omega$, gives $\int_0^\infty \mu(f > t)\,dt = \lim_n \int_0^\infty \mu(s_n > t)\,dt = \lim_n \int s_n\,d\mu = \int f\,d\mu$.
+$`\displaystyle \int_\Omega \left(\int_0^\infty \mathbf 1_H(\omega, t)\,dt\right) d\mu(\omega) = \int_0^\infty \left(\int_\Omega \mathbf 1_H(\omega, t)\,d\mu(\omega)\right) dt .`$
 
-**Claim 4: moments.** Let $p > 0$. For $a \in [0, \infty]$, $a^p = \int_0^\infty p\,t^{p-1}\,\mathbf 1\{t < a\}\,dt$ by the fundamental theorem of calculus on $[0, a)$ (and monotone convergence when $a = \infty$). The measure $p\,t^{p-1}\,dt$ on $[0, \infty)$ is σ-finite. Claim 1 and Tonelli with it in place of $\lambda$ give $\int f^p\,d\mu = \int_0^\infty p\,t^{p-1}\,\mu(f > t)\,dt$ for σ-finite $\mu$; for a general measure, apply Claim 3 to $f^p$, use $\{f^p > u\} = \{f > u^{1/p}\}$, and substitute $u = t^p$.
+The inner integral on the left is $`\lambda([0, f(\omega))) = f(\omega)`$. The inner integral on the right is $`\mu(\{\omega : f(\omega) > t\})`$. This is the formula, with $`+\infty`$ allowed on both sides. The same computation with $`H'`$ gives $`\lambda([0, f(\omega)]) = f(\omega)`$ on the left and $`\mu(f \ge t)`$ on the right, so $`\int_0^\infty \mu(f \ge t)\,dt = \int f\,d\mu`$ as well.
 
-**Claim 5: shift.** For real K and $a \in [-\infty, \infty]$, $(a - K)^+ = \lambda([K, \infty) \cap [K, a)) = \int_K^\infty \mathbf 1\{t < a\}\,dt$. The region $\{(\omega, t) : K \le t < X(\omega)\}$ is the union over rationals $r > K$ of $\{X > r\} \times [K, r)$. Tonelli gives $E[(X - K)^+] = \int_K^\infty P(X > t)\,dt$.
+**Claim 3: the formula, for any measure.** First let $`s`$ be a non-negative simple function taking distinct values $`0 < b_1 < \dots < b_m`$ on disjoint sets $`B_1, \dots, B_m`$ in $`\mathcal F`$ and 0 elsewhere. For each t, $`\mu(s > t) = \sum_{j : b_j > t} \mu(B_j) = \sum_j \mu(B_j)\,\mathbf 1\{t < b_j\}`$, a finite sum of non-negative functions of t. Integrating term by term, $`\int_0^\infty \mu(s > t)\,dt = \sum_j \mu(B_j)\,b_j = \int s\,d\mu`$ ([The integral of a simple function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md)). For general f take simple $`s_n \uparrow f`$ pointwise ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). Each $`t \mapsto \mu(s_n > t)`$ and $`t \mapsto \mu(f > t)`$ is non-increasing, hence Borel measurable. For fixed t, the sets $`\{s_n > t\}`$ increase, and their union is $`\{f > t\}`$: if $`f(\omega) > t`$ then $`s_n(\omega) > t`$ for large n. Continuity of measure from below ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) gives $`\mu(s_n > t) \uparrow \mu(f > t)`$ for every t. The monotone convergence theorem ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)), once on $`[0, \infty)`$ and once on $`\Omega`$, gives $`\int_0^\infty \mu(f > t)\,dt = \lim_n \int_0^\infty \mu(s_n > t)\,dt = \lim_n \int s_n\,d\mu = \int f\,d\mu`$.
 
-**Claim 6: signed X.** Write $X = X^+ - X^-$ with $X^+ = \max(X, 0)$, $X^- = \max(-X, 0)$. For $t \ge 0$, $\{X^+ > t\} = \{X > t\}$ and $\{X^- > t\} = \{X < -t\}$. Claim 2 for each part gives $E[X^+] = \int_0^\infty P(X > t)\,dt$ and $E[X^-] = \int_0^\infty P(X < -t)\,dt$. When at least one is finite, $E[X] = E[X^+] - E[X^-]$ by the definition of the integral of a signed function ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)).
+**Claim 4: moments.** Let $`p > 0`$. For $`a \in [0, \infty]`$, $`a^p = \int_0^\infty p\,t^{p-1}\,\mathbf 1\{t < a\}\,dt`$ by the fundamental theorem of calculus on $`[0, a)`$ (and monotone convergence when $`a = \infty`$). The measure $`p\,t^{p-1}\,dt`$ on $`[0, \infty)`$ is σ-finite. Claim 1 and Tonelli with it in place of $`\lambda`$ give $`\int f^p\,d\mu = \int_0^\infty p\,t^{p-1}\,\mu(f > t)\,dt`$ for σ-finite $`\mu`$; for a general measure, apply Claim 3 to $`f^p`$, use $`\{f^p > u\} = \{f > u^{1/p}\}`$, and substitute $`u = t^p`$.
 
-**Claim 7: the board.** $\{M \le t\} = [0, t]^2$ for $0 \le t \le 1$, so $P(M > t) = 1 - t^2$ there and 0 beyond. Claim 4 gives $E[M^p] = 1 - \frac{p}{p+2} = \frac{2}{p+2}$; Tonelli on the triangle $\{y < x\}$, doubled by symmetry (the diagonal has area 0), gives $2\int_0^1 x^{p+1}\,dx$, the same.
+**Claim 5: shift.** For real K and $`a \in [-\infty, \infty]`$, $`(a - K)^+ = \lambda([K, \infty) \cap [K, a)) = \int_K^\infty \mathbf 1\{t < a\}\,dt`$. The region $`\{(\omega, t) : K \le t < X(\omega)\}`$ is the union over rationals $`r > K`$ of $`\{X > r\} \times [K, r)`$. Tonelli gives $`E[(X - K)^+] = \int_K^\infty P(X > t)\,dt`$.
+
+**Claim 6: signed X.** Write $`X = X^+ - X^-`$ with $`X^+ = \max(X, 0)`$, $`X^- = \max(-X, 0)`$. For $`t \ge 0`$, $`\{X^+ > t\} = \{X > t\}`$ and $`\{X^- > t\} = \{X < -t\}`$. Claim 2 for each part gives $`E[X^+] = \int_0^\infty P(X > t)\,dt`$ and $`E[X^-] = \int_0^\infty P(X < -t)\,dt`$. When at least one is finite, $`E[X] = E[X^+] - E[X^-]`$ by the definition of the integral of a signed function ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)).
+
+**Claim 7: the board.** $`\{M \le t\} = [0, t]^2`$ for $`0 \le t \le 1`$, so $`P(M > t) = 1 - t^2`$ there and 0 beyond. Claim 4 gives $`E[M^p] = 1 - \frac{p}{p+2} = \frac{2}{p+2}`$; Tonelli on the triangle $`\{y < x\}`$, doubled by symmetry (the diagonal has area 0), gives $`2\int_0^1 x^{p+1}\,dx`$, the same.
 
 </details>
 
@@ -186,7 +200,7 @@ The larger coordinate of a random dart is 2/3 m on average, and the three tail r
 | Integrate P(M ≤ t) instead of the tail | 1/3, not 2/3 | that area is the average of 1 − M, the gap to the top |
 | Stop at a height T for Y = 1/x | 3.3026, 5.6052, 7.9078 at T = 10, 100, 1000 | nothing breaks: the tail 1/t has infinite area, and the mean is infinite on both roads |
 
-For D, the set $\{D > t\}$ is a triangle of area (1 − t)^2/2, whose area over t from 0 to 1 is 1/6.
+For D, the set $`\{D > t\}`$ is a triangle of area (1 − t)^2/2, whose area over t from 0 to 1 is 1/6.
 
 ---
 
@@ -532,12 +546,12 @@ The two outputs match line for line. The simulated E[M], 0.6664, is within one s
 
 Lean proves the layer-cake, moment and shifted formulas in general, and checks the grid and board arithmetic exactly.
 
-- Take any measure space and a measurable $f \ge 0$, the value $+\infty$ allowed. Then $\int f\,d\mu$ equals the area under the tail sizes $\mu(f > t)$.
-- Take the same f and a power $p > 0$. Then $\int f^p\,d\mu$ is the area under $\mu(f > t)$ weighted by $p\,t^{p-1}$.
-- Take a random variable X on a probability space and any height K. Then $E[(X - K)^+]$ is the area under $P(X > t)$ from K on.
+- Take any measure space and a measurable $`f \ge 0`$, the value $`+\infty`$ allowed. Then $`\int f\,d\mu`$ equals the area under the tail sizes $`\mu(f > t)`$.
+- Take the same f and a power $`p > 0`$. Then $`\int f^p\,d\mu`$ is the area under $`\mu(f > t)`$ weighted by $`p\,t^{p-1}`$.
+- Take a random variable X on a probability space and any height K. Then $`E[(X - K)^+]`$ is the area under $`P(X > t)`$ from K on.
 - On the sixteen-point grid, the larger coordinate is k/4 on 1, 3, 5, 7 points for k = 1, 2, 3, 4.
 - The points with max above 0, 1/4, 2/4, 3/4 number 16, 15, 12, 7.
-- Counting the blocks by columns and by rows gives the same total, 50. So $E[M_4] = 50/64 = 25/32$.
+- Counting the blocks by columns and by rows gives the same total, 50. So $`E[M_4] = 50/64 = 25/32`$.
 - Take n = 4. Then (n + 1)(4n − 1)/(6n^2) = 25/32. The overshoot 25/32 − 2/3 equals (3n − 1)/(6n^2).
 - Take n = 2 or n = 10. Then the direct average on the n by n grid is (n + 1)(4n − 1)/(6n^2) too.
 - On the board, the variance is 1/2 − 4/9 = 1/18. The Markov rectangle, 3/8, lies below 2/3.
@@ -769,7 +783,7 @@ example : (1 : ℚ) / 2 * (3 / 4) = 3 / 8 ∧ (3 : ℚ) / 8 < 2 / 3 := by norm_n
 - **Reliability and survival.** A component's expected lifetime is the area under its survival curve, the probability it still works at time t; no density is needed.
 - **Stop-loss insurance.** A reinsurer pays the part of a loss above a retention K; its expected payment is the tail area from K on, the shifted formula.
 - **Heavy tails.** Claim sizes and file sizes have tails falling like a power of t; the exponent decides which moments exist.
-- **Inequalities.** Markov's inequality is the rectangle under the tail curve ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)); in harmonic analysis the size of a function in $L^p$ is computed from its tail sizes by the moment formula.
+- **Inequalities.** Markov's inequality is the rectangle under the tail curve ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)); in harmonic analysis the size of a function in $`L^p`$ is computed from its tail sizes by the moment formula.
 - **Maxima of independent readings.** P(M ≤ t) = t × t because the coordinates are independent ([Independence as a product](04-independence-as-a-product-measure.md)); the tail of a sum x + y comes from [Convolution](05-convolution-and-sums.md).
 
 > **Say it back**

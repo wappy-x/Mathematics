@@ -38,41 +38,43 @@ Upper line (orange): Black-Cox, default at the first touch of the barrier at any
 
 ## The formula
 
-Notation first, in words. The asset value at time $t$ years is $V_t$; today's value is $V_0$. The **first-passage time** $\tau$ is the first moment $V_t$ touches the barrier $H$. Default within the year is the event that $\tau$ comes at or before $T$. Work on a log scale: $b$ is the barrier in log units, $b = \ln(H/V_0)$, negative because the barrier sits below today's value. $N(x)$ is the bell-curve area to the left of $x$.
+Notation first, in words. The asset value at time $`t`$ years is $`V_t`$; today's value is $`V_0`$. The **first-passage time** $`\tau`$ is the first moment $`V_t`$ touches the barrier $`H`$. Default within the year is the event that $`\tau`$ comes at or before $`T`$. Work on a log scale: $`b`$ is the barrier in log units, $`b = \ln(H/V_0)`$, negative because the barrier sits below today's value. $`N(x)`$ is the bell-curve area to the left of $`x`$.
 
-$$P(\tau \le T) \;=\; N\!\left(\frac{b - \nu T}{\sigma\sqrt T}\right) \;+\; \left(\frac{H}{V_0}\right)^{2\nu/\sigma^2} N\!\left(\frac{b + \nu T}{\sigma\sqrt T}\right)$$
+```math
+P(\tau \le T) \;=\; N\!\left(\frac{b - \nu T}{\sigma\sqrt T}\right) \;+\; \left(\frac{H}{V_0}\right)^{2\nu/\sigma^2} N\!\left(\frac{b + \nu T}{\sigma\sqrt T}\right)
+```
 
-**Read it aloud:** the chance of finishing the year below the barrier, plus the chance that a path started at the mirror image of today's value (log level $2b$) finishes above the barrier, the second scaled by a weight that accounts for drift.
+**Read it aloud:** the chance of finishing the year below the barrier, plus the chance that a path started at the mirror image of today's value (log level $`2b`$) finishes above the barrier, the second scaled by a weight that accounts for drift.
 
-The first term is Merton's check moved to the level $H$. The second is the reflection term, the paths that touched and recovered.
+The first term is Merton's check moved to the level $`H`$. The second is the reflection term, the paths that touched and recovered.
 
 | Symbol | Plain meaning | In our example | Push it up and the default chance… |
 | --- | --- | --- | --- |
-| $t$, $V_t$, $V_0$ | a time in years; the firm's asset value then, and today | $100m today | $V_0$ up: falls, further to fall |
-| $D$ | the face value of the debt, due at $T$ | $80m | no effect on the touch alone; it sets Merton's trigger |
-| $H$ | the barrier: the asset level at which lenders take over | $80m, then $70m and $60m | rises steeply: 0.72% at $60m, 22.24% at $80m |
-| $T$ | the horizon in years | 1 | rises: more time to touch |
-| $r$ | the riskless rate, continuously compounded | 5% | falls: a faster upward drift in the pricing world |
-| $\sigma$ | asset volatility: the yearly spread of log asset moves | 20% | rises: bigger swings reach the barrier more often |
-| $\nu$ | the drift of log assets in the pricing world, $r - \tfrac12\sigma^2$ | 0.03 | falls |
-| $b$ | the barrier in log units, $\ln(H/V_0)$ | $\ln 0.8 = -0.223144$ | rises toward 0 as the barrier nears today's value |
-| $N$ | bell-curve area to the left of a point: a probability | $N(-1.265718) = 0.102807$ | — |
-| $\tau$ | the first-passage time, when default happens | unknown today | — |
-| $X_t$, $X_T$, $W_t$, $p_0$ | in the proof: log assets $\ln(V_t/V_0)$, their value at $T$, their random part (a standard Brownian motion), and the bell-curve density centred at 0 | $X_T$ centred at 0.03, spread 0.20 | — |
-| $x$, $y$, $\Delta$ | log asset levels at the start and end of one simulated step, and the step's length in years | step length 1/12 | — |
+| $`t`$, $`V_t`$, $`V_0`$ | a time in years; the firm's asset value then, and today | $100m today | $`V_0`$ up: falls, further to fall |
+| $`D`$ | the face value of the debt, due at $`T`$ | $80m | no effect on the touch alone; it sets Merton's trigger |
+| $`H`$ | the barrier: the asset level at which lenders take over | $80m, then $70m and $60m | rises steeply: 0.72% at $60m, 22.24% at $80m |
+| $`T`$ | the horizon in years | 1 | rises: more time to touch |
+| $`r`$ | the riskless rate, continuously compounded | 5% | falls: a faster upward drift in the pricing world |
+| $`\sigma`$ | asset volatility: the yearly spread of log asset moves | 20% | rises: bigger swings reach the barrier more often |
+| $`\nu`$ | the drift of log assets in the pricing world, $`r - \tfrac12\sigma^2`$ | 0.03 | falls |
+| $`b`$ | the barrier in log units, $`\ln(H/V_0)`$ | $`\ln 0.8 = -0.223144`$ | rises toward 0 as the barrier nears today's value |
+| $`N`$ | bell-curve area to the left of a point: a probability | $`N(-1.265718) = 0.102807`$ | — |
+| $`\tau`$ | the first-passage time, when default happens | unknown today | — |
+| $`X_t`$, $`X_T`$, $`W_t`$, $`p_0`$ | in the proof: log assets $`\ln(V_t/V_0)`$, their value at $`T`$, their random part (a standard Brownian motion), and the bell-curve density centred at 0 | $`X_T`$ centred at 0.03, spread 0.20 | — |
+| $`x`$, $`y`$, $`\Delta`$ | log asset levels at the start and end of one simulated step, and the step's length in years | step length 1/12 | — |
 
 Two helper numbers have names of their own:
 
-- The **reflection weight** $(H/V_0)^{2\nu/\sigma^2}$, which is $0.8^{1.5} = 0.715542$ here. With no drift it would be 1.
-- The **bridge chance** $\exp\!\big(-2(x - b)(y - b)/(\sigma^2\Delta)\big)$: the chance that a step starting at $x$ and ending at $y$, both above the barrier, touched it somewhere in between. The proof in Step 2 derives it; the simulation uses it.
+- The **reflection weight** $`(H/V_0)^{2\nu/\sigma^2}`$, which is $`0.8^{1.5} = 0.715542`$ here. With no drift it would be 1.
+- The **bridge chance** $`\exp\!\big(-2(x - b)(y - b)/(\sigma^2\Delta)\big)`$: the chance that a step starting at $`x`$ and ending at $`y`$, both above the barrier, touched it somewhere in between. The proof in Step 2 derives it; the simulation uses it.
 
 ### When it holds
 
 - **Continuous paths.** The assets move without jumps, so a default lands exactly on the barrier. A sudden loss that jumps the assets from $85m to $70m overnight is outside the model; [Where structural models break](06-where-structural-models-fail.md) shows what that costs.
 - **Watched every instant.** A covenant tested monthly misses touches between tests. Here monthly tests give 16.74% in the simulation, not 22.24%.
 - **A flat barrier, constant rate and volatility, no payouts.** Black and Cox allowed a barrier that rises over time and a firm that pays out cash; both change the formula. With constant inputs it is the one above.
-- **Barrier below today's value.** With $H \ge V_0$ the firm is already in default. With $H$ near zero the chance goes to zero.
-- **Pricing world, not a forecast.** With $\nu = r - \tfrac12\sigma^2$ the answer is the chance used for pricing. The real-world chance uses the asset's expected growth instead: 0.184582 with an 8% expected return.
+- **Barrier below today's value.** With $`H \ge V_0`$ the firm is already in default. With $`H`$ near zero the chance goes to zero.
+- **Pricing world, not a forecast.** With $`\nu = r - \tfrac12\sigma^2`$ the answer is the chance used for pricing. The real-world chance uses the asset's expected growth instead: 0.184582 with an 8% expected return.
 
 ---
 
@@ -82,82 +84,87 @@ Two helper numbers have names of their own:
 
 A path defaults when its lowest value during the year reaches the barrier. Merton looks only at the last value. So every path splits in two: it ends below the barrier, or it ends above but touched on the way.
 
-Paths ending below the barrier must have touched it. They started at $100m, above, and move without jumps. So the first group is simply "ends below $80m", Merton's event at the level $H$:
+Paths ending below the barrier must have touched it. They started at $100m, above, and move without jumps. So the first group is simply "ends below $80m", Merton's event at the level $`H`$:
 
-$$N\!\left(\frac{b - \nu T}{\sigma\sqrt T}\right) = N(-1.265718) = 0.102807.$$
+```math
+N\!\left(\frac{b - \nu T}{\sigma\sqrt T}\right) = N(-1.265718) = 0.102807.
+```
 
 The whole difficulty is the second group: touched and recovered.
 
 ### Step 1: without drift, a mirror counts the recovered paths
 
-Take a path that touches the barrier and ends above it. After the first touch, flip the rest of the path upside down about the barrier. A path that ended $y$ above the barrier in log units now ends $y$ below it.
+Take a path that touches the barrier and ends above it. After the first touch, flip the rest of the path upside down about the barrier. A path that ended $`y`$ above the barrier in log units now ends $`y`$ below it.
 
 The flip pairs every touched-and-recovered path with exactly one path that ends below the barrier. With no drift, up and down moves are equally likely, so the flip keeps probabilities ([Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)). The recovered group is as likely as the "ends below" group. So without drift the default chance is exactly twice Merton's term at the same level.
 
-The check confirms it. Set the rate to 2%, so $\nu = 0.02 - \tfrac12(0.20)^2 = 0$. Adding up the first-touch times gives 0.264543, and twice the finish-below term gives 0.264543.
+The check confirms it. Set the rate to 2%, so $`\nu = 0.02 - \tfrac12(0.20)^2 = 0`$. Adding up the first-touch times gives 0.264543, and twice the finish-below term gives 0.264543.
 
 ### Step 2: drift tilts the mirror by one weight
 
 With an upward drift the flip no longer keeps probabilities. The original path climbs back after the touch, going with the drift. Its mirror keeps falling, against it. The mirror is rarer.
 
-How much rarer depends only on where the path ends, not on its shape in between. That makes the correction a single number, the reflection weight $(H/V_0)^{2\nu/\sigma^2}$. Here $2\nu/\sigma^2 = 0.06/0.04 = 1.5$ and the weight is $0.8^{1.5} = 0.715542$.
+How much rarer depends only on where the path ends, not on its shape in between. That makes the correction a single number, the reflection weight $`(H/V_0)^{2\nu/\sigma^2}`$. Here $`2\nu/\sigma^2 = 0.06/0.04 = 1.5`$ and the weight is $`0.8^{1.5} = 0.715542`$.
 
-Reflect today's value in the barrier: on the log scale it lands at $2b$. The mirror count is the chance that a path started there finishes above the barrier. That is the bell-curve area $N\big((b + \nu T)/(\sigma\sqrt T)\big) = N(-0.965718) = 0.167093$. Times the weight: $0.715542 \times 0.167093 = 0.119562$.
+Reflect today's value in the barrier: on the log scale it lands at $`2b`$. The mirror count is the chance that a path started there finishes above the barrier. That is the bell-curve area $`N\big((b + \nu T)/(\sigma\sqrt T)\big) = N(-0.965718) = 0.167093`$. Times the weight: $`0.715542 \times 0.167093 = 0.119562`$.
 
 <details>
 <summary>Detailed proof: the drifted reflection, and the bridge chance</summary>
 
-Write $X_t = \ln(V_t/V_0) = \nu t + \sigma W_t$, with $W_t$ a standard Brownian motion, and $b < 0$. Let $p_\nu(y)$ be the bell-curve density of $X_T$: centre $\nu T$, spread $s = \sigma\sqrt T$. Let $p_0$ be the same with centre 0.
+Write $`X_t = \ln(V_t/V_0) = \nu t + \sigma W_t`$, with $`W_t`$ a standard Brownian motion, and $`b < 0`$. Let $`p_\nu(y)`$ be the bell-curve density of $`X_T`$: centre $`\nu T`$, spread $`s = \sigma\sqrt T`$. Let $`p_0`$ be the same with centre 0.
 
-**Finish below.** $P(X_T \le b) = N\big((b - \nu T)/s\big)$. Every such path has touched $b$, since paths are continuous and start at 0.
+**Finish below.** $`P(X_T \le b) = N\big((b - \nu T)/s\big)`$. Every such path has touched $`b`$, since paths are continuous and start at 0.
 
-**Driftless reflection.** For $y > b$, the density of paths that touch $b$ and end at $y$ is $p_0(2b - y)$. That is the reflection principle.
+**Driftless reflection.** For $`y > b`$, the density of paths that touch $`b`$ and end at $`y`$ is $`p_0(2b - y)`$. That is the reflection principle.
 
-**Adding drift.** Relative to the driftless path, the drifted path has the likelihood ratio $\exp\big(\nu y/\sigma^2 - \nu^2 T/(2\sigma^2)\big)$, which depends only on the end point $y$ (Girsanov's theorem in its simplest form; completing the square in $p_\nu(y)/p_0(y)$ checks it). So the drifted density of touched paths ending at $y$ is $p_0(2b - y)\exp\big(\nu y/\sigma^2 - \nu^2T/(2\sigma^2)\big)$. The bell curve $p_0$ is symmetric, so $p_0(2b - y) = p_0(y - 2b)$, and the same ratio at $y - 2b$ turns this into
-$$e^{2\nu b/\sigma^2}\, p_\nu(y - 2b).$$
+**Adding drift.** Relative to the driftless path, the drifted path has the likelihood ratio $`\exp\big(\nu y/\sigma^2 - \nu^2 T/(2\sigma^2)\big)`$, which depends only on the end point $`y`$ (Girsanov's theorem in its simplest form; completing the square in $`p_\nu(y)/p_0(y)`$ checks it). So the drifted density of touched paths ending at $`y`$ is $`p_0(2b - y)\exp\big(\nu y/\sigma^2 - \nu^2T/(2\sigma^2)\big)`$. The bell curve $`p_0`$ is symmetric, so $`p_0(2b - y) = p_0(y - 2b)`$, and the same ratio at $`y - 2b`$ turns this into
 
-**Integrate.** Over $y > b$, $\int p_\nu(y - 2b)\,dy$ is the chance that $X_T > -b$, which is $N\big((b + \nu T)/s\big)$. And $e^{2\nu b/\sigma^2} = (H/V_0)^{2\nu/\sigma^2}$ because $e^b = H/V_0$. The two groups do not overlap, so their chances add to the formula.
+$`\displaystyle e^{2\nu b/\sigma^2}\, p_\nu(y - 2b).`$
 
-**The bridge chance.** Divide the touched density by the density of all paths ending at $y$: $e^{2\nu b/\sigma^2} p_\nu(y - 2b)/p_\nu(y)$. Expanding both squares, the $\nu$ terms cancel and the ratio is $\exp\big(2b(y - b)/(\sigma^2 T)\big)$. The drift has vanished: once the end point is fixed, the path in between (a **Brownian bridge**) does not feel the drift. For a step that starts at $x$ instead of 0 and lasts $\Delta$ years, shift and rescale: $\exp\big(-2(x - b)(y - b)/(\sigma^2\Delta)\big)$.
+**Integrate.** Over $`y > b`$, $`\int p_\nu(y - 2b)\,dy`$ is the chance that $`X_T > -b`$, which is $`N\big((b + \nu T)/s\big)`$. And $`e^{2\nu b/\sigma^2} = (H/V_0)^{2\nu/\sigma^2}`$ because $`e^b = H/V_0`$. The two groups do not overlap, so their chances add to the formula.
 
-**The same count by time.** Differentiating the formula in $T$ gives the density of the first-touch time, $f(t) = \dfrac{-b}{\sigma\sqrt{2\pi t^3}}\exp\!\Big(-\dfrac{(b - \nu t)^2}{2\sigma^2 t}\Big)$, the inverse Gaussian law. It can also be found without reflection, from the exponential martingale of $X_t$ stopped at $\tau$. Adding it up from 0 to $T$ must return the formula.
+**The bridge chance.** Divide the touched density by the density of all paths ending at $`y`$: $`e^{2\nu b/\sigma^2} p_\nu(y - 2b)/p_\nu(y)`$. Expanding both squares, the $`\nu`$ terms cancel and the ratio is $`\exp\big(2b(y - b)/(\sigma^2 T)\big)`$. The drift has vanished: once the end point is fixed, the path in between (a **Brownian bridge**) does not feel the drift. For a step that starts at $`x`$ instead of 0 and lasts $`\Delta`$ years, shift and rescale: $`\exp\big(-2(x - b)(y - b)/(\sigma^2\Delta)\big)`$.
+
+**The same count by time.** Differentiating the formula in $`T`$ gives the density of the first-touch time, $`f(t) = \dfrac{-b}{\sigma\sqrt{2\pi t^3}}\exp\!\Big(-\dfrac{(b - \nu t)^2}{2\sigma^2 t}\Big)`$, the inverse Gaussian law. It can also be found without reflection, from the exponential martingale of $`X_t`$ stopped at $`\tau`$. Adding it up from 0 to $`T`$ must return the formula.
 
 </details>
 
 ### Step 3: add the two groups
 
-$$P(\tau \le T) = 0.102807 + 0.119562 = 0.222369.$$
+```math
+P(\tau \le T) = 0.102807 + 0.119562 = 0.222369.
+```
 
 The reflection term is slightly bigger than the finish-below term: more than half of the paths that touch $80m during the year are back above it by December.
 
 ### Step 4: read the same count as a chance for one step
 
-The proof also gives the chance that a path touched the barrier *between* two known points. For a step from log level $x$ to $y$, both above $b$, lasting $\Delta$ years, it is $\exp\big(-2(x - b)(y - b)/(\sigma^2\Delta)\big)$. It is near 1 when either end is close to the barrier, and tiny when both are far away. The drift is absent, because fixing both ends removes it.
+The proof also gives the chance that a path touched the barrier *between* two known points. For a step from log level $`x`$ to $`y`$, both above $`b`$, lasting $`\Delta`$ years, it is $`\exp\big(-2(x - b)(y - b)/(\sigma^2\Delta)\big)`$. It is near 1 when either end is close to the barrier, and tiny when both are far away. The drift is absent, because fixing both ends removes it.
 
 This is what makes simulation honest. A simulation that samples the path monthly sees only twelve points. Between them the path can dip and recover unseen. Drawing one random number per step against the bridge chance counts those unseen touches.
 
 ### Other roads
 
-The first-touch time has a density of its own, the inverse Gaussian law in the proof callout. Adding it up from 0 to $T$ is a second route to 0.222369, and the check does it. A third route is the simulation, with no formula inside it at all. The same mirror prices barrier options: [Knock-out and knock-in options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md) uses it to value a call that dies at a barrier.
+The first-touch time has a density of its own, the inverse Gaussian law in the proof callout. Adding it up from 0 to $`T`$ is a second route to 0.222369, and the check does it. A third route is the simulation, with no formula inside it at all. The same mirror prices barrier options: [Knock-out and knock-in options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md) uses it to value a call that dies at a barrier.
 
 ---
 
 ## Worked numbers, by hand
 
-The firm: $V_0 = 100$, barrier $H = 80$, $T = 1$, $r = 5\%$, $\sigma = 20\%$, money in $m.
+The firm: $`V_0 = 100`$, barrier $`H = 80`$, $`T = 1`$, $`r = 5\%`$, $`\sigma = 20\%`$, money in $m.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| drift of log assets, $\nu$ | $0.05 - \tfrac12(0.20)^2$ | 0.030000 |
-| barrier in log units, $b$ | $\ln(80/100)$ | −0.223144 |
-| finish-below point | $(−0.223144 − 0.03)/0.20$ | −1.265718 |
-| finish below $80m | $N(−1.265718)$ | 0.102807 |
-| weight exponent | $2 \times 0.03 / 0.04$ | 1.500000 |
-| reflection weight | $0.8^{1.5}$ | 0.715542 |
-| mirror point | $(−0.223144 + 0.03)/0.20$ | −0.965718 |
-| mirrored paths below it | $N(−0.965718)$ | 0.167093 |
-| reflection term | $0.715542 \times 0.167093$ | 0.119562 |
-| **default within the year** | $0.102807 + 0.119562$ | **0.222369** |
+| drift of log assets, $`\nu`$ | $`0.05 - \tfrac12(0.20)^2`$ | 0.030000 |
+| barrier in log units, $`b`$ | $`\ln(80/100)`$ | −0.223144 |
+| finish-below point | $`(−0.223144 − 0.03)/0.20`$ | −1.265718 |
+| finish below $80m | $`N(−1.265718)`$ | 0.102807 |
+| weight exponent | $`2 \times 0.03 / 0.04`$ | 1.500000 |
+| reflection weight | $`0.8^{1.5}`$ | 0.715542 |
+| mirror point | $`(−0.223144 + 0.03)/0.20`$ | −0.965718 |
+| mirrored paths below it | $`N(−0.965718)`$ | 0.167093 |
+| reflection term | $`0.715542 \times 0.167093`$ | 0.119562 |
+| **default within the year** | $`0.102807 + 0.119562`$ | **0.222369** |
 
 Lower barriers, same steps:
 
@@ -175,7 +182,7 @@ A covenant at $80m more than doubles the pricing-world default chance of this fi
 | --- | --- | --- |
 | Drop the reflection term | 0.102807 | Merton's year-end check: every dip-and-recover path is missed |
 | Mirror without the weight | 0.269900 | Treats the drift as zero; the mirrored paths fight the drift and are rarer |
-| Weight with its sign flipped, $(V_0/H)^{2\nu/\sigma^2}$ | 0.336326 | Makes the mirrored paths more likely than the originals |
+| Weight with its sign flipped, $`(V_0/H)^{2\nu/\sigma^2}`$ | 0.336326 | Makes the mirrored paths more likely than the originals |
 | Simulate monthly, no bridge chance | about 0.1674 | Counts only touches that land on a month end |
 
 The code prints every row.
@@ -196,7 +203,7 @@ xychart-beta
     line [0.00, 0.26, 1.05, 2.17, 3.40, 4.61, 5.76, 6.83, 7.81, 8.71, 9.53, 10.28]
 ```
 
-Upper line (orange): Black-Cox, the chance the assets have touched $80m by the end of that month, from the formula with $T$ set to that many twelfths. Lower line (green): the chance the assets sit below $80m at that month end. The simulation's month-by-month count tracks the upper line: 2.23% by month three, 9.91% by month six, 22.18% by month twelve.
+Upper line (orange): Black-Cox, the chance the assets have touched $80m by the end of that month, from the formula with $`T`$ set to that many twelfths. Lower line (green): the chance the assets sit below $80m at that month end. The simulation's month-by-month count tracks the upper line: 2.23% by month three, 9.91% by month six, 22.18% by month twelve.
 
 ### One force at a time: how often the lender looks
 
@@ -211,7 +218,7 @@ how often the $80m level is checked     chance of default within the year, %
   continuously (formula)                ██████████████████████████████    22.24
 ```
 
-Looking more often finds more defaults, because more of the dips are seen. The shifted-barrier rule treats monthly checks as continuous watching of a slightly lower barrier, $80 \times e^{-0.5826 \times 0.20 \times \sqrt{1/12}} = 77.3538$; it lands within half a point of the monthly simulation ([Daily monitoring](../16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md)).
+Looking more often finds more defaults, because more of the dips are seen. The shifted-barrier rule treats monthly checks as continuous watching of a slightly lower barrier, $`80 \times e^{-0.5826 \times 0.20 \times \sqrt{1/12}} = 77.3538`$; it lands within half a point of the monthly simulation ([Daily monitoring](../16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md)).
 
 ### The other force: where the barrier sits
 
@@ -221,7 +228,7 @@ Hold the watching continuous and move the level. From $80m to $70m the chance fa
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported that knows the answer. The bell-curve area is a power series in Python and a sum of thin slices (Simpson's rule) in Rust. The answer is reached three ways: the reflection formula; adding up the density of the first-touch time from 0 to $T$; and a simulation of 40,000 monthly paths with the bridge chance drawn inside each month. A fourth calculation integrates the bridge chance against the end-point bell curve to recover the reflection term on its own. Both programs use the same xorshift random-number stream, so their simulated counts agree exactly.
+Nothing is imported that knows the answer. The bell-curve area is a power series in Python and a sum of thin slices (Simpson's rule) in Rust. The answer is reached three ways: the reflection formula; adding up the density of the first-touch time from 0 to $`T`$; and a simulation of 40,000 monthly paths with the bridge chance drawn inside each month. A fourth calculation integrates the bridge chance against the end-point bell curve to recover the reflection term on its own. Both programs use the same xorshift random-number stream, so their simulated counts agree exactly.
 
 ### Python
 
@@ -557,12 +564,12 @@ The two outputs are identical line for line: different bell-curve routes agree t
 
 Lean proves the main formula for every flat barrier below today's value, and two steps of the detailed proof.
 
-- Suppose $W_t$ is a standard Brownian motion, $\nu = r - \tfrac12\sigma^2$, $\sigma > 0$, $T > 0$ and $0 < H < V_0$. Then $V_t = V_0 e^{\nu t + \sigma W_t}$ touches $H$ by time $T$ with the chance in the formula above.
-- Take any end point $y$. Then $p_0(2b - y)$ times the drift's likelihood ratio equals $e^{2\nu b/\sigma^2}\, p_\nu(y - 2b)$.
-- Take any end point $y$. Then the touched density over $p_\nu(y)$ is $\exp\big(2b(y - b)/(\sigma^2 T)\big)$, free of $\nu$.
-- Take $r = 5\%$ and $\sigma = 20\%$. Then $\nu = 0.03$, the weight exponent is 1.5, and $0.8^{1.5}$ rounds to 0.715542.
-- Take the Try changing inputs. Then $\nu$ is 0 at a 2% rate, 0.005 at 30% volatility, and 0.06 for 8% growth.
-- Take $H = 80$. Then the two terms add up exactly: 0.102807 + 0.119562 = 0.222369.
+- Suppose $`W_t`$ is a standard Brownian motion, $`\nu = r - \tfrac12\sigma^2`$, $`\sigma > 0`$, $`T > 0`$ and $`0 < H < V_0`$. Then $`V_t = V_0 e^{\nu t + \sigma W_t}`$ touches $`H`$ by time $`T`$ with the chance in the formula above.
+- Take any end point $`y`$. Then $`p_0(2b - y)`$ times the drift's likelihood ratio equals $`e^{2\nu b/\sigma^2}\, p_\nu(y - 2b)`$.
+- Take any end point $`y`$. Then the touched density over $`p_\nu(y)`$ is $`\exp\big(2b(y - b)/(\sigma^2 T)\big)`$, free of $`\nu`$.
+- Take $`r = 5\%`$ and $`\sigma = 20\%`$. Then $`\nu = 0.03`$, the weight exponent is 1.5, and $`0.8^{1.5}`$ rounds to 0.715542.
+- Take the Try changing inputs. Then $`\nu`$ is 0 at a 2% rate, 0.005 at 30% volatility, and 0.06 for 8% growth.
+- Take $`H = 80`$. Then the two terms add up exactly: 0.102807 + 0.119562 = 0.222369.
 
 The bell-curve values such as 0.102807, the first-touch density and every simulation are left to the Python and Rust checks.
 
@@ -1524,10 +1531,10 @@ example : (102807 : ℕ) + 119562 = 222369 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
-> - **Remove the drift.** Set `r = 0.02`, so $\nu = 0$. The default chance becomes 0.264543, exactly twice the finish-below term. Drift was pulling the assets away from the barrier; without it the mirror is exact.
-> - **More volatile assets.** Set `sigma = 0.30` (and so $\nu = 0.005$). Black-Cox rises to 0.451333; the year-end check to 0.223484. The ratio stays about two.
+> - **Remove the drift.** Set `r = 0.02`, so $`\nu = 0`$. The default chance becomes 0.264543, exactly twice the finish-below term. Drift was pulling the assets away from the barrier; without it the mirror is exact.
+> - **More volatile assets.** Set `sigma = 0.30` (and so $`\nu = 0.005`$). Black-Cox rises to 0.451333; the year-end check to 0.223484. The ratio stays about two.
 > - **Five years.** Set `T = 5.0`. Black-Cox gives 0.513325 against 0.202035 at the year-five check. Over long horizons the touch-and-recover paths dominate.
-> - **The real world.** Replace $\nu$ by $0.08 - 0.02 = 0.06$, the house example's 8% expected asset growth. The chance falls to 0.184582 against 0.078429 at year end. Real-world default chances are lower than pricing-world ones, because investors are paid for bearing the risk.
+> - **The real world.** Replace $`\nu`$ by $`0.08 - 0.02 = 0.06`$, the house example's 8% expected asset growth. The chance falls to 0.184582 against 0.078429 at year end. Real-world default chances are lower than pricing-world ones, because investors are paid for bearing the risk.
 
 ---
 

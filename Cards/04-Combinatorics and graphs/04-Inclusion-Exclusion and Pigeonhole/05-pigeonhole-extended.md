@@ -35,22 +35,24 @@ The left branch rules out 8; the right reaches 9. Between them, 9 is exact.
 
 Two pieces of notation, in words first. Corner marks on either side of a number say: round it up to the next whole number. So 8.3333 becomes 9, and 9 stays 9. Straight bars on either side of a set count its members.
 
-$$\max_i \ \lvert B_i \rvert \ \ge\ \left\lceil \frac{n}{k} \right\rceil$$
+```math
+\max_i \ \lvert B_i \rvert \ \ge\ \left\lceil \frac{n}{k} \right\rceil
+```
 
 **Read it aloud:** however the items are placed, the fullest box holds at least the average load, rounded up.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | how many items are placed | 100 emails | a fuller box |
-| $k$ | how many boxes they go into | 12 folders | an emptier box |
-| $B_i$ | the items that landed in box number i | one folder's emails | — |
-| $\lvert B_i \rvert$ | that box's load: how many it holds | 8 or 9 | — |
-| $\max_i \lvert B_i \rvert$ | the largest load, over every box | the fullest folder's 9 | — |
-| $n/k$ | the average load, spread perfectly evenly | 8.3333 | — |
-| $\lceil n/k \rceil$ | that average rounded up | 9 | — |
-| $q$, $r$ | how many whole times $k$ goes into $n$, and the leftover | 8 and 4 | one more crowded box |
+| $`n`$ | how many items are placed | 100 emails | a fuller box |
+| $`k`$ | how many boxes they go into | 12 folders | an emptier box |
+| $`B_i`$ | the items that landed in box number i | one folder's emails | — |
+| $`\lvert B_i \rvert`$ | that box's load: how many it holds | 8 or 9 | — |
+| $`\max_i \lvert B_i \rvert`$ | the largest load, over every box | the fullest folder's 9 | — |
+| $`n/k`$ | the average load, spread perfectly evenly | 8.3333 | — |
+| $`\lceil n/k \rceil`$ | that average rounded up | 9 | — |
+| $`q`$, $`r`$ | how many whole times $`k`$ goes into $`n`$, and the leftover | 8 and 4 | one more crowded box |
 
-The even spread has its own formula: $n = q \times k + r$. Give $r$ boxes one more than $q$ and the rest $q$ each. For the inbox, 100 = 8 × 12 + 4.
+The even spread has its own formula: $`n = q \times k + r`$. Give $`r`$ boxes one more than $`q`$ and the rest $`q`$ each. For the inbox, 100 = 8 × 12 + 4.
 
 ### When it holds
 
@@ -71,7 +73,9 @@ Twelve folder loads add up to 100, so their average is 8.3333. Were every one be
 
 Every item lands in exactly one box, so counting box by box counts each item once ([The rules of sum and product](../01-Counting%20Principles/01-rules-of-sum-and-product.md)):
 
-$$\sum_{i=1}^{k} \lvert B_i \rvert = n$$
+```math
+\sum_{i=1}^{k} \lvert B_i \rvert = n
+```
 
 The sigma sign says: add up what follows, once for every box, from the first to the k-th. Divide by k and the average load is n/k. A load counts items, so it is a whole number, and the smallest whole number not below n/k is n/k rounded up — for the inbox, 9.
 
@@ -83,7 +87,7 @@ Suppose the claim fails: every box holds at most one less than n/k rounded up. R
 
 Deal the 100 emails out one at a time round the twelve folders: the loads come out 9, 9, 9, 9 and then eight folders of 8.
 
-In general the even spread gives $r$ boxes of $q + 1$ and the rest $q$. So the fullest holds $\lceil n/k \rceil$: $q + 1$ when something is left over, $q$ when $k$ divides $n$ exactly.
+In general the even spread gives $`r`$ boxes of $`q + 1`$ and the rest $`q`$. So the fullest holds $`\lceil n/k \rceil`$: $`q + 1`$ when something is left over, $`q`$ when $`k`$ divides $`n`$ exactly.
 
 The bound is attained, not a cautious estimate. The code confirms it by trying every possible filing for the 32 small cases with n up to 8 and k up to 4.
 

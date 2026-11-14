@@ -38,45 +38,49 @@ Those are the real weights for the three-step tree worked below, and they are no
 
 ## The formula
 
-Notation first, in words. The card works in **log-price**: the natural logarithm of Acme's price, so that "multiply by 1.22" becomes "add 0.2" and the branches become add, do nothing, subtract. The step length in years is $\Delta t$ and the rung spacing in log-price is $\Delta x$; each is one symbol, not a product of two.
+Notation first, in words. The card works in **log-price**: the natural logarithm of Acme's price, so that "multiply by 1.22" becomes "add 0.2" and the branches become add, do nothing, subtract. The step length in years is $`\Delta t`$ and the rung spacing in log-price is $`\Delta x`$; each is one symbol, not a product of two.
 
-The stretch $\lambda$, say "lambda", says how many standard deviations of one step the spacing is worth, and $\nu$, say "new", is the log-price's drift per year under the risk-neutral weights. The three branch weights are $p_u$ up, $p_m$ middle and $p_d$ down.
+The stretch $`\lambda`$, say "lambda", says how many standard deviations of one step the spacing is worth, and $`\nu`$, say "new", is the log-price's drift per year under the risk-neutral weights. The three branch weights are $`p_u`$ up, $`p_m`$ middle and $`p_d`$ down.
 
 The ladder of prices is the same ladder at every step:
 
-$$\Delta t = \frac{T}{n},\qquad \Delta x = \lambda\,\sigma\sqrt{\Delta t},\qquad \nu = r - q - \tfrac12\sigma^2,\qquad S_j = S\,e^{\,j\,\Delta x}$$
+```math
+\Delta t = \frac{T}{n},\qquad \Delta x = \lambda\,\sigma\sqrt{\Delta t},\qquad \nu = r - q - \tfrac12\sigma^2,\qquad S_j = S\,e^{\,j\,\Delta x}
+```
 
 **Read it aloud:** cut the year into equal steps, pick a rung spacing worth so many standard deviations of one step, and lay the prices up and down from today's. The rung number j runs from minus the step count to plus it; rung zero is today's price.
 
-$$p_u = \frac12\!\left(\frac{\sigma^2\Delta t + \nu^2\Delta t^2}{\Delta x^2} + \frac{\nu\,\Delta t}{\Delta x}\right),\qquad
-p_m = 1 - \frac{\sigma^2\Delta t + \nu^2\Delta t^2}{\Delta x^2},\qquad
-p_d = \frac12\!\left(\frac{\sigma^2\Delta t + \nu^2\Delta t^2}{\Delta x^2} - \frac{\nu\,\Delta t}{\Delta x}\right)$$
+```math
+p_u = \frac12\!\left(\frac{\sigma^2\Delta t + \nu^2\Delta t^2}{\Delta x^2} + \frac{\nu\,\Delta t}{\Delta x}\right),\qquad p_m = 1 - \frac{\sigma^2\Delta t + \nu^2\Delta t^2}{\Delta x^2},\qquad p_d = \frac12\!\left(\frac{\sigma^2\Delta t + \nu^2\Delta t^2}{\Delta x^2} - \frac{\nu\,\Delta t}{\Delta x}\right)
+```
 
 **Read it aloud:** the outer two weights split the step's jumpiness, the drift tips that split towards the up branch, and the middle weight is whatever is left.
 
-$$V_{i,j} = e^{-r\Delta t}\left(p_u\,V_{i+1,\,j+1} + p_m\,V_{i+1,\,j} + p_d\,V_{i+1,\,j-1}\right)$$
+```math
+V_{i,j} = e^{-r\Delta t}\left(p_u\,V_{i+1,\,j+1} + p_m\,V_{i+1,\,j} + p_d\,V_{i+1,\,j-1}\right)
+```
 
-**Read it aloud:** a node is worth the weighted average of the three nodes it can reach, carried back one step of interest. Start at expiry with the payoff $\max(S_j - K, 0)$ on every rung, apply that line $n$ times, and the middle rung is today's price.
+**Read it aloud:** a node is worth the weighted average of the three nodes it can reach, carried back one step of interest. Start at expiry with the payoff $`\max(S_j - K, 0)`$ on every rung, apply that line $`n`$ times, and the middle rung is today's price.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | Acme's price today | 100.00 | dearer call |
-| $K$ | the strike, the price the option may buy at | 100.00 | cheaper call |
-| $r$, $q$ | riskless rate; dividend yield, both continuously compounded | 5 percent; 2 percent | $r$ up lifts the call, $q$ up lowers it |
-| $\sigma$ | volatility, how jumpy Acme is, per square root of a year | 20 percent | dearer call, wider rungs |
-| $T$, $n$ | years to expiry; steps in the tree | 1 year; 3 by hand, 200 and 2000 in code | less error, more arithmetic |
-| $\Delta t$ | one step's length in years, $T$ divided by $n$ | 0.333333 by hand | a coarser tree |
-| $\Delta x$ | the rung spacing, in log-price | 0.200000 by hand | fatter middle weight |
-| $\lambda$ | the stretch: step-standard-deviations per rung | 1.732051, the square root of 3 | as for $\Delta x$; at or below 1 the middle weight goes negative |
-| $\nu$ | the log-price's drift per year under those weights | 0.010000 | the split tilts up |
-| $u$, $d$ | the up and down multipliers, $e^{\Delta x}$ and $e^{-\Delta x}$ | 1.221403 and 0.818731 | a longer ladder |
-| $p_u$, $p_m$, $p_d$, called $a_u$, $a_m$, $a_d$ on the grid side | weights on the up, middle and down branches | 0.175139, 0.666389, 0.158472 | more weight up, dearer call |
-| $V$ | the option's value at a node, step i and rung j | 8.510012 at the root | — |
+| $`S`$ | Acme's price today | 100.00 | dearer call |
+| $`K`$ | the strike, the price the option may buy at | 100.00 | cheaper call |
+| $`r`$, $`q`$ | riskless rate; dividend yield, both continuously compounded | 5 percent; 2 percent | $`r`$ up lifts the call, $`q`$ up lowers it |
+| $`\sigma`$ | volatility, how jumpy Acme is, per square root of a year | 20 percent | dearer call, wider rungs |
+| $`T`$, $`n`$ | years to expiry; steps in the tree | 1 year; 3 by hand, 200 and 2000 in code | less error, more arithmetic |
+| $`\Delta t`$ | one step's length in years, $`T`$ divided by $`n`$ | 0.333333 by hand | a coarser tree |
+| $`\Delta x`$ | the rung spacing, in log-price | 0.200000 by hand | fatter middle weight |
+| $`\lambda`$ | the stretch: step-standard-deviations per rung | 1.732051, the square root of 3 | as for $`\Delta x`$; at or below 1 the middle weight goes negative |
+| $`\nu`$ | the log-price's drift per year under those weights | 0.010000 | the split tilts up |
+| $`u`$, $`d`$ | the up and down multipliers, $`e^{\Delta x}`$ and $`e^{-\Delta x}`$ | 1.221403 and 0.818731 | a longer ladder |
+| $`p_u`$, $`p_m`$, $`p_d`$, called $`a_u`$, $`a_m`$, $`a_d`$ on the grid side | weights on the up, middle and down branches | 0.175139, 0.666389, 0.158472 | more weight up, dearer call |
+| $`V`$ | the option's value at a node, step i and rung j | 8.510012 at the root | — |
 
 ### When it holds
 
-- **Geometric Brownian motion, with $r$, $q$ and $\sigma$ steady across a step.** The weights match one step's average log-move and its spread, nothing more. A volatility one point wrong moves the price by the option's volatility sensitivity times that point.
-- **Spacing wide enough:** $\Delta x^2 \ge \sigma^2\Delta t + \nu^2\Delta t^2$, meaning $\lambda$ at or above 1.000417 at three steps, and closer to 1 as the steps shrink. Below that the middle weight is negative, and negative weight magnifies each step's error rather than smoothing it, as Step 5 traces. The other end binds only in quiet markets: the down weight stays positive while $\Delta x \le (\sigma^2 + \nu^2\Delta t)/\nu$, far above any spacing a share would use, but not above an interest rate's.
+- **Geometric Brownian motion, with $`r`$, $`q`$ and $`\sigma`$ steady across a step.** The weights match one step's average log-move and its spread, nothing more. A volatility one point wrong moves the price by the option's volatility sensitivity times that point.
+- **Spacing wide enough:** $`\Delta x^2 \ge \sigma^2\Delta t + \nu^2\Delta t^2`$, meaning $`\lambda`$ at or above 1.000417 at three steps, and closer to 1 as the steps shrink. Below that the middle weight is negative, and negative weight magnifies each step's error rather than smoothing it, as Step 5 traces. The other end binds only in quiet markets: the down weight stays positive while $`\Delta x \le (\sigma^2 + \nu^2\Delta t)/\nu`$, far above any spacing a share would use, but not above an interest rate's.
 - **European exercise.** The recursion takes the discounted average and nothing else; cashing in early needs a comparison at every node, which is [Early exercise](05-american-exercise-on-a-tree.md).
 - **A grid of fixed width needs edges; a tree grows its own.** Chop the rungs to 20 either side, call the option worthless outside, and the 200-step grid price comes out at 8.239460 instead of 9.217514.
 
@@ -88,15 +92,17 @@ $$V_{i,j} = e^{-r\Delta t}\left(p_u\,V_{i+1,\,j+1} + p_m\,V_{i+1,\,j} + p_d\,V_{
 
 Over one step the log-price must drift by the right amount on average and wiggle by the right amount around that drift. Two targets; the weights adding to one is not a third, it only means one weight is whatever is left.
 
-A two-branch step has three dials: an up size, a down size and one weight. Two go on the targets, and the third has to go on keeping the rungs even — the down size the up size's reciprocal — or each layer sits offset from the one before and there is no fixed ladder. Nothing is spare, and the spacing comes out pinned at $\Delta x^2 = \sigma^2\Delta t + \nu^2\Delta t^2$: a stretch of 1.000417 at three steps, a whisker over one standard deviation of the step.
+A two-branch step has three dials: an up size, a down size and one weight. Two go on the targets, and the third has to go on keeping the rungs even — the down size the up size's reciprocal — or each layer sits offset from the one before and there is no fixed ladder. Nothing is spare, and the spacing comes out pinned at $`\Delta x^2 = \sigma^2\Delta t + \nu^2\Delta t^2`$: a stretch of 1.000417 at three steps, a whisker over one standard deviation of the step.
 
 A three-branch step adds a dial, the third weight, and no new size to choose: the middle branch stays put. Two targets for two weights, so the spacing is nobody's job. It is free, subject only to a non-negative middle weight, and everything else follows from that.
 
 ### Step 1: what one step has to match
 
-Under the risk-neutral weights Acme's log-price drifts by $\nu\Delta t$ over a step and spreads by $\sigma^2\Delta t$ around that drift ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)); the $-\tfrac12\sigma^2$ inside $\nu$ is the usual charge for working in logs. Matching the average and the spread is the same as matching the average and the average square, which is tidier: the square of a move is $\Delta x^2$ whichever way it went.
+Under the risk-neutral weights Acme's log-price drifts by $`\nu\Delta t`$ over a step and spreads by $`\sigma^2\Delta t`$ around that drift ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)); the $`-\tfrac12\sigma^2`$ inside $`\nu`$ is the usual charge for working in logs. Matching the average and the spread is the same as matching the average and the average square, which is tidier: the square of a move is $`\Delta x^2`$ whichever way it went.
 
-$$(p_u - p_d)\,\Delta x = \nu\,\Delta t, \qquad (p_u + p_d)\,\Delta x^2 = \sigma^2\Delta t + \nu^2\Delta t^2$$
+```math
+(p_u - p_d)\,\Delta x = \nu\,\Delta t, \qquad (p_u + p_d)\,\Delta x^2 = \sigma^2\Delta t + \nu^2\Delta t^2
+```
 
 That right-hand side is the spread plus the square of the average, which is what an average square comes to.
 
@@ -105,13 +111,13 @@ That right-hand side is the spread plus the square of the average, which is what
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-Both matching lines are built from two quantities: call $(\sigma^2\Delta t + \nu^2\Delta t^2)/\Delta x^2$ the **spread term** and $\nu\Delta t/\Delta x$ the **tilt term**. The second line says the up and down weights add to the spread term; the first says they differ by the tilt term. Add those: twice the up weight is spread plus tilt. Subtract: twice the down weight is spread minus tilt. Adding to one leaves the middle weight as one minus the spread term. That is the display formula.
+Both matching lines are built from two quantities: call $`(\sigma^2\Delta t + \nu^2\Delta t^2)/\Delta x^2`$ the **spread term** and $`\nu\Delta t/\Delta x`$ the **tilt term**. The second line says the up and down weights add to the spread term; the first says they differ by the tilt term. Add those: twice the up weight is spread plus tilt. Subtract: twice the down weight is spread minus tilt. Adding to one leaves the middle weight as one minus the spread term. That is the display formula.
 
 Nothing needed the spacing to take a particular value. Every spacing gives a set of weights, shifting between the outside and the middle as it changes. That is the free parameter, seen in the algebra.
 
 </details>
 
-Writing the spacing as $\lambda\sigma\sqrt{\Delta t}$ makes the spare choice visible: the spread term is then one over $\lambda$ squared plus a term of size $\Delta t$, so the middle weight sits near one minus that. It vanishes at $\lambda = 1.000417$ for a three-step tree, the spacing a two-branch tree is forced to, and there the trinomial quietly is one. At the square root of 3 it is two thirds — the common desk choice, with all three weights comfortably positive.
+Writing the spacing as $`\lambda\sigma\sqrt{\Delta t}`$ makes the spare choice visible: the spread term is then one over $`\lambda`$ squared plus a term of size $`\Delta t`$, so the middle weight sits near one minus that. It vanishes at $`\lambda = 1.000417`$ for a three-step tree, the spacing a two-branch tree is forced to, and there the trinomial quietly is one. At the square root of 3 it is two thirds — the common desk choice, with all three weights comfortably positive.
 
 ### Step 3: stacking the step
 
@@ -123,43 +129,51 @@ One consequence is the hinge of the rest of the card. **The rungs never move.** 
 
 Written in log-price, the Black-Scholes equation ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)) loses every trace of the price level and becomes an equation with constant coefficients:
 
-$$\frac{\partial V}{\partial t} + \nu\,\frac{\partial V}{\partial x} + \tfrac12\sigma^2\,\frac{\partial^2 V}{\partial x^2} - r\,V = 0$$
+```math
+\frac{\partial V}{\partial t} + \nu\,\frac{\partial V}{\partial x} + \tfrac12\sigma^2\,\frac{\partial^2 V}{\partial x^2} - r\,V = 0
+```
 
 Solve it the crudest way there is. Put the values on the grid, replace the time derivative by the change over one step, the first space derivative by the difference between the rungs either side over twice the spacing, and the second by the three-point second difference. Solve for the earlier value:
 
-$$V_{i,j} = \frac{1}{1 + r\Delta t}\Big(a_d\,V_{i+1,\,j-1} + a_m\,V_{i+1,\,j} + a_u\,V_{i+1,\,j+1}\Big)$$
+```math
+V_{i,j} = \frac{1}{1 + r\Delta t}\Big(a_d\,V_{i+1,\,j-1} + a_m\,V_{i+1,\,j} + a_u\,V_{i+1,\,j+1}\Big)
+```
 
-$$a_u = \Delta t\left(\frac{\sigma^2}{2\,\Delta x^2} + \frac{\nu}{2\,\Delta x}\right),\qquad a_m = 1 - \frac{\sigma^2\Delta t}{\Delta x^2},\qquad a_d = \Delta t\left(\frac{\sigma^2}{2\,\Delta x^2} - \frac{\nu}{2\,\Delta x}\right)$$
+```math
+a_u = \Delta t\left(\frac{\sigma^2}{2\,\Delta x^2} + \frac{\nu}{2\,\Delta x}\right),\qquad a_m = 1 - \frac{\sigma^2\Delta t}{\Delta x^2},\qquad a_d = \Delta t\left(\frac{\sigma^2}{2\,\Delta x^2} - \frac{\nu}{2\,\Delta x}\right)
+```
 
-Those three add to exactly one, and they are the branch weights with the $\nu^2\Delta t^2$ term missing. The gap on each outer weight is that term over twice the spacing squared: at 200 steps the code prints the difference between $p_u$ and $a_u$ as 0.000002083 and the predicted term as 0.000002083. The discounts differ too, 0.999750031 against 0.999750062. The weight gap shrinks with the step and the discount gap with its square, so both vanish as the steps shrink, and at 200 steps the two roads price the call at 9.217519 and 9.217514.
+Those three add to exactly one, and they are the branch weights with the $`\nu^2\Delta t^2`$ term missing. The gap on each outer weight is that term over twice the spacing squared: at 200 steps the code prints the difference between $`p_u`$ and $`a_u`$ as 0.000002083 and the predicted term as 0.000002083. The discounts differ too, 0.999750031 against 0.999750062. The weight gap shrinks with the step and the discount gap with its square, so both vanish as the steps shrink, and at 200 steps the two roads price the call at 9.217519 and 9.217514.
 
 <details>
 <summary>Detailed proof: the change of variable and the three difference quotients</summary>
 
 **The change of variable.** In the price variable the equation reads
-$$\frac{\partial V}{\partial t} + (r-q)\,S\,\frac{\partial V}{\partial S} + \tfrac12\sigma^2 S^2\,\frac{\partial^2 V}{\partial S^2} - rV = 0.$$
-Take the log-price as the new variable. By the chain rule the first derivative in price, times the price, is the first derivative in log-price; differentiating again, the second derivative in price, times the price squared, is the second derivative in log-price minus the first. Substituting both and collecting the first-derivative terms leaves the drift bracket $r - q - \tfrac12\sigma^2$, which is $\nu$. Every coefficient is now constant, which is what lets the grid be evenly spaced.
 
-**The difference quotients.** Writing the value at step i, rung j as $V_{i,j}$, replace
-$$\frac{\partial V}{\partial t}\approx\frac{V_{i+1,j}-V_{i,j}}{\Delta t},\quad
-\frac{\partial V}{\partial x}\approx\frac{V_{i+1,j+1}-V_{i+1,j-1}}{2\,\Delta x},\quad
-\frac{\partial^2 V}{\partial x^2}\approx\frac{V_{i+1,j+1}-2V_{i+1,j}+V_{i+1,j-1}}{\Delta x^2},$$
-taking the space derivatives at the later step, which is what makes the scheme **explicit**: the unknown earlier value stands alone, no system to solve. Take the rate-times-value term at the earlier step; multiplying through by $\Delta t$ then leaves that value times $1 + r\Delta t$ on the left and the three coefficients on the right, and dividing gives the scheme above. Added up, their drift terms cancel and their jumpiness terms cancel, leaving 1.
+$`\displaystyle \frac{\partial V}{\partial t} + (r-q)\,S\,\frac{\partial V}{\partial S} + \tfrac12\sigma^2 S^2\,\frac{\partial^2 V}{\partial S^2} - rV = 0.`$
 
-**The comparison.** Subtract the grid's up coefficient from the tree's up weight and the tilt terms cancel, leaving $\nu^2\Delta t^2/(2\Delta x^2)$; the down pair differ by the same amount, the middle pair by twice it with the opposite sign. Since the spacing squared is proportional to $\Delta t$, each gap is proportional to $\Delta t$ and vanishes in the limit. Taking the rate-times-value term at the later step instead gives a factor of one minus $r\Delta t$; all three choices agree with $e^{-r\Delta t}$ to first order.
+Take the log-price as the new variable. By the chain rule the first derivative in price, times the price, is the first derivative in log-price; differentiating again, the second derivative in price, times the price squared, is the second derivative in log-price minus the first. Substituting both and collecting the first-derivative terms leaves the drift bracket $`r - q - \tfrac12\sigma^2`$, which is $`\nu`$. Every coefficient is now constant, which is what lets the grid be evenly spaced.
+
+**The difference quotients.** Writing the value at step i, rung j as $`V_{i,j}`$, replace
+
+$`\displaystyle \frac{\partial V}{\partial t}\approx\frac{V_{i+1,j}-V_{i,j}}{\Delta t},\quad \frac{\partial V}{\partial x}\approx\frac{V_{i+1,j+1}-V_{i+1,j-1}}{2\,\Delta x},\quad \frac{\partial^2 V}{\partial x^2}\approx\frac{V_{i+1,j+1}-2V_{i+1,j}+V_{i+1,j-1}}{\Delta x^2},`$
+
+taking the space derivatives at the later step, which is what makes the scheme **explicit**: the unknown earlier value stands alone, no system to solve. Take the rate-times-value term at the earlier step; multiplying through by $`\Delta t`$ then leaves that value times $`1 + r\Delta t`$ on the left and the three coefficients on the right, and dividing gives the scheme above. Added up, their drift terms cancel and their jumpiness terms cancel, leaving 1.
+
+**The comparison.** Subtract the grid's up coefficient from the tree's up weight and the tilt terms cancel, leaving $`\nu^2\Delta t^2/(2\Delta x^2)`$; the down pair differ by the same amount, the middle pair by twice it with the opposite sign. Since the spacing squared is proportional to $`\Delta t`$, each gap is proportional to $`\Delta t`$ and vanishes in the limit. Taking the rate-times-value term at the later step instead gives a factor of one minus $`r\Delta t`$; all three choices agree with $`e^{-r\Delta t}`$ to first order.
 
 </details>
 
 ### Step 5: positive weights are the stability condition
 
-An explicit scheme is stable only while the time step is small enough for the spacing, $\Delta t \le \Delta x^2/\sigma^2$. Cross that line and rounding error is multiplied rather than damped at every step, and the answer runs away.
+An explicit scheme is stable only while the time step is small enough for the spacing, $`\Delta t \le \Delta x^2/\sigma^2`$. Cross that line and rounding error is multiplied rather than damped at every step, and the answer runs away.
 
-Read the same condition through the tree and it says the spacing squared must be at least $\sigma^2\Delta t$ — the requirement that the middle weight not go negative, bar the same $\nu^2\Delta t^2$ term. The two warnings are one warning, and a rare case of a numerical condition meaning something in the world: the scheme is safe exactly when it describes something that could happen. At $\lambda = 0.80$, middle weight −0.563802, the price at 5, 10, 15 and 20 steps runs 25.000112, then −328.100480, then 9719.182406, then −314933.652887.
+Read the same condition through the tree and it says the spacing squared must be at least $`\sigma^2\Delta t`$ — the requirement that the middle weight not go negative, bar the same $`\nu^2\Delta t^2`$ term. The two warnings are one warning, and a rare case of a numerical condition meaning something in the world: the scheme is safe exactly when it describes something that could happen. At $`\lambda = 0.80`$, middle weight −0.563802, the price at 5, 10, 15 and 20 steps runs 25.000112, then −328.100480, then 9719.182406, then −314933.652887.
 
 <details>
 <summary>Boyle's own version, and the rest of the family</summary>
 
-Boyle wrote the jumps multiplicatively — up by $e^{\lambda\sigma\sqrt{\Delta t}}$, middle multiplier 1, down by its reciprocal — and matched the average and spread of the **price** rather than of the log-price. Kamrad and Ritchken tidied the family into the stretch used here; their weights drop the $\nu^2\Delta t^2$ term, which makes their middle weight exactly $1 - 1/\lambda^2$, vanishing at a stretch of 1. Those versions differ by terms of size $\Delta t$, the same size as the gap to the grid, so all converge to the same number at the same rate; matching the log-price rather than the price is what lets the weights line up with the grid coefficients at all.
+Boyle wrote the jumps multiplicatively — up by $`e^{\lambda\sigma\sqrt{\Delta t}}`$, middle multiplier 1, down by its reciprocal — and matched the average and spread of the **price** rather than of the log-price. Kamrad and Ritchken tidied the family into the stretch used here; their weights drop the $`\nu^2\Delta t^2`$ term, which makes their middle weight exactly $`1 - 1/\lambda^2`$, vanishing at a stretch of 1. Those versions differ by terms of size $`\Delta t`$, the same size as the gap to the grid, so all converge to the same number at the same rate; matching the log-price rather than the price is what lets the weights line up with the grid coefficients at all.
 
 A second route arrives from the two-branch side: glue each pair of steps of a binomial tree of half the step length together, and the pair ends one full jump up, one full jump down, or back where it started — a trinomial step with a stretch of the square root of 2.
 
@@ -214,7 +228,7 @@ Walking the same tree backwards node by node gives 8.510012 too, to twelve digit
 | --- | --- | --- |
 | Stretch set to 1.00, the two-branch spacing | 9.857399, middle weight −0.000833 | Nothing left for the middle branch to carry |
 | Stretch set to 0.80 | 15.179215 at three steps, −314933.652887 at twenty | Middle weight −0.563802, and every step magnifies the last one's error |
-| Drift tilt dropped, up and down weighted alike | 8.643091 | Acme no longer drifts at $r - q$ under the weights, so the copy is not a copy |
+| Drift tilt dropped, up and down weighted alike | 8.643091 | Acme no longer drifts at $`r - q`$ under the weights, so the copy is not a copy |
 | Discount forgotten on each step | 9.690111 | A year of interest never taken off a payment that arrives in a year |
 | Grid chopped to 20 rungs either side | 8.239460 | The top rows were told the option is worthless, and that verdict walked inwards |
 
@@ -685,18 +699,18 @@ The two outputs match line for line.
 Lean proves the algebra in Why it works for any positive step and spacing, and checks the worked numbers exactly.
 
 - The three weights add to one and match one step's average log-move and spread. They are the only three numbers that do, whatever the spacing.
-- Take the tree's middle weight $p_m$. Then it is non-negative exactly when $\Delta x^2 \ge \sigma^2\Delta t + \nu^2\Delta t^2$.
-- Suppose the drift $\nu$ is positive. Then the down weight is non-negative exactly when $\Delta x \le (\sigma^2 + \nu^2\Delta t)/\nu$.
-- Take the grid's middle coefficient $a_m$. Then it is non-negative exactly when $\Delta t \le \Delta x^2/\sigma^2$, the stability condition of Step 5.
-- Take the explicit scheme of Step 4 at any rung. Then it holds exactly when the earlier value times $1 + r\Delta t$ equals the grid's weighted average of the three later values.
+- Take the tree's middle weight $`p_m`$. Then it is non-negative exactly when $`\Delta x^2 \ge \sigma^2\Delta t + \nu^2\Delta t^2`$.
+- Suppose the drift $`\nu`$ is positive. Then the down weight is non-negative exactly when $`\Delta x \le (\sigma^2 + \nu^2\Delta t)/\nu`$.
+- Take the grid's middle coefficient $`a_m`$. Then it is non-negative exactly when $`\Delta t \le \Delta x^2/\sigma^2`$, the stability condition of Step 5.
+- Take the explicit scheme of Step 4 at any rung. Then it holds exactly when the earlier value times $`1 + r\Delta t`$ equals the grid's weighted average of the three later values.
 - The three grid coefficients add to exactly one.
-- Each outer tree weight exceeds its grid coefficient by the same gap, $\nu^2\Delta t^2/(2\Delta x^2)$. The middle weight falls short by twice that gap.
-- Suppose the spacing is $\Delta x = \lambda\sigma\sqrt{\Delta t}$, with $\lambda$ and $\sigma$ positive. Then that gap is $\nu^2/(2\lambda^2\sigma^2)$ times $\Delta t$, so it shrinks with the step.
+- Each outer tree weight exceeds its grid coefficient by the same gap, $`\nu^2\Delta t^2/(2\Delta x^2)`$. The middle weight falls short by twice that gap.
+- Suppose the spacing is $`\Delta x = \lambda\sigma\sqrt{\Delta t}`$, with $`\lambda`$ and $`\sigma`$ positive. Then that gap is $`\nu^2/(2\lambda^2\sigma^2)`$ times $`\Delta t`$, so it shrinks with the step.
 - Suppose the option's value has a continuous second derivative in log-price. Then at every positive price the Black-Scholes equation in price becomes Step 4's equation in log-price.
-- At three steps and stretch $\sqrt{3}$, the spacing is exactly 0.2 and the drift $\nu$ is 0.01.
+- At three steps and stretch $`\sqrt{3}`$, the spacing is exactly 0.2 and the drift $`\nu`$ is 0.01.
 - The three-step weights are exactly 1261/7200, 2399/3600 and 1141/7200, which round to 0.175139, 0.666389 and 0.158472.
 - The ending rungs +3 and 0 carry weights 0.005372 and 0.406898, to six decimals.
-- The middle weight is −0.000833 at stretch 1, −0.563802 at stretch 0.80, and zero at $\lambda^2 = 1201/1200$.
+- The middle weight is −0.000833 at stretch 1, −0.563802 at stretch 0.80, and zero at $`\lambda^2 = 1201/1200`$.
 - At 200 steps the gap is 0.000002083, and the middle weights are 0.666662500 on the tree and 2/3 on the grid.
 
 The option prices, the discount gap, the convergence table and the runaway at stretch 0.80 are left to the Python and Rust checks.
@@ -1019,7 +1033,7 @@ end TrinomialTree
 > **Try changing**
 > Guess first, then run it. Each of these trips an assert, which is what the asserts are for.
 > - **Set the stretch to 1.00.** Change `LAM` to `1.0`. The middle weight becomes −0.000833 and the three-step price rises to 9.857399: a two-branch tree with a sliver of negative weight.
-> - **Switch off the drift tilt.** Pass `tilt_on=False` to the 200-step run: 8.643091, because Acme no longer drifts at $r - q$ under the weights.
+> - **Switch off the drift tilt.** Pass `tilt_on=False` to the 200-step run: 8.643091, because Acme no longer drifts at $`r - q`$ under the weights.
 > - **Starve the grid.** Call `grid_explicit(200, 20)` instead of the full width: 8.239460, as the worthless top rows walk inwards.
 
 ---
@@ -1030,7 +1044,7 @@ end TrinomialTree
 > **Believing the third branch makes the tree a better description of the world.** It does not. Acme is no likelier to end a step exactly unchanged than a two-branch tree implies, and the middle weight of 0.666389 is nobody's estimate of anything. Every stretch matches the same two facts about one step, and each gives different weights. The third branch buys where the nodes sit, not how true they are.
 >
 > - **Choosing the spacing without checking the weights.** A stretch of 1 or below gives a negative middle weight, which amplifies rather than averages.
-> - **Dropping the tilt because it looks small.** The $\nu\Delta t/\Delta x$ term is the smallest thing in the formula and the only thing making Acme grow at the right rate. Without it the 200-step price is 8.643091, nearly sixty cents light.
+> - **Dropping the tilt because it looks small.** The $`\nu\Delta t/\Delta x`$ term is the smallest thing in the formula and the only thing making Acme grow at the right rate. Without it the 200-step price is 8.643091, nearly sixty cents light.
 > - **Forgetting that a grid has edges and a tree does not.** A grid of fixed width must be told what the option is worth at its top and bottom rows, and a bad answer there walks inwards one rung per step: 8.239460 against 9.217514.
 
 ---

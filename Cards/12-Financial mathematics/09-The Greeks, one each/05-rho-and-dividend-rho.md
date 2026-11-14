@@ -44,38 +44,44 @@ The first line (orange) is the call priced at each rate. The second line (green)
 
 ## The formula
 
-A partial derivative ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)) is the slope in one input with every other input frozen. It is written with a curly d: $\partial C/\partial r$ reads "the change in the call price per unit change in the rate, all else fixed".
+A partial derivative ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)) is the slope in one input with every other input frozen. It is written with a curly d: $`\partial C/\partial r`$ reads "the change in the call price per unit change in the rate, all else fixed".
 
-$$\rho = \frac{\partial C}{\partial r} = K\,T\,e^{-rT}\,N(d_2), \qquad \rho_q = \frac{\partial C}{\partial q} = -\,T\,S\,e^{-qT}\,N(d_1)$$
+```math
+\rho = \frac{\partial C}{\partial r} = K\,T\,e^{-rT}\,N(d_2), \qquad \rho_q = \frac{\partial C}{\partial q} = -\,T\,S\,e^{-qT}\,N(d_1)
+```
 
 **Read it aloud:** rho is the years to expiry times the strike's value today times the chance of paying it; dividend rho is minus the years to expiry times the share half of the price.
 
 For the put, the same two slopes are
 
-$$\frac{\partial P}{\partial r} = -\,K\,T\,e^{-rT}\,N(-d_2), \qquad \frac{\partial P}{\partial q} = T\,S\,e^{-qT}\,N(-d_1).$$
+```math
+\frac{\partial P}{\partial r} = -\,K\,T\,e^{-rT}\,N(-d_2), \qquad \frac{\partial P}{\partial q} = T\,S\,e^{-qT}\,N(-d_1).
+```
 
 The put holder receives the strike instead of paying it, so every sign flips, and each chance becomes the chance of the other outcome.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\rho$ | rho: dollars of call price per unit of interest rate, other inputs frozen | 49.46 | is the answer |
-| $\rho_q$ | dividend rho: dollars of call price per unit of dividend yield | −58.69 | is the answer |
-| $C$, $P$ | today's price of the call, and of the put | $9.23 and $6.33 | — |
-| $S$ | Acme's share price today | $100 | rho rises: exercise gets likelier, so the strike is likelier to be paid |
-| $K$ | the strike: the cash paid for the share on exercise | $100 | rho falls here: exercise gets less likely (12.80 at a $130 strike); only deep in the money (Acme far above the strike) does a higher strike raise it |
-| $r$ | the bank rate, continuously compounded, as a decimal | 0.05 | rho rises a little: the chance of exercise grows faster than the discount shrinks |
-| $q$ | the dividend yield, continuously compounded, as a decimal | 0.02 | rho falls: dividends drag the share down, exercise gets less likely |
-| $\sigma$ | volatility: the yearly spread of Acme's log-returns | 0.20 | rho falls here: a wider spread pushes $d_2$ down |
-| $T$ | years to expiry | 1 | rho rises hard: 12.59 at three months, 341.37 at ten years |
-| $N(x)$, $\varphi(x)$ | the bell-curve area to the left of $x$, and the bell curve's height at $x$ (its density) | $N(d_2) = 0.5199$ | — |
-| $d_1$, $d_2$ | how far Acme sits from the strike, in units of $\sigma\sqrt{T}$; $d_1 = d_2 + \sigma\sqrt{T}$ | 0.25 and 0.05 | — |
-| $e^{-rT}$, $e^{-qT}$ | the discount on a dollar due at expiry, and the dividend drag on a share | 0.9512 and 0.9802 | — |
+| $`\rho`$ | rho: dollars of call price per unit of interest rate, other inputs frozen | 49.46 | is the answer |
+| $`\rho_q`$ | dividend rho: dollars of call price per unit of dividend yield | −58.69 | is the answer |
+| $`C`$, $`P`$ | today's price of the call, and of the put | $9.23 and $6.33 | — |
+| $`S`$ | Acme's share price today | $100 | rho rises: exercise gets likelier, so the strike is likelier to be paid |
+| $`K`$ | the strike: the cash paid for the share on exercise | $100 | rho falls here: exercise gets less likely (12.80 at a $130 strike); only deep in the money (Acme far above the strike) does a higher strike raise it |
+| $`r`$ | the bank rate, continuously compounded, as a decimal | 0.05 | rho rises a little: the chance of exercise grows faster than the discount shrinks |
+| $`q`$ | the dividend yield, continuously compounded, as a decimal | 0.02 | rho falls: dividends drag the share down, exercise gets less likely |
+| $`\sigma`$ | volatility: the yearly spread of Acme's log-returns | 0.20 | rho falls here: a wider spread pushes $`d_2`$ down |
+| $`T`$ | years to expiry | 1 | rho rises hard: 12.59 at three months, 341.37 at ten years |
+| $`N(x)`$, $`\varphi(x)`$ | the bell-curve area to the left of $`x`$, and the bell curve's height at $`x`$ (its density) | $`N(d_2) = 0.5199`$ | — |
+| $`d_1`$, $`d_2`$ | how far Acme sits from the strike, in units of $`\sigma\sqrt{T}`$; $`d_1 = d_2 + \sigma\sqrt{T}`$ | 0.25 and 0.05 | — |
+| $`e^{-rT}`$, $`e^{-qT}`$ | the discount on a dollar due at expiry, and the dividend drag on a share | 0.9512 and 0.9802 | — |
 
 The two distances, as on the call card:
 
-$$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}.$$
+```math
+d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}.
+```
 
-In words: $d_2$ counts how many units of spread separate Acme from the strike, after the expected drift. $d_1$ is one unit further. The rate $r$ sits inside both, in the drift.
+In words: $`d_2`$ counts how many units of spread separate Acme from the strike, after the expected drift. $`d_1`$ is one unit further. The rate $`r`$ sits inside both, in the drift.
 
 ### When it holds
 
@@ -91,29 +97,35 @@ In words: $d_2$ counts how many units of spread separate Acme from the strike, a
 
 ### Step 0: the rate touches the price in two places
 
-Freeze Acme at $100. Raise the rate. Two things change. The strike, paid a year from now, is worth less in today's money: that is the discount factor $e^{-rT}$ on the cash half. And Acme's expected path in the pricing world (the risk-neutral world of the call card) drifts up faster, because there every asset grows at the bank rate minus its payout: that shows up as $r$ inside $d_1$ and $d_2$. The whole proof is that the second change adds up to zero.
+Freeze Acme at $100. Raise the rate. Two things change. The strike, paid a year from now, is worth less in today's money: that is the discount factor $`e^{-rT}`$ on the cash half. And Acme's expected path in the pricing world (the risk-neutral world of the call card) drifts up faster, because there every asset grows at the bank rate minus its payout: that shows up as $`r`$ inside $`d_1`$ and $`d_2`$. The whole proof is that the second change adds up to zero.
 
 ### Step 1: the two distances move together
 
-Only one term in $d_1$ carries the rate: the rate times the years, in the numerator. The denominator $\sigma\sqrt{T}$ has none. So
+Only one term in $`d_1`$ carries the rate: the rate times the years, in the numerator. The denominator $`\sigma\sqrt{T}`$ has none. So
 
-$$\frac{\partial d_1}{\partial r} = \frac{\partial d_2}{\partial r} = \frac{T}{\sigma\sqrt{T}} = \frac{\sqrt{T}}{\sigma}.$$
+```math
+\frac{\partial d_1}{\partial r} = \frac{\partial d_2}{\partial r} = \frac{T}{\sigma\sqrt{T}} = \frac{\sqrt{T}}{\sigma}.
+```
 
-For Acme this is $1/0.20 = 5$: a full unit of rate would push both distances up by 5. They move by the same amount because the gap between them, $\sigma\sqrt{T}$, has no rate in it.
+For Acme this is $`1/0.20 = 5`$: a full unit of rate would push both distances up by 5. They move by the same amount because the gap between them, $`\sigma\sqrt{T}`$, has no rate in it.
 
 ### Step 2: differentiate every piece
 
-Start from the price, $C = S\,e^{-qT}N(d_1) - K\,e^{-rT}N(d_2)$. The slope of $N$ at any point is the bell curve's height $\varphi$ there. The slope of $e^{-rT}$ in $r$ is $-T\,e^{-rT}$. Apply the chain rule to each factor that holds an $r$:
+Start from the price, $`C = S\,e^{-qT}N(d_1) - K\,e^{-rT}N(d_2)`$. The slope of $`N`$ at any point is the bell curve's height $`\varphi`$ there. The slope of $`e^{-rT}`$ in $`r`$ is $`-T\,e^{-rT}`$. Apply the chain rule to each factor that holds an $`r`$:
 
-$$\frac{\partial C}{\partial r} = \underbrace{S\,e^{-qT}\varphi(d_1)\frac{\sqrt{T}}{\sigma}}_{\text{share side, chance moves}} \;+\; \underbrace{K\,T\,e^{-rT}N(d_2)}_{\text{discount moves}} \;-\; \underbrace{K\,e^{-rT}\varphi(d_2)\frac{\sqrt{T}}{\sigma}}_{\text{cash side, chance moves}}.$$
+```math
+\frac{\partial C}{\partial r} = \underbrace{S\,e^{-qT}\varphi(d_1)\frac{\sqrt{T}}{\sigma}}_{\text{share side, chance moves}} \;+\; \underbrace{K\,T\,e^{-rT}N(d_2)}_{\text{discount moves}} \;-\; \underbrace{K\,e^{-rT}\varphi(d_2)\frac{\sqrt{T}}{\sigma}}_{\text{cash side, chance moves}}.
+```
 
-Three terms. The middle one carries two minus signs, the one in front of the cash half and the one from differentiating $e^{-rT}$, so it comes out positive.
+Three terms. The middle one carries two minus signs, the one in front of the cash half and the one from differentiating $`e^{-rT}`$, so it comes out positive.
 
 ### Step 3: the two chance terms cancel
 
 For Acme the first term is 189.51 and the third is −189.51. Both are large. They cancel exactly, for every value of the inputs, because of one identity:
 
-$$S\,e^{-qT}\varphi(d_1) = K\,e^{-rT}\varphi(d_2).$$
+```math
+S\,e^{-qT}\varphi(d_1) = K\,e^{-rT}\varphi(d_2).
+```
 
 The share-side bell-curve height, weighted by the share, equals the cash-side height, weighted by the discounted strike. The folded proof below takes three lines of algebra.
 
@@ -122,16 +134,19 @@ The reason in words: where exercise switches on, Acme sits at the strike and the
 <details>
 <summary>Detailed proof: the density identity and both slopes</summary>
 
-**The identity.** From the definitions of the two distances, $d_1 - d_2 = \sigma\sqrt{T}$ and $d_1 + d_2 = \bigl(2\ln(S/K) + 2(r-q)T\bigr)/(\sigma\sqrt{T})$. Multiply: $d_1^2 - d_2^2 = 2\ln(S/K) + 2(r-q)T$. The bell curve's height is $\varphi(x) = e^{-x^2/2}/\sqrt{2\pi}$, so
-$$\frac{\varphi(d_1)}{\varphi(d_2)} = e^{-\frac12(d_1^2 - d_2^2)} = \frac{K}{S}\,e^{-(r-q)T} = \frac{K\,e^{-rT}}{S\,e^{-qT}}.$$
-Cross-multiply: $S\,e^{-qT}\varphi(d_1) = K\,e^{-rT}\varphi(d_2)$. Nothing was assumed about the inputs.
+**The identity.** From the definitions of the two distances, $`d_1 - d_2 = \sigma\sqrt{T}`$ and $`d_1 + d_2 = \bigl(2\ln(S/K) + 2(r-q)T\bigr)/(\sigma\sqrt{T})`$. Multiply: $`d_1^2 - d_2^2 = 2\ln(S/K) + 2(r-q)T`$. The bell curve's height is $`\varphi(x) = e^{-x^2/2}/\sqrt{2\pi}`$, so
 
-**Rho.** Step 2's first and third terms are $\frac{\sqrt{T}}{\sigma}\bigl[S e^{-qT}\varphi(d_1) - K e^{-rT}\varphi(d_2)\bigr]$, which is zero by the identity. What is left is $\rho = K\,T\,e^{-rT}N(d_2)$. $\blacksquare$
+$`\displaystyle \frac{\varphi(d_1)}{\varphi(d_2)} = e^{-\frac12(d_1^2 - d_2^2)} = \frac{K}{S}\,e^{-(r-q)T} = \frac{K\,e^{-rT}}{S\,e^{-qT}}.`$
 
-**Dividend rho.** The yield sits in $d_1$ and $d_2$ as $-qT$, so both distances move by $-\sqrt{T}/\sigma$ per unit of $q$. The slope of $e^{-qT}$ in $q$ is $-T e^{-qT}$. Then
-$$\frac{\partial C}{\partial q} = -T\,S\,e^{-qT}N(d_1) - \frac{\sqrt{T}}{\sigma}\bigl[S e^{-qT}\varphi(d_1) - K e^{-rT}\varphi(d_2)\bigr] = -T\,S\,e^{-qT}N(d_1). \qquad\blacksquare$$
+Cross-multiply: $`S\,e^{-qT}\varphi(d_1) = K\,e^{-rT}\varphi(d_2)`$. Nothing was assumed about the inputs.
 
-**The puts.** Parity (Step 5) gives each put slope from the call's, using $1 - N(x) = N(-x)$.
+**Rho.** Step 2's first and third terms are $`\frac{\sqrt{T}}{\sigma}\bigl[S e^{-qT}\varphi(d_1) - K e^{-rT}\varphi(d_2)\bigr]`$, which is zero by the identity. What is left is $`\rho = K\,T\,e^{-rT}N(d_2)`$. $`\blacksquare`$
+
+**Dividend rho.** The yield sits in $`d_1`$ and $`d_2`$ as $`-qT`$, so both distances move by $`-\sqrt{T}/\sigma`$ per unit of $`q`$. The slope of $`e^{-qT}`$ in $`q`$ is $`-T e^{-qT}`$. Then
+
+$`\displaystyle \frac{\partial C}{\partial q} = -T\,S\,e^{-qT}N(d_1) - \frac{\sqrt{T}}{\sigma}\bigl[S e^{-qT}\varphi(d_1) - K e^{-rT}\varphi(d_2)\bigr] = -T\,S\,e^{-qT}N(d_1). \qquad\blacksquare`$
+
+**The puts.** Parity (Step 5) gives each put slope from the call's, using $`1 - N(x) = N(-x)`$.
 
 </details>
 
@@ -139,41 +154,49 @@ $$\frac{\partial C}{\partial q} = -T\,S\,e^{-qT}N(d_1) - \frac{\sqrt{T}}{\sigma}
 
 After the cancellation one term survives:
 
-$$\rho = K\,T\,e^{-rT}N(d_2).$$
+```math
+\rho = K\,T\,e^{-rT}N(d_2).
+```
 
-It is the derivative of the discount factor on the cash half, and nothing else. Read it as: the strike you may pay at expiry is $K$ dollars, owed with chance $N(d_2)$, worth $K e^{-rT}N(d_2)$ today. Raise the rate by a small step and that obligation shrinks by $T$ times the step, as a fraction of itself, because a rate is a per-year number and the payment is $T$ years away.
+It is the derivative of the discount factor on the cash half, and nothing else. Read it as: the strike you may pay at expiry is $`K`$ dollars, owed with chance $`N(d_2)`$, worth $`K e^{-rT}N(d_2)`$ today. Raise the rate by a small step and that obligation shrinks by $`T`$ times the step, as a fraction of itself, because a rate is a per-year number and the payment is $`T`$ years away.
 
-A call holder owes the strike, so a cheaper obligation makes the call dearer. Rho for a call is never negative. It runs from 0, far out of the money (Acme far below the strike), up to $K T e^{-rT} = 95.12$, deep in the money, where the strike is certain to be paid.
+A call holder owes the strike, so a cheaper obligation makes the call dearer. Rho for a call is never negative. It runs from 0, far out of the money (Acme far below the strike), up to $`K T e^{-rT} = 95.12`$, deep in the money, where the strike is certain to be paid.
 
-The same three steps run on the yield. The yield enters the price only through the dividend drag $e^{-qT}$ on the share half and through the drift inside $d_1$ and $d_2$. The drift part cancels by the same identity. What survives is the derivative of the drag: $\rho_q = -T\,S\,e^{-qT}N(d_1)$. A higher yield means more of Acme's value leaks out as dividends before expiry, and the call holder receives none of them. Dividend rho for a call is negative.
+The same three steps run on the yield. The yield enters the price only through the dividend drag $`e^{-qT}`$ on the share half and through the drift inside $`d_1`$ and $`d_2`$. The drift part cancels by the same identity. What survives is the derivative of the drag: $`\rho_q = -T\,S\,e^{-qT}N(d_1)`$. A higher yield means more of Acme's value leaks out as dividends before expiry, and the call holder receives none of them. Dividend rho for a call is negative.
 
-So each rate owns one half of the price. **Rho is $T$ times the cash half. Dividend rho is minus $T$ times the share half.** For Acme, with $T = 1$, those are 49.46 and −58.69: the cash half and the share half of the call card, read off unchanged.
+So each rate owns one half of the price. **Rho is $`T`$ times the cash half. Dividend rho is minus $`T`$ times the share half.** For Acme, with $`T = 1`$, those are 49.46 and −58.69: the cash half and the share half of the call card, read off unchanged.
 
 ### Step 5: parity gives the put, and checks the call
 
-Put–call parity says $C - P = S\,e^{-qT} - K\,e^{-rT}$ for any model ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)). Differentiate both sides in $r$. The share term has no $r$:
+Put–call parity says $`C - P = S\,e^{-qT} - K\,e^{-rT}`$ for any model ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)). Differentiate both sides in $`r`$. The share term has no $`r`$:
 
-$$\frac{\partial C}{\partial r} - \frac{\partial P}{\partial r} = K\,T\,e^{-rT}.$$
+```math
+\frac{\partial C}{\partial r} - \frac{\partial P}{\partial r} = K\,T\,e^{-rT}.
+```
 
-So put rho is call rho minus $K T e^{-rT}$: $49.46 - 95.12 = -45.66$. Differentiate in $q$ instead, and the strike term drops out:
+So put rho is call rho minus $`K T e^{-rT}`$: $`49.46 - 95.12 = -45.66`$. Differentiate in $`q`$ instead, and the strike term drops out:
 
-$$\frac{\partial C}{\partial q} - \frac{\partial P}{\partial q} = -\,T\,S\,e^{-qT},$$
+```math
+\frac{\partial C}{\partial q} - \frac{\partial P}{\partial q} = -\,T\,S\,e^{-qT},
+```
 
-so the put's dividend rho is $-58.69 + 98.02 = +39.33$. A put holder delivers a share and receives cash, so both signs flip: higher rates shrink the cash received, higher dividends make the share delivered cheaper.
+so the put's dividend rho is $`-58.69 + 98.02 = +39.33`$. A put holder delivers a share and receives cash, so both signs flip: higher rates shrink the cash received, higher dividends make the share delivered cheaper.
 
 ### Step 6: move both rates together
 
 Add the two slopes for the call:
 
-$$\rho + \rho_q = T\bigl[K e^{-rT}N(d_2) - S e^{-qT}N(d_1)\bigr] = -\,T\,C.$$
+```math
+\rho + \rho_q = T\bigl[K e^{-rT}N(d_2) - S e^{-qT}N(d_1)\bigr] = -\,T\,C.
+```
 
-For Acme, $49.46 - 58.69 = -9.23$, which is minus the call's price. The reason: the forward price $F = S\,e^{(r-q)T}$, the price that can be locked in today for delivery at expiry, depends only on the gap $r - q$. Raise both rates together and the forward, and every chance, stays put. Only the discount on the whole payoff changes, and it removes $T$ times the price per unit of rate. The put obeys the same rule: $-45.66 + 39.33 = -6.33$, minus the put's price.
+For Acme, $`49.46 - 58.69 = -9.23`$, which is minus the call's price. The reason: the forward price $`F = S\,e^{(r-q)T}`$, the price that can be locked in today for delivery at expiry, depends only on the gap $`r - q`$. Raise both rates together and the forward, and every chance, stays put. Only the discount on the whole payoff changes, and it removes $`T`$ times the price per unit of rate. The put obeys the same rule: $`-45.66 + 39.33 = -6.33`$, minus the put's price.
 
 ### The other door: differentiate inside the average
 
 The call price is a discounted average of the payoff over the pricing world's possible end prices. Road 4 in the code differentiates inside that average, one possible future at a time.
 
-Hold the random draw fixed and raise $r$. Each possible end price grows in proportion to $T$ per unit of rate, because the pricing-world drift is $r - q - \tfrac12\sigma^2$. That adds $T$ times the share half. Meanwhile the discount on the whole payoff tightens, which removes $T$ times the whole call price. Net: $T \times 58.69 - T \times 9.23 = T \times 49.46$, the cash half again.
+Hold the random draw fixed and raise $`r`$. Each possible end price grows in proportion to $`T`$ per unit of rate, because the pricing-world drift is $`r - q - \tfrac12\sigma^2`$. That adds $`T`$ times the share half. Meanwhile the discount on the whole payoff tightens, which removes $`T`$ times the whole call price. Net: $`T \times 58.69 - T \times 9.23 = T \times 49.46`$, the cash half again.
 
 No boundary term appears, because the payoff is zero at the strike. Same answer by a different bookkeeping. The method is the subject of [Greeks inside the simulation](../07-Greeks%20by%20Numbers%20and%20Calibration/02-pathwise-and-likelihood-ratio-greeks.md).
 
@@ -181,22 +204,22 @@ No boundary term appears, because the payoff is zero at the strike. Same answer 
 
 ## Worked numbers, by hand
 
-Acme: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year. From the call card: $d_1 = 0.25$, $d_2 = 0.05$.
+Acme: $`S = 100`$, $`K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year. From the call card: $`d_1 = 0.25`$, $`d_2 = 0.05`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $N(d_2)$, chance of paying the strike | bell-curve table at 0.05 | 0.5199 |
-| $N(d_1)$, same event counted in shares | bell-curve table at 0.25 | 0.5987 |
-| $K T e^{-rT}$ | $100 \times 1 \times e^{-0.05} = 100 \times 0.9512$ | 95.12 |
-| $T S e^{-qT}$ | $1 \times 100 \times e^{-0.02} = 100 \times 0.9802$ | 98.02 |
-| **call rho** | $95.12 \times 0.5199$ | **49.46** |
-| put rho | $-95.12 \times (1 - 0.5199) = -95.12 \times 0.4801$ | −45.66 |
-| **call dividend rho** | $-98.02 \times 0.5987$ | **−58.69** |
-| put dividend rho | $98.02 \times (1 - 0.5987) = 98.02 \times 0.4013$ | +39.33 |
-| rho per basis point | $49.46 / 10{,}000$ | 0.0049 |
-| rho per percentage point | $49.46 / 100$ | 0.49 |
-| parity in $r$ | $49.46 - (-45.66)$ | 95.12, equal to $K T e^{-rT}$ |
-| parity in $q$ | $-58.69 - 39.33$ | −98.02, equal to $-T S e^{-qT}$ |
+| $`N(d_2)`$, chance of paying the strike | bell-curve table at 0.05 | 0.5199 |
+| $`N(d_1)`$, same event counted in shares | bell-curve table at 0.25 | 0.5987 |
+| $`K T e^{-rT}`$ | $`100 \times 1 \times e^{-0.05} = 100 \times 0.9512`$ | 95.12 |
+| $`T S e^{-qT}`$ | $`1 \times 100 \times e^{-0.02} = 100 \times 0.9802`$ | 98.02 |
+| **call rho** | $`95.12 \times 0.5199`$ | **49.46** |
+| put rho | $`-95.12 \times (1 - 0.5199) = -95.12 \times 0.4801`$ | −45.66 |
+| **call dividend rho** | $`-98.02 \times 0.5987`$ | **−58.69** |
+| put dividend rho | $`98.02 \times (1 - 0.5987) = 98.02 \times 0.4013`$ | +39.33 |
+| rho per basis point | $`49.46 / 10{,}000`$ | 0.0049 |
+| rho per percentage point | $`49.46 / 100`$ | 0.49 |
+| parity in $`r`$ | $`49.46 - (-45.66)`$ | 95.12, equal to $`K T e^{-rT}`$ |
+| parity in $`q`$ | $`-58.69 - 39.33`$ | −98.02, equal to $`-T S e^{-qT}`$ |
 
 So a one-basis-point rise in the bank rate adds about half a cent to the Acme call and takes a little less off the put. A rise in the dividend yield does the opposite, and by more: the call's dividend rho is the larger of its two rate slopes.
 
@@ -206,10 +229,10 @@ Correct call rho: 49.46.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| $N(d_1)$ in place of $N(d_2)$ | 56.95 | $N(d_1)$ counts exercise in shares. The rate acts on the cash leg, counted in dollars. |
-| Drop the discount $e^{-rT}$ | 51.99 | The saving is on money owed later; it has to be brought back to today too. |
-| Put rho taken as minus call rho | −49.46 (right: −45.66) | Parity sees the rate. The two rhos differ by $K T e^{-rT} = 95.12$, not by a sign. |
-| Drop the $T$ in front, 5-year option | 42.41 (right: 212.03) | A rate is per year. At one year the $T$ hides because it equals 1. |
+| $`N(d_1)`$ in place of $`N(d_2)`$ | 56.95 | $`N(d_1)`$ counts exercise in shares. The rate acts on the cash leg, counted in dollars. |
+| Drop the discount $`e^{-rT}`$ | 51.99 | The saving is on money owed later; it has to be brought back to today too. |
+| Put rho taken as minus call rho | −49.46 (right: −45.66) | Parity sees the rate. The two rhos differ by $`K T e^{-rT} = 95.12`$, not by a sign. |
+| Drop the $`T`$ in front, 5-year option | 42.41 (right: 212.03) | A rate is per year. At one year the $`T`$ hides because it equals 1. |
 | Quote 49.46 as "per basis point" | off by 10,000 times | The formula is per unit of rate, 100 percentage points. Per basis point it is 0.0049. |
 
 The first four wrong numbers come from the checks below.
@@ -230,7 +253,7 @@ Hold everything at the house values and change only the time to expiry. The call
 | 5 years | $22.01 | 212.03 | −177.37 | $2.12 |
 | 10 years | $30.17 | 341.37 | −265.17 | $3.41 |
 
-Two forces push rho up with maturity. The $T$ in front: a rate is charged per year, and the strike is further away. And $N(d_2)$ climbs, because the positive drift $r - q$ has longer to act. One force pulls down: $e^{-rT}$ shrinks. The product $T e^{-rT}$ peaks at $T = 1/r$, which is 20 years at 5 percent. At 20 years the Acme call's rho is 432.97. Out to ten years, the upward forces win at every step.
+Two forces push rho up with maturity. The $`T`$ in front: a rate is charged per year, and the strike is further away. And $`N(d_2)`$ climbs, because the positive drift $`r - q`$ has longer to act. One force pulls down: $`e^{-rT}`$ shrinks. The product $`T e^{-rT}`$ peaks at $`T = 1/r`$, which is 20 years at 5 percent. At 20 years the Acme call's rho is 432.97. Out to ten years, the upward forces win at every step.
 
 ### Rho against the price it moves
 
@@ -259,13 +282,13 @@ xychart-beta
     line [-4.10, -12.10, -23.70, -45.66, -85.38, -177.37, -265.17]
 ```
 
-The upper line (orange) is call rho. The lower line (green) is put rho. The gap between them at each maturity is $K T e^{-rT}$, the parity derivative from Step 5. The time axis is not to scale: its steps grow from one month to five years.
+The upper line (orange) is call rho. The lower line (green) is put rho. The gap between them at each maturity is $`K T e^{-rT}`$, the parity derivative from Step 5. The time axis is not to scale: its steps grow from one month to five years.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Four independent roads to rho. Road 1 is the formula. Road 2 bumps the formula's price one basis point each way and divides. Road 3 prices the call by averaging over the bell curve with Simpson's rule, using no $d_1$, no $d_2$ and no $N$, then bumps that price. Road 4 differentiates inside the average, the other door above. The put and both dividend rhos are bumped from the integral prices and checked against the formulas and parity. The bell-curve area is a series written out; the strike crossing is found by bisection, a halving search. Ten asserts, each comparing two different roads.
+Four independent roads to rho. Road 1 is the formula. Road 2 bumps the formula's price one basis point each way and divides. Road 3 prices the call by averaging over the bell curve with Simpson's rule, using no $`d_1`$, no $`d_2`$ and no $`N`$, then bumps that price. Road 4 differentiates inside the average, the other door above. The put and both dividend rhos are bumped from the integral prices and checked against the formulas and parity. The bell-curve area is a series written out; the strike crossing is found by bisection, a halving search. Ten asserts, each comparing two different roads.
 
 ### Python
 
@@ -630,12 +653,12 @@ The two outputs agree line for line. The bumped roads sit within a millionth of 
 
 Lean proves the card's rate slopes for the call and the put, for every positive share price, strike, volatility and time to expiry.
 
-- Take a positive $S$, $K$, $\sigma$ and $T$. Then rho is the time to expiry times the cash half, $K\,T\,e^{-rT}N(d_2)$.
-- Take the same inputs. Then dividend rho is minus the time to expiry times the share half, $-T\,S\,e^{-qT}N(d_1)$.
-- Take the same inputs. Then the put's rho is $-K\,T\,e^{-rT}N(-d_2)$.
-- Take the same inputs. Then the put's dividend rho is $T\,S\,e^{-qT}N(-d_1)$.
-- Take the same inputs, and raise the bank rate and the dividend yield together. Then the call moves at minus $T$ times its own price.
-- Acme's two distances hold exactly in fractions: $d_1 = 0.25$ and $d_2 = 0.05$. So does Step 1's move of 5 per unit of rate.
+- Take a positive $`S`$, $`K`$, $`\sigma`$ and $`T`$. Then rho is the time to expiry times the cash half, $`K\,T\,e^{-rT}N(d_2)`$.
+- Take the same inputs. Then dividend rho is minus the time to expiry times the share half, $`-T\,S\,e^{-qT}N(d_1)`$.
+- Take the same inputs. Then the put's rho is $`-K\,T\,e^{-rT}N(-d_2)`$.
+- Take the same inputs. Then the put's dividend rho is $`T\,S\,e^{-qT}N(-d_1)`$.
+- Take the same inputs, and raise the bank rate and the dividend yield together. Then the call moves at minus $`T`$ times its own price.
+- Acme's two distances hold exactly in fractions: $`d_1 = 0.25`$ and $`d_2 = 0.05`$. So does Step 1's move of 5 per unit of rate.
 
 The bell-curve values, the rest of the worked numbers and the time-to-expiry table are left to the Python and Rust checks.
 
@@ -923,8 +946,8 @@ example : (1 : ℝ) / (1 / 5 * √1) = 5 := by norm_num
 > **Try changing**
 > Guess the direction first. Then run it.
 > - **Push the strike far out.** Set `K = 130`. Rho falls to **12.80**. The strike is bigger, but it is far less likely to be paid, and the chance wins.
-> - **Go long.** Set `T = 20`. Rho is **432.97**, close to where $T e^{-rT}$ peaks at 5 percent rates. Compare 4.20 at one month.
-> - **Swap the chance.** In `rho_c`, take index `[0]` instead of `[1]`, so $N(d_1)$ replaces $N(d_2)$. Rho becomes **56.95**, the first row of the what-breaks table, and the house-number assert fails.
+> - **Go long.** Set `T = 20`. Rho is **432.97**, close to where $`T e^{-rT}`$ peaks at 5 percent rates. Compare 4.20 at one month.
+> - **Swap the chance.** In `rho_c`, take index `[0]` instead of `[1]`, so $`N(d_1)`$ replaces $`N(d_2)`$. Rho becomes **56.95**, the first row of the what-breaks table, and the house-number assert fails.
 > - **Break the proof.** In `by_integral`, drop the `- T * (ST(z) - K)` term from the pathwise integrand. Road 4 lands on 58.69, the share half: the forward's lift without the discount's drag, and the pathwise assert fails.
 
 ---
@@ -936,8 +959,8 @@ example : (1 : ℝ) / (1 / 5 * √1) = 5 := by norm_num
 >
 > Smaller traps:
 > - **Units.** The formula gives dollars per unit of rate, where one unit is 100 percentage points. Per percentage point divide by 100 (0.49); per basis point divide by 10,000 (0.0049). A report that mixes them is off by a hundred or ten thousand times.
-> - **The wrong chance.** $N(d_1)$ in rho gives 56.95 instead of 49.46. Rho uses the dollar-counted chance $N(d_2)$; dividend rho uses the share-counted chance $N(d_1)$.
-> - **Same rho for call and put.** The two share [Gamma](02-gamma.md) and [Vega](03-vega.md), but not rho. Parity puts them $K T e^{-rT}$ apart: 49.46 and −45.66, not ±49.46.
+> - **The wrong chance.** $`N(d_1)`$ in rho gives 56.95 instead of 49.46. Rho uses the dollar-counted chance $`N(d_2)`$; dividend rho uses the share-counted chance $`N(d_1)`$.
+> - **Same rho for call and put.** The two share [Gamma](02-gamma.md) and [Vega](03-vega.md), but not rho. Parity puts them $`K T e^{-rT}`$ apart: 49.46 and −45.66, not ±49.46.
 > - **Forgetting the dividend rho.** For the Acme call it is larger than rho, −58.69 against 49.46. A desk that hedges rates but not the dividend forecast has hedged the smaller risk.
 
 ---
@@ -948,18 +971,18 @@ example : (1 : ℝ) / (1 / 5 * √1) = 5 := by norm_num
 - **Employee stock options.** Grants often run many years, so the rate assumed in their accounting value shifts that value noticeably.
 - **Dividend forecasts.** Long-dated equity options carry dividend risk through dividend rho. A cut in Acme's expected payout lifts every call and lowers every put.
 - **Currency options.** The dividend yield becomes the foreign interest rate. Dividend rho becomes the foreign-rate rho, of the same order of size as the domestic one ([The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md)).
-- **Options on futures.** The underlying futures price already contains the rate, so $q$ is replaced by $r$ and the two rho terms combine into Step 6's $-T C$ ([Greeks of a futures option](../26-Options%20on%20commodity%20futures%20and%20spreads/02-futures-option-greeks.md)).
+- **Options on futures.** The underlying futures price already contains the rate, so $`q`$ is replaced by $`r`$ and the two rho terms combine into Step 6's $`-T C`$ ([Greeks of a futures option](../26-Options%20on%20commodity%20futures%20and%20spreads/02-futures-option-greeks.md)).
 - **The rest of the shelf.** [Delta](01-delta.md) is the slope in the share price, [Vega](03-vega.md) in volatility, [Theta](04-theta.md) in time. Rho and dividend rho are the slopes in the two rates.
 
 > **Say it back**
-> Rho is the slope of the option price in the bank rate, with every other input frozen; dividend rho is the slope in the dividend yield. The rate changes the discount on the strike and the chances of exercise, but the chance effects cancel exactly, because at the exercise boundary the payoff is zero. What remains is $T$ times the cash half for rho and minus $T$ times the share half for dividend rho: 49.46 and −58.69 for the Acme call. Parity sets the put's values, −45.66 and +39.33. The factor $T$ makes rho negligible on short equity options and large on long ones.
+> Rho is the slope of the option price in the bank rate, with every other input frozen; dividend rho is the slope in the dividend yield. The rate changes the discount on the strike and the chances of exercise, but the chance effects cancel exactly, because at the exercise boundary the payoff is zero. What remains is $`T`$ times the cash half for rho and minus $`T`$ times the share half for dividend rho: 49.46 and −58.69 for the Acme call. Parity sets the put's values, −45.66 and +39.33. The factor $`T`$ makes rho negligible on short equity options and large on long ones.
 
 ---
 
 ## What this builds on
 
 - [Delta](01-delta.md): the first Greek, and the pattern this card repeats: differentiate the price, watch terms cancel. Delta's own cancellation uses the same density identity.
-- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): the slope in one input with the others frozen, and the chain rule that carries the rate through $d_1$ and $d_2$.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): the slope in one input with the others frozen, and the chain rule that carries the rate through $`d_1`$ and $`d_2`$.
 
 ## Where this goes next
 

@@ -30,38 +30,40 @@ Drawn to scale: tables across, chairs up; the shaded region is every allowed pla
 
 ## The formula
 
-The workshop in the shelf's standard form, from [Corners are enough](02-corners-and-the-fundamental-theorem.md): maximise $c^Tx$ (the total profit: each variable times its profit per unit, added up) subject to $Ax = b$ and $x \ge 0$. Here $x = (t, c, s_1, s_2, s_3)$ lists five variables: $t$ tables, $c$ chairs, and one **slack** per limit, the timber, labour and finish left over. So timber reads $4t + 2c + s_1 = 160$. As on that card, the letter $c$ alone counts chairs, while in $c^Tx$ it is the profit list $(19, 20, 0, 0, 0)$.
+The workshop in the shelf's standard form, from [Corners are enough](02-corners-and-the-fundamental-theorem.md): maximise $`c^Tx`$ (the total profit: each variable times its profit per unit, added up) subject to $`Ax = b`$ and $`x \ge 0`$. Here $`x = (t, c, s_1, s_2, s_3)`$ lists five variables: $`t`$ tables, $`c`$ chairs, and one **slack** per limit, the timber, labour and finish left over. So timber reads $`4t + 2c + s_1 = 160`$. As on that card, the letter $`c`$ alone counts chairs, while in $`c^Tx`$ it is the profit list $`(19, 20, 0, 0, 0)`$.
 
 A corner is a **basic feasible solution** ([Corners are enough](02-corners-and-the-fundamental-theorem.md)): three **basic** variables, one per limit, solved from the equations, and the other two, the **non-basic** ones, held at zero. The **tableau** is those equations written already solved for the basic variables, plus a profit row.
 
 One simplex move, a **pivot**, is these two lines:
 
-$$\theta = \min_{i\,:\,\bar a_{ij} > 0} \frac{\bar b_i}{\bar a_{ij}}, \qquad z_{\text{new}} = z_{\text{old}} + (-r_j)\,\theta .$$
+```math
+\theta = \min_{i\,:\,\bar a_{ij} > 0} \frac{\bar b_i}{\bar a_{ij}}, \qquad z_{\text{new}} = z_{\text{old}} + (-r_j)\,\theta .
+```
 
-**Read it aloud:** pick a column $j$ whose profit-row entry $r_j$ is negative; raise that variable until the first row runs out, which happens at the smallest ratio of right side to column entry over the rows where the entry is positive; profit rises by the gain per unit times that step.
+**Read it aloud:** pick a column $`j`$ whose profit-row entry $`r_j`$ is negative; raise that variable until the first row runs out, which happens at the smallest ratio of right side to column entry over the rows where the entry is positive; profit rises by the gain per unit times that step.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x = (t, c, s_1, s_2, s_3)$ | tables and chairs made per week, then timber (m), labour (h) and finish (l) left over | (32, 16, 0, 8, 0) at the best plan | — |
-| $c$; $c_B$, $c_N$ | profit per unit of each variable, £; its entries for the basic and non-basic variables | (19, 20, 0, 0, 0) | profit rises; past a point the best corner moves |
-| $A$, $a_j$ | resource used per unit, one row per limit; $a_j$ its column $j$ | rows `[4, 2, 1, 0, 0]`, `[3, 1, 0, 1, 0]`, `[1, 2, 0, 0, 1]` | each unit uses more, so fewer fit |
-| $b$ | resource available per week | (160, 120, 64) | more fits; profit rises by that resource's price, within a range |
-| $B$, $N$; $x_B$, $x_N$ | the basic columns and the rest; their variables | after pivot 3, basic $c$, $t$, $s_2$ = 16, 32, 8 | — |
-| $z$, $k$ | the week's profit in £ at the current corner; $k$ counts tableaus from 0 at the origin | 0, 760, 760, 928 for $k$ = 0 to 3 | — |
-| $r_j$ | the **profit-row entry** of column $j$: minus the profit one more unit of variable $j$ adds, the other non-basic variables staying at zero | $-19$ for tables at the start | negative means that move is uphill |
-| $\bar b_i$ | right side of row $i$ of the current tableau: the value of that row's basic variable now | 40 tables after pivot 1 | — |
-| $\bar a_{ij}$ | entry of row $i$ in the entering column: how fast row $i$'s variable falls as variable $j$ rises | 4, 3 and 1 in pivot 1 | — |
-| $\theta$ | the **step**: how far the entering variable rises | 40, then 0, then 8 | — |
-| $y_i$ | **price** of resource $i$, read from the final profit row under slack $s_i$ | £3, £0, £7 | — |
-| $n$ | number of variables in the Klee–Minty cube | 3 | its worst-case pivot count $2^n - 1$ doubles with each one |
+| $`x = (t, c, s_1, s_2, s_3)`$ | tables and chairs made per week, then timber (m), labour (h) and finish (l) left over | (32, 16, 0, 8, 0) at the best plan | — |
+| $`c`$; $`c_B`$, $`c_N`$ | profit per unit of each variable, £; its entries for the basic and non-basic variables | (19, 20, 0, 0, 0) | profit rises; past a point the best corner moves |
+| $`A`$, $`a_j`$ | resource used per unit, one row per limit; $`a_j`$ its column $`j`$ | rows `[4, 2, 1, 0, 0]`, `[3, 1, 0, 1, 0]`, `[1, 2, 0, 0, 1]` | each unit uses more, so fewer fit |
+| $`b`$ | resource available per week | (160, 120, 64) | more fits; profit rises by that resource's price, within a range |
+| $`B`$, $`N`$; $`x_B`$, $`x_N`$ | the basic columns and the rest; their variables | after pivot 3, basic $`c`$, $`t`$, $`s_2`$ = 16, 32, 8 | — |
+| $`z`$, $`k`$ | the week's profit in £ at the current corner; $`k`$ counts tableaus from 0 at the origin | 0, 760, 760, 928 for $`k`$ = 0 to 3 | — |
+| $`r_j`$ | the **profit-row entry** of column $`j`$: minus the profit one more unit of variable $`j`$ adds, the other non-basic variables staying at zero | $`-19`$ for tables at the start | negative means that move is uphill |
+| $`\bar b_i`$ | right side of row $`i`$ of the current tableau: the value of that row's basic variable now | 40 tables after pivot 1 | — |
+| $`\bar a_{ij}`$ | entry of row $`i`$ in the entering column: how fast row $`i`$'s variable falls as variable $`j`$ rises | 4, 3 and 1 in pivot 1 | — |
+| $`\theta`$ | the **step**: how far the entering variable rises | 40, then 0, then 8 | — |
+| $`y_i`$ | **price** of resource $`i`$, read from the final profit row under slack $`s_i`$ | £3, £0, £7 | — |
+| $`n`$ | number of variables in the Klee–Minty cube | 3 | its worst-case pivot count $`2^n - 1`$ doubles with each one |
 
 ### When it holds
 
 - **Profit and limits are straight lines.** Twice the tables use twice the timber. If a cost curves, the best plan can sit in the middle of an edge, and walking corners misses it.
-- **There is a starting corner.** Here every $b_i \ge 0$, so "make nothing" is allowed and the slacks are the first basic variables. A limit such as "make at least 10 chairs" puts the origin outside the region; then a first stage, **phase one**, solves a helper problem whose answer is a starting corner, or proves there is none.
+- **There is a starting corner.** Here every $`b_i \ge 0`$, so "make nothing" is allowed and the slacks are the first basic variables. A limit such as "make at least 10 chairs" puts the origin outside the region; then a first stage, **phase one**, solves a helper problem whose answer is a starting corner, or proves there is none.
 - **The profit is bounded.** If the entering column has no positive entry, no limit ever stops the walk and profit grows without end: the program is unbounded, and the method says so instead of returning a plan.
 - **A rule against cycling.** At a degenerate corner a pivot can have step 0. A careless rule can then cycle through the same tables forever: Beale's example does, below. Bland's rule (smallest index enters; among tied rows, smallest index leaves) never cycles.
-- **Exact arithmetic, or tolerances.** The tests "$r_j < 0$" and "$\bar a_{ij} > 0$" are exact here because the code uses fractions. Floating-point solvers need tolerances, or a tiny rounding error picks the wrong row.
+- **Exact arithmetic, or tolerances.** The tests "$`r_j < 0`$" and "$`\bar a_{ij} > 0`$" are exact here because the code uses fractions. Floating-point solvers need tolerances, or a tiny rounding error picks the wrong row.
 
 ---
 
@@ -75,46 +77,46 @@ So a move lets one non-basic variable grow while the other stays at zero. That g
 
 ### Step 1: the profit row says which edges go uphill
 
-Write profit the same way: $z = z_{\text{now}} - \sum_j r_j \cdot (\text{variable } j)$, summed over the non-basic variables. At the origin this reads $z = 0 + 19t + 20c$, so the tableau stores $r = -19$ and $-20$. A negative $r_j$ says "raise variable $j$ and profit rises by $-r_j$ per unit". Either negative column is a legal choice. This card's run takes the first one, tables. **Dantzig's rule** takes the most negative, chairs.
+Write profit the same way: $`z = z_{\text{now}} - \sum_j r_j \cdot (\text{variable } j)`$, summed over the non-basic variables. At the origin this reads $`z = 0 + 19t + 20c`$, so the tableau stores $`r = -19`$ and $`-20`$. A negative $`r_j`$ says "raise variable $`j`$ and profit rises by $`-r_j`$ per unit". Either negative column is a legal choice. This card's run takes the first one, tables. **Dantzig's rule** takes the most negative, chairs.
 
 ### Step 2: the ratio test keeps every value allowed
 
-Raise the entering variable by $\theta$. Row $i$'s basic variable becomes $\bar b_i - \bar a_{ij}\theta$. If $\bar a_{ij} \le 0$ that never falls below zero. If $\bar a_{ij} > 0$ it reaches zero at $\theta = \bar b_i / \bar a_{ij}$. So the largest safe step is the smallest of those ratios, which is the formula's $\theta$. Any larger step drives some resource negative: the plan would use timber the workshop does not have. If no entry in the column is positive, the step is unlimited and the program is unbounded.
+Raise the entering variable by $`\theta`$. Row $`i`$'s basic variable becomes $`\bar b_i - \bar a_{ij}\theta`$. If $`\bar a_{ij} \le 0`$ that never falls below zero. If $`\bar a_{ij} > 0`$ it reaches zero at $`\theta = \bar b_i / \bar a_{ij}`$. So the largest safe step is the smallest of those ratios, which is the formula's $`\theta`$. Any larger step drives some resource negative: the plan would use timber the workshop does not have. If no entry in the column is positive, the step is unlimited and the program is unbounded.
 
 ### Step 3: the pivot re-solves the table at the new corner
 
-The leaving row is divided by its pivot entry $\bar a_{ij}$, so the entering variable now has coefficient 1 there. That row, times a suitable number, is subtracted from every other row and from the profit row, clearing the entering column. These are the row moves of [Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md); they never change which points satisfy the equations. The new table is the same limits, solved for the new basic variables. Profit changes by $(-r_j)\theta$, which is never negative.
+The leaving row is divided by its pivot entry $`\bar a_{ij}`$, so the entering variable now has coefficient 1 there. That row, times a suitable number, is subtracted from every other row and from the profit row, clearing the entering column. These are the row moves of [Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md); they never change which points satisfy the equations. The new table is the same limits, solved for the new basic variables. Profit changes by $`(-r_j)\theta`$, which is never negative.
 
 ### Step 4: when no entry is negative, the corner is best
 
-Suppose every $r_j \ge 0$. Every allowed plan has every variable $\ge 0$, so $z = z_{\text{now}} - \sum r_j \cdot(\text{variable})$ is at most $z_{\text{now}}$. No plan beats the current one. The workshop's final profit row reads $z = 928 - 3s_1 - 7s_3$: each metre of timber or litre of finish left unused costs £3 or £7 of profit.
+Suppose every $`r_j \ge 0`$. Every allowed plan has every variable $`\ge 0`$, so $`z = z_{\text{now}} - \sum r_j \cdot(\text{variable})`$ is at most $`z_{\text{now}}`$. No plan beats the current one. The workshop's final profit row reads $`z = 928 - 3s_1 - 7s_3`$: each metre of timber or litre of finish left unused costs £3 or £7 of profit.
 
-The entries under the slacks are the prices $y = (3, 0, 7)$, and they give a second, independent proof. They **cover** each product's profit: a table uses $4 \times 3 + 3 \times 0 + 1 \times 7 = 19$ pounds' worth, a chair $2 \times 3 + 0 + 2 \times 7 = 20$.
+The entries under the slacks are the prices $`y = (3, 0, 7)`$, and they give a second, independent proof. They **cover** each product's profit: a table uses $`4 \times 3 + 3 \times 0 + 1 \times 7 = 19`$ pounds' worth, a chair $`2 \times 3 + 0 + 2 \times 7 = 20`$.
 
-So any plan's profit is at most the value of the resources it uses, which is at most $160 \times 3 + 120 \times 0 + 64 \times 7 = 928$. That bound meets the plan's £928, so the plan is best. Why the prices always exist and always meet the best profit is [LP duality](04-lp-duality-and-complementary-slackness.md).
+So any plan's profit is at most the value of the resources it uses, which is at most $`160 \times 3 + 120 \times 0 + 64 \times 7 = 928`$. That bound meets the plan's £928, so the plan is best. Why the prices always exist and always meet the best profit is [LP duality](04-lp-duality-and-complementary-slackness.md).
 
 ### Step 5: why it stops, and when it might not
 
-Each tableau is fixed by its set of basic variables, and there are only so many sets: here 10 ways to pick 3 basic columns of 5. If every step $\theta$ is positive, profit strictly rises, so no set comes back, and the walk ends. A step of 0 breaks that argument: profit stays put, and a rule could return to a set it has seen. That is **cycling**. Bland proved that choosing the smallest-index improving column, and the smallest-index basic variable among tied rows, never revisits a set, so the walk always ends (Bland 1977).
+Each tableau is fixed by its set of basic variables, and there are only so many sets: here 10 ways to pick 3 basic columns of 5. If every step $`\theta`$ is positive, profit strictly rises, so no set comes back, and the walk ends. A step of 0 breaks that argument: profit stays put, and a rule could return to a set it has seen. That is **cycling**. Bland proved that choosing the smallest-index improving column, and the smallest-index basic variable among tied rows, never revisits a set, so the walk always ends (Bland 1977).
 
 <details>
 <summary>Detailed proof: the stopping test and the price bound, in matrix form</summary>
 
-Let $B$ be the columns of the basic variables and $N$ the rest, so $Bx_B + Nx_N = b$. Solving, $x_B = B^{-1}b - B^{-1}N x_N$: these are the tableau's rows, with $\bar b = B^{-1}b$ and the columns $B^{-1}a_j$.
+Let $`B`$ be the columns of the basic variables and $`N`$ the rest, so $`Bx_B + Nx_N = b`$. Solving, $`x_B = B^{-1}b - B^{-1}N x_N`$: these are the tableau's rows, with $`\bar b = B^{-1}b`$ and the columns $`B^{-1}a_j`$.
 
-Profit is $c_B^Tx_B + c_N^Tx_N = c_B^TB^{-1}b - (c_B^TB^{-1}N - c_N^T)\,x_N$. So the profit row holds $r_N = c_B^TB^{-1}N - c_N^T$ and $z_{\text{now}} = c_B^TB^{-1}b$.
+Profit is $`c_B^Tx_B + c_N^Tx_N = c_B^TB^{-1}b - (c_B^TB^{-1}N - c_N^T)\,x_N`$. So the profit row holds $`r_N = c_B^TB^{-1}N - c_N^T`$ and $`z_{\text{now}} = c_B^TB^{-1}b`$.
 
-If $r_N \ge 0$, every allowed point has $x_N \ge 0$, so its profit is at most $z_{\text{now}}$. That is the stopping test.
+If $`r_N \ge 0`$, every allowed point has $`x_N \ge 0`$, so its profit is at most $`z_{\text{now}}`$. That is the stopping test.
 
-Write $y^T = c_B^TB^{-1}$. A slack column is all zeros except a 1 in its own row, with zero profit, so its profit-row entry is $y_i$; the stopping test says $y \ge 0$. A product column $j$ has entry $y^Ta_j - c_j \ge 0$, so $A^Ty \ge c$. For any allowed $x$: $c^Tx \le (A^Ty)^Tx = y^T(Ax) \le y^Tb$, using $x \ge 0$ and then $y \ge 0$. And $y^Tb = c_B^TB^{-1}b = z_{\text{now}}$. So the bound meets the current profit.
+Write $`y^T = c_B^TB^{-1}`$. A slack column is all zeros except a 1 in its own row, with zero profit, so its profit-row entry is $`y_i`$; the stopping test says $`y \ge 0`$. A product column $`j`$ has entry $`y^Ta_j - c_j \ge 0`$, so $`A^Ty \ge c`$. For any allowed $`x`$: $`c^Tx \le (A^Ty)^Tx = y^T(Ax) \le y^Tb`$, using $`x \ge 0`$ and then $`y \ge 0`$. And $`y^Tb = c_B^TB^{-1}b = z_{\text{now}}`$. So the bound meets the current profit.
 
-The ratio test: along the edge, $x_B(\theta) = \bar b - \theta\,B^{-1}a_j$, and the smallest ratio over positive entries is the largest $\theta$ with $x_B(\theta) \ge 0$. The pivot is an invertible row operation, so the new table describes the same set of solutions.
+The ratio test: along the edge, $`x_B(\theta) = \bar b - \theta\,B^{-1}a_j`$, and the smallest ratio over positive entries is the largest $`\theta`$ with $`x_B(\theta) \ge 0`$. The pivot is an invertible row operation, so the new table describes the same set of solutions.
 
 </details>
 
 ### How fast: pivots, and the cost of each
 
-One pivot is one elimination pass over the tableau: here 4 rows of 6 numbers. The question is how many pivots. In the worst case, very many: Klee and Minty built a squashed cube on which Dantzig's rule visits every corner, $2^n - 1$ pivots for $n$ variables. The code runs the 3-variable cube and counts 7 pivots, through every corner of the cube.
+One pivot is one elimination pass over the tableau: here 4 rows of 6 numbers. The question is how many pivots. In the worst case, very many: Klee and Minty built a squashed cube on which Dantzig's rule visits every corner, $`2^n - 1`$ pivots for $`n`$ variables. The code runs the 3-variable cube and counts 7 pivots, through every corner of the cube.
 
 In practice the count stays small, and smoothed analysis (Spielman and Teng 2004) explains why: shake the data a little at random and, under the shadow-vertex pivot rule (which follows the outline of the region's shadow cast onto a plane), the expected number of pivots becomes polynomial in the problem's size. Methods with a polynomial worst case exist too: [Interior point for linear programs](08-interior-point-for-lp-and-complexity.md).
 
@@ -122,35 +124,35 @@ In practice the count stays small, and smoothed analysis (Spielman and Teng 2004
 
 ## Worked numbers, by hand
 
-The start is the origin, tableau $k = 0$: basic variables $s_1, s_2, s_3$ equal to 160, 120 and 64; profit 0. The run below enters the first column with a negative profit-row entry, and where the ratio test ties it takes labour out.
+The start is the origin, tableau $`k = 0`$: basic variables $`s_1, s_2, s_3`$ equal to 160, 120 and 64; profit 0. The run below enters the first column with a negative profit-row entry, and where the ratio test ties it takes labour out.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| pivot 1: entering column | profit row $-19$, $-20$; first negative is tables | $t$ enters |
-| pivot 1: ratio test | $160/4,\ 120/3,\ 64/1$ | 40, 40, 64: a tie; $s_2$ (labour) leaves |
-| pivot 1: profit | $0 + 19 \times 40$ | £760 at (40, 0) |
-| pivot 2: entering column | chairs' entry $-20 + 19 \times \tfrac13$ | $-41/3$: $c$ enters |
-| pivot 2: ratio test | $0 \div \tfrac23,\ 40 \div \tfrac13,\ 24 \div \tfrac53$ | 0, 120, 14.4: $s_1$ (timber) leaves |
-| pivot 2: profit | $760 + \tfrac{41}{3} \times 0$ | £760, still at (40, 0): degenerate |
-| pivot 3: entering column | profit row: only $s_2$ is negative | $-21$: $s_2$ enters |
-| pivot 3: ratio test | $c$ row entry $-2$ skipped; $40 \div 1,\ 24 \div 3$ | 40, 8: $s_3$ (finish) leaves |
-| pivot 3: profit | $760 + 21 \times 8$ | £928 at (32, 16) |
+| pivot 1: entering column | profit row $`-19`$, $`-20`$; first negative is tables | $`t`$ enters |
+| pivot 1: ratio test | $`160/4,\ 120/3,\ 64/1`$ | 40, 40, 64: a tie; $`s_2`$ (labour) leaves |
+| pivot 1: profit | $`0 + 19 \times 40`$ | £760 at (40, 0) |
+| pivot 2: entering column | chairs' entry $`-20 + 19 \times \tfrac13`$ | $`-41/3`$: $`c`$ enters |
+| pivot 2: ratio test | $`0 \div \tfrac23,\ 40 \div \tfrac13,\ 24 \div \tfrac53`$ | 0, 120, 14.4: $`s_1`$ (timber) leaves |
+| pivot 2: profit | $`760 + \tfrac{41}{3} \times 0`$ | £760, still at (40, 0): degenerate |
+| pivot 3: entering column | profit row: only $`s_2`$ is negative | $`-21`$: $`s_2`$ enters |
+| pivot 3: ratio test | $`c`$ row entry $`-2`$ skipped; $`40 \div 1,\ 24 \div 3`$ | 40, 8: $`s_3`$ (finish) leaves |
+| pivot 3: profit | $`760 + 21 \times 8`$ | £928 at (32, 16) |
 | stopping test | profit row 0, 0, 3, 0, 7 | none negative: stop |
-| price bound | $160 \times 3 + 120 \times 0 + 64 \times 7$ | 928, equal to the profit |
+| price bound | $`160 \times 3 + 120 \times 0 + 64 \times 7`$ | 928, equal to the profit |
 | **answer** | 3 pivots, steps 40, 0, 8 | **32 tables, 16 chairs, £928 a week** |
 
 Make 32 tables and 16 chairs. Timber and finish are used to the last metre and litre, and 8 labour hours a week are spare. The prices, £3 a metre of timber and £7 a litre of finish, prove that no plan earns more.
 
-Pivot 3 reads plainly. Labour slack $s_2$ enters: the workshop leaves some labour hours unused. With timber held full, each spare hour means one table fewer and two chairs more, £21 better off, until finish runs out after 8 hours.
+Pivot 3 reads plainly. Labour slack $`s_2`$ enters: the workshop leaves some labour hours unused. With timber held full, each spare hour means one table fewer and two chairs more, £21 better off, until finish runs out after 8 hours.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Skip the ratio test in pivot 1: take finish out | (64, 0), "earning" £1,216 | That plan needs timber slack $-96$ m and labour slack $-72$ h: it uses resources the workshop does not have |
-| Stop at the first pivot with step 0 | £760, short by £168 | A step of 0 means a degenerate corner, not the best one; the profit row still had $-41/3$ |
+| Skip the ratio test in pivot 1: take finish out | (64, 0), "earning" £1,216 | That plan needs timber slack $`-96`$ m and labour slack $`-72`$ h: it uses resources the workshop does not have |
+| Stop at the first pivot with step 0 | £760, short by £168 | A step of 0 means a degenerate corner, not the best one; the profit row still had $`-41/3`$ |
 | Dantzig's rule, lowest index leaving, on Beale's example (four variables, three limits) | profit 0 after each of 6 pivots, then back to the starting basis | Cycling: the hypothesis "every step is positive" fails, and the rule loops forever. Bland's rule ends after 6 pivots at the optimum, 1.25 |
-| Dantzig's rule on the 3-variable Klee–Minty cube | 7 pivots for profit 10000, every corner visited | Each pivot improves, but the rule's greed is a bad guide: the worst case is $2^n - 1$ |
+| Dantzig's rule on the 3-variable Klee–Minty cube | 7 pivots for profit 10000, every corner visited | Each pivot improves, but the rule's greed is a bad guide: the worst case is $`2^n - 1`$ |
 
 ---
 
@@ -158,41 +160,41 @@ Pivot 3 reads plainly. Labour slack $s_2$ enters: the workshop leaves some labou
 
 Each table below is the workshop's three limits plus the profit row, solved at the current corner. The row label is the basic variable that row is solved for. The pivot entry, the one its row is divided by, is in bold brackets.
 
-**Tableau $k = 0$, at (0, 0), profit £0.**
+**Tableau $`k = 0`$, at (0, 0), profit £0.**
 
-| basic | $t$ | $c$ | $s_1$ | $s_2$ | $s_3$ | right side |
+| basic | $`t`$ | $`c`$ | $`s_1`$ | $`s_2`$ | $`s_3`$ | right side |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| $s_1$ (timber) | 4 | 2 | 1 | 0 | 0 | 160 |
-| $s_2$ (labour) | **[3]** | 1 | 0 | 1 | 0 | 120 |
-| $s_3$ (finish) | 1 | 2 | 0 | 0 | 1 | 64 |
-| $z$ | −19 | −20 | 0 | 0 | 0 | 0 |
+| $`s_1`$ (timber) | 4 | 2 | 1 | 0 | 0 | 160 |
+| $`s_2`$ (labour) | **[3]** | 1 | 0 | 1 | 0 | 120 |
+| $`s_3`$ (finish) | 1 | 2 | 0 | 0 | 1 | 64 |
+| $`z`$ | −19 | −20 | 0 | 0 | 0 | 0 |
 
 **After pivot 1, at (40, 0), profit £760.** Timber's right side is 0: the timber wall passes through this corner too.
 
-| basic | $t$ | $c$ | $s_1$ | $s_2$ | $s_3$ | right side |
+| basic | $`t`$ | $`c`$ | $`s_1`$ | $`s_2`$ | $`s_3`$ | right side |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| $s_1$ | 0 | **[2/3]** | 1 | −4/3 | 0 | 0 |
-| $t$ | 1 | 1/3 | 0 | 1/3 | 0 | 40 |
-| $s_3$ | 0 | 5/3 | 0 | −1/3 | 1 | 24 |
-| $z$ | 0 | −41/3 | 0 | 19/3 | 0 | 760 |
+| $`s_1`$ | 0 | **[2/3]** | 1 | −4/3 | 0 | 0 |
+| $`t`$ | 1 | 1/3 | 0 | 1/3 | 0 | 40 |
+| $`s_3`$ | 0 | 5/3 | 0 | −1/3 | 1 | 24 |
+| $`z`$ | 0 | −41/3 | 0 | 19/3 | 0 | 760 |
 
 **After pivot 2, still at (40, 0), profit £760.** Chairs are basic at value 0; timber slack has left. The point did not move.
 
-| basic | $t$ | $c$ | $s_1$ | $s_2$ | $s_3$ | right side |
+| basic | $`t`$ | $`c`$ | $`s_1`$ | $`s_2`$ | $`s_3`$ | right side |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| $c$ | 0 | 1 | 3/2 | −2 | 0 | 0 |
-| $t$ | 1 | 0 | −1/2 | 1 | 0 | 40 |
-| $s_3$ | 0 | 0 | −5/2 | **[3]** | 1 | 24 |
-| $z$ | 0 | 0 | 41/2 | −21 | 0 | 760 |
+| $`c`$ | 0 | 1 | 3/2 | −2 | 0 | 0 |
+| $`t`$ | 1 | 0 | −1/2 | 1 | 0 | 40 |
+| $`s_3`$ | 0 | 0 | −5/2 | **[3]** | 1 | 24 |
+| $`z`$ | 0 | 0 | 41/2 | −21 | 0 | 760 |
 
 **After pivot 3, at (32, 16), profit £928.** No negative entry in the profit row: stop.
 
-| basic | $t$ | $c$ | $s_1$ | $s_2$ | $s_3$ | right side |
+| basic | $`t`$ | $`c`$ | $`s_1`$ | $`s_2`$ | $`s_3`$ | right side |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| $c$ | 0 | 1 | −1/6 | 0 | 2/3 | 16 |
-| $t$ | 1 | 0 | 1/3 | 0 | −1/3 | 32 |
-| $s_2$ | 0 | 0 | −5/6 | 1 | 1/3 | 8 |
-| $z$ | 0 | 0 | 3 | 0 | 7 | 928 |
+| $`c`$ | 0 | 1 | −1/6 | 0 | 2/3 | 16 |
+| $`t`$ | 1 | 0 | 1/3 | 0 | −1/3 | 32 |
+| $`s_2`$ | 0 | 0 | −5/6 | 1 | 1/3 | 8 |
+| $`z`$ | 0 | 0 | 3 | 0 | 7 | 928 |
 
 The degenerate pivot was not wasted. It changed which walls the table is written against, from the labour wall to the timber wall, and only from the timber wall does an uphill edge show. Profit after each pivot, for the two rules:
 
@@ -624,14 +626,14 @@ The two outputs are identical, line for line.
 Lean proves the stopping test, the ratio test and the price bound for every linear program of any size, plus the workshop's worked numbers.
 
 - Take a corner whose basic variables are all at least 0. It is an allowed plan. If no profit-row entry is negative, no allowed plan earns more.
-- Let one non-basic variable enter and rise by a step $\theta \ge 0$, the others staying at zero. The moved point still solves $Ax = b$.
-- Its profit is the old profit plus $(-r_j)\,\theta$, so profit never falls when $r_j$ is negative.
-- The moved point stays allowed exactly when $\theta$ is at most each ratio $\bar b_i / \bar a_{ij}$ whose $\bar a_{ij}$ is positive.
-- If prices $y \ge 0$ cover each product's profit, no allowed plan earns more than the week's resources are worth at those prices.
+- Let one non-basic variable enter and rise by a step $`\theta \ge 0`$, the others staying at zero. The moved point still solves $`Ax = b`$.
+- Its profit is the old profit plus $`(-r_j)\,\theta`$, so profit never falls when $`r_j`$ is negative.
+- The moved point stays allowed exactly when $`\theta`$ is at most each ratio $`\bar b_i / \bar a_{ij}`$ whose $`\bar a_{ij}`$ is positive.
+- If prices $`y \ge 0`$ cover each product's profit, no allowed plan earns more than the week's resources are worth at those prices.
 - The best plan, 32 tables and 16 chairs, fits all three limits and earns £928.
 - The prices £3, £0 and £7 cover £19 and £20, and value the week's resources at £928.
 - The four corner profits, each pivot's ratios and profit, and the break numbers −96, −72, £1,216 and £168 all check.
-- There are 10 ways to pick 3 basic columns of 5, and $2^3 - 1 = 7$ for the Klee–Minty count.
+- There are 10 ways to pick 3 basic columns of 5, and $`2^3 - 1 = 7`$ for the Klee–Minty count.
 
 The pivot's row moves, whole runs, Bland's rule, Beale's cycle, the Klee–Minty walk and the figure are left to the Python and Rust checks.
 
@@ -914,12 +916,12 @@ example : 2 ^ 3 - 1 = 7 := by decide
 ## The usual mistake
 
 > [!warning]
-> **Reading a step of zero as "this is the top".** A pivot with step 0 changes the table but not the plan, and it happens at any corner where more walls meet than are needed to pin it down. The test for "best" is the profit row: stop only when no entry is negative. At (40, 0) after pivot 2 the profit is still £760, but the row holds $-21$, and one more pivot earns £168.
+> **Reading a step of zero as "this is the top".** A pivot with step 0 changes the table but not the plan, and it happens at any corner where more walls meet than are needed to pin it down. The test for "best" is the profit row: stop only when no entry is negative. At (40, 0) after pivot 2 the profit is still £760, but the row holds $`-21`$, and one more pivot earns £168.
 >
 > Smaller traps:
-> - **Skipping the ratio test.** Taking finish out first instead of the smallest ratio gives (64, 0) and a "profit" of £1,216, with timber slack $-96$ m. A negative right side means the plan is not allowed.
-> - **Mixing up the sign convention.** This card writes the profit row as $z - 19t - 20c = 0$, so negative means uphill for a maximum. A minimising textbook, or a row written the other way, flips it. Read it the wrong way round here and the run stops at once, at (0, 0) and £0.
-> - **Reading prices as leftovers.** The final row's 3 under $s_1$ is £3 per metre of timber, not 3 metres spare. Leftovers are the basic variables' right sides: 8 labour hours, and 0 for the two resources that have prices.
+> - **Skipping the ratio test.** Taking finish out first instead of the smallest ratio gives (64, 0) and a "profit" of £1,216, with timber slack $`-96`$ m. A negative right side means the plan is not allowed.
+> - **Mixing up the sign convention.** This card writes the profit row as $`z - 19t - 20c = 0`$, so negative means uphill for a maximum. A minimising textbook, or a row written the other way, flips it. Read it the wrong way round here and the run stops at once, at (0, 0) and £0.
+> - **Reading prices as leftovers.** The final row's 3 under $`s_1`$ is £3 per metre of timber, not 3 metres spare. Leftovers are the basic variables' right sides: 8 labour hours, and 0 for the two resources that have prices.
 
 ---
 
@@ -939,7 +941,7 @@ example : 2 ^ 3 - 1 = 7 := by decide
 ## What this builds on
 
 - [Corners are enough](02-corners-and-the-fundamental-theorem.md): the best plan of a bounded linear program is at a corner, and a corner is a set of tight walls. That is why a walk over corners can find the best plan.
-- [Linear programs](01-linear-programs-and-polyhedra.md): the notation $c^Tx$, $Ax = b$, $x \ge 0$ and the workshop's region.
+- [Linear programs](01-linear-programs-and-polyhedra.md): the notation $`c^Tx`$, $`Ax = b`$, $`x \ge 0`$ and the workshop's region.
 - [Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md): the row moves a pivot performs, and why they keep the same solutions.
 
 ## Where this goes next

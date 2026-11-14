@@ -6,7 +6,7 @@
 
 ## General Overview
 
-A stone dropped from a bridge falls $s(t) = 4.9t^2$ metres in $t$ seconds, if air is ignored. At 3 seconds its true speed is 29.4 metres per second. A program that only knows positions estimates that speed as a slope: the distance gained over a short step $h$, divided by $h$.
+A stone dropped from a bridge falls $`s(t) = 4.9t^2`$ metres in $`t`$ seconds, if air is ignored. At 3 seconds its true speed is 29.4 metres per second. A program that only knows positions estimates that speed as a slope: the distance gained over a short step $`h`$, divided by $`h`$.
 
 With a step of a hundredth of a second (1e-2 s), the estimate is 29.449 m/s, off by 4.90e-2. All of that error comes from the recipe: a chord across 0.01 s is not the tangent. Cut the step to a trillionth of a second (1e-12 s) and the recipe's part of the error falls ten billion times, to 4.90e-12. The run returns 29.409363833111 instead, off by 9.36e-3. At 1e-8 s it was off by only 3.01e-7.
 
@@ -23,7 +23,7 @@ Shrinking the step cuts the first and feeds the second. This card separates the 
 
 ### The picture: two error curves for the stone's speed
 
-The vertical axis is the base-10 logarithm of the error: −6 means an error of one millionth of a metre per second. The horizontal axis is the base-10 logarithm of the step: −8 means a step of $10^{-8}$ seconds.
+The vertical axis is the base-10 logarithm of the error: −6 means an error of one millionth of a metre per second. The horizontal axis is the base-10 logarithm of the step: −8 means a step of $`10^{-8}`$ seconds.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -35,7 +35,7 @@ xychart-beta
     line [-13.85, -12.18, -11.34, -10.23, -10.62, -8.60, -7.26, -7.26, -5.61, -4.69, -3.90, -2.24, -1.72]
 ```
 
-Orange: the forward slope, one step ahead. It falls one decade per decade of step while truncation rules, bottoms out at 1e-8, then climbs as rounding takes over. Green: the central slope, one step each way. For a quadratic like $4.9t^2$ it has no truncation error at all, so the green line is rounding alone, rising with small wobbles as the step shrinks.
+Orange: the forward slope, one step ahead. It falls one decade per decade of step while truncation rules, bottoms out at 1e-8, then climbs as rounding takes over. Green: the central slope, one step each way. For a quadratic like $`4.9t^2`$ it has no truncation error at all, so the green line is rounding alone, rising with small wobbles as the step shrinks.
 
 ---
 
@@ -43,42 +43,46 @@ Orange: the forward slope, one step ahead. It falls one decade per decade of ste
 
 Every computation on this card has three versions of one answer:
 
-- $A^\ast$, the exact answer, such as the true speed 29.4 m/s;
-- $A(h)$, what the recipe gives with step $h$ in exact arithmetic;
-- $\hat A(h)$, read "A-hat of h", what the machine actually returns. The hat means "the computed value", as on [Absolute and relative error](01-absolute-and-relative-error.md).
+- $`A^\ast`$, the exact answer, such as the true speed 29.4 m/s;
+- $`A(h)`$, what the recipe gives with step $`h`$ in exact arithmetic;
+- $`\hat A(h)`$, read "A-hat of h", what the machine actually returns. The hat means "the computed value", as on [Absolute and relative error](01-absolute-and-relative-error.md).
 
-$$\hat A(h) - A^\ast \;=\; \underbrace{\big(A(h) - A^\ast\big)}_{\text{truncation}} \;+\; \underbrace{\big(\hat A(h) - A(h)\big)}_{\text{rounding}}$$
+```math
+\hat A(h) - A^\ast \;=\; \underbrace{\big(A(h) - A^\ast\big)}_{\text{truncation}} \;+\; \underbrace{\big(\hat A(h) - A(h)\big)}_{\text{rounding}}
+```
 
 **Read it aloud:** the total error is the recipe's own error plus the arithmetic's error, with nothing left over.
 
 The two parts have typical sizes
 
-$$\big|A(h) - A^\ast\big| \approx C\,h^{p}, \qquad \big|\hat A(h) - A(h)\big| \approx u\,R(h).$$
+```math
+\big|A(h) - A^\ast\big| \approx C\,h^{p}, \qquad \big|\hat A(h) - A(h)\big| \approx u\,R(h).
+```
 
 **Read it aloud:** truncation is a constant times the step raised to the recipe's order; rounding is the unit roundoff times a magnifier that grows as the step shrinks.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $s(t)$ | metres the stone has fallen after $t$ seconds | $4.9t^2$; 44.1 m at 3 s | rounding grows with its size |
-| $t$ | the time where the speed is wanted, in seconds | 3 s | larger positions, more rounding |
-| $h$ | the step: seconds per chord, or width of a strip or time step | 1e-2 s, then 1e-12 s | truncation grows, rounding shrinks |
-| $A^\ast$ | the exact answer | 29.4 m/s | — |
-| $A(h)$ | the recipe's answer in exact arithmetic | $29.4 + 4.9h$ m/s | — |
-| $\hat A(h)$ | the answer the machine returns | 29.449000000000 at 1e-2 | — |
-| $C$ | the truncation constant, set by the problem's derivatives | 4.9 m/s² for the stone | more truncation at every step |
-| $p$ | the order: how many decades truncation falls per decade of step | 1 (forward), 2 (trapezoid) | truncation falls faster |
-| $u$, $\delta$ | $u$ is the unit roundoff, $2^{-53}$: the largest relative error of one rounding in double precision; $\delta$ is the relative error of one rounded operation, at most $u$ in size | 1.11e-16 | more rounding everywhere |
-| $R(h)$ | the rounding magnifier: how much the recipe amplifies one rounding | about $2s(t)/h$ for the slope | more rounding |
-| $n$, $N$ | counts: $n$ series terms or trapezoid strips, $N$ Euler steps or rounded additions | 10 million additions for the tracker | truncation falls, rounding grows |
-| $f$, $y$; $a$, $g$, $w$, $\eta$ | Step 2's other recipes: $f(x)$ is the curve the trapezoid rule integrates, $y$ is Euler's unknown with $y' = y$; in the proof, $[a, a+h]$ is one strip, $g$ is $f$ on it, $w$ is a weight that is zero at both ends, and $\eta$ is a point inside the strip | $f(x) = 4/(1+x^2)$; $y(0) = 1$ | — |
+| $`s(t)`$ | metres the stone has fallen after $`t`$ seconds | $`4.9t^2`$; 44.1 m at 3 s | rounding grows with its size |
+| $`t`$ | the time where the speed is wanted, in seconds | 3 s | larger positions, more rounding |
+| $`h`$ | the step: seconds per chord, or width of a strip or time step | 1e-2 s, then 1e-12 s | truncation grows, rounding shrinks |
+| $`A^\ast`$ | the exact answer | 29.4 m/s | — |
+| $`A(h)`$ | the recipe's answer in exact arithmetic | $`29.4 + 4.9h`$ m/s | — |
+| $`\hat A(h)`$ | the answer the machine returns | 29.449000000000 at 1e-2 | — |
+| $`C`$ | the truncation constant, set by the problem's derivatives | 4.9 m/s² for the stone | more truncation at every step |
+| $`p`$ | the order: how many decades truncation falls per decade of step | 1 (forward), 2 (trapezoid) | truncation falls faster |
+| $`u`$, $`\delta`$ | $`u`$ is the unit roundoff, $`2^{-53}`$: the largest relative error of one rounding in double precision; $`\delta`$ is the relative error of one rounded operation, at most $`u`$ in size | 1.11e-16 | more rounding everywhere |
+| $`R(h)`$ | the rounding magnifier: how much the recipe amplifies one rounding | about $`2s(t)/h`$ for the slope | more rounding |
+| $`n`$, $`N`$ | counts: $`n`$ series terms or trapezoid strips, $`N`$ Euler steps or rounded additions | 10 million additions for the tracker | truncation falls, rounding grows |
+| $`f`$, $`y`$; $`a`$, $`g`$, $`w`$, $`\eta`$ | Step 2's other recipes: $`f(x)`$ is the curve the trapezoid rule integrates, $`y`$ is Euler's unknown with $`y' = y`$; in the proof, $`[a, a+h]`$ is one strip, $`g`$ is $`f`$ on it, $`w`$ is a weight that is zero at both ends, and $`\eta`$ is a point inside the strip | $`f(x) = 4/(1+x^2)`$; $`y(0) = 1`$ | — |
 
 ### When it holds
 
-- **The problem is smooth.** The law $Ch^p$ needs enough derivatives across the step. At a corner, such as the value of an option on its expiry day, there is no slope to find and the error stops shrinking with $h$ ([Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md) shows it).
-- **The step is small enough for the leading term.** $Ch^p$ is the first term of a longer expansion. With only 10 Euler steps the error is 0.916309 of its law, not 1.
-- **Rounding is treated as a size, not a value.** $uR(h)$ is an estimate of how large rounding gets. The actual rounding part has a random-looking sign and can be far smaller; with a million trapezoid strips the two errors cancelled so well that the answer equals the stored double for $\pi$, an error of 0.00e0 against it.
+- **The problem is smooth.** The law $`Ch^p`$ needs enough derivatives across the step. At a corner, such as the value of an option on its expiry day, there is no slope to find and the error stops shrinking with $`h`$ ([Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md) shows it).
+- **The step is small enough for the leading term.** $`Ch^p`$ is the first term of a longer expansion. With only 10 Euler steps the error is 0.916309 of its law, not 1.
+- **Rounding is treated as a size, not a value.** $`uR(h)`$ is an estimate of how large rounding gets. The actual rounding part has a random-looking sign and can be far smaller; with a million trapezoid strips the two errors cancelled so well that the answer equals the stored double for $`\pi`$, an error of 0.00e0 against it.
 - **The inputs are exact.** The split ignores error already in the data, such as a measured position. That is a third error, magnified by the problem itself, the subject of [Conditioning and stability](05-conditioning-and-stability.md).
-- **The arithmetic is fixed.** Everything here is double precision with round-to-nearest. Switch to single precision and $u$ becomes $2^{-24}$; only the rounding part changes.
+- **The arithmetic is fixed.** Everything here is double precision with round-to-nearest. Switch to single precision and $`u`$ becomes $`2^{-24}`$; only the rounding part changes.
 
 ---
 
@@ -86,12 +90,12 @@ $$\big|A(h) - A^\ast\big| \approx C\,h^{p}, \qquad \big|\hat A(h) - A(h)\big| \a
 
 ### Step 0: add and subtract the exact-arithmetic answer
 
-The split is true for any computation: add $A(h)$ and subtract it again. It is worth making because the two parts answer to different knobs.
+The split is true for any computation: add $`A(h)`$ and subtract it again. It is worth making because the two parts answer to different knobs.
 
 | Knob | Truncation | Rounding |
 | --- | --- | --- |
 | Finer step or more terms | falls, by a known law | grows: smaller differences, more operations |
-| More binary digits | does not change | falls in proportion to $u$ |
+| More binary digits | does not change | falls in proportion to $`u`$ |
 
 That table is also the test for which one dominates (Step 5).
 
@@ -99,74 +103,80 @@ That table is also the test for which one dominates (Step 5).
 
 Expand the forward slope:
 
-$$\frac{s(t+h) - s(t)}{h} = \frac{4.9\,(2th + h^2)}{h} = 9.8t + 4.9h.$$
+```math
+\frac{s(t+h) - s(t)}{h} = \frac{4.9\,(2th + h^2)}{h} = 9.8t + 4.9h.
+```
 
-At $t = 3$ that is $29.4 + 4.9h$ exactly. So $C = 4.9$ and $p = 1$, at every time $t$.
+At $`t = 3`$ that is $`29.4 + 4.9h`$ exactly. So $`C = 4.9`$ and $`p = 1`$, at every time $`t`$.
 
-The central slope, $\big(s(t+h) - s(t-h)\big)/(2h)$, gives $9.8t$ exactly: the $h^2$ terms cancel. For any quadratic its truncation is zero, which is why the green line in the picture is pure rounding. For a general smooth function, [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md) gives the forward error as $\tfrac{h}{2}$ times a second derivative, as [Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md) proves on an option price.
+The central slope, $`\big(s(t+h) - s(t-h)\big)/(2h)`$, gives $`9.8t`$ exactly: the $`h^2`$ terms cancel. For any quadratic its truncation is zero, which is why the green line in the picture is pure rounding. For a general smooth function, [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md) gives the forward error as $`\tfrac{h}{2}`$ times a second derivative, as [Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md) proves on an option price.
 
 ### Step 2: truncation in three other recipes
 
-**A cut-off series.** The number $e$ is $1 + 1/1! + 1/2! + 1/3! + \dots$, where $n!$ ("n factorial") is $1 \times 2 \times \dots \times n$. Stop after $1/n!$ and the truncation error is the dropped tail. The tail is at least its first term, $1/(n+1)!$, and at most that term times $(n+2)/(n+1)$, because each later term is at most $1/(n+2)$ times the one before, a geometric series. After $1/10!$ the error is −2.73e-8 against a next term of 2.51e-8.
+**A cut-off series.** The number $`e`$ is $`1 + 1/1! + 1/2! + 1/3! + \dots`$, where $`n!`$ ("n factorial") is $`1 \times 2 \times \dots \times n`$. Stop after $`1/n!`$ and the truncation error is the dropped tail. The tail is at least its first term, $`1/(n+1)!`$, and at most that term times $`(n+2)/(n+1)`$, because each later term is at most $`1/(n+2)`$ times the one before, a geometric series. After $`1/10!`$ the error is −2.73e-8 against a next term of 2.51e-8.
 
-**A quadrature rule.** The area under $f(x) = 4/(1+x^2)$ from 0 to 1 is exactly $\pi$. The trapezoid rule cuts $[0, 1]$ into $n$ strips of width $h = 1/n$ and replaces the curve on each strip by a straight line. Its error is close to
+**A quadrature rule.** The area under $`f(x) = 4/(1+x^2)`$ from 0 to 1 is exactly $`\pi`$. The trapezoid rule cuts $`[0, 1]`$ into $`n`$ strips of width $`h = 1/n`$ and replaces the curve on each strip by a straight line. Its error is close to
 
-$$\frac{h^2}{12}\big(f'(1) - f'(0)\big) = \frac{h^2}{12}(-2 - 0) = -\frac{h^2}{6},$$
+```math
+\frac{h^2}{12}\big(f'(1) - f'(0)\big) = \frac{h^2}{12}(-2 - 0) = -\frac{h^2}{6},
+```
 
-so $p = 2$: ten times more strips, a hundred times less error.
+so $`p = 2`$: ten times more strips, a hundred times less error.
 
 <details>
 <summary>Detailed proof: the trapezoid rule's error is close to −h²/6 here</summary>
 
-Take one strip $[a, a+h]$ and write $g(x) = f(a + x)$. Let $w(x) = x(h-x)/2$, which is zero at both ends and positive between. Integrate by parts twice:
+Take one strip $`[a, a+h]`$ and write $`g(x) = f(a + x)`$. Let $`w(x) = x(h-x)/2`$, which is zero at both ends and positive between. Integrate by parts twice:
 
-$$\int_0^h w\,g''\,dx = \Big[w\,g'\Big]_0^h - \int_0^h \Big(\tfrac{h}{2} - x\Big) g'\,dx = \tfrac{h}{2}\big(g(0) + g(h)\big) - \int_0^h g\,dx.$$
+$`\displaystyle \int_0^h w\,g''\,dx = \Big[w\,g'\Big]_0^h - \int_0^h \Big(\tfrac{h}{2} - x\Big) g'\,dx = \tfrac{h}{2}\big(g(0) + g(h)\big) - \int_0^h g\,dx.`$
 
-The right side is exactly the strip's trapezoid area minus its true area. Because $w \ge 0$, the mean value theorem for integrals gives a point $\eta$ in the strip with $\int_0^h w\,g'' = g''(\eta)\int_0^h w = \tfrac{h^3}{12} g''(\eta)$.
+The right side is exactly the strip's trapezoid area minus its true area. Because $`w \ge 0`$, the mean value theorem for integrals gives a point $`\eta`$ in the strip with $`\int_0^h w\,g'' = g''(\eta)\int_0^h w = \tfrac{h^3}{12} g''(\eta)`$.
 
-Add the $n$ strips. The total error is $\tfrac{h^2}{12}\sum h\,f''(\eta_i)$. The sum is a Riemann sum for $\int_0^1 f''\,dx = f'(1) - f'(0) = -2$, so the error is $-\tfrac{h^2}{6}$ times a factor that tends to 1 as $h \to 0$. The full expansion, with further terms in $h^4$, $h^6$ and so on, is the Euler–Maclaurin formula.
+Add the $`n`$ strips. The total error is $`\tfrac{h^2}{12}\sum h\,f''(\eta_i)`$. The sum is a Riemann sum for $`\int_0^1 f''\,dx = f'(1) - f'(0) = -2`$, so the error is $`-\tfrac{h^2}{6}`$ times a factor that tends to 1 as $`h \to 0`$. The full expansion, with further terms in $`h^4`$, $`h^6`$ and so on, is the Euler–Maclaurin formula.
 
 </details>
 
-**A time step.** Euler's method solves $y' = y$, $y(0) = 1$, up to $t = 1$ in $N$ steps of size $h = 1/N$. Each step multiplies $y$ by $1 + 1/N$, so the result is $(1 + 1/N)^N$. Its logarithm is
+**A time step.** Euler's method solves $`y' = y`$, $`y(0) = 1`$, up to $`t = 1`$ in $`N`$ steps of size $`h = 1/N`$. Each step multiplies $`y`$ by $`1 + 1/N`$, so the result is $`(1 + 1/N)^N`$. Its logarithm is
 
-$$N \log\!\Big(1 + \frac1N\Big) = 1 - \frac{1}{2N} + \frac{1}{3N^2} - \dots,$$
+```math
+N \log\!\Big(1 + \frac1N\Big) = 1 - \frac{1}{2N} + \frac{1}{3N^2} - \dots,
+```
 
-so the result is close to $e\,(1 - \tfrac{1}{2N})$ and the error is close to $-e/(2N)$. That is $p = 1$, with $C = e/2$.
+so the result is close to $`e\,(1 - \tfrac{1}{2N})`$ and the error is close to $`-e/(2N)`$. That is $`p = 1`$, with $`C = e/2`$.
 
 ### Step 3: rounding, one operation at a time
 
-The standard model from [Machine epsilon and cancellation](03-rounding-cancellation-and-machine-epsilon.md) says each operation returns the exact result times $(1 + \delta)$, with $|\delta| \le u$ = 1.11e-16. Two things then make rounding grow.
+The standard model from [Machine epsilon and cancellation](03-rounding-cancellation-and-machine-epsilon.md) says each operation returns the exact result times $`(1 + \delta)`$, with $`|\delta| \le u`$ = 1.11e-16. Two things then make rounding grow.
 
-**Small differences.** The stored positions 44.1 and $s(3 + h)$ each carry an error up to about $u \times 44.1$ metres. Subtracting two nearly equal numbers keeps those errors while the difference itself shrinks to about $29.4h$: this is cancellation. Dividing by $h$ then magnifies them, so the rounding part is about $2u\,s(t)/h$. At 1e-12 s that estimate is 9.79e-3; the actual rounding part is 9.36e-3. The step itself is rounded too: $3 + 10^{-12}$ is stored as the nearest double, so the step actually taken is 1.000089e-12 s.
+**Small differences.** The stored positions 44.1 and $`s(3 + h)`$ each carry an error up to about $`u \times 44.1`$ metres. Subtracting two nearly equal numbers keeps those errors while the difference itself shrinks to about $`29.4h`$: this is cancellation. Dividing by $`h`$ then magnifies them, so the rounding part is about $`2u\,s(t)/h`$. At 1e-12 s that estimate is 9.79e-3; the actual rounding part is 9.36e-3. The step itself is rounded too: $`3 + 10^{-12}`$ is stored as the nearest double, so the step actually taken is 1.000089e-12 s.
 
-**Many operations.** A loop of $N$ additions rounds $N$ times, each time by up to $u$ times the running total. The bound is about $N u$ times the total. A fitness tracker that adds 0.1 ten million times should reach 1,000,000. It reaches 999999.9998389754, off by 1.61e-4, against a bound of 1.11e-3 (ratio 0.145). Here there is no truncation at all: "add them up" is an exact recipe. The error is pure rounding, including the fact that 0.1 has no exact binary form ([IEEE 754](02-ieee-floating-point.md)). [Adding a million numbers without losing the small ones](07-summation-kahan-and-welford.md) removes most of it.
+**Many operations.** A loop of $`N`$ additions rounds $`N`$ times, each time by up to $`u`$ times the running total. The bound is about $`N u`$ times the total. A fitness tracker that adds 0.1 ten million times should reach 1,000,000. It reaches 999999.9998389754, off by 1.61e-4, against a bound of 1.11e-3 (ratio 0.145). Here there is no truncation at all: "add them up" is an exact recipe. The error is pure rounding, including the fact that 0.1 has no exact binary form ([IEEE 754](02-ieee-floating-point.md)). [Adding a million numbers without losing the small ones](07-summation-kahan-and-welford.md) removes most of it.
 
-Quadrature and time stepping are loops too. A finer step means more strips or more steps, so their rounding grows like $N$ as truncation falls.
+Quadrature and time stepping are loops too. A finer step means more strips or more steps, so their rounding grows like $`N`$ as truncation falls.
 
 ### Step 4: the crossover
 
-Total error is roughly $Ch^p + uR(h)$. The first term falls as $h$ shrinks; the second rises. Near the step where they are equal, the total is smallest: the bottom of the V in the picture.
+Total error is roughly $`Ch^p + uR(h)`$. The first term falls as $`h`$ shrinks; the second rises. Near the step where they are equal, the total is smallest: the bottom of the V in the picture.
 
 For the stone's forward slope the bottom is at 1e-8 s, with error 3.01e-7. Below it every finer step gives a worse answer. Where the bottom sits in general, and how to aim for it, is the subject of Choosing the step.
 
-A higher order $p$ lets truncation fall faster, so it reaches the rounding floor at a larger step and a lower error. That is why central differences beat forward ones on smooth functions.
+A higher order $`p`$ lets truncation fall faster, so it reaches the rounding floor at a larger step and a lower error. That is why central differences beat forward ones on smooth functions.
 
 ### Step 5: telling them apart from a run
 
 Three tests read the split off a run, even without the exact answer.
 
-1. **Halving test.** Compute $A$ at $h$, $h/2$ and $h/4$, and divide the first change by the second. If truncation $Ch^p$ dominates, the changes are $Ch^p(1 - 2^{-p})$ and $C(h/2)^p(1 - 2^{-p})$, so the ratio is $2^p$. For the stone, $p = 1$: the ratio is 2.000000 at 1e-2 and −0.500000 at 1e-12. A ratio far from $2^p$ means rounding, or a bug.
-2. **Precision test.** Rerun in single precision, where $u = 2^{-24}$. Truncation does not move; rounding grows about $2^{29}$ times. At 1e-2 the answer shifts by 8.14e-5, tiny beside the error of 4.90e-2: truncation rules. At 1e-3 it shifts by −5.03e-3, as large as the truncation 4.90e-3: in single precision this step is already at the crossover. At 1e-12 the single-precision answer is 0.000000, because $3 + 10^{-12}$ rounds to 3.
+1. **Halving test.** Compute $`A`$ at $`h`$, $`h/2`$ and $`h/4`$, and divide the first change by the second. If truncation $`Ch^p`$ dominates, the changes are $`Ch^p(1 - 2^{-p})`$ and $`C(h/2)^p(1 - 2^{-p})`$, so the ratio is $`2^p`$. For the stone, $`p = 1`$: the ratio is 2.000000 at 1e-2 and −0.500000 at 1e-12. A ratio far from $`2^p`$ means rounding, or a bug.
+2. **Precision test.** Rerun in single precision, where $`u = 2^{-24}`$. Truncation does not move; rounding grows about $`2^{29}`$ times. At 1e-2 the answer shifts by 8.14e-5, tiny beside the error of 4.90e-2: truncation rules. At 1e-3 it shifts by −5.03e-3, as large as the truncation 4.90e-3: in single precision this step is already at the crossover. At 1e-12 the single-precision answer is 0.000000, because $`3 + 10^{-12}`$ rounds to 3.
 3. **Law test.** When the exact answer is known, divide the error by the truncation law. A ratio near 1 means truncation dominates; a ratio that wanders means rounding has arrived.
 
-The law test on the other three recipes. The series and trapezoid errors are measured against the stored doubles for $e$ and $\pi$, which are themselves rounded, so an error the size of one rounding unit is not the true error.
+The law test on the other three recipes. The series and trapezoid errors are measured against the stored doubles for $`e`$ and $`\pi`$, which are themselves rounded, so an error the size of one rounding unit is not the true error.
 
 | Recipe | Knob | Truncation law | Ratio of error to law | Where rounding shows |
 | --- | --- | --- | --- | --- |
-| Series for $e$ | terms up to $1/n!$ | next term $1/(n+1)!$ | error −2.73e-8 against 2.51e-8 at $n = 10$ | from $1/17!$ on, the error against the stored $e$ sticks at 4.44e-16 |
-| Trapezoid for $\pi$ | strips $n$ | $-h^2/6$ | 1.0000 up to $n$ = 1e4; 0.9984 at 1e5 | 0.00e0 against the stored $\pi$ at 1e6, by luck; −116.4402 at 1e7 |
-| Euler for $e$ | steps $N$ | $-e/(2N)$ | 0.999084, 0.999908, 0.999991, 0.999999 for $N$ = 1e3 to 1e6 | 1.000007 at 1e7: the ratio overshoots 1 |
+| Series for $`e`$ | terms up to $`1/n!`$ | next term $`1/(n+1)!`$ | error −2.73e-8 against 2.51e-8 at $`n = 10`$ | from $`1/17!`$ on, the error against the stored $`e`$ sticks at 4.44e-16 |
+| Trapezoid for $`\pi`$ | strips $`n`$ | $`-h^2/6`$ | 1.0000 up to $`n`$ = 1e4; 0.9984 at 1e5 | 0.00e0 against the stored $`\pi`$ at 1e6, by luck; −116.4402 at 1e7 |
+| Euler for $`e`$ | steps $`N`$ | $`-e/(2N)`$ | 0.999084, 0.999908, 0.999991, 0.999999 for $`N`$ = 1e3 to 1e6 | 1.000007 at 1e7: the ratio overshoots 1 |
 
 The Euler ratio climbs towards 1 from below as the next term in the expansion fades. At 10 million steps it passes 1: rounding has started to show, in the sixth digit.
 
@@ -186,16 +196,16 @@ The Euler ratio climbs towards 1 from below as the next term in the expansion fa
 | rounding, estimated | 2 × 1.11e-16 × 44.1 ÷ 1e-12 | 9.79e-3 |
 | rounding, actual | error minus truncation | **9.36e-3 m/s** |
 
-At the coarse step, the error is all truncation and the rounding part is invisible. At the fine step the opposite holds: the error is all rounding, and the estimate $2u\,s(t)/h$ predicts its size.
+At the coarse step, the error is all truncation and the rounding part is invisible. At the fine step the opposite holds: the error is all rounding, and the estimate $`2u\,s(t)/h`$ predicts its size.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | A trillionth-of-a-second step | 29.409363833111, error 9.36e-3 | Rounding divided by a tiny step; 1e-8 gave 3.01e-7 |
-| The same step in single precision | 0.000000 | $3 + 10^{-12}$ rounds to 3, so both positions are equal |
+| The same step in single precision | 0.000000 | $`3 + 10^{-12}`$ rounds to 3, so both positions are equal |
 | 10 million trapezoid strips | error 1.94e-13 against a law of −1.67e-15 | Rounding from 10 million additions; the sign flipped |
-| Series terms past $1/17!$ | error 4.44e-16 against the stored $e$, even at $1/20!$ | The terms fall below one rounding unit of $e$ |
+| Series terms past $`1/17!`$ | error 4.44e-16 against the stored $`e`$, even at $`1/20!`$ | The terms fall below one rounding unit of $`e`$ |
 | Trusting the halving test without reading it | ratio −0.500000 at 1e-12 | Rounding noise, not convergence |
 
 The code prints all five.
@@ -204,7 +214,7 @@ The code prints all five.
 
 ## Code, from first principles, and it actually runs
 
-The script runs four recipes. Road one is the closed forms: the stone's exact speed 29.4 m/s and exact truncation $4.9h$, with $\pi$ and $e$ as stored constants. Road two runs each recipe at many steps and divides its error by its truncation law. Road three reruns the slope in single precision, by rounding each result to 24 binary digits, so only the rounding part changes. The asserts check that the truncation laws hold, that rounding grows where the card says, that the halving and precision tests tell the two apart, and that the tracker's error stays under its bound.
+The script runs four recipes. Road one is the closed forms: the stone's exact speed 29.4 m/s and exact truncation $`4.9h`$, with $`\pi`$ and $`e`$ as stored constants. Road two runs each recipe at many steps and divides its error by its truncation law. Road three reruns the slope in single precision, by rounding each result to 24 binary digits, so only the rounding part changes. The asserts check that the truncation laws hold, that rounding grows where the card says, that the halving and precision tests tell the two apart, and that the tracker's error stays under its bound.
 
 ### Python
 
@@ -509,13 +519,13 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the exact algebra behind the stone's slopes, the series for $e$ and the halving test, for every step and term count.
+Lean proves the exact algebra behind the stone's slopes, the series for $`e`$ and the halving test, for every step and term count.
 
-- For any quadratic position, like the stone's $4.9t^2$, the forward slope's truncation is exactly $Ch$, with $C$ the number in front of $t^2$. This holds for every step except zero.
+- For any quadratic position, like the stone's $`4.9t^2`$, the forward slope's truncation is exactly $`Ch`$, with $`C`$ the number in front of $`t^2`$. This holds for every step except zero.
 - For any quadratic position, the central slope has no truncation error at all.
-- Stop the series for $e$ after $1/n!$, for any $n$. The dropped tail is at least $1/(n+1)!$ and at most that term times $(n+2)/(n+1)$.
-- If an answer is exactly $A^\ast + Ch^p$, with $C$ not zero and order $p$ at least 1, the halving test's ratio is exactly $2^p$. This holds for every step except zero.
-- The hand arithmetic holds exactly: the positions 44.1 m and 44.39449 m, the 29.449 m/s slope and its 0.049 error, the central 29.4 m/s, $11! = 39916800$ and the tracker's exact 1,000,000.
+- Stop the series for $`e`$ after $`1/n!`$, for any $`n`$. The dropped tail is at least $`1/(n+1)!`$ and at most that term times $`(n+2)/(n+1)`$.
+- If an answer is exactly $`A^\ast + Ch^p`$, with $`C`$ not zero and order $`p`$ at least 1, the halving test's ratio is exactly $`2^p`$. This holds for every step except zero.
+- The hand arithmetic holds exactly: the positions 44.1 m and 44.39449 m, the 29.449 m/s slope and its 0.049 error, the central 29.4 m/s, $`11! = 39916800`$ and the tracker's exact 1,000,000.
 
 The trapezoid and Euler laws, all rounding sizes, and the three tests on actual runs are left to the Python and Rust checks.
 
@@ -639,9 +649,9 @@ example : (10 ^ 7 : ℚ) * (1 / 10) = 10 ^ 6 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> - **Time the stone at 30 s instead of 3 s** (`fwd(1e-12, 30.0)`, exact speed 294). Guess first: does the truncation change? No: it is still 4.90e-12, since $C = 4.9$ at every time. The positions are 100 times larger, so rounding grows: the error is −2.33e-1.
-> - **Add 0.125 instead of 0.1 in the tracker loop** (and expect 1,250,000). Guess first: how big is the error? Zero (0.00e0): 0.125 is $2^{-3}$, and every running total is stored exactly.
-> - **Write Euler's step as `y *= 1 + 1/N`.** Guess first: same truncation, same rounding? Same truncation. But $1 + 1/N$ is rounded once and that error is multiplied in $N$ times, so at $N$ = 1e7 the ratio to the law falls from 1.000007 to 0.988323.
+> - **Time the stone at 30 s instead of 3 s** (`fwd(1e-12, 30.0)`, exact speed 294). Guess first: does the truncation change? No: it is still 4.90e-12, since $`C = 4.9`$ at every time. The positions are 100 times larger, so rounding grows: the error is −2.33e-1.
+> - **Add 0.125 instead of 0.1 in the tracker loop** (and expect 1,250,000). Guess first: how big is the error? Zero (0.00e0): 0.125 is $`2^{-3}`$, and every running total is stored exactly.
+> - **Write Euler's step as `y *= 1 + 1/N`.** Guess first: same truncation, same rounding? Same truncation. But $`1 + 1/N`$ is rounded once and that error is multiplied in $`N`$ times, so at $`N`$ = 1e7 the ratio to the law falls from 1.000007 to 0.988323.
 
 ---
 
@@ -651,8 +661,8 @@ example : (10 ^ 7 : ℚ) * (1 / 10) = 10 ^ 6 := by norm_num
 > **Treating a smaller step as always safer.** Truncation falls with the step, but rounding rises, and below the crossover every refinement makes the answer worse. The trillionth-of-a-second step gives 29.409363833111, an error of 9.36e-3; the 1e-8 step's error was only 3.01e-7.
 >
 > - **Calling every error "rounding".** At 1e-2 the error 4.90e-2 is all truncation; more digits would change it by only 8.14e-5.
-> - **Adding more terms, strips or steps past the floor.** The series for $e$ sticks 4.44e-16 above the stored $e$ from $1/17!$ on; the extra work buys nothing.
-> - **Reading a lucky zero as accuracy.** A million trapezoid strips landed exactly on the stored double for $\pi$: an error of 0.00e0 against it. Ten million gave 1.94e-13. The zero was truncation and rounding cancelling by chance.
+> - **Adding more terms, strips or steps past the floor.** The series for $`e`$ sticks 4.44e-16 above the stored $`e`$ from $`1/17!`$ on; the extra work buys nothing.
+> - **Reading a lucky zero as accuracy.** A million trapezoid strips landed exactly on the stored double for $`\pi`$: an error of 0.00e0 against it. Ten million gave 1.94e-13. The zero was truncation and rounding cancelling by chance.
 > - **Forgetting the loop that has no truncation.** The tracker's 999999.9998389754 is wrong by 1.61e-4 with an exact recipe. Rounding alone did it.
 
 ---
@@ -660,19 +670,19 @@ example : (10 ^ 7 : ℚ) * (1 / 10) = 10 ^ 6 := by norm_num
 ## Where you meet it in real life
 
 - **Risk systems.** Banks bump a price to estimate its sensitivities. A bump too small returns rounding noise; [Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md) works the option-price case.
-- **Maths libraries.** Routines for functions such as $e^x$ stop their series or polynomial once truncation falls below about one rounding unit. Beyond that, as with the series for $e$ here, extra terms cost time and add nothing.
+- **Maths libraries.** Routines for functions such as $`e^x`$ stop their series or polynomial once truncation falls below about one rounding unit. Beyond that, as with the series for $`e`$ here, extra terms cost time and add nothing.
 - **Simulation codes.** Engineers halve the time step or the mesh and check that the answer changes by the expected factor. This is the halving test, run as a convergence study.
 - **Fitness trackers and utility meters.** A running total of many small readings has no truncation at all, only rounding that piles up; compensated summation fixes it.
-- **Graphics chips and machine learning.** Single and half precision make $u$ much larger, so the crossover moves to larger steps. Checks of a coded gradient against a difference quotient are usually run in double precision for that reason.
+- **Graphics chips and machine learning.** Single and half precision make $`u`$ much larger, so the crossover moves to larger steps. Checks of a coded gradient against a difference quotient are usually run in double precision for that reason.
 
 > **Say it back**
-> Every computed answer's error is truncation plus rounding, exactly. Truncation is the recipe's: a step, a cut-off series or a strip width, and it falls by a known law as the step shrinks. Rounding is the machine's: each operation is off by up to $u$, and small differences and long loops magnify it. The two cross at a best step, and refining past it makes things worse. A halving test, a precision test or a law test on the run says which error is in charge.
+> Every computed answer's error is truncation plus rounding, exactly. Truncation is the recipe's: a step, a cut-off series or a strip width, and it falls by a known law as the step shrinks. Rounding is the machine's: each operation is off by up to $`u`$, and small differences and long loops magnify it. The two cross at a best step, and refining past it makes things worse. A halving test, a precision test or a law test on the run says which error is in charge.
 
 ---
 
 ## What this builds on
 
-- [Machine epsilon and cancellation](03-rounding-cancellation-and-machine-epsilon.md): the unit roundoff $u$, the standard model of one rounded operation, and cancellation.
+- [Machine epsilon and cancellation](03-rounding-cancellation-and-machine-epsilon.md): the unit roundoff $`u`$, the standard model of one rounded operation, and cancellation.
 - [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): the remainder term that turns a recipe's truncation into a law with a constant and an order.
 - [Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md): the first meeting of the two errors, on a bumped option price; this card extends it to series, quadrature and time steps.
 

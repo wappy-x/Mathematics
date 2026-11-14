@@ -35,27 +35,33 @@ Each arrow is one pass of subtraction: down the triangle to find a rule, back up
 
 A list is written a(1), a(2), a(3), … and a(n) is its n-th term, the way a recurrence names the terms it steps through ([Recurrences](01-recurrences-and-fibonacci.md)). The Greek capital D, written Δ and read "delta", marks the subtraction that turns one list into a new one: its name is the **difference**.
 
-$$\Delta a(n) = a(n+1) - a(n)$$
+```math
+\Delta a(n) = a(n+1) - a(n)
+```
 
 **Read it aloud:** the difference at step n is the next term minus this one, the jump.
 
-$$\Delta a(1) + \Delta a(2) + \cdots + \Delta a(n) = a(n+1) - a(1)$$
+```math
+\Delta a(1) + \Delta a(2) + \cdots + \Delta a(n) = a(n+1) - a(1)
+```
 
 **Read it aloud:** add every jump from the first to the n-th, and what survives is the term one past the end, minus the first.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a(n)$ | the n-th term of a list | a(5) = 15 tins | the display holds more tins |
-| $\Delta a(n)$ | the jump from term n to term n+1 | 10 to 15 is a jump of 5 | the list climbs faster |
-| $\Delta^2 a(n)$ | the jump of the jumps, Δ applied twice | 1 at every step | the climb steepens |
-| $n$ | which term, and how many rows | 10 rows | 55 tins, by n(n+1)/2 |
-| $k$ | the counter in a sum, stepping to its last term | k runs 1 to 99 | more fractions to add |
-| $C(n, k)$ | "n choose k": ways to pick k from n | C(4, 2) = 6 | each layer counts in more often |
-| $F(n)$ | the n-th Fibonacci number | F(11) = 89 | a longer hallway, more tilings |
+| $`a(n)`$ | the n-th term of a list | a(5) = 15 tins | the display holds more tins |
+| $`\Delta a(n)`$ | the jump from term n to term n+1 | 10 to 15 is a jump of 5 | the list climbs faster |
+| $`\Delta^2 a(n)`$ | the jump of the jumps, Δ applied twice | 1 at every step | the climb steepens |
+| $`n`$ | which term, and how many rows | 10 rows | 55 tins, by n(n+1)/2 |
+| $`k`$ | the counter in a sum, stepping to its last term | k runs 1 to 99 | more fractions to add |
+| $`C(n, k)`$ | "n choose k": ways to pick k from n | C(4, 2) = 6 | each layer counts in more often |
+| $`F(n)`$ | the n-th Fibonacci number | F(11) = 89 | a longer hallway, more tilings |
 
 One helper formula runs the other way: the triangle's top-left edge — first term, first jump, first jump of jumps — rebuilds the list.
 
-$$a(n) = a(1) + \Delta a(1)\,C(n-1, 1) + \Delta^2 a(1)\,C(n-1, 2) + \cdots$$
+```math
+a(n) = a(1) + \Delta a(1)\,C(n-1, 1) + \Delta^2 a(1)\,C(n-1, 2) + \cdots
+```
 
 Each layer counts in as often as there are ways to choose that many steps from the n − 1 taken: Isaac Newton's forward-difference formula. For the tins' edge 1, 2, 1 it reads a(n) = 1 + 2·C(n−1, 1) + C(n−1, 2).
 
@@ -77,7 +83,9 @@ Adding every jump along a list is the same as travelling from its first term to 
 
 Put the definition in, term by term:
 
-$$(a(2) - a(1)) + (a(3) - a(2)) + (a(4) - a(3)) + \cdots + (a(n+1) - a(n))$$
+```math
+(a(2) - a(1)) + (a(3) - a(2)) + (a(4) - a(3)) + \cdots + (a(n+1) - a(n))
+```
 
 Every term from a(2) to a(n) appears twice, once added and once taken away, so those pairs vanish. Only −a(1) and +a(n+1) survive: the identity above.
 
@@ -87,11 +95,15 @@ A pocket telescope closes into two rings with nothing between: such a sum is sai
 
 The identity is most useful run backwards: given numbers to add, find the list whose jumps they are. For 1 + 2 + … + n that means Δa(n) = n, and since differencing drops a rule's degree by one, the list is degree 2. Try a(n) = n(n−1)/2:
 
-$$\Delta a(n) = \frac{(n+1)n}{2} - \frac{n(n-1)}{2} = \frac{n\,[(n+1) - (n-1)]}{2} = n$$
+```math
+\Delta a(n) = \frac{(n+1)n}{2} - \frac{n(n-1)}{2} = \frac{n\,[(n+1) - (n-1)]}{2} = n
+```
 
 That is the list, and a(1) = 0, so the sum is a(n+1) − a(1) = n(n+1)/2:
 
-$$1 + 2 + 3 + \cdots + n = \frac{n(n+1)}{2}$$
+```math
+1 + 2 + 3 + \cdots + n = \frac{n(n+1)}{2}
+```
 
 At n = 10 that is 55, the total the slow way reaches row by row.
 
@@ -99,7 +111,9 @@ At n = 10 that is 55, the total the slow way reaches row by row.
 
 Now 1/(k(k+1)) for k from 1 to 99. Splitting the fraction into simpler pieces ([Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md)) turns each term into a jump:
 
-$$\frac{1}{k} - \frac{1}{k+1} = \frac{(k+1) - k}{k(k+1)} = \frac{1}{k(k+1)}$$
+```math
+\frac{1}{k} - \frac{1}{k+1} = \frac{(k+1) - k}{k(k+1)} = \frac{1}{k(k+1)}
+```
 
 The sum then reads (1/1 − 1/2) + (1/2 − 1/3) + … + (1/99 − 1/100), and every middle fraction meets its negative. What survives is 1/1 − 1/100: 99/100, or 0.99. At any length it gives 1 − 1/(n+1).
 
@@ -111,7 +125,9 @@ Travel down the triangle instead. Differencing a degree-2 rule leaves a degree-1
 <summary>Detailed proof: why a flat k-th row means a degree-k rule</summary>
 
 Let B(j, n) be the list whose n-th term is C(n−1, j). Pascal's rule, C(n, j) = C(n−1, j) + C(n−1, j−1), gives its difference:
-$$\Delta B(j, n) = C(n, j) - C(n-1, j) = C(n-1, j-1) = B(j-1, n).$$
+
+$`\displaystyle \Delta B(j, n) = C(n, j) - C(n-1, j) = C(n-1, j-1) = B(j-1, n).`$
+
 Differencing shifts each list one place down the family, and B(0, n), 1 everywhere, differences to zero. So take numbers c(0) … c(k) and a(n) = c(0)·B(0, n) + … + c(k)·B(k, n). Differencing j times drops every piece j places, and at n = 1 only one survives: Δ^j a(1) = c(j), read straight off the edge — Newton's formula.
 
 A flat k-th row makes the next row zero, so the edge stops at c(k). Since C(n−1, j) has degree j, the list has degree k. Its leading coefficient, the number in front of the largest power, is c(k) over 1 × 2 × … × k. For the tins, k = 2 and c(2) = 1 give the 1/2 in n(n+1)/2.

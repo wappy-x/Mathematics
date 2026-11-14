@@ -35,44 +35,52 @@ Rising curve: the call's price. Top flat line: the ceiling, $98.02, the cost tod
 
 ## The formula
 
-Implied volatility, written $\sigma_{\text{imp}}$, is defined by one equation:
+Implied volatility, written $`\sigma_{\text{imp}}`$, is defined by one equation:
 
-$$C(\sigma_{\text{imp}}) = C_{\text{mkt}}, \qquad C(\sigma) = S\,e^{-qT}N(d_1) - K\,e^{-rT}N(d_2).$$
+```math
+C(\sigma_{\text{imp}}) = C_{\text{mkt}}, \qquad C(\sigma) = S\,e^{-qT}N(d_1) - K\,e^{-rT}N(d_2).
+```
 
 **Read it aloud:** the implied volatility is the setting of the volatility dial at which the Black-Scholes call price equals the price on the screen.
 
 It has a solution exactly inside this range, the heart of the card:
 
-$$\max(A - B,\,0) \;<\; C_{\text{mkt}} \;<\; A, \qquad A = S\,e^{-qT},\quad B = K\,e^{-rT}.$$
+```math
+\max(A - B,\,0) \;<\; C_{\text{mkt}} \;<\; A, \qquad A = S\,e^{-qT},\quad B = K\,e^{-rT}.
+```
 
 **Read it aloud:** the quote must sit above what the option is worth when nothing is random, and below what a share delivered at expiry costs today.
 
-For a put, the right to sell at the strike, the range is $\max(B - A, 0) < P_{\text{mkt}} < B$, with $P(\sigma)$ the put formula.
+For a put, the right to sell at the strike, the range is $`\max(B - A, 0) < P_{\text{mkt}} < B`$, with $`P(\sigma)`$ the put formula.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C_{\text{mkt}}$, $P_{\text{mkt}}$ | the call's and put's quoted prices | $9.227006, $6.330081 | implied vol rises |
-| $C(\sigma)$, $P(\sigma)$ | the Black-Scholes prices with volatility $\sigma$ put in | $9.227006 at 20% | |
-| $\sigma$, $w$, $w_0$, $w_1$ | volatility: the yearly spread of the share's log price, a decimal; $w = \sigma\sqrt{T}$ is the total swing over the option's life; $w_0$, $w_1$ are a small and a large swing in the proof | the dial being turned | the price rises |
-| $\sigma_{\text{imp}}$ | implied volatility: the $\sigma$ that matches the quote | 0.200000 | |
-| $S$ | Acme's share price today | $100 | a call's implied vol falls for the same quote |
-| $K$ | the strike: the price fixed in the contract | $100 | a call's implied vol rises for the same quote |
-| $r$, $q$ | bank rate and dividend yield, continuously compounded, per year | 5%, 2% | move the floor and ceiling |
-| $T$ | time to expiry, in years | 1 | the same quote implies a lower vol |
-| $A$, $B$, $F$ | $A$: cost today of one share delivered at expiry, $S e^{-qT}$. $B$: today's value of the strike paid at expiry, $K e^{-rT}$. $F$: the forward price, $S e^{(r-q)T}$ | $98.019867, $95.122942, $103.045453 | |
-| $d_1$, $d_2$ | the Black-Scholes formula's two distances to the strike, in units of $\sigma\sqrt{T}$ | 0.25, 0.05 at 20% | |
-| $N(x)$, $\varphi(x)$ | bell-curve area left of $x$, and the bell curve's height at $x$ | $\varphi(0.25) = 0.386668$ | |
-| $\nu$ | vega: how many dollars the price gains per unit of $\sigma$ | 37.901158 | |
+| $`C_{\text{mkt}}`$, $`P_{\text{mkt}}`$ | the call's and put's quoted prices | $9.227006, $6.330081 | implied vol rises |
+| $`C(\sigma)`$, $`P(\sigma)`$ | the Black-Scholes prices with volatility $`\sigma`$ put in | $9.227006 at 20% | |
+| $`\sigma`$, $`w`$, $`w_0`$, $`w_1`$ | volatility: the yearly spread of the share's log price, a decimal; $`w = \sigma\sqrt{T}`$ is the total swing over the option's life; $`w_0`$, $`w_1`$ are a small and a large swing in the proof | the dial being turned | the price rises |
+| $`\sigma_{\text{imp}}`$ | implied volatility: the $`\sigma`$ that matches the quote | 0.200000 | |
+| $`S`$ | Acme's share price today | $100 | a call's implied vol falls for the same quote |
+| $`K`$ | the strike: the price fixed in the contract | $100 | a call's implied vol rises for the same quote |
+| $`r`$, $`q`$ | bank rate and dividend yield, continuously compounded, per year | 5%, 2% | move the floor and ceiling |
+| $`T`$ | time to expiry, in years | 1 | the same quote implies a lower vol |
+| $`A`$, $`B`$, $`F`$ | $`A`$: cost today of one share delivered at expiry, $`S e^{-qT}`$. $`B`$: today's value of the strike paid at expiry, $`K e^{-rT}`$. $`F`$: the forward price, $`S e^{(r-q)T}`$ | $98.019867, $95.122942, $103.045453 | |
+| $`d_1`$, $`d_2`$ | the Black-Scholes formula's two distances to the strike, in units of $`\sigma\sqrt{T}`$ | 0.25, 0.05 at 20% | |
+| $`N(x)`$, $`\varphi(x)`$ | bell-curve area left of $`x`$, and the bell curve's height at $`x`$ | $`\varphi(0.25) = 0.386668`$ | |
+| $`\nu`$ | vega: how many dollars the price gains per unit of $`\sigma`$ | 37.901158 | |
 
 The two helpers, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
 
-$$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}.$$
+```math
+d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}.
+```
 
-In words: $d_2$ is how many standard swings separate the strike from where the share is expected to end; $d_1$ is one swing more. Vega, the slope that drives the whole proof, is
+In words: $`d_2`$ is how many standard swings separate the strike from where the share is expected to end; $`d_1`$ is one swing more. Vega, the slope that drives the whole proof, is
 
-$$\nu = \frac{\partial C}{\partial \sigma} = S\,e^{-qT}\,\varphi(d_1)\sqrt{T}.$$
+```math
+\nu = \frac{\partial C}{\partial \sigma} = S\,e^{-qT}\,\varphi(d_1)\sqrt{T}.
+```
 
-In words: the slope of price against volatility is $A$, the cost today of a share delivered at expiry, times the bell curve's height at $d_1$, times the square root of time. Every factor is positive.
+In words: the slope of price against volatility is $`A`$, the cost today of a share delivered at expiry, times the bell curve's height at $`d_1`$, times the square root of time. Every factor is positive.
 
 ### When it holds
 
@@ -93,40 +101,42 @@ Picture the price as a road that climbs as the volatility dial turns. If the roa
 
 ### Step 1: the floor, when nothing is random
 
-Turn volatility to zero. Acme's share then grows like a bank balance, at the rate minus the dividend. In one year it reaches the forward price $F = S e^{(r-q)T} = \$103.045453$. The call pays $F - K = \$3.045453$ for sure. Discounted at $e^{-rT} = 0.951229$, that is $A - B = \$2.896925$.
+Turn volatility to zero. Acme's share then grows like a bank balance, at the rate minus the dividend. In one year it reaches the forward price $`F = S e^{(r-q)T} = \$103.045453`$. The call pays $`F - K = \$3.045453`$ for sure. Discounted at $`e^{-rT} = 0.951229`$, that is $`A - B = \$2.896925`$.
 
-The formula agrees in the limit. Here $\ln(A/B) = 0.03$ is positive, so as $\sigma$ shrinks both $d_1$ and $d_2$ run off to plus infinity, both $N$ values go to 1, and the price goes to $A - B$. At $\sigma = 0.01$ the formula already gives $2.897294. When the forward sits below the strike, both $d$ values run to minus infinity and the floor is zero instead. Hence the $\max(A - B, 0)$.
+The formula agrees in the limit. Here $`\ln(A/B) = 0.03`$ is positive, so as $`\sigma`$ shrinks both $`d_1`$ and $`d_2`$ run off to plus infinity, both $`N`$ values go to 1, and the price goes to $`A - B`$. At $`\sigma = 0.01`$ the formula already gives $2.897294. When the forward sits below the strike, both $`d`$ values run to minus infinity and the floor is zero instead. Hence the $`\max(A - B, 0)`$.
 
 ### Step 2: the ceiling, when everything is random
 
-Turn volatility up without limit. Now $d_1 \to +\infty$ and $d_2 \to -\infty$, so $N(d_1) \to 1$ and $N(d_2) \to 0$. The price tends to $A = S e^{-qT} = \$98.019867$. At $\sigma = 20$, that is 2,000 percent, the formula prints $98.019867 to six decimals.
+Turn volatility up without limit. Now $`d_1 \to +\infty`$ and $`d_2 \to -\infty`$, so $`N(d_1) \to 1`$ and $`N(d_2) \to 0`$. The price tends to $`A = S e^{-qT} = \$98.019867`$. At $`\sigma = 20`$, that is 2,000 percent, the formula prints $98.019867 to six decimals.
 
-The ceiling has a plain reason. Whatever happens, the call pays less than the share: at expiry it pays the share minus the strike, or nothing. So it can never cost more than a share delivered at expiry, which costs $A$ today. At huge volatility the share almost always ends near zero, but with rare enormous outcomes that carry the average. In those outcomes the strike is a rounding error, so the call becomes almost as good as the share.
+The ceiling has a plain reason. Whatever happens, the call pays less than the share: at expiry it pays the share minus the strike, or nothing. So it can never cost more than a share delivered at expiry, which costs $`A`$ today. At huge volatility the share almost always ends near zero, but with rare enormous outcomes that carry the average. In those outcomes the strike is a rounding error, so the call becomes almost as good as the share.
 
 The price therefore does not "climb forever", as is often said. It climbs toward a finite ceiling. That is why a quote of $99 has no volatility at all.
 
 ### Step 3: the price always climbs
 
-Vega is $\nu = A\,\varphi(d_1)\sqrt{T}$. A share price, a bell-curve height and a square root are all positive, so vega is strictly positive at every volatility. A function whose slope is always positive is strictly increasing: two different volatilities never give the same price. At Acme's 20 percent, vega is $37.901158; a bump of the dial by $\pm 0.0001$ gives 37.901157, the same slope to five decimals.
+Vega is $`\nu = A\,\varphi(d_1)\sqrt{T}`$. A share price, a bell-curve height and a square root are all positive, so vega is strictly positive at every volatility. A function whose slope is always positive is strictly increasing: two different volatilities never give the same price. At Acme's 20 percent, vega is $37.901158; a bump of the dial by $`\pm 0.0001`$ gives 37.901157, the same slope to five decimals.
 
-The formula for vega is short because the two halves of the call move together. The share half and the cash half each change as $\sigma$ moves, and the identity $A\,\varphi(d_1) = B\,\varphi(d_2)$ cancels everything except one term. The folded proof shows it.
+The formula for vega is short because the two halves of the call move together. The share half and the cash half each change as $`\sigma`$ moves, and the identity $`A\,\varphi(d_1) = B\,\varphi(d_2)`$ cancels everything except one term. The folded proof shows it.
 
 <details>
 <summary>Detailed proof: vega is positive, the limits are the floor and ceiling, the root is unique</summary>
 
-Write $w = \sigma\sqrt{T} > 0$ for the total swing and $m = \ln(A/B) = \ln(S/K) + (r - q)T$ for how far the forward sits above the strike, in logs. Then
-$$d_1 = \frac{m}{w} + \frac{w}{2}, \qquad d_2 = \frac{m}{w} - \frac{w}{2}, \qquad C(w) = A\,N(d_1) - B\,N(d_2).$$
-**The identity.** $d_1^2 - d_2^2 = (d_1 + d_2)(d_1 - d_2) = (2m/w)(w) = 2m$. So $\varphi(d_1)/\varphi(d_2) = e^{-(d_1^2 - d_2^2)/2} = e^{-m} = B/A$, which gives $A\,\varphi(d_1) = B\,\varphi(d_2)$.
+Write $`w = \sigma\sqrt{T} > 0`$ for the total swing and $`m = \ln(A/B) = \ln(S/K) + (r - q)T`$ for how far the forward sits above the strike, in logs. Then
 
-**The slope.** $N$ has slope $\varphi$. Differentiating in $w$: $C'(w) = A\varphi(d_1)\,d_1' - B\varphi(d_2)\,d_2' = A\varphi(d_1)(d_1' - d_2')$. Since $d_1 - d_2 = w$, $d_1' - d_2' = 1$. So $C'(w) = A\,\varphi(d_1) > 0$, and by the chain rule $\partial C/\partial\sigma = A\,\varphi(d_1)\sqrt{T}$. The put, $P(w) = B\,N(-d_2) - A\,N(-d_1)$, has $P'(w) = -B\varphi(d_2)\,d_2' + A\varphi(d_1)\,d_1' = A\varphi(d_1)(d_1' - d_2') = A\varphi(d_1)$: the same vega.
+$`\displaystyle d_1 = \frac{m}{w} + \frac{w}{2}, \qquad d_2 = \frac{m}{w} - \frac{w}{2}, \qquad C(w) = A\,N(d_1) - B\,N(d_2).`$
 
-**The limits as $w \to 0$.** If $m > 0$, $m/w \to +\infty$ dominates $\pm w/2$, both $d$ values go to $+\infty$, and $C \to A - B$. If $m < 0$, both go to $-\infty$ and $C \to 0$. If $m = 0$, $d_1 = w/2 \to 0$ and $d_2 = -w/2 \to 0$, so $C \to A/2 - B/2 = 0$ since $A = B$. In every case $C \to \max(A - B, 0)$.
+**The identity.** $`d_1^2 - d_2^2 = (d_1 + d_2)(d_1 - d_2) = (2m/w)(w) = 2m`$. So $`\varphi(d_1)/\varphi(d_2) = e^{-(d_1^2 - d_2^2)/2} = e^{-m} = B/A`$, which gives $`A\,\varphi(d_1) = B\,\varphi(d_2)`$.
 
-**The limit as $w \to \infty$.** $m/w \to 0$, so $d_1 \to +\infty$, $d_2 \to -\infty$, and $C \to A$.
+**The slope.** $`N`$ has slope $`\varphi`$. Differentiating in $`w`$: $`C'(w) = A\varphi(d_1)\,d_1' - B\varphi(d_2)\,d_2' = A\varphi(d_1)(d_1' - d_2')`$. Since $`d_1 - d_2 = w`$, $`d_1' - d_2' = 1`$. So $`C'(w) = A\,\varphi(d_1) > 0`$, and by the chain rule $`\partial C/\partial\sigma = A\,\varphi(d_1)\sqrt{T}`$. The put, $`P(w) = B\,N(-d_2) - A\,N(-d_1)`$, has $`P'(w) = -B\varphi(d_2)\,d_2' + A\varphi(d_1)\,d_1' = A\varphi(d_1)(d_1' - d_2') = A\varphi(d_1)`$: the same vega.
 
-**Existence and uniqueness.** Take a quote with $\max(A - B, 0) < C_{\text{mkt}} < A$. By the two limits there is a small $w_0$ with $C(w_0) < C_{\text{mkt}}$ and a large $w_1$ with $C(w_1) > C_{\text{mkt}}$. $C$ is continuous on $[w_0, w_1]$, so the intermediate value theorem gives a $w$ between them with $C(w) = C_{\text{mkt}}$. If two values $w < w'$ both did, the [Mean value theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md) would give a point between them with $C' = 0$, contradicting $C' > 0$. So the root is unique, and $\sigma_{\text{imp}} = w/\sqrt{T}$.
+**The limits as $`w \to 0`$.** If $`m > 0`$, $`m/w \to +\infty`$ dominates $`\pm w/2`$, both $`d`$ values go to $`+\infty`$, and $`C \to A - B`$. If $`m < 0`$, both go to $`-\infty`$ and $`C \to 0`$. If $`m = 0`$, $`d_1 = w/2 \to 0`$ and $`d_2 = -w/2 \to 0`$, so $`C \to A/2 - B/2 = 0`$ since $`A = B`$. In every case $`C \to \max(A - B, 0)`$.
 
-**The ends are never reached.** For every $w > 0$, $C(w/2) < C(w) < C(2w)$, and the outer two lie within the limits, so $\max(A - B, 0) < C(w) < A$ strictly. A quote equal to either end has no positive, finite volatility. At the floor, only $\sigma = 0$ fits, if zero is admitted.
+**The limit as $`w \to \infty`$.** $`m/w \to 0`$, so $`d_1 \to +\infty`$, $`d_2 \to -\infty`$, and $`C \to A`$.
+
+**Existence and uniqueness.** Take a quote with $`\max(A - B, 0) < C_{\text{mkt}} < A`$. By the two limits there is a small $`w_0`$ with $`C(w_0) < C_{\text{mkt}}`$ and a large $`w_1`$ with $`C(w_1) > C_{\text{mkt}}`$. $`C`$ is continuous on $`[w_0, w_1]`$, so the intermediate value theorem gives a $`w`$ between them with $`C(w) = C_{\text{mkt}}`$. If two values $`w < w'`$ both did, the [Mean value theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md) would give a point between them with $`C' = 0`$, contradicting $`C' > 0`$. So the root is unique, and $`\sigma_{\text{imp}} = w/\sqrt{T}`$.
+
+**The ends are never reached.** For every $`w > 0`$, $`C(w/2) < C(w) < C(2w)`$, and the outer two lie within the limits, so $`\max(A - B, 0) < C(w) < A`$ strictly. A quote equal to either end has no positive, finite volatility. At the floor, only $`\sigma = 0`$ fits, if zero is admitted.
 
 </details>
 
@@ -149,7 +159,7 @@ Rising curve: the call's price at the low end of the dial. Middle flat line: the
 
 ### Step 5: the put gives the same answer, and the outside has free money
 
-The put's price has the same vega, so the same argument works on its range, $0$ to $B = \$95.122942$. Acme's put at $6.330081 lies inside and, inverted on its own formula, gives 0.200000 again. This is not a coincidence. [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md), $C - P = A - B$, holds at every volatility, so a matched pair of quotes must share one implied vol.
+The put's price has the same vega, so the same argument works on its range, $`0`$ to $`B = \$95.122942`$. Acme's put at $6.330081 lies inside and, inverted on its own formula, gives 0.200000 again. This is not a coincidence. [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md), $`C - P = A - B`$, holds at every volatility, so a matched pair of quotes must share one implied vol.
 
 Outside the range, no volatility exists because no sane market trades there.
 
@@ -163,21 +173,21 @@ A call at $99 is above the ceiling: sell it and buy the prepaid share for $98.02
 
 ## Worked numbers, by hand
 
-Acme: $S = K = 100$, $r = 5\%$, $q = 2\%$, $T = 1$, quote $C_{\text{mkt}} = 9.227006$.
+Acme: $`S = K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`T = 1`$, quote $`C_{\text{mkt}} = 9.227006`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| prepaid share $A$ | $100 \times e^{-0.02}$ | $98.019867 |
-| discounted strike $B$ | $100 \times e^{-0.05}$ | $95.122942 |
-| floor, $\max(A - B, 0)$ | $98.019867 - 95.122942$ | $2.896925 |
-| ceiling, $A$ | | $98.019867 |
-| is the quote inside? | $2.896925 < 9.227006 < 98.019867$ | yes: one answer |
-| try $\sigma = 0.20$: $d_1$ | $(0 + (0.05 - 0.02 + 0.02)) / 0.20$ | 0.25 |
+| prepaid share $`A`$ | $`100 \times e^{-0.02}`$ | $98.019867 |
+| discounted strike $`B`$ | $`100 \times e^{-0.05}`$ | $95.122942 |
+| floor, $`\max(A - B, 0)`$ | $`98.019867 - 95.122942`$ | $2.896925 |
+| ceiling, $`A`$ | | $98.019867 |
+| is the quote inside? | $`2.896925 < 9.227006 < 98.019867`$ | yes: one answer |
+| try $`\sigma = 0.20`$: $`d_1`$ | $`(0 + (0.05 - 0.02 + 0.02)) / 0.20`$ | 0.25 |
 | price at 0.20 | Black-Scholes formula | $9.227006, the quote |
-| vega at 0.20 | $98.019867 \times 0.386668 \times 1$ | 37.901158 |
+| vega at 0.20 | $`98.019867 \times 0.386668 \times 1`$ | 37.901158 |
 | **implied volatility** | | **0.200000, or 20%** |
 
-One vol point, a change of 0.01 in $\sigma$, moves this option by $37.901158 \times 0.01 = \$0.379012$. So a quote rounded to $9.23 implies 0.200079: three-tenths of a cent in price is less than a hundredth of a vol point.
+One vol point, a change of 0.01 in $`\sigma`$, moves this option by $`37.901158 \times 0.01 = \$0.379012`$. So a quote rounded to $9.23 implies 0.200079: three-tenths of a cent in price is less than a hundredth of a vol point.
 
 The same inputs turn a ladder of quotes into volatilities:
 
@@ -202,10 +212,10 @@ At both ends a small move in price is a huge move in volatility. Near the ceilin
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Forget the 2% dividend | 0.167217 | Implied vol soaks up any wrong input: it is the one free dial |
-| Use $\ln(1.05) = 4.879\%$ for the 5% continuous rate | 0.201574 | A rate-convention slip moves the vol |
+| Use $`\ln(1.05) = 4.879\%`$ for the 5% continuous rate | 0.201574 | A rate-convention slip moves the vol |
 | Feed the put's $6.33 into the call formula | 0.123157 | A real number from the wrong contract |
-| Quote $2.80, floor checked as $S - K = 0$ | 0.000001 | No root exists; the solver stops at the edge of its search range |
-| Quote $99, ceiling checked as $S = 100$ | 10.000000 | Same failure at the other end: a 1,000% "answer" |
+| Quote $2.80, floor checked as $`S - K = 0`$ | 0.000001 | No root exists; the solver stops at the edge of its search range |
+| Quote $99, ceiling checked as $`S = 100`$ | 10.000000 | Same failure at the other end: a 1,000% "answer" |
 
 The last two are the dangerous ones. The solver returns a number, not an error.
 
@@ -213,7 +223,7 @@ The last two are the dangerous ones. The solver returns a number, not an error.
 
 ## Code, from first principles, and it actually runs
 
-The code finds Acme's implied volatility by three independent roads. Road 1 halves the volatility range on the formula, with the bell-curve area built from a series in Python and from Simpson's rule in Rust. Road 2 halves on a price built by brute-force averaging of the payoff over the bell curve, which uses no $d_1$ or $d_2$. Road 3 inverts the put quote on the put's own formula. It then checks vega against a bump, the floor and ceiling against the formula's limits, the ladder of quotes by repricing, and that the two refused quotes have no root, so a bare solver stops at a search edge. It prints every wrong answer in the table above. Mutation tests were run: swapping $N(d_2)$ for $N(d_1)$, flipping the halving rule, breaking the put, and breaking the averaging drift each trip an assert.
+The code finds Acme's implied volatility by three independent roads. Road 1 halves the volatility range on the formula, with the bell-curve area built from a series in Python and from Simpson's rule in Rust. Road 2 halves on a price built by brute-force averaging of the payoff over the bell curve, which uses no $`d_1`$ or $`d_2`$. Road 3 inverts the put quote on the put's own formula. It then checks vega against a bump, the floor and ceiling against the formula's limits, the ladder of quotes by repricing, and that the two refused quotes have no root, so a bare solver stops at a search edge. It prints every wrong answer in the table above. Mutation tests were run: swapping $`N(d_2)`$ for $`N(d_1)`$, flipping the halving rule, breaking the put, and breaking the averaging drift each trip an assert.
 
 ### Python
 
@@ -569,10 +579,10 @@ The two outputs agree line for line. They build the bell-curve area differently,
 
 Lean proves the range for calls and for puts, and the vega formula, for any share price, strike and time above zero.
 
-- Take $S$, $K$ and $T$ above zero. Then exactly one positive $\sigma$ gives $C(\sigma) = C_{\text{mkt}}$ exactly when $\max(A - B, 0) < C_{\text{mkt}} < A$.
-- Take the same inputs. Then exactly one positive $\sigma$ gives $P(\sigma) = P_{\text{mkt}}$ exactly when $\max(B - A, 0) < P_{\text{mkt}} < B$.
-- Take the same inputs and any positive $\sigma$. Then the slope of $C$ against $\sigma$ is $\nu = S\,e^{-qT}\,\varphi(d_1)\sqrt{T}$.
-- Take Acme's inputs at 20 percent. Then $d_1 = 0.25$ and $d_2 = 0.05$, and the table's floor and free-money subtractions come out as printed.
+- Take $`S`$, $`K`$ and $`T`$ above zero. Then exactly one positive $`\sigma`$ gives $`C(\sigma) = C_{\text{mkt}}`$ exactly when $`\max(A - B, 0) < C_{\text{mkt}} < A`$.
+- Take the same inputs. Then exactly one positive $`\sigma`$ gives $`P(\sigma) = P_{\text{mkt}}`$ exactly when $`\max(B - A, 0) < P_{\text{mkt}} < B`$.
+- Take the same inputs and any positive $`\sigma`$. Then the slope of $`C`$ against $`\sigma`$ is $`\nu = S\,e^{-qT}\,\varphi(d_1)\sqrt{T}`$.
+- Take Acme's inputs at 20 percent. Then $`d_1 = 0.25`$ and $`d_2 = 0.05`$, and the table's floor and free-money subtractions come out as printed.
 
 Every dollar price, every implied vol and the halving search are left to the Python and Rust checks.
 
@@ -979,10 +989,10 @@ example : (37901158 : ℚ) / 10 ^ 6 * (1 / 100) = 37901158 / 10 ^ 8 := by norm_n
 > **Reading implied volatility as a forecast.** It is the price of the option, written in different units. It includes the demand for protection, the seller's hedging costs and a premium for bearing risk. On equity indexes it has usually sat above the volatility that later turned up. A trader who says "the market expects 20%" means "the market charges 20%".
 >
 > Smaller traps:
-> - **Solving without checking the range.** A quote of $2.80 returns 0.000001 and a quote of $99 returns 10.000000. Both are search-range edges, not answers. Check $\max(A - B, 0) < C_{\text{mkt}} < A$ first, every time.
+> - **Solving without checking the range.** A quote of $2.80 returns 0.000001 and a quote of $99 returns 10.000000. Both are search-range edges, not answers. Check $`\max(A - B, 0) < C_{\text{mkt}} < A`$ first, every time.
 > - **Mismatched inputs.** Leaving out Acme's dividend turns 20% into 16.72%. The error lands in the volatility, where it looks like information.
 > - **The wrong contract.** The put's $6.33 run through the call formula gives 12.32%. The quote lies inside the call's range, so the solver runs happily and returns nonsense.
-> - **American quotes in a European formula.** An American put can be worth more than the European ceiling $B$. Its quote may have no solution, or a solution with no meaning.
+> - **American quotes in a European formula.** An American put can be worth more than the European ceiling $`B`$. Its quote may have no solution, or a solution with no meaning.
 
 ---
 
@@ -995,7 +1005,7 @@ example : (37901158 : ℚ) / 10 ^ 6 * (1 / 100) = 37901158 / 10 ^ 8 := by norm_n
 - **Historical volatility, the number it is compared with.** Take a year of daily closing prices, the natural log of each day's ratio to the day before, their standard deviation, and scale it by the square root of the number of trading days in a year. That is how much the share did swing. Implied volatility is what the options charge for it to swing. The gap between them is what volatility traders bet on.
 
 > **Say it back**
-> Five inputs to the Black-Scholes formula can be looked up; volatility cannot, so the formula is run backwards from the quote. The price climbs with volatility, since vega is always positive, from the zero-volatility floor $\max(A - B, 0)$ toward the ceiling $A$, the cost of a share delivered at expiry. So every quote strictly between has exactly one implied volatility, and a quote at or outside has none. For Acme, $9.227006 gives 20%, and $2.80 or $99 give nothing but free money. Implied volatility is a price in different units, not a forecast.
+> Five inputs to the Black-Scholes formula can be looked up; volatility cannot, so the formula is run backwards from the quote. The price climbs with volatility, since vega is always positive, from the zero-volatility floor $`\max(A - B, 0)`$ toward the ceiling $`A`$, the cost of a share delivered at expiry. So every quote strictly between has exactly one implied volatility, and a quote at or outside has none. For Acme, $9.227006 gives 20%, and $2.80 or $99 give nothing but free money. Implied volatility is a price in different units, not a forecast.
 
 ---
 

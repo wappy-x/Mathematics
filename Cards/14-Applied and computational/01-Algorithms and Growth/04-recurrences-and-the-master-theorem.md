@@ -38,54 +38,58 @@ The first line is merge sort: every depth holds all the tracks, so every depth b
 
 The recipe, read straight off the code: one term for each call the routine makes to itself, at the size it passes down, plus the work the routine does outside those calls.
 
-$$T(n) = T(n_1) + T(n_2) + \dots + f(n)$$
+```math
+T(n) = T(n_1) + T(n_2) + \dots + f(n)
+```
 
-**Read it aloud:** the cost on n items is the cost of each smaller call the code makes, plus the work this call does itself. Here $n_1$, $n_2$, … are the sizes the code passes to its calls.
+**Read it aloud:** the cost on n items is the cost of each smaller call the code makes, plus the work this call does itself. Here $`n_1`$, $`n_2`$, … are the sizes the code passes to its calls.
 
 Merge sort calls itself on the two halves, then merges with at most n − 1 comparisons, and a single track costs nothing:
 
-$$T(n) = T(\lfloor n/2 \rfloor) + T(\lceil n/2 \rceil) + (n - 1), \qquad T(1) = 0$$
+```math
+T(n) = T(\lfloor n/2 \rfloor) + T(\lceil n/2 \rceil) + (n - 1), \qquad T(1) = 0
+```
 
-The brackets $\lfloor\ \rfloor$ and $\lceil\ \rceil$ round down and up, so an odd list splits into two whole pieces.
+The brackets $`\lfloor\ \rfloor`$ and $`\lceil\ \rceil`$ round down and up, so an odd list splits into two whole pieces.
 
-When the calls are $a$ copies of size $n/b$ and the outside work is $f(n) = n^d$, the master theorem ([Divide-and-conquer recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/07-divide-and-conquer-recurrences.md)) reads the answer off in one line. $T(n)$ is:
+When the calls are $`a`$ copies of size $`n/b`$ and the outside work is $`f(n) = n^d`$, the master theorem ([Divide-and-conquer recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/07-divide-and-conquer-recurrences.md)) reads the answer off in one line. $`T(n)`$ is:
 
-- $\Theta(n^{\log_b a})$ if $d < \log_b a$;
-- $\Theta(n^d \log n)$ if they are equal;
-- $\Theta(n^d)$ if $d$ is bigger.
+- $`\Theta(n^{\log_b a})`$ if $`d < \log_b a`$;
+- $`\Theta(n^d \log n)`$ if they are equal;
+- $`\Theta(n^d)`$ if $`d`$ is bigger.
 
-$\Theta(g)$ means "grows exactly like g, up to a constant factor, for large n" ([Big-O](01-big-o-and-growth-rates.md)).
+$`\Theta(g)`$ means "grows exactly like g, up to a constant factor, for large n" ([Big-O](01-big-o-and-growth-rates.md)).
 
 | Code | Calls itself on | Work outside | Rule | Grows like |
 | --- | --- | --- | --- | --- |
-| merge sort | 2 halves | merge, n | $2T(n/2) + n$ | $n \log n$, flat levels |
-| binary search | 1 half | one look | $T(n/2) + 1$ | $\log n$, flat levels |
-| Karatsuba multiply | 3 half-length numbers | additions, n | $3T(n/2) + n$ | $n^{1.585}$, bottom heavy |
-| Strassen matrix multiply | 7 half-size blocks | additions, $n^2$ | $7T(n/2) + n^2$ | $n^{2.807}$, bottom heavy |
-| quicksort, 10% pivot | pieces of 10% and 90% | partition, n | $T(n/10) + T(9n/10) + n$ | $n \log n$, not by the theorem |
-| quicksort, sorted input | pieces of 0 and n − 1 | partition, n | $T(n-1) + n$ | $n^2$, not by the theorem |
+| merge sort | 2 halves | merge, n | $`2T(n/2) + n`$ | $`n \log n`$, flat levels |
+| binary search | 1 half | one look | $`T(n/2) + 1`$ | $`\log n`$, flat levels |
+| Karatsuba multiply | 3 half-length numbers | additions, n | $`3T(n/2) + n`$ | $`n^{1.585}`$, bottom heavy |
+| Strassen matrix multiply | 7 half-size blocks | additions, $`n^2`$ | $`7T(n/2) + n^2`$ | $`n^{2.807}`$, bottom heavy |
+| quicksort, 10% pivot | pieces of 10% and 90% | partition, n | $`T(n/10) + T(9n/10) + n`$ | $`n \log n`$, not by the theorem |
+| quicksort, sorted input | pieces of 0 and n − 1 | partition, n | $`T(n-1) + n`$ | $`n^2`$, not by the theorem |
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $T(n)$ | comparisons (or digit multiplies) on n items | 18,951,425 at n = 1,000,000 | — |
-| $n$; $n_1$, $n_2$ | input size: tracks, or digits; the sizes passed to the calls | 1,000,000 tracks; the two halves | rises, at the rate the rule sets |
-| $a$ | calls the code makes to itself | 2 for merge sort, 3 for Karatsuba | the bottom of the tree swells |
-| $b$ | how many times smaller each call is | 2 | fewer levels |
-| $f(n)$ | work done outside the calls | n − 1 comparisons to merge | the top of the tree swells |
-| $d$ | the power in $f(n) = n^d$ | 1 | the top takes over |
-| $\log_b a$ | the watershed power the theorem compares $d$ with | 1; 1.585 for Karatsuba | the bottom takes over |
-| $j$ | depth in the tree, the first call being depth 0 | 0 to 19 | smaller pieces, more of them |
-| $x$, $y$; $x_1$, $x_0$ | two numbers to multiply; the top and bottom halves of x's digits | 16 digits; 8 digits each | more digits, more levels |
-| $k$ | levels of the tree, $\lceil \log_2 n \rceil$ | 20 | one more level per doubling |
-| $H$ | the uneven split's entropy, $-(0.1 \ln 0.1 + 0.9 \ln 0.9)$; ln is the natural log | 0.3251 | a more even split: fewer levels |
-| $\Theta(g)$ | grows exactly like g, up to a constant | $\Theta(n \log n)$ | — |
+| $`T(n)`$ | comparisons (or digit multiplies) on n items | 18,951,425 at n = 1,000,000 | — |
+| $`n`$; $`n_1`$, $`n_2`$ | input size: tracks, or digits; the sizes passed to the calls | 1,000,000 tracks; the two halves | rises, at the rate the rule sets |
+| $`a`$ | calls the code makes to itself | 2 for merge sort, 3 for Karatsuba | the bottom of the tree swells |
+| $`b`$ | how many times smaller each call is | 2 | fewer levels |
+| $`f(n)`$ | work done outside the calls | n − 1 comparisons to merge | the top of the tree swells |
+| $`d`$ | the power in $`f(n) = n^d`$ | 1 | the top takes over |
+| $`\log_b a`$ | the watershed power the theorem compares $`d`$ with | 1; 1.585 for Karatsuba | the bottom takes over |
+| $`j`$ | depth in the tree, the first call being depth 0 | 0 to 19 | smaller pieces, more of them |
+| $`x`$, $`y`$; $`x_1`$, $`x_0`$ | two numbers to multiply; the top and bottom halves of x's digits | 16 digits; 8 digits each | more digits, more levels |
+| $`k`$ | levels of the tree, $`\lceil \log_2 n \rceil`$ | 20 | one more level per doubling |
+| $`H`$ | the uneven split's entropy, $`-(0.1 \ln 0.1 + 0.9 \ln 0.9)`$; ln is the natural log | 0.3251 | a more even split: fewer levels |
+| $`\Theta(g)`$ | grows exactly like g, up to a constant | $`\Theta(n \log n)`$ | — |
 
 ### When it holds
 
 - **Every call's size is fixed by n.** Quicksort's piece sizes depend on the data, so its rule exists only for a named case: the worst case, or a fixed split. Leave the case unnamed and the rule means nothing.
-- **The pieces are a fixed fraction of n.** A rule like $T(n-1) + n$ has no $b$, so the theorem is silent; on a sorted playlist it gives n²/2, not n log n.
+- **The pieces are a fixed fraction of n.** A rule like $`T(n-1) + n`$ has no $`b`$, so the theorem is silent; on a sorted playlist it gives n²/2, not n log n.
 - **The outside work is a plain power of n.** Work of n log₂ n per call falls between two cases; the tree gives n log² n (n times log n squared), more than ten times the n log n a forced guess gives at 2²⁰ items.
-- **The answer is a growth class, not a count.** The theorem says merge sort is $\Theta(n \log n)$; it cannot tell 18,951,425 from 20,000,000. The exact count comes from the recurrence itself.
+- **The answer is a growth class, not a count.** The theorem says merge sort is $`\Theta(n \log n)`$; it cannot tell 18,951,425 from 20,000,000. The exact count comes from the recurrence itself.
 
 ---
 
@@ -97,58 +101,64 @@ Each call does its own outside work once, then hands smaller jobs to its childre
 
 ### Step 1: write merge sort's rule from the code, and solve it exactly
 
-The code makes two calls, on $\lfloor n/2 \rfloor$ and $\lceil n/2 \rceil$ tracks, then a merge loop. Each pass of the loop makes one comparison and places one track, and the last track is placed without a comparison, so the merge costs at most n − 1. That is the rule above.
+The code makes two calls, on $`\lfloor n/2 \rfloor`$ and $`\lceil n/2 \rceil`$ tracks, then a merge loop. Each pass of the loop makes one comparison and places one track, and the last track is placed without a comparison, so the merge costs at most n − 1. That is the rule above.
 
-At depth j there are $2^j$ pieces, together holding all n tracks. Each piece costs its size minus one, so the whole depth costs $n - 2^j$: 999,999 at depth 0, 475,712 at depth 19. With $k = \lceil \log_2 n \rceil$ depths, the total is
+At depth j there are $`2^j`$ pieces, together holding all n tracks. Each piece costs its size minus one, so the whole depth costs $`n - 2^j`$: 999,999 at depth 0, 475,712 at depth 19. With $`k = \lceil \log_2 n \rceil`$ depths, the total is
 
-$$T(n) = \sum_{j=0}^{k-1} (n - 2^j) = n k - 2^k + 1$$
+```math
+T(n) = \sum_{j=0}^{k-1} (n - 2^j) = n k - 2^k + 1
+```
 
-At 1,000,000 tracks, $k = 20$: 20,000,000 minus 1,048,575 is **18,951,425**. The code checks this three ways: by running the recurrence, by the closed form, and by summing the depths.
+At 1,000,000 tracks, $`k = 20`$: 20,000,000 minus 1,048,575 is **18,951,425**. The code checks this three ways: by running the recurrence, by the closed form, and by summing the depths.
 
-No comparison sort can beat $\log_2(n!)$ comparisons in the worst case, or on average over all orders: 18,488,885 here. Each comparison at best halves the orders still possible ([Sorting and searching](05-sorting-and-searching.md)). The counted run on the shuffled library, 18,674,254, sits between that floor and the worst case. The floor does not bind a single lucky order: handed the library already sorted, the same code makes 9,884,992.
+No comparison sort can beat $`\log_2(n!)`$ comparisons in the worst case, or on average over all orders: 18,488,885 here. Each comparison at best halves the orders still possible ([Sorting and searching](05-sorting-and-searching.md)). The counted run on the shuffled library, 18,674,254, sits between that floor and the worst case. The floor does not bind a single lucky order: handed the library already sorted, the same code makes 9,884,992.
 
 <details>
 <summary>Why every depth holds n − 2^j comparisons, even when n is not a power of 2</summary>
 
-Splitting into $\lfloor n/2 \rfloor$ and $\lceil n/2 \rceil$ keeps every piece at a depth within one of the others in size. Since $n > 2^{k-1}$, every piece down to depth $k - 1$ holds at least one track. A piece costs its size minus one, and a piece of one track costs 0, which is also its size minus one. Summing size minus one over the $2^j$ pieces gives $n - 2^j$. Adding depths 0 to k − 1 gives $nk - (2^k - 1)$. ∎
+Splitting into $`\lfloor n/2 \rfloor`$ and $`\lceil n/2 \rceil`$ keeps every piece at a depth within one of the others in size. Since $`n > 2^{k-1}`$, every piece down to depth $`k - 1`$ holds at least one track. A piece costs its size minus one, and a piece of one track costs 0, which is also its size minus one. Summing size minus one over the $`2^j`$ pieces gives $`n - 2^j`$. Adding depths 0 to k − 1 gives $`nk - (2^k - 1)`$. ∎
 
 </details>
 
 ### Step 2: Karatsuba and Strassen, where the trick is one fewer call
 
-Write a 16-digit number as a top half and a bottom half: $x = x_1 \cdot 10^8 + x_0$, and the same for y. The product needs $x_1 y_1$, $x_0 y_0$ and the middle part $x_1 y_0 + x_0 y_1$. Schoolbook multiplication finds the middle with two more products: four calls. Karatsuba's trick gets it from one:
+Write a 16-digit number as a top half and a bottom half: $`x = x_1 \cdot 10^8 + x_0`$, and the same for y. The product needs $`x_1 y_1`$, $`x_0 y_0`$ and the middle part $`x_1 y_0 + x_0 y_1`$. Schoolbook multiplication finds the middle with two more products: four calls. Karatsuba's trick gets it from one:
 
-$$x_1 y_0 + x_0 y_1 = (x_1 - x_0)(y_0 - y_1) + x_1 y_1 + x_0 y_0$$
+```math
+x_1 y_0 + x_0 y_1 = (x_1 - x_0)(y_0 - y_1) + x_1 y_1 + x_0 y_0
+```
 
-Three calls on half-length numbers, plus some additions: $T(n) = 3T(n/2) + n$. Now $\log_2 3 = 1.585$ beats $d = 1$, so the bottom of the tree wins, and the cost is $3^k$ one-digit multiplies for $2^k$ digits. The run counts 9, 27 and 81 at 4, 8 and 16 digits, multiplying by 3 at each doubling. At 1,024 digits that is 59,049 against the schoolbook's 1,048,576.
+Three calls on half-length numbers, plus some additions: $`T(n) = 3T(n/2) + n`$. Now $`\log_2 3 = 1.585`$ beats $`d = 1`$, so the bottom of the tree wins, and the cost is $`3^k`$ one-digit multiplies for $`2^k`$ digits. The run counts 9, 27 and 81 at 4, 8 and 16 digits, multiplying by 3 at each doubling. At 1,024 digits that is 59,049 against the schoolbook's 1,048,576.
 
-Strassen does the same for square tables of numbers (matrices): cut each into four blocks, and seven block products, not eight, rebuild the answer. The rule is $7T(n/2) + n^2$, so the cost grows like $n^{\log_2 7} = n^{2.807}$: 282,475,249 number multiplies for 1,024-by-1,024 against 1,073,741,824. The code reads this count from the rule; it does not run Strassen.
+Strassen does the same for square tables of numbers (matrices): cut each into four blocks, and seven block products, not eight, rebuild the answer. The rule is $`7T(n/2) + n^2`$, so the cost grows like $`n^{\log_2 7} = n^{2.807}`$: 282,475,249 number multiplies for 1,024-by-1,024 against 1,073,741,824. The code reads this count from the rule; it does not run Strassen.
 
 ### Step 3: an uneven split, which the theorem does not cover
 
 Quicksort picks one track, the **pivot**, compares every other track with it, and calls itself on the tracks before it and the tracks after it. Suppose the pivot always lands at the 10% mark. Then
 
-$$T(n) = T(\lfloor n/10 \rfloor) + T(n - 1 - \lfloor n/10 \rfloor) + (n - 1)$$
+```math
+T(n) = T(\lfloor n/10 \rfloor) + T(n - 1 - \lfloor n/10 \rfloor) + (n - 1)
+```
 
-Two calls of different sizes: there is no single $b$, so the master theorem does not apply.
+Two calls of different sizes: there is no single $`b`$, so the master theorem does not apply.
 
-The tree still works. The pieces at any depth hold different tracks, so no depth costs more than n. The short branch runs out quickly; the long one shrinks by 9/10 each time, so the tree has a depth that grows like log n. At most n per depth, over a depth like log n: $\Theta(n \log n)$. The picture shows it: 113 depths, full at first, then thinning.
+The tree still works. The pieces at any depth hold different tracks, so no depth costs more than n. The short branch runs out quickly; the long one shrinks by 9/10 each time, so the tree has a depth that grows like log n. At most n per depth, over a depth like log n: $`\Theta(n \log n)`$. The picture shows it: 113 depths, full at first, then thinning.
 
 A sharper count charges each comparison to the track being compared. A track's cost is the number of pivots it met, which is its depth in the tree.
 
-Averaged over all the tracks, a track sits at depth about $\ln n / H$, where $H = 0.3251$ is the split's **entropy**. Entropy is a measure of how evenly the split shares out the tracks, largest for a half-and-half split. That predicts 42,498,413 comparisons; the exact recurrence gives 38,011,396. The gap is the lower-order terms.
+Averaged over all the tracks, a track sits at depth about $`\ln n / H`$, where $`H = 0.3251`$ is the split's **entropy**. Entropy is a measure of how evenly the split shares out the tracks, largest for a half-and-half split. That predicts 42,498,413 comparisons; the exact recurrence gives 38,011,396. The gap is the lower-order terms.
 
-Computed from the recurrence at 10,000, 100,000 and 1,000,000 tracks, the cost divided by $n \log_2 n$ is 1.794, 1.862 and 1.907. The ratio is steady, creeping toward its limit 2.132: the sign of n log n with a larger constant than merge sort's, which is 0.951 here and tends to 1. The general result for unequal pieces is the Akra–Bazzi theorem.
+Computed from the recurrence at 10,000, 100,000 and 1,000,000 tracks, the cost divided by $`n \log_2 n`$ is 1.794, 1.862 and 1.907. The ratio is steady, creeping toward its limit 2.132: the sign of n log n with a larger constant than merge sort's, which is 0.951 here and tends to 1. The general result for unequal pieces is the Akra–Bazzi theorem.
 
 ### Step 4: two more shapes outside the theorem
 
-**Subtract one, not divide.** Give quicksort a playlist that is already sorted and take the first track as pivot. Every other track is bigger, so one call gets nothing and the other gets n − 1 tracks: $T(n) = T(n-1) + (n - 1)$. There is only one node per depth and n depths, so the total is $(n-1) + (n-2) + \dots + 1 = n(n-1)/2$.
+**Subtract one, not divide.** Give quicksort a playlist that is already sorted and take the first track as pivot. Every other track is bigger, so one call gets nothing and the other gets n − 1 tracks: $`T(n) = T(n-1) + (n - 1)`$. There is only one node per depth and n depths, so the total is $`(n-1) + (n-2) + \dots + 1 = n(n-1)/2`$.
 
 The run counts 499,500 comparisons on 1,000 sorted tracks, and the same code makes 11,365 on 1,000 tracks in random order. At 1,000,000 sorted tracks it would make 499,999,500,000.
 
-**Outside work of n log n.** Suppose each call does its piece's size times $\log_2$ of that size in outside work: $T(n) = 2T(n/2) + n \log_2 n$. At depth j there are $2^j$ pieces of size $n/2^j$, so the depth costs $n(k - j)$ with $k = \log_2 n$.
+**Outside work of n log n.** Suppose each call does its piece's size times $`\log_2`$ of that size in outside work: $`T(n) = 2T(n/2) + n \log_2 n`$. At depth j there are $`2^j`$ pieces of size $`n/2^j`$, so the depth costs $`n(k - j)`$ with $`k = \log_2 n`$.
 
-The depths no longer tie: they shrink slowly. Summing $k + (k-1) + \dots + 1$ gives $n k(k+1)/2$, which grows like $n \log^2 n$. At $2^{20}$ items that is 220,200,960, against 20,971,520 if it is wrongly read as n log n. The rule in general: when the outside work is $n^{\log_b a}$ times a power of log n, the total carries that power plus one.
+The depths no longer tie: they shrink slowly. Summing $`k + (k-1) + \dots + 1`$ gives $`n k(k+1)/2`$, which grows like $`n \log^2 n`$. At $`2^{20}`$ items that is 220,200,960, against 20,971,520 if it is wrongly read as n log n. The rule in general: when the outside work is $`n^{\log_b a}`$ times a power of log n, the total carries that power plus one.
 
 ---
 
@@ -165,7 +175,7 @@ Merge sort on the 1,000,000-track library, worst case.
 | what the depths give back | 2²⁰ − 1 | 1,048,575 |
 | worst case | 20,000,000 − 1,048,575 | **18,951,425** |
 | counted on the synthetic library | the run's own tally | **18,674,254** |
-| floor for any comparison sort, worst case or average | $\log_2(1{,}000{,}000!)$ | 18,488,885 |
+| floor for any comparison sort, worst case or average | $`\log_2(1{,}000{,}000!)`$ | 18,488,885 |
 | every pair of tracks | 1,000,000 × 999,999 / 2 | 499,999,500,000 |
 
 Sorting the library costs under 19 million comparisons, where comparing every pair would cost about half a million million.
@@ -174,7 +184,7 @@ Sorting the library costs under 19 million comparisons, where comparing every pa
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Quicksort, first track as pivot, on a sorted playlist | 499,999,500,000 at 1,000,000 tracks; 499,500 at 1,000 | Every split is 0 and n − 1: the rule is $T(n-1) + n$, not halving |
+| Quicksort, first track as pivot, on a sorted playlist | 499,999,500,000 at 1,000,000 tracks; 499,500 at 1,000 | Every split is 0 and n − 1: the rule is $`T(n-1) + n`$, not halving |
 | Karatsuba read as n log n because it halves | 10,240 at 1,024 digits | Three calls, not two: 59,049 one-digit multiplies alone |
 | Strassen written with eight block products | 1,073,741,824 | Seven calls give 282,475,249 |
 | Work of n log n per call forced into the flat case | 20,971,520 at 2²⁰ items | Depths shrink slowly: 220,200,960 |
@@ -546,9 +556,9 @@ The two outputs match line for line.
 
 Lean proves the exact totals for merge sort's rule and the two shapes outside the master theorem, and checks the worked numbers.
 
-- Suppose $T(1) = 0$ and merge sort's rule holds for every $n \ge 2$. Then $T(n) = nk - 2^k + 1$ for every $n \ge 1$, with $k = \lceil \log_2 n \rceil$.
-- Suppose $T(1) = 0$ and $T(n) = T(n-1) + (n-1)$ for every $n \ge 2$. Then $T(n) = n(n-1)/2$ for every $n \ge 1$.
-- Suppose $T(1) = 0$ and $T(n) = 2T(n/2) + n \log_2 n$ whenever n is a power of 2. Then $T(n) = nk(k+1)/2$ for every $n = 2^k$.
+- Suppose $`T(1) = 0`$ and merge sort's rule holds for every $`n \ge 2`$. Then $`T(n) = nk - 2^k + 1`$ for every $`n \ge 1`$, with $`k = \lceil \log_2 n \rceil`$.
+- Suppose $`T(1) = 0`$ and $`T(n) = T(n-1) + (n-1)`$ for every $`n \ge 2`$. Then $`T(n) = n(n-1)/2`$ for every $`n \ge 1`$.
+- Suppose $`T(1) = 0`$ and $`T(n) = 2T(n/2) + n \log_2 n`$ whenever n is a power of 2. Then $`T(n) = nk(k+1)/2`$ for every $`n = 2^k`$.
 - 1,000,000 tracks take 20 depths. The worst case is 20,000,000 minus 1,048,575, which is 18,951,425.
 - At 2²⁰ tracks the worst case becomes 19,922,945.
 - Comparing every pair of 1,000,000 tracks costs 499,999,500,000, and the sorted playlist of 1,000 tracks costs 499,500.
@@ -719,12 +729,12 @@ example : 2 ^ 20 * 20 = 20971520 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Writing quicksort's rule without naming the case.** Quicksort's piece sizes are set by the data, so there is no rule to write until a case is named. With the pivot at the 10% mark the rule is $T(n/10) + T(9n/10) + n$: 38,011,396 comparisons at 1,000,000 tracks. With the first track as pivot on a sorted playlist it is $T(n-1) + n$: 499,999,500,000, against about 19 million for merge sort.
+> **Writing quicksort's rule without naming the case.** Quicksort's piece sizes are set by the data, so there is no rule to write until a case is named. With the pivot at the 10% mark the rule is $`T(n/10) + T(9n/10) + n`$: 38,011,396 comparisons at 1,000,000 tracks. With the first track as pivot on a sorted playlist it is $`T(n-1) + n`$: 499,999,500,000, against about 19 million for merge sort.
 >
-> - **Reading every halving rule as n log n.** [Divide-and-conquer recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/07-divide-and-conquer-recurrences.md) opens on this trap. Karatsuba halves and makes three calls: 59,049 one-digit multiplies alone at 1,024 digits, not 10,240. Strassen makes seven: $n^{2.807}$, not $n^2 \log n$.
+> - **Reading every halving rule as n log n.** [Divide-and-conquer recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/07-divide-and-conquer-recurrences.md) opens on this trap. Karatsuba halves and makes three calls: 59,049 one-digit multiplies alone at 1,024 digits, not 10,240. Strassen makes seven: $`n^{2.807}`$, not $`n^2 \log n`$.
 > - **Forcing a rule into a case it does not fit.** Work of n log₂ n per call is in no case of the basic theorem; read as n log n it gives 20,971,520 at 2²⁰ items, against a true 220,200,960.
 > - **Taking the growth class as the count.** Θ(n log n) does not say 20,000,000. The worst case is 18,951,425, and a real run made 18,674,254.
-> - **Leaving the outside work uncounted.** Dropping the merge gives $T(n) = 2T(n/2)$, which counts 0 comparisons: the merge is where all the work is done.
+> - **Leaving the outside work uncounted.** Dropping the merge gives $`T(n) = 2T(n/2)`$, which counts 0 comparisons: the merge is where all the work is done.
 
 ---
 
@@ -732,11 +742,11 @@ example : 2 ^ 20 * 20 = 20971520 := by norm_num
 
 - **Sorting in a music app or a spreadsheet.** Python's sort, and Java's sort for lists of objects, merge ordered runs, so their worst case grows like merge sort's: double the tracks and the comparisons a little more than double.
 - **Long-number arithmetic.** Python's own whole-number multiplication switches from the schoolbook method to Karatsuba once numbers get long enough, and big-number libraries behind cryptography software do the same.
-- **Matrix multiplication.** Strassen's seven products were the first proof that multiplying matrices costs less than $n^3$, and some large-matrix libraries use the trick for big blocks.
-- **Defending quicksort.** Library quicksorts choose pivots carefully, and some switch to a different sort when the call tree gets too deep, because the sorted-input rule $T(n-1) + n$ is a real risk.
+- **Matrix multiplication.** Strassen's seven products were the first proof that multiplying matrices costs less than $`n^3`$, and some large-matrix libraries use the trick for big blocks.
+- **Defending quicksort.** Library quicksorts choose pivots carefully, and some switch to a different sort when the call tree gets too deep, because the sorted-input rule $`T(n-1) + n`$ is a real risk.
 
 > **Say it back**
-> To cost a method that calls itself, write one term for each call it makes, at the size it passes down, and add the work it does outside the calls. Merge sort gives two half-size calls plus a merge: 18,951,425 comparisons at worst for 1,000,000 tracks. When the calls are equal fractions of n and the outside work is a power of n, the master theorem gives the growth in one line; Karatsuba's three calls make it $n^{1.585}$. When the pieces are uneven, shrink by subtraction, or the outside work carries a log, add up the tree level by level instead. A 10% pivot still gives n log n, a sorted playlist with a first-track pivot gives n²/2.
+> To cost a method that calls itself, write one term for each call it makes, at the size it passes down, and add the work it does outside the calls. Merge sort gives two half-size calls plus a merge: 18,951,425 comparisons at worst for 1,000,000 tracks. When the calls are equal fractions of n and the outside work is a power of n, the master theorem gives the growth in one line; Karatsuba's three calls make it $`n^{1.585}`$. When the pieces are uneven, shrink by subtraction, or the outside work carries a log, add up the tree level by level instead. A 10% pivot still gives n log n, a sorted playlist with a first-track pivot gives n²/2.
 
 ---
 

@@ -33,35 +33,45 @@ One line: the tail, the chance the claim is larger than x. It starts at 0.70, no
 
 ## The formula
 
-Notation first, in words. F is a **right-continuous** function: approaching any point from the right lands on the value there. Its **left limit** $F(x-)$ is the value approached from the left, and the **jump** at x is $\Delta F(x) = F(x) - F(x-)$. When F is increasing, $\mu_F$ is its Lebesgue-Stieltjes measure, the measure giving each stretch (a, b] the mass F(b) − F(a) ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). The integral $\int g\,dF$ is read "the integral of g against F".
+Notation first, in words. F is a **right-continuous** function: approaching any point from the right lands on the value there. Its **left limit** $`F(x-)`$ is the value approached from the left, and the **jump** at x is $`\Delta F(x) = F(x) - F(x-)`$. When F is increasing, $`\mu_F`$ is its Lebesgue-Stieltjes measure, the measure giving each stretch (a, b] the mass F(b) − F(a) ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). The integral $`\int g\,dF`$ is read "the integral of g against F".
 
 **The definition.** For F increasing and right-continuous, and g a Borel function (measurable with respect to the Borel sets, the sets built from intervals):
 
-$$\int g\,dF \;=\; \int g\,d\mu_F.$$
+```math
+\int g\,dF \;=\; \int g\,d\mu_F.
+```
 
-For F of **bounded variation** (finite total up-and-down movement on every bounded interval), write $F = F_1 - F_2$ with $F_1$ and $F_2$ increasing and right-continuous, and set $\int g\,dF = \int g\,d\mu_{F_1} - \int g\,d\mu_{F_2}$. This split is the Jordan decomposition of [Bounded variation](01-functions-of-bounded-variation.md). Its climb and descent inherit right-continuity from F, because the running variation of a right-continuous function is right-continuous (Folland, Section 3.5).
+For F of **bounded variation** (finite total up-and-down movement on every bounded interval), write $`F = F_1 - F_2`$ with $`F_1`$ and $`F_2`$ increasing and right-continuous, and set $`\int g\,dF = \int g\,d\mu_{F_1} - \int g\,d\mu_{F_2}`$. This split is the Jordan decomposition of [Bounded variation](01-functions-of-bounded-variation.md). Its climb and descent inherit right-continuity from F, because the running variation of a right-continuous function is right-continuous (Folland, Section 3.5).
 
 **Read it aloud:** integrating against F is integrating against the measure F builds; a function that also falls is split into what it gains minus what it loses.
 
-**Jumps plus a density.** Split F into its **jump part** $F_d$, the sum of the jumps at or below x, and its **continuous part** $F_c = F - F_d$. When $F_c$ is absolutely continuous (it is the running integral of its own slope, [Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md)), with slope $F_c'$:
+**Jumps plus a density.** Split F into its **jump part** $`F_d`$, the sum of the jumps at or below x, and its **continuous part** $`F_c = F - F_d`$. When $`F_c`$ is absolutely continuous (it is the running integral of its own slope, [Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md)), with slope $`F_c'`$:
 
-$$\int g\,dF \;=\; \sum_{x} g(x)\,\Delta F(x) \;+\; \int g(x)\,F_c'(x)\,dx.$$
+```math
+\int g\,dF \;=\; \sum_{x} g(x)\,\Delta F(x) \;+\; \int g(x)\,F_c'(x)\,dx.
+```
 
 **Read it aloud:** each jump adds g at the jump times the jump's height, and the smooth part adds the ordinary integral of g times the slope.
 
 **Expectation.** If a random quantity X has distribution function F:
 
-$$E[g(X)] \;=\; \int g\,dF.$$
+```math
+E[g(X)] \;=\; \int g\,dF.
+```
 
 **Integration by parts.** For F and G right-continuous and of bounded variation on (a, b]:
 
-$$\int_{(a,b]} F\,dG \;+\; \int_{(a,b]} G\,dF \;=\; F(b)\,G(b) - F(a)\,G(a) \;+\; \sum_{a < x \le b} \Delta F(x)\,\Delta G(x).$$
+```math
+\int_{(a,b]} F\,dG \;+\; \int_{(a,b]} G\,dF \;=\; F(b)\,G(b) - F(a)\,G(a) \;+\; \sum_{a < x \le b} \Delta F(x)\,\Delta G(x).
+```
 
 **Read it aloud:** the two integrals add up to the change in the product, plus one correction for every point where both functions jump at once.
 
 **The tail formula.** For X that is never negative and has a finite average:
 
-$$E[X] \;=\; \int_0^\infty \big(1 - F(x)\big)\,dx.$$
+```math
+E[X] \;=\; \int_0^\infty \big(1 - F(x)\big)\,dx.
+```
 
 **Read it aloud:** the average payout is the area under the chance of exceeding each amount.
 
@@ -69,18 +79,18 @@ On the claim: E[X] = 0.3 × \$0 + ∫ x × 0.0007 dx over (0, 1,000] = \$350, an
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$ | a right-continuous running total; for a claim, its distribution function | 0.3 at \$0, then rising 0.0007 per dollar | a steeper climb puts more weight there |
-| $G$ | a second such function, in integration by parts | F itself, or G(x) = x | — |
-| $g$ | the function averaged | the payout x; 50 + x with the fee | a larger g gives a larger integral |
-| $\mu_F$ | the measure F builds: mass F(b) − F(a) on (a, b] | mass 0.3 on the single point \$0 | — |
-| $F(x-)$, $\Delta F(x)$ | left limit; jump F(x) − F(x−) | F(0−) = 0, ΔF(0) = 0.3 | a taller jump weights that point more |
-| $F_d$, $F_c$ | jump part; continuous part F − F_d | 0.3 from \$0 on; 0.0007x on [0, 1,000] | — |
-| $F_c'$, $F'$ | slope of the continuous part; slope of F where it exists | 0.0007 per dollar | a steeper slope weights that stretch more |
-| $F_1$, $F_2$, $V$ | increasing parts with F = F_1 − F_2; the running variation of $F_c$, used to choose them | for 1 − F: 1 and F | — |
-| $X$, $X'$ | the claim; an independent copy of it, the first claim of the pair in Step 4 | E[X] = \$350 | — |
-| $E$, $P$, $\lambda$ | average; probability; Lebesgue measure (length) | P(X = 0) = 0.3 | — |
-| $a$, $b$, $s$, $t$ | ends of an interval; coordinates on a square of pairs | (−100, 1,000] | — |
-| $n$, $h$, $t_i$ | pieces, piece width and tag points of a Riemann-Stieltjes sum | 1,100 pieces of width 1 | more pieces, closer sums |
+| $`F`$ | a right-continuous running total; for a claim, its distribution function | 0.3 at \$0, then rising 0.0007 per dollar | a steeper climb puts more weight there |
+| $`G`$ | a second such function, in integration by parts | F itself, or G(x) = x | — |
+| $`g`$ | the function averaged | the payout x; 50 + x with the fee | a larger g gives a larger integral |
+| $`\mu_F`$ | the measure F builds: mass F(b) − F(a) on (a, b] | mass 0.3 on the single point \$0 | — |
+| $`F(x-)`$, $`\Delta F(x)`$ | left limit; jump F(x) − F(x−) | F(0−) = 0, ΔF(0) = 0.3 | a taller jump weights that point more |
+| $`F_d`$, $`F_c`$ | jump part; continuous part F − F_d | 0.3 from \$0 on; 0.0007x on [0, 1,000] | — |
+| $`F_c'`$, $`F'`$ | slope of the continuous part; slope of F where it exists | 0.0007 per dollar | a steeper slope weights that stretch more |
+| $`F_1`$, $`F_2`$, $`V`$ | increasing parts with F = F_1 − F_2; the running variation of $`F_c`$, used to choose them | for 1 − F: 1 and F | — |
+| $`X`$, $`X'`$ | the claim; an independent copy of it, the first claim of the pair in Step 4 | E[X] = \$350 | — |
+| $`E`$, $`P`$, $`\lambda`$ | average; probability; Lebesgue measure (length) | P(X = 0) = 0.3 | — |
+| $`a`$, $`b`$, $`s`$, $`t`$ | ends of an interval; coordinates on a square of pairs | (−100, 1,000] | — |
+| $`n`$, $`h`$, $`t_i`$ | pieces, piece width and tag points of a Riemann-Stieltjes sum | 1,100 pieces of width 1 | more pieces, closer sums |
 
 ### When it holds
 
@@ -106,26 +116,26 @@ Adding one increasing function to both parts gives another splitting. Suppose F_
 
 **Jumps.** μ_F puts mass ΔF(x) on the single point x ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). An increasing F has at most countably many jumps, since those inside (a, b] add to at most F(b) − F(a). Integrating g against one point mass returns g at that point, and monotone convergence allows the sum over countably many. Monotone convergence says the integrals of a rising sequence of functions rise to the integral of their limit ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)).
 
-**The smooth part.** Let $F_c$ be absolutely continuous. The fundamental theorem for such functions ([Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md)) says $F_c(b) - F_c(a) = \int_a^b F_c'\,dx$. The right side is the mass the measure "slope times length" gives to (a, b]. So the measure $F_c$ builds and that measure agree on intervals, and by Step 0 everywhere: $F_c'$ is its density against λ ([The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md)).
+**The smooth part.** Let $`F_c`$ be absolutely continuous. The fundamental theorem for such functions ([Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md)) says $`F_c(b) - F_c(a) = \int_a^b F_c'\,dx`$. The right side is the mass the measure "slope times length" gives to (a, b]. So the measure $`F_c`$ builds and that measure agree on intervals, and by Step 0 everywhere: $`F_c'`$ is its density against λ ([The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md)).
 
-**Together.** $F_d$ and $F_c$ add to F, so their measures add to μ_F, and the integral is linear in the measure.
+**Together.** $`F_d`$ and $`F_c`$ add to F, so their measures add to μ_F, and the integral is linear in the measure.
 
 On the claim, the jump is 0.3 at \$0 and the slope 0.0007 on (0, 1,000]. The payout gives 0.3 × \$0 + \$350 = \$350. The fee case, g(x) = 50 + x, gives \$15 + \$385 = \$400. The jump adds nothing to the first only because it sits at \$0.
 
 <details>
 <summary>Detailed proof: from indicators to every integrable g</summary>
 
-Take F increasing first. Let ν(A) be the integral of $F_c'$ over A against λ. Step 2 showed that ν and the measure $F_c$ builds agree on every Borel A. That is the statement for the indicator g = 1_A.
+Take F increasing first. Let ν(A) be the integral of $`F_c'`$ over A against λ. Step 2 showed that ν and the measure $`F_c`$ builds agree on every Borel A. That is the statement for the indicator g = 1_A.
 
-Both sides are linear in g, so the statement holds for simple functions, finite sums of multiples of indicators. A Borel g that is never negative is the increasing limit of simple functions ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)), and monotone convergence ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) applies on both sides, since $F_c' \ge 0$. For integrable g, subtract the equalities for its positive and negative parts.
+Both sides are linear in g, so the statement holds for simple functions, finite sums of multiples of indicators. A Borel g that is never negative is the increasing limit of simple functions ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)), and monotone convergence ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) applies on both sides, since $`F_c' \ge 0`$. For integrable g, subtract the equalities for its positive and negative parts.
 
-For the jump part: $F_d$ builds the measure giving A the sum of the jumps at points of A, since both give (a, b] the sum of the jumps inside it. For g = 1_A the integral is that sum; linearity, monotone convergence over the list of jumps, and the positive-negative split carry it to every integrable g.
+For the jump part: $`F_d`$ builds the measure giving A the sum of the jumps at points of A, since both give (a, b] the sum of the jumps inside it. For g = 1_A the integral is that sum; linearity, monotone convergence over the list of jumps, and the positive-negative split carry it to every integrable g.
 
 For F of bounded variation, Step 1 lets the split be chosen, and an arbitrary one will not do: adding the Cantor function to both parts leaves F unchanged but gives each part a continuous part that is not absolutely continuous.
 
-So split the two parts of F separately. $F_d$ is its rising jumps minus its falling jumps, two increasing jump functions. $F_c = V - (V - F_c)$ with $V$ the running variation of $F_c$; both pieces rise and are absolutely continuous by Lemma 3 of [Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md).
+So split the two parts of F separately. $`F_d`$ is its rising jumps minus its falling jumps, two increasing jump functions. $`F_c = V - (V - F_c)`$ with $`V`$ the running variation of $`F_c`$; both pieces rise and are absolutely continuous by Lemma 3 of [Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md).
 
-Take $F_1$ = rising jumps + $V$ and $F_2$ = falling jumps + $(V - F_c)$. Each is increasing and right-continuous with an absolutely continuous continuous part, so the increasing case applies to each. Subtracting, the jumps give ΔF and the slopes give $F_c'$.
+Take $`F_1`$ = rising jumps + $`V`$ and $`F_2`$ = falling jumps + $`(V - F_c)`$. Each is increasing and right-continuous with an absolutely continuous continuous part, so the increasing case applies to each. Subtracting, the jumps give ΔF and the slopes give $`F_c'`$.
 
 </details>
 
@@ -139,7 +149,9 @@ Wing 09 averages by a sum for a discrete law and by a density for a continuous o
 
 Take two independent claims, the first s and the second t; the pairs fill a square. The chances of s ≤ t and of s > t add to 1. Fix t: the chance the first claim is at most t is F(t), and averaging over t gives ∫ F dF, which is P(X′ ≤ X) with X′ the first claim. Fix s: the chance the second is strictly below s is the left limit F(s−), and averaging gives ∫ F(s−) dF(s). So
 
-$$\int F\,dF + \int F(s-)\,dF(s) = 1.$$
+```math
+\int F\,dF + \int F(s-)\,dF(s) = 1.
+```
 
 The integrands differ only at the jump, by ΔF(0) = 0.3, which carries mass 0.3. So the integrals differ by 0.09, and ∫ F dF = (1 + 0.09)/2 = 0.545. Without the jump it would be 1/2. The picture draws the square in probability units, so each region's area is its chance.
 
@@ -158,7 +170,7 @@ In D1 the s-section at t is (a, t], of mass F(t) − F(a); by Tonelli, D1 has ma
 
 The two add to the mass of S, (F(b) − F(a))(G(b) − G(a)). Expanding and cancelling:
 
-$$\int_{(a,b]} F\,dG + \int_{(a,b]} G(s-)\,dF(s) = F(b)G(b) - F(a)G(a).$$
+$`\displaystyle \int_{(a,b]} F\,dG + \int_{(a,b]} G(s-)\,dF(s) = F(b)G(b) - F(a)G(a).`$
 
 Now G(s−) = G(s) − ΔG(s), and ΔG is zero off the countably many jumps of G, so by Step 2 its integral against F is the sum of ΔG(x) ΔF(x). Substituting gives the formula with the jump term.
 
@@ -170,7 +182,9 @@ Now G(s−) = G(s) − ΔG(s), and ΔG is zero off the countably many jumps of G
 
 Apply Step 4 with G(x) = x, which has no jumps, on (0, b]. It gives ∫ x dF over (0, b] plus the integral of F from 0 to b equals bF(b). Rearranged:
 
-$$\int_{(0,b]} x\,dF(x) \;=\; \int_0^b \big(1 - F(x)\big)\,dx \;-\; b\,\big(1 - F(b)\big).$$
+```math
+\int_{(0,b]} x\,dF(x) \;=\; \int_0^b \big(1 - F(x)\big)\,dx \;-\; b\,\big(1 - F(b)\big).
+```
 
 The last term is the **boundary term**. On the claim at b = \$500: \$87.500 on the left, tail area \$262.500, boundary term 500 × 0.35 = \$175.000. At b = \$1,000 the boundary term is 0 and both sides are \$350.000, which is E[X], since the atom at \$0 (the mass 0.3 sitting on that single point) adds nothing.
 
@@ -178,7 +192,7 @@ For general X, never negative with finite average, let b grow. The left side ris
 
 ### Step 6: Riemann-Stieltjes sums converge to this integral when g is continuous
 
-A **Riemann-Stieltjes sum** cuts (a, b] into n pieces, picks a tag point $t_i$ in each, and adds g at the tag times the rise of F across the piece ([Stieltjes integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/06-riemann-stieltjes-integral.md)). That sum is the integral against μ_F of a step function, g at the tag on each piece.
+A **Riemann-Stieltjes sum** cuts (a, b] into n pieces, picks a tag point $`t_i`$ in each, and adds g at the tag times the rise of F across the piece ([Stieltjes integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/06-riemann-stieltjes-integral.md)). That sum is the integral against μ_F of a step function, g at the tag on each piece.
 
 A continuous g on [a, b] is uniformly continuous ([Uniform continuity](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md)), so on narrow pieces the step function stays within any chosen distance of g, and the integrals differ by at most that distance times F(b) − F(a) (for increasing F; the total variation otherwise).
 
@@ -581,11 +595,11 @@ The two outputs match line for line. The simulated mean, \$351.13, sits about on
 
 Lean proves the three theorems for every F, G, g and X the card allows, under the conditions in When it holds.
 
-- Suppose X has distribution function F and g is Borel. Then $E[g(X)] = \int g\,dF$, for g never negative or integrable against F.
-- Take $F = F_1 - F_2$, both parts increasing and right-continuous, with $F_c$ absolutely continuous, and g Borel and integrable. Then $\int g\,dF$ is g times each jump, summed, plus the ordinary integral of g times $F_c'$.
+- Suppose X has distribution function F and g is Borel. Then $`E[g(X)] = \int g\,dF`$, for g never negative or integrable against F.
+- Take $`F = F_1 - F_2`$, both parts increasing and right-continuous, with $`F_c`$ absolutely continuous, and g Borel and integrable. Then $`\int g\,dF`$ is g times each jump, summed, plus the ordinary integral of g times $`F_c'`$.
 - Suppose F and G are right-continuous and of bounded variation on [a, b]. Then integration by parts holds on (a, b], jump term included.
 - Exact fractions confirm the worked numbers: \$350, \$400, the tail area, \$87.5 by parts, and 0.545 for F against F.
-- They also confirm the 11-piece Riemann-Stieltjes sums, 285 and 385, then 0.7 and 1, and the Cantor length $(2/3)^{10}$.
+- They also confirm the 11-piece Riemann-Stieltjes sums, 285 and 385, then 0.7 and 1, and the Cantor length $`(2/3)^{10}`$.
 
 The tail formula, the convergence of Riemann-Stieltjes sums, the finer grids and the simulations are left to the Python and Rust checks.
 

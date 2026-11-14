@@ -32,46 +32,52 @@ To scale, in the common units explained below. Every 11th order of a 1,053-order
 
 First, the common scale. Basket value in pounds and hour of day are in different units, so each of the 12 numbers is first rescaled: shifted so a typical order scores 0 and stretched so a typical spread is 1. This is **standardising**. After it, a difference of 1 means the same amount in every column. The usual mistake below shows what happens without it.
 
-Notation, in words. Order $i$ is a list of $d = 12$ numbers, written $x_i$. There are $n = 20{,}000$ orders and $k$ groups. Centre $j$ is a list of 12 numbers too, $c_j$. The label $g_i$ says which group order $i$ is in. $\lVert x - c \rVert$ is the straight-line distance between two lists of numbers: Pythagoras from [Distance and midpoint](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/01-distance-and-midpoint.md), with 12 differences squared and added instead of 2.
+Notation, in words. Order $`i`$ is a list of $`d = 12`$ numbers, written $`x_i`$. There are $`n = 20{,}000`$ orders and $`k`$ groups. Centre $`j`$ is a list of 12 numbers too, $`c_j`$. The label $`g_i`$ says which group order $`i`$ is in. $`\lVert x - c \rVert`$ is the straight-line distance between two lists of numbers: Pythagoras from [Distance and midpoint](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/01-distance-and-midpoint.md), with 12 differences squared and added instead of 2.
 
-$$J = \sum_{i=1}^{n} \lVert x_i - c_{g_i} \rVert^2$$
+```math
+J = \sum_{i=1}^{n} \lVert x_i - c_{g_i} \rVert^2
+```
 
-**Read it aloud:** the score $J$ is the squared distance from every order to the centre of its own group, added up over all orders.
+**Read it aloud:** the score $`J`$ is the squared distance from every order to the centre of its own group, added up over all orders.
 
 The two turns that lower it:
 
-$$\text{assign: } g_i = \text{the } j \text{ with the smallest } \lVert x_i - c_j \rVert^2, \qquad \text{update: } c_j = \frac{1}{n_j} \sum_{i \,:\, g_i = j} x_i$$
+```math
+\text{assign: } g_i = \text{the } j \text{ with the smallest } \lVert x_i - c_j \rVert^2, \qquad \text{update: } c_j = \frac{1}{n_j} \sum_{i \,:\, g_i = j} x_i
+```
 
-**Read it aloud:** give each order the label of its nearest centre; then set each centre to the average, number by number, of the $n_j$ orders labelled $j$.
+**Read it aloud:** give each order the label of its nearest centre; then set each centre to the average, number by number, of the $`n_j`$ orders labelled $`j`$.
 
-To choose $k$, the **silhouette** of order $i$ compares $a_i$, its average distance to the other orders in its own group, with $b_i$, its average distance to the orders of the nearest other group:
+To choose $`k`$, the **silhouette** of order $`i`$ compares $`a_i`$, its average distance to the other orders in its own group, with $`b_i`$, its average distance to the orders of the nearest other group:
 
-$$s_i = \frac{b_i - a_i}{\max(a_i, b_i)}$$
+```math
+s_i = \frac{b_i - a_i}{\max(a_i, b_i)}
+```
 
 **Read it aloud:** the silhouette is how much farther the next-nearest group is than the order's own group, as a fraction of the larger of the two; near 1 means well placed, near 0 means on a border, below 0 means probably in the wrong group.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_i$ | order $i$: its 12 numbers, on the common scale | one order's basket value, items, … | — |
-| $n$ | number of orders | 20,000 | $J$ grows in proportion; the work per pass grows in proportion |
-| $d$ | numbers per order | 12 | each distance takes longer; $J$ grows |
-| $k$ | number of groups asked for | 4 | $J$ always falls, slower and slower past the true number |
-| $g_i$ | the group label of order $i$ | 0, 1, 2 or 3 | — |
-| $c_j$ | centre of group $j$: 12 numbers | big-ticket centre has basket value 2.50 | — |
-| $n_j$ | number of orders in group $j$ | 8,005, 5,992, 2,000, 4,003 | — |
-| $J$ | the score: total squared distance to own centre | 117,324.1 | worse grouping |
-| $\sigma$ | spread of the wobble round each true centre (synthetic data only) | 0.7 | groups overlap; $J$ grows like $\sigma^2$ |
-| $a_i$, $b_i$ | order $i$'s average distance to its own group, and to the nearest other group | — | $a_i$ up: worse fit; $b_i$ up: better separated |
-| $m$, $\bar x$, $c$ | in Step 2: one group's size, its mean, and any centre tried | A, B, C: 3, (0.3333, 3) and A | $c$ away from $\bar x$: that group's share of $J$ rises |
-| $s_i$, $\bar s$ | silhouette of one order; its average over a sample | $\bar s$ = 0.3597 at $k = 4$ | clearer groups |
+| $`x_i`$ | order $`i`$: its 12 numbers, on the common scale | one order's basket value, items, … | — |
+| $`n`$ | number of orders | 20,000 | $`J`$ grows in proportion; the work per pass grows in proportion |
+| $`d`$ | numbers per order | 12 | each distance takes longer; $`J`$ grows |
+| $`k`$ | number of groups asked for | 4 | $`J`$ always falls, slower and slower past the true number |
+| $`g_i`$ | the group label of order $`i`$ | 0, 1, 2 or 3 | — |
+| $`c_j`$ | centre of group $`j`$: 12 numbers | big-ticket centre has basket value 2.50 | — |
+| $`n_j`$ | number of orders in group $`j`$ | 8,005, 5,992, 2,000, 4,003 | — |
+| $`J`$ | the score: total squared distance to own centre | 117,324.1 | worse grouping |
+| $`\sigma`$ | spread of the wobble round each true centre (synthetic data only) | 0.7 | groups overlap; $`J`$ grows like $`\sigma^2`$ |
+| $`a_i`$, $`b_i`$ | order $`i`$'s average distance to its own group, and to the nearest other group | — | $`a_i`$ up: worse fit; $`b_i`$ up: better separated |
+| $`m`$, $`\bar x`$, $`c`$ | in Step 2: one group's size, its mean, and any centre tried | A, B, C: 3, (0.3333, 3) and A | $`c`$ away from $`\bar x`$: that group's share of $`J`$ rises |
+| $`s_i`$, $`\bar s`$ | silhouette of one order; its average over a sample | $`\bar s`$ = 0.3597 at $`k = 4`$ | clearer groups |
 
 ### When it holds
 
 - **A group really is a blob round a centre.** k-means describes groups by centres and nearest-centre borders, which are straight. Two long thin groups lying side by side, or one ring inside another, get cut the wrong way. Spectral clustering in [The graph Laplacian](../07-Network%20Science%20and%20Spectral%20Graphs/03-graph-laplacian-and-spectral-clustering.md) handles shapes like that.
 - **The numbers share a scale.** Distance treats a unit in every column alike. Leave basket value in pounds and it swamps the other 11 numbers: only 63.15% of orders then land with their own kind.
 - **Squared distance is a fair price.** Squaring makes one far-off order cost a lot, so a handful of extreme orders can drag a centre towards them. With heavy outliers, a version that uses medians is safer.
-- **Several starts, not one.** The method stops at a grouping no single turn can improve, which need not be the best grouping. One of three starts here stops at $J$ = 172,458.5, 1.4699 times the best.
-- **You choose $k$, and the method never questions it.** Ask for 8 groups and it returns 8. The elbow and the silhouette are checks you run beside it.
+- **Several starts, not one.** The method stops at a grouping no single turn can improve, which need not be the best grouping. One of three starts here stops at $`J`$ = 172,458.5, 1.4699 times the best.
+- **You choose $`k`$, and the method never questions it.** Ask for 8 groups and it returns 8. The elbow and the silhouette are checks you run beside it.
 
 ---
 
@@ -81,28 +87,30 @@ $$s_i = \frac{b_i - a_i}{\max(a_i, b_i)}$$
 
 Finding the labels and the centres together is hard. But each half alone is easy. If the centres are fixed, the best labels are obvious: send each order to its nearest centre. If the labels are fixed, the best centres are obvious too: the mean of each group, as Step 2 proves. k-means solves one half, then the other, and repeats. This is **coordinate descent**: lower a score by improving one block of unknowns at a time, holding the rest still.
 
-### Step 1: the assign turn cannot raise $J$
+### Step 1: the assign turn cannot raise $`J`$
 
-Hold the centres still. $J$ is a sum with one term per order, and each order's term depends only on its own label. Switching order $i$ to its nearest centre makes its term as small as it can be, so no term rises and the sum cannot rise. If two centres tie, keep the current label; then a label changes only when $J$ strictly falls. (The code breaks a tie by the lower group number instead; with numbers like these, exact ties are vanishingly rare.)
+Hold the centres still. $`J`$ is a sum with one term per order, and each order's term depends only on its own label. Switching order $`i`$ to its nearest centre makes its term as small as it can be, so no term rises and the sum cannot rise. If two centres tie, keep the current label; then a label changes only when $`J`$ strictly falls. (The code breaks a tie by the lower group number instead; with numbers like these, exact ties are vanishingly rare.)
 
-### Step 2: the update turn cannot raise $J$, because the mean is the best centre
+### Step 2: the update turn cannot raise $`J`$, because the mean is the best centre
 
-Hold the labels still and look at one group of $m$ orders with mean $\bar x$. For any centre $c$, the **shift identity** says
+Hold the labels still and look at one group of $`m`$ orders with mean $`\bar x`$. For any centre $`c`$, the **shift identity** says
 
-$$\sum_{i} \lVert x_i - c \rVert^2 = \sum_{i} \lVert x_i - \bar x \rVert^2 + m\,\lVert \bar x - c \rVert^2 .$$
+```math
+\sum_{i} \lVert x_i - c \rVert^2 = \sum_{i} \lVert x_i - \bar x \rVert^2 + m\,\lVert \bar x - c \rVert^2 .
+```
 
-The first part does not depend on $c$. The second part is never negative and is zero only at $c = \bar x$. So the mean is the one best centre, and moving each centre to its group's mean lowers $J$ or leaves it alone. The one-number case is Step 1 of [Loss and empirical risk](01-loss-functions-and-empirical-risk.md); here it is the same with 12 numbers.
+The first part does not depend on $`c`$. The second part is never negative and is zero only at $`c = \bar x`$. So the mean is the one best centre, and moving each centre to its group's mean lowers $`J`$ or leaves it alone. The one-number case is Step 1 of [Loss and empirical risk](01-loss-functions-and-empirical-risk.md); here it is the same with 12 numbers.
 
 <details>
 <summary>Proof of the shift identity, with the dot product</summary>
 
-Write $x_i - c = (x_i - \bar x) + (\bar x - c)$ and square its length using [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): $\lVert u + v \rVert^2 = \lVert u \rVert^2 + 2\,u \cdot v + \lVert v \rVert^2$. Add over the $m$ orders:
+Write $`x_i - c = (x_i - \bar x) + (\bar x - c)`$ and square its length using [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): $`\lVert u + v \rVert^2 = \lVert u \rVert^2 + 2\,u \cdot v + \lVert v \rVert^2`$. Add over the $`m`$ orders:
 
-$$\sum_i \lVert x_i - c \rVert^2 = \sum_i \lVert x_i - \bar x \rVert^2 + 2 \Big(\sum_i (x_i - \bar x)\Big) \cdot (\bar x - c) + m\,\lVert \bar x - c \rVert^2 .$$
+$`\displaystyle \sum_i \lVert x_i - c \rVert^2 = \sum_i \lVert x_i - \bar x \rVert^2 + 2 \Big(\sum_i (x_i - \bar x)\Big) \cdot (\bar x - c) + m\,\lVert \bar x - c \rVert^2 .`$
 
-The middle sum is $\sum_i x_i - m\bar x = 0$, by the definition of the mean. What is left is the identity.
+The middle sum is $`\sum_i x_i - m\bar x = 0`$, by the definition of the mean. What is left is the identity.
 
-The same answer comes from [Gradient descent](02-gradient-descent-and-stochastic-gradient.md)'s view: the slope of $\sum_i \lVert x_i - c \rVert^2$ with respect to $c$ is $-2\sum_i (x_i - c)$, which is zero exactly when $c$ is the mean. k-means jumps straight to the bottom instead of stepping downhill.
+The same answer comes from [Gradient descent](02-gradient-descent-and-stochastic-gradient.md)'s view: the slope of $`\sum_i \lVert x_i - c \rVert^2`$ with respect to $`c`$ is $`-2\sum_i (x_i - c)`$, which is zero exactly when $`c`$ is the mean. k-means jumps straight to the bottom instead of stepping downhill.
 
 </details>
 
@@ -110,23 +118,23 @@ On the six-order example below, group A, B, C with its centre at A scores 6.0000
 
 ### Step 3: taking turns must stop
 
-There are only finitely many ways to label $n$ orders with $k$ groups: at most $k^n$. Each pass that changes any label lowers $J$ strictly (Step 1, with the tie rule), and the update that follows cannot raise it (Step 2). So $J$ after each pass is strictly lower than after the one before, and no labelling can come back. A walk through a finite set that never revisits a point must end. When an assign turn changes nothing, the update changes nothing either, and the method has stopped.
+There are only finitely many ways to label $`n`$ orders with $`k`$ groups: at most $`k^n`$. Each pass that changes any label lowers $`J`$ strictly (Step 1, with the tie rule), and the update that follows cannot raise it (Step 2). So $`J`$ after each pass is strictly lower than after the one before, and no labelling can come back. A walk through a finite set that never revisits a point must end. When an assign turn changes nothing, the update changes nothing either, and the method has stopped.
 
-The bound $k^n$ is astronomically loose. In practice the passes are few: the best start here stops after 3, and the slowest after 67.
+The bound $`k^n`$ is astronomically loose. In practice the passes are few: the best start here stops after 3, and the slowest after 67.
 
 ### Step 4: it stops at a local best, not the best
 
-"No single turn helps" is not "nothing helps". In the worst of the three starts, two centres end up sharing the 2,000 big-ticket orders (basket values 2.76 and 2.24), while one centre is left to cover the family shoppers and bargain hunters together. No order wants to move, and no centre wants to move, yet $J$ = 172,458.5, against 117,324.1 for the good answer. Only 13,996 orders end up with their own kind.
+"No single turn helps" is not "nothing helps". In the worst of the three starts, two centres end up sharing the 2,000 big-ticket orders (basket values 2.76 and 2.24), while one centre is left to cover the family shoppers and bargain hunters together. No order wants to move, and no centre wants to move, yet $`J`$ = 172,458.5, against 117,324.1 for the good answer. Only 13,996 orders end up with their own kind.
 
-Finding the grouping with the lowest $J$ for sure is hard: for points in many dimensions it is NP-hard even with $k = 2$ (Aloise and others, in Sources), which means no known method does it fast on every input.
+Finding the grouping with the lowest $`J`$ for sure is hard: for points in many dimensions it is NP-hard even with $`k = 2`$ (Aloise and others, in Sources), which means no known method does it fast on every input.
 
-The practical remedy is careful starts. **k-means++** picks the first centre at random from the orders. It picks each later one at random too, with an order's chance in proportion to its squared distance from the nearest centre chosen so far, so starts spread out. Running several starts and keeping the lowest $J$ costs little. The code runs three starts for every $k$.
+The practical remedy is careful starts. **k-means++** picks the first centre at random from the orders. It picks each later one at random too, with an order's chance in proportion to its squared distance from the nearest centre chosen so far, so starts spread out. Running several starts and keeping the lowest $`J`$ costs little. The code runs three starts for every $`k`$.
 
-### Step 5: choosing $k$, when $J$ always prefers more
+### Step 5: choosing $`k`$, when $`J`$ always prefers more
 
-The best $J$ with $k + 1$ centres is never above the best with $k$: add a centre on top of any order and that order's term drops to 0. With $k = n$, $J$ is 0. So "pick the $k$ with the lowest $J$" always picks the most groups you allow: here 8.
+The best $`J`$ with $`k + 1`$ centres is never above the best with $`k`$: add a centre on top of any order and that order's term drops to 0. With $`k = n`$, $`J`$ is 0. So "pick the $`k`$ with the lowest $`J`$" always picks the most groups you allow: here 8.
 
-The **elbow** looks at how much each extra centre buys. Going from 3 to 4 groups cuts $J$ by 35,873.4. Going from 4 to 5 cuts it by only 2,013.6: the fifth centre is splitting a real group, not finding a new one.
+The **elbow** looks at how much each extra centre buys. Going from 3 to 4 groups cuts $`J`$ by 35,873.4. Going from 4 to 5 cuts it by only 2,013.6: the fifth centre is splitting a real group, not finding a new one.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -137,9 +145,9 @@ xychart-beta
     line [288653.1, 209097.5, 153197.5, 117324.1, 115310.4, 112824.3, 110877.5, 110494.4]
 ```
 
-The one line is $J$, the best of three k-means++ starts at each $k$, as printed by the code. It falls steeply to $k = 4$, then almost flat: the bend is the elbow.
+The one line is $`J`$, the best of three k-means++ starts at each $`k`$, as printed by the code. It falls steeply to $`k = 4`$, then almost flat: the bend is the elbow.
 
-The **silhouette** asks each order whether it sits closer to its own group than to the next one, and averages. It is computed on every 19th order, 1,053 of them, because it needs the distance between every pair of orders, and that count grows with the square of the number of orders. The average is highest at $k = 4$:
+The **silhouette** asks each order whether it sits closer to its own group than to the next one, and averages. It is computed on every 19th order, 1,053 of them, because it needs the distance between every pair of orders, and that count grows with the square of the number of orders. The average is highest at $`k = 4`$:
 
 ```
 k = 2  ##############################        0.3010
@@ -151,7 +159,7 @@ k = 7  ###############                       0.1512
 k = 8  #####                                 0.0520
 ```
 
-Both tests agree with the rule the data was made from: 4 kinds. On real orders they often disagree or show no clear bend, and then the choice of $k$ is a business decision, not a theorem.
+Both tests agree with the rule the data was made from: 4 kinds. On real orders they often disagree or show no clear bend, and then the choice of $`k`$ is a business decision, not a theorem.
 
 ---
 
@@ -162,13 +170,13 @@ Six orders, just two numbers each, basket value and discount share, as small who
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | start | centres at A (0, 4) and B (1, 3) | — |
-| pass 1, assign | A to centre 1; B, C, D, E, F nearer B: squared distances 0 + 0 + 2 + 13 + 13 + 25 | $J$ = 53 |
-| pass 1, update | centre 1 stays at (0, 4); centre 2 = mean of B to F = (13/5, 6/5) = (2.6, 1.2) | $J$ = 24 |
-| pass 2, assign | B and C are now nearer (0, 4): 0 + 2 + 4 + 1.6 + 2 + 7.2 | $J$ = 16.8 |
-| pass 2, update | centres to (1/3, 3) and (4, 1/3) | $J$ = 16/3 = 5.3333 |
+| pass 1, assign | A to centre 1; B, C, D, E, F nearer B: squared distances 0 + 0 + 2 + 13 + 13 + 25 | $`J`$ = 53 |
+| pass 1, update | centre 1 stays at (0, 4); centre 2 = mean of B to F = (13/5, 6/5) = (2.6, 1.2) | $`J`$ = 24 |
+| pass 2, assign | B and C are now nearer (0, 4): 0 + 2 + 4 + 1.6 + 2 + 7.2 | $`J`$ = 16.8 |
+| pass 2, update | centres to (1/3, 3) and (4, 1/3) | $`J`$ = 16/3 = 5.3333 |
 | pass 3, assign | no order changes group | stop after 2 passes |
-| check: every split | all 31 ways to cut six orders into two groups, scored | lowest $J$ = 5.3333, A B C against D E F |
-| **answer** | **groups A B C and D E F, centres (0.3333, 3) and (4, 0.3333)** | **$J$ = 5.3333** |
+| check: every split | all 31 ways to cut six orders into two groups, scored | lowest $`J`$ = 5.3333, A B C against D E F |
+| **answer** | **groups A B C and D E F, centres (0.3333, 3) and (4, 0.3333)** | **$`J`$ = 5.3333** |
 
 The score fell 53, 24, 16.8, 5.3333, never rising, and from a bad start it still reached the grouping that brute force says is best.
 
@@ -176,10 +184,10 @@ The score fell 53, 24, 16.8, 5.3333, never rising, and from a bad start it still
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| One start only, the unlucky one | $J$ = 172,458.5, 1.4699 times the best; 13,996 orders with their own kind | Two centres split the big-ticket buyers; family and bargain shoppers share one centre |
+| One start only, the unlucky one | $`J`$ = 172,458.5, 1.4699 times the best; 13,996 orders with their own kind | Two centres split the big-ticket buyers; family and bargain shoppers share one centre |
 | Basket value left in pounds | 12,631 of 20,000 with their own kind, 63.15% | One column's units are 30 times larger, so distance is mostly basket value |
-| Choose $k$ by the lowest $J$ | $k$ = 8, $J$ = 110,494.4 | $J$ always falls as $k$ grows; the eighth centre buys only 383.1 |
-| Choose $k$ = 3 | silhouette 0.3168 against 0.3597 | Two real kinds are forced to share a centre |
+| Choose $`k`$ by the lowest $`J`$ | $`k`$ = 8, $`J`$ = 110,494.4 | $`J`$ always falls as $`k`$ grows; the eighth centre buys only 383.1 |
+| Choose $`k`$ = 3 | silhouette 0.3168 against 0.3597 | Two real kinds are forced to share a centre |
 
 The code prints every one.
 
@@ -187,21 +195,21 @@ The code prints every one.
 
 ## How the objective falls
 
-The best k-means++ start on the 20,000 orders, one half-turn at a time. "Assign" is $J$ just after orders move to their nearest centre; "update" is $J$ just after centres move to their means.
+The best k-means++ start on the 20,000 orders, one half-turn at a time. "Assign" is $`J`$ just after orders move to their nearest centre; "update" is $`J`$ just after centres move to their means.
 
-| Pass | $J$ after assign | $J$ after update |
+| Pass | $`J`$ after assign | $`J`$ after update |
 | --- | --- | --- |
 | 1 | 260,300.0 | 125,908.7 |
 | 2 | 118,361.5 | 117,356.4 |
 | 3 | 117,325.2 | 117,324.1 |
 
-The first update does almost all the work: centres that started on single orders jump to the middle of their groups. After that only orders near a border change sides, and $J$ barely moves. The fourth assign moves nobody, so the method stops.
+The first update does almost all the work: centres that started on single orders jump to the middle of their groups. After that only orders near a border change sides, and $`J`$ barely moves. The fourth assign moves nobody, so the method stops.
 
-Where does it settle? Each order wobbles round its kind's true centre by a spread of 0.7 in each of 12 numbers, so a perfect grouping should leave about $n \times d \times \sigma^2$ = 20,000 × 12 × 0.7² = 117,600.0, give or take a standard deviation of $\sigma^2\sqrt{2nd}$ = 339.5 from chance in the wobble. One squared bell-shaped wobble has standard deviation $\sqrt 2\,\sigma^2$, and the $nd$ of them add independently.
+Where does it settle? Each order wobbles round its kind's true centre by a spread of 0.7 in each of 12 numbers, so a perfect grouping should leave about $`n \times d \times \sigma^2`$ = 20,000 × 12 × 0.7² = 117,600.0, give or take a standard deviation of $`\sigma^2\sqrt{2nd}`$ = 339.5 from chance in the wobble. One squared bell-shaped wobble has standard deviation $`\sqrt 2\,\sigma^2`$, and the $`nd`$ of them add independently.
 
 The run's 117,324.1, or 5.8662 per order, is just under that, inside one standard deviation; fitted centres also sit slightly closer to their orders than the true ones do. The check asserts that the gap is under three standard deviations. This is the third road: the score agrees with the rule that made the data, not just with itself.
 
-The other two starts at $k = 4$ took 67 and 37 passes. The slow one reached the same 117,324.1; the other stopped in the trap of Step 4.
+The other two starts at $`k = 4`$ took 67 and 37 passes. The slow one reached the same 117,324.1; the other stopped in the trap of Step 4.
 
 ---
 
@@ -211,10 +219,10 @@ The script builds the 20,000 synthetic orders from SplitMix64, a short random-nu
 
 1. Brute force: all 31 splits of the six-order example, against k-means.
 2. The shift identity of Step 2, both sides computed separately.
-3. The run's $J$ against $n d \sigma^2$ from the generating rule, within three standard deviations.
+3. The run's $`J`$ against $`n d \sigma^2`$ from the generating rule, within three standard deviations.
 4. The groups found, against the kinds the data was made from.
 
-It also asserts that $J$ never rises between half-turns, that the best $J$ falls as $k$ grows, and that the silhouette code matches a four-order example worked by hand. The Rust program does the same and prints identical lines.
+It also asserts that $`J`$ never rises between half-turns, that the best $`J`$ falls as $`k`$ grows, and that the silhouette code matches a four-order example worked by hand. The Rust program does the same and prints identical lines.
 
 ### Python
 
@@ -604,15 +612,15 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves Steps 1, 2, 3 and 5 for any orders, any $k$ and any start, and checks the six-order example.
+Lean proves Steps 1, 2, 3 and 5 for any orders, any $`k`$ and any start, and checks the six-order example.
 
-- Take k-means from any start, with the tie rule of Step 1. Then $J$ never rises from one pass to the next.
-- On such a run, a pass that changes any label lowers $J$ strictly.
+- Take k-means from any start, with the tie rule of Step 1. Then $`J`$ never rises from one pass to the next.
+- On such a run, a pass that changes any label lowers $`J`$ strictly.
 - On such a run, after finitely many passes no label and no centre changes again.
-- Take a group of $m \ge 1$ orders with mean $\bar x$, and any centre $c$. Then the shift identity of Step 2 holds.
+- Take a group of $`m \ge 1`$ orders with mean $`\bar x`$, and any centre $`c`$. Then the shift identity of Step 2 holds.
 - Every centre other than the mean gives that group a strictly larger total squared distance.
-- Take any grouping into $k$ groups. Then some grouping into $k + 1$ groups has no higher $J$, and a lower one whenever $J > 0$.
-- On the six orders, each assign sends every order to a nearest centre, and $J$ goes 53, 24, 16.8, then 16/3.
+- Take any grouping into $`k`$ groups. Then some grouping into $`k + 1`$ groups has no higher $`J`$, and a lower one whenever $`J > 0`$.
+- On the six orders, each assign sends every order to a nearest centre, and $`J`$ goes 53, 24, 16.8, then 16/3.
 - In pass 3 every order is already nearest its own centre, so no label changes.
 - There are 31 ways to cut the six orders into two groups. With centres at the group means, none scores below 16/3.
 - On A, B, C with centre A, the shift identity reads 6 = 8/3 + 3 × 10/9.
@@ -935,8 +943,8 @@ end KMeansAndClustering
 > [!TIP]
 > **Try changing**
 > - Guess first: if the wobble `SIG` goes from 0.7 to 1.2, do the two tests still agree on 4? Set `N, SIG = 20000, 1.2`. The groups now overlap. The elbow still bends at 4 (drops of 35,684.5, then 7,957.6), but the silhouette picks 2, at 0.1770 against 0.1745. The tests disagree, and the choice is yours.
-> - Guess first: how many passes does the six-order example need if it starts at C and D instead of A and B? Change `[P[0], P[1]]` to `[P[2], P[3]]`. One: the first assign already splits A B C from D E F, $J$ goes 12 then 5.3333, and the answer is the same.
-> - Guess first: with one start per $k$ instead of three, does the elbow survive? Change `range(3)` to `range(1)`. The elbow stays at 4, but $k = 5$ now stops at 116,624.7 instead of 115,310.4, so the drop from 4 to 5 shrinks to 699.4: a single start can leave some points on the curve worse than others, which bends the elbow's shape.
+> - Guess first: how many passes does the six-order example need if it starts at C and D instead of A and B? Change `[P[0], P[1]]` to `[P[2], P[3]]`. One: the first assign already splits A B C from D E F, $`J`$ goes 12 then 5.3333, and the answer is the same.
+> - Guess first: with one start per $`k`$ instead of three, does the elbow survive? Change `range(3)` to `range(1)`. The elbow stays at 4, but $`k = 5`$ now stops at 116,624.7 instead of 115,310.4, so the drop from 4 to 5 shrinks to 699.4: a single start can leave some points on the curve worse than others, which bends the elbow's shape.
 > - Guess first: does stretching the pounds column ten times more make the pounds mistake ten times worse? Change `30 * x[0]` to `300 * x[0]`. No: 12,616 orders with their own kind instead of 12,631. At 30 the grouping already follows basket value almost alone.
 >
 > Each answer is what both scripts print after that one edit. After the first three edits an assert then stops the script, because the run no longer matches the card.
@@ -946,30 +954,30 @@ end KMeansAndClustering
 ## The usual mistake
 
 > [!warning]
-> **Trusting one run.** k-means always stops, and it always returns $k$ tidy groups, so a single run looks finished. But stopping means only that no single turn helps. One of three k-means++ starts here stopped at $J$ = 172,458.5, 1.4699 times the best, with two centres splitting the big-ticket buyers and family and bargain shoppers lumped together. Run several starts and keep the lowest $J$.
+> **Trusting one run.** k-means always stops, and it always returns $`k`$ tidy groups, so a single run looks finished. But stopping means only that no single turn helps. One of three k-means++ starts here stopped at $`J`$ = 172,458.5, 1.4699 times the best, with two centres splitting the big-ticket buyers and family and bargain shoppers lumped together. Run several starts and keep the lowest $`J`$.
 >
 > - **Forgetting to standardise.** Leave basket value in pounds and only 12,631 of 20,000 orders, 63.15%, land with their own kind, against 19,965 on the common scale.
-> - **Choosing $k$ by the lowest $J$.** It always picks the largest $k$ allowed: 8 here, at $J$ = 110,494.4. Look for the elbow or the highest silhouette instead.
-> - **Treating the groups as facts about customers.** k-means returns $k$ groups even from data with no groups in it. Here the data was built with 4 kinds, so the answer can be checked; on real orders, check that the groups are stable across starts and mean something to the business.
-> - **Reading $J$ without its units.** $J$ = 117,324.1 is in squared common units, summed over 20,000 orders. Per order it is 5.8662, close to the 12 × 0.7² that the wobble alone would give.
+> - **Choosing $`k`$ by the lowest $`J`$.** It always picks the largest $`k`$ allowed: 8 here, at $`J`$ = 110,494.4. Look for the elbow or the highest silhouette instead.
+> - **Treating the groups as facts about customers.** k-means returns $`k`$ groups even from data with no groups in it. Here the data was built with 4 kinds, so the answer can be checked; on real orders, check that the groups are stable across starts and mean something to the business.
+> - **Reading $`J`$ without its units.** $`J`$ = 117,324.1 is in squared common units, summed over 20,000 orders. Per order it is 5.8662, close to the 12 × 0.7² that the wobble alone would give.
 
 ---
 
 ## Where you meet it in real life
 
 - **Customer segments.** Shops, banks and phone companies group customers by behaviour exactly as here, then design one offer per group.
-- **Fewer colours in an image.** Treat each pixel as three numbers, red, green and blue, run k-means with $k$ = 16 or 256, and repaint each pixel with its centre's colour. The picture keeps its look with far fewer colours.
+- **Fewer colours in an image.** Treat each pixel as three numbers, red, green and blue, run k-means with $`k`$ = 16 or 256, and repaint each pixel with its centre's colour. The picture keeps its look with far fewer colours.
 - **Signal coding.** Lloyd first wrote the method in 1957 to choose the levels for turning a speech signal into a few allowed values, which is still called Lloyd's algorithm. Codebooks for speech and image compression are built the same way.
 - **Fast search over many items.** A search index over millions of song or document vectors first sorts them into k-means groups, then searches only the groups whose centres are nearest the query.
 
 > **Say it back**
-> k-means describes each group by a centre and puts every point with its nearest centre. It takes turns: assign each point to its nearest centre, then move each centre to the mean of its points. Each turn can only lower $J$, the total squared distance to own centre, because the nearest centre and the mean are the best choices for their half, so the method must stop. It may stop at a local best, so run several starts: one start on the 20,000 orders stopped at 172,458.5 instead of 117,324.1. $J$ always falls as $k$ grows, so choose $k$ by the elbow or the silhouette; both pick 4 here.
+> k-means describes each group by a centre and puts every point with its nearest centre. It takes turns: assign each point to its nearest centre, then move each centre to the mean of its points. Each turn can only lower $`J`$, the total squared distance to own centre, because the nearest centre and the mean are the best choices for their half, so the method must stop. It may stop at a local best, so run several starts: one start on the 20,000 orders stopped at 172,458.5 instead of 117,324.1. $`J`$ always falls as $`k`$ grows, so choose $`k`$ by the elbow or the silhouette; both pick 4 here.
 
 ---
 
 ## What this builds on
 
-- [Gradient descent](02-gradient-descent-and-stochastic-gradient.md): lowering a score by following its slope. k-means lowers $J$ too, but solves each half exactly instead of stepping.
+- [Gradient descent](02-gradient-descent-and-stochastic-gradient.md): lowering a score by following its slope. k-means lowers $`J`$ too, but solves each half exactly instead of stepping.
 - [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): expands the squared length in the shift identity, which proves the mean is the best centre.
 - [Distance and midpoint](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/01-distance-and-midpoint.md): Pythagoras on coordinates, here with 12 numbers instead of 2, and the midpoint as the mean of two points.
 
@@ -978,7 +986,7 @@ end KMeansAndClustering
 - [Principal components](07-principal-components-and-dimension-reduction.md): finds the few directions along which the 12 numbers vary most, so a picture like the one above can show the groups at their clearest, and so k-means can run on fewer numbers.
 - [The graph Laplacian](../07-Network%20Science%20and%20Spectral%20Graphs/03-graph-laplacian-and-spectral-clustering.md): spectral clustering, which finds groups that are not blobs round a centre, by treating the orders as a network.
 
-[EM](08-em-algorithm.md) on this shelf softens the assign turn: instead of a hard label, each order gets a share of membership in every group. The question left open is how to choose $k$ with a guarantee, rather than by a bend in a curve.
+[EM](08-em-algorithm.md) on this shelf softens the assign turn: instead of a hard label, each order gets a share of membership in every group. The question left open is how to choose $`k`$ with a guarantee, rather than by a bend in a curve.
 
 ---
 
@@ -987,7 +995,7 @@ end KMeansAndClustering
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Lloyd, Stuart P. "Least squares quantization in PCM." *IEEE Transactions on Information Theory* 28 (1982): 129–137. [doi:10.1109/TIT.1982.1056489](https://doi.org/10.1109/TIT.1982.1056489). The assign-and-update method and its proof that the error never rises, written in 1957 for signal coding.
-- Rousseeuw, Peter J. "Silhouettes: a graphical aid to the interpretation and validation of cluster analysis." *Journal of Computational and Applied Mathematics* 20 (1987): 53–65. [doi:10.1016/0377-0427(87)90125-7](https://doi.org/10.1016/0377-0427(87)90125-7). Defines the silhouette $s_i$ and its average as a test for the number of groups.
-- Aloise, Daniel, Amit Deshpande, Pierre Hansen and Preyas Popat. "NP-hardness of Euclidean sum-of-squares clustering." *Machine Learning* 75 (2009): 245–248. [doi:10.1007/s10994-009-5103-0](https://doi.org/10.1007/s10994-009-5103-0). Proves that finding the lowest $J$ is hard in general, even for two groups.
-- Steinley, Douglas. "K-means clustering: a half-century synthesis." *British Journal of Mathematical and Statistical Psychology* 59 (2006): 1–34. [doi:10.1348/000711005X48266](https://doi.org/10.1348/000711005X48266). A survey of the method's history, local minima, starting rules, standardising and choosing $k$.
-- Hastie, Trevor, Robert Tibshirani and Jerome Friedman. *The Elements of Statistical Learning*, 2nd ed. Springer, 2009. [doi:10.1007/978-0-387-84858-7](https://doi.org/10.1007/978-0-387-84858-7). Chapter 14 presents k-means as coordinate descent on $J$ and discusses choosing the number of groups.
+- Rousseeuw, Peter J. "Silhouettes: a graphical aid to the interpretation and validation of cluster analysis." *Journal of Computational and Applied Mathematics* 20 (1987): 53–65. [doi:10.1016/0377-0427(87)90125-7](https://doi.org/10.1016/0377-0427(87)90125-7). Defines the silhouette $`s_i`$ and its average as a test for the number of groups.
+- Aloise, Daniel, Amit Deshpande, Pierre Hansen and Preyas Popat. "NP-hardness of Euclidean sum-of-squares clustering." *Machine Learning* 75 (2009): 245–248. [doi:10.1007/s10994-009-5103-0](https://doi.org/10.1007/s10994-009-5103-0). Proves that finding the lowest $`J`$ is hard in general, even for two groups.
+- Steinley, Douglas. "K-means clustering: a half-century synthesis." *British Journal of Mathematical and Statistical Psychology* 59 (2006): 1–34. [doi:10.1348/000711005X48266](https://doi.org/10.1348/000711005X48266). A survey of the method's history, local minima, starting rules, standardising and choosing $`k`$.
+- Hastie, Trevor, Robert Tibshirani and Jerome Friedman. *The Elements of Statistical Learning*, 2nd ed. Springer, 2009. [doi:10.1007/978-0-387-84858-7](https://doi.org/10.1007/978-0-387-84858-7). Chapter 14 presents k-means as coordinate descent on $`J`$ and discusses choosing the number of groups.

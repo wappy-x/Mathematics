@@ -12,7 +12,7 @@ The European put is worth $6.33, the closed-form price on [Black-Scholes put](..
 
 That choice pays for one reason. Exercising a put hands over a share and takes in $100.00 of cash, and cash earns the riskless rate, 5 percent a year. Exercise three months in and that $100.00 earns interest for the nine months left. A European holder collects nothing on it until the final day.
 
-So the freedom cannot be worth more than a year's interest on the strike, $K(1 - e^{-rT})$ in symbols, which is $4.88 here. The American put collects just 33 cents of that $4.88, because the right pays only in the futures where Acme falls far enough to make selling worthwhile.
+So the freedom cannot be worth more than a year's interest on the strike, $`K(1 - e^{-rT})`$ in symbols, which is $4.88 here. The American put collects just 33 cents of that $4.88, because the right pays only in the futures where Acme falls far enough to make selling worthwhile.
 
 No formula returns $6.6602. What there is instead is one comparison, made at every node of a tree ([Many steps](03-multi-step-trees-and-backward-induction.md)). At a node the holder can do exactly two things: take the payoff now, or carry the option one step further. Both are numbers. Keep the bigger one and walk back.
 
@@ -41,36 +41,40 @@ Between $75 and $80 the American line settles onto the exercise line: 25.00 at $
 
 ## The formula
 
-Notation first, in words. A node is fixed by two counts: how many steps have passed, written under the letter, and how many of those steps were up moves, written in brackets after it ([Many steps](03-multi-step-trees-and-backward-induction.md)). Write $g$ for the **payoff function**: what exercising pays at a given share price. For a put, $g(S) = \max(K - S,\,0)$ — the strike minus the share price where the share is below the strike, and zero elsewhere. For a call it is $\max(S - K,\,0)$.
+Notation first, in words. A node is fixed by two counts: how many steps have passed, written under the letter, and how many of those steps were up moves, written in brackets after it ([Many steps](03-multi-step-trees-and-backward-induction.md)). Write $`g`$ for the **payoff function**: what exercising pays at a given share price. For a put, $`g(S) = \max(K - S,\,0)`$ — the strike minus the share price where the share is below the strike, and zero elsewhere. For a call it is $`\max(S - K,\,0)`$.
 
-$$V_N(j) = g\big(S_N(j)\big)$$
+```math
+V_N(j) = g\big(S_N(j)\big)
+```
 
-$$V_n(j) = \max\Big(\;g\big(S_n(j)\big)\;,\;\; e^{-r\Delta t}\big[\,p\,V_{n+1}(j+1) + (1-p)\,V_{n+1}(j)\,\big]\;\Big)$$
+```math
+V_n(j) = \max\Big(\;g\big(S_n(j)\big)\;,\;\; e^{-r\Delta t}\big[\,p\,V_{n+1}(j+1) + (1-p)\,V_{n+1}(j)\,\big]\;\Big)
+```
 
 **Read it aloud:** the last column is the payoff; every earlier node is worth the better of taking the payoff there and carrying the option one step further.
 
-Delete the $\max$ and what is left is the European rule from [Many steps](03-multi-step-trees-and-backward-induction.md). The branch factors, the weight and the discount are untouched; the American price is that same walk plus one comparison per node.
+Delete the $`\max`$ and what is left is the European rule from [Many steps](03-multi-step-trees-and-backward-induction.md). The branch factors, the weight and the discount are untouched; the American price is that same walk plus one comparison per node.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | Acme's price today; $S_n(j)$ is its price at a node | $100.00 | a put is worth less: less shortfall to sell into |
-| $K$ | the strike, the price the put may sell at | $100.00 | worth more: the sale is at a better price |
-| $T$, $N$, $n$, $j$ | the life in years; the number of steps; a step count; a count of up moves | 1 year, 4 or 2,000 steps | more steps: a finer picture, a truer price |
-| $\Delta t$ | one step's length, $T$ divided by $N$, in years | 0.25, then 0.0005 | coarser tree, bigger error |
-| $u$, $d$ | what Acme multiplies by on an up step and on a down step | 1.105171 and 0.904837 per quarter | wider branches, a dearer option |
-| $p$ | the weight on the up branch: a price, not a forecast | 0.512599 per quarter | up branches count for more |
-| $r$ | the riskless rate, continuously compounded | 5% | the premium for exercising early grows |
-| $q$ | the dividend yield the share pays out | 2% | the put is dearer, the early-exercise case weaker |
-| $\sigma$ | volatility, how jumpy Acme is. Say "sigma". | 20% | dearer option; deep in the money, waiting looks better |
-| $\tau$ | the time still to run at a node, in years. Say "tau". | 0.25 nine months in | more time left: holding looks better |
-| $V$, $g$ | the option's worth at a node; what exercising there pays | 6.660226 at the root; 25.918178 at one node | — |
-| $S^*$ | the exercise boundary: exercise at or below it, hold above | 78.90 two months in | — |
+| $`S`$ | Acme's price today; $`S_n(j)`$ is its price at a node | $100.00 | a put is worth less: less shortfall to sell into |
+| $`K`$ | the strike, the price the put may sell at | $100.00 | worth more: the sale is at a better price |
+| $`T`$, $`N`$, $`n`$, $`j`$ | the life in years; the number of steps; a step count; a count of up moves | 1 year, 4 or 2,000 steps | more steps: a finer picture, a truer price |
+| $`\Delta t`$ | one step's length, $`T`$ divided by $`N`$, in years | 0.25, then 0.0005 | coarser tree, bigger error |
+| $`u`$, $`d`$ | what Acme multiplies by on an up step and on a down step | 1.105171 and 0.904837 per quarter | wider branches, a dearer option |
+| $`p`$ | the weight on the up branch: a price, not a forecast | 0.512599 per quarter | up branches count for more |
+| $`r`$ | the riskless rate, continuously compounded | 5% | the premium for exercising early grows |
+| $`q`$ | the dividend yield the share pays out | 2% | the put is dearer, the early-exercise case weaker |
+| $`\sigma`$ | volatility, how jumpy Acme is. Say "sigma". | 20% | dearer option; deep in the money, waiting looks better |
+| $`\tau`$ | the time still to run at a node, in years. Say "tau". | 0.25 nine months in | more time left: holding looks better |
+| $`V`$, $`g`$ | the option's worth at a node; what exercising there pays | 6.660226 at the root; 25.918178 at one node | — |
+| $`S^*`$ | the exercise boundary: exercise at or below it, hold above | 78.90 two months in | — |
 
-Three helpers come from earlier cards and are used unchanged: $\Delta t = T/N$, the branch factors $u = e^{\sigma\sqrt{\Delta t}}$ and $d = 1/u$, and the weight $p = (e^{(r-q)\Delta t} - d)/(u - d)$. Why those, and how fast the price settles as $N$ grows, is [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md).
+Three helpers come from earlier cards and are used unchanged: $`\Delta t = T/N`$, the branch factors $`u = e^{\sigma\sqrt{\Delta t}}`$ and $`d = 1/u`$, and the weight $`p = (e^{(r-q)\Delta t} - d)/(u - d)`$. Why those, and how fast the price settles as $`N`$ grows, is [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md).
 
 ### When it holds
 
-- **Exercise only on the tree's own dates.** An $N$-step tree prices a contract exercisable on $N + 1$ dates, today included, not on any day. The American price is the limit as those dates crowd together: 6.6602 at 2,000 steps, and still creeping up in the fourth decimal.
+- **Exercise only on the tree's own dates.** An $`N`$-step tree prices a contract exercisable on $`N + 1`$ dates, today included, not on any day. The American price is the limit as those dates crowd together: 6.6602 at 2,000 steps, and still creeping up in the fourth decimal.
 - **A payoff read off today's price, not the path.** Two histories meeting at a node must be worth the same from there on, or the comparison is made against the wrong number. A payoff that remembers where the share has been needs more than a node to decide by.
 - **A holder who never errs.** The price assumes the larger of the two numbers is taken every time, which is what the seller must be funded for. A holder who follows a worse rule collects less, and the code prices how much less.
 - **One fixed rate above zero, one fixed yield and volatility**, as on [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md). Let volatility move and the tree prices a share that does not exist. Let the rate go negative and Step 5's call argument breaks with it.
@@ -92,7 +96,7 @@ On the last date there is nothing left to wait for, so the option is worth what 
 
 ### Step 2: holding is worth one step of the ordinary walk
 
-The right-hand half of the formula is the European rule. Weight the two nodes ahead by $p$ and $1-p$, discount one step at the riskless rate. It answers one question only: what is this option worth if nobody may touch it before the next node?
+The right-hand half of the formula is the European rule. Weight the two nodes ahead by $`p`$ and $`1-p`$, discount one step at the riskless rate. It answers one question only: what is this option worth if nobody may touch it before the next node?
 
 ### Step 3: the comparison, on one real node
 
@@ -112,28 +116,28 @@ That also names the dial: at a zero rate there is no interest to collect, waitin
 
 Hold a call instead of exercising it and two good things happen. The strike stays in the bank, earning interest until it is needed. And the floor stays: if Acme collapses the call is left unexercised, while a share bought early falls with the market. Exercising early buys neither. Two costs, no benefit.
 
-Written as a bound: a European call is worth at least $S e^{-q\tau} - K e^{-r\tau}$, where $\tau$ is the time left. With no dividend, $q = 0$, that is $S - K e^{-r\tau}$, and a positive rate makes it strictly larger than $S - K$, which is what exercising pays. Holding beats exercising at every node, the $\max$ never picks the payoff, and the American call equals its European twin.
+Written as a bound: a European call is worth at least $`S e^{-q\tau} - K e^{-r\tau}`$, where $`\tau`$ is the time left. With no dividend, $`q = 0`$, that is $`S - K e^{-r\tau}`$, and a positive rate makes it strictly larger than $`S - K`$, which is what exercising pays. Holding beats exercising at every node, the $`\max`$ never picks the payoff, and the American call equals its European twin.
 
 The run confirms it with no theory: with no dividend the tree's American call comes out at 10.449584 against a closed-form European 10.450584. The gap is the tree's own step error — the same tenth of a cent by which the tree's European put, 6.329109, misses the closed form 6.330081.
 
-A dividend breaks the argument, because the share sheds $q$ a year and a call holder does not collect it. On the house market that leak is small beside the interest on the strike: the American call prints 9.226034 and the European call on the same tree prints 9.226034, differing by 0.000000034. Real, and far below the tree's own accuracy. A call's exercise region lives where the yield a share sheds outruns the interest on the strike, which for Acme means prices far above today's.
+A dividend breaks the argument, because the share sheds $`q`$ a year and a call holder does not collect it. On the house market that leak is small beside the interest on the strike: the American call prints 9.226034 and the European call on the same tree prints 9.226034, differing by 0.000000034. Real, and far below the tree's own accuracy. A call's exercise region lives where the yield a share sheds outruns the interest on the strike, which for Acme means prices far above today's.
 
 <details>
 <summary>Detailed proof: the two bounds, and what each one settles</summary>
 
-Both bounds come from put–call parity, $C - P = S e^{-q\tau} - K e^{-r\tau}$, and from the fact that neither European option can be worth less than nothing.
+Both bounds come from put–call parity, $`C - P = S e^{-q\tau} - K e^{-r\tau}`$, and from the fact that neither European option can be worth less than nothing.
 
-**The call.** Parity with $P \ge 0$ gives $C \ge S e^{-q\tau} - K e^{-r\tau}$. Set $q = 0$: $C \ge S - K e^{-r\tau}$. For $r > 0$, $K > 0$ and $\tau > 0$, $K e^{-r\tau} < K$, so $C > S - K = g(S)$ at every node before the last, and strictly. The comparison therefore always keeps the holding value, and by backward induction the American and European values agree at every node, root included; strictness leaves no tie to break. With $q > 0$ the bound weakens to $C \ge S e^{-q\tau} - K e^{-r\tau}$, which for large $S$ drops below $S - K$: the protection stops, and an exercise region appears far above the strike.
+**The call.** Parity with $`P \ge 0`$ gives $`C \ge S e^{-q\tau} - K e^{-r\tau}`$. Set $`q = 0`$: $`C \ge S - K e^{-r\tau}`$. For $`r > 0`$, $`K > 0`$ and $`\tau > 0`$, $`K e^{-r\tau} < K`$, so $`C > S - K = g(S)`$ at every node before the last, and strictly. The comparison therefore always keeps the holding value, and by backward induction the American and European values agree at every node, root included; strictness leaves no tie to break. With $`q > 0`$ the bound weakens to $`C \ge S e^{-q\tau} - K e^{-r\tau}`$, which for large $`S`$ drops below $`S - K`$: the protection stops, and an exercise region appears far above the strike.
 
-**The put.** Parity with $C \ge 0$ gives $P \ge K e^{-r\tau} - S e^{-q\tau}$, which is weaker than the payoff $K - S$ when $S$ is small, so the bound settles nothing on its own. Take the limit instead. As $S \to 0$ the share is worth nothing at every later node, so the European put is worth exactly $K e^{-r\tau}$, while exercising pays $K$. For $r > 0$, $K e^{-r\tau} < K$: exercising strictly wins. Values on the tree are continuous in $S$, so exercising still wins for small positive $S$. The exercise region is non-empty, which is all that is claimed here; where it starts is Step 6 and has no closed form.
+**The put.** Parity with $`C \ge 0`$ gives $`P \ge K e^{-r\tau} - S e^{-q\tau}`$, which is weaker than the payoff $`K - S`$ when $`S`$ is small, so the bound settles nothing on its own. Take the limit instead. As $`S \to 0`$ the share is worth nothing at every later node, so the European put is worth exactly $`K e^{-r\tau}`$, while exercising pays $`K`$. For $`r > 0`$, $`K e^{-r\tau} < K`$: exercising strictly wins. Values on the tree are continuous in $`S`$, so exercising still wins for small positive $`S`$. The exercise region is non-empty, which is all that is claimed here; where it starts is Step 6 and has no closed form.
 
 </details>
 
 ### Step 6: the two choices tie along a line that moves
 
-Fix a date. High up, holding wins; far down, exercising wins. Between them the two numbers cross exactly once. That crossing price is the **exercise boundary**, written $S^*$, and it depends on how much time is left.
+Fix a date. High up, holding wins; far down, exercising wins. Between them the two numbers cross exactly once. That crossing price is the **exercise boundary**, written $`S^*`$, and it depends on how much time is left.
 
-Nobody supplies $S^*$. It falls out of the same backward walk — that is what makes this a *free-boundary* problem: the line separating the two regions is part of the answer, not part of the question. The tree reports it for nothing, as the highest node price at which the comparison chose exercise, and the next section reads it off.
+Nobody supplies $`S^*`$. It falls out of the same backward walk — that is what makes this a *free-boundary* problem: the line separating the two regions is part of the answer, not part of the question. The tree reports it for nothing, as the highest node price at which the comparison chose exercise, and the next section reads it off.
 
 The same problem in continuous time is that free boundary written as an equation: the Black–Scholes equation holds where the holder waits, the value equals the payoff where the holder exercises, and the two pieces meet without a kink — the *smooth pasting* condition. Road three in the code solves that version on a grid of prices and returns 6.659428, within a tenth of a cent of the tree. What the grid is, and why it is a trinomial tree in disguise, is [Trinomial trees](06-trinomial-trees-and-the-grid-connection.md).
 
@@ -145,16 +149,16 @@ Four quarterly steps on the house market: Acme at $100.00, strike $100.00, one y
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| up factor, $u = e^{\sigma\sqrt{\Delta t}}$ | $e^{0.20 \times 0.5}$ | 1.105171 |
-| down factor, $d = 1/u$ | $1 / 1.105171$ | 0.904837 |
-| up weight, $p$ | $(e^{0.03 \times 0.25} - 0.904837)/(1.105171 - 0.904837)$ | 0.512599 |
-| three down moves, nine months in | $100 \times 0.904837^3$ | 74.081822 |
+| up factor, $`u = e^{\sigma\sqrt{\Delta t}}`$ | $`e^{0.20 \times 0.5}`$ | 1.105171 |
+| down factor, $`d = 1/u`$ | $`1 / 1.105171`$ | 0.904837 |
+| up weight, $`p`$ | $`(e^{0.03 \times 0.25} - 0.904837)/(1.105171 - 0.904837)`$ | 0.512599 |
+| three down moves, nine months in | $`100 \times 0.904837^3`$ | 74.081822 |
 | what the two nodes ahead pay | the strike minus each of the two prices a quarter later | 18.126925 and 32.967995 |
-| hold | $e^{-0.05 \times 0.25}\,[\,0.512599 \times 18.126925 + (1 - 0.512599) \times 32.967995\,]$ | 25.045443 |
-| exercise now | $100 - 74.081822$ | 25.918178 |
+| hold | $`e^{-0.05 \times 0.25}\,[\,0.512599 \times 18.126925 + (1 - 0.512599) \times 32.967995\,]`$ | 25.045443 |
+| exercise now | $`100 - 74.081822`$ | 25.918178 |
 | the node's value, the larger of the two | exercise | **25.918178** |
 | the root of that four-step tree | walk the same comparison back | **6.432246** |
-| the same tree with the $\max$ deleted | the European put | 5.863402 |
+| the same tree with the $`\max`$ deleted | the European put | 5.863402 |
 | the answer, 2,000 steps | the same walk, finer | **6.660226** |
 
 Four quarters already show the effect: 6.432246 against 5.863402. But four steps a year is a thin picture of a right exercisable any day, and the coarse tree undercounts the chances to use it. Crowd the dates and the price settles: 6.6602.
@@ -163,7 +167,7 @@ Four quarters already show the effect: 6.432246 against 5.863402. But four steps
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Delete the comparison | 6.329109 | That is the European put on the same tree. The whole 33 cents is the one $\max$. |
+| Delete the comparison | 6.329109 | That is the European put on the same tree. The whole 33 cents is the one $`\max`$. |
 | Exercise on a fixed line at $95 | 4.0379 | Sold for a few dollars of payoff, over and over, throwing away an option worth more. |
 | The best fixed line tried, $82 | 6.6129 | Closer, and still short of 6.660226: the right line is not a line, it moves. |
 | Ten steps instead of two thousand | 6.5603 | Too few dates to exercise on. At 25 steps it overshoots instead, 6.7284: the error lands on either side. |
@@ -194,7 +198,7 @@ xychart-beta
     line [78.90, 79.96, 81.41, 83.25, 86.67, 100.00]
 ```
 
-One line: the boundary $S^*$, flat for most of the year, then bending up hard into the strike in the last weeks. Under it is the exercise region; over it the option stays alive.
+One line: the boundary $`S^*`$, flat for most of the year, then bending up hard into the strike in the last weeks. Under it is the exercise region; over it the option stays alive.
 
 Two forces set how much the whole right is worth. Here they are one at a time.
 
@@ -665,11 +669,11 @@ The two outputs match line for line, from different code taking a different rout
 
 ### Lean
 
-Lean proves three facts about the backward walk, on any tree whose up weight $p$ lies strictly between 0 and 1.
+Lean proves three facts about the backward walk, on any tree whose up weight $`p`$ lies strictly between 0 and 1.
 
 - Take any payoff read off the share price. Then at every node the American value is at least the payoff and at least the European value.
 - Suppose the share pays no dividend, and the rate and the strike are above zero. Then the American call equals the European call at every node, root included.
-- Suppose the rate, the strike and the down factor $d$ are above zero. Then, on every date before expiry, exercising the American put strictly beats holding one more step at low enough prices.
+- Suppose the rate, the strike and the down factor $`d`$ are above zero. Then, on every date before expiry, exercising the American put strictly beats holding one more step at low enough prices.
 - The exercise line for the put struck at $100 pays 40 at $60, 25 at $75, 20 at $80 and 0 at $100.
 - On the last date the option is worth its payoff: 25 at $75.
 
@@ -972,7 +976,7 @@ end AmericanTree
 ## Where you meet it in real life
 
 - **Listed single-name options.** Options on individual US shares are American: the exercise decision is the holder's on any day. Index options such as SPX are European, which is why one desk prices some contracts with a closed form and some with a tree. Conventions verified 14 Sep 2026.
-- **Dividend season.** Calls on dividend-paying shares get exercised the day before a big payment: the $q > 0$ case of Step 5, with a year's yield arriving in one lump, so that for one day the leak outruns the interest on the strike.
+- **Dividend season.** Calls on dividend-paying shares get exercised the day before a big payment: the $`q > 0`$ case of Step 5, with a year's yield arriving in one lump, so that for one day the leak outruns the interest on the strike.
 - **Convertible bonds and callable bonds.** A bond the issuer may buy back, or the holder may turn into shares, is a bundle of early-exercise decisions on a tree of the same shape.
 - **Mortgage prepayment.** A borrower who may repay early holds an American option on their own loan. The lender is short it, and prices it with the same comparison against a refinancing payoff.
 - **Employee share schemes.** Grants are typically exercisable over a window, so their accounting value is an early-exercise calculation, not a Black–Scholes number.

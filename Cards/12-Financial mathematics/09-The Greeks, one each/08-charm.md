@@ -41,46 +41,54 @@ As time runs out, the $105 call becomes a sure exercise and its delta climbs to 
 
 ## The formula
 
-Notation first, in words. $T$ is time left to expiry, in years. $t$ is the calendar, in years. When $t$ moves forward one day, $T$ moves back one day.
+Notation first, in words. $`T`$ is time left to expiry, in years. $`t`$ is the calendar, in years. When $`t`$ moves forward one day, $`T`$ moves back one day.
 
-A **partial derivative** (the rate of change in one input with all the others held still; see [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)) is written with a curly d. So $\partial\Delta/\partial t$ reads "how fast delta changes as the calendar advances, with Acme, volatility and rates held still".
+A **partial derivative** (the rate of change in one input with all the others held still; see [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)) is written with a curly d. So $`\partial\Delta/\partial t`$ reads "how fast delta changes as the calendar advances, with Acme, volatility and rates held still".
 
-Charm is that rate, written $\chi$ (the Greek letter chi):
+Charm is that rate, written $`\chi`$ (the Greek letter chi):
 
-$$\chi = \frac{\partial \Delta}{\partial t} = -\frac{\partial \Delta}{\partial T}$$
+```math
+\chi = \frac{\partial \Delta}{\partial t} = -\frac{\partial \Delta}{\partial T}
+```
 
-For a call, with delta $\Delta_C = e^{-qT}N(d_1)$ from the delta card:
+For a call, with delta $`\Delta_C = e^{-qT}N(d_1)`$ from the delta card:
 
-$$\chi_C = q\,e^{-qT}N(d_1) \;-\; e^{-qT}\,\varphi(d_1)\,\frac{2(r-q)T - d_2\,\sigma\sqrt{T}}{2T\,\sigma\sqrt{T}}$$
+```math
+\chi_C = q\,e^{-qT}N(d_1) \;-\; e^{-qT}\,\varphi(d_1)\,\frac{2(r-q)T - d_2\,\sigma\sqrt{T}}{2T\,\sigma\sqrt{T}}
+```
 
 **Read it aloud:** the call's delta gains a little as dividends still to come shrink, and loses or gains as the bell-curve probability behind delta slides with the time left.
 
 For a put:
 
-$$\chi_P = \chi_C - q\,e^{-qT}$$
+```math
+\chi_P = \chi_C - q\,e^{-qT}
+```
 
-**Read it aloud:** the put's charm is the call's charm minus the rate at which the dividend drag $e^{-qT}$ grows as the clock runs.
+**Read it aloud:** the put's charm is the call's charm minus the rate at which the dividend drag $`e^{-qT}`$ grows as the clock runs.
 
 | Symbol | Plain meaning | In our example | Push it up and charm… |
 | --- | --- | --- | --- |
-| $S$ | Acme's price today | $100 | turns from negative to positive once Acme is far enough above the strike |
-| $K$ | the strike | $100 | acts like pushing $S$ down |
-| $r$ | the riskless rate, continuously compounded | 5% | pushes charm down at the house point |
-| $q$ | the dividend yield | 2% | adds the dividend piece to the call; sets the call-put gap |
-| $\sigma$ | volatility, the yearly spread of Acme's log-moves | 20% | changes the size, not a fixed direction |
-| $T$ | time left to expiry, in years | 1 | smaller $T$ makes charm larger in size near the strike |
-| $t$ | the calendar, in years; $T$ falls as $t$ rises | today | |
-| $\Delta$, $\Delta_C$, $\Delta_P$ | delta: shares that move like one option; call and put | 0.586851 and −0.393348 | |
-| $\chi$, $\chi_C$, $\chi_P$ | charm: delta's change per year of calendar | −0.035639 and −0.055243 | |
-| $N(x)$, $\varphi(x)$ | bell-curve area left of $x$, and bell-curve height at $x$ | $N(d_1)$ = 0.598706, $\varphi(d_1)$ = 0.386668 | |
-| $d_1$, $d_2$ | how far Acme sits from the strike, in units of $\sigma\sqrt{T}$ | 0.25 and 0.05 | |
-| $e^{-qT}$ | the dividend drag: the share fraction bought today that grows to one share by expiry | 0.980199 | |
+| $`S`$ | Acme's price today | $100 | turns from negative to positive once Acme is far enough above the strike |
+| $`K`$ | the strike | $100 | acts like pushing $`S`$ down |
+| $`r`$ | the riskless rate, continuously compounded | 5% | pushes charm down at the house point |
+| $`q`$ | the dividend yield | 2% | adds the dividend piece to the call; sets the call-put gap |
+| $`\sigma`$ | volatility, the yearly spread of Acme's log-moves | 20% | changes the size, not a fixed direction |
+| $`T`$ | time left to expiry, in years | 1 | smaller $`T`$ makes charm larger in size near the strike |
+| $`t`$ | the calendar, in years; $`T`$ falls as $`t`$ rises | today | |
+| $`\Delta`$, $`\Delta_C`$, $`\Delta_P`$ | delta: shares that move like one option; call and put | 0.586851 and −0.393348 | |
+| $`\chi`$, $`\chi_C`$, $`\chi_P`$ | charm: delta's change per year of calendar | −0.035639 and −0.055243 | |
+| $`N(x)`$, $`\varphi(x)`$ | bell-curve area left of $`x`$, and bell-curve height at $`x`$ | $`N(d_1)`$ = 0.598706, $`\varphi(d_1)`$ = 0.386668 | |
+| $`d_1`$, $`d_2`$ | how far Acme sits from the strike, in units of $`\sigma\sqrt{T}`$ | 0.25 and 0.05 | |
+| $`e^{-qT}`$ | the dividend drag: the share fraction bought today that grows to one share by expiry | 0.980199 | |
 
 The helpers, as on the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card:
 
-$$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+```
 
-The fraction in the charm formula has a name on this card: **the slide**. It is how fast $d_1$ grows as time left grows, $\partial d_1/\partial T$. For the house call it is 0.125.
+The fraction in the charm formula has a name on this card: **the slide**. It is how fast $`d_1`$ grows as time left grows, $`\partial d_1/\partial T`$. For the house call it is 0.125.
 
 Units. Charm here is per year, like the theta card's figures. Per calendar day is charm divided by 365; this card makes that choice throughout, and a desk that counts only trading days divides by its own count instead.
 
@@ -100,58 +108,68 @@ Units. Charm here is per year, like the theta card's figures. Per calendar day i
 
 Delta is a formula in five inputs: Acme's price, the strike, two rates, volatility and time left. Freeze all but time left and delta becomes a function of one input. Any smooth function of one input has a slope. Charm is that slope, with its sign turned round so it follows the calendar instead of the countdown.
 
-The call's delta is a product of two pieces: the dividend drag $e^{-qT}$ and the share-counted chance $N(d_1)$. Both depend on $T$. So the product rule gives two terms, one per piece.
+The call's delta is a product of two pieces: the dividend drag $`e^{-qT}`$ and the share-counted chance $`N(d_1)`$. Both depend on $`T`$. So the product rule gives two terms, one per piece.
 
 ### Step 1: the dividend piece
 
-The drag $e^{-qT}$ is the fraction of a share that, with dividends reinvested, grows to one full share by expiry. As $T$ shrinks, fewer dividends remain, so the fraction rises toward 1.
+The drag $`e^{-qT}`$ is the fraction of a share that, with dividends reinvested, grows to one full share by expiry. As $`T`$ shrinks, fewer dividends remain, so the fraction rises toward 1.
 
-Its slope in $T$ is $-q\,e^{-qT}$. Turned round to follow the calendar, it is $+q\,e^{-qT}$. Multiplied by the other piece, $N(d_1)$, the call gains
+Its slope in $`T`$ is $`-q\,e^{-qT}`$. Turned round to follow the calendar, it is $`+q\,e^{-qT}`$. Multiplied by the other piece, $`N(d_1)`$, the call gains
 
-$$q\,e^{-qT}N(d_1) = q\,\Delta_C$$
+```math
+q\,e^{-qT}N(d_1) = q\,\Delta_C
+```
 
 per year. For the house call: 0.02 × 0.586851 = 0.011737. Positive: the hedge needs slightly more shares as the dividends it must match run out.
 
 ### Step 2: the bell piece
 
-The chance $N(d_1)$ changes only because $d_1$ changes. By the chain rule, its slope in $T$ is the bell's height at $d_1$ times the slide:
+The chance $`N(d_1)`$ changes only because $`d_1`$ changes. By the chain rule, its slope in $`T`$ is the bell's height at $`d_1`$ times the slide:
 
-$$\frac{\partial N(d_1)}{\partial T} = \varphi(d_1)\,\frac{\partial d_1}{\partial T}$$
+```math
+\frac{\partial N(d_1)}{\partial T} = \varphi(d_1)\,\frac{\partial d_1}{\partial T}
+```
 
-Write $d_1$ as two parts: $\ln(S/K)/(\sigma\sqrt{T})$, the distance to the strike, and $(r-q+\tfrac12\sigma^2)\sqrt{T}/\sigma$, the drift's contribution. The first part shrinks toward zero from either side as $T$ grows; the second part grows. Differentiating each and gathering over one denominator gives the slide:
+Write $`d_1`$ as two parts: $`\ln(S/K)/(\sigma\sqrt{T})`$, the distance to the strike, and $`(r-q+\tfrac12\sigma^2)\sqrt{T}/\sigma`$, the drift's contribution. The first part shrinks toward zero from either side as $`T`$ grows; the second part grows. Differentiating each and gathering over one denominator gives the slide:
 
-$$\frac{\partial d_1}{\partial T} = \frac{2(r-q)T - d_2\,\sigma\sqrt{T}}{2T\,\sigma\sqrt{T}}$$
+```math
+\frac{\partial d_1}{\partial T} = \frac{2(r-q)T - d_2\,\sigma\sqrt{T}}{2T\,\sigma\sqrt{T}}
+```
 
-For the house call: $(2 \times 0.03 \times 1 - 0.05 \times 0.20)/(2 \times 0.20) = 0.05/0.40 = 0.125$. Turned round to follow the calendar and multiplied by the drag, the bell piece is $-e^{-qT}\varphi(d_1)$ times the slide: 0.980199 × 0.386668 × 0.125 = 0.047376, taken away.
+For the house call: $`(2 \times 0.03 \times 1 - 0.05 \times 0.20)/(2 \times 0.20) = 0.05/0.40 = 0.125`$. Turned round to follow the calendar and multiplied by the drag, the bell piece is $`-e^{-qT}\varphi(d_1)`$ times the slide: 0.980199 × 0.386668 × 0.125 = 0.047376, taken away.
 
 ### Step 3: add the two pieces
 
-$$\chi_C = 0.011737 - 0.047376 = -0.035639$$
+```math
+\chi_C = 0.011737 - 0.047376 = -0.035639
+```
 
-The bell piece wins. At the house point, time running out shrinks $d_1$, and the share-counted chance falls faster than the dividend drag rises.
+The bell piece wins. At the house point, time running out shrinks $`d_1`$, and the share-counted chance falls faster than the dividend drag rises.
 
 <details>
 <summary>Detailed proof: the slide, line by line</summary>
 
-Split $d_1 = A\,T^{-1/2} + B\,T^{1/2}$ with $A = \ln(S/K)/\sigma$ and $B = (r - q + \tfrac12\sigma^2)/\sigma$. Differentiate each power of $T$:
-$$\frac{\partial d_1}{\partial T} = -\tfrac12 A\,T^{-3/2} + \tfrac12 B\,T^{-1/2} = \frac{-\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{2T\,\sigma\sqrt{T}}.$$
-Now use the definition of $d_2$: $d_2\,\sigma\sqrt{T} = \ln(S/K) + (r - q - \tfrac12\sigma^2)T$. So $-\ln(S/K) = (r - q - \tfrac12\sigma^2)T - d_2\,\sigma\sqrt{T}$. Substitute: the top becomes $(r-q-\tfrac12\sigma^2)T + (r-q+\tfrac12\sigma^2)T - d_2\sigma\sqrt{T} = 2(r-q)T - d_2\,\sigma\sqrt{T}$. That is the slide.
+Split $`d_1 = A\,T^{-1/2} + B\,T^{1/2}`$ with $`A = \ln(S/K)/\sigma`$ and $`B = (r - q + \tfrac12\sigma^2)/\sigma`$. Differentiate each power of $`T`$:
 
-The product rule on $\Delta_C = e^{-qT}N(d_1)$ gives $\partial\Delta_C/\partial T = -q\,e^{-qT}N(d_1) + e^{-qT}\varphi(d_1)\,\partial d_1/\partial T$, since the slope of $N$ is $\varphi$. Negate, because $\partial/\partial t = -\partial/\partial T$, and the charm formula follows.
+$`\displaystyle \frac{\partial d_1}{\partial T} = -\tfrac12 A\,T^{-3/2} + \tfrac12 B\,T^{-1/2} = \frac{-\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{2T\,\sigma\sqrt{T}}.`$
 
-For the put, differentiate put-call parity for deltas, $\Delta_C - \Delta_P = e^{-qT}$, from the delta card. The right side has calendar slope $q\,e^{-qT}$. So $\chi_C - \chi_P = q\,e^{-qT}$, which is the put formula.
+Now use the definition of $`d_2`$: $`d_2\,\sigma\sqrt{T} = \ln(S/K) + (r - q - \tfrac12\sigma^2)T`$. So $`-\ln(S/K) = (r - q - \tfrac12\sigma^2)T - d_2\,\sigma\sqrt{T}`$. Substitute: the top becomes $`(r-q-\tfrac12\sigma^2)T + (r-q+\tfrac12\sigma^2)T - d_2\sigma\sqrt{T} = 2(r-q)T - d_2\,\sigma\sqrt{T}`$. That is the slide.
+
+The product rule on $`\Delta_C = e^{-qT}N(d_1)`$ gives $`\partial\Delta_C/\partial T = -q\,e^{-qT}N(d_1) + e^{-qT}\varphi(d_1)\,\partial d_1/\partial T`$, since the slope of $`N`$ is $`\varphi`$. Negate, because $`\partial/\partial t = -\partial/\partial T`$, and the charm formula follows.
+
+For the put, differentiate put-call parity for deltas, $`\Delta_C - \Delta_P = e^{-qT}`$, from the delta card. The right side has calendar slope $`q\,e^{-qT}`$. So $`\chi_C - \chi_P = q\,e^{-qT}`$, which is the put formula.
 
 </details>
 
 ### Step 4: the put follows from parity
 
-A call minus a put is a forward contract (a deal to buy Acme at the strike on the expiry date), and its delta is $e^{-qT}$ whatever Acme does. So the two deltas always differ by the dividend drag, and their charms differ by the drag's calendar slope, $q\,e^{-qT}$ = 0.019604. The put's charm is −0.035639 − 0.019604 = −0.055243. The put's delta, −0.393348, falls further from zero: it loses what the call's delta loses, and also the drag's gain.
+A call minus a put is a forward contract (a deal to buy Acme at the strike on the expiry date), and its delta is $`e^{-qT}`$ whatever Acme does. So the two deltas always differ by the dividend drag, and their charms differ by the drag's calendar slope, $`q\,e^{-qT}`$ = 0.019604. The put's charm is −0.035639 − 0.019604 = −0.055243. The put's delta, −0.393348, falls further from zero: it loses what the call's delta loses, and also the drag's gain.
 
 ### Step 5: why the at-the-money delta settles near a half, and then jumps
 
-Put Acme exactly at the strike. Then $\ln(S/K) = 0$, and $d_1 = (r - q + \tfrac12\sigma^2)\sqrt{T}/\sigma$ shrinks to 0 as $T$ runs out. $N(0)$ is one half and the drag goes to 1. So the delta drifts to one half: 58.69 shares per 100 calls with a year left, 52.79 with a month, 50.11 with an hour. The bell piece's slide there is $(r - q + \tfrac12\sigma^2)/(2\sigma\sqrt{T})$, which grows without limit as $T$ shrinks, but slowly enough that the total drift stays finite.
+Put Acme exactly at the strike. Then $`\ln(S/K) = 0`$, and $`d_1 = (r - q + \tfrac12\sigma^2)\sqrt{T}/\sigma`$ shrinks to 0 as $`T`$ runs out. $`N(0)`$ is one half and the drag goes to 1. So the delta drifts to one half: 58.69 shares per 100 calls with a year left, 52.79 with a month, 50.11 with an hour. The bell piece's slide there is $`(r - q + \tfrac12\sigma^2)/(2\sigma\sqrt{T})`$, which grows without limit as $`T`$ shrinks, but slowly enough that the total drift stays finite.
 
-Move Acme off the strike and the distance part of $d_1$ takes over, since it is divided by $\sqrt{T}$. With Acme at $105, $d_1$ runs off toward plus infinity and delta to one full share; at $95 toward minus infinity and delta to zero.
+Move Acme off the strike and the distance part of $`d_1`$ takes over, since it is divided by $`\sqrt{T}`$. With Acme at $105, $`d_1`$ runs off toward plus infinity and delta to one full share; at $95 toward minus infinity and delta to zero.
 
 A call sitting at the strike on the final day is balanced between those two fates. The smallest move at the close decides which, so its delta jumps from about a half to 0 or 1. Charm near the strike and near expiry is therefore huge, as the charm chart further down shows.
 
@@ -163,13 +181,13 @@ Charm is a mixed partial derivative of the price: once in Acme's price, once in 
 
 ## Worked numbers, by hand
 
-The house call: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$.
+The house call: $`S = 100`$, $`K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $d_1$, $d_2$ | as on the Black-Scholes call card | 0.25, 0.05 |
-| drag $e^{-qT}$ | $e^{-0.02}$ | 0.980199 |
-| $N(d_1)$, $\varphi(d_1)$ | bell-curve area and height at 0.25 | 0.598706, 0.386668 |
+| $`d_1`$, $`d_2`$ | as on the Black-Scholes call card | 0.25, 0.05 |
+| drag $`e^{-qT}`$ | $`e^{-0.02}`$ | 0.980199 |
+| $`N(d_1)`$, $`\varphi(d_1)`$ | bell-curve area and height at 0.25 | 0.598706, 0.386668 |
 | delta | 0.980199 × 0.598706 | 0.586851 |
 | dividend piece | 0.02 × 0.586851 | +0.011737 |
 | the slide | (0.06 − 0.05 × 0.20) / 0.40 | 0.125 |
@@ -185,10 +203,10 @@ A month of calendar trims the house call's delta by about 0.003 share. The strai
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Drop the dividend piece | −0.047376 | Charm without $q\,\Delta_C$: the hedge ignores that dividends still to come are running out |
+| Drop the dividend piece | −0.047376 | Charm without $`q\,\Delta_C`$: the hedge ignores that dividends still to come are running out |
 | Differentiate in time left, not calendar | +0.035639 | Right size, wrong sign: the desk buys shares when it should sell |
 | Use the per-year figure for one night | −356.39 shares on 10,000 calls | Forgot to divide by 365; the true overnight change is −0.98 |
-| Give the put the call's charm | −0.035639, not −0.055243 | Dropped the drag's slope, $q\,e^{-qT}$ |
+| Give the put the call's charm | −0.035639, not −0.055243 | Dropped the drag's slope, $`q\,e^{-qT}`$ |
 
 Every number in that table is printed by the code below.
 
@@ -242,7 +260,7 @@ The code computes the house call's charm by **five independent roads**:
 2. delta from its own formula, nudged in time;
 3. the price nudged in both Acme's price and time, with no delta formula at all;
 4. the theta card's formula nudged in Acme's price;
-5. delta rebuilt as an average over the bell curve by Simpson's rule (adding up thin slices under a curve), with no $N$ and no $d_1$, then nudged in time.
+5. delta rebuilt as an average over the bell curve by Simpson's rule (adding up thin slices under a curve), with no $`N`$ and no $`d_1`$, then nudged in time.
 
 The put's charm is checked against its own delta nudged in time. Charm added up across a month is checked against the repriced month. Every number on the card is printed. The bell-curve area is a power series in Python and a sum of thin slices in Rust.
 
@@ -599,13 +617,13 @@ The two outputs agree line for line at the printed precision, from different rou
 
 ### Lean
 
-Lean proves the charm formulas, the slide, and charm as theta's slope, for every positive $S$, $K$, $\sigma$ and time left.
+Lean proves the charm formulas, the slide, and charm as theta's slope, for every positive $`S`$, $`K`$, $`\sigma`$ and time left.
 
-- Take $S$, $K$ and $\sigma$ above zero, and a date before expiry. Then the call's delta has calendar slope $\chi_C$, exactly as in the formula above.
-- Take the same conditions. Then the put's delta has calendar slope $\chi_P = \chi_C - q\,e^{-qT}$.
-- Take $S$, $K$, $\sigma$ and $T$ above zero. Then $\partial d_1/\partial T$ equals the slide, exactly as written in Step 2.
-- Take the same conditions as for the call. Then theta's slope in $S$ is the call's charm, $\chi_C$.
-- Take the house call. Then $d_1 = 0.25$ and $d_2 = 0.05$ exactly, and the slide's arithmetic gives 0.125.
+- Take $`S`$, $`K`$ and $`\sigma`$ above zero, and a date before expiry. Then the call's delta has calendar slope $`\chi_C`$, exactly as in the formula above.
+- Take the same conditions. Then the put's delta has calendar slope $`\chi_P = \chi_C - q\,e^{-qT}`$.
+- Take $`S`$, $`K`$, $`\sigma`$ and $`T`$ above zero. Then $`\partial d_1/\partial T`$ equals the slide, exactly as written in Step 2.
+- Take the same conditions as for the call. Then theta's slope in $`S`$ is the call's charm, $`\chi_C`$.
+- Take the house call. Then $`d_1 = 0.25`$ and $`d_2 = 0.05`$ exactly, and the slide's arithmetic gives 0.125.
 
 The decimal values, the nudged roads, the month added up and the overnight hedge changes are left to the Python and Rust checks.
 
@@ -947,7 +965,7 @@ example : ((2 : ℚ) * (5 / 100 - 2 / 100) * 1 - 1 / 20 * (1 / 5)) / (2 * 1 * (1
 > - **The sign convention.** Some software reports delta's slope in time left, which is minus charm: +0.035639 instead of −0.035639. Read the label before trading on it.
 > - **Units.** Charm per year used as charm per day turns a 0.98-share adjustment into 356.39 shares on 10,000 calls.
 > - **Using a slope near expiry.** Two days out, one dollar above the strike, charm misses the night by 259.23 shares out of 773.15. Reprice instead.
-> - **The put.** Put charm is not call charm: −0.055243 against −0.035639. The gap is the dividend drag's slope, and it vanishes only when $q$ is zero.
+> - **The put.** Put charm is not call charm: −0.055243 against −0.035639. The gap is the dividend drag's slope, and it vanishes only when $`q`$ is zero.
 
 ---
 
@@ -965,7 +983,7 @@ example : ((2 : ℚ) * (5 / 100 - 2 / 100) * 1 - 1 / 20 * (1 / 5)) / (2 * 1 * (1
 
 ## What this builds on
 
-- [Delta](01-delta.md): the call's delta $e^{-qT}N(d_1)$, and delta parity with the put. Charm is its slope along the calendar.
+- [Delta](01-delta.md): the call's delta $`e^{-qT}N(d_1)`$, and delta parity with the put. Charm is its slope along the calendar.
 - [Theta](04-theta.md): the price's slope along the calendar, the same clock with the sign turned round, and the formula the code nudges in Acme's price.
 - [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): slopes in one input with the others frozen, and why the order of two partial derivatives does not matter.
 
@@ -982,6 +1000,6 @@ Charm ages a hedge while the stock stands still; the next card asks what one day
 Verified 2026-09-24: every link below resolves to the publisher's page.
 
 - Black, Fischer, and Myron Scholes. "The Pricing of Options and Corporate Liabilities." *Journal of Political Economy* 81, no. 3 (1973): 637–654. [doi:10.1086/260062](https://doi.org/10.1086/260062). The price and delta that charm differentiates.
-- Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). The dividend yield $q$, which splits call charm from put charm.
+- Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). The dividend yield $`q`$, which splits call charm from put charm.
 - Hull, John C. *Options, Futures, and Other Derivatives*, 11th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938). The chapter on the Greek letters: delta, theta and hedging with them.
 - Taleb, Nassim Nicholas. *Dynamic Hedging: Managing Vanilla and Exotic Options*. Wiley, 1997. [Publisher page](https://www.wiley.com/en-us/Dynamic+Hedging%3A+Managing+Vanilla+and+Exotic+Options-p-9780471152804). A trader's account of how Greeks change with the stock and with the passage of time.

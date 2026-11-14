@@ -38,39 +38,45 @@ No pile is chosen along the way: the multiplication chooses, and the reading hap
 
 ## The formula
 
-A series here is a bookkeeping row: the number on $x^{n}$ is the count for a total of $n$, with $x$ a placeholder, never a quantity. "The coefficient of $x^{n}$" names that number ([Generating functions](01-ordinary-generating-functions.md)).
+A series here is a bookkeeping row: the number on $`x^{n}`$ is the count for a total of $`n`$, with $`x`$ a placeholder, never a quantity. "The coefficient of $`x^{n}`$" names that number ([Generating functions](01-ordinary-generating-functions.md)).
 
-A kind of coin worth $v$ cents, in unlimited supply, can contribute 0, $v$, $2v$, $3v$ cents and on up, one pile per amount:
+A kind of coin worth $`v`$ cents, in unlimited supply, can contribute 0, $`v`$, $`2v`$, $`3v`$ cents and on up, one pile per amount:
 
-$$1 + x^{v} + x^{2v} + x^{3v} + \cdots \;=\; \frac{1}{1 - x^{v}}$$
+```math
+1 + x^{v} + x^{2v} + x^{3v} + \cdots \;=\; \frac{1}{1 - x^{v}}
+```
 
 **Read it aloud:** one term for every size of pile one kind can make; the fraction on the right is shorthand for the endless list.
 
-With $k$ kinds, the count for a total of $n$ is one coefficient of one product:
+With $`k`$ kinds, the count for a total of $`n`$ is one coefficient of one product:
 
-$$\text{ways to make } n \;=\; \text{the coefficient of } x^{n} \text{ in } F_1(x) \times F_2(x) \times \cdots \times F_k(x)$$
+```math
+\text{ways to make } n \;=\; \text{the coefficient of } x^{n} \text{ in } F_1(x) \times F_2(x) \times \cdots \times F_k(x)
+```
 
 Each factor belongs to one kind and lists what it may contribute. The till has four:
 
-$$\frac{1}{(1-x)(1-x^{5})(1-x^{10})(1-x^{25})}$$
+```math
+\frac{1}{(1-x)(1-x^{5})(1-x^{10})(1-x^{25})}
+```
 
-**Read it aloud:** pennies times nickels times dimes times quarters, and the coefficient of $x^{50}$ is 49.
+**Read it aloud:** pennies times nickels times dimes times quarters, and the coefficient of $`x^{50}`$ is 49.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | a placeholder; its power records a total | $x^{50}$ is 50 cents | — |
-| $n$ | the total to pay, in cents | 50 | climbs fast: 13 piles at 25 cents, 49 at 50 |
-| $v$ | one kind's coin value | 1, 5, 10 and 25 | coarser coins, fewer piles |
-| $k$ | how many kinds of coin | 4 | one more factor |
-| $F_1$, $F_2$, $F_3$, $F_4$ | the factors, one per kind | quarters: $1 + x^{25} + x^{50}$ | — |
-| $a$, $b$, $c$, $d$ | pennies, nickels, dimes, quarters in one pile | 0, 1, 2, 1 pays 50 | — |
-| $C(7, 2)$ | a choose count, read "7 choose 2": ways to pick 2 of 7 | 21 | — |
+| $`x`$ | a placeholder; its power records a total | $`x^{50}`$ is 50 cents | — |
+| $`n`$ | the total to pay, in cents | 50 | climbs fast: 13 piles at 25 cents, 49 at 50 |
+| $`v`$ | one kind's coin value | 1, 5, 10 and 25 | coarser coins, fewer piles |
+| $`k`$ | how many kinds of coin | 4 | one more factor |
+| $`F_1`$, $`F_2`$, $`F_3`$, $`F_4`$ | the factors, one per kind | quarters: $`1 + x^{25} + x^{50}`$ | — |
+| $`a`$, $`b`$, $`c`$, $`d`$ | pennies, nickels, dimes, quarters in one pile | 0, 1, 2, 1 pays 50 | — |
+| $`C(7, 2)`$ | a choose count, read "7 choose 2": ways to pick 2 of 7 | 21 | — |
 
 ### When it holds
 
 - **Order must not matter.** The product counts piles, not the order they are handed over in; count orders and each pile is counted many times.
 - **Only the total ties the kinds together.** A factor speaks for its own kind and nothing else. A rule like "no dimes once a quarter is used" spans two kinds, so no factor carries it and the product counts forbidden piles.
-- **Each allowed amount appears once in its factor.** The 1 on $x^{25}$ says the quarters have one way to bring 25 cents; put 2 there and every pile using one quarter is counted twice.
+- **Each allowed amount appears once in its factor.** The 1 on $`x^{25}`$ says the quarters have one way to bring 25 cents; put 2 there and every pile using one quarter is counted twice.
 
 ---
 
@@ -78,48 +84,54 @@ $$\frac{1}{(1-x)(1-x^{5})(1-x^{10})(1-x^{25})}$$
 
 ### Step 0: multiplying two series adds the exponents
 
-$x^{5}$ times $x^{45}$ is $x^{50}$: powers of one placeholder add. Multiplying two factors means taking one term from each, adding the exponents, and collecting what lands on one power.
+$`x^{5}`$ times $`x^{45}`$ is $`x^{50}`$: powers of one placeholder add. Multiplying two factors means taking one term from each, adding the exponents, and collecting what lands on one power.
 
-Pennies and nickels alone, at $x^{50}$: no nickel with fifty pennies, one with forty-five, on to ten nickels with none — eleven terms, so the coefficient is 11, the count by hand too. The multiplication did the splitting, for every power at once.
+Pennies and nickels alone, at $`x^{50}`$: no nickel with fifty pennies, one with forty-five, on to ten nickels with none — eleven terms, so the coefficient is 11, the count by hand too. The multiplication did the splitting, for every power at once.
 
 ### Step 1: one kind of coin is one list, endless or short
 
 A pile of nickels is worth 0, 5, 10, 15 cents and on up, one pile per amount, since nickels are identical: coefficient 1 on those powers, 0 elsewhere. The short form is one cancellation:
 
-$$(1 - x^{5})(1 + x^{5} + x^{10} + x^{15} + \cdots) = 1$$
+```math
+(1 - x^{5})(1 + x^{5} + x^{10} + x^{15} + \cdots) = 1
+```
 
-Multiplying out gives the list minus the same list shifted up by $x^{5}$, so every term after the 1 dies against its neighbour. List and fraction are two spellings of one row.
+Multiplying out gives the list minus the same list shifted up by $`x^{5}`$, so every term after the 1 dies against its neighbour. List and fraction are two spellings of one row.
 
 A limit only cuts the list short. A die shows 1 to 6 and must show something, so one die's factor is
 
-$$x + x^{2} + x^{3} + x^{4} + x^{5} + x^{6}$$
+```math
+x + x^{2} + x^{3} + x^{4} + x^{5} + x^{6}
+```
 
-no constant term, since 0 is not a face, and nothing above $x^{6}$. Two dice square it. The code checks both numbers that square gives ([Generating functions](01-ordinary-generating-functions.md)): 6 on $x^{7}$, and 36 once every coefficient is added. At most two quarters is the same cut: $1 + x^{25} + x^{50}$.
+no constant term, since 0 is not a face, and nothing above $`x^{6}`$. Two dice square it. The code checks both numbers that square gives ([Generating functions](01-ordinary-generating-functions.md)): 6 on $`x^{7}`$, and 36 once every coefficient is added. At most two quarters is the same cut: $`1 + x^{25} + x^{50}`$.
 
 ### Step 2: the coefficient keeps only what adds up
 
-Now all four. A term of the product takes one term from each factor: $x^{a}$ from the pennies, $x^{5b}$ from the nickels, $x^{10c}$ from the dimes, $x^{25d}$ from the quarters, where $a$, $b$, $c$ and $d$ count coins. Exponents add, so the term lands on
+Now all four. A term of the product takes one term from each factor: $`x^{a}`$ from the pennies, $`x^{5b}`$ from the nickels, $`x^{10c}`$ from the dimes, $`x^{25d}`$ from the quarters, where $`a`$, $`b`$, $`c`$ and $`d`$ count coins. Exponents add, so the term lands on
 
-$$x^{\,a + 5b + 10c + 25d}$$
+```math
+x^{\,a + 5b + 10c + 25d}
+```
 
-which is $x^{50}$ exactly when $a + 5b + 10c + 25d = 50$ — the equation for "these coins pay 50 cents". Each paying pile puts 1 on $x^{50}$, and no two piles give the same term, so the coefficient is the count: 49.
+which is $`x^{50}`$ exactly when $`a + 5b + 10c + 25d = 50`$ — the equation for "these coins pay 50 cents". Each paying pile puts 1 on $`x^{50}`$, and no two piles give the same term, so the coefficient is the count: 49.
 
 That is where 198 failed: each choice here pushes the exponent up by what it spends, so only terms reaching 50 are counted.
 
 ### Step 3: stars and bars is the case where every factor is the same
 
-Let each of $k$ kinds contribute any whole number of single items. Every factor is then the all-ones list $1 + x + x^{2} + \cdots$ and the product is $1/(1-x)^{k}$. Its coefficient of $x^{n}$ collects exponents adding to $n$ — every way to share $n$ identical items among $k$ labelled kinds, the choose count $C(n + k - 1, k - 1)$ ([Stars and bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md)).
+Let each of $`k`$ kinds contribute any whole number of single items. Every factor is then the all-ones list $`1 + x + x^{2} + \cdots`$ and the product is $`1/(1-x)^{k}`$. Its coefficient of $`x^{n}`$ collects exponents adding to $`n`$ — every way to share $`n`$ identical items among $`k`$ labelled kinds, the choose count $`C(n + k - 1, k - 1)`$ ([Stars and bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md)).
 
-Three kinds, total 5: three all-ones lists put 21 on $x^{5}$, and $C(7, 2)$ is 21, that card's count. Stars and bars is the flat case, every value 1; coin values make the till harder.
+Three kinds, total 5: three all-ones lists put 21 on $`x^{5}`$, and $`C(7, 2)`$ is 21, that card's count. Stars and bars is the flat case, every value 1; coin values make the till harder.
 
 <details>
 <summary>Detailed proof: the same coefficient by algebra alone</summary>
 
-Induction on the number of factors, with no bars and no stars. One factor: $1/(1-x)$ carries 1 on every power, and $C(n, 0) = 1$. Suppose the claim holds for $k$ factors. A further all-ones list contributes 1 whatever is left for it, so the coefficient of $x^{n}$ in $1/(1-x)^{k+1}$ adds the $k$-factor coefficients from 0 to $n$:
+Induction on the number of factors, with no bars and no stars. One factor: $`1/(1-x)`$ carries 1 on every power, and $`C(n, 0) = 1`$. Suppose the claim holds for $`k`$ factors. A further all-ones list contributes 1 whatever is left for it, so the coefficient of $`x^{n}`$ in $`1/(1-x)^{k+1}`$ adds the $`k`$-factor coefficients from 0 to $`n`$:
 
-$$C(k - 1, k - 1) + C(k, k - 1) + \cdots + C(n + k - 1, k - 1)$$
+$`\displaystyle C(k - 1, k - 1) + C(k, k - 1) + \cdots + C(n + k - 1, k - 1)`$
 
-The hockey-stick identity adds such a run into one coefficient further along ([The hockey stick](../03-Binomial%20Coefficients%20and%20Identities/04-hockey-stick-identity.md)): the sum is $C(n + k, k)$, the claim for one factor more.
+The hockey-stick identity adds such a run into one coefficient further along ([The hockey stick](../03-Binomial%20Coefficients%20and%20Identities/04-hockey-stick-identity.md)): the sum is $`C(n + k, k)`$, the claim for one factor more.
 
 </details>
 
@@ -129,7 +141,7 @@ A second route skips series: fix the quarters, then the dimes, then the nickels,
 
 ## Worked numbers, by hand
 
-Multiply the kinds in one at a time and watch the coefficient of $x^{50}$ grow. Each row counts piles worth 50 cents from the kinds so far.
+Multiply the kinds in one at a time and watch the coefficient of $`x^{50}`$ grow. Each row counts piles worth 50 cents from the kinds so far.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -155,7 +167,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Road one multiplies the four factors, collecting like powers, and reads the coefficient of $x^{50}$. Road two counts piles directly, with no series: quarters, dimes and nickels run through every count and pennies take the remainder. The roads are compared at every fifth total up to 50; the dice and all-ones cases follow.
+Nothing is imported. Road one multiplies the four factors, collecting like powers, and reads the coefficient of $`x^{50}`$. Road two counts piles directly, with no series: quarters, dimes and nickels run through every count and pennies take the remainder. The roads are compared at every fifth total up to 50; the dice and all-ones cases follow.
 
 ### Python
 
@@ -354,9 +366,9 @@ The two outputs match line for line.
 
 Lean proves the method for any number of kinds and any allowed amounts, then the till's 49 and the stars-and-bars case.
 
-- Give each kind a factor with 1 on each allowed amount, 0 elsewhere: the coefficient of $x^{n}$ in the product counts the piles worth $n$.
-- For pennies, nickels, dimes and quarters, the coefficient of $x^{50}$ is 49.
-- For $k$ kinds, at least one, each with the all-ones factor, the coefficient of $x^{n}$ is $C(n + k - 1, k - 1)$.
+- Give each kind a factor with 1 on each allowed amount, 0 elsewhere: the coefficient of $`x^{n}`$ in the product counts the piles worth $`n`$.
+- For pennies, nickels, dimes and quarters, the coefficient of $`x^{50}`$ is 49.
+- For $`k`$ kinds, at least one, each with the all-ones factor, the coefficient of $`x^{n}`$ is $`C(n + k - 1, k - 1)`$.
 - It also re-checks the card's numbers: 49 by counting piles, 1, 11, 36, 49, the quarter split, 13, 4, the dice, 21, 198 and 23426.
 
 The mistakes of adding the factors or starting each at its own coin, and running the code, are left to the Python and Rust checks.
@@ -487,11 +499,11 @@ example : Nat.choose 53 3 = 23426 := by decide
 ## The usual mistake
 
 > [!warning]
-> **Multiplying each kind's count as though the kinds were free of one another.** 11 × 6 × 3 = 198 counts combinations that spend past 50 cents, which no pennies rescue. The coefficient of $x^{50}$ keeps only the ones reaching it: 49.
+> **Multiplying each kind's count as though the kinds were free of one another.** 11 × 6 × 3 = 198 counts combinations that spend past 50 cents, which no pennies rescue. The coefficient of $`x^{50}`$ keeps only the ones reaching it: 49.
 >
 > - **Dropping the "none of this kind" term.** The 1 opening each factor stands for taking none of that coin; start each factor at its own coin and the answer falls to 2.
 > - **Adding the factors instead of multiplying them.** Addition keeps the kinds apart, so it counts only the four single-kind piles: 4.
-> - **Reaching for stars and bars because the coins look identical.** Fifty cents among four kinds is not fifty items among four boxes: that count is $C(53, 3) = 23426$. Values live in the exponents.
+> - **Reaching for stars and bars because the coins look identical.** Fifty cents among four kinds is not fifty items among four boxes: that count is $`C(53, 3) = 23426`$. Values live in the exponents.
 
 ---
 
@@ -508,7 +520,7 @@ example : Nat.choose 53 3 = 23426 := by decide
 
 ## What this builds on
 
-- [Generating functions](01-ordinary-generating-functions.md): what a series of counts is, and where the count for $n$ sits in it.
+- [Generating functions](01-ordinary-generating-functions.md): what a series of counts is, and where the count for $`n`$ sits in it.
 - [Stars and bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md): the count Step 3 re-derives, and the 21 the code agrees with.
 
 ## Where this goes next

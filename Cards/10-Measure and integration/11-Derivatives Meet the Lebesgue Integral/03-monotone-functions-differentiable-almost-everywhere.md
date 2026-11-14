@@ -35,39 +35,43 @@ One line: the staircase C, in percent of its climb. It is flat on the middle thi
 
 ## The formula
 
-Notation first, in words. F is **increasing**: x < y gives F(x) ≤ F(y). Its **derivative** $F'(x)$ at a point x is the limit of the slope (F(x + h) − F(x))/h as the step h shrinks to 0 from either side, when that limit exists and is finite. Lebesgue measure $\lambda$ is length. Reminder: "almost everywhere", a.e., means except on a set of length zero.
+Notation first, in words. F is **increasing**: x < y gives F(x) ≤ F(y). Its **derivative** $`F'(x)`$ at a point x is the limit of the slope (F(x + h) − F(x))/h as the step h shrinks to 0 from either side, when that limit exists and is finite. Lebesgue measure $`\lambda`$ is length. Reminder: "almost everywhere", a.e., means except on a set of length zero.
 
-$$F'(x) \text{ exists and is finite for } \lambda\text{-a.e. } x, \qquad \int_a^b F' \, d\lambda \;\le\; F(b) - F(a)$$
+```math
+F'(x) \text{ exists and is finite for } \lambda\text{-a.e. } x, \qquad \int_a^b F' \, d\lambda \;\le\; F(b) - F(a)
+```
 
 **Read it aloud:** a rising function has a slope at almost every point, and the integral of that slope over a stretch is at most how far the function rose across it.
 
-The shortfall has a name. When F is right-continuous (F(x) is the limit of F from the right, as for every distribution function), it has a **Lebesgue-Stieltjes measure** $\mu_F$ with $\mu_F((a, b]) = F(b) - F(a)$ ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). That measure splits into a part with a density against length and a **singular** part $\mu_s$ that lives on a set of length zero ([Lebesgue decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md)). The density turns out to be the derivative:
+The shortfall has a name. When F is right-continuous (F(x) is the limit of F from the right, as for every distribution function), it has a **Lebesgue-Stieltjes measure** $`\mu_F`$ with $`\mu_F((a, b]) = F(b) - F(a)`$ ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). That measure splits into a part with a density against length and a **singular** part $`\mu_s`$ that lives on a set of length zero ([Lebesgue decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md)). The density turns out to be the derivative:
 
-$$\mu_F(A) = \int_A F' \, d\lambda + \mu_s(A), \qquad F(b) - F(a) - \int_a^b F' \, d\lambda = \mu_s\big((a, b]\big)$$
+```math
+\mu_F(A) = \int_A F' \, d\lambda + \mu_s(A), \qquad F(b) - F(a) - \int_a^b F' \, d\lambda = \mu_s\big((a, b]\big)
+```
 
 **Read it aloud:** the measure of a rising function is its slope integrated against length plus a singular part, so the integral of the slope misses exactly the singular mass.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$ | an increasing function | the claim's distribution function; F(1) = 0.742484 | a bigger rise, more to account for |
-| $F'$ | its derivative: the slope at one point | 0.7 e^(−x) for x > 0; none at 0 | more of the rise recovered by the integral |
-| $x$, $h$, $r$ | a point; a step away from it; a half-width | h = 3^(−n) on the staircase | smaller h, closer to the true slope |
-| $a$, $b$ | the ends of the stretch | −1 and 5 | a longer stretch catches more rise |
-| $\lambda$ | Lebesgue measure: length | length of (a, b] is b − a | — |
-| $\mu_F$ | the measure of F: mass F(b) − F(a) on (a, b] | 0.3 at zero plus 0.7 spread out | — |
-| $f$, $\mu_{ac}$ | the density of the part of $\mu_F$ that gives length-zero sets mass 0; that part | f(x) = 0.7 e^(−x); total 0.7 | a bigger integral of $F'$ |
-| $\mu_s$, $N$ | the singular part; a length-zero set it lives on | 0.3 on N = {0} | a bigger shortfall |
-| $G$ | the right-continuous version of F, G(x) = F(x+) | equals F for the claim | — |
-| $C$, $\mu_C$, $T$, $s$ | the Cantor staircase and its measure; the Takagi function; distance to the nearest whole number | C(1/3) = 0.5 | — |
-| $n$ | the stage: cells of width 3^(−n) | n = 1 to 10 | finer cells, a sharper picture |
-| $J$, $K$, $A$, $\varepsilon$, $\delta$ | a bounded interval, a closed piece of N, a bad set and two small numbers, in the proof | — | — |
+| $`F`$ | an increasing function | the claim's distribution function; F(1) = 0.742484 | a bigger rise, more to account for |
+| $`F'`$ | its derivative: the slope at one point | 0.7 e^(−x) for x > 0; none at 0 | more of the rise recovered by the integral |
+| $`x`$, $`h`$, $`r`$ | a point; a step away from it; a half-width | h = 3^(−n) on the staircase | smaller h, closer to the true slope |
+| $`a`$, $`b`$ | the ends of the stretch | −1 and 5 | a longer stretch catches more rise |
+| $`\lambda`$ | Lebesgue measure: length | length of (a, b] is b − a | — |
+| $`\mu_F`$ | the measure of F: mass F(b) − F(a) on (a, b] | 0.3 at zero plus 0.7 spread out | — |
+| $`f`$, $`\mu_{ac}`$ | the density of the part of $`\mu_F`$ that gives length-zero sets mass 0; that part | f(x) = 0.7 e^(−x); total 0.7 | a bigger integral of $`F'`$ |
+| $`\mu_s`$, $`N`$ | the singular part; a length-zero set it lives on | 0.3 on N = {0} | a bigger shortfall |
+| $`G`$ | the right-continuous version of F, G(x) = F(x+) | equals F for the claim | — |
+| $`C`$, $`\mu_C`$, $`T`$, $`s`$ | the Cantor staircase and its measure; the Takagi function; distance to the nearest whole number | C(1/3) = 0.5 | — |
+| $`n`$ | the stage: cells of width 3^(−n) | n = 1 to 10 | finer cells, a sharper picture |
+| $`J`$, $`K`$, $`A`$, $`\varepsilon`$, $`\delta`$ | a bounded interval, a closed piece of N, a bad set and two small numbers, in the proof | — | — |
 
 ### When it holds
 
 - **F increasing, real-valued, on an interval.** Drop monotonicity and a continuous function can have no derivative anywhere: the Takagi function (What breaks). A difference of two increasing functions is fine, which covers every function of bounded variation ([Bounded variation](01-functions-of-bounded-variation.md)).
 - **Almost everywhere, not everywhere.** The claim's F has no derivative at 0; the staircase has none at any point of the Cantor set. A null set of such points is allowed, and it can be uncountable.
-- **The Lebesgue integral.** $F'$ is measurable and never negative, so its integral makes sense; the theorem also shows it is finite on bounded stretches.
-- **Right-continuity, for the exact shortfall.** The inequality holds for every increasing F. The equation with $\mu_s$ needs F right-continuous; otherwise use its right-continuous version $G$, which differs from F at countably many points only.
+- **The Lebesgue integral.** $`F'`$ is measurable and never negative, so its integral makes sense; the theorem also shows it is finite on bounded stretches.
+- **Right-continuity, for the exact shortfall.** The inequality holds for every increasing F. The equation with $`\mu_s`$ needs F right-continuous; otherwise use its right-continuous version $`G`$, which differs from F at countably many points only.
 
 ---
 
@@ -75,21 +79,23 @@ $$\mu_F(A) = \int_A F' \, d\lambda + \mu_s(A), \qquad F(b) - F(a) - \int_a^b F' 
 
 ### Step 0: a rising function is a measure in disguise, and its slope is that measure's density
 
-The rise of F over (x, x + h] is a mass, $\mu_F((x, x + h])$, and the slope over that step is mass per unit length. As h shrinks, the part of the mass with a density gives back that density at almost every point; the part on a length-zero set gives back 0 at almost every point. So the slope is the density almost everywhere, and integrating it recovers only the mass that has a density.
+The rise of F over (x, x + h] is a mass, $`\mu_F((x, x + h])`$, and the slope over that step is mass per unit length. As h shrinks, the part of the mass with a density gives back that density at almost every point; the part on a length-zero set gives back 0 at almost every point. So the slope is the density almost everywhere, and integrating it recovers only the mass that has a density.
 
 ### Step 1: turn F into a measure
 
-Take F right-continuous for now; the general case follows by a squeeze in the Detailed proof. The measure $\mu_F$ gives (a, b] the mass F(b) − F(a) ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). For the claim, $\mu_F$ is 0.3 on the point 0 plus mass 0.7 e^(−x) per unit length on x > 0. For the staircase, $\mu_C$ is the **Cantor measure**: all its mass lies on the Cantor set, which has length 0 ([The Cantor set](../02-Length%20Done%20Properly/07-the-cantor-set.md)).
+Take F right-continuous for now; the general case follows by a squeeze in the Detailed proof. The measure $`\mu_F`$ gives (a, b] the mass F(b) − F(a) ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). For the claim, $`\mu_F`$ is 0.3 on the point 0 plus mass 0.7 e^(−x) per unit length on x > 0. For the staircase, $`\mu_C`$ is the **Cantor measure**: all its mass lies on the Cantor set, which has length 0 ([The Cantor set](../02-Length%20Done%20Properly/07-the-cantor-set.md)).
 
 ### Step 2: split the measure against length
 
-The Lebesgue decomposition splits $\mu_F$ in exactly one way into $\mu_{ac}$, which gives every length-zero set mass 0, and $\mu_s$, which lives on one length-zero set N. The Radon-Nikodym theorem ([The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md)) gives $\mu_{ac}$ a density f: $\mu_{ac}(A) = \int_A f \, d\lambda$. Claim: f(x) = 0.7 e^(−x) for x > 0, $\mu_s$ is 0.3 on N = {0}. Staircase: f = 0, and $\mu_s$ is everything, on N the Cantor set.
+The Lebesgue decomposition splits $`\mu_F`$ in exactly one way into $`\mu_{ac}`$, which gives every length-zero set mass 0, and $`\mu_s`$, which lives on one length-zero set N. The Radon-Nikodym theorem ([The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md)) gives $`\mu_{ac}`$ a density f: $`\mu_{ac}(A) = \int_A f \, d\lambda`$. Claim: f(x) = 0.7 e^(−x) for x > 0, $`\mu_s`$ is 0.3 on N = {0}. Staircase: f = 0, and $`\mu_s`$ is everything, on N the Cantor set.
 
 ### Step 3: every slope is two averages
 
 For a step h > 0,
 
-$$\frac{F(x + h) - F(x)}{h} \;=\; \frac{1}{h}\int_x^{x+h} f \, d\lambda \;+\; \frac{\mu_s\big((x, x + h]\big)}{h}$$
+```math
+\frac{F(x + h) - F(x)}{h} \;=\; \frac{1}{h}\int_x^{x+h} f \, d\lambda \;+\; \frac{\mu_s\big((x, x + h]\big)}{h}
+```
 
 **Read it aloud:** the slope over a step is the average density over the step plus the singular mass in the step per unit length. A step to the left works the same way. The next two steps take the limit of each piece.
 
@@ -99,7 +105,7 @@ That is the Lebesgue differentiation theorem ([The Lebesgue differentiation theo
 
 ### Step 5: the singular mass per unit length tends to 0, almost everywhere
 
-This is the heart of the proof. Fix a threshold ε and call x bad if arbitrarily short intervals around x hold singular mass above ε times their length. Most of $\mu_s$ sits on a closed piece K of N. Short intervals around bad points off K miss K, so their mass comes from the small leftover of N outside K.
+This is the heart of the proof. Fix a threshold ε and call x bad if arbitrarily short intervals around x hold singular mass above ε times their length. Most of $`\mu_s`$ sits on a closed piece K of N. Short intervals around bad points off K miss K, so their mass comes from the small leftover of N outside K.
 
 A covering lemma picks disjoint intervals among them whose tripled copies cover the bad points. Each has length below its mass over ε, so the bad points have length at most 3 × leftover / ε, which can be made as small as wanted. K itself has length 0.
 
@@ -116,13 +122,15 @@ The last column shows a limit and an integral that cannot be swapped. The stage 
 
 ### Step 6: add the two limits
 
-At every x where both Step 4 and Step 5 succeed, the slope of F converges to f(x) + 0. Each step fails only on a null set, so $F'(x) = f(x)$ almost everywhere. For the claim, $F'$ is 0.7 e^(−x) for x > 0, 0 for x < 0, and undefined at the single point 0. For the staircase, $C'$ is 0 off the Cantor set.
+At every x where both Step 4 and Step 5 succeed, the slope of F converges to f(x) + 0. Each step fails only on a null set, so $`F'(x) = f(x)`$ almost everywhere. For the claim, $`F'`$ is 0.7 e^(−x) for x > 0, 0 for x < 0, and undefined at the single point 0. For the staircase, $`C'`$ is 0 off the Cantor set.
 
 ### Step 7: integrate, and read off the shortfall
 
 Two functions equal almost everywhere have the same integral. So
 
-$$\int_a^b F' \, d\lambda = \int_a^b f \, d\lambda = \mu_{ac}\big((a, b]\big) = \mu_F\big((a, b]\big) - \mu_s\big((a, b]\big) = F(b) - F(a) - \mu_s\big((a, b]\big).$$
+```math
+\int_a^b F' \, d\lambda = \int_a^b f \, d\lambda = \mu_{ac}\big((a, b]\big) = \mu_F\big((a, b]\big) - \mu_s\big((a, b]\big) = F(b) - F(a) - \mu_s\big((a, b]\big).
+```
 
 **Read it aloud:** the integral of the slope is the density part of the rise, which is the whole rise minus the singular part.
 
@@ -131,29 +139,29 @@ Singular mass is never negative, which gives the inequality. Claim on (−1, 5]:
 <details>
 <summary>Detailed proof: Lebesgue's theorem for increasing functions</summary>
 
-*Claims.* Let F be increasing and real-valued on the line. (i) $F'(x)$ exists and is finite for λ-a.e. x. (ii) $F'$ is measurable and $\int_a^b F' \, d\lambda \le F(b) - F(a)$ for a < b. (iii) If F is right-continuous, $F(b) - F(a) - \int_a^b F' \, d\lambda = \mu_s((a, b])$.
+*Claims.* Let F be increasing and real-valued on the line. (i) $`F'(x)`$ exists and is finite for λ-a.e. x. (ii) $`F'`$ is measurable and $`\int_a^b F' \, d\lambda \le F(b) - F(a)`$ for a < b. (iii) If F is right-continuous, $`F(b) - F(a) - \int_a^b F' \, d\lambda = \mu_s((a, b])`$.
 
-*The measure and its split.* Let F be right-continuous. Its Lebesgue-Stieltjes measure $\mu_F$ is finite on bounded sets, so σ-finite. By the Lebesgue decomposition, $\mu_F = \mu_{ac} + \mu_s$ with $\mu_{ac}$ null on λ-null sets and $\mu_s(\mathbb{R} \setminus N) = 0$ for a Borel set N with $\lambda(N) = 0$. By Radon-Nikodym, $\mu_{ac}(A) = \int_A f \, d\lambda$ for a measurable $f \ge 0$; f is integrable on bounded intervals, since $\int_a^b f \, d\lambda \le F(b) - F(a) < \infty$.
+*The measure and its split.* Let F be right-continuous. Its Lebesgue-Stieltjes measure $`\mu_F`$ is finite on bounded sets, so σ-finite. By the Lebesgue decomposition, $`\mu_F = \mu_{ac} + \mu_s`$ with $`\mu_{ac}`$ null on λ-null sets and $`\mu_s(\mathbb{R} \setminus N) = 0`$ for a Borel set N with $`\lambda(N) = 0`$. By Radon-Nikodym, $`\mu_{ac}(A) = \int_A f \, d\lambda`$ for a measurable $`f \ge 0`$; f is integrable on bounded intervals, since $`\int_a^b f \, d\lambda \le F(b) - F(a) < \infty`$.
 
-*Density part.* By the Lebesgue differentiation theorem, λ-a.e. x is a Lebesgue point of f: $\frac{1}{2r}\int_{x-r}^{x+r} \lvert f - f(x) \rvert \, d\lambda \to 0$ as r → 0. For 0 < h, $\big\lvert \frac1h \int_x^{x+h} f \, d\lambda - f(x) \big\rvert \le \frac1h \int_{x-h}^{x+h} \lvert f - f(x) \rvert \, d\lambda \to 0$; the same bound serves (x + h, x] for h < 0.
+*Density part.* By the Lebesgue differentiation theorem, λ-a.e. x is a Lebesgue point of f: $`\frac{1}{2r}\int_{x-r}^{x+r} \lvert f - f(x) \rvert \, d\lambda \to 0`$ as r → 0. For 0 < h, $`\big\lvert \frac1h \int_x^{x+h} f \, d\lambda - f(x) \big\rvert \le \frac1h \int_{x-h}^{x+h} \lvert f - f(x) \rvert \, d\lambda \to 0`$; the same bound serves (x + h, x] for h < 0.
 
-*Singular part.* Let $D(x) = \limsup_{r \to 0} \mu_s([x - r, x + r]) / (2r)$. D is Borel: by monotonicity in r the lim sup may run over rational r, and for fixed r the map x ↦ $\mu_s([x - r, x + r])$ is upper semicontinuous.
+*Singular part.* Let $`D(x) = \limsup_{r \to 0} \mu_s([x - r, x + r]) / (2r)`$. D is Borel: by monotonicity in r the lim sup may run over rational r, and for fixed r the map x ↦ $`\mu_s([x - r, x + r])`$ is upper semicontinuous.
 
-Fix ε > 0, δ > 0 and a bounded open interval J. The restriction of $\mu_s$ to J is a finite Lebesgue-Stieltjes measure, hence regular, so there is a compact $K \subseteq N \cap J$ with $\mu_s((N \cap J) \setminus K) < \delta$. Let $A = \{x \in J \setminus K : D(x) > \varepsilon\}$ and let E be any compact subset of A. The set $J \setminus K$ is open. Each x in E is the centre of some $I_x = [x - r, x + r] \subseteq J \setminus K$ with $\mu_s(I_x) > 2\varepsilon r$. Finitely many interiors of these cover E.
+Fix ε > 0, δ > 0 and a bounded open interval J. The restriction of $`\mu_s`$ to J is a finite Lebesgue-Stieltjes measure, hence regular, so there is a compact $`K \subseteq N \cap J`$ with $`\mu_s((N \cap J) \setminus K) < \delta`$. Let $`A = \{x \in J \setminus K : D(x) > \varepsilon\}`$ and let E be any compact subset of A. The set $`J \setminus K`$ is open. Each x in E is the centre of some $`I_x = [x - r, x + r] \subseteq J \setminus K`$ with $`\mu_s(I_x) > 2\varepsilon r`$. Finitely many interiors of these cover E.
 
-*Covering lemma:* list those intervals longest first; keep an interval if it misses every interval already kept. A discarded interval meets a kept one at least as long, so it lies inside that one's triple (same centre, three times the half-width). Hence E is covered by the triples of kept intervals $I_1, \dots, I_m$, which are disjoint. So $\lambda(E) \le \sum_i 3 \cdot 2 r_i < \frac{3}{\varepsilon} \sum_i \mu_s(I_i) \le \frac{3}{\varepsilon}\, \mu_s(J \setminus K) = \frac{3}{\varepsilon}\, \mu_s\big((N \cap J) \setminus K\big) < \frac{3\delta}{\varepsilon}$, the equality because $\mu_s$ gives nothing off N.
+*Covering lemma:* list those intervals longest first; keep an interval if it misses every interval already kept. A discarded interval meets a kept one at least as long, so it lies inside that one's triple (same centre, three times the half-width). Hence E is covered by the triples of kept intervals $`I_1, \dots, I_m`$, which are disjoint. So $`\lambda(E) \le \sum_i 3 \cdot 2 r_i < \frac{3}{\varepsilon} \sum_i \mu_s(I_i) \le \frac{3}{\varepsilon}\, \mu_s(J \setminus K) = \frac{3}{\varepsilon}\, \mu_s\big((N \cap J) \setminus K\big) < \frac{3\delta}{\varepsilon}`$, the equality because $`\mu_s`$ gives nothing off N.
 
-By inner regularity of λ, $\lambda(A) \le 3\delta/\varepsilon$. Then $\{x \in J : D(x) > \varepsilon\} \subseteq A \cup K$ has length at most $3\delta/\varepsilon$, since $\lambda(K) \le \lambda(N) = 0$. That set does not depend on δ, and δ is arbitrary, so it is λ-null. Taking ε = 1/k and J = (−k, k) for k = 1, 2, 3, … gives D = 0 λ-a.e. Finally, for h > 0, $0 \le \mu_s((x, x + h]) / h \le 2 \cdot \mu_s([x - h, x + h]) / (2h) \to 0$ wherever D(x) = 0, and likewise for h < 0.
+By inner regularity of λ, $`\lambda(A) \le 3\delta/\varepsilon`$. Then $`\{x \in J : D(x) > \varepsilon\} \subseteq A \cup K`$ has length at most $`3\delta/\varepsilon`$, since $`\lambda(K) \le \lambda(N) = 0`$. That set does not depend on δ, and δ is arbitrary, so it is λ-null. Taking ε = 1/k and J = (−k, k) for k = 1, 2, 3, … gives D = 0 λ-a.e. Finally, for h > 0, $`0 \le \mu_s((x, x + h]) / h \le 2 \cdot \mu_s([x - h, x + h]) / (2h) \to 0`$ wherever D(x) = 0, and likewise for h < 0.
 
-*Derivative.* For h > 0, $F(x + h) - F(x) = \mu_F((x, x + h]) = \int_x^{x+h} f \, d\lambda + \mu_s((x, x + h])$; for h < 0 the same with (x + h, x]. At every x where both limits above hold, the difference quotient tends to f(x), which is finite a.e. So $F' = f$ λ-a.e., which proves (i). $F'$ is the a.e. limit of the measurable functions $k(F(x + 1/k) - F(x))$, so it is measurable.
+*Derivative.* For h > 0, $`F(x + h) - F(x) = \mu_F((x, x + h]) = \int_x^{x+h} f \, d\lambda + \mu_s((x, x + h])`$; for h < 0 the same with (x + h, x]. At every x where both limits above hold, the difference quotient tends to f(x), which is finite a.e. So $`F' = f`$ λ-a.e., which proves (i). $`F'`$ is the a.e. limit of the measurable functions $`k(F(x + 1/k) - F(x))`$, so it is measurable.
 
-*Integral.* Functions equal a.e. have equal integrals, so $\int_a^b F' \, d\lambda = \mu_{ac}((a, b]) = \mu_F((a, b]) - \mu_s((a, b]) = F(b) - F(a) - \mu_s((a, b])$. This is (iii), and (ii) follows since $\mu_s \ge 0$.
+*Integral.* Functions equal a.e. have equal integrals, so $`\int_a^b F' \, d\lambda = \mu_{ac}((a, b]) = \mu_F((a, b]) - \mu_s((a, b]) = F(b) - F(a) - \mu_s((a, b])`$. This is (iii), and (ii) follows since $`\mu_s \ge 0`$.
 
-*Any increasing F.* Let $G(x) = F(x+)$, the limit from the right; G is increasing and right-continuous. F jumps at countably many points only (each jump spans its own rational), and elsewhere F is continuous and F = G. Let x be a continuity point of F where G is differentiable; all but a null set of x qualify.
+*Any increasing F.* Let $`G(x) = F(x+)`$, the limit from the right; G is increasing and right-continuous. F jumps at countably many points only (each jump spans its own rational), and elsewhere F is continuous and F = G. Let x be a continuity point of F where G is differentiable; all but a null set of x qualify.
 
-For y < y′, $G(y) \le F(y') \le G(y')$. So for h > 0 and 0 < η < 1, $G(x + (1 - \eta)h) \le F(x + h) \le G(x + h)$, and F(x) = G(x). Dividing by h and letting h → 0, the right-hand slopes of F lie eventually between $(1 - \eta)G'(x) - \eta$ and $G'(x) + \eta$; letting η → 0 gives $G'(x)$. The same squeeze with $G(x + (1 + \eta)h) \le F(x + h) \le G(x + h)$ handles h < 0. So $F' = G'$ a.e.
+For y < y′, $`G(y) \le F(y') \le G(y')`$. So for h > 0 and 0 < η < 1, $`G(x + (1 - \eta)h) \le F(x + h) \le G(x + h)`$, and F(x) = G(x). Dividing by h and letting h → 0, the right-hand slopes of F lie eventually between $`(1 - \eta)G'(x) - \eta`$ and $`G'(x) + \eta`$; letting η → 0 gives $`G'(x)`$. The same squeeze with $`G(x + (1 + \eta)h) \le F(x + h) \le G(x + h)`$ handles h < 0. So $`F' = G'`$ a.e.
 
-For a < b′ < b, (ii) for G gives $\int_a^{b'} G' \, d\lambda \le G(b') - G(a) \le F(b) - F(a)$, since $G(b') \le F(b)$ and $G(a) \ge F(a)$. Let b′ rise to b; by monotone convergence $\int_a^b F' \, d\lambda \le F(b) - F(a)$. ∎
+For a < b′ < b, (ii) for G gives $`\int_a^{b'} G' \, d\lambda \le G(b') - G(a) \le F(b) - F(a)`$, since $`G(b') \le F(b)`$ and $`G(a) \ge F(a)`$. Let b′ rise to b; by monotone convergence $`\int_a^b F' \, d\lambda \le F(b) - F(a)`$. ∎
 
 </details>
 
@@ -161,7 +169,7 @@ For a < b′ < b, (ii) for G gives $\int_a^{b'} G' \, d\lambda \le G(b') - G(a) 
 
 The code computes stage slopes exactly, reads slopes off F at thousands of points, and adds them up for three rising functions. That the slope exists almost everywhere for every increasing function, and that the gap always equals the singular mass, only the proof shows.
 
-A second route to the inequality skips the decomposition: the slopes $k(F(x + 1/k) - F(x))$ are never negative, tend to $F'$ almost everywhere, and integrate over [a, b′], for b′ < b and k large, to at most F(b′ + 1/k) − F(a) ≤ F(b) − F(a), so [Fatou's lemma](../05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md) bounds the integral of the limit over [a, b′]; then let b′ rise to b. Riesz's rising-sun lemma gives the derivative without measures (Stein and Shakarchi, below).
+A second route to the inequality skips the decomposition: the slopes $`k(F(x + 1/k) - F(x))`$ are never negative, tend to $`F'`$ almost everywhere, and integrate over [a, b′], for b′ < b and k large, to at most F(b′ + 1/k) − F(a) ≤ F(b) − F(a), so [Fatou's lemma](../05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md) bounds the integral of the limit over [a, b′]; then let b′ rise to b. Riesz's rising-sun lemma gives the derivative without measures (Stein and Shakarchi, below).
 
 ---
 
@@ -178,7 +186,7 @@ The claim, on the stretch from −1 to 5 thousand dollars.
 | Integral of the slope | integral of 0.7 e^(−x) over (0, 5] = 0.7 × (1 − e^(−5)) | 0.695283 |
 | Shortfall | 0.995283 − 0.695283 | **0.3** |
 | Jump at 0 | F(0) − F(0−) = 0.3 − 0 | 0.3 |
-| Staircase on [0, 1] | rise C(1) − C(0) = 1; integral of $C'$ = 0 | shortfall **1** |
+| Staircase on [0, 1] | rise C(1) − C(0) = 1; integral of $`C'`$ = 0 | shortfall **1** |
 | Three pieces on [−1, 1] | rise 0.816060; integral of slope 0.316060 | shortfall **0.5** = 0.3 + 0.2 |
 
 The integral of the slope accounts for the 70% of policies with a spread-out claim; the 30% with no claim sit on one point, where no slope can see them. The last row mixes all three kinds of mass from the [Lebesgue decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md) card: 0.3 at zero, 0.5 exponential at rate 1, and 0.2 spread by the staircase. The gap is the jump plus the staircase.
@@ -193,20 +201,20 @@ xychart-beta
     line [0.00, 0.00, 0.00, 0.00, 0.28, 0.44, 0.61, 0.67, 0.69, 0.70]
 ```
 
-Two lines. Upper (orange): F(x) − F(−1), the rise so far. Lower (green): the integral of $F'$ from −1 to x. They agree up to just below 0, part by exactly 0.3 at 0, and stay 0.3 apart. "Just below 0" sits right beside 0.
+Two lines. Upper (orange): F(x) − F(−1), the rise so far. Lower (green): the integral of $`F'`$ from −1 to x. They agree up to just below 0, part by exactly 0.3 at 0, and stay 0.3 apart. "Just below 0" sits right beside 0.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Integral of $F'$ taken as F(b) − F(a) | staircase 0.000000 vs 1; claim 0.695283 vs 0.995283 | that equation needs absolute continuity (F moves little over any collection of short intervals of small total length), which the staircase and the jump both lack |
+| Integral of $`F'`$ taken as F(b) − F(a) | staircase 0.000000 vs 1; claim 0.695283 vs 0.995283 | that equation needs absolute continuity (F moves little over any collection of short intervals of small total length), which the staircase and the jump both lack |
 | Limit and integral swapped on the stage slopes | 1.000000 at every stage; the a.e. limit integrates to 0.000000 | the slopes pile onto cells of vanishing length; nothing dominates them |
 | A slope expected at every point | at 0: staircase slope 11.390625 at h = 3^(−6); claim slope 300000.7 at h = 10^(−6) | "almost everywhere" allows a null set of bad points |
 | Monotonicity dropped: Takagi function | slopes across the cells holding 1/3: 1, 0, 1, 0, … | no limit, here or at any point that is not a dyadic fraction |
 
-The last row is a hypothesis failing. The **Takagi function** $T$ adds up $s(2^k x) / 2^k$ for k = 0, 1, 2, …, where $s$ is the distance to the nearest whole number; it is continuous and rises and falls on every interval.
+The last row is a hypothesis failing. The **Takagi function** $`T`$ adds up $`s(2^k x) / 2^k`$ for k = 0, 1, 2, …, where $`s`$ is the distance to the nearest whole number; it is continuous and rises and falls on every interval.
 
-Across a cell of width 2^(−n) with ends at multiples of 2^(−n), the first n terms each have slope +1 or −1 and the rest vanish at both ends. So the slope across the cell is the count of 0s minus 1s among the first n binary digits of a point inside, and it changes by exactly 1 from each n to the next. A slope across a cell containing x is a weighted average of the slopes from x to the two ends, so if $T'(x)$ existed these would converge to it. So $T$ has no derivative off the dyadic fractions, a countable set.
+Across a cell of width 2^(−n) with ends at multiples of 2^(−n), the first n terms each have slope +1 or −1 and the rest vanish at both ends. So the slope across the cell is the count of 0s minus 1s among the first n binary digits of a point inside, and it changes by exactly 1 from each n to the next. A slope across a cell containing x is a weighted average of the slopes from x to the two ends, so if $`T'(x)`$ existed these would converge to it. So $`T`$ has no derivative off the dyadic fractions, a countable set.
 
 ---
 
@@ -532,9 +540,9 @@ The two outputs match line for line.
 
 Lean proves Lebesgue's theorem for every increasing F, on an interval and on the whole line, and the exact shortfall for right-continuous F.
 
-- Suppose F is increasing on [a, b], with a ≤ b. Then $F'$ exists almost everywhere on [a, b], and its integral there is finite and at most F(b) − F(a).
-- Suppose F is increasing on the whole line. Then $F'$ exists almost everywhere, and on every stretch [a, b] its integral is finite and at most F(b) − F(a).
-- Suppose F is increasing and right-continuous, and a ≤ b. Then $F(b) - F(a) - \int_a^b F' \, d\lambda = \mu_s\big((a, b]\big)$.
+- Suppose F is increasing on [a, b], with a ≤ b. Then $`F'`$ exists almost everywhere on [a, b], and its integral there is finite and at most F(b) − F(a).
+- Suppose F is increasing on the whole line. Then $`F'`$ exists almost everywhere, and on every stretch [a, b] its integral is finite and at most F(b) − F(a).
+- Suppose F is increasing and right-continuous, and a ≤ b. Then $`F(b) - F(a) - \int_a^b F' \, d\lambda = \mu_s\big((a, b]\big)`$.
 - Take any stage n of the staircase. Then its 2^n rising cells, of width 3^(−n) and slope (3/2)^n, make the integral of stage slopes exactly 1.
 - The three-piece shortfall adds up: 0.3 + 0.2 = 0.5.
 
@@ -715,7 +723,7 @@ example : (3 : ℚ) / 10 + 2 / 10 = 1 / 2 := by norm_num
 
 - **Insurance claims and rainfall.** A claim amount, like a day's rainfall, is exactly 0 with positive probability and spread out otherwise. Its density is the slope of the distribution function; the atom at 0 is the shortfall and must be modelled separately.
 - **Densities in probability.** A law has a density exactly when its distribution function recovers from its slope; otherwise the slope is only the density of the absolutely continuous part ([Lebesgue decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md)).
-- **Integrating against a rising function.** Integrals against $\mu_F$, written with dF ([The Lebesgue-Stieltjes integral](05-lebesgue-stieltjes-integral.md)), split into a part with $F'$ and a part on the jumps and staircases.
+- **Integrating against a rising function.** Integrals against $`\mu_F`$, written with dF ([The Lebesgue-Stieltjes integral](05-lebesgue-stieltjes-integral.md)), split into a part with $`F'`$ and a part on the jumps and staircases.
 - **Devil's staircases in physics.** In systems of coupled oscillators the locked frequency ratio, plotted against a driving parameter, can form a continuous rising staircase that is flat almost everywhere, the same shape as C.
 
 > **Say it back**
@@ -726,7 +734,7 @@ example : (3 : ℚ) / 10 + 2 / 10 = 1 / 2 := by norm_num
 ## What this builds on
 
 - [The Lebesgue differentiation theorem](02-lebesgue-differentiation-theorem.md): averages of an integrable function over shrinking intervals return the function almost everywhere, the density half of Step 3.
-- [Lebesgue decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md): the unique split of $\mu_F$ into a density part and a singular part.
+- [Lebesgue decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md): the unique split of $`\mu_F`$ into a density part and a singular part.
 - [Bounded variation](01-functions-of-bounded-variation.md): a function of bounded variation is a difference of two increasing ones, so the theorem covers it too.
 
 ## Where this goes next

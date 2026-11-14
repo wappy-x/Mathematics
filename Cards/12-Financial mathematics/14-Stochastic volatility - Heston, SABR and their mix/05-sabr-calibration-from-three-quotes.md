@@ -34,58 +34,68 @@ Orange: the SABR smile fitted to the quotes, through 24% at $92.15, 20% at $103.
 
 ## The formula
 
-Notation first, in words. $\sigma_B(K)$ is Hagan's implied volatility at strike $K$: the smile. $\sigma_{\text{ATM}}$, $\sigma_1$ and $\sigma_2$ are the quotes at the forward $F$ and at the wing strikes $K_1$ and $K_2$. $T$ is the time to expiry in years. SABR's dials are $\alpha$ (alpha, the level), $\rho$ (rho, the correlation), $\nu$ (nu, the volatility of volatility) and $\beta$ (beta, the exponent). At $\beta = 1$ Hagan's formula reads
+Notation first, in words. $`\sigma_B(K)`$ is Hagan's implied volatility at strike $`K`$: the smile. $`\sigma_{\text{ATM}}`$, $`\sigma_1`$ and $`\sigma_2`$ are the quotes at the forward $`F`$ and at the wing strikes $`K_1`$ and $`K_2`$. $`T`$ is the time to expiry in years. SABR's dials are $`\alpha`$ (alpha, the level), $`\rho`$ (rho, the correlation), $`\nu`$ (nu, the volatility of volatility) and $`\beta`$ (beta, the exponent). At $`\beta = 1`$ Hagan's formula reads
 
-$$\sigma_B(K) = \alpha\,\frac{z}{\chi(z)}\,\Big(1 + \big[\tfrac14\,\rho\,\nu\,\alpha + \tfrac{1}{24}\,(2 - 3\rho^2)\,\nu^2\big]\,T\Big), \qquad z = \frac{\nu}{\alpha}\,\ln\frac{F}{K}, \qquad \chi(z) = \ln\frac{\sqrt{1 - 2\rho z + z^2} + z - \rho}{1 - \rho}.$$
+```math
+\sigma_B(K) = \alpha\,\frac{z}{\chi(z)}\,\Big(1 + \big[\tfrac14\,\rho\,\nu\,\alpha + \tfrac{1}{24}\,(2 - 3\rho^2)\,\nu^2\big]\,T\Big), \qquad z = \frac{\nu}{\alpha}\,\ln\frac{F}{K}, \qquad \chi(z) = \ln\frac{\sqrt{1 - 2\rho z + z^2} + z - \rho}{1 - \rho}.
+```
 
-In words: the level, times a smile factor $z/\chi(z)$ that is 1 at the forward, times a time factor that is the same at every strike. The sibling card derives it; this card runs it backwards.
+In words: the level, times a smile factor $`z/\chi(z)`$ that is 1 at the forward, times a time factor that is the same at every strike. The sibling card derives it; this card runs it backwards.
 
 The calibration is three equations in three unknowns:
 
-$$\sigma_B(F) = \sigma_{\text{ATM}}, \qquad \sigma_B(K_1) = \sigma_1, \qquad \sigma_B(K_2) = \sigma_2.$$
+```math
+\sigma_B(F) = \sigma_{\text{ATM}}, \qquad \sigma_B(K_1) = \sigma_1, \qquad \sigma_B(K_2) = \sigma_2.
+```
 
 **Read it aloud:** choose alpha, rho and nu so that Hagan's smile passes through all three quotes.
 
-At the forward, $z = 0$ and the smile factor is 1; the first equation, multiplied out, is a polynomial in $\alpha$. For a general exponent it is the **ATM cubic** (ATM: at the money):
+At the forward, $`z = 0`$ and the smile factor is 1; the first equation, multiplied out, is a polynomial in $`\alpha`$. For a general exponent it is the **ATM cubic** (ATM: at the money):
 
-$$c_3\,\alpha^3 + c_2\,\alpha^2 + c_1\,\alpha - \sigma_{\text{ATM}}\,F^{1-\beta} = 0, \qquad c_3 = \frac{(1-\beta)^2\,T}{24\,F^{2-2\beta}},\quad c_2 = \frac{\rho\,\beta\,\nu\,T}{4\,F^{1-\beta}},\quad c_1 = 1 + \frac{(2-3\rho^2)\,\nu^2\,T}{24}.$$
+```math
+c_3\,\alpha^3 + c_2\,\alpha^2 + c_1\,\alpha - \sigma_{\text{ATM}}\,F^{1-\beta} = 0, \qquad c_3 = \frac{(1-\beta)^2\,T}{24\,F^{2-2\beta}},\quad c_2 = \frac{\rho\,\beta\,\nu\,T}{4\,F^{1-\beta}},\quad c_1 = 1 + \frac{(2-3\rho^2)\,\nu^2\,T}{24}.
+```
 
-At $\beta = 1$ the cubic term vanishes, $c_2 = \rho\nu T/4$, and the equation is a quadratic. Its relevant root is
+At $`\beta = 1`$ the cubic term vanishes, $`c_2 = \rho\nu T/4`$, and the equation is a quadratic. Its relevant root is
 
-$$\alpha \;=\; \frac{-c_1 + \sqrt{c_1^2 + 4\,c_2\,\sigma_{\text{ATM}}}}{2\,c_2} \;=\; \frac{2\,\sigma_{\text{ATM}}}{c_1 + \sqrt{c_1^2 + 4\,c_2\,\sigma_{\text{ATM}}}}.$$
+```math
+\alpha \;=\; \frac{-c_1 + \sqrt{c_1^2 + 4\,c_2\,\sigma_{\text{ATM}}}}{2\,c_2} \;=\; \frac{2\,\sigma_{\text{ATM}}}{c_1 + \sqrt{c_1^2 + 4\,c_2\,\sigma_{\text{ATM}}}}.
+```
 
-**Read it aloud:** the level is the at-the-money quote divided by the time factor, $c_1 + c_2\alpha$, that the correlation and the volatility of volatility add.
+**Read it aloud:** the level is the at-the-money quote divided by the time factor, $`c_1 + c_2\alpha`$, that the correlation and the volatility of volatility add.
 
-The second form is the first multiplied top and bottom by $c_1 + \sqrt{c_1^2 + 4c_2\sigma_{\text{ATM}}}$; it never divides by $c_2$, so it also works at $\rho = 0$. With $\alpha$ tied to $\rho$ and $\nu$ this way, the wing equations are two equations in two unknowns, with no closed form.
+The second form is the first multiplied top and bottom by $`c_1 + \sqrt{c_1^2 + 4c_2\sigma_{\text{ATM}}}`$; it never divides by $`c_2`$, so it also works at $`\rho = 0`$. With $`\alpha`$ tied to $`\rho`$ and $`\nu`$ this way, the wing equations are two equations in two unknowns, with no closed form.
 
 The fitted smile then has to pass one more test ([The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)):
 
-$$f(K) \;=\; \frac{1}{D(T)}\,\frac{\partial^2 C}{\partial K^2}(K) \;\ge\; 0.$$
+```math
+f(K) \;=\; \frac{1}{D(T)}\,\frac{\partial^2 C}{\partial K^2}(K) \;\ge\; 0.
+```
 
 **Read it aloud:** the bend of the call price curve in strike, divided by the discount factor, is a probability density and may not be negative.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $F$, $S$, $r$, $q$ | forward $S e^{(r-q)T}$, the price fixed today for delivery at expiry; Acme's price; riskless rate; dividend yield | $103.05 at one year, $134.99 at ten; $100; 5%; 2% | the smile slides right |
-| $K$, $K_1$, $K_2$ | strike, the price written into the option; the wing strikes | $92.15 and $119.93 | — |
-| $T$ | years to expiry | 1; 10 for the failure | past 2.73 years the density at $40 turns negative |
-| $\sigma_B$ | Hagan's implied volatility: the smile | 24%, 20%, 18% at the quotes | — |
-| $\sigma_1$, $\sigma_2$ | the wing quotes; $\sigma_{\text{ATM}}$ is the middle one | 24% and 18%; 20% | a wider gap needs a more negative $\rho$ |
-| $\alpha$ | the forward's volatility today: the level | 0.192250 | the whole smile rises |
-| $\beta$ | exponent: how the forward's moves scale with its level | 1, fixed in advance | — |
-| $\rho$ | correlation between the forward's shocks and its volatility's shocks | −0.508283 | the tilt flattens, then reverses |
-| $\nu$ | volatility of volatility: how fast $\alpha$ itself moves | 1.159719 | the wings curl up; the density breaks sooner |
-| $z$, $\chi$ | log-distance from forward to strike, in units of $\alpha/\nu$; the integral of $1/\sqrt{1 - 2\rho s + s^2}$ from 0 to $z$, which bends $z$ by the correlation | 0.674131 and 0.561776 at $92.15 | — |
-| $c_1$, $c_2$, $c_3$ | coefficients of the ATM equation | 1.068645, −0.147366, 0 | — |
-| $f$, $C$, $D$ | density: chance per dollar of finishing near $K$; call price; discount factor $e^{-rT}$ | at $40: +0.088614% per $1 at one year, −0.890784% at ten; D = 0.606531 at ten | — |
+| $`F`$, $`S`$, $`r`$, $`q`$ | forward $`S e^{(r-q)T}`$, the price fixed today for delivery at expiry; Acme's price; riskless rate; dividend yield | $103.05 at one year, $134.99 at ten; $100; 5%; 2% | the smile slides right |
+| $`K`$, $`K_1`$, $`K_2`$ | strike, the price written into the option; the wing strikes | $92.15 and $119.93 | — |
+| $`T`$ | years to expiry | 1; 10 for the failure | past 2.73 years the density at $40 turns negative |
+| $`\sigma_B`$ | Hagan's implied volatility: the smile | 24%, 20%, 18% at the quotes | — |
+| $`\sigma_1`$, $`\sigma_2`$ | the wing quotes; $`\sigma_{\text{ATM}}`$ is the middle one | 24% and 18%; 20% | a wider gap needs a more negative $`\rho`$ |
+| $`\alpha`$ | the forward's volatility today: the level | 0.192250 | the whole smile rises |
+| $`\beta`$ | exponent: how the forward's moves scale with its level | 1, fixed in advance | — |
+| $`\rho`$ | correlation between the forward's shocks and its volatility's shocks | −0.508283 | the tilt flattens, then reverses |
+| $`\nu`$ | volatility of volatility: how fast $`\alpha`$ itself moves | 1.159719 | the wings curl up; the density breaks sooner |
+| $`z`$, $`\chi`$ | log-distance from forward to strike, in units of $`\alpha/\nu`$; the integral of $`1/\sqrt{1 - 2\rho s + s^2}`$ from 0 to $`z`$, which bends $`z`$ by the correlation | 0.674131 and 0.561776 at $92.15 | — |
+| $`c_1`$, $`c_2`$, $`c_3`$ | coefficients of the ATM equation | 1.068645, −0.147366, 0 | — |
+| $`f`$, $`C`$, $`D`$ | density: chance per dollar of finishing near $`K`$; call price; discount factor $`e^{-rT}`$ | at $40: +0.088614% per $1 at one year, −0.890784% at ten; D = 0.606531 at ten | — |
 
 ### When it holds
 
-- **The exponent is fixed first.** Four dials, three quotes. The exponent and the correlation both tilt the smile, so three quotes cannot separate them, and fitting all four has no unique answer. Hagan and co-authors choose $\beta$ from how the at-the-money volatility moves with the forward, or by convention: 1 on many currency desks, 0 or one half on rate desks.
-- **One expiry, at the money meaning at the forward.** Conventions verified 2026-09-24: in Hagan et al. (2002) the at-the-money volatility is $\sigma_B(F)$. Place the 20% quote at today's price, $100, instead, and the fitted smile misses it: 20.9785% there.
-- **The quotes must be reachable.** At $\nu = 0.4$, even $\rho = -0.999$ tilts these strikes only 5.2212 points apart, short of the 6 quoted. With $\rho < 0$ the at-the-money quote must sit below the ceiling of Step 1. And $c_1$ stays positive at every $\rho$ only while $\nu^2 T$ is below 24; here it is 1.3449.
-- **Hagan's formula is an approximation.** It keeps the first correction in $T$, so it is good while $\nu^2 T$ is small. At ten years, with $\nu^2 T$ = 13.4495, its density goes negative: Step 4.
-- **One fit, locally unique, not a uniqueness theorem.** No second fit lies near this one, and 35 spread-out starts all reach it (Step 3). Whether every arbitrage-free triple of quotes has exactly one fit with $\rho$ strictly inside −1 to 1 is not settled here.
+- **The exponent is fixed first.** Four dials, three quotes. The exponent and the correlation both tilt the smile, so three quotes cannot separate them, and fitting all four has no unique answer. Hagan and co-authors choose $`\beta`$ from how the at-the-money volatility moves with the forward, or by convention: 1 on many currency desks, 0 or one half on rate desks.
+- **One expiry, at the money meaning at the forward.** Conventions verified 2026-09-24: in Hagan et al. (2002) the at-the-money volatility is $`\sigma_B(F)`$. Place the 20% quote at today's price, $100, instead, and the fitted smile misses it: 20.9785% there.
+- **The quotes must be reachable.** At $`\nu = 0.4`$, even $`\rho = -0.999`$ tilts these strikes only 5.2212 points apart, short of the 6 quoted. With $`\rho < 0`$ the at-the-money quote must sit below the ceiling of Step 1. And $`c_1`$ stays positive at every $`\rho`$ only while $`\nu^2 T`$ is below 24; here it is 1.3449.
+- **Hagan's formula is an approximation.** It keeps the first correction in $`T`$, so it is good while $`\nu^2 T`$ is small. At ten years, with $`\nu^2 T`$ = 13.4495, its density goes negative: Step 4.
+- **One fit, locally unique, not a uniqueness theorem.** No second fit lies near this one, and 35 spread-out starts all reach it (Step 3). Whether every arbitrage-free triple of quotes has exactly one fit with $`\rho`$ strictly inside −1 to 1 is not settled here.
 
 ---
 
@@ -93,58 +103,62 @@ $$f(K) \;=\; \frac{1}{D(T)}\,\frac{\partial^2 C}{\partial K^2}(K) \;\ge\; 0.$$
 
 ### Step 0: the middle quote carries the level, the wings carry the shape
 
-At $\beta = 1$ the time factor does not depend on the strike. Divide a wing volatility by the at-the-money volatility and $\alpha$ and the time factor cancel:
+At $`\beta = 1`$ the time factor does not depend on the strike. Divide a wing volatility by the at-the-money volatility and $`\alpha`$ and the time factor cancel:
 
-$$\frac{\sigma_B(K)}{\sigma_B(F)} = \frac{z}{\chi(z)}.$$
+```math
+\frac{\sigma_B(K)}{\sigma_B(F)} = \frac{z}{\chi(z)}.
+```
 
-So the wings see only $\rho$ and the ratio $\nu/\alpha$. At $92.15 the volatility ratio must be 24 over 20, and the worked table finds $z/\chi$ = 1.200000. The middle quote then sets the level.
+So the wings see only $`\rho`$ and the ratio $`\nu/\alpha`$. At $92.15 the volatility ratio must be 24 over 20, and the worked table finds $`z/\chi`$ = 1.200000. The middle quote then sets the level.
 
-Three quotes, three pieces of information. The **level** is the 20% at the forward. The **tilt**, called the risk reversal, is the high wing minus the low wing: 18% − 24% = −6.0000 volatility points. The **curvature**, called the butterfly, is the wings' average minus the middle: (24% + 18%)/2 − 20% = 1.0000 point. Currency desks quote the same three kinds of number at fixed deltas rather than fixed strikes, under conventions of their own ([Risk reversal and butterfly](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/01-risk-reversal-and-butterfly.md)). Level goes with $\alpha$, tilt with $\rho$, curvature with $\nu$: that pairing is why three quotes are enough.
+Three quotes, three pieces of information. The **level** is the 20% at the forward. The **tilt**, called the risk reversal, is the high wing minus the low wing: 18% − 24% = −6.0000 volatility points. The **curvature**, called the butterfly, is the wings' average minus the middle: (24% + 18%)/2 − 20% = 1.0000 point. Currency desks quote the same three kinds of number at fixed deltas rather than fixed strikes, under conventions of their own ([Risk reversal and butterfly](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/01-risk-reversal-and-butterfly.md)). Level goes with $`\alpha`$, tilt with $`\rho`$, curvature with $`\nu`$: that pairing is why three quotes are enough.
 
 ### Step 1: alpha from the middle quote, existence and uniqueness first
 
-The at-the-money volatility is $\alpha$ times the time factor, and the time factor is $c_1 + c_2\alpha$. So the middle quote asks where the curve $c_1\alpha + c_2\alpha^2$ reaches 0.20. The curve starts at zero, rising with slope $c_1$. The rest depends on the sign of $c_2$, which is the sign of $\rho$:
+The at-the-money volatility is $`\alpha`$ times the time factor, and the time factor is $`c_1 + c_2\alpha`$. So the middle quote asks where the curve $`c_1\alpha + c_2\alpha^2`$ reaches 0.20. The curve starts at zero, rising with slope $`c_1`$. The rest depends on the sign of $`c_2`$, which is the sign of $`\rho`$:
 
-- **$\rho > 0$:** the curve rises forever. Exactly one positive root.
-- **$\rho = 0$:** a straight line. One root, $\sigma_{\text{ATM}}/c_1$: at the fitted $\nu$ that is 0.179843.
-- **$\rho < 0$:** the curve rises to a peak, then falls. A quote above the peak has no root at all. A quote below it has two: one on the rising side, one on the falling side.
+- **$`\rho > 0`$:** the curve rises forever. Exactly one positive root.
+- **$`\rho = 0`$:** a straight line. One root, $`\sigma_{\text{ATM}}/c_1`$: at the fitted $`\nu`$ that is 0.179843.
+- **$`\rho < 0`$:** the curve rises to a peak, then falls. A quote above the peak has no root at all. A quote below it has two: one on the rising side, one on the falling side.
 
-At the fitted dials, $c_2$ = −0.147366 and $c_1$ = 1.068645. The peak sits at $\alpha$ = 3.625815, where the at-the-money volatility is 1.937356: a ceiling of 193.74%, far above any real one-year quote. The two roots are 0.192250 and 7.059381.
+At the fitted dials, $`c_2`$ = −0.147366 and $`c_1`$ = 1.068645. The peak sits at $`\alpha`$ = 3.625815, where the at-the-money volatility is 1.937356: a ceiling of 193.74%, far above any real one-year quote. The two roots are 0.192250 and 7.059381.
 
-The right one is the small root, on the rising side, where more level means more volatility. It is also the one that survives the edge case: with $\nu = 0$ SABR is Black's model, $\alpha$ must equal the quote, and the small root gives 0.200000. The large root runs off to infinity as $\nu$ shrinks, since the roots add to $c_1/|c_2|$.
+The right one is the small root, on the rising side, where more level means more volatility. It is also the one that survives the edge case: with $`\nu = 0`$ SABR is Black's model, $`\alpha`$ must equal the quote, and the small root gives 0.200000. The large root runs off to infinity as $`\nu`$ shrinks, since the roots add to $`c_1/|c_2|`$.
 
 <details>
 <summary>Detailed proof: one root on the rising side, and the general cubic</summary>
 
-The at-the-money volatility at $\beta = 1$ is $c_1\alpha + c_2\alpha^2$. It is 0 at $\alpha = 0$ and its slope is $c_1 + 2c_2\alpha$. Here $c_1 > 0$: since $2 - 3\rho^2 \ge -1$, $c_1 \ge 1 - \nu^2T/24$, which is positive while $\nu^2 T$ is below 24, as everywhere on this card.
+The at-the-money volatility at $`\beta = 1`$ is $`c_1\alpha + c_2\alpha^2`$. It is 0 at $`\alpha = 0`$ and its slope is $`c_1 + 2c_2\alpha`$. Here $`c_1 > 0`$: since $`2 - 3\rho^2 \ge -1`$, $`c_1 \ge 1 - \nu^2T/24`$, which is positive while $`\nu^2 T`$ is below 24, as everywhere on this card.
 
-If $c_2 \ge 0$ the slope stays positive and the curve grows without bound: exactly one positive root. If $c_2 < 0$ the slope is positive only for $\alpha < c_1/(2|c_2|)$. There the curve climbs from 0 to $c_1^2/(4|c_2|)$ without repeating a value, so a quote up to that peak has exactly one root on the rising side and a quote above it has none. Any second root lies past the peak. The quadratic formula's $+\sqrt{\;}$ root is the rising-side one for either sign of $c_2$.
+If $`c_2 \ge 0`$ the slope stays positive and the curve grows without bound: exactly one positive root. If $`c_2 < 0`$ the slope is positive only for $`\alpha < c_1/(2|c_2|)`$. There the curve climbs from 0 to $`c_1^2/(4|c_2|)`$ without repeating a value, so a quote up to that peak has exactly one root on the rising side and a quote above it has none. Any second root lies past the peak. The quadratic formula's $`+\sqrt{\;}`$ root is the rising-side one for either sign of $`c_2`$.
 
-For $\beta < 1$, $c_3 > 0$: the cubic's left side is negative at $\alpha = 0$ and grows without bound, so a positive root always exists. Descartes' rule of signs says the number of positive roots equals the number of sign changes along the coefficients, or falls short of it by an even number. The signs run $+$, sign of $c_2$, $+$, $-$: one change if $c_2 \ge 0$, so exactly one positive root; three if $c_2 < 0$, so one or three. Take the smallest, the first crossing on the rising stretch. West (2005) states the same rule: when the cubic has three real roots, keep the smallest positive one.
+For $`\beta < 1`$, $`c_3 > 0`$: the cubic's left side is negative at $`\alpha = 0`$ and grows without bound, so a positive root always exists. Descartes' rule of signs says the number of positive roots equals the number of sign changes along the coefficients, or falls short of it by an even number. The signs run $`+`$, sign of $`c_2`$, $`+`$, $`-`$: one change if $`c_2 \ge 0`$, so exactly one positive root; three if $`c_2 < 0`$, so one or three. Take the smallest, the first crossing on the rising stretch. West (2005) states the same rule: when the cubic has three real roots, keep the smallest positive one.
 
 </details>
 
 ### Step 2: rho and nu from the wings, existence and edges first
 
-With the small root in for $\alpha$, two equations remain, in $\rho$ and $\nu$. Their edges:
+With the small root in for $`\alpha`$, two equations remain, in $`\rho`$ and $`\nu`$. Their edges:
 
-- **$\nu = 0$:** $z = 0$ at every strike and the smile is flat at $\alpha$. No tilt, no curl, and $\rho$ drops out, so no quote can recover it. A fit needs $\nu > 0$.
-- **$\rho$ near −1:** the steepest tilt a given $\nu$ can make. At the house $\nu = 0.4$ and $\rho = -0.999$ it is 5.2212 points, short of the 6 quoted: no correlation fits these quotes with the house volatility of volatility.
-- **$\rho$ near +1:** the denominator $1 - \rho$ goes to zero, so correlations stay strictly inside −1 to 1.
+- **$`\nu = 0`$:** $`z = 0`$ at every strike and the smile is flat at $`\alpha`$. No tilt, no curl, and $`\rho`$ drops out, so no quote can recover it. A fit needs $`\nu > 0`$.
+- **$`\rho`$ near −1:** the steepest tilt a given $`\nu`$ can make. At the house $`\nu = 0.4`$ and $`\rho = -0.999`$ it is 5.2212 points, short of the 6 quoted: no correlation fits these quotes with the house volatility of volatility.
+- **$`\rho`$ near +1:** the denominator $`1 - \rho`$ goes to zero, so correlations stay strictly inside −1 to 1.
 
-Inside those edges, lowering $\rho$ steepens the tilt at fixed $\nu$, and raising $\nu$, with $\rho$ reset to hold the tilt, deepens the curl. The second road below leans on both, so the first road checks it.
+Inside those edges, lowering $`\rho`$ steepens the tilt at fixed $`\nu`$, and raising $`\nu`$, with $`\rho`$ reset to hold the tilt, deepens the curl. The second road below leans on both, so the first road checks it.
 
 ### Step 3: solve, twice each
 
 **The level.** The quadratic formula gives 0.192250. Newton's method, which follows a curve's tangent line to where it meets the target ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)), run on Hagan's own at-the-money volatility from 0.20, gives 0.192250 too. Started at 10, past the peak, it finds 7.059381.
 
-**The shape.** Road one is Newton's method in two dimensions on the two wing misses, slopes found by nudging each dial, one linear solve per step; from $\rho = 0$, $\nu = 0.5$ it settles in 7 steps. Road two shares no solving step with it. For each trial $\nu$, bisection (halving an interval that brackets the answer) finds the $\rho$ that makes the tilt −6 points; an outer bisection on $\nu$ makes the curvature +1 point; its level comes from Newton. Both land on
+**The shape.** Road one is Newton's method in two dimensions on the two wing misses, slopes found by nudging each dial, one linear solve per step; from $`\rho = 0`$, $`\nu = 0.5`$ it settles in 7 steps. Road two shares no solving step with it. For each trial $`\nu`$, bisection (halving an interval that brackets the answer) finds the $`\rho`$ that makes the tilt −6 points; an outer bisection on $`\nu`$ makes the curvature +1 point; its level comes from Newton. Both land on
 
-$$\alpha = 0.192250, \qquad \rho = -0.508283, \qquad \nu = 1.159719.$$
+```math
+\alpha = 0.192250, \qquad \rho = -0.508283, \qquad \nu = 1.159719.
+```
 
-**No second fit nearby.** At the fit, road one's 2-by-2 table of slopes, the two wing misses against $\rho$ and $\nu$, has determinant −0.004759: top-left times bottom-right, minus top-right times bottom-left ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). It is not zero, so close by, each pair of misses comes from one pair of dials. Restarted from 35 points, $\rho$ from −0.9 to 0.9 and $\nu$ from 0.2 to 3, road one lands here every time.
+**No second fit nearby.** At the fit, road one's 2-by-2 table of slopes, the two wing misses against $`\rho`$ and $`\nu`$, has determinant −0.004759: top-left times bottom-right, minus top-right times bottom-left ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). It is not zero, so close by, each pair of misses comes from one pair of dials. Restarted from 35 points, $`\rho`$ from −0.9 to 0.9 and $`\nu`$ from 0.2 to 3, road one lands here every time.
 
-**A round trip.** The house SABR, $\rho = -0.3$ and $\nu = 0.4$ with 20% at the money, quotes 20.8066% and 19.3796% on the wings. Fit those and road one returns 0.198893, −0.300000 and 0.400000: the dials that made them.
+**A round trip.** The house SABR, $`\rho = -0.3`$ and $`\nu = 0.4`$ with 20% at the money, quotes 20.8066% and 19.3796% on the wings. Fit those and road one returns 0.198893, −0.300000 and 0.400000: the dials that made them.
 
 ### Step 4: check the density, and find where the formula breaks
 
@@ -169,7 +183,7 @@ A negative density is a butterfly with a negative price. Buy the $30 and $50 cal
 
 The break builds gradually. At $40 the density is +0.0886, +0.0655, −0.0292, −0.2782 and −0.8908% per dollar at 1, 2, 3, 5 and 10 years; it changes sign at 2.73 years.
 
-The cause is the approximation. Hagan's formula comes from an expansion that keeps the first correction in $T$, and the dropped terms grow with $\nu^2 T$: 1.3449 at one year, 13.4495 at ten. The SABR model itself is a genuine random process, so its own density cannot be negative. The named repair is **arbitrage-free SABR** (Hagan et al., 2014), which solves a one-dimensional equation for the density itself, keeping it non-negative, and agrees with the explicit formula where that formula is sound.
+The cause is the approximation. Hagan's formula comes from an expansion that keeps the first correction in $`T`$, and the dropped terms grow with $`\nu^2 T`$: 1.3449 at one year, 13.4495 at ten. The SABR model itself is a genuine random process, so its own density cannot be negative. The named repair is **arbitrage-free SABR** (Hagan et al., 2014), which solves a one-dimensional equation for the density itself, keeping it non-negative, and agrees with the explicit formula where that formula is sound.
 
 With more than three quotes per expiry the square system becomes a best fit by least squares ([Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md)). A model that fits many expiries at once needs different machinery: Heston's is on [Heston Greeks and calibration](03-heston-greeks-and-calibration.md).
 
@@ -177,21 +191,21 @@ With more than three quotes per expiry the square system becomes a best fit by l
 
 ## Worked numbers, by hand
 
-The level at the fitted $\rho$ and $\nu$, then the low wing rebuilt from the dials.
+The level at the fitted $`\rho`$ and $`\nu`$, then the low wing rebuilt from the dials.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $c_2 = \rho\nu T/4$ | $(-0.508283)(1.159719)(1)/4$ | −0.147366 |
-| $c_1 = 1 + (2-3\rho^2)\nu^2T/24$ | $1 + (2 - 3\times0.508283^2)\times1.159719^2/24$ | 1.068645 |
-| square root | $\sqrt{1.068645^2 + 4(-0.147366)(0.20)}$ | 1.011983 |
-| **level** $\alpha$ | $2(0.20)/(1.068645 + 1.011983)$ | **0.192250** |
-| log-distance to $92.15 | $\ln(103.045453/92.15)$ | 0.111753 |
-| $\nu/\alpha$ | $1.159719/0.192250$ | 6.032361 |
-| $z$ | $6.032361 \times 0.111753$ | 0.674131 |
-| $\chi(z)$ | $\ln\big((\sqrt{1 - 2\rho z + z^2} + z - \rho)/(1-\rho)\big)$ | 0.561776 |
-| smile factor $z/\chi$ | $0.674131/0.561776$ | 1.200000 |
-| time factor $c_1 + c_2\alpha$ | $1.068645 - 0.147366 \times 0.192250$ | 1.040314 |
-| **volatility at $92.15** | $0.192250 \times 1.200000 \times 1.040314$ | **0.240000** |
+| $`c_2 = \rho\nu T/4`$ | $`(-0.508283)(1.159719)(1)/4`$ | −0.147366 |
+| $`c_1 = 1 + (2-3\rho^2)\nu^2T/24`$ | $`1 + (2 - 3\times0.508283^2)\times1.159719^2/24`$ | 1.068645 |
+| square root | $`\sqrt{1.068645^2 + 4(-0.147366)(0.20)}`$ | 1.011983 |
+| **level** $`\alpha`$ | $`2(0.20)/(1.068645 + 1.011983)`$ | **0.192250** |
+| log-distance to $92.15 | $`\ln(103.045453/92.15)`$ | 0.111753 |
+| $`\nu/\alpha`$ | $`1.159719/0.192250`$ | 6.032361 |
+| $`z`$ | $`6.032361 \times 0.111753`$ | 0.674131 |
+| $`\chi(z)`$ | $`\ln\big((\sqrt{1 - 2\rho z + z^2} + z - \rho)/(1-\rho)\big)`$ | 0.561776 |
+| smile factor $`z/\chi`$ | $`0.674131/0.561776`$ | 1.200000 |
+| time factor $`c_1 + c_2\alpha`$ | $`1.068645 - 0.147366 \times 0.192250`$ | 1.040314 |
+| **volatility at $92.15** | $`0.192250 \times 1.200000 \times 1.040314`$ | **0.240000** |
 
 The level times the time factor is 0.20, the middle quote; the smile factor lifts it by a fifth to 24%. In dollars, discounted at 5% for the year, the fitted smile prices the $92.15 put at $4.62, the at-the-money call at $7.81 and the $119.93 call at $2.11, the same as the quotes themselves.
 
@@ -199,9 +213,9 @@ The ten-year butterfly, from three call prices at the fitted smile:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| discount factor | $e^{-0.05 \times 10}$ | 0.606531 |
+| discount factor | $`e^{-0.05 \times 10}`$ | 0.606531 |
 | calls at $30, $40, $50, undiscounted | Black-76 at the smile's volatility, forward $134.99 | 127.457656, 122.439041, 116.525844 |
-| **butterfly** | $0.606531 \times (127.457656 - 2 \times 122.439041 + 116.525844)$ | **−0.542591** |
+| **butterfly** | $`0.606531 \times (127.457656 - 2 \times 122.439041 + 116.525844)`$ | **−0.542591** |
 
 A payoff that is never negative, priced at minus 54 cents: the fitted dials cannot be carried to ten years.
 
@@ -209,10 +223,10 @@ A payoff that is never negative, priced at minus 54 cents: the fitted dials cann
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Take the large root, $\alpha$ = 7.059381 | 20% at the money, but 20.0940% and 19.8746% on the wings, not 24% and 18% | the falling side of the curve: the level is absurd and the smile goes flat |
-| Set $\alpha$ to the quote, 0.20 | 20.7834% at the money | the time factor, 1.040314 at the fit, was left out |
+| Take the large root, $`\alpha`$ = 7.059381 | 20% at the money, but 20.0940% and 19.8746% on the wings, not 24% and 18% | the falling side of the curve: the level is absurd and the smile goes flat |
+| Set $`\alpha`$ to the quote, 0.20 | 20.7834% at the money | the time factor, 1.040314 at the fit, was left out |
 | Read the 20% quote as struck at $100 | the fitted smile gives 20.9785% at $100 | at the money means at the forward, $103.05 |
-| Hold $\nu$ at the house 0.4 and fit $\rho$ alone | tilt −5.2212 points even at $\rho = -0.999$, short of −6 | the tilt needs volatility of volatility |
+| Hold $`\nu`$ at the house 0.4 and fit $`\rho`$ alone | tilt −5.2212 points even at $`\rho = -0.999`$, short of −6 | the tilt needs volatility of volatility |
 | Carry the one-year dials to ten years | density −0.890784% per $1 at $40; butterfly −$0.54 | the expansion behind the formula has run out |
 
 The code prints all five.
@@ -221,9 +235,9 @@ The code prints all five.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows the answer; the bell-curve area is Marsaglia's series, written out. Each answer is reached by two roads that share no solving step: the level by the quadratic formula and by Newton's method; the other two dials by two-dimensional Newton and by nested bisection; $\chi$ by its closed form and by Simpson's rule on its slope, $1/\sqrt{1 - 2\rho z + z^2}$; the density by butterflies on prices and by Durrleman's formula; the ten-year butterfly by three call prices and by Simpson's rule on tent times density. Simpson's rule fits a parabola through each three neighboring points and adds the areas ([Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md)).
+Nothing imported knows the answer; the bell-curve area is Marsaglia's series, written out. Each answer is reached by two roads that share no solving step: the level by the quadratic formula and by Newton's method; the other two dials by two-dimensional Newton and by nested bisection; $`\chi`$ by its closed form and by Simpson's rule on its slope, $`1/\sqrt{1 - 2\rho z + z^2}`$; the density by butterflies on prices and by Durrleman's formula; the ten-year butterfly by three call prices and by Simpson's rule on tent times density. Simpson's rule fits a parabola through each three neighboring points and adds the areas ([Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md)).
 
-A round trip through the house SABR checks that the fitter returns the dials it was given, and 35 restarts check that road one finds no other fit. Ten asserts compare the roads and test the card's claims; breaking $\chi$, the time factor, the Black-76 formula or Durrleman's formula makes the run fail.
+A round trip through the house SABR checks that the fitter returns the dials it was given, and 35 restarts check that road one finds no other fit. Ten asserts compare the roads and test the card's claims; breaking $`\chi`$, the time factor, the Black-76 formula or Durrleman's formula makes the run fail.
 
 ### Python
 
@@ -643,17 +657,17 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the level's small root, the sign of $c_1$ and $\chi$ as an integral, for any dials within the card's limits.
+Lean proves the level's small root, the sign of $`c_1`$ and $`\chi`$ as an integral, for any dials within the card's limits.
 
-- Take $\rho$ from −1 to 1, $T \ge 0$ and $\nu^2 T$ below 24. Then $c_1$ is positive.
-- Take $\rho$ strictly inside −1 to 1, $\nu \ge 0$, $T > 0$, $\nu^2 T$ below 24 and a reachable positive quote. Then the small root is positive and gives back the at-the-money quote.
+- Take $`\rho`$ from −1 to 1, $`T \ge 0`$ and $`\nu^2 T`$ below 24. Then $`c_1`$ is positive.
+- Take $`\rho`$ strictly inside −1 to 1, $`\nu \ge 0`$, $`T > 0`$, $`\nu^2 T`$ below 24 and a reachable positive quote. Then the small root is positive and gives back the at-the-money quote.
 - The small root sits on the rising side, and no other positive root does.
 - The small root is the smallest positive root of the quadratic.
-- Suppose $\rho$ is zero or more. Then the small root is the only positive root.
-- Suppose $\nu = 0$. Then the small root is the quote itself, as in Black's model.
-- Take $\rho$ strictly inside −1 to 1. Then $\chi(z)$ is the integral of $1/\sqrt{1 - 2\rho s + s^2}$ from 0 to $z$.
+- Suppose $`\rho`$ is zero or more. Then the small root is the only positive root.
+- Suppose $`\nu = 0`$. Then the small root is the quote itself, as in Black's model.
+- Take $`\rho`$ strictly inside −1 to 1. Then $`\chi(z)`$ is the integral of $`1/\sqrt{1 - 2\rho s + s^2}`$ from 0 to $`z`$.
 
-The wing fit for $\rho$ and $\nu$, the density check and every number on the card are left to the Python and Rust checks.
+The wing fit for $`\rho`$ and $`\nu`$, the density check and every number on the card are left to the Python and Rust checks.
 
 ```lean
 -- SABR from three quotes: at exponent 1 the at-the-money equation is a quadratic in the level whose small positive root, 2σ/(c₁ + √(c₁² + 4c₂σ)), is the one rising-side fit (the only positive one when the correlation is not negative), c₁ stays positive while ν²T is below 24, and χ is the integral of 1/√(1 - 2ρs + s²).
@@ -874,7 +888,7 @@ example (ρ T σ : ℝ) (hσ : 0 < σ) :
 > Guess first, then read the answer off the run's `try:` rows.
 > - **Start Newton past the peak.** Call `alpha_newton` from 10 instead of 0.20. Same level? No: 7.059381, the falling-side root, which still matches the at-the-money quote.
 > - **The house SABR at ten years.** Keep the house dials, volatility of volatility 0.4, and ask about ten years. Negative at $40? No: +0.196646% per dollar. The break has moved down, not gone: the density is negative below $2.86.
-> - **Swap the wings.** Quote 18% at $92.15 and 24% at $119.93. Does $\rho$ just flip sign? Nearly: +0.543224 against −0.508283, with $\nu$ = 0.813403 and $\alpha$ = 0.190162. The strikes sit at different distances from the forward, so the mirror is not exact.
+> - **Swap the wings.** Quote 18% at $92.15 and 24% at $119.93. Does $`\rho`$ just flip sign? Nearly: +0.543224 against −0.508283, with $`\nu`$ = 0.813403 and $`\alpha`$ = 0.190162. The strikes sit at different distances from the forward, so the mirror is not exact.
 
 ---
 
@@ -883,14 +897,14 @@ example (ρ T σ : ℝ) (hσ : 0 < σ) :
 > [!warning]
 > **Trusting a fit because it hits its quotes.** Three dials, three quotes: the fit hits them by construction, which proves nothing about other strikes or expiries. The same dials at ten years give a density of −0.890784% per dollar at $40 and a butterfly that pays its buyer $0.54 to hold it. Check the density before using a fitted smile away from where it was fitted.
 >
-> - **Smaller slips, each priced in What breaks above:** keeping the large root, 7.059381; reading $\alpha$, 0.192250, as the at-the-money volatility; placing at the money at today's $100 instead of the forward, $103.05.
+> - **Smaller slips, each priced in What breaks above:** keeping the large root, 7.059381; reading $`\alpha`$, 0.192250, as the at-the-money volatility; placing at the money at today's $100 instead of the forward, $103.05.
 
 ---
 
 ## Where you meet it in real life
 
 - **Interest-rate options.** Hagan et al. (2002) built SABR for rate options, fitted one expiry at a time with the exponent fixed in advance, often at one half on US rate desks.
-- **Frequent re-marking.** The same paper quotes SABR by its at-the-money volatility with $\beta$, $\rho$ and $\nu$: the level is re-solved whenever the at-the-money quote moves, the shape dials refitted far less often. Step 1 is that re-solve.
+- **Frequent re-marking.** The same paper quotes SABR by its at-the-money volatility with $`\beta`$, $`\rho`$ and $`\nu`$: the level is re-solved whenever the at-the-money quote moves, the shape dials refitted far less often. Step 1 is that re-solve.
 - **Currency options.** Each expiry is quoted as an at-the-money volatility, a risk reversal and a butterfly: the same square system in delta terms ([Risk reversal and butterfly](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/01-risk-reversal-and-butterfly.md)).
 - **Long-dated and low-strike options.** Where the explicit formula's density goes negative, the arbitrage-free version takes over, or a model that fits the smile by construction ([Stochastic-local volatility](06-stochastic-local-volatility.md)).
 
@@ -903,7 +917,7 @@ example (ρ T σ : ℝ) (hσ : 0 < σ) :
 
 - [SABR and Hagan's formula](04-sabr-model-and-hagan-formula.md): the model and the formula this card runs backwards.
 - [The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md): why the bend of call prices in strike is a probability density, and why a negative one is free money.
-- [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): the level's closed form at $\beta = 1$.
+- [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): the level's closed form at $`\beta = 1`$.
 - [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the second road to the level, and the first road to the wings.
 
 ## Where this goes next

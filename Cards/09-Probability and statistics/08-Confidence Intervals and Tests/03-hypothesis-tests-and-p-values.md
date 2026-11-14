@@ -32,40 +32,44 @@ The curve is the chance law of the gap, measured in standard errors, in a world 
 
 ## The formula
 
-Notation first, in words. The claim being tested, "the drug does nothing", is the **null hypothesis**, written $H_0$ and read "H nought". The rival claim, "the drug changes the recovery rate", is the **alternative**, $H_1$.
+Notation first, in words. The claim being tested, "the drug does nothing", is the **null hypothesis**, written $`H_0`$ and read "H nought". The rival claim, "the drug changes the recovery rate", is the **alternative**, $`H_1`$.
 
-The true recovery rates are $r_D$ on the drug and $r_P$ on placebo; a hat marks an estimate from the trial, so $\hat r_D$ = 45/100 = 0.45 and $\hat r_P$ = 0.35. Each group has $n$ = 100 patients. Under $H_0$ both groups share one rate, estimated by pooling them: $\bar r$ = 80/200 = 0.40.
+The true recovery rates are $`r_D`$ on the drug and $`r_P`$ on placebo; a hat marks an estimate from the trial, so $`\hat r_D`$ = 45/100 = 0.45 and $`\hat r_P`$ = 0.35. Each group has $`n`$ = 100 patients. Under $`H_0`$ both groups share one rate, estimated by pooling them: $`\bar r`$ = 80/200 = 0.40.
 
-A reminder from [Normal](../04-Continuous%20Distributions/04-normal-distribution.md): $\Phi(x)$ is the standard bell's area to the left of x.
+A reminder from [Normal](../04-Continuous%20Distributions/04-normal-distribution.md): $`\Phi(x)`$ is the standard bell's area to the left of x.
 
 The **test statistic** turns the trial into one number, the gap in units of its standard error:
 
-$$z = \frac{\hat r_D - \hat r_P}{\sqrt{\bar r\,(1 - \bar r)\,\dfrac{2}{n}}}$$
+```math
+z = \frac{\hat r_D - \hat r_P}{\sqrt{\bar r\,(1 - \bar r)\,\dfrac{2}{n}}}
+```
 
 **Read it aloud:** take the gap in recovery rates and divide it by how much that gap typically wobbles when the drug does nothing.
 
-The p-value is the chance, computed as if $H_0$ were true, that a fresh trial's statistic $Z$ lands at least as far from zero as the observed $z$:
+The p-value is the chance, computed as if $`H_0`$ were true, that a fresh trial's statistic $`Z`$ lands at least as far from zero as the observed $`z`$:
 
-$$p = P_{H_0}\big(\,|Z| \ge |z|\,\big) \approx 2\,\big(1 - \Phi(|z|)\big)$$
+```math
+p = P_{H_0}\big(\,|Z| \ge |z|\,\big) \approx 2\,\big(1 - \Phi(|z|)\big)
+```
 
 **Read it aloud:** if the drug did nothing, the p-value is how often luck alone would push the gap at least this many standard errors out, on either side; for large groups that share is twice the bell's area beyond the observed point.
 
-A **test at level** $\alpha$ is the rule "reject $H_0$ when $p \le \alpha$", with $\alpha$ chosen before the data arrive, usually 0.05.
+A **test at level** $`\alpha`$ is the rule "reject $`H_0`$ when $`p \le \alpha`$", with $`\alpha`$ chosen before the data arrive, usually 0.05.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $H_0$ | the null hypothesis: the dull explanation being tested | the drug does nothing, $r_D = r_P$ | — |
-| $H_1$ | the alternative: what the test is looking for | $r_D \ne r_P$, either direction | — |
-| $r_D$, $r_P$ | true recovery rates on drug and placebo: fixed, unknown | unknown | a bigger true gap makes small p more likely |
-| $\hat r_D$, $\hat r_P$ | the rates the trial observed | 0.45 and 0.35 | a wider gap raises z, lowers p |
-| $\bar r$ | pooled rate, the shared rate $H_0$ assumes | 0.40 | nearer 0.5 widens the wobble slightly |
-| $n$ | patients per group | 100 | same gap, more patients: z grows like root n |
-| $z$ | the observed gap in standard errors | 1.443376 | lowers p |
-| $Z$ | the same statistic for a trial not yet run: random | — | — |
-| $\Phi$ | standard bell's area left of a point | 1 − Φ(1.443376) = 0.074457 | — |
-| $p$ | the p-value: how often a true $H_0$ gives a statistic this far out | 0.148915 | — |
-| $\alpha$ | the level: the p-value at or below which $H_0$ is rejected | 0.05 | more false alarms, fewer misses |
-| $u$ | any threshold between 0 and 1 | 0.05, 0.15 | — |
+| $`H_0`$ | the null hypothesis: the dull explanation being tested | the drug does nothing, $`r_D = r_P`$ | — |
+| $`H_1`$ | the alternative: what the test is looking for | $`r_D \ne r_P`$, either direction | — |
+| $`r_D`$, $`r_P`$ | true recovery rates on drug and placebo: fixed, unknown | unknown | a bigger true gap makes small p more likely |
+| $`\hat r_D`$, $`\hat r_P`$ | the rates the trial observed | 0.45 and 0.35 | a wider gap raises z, lowers p |
+| $`\bar r`$ | pooled rate, the shared rate $`H_0`$ assumes | 0.40 | nearer 0.5 widens the wobble slightly |
+| $`n`$ | patients per group | 100 | same gap, more patients: z grows like root n |
+| $`z`$ | the observed gap in standard errors | 1.443376 | lowers p |
+| $`Z`$ | the same statistic for a trial not yet run: random | — | — |
+| $`\Phi`$ | standard bell's area left of a point | 1 − Φ(1.443376) = 0.074457 | — |
+| $`p`$ | the p-value: how often a true $`H_0`$ gives a statistic this far out | 0.148915 | — |
+| $`\alpha`$ | the level: the p-value at or below which $`H_0`$ is rejected | 0.05 | more false alarms, fewer misses |
+| $`u`$ | any threshold between 0 and 1 | 0.05, 0.15 | — |
 
 ### When it holds
 
@@ -80,7 +84,7 @@ A **test at level** $\alpha$ is the rule "reject $H_0$ when $p \le \alpha$", wit
 
 ### Step 0: argue from the dull side
 
-No calculation can say directly whether the drug works: the true rates are unknown. What can be calculated is how the data would behave if the dull explanation were true, because the dull explanation pins the chance law down. A test borrows the shape of a proof by contradiction. Assume $H_0$. Compute what it predicts. If the data land where $H_0$ rarely puts them, either something rare happened or $H_0$ is wrong. The p-value measures how rare.
+No calculation can say directly whether the drug works: the true rates are unknown. What can be calculated is how the data would behave if the dull explanation were true, because the dull explanation pins the chance law down. A test borrows the shape of a proof by contradiction. Assume $`H_0`$. Compute what it predicts. If the data land where $`H_0`$ rarely puts them, either something rare happened or $`H_0`$ is wrong. The p-value measures how rare.
 
 ### Step 1: build the world where the drug does nothing
 
@@ -90,13 +94,13 @@ That is a choice with a cost. The null says only that the two rates are equal, n
 
 ### Step 2: put the gap in units of its own wobble
 
-One group's observed rate has variance $\bar r(1-\bar r)/n$, here 0.40 × 0.60 / 100. The two groups are independent, so the variance of the gap is the sum, 0.004800. Its square root, 0.069282, is the **standard error of the gap**: how far the gap between two groups of 100 typically lands from zero when nothing is going on.
+One group's observed rate has variance $`\bar r(1-\bar r)/n`$, here 0.40 × 0.60 / 100. The two groups are independent, so the variance of the gap is the sum, 0.004800. Its square root, 0.069282, is the **standard error of the gap**: how far the gap between two groups of 100 typically lands from zero when nothing is going on.
 
-The observed gap, 0.10, is 0.10 / 0.069282 = 1.443376 standard errors. That is the statistic $z$. Dividing by the standard error puts every trial, of any size and any base rate, on one scale.
+The observed gap, 0.10, is 0.10 / 0.069282 = 1.443376 standard errors. That is the statistic $`z`$. Dividing by the standard error puts every trial, of any size and any base rate, on one scale.
 
 ### Step 3: the tail beyond the observed point
 
-By the normal approximation to the binomial ([Normal approximation](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md)), a gap in standard errors from groups this large follows the standard bell closely when $H_0$ is true. So the chance of landing 1.443376 or more to the right is the bell's right tail, 0.074457. The null says nothing about which group should win, so a gap of 1.443376 the other way is equally surprising, and the two-sided p-value adds both tails: 0.148915.
+By the normal approximation to the binomial ([Normal approximation](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md)), a gap in standard errors from groups this large follows the standard bell closely when $`H_0`$ is true. So the chance of landing 1.443376 or more to the right is the bell's right tail, 0.074457. The null says nothing about which group should win, so a gap of 1.443376 the other way is equally surprising, and the two-sided p-value adds both tails: 0.148915.
 
 The bell is an approximation, so two more roads check it. Enumerating all 10,201 pairs of counts (0 to 100 recoveries in each group) at the shared rate 0.40, and adding the exact chances of every pair whose statistic is at least 1.443376 from zero, gives 0.151939. Simulating 20,000 useless-drug trials gives 0.1541, give or take 0.0026. All three agree: luck alone produces a gap at least 1.44 standard errors out, either way, about 15 times in 100.
 
@@ -104,20 +108,20 @@ The bell is an approximation, so two more roads check it. Enumerating all 10,201
 
 The p-value has one property that makes it usable. If the dull explanation is true and the statistic has a continuous law, the p-value is spread evenly between 0 and 1. So a p-value below 0.05 turns up 5 times in 100, below 0.15 turns up 15 times in 100, and so on.
 
-That is the whole guarantee: a rule that rejects when $p \le 0.05$ raises a false alarm on a useless drug 5 times in 100. Counts are not continuous, so for this trial the promise is close, 0.0514, not exact.
+That is the whole guarantee: a rule that rejects when $`p \le 0.05`$ raises a false alarm on a useless drug 5 times in 100. Counts are not continuous, so for this trial the promise is close, 0.0514, not exact.
 
 <details>
 <summary>Detailed proof: under the null, the chance that p is at most u is u</summary>
 
-Write $T = |Z|$ and suppose that under $H_0$ it has a continuous law, with $G(t) = P(T \le t)$. The p-value of an observed value t is the chance of a value at least as large, $1 - G(t)$, so the p-value of a trial not yet run is the random number $1 - G(T)$.
+Write $`T = |Z|`$ and suppose that under $`H_0`$ it has a continuous law, with $`G(t) = P(T \le t)`$. The p-value of an observed value t is the chance of a value at least as large, $`1 - G(t)`$, so the p-value of a trial not yet run is the random number $`1 - G(T)`$.
 
-Fix u strictly between 0 and 1. G rises continuously from 0 to 1, so by the intermediate value theorem some c has $1 - G(c) = u$. Now $1 - G(T) \le u$ exactly when $G(T) \ge G(c)$. Since G never decreases, that holds whenever $T \ge c$. It can also hold for some $T < c$, but only where G is flat between T and c, and a flat stretch of G carries chance 0. So
+Fix u strictly between 0 and 1. G rises continuously from 0 to 1, so by the intermediate value theorem some c has $`1 - G(c) = u`$. Now $`1 - G(T) \le u`$ exactly when $`G(T) \ge G(c)`$. Since G never decreases, that holds whenever $`T \ge c`$. It can also hold for some $`T < c`$, but only where G is flat between T and c, and a flat stretch of G carries chance 0. So
 
-$$P(1 - G(T) \le u) = P(T \ge c) = 1 - G(c) = u.$$
+$`\displaystyle P(1 - G(T) \le u) = P(T \ge c) = 1 - G(c) = u.`$
 
-At u = 0 and u = 1 the statement holds trivially. Hence the rule "reject when $p \le \alpha$" rejects a true $H_0$ with chance exactly $\alpha$.
+At u = 0 and u = 1 the statement holds trivially. Hence the rule "reject when $`p \le \alpha`$" rejects a true $`H_0`$ with chance exactly $`\alpha`$.
 
-A count is not continuous: G jumps. Computed exactly from the count law, under a null that pins that law down completely, the p-value then satisfies $P(p \le u) \le u$, a slightly careful test. Computed from the bell, as here, it can overshoot a little: the rule "reject when |z| ≥ 1.959964" rejects a true null with exact chance 0.0514, not 0.05.
+A count is not continuous: G jumps. Computed exactly from the count law, under a null that pins that law down completely, the p-value then satisfies $`P(p \le u) \le u`$, a slightly careful test. Computed from the bell, as here, it can overshoot a little: the rule "reject when |z| ≥ 1.959964" rejects a true null with exact chance 0.0514, not 0.05.
 
 </details>
 
@@ -137,9 +141,9 @@ Bars: the drug does nothing, both groups at 0.40. Line: the drug lifts recovery 
 
 ### Step 5: from p-value to decision, and the two ways to be wrong
 
-A decision at level 0.05 can go wrong two ways. Rejecting a true $H_0$ is a **false alarm**, also called a Type I error; Step 4 holds its chance near the level: 0.0514 here. Keeping a false $H_0$ is a **miss**, a Type II error. The chance of avoiding a miss is the test's **power**, the subject of [Power](04-power-and-sample-size.md).
+A decision at level 0.05 can go wrong two ways. Rejecting a true $`H_0`$ is a **false alarm**, also called a Type I error; Step 4 holds its chance near the level: 0.0514 here. Keeping a false $`H_0`$ is a **miss**, a Type II error. The chance of avoiding a miss is the test's **power**, the subject of [Power](04-power-and-sample-size.md).
 
-Here the miss is the bigger danger. Suppose the drug truly lifts recovery from 0.35 to 0.45, exactly what was observed. Enumerating every outcome, a trial of 100 per group reaches p ≤ 0.05 with chance 0.3078. Simulation agrees: 0.3080, give or take 0.0033. So at this size, a real 10-point benefit goes undetected in most trials. A p-value of 0.15 is weak evidence against $H_0$; it is not evidence for it.
+Here the miss is the bigger danger. Suppose the drug truly lifts recovery from 0.35 to 0.45, exactly what was observed. Enumerating every outcome, a trial of 100 per group reaches p ≤ 0.05 with chance 0.3078. Simulation agrees: 0.3080, give or take 0.0033. So at this size, a real 10-point benefit goes undetected in most trials. A p-value of 0.15 is weak evidence against $`H_0`$; it is not evidence for it.
 
 The same point shows in the confidence interval for the gap. It is the z recipe of [Confidence intervals](01-confidence-intervals.md), the estimate plus or minus 1.959964 standard errors, with each group's own rate in the standard error: the square root of 0.45 × 0.55 / 100 + 0.35 × 0.65 / 100 is 0.068920. The 95 percent interval is 0.10 ± 1.959964 × 0.068920 = 0.10 ± 0.1351, from −0.0351 to 0.2351.
 
@@ -159,13 +163,13 @@ The same gap squared is the statistic of [Chi-square tests](06-chi-square-tests.
 | --- | --- | --- |
 | observed rates | 45 / 100 and 35 / 100 | 0.45 and 0.35 |
 | gap | 0.45 − 0.35 | 0.10 |
-| pooled rate under $H_0$ | 80 / 200 | 0.40 |
+| pooled rate under $`H_0`$ | 80 / 200 | 0.40 |
 | variance of the gap | 0.40 × 0.60 × 2 / 100 | 0.004800 |
 | standard error | square root of 0.004800 | 0.069282 |
-| statistic $z$ | 0.10 / 0.069282 | 1.443376 |
+| statistic $`z`$ | 0.10 / 0.069282 | 1.443376 |
 | one tail | 1 − Φ(1.443376) | 0.074457 |
 | **two-sided p-value** | 2 × 0.074457 | **0.148915** |
-| decision at level 0.05 | 0.148915 > 0.05 | do not reject $H_0$ |
+| decision at level 0.05 | 0.148915 > 0.05 | do not reject $`H_0`$ |
 
 If the drug did nothing, trials like this one would show a gap at least 1.44 standard errors out, either way, about 15 times in 100; so this trial alone cannot separate the drug from luck.
 
@@ -559,12 +563,12 @@ The two outputs match line for line, simulation included: both languages draw th
 
 ### Lean
 
-Lean proves the p-value's guarantee under a true $H_0$, both for a continuous law and for an exact count law.
+Lean proves the p-value's guarantee under a true $`H_0`$, both for a continuous law and for an exact count law.
 
-- Take a statistic $T$ with a continuous law under $H_0$, and $G(t) = P(T \le t)$. Then $P(1 - G(T) \le u) = u$ for every $u$ from 0 to 1.
-- Take any statistic $T$, counts included, and its exact p-value: the chance of a value at least as large. Then $P(p \le u) \le u$ for every $u$ from 0 to 1.
-- The hand arithmetic holds exactly: gap 0.10, pooled rate 0.40, variance of the gap 0.004800, and $z^2 = 25/12$.
-- Also exact: four times the patients with the same gap doubles $z$, and the enumeration covers 10,201 pairs of counts.
+- Take a statistic $`T`$ with a continuous law under $`H_0`$, and $`G(t) = P(T \le t)`$. Then $`P(1 - G(T) \le u) = u`$ for every $`u`$ from 0 to 1.
+- Take any statistic $`T`$, counts included, and its exact p-value: the chance of a value at least as large. Then $`P(p \le u) \le u`$ for every $`u`$ from 0 to 1.
+- The hand arithmetic holds exactly: gap 0.10, pooled rate 0.40, variance of the gap 0.004800, and $`z^2 = 25/12`$.
+- Also exact: four times the patients with the same gap doubles $`z`$, and the enumeration covers 10,201 pairs of counts.
 
 The decimals, the bell's tail, the exact enumeration, the simulation, the power and the permutation test are left to the Python and Rust checks.
 

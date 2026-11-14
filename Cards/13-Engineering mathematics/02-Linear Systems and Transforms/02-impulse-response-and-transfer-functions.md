@@ -32,41 +32,45 @@ The top row is the car in time, where the block stands for a differential equati
 
 ## The formula
 
-Notation first, in words. The Laplace transform ([The Laplace transform](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/01-the-laplace-transform.md)) turns a signal of time into a function of a rate $s$, measured in 1/s; a capital letter is the transform of the lower-case signal, so $U(s)$ is the transform of the force $u(t)$. New here: the **transfer function** $G(s)$, read "what the system does to each exponential e^(st)".
+Notation first, in words. The Laplace transform ([The Laplace transform](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/01-the-laplace-transform.md)) turns a signal of time into a function of a rate $`s`$, measured in 1/s; a capital letter is the transform of the lower-case signal, so $`U(s)`$ is the transform of the force $`u(t)`$. New here: the **transfer function** $`G(s)`$, read "what the system does to each exponential e^(st)".
 
-The car's law of motion, with $v$ the speed above the 25 m/s cruise and $u$ the force above the 312.5 N cruise push:
+The car's law of motion, with $`v`$ the speed above the 25 m/s cruise and $`u`$ the force above the 312.5 N cruise push:
 
-$$m\,\frac{dv}{dt} + b\,v = u(t)$$
+```math
+m\,\frac{dv}{dt} + b\,v = u(t)
+```
 
-Transform it with the car at cruise when the clock starts, so $v(0) = 0$, and divide:
+Transform it with the car at cruise when the clock starts, so $`v(0) = 0`$, and divide:
 
-$$G(s) = \frac{V(s)}{U(s)} = \frac{1}{m s + b}, \qquad h(t) = \frac{1}{m}\,e^{-t/\tau}, \qquad \tau = \frac{m}{b}$$
+```math
+G(s) = \frac{V(s)}{U(s)} = \frac{1}{m s + b}, \qquad h(t) = \frac{1}{m}\,e^{-t/\tau}, \qquad \tau = \frac{m}{b}
+```
 
 **Read it aloud:** the transfer function is the speed's transform over the force's transform, one over mass times s plus drag; its inverse transform is the impulse response, a jump of one over the mass that dies away on the time constant, mass over drag.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $\sigma$ | time since the clock started; a delay inside an integral | 0 to 160 s | — |
-| $u(t)$, $U(s)$, $r$ | extra force from the engine, its transform; the force commanded | a 100 N step; a 500 N·s shove | speed rises in proportion |
-| $v(t)$, $V(s)$ | speed above cruise, and its transform | 0 at the start | — |
-| $m$ | the car's mass | 1000 kg | slower response, smaller jump from a shove |
-| $c$, $v_0$ | air-drag coefficient, in N·s^2/m^2, and the cruise speed | 0.5 and 25 m/s | more drag at cruise |
-| $b$ | drag per extra m/s near cruise, $2 c v_0$ | 25 N·s/m | lower steady gain, faster settling |
-| $s$ | the rate of an exponential e^(st), in 1/s; complex in general, and an imaginary s is a steady oscillation | 0, 0.025, 0.05, 0.1 | — |
-| $G(s)$, $q$ | the transfer function, in (m/s)/N; q is the same number found by trial in Step 1 | 1/(1000 s + 25) | — |
-| $y$, $a_i$, $\beta_i$, $n$, $k$ | in Step 0 and the detailed proof: a general system's output; in the proof, the coefficients on its output and input sides, and their highest orders | for the car y = v, a_1 = m, a_0 = b, β_0 = 1, n = 1, k = 0 | — |
-| $A$, $B$, $C$, $D$, $I$ | the state-space matrices and the identity matrix, used once below; for the car single numbers, unrelated to b and c | −b/m, 1/m, 1, 0 | — |
-| $h(t)$, $h_2(t)$ | impulse response, in (m/s) per N·s; with engine lag | 0.001 e^(−t/40) | — |
-| $\tau$, $\tau_e$ | time constant of the car; of the engine | 40 s; 0.5 s | slower rise, slower decay |
-| $\delta(t)$, $J$ | the delta (an ideal instant shove of area 1 N·s); a shove's size | $J$ = 500 N·s | speed jump $J/m$ grows |
+| $`t`$, $`\sigma`$ | time since the clock started; a delay inside an integral | 0 to 160 s | — |
+| $`u(t)`$, $`U(s)`$, $`r`$ | extra force from the engine, its transform; the force commanded | a 100 N step; a 500 N·s shove | speed rises in proportion |
+| $`v(t)`$, $`V(s)`$ | speed above cruise, and its transform | 0 at the start | — |
+| $`m`$ | the car's mass | 1000 kg | slower response, smaller jump from a shove |
+| $`c`$, $`v_0`$ | air-drag coefficient, in N·s^2/m^2, and the cruise speed | 0.5 and 25 m/s | more drag at cruise |
+| $`b`$ | drag per extra m/s near cruise, $`2 c v_0`$ | 25 N·s/m | lower steady gain, faster settling |
+| $`s`$ | the rate of an exponential e^(st), in 1/s; complex in general, and an imaginary s is a steady oscillation | 0, 0.025, 0.05, 0.1 | — |
+| $`G(s)`$, $`q`$ | the transfer function, in (m/s)/N; q is the same number found by trial in Step 1 | 1/(1000 s + 25) | — |
+| $`y`$, $`a_i`$, $`\beta_i`$, $`n`$, $`k`$ | in Step 0 and the detailed proof: a general system's output; in the proof, the coefficients on its output and input sides, and their highest orders | for the car y = v, a_1 = m, a_0 = b, β_0 = 1, n = 1, k = 0 | — |
+| $`A`$, $`B`$, $`C`$, $`D`$, $`I`$ | the state-space matrices and the identity matrix, used once below; for the car single numbers, unrelated to b and c | −b/m, 1/m, 1, 0 | — |
+| $`h(t)`$, $`h_2(t)`$ | impulse response, in (m/s) per N·s; with engine lag | 0.001 e^(−t/40) | — |
+| $`\tau`$, $`\tau_e`$ | time constant of the car; of the engine | 40 s; 0.5 s | slower rise, slower decay |
+| $`\delta(t)`$, $`J`$ | the delta (an ideal instant shove of area 1 N·s); a shove's size | $`J`$ = 500 N·s | speed jump $`J/m`$ grows |
 
-The time constant $\tau$ is the time for the impulse response to fall by the factor e. The pole of $G(s)$, the rate where the denominator is zero, is $s = -b/m$ = −0.025 1/s, minus one over the time constant.
+The time constant $`\tau`$ is the time for the impulse response to fall by the factor e. The pole of $`G(s)`$, the rate where the denominator is zero, is $`s = -b/m`$ = −0.025 1/s, minus one over the time constant.
 
 ### When it holds
 
-- **Linear.** True drag is $c v^2$, and the straight line $b v$ is its tangent at 25 m/s. A 100 N step gives +4.000 m/s by the model and +3.723 m/s for the real drag. A 1000 N step is outside the range: the model says +40.000 m/s, the drag-squared car reaches only +26.235 m/s.
-- **Time-invariant.** Mass and drag constant over the run. A hill or a headwind is an extra input force, not a new transfer function; a trailer hitched on is a new $m$ and a new $G$.
-- **At rest, in the deviation sense.** The ratio of transforms is $G$ only when the speed deviation starts at zero. Starting 1 m/s fast adds a term, and the ratio at s = 0.05 reads 0.0200, not 0.0133.
+- **Linear.** True drag is $`c v^2`$, and the straight line $`b v`$ is its tangent at 25 m/s. A 100 N step gives +4.000 m/s by the model and +3.723 m/s for the real drag. A 1000 N step is outside the range: the model says +40.000 m/s, the drag-squared car reaches only +26.235 m/s.
+- **Time-invariant.** Mass and drag constant over the run. A hill or a headwind is an extra input force, not a new transfer function; a trailer hitched on is a new $`m`$ and a new $`G`$.
+- **At rest, in the deviation sense.** The ratio of transforms is $`G`$ only when the speed deviation starts at zero. Starting 1 m/s fast adds a term, and the ratio at s = 0.05 reads 0.0200, not 0.0133.
 - **An impulse is short next to the time constant.** A 0.5 s push of 1000 N acts like the ideal shove; the same 500 N·s spread over 40 s peaks at 0.316 m/s, not 0.500 m/s.
 - **Nothing else between pedal and road.** An engine that takes 0.5 s to build force is a second block in series: G(0.05) drops from 0.0133333 to 0.0130081 (m/s)/N.
 
@@ -80,11 +84,11 @@ Delay an exponential e^(st), running for all time, by any amount and it is the s
 
 Here is why. Call the output y. The input delayed by σ is e^(s(t − σ)) = e^(−sσ) e^(st), the same input times the constant e^(−sσ). Time-invariance says its output is y(t − σ); linearity says it is e^(−sσ) y(t).
 
-So y(t − σ) = e^(−sσ) y(t) for every t and σ. Put t = σ: y(σ) = y(0) e^(sσ), the input's own exponential times the constant y(0). That constant depends on $s$ and on the system only. It is $G(s)$.
+So y(t − σ) = e^(−sσ) y(t) for every t and σ. Put t = σ: y(σ) = y(0) e^(sσ), the input's own exponential times the constant y(0). That constant depends on $`s`$ and on the system only. It is $`G(s)`$.
 
 ### Step 1: find the constant for the car
 
-Push the car with $u = e^{st}$ and try $v = q e^{st}$, with q a number to be found. The derivative brings down a factor $s$:
+Push the car with $`u = e^{st}`$ and try $`v = q e^{st}`$, with q a number to be found. The derivative brings down a factor $`s`$:
 
 m s q e^(st) + b q e^(st) = e^(st), so q = 1/(m s + b).
 
@@ -92,37 +96,37 @@ At s = 0.05 1/s this is 1/(1000 × 0.05 + 25) = 0.0133333 (m/s)/N. The code chec
 
 ### Step 2: the same ratio from the Laplace transform
 
-The transform of a derivative is $s$ times the transform minus the starting value ([Transforming a derivative](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/02-transforms-of-derivatives.md)). Applied to the car:
+The transform of a derivative is $`s`$ times the transform minus the starting value ([Transforming a derivative](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/02-transforms-of-derivatives.md)). Applied to the car:
 
 m (s V(s) − v(0)) + b V(s) = U(s).
 
-With $v(0) = 0$ this is $V(s) = U(s)/(m s + b)$: the differential equation has become a multiplication. The derivative turned into a factor $s$, so any equation with constant coefficients becomes a ratio of polynomials in $s$. The folded proof below writes that out.
+With $`v(0) = 0`$ this is $`V(s) = U(s)/(m s + b)`$: the differential equation has become a multiplication. The derivative turned into a factor $`s`$, so any equation with constant coefficients becomes a ratio of polynomials in $`s`$. The folded proof below writes that out.
 
 ### Step 3: the impulse response is the transfer function in time
 
-An ideal shove of area 1 N·s is the delta $\delta(t)$, whose transform is 1 ([Impulses](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/06-impulses-and-the-delta-function.md)). Put $U = 1$ into Step 2: $V = G$. The response to the delta, $h(t)$, has transform $G(s)$. One function holds the system twice: as a curve in time and as a ratio in $s$.
+An ideal shove of area 1 N·s is the delta $`\delta(t)`$, whose transform is 1 ([Impulses](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/06-impulses-and-the-delta-function.md)). Put $`U = 1`$ into Step 2: $`V = G`$. The response to the delta, $`h(t)`$, has transform $`G(s)`$. One function holds the system twice: as a curve in time and as a ratio in $`s`$.
 
-The physics agrees. A shove of $J$ N·s changes the car's momentum by $J$, so the speed jumps by $J/m$; afterwards no force acts but drag, and the jump decays at the rate $b/m$.
+The physics agrees. A shove of $`J`$ N·s changes the car's momentum by $`J`$, so the speed jumps by $`J/m`$; afterwards no force acts but drag, and the jump decays at the rate $`b/m`$.
 
 ### Step 4: invert the ratio by its residue
 
-The inverse transform of $G$ is the sum of the residues of $G(s) e^{st}$ at its poles ([Inverting a Laplace transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md)). At a pole $p$ where the denominator vanishes once, the residue is the number that multiplies $1/(s - p)$ when the function is written near $p$. The car's $G$ has one pole, at $s = -b/m$. Near it, $G(s) e^{st} = (1/m) e^{st}/(s + b/m)$, so the residue is $(1/m) e^{-bt/m}$:
+The inverse transform of $`G`$ is the sum of the residues of $`G(s) e^{st}`$ at its poles ([Inverting a Laplace transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md)). At a pole $`p`$ where the denominator vanishes once, the residue is the number that multiplies $`1/(s - p)`$ when the function is written near $`p`$. The car's $`G`$ has one pole, at $`s = -b/m`$. Near it, $`G(s) e^{st} = (1/m) e^{st}/(s + b/m)`$, so the residue is $`(1/m) e^{-bt/m}`$:
 
 h(t) = (1/1000) e^(−t/40) per N·s, so h(0+) = 0.001 (m/s) per N·s.
 
-The code runs this backwards: it integrates $h(t) e^{-st}$ numerically from 0 to 1000 s by Simpson's rule (a weighted sum of samples) and recovers $G(s)$ to seven digits at four rates.
+The code runs this backwards: it integrates $`h(t) e^{-st}`$ numerically from 0 to 1000 s by Simpson's rule (a weighted sum of samples) and recovers $`G(s)`$ to seven digits at four rates.
 
 ### Step 5: any input, by multiplication
 
-Since $V = G U$, and a product of transforms is the transform of a convolution, the speed is $h$ convolved with the force: every earlier piece of force, weighted by $h$ at its age, added up ([Convolution](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md)). For a 100 N step, $U(s) = 100/s$ and
+Since $`V = G U`$, and a product of transforms is the transform of a convolution, the speed is $`h`$ convolved with the force: every earlier piece of force, weighted by $`h`$ at its age, added up ([Convolution](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md)). For a 100 N step, $`U(s) = 100/s`$ and
 
 V(s) = 100 / (s (1000 s + 25)) = 4/s − 4/(s + 0.025),
 
-split by partial fractions ([Inverting](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/03-inverting-by-partial-fractions.md)). So $v(t) = 4(1 - e^{-t/40})$ m/s: 2.5285 m/s at 40 s, 3.9267 m/s at 160 s. The engineer reads two numbers off it: 100 N buys 4 m/s, and the car takes tens of seconds to get there, so a controller cannot correct speed faster than the car allows without big force swings.
+split by partial fractions ([Inverting](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/03-inverting-by-partial-fractions.md)). So $`v(t) = 4(1 - e^{-t/40})`$ m/s: 2.5285 m/s at 40 s, 3.9267 m/s at 160 s. The engineer reads two numbers off it: 100 N buys 4 m/s, and the car takes tens of seconds to get there, so a controller cannot correct speed faster than the car allows without big force swings.
 
 ### Step 6: blocks in series multiply
 
-Suppose the engine does not deliver force at once but follows the command $r$ with a lag: $\tau_e\,du/dt + u = r$, with $\tau_e$ = 0.5 s. That block alone has transfer function $1/(\tau_e s + 1)$. Command to speed is the product:
+Suppose the engine does not deliver force at once but follows the command $`r`$ with a lag: $`\tau_e\,du/dt + u = r`$, with $`\tau_e`$ = 0.5 s. That block alone has transfer function $`1/(\tau_e s + 1)`$. Command to speed is the product:
 
 G_total(s) = 1 / ((0.5 s + 1)(1000 s + 25)), so G_total(0.05) = 0.0133333 / (0.5 × 0.05 + 1) = 0.0130081 (m/s)/N.
 
@@ -135,15 +139,15 @@ The jump is gone: force has to build through the engine first, so a shove on the
 <details>
 <summary>Detailed proof: G is a ratio of polynomials, and it is the transform of h</summary>
 
-**Any constant-coefficient equation.** Take $a_n y^{(n)} + \dots + a_1 y' + a_0 y = \beta_k u^{(k)} + \dots + \beta_0 u$, with $y(t)$ and $u(t)$ and all their derivatives zero at the start. Each derivative transforms to $s$ times the previous transform, with no starting terms, so a derivative of order k becomes $s^k$ times the transform. Collecting terms, $(a_n s^n + \dots + a_0)\,Y(s) = (\beta_k s^k + \dots + \beta_0)\,U(s)$, and $G = Y/U$ is the ratio of those two polynomials. For the car, $n = 1$, $a_1 = m$, $a_0 = b$, and the top polynomial is 1.
+**Any constant-coefficient equation.** Take $`a_n y^{(n)} + \dots + a_1 y' + a_0 y = \beta_k u^{(k)} + \dots + \beta_0 u`$, with $`y(t)`$ and $`u(t)`$ and all their derivatives zero at the start. Each derivative transforms to $`s`$ times the previous transform, with no starting terms, so a derivative of order k becomes $`s^k`$ times the transform. Collecting terms, $`(a_n s^n + \dots + a_0)\,Y(s) = (\beta_k s^k + \dots + \beta_0)\,U(s)`$, and $`G = Y/U`$ is the ratio of those two polynomials. For the car, $`n = 1`$, $`a_1 = m`$, $`a_0 = b`$, and the top polynomial is 1.
 
-**G is the transform of h.** For a linear, time-invariant system the output is $y(t) = \int_0^\infty h(\sigma)\,u(t - \sigma)\,d\sigma$, with $\sigma$ the delay since each piece of input arrived. Feed it $u = e^{st}$ for all time. Then $y(t) = e^{st} \int_0^\infty h(\sigma) e^{-s\sigma}\,d\sigma$: the same exponential times the Laplace transform of $h$, wherever that integral converges (for the car, any $s$ above −0.025 1/s). By Step 0 that multiplier is $G(s)$. So the multiplier on exponentials, the ratio of transforms at rest, and the transform of the impulse response are one function.
+**G is the transform of h.** For a linear, time-invariant system the output is $`y(t) = \int_0^\infty h(\sigma)\,u(t - \sigma)\,d\sigma`$, with $`\sigma`$ the delay since each piece of input arrived. Feed it $`u = e^{st}`$ for all time. Then $`y(t) = e^{st} \int_0^\infty h(\sigma) e^{-s\sigma}\,d\sigma`$: the same exponential times the Laplace transform of $`h`$, wherever that integral converges (for the car, any $`s`$ above −0.025 1/s). By Step 0 that multiplier is $`G(s)`$. So the multiplier on exponentials, the ratio of transforms at rest, and the transform of the impulse response are one function.
 
-**Starting conditions.** If $v(0) \ne 0$, Step 2 gives $V = (U + m\,v(0))/(m s + b)$. The extra term $m\,v(0)/(m s + b)$ is the free decay of the starting speed, which the input did not cause. That is why the definition demands rest.
+**Starting conditions.** If $`v(0) \ne 0`$, Step 2 gives $`V = (U + m\,v(0))/(m s + b)`$. The extra term $`m\,v(0)/(m s + b)`$ is the free decay of the starting speed, which the input did not cause. That is why the definition demands rest.
 
 </details>
 
-Another road to the same $G$ runs through the state-space form, $G(s) = C (sI - A)^{-1} B + D$, worked in [State space](../04-State%20Space%20and%20Optimal%20Control/01-state-space-models-and-the-matrix-exponential.md). There A, B, C and D are the matrices that card introduces to describe a system, and I is the identity matrix, the matrix version of 1. For the car each is a single number, unrelated to this card's drag b and c: A = −b/m, B = 1/m, C = 1, D = 0 gives the same ratio.
+Another road to the same $`G`$ runs through the state-space form, $`G(s) = C (sI - A)^{-1} B + D`$, worked in [State space](../04-State%20Space%20and%20Optimal%20Control/01-state-space-models-and-the-matrix-exponential.md). There A, B, C and D are the matrices that card introduces to describe a system, and I is the identity matrix, the matrix version of 1. For the car each is a single number, unrelated to this card's drag b and c: A = −b/m, B = 1/m, C = 1, D = 0 gives the same ratio.
 
 ---
 
@@ -194,7 +198,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Python imports only `math`; Rust uses only std. The scripts reach $G(s)$ three independent ways at four rates: the formula; the numerical Laplace transform of the residue-inverted impulse response, by Simpson's rule; and a fourth-order Runge–Kutta simulation (RK4, a standard step-by-step solver of the equation) driven by e^(st). The impulse response is checked against simulated 0.5 s and 40 s pushes; the step response by partial fractions, by simulation and by convolution; the engine-lag cascade by the product rule against simulation and by residues against simulation. Then every what-breaks number is reproduced, the last against a simulation of the drag-squared car.
+Python imports only `math`; Rust uses only std. The scripts reach $`G(s)`$ three independent ways at four rates: the formula; the numerical Laplace transform of the residue-inverted impulse response, by Simpson's rule; and a fourth-order Runge–Kutta simulation (RK4, a standard step-by-step solver of the equation) driven by e^(st). The impulse response is checked against simulated 0.5 s and 40 s pushes; the step response by partial fractions, by simulation and by convolution; the engine-lag cascade by the product rule against simulation and by residues against simulation. Then every what-breaks number is reproduced, the last against a simulation of the drag-squared car.
 
 ### Python
 
@@ -546,13 +550,13 @@ The two outputs match line for line.
 
 Lean proves the car's three formulas for every positive mass and drag, and checks the worked numbers.
 
-- Take $m > 0$ and a rate $s$ whose real part lies above the pole, $-b/m$. Then the Laplace transform of $h(t) = (1/m) e^{-bt/m}$ is $G(s) = 1/(m s + b)$.
-- Suppose $m s + b \ne 0$. Then $v = q e^{st}$ solves $m v' + b v = e^{st}$ exactly when $q = 1/(m s + b)$.
-- Take $m > 0$, $b > 0$ and a constant extra force $r$. Then the speed $v(t) = (r/b)(1 - e^{-bt/m})$ starts at 0 and solves $m v' + b v = r$. It settles at the steady gain times the force, $r/b$.
-- The car's numbers hold: cruise push 312.5 N, $b$ = 25 N·s/m, $\tau$ = 40 s, and the pole at −1/40 1/s.
-- $G(0)$ is 1/25 and $G(0.05)$ is 1/75 (m/s)/N. A 500 N·s shove adds 1/2 m/s, and a 100 N step buys 4 m/s.
+- Take $`m > 0`$ and a rate $`s`$ whose real part lies above the pole, $`-b/m`$. Then the Laplace transform of $`h(t) = (1/m) e^{-bt/m}`$ is $`G(s) = 1/(m s + b)`$.
+- Suppose $`m s + b \ne 0`$. Then $`v = q e^{st}`$ solves $`m v' + b v = e^{st}`$ exactly when $`q = 1/(m s + b)`$.
+- Take $`m > 0`$, $`b > 0`$ and a constant extra force $`r`$. Then the speed $`v(t) = (r/b)(1 - e^{-bt/m})`$ starts at 0 and solves $`m v' + b v = r`$. It settles at the steady gain times the force, $`r/b`$.
+- The car's numbers hold: cruise push 312.5 N, $`b`$ = 25 N·s/m, $`\tau`$ = 40 s, and the pole at −1/40 1/s.
+- $`G(0)`$ is 1/25 and $`G(0.05)`$ is 1/75 (m/s)/N. A 500 N·s shove adds 1/2 m/s, and a 100 N step buys 4 m/s.
 - The partial fractions of Step 5 hold away from the poles. Dropping the mass gives a steady gain of 40 (m/s)/N.
-- With the 0.5 s engine lag, G_total(0.05) is 8/615 (m/s)/N. The coefficient in $h_2(t)$ is 2/1975, so the speed starts rising at 1/500 m/s^2 per N·s.
+- With the 0.5 s engine lag, G_total(0.05) is 8/615 (m/s)/N. The coefficient in $`h_2(t)`$ is 2/1975, so the speed starts rising at 1/500 m/s^2 per N·s.
 
 Lean runs no simulation, so the RK4 runs, the Simpson transforms and the drag-squared car are left to the Python and Rust checks.
 
@@ -707,7 +711,7 @@ example : (1 : ℚ) / (0 + 1 / 40) = 40 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Taking the ratio of transforms when the system is not at rest.** $G(s)$ is defined with every deviation zero at the start. A car already 1 m/s above cruise, given a 100 N step, has speed 4 − 3 e^(−t/40) m/s; its transform over the input's transform at s = 0.05 is 0.0200, not G(0.05) = 0.0133. The difference is the free decay of the starting speed, which belongs to the initial condition, not to the car's transfer function.
+> **Taking the ratio of transforms when the system is not at rest.** $`G(s)`$ is defined with every deviation zero at the start. A car already 1 m/s above cruise, given a 100 N step, has speed 4 − 3 e^(−t/40) m/s; its transform over the input's transform at s = 0.05 is 0.0200, not G(0.05) = 0.0133. The difference is the free decay of the starting speed, which belongs to the initial condition, not to the car's transfer function.
 >
 > - **Dropping the mass.** Writing v' + (b/m) v = u gives 1/(s + 0.025): a steady gain of 40 (m/s)/N, a thousand times too large.
 > - **Inverting the time constant.** The time constant is m/b = 40 s; b/m is the pole's distance from zero, 0.025 1/s. Reading 0.025 as seconds predicts a car that settles almost at once.
@@ -718,10 +722,10 @@ example : (1 : ℚ) / (0 + 1 / 40) = 40 := by norm_num
 
 ## Where you meet it in real life
 
-- **Cruise control and adaptive cruise.** The controller is designed against $1/(m s + b)$, with $m$ and $b$ re-estimated as load and speed change; the loop around it is [Feedback](../03-Feedback%20Control/01-feedback-and-closed-loop-transfer-functions.md).
+- **Cruise control and adaptive cruise.** The controller is designed against $`1/(m s + b)`$, with $`m`$ and $`b`$ re-estimated as load and speed change; the loop around it is [Feedback](../03-Feedback%20Control/01-feedback-and-closed-loop-transfer-functions.md).
 - **Hammer tests on structures.** Engineers strike a bridge or an engine mount with an instrumented hammer, record the response, and transform it: the measured impulse response is the structure's transfer function in time.
 - **Audio and electronics.** A loudspeaker, an amplifier stage or a filter is specified by its transfer function; evaluated along the imaginary axis it gives the gain and lag at each pitch, the subject of [Bode plots](04-frequency-response-and-bode-plots.md).
-- **Digital controllers.** A computer samples the speed every few milliseconds; its version of $G$ is a ratio in a one-step delay, in [The z-transform](08-z-transform-and-discrete-time-systems.md).
+- **Digital controllers.** A computer samples the speed every few milliseconds; its version of $`G`$ is a ratio in a one-step delay, in [The z-transform](08-z-transform-and-discrete-time-systems.md).
 
 > **Say it back**
 > A linear, time-invariant system answers each exponential e^(st) with the same exponential times one number, and that number, as a function of s, is the transfer function. Transforming the equation at rest turns derivatives into powers of s, so the transfer function is a ratio of polynomials: for the car, 1/(1000 s + 25). Since the delta transforms to 1, the transfer function is also the transform of the impulse response, here 0.001 e^(−t/40) per N·s, found from the residue at the pole. Any other input's response is the transfer function times the input's transform: 100 N gives 4 m/s with a 40 s time constant. Blocks in series multiply, and the ratio is only the transfer function when the system starts at rest.

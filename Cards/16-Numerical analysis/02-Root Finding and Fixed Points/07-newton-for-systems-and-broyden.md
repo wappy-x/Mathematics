@@ -38,59 +38,69 @@ Orange: Newton, whose correct digits roughly double each step. Teal: Broyden, a 
 
 ## The formula
 
-Notation from [Newton and secant](02-newton-and-secant-with-convergence-orders.md), now with lists in place of single numbers. The **iterate** $x_k$ is the pair of flows after $k$ steps, the **root** $x^*$ is the pair that solves the equations, and the **error** is $e_k = x_k - x^*$. The size of a pair is its length, $\|v\| = \sqrt{v_1^2 + v_2^2}$. For a matrix $A$, $\|A\|$ is the most it can stretch a length.
+Notation from [Newton and secant](02-newton-and-secant-with-convergence-orders.md), now with lists in place of single numbers. The **iterate** $`x_k`$ is the pair of flows after $`k`$ steps, the **root** $`x^*`$ is the pair that solves the equations, and the **error** is $`e_k = x_k - x^*`$. The size of a pair is its length, $`\|v\| = \sqrt{v_1^2 + v_2^2}`$. For a matrix $`A`$, $`\|A\|`$ is the most it can stretch a length.
 
-**The plant.** Call the stock flow $p$ and the water flow $q$, both in L/s, so $x = (p, q)$ and the total flow is $u = p + q$. Water leaves each tank through a hole in its floor, at a speed that grows with the square root of the depth. So the depth, and the volume held, grow as the square of the flow: tank $i$ holds $\beta_i u^2$ litres, and water stays in it $\beta_i u$ seconds. The disinfectant decays at rate $\gamma$ per second. Each balance is what flows in, minus what flows out, minus what decays:
+**The plant.** Call the stock flow $`p`$ and the water flow $`q`$, both in L/s, so $`x = (p, q)`$ and the total flow is $`u = p + q`$. Water leaves each tank through a hole in its floor, at a speed that grows with the square root of the depth. So the depth, and the volume held, grow as the square of the flow: tank $`i`$ holds $`\beta_i u^2`$ litres, and water stays in it $`\beta_i u`$ seconds. The disinfectant decays at rate $`\gamma`$ per second. Each balance is what flows in, minus what flows out, minus what decays:
 
-$$F(x) = \begin{pmatrix} c_0\,p - c_1\,u\,(1 + \gamma\beta_1 u) \\ c_1\,u - c_2\,u\,(1 + \gamma\beta_2 u) \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}$$
+```math
+F(x) = \begin{pmatrix} c_0\,p - c_1\,u\,(1 + \gamma\beta_1 u) \\ c_1\,u - c_2\,u\,(1 + \gamma\beta_2 u) \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}
+```
 
 **Read it aloud:** in each tank, what comes in equals what leaves plus what decays.
 
 **The Jacobian** is the table of rates: one row per balance, one column per flow ([Chain rule in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md) defines it). For this plant it has only two distinct entries:
 
-$$J(x) = \begin{pmatrix} c_0 - h & -h \\ g & g \end{pmatrix}, \qquad h = c_1\,(1 + 2\gamma\beta_1 u), \qquad g = c_1 - c_2\,(1 + 2\gamma\beta_2 u)$$
+```math
+J(x) = \begin{pmatrix} c_0 - h & -h \\ g & g \end{pmatrix}, \qquad h = c_1\,(1 + 2\gamma\beta_1 u), \qquad g = c_1 - c_2\,(1 + 2\gamma\beta_2 u)
+```
 
-**Read it aloud:** tank 2 sees only the total flow, so both of its rates are the same number $g$.
+**Read it aloud:** tank 2 sees only the total flow, so both of its rates are the same number $`g`$.
 
 **Newton's step.** Solve one linear system, then move:
 
-$$J(x_k)\,s_k = -F(x_k), \qquad x_{k+1} = x_k + s_k$$
+```math
+J(x_k)\,s_k = -F(x_k), \qquad x_{k+1} = x_k + s_k
+```
 
 **Read it aloud:** find the move that would cancel the miss if the plant were straight lines, and make it.
 
-**Broyden's step.** Same move, but with an estimate $B_k$ in place of $J(x_k)$. After the move, record the change in the miss, $y_k$, and repair the estimate ($^{\mathsf T}$, the transpose, turns a column into a row):
+**Broyden's step.** Same move, but with an estimate $`B_k`$ in place of $`J(x_k)`$. After the move, record the change in the miss, $`y_k`$, and repair the estimate ($`^{\mathsf T}`$, the transpose, turns a column into a row):
 
-$$B_k s_k = -F(x_k), \quad x_{k+1} = x_k + s_k, \quad y_k = F(x_{k+1}) - F(x_k), \quad B_{k+1} = B_k + \frac{(y_k - B_k s_k)\,s_k^{\mathsf T}}{s_k^{\mathsf T} s_k}$$
+```math
+B_k s_k = -F(x_k), \quad x_{k+1} = x_k + s_k, \quad y_k = F(x_{k+1}) - F(x_k), \quad B_{k+1} = B_k + \frac{(y_k - B_k s_k)\,s_k^{\mathsf T}}{s_k^{\mathsf T} s_k}
+```
 
-**Read it aloud:** the old table predicted $B_k s_k$, the plant showed $y_k$; add the surprise back, along the step only.
+**Read it aloud:** the old table predicted $`B_k s_k`$, the plant showed $`y_k`$; add the surprise back, along the step only.
 
-**The same update on the inverse**, $H_k = B_k^{-1}$, so no linear system is solved at all:
+**The same update on the inverse**, $`H_k = B_k^{-1}`$, so no linear system is solved at all:
 
-$$s_k = -H_k F(x_k), \qquad H_{k+1} = H_k + \frac{(s_k - H_k y_k)\,s_k^{\mathsf T} H_k}{s_k^{\mathsf T} H_k y_k}$$
+```math
+s_k = -H_k F(x_k), \qquad H_{k+1} = H_k + \frac{(s_k - H_k y_k)\,s_k^{\mathsf T} H_k}{s_k^{\mathsf T} H_k y_k}
+```
 
 **Read it aloud:** a few products replace a whole solve.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p$, $q$, $u$ | stock flow, water flow, and their total, L/s | 3.18, 4.32 and 7.5 at the answer | — |
-| $c_0$, $c_1$, $c_2$ | stock strength; targets for tank 1 and tank 2, mg/L | 10, 4, 2.5 | $c_2$ lowered to 2.0: total 12.50, $p$ 5.5000, $q$ 7.0000 |
-| $\gamma$ | decay rate of the disinfectant, per second | 0.002 | halved: total 15.00, $p$ 6.3600, $q$ 8.6400 |
-| $\beta_1$, $\beta_2$ | tank sizes: tank $i$ holds $\beta_i u^2$ litres for $\beta_i u$ seconds | 4 and 40 s²/L; 225.0 L for 30.0 s, 2250.0 L for 300.0 s | less total flow |
-| $F$ | the two balances, mg/s; zero at the answer | (−14.0480, −0.8000) at yesterday's (2, 6) | — |
-| $J$, $h$, $g$ | the Jacobian; its two distinct entries | `[[5.52, -4.48], [-1.50, -1.50]]` at the answer | — |
-| $x_k$, $x^*$, $e_k$ | flows after $k$ steps; the answer; the error | $x_0 = (2, 6)$, $x^* = (3.18, 4.32)$, $\|e_0\|$ = 2.05e0 | — |
-| $s_k$, $y_k$ | the step taken; the change in $F$ across it | $\|y_2\|$ = 4.97e-3 | — |
-| $B_k$, $H_k$ | Broyden's estimate of $J$; its inverse | $B_0 = J(x_0)$; $B_5$ = `[[5.51, -4.47], [-1.55, -1.46]]` | — |
-| $L$ | how fast $J$ changes: $\|J(a) - J(b)\| \le L\,\|a - b\|$ | 0.8102 | looser bound |
-| $\kappa$, $\|A\|_F$, $I$ | condition number $\|J\|\,\|J^{-1}\|$; size of a matrix, the square root of its summed squared entries; the identity matrix, 1 on the diagonal and 0 elsewhere | $\|J(x^*)^{-1}\|$ = 0.4742, κ = 3.37 | a less trustworthy residual |
-| $n$, $i$, $\Delta u$; $t$, $M$, $E$, $P$, $w$, $A$, $a$, $b$, $\theta$ | number of unknowns; a tank's number; a change in total flow. Proof helpers: the fraction of the way along a line; $\|J(x^*)^{-1}\|$; a small perturbation; the projection onto the step; a direction at right angles to it; a matrix, the column and row of a one-piece change to it, and one number built from them | $n$ = 2 here, 500 in the cost count; $M$ = 0.4742 | — |
+| $`p`$, $`q`$, $`u`$ | stock flow, water flow, and their total, L/s | 3.18, 4.32 and 7.5 at the answer | — |
+| $`c_0`$, $`c_1`$, $`c_2`$ | stock strength; targets for tank 1 and tank 2, mg/L | 10, 4, 2.5 | $`c_2`$ lowered to 2.0: total 12.50, $`p`$ 5.5000, $`q`$ 7.0000 |
+| $`\gamma`$ | decay rate of the disinfectant, per second | 0.002 | halved: total 15.00, $`p`$ 6.3600, $`q`$ 8.6400 |
+| $`\beta_1`$, $`\beta_2`$ | tank sizes: tank $`i`$ holds $`\beta_i u^2`$ litres for $`\beta_i u`$ seconds | 4 and 40 s²/L; 225.0 L for 30.0 s, 2250.0 L for 300.0 s | less total flow |
+| $`F`$ | the two balances, mg/s; zero at the answer | (−14.0480, −0.8000) at yesterday's (2, 6) | — |
+| $`J`$, $`h`$, $`g`$ | the Jacobian; its two distinct entries | `[[5.52, -4.48], [-1.50, -1.50]]` at the answer | — |
+| $`x_k`$, $`x^*`$, $`e_k`$ | flows after $`k`$ steps; the answer; the error | $`x_0 = (2, 6)`$, $`x^* = (3.18, 4.32)`$, $`\Vert e_0\Vert`$ = 2.05e0 | — |
+| $`s_k`$, $`y_k`$ | the step taken; the change in $`F`$ across it | $`\Vert y_2\Vert`$ = 4.97e-3 | — |
+| $`B_k`$, $`H_k`$ | Broyden's estimate of $`J`$; its inverse | $`B_0 = J(x_0)`$; $`B_5`$ = `[[5.51, -4.47], [-1.55, -1.46]]` | — |
+| $`L`$ | how fast $`J`$ changes: $`\Vert J(a) - J(b)\Vert \le L\,\Vert a - b\Vert`$ | 0.8102 | looser bound |
+| $`\kappa`$, $`\Vert A\Vert_F`$, $`I`$ | condition number $`\Vert J\Vert\,\Vert J^{-1}\Vert`$; size of a matrix, the square root of its summed squared entries; the identity matrix, 1 on the diagonal and 0 elsewhere | $`\Vert J(x^*)^{-1}\Vert`$ = 0.4742, κ = 3.37 | a less trustworthy residual |
+| $`n`$, $`i`$, $`\Delta u`$; $`t`$, $`M`$, $`E`$, $`P`$, $`w`$, $`A`$, $`a`$, $`b`$, $`\theta`$ | number of unknowns; a tank's number; a change in total flow. Proof helpers: the fraction of the way along a line; $`\Vert J(x^*)^{-1}\Vert`$; a small perturbation; the projection onto the step; a direction at right angles to it; a matrix, the column and row of a one-piece change to it, and one number built from them | $`n`$ = 2 here, 500 in the cost count; $`M`$ = 0.4742 | — |
 
 ### When it holds
 
-- **The Jacobian is invertible at the root.** Here $\det J = c_0\,g$, which is −15.00 at the answer. Where $g = 0$, at a total flow of 3.75 L/s, $\det J$ = 0.0 and there is no Newton step at all.
-- **The Jacobian changes smoothly.** The proof needs $L$. A valve that snaps shut breaks it, and no rate is promised.
-- **The start is close enough.** The equations have a second root: $p = q = 0$, the empty plant, where nothing flows and both balances are zero. From (1, 2), Newton goes there in 9 steps.
-- **For Broyden, a good first table.** Start it with the identity matrix instead of $J(x_0)$ and its first step lands 1.31e1 L/s from the answer; it ends on the empty plant.
+- **The Jacobian is invertible at the root.** Here $`\det J = c_0\,g`$, which is −15.00 at the answer. Where $`g = 0`$, at a total flow of 3.75 L/s, $`\det J`$ = 0.0 and there is no Newton step at all.
+- **The Jacobian changes smoothly.** The proof needs $`L`$. A valve that snaps shut breaks it, and no rate is promised.
+- **The start is close enough.** The equations have a second root: $`p = q = 0`$, the empty plant, where nothing flows and both balances are zero. From (1, 2), Newton goes there in 9 steps.
+- **For Broyden, a good first table.** Start it with the identity matrix instead of $`J(x_0)`$ and its first step lands 1.31e1 L/s from the answer; it ends on the empty plant.
 - **Errors well above rounding.** Newton's step 4 is at the rounding floor, 9.93e-16, and its ratio there means nothing.
 
 ---
@@ -99,100 +109,108 @@ $$s_k = -H_k F(x_k), \qquad H_{k+1} = H_k + \frac{(s_k - H_k y_k)\,s_k^{\mathsf 
 
 ### Step 0: near a point, a smooth map is almost a matrix
 
-Zoom in and a smooth map looks linear: a small move $s$ changes $F$ by about $J(x)\,s$. Newton solves that linear model exactly. The model misses only by the bend, which grows as the square of the move, so the new error is about a constant times the old error squared.
+Zoom in and a smooth map looks linear: a small move $`s`$ changes $`F`$ by about $`J(x)\,s`$. Newton solves that linear model exactly. The model misses only by the bend, which grows as the square of the move, so the new error is about a constant times the old error squared.
 
 Broyden remembers the table instead of measuring it. Each step shows the plant's response in one direction; the update writes that in and leaves every other direction alone.
 
 ### Step 1: Newton's step is the linear model's root
 
-Set the model $F(x_k) + J(x_k)\,s$ to zero: that is $J(x_k)\,s_k = -F(x_k)$, an ordinary linear system ([Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md)). With one unknown it is the familiar step: minus the value divided by the slope.
+Set the model $`F(x_k) + J(x_k)\,s`$ to zero: that is $`J(x_k)\,s_k = -F(x_k)`$, an ordinary linear system ([Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md)). With one unknown it is the familiar step: minus the value divided by the slope.
 
 ### Step 2: the error is squared, with a constant you can compute
 
-Write the new error and use $F(x^*) = 0$:
+Write the new error and use $`F(x^*) = 0`$:
 
-$$e_{k+1} = J(x_k)^{-1}\Big( J(x_k)\,e_k - \big(F(x_k) - F(x^*)\big) \Big)$$
+```math
+e_{k+1} = J(x_k)^{-1}\Big( J(x_k)\,e_k - \big(F(x_k) - F(x^*)\big) \Big)
+```
 
-Walk from $x^*$ to $x_k$ along the line $x^* + t\,e_k$, $t$ from 0 to 1. The change in $F$ adds up the small changes on the way, $\int_0^1 J(x^* + t e_k)\,e_k\,dt$, so the bracket is
+Walk from $`x^*`$ to $`x_k`$ along the line $`x^* + t\,e_k`$, $`t`$ from 0 to 1. The change in $`F`$ adds up the small changes on the way, $`\int_0^1 J(x^* + t e_k)\,e_k\,dt`$, so the bracket is
 
-$$\int_0^1 \big( J(x_k) - J(x^* + t e_k) \big)\, e_k \, dt$$
+```math
+\int_0^1 \big( J(x_k) - J(x^* + t e_k) \big)\, e_k \, dt
+```
 
-The two Jacobians are read $(1 - t)\|e_k\|$ apart, so they differ by at most $L(1 - t)\|e_k\|$, and the integral of $1 - t$ is $1/2$:
+The two Jacobians are read $`(1 - t)\|e_k\|`$ apart, so they differ by at most $`L(1 - t)\|e_k\|`$, and the integral of $`1 - t`$ is $`1/2`$:
 
-$$\|e_{k+1}\| \;\le\; \frac{L}{2}\,\|J(x_k)^{-1}\|\,\|e_k\|^2$$
+```math
+\|e_{k+1}\| \;\le\; \frac{L}{2}\,\|J(x_k)^{-1}\|\,\|e_k\|^2
+```
 
 **Read it aloud:** the next error is at most a fixed constant times the current error squared.
 
-For the tanks, $J$ depends only on $u$: moving $u$ by $\Delta u$ moves the rows by $\Delta u$ times (−0.064, −0.064) and (−0.400, −0.400). So $L = 2\sqrt{0.064^2 + 0.400^2} = 0.8102$. The 2 is one $\sqrt2$ because both columns change alike, and one because $\lvert\Delta u\rvert \le \sqrt2\,\|a - b\|$. Near the answer the constant is $(L/2)\,\|J(x^*)^{-1}\| = 0.1921$. The measured ratio is 0.1850, then 0.1864. At step 2 the bound allows 8.43e-5 and the true error is 8.19e-5, a ratio of 1.0304; at step 3 the ratio is 1.0304 again. The observed order is 1.211 at step 2, still far out, and 1.999 at step 3, against the theorem's 2.
+For the tanks, $`J`$ depends only on $`u`$: moving $`u`$ by $`\Delta u`$ moves the rows by $`\Delta u`$ times (−0.064, −0.064) and (−0.400, −0.400). So $`L = 2\sqrt{0.064^2 + 0.400^2} = 0.8102`$. The 2 is one $`\sqrt2`$ because both columns change alike, and one because $`\lvert\Delta u\rvert \le \sqrt2\,\|a - b\|`$. Near the answer the constant is $`(L/2)\,\|J(x^*)^{-1}\| = 0.1921`$. The measured ratio is 0.1850, then 0.1864. At step 2 the bound allows 8.43e-5 and the true error is 8.19e-5, a ratio of 1.0304; at step 3 the ratio is 1.0304 again. The observed order is 1.211 at step 2, still far out, and 1.999 at step 3, against the theorem's 2.
 
 <details>
 <summary>Detailed proof: from a close start, Newton converges with order 2</summary>
 
-**Assume** $F$ has a Jacobian with $\|J(a) - J(b)\| \le L\|a - b\|$ near $x^*$, $F(x^*) = 0$, and $J(x^*)$ is invertible. Write $M = \|J(x^*)^{-1}\|$.
+**Assume** $`F`$ has a Jacobian with $`\|J(a) - J(b)\| \le L\|a - b\|`$ near $`x^*`$, $`F(x^*) = 0`$, and $`J(x^*)`$ is invertible. Write $`M = \|J(x^*)^{-1}\|`$.
 
-**The bound.** The algebra above is exact once $J(x_k)$ is invertible: $\|e_{k+1}\| \le \|J(x_k)^{-1}\| \int_0^1 L(1 - t)\,dt\,\|e_k\|^2 = \tfrac{L}{2}\|J(x_k)^{-1}\|\,\|e_k\|^2$.
+**The bound.** The algebra above is exact once $`J(x_k)`$ is invertible: $`\|e_{k+1}\| \le \|J(x_k)^{-1}\| \int_0^1 L(1 - t)\,dt\,\|e_k\|^2 = \tfrac{L}{2}\|J(x_k)^{-1}\|\,\|e_k\|^2`$.
 
-**The inverse stays bounded.** Suppose $\|e_k\| \le 1/(2LM)$. Then $J(x_k) = J(x^*)(I - E)$ with $E = J(x^*)^{-1}(J(x^*) - J(x_k))$, and $\|E\| \le M L \|e_k\| \le 1/2$. The series $I + E + E^2 + \dots$ converges to $(I - E)^{-1}$, with size at most $1 + 1/2 + 1/4 + \dots = 2$. So $J(x_k)$ is invertible and $\|J(x_k)^{-1}\| \le 2M$.
+**The inverse stays bounded.** Suppose $`\|e_k\| \le 1/(2LM)`$. Then $`J(x_k) = J(x^*)(I - E)`$ with $`E = J(x^*)^{-1}(J(x^*) - J(x_k))`$, and $`\|E\| \le M L \|e_k\| \le 1/2`$. The series $`I + E + E^2 + \dots`$ converges to $`(I - E)^{-1}`$, with size at most $`1 + 1/2 + 1/4 + \dots = 2`$. So $`J(x_k)`$ is invertible and $`\|J(x_k)^{-1}\| \le 2M`$.
 
-**Convergence.** With both facts, $\|e_{k+1}\| \le L M \|e_k\|^2 \le \tfrac12\|e_k\|$. The error at least halves, so the next iterate also satisfies the assumption. By induction every step is defined, $e_k \to 0$, and $\|e_{k+1}\|/\|e_k\|^2 \le LM$: order 2. $\blacksquare$
+**Convergence.** With both facts, $`\|e_{k+1}\| \le L M \|e_k\|^2 \le \tfrac12\|e_k\|`$. The error at least halves, so the next iterate also satisfies the assumption. By induction every step is defined, $`e_k \to 0`$, and $`\|e_{k+1}\|/\|e_k\|^2 \le LM`$: order 2. $`\blacksquare`$
 
-For the tanks, $1/(2LM) = 1.30$ L/s. Yesterday's start is 2.05e0 away and still works: the guarantee is sufficient, not necessary.
+For the tanks, $`1/(2LM) = 1.30`$ L/s. Yesterday's start is 2.05e0 away and still works: the guarantee is sufficient, not necessary.
 
 </details>
 
 ### Step 3: what a Newton step costs
 
-Two costs, counted at $n$ unknowns ([Counting the work](../01-Floating%20Point%20and%20Error/08-operation-counts-and-cost.md) counts them; a **flop** is one floating-point add, subtract, multiply or divide on two numbers).
+Two costs, counted at $`n`$ unknowns ([Counting the work](../01-Floating%20Point%20and%20Error/08-operation-counts-and-cost.md) counts them; a **flop** is one floating-point add, subtract, multiply or divide on two numbers).
 
-- **The table.** $J$ has $n$ columns. If no formula for it exists, each column comes from one extra evaluation of $F$ by a small difference, so a step costs $n + 1$ evaluations.
-- **The solve.** Elimination on a full $n \times n$ table costs about $2n^3/3$ flops.
+- **The table.** $`J`$ has $`n`$ columns. If no formula for it exists, each column comes from one extra evaluation of $`F`$ by a small difference, so a step costs $`n + 1`$ evaluations.
+- **The solve.** Elimination on a full $`n \times n`$ table costs about $`2n^3/3`$ flops.
 
-| Unknowns $n$ | Newton per step | Broyden per step |
+| Unknowns $`n`$ | Newton per step | Broyden per step |
 | --- | --- | --- |
 | 2 | 3 evaluations, about 5 flops | 1 evaluation, about 32 flops |
 | 500 | 501 evaluations, about 83,333,333 flops | 1 evaluation, about 2,000,000 flops |
 
-At $n = 2$ Broyden does more arithmetic, but in a real plant model the evaluation is the expensive part.
+At $`n = 2`$ Broyden does more arithmetic, but in a real plant model the evaluation is the expensive part.
 
 ### Step 4: Broyden's update is the smallest change that fits the newest step
 
-The step $s_k$ produced the change $y_k$, so the new table should predict it: $B_{k+1}s_k = y_k$. This **secant condition** is the many-unknown form of the secant method's chord slope.
+The step $`s_k`$ produced the change $`y_k`$, so the new table should predict it: $`B_{k+1}s_k = y_k`$. This **secant condition** is the many-unknown form of the secant method's chord slope.
 
-It pins down only $n$ of the table's $n^2$ entries. Broyden changes nothing the step did not test: for any direction $w$ at right angles to $s_k$, $s_k^{\mathsf T} w = 0$, so $B_{k+1}w = B_k w$. In the code the secant condition holds to 8.67e-19 on a change of size 4.97e-3, which is rounding.
+It pins down only $`n`$ of the table's $`n^2`$ entries. Broyden changes nothing the step did not test: for any direction $`w`$ at right angles to $`s_k`$, $`s_k^{\mathsf T} w = 0`$, so $`B_{k+1}w = B_k w`$. In the code the secant condition holds to 8.67e-19 on a change of size 4.97e-3, which is rounding.
 
 <details>
 <summary>Detailed proof: no matrix that fits the step is closer to the old one</summary>
 
-Measure a matrix by $\|A\|_F$, the square root of the sum of its squared entries. Let $B$ be any matrix with $B s_k = y_k$. Then $y_k - B_k s_k = (B - B_k)s_k$, so Broyden's change is
+Measure a matrix by $`\|A\|_F`$, the square root of the sum of its squared entries. Let $`B`$ be any matrix with $`B s_k = y_k`$. Then $`y_k - B_k s_k = (B - B_k)s_k`$, so Broyden's change is
 
-$$B_{k+1} - B_k = (B - B_k)\,\frac{s_k s_k^{\mathsf T}}{s_k^{\mathsf T} s_k}$$
+$`\displaystyle B_{k+1} - B_k = (B - B_k)\,\frac{s_k s_k^{\mathsf T}}{s_k^{\mathsf T} s_k}`$
 
-The matrix $P = s_k s_k^{\mathsf T}/(s_k^{\mathsf T}s_k)$ projects every list onto the line of $s_k$, so it never lengthens anything. Each row of $(B - B_k)P$ is a row of $B - B_k$ projected, so it is no longer than before. Summing the squared rows, $\|B_{k+1} - B_k\|_F \le \|B - B_k\|_F$. Equality forces every row to lie along $s_k$ already, which makes $B = B_{k+1}$. So Broyden's matrix is the unique closest one. $\blacksquare$
+The matrix $`P = s_k s_k^{\mathsf T}/(s_k^{\mathsf T}s_k)`$ projects every list onto the line of $`s_k`$, so it never lengthens anything. Each row of $`(B - B_k)P`$ is a row of $`B - B_k`$ projected, so it is no longer than before. Summing the squared rows, $`\|B_{k+1} - B_k\|_F \le \|B - B_k\|_F`$. Equality forces every row to lie along $`s_k`$ already, which makes $`B = B_{k+1}`$. So Broyden's matrix is the unique closest one. $`\blacksquare`$
 
 </details>
 
 ### Step 5: update the inverse, and skip the solve
 
-Solving $B_k s_k = -F(x_k)$ would still cost about $2n^3/3$ flops. But the update adds one column times one row, and such a change has an inverse in closed form, the **Sherman–Morrison formula**:
+Solving $`B_k s_k = -F(x_k)`$ would still cost about $`2n^3/3`$ flops. But the update adds one column times one row, and such a change has an inverse in closed form, the **Sherman–Morrison formula**:
 
-$$(A + a\,b^{\mathsf T})^{-1} = A^{-1} - \frac{A^{-1}a\,b^{\mathsf T}A^{-1}}{1 + b^{\mathsf T}A^{-1}a}$$
+```math
+(A + a\,b^{\mathsf T})^{-1} = A^{-1} - \frac{A^{-1}a\,b^{\mathsf T}A^{-1}}{1 + b^{\mathsf T}A^{-1}a}
+```
 
-With $A = B_k$, $a = (y_k - B_k s_k)/(s_k^{\mathsf T}s_k)$ and $b = s_k$, it simplifies to the $H_{k+1}$ in the formula. A step then costs four matrix-and-list products: about $8n^2$ flops. Over the run, the code's $H_k$ and $B_k$ multiply to the identity within 6.66e-16.
+With $`A = B_k`$, $`a = (y_k - B_k s_k)/(s_k^{\mathsf T}s_k)`$ and $`b = s_k`$, it simplifies to the $`H_{k+1}`$ in the formula. A step then costs four matrix-and-list products: about $`8n^2`$ flops. Over the run, the code's $`H_k`$ and $`B_k`$ multiply to the identity within 6.66e-16.
 
 <details>
 <summary>Detailed proof: the Sherman–Morrison formula, and the inverse update</summary>
 
-Multiply $A + ab^{\mathsf T}$ by the claimed inverse and write $\theta = b^{\mathsf T}A^{-1}a$, a single number:
+Multiply $`A + ab^{\mathsf T}`$ by the claimed inverse and write $`\theta = b^{\mathsf T}A^{-1}a`$, a single number:
 
-$$I + a b^{\mathsf T}A^{-1} - \frac{a\,b^{\mathsf T}A^{-1} + a\,\theta\,b^{\mathsf T}A^{-1}}{1 + \theta} = I + a b^{\mathsf T}A^{-1} - a\,b^{\mathsf T}A^{-1} = I$$
+$`\displaystyle I + a b^{\mathsf T}A^{-1} - \frac{a\,b^{\mathsf T}A^{-1} + a\,\theta\,b^{\mathsf T}A^{-1}}{1 + \theta} = I + a b^{\mathsf T}A^{-1} - a\,b^{\mathsf T}A^{-1} = I`$
 
-So the formula holds whenever $1 + \theta \neq 0$.
+So the formula holds whenever $`1 + \theta \neq 0`$.
 
-For Broyden, $A^{-1}a = (H_k y_k - s_k)/(s_k^{\mathsf T}s_k)$ and $1 + \theta = s_k^{\mathsf T}H_k y_k/(s_k^{\mathsf T}s_k)$. Substituting, the factors $s_k^{\mathsf T}s_k$ cancel and
+For Broyden, $`A^{-1}a = (H_k y_k - s_k)/(s_k^{\mathsf T}s_k)`$ and $`1 + \theta = s_k^{\mathsf T}H_k y_k/(s_k^{\mathsf T}s_k)`$. Substituting, the factors $`s_k^{\mathsf T}s_k`$ cancel and
 
-$$H_{k+1} = H_k + \frac{(s_k - H_k y_k)\,s_k^{\mathsf T}H_k}{s_k^{\mathsf T}H_k y_k}. \qquad\blacksquare$$
+$`\displaystyle H_{k+1} = H_k + \frac{(s_k - H_k y_k)\,s_k^{\mathsf T}H_k}{s_k^{\mathsf T}H_k y_k}. \qquad\blacksquare`$
 
-The update fails when $s_k^{\mathsf T}H_k y_k = 0$: then $B_{k+1}$ is singular and the formula divides by zero. The runs on this card never meet that case; a careful code restarts from a fresh Jacobian.
+The update fails when $`s_k^{\mathsf T}H_k y_k = 0`$: then $`B_{k+1}`$ is singular and the formula divides by zero. The runs on this card never meet that case; a careful code restarts from a fresh Jacobian.
 
 </details>
 
@@ -200,13 +218,13 @@ The update fails when $s_k^{\mathsf T}H_k y_k = 0$: then $B_{k+1}$ is singular a
 
 Broyden's error ratios fall to zero: 1.12e-1, 3.90e-3, 4.38e-4, 1.78e-6. That is **superlinear** convergence: faster than any fixed ratio. The measured orders, 2.530 then 1.395, settle on no single number.
 
-The theorem, stated here and proved by Broyden, Dennis and Moré (1973): with $F$ as in Step 2 and both $x_0$ and $B_0$ close enough, Broyden converges superlinearly. The key, the Dennis–Moré condition, is that $B_k$ must be right only along the step it takes: $\|(B_k - J(x^*))\,s_k\| / \|s_k\|$ must fall to zero. From $k$ = 2 to 4 it falls 9.26e-3, 9.34e-4, 3.64e-6, while the whole table's error $\|B_k - J(x^*)\|$ stalls at 0.0639. When the flows are right to 7.16e-15, $B_5$ is `[[5.51, -4.47], [-1.55, -1.46]]` against the true `[[5.52, -4.48], [-1.50, -1.50]]`: the bottom row never became right, yet the flows did.
+The theorem, stated here and proved by Broyden, Dennis and Moré (1973): with $`F`$ as in Step 2 and both $`x_0`$ and $`B_0`$ close enough, Broyden converges superlinearly. The key, the Dennis–Moré condition, is that $`B_k`$ must be right only along the step it takes: $`\|(B_k - J(x^*))\,s_k\| / \|s_k\|`$ must fall to zero. From $`k`$ = 2 to 4 it falls 9.26e-3, 9.34e-4, 3.64e-6, while the whole table's error $`\|B_k - J(x^*)\|`$ stalls at 0.0639. When the flows are right to 7.16e-15, $`B_5`$ is `[[5.51, -4.47], [-1.55, -1.46]]` against the true `[[5.52, -4.48], [-1.50, -1.50]]`: the bottom row never became right, yet the flows did.
 
-The code then takes two steps at the rounding floor, 1.03e-14 and 1.47e-15 long. There $y_k$ is noise, divided by $s_k^{\mathsf T}s_k$, and the table jumps to `[[7.72, -2.84], [-1.74, -1.75]]`. A careful code stops updating at the floor.
+The code then takes two steps at the rounding floor, 1.03e-14 and 1.47e-15 long. There $`y_k`$ is noise, divided by $`s_k^{\mathsf T}s_k`$, and the table jumps to `[[7.72, -2.84], [-1.74, -1.75]]`. A careful code stops updating at the floor.
 
 ### Step 7: when to stop, and how wrong the answer is
 
-A small miss $\|F(x_k)\|$ is a small backward error: the flows exactly solve a slightly different plant ([Forward and backward error](../01-Floating%20Point%20and%20Error/06-forward-and-backward-error.md)). Multiply it by $\|J^{-1}\|$ to estimate the error in the flows; this is a bound only to first order.
+A small miss $`\|F(x_k)\|`$ is a small backward error: the flows exactly solve a slightly different plant ([Forward and backward error](../01-Floating%20Point%20and%20Error/06-forward-and-backward-error.md)). Multiply it by $`\|J^{-1}\|`$ to estimate the error in the flows; this is a bound only to first order.
 
 At Newton's step 3 the miss is 2.65e-9 mg/s, which estimates the error at 1.26e-9 L/s. The true error is 1.25e-9, a ratio of 1.0071. With κ = 3.37 the plant is well conditioned; the trouble on this card is never conditioning or stability, only the start. [When to stop](03-stopping-criteria-and-error-estimates.md) turns this into a stopping test.
 
@@ -214,31 +232,31 @@ At Newton's step 3 the miss is 2.65e-9 mg/s, which estimates the error at 1.26e-
 
 ## Worked numbers, by hand
 
-One Newton step from yesterday's settings, $x_0 = (2, 6)$, with $c_0 = 10$, $c_1 = 4$, $c_2 = 2.5$, $\gamma = 0.002$, $\beta_1 = 4$, $\beta_2 = 40$.
+One Newton step from yesterday's settings, $`x_0 = (2, 6)`$, with $`c_0 = 10`$, $`c_1 = 4`$, $`c_2 = 2.5`$, $`\gamma = 0.002`$, $`\beta_1 = 4`$, $`\beta_2 = 40`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| tank 1 balance | $10 \times 2 - 4 \times 8 \times (1 + 0.002 \times 4 \times 8)$ | −14.0480 mg/s |
-| tank 2 balance | $4 \times 8 - 2.5 \times 8 \times (1 + 0.002 \times 40 \times 8)$ | −0.8000 mg/s |
-| $h$ and the top row | $4 \times (1 + 2 \times 0.002 \times 4 \times 8)$; then $10 - h$, $-h$ | 5.488, −4.512 |
-| $g$, the bottom row | $4 - 2.5 \times (1 + 2 \times 0.002 \times 40 \times 8)$ | −1.700, −1.700 |
-| determinant | $c_0\,g = 10 \times (-1.700)$ | −17.000 |
-| the step $s_0$ | solve $J(x_0)\,s = (14.048,\ 0.8)$ by elimination | (1.192471, −1.663059) |
-| $x_1$ | $(2 + 1.192471,\ 6 - 1.663059)$ | **(3.192471, 4.336941)** |
-| error | $\|x_1 - x^*\|$ against the closed form (3.18, 4.32) | 2.10e-2 L/s |
+| tank 1 balance | $`10 \times 2 - 4 \times 8 \times (1 + 0.002 \times 4 \times 8)`$ | −14.0480 mg/s |
+| tank 2 balance | $`4 \times 8 - 2.5 \times 8 \times (1 + 0.002 \times 40 \times 8)`$ | −0.8000 mg/s |
+| $`h`$ and the top row | $`4 \times (1 + 2 \times 0.002 \times 4 \times 8)`$; then $`10 - h`$, $`-h`$ | 5.488, −4.512 |
+| $`g`$, the bottom row | $`4 - 2.5 \times (1 + 2 \times 0.002 \times 40 \times 8)`$ | −1.700, −1.700 |
+| determinant | $`c_0\,g = 10 \times (-1.700)`$ | −17.000 |
+| the step $`s_0`$ | solve $`J(x_0)\,s = (14.048,\ 0.8)`$ by elimination | (1.192471, −1.663059) |
+| $`x_1`$ | $`(2 + 1.192471,\ 6 - 1.663059)`$ | **(3.192471, 4.336941)** |
+| error | $`\Vert x_1 - x^*\Vert`$ against the closed form (3.18, 4.32) | 2.10e-2 L/s |
 
 One step took the error from 2.05e0 to 2.10e-2 L/s. Three more Newton steps reach 9.93e-16; Broyden takes the same first step, then four more to reach 7.16e-15.
 
-The closed form exists because tank 2 sees only the total flow: its balance gives $u^* = (c_1/c_2 - 1)/(\gamma\beta_2) = 7.5$, then tank 1 gives $p^*$. A plant with a recycle line has no such shortcut.
+The closed form exists because tank 2 sees only the total flow: its balance gives $`u^* = (c_1/c_2 - 1)/(\gamma\beta_2) = 7.5`$, then tank 1 gives $`p^*`$. A plant with a recycle line has no such shortcut.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Start at a total of 3.75 L/s, e.g. (1, 2.75) | $\det J$ = 0.0, no step | Tank 2's balance is flat in both flows there, so the table cannot be inverted |
+| Start at a total of 3.75 L/s, e.g. (1, 2.75) | $`\det J`$ = 0.0, no step | Tank 2's balance is flat in both flows there, so the table cannot be inverted |
 | Start at (1, 2) | (0.0, 0.0) after 9 steps, miss 0.00e0 | A true root, the empty plant; Newton converges to whichever root its start leads to |
-| Freeze $J(x_0)$ for ever | 9 steps, error ratio 0.1176 | A fixed table gives a contraction, so the order drops to 1 |
-| Broyden with $B_0 = I$ | 1.31e1 after step 1, 3.29e1 at step 5; at (0.0000, 0.0000) by step 20 | A wrong first table sends the first step far off, and the method settles on the wrong root |
+| Freeze $`J(x_0)`$ for ever | 9 steps, error ratio 0.1176 | A fixed table gives a contraction, so the order drops to 1 |
+| Broyden with $`B_0 = I`$ | 1.31e1 after step 1, 3.29e1 at step 5; at (0.0000, 0.0000) by step 20 | A wrong first table sends the first step far off, and the method settles on the wrong root |
 
 The code prints all four.
 
@@ -246,7 +264,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The code takes three independent roads to the flows and makes them agree: the closed form through the total flow; Newton, with its error bound checked at every step; and Broyden on the inverse, with the secant condition and $H_k B_k = I$ checked in floating point. It then runs the four breaks, the costs and the chart's points.
+The code takes three independent roads to the flows and makes them agree: the closed form through the total flow; Newton, with its error bound checked at every step; and Broyden on the inverse, with the secant condition and $`H_k B_k = I`$ checked in floating point. It then runs the four breaks, the costs and the chart's points.
 
 ### Python
 
@@ -660,17 +678,17 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the three theorems of Why it works for any number of unknowns $n$, and checks the card's exact tank arithmetic.
+Lean proves the three theorems of Why it works for any number of unknowns $`n`$, and checks the card's exact tank arithmetic.
 
-- Newton: say $\|J(a) - J(b)\| \le L\,\|a - b\|$ near the root, $J(x^*)$ is invertible, and $\|e_0\| \le 1/(2LM)$. Then every step is defined and $\|e_{k+1}\| \le \tfrac{L}{2}\,\|J(x_k)^{-1}\|\,\|e_k\|^2$.
-- Under the same assumptions, $\|e_{k+1}\| \le L M \|e_k\|^2 \le \tfrac12\|e_k\|$, so $x_k \to x^*$ with order 2.
-- Broyden: for any step $s_k \ne 0$, $B_{k+1}$ meets the secant condition $B_{k+1} s_k = y_k$, and $B_{k+1} w = B_k w$ for every $w$ at right angles to $s_k$.
-- Among all matrices $B$ with $B s_k = y_k$, Broyden's $B_{k+1}$ is the one closest to $B_k$ in $\|\cdot\|_F$, and the only one that close.
-- Sherman–Morrison: if $A$ is invertible and $1 + \theta \ne 0$, the formula gives the inverse of $A + a\,b^{\mathsf T}$.
+- Newton: say $`\|J(a) - J(b)\| \le L\,\|a - b\|`$ near the root, $`J(x^*)`$ is invertible, and $`\|e_0\| \le 1/(2LM)`$. Then every step is defined and $`\|e_{k+1}\| \le \tfrac{L}{2}\,\|J(x_k)^{-1}\|\,\|e_k\|^2`$.
+- Under the same assumptions, $`\|e_{k+1}\| \le L M \|e_k\|^2 \le \tfrac12\|e_k\|`$, so $`x_k \to x^*`$ with order 2.
+- Broyden: for any step $`s_k \ne 0`$, $`B_{k+1}`$ meets the secant condition $`B_{k+1} s_k = y_k`$, and $`B_{k+1} w = B_k w`$ for every $`w`$ at right angles to $`s_k`$.
+- Among all matrices $`B`$ with $`B s_k = y_k`$, Broyden's $`B_{k+1}`$ is the one closest to $`B_k`$ in $`\|\cdot\|_F`$, and the only one that close.
+- Sherman–Morrison: if $`A`$ is invertible and $`1 + \theta \ne 0`$, the formula gives the inverse of $`A + a\,b^{\mathsf T}`$.
 - The card's exact numbers: the balances (−14.048, −0.8) at (2, 6), and zero at (3.18, 4.32).
-- Also $\det J$ = −17, −15 and 0 at totals 8, 7.5 and 3.75; $h$ = 4.512; the two Try-changing answers; and $8 \times 500^2$ = 2,000,000.
+- Also $`\det J`$ = −17, −15 and 0 at totals 8, 7.5 and 3.75; $`h`$ = 4.512; the two Try-changing answers; and $`8 \times 500^2`$ = 2,000,000.
 
-Floating-point runs, step counts, measured orders, Broyden's superlinear rate, the inverse update $H_{k+1}$ and What breaks are left to Python and Rust.
+Floating-point runs, step counts, measured orders, Broyden's superlinear rate, the inverse update $`H_{k+1}`$ and What breaks are left to Python and Rust.
 
 ```lean
 -- Newton in several unknowns, and Broyden when a Jacobian is too expensive: Newton's method for a system converges with order 2 from a close start, Broyden's update is the smallest change that fits the newest step, and the Sherman–Morrison formula inverts a rank-one change.
@@ -1035,8 +1053,8 @@ example : 8 * 500 ^ 2 = 2000000 := by norm_num
 > [!TIP]
 > **Try changing**
 > The first three answers are on the checks' `try:` lines; each of those edits stops the run at an assert.
-> - Guess first: tank 2 at 2.0 mg/L. Set `C2 = 2.0`. Total 12.50 L/s, $p$ 5.5000, $q$ 7.0000.
-> - Guess first: halve the decay rate. Set `K = 0.001`. Total 15.00, $p$ 6.3600, $q$ 8.6400.
+> - Guess first: tank 2 at 2.0 mg/L. Set `C2 = 2.0`. Total 12.50 L/s, $`p`$ 5.5000, $`q`$ 7.0000.
+> - Guess first: halve the decay rate. Set `K = 0.001`. Total 15.00, $`p`$ 6.3600, $`q`$ 8.6400.
 > - Guess first: start from (3, 3), farther in total flow. Set `x0 = [3.0, 3.0]`. Newton needs 5 steps and Broyden 6.
 > - Guess first: start from (1, 2.75). Set `x0 = [1.0, 2.75]`. The Jacobian is singular and the first Newton step divides by zero.
 
@@ -1049,7 +1067,7 @@ example : 8 * 500 ^ 2 = 2000000 := by norm_num
 >
 > - **Freezing the Jacobian to save work.** It skips the table and the factorisation after the first step, but drops the order to 1: 9 steps instead of 4, at a ratio of 0.1176.
 > - **Starting Broyden from the identity.** It skips the one Jacobian Broyden needs, and lands on the empty plant with error 5.36e0.
-> - **Expecting $B_k$ to become $J$.** It need not: with the flows right to 7.16e-15, $B_5$ is still 0.0639 from $J(x^*)$. Two updates at the rounding floor then move its top-left entry from 5.51 to 7.72, against the true 5.52.
+> - **Expecting $`B_k`$ to become $`J`$.** It need not: with the flows right to 7.16e-15, $`B_5`$ is still 0.0639 from $`J(x^*)`$. Two updates at the rounding floor then move its top-left entry from 5.51 to 7.72, against the true 5.52.
 > - **Counting steps, not evaluations.** Newton's 4 steps look better than Broyden's 5; in evaluations it is 12 against 7.
 
 ---
@@ -1063,7 +1081,7 @@ example : 8 * 500 ^ 2 = 2000000 := by norm_num
 - **Credit risk.** [Backing out the unobservable](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/04-asset-value-and-volatility-from-the-share-price.md) finds a firm's hidden asset value and volatility from two market numbers by a 2 × 2 Newton, halving any step that makes the miss bigger.
 
 > **Say it back**
-> Newton replaces several equations by their table of rates, the Jacobian, and solves that linear system for the next guess. Near a root where the Jacobian is invertible and changes smoothly, the new error is at most a constant times the old error squared. Broyden measures the table once, then corrects it along each step only: the smallest change that fits what the step showed. Updating the inverse makes a step cost one evaluation and about $8n^2$ flops. Both need a good start, because a bad start finds the wrong root.
+> Newton replaces several equations by their table of rates, the Jacobian, and solves that linear system for the next guess. Near a root where the Jacobian is invertible and changes smoothly, the new error is at most a constant times the old error squared. Broyden measures the table once, then corrects it along each step only: the smallest change that fits what the step showed. Updating the inverse makes a step cost one evaluation and about $`8n^2`$ flops. Both need a good start, because a bad start finds the wrong root.
 
 ---
 
@@ -1081,7 +1099,7 @@ example : 8 * 500 ^ 2 = 2000000 := by norm_num
 
 - [Nonlinear least squares](../../15-Optimization/02-Unconstrained%20Methods/09-nonlinear-least-squares-gauss-newton-and-levenberg-marquardt.md): more equations than unknowns, so no exact root; Gauss–Newton keeps this card's linear model and solves it by least squares, and damping rescues far starts.
 - [Every root at once](08-polynomial-roots-and-companion-matrices.md): the next card on this shelf finds all the roots of a polynomial together, so no start can pick the wrong one.
-- [LU with partial pivoting](../03-Numerical%20Linear%20Algebra/02-lu-decomposition-and-pivoting.md): the factorisation behind the $2n^3/3$ count, and how to reuse it when the table is frozen.
+- [LU with partial pivoting](../03-Numerical%20Linear%20Algebra/02-lu-decomposition-and-pivoting.md): the factorisation behind the $`2n^3/3`$ count, and how to reuse it when the table is frozen.
 
 This card's guarantees are all local, so it leaves one question open: how to make Newton safe from a far start in several unknowns, where no bracket exists to fall back on.
 

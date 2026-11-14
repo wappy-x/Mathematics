@@ -37,46 +37,52 @@ All three lines are the straight-line model of this card, which holds for a few 
 
 ## The formula
 
-Notation first, in words. This card introduces four letters that the rest of the wing uses freely. The **state** $x$ is the list of internal numbers, a column vector. The **input** $u$ is what we command, here the cart's acceleration. The **output** $y$ is what a sensor reads, here the tilt from the encoder at the hinge. The four matrices $A$, $B$, $C$, $D$ say how they connect. A prime means rate of change with time.
+Notation first, in words. This card introduces four letters that the rest of the wing uses freely. The **state** $`x`$ is the list of internal numbers, a column vector. The **input** $`u`$ is what we command, here the cart's acceleration. The **output** $`y`$ is what a sensor reads, here the tilt from the encoder at the hinge. The four matrices $`A`$, $`B`$, $`C`$, $`D`$ say how they connect. A prime means rate of change with time.
 
-$$x' = A\,x + B\,u, \qquad y = C\,x + D\,u$$
+```math
+x' = A\,x + B\,u, \qquad y = C\,x + D\,u
+```
 
-$$x(t) = e^{At}\,x(0) + \int_0^t e^{A(t-\tau)}\,B\,u(\tau)\,d\tau$$
+```math
+x(t) = e^{At}\,x(0) + \int_0^t e^{A(t-\tau)}\,B\,u(\tau)\,d\tau
+```
 
-**Read it aloud:** the state's rate is $A$ times the state plus $B$ times the input, and the sensor reads $C$ times the state plus $D$ times the input; the state at time $t$ is the start carried forward $t$ seconds, plus each earlier moment's input carried forward the $t - \tau$ seconds since it acted.
+**Read it aloud:** the state's rate is $`A`$ times the state plus $`B`$ times the input, and the sensor reads $`C`$ times the state plus $`D`$ times the input; the state at time $`t`$ is the start carried forward $`t`$ seconds, plus each earlier moment's input carried forward the $`t - \tau`$ seconds since it acted.
 
-For the cart and rod, with the state $x = (p, v, \theta, \omega)$:
+For the cart and rod, with the state $`x = (p, v, \theta, \omega)`$:
 
-$$A = \begin{pmatrix} 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & g/l & 0 \end{pmatrix}, \quad B = \begin{pmatrix} 0 \\ 1 \\ 0 \\ -1/l \end{pmatrix}, \quad C = \begin{pmatrix} 0 & 0 & 1 & 0 \end{pmatrix}, \quad D = 0$$
+```math
+A = \begin{pmatrix} 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & g/l & 0 \end{pmatrix}, \quad B = \begin{pmatrix} 0 \\ 1 \\ 0 \\ -1/l \end{pmatrix}, \quad C = \begin{pmatrix} 0 & 0 & 1 & 0 \end{pmatrix}, \quad D = 0
+```
 
-Row by row: position changes at the speed; speed changes at the commanded acceleration; tilt changes at the tilt rate; tilt rate changes by gravity tipping the rod further, $(g/l)\,\theta$, minus the push, which slides the hinge out from under the rod and tips it the other way, $u/l$.
+Row by row: position changes at the speed; speed changes at the commanded acceleration; tilt changes at the tilt rate; tilt rate changes by gravity tipping the rod further, $`(g/l)\,\theta`$, minus the push, which slides the hinge out from under the rod and tips it the other way, $`u/l`$.
 
-The matrix exponential $e^{At}$ is the power series $I + At + (At)^2/2! + \cdots$, which carries any start forward $t$ seconds; [The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md) defines and computes it. This card uses it.
+The matrix exponential $`e^{At}`$ is the power series $`I + At + (At)^2/2! + \cdots`$, which carries any start forward $`t`$ seconds; [The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md) defines and computes it. This card uses it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $x(0)$ | the state: the list that says everything about the rig now; its value at the start | $x(0) = (0, 0, 0.05, 0)$ | a bigger lean needs a bigger push, in proportion |
-| $p$, $v$ | cart position along the rail, m; cart speed, m/s | 0.083510 m and 0.334038 m/s at 0.5 s | — |
-| $\theta$, $\omega$ | rod tilt from upright, rad (theta); tilt rate, rad/s (omega) | 0.05 rad at the start; 0 and −0.262607 rad/s at 0.5 s | — |
-| $u$ | input: the cart's commanded acceleration, m/s² | 0.668076 m/s², steady | the rod comes back sooner, and overshoots harder |
-| $y$ | output: what the encoder reads, the tilt, rad | 0 at 0.5 s | — |
-| $A$ | the rate matrix: how the state drives its own rates | entries 1, 1 and $g/l$ = 16 per s² | — |
-| $B$ | the input matrix: where the push enters | $(0, 1, 0, -1/l)$, with $1/l$ = 1.630989 per m | — |
-| $C$, $D$ | output matrices: which blend of state and input the sensor sees | $C$ picks the tilt; $D = 0$ | — |
-| $g$, $l$ | gravity, 9.81 m/s²: the standard acceleration of gravity in NIST's CODATA tables, rounded to three figures; rod length, to its mass at the tip | 0.613125 m | longer $l$: slower fall, but each m/s² tips the rod less, so more push is needed |
-| $t$, $\tau$, $\sigma$ | time now, s; an earlier moment when some input acted; a stretch of time inside an integral | $t$ = 0.5 s | — |
-| $e^{At}$, $I$ | the matrix that carries a state forward $t$ seconds; the identity matrix | tilt entry 3.762196 at 0.5 s | — |
-| $\Phi$, $\Gamma$, $\Delta t$, $k$; $G(s)$, $X$, $U$ | one clock tick: $\Phi = e^{A\Delta t}$, $\Gamma$ the input's effect over a tick, $\Delta t$ the tick, $k$ the tick number; the transfer function at rate $s$ per s, and the transforms of $x$ and $u$ | $\Delta t$ = 0.01 s; $G(5) = -0.181221$ rad per m/s² | — |
+| $`x`$, $`x(0)`$ | the state: the list that says everything about the rig now; its value at the start | $`x(0) = (0, 0, 0.05, 0)`$ | a bigger lean needs a bigger push, in proportion |
+| $`p`$, $`v`$ | cart position along the rail, m; cart speed, m/s | 0.083510 m and 0.334038 m/s at 0.5 s | — |
+| $`\theta`$, $`\omega`$ | rod tilt from upright, rad (theta); tilt rate, rad/s (omega) | 0.05 rad at the start; 0 and −0.262607 rad/s at 0.5 s | — |
+| $`u`$ | input: the cart's commanded acceleration, m/s² | 0.668076 m/s², steady | the rod comes back sooner, and overshoots harder |
+| $`y`$ | output: what the encoder reads, the tilt, rad | 0 at 0.5 s | — |
+| $`A`$ | the rate matrix: how the state drives its own rates | entries 1, 1 and $`g/l`$ = 16 per s² | — |
+| $`B`$ | the input matrix: where the push enters | $`(0, 1, 0, -1/l)`$, with $`1/l`$ = 1.630989 per m | — |
+| $`C`$, $`D`$ | output matrices: which blend of state and input the sensor sees | $`C`$ picks the tilt; $`D = 0`$ | — |
+| $`g`$, $`l`$ | gravity, 9.81 m/s²: the standard acceleration of gravity in NIST's CODATA tables, rounded to three figures; rod length, to its mass at the tip | 0.613125 m | longer $`l`$: slower fall, but each m/s² tips the rod less, so more push is needed |
+| $`t`$, $`\tau`$, $`\sigma`$ | time now, s; an earlier moment when some input acted; a stretch of time inside an integral | $`t`$ = 0.5 s | — |
+| $`e^{At}`$, $`I`$ | the matrix that carries a state forward $`t`$ seconds; the identity matrix | tilt entry 3.762196 at 0.5 s | — |
+| $`\Phi`$, $`\Gamma`$, $`\Delta t`$, $`k`$; $`G(s)`$, $`X`$, $`U`$ | one clock tick: $`\Phi = e^{A\Delta t}`$, $`\Gamma`$ the input's effect over a tick, $`\Delta t`$ the tick, $`k`$ the tick number; the transfer function at rate $`s`$ per s, and the transforms of $`x`$ and $`u`$ | $`\Delta t`$ = 0.01 s; $`G(5) = -0.181221`$ rad per m/s² | — |
 
-The rod's growth rate, $\sqrt{g/l} = \sqrt{16}$ = 4 per s, appears everywhere below. It is the rate at which an unwatched lean grows.
+The rod's growth rate, $`\sqrt{g/l} = \sqrt{16}`$ = 4 per s, appears everywhere below. It is the rate at which an unwatched lean grows.
 
 ### When it holds
 
-- **Small tilts.** The true rod obeys $l\,\theta'' = g\sin\theta - u\cos\theta$; the model replaces $\sin\theta$ by $\theta$ and $\cos\theta$ by 1. From 0.05 rad, the true rod given the 0.668076 m/s² push ends at 0.000147 rad instead of 0: the model is fine. Start at 0.5 rad (28.647890°) and the model's push, 6.680761 m/s², leaves the true rod at 0.153185 rad (8.776869°). Outside a few tenths of a radian the straight-line model is wrong; [Linearisation](02-linearisation-about-an-equilibrium.md) says how far it can be trusted.
-- **Fixed matrices.** $A$ and $B$ must not change with time. A rod that telescopes mid-run, or a cart that picks up a load, needs a transition matrix that depends on both $t$ and $\tau$, not $e^{A(t-\tau)}$.
+- **Small tilts.** The true rod obeys $`l\,\theta'' = g\sin\theta - u\cos\theta`$; the model replaces $`\sin\theta`$ by $`\theta`$ and $`\cos\theta`$ by 1. From 0.05 rad, the true rod given the 0.668076 m/s² push ends at 0.000147 rad instead of 0: the model is fine. Start at 0.5 rad (28.647890°) and the model's push, 6.680761 m/s², leaves the true rod at 0.153185 rad (8.776869°). Outside a few tenths of a radian the straight-line model is wrong; [Linearisation](02-linearisation-about-an-equilibrium.md) says how far it can be trusted.
+- **Fixed matrices.** $`A`$ and $`B`$ must not change with time. A rod that telescopes mid-run, or a cart that picks up a load, needs a transition matrix that depends on both $`t`$ and $`\tau`$, not $`e^{A(t-\tau)}`$.
 - **The input is what the motor delivers.** The model assumes the driver produces the commanded acceleration at once and without limit. A drive that lags needs one more state, its current; a drive that saturates is no longer linear, which is where [Predictive control](10-model-predictive-control.md) comes in.
 - **The list is complete.** Four numbers are enough only if nothing else stores energy or drags: a flexing rod, a springy belt or hinge friction each change the model.
-- **$D = 0$ is a fact about this sensor.** The encoder sees the tilt, not the push. An accelerometer on the cart would read $u$ directly and have $D \neq 0$.
+- **$`D = 0`$ is a fact about this sensor.** The encoder sees the tilt, not the push. An accelerometer on the cart would read $`u`$ directly and have $`D \neq 0`$.
 
 ---
 
@@ -90,70 +96,84 @@ Then linearity does the rest. The response to a start plus a push is the respons
 
 ### Step 1: build A and B from the physics
 
-The cart is simple: $p' = v$ and $v' = u$, because the driver sets the acceleration.
+The cart is simple: $`p' = v`$ and $`v' = u`$, because the driver sets the acceleration.
 
-The rod is a mass at the end of a light stick of length $l$. Sit in the cart's frame. Gravity pulls the mass down, and the cart's acceleration $u$ feels like a force pushing it backwards. Taking the turning parts of both about the hinge gives $l\,\theta'' = g\sin\theta - u\cos\theta$. Near upright, $\sin\theta \approx \theta$ and $\cos\theta \approx 1$, so
+The rod is a mass at the end of a light stick of length $`l`$. Sit in the cart's frame. Gravity pulls the mass down, and the cart's acceleration $`u`$ feels like a force pushing it backwards. Taking the turning parts of both about the hinge gives $`l\,\theta'' = g\sin\theta - u\cos\theta`$. Near upright, $`\sin\theta \approx \theta`$ and $`\cos\theta \approx 1`$, so
 
-$$\theta' = \omega, \qquad \omega' = \frac{g}{l}\,\theta - \frac{1}{l}\,u .$$
+```math
+\theta' = \omega, \qquad \omega' = \frac{g}{l}\,\theta - \frac{1}{l}\,u .
+```
 
-Stack the four equations and read off the coefficients: those of the state go in $A$, those of $u$ in $B$. The encoder reads $\theta$, so $C = (0, 0, 1, 0)$ and $D = 0$.
+Stack the four equations and read off the coefficients: those of the state go in $`A`$, those of $`u`$ in $`B`$. The encoder reads $`\theta`$, so $`C = (0, 0, 1, 0)`$ and $`D = 0`$.
 
 ### Step 2: the rig alone, carried forward by e^(At)
 
-With $u = 0$, the solution is $x(t) = e^{At}x(0)$, because the series for $e^{At}$ has derivative $A\,e^{At}$ and starts at $I$. For this $A$ the series sums in closed form. The cart's block is $\begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}$, whose square is zero, so the series stops: $\begin{pmatrix} 1 & t \\ 0 & 1 \end{pmatrix}$.
+With $`u = 0`$, the solution is $`x(t) = e^{At}x(0)`$, because the series for $`e^{At}`$ has derivative $`A\,e^{At}`$ and starts at $`I`$. For this $`A`$ the series sums in closed form. The cart's block is $`\begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}`$, whose square is zero, so the series stops: $`\begin{pmatrix} 1 & t \\ 0 & 1 \end{pmatrix}`$.
 
-The rod's block squares to $g/l$ times the identity, so the even powers build $\cosh$ and the odd powers build $\sinh$. These are the hyperbolic cosine and sine, $\cosh 4t = (e^{4t} + e^{-4t})/2$ and $\sinh 4t = (e^{4t} - e^{-4t})/2$: the even and odd halves of the series for $e^{4t}$.
+The rod's block squares to $`g/l`$ times the identity, so the even powers build $`\cosh`$ and the odd powers build $`\sinh`$. These are the hyperbolic cosine and sine, $`\cosh 4t = (e^{4t} + e^{-4t})/2`$ and $`\sinh 4t = (e^{4t} - e^{-4t})/2`$: the even and odd halves of the series for $`e^{4t}`$.
 
-$$e^{At}\big|_{\text{rod}} = \begin{pmatrix} \cosh 4t & \tfrac14 \sinh 4t \\ 4\sinh 4t & \cosh 4t \end{pmatrix}$$
+```math
+e^{At}\big|_{\text{rod}} = \begin{pmatrix} \cosh 4t & \tfrac14 \sinh 4t \\ 4\sinh 4t & \cosh 4t \end{pmatrix}
+```
 
-At $t$ = 0.5 s the entries are 3.762196, 0.906715 and 14.507442. The lean 0.05 rad becomes 0.188110 rad, turning at 0.725372 rad/s.
+At $`t`$ = 0.5 s the entries are 3.762196, 0.906715 and 14.507442. The lean 0.05 rad becomes 0.188110 rad, turning at 0.725372 rad/s.
 
 ### Step 3: add every past input, each carried forward
 
-Multiply $x' - Ax = Bu$ by $e^{-At}$. The left side is then exactly the derivative of $e^{-At}x$, by the product rule. Integrate from 0 to $t$ and multiply back by $e^{At}$:
+Multiply $`x' - Ax = Bu`$ by $`e^{-At}`$. The left side is then exactly the derivative of $`e^{-At}x`$, by the product rule. Integrate from 0 to $`t`$ and multiply back by $`e^{At}`$:
 
-$$x(t) = e^{At}x(0) + \int_0^t e^{A(t-\tau)}\,B\,u(\tau)\,d\tau .$$
+```math
+x(t) = e^{At}x(0) + \int_0^t e^{A(t-\tau)}\,B\,u(\tau)\,d\tau .
+```
 
-The push at moment $\tau$ enters as the small change $B\,u(\tau)\,d\tau$ and is then carried forward by $e^{A(t-\tau)}$, the same machine that carries the start. [Forced systems](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md) proves this in full; the integral is a convolution, a running sum of past inputs each weighted by how long ago it acted, as in [Linear and time-invariant](../02-Linear%20Systems%20and%20Transforms/01-linear-time-invariant-systems-and-convolution.md).
+The push at moment $`\tau`$ enters as the small change $`B\,u(\tau)\,d\tau`$ and is then carried forward by $`e^{A(t-\tau)}`$, the same machine that carries the start. [Forced systems](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md) proves this in full; the integral is a convolution, a running sum of past inputs each weighted by how long ago it acted, as in [Linear and time-invariant](../02-Linear%20Systems%20and%20Transforms/01-linear-time-invariant-systems-and-convolution.md).
 
 ### Step 4: a steady push, done by hand
 
-For a steady $u$ the integral is $\int_0^t e^{A\sigma}\,d\sigma\;B\,u$. The cart's part gives the school formulas, $u t^2/2$ and $u t$. The rod's part integrates $\sinh$ and $\cosh$:
+For a steady $`u`$ the integral is $`\int_0^t e^{A\sigma}\,d\sigma\;B\,u`$. The cart's part gives the school formulas, $`u t^2/2`$ and $`u t`$. The rod's part integrates $`\sinh`$ and $`\cosh`$:
 
-$$\theta_{\text{push}}(t) = -\frac{u}{l}\cdot\frac{\cosh 4t - 1}{16}, \qquad \omega_{\text{push}}(t) = -\frac{u}{l}\cdot\frac{\sinh 4t}{4} .$$
+```math
+\theta_{\text{push}}(t) = -\frac{u}{l}\cdot\frac{\cosh 4t - 1}{16}, \qquad \omega_{\text{push}}(t) = -\frac{u}{l}\cdot\frac{\sinh 4t}{4} .
+```
 
-The tilt at time $t$ is $0.05\cosh 4t + \theta_{\text{push}}(t)$. Set it to zero and solve for $u$:
+The tilt at time $`t`$ is $`0.05\cosh 4t + \theta_{\text{push}}(t)`$. Set it to zero and solve for $`u`$:
 
-$$u = \frac{0.05\; g\, \cosh 4t}{\cosh 4t - 1} .$$
+```math
+u = \frac{0.05\; g\, \cosh 4t}{\cosh 4t - 1} .
+```
 
-As $t$ grows, the fraction tends to 1 and $u$ tends to $0.05\,g$ = 0.4905 m/s², the push that only holds the lean.
+As $`t`$ grows, the fraction tends to 1 and $`u`$ tends to $`0.05\,g`$ = 0.4905 m/s², the push that only holds the lean.
 
 ### Step 5: the transfer function falls out
 
-The Laplace transform turns a signal in time into a function of a rate $s$, and turns a rate of change into multiplication by $s$. Take it of $x' = Ax + Bu$ from rest: $sX = AX + BU$, so $X = (sI - A)^{-1}BU$ and
+The Laplace transform turns a signal in time into a function of a rate $`s`$, and turns a rate of change into multiplication by $`s`$. Take it of $`x' = Ax + Bu`$ from rest: $`sX = AX + BU`$, so $`X = (sI - A)^{-1}BU`$ and
 
-$$G(s) = C\,(sI - A)^{-1}B + D = \frac{-1/l}{s^2 - 16} .$$
+```math
+G(s) = C\,(sI - A)^{-1}B + D = \frac{-1/l}{s^2 - 16} .
+```
 
-This is the transfer function of [Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md), from push to tilt. Its poles, ±4 per s, are eigenvalues of $A$ (the growth rates of $A$'s separate modes), and the one at +4 is the falling rod ([Poles and zeros](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md)). But $A$ has four eigenvalues, 4, 0, 0 and −4. The two at zero belong to the cart, which this $C$ never sees. State space keeps them; the transfer function drops them. At $s = 5$ both routes give −0.181221.
+This is the transfer function of [Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md), from push to tilt. Its poles, ±4 per s, are eigenvalues of $`A`$ (the growth rates of $`A`$'s separate modes), and the one at +4 is the falling rod ([Poles and zeros](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md)). But $`A`$ has four eigenvalues, 4, 0, 0 and −4. The two at zero belong to the cart, which this $`C`$ never sees. State space keeps them; the transfer function drops them. At $`s = 5`$ both routes give −0.181221.
 
 ### Step 6: stepping forward one tick at a time
 
-A computer updates the state on a clock. If the push is held flat over each tick of $\Delta t$, Step 3 over one tick gives an exact update with no approximation:
+A computer updates the state on a clock. If the push is held flat over each tick of $`\Delta t`$, Step 3 over one tick gives an exact update with no approximation:
 
-$$x_{k+1} = \Phi\,x_k + \Gamma\,u_k, \qquad \Phi = e^{A\Delta t}, \quad \Gamma = \int_0^{\Delta t} e^{A\sigma}\,d\sigma\;B .$$
+```math
+x_{k+1} = \Phi\,x_k + \Gamma\,u_k, \qquad \Phi = e^{A\Delta t}, \quad \Gamma = \int_0^{\Delta t} e^{A\sigma}\,d\sigma\;B .
+```
 
-At 100 Hz the tilt row of $\Phi$ is (1.000800, 0.010003), and $\Gamma$ puts 0.010000 m/s of speed and −0.000082 rad of tilt into each tick per 1 m/s². Fifty such steps land on the same state as the integral. This is the list of numbers that steps forward, pushed by the input, of the title. [Discretising a design](../02-Linear%20Systems%20and%20Transforms/09-zero-order-hold-and-tustin-discretisation.md) treats the held input in detail.
+At 100 Hz the tilt row of $`\Phi`$ is (1.000800, 0.010003), and $`\Gamma`$ puts 0.010000 m/s of speed and −0.000082 rad of tilt into each tick per 1 m/s². Fifty such steps land on the same state as the integral. This is the list of numbers that steps forward, pushed by the input, of the title. [Discretising a design](../02-Linear%20Systems%20and%20Transforms/09-zero-order-hold-and-tustin-discretisation.md) treats the held input in detail.
 
 ---
 
 ## Worked numbers, by hand
 
-The rod starts at 0.05 rad, still; the cart starts still at 0. Find the steady push that zeroes the tilt at $t$ = 0.5 s.
+The rod starts at 0.05 rad, still; the cart starts still at 0. Find the steady push that zeroes the tilt at $`t`$ = 0.5 s.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| rod growth rate | $\sqrt{9.81 / 0.613125} = \sqrt{16}$ | 4 per s |
-| rod entries of $e^{At}$ at 0.5 s | $\cosh 2$, $\tfrac14\sinh 2$, $4\sinh 2$ | 3.762196, 0.906715, 14.507442 |
+| rod growth rate | $`\sqrt{9.81 / 0.613125} = \sqrt{16}`$ | 4 per s |
+| rod entries of $`e^{At}`$ at 0.5 s | $`\cosh 2`$, $`\tfrac14\sinh 2`$, $`4\sinh 2`$ | 3.762196, 0.906715, 14.507442 |
 | free tilt | 0.05 × 3.762196 | 0.188110 rad |
 | free tilt rate | 0.05 × 14.507442 | 0.725372 rad/s |
 | tilt per 1 m/s² of push | −(1.630989 / 16) × (3.762196 − 1) | −0.281569 rad |
@@ -171,11 +191,11 @@ Each row is a slip in the method, with the tilt it predicts at 0.5 s under the 0
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Drop the integral: only $e^{At}x(0)$ | 0.188110 rad | The push never enters; this is the motor-off answer |
-| Deliver all 0.5 s of push as one kick at time 0, $e^{At}B\,u\,t$ | −0.305880 rad | Early pushes get the full 0.5 s to grow; each push must be carried forward only from its own moment |
-| Exponentiate each entry of $At$ separately | 0.050000 rad | $e^{At}$ is a series of matrix powers, not $e$ of each entry; the rod never falls |
-| Flip the sign of $B$'s rod entry | 0.376220 rad | The push tips the rod the wrong way and doubles the fall |
-| Use the straight-line model from a 0.5 rad lean | 0.153185 rad left on the true rod | Outside small tilts, $\sin\theta \neq \theta$ |
+| Drop the integral: only $`e^{At}x(0)`$ | 0.188110 rad | The push never enters; this is the motor-off answer |
+| Deliver all 0.5 s of push as one kick at time 0, $`e^{At}B\,u\,t`$ | −0.305880 rad | Early pushes get the full 0.5 s to grow; each push must be carried forward only from its own moment |
+| Exponentiate each entry of $`At`$ separately | 0.050000 rad | $`e^{At}`$ is a series of matrix powers, not $`e`$ of each entry; the rod never falls |
+| Flip the sign of $`B`$'s rod entry | 0.376220 rad | The push tips the rod the wrong way and doubles the fall |
+| Use the straight-line model from a 0.5 rad lean | 0.153185 rad left on the true rod | Outside small tilts, $`\sin\theta \neq \theta`$ |
 
 ---
 
@@ -211,13 +231,13 @@ t = 0.4 s  ██████████████████████   
 t = 0.5 s  ██████████████████████████████████████   0.188110
 ```
 
-The push part grows faster than the fall, because each bit of push is itself carried forward by $e^{A(t-\tau)}$: early pushes grow along with the lean they fight. The parts cancel at 0.5 s. The overview chart shows the sum and what follows: the push part keeps winning, and the rod falls the other way.
+The push part grows faster than the fall, because each bit of push is itself carried forward by $`e^{A(t-\tau)}`$: early pushes grow along with the lean they fight. The parts cancel at 0.5 s. The overview chart shows the sum and what follows: the push part keeps winning, and the rod falls the other way.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The script builds $A$, $B$, $C$, $D$ for the cart and rod and finds the state at 0.5 s by **four independent roads**: the closed form with $\cosh$ and $\sinh$ from Steps 2 and 4; the matrix exponential summed as a 60-term series with the convolution integral done by Simpson's rule over 200 slices; 50 exact clock ticks of $\Phi$ and $\Gamma$; and a plain RK4 integrator with 1 ms steps. RK4 is the classical fourth-order Runge–Kutta method, a standard way to step equations forward numerically. All four agree to $10^{-9}$. It also checks $G(5)$ by solving $(sI - A)z = B$ by elimination against the formula, and runs the true rod, with $\sin$ and $\cos$, to test the model's range, twice: at 1 ms and at 0.5 ms steps, which must agree to $10^{-6}$ rad.
+The script builds $`A`$, $`B`$, $`C`$, $`D`$ for the cart and rod and finds the state at 0.5 s by **four independent roads**: the closed form with $`\cosh`$ and $`\sinh`$ from Steps 2 and 4; the matrix exponential summed as a 60-term series with the convolution integral done by Simpson's rule over 200 slices; 50 exact clock ticks of $`\Phi`$ and $`\Gamma`$; and a plain RK4 integrator with 1 ms steps. RK4 is the classical fourth-order Runge–Kutta method, a standard way to step equations forward numerically. All four agree to $`10^{-9}`$. It also checks $`G(5)`$ by solving $`(sI - A)z = B`$ by elimination against the formula, and runs the true rod, with $`\sin`$ and $`\cos`$, to test the model's range, twice: at 1 ms and at 0.5 ms steps, which must agree to $`10^{-6}`$ rad.
 
 ### Python
 
@@ -576,12 +596,12 @@ The two outputs are identical, line for line.
 
 ### Lean
 
-Lean proves the solution formula for any fixed $A$ and $B$, and the cart and rod's $e^{At}$ and transfer function.
+Lean proves the solution formula for any fixed $`A`$ and $`B`$, and the cart and rod's $`e^{At}`$ and transfer function.
 
-- Take fixed matrices $A$ and $B$, a continuous input $u$, and a state obeying $x' = Ax + Bu$. Then at every time $t$, $x(t)$ equals the solution formula above.
-- Take gravity $g > 0$ and rod length $l > 0$. Then the cart and rod's $e^{At}$ is the $\cosh$ and $\sinh$ matrix of Step 2, with rate $\sqrt{g/l}$.
-- Take the same $g$ and $l$, and a rate $s$ with $s \neq 0$ and $s^2 \neq g/l$. Then $G(s) = C(sI - A)^{-1}B + D = (-1/l)/(s^2 - g/l)$.
-- $g/l$ = 9.81 / 0.613125 is exactly 16, and $\sqrt{16}$ = 4 per s.
+- Take fixed matrices $`A`$ and $`B`$, a continuous input $`u`$, and a state obeying $`x' = Ax + Bu`$. Then at every time $`t`$, $`x(t)`$ equals the solution formula above.
+- Take gravity $`g > 0`$ and rod length $`l > 0`$. Then the cart and rod's $`e^{At}`$ is the $`\cosh`$ and $`\sinh`$ matrix of Step 2, with rate $`\sqrt{g/l}`$.
+- Take the same $`g`$ and $`l`$, and a rate $`s`$ with $`s \neq 0`$ and $`s^2 \neq g/l`$. Then $`G(s) = C(sI - A)^{-1}B + D = (-1/l)/(s^2 - g/l)`$.
+- $`g/l`$ = 9.81 / 0.613125 is exactly 16, and $`\sqrt{16}`$ = 4 per s.
 - The cart's block squares to zero, and the rod's block squares to 16 times the identity.
 - The push that only holds the lean is 0.05 × 9.81 = 0.4905 m/s².
 - Per 1 m/s² of push over 0.5 s, the cart moves 0.125 m and gains 0.5 m/s.
@@ -821,12 +841,12 @@ example : (1 : ℚ) * (1 / 2) ^ 2 / 2 = 1 / 8 ∧ (1 : ℚ) * (1 / 2) = 1 / 2 :=
 ## The usual mistake
 
 > [!warning]
-> **Reading the sensor as the state.** The encoder reads 0 at 0.5 s, and the rod looks balanced. It is not: the state also holds the rate, −0.262607 rad/s, and the cart's speed, 0.334038 m/s. Keep the push on and the tilt is −0.43 rad at 1 s. The output $y = Cx$ is a window on the state, not the state. Whether the hidden numbers can be worked out from the readings is a real question, answered on [Can you steer every state, and can you see every state](03-controllability-and-observability.md).
+> **Reading the sensor as the state.** The encoder reads 0 at 0.5 s, and the rod looks balanced. It is not: the state also holds the rate, −0.262607 rad/s, and the cart's speed, 0.334038 m/s. Keep the push on and the tilt is −0.43 rad at 1 s. The output $`y = Cx`$ is a window on the state, not the state. Whether the hidden numbers can be worked out from the readings is a real question, answered on [Can you steer every state, and can you see every state](03-controllability-and-observability.md).
 >
 > Smaller traps:
 > - **Treating the input as a new start.** One kick at time 0 in place of 0.5 s of push predicts −0.305880 rad instead of 0.
-> - **Taking $e$ of each entry.** That predicts 0.050000 rad, a rod that never falls.
-> - **Getting a sign in $B$ backwards.** Pushing the cart right tips the rod left; flipped, the model predicts 0.376220 rad.
+> - **Taking $`e`$ of each entry.** That predicts 0.050000 rad, a rod that never falls.
+> - **Getting a sign in $`B`$ backwards.** Pushing the cart right tips the rod left; flipped, the model predicts 0.376220 rad.
 > - **Trusting the model at large tilts.** From 0.5 rad the model's push leaves the true rod at 0.153185 rad.
 
 ---
@@ -839,21 +859,21 @@ example : (1 : ℚ) * (1 / 2) ^ 2 / 2 = 1 / 8 ∧ (1 : ℚ) * (1 / 2) = 1 / 2 :=
 - **Control software.** Engineering packages store a plant as its four matrices and simulate it with the tick update of Step 6.
 
 > **Say it back**
-> A state is a list of numbers that says everything about a system now: for the cart and rod, position, speed, tilt and tilt rate. Its rule is $x' = Ax + Bu$, and the sensor reads $y = Cx + Du$. The state at a later time is the start carried forward by $e^{At}$, plus every past input carried forward from the moment it acted. A steady push of 0.668076 m/s² brings a 0.05 rad lean upright in half a second, but the rod arrives still turning, which only the full state shows. Held flat over a clock tick, the same formula gives an exact step, $x_{k+1} = \Phi x_k + \Gamma u_k$.
+> A state is a list of numbers that says everything about a system now: for the cart and rod, position, speed, tilt and tilt rate. Its rule is $`x' = Ax + Bu`$, and the sensor reads $`y = Cx + Du`$. The state at a later time is the start carried forward by $`e^{At}`$, plus every past input carried forward from the moment it acted. A steady push of 0.668076 m/s² brings a 0.05 rad lean upright in half a second, but the rod arrives still turning, which only the full state shows. Held flat over a clock tick, the same formula gives an exact step, $`x_{k+1} = \Phi x_k + \Gamma u_k`$.
 
 ---
 
 ## What this builds on
 
-- [Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md): the ratio $G(s)$, here recovered as $C(sI - A)^{-1}B + D$.
-- [Poles and zeros](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md): poles as the rates of a system's modes; here they are the eigenvalues of $A$, including the falling rod at +4 per s.
-- [The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md): $e^{At}$ as a series, and why it carries a state forward.
+- [Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md): the ratio $`G(s)`$, here recovered as $`C(sI - A)^{-1}B + D`$.
+- [Poles and zeros](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md): poles as the rates of a system's modes; here they are the eigenvalues of $`A`$, including the falling rod at +4 per s.
+- [The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md): $`e^{At}`$ as a series, and why it carries a state forward.
 - [Forced systems](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md): the proof that the forced response is the start carried forward plus the convolution integral.
 
 ## Where this goes next
 
-- [Linearisation](02-linearisation-about-an-equilibrium.md): where $A$ and $B$ come from for a nonlinear plant, and how far from upright they can be trusted.
-- [Stability of a state-space model](05-hurwitz-schur-and-lyapunov-stability.md): reading from $A$'s eigenvalues, or from a Lyapunov equation, whether every start dies away.
+- [Linearisation](02-linearisation-about-an-equilibrium.md): where $`A`$ and $`B`$ come from for a nonlinear plant, and how far from upright they can be trusted.
+- [Stability of a state-space model](05-hurwitz-schur-and-lyapunov-stability.md): reading from $`A`$'s eigenvalues, or from a Lyapunov equation, whether every start dies away.
 - [Pole placement](04-pole-placement-and-observers.md): feeding the measured state back into the push to move the falling pole at +4 to where it should be.
 - [The Kalman filter](07-kalman-filter.md): estimating the hidden rate from the noisy encoder, using this model to predict each tick.
 
@@ -866,6 +886,6 @@ This card commands the push in advance and cannot keep the rod up; how to choose
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Kalman, R. E. "Mathematical Description of Linear Dynamical Systems." *Journal of the Society for Industrial and Applied Mathematics, Series A: Control* 1, no. 2 (1963): 152–192. [doi:10.1137/0301010](https://doi.org/10.1137/0301010). The state, input and output form, the transition matrix, and how a transfer function can hide states.
-- Moler, Cleve, and Charles Van Loan. "Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later." *SIAM Review* 45, no. 1 (2003): 3–49. [doi:10.1137/S00361445024180](https://doi.org/10.1137/S00361445024180). The series used in the code, the other ways of computing $e^{At}$, and when each is safe.
+- Moler, Cleve, and Charles Van Loan. "Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later." *SIAM Review* 45, no. 1 (2003): 3–49. [doi:10.1137/S00361445024180](https://doi.org/10.1137/S00361445024180). The series used in the code, the other ways of computing $`e^{At}`$, and when each is safe.
 - Åström, Karl Johan, and Richard M. Murray. *Feedback Systems: An Introduction for Scientists and Engineers*, 2nd ed. Princeton University Press, 2021. [Publisher's page](https://press.princeton.edu/books/hardcover/9780691193984/feedback-systems). State-space models, the convolution solution, and the inverted pendulum on a cart.
-- National Institute of Standards and Technology. "CODATA Value: standard acceleration of gravity." [NIST page](https://physics.nist.gov/cgi-bin/cuu/Value?gn). The exact standard value of $g$ that this card rounds to 9.81 m/s².
+- National Institute of Standards and Technology. "CODATA Value: standard acceleration of gravity." [NIST page](https://physics.nist.gov/cgi-bin/cuu/Value?gn). The exact standard value of $`g`$ that this card rounds to 9.81 m/s².

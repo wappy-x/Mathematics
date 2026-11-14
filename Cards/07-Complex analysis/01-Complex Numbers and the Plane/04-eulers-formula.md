@@ -26,38 +26,44 @@ To scale: 80 units per 1, centre 0 at (180, 120), so the tip sits at (105.62, 90
 
 ## The formula
 
-Notation first, in words. For a complex number z, "e to the z", written $e^z$, means the sum of the power series below; on real numbers it is the familiar exponential.
+Notation first, in words. For a complex number z, "e to the z", written $`e^z`$, means the sum of the power series below; on real numbers it is the familiar exponential.
 
-$$e^{z} = 1 + z + \frac{z^2}{2!} + \frac{z^3}{3!} + \frac{z^4}{4!} + \cdots$$
+```math
+e^{z} = 1 + z + \frac{z^2}{2!} + \frac{z^3}{3!} + \frac{z^4}{4!} + \cdots
+```
 
 **Read it aloud:** e to the z is one, plus z, plus z squared over two factorial, and so on for ever.
 
-$$e^{i\theta} = \cos\theta + i\sin\theta$$
+```math
+e^{i\theta} = \cos\theta + i\sin\theta
+```
 
 **Read it aloud:** e to the i-theta is the point at angle theta on the circle of radius 1.
 
-$$e^{x+iy} = e^{x}\,(\cos y + i\sin y)$$
+```math
+e^{x+iy} = e^{x}\,(\cos y + i\sin y)
+```
 
 **Read it aloud:** the real part of the exponent sets the length; the imaginary part sets the direction.
 
-The tone is $e^{2\pi i f t}$: angle 2π times frequency times time.
+The tone is $`e^{2\pi i f t}`$: angle 2π times frequency times time.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $z$, $w$ | complex numbers in the exponent | z = ln 2 + iπ/2 | see x and y |
-| $x$, $y$ | its real and imaginary parts | ln 2 and π/2 | x stretches; y turns |
-| $i$ | the number whose square is −1: a quarter turn | the Im axis | — |
-| $\theta$, $\pi$ | an angle in radians; π is a half turn | 2.764602 | further round |
-| $e$, $e^{i\theta}$ | the base of natural growth; the point at angle θ | −0.929776 + 0.368125i | moves anticlockwise |
-| $r$ | the arrow's length, the modulus | 2, for 2i | a bigger circle |
-| $f$, $t$ | frequency in turns a second; time in seconds | 440 and 0.001 | further round |
-| $n$, $n!$, $N$ | term number; 1 × 2 × … × n; last degree kept, or steps | degree 6 misses by 0.565059 | closer to the limit |
+| $`z`$, $`w`$ | complex numbers in the exponent | z = ln 2 + iπ/2 | see x and y |
+| $`x`$, $`y`$ | its real and imaginary parts | ln 2 and π/2 | x stretches; y turns |
+| $`i`$ | the number whose square is −1: a quarter turn | the Im axis | — |
+| $`\theta`$, $`\pi`$ | an angle in radians; π is a half turn | 2.764602 | further round |
+| $`e`$, $`e^{i\theta}`$ | the base of natural growth; the point at angle θ | −0.929776 + 0.368125i | moves anticlockwise |
+| $`r`$ | the arrow's length, the modulus | 2, for 2i | a bigger circle |
+| $`f`$, $`t`$ | frequency in turns a second; time in seconds | 440 and 0.001 | further round |
+| $`n`$, $`n!`$, $`N`$ | term number; 1 × 2 × … × n; last degree kept, or steps | degree 6 misses by 0.565059 | closer to the limit |
 
 ### When it holds
 
 - **Any complex exponent.** The series converges for every z: no exceptions.
 - **Angles in radians.** Feed it 180 meaning degrees and it returns −0.598460 − 0.801153i, not −1.
-- **Exponents add, for all complex z and w:** $e^{z+w} = e^z e^w$. The rule for a power of a power can fail: e to the 2πi is 1, whose usual square root is 1, yet e to the πi is −1.
+- **Exponents add, for all complex z and w:** $`e^{z+w} = e^z e^w`$. The rule for a power of a power can fail: e to the 2πi is 1, whose usual square root is 1, yet e to the πi is −1.
 - **Going backwards is not unique.** Adding 2πi to the exponent changes nothing, so undoing it needs a choice, made in [The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md).
 
 ---
@@ -66,11 +72,11 @@ The tone is $e^{2\pi i f t}$: angle 2π times frequency times time.
 
 ### Step 0: the series needs only adding and multiplying
 
-The real exponential equals its power series ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). Each term needs only multiplying, dividing by a whole number and adding, which complex numbers do ([Complex numbers](01-complex-numbers.md)). So the series defines $e^z$ for complex z, and leaves the real exponential unchanged.
+The real exponential equals its power series ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). Each term needs only multiplying, dividing by a whole number and adding, which complex numbers do ([Complex numbers](01-complex-numbers.md)). So the series defines $`e^z`$ for complex z, and leaves the real exponential unchanged.
 
 ### Step 1: the series converges everywhere
 
-The n-th term has size $|z|^n/n!$, with the modulus of [Conjugate and modulus](02-conjugate-and-modulus.md): each size is the last times |z|/n. Once n passes twice |z|, that factor is below one half, so the sizes shrink faster than halving and add to a finite total: absolute convergence. Such a series gives the same sum however its terms are grouped, which Step 3 needs.
+The n-th term has size $`|z|^n/n!`$, with the modulus of [Conjugate and modulus](02-conjugate-and-modulus.md): each size is the last times |z|/n. Once n passes twice |z|, that factor is below one half, so the sizes shrink faster than halving and add to a finite total: absolute convergence. Such a series gives the same sum however its terms are grouped, which Step 3 needs.
 
 ### Step 2: each term turns a quarter
 
@@ -84,42 +90,46 @@ To scale: 36 units per 1, 0 at (210, 140), −1 at (174, 140). The corners are t
 
 ### Step 3: regroup into cosine and sine
 
-Write out the series at iθ and use $i^2 = -1$:
+Write out the series at iθ and use $`i^2 = -1`$:
 
-$$e^{i\theta} = 1 + i\theta - \frac{\theta^2}{2!} - i\frac{\theta^3}{3!} + \frac{\theta^4}{4!} + i\frac{\theta^5}{5!} - \cdots$$
+```math
+e^{i\theta} = 1 + i\theta - \frac{\theta^2}{2!} - i\frac{\theta^3}{3!} + \frac{\theta^4}{4!} + i\frac{\theta^5}{5!} - \cdots
+```
 
 Even terms carry no i, odd terms carry one, and each kind alternates in sign. Step 1 allows the regrouping:
 
-$$e^{i\theta} = \Big(1 - \frac{\theta^2}{2!} + \frac{\theta^4}{4!} - \cdots\Big) + i\Big(\theta - \frac{\theta^3}{3!} + \frac{\theta^5}{5!} - \cdots\Big)$$
+```math
+e^{i\theta} = \Big(1 - \frac{\theta^2}{2!} + \frac{\theta^4}{4!} - \cdots\Big) + i\Big(\theta - \frac{\theta^3}{3!} + \frac{\theta^5}{5!} - \cdots\Big)
+```
 
 The brackets are the Taylor series of cos θ and sin θ, proved equal to them on [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md). That is Euler's formula. Since cos^2 θ + sin^2 θ = 1, the point lies on the unit circle.
 
 ### Step 4: exponents add, so a real part stretches
 
-The complex series keeps the real rule $e^{z+w} = e^z e^w$: multiply the two series out, and the binomial theorem turns the terms of total degree n into the degree-n term at z + w.
+The complex series keeps the real rule $`e^{z+w} = e^z e^w`$: multiply the two series out, and the binomial theorem turns the terms of total degree n into the degree-n term at z + w.
 
 <details>
 <summary>Detailed proof: the addition law</summary>
 
-Write $a_j = z^j/j!$ and $b_k = w^k/k!$. The product of the sums to degree N is the sum of $a_j b_k$ over the square 0 ≤ j, k ≤ N. Inside it, the terms with j + k = n give:
+Write $`a_j = z^j/j!`$ and $`b_k = w^k/k!`$. The product of the sums to degree N is the sum of $`a_j b_k`$ over the square 0 ≤ j, k ≤ N. Inside it, the terms with j + k = n give:
 
-$$\sum_{j=0}^{n} \frac{z^j}{j!}\,\frac{w^{n-j}}{(n-j)!} = \frac{1}{n!}\sum_{j=0}^{n} \binom{n}{j} z^j w^{n-j} = \frac{(z+w)^n}{n!}.$$
+$`\displaystyle \sum_{j=0}^{n} \frac{z^j}{j!}\,\frac{w^{n-j}}{(n-j)!} = \frac{1}{n!}\sum_{j=0}^{n} \binom{n}{j} z^j w^{n-j} = \frac{(z+w)^n}{n!}.`$
 
-So the triangle j + k ≤ N is the series of $e^{z+w}$ to degree N. The rest of the square has j or k above N/2, so its size is at most the tail of $|a_j|$ beyond N/2 times the full sum of $|b_k|$, plus the same swapped. Both tails vanish by Step 1. Letting N grow gives $e^{z}e^{w} = e^{z+w}$.
+So the triangle j + k ≤ N is the series of $`e^{z+w}`$ to degree N. The rest of the square has j or k above N/2, so its size is at most the tail of $`|a_j|`$ beyond N/2 times the full sum of $`|b_k|`$, plus the same swapped. Both tails vanish by Step 1. Letting N grow gives $`e^{z}e^{w} = e^{z+w}`$.
 
 </details>
 
-So $e^{x+iy} = e^x e^{iy}$: a stretch by e to the x times a unit arrow at angle y. At ln 2 + iπ/2 that is 2 times i, or 2i.
+So $`e^{x+iy} = e^x e^{iy}`$: a stretch by e to the x times a unit arrow at angle y. At ln 2 + iπ/2 that is 2 times i, or 2i.
 
 ### Step 5: what falls out
 
-- **Polar form.** Any nonzero number of length r at angle θ is $r e^{i\theta}$.
-- **Euler's identity.** At θ = π the point is −1, so $e^{i\pi} + 1 = 0$.
-- **Never zero.** $e^z e^{-z} = e^0 = 1$, so $e^z \neq 0$.
-- **The period 2πi.** A full turn returns the arrow, so $e^{z + 2\pi i} = e^z$ for every z.
+- **Polar form.** Any nonzero number of length r at angle θ is $`r e^{i\theta}`$.
+- **Euler's identity.** At θ = π the point is −1, so $`e^{i\pi} + 1 = 0`$.
+- **Never zero.** $`e^z e^{-z} = e^0 = 1`$, so $`e^z \neq 0`$.
+- **The period 2πi.** A full turn returns the arrow, so $`e^{z + 2\pi i} = e^z`$ for every z.
 - **Multiplying adds angles.** Expanding both sides of "turn by a, then b, is turn by a + b" gives the angle-sum formulas for cos and sin.
 
-A second road: (1 + iθ/N) multiplied in N times turns about θ/N per step and closes on $e^{i\theta}$ as N grows, as in [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md); the code runs it. The route through the derivative of $e^z$ belongs to [The elementary functions](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md).
+A second road: (1 + iθ/N) multiplied in N times turns about θ/N per step and closes on $`e^{i\theta}`$ as N grows, as in [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md); the code runs it. The route through the derivative of $`e^z`$ belongs to [The elementary functions](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md).
 
 ---
 
@@ -152,7 +162,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Both programs build $e^z$ from its own series and take three roads: the series, cosine and sine read off the circle, and compounding. The compounding road closes on −1 at distance 0.613543 for N = 10, 0.004947 for N = 1000 and 0.000049 for N = 100000. The four asserts compare the series with the circle, with 2 times i, with the shrinking compounding gap, and with itself a full turn later.
+Both programs build $`e^z`$ from its own series and take three roads: the series, cosine and sine read off the circle, and compounding. The compounding road closes on −1 at distance 0.613543 for N = 10, 0.004947 for N = 1000 and 0.000049 for N = 100000. The four asserts compare the series with the circle, with 2 times i, with the shrinking compounding gap, and with itself a full turn later.
 
 ### Python
 
@@ -452,11 +462,11 @@ example : Complex.exp (2 * (Real.pi : ℂ) * I) = 1 := by exact Complex.exp_two_
 ## The usual mistake
 
 > [!warning]
-> **Reading $e^{i\theta}$ as e multiplied by itself iθ times.** An imaginary angle is not a count. The meaning comes from the series, whose terms at iθ turn a quarter each instead of growing, so the result has length 1 whatever θ is.
+> **Reading $`e^{i\theta}`$ as e multiplied by itself iθ times.** An imaginary angle is not a count. The meaning comes from the series, whose terms at iθ turn a quarter each instead of growing, so the result has length 1 whatever θ is.
 >
 > - **Degrees for radians.** "e to the i times 180" gives −0.598460 − 0.801153i, not −1.
 > - **Dropping the 2π.** e to the i·440t spins 70.028175 turns a second, not 440.
-> - **Forgetting $i^2 = -1$.** The signs stop alternating: iπ gives 11.591953 + 11.548739i.
+> - **Forgetting $`i^2 = -1`$.** The signs stop alternating: iπ gives 11.591953 + 11.548739i.
 > - **Treating the exponential as one-to-one.** Exponents 2πi apart give the same value, so a logarithm of 2i is a choice.
 
 ---
@@ -468,7 +478,7 @@ example : Complex.exp (2 * (Real.pi : ℂ) * I) = 1 := by exact Complex.exp_two_
 - **Frequency analysis.** Fourier series write a repeating signal as a sum of spinning arrows: [Fourier series](../08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md).
 
 > **Say it back**
-> The complex exponential is the real one's series, which converges everywhere. At i times an angle each term turns a quarter, so the real terms regroup into cosine and the imaginary ones into sine. So $e^{i\theta}$ is the point at angle θ on the unit circle, and a real part in the exponent stretches it. The A440 tone is an arrow spinning 440 turns a second, and the pressure is its shadow. A half turn gives −1; a full turn changes nothing.
+> The complex exponential is the real one's series, which converges everywhere. At i times an angle each term turns a quarter, so the real terms regroup into cosine and the imaginary ones into sine. So $`e^{i\theta}`$ is the point at angle θ on the unit circle, and a real part in the exponent stretches it. The A440 tone is an arrow spinning 440 turns a second, and the pressure is its shadow. A half turn gives −1; a full turn changes nothing.
 
 ---
 
@@ -482,9 +492,9 @@ example : Complex.exp (2 * (Real.pi : ℂ) * I) = 1 := by exact Complex.exp_two_
 
 - [Powers and roots](05-powers-roots-and-roots-of-unity.md): powers multiply angles.
 - [Limits and regions in the plane](06-complex-limits-series-and-regions.md): convergence, made careful.
-- [The elementary functions](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md): the derivative of $e^z$.
+- [The elementary functions](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md): the derivative of $`e^z`$.
 - [The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md): undoing it, with a choice.
-- [Contour integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md): circles traced as $e^{i\theta}$.
+- [Contour integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md): circles traced as $`e^{i\theta}`$.
 - [Fourier series](../08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): signals as arrows.
 - [Complex roots](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md): a decaying swing.
 - [The complex form](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/05-complex-fourier-series-and-the-transform-in-outline.md): the transform.
@@ -502,5 +512,5 @@ Left open: exponents 2πi apart give the same point, so which exponent should un
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
 - Euler, Leonhard. *Introductio in analysin infinitorum*, volume 1, 1748. [Euler Archive, E101](https://scholarlycommons.pacific.edu/euler-works/101/). Chapter 8 derives the formula.
-- Stein, Elias M., and Rami Shakarchi. *Complex Analysis*. Princeton University Press, 2003. [Publisher page](https://press.princeton.edu/books/hardcover/9780691113852/complex-analysis). Chapter 1: power series and $e^z$.
+- Stein, Elias M., and Rami Shakarchi. *Complex Analysis*. Princeton University Press, 2003. [Publisher page](https://press.princeton.edu/books/hardcover/9780691113852/complex-analysis). Chapter 1: power series and $`e^z`$.
 - Orloff, Jeremy. "Topic 1: Complex algebra and the complex plane." MIT OpenCourseWare 18.04, Spring 2018. [Course notes](https://ocw.mit.edu/courses/18-04-complex-variables-with-applications-spring-2018/resources/mit18_04s18_topic1/). Free notes on Euler's formula and polar form.

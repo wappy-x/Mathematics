@@ -33,7 +33,9 @@ Each arrow removes the biggest power still standing. The labels, added up, are t
 
 ## The formula
 
-$$p(x) = d(x)\,q(x) + s(x)$$
+```math
+p(x) = d(x)\,q(x) + s(x)
+```
 
 **Read it aloud:** what you started with is the divisor, times how many of it fit, plus a scrap too small to divide again.
 
@@ -41,16 +43,18 @@ The size rule is half the formula: the scrap's degree must be lower than the div
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | the number, in cm, that sets the box's size | 2 gives the 3 by 4 by 5 box | every edge grows with it: at 10 the box is 11 by 12 by 13 |
-| $p(x)$ | the polynomial you are cutting up | the volume, x^3 + 6x^2 + 11x + 6 | a higher power here means a longer quotient |
-| $d(x)$ | the divisor: what you divide by | the known edge, x + 1 | a higher power leaves a shorter quotient, a roomier scrap |
-| $q(x)$ | the quotient: how many of the divisor fit | the face, x^2 + 5x + 6 | its degree is p's degree minus d's |
-| $s(x)$ | the remainder, or scrap: what is left at the end, always lower degree than the divisor | 0 for this edge; 60 for x - 2 | raise d's degree and the scrap may keep an x |
-| $r$ | a root: the number that makes x - r equal zero | -1 for the edge x + 1; 2 for x - 2 | move r and the scrap traces the curve of p |
+| $`x`$ | the number, in cm, that sets the box's size | 2 gives the 3 by 4 by 5 box | every edge grows with it: at 10 the box is 11 by 12 by 13 |
+| $`p(x)`$ | the polynomial you are cutting up | the volume, x^3 + 6x^2 + 11x + 6 | a higher power here means a longer quotient |
+| $`d(x)`$ | the divisor: what you divide by | the known edge, x + 1 | a higher power leaves a shorter quotient, a roomier scrap |
+| $`q(x)`$ | the quotient: how many of the divisor fit | the face, x^2 + 5x + 6 | its degree is p's degree minus d's |
+| $`s(x)`$ | the remainder, or scrap: what is left at the end, always lower degree than the divisor | 0 for this edge; 60 for x - 2 | raise d's degree and the scrap may keep an x |
+| $`r`$ | a root: the number that makes x - r equal zero | -1 for the edge x + 1; 2 for x - 2 | move r and the scrap traces the curve of p |
 
 Now the second formula. Divide by x - r and the scrap is a plain number — and that number is p worked out at r:
 
-$$p(x) = (x - r)\,q(x) + p(r)$$
+```math
+p(x) = (x - r)\,q(x) + p(r)
+```
 
 **Read it aloud:** dividing by x minus a number leaves the polynomial's value at that number.
 
@@ -97,7 +101,9 @@ One catch. Each pass divides the leading number by the divisor's leading number.
 
 Put the number r in place of x:
 
-$$p(r) = (r - r)\,q(r) + s = 0 \times q(r) + s = s$$
+```math
+p(r) = (r - r)\,q(r) + s = 0 \times q(r) + s = s
+```
 
 x - r was built to vanish at r, so whatever the quotient is worth there gets multiplied by zero and disappears. Only the scrap survives, and a degree-1 divisor leaves it a plain number.
 

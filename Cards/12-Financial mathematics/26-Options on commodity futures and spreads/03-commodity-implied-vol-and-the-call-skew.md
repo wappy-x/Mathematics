@@ -40,55 +40,63 @@ Rising curve: the implied volatility read off each strike's quote, from the 10-d
 
 The option is priced by Black's 1976 formula for options on futures, Black-76, taught on [Options on a futures price](01-options-on-commodity-futures.md):
 
-$$C(\sigma) = D\,\big[F\,N(d_1) - K\,N(d_2)\big], \qquad P(\sigma) = D\,\big[K\,N(-d_2) - F\,N(-d_1)\big], \qquad D = e^{-rT}.$$
+```math
+C(\sigma) = D\,\big[F\,N(d_1) - K\,N(d_2)\big], \qquad P(\sigma) = D\,\big[K\,N(-d_2) - F\,N(-d_1)\big], \qquad D = e^{-rT}.
+```
 
-Implied volatility, written $\sigma_{\text{imp}}$, is defined by one equation, and has a solution exactly inside one range:
+Implied volatility, written $`\sigma_{\text{imp}}`$, is defined by one equation, and has a solution exactly inside one range:
 
-$$C(\sigma_{\text{imp}}) = C_{\text{mkt}}, \qquad D\,(F - K)^+ \;<\; C_{\text{mkt}} \;<\; D\,F.$$
+```math
+C(\sigma_{\text{imp}}) = C_{\text{mkt}}, \qquad D\,(F - K)^+ \;<\; C_{\text{mkt}} \;<\; D\,F.
+```
 
 **Read it aloud:** the implied volatility is the setting of the volatility dial at which Black-76 matches the screen, and such a setting exists, once only, when the quote sits above the discounted payoff at zero volatility and below the discounted futures price.
 
-Here $(F - K)^+$ means $F - K$ when that is positive, and zero otherwise. For a put the range is $D\,(K - F)^+ < P_{\text{mkt}} < D\,K$.
+Here $`(F - K)^+`$ means $`F - K`$ when that is positive, and zero otherwise. For a put the range is $`D\,(K - F)^+ < P_{\text{mkt}} < D\,K`$.
 
 The strip is summarised by two numbers read at the 15-delta points:
 
-$$\text{RR} = \sigma_{15c} - \sigma_{15p}, \qquad \text{BF} = \tfrac12(\sigma_{15c} + \sigma_{15p}) - \sigma_{\text{ATM}}.$$
+```math
+\text{RR} = \sigma_{15c} - \sigma_{15p}, \qquad \text{BF} = \tfrac12(\sigma_{15c} + \sigma_{15p}) - \sigma_{\text{ATM}}.
+```
 
 **Read it aloud:** the risk reversal is the call's vol minus the put's vol, and the butterfly is how far their average sits above the at-the-money vol. Positive risk reversal means calls are rich.
 
 The fade with contract month, called the Samuelson effect, is one formula when the spot price, the price for oil delivered now, is pulled back toward a normal level:
 
-$$\sigma_{\text{imp}}(T)^2 = \sigma_S^2\,\frac{1 - e^{-2\kappa T}}{2\kappa T}.$$
+```math
+\sigma_{\text{imp}}(T)^2 = \sigma_S^2\,\frac{1 - e^{-2\kappa T}}{2\kappa T}.
+```
 
-**Read it aloud:** the implied variance of a contract delivering in $T$ years is the spot's variance times the average, over the option's life, of how much of each shock survives to delivery, squared.
+**Read it aloud:** the implied variance of a contract delivering in $`T`$ years is the spot's variance times the average, over the option's life, of how much of each shock survives to delivery, squared.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C_{\text{mkt}}$, $P_{\text{mkt}}$ | the call's and put's quoted prices, USD/bbl | 7.002679 | implied vol rises |
-| $C$, $P$ | Black-76 call and put prices at volatility $\sigma$ | 7.002679 at 30% | |
-| $\sigma$, $\sigma_{\text{imp}}$, $w$, $w_0$, $w_1$ | volatility: yearly spread of the log futures price, a decimal; the one that matches the quote; $w = \sigma\sqrt T$, the total swing, with a small and a large one in the proof | 0.300000 | price rises |
-| $F$ | the futures price today | 85 USD/bbl | a call's implied vol falls for the same quote |
-| $K$ | the strike | 85 at the money; 67.38 to 119.87 on the strip | a call's implied vol rises for the same quote |
-| $D$, $r$ | discount factor $e^{-rT}$; bank rate, continuously compounded | 0.975310; 5% | move floor and ceiling |
-| $T$, $t$ | time to expiry in years; a running time between now and $T$ | 0.5 | the same quote implies a lower vol |
-| $d_1$, $d_2$ | the formula's two distances, $d_1 = \frac{\ln(F/K) + \frac12\sigma^2 T}{\sigma\sqrt T}$, $d_2 = d_1 - \sigma\sqrt T$ | 0.106066, $-0.106066$ | |
-| $N$, $\varphi$ | bell-curve area left of a point, and the bell curve's height | $N(d_1) = 0.542235$ | |
-| $\nu$ | vega: dollars gained per unit of $\sigma$, $D\,F\,\varphi(d_1)\sqrt T$ | 23.254860 | |
-| $\Delta$, $b$, $c$ | delta, here $N(d_1)$; the tilt and bend of the strip's vol curve in delta | 15-delta call 34%; $b = -0.081250$, $c = 0.052850$ | |
-| $\sigma_S$, $\kappa$ | the spot's own volatility; the pull-back speed toward a normal level, per year | 0.393128; 1.2 | far vols rise; far vols fall |
+| $`C_{\text{mkt}}`$, $`P_{\text{mkt}}`$ | the call's and put's quoted prices, USD/bbl | 7.002679 | implied vol rises |
+| $`C`$, $`P`$ | Black-76 call and put prices at volatility $`\sigma`$ | 7.002679 at 30% | |
+| $`\sigma`$, $`\sigma_{\text{imp}}`$, $`w`$, $`w_0`$, $`w_1`$ | volatility: yearly spread of the log futures price, a decimal; the one that matches the quote; $`w = \sigma\sqrt T`$, the total swing, with a small and a large one in the proof | 0.300000 | price rises |
+| $`F`$ | the futures price today | 85 USD/bbl | a call's implied vol falls for the same quote |
+| $`K`$ | the strike | 85 at the money; 67.38 to 119.87 on the strip | a call's implied vol rises for the same quote |
+| $`D`$, $`r`$ | discount factor $`e^{-rT}`$; bank rate, continuously compounded | 0.975310; 5% | move floor and ceiling |
+| $`T`$, $`t`$ | time to expiry in years; a running time between now and $`T`$ | 0.5 | the same quote implies a lower vol |
+| $`d_1`$, $`d_2`$ | the formula's two distances, $`d_1 = \frac{\ln(F/K) + \frac12\sigma^2 T}{\sigma\sqrt T}`$, $`d_2 = d_1 - \sigma\sqrt T`$ | 0.106066, $`-0.106066`$ | |
+| $`N`$, $`\varphi`$ | bell-curve area left of a point, and the bell curve's height | $`N(d_1) = 0.542235`$ | |
+| $`\nu`$ | vega: dollars gained per unit of $`\sigma`$, $`D\,F\,\varphi(d_1)\sqrt T`$ | 23.254860 | |
+| $`\Delta`$, $`b`$, $`c`$ | delta, here $`N(d_1)`$; the tilt and bend of the strip's vol curve in delta | 15-delta call 34%; $`b = -0.081250`$, $`c = 0.052850`$ | |
+| $`\sigma_S`$, $`\kappa`$ | the spot's own volatility; the pull-back speed toward a normal level, per year | 0.393128; 1.2 | far vols rise; far vols fall |
 
-In words: $d_2$ counts how many standard swings the strike sits below the futures price, minus half a swing; $d_1$ is one swing more.
+In words: $`d_2`$ counts how many standard swings the strike sits below the futures price, minus half a swing; $`d_1`$ is one swing more.
 
-**Convention on this card:** delta means $N(d_1)$, the futures delta without discounting. Some desks multiply by $D$ or subtract the premium; either moves the 15-delta strikes slightly, not the shape of the strip. The premium is paid today, as in an over-the-counter trade (a private deal between two firms, not on an exchange), so the price carries $D$.
+**Convention on this card:** delta means $`N(d_1)`$, the futures delta without discounting. Some desks multiply by $`D`$ or subtract the premium; either moves the 15-delta strikes slightly, not the shape of the strip. The premium is paid today, as in an over-the-counter trade (a private deal between two firms, not on an exchange), so the price carries $`D`$.
 
-**Conventions verified 2026-09-28** on the Brent Crude American-style Options page of ICE (Intercontinental Exchange, where Brent trades): listed Brent options are American-style, futures-style margined (no premium changes hands up front; the option's value is settled daily, like a futures), and stop trading three business days before their futures. With futures-style margining the fair quote is Black-76 without $D$, and early exercise is worth nothing.
+**Conventions verified 2026-09-28** on the Brent Crude American-style Options page of ICE (Intercontinental Exchange, where Brent trades): listed Brent options are American-style, futures-style margined (no premium changes hands up front; the option's value is settled daily, like a futures), and stop trading three business days before their futures. With futures-style margining the fair quote is Black-76 without $`D`$, and early exercise is worth nothing.
 
 ### When it holds
 
-- **European exercise, premium paid today.** Black-76 prices options exercisable only at expiry. A premium-paid American option on futures can be worth more than $D\,F$; its quote may have no answer in this formula. A futures-style margined option, like listed Brent, is inverted with $D = 1$.
+- **European exercise, premium paid today.** Black-76 prices options exercisable only at expiry. A premium-paid American option on futures can be worth more than $`D\,F`$; its quote may have no answer in this formula. A futures-style margined option, like listed Brent, is inverted with $`D = 1`$.
 - **Agreed inputs.** Rate, time and futures price are fixed first. Treat 85 as a spot price in Black-Scholes, the formula for an option on a share, and the same quote implies 24.92 percent, not 30: implied vol absorbs every error in the other inputs.
 - **Lognormal futures price for the inversion; a smile for the market.** One volatility per strike is a quoting device. The strip's shape is information the model cannot produce.
-- **Mean reversion for the term structure.** The Samuelson formula needs a spot that is pulled back toward a normal level at a steady speed. If shocks were permanent ($\kappa = 0$), every contract month would carry the same volatility.
+- **Mean reversion for the term structure.** The Samuelson formula needs a spot that is pulled back toward a normal level at a steady speed. If shocks were permanent ($`\kappa = 0`$), every contract month would carry the same volatility.
 - **Option expiry at the contract's expiry.** Listed Brent options stop three business days before their futures. The formula here ignores that gap.
 
 ---
@@ -101,28 +109,28 @@ As the volatility dial turns from zero to endless, the option's price rises stea
 
 ### Step 1: the floor and the ceiling for a futures option
 
-Turn volatility to zero. The futures price then ends where it is, at 85. The call pays $F - K$ for sure, or nothing, so its value is $D\,(F - K)^+$. For the at-the-money Brent call that floor is 0.
+Turn volatility to zero. The futures price then ends where it is, at 85. The call pays $`F - K`$ for sure, or nothing, so its value is $`D\,(F - K)^+`$. For the at-the-money Brent call that floor is 0.
 
-Turn volatility up without limit. Then $d_1$ runs to plus infinity and $d_2$ to minus infinity, so $N(d_1) \to 1$ and $N(d_2) \to 0$. The price tends to $D\,F = 82.901343$. The reason is plain: the call can never be worth more than the futures contract itself, paid for today, and that costs $D\,F$.
+Turn volatility up without limit. Then $`d_1`$ runs to plus infinity and $`d_2`$ to minus infinity, so $`N(d_1) \to 1`$ and $`N(d_2) \to 0`$. The price tends to $`D\,F = 82.901343`$. The reason is plain: the call can never be worth more than the futures contract itself, paid for today, and that costs $`D\,F`$.
 
 A quote of 83.00 lies above the ceiling. No volatility produces it. Sell the call for 83.00, bank 82.90 and buy one futures contract. At expiry the bank holds 85 and the futures has gained its final price minus 85: together, the final futures price, which covers any call payoff. The 0.10 left over is riskless profit.
 
 ### Step 2: the price always climbs, so the answer is unique
 
-Vega is $\nu = D\,F\,\varphi(d_1)\sqrt T$. A discount factor, a price, a bell-curve height and a square root are all positive. So vega is positive at every volatility, and two different volatilities never give the same price. At 30 percent it is 23.254860 dollars per unit of $\sigma$, as [Greeks of a futures option](02-futures-option-greeks.md) computes.
+Vega is $`\nu = D\,F\,\varphi(d_1)\sqrt T`$. A discount factor, a price, a bell-curve height and a square root are all positive. So vega is positive at every volatility, and two different volatilities never give the same price. At 30 percent it is 23.254860 dollars per unit of $`\sigma`$, as [Greeks of a futures option](02-futures-option-greeks.md) computes.
 
 <details>
 <summary>Detailed proof: vega is positive, the limits are the floor and ceiling, the root is unique</summary>
 
-Write $w = \sigma\sqrt T > 0$ and $m = \ln(F/K)$. Then $d_1 = m/w + w/2$, $d_2 = m/w - w/2$, and $C(w) = D\,[F\,N(d_1) - K\,N(d_2)]$.
+Write $`w = \sigma\sqrt T > 0`$ and $`m = \ln(F/K)`$. Then $`d_1 = m/w + w/2`$, $`d_2 = m/w - w/2`$, and $`C(w) = D\,[F\,N(d_1) - K\,N(d_2)]`$.
 
-**The identity.** $d_1^2 - d_2^2 = (d_1 + d_2)(d_1 - d_2) = (2m/w)\,w = 2m$. So $\varphi(d_1)/\varphi(d_2) = e^{-m} = K/F$, which gives $F\,\varphi(d_1) = K\,\varphi(d_2)$.
+**The identity.** $`d_1^2 - d_2^2 = (d_1 + d_2)(d_1 - d_2) = (2m/w)\,w = 2m`$. So $`\varphi(d_1)/\varphi(d_2) = e^{-m} = K/F`$, which gives $`F\,\varphi(d_1) = K\,\varphi(d_2)`$.
 
-**The slope.** $N$ has slope $\varphi$. So $C'(w) = D\,[F\varphi(d_1)\,d_1' - K\varphi(d_2)\,d_2'] = D\,F\varphi(d_1)\,(d_1' - d_2') = D\,F\,\varphi(d_1)$, because $d_1 - d_2 = w$. This is positive. The put, $P = D\,[K\,N(-d_2) - F\,N(-d_1)]$, has the same slope.
+**The slope.** $`N`$ has slope $`\varphi`$. So $`C'(w) = D\,[F\varphi(d_1)\,d_1' - K\varphi(d_2)\,d_2'] = D\,F\varphi(d_1)\,(d_1' - d_2') = D\,F\,\varphi(d_1)`$, because $`d_1 - d_2 = w`$. This is positive. The put, $`P = D\,[K\,N(-d_2) - F\,N(-d_1)]`$, has the same slope.
 
-**The limits.** As $w \to 0$: if $m > 0$ both $d$ values go to $+\infty$ and $C \to D(F - K)$; if $m < 0$ both go to $-\infty$ and $C \to 0$; if $m = 0$ both go to 0 and $C \to D(F - K)/2 = 0$. As $w \to \infty$: $d_1 \to +\infty$, $d_2 \to -\infty$, $C \to D\,F$.
+**The limits.** As $`w \to 0`$: if $`m > 0`$ both $`d`$ values go to $`+\infty`$ and $`C \to D(F - K)`$; if $`m < 0`$ both go to $`-\infty`$ and $`C \to 0`$; if $`m = 0`$ both go to 0 and $`C \to D(F - K)/2 = 0`$. As $`w \to \infty`$: $`d_1 \to +\infty`$, $`d_2 \to -\infty`$, $`C \to D\,F`$.
 
-**Existence and uniqueness.** For a quote strictly inside the range, the limits give a small $w_0$ priced below it and a large $w_1$ priced above. $C$ is continuous, so it meets the quote somewhere between (the intermediate value theorem). Two meeting points would force a zero slope between them (the mean value theorem), and the slope is never zero. For every $w$, $C(w/2) < C(w) < C(2w)$, so the ends of the range are never reached: a quote at either end has no positive, finite volatility.
+**Existence and uniqueness.** For a quote strictly inside the range, the limits give a small $`w_0`$ priced below it and a large $`w_1`$ priced above. $`C`$ is continuous, so it meets the quote somewhere between (the intermediate value theorem). Two meeting points would force a zero slope between them (the mean value theorem), and the slope is never zero. For every $`w`$, $`C(w/2) < C(w) < C(2w)`$, so the ends of the range are never reached: a quote at either end has no positive, finite volatility.
 
 </details>
 
@@ -134,11 +142,11 @@ Newton's method is faster. It steps along the slope: new guess = old guess minus
 
 ### Step 4: read every strike, and the strip leans up
 
-The six-month Brent strip is built from three quotes: 30 percent at the money, 34 percent at the 15-delta call, 28 percent at the 15-delta put. On this card the volatility is a smooth curve in delta between them: $\sigma = 0.30 + b\,(\Delta - \Delta_{\text{ATM}}) + c\,(\Delta - \Delta_{\text{ATM}})^2$, where $\Delta_{\text{ATM}} = 0.542235$ is the delta of the call struck at the futures price. A put's delta is $N(d_1) - 1$, so the 15-delta put is the strike whose call delta is 0.85. This is a simple shape chosen for the example, not a market standard.
+The six-month Brent strip is built from three quotes: 30 percent at the money, 34 percent at the 15-delta call, 28 percent at the 15-delta put. On this card the volatility is a smooth curve in delta between them: $`\sigma = 0.30 + b\,(\Delta - \Delta_{\text{ATM}}) + c\,(\Delta - \Delta_{\text{ATM}})^2`$, where $`\Delta_{\text{ATM}} = 0.542235`$ is the delta of the call struck at the futures price. A put's delta is $`N(d_1) - 1`$, so the 15-delta put is the strike whose call delta is 0.85. This is a simple shape chosen for the example, not a market standard.
 
-A delta and a volatility fix a strike. Since $\Delta = N(d_1)$, the strike is $K = F\,e^{-N^{-1}(\Delta)\,\sigma\sqrt T + \frac12\sigma^2 T}$, where $N^{-1}$ undoes $N$. The 15-delta call lands at 112.25 and the 15-delta put at 70.60. Each strike's out-of-the-money option (the call when struck above the futures price, the put when struck below it) is priced at its volatility; those prices are the screen. Inverting each price returns its volatility to four decimals. Inverting the put through put-call parity, $C - P = D\,(F - K)$, returns the same number: one strike has one volatility, whichever side is quoted.
+A delta and a volatility fix a strike. Since $`\Delta = N(d_1)`$, the strike is $`K = F\,e^{-N^{-1}(\Delta)\,\sigma\sqrt T + \frac12\sigma^2 T}`$, where $`N^{-1}`$ undoes $`N`$. The 15-delta call lands at 112.25 and the 15-delta put at 70.60. Each strike's out-of-the-money option (the call when struck above the futures price, the put when struck below it) is priced at its volatility; those prices are the screen. Inverting each price returns its volatility to four decimals. Inverting the put through put-call parity, $`C - P = D\,(F - K)`$, returns the same number: one strike has one volatility, whichever side is quoted.
 
-The risk reversal is $34 - 28 = +6.0000$ vol points (percentage points of volatility); the butterfly is $+1.0000$. The call skew costs real money. At its 34 percent, the 15-delta call costs 1.396756; at a flat 30 percent it would cost 0.895547. The skew adds 0.501209 dollars a barrel.
+The risk reversal is $`34 - 28 = +6.0000`$ vol points (percentage points of volatility); the butterfly is $`+1.0000`$. The call skew costs real money. At its 34 percent, the 15-delta call costs 1.396756; at a flat 30 percent it would cost 0.895547. The skew adds 0.501209 dollars a barrel.
 
 Why do calls carry the premium? Three reasons, each about the oil market rather than the formula.
 
@@ -150,15 +158,17 @@ Natural gas and power show the same lean, often more steeply, because they are h
 
 ### Step 5: why far contracts move less
 
-On a mean-reverting spot, a shock to the price today is expected to fade. The model, from [A spot price that reverts](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md), says the log spot is pulled toward a normal level at speed $\kappa$ a year: a fraction $e^{-\kappa u}$ of any shock is still there $u$ years later. A futures price is the expected spot at delivery. So a shock at time $t$ moves the contract delivering at $T$ by only $e^{-\kappa(T - t)}$ of what it does to the spot. Its volatility at time $t$ is $\sigma_S\,e^{-\kappa(T - t)}$.
+On a mean-reverting spot, a shock to the price today is expected to fade. The model, from [A spot price that reverts](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md), says the log spot is pulled toward a normal level at speed $`\kappa`$ a year: a fraction $`e^{-\kappa u}`$ of any shock is still there $`u`$ years later. A futures price is the expected spot at delivery. So a shock at time $`t`$ moves the contract delivering at $`T`$ by only $`e^{-\kappa(T - t)}`$ of what it does to the spot. Its volatility at time $`t`$ is $`\sigma_S\,e^{-\kappa(T - t)}`$.
 
 The option's implied variance is the average of that squared volatility over the option's life:
 
-$$\sigma_{\text{imp}}(T)^2 = \frac{1}{T}\int_0^T \sigma_S^2\,e^{-2\kappa(T - t)}\,dt = \sigma_S^2\,\frac{1 - e^{-2\kappa T}}{2\kappa T}.$$
+```math
+\sigma_{\text{imp}}(T)^2 = \frac{1}{T}\int_0^T \sigma_S^2\,e^{-2\kappa(T - t)}\,dt = \sigma_S^2\,\frac{1 - e^{-2\kappa T}}{2\kappa T}.
+```
 
-The integral is a plain exponential: its antiderivative is $\sigma_S^2\,e^{-2\kappa(T - t)}/(2\kappa)$, evaluated from $0$ to $T$.
+The integral is a plain exponential: its antiderivative is $`\sigma_S^2\,e^{-2\kappa(T - t)}/(2\kappa)`$, evaluated from $`0`$ to $`T`$.
 
-On this card $\kappa = 1.2$, so half of any shock is gone in 0.5776 years. The spot's own volatility $\sigma_S = 0.393128$ is set so the six-month contract sits at 30 percent, matching the Brent quote. The formula then predicts every other month. Near expiry, contracts behave like spot and carry close to the spot's own 0.393128. The 24-month contract comes out at 17.87 percent.
+On this card $`\kappa = 1.2`$, so half of any shock is gone in 0.5776 years. The spot's own volatility $`\sigma_S = 0.393128`$ is set so the six-month contract sits at 30 percent, matching the Brent quote. The formula then predicts every other month. Near expiry, contracts behave like spot and carry close to the spot's own 0.393128. The 24-month contract comes out at 17.87 percent.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -170,7 +180,7 @@ xychart-beta
     line [31.88, 31.10, 30.00, 28.96, 27.99, 27.07, 26.21, 25.40, 24.63]
 ```
 
-Steep curve: pull-back speed $\kappa = 1.2$ a year, falling from 37.43 percent on the one-month contract to 17.87 percent on the 24-month. Gentle curve: $\kappa = 0.3$, both fitted to 30 percent at six months; the 24-month contract then carries 24.63 percent. Slower pull-back, slower fade.
+Steep curve: pull-back speed $`\kappa = 1.2`$ a year, falling from 37.43 percent on the one-month contract to 17.87 percent on the 24-month. Gentle curve: $`\kappa = 0.3`$, both fitted to 30 percent at six months; the 24-month contract then carries 24.63 percent. Slower pull-back, slower fade.
 
 Two more roads check the formula. The integral, added up numerically by Simpson's rule, gives the same row to two decimals. And a simulation that never uses the formula follows 40,000 random paths of the mean-reverting log spot, week by week for two years. The average ending spot is the 24-month futures price. The average call payoff, discounted, is the option's price, 7.775924. Inverted through Black-76, it implies 17.9682 percent: 0.0985 points from the formula, inside the simulation's noise.
 
@@ -178,29 +188,29 @@ Two more roads check the formula. The integral, added up numerically by Simpson'
 
 ## Worked numbers, by hand
 
-House Brent: $F = K = 85$, $r = 5\%$, $T = 0.5$, quote $C_{\text{mkt}} = 7.002679$.
+House Brent: $`F = K = 85`$, $`r = 5\%`$, $`T = 0.5`$, quote $`C_{\text{mkt}} = 7.002679`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| discount $D$ | $e^{-0.05 \times 0.5}$ | 0.975310 |
-| floor, $D\,(F - K)^+$ | $F = K$ | 0 |
-| ceiling, $D\,F$ | $0.975310 \times 85$ | 82.901343 |
-| inside? | $0 < 7.002679 < 82.901343$ | yes: one answer |
-| try $\sigma = 0.30$: $d_1$ | $(0 + \tfrac12 \times 0.09 \times 0.5) / (0.30 \times \sqrt{0.5})$ | 0.106066 |
-| $N(d_1)$, $N(d_2)$ | $d_2 = -0.106066$ | 0.542235, 0.457765 |
-| price at 0.30 | $0.975310 \times 85 \times (0.542235 - 0.457765)$ | 7.002679, the quote |
-| vega at 0.30 | $0.975310 \times 85 \times \varphi(0.106066) \times \sqrt{0.5}$ | 23.254860 |
+| discount $`D`$ | $`e^{-0.05 \times 0.5}`$ | 0.975310 |
+| floor, $`D\,(F - K)^+`$ | $`F = K`$ | 0 |
+| ceiling, $`D\,F`$ | $`0.975310 \times 85`$ | 82.901343 |
+| inside? | $`0 < 7.002679 < 82.901343`$ | yes: one answer |
+| try $`\sigma = 0.30`$: $`d_1`$ | $`(0 + \tfrac12 \times 0.09 \times 0.5) / (0.30 \times \sqrt{0.5})`$ | 0.106066 |
+| $`N(d_1)`$, $`N(d_2)`$ | $`d_2 = -0.106066`$ | 0.542235, 0.457765 |
+| price at 0.30 | $`0.975310 \times 85 \times (0.542235 - 0.457765)`$ | 7.002679, the quote |
+| vega at 0.30 | $`0.975310 \times 85 \times \varphi(0.106066) \times \sqrt{0.5}`$ | 23.254860 |
 | **implied volatility** | | **0.300000, or 30%** |
 
-The 24-month vol, from the Samuelson formula with $\kappa = 1.2$:
+The 24-month vol, from the Samuelson formula with $`\kappa = 1.2`$:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| six-month factor | $(1 - e^{-1.2}) / 1.2 = (1 - 0.301194)/1.2$ | 0.582338 |
-| spot vol $\sigma_S$ | $0.30 / \sqrt{0.582338}$ | 0.393128 |
-| 24-month factor | $(1 - e^{-4.8}) / 4.8 = (1 - 0.008230)/4.8$ | 0.206619 |
+| six-month factor | $`(1 - e^{-1.2}) / 1.2 = (1 - 0.301194)/1.2`$ | 0.582338 |
+| spot vol $`\sigma_S`$ | $`0.30 / \sqrt{0.582338}`$ | 0.393128 |
+| 24-month factor | $`(1 - e^{-4.8}) / 4.8 = (1 - 0.008230)/4.8`$ | 0.206619 |
 | its square root | | 0.454553 |
-| **24-month implied vol** | $0.393128 \times 0.454553$ | **17.87%** |
+| **24-month implied vol** | $`0.393128 \times 0.454553`$ | **17.87%** |
 
 A trader quoting the 24-month contract at the front month's 30 percent would charge 12.920768 for its at-the-money call. At the model's 17.87 percent it is worth 7.733545.
 
@@ -209,7 +219,7 @@ A trader quoting the 24-month contract at the front month's 30 percent would cha
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Treat 85 as a spot price in Black-Scholes, no yield | 0.249215 | The model grows the price at 5% a year; a futures price does not grow, it is already the delivery price |
-| Forget the discount $D$ | 0.292566 | The premium is paid today, the payoff in six months ($D = 1$ is right only under futures-style margining) |
+| Forget the discount $`D`$ | 0.292566 | The premium is paid today, the payoff in six months ($`D = 1`$ is right only under futures-style margining) |
 | Use one year instead of six months | 0.217523 | More time needs less volatility for the same price |
 | Quote 83.00, range not checked | 10.000000 | Above the ceiling 82.901343: no root; the solver stops at its 1,000% edge |
 | Price the 24-month call at the front's 30% | 12.920768 instead of 7.733545 | Ignores the fade: overpays 5.187223 |
@@ -218,7 +228,7 @@ A trader quoting the 24-month contract at the front month's 30 percent would cha
 
 ## Code, from first principles, and it actually runs
 
-The code reads 30 percent out of the Brent quote by three roads: halving on Black-76, Newton's method on Black-76, and halving on a price built by averaging the payoff over the bell curve with Simpson's rule, which uses no $d_1$ or $d_2$. It builds the nine-strike strip from the three quoted points, prices each strike, inverts every price back to its volatility, and inverts every put a second time through parity. It computes the Samuelson term structure by three roads: the formula, the integral added up numerically, and a simulation of the mean-reverting spot. It prints every wrong answer in the table above. Mutation tests were run: flipping the sign of the half-variance term in $d_1$, flipping the put's sign, halving the exponent in the Samuelson factor, removing the pull-back from the simulation, removing the drift from the Simpson price, flipping a sign in the strip fit, and deleting the range check each trip an assert.
+The code reads 30 percent out of the Brent quote by three roads: halving on Black-76, Newton's method on Black-76, and halving on a price built by averaging the payoff over the bell curve with Simpson's rule, which uses no $`d_1`$ or $`d_2`$. It builds the nine-strike strip from the three quoted points, prices each strike, inverts every price back to its volatility, and inverts every put a second time through parity. It computes the Samuelson term structure by three roads: the formula, the integral added up numerically, and a simulation of the mean-reverting spot. It prints every wrong answer in the table above. Mutation tests were run: flipping the sign of the half-variance term in $`d_1`$, flipping the put's sign, halving the exponent in the Samuelson factor, removing the pull-back from the simulation, removing the drift from the Simpson price, flipping a sign in the strip fit, and deleting the range check each trip an assert.
 
 ### Python
 
@@ -611,10 +621,10 @@ The two outputs agree line for line, including the simulation: both use the same
 
 Lean proves Steps 0 to 2 and Step 5 for every positive futures price, strike, time, spot vol and pull-back speed.
 
-- Suppose $F$, $K$ and $T$ are above zero, at any bank rate $r$. Then a call quote has one positive implied vol exactly when $D\,(F - K)^+ < C_{\text{mkt}} < D\,F$.
-- Take the same setting. Then a put quote has one positive implied vol exactly when $D\,(K - F)^+ < P_{\text{mkt}} < D\,K$.
-- Suppose $\kappa > 0$ and $T > 0$. Then the implied variance from Step 5's integral is $\sigma_S^2\,(1 - e^{-2\kappa T})/(2\kappa T)$.
-- Suppose $\sigma_S > 0$ and $\kappa > 0$. Then $\sigma_{\text{imp}}(T)$ falls strictly as $T$ grows: further contract months carry lower vol.
+- Suppose $`F`$, $`K`$ and $`T`$ are above zero, at any bank rate $`r`$. Then a call quote has one positive implied vol exactly when $`D\,(F - K)^+ < C_{\text{mkt}} < D\,F`$.
+- Take the same setting. Then a put quote has one positive implied vol exactly when $`D\,(K - F)^+ < P_{\text{mkt}} < D\,K`$.
+- Suppose $`\kappa > 0`$ and $`T > 0`$. Then the implied variance from Step 5's integral is $`\sigma_S^2\,(1 - e^{-2\kappa T})/(2\kappa T)`$.
+- Suppose $`\sigma_S > 0`$ and $`\kappa > 0`$. Then $`\sigma_{\text{imp}}(T)`$ falls strictly as $`T`$ grows: further contract months carry lower vol.
 - The hand arithmetic holds: floor 0, quote inside the range, 83.00 above the ceiling, risk reversal 6, butterfly 1, overpay 5.187223.
 
 The prices, the strip, the root finders and the simulation are left to the Python and Rust checks.
@@ -1058,7 +1068,7 @@ example : (12920768 : ℚ) / 10 ^ 6 - 7733545 / 10 ^ 6 = 5187223 / 10 ^ 6 := by 
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
-> - **Slow the pull-back** to $\kappa = 0.3$, refitting the spot vol to 30 percent at six months. Guess the 24-month vol. The answer is 24.63 percent: a slower fade.
+> - **Slow the pull-back** to $`\kappa = 0.3`$, refitting the spot vol to 30 percent at six months. Guess the 24-month vol. The answer is 24.63 percent: a slower fade.
 > - **Quote 83.00** for the Brent call. The range check refuses it, since the ceiling is 82.901343. Remove the check and bisection prints 10.000000, a 1,000 percent "volatility".
 > - **Flatten the skew** by pricing the 15-delta call at 30 percent. Guess the price. It is 0.895547, against 1.396756 at the skewed 34 percent.
 > - **Start Newton at 0.5.** It takes 4 steps to reach 0.300000. Halving takes sixty.
@@ -1074,7 +1084,7 @@ example : (12920768 : ℚ) / 10 ^ 6 - 7733545 / 10 ^ 6 = 5187223 / 10 ^ 6 := by 
 > - **Spot model on a futures price.** Black-Scholes with 85 as spot and no yield turns 30 percent into 24.92 percent. The futures price is already the delivery price and does not grow.
 > - **One vol for every contract month.** Quoting the 24-month contract at the six-month 30 percent prices its at-the-money call at 12.920768, where the Samuelson model gives 7.733545.
 > - **Skipping the range check.** 83.00 is above the ceiling 82.901343, yet a bare solver returns 10.000000.
-> - **Forgetting the discount.** For a premium paid today, dropping $D$ gives 29.26 percent. Small here; larger for long-dated options. The opposite slip, discounting a futures-style margined quote, is as wrong.
+> - **Forgetting the discount.** For a premium paid today, dropping $`D`$ gives 29.26 percent. Small here; larger for long-dated options. The opposite slip, discounting a futures-style margined quote, is as wrong.
 
 ---
 
@@ -1095,7 +1105,7 @@ example : (12920768 : ℚ) / 10 ^ 6 - 7733545 / 10 ^ 6 = 5187223 / 10 ^ 6 := by 
 
 - [Options on a futures price](01-options-on-commodity-futures.md): Black-76, the futures-option formula this card runs backwards.
 - [Greeks of a futures option](02-futures-option-greeks.md): vega for a futures option, the slope that makes the answer unique and drives Newton.
-- [A spot price that reverts](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md): the pull-back model whose shocks fade at speed $\kappa$.
+- [A spot price that reverts](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md): the pull-back model whose shocks fade at speed $`\kappa`$.
 - [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): the inverse for a share option, with the same floor-ceiling proof.
 - [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): reading one volatility per strike, and why the curve is not flat.
 - [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the fast root finder used as the second road.

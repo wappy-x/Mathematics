@@ -28,38 +28,44 @@ To scale, 9 pixels per metre. The triangle at 12 + 0i shows the car heading nort
 
 ## The formula
 
-Notation first, in words. The loop integral sign $\oint$ means a contour integral once round a closed path ([Contour integrals](01-contour-integrals.md)). This card introduces the **winding number** $n(\gamma, a)$, read "n of gamma and a": the net anticlockwise laps the loop $\gamma$ (gamma) makes round the point $a$.
+Notation first, in words. The loop integral sign $`\oint`$ means a contour integral once round a closed path ([Contour integrals](01-contour-integrals.md)). This card introduces the **winding number** $`n(\gamma, a)`$, read "n of gamma and a": the net anticlockwise laps the loop $`\gamma`$ (gamma) makes round the point $`a`$.
 
-$$n(\gamma, a) = \frac{1}{2\pi i}\oint_\gamma \frac{dz}{z - a}$$
+```math
+n(\gamma, a) = \frac{1}{2\pi i}\oint_\gamma \frac{dz}{z - a}
+```
 
 **Read it aloud:** integrate one over the arrow from the island to the car, once round, and divide by 2πi; the result counts laps.
 
-Now let $f$ be holomorphic (it has a complex derivative) everywhere in the plane except at $m$ holes $a_1, \dots, a_m$, none on the loop, and let $C_k$ be a small anticlockwise circle round $a_k$ alone.
+Now let $`f`$ be holomorphic (it has a complex derivative) everywhere in the plane except at $`m`$ holes $`a_1, \dots, a_m`$, none on the loop, and let $`C_k`$ be a small anticlockwise circle round $`a_k`$ alone.
 
-$$\oint_\gamma f(z)\,dz = \sum_{k=1}^{m} n(\gamma, a_k)\oint_{C_k} f(z)\,dz$$
+```math
+\oint_\gamma f(z)\,dz = \sum_{k=1}^{m} n(\gamma, a_k)\oint_{C_k} f(z)\,dz
+```
 
 **Read it aloud:** the loop's integral is each hole's small-circle integral times the loop's laps round that hole, added up.
 
-For a building block $c_k/(z - a_k)$, with $c_k$ a fixed number called its strength, the small circle gives $2\pi i\,c_k$. The double roundabout's function is
+For a building block $`c_k/(z - a_k)`$, with $`c_k`$ a fixed number called its strength, the small circle gives $`2\pi i\,c_k`$. The double roundabout's function is
 
-$$f(z) = \frac{4z + 10}{z^2 - 25} = \frac{3}{z - 5} + \frac{1}{z + 5},$$
+```math
+f(z) = \frac{4z + 10}{z^2 - 25} = \frac{3}{z - 5} + \frac{1}{z + 5},
+```
 
 so its holes are 5 and −5, with strengths 3 and 1.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\gamma$, $\oint$ | a loop, the car's route; the integral once round it | the oval lane | more laps, bigger count |
-| $z$ | a point on the loop: the car's position | 12 + 0i at the start | — |
-| $a$ | the point circled | the island, 0 | past the lane, count 0 |
-| $n(\gamma, a)$ | winding number: net anticlockwise laps round $a$ | 1, 2, −1; figure-eight +1 and −1 | integral grows by 2πi per lap |
-| $f$ | a function holomorphic except at its holes | (4z + 10)/(z^2 − 25) | — |
-| $a_k$, $c_k$, $m$ | the holes, their strengths, how many | 5 and −5; 3 and 1; 2 | bigger strength, bigger share |
-| $C_k$, $r$ | small anticlockwise circle round one hole; its radius | radius 1 | no change |
-| $t$, $i$ | the path's clock, in radians; the number with $i^2 = -1$ | 0 to 2π per lap | — |
+| $`\gamma`$, $`\oint`$ | a loop, the car's route; the integral once round it | the oval lane | more laps, bigger count |
+| $`z`$ | a point on the loop: the car's position | 12 + 0i at the start | — |
+| $`a`$ | the point circled | the island, 0 | past the lane, count 0 |
+| $`n(\gamma, a)`$ | winding number: net anticlockwise laps round $`a`$ | 1, 2, −1; figure-eight +1 and −1 | integral grows by 2πi per lap |
+| $`f`$ | a function holomorphic except at its holes | (4z + 10)/(z^2 − 25) | — |
+| $`a_k`$, $`c_k`$, $`m`$ | the holes, their strengths, how many | 5 and −5; 3 and 1; 2 | bigger strength, bigger share |
+| $`C_k`$, $`r`$ | small anticlockwise circle round one hole; its radius | radius 1 | no change |
+| $`t`$, $`i`$ | the path's clock, in radians; the number with $`i^2 = -1`$ | 0 to 2π per lap | — |
 
 ### When it holds
 
-- **No hole on the loop.** Through the island, $1/z$ has no value: the integral is undefined.
+- **No hole on the loop.** Through the island, $`1/z`$ has no value: the integral is undefined.
 - **The loop is closed.** Stopped halfway, the arrow from the island has turned half a turn: only a loop ending where it began gives a whole number.
 - **Sliding never crosses a hole.** Shift the lane 20 metres east so the island falls outside, and the integral of dz/z jumps from 6.283185i to 0.
 
@@ -69,45 +75,47 @@ so its holes are 5 and −5, with strengths 3 and 1.
 
 ### Step 0: the region between two loops decides
 
-A loop surrounding only points where $f$ is holomorphic gives 0, so two loops differing only across such a region give the same integral.
+A loop surrounding only points where $`f`$ is holomorphic gives 0, so two loops differing only across such a region give the same integral.
 
 ### Step 1: one lap of a small circle gives 2πi
 
-Walk a circle of radius $r$ round the island: $z = r(\cos t + i\sin t)$ as $t$ runs from 0 to 2π. Then $dz/dt = r(-\sin t + i\cos t) = i z$. So $dz/z = i\,dt$, and one lap gives $\int_0^{2\pi} i\,dt = 2\pi i$, whatever $r$ is.
+Walk a circle of radius $`r`$ round the island: $`z = r(\cos t + i\sin t)`$ as $`t`$ runs from 0 to 2π. Then $`dz/dt = r(-\sin t + i\cos t) = i z`$. So $`dz/z = i\,dt`$, and one lap gives $`\int_0^{2\pi} i\,dt = 2\pi i`$, whatever $`r`$ is.
 
-With the island at $a_k$ and strength $c_k$ the same steps give $2\pi i\,c_k$: at 5 with strength 3, 18.849556i.
+With the island at $`a_k`$ and strength $`c_k`$ the same steps give $`2\pi i\,c_k`$: at 5 with strength 3, 18.849556i.
 
 ### Step 2: the oval can shrink to the small circle
 
-Cut the ring between the oval and the radius-1 circle along the real axis, east and west of the island. It falls into an upper and a lower piece, neither containing the island, so Cauchy's theorem gives 0 round each. Add the two boundaries: the cuts are travelled once each way and cancel. What remains is the oval anticlockwise plus the small circle clockwise, summing to 0. So the oval equals the small circle, $2\pi i$. The checks find 6.283185i for the oval and for circles of radius 1 and 0.1.
+Cut the ring between the oval and the radius-1 circle along the real axis, east and west of the island. It falls into an upper and a lower piece, neither containing the island, so Cauchy's theorem gives 0 round each. Add the two boundaries: the cuts are travelled once each way and cancel. What remains is the oval anticlockwise plus the small circle clockwise, summing to 0. So the oval equals the small circle, $`2\pi i`$. The checks find 6.283185i for the oval and for circles of radius 1 and 0.1.
 
 <details>
 <summary>Detailed proof: why Cauchy's theorem applies to each piece</summary>
 
-The upper piece, edges included, avoids the ray running straight down from 0. The plane minus that ray is star-shaped about $i$: the segment from $i$ to any point off the ray stays off it. On a star-shaped region a holomorphic function has an antiderivative ([Antiderivatives](02-antiderivatives-and-path-independence.md)), so every closed path there gives 0; $1/z$ is holomorphic off 0. The lower piece avoids the upward ray and gives 0 the same way. Nothing here used the oval's shape: any two loops joined by cuts into hole-free pieces give equal integrals.
+The upper piece, edges included, avoids the ray running straight down from 0. The plane minus that ray is star-shaped about $`i`$: the segment from $`i`$ to any point off the ray stays off it. On a star-shaped region a holomorphic function has an antiderivative ([Antiderivatives](02-antiderivatives-and-path-independence.md)), so every closed path there gives 0; $`1/z`$ is holomorphic off 0. The lower piece avoids the upward ray and gives 0 the same way. Nothing here used the oval's shape: any two loops joined by cuts into hole-free pieces give equal integrals.
 
 </details>
 
 ### Step 3: the winding number is a whole number
 
-Write $z - a$, the arrow from the island to the car, in polar form. Then $dz/(z - a)$ has a real part, the change in the logarithm of the arrow's length, and an imaginary part, the change in its angle. Back at the start the length is unchanged, so the real part totals 0. The angle has turned through whole turns, $2\pi$ each. Divide by $2\pi i$ and a whole number remains.
+Write $`z - a`$, the arrow from the island to the car, in polar form. Then $`dz/(z - a)`$ has a real part, the change in the logarithm of the arrow's length, and an imaginary part, the change in its angle. Back at the start the length is unchanged, so the real part totals 0. The angle has turned through whole turns, $`2\pi`$ each. Divide by $`2\pi i`$ and a whole number remains.
 
 That is the checks' second road. They follow the arrow in 100000 small steps, add each step's turn, read off by atan2 (the angle of a point, in (−π, π]), and divide by 2π: 1.000000, 2.000000 and −1.000000 for the three laps, matching the integral.
 
 <details>
 <summary>Detailed proof: the integral is 2πi times a whole number</summary>
 
-Let $\gamma(t)$, $0 \le t \le T$, be a closed path avoiding $a$. Define $h(t) = \int_0^t \gamma'(s)/(\gamma(s) - a)\,ds$. The function $(\gamma(t) - a)\,e^{-h(t)}$ has derivative $\gamma' e^{-h} - (\gamma - a)\,h' e^{-h} = 0$, so it is constant. Since $\gamma(T) = \gamma(0)$, this forces $e^{-h(T)} = 1$. The exponential is 1 exactly at whole multiples of $2\pi i$ ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)), and $h(T)$ is the loop integral. Moving $a$ without touching the loop changes $h(T)$ continuously, so the whole number stays fixed, and it is 0 for $a$ far away.
+Let $`\gamma(t)`$, $`0 \le t \le T`$, be a closed path avoiding $`a`$. Define $`h(t) = \int_0^t \gamma'(s)/(\gamma(s) - a)\,ds`$. The function $`(\gamma(t) - a)\,e^{-h(t)}`$ has derivative $`\gamma' e^{-h} - (\gamma - a)\,h' e^{-h} = 0`$, so it is constant. Since $`\gamma(T) = \gamma(0)`$, this forces $`e^{-h(T)} = 1`$. The exponential is 1 exactly at whole multiples of $`2\pi i`$ ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)), and $`h(T)`$ is the loop integral. Moving $`a`$ without touching the loop changes $`h(T)`$ continuously, so the whole number stays fixed, and it is 0 for $`a`$ far away.
 
 </details>
 
 ### Step 4: several holes, each with its own small circle
 
-The double roundabout's $f$ splits into $3/(z - 5)$ and $1/(z + 5)$. By the winding number's definition, the pieces give $3 \cdot 2\pi i \cdot n(\gamma, 5)$ and $1 \cdot 2\pi i \cdot n(\gamma, -5)$ round the figure-eight. The small circle round 5 sees only the first piece, since the second is holomorphic on a disc containing that circle. So:
+The double roundabout's $`f`$ splits into $`3/(z - 5)`$ and $`1/(z + 5)`$. By the winding number's definition, the pieces give $`3 \cdot 2\pi i \cdot n(\gamma, 5)`$ and $`1 \cdot 2\pi i \cdot n(\gamma, -5)`$ round the figure-eight. The small circle round 5 sees only the first piece, since the second is holomorphic on a disc containing that circle. So:
 
-$$\oint_\gamma f\,dz = (+1)(2\pi i \cdot 3) + (-1)(2\pi i \cdot 1) = 4\pi i.$$
+```math
+\oint_\gamma f\,dz = (+1)(2\pi i \cdot 3) + (-1)(2\pi i \cdot 1) = 4\pi i.
+```
 
-For a general $f$, subtract near each hole the part that blows up there ([Laurent series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md)); the remainder gives 0, and so do the powers beyond the first. The full statement is [The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md). Topology counts the same laps by deforming loops alone, with no integral: The circle's fundamental group is the integers.
+For a general $`f`$, subtract near each hole the part that blows up there ([Laurent series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md)); the remainder gives 0, and so do the powers beyond the first. The full statement is [The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md). Topology counts the same laps by deforming loops alone, with no integral: The circle's fundamental group is the integers.
 
 ### The picture: the figure-eight round two islands
 
@@ -121,11 +129,11 @@ To scale, 14 pixels per metre; t runs from 0 to 2π. Both triangles point north:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| small circle round the island | $dz/z = i\,dt$, one lap is 2π of $t$ | 2πi = 6.283185i |
+| small circle round the island | $`dz/z = i\,dt`$, one lap is 2π of $`t`$ | 2πi = 6.283185i |
 | the oval lane, once | same as the circle, by Step 2 | **n = 1** |
 | two laps; the wrong way | 2 × 2πi and −2πi, divided by 2πi | **2 and −1** |
 | bus stop at 15 | shrink the lane to a point away from 15 | **0** |
-| strengths of $f$ | drop the factor z − 5, put z = 5: 30/10; drop z + 5, put z = −5: −10/−10 | 3 and 1 |
+| strengths of $`f`$ | drop the factor z − 5, put z = 5: 30/10; drop z + 5, put z = −5: −10/−10 | 3 and 1 |
 | small circles | 2πi × 3 and 2πi × 1 | 18.849556i and 6.283185i |
 | figure-eight | (+1)(18.849556i) + (−1)(6.283185i) | **12.566371i = 4πi** |
 | the oval lane round both | (+1)(18.849556i) + (+1)(6.283185i) | **25.132741i = 8πi** |
@@ -146,7 +154,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Two independent roads. Road one is a trapezoid sum of $f(z)\,dz$ along short chords of each path; its error falls about a hundredfold per tenfold more steps. Road two never integrates: it adds up the arrow's turns with atan2. The small circles and counted windings rebuild the figure-eight's integral.
+Two independent roads. Road one is a trapezoid sum of $`f(z)\,dz`$ along short chords of each path; its error falls about a hundredfold per tenfold more steps. Road two never integrates: it adds up the arrow's turns with atan2. The small circles and counted windings rebuild the figure-eight's integral.
 
 ### Python
 
@@ -938,7 +946,7 @@ example : (1 : ℤ) * 3 + 1 * 1 ≠ 1 * 3 + (-1) * 1 ∧ (1 : ℤ) ≠ 2 := by d
 ## The usual mistake
 
 > [!warning]
-> **Reading a zero integral as "no holes inside".** Round the figure-eight, $1/(z - 5) + 1/(z + 5)$ gives 0 although the loop circles both holes: the two opposite windings cancel. Only a loop whose inside is all holomorphic is guaranteed 0.
+> **Reading a zero integral as "no holes inside".** Round the figure-eight, $`1/(z - 5) + 1/(z + 5)`$ gives 0 although the loop circles both holes: the two opposite windings cancel. Only a loop whose inside is all holomorphic is guaranteed 0.
 >
 > - **Direction dropped.** Counting every hole as +1 turns the figure-eight's 12.566371i into 25.132741i.
 > - **"Inside" as yes-or-no.** Two laps give 12.566371i, not 6.283185i.
@@ -963,7 +971,7 @@ example : (1 : ℤ) * 3 + 1 * 1 ≠ 1 * 3 + (-1) * 1 ∧ (1 : ℤ) ≠ 2 := by d
 
 ## Where this goes next
 
-- [Cauchy's integral formula](05-cauchys-integral-formula.md): a small circle reads off $f$ at its centre.
+- [Cauchy's integral formula](05-cauchys-integral-formula.md): a small circle reads off $`f`$ at its centre.
 - [Laurent series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md): the part that blows up at a hole.
 - [The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md): the several-hole sum in general.
 - [Nyquist and margins](../../13-Engineering%20mathematics/03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): winding round −1 as a stability test.
@@ -971,7 +979,7 @@ example : (1 : ℤ) * 3 + 1 * 1 ≠ 1 * 3 + (-1) * 1 ∧ (1 : ℤ) ≠ 2 := by d
 - The circle's fundamental group is the integers: winding without integrals.
 - Turning and winding numbers: the turns of a curve's own direction.
 
-A small circle round a hole gives 2πi times its strength; what the circle gives for $f(z)/(z - a)$, with $f$ holomorphic, is [Cauchy's integral formula](05-cauchys-integral-formula.md).
+A small circle round a hole gives 2πi times its strength; what the circle gives for $`f(z)/(z - a)`$, with $`f`$ holomorphic, is [Cauchy's integral formula](05-cauchys-integral-formula.md).
 
 ---
 

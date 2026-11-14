@@ -36,42 +36,46 @@ Bars: 20,000 simulated years, each built from 252 daily multipliers (one sample,
 
 ## The formula
 
-Notation first, in words. $S_t$ is the price at time $t$, in years, and $S_0$ the price today. $W_t$ is a standard Brownian motion: it starts at 0, and its value at time $t$ is normal with mean 0 and variance $t$. $\mu$ is the drift and $\sigma$ the volatility, both per year. $E$ is an average over all paths and $\Phi$ the area under the standard bell curve to the left of a point.
+Notation first, in words. $`S_t`$ is the price at time $`t`$, in years, and $`S_0`$ the price today. $`W_t`$ is a standard Brownian motion: it starts at 0, and its value at time $`t`$ is normal with mean 0 and variance $`t`$. $`\mu`$ is the drift and $`\sigma`$ the volatility, both per year. $`E`$ is an average over all paths and $`\Phi`$ the area under the standard bell curve to the left of a point.
 
-$$S_t = S_0\, e^{(\mu - \frac12\sigma^2)\,t + \sigma W_t}$$
+```math
+S_t = S_0\, e^{(\mu - \frac12\sigma^2)\,t + \sigma W_t}
+```
 
 **Read it aloud:** the price at time t is today's price times e raised to a straight-line trend plus volatility times a Brownian motion; the trend is the drift less half the variance.
 
 The two summaries this card is about follow from it:
 
-$$E[S_t] = S_0\, e^{\mu t}, \qquad \operatorname{median}(S_t) = S_0\, e^{(\mu - \frac12\sigma^2)\,t}, \qquad P\big(S_t < E[S_t]\big) = \Phi\!\left(\tfrac12\sigma\sqrt{t}\right)$$
+```math
+E[S_t] = S_0\, e^{\mu t}, \qquad \mathrm{median}(S_t) = S_0\, e^{(\mu - \frac12\sigma^2)\,t}, \qquad P\big(S_t < E[S_t]\big) = \Phi\!\left(\tfrac12\sigma\sqrt{t}\right)
+```
 
 **Read it aloud:** the average grows at the drift; the middle grows at the drift less half the variance; the chance of ending below the average is the bell-curve area up to half of one spread.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S_t$, $S^{(n)}_t$ | the price at time $t$; $S^{(n)}_t$ the grid price after n multiplying steps | $103.05 in the middle at $t$ = 1 | — |
-| $S_0$ | the price today | $100 | every price scales with it |
-| $t$, $T$ | time in years; $T$ a fixed horizon | 1 year | mean and median separate further |
-| $\mu$ | drift: the average growth rate, per year | 0.05 | mean and median rise together |
-| $\sigma$ | volatility: the spread of the log price after one year | 0.20 | mean unchanged, median falls |
-| $W_t$, $W_n$, $Z$ | standard Brownian motion, read at time $t$ or at whole year $n$; normal with variance equal to the time; $Z = W_t/\sqrt{t}$, a standard normal | — | — |
-| $\Delta t$, $\Delta W$ | one grid step, and the Brownian motion's change over it | 1/252 year; normal, variance 1/252 | — |
-| $n$ | number of steps on the grid | 252 a year | grid products close in on the formula |
-| $E$ | the average over all paths | $E[S_1]$ = $105.13 | — |
-| $\Phi$ | standard bell-curve area left of a point | $\Phi$(0.1) = 0.5398 | — |
-| $x_i$, $a$, $b$ | the change over grid step number i; its steady part $\mu\Delta t$ and its random size $\sigma\sqrt{\Delta t}$ | $a$ = 0.05/252 | — |
-| $A_n$, $M_n$, $C$, $c$, $\varepsilon$, $r(x)$ | helpers inside the folded proofs, defined where they appear: $\varepsilon$ any small positive number, $r(x)$ the Taylor remainder of $\ln(1 + x)$ | — | — |
+| $`S_t`$, $`S^{(n)}_t`$ | the price at time $`t`$; $`S^{(n)}_t`$ the grid price after n multiplying steps | $103.05 in the middle at $`t`$ = 1 | — |
+| $`S_0`$ | the price today | $100 | every price scales with it |
+| $`t`$, $`T`$ | time in years; $`T`$ a fixed horizon | 1 year | mean and median separate further |
+| $`\mu`$ | drift: the average growth rate, per year | 0.05 | mean and median rise together |
+| $`\sigma`$ | volatility: the spread of the log price after one year | 0.20 | mean unchanged, median falls |
+| $`W_t`$, $`W_n`$, $`Z`$ | standard Brownian motion, read at time $`t`$ or at whole year $`n`$; normal with variance equal to the time; $`Z = W_t/\sqrt{t}`$, a standard normal | — | — |
+| $`\Delta t`$, $`\Delta W`$ | one grid step, and the Brownian motion's change over it | 1/252 year; normal, variance 1/252 | — |
+| $`n`$ | number of steps on the grid | 252 a year | grid products close in on the formula |
+| $`E`$ | the average over all paths | $`E[S_1]`$ = $105.13 | — |
+| $`\Phi`$ | standard bell-curve area left of a point | $`\Phi`$(0.1) = 0.5398 | — |
+| $`x_i`$, $`a`$, $`b`$ | the change over grid step number i; its steady part $`\mu\Delta t`$ and its random size $`\sigma\sqrt{\Delta t}`$ | $`a`$ = 0.05/252 | — |
+| $`A_n`$, $`M_n`$, $`C`$, $`c`$, $`\varepsilon`$, $`r(x)`$ | helpers inside the folded proofs, defined where they appear: $`\varepsilon`$ any small positive number, $`r(x)`$ the Taylor remainder of $`\ln(1 + x)`$ | — | — |
 
-The term $\frac12\sigma^2$ is 0.02 here. It is called the **volatility drag**. It is not charged to the average; it is the gap between the average's growth rate and the middle's.
+The term $`\frac12\sigma^2`$ is 0.02 here. It is called the **volatility drag**. It is not charged to the average; it is the gap between the average's growth rate and the middle's.
 
-The spread of the price itself comes from the variance of the lognormal law, the law of e raised to a normal ([Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md)): its standard deviation is $E[S_t]\sqrt{e^{\sigma^2 t} - 1}$, $21.24 after one year.
+The spread of the price itself comes from the variance of the lognormal law, the law of e raised to a normal ([Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md)): its standard deviation is $`E[S_t]\sqrt{e^{\sigma^2 t} - 1}`$, $21.24 after one year.
 
 ### When it holds
 
 - **Percentage moves with one fixed spread.** If the volatility itself wanders, the year's log return is a blend of normals with fatter tails, and the median and the chance of a loss both shift.
 - **Paths are continuous.** A crash of 20 percent in one morning is a jump; GBM gives it almost no chance, and [The Black-Scholes assumptions](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/09-black-scholes-assumptions-and-failures.md) counts what that costs.
-- **Drift and volatility are constants.** With changing values, replace $\mu t$ and $\sigma^2 t$ by their totals over the period; the shape of every formula survives.
+- **Drift and volatility are constants.** With changing values, replace $`\mu t`$ and $`\sigma^2 t`$ by their totals over the period; the shape of every formula survives.
 - **The price starts above zero.** GBM never reaches zero in finite time, so it cannot model a default by itself.
 
 ---
@@ -80,45 +84,47 @@ The spread of the price itself comes from the variance of the lognormal law, the
 
 ### Step 0: logs turn multiplying into adding, and the squares of the steps do not vanish
 
-A price is a product of many small multipliers. Its log is a sum, which is where Brownian motion lives. The surprise is in the log of one multiplier: $\ln(1 + x)$ is $x - x^2/2$ plus a much smaller remainder.
+A price is a product of many small multipliers. Its log is a sum, which is where Brownian motion lives. The surprise is in the log of one multiplier: $`\ln(1 + x)`$ is $`x - x^2/2`$ plus a much smaller remainder.
 
-Over a year the $x$ terms add up to the trend plus the noise. The $x^2/2$ terms add up to something that does not shrink as the steps get smaller: the squared Brownian steps add up to the elapsed time, [Quadratic variation](03-quadratic-variation.md). That leftover is the $-\frac12\sigma^2 t$.
+Over a year the $`x`$ terms add up to the trend plus the noise. The $`x^2/2`$ terms add up to something that does not shrink as the steps get smaller: the squared Brownian steps add up to the elapsed time, [Quadratic variation](03-quadratic-variation.md). That leftover is the $`-\frac12\sigma^2 t`$.
 
 ### Step 1: the model on a grid
 
-Cut the year into $n$ steps of length $\Delta t = 1/n$. Over each step the price is multiplied by $1 + \mu\Delta t + \sigma\Delta W$, where $\Delta W$ is the Brownian motion's change over that step: normal, mean 0, variance $\Delta t$, independent of every other step. With 252 steps a year that is a tiny steady creep plus a random daily kick many times larger.
+Cut the year into $`n`$ steps of length $`\Delta t = 1/n`$. Over each step the price is multiplied by $`1 + \mu\Delta t + \sigma\Delta W`$, where $`\Delta W`$ is the Brownian motion's change over that step: normal, mean 0, variance $`\Delta t`$, independent of every other step. With 252 steps a year that is a tiny steady creep plus a random daily kick many times larger.
 
 That is the whole model. Its limit as the steps shrink is written on shelf 06 of this wing as an equation in dS and dW ([Stochastic differential equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md)); there dW is shorthand for an integral, never a derivative, because a Brownian path has no slope ([Brownian paths](02-scaling-and-path-roughness.md)). This card works with the grid and its limit directly.
 
 ### Step 2: the product converges to the formula
 
-Write $x_i = \mu\Delta t + \sigma\Delta W_i$ for the change over step number i. The log of the grid price is the sum of $\ln(1 + x_i)$, which is
+Write $`x_i = \mu\Delta t + \sigma\Delta W_i`$ for the change over step number i. The log of the grid price is the sum of $`\ln(1 + x_i)`$, which is
 
-$$\sum_i x_i \;-\; \tfrac12 \sum_i x_i^2 \;+\; \text{remainder}.$$
+```math
+\sum_i x_i \;-\; \tfrac12 \sum_i x_i^2 \;+\; \text{remainder}.
+```
 
 Take the three pieces in turn.
 
-- **The first sum is exact.** The $\mu\Delta t$ parts add to $\mu t$; the $\Delta W$ parts add to $W_t$. So the first sum is $\mu t + \sigma W_t$.
-- **The second sum tends to $\sigma^2 t$.** Its main part is $\sigma^2 \sum \Delta W_i^2$. Each $\Delta W_i^2$ has mean $\Delta t$, so the sum has mean $t$, and its variance is $2t\Delta t$, which goes to zero. The cross terms carry an extra $\Delta t$ and vanish.
-- **The remainder vanishes.** It is at most the sum of the cubes $\lvert x_i\rvert^3$, which is of size $n\,\Delta t^{3/2} = t\sqrt{\Delta t}$.
+- **The first sum is exact.** The $`\mu\Delta t`$ parts add to $`\mu t`$; the $`\Delta W`$ parts add to $`W_t`$. So the first sum is $`\mu t + \sigma W_t`$.
+- **The second sum tends to $`\sigma^2 t`$.** Its main part is $`\sigma^2 \sum \Delta W_i^2`$. Each $`\Delta W_i^2`$ has mean $`\Delta t`$, so the sum has mean $`t`$, and its variance is $`2t\Delta t`$, which goes to zero. The cross terms carry an extra $`\Delta t`$ and vanish.
+- **The remainder vanishes.** It is at most the sum of the cubes $`\lvert x_i\rvert^3`$, which is of size $`n\,\Delta t^{3/2} = t\sqrt{\Delta t}`$.
 
-Exponentiate: the grid price tends to $S_0 e^{\mu t - \frac12\sigma^2 t + \sigma W_t}$. That is the formula.
+Exponentiate: the grid price tends to $`S_0 e^{\mu t - \frac12\sigma^2 t + \sigma W_t}`$. That is the formula.
 
 The code checks this path by path. For each of the 20,000 simulated years it builds the grid product and the formula from the same Brownian increments and averages the gap.
 
-With one step a year the gap is $2.05; with 12, $0.68; with 63, $0.30; with 252, $0.15. The gap falls like $\sqrt{\Delta t}$, the rate the proof's error terms promise: the fourfold cut from 63 to 252 steps halves it. On the first simulated path the squared daily steps add to 1.083, close to the year's length of 1.
+With one step a year the gap is $2.05; with 12, $0.68; with 63, $0.30; with 252, $0.15. The gap falls like $`\sqrt{\Delta t}`$, the rate the proof's error terms promise: the fourfold cut from 63 to 252 steps halves it. On the first simulated path the squared daily steps add to 1.083, close to the year's length of 1.
 
 <details>
 <summary>Detailed proof: the grid product converges in probability</summary>
 
-Fix $t$ and let $\Delta t = t/n$. Let $A_n$ be the event that every $\lvert x_i\rvert \le \frac12$. Off $A_n$ some step is larger than one half; each $x_i$ is normal with spread about $\sigma\sqrt{\Delta t}$, so $P(A_n^c) \le n\,P(\lvert x_1\rvert > \frac12)$, a number times $n e^{-c/\Delta t}$ for a constant $c > 0$, which tends to 0.
+Fix $`t`$ and let $`\Delta t = t/n`$. Let $`A_n`$ be the event that every $`\lvert x_i\rvert \le \frac12`$. Off $`A_n`$ some step is larger than one half; each $`x_i`$ is normal with spread about $`\sigma\sqrt{\Delta t}`$, so $`P(A_n^c) \le n\,P(\lvert x_1\rvert > \frac12)`$, a number times $`n e^{-c/\Delta t}`$ for a constant $`c > 0`$, which tends to 0.
 
-On $A_n$, Taylor's theorem with remainder gives $\ln(1 + x) = x - x^2/2 + r(x)$ with $\lvert r(x)\rvert \le \lvert x\rvert^3$ for $\lvert x\rvert \le \frac12$. Then:
-- $\sum x_i = \mu t + \sigma W_t$ exactly.
-- $\sum x_i^2 - \sigma^2 t = \sigma^2\big(\sum \Delta W_i^2 - t\big) + 2\mu\sigma\Delta t\, W_t + \mu^2 t\,\Delta t$. The first bracket has mean 0 and variance $2t\Delta t$ (each $\Delta W_i^2$ has variance $2\Delta t^2$, and they are independent). The other two terms carry a factor $\Delta t$. So the difference tends to 0 in mean square, hence in probability.
-- $E\sum \lvert x_i\rvert^3 \le n\,C\,\Delta t^{3/2} = C\,t\sqrt{\Delta t}$ for a constant $C$, so the remainder tends to 0 in mean, hence in probability (Markov's inequality).
+On $`A_n`$, Taylor's theorem with remainder gives $`\ln(1 + x) = x - x^2/2 + r(x)`$ with $`\lvert r(x)\rvert \le \lvert x\rvert^3`$ for $`\lvert x\rvert \le \frac12`$. Then:
+- $`\sum x_i = \mu t + \sigma W_t`$ exactly.
+- $`\sum x_i^2 - \sigma^2 t = \sigma^2\big(\sum \Delta W_i^2 - t\big) + 2\mu\sigma\Delta t\, W_t + \mu^2 t\,\Delta t`$. The first bracket has mean 0 and variance $`2t\Delta t`$ (each $`\Delta W_i^2`$ has variance $`2\Delta t^2`$, and they are independent). The other two terms carry a factor $`\Delta t`$. So the difference tends to 0 in mean square, hence in probability.
+- $`E\sum \lvert x_i\rvert^3 \le n\,C\,\Delta t^{3/2} = C\,t\sqrt{\Delta t}`$ for a constant $`C`$, so the remainder tends to 0 in mean, hence in probability (Markov's inequality).
 
-Together, $\ln(S^{(n)}_t / S_0) \to (\mu - \frac12\sigma^2)t + \sigma W_t$ in probability, and since the exponential is continuous, $S^{(n)}_t \to S_t$ in probability. This card proves that convergence. That the limit solves the stochastic differential equation in Itô's sense needs Itô's formula, done on shelf 06 of this wing ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)); Øksendal proves the formula in chapter 4 and solves this equation with it in chapter 5.
+Together, $`\ln(S^{(n)}_t / S_0) \to (\mu - \frac12\sigma^2)t + \sigma W_t`$ in probability, and since the exponential is continuous, $`S^{(n)}_t \to S_t`$ in probability. This card proves that convergence. That the limit solves the stochastic differential equation in Itô's sense needs Itô's formula, done on shelf 06 of this wing ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)); Øksendal proves the formula in chapter 4 and solves this equation with it in chapter 5.
 
 </details>
 
@@ -126,44 +132,46 @@ Together, $\ln(S^{(n)}_t / S_0) \to (\mu - \frac12\sigma^2)t + \sigma W_t$ in pr
 
 Two independent roads.
 
-**From the grid.** The steps are independent and each multiplier has mean $1 + \mu\Delta t$, since $\Delta W$ has mean 0. The mean of a product of independent factors is the product of their means, so the grid price has mean $S_0(1 + \mu\Delta t)^n = S_0(1 + \mu t/n)^n$, which tends to $S_0 e^{\mu t}$, the compound-interest limit.
+**From the grid.** The steps are independent and each multiplier has mean $`1 + \mu\Delta t`$, since $`\Delta W`$ has mean 0. The mean of a product of independent factors is the product of their means, so the grid price has mean $`S_0(1 + \mu\Delta t)^n = S_0(1 + \mu t/n)^n`$, which tends to $`S_0 e^{\mu t}`$, the compound-interest limit.
 
-**From the formula.** $W_t$ is normal with variance $t$, and completing the square gives $E[e^{\sigma W_t}] = e^{\frac12\sigma^2 t}$, the lognormal card's mean. Equivalently, $e^{\sigma W_t - \frac12\sigma^2 t}$ has mean 1 at every time, [Brownian martingales](06-brownian-martingales-and-exponential-martingale.md). Multiply by $S_0 e^{\mu t}$ and the drag cancels: $E[S_t] = S_0 e^{\mu t}$.
+**From the formula.** $`W_t`$ is normal with variance $`t`$, and completing the square gives $`E[e^{\sigma W_t}] = e^{\frac12\sigma^2 t}`$, the lognormal card's mean. Equivalently, $`e^{\sigma W_t - \frac12\sigma^2 t}`$ has mean 1 at every time, [Brownian martingales](06-brownian-martingales-and-exponential-martingale.md). Multiply by $`S_0 e^{\mu t}`$ and the drag cancels: $`E[S_t] = S_0 e^{\mu t}`$.
 
-For the share: $100 \times e^{0.05} = \$105.13$.
+For the share: $`100 \times e^{0.05} = \$105.13`$.
 
 ### Step 4: the median grows slower
 
-The exponential only rises, so it keeps order: the middle of $S_t$ is $S_0$ times e raised to the middle of the exponent. $W_t$ is symmetric about 0, so the exponent's middle is its trend, $(\mu - \frac12\sigma^2)t$. The median is $S_0 e^{(\mu - \frac12\sigma^2)t}$.
+The exponential only rises, so it keeps order: the middle of $`S_t`$ is $`S_0`$ times e raised to the middle of the exponent. $`W_t`$ is symmetric about 0, so the exponent's middle is its trend, $`(\mu - \frac12\sigma^2)t`$. The median is $`S_0 e^{(\mu - \frac12\sigma^2)t}`$.
 
-For the share: $100 \times e^{0.03} = \$103.05$.
+For the share: $`100 \times e^{0.03} = \$103.05`$.
 
-A coin-flip version of the grid shows the drag at work in one pair of steps. Replace each normal $\Delta W$ by $+\sqrt{\Delta t}$ or $-\sqrt{\Delta t}$, with chance one half each: the same mean and variance, and the model the code counts exactly.
+A coin-flip version of the grid shows the drag at work in one pair of steps. Replace each normal $`\Delta W`$ by $`+\sqrt{\Delta t}`$ or $`-\sqrt{\Delta t}`$, with chance one half each: the same mean and variance, and the model the code counts exactly.
 
-One step up and one step down multiply the price by $(1 + a + b)(1 + a - b) = (1 + a)^2 - b^2$, where $a = \mu\Delta t$ and $b = \sigma\sqrt{\Delta t}$. The $b^2 = \sigma^2\Delta t$ is lost on every up-down pair, whatever the order.
+One step up and one step down multiply the price by $`(1 + a + b)(1 + a - b) = (1 + a)^2 - b^2`$, where $`a = \mu\Delta t`$ and $`b = \sigma\sqrt{\Delta t}`$. The $`b^2 = \sigma^2\Delta t`$ is lost on every up-down pair, whatever the order.
 
-The middle path has as many ups as downs, so it holds $n/2$ such pairs and loses about $\frac{n}{2}\sigma^2\Delta t = \frac12\sigma^2 t$ of log growth.
+The middle path has as many ups as downs, so it holds $`n/2`$ such pairs and loses about $`\frac{n}{2}\sigma^2\Delta t = \frac12\sigma^2 t`$ of log growth.
 
 ### Step 5: the average is carried by a shrinking minority
 
-$S_t$ ends below its mean exactly when $(\mu - \frac12\sigma^2)t + \sigma W_t < \mu t$, that is when $W_t < \frac12\sigma t$. Writing $W_t = \sqrt{t}\,Z$ with $Z$ standard normal, that is $Z < \frac12\sigma\sqrt{t}$, with chance $\Phi(\frac12\sigma\sqrt{t})$.
+$`S_t`$ ends below its mean exactly when $`(\mu - \frac12\sigma^2)t + \sigma W_t < \mu t`$, that is when $`W_t < \frac12\sigma t`$. Writing $`W_t = \sqrt{t}\,Z`$ with $`Z`$ standard normal, that is $`Z < \frac12\sigma\sqrt{t}`$, with chance $`\Phi(\frac12\sigma\sqrt{t})`$.
 
-At one year this is $\Phi(0.1) = 0.5398$. At 100 years it is $\Phi(1) = 0.8413$. The chance rises towards 1 with the horizon, while the mean keeps growing at 5 percent: a smaller and smaller share of very lucky paths holds the average up.
+At one year this is $`\Phi(0.1) = 0.5398`$. At 100 years it is $`\Phi(1) = 0.8413`$. The chance rises towards 1 with the horizon, while the mean keeps growing at 5 percent: a smaller and smaller share of very lucky paths holds the average up.
 
-Almost every single path settles at the median's rate. Divide the log price by $t$:
+Almost every single path settles at the median's rate. Divide the log price by $`t`$:
 
-$$\frac{1}{t}\ln\frac{S_t}{S_0} = \mu - \tfrac12\sigma^2 + \sigma\,\frac{W_t}{t}.$$
+```math
+\frac{1}{t}\ln\frac{S_t}{S_0} = \mu - \tfrac12\sigma^2 + \sigma\,\frac{W_t}{t}.
+```
 
-The last term tends to 0 with probability one, so each path's long-run growth rate is $\mu - \frac12\sigma^2$, 3 percent a year, not 5.
+The last term tends to 0 with probability one, so each path's long-run growth rate is $`\mu - \frac12\sigma^2`$, 3 percent a year, not 5.
 
 <details>
 <summary>Detailed proof: $W_t/t \to 0$ with probability one</summary>
 
-At whole years, $W_n$ is the sum of $n$ independent standard normal increments, so $W_n/n \to 0$ with probability one by [The strong law of large numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md). Between whole years, let $M_n$ be the largest value of $\lvert W_s - W_n\rvert$ over times s in $[n, n+1]$. By the reflection principle, [Reflection principle](04-reflection-principle-and-running-maximum.md), applied to each sign, $P(M_n > \varepsilon n) \le 4\,P(W_1 > \varepsilon n)$ for any $\varepsilon > 0$. These chances fall faster than any power of $n$, so their sum is finite, and by Borel–Cantelli only finitely many $M_n$ exceed $\varepsilon n$. Hence $M_n/n \to 0$, and for $t$ in $[n, n+1]$, $\lvert W_t\rvert/t \le (\lvert W_n\rvert + M_n)/n \to 0$.
+At whole years, $`W_n`$ is the sum of $`n`$ independent standard normal increments, so $`W_n/n \to 0`$ with probability one by [The strong law of large numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md). Between whole years, let $`M_n`$ be the largest value of $`\lvert W_s - W_n\rvert`$ over times s in $`[n, n+1]`$. By the reflection principle, [Reflection principle](04-reflection-principle-and-running-maximum.md), applied to each sign, $`P(M_n > \varepsilon n) \le 4\,P(W_1 > \varepsilon n)`$ for any $`\varepsilon > 0`$. These chances fall faster than any power of $`n`$, so their sum is finite, and by Borel–Cantelli only finitely many $`M_n`$ exceed $`\varepsilon n`$. Hence $`M_n/n \to 0`$, and for $`t`$ in $`[n, n+1]`$, $`\lvert W_t\rvert/t \le (\lvert W_n\rvert + M_n)/n \to 0`$.
 
 </details>
 
-The other road to the median is the lognormal card's: $S_t/S_0$ is lognormal with log-centre $(\mu - \frac12\sigma^2)t$ and log-variance $\sigma^2 t$, and its median, mean and mode (most likely value) are read off there.
+The other road to the median is the lognormal card's: $`S_t/S_0`$ is lognormal with log-centre $`(\mu - \frac12\sigma^2)t`$ and log-variance $`\sigma^2 t`$, and its median, mean and mode (most likely value) are read off there.
 
 ---
 
@@ -198,7 +206,7 @@ The typical year ends at $103.05 and the average year at $105.13. About 54 years
 
 ## How the gap widens with the horizon
 
-The share did nothing different over a longer stretch. The two summaries separate because the drag compounds. The mean multiplies by $e^{0.05}$ each year, the median by $e^{0.03}$, so the ratio between them is $e^{0.02 t}$.
+The share did nothing different over a longer stretch. The two summaries separate because the drag compounds. The mean multiplies by $`e^{0.05}`$ each year, the median by $`e^{0.03}`$, so the ratio between them is $`e^{0.02 t}`$.
 
 | Years | Mean | Median | Chance of ending below the mean (formula) | 20,000 draws of the exact lognormal law |
 | --- | --- | --- | --- | --- |
@@ -229,10 +237,10 @@ Orange, the steeper smooth curve: the mean, growing 5 percent a year. Green, the
 The scripts reach the mean and the median by three independent roads.
 
 - First, the formulas.
-- Second, an exact coin-flip model: each of $n$ steps a year multiplies the price by $1 + a + b$ or $1 + a - b$ with chance one half each, and every one of the $n + 1$ possible end prices is weighted by its exact binomial chance.
+- Second, an exact coin-flip model: each of $`n`$ steps a year multiplies the price by $`1 + a + b`$ or $`1 + a - b`$ with chance one half each, and every one of the $`n + 1`$ possible end prices is weighted by its exact binomial chance.
 - Third, a simulation of 20,000 years of 252 daily Brownian steps, with SplitMix64 random numbers (a small, fixed-seed generator) and Box–Muller normals (two uniform numbers turned into two normal ones) written out.
 
-The bell-curve area is Simpson's rule, also written out. The simulation also measures the gap between the grid product and the formula at four step sizes, and its share of years ending below the mean is asserted against $\Phi(0.1)$; separate draws of the exact lognormal law check that chance at four horizons. Every simulated number carries its standard error, the median's from the sorted years lying half the square root of 20,000 places either side of the middle, and the asserts allow four of them.
+The bell-curve area is Simpson's rule, also written out. The simulation also measures the gap between the grid product and the formula at four step sizes, and its share of years ending below the mean is asserted against $`\Phi(0.1)`$; separate draws of the exact lognormal law check that chance at four horizons. Every simulated number carries its standard error, the median's from the sorted years lying half the square root of 20,000 places either side of the middle, and the asserts allow four of them.
 
 ### Python
 
@@ -664,13 +672,13 @@ The two outputs agree byte for byte: the same generator, the same seed, and the 
 
 Lean proves Steps 3 to 5 of Why it works, for the card's formula and any price above zero.
 
-- Suppose $S_0 > 0$, and take any time $t$. Then $E[S_t] = S_0 e^{\mu t}$: the average grows at the drift.
+- Suppose $`S_0 > 0`$, and take any time $`t`$. Then $`E[S_t] = S_0 e^{\mu t}`$: the average grows at the drift.
 - Take the same price and time. Then at least half the paths end at or below the formula's median, and at least half end at or above it.
-- Suppose also $\sigma > 0$ and $t > 0$. Then $P(S_t < E[S_t]) = \Phi(\tfrac12\sigma\sqrt{t})$. At $\sigma = 0$ or $t = 0$ the price is not random, and that chance is 0.
-- Suppose $S_0 > 0$. Then, with probability one, $\frac{1}{t}\ln\frac{S_t}{S_0}$ tends to $\mu - \tfrac12\sigma^2$ as $t$ grows.
-- Take the share, with $\mu$ = 0.05 and $\sigma$ = 0.20. Then the volatility drag is 0.02, the median's growth rate is 0.03, and the chance of a loss is $\Phi(-0.15)$.
-- Take the point inside $\Phi$ for ending below the mean. Then it is 0.1 at one year and 1 at 100 years.
-- Take one up step and one down step. Then they multiply the price by $(1 + a + b)(1 + a - b) = (1 + a)^2 - b^2$.
+- Suppose also $`\sigma > 0`$ and $`t > 0`$. Then $`P(S_t < E[S_t]) = \Phi(\tfrac12\sigma\sqrt{t})`$. At $`\sigma = 0`$ or $`t = 0`$ the price is not random, and that chance is 0.
+- Suppose $`S_0 > 0`$. Then, with probability one, $`\frac{1}{t}\ln\frac{S_t}{S_0}`$ tends to $`\mu - \tfrac12\sigma^2`$ as $`t`$ grows.
+- Take the share, with $`\mu`$ = 0.05 and $`\sigma`$ = 0.20. Then the volatility drag is 0.02, the median's growth rate is 0.03, and the chance of a loss is $`\Phi(-0.15)`$.
+- Take the point inside $`\Phi`$ for ending below the mean. Then it is 0.1 at one year and 1 at 100 years.
+- Take one up step and one down step. Then they multiply the price by $`(1 + a + b)(1 + a - b) = (1 + a)^2 - b^2`$.
 
 The grid product's convergence to the formula, the coin-flip model and the simulations are left to the Python and Rust checks.
 
@@ -977,10 +985,10 @@ example (a b : ℚ) : (1 + a + b) * (1 + a - b) = (1 + a) ^ 2 - b ^ 2 := by ring
 > [!warning]
 > **Reading the drift as the growth of a typical path.** The drift is the growth of the average over all paths. A typical path grows at the drift less half the variance: 3 percent here, not 5. Over 30 years that is the difference between $245.96 and $448.17, and over long horizons most paths end below the average.
 >
-> - **Estimating the drift from average log returns.** The average of $\ln(S_1/S_0)$ estimates $\mu - \frac12\sigma^2$, 0.03, not $\mu$. Add back $\frac12\sigma^2$ to recover 0.05.
+> - **Estimating the drift from average log returns.** The average of $`\ln(S_1/S_0)`$ estimates $`\mu - \frac12\sigma^2`$, 0.03, not $`\mu`$. Add back $`\frac12\sigma^2`$ to recover 0.05.
 > - **Applying the ordinary chain rule to the log price.** It drops the squared Brownian steps and gives a median of $105.13 and a mean of $107.25, both wrong.
-> - **Scaling volatility with time instead of its square root.** The spread of the log price after $t$ years is $\sigma\sqrt{t}$; ten years carry about three times one year's spread, not ten times.
-> - **Calling the drag a cost.** Every path ends at $S_0 e^{(\mu - \frac12\sigma^2)t + \sigma W_t}$, and the average still grows at $\mu$. The drag describes where the middle sits, not money lost by the average.
+> - **Scaling volatility with time instead of its square root.** The spread of the log price after $`t`$ years is $`\sigma\sqrt{t}`$; ten years carry about three times one year's spread, not ten times.
+> - **Calling the drag a cost.** Every path ends at $`S_0 e^{(\mu - \frac12\sigma^2)t + \sigma W_t}`$, and the average still grows at $`\mu`$. The drag describes where the middle sits, not money lost by the average.
 
 ---
 

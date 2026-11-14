@@ -36,50 +36,54 @@ One sample path from the code's seeded simulation (seed 20260929), on a grid of 
 
 ## The formula
 
-Notation first, in words. The fortune after n rounds is $S_n$, in dollars, with $S_0 = 0$: the process notation from [Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md), read "the value at round n". The symbol $\mathcal{F}_n$ is what is known after round n, here the first n tosses: the filtration ([Filtrations](../01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md)). A **martingale** $M_n$ is a fair game ([Martingales](01-martingales.md)): given $\mathcal{F}_n$, the best forecast of the next value is the current one. The fortune $S_n$ is one.
+Notation first, in words. The fortune after n rounds is $`S_n`$, in dollars, with $`S_0 = 0`$: the process notation from [Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md), read "the value at round n". The symbol $`\mathcal{F}_n`$ is what is known after round n, here the first n tosses: the filtration ([Filtrations](../01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md)). A **martingale** $`M_n`$ is a fair game ([Martingales](01-martingales.md)): given $`\mathcal{F}_n`$, the best forecast of the next value is the current one. The fortune $`S_n`$ is one.
 
-A stopping time is a random round $\tau$ (Greek "tau"). It must meet one condition:
+A stopping time is a random round $`\tau`$ (Greek "tau"). It must meet one condition:
 
-$$\{\tau \le n\} \in \mathcal{F}_n \quad \text{for every round } n.$$
+```math
+\{\tau \le n\} \in \mathcal{F}_n \quad \text{for every round } n.
+```
 
 **Read it aloud:** after any round, the tosses seen so far are enough to say whether the stop has already happened.
 
 The quit-at-5 rule passes: the first n tosses show whether the fortune has touched 5 yet. "Quit at the highest point of the 100 rounds" fails: at round 40 nobody can tell whether a higher point is still to come.
 
-Write $n \wedge \tau$ for the smaller of n and $\tau$, read "n or tau, whichever comes first". The **stopped process** $M_{n \wedge \tau}$ follows the game until the stop and then stays frozen, as the flat line in the picture does. The theorem:
+Write $`n \wedge \tau`$ for the smaller of n and $`\tau`$, read "n or tau, whichever comes first". The **stopped process** $`M_{n \wedge \tau}`$ follows the game until the stop and then stays frozen, as the flat line in the picture does. The theorem:
 
-$$\text{if } \tau \le N \text{ on every path, then } E[M_\tau] = E[M_0].$$
+```math
+\text{if } \tau \le N \text{ on every path, then } E[M_\tau] = E[M_0].
+```
 
 **Read it aloud:** stop a fair game at a stopping time that never runs past round N, and the average value at the stop equals the value at the start.
 
-The proof gives more: the frozen process $M_{n \wedge \tau}$ is itself a martingale, with or without a deadline. The deadline is needed only to make the frozen value at round N the value at the stop.
+The proof gives more: the frozen process $`M_{n \wedge \tau}`$ is itself a martingale, with or without a deadline. The deadline is needed only to make the frozen value at round N the value at the stop.
 
-In the example, $M_n = S_n$, the deadline is $N = 100$, and $\tau$ is the first round the fortune reaches the target $a = 5$, or 100 if it never does. The theorem says $E[S_\tau] = 0$.
+In the example, $`M_n = S_n`$, the deadline is $`N = 100`$, and $`\tau`$ is the first round the fortune reaches the target $`a = 5`$, or 100 if it never does. The theorem says $`E[S_\tau] = 0`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$, $k$ | round numbers; n = 0 is the start | 0 to 100 | — |
-| $S_n$, $S_{100}$ | the fortune after round n, in dollars; after round 100 | −1 after round 3 of the sample path | — |
-| $M_n$ | any fair game (martingale) at round n | $S_n$ | — |
-| $\mathcal{F}_n$ | what is known after round n | the first n tosses | more is known, so more rules qualify as stopping times |
-| $\tau$ | the stopping time: the round play stops | 39 on the sample path | — |
-| $N$ | the deadline: a round $\tau$ never passes | 100 | more players quit 5 up, those left sink deeper; the average stays 0 |
-| $a$ | the target | 5 dollars | fewer players reach it; the average stays 0 |
-| $n \wedge \tau$ | the smaller of n and $\tau$ | 39 at round 45 of the sample path | — |
-| $M_{n \wedge \tau}$ | the stopped game, frozen at the stop | 5 dollars at round 45 of the sample path | — |
-| $E$ | the average over all paths, weighted by probability | $E[S_\tau] = 0$ | — |
-| $p$ | the chance of quitting a dollars up by round N (not the chance of winning a round, which is 0.5 here) | 0.617299 | — |
-| $s$ | a fortune in dollars: before a toss in Step 5, at round 100 in the mirror count | a path ending at s mirrors to one ending at 10 − s | — |
-| $b$, $c$ | the two walls: stop at the first touch of +b or −c dollars | not used in the main example | a higher c makes +b likelier to come first, c/(b + c) |
-| $j$ | in the detailed proof, a round before n at which the stop came | 39 on the sample path | — |
-| $\mathbf{1}_{\{\tau \ge k\}}$ | 1 if still playing at round k, otherwise 0 | 1 up to round 39 on the sample path, then 0 | — |
+| $`n`$, $`k`$ | round numbers; n = 0 is the start | 0 to 100 | — |
+| $`S_n`$, $`S_{100}`$ | the fortune after round n, in dollars; after round 100 | −1 after round 3 of the sample path | — |
+| $`M_n`$ | any fair game (martingale) at round n | $`S_n`$ | — |
+| $`\mathcal{F}_n`$ | what is known after round n | the first n tosses | more is known, so more rules qualify as stopping times |
+| $`\tau`$ | the stopping time: the round play stops | 39 on the sample path | — |
+| $`N`$ | the deadline: a round $`\tau`$ never passes | 100 | more players quit 5 up, those left sink deeper; the average stays 0 |
+| $`a`$ | the target | 5 dollars | fewer players reach it; the average stays 0 |
+| $`n \wedge \tau`$ | the smaller of n and $`\tau`$ | 39 at round 45 of the sample path | — |
+| $`M_{n \wedge \tau}`$ | the stopped game, frozen at the stop | 5 dollars at round 45 of the sample path | — |
+| $`E`$ | the average over all paths, weighted by probability | $`E[S_\tau] = 0`$ | — |
+| $`p`$ | the chance of quitting a dollars up by round N (not the chance of winning a round, which is 0.5 here) | 0.617299 | — |
+| $`s`$ | a fortune in dollars: before a toss in Step 5, at round 100 in the mirror count | a path ending at s mirrors to one ending at 10 − s | — |
+| $`b`$, $`c`$ | the two walls: stop at the first touch of +b or −c dollars | not used in the main example | a higher c makes +b likelier to come first, c/(b + c) |
+| $`j`$ | in the detailed proof, a round before n at which the stop came | 39 on the sample path | — |
+| $`\mathbf{1}_{\{\tau \ge k\}}`$ | 1 if still playing at round k, otherwise 0 | 1 up to round 39 on the sample path, then 0 | — |
 
 ### When it holds
 
 - **A fair game.** Each round must average zero given the past. With a coin that favours the house, no stopped fortune averages above zero; no stopping time rescues it.
 - **A rule that uses only the past.** "Stop just before the first loss" needs the next toss. It averages about 1 dollar of profit, not 0.
 - **A fixed deadline.** With no round 100, the quit-at-5 rule ends with probability 1, always at 5 dollars, so it averages 5. Weaker conditions can stand in for the deadline; they are the subject of [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md).
-- **A finite average at each round.** Each $M_n$ needs a finite average; here the fortune after n rounds is within n dollars of the start.
+- **A finite average at each round.** Each $`M_n`$ needs a finite average; here the fortune after n rounds is within n dollars of the start.
 
 ---
 
@@ -91,19 +95,23 @@ Playing round k is a stake of 1 dollar on its toss; quitting is a stake of 0 on 
 
 ### Step 1: write the frozen fortune as a sum of bets
 
-$$M_{n \wedge \tau} = M_0 + \sum_{k=1}^{n} \mathbf{1}_{\{\tau \ge k\}}\,(M_k - M_{k-1}).$$
+```math
+M_{n \wedge \tau} = M_0 + \sum_{k=1}^{n} \mathbf{1}_{\{\tau \ge k\}}\,(M_k - M_{k-1}).
+```
 
-The factor $\mathbf{1}_{\{\tau \ge k\}}$ is 1 while the player is still in at round k and 0 after the stop. On the sample path at round 45, the terms for rounds 1 to 39 carry the tosses, which add to 5 dollars. The terms for rounds 40 to 45 are multiplied by 0. The sum is 5, the frozen value.
+The factor $`\mathbf{1}_{\{\tau \ge k\}}`$ is 1 while the player is still in at round k and 0 after the stop. On the sample path at round 45, the terms for rounds 1 to 39 carry the tosses, which add to 5 dollars. The terms for rounds 40 to 45 are multiplied by 0. The sum is 5, the frozen value.
 
 ### Step 2: the stake is known before the toss
 
-$$\{\tau \ge k\} \text{ is the complement of } \{\tau \le k-1\}, \text{ which lies in } \mathcal{F}_{k-1}.$$
+```math
+\{\tau \ge k\} \text{ is the complement of } \{\tau \le k-1\}, \text{ which lies in } \mathcal{F}_{k-1}.
+```
 
 This is the one place the definition of a stopping time is used. Whether the player sits down for round k is settled by rounds 1 to k − 1. The peek rule fails exactly here: it plays round k only if round k is a win, so its stake depends on the toss it is staked on.
 
 ### Step 3: every bet averages zero, at every round
 
-Given what is known after round k − 1, the stake is fixed and the next change in a fair game averages zero. So each term of the sum averages zero, and the frozen game's average never moves: $E[M_{n \wedge \tau}] = E[M_0]$ at every round n. No deadline is needed for this step.
+Given what is known after round k − 1, the stake is fixed and the next change in a fair game averages zero. So each term of the sum averages zero, and the frozen game's average never moves: $`E[M_{n \wedge \tau}] = E[M_0]`$ at every round n. No deadline is needed for this step.
 
 The exact counts show it round by round. After n rounds, the quitters contribute 5 dollars times their share, the players still in contribute their average fortune times their share, and the two cancel; the code checks all 101 rounds exactly.
 
@@ -122,20 +130,20 @@ Top line: the quitters' contribution, 5 dollars times the share who have quit, r
 
 ### Step 4: the deadline turns "every round" into "at the stop"
 
-At round N, the smaller of N and $\tau$ is $\tau$, because $\tau$ never passes N. So $E[M_\tau] = E[M_{N \wedge \tau}] = E[M_0]$. In the example, $E[S_\tau] = 0$.
+At round N, the smaller of N and $`\tau`$ is $`\tau`$, because $`\tau`$ never passes N. So $`E[M_\tau] = E[M_{N \wedge \tau}] = E[M_0]`$. In the example, $`E[S_\tau] = 0`$.
 
 <details>
 <summary>Detailed proof: optional stopping for a bounded stopping time</summary>
 
-**Setting.** A probability space with a filtration $\mathcal{F}_0 \subseteq \mathcal{F}_1 \subseteq \dots$. A martingale $M_0, M_1, \dots$: each $M_n$ is determined by $\mathcal{F}_n$ (adapted), has $E|M_n| < \infty$ (integrable), and $E[M_k \mid \mathcal{F}_{k-1}] = M_{k-1}$ almost surely. A random time $\tau$ with values in $\{0, 1, 2, \dots\} \cup \{\infty\}$ and $\{\tau \le n\} \in \mathcal{F}_n$ for every n. No deadline is assumed until the last line: $\tau$ may be unbounded, or infinite on some paths.
+**Setting.** A probability space with a filtration $`\mathcal{F}_0 \subseteq \mathcal{F}_1 \subseteq \dots`$. A martingale $`M_0, M_1, \dots`$: each $`M_n`$ is determined by $`\mathcal{F}_n`$ (adapted), has $`E|M_n| < \infty`$ (integrable), and $`E[M_k \mid \mathcal{F}_{k-1}] = M_{k-1}`$ almost surely. A random time $`\tau`$ with values in $`\{0, 1, 2, \dots\} \cup \{\infty\}`$ and $`\{\tau \le n\} \in \mathcal{F}_n`$ for every n. No deadline is assumed until the last line: $`\tau`$ may be unbounded, or infinite on some paths.
 
-**The frozen game is adapted and integrable.** Split by when the stop happened: $M_{n \wedge \tau} = \sum_{j=0}^{n-1} M_j \mathbf{1}_{\{\tau = j\}} + M_n \mathbf{1}_{\{\tau \ge n\}}$. The event $\{\tau = j\}$ is $\{\tau \le j\}$ minus $\{\tau \le j-1\}$, so it lies in $\mathcal{F}_j \subseteq \mathcal{F}_n$. The event $\{\tau \ge n\}$ is the complement of $\{\tau \le n-1\}$, in $\mathcal{F}_{n-1}$. Each term is therefore determined by $\mathcal{F}_n$. And $|M_{n \wedge \tau}| \le |M_0| + \dots + |M_n|$, a sum of finitely many integrable variables.
+**The frozen game is adapted and integrable.** Split by when the stop happened: $`M_{n \wedge \tau} = \sum_{j=0}^{n-1} M_j \mathbf{1}_{\{\tau = j\}} + M_n \mathbf{1}_{\{\tau \ge n\}}`$. The event $`\{\tau = j\}`$ is $`\{\tau \le j\}`$ minus $`\{\tau \le j-1\}`$, so it lies in $`\mathcal{F}_j \subseteq \mathcal{F}_n`$. The event $`\{\tau \ge n\}`$ is the complement of $`\{\tau \le n-1\}`$, in $`\mathcal{F}_{n-1}`$. Each term is therefore determined by $`\mathcal{F}_n`$. And $`|M_{n \wedge \tau}| \le |M_0| + \dots + |M_n|`$, a sum of finitely many integrable variables.
 
-**Each step of the frozen game is a predictable bet.** For every $k \ge 1$: if $\tau \ge k$, then $M_{k \wedge \tau} - M_{(k-1) \wedge \tau} = M_k - M_{k-1}$; if $\tau \le k-1$, both indices equal $\tau$ and the difference is 0. So the step is $\mathbf{1}_{\{\tau \ge k\}}(M_k - M_{k-1})$.
+**Each step of the frozen game is a predictable bet.** For every $`k \ge 1`$: if $`\tau \ge k`$, then $`M_{k \wedge \tau} - M_{(k-1) \wedge \tau} = M_k - M_{k-1}`$; if $`\tau \le k-1`$, both indices equal $`\tau`$ and the difference is 0. So the step is $`\mathbf{1}_{\{\tau \ge k\}}(M_k - M_{k-1})`$.
 
-**Each step has conditional mean zero.** The factor $\mathbf{1}_{\{\tau \ge k\}}$ is bounded and determined by $\mathcal{F}_{k-1}$. Taking out what is known (wing 10's rules for conditional expectation) gives $E[\mathbf{1}_{\{\tau \ge k\}}(M_k - M_{k-1}) \mid \mathcal{F}_{k-1}] = \mathbf{1}_{\{\tau \ge k\}}\,E[M_k - M_{k-1} \mid \mathcal{F}_{k-1}] = 0$ almost surely. With adaptedness and integrability, $M_{n \wedge \tau}$ is a martingale.
+**Each step has conditional mean zero.** The factor $`\mathbf{1}_{\{\tau \ge k\}}`$ is bounded and determined by $`\mathcal{F}_{k-1}`$. Taking out what is known (wing 10's rules for conditional expectation) gives $`E[\mathbf{1}_{\{\tau \ge k\}}(M_k - M_{k-1}) \mid \mathcal{F}_{k-1}] = \mathbf{1}_{\{\tau \ge k\}}\,E[M_k - M_{k-1} \mid \mathcal{F}_{k-1}] = 0`$ almost surely. With adaptedness and integrability, $`M_{n \wedge \tau}`$ is a martingale.
 
-**Averages.** The tower property turns a zero conditional mean into a zero mean: $E[M_{k \wedge \tau}] = E[M_{(k-1) \wedge \tau}]$ for each k. Chaining from $k = 1$ to n gives $E[M_{n \wedge \tau}] = E[M_0]$ for every n, with or without a deadline. Now add the deadline: if $\tau \le N$ on every path, then $N \wedge \tau = \tau$, so $E[M_\tau] = E[M_0]$.
+**Averages.** The tower property turns a zero conditional mean into a zero mean: $`E[M_{k \wedge \tau}] = E[M_{(k-1) \wedge \tau}]`$ for each k. Chaining from $`k = 1`$ to n gives $`E[M_{n \wedge \tau}] = E[M_0]`$ for every n, with or without a deadline. Now add the deadline: if $`\tau \le N`$ on every path, then $`N \wedge \tau = \tau`$, so $`E[M_\tau] = E[M_0]`$.
 
 **Where each hypothesis entered.** Fairness gave the zero conditional mean. The stopping-time condition made the factor known a round early. The deadline appeared only in the last line.
 
@@ -143,11 +151,11 @@ At round N, the smaller of N and $\tau$ is $\tau$, because $\tau$ never passes N
 
 ### Step 5: the same theorem, run a second time, measures the wait
 
-The square of the fortune minus the round number, $S_n^2 - n$, is also a fair game. From fortune s, the next square is $(s+1)^2$ or $(s-1)^2$, which average $s^2 + 1$, and the round count also rises by 1. Optional stopping applied to it gives $E[S_\tau^2] = E[\tau]$. The code computes the left side from where players end up and the right side from how long they stay: both come to 58.130538. A player sits through 58.13 of the 100 rounds on average.
+The square of the fortune minus the round number, $`S_n^2 - n`$, is also a fair game. From fortune s, the next square is $`(s+1)^2`$ or $`(s-1)^2`$, which average $`s^2 + 1`$, and the round count also rises by 1. Optional stopping applied to it gives $`E[S_\tau^2] = E[\tau]`$. The code computes the left side from where players end up and the right side from how long they stay: both come to 58.130538. A player sits through 58.13 of the 100 rounds on average.
 
 ### A second road: the mirror count
 
-Counting paths reaches the answer with no martingale in sight. Flip every toss after a path's first touch of 5, and a path ending at s becomes one ending at 10 − s: the reflection principle from the path-counting wing ([The reflection principle](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md)). It gives the chance of reaching 5 by round 100 as twice the chance that $S_{100}$ is 6 or more: 0.617299. Subtracting mirrored paths from all paths gives the losers' final fortunes, and the total again comes to exactly 0. The mirror shows the cancellation for this one rule. The theorem says why it must happen for every stopping time with a deadline.
+Counting paths reaches the answer with no martingale in sight. Flip every toss after a path's first touch of 5, and a path ending at s becomes one ending at 10 − s: the reflection principle from the path-counting wing ([The reflection principle](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md)). It gives the chance of reaching 5 by round 100 as twice the chance that $`S_{100}`$ is 6 or more: 0.617299. Subtracting mirrored paths from all paths gives the losers' final fortunes, and the total again comes to exactly 0. The mirror shows the cancellation for this one rule. The theorem says why it must happen for every stopping time with a deadline.
 
 ---
 
@@ -155,13 +163,13 @@ Counting paths reaches the answer with no martingale in sight. Flip every toss a
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| share who quit 5 up by round 100 | twice the chance that $S_{100}$ is 6 or more | 0.617299 |
+| share who quit 5 up by round 100 | twice the chance that $`S_{100}`$ is 6 or more | 0.617299 |
 | share still playing at round 100 | 1 − 0.617299 | 0.382701 |
 | average fortune of those still playing | from the exact path counts | −8.07 dollars |
 | quitters' contribution | 5 × 0.617299 | 3.09 dollars |
 | players' contribution | 0.382701 × (−8.07) | −3.09 dollars |
 | **average result of the rule** | 3.09 − 3.09 | **0 dollars** |
-| average rounds played | the average of $S_\tau^2$ | 58.13 |
+| average rounds played | the average of $`S_\tau^2`$ | 58.13 |
 
 A player using the rule usually walks away 5 dollars up, and still breaks even on average, because the rest lose more than 5.
 
@@ -169,7 +177,7 @@ A player using the rule usually walks away 5 dollars up, and still breaks even o
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| No deadline: quit at +5 whenever that comes | +5 dollars with probability 1 | $\tau$ has no bound; the losses sit in ever rarer, ever deeper losers (table below) |
+| No deadline: quit at +5 whenever that comes | +5 dollars with probability 1 | $`\tau`$ has no bound; the losses sit in ever rarer, ever deeper losers (table below) |
 | Peek: stop just before the first loss | +1 dollar (exact 1.000000; simulated 0.9918, standard error 0.0044) | not a stopping time: it plays a round only if that round is a win |
 | Doubling with no cap: stake 1, 2, 4, … until a win | +1 dollar with probability 1 | stakes and waiting both unbounded; capped at 10 rounds it wins 1 with chance 0.999023 and loses 1023 with chance 0.000977 (1 in 1024), average 0 |
 | Averaging only the quitters | +5 dollars | drops the 38.3% still playing, 8.07 dollars down on average |
@@ -193,7 +201,7 @@ The quitters' share climbs toward 1. Those still playing shrink toward none, but
 
 ## Code, from first principles, and it actually runs
 
-Three independent roads reach the average at the stop. Road 1 carries the weight of every path still playing from round to round, in exact integers (128-bit in Rust). Road 2 is the mirror count, from binomial coefficients. Road 3 simulates 100,000 players with a SplitMix64 generator written out, with standard errors. The code also checks the frozen average at all 101 rounds, $E[\tau] = E[S_\tau^2]$, the no-deadline table, the peek rule and capped doubling.
+Three independent roads reach the average at the stop. Road 1 carries the weight of every path still playing from round to round, in exact integers (128-bit in Rust). Road 2 is the mirror count, from binomial coefficients. Road 3 simulates 100,000 players with a SplitMix64 generator written out, with standard errors. The code also checks the frozen average at all 101 rounds, $`E[\tau] = E[S_\tau^2]`$, the no-deadline table, the peek rule and capped doubling.
 
 ### Python
 
@@ -559,11 +567,11 @@ The two outputs are identical line for line.
 
 Lean proves the theorem and Step 5 for every fair game, and checks the example's exact path counts.
 
-- Suppose $M_n$ is a fair game, $\tau$ is a stopping time, and $\tau \le N$ on every path. Then $E[M_\tau] = E[M_0]$.
-- Suppose $M_n$ is a fair game and $\tau$ is any stopping time, with no deadline. Then the stopped process $M_{n \wedge \tau}$ is a fair game. Its average equals $E[M_0]$ at every round n.
-- Suppose a fair game $S_n$ starts at 0, moves 1 dollar each round, and stops at a stopping time $\tau \le N$. Then $E[S_\tau^2] = E[\tau]$.
+- Suppose $`M_n`$ is a fair game, $`\tau`$ is a stopping time, and $`\tau \le N`$ on every path. Then $`E[M_\tau] = E[M_0]`$.
+- Suppose $`M_n`$ is a fair game and $`\tau`$ is any stopping time, with no deadline. Then the stopped process $`M_{n \wedge \tau}`$ is a fair game. Its average equals $`E[M_0]`$ at every round n.
+- Suppose a fair game $`S_n`$ starts at 0, moves 1 dollar each round, and stops at a stopping time $`\tau \le N`$. Then $`E[S_\tau^2] = E[\tau]`$.
 - Take the quit-at-5 rule with deadline 100. Then exact counts over every run of 100 tosses put the frozen fortune's average at exactly 0, at all 101 rounds.
-- Take the same rule. Then the same exact counts give $E[\tau] = E[S_\tau^2]$.
+- Take the same rule. Then the same exact counts give $`E[\tau] = E[S_\tau^2]`$.
 - Take the sample path in the picture. Then it first reaches 5 dollars at round 39, and the flat line is it frozen from then on.
 - Take doubling capped at 10 rounds. Then the stakes 1, 2, …, 512 lose 1023 in all, and the average result is exactly 0.
 

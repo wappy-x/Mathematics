@@ -43,51 +43,59 @@ The values are the exact root-mean-square errors over all random draws, from the
 
 ## The formula
 
-Notation first, in words. Customer $i$ books $b_i(m_i - p)$ deliveries a month at fee $p$. Here $m_i$ is the fee at which they stop booking, and $b_i$ is how many deliveries a month they drop per £1 of fee. One customer's **loss** (minus their monthly profit to the grocer) and its slope are
+Notation first, in words. Customer $`i`$ books $`b_i(m_i - p)`$ deliveries a month at fee $`p`$. Here $`m_i`$ is the fee at which they stop booking, and $`b_i`$ is how many deliveries a month they drop per £1 of fee. One customer's **loss** (minus their monthly profit to the grocer) and its slope are
 
-$$F(p, i) = -(p - c)\,b_i\,(m_i - p), \qquad F'(p, i) = b_i\,(2p - m_i - c).$$
+```math
+F(p, i) = -(p - c)\,b_i\,(m_i - p), \qquad F'(p, i) = b_i\,(2p - m_i - c).
+```
 
-The grocer minimises the average loss over all $N$ customers, $f(p) = \frac{1}{N}\sum_i F(p, i)$. Its minimiser is $p^*$.
+The grocer minimises the average loss over all $`N`$ customers, $`f(p) = \frac{1}{N}\sum_i F(p, i)`$. Its minimiser is $`p^*`$.
 
-The **stochastic gradient** step (the gradient-descent step of [Gradient descent](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/02-gradient-descent-and-stochastic-gradient.md), with one random customer's slope in place of the average) draws a customer $i_k$ at random and moves the fee:
+The **stochastic gradient** step (the gradient-descent step of [Gradient descent](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/02-gradient-descent-and-stochastic-gradient.md), with one random customer's slope in place of the average) draws a customer $`i_k`$ at random and moves the fee:
 
-$$p_{k+1} = p_k - \alpha_k\, g_k, \qquad g_k = F'(p_k, i_k).$$
+```math
+p_{k+1} = p_k - \alpha_k\, g_k, \qquad g_k = F'(p_k, i_k).
+```
 
 The **Robbins-Monro conditions** on the step sizes:
 
-$$\sum_{k=0}^{\infty} \alpha_k = \infty, \qquad \sum_{k=0}^{\infty} \alpha_k^2 < \infty.$$
+```math
+\sum_{k=0}^{\infty} \alpha_k = \infty, \qquad \sum_{k=0}^{\infty} \alpha_k^2 < \infty.
+```
 
-The **sample average approximation** draws $n$ customers, averages their losses into $\hat f_n$, and takes its minimiser $\hat p_n$. Write $E[\cdot]$ for the average over all the random draws. If every customer's loss curves upward by at least $\mu$, then
+The **sample average approximation** draws $`n`$ customers, averages their losses into $`\hat f_n`$, and takes its minimiser $`\hat p_n`$. Write $`E[\cdot]`$ for the average over all the random draws. If every customer's loss curves upward by at least $`\mu`$, then
 
-$$E\big[(\hat p_n - p^*)^2\big] \;\le\; \frac{\sigma^2}{\mu^2\, n}.$$
+```math
+E\big[(\hat p_n - p^*)^2\big] \;\le\; \frac{\sigma^2}{\mu^2\, n}.
+```
 
 **Read it aloud:** step against one random customer's slope; let the steps add up to an unlimited distance while their squares add up to a finite total; and a sample of n customers, solved exactly, misses the best fee by a mean square of at most the noise σ² over μ² times n.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $i$, $N$ | a customer's number; how many customers there are | $N$ = 200,000 | — |
-| $b_i$, $m_i$ | deliveries a month lost per £1 of fee; the fee at which the customer stops | first customer drawn: 1.44645 and £4.71773 | larger $m_i$ pulls $p^*$ up |
-| $c$ | the grocer's cost per delivery | £1 | $p^*$ rises by half of it |
-| $p$, $p^*$ | the fee; the best fee | £2 now; £3.9997 | — |
-| $F(p, i)$, $f(p)$, $f''$ | one customer's loss; the average loss; its curvature, twice the average $b_i$ | $f(p^*)$ = −£8.9880; $f''$ = 1.9978 | larger $f''$: a sharper optimum |
-| $k$, $p_k$, $e_k$ | step count from $k$ = 0; the fee after $k$ steps; its error $p_k - p^*$ | $p_0$ = £2, $e_0$ = −£1.9997 | — |
-| $g_k$ | the drawn customer's slope at $p_k$ | −2.4846 at $k$ = 0 | — |
-| $\alpha_k$, $a$ | the step size at step $k$; its multiplier in $a/(k+1)$ | 0.5/(k+1), so $a$ = 0.5 | faster start, more noise |
-| $\mu_f$, $A$, $B$, $u_k$ | in the theorem: the least pull of the average loss; the drawn slope's mean square is at most $A + Be_k^2$; $u_k = E[e_k^2]$ | $\mu_f = f''$ = 1.9978; $u_k$ is the RMS error squared | larger $\mu_f$: faster pull-in |
-| $\zeta_i$, $\sigma^2$ | customer $i$'s slope at $p^*$; the average of its square: the noise | $\sigma^2$ = 3.3495 | every error grows with it |
-| $\mu$, $L$ | the least and greatest curvature $2b_i$ of any one customer's loss | 0.8 and 3.2 | larger $\mu$: a tighter bound |
-| $n$, $\hat f_n$, $\hat p_n$ | sample size; the sample's average loss; its minimiser | $n$ = 1,000 | error falls like $1/\sqrt{n}$ |
-| $\varepsilon$, $\delta$ | a tolerance on the fee; the chance allowed of missing it | £0.10 and 0.05 | more customers needed |
+| $`i`$, $`N`$ | a customer's number; how many customers there are | $`N`$ = 200,000 | — |
+| $`b_i`$, $`m_i`$ | deliveries a month lost per £1 of fee; the fee at which the customer stops | first customer drawn: 1.44645 and £4.71773 | larger $`m_i`$ pulls $`p^*`$ up |
+| $`c`$ | the grocer's cost per delivery | £1 | $`p^*`$ rises by half of it |
+| $`p`$, $`p^*`$ | the fee; the best fee | £2 now; £3.9997 | — |
+| $`F(p, i)`$, $`f(p)`$, $`f''`$ | one customer's loss; the average loss; its curvature, twice the average $`b_i`$ | $`f(p^*)`$ = −£8.9880; $`f''`$ = 1.9978 | larger $`f''`$: a sharper optimum |
+| $`k`$, $`p_k`$, $`e_k`$ | step count from $`k`$ = 0; the fee after $`k`$ steps; its error $`p_k - p^*`$ | $`p_0`$ = £2, $`e_0`$ = −£1.9997 | — |
+| $`g_k`$ | the drawn customer's slope at $`p_k`$ | −2.4846 at $`k`$ = 0 | — |
+| $`\alpha_k`$, $`a`$ | the step size at step $`k`$; its multiplier in $`a/(k+1)`$ | 0.5/(k+1), so $`a`$ = 0.5 | faster start, more noise |
+| $`\mu_f`$, $`A`$, $`B`$, $`u_k`$ | in the theorem: the least pull of the average loss; the drawn slope's mean square is at most $`A + Be_k^2`$; $`u_k = E[e_k^2]`$ | $`\mu_f = f''`$ = 1.9978; $`u_k`$ is the RMS error squared | larger $`\mu_f`$: faster pull-in |
+| $`\zeta_i`$, $`\sigma^2`$ | customer $`i`$'s slope at $`p^*`$; the average of its square: the noise | $`\sigma^2`$ = 3.3495 | every error grows with it |
+| $`\mu`$, $`L`$ | the least and greatest curvature $`2b_i`$ of any one customer's loss | 0.8 and 3.2 | larger $`\mu`$: a tighter bound |
+| $`n`$, $`\hat f_n`$, $`\hat p_n`$ | sample size; the sample's average loss; its minimiser | $`n`$ = 1,000 | error falls like $`1/\sqrt{n}`$ |
+| $`\varepsilon`$, $`\delta`$ | a tolerance on the fee; the chance allowed of missing it | £0.10 and 0.05 | more customers needed |
 
-The **root-mean-square (RMS) error** is the square root of $E[e_k^2]$, the typical size of the miss over all the random draws.
+The **root-mean-square (RMS) error** is the square root of $`E[e_k^2]`$, the typical size of the miss over all the random draws.
 
 ### When it holds
 
-- **The slope is unbiased.** A customer drawn uniformly at random has average slope $f'(p)$. Read only keen customers (those who keep booking up to a fee above £7) in file order, and the fee ends at £4.7519, not £4.00.
+- **The slope is unbiased.** A customer drawn uniformly at random has average slope $`f'(p)`$. Read only keen customers (those who keep booking up to a fee above £7) in file order, and the fee ends at £4.7519, not £4.00.
 - **The steps add up to an unlimited distance.** Steps 0.25/(k+1)² add up to only 0.411, and the fee stops with a mean error of −£0.7174.
 - **The steps shrink to zero.** A fixed step 0.02 never stops injecting noise, so the error sticks at £0.1310. Robbins and Monro's finite total of squares is one way to make the steps shrink; Step 3 shows it is more than this problem needs.
-- **The objective curves upward everywhere.** Here every $b_i \ge 0.4$, so every customer's loss has curvature at least $\mu$ = 0.8. Without a floor on the curvature, the bound σ²/(μ²n) says nothing and the rate claims below do not apply.
-- **Big enough first steps.** The 1/k rate needs $\alpha_k = a/(k+1)$ with $2af'' > 1$. Steps 0.05/(k+1) give 0.2 and crawl.
+- **The objective curves upward everywhere.** Here every $`b_i \ge 0.4`$, so every customer's loss has curvature at least $`\mu`$ = 0.8. Without a floor on the curvature, the bound σ²/(μ²n) says nothing and the rate claims below do not apply.
+- **Big enough first steps.** The 1/k rate needs $`\alpha_k = a/(k+1)`$ with $`2af'' > 1`$. Steps 0.05/(k+1) give 0.2 and crawl.
 
 ---
 
@@ -95,76 +103,86 @@ The **root-mean-square (RMS) error** is the square root of $E[e_k^2]$, the typic
 
 ### Step 0: a random slope is right on average
 
-Draw a customer uniformly at random. The expected value of their slope is the average of all 200,000 slopes, which is $f'(p)$, the slope the full read would give. So each stochastic step points, on average, exactly where the full step points. What differs is the scatter around that average. The whole theory is a bookkeeping of two things: how fast the steps remove the starting error, and how much scatter they leave behind.
+Draw a customer uniformly at random. The expected value of their slope is the average of all 200,000 slopes, which is $`f'(p)`$, the slope the full read would give. So each stochastic step points, on average, exactly where the full step points. What differs is the scatter around that average. The whole theory is a bookkeeping of two things: how fast the steps remove the starting error, and how much scatter they leave behind.
 
 ### Step 1: the best fee, with a certificate
 
-Each customer's loss is a parabola in $p$. So is the average: $f(p) = \bar b\,p^2 - \overline{b(m+c)}\,p + \text{const}$, with bars for averages over the 200,000. Setting $f'(p) = 0$ gives
+Each customer's loss is a parabola in $`p`$. So is the average: $`f(p) = \bar b\,p^2 - \overline{b(m+c)}\,p + \text{const}`$, with bars for averages over the 200,000. Setting $`f'(p) = 0`$ gives
 
-$$p^* = \frac{\overline{b(m+c)}}{2\,\bar b} = \frac{7.99045}{2 \times 0.99889} = £3.9997.$$
+```math
+p^* = \frac{\overline{b(m+c)}}{2\,\bar b} = \frac{7.99045}{2 \times 0.99889} = £3.9997.
+```
 
-The code reaches the same fee a second way, from the vertex of the parabola through $f$ at £3, £4 and £5. The certificate: $f'(p^*) = 0$ to six decimals and $f'' = 1.9978 > 0$, so $f$ is convex (it curves upward everywhere) and $p^*$ is its global minimum.
+The code reaches the same fee a second way, from the vertex of the parabola through $`f`$ at £3, £4 and £5. The certificate: $`f'(p^*) = 0`$ to six decimals and $`f'' = 1.9978 > 0`$, so $`f`$ is convex (it curves upward everywhere) and $`p^*`$ is its global minimum.
 
 ### Step 2: one step, squared
 
-Subtract $p^*$ from the update: $e_{k+1} = e_k - \alpha_k g_k$. Square it:
+Subtract $`p^*`$ from the update: $`e_{k+1} = e_k - \alpha_k g_k`$. Square it:
 
-$$e_{k+1}^2 = e_k^2 - 2\alpha_k\, g_k\, e_k + \alpha_k^2\, g_k^2.$$
+```math
+e_{k+1}^2 = e_k^2 - 2\alpha_k\, g_k\, e_k + \alpha_k^2\, g_k^2.
+```
 
-Take the average over the customer drawn. The middle term becomes $-2\alpha_k f'(p_k)\,e_k$. Here $f'(p_k) = f''\,e_k$, since $f$ is a parabola, so it pulls the error in by $2\alpha_k f'' e_k^2$. The last term pushes out: the drawn slope is never exactly zero, even at $p^*$, where it is $\zeta_i$ with mean square $\sigma^2$. So, roughly,
+Take the average over the customer drawn. The middle term becomes $`-2\alpha_k f'(p_k)\,e_k`$. Here $`f'(p_k) = f''\,e_k`$, since $`f`$ is a parabola, so it pulls the error in by $`2\alpha_k f'' e_k^2`$. The last term pushes out: the drawn slope is never exactly zero, even at $`p^*`$, where it is $`\zeta_i`$ with mean square $`\sigma^2`$. So, roughly,
 
-$$E[e_{k+1}^2] \;\approx\; (1 - 2 f''\alpha_k)\,E[e_k^2] + \alpha_k^2\,\sigma^2.$$
+```math
+E[e_{k+1}^2] \;\approx\; (1 - 2 f''\alpha_k)\,E[e_k^2] + \alpha_k^2\,\sigma^2.
+```
 
-The code does not use "roughly". Because each loss is a parabola, the exact mean and mean square of $e_k$ follow a two-line recursion in the averages of $b_i$, $b_i^2$, $\zeta_i$, $\zeta_i^2$ and $b_i\zeta_i$. That recursion draws the chart. It agrees with 200 simulated runs to within 1.41 standard errors at every checkpoint.
+The code does not use "roughly". Because each loss is a parabola, the exact mean and mean square of $`e_k`$ follow a two-line recursion in the averages of $`b_i`$, $`b_i^2`$, $`\zeta_i`$, $`\zeta_i^2`$ and $`b_i\zeta_i`$. That recursion draws the chart. It agrees with 200 simulated runs to within 1.41 standard errors at every checkpoint.
 
 ### Step 3: what each condition does
 
-**The sum of the steps must be unlimited.** Without noise, each step multiplies the error by about $1 - f''\alpha_k$. A product of such factors reaches zero exactly when the $\alpha_k$ add up to infinity. If they add up to a finite total, part of the starting error is never removed. Steps 0.25/(k+1)² add up to 0.411, and the mean error freezes at −£0.7174.
+**The sum of the steps must be unlimited.** Without noise, each step multiplies the error by about $`1 - f''\alpha_k`$. A product of such factors reaches zero exactly when the $`\alpha_k`$ add up to infinity. If they add up to a finite total, part of the starting error is never removed. Steps 0.25/(k+1)² add up to 0.411, and the mean error freezes at −£0.7174.
 
-**The steps must shrink to zero.** Each step injects scatter $\alpha_k^2\sigma^2$, while the pull removes the fraction $2f''\alpha_k$ of the mean square. The two balance near $E[e_k^2] \approx \alpha_k\sigma^2/(2f'')$, a floor in proportion to the step. A fixed step keeps its floor for ever: RMS £0.1310 at step 0.02, reached by $k$ = 1,000 and never left. Shrinking steps lower the floor as they shrink, so the noise dies.
+**The steps must shrink to zero.** Each step injects scatter $`\alpha_k^2\sigma^2`$, while the pull removes the fraction $`2f''\alpha_k`$ of the mean square. The two balance near $`E[e_k^2] \approx \alpha_k\sigma^2/(2f'')`$, a floor in proportion to the step. A fixed step keeps its floor for ever: RMS £0.1310 at step 0.02, reached by $`k`$ = 1,000 and never left. Shrinking steps lower the floor as they shrink, so the noise dies.
 
-**A finite total of squares is enough, but not needed.** It is Robbins and Monro's classical condition: it forces the steps to zero, and it keeps the last step of the proof below short. Steps 0.5/√(k+1) shrink to zero with an unlimited sum, but their squares add up to infinity. They still converge, only more slowly: RMS £0.1166 at $k$ = 1,000 and £0.0650 at 10,000, close to the floor formula's £0.0647. The proof below covers them too.
+**A finite total of squares is enough, but not needed.** It is Robbins and Monro's classical condition: it forces the steps to zero, and it keeps the last step of the proof below short. Steps 0.5/√(k+1) shrink to zero with an unlimited sum, but their squares add up to infinity. They still converge, only more slowly: RMS £0.1166 at $`k`$ = 1,000 and £0.0650 at 10,000, close to the floor formula's £0.0647. The proof below covers them too.
 
-With $\alpha_k = 0.5/(k+1)$ both of Robbins and Monro's conditions hold: the harmonic sum $1 + \tfrac12 + \tfrac13 + \dots$ is unlimited, and the squares add to $0.25 \times \pi^2/6$.
+With $`\alpha_k = 0.5/(k+1)`$ both of Robbins and Monro's conditions hold: the harmonic sum $`1 + \tfrac12 + \tfrac13 + \dots`$ is unlimited, and the squares add to $`0.25 \times \pi^2/6`$.
 
 ### Step 4: the theorem, and the rate
 
-**Robbins-Monro, mean-square form.** Suppose the slope drawn is unbiased, the average loss pulls the error in at a rate at least $\mu_f > 0$ (here $\mu_f = f''$), and the drawn slope's mean square is at most $A + B\,e_k^2$. If $\alpha_k > 0$, $\sum \alpha_k = \infty$ and $\sum \alpha_k^2 < \infty$, then $E[e_k^2] \to 0$. Robbins and Monro proved this in 1951 for finding a root from noisy measurements; minimising $f$ is finding the root of $f'$.
+**Robbins-Monro, mean-square form.** Suppose the slope drawn is unbiased, the average loss pulls the error in at a rate at least $`\mu_f > 0`$ (here $`\mu_f = f''`$), and the drawn slope's mean square is at most $`A + B\,e_k^2`$. If $`\alpha_k > 0`$, $`\sum \alpha_k = \infty`$ and $`\sum \alpha_k^2 < \infty`$, then $`E[e_k^2] \to 0`$. Robbins and Monro proved this in 1951 for finding a root from noisy measurements; minimising $`f`$ is finding the root of $`f'`$.
 
 <details>
 <summary>Detailed proof: the mean-square error goes to zero</summary>
 
-From Step 2 with the bounds in place, $u_k = E[e_k^2]$ satisfies
+From Step 2 with the bounds in place, $`u_k = E[e_k^2]`$ satisfies
 
-$$u_{k+1} \le (1 - 2\mu_f\alpha_k + B\alpha_k^2)\,u_k + A\alpha_k^2.$$
+$`\displaystyle u_{k+1} \le (1 - 2\mu_f\alpha_k + B\alpha_k^2)\,u_k + A\alpha_k^2.`$
 
-Because $\sum\alpha_k^2$ is finite, $\alpha_k \to 0$, so from some step $K$ on, $B\alpha_k^2 \le \mu_f\alpha_k$ and $\mu_f\alpha_k < 1$. From there $u_{k+1} \le (1 - \mu_f\alpha_k)\,u_k + A\alpha_k^2$. Unroll from $K$ to $n$:
+Because $`\sum\alpha_k^2`$ is finite, $`\alpha_k \to 0`$, so from some step $`K`$ on, $`B\alpha_k^2 \le \mu_f\alpha_k`$ and $`\mu_f\alpha_k < 1`$. From there $`u_{k+1} \le (1 - \mu_f\alpha_k)\,u_k + A\alpha_k^2`$. Unroll from $`K`$ to $`n`$:
 
-$$u_n \le u_K \prod_{j=K}^{n-1}(1 - \mu_f\alpha_j) \;+\; A\sum_{j=K}^{n-1}\alpha_j^2 \prod_{i=j+1}^{n-1}(1 - \mu_f\alpha_i).$$
+$`\displaystyle u_n \le u_K \prod_{j=K}^{n-1}(1 - \mu_f\alpha_j) \;+\; A\sum_{j=K}^{n-1}\alpha_j^2 \prod_{i=j+1}^{n-1}(1 - \mu_f\alpha_i).`$
 
-Since $1 - x \le e^{-x}$, each product is at most $e^{-\mu_f\sum\alpha_i}$ over its range. The first term goes to zero because $\sum\alpha_j = \infty$. For the second, fix a tolerance and pick $J$ so that $A\sum_{j \ge J}\alpha_j^2$ is below it; that is possible because $\sum\alpha_j^2$ is finite. The terms with $j \ge J$ add to less than the tolerance, as each product is at most 1. The finitely many terms with $j < J$ each carry a product over $i$ from $J$ to $n - 1$, which goes to zero as $n$ grows. So $\limsup u_n$ is below every tolerance, and $u_n \to 0$.
+Since $`1 - x \le e^{-x}`$, each product is at most $`e^{-\mu_f\sum\alpha_i}`$ over its range. The first term goes to zero because $`\sum\alpha_j = \infty`$. For the second, fix a tolerance and pick $`J`$ so that $`A\sum_{j \ge J}\alpha_j^2`$ is below it; that is possible because $`\sum\alpha_j^2`$ is finite. The terms with $`j \ge J`$ add to less than the tolerance, as each product is at most 1. The finitely many terms with $`j < J`$ each carry a product over $`i`$ from $`J`$ to $`n - 1`$, which goes to zero as $`n`$ grows. So $`\limsup u_n`$ is below every tolerance, and $`u_n \to 0`$.
 
-The square condition is used only for the terms with $j \ge J$, and steps that merely shrink to zero handle them too. Pick $J \ge K$ so that $A\alpha_j$ is at most $\mu_f$ times the tolerance for every $j \ge J$. Those terms then add to at most the tolerance times $\sum_{j \ge J}\mu_f\alpha_j\prod_{i=j+1}^{n-1}(1 - \mu_f\alpha_i)$. Each term of that sum is the difference of two neighbouring products, so the sum collapses to $1 - \prod_{i=J}^{n-1}(1 - \mu_f\alpha_i) \le 1$. So $\alpha_k \to 0$ with $\sum\alpha_k = \infty$ is already enough here.
+The square condition is used only for the terms with $`j \ge J`$, and steps that merely shrink to zero handle them too. Pick $`J \ge K`$ so that $`A\alpha_j`$ is at most $`\mu_f`$ times the tolerance for every $`j \ge J`$. Those terms then add to at most the tolerance times $`\sum_{j \ge J}\mu_f\alpha_j\prod_{i=j+1}^{n-1}(1 - \mu_f\alpha_i)`$. Each term of that sum is the difference of two neighbouring products, so the sum collapses to $`1 - \prod_{i=J}^{n-1}(1 - \mu_f\alpha_i) \le 1`$. So $`\alpha_k \to 0`$ with $`\sum\alpha_k = \infty`$ is already enough here.
 
 </details>
 
-**The rate, stated.** With $\alpha_k = a/(k+1)$ and $2af'' > 1$, $E[e_k^2]$ falls like $1/k$. The precise bound is in Nemirovski, Juditsky, Lan and Shapiro (2009, section 2.1), with the same rate for the loss in Bottou, Curtis and Nocedal (2018, Theorem 4.7). For a parabola the constant is $a^2\sigma^2/\big((2af'' - 1)k\big)$, smallest at $a = 1/f''$, where it is $\sigma^2/(f''^2 k)$. Here $a$ = 0.5 is that choice: at $k$ = 10,000, $\sigma/(f''\sqrt k)$ = £0.0092, the exact RMS error.
+**The rate, stated.** With $`\alpha_k = a/(k+1)`$ and $`2af'' > 1`$, $`E[e_k^2]`$ falls like $`1/k`$. The precise bound is in Nemirovski, Juditsky, Lan and Shapiro (2009, section 2.1), with the same rate for the loss in Bottou, Curtis and Nocedal (2018, Theorem 4.7). For a parabola the constant is $`a^2\sigma^2/\big((2af'' - 1)k\big)`$, smallest at $`a = 1/f''`$, where it is $`\sigma^2/(f''^2 k)`$. Here $`a`$ = 0.5 is that choice: at $`k`$ = 10,000, $`\sigma/(f''\sqrt k)`$ = £0.0092, the exact RMS error.
 
-With $2af'' < 1$ the mean error shrinks only like $k^{-af''}$. Steps 0.05/(k+1) give $af''$ = 0.1, and reaching £0.01 would take about $10^{22.7}$ customers.
+With $`2af'' < 1`$ the mean error shrinks only like $`k^{-af''}`$. Steps 0.05/(k+1) give $`af''`$ = 0.1, and reaching £0.01 would take about $`10^{22.7}`$ customers.
 
 ### Step 5: the sample average, bounded
 
-Now solve on a sample. Draw $n$ customers at random, average their losses into $\hat f_n$, and take its minimiser $\hat p_n$, so $\hat f_n'(\hat p_n) = 0$. Every customer's loss has curvature at least $\mu$, so the average of any of them does too. A function curving up by at least $\mu$ has slopes that differ by at least $\mu$ times the distance between the points:
+Now solve on a sample. Draw $`n`$ customers at random, average their losses into $`\hat f_n`$, and take its minimiser $`\hat p_n`$, so $`\hat f_n'(\hat p_n) = 0`$. Every customer's loss has curvature at least $`\mu`$, so the average of any of them does too. A function curving up by at least $`\mu`$ has slopes that differ by at least $`\mu`$ times the distance between the points:
 
-$$\mu\,\lvert\hat p_n - p^*\rvert \;\le\; \lvert \hat f_n'(\hat p_n) - \hat f_n'(p^*)\rvert = \lvert \hat f_n'(p^*)\rvert.$$
+```math
+\mu\,\lvert\hat p_n - p^*\rvert \;\le\; \lvert \hat f_n'(\hat p_n) - \hat f_n'(p^*)\rvert = \lvert \hat f_n'(p^*)\rvert.
+```
 
-The right side is an average of $n$ independent slopes at $p^*$, the $\zeta_i$. Their mean is $f'(p^*) = 0$, so the mean square of their average is $\sigma^2/n$, the variance-of-an-average rule from the [Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md). Square, average, divide by $\mu^2$:
+The right side is an average of $`n`$ independent slopes at $`p^*`$, the $`\zeta_i`$. Their mean is $`f'(p^*) = 0`$, so the mean square of their average is $`\sigma^2/n`$, the variance-of-an-average rule from the [Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md). Square, average, divide by $`\mu^2`$:
 
-$$E\big[(\hat p_n - p^*)^2\big] \le \frac{\sigma^2}{\mu^2 n}.$$
+```math
+E\big[(\hat p_n - p^*)^2\big] \le \frac{\sigma^2}{\mu^2 n}.
+```
 
-Chebyshev's inequality turns it into a sample size. The chance of missing by $\varepsilon$ or more is at most $\sigma^2/(\mu^2 n\varepsilon^2)$. Keeping that under $\delta$ needs $n \ge \sigma^2/(\mu^2\varepsilon^2\delta)$.
+Chebyshev's inequality turns it into a sample size. The chance of missing by $`\varepsilon`$ or more is at most $`\sigma^2/(\mu^2 n\varepsilon^2)`$. Keeping that under $`\delta`$ needs $`n \ge \sigma^2/(\mu^2\varepsilon^2\delta)`$.
 
-The bound uses the worst curvature, 0.8, while the average curvature is 1.9978. So it is safe but loose. For large $n$ the actual mean square approaches $\sigma^2/(f''^2 n)$, smaller by the factor $(f''/\mu)^2$. The simulation shows both.
+The bound uses the worst curvature, 0.8, while the average curvature is 1.9978. So it is safe but loose. For large $`n`$ the actual mean square approaches $`\sigma^2/(f''^2 n)`$, smaller by the factor $`(f''/\mu)^2`$. The simulation shows both.
 
 ---
 
@@ -176,8 +194,8 @@ The first step, then the sample size.
 | --- | --- | --- |
 | best fee | 7.99045 ÷ (2 × 0.99889) | £3.9997 |
 | first customer's slope at £2 | 1.44645 × (2 × 2 − 4.71773 − 1) | −2.4846 |
-| first step, $\alpha_0$ = 0.5 | 2 − 0.5 × (−2.4846) | £3.2423 |
-| SAA mean-square bound, $n$ = 1,000 | 3.3495 ÷ (0.8² × 1,000) | 0.005234 |
+| first step, $`\alpha_0`$ = 0.5 | 2 − 0.5 × (−2.4846) | £3.2423 |
+| SAA mean-square bound, $`n`$ = 1,000 | 3.3495 ÷ (0.8² × 1,000) | 0.005234 |
 | as an RMS error | √0.005234 | £0.0723 |
 | customers for ±£0.10 with 95% | 3.3495 ÷ (0.64 × 0.01 × 0.05), rounded up | **10,468** |
 
@@ -187,27 +205,27 @@ A random sample of 10,468 customers, solved exactly, puts the fee within 10p of 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Fixed step 0.02 | RMS £0.1310 at $k$ = 10,000, the same as at 1,000 | The step never shrinks: the noise floor stays |
+| Fixed step 0.02 | RMS £0.1310 at $`k`$ = 10,000, the same as at 1,000 | The step never shrinks: the noise floor stays |
 | Steps 0.25/(k+1)² | mean error −£0.7174, frozen | Steps add up to only 0.411: the fee runs out of road |
-| Steps 0.05/(k+1) | still £0.7458 off on average after 10,000 | Conditions met, but $2af''$ = 0.2 < 1: about $10^{22.7}$ steps to reach £0.01 |
+| Steps 0.05/(k+1) | still £0.7458 off on average after 10,000 | Conditions met, but $`2af''`$ = 0.2 < 1: about $`10^{22.7}`$ steps to reach £0.01 |
 | 10,000 keen customers in file order | fee £4.7519 | The slopes are biased: the method finds the best fee for the wrong customers |
 
 ---
 
 ## Ten thousand customers, one at a time
 
-The puzzle: each step is a guess from one customer, yet the fee settles to within a penny. Two forces act on every step. The pull towards $p^*$ removes part of the error left from the start. The kick from the drawn customer adds fresh scatter. The step rule sets the balance.
+The puzzle: each step is a guess from one customer, yet the fee settles to within a penny. Two forces act on every step. The pull towards $`p^*`$ removes part of the error left from the start. The kick from the drawn customer adds fresh scatter. The step rule sets the balance.
 
 ### One story: a single run
 
 The Robbins-Monro run, with its own random customers.
 
-| Customers used, $k$ | 0 | 1 | 10 | 100 | 1,000 | 10,000 |
+| Customers used, $`k`$ | 0 | 1 | 10 | 100 | 1,000 | 10,000 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| fee $p_k$ | £2.0000 | £3.2423 | £4.0521 | £3.9106 | £4.0097 | £4.0106 |
+| fee $`p_k`$ | £2.0000 | £3.2423 | £4.0521 | £3.9106 | £4.0097 | £4.0106 |
 | RMS error over all runs | £1.9997 | £1.1465 | £0.3043 | £0.0922 | £0.0290 | £0.0092 |
 
-The first step does most of the travel: $\alpha_0 f''$ is close to 1, so on average one step lands on $p^*$. After that the run wanders inside a band that narrows like $1/\sqrt{k}$.
+The first step does most of the travel: $`\alpha_0 f''`$ is close to 1, so on average one step lands on $`p^*`$. After that the run wanders inside a band that narrows like $`1/\sqrt{k}`$.
 
 ### One force at a time: what is left at k = 10,000
 
@@ -230,15 +248,15 @@ The fixed step has forgotten the start but keeps its noise. The timid and summab
 
 ### Both forces in one picture
 
-The chart in the overview is the sum of the two bars at every $k$: the Robbins-Monro line falls steadily, the fixed step flattens at its noise floor, and the timid line barely moves.
+The chart in the overview is the sum of the two bars at every $`k`$: the Robbins-Monro line falls steadily, the fixed step flattens at its noise floor, and the timid line barely moves.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code builds the 200,000 customers from a written-out SplitMix64 generator with seed 2026, so Python and Rust draw the same customers. It takes four roads. The best fee comes from solving $f'(p) = 0$ and, separately, from the vertex of the parabola through three loss values, with a derivative certificate.
+The code builds the 200,000 customers from a written-out SplitMix64 generator with seed 2026, so Python and Rust draw the same customers. It takes four roads. The best fee comes from solving $`f'(p) = 0`$ and, separately, from the vertex of the parabola through three loss values, with a derivative certificate.
 
-The stochastic-gradient error comes from the exact mean-square recursion, from 200 simulated runs, from the $\sigma^2/(f''^2k)$ law and, for the steps 0.5/√(k+1), from the floor $\alpha_k\sigma^2/(2f'')$; the run's first step is checked against the hand calculation. The sample-average error is simulated 200 times at each sample size and checked against both the bound and the large-sample value.
+The stochastic-gradient error comes from the exact mean-square recursion, from 200 simulated runs, from the $`\sigma^2/(f''^2k)`$ law and, for the steps 0.5/√(k+1), from the floor $`\alpha_k\sigma^2/(2f'')`$; the run's first step is checked against the hand calculation. The sample-average error is simulated 200 times at each sample size and checked against both the bound and the large-sample value.
 
 ### Python
 
@@ -620,16 +638,16 @@ The two outputs match line for line.
 
 Lean proves the card's three theorems for any customers and losses that meet their conditions, and checks the card's sample sizes.
 
-- Each draw picks one of the $N$ customers, every customer equally likely, independently of the other draws. So $E[\cdot]$ averages over all lists of draws.
-- Let every customer's loss curve upward by at least $\mu > 0$. Solve a sample of $n$ customers exactly. Then $E\big[(\hat p_n - p^*)^2\big] \le \sigma^2/(\mu^2 n)$.
-- Here $\sigma^2$ is the average square of each customer's slope at the best fee $p^*$.
-- Under the same conditions, a sample of $n \ge \sigma^2/(\mu^2\varepsilon^2\delta)$ customers misses $p^*$ by $\varepsilon$ or more with chance at most $\delta$.
-- Robbins-Monro: let the slope drawn be unbiased, and let the average loss pull the error in at a rate at least $\mu_f > 0$.
-- Let the drawn slope's mean square be at most $A + B\,e_k^2$. If $\alpha_k > 0$, $\sum \alpha_k = \infty$ and $\sum \alpha_k^2 < \infty$, then $E[e_k^2] \to 0$ from any starting fee.
+- Each draw picks one of the $`N`$ customers, every customer equally likely, independently of the other draws. So $`E[\cdot]`$ averages over all lists of draws.
+- Let every customer's loss curve upward by at least $`\mu > 0`$. Solve a sample of $`n`$ customers exactly. Then $`E\big[(\hat p_n - p^*)^2\big] \le \sigma^2/(\mu^2 n)`$.
+- Here $`\sigma^2`$ is the average square of each customer's slope at the best fee $`p^*`$.
+- Under the same conditions, a sample of $`n \ge \sigma^2/(\mu^2\varepsilon^2\delta)`$ customers misses $`p^*`$ by $`\varepsilon`$ or more with chance at most $`\delta`$.
+- Robbins-Monro: let the slope drawn be unbiased, and let the average loss pull the error in at a rate at least $`\mu_f > 0`$.
+- Let the drawn slope's mean square be at most $`A + B\,e_k^2`$. If $`\alpha_k > 0`$, $`\sum \alpha_k = \infty`$ and $`\sum \alpha_k^2 < \infty`$, then $`E[e_k^2] \to 0`$ from any starting fee.
 - 3.3495 ÷ (0.8² × 1,000) is 0.005234 to six places, and 3.3495 ÷ (0.64 × 0.01 × 0.05), rounded up, is 10,468.
-- With $\mu$ = 0.4, or with ±£0.05 in place of ±£0.10, the sample size is 41,869.
+- With $`\mu`$ = 0.4, or with ±£0.05 in place of ±£0.10, the sample size is 41,869.
 
-The 200,000 customers, $p^*$ = £3.9997, $\sigma^2$ = 3.3495, the 1/k rate and the simulations are left to the Python and Rust checks.
+The 200,000 customers, $`p^*`$ = £3.9997, $`\sigma^2`$ = 3.3495, the 1/k rate and the simulations are left to the Python and Rust checks.
 
 ```lean
 -- Stochastic gradient: a sample of n customers solved exactly misses the best fee by a mean square of at most σ²/(μ²n), which sets the sample size by Chebyshev, and stochastic gradient steps whose sum is unlimited and whose squares add to a finite total drive the mean-square error to zero.
@@ -1083,9 +1101,9 @@ example : ⌈(33495 / 10000 : ℚ) / ((4 / 10) ^ 2 * (1 / 10) ^ 2 * (5 / 100))�
 
 > [!TIP]
 > **Try changing**
-> - Guess first: what does a step of 1.0/(k+1) do? Change `0.5 / (k + 1)` in `RULES`. Now $2af''$ is about 4 and the 1/k-law constant $a^2\sigma^2/(2af''-1)$ is a third larger than at the best $a$, so the assert on the 1/k law stops the run.
+> - Guess first: what does a step of 1.0/(k+1) do? Change `0.5 / (k + 1)` in `RULES`. Now $`2af''`$ is about 4 and the 1/k-law constant $`a^2\sigma^2/(2af''-1)`$ is a third larger than at the best $`a`$, so the assert on the 1/k law stops the run.
 > - Guess first: does halving the fixed step halve its error? Set `0.02` to `0.01` in `RULES`. The floor falls from £0.1310 to £0.0921: the mean square halves, so the RMS falls by about √2, not 2.
-> - Guess first: what happens to the bound if all you knew was that every $b_i \ge 0.2$? Set `MU` to `0.4`. The bound doubles to £0.1447 RMS at $n$ = 1,000, and the sample size for ±£0.10 grows to 41,869; the simulated error does not change, because the customers did not.
+> - Guess first: what happens to the bound if all you knew was that every $`b_i \ge 0.2`$? Set `MU` to `0.4`. The bound doubles to £0.1447 RMS at $`n`$ = 1,000, and the sample size for ±£0.10 grows to 41,869; the simulated error does not change, because the customers did not.
 > - Guess first: how many customers does the sample need for ±£0.05? Change `0.1 ** 2` to `0.05 ** 2` on the `need_mu` line. Four times as many: 41,869 from μ.
 
 ---
@@ -1096,9 +1114,9 @@ example : ⌈(33495 / 10000 : ℚ) / ((4 / 10) ^ 2 * (1 / 10) ^ 2 * (5 / 100))�
 > **Keeping a fixed step and calling it converged.** With step 0.02 the error drops from £2 to £0.1353 in 100 customers and looks finished. It is not: it stays at £0.1310 for ever, ten times the Robbins-Monro error at 10,000. A fixed step reaches a noise floor whose height scales with the step. For an exact answer the steps must shrink, slowly enough that they still add up to an unlimited distance.
 >
 > - **Shrinking too fast.** Steps 0.25/(k+1)² look careful but add up to 0.411, and the fee stops £0.7174 short on average.
-> - **Shrinking from too small a start.** Steps 0.05/(k+1) satisfy both conditions and still leave £0.7458 of error after 10,000 customers. The 1/k rate needs $2af'' > 1$.
+> - **Shrinking from too small a start.** Steps 0.05/(k+1) satisfy both conditions and still leave £0.7458 of error after 10,000 customers. The 1/k rate needs $`2af'' > 1`$.
 > - **Feeding the customers in file order.** If the file holds keen customers first, the slopes are biased, and 10,000 of them push the fee to £4.7519. Draw at random, or shuffle.
-> - **Quoting the sample's own best profit.** The sample's optimum is fitted to that sample, so its profit is too high on average: by 1.004p a customer a month at $n$ = 100, and the fee it picks earns 1.007p less than the best. Check a sample's answer on fresh customers.
+> - **Quoting the sample's own best profit.** The sample's optimum is fitted to that sample, so its profit is too high on average: by 1.004p a customer a month at $`n`$ = 100, and the fee it picks earns 1.007p less than the best. Check a sample's answer on fresh customers.
 
 ---
 
@@ -1116,8 +1134,8 @@ example : ⌈(33495 / 10000 : ℚ) / ((4 / 10) ^ 2 * (1 / 10) ^ 2 * (5 / 100))�
 
 ## What this builds on
 
-- [Gradient descent](../02-Unconstrained%20Methods/02-gradient-descent-and-its-rate.md): the optimisation wing's card on the fixed-step method, with the iterate, step and direction notation $x_k$, $\alpha_k$, $d_k$ used here as $p_k$ and $\alpha_k$.
-- [Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): the average of $n$ draws has variance $\sigma^2/n$, and Chebyshev turns that into a sample size.
+- [Gradient descent](../02-Unconstrained%20Methods/02-gradient-descent-and-its-rate.md): the optimisation wing's card on the fixed-step method, with the iterate, step and direction notation $`x_k`$, $`\alpha_k`$, $`d_k`$ used here as $`p_k`$ and $`\alpha_k`$.
+- [Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): the average of $`n`$ draws has variance $`\sigma^2/n`$, and Chebyshev turns that into a sample size.
 - [Gradient descent](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/02-gradient-descent-and-stochastic-gradient.md): the computing wing's card, which runs the stochastic gradient method itself with mini-batches on a large data sum.
 
 ## Where this goes next

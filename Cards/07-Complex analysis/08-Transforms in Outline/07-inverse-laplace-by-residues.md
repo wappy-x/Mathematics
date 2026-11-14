@@ -28,24 +28,28 @@ To scale: 25 units per 1, 0 at (220, 125), −2 at (170, 125), poles as crosses.
 
 Reminders: Re s is the real part of s; Res is the residue, the coefficient of 1/(s − a) round a pole a. Limits c − i∞ to c + i∞ mean the path runs straight up the line where the real part is c.
 
-$$v(t) = \frac{1}{2\pi i}\int_{c - i\infty}^{c + i\infty} V(s)\,e^{st}\,ds = \sum_{k} \operatorname{Res}\bigl(V(s)e^{st},\, a_k\bigr) \qquad (t > 0)$$
+```math
+v(t) = \frac{1}{2\pi i}\int_{c - i\infty}^{c + i\infty} V(s)\,e^{st}\,ds = \sum_{k} \mathrm{Res}\bigl(V(s)e^{st},\, a_k\bigr) \qquad (t > 0)
+```
 
 **Read it aloud:** the signal at time t is one over two pi i times the integral of V(s) e^(st) up a vertical line right of every pole, which equals the sum of the residues of V(s) e^(st).
 
 The first equality is the **Bromwich integral**, after Thomas Bromwich. He used it to put Heaviside's circuit calculus, Oliver Heaviside's rules for solving circuit equations by algebra, on firm ground. The second equality is the residue theorem, once the line is closed. At a simple pole (V behaves like a constant over s − a) the residue is a limit, worked below:
 
-$$\operatorname{Res}\bigl(V(s)e^{st}, a\bigr) = \lim_{s \to a}\,(s - a)\,V(s)\,e^{st}$$
+```math
+\mathrm{Res}\bigl(V(s)e^{st}, a\bigr) = \lim_{s \to a}\,(s - a)\,V(s)\,e^{st}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $v(t)$, $t$ | volts at time t seconds | 0.864665 at t = 1 | — |
-| $V(s)$, $s$ | the transform, at a complex point s | 2/(s(s + 2)) | — |
-| $c$ | real part of the line, right of every pole | 1 | no change, while c > 0 |
-| $e^{st}$ | what each pole turns into a signal | e^(−2t) at s = −2 | — |
-| $a_k$ | the k-th pole of V | 0 and −2 | further left, faster decay |
-| $\operatorname{Res}$ | residue of V(s)e^(st) at a pole | 1 and −e^(−2t) | a louder exponential |
-| $R$ | radius of the closing half circle | 4 drawn; 10, 100, 1000 in code | its share shrinks to 0 |
-| $W$ | height where the code's sum up the line stops | 10, 100, 1000 | the sum nears v(t) |
+| $`v(t)`$, $`t`$ | volts at time t seconds | 0.864665 at t = 1 | — |
+| $`V(s)`$, $`s`$ | the transform, at a complex point s | 2/(s(s + 2)) | — |
+| $`c`$ | real part of the line, right of every pole | 1 | no change, while c > 0 |
+| $`e^{st}`$ | what each pole turns into a signal | e^(−2t) at s = −2 | — |
+| $`a_k`$ | the k-th pole of V | 0 and −2 | further left, faster decay |
+| $`\mathrm{Res}`$ | residue of V(s)e^(st) at a pole | 1 and −e^(−2t) | a louder exponential |
+| $`R`$ | radius of the closing half circle | 4 drawn; 10, 100, 1000 in code | its share shrinks to 0 |
+| $`W`$ | height where the code's sum up the line stops | 10, 100, 1000 | the sum nears v(t) |
 
 ### When it holds
 

@@ -35,7 +35,7 @@ xychart-beta
     line [-1.243, -1.652, -2.664, -2.857, -3.744, -4.275, -4.513, -5.110, -5.601, -5.996, -6.466, -6.945]
 ```
 
-Orange: the primal residual $r_k$, the gap between the fit's copy and the penalty's copy. Green: the dual residual $s_k$, how far the penalty's copy moved this round. Dark: the true error, the distance from the exact answer. Each step down by 1 is a factor of 10. All three fall together, roughly in a straight line, and the run stops when the first two are both below $\varepsilon = 5 \times 10^{-7}$.
+Orange: the primal residual $`r_k`$, the gap between the fit's copy and the penalty's copy. Green: the dual residual $`s_k`$, how far the penalty's copy moved this round. Dark: the true error, the distance from the exact answer. Each step down by 1 is a factor of 10. All three fall together, roughly in a straight line, and the run stops when the first two are both below $`\varepsilon = 5 \times 10^{-7}`$.
 
 ---
 
@@ -43,49 +43,47 @@ Orange: the primal residual $r_k$, the gap between the fit's copy and the penalt
 
 The problem, with the agreement written as a constraint:
 
-$$\text{minimise } f(x) + g(z) \quad\text{subject to}\quad x = z, \qquad f(x) = \tfrac12\|Ax - b\|^2, \quad g(z) = \lambda\|z\|_1 .$$
+```math
+\text{minimise } f(x) + g(z) \quad\text{subject to}\quad x = z, \qquad f(x) = \tfrac12\|Ax - b\|^2, \quad g(z) = \lambda\|z\|_1 .
+```
 
-ADMM, in scaled form, from $x_0 = z_0 = u_0 = 0$, for $k = 0, 1, 2, \dots$:
+ADMM, in scaled form, from $`x_0 = z_0 = u_0 = 0`$, for $`k = 0, 1, 2, \dots`$:
 
-$$
-\begin{aligned}
-x_{k+1} &= \operatorname*{argmin}_x \Big( f(x) + \tfrac{\rho}{2}\|x - z_k + u_k\|^2 \Big) && \text{so } (A^T A + \rho I)\,x_{k+1} = A^T b + \rho(z_k - u_k) \\
-z_{k+1} &= \operatorname*{argmin}_z \Big( g(z) + \tfrac{\rho}{2}\|x_{k+1} - z + u_k\|^2 \Big) && \text{so } z_{k+1} = S_{\lambda/\rho}(x_{k+1} + u_k) \\
-u_{k+1} &= u_k + x_{k+1} - z_{k+1}
-\end{aligned}
-$$
+```math
+\begin{aligned} x_{k+1} &= \underset{x}{\mathrm{argmin}} \Big( f(x) + \tfrac{\rho}{2}\|x - z_k + u_k\|^2 \Big) && \text{so } (A^T A + \rho I)\,x_{k+1} = A^T b + \rho(z_k - u_k) \\ z_{k+1} &= \underset{z}{\mathrm{argmin}} \Big( g(z) + \tfrac{\rho}{2}\|x_{k+1} - z + u_k\|^2 \Big) && \text{so } z_{k+1} = S_{\lambda/\rho}(x_{k+1} + u_k) \\ u_{k+1} &= u_k + x_{k+1} - z_{k+1} \end{aligned}
+```
 
-Stop when $r_{k+1} = \|x_{k+1} - z_{k+1}\|$ and $s_{k+1} = \rho\|z_{k+1} - z_k\|$ are both below $\varepsilon$.
+Stop when $`r_{k+1} = \|x_{k+1} - z_{k+1}\|`$ and $`s_{k+1} = \rho\|z_{k+1} - z_k\|`$ are both below $`\varepsilon`$.
 
 **Read it aloud:** fit the data while being pulled towards the penalty's copy, shrink the result while being pulled towards the fit's copy, then add the remaining gap to the running price, and repeat until the copies agree and stop moving.
 
-Here $S_t$ is soft-thresholding (shrink every entry towards zero by $t$, and set it to zero if it is smaller than $t$), the proximal step of the $\ell_1$ penalty taught on [Proximal gradient](06-proximal-methods-ista-fista-and-the-lasso.md).
+Here $`S_t`$ is soft-thresholding (shrink every entry towards zero by $`t`$, and set it to zero if it is smaller than $`t`$), the proximal step of the $`\ell_1`$ penalty taught on [Proximal gradient](06-proximal-methods-ista-fista-and-the-lasso.md).
 
-The other marks: $\|v\|$ is the length of a list of numbers $v$ (the square root of the sum of its squares), $\|v\|_1$ is the sum of the sizes of its entries, $A^T$ is $A$ with rows and columns swapped, and $\operatorname{argmin}_x$ names the $x$ that makes the bracket smallest.
+The other marks: $`\|v\|`$ is the length of a list of numbers $`v`$ (the square root of the sum of its squares), $`\|v\|_1`$ is the sum of the sizes of its entries, $`A^T`$ is $`A`$ with rows and columns swapped, and $`\mathrm{argmin}_x`$ names the $`x`$ that makes the bracket smallest.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$, $b$, $I$ | the holdings' monthly returns (8 rows, 5 columns) and the index's, in percent; $I$ the 5-by-5 identity (1 on the diagonal, 0 elsewhere) | first month: $(2, 3, -1, 1, 2)$ and 1.8 | — |
-| $f$, $\nabla f$ | the fit: half the sum of squared monthly gaps; its gradient $A^T(Ax - b)$ | 0.408125 at the answer | — |
-| $g$, $\partial g$ | the penalty $\lambda\|z\|_1$ (sum of sizes); its subdifferential, the set of its slopes | 1.125 at the answer | — |
-| $\lambda$ | the lasso weight: the price of holding anything at all | 2 | fewer holdings: at 4, only UK and US shares |
-| $x$, $z$; $k$ | the fit's copy and the penalty's copy of the five weights; $x_k$, $z_k$ are their values after round $k$ | $z = (0.3125, 0.2, 0, 0, 0.05)$ | — |
-| $\rho$ | the agreement weight: how hard disagreement between the copies is charged (the penalty weight of shelf 03's penalty card) | 3 | rounds fall, then rise: 324 at 0.5, 43 at 10, 252 at 100 |
-| $y$, $u = y/\rho$ | the price on the gap $x - z$ (the equality multiplier, written ν on [KKT conditions](../03-Constrained%20Optimisation/02-kkt-conditions.md)), and the same price scaled | $u_1 = x_1$ | — |
-| $L_\rho$, $L_0$ | the augmented Lagrangian: cost plus price times gap plus $\tfrac{\rho}{2}$ times gap squared; $L_0$, the plain Lagrangian, is the same with $\rho = 0$ | — | — |
-| $S_t$ | soft-thresholding at level $t$ | $t = \lambda/\rho = 2/3$ | more entries cut to zero |
-| $r_k$, $s_k$, $\varepsilon$ | primal residual (copies' gap), dual residual (penalty copy's move times $\rho$), stopping level | $\varepsilon = 5 \times 10^{-7}$ | a smaller $\varepsilon$ takes more rounds |
-| $x^*$, $y^*$, $p^*$ | the optimal weights, optimal price and optimal cost | $p^* = 1.533125$ | — |
-| $V_k$ | the yardstick in the convergence proof: $\tfrac{1}{\rho}\|y_k - y^*\|^2 + \rho\|z_k - x^*\|^2$ | falls every round | — |
+| $`A`$, $`b`$, $`I`$ | the holdings' monthly returns (8 rows, 5 columns) and the index's, in percent; $`I`$ the 5-by-5 identity (1 on the diagonal, 0 elsewhere) | first month: $`(2, 3, -1, 1, 2)`$ and 1.8 | — |
+| $`f`$, $`\nabla f`$ | the fit: half the sum of squared monthly gaps; its gradient $`A^T(Ax - b)`$ | 0.408125 at the answer | — |
+| $`g`$, $`\partial g`$ | the penalty $`\lambda\Vert z\Vert_1`$ (sum of sizes); its subdifferential, the set of its slopes | 1.125 at the answer | — |
+| $`\lambda`$ | the lasso weight: the price of holding anything at all | 2 | fewer holdings: at 4, only UK and US shares |
+| $`x`$, $`z`$; $`k`$ | the fit's copy and the penalty's copy of the five weights; $`x_k`$, $`z_k`$ are their values after round $`k`$ | $`z = (0.3125, 0.2, 0, 0, 0.05)`$ | — |
+| $`\rho`$ | the agreement weight: how hard disagreement between the copies is charged (the penalty weight of shelf 03's penalty card) | 3 | rounds fall, then rise: 324 at 0.5, 43 at 10, 252 at 100 |
+| $`y`$, $`u = y/\rho`$ | the price on the gap $`x - z`$ (the equality multiplier, written ν on [KKT conditions](../03-Constrained%20Optimisation/02-kkt-conditions.md)), and the same price scaled | $`u_1 = x_1`$ | — |
+| $`L_\rho`$, $`L_0`$ | the augmented Lagrangian: cost plus price times gap plus $`\tfrac{\rho}{2}`$ times gap squared; $`L_0`$, the plain Lagrangian, is the same with $`\rho = 0`$ | — | — |
+| $`S_t`$ | soft-thresholding at level $`t`$ | $`t = \lambda/\rho = 2/3`$ | more entries cut to zero |
+| $`r_k`$, $`s_k`$, $`\varepsilon`$ | primal residual (copies' gap), dual residual (penalty copy's move times $`\rho`$), stopping level | $`\varepsilon = 5 \times 10^{-7}`$ | a smaller $`\varepsilon`$ takes more rounds |
+| $`x^*`$, $`y^*`$, $`p^*`$ | the optimal weights, optimal price and optimal cost | $`p^* = 1.533125`$ | — |
+| $`V_k`$ | the yardstick in the convergence proof: $`\tfrac{1}{\rho}\Vert y_k - y^*\Vert^2 + \rho\Vert z_k - x^*\Vert^2`$ | falls every round | — |
 
-The agreement weight $\rho$ is the penalty weight of [Penalties and augmented Lagrangians](../03-Constrained%20Optimisation/07-penalty-and-augmented-lagrangian-methods.md). The fit and penalty at the answer, 0.408125 and 1.125, add to $p^* = 1.533125$, which the code prints.
+The agreement weight $`\rho`$ is the penalty weight of [Penalties and augmented Lagrangians](../03-Constrained%20Optimisation/07-penalty-and-augmented-lagrangian-methods.md). The fit and penalty at the answer, 0.408125 and 1.125, add to $`p^* = 1.533125`$, which the code prints.
 
 ### When it holds
 
-- **Both halves convex, closed and proper.** Convex: a straight line between two points on the graph never dips below the graph. Closed: at the edge of where the function is finite, it does not jump up above the values it approaches. Proper: never −∞, and finite somewhere. Here $f$ is a bowl and $g$ a sum of V shapes. If one half has two separate dips, ADMM can settle at a point that satisfies the stopping test but is only a local answer, and nothing on this card certifies it.
-- **An optimum and a matching price exist.** The theorem needs a saddle point of the plain Lagrangian $L_0$: weights and a price where no change of weights lowers $L_0$ and no change of price raises it ([Saddle points](../03-Constrained%20Optimisation/06-saddle-points-and-minimax.md)). For the lasso one always exists. For a problem with no feasible point, $r_k$ never reaches zero and $u_k$ grows without bound.
+- **Both halves convex, closed and proper.** Convex: a straight line between two points on the graph never dips below the graph. Closed: at the edge of where the function is finite, it does not jump up above the values it approaches. Proper: never −∞, and finite somewhere. Here $`f`$ is a bowl and $`g`$ a sum of V shapes. If one half has two separate dips, ADMM can settle at a point that satisfies the stopping test but is only a local answer, and nothing on this card certifies it.
+- **An optimum and a matching price exist.** The theorem needs a saddle point of the plain Lagrangian $`L_0`$: weights and a price where no change of weights lowers $`L_0`$ and no change of price raises it ([Saddle points](../03-Constrained%20Optimisation/06-saddle-points-and-minimax.md)). For the lasso one always exists. For a problem with no feasible point, $`r_k`$ never reaches zero and $`u_k`$ grows without bound.
 - **Exactly two blocks.** Updating three unknowns in turn with one shared price is not covered, and can blow up: in What breaks, the sizes grow from 1.7321 to 413.7233 in 200 rounds.
-- **The dual step equals $\rho$.** The price must move by exactly $\rho$ times the gap, which in scaled form is $u + (x - z)$. Any other step loses the property in Step 3 that makes the stopping test correct.
+- **The dual step equals $`\rho`$.** The price must move by exactly $`\rho`$ times the gap, which in scaled form is $`u + (x - z)`$. Any other step loses the property in Step 3 that makes the stopping test correct.
 - **Each half solved exactly.** Here both steps are exact. Inexact inner solves need errors that shrink fast enough (Eckstein and Bertsekas), or the residuals stall.
 
 ---
@@ -94,110 +92,116 @@ The agreement weight $\rho$ is the penalty weight of [Penalties and augmented La
 
 ### Step 0: give each half its own copy, then charge for disagreement
 
-Minimising $f(x) + g(x)$ in one go is hard because $f$ is smooth and $g$ has corners. Write the same problem with two copies, $f(x) + g(z)$ with $x = z$. Now each half sees only its own variable.
+Minimising $`f(x) + g(x)`$ in one go is hard because $`f`$ is smooth and $`g`$ has corners. Write the same problem with two copies, $`f(x) + g(z)`$ with $`x = z`$. Now each half sees only its own variable.
 
-The one thing joining them is the constraint $x = z$, and a constraint can be priced, as Lagrange multipliers do. A price $y$ on the gap plus a quadratic penalty on its size gives a cost that each copy can minimise separately while the other copy stays fixed.
+The one thing joining them is the constraint $`x = z`$, and a constraint can be priced, as Lagrange multipliers do. A price $`y`$ on the gap plus a quadratic penalty on its size gives a cost that each copy can minimise separately while the other copy stays fixed.
 
 ### Step 1: the augmented Lagrangian
 
-$$L_\rho(x, z, y) = f(x) + g(z) + y^T(x - z) + \tfrac{\rho}{2}\|x - z\|^2 .$$
+```math
+L_\rho(x, z, y) = f(x) + g(z) + y^T(x - z) + \tfrac{\rho}{2}\|x - z\|^2 .
+```
 
-The method of multipliers minimises $L_\rho$ over $x$ and $z$ together, then moves the price: $y \leftarrow y + \rho(x - z)$. The quadratic term makes each inner problem well behaved, and the price update steers the gap to zero without sending $\rho$ to infinity, as [Penalties and augmented Lagrangians](../03-Constrained%20Optimisation/07-penalty-and-augmented-lagrangian-methods.md) shows. The trouble is "together": minimising over $x$ and $z$ at once is the original hard problem again.
+The method of multipliers minimises $`L_\rho`$ over $`x`$ and $`z`$ together, then moves the price: $`y \leftarrow y + \rho(x - z)`$. The quadratic term makes each inner problem well behaved, and the price update steers the gap to zero without sending $`\rho`$ to infinity, as [Penalties and augmented Lagrangians](../03-Constrained%20Optimisation/07-penalty-and-augmented-lagrangian-methods.md) shows. The trouble is "together": minimising over $`x`$ and $`z`$ at once is the original hard problem again.
 
 ### Step 2: one sweep instead of a joint minimisation
 
-ADMM replaces the joint minimisation by one pass: minimise $L_\rho$ over $x$ with $z$ fixed, then over $z$ with the new $x$ fixed, then update $y$. Each pass touches only one half.
+ADMM replaces the joint minimisation by one pass: minimise $`L_\rho`$ over $`x`$ with $`z`$ fixed, then over $`z`$ with the new $`x`$ fixed, then update $`y`$. Each pass touches only one half.
 
-Completing the square makes the steps tidy. With $u = y/\rho$,
+Completing the square makes the steps tidy. With $`u = y/\rho`$,
 
-$$y^T(x - z) + \tfrac{\rho}{2}\|x - z\|^2 = \tfrac{\rho}{2}\|x - z + u\|^2 - \tfrac{\rho}{2}\|u\|^2 ,$$
+```math
+y^T(x - z) + \tfrac{\rho}{2}\|x - z\|^2 = \tfrac{\rho}{2}\|x - z + u\|^2 - \tfrac{\rho}{2}\|u\|^2 ,
+```
 
-and the last term does not depend on $x$ or $z$. So the $x$ step minimises $f(x) + \tfrac{\rho}{2}\|x - z_k + u_k\|^2$. Setting its gradient to zero gives $A^T(Ax - b) + \rho(x - z_k + u_k) = 0$, the linear system in The formula.
+and the last term does not depend on $`x`$ or $`z`$. So the $`x`$ step minimises $`f(x) + \tfrac{\rho}{2}\|x - z_k + u_k\|^2`$. Setting its gradient to zero gives $`A^T(Ax - b) + \rho(x - z_k + u_k) = 0`$, the linear system in The formula.
 
-The $z$ step minimises $\lambda\|z\|_1 + \tfrac{\rho}{2}\|z - (x_{k+1} + u_k)\|^2$, which separates into five one-variable problems, each solved by shrinking by $\lambda/\rho$. The price update $y \leftarrow y + \rho(x - z)$ becomes $u \leftarrow u + x - z$.
+The $`z`$ step minimises $`\lambda\|z\|_1 + \tfrac{\rho}{2}\|z - (x_{k+1} + u_k)\|^2`$, which separates into five one-variable problems, each solved by shrinking by $`\lambda/\rho`$. The price update $`y \leftarrow y + \rho(x - z)`$ becomes $`u \leftarrow u + x - z`$.
 
 ### Step 3: why the two residuals are the right stopping test
 
-The lasso is optimal at $x^* = z^*$ with price $y^*$ exactly when three conditions hold: $x^* = z^*$; $\nabla f(x^*) + y^* = 0$; and $y^* \in \partial g(z^*)$, a slope of the penalty at $z^*$. ADMM satisfies the third one exactly at every round, leaves the first as $r$, and leaves the second as $s$.
+The lasso is optimal at $`x^* = z^*`$ with price $`y^*`$ exactly when three conditions hold: $`x^* = z^*`$; $`\nabla f(x^*) + y^* = 0`$; and $`y^* \in \partial g(z^*)`$, a slope of the penalty at $`z^*`$. ADMM satisfies the third one exactly at every round, leaves the first as $`r`$, and leaves the second as $`s`$.
 
-**The penalty's condition always holds.** The $z$ step is optimal, so $0 \in \partial g(z_{k+1}) - y_k - \rho(x_{k+1} - z_{k+1})$. The price update turns the last two terms into $-y_{k+1}$. So $y_{k+1} \in \partial g(z_{k+1})$ at every round. This is why the price step must be exactly $\rho$.
+**The penalty's condition always holds.** The $`z`$ step is optimal, so $`0 \in \partial g(z_{k+1}) - y_k - \rho(x_{k+1} - z_{k+1})`$. The price update turns the last two terms into $`-y_{k+1}`$. So $`y_{k+1} \in \partial g(z_{k+1})`$ at every round. This is why the price step must be exactly $`\rho`$.
 
-**The fit's condition is off by $s$.** The $x$ step is optimal, so $\nabla f(x_{k+1}) + y_k + \rho(x_{k+1} - z_k) = 0$. Since $y_k + \rho(x_{k+1} - z_k) = y_{k+1} + \rho(z_{k+1} - z_k)$, this reads
+**The fit's condition is off by $`s`$.** The $`x`$ step is optimal, so $`\nabla f(x_{k+1}) + y_k + \rho(x_{k+1} - z_k) = 0`$. Since $`y_k + \rho(x_{k+1} - z_k) = y_{k+1} + \rho(z_{k+1} - z_k)`$, this reads
 
-$$\nabla f(x_{k+1}) + y_{k+1} = -\rho\,(z_{k+1} - z_k).$$
+```math
+\nabla f(x_{k+1}) + y_{k+1} = -\rho\,(z_{k+1} - z_k).
+```
 
-The right side has size $s_{k+1}$. **The agreement condition is off by $r$**, by definition. So when $r$ and $s$ are both zero, all three conditions hold, and for a convex problem those conditions mean optimal. Small $r$ and $s$ mean the conditions nearly hold. That is the whole justification for the test.
+The right side has size $`s_{k+1}`$. **The agreement condition is off by $`r`$**, by definition. So when $`r`$ and $`s`$ are both zero, all three conditions hold, and for a convex problem those conditions mean optimal. Small $`r`$ and $`s`$ mean the conditions nearly hold. That is the whole justification for the test.
 
 ### Step 4: the two residuals must fall to zero
 
-The convergence theorem (Gabay and Mercier 1976; in this form, Boyd and co-authors 2011, section 3.2): if $f$ and $g$ are closed, proper and convex and the plain Lagrangian $L_0$ has a saddle point, then for any $\rho > 0$, $r_k \to 0$, $f(x_k) + g(z_k) \to p^*$, and $y_k \to$ an optimal price. Nothing about smoothness or strong convexity is needed.
+The convergence theorem (Gabay and Mercier 1976; in this form, Boyd and co-authors 2011, section 3.2): if $`f`$ and $`g`$ are closed, proper and convex and the plain Lagrangian $`L_0`$ has a saddle point, then for any $`\rho > 0`$, $`r_k \to 0`$, $`f(x_k) + g(z_k) \to p^*`$, and $`y_k \to`$ an optimal price. Nothing about smoothness or strong convexity is needed.
 
-Without more hypotheses the guaranteed rate is slow, $O(1/k)$ in an averaged sense: the averaged error falls in proportion to $1/k$ (He and Yuan 2012). On this lasso the residuals fell much faster, by a roughly constant factor each round, as the straight lines in the chart show.
+Without more hypotheses the guaranteed rate is slow, $`O(1/k)`$ in an averaged sense: the averaged error falls in proportion to $`1/k`$ (He and Yuan 2012). On this lasso the residuals fell much faster, by a roughly constant factor each round, as the straight lines in the chart show.
 
 <details>
 <summary>Detailed proof, in outline: a yardstick that falls every round</summary>
 
-Take an optimal pair $(x^*, y^*)$ and define
+Take an optimal pair $`(x^*, y^*)`$ and define
 
-$$V_k = \tfrac{1}{\rho}\|y_k - y^*\|^2 + \rho\|z_k - x^*\|^2 .$$
+$`\displaystyle V_k = \tfrac{1}{\rho}\|y_k - y^*\|^2 + \rho\|z_k - x^*\|^2 .`$
 
-The proof adds two inequalities. One comes from the optimality of the $x$ step and of $x^*$. The other comes from the optimality of the $z$ step. Each is a statement that a convex function lies above its tangent. The cross terms cancel, and what is left is
+The proof adds two inequalities. One comes from the optimality of the $`x`$ step and of $`x^*`$. The other comes from the optimality of the $`z`$ step. Each is a statement that a convex function lies above its tangent. The cross terms cancel, and what is left is
 
-$$V_{k+1} \le V_k - \rho\,r_{k+1}^2 - \rho\,\|z_{k+1} - z_k\|^2 .$$
+$`\displaystyle V_{k+1} \le V_k - \rho\,r_{k+1}^2 - \rho\,\|z_{k+1} - z_k\|^2 .`$
 
-So $V$ never rises, and it falls by at least $\rho r^2 + s^2/\rho$ each round. Since $V \ge 0$, the total of all those falls is finite, which forces $r_k \to 0$ and $z_{k+1} - z_k \to 0$. Feeding those limits back into Step 3 gives the cost and price limits. Boyd and co-authors give the algebra in full in their Appendix A.
+So $`V`$ never rises, and it falls by at least $`\rho r^2 + s^2/\rho`$ each round. Since $`V \ge 0`$, the total of all those falls is finite, which forces $`r_k \to 0`$ and $`z_{k+1} - z_k \to 0`$. Feeding those limits back into Step 3 gives the cost and price limits. Boyd and co-authors give the algebra in full in their Appendix A.
 
-The code computes $V_k$ from the exact $x^*$ and $y^* = -\nabla f(x^*)$ and asserts this inequality at every one of the 60 rounds. The smallest ratio of actual fall to the required fall is 1.7866: never below the floor.
+The code computes $`V_k`$ from the exact $`x^*`$ and $`y^* = -\nabla f(x^*)`$ and asserts this inequality at every one of the 60 rounds. The smallest ratio of actual fall to the required fall is 1.7866: never below the floor.
 
 </details>
 
 ### Step 5: the certificate at the end
 
-For the lasso, the conditions of Step 3 read: on every holding, $-\nabla f$ equals $\lambda$ times the weight's sign; on every zero weight, $-\nabla f$ lies between $-\lambda$ and $\lambda$. At the final $z$, $-\nabla f = (2.00000, 2.00000, 1.00000, 1.66250, 2.00000)$: the three holdings sit at $\lambda = 2$, and gilts and gold lie inside $[-2, 2]$. That is the printed certificate that the answer is optimal, not only the best found. Worked numbers checks it by hand.
+For the lasso, the conditions of Step 3 read: on every holding, $`-\nabla f`$ equals $`\lambda`$ times the weight's sign; on every zero weight, $`-\nabla f`$ lies between $`-\lambda`$ and $`\lambda`$. At the final $`z`$, $`-\nabla f = (2.00000, 2.00000, 1.00000, 1.66250, 2.00000)`$: the three holdings sit at $`\lambda = 2`$, and gilts and gold lie inside $`[-2, 2]`$. That is the printed certificate that the answer is optimal, not only the best found. Worked numbers checks it by hand.
 
 ---
 
 ## Worked numbers, by hand
 
-The data: $A^T A$ and $A^T b$ are what the fit sees.
+The data: $`A^T A`$ and $`A^T b`$ are what the fit sees.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $A^T A$ diagonal | each holding's sum of squared returns | 24, 24, 21, 20, 24 |
-| $A^T b$ | each holding's returns times the index's, summed | 12.7, 10.8, −6.1, 5.8, 9.2 |
-| round 1, fit half | solve $(A^T A + 3I)x_1 = A^T b$ | $x_1 = (0.253348, 0.267164, 0.087908, 0.122235, 0.169723)$ |
-| round 1, penalty half | shrink $x_1 + u_0 = x_1$ by $\lambda/\rho = 2/3$; every entry is below 0.6667 | $z_1 = (0, 0, 0, 0, 0)$ |
-| round 1, reconcile | $u_1 = 0 + x_1 - 0$ | $u_1 = x_1$ |
-| round 1, residuals | $r_1 = \|x_1\|$; $s_1 = 3\|z_1 - z_0\|$ | 0.432478, 0 |
-| round 60, the copies | $z_{60}$; $x_{60}$ agrees to within $5 \times 10^{-7}$ | $(0.3125, 0.2, 0, 0, 0.05)$ |
-| certificate, UK row | $24(0.3125) + 12(0.2) + 16(0.05) = 7.5 + 2.4 + 0.8$ | $10.7 = 12.7 - 2$ ✓ |
-| certificate, US row | $12(0.3125) + 24(0.2) + 5(0.05) = 3.75 + 4.8 + 0.25$ | $8.8 = 10.8 - 2$ ✓ |
-| certificate, property row | $16(0.3125) + 5(0.2) + 24(0.05) = 5 + 1 + 1.2$ | $7.2 = 9.2 - 2$ ✓ |
-| certificate, gilts | $-6.1 - (-16)(0.3125) - (-9)(0.2) - (-6)(0.05) = -6.1 + 5 + 1.8 + 0.3$ | $1.0$, inside $[-2, 2]$ ✓ |
-| certificate, gold | $5.8 - 11(0.3125) - 4(0.2) - (-2)(0.05) = 5.8 - 3.4375 - 0.8 + 0.1$ | $1.6625$, inside $[-2, 2]$ ✓ |
-| lasso cost | fit plus penalty | $p^* = 1.533125$ |
+| $`A^T A`$ diagonal | each holding's sum of squared returns | 24, 24, 21, 20, 24 |
+| $`A^T b`$ | each holding's returns times the index's, summed | 12.7, 10.8, −6.1, 5.8, 9.2 |
+| round 1, fit half | solve $`(A^T A + 3I)x_1 = A^T b`$ | $`x_1 = (0.253348, 0.267164, 0.087908, 0.122235, 0.169723)`$ |
+| round 1, penalty half | shrink $`x_1 + u_0 = x_1`$ by $`\lambda/\rho = 2/3`$; every entry is below 0.6667 | $`z_1 = (0, 0, 0, 0, 0)`$ |
+| round 1, reconcile | $`u_1 = 0 + x_1 - 0`$ | $`u_1 = x_1`$ |
+| round 1, residuals | $`r_1 = \Vert x_1\Vert`$; $`s_1 = 3\Vert z_1 - z_0\Vert`$ | 0.432478, 0 |
+| round 60, the copies | $`z_{60}`$; $`x_{60}`$ agrees to within $`5 \times 10^{-7}`$ | $`(0.3125, 0.2, 0, 0, 0.05)`$ |
+| certificate, UK row | $`24(0.3125) + 12(0.2) + 16(0.05) = 7.5 + 2.4 + 0.8`$ | $`10.7 = 12.7 - 2`$ ✓ |
+| certificate, US row | $`12(0.3125) + 24(0.2) + 5(0.05) = 3.75 + 4.8 + 0.25`$ | $`8.8 = 10.8 - 2`$ ✓ |
+| certificate, property row | $`16(0.3125) + 5(0.2) + 24(0.05) = 5 + 1 + 1.2`$ | $`7.2 = 9.2 - 2`$ ✓ |
+| certificate, gilts | $`-6.1 - (-16)(0.3125) - (-9)(0.2) - (-6)(0.05) = -6.1 + 5 + 1.8 + 0.3`$ | $`1.0`$, inside $`[-2, 2]`$ ✓ |
+| certificate, gold | $`5.8 - 11(0.3125) - 4(0.2) - (-2)(0.05) = 5.8 - 3.4375 - 0.8 + 0.1`$ | $`1.6625`$, inside $`[-2, 2]`$ ✓ |
+| lasso cost | fit plus penalty | $`p^* = 1.533125`$ |
 | **per £1,000,000** | weights times £1,000,000 | **£312,500 UK shares, £200,000 US shares, £50,000 property, £437,500 cash** |
 
-On each holding the fit's pull is exactly balanced by the charge of 2; towards gilts and gold the pull is weaker than the charge, so neither is worth holding. The copy tracks the index with a root-mean-square gap of 0.3194 percent a month. It misses by more than plain least squares would, which holds all five, $(0.436692, 0.279295, 0.206540, 0.065030, 0.091073)$, but it needs three holdings, not five.
+On each holding the fit's pull is exactly balanced by the charge of 2; towards gilts and gold the pull is weaker than the charge, so neither is worth holding. The copy tracks the index with a root-mean-square gap of 0.3194 percent a month. It misses by more than plain least squares would, which holds all five, $`(0.436692, 0.279295, 0.206540, 0.065030, 0.091073)`$, but it needs three holdings, not five.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| No reconcile step: $u$ stays 0 | after 2,000 rounds, $z = 0$ and $x = x_1$; the gap is still 0.432478 | Without a price the rounds minimise $f(x) + g(z) + \tfrac{\rho}{2}\|x - z\|^2$, a different problem whose best point has the copies apart. The price is what closes the gap. |
-| Shrink by $\lambda$, not $\lambda/\rho$ | $z = (0.238889, 0.080556, 0, 0, 0)$ | The $z$ step solved a lasso with weight $\rho\lambda = 6$. ADMM converged, to the wrong problem. |
-| Stop when $s$ alone is small | stops at round 1 with $s_1 = 0$, holding nothing; $r_1 = 0.432478$ | At rounds 1 and 2 the penalty copy has not moved yet. Only both residuals together certify the answer. |
-| Three unknowns updated in turn, one price: minimise 0 subject to `[[1, 1, 1], [1, 1, 2], [1, 2, 2]]` times the unknowns equal to 0, $\rho = 1$, start `(1, 1, 1)` | the unknowns' size goes 1.7321, 3.2759, 6.9647, 32.0870, 413.7233 at rounds 0, 1, 50, 100, 200 | The answer is all zeros, but the theorem covers two blocks only. This is the counterexample of Chen, He, Ye and Yuan: the three-block sweep is not a contraction (a step that brings every two points closer) and the iterates grow without bound. |
+| No reconcile step: $`u`$ stays 0 | after 2,000 rounds, $`z = 0`$ and $`x = x_1`$; the gap is still 0.432478 | Without a price the rounds minimise $`f(x) + g(z) + \tfrac{\rho}{2}\Vert x - z\Vert^2`$, a different problem whose best point has the copies apart. The price is what closes the gap. |
+| Shrink by $`\lambda`$, not $`\lambda/\rho`$ | $`z = (0.238889, 0.080556, 0, 0, 0)`$ | The $`z`$ step solved a lasso with weight $`\rho\lambda = 6`$. ADMM converged, to the wrong problem. |
+| Stop when $`s`$ alone is small | stops at round 1 with $`s_1 = 0`$, holding nothing; $`r_1 = 0.432478`$ | At rounds 1 and 2 the penalty copy has not moved yet. Only both residuals together certify the answer. |
+| Three unknowns updated in turn, one price: minimise 0 subject to `[[1, 1, 1], [1, 1, 2], [1, 2, 2]]` times the unknowns equal to 0, $`\rho = 1`$, start `(1, 1, 1)` | the unknowns' size goes 1.7321, 3.2759, 6.9647, 32.0870, 413.7233 at rounds 0, 1, 50, 100, 200 | The answer is all zeros, but the theorem covers two blocks only. This is the counterexample of Chen, He, Ye and Yuan: the three-block sweep is not a contraction (a step that brings every two points closer) and the iterates grow without bound. |
 
 ---
 
 ## Watching the residuals fall
 
-Each round, the fit copy pulls towards the index, the penalty copy towards few, small weights, and the price $u$ keeps a running total of their disagreement.
+Each round, the fit copy pulls towards the index, the penalty copy towards few, small weights, and the price $`u`$ keeps a running total of their disagreement.
 
 ### One run, round by round
 
-| Round $k$ | UK shares $z$ | US shares $z$ | property $z$ | $r_k$ | $s_k$ |
+| Round $`k`$ | UK shares $`z`$ | US shares $`z`$ | property $`z`$ | $`r_k`$ | $`s_k`$ |
 | --- | --- | --- | --- | --- | --- |
 | 1 | 0.000000 | 0.000000 | 0.000000 | 0.432478314 | 0.000000000 |
 | 2 | 0.000000 | 0.000000 | 0.000000 | 0.381480604 | 0.000000000 |
@@ -209,15 +213,15 @@ Each round, the fit copy pulls towards the index, the penalty copy towards few, 
 | 59 | 0.312500 | 0.200000 | 0.050000 | 0.000000518 | 0.000000102 |
 | 60 | 0.312500 | 0.200000 | 0.050000 | 0.000000420 | 0.000000081 |
 
-For two rounds the penalty copy holds nothing: the shrink of 2/3 is bigger than any entry of $x + u$. Meanwhile $u$ piles up the gap, so the penalty copy sees $x + u$, larger each round, and at round 3 US shares cross the threshold.
+For two rounds the penalty copy holds nothing: the shrink of 2/3 is bigger than any entry of $`x + u`$. Meanwhile $`u`$ piles up the gap, so the penalty copy sees $`x + u`$, larger each round, and at round 3 US shares cross the threshold.
 
 By round 5 all three holdings are in. UK shares overshoot to 0.333 at round 10, then settle back to 0.3125.
 
-Round 59 is still just above the stopping level ($r = 5.18 \times 10^{-7}$); round 60 is below it on both counts. Gilts and gold stay at exactly zero in $z$ from the first round to the last. In $x$ they are never exactly zero: at round 60 they are 0.000000320 and 0.000000272.
+Round 59 is still just above the stopping level ($`r = 5.18 \times 10^{-7}`$); round 60 is below it on both counts. Gilts and gold stay at exactly zero in $`z`$ from the first round to the last. In $`x`$ they are never exactly zero: at round 60 they are 0.000000320 and 0.000000272.
 
-### One force at a time: the agreement weight $\rho$
+### One force at a time: the agreement weight $`\rho`$
 
-The agreement weight trades one residual against the other. A small $\rho$ lets the copies disagree cheaply, so $r$ falls slowly. A large $\rho$ forces agreement but makes the price move in big jumps and the penalty copy crawl, so $s$ falls slowly. Rounds to reach both residuals below $5 \times 10^{-7}$:
+The agreement weight trades one residual against the other. A small $`\rho`$ lets the copies disagree cheaply, so $`r`$ falls slowly. A large $`\rho`$ forces agreement but makes the price move in big jumps and the penalty copy crawl, so $`s`$ falls slowly. Rounds to reach both residuals below $`5 \times 10^{-7}`$:
 
 ```
      rho   rounds to stop
@@ -229,15 +233,15 @@ The agreement weight trades one residual against the other. A small $\rho$ lets 
     100   █████████████████████████          252
 ```
 
-Of these weights, 10 is the fastest, not 3. No formula picks $\rho$ in general; practical codes adjust it during the run by comparing $r$ and $s$.
+Of these weights, 10 is the fastest, not 3. No formula picks $`\rho`$ in general; practical codes adjust it during the run by comparing $`r`$ and $`s`$.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The script writes ADMM out in full: the $x$ step is a 5-by-5 linear system solved by Gauss–Jordan elimination, the $z$ step is soft-thresholding, the $u$ step one line.
+The script writes ADMM out in full: the $`x`$ step is a 5-by-5 linear system solved by Gauss–Jordan elimination, the $`z`$ step is soft-thresholding, the $`u`$ step one line.
 
-It reaches the answer by **four independent roads**. Road 1 is ADMM from zero. Road 2 lists all 243 sign patterns (each holding positive, negative or zero), solves the lasso's equations for each and keeps the one that passes the optimality test; exactly one does. Road 3 checks the lasso's optimality conditions at ADMM's answer, the certificate. Road 4 checks the convergence proof's inequality $V_{k+1} \le V_k - \rho r^2 - s^2/\rho$ at every round. Then it prints the mistakes, the three-block blow-up and the chart's points.
+It reaches the answer by **four independent roads**. Road 1 is ADMM from zero. Road 2 lists all 243 sign patterns (each holding positive, negative or zero), solves the lasso's equations for each and keeps the one that passes the optimality test; exactly one does. Road 3 checks the lasso's optimality conditions at ADMM's answer, the certificate. Road 4 checks the convergence proof's inequality $`V_{k+1} \le V_k - \rho r^2 - s^2/\rho`$ at every round. Then it prints the mistakes, the three-block blow-up and the chart's points.
 
 ### Python
 
@@ -629,15 +633,15 @@ ALL CHECKS PASS
 
 Lean proves the convergence theorem for any two closed, proper, convex halves, and checks the five-holding lasso answer exactly.
 
-- For two convex, closed, proper halves with a saddle point, and any $\rho > 0$, both residuals $r_k$ and $s_k$ fall to zero.
-- In the same setting, the cost tends to $p^*$ and the price $\rho u_k$ tends to an optimal price.
-- These hold from any start, with each half solved exactly and the price step equal to $\rho$.
+- For two convex, closed, proper halves with a saddle point, and any $`\rho > 0`$, both residuals $`r_k`$ and $`s_k`$ fall to zero.
+- In the same setting, the cost tends to $`p^*`$ and the price $`\rho u_k`$ tends to an optimal price.
+- These hold from any start, with each half solved exactly and the price step equal to $`\rho`$.
 - After every round, the penalty's condition holds exactly, and the fit's condition is off by the dual residual.
 - When both residuals are zero, the fit's copy is optimal.
-- The weights $(0.3125, 0.2, 0, 0, 0.05)$ cost exactly $p^* = 1.533125$, and no other weights cost less.
-- $A^T A$, $A^T b$, the certificate rows and the split per £1,000,000 match Worked numbers exactly.
+- The weights $`(0.3125, 0.2, 0, 0, 0.05)`$ cost exactly $`p^* = 1.533125`$, and no other weights cost less.
+- $`A^T A`$, $`A^T b`$, the certificate rows and the split per £1,000,000 match Worked numbers exactly.
 
-The round counts, the residual table, the effect of $\rho$ and the three-block blow-up are left to the Python and Rust checks.
+The round counts, the residual table, the effect of $`\rho`$ and the three-block blow-up are left to the Python and Rust checks.
 
 ```lean
 -- ADMM: for two closed, proper, convex halves whose plain Lagrangian has a saddle point, the ADMM rounds keep the penalty's optimality condition exactly, drive the copies' gap and the penalty copy's move to zero, and bring the cost to the optimum and the price to an optimal price; and the card's five-holding lasso answer is optimal.
@@ -1151,31 +1155,31 @@ example :
 
 > [!TIP]
 > **Try changing**
-> - Guess first: does a larger lasso weight drop property or a share holding? Set `LAM` to 4 (the last loop already does). Property goes: $z = (0.294444, 0.136111, 0, 0, 0)$.
-> - Guess first: does a smaller weight keep three holdings? At `LAM = 1.0` all five are held: $(0.294488, 0.243661, 0.036055, 0.050899, 0.107834)$.
-> - Guess first: is a bigger $\rho$ always faster? Set `RHO` to 10 and the run stops at round 43; at 100 it takes 252 rounds. (The assert `K == 60` will then fail, as it should.)
-> - Guess first: how much of the work does the price do? Call `admm(RHO, rounds=2000, dual=False)`, as the "What breaks" part of the script does: after 2,000 rounds the copies are still 0.432478 apart, and $z$ holds nothing.
+> - Guess first: does a larger lasso weight drop property or a share holding? Set `LAM` to 4 (the last loop already does). Property goes: $`z = (0.294444, 0.136111, 0, 0, 0)`$.
+> - Guess first: does a smaller weight keep three holdings? At `LAM = 1.0` all five are held: $`(0.294488, 0.243661, 0.036055, 0.050899, 0.107834)`$.
+> - Guess first: is a bigger $`\rho`$ always faster? Set `RHO` to 10 and the run stops at round 43; at 100 it takes 252 rounds. (The assert `K == 60` will then fail, as it should.)
+> - Guess first: how much of the work does the price do? Call `admm(RHO, rounds=2000, dual=False)`, as the "What breaks" part of the script does: after 2,000 rounds the copies are still 0.432478 apart, and $`z`$ holds nothing.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Stopping when the copies look settled, without checking both residuals.** At rounds 1 and 2 the penalty copy does not move at all, so $s = 0$, yet it holds nothing and sits 0.432478 away from the fit copy. Only $r$ and $s$ together match the optimality conditions of Step 3; here $s$ alone was zero at an answer that holds nothing.
+> **Stopping when the copies look settled, without checking both residuals.** At rounds 1 and 2 the penalty copy does not move at all, so $`s = 0`$, yet it holds nothing and sits 0.432478 away from the fit copy. Only $`r`$ and $`s`$ together match the optimality conditions of Step 3; here $`s`$ alone was zero at an answer that holds nothing.
 >
-> - **Shrinking by $\lambda$ instead of $\lambda/\rho$.** The run converges cleanly, to $(0.238889, 0.080556, 0, 0, 0)$, the lasso with weight 6.
-> - **Reading the answer from $x$.** The sparse answer is $z$. The fit copy is never exactly zero: gilts sit at 0.000000320 in $x_{60}$.
-> - **Dropping the price update.** The copies stay 0.432478 apart for ever, and $z$ holds nothing.
+> - **Shrinking by $`\lambda`$ instead of $`\lambda/\rho`$.** The run converges cleanly, to $`(0.238889, 0.080556, 0, 0, 0)`$, the lasso with weight 6.
+> - **Reading the answer from $`x`$.** The sparse answer is $`z`$. The fit copy is never exactly zero: gilts sit at 0.000000320 in $`x_{60}`$.
+> - **Dropping the price update.** The copies stay 0.432478 apart for ever, and $`z`$ holds nothing.
 > - **Adding a third block "the same way".** With three unknowns updated in turn and one price, the sizes grow from 1.7321 to 413.7233 in 200 rounds. Group the unknowns into two blocks first.
 
 ---
 
 ## Where you meet it in real life
 
-- **Fitting one model on many machines.** Each machine fits its own share of the data as an $x$ step, and the shared answer is the $z$ step: an average followed by the penalty's shrink. Only the copies travel over the network, never the data.
+- **Fitting one model on many machines.** Each machine fits its own share of the data as an $`x`$ step, and the shared answer is the $`z`$ step: an average followed by the penalty's shrink. Only the copies travel over the network, never the data.
 - **Quadratic-program solvers in controllers.** Embedded solvers for problems like [Quadratic programs](01-quadratic-programs-and-markowitz.md) split "minimise the bowl" from "stay inside the box" and run ADMM rounds, because each round is one cached linear solve and a clip, cheap enough for a control loop.
 - **Medical imaging.** Scanners that take fewer measurements rebuild the image by a fit to the measurements plus a penalty on edges; the two are split exactly as here.
-- **Portfolio rebalancing.** A trading cost on each change of holding is an $\ell_1$ penalty on the trades, and the same split separates "track the target" from "trade little".
+- **Portfolio rebalancing.** A trading cost on each change of holding is an $`\ell_1`$ penalty on the trades, and the same split separates "track the target" from "trade little".
 
 > **Say it back**
 > ADMM gives each half of a hard problem its own copy of the unknowns and joins the copies with the constraint that they are equal. Each round, it solves the fit with the penalty copy fixed, then the penalty with the new fit copy fixed, then adds the leftover gap to a running price. The penalty's optimality condition then holds exactly every round, and the other two conditions are measured by the primal and dual residuals. For two convex halves both residuals fall to zero. On the five-holding lasso they did so in 60 rounds, at £312,500, £200,000 and £50,000 per million, certified by the lasso's conditions.
@@ -1184,15 +1188,15 @@ example :
 
 ## What this builds on
 
-- [Penalties and augmented Lagrangians](../03-Constrained%20Optimisation/07-penalty-and-augmented-lagrangian-methods.md): the augmented Lagrangian $L_\rho$, the method of multipliers, and why a price update beats sending the penalty weight to infinity.
-- [Proximal gradient](06-proximal-methods-ista-fista-and-the-lasso.md): the lasso, soft-thresholding as the proximal step of the $\ell_1$ penalty, and a one-copy method for the same problem.
+- [Penalties and augmented Lagrangians](../03-Constrained%20Optimisation/07-penalty-and-augmented-lagrangian-methods.md): the augmented Lagrangian $`L_\rho`$, the method of multipliers, and why a price update beats sending the penalty weight to infinity.
+- [Proximal gradient](06-proximal-methods-ista-fista-and-the-lasso.md): the lasso, soft-thresholding as the proximal step of the $`\ell_1`$ penalty, and a one-copy method for the same problem.
 
 ## Where this goes next
 
 - [Stochastic gradient](08-stochastic-gradient-and-sample-average-approximation.md): the next card, for when there is too much data even for one linear solve per round, so each step uses a sample.
 - [Robust and chance constraints](10-robust-and-chance-constrained-optimisation.md): problems with a shared answer across many scenarios, where splitting by scenario and agreeing through a price is the same consensus idea.
 
-The open question this card leaves: how to choose $\rho$ well before the run, rather than adjusting it during the run.
+The open question this card leaves: how to choose $`\rho`$ well before the run, rather than adjusting it during the run.
 
 ---
 
@@ -1200,8 +1204,8 @@ The open question this card leaves: how to choose $\rho$ well before the run, ra
 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
-- Boyd, S., Parikh, N., Chu, E., Peleato, B. and Eckstein, J. (2011), "Distributed optimization and statistical learning via the alternating direction method of multipliers", *Foundations and Trends in Machine Learning* 3(1), 1–122. [doi:10.1561/2200000016](https://doi.org/10.1561/2200000016). The scaled form, the residuals and stopping test, the convergence theorem with its yardstick $V$, and the lasso and consensus examples.
+- Boyd, S., Parikh, N., Chu, E., Peleato, B. and Eckstein, J. (2011), "Distributed optimization and statistical learning via the alternating direction method of multipliers", *Foundations and Trends in Machine Learning* 3(1), 1–122. [doi:10.1561/2200000016](https://doi.org/10.1561/2200000016). The scaled form, the residuals and stopping test, the convergence theorem with its yardstick $`V`$, and the lasso and consensus examples.
 - Gabay, D. and Mercier, B. (1976), "A dual algorithm for the solution of nonlinear variational problems via finite element approximation", *Computers & Mathematics with Applications* 2(1), 17–40. [doi:10.1016/0898-1221(76)90003-1](https://doi.org/10.1016/0898-1221(76)90003-1). One of the two original papers on the method, with its first convergence proof.
 - Eckstein, J. and Bertsekas, D. P. (1992), "On the Douglas–Rachford splitting method and the proximal point algorithm for maximal monotone operators", *Mathematical Programming* 55, 293–318. [doi:10.1007/BF01581204](https://doi.org/10.1007/BF01581204). Shows ADMM is Douglas–Rachford splitting applied to the dual, and allows inexact inner solves.
-- He, B. and Yuan, X. (2012), "On the O(1/n) convergence rate of the Douglas–Rachford alternating direction method", *SIAM Journal on Numerical Analysis* 50(2), 700–709. [doi:10.1137/110836936](https://doi.org/10.1137/110836936). The general averaged $O(1/k)$ rate quoted in Step 4.
+- He, B. and Yuan, X. (2012), "On the O(1/n) convergence rate of the Douglas–Rachford alternating direction method", *SIAM Journal on Numerical Analysis* 50(2), 700–709. [doi:10.1137/110836936](https://doi.org/10.1137/110836936). The general averaged $`O(1/k)`$ rate quoted in Step 4.
 - Chen, C., He, B., Ye, Y. and Yuan, X. (2016), "The direct extension of ADMM for multi-block convex minimization problems is not necessarily convergent", *Mathematical Programming* 155(1–2), 57–79. [doi:10.1007/s10107-014-0826-5](https://doi.org/10.1007/s10107-014-0826-5). The three-block counterexample in What breaks.

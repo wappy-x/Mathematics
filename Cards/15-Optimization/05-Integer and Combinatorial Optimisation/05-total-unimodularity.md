@@ -36,47 +36,55 @@ Acts on the left, slots on the right, extra sales in £ thousand on each line; s
 
 ## The formula
 
-Write $x_{ij}$ for the share of act $i$ booked into slot $j$, and $c_{ij}$ for its value. The relaxation of the festival is a linear program (LP) in the standard form of [Linear programs](../04-Linear%20Programming/01-linear-programs-and-polyhedra.md), $c^T x$ (each value $c_{ij}$ times its share $x_{ij}$, added up) made largest under $Ax \le b$, $x \ge 0$:
+Write $`x_{ij}`$ for the share of act $`i`$ booked into slot $`j`$, and $`c_{ij}`$ for its value. The relaxation of the festival is a linear program (LP) in the standard form of [Linear programs](../04-Linear%20Programming/01-linear-programs-and-polyhedra.md), $`c^T x`$ (each value $`c_{ij}`$ times its share $`x_{ij}`$, added up) made largest under $`Ax \le b`$, $`x \ge 0`$:
 
-$$\max \sum_{i,j} c_{ij}\,x_{ij} \quad\text{such that}\quad \sum_j x_{ij} \le 1 \text{ for each act},\quad \sum_i x_{ij} \le 1 \text{ for each slot},\quad x_{ij} \ge 0$$
+```math
+\max \sum_{i,j} c_{ij}\,x_{ij} \quad\text{such that}\quad \sum_j x_{ij} \le 1 \text{ for each act},\quad \sum_i x_{ij} \le 1 \text{ for each slot},\quad x_{ij} \ge 0
+```
 
-The constraint table $A$ has 12 rows (six acts, then six slots) and 36 columns (one per act-slot pair). Column $(i, j)$ holds a 1 in act row $i$, a 1 in slot row $j$ and 0 everywhere else. The right-hand side $b$ is all 1s.
+The constraint table $`A`$ has 12 rows (six acts, then six slots) and 36 columns (one per act-slot pair). Column $`(i, j)`$ holds a 1 in act row $`i`$, a 1 in slot row $`j`$ and 0 everywhere else. The right-hand side $`b`$ is all 1s.
 
-A **square submatrix** of $A$ is what is left after keeping some rows and the same number of columns. Its **determinant** is the single number from [Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md) that is zero when its rows are dependent. The definition and the theorem:
+A **square submatrix** of $`A`$ is what is left after keeping some rows and the same number of columns. Its **determinant** is the single number from [Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md) that is zero when its rows are dependent. The definition and the theorem:
 
-$$A \text{ is totally unimodular} \iff \det(S) \in \{-1,\, 0,\, +1\} \text{ for every square submatrix } S \text{ of } A$$
+```math
+A \text{ is totally unimodular} \iff \det(S) \in \{-1,\, 0,\, +1\} \text{ for every square submatrix } S \text{ of } A
+```
 
-$$A \text{ totally unimodular and } b \text{ whole} \;\Longrightarrow\; \text{every corner of } \{x : Ax \le b,\ x \ge 0\} \text{ is whole}$$
+```math
+A \text{ totally unimodular and } b \text{ whole} \;\Longrightarrow\; \text{every corner of } \{x : Ax \le b,\ x \ge 0\} \text{ is whole}
+```
 
 **Read it aloud:** if no square block of the table has a determinant other than minus one, zero or one, then every corner of the region it cuts out has whole coordinates, as long as the limits on the right are whole.
 
 The test that proves the festival's table qualifies:
 
-$$\text{entries in } \{-1, 0, 1\},\ \text{at most two nonzeros per column, rows split into two groups as below} \;\Longrightarrow\; A \text{ is totally unimodular}$$
+```math
+\text{entries in } \{-1, 0, 1\},\ \text{at most two nonzeros per column, rows split into two groups as below} \;\Longrightarrow\; A \text{ is totally unimodular}
+```
 
 The split rule: when a column's two nonzeros have the same sign they sit in different groups; when they have opposite signs they sit in the same group. For the festival the groups are acts and slots, and every column has one 1 in each.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $i$, $j$ | an act (a row group), a slot (the other row group) | Headliner is $i = 1$; Sat main is $j = 2$ | — |
-| $x_{ij}$ | share of act $i$ booked into slot $j$; the relaxation allows fractions | 1 for Headliner in Sat main, 0 for every pair not drawn | — |
-| $c_{ij}$ | extra ticket sales if act $i$ plays slot $j$, £ thousand | Headliner in Sat main: 60 | the best plan may change; it stays whole |
-| $A$ | the constraint table: one row per act and per slot, one column per pair | 12 rows, 36 columns of 0s and 1s | — |
-| $b$ | the right-hand limits: how many slots an act may fill, how many acts a slot may hold | all 1 | a slot that takes 2 acts: still whole, £215k |
-| $S$, $S'$ | a square submatrix kept from $A$; $S'$ is $S$ with one row and one column removed | the 3-act, 3-slot table has 5004 of them | — |
-| $\det$ | determinant of a square table | −1, 0 or 1 for every $S$ here; 2 for the duet triangle below | a value other than ±1 or 0 lets fractions in |
-| $I$, $s$ | the identity block, one column per row; $s$ is the slack, the unused room in each row | 12 slack columns | — |
-| $B$, $x_B$ | the basis: the 12 columns of $[A \mid I]$ that a corner uses, as a square table; $x_B$ are their values | determinant ±1 after each of the 63 pivots (simplex steps from one basis to the next) | — |
-| $B_k$, $(x_B)_k$ | $B$ with its $k$-th column swapped for $b$; $(x_B)_k$ is the $k$-th basic value | in the duet triangle, $\det(B_k) = 1$ for each $k$ | — |
-| $u_i$, $v_j$ | the dual prices $y$: what one more unit of act $i$, or of slot $j$, is worth | acts 55, 40, 38, 22, 21, 21; slots 0, 5, 4, 0, 0, 4 | — |
-| $R_1$, $R_2$ | the two row groups of the test | acts, slots | — |
+| $`i`$, $`j`$ | an act (a row group), a slot (the other row group) | Headliner is $`i = 1`$; Sat main is $`j = 2`$ | — |
+| $`x_{ij}`$ | share of act $`i`$ booked into slot $`j`$; the relaxation allows fractions | 1 for Headliner in Sat main, 0 for every pair not drawn | — |
+| $`c_{ij}`$ | extra ticket sales if act $`i`$ plays slot $`j`$, £ thousand | Headliner in Sat main: 60 | the best plan may change; it stays whole |
+| $`A`$ | the constraint table: one row per act and per slot, one column per pair | 12 rows, 36 columns of 0s and 1s | — |
+| $`b`$ | the right-hand limits: how many slots an act may fill, how many acts a slot may hold | all 1 | a slot that takes 2 acts: still whole, £215k |
+| $`S`$, $`S'`$ | a square submatrix kept from $`A`$; $`S'`$ is $`S`$ with one row and one column removed | the 3-act, 3-slot table has 5004 of them | — |
+| $`\det`$ | determinant of a square table | −1, 0 or 1 for every $`S`$ here; 2 for the duet triangle below | a value other than ±1 or 0 lets fractions in |
+| $`I`$, $`s`$ | the identity block, one column per row; $`s`$ is the slack, the unused room in each row | 12 slack columns | — |
+| $`B`$, $`x_B`$ | the basis: the 12 columns of $`[A \mid I]`$ that a corner uses, as a square table; $`x_B`$ are their values | determinant ±1 after each of the 63 pivots (simplex steps from one basis to the next) | — |
+| $`B_k`$, $`(x_B)_k`$ | $`B`$ with its $`k`$-th column swapped for $`b`$; $`(x_B)_k`$ is the $`k`$-th basic value | in the duet triangle, $`\det(B_k) = 1`$ for each $`k`$ | — |
+| $`u_i`$, $`v_j`$ | the dual prices $`y`$: what one more unit of act $`i`$, or of slot $`j`$, is worth | acts 55, 40, 38, 22, 21, 21; slots 0, 5, 4, 0, 0, 4 | — |
+| $`R_1`$, $`R_2`$ | the two row groups of the test | acts, slots | — |
 
 Simplex, on this card, means [The simplex method](../04-Linear%20Programming/03-simplex-method.md), the LP shelf's corner-walking method, not a triangle-shaped set.
 
 ### When it holds
 
 - **Every square block, not just the entries.** A table of 0s and 1s can still fail. Three acts pairing up for duet sets give a 3 × 3 block with determinant 2, and the relaxation answers 1.5 duets when only 1 is possible.
-- **The right-hand side must be whole.** Cramer's rule divides by ±1, but it still copies whatever is in $b$, so a limit of half a slot can give a corner with half an act. The values $c$ never matter: any $c$ gives a whole best corner.
+- **The right-hand side must be whole.** Cramer's rule divides by ±1, but it still copies whatever is in $`b`$, so a limit of half a slot can give a corner with half an act. The values $`c`$ never matter: any $`c`$ gives a whole best corner.
 - **No extra row that breaks the shape.** Add the festival's £80k budget as a 13th row, with fees 40, 25, 15, 8, 6 and 7, and the table is no longer totally unimodular (the 1 × 1 block holding 40 already fails). The relaxation then books 19/40 of the headliner.
 - **The solver must return a corner.** When two plans tie, the halfway point between them is also optimal and not whole. Simplex returns a corner. An interior-point method cuts through the middle of the region instead ([Interior point for linear programs](../04-Linear%20Programming/08-interior-point-for-lp-and-complexity.md)), and can return a point between them, such as the halfway point the code checks.
 
@@ -90,25 +98,25 @@ A corner of the region is where enough limits hold exactly to pin down one point
 
 ### Step 1: name the corner's square system
 
-Add a slack $s \ge 0$ to each row, the unused room, so the limits read $Ax + Is = b$. A corner sets all but 12 of the variables to zero. The 12 it keeps are the basic variables; their columns of $[A \mid I]$ form the square basis $B$, and the corner solves $B\,x_B = b$. This is how the LP shelf's simplex method stores a corner, and it moves from one basis to the next.
+Add a slack $`s \ge 0`$ to each row, the unused room, so the limits read $`Ax + Is = b`$. A corner sets all but 12 of the variables to zero. The 12 it keeps are the basic variables; their columns of $`[A \mid I]`$ form the square basis $`B`$, and the corner solves $`B\,x_B = b`$. This is how the LP shelf's simplex method stores a corner, and it moves from one basis to the next.
 
 ### Step 2: the basis has determinant ±1
 
-$B$ mixes columns of $A$ and columns of $I$. Each column from $I$ has a single 1. Expand the determinant down that column: it equals ±1 times the determinant of $B$ with that row and column removed. Repeat for every slack column. What remains is a square submatrix of $A$, whose determinant is −1, 0 or +1. It cannot be 0, because $B$ is invertible (a basis always is). So $\det B = \pm 1$.
+$`B`$ mixes columns of $`A`$ and columns of $`I`$. Each column from $`I`$ has a single 1. Expand the determinant down that column: it equals ±1 times the determinant of $`B`$ with that row and column removed. Repeat for every slack column. What remains is a square submatrix of $`A`$, whose determinant is −1, 0 or +1. It cannot be 0, because $`B`$ is invertible (a basis always is). So $`\det B = \pm 1`$.
 
-The festival's solver started from the empty plan, whose basis is $I$, and made 63 pivots. After each one the code computes the new basis's determinant: every one is +1 or −1.
+The festival's solver started from the empty plan, whose basis is $`I`$, and made 63 pivots. After each one the code computes the new basis's determinant: every one is +1 or −1.
 
 ### Step 3: Cramer's rule gives whole numbers
 
-Cramer's rule says $(x_B)_k = \det(B_k) / \det(B)$, where $B_k$ is $B$ with its $k$-th column replaced by $b$. $B_k$ holds whole numbers, so $\det(B_k)$ is whole, and dividing by ±1 keeps it whole. Every corner is whole. Simplex only stands on corners, so every plan it visits is whole, including its answer.
+Cramer's rule says $`(x_B)_k = \det(B_k) / \det(B)`$, where $`B_k`$ is $`B`$ with its $`k`$-th column replaced by $`b`$. $`B_k`$ holds whole numbers, so $`\det(B_k)`$ is whole, and dividing by ±1 keeps it whole. Every corner is whole. Simplex only stands on corners, so every plan it visits is whole, including its answer.
 
 ### Step 4: the festival's table passes the test
 
-Take any square submatrix $S$ of the assignment table. Prove $\det S \in \{-1, 0, 1\}$ by induction on its size; a 1 × 1 block is a single 0 or 1. For a larger $S$, look at its columns. Each column of $A$ has one 1 in an act row and one 1 in a slot row, so a column of $S$ keeps two, one or zero of them.
+Take any square submatrix $`S`$ of the assignment table. Prove $`\det S \in \{-1, 0, 1\}`$ by induction on its size; a 1 × 1 block is a single 0 or 1. For a larger $`S`$, look at its columns. Each column of $`A`$ has one 1 in an act row and one 1 in a slot row, so a column of $`S`$ keeps two, one or zero of them.
 
 - **A column with no 1s.** The determinant is 0.
-- **A column with exactly one 1.** Expand down that column: $\det S = \pm \det S'$, with $S'$ one size smaller. By induction that is −1, 0 or 1.
-- **Every column with two 1s.** Then every column has one 1 among the act rows and one among the slot rows. Add up the act rows and subtract the slot rows: every column gives 1 − 1 = 0. The rows are dependent, so $\det S = 0$.
+- **A column with exactly one 1.** Expand down that column: $`\det S = \pm \det S'`$, with $`S'`$ one size smaller. By induction that is −1, 0 or 1.
+- **Every column with two 1s.** Then every column has one 1 among the act rows and one among the slot rows. Add up the act rows and subtract the slot rows: every column gives 1 − 1 = 0. The rows are dependent, so $`\det S = 0`$.
 
 So the table is totally unimodular. The code checks the shape column by column on the full 12 × 36 table, then computes all 5004 square determinants of the 3-act, 3-slot table by brute force: 780 are −1, 3213 are 0, 1011 are +1, and nothing else appears.
 
@@ -117,9 +125,9 @@ The same argument covers a network's table, with one +1 where a pipe leaves a no
 <details>
 <summary>Detailed proof: the general two-group test</summary>
 
-Let $A$ have entries −1, 0, 1, at most two nonzeros per column, and rows split into groups $R_1$ and $R_2$ so that a column's two nonzeros lie in different groups when they have the same sign, and in the same group when they have opposite signs.
+Let $`A`$ have entries −1, 0, 1, at most two nonzeros per column, and rows split into groups $`R_1`$ and $`R_2`$ so that a column's two nonzeros lie in different groups when they have the same sign, and in the same group when they have opposite signs.
 
-Take a square submatrix $S$ and argue by induction on its size. If a column of $S$ is all zero, $\det S = 0$. If a column has one nonzero, expand down it and use induction. Otherwise every column has two nonzeros. Add the rows of $S$ in $R_1$ and subtract those in $R_2$. A column with two equal signs in different groups gives $1 - 1$ or $-1 + 1$. A column with opposite signs in the same group gives $1 - 1$ inside that group. Every column sums to 0, so the rows are dependent and $\det S = 0$.
+Take a square submatrix $`S`$ and argue by induction on its size. If a column of $`S`$ is all zero, $`\det S = 0`$. If a column has one nonzero, expand down it and use induction. Otherwise every column has two nonzeros. Add the rows of $`S`$ in $`R_1`$ and subtract those in $`R_2`$. A column with two equal signs in different groups gives $`1 - 1`$ or $`-1 + 1`$. A column with opposite signs in the same group gives $`1 - 1`$ inside that group. Every column sums to 0, so the rows are dependent and $`\det S = 0`$.
 
 This is Heller and Tompkins's sufficient condition. The full description of totally unimodular tables is Ghouila-Houri's: every set of rows can be split into two groups so that, in every column, the first group's sum minus the second's is −1, 0 or 1. It is quoted, not proved, here. So is Seymour's decomposition theorem, which gives a test of any table for total unimodularity in polynomial time: work that grows like a fixed power of the table's size.
 
@@ -127,13 +135,13 @@ This is Heller and Tompkins's sufficient condition. The full description of tota
 
 ### Step 5: the prices come out whole too, and they certify the plan
 
-The prices problem, the dual from [LP duality](../04-Linear%20Programming/04-lp-duality-and-complementary-slackness.md), uses the transpose $A^T$: the table with its rows and columns swapped. A submatrix of $A^T$ is the transpose of a submatrix of $A$, with the same determinant, so $A^T$ is totally unimodular too. With whole values $c$, the dual's corners are whole.
+The prices problem, the dual from [LP duality](../04-Linear%20Programming/04-lp-duality-and-complementary-slackness.md), uses the transpose $`A^T`$: the table with its rows and columns swapped. A submatrix of $`A^T`$ is the transpose of a submatrix of $`A`$, with the same determinant, so $`A^T`$ is totally unimodular too. With whole values $`c`$, the dual's corners are whole.
 
 The solver's final prices: acts 55, 40, 38, 22, 21, 21 and slots 0, 5, 4, 0, 0, 4. For every pair, act price plus slot price is at least the pair's value. Book any plan: each act and each slot appears once, so its value is at most the sum of all prices, 210. The plan found makes 210. That is the certificate: no plan does better, checked with 36 comparisons, not a search.
 
 ### Step 6: the converse, and why a triangle breaks it
 
-Hoffman and Kruskal also proved the converse: if a whole-number $A$ gives whole corners for every whole $b$, then $A$ is totally unimodular. So when $A$ is not totally unimodular, some whole $b$ gives a fractional corner. For tables with at most two nonzeros per column, though, Heller and Tompkins showed the two-group split is also necessary, so the duet triangle, which has no split, must fail.
+Hoffman and Kruskal also proved the converse: if a whole-number $`A`$ gives whole corners for every whole $`b`$, then $`A`$ is totally unimodular. So when $`A`$ is not totally unimodular, some whole $`b`$ gives a fractional corner. For tables with at most two nonzeros per column, though, Heller and Tompkins showed the two-group split is also necessary, so the duet triangle, which has no split, must fail.
 
 The simplest failure is an odd loop. The folk trio, the brass band and the singer may pair off for a joint set, each act joining at most one. The table, rows Folk, Brass, Singer, columns Folk-Brass, Brass-Singer, Folk-Singer, is `[[1, 0, 1], [1, 1, 0], [0, 1, 1]]`. No row split works: each column's two 1s must go in different groups, and three rows in a loop cannot alternate between two groups. Its determinant is 2. The relaxation sets every duet to 1/2 and claims 1.5 duets; only 1 is possible.
 
@@ -143,14 +151,14 @@ The simplest failure is an odd loop. The folk trio, the brass band and the singe
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the relaxation's plan | Headliner-Sat main, Rock-Fri main, DJ-Fri late, Folk-Sat tent, Brass-Sun main, Singer-Sun tent | every $x_{ij}$ is 0 or 1 |
+| the relaxation's plan | Headliner-Sat main, Rock-Fri main, DJ-Fri late, Folk-Sat tent, Brass-Sun main, Singer-Sun tent | every $`x_{ij}`$ is 0 or 1 |
 | its value | 60 + 40 + 38 + 22 + 25 + 25 | 210 |
 | sum of prices | 55 + 40 + 38 + 22 + 21 + 21 + 0 + 5 + 4 + 0 + 0 + 4 | 210 |
 | one price check, a booked pair | Headliner 55 + Sat main 5 against value 60 | equal |
 | one price check, an unbooked pair | Rock band 40 + Sat main 5 against value 45 | equal: a tie in price, not in plan |
 | all 720 plans | best, runner-up, worst | 210, 209, 115 |
-| the duet triangle | $1 \times (1 \times 1 - 0 \times 1) - 0 + 1 \times (1 \times 1 - 1 \times 0)$ | determinant 2 |
-| duet corner | each $x = \det(B_k)/\det(B) = 1/2$, with $\det(B_k) = 1$ and $\det B = 2$ | 1/2 each, 1.5 duets |
+| the duet triangle | $`1 \times (1 \times 1 - 0 \times 1) - 0 + 1 \times (1 \times 1 - 1 \times 0)`$ | determinant 2 |
+| duet corner | each $`x = \det(B_k)/\det(B) = 1/2`$, with $`\det(B_k) = 1`$ and $`\det B = 2`$ | 1/2 each, 1.5 duets |
 | **the festival** | relaxation = best whole plan = sum of prices | **£210k** |
 
 The promoter books the six acts as drawn in the picture and needs no search: the relaxation's answer is already whole, and the prices prove nothing beats £210k.
@@ -159,10 +167,10 @@ The promoter books the six acts as drawn in the picture and needs no search: the
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Duet sets among three acts, solved as a relaxation | 1.5 duets, every $x = 1/2$; best whole is 1 | an odd loop: a block with determinant 2 |
+| Duet sets among three acts, solved as a relaxation | 1.5 duets, every $`x = 1/2`$; best whole is 1 | an odd loop: a block with determinant 2 |
 | The £80k budget added as a 13th row | £181.125k, with 19/40 of the headliner in Sat main and the rock band split 19/40 and 21/40; best whole is £170k | the fee row is not 0 or ±1, so the table is not totally unimodular |
 | That budget relaxation rounded to the nearest whole plan | £155k, fees £61k | rounding is not optimising: it lands below the best whole plan, £170k |
-| A tie, with a solver that can stop between corners, such as interior point | Singer in Sat tent worth 23: two plans tie at £210k, and a point between them, such as the halfway point with four $x$ values at 1/2, fits every limit and also scores 210 | the theorem is about corners; a point between two corners is optimal but not whole |
+| A tie, with a solver that can stop between corners, such as interior point | Singer in Sat tent worth 23: two plans tie at £210k, and a point between them, such as the halfway point with four $`x`$ values at 1/2, fits every limit and also scores 210 | the theorem is about corners; a point between two corners is optimal but not whole |
 
 The budget is what turns the festival into a real integer program, needing [Branch and bound](03-branch-and-bound.md) or [Cutting planes](04-cutting-planes.md); the assignment alone does not.
 
@@ -567,7 +575,7 @@ The two outputs match line for line.
 
 Lean proves the main theorem and the two-group test for every table, the price certificate for any number of acts, and the festival's numbers.
 
-- Take a whole-number table $A$ that is totally unimodular, and whole limits $b$. Every corner of $\{x : Ax \le b,\ x \ge 0\}$ is whole.
+- Take a whole-number table $`A`$ that is totally unimodular, and whole limits $`b`$. Every corner of $`\{x : Ax \le b,\ x \ge 0\}`$ is whole.
 - Take a table with entries −1, 0 or 1 and at most two nonzeros per column. If its rows split into two groups by the split rule, it is totally unimodular.
 - Suppose each act price plus slot price is at least that pair's value. Then any plan, one act per slot, is worth at most the sum of all prices.
 - The festival's plan uses each slot once and is worth 60 + 40 + 38 + 22 + 25 + 25 = 210, in £ thousand.
@@ -868,7 +876,7 @@ example : ¬ (!![1, 0, 1; 1, 1, 0; 0, 1, 1] : Matrix (Fin 3) (Fin 3) ℤ).IsTota
 > The "try" lines at the end of the output give each answer.
 > - **Guess first: can a new value make fractions?** Set Brass band in Sun main to 15, not 25. The relaxation gives £209k, still whole: the runner-up plan takes over.
 > - **Guess first: does a budget hurt if it never binds?** Set the budget to 101, the sum of all six fees. £210k, whole: a bad row only matters when it is tight.
-> - **Guess first: what if Saturday's main stage takes a double bill?** Set that slot's limit in $b$ to 2. £215k, still whole: $b$ changed but stayed whole.
+> - **Guess first: what if Saturday's main stage takes a double bill?** Set that slot's limit in $`b`$ to 2. £215k, still whole: $`b`$ changed but stayed whole.
 > - **Guess first: what does a tie do?** Set Singer in Sat tent to 23. Two plans tie at £210k. Simplex still returns a whole corner; the halfway point also scores 210 and is not whole.
 
 ---
@@ -881,7 +889,7 @@ example : ¬ (!![1, 0, 1; 1, 1, 0; 0, 1, 1] : Matrix (Fin 3) (Fin 3) ℤ).IsTota
 > - **Reading 0s and 1s as enough.** The duet triangle has only 0s and 1s, and its determinant is 2. It relaxes to 1.5 duets when 1 is the most possible.
 > - **Rounding a fractional answer.** Rounding the budget relaxation to the nearest plan gives £155k, short of the best whole plan at £170k.
 > - **Trusting any solver's output.** Only corners are promised whole. With Singer in Sat tent at 23, two plans tie at £210k, and an interior-point solver can return a point between them, such as the halfway point.
-> - **Blaming the values.** Changing $c$ never makes a corner fractional: Brass band at 15 in Sun main gives a whole £209k. It is $A$ and $b$ that matter.
+> - **Blaming the values.** Changing $`c`$ never makes a corner fractional: Brass band at 15 in Sun main gives a whole £209k. It is $`A`$ and $`b`$ that matter.
 
 ---
 

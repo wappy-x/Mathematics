@@ -36,50 +36,56 @@ Orange, low and flat: the simple rule, 8% of 1.4 times the call's value. It cree
 
 Notation first, in words.
 
-- $T$ is the expiry, 1 year, and $t$ a date before it.
-- $h$ is the hurdle rate.
-- $D(t) = e^{-rt}$ is the discount factor at the riskless rate $r$.
-- $\lambda$ ("lambda") is Northwind's hazard, its yearly default rate, and $Q(t) = e^{-\lambda t}$ the chance it is still alive at $t$.
-- $C_0$ is today's call price.
-- $V(t)$ is the call's value to the bank at date $t$ if nobody could fail.
-- $\mathrm{EE}(t)$ is its average over the pricing world, the **expected exposure** ([Expected exposure over time](../46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md)).
-- $\mathrm{EAD}(t)$, **exposure at default**, is the amount the regulator says the bank is owed for capital purposes.
-- $K(t)$ is the capital held at date $t$: a random amount, since it depends on where Acme is by then. $\mathbb{E}[K(t)]$ is its average.
+- $`T`$ is the expiry, 1 year, and $`t`$ a date before it.
+- $`h`$ is the hurdle rate.
+- $`D(t) = e^{-rt}`$ is the discount factor at the riskless rate $`r`$.
+- $`\lambda`$ ("lambda") is Northwind's hazard, its yearly default rate, and $`Q(t) = e^{-\lambda t}`$ the chance it is still alive at $`t`$.
+- $`C_0`$ is today's call price.
+- $`V(t)`$ is the call's value to the bank at date $`t`$ if nobody could fail.
+- $`\mathrm{EE}(t)`$ is its average over the pricing world, the **expected exposure** ([Expected exposure over time](../46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md)).
+- $`\mathrm{EAD}(t)`$, **exposure at default**, is the amount the regulator says the bank is owed for capital purposes.
+- $`K(t)`$ is the capital held at date $`t`$: a random amount, since it depends on where Acme is by then. $`\mathbb{E}[K(t)]`$ is its average.
 
-$$\mathrm{KVA} = h\int_0^T D(t)\,\mathbb{E}[K(t)]\,Q(t)\,dt$$
+```math
+\mathrm{KVA} = h\int_0^T D(t)\,\mathbb{E}[K(t)]\,Q(t)\,dt
+```
 
 **Read it aloud:** the hurdle rate, times the capital expected at each date in today's money, times the chance the trade is still alive then, added up over the trade's life.
 
 The simple capital rule:
 
-$$K(t) = 8\% \times \mathrm{RW} \times \mathrm{EAD}(t), \qquad \mathrm{EAD}(t) = \alpha\,V(t)$$
+```math
+K(t) = 8\% \times \mathrm{RW} \times \mathrm{EAD}(t), \qquad \mathrm{EAD}(t) = \alpha\,V(t)
+```
 
-In words: 8% of the risk-weighted exposure, and the exposure is 1.4 times what the trade is worth. The fixed part, $c = 8\% \times \mathrm{RW} \times \alpha = 0.112$, is capital per dollar of value.
+In words: 8% of the risk-weighted exposure, and the exposure is 1.4 times what the trade is worth. The fixed part, $`c = 8\% \times \mathrm{RW} \times \alpha = 0.112`$, is capital per dollar of value.
 
 For a bought option under a flat hazard the integral collapses:
 
-$$\mathrm{KVA} = h\,c\,C_0\,\frac{1 - e^{-\lambda T}}{\lambda}$$
+```math
+\mathrm{KVA} = h\,c\,C_0\,\frac{1 - e^{-\lambda T}}{\lambda}
+```
 
-**Read it aloud:** the hurdle rate, times today's capital, times the survival-weighted length of the trade. For Acme: $0.10 \times 1.033425 \times 0.990066 = 0.102316$.
+**Read it aloud:** the hurdle rate, times today's capital, times the survival-weighted length of the trade. For Acme: $`0.10 \times 1.033425 \times 0.990066 = 0.102316`$.
 
 | Symbol | Plain meaning | In our example | Push it up and KVA… |
 | --- | --- | --- | --- |
-| $\mathrm{KVA}$ | the capital valuation adjustment: today's value of the trade's lifetime capital cost | \$0.102316 | — |
-| $h$ | the **hurdle rate**: yearly return promised to shareholders on capital | 10% | rises in proportion |
-| $K(t)$, $c$ | capital held at date $t$; capital per dollar of trade value, $8\% \times \mathrm{RW} \times \alpha$ | $c = 0.112$; \$1.033425 today | rises in proportion |
-| $\mathrm{RW}$, 8% | the **risk weight**, a regulator's multiplier by type of borrower; the minimum capital ratio | 100% for an unrated company | rises in proportion |
-| $\alpha$, $\mathrm{EAD}(t)$ | the regulator's multiplier on exposure ("alpha"); **exposure at default**, the capital measure of what is owed | 1.4; \$12.917808 today | rises in proportion |
-| $V(t)$, $\mathrm{EE}(t)$, $C_0$, $X$ | the call's clean value at $t$; its average; today's price; its payoff at expiry | $C_0 = \$9.227006$ | rises in proportion |
-| $D(t)$, $r$ | the discount factor $e^{-rt}$; the riskless rate | 5% | rises, but only through $C_0$: discounting cancels (Step 3) |
-| $\lambda$, $Q(t)$, $\tau$ | Northwind's **hazard** ("lambda"), its yearly default rate; the survival chance $e^{-\lambda t}$; its default date ("tau") | 2%; survival integral 0.990066 | falls slightly: a trade that may end early ties up capital for less time |
-| $T$, $t$, $dt$ | the expiry; a date, in years; a short stretch of time | $T = 1$ | rises: capital held longer |
-| $\mathrm{PD}$, $\mathrm{LGD}$, $\rho$, $N$ | IRB inputs: one-year default chance; loss given default; the Basel correlation ("rho"); the bell-curve area to the left, $N^{-1}$ its inverse | 2%; 60%; 16.41% | rises with each |
-| $A(t)$ | the SA-CCR **add-on**: the regulator's charge for how far the trade's value could still move | \$23.223900 today | rises |
-| $R$ | Northwind's recovery, used only for the CVA comparison | 40% | no effect on KVA |
+| $`\mathrm{KVA}`$ | the capital valuation adjustment: today's value of the trade's lifetime capital cost | \$0.102316 | — |
+| $`h`$ | the **hurdle rate**: yearly return promised to shareholders on capital | 10% | rises in proportion |
+| $`K(t)`$, $`c`$ | capital held at date $`t`$; capital per dollar of trade value, $`8\% \times \mathrm{RW} \times \alpha`$ | $`c = 0.112`$; \$1.033425 today | rises in proportion |
+| $`\mathrm{RW}`$, 8% | the **risk weight**, a regulator's multiplier by type of borrower; the minimum capital ratio | 100% for an unrated company | rises in proportion |
+| $`\alpha`$, $`\mathrm{EAD}(t)`$ | the regulator's multiplier on exposure ("alpha"); **exposure at default**, the capital measure of what is owed | 1.4; \$12.917808 today | rises in proportion |
+| $`V(t)`$, $`\mathrm{EE}(t)`$, $`C_0`$, $`X`$ | the call's clean value at $`t`$; its average; today's price; its payoff at expiry | $`C_0 = \$9.227006`$ | rises in proportion |
+| $`D(t)`$, $`r`$ | the discount factor $`e^{-rt}`$; the riskless rate | 5% | rises, but only through $`C_0`$: discounting cancels (Step 3) |
+| $`\lambda`$, $`Q(t)`$, $`\tau`$ | Northwind's **hazard** ("lambda"), its yearly default rate; the survival chance $`e^{-\lambda t}`$; its default date ("tau") | 2%; survival integral 0.990066 | falls slightly: a trade that may end early ties up capital for less time |
+| $`T`$, $`t`$, $`dt`$ | the expiry; a date, in years; a short stretch of time | $`T = 1`$ | rises: capital held longer |
+| $`\mathrm{PD}`$, $`\mathrm{LGD}`$, $`\rho`$, $`N`$ | IRB inputs: one-year default chance; loss given default; the Basel correlation ("rho"); the bell-curve area to the left, $`N^{-1}`$ its inverse | 2%; 60%; 16.41% | rises with each |
+| $`A(t)`$ | the SA-CCR **add-on**: the regulator's charge for how far the trade's value could still move | \$23.223900 today | rises |
+| $`R`$ | Northwind's recovery, used only for the CVA comparison | 40% | no effect on KVA |
 
 ### When it holds
 
-- **Capital is proportional to exposure.** The simple rule and the IRB rule are both a fixed number times $\mathrm{EAD}$. Under SA-CCR the add-on bends with Acme's price, the integral no longer collapses, and only the bucketed sum and the simulation remain (Step 5).
+- **Capital is proportional to exposure.** The simple rule and the IRB rule are both a fixed number times $`\mathrm{EAD}`$. Under SA-CCR the add-on bends with Acme's price, the integral no longer collapses, and only the bucketed sum and the simulation remain (Step 5).
 - **The trade stands alone.** Real capital is set on the bank's whole book with Northwind (the **netting set**, all trades that offset at default) and against the bank's total capital. A trade that offsets another needs less capital, sometimes negative. Pricing it alone overstates KVA for a hedge and understates it for a concentration.
 - **Today's rules hold for the life of the trade.** The integral projects capital under the current rulebook. Basel (the Basel Committee, which writes the international capital rules for banks) has rewritten its counterparty rules several times since 2010; a ten-year swap's KVA depends on rules nobody has written yet.
 - **Default is independent of Acme.** As for CVA, the survival chance multiplies the expected capital only if Northwind's failure says nothing about Acme's price ([Wrong-way risk](../46-Counterparty%20Risk%20and%20CVA/05-wrong-way-risk.md)).
@@ -91,65 +97,73 @@ $$\mathrm{KVA} = h\,c\,C_0\,\frac{1 - e^{-\lambda T}}{\lambda}$$
 
 ### Step 0: capital is money that must earn its hurdle
 
-A bank funds itself with borrowed money and with shareholders' money. The regulator requires a minimum share of the second kind behind every risk, so that losses fall on shareholders before depositors. Shareholders accept that role only for a return. The board turns that into a rule: every dollar of capital a trade uses must earn $h$ a year. A trade that ties up $K(t)$ dollars for a short stretch $dt$ therefore costs $h\,K(t)\,dt$. KVA is the value today of that stream of costs, charged to the trade at inception so the desk does not book a profit that shareholders never receive.
+A bank funds itself with borrowed money and with shareholders' money. The regulator requires a minimum share of the second kind behind every risk, so that losses fall on shareholders before depositors. Shareholders accept that role only for a return. The board turns that into a rule: every dollar of capital a trade uses must earn $`h`$ a year. A trade that ties up $`K(t)`$ dollars for a short stretch $`dt`$ therefore costs $`h\,K(t)\,dt`$. KVA is the value today of that stream of costs, charged to the trade at inception so the desk does not book a profit that shareholders never receive.
 
 ### Step 1: the cost stream runs while the trade is alive
 
 Capital is held from today until the trade ends. The call ends at expiry, or earlier if Northwind fails: at default the trade is closed out (settled at its value on that day) and the capital is released. Averaging the cost over when default comes and over where Acme goes:
 
-$$\mathrm{KVA} = \mathbb{E}\Bigl[\int_0^{\min(\tau, T)} D(t)\,h\,K(t)\,dt\Bigr],$$
+```math
+\mathrm{KVA} = \mathbb{E}\Bigl[\int_0^{\min(\tau, T)} D(t)\,h\,K(t)\,dt\Bigr],
+```
 
-where $\tau$ ("tau") is Northwind's default date. If default is independent of Acme, the chance of still being alive at $t$ factors out as $Q(t) = e^{-\lambda t}$, and the average moves inside the integral: that is the KVA formula. The bank's own default is ignored here; a bank that can fail holds capital only while it survives, and some desks multiply in its survival too.
+where $`\tau`$ ("tau") is Northwind's default date. If default is independent of Acme, the chance of still being alive at $`t`$ factors out as $`Q(t) = e^{-\lambda t}`$, and the average moves inside the integral: that is the KVA formula. The bank's own default is ignored here; a bank that can fail holds capital only while it survives, and some desks multiply in its survival too.
 
 ### Step 2: the capital rule turns value into capital
 
-Under the simple rule, capital at date $t$ is $c\,V(t)$, with $c = 0.08 \times 1.00 \times 1.4 = 0.112$. A bought call is never worth less than zero, so $V(t)$ is also the exposure. Averages pass through a fixed multiplier: $\mathbb{E}[K(t)] = c\,\mathrm{EE}(t)$. Today that is $0.112 \times 9.227006 = \$1.033425$. The orange line in the picture is this capital at each date: it grows with $\mathrm{EE}(t)$, from \$1.03 to \$1.09 at expiry.
+Under the simple rule, capital at date $`t`$ is $`c\,V(t)`$, with $`c = 0.08 \times 1.00 \times 1.4 = 0.112`$. A bought call is never worth less than zero, so $`V(t)`$ is also the exposure. Averages pass through a fixed multiplier: $`\mathbb{E}[K(t)] = c\,\mathrm{EE}(t)`$. Today that is $`0.112 \times 9.227006 = \$1.033425`$. The orange line in the picture is this capital at each date: it grows with $`\mathrm{EE}(t)`$, from \$1.03 to \$1.09 at expiry.
 
-The two regulatory numbers do different jobs. The multiplier $\alpha = 1.4$ scales an average exposure up to a cautious one, since exposure is uncertain and concentrated. The 8% times the risk weight converts the exposure to capital: 8% is the Basel minimum ratio, and a risk weight of 100% is the standard weight for an unrated company.
+The two regulatory numbers do different jobs. The multiplier $`\alpha = 1.4`$ scales an average exposure up to a cautious one, since exposure is uncertain and concentrated. The 8% times the risk weight converts the exposure to capital: 8% is the Basel minimum ratio, and a risk weight of 100% is the standard weight for an unrated company.
 
 ### Step 3: in today's money, the capital is flat
 
-The CVA card showed that for a bought option $D(t)\,\mathrm{EE}(t) = C_0$ at every date ([CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md), Step 3): today's price of a traded claim is the discounted average of its later price. So $D(t)\,\mathbb{E}[K(t)] = c\,C_0$ at every date, and the integral keeps only the survival:
+The CVA card showed that for a bought option $`D(t)\,\mathrm{EE}(t) = C_0`$ at every date ([CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md), Step 3): today's price of a traded claim is the discounted average of its later price. So $`D(t)\,\mathbb{E}[K(t)] = c\,C_0`$ at every date, and the integral keeps only the survival:
 
-$$\mathrm{KVA} = h\,c\,C_0\int_0^T e^{-\lambda t}\,dt = h\,c\,C_0\,\frac{1 - e^{-\lambda T}}{\lambda}.$$
+```math
+\mathrm{KVA} = h\,c\,C_0\int_0^T e^{-\lambda t}\,dt = h\,c\,C_0\,\frac{1 - e^{-\lambda T}}{\lambda}.
+```
 
 The last factor, 0.990066, is the survival-weighted length of the trade in years: a year, less the small chance Northwind fails and ends it early. So KVA is 10% of \$1.033425 for 0.990066 years: **0.102316**.
 
 <details>
 <summary>Detailed proof: from the cost stream to the closed form</summary>
 
-Write $\mathbf{1}\{t < \tau\}$ for the switch that is 1 while Northwind is alive and 0 after. The cost stream up to $\min(\tau, T)$ is $\int_0^T \mathbf{1}\{t < \tau\}\,D(t)\,h\,K(t)\,dt$. Everything inside is non-negative, so the average can be taken inside the integral (Tonelli's theorem):
-$$\mathrm{KVA} = h\int_0^T \mathbb{E}\bigl[\mathbf{1}\{t < \tau\}\,D(t)\,K(t)\bigr]\,dt.$$
-Default is independent of Acme and $D(t)$ is a fixed number, so the average splits: $\mathbb{E}[\mathbf{1}\{t < \tau\}] = Q(t)$, and $\mathbb{E}[D(t)K(t)] = D(t)\,\mathbb{E}[K(t)]$. That is the KVA formula.
+Write $`\mathbf{1}\{t < \tau\}`$ for the switch that is 1 while Northwind is alive and 0 after. The cost stream up to $`\min(\tau, T)`$ is $`\int_0^T \mathbf{1}\{t < \tau\}\,D(t)\,h\,K(t)\,dt`$. Everything inside is non-negative, so the average can be taken inside the integral (Tonelli's theorem):
 
-Under the simple rule $K(t) = c\,V(t)$ with $V(t) = e^{-r(T-t)}\,\mathbb{E}_t[X]$, where $X$ is the payoff and $\mathbb{E}_t$ averages given what is known at $t$. Then $D(t)\,\mathbb{E}[V(t)] = e^{-rt}e^{-r(T-t)}\,\mathbb{E}[\mathbb{E}_t[X]] = e^{-rT}\,\mathbb{E}[X] = C_0$, by the tower rule (averaging an average gives the plain average). Substituting and integrating $e^{-\lambda t}$ from 0 to $T$ gives $h\,c\,C_0\,(1 - e^{-\lambda T})/\lambda$.
+$`\displaystyle \mathrm{KVA} = h\int_0^T \mathbb{E}\bigl[\mathbf{1}\{t < \tau\}\,D(t)\,K(t)\bigr]\,dt.`$
+
+Default is independent of Acme and $`D(t)`$ is a fixed number, so the average splits: $`\mathbb{E}[\mathbf{1}\{t < \tau\}] = Q(t)`$, and $`\mathbb{E}[D(t)K(t)] = D(t)\,\mathbb{E}[K(t)]`$. That is the KVA formula.
+
+Under the simple rule $`K(t) = c\,V(t)`$ with $`V(t) = e^{-r(T-t)}\,\mathbb{E}_t[X]`$, where $`X`$ is the payoff and $`\mathbb{E}_t`$ averages given what is known at $`t`$. Then $`D(t)\,\mathbb{E}[V(t)] = e^{-rt}e^{-r(T-t)}\,\mathbb{E}[\mathbb{E}_t[X]] = e^{-rT}\,\mathbb{E}[X] = C_0`$, by the tower rule (averaging an average gives the plain average). Substituting and integrating $`e^{-\lambda t}`$ from 0 to $`T`$ gives $`h\,c\,C_0\,(1 - e^{-\lambda T})/\lambda`$.
 
 </details>
 
 ### Step 4: KVA is a CVA with a different running rate
 
-Put the two closed forms side by side. CVA is $(1-R)\,C_0\,(1 - e^{-\lambda T})$, which is $(1-R)\,\lambda \times C_0 \times (1 - e^{-\lambda T})/\lambda$. KVA is $h\,c \times C_0 \times (1 - e^{-\lambda T})/\lambda$. Same exposure, same survival-weighted life; only the yearly rate charged on the exposure differs. CVA charges the credit spread $(1-R)\lambda = 1.2\%$ a year. KVA charges $h\,c = 1.12\%$ a year. Their ratio is $0.0112 / 0.012 = 0.933333$, and that is why the two come out the same size: 10.23 cents against 10.96. For a riskier counterparty CVA grows with $\lambda$ while KVA under the simple rule does not; under IRB it does, through the risk weight.
+Put the two closed forms side by side. CVA is $`(1-R)\,C_0\,(1 - e^{-\lambda T})`$, which is $`(1-R)\,\lambda \times C_0 \times (1 - e^{-\lambda T})/\lambda`$. KVA is $`h\,c \times C_0 \times (1 - e^{-\lambda T})/\lambda`$. Same exposure, same survival-weighted life; only the yearly rate charged on the exposure differs. CVA charges the credit spread $`(1-R)\lambda = 1.2\%`$ a year. KVA charges $`h\,c = 1.12\%`$ a year. Their ratio is $`0.0112 / 0.012 = 0.933333`$, and that is why the two come out the same size: 10.23 cents against 10.96. For a riskier counterparty CVA grows with $`\lambda`$ while KVA under the simple rule does not; under IRB it does, through the risk weight.
 
 ### Step 5: the refined routes, IRB and SA-CCR
 
 **IRB.** Banks with the regulator's approval replace the flat 100% risk weight with the **internal ratings-based** formula, the Vasicek one-in-a-thousand-year loss ([Vasicek's large-pool loss curve](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md)). Capital per dollar of exposure is
 
-$$\mathrm{LGD}\times\Bigl[N\Bigl(\tfrac{N^{-1}(\mathrm{PD}) + \sqrt{\rho}\,N^{-1}(0.999)}{\sqrt{1-\rho}}\Bigr) - \mathrm{PD}\Bigr],$$
+```math
+\mathrm{LGD}\times\Bigl[N\Bigl(\tfrac{N^{-1}(\mathrm{PD}) + \sqrt{\rho}\,N^{-1}(0.999)}{\sqrt{1-\rho}}\Bigr) - \mathrm{PD}\Bigr],
+```
 
-where $N$ is the bell-curve area to the left and $N^{-1}$ runs it backwards. Basel multiplies this by a maturity adjustment that equals exactly 1 for a one-year effective maturity, so it drops out here. Northwind's one-year default chance is 1.98% at a 2% hazard; take the rounded 2% a rating would carry, and 60% lost at default. Basel's correlation for that PD is 16.41%, the bad-year default rate 19.03%, and capital per dollar of EAD $0.60 \times (0.190259 - 0.02) = 0.102155$, against 0.08 under the simple rule. That is a risk weight of 127.69%. KVA rises in proportion, to **0.130652**.
+where $`N`$ is the bell-curve area to the left and $`N^{-1}`$ runs it backwards. Basel multiplies this by a maturity adjustment that equals exactly 1 for a one-year effective maturity, so it drops out here. Northwind's one-year default chance is 1.98% at a 2% hazard; take the rounded 2% a rating would carry, and 60% lost at default. Basel's correlation for that PD is 16.41%, the bad-year default rate 19.03%, and capital per dollar of EAD $`0.60 \times (0.190259 - 0.02) = 0.102155`$, against 0.08 under the simple rule. That is a risk weight of 127.69%. KVA rises in proportion, to **0.130652**.
 
-**SA-CCR.** Basel's standard way, published in 2014, to measure EAD for derivatives is the **standardised approach for counterparty credit risk**, SA-CCR. It keeps $\alpha = 1.4$ but applies it to two pieces: the **replacement cost**, today's value $V(t)$, plus a **potential future exposure add-on** $A(t)$ for how much the value could still grow. For one bought equity call without margin, the add-on multiplies four things:
+**SA-CCR.** Basel's standard way, published in 2014, to measure EAD for derivatives is the **standardised approach for counterparty credit risk**, SA-CCR. It keeps $`\alpha = 1.4`$ but applies it to two pieces: the **replacement cost**, today's value $`V(t)`$, plus a **potential future exposure add-on** $`A(t)`$ for how much the value could still grow. For one bought equity call without margin, the add-on multiplies four things:
 
 - 32%, the regulator's factor for a single stock;
 - a supervisory delta: the call's sensitivity to Acme, recomputed with a fixed 120% volatility over the time to expiry;
 - Acme's price;
 - the square root of the remaining maturity, capped at one year and floored at ten business days.
 
-Today that is \$23.22, so the EAD is $1.4 \times (9.227006 + 23.223900) = \$45.43$, three and a half times the simple rule's \$12.92.
+Today that is \$23.22, so the EAD is $`1.4 \times (9.227006 + 23.223900) = \$45.43`$, three and a half times the simple rule's \$12.92.
 
-The add-on bends with Acme's price, through the delta, and fades with the square root of the time left. So $D(t)\,\mathbb{E}[K(t)]$ is no longer flat, the closed form fails, and the integral has to be done. Two roads do it. The first cuts the year into 52 weeks and, at each week's middle, averages the capital over every price Acme could have, by Simpson's rule (a weighted sum over thin slices of the bell curve). The second draws 100,000 random dates, each with a random Acme price, and averages the discounted capital. They give 0.263164 and 0.262747, within one standard error (0.000471) of each other.
+The add-on bends with Acme's price, through the delta, and fades with the square root of the time left. So $`D(t)\,\mathbb{E}[K(t)]`$ is no longer flat, the closed form fails, and the integral has to be done. Two roads do it. The first cuts the year into 52 weeks and, at each week's middle, averages the capital over every price Acme could have, by Simpson's rule (a weighted sum over thin slices of the bell curve). The second draws 100,000 random dates, each with a random Acme price, and averages the discounted capital. They give 0.263164 and 0.262747, within one standard error (0.000471) of each other.
 
-Conventions verified 2026-09-28 against the Basel Framework (RBC20, CRE20, CRE31, CRE52): 8% minimum capital ratio, 100% weight for an unrated company, the IRB formula above, $\alpha = 1.4$, the 32% single-stock factor and the 120% supervisory volatility.
+Conventions verified 2026-09-28 against the Basel Framework (RBC20, CRE20, CRE31, CRE52): 8% minimum capital ratio, 100% weight for an unrated company, the IRB formula above, $`\alpha = 1.4`$, the 32% single-stock factor and the 120% supervisory volatility.
 
 ### Step 6: why KVA moves more than any other adjustment
 
@@ -167,7 +181,7 @@ hurdle 8%                  ████████████                 
 charge only h - r = 5%     ███████                                 0.0512
 ```
 
-The smallest is a fifth of the largest. "Charge only $h - r$" is a real argument: capital sits in riskless assets and earns $r$, so only the excess over $r$ is a cost. "Discount at $r + h$" is another: shareholders discount the cost stream at their own required return. "Frozen" holds capital at today's \$1.033425 instead of letting it grow with $\mathrm{EE}(t)$. The capital rule dominates. Which rule applies is set by the regulator, not by the desk.
+The smallest is a fifth of the largest. "Charge only $`h - r`$" is a real argument: capital sits in riskless assets and earns $`r`$, so only the excess over $`r`$ is a cost. "Discount at $`r + h`$" is another: shareholders discount the cost stream at their own required return. "Frozen" holds capital at today's \$1.033425 instead of letting it grow with $`\mathrm{EE}(t)`$. The capital rule dominates. Which rule applies is set by the regulator, not by the desk.
 
 ---
 
@@ -177,15 +191,15 @@ The Acme call: Acme at \$100, strike \$100, riskless rate 5%, dividend yield 2%,
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| clean call $C_0$ | Black-Scholes, house market | 9.227006 |
-| exposure at default today | $1.4 \times 9.227006$ | 12.917808 |
-| capital today | $0.08 \times 100\% \times 12.917808$ | 1.033425 |
-| yearly cost of that capital | $0.10 \times 1.033425$ | 0.103342 |
-| survival-weighted life | $(1 - e^{-0.02}) / 0.02$ | 0.990066 |
-| **KVA** | $0.103342 \times 0.990066$ | **0.102316** |
+| clean call $`C_0`$ | Black-Scholes, house market | 9.227006 |
+| exposure at default today | $`1.4 \times 9.227006`$ | 12.917808 |
+| capital today | $`0.08 \times 100\% \times 12.917808`$ | 1.033425 |
+| yearly cost of that capital | $`0.10 \times 1.033425`$ | 0.103342 |
+| survival-weighted life | $`(1 - e^{-0.02}) / 0.02`$ | 0.990066 |
+| **KVA** | $`0.103342 \times 0.990066`$ | **0.102316** |
 | 52-week bucketed sum | weekly expected capital × discount × survival × hurdle, added | 0.102316 |
 | simulated dates | 100,000 draws | 0.102054 |
-| CVA, for scale | $0.60 \times 9.227006 \times (1 - e^{-0.02})$ | 0.109624 |
+| CVA, for scale | $`0.60 \times 9.227006 \times (1 - e^{-0.02})`$ | 0.109624 |
 
 The desk should charge about 10 cents on the \$9.23 call to pay shareholders for the \$1.03 of capital it locks up for a year. Together with CVA, the Northwind trade carries 0.211940, about 21 cents, of adjustments before funding is counted.
 
@@ -196,8 +210,8 @@ Same trade, correct KVA 0.102316.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | No survival: capital held a full year | 0.103342 | Charges for a year of capital a defaulted trade no longer needs |
-| No $\alpha$: capital on the value, not 1.4 times it | 0.073083 | Drops the regulator's cushion on exposure |
-| No discounting: $\mathrm{EE}(t)$ in that date's dollars | 0.104908 | Treats next year's cost as if paid today |
+| No $`\alpha`$: capital on the value, not 1.4 times it | 0.073083 | Drops the regulator's cushion on exposure |
+| No discounting: $`\mathrm{EE}(t)`$ in that date's dollars | 0.104908 | Treats next year's cost as if paid today |
 | Hurdle charged on the whole EAD | 1.278949 | Treats all \$12.92 of exposure as shareholders' money; only 8% of it is |
 
 Every number in that table is printed by the checks.
@@ -211,7 +225,7 @@ The script prices the call, then reaches KVA by three independent roads: the clo
 1. the weekly sum against the closed form;
 2. the simulation against the closed form, within four standard errors;
 3. the two SA-CCR roads against each other;
-4. the averaged payoff at expiry against $C_0$ grown at $r$;
+4. the averaged payoff at expiry against $`C_0`$ grown at $`r`$;
 5. the IRB capital against the Vasicek card's \$10.22 per \$100.
 
 Breaking the survival weight, the discounting or the price drift trips the first; breaking the Basel correlation trips the last.
@@ -628,11 +642,11 @@ ALL CHECKS PASS
 
 Lean proves the KVA formula, its closed form for a bought option, and its link to CVA, for any rates, hazard and expiry.
 
-- Suppose capital is never negative, and Northwind's default date $\tau$ is independent of the capital $K(t)$ at each date. Then the average capital cost up to $\min(\tau, T)$ equals the KVA formula, with $Q(t)$ the chance of surviving past $t$.
-- Take a payoff $X$ that is never negative, capital $c\,V(t)$, and a hazard $\lambda > 0$. Then $\mathrm{KVA} = h\,c\,C_0\,(1 - e^{-\lambda T})/\lambda$, for any hurdle and any riskless rate.
-- Suppose $R < 1$ and $\lambda > 0$. Then KVA equals CVA times the ratio of running rates, $h\,c / ((1-R)\,\lambda)$.
-- Capital per dollar of value is exactly $0.08 \times 1 \times 1.4 = 0.112$.
-- The running rates are exactly 1.2% for CVA and 1.12% for KVA, and their ratio is $14/15$, which is 0.933333.
+- Suppose capital is never negative, and Northwind's default date $`\tau`$ is independent of the capital $`K(t)`$ at each date. Then the average capital cost up to $`\min(\tau, T)`$ equals the KVA formula, with $`Q(t)`$ the chance of surviving past $`t`$.
+- Take a payoff $`X`$ that is never negative, capital $`c\,V(t)`$, and a hazard $`\lambda > 0`$. Then $`\mathrm{KVA} = h\,c\,C_0\,(1 - e^{-\lambda T})/\lambda`$, for any hurdle and any riskless rate.
+- Suppose $`R < 1`$ and $`\lambda > 0`$. Then KVA equals CVA times the ratio of running rates, $`h\,c / ((1-R)\,\lambda)`$.
+- Capital per dollar of value is exactly $`0.08 \times 1 \times 1.4 = 0.112`$.
+- The running rates are exactly 1.2% for CVA and 1.12% for KVA, and their ratio is $`14/15`$, which is 0.933333.
 - Charging the hurdle on the whole EAD gives exactly 12.5 times the KVA.
 
 The Black–Scholes price, the IRB and SA-CCR rules, and all simulated numbers are left to the Python and Rust checks.
@@ -845,5 +859,5 @@ This card prices capital alone; what it leaves open is whether the capital itsel
 Verified 2026-09-28: every link below resolves to the publisher's page.
 
 - Green, Andrew, and Chris Kenyon. *KVA: Capital Valuation Adjustment* (2014). [arXiv:1405.0515](https://arxiv.org/abs/1405.0515). Adds the cost of capital to the replication argument for CVA and FVA, with the capital projected under Basel rules; the source of the KVA integral.
-- Basel Committee on Banking Supervision. *The standardised approach for measuring counterparty credit risk exposures* (March 2014). [BIS page](https://www.bis.org/publ/bcbs279.htm). SA-CCR: $\alpha = 1.4$, replacement cost plus add-on, the 32% equity factor, the 120% supervisory volatility and the maturity factor used in Step 5.
+- Basel Committee on Banking Supervision. *The standardised approach for measuring counterparty credit risk exposures* (March 2014). [BIS page](https://www.bis.org/publ/bcbs279.htm). SA-CCR: $`\alpha = 1.4`$, replacement cost plus add-on, the 32% equity factor, the 120% supervisory volatility and the maturity factor used in Step 5.
 - Basel Committee on Banking Supervision. *An Explanatory Note on the Basel II IRB Risk Weight Functions* (July 2005). [BIS page](https://www.bis.org/bcbs/irbriskweight.htm). The IRB capital formula, its correlation and its maturity adjustment.

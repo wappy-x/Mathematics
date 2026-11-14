@@ -36,38 +36,44 @@ The lower line is the 1/t^2 tap, levelling off at 1 litre. The climbing line is 
 
 ## The formula
 
-Notation first, in words. The sign $\infty$, read "infinity", is not a number: as an integral's upper end it means no end; in a limit, B growing past every number. A small plus after the 0 under a limit says the cut-off approaches 0 from above.
+Notation first, in words. The sign $`\infty`$, read "infinity", is not a number: as an integral's upper end it means no end; in a limit, B growing past every number. A small plus after the 0 under a limit says the cut-off approaches 0 from above.
 
 The first kind, an endless interval:
 
-$$\int_a^\infty f(t)\,dt = \lim_{B\to\infty} \int_a^B f(t)\,dt$$
+```math
+\int_a^\infty f(t)\,dt = \lim_{B\to\infty} \int_a^B f(t)\,dt
+```
 
 **Read it aloud:** the total from a for ever is where the total from a to B heads as B grows without bound.
 
 The second kind, a spike at 0:
 
-$$\int_0^1 f(t)\,dt = \lim_{s\to 0^+} \int_s^1 f(t)\,dt$$
+```math
+\int_0^1 f(t)\,dt = \lim_{s\to 0^+} \int_s^1 f(t)\,dt
+```
 
 **Read it aloud:** the total up to a spike is where the total from s to 1 heads as the gap s closes.
 
 The power rule, the usual yardstick:
 
-$$\int_1^\infty \frac{dt}{t^p} = \frac{1}{p-1} \text{ if } p > 1, \qquad \int_0^1 \frac{dt}{t^p} = \frac{1}{1-p} \text{ if } p < 1$$
+```math
+\int_1^\infty \frac{dt}{t^p} = \frac{1}{p-1} \text{ if } p > 1, \qquad \int_0^1 \frac{dt}{t^p} = \frac{1}{1-p} \text{ if } p < 1
+```
 
 and each diverges otherwise, p = 1 included.
 
-The comparison test: if $0 \le f(t) \le g(t)$ from some point on, a finite total for g forces one for f, and an endless total for f forces one for g.
+The comparison test: if $`0 \le f(t) \le g(t)`$ from some point on, a finite total for g forces one for f, and an endless total for f forces one for g.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $g$ | a rate in litres a minute; a larger rate it is compared with | 1/(t^2 + t) under 1/t^2 | a bigger total |
-| $t$ | time in minutes, the variable inside | minute 1 onwards | — |
-| $a$ | the fixed, well-behaved end | minute 1 | less water |
-| $B$, $B_0$ | a far cut-off in minutes; $B_0$ one fixed in the proof | 10, 100, 1000 | more of the tail collected |
-| $s$ | a near cut-off: the gap left beside a spike | 0.01, 0.0001 | more of the spike left out |
-| $p$ | the power in 1/t^p: how fast the rate fades | 2, then 1 | a smaller total far out |
-| $\infty$ | no end: a direction, not a number | taps never shut | — |
-| $F$, $G$, $L$ | f's running total; g's full total; F's limit, in the proof | 1 litre for G | — |
+| $`f`$, $`g`$ | a rate in litres a minute; a larger rate it is compared with | 1/(t^2 + t) under 1/t^2 | a bigger total |
+| $`t`$ | time in minutes, the variable inside | minute 1 onwards | — |
+| $`a`$ | the fixed, well-behaved end | minute 1 | less water |
+| $`B`$, $`B_0`$ | a far cut-off in minutes; $`B_0`$ one fixed in the proof | 10, 100, 1000 | more of the tail collected |
+| $`s`$ | a near cut-off: the gap left beside a spike | 0.01, 0.0001 | more of the spike left out |
+| $`p`$ | the power in 1/t^p: how fast the rate fades | 2, then 1 | a smaller total far out |
+| $`\infty`$ | no end: a direction, not a number | taps never shut | — |
+| $`F`$, $`G`$, $`L`$ | f's running total; g's full total; F's limit, in the proof | 1 litre for G | — |
 
 ### When it holds
 
@@ -90,7 +96,9 @@ An ordinary integral needs finitely many strips of finite height; an endless int
 
 The rate 1/t^2 has antiderivative −1/t, since the rate of −1/t is 1/t^2. On 1 to B:
 
-$$\int_1^B \frac{dt}{t^2} = -\frac{1}{B} - \left(-\frac{1}{1}\right) = 1 - \frac{1}{B}$$
+```math
+\int_1^B \frac{dt}{t^2} = -\frac{1}{B} - \left(-\frac{1}{1}\right) = 1 - \frac{1}{B}
+```
 
 The shortfall from 1 is exactly 1/B, the water still to come. The tolerance game: to land within 0.001 litres of 1, need B at least 1000. At B = 999 the shortfall is 0.001001, too big; at B = 1000, 0.001000. Every target is met by a large enough B, so the limit is 1 litre.
 
@@ -110,13 +118,17 @@ The rate must fade faster than the blocks grow.
 
 For p other than 1, the rate of t^(1−p)/(1−p) is t^−p, so
 
-$$\int_1^B \frac{dt}{t^p} = \frac{B^{1-p} - 1}{1-p}$$
+```math
+\int_1^B \frac{dt}{t^p} = \frac{B^{1-p} - 1}{1-p}
+```
 
 When p > 1, B^(1−p) heads for 0 and the total for 1/(p − 1). When p < 1, B^(1−p) grows without bound; at p = 1 the total is ln B, unbounded too. In blocks: each doubling block holds 2^(1−p) times the last, a shrinking factor exactly when p > 1.
 
 Near 0, for a gap s,
 
-$$\int_s^1 \frac{dt}{t^p} = \frac{1 - s^{1-p}}{1-p}$$
+```math
+\int_s^1 \frac{dt}{t^p} = \frac{1 - s^{1-p}}{1-p}
+```
 
 and s^(1−p) heads for 0 exactly when p < 1: the rule flips.
 
@@ -135,11 +147,11 @@ Turned round: 1/√t is at least 1/t from minute 1, so it diverges; its totals 2
 <details>
 <summary>Detailed proof</summary>
 
-**Claim.** Let f and g be integrable from a to every B, with $0 \le f(t) \le g(t)$ for t ≥ a. If g's integral from a to infinity converges to G, f's converges, to at most G.
+**Claim.** Let f and g be integrable from a to every B, with $`0 \le f(t) \le g(t)`$ for t ≥ a. If g's integral from a to infinity converges to G, f's converges, to at most G.
 
-**Proof.** Write F(B) for the integral of f from a to B. For B < C, F(C) − F(B) is f's integral from B to C, at least 0, so F never falls. By the comparison property F(B) is at most g's integral to B, itself at most G. So F has an upper bound, and by the no-gaps property a least upper bound $L$.
+**Proof.** Write F(B) for the integral of f from a to B. For B < C, F(C) − F(B) is f's integral from B to C, at least 0, so F never falls. By the comparison property F(B) is at most g's integral to B, itself at most G. So F has an upper bound, and by the no-gaps property a least upper bound $`L`$.
 
-Take any target closeness $\varepsilon > 0$, the 0.001 of Step 1 made general. $L - \varepsilon$ is not an upper bound, so some $B_0$ has $F(B_0) > L - \varepsilon$. For every B beyond $B_0$, $L - \varepsilon < F(B_0) \le F(B) \le L$. So the limit is $L$, and $L \le G$.
+Take any target closeness $`\varepsilon > 0`$, the 0.001 of Step 1 made general. $`L - \varepsilon`$ is not an upper bound, so some $`B_0`$ has $`F(B_0) > L - \varepsilon`$. For every B beyond $`B_0`$, $`L - \varepsilon < F(B_0) \le F(B) \le L`$. So the limit is $`L`$, and $`L \le G`$.
 
 **The other half.** If f's integral diverges, F is unbounded (a bounded, never-falling F converges), so g's running total, at least F(B), is too. A gap s closing on a spike in place of B gives the second kind.
 

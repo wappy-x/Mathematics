@@ -37,44 +37,52 @@ Rising curve: the option's price as the volatility dial turns, in dollar pips. M
 
 ## The formula
 
-Notation first, in words. A subscript d marks the domestic currency, the one the price is counted in: dollars. A subscript f marks the foreign currency, the one being bought: euros. The spot $S$ is dollars per euro.
+Notation first, in words. A subscript d marks the domestic currency, the one the price is counted in: dollars. A subscript f marks the foreign currency, the one being bought: euros. The spot $`S`$ is dollars per euro.
 
-$$C(\sigma) = S\,e^{-r_f T}\,N(d_1) - K\,e^{-r_d T}\,N(d_2), \qquad \text{find } \sigma_{\text{imp}} \text{ with } C(\sigma_{\text{imp}}) = C_{\text{mkt}}.$$
+```math
+C(\sigma) = S\,e^{-r_f T}\,N(d_1) - K\,e^{-r_d T}\,N(d_2), \qquad \text{find } \sigma_{\text{imp}} \text{ with } C(\sigma_{\text{imp}}) = C_{\text{mkt}}.
+```
 
 **Read it aloud:** the implied vol is the setting of the volatility dial at which the Garman-Kohlhagen price of the euro call, in dollars per euro, equals the quote converted to dollars per euro.
 
 The answer exists exactly inside this range:
 
-$$\max(A - B,\,0) \;<\; C_{\text{mkt}} \;<\; A, \qquad A = S\,e^{-r_f T}, \quad B = K\,e^{-r_d T}.$$
+```math
+\max(A - B,\,0) \;<\; C_{\text{mkt}} \;<\; A, \qquad A = S\,e^{-r_f T}, \quad B = K\,e^{-r_d T}.
+```
 
 **Read it aloud:** the quote must beat what the option is worth when nothing is random, and must stay below what a euro delivered at expiry costs today.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | spot: dollars paid for one euro today | 1.1000 | implied vol falls for the same quote |
-| $K$ | strike: dollars per euro fixed in the contract | 1.1000 | implied vol rises for the same quote |
-| $r_d$, $r_f$ | dollar and euro interest rates, continuously compounded, per year | 5%, 3% | move the floor and ceiling |
-| $T$ | time to expiry, in years | 1 | the same quote implies a lower vol |
-| $\sigma$, $w$, $w_0$, $w_1$, $m$ | volatility: the yearly spread of the log exchange rate, a decimal; in the proof, $w = \sigma\sqrt{T}$ is the total swing, $w_0$ and $w_1$ a small and a large one, $m = \ln(F/K)$ | the dial being turned; $m = 0.02$ | the price rises |
-| $\sigma_{\text{imp}}$ | implied vol: the $\sigma$ that matches the quote | 0.100000 | |
-| $C_{\text{mkt}}$, $C$, $P$ | the quote in dollars per euro; the formula's call price $C(\sigma)$; the matching put's price | 0.053556; 0.053556 at 10%; 0.032418 | implied vol rises |
-| $A$, $B$, $F$ | $A$: a euro delivered at expiry, costed today. $B$: the strike's dollars, discounted. $F = S e^{(r_d - r_f)T}$: the forward rate | 1.067490, 1.046352, 1.122221 | |
-| $d_1$, $d_2$ | the formula's two distances to the strike, in units of $\sigma\sqrt{T}$ | 0.25, 0.15 at 10% | |
-| $N(x)$, $\varphi(x)$ | bell-curve area left of $x$, and the bell curve's height at $x$ | $N(0.25) = 0.598706$ | |
-| $\nu$ | vega: dollars per euro gained per unit of $\sigma$ | 0.412764 | Newton's steps shrink |
-| $\sigma_0$ | the solver's starting guess | 0.20 | |
+| $`S`$ | spot: dollars paid for one euro today | 1.1000 | implied vol falls for the same quote |
+| $`K`$ | strike: dollars per euro fixed in the contract | 1.1000 | implied vol rises for the same quote |
+| $`r_d`$, $`r_f`$ | dollar and euro interest rates, continuously compounded, per year | 5%, 3% | move the floor and ceiling |
+| $`T`$ | time to expiry, in years | 1 | the same quote implies a lower vol |
+| $`\sigma`$, $`w`$, $`w_0`$, $`w_1`$, $`m`$ | volatility: the yearly spread of the log exchange rate, a decimal; in the proof, $`w = \sigma\sqrt{T}`$ is the total swing, $`w_0`$ and $`w_1`$ a small and a large one, $`m = \ln(F/K)`$ | the dial being turned; $`m = 0.02`$ | the price rises |
+| $`\sigma_{\text{imp}}`$ | implied vol: the $`\sigma`$ that matches the quote | 0.100000 | |
+| $`C_{\text{mkt}}`$, $`C`$, $`P`$ | the quote in dollars per euro; the formula's call price $`C(\sigma)`$; the matching put's price | 0.053556; 0.053556 at 10%; 0.032418 | implied vol rises |
+| $`A`$, $`B`$, $`F`$ | $`A`$: a euro delivered at expiry, costed today. $`B`$: the strike's dollars, discounted. $`F = S e^{(r_d - r_f)T}`$: the forward rate | 1.067490, 1.046352, 1.122221 | |
+| $`d_1`$, $`d_2`$ | the formula's two distances to the strike, in units of $`\sigma\sqrt{T}`$ | 0.25, 0.15 at 10% | |
+| $`N(x)`$, $`\varphi(x)`$ | bell-curve area left of $`x`$, and the bell curve's height at $`x`$ | $`N(0.25) = 0.598706`$ | |
+| $`\nu`$ | vega: dollars per euro gained per unit of $`\sigma`$ | 0.412764 | Newton's steps shrink |
+| $`\sigma_0`$ | the solver's starting guess | 0.20 | |
 
 The helpers, as on [Garman-Kohlhagen](01-garman-kohlhagen.md):
 
-$$d_1 = \frac{\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \nu = S\,e^{-r_f T}\,\varphi(d_1)\sqrt{T}.$$
+```math
+d_1 = \frac{\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \nu = S\,e^{-r_f T}\,\varphi(d_1)\sqrt{T}.
+```
 
-In words: $d_2$ counts how many standard swings separate the strike from where the rate is expected to end; $d_1$ is one swing more. Vega, from [The Greeks of a currency option](03-garman-kohlhagen-greeks.md), is a euro's discounted cost times a bell-curve height times a square root: every factor positive.
+In words: $`d_2`$ counts how many standard swings separate the strike from where the rate is expected to end; $`d_1`$ is one swing more. Vega, from [The Greeks of a currency option](03-garman-kohlhagen-greeks.md), is a euro's discounted cost times a bell-curve height times a square root: every factor positive.
 
 The solver's start is the volatility where the price curve bends from curving up to curving down:
 
-$$\sigma_0 = \sqrt{\frac{2\,\lvert \ln(F/K) \rvert}{T}}.$$
+```math
+\sigma_0 = \sqrt{\frac{2\,\lvert \ln(F/K) \rvert}{T}}.
+```
 
-In words: the larger the gap between forward and strike, in logs, the higher the start. Here $\ln(F/K) = 0.02$, so the start is 0.20. When $F = K$ the formula gives zero, and the solver starts at the bracket's midpoint instead.
+In words: the larger the gap between forward and strike, in logs, the higher the start. Here $`\ln(F/K) = 0.02`$, so the start is 0.20. When $`F = K`$ the formula gives zero, and the solver starts at the bracket's midpoint instead.
 
 ### When it holds
 
@@ -102,17 +110,17 @@ The option is written on one euro and struck in dollars. The four forms of its p
 | Form | What it counts | Convert to dollars per euro | House value |
 | --- | --- | --- | --- |
 | USD pips | ten-thousandths of a dollar, per euro | divide by 10,000 | 535.557706 |
-| % of EUR | euros paid, per 100 euros of notional | divide by 100, times $S$ | 4.868706% |
-| % of USD | dollars paid, per 100 dollars of notional ($K$ dollars per euro) | divide by 100, times $K$ | 4.868706% |
-| EUR pips | ten-thousandths of a euro, per dollar of notional | divide by 10,000, times $S$ and $K$ | 442.609675 |
+| % of EUR | euros paid, per 100 euros of notional | divide by 100, times $`S`$ | 4.868706% |
+| % of USD | dollars paid, per 100 dollars of notional ($`K`$ dollars per euro) | divide by 100, times $`K`$ | 4.868706% |
+| EUR pips | ten-thousandths of a euro, per dollar of notional | divide by 10,000, times $`S`$ and $`K`$ | 442.609675 |
 
 The two percentages agree here only because the strike equals the spot. The quotes 535.6 pips and 4.869 percent are rounded forms of the exact premium. Rounding moves them off it by a few millionths of a dollar per euro, and a few millionths of a dollar are about a thousandth of a vol point. Solved, they give 10.0010 and 10.0008 percent. All three read 10.00 percent.
 
 ### Step 2: the floor and the ceiling
 
-Turn volatility to zero. The euro then grows like a deposit, at the dollar rate minus the euro rate, and lands on the forward $F = 1.122221$. The call pays $F - K$ for certain. Discounted, that is $A - B = 1.067490 - 1.046352 = 0.021138$ dollars per euro: the floor. When the forward sits below the strike, the floor is zero instead. Hence the $\max$.
+Turn volatility to zero. The euro then grows like a deposit, at the dollar rate minus the euro rate, and lands on the forward $`F = 1.122221`$. The call pays $`F - K`$ for certain. Discounted, that is $`A - B = 1.067490 - 1.046352 = 0.021138`$ dollars per euro: the floor. When the forward sits below the strike, the floor is zero instead. Hence the $`\max`$.
 
-Turn volatility up without limit. Now $d_1$ runs to plus infinity and $d_2$ to minus infinity, so the price tends to $A = 1.067490$: the cost today of a euro delivered in a year. The call pays less than the euro it could deliver, so it costs less than $A$.
+Turn volatility up without limit. Now $`d_1`$ runs to plus infinity and $`d_2`$ to minus infinity, so the price tends to $`A = 1.067490`$: the cost today of a euro delivered in a year. The call pays less than the euro it could deliver, so it costs less than $`A`$.
 
 Both bounds are also arbitrage bounds, the edges of risk-free profit. Suppose a bank quotes 0.0200. On day one:
 
@@ -122,30 +130,30 @@ Both bounds are also arbitrage bounds, the edges of risk-free profit. Suppose a 
 
 The 0.0200 premium leaves 0.001138 dollars in hand today. At expiry, if the euro is above 1.1000, exercise: pay the deposit's 1.1000 for the euro that repays the loan. If below, buy the euro in the market for less than 1.1000 and keep the change.
 
-Nothing can go wrong, and 0.001138 was taken on day one. A quote above $A$ gives the mirror trade: sell the call, buy the prepaid euro, deliver it if asked.
+Nothing can go wrong, and 0.001138 was taken on day one. A quote above $`A`$ gives the mirror trade: sell the call, buy the prepaid euro, deliver it if asked.
 
 ### Step 3: the price always climbs
 
-Vega, $\nu = A\,\varphi(d_1)\sqrt{T}$, is a positive cost times a positive height times a positive root. So vega is strictly positive at every volatility, and two different volatilities never give the same price. At 10 percent it is 0.412764 dollars per euro per unit of volatility; bumping the dial to 10.01 and 9.99 percent gives the same slope, 0.412764.
+Vega, $`\nu = A\,\varphi(d_1)\sqrt{T}`$, is a positive cost times a positive height times a positive root. So vega is strictly positive at every volatility, and two different volatilities never give the same price. At 10 percent it is 0.412764 dollars per euro per unit of volatility; bumping the dial to 10.01 and 9.99 percent gives the same slope, 0.412764.
 
 <details>
 <summary>Detailed proof: a vol exists exactly inside the bounds, and only one</summary>
 
-Write $w = \sigma\sqrt{T} > 0$ for the total swing and $m = \ln(A/B) = \ln(F/K)$ for the forward's distance above the strike, in logs. Then $d_1 = m/w + w/2$, $d_2 = m/w - w/2$ and $C(w) = A\,N(d_1) - B\,N(d_2)$.
+Write $`w = \sigma\sqrt{T} > 0`$ for the total swing and $`m = \ln(A/B) = \ln(F/K)`$ for the forward's distance above the strike, in logs. Then $`d_1 = m/w + w/2`$, $`d_2 = m/w - w/2`$ and $`C(w) = A\,N(d_1) - B\,N(d_2)`$.
 
-**An identity.** $d_1^2 - d_2^2 = (d_1 + d_2)(d_1 - d_2) = (2m/w)\,w = 2m$. So $\varphi(d_1)/\varphi(d_2) = e^{-m} = B/A$, which gives $A\,\varphi(d_1) = B\,\varphi(d_2)$.
+**An identity.** $`d_1^2 - d_2^2 = (d_1 + d_2)(d_1 - d_2) = (2m/w)\,w = 2m`$. So $`\varphi(d_1)/\varphi(d_2) = e^{-m} = B/A`$, which gives $`A\,\varphi(d_1) = B\,\varphi(d_2)`$.
 
-**The slope.** $N$ has slope $\varphi$. So $C'(w) = A\varphi(d_1)\,d_1' - B\varphi(d_2)\,d_2' = A\varphi(d_1)(d_1' - d_2') = A\varphi(d_1)$, since $d_1 - d_2 = w$. Hence $\partial C/\partial\sigma = A\,\varphi(d_1)\sqrt{T} > 0$. The put, $P(w) = B\,N(-d_2) - A\,N(-d_1)$, has the same slope.
+**The slope.** $`N`$ has slope $`\varphi`$. So $`C'(w) = A\varphi(d_1)\,d_1' - B\varphi(d_2)\,d_2' = A\varphi(d_1)(d_1' - d_2') = A\varphi(d_1)`$, since $`d_1 - d_2 = w`$. Hence $`\partial C/\partial\sigma = A\,\varphi(d_1)\sqrt{T} > 0`$. The put, $`P(w) = B\,N(-d_2) - A\,N(-d_1)`$, has the same slope.
 
-**Small swing.** If $m > 0$, both $d$ values go to $+\infty$ as $w \to 0$, so $C \to A - B$. If $m < 0$, both go to $-\infty$ and $C \to 0$. If $m = 0$, both go to 0 and $C \to (A - B)/2 = 0$. In each case $C \to \max(A - B, 0)$.
+**Small swing.** If $`m > 0`$, both $`d`$ values go to $`+\infty`$ as $`w \to 0`$, so $`C \to A - B`$. If $`m < 0`$, both go to $`-\infty`$ and $`C \to 0`$. If $`m = 0`$, both go to 0 and $`C \to (A - B)/2 = 0`$. In each case $`C \to \max(A - B, 0)`$.
 
-**Large swing.** As $w \to \infty$, $m/w \to 0$, so $d_1 \to +\infty$, $d_2 \to -\infty$ and $C \to A$.
+**Large swing.** As $`w \to \infty`$, $`m/w \to 0`$, so $`d_1 \to +\infty`$, $`d_2 \to -\infty`$ and $`C \to A`$.
 
-**Existence.** Take $\max(A - B, 0) < C_{\text{mkt}} < A$. By the two limits, some small $w_0$ prices below the quote and some large $w_1$ above. $C$ is continuous, so the intermediate value theorem gives a $w$ between them with $C(w) = C_{\text{mkt}}$.
+**Existence.** Take $`\max(A - B, 0) < C_{\text{mkt}} < A`$. By the two limits, some small $`w_0`$ prices below the quote and some large $`w_1`$ above. $`C`$ is continuous, so the intermediate value theorem gives a $`w`$ between them with $`C(w) = C_{\text{mkt}}`$.
 
-**Uniqueness.** If $w < w'$ both matched, the mean value theorem would give a point between with $C' = 0$, against $C' > 0$.
+**Uniqueness.** If $`w < w'`$ both matched, the mean value theorem would give a point between with $`C' = 0`$, against $`C' > 0`$.
 
-**The ends are never reached.** For each $w$, $C(w/2) < C(w) < C(2w)$ by strict increase, and the outer two stay within the limits. So every price lies strictly inside, and a quote at or outside either end has no positive, finite volatility. Then $\sigma_{\text{imp}} = w/\sqrt{T}$.
+**The ends are never reached.** For each $`w`$, $`C(w/2) < C(w) < C(2w)`$ by strict increase, and the outer two stay within the limits. So every price lies strictly inside, and a quote at or outside either end has no positive, finite volatility. Then $`\sigma_{\text{imp}} = w/\sqrt{T}`$.
 
 </details>
 
@@ -176,7 +184,7 @@ The loop ends when the price error falls below a hundred-trillionth. The refusal
 
 The option to buy one euro for 1.1000 dollars is also the option to sell 1.1000 dollars for one euro. Seen from Frankfurt, it is a put on the dollar. There the spot is 0.909091 euros per dollar, the strike is its reciprocal, the domestic rate is the euro's 3 percent and the foreign rate is the dollar's 5 percent. Its premium, per dollar of notional, is 442.609675 euro pips.
 
-Inverting that put on its own formula gives 0.100000 again. The reason: the log of euros-per-dollar is minus the log of dollars-per-euro, so the two spreads are the same size. The full symmetry is on [One option, two currencies](02-premium-currency-and-foreign-domestic-symmetry.md). A third road uses parity: the dollar put at the same strike costs $C - (A - B) = 0.032418$, and inverting it on the put formula gives 0.100000 too.
+Inverting that put on its own formula gives 0.100000 again. The reason: the log of euros-per-dollar is minus the log of dollars-per-euro, so the two spreads are the same size. The full symmetry is on [One option, two currencies](02-premium-currency-and-foreign-domestic-symmetry.md). A third road uses parity: the dollar put at the same strike costs $`C - (A - B) = 0.032418`$, and inverting it on the put formula gives 0.100000 too.
 
 The general inverse, with a share and a dividend in place of the euro and its rate, is [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md); root-finders in general, bracketing included, are on [Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md).
 
@@ -184,21 +192,21 @@ The general inverse, with a share and a dividend in place of the euro and its ra
 
 ## Worked numbers, by hand
 
-EURUSD: $S = K = 1.1000$, $r_d = 5\%$, $r_f = 3\%$, $T = 1$, quote 535.6 USD pips.
+EURUSD: $`S = K = 1.1000`$, $`r_d = 5\%`$, $`r_f = 3\%`$, $`T = 1`$, quote 535.6 USD pips.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | quote in USD per EUR | 535.6 ÷ 10,000 | 0.05356 |
-| euro delivered at expiry, $A$ | $1.1 \times e^{-0.03} = 1.1 \times 0.970446$ | 1.067490 |
-| strike's dollars today, $B$ | $1.1 \times e^{-0.05} = 1.1 \times 0.951229$ | 1.046352 |
-| floor, $\max(A - B, 0)$ | $1.067490 - 1.046352$ | 0.021138 |
-| inside? | $0.021138 < 0.05356 < 1.067490$ | yes: one answer |
-| start, $\sigma_0$ | $\sqrt{2 \times 0.02}$ | 0.20 |
-| check 10% (Step 4 shows the path from 0.20): $d_1$, $d_2$ | $(0 + 0.02 + 0.005)/0.10$, then less 0.10 | 0.25, 0.15 |
-| $N(d_1)$, $N(d_2)$ | bell-curve table | 0.598706, 0.559618 |
-| price at 10% | $1.067490 \times 0.598706 - 1.046352 \times 0.559618$ | 0.053556 |
-| vega at 10% | $1.067490 \times \varphi(0.25) \times 1$ | 0.412764 |
-| Newton from 10% | $0.10 + (0.05356 - 0.053556)/0.412764$ | 0.100010 |
+| euro delivered at expiry, $`A`$ | $`1.1 \times e^{-0.03} = 1.1 \times 0.970446`$ | 1.067490 |
+| strike's dollars today, $`B`$ | $`1.1 \times e^{-0.05} = 1.1 \times 0.951229`$ | 1.046352 |
+| floor, $`\max(A - B, 0)`$ | $`1.067490 - 1.046352`$ | 0.021138 |
+| inside? | $`0.021138 < 0.05356 < 1.067490`$ | yes: one answer |
+| start, $`\sigma_0`$ | $`\sqrt{2 \times 0.02}`$ | 0.20 |
+| check 10% (Step 4 shows the path from 0.20): $`d_1`$, $`d_2`$ | $`(0 + 0.02 + 0.005)/0.10`$, then less 0.10 | 0.25, 0.15 |
+| $`N(d_1)`$, $`N(d_2)`$ | bell-curve table | 0.598706, 0.559618 |
+| price at 10% | $`1.067490 \times 0.598706 - 1.046352 \times 0.559618`$ | 0.053556 |
+| vega at 10% | $`1.067490 \times \varphi(0.25) \times 1`$ | 0.412764 |
+| Newton from 10% | $`0.10 + (0.05356 - 0.053556)/0.412764`$ | 0.100010 |
 | **implied vol** | | **10.00%** |
 
 The market is charging for a euro-dollar rate that swings about 10 percent a year. One vol point, 0.01 of volatility, moves this premium by a hundredth of vega: 0.004128 dollars per euro, about 41 pips.
@@ -234,7 +242,7 @@ At the strike equal to spot, swapping the rates prices the call exactly as the d
 
 ## Code, from first principles, and it actually runs
 
-The code reaches the implied vol by four roads. Road 1 is the bracketed Newton solver on the Garman-Kohlhagen formula, fed the exact premium and each of the three rounded quotes; the bell-curve area comes from a series in Python and from Simpson's rule in Rust. Road 2 halves the volatility range on a price built by averaging the payoff over the bell curve, with no $d_1$ or $d_2$. Road 3 inverts the mirror put from the euro side. Road 4 inverts the dollar put that parity gives. The code also refuses the 0.0200 quote, checks vega by bumping, prints every wrong answer above, and prints every chart point. Eight mutations were tried (swapping $N(d_1)$ and $N(d_2)$, halving the gap between $d_1$ and $d_2$, leaving the rates unswapped in the mirror, breaking the averaging drift, discounting vega at the wrong rate, flipping the bracket rule, lowering the floor, and letting a quote on a bound through); each one stops the run.
+The code reaches the implied vol by four roads. Road 1 is the bracketed Newton solver on the Garman-Kohlhagen formula, fed the exact premium and each of the three rounded quotes; the bell-curve area comes from a series in Python and from Simpson's rule in Rust. Road 2 halves the volatility range on a price built by averaging the payoff over the bell curve, with no $`d_1`$ or $`d_2`$. Road 3 inverts the mirror put from the euro side. Road 4 inverts the dollar put that parity gives. The code also refuses the 0.0200 quote, checks vega by bumping, prints every wrong answer above, and prints every chart point. Eight mutations were tried (swapping $`N(d_1)`$ and $`N(d_2)`$, halving the gap between $`d_1`$ and $`d_2`$, leaving the rates unswapped in the mirror, breaking the averaging drift, discounting vega at the wrong rate, flipping the bracket rule, lowering the floor, and letting a quote on a bound through); each one stops the run.
 
 ### Python
 
@@ -661,13 +669,13 @@ The two outputs agree line for line, including the twelve-decimal Newton path.
 
 Lean proves the bounds for one implied vol, the positive vega, the euro-side match and the hand arithmetic, for any positive spot, strike and time.
 
-- Take spot, strike and time all positive. Then exactly one positive volatility prices the call at the quote exactly when $\max(A - B, 0) < C_{\text{mkt}} < A$.
-- Take the same inputs and any positive volatility. Then the slope of the price against $\sigma$ is vega, $\nu = A\,\varphi(d_1)\sqrt{T}$, and $\nu > 0$.
-- Take the euro-side put, with spot $1/S$, strike $1/K$ and the two rates swapped. Then at each positive volatility, its premium $Q$ matches exactly when $S K Q$ matches the call. So both sides give the same implied vol.
+- Take spot, strike and time all positive. Then exactly one positive volatility prices the call at the quote exactly when $`\max(A - B, 0) < C_{\text{mkt}} < A`$.
+- Take the same inputs and any positive volatility. Then the slope of the price against $`\sigma`$ is vega, $`\nu = A\,\varphi(d_1)\sqrt{T}`$, and $`\nu > 0`$.
+- Take the euro-side put, with spot $`1/S`$, strike $`1/K`$ and the two rates swapped. Then at each positive volatility, its premium $`Q`$ matches exactly when $`S K Q`$ matches the call. So both sides give the same implied vol.
 - On the card's rounded figures, exact arithmetic confirms the quote, the floor, the inside test, the bad quote's gap and the start 0.20.
-- At 10 percent, $d_1 = 0.25$ and $d_2 = 0.15$, so $d_1^2 - d_2^2 = 2m$.
+- At 10 percent, $`d_1 = 0.25`$ and $`d_2 = 0.15`$, so $`d_1^2 - d_2^2 = 2m`$.
 - The Newton error 0.000004, the size of one vol point and the euro-pip conversion also check.
-- The parity put, $0.053556 - 0.021138$, equals 0.032418.
+- The parity put, $`0.053556 - 0.021138`$, equals 0.032418.
 
 The bell-curve values, the prices, the Newton path and the ladder of vols are left to the Python and Rust checks.
 
@@ -1040,7 +1048,7 @@ example : (53556 : ℚ) / 10 ^ 6 - 21138 / 10 ^ 6 = 32418 / 10 ^ 6 := by norm_nu
 > Guess the direction first.
 > - **Raise the quote to 600 pips.** Set the quote to 0.0600. Implied vol rises to **11.5574%**.
 > - **Give the euro the dollar's rate.** Set both rates to 5 percent with the same premium. Implied vol is **12.8386%**. The forward drops to the strike, the zero-volatility floor vanishes, and more of the premium must be paid for by swings.
-> - **Halve the time.** Keep the premium, set $T = 0.5$. Implied vol is **15.7801%**. Less time to swing, so the same price needs a bigger yearly swing.
+> - **Halve the time.** Keep the premium, set $`T = 0.5`$. Implied vol is **15.7801%**. Less time to swing, so the same price needs a bigger yearly swing.
 > - **Remove the bracket.** Start plain Newton at 1.5. The first step lands on **−0.180907**, a negative volatility that means nothing.
 
 ---

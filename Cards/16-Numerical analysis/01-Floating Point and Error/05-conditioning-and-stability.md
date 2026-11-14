@@ -39,37 +39,43 @@ The roads cross where a line passes 0. The orange line is the true bypass: it re
 
 A road written y = mx + c has slope m (metres north per metre east) and intercept c (where it crosses x = 0). Set the two roads equal and solve for x:
 
-$$x = \frac{c_2 - c_1}{m_1 - m_2}$$
+```math
+x = \frac{c_2 - c_1}{m_1 - m_2}
+```
 
 **Read it aloud:** the crossing is the gap at the start divided by how fast the gap closes.
 
 The **relative condition number** κ of a problem is the worst ratio of relative change in the answer to relative change in the data, for small changes. A **relative change** is a change divided by the value's own size, so a 0.1% misreading is a relative change of 0.001. For the crossing, with all four data off by the same small fraction, Step 2 below works out
 
-$$\kappa = \frac{|m_1| + |m_2|}{|m_1 - m_2|} + \frac{|c_1| + |c_2|}{|c_2 - c_1|}$$
+```math
+\kappa = \frac{|m_1| + |m_2|}{|m_1 - m_2|} + \frac{|c_1| + |c_2|}{|c_2 - c_1|}
+```
 
 **Read it aloud:** κ is the size of the slopes over their difference, plus the size of the intercepts over their difference.
 
-An **absolute** condition number, the change in the answer per unit change in the data, also exists. It carries units, so it cannot count digits; [Forward and backward error](06-forward-and-backward-error.md) uses one for a root and writes it $\kappa_{\text{abs}}$. On this card κ always means the relative one.
+An **absolute** condition number, the change in the answer per unit change in the data, also exists. It carries units, so it cannot count digits; [Forward and backward error](06-forward-and-backward-error.md) uses one for a root and writes it $`\kappa_{\text{abs}}`$. On this card κ always means the relative one.
 
 The rule it gives, when the data are off by a relative amount δ (delta) and the method is stable:
 
-$$\frac{|\hat x - x|}{|x|} \lesssim \kappa\,\delta$$
+```math
+\frac{|\hat x - x|}{|x|} \lesssim \kappa\,\delta
+```
 
 **Read it aloud:** the relative error in the computed crossing is at most about κ times the relative error in the data. The sign ≲ means "at most about": it holds to first order, for small δ.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $y$ | east and north coordinates on the plan; $x$ alone means the exact east coordinate of the crossing | 2,000 m | — |
-| $\hat x$ | "x-hat": the computed x, what the machine returns | 2,000 m, off by 9.09e-16 relative | — |
-| $m_1$, $c_1$ | the old road's slope and intercept | 0.1 and 0 m | moving $m_1$ toward $m_2$ sends x far away |
-| $m_2$, $c_2$ | the bypass's slope and intercept | 0.101 and −2 m | a steeper bypass crosses sooner |
-| $\kappa$ | condition number: how much the problem magnifies relative data error | 202 (fork), 4 (45-degree crossing) | more digits are at risk, about $\log_{10}\kappa$ of them |
-| $\delta$, $\delta_i$ | relative error in the data; $\delta_i$ is the relative rounding error of one operation in Step 3, at most u | 0.001 for a 0.1% misreading | the error in x grows about κ times as fast |
-| $d$, $\kappa_d$ | one datum, and its own share of κ (Step 1) | $m_2 = 0.101$ gives $\kappa_{m_2} = 101$ | that datum's errors matter more |
-| $\Delta x$ | the change in the crossing caused by a change in the data (Step 1) | −183.47 m for the slope read 0.1% high | — |
-| $\tilde m_i$, $\tilde c_i$ | "m-tilde", "c-tilde": slopes and intercepts moved just enough to absorb the roundings (Step 3) | within about 3u of the true data | — |
-| $u$ | unit roundoff, $2^{-53}$: the largest relative error of one rounding in a double | 1.11e-16 | — |
-| $a$ | the tiny x-coefficient of a stored road, $ax + y = 1$ | 6.123e-17 | larger $a$ makes the unswapped method less wrong |
+| $`x`$, $`y`$ | east and north coordinates on the plan; $`x`$ alone means the exact east coordinate of the crossing | 2,000 m | — |
+| $`\hat x`$ | "x-hat": the computed x, what the machine returns | 2,000 m, off by 9.09e-16 relative | — |
+| $`m_1`$, $`c_1`$ | the old road's slope and intercept | 0.1 and 0 m | moving $`m_1`$ toward $`m_2`$ sends x far away |
+| $`m_2`$, $`c_2`$ | the bypass's slope and intercept | 0.101 and −2 m | a steeper bypass crosses sooner |
+| $`\kappa`$ | condition number: how much the problem magnifies relative data error | 202 (fork), 4 (45-degree crossing) | more digits are at risk, about $`\log_{10}\kappa`$ of them |
+| $`\delta`$, $`\delta_i`$ | relative error in the data; $`\delta_i`$ is the relative rounding error of one operation in Step 3, at most u | 0.001 for a 0.1% misreading | the error in x grows about κ times as fast |
+| $`d`$, $`\kappa_d`$ | one datum, and its own share of κ (Step 1) | $`m_2 = 0.101`$ gives $`\kappa_{m_2} = 101`$ | that datum's errors matter more |
+| $`\Delta x`$ | the change in the crossing caused by a change in the data (Step 1) | −183.47 m for the slope read 0.1% high | — |
+| $`\tilde m_i`$, $`\tilde c_i`$ | "m-tilde", "c-tilde": slopes and intercepts moved just enough to absorb the roundings (Step 3) | within about 3u of the true data | — |
+| $`u`$ | unit roundoff, $`2^{-53}`$: the largest relative error of one rounding in a double | 1.11e-16 | — |
+| $`a`$ | the tiny x-coefficient of a stored road, $`ax + y = 1`$ | 6.123e-17 | larger $`a`$ makes the unswapped method less wrong |
 
 The unit roundoff and the rounding model come from [Machine epsilon and cancellation](03-rounding-cancellation-and-machine-epsilon.md): every stored number and every result of +, −, ×, ÷ is off by a relative amount of at most u.
 
@@ -86,28 +92,30 @@ The unit roundoff and the rounding model come from [Machine epsilon and cancella
 
 ### Step 0: a difference of nearly equal numbers keeps their errors and loses their size
 
-The crossing depends on $m_1 - m_2 = -0.001$. The slopes are about 0.1, but their difference is a hundred times smaller. A 0.1% error in 0.101 is 0.000101, which is a 10.1% error in the difference. Division by the difference passes that 10.1% to x, to first order. The exact move is 9.17%.
+The crossing depends on $`m_1 - m_2 = -0.001`$. The slopes are about 0.1, but their difference is a hundred times smaller. A 0.1% error in 0.101 is 0.000101, which is a 10.1% error in the difference. Division by the difference passes that 10.1% to x, to first order. The exact move is 9.17%.
 
 This is cancellation, met for subtractions in [Cancellation](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/02-catastrophic-cancellation-and-safe-formulas.md). Here it is built into the problem, not into a formula. Any method that answers this question must, in effect, take that difference. That is why exact arithmetic gives the same 1,816.53 m.
 
 ### Step 1: for one datum, κ is slope times size over answer
 
-Let the answer x depend on one datum d. Change d by a small relative amount δ, so d becomes d(1 + δ). A first-order Taylor step gives the new answer as about $x + x'(d)\,d\,\delta$. Divide that change, Δx, by x:
+Let the answer x depend on one datum d. Change d by a small relative amount δ, so d becomes d(1 + δ). A first-order Taylor step gives the new answer as about $`x + x'(d)\,d\,\delta`$. Divide that change, Δx, by x:
 
-$$\frac{\Delta x}{x} \approx \frac{d\,x'(d)}{x}\,\delta, \qquad \kappa_d = \left|\frac{d\,x'(d)}{x}\right|$$
+```math
+\frac{\Delta x}{x} \approx \frac{d\,x'(d)}{x}\,\delta, \qquad \kappa_d = \left|\frac{d\,x'(d)}{x}\right|
+```
 
 So the relative condition number for one datum is its slope, rescaled to percentages. [Error propagation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md) used the same slopes as sensitivity coefficients for measured inputs. Here they are in relative form: a pure number that counts digits at risk.
 
 ### Step 2: κ for the crossing
 
-Differentiate $x = (c_2 - c_1)/(m_1 - m_2)$ once for each datum and multiply by datum over answer:
+Differentiate $`x = (c_2 - c_1)/(m_1 - m_2)`$ once for each datum and multiply by datum over answer:
 
 | Datum | Slope of x | κ for that datum | Fork |
 | --- | --- | --- | --- |
-| $m_1$ | $-x/(m_1 - m_2)$ | $\lvert m_1\rvert/\lvert m_1 - m_2\rvert$ | 100 |
-| $m_2$ | $x/(m_1 - m_2)$ | $\lvert m_2\rvert/\lvert m_1 - m_2\rvert$ | 101 |
-| $c_1$ | $-1/(m_1 - m_2)$ | $\lvert c_1\rvert/\lvert c_2 - c_1\rvert$ | 0 |
-| $c_2$ | $1/(m_1 - m_2)$ | $\lvert c_2\rvert/\lvert c_2 - c_1\rvert$ | 1 |
+| $`m_1`$ | $`-x/(m_1 - m_2)`$ | $`\lvert m_1\rvert/\lvert m_1 - m_2\rvert`$ | 100 |
+| $`m_2`$ | $`x/(m_1 - m_2)`$ | $`\lvert m_2\rvert/\lvert m_1 - m_2\rvert`$ | 101 |
+| $`c_1`$ | $`-1/(m_1 - m_2)`$ | $`\lvert c_1\rvert/\lvert c_2 - c_1\rvert`$ | 0 |
+| $`c_2`$ | $`1/(m_1 - m_2)`$ | $`\lvert c_2\rvert/\lvert c_2 - c_1\rvert`$ | 1 |
 
 If every datum may be off by up to δ, the worst case lines up all four signs, so the four κ's add: 100 + 101 + 0 + 1 = **202**. The error-propagation card adds independent random errors in squares; numerical analysis quotes the worst case, because rounding errors are not random enough to rely on cancelling.
 
@@ -115,22 +123,22 @@ The code checks 202 a second way: it nudges each datum up and down by one part i
 
 ### Step 3: a stable method behaves as if only the data were rounded
 
-A method is **backward stable** if its computed answer $\hat x$ is the exact answer for data changed by a relative amount of only a few u. The method's errors are then no worse than the errors already made by storing the data.
+A method is **backward stable** if its computed answer $`\hat x`$ is the exact answer for data changed by a relative amount of only a few u. The method's errors are then no worse than the errors already made by storing the data.
 
-The formula itself is backward stable. It does three operations: two subtractions and one division. Each is off by a factor $(1 + \delta_i)$ with $|\delta_i| \le u$. Push the subtraction errors and the division error back onto the data, and $\hat x$ is the exact crossing for slopes off by at most u and intercepts off by at most about 2u. Storing the data adds at most u more. So the total relative data change is at most about 3u.
+The formula itself is backward stable. It does three operations: two subtractions and one division. Each is off by a factor $`(1 + \delta_i)`$ with $`|\delta_i| \le u`$. Push the subtraction errors and the division error back onto the data, and $`\hat x`$ is the exact crossing for slopes off by at most u and intercepts off by at most about 2u. Storing the data adds at most u more. So the total relative data change is at most about 3u.
 
 <details>
 <summary>Detailed proof: the formula is backward stable, and its error is at most κ times 3u</summary>
 
 Write the rounded operations with the standard model fl(p op q) = (p op q)(1 + δ), |δ| ≤ u:
 
-$$\hat x = \frac{(c_2 - c_1)(1 + \delta_1)}{(m_1 - m_2)(1 + \delta_2)}(1 + \delta_3)$$
+$`\displaystyle \hat x = \frac{(c_2 - c_1)(1 + \delta_1)}{(m_1 - m_2)(1 + \delta_2)}(1 + \delta_3)`$
 
-Set $\tilde c_i = c_i(1 + \delta_1)(1 + \delta_3)$ and $\tilde m_i = m_i(1 + \delta_2)$. Then $\hat x = (\tilde c_2 - \tilde c_1)/(\tilde m_1 - \tilde m_2)$ exactly. Each intercept moved by a relative amount at most $2u + u^2$, each slope by at most $u$.
+Set $`\tilde c_i = c_i(1 + \delta_1)(1 + \delta_3)`$ and $`\tilde m_i = m_i(1 + \delta_2)`$. Then $`\hat x = (\tilde c_2 - \tilde c_1)/(\tilde m_1 - \tilde m_2)`$ exactly. Each intercept moved by a relative amount at most $`2u + u^2`$, each slope by at most $`u`$.
 
 The stored data were already rounded once, each by at most u. Combined, every datum is off by at most about 3u from the true data.
 
-$\hat x$ is the exact answer for that nearby data. By Step 1 and Step 2, an exact answer moves by at most about κ times the relative data change. So $|\hat x - x|/|x| \lesssim 3\kappa u$, to first order in u.
+$`\hat x`$ is the exact answer for that nearby data. By Step 1 and Step 2, an exact answer moves by at most about κ times the relative data change. So $`|\hat x - x|/|x| \lesssim 3\kappa u`$, to first order in u.
 
 </details>
 
@@ -138,9 +146,9 @@ For the fork, the bound is 202 × 3u = 6.73e-14. The true error of the computed 
 
 ### Step 4: an unstable method, on a problem with κ = 4
 
-Take two roads that cross at 45 degrees, a healthy angle. Road A runs due east–west at y = 1. A drawing program rotated it, and stores it as $ax + y = 1$ with $a = 6.123\text{e-}17$: the leftover that cos 90° returns in double precision. Road B is $x + y = 2$. They cross at x = 1, y = 1.
+Take two roads that cross at 45 degrees, a healthy angle. Road A runs due east–west at y = 1. A drawing program rotated it, and stores it as $`ax + y = 1`$ with $`a = 6.123\text{e-}17`$: the leftover that cos 90° returns in double precision. Road B is $`x + y = 2`$. They cross at x = 1, y = 1.
 
-In slope form the roads are $y = -ax + 1$ and $y = -x + 2$. The formula for κ gives **4**. A stable method should be right to about 4 × 3u = 1.33e-15. Elimination works on the six stored coefficients instead; with those as the data, nudging each one gives κ = 6.0000, still small, so nothing below changes.
+In slope form the roads are $`y = -ax + 1`$ and $`y = -x + 2`$. The formula for κ gives **4**. A stable method should be right to about 4 × 3u = 1.33e-15. Elimination works on the six stored coefficients instead; with those as the data, nudging each one gives κ = 6.0000, still small, so nothing below changes.
 
 The textbook elimination does this:
 
@@ -173,20 +181,20 @@ flowchart TD
 
 ## Worked numbers, by hand
 
-Case 1, the fork: $m_1 = 0.1$, $c_1 = 0$, $m_2 = 0.101$, $c_2 = -2$.
+Case 1, the fork: $`m_1 = 0.1`$, $`c_1 = 0`$, $`m_2 = 0.101`$, $`c_2 = -2`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| gap at the start | $c_2 - c_1 = -2 - 0$ | −2 m |
-| closing rate | $m_1 - m_2 = 0.1 - 0.101$ | −0.001 |
-| crossing | $-2 / -0.001$ | 2,000 m |
-| κ from the slopes | $(0.1 + 0.101)/0.001$ | 201 |
-| κ from the intercepts | $(0 + 2)/2$ | 1 |
-| κ | $201 + 1$ | 202 |
-| digits at risk | $\log_{10} 202$ | 2.31 |
-| bypass slope read 0.1% high | $-2/(0.1 - 0.101101) = 2/0.001101$ | 1,816.53 m |
-| first-order prediction | $101 \times 0.1\% = 10.10\%$ of 2,000 m | 202.00 m |
-| actual move | $1{,}816.53 - 2{,}000$ | **−183.47 m, or −9.17%** |
+| gap at the start | $`c_2 - c_1 = -2 - 0`$ | −2 m |
+| closing rate | $`m_1 - m_2 = 0.1 - 0.101`$ | −0.001 |
+| crossing | $`-2 / -0.001`$ | 2,000 m |
+| κ from the slopes | $`(0.1 + 0.101)/0.001`$ | 201 |
+| κ from the intercepts | $`(0 + 2)/2`$ | 1 |
+| κ | $`201 + 1`$ | 202 |
+| digits at risk | $`\log_{10} 202`$ | 2.31 |
+| bypass slope read 0.1% high | $`-2/(0.1 - 0.101101) = 2/0.001101`$ | 1,816.53 m |
+| first-order prediction | $`101 \times 0.1\% = 10.10\%`$ of 2,000 m | 202.00 m |
+| actual move | $`1{,}816.53 - 2{,}000`$ | **−183.47 m, or −9.17%** |
 
 A 0.1% misreading of one slope moves the crossing by 183.47 m. The first-order rule κδ predicted 202 m: right size, a little high, because the effect bends as the slope changes.
 
@@ -194,7 +202,7 @@ A 0.1% misreading of one slope moves the crossing by 183.47 m. The first-order r
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Read the absolute slope $\lvert dx/dm_2\rvert$ as κ | 2,000,000 m per unit slope | That is an absolute condition number: it carries units and the data's size, so it cannot count digits. The relative κ for $m_2$ is 101. |
+| Read the absolute slope $`\lvert dx/dm_2\rvert`$ as κ | 2,000,000 m per unit slope | That is an absolute condition number: it carries units and the data's size, so it cannot count digits. The relative κ for $`m_2`$ is 101. |
 | Trust κδ when κδ is not small: bypass slope 1% low | predicted 4,020.00 m; actual −200,000.00 m | κ is first order. At κδ = 1.01 the roads swap sides. |
 | Blame the arithmetic in case 1 | exact fractions give 1,816.53 m too | The problem is ill-conditioned. Floating point added only 9.09e-16. |
 | Blame the problem in case 2 | κ = 4 allows 1.33e-15; the unswapped method is off by 1.00e0 | The method is unstable. The swap gives 6.12e-17. |
@@ -567,8 +575,8 @@ Lean proves the card's three facts for any two roads whose slopes differ and who
 
 - A stable method gives the exact crossing for data off by a relative amount at most δ. Its relative error is then at most about κδ. Precisely: add any margin to κ, and the bound holds with κ plus that margin once δ is small enough.
 - κ is the worst ratio, so the bound cannot be lowered. With the signs of the four data errors lined up, the crossing's relative change is exactly κ times the data's, to first order.
-- The crossing formula is backward stable. Let each of its three operations be off by a factor $(1 + \delta_i)$, with $|\delta_i| \le u$. The computed answer is the exact crossing for slopes off by at most u and intercepts off by at most $2u + u^2$.
-- The fork crosses at 2,000 m with κ = 202, made of 100, 101, 0 and 1. The absolute slope $|dx/dm_2|$ is 2,000,000 m per unit slope.
+- The crossing formula is backward stable. Let each of its three operations be off by a factor $`(1 + \delta_i)`$, with $`|\delta_i| \le u`$. The computed answer is the exact crossing for slopes off by at most u and intercepts off by at most $`2u + u^2`$.
+- The fork crosses at 2,000 m with κ = 202, made of 100, 101, 0 and 1. The absolute slope $`|dx/dm_2|`$ is 2,000,000 m per unit slope.
 - The misreadings come out as exact fractions that round to the card's 1,816.53 m, 1,663.61 m to 2,505.63 m, and −200,000 m. Their first-order predictions, 202 m, 1,596 m to 2,404 m, and 4,020 m, also hold.
 - The 45-degree crossing has κ = 4 and crosses at x = 1. The tries give κ = 4 at x = 20 m and κ = 2,002 at x = 20,000 m.
 
@@ -879,7 +887,7 @@ example : kappa (1 / 10) 0 (1 / 5) (-2) = 4 ∧ crossing (1 / 10) 0 (1 / 5) (-2)
 > - **Blaming the problem for an unstable method.** The 45-degree crossing has κ = 4, so an answer 100% wrong (x̂ = 0 instead of 1) is the method's fault. The swap fixes it.
 > - **Reading κ as an error.** κ = 202 is a magnifier, not an error. With data off by 3u it allows only 6.73e-14; with all data off by 0.1% it allows a crossing anywhere from 1,596.00 m to 2,404.00 m.
 > - **Treating κ as exact far from small errors.** For the bypass slope read 1% low, κδ predicts 4,020.00 m; the true crossing is −200,000.00 m.
-> - **Quoting an absolute sensitivity as κ.** $|dx/dm_2|$ = 2,000,000 m per unit slope sounds alarming but carries units. It is an absolute condition number; only the relative κ is a pure number that counts digits.
+> - **Quoting an absolute sensitivity as κ.** $`|dx/dm_2|`$ = 2,000,000 m per unit slope sounds alarming but carries units. It is an absolute condition number; only the relative κ is a pure number that counts digits.
 
 ---
 

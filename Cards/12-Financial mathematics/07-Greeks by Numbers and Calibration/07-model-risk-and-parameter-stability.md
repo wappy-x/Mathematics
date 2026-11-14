@@ -37,37 +37,43 @@ Each point splits the year's movement between its two halves a different way, an
 
 ## The formula
 
-Notation first, in words. Volatility is written $\sigma$, said "sigma": the fraction a share price swings in a year. What adds up over time is not volatility but **variance** — volatility squared, times the years it runs for. A subscript names the piece of the year it belongs to, so $\sigma_1$ is the first half-year's volatility and $\sigma_2$ the second's, while $\sigma_A$ is desk A's single number for the lot.
+Notation first, in words. Volatility is written $`\sigma`$, said "sigma": the fraction a share price swings in a year. What adds up over time is not volatility but **variance** — volatility squared, times the years it runs for. A subscript names the piece of the year it belongs to, so $`\sigma_1`$ is the first half-year's volatility and $`\sigma_2`$ the second's, while $`\sigma_A`$ is desk A's single number for the lot.
 
-$$\sigma_1^2\,\frac{T}{2} \;+\; \sigma_2^2\,\frac{T}{2} \;=\; \sigma_A^2\,T$$
+```math
+\sigma_1^2\,\frac{T}{2} \;+\; \sigma_2^2\,\frac{T}{2} \;=\; \sigma_A^2\,T
+```
 
 **Read it aloud:** the two halves' variances add up to the year's variance, and the year's variance is the only thing a one-year option can see.
 
 Every pair of volatilities obeying that one equation is a model that fits the quotes. There are infinitely many, so the fit does not choose one. Pricing the untraded ticket in each gives a range, and the reserve is its width:
 
-$$R \;=\; \max V \;-\; \min V \quad\text{over every model whose prices match the quotes}$$
+```math
+R \;=\; \max V \;-\; \min V \quad\text{over every model whose prices match the quotes}
+```
 
 **Read it aloud:** price the untraded ticket in every model that fits, and keep the distance between the highest and the lowest answer.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$ | Acme's price today | $100 | the ticket gains, then loses as the barrier nears |
-| $K$ | the **strike**: the price the calls and the ticket may buy at | $100 | every call is worth less |
-| $H$ | the **barrier**: touch it and the ticket is cancelled | $120 | the ticket rises toward a plain call |
-| $T$, $\tau$ | time to expiry in years, and the length of one stretch inside it | 1, and 0.5 per half-year | more variance to split, and a wider disagreement |
-| $r$, $q$ | the riskless rate and the dividend yield, both continuously compounded | 5%, 2% | the drift $\nu$ moves with them |
-| $\sigma$, $\sigma_A$ | volatility, and desk A's single volatility for the year | 20% | every call gains; the ticket peaks, then falls, since it can be cancelled |
-| $\sigma_1$, $\sigma_2$ | desk B's first-half and second-half volatilities | 10%, 26.4575% | raising $\sigma_1$ forces $\sigma_2$ down, and the ticket gets dearer |
-| $V$ | the up-and-out call's price under one fitted model | $1.132492 or $1.078375 | — |
-| $R$ | the reserve: dearest minus cheapest $V$ across the fitting models | $0.054117 for the two desks | more capital tied up against one ticket |
-| $\nu$ | the drift of Acme's log price in the pricing world, $r - q - \tfrac12\sigma^2$ | 0.01 for desk A | the barrier is reached sooner |
-| $a$ | the climb from today's price to the barrier, in logs, $\ln(H/S)$ | 0.1823 | the barrier is further away |
-| $s$, $\mu$, $k$ | one stretch's spread $\sigma\sqrt{\tau}$, the centre of a bell curve, and the climb to the strike $\ln(K/S)$ | — | — |
-| $G$, $N$, $p$ | the bell curve's height, the area under it to the left of a point, and the density left after the cancelled paths are removed | — | — |
+| $`S`$ | Acme's price today | $100 | the ticket gains, then loses as the barrier nears |
+| $`K`$ | the **strike**: the price the calls and the ticket may buy at | $100 | every call is worth less |
+| $`H`$ | the **barrier**: touch it and the ticket is cancelled | $120 | the ticket rises toward a plain call |
+| $`T`$, $`\tau`$ | time to expiry in years, and the length of one stretch inside it | 1, and 0.5 per half-year | more variance to split, and a wider disagreement |
+| $`r`$, $`q`$ | the riskless rate and the dividend yield, both continuously compounded | 5%, 2% | the drift $`\nu`$ moves with them |
+| $`\sigma`$, $`\sigma_A`$ | volatility, and desk A's single volatility for the year | 20% | every call gains; the ticket peaks, then falls, since it can be cancelled |
+| $`\sigma_1`$, $`\sigma_2`$ | desk B's first-half and second-half volatilities | 10%, 26.4575% | raising $`\sigma_1`$ forces $`\sigma_2`$ down, and the ticket gets dearer |
+| $`V`$ | the up-and-out call's price under one fitted model | $1.132492 or $1.078375 | — |
+| $`R`$ | the reserve: dearest minus cheapest $`V`$ across the fitting models | $0.054117 for the two desks | more capital tied up against one ticket |
+| $`\nu`$ | the drift of Acme's log price in the pricing world, $`r - q - \tfrac12\sigma^2`$ | 0.01 for desk A | the barrier is reached sooner |
+| $`a`$ | the climb from today's price to the barrier, in logs, $`\ln(H/S)`$ | 0.1823 | the barrier is further away |
+| $`s`$, $`\mu`$, $`k`$ | one stretch's spread $`\sigma\sqrt{\tau}`$, the centre of a bell curve, and the climb to the strike $`\ln(K/S)`$ | — | — |
+| $`G`$, $`N`$, $`p`$ | the bell curve's height, the area under it to the left of a point, and the density left after the cancelled paths are removed | — | — |
 
-One helper formula does the barrier work. Take a stretch of the year at one volatility. Acme's log-move, the change in the logarithm of its price, then lands with the ordinary bell-curve density $G$. Its spread is $\sigma$ times the square root of the stretch. The paths that touched the barrier are removed, and what is left is
+One helper formula does the barrier work. Take a stretch of the year at one volatility. Acme's log-move, the change in the logarithm of its price, then lands with the ordinary bell-curve density $`G`$. Its spread is $`\sigma`$ times the square root of the stretch. The paths that touched the barrier are removed, and what is left is
 
-$$p(y) \;=\; G(y - \nu\tau) \;-\; e^{2\nu a/\sigma^{2}}\,G(y - 2a - \nu\tau),$$
+```math
+p(y) \;=\; G(y - \nu\tau) \;-\; e^{2\nu a/\sigma^{2}}\,G(y - 2a - \nu\tau),
+```
 
 the bell curve minus its own mirror image about the barrier, the mirror weighted so that the two cancel exactly at the barrier. What survives is the paths that stayed below it.
 
@@ -76,9 +82,9 @@ the bell curve minus its own mirror image about the barrier, the mirror weighted
 - **The volatility path is fixed in advance.** Both models settle the whole path on day one. If volatility is itself random, the one-year law stops being one bell curve and the five quotes stop fitting exactly, and the disagreement widens rather than closes.
 - **The barrier is watched at every instant.** These prices cancel the ticket the moment Acme touches $120. A contract that checks only at the daily close is cancelled less often and is worth more ([Daily monitoring](../16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md)), so the monitoring clause is part of the model, not paperwork.
 - **One expiry is quoted.** The counterexample works because all five quotes share one expiry date. A quote at a second date pins a second piece of the variance, which is what the week below does.
-- **This shelf's pricing world.** Prices are discounted averages under the risk-neutral measure: the pricing world in which Acme grows on average at $r - q$. The rates $r$ and $q$ are flat, and the model has no bid-offer (the gap between a dealer's buying and selling prices). These five quotes also carry no smile: every strike inverts to the same volatility ([The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)). That is why both fits land exactly. Against real quotes, with a bid-offer as the fitting tolerance, more models fit and the reserve is wider.
+- **This shelf's pricing world.** Prices are discounted averages under the risk-neutral measure: the pricing world in which Acme grows on average at $`r - q`$. The rates $`r`$ and $`q`$ are flat, and the model has no bid-offer (the gap between a dealer's buying and selling prices). These five quotes also carry no smile: every strike inverts to the same volatility ([The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)). That is why both fits land exactly. Against real quotes, with a bid-offer as the fitting tolerance, more models fit and the reserve is wider.
 
-Conventions verified 19 September 2026: quotes are dollar prices of European calls, volatility a percent a year, $r$ and $q$ continuously compounded, and the barrier watched continuously rather than at a daily close.
+Conventions verified 19 September 2026: quotes are dollar prices of European calls, volatility a percent a year, $`r`$ and $`q`$ continuously compounded, and the barrier watched continuously rather than at a daily close.
 
 ---
 
@@ -94,7 +100,7 @@ A one-year call pays whatever Acme's price on the expiry day exceeds the strike,
 
 ### Step 2: variance adds, so a year of one-date quotes pins one number
 
-With the volatility path fixed in advance, the logarithm of Acme's finishing price is a bell curve whose spread squared is the variance totalled over the year. Desk A totals $0.20^2 \times 1 = 0.04$. Desk B totals $0.10^2 \times 0.5 + 0.264575^2 \times 0.5 = 0.005 + 0.035 = 0.04$. Same total, same bell curve, same five prices.
+With the volatility path fixed in advance, the logarithm of Acme's finishing price is a bell curve whose spread squared is the variance totalled over the year. Desk A totals $`0.20^2 \times 1 = 0.04`$. Desk B totals $`0.10^2 \times 0.5 + 0.264575^2 \times 0.5 = 0.005 + 0.035 = 0.04`$. Same total, same bell curve, same five prices.
 
 That is why the fitting score is zero twice over, and zero at every point on the curve drawn above. The score has no valley bottom to find, it has a flat floor: a solver returns whichever point on the floor it started nearest. The fit is not badly conditioned (an answer that swings with tiny changes in the quotes); it is **not identified** — the quotes carry no information about the split at all.
 
@@ -111,13 +117,17 @@ Collect the models that fit — here the nine on the curve above — price the t
 <details>
 <summary>Detailed proof: the cancelled-path density, and the closed form it gives</summary>
 
-Over a stretch of $\tau$ years at one volatility, the log-move of Acme's price is $\nu\tau$ plus a bell-curve wobble of spread $s = \sigma\sqrt{\tau}$, with $\nu = r - q - \tfrac12\sigma^2$. Dividing by $\sigma$ makes it a Brownian motion with drift $\nu/\sigma$ against a barrier at the fixed level $a/\sigma$, and for that the joint law of the endpoint and the running maximum is known. Tilting the drift away by Girsanov's theorem, reflecting the driftless paths in the barrier, then tilting back gives, for every landing place below the barrier,
-$$\Pr\big[\text{log-move} \in dy,\ \text{never touched } a\big] \;=\; \big[G(y - \nu\tau) - e^{2\nu a/\sigma^{2}}G(y - 2a - \nu\tau)\big]\,dy .$$
+Over a stretch of $`\tau`$ years at one volatility, the log-move of Acme's price is $`\nu\tau`$ plus a bell-curve wobble of spread $`s = \sigma\sqrt{\tau}`$, with $`\nu = r - q - \tfrac12\sigma^2`$. Dividing by $`\sigma`$ makes it a Brownian motion with drift $`\nu/\sigma`$ against a barrier at the fixed level $`a/\sigma`$, and for that the joint law of the endpoint and the running maximum is known. Tilting the drift away by Girsanov's theorem, reflecting the driftless paths in the barrier, then tilting back gives, for every landing place below the barrier,
+
+$`\displaystyle \Pr\big[\text{log-move} \in dy,\ \text{never touched } a\big] \;=\; \big[G(y - \nu\tau) - e^{2\nu a/\sigma^{2}}G(y - 2a - \nu\tau)\big]\,dy .`$
+
 The subtracted term is the density's mirror image about the barrier, scaled by the one weight that makes the bracket vanish at the barrier itself. Every path that touched is removed, once.
 
-The payoff $(Se^{y}-K)^{+}$ is positive above $\ln(K/S)$ and the ticket is alive only below $a$, so the price is that density integrated between the two and discounted. Each term needs two standard bell-curve integrals,
-$$\int_k^a G(y-\mu)\,dy = N\!\Big(\tfrac{a-\mu}{s}\Big) - N\!\Big(\tfrac{k-\mu}{s}\Big), \qquad \int_k^a e^{y}G(y-\mu)\,dy = e^{\mu + s^2/2}\Big[N\!\Big(\tfrac{a-\mu-s^2}{s}\Big) - N\!\Big(\tfrac{k-\mu-s^2}{s}\Big)\Big],$$
-where $N$ is the area under the bell curve to the left of a point. Four such pieces, discounted by $e^{-rT}$, are the closed form the code calls `uoc`: Merton's 1973 knock-out result with the barrier above rather than below.
+The payoff $`(Se^{y}-K)^{+}`$ is positive above $`\ln(K/S)`$ and the ticket is alive only below $`a`$, so the price is that density integrated between the two and discounted. Each term needs two standard bell-curve integrals,
+
+$`\displaystyle \int_k^a G(y-\mu)\,dy = N\!\Big(\tfrac{a-\mu}{s}\Big) - N\!\Big(\tfrac{k-\mu}{s}\Big), \qquad \int_k^a e^{y}G(y-\mu)\,dy = e^{\mu + s^2/2}\Big[N\!\Big(\tfrac{a-\mu-s^2}{s}\Big) - N\!\Big(\tfrac{k-\mu-s^2}{s}\Big)\Big],`$
+
+where $`N`$ is the area under the bell curve to the left of a point. Four such pieces, discounted by $`e^{-rT}`$, are the closed form the code calls `uoc`: Merton's 1973 knock-out result with the barrier above rather than below.
 
 Two volatilities need one more integral and no new mathematics: carry Acme to mid-year with the same density, touched paths already gone, then run the closed form from wherever it lands. The code's third road does both halves numerically instead and lands on the same two prices — the check that the reflected term is weighted right.
 
@@ -129,21 +139,21 @@ Another route skips the family scan: let volatility be anything inside a band, a
 
 ## Worked numbers, by hand
 
-Acme at $100, strike $100, barrier $120, $r = 5\%$, $q = 2\%$, one year. Desk A fits one volatility; desk B splits the year at six months. Money runs to six decimals here: the gap being measured is five cents on a one-dollar ticket.
+Acme at $100, strike $100, barrier $120, $`r = 5\%`$, $`q = 2\%`$, one year. Desk A fits one volatility; desk B splits the year at six months. Money runs to six decimals here: the gap being measured is five cents on a one-dollar ticket.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the year's variance, desk A | $0.20 \times 0.20 \times 1$ | 0.04 |
-| the first half's variance, desk B | $0.10 \times 0.10 \times 0.5$ | 0.005 |
-| what the second half must supply | $0.04 - 0.005$ | 0.035 |
-| the second half's volatility | $\sqrt{0.035/0.5}$ | 26.4575% |
+| the year's variance, desk A | $`0.20 \times 0.20 \times 1`$ | 0.04 |
+| the first half's variance, desk B | $`0.10 \times 0.10 \times 0.5`$ | 0.005 |
+| what the second half must supply | $`0.04 - 0.005`$ | 0.035 |
+| the second half's volatility | $`\sqrt{0.035/0.5}`$ | 26.4575% |
 | one-year $100 call, desk A | closed form | $9.227006 |
 | the same, desk B, half a year at a time | two bell curves, composed | $9.227006 |
 | up-and-out call, desk A | cancelled-path density | **$1.132492** |
 | up-and-out call, desk B | mid-year density, then the closed form | **$1.078375** |
-| the gap | $1.132492 - 1.078375$ | **$0.054117** |
-| the gap as a percent of desk B | $0.054117 / 1.078375$ | **5.02%** |
-| across the nine splits scanned, 10% to 26% | $1.221910 - 1.078375$ | **$0.143535**, 13.31% |
+| the gap | $`1.132492 - 1.078375`$ | **$0.054117** |
+| the gap as a percent of desk B | $`0.054117 / 1.078375`$ | **5.02%** |
+| across the nine splits scanned, 10% to 26% | $`1.221910 - 1.078375`$ | **$0.143535**, 13.31% |
 
 Both desks priced the quoted call at $9.227006, the shelf's one-year call to the digit, and the unquoted ticket 5.02% apart. Pushing the barrier out to $1,000 makes the ticket unkillable, and the same machinery returns $9.227006 again: the barrier code has not broken the plain call.
 
@@ -639,9 +649,9 @@ The two outputs match line for line, from different code taking different routes
 
 Lean proves the card's three exact variance claims for every choice of rates, strike and volatilities, plus the worked numbers.
 
-- Suppose $\sigma_1^2\,\frac{T}{2} + \sigma_2^2\,\frac{T}{2} = \sigma_A^2\,T$. Then both desks give the same one-year bell curve, and the same discounted call price at every strike.
-- Take two equal half-years, with the year's variance fixed at desk A's. Then a second-half volatility exists exactly when $\sigma_1 \le \sigma_A\sqrt{2}$, the wall.
-- Suppose $\sigma_1 + \sigma_2 = 2\sigma_A$ and $\sigma_1 \ne \sigma_A$. Then the two halves hold strictly more variance than $\sigma_A^2\,T$, so the one-year quotes no longer fit.
+- Suppose $`\sigma_1^2\,\frac{T}{2} + \sigma_2^2\,\frac{T}{2} = \sigma_A^2\,T`$. Then both desks give the same one-year bell curve, and the same discounted call price at every strike.
+- Take two equal half-years, with the year's variance fixed at desk A's. Then a second-half volatility exists exactly when $`\sigma_1 \le \sigma_A\sqrt{2}`$, the wall.
+- Suppose $`\sigma_1 + \sigma_2 = 2\sigma_A`$ and $`\sigma_1 \ne \sigma_A`$. Then the two halves hold strictly more variance than $`\sigma_A^2\,T`$, so the one-year quotes no longer fit.
 - The by-hand variances add up: 0.005 plus 0.035 is desk A's 0.04, and the 26% split also totals 0.04.
 - Thursday's 28.01% first half sits under the wall, and Friday's 28.81% sits past it.
 

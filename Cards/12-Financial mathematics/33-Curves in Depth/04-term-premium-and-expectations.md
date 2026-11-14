@@ -33,38 +33,42 @@ The top bar is a fact about today's prices. The middle bar is a belief about the
 
 ## The formula
 
-Notation first, in words. $D(T)$ is the **discount factor**: today's price of one dollar paid in $T$ years. $y(T)$ is the **zero rate** for $T$ years, continuously compounded, so $D(T) = e^{-y(T)\,T}$. Two dates $a$ and $b$, with $a$ before $b$, mark the stretch a forward covers. $e^{x}$ and $\ln$ are the exponential and natural logarithm from [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md).
+Notation first, in words. $`D(T)`$ is the **discount factor**: today's price of one dollar paid in $`T`$ years. $`y(T)`$ is the **zero rate** for $`T`$ years, continuously compounded, so $`D(T) = e^{-y(T)\,T}`$. Two dates $`a`$ and $`b`$, with $`a`$ before $`b`$, mark the stretch a forward covers. $`e^{x}`$ and $`\ln`$ are the exponential and natural logarithm from [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md).
 
-$$F(a,b) \;=\; \frac{\ln D(a) - \ln D(b)}{b - a} \;=\; \frac{b\,y(b) - a\,y(a)}{b-a}$$
+```math
+F(a,b) \;=\; \frac{\ln D(a) - \ln D(b)}{b - a} \;=\; \frac{b\,y(b) - a\,y(a)}{b-a}
+```
 
 **Read it aloud:** the forward rate is the extra discounting between the two dates, spread over the years between them.
 
-$$F(a,b) \;=\; A(a,b) \;+\; \mathrm{TP}(a,b), \qquad A(a,b) = E[R]$$
+```math
+F(a,b) \;=\; A(a,b) \;+\; \mathrm{TP}(a,b), \qquad A(a,b) = E[R]
+```
 
 **Read it aloud:** the forward equals the expected future rate plus the term premium.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $D(T)$, $D$ | the discount factor: today's price of one dollar paid in $T$ years | 0.941765 at 2 years, 0.835270 at 4 | a dearer far dollar lowers the forward |
-| $T$ | time from today, in years | 2 and 4 | — |
-| $y(T)$, $y$ | the zero rate: the single rate from today to year $T$, continuously compounded | 3 percent at 2 years, 4.5 at 4 | the far zero rate up lifts the forward twice as fast here |
-| $a$, $b$ | start and end of the forward's stretch | year 2, year 4 | — |
-| $F(a,b)$, $F$ | the forward rate for the stretch from $a$ to $b$, locked today | 6 percent | — |
-| $R$ | the 2-year rate that will be quoted in year 2: unknown today, a random quantity | 1, 4 or 7 percent | — |
-| $p$ | the probability given to one scenario for $R$ | 0.25, 0.50, 0.25 | — |
-| $E[R]$, $A(a,b)$, $A$ | the expected future rate: the probability-weighted average of $R$ | 4 percent | the premium falls one for one |
-| $\mathrm{TP}(a,b)$ | the term premium: forward minus expected rate | 2 percentage points | — |
-| $F_0$ | the forward that a lender who charges no premium at all would accept | 3.955 percent | — |
-| $e^{x}$, $\ln$ | exponential and natural logarithm; each undoes the other | $e^{0.12} = 1.127497$ | — |
+| $`D(T)`$, $`D`$ | the discount factor: today's price of one dollar paid in $`T`$ years | 0.941765 at 2 years, 0.835270 at 4 | a dearer far dollar lowers the forward |
+| $`T`$ | time from today, in years | 2 and 4 | — |
+| $`y(T)`$, $`y`$ | the zero rate: the single rate from today to year $`T`$, continuously compounded | 3 percent at 2 years, 4.5 at 4 | the far zero rate up lifts the forward twice as fast here |
+| $`a`$, $`b`$ | start and end of the forward's stretch | year 2, year 4 | — |
+| $`F(a,b)`$, $`F`$ | the forward rate for the stretch from $`a`$ to $`b`$, locked today | 6 percent | — |
+| $`R`$ | the 2-year rate that will be quoted in year 2: unknown today, a random quantity | 1, 4 or 7 percent | — |
+| $`p`$ | the probability given to one scenario for $`R`$ | 0.25, 0.50, 0.25 | — |
+| $`E[R]`$, $`A(a,b)`$, $`A`$ | the expected future rate: the probability-weighted average of $`R`$ | 4 percent | the premium falls one for one |
+| $`\mathrm{TP}(a,b)`$ | the term premium: forward minus expected rate | 2 percentage points | — |
+| $`F_0`$ | the forward that a lender who charges no premium at all would accept | 3.955 percent | — |
+| $`e^{x}`$, $`\ln`$ | exponential and natural logarithm; each undoes the other | $`e^{0.12} = 1.127497`$ | — |
 
 A **percentage point** (pp) is the plain difference between two percentages: 6 percent minus 4 percent is 2 pp.
 
-The first equation is a theorem. The second is a definition of $\mathrm{TP}$: it holds for any forecast, because the premium is whatever makes it hold. The content arrives only when someone commits to a forecast, or to a model that produces one.
+The first equation is a theorem. The second is a definition of $`\mathrm{TP}`$: it holds for any forecast, because the premium is whatever makes it hold. The content arrives only when someone commits to a forecast, or to a model that produces one.
 
 ### When it holds
 
 - **One borrower, zero-coupon rates, one compounding rule.** Mix a government curve with a bank curve and a credit spread (extra rate for default risk) poses as term premium.
-- **An outside forecast.** Today's prices fix $F$ but not the split. An expected 4 with premium 2 and an expected 5 with premium 1 fit the same 6 percent. Surveys, statistical models and policy guidance supply the forecast, and each brings its own error.
+- **An outside forecast.** Today's prices fix $`F`$ but not the split. An expected 4 with premium 2 and an expected 5 with premium 1 fit the same 6 percent. Surveys, statistical models and policy guidance supply the forecast, and each brings its own error.
 - **Convexity is small, not zero.** Even a lender who charges no premium accepts a forward a little below the expected rate, because bond prices bend with rates. In this example the gap is 0.045 pp, so even that lender shows a TP of −0.045 pp: the premium as defined here carries convexity too. Wider scenarios or longer stretches make it bigger.
 - **The pure expectations hypothesis, TP = 0.** It fails in most data: Campbell and Shiller (1991) found that when the curve is steep, long yields tend to fall, the opposite of what zero premium predicts.
 
@@ -78,11 +82,13 @@ A lender with money for four years has two routes. Lend for four years at once. 
 
 ### Step 1: the forward from the two zero rates
 
-Growth over four years at 4.5 percent is $e^{4 \times 0.045} = e^{0.18}$. Growth over two years at 3 percent is $e^{0.06}$. The forward must supply the rest:
+Growth over four years at 4.5 percent is $`e^{4 \times 0.045} = e^{0.18}`$. Growth over two years at 3 percent is $`e^{0.06}`$. The forward must supply the rest:
 
-$$e^{0.06}\, e^{2F} = e^{0.18} \quad\Longrightarrow\quad 2F = 0.12 \quad\Longrightarrow\quad F = 6\%.$$
+```math
+e^{0.06}\, e^{2F} = e^{0.18} \quad\Longrightarrow\quad 2F = 0.12 \quad\Longrightarrow\quad F = 6\%.
+```
 
-Written with discount factors, the extra discounting $\ln D(2) - \ln D(4) = 0.12$ is spread over $b - a = 2$ years. That is the formula.
+Written with discount factors, the extra discounting $`\ln D(2) - \ln D(4) = 0.12`$ is spread over $`b - a = 2`$ years. That is the formula.
 
 The same arithmetic across a whole curve gives a forward for every year. On a rising curve the forwards run above the zero rates, because each zero rate is an average of the forwards before it.
 
@@ -100,18 +106,20 @@ Lower line: zero rates from today, with the 3 and 4.5 of the example at years 2 
 
 ### Step 2: add a forecast, and the premium is what remains
 
-Suppose the 2-year rate quoted in year 2, $R$, has three scenarios: 1 percent with probability 0.25, 4 percent with probability 0.50, 7 percent with probability 0.25. The expected rate is
+Suppose the 2-year rate quoted in year 2, $`R`$, has three scenarios: 1 percent with probability 0.25, 4 percent with probability 0.50, 7 percent with probability 0.25. The expected rate is
 
-$$E[R] = 0.25 \times 1 + 0.50 \times 4 + 0.25 \times 7 = 4\%.$$
+```math
+E[R] = 0.25 \times 1 + 0.50 \times 4 + 0.25 \times 7 = 4\%.
+```
 
-The premium is $6 - 4 = 2$ pp. Under the pure expectations hypothesis the premium would be zero, the forward would be a forecast, and 6 percent would mean rates are expected to reach 6.
+The premium is $`6 - 4 = 2`$ pp. Under the pure expectations hypothesis the premium would be zero, the forward would be a forecast, and 6 percent would mean rates are expected to reach 6.
 
 ### Step 3: the premium is an expected extra return
 
 Why is the premium a reward? Follow 100 dollars down each route to year 2.
 
-- **Roll:** buy the 2-year zero. In year 2 it repays $100 / D(2) = 106.18$ dollars, whatever happens.
-- **Long:** buy the 4-year zero and sell it in year 2. By then it is a 2-year zero, priced at the rate $R$ quoted that day. Its value is $(100 / D(4))\, e^{-2R}$.
+- **Roll:** buy the 2-year zero. In year 2 it repays $`100 / D(2) = 106.18`$ dollars, whatever happens.
+- **Long:** buy the 4-year zero and sell it in year 2. By then it is a 2-year zero, priced at the rate $`R`$ quoted that day. Its value is $`(100 / D(4))\, e^{-2R}`$.
 
 | Rate in year 2 | Probability | Long route | Roll route | Extra log return, long over roll |
 | --- | --- | --- | --- | --- |
@@ -119,24 +127,24 @@ Why is the premium a reward? Follow 100 dollars down each route to year 2.
 | 4 percent | 0.50 | $110.52 | $106.18 | +4.00 percent |
 | 7 percent | 0.25 | $104.08 | $106.18 | −2.00 percent |
 
-The extra log return (the natural log of the ratio of the two values) is $2(F - R)$ in each row. Its average is $0.25 \times 10 + 0.50 \times 4 + 0.25 \times (-2) = 4$ percent over two years, which is 2 percent a year. That is the term premium again, reached from bond prices instead of from the forward.
+The extra log return (the natural log of the ratio of the two values) is $`2(F - R)`$ in each row. Its average is $`0.25 \times 10 + 0.50 \times 4 + 0.25 \times (-2) = 4`$ percent over two years, which is 2 percent a year. That is the term premium again, reached from bond prices instead of from the forward.
 
 So the premium is the extra a lender expects to earn, per year, for holding the long bond through the stretch. It is paid because the long route can lose: if rates jump to 7 percent, the long route ends at 104.08 dollars against the roll route's 106.18. A lender who dislikes that risk demands a premium to take it. A lender who wants that exposure, such as a pension fund matching payments due in 30 years, may accept a small or negative one.
 
 <details>
 <summary>Detailed proof: the forward identity, the premium as extra return, and the inversion rule</summary>
 
-**Forward.** Both routes cost $D(b)$ today for one dollar at $b$: buy it outright, or buy $D(b)/D(a)$ dollars of the $a$-year zero and reinvest at the locked forward. The second route delivers one dollar exactly when $e^{(b-a)F} = D(a)/D(b)$. Taking logs, $(b-a)F = \ln D(a) - \ln D(b) = b\,y(b) - a\,y(a)$, which is the formula. Existence and uniqueness: $D(a)/D(b)$ is positive, so its log exists, and $e^{(b-a)F}$ is strictly increasing in $F$, so one forward does it.
+**Forward.** Both routes cost $`D(b)`$ today for one dollar at $`b`$: buy it outright, or buy $`D(b)/D(a)`$ dollars of the $`a`$-year zero and reinvest at the locked forward. The second route delivers one dollar exactly when $`e^{(b-a)F} = D(a)/D(b)`$. Taking logs, $`(b-a)F = \ln D(a) - \ln D(b) = b\,y(b) - a\,y(a)`$, which is the formula. Existence and uniqueness: $`D(a)/D(b)`$ is positive, so its log exists, and $`e^{(b-a)F}`$ is strictly increasing in $`F`$, so one forward does it.
 
-**Premium as extra return.** One dollar in the long bond grows to $e^{b\,y(b)} e^{-(b-a)R}$ at $a$. One dollar rolled grows to $e^{a\,y(a)}$. The log of their ratio is $b\,y(b) - a\,y(a) - (b-a)R = (b-a)(F - R)$. Averaging over $R$ gives $(b-a)(F - E[R]) = (b-a)\,\mathrm{TP}$. No step used a particular set of scenarios.
+**Premium as extra return.** One dollar in the long bond grows to $`e^{b\,y(b)} e^{-(b-a)R}`$ at $`a`$. One dollar rolled grows to $`e^{a\,y(a)}`$. The log of their ratio is $`b\,y(b) - a\,y(a) - (b-a)R = (b-a)(F - R)`$. Averaging over $`R`$ gives $`(b-a)(F - E[R]) = (b-a)\,\mathrm{TP}`$. No step used a particular set of scenarios.
 
-**Inversion rule.** From $b\,y(b) = a\,y(a) + (b-a)F$, divide by $b$ and subtract $y(a)$: $y(b) - y(a) = \frac{b-a}{b}\,(F - y(a))$. The factor $\frac{b-a}{b}$ is positive, so $y(b) < y(a)$ exactly when $F < y(a)$. Substituting $F = A + \mathrm{TP}$ gives $F - y(a) = (A - y(a)) + \mathrm{TP}$: a negative sum does not say which term is negative.
+**Inversion rule.** From $`b\,y(b) = a\,y(a) + (b-a)F`$, divide by $`b`$ and subtract $`y(a)`$: $`y(b) - y(a) = \frac{b-a}{b}\,(F - y(a))`$. The factor $`\frac{b-a}{b}`$ is positive, so $`y(b) < y(a)`$ exactly when $`F < y(a)`$. Substituting $`F = A + \mathrm{TP}`$ gives $`F - y(a) = (A - y(a)) + \mathrm{TP}`$: a negative sum does not say which term is negative.
 
 </details>
 
 ### Step 4: even a lender with no premium does not quote the forecast
 
-Remove all appetite for a premium. The lender now prices the long bond at its expected value. The fair forward $F_0$ then solves $e^{-2F_0} = E[e^{-2R}]$. Because $e^{-2R}$ bends upward, its average is larger than $e^{-2E[R]}$, and $F_0$ comes out at 3.955 percent, not 4.
+Remove all appetite for a premium. The lender now prices the long bond at its expected value. The fair forward $`F_0`$ then solves $`e^{-2F_0} = E[e^{-2R}]`$. Because $`e^{-2R}`$ bends upward, its average is larger than $`e^{-2E[R]}`$, and $`F_0`$ comes out at 3.955 percent, not 4.
 
 The 0.045 pp gap is **convexity**: the price gain when rates fall beats the price loss when they rise by the same amount. It is small at two years and grows as the stretch lengthens and the scenarios spread. The full treatment of convexity in rate products lives on [Futures against forwards](../32-Convexity%20and%20Exotics/01-futures-forward-convexity.md).
 
@@ -150,16 +158,16 @@ The government curve: 3 percent for two years, 4.5 percent for four. The forecas
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $D(2)$ | $e^{-2 \times 0.03} = e^{-0.06}$ | 0.941765 |
-| $D(4)$ | $e^{-4 \times 0.045} = e^{-0.18}$ | 0.835270 |
-| discount ratio | $0.941765 / 0.835270$ | 1.127497 |
-| forward $F(2,4)$ | $\ln(1.127497) / 2 = 0.12 / 2$ | 6.00 percent |
-| check by weights | $(4 \times 4.5 - 2 \times 3) / 2$ | 6.00 percent |
-| lock it: buy 1 million dollars face of the 4-year zero | $1{,}000{,}000 \times 0.835270$ | $835,270.21 |
-| pay for it with 2-year zeros | $835{,}270.21 / 0.941765$ | $886,920.44 due in year 2 |
-| rate earned from year 2 to year 4 | $\ln(1{,}000{,}000 / 886{,}920.44) / 2$ | 6.00 percent |
-| expected rate $E[R]$ | $0.25 \times 1 + 0.5 \times 4 + 0.25 \times 7$ | 4.00 percent |
-| **term premium** | $6.00 - 4.00$ | **2.00 pp** |
+| $`D(2)`$ | $`e^{-2 \times 0.03} = e^{-0.06}`$ | 0.941765 |
+| $`D(4)`$ | $`e^{-4 \times 0.045} = e^{-0.18}`$ | 0.835270 |
+| discount ratio | $`0.941765 / 0.835270`$ | 1.127497 |
+| forward $`F(2,4)`$ | $`\ln(1.127497) / 2 = 0.12 / 2`$ | 6.00 percent |
+| check by weights | $`(4 \times 4.5 - 2 \times 3) / 2`$ | 6.00 percent |
+| lock it: buy 1 million dollars face of the 4-year zero | $`1{,}000{,}000 \times 0.835270`$ | $835,270.21 |
+| pay for it with 2-year zeros | $`835{,}270.21 / 0.941765`$ | $886,920.44 due in year 2 |
+| rate earned from year 2 to year 4 | $`\ln(1{,}000{,}000 / 886{,}920.44) / 2`$ | 6.00 percent |
+| expected rate $`E[R]`$ | $`0.25 \times 1 + 0.5 \times 4 + 0.25 \times 7`$ | 4.00 percent |
+| **term premium** | $`6.00 - 4.00`$ | **2.00 pp** |
 
 The two trades cost nothing today: 835,270.21 dollars in, 835,270.21 dollars out. In year 2 they pay out 886,920.44 dollars. In year 4 they bring in 1,000,000. That is a loan from year 2 to year 4 at 6 percent, fixed now. The premium says the market charges 2 pp a year over the forecast for making it.
 
@@ -168,8 +176,8 @@ The two trades cost nothing today: 835,270.21 dollars in, 835,270.21 dollars out
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Average the two zero rates | 3.75 percent | The forward is the rate for the later stretch only; averaging mixes in years 0 to 2 |
-| Divide by $b$ instead of $b - a$ | 3.00 percent | The extra discounting is spread over all four years instead of the two it covers |
-| Read the slope $y(4) - y(2)$ as the premium | 1.50 pp | The slope mixes expected rate changes and premium; it is neither |
+| Divide by $`b`$ instead of $`b - a`$ | 3.00 percent | The extra discounting is spread over all four years instead of the two it covers |
+| Read the slope $`y(4) - y(2)`$ as the premium | 1.50 pp | The slope mixes expected rate changes and premium; it is neither |
 | Read the forward as the forecast | expects 6.00, off by 2.00 pp | Assumes the premium is zero; this forecast says it is 2 pp |
 
 ---
@@ -180,9 +188,11 @@ The mystery: when short rates pay more than long rates, commentators start talki
 
 Take a 1-year zero rate of 5 percent and a 2-year zero rate of 4 percent. That is an **inversion**: a longer rate below a shorter one. The forward for the second year is
 
-$$F(1,2) = 2 \times 4 - 1 \times 5 = 3\%.$$
+```math
+F(1,2) = 2 \times 4 - 1 \times 5 = 3\%.
+```
 
-The inversion rule from the proof above says the two statements are the same: $y(2) - y(1) = \tfrac12\,(F(1,2) - y(1))$, and here $-1 = \tfrac12 (3 - 5)$. A curve inverts exactly when the forward sits below today's short rate.
+The inversion rule from the proof above says the two statements are the same: $`y(2) - y(1) = \tfrac12\,(F(1,2) - y(1))`$, and here $`-1 = \tfrac12 (3 - 5)`$. A curve inverts exactly when the forward sits below today's short rate.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -576,13 +586,13 @@ The two outputs agree line for line, including the simulated premium, because bo
 
 Lean proves the three results in the Detailed proof, for any zero rates and any finite set of scenarios, and checks the worked numbers.
 
-- Take zero rates $y(T)$ with $D(T) = e^{-y(T) T}$, and dates $a < b$. Then exactly one forward makes the two routes cost the same. It is $F(a,b)$, and both forms in The formula agree.
-- Take any finite set of scenarios for $R$, with probabilities $p$ adding to 1. Then the probability-weighted average of the extra log return, long over roll, is $(b-a)(F - E[R])$.
-- Take dates $0 \le a < b$. Then $y(b) - y(a) = \tfrac{b-a}{b}(F - y(a))$, so the curve inverts exactly when $F < y(a)$.
+- Take zero rates $`y(T)`$ with $`D(T) = e^{-y(T) T}`$, and dates $`a < b`$. Then exactly one forward makes the two routes cost the same. It is $`F(a,b)`$, and both forms in The formula agree.
+- Take any finite set of scenarios for $`R`$, with probabilities $`p`$ adding to 1. Then the probability-weighted average of the extra log return, long over roll, is $`(b-a)(F - E[R])`$.
+- Take dates $`0 \le a < b`$. Then $`y(b) - y(a) = \tfrac{b-a}{b}(F - y(a))`$, so the curve inverts exactly when $`F < y(a)`$.
 - The example checks exactly: a 6 percent forward, a 4 percent expected rate and a 2 pp premium.
 - The extra log returns of 10, 4 and −2 percent average to 2 percent a year.
 - The one-year forwards for years 3 and 4, 5.4 and 6.6 percent, average to 6 percent.
-- On the inverted curve, $F(1,2)$ = 3 percent, and $-1 = \tfrac12 (3 - 5)$.
+- On the inverted curve, $`F(1,2)`$ = 3 percent, and $`-1 = \tfrac12 (3 - 5)`$.
 - Premiums of +1, 0, −1 and −2 pp read that forward as expected rates of 2, 3, 4 and 5 percent.
 - The three wrong answers in What breaks, and the 7 percent, 3 pp and 4 percent results in Try changing, also check.
 
@@ -698,7 +708,7 @@ example : ((4 : ℚ) * 5 - 2 * 3) / 2 = 7 ∧ (7 : ℚ) - 4 = 3 ∧ (2 : ℚ) * 
 > [!TIP]
 > **Try changing**
 > Guess the direction first. Then run it.
-> - **Raise the 4-year zero rate to 5 percent.** The forward jumps to **7.00 percent** and, with the forecast unchanged, the premium to **3.00 pp**. The far rate moves the forward twice as fast, because $b/(b-a) = 2$.
+> - **Raise the 4-year zero rate to 5 percent.** The forward jumps to **7.00 percent** and, with the forecast unchanged, the premium to **3.00 pp**. The far rate moves the forward twice as fast, because $`b/(b-a) = 2`$.
 > - **Widen the scenarios to 0, 4 and 8 percent.** The expected rate stays **4.00 percent**, so the premium stays 2 pp. The no-premium forward falls to **3.92 percent**: more spread, more convexity.
 > - **Soften the inversion: 2-year zero rate at 4.5 percent.** The forward for year two rises to **4.00 percent**, still below the 5 percent short rate, so the curve is still inverted, just less.
 > - **Starve the simulation to 1,000 draws.** The simulated premium comes out at **1.9070 pp** instead of 1.9979. A thousand scenarios is too few to pin the average to a hundredth of a point.
@@ -713,7 +723,7 @@ example : ((4 : ℚ) * 5 - 2 * 3) / 2 = 7 ∧ (7 : ℚ) - 4 = 3 ∧ (2 : ℚ) * 
 > Smaller traps:
 > - **Averaging zero rates to get a forward.** It gives 3.75 percent here, not 6. A forward covers the later stretch only.
 > - **Treating the premium as measured.** It is a residual: change the forecast and it changes. Two analysts with different forecasts get different premiums from the same curve, and both are arithmetically right.
-> - **Mixing compounding rules.** The 6 percent on this card is continuously compounded. The same forward quoted with annual compounding is $e^{0.06} - 1$, a different number for the same loan.
+> - **Mixing compounding rules.** The 6 percent on this card is continuously compounded. The same forward quoted with annual compounding is $`e^{0.06} - 1`$, a different number for the same loan.
 > - **Taking an inversion as a recession date.** The inversion rule says only that the forward is below today's short rate. How much of that is expected cuts and how much is a low premium needs a separate estimate.
 
 ---
@@ -736,7 +746,7 @@ example : ((4 : ℚ) * 5 - 2 * 3) / 2 = 7 ∧ (7 : ℚ) - 4 = 3 ∧ (2 : ℚ) * 
 
 - [Fitting a curve with four or six parameters](03-nelson-siegel-and-svensson-fitting.md): a smooth curve of zero rates from a handful of bond prices, so a forward can be read at any pair of dates. Its parameters describe shape, not expectations; this card is where expectations enter.
 - [Spot, forward and par rates](../02-Curves/01-spot-forward-and-par-rates.md): the forward rate as a no-free-money consequence of spot rates, there with annual compounding.
-- [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): discount factors and continuous compounding, the $D(T) = e^{-y(T)T}$ used throughout.
+- [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): discount factors and continuous compounding, the $`D(T) = e^{-y(T)T}`$ used throughout.
 
 ## Where this goes next
 

@@ -40,40 +40,48 @@ Bars: days in the record. Line: days a bell curve with the record's spread expec
 
 ## The formula
 
-Call each possible tomorrow a **scenario**. Scenario $i$ moves Acme's price by a log-move $x_i$ (the natural log of tomorrow's price over today's; for small moves, close to the percent change) and the bond's yield by $y_i$. Write $V(S, y)$ for what today's holdings are worth when Acme trades at $S$ and the yield is $y$. Today's prices are $S_0 = 100$ and $y_0$.
+Call each possible tomorrow a **scenario**. Scenario $`i`$ moves Acme's price by a log-move $`x_i`$ (the natural log of tomorrow's price over today's; for small moves, close to the percent change) and the bond's yield by $`y_i`$. Write $`V(S, y)`$ for what today's holdings are worth when Acme trades at $`S`$ and the yield is $`y`$. Today's prices are $`S_0 = 100`$ and $`y_0`$.
 
-$$L_i = V(S_0,\, y_0) - V\!\left(S_0 e^{x_i},\; y_0 + y_i\right)$$
+```math
+L_i = V(S_0,\, y_0) - V\!\left(S_0 e^{x_i},\; y_0 + y_i\right)
+```
 
-$$\widehat{\mathrm{VaR}}_\alpha = L_{(k)}, \qquad k = \lceil \alpha n \rceil$$
+```math
+\widehat{\mathrm{VaR}}_\alpha = L_{(k)}, \qquad k = \lceil \alpha n \rceil
+```
 
 **Read it aloud:** revalue today's book under each scenario's moves and call the drop in value the loss; sort the losses from smallest to largest; the estimate is the one at position "alpha times n, rounded up".
 
-The hat on $\widehat{\mathrm{VaR}}$ marks an **estimate**: a number computed from scenarios, standing in for the true VaR. The half-brackets $\lceil\ \rceil$ mean "round up to a whole number". The subscript in brackets, $L_{(k)}$, means "the $k$-th smallest", not "the $k$-th in time order".
+The hat on $`\widehat{\mathrm{VaR}}`$ marks an **estimate**: a number computed from scenarios, standing in for the true VaR. The half-brackets $`\lceil\ \rceil`$ mean "round up to a whole number". The subscript in brackets, $`L_{(k)}`$, means "the $`k`$-th smallest", not "the $`k`$-th in time order".
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | number of scenarios | 500 days replayed; 10,000 drawn | wobbles less: the error bar shrinks like one over the square root of $n$ |
-| $\alpha$ | confidence level: the share of scenarios the VaR must cover | 0.99 | rises: the rank moves further into the tail |
-| $i$, $L_i$ | scenario number $i$, and the loss of today's book in it; a gain is a negative loss | day 488 of the record: $469,042.43 | — |
-| $k$, $L_{(k)}$ | a rank, and the $k$-th smallest loss, with $k = \lceil \alpha n \rceil$ | $k$ = 495 of 500, or 9,900 of 10,000 | a higher rank reads a bigger loss |
-| $x_i$, $S$ | Acme's log-move in scenario $i$; Acme's price | day 488: Acme down 2.536119%; $S_0 = 100$ dollars today | a fall raises the loss on shares and calls |
-| $y_i$, $y$, $y_0$ | the change in the bond's yield in scenario $i$; the yield; today's yield | day 488: up 20.800638 basis points (a basis point is 0.01%) | a rise lowers the bond's price and raises the loss |
-| $V$ | value of today's holdings at given market prices: calls priced by the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) formula, the bond by its duration (defined under Worked numbers) | calls worth $9.227006 per share today | — |
-| $f$, $v$ | the true VaR $v$, and the height $f$ of the loss's probability curve there: how crowded losses are near it | $f$ estimated from the 10,000 draws | a crowded tail pins the rank down: smaller error |
-| $\nu$ | tail weight of the Monte Carlo law, said "nu"; smaller means fatter tails | 10 | thinner tails, smaller VaR |
-| $\kappa$ | **excess kurtosis**: how much fatter than a bell curve the loss's tails are; 0 for a bell curve | 0.941376 in the record | picks a smaller $\nu$ |
-| $z$, $N$ | the bell curve's 99% point, $N^{-1}(0.99)$, where $N$ is the bell curve's area function | 2.326348 | — |
-| $F$, $t$, $\delta$ | in the proofs: $F$ gives the chance of a loss at or below a threshold $t$; $\delta$ is a small error in that chance | — | — |
+| $`n`$ | number of scenarios | 500 days replayed; 10,000 drawn | wobbles less: the error bar shrinks like one over the square root of $`n`$ |
+| $`\alpha`$ | confidence level: the share of scenarios the VaR must cover | 0.99 | rises: the rank moves further into the tail |
+| $`i`$, $`L_i`$ | scenario number $`i`$, and the loss of today's book in it; a gain is a negative loss | day 488 of the record: $469,042.43 | — |
+| $`k`$, $`L_{(k)}`$ | a rank, and the $`k`$-th smallest loss, with $`k = \lceil \alpha n \rceil`$ | $`k`$ = 495 of 500, or 9,900 of 10,000 | a higher rank reads a bigger loss |
+| $`x_i`$, $`S`$ | Acme's log-move in scenario $`i`$; Acme's price | day 488: Acme down 2.536119%; $`S_0 = 100`$ dollars today | a fall raises the loss on shares and calls |
+| $`y_i`$, $`y`$, $`y_0`$ | the change in the bond's yield in scenario $`i`$; the yield; today's yield | day 488: up 20.800638 basis points (a basis point is 0.01%) | a rise lowers the bond's price and raises the loss |
+| $`V`$ | value of today's holdings at given market prices: calls priced by the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) formula, the bond by its duration (defined under Worked numbers) | calls worth $9.227006 per share today | — |
+| $`f`$, $`v`$ | the true VaR $`v`$, and the height $`f`$ of the loss's probability curve there: how crowded losses are near it | $`f`$ estimated from the 10,000 draws | a crowded tail pins the rank down: smaller error |
+| $`\nu`$ | tail weight of the Monte Carlo law, said "nu"; smaller means fatter tails | 10 | thinner tails, smaller VaR |
+| $`\kappa`$ | **excess kurtosis**: how much fatter than a bell curve the loss's tails are; 0 for a bell curve | 0.941376 in the record | picks a smaller $`\nu`$ |
+| $`z`$, $`N`$ | the bell curve's 99% point, $`N^{-1}(0.99)`$, where $`N`$ is the bell curve's area function | 2.326348 | — |
+| $`F`$, $`t`$, $`\delta`$ | in the proofs: $`F`$ gives the chance of a loss at or below a threshold $`t`$; $`\delta`$ is a small error in that chance | — | — |
 
 Two helper formulas travel with the main one. The first is the sampling error of a Monte Carlo quantile, written SE for standard error:
 
-$$\mathrm{SE} \approx \frac{1}{f}\sqrt{\frac{\alpha(1-\alpha)}{n}}$$
+```math
+\mathrm{SE} \approx \frac{1}{f}\sqrt{\frac{\alpha(1-\alpha)}{n}}
+```
 
-In words: the share of draws below the true VaR wobbles by $\sqrt{\alpha(1-\alpha)/n}$, and dividing by $f$ converts a wobble in probability into a wobble in dollars. The second fixes the Monte Carlo law's tail weight from the record, using the fact that a Student-t law with $\nu$ degrees of freedom has excess kurtosis $6/(\nu-4)$ when $\nu > 4$:
+In words: the share of draws below the true VaR wobbles by $`\sqrt{\alpha(1-\alpha)/n}`$, and dividing by $`f`$ converts a wobble in probability into a wobble in dollars. The second fixes the Monte Carlo law's tail weight from the record, using the fact that a Student-t law with $`\nu`$ degrees of freedom has excess kurtosis $`6/(\nu-4)`$ when $`\nu > 4`$:
 
-$$\nu = 4 + \frac{6}{\kappa}, \quad \text{rounded to a whole number.}$$
+```math
+\nu = 4 + \frac{6}{\kappa}, \quad \text{rounded to a whole number.}
+```
 
-A **Student-t law** is a bell curve whose width is itself random: divide a bell-curve draw by the square root of an average of $\nu$ squared bell-curve draws. Occasional narrow averages make occasional huge moves. As $\nu$ grows, it turns back into a bell curve.
+A **Student-t law** is a bell curve whose width is itself random: divide a bell-curve draw by the square root of an average of $`\nu`$ squared bell-curve draws. Occasional narrow averages make occasional huge moves. As $`\nu`$ grows, it turns back into a bell curve.
 
 ### When it holds
 
@@ -99,14 +107,14 @@ So the three answers differ for two reasons only: different laws, and sampling e
 
 ### Step 1: sorting reads the replay law's 99% point exactly
 
-Put weight $1/n$ on each of $n$ losses. The chance of a loss at or below a threshold is the count of losses at or below it, divided by $n$. The 99% point is the smallest threshold where that chance reaches 0.99. Counting up the sorted list, the chance first reaches 0.99 at position $\lceil 0.99\,n \rceil$. For 500 days that is position 495, which leaves exactly five days worse.
+Put weight $`1/n`$ on each of $`n`$ losses. The chance of a loss at or below a threshold is the count of losses at or below it, divided by $`n`$. The 99% point is the smallest threshold where that chance reaches 0.99. Counting up the sorted list, the chance first reaches 0.99 at position $`\lceil 0.99\,n \rceil`$. For 500 days that is position 495, which leaves exactly five days worse.
 
 The check code reaches the same loss by a second road: for each loss, count how many losses are at or below it, and keep the smallest loss whose count reaches 495. No sorting. Both roads return $469,042.43.
 
 <details>
 <summary>Detailed proof: the sorted rank is the replay law's quantile, ties included</summary>
 
-Let $F_n(t)$ be the share of the $n$ losses at or below $t$. The lower quantile at level $\alpha$ is the smallest $t$ with $F_n(t) \ge \alpha$. Put $k = \lceil \alpha n \rceil$. For any $t < L_{(k)}$, at most $k-1$ losses are at or below $t$, so $F_n(t) \le (k-1)/n < \alpha$, since $k - 1 < \alpha n$ by the definition of rounding up. At $t = L_{(k)}$, at least $k$ losses are at or below it, so $F_n(t) \ge k/n \ge \alpha$. So $L_{(k)}$ is the smallest qualifying threshold, even when several losses tie with it. The share of losses strictly above it is at most $1 - \alpha$.
+Let $`F_n(t)`$ be the share of the $`n`$ losses at or below $`t`$. The lower quantile at level $`\alpha`$ is the smallest $`t`$ with $`F_n(t) \ge \alpha`$. Put $`k = \lceil \alpha n \rceil`$. For any $`t < L_{(k)}`$, at most $`k-1`$ losses are at or below $`t`$, so $`F_n(t) \le (k-1)/n < \alpha`$, since $`k - 1 < \alpha n`$ by the definition of rounding up. At $`t = L_{(k)}`$, at least $`k`$ losses are at or below it, so $`F_n(t) \ge k/n \ge \alpha`$. So $`L_{(k)}`$ is the smallest qualifying threshold, even when several losses tie with it. The share of losses strictly above it is at most $`1 - \alpha`$.
 
 </details>
 
@@ -120,16 +128,16 @@ For this record the band runs from **$386,641.66 to $558,693.91**. That is the h
 
 ### Step 3: the Monte Carlo error bar shrinks like one over the square root of n
 
-Draw $n$ scenarios from a law whose true VaR is $v$. The share of draws landing at or below $v$ averages 0.99 and wobbles with standard deviation $\sqrt{0.99 \times 0.01 / n}$, the usual spread of a proportion. The estimate is where the sorted draws cross 0.99. When the share is off by a small amount $\delta$, the crossing point moves by about $\delta / f$ dollars, because $f$ is the share of draws per dollar near $v$. That gives the SE formula above.
+Draw $`n`$ scenarios from a law whose true VaR is $`v`$. The share of draws landing at or below $`v`$ averages 0.99 and wobbles with standard deviation $`\sqrt{0.99 \times 0.01 / n}`$, the usual spread of a proportion. The estimate is where the sorted draws cross 0.99. When the share is off by a small amount $`\delta`$, the crossing point moves by about $`\delta / f`$ dollars, because $`f`$ is the share of draws per dollar near $`v`$. That gives the SE formula above.
 
-For 10,000 draws from this card's law, the formula gives **$8,122.35**, with $f$ estimated from the share of draws within $20,000 of the answer. Rerunning the whole simulation 20 times with fresh seeds (the starting numbers of the random-number generator) gives a spread of **$10,649.37**. Two roads, the same order of wobble. The reruns ranged from $414,118.06 to $450,472.79.
+For 10,000 draws from this card's law, the formula gives **$8,122.35**, with $`f`$ estimated from the share of draws within $20,000 of the answer. Rerunning the whole simulation 20 times with fresh seeds (the starting numbers of the random-number generator) gives a spread of **$10,649.37**. Two roads, the same order of wobble. The reruns ranged from $414,118.06 to $450,472.79.
 
 The square root is the expensive part. Cutting the error in half takes four times the draws. With 1,000 scenarios instead of 10,000 the reruns spread by $26,848.00.
 
 <details>
 <summary>The algebra behind the error bar</summary>
 
-Let $F$ be the loss law's cumulative probability and $\hat F_n$ the share of draws at or below a threshold. At the true quantile $v$, $\hat F_n(v)$ is a proportion from $n$ independent trials with success chance $\alpha$, so its standard deviation is $\sqrt{\alpha(1-\alpha)/n}$. The estimate $\hat v$ solves $\hat F_n(\hat v) \approx \alpha$. Near $v$, $F(\hat v) \approx F(v) + f\,(\hat v - v)$, and $\hat F_n$ tracks $F$ up to its own wobble, so $f\,(\hat v - v) \approx \alpha - \hat F_n(v)$. Taking standard deviations gives $\mathrm{SE}(\hat v) \approx \sqrt{\alpha(1-\alpha)/n}\,/\,f$. This is the first-order result for a sample quantile; it assumes $f$ is positive and smooth at $v$.
+Let $`F`$ be the loss law's cumulative probability and $`\hat F_n`$ the share of draws at or below a threshold. At the true quantile $`v`$, $`\hat F_n(v)`$ is a proportion from $`n`$ independent trials with success chance $`\alpha`$, so its standard deviation is $`\sqrt{\alpha(1-\alpha)/n}`$. The estimate $`\hat v`$ solves $`\hat F_n(\hat v) \approx \alpha`$. Near $`v`$, $`F(\hat v) \approx F(v) + f\,(\hat v - v)`$, and $`\hat F_n`$ tracks $`F`$ up to its own wobble, so $`f\,(\hat v - v) \approx \alpha - \hat F_n(v)`$. Taking standard deviations gives $`\mathrm{SE}(\hat v) \approx \sqrt{\alpha(1-\alpha)/n}\,/\,f`$. This is the first-order result for a sample quantile; it assumes $`f`$ is positive and smooth at $`v`$.
 
 </details>
 
@@ -174,8 +182,8 @@ Take day 488 of the record. Acme fell 2.536119% and the yield rose 20.800638 bas
 | bond | −$5,000,000 × duration 7 × 0.0020800638 | −$72,802.23 |
 | loss on day 488 | 253,611.94 + 142,628.25 + 72,802.23, cents rounded | $469,042.43 |
 | its rank among the 500 losses | 5 days lose more | 495 |
-| **historical VaR** | $L_{(495)}$, since $\lceil 0.99 \times 500 \rceil = 495$ | **$469,042.43** |
-| 95% band | $L_{(489)}$ to $L_{(499)}$, chance 0.955037 | $386,641.66 to $558,693.91 |
+| **historical VaR** | $`L_{(495)}`$, since $`\lceil 0.99 \times 500 \rceil = 495`$ | **$469,042.43** |
+| 95% band | $`L_{(489)}`$ to $`L_{(499)}`$, chance 0.955037 | $386,641.66 to $558,693.91 |
 
 **Duration** is the bond's price sensitivity: a 1% rise in yield cuts its price by about 7%.
 
@@ -195,17 +203,17 @@ Take day 488 of the record. Acme fell 2.536119% and the yield rose 20.800638 bas
 | record's excess kurtosis | average of loss to the fourth ÷ (average of loss squared) squared − 3 | 0.941376 |
 | tail weight | 4 + 6 ÷ 0.941376, rounded | 10 |
 | scenarios | Student-t moves with the record's spreads and correlation, 10,000 of them | — |
-| **Monte Carlo VaR** | $L_{(9900)}$, since $\lceil 0.99 \times 10{,}000 \rceil = 9{,}900$ | **$429,435.78** |
+| **Monte Carlo VaR** | $`L_{(9900)}`$, since $`\lceil 0.99 \times 10{,}000 \rceil = 9{,}900`$ | **$429,435.78** |
 | its error bar | formula, then 20 reruns | $8,122.35; $10,649.37 |
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Read off the 5th-worst day, $L_{(496)}$ | $479,232.80 (right: $469,042.43) | With 500 days, five must lie *beyond* the VaR; the fifth-worst is the first of them, not the boundary |
+| Read off the 5th-worst day, $`L_{(496)}`$ | $479,232.80 (right: $469,042.43) | With 500 days, five must lie *beyond* the VaR; the fifth-worst is the first of them, not the boundary |
 | Replay with delta instead of repricing the calls | $480,437.83 (right: $469,042.43) | Long calls lose less than their delta on a big fall; the straight line overstates their loss |
 | Pair Acme's moves and the yield's moves apart (all 250,000 pairings) | $487,276.39 (right: $469,042.43) | Yields tended to rise with Acme, so the bond cushioned the shares; pulling the days apart destroys that cushion |
-| Run 1,000 scenarios instead of 10,000 | error bar $26,848.00 (right: $10,649.37) | Error grows like one over the square root of the number of draws: a tenth of the draws widens it about $\sqrt{10} \approx 3.2$ times |
+| Run 1,000 scenarios instead of 10,000 | error bar $26,848.00 (right: $10,649.37) | Error grows like one over the square root of the number of draws: a tenth of the draws widens it about $`\sqrt{10} \approx 3.2`$ times |
 
 ---
 
@@ -640,9 +648,9 @@ The outputs are identical line for line.
 
 Lean proves the card's sorting facts for every list of losses, with no assumption about where the losses came from.
 
-- Take $n \ge 1$ losses, $0 < \alpha \le 1$ and $k = \lceil \alpha n \rceil$. Then $L_{(k)}$ is the smallest threshold where the share of losses at or below it reaches $\alpha$, ties included.
-- Take the same $n$, $\alpha$ and $k$. Then at most a share $1 - \alpha$ of the losses lie strictly above $L_{(k)}$.
-- Take any threshold $t$ and any rank from 1 to $n$. Then the loss at that rank is at or below $t$ exactly when at least that many losses are.
+- Take $`n \ge 1`$ losses, $`0 < \alpha \le 1`$ and $`k = \lceil \alpha n \rceil`$. Then $`L_{(k)}`$ is the smallest threshold where the share of losses at or below it reaches $`\alpha`$, ties included.
+- Take the same $`n`$, $`\alpha`$ and $`k`$. Then at most a share $`1 - \alpha`$ of the losses lie strictly above $`L_{(k)}`$.
+- Take any threshold $`t`$ and any rank from 1 to $`n`$. Then the loss at that rank is at or below $`t`$ exactly when at least that many losses are.
 - At 99%, the rank is 495 for 500 days and 9,900 for 10,000 draws.
 
 The band's chance of 0.955037, the error-bar formula, the simulations and every dollar figure are left to the Python and Rust checks.

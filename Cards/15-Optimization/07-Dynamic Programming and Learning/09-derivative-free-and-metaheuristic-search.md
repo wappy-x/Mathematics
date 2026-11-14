@@ -18,7 +18,7 @@ Over 10 seeded runs of 20,000 evaluations each (a seed fixes a run's random choi
 
 None reaches 0. An operator would adopt the best rule found and, on a real simulator, could not tell how far above the best rule it sits.
 
-Then the honest part. No method that only reads values can prove it has found the bottom. Nelder-Mead promises only that its best value never rises, and annealing's theorems are about an endless run. A certified answer needs extra knowledge, such as a bound on how steep the surface can be, and then costs $10^{35.73}$ evaluations here.
+Then the honest part. No method that only reads values can prove it has found the bottom. Nelder-Mead promises only that its best value never rises, and annealing's theorems are about an endless run. A certified answer needs extra knowledge, such as a bound on how steep the surface can be, and then costs $`10^{35.73}`$ evaluations here.
 
 **Without derivatives a search can only compare values: Nelder-Mead reshapes a cluster of points to slide downhill and stops in the first valley that holds it, annealing climbs out of valleys with a chance that shrinks as the temperature falls, and a population scales its steps by its own spread; each reports the best found, because no finite list of values can certify a global minimum.**
 
@@ -41,45 +41,51 @@ The line is one ripple, sampled every quarter step. Valley floors sit near whole
 
 ## The formula
 
-In words first. The ten settings form a point $x$. The **hidden coordinates** $y = Qx$ come from a fixed rotation $Q$: a matrix that turns space without stretching it, so lengths stay the same. The rotation stops any method from treating the ten settings one at a time. ($Q$ here is only this rotation, not the values $Q(s, a)$ of [Q-learning](05-q-learning-and-temporal-differences.md) or the recourse cost of [Two-stage stochastic programming](07-stochastic-programming-with-recourse.md).)
+In words first. The ten settings form a point $`x`$. The **hidden coordinates** $`y = Qx`$ come from a fixed rotation $`Q`$: a matrix that turns space without stretching it, so lengths stay the same. The rotation stops any method from treating the ten settings one at a time. ($`Q`$ here is only this rotation, not the values $`Q(s, a)`$ of [Q-learning](05-q-learning-and-temporal-differences.md) or the recourse cost of [Two-stage stochastic programming](07-stochastic-programming-with-recourse.md).)
 
-$$f(x) = \sum_{i=1}^{10} g(y_i), \qquad g(y) = y^2 - 10\cos(2\pi y) + 10, \qquad y = Qx$$
+```math
+f(x) = \sum_{i=1}^{10} g(y_i), \qquad g(y) = y^2 - 10\cos(2\pi y) + 10, \qquad y = Qx
+```
 
 **Read it aloud:** ten ripples, each a parabola with a cosine dent cut into it, read along ten hidden directions and added up.
 
-Since $-10\cos(2\pi y) + 10$ is never negative, each ripple is at least $y^2$, so $f \ge 0$, with $f = 0$ only at the origin. That floor is what grades every run.
+Since $`-10\cos(2\pi y) + 10`$ is never negative, each ripple is at least $`y^2`$, so $`f \ge 0`$, with $`f = 0`$ only at the origin. That floor is what grades every run.
 
-**Nelder-Mead** keeps a **simplex**: $n + 1$ points in $n$ settings, a triangle when $n = 2$. (This is not [The simplex method](../04-Linear%20Programming/03-simplex-method.md) of linear programming, which walks corners of a feasible region.) Sort the corners best first, $x_1, \dots, x_{n+1}$, and let $c$ be the centre of all but the worst. Every trial point lies on one line:
+**Nelder-Mead** keeps a **simplex**: $`n + 1`$ points in $`n`$ settings, a triangle when $`n = 2`$. (This is not [The simplex method](../04-Linear%20Programming/03-simplex-method.md) of linear programming, which walks corners of a feasible region.) Sort the corners best first, $`x_1, \dots, x_{n+1}`$, and let $`c`$ be the centre of all but the worst. Every trial point lies on one line:
 
-$$x(t) = c + t\,(x_{n+1} - c), \qquad t = -1 \text{ reflect}, \quad t = -2 \text{ expand}, \quad t = -\tfrac12 \text{ contract outside}, \quad t = \tfrac12 \text{ contract inside}$$
+```math
+x(t) = c + t\,(x_{n+1} - c), \qquad t = -1 \text{ reflect}, \quad t = -2 \text{ expand}, \quad t = -\tfrac12 \text{ contract outside}, \quad t = \tfrac12 \text{ contract inside}
+```
 
-**Read it aloud:** each trial sits on the line from the worst corner through the centre of the others; $t$ says how far along and on which side.
+**Read it aloud:** each trial sits on the line from the worst corner through the centre of the others; $`t`$ says how far along and on which side.
 
-**Simulated annealing** proposes a step that changes the cost by $\Delta$ and accepts it with chance
+**Simulated annealing** proposes a step that changes the cost by $`\Delta`$ and accepts it with chance
 
-$$P(\text{accept}) = \min\!\left(1,\; e^{-\Delta/T_k}\right), \qquad T_k = T_0\, q^{k}, \qquad q = \left(T_{\text{end}}/T_0\right)^{1/K}$$
+```math
+P(\text{accept}) = \min\!\left(1,\; e^{-\Delta/T_k}\right), \qquad T_k = T_0\, q^{k}, \qquad q = \left(T_{\text{end}}/T_0\right)^{1/K}
+```
 
-**Read it aloud:** always take a step that does not raise the cost; take one that raises it by $\Delta$ with chance e to the minus $\Delta$ over $T$; and shrink $T$ by the same factor $q$ after every evaluation, so it falls from $T_0$ to $T_{\text{end}}$ over the budget.
+**Read it aloud:** always take a step that does not raise the cost; take one that raises it by $`\Delta`$ with chance e to the minus $`\Delta`$ over $`T`$; and shrink $`T`$ by the same factor $`q`$ after every evaluation, so it falls from $`T_0`$ to $`T_{\text{end}}`$ over the budget.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f(x)$ | the cost the simulator returns, to be made smallest: thousand pounds a year above the best rule | 167.50 at run 1's start; floor 0 | — |
-| $x$, $n$ | the settings; how many there are | starts drawn from −5.12 to 5.12 each; $n = 10$ | more settings: far more valleys |
-| $y$, $Q$ | hidden coordinates; the fixed rotation that makes them | $y = Qx$ | — |
-| $g(y)$ | one ripple: a parabola with cosine dents | $g(1) = 1.00$, $g(0.5) = 20.25$ | — |
-| $x_1, \dots, x_{n+1}$ | the simplex corners, best first | 11 corners for 10 settings | — |
-| $c$, $t$ | centre of all corners but the worst; where on the line through it a trial sits | (0.4215, −0.2965) in the worked step; $t$ = −1, −2, −½ or ½ | — |
-| $\Delta$ | the change in cost a proposed step would make | +10 in the trace below | accepted less often |
-| $T_k$ | the **temperature**: how willing the walk is to go uphill | 30 at the start, 1.7321 at $k$ = 10,000 | more uphill steps taken |
-| $T_0$, $T_{\text{end}}$, $q$ | start and end temperature; cooling factor per evaluation | 30, 0.1, 0.999715 | slower cooling |
-| $k$, $K$ | evaluations so far; the budget | $K$ = 20,000 | more found, more cost |
-| $u$, $v$ | the two settings of McKinnon's function, Step 2 | stall at (0, 0) | — |
-| $L$ | a **Lipschitz bound**: the most the cost can change per unit moved, Step 5 | 231.07 | a finer grid is needed to certify |
+| $`f(x)`$ | the cost the simulator returns, to be made smallest: thousand pounds a year above the best rule | 167.50 at run 1's start; floor 0 | — |
+| $`x`$, $`n`$ | the settings; how many there are | starts drawn from −5.12 to 5.12 each; $`n = 10`$ | more settings: far more valleys |
+| $`y`$, $`Q`$ | hidden coordinates; the fixed rotation that makes them | $`y = Qx`$ | — |
+| $`g(y)`$ | one ripple: a parabola with cosine dents | $`g(1) = 1.00`$, $`g(0.5) = 20.25`$ | — |
+| $`x_1, \dots, x_{n+1}`$ | the simplex corners, best first | 11 corners for 10 settings | — |
+| $`c`$, $`t`$ | centre of all corners but the worst; where on the line through it a trial sits | (0.4215, −0.2965) in the worked step; $`t`$ = −1, −2, −½ or ½ | — |
+| $`\Delta`$ | the change in cost a proposed step would make | +10 in the trace below | accepted less often |
+| $`T_k`$ | the **temperature**: how willing the walk is to go uphill | 30 at the start, 1.7321 at $`k`$ = 10,000 | more uphill steps taken |
+| $`T_0`$, $`T_{\text{end}}`$, $`q`$ | start and end temperature; cooling factor per evaluation | 30, 0.1, 0.999715 | slower cooling |
+| $`k`$, $`K`$ | evaluations so far; the budget | $`K`$ = 20,000 | more found, more cost |
+| $`u`$, $`v`$ | the two settings of McKinnon's function, Step 2 | stall at (0, 0) | — |
+| $`L`$ | a **Lipschitz bound**: the most the cost can change per unit moved, Step 5 | 231.07 | a finer grid is needed to certify |
 
 ### When it holds
 
-- **A floor is known.** Here $f \ge 0$ because we built the surface. On a real simulator nothing tells 29.78 apart from the minimum.
-- **Nelder-Mead needs one smooth valley.** On a smooth bowl, $f = \sum x_i^2$, from run 1's start it reaches 4.82e-13 in 1176 evaluations. On the ripples it stops in the first valley that holds it: 78.00 on average. Even a smooth convex function can stall it, as Step 2 shows.
+- **A floor is known.** Here $`f \ge 0`$ because we built the surface. On a real simulator nothing tells 29.78 apart from the minimum.
+- **Nelder-Mead needs one smooth valley.** On a smooth bowl, $`f = \sum x_i^2`$, from run 1's start it reaches 4.82e-13 in 1176 evaluations. On the ripples it stops in the first valley that holds it: 78.00 on average. Even a smooth convex function can stall it, as Step 2 shows.
 - **The temperature must fall.** Held at 30, the walk ends at 248.04 on average, worse than the average start, 177.47. At 0 it only goes downhill and its best is 84.37.
 - **Methods are compared at equal evaluations, over many seeds.** One Nelder-Mead run ends anywhere from 44.77 to 131.33, depending on the start.
 - **Annealing's theorems have their own hypotheses.** One needs a finite set of states and a slow logarithmic cooling; the other needs proposals that can land anywhere in the region. These runs move one setting at a time on a continuous surface, so neither covers them.
@@ -94,16 +100,16 @@ A derivative says which way is down. Without one, the only information is which 
 
 ### Step 1: Nelder-Mead rolls a simplex downhill
 
-Take the worst corner and mirror it through the centre of the others ($t = -1$). On a slope the worst corner sits on the uphill side, so its mirror image lands downhill. Then:
+Take the worst corner and mirror it through the centre of the others ($`t = -1`$). On a slope the worst corner sits on the uphill side, so its mirror image lands downhill. Then:
 
-- if the mirror point is the new best, try twice as far ($t = -2$) and keep the better of the two;
+- if the mirror point is the new best, try twice as far ($`t = -2`$) and keep the better of the two;
 - if it beats the second-worst corner, keep it;
-- otherwise pull a point in halfway, on the mirror side ($t = -\tfrac12$) if the mirror point beat the worst, or on the worst corner's side ($t = \tfrac12$) if not, and keep it if it beats both;
+- otherwise pull a point in halfway, on the mirror side ($`t = -\tfrac12`$) if the mirror point beat the worst, or on the worst corner's side ($`t = \tfrac12`$) if not, and keep it if it beats both;
 - if even that fails, shrink every corner halfway toward the best.
 
 Expansions lengthen the stride along a long slope; contractions shorten it near a floor. So the simplex sets its own step and direction from comparisons alone.
 
-One step by hand, on McKinnon's function of Step 2, in two settings $u$ and $v$. The corners are (0, 0) with cost 0.0000, (1, 1) with 8.0000, and (0.8431, −0.5931) with 4.0233. The worst is (1, 1). The centre of the other two is $c$ = (0.4215, −0.2965). The mirror point (−0.1569, −1.5931) costs 9.8105: not below the worst, 8. So the method contracts inside, to (0.7108, 0.3517), cost 3.5066. That beats 8, and it replaces (1, 1).
+One step by hand, on McKinnon's function of Step 2, in two settings $`u`$ and $`v`$. The corners are (0, 0) with cost 0.0000, (1, 1) with 8.0000, and (0.8431, −0.5931) with 4.0233. The worst is (1, 1). The centre of the other two is $`c`$ = (0.4215, −0.2965). The mirror point (−0.1569, −1.5931) costs 9.8105: not below the worst, 8. So the method contracts inside, to (0.7108, 0.3517), cost 3.5066. That beats 8, and it replaces (1, 1).
 
 ### Step 2: what Nelder-Mead promises, and McKinnon's stall
 
@@ -112,7 +118,7 @@ One thing is guaranteed: the best corner's value never rises. The proof is short
 <details>
 <summary>Detailed proof: Nelder-Mead's best value never rises</summary>
 
-Each step either replaces the worst corner or shrinks. A replacement is accepted only if it is lower than the worst corner's value (reflection: below the second-worst; expansion: below the best; contraction: below the worst and the mirror point). The best corner is never the one replaced, unless all corners tie, and then the newcomer is lower still. A shrink keeps the best corner where it is and moves the others. So after every step the lowest value among the corners is at most what it was. When $f$ has a floor, as the ripples do ($f \ge 0$), the best values form a falling sequence bounded below, so they settle to some number. Nothing in the proof says that number is a minimum.
+Each step either replaces the worst corner or shrinks. A replacement is accepted only if it is lower than the worst corner's value (reflection: below the second-worst; expansion: below the best; contraction: below the worst and the mirror point). The best corner is never the one replaced, unless all corners tie, and then the newcomer is lower still. A shrink keeps the best corner where it is and moves the others. So after every step the lowest value among the corners is at most what it was. When $`f`$ has a floor, as the ripples do ($`f \ge 0`$), the best values form a falling sequence bounded below, so they settle to some number. Nothing in the proof says that number is a minimum.
 
 </details>
 
@@ -120,31 +126,33 @@ Beyond that, the known results are thin. Lagarias and co-authors proved that for
 
 McKinnon showed they need not. His function is
 
-$$f(u, v) = \begin{cases} 360\,u^2 + v + v^2 & u \le 0 \\ 6\,u^2 + v + v^2 & u > 0 \end{cases}$$
+```math
+f(u, v) = \begin{cases} 360\,u^2 + v + v^2 & u \le 0 \\ 6\,u^2 + v + v^2 & u > 0 \end{cases}
+```
 
-It is strictly convex with a continuous slope, and calculus gives its minimum: $u = 0$ and $1 + 2v = 0$, so $v = -0.5$ and $f = -0.250000$. McKinnon proved that from the start of Step 1 every step is an inside contraction. The simplex shrinks onto (0, 0), where the slope is (0, 1), not zero.
+It is strictly convex with a continuous slope, and calculus gives its minimum: $`u = 0`$ and $`1 + 2v = 0`$, so $`v = -0.5`$ and $`f = -0.250000`$. McKinnon proved that from the start of Step 1 every step is an inside contraction. The simplex shrinks onto (0, 0), where the slope is (0, 1), not zero.
 
-The checks stop at (0.000000, 0.000000) with $f$ = 0.000000 after 165 evaluations. A fresh simplex of side 1 started at that point finds (0.000000, −0.500000) with $f$ = −0.250000, after 286 evaluations in all. Restarting a collapsed simplex is the usual fix. It is a habit, not a theorem.
+The checks stop at (0.000000, 0.000000) with $`f`$ = 0.000000 after 165 evaluations. A fresh simplex of side 1 started at that point finds (0.000000, −0.500000) with $`f`$ = −0.250000, after 286 evaluations in all. Restarting a collapsed simplex is the usual fix. It is a habit, not a theorem.
 
 On the ripples each run collapses into a valley after 1077.3 evaluations on average. Spending the rest of the budget on fresh random starts, **multistart**, brings the mean best down from 78.00 to 42.29.
 
 ### Step 3: annealing pays for uphill steps
 
-Annealing changes one setting at a time by a normal (bell-curve) random step of spread 1, about the distance between valleys. It takes every step down. It takes a step up by $\Delta$ with chance $e^{-\Delta/T}$, so a climb of 10 is accepted with chance 0.716531 at $T = 30$, and almost never once $T$ is below 1.
+Annealing changes one setting at a time by a normal (bell-curve) random step of spread 1, about the distance between valleys. It takes every step down. It takes a step up by $`\Delta`$ with chance $`e^{-\Delta/T}`$, so a climb of 10 is accepted with chance 0.716531 at $`T = 30`$, and almost never once $`T`$ is below 1.
 
-Why does that find low valleys? Hold $T$ fixed. The acceptance rule satisfies detailed balance: in the long run each step is made as often as its reverse. So the walk spends its time in proportion to $e^{-f/T}$, as [Local search](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/07-local-search-and-metaheuristics.md) states and [MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md) proves. Lower valleys get exponentially more weight, and the weight piles up faster as $T$ falls.
+Why does that find low valleys? Hold $`T`$ fixed. The acceptance rule satisfies detailed balance: in the long run each step is made as often as its reverse. So the walk spends its time in proportion to $`e^{-f/T}`$, as [Local search](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/07-local-search-and-metaheuristics.md) states and [MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md) proves. Lower valleys get exponentially more weight, and the weight piles up faster as $`T`$ falls.
 
-The checks test this on one ripple at $T = 5$. A walk of 200,000 steps spends 0.2525 of its time within 0.5 of the bottom, with a standard error (the likely size of the error in that estimate) of 0.0024. Simpson's rule (a standard way to compute an area under a curve from sampled heights) applied to $e^{-g/T}$ says 0.2513. The two agree.
+The checks test this on one ripple at $`T = 5`$. A walk of 200,000 steps spends 0.2525 of its time within 0.5 of the bottom, with a standard error (the likely size of the error in that estimate) of 0.0024. Simpson's rule (a standard way to compute an area under a curve from sampled heights) applied to $`e^{-g/T}`$ says 0.2513. The two agree.
 
 ### Step 4: the cooling schedule, and what it can promise
 
-The runs here cool geometrically, from 30 to 0.1. The factor is $q = (0.1/30)^{1/20000}$ = 0.999715 per evaluation, and halfway through $T$ = 1.7321. This schedule, the one nearly everyone uses, carries no guarantee. Its results are measured run by run.
+The runs here cool geometrically, from 30 to 0.1. The factor is $`q = (0.1/30)^{1/20000}`$ = 0.999715 per evaluation, and halfway through $`T`$ = 1.7321. This schedule, the one nearly everyone uses, carries no guarantee. Its results are measured run by run.
 
-Two kinds of theorem exist, and neither covers these runs. For a finite search with local moves, Hajek's theorem, stated on [Local search](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/07-local-search-and-metaheuristics.md), needs the slow schedule $T_k = T_0 / \ln(k + 2)$, with $T_0$ at least the depth of the deepest trap. That card writes it $c / \ln(t + 1)$; it is shifted here because $k$ counts from 0 and $\ln 1 = 0$.
+Two kinds of theorem exist, and neither covers these runs. For a finite search with local moves, Hajek's theorem, stated on [Local search](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/07-local-search-and-metaheuristics.md), needs the slow schedule $`T_k = T_0 / \ln(k + 2)`$, with $`T_0`$ at least the depth of the deepest trap. That card writes it $`c / \ln(t + 1)`$; it is shifted here because $`k`$ counts from 0 and $`\ln 1 = 0`$.
 
 For a continuous surface, Bélisle proved a limit result. Suppose every proposal can land anywhere in the region, with a chance density bounded away from zero, and the temperature falls to 0. Then under mild further conditions the current value converges in probability to the global minimum value: the chance of sitting more than any fixed amount above it shrinks to 0.
 
-Both are statements about the limit $k \to \infty$, not about 20,000 evaluations. The checks run the logarithmic schedule with $T_0 = 30$, with no proof that 30 is deep enough. At the end of the budget it is still at $T$ = 3.0292. Its walks end at 46.54 on average, and their best is 32.56, against 29.78 for geometric cooling.
+Both are statements about the limit $`k \to \infty`$, not about 20,000 evaluations. The checks run the logarithmic schedule with $`T_0 = 30`$, with no proof that 30 is deep enough. At the end of the budget it is still at $`T`$ = 3.0292. Its walks end at 46.54 on average, and their best is 32.56, against 29.78 for geometric cooling.
 
 Bélisle's guarantee leans on the same fact that makes plain random search converge: a proposal that can land anywhere will, eventually, land near the bottom. How long "eventually" is comes next.
 
@@ -153,15 +161,15 @@ Bélisle's guarantee leans on the same fact that makes plain random search conve
 <details>
 <summary>Detailed proof: a finite list of values never certifies a global minimum</summary>
 
-Suppose a method has evaluated $f$ at $K$ points. Pick any point it did not evaluate, and a ball around that point small enough to hold none of the evaluated points. Build a new function equal to $f$ everywhere except inside that ball, where a narrow pit dips to one unit below the best value found. Both functions give the same $K$ values, so the method makes exactly the same choices on both and reports the same best value. On the second function the true minimum is lower than that value. So $K$ values cannot prove that the best of them is the minimum, for any method and any $K$.
+Suppose a method has evaluated $`f`$ at $`K`$ points. Pick any point it did not evaluate, and a ball around that point small enough to hold none of the evaluated points. Build a new function equal to $`f`$ everywhere except inside that ball, where a narrow pit dips to one unit below the best value found. Both functions give the same $`K`$ values, so the method makes exactly the same choices on both and reports the same best value. On the second function the true minimum is lower than that value. So $`K`$ values cannot prove that the best of them is the minimum, for any method and any $`K`$.
 
 </details>
 
-What breaks the argument is extra knowledge. A **Lipschitz bound** $L$ says the cost can change by at most $L$ times the distance moved. Here $\nabla f$ is the slope of the surface and $\|\nabla f\|$ is its length, the steepness. The box is the region where every setting lies from −5.12 to 5.12. Then $\|\nabla f\| \le 2\|y\| + 20\pi\sqrt{n}$, and $\|y\| = \|x\| \le 5.12\sqrt{10}$ inside the box, because the rotation keeps lengths, so $L$ = 231.07.
+What breaks the argument is extra knowledge. A **Lipschitz bound** $`L`$ says the cost can change by at most $`L`$ times the distance moved. Here $`\nabla f`$ is the slope of the surface and $`\|\nabla f\|`$ is its length, the steepness. The box is the region where every setting lies from −5.12 to 5.12. Then $`\|\nabla f\| \le 2\|y\| + 20\pi\sqrt{n}`$, and $`\|y\| = \|x\| \le 5.12\sqrt{10}`$ inside the box, because the rotation keeps lengths, so $`L`$ = 231.07.
 
-Lay a grid over the box. The minimiser is within half a grid diagonal of some grid point, so the best grid value is at most $L$ times that half-diagonal above the minimum. To be within 1 of the minimum, the spacing must be 0.002737: 3743 points per axis, $10^{35.73}$ points in all. That is a certificate, at a cost no budget can meet.
+Lay a grid over the box. The minimiser is within half a grid diagonal of some grid point, so the best grid value is at most $`L`$ times that half-diagonal above the minimum. To be within 1 of the minimum, the spacing must be 0.002737: 3743 points per axis, $`10^{35.73}`$ points in all. That is a certificate, at a cost no budget can meet.
 
-Random search has a guarantee too. One draw lands within 0.5 of the origin, inside the bottom valley, with chance 1.9646 in $10^{13}$. On average that takes 5.09 million million draws. In 20,000 draws its best averages 65.53.
+Random search has a guarantee too. One draw lands within 0.5 of the origin, inside the bottom valley, with chance 1.9646 in $`10^{13}`$. On average that takes 5.09 million million draws. In 20,000 draws its best averages 65.53.
 
 ### Step 6: populations
 
@@ -175,16 +183,16 @@ Why it works: the steps are gaps inside the population. While the points are spr
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| cost at run 1's start | $f$ at a random point of the box | 167.50 |
-| the floor | each ripple $\ge y^2 \ge 0$; $f$ at the origin | 0.00 |
-| McKinnon, worst corner | $f(1, 1) = 6 + 1 + 1$ | 8.0000 |
+| cost at run 1's start | $`f`$ at a random point of the box | 167.50 |
+| the floor | each ripple $`\ge y^2 \ge 0`$; $`f`$ at the origin | 0.00 |
+| McKinnon, worst corner | $`f(1, 1) = 6 + 1 + 1`$ | 8.0000 |
 | centre of the other two | ((0 + 0.8431)/2, (0 − 0.5931)/2) | (0.4215, −0.2965) |
-| mirror point | $2c - (1, 1)$, then its cost | 9.8105, not below 8 |
-| inside contraction | $c + \tfrac12((1, 1) - c)$, then its cost | 3.5066, accepted |
-| cooling factor | $(0.1/30)^{1/20000}$ | 0.999715 |
-| temperature halfway | $30 \times q^{10000}$ | 1.7321 |
-| climbing 10 at the start | $e^{-10/30}$ | 0.716531 |
-| slow schedule at the end | $30 / \ln 20002$ | 3.0292 |
+| mirror point | $`2c - (1, 1)`$, then its cost | 9.8105, not below 8 |
+| inside contraction | $`c + \tfrac12((1, 1) - c)`$, then its cost | 3.5066, accepted |
+| cooling factor | $`(0.1/30)^{1/20000}`$ | 0.999715 |
+| temperature halfway | $`30 \times q^{10000}`$ | 1.7321 |
+| climbing 10 at the start | $`e^{-10/30}`$ | 0.716531 |
+| slow schedule at the end | $`30 / \ln 20002`$ | 3.0292 |
 | Nelder-Mead, restarted to the same budget | mean best of 10 runs | 42.29 |
 | annealing | mean best of 10 runs | **29.78** |
 
@@ -194,8 +202,8 @@ Annealing's best rule averages 29.78 thousand pounds a year above the best possi
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Trusting Nelder-Mead's stop on McKinnon's function | $f$ = 0.000000 at (0, 0); the minimum is −0.250000 | The simplex collapsed onto a point where the slope is not zero |
-| Annealing at $T = 0$, downhill only | mean best 84.37 | It stays in the first valley it reaches |
+| Trusting Nelder-Mead's stop on McKinnon's function | $`f`$ = 0.000000 at (0, 0); the minimum is −0.250000 | The simplex collapsed onto a point where the slope is not zero |
+| Annealing at $`T = 0`$, downhill only | mean best 84.37 | It stays in the first valley it reaches |
 | Temperature held at 30 | best 64.92; the walk ends at 248.04 | Uphill steps are taken so often that the walk never settles |
 | The slow logarithmic schedule | best 32.56; ends at 46.54 | It is built for the limit; at 20,000 the temperature is still 3.0292 |
 | One run taken as the verdict | Nelder-Mead from 44.77 to 131.33 | The start decides which valley it falls into |
@@ -208,7 +216,7 @@ The puzzle: annealing's best falls fast, then barely moves after 12,000 evaluati
 
 Follow run 1. The table reads the temperature, the chance of climbing a wall of 10, and the best cost so far.
 
-| Evaluations $k$ | Temperature $T_k$ | Chance to climb 10 | Best so far |
+| Evaluations $`k`$ | Temperature $`T_k`$ | Chance to climb 10 | Best so far |
 | ---: | ---: | ---: | ---: |
 | 0 | 30.0000 | 0.716531 | 167.50 |
 | 4,000 | 9.5873 | 0.352380 | 42.15 |
@@ -253,7 +261,7 @@ Orange: Nelder-Mead with multistart, at 24.87 by 4,000 evaluations and never bet
 
 ## Code, from first principles, and it actually runs
 
-The script builds the rotated surface, then runs Nelder-Mead (one run and multistart), four temperature schedules for annealing, differential evolution and random search, each for 20,000 evaluations from 10 seeded starts. Cost is counted in evaluations, never seconds. Random numbers come from SplitMix64, a small random-number generator, written out, so both languages print the same. It takes four independent roads: every best found against the proved floor $f \ge 0$; the fixed-temperature walk against Simpson's rule on $e^{-g/T}$; Nelder-Mead on McKinnon's function against its calculus minimum, and on a smooth bowl against 0; and the rotation checked orthogonal.
+The script builds the rotated surface, then runs Nelder-Mead (one run and multistart), four temperature schedules for annealing, differential evolution and random search, each for 20,000 evaluations from 10 seeded starts. Cost is counted in evaluations, never seconds. Random numbers come from SplitMix64, a small random-number generator, written out, so both languages print the same. It takes four independent roads: every best found against the proved floor $`f \ge 0`$; the fixed-temperature walk against Simpson's rule on $`e^{-g/T}`$; Nelder-Mead on McKinnon's function against its calculus minimum, and on a smooth bowl against 0; and the rotation checked orthogonal.
 
 ### Python
 
@@ -652,7 +660,7 @@ Lean proves the two facts of Why it works and the floor of the surface, for any 
 
 - No method that only reads values can certify a global minimum. A pit away from every evaluated point leaves the values unchanged, yet dips one unit below them all.
 - Nelder-Mead's best value never rises from one step to the next. When the cost has a floor, the best values settle to some number.
-- For any rotation $Q$, the surface $f$ is never below 0, and it is 0 only at the origin.
+- For any rotation $`Q`$, the surface $`f`$ is never below 0, and it is 0 only at the origin.
 - The worked numbers: McKinnon's function is 8 at (1, 1) and 0 at (0, 0), and one ripple is 0, 1, 4 and 9 at 0, 1, 2 and 3.
 
 The runs, the annealing and population results, and McKinnon's stall are left to the Python and Rust checks.

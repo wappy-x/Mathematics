@@ -41,51 +41,55 @@ The bars are the rainfall month by month: the full information. The first line i
 
 ## The formula
 
-Notation first, in words. $\Omega$ (omega) is the set of outcomes: here the twelve months. A sigma-algebra is a family of events that holds the whole of $\Omega$ and is closed under complements and countable unions ([Sigma-algebras](../01-Sets%20You%20Can%20Measure/02-sigma-algebras.md)). $\mathcal{F}$ is the sigma-algebra of all events we allow ourselves to measure: here every set of months. $P$ is the probability measure on it: here 1/12 for each month. $X$ is the quantity to forecast, a function on $\Omega$ with a finite average: the rainfall.
+Notation first, in words. $`\Omega`$ (omega) is the set of outcomes: here the twelve months. A sigma-algebra is a family of events that holds the whole of $`\Omega`$ and is closed under complements and countable unions ([Sigma-algebras](../01-Sets%20You%20Can%20Measure/02-sigma-algebras.md)). $`\mathcal{F}`$ is the sigma-algebra of all events we allow ourselves to measure: here every set of months. $`P`$ is the probability measure on it: here 1/12 for each month. $`X`$ is the quantity to forecast, a function on $`\Omega`$ with a finite average: the rainfall.
 
-A **sub-sigma-algebra** $\mathcal{G}$ is a smaller sigma-algebra inside $\mathcal{F}$. Read it as "the events whose outcome the known information decides". The season sigma-algebra holds the 16 unions of whole seasons, from the empty set to the full year. "Is it winter or spring?" is one of them; "is it January?" is not.
+A **sub-sigma-algebra** $`\mathcal{G}`$ is a smaller sigma-algebra inside $`\mathcal{F}`$. Read it as "the events whose outcome the known information decides". The season sigma-algebra holds the 16 unions of whole seasons, from the empty set to the full year. "Is it winter or spring?" is one of them; "is it January?" is not.
 
-**$\mathcal{G}$-measurable** means that for every number c, the set "the function is at most c" belongs to $\mathcal{G}$. So a $\mathcal{G}$-measurable forecast can be computed from the known information alone.
+**$`\mathcal{G}`$-measurable** means that for every number c, the set "the function is at most c" belongs to $`\mathcal{G}`$. So a $`\mathcal{G}`$-measurable forecast can be computed from the known information alone.
 
-The new notation, in words first: $E[X \mid \mathcal{G}]$, read "the conditional expectation of X given G", names a function $M$ on $\Omega$, with a finite average like X, that has two properties.
+The new notation, in words first: $`E[X \mid \mathcal{G}]`$, read "the conditional expectation of X given G", names a function $`M`$ on $`\Omega`$, with a finite average like X, that has two properties.
 
-$$M \text{ is } \mathcal{G}\text{-measurable}, \qquad \int_A M \, dP = \int_A X \, dP \quad \text{for every } A \in \mathcal{G}.$$
+```math
+M \text{ is } \mathcal{G}\text{-measurable}, \qquad \int_A M \, dP = \int_A X \, dP \quad \text{for every } A \in \mathcal{G}.
+```
 
 **Read it aloud:** the forecast depends only on the known information, and over every event that information can decide, the forecast and the true value have the same total.
 
-The integral over an event, $\int_A X \, dP$, is the integral of X times the indicator of A (1 on A, 0 elsewhere): the total of X over A, each outcome weighted by its probability. For winter it is (36 + 30 + 24)/12 = 7.50 mm. Dividing by the event's probability gives an average; the definition never divides.
+The integral over an event, $`\int_A X \, dP`$, is the integral of X times the indicator of A (1 on A, 0 elsewhere): the total of X over A, each outcome weighted by its probability. For winter it is (36 + 30 + 24)/12 = 7.50 mm. Dividing by the event's probability gives an average; the definition never divides.
 
-The existence proof builds $M$ from two measures on $\mathcal{G}$, one for the positive part of X and one for the negative part:
+The existence proof builds $`M`$ from two measures on $`\mathcal{G}`$, one for the positive part of X and one for the negative part:
 
-$$\nu_+(A) = \int_A X^+ \, dP, \qquad \nu_-(A) = \int_A X^- \, dP, \qquad M = \frac{d\nu_+}{dP|_{\mathcal{G}}} - \frac{d\nu_-}{dP|_{\mathcal{G}}}.$$
+```math
+\nu_+(A) = \int_A X^+ \, dP, \qquad \nu_-(A) = \int_A X^- \, dP, \qquad M = \frac{d\nu_+}{dP|_{\mathcal{G}}} - \frac{d\nu_-}{dP|_{\mathcal{G}}}.
+```
 
 **Read it aloud:** split X into its positive part and its negative part (for a rainfall anomaly, the surplus and the shortfall); treat each as a way of giving weight to known events; take each one's density against the probability, looking only at known events; subtract.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Omega$, $\omega$ | the set of outcomes; one outcome | the 12 months; January | — |
-| $\mathcal{F}$ | the sigma-algebra of every measurable event | all 4,096 sets of months | — |
-| $\mathcal{G}$ | the sub-sigma-algebra of events the information decides | the 16 unions of seasons | more events: the forecast gets finer |
-| $P$ | the probability measure | 1/12 per month | — |
-| $X$ | the quantity forecast, with a finite average | monthly rainfall, mm | forecast rises on every event where X rises |
-| $A$, $C$, $C_j$, $A_k$ | an event in $\mathcal{G}$; an atom, a smallest nonempty one; the j-th cell of a partition; the event "D at least 1/k" | winter; each season is an atom | — |
-| $M$, $L$, $D$ | $M = E[X \mid \mathcal{G}]$; $L$ a rival forecast; $D = M - L$ | 30, 60, 90, 40 by season | — |
-| $X^+$, $X^-$ | the positive part, max(X, 0), and the negative part, max(−X, 0) | for the anomaly: surplus and shortfall | — |
-| $\nu_+$, $\nu_-$ | measures on $\mathcal{G}$: totals of $X^+$ and $X^-$ over each event | each 10.83 on the whole year, for the anomaly | — |
-| $h_+$, $h_-$, $P\vert_{\mathcal{G}}$ | the densities of $\nu_+$, $\nu_-$ against $P$ restricted to $\mathcal{G}$ | spring: 8.33 and 3.33 | — |
-| $Z$ | the rainfall anomaly, X − 55 | forecast −25, 5, 35, −15 by season | — |
-| $U$ | the exact date, a fraction of the year in [0, 1) | U = 0.5 is mid-year | — |
-| $V$, $r$ | the hidden wetness factor, spread evenly over [0, 1); the season forecast read off a date | rainfall r(U) × 2V; r is 30, 60, 90 or 40 by quarter-year | a larger V: more rain that year, same forecast r(U) |
-| $c$, $k$ | a threshold in "at most c"; a whole number in "at least 1/k" | "M at most 40" is winter and autumn | — |
+| $`\Omega`$, $`\omega`$ | the set of outcomes; one outcome | the 12 months; January | — |
+| $`\mathcal{F}`$ | the sigma-algebra of every measurable event | all 4,096 sets of months | — |
+| $`\mathcal{G}`$ | the sub-sigma-algebra of events the information decides | the 16 unions of seasons | more events: the forecast gets finer |
+| $`P`$ | the probability measure | 1/12 per month | — |
+| $`X`$ | the quantity forecast, with a finite average | monthly rainfall, mm | forecast rises on every event where X rises |
+| $`A`$, $`C`$, $`C_j`$, $`A_k`$ | an event in $`\mathcal{G}`$; an atom, a smallest nonempty one; the j-th cell of a partition; the event "D at least 1/k" | winter; each season is an atom | — |
+| $`M`$, $`L`$, $`D`$ | $`M = E[X \mid \mathcal{G}]`$; $`L`$ a rival forecast; $`D = M - L`$ | 30, 60, 90, 40 by season | — |
+| $`X^+`$, $`X^-`$ | the positive part, max(X, 0), and the negative part, max(−X, 0) | for the anomaly: surplus and shortfall | — |
+| $`\nu_+`$, $`\nu_-`$ | measures on $`\mathcal{G}`$: totals of $`X^+`$ and $`X^-`$ over each event | each 10.83 on the whole year, for the anomaly | — |
+| $`h_+`$, $`h_-`$, $`P\vert_{\mathcal{G}}`$ | the densities of $`\nu_+`$, $`\nu_-`$ against $`P`$ restricted to $`\mathcal{G}`$ | spring: 8.33 and 3.33 | — |
+| $`Z`$ | the rainfall anomaly, X − 55 | forecast −25, 5, 35, −15 by season | — |
+| $`U`$ | the exact date, a fraction of the year in [0, 1) | U = 0.5 is mid-year | — |
+| $`V`$, $`r`$ | the hidden wetness factor, spread evenly over [0, 1); the season forecast read off a date | rainfall r(U) × 2V; r is 30, 60, 90 or 40 by quarter-year | a larger V: more rain that year, same forecast r(U) |
+| $`c`$, $`k`$ | a threshold in "at most c"; a whole number in "at least 1/k" | "M at most 40" is winter and autumn | — |
 
-$X^+$ and $X^-$ are both non-negative and $X = X^+ - X^-$. $P|_{\mathcal{G}}$ is the same probability, applied to the events of $\mathcal{G}$ only. The densities $h_+$ and $h_-$ are the Radon-Nikodym derivatives written with the fraction bar above: functions whose integral over each known event gives that event's weight.
+$`X^+`$ and $`X^-`$ are both non-negative and $`X = X^+ - X^-`$. $`P|_{\mathcal{G}}`$ is the same probability, applied to the events of $`\mathcal{G}`$ only. The densities $`h_+`$ and $`h_-`$ are the Radon-Nikodym derivatives written with the fraction bar above: functions whose integral over each known event gives that event's weight.
 
 ### When it holds
 
-- **X has a finite average of its size**, $\int |X| \, dP$ finite: X is in $L^1$. Drop it and $\nu_+$ and $\nu_-$ can both be infinite, so their difference means nothing; the code prints a quantity whose average swings −1, 0, −1, 0 forever.
-- **$\mathcal{G}$ is a sigma-algebra inside $\mathcal{F}$.** If it held an event outside $\mathcal{F}$, the right-hand integral would not exist. If it were not closed under countable unions, Radon-Nikodym could not be applied to it.
-- **$P$ is a finite measure**, here a probability. Radon-Nikodym needs sigma-finiteness on $\mathcal{G}$ itself: $\Omega$ must split into countably many events of $\mathcal{G}$, each of finite measure. On an infinite measure a small $\mathcal{G}$ can fail it even when $\mathcal{F}$ does not.
-- **Uniqueness is only almost sure.** Two valid forecasts may differ on a $\mathcal{G}$-event of probability zero, so "the" conditional expectation means any one of these versions.
+- **X has a finite average of its size**, $`\int |X| \, dP`$ finite: X is in $`L^1`$. Drop it and $`\nu_+`$ and $`\nu_-`$ can both be infinite, so their difference means nothing; the code prints a quantity whose average swings −1, 0, −1, 0 forever.
+- **$`\mathcal{G}`$ is a sigma-algebra inside $`\mathcal{F}`$.** If it held an event outside $`\mathcal{F}`$, the right-hand integral would not exist. If it were not closed under countable unions, Radon-Nikodym could not be applied to it.
+- **$`P`$ is a finite measure**, here a probability. Radon-Nikodym needs sigma-finiteness on $`\mathcal{G}`$ itself: $`\Omega`$ must split into countably many events of $`\mathcal{G}`$, each of finite measure. On an infinite measure a small $`\mathcal{G}`$ can fail it even when $`\mathcal{F}`$ does not.
+- **Uniqueness is only almost sure.** Two valid forecasts may differ on a $`\mathcal{G}`$-event of probability zero, so "the" conditional expectation means any one of these versions.
 
 ---
 
@@ -93,64 +97,64 @@ $X^+$ and $X^-$ are both non-negative and $X = X^+ - X^-$. $P|_{\mathcal{G}}$ is
 
 ### Step 0: test totals on known events, instead of dividing
 
-The partition rule divides a total by a probability. Division fails on an event of probability zero, but a total over such an event is fine: it is zero. So state what the average does, not how to compute it. A forecast from the season must agree with the rainfall's total on winter, on spring, on "winter or spring", and on every other event the season decides. Finding a $\mathcal{G}$-measurable function whose totals reproduce a given measure on $\mathcal{G}$ is what [The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md) does.
+The partition rule divides a total by a probability. Division fails on an event of probability zero, but a total over such an event is fine: it is zero. So state what the average does, not how to compute it. A forecast from the season must agree with the rainfall's total on winter, on spring, on "winter or spring", and on every other event the season decides. Finding a $`\mathcal{G}`$-measurable function whose totals reproduce a given measure on $`\mathcal{G}`$ is what [The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md) does.
 
 ### Step 1: the season averages pass both tests, and the obvious impostors fail
 
-Take $M$ = 30 on winter months, 60 on spring, 90 on summer, 40 on autumn.
+Take $`M`$ = 30 on winter months, 60 on spring, 90 on summer, 40 on autumn.
 
-It is $\mathcal{G}$-measurable: each set "M at most c" is a union of seasons. "M at most 40" is winter and autumn together, which is in the season sigma-algebra.
+It is $`\mathcal{G}`$-measurable: each set "M at most c" is a union of seasons. "M at most 40" is winter and autumn together, which is in the season sigma-algebra.
 
-It has a finite average, 55. Its totals match. On winter, $M$ gives 3 × 30/12 = 7.50 and the rainfall gives 90/12 = 7.50. On the wet half, both give 37.50. The code checks all 16 events.
+It has a finite average, 55. Its totals match. On winter, $`M`$ gives 3 × 30/12 = 7.50 and the rainfall gives 90/12 = 7.50. On the wet half, both give 37.50. The code checks all 16 events.
 
-Two candidates fail, one test each. The rainfall itself matches every total, but it is not $\mathcal{G}$-measurable: "X at most 30" is January, February and November, which splits winter and borrows a month of autumn. The constant 55 is $\mathcal{G}$-measurable, but on winter it totals 13.75 against the true 7.50; it matches on only 2 of the 16 events, the empty set and the whole year. The first test stops peeking; the second stops ignoring what is known.
+Two candidates fail, one test each. The rainfall itself matches every total, but it is not $`\mathcal{G}`$-measurable: "X at most 30" is January, February and November, which splits winter and borrows a month of autumn. The constant 55 is $`\mathcal{G}`$-measurable, but on winter it totals 13.75 against the true 7.50; it matches on only 2 of the 16 events, the empty set and the whole year. The first test stops peeking; the second stops ignoring what is known.
 
 ### Step 2: two finite measures on the known events
 
-Let $\nu_+(A)$ be the total of $X^+$ over A, for every A in $\mathcal{G}$, and $\nu_-(A)$ the total of $X^-$. Each is a measure on $\mathcal{G}$. It is finite, because X has a finite average. It gives zero to every known event of probability zero, because a total over a null event is zero. That last property is absolute continuity: $\nu_+$ and $\nu_-$ never give weight where $P$ gives none.
+Let $`\nu_+(A)`$ be the total of $`X^+`$ over A, for every A in $`\mathcal{G}`$, and $`\nu_-(A)`$ the total of $`X^-`$. Each is a measure on $`\mathcal{G}`$. It is finite, because X has a finite average. It gives zero to every known event of probability zero, because a total over a null event is zero. That last property is absolute continuity: $`\nu_+`$ and $`\nu_-`$ never give weight where $`P`$ gives none.
 
-On the anomaly Z = X − 55, the surplus months (April to August) give $\nu_+$ of the whole year 130/12 = 10.83. The shortfall months give $\nu_-$ the same 10.83, since the anomaly averages zero.
+On the anomaly Z = X − 55, the surplus months (April to August) give $`\nu_+`$ of the whole year 130/12 = 10.83. The shortfall months give $`\nu_-`$ the same 10.83, since the anomaly averages zero.
 
 ### Step 3: take the densities against P, on G only
 
-Radon-Nikodym, applied on the smaller sigma-algebra $\mathcal{G}$, gives $\mathcal{G}$-measurable functions $h_+$ and $h_-$ whose totals over each known event are $\nu_+$ and $\nu_-$. Their difference $M$ is $\mathcal{G}$-measurable, and its total over each known event is $\nu_+(A) - \nu_-(A)$, which is the total of X.
+Radon-Nikodym, applied on the smaller sigma-algebra $`\mathcal{G}`$, gives $`\mathcal{G}`$-measurable functions $`h_+`$ and $`h_-`$ whose totals over each known event are $`\nu_+`$ and $`\nu_-`$. Their difference $`M`$ is $`\mathcal{G}`$-measurable, and its total over each known event is $`\nu_+(A) - \nu_-(A)`$, which is the total of X.
 
-The restriction to $\mathcal{G}$ is the whole trick. Against $P$ on the full $\mathcal{F}$, the density of $\nu_+$ is $X^+$ itself: nothing is gained. On $\mathcal{G}$ there are fewer events to match, so the density is allowed to be coarser, and it must be, to be $\mathcal{G}$-measurable. Same measure, fewer test events, a coarser density.
+The restriction to $`\mathcal{G}`$ is the whole trick. Against $`P`$ on the full $`\mathcal{F}`$, the density of $`\nu_+`$ is $`X^+`$ itself: nothing is gained. On $`\mathcal{G}`$ there are fewer events to match, so the density is allowed to be coarser, and it must be, to be $`\mathcal{G}`$-measurable. Same measure, fewer test events, a coarser density.
 
 On the anomaly, spring's months give surplus 0, 5, 20 and shortfall 10, 0, 0. Density of the surplus on the atom: (25/12) ÷ (3/12) = 8.33. Of the shortfall: 3.33. Difference 5.00; add back 55 and spring's forecast is 60.
 
 ### Step 4: two valid forecasts agree except on a null event
 
-Suppose $M$ and $L$ both pass. Their difference $D$ is $\mathcal{G}$-measurable and totals zero on every known event. The event "D is at least 1/k", for a whole number k, is known. If it had positive probability, the total of $D$ over it would be at least that probability divided by k, not zero. So it is null for every k, and so is their union, "D above 0". The same argument on −D finishes it. The code shows this on a finite grid: of 194,481 season-constant forecasts, exactly one passes.
+Suppose $`M`$ and $`L`$ both pass. Their difference $`D`$ is $`\mathcal{G}`$-measurable and totals zero on every known event. The event "D is at least 1/k", for a whole number k, is known. If it had positive probability, the total of $`D`$ over it would be at least that probability divided by k, not zero. So it is null for every k, and so is their union, "D above 0". The same argument on −D finishes it. The code shows this on a finite grid: of 194,481 season-constant forecasts, exactly one passes.
 
 ### Step 5: the partition rule comes back
 
-A $\mathcal{G}$-measurable function is constant on each atom C, since "equal to its value at one month of C" is a known event, and a known event holding one month of a season holds the whole season. If $P(C)$ is positive, the total test on C forces that constant to be the total of X over C divided by $P(C)$. That is the partition rule, now a consequence. Where $P(C)$ is zero, any constant is allowed: versions again.
+A $`\mathcal{G}`$-measurable function is constant on each atom C, since "equal to its value at one month of C" is a known event, and a known event holding one month of a season holds the whole season. If $`P(C)`$ is positive, the total test on C forces that constant to be the total of X over C divided by $`P(C)`$. That is the partition rule, now a consequence. Where $`P(C)`$ is zero, any constant is allowed: versions again.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal{F}, P)$ a probability space, $\mathcal{G} \subseteq \mathcal{F}$ a sigma-algebra, $X$ an $\mathcal{F}$-measurable function with $\int |X| \, dP$ finite.
+**Setting.** $`(\Omega, \mathcal{F}, P)`$ a probability space, $`\mathcal{G} \subseteq \mathcal{F}`$ a sigma-algebra, $`X`$ an $`\mathcal{F}`$-measurable function with $`\int |X| \, dP`$ finite.
 
-**Existence.** (1) For $A \in \mathcal{G}$ put $\nu_\pm(A) = \int_A X^\pm \, dP$. Each is at most $\int |X| \, dP$, so finite. For disjoint $A_1, A_2, \ldots$ in $\mathcal{G}$, the functions $X^\pm$ times the indicator of $A_1 \cup \cdots \cup A_n$ increase to $X^\pm$ times the indicator of the union; the monotone convergence theorem turns the sum of the $\nu_\pm(A_j)$ into $\nu_\pm$ of the union. So $\nu_\pm$ are finite measures on $(\Omega, \mathcal{G})$.
+**Existence.** (1) For $`A \in \mathcal{G}`$ put $`\nu_\pm(A) = \int_A X^\pm \, dP`$. Each is at most $`\int |X| \, dP`$, so finite. For disjoint $`A_1, A_2, \ldots`$ in $`\mathcal{G}`$, the functions $`X^\pm`$ times the indicator of $`A_1 \cup \cdots \cup A_n`$ increase to $`X^\pm`$ times the indicator of the union; the monotone convergence theorem turns the sum of the $`\nu_\pm(A_j)`$ into $`\nu_\pm`$ of the union. So $`\nu_\pm`$ are finite measures on $`(\Omega, \mathcal{G})`$.
 
-(2) $P|_{\mathcal{G}}$, the restriction of $P$ to $\mathcal{G}$, is a probability measure on $(\Omega, \mathcal{G})$. If $A \in \mathcal{G}$ has $P(A) = 0$, then $X^\pm$ times its indicator is zero almost surely, so $\nu_\pm(A) = 0$: both are absolutely continuous with respect to $P|_{\mathcal{G}}$.
+(2) $`P|_{\mathcal{G}}`$, the restriction of $`P`$ to $`\mathcal{G}`$, is a probability measure on $`(\Omega, \mathcal{G})`$. If $`A \in \mathcal{G}`$ has $`P(A) = 0`$, then $`X^\pm`$ times its indicator is zero almost surely, so $`\nu_\pm(A) = 0`$: both are absolutely continuous with respect to $`P|_{\mathcal{G}}`$.
 
-(3) The Radon-Nikodym theorem on $(\Omega, \mathcal{G})$, all measures finite, gives $\mathcal{G}$-measurable $h_\pm \ge 0$ with $\nu_\pm(A) = \int_A h_\pm \, dP|_{\mathcal{G}}$ for all $A \in \mathcal{G}$. Their integrals $\nu_\pm(\Omega)$ are finite, so the $\mathcal{G}$-set where either is infinite is null; set both to zero there. Nothing above changes.
+(3) The Radon-Nikodym theorem on $`(\Omega, \mathcal{G})`$, all measures finite, gives $`\mathcal{G}`$-measurable $`h_\pm \ge 0`$ with $`\nu_\pm(A) = \int_A h_\pm \, dP|_{\mathcal{G}}`$ for all $`A \in \mathcal{G}`$. Their integrals $`\nu_\pm(\Omega)`$ are finite, so the $`\mathcal{G}`$-set where either is infinite is null; set both to zero there. Nothing above changes.
 
-(4) For a $\mathcal{G}$-measurable $g \ge 0$, $\int g \, dP|_{\mathcal{G}} = \int g \, dP$. For an indicator of a $\mathcal{G}$-set both sides are its probability. Linearity extends this to $\mathcal{G}$-simple functions. The standard staircase of simple functions below g is built from g's own level sets, which are in $\mathcal{G}$, and monotone convergence passes to the limit on both sides.
+(4) For a $`\mathcal{G}`$-measurable $`g \ge 0`$, $`\int g \, dP|_{\mathcal{G}} = \int g \, dP`$. For an indicator of a $`\mathcal{G}`$-set both sides are its probability. Linearity extends this to $`\mathcal{G}`$-simple functions. The standard staircase of simple functions below g is built from g's own level sets, which are in $`\mathcal{G}`$, and monotone convergence passes to the limit on both sides.
 
-(5) Put $M = h_+ - h_-$. It is $\mathcal{G}$-measurable. By (4), $\int |M| \, dP \le \int h_+ \, dP + \int h_- \, dP = \nu_+(\Omega) + \nu_-(\Omega) = \int |X| \, dP$, finite. For $A \in \mathcal{G}$, by (4) and linearity of the integral, $\int_A M \, dP = \nu_+(A) - \nu_-(A) = \int_A X^+ \, dP - \int_A X^- \, dP = \int_A X \, dP$.
+(5) Put $`M = h_+ - h_-`$. It is $`\mathcal{G}`$-measurable. By (4), $`\int |M| \, dP \le \int h_+ \, dP + \int h_- \, dP = \nu_+(\Omega) + \nu_-(\Omega) = \int |X| \, dP`$, finite. For $`A \in \mathcal{G}`$, by (4) and linearity of the integral, $`\int_A M \, dP = \nu_+(A) - \nu_-(A) = \int_A X^+ \, dP - \int_A X^- \, dP = \int_A X \, dP`$.
 
-**Uniqueness.** Let $M$ and $L$ both satisfy the definition and put $D = M - L$, which is $\mathcal{G}$-measurable and integrable with $\int_A D \, dP = 0$ for all $A \in \mathcal{G}$. For a whole number k, $A_k = \{D \ge 1/k\}$ is in $\mathcal{G}$, and $0 = \int_{A_k} D \, dP \ge P(A_k)/k$, so $P(A_k) = 0$. The event $\{D > 0\}$ is the union of the $A_k$, a countable union of null sets, so null. Applying this to $-D$ gives $\{D < 0\}$ null. So $M = L$ almost surely.
+**Uniqueness.** Let $`M`$ and $`L`$ both satisfy the definition and put $`D = M - L`$, which is $`\mathcal{G}`$-measurable and integrable with $`\int_A D \, dP = 0`$ for all $`A \in \mathcal{G}`$. For a whole number k, $`A_k = \{D \ge 1/k\}`$ is in $`\mathcal{G}`$, and $`0 = \int_{A_k} D \, dP \ge P(A_k)/k`$, so $`P(A_k) = 0`$. The event $`\{D > 0\}`$ is the union of the $`A_k`$, a countable union of null sets, so null. Applying this to $`-D`$ gives $`\{D < 0\}`$ null. So $`M = L`$ almost surely.
 
-**The partition case.** Let $\mathcal{G}$ be generated by a countable partition $C_1, C_2, \ldots$ of $\Omega$; its events are the unions of cells. A $\mathcal{G}$-measurable $M$ is constant on each cell: for $\omega \in C_j$ the event $\{M = M(\omega)\}$ is in $\mathcal{G}$, so it is a union of cells, and it contains $\omega$, so it contains $C_j$. Taking $A = C_j$ with $P(C_j) > 0$ gives (the constant value of $M$ on $C_j$) $\cdot P(C_j) = \int_{C_j} X \, dP$. Conversely, the cell averages pass the test on every union of cells, by countable additivity of the integral. This is the rule of the partition card, recovered.
+**The partition case.** Let $`\mathcal{G}`$ be generated by a countable partition $`C_1, C_2, \ldots`$ of $`\Omega`$; its events are the unions of cells. A $`\mathcal{G}`$-measurable $`M`$ is constant on each cell: for $`\omega \in C_j`$ the event $`\{M = M(\omega)\}`$ is in $`\mathcal{G}`$, so it is a union of cells, and it contains $`\omega`$, so it contains $`C_j`$. Taking $`A = C_j`$ with $`P(C_j) > 0`$ gives (the constant value of $`M`$ on $`C_j`$) $`\cdot P(C_j) = \int_{C_j} X \, dP`$. Conversely, the cell averages pass the test on every union of cells, by countable additivity of the integral. This is the rule of the partition card, recovered.
 
 </details>
 
 What the code shows and what only the proof shows: the code checks both tests on all 16 events of the season sigma-algebra and on three date intervals of a continuous example. That the construction works for every sigma-algebra, and for every Borel set of dates, only the proof shows. A Borel set is any set built from intervals by complements and countable unions ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)).
 
-The same forecast has a second description, as the closest $\mathcal{G}$-measurable function to X in mean squared distance. [Conditional expectation as a projection](03-conditional-expectation-as-projection.md) proves existence that way, without Radon-Nikodym, when X has a finite variance.
+The same forecast has a second description, as the closest $`\mathcal{G}`$-measurable function to X in mean squared distance. [Conditional expectation as a projection](03-conditional-expectation-as-projection.md) proves existence that way, without Radon-Nikodym, when X has a finite variance.
 
 ---
 
@@ -172,7 +176,7 @@ Told "wet season", forecast 75 mm; told "dry season", forecast 35 mm. Averaging 
 
 ### A date read exactly
 
-Let the date $U$ be a fraction of the year, spread evenly over [0, 1), and let a hidden wetness factor V, spread evenly over [0, 1) and independent of the date, scale each year: the rainfall is r(U) × 2V, where r is 30, 60, 90 or 40 by quarter-year. Given the exact date, "U = 0.5" has probability zero, so the partition rule asks for 0/0. The definition asks only that r(U) and the rainfall have equal totals over every set of dates. Averaging 2V gives 1, so they do: over dates in [0.2, 0.3), both total 4.50 (half the interval at 30 mm, half at 60 mm). Changing the forecast on the single date 0.5, to 7 or anything else, changes no total, so that is another version.
+Let the date $`U`$ be a fraction of the year, spread evenly over [0, 1), and let a hidden wetness factor V, spread evenly over [0, 1) and independent of the date, scale each year: the rainfall is r(U) × 2V, where r is 30, 60, 90 or 40 by quarter-year. Given the exact date, "U = 0.5" has probability zero, so the partition rule asks for 0/0. The definition asks only that r(U) and the rainfall have equal totals over every set of dates. Averaging 2V gives 1, so they do: over dates in [0.2, 0.3), both total 4.50 (half the interval at 30 mm, half at 60 mm). Changing the forecast on the single date 0.5, to 7 or anything else, changes no total, so that is another version.
 
 ### What breaks if you drop a piece
 
@@ -181,7 +185,7 @@ Let the date $U$ be a fraction of the year, spread evenly over [0, 1), and let a
 | Offer X itself as the forecast | "X at most 30" is Jan, Feb, Nov: not a union of seasons | passes the total test, fails measurability: it peeks |
 | Match only the whole year: forecast 55 | winter totals 13.75 against 7.50; 2 of 16 events match | one test event is not enough |
 | Divide on the exact date | P(U = 0.5) = 0, so 0/0 | the partition rule needs cells of positive probability |
-| Drop integrability: X(n) = (−2)^n with probability 2^−n | partial averages −1, 0, −1, 0, …; E&#124;X&#124; reaches 6 after six terms and keeps rising | $\nu_+$ and $\nu_-$ are infinite; no density, no forecast |
+| Drop integrability: X(n) = (−2)^n with probability 2^−n | partial averages −1, 0, −1, 0, …; E&#124;X&#124; reaches 6 after six terms and keeps rising | $`\nu_+`$ and $`\nu_-`$ are infinite; no density, no forecast |
 
 Every number in this table is printed by the checks.
 
@@ -564,9 +568,9 @@ The two outputs match line for line.
 
 Lean proves existence, uniqueness and the partition rule on an atom, for every finite measure and every sub-sigma-algebra.
 
-- Take X with a finite average, a sub-sigma-algebra $\mathcal{G}$ and a finite measure P. Then some $\mathcal{G}$-measurable forecast with a finite average matches X's total on every event of $\mathcal{G}$.
+- Take X with a finite average, a sub-sigma-algebra $`\mathcal{G}`$ and a finite measure P. Then some $`\mathcal{G}`$-measurable forecast with a finite average matches X's total on every event of $`\mathcal{G}`$.
 - Any two such forecasts agree except on a set of probability zero.
-- Suppose C is an atom of $\mathcal{G}$ with positive probability. Then every valid forecast is constant on C, equal to the total of X over C divided by P(C).
+- Suppose C is an atom of $`\mathcal{G}`$ with positive probability. Then every valid forecast is constant on C, equal to the total of X over C divided by P(C).
 - The worked numbers hold exactly as fractions: winter 7.50 and 30, then spring, summer and autumn at 60, 90 and 40.
 - The wet and dry forecasts, 75 and 35, hold both directly and from the season forecast.
 - The constant 55 totals 13.75 on winter, against the true 7.50.
@@ -698,7 +702,7 @@ example : (∑ n ∈ Finset.Icc 1 6, ((2 : ℚ) ^ n / 2 ^ n)) = 6 := by simp
 ## The usual mistake
 
 > [!warning]
-> **Treating E[X | G] as a number.** It is a function on $\Omega$: 30 on winter months, 60 on spring, and so on. It becomes a number only once the outcome is known. The single number is the plain average, 55, which is the forecast given no information at all.
+> **Treating E[X | G] as a number.** It is a function on $`\Omega`$: 30 on winter months, 60 on spring, and so on. It becomes a number only once the outcome is known. The single number is the plain average, 55, which is the forecast given no information at all.
 >
 > - **Dropping the measurability test.** X itself passes every total test. Without measurability the definition would return the answer it was meant to forecast, using the month the season cannot reveal.
 > - **Testing only the whole space.** Matching the yearly total makes the constant 55 pass; it fails winter by 13.75 against 7.50.

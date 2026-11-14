@@ -34,34 +34,38 @@ Orange: the call's Black-Scholes price at each share price, one year left. Green
 
 ## The formula
 
-Notation first, in words. A partial derivative, written with a curly $\partial$, is the slope in one input while every other input is held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). The capital Greek letter $\Delta$ (delta) names that slope in the share price.
+Notation first, in words. A partial derivative, written with a curly $`\partial`$, is the slope in one input while every other input is held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). The capital Greek letter $`\Delta`$ (delta) names that slope in the share price.
 
-$$\Delta_C = \frac{\partial C}{\partial S} = e^{-qT}\,N(d_1), \qquad \Delta_P = \frac{\partial P}{\partial S} = \Delta_C - e^{-qT} = -e^{-qT}\,N(-d_1)$$
+```math
+\Delta_C = \frac{\partial C}{\partial S} = e^{-qT}\,N(d_1), \qquad \Delta_P = \frac{\partial P}{\partial S} = \Delta_C - e^{-qT} = -e^{-qT}\,N(-d_1)
+```
 
 **Read it aloud:** the call's delta is the share-counted chance of exercise, shrunk by the dividends that leak out before expiry; the put's delta is the call's minus that same shrink factor.
 
 | Symbol | Plain meaning | In our example | Push it up and delta… |
 | --- | --- | --- | --- |
-| $S$, $K$ | Acme's price today; the strike, the fixed price in the contract | $100 and $100 | $S$ up: call delta rises toward its ceiling; $K$ up: it falls |
-| $T$ | years left to expiry | 1 | at the money, rises a little; far out of the money, rises; deep in, falls |
-| $r$ | the riskless rate, continuously compounded | 5% | rises: the forward price moves up |
-| $q$ | the dividend yield, the share's payout per year as a fraction of its price | 2% | falls: both the ceiling and the chance shrink |
-| $\sigma$ | volatility: how jumpy Acme is, per square-root year. Say "sigma". | 20% | here, falls slightly ([Vanna](06-vanna.md), −0.095 per unit of $\sigma$); far out, rises; deep in, falls |
-| $C$, $P$ | the call price and the put price today | $9.23 and $6.33 | — |
-| $N(x)$, $\varphi(x)$ | the bell curve's area to the left of $x$; its height at $x$ | $N(d_1)$ = 0.598706 | — |
-| $d_1$, $d_2$ | where the strike sits on the bell curve, counted in shares and in dollars | 0.25 and 0.05 | — |
-| $e^{-qT}$, $e^{-rT}$ | the dividend drag; the discount factor on a dollar due at $T$ | 0.980199 and 0.951229 | — |
-| $\Delta$, $\Delta_C$, $\Delta_P$, $\partial$ | delta; of the call; of the put; $\partial$ marks a slope in one input | 0.586851 and −0.393348 | — |
-| $h$, $\Gamma$ | a nudge to the share price in dollars; gamma, delta's own slope | $h$ = 0.01; $\Gamma$ about 0.019 | — |
-| $S_T$, $z$, $z_0$ | Acme's price at expiry; a standard bell-curve draw that sets it; the draw at which $S_T = K$ | $z_0$ = −0.05 | — |
+| $`S`$, $`K`$ | Acme's price today; the strike, the fixed price in the contract | $100 and $100 | $`S`$ up: call delta rises toward its ceiling; $`K`$ up: it falls |
+| $`T`$ | years left to expiry | 1 | at the money, rises a little; far out of the money, rises; deep in, falls |
+| $`r`$ | the riskless rate, continuously compounded | 5% | rises: the forward price moves up |
+| $`q`$ | the dividend yield, the share's payout per year as a fraction of its price | 2% | falls: both the ceiling and the chance shrink |
+| $`\sigma`$ | volatility: how jumpy Acme is, per square-root year. Say "sigma". | 20% | here, falls slightly ([Vanna](06-vanna.md), −0.095 per unit of $`\sigma`$); far out, rises; deep in, falls |
+| $`C`$, $`P`$ | the call price and the put price today | $9.23 and $6.33 | — |
+| $`N(x)`$, $`\varphi(x)`$ | the bell curve's area to the left of $`x`$; its height at $`x`$ | $`N(d_1)`$ = 0.598706 | — |
+| $`d_1`$, $`d_2`$ | where the strike sits on the bell curve, counted in shares and in dollars | 0.25 and 0.05 | — |
+| $`e^{-qT}`$, $`e^{-rT}`$ | the dividend drag; the discount factor on a dollar due at $`T`$ | 0.980199 and 0.951229 | — |
+| $`\Delta`$, $`\Delta_C`$, $`\Delta_P`$, $`\partial`$ | delta; of the call; of the put; $`\partial`$ marks a slope in one input | 0.586851 and −0.393348 | — |
+| $`h`$, $`\Gamma`$ | a nudge to the share price in dollars; gamma, delta's own slope | $`h`$ = 0.01; $`\Gamma`$ about 0.019 | — |
+| $`S_T`$, $`z`$, $`z_0`$ | Acme's price at expiry; a standard bell-curve draw that sets it; the draw at which $`S_T = K`$ | $`z_0`$ = −0.05 | — |
 
 At the money means the strike equals today's price, as for Acme now. Out of the money means the call would pay nothing if exercised today; in the money means it would pay. "Far out" and "deep in" mean far on either side of the strike.
 
-The helper $d_1$ is the one from the call card:
+The helper $`d_1`$ is the one from the call card:
 
-$$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+```math
+d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+```
 
-In words: $d_1$ is the distance from today's price to the strike, plus the drift, measured in units of the year's spread $\sigma\sqrt{T}$; $d_2$ sits one spread unit lower.
+In words: $`d_1`$ is the distance from today's price to the strike, plus the drift, measured in units of the year's spread $`\sigma\sqrt{T}`$; $`d_2`$ sits one spread unit lower.
 
 ### When it holds
 
@@ -77,73 +81,87 @@ In words: $d_1$ is the distance from today's price to the strike, plus the drift
 
 ### Step 0: the slope of the price is a share count
 
-A call's price moves with Acme. Holding $\Delta$ shares moves by $\Delta$ dollars for each dollar Acme moves. So a portfolio short one call and long $\Delta$ shares has zero slope in Acme: for a small move, the gain on one leg pays the loss on the other. The slope is the hedge. That was Step 0 of the call card, the hedge that pinned the price; here it is computed.
+A call's price moves with Acme. Holding $`\Delta`$ shares moves by $`\Delta`$ dollars for each dollar Acme moves. So a portfolio short one call and long $`\Delta`$ shares has zero slope in Acme: for a small move, the gain on one leg pays the loss on the other. The slope is the hedge. That was Step 0 of the call card, the hedge that pinned the price; here it is computed.
 
 ### Step 1: differentiate, and three terms appear
 
-The call price is $C = S e^{-qT} N(d_1) - K e^{-rT} N(d_2)$. The share price $S$ appears in three places: out in front, inside $d_1$, and inside $d_2$. The product rule and the [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md) give one term for each.
+The call price is $`C = S e^{-qT} N(d_1) - K e^{-rT} N(d_2)`$. The share price $`S`$ appears in three places: out in front, inside $`d_1`$, and inside $`d_2`$. The product rule and the [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md) give one term for each.
 
-The front term gives $e^{-qT} N(d_1)$. The other two come from moving $d_1$ and $d_2$. The slope of $N$ is the bell curve's height $\varphi$, and both $d_1$ and $d_2$ move by $1/(S\sigma\sqrt{T})$ per dollar of $S$, since $S$ sits only in $\ln(S/K)$ and they differ by a constant. So
+The front term gives $`e^{-qT} N(d_1)`$. The other two come from moving $`d_1`$ and $`d_2`$. The slope of $`N`$ is the bell curve's height $`\varphi`$, and both $`d_1`$ and $`d_2`$ move by $`1/(S\sigma\sqrt{T})`$ per dollar of $`S`$, since $`S`$ sits only in $`\ln(S/K)`$ and they differ by a constant. So
 
-$$\frac{\partial C}{\partial S} = e^{-qT} N(d_1) + \frac{S e^{-qT}\varphi(d_1) - K e^{-rT}\varphi(d_2)}{S\sigma\sqrt{T}}.$$
+```math
+\frac{\partial C}{\partial S} = e^{-qT} N(d_1) + \frac{S e^{-qT}\varphi(d_1) - K e^{-rT}\varphi(d_2)}{S\sigma\sqrt{T}}.
+```
 
 ### Step 2: the two density terms cancel exactly
 
 The numerator of the second piece is zero:
 
-$$S e^{-qT}\,\varphi(d_1) = K e^{-rT}\,\varphi(d_2).$$
+```math
+S e^{-qT}\,\varphi(d_1) = K e^{-rT}\,\varphi(d_2).
+```
 
-For Acme both sides are 37.901158. The reason is that $d_1$ and $d_2$ differ by one spread unit, so the bell curve's heights at the two points differ by a factor that exactly undoes the ratio of the two discounted amounts. The folded proof does the algebra in four lines. What remains is
+For Acme both sides are 37.901158. The reason is that $`d_1`$ and $`d_2`$ differ by one spread unit, so the bell curve's heights at the two points differ by a factor that exactly undoes the ratio of the two discounted amounts. The folded proof does the algebra in four lines. What remains is
 
-$$\Delta_C = e^{-qT} N(d_1).$$
+```math
+\Delta_C = e^{-qT} N(d_1).
+```
 
 The cancellation has a reading. Moving Acme shifts the price at which the call starts to pay. Paths that finish just at the strike pay nothing, so shifting that boundary a little adds or removes paths worth zero. Only the paths already paying feel the move.
 
 <details>
 <summary>Detailed proof: the density cancellation and the slope</summary>
 
-The bell curve's height is $\varphi(x) = e^{-x^2/2}/\sqrt{2\pi}$, so
-$$\frac{\varphi(d_1)}{\varphi(d_2)} = e^{-(d_1^2 - d_2^2)/2}.$$
-Factor the difference of squares: $d_1^2 - d_2^2 = (d_1 - d_2)(d_1 + d_2)$. The first factor is $\sigma\sqrt{T}$ and the second is $2d_1 - \sigma\sqrt{T}$. Multiply out using the definition of $d_1$:
-$$d_1^2 - d_2^2 = 2\ln(S/K) + 2(r - q + \tfrac12\sigma^2)T - \sigma^2 T = 2\ln(S/K) + 2(r - q)T.$$
-So $\varphi(d_1)/\varphi(d_2) = (K/S)\,e^{-(r-q)T}$. Multiply both sides by $S e^{-qT}\varphi(d_2)$: $S e^{-qT}\varphi(d_1) = K e^{-rT}\varphi(d_2)$.
+The bell curve's height is $`\varphi(x) = e^{-x^2/2}/\sqrt{2\pi}`$, so
 
-For the slope, $\partial d_1/\partial S = \partial d_2/\partial S = 1/(S\sigma\sqrt{T})$, because $\partial \ln(S/K)/\partial S = 1/S$ and nothing else in $d_1$ contains $S$. The product and chain rules give Step 1's line; the cancellation removes the second piece. Every denominator is positive for $S > 0$, $\sigma > 0$, $T > 0$.
+$`\displaystyle \frac{\varphi(d_1)}{\varphi(d_2)} = e^{-(d_1^2 - d_2^2)/2}.`$
+
+Factor the difference of squares: $`d_1^2 - d_2^2 = (d_1 - d_2)(d_1 + d_2)`$. The first factor is $`\sigma\sqrt{T}`$ and the second is $`2d_1 - \sigma\sqrt{T}`$. Multiply out using the definition of $`d_1`$:
+
+$`\displaystyle d_1^2 - d_2^2 = 2\ln(S/K) + 2(r - q + \tfrac12\sigma^2)T - \sigma^2 T = 2\ln(S/K) + 2(r - q)T.`$
+
+So $`\varphi(d_1)/\varphi(d_2) = (K/S)\,e^{-(r-q)T}`$. Multiply both sides by $`S e^{-qT}\varphi(d_2)`$: $`S e^{-qT}\varphi(d_1) = K e^{-rT}\varphi(d_2)`$.
+
+For the slope, $`\partial d_1/\partial S = \partial d_2/\partial S = 1/(S\sigma\sqrt{T})`$, because $`\partial \ln(S/K)/\partial S = 1/S`$ and nothing else in $`d_1`$ contains $`S`$. The product and chain rules give Step 1's line; the cancellation removes the second piece. Every denominator is positive for $`S > 0`$, $`\sigma > 0`$, $`T > 0`$.
 
 </details>
 
 ### Step 3: the put, from parity
 
-Put–call parity says $C - P = S e^{-qT} - K e^{-rT}$ at every share price: a call minus a put on the same terms is a share delivered at $T$ without its dividends, minus cash due at $T$. Differentiate both sides in $S$. The cash term does not move. So
+Put–call parity says $`C - P = S e^{-qT} - K e^{-rT}`$ at every share price: a call minus a put on the same terms is a share delivered at $`T`$ without its dividends, minus cash due at $`T`$. Differentiate both sides in $`S`$. The cash term does not move. So
 
-$$\Delta_C - \Delta_P = e^{-qT},$$
+```math
+\Delta_C - \Delta_P = e^{-qT},
+```
 
-and $\Delta_P = e^{-qT}(N(d_1) - 1) = -e^{-qT}N(-d_1)$, using $1 - N(x) = N(-x)$. For Acme, $0.980199 \times (0.598706 - 1) = -0.393348$. The difference $e^{-qT}$ holds whatever the volatility: it is the delta of the prepaid forward (the share delivered at $T$ without its dividends), not a property of the model.
+and $`\Delta_P = e^{-qT}(N(d_1) - 1) = -e^{-qT}N(-d_1)`$, using $`1 - N(x) = N(-x)`$. For Acme, $`0.980199 \times (0.598706 - 1) = -0.393348`$. The difference $`e^{-qT}`$ holds whatever the volatility: it is the delta of the prepaid forward (the share delivered at $`T`$ without its dividends), not a property of the model.
 
 ### Step 4: the three readings
 
 **Slope.** That is the definition. The code checks it by nudging Acme a cent each way and dividing: 0.586851.
 
-**Hedge ratio.** Short one call and long $\Delta$ shares has zero slope, so a small move $h$ leaves only the bend, about $-\tfrac12\Gamma h^2$ for the dealer who is short the curve. Worked numbers runs it.
+**Hedge ratio.** Short one call and long $`\Delta`$ shares has zero slope, so a small move $`h`$ leaves only the bend, about $`-\tfrac12\Gamma h^2`$ for the dealer who is short the curve. Worked numbers runs it.
 
-**Share-counted chance.** Differentiate the payoff path by path instead of the formula. On a path that finishes above the strike, the call pays $S_T - K$, and $S_T$ is proportional to today's $S$, so the payoff moves by $S_T/S$ per dollar of $S$. Below the strike it pays nothing and moves by nothing. Averaging over all paths in the pretend world of the call card (where every asset grows at the riskless rate; finance calls it "risk-neutral"), written $\mathbb{E}$ for expectation (the probability-weighted average), and discounting:
+**Share-counted chance.** Differentiate the payoff path by path instead of the formula. On a path that finishes above the strike, the call pays $`S_T - K`$, and $`S_T`$ is proportional to today's $`S`$, so the payoff moves by $`S_T/S`$ per dollar of $`S`$. Below the strike it pays nothing and moves by nothing. Averaging over all paths in the pretend world of the call card (where every asset grows at the riskless rate; finance calls it "risk-neutral"), written $`\mathbb{E}`$ for expectation (the probability-weighted average), and discounting:
 
-$$\Delta_C = e^{-rT}\,\mathbb{E}\!\left[\frac{S_T}{S}\ \text{on paths with } S_T > K\right].$$
+```math
+\Delta_C = e^{-rT}\,\mathbb{E}\!\left[\frac{S_T}{S}\ \text{on paths with } S_T > K\right].
+```
 
-Weighting each exercised path by the share's value there, rather than counting paths, is the "counted in shares" of the call card: it slides the bell curve one spread unit and turns $N(d_2)$ into $N(d_1)$. The factor $e^{-rT}\,\mathbb{E}[S_T]/S$ is $e^{-qT}$. So delta is the dividend drag times the chance of exercise in the share-counted world. It is not the ordinary exercise chance, which is $N(d_2)$ = 0.519939.
+Weighting each exercised path by the share's value there, rather than counting paths, is the "counted in shares" of the call card: it slides the bell curve one spread unit and turns $`N(d_2)`$ into $`N(d_1)`$. The factor $`e^{-rT}\,\mathbb{E}[S_T]/S`$ is $`e^{-qT}`$. So delta is the dividend drag times the chance of exercise in the share-counted world. It is not the ordinary exercise chance, which is $`N(d_2)`$ = 0.519939.
 
 <details>
 <summary>Why the at-the-money call has delta 0.59, not 0.5</summary>
 
-A coin-flip intuition says a call struck at today's price is half in, half out. Two things push $d_1$ above zero. The forward price $S e^{(r-q)T}$ sits above $100 because rates exceed dividends, so the strike is below the middle of the pretend world's bell curve. And counting in shares adds half a variance, $\tfrac12\sigma^2 T$. Together they make $d_1$ = 0.25, $N(d_1)$ = 0.598706, and after the drag 0.586851. With a quarter year left the spread is narrower and delta at $100 is 0.546996.
+A coin-flip intuition says a call struck at today's price is half in, half out. Two things push $`d_1`$ above zero. The forward price $`S e^{(r-q)T}`$ sits above $100 because rates exceed dividends, so the strike is below the middle of the pretend world's bell curve. And counting in shares adds half a variance, $`\tfrac12\sigma^2 T`$. Together they make $`d_1`$ = 0.25, $`N(d_1)`$ = 0.598706, and after the drag 0.586851. With a quarter year left the spread is narrower and delta at $100 is 0.546996.
 
 </details>
 
-### Step 5: the bounds are 0 and $e^{-qT}$, not 0 and 1
+### Step 5: the bounds are 0 and $`e^{-qT}`$, not 0 and 1
 
-$N(d_1)$ is a probability strictly between 0 and 1, so $0 < \Delta_C < e^{-qT}$ and $-e^{-qT} < \Delta_P < 0$. Far out of the money, Acme at $40, the call's delta is 0.000007. Deep in, Acme at $1,000, it is 0.980199, the ceiling to six places.
+$`N(d_1)`$ is a probability strictly between 0 and 1, so $`0 < \Delta_C < e^{-qT}`$ and $`-e^{-qT} < \Delta_P < 0`$. Far out of the money, Acme at $40, the call's delta is 0.000007. Deep in, Acme at $1,000, it is 0.980199, the ceiling to six places.
 
-The ceiling is below 1 for a plain reason. A call almost sure to be exercised is a share delivered in a year minus fixed cash. A share delivered in a year, with the dividends before then kept by someone else, is worth $S e^{-qT}$ today, and its slope in $S$ is $e^{-qT}$. With no dividends the ceiling is 1; with a 2 percent yield it is 0.980199.
+The ceiling is below 1 for a plain reason. A call almost sure to be exercised is a share delivered in a year minus fixed cash. A share delivered in a year, with the dividends before then kept by someone else, is worth $`S e^{-qT}`$ today, and its slope in $`S`$ is $`e^{-qT}`$. With no dividends the ceiling is 1; with a 2 percent yield it is 0.980199.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -156,7 +174,7 @@ xychart-beta
     line [98.02, 98.02, 98.02, 98.02, 98.02, 98.02, 98.02, 98.02, 98.02, 98.02, 98.02]
 ```
 
-Delta times 100: the shares a desk holds against 100 calls. Orange: one year left. Green: a quarter year left, steeper, with its own higher ceiling of 99.50 shares, since a quarter year's dividends drag less ($e^{-0.005}$ = 0.995012). Dark: the one-year ceiling, 98.02 shares, which is $100 e^{-0.02}$. The orange curve climbs toward the dark line and never reaches 100.
+Delta times 100: the shares a desk holds against 100 calls. Orange: one year left. Green: a quarter year left, steeper, with its own higher ceiling of 99.50 shares, since a quarter year's dividends drag less ($`e^{-0.005}`$ = 0.995012). Dark: the one-year ceiling, 98.02 shares, which is $`100 e^{-0.02}`$. The orange curve climbs toward the dark line and never reaches 100.
 
 A second route to delta is the binomial tree: the two nodes one step in give a slope directly, and the code reads 0.586845 off a 2,000-step tree. The method is on [Greeks from a tree or grid](../07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md).
 
@@ -164,42 +182,42 @@ A second route to delta is the binomial tree: the two nodes one step in give a s
 
 ## Worked numbers, by hand
 
-House market: $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$.
+House market: $`S = K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $\ln(S/K)$ | $\ln 1$ | 0 |
-| $d_1$ | $(0 + (0.05 - 0.02 + 0.02) \times 1) / 0.20$ | 0.25 |
-| $d_2$ | $0.25 - 0.20$ | 0.05 |
-| $N(d_1)$ | bell-curve area left of 0.25 | 0.598706 |
-| dividend drag $e^{-qT}$ | $e^{-0.02}$ | 0.980199 |
-| **call delta** | $0.980199 \times 0.598706$ | **0.586851** |
-| **put delta** | $0.980199 \times (0.598706 - 1)$ | **−0.393348** |
-| call minus put | $0.586851 + 0.393348$ | 0.980199 |
-| check: $S e^{-qT}\varphi(d_1)$ and $K e^{-rT}\varphi(d_2)$ | the two density terms | 37.901158 and 37.901158 |
+| $`\ln(S/K)`$ | $`\ln 1`$ | 0 |
+| $`d_1`$ | $`(0 + (0.05 - 0.02 + 0.02) \times 1) / 0.20`$ | 0.25 |
+| $`d_2`$ | $`0.25 - 0.20`$ | 0.05 |
+| $`N(d_1)`$ | bell-curve area left of 0.25 | 0.598706 |
+| dividend drag $`e^{-qT}`$ | $`e^{-0.02}`$ | 0.980199 |
+| **call delta** | $`0.980199 \times 0.598706`$ | **0.586851** |
+| **put delta** | $`0.980199 \times (0.598706 - 1)`$ | **−0.393348** |
+| call minus put | $`0.586851 + 0.393348`$ | 0.980199 |
+| check: $`S e^{-qT}\varphi(d_1)`$ and $`K e^{-rT}\varphi(d_2)`$ | the two density terms | 37.901158 and 37.901158 |
 
 The call behaves like 0.59 of an Acme share, the put like minus 0.39 of one; together, long call and short put, they behave like 0.98 of a share, the prepaid forward.
 
 ### The one-move hedge
 
-A dealer sells the call for $9.23. To hedge, the dealer buys 0.586851 shares for $58.69, paying with the $9.23 premium plus $49.46 borrowed. The borrowed amount is the cash half of the call formula, $K e^{-rT} N(d_2)$: the hedge rebuilds the call's two halves. Now Acme jumps instantly, no time passing. The table gives the dealer's gain in dollars per call.
+A dealer sells the call for $9.23. To hedge, the dealer buys 0.586851 shares for $58.69, paying with the $9.23 premium plus $49.46 borrowed. The borrowed amount is the cash half of the call formula, $`K e^{-rT} N(d_2)`$: the hedge rebuilds the call's two halves. Now Acme jumps instantly, no time passing. The table gives the dealer's gain in dollars per call.
 
-| Acme moves | Short call only | Hedged with 0.586851 shares | Hedged with $N(d_1)$ = 0.598706 | Hedged with $N(d_2)$ = 0.519939 |
+| Acme moves | Short call only | Hedged with 0.586851 shares | Hedged with $`N(d_1)`$ = 0.598706 | Hedged with $`N(d_2)`$ = 0.519939 |
 | --- | --- | --- | --- | --- |
 | −$5 | +2.689468 | −0.244788 | −0.304064 | +0.089774 |
 | −$1 | +0.577306 | −0.009545 | −0.021400 | +0.057367 |
 | +$1 | −0.596254 | −0.009403 | +0.002452 | −0.076315 |
 | +$5 | −3.161486 | −0.227231 | −0.167955 | −0.561792 |
 
-Unhedged, a dollar move swings the book by about 59 cents either way. Hedged with delta, both directions cost under a cent, and both cost: that loss is half of gamma, 0.009474, the price of being short the curve's bend. The two wrong hedges leave a directional bet: the $N(d_1)$ hedge holds too many shares and wins on rises, loses on falls; the $N(d_2)$ hedge holds too few and does the reverse, with swings several times the correct hedge's.
+Unhedged, a dollar move swings the book by about 59 cents either way. Hedged with delta, both directions cost under a cent, and both cost: that loss is half of gamma, 0.009474, the price of being short the curve's bend. The two wrong hedges leave a directional bet: the $`N(d_1)`$ hedge holds too many shares and wins on rises, loses on falls; the $`N(d_2)`$ hedge holds too few and does the reverse, with swings several times the correct hedge's.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Hedge with $N(d_1)$, dropping $e^{-qT}$ | 0.598706 shares; a $1 fall costs 0.021400, not 0.009545 | ignores the dividends the share pays and the call does not |
-| Take delta to be the exercise chance $N(d_2)$ | 0.519939 shares; a $1 rise costs 0.076315 | $N(d_2)$ counts paths; delta weights them by the share's value |
-| Put delta as minus the call delta | −0.586851, right −0.393348 | parity makes them differ by $e^{-qT}$, not sum to zero |
+| Hedge with $`N(d_1)`$, dropping $`e^{-qT}`$ | 0.598706 shares; a $1 fall costs 0.021400, not 0.009545 | ignores the dividends the share pays and the call does not |
+| Take delta to be the exercise chance $`N(d_2)`$ | 0.519939 shares; a $1 rise costs 0.076315 | $`N(d_2)`$ counts paths; delta weights them by the share's value |
+| Put delta as minus the call delta | −0.586851, right −0.393348 | parity makes them differ by $`e^{-qT}`$, not sum to zero |
 | Put delta with the sign dropped | +0.393348 | a put gains when Acme falls, so its delta is negative |
 | Slope from a one-sided $1 nudge | 0.596254, right 0.586851 | a one-sided difference picks up half of gamma; nudge both ways |
 
@@ -212,9 +230,9 @@ Four independent roads reach the call delta:
 1. the formula;
 2. a central difference on the price, nudging Acme a cent each way;
 3. the two nodes one step into a 2,000-step coin-flip tree;
-4. the pathwise average of $S_T/S$ over the exercised paths, integrated by Simpson's rule (adding thin slices under the curve) from a crossing point found by bisection (halving an interval until it closes on the point), which uses neither $d_1$ nor $d_2$.
+4. the pathwise average of $`S_T/S`$ over the exercised paths, integrated by Simpson's rule (adding thin slices under the curve) from a crossing point found by bisection (halving an interval until it closes on the point), which uses neither $`d_1`$ nor $`d_2`$.
 
-The put's delta comes from nudging the put formula on its own, and call minus put is checked against $e^{-qT}$. The density cancellation, the hedge table, the wrong answers and every chart point are printed.
+The put's delta comes from nudging the put formula on its own, and call minus put is checked against $`e^{-qT}`$. The density cancellation, the hedge table, the wrong answers and every chart point are printed.
 
 ### Python
 
@@ -561,12 +579,12 @@ The two outputs agree line for line. They reach the bell-curve area by different
 
 Lean proves the delta formulas and bounds for every positive share price, strike, volatility and time left, at any rate and dividend yield.
 
-- Take $S$, $K$, $\sigma$ and $T$ all above zero, and hold every other input still. Then the call's slope in the share price is $e^{-qT} N(d_1)$.
-- Take the same inputs. Then the two density terms of Step 2 cancel: $S e^{-qT}\varphi(d_1) = K e^{-rT}\varphi(d_2)$.
-- Take the same inputs. Then the put's slope in the share price is $-e^{-qT} N(-d_1)$.
-- Take the same inputs. Then the call's delta minus the put's delta is the dividend drag $e^{-qT}$.
-- Take the same inputs. Then $0 < \Delta_C < e^{-qT}$ and $-e^{-qT} < \Delta_P < 0$.
-- For Acme, $d_1$ is exactly 0.25 and $d_2$ is exactly 0.05.
+- Take $`S`$, $`K`$, $`\sigma`$ and $`T`$ all above zero, and hold every other input still. Then the call's slope in the share price is $`e^{-qT} N(d_1)`$.
+- Take the same inputs. Then the two density terms of Step 2 cancel: $`S e^{-qT}\varphi(d_1) = K e^{-rT}\varphi(d_2)`$.
+- Take the same inputs. Then the put's slope in the share price is $`-e^{-qT} N(-d_1)`$.
+- Take the same inputs. Then the call's delta minus the put's delta is the dividend drag $`e^{-qT}`$.
+- Take the same inputs. Then $`0 < \Delta_C < e^{-qT}`$ and $`-e^{-qT} < \Delta_P < 0`$.
+- For Acme, $`d_1`$ is exactly 0.25 and $`d_2`$ is exactly 0.05.
 - The printed deltas 0.586851 and −0.393348 differ by exactly 0.980199.
 
 The six-place values, the hedge table, the tree and the pathwise average are left to the Python and Rust checks.
@@ -784,7 +802,7 @@ example : (586851 : ℕ) + 393348 = 980199 := by decide
 > [!TIP]
 > **Try changing**
 > Guess the direction first. The first assert is pinned to the house delta, so each change stops the run there, after the numbers print.
-> - **Remove the dividend.** Set `q = 0.0`. Delta rises from 0.586851 to **0.636831**: the drag is gone and the forward sits higher, so $d_1$ grows.
+> - **Remove the dividend.** Set `q = 0.0`. Delta rises from 0.586851 to **0.636831**: the drag is gone and the forward sits higher, so $`d_1`$ grows.
 > - **Double the volatility.** Set `s = 0.40`. Delta moves only to **0.596296**, after dipping slightly first. At the money, extra spread barely shifts the share-counted chance; the price moves far more than the hedge.
 > - **Run the clock down.** Set `T = 0.01`. Delta falls to **0.509871**: with almost no time, an at-the-money call is nearly a coin flip, and near expiry delta swings between 0 and 1 over a small range of prices.
 > - **Raise the strike.** Set `K = 120.0`. Delta drops to **0.249080**: the call now behaves like a quarter of a share.
@@ -794,10 +812,10 @@ example : (586851 : ℕ) + 393348 = 980199 := by decide
 ## The usual mistake
 
 > [!warning]
-> **Reading delta as the probability the option finishes in the money.** It is not. The ordinary chance of exercise in the pretend world is $N(d_2)$ = 0.519939. Delta is 0.586851: the exercise chance with each path weighted by what the share is worth there, times the dividend drag. Hedging with the wrong one leaves 6 to 8 cents of exposure per call on a $1 move instead of under one.
+> **Reading delta as the probability the option finishes in the money.** It is not. The ordinary chance of exercise in the pretend world is $`N(d_2)`$ = 0.519939. Delta is 0.586851: the exercise chance with each path weighted by what the share is worth there, times the dividend drag. Hedging with the wrong one leaves 6 to 8 cents of exposure per call on a $1 move instead of under one.
 >
-> - **Delta between 0 and 1.** For a call on a dividend-paying share the ceiling is $e^{-qT}$ = 0.980199. Deep in the money, a hedge of one full share per call is over-hedged.
-> - **Put delta as minus the call delta.** The two differ by $e^{-qT}$: −0.393348, not −0.586851.
+> - **Delta between 0 and 1.** For a call on a dividend-paying share the ceiling is $`e^{-qT}`$ = 0.980199. Deep in the money, a hedge of one full share per call is over-hedged.
+> - **Put delta as minus the call delta.** The two differ by $`e^{-qT}`$: −0.393348, not −0.586851.
 > - **At the money means delta one half.** Here it is 0.586851, because the forward sits above the strike and share-counting adds half a variance.
 > - **A hedge set once.** Delta changes as Acme moves and as the clock runs; a $5 move already leaves 23 to 24 cents unhedged. Keeping the hedge right is continuous work, and its cost is the subject of [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md).
 
@@ -808,25 +826,25 @@ example : (586851 : ℕ) + 393348 = 980199 := by decide
 - **A market maker's hedge.** After selling calls, a dealer buys delta shares per call and adjusts through the day. The replication argument of [Black-Scholes by hedging](../05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md) is this card run continuously.
 - **Share-equivalent exposure.** Risk reports add up delta times the share price, $58.69 per Acme call here, so a book of options can be compared with a book of shares. Adding it across the Greeks gives the first line of [The Greeks together](09-greeks-together-taylor-pnl.md).
 - **Options quoted by delta.** Currency desks name strikes by delta: a "25-delta call" is the strike whose call has delta 0.25. Turning a delta back into a strike is [Strike from delta](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md).
-- **Other underlyings.** A currency option replaces $q$ with the foreign interest rate; an option on a futures contract has its own delta. Same skeleton, different drags.
+- **Other underlyings.** A currency option replaces $`q`$ with the foreign interest rate; an option on a futures contract has its own delta. Same skeleton, different drags.
 - **A company's shares.** In Merton's model, equity is a call on the firm's assets, and its delta says how far the share price moves per dollar of asset value ([How the balance-sheet claims move](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/02-structural-model-sensitivities.md)).
 
 > **Say it back**
-> Delta is the slope of an option's price in the share price: the one-year Acme call moves 0.59 cents per cent, the put minus 0.39. Differentiating the Black-Scholes price, two density terms cancel exactly and leave $e^{-qT}N(d_1)$. Parity makes call and put deltas differ by $e^{-qT}$, the delta of a share delivered without its dividends. The same number is the hedge that cancels a small move, and the exercise chance counted in shares; it is not the plain exercise chance $N(d_2)$. It lives between 0 and $e^{-qT}$, not 0 and 1.
+> Delta is the slope of an option's price in the share price: the one-year Acme call moves 0.59 cents per cent, the put minus 0.39. Differentiating the Black-Scholes price, two density terms cancel exactly and leave $`e^{-qT}N(d_1)`$. Parity makes call and put deltas differ by $`e^{-qT}`$, the delta of a share delivered without its dividends. The same number is the hedge that cancels a small move, and the exercise chance counted in shares; it is not the plain exercise chance $`N(d_2)`$. It lives between 0 and $`e^{-qT}`$, not 0 and 1.
 
 ---
 
 ## What this builds on
 
-- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the price being differentiated, and the share-counted chance $N(d_1)$.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the price being differentiated, and the share-counted chance $`N(d_1)`$.
 - [Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): the put's price, and the parity used in Step 3.
 - [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): a slope in one input with the others held still, which is what every Greek is.
-- [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md): how $S$ inside $d_1$ and $d_2$ produces the two density terms.
+- [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md): how $`S`$ inside $`d_1`$ and $`d_2`$ produces the two density terms.
 
 ## Where this goes next
 
 - [Gamma](02-gamma.md): delta's own slope, the bend that leaves a delta hedge about a cent short on each dollar move.
-- [Vega](03-vega.md): the slope in volatility; its value, 37.901158, is the density term that cancelled in Step 2, times $\sqrt{T}$.
+- [Vega](03-vega.md): the slope in volatility; its value, 37.901158, is the density term that cancelled in Step 2, times $`\sqrt{T}`$.
 - [Rho and dividend rho](05-rho-and-dividend-rho.md): the slopes in the rate and the dividend yield, where the cash half and the share half separate again.
 - [Vanna](06-vanna.md): how delta moves when volatility moves.
 - [Charm](08-charm.md): how delta drifts as the clock runs with Acme still.
@@ -844,7 +862,7 @@ A delta hedge cancels the first-order move and leaves the bend; how big that lef
 Verified 2026-09-23: every link below resolves to the publisher's page.
 
 - Black, Fischer, and Myron Scholes. "The Pricing of Options and Corporate Liabilities." *Journal of Political Economy* 81, no. 3 (1973): 637–654. [doi:10.1086/260062](https://doi.org/10.1086/260062). The hedge ratio as the slope of the price: the argument behind Step 0.
-- Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). The dividend yield, and so the $e^{-qT}$ ceiling.
+- Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). The dividend yield, and so the $`e^{-qT}`$ ceiling.
 - Cox, John C., Stephen A. Ross, and Mark Rubinstein. "Option Pricing: A Simplified Approach." *Journal of Financial Economics* 7, no. 3 (1979): 229–263. [doi:10.1016/0304-405X(79)90015-1](https://doi.org/10.1016/0304-405X(79)90015-1). The tree, whose one-step share count is road 3 in the code.
 - Glasserman, Paul. *Monte Carlo Methods in Financial Engineering*. Springer, 2003. [Publisher page](https://link.springer.com/book/10.1007/978-0-387-21617-1). The pathwise derivative, path by path, behind road 4 and Step 4's third reading.
 - Hull, John C. *Options, Futures, and Other Derivatives*, 11th ed. Pearson. [Publisher page](https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938). The textbook treatment of delta and delta hedging, chapter "The Greek Letters".

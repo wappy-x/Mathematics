@@ -34,30 +34,34 @@ The script is a funnel: many numbers go in, one exit code comes out. The exit co
 
 ## The formula
 
-Notation first, in words. Number the claims on the card $i$ = 1, 2, 3 and so on. Claim $i$ prints a value $c_i$ with $d_i$ digits after the decimal point. The script computes its own value $x_i$, once by each road. The **exit code** is the whole number a program hands back to whatever started it; by long convention 0 means success and anything else means failure.
+Notation first, in words. Number the claims on the card $`i`$ = 1, 2, 3 and so on. Claim $`i`$ prints a value $`c_i`$ with $`d_i`$ digits after the decimal point. The script computes its own value $`x_i`$, once by each road. The **exit code** is the whole number a program hands back to whatever started it; by long convention 0 means success and anything else means failure.
 
-$$\text{claim } i \text{ passes} \iff |x_i - c_i| \le \tfrac12 \times 10^{-d_i} \text{ on both roads}, \qquad \text{exit code} = \begin{cases} 0 & \text{every claim passes} \\ 1 & \text{otherwise.} \end{cases}$$
+```math
+\text{claim } i \text{ passes} \iff |x_i - c_i| \le \tfrac12 \times 10^{-d_i} \text{ on both roads}, \qquad \text{exit code} = \begin{cases} 0 & \text{every claim passes} \\ 1 & \text{otherwise.} \end{cases}
+```
 
 **Read it aloud:** a claim passes when the computed value sits within half a unit of the card's last printed digit, by both roads, and the script exits with 0 only when every claim passes.
 
 A number that comes from a simulation is held to a different allowance, a few standard errors (the typical spread of a simulated average) instead of half a unit:
 
-$$|\bar{x} - c| \le 4\,\mathrm{SE}.$$
+```math
+|\bar{x} - c| \le 4\,\mathrm{SE}.
+```
 
 Numbers compared as computed follow a third rule. Two roads checked against each other, or a computed number against a value pinned with full digits, get the floating-point default of [Tolerances](05-tolerances-and-comparing-computed-numbers.md): a relative allowance with a small floor. This card holds numbers as printed; that card holds numbers as computed.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $i$ | which claim on the card | 1 to 10: the order size first, the two-till wait last | — |
-| $c_i$ | claim $i$ exactly as printed on the card, copied by hand | 707.1 | a typo moves it off the computed value and the claim fails |
-| $d_i$ | digits printed after the decimal point | 1 for 707.1; 3 for 10.083 | the allowance shrinks tenfold per digit |
-| $x_i$ | the value the script works out, by road 1 or road 2 | 707.1068 | — |
-| $\tfrac12 \times 10^{-d_i}$ | the allowance: half a unit in the last printed digit | 0.05 for 707.1 | — |
+| $`i`$ | which claim on the card | 1 to 10: the order size first, the two-till wait last | — |
+| $`c_i`$ | claim $`i`$ exactly as printed on the card, copied by hand | 707.1 | a typo moves it off the computed value and the claim fails |
+| $`d_i`$ | digits printed after the decimal point | 1 for 707.1; 3 for 10.083 | the allowance shrinks tenfold per digit |
+| $`x_i`$ | the value the script works out, by road 1 or road 2 | 707.1068 | — |
+| $`\tfrac12 \times 10^{-d_i}`$ | the allowance: half a unit in the last printed digit | 0.05 for 707.1 | — |
 | exit code | the one number the script hands back when it ends | 0 on this run; 1 on a mistyped card | — |
-| $\bar{x}$, SE | a simulated average and its standard error | 10.71 minutes, 0.23 | — |
-| $Q^*$, $K$, $D$, $h$ | best order size (the economic order quantity, EOQ in the code's labels); order cost, yearly demand and holding cost, from [Stock](../05-Operations%20Research/06-inventory-models-eoq-and-newsvendor.md) | 707.1 cases; £125, 5,200 cases, £2.60 | — |
-| $\lambda$, $\mu$, $\rho$ | arrivals an hour, sales a till makes an hour, the busy share $\lambda/\mu$, from [Queues](../05-Operations%20Research/07-queueing-theory-and-littles-law.md) | 55, 60, 0.9167 | $\lambda$ up to 59: six claims fail |
-| $L_q$, $W_q$, $W$ | people in line, minutes in line, minutes in the shop | 10.083, 11.00, 12.00 | — |
+| $`\bar{x}`$, SE | a simulated average and its standard error | 10.71 minutes, 0.23 | — |
+| $`Q^*`$, $`K`$, $`D`$, $`h`$ | best order size (the economic order quantity, EOQ in the code's labels); order cost, yearly demand and holding cost, from [Stock](../05-Operations%20Research/06-inventory-models-eoq-and-newsvendor.md) | 707.1 cases; £125, 5,200 cases, £2.60 | — |
+| $`\lambda`$, $`\mu`$, $`\rho`$ | arrivals an hour, sales a till makes an hour, the busy share $`\lambda/\mu`$, from [Queues](../05-Operations%20Research/07-queueing-theory-and-littles-law.md) | 55, 60, 0.9167 | $`\lambda`$ up to 59: six claims fail |
+| $`L_q`$, $`W_q`$, $`W`$ | people in line, minutes in line, minutes in the shop | 10.083, 11.00, 12.00 | — |
 
 ### When it holds
 
@@ -77,21 +81,23 @@ Numbers compared as computed follow a third rule. Two roads checked against each
 
 ### Step 1: half a unit is exactly the right allowance
 
-Take one claim and drop the $i$. Rounding to $d$ digits moves a value by at most half a unit in the last place, $\tfrac12 \times 10^{-d}$. So a correctly rounded claim always passes: no false alarms.
+Take one claim and drop the $`i`$. Rounding to $`d`$ digits moves a value by at most half a unit in the last place, $`\tfrac12 \times 10^{-d}`$. So a correctly rounded claim always passes: no false alarms.
 
-Now suppose a typo changes the printed digits, from $c$ to some other $c'$ with the same number of digits. Two such numbers differ by at least one whole unit, $10^{-d}$. The true value is within half a unit of $c$, so it is at least half a unit from $c'$:
+Now suppose a typo changes the printed digits, from $`c`$ to some other $`c'`$ with the same number of digits. Two such numbers differ by at least one whole unit, $`10^{-d}`$. The true value is within half a unit of $`c`$, so it is at least half a unit from $`c'`$:
 
-$$|x - c'| \ge |c' - c| - |x - c| \ge 10^{-d} - \tfrac12 \times 10^{-d} = \tfrac12 \times 10^{-d}.$$
+```math
+|x - c'| \ge |c' - c| - |x - c| \ge 10^{-d} - \tfrac12 \times 10^{-d} = \tfrac12 \times 10^{-d}.
+```
 
-Equality needs both steps to be tight at once: the typo moves exactly one unit, and the true value sits exactly on a rounding tie. Otherwise the typo fails. In the butter case the true $Q^*$ is 707.1068, off by 0.0068 from 707.1 and by 5.4068 from 701.7, against an allowance of 0.05.
+Equality needs both steps to be tight at once: the typo moves exactly one unit, and the true value sits exactly on a rounding tie. Otherwise the typo fails. In the butter case the true $`Q^*`$ is 707.1068, off by 0.0068 from 707.1 and by 5.4068 from 701.7, against an allowance of 0.05.
 
 A fixed relative allowance has neither guarantee. With 1%, the typo 10.083 → 10.038 passes, because 10.038 is off by 0.0453 and 1% of it is 0.1004. And the correct two-till wait, 0.27 minutes, fails: the true 0.2659 is off by 0.0041, but 1% of 0.27 allows only 0.0027. One rule, one miss and one false alarm.
 
 ### Step 2: two roads, so the code cannot vouch for itself
 
-Every claim is worked out twice. For the butter, road 1 is the formula $Q^* = \sqrt{2KD/h}$. Road 2 never takes a square root: it halves an interval 200 times, keeping the half where the yearly holding cost $hQ/2$ meets the yearly ordering cost $KD/Q$. A third road, trying every whole order from 1 to 5,000, finds the cheapest at 707.
+Every claim is worked out twice. For the butter, road 1 is the formula $`Q^* = \sqrt{2KD/h}`$. Road 2 never takes a square root: it halves an interval 200 times, keeping the half where the yearly holding cost $`hQ/2`$ meets the yearly ordering cost $`KD/Q`$. A third road, trying every whole order from 1 to 5,000, finds the cheapest at 707.
 
-For the queue, road 1 is the closed form $W_q = \rho/(\mu - \lambda)$. Road 2 solves the balance equations (at each queue length, the line steps up as often as it steps back down) state by state. It then reads the wait off Little's law: the average number of people in line equals the arrival rate times the average wait in line.
+For the queue, road 1 is the closed form $`W_q = \rho/(\mu - \lambda)`$. Road 2 solves the balance equations (at each queue length, the line steps up as often as it steps back down) state by state. It then reads the wait off Little's law: the average number of people in line equals the arrival rate times the average wait in line.
 
 Both roads must land within the allowance of the card. A bug now has to make the same mistake twice, in two different computations, and still match the printed digits. Why two roads catch what one cannot is the job of [Two roads and a mutation](06-testing-numerical-code-two-roads-and-mutations.md); here it is one line in a loop.
 
@@ -115,15 +121,15 @@ An assert that has never failed has not shown it can. The script breaks the card
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| digits in "707.1" | one after the point | $d = 1$ |
-| allowance | $\tfrac12 \times 10^{-1}$ | 0.05 |
-| road 1 | $\sqrt{2 \times 125 \times 5{,}200 / 2.60}$ | 707.1068 |
-| road 2 | bisect $2.60\,Q/2 = 125 \times 5{,}200/Q$ | 707.1068 |
-| gap to the card | $\lvert 707.1068 - 707.1 \rvert$ | 0.0068, under 0.05: pass |
-| gap to a typo | $\lvert 707.1068 - 701.7 \rvert$ | 5.4068, over 0.05: fail |
+| digits in "707.1" | one after the point | $`d = 1`$ |
+| allowance | $`\tfrac12 \times 10^{-1}`$ | 0.05 |
+| road 1 | $`\sqrt{2 \times 125 \times 5{,}200 / 2.60}`$ | 707.1068 |
+| road 2 | bisect $`2.60\,Q/2 = 125 \times 5{,}200/Q`$ | 707.1068 |
+| gap to the card | $`\lvert 707.1068 - 707.1 \rvert`$ | 0.0068, under 0.05: pass |
+| gap to a typo | $`\lvert 707.1068 - 701.7 \rvert`$ | 5.4068, over 0.05: fail |
 | digits in "10.083" | three after the point | allowance 0.0005 |
-| gap to the card | $\lvert 10.0833 - 10.083 \rvert$ | 0.0003: pass |
-| gap to a typo | $\lvert 10.0833 - 10.038 \rvert$ | 0.0453: fail |
+| gap to the card | $`\lvert 10.0833 - 10.083 \rvert`$ | 0.0003: pass |
+| gap to a typo | $`\lvert 10.0833 - 10.038 \rvert`$ | 0.0453: fail |
 | all ten claims | both roads, each within its allowance | **0 failing: exit code 0** |
 
 All ten numbers on the two cards are confirmed by two independent computations, each to the precision it was printed at, and one swapped digit anywhere would turn the exit code to 1.
@@ -133,7 +139,7 @@ All ten numbers on the two cards are confirmed by two independent computations, 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Card typo, 707.1 printed as 701.7 | off by 5.4068; 1 failing; exit code 1 | Nothing: this is the script working |
-| Code drops the 2: $\sqrt{KD/h}$ | $Q^*$ = 500.0000; 4 failing | Caught, through the order size, the cost, the whole order and the deliveries |
+| Code drops the 2: $`\sqrt{KD/h}`$ | $`Q^*`$ = 500.0000; 4 failing | Caught, through the order size, the cost, the whole order and the deliveries |
 | Code uses the time in the shop for the time in line | 12.0000 minutes against 11.00; 1 failing | Caught; the two roads disagree too |
 | Allow 1% instead of half a unit | typo 10.038 passes; correct 0.27 fails (off by 0.0041, allowed 0.0027) | Relative slack is too loose on big numbers and too tight on short ones |
 | Compare the formula with itself | 0 failing with the 2 dropped | A tautology: nothing outside the code is consulted |
@@ -523,9 +529,9 @@ ALL CHECKS PASS
 
 Lean proves the half-unit rule of Step 1 for every true value and digit count, and checks the card's worked numbers exactly.
 
-- Take any true value $x$ and any digit count $d$. Then rounding $x$ to $d$ digits moves it by at most half a unit.
-- Suppose $x$ is within half a unit of $c$, and $c'$ is a different number with the same digit count. Then $x$ is at least half a unit from $c'$.
-- Suppose also that $c'$ passes the half-unit rule. Then $c'$ is exactly one unit from $c$, and $x$ sits exactly on a rounding tie.
+- Take any true value $`x`$ and any digit count $`d`$. Then rounding $`x`$ to $`d`$ digits moves it by at most half a unit.
+- Suppose $`x`$ is within half a unit of $`c`$, and $`c'`$ is a different number with the same digit count. Then $`x`$ is at least half a unit from $`c'`$.
+- Suppose also that $`c'`$ passes the half-unit rule. Then $`c'`$ is exactly one unit from $`c`$, and $`x`$ sits exactly on a rounding tie.
 - The butter numbers 707.1, 1838.48 and 7.35 pass the half-unit rule, and the typo 701.7 fails it.
 - The whole order 707 costs less than 706 or 708.
 - The queue numbers 0.9167, 10.083, 0.2881 and 0.27 pass the half-unit rule. The waits come out at exactly 11 and 12 minutes.

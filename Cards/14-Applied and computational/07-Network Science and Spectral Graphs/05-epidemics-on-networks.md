@@ -39,44 +39,50 @@ Orange: nobody vaccinated. Green: the 50 busiest vaccinated. Dark blue: 50 vacci
 
 ## The formula
 
-Notation, in words first. $k$ is a person's number of friends, their **degree**. $p_k$ is the share of the town with exactly $k$ friends, the **degree distribution**, and $\langle k \rangle$ is the mean degree, both from [Small worlds and hubs](04-small-world-and-scale-free-models.md). Angle brackets mean "the average over all people", so $\langle k^2 \rangle$ is the average of each person's degree squared. $T$ is the **transmissibility**: the chance that an ill person passes the flu along one given friendship over their whole illness. (On shelf 02, $T$ was an annealing temperature; here it is only this chance.)
+Notation, in words first. $`k`$ is a person's number of friends, their **degree**. $`p_k`$ is the share of the town with exactly $`k`$ friends, the **degree distribution**, and $`\langle k \rangle`$ is the mean degree, both from [Small worlds and hubs](04-small-world-and-scale-free-models.md). Angle brackets mean "the average over all people", so $`\langle k^2 \rangle`$ is the average of each person's degree squared. $`T`$ is the **transmissibility**: the chance that an ill person passes the flu along one given friendship over their whole illness. (On shelf 02, $`T`$ was an annealing temperature; here it is only this chance.)
 
-The **mean excess degree** $\kappa$ (the Greek letter kappa) is the average number of *other* friends of a person you reach by following a friendship.
+The **mean excess degree** $`\kappa`$ (the Greek letter kappa) is the average number of *other* friends of a person you reach by following a friendship.
 
-$$\kappa = \frac{\langle k^2\rangle - \langle k\rangle}{\langle k\rangle}, \qquad R_0 = T\,\kappa, \qquad T_c = \frac{1}{\kappa} = \frac{\langle k\rangle}{\langle k^2\rangle - \langle k\rangle}$$
+```math
+\kappa = \frac{\langle k^2\rangle - \langle k\rangle}{\langle k\rangle}, \qquad R_0 = T\,\kappa, \qquad T_c = \frac{1}{\kappa} = \frac{\langle k\rangle}{\langle k^2\rangle - \langle k\rangle}
+```
 
 **Read it aloud:** a case reached along a friendship passes the flu on to T times kappa others, and a large outbreak is possible exactly when that number is above one, that is, when T is above one over kappa.
 
 The share of the town ill in a large outbreak comes from two averages over the degree list, called **generating functions** (a list of chances packed into one polynomial):
 
-$$G_0(x) = \sum_k p_k\,x^k, \qquad G_1(x) = \frac{1}{\langle k\rangle}\sum_k k\,p_k\,x^{k-1}$$
+```math
+G_0(x) = \sum_k p_k\,x^k, \qquad G_1(x) = \frac{1}{\langle k\rangle}\sum_k k\,p_k\,x^{k-1}
+```
 
-$$u = G_1(1 - T + T u), \qquad z = 1 - G_0(1 - T + T u)$$
+```math
+u = G_1(1 - T + T u), \qquad z = 1 - G_0(1 - T + T u)
+```
 
 **Read it aloud:** u is the chance that one friendship does not lead into the big outbreak, it is the smallest number that solves its own equation, and z, the share of the town ill, is one minus the chance that none of a person's friendships leads in.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $k$, $k'$ | a person's number of friends (degree); $k'$ counts only friends left unvaccinated | 3 to 300 by the rule; 270 at most in the town | — |
-| $p_k$ | share of people with exactly $k$ friends; here proportional to $k^{-2.5}$ | falls fast, with a long tail of hubs | a fatter tail raises $\kappa$ |
-| $\langle k\rangle$ | mean number of friends | 6.8536 | more spreading, but slowly |
-| $\langle k^2\rangle$ | mean of each person's friends squared; hubs dominate it | 194.3964 | $\kappa$ rises sharply |
-| $\kappa$ | mean excess degree: other friends of a person reached along a friendship | 27.3641 | lower threshold, bigger outbreak |
-| $T$ | transmissibility: chance flu passes along one friendship over a whole illness | 0.10 | bigger outbreak |
-| $R_0$ | new cases caused by a case reached along a friendship, $T\kappa$ | 2.7364 | bigger outbreak; at most 1 means none |
-| $T_c$ | threshold: the transmissibility at which $R_0 = 1$ | 0.0365 | harder to start an outbreak |
-| $G_0$, $G_1$, $x$ | the generating functions of the degrees, and of the onward friendships from a person reached along one; $x$ is the number fed in | $G_0(1) = G_1(1) = 1$ | — |
-| $u$, $h$ | chance one friendship does not lead into the large outbreak; $h(u)$ is the right side of its equation | solved for in the code | — |
-| $z$ | share of the town ill in a large outbreak; also the chance one introduction takes off | 0.1933, 967 people | — |
-| $f$ | share of the town vaccinated at random | 0.01 for 50 doses; 0.6346 to reach the threshold | $\kappa$ shrinks by $1 - f$ |
+| $`k`$, $`k'`$ | a person's number of friends (degree); $`k'`$ counts only friends left unvaccinated | 3 to 300 by the rule; 270 at most in the town | — |
+| $`p_k`$ | share of people with exactly $`k`$ friends; here proportional to $`k^{-2.5}`$ | falls fast, with a long tail of hubs | a fatter tail raises $`\kappa`$ |
+| $`\langle k\rangle`$ | mean number of friends | 6.8536 | more spreading, but slowly |
+| $`\langle k^2\rangle`$ | mean of each person's friends squared; hubs dominate it | 194.3964 | $`\kappa`$ rises sharply |
+| $`\kappa`$ | mean excess degree: other friends of a person reached along a friendship | 27.3641 | lower threshold, bigger outbreak |
+| $`T`$ | transmissibility: chance flu passes along one friendship over a whole illness | 0.10 | bigger outbreak |
+| $`R_0`$ | new cases caused by a case reached along a friendship, $`T\kappa`$ | 2.7364 | bigger outbreak; at most 1 means none |
+| $`T_c`$ | threshold: the transmissibility at which $`R_0 = 1`$ | 0.0365 | harder to start an outbreak |
+| $`G_0`$, $`G_1`$, $`x`$ | the generating functions of the degrees, and of the onward friendships from a person reached along one; $`x`$ is the number fed in | $`G_0(1) = G_1(1) = 1`$ | — |
+| $`u`$, $`h`$ | chance one friendship does not lead into the large outbreak; $`h(u)`$ is the right side of its equation | solved for in the code | — |
+| $`z`$ | share of the town ill in a large outbreak; also the chance one introduction takes off | 0.1933, 967 people | — |
+| $`f`$ | share of the town vaccinated at random | 0.01 for 50 doses; 0.6346 to reach the threshold | $`\kappa`$ shrinks by $`1 - f`$ |
 
-[The SIR model](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/07-the-sir-epidemic-model.md) mixes the town evenly, sets $R_0$ to the contact rate over the recovery rate, and its final size solves $z = 1 - e^{-R_0 z}$. On a network, $T$ folds that card's contact rate and illness length into one chance per friendship, and $\kappa$ replaces "everyone meets everyone".
+[The SIR model](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/07-the-sir-epidemic-model.md) mixes the town evenly, sets $`R_0`$ to the contact rate over the recovery rate, and its final size solves $`z = 1 - e^{-R_0 z}`$. On a network, $`T`$ folds that card's contact rate and illness length into one chance per friendship, and $`\kappa`$ replaces "everyone meets everyone".
 
 ### When it holds
 
 - **Friendships wired at random, given each person's degree.** This is the configuration model (shuffle all friendship ends and pair them off). Real friends share friends. Wire the same 5,000 people as a ring, each linked to the 3 nearest on each side: the formula says 74.62% fall ill at T = 0.30, but no simulated outbreak passed 100 people. The ring breaks two things at once. Friends share friends, so infections are wasted on people already ill. And the ring is a thin chain: only 6 friendships cross any point of it, so an outbreak stops at the first point where all 6 fail.
 - **A large network.** The formula describes an endlessly large network. At 5,000 people, with the 50 busiest vaccinated and the flu below the threshold, 0.15% of 2,000 introductions still passed 100 people, 133 on average, before dying out.
-- **One fixed chance per friendship, independent of the others.** If illness length varies from person to person, one long illness raises the chance on all of that person's friendships at once. Then fewer introductions take off than $z$ says, though a large outbreak's size stays close to the formula.
+- **One fixed chance per friendship, independent of the others.** If illness length varies from person to person, one long illness raises the chance on all of that person's friendships at once. Then fewer introductions take off than $`z`$ says, though a large outbreak's size stays close to the formula.
 - **Immunity lasts.** This is SIR: recovered people cannot catch it again. If they can, the disease can settle in for good and the threshold changes.
 - **Hubs can be found.** Targeting needs the degree list. Without it, a known trick reaches hubs anyway (see Where you meet it).
 
@@ -92,55 +98,61 @@ The new step is who the children are. Patient zero is a random person. Everyone 
 
 ### Step 1: patient zero infects T times the mean degree
 
-Patient zero has $k$ friends with chance $p_k$, and infects each with chance $T$. So patient zero infects $T\langle k\rangle$ = 0.1 × 6.8536 = 0.6854 on average. The simulation agrees: across 2,000 introductions, patient zero infected 0.6625 on average.
+Patient zero has $`k`$ friends with chance $`p_k`$, and infects each with chance $`T`$. So patient zero infects $`T\langle k\rangle`$ = 0.1 × 6.8536 = 0.6854 on average. The simulation agrees: across 2,000 introductions, patient zero infected 0.6625 on average.
 
 This is the number the quick answer used. It is right, but only for the first generation.
 
 ### Step 2: a person reached along a friendship is busier than average
 
-Pick a friendship end at random. There are 34,268 ends, two per friendship. A person with $k$ friends owns $k$ of them. So the chance the end belongs to someone with $k$ friends is $k\,p_k / \langle k\rangle$, not $p_k$. A person with 270 friends is found this way in proportion to 270, a person with 3 friends in proportion to 3.
+Pick a friendship end at random. There are 34,268 ends, two per friendship. A person with $`k`$ friends owns $`k`$ of them. So the chance the end belongs to someone with $`k`$ friends is $`k\,p_k / \langle k\rangle`$, not $`p_k`$. A person with 270 friends is found this way in proportion to 270, a person with 3 friends in proportion to 3.
 
-That person arrived along one friendship, the one from whoever infected them. They have $k - 1$ others. The average over this busier crowd is
+That person arrived along one friendship, the one from whoever infected them. They have $`k - 1`$ others. The average over this busier crowd is
 
-$$\kappa = \sum_k \frac{k\,p_k}{\langle k\rangle}\,(k - 1) = \frac{\langle k^2\rangle - \langle k\rangle}{\langle k\rangle} = \frac{194.3964 - 6.8536}{6.8536} = 27.3641 .$$
+```math
+\kappa = \sum_k \frac{k\,p_k}{\langle k\rangle}\,(k - 1) = \frac{\langle k^2\rangle - \langle k\rangle}{\langle k\rangle} = \frac{194.3964 - 6.8536}{6.8536} = 27.3641 .
+```
 
-Each passes the flu on with chance $T$, so every case after patient zero causes $T\kappa$ = 2.7364 more. In the simulation, the second generation was 2.4385 times the first. That is a sample average leaning on the rare runs that reach a hub, so it scatters around 2.7364; the checks allow 0.45 either way, about three times the scatter expected from 2,000 introductions.
+Each passes the flu on with chance $`T`$, so every case after patient zero causes $`T\kappa`$ = 2.7364 more. In the simulation, the second generation was 2.4385 times the first. That is a sample average leaning on the rare runs that reach a hub, so it scatters around 2.7364; the checks allow 0.45 either way, about three times the scatter expected from 2,000 introductions.
 
-The code reaches $\kappa$ a second way, without squaring anything: it walks along every friendship from both ends, counts the far person's other friends, and averages. It lands on 27.3641 to every printed digit. This is the **friendship paradox** (on average, your friends have more friends than you do), turned into a number.
+The code reaches $`\kappa`$ a second way, without squaring anything: it walks along every friendship from both ends, counts the far person's other friends, and averages. It lands on 27.3641 to every printed digit. This is the **friendship paradox** (on average, your friends have more friends than you do), turned into a number.
 
 ### Step 3: the threshold
 
-From the second generation on, the tree has $T\kappa$ children per member on average. By the branching-process result, it dies out for certain when $T\kappa \le 1$ and can grow without end when $T\kappa > 1$. Patient zero only sets how many trees start, not whether they grow. So the threshold is
+From the second generation on, the tree has $`T\kappa`$ children per member on average. By the branching-process result, it dies out for certain when $`T\kappa \le 1`$ and can grow without end when $`T\kappa > 1`$. Patient zero only sets how many trees start, not whether they grow. So the threshold is
 
-$$T_c = \frac{1}{\kappa} = \frac{6.8536}{194.3964 - 6.8536} = 0.0365 .$$
+```math
+T_c = \frac{1}{\kappa} = \frac{6.8536}{194.3964 - 6.8536} = 0.0365 .
+```
 
-Any flu with T above 0.0365 can cause a large outbreak in this town. The well-mixed reading puts the line where $T\langle k\rangle = 1$, and $T\langle k\rangle$ was 0.6854, which is why it called T = 0.10 safe.
+Any flu with T above 0.0365 can cause a large outbreak in this town. The well-mixed reading puts the line where $`T\langle k\rangle = 1`$, and $`T\langle k\rangle`$ was 0.6854, which is why it called T = 0.10 safe.
 
-The square is what gives the hubs their power. One person with 270 friends counts 270 in the sum behind $\langle k\rangle$ but 270 × 270 in the sum behind $\langle k^2\rangle$. When the degree distribution falls like $k^{-2.5}$ with no cap, $\langle k^2\rangle$ grows without limit as the town grows, and $T_c$ sinks toward zero: an endless network of this kind has no threshold. At 5,000 people, with degrees capped at 300, it is 0.0365.
+The square is what gives the hubs their power. One person with 270 friends counts 270 in the sum behind $`\langle k\rangle`$ but 270 × 270 in the sum behind $`\langle k^2\rangle`$. When the degree distribution falls like $`k^{-2.5}`$ with no cap, $`\langle k^2\rangle`$ grows without limit as the town grows, and $`T_c`$ sinks toward zero: an endless network of this kind has no threshold. At 5,000 people, with degrees capped at 300, it is 0.0365.
 
 ### Step 4: how many fall ill
 
-Keep each friendship with chance $T$ and delete it otherwise. Whether flu would cross a friendship is decided once, so the people who ever fall ill are exactly those patient zero can reach along kept friendships. A large outbreak is the giant component of this thinned network.
+Keep each friendship with chance $`T`$ and delete it otherwise. Whether flu would cross a friendship is decided once, so the people who ever fall ill are exactly those patient zero can reach along kept friendships. A large outbreak is the giant component of this thinned network.
 
-Now follow one friendship to a person with $k$ friends, chosen with chance $k\,p_k/\langle k\rangle$ as in Step 2. Call $u$ the chance this friendship does not lead into the giant. That happens when each of the person's $k - 1$ onward friendships either was deleted (chance $1 - T$) or was kept but leads to another dead end (chance $T u$). Averaging over $k$:
+Now follow one friendship to a person with $`k`$ friends, chosen with chance $`k\,p_k/\langle k\rangle`$ as in Step 2. Call $`u`$ the chance this friendship does not lead into the giant. That happens when each of the person's $`k - 1`$ onward friendships either was deleted (chance $`1 - T`$) or was kept but leads to another dead end (chance $`T u`$). Averaging over $`k`$:
 
-$$u = \sum_k \frac{k\,p_k}{\langle k\rangle}\,(1 - T + T u)^{k-1} = G_1(1 - T + T u).$$
+```math
+u = \sum_k \frac{k\,p_k}{\langle k\rangle}\,(1 - T + T u)^{k-1} = G_1(1 - T + T u).
+```
 
-A random person stays out of the giant when all $k$ of their friendships fail the same way, so the share inside is $z = 1 - G_0(1 - T + T u)$. Solving for the town's list at T = 0.10 gives $z$ = 0.1933: 967 people. The simulated large outbreaks averaged 977.4 people, 0.1955 of the town.
+A random person stays out of the giant when all $`k`$ of their friendships fail the same way, so the share inside is $`z = 1 - G_0(1 - T + T u)`$. Solving for the town's list at T = 0.10 gives $`z`$ = 0.1933: 967 people. The simulated large outbreaks averaged 977.4 people, 0.1955 of the town.
 
-The same $z$ is the chance that one introduction takes off, since that happens exactly when patient zero sits inside the giant: about 1 in 5. In the simulation 19.15% did.
+The same $`z`$ is the chance that one introduction takes off, since that happens exactly when patient zero sits inside the giant: about 1 in 5. In the simulation 19.15% did.
 
 <details>
 <summary>Why the smallest root, and why it exists only above the threshold</summary>
 
-Write $h(u) = G_1(1 - T + Tu)$. It is a sum of powers with positive weights, so it rises and bends upward on 0 to 1, and $h(1) = G_1(1) = 1$. So $u = 1$ always solves the equation; it means no friendship leads into a giant, so no giant.
+Write $`h(u) = G_1(1 - T + Tu)`$. It is a sum of powers with positive weights, so it rises and bends upward on 0 to 1, and $`h(1) = G_1(1) = 1`$. So $`u = 1`$ always solves the equation; it means no friendship leads into a giant, so no giant.
 
-The slope of $h$ at $u = 1$ is $T\,G_1'(1)$. Differentiating, $G_1'(1) = \sum_k k(k-1)p_k/\langle k\rangle = \kappa$, so the slope is $T\kappa$.
+The slope of $`h`$ at $`u = 1`$ is $`T\,G_1'(1)`$. Differentiating, $`G_1'(1) = \sum_k k(k-1)p_k/\langle k\rangle = \kappa`$, so the slope is $`T\kappa`$.
 
-- If $T\kappa \le 1$, a curve bending upward and meeting the diagonal at 1 with slope at most 1 lies above the diagonal everywhere to its left. The only root is $u = 1$, and $z = 1 - G_0(1) = 0$.
-- If $T\kappa > 1$, the curve meets the diagonal at 1 steeper than the diagonal, so just left of 1 it is below. At 0 it is above, since $h(0) > 0$. So it crosses once in between, at some $u < 1$, and $z > 0$.
+- If $`T\kappa \le 1`$, a curve bending upward and meeting the diagonal at 1 with slope at most 1 lies above the diagonal everywhere to its left. The only root is $`u = 1`$, and $`z = 1 - G_0(1) = 0`$.
+- If $`T\kappa > 1`$, the curve meets the diagonal at 1 steeper than the diagonal, so just left of 1 it is below. At 0 it is above, since $`h(0) > 0`$. So it crosses once in between, at some $`u < 1`$, and $`z > 0`$.
 
-The right root is the smallest, as on the giant-component card: applying $h$ again and again from $u = 0$ climbs to it and never passes it. The code solves it that way. This is Step 3's threshold reached a second way.
+The right root is the smallest, as on the giant-component card: applying $`h`$ again and again from $`u = 0`$ climbs to it and never passes it. The code solves it that way. This is Step 3's threshold reached a second way.
 
 </details>
 
@@ -148,16 +160,16 @@ The right root is the smallest, as on the giant-component card: applying $h$ aga
 
 To the flu, a vaccinated person and their friendships are gone. Delete them, recount everyone's friends, and the same formula applies to the remaining degree list.
 
-**Hubs first.** The 50 busiest people hold 5,062 of the 34,268 friendship ends: 14.8% of all friendship ends in 1% of the people. Removing them drops $\langle k\rangle$ from 6.8536 to 5.0081, a modest fall. But $\langle k^2\rangle$ falls from 194.3964 to 46.5774, because the square was carried by those 50. So $\kappa$ falls from 27.3641 to 8.3004, $R_0$ from 2.7364 to 0.8300, and the threshold rises from 0.0365 to 0.1205. Flu at T = 0.10 is now below it.
+**Hubs first.** The 50 busiest people hold 5,062 of the 34,268 friendship ends: 14.8% of all friendship ends in 1% of the people. Removing them drops $`\langle k\rangle`$ from 6.8536 to 5.0081, a modest fall. But $`\langle k^2\rangle`$ falls from 194.3964 to 46.5774, because the square was carried by those 50. So $`\kappa`$ falls from 27.3641 to 8.3004, $`R_0`$ from 2.7364 to 0.8300, and the threshold rises from 0.0365 to 0.1205. Flu at T = 0.10 is now below it.
 
-**At random.** A random dose usually lands on someone with few friends. Vaccinating a share $f$ at random deletes each friend of a reached person with chance $f$, so on average $\kappa$ shrinks by the factor $1 - f$. With 50 doses, $f$ = 1%. The town's one draw of 50 took $\kappa$ from 27.3641 to 26.8779, a little more than the 1% the average predicts, since one draw scatters around it.
+**At random.** A random dose usually lands on someone with few friends. Vaccinating a share $`f`$ at random deletes each friend of a reached person with chance $`f`$, so on average $`\kappa`$ shrinks by the factor $`1 - f`$. With 50 doses, $`f`$ = 1%. The town's one draw of 50 took $`\kappa`$ from 27.3641 to 26.8779, a little more than the 1% the average predicts, since one draw scatters around it.
 
-Pushing $R_0$ below 1 needs $(1 - f) \times 2.7364 \le 1$, that is $f \ge 1 - 1/2.7364$ = 0.6346: 3,173 people. Over 40 random draws of 3,173 doses, $R_0$ averaged 0.9873. A single draw ranged from 0.6093 to 1.4174, depending on how many hubs it happened to hit.
+Pushing $`R_0`$ below 1 needs $`(1 - f) \times 2.7364 \le 1`$, that is $`f \ge 1 - 1/2.7364`$ = 0.6346: 3,173 people. Over 40 random draws of 3,173 doses, $`R_0`$ averaged 0.9873. A single draw ranged from 0.6093 to 1.4174, depending on how many hubs it happened to hit.
 
 <details>
 <summary>Why random doses shrink kappa by exactly 1 − f, on average</summary>
 
-A remaining person who had $k$ friends now has $k'$, the number of those friends not vaccinated. Each friend survives with chance $1 - f$, independently, so $k'$ is binomial with $k$ trials and chance $1 - f$. Then the average of $k'$ is $(1-f)k$, and the average of $k'(k'-1)$ is $(1-f)^2 k(k-1)$, since it counts ordered pairs of surviving friends. Averaging over people, the top of $\kappa$, $\langle k'^2\rangle - \langle k'\rangle$, shrinks by $(1-f)^2$, and the bottom, $\langle k'\rangle$, by $(1-f)$. The ratio shrinks by $1 - f$.
+A remaining person who had $`k`$ friends now has $`k'`$, the number of those friends not vaccinated. Each friend survives with chance $`1 - f`$, independently, so $`k'`$ is binomial with $`k`$ trials and chance $`1 - f`$. Then the average of $`k'`$ is $`(1-f)k`$, and the average of $`k'(k'-1)`$ is $`(1-f)^2 k(k-1)`$, since it counts ordered pairs of surviving friends. Averaging over people, the top of $`\kappa`$, $`\langle k'^2\rangle - \langle k'\rangle`$, shrinks by $`(1-f)^2`$, and the bottom, $`\langle k'\rangle`$, by $`(1-f)`$. The ratio shrinks by $`1 - f`$.
 
 </details>
 
@@ -169,13 +181,13 @@ A remaining person who had $k$ friends now has $k'$, the number of those friends
 | --- | --- | --- |
 | mean friends | 34,268 ends ÷ 5,000 people | 6.8536 |
 | mean friends squared | from the degree list | 194.3964 |
-| mean excess degree $\kappa$ | (194.3964 − 6.8536) ÷ 6.8536 | 27.3641 |
+| mean excess degree $`\kappa`$ | (194.3964 − 6.8536) ÷ 6.8536 | 27.3641 |
 | patient zero's cases | 0.1 × 6.8536 | 0.6854 |
-| each later case's cases, $R_0$ | 0.1 × 27.3641 | **2.7364** |
-| threshold $T_c$ | 1 ÷ 27.3641 | 0.0365 |
-| ill in a large outbreak | solve for $u$, then $z$ | 0.1933: **967 people** |
-| 50 busiest vaccinated | 0.1 × 8.3004 | $R_0$ = **0.8300**, no large outbreak |
-| 50 at random vaccinated | 0.1 × 26.8779 | $R_0$ = 2.6878: 929 people |
+| each later case's cases, $`R_0`$ | 0.1 × 27.3641 | **2.7364** |
+| threshold $`T_c`$ | 1 ÷ 27.3641 | 0.0365 |
+| ill in a large outbreak | solve for $`u`$, then $`z`$ | 0.1933: **967 people** |
+| 50 busiest vaccinated | 0.1 × 8.3004 | $`R_0`$ = **0.8300**, no large outbreak |
+| 50 at random vaccinated | 0.1 × 26.8779 | $`R_0`$ = 2.6878: 929 people |
 | random doses to match | 1 − 1 ÷ 2.7364, of 5,000 | 0.6346: 3,173 people |
 
 Flu at 1 chance in 10 per friendship spreads in this town because each case after the first meets the busy crowd, and 50 doses aimed at the busiest people stop it where 50 random doses leave 929 ill.
@@ -184,8 +196,8 @@ Flu at 1 chance in 10 per friendship spreads in this town because each case afte
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| $R_0$ from the mean degree, $T\langle k\rangle$ | 0.6854, "no outbreak"; truly 967 ill, 19.15% of introductions take off | Later cases are reached along friendships, so they are busier than average |
-| Drop the −1 in $\kappa$: $T\langle k^2\rangle/\langle k\rangle$ | 2.8364 instead of 2.7364 | It counts the friendship the infection arrived on |
+| $`R_0`$ from the mean degree, $`T\langle k\rangle`$ | 0.6854, "no outbreak"; truly 967 ill, 19.15% of introductions take off | Later cases are reached along friendships, so they are busier than average |
+| Drop the −1 in $`\kappa`$: $`T\langle k^2\rangle/\langle k\rangle`$ | 2.8364 instead of 2.7364 | It counts the friendship the infection arrived on |
 | Random-wiring formula on a clustered ring, T = 0.30 | 74.62% ill predicted; 0 of 2,000 outbreaks passed 100 | Neighbours share neighbours, and the ring is a thin chain: an outbreak stops wherever all 6 friendships across one point fail |
 | 50 doses at random instead of to the busiest | 929 ill instead of 0 | A random dose rarely lands on a hub |
 
@@ -197,7 +209,7 @@ The code prints all four.
 
 The script builds the town from its rule: it draws 5,000 degrees, shuffles the friendship ends with SplitMix64 (a small random-number generator written out in both languages, seed 2026) and pairs them, dropping self-friendships and repeats.
 
-Then it takes **three independent roads**. Road one is the formula: the degree list's averages, then $u$ by repeated substitution from 0. Road two walks every friendship and counts the far person's other friends, reaching $\kappa$ without squaring anything. Road three runs 2,000 seeded SIR outbreaks on the network, one generation per step, for each vaccination plan. It also runs the ring, and 40 random draws of 3,173 doses.
+Then it takes **three independent roads**. Road one is the formula: the degree list's averages, then $`u`$ by repeated substitution from 0. Road two walks every friendship and counts the far person's other friends, reaching $`\kappa`$ without squaring anything. Road three runs 2,000 seeded SIR outbreaks on the network, one generation per step, for each vaccination plan. It also runs the ring, and 40 random draws of 3,173 doses.
 
 ### Python
 
@@ -362,7 +374,7 @@ try: T = 0.20, 50 busiest vaccinated: formula share 0.3114
 ALL CHECKS PASS
 ```
 
-The formula said 0.1933 of the town and the simulated large outbreaks averaged 0.1955; it said 0.1933 of introductions take off and 0.1915 did. The walk along friendships matches $\kappa$ to the last digit in all three plans.
+The formula said 0.1933 of the town and the simulated large outbreaks averaged 0.1955; it said 0.1933 of introductions take off and 0.1915 did. The walk along friendships matches $`\kappa`$ to the last digit in all three plans.
 
 ### Rust
 
@@ -571,12 +583,12 @@ ALL CHECKS PASS
 
 Lean proves the threshold, the friendship paradox as a number, and the random-dose factor, for every finite network and degree list.
 
-- Suppose $T\kappa$ is above one. Then $u = h(u)$ has a root below 1, and the share ill $z$ is above 0.
-- Suppose $T\kappa$ is at most one, and $T$ is below 1 or someone has exactly one friend. Then the only root from 0 to 1 is $u = 1$.
-- Take $T = 1$, with everyone who has friends having exactly 2. Then every $u$ is a root, so the extra condition, which gives $h(0) > 0$, is needed.
-- Take any finite network, and walk along every friendship from both ends. Then the average of the far person's other friends is exactly $\kappa$.
-- Suppose a share $f$ is vaccinated at random, so each friend survives with chance $1 - f$. Then the new degree list, averaged over the doses, has exactly $(1 - f)$ times the old $\kappa$.
-- Take the ring, where everyone has 6 friends. Then $\kappa = (36 - 6)/6 = 5$.
+- Suppose $`T\kappa`$ is above one. Then $`u = h(u)`$ has a root below 1, and the share ill $`z`$ is above 0.
+- Suppose $`T\kappa`$ is at most one, and $`T`$ is below 1 or someone has exactly one friend. Then the only root from 0 to 1 is $`u = 1`$.
+- Take $`T = 1`$, with everyone who has friends having exactly 2. Then every $`u`$ is a root, so the extra condition, which gives $`h(0) > 0`$, is needed.
+- Take any finite network, and walk along every friendship from both ends. Then the average of the far person's other friends is exactly $`\kappa`$.
+- Suppose a share $`f`$ is vaccinated at random, so each friend survives with chance $`1 - f`$. Then the new degree list, averaged over the doses, has exactly $`(1 - f)`$ times the old $`\kappa`$.
+- Take the ring, where everyone has 6 friends. Then $`\kappa = (36 - 6)/6 = 5`$.
 - The hand counts check too: 34,268 friendship ends, a mean of 6.8536 friends, and 50 doses as 1% of 5,000.
 
 The town's own numbers, the simulated outbreaks and the ring's failure are left to the Python and Rust checks.
@@ -1066,14 +1078,14 @@ example : 3 + 2 + 1 = 6 := by decide
 > - Guess first: set `T = 0.15` with the 50 busiest vaccinated. Does the vaccination still hold? No: 0.15 is above the new threshold 0.1205, and 0.1339 of the remaining town falls ill (the first `try:` line).
 > - Guess first: set `T = 0.20`, hubs vaccinated. 31.1% of the remaining town falls ill, against 48.7% with nobody vaccinated: targeting still helps, but once the threshold is crossed it no longer stops the outbreak.
 > - Guess first: set `T = 0.04`, just above the threshold 0.0365, nobody vaccinated. Only 1.1% fall ill (the `chart % ill, nobody` line): near the threshold a large outbreak is possible but small.
-> - Guess first: change the seed `SplitMix64(13)` and draw 3,173 random doses again. Does every draw stop the flu? No: over the 40 draws printed, $R_0$ ran from 0.6093 to 1.4174, depending on which hubs were hit.
+> - Guess first: change the seed `SplitMix64(13)` and draw 3,173 random doses again. Does every draw stop the flu? No: over the 40 draws printed, $`R_0`$ ran from 0.6093 to 1.4174, depending on which hubs were hit.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Judging an outbreak by the average number of contacts.** The first case meets an average person's 6.85 friends, but every later case was reached along a friendship and so meets a busier crowd: 27.36 other friends on average here. Use $T\langle k\rangle$ = 0.6854 and the flu looks safe; use $T\kappa$ = 2.7364 and it is not. The hubs, and the square in $\langle k^2\rangle$, decide it.
+> **Judging an outbreak by the average number of contacts.** The first case meets an average person's 6.85 friends, but every later case was reached along a friendship and so meets a busier crowd: 27.36 other friends on average here. Use $`T\langle k\rangle`$ = 0.6854 and the flu looks safe; use $`T\kappa`$ = 2.7364 and it is not. The hubs, and the square in $`\langle k^2\rangle`$, decide it.
 >
 > Smaller traps:
 > - **Dropping the −1.** The flu cannot go back along the friendship it arrived on. Counting it gives 2.8364 instead of 2.7364, and far worse when degrees are small.
@@ -1092,15 +1104,15 @@ example : 3 + 2 + 1 = 6 := by decide
 - **Superspreading.** A small share of cases often causes most onward infections; a long tail of contacts is one reason.
 
 > **Say it back**
-> The first case meets an average person's friends, but every later case was reached along a friendship, so it is busier than average. That busier crowd has $\kappa = (\langle k^2\rangle - \langle k\rangle)/\langle k\rangle$ other friends, so each later case infects $T\kappa$ more. A large outbreak can happen only when $T\kappa$ is above one. Hubs carry the square, so a long-tailed network has a low threshold, and removing the 50 busiest people cut $\kappa$ from 27.36 to 8.30 and stopped the flu. The outbreak size is the giant component of the network with each friendship kept with chance $T$.
+> The first case meets an average person's friends, but every later case was reached along a friendship, so it is busier than average. That busier crowd has $`\kappa = (\langle k^2\rangle - \langle k\rangle)/\langle k\rangle`$ other friends, so each later case infects $`T\kappa`$ more. A large outbreak can happen only when $`T\kappa`$ is above one. Hubs carry the square, so a long-tailed network has a low threshold, and removing the 50 busiest people cut $`\kappa`$ from 27.36 to 8.30 and stopped the flu. The outbreak size is the giant component of the network with each friendship kept with chance $`T`$.
 
 ---
 
 ## What this builds on
 
-- [Small worlds and hubs](04-small-world-and-scale-free-models.md): the degree distribution $p_k$, the mean degree $\langle k\rangle$, and networks with long tails of hubs, which is where this card's threshold drops.
-- [The SIR model](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/07-the-sir-epidemic-model.md): susceptible, infected and removed, $R_0$ as contact rate over recovery rate, and the final-size equation, all for a town that mixes evenly. This card keeps the three boxes and replaces the mixing with friendships.
-- [Random graphs](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/01-random-graphs-erdos-renyi.md): the network where every pair is a coin toss. Its degrees are Poisson, for which $\kappa$ equals $\langle k\rangle$ and the quick answer happens to be right.
+- [Small worlds and hubs](04-small-world-and-scale-free-models.md): the degree distribution $`p_k`$, the mean degree $`\langle k\rangle`$, and networks with long tails of hubs, which is where this card's threshold drops.
+- [The SIR model](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/07-the-sir-epidemic-model.md): susceptible, infected and removed, $`R_0`$ as contact rate over recovery rate, and the final-size equation, all for a town that mixes evenly. This card keeps the three boxes and replaces the mixing with friendships.
+- [Random graphs](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/01-random-graphs-erdos-renyi.md): the network where every pair is a coin toss. Its degrees are Poisson, for which $`\kappa`$ equals $`\langle k\rangle`$ and the quick answer happens to be right.
 - [The giant component](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/02-the-giant-component.md): the branching-process argument and the switch at one child per member, used here with the busier crowd's offspring.
 
 ## Where this goes next
@@ -1117,7 +1129,7 @@ This card treats every friendship as equally likely to carry flu and every perso
 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
-- Newman, M. E. J. "Spread of epidemic disease on networks." *Physical Review E* 66, no. 1 (2002): 016128. [doi:10.1103/PhysRevE.66.016128](https://doi.org/10.1103/PhysRevE.66.016128). The SIR model on a configuration-model network as bond percolation, with transmissibility $T$ and the generating-function outbreak size used here.
+- Newman, M. E. J. "Spread of epidemic disease on networks." *Physical Review E* 66, no. 1 (2002): 016128. [doi:10.1103/PhysRevE.66.016128](https://doi.org/10.1103/PhysRevE.66.016128). The SIR model on a configuration-model network as bond percolation, with transmissibility $`T`$ and the generating-function outbreak size used here.
 - Callaway, Duncan S., M. E. J. Newman, Steven H. Strogatz, and Duncan J. Watts. "Network Robustness and Fragility: Percolation on Random Graphs." *Physical Review Letters* 85, no. 25 (2000): 5468–5471. [doi:10.1103/PhysRevLett.85.5468](https://doi.org/10.1103/PhysRevLett.85.5468). Percolation on random graphs with any degree distribution, including removing the highest-degree vertices first.
 - Pastor-Satorras, Romualdo, and Alessandro Vespignani. "Epidemic Spreading in Scale-Free Networks." *Physical Review Letters* 86, no. 14 (2001): 3200–3203. [doi:10.1103/PhysRevLett.86.3200](https://doi.org/10.1103/PhysRevLett.86.3200). The finding that networks with long-tailed degrees have a vanishing threshold.
 - Pastor-Satorras, Romualdo, and Alessandro Vespignani. "Immunization of complex networks." *Physical Review E* 65, no. 3 (2002): 036104. [doi:10.1103/PhysRevE.65.036104](https://doi.org/10.1103/PhysRevE.65.036104). Random against targeted immunization: why random doses fail on such networks and hub-first doses work.

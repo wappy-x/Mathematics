@@ -36,43 +36,47 @@ The line farther from zero is the payoff at expiry if the second half realises t
 
 ## The formula
 
-Notation first, in words. Time runs in years: $t$ is the time already gone, $T$ the swap's whole life, and $\tau$ ("tau") the time left, $T - t$. A subscript names what a symbol belongs to: $K_{var}$ is the swap's strike in variance, $K_{rem}$ the fair variance the market quotes today for the time left. The realised volatility so far is $\sigma_R$, so its variance is $\sigma_R^2$. Here $N$ is the swap's notional, a dollar amount; this card never uses the normal CDF $N(x)$, so $D\,N\,(\ldots)$ below is a product.
+Notation first, in words. Time runs in years: $`t`$ is the time already gone, $`T`$ the swap's whole life, and $`\tau`$ ("tau") the time left, $`T - t`$. A subscript names what a symbol belongs to: $`K_{var}`$ is the swap's strike in variance, $`K_{rem}`$ the fair variance the market quotes today for the time left. The realised volatility so far is $`\sigma_R`$, so its variance is $`\sigma_R^2`$. Here $`N`$ is the swap's notional, a dollar amount; this card never uses the normal CDF $`N(x)`$, so $`D\,N\,(\ldots)`$ below is a product.
 
-$$V_t \;=\; D\,N\times\left(\frac{t}{T}\,\sigma_R^2 \;+\; \frac{\tau}{T}\,K_{rem} \;-\; K_{var}\right), \qquad D = e^{-r\tau}.$$
+```math
+V_t \;=\; D\,N\times\left(\frac{t}{T}\,\sigma_R^2 \;+\; \frac{\tau}{T}\,K_{rem} \;-\; K_{var}\right), \qquad D = e^{-r\tau}.
+```
 
 **Read it aloud:** the value today is the discounted notional times the variance already banked, weighted by the share of the life gone, plus the variance quoted for the rest, weighted by the share left, minus the strike.
 
-The forward variance $\xi$ ("xi") between two expiries $T_1 < T_2$, with total variances $w_1 = \sigma_1^2 T_1$ and $w_2 = \sigma_2^2 T_2$, is
+The forward variance $`\xi`$ ("xi") between two expiries $`T_1 < T_2`$, with total variances $`w_1 = \sigma_1^2 T_1`$ and $`w_2 = \sigma_2^2 T_2`$, is
 
-$$\xi \;=\; \frac{w_2 - w_1}{T_2 - T_1}.$$
+```math
+\xi \;=\; \frac{w_2 - w_1}{T_2 - T_1}.
+```
 
 **Read it aloud:** the far total variance minus the near total variance, spread over the years between them.
 
 | Symbol | Plain meaning | In our example | Push it up and the mark… |
 | --- | --- | --- | --- |
-| $t$, $T$, $\tau$ | time gone, the swap's whole life, time left, in years | 0.5, 1, 0.5 | $t$ up with $\tau$ down: realised counts for more, the quote for less |
-| $\sigma_R$, $\sigma$ | realised volatility so far: the square root of 252 times the average squared daily log return; $\sigma$ alone, the volatility quoted for the rest | 18%; 20% | $\sigma_R$ up: rises |
-| $K_{var}$, $K$ | the swap's strike, in variance and in volatility points | 0.04; 20 | falls: the buyer pays more |
-| $K_{rem}$ | fair variance for the time left, quoted today by a strip of options | 0.04 (20% flat) | rises |
-| $N$ | **variance notional**: dollars per unit of variance | 2,500 dollars per variance point (volatility points squared); 25,000,000 per unit of decimal variance | scales it |
-| $N_{vega}$ | **vega notional**, $2KN$: dollars per volatility point near the strike | 100,000 | — |
-| $D$, $r$ | discount factor over the time left, and the riskless rate | 0.975310; 5% | $r$ up: the mark shrinks toward zero |
-| $V_t$ | the mark: the swap's value to the buyer today | −92,654.44 dollars | — |
-| $T_1$, $T_2$, $\sigma_1$, $\sigma_2$ | two expiries in years, and the variance-swap volatilities quoted to each | 0.5, 1; 18%, 20% | $\sigma_2$ up: $\xi$ rises |
-| $w_1$, $w_2$ | **total variance** to each expiry, volatility squared times years | 0.016200, 0.040000 | — |
-| $\xi$ | **forward variance** from $T_1$ to $T_2$, per year | 0.0476 (21.82%) | — |
-| $S$, $F_0$, $\Gamma$, $r_i$, $i$ | Acme's price and its forward price for the end of the rest; **gamma**, how fast an option's hedge ratio changes as $S$ moves; $r_i$ the log return on trading day $i$ | 100 | — |
+| $`t`$, $`T`$, $`\tau`$ | time gone, the swap's whole life, time left, in years | 0.5, 1, 0.5 | $`t`$ up with $`\tau`$ down: realised counts for more, the quote for less |
+| $`\sigma_R`$, $`\sigma`$ | realised volatility so far: the square root of 252 times the average squared daily log return; $`\sigma`$ alone, the volatility quoted for the rest | 18%; 20% | $`\sigma_R`$ up: rises |
+| $`K_{var}`$, $`K`$ | the swap's strike, in variance and in volatility points | 0.04; 20 | falls: the buyer pays more |
+| $`K_{rem}`$ | fair variance for the time left, quoted today by a strip of options | 0.04 (20% flat) | rises |
+| $`N`$ | **variance notional**: dollars per unit of variance | 2,500 dollars per variance point (volatility points squared); 25,000,000 per unit of decimal variance | scales it |
+| $`N_{vega}`$ | **vega notional**, $`2KN`$: dollars per volatility point near the strike | 100,000 | — |
+| $`D`$, $`r`$ | discount factor over the time left, and the riskless rate | 0.975310; 5% | $`r`$ up: the mark shrinks toward zero |
+| $`V_t`$ | the mark: the swap's value to the buyer today | −92,654.44 dollars | — |
+| $`T_1`$, $`T_2`$, $`\sigma_1`$, $`\sigma_2`$ | two expiries in years, and the variance-swap volatilities quoted to each | 0.5, 1; 18%, 20% | $`\sigma_2`$ up: $`\xi`$ rises |
+| $`w_1`$, $`w_2`$ | **total variance** to each expiry, volatility squared times years | 0.016200, 0.040000 | — |
+| $`\xi`$ | **forward variance** from $`T_1`$ to $`T_2`$, per year | 0.0476 (21.82%) | — |
+| $`S`$, $`F_0`$, $`\Gamma`$, $`r_i`$, $`i`$ | Acme's price and its forward price for the end of the rest; **gamma**, how fast an option's hedge ratio changes as $`S`$ moves; $`r_i`$ the log return on trading day $`i`$ | 100 | — |
 
-Three quantities built from these carry the swap's risk. **Vega**, the change in the mark per volatility point of the quote for the rest, is $D\,N\,(\tau/T)\,2\sqrt{K_{rem}}$, with $N$ in dollars per variance point and the root in volatility points: 48,765.50 dollars here. **Dollar gamma**, $S^2\Gamma$, is the hedge's gamma scaled to dollars per unit of squared return; for the strip hedging this swap it is $2ND/T$ with $N$ per unit of decimal variance, 48,765,496, the same at every Acme price. The **mark's sensitivity to realised**, $D\,N\,t/T$, is 1,219.14 dollars per variance point realised so far.
+Three quantities built from these carry the swap's risk. **Vega**, the change in the mark per volatility point of the quote for the rest, is $`D\,N\,(\tau/T)\,2\sqrt{K_{rem}}`$, with $`N`$ in dollars per variance point and the root in volatility points: 48,765.50 dollars here. **Dollar gamma**, $`S^2\Gamma`$, is the hedge's gamma scaled to dollars per unit of squared return; for the strip hedging this swap it is $`2ND/T`$ with $`N`$ per unit of decimal variance, 48,765,496, the same at every Acme price. The **mark's sensitivity to realised**, $`D\,N\,t/T`$, is 1,219.14 dollars per variance point realised so far.
 
 Conventions verified 27 Sep 2026: variance notional is vega notional divided by twice the strike in volatility points, realised variance is annualised with 252 trading days, and returns are daily closing log returns. These are the common equity terms; a confirmation may set other ones, and then 252 changes.
 
 ### When it holds
 
-- **A quote for the time left that trades.** $K_{rem}$ must be a price at which a fresh swap on the rest can be dealt. If the strip of options is thin, the quote is a guess and so is the mark; a one-point error in the rest's volatility moves this mark by about the vega, 48,765.50 dollars.
+- **A quote for the time left that trades.** $`K_{rem}`$ must be a price at which a fresh swap on the rest can be dealt. If the strip of options is thin, the quote is a guess and so is the mark; a one-point error in the rest's volatility moves this mark by about the vega, 48,765.50 dollars.
 - **No jumps for the strip to miss.** The strip prices the rest's variance exactly only when Acme moves without jumps. With jumps, the log contract (a claim that pays the logarithm of Acme's final price, built from the strip in [Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md)) and the squared returns part ways; the gap is on [The volatility swap and the jump bias](05-volatility-swap-and-jump-bias.md).
 - **The same day count on both halves.** The split needs realised variance to be an average over the whole life. If the first half had 126 trading days and the rest has 125, the weights are 126 over 251 and 125 over 251, not a half each.
-- **Forward variance needs rising total variance.** $\xi$ exists only if $w_2 \ge w_1$. Otherwise the two quotes carry an arbitrage and no forward variance fits them ([Term structure and forward volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md)).
+- **Forward variance needs rising total variance.** $`\xi`$ exists only if $`w_2 \ge w_1`$. Otherwise the two quotes carry an arbitrage and no forward variance fits them ([Term structure and forward volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md)).
 
 ---
 
@@ -86,64 +90,72 @@ Realised variance is an average of squared daily returns. An average over a year
 
 With 252 trading days, 126 gone and 126 left, the realised variance at expiry is
 
-$$\sigma_{year}^2 = \frac{252}{252}\sum_{i=1}^{252} r_i^2 = \frac{t}{T}\,\sigma_R^2 + \frac{\tau}{T}\,\sigma_{rest}^2,$$
+```math
+\sigma_{year}^2 = \frac{252}{252}\sum_{i=1}^{252} r_i^2 = \frac{t}{T}\,\sigma_R^2 + \frac{\tau}{T}\,\sigma_{rest}^2,
+```
 
-where $\sigma_R^2$ is the first 126 squared returns scaled to a year, and $\sigma_{rest}^2$ the last 126 scaled the same way. For Acme, the first term is $0.5 \times 0.0324 = 0.016200$. The payoff at expiry is $N(\sigma_{year}^2 - K_{var})$.
+where $`\sigma_R^2`$ is the first 126 squared returns scaled to a year, and $`\sigma_{rest}^2`$ the last 126 scaled the same way. For Acme, the first term is $`0.5 \times 0.0324 = 0.016200`$. The payoff at expiry is $`N(\sigma_{year}^2 - K_{var})`$.
 
 ### Step 2: price each piece
 
 The payoff has three pieces, all paid at expiry.
 
-- **The banked variance**, $N (t/T)\,\sigma_R^2$: a known number of dollars at $T$. Its value today is $D$ times it.
-- **The fixed leg**, $-N K_{var}$: also known. Value today: $-D\,N K_{var}$.
-- **The variance still to come**, $N (\tau/T)\,\sigma_{rest}^2$: unknown. But a fresh swap on the rest, struck at $K_{rem}$, costs nothing to enter. So receiving $\sigma_{rest}^2$ at expiry is worth exactly what receiving $K_{rem}$ is worth: $D$ times it. Any other price would let a trader enter the fresh swap against the running one and lock in the difference.
+- **The banked variance**, $`N (t/T)\,\sigma_R^2`$: a known number of dollars at $`T`$. Its value today is $`D`$ times it.
+- **The fixed leg**, $`-N K_{var}`$: also known. Value today: $`-D\,N K_{var}`$.
+- **The variance still to come**, $`N (\tau/T)\,\sigma_{rest}^2`$: unknown. But a fresh swap on the rest, struck at $`K_{rem}`$, costs nothing to enter. So receiving $`\sigma_{rest}^2`$ at expiry is worth exactly what receiving $`K_{rem}`$ is worth: $`D`$ times it. Any other price would let a trader enter the fresh swap against the running one and lock in the difference.
 
-Add the three and factor out $D\,N$: that is the formula. No model of Acme entered; only the price of the rest did. For the house market, $K_{rem}$ is 0.04, the flat-20-percent strip. The expected year is $0.016200 + 0.5 \times 0.04 = 0.036200$, short of the strike by 0.003800, and the mark is $0.975310 \times 25{,}000{,}000 \times (-0.0038) = -92{,}654.44$ dollars.
+Add the three and factor out $`D\,N`$: that is the formula. No model of Acme entered; only the price of the rest did. For the house market, $`K_{rem}`$ is 0.04, the flat-20-percent strip. The expected year is $`0.016200 + 0.5 \times 0.04 = 0.036200`$, short of the strike by 0.003800, and the mark is $`0.975310 \times 25{,}000{,}000 \times (-0.0038) = -92{,}654.44`$ dollars.
 
 ### Step 3: two expiries imply the variance between them
 
 Now take two variance swaps quoted today: six months at 18 percent, strike 0.0324, and one year at 20 percent, strike 0.04. The one-year swap's realised variance splits as in Step 1:
 
-$$\sigma_{0,T_2}^2 = \frac{T_1}{T_2}\,\sigma_{0,T_1}^2 + \frac{T_2 - T_1}{T_2}\,\sigma_{T_1,T_2}^2 .$$
+```math
+\sigma_{0,T_2}^2 = \frac{T_1}{T_2}\,\sigma_{0,T_1}^2 + \frac{T_2 - T_1}{T_2}\,\sigma_{T_1,T_2}^2 .
+```
 
-Multiply by $T_2/(T_2 - T_1)$, which is 2 here, and move the first term across. Receiving 2 one-year swaps and paying 1 six-month swap leaves exactly the realised variance of the second half-year, $\sigma_{T_1,T_2}^2$, against a fixed $2 \times 0.04 - 0.0324 = 0.0476$. Both swaps cost nothing to enter, so this combination is a swap on the second half-year, starting in six months, with a fair strike of 0.0476: the forward variance $\xi$. In total-variance terms, $\xi = (w_2 - w_1)/(T_2 - T_1) = (0.040000 - 0.016200)/0.5$. Its root, 21.82 percent, is the forward volatility.
+Multiply by $`T_2/(T_2 - T_1)`$, which is 2 here, and move the first term across. Receiving 2 one-year swaps and paying 1 six-month swap leaves exactly the realised variance of the second half-year, $`\sigma_{T_1,T_2}^2`$, against a fixed $`2 \times 0.04 - 0.0324 = 0.0476`$. Both swaps cost nothing to enter, so this combination is a swap on the second half-year, starting in six months, with a fair strike of 0.0476: the forward variance $`\xi`$. In total-variance terms, $`\xi = (w_2 - w_1)/(T_2 - T_1) = (0.040000 - 0.016200)/0.5`$. Its root, 21.82 percent, is the forward volatility.
 
 This is an inverse: two quotes in, the variance of an unquoted period out. Before solving, the three questions every inverse gets.
 
-- **Existence.** A forward variance is a variance, so it cannot be negative. It exists exactly when $w_2 \ge w_1$. Quotes of 24 percent to six months and 16 percent to a year give $w_1 = 0.028800$ and $w_2 = 0.025600$, a forward variance of −0.006400: no volatility fits, and the quotes are an arbitrage.
-- **Uniqueness.** When it exists, $\xi$ is one number, fixed by one subtraction, and the forward volatility is its one non-negative root.
-- **Boundary.** $w_2 = w_1$ gives $\xi = 0$: the quotes say Acme will not move between the expiries. That is the edge of consistency. If Acme can move at all, a forward swap struck at 0 pays something for nothing, so real quotes sit strictly above it.
+- **Existence.** A forward variance is a variance, so it cannot be negative. It exists exactly when $`w_2 \ge w_1`$. Quotes of 24 percent to six months and 16 percent to a year give $`w_1 = 0.028800`$ and $`w_2 = 0.025600`$, a forward variance of −0.006400: no volatility fits, and the quotes are an arbitrage.
+- **Uniqueness.** When it exists, $`\xi`$ is one number, fixed by one subtraction, and the forward volatility is its one non-negative root.
+- **Boundary.** $`w_2 = w_1`$ gives $`\xi = 0`$: the quotes say Acme will not move between the expiries. That is the edge of consistency. If Acme can move at all, a forward swap struck at 0 pays something for nothing, so real quotes sit strictly above it.
 
 ### Step 4: where the two halves of the card meet
 
-Put $K_{rem} = \xi$ into the mark: $0.5 \times 0.0324 + 0.5 \times 0.0476 - 0.04 = 0$. So the running swap breaks even exactly when the rest is quoted at the forward variance that the six-month and one-year quotes implied at inception. It has to: had the market at inception quoted 18 then 20, the plan for the year was 18 percent for six months and 21.82 percent after. The first half delivered its plan.
+Put $`K_{rem} = \xi`$ into the mark: $`0.5 \times 0.0324 + 0.5 \times 0.0476 - 0.04 = 0`$. So the running swap breaks even exactly when the rest is quoted at the forward variance that the six-month and one-year quotes implied at inception. It has to: had the market at inception quoted 18 then 20, the plan for the year was 18 percent for six months and 21.82 percent after. The first half delivered its plan.
 
 That gives a second reading of the same mark. Write it as
 
-$$V_t = D\,N\left[\frac{t}{T}\left(\sigma_R^2 - \sigma_1^2\right) + \frac{\tau}{T}\left(K_{rem} - \xi\right)\right],$$
+```math
+V_t = D\,N\left[\frac{t}{T}\left(\sigma_R^2 - \sigma_1^2\right) + \frac{\tau}{T}\left(K_{rem} - \xi\right)\right],
+```
 
-where $\sigma_1^2$ and $\xi$ are the plan from inception and the swap was struck at that plan's fair price, $K_{var} = (t/T)\,\sigma_1^2 + (\tau/T)\,\xi$. The first bracket is the realised surprise; the second is the repricing of the rest. In the flat house market the plan was 20 percent throughout: the whole loss is the first half's surprise. In an 18-then-20 market the first half matched the plan: the whole loss is the rest being repriced from 21.82 percent down to 20. Either story gives −92,654.44 dollars. The mark does not care which story was true; it sees only what was realised and what is quoted now.
+where $`\sigma_1^2`$ and $`\xi`$ are the plan from inception and the swap was struck at that plan's fair price, $`K_{var} = (t/T)\,\sigma_1^2 + (\tau/T)\,\xi`$. The first bracket is the realised surprise; the second is the repricing of the rest. In the flat house market the plan was 20 percent throughout: the whole loss is the first half's surprise. In an 18-then-20 market the first half matched the plan: the whole loss is the rest being repriced from 21.82 percent down to 20. Either story gives −92,654.44 dollars. The mark does not care which story was true; it sees only what was realised and what is quoted now.
 
 ### Step 5: vega, and the dollar-gamma reading
 
-**Vega.** The quote for the rest enters with weight $\tau/T$ and as a square. Differentiate $D N (\tau/T) \sigma^2$ in $\sigma$ and the change per volatility point is $D\,N\,(\tau/T)\,2\sigma$. Here that is $0.975310 \times 2{,}500 \times 0.5 \times 40 = 48{,}765.50$ dollars. At inception it was 95,122.94: the vega notional, 100,000, discounted over a year. A variance swap's vega runs down in proportion to the time left, apart from discounting, because each day lived moves one day's variance from the quoted column to the banked one.
+**Vega.** The quote for the rest enters with weight $`\tau/T`$ and as a square. Differentiate $`D N (\tau/T) \sigma^2`$ in $`\sigma`$ and the change per volatility point is $`D\,N\,(\tau/T)\,2\sigma`$. Here that is $`0.975310 \times 2{,}500 \times 0.5 \times 40 = 48{,}765.50`$ dollars. At inception it was 95,122.94: the vega notional, 100,000, discounted over a year. A variance swap's vega runs down in proportion to the time left, apart from discounting, because each day lived moves one day's variance from the quoted column to the banked one.
 
-**Dollar gamma.** The hedge for the rest is the strip: out-of-the-money puts and calls, each weighted by one over its strike squared. That weighting has one property that matters: the strip's dollar gamma, $S^2\Gamma$, is the same at every Acme price. A delta-hedged option position earns, each day, about half its dollar gamma times the day's squared return, minus a fixed charge for the implied variance:
+**Dollar gamma.** The hedge for the rest is the strip: out-of-the-money puts and calls, each weighted by one over its strike squared. That weighting has one property that matters: the strip's dollar gamma, $`S^2\Gamma`$, is the same at every Acme price. A delta-hedged option position earns, each day, about half its dollar gamma times the day's squared return, minus a fixed charge for the implied variance:
 
-$$\text{day's profit} \approx \tfrac12\,S^2\Gamma\left(r_i^2 - \sigma^2\,\Delta t\right),$$
+```math
+\text{day's profit} \approx \tfrac12\,S^2\Gamma\left(r_i^2 - \sigma^2\,\Delta t\right),
+```
 
-with $\Delta t$ one trading day, 1/252 of a year. With $S^2\Gamma$ constant, every day's squared return is paid at the same rate wherever Acme is: $N/T$ per unit of squared return, discounted. That is exactly what the swap's payoff does, day by day. The strip's dollar gamma is 48,765,496 at Acme 80, 100 and 120 alike; a stack of calls struck at 100 sized to match it at 100 has under a third of it at 80.
+with $`\Delta t`$ one trading day, 1/252 of a year. With $`S^2\Gamma`$ constant, every day's squared return is paid at the same rate wherever Acme is: $`N/T`$ per unit of squared return, discounted. That is exactly what the swap's payoff does, day by day. The strip's dollar gamma is 48,765,496 at Acme 80, 100 and 120 alike; a stack of calls struck at 100 sized to match it at 100 has under a third of it at 80.
 
 <details>
 <summary>Detailed proof: the strip's dollar gamma is flat</summary>
 
-The strip of puts below the forward $F_0$ and calls above, each weighted $2/(\tau K^2)$ per unit of strike, pays at the end of the rest $\frac{2}{\tau}\left(\frac{S_\tau - F_0}{F_0} - \ln\frac{S_\tau}{F_0}\right)$ ([Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md)). The first term is a forward contract, a straight line in Acme's price, with no gamma. The second is the log contract. Its value today, with Acme at $S$, is $-\frac{2}{\tau}e^{-r\tau}\left(\ln S + \text{terms free of } S\right)$, because the average of $\ln S_\tau$ is $\ln S$ plus a drift. Differentiate twice in $S$: $\frac{2}{\tau}e^{-r\tau}\,\frac{1}{S^2}$. Multiply by $S^2$: $\frac{2}{\tau}e^{-r\tau}$, with no $S$ left. The running swap holds $N\tau/T$ of this strip, so its dollar gamma is $2ND/T$, for Acme $2 \times 25{,}000{,}000 \times 0.975310 = 48{,}765{,}496$.
+The strip of puts below the forward $`F_0`$ and calls above, each weighted $`2/(\tau K^2)`$ per unit of strike, pays at the end of the rest $`\frac{2}{\tau}\left(\frac{S_\tau - F_0}{F_0} - \ln\frac{S_\tau}{F_0}\right)`$ ([Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md)). The first term is a forward contract, a straight line in Acme's price, with no gamma. The second is the log contract. Its value today, with Acme at $`S`$, is $`-\frac{2}{\tau}e^{-r\tau}\left(\ln S + \text{terms free of } S\right)`$, because the average of $`\ln S_\tau`$ is $`\ln S`$ plus a drift. Differentiate twice in $`S`$: $`\frac{2}{\tau}e^{-r\tau}\,\frac{1}{S^2}`$. Multiply by $`S^2`$: $`\frac{2}{\tau}e^{-r\tau}`$, with no $`S`$ left. The running swap holds $`N\tau/T`$ of this strip, so its dollar gamma is $`2ND/T`$, for Acme $`2 \times 25{,}000{,}000 \times 0.975310 = 48{,}765{,}496`$.
 
-Summing the daily profits over the rest gives $\frac{N D}{T}\sum (r_i^2 - \sigma^2\Delta t) = D N \frac{\tau}{T}(\sigma_{rest}^2 - \sigma^2)$: the swap's floating leg minus its fair strike, in present value. The hedge and the swap are the same claim.
+Summing the daily profits over the rest gives $`\frac{N D}{T}\sum (r_i^2 - \sigma^2\Delta t) = D N \frac{\tau}{T}(\sigma_{rest}^2 - \sigma^2)`$: the swap's floating leg minus its fair strike, in present value. The hedge and the swap are the same claim.
 
 </details>
 
-A day with no move takes 3,968.25 dollars off the final payoff; the break-even daily move is $20\%/\sqrt{252} = 1.2599$ percent.
+A day with no move takes 3,968.25 dollars off the final payoff; the break-even daily move is $`20\%/\sqrt{252} = 1.2599`$ percent.
 
 The alternative route to the rest's fair variance is the direct one: simulate Acme's daily path, average the payoff. The code does it as a third road; the strip and the formula belong to [The variance swap](03-variance-swap-fair-strike.md).
 
@@ -155,17 +167,17 @@ The house swap: strike 0.04, vega notional 100,000 dollars, six months gone at 1
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| variance notional $N$ | $100{,}000 / (2 \times 20)$ | 2,500 dollars per variance point |
-| banked, $(t/T)\,\sigma_R^2$ | $0.5 \times 0.18^2$ | 0.016200 |
-| quoted rest, $(\tau/T)\,K_{rem}$ | $0.5 \times 0.04$ | 0.020000 |
-| expected year | $0.016200 + 0.020000$ | 0.036200 |
-| minus the strike | $0.036200 - 0.04$ | −0.003800 |
-| in variance points | $-0.0038 \times 10{,}000$ | −38 |
-| payoff if the rest comes in at 20 | $2{,}500 \times (-38)$ | −95,000.00 dollars |
-| discount factor $D$ | $e^{-0.05 \times 0.5}$ | 0.975310 |
-| **mark** | $0.975310 \times (-95{,}000)$ | **−92,654.44 dollars** |
-| forward variance, 18% then 20% | $(0.040000 - 0.016200) / 0.5$ | 0.047600 |
-| forward volatility | $\sqrt{0.0476}$ | **21.82%** |
+| variance notional $`N`$ | $`100{,}000 / (2 \times 20)`$ | 2,500 dollars per variance point |
+| banked, $`(t/T)\,\sigma_R^2`$ | $`0.5 \times 0.18^2`$ | 0.016200 |
+| quoted rest, $`(\tau/T)\,K_{rem}`$ | $`0.5 \times 0.04`$ | 0.020000 |
+| expected year | $`0.016200 + 0.020000`$ | 0.036200 |
+| minus the strike | $`0.036200 - 0.04`$ | −0.003800 |
+| in variance points | $`-0.0038 \times 10{,}000`$ | −38 |
+| payoff if the rest comes in at 20 | $`2{,}500 \times (-38)`$ | −95,000.00 dollars |
+| discount factor $`D`$ | $`e^{-0.05 \times 0.5}`$ | 0.975310 |
+| **mark** | $`0.975310 \times (-95{,}000)`$ | **−92,654.44 dollars** |
+| forward variance, 18% then 20% | $`(0.040000 - 0.016200) / 0.5`$ | 0.047600 |
+| forward volatility | $`\sqrt{0.0476}`$ | **21.82%** |
 
 The buyer would pay 92,654.44 dollars today to be released from the swap. The rest would have to realise 21.82 percent, not 20, for the position to finish level.
 
@@ -433,7 +445,7 @@ chart, mark if implied $k     -341.36  -268.21  -185.31   -92.65     9.75   121.
 ALL CHECKS PASS
 ```
 
-The simulated mark lands within one standard error, 427.98 dollars, of the formula. The simulation also carries a tiny drift term in each daily return that the continuous strip leaves out, far below its noise. The strip's dollar gamma differs from $2ND/T$ in the fifth significant figure, the cost of cutting the strip off at finite strikes.
+The simulated mark lands within one standard error, 427.98 dollars, of the formula. The simulation also carries a tiny drift term in each daily return that the continuous strip leaves out, far below its noise. The strip's dollar gamma differs from $`2ND/T`$ in the fifth significant figure, the cost of cutting the strip off at finite strikes.
 
 ### Rust
 
@@ -654,10 +666,10 @@ The two outputs match line for line.
 
 Lean proves the mark formula, the forward variance and the break-even, in any market where prices add and scale.
 
-- Suppose a sure dollar at expiry costs $D$, and a fresh swap on the rest, struck at $K_{rem}$, costs nothing. Then the mark is the formula's $V_t$, with $t/T$ the share of trading days gone.
-- Suppose swaps to $T_1$ and $T_2$ both cost nothing to enter. Then a swap on the variance between them, struck at $\xi$, also costs nothing.
-- Take two expiries with $0 < T_1 < T_2$. Then $\xi \ge 0$ exactly when $w_2 \ge w_1$.
-- Suppose the first stretch realised $\sigma_1$, the rest is quoted at $\xi$, and the strike is $\sigma_2^2$. Then the running swap's mark is zero, as Step 4 says.
+- Suppose a sure dollar at expiry costs $`D`$, and a fresh swap on the rest, struck at $`K_{rem}`$, costs nothing. Then the mark is the formula's $`V_t`$, with $`t/T`$ the share of trading days gone.
+- Suppose swaps to $`T_1`$ and $`T_2`$ both cost nothing to enter. Then a swap on the variance between them, struck at $`\xi`$, also costs nothing.
+- Take two expiries with $`0 < T_1 < T_2`$. Then $`\xi \ge 0`$ exactly when $`w_2 \ge w_1`$.
+- Suppose the first stretch realised $`\sigma_1`$, the rest is quoted at $`\xi`$, and the strike is $`\sigma_2^2`$. Then the running swap's mark is zero, as Step 4 says.
 - The hand numbers check exactly: the 2,500 notional, the −38 points, the 476-point forward variance, and 19 squared against 362.
 
 The discount factor's value, the option strips, the simulated paths, vega and dollar gamma are left to the Python and Rust checks.

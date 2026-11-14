@@ -36,43 +36,51 @@ Orange: the 10-reading moving average. Teal: the fifth-order Butterworth. Gain i
 
 ## The formula
 
-Notation first. The readings are x[n], the outputs y[n], where n counts readings. The sampling rate is $f_s$ = 500 Hz, and $f_s/2$ = 250 Hz is the Nyquist frequency, the fastest wave the readings can show ([Sampling](01-sampling-and-the-nyquist-theorem.md)).
+Notation first. The readings are x[n], the outputs y[n], where n counts readings. The sampling rate is $`f_s`$ = 500 Hz, and $`f_s/2`$ = 250 Hz is the Nyquist frequency, the fastest wave the readings can show ([Sampling](01-sampling-and-the-nyquist-theorem.md)).
 
-A frequency f in hertz becomes an angle per reading, $\omega = 2\pi f / f_s$ radians: 50 Hz is $\omega = 0.2\pi$, a fifth of a half-turn. As on [The z-transform](../02-Linear%20Systems%20and%20Transforms/08-z-transform-and-discrete-time-systems.md), $z^{-1}$ is the one-reading delay and j is the square root of −1 (the rest of the library writes i).
+A frequency f in hertz becomes an angle per reading, $`\omega = 2\pi f / f_s`$ radians: 50 Hz is $`\omega = 0.2\pi`$, a fifth of a half-turn. As on [The z-transform](../02-Linear%20Systems%20and%20Transforms/08-z-transform-and-discrete-time-systems.md), $`z^{-1}`$ is the one-reading delay and j is the square root of −1 (the rest of the library writes i).
 
 **An FIR filter** weights the last M inputs:
 
-$$y[n] = \sum_{k=0}^{M-1} b_k\, x[n-k], \qquad \text{moving average: } b_k = \frac{1}{M}.$$
+```math
+y[n] = \sum_{k=0}^{M-1} b_k\, x[n-k], \qquad \text{moving average: } b_k = \frac{1}{M}.
+```
 
 **An IIR filter** also feeds back its last N outputs:
 
-$$y[n] = \sum_{k=0}^{N} b_k\, x[n-k] \;-\; \sum_{k=1}^{N} a_k\, y[n-k], \qquad H(z) = \frac{b_0 + b_1 z^{-1} + \dots + b_N z^{-N}}{1 + a_1 z^{-1} + \dots + a_N z^{-N}}.$$
+```math
+y[n] = \sum_{k=0}^{N} b_k\, x[n-k] \;-\; \sum_{k=1}^{N} a_k\, y[n-k], \qquad H(z) = \frac{b_0 + b_1 z^{-1} + \dots + b_N z^{-N}}{1 + a_1 z^{-1} + \dots + a_N z^{-N}}.
+```
 
 **Read it aloud:** the output is a weighted sum of recent inputs, minus a weighted sum of recent outputs; the FIR simply has no second sum.
 
-A steady sine at angle ω per reading comes out as the same sine, multiplied in size by $|H(e^{j\omega})|$ and shifted. For the two designs here those gains have closed forms:
+A steady sine at angle ω per reading comes out as the same sine, multiplied in size by $`|H(e^{j\omega})|`$ and shifted. For the two designs here those gains have closed forms:
 
-$$\text{moving average: } |H| = \left|\frac{\sin(M\omega/2)}{M \sin(\omega/2)}\right|, \qquad \text{Butterworth: } |H|^2 = \frac{1}{1 + \bigl(\tan(\omega/2) / \tan(\omega_c/2)\bigr)^{2N}}.$$
+```math
+\text{moving average: } |H| = \left|\frac{\sin(M\omega/2)}{M \sin(\omega/2)}\right|, \qquad \text{Butterworth: } |H|^2 = \frac{1}{1 + \bigl(\tan(\omega/2) / \tan(\omega_c/2)\bigr)^{2N}}.
+```
 
 **Read it aloud:** the average's gain is a ratio of sines that is zero whenever M ω/2 is a whole number of half-turns; the Butterworth keeps half the power at the cutoff and falls away steadily beyond it.
 
-**The spec, and the order it forces.** Keep at least half the power (the −3 dB point) up to 20 Hz. Cut everything from 49.8 to 50.2 Hz by at least A = 40 dB: 0.5 mV of hum then drops below 5 µV. The average needs M = $f_s$/50 = 10. The Butterworth needs the smallest whole N with
+**The spec, and the order it forces.** Keep at least half the power (the −3 dB point) up to 20 Hz. Cut everything from 49.8 to 50.2 Hz by at least A = 40 dB: 0.5 mV of hum then drops below 5 µV. The average needs M = $`f_s`$/50 = 10. The Butterworth needs the smallest whole N with
 
-$$N \;\ge\; \frac{\log_{10}\bigl(10^{A/10} - 1\bigr)}{2 \log_{10}\bigl(\tan(\omega_s/2) / \tan(\omega_c/2)\bigr)} = \frac{3.99996}{0.8168} = 4.897, \qquad N = 5.$$
+```math
+N \;\ge\; \frac{\log_{10}\bigl(10^{A/10} - 1\bigr)}{2 \log_{10}\bigl(\tan(\omega_s/2) / \tan(\omega_c/2)\bigr)} = \frac{3.99996}{0.8168} = 4.897, \qquad N = 5.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x[n]$, $y[n]$, $n$ | reading in and filtered value out, in mV; the reading's count | 500 readings a second | — |
-| $f_s$ | sampling rate | 500 Hz | both filters need more taps or a higher order for the same spec |
-| $f$, $\omega$ | a frequency in Hz; the same as an angle per reading, $2\pi f/f_s$ | 50 Hz is 0.2π rad | — |
-| $M$ | how many readings the average spans (its taps) | 10, one mains cycle | notches move down; the kept band (the passband) sags |
-| $b_k$, $a_k$, $k$ | weight on the input k readings back; weight on the output k readings back | $b_k$ = 0.1 for the average | — |
-| $z^{-1}$, $H$ | one-reading delay; the transfer function, what the filter does to each frequency | $\lvert H\rvert$ = 0.0087 at 50.2 Hz (Butterworth) | — |
-| $N$ | the IIR's order: how many past outputs it feeds back | 5 | sharper cut, more multiplies, more delay |
-| $f_c$, $\omega_c$ | the Butterworth's cutoff, where it keeps half the power | 20 Hz, 0.08π rad | more of the beat kept, less hum cut |
-| $\omega_s$, $A$, $r$ | the edge where the cut band (the stopband) starts; the cut demanded there; $\tan(\omega_s/2)/\tan(\omega_c/2)$, the warped edge ratio | 49.8 Hz; 40 dB; 2.5610 | a higher order (smaller $r$ also raises it) |
-| $\tau_g$, $D$ | group delay: how long a narrow band of frequencies near f is held up; a delay counted in readings | 9 ms (average); 25.62 to 41.45 ms (Butterworth); D = 4.5 readings | — |
-| $s$, $\Omega$, $\Omega_c$, $p_k$, $\theta_k$ | the Laplace variable of the analogue prototype; its angular frequency and cutoff; a pole (a root of H's bottom) and its angle | pole radii in z: 0.9259, 0.8155, 0.7757 | pole nearer the unit circle (radius 1): sharper, longer ringing |
+| $`x[n]`$, $`y[n]`$, $`n`$ | reading in and filtered value out, in mV; the reading's count | 500 readings a second | — |
+| $`f_s`$ | sampling rate | 500 Hz | both filters need more taps or a higher order for the same spec |
+| $`f`$, $`\omega`$ | a frequency in Hz; the same as an angle per reading, $`2\pi f/f_s`$ | 50 Hz is 0.2π rad | — |
+| $`M`$ | how many readings the average spans (its taps) | 10, one mains cycle | notches move down; the kept band (the passband) sags |
+| $`b_k`$, $`a_k`$, $`k`$ | weight on the input k readings back; weight on the output k readings back | $`b_k`$ = 0.1 for the average | — |
+| $`z^{-1}`$, $`H`$ | one-reading delay; the transfer function, what the filter does to each frequency | $`\lvert H\rvert`$ = 0.0087 at 50.2 Hz (Butterworth) | — |
+| $`N`$ | the IIR's order: how many past outputs it feeds back | 5 | sharper cut, more multiplies, more delay |
+| $`f_c`$, $`\omega_c`$ | the Butterworth's cutoff, where it keeps half the power | 20 Hz, 0.08π rad | more of the beat kept, less hum cut |
+| $`\omega_s`$, $`A`$, $`r`$ | the edge where the cut band (the stopband) starts; the cut demanded there; $`\tan(\omega_s/2)/\tan(\omega_c/2)`$, the warped edge ratio | 49.8 Hz; 40 dB; 2.5610 | a higher order (smaller $`r`$ also raises it) |
+| $`\tau_g`$, $`D`$ | group delay: how long a narrow band of frequencies near f is held up; a delay counted in readings | 9 ms (average); 25.62 to 41.45 ms (Butterworth); D = 4.5 readings | — |
+| $`s`$, $`\Omega`$, $`\Omega_c`$, $`p_k`$, $`\theta_k`$ | the Laplace variable of the analogue prototype; its angular frequency and cutoff; a pole (a root of H's bottom) and its angle | pole radii in z: 0.9259, 0.8155, 0.7757 | pole nearer the unit circle (radius 1): sharper, longer ringing |
 
 ### When it holds
 
@@ -88,17 +96,19 @@ $$N \;\ge\; \frac{\log_{10}\bigl(10^{A/10} - 1\bigr)}{2 \log_{10}\bigl(\tan(\ome
 
 ### Step 0: every steady sine comes out as itself, resized and shifted
 
-A filter that is linear and the same every reading cannot invent frequencies. Feed it $x[n] = e^{j\omega n}$, a wave turning ω radians per reading. Each delayed copy is $e^{j\omega(n-k)} = e^{-j\omega k}\, e^{j\omega n}$: the same wave times a fixed complex number. A weighted sum of such copies is still the same wave, times $H(e^{j\omega})$. Its size $|H|$ is the gain and its angle is the phase shift.
+A filter that is linear and the same every reading cannot invent frequencies. Feed it $`x[n] = e^{j\omega n}`$, a wave turning ω radians per reading. Each delayed copy is $`e^{j\omega(n-k)} = e^{-j\omega k}\, e^{j\omega n}`$: the same wave times a fixed complex number. A weighted sum of such copies is still the same wave, times $`H(e^{j\omega})`$. Its size $`|H|`$ is the gain and its angle is the phase shift.
 
-A real sine is two of these waves turning opposite ways, so it gets the same gain. Designing a filter means placing that gain where you want it. Across a whole signal, filtering multiplies each frequency's share by $H$ ([Convolution](../../07-Complex%20analysis/08-Transforms%20in%20Outline/04-convolution-theorem.md)).
+A real sine is two of these waves turning opposite ways, so it gets the same gain. Designing a filter means placing that gain where you want it. Across a whole signal, filtering multiplies each frequency's share by $`H`$ ([Convolution](../../07-Complex%20analysis/08-Transforms%20in%20Outline/04-convolution-theorem.md)).
 
 ### Step 1: the moving average has zeros exactly on the hum
 
-The average's transfer function is a geometric series in $z^{-1}$:
+The average's transfer function is a geometric series in $`z^{-1}`$:
 
-$$H(z) = \frac{1}{M}\sum_{k=0}^{M-1} z^{-k} = \frac{1}{M}\,\frac{1 - z^{-M}}{1 - z^{-1}}.$$
+```math
+H(z) = \frac{1}{M}\sum_{k=0}^{M-1} z^{-k} = \frac{1}{M}\,\frac{1 - z^{-M}}{1 - z^{-1}}.
+```
 
-The top is zero wherever $z^{M} = 1$: at the M points spaced evenly round the unit circle. The bottom cancels the one at z = 1, so the average passes a constant unchanged. The other nine sit at angles $2\pi k/10$, that is at frequencies $k f_s/M$ = 50, 100, 150, 200 and 250 Hz, plus their mirror images. On the circle, $z = e^{j\omega}$, and taking the size of top over bottom gives the ratio of sines in the formula.
+The top is zero wherever $`z^{M} = 1`$: at the M points spaced evenly round the unit circle. The bottom cancels the one at z = 1, so the average passes a constant unchanged. The other nine sit at angles $`2\pi k/10`$, that is at frequencies $`k f_s/M`$ = 50, 100, 150, 200 and 250 Hz, plus their mirror images. On the circle, $`z = e^{j\omega}`$, and taking the size of top over bottom gives the ratio of sines in the formula.
 
 The plain reason: ten readings 2 ms apart cover one 20 ms cycle of the hum, and a whole cycle of a sine averages to zero. The hum's harmonics, 100 Hz and up, fit whole cycles too.
 
@@ -106,11 +116,13 @@ Each notch is narrow: 47.85 dB at 50.2 Hz, only 34.01 dB at 51 Hz.
 
 ### Step 2: symmetric weights delay every frequency equally
 
-The average's weights read the same forwards and backwards: $b_k = b_{M-1-k}$. Pair the first weight with the last, the second with the second-to-last, and so on. Each pair adds $e^{-j\omega k} + e^{-j\omega(M-1-k)}$, which is $e^{-j\omega (M-1)/2}$ times the real number $2\cos\bigl(\omega((M-1)/2 - k)\bigr)$. So
+The average's weights read the same forwards and backwards: $`b_k = b_{M-1-k}`$. Pair the first weight with the last, the second with the second-to-last, and so on. Each pair adds $`e^{-j\omega k} + e^{-j\omega(M-1-k)}`$, which is $`e^{-j\omega (M-1)/2}`$ times the real number $`2\cos\bigl(\omega((M-1)/2 - k)\bigr)`$. So
 
-$$H(e^{j\omega}) = e^{-j\omega (M-1)/2} \times (\text{a real number}).$$
+```math
+H(e^{j\omega}) = e^{-j\omega (M-1)/2} \times (\text{a real number}).
+```
 
-The phase is a straight line in ω. A phase of $-\omega D$ is a pure delay of D readings for every frequency at once. Here D = 4.5 readings, 9 ms. The group delay, $\tau_g = -d(\text{phase})/d\omega$, is the slope of that line; the code measures it at 5 Hz and at 30 Hz and gets 9.000 ms both times. Every part of the beat arrives 9 ms late and in step. The shape is smoothed but not bent.
+The phase is a straight line in ω. A phase of $`-\omega D`$ is a pure delay of D readings for every frequency at once. Here D = 4.5 readings, 9 ms. The group delay, $`\tau_g = -d(\text{phase})/d\omega`$, is the slope of that line; the code measures it at 5 Hz and at 30 Hz and gets 9.000 ms both times. Every part of the beat arrives 9 ms late and in step. The shape is smoothed but not bent.
 
 ### Step 3: feedback buys sharpness, and the Butterworth places the poles
 
@@ -118,38 +130,40 @@ The average's sharpness is fixed by its length. To cut 40 dB at every frequency 
 
 The Butterworth chooses the poles so that the gain is as flat as possible near 0 Hz. [Sampling](01-sampling-and-the-nyquist-theorem.md) already uses its gain and poles; here is why it is the flattest.
 
-Start in continuous time, with the Laplace variable s. Ask for a power gain $1/(1 + (\Omega/\Omega_c)^{2N})$ at angular frequency Ω. Expanded for small Ω it is $1 - (\Omega/\Omega_c)^{2N} + \dots$. Its first 2N − 1 derivatives at zero vanish, and no other N-pole filter does better. That is "maximally flat".
+Start in continuous time, with the Laplace variable s. Ask for a power gain $`1/(1 + (\Omega/\Omega_c)^{2N})`$ at angular frequency Ω. Expanded for small Ω it is $`1 - (\Omega/\Omega_c)^{2N} + \dots`$. Its first 2N − 1 derivatives at zero vanish, and no other N-pole filter does better. That is "maximally flat".
 
-Its poles solve $1 + (s/j\Omega_c)^{2N} = 0$: 2N points evenly spaced on a circle of radius $\Omega_c$. The N in the left half-plane give a stable filter.
+Its poles solve $`1 + (s/j\Omega_c)^{2N} = 0`$: 2N points evenly spaced on a circle of radius $`\Omega_c`$. The N in the left half-plane give a stable filter.
 
 ### Step 4: the bilinear transform carries the design across, bending the frequency axis
 
 To turn the continuous design into a rule run every reading, replace each integrator by the trapezoid rule ([Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md)). In transfer-function terms that substitutes
 
-$$s = \frac{z - 1}{z + 1}, \qquad z = \frac{1 + s}{1 - s},$$
+```math
+s = \frac{z - 1}{z + 1}, \qquad z = \frac{1 + s}{1 - s},
+```
 
-with the time step folded into the frequency scale. This is the Tustin method of [Discretising a design](../02-Linear%20Systems%20and%20Transforms/09-zero-order-hold-and-tustin-discretisation.md). The left half of the s-plane maps to the inside of the unit circle, so a stable prototype gives a stable filter. On the circle, $z = e^{j\omega}$ gives $s = j\tan(\omega/2)$. So the continuous frequency Ω and the digital ω are tied by $\Omega = \tan(\omega/2)$. The whole infinite Ω axis is squeezed into 0 to 250 Hz.
+with the time step folded into the frequency scale. This is the Tustin method of [Discretising a design](../02-Linear%20Systems%20and%20Transforms/09-zero-order-hold-and-tustin-discretisation.md). The left half of the s-plane maps to the inside of the unit circle, so a stable prototype gives a stable filter. On the circle, $`z = e^{j\omega}`$ gives $`s = j\tan(\omega/2)`$. So the continuous frequency Ω and the digital ω are tied by $`\Omega = \tan(\omega/2)`$. The whole infinite Ω axis is squeezed into 0 to 250 Hz.
 
-That squeeze is why the formulas carry tangents. Design the prototype with cutoff $\tan(\omega_c/2)$, a step called prewarping. Then the digital filter keeps half the power at exactly 20 Hz, and its gain is the Butterworth formula with tangents.
+That squeeze is why the formulas carry tangents. Design the prototype with cutoff $`\tan(\omega_c/2)`$, a step called prewarping. Then the digital filter keeps half the power at exactly 20 Hz, and its gain is the Butterworth formula with tangents.
 
-The map also sends s = ∞ to z = −1. So all five zeros land at z = −1, and the gain at 250 Hz is exactly zero. That is why the top of H(z) is $(1 + z^{-1})^5$, the weights 1, 5, 10, 10, 5, 1 times a scale that makes the gain at 0 Hz exactly 1.
+The map also sends s = ∞ to z = −1. So all five zeros land at z = −1, and the gain at 250 Hz is exactly zero. That is why the top of H(z) is $`(1 + z^{-1})^5`$, the weights 1, 5, 10, 10, 5, 1 times a scale that makes the gain at 0 Hz exactly 1.
 
 ### Step 5: the order comes from one inequality
 
-Asking for A dB at the stopband edge, $1 + r^{2N} \ge 10^{A/10}$, gives the order rule of [Sampling](01-sampling-and-the-nyquist-theorem.md). The one change is Step 4's tangent warp: $r = \tan(\omega_s/2)/\tan(\omega_c/2)$, 2.5610 here, replaces the plain frequency ratio. The gain only ever falls, so meeting the spec at 49.8 Hz meets it above too. The code also searches orders 1, 2, 3, … and checks the spec directly; both say 5.
+Asking for A dB at the stopband edge, $`1 + r^{2N} \ge 10^{A/10}`$, gives the order rule of [Sampling](01-sampling-and-the-nyquist-theorem.md). The one change is Step 4's tangent warp: $`r = \tan(\omega_s/2)/\tan(\omega_c/2)`$, 2.5610 here, replaces the plain frequency ratio. The gain only ever falls, so meeting the spec at 49.8 Hz meets it above too. The code also searches orders 1, 2, 3, … and checks the spec directly; both say 5.
 
 ### Step 6: feedback costs equal delay
 
 An IIR filter's impulse response runs on forever. Exactly linear phase needs it to read the same backwards as forwards about some middle reading. A response that starts at reading 0 and never ends has no middle, so a causal IIR filter cannot have exactly linear phase.
 
-The Butterworth's delay changes with frequency. At 0 Hz it follows from the poles: each pole $p_k = \Omega_c e^{j\theta_k}$ contributes $-\cos\theta_k / \Omega_c$, and the five add up to $1/(\sin(\pi/2N)\,\Omega_c)$. With $\Omega_c = 2 f_s \tan(\omega_c/2)$ in rad/s, that is 25.62 ms. The code measures the phase slope of the actual filter and gets the same 25.62 ms.
+The Butterworth's delay changes with frequency. At 0 Hz it follows from the poles: each pole $`p_k = \Omega_c e^{j\theta_k}`$ contributes $`-\cos\theta_k / \Omega_c`$, and the five add up to $`1/(\sin(\pi/2N)\,\Omega_c)`$. With $`\Omega_c = 2 f_s \tan(\omega_c/2)`$ in rad/s, that is 25.62 ms. The code measures the phase slope of the actual filter and gets the same 25.62 ms.
 
 Near the cutoff the delay peaks at 41.45 ms, at 18.5 Hz. The slow parts of a beat arrive about 26 ms late, its sharpest parts up to 41.45 ms late. That spread is what bends the shape.
 
 <details>
 <summary>The delay at 0 Hz, line by line</summary>
 
-The prototype is $H(s) = \prod_k \frac{-p_k}{s - p_k}$. For small Ω, the factor's phase at $s = j\Omega$ is $-\arg(1 - j\Omega/p_k) \approx \Omega\,\mathrm{Re}(1/p_k)$, so its delay is $-\mathrm{Re}(1/p_k) = -\cos\theta_k/\Omega_c$. The angles are $\theta_k = \pi/2 + (2k+1)\pi/(2N)$, so $-\cos\theta_k = \sin\bigl((2k+1)\pi/(2N)\bigr)$. The sum of those sines for k = 0 to N − 1 is $1/\sin(\pi/(2N))$, which is 3.236 for N = 5. In rad/s the bilinear map reads $\Omega = 2 f_s \tan(\omega/2)$, which near 0 Hz is $f_s\,\omega = 2\pi f$: the two frequency scales agree there, so the digital delay at 0 Hz equals the prototype's.
+The prototype is $`H(s) = \prod_k \frac{-p_k}{s - p_k}`$. For small Ω, the factor's phase at $`s = j\Omega`$ is $`-\arg(1 - j\Omega/p_k) \approx \Omega\,\mathrm{Re}(1/p_k)`$, so its delay is $`-\mathrm{Re}(1/p_k) = -\cos\theta_k/\Omega_c`$. The angles are $`\theta_k = \pi/2 + (2k+1)\pi/(2N)`$, so $`-\cos\theta_k = \sin\bigl((2k+1)\pi/(2N)\bigr)`$. The sum of those sines for k = 0 to N − 1 is $`1/\sin(\pi/(2N))`$, which is 3.236 for N = 5. In rad/s the bilinear map reads $`\Omega = 2 f_s \tan(\omega/2)`$, which near 0 Hz is $`f_s\,\omega = 2\pi f`$: the two frequency scales agree there, so the digital delay at 0 Hz equals the prototype's.
 
 </details>
 
@@ -157,7 +171,7 @@ The prototype is $H(s) = \prod_k \frac{-p_k}{s - p_k}$. For small Ω, the factor
 
 ## Worked numbers, by hand
 
-The spec at $f_s$ = 500 Hz: half power kept to 20 Hz, 40 dB cut from 49.8 to 50.2 Hz.
+The spec at $`f_s`$ = 500 Hz: half power kept to 20 Hz, 40 dB cut from 49.8 to 50.2 Hz.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -660,14 +674,14 @@ Butterworth, order 5               █████▌ 11
 Hamming-window FIR, 53 weights     ██████████████████████████▌ 53
 ```
 
-The average can run as a running sum, $y[n] = y[n-1] + (x[n] - x[n-10])/10$. That is feedback, yet the response still ends after 10 readings: the pole at z = 1 is cancelled by a zero. The Hamming FIR matches the Butterworth's cut everywhere above 49.8 Hz with equal delay for every frequency. It pays five times the multiplies and 52 ms of delay.
+The average can run as a running sum, $`y[n] = y[n-1] + (x[n] - x[n-10])/10`$. That is feedback, yet the response still ends after 10 readings: the pole at z = 1 is cancelled by a zero. The Hamming FIR matches the Butterworth's cut everywhere above 49.8 Hz with equal delay for every frequency. It pays five times the multiplies and 52 ms of delay.
 
 ### Lean
 
 Lean proves Step 2's equal delay and the average's gain and notches for every M, and checks a few small numbers.
 
-- Take an FIR whose real weights read the same forwards and backwards, $b_k = b_{M-1-k}$. Then $H(e^{j\omega})$ is $e^{-j\omega (M-1)/2}$ times a real number: a pure delay of $(M-1)/2$ readings.
-- Take the M-reading average and any $\omega$ with $\sin(\omega/2) \ne 0$. Then its gain is $|\sin(M\omega/2) / (M \sin(\omega/2))|$, the formula above.
+- Take an FIR whose real weights read the same forwards and backwards, $`b_k = b_{M-1-k}`$. Then $`H(e^{j\omega})`$ is $`e^{-j\omega (M-1)/2}`$ times a real number: a pure delay of $`(M-1)/2`$ readings.
+- Take the M-reading average and any $`\omega`$ with $`\sin(\omega/2) \ne 0`$. Then its gain is $`|\sin(M\omega/2) / (M \sin(\omega/2))|`$, the formula above.
 - Take a sine that fits a whole number of cycles into M readings, but not a whole number into one reading. Then the average of the last M readings is zero at every reading, whatever its phase.
 - 500 readings a second over a 50 Hz hum is exactly 10 readings, and 500/60 is not whole.
 - The Butterworth's top weights are 1, 5, 10, 10, 5, 1. The notches sit at 50, 100, 150, 200 and 250 Hz.
@@ -875,7 +889,7 @@ example : (List.range' 1 5).map (fun k => k * 500 / 10) = [50, 100, 150, 200, 25
 - **Heart monitors and wearables.** A rate monitor wants the beat's timing, not its fine shape, so a strong low-pass is acceptable. Many front ends sample at a whole multiple of the mains frequency so that a short average notches the hum for almost nothing.
 - **Diagnostic ECG machines.** These must keep content up to 150 Hz, so a 20 Hz low-pass is ruled out. They use a narrow notch filter at 50 or 60 Hz, or estimate the hum and subtract it. Offline software runs IIR filters forward and backward to remove their delay.
 - **Audio.** A guitar recording at 44.1 kHz is equalised by chains of second-order IIR sections, a few multiplies each. Mastering tools that must not smear transients use long linear-phase FIRs instead, and accept the delay.
-- **Finance and dashboards.** A 10-day moving average of a price is this card's FIR. An exponentially weighted average is the simplest IIR, for example $y[n] = 0.9\, y[n-1] + 0.1\, x[n]$: one fed-back output, and every past price still counts a little.
+- **Finance and dashboards.** A 10-day moving average of a price is this card's FIR. An exponentially weighted average is the simplest IIR, for example $`y[n] = 0.9\, y[n-1] + 0.1\, x[n]`$: one fed-back output, and every past price still counts a little.
 
 > **Say it back**
 > A digital filter makes each output from recent numbers. An FIR uses only recent inputs; an IIR also feeds back recent outputs. Averaging exactly one hum cycle, 10 readings at 500 Hz, cancels 50 Hz completely and delays every frequency by the same 9 ms, but leaks noise between its notches. A fifth-order Butterworth meets the same spec with 11 multiplies and cuts everything above 50 Hz by at least 41 dB. Its feedback makes the delay change with frequency, from 25.62 to 41.45 ms, and makes it ring after a sharp spike.
@@ -884,7 +898,7 @@ example : (List.range' 1 5).map (fun k => k * 500 / 10) = [50, 100, 150, 200, 25
 
 ## What this builds on
 
-- [The z-transform](../02-Linear%20Systems%20and%20Transforms/08-z-transform-and-discrete-time-systems.md): the one-reading delay $z^{-1}$, transfer functions as ratios of polynomials, and why poles must sit inside the unit circle.
+- [The z-transform](../02-Linear%20Systems%20and%20Transforms/08-z-transform-and-discrete-time-systems.md): the one-reading delay $`z^{-1}`$, transfer functions as ratios of polynomials, and why poles must sit inside the unit circle.
 - [Windows](03-windows-and-spectral-leakage.md): the Hamming window, used here to size the linear-phase FIR that matches the Butterworth.
 - [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md): the trapezoid rule, which becomes the bilinear transform when it replaces an integrator.
 

@@ -44,48 +44,54 @@ Orange: the spread, a ramp from $99 to $101. Green: the digital, a step just abo
 
 ## The formula
 
-Notation first. $C(K)$ is the price today of a call struck at $K$. A tick after a function, as in $\sigma'(K)$, means its rate of change as $K$ moves: the derivative. $\partial C / \partial K$ is the same rate for $C$ with every other input held still.
+Notation first. $`C(K)`$ is the price today of a call struck at $`K`$. A tick after a function, as in $`\sigma'(K)`$, means its rate of change as $`K`$ moves: the derivative. $`\partial C / \partial K`$ is the same rate for $`C`$ with every other input held still.
 
-$$\text{digital}(K) \;=\; \lim_{h \to 0} \frac{C(K-h) - C(K+h)}{2h} \;=\; -\frac{dC}{dK}$$
+```math
+\text{digital}(K) \;=\; \lim_{h \to 0} \frac{C(K-h) - C(K+h)}{2h} \;=\; -\frac{dC}{dK}
+```
 
 **Read it aloud:** the digital is the price of the tight spread divided by its width, which is minus the slope of the call price against the strike.
 
-With flat volatility this slope is the familiar Black-Scholes digital. When the market prices each strike at its own volatility $\sigma(K)$, the call price is $C(K) = C_{\text{BS}}(K, \sigma(K))$, Black-Scholes fed the strike's own volatility, and the slope gains a term:
+With flat volatility this slope is the familiar Black-Scholes digital. When the market prices each strike at its own volatility $`\sigma(K)`$, the call price is $`C(K) = C_{\text{BS}}(K, \sigma(K))`$, Black-Scholes fed the strike's own volatility, and the slope gains a term:
 
-$$\text{digital}(K) \;=\; e^{-rT}N(d_2) \;-\; \mathcal{V}\,\sigma'(K)$$
+```math
+\text{digital}(K) \;=\; e^{-rT}N(d_2) \;-\; \mathcal{V}\,\sigma'(K)
+```
 
 **Read it aloud:** the market digital is the textbook digital at the strike's own volatility, minus vega times the slope of the smile.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C(K)$ | price today of a call struck at $K$ | 9.731084 at 99, 8.741874 at 101 | — |
-| $K$ | the strike, the level the digital is a bet on | 100 | falls: harder to finish above |
-| $h$ | half the gap between the spread's two strikes | 1 | the spread drifts from the digital |
-| $S$, $S_T$ | Acme's price today, and at expiry | 100, unknown | rises: more likely to finish above |
-| $r$, $q$ | bank rate and dividend yield, continuously compounded | 5%, 2% | $r$: rises here, the higher forward outweighing the heavier discount; $q$: falls, the share drifts lower |
-| $T$ | time to expiry, in years | 1 | skew term grows roughly like $\sqrt{T}$ |
-| $\sigma$, $\sigma(K)$ | volatility; the market's volatility at strike $K$ | 0.20; 0.2004 at 99, 0.1996 at 101 | at the money, lowers the digital a little |
-| $\sigma'(K)$ | slope of the smile: volatility change per $1 of strike | −0.0004, which is −0.04 points | steeper negative slope, dearer digital call |
-| $N$, $\varphi$ | bell-curve area to the left of a point; bell-curve height | $N(0.05)$ = 0.519939 | — |
-| $d_1$, $d_2$ | distance to the strike in units of $\sigma\sqrt{T}$, as on the call card | 0.25, 0.05 | — |
-| $e^{-rT}$ | discount factor $D(T)$: today's value of one dollar due at $T$ | 0.951229 | — |
-| $\mathcal{V}$ | vega of the call at $K$: price change per 1.00 of volatility | 37.901158 | bigger skew term |
+| $`C(K)`$ | price today of a call struck at $`K`$ | 9.731084 at 99, 8.741874 at 101 | — |
+| $`K`$ | the strike, the level the digital is a bet on | 100 | falls: harder to finish above |
+| $`h`$ | half the gap between the spread's two strikes | 1 | the spread drifts from the digital |
+| $`S`$, $`S_T`$ | Acme's price today, and at expiry | 100, unknown | rises: more likely to finish above |
+| $`r`$, $`q`$ | bank rate and dividend yield, continuously compounded | 5%, 2% | $`r`$: rises here, the higher forward outweighing the heavier discount; $`q`$: falls, the share drifts lower |
+| $`T`$ | time to expiry, in years | 1 | skew term grows roughly like $`\sqrt{T}`$ |
+| $`\sigma`$, $`\sigma(K)`$ | volatility; the market's volatility at strike $`K`$ | 0.20; 0.2004 at 99, 0.1996 at 101 | at the money, lowers the digital a little |
+| $`\sigma'(K)`$ | slope of the smile: volatility change per $1 of strike | −0.0004, which is −0.04 points | steeper negative slope, dearer digital call |
+| $`N`$, $`\varphi`$ | bell-curve area to the left of a point; bell-curve height | $`N(0.05)`$ = 0.519939 | — |
+| $`d_1`$, $`d_2`$ | distance to the strike in units of $`\sigma\sqrt{T}`$, as on the call card | 0.25, 0.05 | — |
+| $`e^{-rT}`$ | discount factor $`D(T)`$: today's value of one dollar due at $`T`$ | 0.951229 | — |
+| $`\mathcal{V}`$ | vega of the call at $`K`$: price change per 1.00 of volatility | 37.901158 | bigger skew term |
 
 The helpers are the call card's ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)):
 
-$$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \mathcal{V} = S e^{-qT}\varphi(d_1)\sqrt{T}$$
+```math
+d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \mathcal{V} = S e^{-qT}\varphi(d_1)\sqrt{T}
+```
 
-In words: $d_2$ is how many whole-life swings separate Acme from the strike; $\mathcal{V}$ is how many dollars the call gains per 1.00 of volatility ([Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md)).
+In words: $`d_2`$ is how many whole-life swings separate Acme from the strike; $`\mathcal{V}`$ is how many dollars the call gains per 1.00 of volatility ([Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md)).
 
-A **volatility point** is one percentage point of volatility, 0.01. A skew of −0.04 points per dollar is $\sigma'(K) = -0.0004$. Desks quote the points; the formula takes the decimal.
+A **volatility point** is one percentage point of volatility, 0.01. A skew of −0.04 points per dollar is $`\sigma'(K) = -0.0004`$. Desks quote the points; the formula takes the decimal.
 
 ### When it holds
 
 - **European exercise.** The calls must be exercisable only at expiry. With early exercise the strike slope carries an early-exercise premium and is no longer the digital.
 - **No lump of probability at the strike.** If Acme could finish at exactly $100 with a positive chance, the ramp and the step would disagree there forever and the limit would miss by that chance.
-- **A smooth smile at the strike.** The skew term needs $\sigma'(K)$ to exist. A kink in the smile at $K$ puts a kink in the call curve, which is a lump of probability at $K$; the two one-sided spreads then disagree.
-- **A smile free of arbitrage.** The formula prices any slope, but a digital must lie between 0 and $e^{-rT}$. A smile steep enough to push it outside is quoting prices that cannot all be traded.
-- **Two tradeable strikes close to $K$.** The limit is exact; the real hedge uses a real width. At $h = 1$ the centered spread misses the house digital by 0.000023668.
+- **A smooth smile at the strike.** The skew term needs $`\sigma'(K)`$ to exist. A kink in the smile at $`K`$ puts a kink in the call curve, which is a lump of probability at $`K`$; the two one-sided spreads then disagree.
+- **A smile free of arbitrage.** The formula prices any slope, but a digital must lie between 0 and $`e^{-rT}`$. A smile steep enough to push it outside is quoting prices that cannot all be traded.
+- **Two tradeable strikes close to $`K`$.** The limit is exact; the real hedge uses a real width. At $`h = 1`$ the centered spread misses the house digital by 0.000023668.
 - **The right units.** Vega per 1.00 of volatility with the slope per 1.00 of volatility. Mix a per-point slope with a per-1.00 vega and the term is 100 times too big: the digital comes out at 2.010627, for a contract never worth more than 0.951229.
 
 ---
@@ -94,54 +100,58 @@ A **volatility point** is one percentage point of volatility, 0.01. A skew of �
 
 ### Step 0: a ramp squeezed into a step
 
-The whole card rests on one picture. The spread pays a ramp. The digital pays a step. As the ramp's two strikes close in on $K$, the ramp and the step agree at every price except $K$ itself. Anything that pays the same everywhere must cost the same today, or someone buys the cheap one, sells the dear one and keeps the difference. So the digital's price is the limit of the spread's price.
+The whole card rests on one picture. The spread pays a ramp. The digital pays a step. As the ramp's two strikes close in on $`K`$, the ramp and the step agree at every price except $`K`$ itself. Anything that pays the same everywhere must cost the same today, or someone buys the cheap one, sells the dear one and keeps the difference. So the digital's price is the limit of the spread's price.
 
 ### Step 1: the ramp is two calls
 
-A call struck at $K - h$ pays $\max(S_T - K + h, 0)$ at expiry. A call struck at $K + h$ pays $\max(S_T - K - h, 0)$. Subtract and divide by $2h$:
+A call struck at $`K - h`$ pays $`\max(S_T - K + h, 0)`$ at expiry. A call struck at $`K + h`$ pays $`\max(S_T - K - h, 0)`$. Subtract and divide by $`2h`$:
 
-- below $K - h$ both pay nothing: 0;
+- below $`K - h`$ both pay nothing: 0;
 - between the strikes only the lower call pays: a straight climb from 0 to 1;
-- above $K + h$ both pay, and the difference is always $2h$: exactly 1.
+- above $`K + h`$ both pay, and the difference is always $`2h`$: exactly 1.
 
-That is the ramp. Its price today is the difference of the two call prices divided by $2h$, because a portfolio's price is the sum of its parts' prices.
+That is the ramp. Its price today is the difference of the two call prices divided by $`2h`$, because a portfolio's price is the sum of its parts' prices.
 
 ### Step 2: the limit is minus the strike slope, with no model
 
-Divide a difference of call prices by the gap in strikes and let the gap shrink: that is the definition of the derivative of $C$ in $K$, with a minus sign because the lower strike comes first. So the digital is $-dC/dK$.
+Divide a difference of call prices by the gap in strikes and let the gap shrink: that is the definition of the derivative of $`C`$ in $`K`$, with a minus sign because the lower strike comes first. So the digital is $`-dC/dK`$.
 
-A second way to see it uses the pricing average. A call's price is the discounted average of $\max(S_T - K, 0)$ over the market's pricing distribution for $S_T$. Raise $K$ by a cent: every outcome above $K$ pays a cent less, and outcomes below $K$ were paying nothing anyway. So the call falls by one discounted cent times the chance of finishing above $K$. That chance, discounted, is the digital. Nothing about Black-Scholes entered.
+A second way to see it uses the pricing average. A call's price is the discounted average of $`\max(S_T - K, 0)`$ over the market's pricing distribution for $`S_T`$. Raise $`K`$ by a cent: every outcome above $`K`$ pays a cent less, and outcomes below $`K`$ were paying nothing anyway. So the call falls by one discounted cent times the chance of finishing above $`K`$. That chance, discounted, is the digital. Nothing about Black-Scholes entered.
 
 <details>
 <summary>Detailed proof</summary>
 
-Write $p(x)$ for the pricing density of $S_T$ (the curve whose area over a range is that range's pricing chance). Then $C(K) = e^{-rT}\int_K^\infty (x - K)\,p(x)\,dx$. Differentiate in $K$. The lower limit contributes $(K - K)\,p(K) = 0$. Inside, $\partial(x-K)/\partial K = -1$. So
-$$-\frac{dC}{dK} = e^{-rT}\int_K^\infty p(x)\,dx = e^{-rT}\,\text{(pricing chance that } S_T > K).$$
-The right side is the digital. In Black-Scholes that chance is $N(d_2)$ (the call card's Step 2). Checked directly: differentiate $C = Se^{-qT}N(d_1) - Ke^{-rT}N(d_2)$ in $K$. Both $d_1$ and $d_2$ have slope $-1/(K\sigma\sqrt{T})$ in $K$, and the identity $Se^{-qT}\varphi(d_1) = Ke^{-rT}\varphi(d_2)$ (the vega card proves it) makes the two chain-rule terms cancel. What is left is $\partial C/\partial K = -e^{-rT}N(d_2)$.
+Write $`p(x)`$ for the pricing density of $`S_T`$ (the curve whose area over a range is that range's pricing chance). Then $`C(K) = e^{-rT}\int_K^\infty (x - K)\,p(x)\,dx`$. Differentiate in $`K`$. The lower limit contributes $`(K - K)\,p(K) = 0`$. Inside, $`\partial(x-K)/\partial K = -1`$. So
 
-For the finite spread: by Taylor's theorem with $f = C$, $f(K-h) - f(K+h) = -2h f'(K) - \tfrac13 h^3 f'''(K) + \ldots$. Divide by $2h$: the centered spread misses by $-\tfrac16 h^2 f'''(K)$, so halving $h$ quarters the miss. The one-sided spread $(f(K) - f(K+h))/h$ misses by $-\tfrac12 h f''(K)$, so halving $h$ only halves it.
+$`\displaystyle -\frac{dC}{dK} = e^{-rT}\int_K^\infty p(x)\,dx = e^{-rT}\,\text{(pricing chance that } S_T > K).`$
+
+The right side is the digital. In Black-Scholes that chance is $`N(d_2)`$ (the call card's Step 2). Checked directly: differentiate $`C = Se^{-qT}N(d_1) - Ke^{-rT}N(d_2)`$ in $`K`$. Both $`d_1`$ and $`d_2`$ have slope $`-1/(K\sigma\sqrt{T})`$ in $`K`$, and the identity $`Se^{-qT}\varphi(d_1) = Ke^{-rT}\varphi(d_2)`$ (the vega card proves it) makes the two chain-rule terms cancel. What is left is $`\partial C/\partial K = -e^{-rT}N(d_2)`$.
+
+For the finite spread: by Taylor's theorem with $`f = C`$, $`f(K-h) - f(K+h) = -2h f'(K) - \tfrac13 h^3 f'''(K) + \ldots`$. Divide by $`2h`$: the centered spread misses by $`-\tfrac16 h^2 f'''(K)`$, so halving $`h`$ quarters the miss. The one-sided spread $`(f(K) - f(K+h))/h`$ misses by $`-\tfrac12 h f''(K)`$, so halving $`h`$ only halves it.
 
 </details>
 
 ### Step 3: the market's calls carry their own volatilities
 
-The market does not quote one volatility. It quotes a price at each strike, and the volatility that reproduces that price through Black-Scholes is the **implied volatility** at that strike ([The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)). Drawn against strike, those volatilities form the smile. On this card the smile is a straight line through 0.20 at $100$, falling 0.0004 per dollar: $\sigma(K) = 0.20 - 0.0004\,(K - 100)$.
+The market does not quote one volatility. It quotes a price at each strike, and the volatility that reproduces that price through Black-Scholes is the **implied volatility** at that strike ([The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)). Drawn against strike, those volatilities form the smile. On this card the smile is a straight line through 0.20 at $`100`$, falling 0.0004 per dollar: $`\sigma(K) = 0.20 - 0.0004\,(K - 100)`$.
 
-So the market call is Black-Scholes with the strike's own volatility: $C(K) = C_{\text{BS}}(K, \sigma(K))$. Step 2 still holds, because it never used a model: the market digital is minus the slope of this market call curve.
+So the market call is Black-Scholes with the strike's own volatility: $`C(K) = C_{\text{BS}}(K, \sigma(K))`$. Step 2 still holds, because it never used a model: the market digital is minus the slope of this market call curve.
 
 ### Step 4: the chain rule splits the slope in two
 
-Move $K$ up by a small amount. The market call changes for two reasons at once. The strike rose, so the call is worth less at the same volatility: that part is $\partial C_{\text{BS}}/\partial K$, and Step 2 showed it is $-e^{-rT}N(d_2)$. And the volatility changed, by $\sigma'(K)$ per dollar, which moves the call by vega per unit of volatility: that part is $\mathcal{V}\,\sigma'(K)$. The chain rule adds them:
+Move $`K`$ up by a small amount. The market call changes for two reasons at once. The strike rose, so the call is worth less at the same volatility: that part is $`\partial C_{\text{BS}}/\partial K`$, and Step 2 showed it is $`-e^{-rT}N(d_2)`$. And the volatility changed, by $`\sigma'(K)`$ per dollar, which moves the call by vega per unit of volatility: that part is $`\mathcal{V}\,\sigma'(K)`$. The chain rule adds them:
 
-$$\frac{dC}{dK} = \frac{\partial C_{\text{BS}}}{\partial K} + \frac{\partial C_{\text{BS}}}{\partial \sigma}\,\sigma'(K) = -e^{-rT}N(d_2) + \mathcal{V}\,\sigma'(K).$$
+```math
+\frac{dC}{dK} = \frac{\partial C_{\text{BS}}}{\partial K} + \frac{\partial C_{\text{BS}}}{\partial \sigma}\,\sigma'(K) = -e^{-rT}N(d_2) + \mathcal{V}\,\sigma'(K).
+```
 
-Change the sign and the market digital appears: $e^{-rT}N(d_2) - \mathcal{V}\,\sigma'(K)$.
+Change the sign and the market digital appears: $`e^{-rT}N(d_2) - \mathcal{V}\,\sigma'(K)`$.
 
 ### Step 5: which way it moves
 
-In equity markets low strikes trade at higher volatility than high strikes, so $\sigma'(K)$ is negative and the skew term is positive: the digital call is worth more than the textbook says. In spread terms, the call bought at $99$ is priced at 0.2004 and the call sold at $101$ at 0.1996. The buyer pays a little extra volatility on the long leg and receives a little less on the short leg, so the spread costs more.
+In equity markets low strikes trade at higher volatility than high strikes, so $`\sigma'(K)`$ is negative and the skew term is positive: the digital call is worth more than the textbook says. In spread terms, the call bought at $`99`$ is priced at 0.2004 and the call sold at $`101`$ at 0.1996. The buyer pays a little extra volatility on the long leg and receives a little less on the short leg, so the spread costs more.
 
-The digital put pays one dollar if Acme finishes below the strike. A put spread builds it the same way, and a call digital plus a put digital at the same strike pays $1 for sure, worth $e^{-rT}$ with or without a smile. So the put digital loses exactly what the call digital gains.
+The digital put pays one dollar if Acme finishes below the strike. A put spread builds it the same way, and a call digital plus a put digital at the same strike pays $1 for sure, worth $`e^{-rT}`$ with or without a smile. So the put digital loses exactly what the call digital gains.
 
 The same limit, taken one step further, is the next card's subject: the spread of two spreads, a butterfly, is minus the slope of the digital, and that slope is the pricing density itself.
 
@@ -149,17 +159,17 @@ The same limit, taken one step further, is the next card's subject: the spread o
 
 ## Worked numbers, by hand
 
-House market: $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 0.20$, $T = 1$, and a smile slope of −0.0004 per dollar for the second half.
+House market: $`S = K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 0.20`$, $`T = 1`$, and a smile slope of −0.0004 per dollar for the second half.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $d_1$, $d_2$ | as on the call card | 0.25, 0.05 |
-| $N(d_2)$ | bell-curve area left of 0.05 | 0.519939 |
-| discount | $e^{-0.05}$ | 0.951229 |
+| $`d_1`$, $`d_2`$ | as on the call card | 0.25, 0.05 |
+| $`N(d_2)`$ | bell-curve area left of 0.05 | 0.519939 |
+| discount | $`e^{-0.05}`$ | 0.951229 |
 | flat digital | 0.951229 × 0.519939 | **0.494581** |
 | 99 call, 101 call | Black-Scholes at 0.20 | 9.731084, 8.741874 |
 | the 99/101 spread | (9.731084 − 8.741874) / 2 | 0.494605 |
-| vega at 100 | $100\,e^{-0.02}\,\varphi(0.25)$ | 37.901158 |
+| vega at 100 | $`100\,e^{-0.02}\,\varphi(0.25)`$ | 37.901158 |
 | skew term | −37.901158 × (−0.0004) | 0.015160 |
 | market digital | 0.494581 + 0.015160, rounded at the sixth place | **0.509742** |
 | market 99/101 spread | calls at 0.2004 and 0.1996 | 0.509747 |
@@ -187,18 +197,18 @@ Correct market digital: 0.509742.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Strike's volatility into $e^{-rT}N(d_2)$, no skew term | 0.494581 | Priced a Black-Scholes digital, not the market's; 0.015160 short |
-| $N(d_1)$ in place of $N(d_2)$ | 0.569507 | That is the chance counted in shares, which belongs to the asset-or-nothing digital |
+| Strike's volatility into $`e^{-rT}N(d_2)`$, no skew term | 0.494581 | Priced a Black-Scholes digital, not the market's; 0.015160 short |
+| $`N(d_1)`$ in place of $`N(d_2)`$ | 0.569507 | That is the chance counted in shares, which belongs to the asset-or-nothing digital |
 | Slope quoted in points, −0.04, used as a decimal | 2.010627 | 100 times too big; more than the 0.951229 a sure $1 costs |
 | Sign of the skew term flipped | 0.479421 | Added vega times a negative slope instead of subtracting it |
-| $C(99) - C(101)$, not divided by the width | 1.019493 | That spread pays $2 at the top, not $1 |
+| $`C(99) - C(101)`$, not divided by the width | 1.019493 | That spread pays $2 at the top, not $1 |
 | One-sided 100/101 spread taken as the digital (flat market) | 0.485131 | A ramp starting at the strike; misses by half the width times the discounted density |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code prices the flat digital four independent ways: the formula with a normal CDF built from its own series, the tight call spread, Simpson's rule over the bell curve above $-d_2$, and a 200,000-path simulation driven by a hand-written random-number generator. It then prices the skewed digital two ways, by the chain-rule formula and by call spreads on the smile, and checks that the call and put digitals still sum to one discounted dollar. It reproduces every wrong answer above, the sandwich, the Greeks, both charts and the width table.
+The code prices the flat digital four independent ways: the formula with a normal CDF built from its own series, the tight call spread, Simpson's rule over the bell curve above $`-d_2`$, and a 200,000-path simulation driven by a hand-written random-number generator. It then prices the skewed digital two ways, by the chain-rule formula and by call spreads on the smile, and checks that the call and put digitals still sum to one discounted dollar. It reproduces every wrong answer above, the sandwich, the Greeks, both charts and the width table.
 
 ### Python
 
@@ -549,13 +559,13 @@ The width table shows the two kinds of spread. Centered, the miss goes 0.0000944
 
 Lean proves the card's three main claims for every market that meets the conditions below, and the worked numbers that are exact fractions.
 
-- Suppose each call's price is its discounted average payoff, $S_T$ has a finite average, and no lump of probability sits at the strike. Then, as $h$ shrinks, $(C(K-h) - C(K+h))/(2h)$ tends to $e^{-rT}$ times the pricing chance that $S_T > K$. That number is also minus the slope of $C$ at $K$.
-- Suppose the market call is Black-Scholes at each strike's own volatility, the smile is smooth at $K$, and $S$, $K$, $T$, $\sigma(K)$ are positive. Then the market call has slope $-e^{-rT}N(d_2) + \mathcal{V}\,\sigma'(K)$ at $K$. So the market digital is $e^{-rT}N(d_2) - \mathcal{V}\,\sigma'(K)$, and the tight centered spread tends to it. Here $d_2$ and $\mathcal{V}$ use the strike's own volatility $\sigma(K)$.
-- Take $h > 0$. Then the ramp pays 0 at or below $K - h$, exactly 1 at or above $K + h$, and between 0 and 1 in between.
-- Take any finishing price other than the strike. Then, as $h$ shrinks to 0, the ramp's payoff tends to the digital's step payoff.
-- The worked numbers hold exactly: $d_1 = 0.25$, $d_2 = 0.05$, the ramp's chart values, the 99/101 spread arithmetic and the sandwich order. So do the smile volatilities 0.2004 and 0.1996, and −0.04 points as −0.0004.
+- Suppose each call's price is its discounted average payoff, $`S_T`$ has a finite average, and no lump of probability sits at the strike. Then, as $`h`$ shrinks, $`(C(K-h) - C(K+h))/(2h)`$ tends to $`e^{-rT}`$ times the pricing chance that $`S_T > K`$. That number is also minus the slope of $`C`$ at $`K`$.
+- Suppose the market call is Black-Scholes at each strike's own volatility, the smile is smooth at $`K`$, and $`S`$, $`K`$, $`T`$, $`\sigma(K)`$ are positive. Then the market call has slope $`-e^{-rT}N(d_2) + \mathcal{V}\,\sigma'(K)`$ at $`K`$. So the market digital is $`e^{-rT}N(d_2) - \mathcal{V}\,\sigma'(K)`$, and the tight centered spread tends to it. Here $`d_2`$ and $`\mathcal{V}`$ use the strike's own volatility $`\sigma(K)`$.
+- Take $`h > 0`$. Then the ramp pays 0 at or below $`K - h`$, exactly 1 at or above $`K + h`$, and between 0 and 1 in between.
+- Take any finishing price other than the strike. Then, as $`h`$ shrinks to 0, the ramp's payoff tends to the digital's step payoff.
+- The worked numbers hold exactly: $`d_1 = 0.25`$, $`d_2 = 0.05`$, the ramp's chart values, the 99/101 spread arithmetic and the sandwich order. So do the smile volatilities 0.2004 and 0.1996, and −0.04 points as −0.0004.
 
-Prices that need $N$ or $\varphi$, the width table, the Greeks and the simulation are left to the Python and Rust checks.
+Prices that need $`N`$ or $`\varphi`$, the width table, the Greeks and the simulation are left to the Python and Rust checks.
 
 ```lean
 -- A digital from a call spread: when the finishing price has no lump of probability at the strike, the tight centered call spread tends to the digital price e^(-rT) Q(S_T > K), which is minus the slope of the call price in the strike, and when each strike carries its own smooth Black-Scholes volatility σ(K) that slope gives the digital e^(-rT) N(d₂) - vega · σ'(K).
@@ -843,21 +853,21 @@ xychart-beta
     line [83.14, 76.74, 68.97, 60.21, 50.97, 41.81, 33.21, 25.54, 19.01]
 ```
 
-Orange: flat 20% at every strike. Green: each strike's own smile volatility plugged into $e^{-rT}N(d_2)$, the usual mistake. Dark: the market digital, green plus the skew term. The gap between green and dark is the skew term: 0.015160 per dollar at the 100 strike, and present at every strike because vega is.
+Orange: flat 20% at every strike. Green: each strike's own smile volatility plugged into $`e^{-rT}N(d_2)`$, the usual mistake. Dark: the market digital, green plus the skew term. The gap between green and dark is the skew term: 0.015160 per dollar at the 100 strike, and present at every strike because vega is.
 
 > [!TIP]
 > **Try changing**
 > - **Double the skew**, slope −0.0008. Guess first. The skew term doubles and the digital becomes 0.524902.
 > - **Move the strike to $110**. Guess first: vega is lower away from the money, so the term should shrink. It barely moves, to 0.015215: vega peaks a little above today's price, so the 110 call's vega is almost the 100 call's.
-> - **Shorten to three months**, $T = 0.25$. Vega grows like $\sqrt{T}$, so the term should roughly halve. It does: 0.007877.
-> - **Widen the spread** to 95/105, $h = 5$. The centered spread reads 0.495161. Five times the width, and the miss grows roughly with the square of that, as the width table above predicts.
+> - **Shorten to three months**, $`T = 0.25`$. Vega grows like $`\sqrt{T}`$, so the term should roughly halve. It does: 0.007877.
+> - **Widen the spread** to 95/105, $`h = 5`$. The centered spread reads 0.495161. Five times the width, and the miss grows roughly with the square of that, as the width table above predicts.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Plugging the strike's implied volatility into $e^{-rT}N(d_2)$ and stopping.** That prices a digital in a world where every strike has that same volatility, which is not the market the hedge trades in. The hedge is the call spread, and the call spread feels the slope of the smile. On the house skew the shortfall is 0.015160 per dollar of payout, on a product often sold in size.
+> **Plugging the strike's implied volatility into $`e^{-rT}N(d_2)`$ and stopping.** That prices a digital in a world where every strike has that same volatility, which is not the market the hedge trades in. The hedge is the call spread, and the call spread feels the slope of the smile. On the house skew the shortfall is 0.015160 per dollar of payout, on a product often sold in size.
 >
 > - **Volatility points versus decimals.** A slope of −0.04 points per dollar is −0.0004. Feeding in −0.04 with vega per 1.00 gives 2.010627, more than a sure $1.
 > - **The sign.** A falling smile makes the digital call dearer and the digital put cheaper. Get the sign wrong and the call comes out at 0.479421.
@@ -875,7 +885,7 @@ Orange: flat 20% at every strike. Green: each strike's own smile volatility plug
 - **Model checks.** Any model that claims to fit the smile must reproduce the spread prices at every strike; the skew term is a fast test.
 
 > **Say it back**
-> A digital pays one dollar if the stock finishes above the strike. Half a call spread across two strikes pays a ramp, and as the strikes close in the ramp becomes the step, so the digital is minus the slope of the call price in the strike. With one volatility that slope is $e^{-rT}N(d_2)$. On a skewed market each strike has its own volatility, the chain rule adds vega times the smile's slope, and a falling smile makes the digital call dearer: 0.509742 instead of 0.494581 in the house market.
+> A digital pays one dollar if the stock finishes above the strike. Half a call spread across two strikes pays a ramp, and as the strikes close in the ramp becomes the step, so the digital is minus the slope of the call price in the strike. With one volatility that slope is $`e^{-rT}N(d_2)`$. On a skewed market each strike has its own volatility, the chain rule adds vega times the smile's slope, and a falling smile makes the digital call dearer: 0.509742 instead of 0.494581 in the house market.
 
 ---
 
@@ -886,7 +896,7 @@ Orange: flat 20% at every strike. Green: each strike's own smile volatility plug
 
 ## Where this goes next
 
-- [The butterfly and the implied density](05-butterfly-and-the-implied-density.md): difference the call curve once more, with three strikes, and the pricing density of $S_T$ appears.
+- [The butterfly and the implied density](05-butterfly-and-the-implied-density.md): difference the call curve once more, with three strikes, and the pricing density of $`S_T`$ appears.
 
 The spread gave the market's chance of finishing above one strike; the open question is the whole distribution of where Acme finishes, and the butterfly answers it.
 

@@ -33,11 +33,13 @@ Orange: steps of 0.006 s. Teal: steps of 0.004 s. Dark blue: the exact rod, on t
 
 ## The formula
 
-Notation first, in words. $u(x, t)$ is the temperature in C at $x$ metres from the left end at $t$ seconds. A subscript is a rate ([A partial differential equation](01-what-a-pde-says.md)): $u_t$ is the change in time, $u_{xx}$ the bend along the rod. The heat equation ([The heat equation](03-the-heat-equation.md)) says $u_t = \kappa\, u_{xx}$.
+Notation first, in words. $`u(x, t)`$ is the temperature in C at $`x`$ metres from the left end at $`t`$ seconds. A subscript is a rate ([A partial differential equation](01-what-a-pde-says.md)): $`u_t`$ is the change in time, $`u_{xx}`$ the bend along the rod. The heat equation ([The heat equation](03-the-heat-equation.md)) says $`u_t = \kappa\, u_{xx}`$.
 
-The grid has nodes every $\Delta x$ metres, and time moves in steps of $\Delta t$ seconds. Write $U_j^n$ for the reading at node number $j$ after $n$ steps; the raised $n$ is a label, not a power. Here $j$ runs from 0 to 10; the ends stay at 0 C.
+The grid has nodes every $`\Delta x`$ metres, and time moves in steps of $`\Delta t`$ seconds. Write $`U_j^n`$ for the reading at node number $`j`$ after $`n`$ steps; the raised $`n`$ is a label, not a power. Here $`j`$ runs from 0 to 10; the ends stay at 0 C.
 
-$$U_j^{n+1} = r\,U_{j-1}^n + (1 - 2r)\,U_j^n + r\,U_{j+1}^n, \qquad r = \frac{\kappa\,\Delta t}{\Delta x^2}$$
+```math
+U_j^{n+1} = r\,U_{j-1}^n + (1 - 2r)\,U_j^n + r\,U_{j+1}^n, \qquad r = \frac{\kappa\,\Delta t}{\Delta x^2}
+```
 
 **Read it aloud:** the new reading at a node is r times each neighbour plus 1 − 2r times itself, where r is the time step measured in grid units.
 
@@ -45,18 +47,20 @@ The weights add to 1. This is the **FTCS scheme** (forward in time, centred in s
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$, $u_t$, $u_{xx}$ | temperature; its time rate; its bend | 1 C mid-rod at the start | — |
-| $x$, $t$ | place in m; time in s | 0 to 1 m; 0.1 s | — |
-| $\kappa$ | diffusivity: how fast heat spreads, in m^2/s | 1 | the safe time step shrinks |
-| $\Delta x$, $\Delta t$ | node spacing; time step | 0.1 m; 0.004 s (A) or 0.006 s (B) | larger error |
-| $r$ | κΔt/Δx^2, the step in grid units | 0.4 (A) or 0.6 (B) | above 1/2 the scheme blows up |
-| $U_j^n$, $j$, $n$ | grid reading at node j after n steps | middle node j = 5 starts at 1 | — |
-| $k$ | mode number: sin(kπx) has k humps | 1 smooth; 9 zigzag | sharper zigzag |
-| $g$ | factor multiplying mode k each step | 0.960845 (A, k = 1); −1.341268 (B, k = 9) | outside −1 to 1, the mode grows |
+| $`u`$, $`u_t`$, $`u_{xx}`$ | temperature; its time rate; its bend | 1 C mid-rod at the start | — |
+| $`x`$, $`t`$ | place in m; time in s | 0 to 1 m; 0.1 s | — |
+| $`\kappa`$ | diffusivity: how fast heat spreads, in m^2/s | 1 | the safe time step shrinks |
+| $`\Delta x`$, $`\Delta t`$ | node spacing; time step | 0.1 m; 0.004 s (A) or 0.006 s (B) | larger error |
+| $`r`$ | κΔt/Δx^2, the step in grid units | 0.4 (A) or 0.6 (B) | above 1/2 the scheme blows up |
+| $`U_j^n`$, $`j`$, $`n`$ | grid reading at node j after n steps | middle node j = 5 starts at 1 | — |
+| $`k`$ | mode number: sin(kπx) has k humps | 1 smooth; 9 zigzag | sharper zigzag |
+| $`g`$ | factor multiplying mode k each step | 0.960845 (A, k = 1); −1.341268 (B, k = 9) | outside −1 to 1, the mode grows |
 
 The safe range:
 
-$$r \le \tfrac12 \quad\Longleftrightarrow\quad \Delta t \le \frac{\Delta x^2}{2\kappa}$$
+```math
+r \le \tfrac12 \quad\Longleftrightarrow\quad \Delta t \le \frac{\Delta x^2}{2\kappa}
+```
 
 On this rod that is Δt ≤ 0.005000 s. Case A is inside; case B is outside.
 
@@ -77,7 +81,7 @@ A rate is a change over a gap, as the gap shrinks. Keep the gap finite and the h
 
 ### Step 1: replace each rate by a difference
 
-In time, take one plain step along the slope (Euler's rule, [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)): $u_t$ is about $(U_j^{n+1} - U_j^n)/\Delta t$. In space, use the centred second difference ([Finite differences](../07-Series%20Solutions%20and%20Boundary%20Problems/07-finite-differences-for-boundary-problems.md)): $u_{xx}$ is about $(U_{j+1}^n - 2U_j^n + U_{j-1}^n)/\Delta x^2$. Set the first equal to κ times the second, multiply by Δt, collect terms: the formula.
+In time, take one plain step along the slope (Euler's rule, [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)): $`u_t`$ is about $`(U_j^{n+1} - U_j^n)/\Delta t`$. In space, use the centred second difference ([Finite differences](../07-Series%20Solutions%20and%20Boundary%20Problems/07-finite-differences-for-boundary-problems.md)): $`u_{xx}`$ is about $`(U_{j+1}^n - 2U_j^n + U_{j-1}^n)/\Delta x^2`$. Set the first equal to κ times the second, multiply by Δt, collect terms: the formula.
 
 ### Step 2: r ≤ 1/2 makes the step an average
 
@@ -89,18 +93,20 @@ Case B's weights are 0.6, −0.2, 0.6. Take readings +1 and −1 alternating. Ea
 
 ### Step 4: every shape has its own growth factor
 
-Put the mode $U_j^n = g^n \sin(k\pi j\,\Delta x)$ into the formula. The two neighbours combine by sin(a + b) + sin(a − b) = 2 sin a cos b, and the whole step becomes multiplication by
+Put the mode $`U_j^n = g^n \sin(k\pi j\,\Delta x)`$ into the formula. The two neighbours combine by sin(a + b) + sin(a − b) = 2 sin a cos b, and the whole step becomes multiplication by
 
-$$g = 1 - 4r\,\sin^2\!\Bigl(\frac{k\pi\,\Delta x}{2}\Bigr).$$
+```math
+g = 1 - 4r\,\sin^2\!\Bigl(\frac{k\pi\,\Delta x}{2}\Bigr).
+```
 
 This is **von Neumann analysis**: test each mode, read off its factor. The sine squared lies between 0 and 1, so g stays at or above −1 for every mode on every grid exactly when r ≤ 1/2. Case A's k = 9 mode has g = −0.560845 and dies. Case B's has g = −1.341268 and doubles every 2.36 steps.
 
 <details>
 <summary>Detailed proof</summary>
 
-With $U_j^n = g^n \sin(j\theta)$ and $\theta = k\pi\Delta x$, the neighbours sum to $2 g^n \sin(j\theta)\cos\theta$. The formula gives $U_j^{n+1} = g^n \sin(j\theta)\,[1 - 2r + 2r\cos\theta]$, so the factor is $1 - 2r(1 - \cos\theta) = 1 - 4r\sin^2(\theta/2)$. The ends stay at 0, since $\sin 0 = \sin(10\theta) = 0$ for whole-number $k$ when $\Delta x = 0.1$.
+With $`U_j^n = g^n \sin(j\theta)`$ and $`\theta = k\pi\Delta x`$, the neighbours sum to $`2 g^n \sin(j\theta)\cos\theta`$. The formula gives $`U_j^{n+1} = g^n \sin(j\theta)\,[1 - 2r + 2r\cos\theta]`$, so the factor is $`1 - 2r(1 - \cos\theta) = 1 - 4r\sin^2(\theta/2)`$. The ends stay at 0, since $`\sin 0 = \sin(10\theta) = 0`$ for whole-number $`k`$ when $`\Delta x = 0.1`$.
 
-The modes $k = 1, \dots, 9$ are the eigenvectors of the second-difference matrix, so any start is a sum of them, each multiplied by its own $g$ every step; all stay bounded exactly when every $|g| \le 1$. The largest $\sin^2$ is at $k = 9$ and tends to 1 as $\Delta x$ shrinks, so every grid is safe exactly when $1 - 4r \ge -1$: $r \le 1/2$.
+The modes $`k = 1, \dots, 9`$ are the eigenvectors of the second-difference matrix, so any start is a sum of them, each multiplied by its own $`g`$ every step; all stay bounded exactly when every $`|g| \le 1`$. The largest $`\sin^2`$ is at $`k = 9`$ and tends to 1 as $`\Delta x`$ shrinks, so every grid is safe exactly when $`1 - 4r \ge -1`$: $`r \le 1/2`$.
 
 </details>
 

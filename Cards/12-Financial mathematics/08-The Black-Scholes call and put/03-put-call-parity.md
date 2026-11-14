@@ -41,36 +41,42 @@ The first line is the call that was bought: flat at zero below $100.00, then a d
 
 ## The formula
 
-Notation first, in words. A raised plus sign means "or nothing": $(x)^+$ is $x$ when $x$ is positive and zero otherwise, which is what a ticket nobody bothers to use pays. A subscript $T$ means "on expiry day", so $S_T$ is Acme's price then: unknown today, and about to drop out. A discount factor is written $e^{-rT}$ in this wing's style, the value today of one dollar due on expiry day.
+Notation first, in words. A raised plus sign means "or nothing": $`(x)^+`$ is $`x`$ when $`x`$ is positive and zero otherwise, which is what a ticket nobody bothers to use pays. A subscript $`T`$ means "on expiry day", so $`S_T`$ is Acme's price then: unknown today, and about to drop out. A discount factor is written $`e^{-rT}`$ in this wing's style, the value today of one dollar due on expiry day.
 
-$$C - P = S\,e^{-qT} - K\,e^{-rT}$$
+```math
+C - P = S\,e^{-qT} - K\,e^{-rT}
+```
 
 **Read it aloud:** the call costs more than the put by exactly what owning the share forward costs — the share, less the dividends it pays away before expiry, minus the cash set aside today to have the strike ready on the day.
 
 The same statement rearranged is the version desks say out loud, **call plus cash equals put plus share**:
 
-$$C + K\,e^{-rT} = P + S\,e^{-qT}$$
+```math
+C + K\,e^{-rT} = P + S\,e^{-qT}
+```
 
-And with the forward price $F = S\,e^{(r-q)T}$ from [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md), the difference is the forward's head start over the strike, discounted back:
+And with the forward price $`F = S\,e^{(r-q)T}`$ from [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md), the difference is the forward's head start over the strike, discounted back:
 
-$$C - P = e^{-rT}\,(F - K)$$
+```math
+C - P = e^{-rT}\,(F - K)
+```
 
-Each price enters once, and only added or subtracted, so any three of the four fix the fourth exactly: one answer, always available, no root to hunt for. The one degenerate case is a strike of nothing, $K = 0$: the cash leg disappears, $C - P = S\,e^{-qT}$, and the equation can no longer say anything about the rate.
+Each price enters once, and only added or subtracted, so any three of the four fix the fourth exactly: one answer, always available, no root to hunt for. The one degenerate case is a strike of nothing, $`K = 0`$: the cash leg disappears, $`C - P = S\,e^{-qT}`$, and the equation can no longer say anything about the rate.
 
-| Symbol | Plain meaning | In our example | Push it up and the gap $C - P$… |
+| Symbol | Plain meaning | In our example | Push it up and the gap $`C - P`$… |
 | --- | --- | --- | --- |
-| $C$ | the call's price today: the right to **buy** at the strike | $9.23 | not an input. With $P$ fixed, a higher $C$ is a parity break to trade |
-| $P$ | the put's price today: the right to **sell** at the strike | $6.33 | not an input either: the gap fixes it once $C$ is known |
-| $S$ | Acme's price today | $100.00 | widens, by a shade under a dollar per dollar |
-| $K$ | the **strike**, the price both tickets name | $100.00 | narrows: more cash to set aside |
-| $T$ | time to expiry, in **years** | 1.00 | widens, while the rate beats the dividend yield |
-| $r$ | the **riskless rate**, continuously compounded | 5.00% | widens: less cash needed today to cover the strike |
-| $q$ | the **dividend yield**, cash paid out to shareholders each year | 2.00% | narrows: the forward misses more dividends |
-| $\sigma$ | **volatility**, how jumpy the share is. Say "sigma" | 20.00% | does not move it at all. Both prices rise together |
-| $S_T$ | Acme's price on expiry day | unknown today | does not appear: both packages move with it alike, so it drops out of the price equation. The pair itself is fully exposed to it |
-| $e^{-rT}$ | the **discount factor**: one dollar due on expiry day, valued today | 0.951229 | — |
-| $e^{-qT}$ | the **dividend drag**: the fraction of a share to buy today to hold one whole share at expiry | 0.980199 | — |
-| $F$ | the **forward price**: the fixed price at which the share can be bought forward | 103.05 | widens | 
+| $`C`$ | the call's price today: the right to **buy** at the strike | $9.23 | not an input. With $`P`$ fixed, a higher $`C`$ is a parity break to trade |
+| $`P`$ | the put's price today: the right to **sell** at the strike | $6.33 | not an input either: the gap fixes it once $`C`$ is known |
+| $`S`$ | Acme's price today | $100.00 | widens, by a shade under a dollar per dollar |
+| $`K`$ | the **strike**, the price both tickets name | $100.00 | narrows: more cash to set aside |
+| $`T`$ | time to expiry, in **years** | 1.00 | widens, while the rate beats the dividend yield |
+| $`r`$ | the **riskless rate**, continuously compounded | 5.00% | widens: less cash needed today to cover the strike |
+| $`q`$ | the **dividend yield**, cash paid out to shareholders each year | 2.00% | narrows: the forward misses more dividends |
+| $`\sigma`$ | **volatility**, how jumpy the share is. Say "sigma" | 20.00% | does not move it at all. Both prices rise together |
+| $`S_T`$ | Acme's price on expiry day | unknown today | does not appear: both packages move with it alike, so it drops out of the price equation. The pair itself is fully exposed to it |
+| $`e^{-rT}`$ | the **discount factor**: one dollar due on expiry day, valued today | 0.951229 | — |
+| $`e^{-qT}`$ | the **dividend drag**: the fraction of a share to buy today to hold one whole share at expiry | 0.980199 | — |
+| $`F`$ | the **forward price**: the fixed price at which the share can be bought forward | 103.05 | widens | 
 
 ### When it holds
 
@@ -92,31 +98,35 @@ Nothing in that rule is a belief about Acme. So the job is to find two packages 
 
 ### Step 1: the two tickets add up to the forward's payoff
 
-On expiry day the call pays $(S_T - K)^+$, Acme's price less the strike or nothing. The put pays $(K - S_T)^+$, the strike less Acme's price or nothing. A call bought and a put sold together pay the first minus the second:
+On expiry day the call pays $`(S_T - K)^+`$, Acme's price less the strike or nothing. The put pays $`(K - S_T)^+`$, the strike less Acme's price or nothing. A call bought and a put sold together pay the first minus the second:
 
-$$(S_T - K)^+ - (K - S_T)^+ = S_T - K$$
+```math
+(S_T - K)^+ - (K - S_T)^+ = S_T - K
+```
 
 Above the strike the put is dead and the call is the whole payoff. Below it the call is dead and the sold put is. One of the two is always the live one, which is why the kinks cancel. At $60.00 the sum is minus $40.00, and so is $60.00 - $100.00; at $140.00 both come to $40.00.
 
 This is an identity, true at every price at once rather than on average. The check tests it at 41 prices from $0.01 to $1000.00 and the worst gap is zero.
 
-The same fact packed differently: one call plus cash of $K$ is worth the larger of $S_T$ and $K$ on expiry day, and so is one put plus one share. The run prints both boxes side by side.
+The same fact packed differently: one call plus cash of $`K`$ is worth the larger of $`S_T`$ and $`K`$ on expiry day, and so is one put plus one share. The run prints both boxes side by side.
 
 ### Step 2: building that straight line without any options
 
 Two pieces, bought today.
 
-**The share, prepaid.** Buy $e^{-qT}$ = 0.980199 of a share and reinvest every dividend it pays in more of the same share. Dividends paid at yield $q$ make the holding grow at exactly that rate, so 0.980199 of a share grows into one whole share by expiry day. Cost today: $S\,e^{-qT}$ = $98.02.
+**The share, prepaid.** Buy $`e^{-qT}`$ = 0.980199 of a share and reinvest every dividend it pays in more of the same share. Dividends paid at yield $`q`$ make the holding grow at exactly that rate, so 0.980199 of a share grows into one whole share by expiry day. Cost today: $`S\,e^{-qT}`$ = $98.02.
 
-**The loan.** Borrow $K\,e^{-rT}$ = $95.12 at the riskless rate. The debt grows to exactly $100.00 on expiry day, which is the strike, due the day the strike is due.
+**The loan.** Borrow $`K\,e^{-rT}`$ = $95.12 at the riskless rate. The debt grows to exactly $100.00 on expiry day, which is the strike, due the day the strike is due.
 
-On expiry day this package delivers one share and owes $100.00, so it pays $S_T - 100.00$: the straight line of Step 1. Its cost today is $98.02 - $95.12 = $2.90. That is the cash-and-carry forward, used here as a price rather than as a new idea.
+On expiry day this package delivers one share and owes $100.00, so it pays $`S_T - 100.00`$: the straight line of Step 1. Its cost today is $98.02 - $95.12 = $2.90. That is the cash-and-carry forward, used here as a price rather than as a new idea.
 
 ### Step 3: equate the two costs, and read the numbers off
 
 The two packages pay the same, so by Step 0 they cost the same:
 
-$$C - P = S\,e^{-qT} - K\,e^{-rT} = 98.019867 - 95.122942 = 2.896925$$
+```math
+C - P = S\,e^{-qT} - K\,e^{-rT} = 98.019867 - 95.122942 = 2.896925
+```
 
 The call and put cards give $9.227006 and $6.330081 on this market, and their difference is $2.896925. The two sides agree to the last digit the machine keeps — and notice where each came from. The left side came out of a model, with a bell curve and a volatility in it. The right side is arithmetic on a share price and two rates. They would still agree if the model were thrown away.
 
@@ -134,56 +144,56 @@ Suppose the put is quoted at $6.00 while parity says $6.330081. The pair of tick
 | borrow $95.122942, repayable as $100.00 at expiry | +$95.122942 |
 | **banked today** | **+$0.330081** |
 
-That $0.330081 is exactly the put's shortfall, $6.330081 - $6.00. On expiry day the legs cancel at every price: the short call and long put pay $-(S_T - K)$ between them, the share is worth $S_T$, the loan takes $100.00. The run prints the net at $60.00, $100.00 and $140.00, and it is zero in all three. Nothing is left to go wrong, so the $0.33 was riskless and was banked a year before expiry day.
+That $0.330081 is exactly the put's shortfall, $6.330081 - $6.00. On expiry day the legs cancel at every price: the short call and long put pay $`-(S_T - K)`$ between them, the share is worth $`S_T`$, the loan takes $100.00. The run prints the net at $60.00, $100.00 and $140.00, and it is zero in all three. Nothing is left to go wrong, so the $0.33 was riskless and was banked a year before expiry day.
 
 That package — long share, long put, short call — is a **conversion**. "Long" means bought and held; "short" means sold. Reversed it is a **reversal**, which is what to do when the put is quoted too dear instead.
 
 <details>
 <summary>Detailed proof: both boxes, and both violation trades</summary>
 
-**The identity, all three cases.** If $S_T > K$ then $(S_T - K)^+ = S_T - K$ and $(K - S_T)^+ = 0$, so the difference is $S_T - K$. If $S_T < K$ the first is 0 and the second is $K - S_T$, and the difference is again $S_T - K$. At $S_T = K$ all three quantities are zero. No distribution and no expectation is used.
+**The identity, all three cases.** If $`S_T > K`$ then $`(S_T - K)^+ = S_T - K`$ and $`(K - S_T)^+ = 0`$, so the difference is $`S_T - K`$. If $`S_T < K`$ the first is 0 and the second is $`K - S_T`$, and the difference is again $`S_T - K`$. At $`S_T = K`$ all three quantities are zero. No distribution and no expectation is used.
 
-**The two boxes.** Box A is one call plus cash of $K$ set aside today, costing $C + K\,e^{-rT}$. Box B is one put plus the prepaid share, costing $P + S\,e^{-qT}$.
+**The two boxes.** Box A is one call plus cash of $`K`$ set aside today, costing $`C + K\,e^{-rT}`$. Box B is one put plus the prepaid share, costing $`P + S\,e^{-qT}`$.
 
-| On expiry day | $S_T < K$ | $S_T \ge K$ |
+| On expiry day | $`S_T < K`$ | $`S_T \ge K`$ |
 | --- | --- | --- |
-| call | 0 | $S_T - K$ |
-| cash, grown to the strike | $K$ | $K$ |
-| **box A** | $K$ | $S_T$ |
-| put | $K - S_T$ | 0 |
-| one share | $S_T$ | $S_T$ |
-| **box B** | $K$ | $S_T$ |
+| call | 0 | $`S_T - K`$ |
+| cash, grown to the strike | $`K`$ | $`K`$ |
+| **box A** | $`K`$ | $`S_T`$ |
+| put | $`K - S_T`$ | 0 |
+| one share | $`S_T`$ | $`S_T`$ |
+| **box B** | $`K`$ | $`S_T`$ |
 
-Both boxes hold the larger of $S_T$ and $K$ in both columns, so by Step 0 they cost the same today, which rearranges to the formula.
+Both boxes hold the larger of $`S_T`$ and $`K`$ in both columns, so by Step 0 they cost the same today, which rearranges to the formula.
 
-**The prepaid share, carefully.** Reinvesting a dividend yield $q$ makes a holding of shares grow in number at rate $q$, so $e^{-qT}$ of a share today becomes exactly one share at expiry. That is the only place dividends enter, and it is why they enter as a factor on $S$ rather than as a term.
+**The prepaid share, carefully.** Reinvesting a dividend yield $`q`$ makes a holding of shares grow in number at rate $`q`$, so $`e^{-qT}`$ of a share today becomes exactly one share at expiry. That is the only place dividends enter, and it is why they enter as a factor on $`S`$ rather than as a term.
 
-**Both violation trades.** Write the price gap as $(C - P) - (S\,e^{-qT} - K\,e^{-rT})$. If it is positive, sell the call, buy the put, buy the prepaid share and borrow $K\,e^{-rT}$. The legs bring in that gap today, and on expiry day the package pays $-(S_T - K) + S_T - K = 0$ at every price, so the money was free. If the gap is negative, reverse all four legs and take in its size instead. Both signs produce free money, so the gap is zero.
+**Both violation trades.** Write the price gap as $`(C - P) - (S\,e^{-qT} - K\,e^{-rT})`$. If it is positive, sell the call, buy the put, buy the prepaid share and borrow $`K\,e^{-rT}`$. The legs bring in that gap today, and on expiry day the package pays $`-(S_T - K) + S_T - K = 0`$ at every price, so the money was free. If the gap is negative, reverse all four legs and take in its size instead. Both signs produce free money, so the gap is zero.
 
 **What this does not prove.** Parity pins the difference only. Adding the same amount to both prices leaves the difference untouched, so parity alone cannot say whether $9.23 and $6.33 are sane levels; that takes [Option price bounds](04-option-price-bounds.md).
 
 </details>
 
-There is a second door, and it is longer. Average both sides of the Step 1 identity over the pretend world where everything grows at the bank rate, then discount — the machinery in Step 0 of [Black–Scholes call](01-black-scholes-call.md). The discounted average of the share price is $S\,e^{-qT}$ and of the strike is $K\,e^{-rT}$, so the same formula appears. Worth seeing once, because it shows every model must obey parity; wrong road to take first, because it drags in an apparatus that Steps 1 to 3 never needed.
+There is a second door, and it is longer. Average both sides of the Step 1 identity over the pretend world where everything grows at the bank rate, then discount — the machinery in Step 0 of [Black–Scholes call](01-black-scholes-call.md). The discounted average of the share price is $`S\,e^{-qT}`$ and of the strike is $`K\,e^{-rT}`$, so the same formula appears. Worth seeing once, because it shows every model must obey parity; wrong road to take first, because it drags in an apparatus that Steps 1 to 3 never needed.
 
 ---
 
 ## Worked numbers, by hand
 
-The house market: Acme at $S$ = $100.00, strike $K$ = $100.00, riskless rate $r$ = 5.00%, dividend yield $q$ = 2.00%, volatility 20.00%, $T$ = 1.00 year.
+The house market: Acme at $`S`$ = $100.00, strike $`K`$ = $100.00, riskless rate $`r`$ = 5.00%, dividend yield $`q`$ = 2.00%, volatility 20.00%, $`T`$ = 1.00 year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the dividend drag, $e^{-qT}$ | $e^{-0.02}$ | 0.980199 |
-| the discount factor, $e^{-rT}$ | $e^{-0.05}$ | 0.951229 |
-| the prepaid share, $S\,e^{-qT}$ | $100.00 \times 0.980199$ | $98.02 |
-| the loan repaying the strike, $K\,e^{-rT}$ | $100.00 \times 0.951229$ | $95.12 |
-| what the forward costs today | $98.02 - 95.12$ | **$2.90** |
+| the dividend drag, $`e^{-qT}`$ | $`e^{-0.02}`$ | 0.980199 |
+| the discount factor, $`e^{-rT}`$ | $`e^{-0.05}`$ | 0.951229 |
+| the prepaid share, $`S\,e^{-qT}`$ | $`100.00 \times 0.980199`$ | $98.02 |
+| the loan repaying the strike, $`K\,e^{-rT}`$ | $`100.00 \times 0.951229`$ | $95.12 |
+| what the forward costs today | $`98.02 - 95.12`$ | **$2.90** |
 | the call, from its own card | | $9.23 |
-| the put, backed out of the call | $9.227006 - 2.896925$ | **$6.33** |
+| the put, backed out of the call | $`9.227006 - 2.896925`$ | **$6.33** |
 | the put, priced on its own card, as a check | | $6.33 |
-| the forward price, the strike plus the gap carried a year at 5.00% | $100.00 + 2.896925 \times e^{0.05}$ | $103.05 |
-| the forward price by cash and carry, $S\,e^{(r-q)T}$ | $100.00 \times e^{0.03}$ | $103.05 |
+| the forward price, the strike plus the gap carried a year at 5.00% | $`100.00 + 2.896925 \times e^{0.05}`$ | $103.05 |
+| the forward price by cash and carry, $`S\,e^{(r-q)T}`$ | $`100.00 \times e^{0.03}`$ | $103.05 |
 
 One forward, two prices, reached from opposite directions: one from two option quotes, one from a share price and two rates. Reading the forward off option prices is a working tool — it is how a desk finds the dividend the options market is quietly assuming ([Implied forward and dividend from parity](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/05-implied-forward-and-dividend-from-parity.md)).
 
@@ -193,9 +203,9 @@ Same market, right answers $2.90 for the gap and $6.33 for the put.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Strike left undiscounted, $S - K$ | $0.00, so the put backs out at $9.23 | The strike is paid in a year, not today. The call's holder keeps a year's interest on it, worth $4.88 |
-| Dividend dropped, $S - K\,e^{-rT}$ | $4.88, so the put backs out at $4.35 | The forward collects none of the dividends a shareholder would, worth $1.98 |
-| Sides swapped, $K\,e^{-rT} - S\,e^{-qT}$ | −$2.90, so the put backs out at $12.12 | The forward is the wrong way round. The share sits with the put, the cash with the call |
+| Strike left undiscounted, $`S - K`$ | $0.00, so the put backs out at $9.23 | The strike is paid in a year, not today. The call's holder keeps a year's interest on it, worth $4.88 |
+| Dividend dropped, $`S - K\,e^{-rT}`$ | $4.88, so the put backs out at $4.35 | The forward collects none of the dividends a shareholder would, worth $1.98 |
+| Sides swapped, $`K\,e^{-rT} - S\,e^{-qT}`$ | −$2.90, so the put backs out at $12.12 | The forward is the wrong way round. The share sits with the put, the cash with the call |
 
 The code prints each wrong gap, and every wrong put is out by more than a real bid-offer spread (a dealer's selling price minus its buying price).
 
@@ -668,12 +678,12 @@ The two outputs are identical line for line, from different code taking differen
 
 ### Lean
 
-Lean proves the card's formula $C - P = S\,e^{-qT} - K\,e^{-rT}$ for any pricing rule with two properties.
+Lean proves the card's formula $`C - P = S\,e^{-qT} - K\,e^{-rT}`$ for any pricing rule with two properties.
 
 - Packages that pay the same cost the same.
 - Prices add up.
 
-The only prices it needs are one dollar due on expiry day and the prepaid share. It also proves the payoff identity at every share price, the forward form $e^{-rT}(F - K)$, and the card's whole-number payoff checks at strike 100. The call and put prices themselves, the volatility, the tree, the conversion trade and every decimal are left to the Python and Rust checks.
+The only prices it needs are one dollar due on expiry day and the prepaid share. It also proves the payoff identity at every share price, the forward form $`e^{-rT}(F - K)`$, and the card's whole-number payoff checks at strike 100. The call and put prices themselves, the volatility, the tree, the conversion trade and every decimal are left to the Python and Rust checks.
 
 ```lean
 -- Put-call parity: if prices add up (two packages paying the same cost the same), a call minus a put at one strike costs the prepaid share minus the discounted strike, whatever the share does.
@@ -773,11 +783,11 @@ example : max ((140 : ℤ) - 100) 0 + 100 = max (100 - 140) 0 + 140 := by norm_n
 ## The usual mistake
 
 > [!warning]
-> **Using the equality on options that can be exercised early.** Listed single-share options in the US are American: usable any day, not only expiry day. Feed their prices into $C - P = S\,e^{-qT} - K\,e^{-rT}$ and the "free money" that appears is mostly the value of the early-exercise right, which is real and is nobody else's to collect. On the house market's 1000-step tree the American put is worth $6.659759 against the European $6.328137, and the difference between the American prices is $2.565303 instead of $2.896925. The equality becomes a corridor: [American options](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md).
+> **Using the equality on options that can be exercised early.** Listed single-share options in the US are American: usable any day, not only expiry day. Feed their prices into $`C - P = S\,e^{-qT} - K\,e^{-rT}`$ and the "free money" that appears is mostly the value of the early-exercise right, which is real and is nobody else's to collect. On the house market's 1000-step tree the American put is worth $6.659759 against the European $6.328137, and the difference between the American prices is $2.565303 instead of $2.896925. The equality becomes a corridor: [American options](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md).
 >
 > **Conventions verified 19 Sep 2026:** listed US single-share options are American-style, while most index options, SPX among them, are European and cash-settled, and there the equality holds as written. SPX is the market's name for options on the S&P 500 index.
 >
-> - **Leaving the strike undiscounted.** $C - P = S - K$ gives $0.00 here, so the put backs out at $9.23 instead of $6.33. The whole gap is carry, and most of it is that year of interest on the strike.
+> - **Leaving the strike undiscounted.** $`C - P = S - K`$ gives $0.00 here, so the put backs out at $9.23 instead of $6.33. The whole gap is carry, and most of it is that year of interest on the strike.
 > - **Forgetting the dividend.** The gap comes out at $4.88 and the put at $4.35, light by $1.98 on a $6.33 put — exactly the dividends the forward misses. For a currency option the same slot holds the foreign interest rate.
 > - **Reading the gap as a view on the share.** $2.90 is not a forecast that Acme will rise. A bull and a bear must agree on it while disagreeing about everything else, because no forecast entered the proof.
 > - **Getting the sides round the wrong way.** The share sits with the put, the cash with the call. A slip gives −$2.90 and a $12.12 put, nearly twice the right price, and it should be caught by eye.
@@ -794,7 +804,7 @@ example : max ((140 : ℤ) - 100) 0 + 100 = max (100 - 140) 0 + 140 := by norm_n
 - **A company's balance sheet.** Treat its shares as a call on its assets and its debt becomes the assets minus that call, which parity rewrites as a safe bond minus a put: [Merton's model](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/01-merton-model-equity-as-a-call.md). That put is the risk of default.
 
 > **Say it back**
-> Buy a call and sell a put at the same strike and expiry, and one of the two is always the live one, so the pair pays $S_T - K$ whatever happens: a forward. The same forward can be built by buying $e^{-qT}$ of a share and borrowing $K\,e^{-rT}$, at a cost today of $S\,e^{-qT} - K\,e^{-rT}$. Two packages with the same payoff cost the same, so $C - P = S\,e^{-qT} - K\,e^{-rT}$. On the house market that is $9.23 - $6.33 = $2.90 = $98.02 - $95.12. No volatility appears, so no model is needed, and a put quoted $0.33 cheap hands $0.33 to whoever sells the pair and buys the forward.
+> Buy a call and sell a put at the same strike and expiry, and one of the two is always the live one, so the pair pays $`S_T - K`$ whatever happens: a forward. The same forward can be built by buying $`e^{-qT}`$ of a share and borrowing $`K\,e^{-rT}`$, at a cost today of $`S\,e^{-qT} - K\,e^{-rT}`$. Two packages with the same payoff cost the same, so $`C - P = S\,e^{-qT} - K\,e^{-rT}`$. On the house market that is $9.23 - $6.33 = $2.90 = $98.02 - $95.12. No volatility appears, so no model is needed, and a put quoted $0.33 cheap hands $0.33 to whoever sells the pair and buys the forward.
 
 ---
 
@@ -803,7 +813,7 @@ example : max ((140 : ℤ) - 100) 0 + 100 = max (100 - 140) 0 + 140 := by norm_n
 - [Black–Scholes call](01-black-scholes-call.md): where the $9.23 comes from. Parity does not need it; the check uses it to have two prices worth comparing.
 - [Black-Scholes put](02-black-scholes-put.md): the $6.33, priced on its own so the two sides of this card can be tested against each other.
 - [No arbitrage](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md): the single rule Step 0 leans on, and the only assumption in the proof.
-- [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md): the prepaid share, the loan, and the forward price $F$ that Step 2 buys off the shelf.
+- [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md): the prepaid share, the loan, and the forward price $`F`$ that Step 2 buys off the shelf.
 
 ## Where this goes next
 

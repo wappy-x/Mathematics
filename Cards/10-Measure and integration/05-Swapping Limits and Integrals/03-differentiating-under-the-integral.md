@@ -38,60 +38,66 @@ Orange: average daily profit, £ per day. Teal: marginal profit, £ per day for 
 
 Notation first.
 
-- A measure space $(\Omega,\mathcal F,\mu)$ is a set of points $\Omega$ (omega), the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ (mu) giving each such set a size.
-- The integral $\int f\,d\mu$ is read "the integral of f against mu" ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)).
-- A function on $\Omega$ is measurable when, for every number, the set of points where its value is below that number lies in $\mathcal F$; these are the functions the integral can handle ([Measurable functions](../03-Measurable%20Functions/01-measurable-functions.md)).
+- A measure space $`(\Omega,\mathcal F,\mu)`$ is a set of points $`\Omega`$ (omega), the collection $`\mathcal F`$ of sets we allow ourselves to measure, and a measure $`\mu`$ (mu) giving each such set a size.
+- The integral $`\int f\,d\mu`$ is read "the integral of f against mu" ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)).
+- A function on $`\Omega`$ is measurable when, for every number, the set of points where its value is below that number lies in $`\mathcal F`$; these are the functions the integral can handle ([Measurable functions](../03-Measurable%20Functions/01-measurable-functions.md)).
 - "For almost every x", written a.e., means "except on a set of size zero". Such a set is a null set ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)).
-- The curly $\partial f/\partial t$ is a partial derivative: the rate of change in $t$ with $x$ held still.
+- The curly $`\partial f/\partial t`$ is a partial derivative: the rate of change in $`t`$ with $`x`$ held still.
 
-Now the setting. A function $f(t,x)$ has two inputs: a **parameter** $t$, a dial that ranges over an open interval $I$, and a point $x$ of $\Omega$ that the integral averages over. The integral depends on the parameter alone:
+Now the setting. A function $`f(t,x)`$ has two inputs: a **parameter** $`t`$, a dial that ranges over an open interval $`I`$, and a point $`x`$ of $`\Omega`$ that the integral averages over. The integral depends on the parameter alone:
 
-$$F(t)=\int_\Omega f(t,x)\,d\mu(x).$$
+```math
+F(t)=\int_\Omega f(t,x)\,d\mu(x).
+```
 
 **The theorem**, known as Leibniz's rule. Suppose
 
-1. for each $t$ in $I$, the function $x\mapsto f(t,x)$ is measurable and has a finite integral;
-2. there is one set of size zero outside which, for every $x$, the function $t\mapsto f(t,x)$ is differentiable at every $t$ in $I$;
-3. there is one function $g$ with $\int g\,d\mu<\infty$ and one set of size zero outside which, for every $x$, $|\partial f/\partial t\,(t,x)|\le g(x)$ at every $t$ in $I$.
+1. for each $`t`$ in $`I`$, the function $`x\mapsto f(t,x)`$ is measurable and has a finite integral;
+2. there is one set of size zero outside which, for every $`x`$, the function $`t\mapsto f(t,x)`$ is differentiable at every $`t`$ in $`I`$;
+3. there is one function $`g`$ with $`\int g\,d\mu<\infty`$ and one set of size zero outside which, for every $`x`$, $`|\partial f/\partial t\,(t,x)|\le g(x)`$ at every $`t`$ in $`I`$.
 
-Then $F$ is differentiable at every $t$ in $I$, the rate $x\mapsto \partial f/\partial t\,(t,x)$ has a finite integral, and
+Then $`F`$ is differentiable at every $`t`$ in $`I`$, the rate $`x\mapsto \partial f/\partial t\,(t,x)`$ has a finite integral, and
 
-$$F'(t)=\frac{d}{dt}\int_\Omega f(t,x)\,d\mu(x)=\int_\Omega \frac{\partial f}{\partial t}(t,x)\,d\mu(x).$$
+```math
+F'(t)=\frac{d}{dt}\int_\Omega f(t,x)\,d\mu(x)=\int_\Omega \frac{\partial f}{\partial t}(t,x)\,d\mu(x).
+```
 
 **Read it aloud:** if one integrable function caps every rate, the rate of the average is the average of the rates.
 
-On the bakery, $\Omega$ is the range of possible sensitivities $z\ge 0$, and $\mu$ is the probability law of the day's sensitivity, with density $4z\,e^{-2z}$: a sum of two independent exponential waits of mean 0.5 ([Gamma and beta](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)). A day with sensitivity $z$ sells $N e^{-zp}$ loaves at price $p$. That day's profit and the average profit are
+On the bakery, $`\Omega`$ is the range of possible sensitivities $`z\ge 0`$, and $`\mu`$ is the probability law of the day's sensitivity, with density $`4z\,e^{-2z}`$: a sum of two independent exponential waits of mean 0.5 ([Gamma and beta](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)). A day with sensitivity $`z`$ sells $`N e^{-zp}`$ loaves at price $`p`$. That day's profit and the average profit are
 
-$$y(p,z)=(p-c)\,N e^{-zp},\qquad \Pi(p)=\int_0^\infty y(p,z)\,4z\,e^{-2z}\,dz .$$
+```math
+y(p,z)=(p-c)\,N e^{-zp},\qquad \Pi(p)=\int_0^\infty y(p,z)\,4z\,e^{-2z}\,dz .
+```
 
-The day's rate, by the product rule, is $\partial y/\partial p=N e^{-zp}\,\big(1-(p-c)z\big)$: one more pound on every loaf sold, minus the loaves lost.
+The day's rate, by the product rule, is $`\partial y/\partial p=N e^{-zp}\,\big(1-(p-c)z\big)`$: one more pound on every loaf sold, minus the loaves lost.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $p$ | the loaf price: the parameter | £3 | marginal profit falls, reaching 0 at £4 |
-| $z$ | the day's price sensitivity, per pound | random, density 4z e^(−2z), mean 1 | fewer loaves sold that day |
-| $c$, $N$ | cost per loaf; loaves sold if the bread were free | £1; 500 | best price is 2 + 2c; N up: everything scales |
-| $y$, $\Pi$ | one day's profit y(p, z); its average Π(p) | Π(3) = £160 a day | — |
-| $\Omega$, $\mu$ | the space averaged over and its measure | sensitivities z ≥ 0, their probability law | — |
-| $t$, $x$ | the general parameter and the general point | t is p, x is z | — |
-| $f$, $F$ | the integrand and its integral as a function of t | f is y, F is Π | — |
-| $I$ | the open interval of parameters | prices from £2 to £4 | a wider interval may need a bigger bound |
-| $g$ | one integrable cap on every rate over I | 500(1 + 3z)e^(−2z), integral 312.5 | a cap that is not integrable voids the theorem |
-| $h$, $h_n$, $q_n$ | a price step; a sequence of steps shrinking to 0; the difference quotients | h = 0.1, 0.01, 0.001 | smaller steps, quotient closer to the rate |
-| $\lambda$, $G$ | Lebesgue measure: length on the line; the Gaussian integral G(t), in which π is the circle constant 3.14159… | G(1) = √π = 1.772454 | t up: G(t) = √(π/t) falls |
-| $W$ | a buyer's willingness to pay, in pounds | uniform on £1 to £6 | — |
-| $Z$, $E[\cdot]$ | the day's sensitivity as a random quantity; the average against its law | E[e^(−3Z)] = 0.16 | — |
-| $k$, $a$ | a power of z and a rate, in the one integral of Worked numbers | k = 1, a = 5 for E[e^(−3Z)] | — |
-| $s$, $s_n$, $u$, $D$, $B$ | proof letters: parameter values (s between t and t + h in the mean value theorem, s running from t_0 to t in Another road, s and u any two in the Remark); the one picked for the step $h_n$; the limit of the quotients; the one null set of the proof | s between £3 and £3 + h; D is the rate ∂y/∂p at £3; B is empty for the bakery | — |
-| $t_0$ | a fixed parameter: the floor of the Gaussian step's range, or the base point of Another road | t_0 = 0.5 serves t = 1 | a smaller t_0 needs a bigger cap |
-| $X$, $s$, $u$, $i$, $\theta$, $p_\theta$ | in the applications: a random quantity; the generating function's variable; the characteristic function's frequency; the square root of −1; a model's parameter and its density | — | — |
+| $`p`$ | the loaf price: the parameter | £3 | marginal profit falls, reaching 0 at £4 |
+| $`z`$ | the day's price sensitivity, per pound | random, density 4z e^(−2z), mean 1 | fewer loaves sold that day |
+| $`c`$, $`N`$ | cost per loaf; loaves sold if the bread were free | £1; 500 | best price is 2 + 2c; N up: everything scales |
+| $`y`$, $`\Pi`$ | one day's profit y(p, z); its average Π(p) | Π(3) = £160 a day | — |
+| $`\Omega`$, $`\mu`$ | the space averaged over and its measure | sensitivities z ≥ 0, their probability law | — |
+| $`t`$, $`x`$ | the general parameter and the general point | t is p, x is z | — |
+| $`f`$, $`F`$ | the integrand and its integral as a function of t | f is y, F is Π | — |
+| $`I`$ | the open interval of parameters | prices from £2 to £4 | a wider interval may need a bigger bound |
+| $`g`$ | one integrable cap on every rate over I | 500(1 + 3z)e^(−2z), integral 312.5 | a cap that is not integrable voids the theorem |
+| $`h`$, $`h_n`$, $`q_n`$ | a price step; a sequence of steps shrinking to 0; the difference quotients | h = 0.1, 0.01, 0.001 | smaller steps, quotient closer to the rate |
+| $`\lambda`$, $`G`$ | Lebesgue measure: length on the line; the Gaussian integral G(t), in which π is the circle constant 3.14159… | G(1) = √π = 1.772454 | t up: G(t) = √(π/t) falls |
+| $`W`$ | a buyer's willingness to pay, in pounds | uniform on £1 to £6 | — |
+| $`Z`$, $`E[\cdot]`$ | the day's sensitivity as a random quantity; the average against its law | E[e^(−3Z)] = 0.16 | — |
+| $`k`$, $`a`$ | a power of z and a rate, in the one integral of Worked numbers | k = 1, a = 5 for E[e^(−3Z)] | — |
+| $`s`$, $`s_n`$, $`u`$, $`D`$, $`B`$ | proof letters: parameter values (s between t and t + h in the mean value theorem, s running from t_0 to t in Another road, s and u any two in the Remark); the one picked for the step $`h_n`$; the limit of the quotients; the one null set of the proof | s between £3 and £3 + h; D is the rate ∂y/∂p at £3; B is empty for the bakery | — |
+| $`t_0`$ | a fixed parameter: the floor of the Gaussian step's range, or the base point of Another road | t_0 = 0.5 serves t = 1 | a smaller t_0 needs a bigger cap |
+| $`X`$, $`s`$, $`u`$, $`i`$, $`\theta`$, $`p_\theta`$ | in the applications: a random quantity; the generating function's variable; the characteristic function's frequency; the square root of −1; a model's parameter and its density | — | — |
 
 ### When it holds
 
-- **Each integral finite.** If $\int |f(t,x)|\,d\mu$ is infinite for some $t$, then $F(t)$ is not a number and there is nothing to differentiate.
-- **Differentiable in the parameter, off one null set.** The exceptional set must not move with $t$. The threshold buyer, profit $(p-1)$ if $W\ge p$ and 0 otherwise, jumps at $p=W$. Every $W$ between £2 and £4 has its jump inside $I$, so the exceptional set is the whole middle of the range, and the swap gives 0.6 where the truth is 0.2.
-- **One integrable cap for all parameters in I.** The cap $g$ may depend on $x$ but not on $t$. For $f(t,x)=t^3e^{-t^2x}$ on $[0,\infty)$ each rate is finite, but on $I=(-1,1)$ any cap must be at least 1/(ex) for x ≥ 1, and that has an infinite integral; the swap gives 0 where the truth is 1.
-- **The cap is local.** $I$ can be any small open interval around the price of interest. A cap that works on £2 to £4 proves the formula at every price inside it.
+- **Each integral finite.** If $`\int |f(t,x)|\,d\mu`$ is infinite for some $`t`$, then $`F(t)`$ is not a number and there is nothing to differentiate.
+- **Differentiable in the parameter, off one null set.** The exceptional set must not move with $`t`$. The threshold buyer, profit $`(p-1)`$ if $`W\ge p`$ and 0 otherwise, jumps at $`p=W`$. Every $`W`$ between £2 and £4 has its jump inside $`I`$, so the exceptional set is the whole middle of the range, and the swap gives 0.6 where the truth is 0.2.
+- **One integrable cap for all parameters in I.** The cap $`g`$ may depend on $`x`$ but not on $`t`$. For $`f(t,x)=t^3e^{-t^2x}`$ on $`[0,\infty)`$ each rate is finite, but on $`I=(-1,1)`$ any cap must be at least 1/(ex) for x ≥ 1, and that has an infinite integral; the swap gives 0 where the truth is 1.
+- **The cap is local.** $`I`$ can be any small open interval around the price of interest. A cap that works on £2 to £4 proves the formula at every price inside it.
 
 ---
 
@@ -99,69 +105,76 @@ The day's rate, by the product rule, is $\partial y/\partial p=N e^{-zp}\,\big(1
 
 ### Step 0: a derivative is a limit, and the question is whether a limit passes through an integral
 
-The derivative of $F$ at $t$ is the limit of difference quotients $(F(t+h)-F(t))/h$ as the step $h$ shrinks to 0. Integrals add and scale, so the difference quotient of the average is the average of the difference quotients:
+The derivative of $`F`$ at $`t`$ is the limit of difference quotients $`(F(t+h)-F(t))/h`$ as the step $`h`$ shrinks to 0. Integrals add and scale, so the difference quotient of the average is the average of the difference quotients:
 
-$$\frac{F(t+h)-F(t)}{h}=\int_\Omega \frac{f(t+h,x)-f(t,x)}{h}\,d\mu(x).$$
+```math
+\frac{F(t+h)-F(t)}{h}=\int_\Omega \frac{f(t+h,x)-f(t,x)}{h}\,d\mu(x).
+```
 
-Nothing has been swapped yet: this is linearity, exact for every $h$. The swap is the next move: letting $h\to 0$ inside the integral. That is a limit passing through an integral, the exact job of [Dominated convergence](02-dominated-convergence-theorem.md). Its two demands are pointwise convergence and one integrable cap.
+Nothing has been swapped yet: this is linearity, exact for every $`h`$. The swap is the next move: letting $`h\to 0`$ inside the integral. That is a limit passing through an integral, the exact job of [Dominated convergence](02-dominated-convergence-theorem.md). Its two demands are pointwise convergence and one integrable cap.
 
 ### Step 1: the quotients converge, point by point
 
-Take any sequence of steps $h_n\to 0$, none equal to 0, with $t+h_n$ in $I$. Write $q_n(x)$ for the quotient $(f(t+h_n,x)-f(t,x))/h_n$. Off the one null set of hypothesis 2, $f(\cdot,x)$ is differentiable at $t$, so $q_n(x)\to\partial f/\partial t\,(t,x)$. On the bakery at £3 with $z=1$, the quotients approach $500e^{-3}(1-2)=-24.89$.
+Take any sequence of steps $`h_n\to 0`$, none equal to 0, with $`t+h_n`$ in $`I`$. Write $`q_n(x)`$ for the quotient $`(f(t+h_n,x)-f(t,x))/h_n`$. Off the one null set of hypothesis 2, $`f(\cdot,x)`$ is differentiable at $`t`$, so $`q_n(x)\to\partial f/\partial t\,(t,x)`$. On the bakery at £3 with $`z=1`$, the quotients approach $`500e^{-3}(1-2)=-24.89`$.
 
 ### Step 2: the mean value theorem turns a cap on the rate into a cap on every quotient
 
-For a fixed $x$ off the null set, $f(\cdot,x)$ is differentiable on the segment from $t$ to $t+h_n$. By [Mean value theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md), the quotient equals the rate at some point s between them: $q_n(x)=\partial f/\partial t\,(s,x)$. That point lies in $I$, so hypothesis 3 gives $|q_n(x)|\le g(x)$. This is where a single cap for all parameters matters: nobody knows in advance which s the theorem picks.
+For a fixed $`x`$ off the null set, $`f(\cdot,x)`$ is differentiable on the segment from $`t`$ to $`t+h_n`$. By [Mean value theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md), the quotient equals the rate at some point s between them: $`q_n(x)=\partial f/\partial t\,(s,x)`$. That point lies in $`I`$, so hypothesis 3 gives $`|q_n(x)|\le g(x)`$. This is where a single cap for all parameters matters: nobody knows in advance which s the theorem picks.
 
 ### Step 3: dominated convergence finishes
 
-The quotients converge almost everywhere and are all capped by the integrable $g$. Dominated convergence gives $\int q_n\,d\mu\to\int \partial f/\partial t\,(t,\cdot)\,d\mu$. By Step 0 the left side is the difference quotient of $F$. Every sequence of steps gives the same limit, so $F'(t)$ exists and equals the average of the rates.
+The quotients converge almost everywhere and are all capped by the integrable $`g`$. Dominated convergence gives $`\int q_n\,d\mu\to\int \partial f/\partial t\,(t,\cdot)\,d\mu`$. By Step 0 the left side is the difference quotient of $`F`$. Every sequence of steps gives the same limit, so $`F'(t)`$ exists and equals the average of the rates.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega,\mathcal F,\mu)$ is a measure space, $I$ an open interval, $f: I\times\Omega\to\mathbb R$, with hypotheses 1 to 3 of The formula. Let B be the null set of hypothesis 2 joined with the null set of hypothesis 3; a union of two null sets is null ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). Fix $t\in I$.
+**Setting.** $`(\Omega,\mathcal F,\mu)`$ is a measure space, $`I`$ an open interval, $`f: I\times\Omega\to\mathbb R`$, with hypotheses 1 to 3 of The formula. Let B be the null set of hypothesis 2 joined with the null set of hypothesis 3; a union of two null sets is null ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). Fix $`t\in I`$.
 
-**1. The quotients are measurable and integrable.** Let $h_n\to0$, $h_n\ne0$, $t+h_n\in I$. Then $q_n=(f(t+h_n,\cdot)-f(t,\cdot))/h_n$ is a difference of two measurable functions with finite integrals, scaled by a constant, so it is measurable with finite integral, and by linearity of the integral ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md))
-$$\int q_n\,d\mu=\frac{F(t+h_n)-F(t)}{h_n}.$$
+**1. The quotients are measurable and integrable.** Let $`h_n\to0`$, $`h_n\ne0`$, $`t+h_n\in I`$. Then $`q_n=(f(t+h_n,\cdot)-f(t,\cdot))/h_n`$ is a difference of two measurable functions with finite integrals, scaled by a constant, so it is measurable with finite integral, and by linearity of the integral ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md))
 
-**2. Pointwise limit.** For $x\notin B$, the function $f(\cdot,x)$ is differentiable at $t$, so by the definition of the derivative along the sequence $h_n$, $q_n(x)\to\partial f/\partial t\,(t,x)$. Define $D(x)=\limsup_n q_n(x)$ for all $x$. The lim sup is the eventual ceiling of a sequence, and it equals the limit wherever the limit exists. A lim sup of measurable functions is measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)), and $D=\partial f/\partial t\,(t,\cdot)$ off B. So the rate agrees a.e. with a measurable function, which is all an integral needs.
+$`\displaystyle \int q_n\,d\mu=\frac{F(t+h_n)-F(t)}{h_n}.`$
 
-**3. Domination.** For $x\notin B$, $f(\cdot,x)$ is differentiable, hence continuous, on the closed segment between $t$ and $t+h_n$, which lies inside $I$ because $I$ is an interval. The mean value theorem gives $s_n(x)$ strictly between them with $q_n(x)=\partial f/\partial t\,(s_n(x),x)$. Since $s_n(x)\in I$ and $x\notin B$, hypothesis 3 gives $|q_n(x)|\le g(x)$. So $|q_n|\le g$ a.e., for every n.
+**2. Pointwise limit.** For $`x\notin B`$, the function $`f(\cdot,x)`$ is differentiable at $`t`$, so by the definition of the derivative along the sequence $`h_n`$, $`q_n(x)\to\partial f/\partial t\,(t,x)`$. Define $`D(x)=\limsup_n q_n(x)`$ for all $`x`$. The lim sup is the eventual ceiling of a sequence, and it equals the limit wherever the limit exists. A lim sup of measurable functions is measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)), and $`D=\partial f/\partial t\,(t,\cdot)`$ off B. So the rate agrees a.e. with a measurable function, which is all an integral needs.
 
-**4. Limit.** $q_n\to D$ a.e., $|q_n|\le g$ a.e., $\int g\,d\mu<\infty$. By dominated convergence, D has a finite integral and $\int q_n\,d\mu\to\int D\,d\mu$. Also $|D|\le g$ a.e., so the rate is integrable.
+**3. Domination.** For $`x\notin B`$, $`f(\cdot,x)`$ is differentiable, hence continuous, on the closed segment between $`t`$ and $`t+h_n`$, which lies inside $`I`$ because $`I`$ is an interval. The mean value theorem gives $`s_n(x)`$ strictly between them with $`q_n(x)=\partial f/\partial t\,(s_n(x),x)`$. Since $`s_n(x)\in I`$ and $`x\notin B`$, hypothesis 3 gives $`|q_n(x)|\le g(x)`$. So $`|q_n|\le g`$ a.e., for every n.
 
-**5. From sequences to the derivative.** Steps 1 to 4 show: for every sequence $h_n\to0$ with $h_n\neq0$ and $t+h_n\in I$, $(F(t+h_n)-F(t))/h_n\to\int D\,d\mu$. A function has limit L as $h\to 0$ exactly when it tends to L along every such sequence (the sequence criterion for limits). So $F'(t)$ exists and equals $\int_\Omega \partial f/\partial t\,(t,x)\,d\mu(x)$. As $t\in I$ was arbitrary, this holds on all of $I$. ∎
+**4. Limit.** $`q_n\to D`$ a.e., $`|q_n|\le g`$ a.e., $`\int g\,d\mu<\infty`$. By dominated convergence, D has a finite integral and $`\int q_n\,d\mu\to\int D\,d\mu`$. Also $`|D|\le g`$ a.e., so the rate is integrable.
 
-**Remark.** Step 3 used the cap only to bound the quotients. Any hypothesis giving $|q_n|\le g$ with $g$ integrable, and $q_n\to D$ a.e. at the fixed $t$, gives the same conclusion; a Lipschitz bound $|f(s,x)-f(u,x)|\le g(x)\,|s-u|$ is the usual one.
+**5. From sequences to the derivative.** Steps 1 to 4 show: for every sequence $`h_n\to0`$ with $`h_n\neq0`$ and $`t+h_n\in I`$, $`(F(t+h_n)-F(t))/h_n\to\int D\,d\mu`$. A function has limit L as $`h\to 0`$ exactly when it tends to L along every such sequence (the sequence criterion for limits). So $`F'(t)`$ exists and equals $`\int_\Omega \partial f/\partial t\,(t,x)\,d\mu(x)`$. As $`t\in I`$ was arbitrary, this holds on all of $`I`$. ∎
+
+**Remark.** Step 3 used the cap only to bound the quotients. Any hypothesis giving $`|q_n|\le g`$ with $`g`$ integrable, and $`q_n\to D`$ a.e. at the fixed $`t`$, gives the same conclusion; a Lipschitz bound $`|f(s,x)-f(u,x)|\le g(x)\,|s-u|`$ is the usual one.
 
 </details>
 
 ### Step 4: the cap for the bakery
 
-For prices $p$ in $I=(2,4)$ and any sensitivity $z\ge0$: $e^{-zp}\le e^{-2z}$ because $p\ge 2$, and $|1-(p-1)z|\le 1+3z$ because $p-1\le 3$. So
+For prices $`p`$ in $`I=(2,4)`$ and any sensitivity $`z\ge0`$: $`e^{-zp}\le e^{-2z}`$ because $`p\ge 2`$, and $`|1-(p-1)z|\le 1+3z`$ because $`p-1\le 3`$. So
 
-$$\Big|\frac{\partial y}{\partial p}(p,z)\Big|\le g(z)=500\,(1+3z)\,e^{-2z}.$$
+```math
+\Big|\frac{\partial y}{\partial p}(p,z)\Big|\le g(z)=500\,(1+3z)\,e^{-2z}.
+```
 
-Its average against the sensitivity law is 312.5: finite. The code checks the cap on a grid of 101 prices by 801 sensitivities; the largest ratio of rate to cap is 1.0000, reached at z = 0, where every price's rate equals the cap, 500. All three hypotheses hold on $(2,4)$, so the average of the rates is the marginal profit at every price in between, £3 included.
+Its average against the sensitivity law is 312.5: finite. The code checks the cap on a grid of 101 prices by 801 sensitivities; the largest ratio of rate to cap is 1.0000, reached at z = 0, where every price's rate equals the cap, 500. All three hypotheses hold on $`(2,4)`$, so the average of the rates is the marginal profit at every price in between, £3 included.
 
 ### Step 5: the Gaussian moment trick
 
-A moment is the integral of a power of x against a curve; here the curve is $e^{-x^2}$. The Gaussian integral is $G(t)=\int_{-\infty}^{\infty}e^{-tx^2}\,d\lambda(x)=\sqrt{\pi/t}$, where $\lambda$ is length on the line ([The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)). At $t=1$ it is $\sqrt\pi=1.772454$. The rate of the integrand in $t$ is $-x^2e^{-tx^2}$. For all $t$ above a fixed $t_0>0$ it is capped by $x^2e^{-t_0x^2}$, which has a finite integral. So the theorem applies:
+A moment is the integral of a power of x against a curve; here the curve is $`e^{-x^2}`$. The Gaussian integral is $`G(t)=\int_{-\infty}^{\infty}e^{-tx^2}\,d\lambda(x)=\sqrt{\pi/t}`$, where $`\lambda`$ is length on the line ([The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)). At $`t=1`$ it is $`\sqrt\pi=1.772454`$. The rate of the integrand in $`t`$ is $`-x^2e^{-tx^2}`$. For all $`t`$ above a fixed $`t_0>0`$ it is capped by $`x^2e^{-t_0x^2}`$, which has a finite integral. So the theorem applies:
 
-$$\int_{-\infty}^{\infty}x^2e^{-x^2}\,dx=-G'(1)=\tfrac12\sqrt\pi=0.886227 .$$
+```math
+\int_{-\infty}^{\infty}x^2e^{-x^2}\,dx=-G'(1)=\tfrac12\sqrt\pi=0.886227 .
+```
 
-Once more, with cap $x^4e^{-t_0x^2}$: $\int x^4e^{-x^2}\,dx=G''(1)=\tfrac34\sqrt\pi=1.329340$. Two moments, with no integration by parts.
+Once more, with cap $`x^4e^{-t_0x^2}`$: $`\int x^4e^{-x^2}\,dx=G''(1)=\tfrac34\sqrt\pi=1.329340`$. Two moments, with no integration by parts.
 
 ### Another road
 
-When the rate is also continuous in the parameter, write $F(t)-F(t_0)=\int_\Omega\int_{t_0}^{t}\partial f/\partial t\,(s,x)\,ds\,d\mu(x)$, swap the two integrals by [Tonelli and Fubini](../06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md) (the cap $g$ keeps the double integral finite), and differentiate the outer integral in $t$. Dominated convergence, with the same cap, makes $t\mapsto\int\partial f/\partial t\,d\mu$ continuous, so the fundamental theorem of calculus applies. Without that continuity this route gives the formula only for almost every $t$, measured by length on $I$; the route above gives it at every $t$.
+When the rate is also continuous in the parameter, write $`F(t)-F(t_0)=\int_\Omega\int_{t_0}^{t}\partial f/\partial t\,(s,x)\,ds\,d\mu(x)`$, swap the two integrals by [Tonelli and Fubini](../06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md) (the cap $`g`$ keeps the double integral finite), and differentiate the outer integral in $`t`$. Dominated convergence, with the same cap, makes $`t\mapsto\int\partial f/\partial t\,d\mu`$ continuous, so the fundamental theorem of calculus applies. Without that continuity this route gives the formula only for almost every $`t`$, measured by length on $`I`$; the route above gives it at every $`t`$.
 
 ---
 
 ## Worked numbers, by hand
 
-Write Z for the day's random sensitivity and E[·] for the average against its law. One integral does the averaging: for $a>0$, $\int_0^\infty z^k e^{-az}\,dz = k!/a^{k+1}$.
+Write Z for the day's random sensitivity and E[·] for the average against its law. One integral does the averaging: for $`a>0`$, $`\int_0^\infty z^k e^{-az}\,dz = k!/a^{k+1}`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -195,7 +208,7 @@ The code finds the marginal profit at £3 by four independent roads:
 3. the average of each day's rate;
 4. a simulation of 200,000 days drawn by SplitMix64, a short random-number generator written out in both languages.
 
-Then it checks the cap, finds the best price by bisection (halving an interval until it traps the zero), prints the chart, runs the Gaussian moment trick against $\sqrt\pi/2$ and $3\sqrt\pi/4$, and prints both failures.
+Then it checks the cap, finds the best price by bisection (halving an interval until it traps the zero), prints the chart, runs the Gaussian moment trick against $`\sqrt\pi/2`$ and $`3\sqrt\pi/4`$, and prints both failures.
 
 The code checks one bakery, one Gaussian and two counterexamples to the printed precision. That the swap holds for every integrand on every measure space satisfying the three hypotheses is what the Detailed proof shows.
 
@@ -566,10 +579,10 @@ ALL CHECKS PASS
 
 Lean proves Leibniz's rule on every measure space. It also checks the bakery at £3, the two Gaussian moments and the hand arithmetic exactly.
 
-- Suppose hypotheses 1 to 3 of The formula hold on an open interval $I$. Then at every $t$ in $I$, the rate has a finite integral and $F'(t)$ equals its integral.
-- Take the bakery at £3. Then the average profit $\Pi(3)$ is £160, and the average of the day's rates is 16.
-- Take the average profit $\Pi(p)$ as a function of price. Then $\Pi'(3)=16$: both roads give £16 a day per £1 of price.
-- Take integrals over the whole line. Then $\int x^2e^{-x^2}\,dx=\sqrt\pi/2$ and $\int x^4e^{-x^2}\,dx=3\sqrt\pi/4$.
+- Suppose hypotheses 1 to 3 of The formula hold on an open interval $`I`$. Then at every $`t`$ in $`I`$, the rate has a finite integral and $`F'(t)`$ equals its integral.
+- Take the bakery at £3. Then the average profit $`\Pi(3)`$ is £160, and the average of the day's rates is 16.
+- Take the average profit $`\Pi(p)`$ as a function of price. Then $`\Pi'(3)=16`$: both roads give £16 a day per £1 of price.
+- Take integrals over the whole line. Then $`\int x^2e^{-x^2}\,dx=\sqrt\pi/2`$ and $`\int x^4e^{-x^2}\,dx=3\sqrt\pi/4`$.
 - Take the day's sensitivity Z at £3. Then E[e^(−3Z)] = 4/25 = 0.16 and E[Z e^(−3Z)] = 8/125 = 0.064.
 - Take those two averages. Then Π(3) = 2 × 500 × 0.16 = 160, and the average of the rates is 500 × 0.032 = 16.
 - Take the formula 2000 (p − 1)/(2 + p)^2 at p = 3. Then it gives 160, and its derivative 2000 (4 − p)/(2 + p)^3 gives 16.
@@ -904,8 +917,8 @@ example : (500 * (1 + 3 * 0) : ℚ) = 500 ∧
 ## Where you meet it in real life
 
 - **Pricing and revenue management.** Marginal revenue under uncertain demand is computed as the average of per-scenario rates, often over simulated scenarios, as road four does for the bakery.
-- **Moments from generating functions.** Differentiating $E[e^{sX}]$ at $s=0$ under the integral gives the mean, then the second moment ([Moment generating functions](../../09-Probability%20and%20statistics/02-Random%20Variables/07-moment-generating-functions.md)); the Gaussian trick above is the same move.
-- **Statistics: the score has mean zero.** The score is the rate of change of the log-density $\log p_\theta$ in the parameter θ. Differentiating $\int p_\theta\,dx=1$ in the parameter under the integral gives the facts behind Fisher information ([Fisher information](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md)).
+- **Moments from generating functions.** Differentiating $`E[e^{sX}]`$ at $`s=0`$ under the integral gives the mean, then the second moment ([Moment generating functions](../../09-Probability%20and%20statistics/02-Random%20Variables/07-moment-generating-functions.md)); the Gaussian trick above is the same move.
+- **Statistics: the score has mean zero.** The score is the rate of change of the log-density $`\log p_\theta`$ in the parameter θ. Differentiating $`\int p_\theta\,dx=1`$ in the parameter under the integral gives the facts behind Fisher information ([Fisher information](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md)).
 - **Option sensitivities by simulation.** A pathwise estimate of an option's delta averages each path's rate of payoff in the spot price. Delta is how fast the option's value moves with the spot price, today's price of the stock. The theorem says when that is right, and the jump of a digital option, which pays a fixed sum or nothing, is the threshold buyer again ([Delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md)).
 
 > **Say it back**
@@ -921,9 +934,9 @@ example : (500 * (1 + 3 * 0) : ℚ) = 500 ∧
 
 ## Where this goes next
 
-- [Characteristic functions](../10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md): differentiates $E[e^{iuX}]$ in $u$ under the integral, capped by $|X|$, integrable when $E|X|$ is finite, to read moments off the characteristic function.
+- [Characteristic functions](../10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md): differentiates $`E[e^{iuX}]`$ in $`u`$ under the integral, capped by $`|X|`$, integrable when $`E|X|`$ is finite, to read moments off the characteristic function.
 
-This card differentiates an average whose integrand is capped; what the average of $e^{iuX}$ reveals about a whole distribution, and how its derivatives at 0 give the moments, is the question [Characteristic functions](../10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md) answers.
+This card differentiates an average whose integrand is capped; what the average of $`e^{iuX}`$ reveals about a whole distribution, and how its derivatives at 0 give the moments, is the question [Characteristic functions](../10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md) answers.
 
 ---
 

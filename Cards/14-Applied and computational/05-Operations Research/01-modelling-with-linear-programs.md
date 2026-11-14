@@ -26,47 +26,43 @@ Drawn to scale. Across the bottom is sponge batches a day, up the side fruit bat
 
 ## The formula
 
-Two letters carry the plan: $x_1$ is sponge batches a day, $x_2$ fruit-cake batches a day. The bakery's whole problem, written out:
+Two letters carry the plan: $`x_1`$ is sponge batches a day, $`x_2`$ fruit-cake batches a day. The bakery's whole problem, written out:
 
-$$
-\begin{aligned}
-\text{maximise}\quad & 40x_1 + 60x_2 && \text{margin, pounds a day}\\
-\text{subject to}\quad & 2x_1 + 4x_2 \le 48 && \text{oven hours}\\
-& 20x_1 + 10x_2 \le 300 && \text{flour, kg}\\
-& x_2 \le 10 && \text{fruit-cake demand}\\
-& x_1 \ge 0,\ x_2 \ge 0 && \text{no negative baking}
-\end{aligned}
-$$
+```math
+\begin{aligned} \text{maximise}\quad & 40x_1 + 60x_2 && \text{margin, pounds a day}\\ \text{subject to}\quad & 2x_1 + 4x_2 \le 48 && \text{oven hours}\\ & 20x_1 + 10x_2 \le 300 && \text{flour, kg}\\ & x_2 \le 10 && \text{fruit-cake demand}\\ & x_1 \ge 0,\ x_2 \ge 0 && \text{no negative baking} \end{aligned}
+```
 
-Every linear program fits one shape, called **standard form**. Stack the letters into a list $x$, the margins per batch into a list $c$, the limits' right-hand sides into a list $b$, and the amounts each batch uses into a table $A$ with one row per limit and one column per decision. Here $c = (40, 60)$, $b = (48, 300, 10)$ and $A$ is `[[2, 4], [20, 10], [0, 1]]`. Then:
+Every linear program fits one shape, called **standard form**. Stack the letters into a list $`x`$, the margins per batch into a list $`c`$, the limits' right-hand sides into a list $`b`$, and the amounts each batch uses into a table $`A`$ with one row per limit and one column per decision. Here $`c = (40, 60)`$, $`b = (48, 300, 10)`$ and $`A`$ is `[[2, 4], [20, 10], [0, 1]]`. Then:
 
-$$\max_{x}\ c^{\top}x \quad\text{subject to}\quad Ax \le b,\quad x \ge 0$$
+```math
+\max_{x}\ c^{\top}x \quad\text{subject to}\quad Ax \le b,\quad x \ge 0
+```
 
-**Read it aloud:** choose the amounts $x$ that make the total margin as big as possible, while each row of resources used stays within its allowance and no amount goes negative.
+**Read it aloud:** choose the amounts $`x`$ that make the total margin as big as possible, while each row of resources used stays within its allowance and no amount goes negative.
 
-$c^{\top}x$ is the sum $c_1x_1 + c_2x_2$ (the small T, "transpose", turns the list $c$ on its side so it multiplies $x$ entry by entry). $Ax \le b$ means every row at once: row 1 is the oven line, row 2 flour, row 3 demand.
+$`c^{\top}x`$ is the sum $`c_1x_1 + c_2x_2`$ (the small T, "transpose", turns the list $`c`$ on its side so it multiplies $`x`$ entry by entry). $`Ax \le b`$ means every row at once: row 1 is the oven line, row 2 flour, row 3 demand.
 
 A problem in another shape is rewritten into this one:
 
 - To minimise a cost, maximise minus the cost: the best plan is the same, and its value comes back with the sign flipped.
-- An "at least" limit is multiplied through by −1, which turns $\ge$ into $\le$: a contract for at least 14 sponge, $x_1 \ge 14$, becomes the row $-x_1 \le -14$, and the best plan moves to (14, 2), £680.
-- An "exactly" limit is two rows, one each way: exactly 8 fruit is $x_2 \le 8$ and $-x_2 \le -8$, and the best plan is (8, 8), £800.
+- An "at least" limit is multiplied through by −1, which turns $`\ge`$ into $`\le`$: a contract for at least 14 sponge, $`x_1 \ge 14`$, becomes the row $`-x_1 \le -14`$, and the best plan moves to (14, 2), £680.
+- An "exactly" limit is two rows, one each way: exactly 8 fruit is $`x_2 \le 8`$ and $`-x_2 \le -8`$, and the best plan is (8, 8), £800.
 
-A solver works with equations, so each limit gets a **slack variable**: the amount left over. Write $s = b - Ax$, so $Ax + s = b$ with $s \ge 0$. At the best plan the slack is (0, 0, 4): no oven hours spare, no flour spare, 4 batches of fruit demand unused. A limit with zero slack is **tight**, and the plan sits on its line.
+A solver works with equations, so each limit gets a **slack variable**: the amount left over. Write $`s = b - Ax`$, so $`Ax + s = b`$ with $`s \ge 0`$. At the best plan the slack is (0, 0, 4): no oven hours spare, no flour spare, 4 batches of fruit demand unused. A limit with zero slack is **tight**, and the plan sits on its line.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_1$, $x_2$ | the decisions: sponge and fruit batches a day | 12 and 6 at the best plan | — (the solver chooses them) |
-| $x$ | the plan, the list $(x_1, x_2)$ | (12, 6) | — |
-| $c$ | margin per batch of each cake, £ | (40, 60) | raise sponge's £40 to £130 and the best plan jumps to all sponge, (15, 0) |
-| $c^{\top}x$ | the target: total margin, £ a day | £840 | — (this is the answer) |
-| $A$ | resources one batch uses: one row per limit, one column per cake | `[[2, 4], [20, 10], [0, 1]]` | a hungrier recipe shrinks the region |
-| $b$ | each limit's allowance | 48 h, 300 kg, 10 batches | more flour (400 kg) lifts margin to £906.67 |
-| $s$ | slack, $b - Ax$: what each limit leaves unused | (0, 0, 4) | — |
-| $m$, $n$ | number of limits, number of decisions | 3 and 2 | more corners to check (Step 3) |
-| $\binom{m+n}{n}$ | "m + n choose n": ways to pick $n$ tight lines out of $m + n$ | 10 | grows explosively |
-| $p$, $q$, $v_1, \dots, v_k$ | plans used in the proof: two allowed plans, and the $k$ corners | $v$: the 5 corners | — |
-| $t$, $\theta_i$ | mixing weights: not negative, adding to 1 | the midpoint (8, 8) takes half of each end | — |
+| $`x_1`$, $`x_2`$ | the decisions: sponge and fruit batches a day | 12 and 6 at the best plan | — (the solver chooses them) |
+| $`x`$ | the plan, the list $`(x_1, x_2)`$ | (12, 6) | — |
+| $`c`$ | margin per batch of each cake, £ | (40, 60) | raise sponge's £40 to £130 and the best plan jumps to all sponge, (15, 0) |
+| $`c^{\top}x`$ | the target: total margin, £ a day | £840 | — (this is the answer) |
+| $`A`$ | resources one batch uses: one row per limit, one column per cake | `[[2, 4], [20, 10], [0, 1]]` | a hungrier recipe shrinks the region |
+| $`b`$ | each limit's allowance | 48 h, 300 kg, 10 batches | more flour (400 kg) lifts margin to £906.67 |
+| $`s`$ | slack, $`b - Ax`$: what each limit leaves unused | (0, 0, 4) | — |
+| $`m`$, $`n`$ | number of limits, number of decisions | 3 and 2 | more corners to check (Step 3) |
+| $`\binom{m+n}{n}`$ | "m + n choose n": ways to pick $`n`$ tight lines out of $`m + n`$ | 10 | grows explosively |
+| $`p`$, $`q`$, $`v_1, \dots, v_k`$ | plans used in the proof: two allowed plans, and the $`k`$ corners | $`v`$: the 5 corners | — |
+| $`t`$, $`\theta_i`$ | mixing weights: not negative, adding to 1 | the midpoint (8, 8) takes half of each end | — |
 
 ### When it holds
 
@@ -90,20 +86,20 @@ On the oven edge from (12, 6) to (4, 10), the midpoint (8, 8) earns £800, exact
 
 A region is **convex** when the straight segment between any two of its points stays inside it ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md) uses the same idea for chords that stay on or above a bowl's graph).
 
-Take two plans $p$ and $q$ that both fit the oven limit, and a mix of them, $t$ of $p$ and $1 - t$ of $q$ with $t$ between 0 and 1. Oven hours used by the mix are $t$ times $p$'s hours plus $1 - t$ times $q$'s hours. Each is at most 48, so the mix uses at most $48t + 48(1 - t) = 48$. The same line works for flour, demand and the two "no negative" limits. So every mix of two allowed plans is allowed, and the region has no dents.
+Take two plans $`p`$ and $`q`$ that both fit the oven limit, and a mix of them, $`t`$ of $`p`$ and $`1 - t`$ of $`q`$ with $`t`$ between 0 and 1. Oven hours used by the mix are $`t`$ times $`p`$'s hours plus $`1 - t`$ times $`q`$'s hours. Each is at most 48, so the mix uses at most $`48t + 48(1 - t) = 48`$. The same line works for flour, demand and the two "no negative" limits. So every mix of two allowed plans is allowed, and the region has no dents.
 
 ### Step 2: every allowed plan is a mix of corners, so some corner does at least as well
 
-Take any allowed plan $p$. Draw a straight line through $p$. Because the region is convex, bounded and closed in by straight edges, the line leaves it at two edge points, and $p$ lies between them. By Step 0, one of those two edge points earns at least as much as $p$. That edge point lies between the two corners at the ends of its edge, and by Step 0 again one of those corners earns at least as much.
+Take any allowed plan $`p`$. Draw a straight line through $`p`$. Because the region is convex, bounded and closed in by straight edges, the line leaves it at two edge points, and $`p`$ lies between them. By Step 0, one of those two edge points earns at least as much as $`p`$. That edge point lies between the two corners at the ends of its edge, and by Step 0 again one of those corners earns at least as much.
 
 So for every allowed plan there is a corner that earns at least as much. There are finitely many corners, so the best corner is the best plan. This is the corner theorem for two decisions; the general version, for any number of decisions, is proved on the card [Corners are enough](../../15-Optimization/04-Linear%20Programming/02-corners-and-the-fundamental-theorem.md).
 
 <details>
 <summary>The same argument as one inequality</summary>
 
-Step 2 shows that $p$ is a weighted average of corners $v_1, \dots, v_k$: weights $\theta_i \ge 0$ that add to 1, with $p = \sum_i \theta_i v_i$. The target is linear, so
+Step 2 shows that $`p`$ is a weighted average of corners $`v_1, \dots, v_k`$: weights $`\theta_i \ge 0`$ that add to 1, with $`p = \sum_i \theta_i v_i`$. The target is linear, so
 
-$$c^{\top}p = \sum_i \theta_i\, c^{\top}v_i \le \Big(\sum_i \theta_i\Big)\max_i c^{\top}v_i = \max_i c^{\top}v_i .$$
+$`\displaystyle c^{\top}p = \sum_i \theta_i\, c^{\top}v_i \le \Big(\sum_i \theta_i\Big)\max_i c^{\top}v_i = \max_i c^{\top}v_i .`$
 
 An average can never beat its largest member. That one line is the corner theorem.
 
@@ -111,17 +107,19 @@ An average can never beat its largest member. That one line is the corner theore
 
 ### Step 3: a corner is a small system of equations
 
-A corner is a point where $n$ limits are tight at once, two here. Making two limits tight turns two inequalities into two equations, and two equations in two unknowns is [Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md). Solve it, then keep the point only if it also fits every other limit.
+A corner is a point where $`n`$ limits are tight at once, two here. Making two limits tight turns two inequalities into two equations, and two equations in two unknowns is [Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md). Solve it, then keep the point only if it also fits every other limit.
 
-The bakery has 5 limits counting the two "no negative" ones. Pairs of lines: 10. One pair, demand and $x_2 \ge 0$, is parallel and never meets, which leaves 9 candidate points. Four break a limit; for instance, the oven line meets the bottom axis at (24, 0), a plan that would need 480 kg of flour. Five fit, and those five are the corners in the picture.
+The bakery has 5 limits counting the two "no negative" ones. Pairs of lines: 10. One pair, demand and $`x_2 \ge 0`$, is parallel and never meets, which leaves 9 candidate points. Four break a limit; for instance, the oven line meets the bottom axis at (24, 0), a plan that would need 480 kg of flour. Five fit, and those five are the corners in the picture.
 
-That is a complete solver for small problems, and it is the solver in the code below. It does not scale. With $n$ decisions and $m$ limits the candidates number $\binom{m+n}{n}$: 10 for the bakery, 30,045,015 for 10 decisions and 20 limits, and 4,191,844,505,805,495 for 20 decisions and 40 limits. Real solvers walk from corner to better corner (the simplex method) or cut through the inside (interior-point methods). Both belong to the optimisation wing; here they are a box that takes $c$, $A$, $b$ and returns a plan.
+That is a complete solver for small problems, and it is the solver in the code below. It does not scale. With $`n`$ decisions and $`m`$ limits the candidates number $`\binom{m+n}{n}`$: 10 for the bakery, 30,045,015 for 10 decisions and 20 limits, and 4,191,844,505,805,495 for 20 decisions and 40 limits. Real solvers walk from corner to better corner (the simplex method) or cut through the inside (interior-point methods). Both belong to the optimisation wing; here they are a box that takes $`c`$, $`A`$, $`b`$ and returns a plan.
 
 ### Step 4: a certificate proves the corner is best
 
 How can anyone check £840 without re-solving? Multiply the oven limit by 13.33 (exactly 40/3) and the flour limit by 0.67 (exactly 2/3), then add:
 
-$$\tfrac{40}{3}(2x_1 + 4x_2) + \tfrac{2}{3}(20x_1 + 10x_2) = 40x_1 + 60x_2 \le \tfrac{40}{3}\cdot 48 + \tfrac{2}{3}\cdot 300 = 640 + 200 = 840.$$
+```math
+\tfrac{40}{3}(2x_1 + 4x_2) + \tfrac{2}{3}(20x_1 + 10x_2) = 40x_1 + 60x_2 \le \tfrac{40}{3}\cdot 48 + \tfrac{2}{3}\cdot 300 = 640 + 200 = 840.
+```
 
 The left side is the margin, term by term. The weights are not negative, so the inequalities keep their direction. So no allowed plan earns more than £840, and the plan (12, 6) earns exactly that. The two weights are the **dual values** a solver prints beside its answer: £13.33 per extra oven hour, £0.67 per extra kilogram of flour. How to read such values off a solver's report, and what they are worth to a manager, is [Shadow prices](02-shadow-prices-and-sensitivity.md), worked on another branch's plan.
 
@@ -134,11 +132,11 @@ The best corner lies where the oven and flour lines cross. Make both tight and s
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | oven hours | 4 ovens × 12 h | 48 h |
-| oven line, tight | $2x_1 + 4x_2 = 48$, so $x_1 = 24 - 2x_2$ | — |
-| put it into flour | $20(24 - 2x_2) + 10x_2 = 480 - 30x_2 = 300$ | $x_2 = 6$ |
-| back into the oven line | $24 - 2 \times 6$ | $x_1 = 12$ |
-| demand check | $6 \le 10$ | slack 4 batches |
-| margin at (12, 6) | $40 \times 12 + 60 \times 6$ | £840 |
+| oven line, tight | $`2x_1 + 4x_2 = 48`$, so $`x_1 = 24 - 2x_2`$ | — |
+| put it into flour | $`20(24 - 2x_2) + 10x_2 = 480 - 30x_2 = 300`$ | $`x_2 = 6`$ |
+| back into the oven line | $`24 - 2 \times 6`$ | $`x_1 = 12`$ |
+| demand check | $`6 \le 10`$ | slack 4 batches |
+| margin at (12, 6) | $`40 \times 12 + 60 \times 6`$ | £840 |
 | the other corners | (15, 0), (4, 10), (0, 10), (0, 0) | £600, £760, £600, £0 |
 | **best plan** | the largest of the five | **12 sponge, 6 fruit: £840 a day** |
 
@@ -159,7 +157,7 @@ The last row is the modelling assumption failing. The program assumed batches ca
 
 ## Code, from first principles, and it actually runs
 
-Both programs build the bakery's program from the lists $c$, $A$ and $b$, then reach the best plan by **three independent roads**:
+Both programs build the bakery's program from the lists $`c`$, $`A`$ and $`b`$, then reach the best plan by **three independent roads**:
 
 1. A corner solver: it makes every pair of limits tight, solves the two equations, keeps the points that fit, and reports status, plan, slacks and dual values, the same four things a production solver reports.
 2. A grid: it checks every plan on a grid of tenths of a batch, 29,161 plans, of which 11,481 fit.
@@ -550,10 +548,10 @@ Lean proves the corner theorem and the certificate for any number of decisions a
 
 - Take any linear program in standard form with at least one allowed plan and a ceiling on the target. Then some corner earns at least as much as every allowed plan.
 - The allowed plans form a convex region: every mix of two allowed plans is allowed.
-- Take weights on the limits, none negative, whose weighted rows add up to $c$ term by term. Then no allowed plan's target beats the allowances times their weights, added up.
+- Take weights on the limits, none negative, whose weighted rows add up to $`c`$ term by term. Then no allowed plan's target beats the allowances times their weights, added up.
 - Take the bakery's plan (12, 6). Then it uses all 48 oven hours and all 300 kg of flour, leaves 4 batches of demand and earns £840.
 - Take any bakery plan that fits every limit, split amounts included. Then it earns at most £840.
-- The weights $\tfrac{40}{3}$ on oven and $\tfrac{2}{3}$ on flour rebuild the margin row. They cap it at 640 + 200 = 840.
+- The weights $`\tfrac{40}{3}`$ on oven and $`\tfrac{2}{3}`$ on flour rebuild the margin row. They cap it at 640 + 200 = 840.
 - The other corners' margins, the 11,481 grid plans that fit, the numbers in What breaks and the candidate counts also check.
 
 Searching the corners and the grid for the best plan, and showing the Try changing plans are best, are left to the Python and Rust checks.
@@ -943,7 +941,7 @@ example : Nat.choose 60 20 = 4191844505805495 := by
 > Smaller traps, each with the wrong number it produces:
 > - **Rounding a split answer.** With 310 kg of flour the program says 12.67 sponge and 5.67 fruit. Rounding to 13 and 6 claims £880 but needs 2 more oven hours and 10 kg more flour than the bakery has. The best whole plan is 12 and 6, £840.
 > - **Ranking cakes by one ratio.** Margin per batch says fruit first (£760); margin per oven hour says sponge first (£600). Neither ratio sees both limits at once. The program sees all of them.
-> - **Mixed units.** Write the flour allowance as 12 bags of 25 kg beside recipes in kilograms, and the best plan earns £72. Every row of $A$ and $b$ must use one unit.
+> - **Mixed units.** Write the flour allowance as 12 bags of 25 kg beside recipes in kilograms, and the best plan earns £72. Every row of $`A`$ and $`b`$ must use one unit.
 > - **Minimise instead of maximise.** Flip the direction and the "best" plan is to bake nothing: (0, 0), £0. Every solver has a default direction; check it.
 
 ---
@@ -964,7 +962,7 @@ example : Nat.choose 60 20 = 4191844505805495 := by
 ## What this builds on
 
 - [Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md): each corner is two limits made tight, a square system solved exactly as there. Parallel limits are the "no answer" case.
-- [Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md): mixing two points with weights $t$ and $1 - t$, and the fact that an average never beats its largest member, are the two moves in Why it works.
+- [Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md): mixing two points with weights $`t`$ and $`1 - t`$, and the fact that an average never beats its largest member, are the two moves in Why it works.
 
 ## Where this goes next
 
@@ -986,5 +984,5 @@ Verified 2026-11-11: every link below resolves to the publisher's page. Each DOI
 - Kantorovich, L. V. "Mathematical Methods of Organizing and Planning Production." *Management Science* 6, no. 4 (1960): 366–422. [doi:10.1287/mnsc.6.4.366](https://doi.org/10.1287/mnsc.6.4.366). The 1939 founding paper in English: production plans written as linear programs.
 - Stigler, George J. "The Cost of Subsistence." *Journal of Farm Economics* 27, no. 2 (1945): 303–314. [doi:10.2307/1231810](https://doi.org/10.2307/1231810). The diet problem, the classic blending program.
 - Dantzig, George B. "Linear Programming." *Operations Research* 50, no. 1 (2002): 42–47. [doi:10.1287/opre.50.1.42.17798](https://doi.org/10.1287/opre.50.1.42.17798). The inventor of the simplex method on how linear programming and the method began.
-- Huangfu, Q., and J. A. J. Hall. "Parallelizing the Dual Revised Simplex Method." *Mathematical Programming Computation* 10, no. 1 (2018): 119–142. [doi:10.1007/s12532-017-0130-5](https://doi.org/10.1007/s12532-017-0130-5). The method inside the HiGHS solver, an example of the box that takes $c$, $A$, $b$.
+- Huangfu, Q., and J. A. J. Hall. "Parallelizing the Dual Revised Simplex Method." *Mathematical Programming Computation* 10, no. 1 (2018): 119–142. [doi:10.1007/s12532-017-0130-5](https://doi.org/10.1007/s12532-017-0130-5). The method inside the HiGHS solver, an example of the box that takes $`c`$, $`A`$, $`b`$.
 - Vanderbei, Robert J. *Linear Programming: Foundations and Extensions*, 5th ed. Springer, 2020. [doi:10.1007/978-3-030-39415-8](https://doi.org/10.1007/978-3-030-39415-8). Standard form, slack variables and the geometry of corners, carried into the algorithms.

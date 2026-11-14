@@ -34,34 +34,38 @@ The orange curve is the train's speed, peaking at 150 km/h at half past. The tea
 
 ## The formula
 
-Notation first, in words. $[a, b]$ means every input from a to b, ends included; $(a, b)$ leaves the two ends out. A function is **continuous** on a stretch when it has no jumps there, and **differentiable** at a point when it has a derivative there.
+Notation first, in words. $`[a, b]`$ means every input from a to b, ends included; $`(a, b)`$ leaves the two ends out. A function is **continuous** on a stretch when it has no jumps there, and **differentiable** at a point when it has a derivative there.
 
-If $f$ is continuous on $[a, b]$ and differentiable on $(a, b)$, then at least one point $c$ strictly between a and b has
+If $`f`$ is continuous on $`[a, b]`$ and differentiable on $`(a, b)`$, then at least one point $`c`$ strictly between a and b has
 
-$$f'(c) = \frac{f(b) - f(a)}{b - a}.$$
+```math
+f'(c) = \frac{f(b) - f(a)}{b - a}.
+```
 
 **Read it aloud:** somewhere inside, the instantaneous rate equals the total change divided by the stretch's length.
 
-The right side, the average rate $m$, is the slope of the **chord**: the straight line joining the graph's two end points. In pictures: some tangent runs parallel to the chord.
+The right side, the average rate $`m`$, is the slope of the **chord**: the straight line joining the graph's two end points. In pictures: some tangent runs parallel to the chord.
 
-**Rolle's theorem** is the special case $f(a) = f(b)$. Then $m = 0$, and some inside point has $f'(c) = 0$: a flat tangent.
+**Rolle's theorem** is the special case $`f(a) = f(b)`$. Then $`m = 0`$, and some inside point has $`f'(c) = 0`$: a flat tangent.
 
-For the train, $f$ is the position $s$ in km, and $t$ the time in hours:
+For the train, $`f`$ is the position $`s`$ in km, and $`t`$ the time in hours:
 
-$$s(t) = 100\,(3t^2 - 2t^3), \qquad v(t) = s'(t) = 600t - 600t^2.$$
+```math
+s(t) = 100\,(3t^2 - 2t^3), \qquad v(t) = s'(t) = 600t - 600t^2.
+```
 
-The speed $v$ is in km/h: output units per input unit.
+The speed $`v`$ is in km/h: output units per input unit.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $s$ | the function; $s$ is the train's position | $s(t)$ km | — |
-| $t$ | time since departure | 0 to 1 hour | — |
-| $a$, $b$ | the ends of the stretch | 0 h and 1 h | — |
-| $f'$, $v$ | the derivative; $v$ is speed | $v(t)$ km/h | — |
-| $m$ | the average rate, $(f(b) - f(a))/(b - a)$ | 100 km/h | the promised instants move |
-| $c$, $c_1$, $c_2$ | inside points where $f'(c) = m$ | 0.211325 h and 0.788675 h | found, not chosen |
-| $g$ | $f$ minus a line of slope $m$: the lead over a steady 100 km/h | $s(t) - 100t$ km | — |
-| $h$ | a small time step in a difference quotient: the change over the step, divided by the step | 0.1, 0.01, 0.001 h | a cruder slope |
+| $`f`$, $`s`$ | the function; $`s`$ is the train's position | $`s(t)`$ km | — |
+| $`t`$ | time since departure | 0 to 1 hour | — |
+| $`a`$, $`b`$ | the ends of the stretch | 0 h and 1 h | — |
+| $`f'`$, $`v`$ | the derivative; $`v`$ is speed | $`v(t)`$ km/h | — |
+| $`m`$ | the average rate, $`(f(b) - f(a))/(b - a)`$ | 100 km/h | the promised instants move |
+| $`c`$, $`c_1`$, $`c_2`$ | inside points where $`f'(c) = m`$ | 0.211325 h and 0.788675 h | found, not chosen |
+| $`g`$ | $`f`$ minus a line of slope $`m`$: the lead over a steady 100 km/h | $`s(t) - 100t`$ km | — |
+| $`h`$ | a small time step in a difference quotient: the change over the step, divided by the step | 0.1, 0.01, 0.001 h | a cruder slope |
 
 ### The picture: the chord and the two parallel tangents
 
@@ -81,11 +85,11 @@ Drawn to scale: 280 units across per hour, 1.8 units up per km. The solid curve 
 
 ### Step 0: at a smooth inside peak or trough, the slope is zero
 
-Take the train's lead over a steady 100 km/h pace, $g(t) = s(t) - 100t$. It starts at 0 km, falls behind, pulls ahead, and ends at 0 km. It is lowest, 9.62 km behind, at $c_1$ = 0.211325 h.
+Take the train's lead over a steady 100 km/h pace, $`g(t) = s(t) - 100t`$. It starts at 0 km, falls behind, pulls ahead, and ends at 0 km. It is lowest, 9.62 km behind, at $`c_1`$ = 0.211325 h.
 
-Take slopes of $g$ over short steps from there. Forward, $g$ can only rise, so the slope is at least zero. Backward, $g$ also rises, but the step is negative, so the slope is at most zero:
+Take slopes of $`g`$ over short steps from there. Forward, $`g`$ can only rise, so the slope is at least zero. Backward, $`g`$ also rises, but the step is negative, so the slope is at most zero:
 
-| Step $h$ | Slope after $c_1$ | Slope before $c_1$ |
+| Step $`h`$ | Slope after $`c_1`$ | Slope before $`c_1`$ |
 | --- | --- | --- |
 | 0.1 h | +15.3205 | −19.3205 |
 | 0.01 h | +1.7121 | −1.7521 |
@@ -97,34 +101,36 @@ The same holds at any inside peak or trough where a derivative exists. At an end
 
 ### Step 1: Rolle's theorem, equal ends force a flat point
 
-Suppose $f(a) = f(b)$. If $f$ is constant, every slope is 0. If not, $f$ goes above or below the end height somewhere.
+Suppose $`f(a) = f(b)`$. If $`f`$ is constant, every slope is 0. If not, $`f`$ goes above or below the end height somewhere.
 
-A continuous function on a closed stretch reaches a highest and a lowest value ([Extreme value theorem](../01-Limits%20and%20Continuity/07-extreme-value-theorem.md)). If $f$ goes above the end height, its highest value is reached inside, and Step 0 makes the derivative there 0. Going below uses the lowest value.
+A continuous function on a closed stretch reaches a highest and a lowest value ([Extreme value theorem](../01-Limits%20and%20Continuity/07-extreme-value-theorem.md)). If $`f`$ goes above the end height, its highest value is reached inside, and Step 0 makes the derivative there 0. Going below uses the lowest value.
 
-The lead $g$ is 0 km at both ends, lowest (−9.62 km) at $c_1$ and highest (+9.62 km) at $c_2$ = 0.788675 h: two flat points.
+The lead $`g`$ is 0 km at both ends, lowest (−9.62 km) at $`c_1`$ and highest (+9.62 km) at $`c_2`$ = 0.788675 h: two flat points.
 
 ### Step 2: the mean value theorem, tilt until the ends are level
 
-Set $g(x) = f(x) - m x$ for each input $x$. The ends now match: $g(b) - g(a) = (f(b) - f(a)) - m(b - a) = 0$. A straight line adds no jump and no corner, so $g$ meets Rolle's conditions.
+Set $`g(x) = f(x) - m x`$ for each input $`x`$. The ends now match: $`g(b) - g(a) = (f(b) - f(a)) - m(b - a) = 0`$. A straight line adds no jump and no corner, so $`g`$ meets Rolle's conditions.
 
-Rolle gives an inside $c$ with $g'(c) = 0$. Since $g'(x) = f'(x) - m$, that says $f'(c) = m$.
+Rolle gives an inside $`c`$ with $`g'(c) = 0`$. Since $`g'(x) = f'(x) - m`$, that says $`f'(c) = m`$.
 
-For the train, $g$ is the lead over a steady 100 km/h. Where the lead stops shrinking and starts growing, the train is doing exactly 100.
+For the train, $`g`$ is the lead over a steady 100 km/h. Where the lead stops shrinking and starts growing, the train is doing exactly 100.
 
 ### Step 3: zero derivative means constant
 
-Suppose $f'(x) = 0$ at every point of a stretch with no gaps. Pick any two points $a < b$ in it. Steps 0 to 2 apply on $[a, b]$, so
+Suppose $`f'(x) = 0`$ at every point of a stretch with no gaps. Pick any two points $`a < b`$ in it. Steps 0 to 2 apply on $`[a, b]`$, so
 
-$$f(b) - f(a) = f'(c)\,(b - a) = 0 \times (b - a) = 0.$$
+```math
+f(b) - f(a) = f'(c)\,(b - a) = 0 \times (b - a) = 0.
+```
 
-So $f$ is constant. A train at zero speed for a whole hour did not move. Likewise two trains with identical speed records stay a fixed distance apart: their difference has derivative 0. That is why an antiderivative is fixed up to one added constant.
+So $`f`$ is constant. A train at zero speed for a whole hour did not move. Likewise two trains with identical speed records stay a fixed distance apart: their difference has derivative 0. That is why an antiderivative is fixed up to one added constant.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Interior extremum.** Let $f$ be lowest on $(a, b)$ at $c$, with $f'(c)$ existing. For every step $h \ne 0$ keeping $c + h$ in the stretch, $f(c + h) - f(c) \ge 0$, so the quotient by $h$ is $\ge 0$ for $h > 0$ and $\le 0$ for $h < 0$. Given any $\varepsilon > 0$, the derivative's definition gives a distance within which every quotient lies within $\varepsilon$ of $f'(c)$. One step of each sign inside it gives $-\varepsilon < f'(c) < \varepsilon$; as $\varepsilon$ is arbitrary, $f'(c) = 0$. A highest value reverses the inequalities.
+**Interior extremum.** Let $`f`$ be lowest on $`(a, b)`$ at $`c`$, with $`f'(c)`$ existing. For every step $`h \ne 0`$ keeping $`c + h`$ in the stretch, $`f(c + h) - f(c) \ge 0`$, so the quotient by $`h`$ is $`\ge 0`$ for $`h > 0`$ and $`\le 0`$ for $`h < 0`$. Given any $`\varepsilon > 0`$, the derivative's definition gives a distance within which every quotient lies within $`\varepsilon`$ of $`f'(c)`$. One step of each sign inside it gives $`-\varepsilon < f'(c) < \varepsilon`$; as $`\varepsilon`$ is arbitrary, $`f'(c) = 0`$. A highest value reverses the inequalities.
 
-**The rest.** Rolle, the theorem and constancy then follow exactly as in Steps 1 to 3, which use nothing beyond this step and the extreme value theorem. For constancy, a derivative at every point forces continuity there, so $[a, b]$ meets the conditions; on a domain with a gap no such $[a, b]$ spans the gap.
+**The rest.** Rolle, the theorem and constancy then follow exactly as in Steps 1 to 3, which use nothing beyond this step and the extreme value theorem. For constancy, a derivative at every point forces continuity there, so $`[a, b]`$ meets the conditions; on a domain with a gap no such $`[a, b]`$ spans the gap.
 
 </details>
 
@@ -136,15 +142,15 @@ The same tilt, with two functions, gives Cauchy's version, behind [L'Hopital's r
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| positions at the ends | $s(0) = 0$, $s(1) = 100(3 - 2)$ | 0 km and 100 km |
+| positions at the ends | $`s(0) = 0`$, $`s(1) = 100(3 - 2)`$ | 0 km and 100 km |
 | average rate | (100 − 0) ÷ (1 − 0) | 100 km/h |
-| speed | derivative of $100(3t^2 - 2t^3)$ | $600t - 600t^2$ km/h |
-| set speed equal to the average | $600t - 600t^2 = 100$, so $6t^2 - 6t + 1 = 0$ | a quadratic |
-| quadratic formula | $t = (6 \pm \sqrt{36 - 24})/12 = (3 \pm \sqrt{3})/6$ | two roots |
+| speed | derivative of $`100(3t^2 - 2t^3)`$ | $`600t - 600t^2`$ km/h |
+| set speed equal to the average | $`600t - 600t^2 = 100`$, so $`6t^2 - 6t + 1 = 0`$ | a quadratic |
+| quadratic formula | $`t = (6 \pm \sqrt{36 - 24})/12 = (3 \pm \sqrt{3})/6`$ | two roots |
 | with √3 = 1.732051 | (3 − 1.732051) ÷ 6 and (3 + 1.732051) ÷ 6 | **0.211325 h and 0.788675 h** |
 | in minutes | times 60 | **12.68 min and 47.32 min** |
-| positions then | $s$ at each time | 11.51 km and 88.49 km |
-| lead over steady 100 km/h | $s(t) - 100t$ at each time | −9.62 km and +9.62 km |
+| positions then | $`s`$ at each time | 11.51 km and 88.49 km |
+| lead over steady 100 km/h | $`s(t) - 100t`$ at each time | −9.62 km and +9.62 km |
 
 The train passes 100 km/h accelerating at 11.51 km and braking at 88.49 km.
 
@@ -153,7 +159,7 @@ The train passes 100 km/h accelerating at 11.51 km and braking at 88.49 km.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | A corner: 200 km/h for 30 min, then stopped | average 100; speed 200, then 0, never 100 | no derivative at 30 minutes |
-| A jump: 0 km until the last instant, then 100 km | average 100; speed 0 at every inside time | not continuous at the end $b$ |
+| A jump: 0 km until the last instant, then 100 km | average 100; speed 0 at every inside time | not continuous at the end $`b`$ |
 | A gap at 30 min: at 0 km before, 100 km after | rate 0 everywhere it exists; values 0 and 100 | zero derivative gives constant only on one unbroken stretch |
 
 The code prints all three.
@@ -346,8 +352,8 @@ The two outputs are identical.
 
 Lean proves three theorems, for every function on the real numbers that meets their conditions.
 
-- The mean value theorem: continuous on $[a, b]$ and differentiable on $(a, b)$ gives an inside $c$ with $f'(c) = (f(b) - f(a))/(b - a)$.
-- Rolle's theorem: with the same conditions and $f(a) = f(b)$, some inside point has a flat tangent, $f'(c) = 0$.
+- The mean value theorem: continuous on $`[a, b]`$ and differentiable on $`(a, b)`$ gives an inside $`c`$ with $`f'(c) = (f(b) - f(a))/(b - a)`$.
+- Rolle's theorem: with the same conditions and $`f(a) = f(b)`$, some inside point has a flat tangent, $`f'(c) = 0`$.
 - A derivative of 0 at every point of one unbroken stretch means the function is constant there.
 
 The train's exact arithmetic is checked too; the decimals, bisection, grid search and difference quotients are left to the Python and Rust checks.
@@ -442,7 +448,7 @@ example : ((200 : ℚ) * (1 / 2) - 0) / (1 - 0) = 100 := by norm_num
 > **Reading the theorem as "the speed was 100 at the halfway time".** It promises a time, not which one: this train does 150 km/h at 30 minutes.
 >
 > - **Checking only for jumps.** The corner trip has none and never shows 100 km/h.
-> - **Expecting a formula for c.** The theorem proves $c$ exists; finding it is separate work, here a quadratic and a bisection.
+> - **Expecting a formula for c.** The theorem proves $`c`$ exists; finding it is separate work, here a quadratic and a bisection.
 
 ---
 

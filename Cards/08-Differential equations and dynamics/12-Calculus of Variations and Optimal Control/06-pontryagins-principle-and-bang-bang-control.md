@@ -34,47 +34,55 @@ Orange: full throttle, then full brake from 7.07 s. Teal: half throttle, then ha
 
 ## The formula
 
-Notation first. The **state** $x$ lists what the rate law tracks: for the car, $x_1$ is position and $x_2$ speed. The **costate** $p$ has one entry per state entry. The dot in $p \cdot f$ multiplies entries in pairs and adds.
+Notation first. The **state** $`x`$ lists what the rate law tracks: for the car, $`x_1`$ is position and $`x_2`$ speed. The **costate** $`p`$ has one entry per state entry. The dot in $`p \cdot f`$ multiplies entries in pairs and adds.
 
-The problem: steer $x' = f(x, u)$ from a start to a target, keeping the control $u$ in its allowed set $U$, and make the total cost smallest, where $L$ is the cost paid per second:
+The problem: steer $`x' = f(x, u)`$ from a start to a target, keeping the control $`u`$ in its allowed set $`U`$, and make the total cost smallest, where $`L`$ is the cost paid per second:
 
-$$J = \int_0^T L(x, u)\,dt .$$
+```math
+J = \int_0^T L(x, u)\,dt .
+```
 
 The control Hamiltonian is
 
-$$H(x, p, u) = p \cdot f(x, u) - L(x, u).$$
+```math
+H(x, p, u) = p \cdot f(x, u) - L(x, u).
+```
 
 **Pontryagin's maximum principle.** If the control u* and its path x* are best, there are prices p(t) such that
 
-$$x' = \frac{\partial H}{\partial p}, \qquad p' = -\frac{\partial H}{\partial x}, \qquad H(x^*, p, u^*) = \max_{u \in U} H(x^*, p, u),$$
+```math
+x' = \frac{\partial H}{\partial p}, \qquad p' = -\frac{\partial H}{\partial x}, \qquad H(x^*, p, u^*) = \max_{u \in U} H(x^*, p, u),
+```
 
-and, when the arrival time $T$ is free, $H = 0$ at every instant along the path. (In rare "abnormal" problems, L enters H with weight 0 instead of 1.)
+and, when the arrival time $`T`$ is free, $`H = 0`$ at every instant along the path. (In rare "abnormal" problems, L enters H with weight 0 instead of 1.)
 
 **Read it aloud:** the state moves by its rate law, the prices by the mirror rule, and each instant's control gives the largest priced progress minus running cost.
 
-For the car, $f = (x_2, u)$, $L = 1$ (the cost is elapsed time) and $a = 2$ m/s^2:
+For the car, $`f = (x_2, u)`$, $`L = 1`$ (the cost is elapsed time) and $`a = 2`$ m/s^2:
 
-$$H = p_1 x_2 + p_2 u - 1, \qquad \sigma = p_2, \qquad u^* = \pm a \text{ as } \sigma \gtrless 0 .$$
+```math
+H = p_1 x_2 + p_2 u - 1, \qquad \sigma = p_2, \qquad u^* = \pm a \text{ as } \sigma \gtrless 0 .
+```
 
-The **switching function** $\sigma$, the coefficient of u in H, picks the pedal by its sign.
+The **switching function** $`\sigma`$, the coefficient of u in H, picks the pedal by its sign.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $T$, $t_s$ | time; arrival; switch, in s | 14.14 s; 7.07 s | — |
-| $x$, $x_1$, $x_2$ | state: position (m), speed (m/s) | (0, 0) to (100, 0) | — |
-| $u$, $U$, $a$ | control (acceleration); allowed set; cap, m/s^2 | ±2; [−2, 2]; 2 | T falls as 1/√a |
-| $D$ | distance to the bay | 100 m | T grows as √D |
-| $f$, $L$, $J$ | rate law; running cost; total cost | ($x_2$, u); 1; T | — |
-| $p$, $p_1$, $p_2$ | costate: seconds saved per unit of state | 0.0707 s/m; 0.5 to −0.5 s^2/m | — |
-| $H$ | control Hamiltonian | zero all along | — |
-| $\sigma$ | switching function | 0.5 − 0.0707t | — |
+| $`t`$, $`T`$, $`t_s`$ | time; arrival; switch, in s | 14.14 s; 7.07 s | — |
+| $`x`$, $`x_1`$, $`x_2`$ | state: position (m), speed (m/s) | (0, 0) to (100, 0) | — |
+| $`u`$, $`U`$, $`a`$ | control (acceleration); allowed set; cap, m/s^2 | ±2; [−2, 2]; 2 | T falls as 1/√a |
+| $`D`$ | distance to the bay | 100 m | T grows as √D |
+| $`f`$, $`L`$, $`J`$ | rate law; running cost; total cost | ($`x_2`$, u); 1; T | — |
+| $`p`$, $`p_1`$, $`p_2`$ | costate: seconds saved per unit of state | 0.0707 s/m; 0.5 to −0.5 s^2/m | — |
+| $`H`$ | control Hamiltonian | zero all along | — |
+| $`\sigma`$ | switching function | 0.5 − 0.0707t | — |
 
 ### When it holds
 
 - **The rate law is smooth in the state.** The mirror rule differentiates f and L; a kink such as dry friction needs a generalised version.
 - **A best control exists.** Drop the cap and none does: a = 200 m/s^2 parks in 1.41 s, and larger caps are faster still.
 - **Necessary, not sufficient.** The conditions name candidates; one must still be shown best, by a direct bound (Step 5), convexity, or the value function of [The HJB equation](08-the-hjb-equation-and-the-linear-quadratic-regulator.md).
-- **The switching function has isolated zeros.** If $\sigma$ stays zero for a stretch, a **singular arc**, every setting ties and extra conditions decide.
+- **The switching function has isolated zeros.** If $`\sigma`$ stays zero for a stretch, a **singular arc**, every setting ties and extra conditions decide.
 
 ---
 
@@ -82,13 +90,15 @@ The **switching function** $\sigma$, the coefficient of u in H, picks the pedal 
 
 ### Step 0: price the state
 
-A small head start, a metre closer or an extra m/s, saves some seconds. Those exchange rates are the costate. H is priced progress, $p \cdot f$, minus the cost being paid, L.
+A small head start, a metre closer or an extra m/s, saves some seconds. Those exchange rates are the costate. H is priced progress, $`p \cdot f`$, minus the cost being paid, L.
 
 ### Step 1: the prices run by the mirror rule
 
 A head start δx, a small change of state, travels forward by the linearised law, δx' = (∂f/∂x) δx: extra speed becomes extra metres. Its worth cannot depend on when it is counted, so p · δx stays constant. Differentiating, with L's own dependence on x, gives p' = −∂H/∂x, the mirror rule of [Hamilton's equations](05-hamiltons-equations.md). For the car, ∂H/∂x_1 = 0 and ∂H/∂x_2 = p_1, so
 
-$$p_1' = 0, \qquad p_2' = -p_1 .$$
+```math
+p_1' = 0, \qquad p_2' = -p_1 .
+```
 
 A metre is worth the same throughout; extra speed is worth less near the finish.
 
@@ -109,9 +119,9 @@ Arriving δT later costs δT seconds and gains priced progress p · f δT; at th
 
 ### Step 4: solve the car
 
-H = p_1 x_2 + p_2 u − 1 is a straight line in u, largest at u = +2 when p_2 > 0 and at −2 when p_2 < 0. By Step 1, $p_2 = p_2(0) - p_1 t$ is a straight line in t, so it changes sign at most once: +2, one switch, −2.
+H = p_1 x_2 + p_2 u − 1 is a straight line in u, largest at u = +2 when p_2 > 0 and at −2 when p_2 < 0. By Step 1, $`p_2 = p_2(0) - p_1 t`$ is a straight line in t, so it changes sign at most once: +2, one switch, −2.
 
-By symmetry the switch falls at half the distance: ½ × 2 × $t_s^2$ = 50, so $t_s$ = 7.07 s and T = 14.14 s. At t = 0 the speed is 0 and H = 0, so p_2(0) = 0.5. At the switch p_2 = 0, so p_1 = 0.5 / 7.07 = 0.0707 s/m. In general the state is known at both ends and the prices at neither, a **two-point boundary-value problem**; here symmetry and H = 0 solve it by hand.
+By symmetry the switch falls at half the distance: ½ × 2 × $`t_s^2`$ = 50, so $`t_s`$ = 7.07 s and T = 14.14 s. At t = 0 the speed is 0 and H = 0, so p_2(0) = 0.5. At the switch p_2 = 0, so p_1 = 0.5 / 7.07 = 0.0707 s/m. In general the state is known at both ends and the prices at neither, a **two-point boundary-value problem**; here symmetry and H = 0 solve it by hand.
 
 They are real exchange rates: the best time from d metres out at speed v0 is (2√(a d + v0^2/2) − v0) / a, which moves 0.0707 s per metre of d and −0.5 s per m/s of v0.
 
@@ -133,11 +143,11 @@ A grid search over five pedal settings per step finds 14.20, 14.16 and 14.15 s o
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| switch at half the distance | ½ × 2 × $t_s^2$ = 50 | $t_s$ = 7.07 s |
+| switch at half the distance | ½ × 2 × $`t_s^2`$ = 50 | $`t_s`$ = 7.07 s |
 | speed at the switch | 2 × 7.07 | 14.14 m/s |
 | arrival | 2 × 7.07 | **T = 14.14 s** |
-| H = 0 at the start | $p_2(0)$ × 2 − 1 = 0 | $p_2(0)$ = 0.5 s^2/m |
-| $p_2$ = 0 at the switch | 0.5 / 7.07 | $p_1$ = 0.0707 s/m |
+| H = 0 at the start | $`p_2(0)`$ × 2 − 1 = 0 | $`p_2(0)`$ = 0.5 s^2/m |
+| $`p_2`$ = 0 at the switch | 0.5 / 7.07 | $`p_1`$ = 0.0707 s/m |
 | switching function at 3 s, 10 s | 0.5 − 0.0707t | +0.2879; −0.2071 |
 
 Floor it to the 50 m mark, then brake hard: parked at 14.14 s.
@@ -357,10 +367,10 @@ The two outputs match line for line.
 
 Lean proves the tent bound and the bang-bang plan for every cap and distance, and the limit rule for any nonzero switching function.
 
-- Take a car going from rest at 0 to rest at D at time T, its speed changing by at most a per second. Then T is at least $2\sqrt{D/a}$.
-- Take $T = 2\sqrt{D/a}$, with full throttle until $T/2$ and full brake after. Then the speed changes by at most a per second, starts and ends at 0, and covers exactly D.
-- Take a control u between $-a$ and $a$, entering H in a straight line, with switching function $\sigma$ not zero. Then u maximises H exactly when it is $+a$ for $\sigma > 0$ and $-a$ for $\sigma < 0$.
-- The hand arithmetic checks out exactly. That includes $T^2 = 200$, $p_2(0) = 0.5$, half throttle's 20 s, the 15 s capped plan and the 128 m stop.
+- Take a car going from rest at 0 to rest at D at time T, its speed changing by at most a per second. Then T is at least $`2\sqrt{D/a}`$.
+- Take $`T = 2\sqrt{D/a}`$, with full throttle until $`T/2`$ and full brake after. Then the speed changes by at most a per second, starts and ends at 0, and covers exactly D.
+- Take a control u between $`-a`$ and $`a`$, entering H in a straight line, with switching function $`\sigma`$ not zero. Then u maximises H exactly when it is $`+a`$ for $`\sigma > 0`$ and $`-a`$ for $`\sigma < 0`$.
+- The hand arithmetic checks out exactly. That includes $`T^2 = 200`$, $`p_2(0) = 0.5`$, half throttle's 20 s, the 15 s capped plan and the 128 m stop.
 
 The costate prices, grid search, Euler runs and rolling start are left to the Python and Rust checks; neither proves the general principle.
 
@@ -545,7 +555,7 @@ example : (2 : ℚ) * 8 ^ 2 / 2 + (2 * 8) ^ 2 / (2 * 2) = 128 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **A bay four times as far.** Set D to 400.0. T doubles to 28.2843 s; $p_1$ halves to 0.035355 s/m; $p_2(0)$ stays 0.5.
+> - **A bay four times as far.** Set D to 400.0. T doubles to 28.2843 s; $`p_1`$ halves to 0.035355 s/m; $`p_2(0)`$ stays 0.5.
 > - **Only the extremes.** Offer the grid (−2, 0, 2). It returns 14.200, 14.160 and 14.150 s, unchanged.
 > - **Only gentle settings.** Offer (−1, 0, 1). The grid finds 20.000 s, the half-throttle plan, and the first assert stops the run.
 
@@ -557,7 +567,7 @@ example : (2 : ℚ) * 8 ^ 2 / 2 + (2 * 8) ^ 2 / (2 * 2) = 128 := by norm_num
 > **Taking the principle's answer as proved best.** The conditions only list candidates; a candidate can lose, or no best plan exist.
 >
 > - **Switching at half the time.** From a rolling start of 10 m/s the best time is 10.81 s, yet the switch comes at 2.91 s. Only rest to rest is symmetric.
-> - **Minimising H.** With H = p · f − L the best control maximises; minimising picks u = −2 while $p_2$ is positive, and the car reverses.
+> - **Minimising H.** With H = p · f − L the best control maximises; minimising picks u = −2 while $`p_2`$ is positive, and the car reverses.
 > - **Forgetting H = 0.** The prices are then fixed only up to a common factor.
 
 ---

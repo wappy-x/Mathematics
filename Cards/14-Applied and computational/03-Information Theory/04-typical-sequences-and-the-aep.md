@@ -40,51 +40,57 @@ Orange: records of 100 days. Green: records of 1,000 days. A record's surprise p
 
 ## The formula
 
-Start with one reading. Its **surprise** is $s(x) = -\log_2 p(x)$: minus the base-2 logarithm of its chance $p(x)$, in bits. A sunny day, chance 1/2, carries 1 bit of surprise. Cloudy, 1/4, carries 2 bits. Rain and snow, 1/8 each, carry 3 bits.
+Start with one reading. Its **surprise** is $`s(x) = -\log_2 p(x)`$: minus the base-2 logarithm of its chance $`p(x)`$, in bits. A sunny day, chance 1/2, carries 1 bit of surprise. Cloudy, 1/4, carries 2 bits. Rain and snow, 1/8 each, carry 3 bits.
 
-The entropy $H$, written $H(X)$ on the [Entropy](01-entropy.md) card, is the average surprise: $\tfrac12 \cdot 1 + \tfrac14 \cdot 2 + \tfrac18 \cdot 3 + \tfrac18 \cdot 3 = 1.75$ bits.
+The entropy $`H`$, written $`H(X)`$ on the [Entropy](01-entropy.md) card, is the average surprise: $`\tfrac12 \cdot 1 + \tfrac14 \cdot 2 + \tfrac18 \cdot 3 + \tfrac18 \cdot 3 = 1.75`$ bits.
 
-A **record** is $n$ readings in a row, written $x^n = (x_1, x_2, \dots, x_n)$. Here $n$ counts days; on the [Entropy](01-entropy.md) card it counted outcomes. The days are independent, so its chance is the product $p(x^n) = p(x_1)\,p(x_2) \cdots p(x_n)$. The capital $X_i$ is the reading on day $i$ before it is seen: a random variable. The equipartition property says:
+A **record** is $`n`$ readings in a row, written $`x^n = (x_1, x_2, \dots, x_n)`$. Here $`n`$ counts days; on the [Entropy](01-entropy.md) card it counted outcomes. The days are independent, so its chance is the product $`p(x^n) = p(x_1)\,p(x_2) \cdots p(x_n)`$. The capital $`X_i`$ is the reading on day $`i`$ before it is seen: a random variable. The equipartition property says:
 
-$$-\frac{1}{n}\log_2 p(X_1, X_2, \dots, X_n) \;\longrightarrow\; H \quad \text{in probability}$$
+```math
+-\frac{1}{n}\log_2 p(X_1, X_2, \dots, X_n) \;\longrightarrow\; H \quad \text{in probability}
+```
 
 **Read it aloud:** the surprise of a random record, per reading, lands close to the entropy with a chance that tends to 1 as the record grows.
 
 "In probability" means: for any tolerance, the chance of missing by that much goes to zero.
 
-Pick a tolerance $\varepsilon$ (Greek epsilon), here 0.05 bits a day. The **typical set** $A$ is every record whose surprise per day is within $\varepsilon$ of $H$:
+Pick a tolerance $`\varepsilon`$ (Greek epsilon), here 0.05 bits a day. The **typical set** $`A`$ is every record whose surprise per day is within $`\varepsilon`$ of $`H`$:
 
-$$A = \Big\{\, x^n \;:\; 2^{-n(H+\varepsilon)} \le p(x^n) \le 2^{-n(H-\varepsilon)} \,\Big\}$$
+```math
+A = \Big\{\, x^n \;:\; 2^{-n(H+\varepsilon)} \le p(x^n) \le 2^{-n(H-\varepsilon)} \,\Big\}
+```
 
-**Read it aloud:** a record is typical when its chance lies between 2 to the minus $n(H+\varepsilon)$ and 2 to the minus $n(H-\varepsilon)$.
+**Read it aloud:** a record is typical when its chance lies between 2 to the minus $`n(H+\varepsilon)`$ and 2 to the minus $`n(H-\varepsilon)`$.
 
-For the station, a 1,000-day record is typical when its chance lies between 2^−1800 and 2^−1700. The card proves three promises about $A$:
+For the station, a 1,000-day record is typical when its chance lies between 2^−1800 and 2^−1700. The card proves three promises about $`A`$:
 
-$$P(A) \ge 1 - \frac{\sigma^2}{n\varepsilon^2}, \qquad |A| \le 2^{n(H+\varepsilon)}, \qquad |A| \ge P(A)\, 2^{n(H-\varepsilon)}$$
+```math
+P(A) \ge 1 - \frac{\sigma^2}{n\varepsilon^2}, \qquad |A| \le 2^{n(H+\varepsilon)}, \qquad |A| \ge P(A)\, 2^{n(H-\varepsilon)}
+```
 
-**Read it aloud:** the typical set holds nearly all the chance, and it has between about $2^{n(H-\varepsilon)}$ and $2^{n(H+\varepsilon)}$ members.
+**Read it aloud:** the typical set holds nearly all the chance, and it has between about $`2^{n(H-\varepsilon)}`$ and $`2^{n(H+\varepsilon)}`$ members.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $X_i$ | one reading; the reading on day $i$, before it is seen | sunny, cloudy, rain, snow | — |
-| $p(x)$ | the chance of one reading | 1/2, 1/4, 1/8, 1/8 | — |
-| $s(x)$, $Y_i$ | its surprise, $-\log_2 p(x)$, in bits; the fold writes $Y_i = s(X_i)$ for day $i$'s surprise and $E[Y_i]$ for its average | 1, 2, 3, 3; $E[Y_i] = H$ | — |
-| $n$ | days in the record | 1,000 | more of the chance is typical |
-| $x^n$, $p(x^n)$ | a whole record, and its chance | 500 sunny, 250 cloudy, 125 rain, 125 snow: $2^{-1750}$ | — |
-| $L$ | a record's total surprise, $-\log_2 p(x^n)$, in bits | 1,750 for that record | its chance halves per extra bit |
-| $H$ | the entropy: the average surprise of one reading | 1.75 bits | every count grows as $2^{nH}$ |
-| $\sigma^2$ | the variance of one reading's surprise | 0.6875 | the miss bound rises with it |
-| $\varepsilon$ | the window's half-width, bits per day | 0.05 | more chance is typical, and the bounds on the count spread apart |
-| $A$, $\lvert A\rvert$, $P(A)$ | the typical set, its member count, the chance a record lands in it | — , $2^{1792.45}$, 0.9459 | — |
-| $B$ | any other set of records, used in the converse | the $2^{1650}$ most likely records | — |
+| $`x`$, $`X_i`$ | one reading; the reading on day $`i`$, before it is seen | sunny, cloudy, rain, snow | — |
+| $`p(x)`$ | the chance of one reading | 1/2, 1/4, 1/8, 1/8 | — |
+| $`s(x)`$, $`Y_i`$ | its surprise, $`-\log_2 p(x)`$, in bits; the fold writes $`Y_i = s(X_i)`$ for day $`i`$'s surprise and $`E[Y_i]`$ for its average | 1, 2, 3, 3; $`E[Y_i] = H`$ | — |
+| $`n`$ | days in the record | 1,000 | more of the chance is typical |
+| $`x^n`$, $`p(x^n)`$ | a whole record, and its chance | 500 sunny, 250 cloudy, 125 rain, 125 snow: $`2^{-1750}`$ | — |
+| $`L`$ | a record's total surprise, $`-\log_2 p(x^n)`$, in bits | 1,750 for that record | its chance halves per extra bit |
+| $`H`$ | the entropy: the average surprise of one reading | 1.75 bits | every count grows as $`2^{nH}`$ |
+| $`\sigma^2`$ | the variance of one reading's surprise | 0.6875 | the miss bound rises with it |
+| $`\varepsilon`$ | the window's half-width, bits per day | 0.05 | more chance is typical, and the bounds on the count spread apart |
+| $`A`$, $`\lvert A\rvert`$, $`P(A)`$ | the typical set, its member count, the chance a record lands in it | — , $`2^{1792.45}`$, 0.9459 | — |
+| $`B`$ | any other set of records, used in the converse | the $`2^{1650}`$ most likely records | — |
 
 ### When it holds
 
 - **Independent readings.** Each day must tell nothing about the next. A stuck station that repeats its first reading for all 1,000 days sends a record whose surprise per day, by the independent formula, is 1.00, 2.00 or 3.00 bits: never in the window. The chance of a typical record is 0.
 - **The same chances every day.** The average surprise settles on the average of the daily entropies. If the chances drift with the seasons, it settles there, not on 1.75.
-- **Readings that depend on yesterday.** The property survives for a source whose statistics do not change over time and whose long runs reflect its long-run averages (a stationary ergodic source). Then $H$ becomes the **entropy rate**: the bits per reading once the past is known. This is the Shannon–McMillan–Breiman theorem, stated here and not proved.
-- **A finite variance of the surprise, for this proof.** Chebyshev's inequality, the bound used in Step 2, needs $\sigma^2$. With four readings it is 0.6875; a finite alphabet always has one.
-- **A long record.** The promises speak about large $n$. At 100 days only 0.4924 of the chance is typical.
+- **Readings that depend on yesterday.** The property survives for a source whose statistics do not change over time and whose long runs reflect its long-run averages (a stationary ergodic source). Then $`H`$ becomes the **entropy rate**: the bits per reading once the past is known. This is the Shannon–McMillan–Breiman theorem, stated here and not proved.
+- **A finite variance of the surprise, for this proof.** Chebyshev's inequality, the bound used in Step 2, needs $`\sigma^2`$. With four readings it is 0.6875; a finite alphabet always has one.
+- **A long record.** The promises speak about large $`n`$. At 100 days only 0.4924 of the chance is typical.
 
 ---
 
@@ -92,21 +98,23 @@ $$P(A) \ge 1 - \frac{\sigma^2}{n\varepsilon^2}, \qquad |A| \le 2^{n(H+\varepsilo
 
 ### Step 0: chances multiply, so surprises add, so the law of large numbers applies
 
-The chance of a record is a product of daily chances, because the days are independent. A logarithm turns a product into a sum. So a record's surprise is the sum of its days' surprises. Its surprise per day is an average of independent numbers, each with mean $H$. The weak law of large numbers pins such an average near its mean. That is the whole idea. The rest is counting.
+The chance of a record is a product of daily chances, because the days are independent. A logarithm turns a product into a sum. So a record's surprise is the sum of its days' surprises. Its surprise per day is an average of independent numbers, each with mean $`H`$. The weak law of large numbers pins such an average near its mean. That is the whole idea. The rest is counting.
 
 ### Step 1: a record's surprise is the sum of its days
 
-Take the record with 500 sunny, 250 cloudy, 125 rain and 125 snow days. Its total surprise is $500 \times 1 + 250 \times 2 + 250 \times 3 = 1{,}750$ bits, so its chance is $2^{-1750}$. Order does not matter: any record with the same mix has the same chance.
+Take the record with 500 sunny, 250 cloudy, 125 rain and 125 snow days. Its total surprise is $`500 \times 1 + 250 \times 2 + 250 \times 3 = 1{,}750`$ bits, so its chance is $`2^{-1750}`$. Order does not matter: any record with the same mix has the same chance.
 
-Every record's chance is $2^{-L}$, where $L$ is its total surprise. So "chance near $2^{-1750}$" and "surprise near 1.75 bits a day" are the same statement.
+Every record's chance is $`2^{-L}`$, where $`L`$ is its total surprise. So "chance near $`2^{-1750}`$" and "surprise near 1.75 bits a day" are the same statement.
 
 ### Step 2: the weak law pins the surprise per day
 
-The [Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md) proves, from Chebyshev's inequality, that an average of $n$ independent draws with variance $\sigma^2$ misses its mean by $\varepsilon$ or more with chance at most $\sigma^2/(n\varepsilon^2)$.
+The [Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md) proves, from Chebyshev's inequality, that an average of $`n`$ independent draws with variance $`\sigma^2`$ misses its mean by $`\varepsilon`$ or more with chance at most $`\sigma^2/(n\varepsilon^2)`$.
 
-Here the draws are the daily surprises. Their mean is $H = 1.75$. Their mean square is $\tfrac12 \cdot 1 + \tfrac14 \cdot 4 + \tfrac14 \cdot 9 = 3.75$, so their variance is $3.75 - 1.75^2 = 0.6875$. With 1,000 days and a window of 0.05:
+Here the draws are the daily surprises. Their mean is $`H = 1.75`$. Their mean square is $`\tfrac12 \cdot 1 + \tfrac14 \cdot 4 + \tfrac14 \cdot 9 = 3.75`$, so their variance is $`3.75 - 1.75^2 = 0.6875`$. With 1,000 days and a window of 0.05:
 
-$$P(\text{not typical}) \le \frac{0.6875}{1000 \times 0.05^2} = 0.2750, \qquad P(A) \ge 0.7250$$
+```math
+P(\text{not typical}) \le \frac{0.6875}{1000 \times 0.05^2} = 0.2750, \qquad P(A) \ge 0.7250
+```
 
 The exact chance, computed in the code, is 0.9459. Chebyshev gives a floor, not the answer. Both rise toward 1 as the record grows:
 
@@ -124,41 +132,41 @@ Orange: the exact chance. Green: Chebyshev's floor, which is zero at 100 and 200
 
 ### Step 3: the count has a ceiling
 
-Every typical record has chance at least $2^{-1800}$. All records together have chance 1. So there cannot be more than $2^{1800}$ typical records: more would add up to more than 1. In general, $|A| \le 2^{n(H+\varepsilon)}$.
+Every typical record has chance at least $`2^{-1800}`$. All records together have chance 1. So there cannot be more than $`2^{1800}`$ typical records: more would add up to more than 1. In general, $`|A| \le 2^{n(H+\varepsilon)}`$.
 
 ### Step 4: the count has a floor
 
-Every typical record has chance at most $2^{-1700}$. Together they hold 0.9459 of the chance. So there are at least $0.9459 \times 2^{1700}$ of them, which is $2^{1699.92}$. In general, $|A| \ge P(A)\,2^{n(H-\varepsilon)}$.
+Every typical record has chance at most $`2^{-1700}`$. Together they hold 0.9459 of the chance. So there are at least $`0.9459 \times 2^{1700}`$ of them, which is $`2^{1699.92}`$. In general, $`|A| \ge P(A)\,2^{n(H-\varepsilon)}`$.
 
-The true count, $2^{1792.45}$, sits near the ceiling. Inside the window, one more bit of total surprise halves a record's chance but roughly doubles the number of records with that total. So the records near 1.80 bits a day far outnumber those near 1.70, and the count leans to the top of the window.
+The true count, $`2^{1792.45}`$, sits near the ceiling. Inside the window, one more bit of total surprise halves a record's chance but roughly doubles the number of records with that total. So the records near 1.80 bits a day far outnumber those near 1.70, and the count leans to the top of the window.
 
 <details>
 <summary>Detailed proof of the three promises</summary>
 
-Let $Y_i = s(X_i) = -\log_2 p(X_i)$. The $Y_i$ are independent, with mean $E[Y_i] = \sum_x p(x)\,s(x) = H$ and variance $\sigma^2$. By independence, $-\frac1n \log_2 p(X_1, \dots, X_n) = \frac1n \sum_{i=1}^n Y_i$.
+Let $`Y_i = s(X_i) = -\log_2 p(X_i)`$. The $`Y_i`$ are independent, with mean $`E[Y_i] = \sum_x p(x)\,s(x) = H`$ and variance $`\sigma^2`$. By independence, $`-\frac1n \log_2 p(X_1, \dots, X_n) = \frac1n \sum_{i=1}^n Y_i`$.
 
-**Chance.** Chebyshev applied to this average gives $P\big(\lvert \frac1n \sum Y_i - H\rvert \ge \varepsilon\big) \le \sigma^2/(n\varepsilon^2)$. A record outside $A$ has $\lvert \frac1n \sum Y_i - H\rvert > \varepsilon$, so $P(A) \ge 1 - \sigma^2/(n\varepsilon^2)$, which tends to 1.
+**Chance.** Chebyshev applied to this average gives $`P\big(\lvert \frac1n \sum Y_i - H\rvert \ge \varepsilon\big) \le \sigma^2/(n\varepsilon^2)`$. A record outside $`A`$ has $`\lvert \frac1n \sum Y_i - H\rvert > \varepsilon`$, so $`P(A) \ge 1 - \sigma^2/(n\varepsilon^2)`$, which tends to 1.
 
-**Ceiling.** $1 = \sum_{\text{all } x^n} p(x^n) \ge \sum_{x^n \in A} p(x^n) \ge |A|\,2^{-n(H+\varepsilon)}$, so $|A| \le 2^{n(H+\varepsilon)}$.
+**Ceiling.** $`1 = \sum_{\text{all } x^n} p(x^n) \ge \sum_{x^n \in A} p(x^n) \ge |A|\,2^{-n(H+\varepsilon)}`$, so $`|A| \le 2^{n(H+\varepsilon)}`$.
 
-**Floor.** $P(A) = \sum_{x^n \in A} p(x^n) \le |A|\,2^{-n(H-\varepsilon)}$, so $|A| \ge P(A)\,2^{n(H-\varepsilon)}$.
+**Floor.** $`P(A) = \sum_{x^n \in A} p(x^n) \le |A|\,2^{-n(H-\varepsilon)}`$, so $`|A| \ge P(A)\,2^{n(H-\varepsilon)}`$.
 
 </details>
 
 ### Step 5: no smaller set will do
 
-Could some cleverer set of records, much smaller than $2^{1750}$, still catch most of the chance? No. Take any set $B$ of at most $2^{n(H-2\varepsilon)} = 2^{1650}$ records. Split it in two.
+Could some cleverer set of records, much smaller than $`2^{1750}`$, still catch most of the chance? No. Take any set $`B`$ of at most $`2^{n(H-2\varepsilon)} = 2^{1650}`$ records. Split it in two.
 
-- Its typical members each have chance at most $2^{-1700}$. There are at most $2^{1650}$ of them, so together they hold at most $2^{1650} \times 2^{-1700} = 2^{-50}$.
-- Its other members hold at most what lies outside $A$: $1 - 0.9459 = 0.0541$.
+- Its typical members each have chance at most $`2^{-1700}`$. There are at most $`2^{1650}`$ of them, so together they hold at most $`2^{1650} \times 2^{-1700} = 2^{-50}`$.
+- Its other members hold at most what lies outside $`A`$: $`1 - 0.9459 = 0.0541`$.
 
-So $B$ holds at most $2^{-50} + 0.0541$, which rounds to 0.0541. The best possible $B$, the $2^{1650}$ most likely records, actually holds 0.000448. In general, a list $2^{2n\varepsilon}$ times shorter than $2^{nH}$ catches at most $2^{-n\varepsilon}$ plus the chance outside $A$, and both shrink to zero as the record grows.
+So $`B`$ holds at most $`2^{-50} + 0.0541`$, which rounds to 0.0541. The best possible $`B`$, the $`2^{1650}`$ most likely records, actually holds 0.000448. In general, a list $`2^{2n\varepsilon}`$ times shorter than $`2^{nH}`$ catches at most $`2^{-n\varepsilon}`$ plus the chance outside $`A`$, and both shrink to zero as the record grows.
 
 ### Step 6: entropy is the cost per reading
 
-A simple code: one flag bit says "typical" or not. A typical record is then sent as its position in a numbered list of $A$: 1,793 bits. Anything else is sent raw: 2,000 bits. On average that costs 1,805.2 bits, or 1.8052 bits a day, against 2 bits a day for plain labels.
+A simple code: one flag bit says "typical" or not. A typical record is then sent as its position in a numbered list of $`A`$: 1,793 bits. Anything else is sent raw: 2,000 bits. On average that costs 1,805.2 bits, or 1.8052 bits a day, against 2 bits a day for plain labels.
 
-Step 5 sets the floor. Any list short enough to label in about $n(H - 2\varepsilon)$ bits misses almost all the chance. Step 3 sets the ceiling: about $n(H+\varepsilon)$ bits suffice. Let the window narrow slowly as the record grows and both ends close on $H$. So **$H$ bits per reading is the cost of a long record**: reachable as $n$ grows, and impossible to beat.
+Step 5 sets the floor. Any list short enough to label in about $`n(H - 2\varepsilon)`$ bits misses almost all the chance. Step 3 sets the ceiling: about $`n(H+\varepsilon)`$ bits suffice. Let the window narrow slowly as the record grows and both ends close on $`H`$. So **$`H`$ bits per reading is the cost of a long record**: reachable as $`n`$ grows, and impossible to beat.
 
 The approach is slow. The smallest set holding 95% of the chance costs 1.7859 bits a day at 1,000 days:
 
@@ -173,7 +181,7 @@ xychart-beta
     line [1.75, 1.75, 1.75, 1.75, 1.75, 1.75, 1.75, 1.75, 1.75, 1.75]
 ```
 
-Orange: log2 of the typical set's size, per day, with the window fixed at 0.05. It climbs toward the top of the window, not toward 1.75. Green: the smallest set holding 95% of the chance, falling toward the entropy. Dark: $H$ = 1.75. The smallest set falls toward $H$ for any fixed share of the chance; this is the form of the result that compression uses.
+Orange: log2 of the typical set's size, per day, with the window fixed at 0.05. It climbs toward the top of the window, not toward 1.75. Green: the smallest set holding 95% of the chance, falling toward the entropy. Dark: $`H`$ = 1.75. The smallest set falls toward $`H`$ for any fixed share of the chance; this is the form of the result that compression uses.
 
 For these four chances, all whole powers of one half, a day-by-day code already reaches 1.75 bits ([Huffman coding](05-source-coding-and-huffman.md)); for most sources only long blocks get close.
 
@@ -613,17 +621,17 @@ The two outputs match line for line.
 
 Lean proves the three promises, the equipartition property and Step 5 for any reading with finitely many values, and checks the worked numbers.
 
-- Take independent readings with the same chances every day, each at least 0 and adding to 1. Take a tolerance $\varepsilon > 0$. Then $P(A) \ge 1 - \sigma^2/(n\varepsilon^2)$.
-- Take the same readings and tolerance. Then the typical set has at most $2^{n(H+\varepsilon)}$ members and at least $P(A)\, 2^{n(H-\varepsilon)}$.
-- Take the same readings and tolerance. Then $P(A)$ tends to 1 as the record grows.
-- Take the same readings and any set $B$ of at most $2^{n(H-2\varepsilon)}$ records. Then $B$ holds at most $2^{-n\varepsilon} + 1 - P(A)$ of the chance.
+- Take independent readings with the same chances every day, each at least 0 and adding to 1. Take a tolerance $`\varepsilon > 0`$. Then $`P(A) \ge 1 - \sigma^2/(n\varepsilon^2)`$.
+- Take the same readings and tolerance. Then the typical set has at most $`2^{n(H+\varepsilon)}`$ members and at least $`P(A)\, 2^{n(H-\varepsilon)}`$.
+- Take the same readings and tolerance. Then $`P(A)`$ tends to 1 as the record grows.
+- Take the same readings and any set $`B`$ of at most $`2^{n(H-2\varepsilon)}`$ records. Then $`B`$ holds at most $`2^{-n\varepsilon} + 1 - P(A)`$ of the chance.
 - For the station, the entropy is 1.75 bits and the variance of the surprise is 0.6875.
-- Take records of 1,000 days. Then there are $2^{2000}$ of them, and the window runs from chance $2^{-1800}$ to $2^{-1700}$.
+- Take records of 1,000 days. Then there are $`2^{2000}`$ of them, and the window runs from chance $`2^{-1800}`$ to $`2^{-1700}`$.
 - The centre record has 1,750 bits of surprise, and Chebyshev's floor at 1,000 days is 0.7250.
-- Take $2^{1650}$ records, each of chance at most $2^{-1700}$. Then together they hold at most $2^{-50}$.
-- Take records of 8 days. Then only a total surprise of 14 bits is typical: 2,716 of the 65,536 records, each of chance $2^{-14}$.
+- Take $`2^{1650}`$ records, each of chance at most $`2^{-1700}`$. Then together they hold at most $`2^{-50}`$.
+- Take records of 8 days. Then only a total surprise of 14 bits is typical: 2,716 of the 65,536 records, each of chance $`2^{-14}`$.
 
-The exact chance 0.9459, the count $2^{1792.45}$, the simulation and the codes are left to the Python and Rust checks.
+The exact chance 0.9459, the count $`2^{1792.45}`$, the simulation and the codes are left to the Python and Rust checks.
 
 ```lean
 -- Typical sequences: for independent readings with the same chances every day, the typical records hold at least 1 - σ²/(nε²) of the chance and number between P(A)·2^(n(H-ε)) and 2^(n(H+ε)), the chance of the typical set tends to 1 as the record grows, any set of at most 2^(n(H-2ε)) records holds at most 2^(-nε) plus the chance outside the typical set, and the card's weather numbers are exact.
@@ -997,7 +1005,7 @@ example : (2716 : ℚ) * (2 ^ 14)⁻¹ = 2716 / 16384 := by norm_num
 >
 > - **Reading 2^(nH) as the count.** At 1,000 days with a 0.05 window, the typical set has 2^1792.45 members, not 2^1750: off by a factor of 2^42.5. "About 2^(nH)" is a statement about bits per day as the record grows.
 > - **Natural logs.** The entropy in natural-log units is 1.2130 a day, giving 2^1213. Bits need log2.
-> - **Forgetting independence.** For readings that depend on yesterday, the right $H$ is the entropy rate, not one day's entropy; a stuck station's typical chance is 0.
+> - **Forgetting independence.** For readings that depend on yesterday, the right $`H`$ is the entropy rate, not one day's entropy; a stuck station's typical chance is 0.
 
 ---
 
@@ -1005,7 +1013,7 @@ example : (2716 : ℚ) * (2 ^ 14)⁻¹ = 2716 / 16384 := by norm_num
 
 - **File compression.** Every lossless compressor, from a zip file to an image format, is bounded by this card: it cannot average fewer bits per symbol than the source's entropy rate. Practical coders that get close are [Arithmetic and Lempel-Ziv coding](06-arithmetic-and-lempel-ziv-coding.md).
 - **Radio and mobile links.** The proof that a noisy channel can carry data with almost no errors uses typical records of both what is sent and what is received. That is [Channel capacity](07-channel-capacity-and-the-noisy-channel-theorem.md).
-- **Physics.** A gas's entropy is the logarithm of how many microscopic arrangements match what is measured; $\log_2 |A| \approx nH$ is the same idea for messages. "Equipartition" means the chance is shared almost equally among the typical records.
+- **Physics.** A gas's entropy is the logarithm of how many microscopic arrangements match what is measured; $`\log_2 |A| \approx nH`$ is the same idea for messages. "Equipartition" means the chance is shared almost equally among the typical records.
 
 > **Say it back**
 > A long record of independent readings has a surprise per day that is an average of daily surprises, so the law of large numbers pins it near the entropy H. Every record near that average has chance close to 2^(−nH), so about 2^(nH) of them carry nearly all the chance. For 1,000 days of weather that is 2^1792.45 records holding 94.59% of the chance, out of 2^2000. Numbering them costs about H bits a day, and Step 5 shows that any much smaller list misses almost everything. That is why entropy is the limit for compression.

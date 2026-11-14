@@ -35,9 +35,11 @@ Dara has one taxi, so every split lands in exactly one branch: 1 + 3 + 6 + 5 = 1
 
 ## The formula
 
-Two pieces of notation carry the card, both written as functions rather than with subscripts. $B(n)$, read "B of n", is the number of splits of n named people: the Bell number. $C(n, k)$, read "n choose k", counts the ways to pick k of n, order ignored ([Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md)).
+Two pieces of notation carry the card, both written as functions rather than with subscripts. $`B(n)`$, read "B of n", is the number of splits of n named people: the Bell number. $`C(n, k)`$, read "n choose k", counts the ways to pick k of n, order ignored ([Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md)).
 
-$$B(n+1) = C(n,0)\,B(0) + C(n,1)\,B(1) + \cdots + C(n,n)\,B(n)$$
+```math
+B(n+1) = C(n,0)\,B(0) + C(n,1)\,B(1) + \cdots + C(n,n)\,B(n)
+```
 
 **Read it aloud:** choose who is left out of the newest person's group, split those left out any way at all, and add over how many are left out.
 
@@ -45,17 +47,19 @@ A formula that builds each count out of the smaller ones, as this one does, is a
 
 The sum stands on a floor:
 
-$$B(0) = 1$$
+```math
+B(0) = 1
+```
 
 An empty crowd splits exactly one way: into no groups at all.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | people already there, before the newest joins | 3: Ada, Ben and Cleo | climbs faster than doubling |
-| $B(n)$ | splits of $n$ named people into unnamed groups | B(4) = 15, B(5) = 52 | — |
-| $k$ | people left out of the newest person's group | 0, 1, 2 or 3 | — |
-| $C(n,k)$ | ways to pick $k$ of $n$, order ignored | C(3,2) = 3 | more ways to leave people out |
-| $B(0)$ | the one split of an empty crowd: no groups | 1 | every later count scales with it |
+| $`n`$ | people already there, before the newest joins | 3: Ada, Ben and Cleo | climbs faster than doubling |
+| $`B(n)`$ | splits of $`n`$ named people into unnamed groups | B(4) = 15, B(5) = 52 | — |
+| $`k`$ | people left out of the newest person's group | 0, 1, 2 or 3 | — |
+| $`C(n,k)`$ | ways to pick $`k`$ of $`n`$, order ignored | C(3,2) = 3 | more ways to leave people out |
+| $`B(0)`$ | the one split of an empty crowd: no groups | 1 | every later count scales with it |
 
 ### When it holds
 
@@ -88,7 +92,9 @@ The rest is forced: everyone else rides with Dara, and that car is the last bloc
 
 The leftover can be anyone from nobody to everybody, so k runs from 0 to n, and the branches cover every split once:
 
-$$B(n+1) = C(n,0)\,B(0) + C(n,1)\,B(1) + \cdots + C(n,n)\,B(n).$$
+```math
+B(n+1) = C(n,0)\,B(0) + C(n,1)\,B(1) + \cdots + C(n,n)\,B(n).
+```
 
 For the four friends, n + 1 = 4, so n = 3, and the branches are 1 × 1, 3 × 1, 3 × 2 and 1 × 5: that is 1 + 3 + 6 + 5 = 15.
 

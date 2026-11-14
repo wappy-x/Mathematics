@@ -26,28 +26,32 @@ To scale: 34 units per 1, with 0 at (180, 125), i at (180, 91) and −i at (180,
 
 ## The formula
 
-Reminder: a loop is written $\gamma$ (gamma), and the integral round it with a ringed integral sign. The residue at a point a, $\operatorname{Res}(f, a)$, is the coefficient of 1/(z − a) in the Laurent series of f round a ([Laurent series](01-laurent-series.md)).
+Reminder: a loop is written $`\gamma`$ (gamma), and the integral round it with a ringed integral sign. The residue at a point a, $`\mathrm{Res}(f, a)`$, is the coefficient of 1/(z − a) in the Laurent series of f round a ([Laurent series](01-laurent-series.md)).
 
-$$\oint_\gamma f(z)\,dz = 2\pi i \sum_{k=1}^{m} \operatorname{Res}(f, a_k)$$
+```math
+\oint_\gamma f(z)\,dz = 2\pi i \sum_{k=1}^{m} \mathrm{Res}(f, a_k)
+```
 
 **Read it aloud:** the integral of f once anticlockwise round the loop equals two pi i times the sum of the residues at the singular points inside it.
 
 For a loop that winds more than once, or clockwise, each residue is weighted by its winding number:
 
-$$\oint_\gamma f(z)\,dz = 2\pi i \sum_{k=1}^{m} n(\gamma, a_k)\,\operatorname{Res}(f, a_k)$$
+```math
+\oint_\gamma f(z)\,dz = 2\pi i \sum_{k=1}^{m} n(\gamma, a_k)\,\mathrm{Res}(f, a_k)
+```
 
 **Read it aloud:** each pole pays its toll once per anticlockwise turn round it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $z$ | the function, and its input point | 1/(z^2 + 1) | — |
-| $\gamma$ | a closed loop, run anticlockwise | \|z − i\| = 1 | may catch more poles |
-| $a$, $a_k$, $m$ | an isolated singular point; the k-th inside; their count | i; m = 1 | one more toll |
-| $\operatorname{Res}(f, a)$ | the residue | −i/2 at i, i/2 at −i | a bigger toll |
-| $c_n$ | Laurent coefficient of (z − a)^n; at n = −1, the residue | −i/2 at n = −1 | — |
-| $\rho$, $\theta$ | small-circle radius; angle round it | 0.01; 0 to 2π | nothing changes |
-| $n(\gamma, a)$ | winding number: net anticlockwise turns round a | 1; 2 run twice | the toll repeats |
-| $i$, $\pi$ | i^2 = −1, a quarter turn; the half-turn angle | 2πi ≈ 6.283185i | — |
+| $`f`$, $`z`$ | the function, and its input point | 1/(z^2 + 1) | — |
+| $`\gamma`$ | a closed loop, run anticlockwise | \|z − i\| = 1 | may catch more poles |
+| $`a`$, $`a_k`$, $`m`$ | an isolated singular point; the k-th inside; their count | i; m = 1 | one more toll |
+| $`\mathrm{Res}(f, a)`$ | the residue | −i/2 at i, i/2 at −i | a bigger toll |
+| $`c_n`$ | Laurent coefficient of (z − a)^n; at n = −1, the residue | −i/2 at n = −1 | — |
+| $`\rho`$, $`\theta`$ | small-circle radius; angle round it | 0.01; 0 to 2π | nothing changes |
+| $`n(\gamma, a)`$ | winding number: net anticlockwise turns round a | 1; 2 run twice | the toll repeats |
+| $`i`$, $`\pi`$ | i^2 = −1, a quarter turn; the half-turn angle | 2πi ≈ 6.283185i | — |
 
 ### When it holds
 
@@ -69,11 +73,11 @@ Pull |z − i| = 1 in towards i. At radius 0.01 the 64-point sum still gives 3.1
 
 ### Step 2: on a small circle, only the 1/(z − a) term survives
 
-Near a pole a, f is its Laurent series: terms $c_n$ times (z − a)^n, for n over all whole numbers. Walk a circle of radius $\rho$ round a: z = a + ρe^(iθ), so dz = iρe^(iθ) dθ as the angle $\theta$ runs from 0 to 2π. One term then gives
+Near a pole a, f is its Laurent series: terms $`c_n`$ times (z − a)^n, for n over all whole numbers. Walk a circle of radius $`\rho`$ round a: z = a + ρe^(iθ), so dz = iρe^(iθ) dθ as the angle $`\theta`$ runs from 0 to 2π. One term then gives
 
 (z − a)^n dz = i ρ^(n+1) e^(i(n+1)θ) dθ.
 
-For n other than −1, e^(i(n+1)θ) turns a whole number of times round, and the arrows cancel to 0. For n = −1 the factor is e^0 = 1, and the integral is i × 2π = 2πi, whatever the radius. So the circle keeps exactly 2πi times $c_n$ at n = −1, which is the residue.
+For n other than −1, e^(i(n+1)θ) turns a whole number of times round, and the arrows cancel to 0. For n = −1 the factor is e^0 = 1, and the integral is i × 2π = 2πi, whatever the radius. So the circle keeps exactly 2πi times $`c_n`$ at n = −1, which is the residue.
 
 For f = 1/((z − i)(z + i)) near i, the factor 1/(z + i) is close to 1/(2i), so the residue is 1/(2i) = −i/2.
 
@@ -84,15 +88,15 @@ Each small circle pays 2πi times its residue, and the loop pays their sum. For 
 <details>
 <summary>Detailed proof</summary>
 
-Let f be holomorphic on an open set containing the loop $\gamma$ and its inside, except at points $a_1, \dots, a_m$ inside, none on $\gamma$. Choose $\rho > 0$ so small that the closed discs of radius $\rho$ round each $a_k$ are disjoint and lie inside $\gamma$.
+Let f be holomorphic on an open set containing the loop $`\gamma`$ and its inside, except at points $`a_1, \dots, a_m`$ inside, none on $`\gamma`$. Choose $`\rho > 0`$ so small that the closed discs of radius $`\rho`$ round each $`a_k`$ are disjoint and lie inside $`\gamma`$.
 
-**Deformation.** Join $\gamma$ to each small circle by a corridor. The result is one loop: $\gamma$ anticlockwise, each small circle clockwise, each corridor twice in opposite directions, with f holomorphic on and inside it. By [Cauchy's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md), a holomorphic function integrates to 0 round a loop with no hole inside, so this integral is 0. The corridors cancel, so the integral round $\gamma$ is the sum of the anticlockwise small-circle integrals.
+**Deformation.** Join $`\gamma`$ to each small circle by a corridor. The result is one loop: $`\gamma`$ anticlockwise, each small circle clockwise, each corridor twice in opposite directions, with f holomorphic on and inside it. By [Cauchy's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md), a holomorphic function integrates to 0 round a loop with no hole inside, so this integral is 0. The corridors cancel, so the integral round $`\gamma`$ is the sum of the anticlockwise small-circle integrals.
 
-**Termwise integration.** For some radius $R > \rho$ reaching no other singular point, on the punctured disc $0 < |z - a_k| < R$, f equals its Laurent series $\sum_n c_n (z - a_k)^n$. The series converges uniformly on the circle $|z - a_k| = \rho$: for each $\varepsilon > 0$ there is an N with the partial sums over $|n| \le N$ within $\varepsilon$ of f at every point of the circle.
+**Termwise integration.** For some radius $`R > \rho`$ reaching no other singular point, on the punctured disc $`0 < |z - a_k| < R`$, f equals its Laurent series $`\sum_n c_n (z - a_k)^n`$. The series converges uniformly on the circle $`|z - a_k| = \rho`$: for each $`\varepsilon > 0`$ there is an N with the partial sums over $`|n| \le N`$ within $`\varepsilon`$ of f at every point of the circle.
 
-So the integral of f round the circle is the limit of the integrals of the partial sums, each within $2\pi\rho\,\varepsilon$ of it. Each partial sum integrates term by term, and Step 2 gives $2\pi i\, c_{-1}$ for every $N \ge 1$. Hence the small circle gives $2\pi i \operatorname{Res}(f, a_k)$.
+So the integral of f round the circle is the limit of the integrals of the partial sums, each within $`2\pi\rho\,\varepsilon`$ of it. Each partial sum integrates term by term, and Step 2 gives $`2\pi i\, c_{-1}`$ for every $`N \ge 1`$. Hence the small circle gives $`2\pi i \mathrm{Res}(f, a_k)`$.
 
-**Winding numbers.** For a general loop lying in a disc where f is holomorphic except at the $a_k$, subtract from f the negative-power terms at each pole. The remainder has no singular points left and integrates to 0. Powers below −1 have antiderivatives and integrate to 0. Each $c_{-1}/(z - a_k)$ gives $2\pi i\, n(\gamma, a_k)\, c_{-1}$ by the definition of the winding number.
+**Winding numbers.** For a general loop lying in a disc where f is holomorphic except at the $`a_k`$, subtract from f the negative-power terms at each pole. The remainder has no singular points left and integrates to 0. Powers below −1 have antiderivatives and integrate to 0. Each $`c_{-1}/(z - a_k)`$ gives $`2\pi i\, n(\gamma, a_k)\, c_{-1}`$ by the definition of the winding number.
 
 </details>
 

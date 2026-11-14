@@ -32,35 +32,41 @@ One round trip, nothing moved.
 
 ## The formula
 
-The inverse of a square matrix $A$ is written $A^{-1}$, read "A inverse". The raised minus one is a power, not each entry's reciprocal. Two matrices are inverses when multiplying them, either way round, changes nothing:
+The inverse of a square matrix $`A`$ is written $`A^{-1}`$, read "A inverse". The raised minus one is a power, not each entry's reciprocal. Two matrices are inverses when multiplying them, either way round, changes nothing:
 
-$$A A^{-1} = I \qquad \text{and} \qquad A^{-1} A = I$$
+```math
+A A^{-1} = I \qquad \text{and} \qquad A^{-1} A = I
+```
 
-$I$ is the identity: ones down the main diagonal, zeros elsewhere — `[[1, 0], [0, 1]]` at 2 by 2, the do-nothing matrix. At most one matrix undoes $A$, so "the" inverse is safe.
+$`I`$ is the identity: ones down the main diagonal, zeros elsewhere — `[[1, 0], [0, 1]]` at 2 by 2, the do-nothing matrix. At most one matrix undoes $`A`$, so "the" inverse is safe.
 
-For a 2 by 2 — $A$ = `[[p, q], [r, s]]`, with $p$ and $q$ on top — the inverse is one line:
+For a 2 by 2 — $`A`$ = `[[p, q], [r, s]]`, with $`p`$ and $`q`$ on top — the inverse is one line:
 
-$$\det A = ps - qr \qquad\qquad A^{-1} = \frac{1}{ps - qr}\;[[\,s,\; -q\,],\; [\,-r,\; p\,]]$$
+```math
+\det A = ps - qr \qquad\qquad A^{-1} = \frac{1}{ps - qr}\;[[\,s,\; -q\,],\; [\,-r,\; p\,]]
+```
 
 **Read it aloud:** swap the main diagonal, flip the sign of the other two, divide every entry by ps − qr.
 
-That ps − qr is the **determinant**, $\det A$: not zero and the formula works, zero and it divides by zero. [Determinants](04-determinants.md) takes it apart.
+That ps − qr is the **determinant**, $`\det A`$: not zero and the formula works, zero and it divides by zero. [Determinants](04-determinants.md) takes it apart.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$ | the counts: a row per day, a column per item | `[[2, 1], [1, 1]]` | every price shifts |
-| $A^{-1}$ | the matrix that undoes $A$ | `[[1, -1], [-1, 2]]` | — |
-| $I$ | the identity: ones on the diagonal, zeros off | `[[1, 0], [0, 1]]` | — |
-| $p$, $q$, $r$, $s$ | the four entries, row by row | 2, 1, 1, 1 | the determinant moves too |
-| $\det A$ | ps − qr: zero or not decides everything | 1 | toward zero, the inverse blows up |
-| $b$ | the takings — what you know | (11, 7) | the prices scale with it |
-| $x$ | the prices — what you want | (4, 3) | — |
+| $`A`$ | the counts: a row per day, a column per item | `[[2, 1], [1, 1]]` | every price shifts |
+| $`A^{-1}`$ | the matrix that undoes $`A`$ | `[[1, -1], [-1, 2]]` | — |
+| $`I`$ | the identity: ones on the diagonal, zeros off | `[[1, 0], [0, 1]]` | — |
+| $`p`$, $`q`$, $`r`$, $`s`$ | the four entries, row by row | 2, 1, 1, 1 | the determinant moves too |
+| $`\det A`$ | ps − qr: zero or not decides everything | 1 | toward zero, the inverse blows up |
+| $`b`$ | the takings — what you know | (11, 7) | the prices scale with it |
+| $`x`$ | the prices — what you want | (4, 3) | — |
 
-The payoff: the system $A x = b$ from [Solving A x = b](01-matrix-equation-ax-b.md), counts times unknown prices equals known takings, is one multiply from solved.
+The payoff: the system $`A x = b`$ from [Solving A x = b](01-matrix-equation-ax-b.md), counts times unknown prices equals known takings, is one multiply from solved.
 
-$$A x = b \qquad \text{becomes} \qquad x = A^{-1} b$$
+```math
+A x = b \qquad \text{becomes} \qquad x = A^{-1} b
+```
 
-Multiply on the left by $A^{-1}$: $A^{-1} A$ is $I$, and $I$ times $x$ is $x$.
+Multiply on the left by $`A^{-1}`$: $`A^{-1} A`$ is $`I`$, and $`I`$ times $`x`$ is $`x`$.
 
 ### When it holds
 
@@ -75,27 +81,29 @@ Multiply on the left by $A^{-1}$: $A^{-1} A$ is $I$, and $I$ times $x$ is $x$.
 
 ### Step 0: undoing needs a target
 
-"Undo" needs a state to return to. For matrices it is $I$: doing $A$, then $A^{-1}$, must add up to doing nothing.
+"Undo" needs a state to return to. For matrices it is $`I`$: doing $`A`$, then $`A^{-1}`$, must add up to doing nothing.
 
 ### Step 1: swapping and flipping leaves a plain number
 
-Take $A$ = `[[p, q], [r, s]]`, swap the diagonal, flip the other two's signs, and multiply row by column ([Matrix multiplication](../04-Matrices/03-matrix-multiplication.md)):
+Take $`A`$ = `[[p, q], [r, s]]`, swap the diagonal, flip the other two's signs, and multiply row by column ([Matrix multiplication](../04-Matrices/03-matrix-multiplication.md)):
 
 - the diagonal comes out ps − qr twice: p × s + q × (−r) top left, r × (−q) + s × p bottom right
 - the other two cancel: p × (−q) + q × p = 0 and r × s + s × (−r) = 0
 
-$$[[\,p,\; q\,],\; [\,r,\; s\,]] \times [[\,s,\; -q\,],\; [\,-r,\; p\,]] = (ps - qr)\,I$$
+```math
+[[\,p,\; q\,],\; [\,r,\; s\,]] \times [[\,s,\; -q\,],\; [\,-r,\; p\,]] = (ps - qr)\,I
+```
 
-Swap-and-flip does not quite undo $A$: it leaves ps − qr on the diagonal.
+Swap-and-flip does not quite undo $`A`$: it leaves ps − qr on the diagonal.
 
 ### Step 2: divide, and the formula is proved
 
-Divide every entry by ps − qr and exactly $I$ is left. The other order pairs the same numbers, so it gives $I$ too: a genuine two-sided undo whenever ps − qr is not zero.
+Divide every entry by ps − qr and exactly $`I`$ is left. The other order pairs the same numbers, so it gives $`I`$ too: a genuine two-sided undo whenever ps − qr is not zero.
 
 <details>
 <summary>Detailed proof: why the inverse is unique</summary>
 
-Suppose two matrices each undo $A$ on both sides, and multiply three in a row: the first, $A$, the second. Grouping the first pair leaves the second; grouping the last pair leaves the first. One product, so the two are equal.
+Suppose two matrices each undo $`A`$ on both sides, and multiply three in a row: the first, $`A`$, the second. Grouping the first pair leaves the second; grouping the last pair leaves the first. One product, so the two are equal.
 
 </details>
 
@@ -107,7 +115,7 @@ For a square matrix these agree: if one fails, all fail.
 
 - the determinant is not zero
 - no column is a mix of the other columns
-- the only price list $A$ sends to all-zero takings is all-zero prices
+- the only price list $`A`$ sends to all-zero takings is all-zero prices
 
 The third rules out every inverse, not just this formula: if another price list also gave zero takings, no matrix could send those takings back to both. That is the one-to-one test from [Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md), and [Rank and nullity](05-rank-nullity.md) counts what is lost.
 
@@ -115,16 +123,16 @@ A zero determinant always supplies such a list: the columns are then multiples o
 
 ### Step 4: bigger than 2 by 2, by Gauss-Jordan on [A | I]
 
-The 2 by 2 trick does not extend by shuffling entries. Write $A$ and the identity side by side as one wide block, [A | I]. Run the row moves from [Gaussian elimination](02-gaussian-elimination.md) across the full width until the left half is the identity — **Gauss-Jordan elimination**. The right half is then $A^{-1}$; a column with no pivot (no nonzero entry left to divide by) means no inverse.
+The 2 by 2 trick does not extend by shuffling entries. Write $`A`$ and the identity side by side as one wide block, [A | I]. Run the row moves from [Gaussian elimination](02-gaussian-elimination.md) across the full width until the left half is the identity — **Gauss-Jordan elimination**. The right half is then $`A^{-1}`$; a column with no pivot (no nonzero entry left to divide by) means no inverse.
 
-Each row move is a multiply on the left by a small matrix, so the run is one matrix; it turns $A$ into $I$, so it is $A^{-1}$. Applied to the identity, the same moves build $A^{-1}$.
+Each row move is a multiply on the left by a small matrix, so the run is one matrix; it turns $`A`$ into $`I`$, so it is $`A^{-1}`$. Applied to the identity, the same moves build $`A^{-1}`$.
 
-Reusing one elimination is less work than forming $A^{-1}$, even for many days' takings.
+Reusing one elimination is less work than forming $`A^{-1}`$, even for many days' takings.
 
 <details>
 <summary>Cramer's rule, the 2 by 2 shortcut</summary>
 
-Each unknown is one determinant over another: replace a column of $A$ with the takings, divide that determinant by $\det A$. With $\det A$ = 1: `[[11, 1], [7, 1]]` gives 11 × 1 − 1 × 7 = 4, the coffee; `[[2, 11], [1, 7]]` gives 2 × 7 − 11 × 1 = 3, the pastry. Past 2 by 2 the work outgrows the payoff.
+Each unknown is one determinant over another: replace a column of $`A`$ with the takings, divide that determinant by $`\det A`$. With $`\det A`$ = 1: `[[11, 1], [7, 1]]` gives 11 × 1 − 1 × 7 = 4, the coffee; `[[2, 11], [1, 7]]` gives 2 × 7 − 11 × 1 = 3, the pastry. Past 2 by 2 the work outgrows the payoff.
 
 </details>
 
@@ -364,7 +372,7 @@ The two outputs match line for line.
 
 Lean proves the 2 by 2 formula, the inverse test and the one-inverse rule, for any numbers that divide.
 
-- For a 2 by 2 with ps − qr not zero, swap, flip and divide gives a matrix that undoes A from both sides. So it is $A^{-1}$.
+- For a 2 by 2 with ps − qr not zero, swap, flip and divide gives a matrix that undoes A from both sides. So it is $`A^{-1}`$.
 - For a square matrix of any size, four tests agree, so if one fails, all fail. The tests: it has an inverse, a nonzero determinant, no column a mix of the others, and only all-zero prices give all-zero takings.
 - At most one matrix undoes A, so "the" inverse is safe.
 
@@ -522,7 +530,7 @@ example : (2 : ZMod 4) ≠ 0 ∧ ∀ x : ZMod 4, 2 * x ≠ 1 := by decide
 > [!warning]
 > **There is no dividing by a matrix.** Nothing written as "the takings over A" means anything: what exists is multiplying by the inverse, and only when there is one.
 >
-> - **Order matters.** $A^{-1} b$, not $b$ then $A^{-1}$. Matrices do not commute ([Matrix multiplication](../04-Matrices/03-matrix-multiplication.md)).
+> - **Order matters.** $`A^{-1} b`$, not $`b`$ then $`A^{-1}`$. Matrices do not commute ([Matrix multiplication](../04-Matrices/03-matrix-multiplication.md)).
 > - **Square is not the same as invertible.** `[[2, 4], [1, 2]]` is square and singular. Square is only the entry ticket.
 > - **Undoing two flips their order.** The inverse of AB is the inverse of B times the inverse of A. Socks then shoes; to undo, shoes first.
 

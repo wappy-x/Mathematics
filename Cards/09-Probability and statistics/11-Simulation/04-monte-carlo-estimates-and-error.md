@@ -32,40 +32,46 @@ The square is the board, one unit a side; the shaded region is the quarter circl
 
 Notation first, in words. A reminder from shelf 02 ([Expectation](../02-Random%20Variables/02-expectation.md), [Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)): E[X] is the average value of X in the long run and Var(X) is its variance, the average squared distance from that mean.
 
-A hat marks an estimate, as on shelf 07 ([Samples and estimators](../07-Sampling%20and%20Estimation/01-populations-samples-and-estimators.md)): $\hat I_n$ is the estimate of $I$ from $n$ draws. The Greek letter σ (sigma) is the spread of one draw, its standard deviation; s is the same spread measured from the draws of one run.
+A hat marks an estimate, as on shelf 07 ([Samples and estimators](../07-Sampling%20and%20Estimation/01-populations-samples-and-estimators.md)): $`\hat I_n`$ is the estimate of $`I`$ from $`n`$ draws. The Greek letter σ (sigma) is the spread of one draw, its standard deviation; s is the same spread measured from the draws of one run.
 
-The integral to estimate is written as an average of a function $g$ of a random point $U$:
+The integral to estimate is written as an average of a function $`g`$ of a random point $`U`$:
 
-$$I = E[g(U)], \qquad \hat I_n = \frac{1}{n}\sum_{i=1}^{n} X_i, \quad X_i = g(U_i)$$
+```math
+I = E[g(U)], \qquad \hat I_n = \frac{1}{n}\sum_{i=1}^{n} X_i, \quad X_i = g(U_i)
+```
 
 **Read it aloud:** the target is the long-run average of g at a random point; the estimate is the plain average of g at n random points.
 
-$$\mathrm{SE} = \frac{\sigma}{\sqrt n}, \qquad \sigma^2 = \mathrm{Var}(X_i), \qquad \text{95 percent interval: } \hat I_n \pm 1.96\,\frac{s}{\sqrt n}$$
+```math
+\mathrm{SE} = \frac{\sigma}{\sqrt n}, \qquad \sigma^2 = \mathrm{Var}(X_i), \qquad \text{95 percent interval: } \hat I_n \pm 1.96\,\frac{s}{\sqrt n}
+```
 
 **Read it aloud:** the estimate's typical miss is one draw's spread divided by the square root of the number of draws. In practice s stands in for σ, and 1.96 of those errors either side catches the truth in about 95 runs out of 100.
 
-For the darts, $U$ is a point $(x, y)$ in the square and $g$ scores 4 for a dart inside the quarter circle and 0 for one outside. The chance of scoring 4 is $p = \pi/4$, so
+For the darts, $`U`$ is a point $`(x, y)`$ in the square and $`g`$ scores 4 for a dart inside the quarter circle and 0 for one outside. The chance of scoring 4 is $`p = \pi/4`$, so
 
-$$\sigma = 4\sqrt{p(1-p)} = 1.642183, \qquad s = 4\sqrt{\hat p(1-\hat p)}\sqrt{\frac{n}{n-1}}$$
+```math
+\sigma = 4\sqrt{p(1-p)} = 1.642183, \qquad s = 4\sqrt{\hat p(1-\hat p)}\sqrt{\frac{n}{n-1}}
+```
 
 In words: a score that is 4 or 0 has spread 4 times the spread of a yes-or-no count. The second formula is the same thing measured from the run, with the usual n − 1 correction from shelf 07 ([Standard error](../07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | number of independent draws | 10,000 darts | error bar shrinks as 1/√n |
-| $U$, $x$, $y$ | one random point, and its across and up positions; in Step 1, also a single uniform number on 0 to 1 | a dart on the board | — |
-| $a$, $b$ | the ends of an interval, when the integral runs from a to b instead of 0 to 1 | 0 and 1 for the curve heights | — |
-| $g$ | the function whose average is wanted | 4 inside, 0 outside | — |
-| $X_i$ | the i-th draw's score, g of the i-th point | 4 or 0 | — |
-| $Z_i$ | the i-th draw's miss, $X_i - I$, used in the Detailed proof | 4 − π or −π | — |
-| $I$ | the true value, an integral written as an average | π = 3.141593 | — |
-| $\hat I_n$ | the estimate: the average of n scores | 3.1424 | — |
-| $\sigma$ | spread of one score, its standard deviation | 1.642183 | wider error bar |
-| $s$ | the same spread measured from the run | 1.641704 | wider error bar |
-| $\mathrm{SE}$ | standard error: the estimate's typical miss, σ/√n | 0.016417 | — |
-| $z$, $\Phi$ | Φ is the standard bell's area to the left; z = 1.96 has area 0.975 left of it | 1.959964 | wider interval, higher coverage |
-| $p$, $\hat p$, $K$ | chance a dart lands inside; the fraction that did; the count inside | 0.785398; 0.7856; 7,856 | — |
-| $\varepsilon$ | a chosen tolerance for the miss | 0.01 | fewer darts needed |
+| $`n`$ | number of independent draws | 10,000 darts | error bar shrinks as 1/√n |
+| $`U`$, $`x`$, $`y`$ | one random point, and its across and up positions; in Step 1, also a single uniform number on 0 to 1 | a dart on the board | — |
+| $`a`$, $`b`$ | the ends of an interval, when the integral runs from a to b instead of 0 to 1 | 0 and 1 for the curve heights | — |
+| $`g`$ | the function whose average is wanted | 4 inside, 0 outside | — |
+| $`X_i`$ | the i-th draw's score, g of the i-th point | 4 or 0 | — |
+| $`Z_i`$ | the i-th draw's miss, $`X_i - I`$, used in the Detailed proof | 4 − π or −π | — |
+| $`I`$ | the true value, an integral written as an average | π = 3.141593 | — |
+| $`\hat I_n`$ | the estimate: the average of n scores | 3.1424 | — |
+| $`\sigma`$ | spread of one score, its standard deviation | 1.642183 | wider error bar |
+| $`s`$ | the same spread measured from the run | 1.641704 | wider error bar |
+| $`\mathrm{SE}`$ | standard error: the estimate's typical miss, σ/√n | 0.016417 | — |
+| $`z`$, $`\Phi`$ | Φ is the standard bell's area to the left; z = 1.96 has area 0.975 left of it | 1.959964 | wider interval, higher coverage |
+| $`p`$, $`\hat p`$, $`K`$ | chance a dart lands inside; the fraction that did; the count inside | 0.785398; 0.7856; 7,856 | — |
+| $`\varepsilon`$ | a chosen tolerance for the miss | 0.01 | fewer darts needed |
 
 ### When it holds
 
@@ -84,38 +90,42 @@ A dart lands uniformly on a board of area 1. The chance it lands in a region equ
 
 ### Step 1: write π as an average
 
-Score each dart 4 inside the quarter circle and 0 outside. The long-run average score is 4 times the chance of a hit, $4 \times \pi/4 = \pi$. Any integral over the unit interval works the same way. If U is now a single uniform number on 0 to 1, then E[g(U)] is the integral of g from 0 to 1. This holds because every stretch of the interval gets a chance equal to its length.
+Score each dart 4 inside the quarter circle and 0 outside. The long-run average score is 4 times the chance of a hit, $`4 \times \pi/4 = \pi`$. Any integral over the unit interval works the same way. If U is now a single uniform number on 0 to 1, then E[g(U)] is the integral of g from 0 to 1. This holds because every stretch of the interval gets a chance equal to its length.
 
-The quarter circle's upper edge is the curve $y = \sqrt{1 - x^2}$, so π is also the average of $4\sqrt{1-x^2}$ at a random x. That second way reads the curve's height instead of counting hits; the code runs it too.
+The quarter circle's upper edge is the curve $`y = \sqrt{1 - x^2}`$, so π is also the average of $`4\sqrt{1-x^2}`$ at a random x. That second way reads the curve's height instead of counting hits; the code runs it too.
 
-On an interval from a to b, average $(b-a)\,g(a + (b-a)U)$: the factor b − a is the interval's length.
+On an interval from a to b, average $`(b-a)\,g(a + (b-a)U)`$: the factor b − a is the interval's length.
 
 ### Step 2: the average is right on average
 
-Expectation passes through sums and constants ([Expectation](../02-Random%20Variables/02-expectation.md)). So $E[\hat I_n] = \frac1n(E[X_1] + \dots + E[X_n]) = I$. The estimator has no bias: it aims at the truth. Across 200 repeated runs of 10,000 darts, the estimates averaged 3.1415.
+Expectation passes through sums and constants ([Expectation](../02-Random%20Variables/02-expectation.md)). So $`E[\hat I_n] = \frac1n(E[X_1] + \dots + E[X_n]) = I`$. The estimator has no bias: it aims at the truth. Across 200 repeated runs of 10,000 darts, the estimates averaged 3.1415.
 
 ### Step 3: its spread is σ divided by root n
 
-Variances of independent quantities add: the variance of $X_1 + \dots + X_n$ is $n\sigma^2$. Dividing the sum by n divides its variance by $n^2$. So the average has variance $\sigma^2/n$ and standard deviation $\sigma/\sqrt n$.
+Variances of independent quantities add: the variance of $`X_1 + \dots + X_n`$ is $`n\sigma^2`$. Dividing the sum by n divides its variance by $`n^2`$. So the average has variance $`\sigma^2/n`$ and standard deviation $`\sigma/\sqrt n`$.
 
-The cancellation from $n^2$ to $n$ is the whole story. Here n draws add n units of variance, but spreads are square roots of variances, so the typical miss falls only as $1/\sqrt n$. Four times the draws halve the error; a hundred times the draws buy one more decimal place.
+The cancellation from $`n^2`$ to $`n`$ is the whole story. Here n draws add n units of variance, but spreads are square roots of variances, so the typical miss falls only as $`1/\sqrt n`$. Four times the draws halve the error; a hundred times the draws buy one more decimal place.
 
 <details>
 <summary>Detailed proof</summary>
 
-Write $Z_i = X_i - I$, the i-th draw's miss. Each has mean 0 and variance $\sigma^2$. The estimate misses by the average miss, $\hat I_n - I = \frac1n(Z_1 + \dots + Z_n)$. Square it and take expectations:
-$$E\big[(\hat I_n - I)^2\big] = \frac{1}{n^2}\sum_{i=1}^{n}\sum_{j=1}^{n} E[Z_i Z_j].$$
-For i ≠ j, independence gives $E[Z_i Z_j] = E[Z_i]\,E[Z_j] = 0$: the cross terms vanish. Only the n diagonal terms survive, each equal to $\sigma^2$. So the mean squared miss is $n\sigma^2/n^2 = \sigma^2/n$. Because the estimate has no bias, this is its variance, and its square root σ/√n is its standard error. Nothing here needs a bell curve: the formula holds exactly at every n, as long as σ is finite.
+Write $`Z_i = X_i - I`$, the i-th draw's miss. Each has mean 0 and variance $`\sigma^2`$. The estimate misses by the average miss, $`\hat I_n - I = \frac1n(Z_1 + \dots + Z_n)`$. Square it and take expectations:
+
+$`\displaystyle E\big[(\hat I_n - I)^2\big] = \frac{1}{n^2}\sum_{i=1}^{n}\sum_{j=1}^{n} E[Z_i Z_j].`$
+
+For i ≠ j, independence gives $`E[Z_i Z_j] = E[Z_i]\,E[Z_j] = 0`$: the cross terms vanish. Only the n diagonal terms survive, each equal to $`\sigma^2`$. So the mean squared miss is $`n\sigma^2/n^2 = \sigma^2/n`$. Because the estimate has no bias, this is its variance, and its square root σ/√n is its standard error. Nothing here needs a bell curve: the formula holds exactly at every n, as long as σ is finite.
 
 Chebyshev's inequality ([Markov and Chebyshev](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)) then gives a guarantee with no limit theorem at all:
-$$P\big(|\hat I_n - I| \ge \varepsilon\big) \le \frac{\sigma^2}{n\varepsilon^2}.$$
+
+$`\displaystyle P\big(|\hat I_n - I| \ge \varepsilon\big) \le \frac{\sigma^2}{n\varepsilon^2}.`$
+
 Set the right side to 0.05 and solve for n.
 
 </details>
 
 ### Step 4: from a spread to an interval
 
-The central limit theorem says the average of many independent draws with finite variance is close to bell-shaped around I, with spread σ/√n. The standard bell puts 95 percent of its area within 1.96 spreads of its centre. So $\hat I_n \pm 1.96\,\sigma/\sqrt n$ catches I in about 95 percent of runs.
+The central limit theorem says the average of many independent draws with finite variance is close to bell-shaped around I, with spread σ/√n. The standard bell puts 95 percent of its area within 1.96 spreads of its centre. So $`\hat I_n \pm 1.96\,\sigma/\sqrt n`$ catches I in about 95 percent of runs.
 
 That is a statement about the method: of 200 runs, 193 intervals caught π. Any one interval either contains π or it does not.
 
@@ -123,7 +133,7 @@ Chebyshev gives the same kind of promise without the bell, at a price. To be wit
 
 ### Step 5: measure σ from the run
 
-σ is usually unknown, since it depends on the answer. Replace it with s, the spread of the scores the run produced. For the darts, $s = 1.641704$ against the true 1.642183. Using s in place of σ leaves the 95 percent coverage intact as n grows; the proof is in [Delta method](../06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md).
+σ is usually unknown, since it depends on the answer. Replace it with s, the spread of the scores the run produced. For the darts, $`s = 1.641704`$ against the true 1.642183. Using s in place of σ leaves the 95 percent coverage intact as n grows; the proof is in [Delta method](../06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md).
 
 ### The other door: a grid
 
@@ -576,9 +586,9 @@ The two outputs are identical line for line.
 
 Lean proves Steps 2 and 3 and Chebyshev's guarantee for every n of 1 or more, and checks the card's counts.
 
-- Take n independent draws, each from the intended law, and a $g$ with finite variance. Then $E[\hat I_n] = I$: the estimator has no bias.
-- Take the same draws. Then $\mathrm{Var}(\hat I_n) = \sigma^2/n$, and the standard error is $\sigma/\sqrt n$, exactly at every n.
-- Take the same draws and any tolerance $\varepsilon > 0$. Then $P(|\hat I_n - I| \ge \varepsilon) \le \sigma^2/(n\varepsilon^2)$, Chebyshev's guarantee.
+- Take n independent draws, each from the intended law, and a $`g`$ with finite variance. Then $`E[\hat I_n] = I`$: the estimator has no bias.
+- Take the same draws. Then $`\mathrm{Var}(\hat I_n) = \sigma^2/n`$, and the standard error is $`\sigma/\sqrt n`$, exactly at every n.
+- Take the same draws and any tolerance $`\varepsilon > 0`$. Then $`P(|\hat I_n - I| \ge \varepsilon) \le \sigma^2/(n\varepsilon^2)`$, Chebyshev's guarantee.
 - The 100 by 100 grid has 7,857 cell centres inside the quarter circle.
 - Four times 7,856 out of 10,000 is 3.1424, the seeded run's estimate.
 - The first 20 darts, 17 inside, give 3.40.
@@ -741,7 +751,7 @@ example : (2 : ℕ) ^ 2 = 4 ∧ (10 : ℕ) ^ 2 = 100 := by decide
 > **Try changing**
 > - **40,000 darts instead of 10,000.** Guess first: four times the work. The standard error falls from 0.0164 to 0.0082, exactly half.
 > - **1,000,000 darts.** Guess first: 100 times the work. The standard error is 0.0016: one more correct decimal place, no more.
-> - **Read heights instead of counting hits.** Average $4\sqrt{1-x^2}$ at 10,000 random x. Guess first: same cost, same target. The standard error drops to 0.0089 against the darts' 0.0164, because a height varies less than a 4-or-0 score. Shrinking σ is the other lever, pulled in [Variance reduction](05-variance-reduction.md).
+> - **Read heights instead of counting hits.** Average $`4\sqrt{1-x^2}`$ at 10,000 random x. Guess first: same cost, same target. The standard error drops to 0.0089 against the darts' 0.0164, because a height varies less than a 4-or-0 score. Shrinking σ is the other lever, pulled in [Variance reduction](05-variance-reduction.md).
 > - **Change the seed.** Guess first: does 3.1424 survive? No: each seed gives its own estimate, but about 95 in 100 of their intervals still contain π; the 200 runs above caught it 193 times.
 
 ---

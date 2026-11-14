@@ -36,32 +36,36 @@ The five piles add to 14,641.
 
 ## The formula
 
-Shorthand first, in words. A capital sigma, $\sum$, says add. Below it goes the letter that changes and where it starts, above it where it stops: k = 0 below and n above means work out what follows for k = 0, then k = 1, on up to n, and add.
+Shorthand first, in words. A capital sigma, $`\sum`$, says add. Below it goes the letter that changes and where it starts, above it where it stops: k = 0 below and n above means work out what follows for k = 0, then k = 1, on up to n, and add.
 
-Here $n$ is the power, the number of brackets; $a$ and $b$ the two things inside each; $k$ how many brackets hand over $b$. C(n, k) counts the ways of choosing which, read "n choose k" ([Pascal's rule](01-pascals-rule-and-the-triangle.md)).
+Here $`n`$ is the power, the number of brackets; $`a`$ and $`b`$ the two things inside each; $`k`$ how many brackets hand over $`b`$. C(n, k) counts the ways of choosing which, read "n choose k" ([Pascal's rule](01-pascals-rule-and-the-triangle.md)).
 
-$$(a + b)^n = \sum_{k=0}^{n} C(n, k)\; a^{\,n-k} b^{\,k}$$
+```math
+(a + b)^n = \sum_{k=0}^{n} C(n, k)\; a^{\,n-k} b^{\,k}
+```
 
 **Read it aloud:** take b from k brackets and a from the rest, count the ways, and add one piece for every k from none to all. A piece is a **term**.
 
-With a third thing, $c$, in the bracket, naming the brackets that gave $b$ no longer fixes a walk: each bracket has three doors, three things to take. What fixes it is the split into the groups that gave $a$, $b$ and $c$ — sizes i, j and l, adding to n.
+With a third thing, $`c`$, in the bracket, naming the brackets that gave $`b`$ no longer fixes a walk: each bracket has three doors, three things to take. What fixes it is the split into the groups that gave $`a`$, $`b`$ and $`c`$ — sizes i, j and l, adding to n.
 
 Such splits number n! divided by i!, j! and l! ([Splitting into groups](../02-Repeats%2C%20Groups%20and%20Double%20Counting/03-splitting-into-groups.md)). Write it C(n; i, j, l), read "n split into i, j and l". Here n!, read "n factorial", is 1 × 2 × … × n, so 3! = 6 ([Factorials](../01-Counting%20Principles/03-factorial.md)).
 
-$$(a + b + c)^n = \sum C(n; i, j, l)\; a^{\,i} b^{\,j} c^{\,l}, \qquad C(n; i, j, l) = \frac{n!}{i!\; j!\; l!}$$
+```math
+(a + b + c)^n = \sum C(n; i, j, l)\; a^{\,i} b^{\,j} c^{\,l}, \qquad C(n; i, j, l) = \frac{n!}{i!\; j!\; l!}
+```
 
 **Read it aloud:** one piece per triple of sizes i, j, l, weighted by how many splits give it. The sum runs over all whole i, j, l adding to n.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $a$, $b$, $c$ | the things inside a bracket | 10 and 1, or 100, 10, 1 | pieces grow |
-| $n$ | the power: how many brackets | 4 | longer row |
-| $k$ | brackets handing over $b$ | 0 to 4 | weight to $b$ |
-| $i$, $j$, $l$ | brackets handing over $a$, $b$, $c$ | 1, 1, 1 | weight to that letter |
-| $\sum$ | add what follows, once per $k$ | k = 0 up to 4 | more to add |
-| $C(n, k)$ | ways to choose those $k$ | 1, 4, 6, 4, 1 | peaks mid-row |
-| $C(n; i, j, l)$ | splits into three named groups | C(3; 1, 1, 1) = 6 | more piles |
-| $n!$ | 1 × 2 × … × n, "n factorial" | 3! = 6 | grows fast |
+| $`a`$, $`b`$, $`c`$ | the things inside a bracket | 10 and 1, or 100, 10, 1 | pieces grow |
+| $`n`$ | the power: how many brackets | 4 | longer row |
+| $`k`$ | brackets handing over $`b`$ | 0 to 4 | weight to $`b`$ |
+| $`i`$, $`j`$, $`l`$ | brackets handing over $`a`$, $`b`$, $`c`$ | 1, 1, 1 | weight to that letter |
+| $`\sum`$ | add what follows, once per $`k`$ | k = 0 up to 4 | more to add |
+| $`C(n, k)`$ | ways to choose those $`k`$ | 1, 4, 6, 4, 1 | peaks mid-row |
+| $`C(n; i, j, l)`$ | splits into three named groups | C(3; 1, 1, 1) = 6 | more piles |
+| $`n!`$ | 1 × 2 × … × n, "n factorial" | 3! = 6 | grows fast |
 
 ### When it holds
 

@@ -28,38 +28,42 @@ Every 400th order is drawn, 50 in all, at 18 drawing units per score unit on bot
 
 ## The formula
 
-Notation first, in words. Order i has value $x_{ij}$ in column j. Each column has mean $m_j$ and standard deviation $s_j$ over the 20,000 orders. **Standardising** a column means subtracting its mean and dividing by its standard deviation, which turns pounds, kg and days into "standard deviations from the average order". The standardised orders, one row each, form the table $Z$. The superscript T is the transpose, which turns rows into columns and columns into rows.
+Notation first, in words. Order i has value $`x_{ij}`$ in column j. Each column has mean $`m_j`$ and standard deviation $`s_j`$ over the 20,000 orders. **Standardising** a column means subtracting its mean and dividing by its standard deviation, which turns pounds, kg and days into "standard deviations from the average order". The standardised orders, one row each, form the table $`Z`$. The superscript T is the transpose, which turns rows into columns and columns into rows.
 
-$$z_{ij} = \frac{x_{ij} - m_j}{s_j}, \qquad R = \frac{1}{n-1}\,Z^T Z, \qquad R\,v_k = \lambda_k\, v_k$$
+```math
+z_{ij} = \frac{x_{ij} - m_j}{s_j}, \qquad R = \frac{1}{n-1}\,Z^T Z, \qquad R\,v_k = \lambda_k\, v_k
+```
 
 **Read it aloud:** put every column in standard-deviation units, average the products of every pair of columns to get the correlation matrix, and find the directions that matrix only stretches.
 
-$$\text{share}(r) = \frac{\lambda_1 + \dots + \lambda_r}{d}, \qquad t_{ik} = v_k^T z_i = \sum_j v_{kj}\, z_{ij}$$
+```math
+\text{share}(r) = \frac{\lambda_1 + \dots + \lambda_r}{d}, \qquad t_{ik} = v_k^T z_i = \sum_j v_{kj}\, z_{ij}
+```
 
 **Read it aloud:** the first r components keep their eigenvalues' total out of d, the number of columns; an order's score on a component is its standardised values weighted by that component's loadings and added up.
 
-The denominator is d because each standardised column has variance exactly 1, so the total is 12. An eigenvalue therefore counts columns' worth of variance: the first component, $\lambda_1 = 5.717$, carries as much as 5.7 of the original columns.
+The denominator is d because each standardised column has variance exactly 1, so the total is 12. An eigenvalue therefore counts columns' worth of variance: the first component, $`\lambda_1 = 5.717`$, carries as much as 5.7 of the original columns.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x_{ij}$ | order i's raw value in column j | order 1: basket £45.61, 4.52 items, 20.95 km | moves that order's scores |
-| $m_j$, $s_j$ | column j's mean and standard deviation | basket value: £70.58 and £37.86 | none: standardising cancels the unit |
-| $z_{ij}$, $z_i$, $Z$ | standardised value; order i's row of 12; the 20,000-by-12 table | order 1's basket value: −0.66 | moves that order's scores |
-| $n$, $d$ | orders, columns | 20,000 and 12 | n: estimates settle; d: more to share out |
-| $R$ | correlation matrix, 12 by 12, ones on the diagonal | items with basket value: strongly positive | more correlation, fewer components needed |
-| $v_k$, $v_{kj}$ | component k, a unit direction; its loading on column j | $v_1$: 0.38 on basket value, about 0 on distance | — |
-| $\lambda_k$ | eigenvalue: the variance of all orders along $v_k$ | 5.717, 2.027, 1.554, 1.000, … | that component's share grows |
-| $r$ | components kept | 4 | share rises, never falls |
-| $\text{share}(r)$ | fraction of the total variance the first r keep | 85.82% at r = 4 | — |
-| $t_{ik}$ | order i's score on component k: its coordinate on the new axis | order 1: −1.51 on $v_1$ | — |
-| $U$, $S$, $V$ | the singular value decomposition $Z = U S V^T$; the columns of $V$ are the $v_k$ | $S$'s squared entries over n − 1 equal the $\lambda_k$ | — |
+| $`x_{ij}`$ | order i's raw value in column j | order 1: basket £45.61, 4.52 items, 20.95 km | moves that order's scores |
+| $`m_j`$, $`s_j`$ | column j's mean and standard deviation | basket value: £70.58 and £37.86 | none: standardising cancels the unit |
+| $`z_{ij}`$, $`z_i`$, $`Z`$ | standardised value; order i's row of 12; the 20,000-by-12 table | order 1's basket value: −0.66 | moves that order's scores |
+| $`n`$, $`d`$ | orders, columns | 20,000 and 12 | n: estimates settle; d: more to share out |
+| $`R`$ | correlation matrix, 12 by 12, ones on the diagonal | items with basket value: strongly positive | more correlation, fewer components needed |
+| $`v_k`$, $`v_{kj}`$ | component k, a unit direction; its loading on column j | $`v_1`$: 0.38 on basket value, about 0 on distance | — |
+| $`\lambda_k`$ | eigenvalue: the variance of all orders along $`v_k`$ | 5.717, 2.027, 1.554, 1.000, … | that component's share grows |
+| $`r`$ | components kept | 4 | share rises, never falls |
+| $`\text{share}(r)`$ | fraction of the total variance the first r keep | 85.82% at r = 4 | — |
+| $`t_{ik}`$ | order i's score on component k: its coordinate on the new axis | order 1: −1.51 on $`v_1`$ | — |
+| $`U`$, $`S`$, $`V`$ | the singular value decomposition $`Z = U S V^T`$; the columns of $`V`$ are the $`v_k`$ | $`S`$'s squared entries over n − 1 equal the $`\lambda_k`$ | — |
 
 ### When it holds
 
 - **Columns are put on one scale.** Variance counts squared units, so an unstandardised column in big numbers takes over. In raw units the first component is 0.95 basket value and keeps 68.57% of a total that is mostly pounds; items get a loading of 0.06.
 - **Every column deserves an equal vote.** Standardising gives each column exactly one unit of variance, even one that is pure noise. Delivery distance has nothing to do with the three traits, yet it takes a whole component: the fourth, eigenvalue 0.9998, loading 0.9996 on distance alone, 8.33% of the total. A component is a direction of spread, not proof of a pattern.
 - **The structure is flat.** Components are straight-line blends. If the orders lay along a curve in the twelve columns, a flat summary would need more components than the curve has dimensions. Curved methods (manifold learning) are beyond this card.
-- **New orders are scaled with the old means and standard deviations.** Scoring an order means standardising it with $m_j$ and $s_j$ from the 20,000. Skip that and order 1 scores 32.21 on the first component instead of −1.51.
+- **New orders are scaled with the old means and standard deviations.** Scoring an order means standardising it with $`m_j`$ and $`s_j`$ from the 20,000. Skip that and order 1 scores 32.21 on the first component instead of −1.51.
 - **The sample is large enough.** With 20,000 orders, the data's shares sit within 0.11 percentage points of the model's true shares at every r. With 2,000 orders the gap grows to 0.66 points (Try changing, below).
 
 ---
@@ -72,27 +76,29 @@ Principal components look for the direction with the most variance, then the nex
 
 ### Step 1: standardised covariance is correlation, and the total is d
 
-The covariance of two standardised columns is the covariance of the originals divided by both standard deviations: their **correlation**, a number between −1 and 1. So $R$ is the correlation matrix, with ones on its diagonal. The total variance is the sum of the diagonal, its trace: 12. The eigenvalues of a symmetric matrix add up to its trace (proved on [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md), Step 4), so they share out exactly 12 units. In the code both sums are 12.0000.
+The covariance of two standardised columns is the covariance of the originals divided by both standard deviations: their **correlation**, a number between −1 and 1. So $`R`$ is the correlation matrix, with ones on its diagonal. The total variance is the sum of the diagonal, its trace: 12. The eigenvalues of a symmetric matrix add up to its trace (proved on [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md), Step 4), so they share out exactly 12 units. In the code both sums are 12.0000.
 
 ### Step 2: keeping r components keeps the top r eigenvalues, and no choice does better
 
-By [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md), $R$ has 12 perpendicular unit eigenvectors. The variance of the 20,000 scores on $v_k$ is $\lambda_k$. The proof on the statistics card shows that no r directions together keep more than $\lambda_1 + \dots + \lambda_r$. Rebuild an order from its first r scores and the part lost is its spread along the dropped components. Averaged over orders, that loss is the sum of the dropped eigenvalues. The code measures it directly on the 20,000 orders with r = 4: 1.7015, equal to the last eight eigenvalues.
+By [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md), $`R`$ has 12 perpendicular unit eigenvectors. The variance of the 20,000 scores on $`v_k`$ is $`\lambda_k`$. The proof on the statistics card shows that no r directions together keep more than $`\lambda_1 + \dots + \lambda_r`$. Rebuild an order from its first r scores and the part lost is its spread along the dropped components. Averaged over orders, that loss is the sum of the dropped eigenvalues. The code measures it directly on the 20,000 orders with r = 4: 1.7015, equal to the last eight eigenvalues.
 
 So choosing r for a target is reading a running total. Add eigenvalues from the largest down and stop at the first r whose total reaches 85% of 12.
 
 ### Step 3: the SVD gives the same components without forming R
 
-Write the table as $Z = U S V^T$ ([The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md)): $U$ and $V$ have perpendicular unit columns, and $S$ is diagonal. Then
+Write the table as $`Z = U S V^T`$ ([The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md)): $`U`$ and $`V`$ have perpendicular unit columns, and $`S`$ is diagonal. Then
 
-$$R = \frac{1}{n-1} Z^T Z = \frac{1}{n-1}\, V S U^T U S V^T = V\, \frac{S^2}{n-1}\, V^T$$
+```math
+R = \frac{1}{n-1} Z^T Z = \frac{1}{n-1}\, V S U^T U S V^T = V\, \frac{S^2}{n-1}\, V^T
+```
 
-because $U^T U$ is the identity. That is $R$ written as eigenvectors and eigenvalues: the columns of $V$ are the components, and each squared singular value over $n - 1$ is an eigenvalue. Software prefers this road because it works on the table itself and never squares its rounding errors. The code takes it with a one-sided Jacobi method: it rotates pairs of the table's columns until every pair is perpendicular, then reads each column's squared length. The twelve values agree with the eigenvalue road to within $10^{-9}$.
+because $`U^T U`$ is the identity. That is $`R`$ written as eigenvectors and eigenvalues: the columns of $`V`$ are the components, and each squared singular value over $`n - 1`$ is an eigenvalue. Software prefers this road because it works on the table itself and never squares its rounding errors. The code takes it with a one-sided Jacobi method: it rotates pairs of the table's columns until every pair is perpendicular, then reads each column's squared length. The twelve values agree with the eigenvalue road to within $`10^{-9}`$.
 
 ### Step 4: the plot is a shadow, and it keeps share(2)
 
-An order's first two scores are the coordinates of its shadow on the plane through the average order spanned by $v_1$ and $v_2$. A shadow is never longer than the thing that casts it, so two orders close on the plot may be far apart along the other ten directions; two orders far apart on the plot are far apart in fact. The plot keeps $\lambda_1 + \lambda_2$ of the 12 units: 64.54%, not the 85% of four components.
+An order's first two scores are the coordinates of its shadow on the plane through the average order spanned by $`v_1`$ and $`v_2`$. A shadow is never longer than the thing that casts it, so two orders close on the plot may be far apart along the other ten directions; two orders far apart on the plot are far apart in fact. The plot keeps $`\lambda_1 + \lambda_2`$ of the 12 units: 64.54%, not the 85% of four components.
 
-Scores on different components are uncorrelated, with variances $\lambda_1$ and $\lambda_2$. The plot's horizontal spread is genuinely larger than its vertical one, variance 5.717 against 2.027. Drawing both axes at the same scale shows that; stretching each axis to fill the box would hide it.
+Scores on different components are uncorrelated, with variances $`\lambda_1`$ and $`\lambda_2`$. The plot's horizontal spread is genuinely larger than its vertical one, variance 5.717 against 2.027. Drawing both axes at the same scale shows that; stretching each axis to fill the box would hide it.
 
 ---
 
@@ -102,7 +108,7 @@ Scores on different components are uncorrelated, with variances $\lambda_1$ and 
 | --- | --- | --- |
 | standardise order 1's basket value | (45.61 − 70.58) / 37.86 | −0.66 |
 | standardise order 1's distance | (20.95 − 29.83) / 12.04 | −0.74 |
-| order 1's score on $v_1$ | 12 loadings times 12 standardised values, shown rounded: −0.25 − 0.31 − 0.18 − 0.37 − 0.10 − 0.29 − 0.06 + 0.05 − 0.12 − 0.02 + 0.13 + 0.00, added unrounded | −1.51 (code: −1.5148) |
+| order 1's score on $`v_1`$ | 12 loadings times 12 standardised values, shown rounded: −0.25 − 0.31 − 0.18 − 0.37 − 0.10 − 0.29 − 0.06 + 0.05 − 0.12 − 0.02 + 0.13 + 0.00, added unrounded | −1.51 (code: −1.5148) |
 | total variance | 12 columns, 1 each | 12 |
 | r = 1 | 5.717 / 12 | 47.64% |
 | r = 2 | (5.717 + 2.027) / 12, from the unrounded eigenvalues | 64.54% |
@@ -119,7 +125,7 @@ The four components read as the three hidden traits plus the noise column. The f
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Run on raw units, no standardising | first component 0.95 basket value, keeping 68.57%; two keep 84.99%, so a third is added, and it is 0.99 distance | pounds, days and km win by size of number, not by information |
-| Score a new order with its raw values | order 1 at 32.21 on $v_1$, not −1.51 | the components were built for standardised inputs |
+| Score a new order with its raw values | order 1 at 32.21 on $`v_1`$, not −1.51 | the components were built for standardised inputs |
 | Read the 2-D plot as the 85% summary | the plot keeps 64.54% | two components were plotted; four were needed for 85% |
 | Read the fourth component as a customer pattern | eigenvalue 0.9998, loading 0.9996 on distance | one noise column, given a full vote by standardising |
 
@@ -129,7 +135,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Both programs generate the same 20,000 orders from SplitMix64 (a small, standard random number generator) with seed 2026 and the Box–Muller formula (which turns two uniform random numbers into one bell-curve number), so Python and Rust print identical lines. Four roads meet. The first standardises, builds $R$ and diagonalises it by Jacobi rotations, which zero one off-diagonal pair at a time. The second takes the SVD of the 20,000-by-12 table by one-sided Jacobi, never forming $R$. The third computes the model's exact correlation matrix from the generating rule and its eigenvalues, with no data at all. The fourth works straight from the orders: the variance of the 20,000 first scores, and the rebuild error at r = 4. The plain `add` loop sums left to right in both languages, so the last digits agree.
+Both programs generate the same 20,000 orders from SplitMix64 (a small, standard random number generator) with seed 2026 and the Box–Muller formula (which turns two uniform random numbers into one bell-curve number), so Python and Rust print identical lines. Four roads meet. The first standardises, builds $`R`$ and diagonalises it by Jacobi rotations, which zero one off-diagonal pair at a time. The second takes the SVD of the 20,000-by-12 table by one-sided Jacobi, never forming $`R`$. The third computes the model's exact correlation matrix from the generating rule and its eigenvalues, with no data at all. The fourth works straight from the orders: the variance of the 20,000 first scores, and the rebuild error at r = 4. The plain `add` loop sums left to right in both languages, so the last digits agree.
 
 ### Python
 
@@ -541,9 +547,9 @@ The two outputs match line for line.
 
 Lean proves the three facts behind the method, for every table with at least two orders and no column whose standard deviation is 0.
 
-- Take any standardised table. Then $R$ has ones on its diagonal, its trace is $d$, and its eigenvalues add up to $d$.
-- Take any $r$ perpendicular unit directions, with $r$ at most $d$. Then their scores keep at most $\text{share}(r)$, and the top $r$ eigenvectors keep exactly that.
-- Take the SVD $Z = U S V^T$, where $U$ and $V$ have perpendicular unit columns. Then $R = V \frac{S^2}{n-1} V^T$, so each column of $V$ is a component. Its eigenvalue is its squared singular value over $n - 1$.
+- Take any standardised table. Then $`R`$ has ones on its diagonal, its trace is $`d`$, and its eigenvalues add up to $`d`$.
+- Take any $`r`$ perpendicular unit directions, with $`r`$ at most $`d`$. Then their scores keep at most $`\text{share}(r)`$, and the top $`r`$ eigenvectors keep exactly that.
+- Take the SVD $`Z = U S V^T`$, where $`U`$ and $`V`$ have perpendicular unit columns. Then $`R = V \frac{S^2}{n-1} V^T`$, so each column of $`V`$ is a component. Its eigenvalue is its squared singular value over $`n - 1`$.
 
 The 20,000 orders' numbers, the rebuild error, the Jacobi roads and the plot are left to the Python and Rust checks.
 
@@ -942,8 +948,8 @@ end PrincipalComponentsReduction
 
 - [k-means](06-k-means-and-clustering.md): the clustering that is usually run on the scores this card produces.
 - [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): the proof that the top eigenvectors keep the most variance, explained variance, and the warning about units.
-- [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): perpendicular eigenvectors and real eigenvalues for the symmetric matrix $R$.
-- [The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md): $Z = U S V^T$, the second road to the components.
+- [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): perpendicular eigenvectors and real eigenvalues for the symmetric matrix $`R`$.
+- [The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md): $`Z = U S V^T`$, the second road to the components.
 
 ## Where this goes next
 

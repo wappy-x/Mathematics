@@ -34,25 +34,31 @@ Each factor is one letter's count list, hung on the factorials.
 
 ## The formula
 
-Three reminders. The factorial $n!$ is $n$ × ($n$ − 1) × … × 1, the orderings of $n$ distinct things, with 0! = 1. The binomial coefficient $C(n, k)$, "n choose k", counts ways of picking k of n places. A coefficient is the number in front of a power once a product is multiplied out ([Generating functions](01-ordinary-generating-functions.md)).
+Three reminders. The factorial $`n!`$ is $`n`$ × ($`n`$ − 1) × … × 1, the orderings of $`n`$ distinct things, with 0! = 1. The binomial coefficient $`C(n, k)`$, "n choose k", counts ways of picking k of n places. A coefficient is the number in front of a power once a product is multiplied out ([Generating functions](01-ordinary-generating-functions.md)).
 
-Count what one part of the row — one letter, say — can do on 0 places, 1 place, 2 places, and so on. Its **exponential generating function** $A(x)$ hangs each count on a power of $x$ over a factorial:
+Count what one part of the row — one letter, say — can do on 0 places, 1 place, 2 places, and so on. Its **exponential generating function** $`A(x)`$ hangs each count on a power of $`x`$ over a factorial:
 
-$$A(x) \;=\; a_0 \;+\; a_1\frac{x}{1!} \;+\; a_2\frac{x^2}{2!} \;+\; a_3\frac{x^3}{3!} \;+\; \cdots$$
+```math
+A(x) \;=\; a_0 \;+\; a_1\frac{x}{1!} \;+\; a_2\frac{x^2}{2!} \;+\; a_3\frac{x^3}{3!} \;+\; \cdots
+```
 
 **Read it aloud:** the count for n places rides on x to the n, divided by the orderings of n things.
 
-Nothing is put in place of $x$; it is a peg keeping the sizes apart. A count comes back out as $n!$ times the coefficient of $x^n$. The factorial under each power is the **hanger**, and it is the only difference from the ordinary series.
+Nothing is put in place of $`x`$; it is a peg keeping the sizes apart. A count comes back out as $`n!`$ times the coefficient of $`x^n`$. The factorial under each power is the **hanger**, and it is the only difference from the ordinary series.
 
-What the hanger buys is the product. Take a second part, counts $b_n$ and series $B(x)$; let $c_n$ count the ways the two together fill $n$ places, each place to one part. Then $A(x)$ times $B(x)$ is the series of the $c_n$:
+What the hanger buys is the product. Take a second part, counts $`b_n`$ and series $`B(x)`$; let $`c_n`$ count the ways the two together fill $`n`$ places, each place to one part. Then $`A(x)`$ times $`B(x)`$ is the series of the $`c_n`$:
 
-$$c_n \;=\; C(n,0)\,a_0 b_n \;+\; C(n,1)\,a_1 b_{n-1} \;+\; \cdots \;+\; C(n,n)\,a_n b_0$$
+```math
+c_n \;=\; C(n,0)\,a_0 b_n \;+\; C(n,1)\,a_1 b_{n-1} \;+\; \cdots \;+\; C(n,n)\,a_n b_0
+```
 
 **Read it aloud:** choose the first part's places, count what each part does with its share, and add over the size of that share.
 
-That sum is called binomial convolution: the two shares add to $n$, and a binomial coefficient picks the places. The rack takes one factor per letter: two A tiles cover no place, one or two, one way each, so their factor is 1 + x + x^2/2!. The B tiles match; the C tile stops after one place:
+That sum is called binomial convolution: the two shares add to $`n`$, and a binomial coefficient picks the places. The rack takes one factor per letter: two A tiles cover no place, one or two, one way each, so their factor is 1 + x + x^2/2!. The B tiles match; the C tile stops after one place:
 
-$$\Big(1 + x + \frac{x^2}{2!}\Big)^2\,\big(1 + x\big) \;=\; 1 + 3x + 4x^2 + 3x^3 + \tfrac{5}{4}x^4 + \tfrac{1}{4}x^5$$
+```math
+\Big(1 + x + \frac{x^2}{2!}\Big)^2\,\big(1 + x\big) \;=\; 1 + 3x + 4x^2 + 3x^3 + \tfrac{5}{4}x^4 + \tfrac{1}{4}x^5
+```
 
 Four-letter words: 4! times the coefficient of the fourth power, 24 × 5/4 = 30.
 
@@ -60,20 +66,20 @@ One split of the rack runs the table: the A and B tiles are the first part, the 
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | the peg; its power records the size | never given a value | — |
-| $n$ | places in the row | 4 | climbs, till the tiles run out |
-| $n!$ | orderings of $n$ things; the hanger | 4! = 24 | — |
-| $a_n$ | the first part's ways on $n$ places | A and B tiles: 1, 2, 4, 6, 6 | more words at every size |
-| $b_n$ | the second part's ways on $n$ places | C tile: 1, 1, none | more words again |
-| $c_n$ | both parts' ways on $n$ places | 30 at $n$ = 4 | — |
-| $A(x)$, $B(x)$ | the parts' series | (1 + x + x^2/2)^2, and 1 + x | — |
-| $C(n, k)$, $k$ | choices of the first part's $k$ places | C(4, 3) = 4 | — |
+| $`x`$ | the peg; its power records the size | never given a value | — |
+| $`n`$ | places in the row | 4 | climbs, till the tiles run out |
+| $`n!`$ | orderings of $`n`$ things; the hanger | 4! = 24 | — |
+| $`a_n`$ | the first part's ways on $`n`$ places | A and B tiles: 1, 2, 4, 6, 6 | more words at every size |
+| $`b_n`$ | the second part's ways on $`n`$ places | C tile: 1, 1, none | more words again |
+| $`c_n`$ | both parts' ways on $`n`$ places | 30 at $`n`$ = 4 | — |
+| $`A(x)`$, $`B(x)`$ | the parts' series | (1 + x + x^2/2)^2, and 1 + x | — |
+| $`C(n, k)`$, $`k`$ | choices of the first part's $`k`$ places | C(4, 3) = 4 | — |
 
 ### When it holds
 
 - **The places are distinguishable, the copies inside a part are not.** Number the tiles and the answer goes back to 120.
 - **A part's count depends on how many places it gets, not which.** A ban on two A's side by side breaks that, and the product rule with it.
-- **Each factor stops where its tiles run out.** Two A tiles give no $x^3$ term; leaving one in would count words the rack cannot spell.
+- **Each factor stops where its tiles run out.** Two A tiles give no $`x^3`$ term; leaving one in would count words the rack cannot spell.
 
 ---
 
@@ -91,11 +97,15 @@ Two A tiles, given named places, cover none, one or two of them, one way each: a
 
 Take one term from each of two series:
 
-$$a_i\frac{x^i}{i!} \times b_j\frac{x^j}{j!} \;=\; a_i b_j\,\frac{x^{i+j}}{i!\,j!}$$
+```math
+a_i\frac{x^i}{i!} \times b_j\frac{x^j}{j!} \;=\; a_i b_j\,\frac{x^{i+j}}{i!\,j!}
+```
 
-Only pairs with i + j = n land on the n-th power. Writing k for i, the coefficient there sums $a_k b_{n-k} / (k!\,(n-k)!)$ over k from 0 to n. Multiply by $n!$ and every term picks up
+Only pairs with i + j = n land on the n-th power. Writing k for i, the coefficient there sums $`a_k b_{n-k} / (k!\,(n-k)!)`$ over k from 0 to n. Multiply by $`n!`$ and every term picks up
 
-$$\frac{n!}{k!\,(n-k)!} \;=\; C(n, k).$$
+```math
+\frac{n!}{k!\,(n-k)!} \;=\; C(n, k).
+```
 
 Nothing but the hangers produced that; on plain powers the sizes merely add.
 
@@ -103,7 +113,7 @@ Nothing but the hangers produced that; on plain powers the sizes merely add.
 
 Count directly, no series in sight. To fill n places:
 
-1. Pick the k places for the first part, $C(n, k)$ ways.
+1. Pick the k places for the first part, $`C(n, k)`$ ways.
 2. It fills them in its own count for k places.
 3. The second fills the other n − k in its count.
 4. Add over k.

@@ -38,47 +38,53 @@ Orange: the real machine, a bell curve centred on target. Green: the mis-set mac
 
 ## The formula
 
-Notation first. The real diameter, measured in standard deviations above target, is a random variable $X$ (a number settled by chance) with density $f$ (chance per standard deviation of diameter), the bell curve ([Normal](../04-Continuous%20Distributions/04-normal-distribution.md)). The proposal is a second density $g$, and its draws are called $Y_1, Y_2, \dots$ to keep them apart from the real ones. $E_f[\cdot]$ reads "the long-run average when the draw comes from $f$", the expectation ([Expectation](../02-Random%20Variables/02-expectation.md)) with the drawing law written underneath. A hat marks an estimate.
+Notation first. The real diameter, measured in standard deviations above target, is a random variable $`X`$ (a number settled by chance) with density $`f`$ (chance per standard deviation of diameter), the bell curve ([Normal](../04-Continuous%20Distributions/04-normal-distribution.md)). The proposal is a second density $`g`$, and its draws are called $`Y_1, Y_2, \dots`$ to keep them apart from the real ones. $`E_f[\cdot]`$ reads "the long-run average when the draw comes from $`f`$", the expectation ([Expectation](../02-Random%20Variables/02-expectation.md)) with the drawing law written underneath. A hat marks an estimate.
 
-The quantity averaged is $h$: here $h(x) = 1$ if $x$ is past the line $c$ and 0 if not, so its average is the chance of a jam. The answer is
+The quantity averaged is $`h`$: here $`h(x) = 1`$ if $`x`$ is past the line $`c`$ and 0 if not, so its average is the chance of a jam. The answer is
 
-$$I = E_f[h(X)] = \int h(x)\,f(x)\,dx = \int h(x)\,\frac{f(x)}{g(x)}\,g(x)\,dx = E_g\big[h(Y)\,w(Y)\big], \qquad w(y) = \frac{f(y)}{g(y)}.$$
+```math
+I = E_f[h(X)] = \int h(x)\,f(x)\,dx = \int h(x)\,\frac{f(x)}{g(x)}\,g(x)\,dx = E_g\big[h(Y)\,w(Y)\big], \qquad w(y) = \frac{f(y)}{g(y)}.
+```
 
-**Read it aloud:** the average of $h$ under the real law equals the average of $h$ times the weight under the proposal, where the weight is the real density divided by the proposal density.
+**Read it aloud:** the average of $`h`$ under the real law equals the average of $`h`$ times the weight under the proposal, where the weight is the real density divided by the proposal density.
 
-So draw $n$ times from $g$ and average:
+So draw $`n`$ times from $`g`$ and average:
 
-$$\hat I_n = \frac1n \sum_{i=1}^{n} h(Y_i)\,w(Y_i), \qquad \text{standard error} = \sqrt{\frac{M_2 - I^2}{n}}, \qquad M_2 = E_g\big[h(Y)^2 w(Y)^2\big] = \int \frac{h(x)^2 f(x)^2}{g(x)}\,dx.$$
+```math
+\hat I_n = \frac1n \sum_{i=1}^{n} h(Y_i)\,w(Y_i), \qquad \text{standard error} = \sqrt{\frac{M_2 - I^2}{n}}, \qquad M_2 = E_g\big[h(Y)^2 w(Y)^2\big] = \int \frac{h(x)^2 f(x)^2}{g(x)}\,dx.
+```
 
-**Read it aloud:** the estimate is the plain average of the weighted outcomes; its error shrinks like one over the square root of the number of draws, with a size set by the second moment $M_2$, the average squared weighted outcome.
+**Read it aloud:** the estimate is the plain average of the weighted outcomes; its error shrinks like one over the square root of the number of draws, with a size set by the second moment $`M_2`$, the average squared weighted outcome.
 
-For the bolts, the first proposal is the bell curve moved to centre $\theta$, and Step 3 shows the weight and second moment come out as
+For the bolts, the first proposal is the bell curve moved to centre $`\theta`$, and Step 3 shows the weight and second moment come out as
 
-$$w(y) = e^{-\theta y + \theta^2/2}, \qquad M_2(\theta) = e^{\theta^2}\,P(X > c + \theta).$$
+```math
+w(y) = e^{-\theta y + \theta^2/2}, \qquad M_2(\theta) = e^{\theta^2}\,P(X > c + \theta).
+```
 
-The second proposal starts at the line and falls away like an exponential with rate $\lambda$: $g(y) = \lambda\,e^{-\lambda (y - c)}$ for $y > c$. Its density falls to about 37 percent of its value with every further $1/\lambda$ standard deviations.
+The second proposal starts at the line and falls away like an exponential with rate $`\lambda`$: $`g(y) = \lambda\,e^{-\lambda (y - c)}`$ for $`y > c`$. Its density falls to about 37 percent of its value with every further $`1/\lambda`$ standard deviations.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$, $x$, $y$, $t$ | a real bolt's diameter in standard deviations above target; $x$ and $y$ particular values; $t = y - c$ the distance past the line | a bell-curve draw | — |
-| $c$, $h$ | the jam line; $h(x)$ is 1 past it, 0 before it | $c = 4.75$ | a higher line makes the chance smaller and plain simulation hopeless sooner |
-| $f$ | the real density: the bell curve centred on 0 | $f(4.75)$ is tiny | — |
-| $g$ | the proposal: the density actually drawn from | bell curve centred on $\theta$, or an exponential tail | must be positive wherever $h f$ is |
-| $Y$, $Y_i$, $U$ | draws from the proposal; $U$ is a uniform draw between 0 and 1 that the code turns into one | 10,000 of them | — |
-| $w$ | the weight $f/g$: how much less (or more) often the real machine makes this bolt | 12.6071 per million at the line | — |
-| $I$ | the answer, $P(X > c)$ | 1.017083243 per million | — |
-| $n$ | number of draws | 10,000 | standard error falls like $1/\sqrt{n}$ |
-| $\hat I_n$ | the estimate from $n$ weighted draws | 0.973097 per million, standard error (se) 0.023024 | — |
-| $M_2$ | second moment: the average squared weighted outcome | 6.602853 per $10^{12}$ | a bigger second moment means a wider error bar |
-| $\theta$, $\lambda$, $s$ | the proposal's settings: centre, exponential rate, spread | 4.75; 4.75; 1 | best centre 4.852; a spread with $s^2 < 1/2$ makes $M_2$ infinite |
-| $E_f$, $E_g$ | long-run average with draws from $f$, or from $g$ | — | — |
+| $`X`$, $`x`$, $`y`$, $`t`$ | a real bolt's diameter in standard deviations above target; $`x`$ and $`y`$ particular values; $`t = y - c`$ the distance past the line | a bell-curve draw | — |
+| $`c`$, $`h`$ | the jam line; $`h(x)`$ is 1 past it, 0 before it | $`c = 4.75`$ | a higher line makes the chance smaller and plain simulation hopeless sooner |
+| $`f`$ | the real density: the bell curve centred on 0 | $`f(4.75)`$ is tiny | — |
+| $`g`$ | the proposal: the density actually drawn from | bell curve centred on $`\theta`$, or an exponential tail | must be positive wherever $`h f`$ is |
+| $`Y`$, $`Y_i`$, $`U`$ | draws from the proposal; $`U`$ is a uniform draw between 0 and 1 that the code turns into one | 10,000 of them | — |
+| $`w`$ | the weight $`f/g`$: how much less (or more) often the real machine makes this bolt | 12.6071 per million at the line | — |
+| $`I`$ | the answer, $`P(X > c)`$ | 1.017083243 per million | — |
+| $`n`$ | number of draws | 10,000 | standard error falls like $`1/\sqrt{n}`$ |
+| $`\hat I_n`$ | the estimate from $`n`$ weighted draws | 0.973097 per million, standard error (se) 0.023024 | — |
+| $`M_2`$ | second moment: the average squared weighted outcome | 6.602853 per $`10^{12}`$ | a bigger second moment means a wider error bar |
+| $`\theta`$, $`\lambda`$, $`s`$ | the proposal's settings: centre, exponential rate, spread | 4.75; 4.75; 1 | best centre 4.852; a spread with $`s^2 < 1/2`$ makes $`M_2`$ infinite |
+| $`E_f`$, $`E_g`$ | long-run average with draws from $`f`$, or from $`g`$ | — | — |
 
 ### When it holds
 
-- **The proposal covers the answer.** $g$ must be positive wherever $h\,f$ is not zero. A proposal that never draws past 5.75 misses 0.44 percent of the answer, and more draws never find it.
-- **Both densities are known exactly, constants included.** Drop the $e^{\theta^2/2}$ from the weight and the estimate comes out 79,320 times too small. When $f$ is known only up to a constant factor, the self-normalised version divides by the total weight instead; it is then slightly biased, but the bias shrinks as $n$ grows.
-- **The second moment is finite.** The error formula needs $M_2 < \infty$. A bell-curve proposal on the line with spread 0.5 has an infinite second moment, and the error bar it prints means nothing.
-- **Independent draws.** The $1/\sqrt n$ comes from independence ([Monte Carlo](04-monte-carlo-estimates-and-error.md)). Reused or correlated random numbers make the printed error bar too narrow.
+- **The proposal covers the answer.** $`g`$ must be positive wherever $`h\,f`$ is not zero. A proposal that never draws past 5.75 misses 0.44 percent of the answer, and more draws never find it.
+- **Both densities are known exactly, constants included.** Drop the $`e^{\theta^2/2}`$ from the weight and the estimate comes out 79,320 times too small. When $`f`$ is known only up to a constant factor, the self-normalised version divides by the total weight instead; it is then slightly biased, but the bias shrinks as $`n`$ grows.
+- **The second moment is finite.** The error formula needs $`M_2 < \infty`$. A bell-curve proposal on the line with spread 0.5 has an infinite second moment, and the error bar it prints means nothing.
+- **Independent draws.** The $`1/\sqrt n`$ comes from independence ([Monte Carlo](04-monte-carlo-estimates-and-error.md)). Reused or correlated random numbers make the printed error bar too narrow.
 
 ---
 
@@ -86,52 +92,60 @@ The second proposal starts at the line and falls away like an exponential with r
 
 ### Step 0: count each draw by how often it should have happened
 
-Plain simulation fails on the bolts for one reason: every draw costs the same, and almost every draw lands where $h$ is zero. Importance sampling spends the draws where $h$ is not zero and pays for the choice with a correction.
+Plain simulation fails on the bolts for one reason: every draw costs the same, and almost every draw lands where $`h`$ is zero. Importance sampling spends the draws where $`h`$ is not zero and pays for the choice with a correction.
 
 If the mis-set machine makes a given diameter far more often than the real one, that bolt counts for correspondingly less. The discount is exactly the ratio of the two densities at that diameter. The correction is exact, not approximate, so nothing is lost except the need to know both densities.
 
 ### Step 1: multiply and divide by the proposal
 
-Take the integral that defines the answer, $\int h f\,dx$. Multiply and divide the integrand by $g$. Wherever $g$ is positive, nothing changes:
+Take the integral that defines the answer, $`\int h f\,dx`$. Multiply and divide the integrand by $`g`$. Wherever $`g`$ is positive, nothing changes:
 
-$$\int h(x) f(x)\,dx = \int h(x)\,\frac{f(x)}{g(x)}\;g(x)\,dx.$$
+```math
+\int h(x) f(x)\,dx = \int h(x)\,\frac{f(x)}{g(x)}\;g(x)\,dx.
+```
 
-The right side is an average under $g$: the integral of something times $g$. So $I = E_g[h(Y)\,w(Y)]$. The only fine print is where $g$ is zero: there, the division is not allowed, and any part of $h f$ sitting there is dropped from the right side. That is the coverage condition.
+The right side is an average under $`g`$: the integral of something times $`g`$. So $`I = E_g[h(Y)\,w(Y)]`$. The only fine print is where $`g`$ is zero: there, the division is not allowed, and any part of $`h f`$ sitting there is dropped from the right side. That is the coverage condition.
 
 ### Step 2: the estimate is unbiased, and its error has a formula
 
-Each term $h(Y_i)\,w(Y_i)$ has average $I$ by Step 1, so the average of $n$ of them has average $I$ as well. So the estimate is **unbiased** (it aims at the right number). The terms are independent, so the variance of their average is the variance of one term divided by $n$, as on [Monte Carlo](04-monte-carlo-estimates-and-error.md). The variance of one term is its average square minus its squared average, $M_2 - I^2$. So the standard error is $\sqrt{(M_2 - I^2)/n}$.
+Each term $`h(Y_i)\,w(Y_i)`$ has average $`I`$ by Step 1, so the average of $`n`$ of them has average $`I`$ as well. So the estimate is **unbiased** (it aims at the right number). The terms are independent, so the variance of their average is the variance of one term divided by $`n`$, as on [Monte Carlo](04-monte-carlo-estimates-and-error.md). The variance of one term is its average square minus its squared average, $`M_2 - I^2`$. So the standard error is $`\sqrt{(M_2 - I^2)/n}`$.
 
-Unbiasedness holds for any proposal that covers the answer. The error bar depends entirely on $M_2$, and $M_2$ depends on the choice of $g$. That choice is the whole craft.
+Unbiasedness holds for any proposal that covers the answer. The error bar depends entirely on $`M_2`$, and $`M_2`$ depends on the choice of $`g`$. That choice is the whole craft.
 
 ### Step 3: the bolts, with the bell curve moved to the line
 
-Take $g$ as the bell curve centred at $\theta$. The ratio of two bell curves simplifies, because the $y^2$ terms cancel:
+Take $`g`$ as the bell curve centred at $`\theta`$. The ratio of two bell curves simplifies, because the $`y^2`$ terms cancel:
 
-$$w(y) = \frac{e^{-y^2/2}}{e^{-(y-\theta)^2/2}} = e^{-\theta y + \theta^2/2}.$$
+```math
+w(y) = \frac{e^{-y^2/2}}{e^{-(y-\theta)^2/2}} = e^{-\theta y + \theta^2/2}.
+```
 
-At $\theta = c = 4.75$, a draw exactly on the line has weight $e^{-c^2/2} = e^{-11.28125}$, which is 12.6071 per million. A draw at 5.75 has weight 0.1091 per million. The weight falls as the draw moves further out, because the real machine makes those bolts even more rarely than the mis-set one does. About half the proposal's draws jam, each counted at a weight of at most 12.6071 per million, and the average lands near one per million.
+At $`\theta = c = 4.75`$, a draw exactly on the line has weight $`e^{-c^2/2} = e^{-11.28125}`$, which is 12.6071 per million. A draw at 5.75 has weight 0.1091 per million. The weight falls as the draw moves further out, because the real machine makes those bolts even more rarely than the mis-set one does. About half the proposal's draws jam, each counted at a weight of at most 12.6071 per million, and the average lands near one per million.
 
 The second moment comes from completing the square, and is again a bell-curve tail:
 
-$$M_2(\theta) = e^{\theta^2}\,P(X > c + \theta).$$
+```math
+M_2(\theta) = e^{\theta^2}\,P(X > c + \theta).
+```
 
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-$M_2 = \int_c^\infty f(x)^2 / g(x)\,dx$. With $f(x) = e^{-x^2/2}/\sqrt{2\pi}$ and $g(x) = f(x - \theta)$, the exponent of $f^2/g$ is
-$$-x^2 + \tfrac12 (x-\theta)^2 = -\tfrac12 x^2 - \theta x + \tfrac12\theta^2 = -\tfrac12 (x+\theta)^2 + \theta^2.$$
-So $f(x)^2/g(x) = e^{\theta^2} f(x + \theta)$, and integrating from $c$ to infinity gives $e^{\theta^2}\,P(X > c + \theta)$. At $\theta = 4.75$: $e^{22.5625} \times 1.0495 \times 10^{-21} = 6.602853 \times 10^{-12}$. The checks confirm it by integrating $f^2/g$ directly with Simpson's rule.
+$`M_2 = \int_c^\infty f(x)^2 / g(x)\,dx`$. With $`f(x) = e^{-x^2/2}/\sqrt{2\pi}`$ and $`g(x) = f(x - \theta)`$, the exponent of $`f^2/g`$ is
+
+$`\displaystyle -x^2 + \tfrac12 (x-\theta)^2 = -\tfrac12 x^2 - \theta x + \tfrac12\theta^2 = -\tfrac12 (x+\theta)^2 + \theta^2.`$
+
+So $`f(x)^2/g(x) = e^{\theta^2} f(x + \theta)`$, and integrating from $`c`$ to infinity gives $`e^{\theta^2}\,P(X > c + \theta)`$. At $`\theta = 4.75`$: $`e^{22.5625} \times 1.0495 \times 10^{-21} = 6.602853 \times 10^{-12}`$. The checks confirm it by integrating $`f^2/g`$ directly with Simpson's rule.
 
 </details>
 
-This moving of a bell curve is called **exponential tilting**: $g(y) = f(y)\,e^{\theta y - \theta^2/2}$, the real density multiplied by an exponential and rescaled to area 1. The same exponential factor $e^{\theta y}$ drives the Chernoff bound (an exponential upper limit on a tail chance) on [Concentration](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md).
+This moving of a bell curve is called **exponential tilting**: $`g(y) = f(y)\,e^{\theta y - \theta^2/2}`$, the real density multiplied by an exponential and rescaled to area 1. The same exponential factor $`e^{\theta y}`$ drives the Chernoff bound (an exponential upper limit on a tail chance) on [Concentration](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md).
 
 ### Step 4: choosing the proposal
 
-**The ideal.** If every weighted outcome $h(Y)\,w(Y)$ were the same number, the variance would be zero. That happens when $g$ is proportional to $h f$: the proposal $g^* = h f / I$, the real density cut off at the line and rescaled. Every draw from $g^*$ jams, and every weight is exactly $I$. This ideal needs $I$ itself, so it cannot be used. It is still the target shape: **a good proposal looks like the part of the real density that makes the answer.**
+**The ideal.** If every weighted outcome $`h(Y)\,w(Y)`$ were the same number, the variance would be zero. That happens when $`g`$ is proportional to $`h f`$: the proposal $`g^* = h f / I`$, the real density cut off at the line and rescaled. Every draw from $`g^*`$ jams, and every weight is exactly $`I`$. This ideal needs $`I`$ itself, so it cannot be used. It is still the target shape: **a good proposal looks like the part of the real density that makes the answer.**
 
-**What that shape is here.** Write a point past the line as $y = c + t$. Then $y^2/2 = c^2/2 + ct + t^2/2$, so $f(c + t) = f(c)\,e^{-ct}\,e^{-t^2/2}$. Just past the line the tail falls like $e^{-ct}$, an exponential with rate $c$. The exponential proposal with $\lambda = c = 4.75$ copies that fall. Its weight is $f(c)\,e^{-t^2/2}/c$: nearly the same on every draw, which is what a small variance means.
+**What that shape is here.** Write a point past the line as $`y = c + t`$. Then $`y^2/2 = c^2/2 + ct + t^2/2`$, so $`f(c + t) = f(c)\,e^{-ct}\,e^{-t^2/2}`$. Just past the line the tail falls like $`e^{-ct}`$, an exponential with rate $`c`$. The exponential proposal with $`\lambda = c = 4.75`$ copies that fall. Its weight is $`f(c)\,e^{-t^2/2}/c`$: nearly the same on every draw, which is what a small variance means.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -144,9 +158,9 @@ xychart-beta
     line [0.40, 0.39, 0.35, 0.30, 0.24, 0.18, 0.13]
 ```
 
-Orange: the ideal $g^* = f/I$ past the line. Green: the exponential proposal, rate 4.75, lying almost on it. Dark blue: the bell curve moved to the line, which spreads its draws far too wide and puts half of them before the line, where $h$ is zero. That gap is why the exponential proposal's error is 0.0776 percent and the moved bell curve's is 2.32 percent.
+Orange: the ideal $`g^* = f/I`$ past the line. Green: the exponential proposal, rate 4.75, lying almost on it. Dark blue: the bell curve moved to the line, which spreads its draws far too wide and puts half of them before the line, where $`h`$ is zero. That gap is why the exponential proposal's error is 0.0776 percent and the moved bell curve's is 2.32 percent.
 
-**Tuning the centre.** Within the moved bell curves, $M_2(\theta)$ has a formula, so the best centre can be found by minimising it. A golden-section search (repeatedly narrowing an interval around the lowest point) gives $\theta = 4.852$, just past the line, with a relative standard error of 2.31 percent. Too little shift and the draws rarely jam. Too much and most draws land far out with negligible weights, so the few that land near the line carry large weights and dominate the estimate.
+**Tuning the centre.** Within the moved bell curves, $`M_2(\theta)`$ has a formula, so the best centre can be found by minimising it. A golden-section search (repeatedly narrowing an interval around the lowest point) gives $`\theta = 4.852`$, just past the line, with a relative standard error of 2.31 percent. Too little shift and the draws rarely jam. Too much and most draws land far out with negligible weights, so the few that land near the line carry large weights and dominate the estimate.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -157,30 +171,30 @@ xychart-beta
     line [5.92, 3.87, 2.86, 2.40, 2.33, 2.62, 3.37, 4.90, 8.01]
 ```
 
-Orange: the relative standard error, $\sqrt{M_2(\theta) - I^2}\,/\,(I\sqrt{n})$, for $n$ = 10,000. It bottoms out near the line. At centre 0, plain simulation, it is 991.57 percent.
+Orange: the relative standard error, $`\sqrt{M_2(\theta) - I^2}\,/\,(I\sqrt{n})`$, for $`n`$ = 10,000. It bottoms out near the line. At centre 0, plain simulation, it is 991.57 percent.
 
 ### Step 5: two ways a proposal fails
 
-**Missing ground.** If $g$ is zero on part of the region where $h f$ is not, Step 1 drops that part. The estimate is then unbiased for the wrong number, and its error bar shrinks around it with confidence.
+**Missing ground.** If $`g`$ is zero on part of the region where $`h f`$ is not, Step 1 drops that part. The estimate is then unbiased for the wrong number, and its error bar shrinks around it with confidence.
 
-**Tails that are too thin.** $M_2$ divides by $g$. Where $g$ is much smaller than $f$, the weight is huge, and its square larger still. A bell-curve proposal on the line with spread $s$ gives $f^2/g$ the exponent $-x^2 + (x-c)^2/(2s^2)$. For $s^2 < 1/2$ the $x^2$ term wins with a plus sign, the integrand grows without bound, and $M_2$ is infinite.
+**Tails that are too thin.** $`M_2`$ divides by $`g`$. Where $`g`$ is much smaller than $`f`$, the weight is huge, and its square larger still. A bell-curve proposal on the line with spread $`s`$ gives $`f^2/g`$ the exponent $`-x^2 + (x-c)^2/(2s^2)`$. For $`s^2 < 1/2`$ the $`x^2`$ term wins with a plus sign, the integrand grows without bound, and $`M_2`$ is infinite.
 
-With $s = 0.5$, the second moment integrated out to 10, 20, 25 and 30 is $10^{-11.5}$, $10^{26.3}$, $10^{82.6}$ and $10^{160.6}$. The mean is still right: the weights are integrable, so the average still settles on $I$. What is lost is the error bar.
+With $`s = 0.5`$, the second moment integrated out to 10, 20, 25 and 30 is $`10^{-11.5}`$, $`10^{26.3}`$, $`10^{82.6}`$ and $`10^{160.6}`$. The mean is still right: the weights are integrable, so the average still settles on $`I`$. What is lost is the error bar.
 
 <details>
 <summary>Detailed proof</summary>
 
-Assume $h f$ is integrable, $g$ is a density, and $g(x) > 0$ wherever $h(x) f(x) \neq 0$. Let $Y_1, \dots, Y_n$ be independent draws from $g$.
+Assume $`h f`$ is integrable, $`g`$ is a density, and $`g(x) > 0`$ wherever $`h(x) f(x) \neq 0`$. Let $`Y_1, \dots, Y_n`$ be independent draws from $`g`$.
 
-**The identity.** $E_g[h(Y) w(Y)] = \int_{g > 0} h(x) \frac{f(x)}{g(x)} g(x)\,dx = \int_{g>0} h(x) f(x)\,dx = \int h(x) f(x)\,dx = I$. The last step uses coverage: the integrand $h f$ is zero where $g$ is zero. The same computation with $|h|$ shows each term has a finite average, so the averages are well defined.
+**The identity.** $`E_g[h(Y) w(Y)] = \int_{g > 0} h(x) \frac{f(x)}{g(x)} g(x)\,dx = \int_{g>0} h(x) f(x)\,dx = \int h(x) f(x)\,dx = I`$. The last step uses coverage: the integrand $`h f`$ is zero where $`g`$ is zero. The same computation with $`|h|`$ shows each term has a finite average, so the averages are well defined.
 
-**Unbiased.** An average of expectations is the expectation of the average, so $E[\hat I_n] = \frac1n \sum_i E_g[h(Y_i) w(Y_i)] = I$.
+**Unbiased.** An average of expectations is the expectation of the average, so $`E[\hat I_n] = \frac1n \sum_i E_g[h(Y_i) w(Y_i)] = I`$.
 
-**The error.** $E_g[(h w)^2] = \int_{g>0} h^2 \frac{f^2}{g^2}\,g\,dx = \int h^2 f^2 / g\,dx = M_2$. If $M_2$ is finite, one term has variance $M_2 - I^2$, and independent terms add their variances, so $\operatorname{Var}(\hat I_n) = (M_2 - I^2)/n$. If $M_2$ is infinite, one term has infinite variance, and no finite error bar is justified.
+**The error.** $`E_g[(h w)^2] = \int_{g>0} h^2 \frac{f^2}{g^2}\,g\,dx = \int h^2 f^2 / g\,dx = M_2`$. If $`M_2`$ is finite, one term has variance $`M_2 - I^2`$, and independent terms add their variances, so $`\mathrm{Var}(\hat I_n) = (M_2 - I^2)/n`$. If $`M_2`$ is infinite, one term has infinite variance, and no finite error bar is justified.
 
-**The zero-variance proposal.** Since a variance is never negative, $M_2 \ge I^2$ for every proposal. Equality means $h w$ equals $I$ at every point $g$ draws from, that is $h f / g = I$, or $g = h f / I$ (for $h \ge 0$ and $I > 0$). No other proposal achieves zero.
+**The zero-variance proposal.** Since a variance is never negative, $`M_2 \ge I^2`$ for every proposal. Equality means $`h w`$ equals $`I`$ at every point $`g`$ draws from, that is $`h f / g = I`$, or $`g = h f / I`$ (for $`h \ge 0`$ and $`I > 0`$). No other proposal achieves zero.
 
-**Thin bell-curve proposals.** For $g$ the bell curve with centre $c$ and spread $s$, $f(x)^2/g(x) = \frac{s}{\sqrt{2\pi}}\exp\!\big(-x^2 + \frac{(x-c)^2}{2s^2}\big)$. The coefficient of $x^2$ in the exponent is $-1 + \frac{1}{2s^2}$, positive exactly when $s^2 < 1/2$. Then the integrand tends to infinity as $x$ grows, so its integral from $c$ to infinity is infinite. For $s^2 = 1/2$ the exponent is $-2cx + c^2$, which decays, and for $s^2 > 1/2$ it decays faster, so $M_2$ is finite exactly when $s^2 \ge 1/2$.
+**Thin bell-curve proposals.** For $`g`$ the bell curve with centre $`c`$ and spread $`s`$, $`f(x)^2/g(x) = \frac{s}{\sqrt{2\pi}}\exp\!\big(-x^2 + \frac{(x-c)^2}{2s^2}\big)`$. The coefficient of $`x^2`$ in the exponent is $`-1 + \frac{1}{2s^2}`$, positive exactly when $`s^2 < 1/2`$. Then the integrand tends to infinity as $`x`$ grows, so its integral from $`c`$ to infinity is infinite. For $`s^2 = 1/2`$ the exponent is $`-2cx + c^2`$, which decays, and for $`s^2 > 1/2`$ it decays faster, so $`M_2`$ is finite exactly when $`s^2 \ge 1/2`$.
 
 </details>
 
@@ -190,15 +204,15 @@ Assume $h f$ is integrable, $g$ is a density, and $g(x) > 0$ wherever $h(x) f(x)
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the answer, $P(X > 4.75)$ | bell-curve tail | 1.017083243 per million |
+| the answer, $`P(X > 4.75)`$ | bell-curve tail | 1.017083243 per million |
 | plain simulation: expected jams in 10,000 | 10,000 × 1.017 per million | 0.0102 |
 | plain: chance of seeing none | (1 − 1.017 per million) to the power 10,000 | 0.9899 |
-| plain: relative standard error | $\sqrt{(1 - I)/(n I)}$ | 991.57% |
-| weight on the line, $\theta = 4.75$ | $e^{-4.75^2/2} = e^{-11.28125}$ | 12.6071 per million |
-| weight at 5.75 | $e^{-4.75 \times 5.75 + 11.28125}$ | 0.1091 per million |
-| second moment | $e^{22.5625} \times 1.0495 \times 10^{-21}$ | 6.602853 per $10^{12}$ |
-| relative standard error | $\sqrt{6.602853 - 1.034458}$ per $10^{12}$ = 2.3597 per million, over (1.017083 per million × $\sqrt{10{,}000}$) | 2.32% |
-| plain draws for the same error | $I(1 - I)/(M_2 - I^2) \times 10{,}000$ | 1,827 million |
+| plain: relative standard error | $`\sqrt{(1 - I)/(n I)}`$ | 991.57% |
+| weight on the line, $`\theta = 4.75`$ | $`e^{-4.75^2/2} = e^{-11.28125}`$ | 12.6071 per million |
+| weight at 5.75 | $`e^{-4.75 \times 5.75 + 11.28125}`$ | 0.1091 per million |
+| second moment | $`e^{22.5625} \times 1.0495 \times 10^{-21}`$ | 6.602853 per $`10^{12}`$ |
+| relative standard error | $`\sqrt{6.602853 - 1.034458}`$ per $`10^{12}`$ = 2.3597 per million, over (1.017083 per million × $`\sqrt{10{,}000}`$) | 2.32% |
+| plain draws for the same error | $`I(1 - I)/(M_2 - I^2) \times 10{,}000`$ | 1,827 million |
 | **the run, 10,000 moved-bell draws** | 4,934 jams, weighted and averaged | **0.973097 per million, se 0.023024** |
 | the run, 10,000 exponential draws | every draw past the line | 1.016923 per million, se 0.000790 |
 
@@ -210,18 +224,18 @@ The moved bell curve's run is 1.91 standard errors below the true 1.017 per mill
 | --- | --- | --- |
 | Plain simulation, 10,000 draws | 0 jams, estimate 0 (chance 0.9899) | The draws never reach the region that holds the answer |
 | Count the proposal's jams without weights | 0.4934 | That is the mis-set machine's jam rate, not the real one's |
-| Weight $e^{-\theta y}$, dropping $e^{\theta^2/2}$ | 0.00001227 per million, 79,320 times too small | A density's constant is part of the weight |
+| Weight $`e^{-\theta y}`$, dropping $`e^{\theta^2/2}`$ | 0.00001227 per million, 79,320 times too small | A density's constant is part of the weight |
 | Proposal that never draws past 5.75 | misses 0.44% of the answer | No coverage: the missing piece never shows up in any run |
-| Bell curve on the line with spread 0.5 | 0.996897 per million, printed se 0.015209; true $M_2$ infinite | Tails too thin: the printed error bar looks better than the spread-1 run's and means nothing |
+| Bell curve on the line with spread 0.5 | 0.996897 per million, printed se 0.015209; true $`M_2`$ infinite | Tails too thin: the printed error bar looks better than the spread-1 run's and means nothing |
 | Centre the bell curve at 7 instead of 4.852 | relative se 8.01% instead of 2.31% | Overshoot: draws land where the real density is negligible |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Five roads to one number. The exact tail by Laplace's continued fraction, $P(X > x) = f(x) / (x + 1/(x + 2/(x + 3/(x + \dots))))$, evaluated from the bottom up. The same tail by Simpson's rule, an integrator written into the script. Plain simulation with 10,000 draws. Importance sampling from the moved bell curve and from the exponential tail, 10,000 draws each.
+Five roads to one number. The exact tail by Laplace's continued fraction, $`P(X > x) = f(x) / (x + 1/(x + 2/(x + 3/(x + \dots))))`$, evaluated from the bottom up. The same tail by Simpson's rule, an integrator written into the script. Plain simulation with 10,000 draws. Importance sampling from the moved bell curve and from the exponential tail, 10,000 draws each.
 
-Random numbers come from a SplitMix64 generator with seed 2026 ([Random numbers from a computer](01-pseudo-random-numbers.md)). Bell-curve draws come from Box-Muller ([Rejection sampling and Box-Muller](03-rejection-sampling-and-box-muller.md)). Exponential draws come from the inverse transform $y = c - \ln(U)/\lambda$, with $U$ a uniform draw between 0 and 1 ([Inverse transform](02-inverse-transform-sampling.md)). The second moment is reached three ways: the completed square, Simpson's rule on $f^2/g$, and the run's own squares. Simulated numbers are asserted within four standard errors of the exact answer, never to an exact match.
+Random numbers come from a SplitMix64 generator with seed 2026 ([Random numbers from a computer](01-pseudo-random-numbers.md)). Bell-curve draws come from Box-Muller ([Rejection sampling and Box-Muller](03-rejection-sampling-and-box-muller.md)). Exponential draws come from the inverse transform $`y = c - \ln(U)/\lambda`$, with $`U`$ a uniform draw between 0 and 1 ([Inverse transform](02-inverse-transform-sampling.md)). The second moment is reached three ways: the completed square, Simpson's rule on $`f^2/g`$, and the run's own squares. Simulated numbers are asserted within four standard errors of the exact answer, never to an exact match.
 
 ### Python
 
@@ -576,14 +590,14 @@ The two outputs agree line for line.
 
 Lean proves the reweighting identity, that the estimate is unbiased, and the error formula, for every proposal that covers the answer.
 
-- Suppose $g$ is never negative, covers the answer, and the integral of $|h\,f|$ is finite. Then a draw $Y$ from $g$ gives $E_g[h(Y)\,w(Y)] = \int h f\,dx$.
-- Take the same $g$ and $n$ draws $Y_i$ from it, at least one. Then the estimate $\hat I_n$ averages to exactly $I$, even when the draws are not independent.
-- Take the same $g$, $n$ independent draws, and a finite second moment $M_2$. Then the variance of $\hat I_n$ is $(M_2 - I^2)/n$, the square of the standard error.
-- Take $c = 4.75$. Then $c^2/2 = 11.28125$ and $c^2 = 22.5625$ exactly.
-- Take the bell curve moved to $\theta$. Then the $y^2$ terms cancel in the weight, and completing the square for $M_2$ works as Step 3 shows.
-- Take a point $y = c + t$ past the line. Then $y^2/2 = c^2/2 + ct + t^2/2$.
-- Suppose the weight drops its $e^{\theta^2/2}$, with $\theta = c$. Then the weight on the line shrinks by a factor $e^{11.28125}$.
-- Take a bell-curve proposal on the line with spread $s$. Then the $x^2$ coefficient $-1 + 1/(2s^2)$ is 1 at $s = 0.5$, and 0 at $s^2 = 1/2$.
+- Suppose $`g`$ is never negative, covers the answer, and the integral of $`|h\,f|`$ is finite. Then a draw $`Y`$ from $`g`$ gives $`E_g[h(Y)\,w(Y)] = \int h f\,dx`$.
+- Take the same $`g`$ and $`n`$ draws $`Y_i`$ from it, at least one. Then the estimate $`\hat I_n`$ averages to exactly $`I`$, even when the draws are not independent.
+- Take the same $`g`$, $`n`$ independent draws, and a finite second moment $`M_2`$. Then the variance of $`\hat I_n`$ is $`(M_2 - I^2)/n`$, the square of the standard error.
+- Take $`c = 4.75`$. Then $`c^2/2 = 11.28125`$ and $`c^2 = 22.5625`$ exactly.
+- Take the bell curve moved to $`\theta`$. Then the $`y^2`$ terms cancel in the weight, and completing the square for $`M_2`$ works as Step 3 shows.
+- Take a point $`y = c + t`$ past the line. Then $`y^2/2 = c^2/2 + ct + t^2/2`$.
+- Suppose the weight drops its $`e^{\theta^2/2}`$, with $`\theta = c`$. Then the weight on the line shrinks by a factor $`e^{11.28125}`$.
+- Take a bell-curve proposal on the line with spread $`s`$. Then the $`x^2`$ coefficient $`-1 + 1/(2s^2)`$ is 1 at $`s = 0.5`$, and 0 at $`s^2 = 1/2`$.
 
 The tail chances, the simulations, the best centre, the infinite second moment and the charts are left to the Python and Rust checks.
 
@@ -838,7 +852,7 @@ example : (-1 : ℚ) + 1 / (2 * (1 / 2)) = 0 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Trusting the printed error bar.** Importance sampling estimates its own error from the same weights it averages. When the proposal's tails are too thin (for a bell curve on the line, a spread with $s^2 < 1/2$), the second moment is infinite. The rare huge weights have not turned up yet, and the error bar printed from the run is too small by an unknown amount. The spread-0.5 proposal printed 0.015209 per million for an error that has no finite size. Check with algebra that $M_2$ is finite before believing any run; a safe rule is a proposal whose tails are at least as heavy as those of $h f$.
+> **Trusting the printed error bar.** Importance sampling estimates its own error from the same weights it averages. When the proposal's tails are too thin (for a bell curve on the line, a spread with $`s^2 < 1/2`$), the second moment is infinite. The rare huge weights have not turned up yet, and the error bar printed from the run is too small by an unknown amount. The spread-0.5 proposal printed 0.015209 per million for an error that has no finite size. Check with algebra that $`M_2`$ is finite before believing any run; a safe rule is a proposal whose tails are at least as heavy as those of $`h f`$.
 >
 > A second trap: **more shift is not better.** Centring at 7 gives 8.01 percent, worse than centring at 3.5 (3.87 percent). The best centre sits just past the line, at 4.852.
 
@@ -861,13 +875,13 @@ example : (-1 : ℚ) + 1 / (2 * (1 / 2)) = 0 := by norm_num
 ## What this builds on
 
 - [Variance reduction](05-variance-reduction.md): the idea that the same number of draws can give a narrower error bar if the draws are arranged well. Importance sampling is the variance reduction that changes the law itself.
-- [Monte Carlo](04-monte-carlo-estimates-and-error.md): the average of independent draws and its error bar, variance over $n$ under a square root, used in Step 2.
+- [Monte Carlo](04-monte-carlo-estimates-and-error.md): the average of independent draws and its error bar, variance over $`n`$ under a square root, used in Step 2.
 - [Inverse transform](02-inverse-transform-sampling.md) and [Rejection sampling and Box-Muller](03-rejection-sampling-and-box-muller.md): how the code draws from the two proposals.
 - [Normal](../04-Continuous%20Distributions/04-normal-distribution.md): the bell curve and its tail areas.
 
 ## Where this goes next
 
-- [The Radon-Nikodym derivative](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md): the weight $f/g$ in general, for laws with or without densities, and exactly when it exists.
+- [The Radon-Nikodym derivative](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md): the weight $`f/g`$ in general, for laws with or without densities, and exactly when it exists.
 - [Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md): the same reweighting for whole random paths, where moving the centre becomes changing the drift.
 - [Historical and Monte Carlo VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md): simulated tail losses, where plain simulation is short of draws in exactly the way the bolts were.
 

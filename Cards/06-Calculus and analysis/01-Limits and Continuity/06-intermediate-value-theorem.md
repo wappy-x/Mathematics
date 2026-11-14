@@ -36,28 +36,34 @@ The rising line is the miss x^2 − 2 at sides 0.1 m apart; the flat line is zer
 
 ## The formula
 
-$$f \text{ continuous on } [a, b], \quad y \text{ between } f(a) \text{ and } f(b) \;\Longrightarrow\; f(c) = y \text{ for some } c \text{ in } [a, b]$$
+```math
+f \text{ continuous on } [a, b], \quad y \text{ between } f(a) \text{ and } f(b) \;\Longrightarrow\; f(c) = y \text{ for some } c \text{ in } [a, b]
+```
 
 **Read it aloud:** if f has no jumps on the closed interval from a to b, then every value between f(a) and f(b) is hit by some input c in that interval.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$ | the continuous function | the area miss x^2 − 2, square metres | — |
-| $a$, $b$ | ends of the closed interval, both included | sides 1 m and 2 m | wider can catch more crossings |
-| $y$ | the target, between f(a) and f(b) | 0: no miss | c moves to a larger side (f rises here) |
-| $c$ | an input where f hits y; exists, location not given | 1.414213562373095 m | — |
-| $n$ | halvings done so far | 12 | each one halves the bracket |
-| $a_n$, $b_n$ | bracket ends after n halvings: f below target left, above right | 5792/4096 and 5793/4096 | — |
-| $m$ | the midpoint, tested next | 1.5 first | — |
-| $h$, $j$ | a cubic and a jump, showing the limits | x^3 − x; −1 then 1 | — |
+| $`f`$ | the continuous function | the area miss x^2 − 2, square metres | — |
+| $`a`$, $`b`$ | ends of the closed interval, both included | sides 1 m and 2 m | wider can catch more crossings |
+| $`y`$ | the target, between f(a) and f(b) | 0: no miss | c moves to a larger side (f rises here) |
+| $`c`$ | an input where f hits y; exists, location not given | 1.414213562373095 m | — |
+| $`n`$ | halvings done so far | 12 | each one halves the bracket |
+| $`a_n`$, $`b_n`$ | bracket ends after n halvings: f below target left, above right | 5792/4096 and 5793/4096 | — |
+| $`m`$ | the midpoint, tested next | 1.5 first | — |
+| $`h`$, $`j`$ | a cubic and a jump, showing the limits | x^3 − x; −1 then 1 | — |
 
 The working form, target 0, is often named after Bernard Bolzano:
 
-$$f(a) < 0 < f(b) \;\Longrightarrow\; f(c) = 0 \text{ for some } c \text{ in } [a, b]$$
+```math
+f(a) < 0 < f(b) \;\Longrightarrow\; f(c) = 0 \text{ for some } c \text{ in } [a, b]
+```
 
 Any target reduces to it: f hits y exactly where f − y hits zero. The bracket after n halvings has width
 
-$$b_n - a_n = \frac{b - a}{2^n}$$
+```math
+b_n - a_n = \frac{b - a}{2^n}
+```
 
 **Read it aloud:** each halving cuts the width in two; 12 halvings of [1, 2] pin the root inside a width of 1/4096.
 
@@ -87,7 +93,9 @@ Each bracket sits inside the last, and the widths (b − a)/2^n shrink below any
 
 Continuity at c means f(x) heads for f(c) as x heads for c, written
 
-$$\lim_{x \to c} f(x) = f(c).$$
+```math
+\lim_{x \to c} f(x) = f(c).
+```
 
 That limit is a tolerance game: name an output tolerance, and some input window keeps f that close to f(c).
 

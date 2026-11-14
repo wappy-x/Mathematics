@@ -43,24 +43,26 @@ Two bridges reach the north bank, two the south, one the east island: the island
 
 ## The formula
 
-Notation first, in words. $G$ is the network, $V$ its dots, $E$ its lines. A line may be repeated — Königsberg's doubled bridges are two lines between one pair — or join a dot to itself, laying two ends there. $\deg(v)$ is a dot's degree, $k$ the count of odd-degree dots, $T$ a trail.
+Notation first, in words. $`G`$ is the network, $`V`$ its dots, $`E`$ its lines. A line may be repeated — Königsberg's doubled bridges are two lines between one pair — or join a dot to itself, laying two ends there. $`\deg(v)`$ is a dot's degree, $`k`$ the count of odd-degree dots, $`T`$ a trail.
 
-$$\text{some closed trail } T \text{ covers every line of } G \iff G \text{ is in one piece and } \deg(v) \text{ is even at every dot } v$$
+```math
+\text{some closed trail } T \text{ covers every line of } G \iff G \text{ is in one piece and } \deg(v) \text{ is even at every dot } v
+```
 
 **Read it aloud:** one closed sweep covers every line exactly when the network holds together and no dot has an odd number of line-ends.
 
-The open twin is the same statement with $k = 2$: two odd dots, and the trail must run from one to the other.
+The open twin is the same statement with $`k = 2`$: two odd dots, and the trail must run from one to the other.
 
-"In one piece" is asked of the lines, each reachable from every other ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)); dots carrying no line sit out. And $k$ is never odd, the degrees adding to twice the line count — so 0 and 2 exhaust the cases that work.
+"In one piece" is asked of the lines, each reachable from every other ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)); dots carrying no line sit out. And $`k`$ is never odd, the degrees adding to twice the line count — so 0 and 2 exhaust the cases that work.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $G$ | the network of dots and lines | Königsberg | — |
-| $V$ | its dots | A, B, C, D | more places to pass |
-| $E$ | its lines, repeats allowed | seven bridges | a longer route |
-| $\deg(v)$ | line-ends at a dot | deg(A) = 5 | odd ones block a closed route |
-| $k$ | dots of odd degree | 4 | 0 closed, 2 open, more none |
-| $T$ | a trail: no line repeated | the grid's 16-pass route | — |
+| $`G`$ | the network of dots and lines | Königsberg | — |
+| $`V`$ | its dots | A, B, C, D | more places to pass |
+| $`E`$ | its lines, repeats allowed | seven bridges | a longer route |
+| $`\deg(v)`$ | line-ends at a dot | deg(A) = 5 | odd ones block a closed route |
+| $`k`$ | dots of odd degree | 4 | 0 closed, 2 open, more none |
+| $`T`$ | a trail: no line repeated | the grid's 16-pass route | — |
 
 ### When it holds
 

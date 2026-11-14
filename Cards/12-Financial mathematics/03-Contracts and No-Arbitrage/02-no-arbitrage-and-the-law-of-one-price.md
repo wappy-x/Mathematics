@@ -38,53 +38,61 @@ Acme's closing price is the one thing nobody knows this morning. Three scenarios
 
 Three words first.
 
-A **scenario** is one complete way the year can turn out: Acme finishing high at 130.00, middle at 105.00 or low at 85.00. Write $\omega$, said "omega", for one of them.
+A **scenario** is one complete way the year can turn out: Acme finishing high at 130.00, middle at 105.00 or low at 85.00. Write $`\omega`$, said "omega", for one of them.
 
-A **position** is anything held from today to expiry — a note, a share, a deposit or loan, any bundle of them. It can be long (bought: you collect its payoff) or short (sold: you owe its payoff), as in [Payoffs](01-payoffs-and-positions.md). Write $p$ for what it costs today, negative if it pays to put on, and $X(\omega)$ for what it is worth at expiry in scenario $\omega$.
+A **position** is anything held from today to expiry — a note, a share, a deposit or loan, any bundle of them. It can be long (bought: you collect its payoff) or short (sold: you owe its payoff), as in [Payoffs](01-payoffs-and-positions.md). Write $`p`$ for what it costs today, negative if it pays to put on, and $`X(\omega)`$ for what it is worth at expiry in scenario $`\omega`$.
 
 An **arbitrage** is a position for which
 
-$$p \le 0, \qquad X(\omega) \ge 0 \;\text{ in every scenario}, \qquad \text{and either } p < 0 \text{ or } X(\omega) > 0 \text{ somewhere.}$$
+```math
+p \le 0, \qquad X(\omega) \ge 0 \;\text{ in every scenario}, \qquad \text{and either } p < 0 \text{ or } X(\omega) > 0 \text{ somewhere.}
+```
 
 **Read it aloud:** nothing to pay going in, nothing to lose coming out, and money somewhere — cash today or a gain in some scenario.
 
 *No arbitrage* is the assumption that no position in the market fits that description. The last clause is deliberately weak: a ticket that is free and might pay is already free money.
 
-Two rules follow. Take positions A and B, with prices $p_A$, $p_B$ and payoffs $X_A$, $X_B$.
+Two rules follow. Take positions A and B, with prices $`p_A`$, $`p_B`$ and payoffs $`X_A`$, $`X_B`$.
 
-$$X_A(\omega) = X_B(\omega) \;\text{ in every scenario} \quad\Longrightarrow\quad p_A = p_B$$
+```math
+X_A(\omega) = X_B(\omega) \;\text{ in every scenario} \quad\Longrightarrow\quad p_A = p_B
+```
 
 **Read it aloud:** same payoff, same price. This is the **law of one price**.
 
-$$X_A(\omega) \ge X_B(\omega) \;\text{ in every scenario} \quad\Longrightarrow\quad p_A \ge p_B$$
+```math
+X_A(\omega) \ge X_B(\omega) \;\text{ in every scenario} \quad\Longrightarrow\quad p_A \ge p_B
+```
 
 **Read it aloud:** a payoff that is never worse cannot be cheaper. This is the **dominance rule**; if A also pays strictly more somewhere, its price is strictly higher.
 
-Two things trade on this card. One is the bank, at 5 percent continuously compounded, as this wing quotes rates. A dollar left in becomes $R$, and a dollar due at expiry costs $D$ today. Here $r$ is the rate as a decimal and $T$ the term in years.
+Two things trade on this card. One is the bank, at 5 percent continuously compounded, as this wing quotes rates. A dollar left in becomes $`R`$, and a dollar due at expiry costs $`D`$ today. Here $`r`$ is the rate as a decimal and $`T`$ the term in years.
 
-$$R = e^{rT} = 1.051271, \qquad D = e^{-rT} = 0.951229$$
+```math
+R = e^{rT} = 1.051271, \qquad D = e^{-rT} = 0.951229
+```
 
-The other is the note, price $P$ = 98.019867 — less than Acme's 100.00, because Acme pays its holders 2 percent a year and the note's holder collects none of it. That level is settled by [Forward price](03-forward-price-by-cash-and-carry.md); this card takes it as given and asks what it forces on everything else.
+The other is the note, price $`P`$ = 98.019867 — less than Acme's 100.00, because Acme pays its holders 2 percent a year and the note's holder collects none of it. That level is settled by [Forward price](03-forward-price-by-cash-and-carry.md); this card takes it as given and asks what it forces on everything else.
 
-Step 4 adds a third contract, a call on Acme: the right to buy one share for the strike $K$ = 100.00 on expiry day. A copy is any mix of notes and bank dollars. No copy pays exactly what the call pays, so the card finds limits on its price $C$ instead. A copy that never pays less than the call sets a ceiling, one that never pays more sets a floor, and the two make a band.
+Step 4 adds a third contract, a call on Acme: the right to buy one share for the strike $`K`$ = 100.00 on expiry day. A copy is any mix of notes and bank dollars. No copy pays exactly what the call pays, so the card finds limits on its price $`C`$ instead. A copy that never pays less than the call sets a ceiling, one that never pays more sets a floor, and the two make a band.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\omega$ | one scenario: a complete way the year turns out | high, middle or low | more scenarios, wider bounds |
-| $X$, $X_A$, $X_B$ | a payoff: what a position is worth at expiry, scenario by scenario | 30.00, 5.00, 0.00 for the call | — |
-| $p$, $p_A$, $p_B$ | what a position costs today, negative if it pays to put on | 96.50 at one desk, 99.00 at the other | — |
-| $r$ | the bank's rate, continuously compounded, as a decimal | 0.05, quoted as 5 percent | both ends of the band rise |
-| $T$ | the term in years, today to expiry | 1 | the same as raising $r$ |
-| $R$ | what 1.00 in the bank becomes at expiry | 1.051271 | a banked gap grows faster |
-| $D$ | the discount factor, written D(T) when the date matters: what 1.00 due at expiry costs today | 0.951229 | the call's floor falls: waiting to pay the strike is worth less |
-| $S_T$ | Acme's price on expiry day, the one unknown | 130.00, 105.00 or 85.00 | — |
-| $P$ | the note's price today: one Acme share, delivered at expiry | 98.019867 | both ends of the band rise |
-| $K$ | the strike: the price written on the call | 100.00 | the call's band slides down |
-| $a$ | notes held in a copy | 0.666667 in the dominating copy | — |
-| $b$ | dollars due from the bank at expiry, negative when the bank is owed | −56.666667 in that copy | — |
-| $C$ | the call's price today, the unknown being bounded | between 4.29 and 11.44 | — |
+| $`\omega`$ | one scenario: a complete way the year turns out | high, middle or low | more scenarios, wider bounds |
+| $`X`$, $`X_A`$, $`X_B`$ | a payoff: what a position is worth at expiry, scenario by scenario | 30.00, 5.00, 0.00 for the call | — |
+| $`p`$, $`p_A`$, $`p_B`$ | what a position costs today, negative if it pays to put on | 96.50 at one desk, 99.00 at the other | — |
+| $`r`$ | the bank's rate, continuously compounded, as a decimal | 0.05, quoted as 5 percent | both ends of the band rise |
+| $`T`$ | the term in years, today to expiry | 1 | the same as raising $`r`$ |
+| $`R`$ | what 1.00 in the bank becomes at expiry | 1.051271 | a banked gap grows faster |
+| $`D`$ | the discount factor, written D(T) when the date matters: what 1.00 due at expiry costs today | 0.951229 | the call's floor falls: waiting to pay the strike is worth less |
+| $`S_T`$ | Acme's price on expiry day, the one unknown | 130.00, 105.00 or 85.00 | — |
+| $`P`$ | the note's price today: one Acme share, delivered at expiry | 98.019867 | both ends of the band rise |
+| $`K`$ | the strike: the price written on the call | 100.00 | the call's band slides down |
+| $`a`$ | notes held in a copy | 0.666667 in the dominating copy | — |
+| $`b`$ | dollars due from the bank at expiry, negative when the bank is owed | −56.666667 in that copy | — |
+| $`C`$ | the call's price today, the unknown being bounded | between 4.29 and 11.44 | — |
 
-**Conventions verified 14 Sep 2026:** every rate here is continuously compounded and $T$ counts calendar years. Day-count and compounding conventions differ by market and do change; convert before substituting.
+**Conventions verified 14 Sep 2026:** every rate here is continuously compounded and $`T`$ counts calendar years. Day-count and compounding conventions differ by market and do change; convert before substituting.
 
 ### When it holds
 
@@ -102,19 +110,21 @@ Step 4 adds a third contract, a call on Acme: the right to buy one share for the
 
 Two things are done to positions here, both bookkeeping rather than forecast. **Hold two at once:** costs add and payoffs add, scenario by scenario. **Reverse one:** sell what you would have bought, and cost and payoff both change sign.
 
-One position is always available: 1.00 left in the bank, costing 1.00 and paying $R$ = 1.051271 in every scenario. What matters about $R$ is its sign, not its size: it is positive, so banked money stays money.
+One position is always available: 1.00 left in the bank, costing 1.00 and paying $`R`$ = 1.051271 in every scenario. What matters about $`R`$ is its sign, not its size: it is positive, so banked money stays money.
 
 ### Step 1: the difference trade
 
-Take any two positions, A and B, and build a third: hold A, reverse B, put the price difference $p_B - p_A$ in the bank. Its cost today is $p_A - p_B + (p_B - p_A)$ — exactly zero, by the choice of the third leg. Its payoff at expiry in scenario $\omega$ is
+Take any two positions, A and B, and build a third: hold A, reverse B, put the price difference $`p_B - p_A`$ in the bank. Its cost today is $`p_A - p_B + (p_B - p_A)`$ — exactly zero, by the choice of the third leg. Its payoff at expiry in scenario $`\omega`$ is
 
-$$X_A(\omega) - X_B(\omega) + (p_B - p_A)\,R.$$
+```math
+X_A(\omega) - X_B(\omega) + (p_B - p_A)\,R.
+```
 
 Call the left part the payoff difference and the right part the banked gap.
 
 ### Step 2: same payoff, same price
 
-Suppose A and B pay the same in every scenario, and A is cheaper. The payoff difference is zero everywhere; the banked gap is a positive gap times a positive $R$. A trade that cost nothing pays in every scenario: an arbitrage. It cannot happen, and swapping the letters rules out the other inequality. The prices are equal, and the law of one price is proved.
+Suppose A and B pay the same in every scenario, and A is cheaper. The payoff difference is zero everywhere; the banked gap is a positive gap times a positive $`R`$. A trade that cost nothing pays in every scenario: an arbitrage. It cannot happen, and swapping the letters rules out the other inequality. The prices are equal, and the law of one price is proved.
 
 The two desks are exactly this. Both notes pay Acme's closing price, so the payoff difference cancels — 130.00 against 130.00, and so down the list — leaving 2.50 banked, 2.628178 at expiry.
 
@@ -127,11 +137,13 @@ If A pays strictly more somewhere and the prices are equal, no banking is needed
 <details>
 <summary>Detailed proof, with the cases written out</summary>
 
-**Setting.** Finitely many scenarios, each genuinely possible. A position has one price fixed this morning and one payoff per scenario. Combining adds prices and payoffs; scaling by a real number multiplies both, and a negative scale is selling short. The bank costs 1 and pays $R > 0$ everywhere.
+**Setting.** Finitely many scenarios, each genuinely possible. A position has one price fixed this morning and one payoff per scenario. Combining adds prices and payoffs; scaling by a real number multiplies both, and a negative scale is selling short. The bank costs 1 and pays $`R > 0`$ everywhere.
 
-**Dominance, with one price as its two-sided case.** Suppose A's payoff is at least B's everywhere and A is cheaper. The difference trade — A, minus B, plus $p_B - p_A$ bank units — has price $p_A - p_B + (p_B - p_A) = 0$ and payoff
-$$[X_A(\omega) - X_B(\omega)] + (p_B - p_A)R > 0$$
-in every scenario. That payoff is a bracket that is at least 0, plus a positive gap times a positive $R$. Zero cost, a gain everywhere — an arbitrage. None exists, so A is not cheaper. If the payoffs agree exactly the bracket vanishes, and swapping the letters forces the prices equal. If the prices are equal and A pays strictly more somewhere, A minus B costs 0 and gains there: excluded too, so A is strictly dearer.
+**Dominance, with one price as its two-sided case.** Suppose A's payoff is at least B's everywhere and A is cheaper. The difference trade — A, minus B, plus $`p_B - p_A`$ bank units — has price $`p_A - p_B + (p_B - p_A) = 0`$ and payoff
+
+$`\displaystyle [X_A(\omega) - X_B(\omega)] + (p_B - p_A)R > 0`$
+
+in every scenario. That payoff is a bracket that is at least 0, plus a positive gap times a positive $`R`$. Zero cost, a gain everywhere — an arbitrage. None exists, so A is not cheaper. If the payoffs agree exactly the bracket vanishes, and swapping the letters forces the prices equal. If the prices are equal and A pays strictly more somewhere, A minus B costs 0 and gains there: excluded too, so A is strictly dearer.
 
 **What each assumption did.** Combining and scaling made the difference trade holdable. The positive bank factor carries a credit today into a gain at expiry. With no bank, the bare difference A minus B still has a negative price and a zero payoff, which the definition already counts. Finiteness is used only where the scenarios are checked one by one, as the code does.
 
@@ -150,9 +162,9 @@ Read the payoff backwards: the middle entry gives the bank holding, since the ba
 
 The desks' notes could be compared because their payoffs were identical. Most contracts have no exact twin; then the dominance rule bites from both sides at once.
 
-Take a **call** on Acme struck at $K$ = 100.00, expiring with the notes: the right to buy one share for 100.00 that day, paying 30.00, 5.00 or 0.00. Write $C$ for its price today, the unknown.
+Take a **call** on Acme struck at $`K`$ = 100.00, expiring with the notes: the right to buy one share for 100.00 that day, paying 30.00, 5.00 or 0.00. Write $`C`$ for its price today, the unknown.
 
-Copies are built from the two things already priced: $a$ notes and $b$ dollars due from the bank at expiry, costing $aP + bD$ today and holding $a S_T + b$ at expiry. Two dials, three scenarios to hit: no copy matches the call everywhere, so $C$ is not pinned to a point.
+Copies are built from the two things already priced: $`a`$ notes and $`b`$ dollars due from the bank at expiry, costing $`aP + bD`$ today and holding $`a S_T + b`$ at expiry. Two dials, three scenarios to hit: no copy matches the call everywhere, so $`C`$ is not pinned to a point.
 
 A copy paying **at least** the call everywhere cannot cost less than the call: the cheapest such copy is a ceiling. A copy paying **at most** the call everywhere is a floor, the dearest of those the best.
 

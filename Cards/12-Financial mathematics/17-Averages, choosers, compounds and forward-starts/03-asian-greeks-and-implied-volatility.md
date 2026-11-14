@@ -42,56 +42,68 @@ Top line: the ordinary call with the same time left, its vega shrinking roughly 
 
 ## The formula
 
-Notation first. A **fixing** is one of the dates whose closing price enters the average. There are $n$ fixings in all, one per week; $k$ are already in and $m = n - k$ are still to come. The fixings already in averaged $\bar a$. The fixings still to come will average $A_{\text{rest}}$, a random quantity today. The weight of the open part is $w = m/n$.
+Notation first. A **fixing** is one of the dates whose closing price enters the average. There are $`n`$ fixings in all, one per week; $`k`$ are already in and $`m = n - k`$ are still to come. The fixings already in averaged $`\bar a`$. The fixings still to come will average $`A_{\text{rest}}`$, a random quantity today. The weight of the open part is $`w = m/n`$.
 
-$\mathbb{E}$ averages over Acme's paths in the risk-neutral world, where every asset earns the bank rate; Acme's price itself grows at $r - q$, since dividends leave it ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The bold $\mathbf{1}\{\cdot\}$ is a switch: 1 when the statement inside is true, 0 when not.
+$`\mathbb{E}`$ averages over Acme's paths in the risk-neutral world, where every asset earns the bank rate; Acme's price itself grows at $`r - q`$, since dividends leave it ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The bold $`\mathbf{1}\{\cdot\}`$ is a switch: 1 when the statement inside is true, 0 when not.
 
 The whole average splits into a fixed part and an open part:
 
-$$A = \frac{k}{n}\,\bar a + w\,A_{\text{rest}}, \qquad (A - K)^+ = w\,\big(A_{\text{rest}} - K^*\big)^+, \qquad K^* = \frac{K - \tfrac{k}{n}\bar a}{w}$$
+```math
+A = \frac{k}{n}\,\bar a + w\,A_{\text{rest}}, \qquad (A - K)^+ = w\,\big(A_{\text{rest}} - K^*\big)^+, \qquad K^* = \frac{K - \tfrac{k}{n}\bar a}{w}
+```
 
 **Read it aloud:** the fixings already in are money in hand; subtract that from the strike, scale up by the open weight, and the contract is a smaller Asian on the fixings to come with a new strike.
 
-The price and the two pathwise Greeks, with $\tau$ the time left and $t_j$ the time from today to the j-th fixing still to come:
+The price and the two pathwise Greeks, with $`\tau`$ the time left and $`t_j`$ the time from today to the j-th fixing still to come:
 
-$$V = e^{-r\tau}\,\mathbb{E}\big[(A-K)^+\big]$$
+```math
+V = e^{-r\tau}\,\mathbb{E}\big[(A-K)^+\big]
+```
 
-$$\Delta = e^{-r\tau}\,\mathbb{E}\Big[\mathbf{1}\{A > K\}\;\frac{w\,A_{\text{rest}}}{S}\Big], \qquad \mathcal{V} = e^{-r\tau}\,\mathbb{E}\Big[\mathbf{1}\{A > K\}\;\frac{w}{m}\sum_{j=1}^{m} S_j\,\big(W_j - \sigma t_j\big)\Big]$$
+```math
+\Delta = e^{-r\tau}\,\mathbb{E}\Big[\mathbf{1}\{A > K\}\;\frac{w\,A_{\text{rest}}}{S}\Big], \qquad \mathcal{V} = e^{-r\tau}\,\mathbb{E}\Big[\mathbf{1}\{A > K\}\;\frac{w}{m}\sum_{j=1}^{m} S_j\,\big(W_j - \sigma t_j\big)\Big]
+```
 
 **Read it aloud:** on each paying path, count what the open average gains per dollar on Acme (delta) or per unit of volatility (vega); average and discount.
 
-Gamma has no pathwise formula (Step 3 says why). It comes from bumping today's price by $h$ = $1:
+Gamma has no pathwise formula (Step 3 says why). It comes from bumping today's price by $`h`$ = $1:
 
-$$\Gamma \approx \frac{V(S+h) - 2V(S) + V(S-h)}{h^2}$$
+```math
+\Gamma \approx \frac{V(S+h) - 2V(S) + V(S-h)}{h^2}
+```
 
-The inverse: the implied volatility is the $\sigma$ at which the model price equals a quote $Q$:
+The inverse: the implied volatility is the $`\sigma`$ at which the model price equals a quote $`Q`$:
 
-$$V(\sigma) = Q \quad\text{has exactly one root when}\quad e^{-r\tau}\big(w M_1 - wK^*\big)^+ < Q < e^{-r\tau}\,w M_1$$
+```math
+V(\sigma) = Q \quad\text{has exactly one root when}\quad e^{-r\tau}\big(w M_1 - wK^*\big)^+ < Q < e^{-r\tau}\,w M_1
+```
 
 **Read it aloud:** a quote above the zero-volatility floor and below the infinite-volatility ceiling pins down one volatility; outside that band there is none.
 
-Here $M_1$ is the expected open average, $M_1 = \frac{S}{m}\sum_j e^{(r-q)t_j}$. For the fresh contract the band runs from $1.47 to $96.59.
+Here $`M_1`$ is the expected open average, $`M_1 = \frac{S}{m}\sum_j e^{(r-q)t_j}`$. For the fresh contract the band runs from $1.47 to $96.59.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $V$, $Q$ | Asian call price today; a quoted price | $5.26 fresh; quote $5.26 | Q up: implied vol up |
-| $A$, $A_{\text{rest}}$ | average of all 52 fixings; average of those still to come | settles at T | — |
-| $S$, $S_j$ | Acme's price today; at the j-th fixing still to come | $100 | V rises; delta 0.55 |
-| $K$, $K^*$ | the strike; the strike the open average must beat | $100; $95 after 26 fixings at $105 | V falls |
-| $n$, $m$, $k$ | fixings in all, still to come, already in | 52; 26 and 26 when seasoned | more k: less risk left |
-| $\bar a$, $w$ | average of the fixings already in; weight m/n of the open part | $105; 0.5 | ā up: V and delta rise |
-| $r$, $q$, $\tau$ | bank rate, dividend yield, time left in years; $e^{-r\tau}$ discounts | 5%, 2%, 1 then 0.5 | τ down: vega shrinks |
-| $\sigma$, $W$, $W_j$, $t_j$, $\eta$, $B$ | volatility; the Brownian path (the random walk that drives Acme), its value at the j-th open fixing, and that fixing's time from today; in the proof, extra volatility and a second path | 20% | σ up: V rises, always |
-| $\Delta$, $\Gamma$, $h$ | delta, dollars per dollar on Acme; gamma, change in delta per dollar; the bump size | 0.55; 0.032; $1 | — |
-| $\mathcal{V}$ | vega, dollars per unit of volatility (divide by 100 for a volatility point) | $22.19 fresh, $6.21 seasoned | — |
-| $M_1$, $M_2$, $v$, $c$ | expected open average and expected square; spread of its log in the moment road; share of log-variance an average keeps | $101.54 fresh; c 0.343 | — |
-| $N$, $\varphi$, $d_1$ | bell-curve area and height; the moment road's distance to the strike | — | — |
+| $`V`$, $`Q`$ | Asian call price today; a quoted price | $5.26 fresh; quote $5.26 | Q up: implied vol up |
+| $`A`$, $`A_{\text{rest}}`$ | average of all 52 fixings; average of those still to come | settles at T | — |
+| $`S`$, $`S_j`$ | Acme's price today; at the j-th fixing still to come | $100 | V rises; delta 0.55 |
+| $`K`$, $`K^*`$ | the strike; the strike the open average must beat | $100; $95 after 26 fixings at $105 | V falls |
+| $`n`$, $`m`$, $`k`$ | fixings in all, still to come, already in | 52; 26 and 26 when seasoned | more k: less risk left |
+| $`\bar a`$, $`w`$ | average of the fixings already in; weight m/n of the open part | $105; 0.5 | ā up: V and delta rise |
+| $`r`$, $`q`$, $`\tau`$ | bank rate, dividend yield, time left in years; $`e^{-r\tau}`$ discounts | 5%, 2%, 1 then 0.5 | τ down: vega shrinks |
+| $`\sigma`$, $`W`$, $`W_j`$, $`t_j`$, $`\eta`$, $`B`$ | volatility; the Brownian path (the random walk that drives Acme), its value at the j-th open fixing, and that fixing's time from today; in the proof, extra volatility and a second path | 20% | σ up: V rises, always |
+| $`\Delta`$, $`\Gamma`$, $`h`$ | delta, dollars per dollar on Acme; gamma, change in delta per dollar; the bump size | 0.55; 0.032; $1 | — |
+| $`\mathcal{V}`$ | vega, dollars per unit of volatility (divide by 100 for a volatility point) | $22.19 fresh, $6.21 seasoned | — |
+| $`M_1`$, $`M_2`$, $`v`$, $`c`$ | expected open average and expected square; spread of its log in the moment road; share of log-variance an average keeps | $101.54 fresh; c 0.343 | — |
+| $`N`$, $`\varphi`$, $`d_1`$ | bell-curve area and height; the moment road's distance to the strike | — | — |
 
-A third road replaces the open average by a lognormal (a variable whose log is bell-curved) with the same mean $M_1$ and mean square $M_2 = \mathbb{E}[A_{\text{rest}}^2]$, so log-spread $v = \sqrt{\ln(M_2/M_1^2)}$:
+A third road replaces the open average by a lognormal (a variable whose log is bell-curved) with the same mean $`M_1`$ and mean square $`M_2 = \mathbb{E}[A_{\text{rest}}^2]`$, so log-spread $`v = \sqrt{\ln(M_2/M_1^2)}`$:
 
-$$V \approx e^{-r\tau}\,w\,\big[M_1 N(d_1) - K^* N(d_1 - v)\big], \qquad d_1 = \frac{\ln(M_1/K^*) + \tfrac12 v^2}{v}$$
+```math
+V \approx e^{-r\tau}\,w\,\big[M_1 N(d_1) - K^* N(d_1 - v)\big], \qquad d_1 = \frac{\ln(M_1/K^*) + \tfrac12 v^2}{v}
+```
 
-In words: price the open average as a share with the right mean and spread. This is Lévy's approximation; since $M_1$ is proportional to $S$, it gives $\Delta \approx e^{-r\tau} w (M_1/S) N(d_1)$ and $\Gamma \approx e^{-r\tau} w (M_1/S)\varphi(d_1)/(S v)$.
+In words: price the open average as a share with the right mean and spread. This is Lévy's approximation; since $`M_1`$ is proportional to $`S`$, it gives $`\Delta \approx e^{-r\tau} w (M_1/S) N(d_1)`$ and $`\Gamma \approx e^{-r\tau} w (M_1/S)\varphi(d_1)/(S v)`$.
 
 ### When it holds
 
@@ -99,7 +111,7 @@ In words: price the open average as a share with the right mean and spread. This
 - **Draws held fixed.** Pathwise and bumped Greeks need the same random numbers at every input; fresh draws per bump turn a delta into the difference of two noisy prices.
 - **A kink, not a jump.** Pathwise needs a payoff continuous in the average; for a digital Asian, paying a fixed sum above the strike, it returns zero.
 - **A quote inside the band.** Outside it a solver returns the edge of its search interval, which means nothing.
-- **Open strike positive.** If the average so far $\bar a$ reaches $(n/k)K$, then $K^* \le 0$: the call is certain to pay, its price no longer depends on volatility, and vega is zero. A quote at that price fits every volatility; any other quote fits none.
+- **Open strike positive.** If the average so far $`\bar a`$ reaches $`(n/k)K`$, then $`K^* \le 0`$: the call is certain to pay, its price no longer depends on volatility, and vega is zero. A quote at that price fits every volatility; any other quote fits none.
 
 ---
 
@@ -113,27 +125,31 @@ A price is an average of payoffs over paths. Fix the random draws; each path's p
 
 In the risk-neutral world each future price is today's price times a random factor that does not involve today's price:
 
-$$S_j = S\,\exp\!\big((r - q - \tfrac12\sigma^2)\,t_j + \sigma W_j\big).$$
+```math
+S_j = S\,\exp\!\big((r - q - \tfrac12\sigma^2)\,t_j + \sigma W_j\big).
+```
 
-So the open average is proportional to $S$, and its slope in $S$ is $A_{\text{rest}}/S$. The payoff $(A - K)^+$ has slope 1 in $A$ where it pays and 0 where it does not. The chain rule gives the delta formula: the switch times $w A_{\text{rest}}/S$.
+So the open average is proportional to $`S`$, and its slope in $`S`$ is $`A_{\text{rest}}/S`$. The payoff $`(A - K)^+`$ has slope 1 in $`A`$ where it pays and 0 where it does not. The chain rule gives the delta formula: the switch times $`w A_{\text{rest}}/S`$.
 
 Why smaller than the vanilla's 0.59? Both are a discounted, share-weighted chance of paying. But the average grows about half as fast as Acme (expected $101.54 at the end), is discounted at the full bank rate (the vanilla's share only at the dividend yield), and has a narrower spread. Together these pull delta to 0.55.
 
 ### Step 2: vega, because volatility sits in two places in each fixing
 
-Differentiate one fixing in $\sigma$, draws held fixed:
+Differentiate one fixing in $`\sigma`$, draws held fixed:
 
-$$\frac{\partial S_j}{\partial\sigma} = S_j\,\big(W_j - \sigma t_j\big).$$
+```math
+\frac{\partial S_j}{\partial\sigma} = S_j\,\big(W_j - \sigma t_j\big).
+```
 
-$W_j$ is the direct push: volatility stretches every random move. $-\sigma t_j$ is the drag from the drift's $-\tfrac12\sigma^2$, which keeps the expected price fixed. Average over the open fixings, switch on paying paths: the vega formula.
+$`W_j`$ is the direct push: volatility stretches every random move. $`-\sigma t_j`$ is the drag from the drift's $`-\tfrac12\sigma^2`$, which keeps the expected price fixed. Average over the open fixings, switch on paying paths: the vega formula.
 
-Why is it smaller than 37.90? The log of a weekly geometric average carries only a share $c = (n+1)(2n+1)/(6n^2) = 0.343$ of the last price's log-variance, as [The geometric Asian call](01-geometric-asian-kemna-vorst.md) proves; the arithmetic average behaves almost the same.
+Why is it smaller than 37.90? The log of a weekly geometric average carries only a share $`c = (n+1)(2n+1)/(6n^2) = 0.343`$ of the last price's log-variance, as [The geometric Asian call](01-geometric-asian-kemna-vorst.md) proves; the arithmetic average behaves almost the same.
 
-An at-the-money price (strike equal to today's price) is close to proportional to the spread, so vega scales with $\sqrt{c}$ = 0.586. The vanilla's $37.90 times 0.586 is $22.20. The simulation gives $22.19.
+An at-the-money price (strike equal to today's price) is close to proportional to the spread, so vega scales with $`\sqrt{c}`$ = 0.586. The vanilla's $37.90 times 0.586 is $22.20. The simulation gives $22.19.
 
 ### Step 3: gamma is where pathwise fails
 
-Differentiate pathwise delta again, path by path. The factor $w A_{\text{rest}}/S$ does not depend on $S$, and the switch is flat except where the average exactly equals the strike. Every path's second slope is zero, so naive pathwise gamma is 0.000000. The true gamma sits in the switch's jump, which no single path sees.
+Differentiate pathwise delta again, path by path. The factor $`w A_{\text{rest}}/S`$ does not depend on $`S`$, and the switch is flat except where the average exactly equals the strike. Every path's second slope is zero, so naive pathwise gamma is 0.000000. The true gamma sits in the switch's jump, which no single path sees.
 
 Two repairs, both on shared draws: the second difference of the price, or the first difference of pathwise delta. They give 0.0324 and 0.0324; the moment road gives 0.0321.
 
@@ -143,9 +159,11 @@ That is *larger* than the vanilla's 0.0190. The sedative works on delta and vega
 
 After 26 weekly fixings averaging $105, half the final average is already decided:
 
-$$A = \tfrac{26}{52}\times 105 + \tfrac{26}{52}\,A_{\text{rest}} = 52.50 + 0.5\,A_{\text{rest}}.$$
+```math
+A = \tfrac{26}{52}\times 105 + \tfrac{26}{52}\,A_{\text{rest}} = 52.50 + 0.5\,A_{\text{rest}}.
+```
 
-The payoff $(A - 100)^+$ becomes $0.5\,(A_{\text{rest}} - 95)^+$: half a fresh six-month Asian on the 26 fixings to come, struck at $95. Every seasoned Greek is 0.5 times that contract's Greek.
+The payoff $`(A - 100)^+`$ becomes $`0.5\,(A_{\text{rest}} - 95)^+`$: half a fresh six-month Asian on the 26 fixings to come, struck at $95. Every seasoned Greek is 0.5 times that contract's Greek.
 
 Three things shrink vega at once: the weight halves it, the time left is half a year, and the $95 strike puts the option in the money, where spread matters less. Vega falls to $6.21.
 
@@ -162,22 +180,22 @@ The kink sits at $95, not $100, and the slope is 0.5: the $52.50 already fixed m
 
 ### Step 5: the price rises strictly with volatility
 
-Take $\sigma$ and a larger $\sigma'$. Build the $\sigma'$ world from the $\sigma$ world by multiplying each price by independent noise with average 1, driven by a second Brownian path with volatility $\sqrt{\sigma'^2 - \sigma^2}$. Given the $\sigma$ path, the $\sigma'$ average is spread around the $\sigma$ average, centred on it.
+Take $`\sigma`$ and a larger $`\sigma'`$. Build the $`\sigma'`$ world from the $`\sigma`$ world by multiplying each price by independent noise with average 1, driven by a second Brownian path with volatility $`\sqrt{\sigma'^2 - \sigma^2}`$. Given the $`\sigma`$ path, the $`\sigma'`$ average is spread around the $`\sigma`$ average, centred on it.
 
 A call payoff is **convex** (its graph bends upward), so averaging it over a spread of inputs gives at least the payoff at the centre: Jensen's inequality. Spreading can only raise the expected payoff, and strictly, since the spread straddles the kink with positive probability. Vega is never negative.
 
 <details>
 <summary>Detailed proof: monotonicity, the bounds, and existence</summary>
 
-**Construction.** Let $\eta = \sqrt{\sigma'^2 - \sigma^2}$ and $B$ a Brownian motion independent of $W$. Then $\sigma W_t + \eta B_t$ is a Brownian motion scaled by $\sigma'$, so $S'_j = S_j\,e^{\eta B_j - \frac12\eta^2 t_j}$ has exactly the law of the $\sigma'$ prices. Each factor $e^{\eta B_j - \frac12\eta^2 t_j}$ has mean 1 and is independent of $W$, so $\mathbb{E}[A'_{\text{rest}} \mid W] = A_{\text{rest}}$.
+**Construction.** Let $`\eta = \sqrt{\sigma'^2 - \sigma^2}`$ and $`B`$ a Brownian motion independent of $`W`$. Then $`\sigma W_t + \eta B_t`$ is a Brownian motion scaled by $`\sigma'`$, so $`S'_j = S_j\,e^{\eta B_j - \frac12\eta^2 t_j}`$ has exactly the law of the $`\sigma'`$ prices. Each factor $`e^{\eta B_j - \frac12\eta^2 t_j}`$ has mean 1 and is independent of $`W`$, so $`\mathbb{E}[A'_{\text{rest}} \mid W] = A_{\text{rest}}`$.
 
-**Jensen.** For the convex function $x \mapsto (x - K^*)^+$, conditional Jensen gives $\mathbb{E}[(A'_{\text{rest}} - K^*)^+ \mid W] \ge (A_{\text{rest}} - K^*)^+$. Take expectations: $V(\sigma') \ge V(\sigma)$. Equality would need $A'_{\text{rest}}$ to sit on one side of $K^*$ almost surely given $W$; but $A'_{\text{rest}}$ given $W$ has a continuous distribution on all of $(0, \infty)$, so the inequality is strict whenever $K^* > 0$. This is the argument of Carr, Ewald and Xiao (2008).
+**Jensen.** For the convex function $`x \mapsto (x - K^*)^+`$, conditional Jensen gives $`\mathbb{E}[(A'_{\text{rest}} - K^*)^+ \mid W] \ge (A_{\text{rest}} - K^*)^+`$. Take expectations: $`V(\sigma') \ge V(\sigma)`$. Equality would need $`A'_{\text{rest}}`$ to sit on one side of $`K^*`$ almost surely given $`W`$; but $`A'_{\text{rest}}`$ given $`W`$ has a continuous distribution on all of $`(0, \infty)`$, so the inequality is strict whenever $`K^* > 0`$. This is the argument of Carr, Ewald and Xiao (2008).
 
-**Floor.** As $\sigma \to 0$ every path becomes the forward curve, $A_{\text{rest}} \to M_1$, and the price tends to $e^{-r\tau} w (M_1 - K^*)^+$. For the fresh contract that is $e^{-0.05} \times (101.54 - 100)$ = $1.47.
+**Floor.** As $`\sigma \to 0`$ every path becomes the forward curve, $`A_{\text{rest}} \to M_1`$, and the price tends to $`e^{-r\tau} w (M_1 - K^*)^+`$. For the fresh contract that is $`e^{-0.05} \times (101.54 - 100)`$ = $1.47.
 
-**Ceiling.** Write $(A - K^*)^+ = A - \min(A, K^*)$. As $\sigma \to \infty$ each $S_j \to 0$ in probability, so $\min(A_{\text{rest}}, K^*) \to 0$ in probability; it is bounded by $K^*$, so its expectation tends to 0. The price tends to $e^{-r\tau} w\,\mathbb{E}[A_{\text{rest}}] = e^{-r\tau} w M_1$, which is $96.59 for the fresh contract. It never reaches either bound.
+**Ceiling.** Write $`(A - K^*)^+ = A - \min(A, K^*)`$. As $`\sigma \to \infty`$ each $`S_j \to 0`$ in probability, so $`\min(A_{\text{rest}}, K^*) \to 0`$ in probability; it is bounded by $`K^*`$, so its expectation tends to 0. The price tends to $`e^{-r\tau} w\,\mathbb{E}[A_{\text{rest}}] = e^{-r\tau} w M_1`$, which is $96.59 for the fresh contract. It never reaches either bound.
 
-**Existence.** $V$ is continuous in $\sigma$ (dominated convergence), strictly increasing, and runs between the two bounds. By the intermediate value theorem every $Q$ strictly between them is hit exactly once.
+**Existence.** $`V`$ is continuous in $`\sigma`$ (dominated convergence), strictly increasing, and runs between the two bounds. By the intermediate value theorem every $`Q`$ strictly between them is hit exactly once.
 
 </details>
 
@@ -185,9 +203,9 @@ A call payoff is **convex** (its graph bends upward), so averaging it over a spr
 
 **Bisection** starts with 1 to 100 percent, prices the midpoint, keeps the half that straddles the quote, and repeats; 24 rounds shrink the interval below one ten-millionth. Because the price is increasing, it cannot fail.
 
-**Newton's method** steps by the price error over the slope, $\sigma \leftarrow \sigma - (V(\sigma) - Q)/\mathcal{V}(\sigma)$, with the slope being the pathwise vega the same simulation delivers free. From 30 percent it lands on 20 percent in three price evaluations; [Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md) covers both solvers properly.
+**Newton's method** steps by the price error over the slope, $`\sigma \leftarrow \sigma - (V(\sigma) - Q)/\mathcal{V}(\sigma)`$, with the slope being the pathwise vega the same simulation delivers free. From 30 percent it lands on 20 percent in three price evaluations; [Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md) covers both solvers properly.
 
-Both solvers reuse the same draws at every trial volatility, so the simulated price is continuous in $\sigma$ and, with this many paths, increasing (the chart row in the output shows it). The quote made at 20 percent returns 20 percent exactly.
+Both solvers reuse the same draws at every trial volatility, so the simulated price is continuous in $`\sigma`$ and, with this many paths, increasing (the chart row in the output shows it). The quote made at 20 percent returns 20 percent exactly.
 
 ---
 
@@ -197,18 +215,18 @@ The fresh contract's vega from the vanilla's, and the seasoned contract rewritte
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| share of log-variance kept by 52 weekly fixings | $53 \times 105 / (6 \times 52^2)$ | 0.343 |
-| its square root | $\sqrt{0.343}$ | 0.586 |
+| share of log-variance kept by 52 weekly fixings | $`53 \times 105 / (6 \times 52^2)`$ | 0.343 |
+| its square root | $`\sqrt{0.343}`$ | 0.586 |
 | vanilla vega, house call | from the vega card | $37.90 |
-| Asian vega, estimated | $37.90 \times 0.586$ | $22.20 |
+| Asian vega, estimated | $`37.90 \times 0.586`$ | $22.20 |
 | Asian vega, simulated | pathwise | **$22.19** |
-| fixed part after 26 fixings at $105 | $26/52 \times 105$ | $52.50 |
-| open weight | $26/52$ | 0.5 |
-| strike the open average must beat | $(100 - 52.50)/0.5$ | $95 |
+| fixed part after 26 fixings at $105 | $`26/52 \times 105`$ | $52.50 |
+| open weight | $`26/52`$ | 0.5 |
+| strike the open average must beat | $`(100 - 52.50)/0.5`$ | $95 |
 | seasoned vega, simulated | pathwise | **$6.21** |
-| expected average, fresh | $\tfrac{100}{52}\sum_j e^{0.03 j/52}$ | $101.54 |
-| floor for a quote | $e^{-0.05} \times (101.54 - 100)$ | $1.47 |
-| ceiling for a quote | $e^{-0.05} \times 101.54$ | $96.59 |
+| expected average, fresh | $`\tfrac{100}{52}\sum_j e^{0.03 j/52}`$ | $101.54 |
+| floor for a quote | $`e^{-0.05} \times (101.54 - 100)`$ | $1.47 |
+| ceiling for a quote | $`e^{-0.05} \times 101.54`$ | $96.59 |
 
 A one-point rise in volatility adds about 22 cents to the fresh Asian and 6 cents to the seasoned one, against 38 cents on the vanilla.
 
@@ -249,7 +267,7 @@ Acme can sit still all year and the Asian's risk still drains away: each Friday 
 Two forces act:
 
 - **Time:** less room to wander; the vanilla feels only this, and its vega falls roughly as the square root of the time left.
-- **Weight:** each fixing removes one fifty-second of the average from risk, and the open weight $w$ multiplies every Greek.
+- **Weight:** each fixing removes one fifty-second of the average from risk, and the open weight $`w`$ multiplies every Greek.
 
 The Asian feels both, so its vega falls roughly as the time left to the power one and a half. With four weeks to go the vanilla still has $11.02 of vega; the Asian has 58 cents.
 
@@ -656,7 +674,7 @@ The two outputs are identical line for line.
 
 Lean proves the seasoned payoff split, the strict gain from spreading the average, and the unique implied volatility, for any prices and strike.
 
-- Suppose $k$ fixings are in and $m$, at least one, are still to come. Then $A = \tfrac{k}{n}\bar a + w\,A_{\text{rest}}$ and $(A-K)^+ = w\,(A_{\text{rest}}-K^*)^+$.
+- Suppose $`k`$ fixings are in and $`m`$, at least one, are still to come. Then $`A = \tfrac{k}{n}\bar a + w\,A_{\text{rest}}`$ and $`(A-K)^+ = w\,(A_{\text{rest}}-K^*)^+`$.
 - Take a spread of finitely many outcomes centred on an average, with some below and some above the strike, each with positive probability. Then the expected call payoff is strictly above the payoff at the centre.
 - Suppose the price is continuous, rises strictly with volatility, and runs from the floor to the ceiling. Then each quote strictly between them has exactly one implied volatility.
 - The share of log-variance kept by 52 weekly fixings is exactly 1855/5408, which is 0.343.

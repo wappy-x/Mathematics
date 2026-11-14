@@ -34,40 +34,44 @@ Orange: log10 of each singular value. Teal: log10 of the noise tolerance 0.1996,
 
 ## The formula
 
-Notation first, in words. The log is the matrix $A$, with $m$ = 240 rows (hours) and $n$ = 20 columns (sensors). [The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md) writes $A = U S V^T$: perpendicular unit **output axes** $u_i$ (columns of $U$, each 240 long), **stretch factors** $\sigma_i$, the **singular values**, largest first (the diagonal of $S$), and perpendicular unit **input axes** $v_i$ (columns of $V$, each 20 long). This card uses three readings of that factorisation.
+Notation first, in words. The log is the matrix $`A`$, with $`m`$ = 240 rows (hours) and $`n`$ = 20 columns (sensors). [The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md) writes $`A = U S V^T`$: perpendicular unit **output axes** $`u_i`$ (columns of $`U`$, each 240 long), **stretch factors** $`\sigma_i`$, the **singular values**, largest first (the diagonal of $`S`$), and perpendicular unit **input axes** $`v_i`$ (columns of $`V`$, each 20 long). This card uses three readings of that factorisation.
 
-$$A = \sum_{i=1}^{n} \sigma_i\, u_i v_i^T, \qquad A_k = \sum_{i=1}^{k} \sigma_i\, u_i v_i^T, \qquad x_k = A_k^{+}\, y = \sum_{i=1}^{k} \frac{u_i^T y}{\sigma_i}\, v_i$$
+```math
+A = \sum_{i=1}^{n} \sigma_i\, u_i v_i^T, \qquad A_k = \sum_{i=1}^{k} \sigma_i\, u_i v_i^T, \qquad x_k = A_k^{+}\, y = \sum_{i=1}^{k} \frac{u_i^T y}{\sigma_i}\, v_i
+```
 
-**Read it aloud:** the table is a stack of layers, each a column pattern times a row pattern times a size; the rank-$k$ fit keeps the $k$ biggest layers; the truncated least-squares answer divides the data's share along each kept layer by that layer's size.
+**Read it aloud:** the table is a stack of layers, each a column pattern times a row pattern times a size; the rank-$`k`$ fit keeps the $`k`$ biggest layers; the truncated least-squares answer divides the data's share along each kept layer by that layer's size.
 
 What the singular values tell you directly:
 
-$$\operatorname{rank}_\tau(A) = \#\{\,i : \sigma_i > \tau\,\}, \qquad \kappa_2(A) = \frac{\sigma_1}{\sigma_n}, \qquad \lVert A - A_k\rVert_2 = \sigma_{k+1}, \qquad \lVert A - A_k\rVert_F = \sqrt{\sigma_{k+1}^2 + \dots + \sigma_n^2}$$
+```math
+\mathrm{rank}_\tau(A) = \#\{\,i : \sigma_i > \tau\,\}, \qquad \kappa_2(A) = \frac{\sigma_1}{\sigma_n}, \qquad \lVert A - A_k\rVert_2 = \sigma_{k+1}, \qquad \lVert A - A_k\rVert_F = \sqrt{\sigma_{k+1}^2 + \dots + \sigma_n^2}
+```
 
-**Read it aloud:** the trusted rank is the count of singular values above a tolerance; the condition number is the largest over the smallest; and the error of the best rank-$k$ fit is the first dropped value in the 2-norm, or the root-sum-square of all dropped values entry by entry.
+**Read it aloud:** the trusted rank is the count of singular values above a tolerance; the condition number is the largest over the smallest; and the error of the best rank-$`k`$ fit is the first dropped value in the 2-norm, or the root-sum-square of all dropped values entry by entry.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$, $m$, $n$ | the log; its rows (hours) and columns (sensors) | 240 by 20, one shared illustrative scale | more rows: noise values grow like $\sqrt m$ |
-| $\sigma_i$, $u_i$, $v_i$, $U$, $S$, $V$, $S^+$ | the $i$-th singular value and its output and input axes; the matrices holding them; $S$ with each nonzero $\sigma_i$ turned into $1/\sigma_i$ | $\sigma_1$ = 34.7454, $\sigma_{20}$ = 0.1191 | — |
-| $A_0$, $E$, $\delta$ | the noise-free log; the noise, $A = A_0 + E$; the noise's standard deviation | rank 3; $\lVert E\rVert_2$ = 0.1915; 0.01 | $\delta$ up: the floor rises toward the three signals |
-| $\tau$, $\operatorname{rank}_\tau$, $r$ | a tolerance; the count of $\sigma_i$ above it; the count of nonzero $\sigma_i$ | $\delta(\sqrt m+\sqrt n)$ = 0.1996; rank 3 | $\tau$ below the floor: noise counts as rank |
-| $k$, $A_k$ | layers kept; the rank-$k$ fit | 3; 783 numbers | $k$ up: closer to the log, closer to its noise |
-| $\lVert\cdot\rVert_2$, $\lVert\cdot\rVert_F$ | largest stretch of a matrix; root-sum-square of its entries | $\lVert A - A_3\rVert_F$ = 0.6339 | — |
-| $\kappa_2$ | condition number $\sigma_1/\sigma_n$ | 291.8; kept part 3.01 | more digits and more noise amplified |
-| $y$, $c_i$ | water use to predict, litres per hour above base; its share $u_i^T y$ along layer $i$ | $c_1$ = 32.4875, $c_{20}$ = −0.7823 | — |
-| $A^+$, $x_k$ | the pseudoinverse; the truncated least-squares coefficients | $\lvert x_3\rvert$ = 2.267, $\lvert x_{20}\rvert$ = 9.039 | — |
-| $B$, $w$, $z_i$, $X$, $Y$ | names inside the proofs: a rival low-rank table; a unit input; the coordinates of $x$ along the $v_i$; any two matrices | — | — |
-| $\varepsilon_{\text{mach}}$, $u$ | machine epsilon $2^{-52}$; unit roundoff $2^{-53}$ (bare $u$, no subscript) | $\kappa_2^2 u$ = 9.453e-12 | — |
+| $`A`$, $`m`$, $`n`$ | the log; its rows (hours) and columns (sensors) | 240 by 20, one shared illustrative scale | more rows: noise values grow like $`\sqrt m`$ |
+| $`\sigma_i`$, $`u_i`$, $`v_i`$, $`U`$, $`S`$, $`V`$, $`S^+`$ | the $`i`$-th singular value and its output and input axes; the matrices holding them; $`S`$ with each nonzero $`\sigma_i`$ turned into $`1/\sigma_i`$ | $`\sigma_1`$ = 34.7454, $`\sigma_{20}`$ = 0.1191 | — |
+| $`A_0`$, $`E`$, $`\delta`$ | the noise-free log; the noise, $`A = A_0 + E`$; the noise's standard deviation | rank 3; $`\lVert E\rVert_2`$ = 0.1915; 0.01 | $`\delta`$ up: the floor rises toward the three signals |
+| $`\tau`$, $`\mathrm{rank}_\tau`$, $`r`$ | a tolerance; the count of $`\sigma_i`$ above it; the count of nonzero $`\sigma_i`$ | $`\delta(\sqrt m+\sqrt n)`$ = 0.1996; rank 3 | $`\tau`$ below the floor: noise counts as rank |
+| $`k`$, $`A_k`$ | layers kept; the rank-$`k`$ fit | 3; 783 numbers | $`k`$ up: closer to the log, closer to its noise |
+| $`\lVert\cdot\rVert_2`$, $`\lVert\cdot\rVert_F`$ | largest stretch of a matrix; root-sum-square of its entries | $`\lVert A - A_3\rVert_F`$ = 0.6339 | — |
+| $`\kappa_2`$ | condition number $`\sigma_1/\sigma_n`$ | 291.8; kept part 3.01 | more digits and more noise amplified |
+| $`y`$, $`c_i`$ | water use to predict, litres per hour above base; its share $`u_i^T y`$ along layer $`i`$ | $`c_1`$ = 32.4875, $`c_{20}`$ = −0.7823 | — |
+| $`A^+`$, $`x_k`$ | the pseudoinverse; the truncated least-squares coefficients | $`\lvert x_3\rvert`$ = 2.267, $`\lvert x_{20}\rvert`$ = 9.039 | — |
+| $`B`$, $`w`$, $`z_i`$, $`X`$, $`Y`$ | names inside the proofs: a rival low-rank table; a unit input; the coordinates of $`x`$ along the $`v_i`$; any two matrices | — | — |
+| $`\varepsilon_{\text{mach}}`$, $`u`$ | machine epsilon $`2^{-52}`$; unit roundoff $`2^{-53}`$ (bare $`u`$, no subscript) | $`\kappa_2^2 u`$ = 9.453e-12 | — |
 
-The **pseudoinverse** $A^+$ is $V S^+ U^T$, where $S^+$ replaces each nonzero $\sigma_i$ by $1/\sigma_i$ and keeps the zeros. Truncation means treating every $\sigma_i$ at or below $\tau$ as zero: $x_k = A_k^+ y$.
+The **pseudoinverse** $`A^+`$ is $`V S^+ U^T`$, where $`S^+`$ replaces each nonzero $`\sigma_i`$ by $`1/\sigma_i`$ and keeps the zeros. Truncation means treating every $`\sigma_i`$ at or below $`\tau`$ as zero: $`x_k = A_k^+ y`$.
 
 ### When it holds
 
 - **A gap in the singular values, and the cut placed at it.** Truncation needs signal values well above the noise floor. Without a gap, any cut-off is a guess. With one, the cut belongs at the gap: keep only 1 layer, cutting into the signal, and the test error jumps to 1.8753 L/h.
-- **A tolerance above the noise, not just above rounding.** The rounding tolerance $\max(m,n)\,\varepsilon_{\text{mach}}\,\sigma_1$ = 1.852e-12 counts all 20 noisy layers as rank. It only suits data that is exact apart from rounding.
+- **A tolerance above the noise, not just above rounding.** The rounding tolerance $`\max(m,n)\,\varepsilon_{\text{mach}}\,\sigma_1`$ = 1.852e-12 counts all 20 noisy layers as rank. It only suits data that is exact apart from rounding.
 - **Columns in comparable units.** Singular values compare sizes across columns. Rescale one sensor by 1000 and its layer moves up the ranking. Here every sensor is built on one shared illustrative scale.
-- **Noise that is not itself a pattern.** A stuck sensor or a shared calibration error is a pattern, and it gets its own large singular value. Weyl's bound below covers any noise, but only up to $\lVert E\rVert_2$.
+- **Noise that is not itself a pattern.** A stuck sensor or a shared calibration error is a pattern, and it gets its own large singular value. Weyl's bound below covers any noise, but only up to $`\lVert E\rVert_2`$.
 
 ---
 
@@ -75,112 +79,112 @@ The **pseudoinverse** $A^+$ is $V S^+ U^T$, where $S^+$ replaces each nonzero $\
 
 ### Step 0: sort the table into layers, then read sizes
 
-The SVD turns any table into independent layers. Layer $i$ is a column pattern $u_i$ (how the 240 hours move), a row pattern $v_i$ (how the 20 sensors blend), and a size $\sigma_i$. The layers do not overlap: their axes are perpendicular. So questions about the whole table become questions about a sorted list of 20 numbers. Rank is how many are not negligible. Conditioning is the spread of the list. The best fit drops the bottom of the list. That is all three jobs of this card.
+The SVD turns any table into independent layers. Layer $`i`$ is a column pattern $`u_i`$ (how the 240 hours move), a row pattern $`v_i`$ (how the 20 sensors blend), and a size $`\sigma_i`$. The layers do not overlap: their axes are perpendicular. So questions about the whole table become questions about a sorted list of 20 numbers. Rank is how many are not negligible. Conditioning is the spread of the list. The best fit drops the bottom of the list. That is all three jobs of this card.
 
-[The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md) proves $A = USV^T$ exists, reads exact rank from it and states Eckart–Young without proof. [Principal components](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/07-principal-components-and-dimension-reduction.md) uses it to project data onto fewer axes. This card proves the best-fit theorem, decides what "zero" means in floating point and noise, and solves least squares with it.
+[The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md) proves $`A = USV^T`$ exists, reads exact rank from it and states Eckart–Young without proof. [Principal components](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/07-principal-components-and-dimension-reduction.md) uses it to project data onto fewer axes. This card proves the best-fit theorem, decides what "zero" means in floating point and noise, and solves least squares with it.
 
 ### Step 1: the best rank-k fit drops the smallest layers (Eckart–Young)
 
-Any rank-$k$ matrix $B$ flattens at least $n-k$ input directions to zero. The top $k+1$ input axes $v_1, \dots, v_{k+1}$ span $k+1$ directions. Together that is more than $n$, so some unit input $w$ lies in both. $B$ sends $w$ to zero, but $A$ stretches it by at least $\sigma_{k+1}$. So $A - B$ misses by at least $\sigma_{k+1}$ in the 2-norm, and $A_k$ misses by exactly that.
+Any rank-$`k`$ matrix $`B`$ flattens at least $`n-k`$ input directions to zero. The top $`k+1`$ input axes $`v_1, \dots, v_{k+1}`$ span $`k+1`$ directions. Together that is more than $`n`$, so some unit input $`w`$ lies in both. $`B`$ sends $`w`$ to zero, but $`A`$ stretches it by at least $`\sigma_{k+1}`$. So $`A - B`$ misses by at least $`\sigma_{k+1}`$ in the 2-norm, and $`A_k`$ misses by exactly that.
 
 <details>
 <summary>Detailed proof: Eckart–Young in the 2-norm and the Frobenius norm, and Weyl's bound</summary>
 
-**2-norm.** Let $B$ have rank at most $k$. Its null space has dimension at least $n-k$; the span of $v_1, \dots, v_{k+1}$ has dimension $k+1$. Their dimensions add to more than $n$, so they share a unit vector $w$. Then $(A - B)w = Aw = \sum_{i \le k+1} \sigma_i (v_i^T w)\, u_i$, whose squared length is $\sum_{i\le k+1} \sigma_i^2 (v_i^T w)^2 \ge \sigma_{k+1}^2 \sum_{i \le k+1} (v_i^T w)^2 = \sigma_{k+1}^2$. So $\lVert A - B\rVert_2 \ge \sigma_{k+1}$. And $A - A_k = \sum_{i>k}\sigma_i u_i v_i^T$ has largest stretch $\sigma_{k+1}$. Read with $k = i-1$: $\sigma_i(A) = \min \lVert A - B\rVert_2$ over $B$ of rank below $i$.
+**2-norm.** Let $`B`$ have rank at most $`k`$. Its null space has dimension at least $`n-k`$; the span of $`v_1, \dots, v_{k+1}`$ has dimension $`k+1`$. Their dimensions add to more than $`n`$, so they share a unit vector $`w`$. Then $`(A - B)w = Aw = \sum_{i \le k+1} \sigma_i (v_i^T w)\, u_i`$, whose squared length is $`\sum_{i\le k+1} \sigma_i^2 (v_i^T w)^2 \ge \sigma_{k+1}^2 \sum_{i \le k+1} (v_i^T w)^2 = \sigma_{k+1}^2`$. So $`\lVert A - B\rVert_2 \ge \sigma_{k+1}`$. And $`A - A_k = \sum_{i>k}\sigma_i u_i v_i^T`$ has largest stretch $`\sigma_{k+1}`$. Read with $`k = i-1`$: $`\sigma_i(A) = \min \lVert A - B\rVert_2`$ over $`B`$ of rank below $`i`$.
 
-**Weyl.** For any $X$, $Y$: $\sigma_{i+j-1}(X+Y) \le \sigma_i(X) + \sigma_j(Y)$. Proof: $X_{i-1} + Y_{j-1}$ has rank below $i+j-1$, so by the line above $\sigma_{i+j-1}(X+Y) \le \lVert X + Y - X_{i-1} - Y_{j-1}\rVert_2 \le \sigma_i(X) + \sigma_j(Y)$. With $j = 1$, $X = A_0$, $Y = E$, and again with $X = A$, $Y = -E$: $\lvert\sigma_i(A) - \sigma_i(A_0)\rvert \le \lVert E\rVert_2$.
+**Weyl.** For any $`X`$, $`Y`$: $`\sigma_{i+j-1}(X+Y) \le \sigma_i(X) + \sigma_j(Y)`$. Proof: $`X_{i-1} + Y_{j-1}`$ has rank below $`i+j-1`$, so by the line above $`\sigma_{i+j-1}(X+Y) \le \lVert X + Y - X_{i-1} - Y_{j-1}\rVert_2 \le \sigma_i(X) + \sigma_j(Y)`$. With $`j = 1`$, $`X = A_0`$, $`Y = E`$, and again with $`X = A`$, $`Y = -E`$: $`\lvert\sigma_i(A) - \sigma_i(A_0)\rvert \le \lVert E\rVert_2`$.
 
-**Frobenius norm.** Let $B$ have rank at most $k$, so $\sigma_{k+1}(B) = 0$. Weyl with $X = A - B$, $Y = B$, $j = k+1$ gives $\sigma_{i+k}(A) \le \sigma_i(A - B)$ for every $i$. Square and add: $\lVert A - B\rVert_F^2 = \sum_i \sigma_i(A-B)^2 \ge \sum_{i} \sigma_{i+k}(A)^2 = \lVert A - A_k\rVert_F^2$. The first equality holds because $U$ and $V$ keep lengths, so the squares of the entries add to the squares of the singular values.
+**Frobenius norm.** Let $`B`$ have rank at most $`k`$, so $`\sigma_{k+1}(B) = 0`$. Weyl with $`X = A - B`$, $`Y = B`$, $`j = k+1`$ gives $`\sigma_{i+k}(A) \le \sigma_i(A - B)`$ for every $`i`$. Square and add: $`\lVert A - B\rVert_F^2 = \sum_i \sigma_i(A-B)^2 \ge \sum_{i} \sigma_{i+k}(A)^2 = \lVert A - A_k\rVert_F^2`$. The first equality holds because $`U`$ and $`V`$ keep lengths, so the squares of the entries add to the squares of the singular values.
 
 </details>
 
-On the log, three rival rank-3 tables, measured by $\lVert A - B\rVert_F$:
+On the log, three rival rank-3 tables, measured by $`\lVert A - B\rVert_F`$:
 
-| Rank-3 table $B$ | Miss $\lVert A - B\rVert_F$ |
+| Rank-3 table $`B`$ | Miss $`\lVert A - B\rVert_F`$ |
 | --- | --- |
-| $A_3$, the top three layers | **0.6339**, equal to $\sqrt{\sigma_4^2 + \dots + \sigma_{20}^2}$ = 0.6339 |
-| $A_0$, the true noise-free log | 0.6924 |
+| $`A_3`$, the top three layers | **0.6339**, equal to $`\sqrt{\sigma_4^2 + \dots + \sigma_{20}^2}`$ = 0.6339 |
+| $`A_0`$, the true noise-free log | 0.6924 |
 | the best fit from three real sensors (temperature 1, humidity 1, light 1) | 0.8838 |
 
-The SVD fit beats even the truth, because it also fits a little of the noise. In the 2-norm, power iteration on $A - A_3$ returns 0.1887, equal to $\sigma_4$.
+The SVD fit beats even the truth, because it also fits a little of the noise. In the 2-norm, power iteration on $`A - A_3`$ returns 0.1887, equal to $`\sigma_4`$.
 
 ### Step 2: noise moves each singular value by at most the noise's size (Weyl)
 
-The noise-free log $A_0$ has exactly three nonzero singular values. Weyl's bound from the fold says adding noise $E$ moves each $\sigma_i$ by at most $\lVert E\rVert_2$, the noise's largest stretch. So $\sigma_4, \dots, \sigma_{20}$ of the real log lie between 0 and $\lVert E\rVert_2$.
+The noise-free log $`A_0`$ has exactly three nonzero singular values. Weyl's bound from the fold says adding noise $`E`$ moves each $`\sigma_i`$ by at most $`\lVert E\rVert_2`$, the noise's largest stretch. So $`\sigma_4, \dots, \sigma_{20}`$ of the real log lie between 0 and $`\lVert E\rVert_2`$.
 
-The check knows $E$, so it measures both sides. $\lVert E\rVert_2$ = 0.1915 by power iteration. The largest shift $\lvert\sigma_i(A) - \sigma_i(A_0)\rvert$ over all 20 values is 0.1887. That is $\sigma_4$ itself, rising from about zero, and it sits inside the bound: bound ÷ true shift = 1.015.
+The check knows $`E`$, so it measures both sides. $`\lVert E\rVert_2`$ = 0.1915 by power iteration. The largest shift $`\lvert\sigma_i(A) - \sigma_i(A_0)\rvert`$ over all 20 values is 0.1887. That is $`\sigma_4`$ itself, rising from about zero, and it sits inside the bound: bound ÷ true shift = 1.015.
 
-In practice $E$ is unknown, but its typical size is. For noise with independent entries of standard deviation $\delta$, Gordon's theorem (Vershynin, chapter 7, in Sources) gives an expected $\lVert E\rVert_2$ of at most $\delta(\sqrt m + \sqrt n)$ for Gaussian entries. The check's noise is a sum of three uniform draws, close to Gaussian, so the bound serves as an estimate here, not a guarantee. Here that is $0.01 \times (\sqrt{240} + \sqrt{20})$ = 0.1996, just above the measured 0.1915: estimate ÷ measured = 1.042. Counting the singular values above it gives rank 3.
+In practice $`E`$ is unknown, but its typical size is. For noise with independent entries of standard deviation $`\delta`$, Gordon's theorem (Vershynin, chapter 7, in Sources) gives an expected $`\lVert E\rVert_2`$ of at most $`\delta(\sqrt m + \sqrt n)`$ for Gaussian entries. The check's noise is a sum of three uniform draws, close to Gaussian, so the bound serves as an estimate here, not a guarantee. Here that is $`0.01 \times (\sqrt{240} + \sqrt{20})`$ = 0.1996, just above the measured 0.1915: estimate ÷ measured = 1.042. Counting the singular values above it gives rank 3.
 
 ### Step 3: rank you can trust, at two levels
 
-"Rank" in exact arithmetic is the count of nonzero $\sigma_i$. In floating point it is the count above a tolerance, and the tolerance must match how the data was made.
+"Rank" in exact arithmetic is the count of nonzero $`\sigma_i`$. In floating point it is the count above a tolerance, and the tolerance must match how the data was made.
 
 | Data | Tolerance | Count | Verdict |
 | --- | --- | --- | --- |
-| noise-free log $A_0$, rounding only | $\max(m,n)\,\varepsilon_{\text{mach}}\,\sigma_1$ = 1.852e-12 | 3 | right: $\sigma_4$ = 2.506e-15, rounding dust |
+| noise-free log $`A_0`$, rounding only | $`\max(m,n)\,\varepsilon_{\text{mach}}\,\sigma_1`$ = 1.852e-12 | 3 | right: $`\sigma_4`$ = 2.506e-15, rounding dust |
 | noise-free log, "nonzero" | 0 | 20 | wrong: rounding never gives an exact 0 |
 | real log, rounding tolerance | 1.852e-12 | 20 | true but useless: 17 layers of noise |
 | real log, noise tolerance | 0.1996 | **3** | the rank you can trust |
 
-The rounding tolerance uses the machine epsilon ([Machine epsilon and cancellation](../01-Floating%20Point%20and%20Error/03-rounding-cancellation-and-machine-epsilon.md)) because a backward-stable SVD returns the exact singular values of $A$ plus a perturbation of about $\varepsilon_{\text{mach}}$ times $\lVert A \rVert_2$, and Weyl turns that into the same shift in each $\sigma_i$.
+The rounding tolerance uses the machine epsilon ([Machine epsilon and cancellation](../01-Floating%20Point%20and%20Error/03-rounding-cancellation-and-machine-epsilon.md)) because a backward-stable SVD returns the exact singular values of $`A`$ plus a perturbation of about $`\varepsilon_{\text{mach}}`$ times $`\lVert A \rVert_2`$, and Weyl turns that into the same shift in each $`\sigma_i`$.
 
 ### Step 4: the pseudoinverse divides only where it is safe
 
-Least squares asks for the $x$ that makes $\lVert Ax - y\rVert$ smallest ([Least squares two ways](06-least-squares-normal-equations-versus-qr.md)). Turn to the SVD's axes: write $x = \sum z_i v_i$ and $c_i = u_i^T y$. Then the squared miss is $\sum_i (\sigma_i z_i - c_i)^2$ plus a part of $y$ no $x$ can reach. Each term is its own small problem. Where $\sigma_i > 0$ the best $z_i$ is $c_i/\sigma_i$. Where $\sigma_i = 0$ any $z_i$ fits equally well, and setting it to 0 gives the shortest $x$. That shortest answer is $x = A^+ y$.
+Least squares asks for the $`x`$ that makes $`\lVert Ax - y\rVert`$ smallest ([Least squares two ways](06-least-squares-normal-equations-versus-qr.md)). Turn to the SVD's axes: write $`x = \sum z_i v_i`$ and $`c_i = u_i^T y`$. Then the squared miss is $`\sum_i (\sigma_i z_i - c_i)^2`$ plus a part of $`y`$ no $`x`$ can reach. Each term is its own small problem. Where $`\sigma_i > 0`$ the best $`z_i`$ is $`c_i/\sigma_i`$. Where $`\sigma_i = 0`$ any $`z_i`$ fits equally well, and setting it to 0 gives the shortest $`x`$. That shortest answer is $`x = A^+ y`$.
 
 <details>
 <summary>Detailed proof: A⁺y is the shortest least-squares solution</summary>
 
-Extend $u_1, \dots, u_n$ to a full set of perpendicular unit vectors $u_1, \dots, u_m$. Lengths do not change under $U^T$ or $V$. With $z = V^T x$ and $c = U^T y$: $\lVert Ax - y\rVert^2 = \lVert S z - c\rVert^2 = \sum_{i \le r} (\sigma_i z_i - c_i)^2 + \sum_{i > r} c_i^2$, where $r$ counts the nonzero $\sigma_i$. The last sum does not depend on $x$. The first is zero exactly when $z_i = c_i/\sigma_i$ for $i \le r$, and $z_{r+1}, \dots, z_n$ are free. Since $\lVert x\rVert = \lVert z\rVert$, the shortest choice sets the free ones to 0. That $x$ is $\sum_{i\le r} (c_i/\sigma_i) v_i = V S^+ U^T y$.
+Extend $`u_1, \dots, u_n`$ to a full set of perpendicular unit vectors $`u_1, \dots, u_m`$. Lengths do not change under $`U^T`$ or $`V`$. With $`z = V^T x`$ and $`c = U^T y`$: $`\lVert Ax - y\rVert^2 = \lVert S z - c\rVert^2 = \sum_{i \le r} (\sigma_i z_i - c_i)^2 + \sum_{i > r} c_i^2`$, where $`r`$ counts the nonzero $`\sigma_i`$. The last sum does not depend on $`x`$. The first is zero exactly when $`z_i = c_i/\sigma_i`$ for $`i \le r`$, and $`z_{r+1}, \dots, z_n`$ are free. Since $`\lVert x\rVert = \lVert z\rVert`$, the shortest choice sets the free ones to 0. That $`x`$ is $`\sum_{i\le r} (c_i/\sigma_i) v_i = V S^+ U^T y`$.
 
-Penrose (1955) showed $X = A^+$ is the only matrix with $AXA = A$, $XAX = X$, and $AX$ and $XA$ symmetric. The check confirms all four for $A_3^+$, with residuals at most 1.584e-13.
+Penrose (1955) showed $`X = A^+`$ is the only matrix with $`AXA = A`$, $`XAX = X`$, and $`AX`$ and $`XA`$ symmetric. The check confirms all four for $`A_3^+`$, with residuals at most 1.584e-13.
 
 </details>
 
-The danger is the division. Each $c_i$ carries the water meter's noise, about 0.3 L/h in every direction. Dividing by $\sigma_{20}$ = 0.1191 multiplies it by $1/\sigma_{20}$ = 8.3981 (from the unrounded $\sigma_{20}$). Truncation sets $\sigma_4$ to $\sigma_{20}$ to zero, so their noisy shares are never divided at all.
+The danger is the division. Each $`c_i`$ carries the water meter's noise, about 0.3 L/h in every direction. Dividing by $`\sigma_{20}`$ = 0.1191 multiplies it by $`1/\sigma_{20}`$ = 8.3981 (from the unrounded $`\sigma_{20}`$). Truncation sets $`\sigma_4`$ to $`\sigma_{20}`$ to zero, so their noisy shares are never divided at all.
 
 ### Step 5: what truncation does to the condition number
 
-The condition number ([Matrix norms and the condition number](01-matrix-norms-and-the-condition-number.md)) bounds how much a relative change in the water readings $y$ can grow in the answer, for a fit as close as this one. For least squares on all 20 columns it is $\sigma_1/\sigma_{20}$ = 291.8. A change in the log $A$ itself adds a second term, $\kappa_2^2$ times the misfit's length over the fit's ([Least squares two ways](06-least-squares-normal-equations-versus-qr.md)). For the truncated problem only the kept layers count: $\sigma_1/\sigma_3$ = 3.01. The price is a bias: any true signal along the dropped layers is lost. Here the true water use depends only on the three hidden signals, so almost nothing real is lost.
+The condition number ([Matrix norms and the condition number](01-matrix-norms-and-the-condition-number.md)) bounds how much a relative change in the water readings $`y`$ can grow in the answer, for a fit as close as this one. For least squares on all 20 columns it is $`\sigma_1/\sigma_{20}`$ = 291.8. A change in the log $`A`$ itself adds a second term, $`\kappa_2^2`$ times the misfit's length over the fit's ([Least squares two ways](06-least-squares-normal-equations-versus-qr.md)). For the truncated problem only the kept layers count: $`\sigma_1/\sigma_3`$ = 3.01. The price is a bias: any true signal along the dropped layers is lost. Here the true water use depends only on the three hidden signals, so almost nothing real is lost.
 
-The log's trouble is conditioning, not stability. The Jacobi SVD and the normal equations agree to 6.4e-12, the size $\kappa_2^2 u$ = 9.453e-12 predicts. Both answer the ill-posed question (one whose answer swings widely with tiny changes in the data) accurately; truncation changes the question.
+The log's trouble is conditioning, not stability. The Jacobi SVD and the normal equations agree to 6.4e-12, the size $`\kappa_2^2 u`$ = 9.453e-12 predicts. Both answer the ill-posed question (one whose answer swings widely with tiny changes in the data) accurately; truncation changes the question.
 
 ### Step 6: the cost
 
-The code uses the **one-sided Jacobi** SVD: rotate pairs of columns until every pair is perpendicular, then read each $\sigma_i$ as a column length. It needed 9 sweeps over all pairs of columns and 4335960 flops (dot products and rotations; the few scalar flops per pair are not counted). Householder QR of the same table costs $2mn^2 - 2n^3/3$ = 186667 flops, so Jacobi cost 23.2 times QR here. Library routines use Golub–Kahan bidiagonalisation (Sources), at a small multiple of the QR cost. Jacobi is used here because it is short to write.
+The code uses the **one-sided Jacobi** SVD: rotate pairs of columns until every pair is perpendicular, then read each $`\sigma_i`$ as a column length. It needed 9 sweeps over all pairs of columns and 4335960 flops (dot products and rotations; the few scalar flops per pair are not counted). Householder QR of the same table costs $`2mn^2 - 2n^3/3`$ = 186667 flops, so Jacobi cost 23.2 times QR here. Library routines use Golub–Kahan bidiagonalisation (Sources), at a small multiple of the QR cost. Jacobi is used here because it is short to write.
 
 ---
 
 ## Worked numbers, by hand
 
-From the 20 singular values and the shares $c_i = u_i^T y$, all printed by the checks. Each value is worked from the unrounded numbers, so a last digit can differ from the rounded inputs shown:
+From the 20 singular values and the shares $`c_i = u_i^T y`$, all printed by the checks. Each value is worked from the unrounded numbers, so a last digit can differ from the rounded inputs shown:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| noise tolerance | $0.01 \times (\sqrt{240} + \sqrt{20})$ | 0.1996 |
+| noise tolerance | $`0.01 \times (\sqrt{240} + \sqrt{20})`$ | 0.1996 |
 | trusted rank | count of 34.7454, 15.2587, 11.5585, 0.1887, … above 0.1996 | 3 |
 | condition number, all 20 | 34.7454 / 0.1191 | 291.8 |
 | condition number, kept part | 34.7454 / 11.5585 | 3.01 |
 | coefficient along layer 1 | 32.4875 / 34.7454 | 0.9350 |
 | coefficient along layer 3 | 16.1939 / 11.5585 | 1.4010 |
 | coefficient along layer 20 | −0.7823 / 0.1191 | −6.5700, dropped by truncation |
-| length of the coefficients | $\lvert x_3\rvert$ against $\lvert x_{20}\rvert$ | 2.267 against 9.039 |
+| length of the coefficients | $`\lvert x_3\rvert`$ against $`\lvert x_{20}\rvert`$ | 2.267 against 9.039 |
 | sensor 6 drifts by +0.5 | 0.5 × its coefficient | **+0.153 L/h** truncated, +1.585 L/h all 20 |
-| storage for $A_3$ | $3 \times (240 + 20 + 1)$ of $240 \times 20$ | 783 of 4800, 16.3% |
-| error of $A_3$ | $\sqrt{0.1887^2 + \dots + 0.1191^2}$ = 0.6339, over $\lVert A\rVert_F$ | 1.598e-02 relative |
+| storage for $`A_3`$ | $`3 \times (240 + 20 + 1)`$ of $`240 \times 20`$ | 783 of 4800, 16.3% |
+| error of $`A_3`$ | $`\sqrt{0.1887^2 + \dots + 0.1191^2}`$ = 0.6339, over $`\lVert A\rVert_F`$ | 1.598e-02 relative |
 
 The truncated rule predicts the next ten days with an rms error of 0.2821 L/h, against 0.2965 L/h for all 20 layers; the water meter's own noise is 0.3 L/h. The real gain is robustness: a half-unit drift in one temperature sensor costs 0.153 L/h, not 1.585 L/h.
 
-The compressed log is also closer to the truth than the raw log. Its relative distance from $A_0$ is 7.019e-03, against 1.745e-02 for the raw log: dropping 17 noise layers removes most of the noise.
+The compressed log is also closer to the truth than the raw log. Its relative distance from $`A_0`$ is 7.019e-03, against 1.745e-02 for the raw log: dropping 17 noise layers removes most of the noise.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Rank as the count of $\sigma_i > 0$ | 20, and 20 even for the noise-free log | rounding leaves $\sigma_4$ at 2.506e-15, never exactly 0 |
+| Rank as the count of $`\sigma_i > 0`$ | 20, and 20 even for the noise-free log | rounding leaves $`\sigma_4`$ at 2.506e-15, never exactly 0 |
 | Rounding tolerance on noisy data | rank 20 | 1.852e-12 sits far below the noise floor of 0.1996 |
-| Keep all 20 layers: the plain pseudoinverse | drift moves the prediction +1.585 L/h; test rms 0.2965 | dividing noise by $\sigma_{20}$ = 0.1191 amplifies it 8.3981 times |
+| Keep all 20 layers: the plain pseudoinverse | drift moves the prediction +1.585 L/h; test rms 0.2965 | dividing noise by $`\sigma_{20}`$ = 0.1191 amplifies it 8.3981 times |
 | Keep too few: 1 layer | test rms 1.8753 L/h | the heating and watering signals are cut; keeping 6 gives 0.2833, a mild loss the other way |
 
 The broken hypothesis is the tolerance. Below the noise floor, the gap that makes truncation safe is ignored and noise is treated as signal.
@@ -189,7 +193,7 @@ The broken hypothesis is the tolerance. Below the noise floor, the gap that make
 
 ## Code, from first principles, and it actually runs
 
-The code builds the log from three known signals and SplitMix64 noise, so the truth is on hand. Road one is a one-sided Jacobi SVD. Road two checks it independently: power iteration for $\sigma_1$ and for $\lVert A - A_3\rVert_2$, the sum of squared entries against $\sum\sigma_i^2$, the normal equations against the full pseudoinverse, a three-column regression on the scores $Av_i$ against the truncated answer, and Penrose's four conditions. Road three compares with the known signal and noise: Weyl's bound, and Eckart–Young against the true log and against three real sensors.
+The code builds the log from three known signals and SplitMix64 noise, so the truth is on hand. Road one is a one-sided Jacobi SVD. Road two checks it independently: power iteration for $`\sigma_1`$ and for $`\lVert A - A_3\rVert_2`$, the sum of squared entries against $`\sum\sigma_i^2`$, the normal equations against the full pseudoinverse, a three-column regression on the scores $`Av_i`$ against the truncated answer, and Penrose's four conditions. Road three compares with the known signal and noise: Weyl's bound, and Eckart–Young against the true log and against three real sensors.
 
 ### Python
 
@@ -573,15 +577,15 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the three theorems of Why it works for every real matrix, of any size, and for every $k$.
+Lean proves the three theorems of Why it works for every real matrix, of any size, and for every $`k`$.
 
-- Every table $B$ of rank at most $k$ misses $A$ by at least $\sigma_{k+1}$ in the 2-norm.
-- For the same $B$, $\lVert A - B\rVert_F^2$ is at least $\sigma_{k+1}^2 + \dots + \sigma_n^2$.
-- Some table of rank at most $k$ meets both bounds exactly, so no rank-$k$ table is closer.
-- Adding noise $E$ moves each singular value by at most $\lVert E\rVert_2$: Weyl's bound.
-- Exactly one matrix meets Penrose's four conditions, and that matrix is $A^+$.
-- $A^+ y$ is a least-squares solution, and every other least-squares solution is strictly longer.
-- The whole-number arithmetic holds: 783 numbers of 4,800 for $A_3$, and 186,667 flops for Householder QR.
+- Every table $`B`$ of rank at most $`k`$ misses $`A`$ by at least $`\sigma_{k+1}`$ in the 2-norm.
+- For the same $`B`$, $`\lVert A - B\rVert_F^2`$ is at least $`\sigma_{k+1}^2 + \dots + \sigma_n^2`$.
+- Some table of rank at most $`k`$ meets both bounds exactly, so no rank-$`k`$ table is closer.
+- Adding noise $`E`$ moves each singular value by at most $`\lVert E\rVert_2`$: Weyl's bound.
+- Exactly one matrix meets Penrose's four conditions, and that matrix is $`A^+`$.
+- $`A^+ y`$ is a least-squares solution, and every other least-squares solution is strictly longer.
+- The whole-number arithmetic holds: 783 numbers of 4,800 for $`A_3`$, and 186,667 flops for Householder QR.
 
 The decimals, the noise tolerance, the rank count, the Jacobi SVD and the test errors are left to the Python and Rust checks.
 
@@ -1076,16 +1080,16 @@ example : 2 * 240 * 20 ^ 2 - 2 * 20 ^ 3 / 3 = 186667 := by decide
 > **Try changing**
 > - **Guess first:** set `dlt = 0.001`, cleaner sensors. Does the all-20 fit get safer? No: the noise singular values shrink, so dividing by them amplifies the water meter's noise more. The all-20 coefficients and the drift effect grow many times over; the rank-3 answer hardly moves. The asserts still pass.
 > - **Guess first:** count the rank with the rounding tolerance `tr_` in place of `tn`. The count becomes 20 and an assert stops the run.
-> - **Guess first:** keep 4 layers in `A3 = lowrank(s, U, V, 3)`. The fit is closer to the log, but the first assert expects the miss of a rank-3 fit, $\sqrt{\sigma_4^2 + \dots + \sigma_{20}^2}$, and stops the run.
+> - **Guess first:** keep 4 layers in `A3 = lowrank(s, U, V, 3)`. The fit is closer to the log, but the first assert expects the miss of a rank-3 fit, $`\sqrt{\sigma_4^2 + \dots + \sigma_{20}^2}`$, and stops the run.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Trusting the full pseudoinverse on data whose small singular values are noise.** The plain $A^+$ divides by every nonzero $\sigma_i$, including $\sigma_{20}$ = 0.1191, so the water meter's noise along that layer comes back 8.3981 times bigger. The coefficients reach length 9.039 against 2.267, and a half-unit sensor drift moves the prediction 1.585 L/h. Truncate at the noise floor first.
+> **Trusting the full pseudoinverse on data whose small singular values are noise.** The plain $`A^+`$ divides by every nonzero $`\sigma_i`$, including $`\sigma_{20}`$ = 0.1191, so the water meter's noise along that layer comes back 8.3981 times bigger. The coefficients reach length 9.039 against 2.267, and a half-unit sensor drift moves the prediction 1.585 L/h. Truncate at the noise floor first.
 >
-> - **Reading rank as "nonzero singular values".** Rounding never returns an exact zero: the noise-free log has $\sigma_4$ = 2.506e-15, and the count is 20, not 3.
+> - **Reading rank as "nonzero singular values".** Rounding never returns an exact zero: the noise-free log has $`\sigma_4`$ = 2.506e-15, and the count is 20, not 3.
 > - **Using the rounding tolerance on measured data.** 1.852e-12 is the right "zero" for exact data and the wrong one for sensors with 0.01 noise: rank 20 again.
 > - **Truncating past the signal.** One layer gives a test error of 1.8753 L/h; the cut belongs at the gap, not as low as possible.
 > - **Reading a low residual as a good model.** The all-20 fit has the lower fit error, 0.2988 against 0.3082, and the worse test error, 0.2965 against 0.2821.
@@ -1095,7 +1099,7 @@ example : 2 * 240 * 20 ^ 2 - 2 * 20 ^ 3 / 3 = 186667 := by decide
 ## Where you meet it in real life
 
 - **Sensor networks and process plants.** Many instruments watch a few physical drivers. The singular values show how many drivers there are, and the truncated fit gives predictions that survive one instrument drifting.
-- **Image and data compression.** A rank-$k$ fit stores $k(m+n+1)$ numbers instead of $mn$, and Eckart–Young guarantees no rank-$k$ table is closer.
+- **Image and data compression.** A rank-$`k`$ fit stores $`k(m+n+1)`$ numbers instead of $`mn`$, and Eckart–Young guarantees no rank-$`k`$ table is closer.
 - **Ill-posed inverse problems.** Deblurring an image or reading a heat source from surface temperatures gives singular values that fall smoothly to zero; truncated SVD is a standard regularisation (Hansen, in Sources).
 - **Water networks.** The shelf's 500-pipe network with no fixed pressure anywhere has a matrix one short of full rank: pressures are known only up to a constant. The pseudoinverse picks the answer with zero mean pressure change, the shortest one.
 
@@ -1107,8 +1111,8 @@ example : 2 * 240 * 20 ^ 2 - 2 * 20 ^ 3 / 3 = 186667 := by decide
 ## What this builds on
 
 - [Least squares two ways](06-least-squares-normal-equations-versus-qr.md): the least-squares problem, and why the normal equations square the condition number.
-- [Eigenvalues by iteration](07-eigenvalues-power-iteration-and-the-qr-algorithm.md): power iteration, which the checks use for $\sigma_1$, $\lVert E\rVert_2$ and $\lVert A - A_3\rVert_2$.
-- [The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md): $A = USV^T$, its existence proof, and exact rank from the singular values.
+- [Eigenvalues by iteration](07-eigenvalues-power-iteration-and-the-qr-algorithm.md): power iteration, which the checks use for $`\sigma_1`$, $`\lVert E\rVert_2`$ and $`\lVert A - A_3\rVert_2`$.
+- [The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md): $`A = USV^T`$, its existence proof, and exact rank from the singular values.
 - [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): the statistics view, where the singular values of a centred table give the variance along each component.
 - [Principal components](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/07-principal-components-and-dimension-reduction.md): the computing view, projecting a wide table onto a few components.
 
@@ -1130,4 +1134,4 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 - Penrose, R. "A generalized inverse for matrices." *Mathematical Proceedings of the Cambridge Philosophical Society* 51, no. 3 (1955): 406–413. [doi:10.1017/S0305004100030401](https://doi.org/10.1017/S0305004100030401). The four conditions that define the pseudoinverse.
 - Golub, G., and W. Kahan. "Calculating the Singular Values and Pseudo-Inverse of a Matrix." *Journal of the Society for Industrial and Applied Mathematics, Series B: Numerical Analysis* 2, no. 2 (1965): 205–224. [doi:10.1137/0702016](https://doi.org/10.1137/0702016). The bidiagonalisation route that library SVD routines use.
 - Hansen, Per Christian. *Rank-Deficient and Discrete Ill-Posed Problems*. SIAM, 1998. [Publisher page](https://doi.org/10.1137/1.9780898719697). Numerical rank, truncated SVD and the choice of cut-off.
-- Vershynin, Roman. *High-Dimensional Probability*. Cambridge University Press, 2018. [Publisher page](https://doi.org/10.1017/9781108231596). Chapter 7: Gordon's bound $\sqrt m + \sqrt n$ on the expected norm of a Gaussian random matrix.
+- Vershynin, Roman. *High-Dimensional Probability*. Cambridge University Press, 2018. [Publisher page](https://doi.org/10.1017/9781108231596). Chapter 7: Gordon's bound $`\sqrt m + \sqrt n`$ on the expected norm of a Gaussian random matrix.

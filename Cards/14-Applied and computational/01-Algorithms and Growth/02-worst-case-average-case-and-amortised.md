@@ -38,31 +38,33 @@ The bars are the true cost of each add. They spike at adds 2, 3, 5, 9 and 17, wh
 
 The [Big-O](01-big-o-and-growth-rates.md) card measures how a cost grows with the size n of the input, written O (at most), Ω (at least) and Θ (exactly) up to a constant. That card raises the question of *which* cost is growing and leaves it here. This card names the three choices.
 
-$$W(n) = \max_{x}\, t(x) \qquad A(n) = \sum_{x} p(x)\, t(x) \qquad \frac{1}{n}\sum_{i=1}^{n} c_i \;\le\; \hat c = 3$$
+```math
+W(n) = \max_{x}\, t(x) \qquad A(n) = \sum_{x} p(x)\, t(x) \qquad \frac{1}{n}\sum_{i=1}^{n} c_i \;\le\; \hat c = 3
+```
 
 **Read it aloud:** the worst case is the largest cost over every input of size n; the average case is each input's cost weighted by its chance; and for the doubling playlist, the total of n adds to an empty playlist, divided by n, never exceeds 3.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | the input size, or the number of operations in a run | 1,000,000 tracks, or adds | every cost here grows with it |
-| $x$, $k$ | one input of size n; for the search, the slot $k$ the wanted track sits in | a track in slot $k$ costs $k$ comparisons | a later slot costs more |
-| $t(x)$ | the counted cost on input x: a named operation, never seconds | comparisons made by the search | — |
-| $W(n)$ | worst case: the largest $t(x)$ over all inputs of size n | 1,000,000 comparisons (track absent) | — |
-| $p(x)$ | the chance input x turns up: a stated assumption | 1 in 1,000,000 for each slot | weight on late slots raises $A(n)$ |
-| $A(n)$ | average case: mean of $t(x)$ under $p$ | 500,000.5 comparisons | — |
-| $c_i$ | true cost of add number $i$, in writes | 1, or 1 plus every track copied | — |
-| $\hat c$ | the amortised charge: a flat price per add that always covers the true costs | 3 writes; the run averages 2.05 | — |
-| $s$ | size: tracks stored | 1,000,000 | — |
-| $m$ | capacity: slots in the block | 1,048,576 | spare room, $m - s$, grows |
-| $\Phi$ | potential: $2s - m$, the savings the next copy will need | 951,424 at the end | — |
-| $j$ | the power in $2^j$, the largest power of two below n: the biggest single copy | 19, so $2^{19}$ = 524,288 | each step up doubles the worst add |
+| $`n`$ | the input size, or the number of operations in a run | 1,000,000 tracks, or adds | every cost here grows with it |
+| $`x`$, $`k`$ | one input of size n; for the search, the slot $`k`$ the wanted track sits in | a track in slot $`k`$ costs $`k`$ comparisons | a later slot costs more |
+| $`t(x)`$ | the counted cost on input x: a named operation, never seconds | comparisons made by the search | — |
+| $`W(n)`$ | worst case: the largest $`t(x)`$ over all inputs of size n | 1,000,000 comparisons (track absent) | — |
+| $`p(x)`$ | the chance input x turns up: a stated assumption | 1 in 1,000,000 for each slot | weight on late slots raises $`A(n)`$ |
+| $`A(n)`$ | average case: mean of $`t(x)`$ under $`p`$ | 500,000.5 comparisons | — |
+| $`c_i`$ | true cost of add number $`i`$, in writes | 1, or 1 plus every track copied | — |
+| $`\hat c`$ | the amortised charge: a flat price per add that always covers the true costs | 3 writes; the run averages 2.05 | — |
+| $`s`$ | size: tracks stored | 1,000,000 | — |
+| $`m`$ | capacity: slots in the block | 1,048,576 | spare room, $`m - s`$, grows |
+| $`\Phi`$ | potential: $`2s - m`$, the savings the next copy will need | 951,424 at the end | — |
+| $`j`$ | the power in $`2^j`$, the largest power of two below n: the biggest single copy | 19, so $`2^{19}`$ = 524,288 | each step up doubles the worst add |
 
-The search here is **linear search**, the scan from [Big-O](01-big-o-and-growth-rates.md): check slot 1, slot 2, and so on until the track turns up. A track in slot $k$ costs $k$ comparisons. Halving, on the same card, does better on a sorted playlist: it opens the list in the middle and throws away the wrong half each time. This card keeps the plain scan because its cases are easy to see.
+The search here is **linear search**, the scan from [Big-O](01-big-o-and-growth-rates.md): check slot 1, slot 2, and so on until the track turns up. A track in slot $`k`$ costs $`k`$ comparisons. Halving, on the same card, does better on a sorted playlist: it opens the list in the middle and throws away the wrong half each time. This card keeps the plain scan because its cases are easy to see.
 
 ### When it holds
 
 - **The worst case needs a fixed size n and a named operation.** Count comparisons, writes, or copies. Count seconds and the answer moves with the phone, the battery and what else is running.
-- **The average case needs a stated $p(x)$.** "Each track equally likely" gives 500,000.5. If 9 in 10 searches are for the newest 10,000 tracks, the same code averages 945,500.5. Drop the assumption and the average means nothing.
+- **The average case needs a stated $`p(x)`$.** "Each track equally likely" gives 500,000.5. If 9 in 10 searches are for the newest 10,000 tracks, the same code averages 945,500.5. Drop the assumption and the average means nothing.
 - **The amortised bound needs geometric growth.** Doubling, or any fixed multiple above 1, keeps the charge constant. Growing by a fixed 1,000 slots instead makes the per-add cost 500.50 and rising with n.
 - **The amortised bound covers whole runs from empty, not one operation.** Any single add can still cost 524,289. A system that must never stall, such as audio playback, needs the worst case.
 - **Shrinking must lag behind growing.** If the array halves the moment it is half full, an add and an undo at the boundary each cost 524,289. Halving at a quarter full restores a constant.
@@ -79,15 +81,17 @@ The worst and average cases need no such trick: they are a maximum and a mean ov
 
 ### Step 1: the worst case and the average case of a search
 
-Linear search for the track in slot $k$ makes $k$ comparisons. The largest is $k = n$, or a track that is not there, which also checks all n slots. So $W(n) = n$: 1,000,000.
+Linear search for the track in slot $`k`$ makes $`k`$ comparisons. The largest is $`k = n`$, or a track that is not there, which also checks all n slots. So $`W(n) = n`$: 1,000,000.
 
-If each of the n slots is equally likely, $p(x) = 1/n$ for each, and
+If each of the n slots is equally likely, $`p(x) = 1/n`$ for each, and
 
-$$A(n) = \frac{1}{n}\,(1 + 2 + \dots + n) = \frac{1}{n}\cdot\frac{n(n+1)}{2} = \frac{n+1}{2}.$$
+```math
+A(n) = \frac{1}{n}\,(1 + 2 + \dots + n) = \frac{1}{n}\cdot\frac{n(n+1)}{2} = \frac{n+1}{2}.
+```
 
-For n = 1,000,000 that is 500,000.5. The sum $1 + 2 + \dots + n = n(n+1)/2$ comes from writing it forwards and backwards and adding: n pairs, each n + 1.
+For n = 1,000,000 that is 500,000.5. The sum $`1 + 2 + \dots + n = n(n+1)/2`$ comes from writing it forwards and backwards and adding: n pairs, each n + 1.
 
-Change $p$ and the same sum is weighted differently. With 9 in 10 searches spread evenly over the newest 10,000 tracks, the last 10,000 slots (mean slot 995,000.5), and 1 in 10 spread over all slots, $A = 0.9 \times 995{,}000.5 + 0.1 \times 500{,}000.5 = 945{,}500.5$.
+Change $`p`$ and the same sum is weighted differently. With 9 in 10 searches spread evenly over the newest 10,000 tracks, the last 10,000 slots (mean slot 995,000.5), and 1 in 10 spread over all slots, $`A = 0.9 \times 995{,}000.5 + 0.1 \times 500{,}000.5 = 945{,}500.5`$.
 
 ### Step 2: where the copies fall
 
@@ -95,41 +99,45 @@ Start empty, with capacity 0. The first add makes 1 slot. After that the array i
 
 For n adds, the copies are every power of two below n:
 
-$$1 + 2 + 4 + \dots + 2^{j} = 2^{j+1} - 1 < 2n,$$
+```math
+1 + 2 + 4 + \dots + 2^{j} = 2^{j+1} - 1 < 2n,
+```
 
-where $2^j$ is the largest power of two below n. Each power of two is one more than all the smaller ones together, so the sum is one short of the next. For n = 1,000,000, the largest is 524,288, the copies total 1,048,575 over 21 resizes, and the final capacity is 1,048,576. Add the n writes of the tracks themselves:
+where $`2^j`$ is the largest power of two below n. Each power of two is one more than all the smaller ones together, so the sum is one short of the next. For n = 1,000,000, the largest is 524,288, the copies total 1,048,575 over 21 resizes, and the final capacity is 1,048,576. Add the n writes of the tracks themselves:
 
-$$\sum_{i=1}^{n} c_i = n + 2^{j+1} - 1 < 3n.$$
+```math
+\sum_{i=1}^{n} c_i = n + 2^{j+1} - 1 < 3n.
+```
 
 That is 2,048,575 writes, 2.05 per add. The bound is nearly met just past a power of two: 1,048,577 adds cost 3,145,728, which is 2.999997 per add.
 
 ### Step 3: the savings always cover the next copy
 
-Step 2 summed a run from empty. The potential $\Phi = 2s - m$ makes the same argument hold after every single add, which is what "never runs out" means.
+Step 2 summed a run from empty. The potential $`\Phi = 2s - m`$ makes the same argument hold after every single add, which is what "never runs out" means.
 
-Right after a doubling from $m$ to $2m$ slots, the array holds $m + 1$ tracks, so $\Phi = 2$. Each cheap add raises $s$ by one and $\Phi$ by two: the 2 banked writes. By the time the $2m$ slots are full, $\Phi = 2m$, exactly the number of tracks the next copy must move.
+Right after a doubling from $`m`$ to $`2m`$ slots, the array holds $`m + 1`$ tracks, so $`\Phi = 2`$. Each cheap add raises $`s`$ by one and $`\Phi`$ by two: the 2 banked writes. By the time the $`2m`$ slots are full, $`\Phi = 2m`$, exactly the number of tracks the next copy must move.
 
-- **A cheap add:** true cost 1, $\Phi$ rises by 2. Charge $1 + 2 = 3$.
-- **A doubling add,** with $s = m$ before it: true cost $m + 1$. $\Phi$ falls from $2m - m = m$ to $2(m+1) - 2m = 2$, a fall of $m - 2$. Charge $(m + 1) - (m - 2) = 3$.
+- **A cheap add:** true cost 1, $`\Phi`$ rises by 2. Charge $`1 + 2 = 3`$.
+- **A doubling add,** with $`s = m`$ before it: true cost $`m + 1`$. $`\Phi`$ falls from $`2m - m = m`$ to $`2(m+1) - 2m = 2`$, a fall of $`m - 2`$. Charge $`(m + 1) - (m - 2) = 3`$.
 
 <details>
 <summary>Detailed proof: charge minus true cost is never negative</summary>
 
-Write the amortised cost of the i-th add as $\hat c_i = c_i + \Phi_i - \Phi_{i-1}$: true cost plus change in potential. Summing over a run, the potentials cancel in pairs:
+Write the amortised cost of the i-th add as $`\hat c_i = c_i + \Phi_i - \Phi_{i-1}`$: true cost plus change in potential. Summing over a run, the potentials cancel in pairs:
 
-$$\sum_{i=1}^{n} \hat c_i = \sum_{i=1}^{n} c_i + \Phi_n - \Phi_0.$$
+$`\displaystyle \sum_{i=1}^{n} \hat c_i = \sum_{i=1}^{n} c_i + \Phi_n - \Phi_0.`$
 
-Start empty, so $\Phi_0 = 0$. After the first add the array is at least half full, since it doubles only when completely full, so $\Phi_n = 2s - m \ge 0$. Hence $\sum c_i \le \sum \hat c_i$.
+Start empty, so $`\Phi_0 = 0`$. After the first add the array is at least half full, since it doubles only when completely full, so $`\Phi_n = 2s - m \ge 0`$. Hence $`\sum c_i \le \sum \hat c_i`$.
 
-Each $\hat c_i$ is at most 3: the two bullets above, plus the very first add, where the true cost is 1 and $\Phi$ goes from 0 to 1, a charge of 2.
+Each $`\hat c_i`$ is at most 3: the two bullets above, plus the very first add, where the true cost is 1 and $`\Phi`$ goes from 0 to 1, a charge of 2.
 
-So $\sum c_i \le 3n$ for every n, not just at the end. The check tests the inequality after each of the 1,000,000 adds: the bank of 3 per add minus true costs stays at least $\Phi$. At the end the bank holds 951,425 and $\Phi$ is 951,424; the 1 extra is the first add's unused charge.
+So $`\sum c_i \le 3n`$ for every n, not just at the end. The check tests the inequality after each of the 1,000,000 adds: the bank of 3 per add minus true costs stays at least $`\Phi`$. At the end the bank holds 951,425 and $`\Phi`$ is 951,424; the 1 extra is the first add's unused charge.
 
 </details>
 
 ### Step 4: why a fixed step fails
 
-Grow by a fixed 1,000 slots instead. Copies happen at 1,000, 2,000, 3,000, … tracks, and their total is 1,000 times $1 + 2 + 3 + \dots$: Step 1's sum again, so it grows like $n^2$. The run costs 500,500,000 writes, 500.50 per add, and the per-add cost keeps rising with n.
+Grow by a fixed 1,000 slots instead. Copies happen at 1,000, 2,000, 3,000, … tracks, and their total is 1,000 times $`1 + 2 + 3 + \dots`$: Step 1's sum again, so it grows like $`n^2`$. The run costs 500,500,000 writes, 500.50 per add, and the per-add cost keeps rising with n.
 
 Doubling works because each copy is paid for by the adds since the last one: there are half as many of those as tracks to copy, and each banked 2. A fixed step adds only 1,000 new tracks to pay for each ever-larger copy.
 
@@ -144,8 +152,8 @@ One million adds to the doubling playlist, counted in writes.
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | writes of the tracks themselves | one per add | 1,000,000 |
-| largest power of two below n | $2^{19}$ | 524,288 |
-| copies over all resizes | $1 + 2 + \dots + 524{,}288 = 2 \times 524{,}288 - 1$ | 1,048,575 |
+| largest power of two below n | $`2^{19}`$ | 524,288 |
+| copies over all resizes | $`1 + 2 + \dots + 524{,}288 = 2 \times 524{,}288 - 1`$ | 1,048,575 |
 | total writes | 1,000,000 + 1,048,575 | 2,048,575 |
 | worst single add | 524,288 copies + 1 write | 524,289 |
 | **amortised cost per add** | 2,048,575 ÷ 1,000,000 | **2.05** |
@@ -167,11 +175,11 @@ The search, on the same 1,000,000 tracks:
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Grow by a fixed 1,000 slots, not double | 500,500,000 writes, 500.50 per add | The copies grow like $n^2$; geometric growth was the hypothesis |
+| Grow by a fixed 1,000 slots, not double | 500,500,000 writes, 500.50 per add | The copies grow like $`n^2`$; geometric growth was the hypothesis |
 | Halve when half full; user adds then undoes at 524,288 tracks, 10 times | 524,289 writes per operation | Every add doubles and every undo halves: no cheap adds to bank savings |
 | Quote the worst add as the per-add cost | 524,289,000,000 writes predicted | The true total is 2,048,575: a spike cannot recur every time |
 | Quote 500,000.5 for a search for a missing track | 1,000,000 comparisons | An average describes a spread of inputs, not each one |
-| Assume uniform searches when 9 in 10 are for the newest 10,000 | 945,500.5 comparisons, not 500,000.5 | The average belongs to its $p(x)$ |
+| Assume uniform searches when 9 in 10 are for the newest 10,000 | 945,500.5 comparisons, not 500,000.5 | The average belongs to its $`p(x)`$ |
 
 With the shrink rule moved to a quarter full, the same 20 operations cost 26,215.40 writes each on average: one doubling at the start, then single writes. After that doubling every add and undo costs 1 write, so the average falls toward 1 as the run lengthens.
 
@@ -179,7 +187,7 @@ With the shrink rule moved to a quarter full, the same 20 operations cost 26,215
 
 ## Code, from first principles, and it actually runs
 
-The script builds the playlist for real: a list of fixed size, copied element by element on every resize, with every write counted. It reaches the total by **three independent roads**: that real run, a second simulator that counts copies without moving anything, and the closed form $n + 2^{j+1} - 1$. During the real run it checks the potential argument after every single add. The search cases come from an exhaustive search on a 1,000-track playlist, a slot-by-slot sum over 1,000,000 slots, and the formula $(n+1)/2$. Every "what breaks" row is reproduced. Nothing imported knows the answer.
+The script builds the playlist for real: a list of fixed size, copied element by element on every resize, with every write counted. It reaches the total by **three independent roads**: that real run, a second simulator that counts copies without moving anything, and the closed form $`n + 2^{j+1} - 1`$. During the real run it checks the potential argument after every single add. The search cases come from an exhaustive search on a 1,000-track playlist, a slot-by-slot sum over 1,000,000 slots, and the formula $`(n+1)/2`$. Every "what breaks" row is reproduced. Nothing imported knows the answer.
 
 ### Python
 
@@ -563,8 +571,8 @@ The two outputs match line for line.
 Lean proves the doubling playlist's costs for every number of adds n, and the search average for every playlist size n.
 
 - Take n adds to an empty playlist that doubles when full. Then the total is at most 3n writes.
-- Take the same n adds. Then the total is exactly $n + 2^{j+1} - 1$ writes, with $2^{j+1}$ the smallest power of two at least n.
-- Suppose the playlist has n slots, n at least 1, each slot equally likely. Then linear search averages $(n+1)/2$ comparisons.
+- Take the same n adds. Then the total is exactly $`n + 2^{j+1} - 1`$ writes, with $`2^{j+1}`$ the smallest power of two at least n.
+- Suppose the playlist has n slots, n at least 1, each slot equally likely. Then linear search averages $`(n+1)/2`$ comparisons.
 - The bar chart's 20 costs and the worked numbers by hand come out exactly as the card states.
 
 Python and Rust cover the rest: the real copying, the potential after every add, other growth and shrink rules, and the 9-in-10 search.
@@ -739,7 +747,7 @@ example : 524289 * 1000000 = 524289000000 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Reading an amortised cost as an average case.** "Constant amortised" is not a probability statement. It holds for every run of adds, chosen by anyone, including an adversary: 1,000,000 adds cost 2,048,575 writes, always. An average case holds only on average over its stated $p(x)$, and a bad input can cost the full 1,000,000 comparisons. Mixing them up gives false guarantees in one direction and needless worry in the other.
+> **Reading an amortised cost as an average case.** "Constant amortised" is not a probability statement. It holds for every run of adds, chosen by anyone, including an adversary: 1,000,000 adds cost 2,048,575 writes, always. An average case holds only on average over its stated $`p(x)`$, and a bad input can cost the full 1,000,000 comparisons. Mixing them up gives false guarantees in one direction and needless worry in the other.
 >
 > - **Quoting the amortised cost for one operation.** One add can cost 524,289 writes. A music app that copies half a million tracks while the audio buffer drains will stutter, even though the amortised cost is 2.05.
 > - **Quoting an average with no distribution.** 500,000.5 assumes every slot equally likely. If 9 in 10 searches are for recent tracks at the end, it is 945,500.5.

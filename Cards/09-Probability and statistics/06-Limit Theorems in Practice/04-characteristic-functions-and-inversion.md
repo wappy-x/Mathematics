@@ -56,53 +56,61 @@ Orange: an error with standard deviation 1 g. Green: the kitchen scale, standard
 Notation first, in words.
 
 - The wing writes E[X] for the long-run average of X ([Expectation](../02-Random%20Variables/02-expectation.md)).
-- The letter $i$ is the imaginary unit, the number whose square is −1.
-- By Euler's formula, $e^{itX}$ is the point at angle t times X on the circle of radius 1: its across-coordinate is cos(tX) and its up-coordinate is sin(tX) ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)).
-- The characteristic function is written $\varphi_X(t)$, read "phi of X at t". The subscript keeps it apart from the bell's height, which the normal card also calls phi.
+- The letter $`i`$ is the imaginary unit, the number whose square is −1.
+- By Euler's formula, $`e^{itX}`$ is the point at angle t times X on the circle of radius 1: its across-coordinate is cos(tX) and its up-coordinate is sin(tX) ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)).
+- The characteristic function is written $`\varphi_X(t)`$, read "phi of X at t". The subscript keeps it apart from the bell's height, which the normal card also calls phi.
 
-$$\varphi_X(t) = E\!\left[e^{itX}\right] = E[\cos(tX)] + i\,E[\sin(tX)]$$
+```math
+\varphi_X(t) = E\!\left[e^{itX}\right] = E[\cos(tX)] + i\,E[\sin(tX)]
+```
 
 **Read it aloud:** turn a point round the unit circle by t times the error, and average where it lands.
 
-For a normal error with mean $\mu$ and standard deviation $\sigma$:
+For a normal error with mean $`\mu`$ and standard deviation $`\sigma`$:
 
-$$\varphi_X(t) = e^{\,i\mu t \,-\, \sigma^2 t^2/2}$$
+```math
+\varphi_X(t) = e^{\,i\mu t \,-\, \sigma^2 t^2/2}
+```
 
 **Read it aloud:** the mean turns the average; the spread shrinks it along a bell in t.
 
-For the scale, $\mu$ is 0 g and $\sigma$ is 2 g, so the characteristic function is e^(−2t^2): at t = 0.5 it is 0.606531.
+For the scale, $`\mu`$ is 0 g and $`\sigma`$ is 2 g, so the characteristic function is e^(−2t^2): at t = 0.5 it is 0.606531.
 
-Inversion, for a law with a density $f(x)$ whose characteristic function has finite total size (the integral of its absolute value is finite), at every x where f is continuous:
+Inversion, for a law with a density $`f(x)`$ whose characteristic function has finite total size (the integral of its absolute value is finite), at every x where f is continuous:
 
-$$f(x) = \frac{1}{2\pi}\int_{-\infty}^{\infty} e^{-itx}\,\varphi_X(t)\,dt$$
+```math
+f(x) = \frac{1}{2\pi}\int_{-\infty}^{\infty} e^{-itx}\,\varphi_X(t)\,dt
+```
 
 **Read it aloud:** spin every rate's average back by t times x, add them all, divide by 2π, and the density at x comes out.
 
-Lévy's inversion formula, for any law, recovers the chance of an interval from $a$ to $b$ whose ends carry no probability of their own:
+Lévy's inversion formula, for any law, recovers the chance of an interval from $`a`$ to $`b`$ whose ends carry no probability of their own:
 
-$$P(a < X < b) = \lim_{T\to\infty}\frac{1}{2\pi}\int_{-T}^{T} \frac{e^{-ita} - e^{-itb}}{it}\,\varphi_X(t)\,dt$$
+```math
+P(a < X < b) = \lim_{T\to\infty}\frac{1}{2\pi}\int_{-T}^{T} \frac{e^{-ita} - e^{-itb}}{it}\,\varphi_X(t)\,dt
+```
 
-**Read it aloud:** weight each rate's average by the spin-back of the whole interval, add over rates up to a cut-off $T$, and let the cut-off grow.
+**Read it aloud:** weight each rate's average by the spin-back of the whole interval, add over rates up to a cut-off $`T`$, and let the cut-off grow.
 
 **Uniqueness theorem:** two random quantities whose characteristic functions agree at every real t have the same distribution.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$ | the random quantity: the scale's error | a reading minus 500 g | — |
-| $x$ | one possible value of the error | 0 g, 2 g, 4 g | density falls away from 0 |
-| $t$ | the rate: radians of turn per gram of error | 0.5 per gram | the average shrinks toward 0 |
-| $i$ | the imaginary unit, square −1 | — | — |
-| $e^{itX}$ | the turned point on the unit circle | angle 0.5 times the error | — |
-| $\varphi_X(t)$ | the characteristic function: the turned point's average | 0.606531 at t = 0.5 | — |
-| $\mu$ | the error's mean | 0 g | turns the average without shrinking it |
-| $\sigma$ | the error's standard deviation | 2 g | the bell in t narrows |
-| $f(x)$ | the density: chance per gram near x | 0.199471 per gram at 0 | — |
-| $a$, $b$ | ends of an interval of errors | −2 g and 2 g | wider interval, larger chance |
-| $T$ | the cut-off on the rates in Lévy's integral | 10 in the code | the integral settles on the chance |
-| $\pi$ | half a turn in radians | 3.14159… | — |
-| $Z$ | the standard normal: mean 0, standard deviation 1 | the scale's error is 2 times Z | — |
-| $\varepsilon$ | the spread of the tiny normal blur in Step 3's proof | shrinks to 0 | the blurred density smears wider |
-| $k$, $j$ | whole numbers: faces of the die in Step 6; in Step 2, k numbers the terms of the series | face 3 | — |
+| $`X`$ | the random quantity: the scale's error | a reading minus 500 g | — |
+| $`x`$ | one possible value of the error | 0 g, 2 g, 4 g | density falls away from 0 |
+| $`t`$ | the rate: radians of turn per gram of error | 0.5 per gram | the average shrinks toward 0 |
+| $`i`$ | the imaginary unit, square −1 | — | — |
+| $`e^{itX}`$ | the turned point on the unit circle | angle 0.5 times the error | — |
+| $`\varphi_X(t)`$ | the characteristic function: the turned point's average | 0.606531 at t = 0.5 | — |
+| $`\mu`$ | the error's mean | 0 g | turns the average without shrinking it |
+| $`\sigma`$ | the error's standard deviation | 2 g | the bell in t narrows |
+| $`f(x)`$ | the density: chance per gram near x | 0.199471 per gram at 0 | — |
+| $`a`$, $`b`$ | ends of an interval of errors | −2 g and 2 g | wider interval, larger chance |
+| $`T`$ | the cut-off on the rates in Lévy's integral | 10 in the code | the integral settles on the chance |
+| $`\pi`$ | half a turn in radians | 3.14159… | — |
+| $`Z`$ | the standard normal: mean 0, standard deviation 1 | the scale's error is 2 times Z | — |
+| $`\varepsilon`$ | the spread of the tiny normal blur in Step 3's proof | shrinks to 0 | the blurred density smears wider |
+| $`k`$, $`j`$ | whole numbers: faces of the die in Step 6; in Step 2, k numbers the terms of the series | face 3 | — |
 
 The characteristic function is the Fourier transform of the density with the turn reversed. The Fourier card writes the transform with e^(−iωt), ω being its frequency, and this card averages e^(+itX). So the characteristic function at t is the transform at −t ([The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md)). The inversion formula above is that card's inversion with the same sign flip.
 
@@ -136,7 +144,9 @@ Start with the standard normal, written Z: mean 0, standard deviation 1. The sin
 
 The averages needed are the even moments of the standard normal: 1, 1, 3, 15, 105 for powers 0, 2, 4, 6, 8. At t = 1 the terms are 1, −0.5, 0.125, −0.020833, 0.002604 and onward. Each term is the moment divided by the factorial, and that ratio is exactly (−t^2/2)^k divided by k!: the Taylor series of e^(−t^2/2). So
 
-$$\varphi_Z(t) = e^{-t^2/2}.$$
+```math
+\varphi_Z(t) = e^{-t^2/2}.
+```
 
 Step 1 then moves this to the scale. The error is 2 times a standard normal, so its characteristic function is e^(−(2t)^2/2) = e^(−2t^2). With a mean μ the factor e^(iμt) joins it.
 
@@ -163,7 +173,9 @@ Now let ε shrink. The blurred density tends to f(x). The integral tends to the 
 <summary>Detailed proof</summary>
 
 Fix ε > 0 and x. Write the characteristic function as the integral of e^(ity) f(y) over y. Then
-$$\frac{1}{2\pi}\int e^{-itx}\varphi_X(t)\,e^{-\varepsilon^2t^2/2}\,dt = \int f(y)\left[\frac{1}{2\pi}\int e^{it(y-x)}e^{-\varepsilon^2t^2/2}\,dt\right]dy.$$
+
+$`\displaystyle \frac{1}{2\pi}\int e^{-itx}\varphi_X(t)\,e^{-\varepsilon^2t^2/2}\,dt = \int f(y)\left[\frac{1}{2\pi}\int e^{it(y-x)}e^{-\varepsilon^2t^2/2}\,dt\right]dy.`$
+
 The order of the two integrals may be swapped because the absolute value of the integrand is f(y) e^(−ε^2 t^2/2), whose double integral is finite (the rule for changing the order of a double integral).
 
 The bracket is the normal's characteristic function read backwards. Step 2 says a normal error of spread ε has characteristic function e^(−ε^2 t^2/2), and for that bell, whose total size is finite, the Fourier card's inversion gives back its density. So the bracket equals the density of a normal error with spread ε at y − x: a bell of height at most 1/(ε√(2π)), with nearly all its mass within a few ε of zero. The right side is therefore the density at x of the error plus an independent normal blur.
@@ -186,7 +198,9 @@ If two laws share a characteristic function, Lévy's formula gives them the same
 
 A die has no density, but it lives on whole numbers. Its characteristic function is (e^(it) + e^(2it) + … + e^(6it))/6, and it repeats every 2π. Over one turn, from −π to π, the integral of e^(it(j−k)) is 2π when j equals k and 0 otherwise, since a whole number of full turns averages to zero. So
 
-$$P(X = k) = \frac{1}{2\pi}\int_{-\pi}^{\pi} e^{-itk}\,\varphi_X(t)\,dt,$$
+```math
+P(X = k) = \frac{1}{2\pi}\int_{-\pi}^{\pi} e^{-itk}\,\varphi_X(t)\,dt,
+```
 
 which returns 1/6 for each face, 0.166667, and 0 for a face 7.
 

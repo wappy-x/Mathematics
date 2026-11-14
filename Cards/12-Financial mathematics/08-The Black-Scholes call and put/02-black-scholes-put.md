@@ -48,9 +48,11 @@ Read it right to left, the way a put pays.
 
 ## The formula
 
-One piece of notation first, in words. $N(x)$ is the area under the bell curve to the left of $x$: the chance a standard bell-curve draw lands below $x$. A minus on the number inside asks for the other tail. The curve is symmetric, so the area left of $-x$ equals the area right of $x$, giving the identity this card leans on: $N(-x) = 1 - N(x)$. The minus goes inside, never in front.
+One piece of notation first, in words. $`N(x)`$ is the area under the bell curve to the left of $`x`$: the chance a standard bell-curve draw lands below $`x`$. A minus on the number inside asks for the other tail. The curve is symmetric, so the area left of $`-x`$ equals the area right of $`x`$, giving the identity this card leans on: $`N(-x) = 1 - N(x)`$. The minus goes inside, never in front.
 
-$$P = K\,e^{-rT}\,N(-d_2) \;-\; S\,e^{-qT}\,N(-d_1)$$
+```math
+P = K\,e^{-rT}\,N(-d_2) \;-\; S\,e^{-qT}\,N(-d_1)
+```
 
 **Read it aloud:** *the cash you might collect, minus the share you might hand over. The cash pulled back to today. The share shrunk for the dividends it sheds on the way. Each weighted by its own chance of the same event.*
 
@@ -58,27 +60,29 @@ The call was share in, cash out. The put is cash in, share out. Both halves sit 
 
 | Symbol | Plain meaning | In our example | Push it up and the premium… |
 | --- | --- | --- | --- |
-| $P$ | the **premium**: what the put costs today | $6.33 | |
-| $C$ | the call's premium, same strike and date | $9.23 | |
-| $S$ | Acme's price **today** | $100 | falls: the share you hand over is dearer |
-| $S_T$ | Acme's price on expiry day, unknown today | $80 or $120 in the two endings | |
-| $K$ | the **strike**, the price you may sell at | $100 | rises: more cash to collect |
-| $T$ | time to expiry, in **years** | 1 | usually rises: more room for a fall, against a longer wait |
-| $r$ | the **riskless rate**, what cash earns in the bank | 5% | falls: the cash you would collect is worth less today |
-| $q$ | the **dividend yield**, cash Acme pays shareholders each year | 2% | rises: the share sheds dividends before you deliver it |
-| $\sigma$ | **volatility**, how jumpy Acme is. Say "sigma" | 20% | rises: wider spread of endings, loss already capped |
-| $N(x)$ | the **bell curve** area left of $x$, a chance from 0 to 1 | | |
-| $d_2$ | how far Acme is **expected to finish above** the strike, in wiggle units of $\sigma\sqrt{T}$ | 0.05 | falls: less chance of finishing below |
-| $d_1$ | the same distance plus one wiggle unit | 0.25 | |
-| $e^{-rT}$ | the **discount**: $100 due in a year is $95.12 today | $95.12 on the strike | |
-| $e^{-qT}$ | the **dividend drag**: the fraction of a share bought today that dividends grow into one whole share by expiry | $98.02 on the share | |
-| $F$ | the **forward**, $S e^{(r-q)T}$: where Acme is expected to finish in the pricing world | $103.05 | rises: the strike sits further below centre |
+| $`P`$ | the **premium**: what the put costs today | $6.33 | |
+| $`C`$ | the call's premium, same strike and date | $9.23 | |
+| $`S`$ | Acme's price **today** | $100 | falls: the share you hand over is dearer |
+| $`S_T`$ | Acme's price on expiry day, unknown today | $80 or $120 in the two endings | |
+| $`K`$ | the **strike**, the price you may sell at | $100 | rises: more cash to collect |
+| $`T`$ | time to expiry, in **years** | 1 | usually rises: more room for a fall, against a longer wait |
+| $`r`$ | the **riskless rate**, what cash earns in the bank | 5% | falls: the cash you would collect is worth less today |
+| $`q`$ | the **dividend yield**, cash Acme pays shareholders each year | 2% | rises: the share sheds dividends before you deliver it |
+| $`\sigma`$ | **volatility**, how jumpy Acme is. Say "sigma" | 20% | rises: wider spread of endings, loss already capped |
+| $`N(x)`$ | the **bell curve** area left of $`x`$, a chance from 0 to 1 | | |
+| $`d_2`$ | how far Acme is **expected to finish above** the strike, in wiggle units of $`\sigma\sqrt{T}`$ | 0.05 | falls: less chance of finishing below |
+| $`d_1`$ | the same distance plus one wiggle unit | 0.25 | |
+| $`e^{-rT}`$ | the **discount**: $100 due in a year is $95.12 today | $95.12 on the strike | |
+| $`e^{-qT}`$ | the **dividend drag**: the fraction of a share bought today that dividends grow into one whole share by expiry | $98.02 on the share | |
+| $`F`$ | the **forward**, $`S e^{(r-q)T}`$: where Acme is expected to finish in the pricing world | $103.05 | rises: the strike sits further below centre |
 
 The two distances are the call's, unchanged. A put gets no pair of its own:
 
-$$d_2 = \frac{\ln(S/K) + (r - q - \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_1 = d_2 + \sigma\sqrt{T}$$
+```math
+d_2 = \frac{\ln(S/K) + (r - q - \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_1 = d_2 + \sigma\sqrt{T}
+```
 
-The bottom, $\sigma\sqrt{T}$, is how far Acme wiggles over the life. Only the signs inside $N$ change between the two contracts, because they pay on opposite sides of the same cut.
+The bottom, $`\sigma\sqrt{T}`$, is how far Acme wiggles over the life. Only the signs inside $`N`$ change between the two contracts, because they pay on opposite sides of the same cut.
 
 ### When it holds
 
@@ -86,7 +90,7 @@ The bottom, $\sigma\sqrt{T}$, is how far Acme wiggles over the life. Only the si
 - **Rate and dividend yield constant, the dividend a steady trickle.** Real dividends come in lumps on known dates: [Known cash dividends](08-known-cash-dividends.md).
 - **Exercise on the one day only.** Allow it early and the put is worth strictly more whenever collecting the cash now beats waiting — the case this card's bar chart sets up: [American options](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md).
 - **No fees or spread, and borrowing and short selling in any size.** Drop that and the single price becomes a band: [The Black-Scholes assumptions](09-black-scholes-assumptions-and-failures.md).
-- **Price, strike, volatility and time all strictly positive**, since $d_2$ needs a logarithm and a division. At the edges the contract answers instead: with no time left the put is $\max(K - S, 0)$, with no jumpiness $\max(K e^{-rT} - S e^{-qT}, 0)$. Which day-count rule turns two dates into a fraction of a year is a market convention, and belongs to the assumptions card.
+- **Price, strike, volatility and time all strictly positive**, since $`d_2`$ needs a logarithm and a division. At the edges the contract answers instead: with no time left the put is $`\max(K - S, 0)`$, with no jumpiness $`\max(K e^{-rT} - S e^{-qT}, 0)`$. Which day-count rule turns two dates into a fraction of a year is a market convention, and belongs to the assumptions card.
 
 ---
 
@@ -96,11 +100,11 @@ The bottom, $\sigma\sqrt{T}$, is how far Acme wiggles over the life. Only the si
 
 The engine is the one the call card builds. Hold the option, hold the right number of shares against it, and for the next instant the pair does not care which way Acme moves. A position with no randomness must earn the bank rate, or there is free money. That pins the price, and Acme's real expected return cancels out of it.
 
-The shortcut is the same too: pretend every asset drifts at the bank rate. There Acme drifts at $r - q$, the bank rate less the dividends leaking out, and still wiggles with jumpiness $\sigma$. Average the payoff over all the endings, then shrink the average back to today.
+The shortcut is the same too: pretend every asset drifts at the bank rate. There Acme drifts at $`r - q`$, the bank rate less the dividends leaking out, and still wiggles with jumpiness $`\sigma`$. Average the payoff over all the endings, then shrink the average back to today.
 
 ### Step 1: the payoff is two payments, both below the strike
 
-At expiry the put pays $\max(K - S_T, 0)$, shortened to $(K - S_T)^+$ below: the strike minus $S_T$, Acme's price on the day, or nothing if that is negative. Split it into the two things that change hands:
+At expiry the put pays $`\max(K - S_T, 0)`$, shortened to $`(K - S_T)^+`$ below: the strike minus $`S_T`$, Acme's price on the day, or nothing if that is negative. Split it into the two things that change hands:
 
 ```
   (K − S_T)^+  =   $100 · [Acme below $100]   −   S_T · [Acme below $100]
@@ -115,9 +119,9 @@ Each payment is easy to price alone. And — this is what trips people — each 
 
 You collect $100, but only in the endings below $100, so the cash half is worth $100 times the chance of that, discounted back to today.
 
-In the pretend world the *logarithm* of Acme's price is a bell curve ([Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md)), centred at $\ln S + (r - q - \tfrac12\sigma^2)T$ with spread $\sigma\sqrt{T}$. Acme finishes below the strike exactly when a standard draw lands below $-d_2$, and that chance is $N(-d_2) = 0.480061$, a shade under a coin flip. So the cash half is $K\,e^{-rT}\,N(-d_2) = 45.664833$. **$N(-d_2)$ is the chance of exercise, counted in dollars.**
+In the pretend world the *logarithm* of Acme's price is a bell curve ([Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md)), centred at $`\ln S + (r - q - \tfrac12\sigma^2)T`$ with spread $`\sigma\sqrt{T}`$. Acme finishes below the strike exactly when a standard draw lands below $`-d_2`$, and that chance is $`N(-d_2) = 0.480061`$, a shade under a coin flip. So the cash half is $`K\,e^{-rT}\,N(-d_2) = 45.664833`$. **$`N(-d_2)`$ is the chance of exercise, counted in dollars.**
 
-It is one minus the call's: 0.480061 and the call's $N(d_2) = 0.519939$ add to 1. Acme ends above the strike or below it, so the two contracts split every ending between them — the seed of Step 4.
+It is one minus the call's: 0.480061 and the call's $`N(d_2) = 0.519939`$ add to 1. Acme ends above the strike or below it, so the two contracts split every ending between them — the seed of Step 4.
 
 ### Step 3: the share half, and why its chance is the smaller one
 
@@ -125,24 +129,28 @@ The other payment: you hand over *a share*, in those same endings.
 
 A share is not a fixed number of dollars. It is worth **least** in exactly the endings where you give it away. So an average weighted by the share's own value counts the low endings for less than their plain chance.
 
-That weighting slides the whole bell curve right by one wiggle unit, $\sigma\sqrt{T}$. Same event, slid curve — and a curve slid right has less of itself below the strike. The chance becomes $N(-d_2 - \sigma\sqrt{T}) = N(-d_1) = 0.401294$, under the 0.480061 of Step 2, so the share half is $S\,e^{-qT}\,N(-d_1) = 39.334753$.
+That weighting slides the whole bell curve right by one wiggle unit, $`\sigma\sqrt{T}`$. Same event, slid curve — and a curve slid right has less of itself below the strike. The chance becomes $`N(-d_2 - \sigma\sqrt{T}) = N(-d_1) = 0.401294`$, under the 0.480061 of Step 2, so the share half is $`S\,e^{-qT}\,N(-d_1) = 39.334753`$.
 
-**$N(-d_1)$ is that same chance of exercise, weighed in shares instead of dollars.** It is not a rival probability of anything: the plain chance of exercise is $N(-d_2)$, and only in the pretend world. For the call this slide moved weight *into* the paying region and helped. Here it is the identical slide read from the other end, pricing the good news of a put: **you give the share away precisely when it is cheap.**
+**$`N(-d_1)`$ is that same chance of exercise, weighed in shares instead of dollars.** It is not a rival probability of anything: the plain chance of exercise is $`N(-d_2)`$, and only in the pretend world. For the call this slide moved weight *into* the paying region and helped. Here it is the identical slide read from the other end, pricing the good news of a put: **you give the share away precisely when it is cheap.**
 
 <details>
 <summary>Detailed proof: both tail integrals, written out</summary>
 
-In the pretend world $S_T = S\exp\big((r - q - \tfrac12\sigma^2)T + \sigma\sqrt{T}Z\big)$, with $Z$ a standard bell-curve draw of density $\varphi(z) = e^{-z^2/2}/\sqrt{2\pi}$, and $P = e^{-rT}\,\mathbb{E}\big[\max(K - S_T, 0)\big]$, where $\mathbb{E}$ averages over all endings.
+In the pretend world $`S_T = S\exp\big((r - q - \tfrac12\sigma^2)T + \sigma\sqrt{T}Z\big)`$, with $`Z`$ a standard bell-curve draw of density $`\varphi(z) = e^{-z^2/2}/\sqrt{2\pi}`$, and $`P = e^{-rT}\,\mathbb{E}\big[\max(K - S_T, 0)\big]`$, where $`\mathbb{E}`$ averages over all endings.
 
-**Where the payoff lives.** $S_T < K$ exactly when $\sigma\sqrt{T}\,Z < \ln(K/S) - (r - q - \tfrac12\sigma^2)T$. Since $\ln(K/S) = -\ln(S/K)$, dividing by $\sigma\sqrt{T}$ makes the right side $-d_2$:
-$$P = e^{-rT}\int_{-\infty}^{-d_2}\Big(K - S\,e^{(r - q - \frac12\sigma^2)T + \sigma\sqrt{T}z}\Big)\varphi(z)\,dz.$$
-Each half is finite on its own, lying between 0 and $K$.
+**Where the payoff lives.** $`S_T < K`$ exactly when $`\sigma\sqrt{T}\,Z < \ln(K/S) - (r - q - \tfrac12\sigma^2)T`$. Since $`\ln(K/S) = -\ln(S/K)`$, dividing by $`\sigma\sqrt{T}`$ makes the right side $`-d_2`$:
 
-**The cash half** is $K e^{-rT}\int_{-\infty}^{-d_2}\varphi(z)\,dz = K e^{-rT}N(-d_2)$, from the definition of $N$.
+$`\displaystyle P = e^{-rT}\int_{-\infty}^{-d_2}\Big(K - S\,e^{(r - q - \frac12\sigma^2)T + \sigma\sqrt{T}z}\Big)\varphi(z)\,dz.`$
 
-**The share half** needs the square completed, that is, $z^2 - 2az = (z-a)^2 - a^2$ with $a = \sigma\sqrt{T}$:
-$$e^{\sigma\sqrt{T}z}\,\varphi(z) = e^{\frac12\sigma^2 T}\,\varphi\big(z - \sigma\sqrt{T}\big).$$
-The stray $e^{\frac12\sigma^2 T}$ cancels the $-\tfrac12\sigma^2 T$ in the drift and $e^{-rT}$ cancels the $e^{rT}$, leaving $S e^{-qT}\int_{-\infty}^{-d_2}\varphi(z - \sigma\sqrt{T})\,dz$. Substitute $u = z - \sigma\sqrt{T}$: the upper limit becomes $-d_1$, the integral is $N(-d_1)$, and the share half is $S e^{-qT}N(-d_1)$.
+Each half is finite on its own, lying between 0 and $`K`$.
+
+**The cash half** is $`K e^{-rT}\int_{-\infty}^{-d_2}\varphi(z)\,dz = K e^{-rT}N(-d_2)`$, from the definition of $`N`$.
+
+**The share half** needs the square completed, that is, $`z^2 - 2az = (z-a)^2 - a^2`$ with $`a = \sigma\sqrt{T}`$:
+
+$`\displaystyle e^{\sigma\sqrt{T}z}\,\varphi(z) = e^{\frac12\sigma^2 T}\,\varphi\big(z - \sigma\sqrt{T}\big).`$
+
+The stray $`e^{\frac12\sigma^2 T}`$ cancels the $`-\tfrac12\sigma^2 T`$ in the drift and $`e^{-rT}`$ cancels the $`e^{rT}`$, leaving $`S e^{-qT}\int_{-\infty}^{-d_2}\varphi(z - \sigma\sqrt{T})\,dz`$. Substitute $`u = z - \sigma\sqrt{T}`$: the upper limit becomes $`-d_1`$, the integral is $`N(-d_1)`$, and the share half is $`S e^{-qT}N(-d_1)`$.
 
 Subtract. Landing exactly on the strike has zero chance, so the cut may read "below" or "at or below". The check does this integral by brute force and lands on the formula to eleven decimals.
 
@@ -152,24 +160,30 @@ Subtract. Landing exactly on the strike has zero chance, so the cut may read "be
 
 Cash half minus share half:
 
-$$P = K\,e^{-rT}\,N(-d_2) - S\,e^{-qT}\,N(-d_1) = 45.664833 - 39.334753 = 6.330081.$$
+```math
+P = K\,e^{-rT}\,N(-d_2) - S\,e^{-qT}\,N(-d_1) = 45.664833 - 39.334753 = 6.330081.
+```
 
-A shorter road uses no probability at all. For **any** number $x$,
+A shorter road uses no probability at all. For **any** number $`x`$,
 
-$$\max(K - x,\,0) - \max(x - K,\,0) = K - x.$$
+```math
+\max(K - x,\,0) - \max(x - K,\,0) = K - x.
+```
 
-Check it on each side of $K$. In words: own a put, sell a call at the same strike, and whatever Acme does you have agreed to sell one share for $K$. That is a forward sale, worth $K e^{-rT} - S e^{-qT}$ today — the cash you will receive, less the share you will give up, each pulled back. Average and discount the identity, and with $C$ for the call's premium out falls
+Check it on each side of $`K`$. In words: own a put, sell a call at the same strike, and whatever Acme does you have agreed to sell one share for $`K`$. That is a forward sale, worth $`K e^{-rT} - S e^{-qT}`$ today — the cash you will receive, less the share you will give up, each pulled back. Average and discount the identity, and with $`C`$ for the call's premium out falls
 
-$$P = C - S\,e^{-qT} + K\,e^{-rT} = 9.227006 - 98.019867 + 95.122942 = 6.330081.$$
+```math
+P = C - S\,e^{-qT} + K\,e^{-rT} = 9.227006 - 98.019867 + 95.122942 = 6.330081.
+```
 
-The same $6.33$, bell curve never mentioned. This is put-call parity: [Put-call parity](03-put-call-parity.md). As algebra it turns one formula into the other, by substituting $N(d_1) = 1 - N(-d_1)$ and $N(d_2) = 1 - N(-d_2)$ into the call.
+The same $`6.33`$, bell curve never mentioned. This is put-call parity: [Put-call parity](03-put-call-parity.md). As algebra it turns one formula into the other, by substituting $`N(d_1) = 1 - N(-d_1)`$ and $`N(d_2) = 1 - N(-d_2)`$ into the call.
 
 <details>
 <summary>Two reasons the minus goes inside $N$, not in front of it</summary>
 
-By definition: $N(x)$ is the chance of landing *below* $x$, and the put pays when the draw lands below $-d_2$, so $N(-d_2)$ is read straight off. The call is the one needing symmetry, to turn "above $-d_2$" into $N(d_2)$.
+By definition: $`N(x)`$ is the chance of landing *below* $`x`$, and the put pays when the draw lands below $`-d_2`$, so $`N(-d_2)`$ is read straight off. The call is the one needing symmetry, to turn "above $`-d_2`$" into $`N(d_2)`$.
 
-By size: $N$ never leaves the range 0 to 1, so $-N(d_2)$ sits between $-1$ and 0: a negative weight on cash that might arrive. Put that in the cash half alone and the price comes out deeply negative, and an option can be worth nothing, never less. Put a minus in front of both areas and the two flips cancel: out comes $9.227006$, the call's price — the put quoted as the wrong contract.
+By size: $`N`$ never leaves the range 0 to 1, so $`-N(d_2)`$ sits between $`-1`$ and 0: a negative weight on cash that might arrive. Put that in the cash half alone and the price comes out deeply negative, and an option can be worth nothing, never less. Put a minus in front of both areas and the two flips cancel: out comes $`9.227006`$, the call's price — the put quoted as the wrong contract.
 
 </details>
 
@@ -179,37 +193,37 @@ A third road exists, and this card does not take it. The hedge of Step 0, writte
 
 ## Worked numbers, by hand
 
-Acme: $S = 100$, $K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year.
+Acme: $`S = 100`$, $`K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$ year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $\ln(S/K)$ | $\ln(100/100) = \ln 1$ | $0$ |
-| pretend-world drift, $r - q - \tfrac12\sigma^2$ | $0.05 - 0.02 - 0.02$ | $0.01$ |
-| one wiggle unit, $\sigma\sqrt{T}$ | $0.20 \times 1$ | $0.20$ |
-| $d_2$ | $(0 + 0.01)/0.20$ | $0.05$ |
-| $d_1$ | $0.05 + 0.20$ | $0.25$ |
-| $N(-d_2)$, chance below, in cash | area left of $-0.05$ | $0.480061$ |
-| $N(-d_1)$, chance below, in shares | area left of $-0.25$ | $0.401294$ |
-| the strike, pulled back | $100 \times e^{-0.05}$ | $\$95.12$ |
-| the share, less its dividends | $100 \times e^{-0.02}$ | $\$98.02$ |
-| cash half, $K e^{-rT} N(-d_2)$ | $95.122942 \times 0.480061$ | $\$45.66$ |
-| share half, $S e^{-qT} N(-d_1)$ | $98.019867 \times 0.401294$ | $\$39.33$ |
-| **the premium** | $45.66 - 39.33$ | **$\$6.33$** |
-| break even at expiry | $100 - 6.33$ | $\$93.67$ |
+| $`\ln(S/K)`$ | $`\ln(100/100) = \ln 1`$ | $`0`$ |
+| pretend-world drift, $`r - q - \tfrac12\sigma^2`$ | $`0.05 - 0.02 - 0.02`$ | $`0.01`$ |
+| one wiggle unit, $`\sigma\sqrt{T}`$ | $`0.20 \times 1`$ | $`0.20`$ |
+| $`d_2`$ | $`(0 + 0.01)/0.20`$ | $`0.05`$ |
+| $`d_1`$ | $`0.05 + 0.20`$ | $`0.25`$ |
+| $`N(-d_2)`$, chance below, in cash | area left of $`-0.05`$ | $`0.480061`$ |
+| $`N(-d_1)`$, chance below, in shares | area left of $`-0.25`$ | $`0.401294`$ |
+| the strike, pulled back | $`100 \times e^{-0.05}`$ | $`\$95.12`$ |
+| the share, less its dividends | $`100 \times e^{-0.02}`$ | $`\$98.02`$ |
+| cash half, $`K e^{-rT} N(-d_2)`$ | $`95.122942 \times 0.480061`$ | $`\$45.66`$ |
+| share half, $`S e^{-qT} N(-d_1)`$ | $`98.019867 \times 0.401294`$ | $`\$39.33`$ |
+| **the premium** | $`45.66 - 39.33`$ | **$`\$6.33`$** |
+| break even at expiry | $`100 - 6.33`$ | $`\$93.67`$ |
 
-A year of cover against Acme falling costs $6.33, a little over six percent of the share. Note $N(-d_1) = 0.401294$ against $N(-d_2) = 0.480061$: the share-counted chance is the smaller one here, the larger one for a call.
+A year of cover against Acme falling costs $6.33, a little over six percent of the share. Note $`N(-d_1) = 0.401294`$ against $`N(-d_2) = 0.480061`$: the share-counted chance is the smaller one here, the larger one for a call.
 
 ### What breaks if you drop a piece
 
-Same put, correct answer $6.33$. The code computes each wrong number.
+Same put, correct answer $`6.33`$. The code computes each wrong number.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| The minus signs inside $N$ dropped | $-9.23$ | The call's price with a minus sign. A negative price is the tell |
-| $N(-d_1)$ on both halves | $-1.16$ | Cash counted in shares. Cash is worth the same in every ending |
-| $N(-d_2)$ on both halves | $-1.39$ | The share counted in dollars, though it is cheap where you hand it over |
-| The strike cash left undiscounted | $8.67$ | $100 due in a year credited as $100 today. 37% too dear |
-| Acme's 2% dividend ignored | $5.57$ | 12% too cheap. Dividends leave the share before you deliver it, raising a put and cutting a call |
+| The minus signs inside $`N`$ dropped | $`-9.23`$ | The call's price with a minus sign. A negative price is the tell |
+| $`N(-d_1)`$ on both halves | $`-1.16`$ | Cash counted in shares. Cash is worth the same in every ending |
+| $`N(-d_2)`$ on both halves | $`-1.39`$ | The share counted in dollars, though it is cheap where you hand it over |
+| The strike cash left undiscounted | $`8.67`$ | $100 due in a year credited as $100 today. 37% too dear |
+| Acme's 2% dividend ignored | $`5.57`$ | 12% too cheap. Dividends leave the share before you deliver it, raising a put and cutting a call |
 
 ---
 
@@ -241,7 +255,7 @@ riskless rate    the put at Acme $60, where selling now would fetch $40.00
 
 With no interest at all the put is worth **$41.21**, above the $40.00: the chance of a comeback, with nothing charged for the wait. Turn the rate up and the put sinks under the $40.00 and keeps going.
 
-The table below says the same in one line: the rate sensitivity is $-45.664834$, the cash half of the price, $45.664833$, with a minus sign in front and one year to run; the last digit is the bump's own error. A higher rate also drifts Acme up faster, cutting both chances, but those two shifts cancel exactly. So the discount on the cash half is a rate's whole grip on a put.
+The table below says the same in one line: the rate sensitivity is $`-45.664834`$, the cash half of the price, $`45.664833`$, with a minus sign in front and one year to run; the last digit is the bump's own error. A higher rate also drifts Acme up faster, cutting both chances, but those two shifts cancel exactly. So the discount on the cash half is a rate's whole grip on a put.
 
 ### The same put, across Acme's price and across the clock
 
@@ -266,11 +280,11 @@ Each is the change in the premium per one unit of the input nudged. What they me
 
 | Nudge | Trade name | This put | Reading |
 | --- | --- | --- | --- |
-| Acme up $1 | delta | $-0.393348$ | moves against the share, 39 cents per dollar |
-| Acme up $1, again | gamma | $0.018951$ | delta itself moves, about 2 cents per dollar |
-| volatility up 1.00 | vega | $37.901157$ | one point of jumpiness, about 38 cents |
-| one year of clock | theta | $-2.293569$ | at this strike the put melts as the year runs down |
-| the rate up 1.00 | rho | $-45.664834$ | minus the cash half: the rate's whole grip |
+| Acme up $1 | delta | $`-0.393348`$ | moves against the share, 39 cents per dollar |
+| Acme up $1, again | gamma | $`0.018951`$ | delta itself moves, about 2 cents per dollar |
+| volatility up 1.00 | vega | $`37.901157`$ | one point of jumpiness, about 38 cents |
+| one year of clock | theta | $`-2.293569`$ | at this strike the put melts as the year runs down |
+| the rate up 1.00 | rho | $`-45.664834`$ | minus the cash half: the rate's whole grip |
 
 ---
 
@@ -279,7 +293,7 @@ Each is the change in the premium per one unit of the input nudged. What they me
 Nothing below imports a function that already knows an answer; the bell-curve area is built by adding thin slices under the curve. The price is reached **four independent ways**:
 
 1. the formula;
-2. a brute-force average over the lower tail, whose edge is found by bisection (halving the search range until it closes on the strike) rather than read off $d_2$, so the run confirms $d_2$ too;
+2. a brute-force average over the lower tail, whose edge is found by bisection (halving the search range until it closes on the strike) rather than read off $`d_2`$, so the run confirms $`d_2`$ too;
 3. the call by its own upper-tail integral, turned into the put by parity;
 4. a 2,000-step up-or-down tree.
 
@@ -483,7 +497,7 @@ chart, profit after 6.33     33.67   23.67   13.67    3.67   -6.33   -6.33   -6.
 ALL CHECKS PASS
 ```
 
-Four roads, one price. The formula and the tail integral agree to eleven decimals, and the integral borrows no $d$, so that is evidence rather than restatement. The bisected edge lands on $-d_2$ to twelve decimals. Parity between the two integrated legs reproduces $S e^{-qT} - K e^{-rT}$ exactly as printed. The tree, which knows nothing of bell curves, is a tenth of a cent low and closes as it is given more steps.
+Four roads, one price. The formula and the tail integral agree to eleven decimals, and the integral borrows no $`d`$, so that is evidence rather than restatement. The bisected edge lands on $`-d_2`$ to twelve decimals. Parity between the two integrated legs reproduces $`S e^{-qT} - K e^{-rT}`$ exactly as printed. The tree, which knows nothing of bell curves, is a tenth of a cent low and closes as it is given more steps.
 
 ### Rust
 
@@ -717,15 +731,15 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves Steps 1 to 4 in the pretend world, for any positive $S$, $K$, $\sigma$ and $T$.
+Lean proves Steps 1 to 4 in the pretend world, for any positive $`S`$, $`K`$, $`\sigma`$ and $`T`$.
 
-- Take the put's payoff, averaged over all endings and pulled back to today. Then it equals $K e^{-rT} N(-d_2) - S e^{-qT} N(-d_1)$.
-- Take the cash half, $K$ collected only when Acme finishes below the strike. Then it is worth $K e^{-rT} N(-d_2)$ today.
-- Take the share half, one share handed over in those same endings. Then it is worth $S e^{-qT} N(-d_1)$ today.
-- Take the two chances of finishing below the strike. Then the one counted in shares is the smaller: $N(-d_1) < N(-d_2)$.
-- Take any number $x$. Then $N(-x) = 1 - N(x)$, and $\max(K - x, 0) - \max(x - K, 0) = K - x$.
-- Take the call at the same strike and date, priced the same way. Then $P = C - S e^{-qT} + K e^{-rT}$.
-- Take the hand arithmetic for Acme. Then the drift 0.01, $d_2 = 0.05$, $d_1 = 0.25$, both endings and break even all check out.
+- Take the put's payoff, averaged over all endings and pulled back to today. Then it equals $`K e^{-rT} N(-d_2) - S e^{-qT} N(-d_1)`$.
+- Take the cash half, $`K`$ collected only when Acme finishes below the strike. Then it is worth $`K e^{-rT} N(-d_2)`$ today.
+- Take the share half, one share handed over in those same endings. Then it is worth $`S e^{-qT} N(-d_1)`$ today.
+- Take the two chances of finishing below the strike. Then the one counted in shares is the smaller: $`N(-d_1) < N(-d_2)`$.
+- Take any number $`x`$. Then $`N(-x) = 1 - N(x)`$, and $`\max(K - x, 0) - \max(x - K, 0) = K - x`$.
+- Take the call at the same strike and date, priced the same way. Then $`P = C - S e^{-qT} + K e^{-rT}`$.
+- Take the hand arithmetic for Acme. Then the drift 0.01, $`d_2 = 0.05`$, $`d_1 = 0.25`$, both endings and break even all check out.
 
 The decimal values, the tree, the sensitivities and the deep put are left to the Python and Rust checks.
 
@@ -1075,10 +1089,10 @@ example : (100 : ℚ) - 633 / 100 = 9367 / 100 := by norm_num
 > **Expecting a put to be worth at least what exercising would fetch today.** That is no floor for a European put: at Acme $60 the ticket is worth $36.35 against the $40.00 exercising would fetch, because what you hold is $95.12 of future cash against a share, not $100 in hand. The floor is $36.31.
 >
 > Four smaller traps:
-> - **Dropping the minus signs inside $N$.** The call's $N(d_2)$ and $N(d_1)$ in the put's order price it at $-9.23$: the call's price with a minus sign, and a negative price is the tell. A minus written in front of $N$ instead is the same slip in disguise, since $N$ is never negative. Cash takes $-d_2$ and $e^{-rT}$; the share takes $-d_1$ and $e^{-qT}$.
-> - **Calling $N(-d_1)$ the chance of exercise.** That chance is $N(-d_2) = 0.480061$, and only in the pretend world. $N(-d_1) = 0.401294$ is the same event counted in shares, which is why it is smaller.
-> - **Thinking a borrowed-and-sold share collects its dividends.** It pays them: whoever sells a borrowed share owes every dividend to the lender while the loan runs. Get that backwards and the dividend drops out of the hedge, pricing this put at $5.57$ against the right $6.33$.
-> - **The sign of the hedge.** A put's delta is negative, $-0.393348$. A dealer who has *sold* this put gains when Acme rises, and hedges by selling short about 0.39 of a share; somebody who *owns* it hedges by buying. Reverse that and the "hedge" doubles the risk. Watch the units too: sigma is 0.20, not 20, time is in years, and the 5% is continuously compounded, not a quoted annual rate.
+> - **Dropping the minus signs inside $`N`$.** The call's $`N(d_2)`$ and $`N(d_1)`$ in the put's order price it at $`-9.23`$: the call's price with a minus sign, and a negative price is the tell. A minus written in front of $`N`$ instead is the same slip in disguise, since $`N`$ is never negative. Cash takes $`-d_2`$ and $`e^{-rT}`$; the share takes $`-d_1`$ and $`e^{-qT}`$.
+> - **Calling $`N(-d_1)`$ the chance of exercise.** That chance is $`N(-d_2) = 0.480061`$, and only in the pretend world. $`N(-d_1) = 0.401294`$ is the same event counted in shares, which is why it is smaller.
+> - **Thinking a borrowed-and-sold share collects its dividends.** It pays them: whoever sells a borrowed share owes every dividend to the lender while the loan runs. Get that backwards and the dividend drops out of the hedge, pricing this put at $`5.57`$ against the right $`6.33`$.
+> - **The sign of the hedge.** A put's delta is negative, $`-0.393348`$. A dealer who has *sold* this put gains when Acme rises, and hedges by selling short about 0.39 of a share; somebody who *owns* it hedges by buying. Reverse that and the "hedge" doubles the risk. Watch the units too: sigma is 0.20, not 20, time is in years, and the 5% is continuously compounded, not a quoted annual rate.
 
 ---
 
@@ -1091,15 +1105,15 @@ example : (100 : ℚ) - 633 / 100 = 9367 / 100 := by norm_num
 - **Corporate debt.** Merton's reading: a company's lenders own riskless debt *minus* a put on its assets, struck at what they are owed, and the credit spread is that put's cost as a yield: [Merton's model](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/01-merton-model-equity-as-a-call.md).
 
 > **Say it back**
-> A put is the right to sell one share at a fixed strike on a fixed date. Its price is the strike cash you might collect, pulled back to today and weighted by the chance you collect it, minus the share you might hand over, shrunk for its dividends and weighted by its own chance. Both chances sit on the lower tail, and both come from the call's $d_1$ and $d_2$ with the signs inside $N$ turned round: $N(-d_2)$ counts the chance in dollars, $N(-d_1)$ in shares, and the second is smaller because the share is cheap where you give it away. Parity reaches the same answer with no bell curve. Because the cash arrives only at expiry, a deep put can be worth less than exercising would fetch, with $K e^{-rT}$ as its ceiling.
+> A put is the right to sell one share at a fixed strike on a fixed date. Its price is the strike cash you might collect, pulled back to today and weighted by the chance you collect it, minus the share you might hand over, shrunk for its dividends and weighted by its own chance. Both chances sit on the lower tail, and both come from the call's $`d_1`$ and $`d_2`$ with the signs inside $`N`$ turned round: $`N(-d_2)`$ counts the chance in dollars, $`N(-d_1)`$ in shares, and the second is smaller because the share is cheap where you give it away. Parity reaches the same answer with no bell curve. Because the cash arrives only at expiry, a deep put can be worth less than exercising would fetch, with $`K e^{-rT}`$ as its ceiling.
 
 ---
 
 ## What this builds on
 
 - [Black–Scholes call](01-black-scholes-call.md): the hedge, the pretend world, and the two distances. This card reuses all three and turns the signs round.
-- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, the area $N(x)$ to its left, and the symmetry $N(-x) = 1 - N(x)$ that makes the mirror exact rather than approximate.
-- [Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md): why the *logarithm* of Acme's price is the bell-shaped thing, which turns "Acme below the strike" into "a draw below $-d_2$".
+- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, the area $`N(x)`$ to its left, and the symmetry $`N(-x) = 1 - N(x)`$ that makes the mirror exact rather than approximate.
+- [Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md): why the *logarithm* of Acme's price is the bell-shaped thing, which turns "Acme below the strike" into "a draw below $`-d_2`$".
 
 ## Where this goes next
 
@@ -1123,4 +1137,4 @@ Verified 19 Sep 2026: every link below resolves to the publisher's page.
 - Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). Adds the dividend yield this card uses, sets the European put's bounds, and says why early exercise bites for puts and not calls.
 - Stoll, Hans R. "The Relationship Between Put and Call Option Prices." *Journal of Finance* 24, no. 5 (1969): 801–824. [doi:10.1111/j.1540-6261.1969.tb01694.x](https://doi.org/10.1111/j.1540-6261.1969.tb01694.x). Parity, four years before Black-Scholes: Step 4's second road.
 - Cox, John C., Stephen A. Ross, and Mark Rubinstein. "Option Pricing: A Simplified Approach." *Journal of Financial Economics* 7, no. 3 (1979): 229–263. [doi:10.1016/0304-405X(79)90015-1](https://doi.org/10.1016/0304-405X(79)90015-1). The up-or-down tree, the code's fourth road.
-- Shreve, Steven E. *Stochastic Calculus for Finance II: Continuous-Time Models*. Springer, 2004. [Publisher page](https://link.springer.com/book/9780387401010). The pretend-world average, and the change of accounting unit behind $N(-d_1)$.
+- Shreve, Steven E. *Stochastic Calculus for Finance II: Continuous-Time Models*. Springer, 2004. [Publisher page](https://link.springer.com/book/9780387401010). The pretend-world average, and the change of accounting unit behind $`N(-d_1)`$.

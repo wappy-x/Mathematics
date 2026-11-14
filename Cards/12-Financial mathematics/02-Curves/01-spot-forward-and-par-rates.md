@@ -39,32 +39,36 @@ Top line: the forward rates, each one the rate for a single later year. Middle l
 
 ## The formula
 
-Notation first, in plain words. A small numeral set low and to the right of a rate names the date it belongs to. So $z_1$ is the rate from today out to one year and $z_2$ the rate from today out to two years. $z_T$ is the general one, said "z sub T".
+Notation first, in plain words. A small numeral set low and to the right of a rate names the date it belongs to. So $`z_1`$ is the rate from today out to one year and $`z_2`$ the rate from today out to two years. $`z_T`$ is the general one, said "z sub T".
 
-The letter $f$ is a rate for a stretch that starts later, and the two dates naming the stretch go with it. For example, $f_{1,2}$ is the rate for the year running from date 1 to date 2. As on [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md), $D(T)$ is the discount factor: today's price of one dollar paid at $T$.
+The letter $`f`$ is a rate for a stretch that starts later, and the two dates naming the stretch go with it. For example, $`f_{1,2}`$ is the rate for the year running from date 1 to date 2. As on [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md), $`D(T)`$ is the discount factor: today's price of one dollar paid at $`T`$.
 
-$$(1 + z_2)^2 \;=\; (1 + z_1)\,(1 + f_{1,2})$$
+```math
+(1 + z_2)^2 \;=\; (1 + z_1)\,(1 + f_{1,2})
+```
 
 **Read it aloud:** two years of growth at the two-year rate must come to exactly the same as one year of growth at the one-year rate followed by one year at the rate fixed today for the second year.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $z_T$, $z_1$, $z_2$ | the spot rate: one rate for money lent from today until year $T$ and repaid in one go | 4.0000 and 5.0000 percent | a later spot rate up lifts the forward for that year and every par rate reaching past it |
-| $f$, $f_{1,2}$ | the forward rate: the rate for a stretch beginning later, fixed today | 6.0096 percent for year two | it cannot move alone: a spot rate on one side of it must move too |
-| $D$, $D(T)$ | the discount factor: what one dollar paid at year $T$ costs today | 0.961538 at one year, 0.907029 at two | rates fall: a dearer future dollar is a cheaper loan |
-| $T$, $t$, $T_1$, $T_2$ | time from today, counted in whole years | 1 to 5 | the curve runs further out |
-| $c$, $c_n$ | the par rate: the coupon rate that prices a new $n$-year bond at exactly its face value | 4.9755 percent at two years | the bond is worth more than face, so it is no longer at par |
-| $A$, $A_n$, $A_2$ | the annuity factor: the discount factors for years 1 to $n$ added up | 1.868568 at two years | each coupon carries more weight, so the par rate needed falls |
-| $G$, $G_1$, $G_2$ | the growth factor: what one dollar in the bank becomes by a stated date | 1.040000 at one year, 1.102500 at two | the loan earns more, and the discount factor, its reciprocal, falls |
-| $n$ | the bond's maturity, in whole years | 5 | more coupons in the sum |
-| $N$ | the face value the bond repays at the end | 100 | coupons and face scale together, so the par rate does not move |
-| $e$ | the number continuous compounding is built on, from the discount-factor card | — | — |
+| $`z_T`$, $`z_1`$, $`z_2`$ | the spot rate: one rate for money lent from today until year $`T`$ and repaid in one go | 4.0000 and 5.0000 percent | a later spot rate up lifts the forward for that year and every par rate reaching past it |
+| $`f`$, $`f_{1,2}`$ | the forward rate: the rate for a stretch beginning later, fixed today | 6.0096 percent for year two | it cannot move alone: a spot rate on one side of it must move too |
+| $`D`$, $`D(T)`$ | the discount factor: what one dollar paid at year $`T`$ costs today | 0.961538 at one year, 0.907029 at two | rates fall: a dearer future dollar is a cheaper loan |
+| $`T`$, $`t`$, $`T_1`$, $`T_2`$ | time from today, counted in whole years | 1 to 5 | the curve runs further out |
+| $`c`$, $`c_n`$ | the par rate: the coupon rate that prices a new $`n`$-year bond at exactly its face value | 4.9755 percent at two years | the bond is worth more than face, so it is no longer at par |
+| $`A`$, $`A_n`$, $`A_2`$ | the annuity factor: the discount factors for years 1 to $`n`$ added up | 1.868568 at two years | each coupon carries more weight, so the par rate needed falls |
+| $`G`$, $`G_1`$, $`G_2`$ | the growth factor: what one dollar in the bank becomes by a stated date | 1.040000 at one year, 1.102500 at two | the loan earns more, and the discount factor, its reciprocal, falls |
+| $`n`$ | the bond's maturity, in whole years | 5 | more coupons in the sum |
+| $`N`$ | the face value the bond repays at the end | 100 | coupons and face scale together, so the par rate does not move |
+| $`e`$ | the number continuous compounding is built on, from the discount-factor card | — | — |
 
 The other two relations, each in one line of plain words.
 
-$$D(T) \;=\; \frac{1}{(1 + z_T)^T}, \qquad 1 + f_{t-1,\,t} \;=\; \frac{D(t-1)}{D(t)}, \qquad c_n \;=\; \frac{1 - D(n)}{A_n}, \qquad A_n = D(1) + \cdots + D(n)$$
+```math
+D(T) \;=\; \frac{1}{(1 + z_T)^T}, \qquad 1 + f_{t-1,\,t} \;=\; \frac{D(t-1)}{D(t)}, \qquad c_n \;=\; \frac{1 - D(n)}{A_n}, \qquad A_n = D(1) + \cdots + D(n)
+```
 
-The first says a spot rate and a price for a future dollar are the same fact written two ways. The second says the forward rate for one year is the ratio of two neighbouring prices. A dollar at year $t-1$ buys $D(t-1)/D(t)$ dollars at year $t$, so that ratio, less the original dollar, is the interest earned. The third says a new bond sells at face value when its coupons exactly pay for the wait. The wait costs one dollar less today's price, $D(n)$, of the dollar that comes back at the end.
+The first says a spot rate and a price for a future dollar are the same fact written two ways. The second says the forward rate for one year is the ratio of two neighbouring prices. A dollar at year $`t-1`$ buys $`D(t-1)/D(t)`$ dollars at year $`t`$, so that ratio, less the original dollar, is the interest earned. The third says a new bond sells at face value when its coupons exactly pay for the wait. The wait costs one dollar less today's price, $`D(n)`$, of the dollar that comes back at the end.
 
 **Conventions verified 14 Sep 2026.** This card compounds once a year and pays coupons once a year, so the arithmetic stays visible. Markets do neither uniformly. The United States Treasury publishes its official curve as a par yield curve. It fits the curve with a monotone convex method, a curve-fitting rule covered on [Between the pillars](05-curve-interpolation-and-shape.md), and quotes it on a bond-equivalent basis, which compounds twice a year. That description was last revised 18 February 2025. Swap markets, where two sides exchange fixed interest payments for payments that follow a market rate, quote par rates against their own payment calendars. Convert quotes to one compounding convention before comparing them.
 
@@ -112,21 +116,21 @@ A quote below 6.0096 percent is the same trade in reverse. Only 6.0096 leaves no
 <details>
 <summary>Detailed proof: the forward rate is forced, in both directions</summary>
 
-Write $G_1 = 1 + z_1$ for what one dollar becomes in a year and $G_2 = (1 + z_2)^2$ for what it becomes in two, both certain and both available for lending and for borrowing at the same terms. Let $x$ be the rate a dealer quotes today for the year from date 1 to date 2, deliverable in either direction in the size needed. Claim: no trade can cost nothing today and be certain to pay something later unless $1 + x = G_2/G_1$.
+Write $`G_1 = 1 + z_1`$ for what one dollar becomes in a year and $`G_2 = (1 + z_2)^2`$ for what it becomes in two, both certain and both available for lending and for borrowing at the same terms. Let $`x`$ be the rate a dealer quotes today for the year from date 1 to date 2, deliverable in either direction in the size needed. Claim: no trade can cost nothing today and be certain to pay something later unless $`1 + x = G_2/G_1`$.
 
-Suppose $1 + x > G_2 / G_1$. Borrow one dollar for two years and lend it for one year. Today's net cash flow is zero: the dollar borrowed is the dollar lent. At date 1, collect $G_1$ and place it with the dealer for the second year. At date 2, collect $G_1(1 + x)$ and repay $G_2$. What is left is $G_1(1 + x) - G_2$, which is positive by assumption, and no cash was ever committed. With 100 dollars, $G_1 = 1.04$ and a quote of 6.50 percent, that residue is 0.51.
+Suppose $`1 + x > G_2 / G_1`$. Borrow one dollar for two years and lend it for one year. Today's net cash flow is zero: the dollar borrowed is the dollar lent. At date 1, collect $`G_1`$ and place it with the dealer for the second year. At date 2, collect $`G_1(1 + x)`$ and repay $`G_2`$. What is left is $`G_1(1 + x) - G_2`$, which is positive by assumption, and no cash was ever committed. With 100 dollars, $`G_1 = 1.04`$ and a quote of 6.50 percent, that residue is 0.51.
 
-Suppose instead $1 + x < G_2 / G_1$. Run every leg the other way: lend one dollar for two years, borrow one dollar for one year, and at date 1 borrow $G_1$ from the dealer for the second year. Today's net cash flow is zero again. At date 2 the two-year loan pays $G_2$ and the dealer is owed $G_1(1 + x)$, leaving $G_2 - G_1(1 + x)$, positive by assumption.
+Suppose instead $`1 + x < G_2 / G_1`$. Run every leg the other way: lend one dollar for two years, borrow one dollar for one year, and at date 1 borrow $`G_1`$ from the dealer for the second year. Today's net cash flow is zero again. At date 2 the two-year loan pays $`G_2`$ and the dealer is owed $`G_1(1 + x)`$, leaving $`G_2 - G_1(1 + x)`$, positive by assumption.
 
-Both cases are ruled out, so $1 + x = G_2/G_1$, which rearranges to $(1 + z_2)^2 = (1 + z_1)(1 + f_{1,2})$. The argument needs the cash flows certain, the trading free in both directions, and the two loans available at one set of terms; it says nothing about what rates will actually be quoted at date 1.
+Both cases are ruled out, so $`1 + x = G_2/G_1`$, which rearranges to $`(1 + z_2)^2 = (1 + z_1)(1 + f_{1,2})`$. The argument needs the cash flows certain, the trading free in both directions, and the two loans available at one set of terms; it says nothing about what rates will actually be quoted at date 1.
 
 </details>
 
 ### Step 3: the same fact as prices, and then the whole chain
 
-Rates were convenient for the treasurer. Prices are more convenient for everything that comes after. One dollar due in a year costs $D(1) = 0.961538$ today, since 0.961538 placed at 4 percent grows to a dollar. One dollar due in two years costs $D(2) = 0.907029$.
+Rates were convenient for the treasurer. Prices are more convenient for everything that comes after. One dollar due in a year costs $`D(1) = 0.961538`$ today, since 0.961538 placed at 4 percent grows to a dollar. One dollar due in two years costs $`D(2) = 0.907029`$.
 
-Now the forward rate is a ratio of two prices, with no rate arithmetic at all: the same 0.961538 dollars today buys either one dollar at year 1 or $0.961538 / 0.907029 = 1.060096$ dollars at year 2. Selling the first and buying the second is the forward loan, and the interest earned is 6.0096 percent. The check builds the forward both ways and prints the same digits.
+Now the forward rate is a ratio of two prices, with no rate arithmetic at all: the same 0.961538 dollars today buys either one dollar at year 1 or $`0.961538 / 0.907029 = 1.060096`$ dollars at year 2. Selling the first and buying the second is the forward loan, and the interest earned is 6.0096 percent. The check builds the forward both ways and prints the same digits.
 
 Running the ratio along the whole curve gives one forward rate per year: 4.0000, 6.0096, 6.5072, 6.7051 and 6.8038 percent. Multiply those five multipliers together and the product is the growth from today to year 5; divide one dollar by it and the five-year discount factor 0.747258 comes back exactly. The spot rate is the average of the forwards up to its date, taken on the growth as in Step 1, which is why it lags behind them on a rising curve.
 
@@ -134,20 +138,20 @@ Running the ratio along the whole curve gives one forward rate per year: 4.0000,
 
 A new bond with face value 100 pays a coupon each year and repays the face at the end. Price it off the same curve: each coupon is worth the coupon times the discount factor for its year, and the face is worth 100 times the factor for the final year.
 
-Before solving: does such a coupon exist, and is it the only one? Each extra dollar of coupon lifts the price by $A_n$ dollars, and $A_n$ is positive whenever the discount factors are, so the price crosses 100 exactly once. The only failure is at the boundary, where a discount factor reaches zero or turns negative, which needs a spot rate of minus 100 percent or worse. The strictness runs backwards as well, so each par rate names exactly one spot rate.
+Before solving: does such a coupon exist, and is it the only one? Each extra dollar of coupon lifts the price by $`A_n`$ dollars, and $`A_n`$ is positive whenever the discount factors are, so the price crosses 100 exactly once. The only failure is at the boundary, where a discount factor reaches zero or turns negative, which needs a spot rate of minus 100 percent or worse. The strictness runs backwards as well, so each par rate names exactly one spot rate.
 
-Set that price equal to 100 and one unknown is left, the coupon. Adding the discount factors gives the annuity factor $A_2 = 0.961538 + 0.907029 = 1.868568$. The face costs 100 times 0.907029, so the coupons have to make up the rest: one dollar less 0.907029, which is 0.092971 per dollar of face. Spread across the annuity factor, the coupon rate is 0.092971 divided by 1.868568, or 4.9755 percent.
+Set that price equal to 100 and one unknown is left, the coupon. Adding the discount factors gives the annuity factor $`A_2 = 0.961538 + 0.907029 = 1.868568`$. The face costs 100 times 0.907029, so the coupons have to make up the rest: one dollar less 0.907029, which is 0.092971 per dollar of face. Spread across the annuity factor, the coupon rate is 0.092971 divided by 1.868568, or 4.9755 percent.
 
 That number sits below the two-year spot rate of 5.0000 percent, though above the one-year rate. A coupon bond pays part of its money early, and early money is discounted at the cheaper short rates. So the single coupon rate that prices the bond at face value comes out under the rate for the final date. On a falling curve it would sit above. The check also runs the ladder backwards, recovering all five spot rates from the five par rates alone, and lands on the original curve to twelve decimal places.
 
 <details>
 <summary>The same three rates under continuous compounding</summary>
 
-Continuous compounding replaces the multiplier $(1 + z_T)^T$ with $e$ raised to $z_T T$, and multiplying growth factors becomes adding exponents. The forward for the stretch from $T_1$ to $T_2$ then follows a straight-line rule. Take the rate times the time out to the far date, less the rate times the time out to the near date, and divide by the stretch between them. On this curve that is twice 5 percent less 4 percent, or 6.0000 percent, against the exact 6.0096. The gap is the convention, not an error, and it is why desks convert every quote to one convention before touching a curve.
+Continuous compounding replaces the multiplier $`(1 + z_T)^T`$ with $`e`$ raised to $`z_T T`$, and multiplying growth factors becomes adding exponents. The forward for the stretch from $`T_1`$ to $`T_2`$ then follows a straight-line rule. Take the rate times the time out to the far date, less the rate times the time out to the near date, and divide by the stretch between them. On this curve that is twice 5 percent less 4 percent, or 6.0000 percent, against the exact 6.0096. The gap is the convention, not an error, and it is why desks convert every quote to one convention before touching a curve.
 
 </details>
 
-One more road reaches the same place from the other end. Nothing above needed rates at all: given the five prices $D(1)$ to $D(5)$, spot, forward and par rates are three ways of reading them out. Getting those prices from a morning's market quotes, one maturity at a time, is [Bootstrapping](04-bootstrapping-the-discount-curve.md).
+One more road reaches the same place from the other end. Nothing above needed rates at all: given the five prices $`D(1)`$ to $`D(5)`$, spot, forward and par rates are three ways of reading them out. Getting those prices from a morning's market quotes, one maturity at a time, is [Bootstrapping](04-bootstrapping-the-discount-curve.md).
 
 ---
 
@@ -159,11 +163,11 @@ The screen's two quotes: 4 percent for one year, 5 percent for two.
 | --- | --- | --- |
 | one dollar for one year | 1 + 0.04 | 1.040000 |
 | one dollar for two years | 1.05 × 1.05 | 1.102500 |
-| price of a dollar at year 1, $D(1)$ | 1 ÷ 1.040000 | 0.961538 |
-| price of a dollar at year 2, $D(2)$ | 1 ÷ 1.102500 | 0.907029 |
+| price of a dollar at year 1, $`D(1)`$ | 1 ÷ 1.040000 | 0.961538 |
+| price of a dollar at year 2, $`D(2)`$ | 1 ÷ 1.102500 | 0.907029 |
 | the second year on its own | 1.102500 ÷ 1.040000 | 1.060096 |
 | **forward rate for year two** | 1.060096 − 1 | **6.0096 percent** |
-| annuity factor, $A_2$ | 0.961538 + 0.907029 | 1.868568 |
+| annuity factor, $`A_2`$ | 0.961538 + 0.907029 | 1.868568 |
 | what the coupons must cover | 1 − 0.907029 | 0.092971 |
 | **two-year par rate** | 0.092971 ÷ 1.868568 | **4.9755 percent** |
 
@@ -616,13 +620,13 @@ The two outputs match line for line, from different code taking the same three r
 
 Lean proves the forward, par and rising-curve rules for every curve meeting their conditions, and the card's two-year numbers.
 
-- Take spot rates $z_1$ and $z_2$ and a forward quote $f_{1,2}$, each open for lending and borrowing. Then free money is ruled out exactly when $(1 + z_2)^2 = (1 + z_1)(1 + f_{1,2})$.
+- Take spot rates $`z_1`$ and $`z_2`$ and a forward quote $`f_{1,2}`$, each open for lending and borrowing. Then free money is ruled out exactly when $`(1 + z_2)^2 = (1 + z_1)(1 + f_{1,2})`$.
 - Free money here is a trade that costs nothing today, nets nothing at year 1 and pays something certain at year 2.
-- Take discount factors $D(1)$ to $D(n)$, all positive, and a face value $N$ above zero. Then a bond paying coupon rate $c$ sells for $N$ exactly when $c = (1 - D(n))/A_n$.
+- Take discount factors $`D(1)`$ to $`D(n)`$, all positive, and a face value $`N`$ above zero. Then a bond paying coupon rate $`c`$ sells for $`N`$ exactly when $`c = (1 - D(n))/A_n`$.
 - So each maturity has one par rate, and only one.
-- Suppose the spot rate to year $t \ge 1$ is above minus 100 percent, and the rate to year $t + 1$ is higher. Then the forward rate for the year from $t$ to $t + 1$ is higher still.
+- Suppose the spot rate to year $`t \ge 1`$ is above minus 100 percent, and the rate to year $`t + 1`$ is higher. Then the forward rate for the year from $`t`$ to $`t + 1`$ is higher still.
 - With 4 and 5 percent, the forward for year two is exactly 25/416, or 6.0096 percent.
-- That forward also equals $D(1)/D(2) - 1$, a ratio of two discount factors less one.
+- That forward also equals $`D(1)/D(2) - 1`$, a ratio of two discount factors less one.
 - 100 dollars grows to 110.25 over two years and to 104.00 over one year.
 - The two-year par rate is exactly 1066/21425, or 4.9755 percent, and a two-year bond paying it prices at exactly 100.
 - That par rate sits above the one-year rate and below the two-year rate.
@@ -806,7 +810,7 @@ example : (2 * (5 : ℝ) / 100 - 4 / 100) = 6 / 100 ∧ (6 / 100 : ℝ) < 25 / 4
 
 ## What this builds on
 
-- [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): the discount factor $D(T)$, and why a rate is meaningless until its compounding convention is stated. Every conversion on this card is that one idea applied twice.
+- [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): the discount factor $`D(T)`$, and why a rate is meaningless until its compounding convention is stated. Every conversion on this card is that one idea applied twice.
 
 ## Where this goes next
 

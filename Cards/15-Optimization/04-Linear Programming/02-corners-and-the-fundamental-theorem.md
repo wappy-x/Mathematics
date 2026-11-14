@@ -30,48 +30,56 @@ Drawn to scale: tables across, chairs up. The shaded region is every plan that f
 
 [Linear programs](../../14-Applied%20and%20computational/05-Operations%20Research/01-modelling-with-linear-programs.md), in the computing wing, already showed by a picture that a best plan with two decisions sits at a corner. This card proves it for any number of decisions, and names the corners in algebra.
 
-The shelf writes a linear program in **standard form** ([Linear programs](01-linear-programs-and-polyhedra.md)): every limit an equation, every amount at least zero. Each "at most" limit gets a **slack**: the stock left over. The workshop's amounts become a list of five, $x = (t, c, s_{\text{timber}}, s_{\text{labour}}, s_{\text{finish}})$. This card maximises:
+The shelf writes a linear program in **standard form** ([Linear programs](01-linear-programs-and-polyhedra.md)): every limit an equation, every amount at least zero. Each "at most" limit gets a **slack**: the stock left over. The workshop's amounts become a list of five, $`x = (t, c, s_{\text{timber}}, s_{\text{labour}}, s_{\text{finish}})`$. This card maximises:
 
-$$\max_x\ c^T x \quad\text{subject to}\quad Ax = b,\quad x \ge 0$$
+```math
+\max_x\ c^T x \quad\text{subject to}\quad Ax = b,\quad x \ge 0
+```
 
-$$c = (19, 20, 0, 0, 0),\qquad A = \begin{pmatrix} 4 & 2 & 1 & 0 & 0\\ 3 & 1 & 0 & 1 & 0\\ 1 & 2 & 0 & 0 & 1\end{pmatrix},\qquad b = \begin{pmatrix}160\\120\\64\end{pmatrix}$$
+```math
+c = (19, 20, 0, 0, 0),\qquad A = \begin{pmatrix} 4 & 2 & 1 & 0 & 0\\ 3 & 1 & 0 & 1 & 0\\ 1 & 2 & 0 & 0 & 1\end{pmatrix},\qquad b = \begin{pmatrix}160\\120\\64\end{pmatrix}
+```
 
-The letter c does two jobs on this shelf. Alone, or in a plan (t, c), it counts chairs. In $c^T x$ it is the list of profits per unit, and $c^T x$ means $19t + 20c$ (the slacks earn nothing).
+The letter c does two jobs on this shelf. Alone, or in a plan (t, c), it counts chairs. In $`c^T x`$ it is the list of profits per unit, and $`c^T x`$ means $`19t + 20c`$ (the slacks earn nothing).
 
 Two definitions carry the theorem.
 
 - A **vertex** (a corner) is an allowed plan that is not the midpoint of two other allowed plans. Here the region has 4.
-- A **basic solution** comes from picking $m$ columns of $A$ (here $m = 3$, one per limit) whose square matrix $B$ can be inverted. Set every other amount to zero and solve $B x_B = b$ for the picked amounts $x_B$. The pick is a **basis**. If every amount comes out at least zero, it is a **basic feasible solution**.
+- A **basic solution** comes from picking $`m`$ columns of $`A`$ (here $`m = 3`$, one per limit) whose square matrix $`B`$ can be inverted. Set every other amount to zero and solve $`B x_B = b`$ for the picked amounts $`x_B`$. The pick is a **basis**. If every amount comes out at least zero, it is a **basic feasible solution**.
 
-The theorem, for a standard-form program whose $m$ rows are independent:
+The theorem, for a standard-form program whose $`m`$ rows are independent:
 
-$$x \text{ is a vertex} \iff x \text{ is a basic feasible solution}$$
+```math
+x \text{ is a vertex} \iff x \text{ is a basic feasible solution}
+```
 
-$$\text{some plan allowed, profit bounded above on the allowed plans} \implies p^* = \max\{\,c^T x : x \text{ a basic feasible solution}\,\}$$
+```math
+\text{some plan allowed, profit bounded above on the allowed plans} \implies p^* = \max\{\,c^T x : x \text{ a basic feasible solution}\,\}
+```
 
 **Read it aloud:** a corner and a basic feasible solution are the same thing; and if some plan is allowed and profit cannot grow without limit, the best profit is reached, and it is reached at one of the finitely many basic feasible solutions.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $c$ | tables and chairs made a week | 32 and 16 at the best plan | — (the method chooses them) |
-| $s$ | slacks: timber, labour and finish left over | 0 m, 8 h, 0 litres at the best plan | — |
-| $x$, $x_j$ | the plan as five amounts, $x \ge 0$ entry by entry; its $j$-th amount | (32, 16, 0, 8, 0) | — |
-| $c$, $c^T x$ | profit per unit of each amount; the week's profit, £ | (19, 20, 0, 0, 0); £928 | raise the table's profit far enough and the best corner moves to (40, 0) |
-| $A$ | stock used per unit: one row per limit, one column per amount | the 3 × 5 matrix above | hungrier products shrink the region |
-| $b$ | stock available | 160 m, 120 h, 64 litres | more stock moves the corners outwards |
-| $m$, $n$ | number of limits, number of amounts | 3 and 5 | up to $\binom{n}{m}$ bases, the number of ways to choose $m$ columns from $n$: 10 here |
-| $B$, $x_B$ | a basis: $m$ chosen columns of $A$; their amounts | columns $t$, $c$, $s_{\text{labour}}$; (32, 16, 8) | — |
-| $d$, $d_j$ | a direction: a change to the plan with $Ad = 0$; its $j$-th entry | (0.4, −0.2, −1.2, −1, 0) | — |
-| $\theta$ | how far to move along $d$ (in Step 2, a small positive distance) | 50, then 10 | — |
-| $y$ | prices on each stock, £ per unit | £3 a metre, £0 an hour, £7 a litre | — |
-| $p^*$ | the optimal value: the best week's profit | £928 | — |
+| $`t`$, $`c`$ | tables and chairs made a week | 32 and 16 at the best plan | — (the method chooses them) |
+| $`s`$ | slacks: timber, labour and finish left over | 0 m, 8 h, 0 litres at the best plan | — |
+| $`x`$, $`x_j`$ | the plan as five amounts, $`x \ge 0`$ entry by entry; its $`j`$-th amount | (32, 16, 0, 8, 0) | — |
+| $`c`$, $`c^T x`$ | profit per unit of each amount; the week's profit, £ | (19, 20, 0, 0, 0); £928 | raise the table's profit far enough and the best corner moves to (40, 0) |
+| $`A`$ | stock used per unit: one row per limit, one column per amount | the 3 × 5 matrix above | hungrier products shrink the region |
+| $`b`$ | stock available | 160 m, 120 h, 64 litres | more stock moves the corners outwards |
+| $`m`$, $`n`$ | number of limits, number of amounts | 3 and 5 | up to $`\binom{n}{m}`$ bases, the number of ways to choose $`m`$ columns from $`n`$: 10 here |
+| $`B`$, $`x_B`$ | a basis: $`m`$ chosen columns of $`A`$; their amounts | columns $`t`$, $`c`$, $`s_{\text{labour}}`$; (32, 16, 8) | — |
+| $`d`$, $`d_j`$ | a direction: a change to the plan with $`Ad = 0`$; its $`j`$-th entry | (0.4, −0.2, −1.2, −1, 0) | — |
+| $`\theta`$ | how far to move along $`d`$ (in Step 2, a small positive distance) | 50, then 10 | — |
+| $`y`$ | prices on each stock, £ per unit | £3 a metre, £0 an hour, £7 a litre | — |
+| $`p^*`$ | the optimal value: the best week's profit | £928 | — |
 
 ### When it holds
 
 - **Profit is a straight-line sum.** If a chair's profit falls by 50p for every chair made, the best plan is (34.75, 10.5), partway along the timber edge, earning £815.125, while the best corner earns £800. Corner-checking misses it.
 - **Profit cannot grow forever.** Remove all three stocks and the workshop could make any number of tables. There is then no best plan to find, and the theorem says nothing about corners being best.
-- **The region holds no whole straight line.** A half-plane, such as "tables plus twice chairs at most 64" with negative amounts allowed, has no corners at all. Standard form's $x \ge 0$ rules that out.
-- **The rows of $A$ are independent.** A limit that copies another (the timber row written twice) leaves no square matrix $B$ that can be inverted. Delete the copy first.
+- **The region holds no whole straight line.** A half-plane, such as "tables plus twice chairs at most 64" with negative amounts allowed, has no corners at all. Standard form's $`x \ge 0`$ rules that out.
+- **The rows of $`A`$ are independent.** A limit that copies another (the timber row written twice) leaves no square matrix $`B`$ that can be inverted. Delete the copy first.
 - **Fractions are allowed.** A corner can be fractional: cut labour to 64 hours and the best corner is (12.8, 25.6), as the first Try changing experiment shows. The workshop's own four corners happen to be whole. If only whole tables count, the best corner can be the wrong answer: that is the job of [Integer programs](../05-Integer%20and%20Combinatorial%20Optimisation/01-integer-programs-and-relaxations.md).
 
 ---
@@ -90,74 +98,74 @@ So every plan has a corner at least as good as itself. With finitely many corner
 
 ### Step 1: a basic feasible solution is a corner
 
-Take the basis $t$, $c$, $s_{\text{labour}}$. Setting $s_{\text{timber}} = s_{\text{finish}} = 0$ means timber and finish are used up. Solving gives (32, 16) with 8 hours of labour spare: the plan $x = (32, 16, 0, 8, 0)$.
+Take the basis $`t`$, $`c`$, $`s_{\text{labour}}`$. Setting $`s_{\text{timber}} = s_{\text{finish}} = 0`$ means timber and finish are used up. Solving gives (32, 16) with 8 hours of labour spare: the plan $`x = (32, 16, 0, 8, 0)`$.
 
-Suppose this plan were the midpoint of two allowed plans. Every amount of both is at least zero. Where the midpoint has a zero, both plans must have a zero too: a zero is the average of two numbers at least zero only if both are zero. So both plans are zero outside the basis, and both solve the same three equations $B x_B = b$. $B$ can be inverted, so those equations have one solution. So both plans equal $x$: it is not the midpoint of two *different* plans. It is a corner.
+Suppose this plan were the midpoint of two allowed plans. Every amount of both is at least zero. Where the midpoint has a zero, both plans must have a zero too: a zero is the average of two numbers at least zero only if both are zero. So both plans are zero outside the basis, and both solve the same three equations $`B x_B = b`$. $`B`$ can be inverted, so those equations have one solution. So both plans equal $`x`$: it is not the midpoint of two *different* plans. It is a corner.
 
 ### Step 2: a corner is a basic feasible solution
 
-Now go the other way. Take an allowed plan whose positive amounts have **dependent** columns: some combination of those columns adds to zero. That combination is a direction $d$ with $Ad = 0$ that touches only the positive amounts. Move a small distance $\theta$ both ways, to $x + \theta d$ and $x - \theta d$. Both still satisfy $Ax = b$, and both still have every amount at least zero, because only positive amounts moved, and only a little. So $x$ is the midpoint of two allowed plans and is not a corner.
+Now go the other way. Take an allowed plan whose positive amounts have **dependent** columns: some combination of those columns adds to zero. That combination is a direction $`d`$ with $`Ad = 0`$ that touches only the positive amounts. Move a small distance $`\theta`$ both ways, to $`x + \theta d`$ and $`x - \theta d`$. Both still satisfy $`Ax = b`$, and both still have every amount at least zero, because only positive amounts moved, and only a little. So $`x`$ is the midpoint of two allowed plans and is not a corner.
 
-So at a corner the positive amounts have independent columns. There are at most $m$ of them, since $A$ has $m$ rows. Add further columns until there are $m$ independent ones (possible, since the rows of $A$ are independent). That is a basis whose basic solution is $x$. Steps 1 and 2 together: **vertex if and only if basic feasible solution**.
+So at a corner the positive amounts have independent columns. There are at most $`m`$ of them, since $`A`$ has $`m`$ rows. Add further columns until there are $`m`$ independent ones (possible, since the rows of $`A`$ are independent). That is a basis whose basic solution is $`x`$. Steps 1 and 2 together: **vertex if and only if basic feasible solution**.
 
 ### Step 3: the reduction, worked from 10 tables and 10 chairs
 
-The proof of Step 0 is a procedure. The code runs it from $x = (10, 10, 100, 80, 34)$, profit £390.
+The proof of Step 0 is a procedure. The code runs it from $`x = (10, 10, 100, 80, 34)`$, profit £390.
 
-1. The five positive amounts have dependent columns. One direction is $d = (0.4, −0.2, −1.2, −1, 0)$: give up 0.2 of a chair for 0.4 of a table. Finish use stays the same, and timber and labour slack shrink. Profit rises at 3.6 per unit of move. Chairs hit zero after a move of 50, at (30, 0, 40, 30, 34), profit £570.
-2. Four positive amounts remain, still dependent. Now $d = (1, 0, −4, −3, −1)$: one more table, paid for out of the three slacks. Profit rises at 19 per unit. Timber and labour both run out after a move of 10, together. The plan is (40, 0, 0, 0, 24), profit £760.
+1. The five positive amounts have dependent columns. One direction is $`d = (0.4, −0.2, −1.2, −1, 0)`$: give up 0.2 of a chair for 0.4 of a table. Finish use stays the same, and timber and labour slack shrink. Profit rises at 3.6 per unit of move. Chairs hit zero after a move of 50, at (30, 0, 40, 30, 34), profit £570.
+2. Four positive amounts remain, still dependent. Now $`d = (1, 0, −4, −3, −1)`$: one more table, paid for out of the three slacks. Profit rises at 19 per unit. Timber and labour both run out after a move of 10, together. The plan is (40, 0, 0, 0, 24), profit £760.
 
 Two positive amounts remain, with independent columns: a corner. The reduction promised a corner at least as good as £390, and it delivered £760. It did not promise the best corner. To get £928 the code compares all the corners; [The simplex method](03-simplex-method.md) instead walks from corner to better corner.
 
 <details>
 <summary>Detailed proof: a bounded linear program has a best basic feasible solution</summary>
 
-Let $x$ be any allowed plan of $\max c^T x$ subject to $Ax = b$, $x \ge 0$, with profit bounded above on the allowed plans. Call the positions where $x$ is positive its **support**.
+Let $`x`$ be any allowed plan of $`\max c^T x`$ subject to $`Ax = b`$, $`x \ge 0`$, with profit bounded above on the allowed plans. Call the positions where $`x`$ is positive its **support**.
 
-If the columns of $A$ on the support are independent, $x$ is already basic feasible (Step 2's last paragraph builds the basis). Otherwise pick a nonzero $d$ with $Ad = 0$ and $d_j = 0$ off the support. Replace $d$ by $-d$ if needed so that $c^T d \ge 0$; if $c^T d = 0$, pick the sign that gives $d$ at least one negative entry (possible because $d \ne 0$).
+If the columns of $`A`$ on the support are independent, $`x`$ is already basic feasible (Step 2's last paragraph builds the basis). Otherwise pick a nonzero $`d`$ with $`Ad = 0`$ and $`d_j = 0`$ off the support. Replace $`d`$ by $`-d`$ if needed so that $`c^T d \ge 0`$; if $`c^T d = 0`$, pick the sign that gives $`d`$ at least one negative entry (possible because $`d \ne 0`$).
 
-Now $d$ has a negative entry. If not, $d \ge 0$ and $c^T d > 0$; then $x + \theta d$ is allowed for every $\theta \ge 0$, with profit $c^T x + \theta\, c^T d$ growing without limit, which contradicts the bound.
+Now $`d`$ has a negative entry. If not, $`d \ge 0`$ and $`c^T d > 0`$; then $`x + \theta d`$ is allowed for every $`\theta \ge 0`$, with profit $`c^T x + \theta\, c^T d`$ growing without limit, which contradicts the bound.
 
-Set $\theta = \min\{x_j / (-d_j) : d_j < 0\}$, which is positive, and move to $x + \theta d$. It satisfies $A(x + \theta d) = b$; every amount stays at least zero by the choice of $\theta$; at least one amount on the support becomes zero; and its profit is $c^T x + \theta\, c^T d \ge c^T x$.
+Set $`\theta = \min\{x_j / (-d_j) : d_j < 0\}`$, which is positive, and move to $`x + \theta d`$. It satisfies $`A(x + \theta d) = b`$; every amount stays at least zero by the choice of $`\theta`$; at least one amount on the support becomes zero; and its profit is $`c^T x + \theta\, c^T d \ge c^T x`$.
 
-The support shrinks at every move, so after at most $n$ moves its columns are independent and the plan is a basic feasible solution earning at least $c^T x$.
+The support shrinks at every move, so after at most $`n`$ moves its columns are independent and the plan is a basic feasible solution earning at least $`c^T x`$.
 
-There are at most $\binom{n}{m}$ bases, so finitely many basic feasible solutions. Take the one with the largest profit. Every allowed plan earns at most what its own reduction reaches, which is at most that largest profit. So it is a best plan: the maximum exists and is attained at a basic feasible solution, which by Steps 1 and 2 is a vertex. If no plan is allowed at all, there are no basic feasible solutions either, and the program is infeasible.
+There are at most $`\binom{n}{m}`$ bases, so finitely many basic feasible solutions. Take the one with the largest profit. Every allowed plan earns at most what its own reduction reaches, which is at most that largest profit. So it is a best plan: the maximum exists and is attained at a basic feasible solution, which by Steps 1 and 2 is a vertex. If no plan is allowed at all, there are no basic feasible solutions either, and the program is infeasible.
 
-The same proof with "minimise" and $c^T d \le 0$ gives the minimising version. No compactness argument is needed: the maximum exists because the list is finite.
+The same proof with "minimise" and $`c^T d \le 0`$ gives the minimising version. No compactness argument is needed: the maximum exists because the list is finite.
 
 </details>
 
 ### Step 4: list the bases, and keep the ones that fit
 
-With $m = 3$ and $n = 5$ there are 10 ways to pick three columns. All 10 give an invertible $B$ here. Each gives a basic solution: two amounts set to zero means two limit lines crossing in the picture. Four of the ten have a negative amount, so they fall outside the region. For example, columns $t$, $c$, $s_{\text{timber}}$ give (35.2, 14.4) with $s_{\text{timber}} = −9.6$: 9.6 m more timber than exists. Six fit.
+With $`m = 3`$ and $`n = 5`$ there are 10 ways to pick three columns. All 10 give an invertible $`B`$ here. Each gives a basic solution: two amounts set to zero means two limit lines crossing in the picture. Four of the ten have a negative amount, so they fall outside the region. For example, columns $`t`$, $`c`$, $`s_{\text{timber}}`$ give (35.2, 14.4) with $`s_{\text{timber}} = −9.6`$: 9.6 m more timber than exists. Six fit.
 
-Six bases, but four corners. The corner (40, 0) comes from three different bases, because three limits are tight there at once: chairs at zero, timber used up, labour used up. Such a corner is **degenerate**: a basic feasible solution with fewer than $m$ positive amounts (here two: tables, and 24 litres of finish spare). Every corner has at least one basis; a corner with exactly $m$ positive amounts has exactly one. Degenerate corners matter to the simplex method, which can change basis without moving.
+Six bases, but four corners. The corner (40, 0) comes from three different bases, because three limits are tight there at once: chairs at zero, timber used up, labour used up. Such a corner is **degenerate**: a basic feasible solution with fewer than $`m`$ positive amounts (here two: tables, and 24 litres of finish spare). Every corner has at least one basis; a corner with exactly $`m`$ positive amounts has exactly one. Degenerate corners matter to the simplex method, which can change basis without moving.
 
 ### Step 5: the certificate
 
 Listing every basic feasible solution, as above, proves £928 is best, given the theorem. A second proof needs no list.
 
-Put a price on each stock: £3 a metre of timber, £0 an hour of labour, £7 a litre of finish. A table's inputs are then worth $4 \times 3 + 3 \times 0 + 1 \times 7 = 19$, its full profit, and a chair's $2 \times 3 + 1 \times 0 + 2 \times 7 = 20$, its full profit too.
+Put a price on each stock: £3 a metre of timber, £0 an hour of labour, £7 a litre of finish. A table's inputs are then worth $`4 \times 3 + 3 \times 0 + 1 \times 7 = 19`$, its full profit, and a chair's $`2 \times 3 + 1 \times 0 + 2 \times 7 = 20`$, its full profit too.
 
-So any plan earns at most the value of the stock it uses, which is at most the value of all the stock: $480 + 0 + 448 = 928$. The corner (32, 16) earns exactly that. Where such prices come from, and why they always exist, is [LP duality](04-lp-duality-and-complementary-slackness.md).
+So any plan earns at most the value of the stock it uses, which is at most the value of all the stock: $`480 + 0 + 448 = 928`$. The corner (32, 16) earns exactly that. Where such prices come from, and why they always exist, is [LP duality](04-lp-duality-and-complementary-slackness.md).
 
 ---
 
 ## Worked numbers, by hand
 
-The best basis keeps $t$, $c$ and $s_{\text{labour}}$, so timber and finish are used up.
+The best basis keeps $`t`$, $`c`$ and $`s_{\text{labour}}`$, so timber and finish are used up.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| timber, used up | $4t + 2c = 160$ | — |
-| finish, used up | $t + 2c = 64$ | — |
-| subtract the two | $3t = 160 - 64 = 96$ | $t = 32$ |
-| back into finish | $2c = 64 - 32 = 32$ | $c = 16$ |
-| labour left over | $120 - 3 \times 32 - 16$ | 8 hours |
-| profit | $19 \times 32 + 20 \times 16 = 608 + 320$ | £928 |
+| timber, used up | $`4t + 2c = 160`$ | — |
+| finish, used up | $`t + 2c = 64`$ | — |
+| subtract the two | $`3t = 160 - 64 = 96`$ | $`t = 32`$ |
+| back into finish | $`2c = 64 - 32 = 32`$ | $`c = 16`$ |
+| labour left over | $`120 - 3 \times 32 - 16`$ | 8 hours |
+| profit | $`19 \times 32 + 20 \times 16 = 608 + 320`$ | £928 |
 | the other corners | (0, 0), (40, 0), (0, 32) | £0, £760, £640 |
-| the price cap | $3 \times 160 + 0 \times 120 + 7 \times 64 = 480 + 0 + 448$ | £928 |
+| the price cap | $`3 \times 160 + 0 \times 120 + 7 \times 64 = 480 + 0 + 448`$ | £928 |
 | **best plan** | the best corner meets the cap | **32 tables, 16 chairs: £928 a week** |
 
 The workshop should use all its timber and finish and leave 8 hours of labour idle; the stock prices prove no plan earns more.
@@ -585,10 +593,10 @@ Lean proves the theorem in general, for every standard-form program with fractio
 - Take a standard-form program whose rows are independent. If some plan is allowed and profit is bounded above, a best plan exists.
 - That best plan is a corner, and it is also a basic feasible solution.
 - When the rows are independent, a plan is a corner exactly when it is a basic feasible solution.
-- There are finitely many basic feasible solutions: at most $\binom{n}{m}$, the number of ways to choose $m$ columns from $n$.
+- There are finitely many basic feasible solutions: at most $`\binom{n}{m}`$, the number of ways to choose $`m`$ columns from $`n`$.
 - The workshop has four corners: (32, 16, 0, 8, 0), (40, 0, 0, 0, 24), (0, 32, 96, 88, 0) and (0, 0, 160, 120, 64). Each meets all three limits exactly.
-- The best basis, columns $t$, $c$ and $s_{\text{labour}}$, gives a square matrix $B$ that can be inverted.
-- The corners earn £0, £760, £928 and £640. The hand solve gives $t = 32$, $c = 16$ and 8 hours of labour spare.
+- The best basis, columns $`t`$, $`c`$ and $`s_{\text{labour}}`$, gives a square matrix $`B`$ that can be inverted.
+- The corners earn £0, £760, £928 and £640. The hand solve gives $`t = 32`$, $`c = 16`$ and 8 hours of labour spare.
 - Prices of £3, £0 and £7 value a table's inputs at 19 and a chair's at 20, and cap profit at £928.
 - Skipping the sign check: (0, 120, −80, 0, −176) solves the limits, but needs 240 m of timber and "earns" £2,400.
 - With profit 10t + 20c, the corners (0, 32) and (32, 16) and the midpoint (16, 24) each earn £640.
@@ -1072,19 +1080,19 @@ example : Nat.choose 5 3 = 10 := by decide
 
 ## Where you meet it in real life
 
-- **Production and blending plans.** A plan from a corner has at most $m$ positive amounts, counting slacks. A feed mill blending dozens of ingredients under a handful of nutrient rules gets a corner blend that uses no more ingredients than there are rules. The workshop's best plan has three positive amounts: tables, chairs and spare labour.
+- **Production and blending plans.** A plan from a corner has at most $`m`$ positive amounts, counting slacks. A feed mill blending dozens of ingredients under a handful of nutrient rules gets a corner blend that uses no more ingredients than there are rules. The workshop's best plan has three positive amounts: tables, chairs and spare labour.
 - **Solver reports.** Linear programming software reports a **basis**: for every amount, whether it is basic or held at a bound. That status is the algebraic name of the corner this card defines, and it is what a solver saves to restart quickly after a small change to the data.
 - **Pricing the stock.** The £3 and £7 that certify £928 are the prices [Shadow prices](05-sensitivity-and-shadow-prices.md) reads as the value of one more metre of timber or litre of finish, and the price on labour is £0 because labour is left over at the best corner.
 - **Whole-number plans.** Integer solvers solve a linear program at each branch of a search, and each answer is a corner ([Integer programs](../05-Integer%20and%20Combinatorial%20Optimisation/01-integer-programs-and-relaxations.md)).
 
 > **Say it back**
-> A corner of the allowed plans is a plan that is not the midpoint of two others. In algebra it is a basic feasible solution: choose $m$ amounts, set the rest to zero, solve the limits as equations, and keep the answer if nothing is negative. Any plan that is not a corner can slide along a direction that keeps every limit balanced, without losing profit, until one more amount hits zero; so some corner is at least as good. With finitely many corners, a linear program whose profit is bounded has a best corner. For the workshop, 10 bases give 6 that fit and 4 corners, and the best is 32 tables and 16 chairs, £928, matched by a £928 price cap.
+> A corner of the allowed plans is a plan that is not the midpoint of two others. In algebra it is a basic feasible solution: choose $`m`$ amounts, set the rest to zero, solve the limits as equations, and keep the answer if nothing is negative. Any plan that is not a corner can slide along a direction that keeps every limit balanced, without losing profit, until one more amount hits zero; so some corner is at least as good. With finitely many corners, a linear program whose profit is bounded has a best corner. For the workshop, 10 bases give 6 that fit and 4 corners, and the best is 32 tables and 16 chairs, £928, matched by a £928 price cap.
 
 ---
 
 ## What this builds on
 
-- [Linear programs](01-linear-programs-and-polyhedra.md): standard form $c^T x$, $Ax = b$, $x \ge 0$, slack amounts, and the region as a polyhedron (a shape cut out by flat walls).
+- [Linear programs](01-linear-programs-and-polyhedra.md): standard form $`c^T x`$, $`Ax = b`$, $`x \ge 0`$, slack amounts, and the region as a polyhedron (a shape cut out by flat walls).
 - [Linear programs](../../14-Applied%20and%20computational/05-Operations%20Research/01-modelling-with-linear-programs.md): the computing wing's picture argument that a best plan of two decisions sits at a corner, which this card proves for any number of decisions.
 
 ## Where this goes next
@@ -1093,7 +1101,7 @@ example : Nat.choose 5 3 = 10 := by decide
 - Krein-Milman (not written yet): every compact convex set is the closed convex hull of its corners, the same fact for shapes with infinitely many corners. A convex set holds the straight segment between any two of its points; the convex hull of the corners is every weighted average of them, and "closed" adds the limits of those averages. In finite dimensions, where compact means closed and bounded, it is Minkowski's theorem, and the plain convex hull is enough.
 - [LP duality](04-lp-duality-and-complementary-slackness.md): why the stock prices that certify £928 always exist.
 
-The theorem cuts the search to a finite list, but the list grows as $\binom{n}{m}$; how to reach the best corner without listing them all is the question the simplex method answers.
+The theorem cuts the search to a finite list, but the list grows as $`\binom{n}{m}`$; how to reach the best corner without listing them all is the question the simplex method answers.
 
 ---
 

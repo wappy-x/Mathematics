@@ -36,42 +36,50 @@ First line: the x^0 series, leaving height 1 with a finite slope. Second line: t
 
 Divide the equation by its leading coefficient so the bend y'' stands alone:
 
-$$y'' + p(x)\,y' + q(x)\,y = 0, \qquad \text{wire: } p(x) = q(x) = \frac{1}{2x}.$$
+```math
+y'' + p(x)\,y' + q(x)\,y = 0, \qquad \text{wire: } p(x) = q(x) = \frac{1}{2x}.
+```
 
-The point x = 0 is **ordinary** when $p$ and $q$ are power series there. It is a **regular singular point** (the mild kind) when they are not, but $P(x) = x\,p(x)$ and $Q(x) = x^2 q(x)$ are. Anything worse is an **irregular singular point**. For the wire, $P = 1/2$ and $Q = x/2$: regular.
+The point x = 0 is **ordinary** when $`p`$ and $`q`$ are power series there. It is a **regular singular point** (the mild kind) when they are not, but $`P(x) = x\,p(x)`$ and $`Q(x) = x^2 q(x)`$ are. Anything worse is an **irregular singular point**. For the wire, $`P = 1/2`$ and $`Q = x/2`$: regular.
 
 At a regular singular point, try
 
-$$y = x^r \sum_{n=0}^{\infty} a_n x^n, \qquad a_0 \ne 0.$$
+```math
+y = x^r \sum_{n=0}^{\infty} a_n x^n, \qquad a_0 \ne 0.
+```
 
 The lowest power of x gives the **indicial equation** (the equation for the starting power):
 
-$$I(r) = r(r-1) + P_0\, r + Q_0 = 0.$$
+```math
+I(r) = r(r-1) + P_0\, r + Q_0 = 0.
+```
 
 **Read it aloud:** the starting power must make the lowest-order terms cancel.
 
 Each later power gives the **recurrence**, one coefficient from the ones before:
 
-$$I(r+n)\,a_n = -\sum_{k=1}^{n}\big[(r+n-k)P_k + Q_k\big]\,a_{n-k}.$$
+```math
+I(r+n)\,a_n = -\sum_{k=1}^{n}\big[(r+n-k)P_k + Q_k\big]\,a_{n-k}.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $s$ | distance from the tip; $s = \sqrt{2x}$ (Step 4) | 0 to 5 | the curves oscillate |
-| $y$, $y_1$, $y_2$ | temperature; the two independent solutions | $\cos\sqrt{2x}$, $\sin\sqrt{2x}/\sqrt 2$ | — |
-| $p$, $q$ | coefficients once $y''$ stands alone | both $1/(2x)$ | — |
-| $P$, $Q$, $P_0$, $Q_0$, $P_k$, $Q_k$, $R$ | $x\,p$, $x^2 q$, their series coefficients, and those series' radius | $P_0 = 1/2$, $Q_0 = 0$; $R$ unlimited | the series reach further |
-| $r$, $r_1$, $r_2$, $I$, $N$ | starting power; the indicial polynomial's roots, larger first; a whole gap | roots 1/2 and 0 | the gap decides the logarithm |
-| $a_n$, $a_0$, $a_N$, $b_n$, $n$ | coefficients of the first and second series; the index | $a_1 = -1$ when $r = 0$ | — |
-| $c$ | weight of the logarithm in the second solution | 0 for the wire | nonzero if the recurrence jams |
-| $W$ | the Wronskian $y_1 y_2' - y_1' y_2$; nonzero means independent | $\tfrac12 x^{-1/2}$ | — |
+| $`x`$, $`s`$ | distance from the tip; $`s = \sqrt{2x}`$ (Step 4) | 0 to 5 | the curves oscillate |
+| $`y`$, $`y_1`$, $`y_2`$ | temperature; the two independent solutions | $`\cos\sqrt{2x}`$, $`\sin\sqrt{2x}/\sqrt 2`$ | — |
+| $`p`$, $`q`$ | coefficients once $`y''`$ stands alone | both $`1/(2x)`$ | — |
+| $`P`$, $`Q`$, $`P_0`$, $`Q_0`$, $`P_k`$, $`Q_k`$, $`R`$ | $`x\,p`$, $`x^2 q`$, their series coefficients, and those series' radius | $`P_0 = 1/2`$, $`Q_0 = 0`$; $`R`$ unlimited | the series reach further |
+| $`r`$, $`r_1`$, $`r_2`$, $`I`$, $`N`$ | starting power; the indicial polynomial's roots, larger first; a whole gap | roots 1/2 and 0 | the gap decides the logarithm |
+| $`a_n`$, $`a_0`$, $`a_N`$, $`b_n`$, $`n`$ | coefficients of the first and second series; the index | $`a_1 = -1`$ when $`r = 0`$ | — |
+| $`c`$ | weight of the logarithm in the second solution | 0 for the wire | nonzero if the recurrence jams |
+| $`W`$ | the Wronskian $`y_1 y_2' - y_1' y_2`$; nonzero means independent | $`\tfrac12 x^{-1/2}`$ | — |
 
-The second solution takes one of three shapes, with $r_1 \ge r_2$ the real roots:
+The second solution takes one of three shapes, with $`r_1 \ge r_2`$ the real roots:
 
 | Gap between the roots | Second solution |
 | --- | --- |
-| not a whole number | $y_2 = x^{r_2}\sum b_n x^n$ |
-| zero (a repeated root) | $y_2 = y_1 \ln x + x^{r_1}\sum b_n x^n$ |
-| a whole number $N \ge 1$ | $y_2 = c\,y_1 \ln x + x^{r_2}\sum b_n x^n$, and $c$ may be 0 |
+| not a whole number | $`y_2 = x^{r_2}\sum b_n x^n`$ |
+| zero (a repeated root) | $`y_2 = y_1 \ln x + x^{r_1}\sum b_n x^n`$ |
+| a whole number $`N \ge 1`$ | $`y_2 = c\,y_1 \ln x + x^{r_2}\sum b_n x^n`$, and $`c`$ may be 0 |
 
 ### When it holds
 
@@ -86,51 +94,51 @@ The second solution takes one of three shapes, with $r_1 \ge r_2$ the real roots
 
 ### Step 0: near the point, the equation is nearly Cauchy-Euler
 
-Multiply by x^2: x^2 y'' + x P(x) y' + Q(x) y = 0. Freeze $P$ and $Q$ at the point and this is a Cauchy-Euler equation, solved by x^r. The rest carries extra powers of x, so correct x^r with a power series.
+Multiply by x^2: x^2 y'' + x P(x) y' + Q(x) y = 0. Freeze $`P`$ and $`Q`$ at the point and this is a Cauchy-Euler equation, solved by x^r. The rest carries extra powers of x, so correct x^r with a power series.
 
 ### Step 1: the lowest power gives the indicial equation
 
-Put $y = \sum a_n x^{n+r}$ in. A term $a_n x^{n+r}$ turns x^2 y'' into $(n+r)(n+r-1)a_n x^{n+r}$ and x y' into $(n+r)a_n x^{n+r}$. The lowest power, x^r, collects only $a_0$, with coefficient $I(r)\,a_0$. Since $a_0 \ne 0$, $I(r) = 0$. For the wire, $I(r) = r(r - 1/2)$: roots 0 and 1/2.
+Put $`y = \sum a_n x^{n+r}`$ in. A term $`a_n x^{n+r}`$ turns x^2 y'' into $`(n+r)(n+r-1)a_n x^{n+r}`$ and x y' into $`(n+r)a_n x^{n+r}`$. The lowest power, x^r, collects only $`a_0`$, with coefficient $`I(r)\,a_0`$. Since $`a_0 \ne 0`$, $`I(r) = 0`$. For the wire, $`I(r) = r(r - 1/2)`$: roots 0 and 1/2.
 
 ### Step 2: every later power gives one coefficient
 
-The power $x^{r+n}$ collects $I(r+n)\,a_n$ plus each earlier $a_{n-k}$ times $P_k$ and $Q_k$. Setting the total to 0 is the recurrence; where $I(r+n) \ne 0$ it hands over $a_n$. On the wire only $Q_1 = 1/2$ is nonzero; for $r = 1/2$ the coefficients run 1, −1/3, 1/30, −1/630, 1/22680.
+The power $`x^{r+n}`$ collects $`I(r+n)\,a_n`$ plus each earlier $`a_{n-k}`$ times $`P_k`$ and $`Q_k`$. Setting the total to 0 is the recurrence; where $`I(r+n) \ne 0`$ it hands over $`a_n`$. On the wire only $`Q_1 = 1/2`$ is nonzero; for $`r = 1/2`$ the coefficients run 1, −1/3, 1/30, −1/630, 1/22680.
 
 ### Step 3: the series converge, so the formal answer is a function
 
-The denominators $I(r+n)$ grow like n^2 while the right side grows only like n, so the series converge for 0 < x < R and may be differentiated term by term. On the wire they converge for every x.
+The denominators $`I(r+n)`$ grow like n^2 while the right side grows only like n, so the series converge for 0 < x < R and may be differentiated term by term. On the wire they converge for every x.
 
 <details>
 <summary>Detailed proof: the larger root's series converges</summary>
 
-Let $d = r_1 - r_2 \ge 0$, so $I(r_1 + n) = n(n + d) \ge n^2$. Fix ρ < R; the series for P and Q converge at ρ, so some M bounds $|P_k|\rho^k$ and $|Q_k|\rho^k$. As $|r_1 + n - k| + 1 \le |r_1| + n \le (|r_1| + 1)\,n$ for k ≥ 1, the recurrence gives, with $K = M(|r_1| + 1)$,
+Let $`d = r_1 - r_2 \ge 0`$, so $`I(r_1 + n) = n(n + d) \ge n^2`$. Fix ρ < R; the series for P and Q converge at ρ, so some M bounds $`|P_k|\rho^k`$ and $`|Q_k|\rho^k`$. As $`|r_1 + n - k| + 1 \le |r_1| + n \le (|r_1| + 1)\,n`$ for k ≥ 1, the recurrence gives, with $`K = M(|r_1| + 1)`$,
 
-$|a_n|\rho^n \le \dfrac{K}{n} \sum_{k=1}^{n} |a_{n-k}|\rho^{n-k}.$
+$`|a_n|\rho^n \le \dfrac{K}{n} \sum_{k=1}^{n} |a_{n-k}|\rho^{n-k}.`$
 
-Call the left side A_n and the sum of the first n of them S_n. Then S_(n+1) ≤ S_n (1 + K/n), so S_n ≤ A_0 e^K n^K, since 1 + t ≤ e^t and 1 + 1/2 + … + 1/n ≤ 1 + ln n. Hence $|a_n| \le C n^K \rho^{-n}$ for a constant C: convergence for |x| < ρ, and ρ < R was arbitrary. The smaller root, if its denominators never vanish, is the same with $I(r_2 + n) = n(n - d) \ge n^2/2$ once n ≥ 2d.
+Call the left side A_n and the sum of the first n of them S_n. Then S_(n+1) ≤ S_n (1 + K/n), so S_n ≤ A_0 e^K n^K, since 1 + t ≤ e^t and 1 + 1/2 + … + 1/n ≤ 1 + ln n. Hence $`|a_n| \le C n^K \rho^{-n}`$ for a constant C: convergence for |x| < ρ, and ρ < R was arbitrary. The smaller root, if its denominators never vanish, is the same with $`I(r_2 + n) = n(n - d) \ge n^2/2`$ once n ≥ 2d.
 
 </details>
 
 ### Step 4: a second road for the wire
 
-Put $s = \sqrt{2x}$. The chain rule turns the equation into $d^2y/ds^2 + y = 0$, a spring, so $y_1 = \cos\sqrt{2x}$ and $y_2 = \sin\sqrt{2x}/\sqrt 2$. The cosine's even powers of s are whole powers of x; each odd power in the sine carries a factor $\sqrt x$.
+Put $`s = \sqrt{2x}`$. The chain rule turns the equation into $`d^2y/ds^2 + y = 0`$, a spring, so $`y_1 = \cos\sqrt{2x}`$ and $`y_2 = \sin\sqrt{2x}/\sqrt 2`$. The cosine's even powers of s are whole powers of x; each odd power in the sine carries a factor $`\sqrt x`$.
 
 ### Step 5: when a logarithm is forced
 
-The larger root never jams: $I(r_1 + n) = n(n + r_1 - r_2) > 0$. The smaller root jams at $n = N$ when the gap is a whole number N, since $I(r_2 + N) = I(r_1) = 0$: the recurrence reads 0 · a_N = (right side).
+The larger root never jams: $`I(r_1 + n) = n(n + r_1 - r_2) > 0`$. The smaller root jams at $`n = N`$ when the gap is a whole number N, since $`I(r_2 + N) = I(r_1) = 0`$: the recurrence reads 0 · a_N = (right side).
 
-- **Right side 0:** $a_N$ is free, $c = 0$. x^2 y'' − 2x y' + 2y = 0 has roots 1 and 2 and solutions x and x^2.
-- **Right side not 0:** no plain series. x(1 − x) y'' + x y' − y = 0 has roots 0 and 1, and at r = 0, n = 1 asks 0 · a_1 = 1. Its second solution is $1 + x\ln x$, so $c = 1$; at x = 0.5 it is 0.653426410, and finite differences leave a residual below 0.00000002.
+- **Right side 0:** $`a_N`$ is free, $`c = 0`$. x^2 y'' − 2x y' + 2y = 0 has roots 1 and 2 and solutions x and x^2.
+- **Right side not 0:** no plain series. x(1 − x) y'' + x y' − y = 0 has roots 0 and 1, and at r = 0, n = 1 asks 0 · a_1 = 1. Its second solution is $`1 + x\ln x`$, so $`c = 1`$; at x = 0.5 it is 0.653426410, and finite differences leave a residual below 0.00000002.
 - **Repeated root:** one root, one series, so the logarithm is always needed.
 
 <details>
 <summary>Where the logarithm comes from</summary>
 
-Build the series with r left free: only $I(r)\,a_0\,x^r$ survives substitution. At a double root both it and its r-derivative vanish, so the r-derivative of the series solves the equation, and the r-derivative of $x^r = e^{r \ln x}$ is $x^r \ln x$.
+Build the series with r left free: only $`I(r)\,a_0\,x^r`$ survives substitution. At a double root both it and its r-derivative vanish, so the r-derivative of the series solves the equation, and the r-derivative of $`x^r = e^{r \ln x}`$ is $`x^r \ln x`$.
 
 </details>
 
-Abel's formula ($W' = -p\,W$; see [The Wronskian](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/04-wronskian-and-reduction-of-order.md)) makes $W$ a constant times $x^{-1/2}$, and the leading terms fix it at 1/2: the two series are independent. Reduction of order from $y_1$ is the other road to $y_2$.
+Abel's formula ($`W' = -p\,W`$; see [The Wronskian](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/04-wronskian-and-reduction-of-order.md)) makes $`W`$ a constant times $`x^{-1/2}`$, and the leading terms fix it at 1/2: the two series are independent. Reduction of order from $`y_1`$ is the other road to $`y_2`$.
 
 ---
 
@@ -138,8 +146,8 @@ Abel's formula ($W' = -p\,W$; see [The Wronskian](../03-Oscillators%20-%20Second
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| standard form | divide by 2x | $p = q = 1/(2x)$ |
-| regular? | $x\,p = 1/2$, $x^2 q = x/2$ | yes |
+| standard form | divide by 2x | $`p = q = 1/(2x)`$ |
+| regular? | $`x\,p = 1/2`$, $`x^2 q = x/2`$ | yes |
 | indicial | r(r − 1) + r/2 | roots **0** and **1/2**, gap not whole |
 | r = 0 coefficients | divide by 1·1, 2·3, 3·5, 4·7; alternate signs | 1, −1, 1/6, −1/90, 1/2520 |
 | five terms at x = 1 | 1 − 1 + 1/6 − 1/90 + 1/2520 | 0.155952380952 |
@@ -362,8 +370,8 @@ Lean proves that Frobenius series converge and solve the equation at every regul
 
 - At a regular singular point, take a real root r of the indicial equation whose recurrence never jams. Its series converges for 0 < x < R.
 - There x^r times that series can be differentiated twice, and it solves x^2 y'' + x P(x) y' + Q(x) y = 0.
-- The larger root never jams: $I(r_1 + n) = n(n + r_1 - r_2) > 0$ for every n ≥ 1.
-- The smaller root jams at some n ≥ 1 exactly when the gap $r_1 - r_2$ is a whole number N ≥ 1.
+- The larger root never jams: $`I(r_1 + n) = n(n + r_1 - r_2) > 0`$ for every n ≥ 1.
+- The smaller root jams at some n ≥ 1 exactly when the gap $`r_1 - r_2`$ is a whole number N ≥ 1.
 - For every x > 0, cos √(2x) and sin √(2x)/√2 both solve the wire's equation 2x y'' + y' + y = 0.
 - Their Wronskian is ½ x^(−1/2), never 0, so the two solutions are independent.
 - The hand arithmetic holds exactly: the roots 0 and 1/2, both coefficient lists, the five-term sum and the divisors.

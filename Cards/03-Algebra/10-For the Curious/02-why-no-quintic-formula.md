@@ -36,28 +36,34 @@ The left road is settled by the fundamental theorem of algebra ([The fundamental
 
 Each equation, with what its answer may be written as:
 
-$$x^5 - 2 = 0 \quad\longrightarrow\quad x = \sqrt[5]{2} = 1.1486983550\ldots$$
+```math
+x^5 - 2 = 0 \quad\longrightarrow\quad x = \sqrt[5]{2} = 1.1486983550\ldots
+```
 
-$$x^5 - x - 1 = 0 \quad\longrightarrow\quad x = 1.1673039783\ldots, \text{ and no radical expression at all}$$
+```math
+x^5 - x - 1 = 0 \quad\longrightarrow\quad x = 1.1673039783\ldots, \text{ and no radical expression at all}
+```
 
 **Read it aloud:** both have a real answer; only the first has one the radical alphabet can spell.
 
 **Abel–Ruffini, stated:** no expression built from a quintic's coefficients — the numbers multiplying its powers — by finitely many pluses, minuses, times, divides and nth roots gives a root of every quintic. Degrees 1 to 4 have one each; degree 5 and up, none.
 
-One measurement carries the proof. Take two shuffles of the roots, $g$ and $h$: undo $h$, undo $g$, do $h$, do $g$, right to left as shuffles compose.
+One measurement carries the proof. Take two shuffles of the roots, $`g`$ and $`h`$: undo $`h`$, undo $`g`$, do $`h`$, do $`g`$, right to left as shuffles compose.
 
-$$[g, h] = g\,h\,g^{-1}h^{-1}$$
+```math
+[g, h] = g\,h\,g^{-1}h^{-1}
+```
 
-where $g^{-1}$ undoes $g$. This is their **commutator**: if the two commute, either order giving the same result, it all cancels and nothing moves. A commutator records how much order mattered.
+where $`g^{-1}`$ undoes $`g`$. This is their **commutator**: if the two commute, either order giving the same result, it all cancels and nothing moves. A commutator records how much order mattered.
 
 Collect the commutators of every pair in a group of shuffles and close them under "do one, then the next". Out comes a group inside the original, its **peel**, with what commuted dropped. The standard name for it is the **commutator subgroup**. A group is **solvable** when repeated peeling reaches the do-nothing shuffle.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$, $\sqrt[5]{2}$ | the unknown; the number whose fifth power is 2 | 1.1673039783; 1.1486983550 | another equation, another root |
-| $S_n$, so $S_3$, $S_4$, $S_5$ | every shuffle of n roots | $S_5$: 120 shuffles of five | 720 for six roots, still stuck |
-| $A_5$ | the 60 even shuffles of five roots: those made by an even number of swaps | the core peeling cannot break | — |
-| $g$, $h$, $[g, h]$ | two shuffles, and their commutator | two double swaps, from the code | — |
+| $`x`$, $`\sqrt[5]{2}`$ | the unknown; the number whose fifth power is 2 | 1.1673039783; 1.1486983550 | another equation, another root |
+| $`S_n`$, so $`S_3`$, $`S_4`$, $`S_5`$ | every shuffle of n roots | $`S_5`$: 120 shuffles of five | 720 for six roots, still stuck |
+| $`A_5`$ | the 60 even shuffles of five roots: those made by an even number of swaps | the core peeling cannot break | — |
+| $`g`$, $`h`$, $`[g, h]`$ | two shuffles, and their commutator | two double swaps, from the code | — |
 
 ### When it holds
 
@@ -97,17 +103,17 @@ flowchart LR
 
 ### Step 3: five roots jam at 60
 
-Peel the 120 shuffles of five things and 60 come back: exactly the even ones, $A_5$. Peel those and the same 60 come back, for ever, so the chain reads 120 → 60 → 60 → 60.
+Peel the 120 shuffles of five things and 60 come back: exactly the even ones, $`A_5`$. Peel those and the same 60 come back, for ever, so the chain reads 120 → 60 → 60 → 60.
 
 Two facts do it, both checked in code. No peel reaches below the even shuffles, since every commutator is even. And the even shuffles are already commutators of even shuffles. A **three-place cycle** — cycling three places, fixing the rest — is the commutator of two double swaps, and three-place cycles build every even shuffle.
 
 <details>
 <summary>Detailed proof: the peel of the 60 is the 60 again</summary>
 
-1. **Every commutator is even.** A shuffle and its undo take the same number of swaps, so the four pieces take an even number together. The peel of $S_5$ lies inside $A_5$, and no later peel escapes.
+1. **Every commutator is even.** A shuffle and its undo take the same number of swaps, so the four pieces take an even number together. The peel of $`S_5`$ lies inside $`A_5`$, and no later peel escapes.
 2. **Every three-place cycle is such a commutator.** Exchange places 2 and 3 and also 4 and 5; then places 1 and 2 and also 4 and 5. Both are even, and their commutator sends 1 to 2, 2 to 3, 3 to 1, fixing 4 and 5 — the code prints the pair. Relabelling the places carries it to all 20 three-place cycles.
 3. **Three-place cycles build every even shuffle.** Take its swaps two at a time: equal swaps cancel, swaps sharing a place make a three-place cycle, and swaps a-b and c-d sharing none equal a to c, c to d, d to a followed by a to c, c to b, b to a.
-4. **So the peel of $A_5$ is $A_5$.** By 2 and 3 it holds all 20 three-place cycles and so all 60; by 1 it holds no more. $S_5$ is not solvable, nor is any larger shuffle group, each holding these 60.
+4. **So the peel of $`A_5`$ is $`A_5`$.** By 2 and 3 it holds all 20 three-place cycles and so all 60; by 1 it holds no more. $`S_5`$ is not solvable, nor is any larger shuffle group, each holding these 60.
 
 </details>
 
@@ -349,7 +355,7 @@ Lean proves the card's theorem for every degree from 5 up, and the group half fo
 - The root itself exists; only its radical spelling fails.
 - Step 1's bridge, from radical formulas to peeling, is taken from a proof already in Lean's library.
 - The shuffles of n roots peel down to the do-nothing shuffle exactly when n is 4 or less.
-- The first peel of the 120 shuffles of five roots is exactly the 60 even shuffles, $A_5$.
+- The first peel of the 120 shuffles of five roots is exactly the 60 even shuffles, $`A_5`$.
 - Peeling those 60 gives the same 60 back.
 - It also re-checks the card's numbers: -1 and 29, -1 and 30, then 6, 24 and 120 shuffles, 60 of them even.
 - It checks the code's pair: two even double swaps whose commutator is the three-place cycle [2, 3, 1, 4, 5].

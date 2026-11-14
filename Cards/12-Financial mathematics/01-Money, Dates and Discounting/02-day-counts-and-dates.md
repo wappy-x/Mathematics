@@ -40,46 +40,54 @@ The calendar supplies one input, the 45 days, and only the middle branch uses it
 
 ## The formula
 
-Notation first, in words. A period runs from a start date to an end date. Written $[s, e)$ — square bracket, then round bracket — it means the start date counts and the end date does not. That is the standard half-open interval, and it is what stops two back-to-back periods from both claiming the day they share.
+Notation first, in words. A period runs from a start date to an end date. Written $`[s, e)`$ — square bracket, then round bracket — it means the start date counts and the end date does not. That is the standard half-open interval, and it is what stops two back-to-back periods from both claiming the day they share.
 
 Interest over one period is always the same product:
 
-$$\text{interest} = N \times q \times \alpha$$
+```math
+\text{interest} = N \times q \times \alpha
+```
 
 **Read it aloud:** the amount lent, times the yearly rate, times the slice of a year the period counts as.
 
-Here $N$ is the **notional**, the amount the rate is applied to, and $q$ is the **simple annual rate**, quoted as a percent and used as a decimal. The year fraction $\alpha$, said "alpha", is the whole subject of this card. Three conventions compute it three ways.
+Here $`N`$ is the **notional**, the amount the rate is applied to, and $`q`$ is the **simple annual rate**, quoted as a percent and used as a decimal. The year fraction $`\alpha`$, said "alpha", is the whole subject of this card. Three conventions compute it three ways.
 
 **Actual/360.** Count the days, divide by 360.
 
-$$\alpha = \frac{n}{360}$$
+```math
+\alpha = \frac{n}{360}
+```
 
-$n$ is the actual number of days in $[s, e)$: 45 for the note's first period.
+$`n`$ is the actual number of days in $`[s, e)`$: 45 for the note's first period.
 
 **Actual/Actual ISDA.** Cut the period at every 1 January. Divide each piece by the length of the calendar year it sits in, then add.
 
-$$\alpha = \sum_{y} \frac{n_y}{L_y}, \qquad L_y = 365 \text{ or } 366$$
+```math
+\alpha = \sum_{y} \frac{n_y}{L_y}, \qquad L_y = 365 \text{ or } 366
+```
 
-$n_y$ is how many of the days fall in calendar year $y$, and $L_y$ is how many days that year holds: 366 in a leap year, 365 otherwise. Every day of a leap year divides by 366, including a day in January that never sees 29 February.
+$`n_y`$ is how many of the days fall in calendar year $`y`$, and $`L_y`$ is how many days that year holds: 366 in a leap year, 365 otherwise. Every day of a leap year divides by 366, including a day in January that never sees 29 February.
 
-**30E/360**, the European 30/360, as set out in section 4.16(g) of the 2006 ISDA Definitions. Pretend every month has 30 days and every year 360. Write the start date as year $Y_1$, month $M_1$, day $d_1$, and the end date as $Y_2$, $M_2$, $d_2$. Replace any 31st by a 30th: $D_1 = \min(d_1, 30)$ and $D_2 = \min(d_2, 30)$. Then
+**30E/360**, the European 30/360, as set out in section 4.16(g) of the 2006 ISDA Definitions. Pretend every month has 30 days and every year 360. Write the start date as year $`Y_1`$, month $`M_1`$, day $`d_1`$, and the end date as $`Y_2`$, $`M_2`$, $`d_2`$. Replace any 31st by a 30th: $`D_1 = \min(d_1, 30)`$ and $`D_2 = \min(d_2, 30)`$. Then
 
-$$\alpha = \frac{360(Y_2 - Y_1) + 30(M_2 - M_1) + D_2 - D_1}{360}$$
+```math
+\alpha = \frac{360(Y_2 - Y_1) + 30(M_2 - M_1) + D_2 - D_1}{360}
+```
 
 Read the top line as synthetic years of 360 days, plus synthetic months of 30 days, plus the adjusted difference in day numbers. It is not elapsed time, and Step 3 shows exactly where it parts company with the calendar.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $N$ | the notional: the amount the rate is applied to | $3,600.00 | every coupon scales with it |
-| $q$ | the simple annual rate, as a decimal | 0.10, quoted as 10 percent | every coupon scales with it |
-| $\alpha$ | the year fraction: how much of a year the period counts as | 0.125000 under Actual/360 | more interest, in proportion |
-| $s$, $e$ | the start and end dates of the period | 15 January and 1 March 2007 | a later end date lengthens the period |
-| $n$ | the actual days in $[s, e)$, counted on a calendar | 45 | the fraction rises by 1/360 a day |
-| $y$, $n_y$, $L_y$ | a calendar year the period touches; days of the period falling in it; days that year holds | 2007; 45; 365 | a longer year shrinks each day's share |
-| $Y$, $M$, $d$, with $Y_1$, $M_1$, $d_1$ and $Y_2$, $M_2$, $d_2$ | any date's year, month and day number; subscript 1 marks the start date, 2 the end date | 2007, 1, 15 and 2007, 3, 1 | a later month adds 30 synthetic days |
-| $D_1$, $D_2$ | those two day numbers after any 31st is replaced by a 30th | 15 and 1 | — |
-| $O$ | a date's ordinal: how many days it sits after 1 January of year 1 | — | — |
-| $C$ | days in the months of $Y$ already completed before month $M$ | 0 for January, 31 for February | — |
+| $`N`$ | the notional: the amount the rate is applied to | $3,600.00 | every coupon scales with it |
+| $`q`$ | the simple annual rate, as a decimal | 0.10, quoted as 10 percent | every coupon scales with it |
+| $`\alpha`$ | the year fraction: how much of a year the period counts as | 0.125000 under Actual/360 | more interest, in proportion |
+| $`s`$, $`e`$ | the start and end dates of the period | 15 January and 1 March 2007 | a later end date lengthens the period |
+| $`n`$ | the actual days in $`[s, e)`$, counted on a calendar | 45 | the fraction rises by 1/360 a day |
+| $`y`$, $`n_y`$, $`L_y`$ | a calendar year the period touches; days of the period falling in it; days that year holds | 2007; 45; 365 | a longer year shrinks each day's share |
+| $`Y`$, $`M`$, $`d`$, with $`Y_1`$, $`M_1`$, $`d_1`$ and $`Y_2`$, $`M_2`$, $`d_2`$ | any date's year, month and day number; subscript 1 marks the start date, 2 the end date | 2007, 1, 15 and 2007, 3, 1 | a later month adds 30 synthetic days |
+| $`D_1`$, $`D_2`$ | those two day numbers after any 31st is replaced by a 30th | 15 and 1 | — |
+| $`O`$ | a date's ordinal: how many days it sits after 1 January of year 1 | — | — |
+| $`C`$ | days in the months of $`Y`$ already completed before month $`M`$ | 0 for January, 31 for February | — |
 
 ### When it holds
 
@@ -103,30 +111,32 @@ The code splits the first period at 1 February: 17 + 28 = 45 days under Actual/3
 
 ### Step 1: count the days once, and count them right
 
-Everything starts with the actual day count $n$: how many dates lie in $[s, e)$. Counting by hand across a year boundary is where mistakes live. The reliable method gives every date a serial number and subtracts.
+Everything starts with the actual day count $`n`$: how many dates lie in $`[s, e)`$. Counting by hand across a year boundary is where mistakes live. The reliable method gives every date a serial number and subtracts.
 
-That serial number is the date's **ordinal**, written $O$: how many days it sits after 1 January of year 1. For a date with year $Y$, month $M$ and day number $d$,
+That serial number is the date's **ordinal**, written $`O`$: how many days it sits after 1 January of year 1. For a date with year $`Y`$, month $`M`$ and day number $`d`$,
 
-$$O = 365(Y-1) + \left\lfloor \frac{Y-1}{4} \right\rfloor - \left\lfloor \frac{Y-1}{100} \right\rfloor + \left\lfloor \frac{Y-1}{400} \right\rfloor + C + d - 1$$
+```math
+O = 365(Y-1) + \left\lfloor \frac{Y-1}{4} \right\rfloor - \left\lfloor \frac{Y-1}{100} \right\rfloor + \left\lfloor \frac{Y-1}{400} \right\rfloor + C + d - 1
+```
 
 The half-brackets mean "round down to a whole number". The first term counts 365 days for each completed year. The three rounded terms add a day for every fourth year, take one back for every hundredth and hand one over again for every four-hundredth. That is the Gregorian leap rule, which made 2000 a leap year and 1900 not.
 
-$C$ covers the completed months of $Y$, and the last two terms the days inside the current month.
+$`C`$ covers the completed months of $`Y`$, and the last two terms the days inside the current month.
 
-Then $n$ is one subtraction, $O(e) - O(s)$, and the excluded end date takes care of itself.
+Then $`n`$ is one subtraction, $`O(e) - O(s)`$, and the excluded end date takes care of itself.
 
 The code takes a second road sharing no arithmetic with the first: walk every year, month and day number in range, ask of each whether it is a real date inside the period, and count. The roads agree on 45 days, on 182 and on 91.
 
 <details>
 <summary>Detailed proof: the ordinal formula counts each calendar day exactly once</summary>
 
-The claim is that $O$ rises by exactly 1 when a date advances by one calendar day. Given that, $O(e) - O(s)$ counts the dates from $s$ up to but not including $e$, which is the definition of $n$.
+The claim is that $`O`$ rises by exactly 1 when a date advances by one calendar day. Given that, $`O(e) - O(s)`$ counts the dates from $`s`$ up to but not including $`e`$, which is the definition of $`n`$.
 
-**Inside a month.** Moving from day $d$ to day $d+1$ leaves $Y$, $M$ and therefore $C$ untouched, and the final term rises by 1.
+**Inside a month.** Moving from day $`d`$ to day $`d+1`$ leaves $`Y`$, $`M`$ and therefore $`C`$ untouched, and the final term rises by 1.
 
-**Across a month boundary.** The last day of month $M$ carries the day number equal to that month's length. The next date is day 1 of month $M+1$. Completing one more month raises $C$ by that month's length, while the day term drops from it to 1 — a fall of one less. Net change: 1. February's length comes from the same leap test the year terms use, so a leap February counts as 29 in both places.
+**Across a month boundary.** The last day of month $`M`$ carries the day number equal to that month's length. The next date is day 1 of month $`M+1`$. Completing one more month raises $`C`$ by that month's length, while the day term drops from it to 1 — a fall of one less. Net change: 1. February's length comes from the same leap test the year terms use, so a leap February counts as 29 in both places.
 
-**Across a year boundary.** From 31 December of year $Y$ to 1 January of year $Y+1$, $C$ falls from eleven months of days to 0, and the day term falls from 31 to 1. Together they give up the whole of year $Y$ except its last day. Meanwhile $Y-1$ rises by one, so the leading terms add 365, plus one more if the newly completed year was a leap year — exactly that year's length. Net change: 1 again.
+**Across a year boundary.** From 31 December of year $`Y`$ to 1 January of year $`Y+1`$, $`C`$ falls from eleven months of days to 0, and the day term falls from 31 to 1. Together they give up the whole of year $`Y`$ except its last day. Meanwhile $`Y-1`$ rises by one, so the leading terms add 365, plus one more if the newly completed year was a leap year — exactly that year's length. Net change: 1 again.
 
 Only the leap rule and the list of month lengths are special to the Gregorian calendar, and both are supplied, not derived. A calendar is data.
 
@@ -224,7 +234,7 @@ Forty-five days of a 10 percent note on $3,600.00 is worth $45.00 if a year is 3
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Counting the first date and the last | 46 days, a coupon of $46.00 | The period is $[s, e)$: the end date belongs to the next period. The wrong answer happens to equal the correct 30E/360 coupon, which hides it |
+| Counting the first date and the last | 46 days, a coupon of $46.00 | The period is $`[s, e)`$: the end date belongs to the next period. The wrong answer happens to equal the correct 30E/360 coupon, which hides it |
 | Leaving the 31st unclipped in 30E/360 | 33 days from 28 February to 31 March 2007, not 32 | The rule replaces each 31st by a 30th before subtracting |
 | One flat 365 across the leap year | $179.51 instead of $179.35 | Under Actual/Actual ISDA the 60 days in 2008 divide by 366, not 365 |
 | Accruing to the moved payment date | 90 days instead of 91, $90.00 instead of $91.00 | Modified following moves the cheque; accrual still runs between the scheduled dates |
@@ -657,10 +667,10 @@ The two outputs match line for line.
 
 Lean proves the day count, the one-day step and the split rule for every real Gregorian date, and the card's worked numbers.
 
-- Take real Gregorian dates $s$ and $e$, with $e$ on or after $s$. Then the days in $[s, e)$ number exactly $O(e) - O(s)$.
-- Take any real date. Then the next calendar day is a real date too, and its ordinal $O$ is exactly 1 higher.
+- Take real Gregorian dates $`s`$ and $`e`$, with $`e`$ on or after $`s`$. Then the days in $`[s, e)`$ number exactly $`O(e) - O(s)`$.
+- Take any real date. Then the next calendar day is a real date too, and its ordinal $`O`$ is exactly 1 higher.
 - That step holds inside a month, across a month end and across a year end, leap years included.
-- Take real dates $s$ and $e$ in order, and a third real date on or between them. Then the year fractions of the two pieces add to the year fraction of $[s, e)$.
+- Take real dates $`s`$ and $`e`$ in order, and a third real date on or between them. Then the year fractions of the two pieces add to the year fraction of $`[s, e)`$.
 - That split rule holds under Actual/360, 30E/360 and Actual/Actual ISDA alike, for every such split.
 - The first period counts 45 days by ordinals: 17 before 1 February and 28 after.
 - Under 30E/360 the same two pieces read 16 and 30, which add to 46.

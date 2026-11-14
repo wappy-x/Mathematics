@@ -34,30 +34,34 @@ Orange: sugar in the tank, from the solved equation. Teal: 10 kg, where the tank
 
 ## The formula
 
-Reminder: y' = f(t, y) says "the rate of y at time t is f(t, y)" ([A differential equation](01-what-a-differential-equation-says.md)). For a tank of fixed volume $V$, fed and drained at flow $q$:
+Reminder: y' = f(t, y) says "the rate of y at time t is f(t, y)" ([A differential equation](01-what-a-differential-equation-says.md)). For a tank of fixed volume $`V`$, fed and drained at flow $`q`$:
 
-$$S' \;=\; \underbrace{q\,c_{in}}_{\text{rate in}} \;-\; \underbrace{q\,\frac{S}{V}}_{\text{rate out}}$$
+```math
+S' \;=\; \underbrace{q\,c_{in}}_{\text{rate in}} \;-\; \underbrace{q\,\frac{S}{V}}_{\text{rate out}}
+```
 
 **Read it aloud:** the sugar's rate of change is the flow times the feed's strength, minus the flow times the tank's own strength.
 
 Solved (Why it works, Step 2):
 
-$$S(t) \;=\; S_\infty + \big(S(0) - S_\infty\big)\,e^{-t/\tau}, \qquad S_\infty = V c_{in}, \qquad \tau = \frac{V}{q}$$
+```math
+S(t) \;=\; S_\infty + \big(S(0) - S_\infty\big)\,e^{-t/\tau}, \qquad S_\infty = V c_{in}, \qquad \tau = \frac{V}{q}
+```
 
 **Read it aloud:** the amount heads to the feed-strength level, and the gap shrinks by a factor of e every time constant.
 
-For the brewery, $S' = 0.25 - S/40$ and $S = 10 - 6e^{-t/40}$ kg.
+For the brewery, $`S' = 0.25 - S/40`$ and $`S = 10 - 6e^{-t/40}`$ kg.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time since the pumps started, in minutes | 0 to 240 min | the tank gets closer to 10 kg |
-| $S$ | sugar in the tank, in kg | 4 at the start, 8.66 at 60 min | — |
-| $S'$ | the rate $S$ changes, in kg/min | 0.15 at the start | — |
-| $V$ | liquid in the tank, in litres | 200 L | slower to change, same final level per litre |
-| $q$ | flow in, which equals flow out, in L/min | 5 L/min | faster approach to the feed's strength |
-| $c_{in}$ | sugar per litre of the feed, in kg/L | 0.05 kg/L | a higher final level |
-| $S_\infty$ | the level where in equals out, in kg | 10 kg | — |
-| $\tau$ | the time constant $V/q$: minutes to pump one tankful through | 40 min | a slower approach |
+| $`t`$ | time since the pumps started, in minutes | 0 to 240 min | the tank gets closer to 10 kg |
+| $`S`$ | sugar in the tank, in kg | 4 at the start, 8.66 at 60 min | — |
+| $`S'`$ | the rate $`S`$ changes, in kg/min | 0.15 at the start | — |
+| $`V`$ | liquid in the tank, in litres | 200 L | slower to change, same final level per litre |
+| $`q`$ | flow in, which equals flow out, in L/min | 5 L/min | faster approach to the feed's strength |
+| $`c_{in}`$ | sugar per litre of the feed, in kg/L | 0.05 kg/L | a higher final level |
+| $`S_\infty`$ | the level where in equals out, in kg | 10 kg | — |
+| $`\tau`$ | the time constant $`V/q`$: minutes to pump one tankful through | 40 min | a slower approach |
 
 ### When it holds
 
@@ -89,7 +93,9 @@ Rate in: (L/min) × (kg/L) = kg/min. Rate out: (L/min) × kg ÷ L = kg/min. S' i
 
 Rearranged, S' + S/40 = 0.25: linear, since the unknown appears only to the first power. Multiply by the integrating factor e^(t/40) ([The integrating factor](05-integrating-factor.md)); by the product rule the left side becomes the rate of e^(t/40) S:
 
-$$\big(e^{t/40} S\big)' = 0.25\,e^{t/40} \quad\Longrightarrow\quad e^{t/40} S = 10\,e^{t/40} + C$$
+```math
+\big(e^{t/40} S\big)' = 0.25\,e^{t/40} \quad\Longrightarrow\quad e^{t/40} S = 10\,e^{t/40} + C
+```
 
 The start fixes the constant C: at t = 0, 4 = 10 + C, so C = −6, and S = 10 − 6e^(−t/40) kg. With equal flows the equation also separates ([Separable equations](03-separable-equations.md)); the integrating factor is the road that survives unequal flows.
 
@@ -103,7 +109,9 @@ The 6 kg gap shrinks by a factor of e every 40 minutes, the time to pump one tan
 
 A drip gives a patient 20 mg of a drug an hour. The drug spreads through 40 L, its **volume of distribution**: the volume that, at the blood's concentration, would hold all the drug in the body. Kidneys and liver remove the drug from 5 L of blood each hour, the **clearance**. The body is the tank, the drip the feed, clearance the drain:
 
-$$A' = 20 - \frac{5}{40}A \quad\Longrightarrow\quad A = 160\,\big(1 - e^{-t/8}\big) \text{ mg}$$
+```math
+A' = 20 - \frac{5}{40}A \quad\Longrightarrow\quad A = 160\,\big(1 - e^{-t/8}\big) \text{ mg}
+```
 
 Here A is the drug in the body in mg, and time is in hours. The level settles at 160 mg, 4.00 mg/L: rate in over clearance. After 12 hours it is 124.30 mg, 3.11 mg/L.
 
@@ -114,15 +122,15 @@ The time constant is 40/5 = 8 h, so the half-life is 8 ln 2 = 5.55 h, and 95% of
 
 Feed 5 L/min, drain 4 L/min: the tank holds 200 + t litres. By Step 0, sugar in is 0.25 kg/min and sugar out is 4 L/min at S/(200 + t) kg/L:
 
-$$S' + \frac{4}{200+t}\,S = 0.25$$
+$`\displaystyle S' + \frac{4}{200+t}\,S = 0.25`$
 
 The integrating factor is e^(∫ 4/(200+t) dt) = (200+t)^4, which makes the left side the rate of (200+t)^4 S:
 
-$$(200+t)^4 S = 0.05\,(200+t)^5 + C.$$
+$`\displaystyle (200+t)^4 S = 0.05\,(200+t)^5 + C.`$
 
 At t = 0, 200^4 × 4 = 0.05 × 200^5 + C, so C = −6 × 200^4, and
 
-$$S = 0.05\,(200+t) - 6\left(\frac{200}{200+t}\right)^4.$$
+$`\displaystyle S = 0.05\,(200+t) - 6\left(\frac{200}{200+t}\right)^4.`$
 
 At 60 minutes: 260 L and 10.90 kg. A model that keeps 200 L has S' = 0.25 − S/50, so S = 12.5 − 8.5e^(−t/50) and 9.94 kg: it thinks the tank stronger than it is and drains sugar too fast. Substituting this S returns the equation, and the start fixes C, so no other solution starts at 4 kg.
 

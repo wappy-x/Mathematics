@@ -37,44 +37,48 @@ Schematic. Positive numbers on the left, negative on the right: the signs cut on
 
 ## The formula
 
-Notation first, in words. The network is $G = (V, E)$, as on [Planar graphs](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md): $V$ the $n$ people, $E$ the links between them. The **adjacency matrix** $A$ has a 1 in row $u$, column $v$ when $u$ and $v$ are friends, and 0 otherwise. The **degree matrix** $D$ has each person's friend count (their **degree**) on its diagonal and zeros elsewhere. A **labelling** $x$ is a list of $n$ numbers, one per person; $x_u$ is person $u$'s number.
+Notation first, in words. The network is $`G = (V, E)`$, as on [Planar graphs](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md): $`V`$ the $`n`$ people, $`E`$ the links between them. The **adjacency matrix** $`A`$ has a 1 in row $`u`$, column $`v`$ when $`u`$ and $`v`$ are friends, and 0 otherwise. The **degree matrix** $`D`$ has each person's friend count (their **degree**) on its diagonal and zeros elsewhere. A **labelling** $`x`$ is a list of $`n`$ numbers, one per person; $`x_u`$ is person $`u`$'s number.
 
-$$L = D - A, \qquad x^{\mathsf T} L\, x \;=\; \sum_{(u,v)\in E} (x_u - x_v)^2$$
+```math
+L = D - A, \qquad x^{\mathsf T} L\, x \;=\; \sum_{(u,v)\in E} (x_u - x_v)^2
+```
 
 **Read it aloud:** the Laplacian is degrees on the diagonal minus one for every friendship; fed a labelling, it returns the total squared disagreement across all links.
 
-An **eigenvector** of $L$ is a labelling that $L$ only rescales, $L x = \lambda x$; the scale factor $\lambda$ is its **eigenvalue** (see [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)).
+An **eigenvector** of $`L`$ is a labelling that $`L`$ only rescales, $`L x = \lambda x`$; the scale factor $`\lambda`$ is its **eigenvalue** (see [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)).
 
-Its eigenvalues, sorted, are $0 = \lambda_1 \le \lambda_2 \le \dots \le \lambda_n$. Two facts follow:
+Its eigenvalues, sorted, are $`0 = \lambda_1 \le \lambda_2 \le \dots \le \lambda_n`$. Two facts follow:
 
-$$\#\{k : \lambda_k = 0\} = \text{number of pieces}, \qquad \lambda_2 \;=\; \min_{x \ne 0,\ x \perp \mathbf 1}\ \frac{x^{\mathsf T} L\, x}{x^{\mathsf T} x} \;\le\; \frac{4\,\mathrm{cut}(S)}{n}\ \text{ for every half-and-half split } S$$
+```math
+\#\{k : \lambda_k = 0\} = \text{number of pieces}, \qquad \lambda_2 \;=\; \min_{x \ne 0,\ x \perp \mathbf 1}\ \frac{x^{\mathsf T} L\, x}{x^{\mathsf T} x} \;\le\; \frac{4\,\mathrm{cut}(S)}{n}\ \text{ for every half-and-half split } S
+```
 
 **Read it aloud:** count the zero eigenvalues and you have counted the pieces; the second eigenvalue is the least disagreement per unit of labelling among all labellings that add up to zero, and so it can never exceed four times the links cut by any even split, divided by the number of people.
 
-The eigenvector that achieves that minimum is the **Fiedler vector** $v_2$, after Miroslav Fiedler, who in 1973 called $\lambda_2$ the **algebraic connectivity**. Reading its signs is **spectral clustering** in its plainest form.
+The eigenvector that achieves that minimum is the **Fiedler vector** $`v_2`$, after Miroslav Fiedler, who in 1973 called $`\lambda_2`$ the **algebraic connectivity**. Reading its signs is **spectral clustering** in its plainest form.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | number of people (vertices) | 5,000; six in the picture | — |
-| $G = (V, E)$, $(u, v)$ | the network: its people, its list of friendships; one friendship, between $u$ and $v$ | 51,250 links | more links, larger $\lambda_2$ |
-| $A$, $D$ | adjacency matrix (1 for friends, 0 otherwise); degree matrix (friend counts down the diagonal) | degrees 6 to 40, mean 20.5 | — |
-| $L = D - A$ | the graph Laplacian | Cal's row: −1, −1, 3, −1, 0, 0 | — |
-| $x$, $x_u$ | a labelling: one number per person; person $u$'s number | the Fiedler vector, Ana = 1 | — |
-| $x^{\mathsf T} L\, x$ | total squared disagreement across links | 2.030310 for the six | rises when friends get different numbers |
-| $\mathbf 1$, $x \perp \mathbf 1$ | the all-ones list (everyone labelled the same); "$x$ perpendicular to it": the labels add up to zero | $L\mathbf 1 = 0$ | — |
-| $\lambda_1 \dots \lambda_n$, $\lambda_k$, $\lambda_{\max}$ | the eigenvalues, smallest first; the $k$-th; the largest | six friends: 0, 0.438447, 3, 3, 3, 4.561553 | — |
-| $\lambda_2$ | algebraic connectivity: how hard the network is to cut | 0.438447 (six), 0.898010 (5,000) | harder to split in two |
-| $v_2$; $v_k$, $a_k$ | the Fiedler vector, the labelling that achieves $\lambda_2$; in the proof, the $k$-th unit eigenvector and how much of it a labelling holds | signs give the two towns | — |
-| $c$, $I$ | the shift in the power iteration; the identity matrix, which leaves every list alone | $c$ = 43.108260 | — |
-| $\mathrm{cut}(S)$ | links from group $S$ to everyone else | 1 (six), 1,250 (5,000) | raises the bound $4\,\mathrm{cut}/n$ |
+| $`n`$ | number of people (vertices) | 5,000; six in the picture | — |
+| $`G = (V, E)`$, $`(u, v)`$ | the network: its people, its list of friendships; one friendship, between $`u`$ and $`v`$ | 51,250 links | more links, larger $`\lambda_2`$ |
+| $`A`$, $`D`$ | adjacency matrix (1 for friends, 0 otherwise); degree matrix (friend counts down the diagonal) | degrees 6 to 40, mean 20.5 | — |
+| $`L = D - A`$ | the graph Laplacian | Cal's row: −1, −1, 3, −1, 0, 0 | — |
+| $`x`$, $`x_u`$ | a labelling: one number per person; person $`u`$'s number | the Fiedler vector, Ana = 1 | — |
+| $`x^{\mathsf T} L\, x`$ | total squared disagreement across links | 2.030310 for the six | rises when friends get different numbers |
+| $`\mathbf 1`$, $`x \perp \mathbf 1`$ | the all-ones list (everyone labelled the same); "$`x`$ perpendicular to it": the labels add up to zero | $`L\mathbf 1 = 0`$ | — |
+| $`\lambda_1 \dots \lambda_n`$, $`\lambda_k`$, $`\lambda_{\max}`$ | the eigenvalues, smallest first; the $`k`$-th; the largest | six friends: 0, 0.438447, 3, 3, 3, 4.561553 | — |
+| $`\lambda_2`$ | algebraic connectivity: how hard the network is to cut | 0.438447 (six), 0.898010 (5,000) | harder to split in two |
+| $`v_2`$; $`v_k`$, $`a_k`$ | the Fiedler vector, the labelling that achieves $`\lambda_2`$; in the proof, the $`k`$-th unit eigenvector and how much of it a labelling holds | signs give the two towns | — |
+| $`c`$, $`I`$ | the shift in the power iteration; the identity matrix, which leaves every list alone | $`c`$ = 43.108260 | — |
+| $`\mathrm{cut}(S)`$ | links from group $`S`$ to everyone else | 1 (six), 1,250 (5,000) | raises the bound $`4\,\mathrm{cut}/n`$ |
 
-Notation clashes, in one line: $D$ here is the degree matrix, not the stretch-factor matrix of [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md); $L$ is not the queue length of wing 11; and $\lambda_2$ here counts from the bottom, the second-smallest eigenvalue of $L$, unlike the walk's $\lambda_2$ on [PageRank by power iteration](02-power-iteration-and-the-damping-factor.md), the second-largest in size.
+Notation clashes, in one line: $`D`$ here is the degree matrix, not the stretch-factor matrix of [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md); $`L`$ is not the queue length of wing 11; and $`\lambda_2`$ here counts from the bottom, the second-smallest eigenvalue of $`L`$, unlike the walk's $`\lambda_2`$ on [PageRank by power iteration](02-power-iteration-and-the-damping-factor.md), the second-largest in size.
 
 ### When it holds
 
-- **Links run both ways, with weights zero or positive.** Then $L$ is symmetric and every eigenvalue is real and at least 0. For one-way links (who follows whom) $L$ is not symmetric, its eigenvalues can be complex, and the sum-of-squares identity is gone.
-- **No small fringe hangs off by a thread.** Hang a chain of three people off person 0 and $\lambda_2$ falls from 0.898010 to 0.188124: the cheapest cut per person is now the chain, and the sign split stops following the towns (printed below).
-- **The town split is the cheapest way to cut.** The method returns the labelling of least disagreement, whatever that follows. With 20,000 links across instead of 1,250, each town is still denser inside than across, but the town split now scores $4 \times 20000/5000 = 16.000000$ while some other labelling scores $\lambda_2 = 11.7903$. The vector follows that one, and only 2,757 of 5,000 people land in their right town, barely better than the 2,500 a coin would manage. The method still returns a split.
+- **Links run both ways, with weights zero or positive.** Then $`L`$ is symmetric and every eigenvalue is real and at least 0. For one-way links (who follows whom) $`L`$ is not symmetric, its eigenvalues can be complex, and the sum-of-squares identity is gone.
+- **No small fringe hangs off by a thread.** Hang a chain of three people off person 0 and $`\lambda_2`$ falls from 0.898010 to 0.188124: the cheapest cut per person is now the chain, and the sign split stops following the towns (printed below).
+- **The town split is the cheapest way to cut.** The method returns the labelling of least disagreement, whatever that follows. With 20,000 links across instead of 1,250, each town is still denser inside than across, but the town split now scores $`4 \times 20000/5000 = 16.000000`$ while some other labelling scores $`\lambda_2 = 11.7903`$. The vector follows that one, and only 2,757 of 5,000 people land in their right town, barely better than the 2,500 a coin would manage. The method still returns a split.
 - **Zero is tested with a tolerance.** Computed "zeros" come out as tiny non-zero numbers, so the pieces count needs a threshold: an exact test counts 0 pieces where there are 2.
 - **Two groups.** For more than two, take the first few eigenvectors and cluster their rows with [k-means](../06-Machine%20Learning%20Mathematics/06-k-means-and-clustering.md).
 
@@ -88,44 +92,46 @@ Give every person a number. Friends with equal numbers agree; friends with diffe
 
 ### Step 1: the sum-of-squares identity
 
-Expand one link's disagreement: $(x_u - x_v)^2 = x_u^2 + x_v^2 - 2x_u x_v$. Add over every link.
+Expand one link's disagreement: $`(x_u - x_v)^2 = x_u^2 + x_v^2 - 2x_u x_v`$. Add over every link.
 
-- The squares: person $u$ appears in one link per friend, so $x_u^2$ is counted degree-of-$u$ times. That total is $x^{\mathsf T} D\, x$.
-- The cross terms: $x^{\mathsf T} A\, x$ counts each link twice, once as $(u,v)$ and once as $(v,u)$, giving $2x_u x_v$ per link.
+- The squares: person $`u`$ appears in one link per friend, so $`x_u^2`$ is counted degree-of-$`u`$ times. That total is $`x^{\mathsf T} D\, x`$.
+- The cross terms: $`x^{\mathsf T} A\, x`$ counts each link twice, once as $`(u,v)`$ and once as $`(v,u)`$, giving $`2x_u x_v`$ per link.
 
-Subtract: $x^{\mathsf T} D x - x^{\mathsf T} A x = x^{\mathsf T} L x = \sum (x_u - x_v)^2$. Three consequences:
+Subtract: $`x^{\mathsf T} D x - x^{\mathsf T} A x = x^{\mathsf T} L x = \sum (x_u - x_v)^2`$. Three consequences:
 
-1. A sum of squares is never negative, so no eigenvalue of $L$ is below 0.
-2. $L\mathbf 1 = 0$: each row is a degree minus that many 1s. So 0 is always an eigenvalue, with the all-ones list as eigenvector.
-3. $L$ is symmetric, so [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md) gives $n$ real eigenvalues with perpendicular eigenvectors.
+1. A sum of squares is never negative, so no eigenvalue of $`L`$ is below 0.
+2. $`L\mathbf 1 = 0`$: each row is a degree minus that many 1s. So 0 is always an eigenvalue, with the all-ones list as eigenvector.
+3. $`L`$ is symmetric, so [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md) gives $`n`$ real eigenvalues with perpendicular eigenvectors.
 
-For the six friends with their Fiedler vector, the five links that touch Cal or Dev contribute $4(1 - 0.561553)^2 + (2 \times 0.561553)^2$, the other two contribute 0, and the total is 2.030310.
+For the six friends with their Fiedler vector, the five links that touch Cal or Dev contribute $`4(1 - 0.561553)^2 + (2 \times 0.561553)^2`$, the other two contribute 0, and the total is 2.030310.
 
 ### Step 2: zero eigenvalues count the pieces
 
-Suppose $Lx = 0$. Then $x^{\mathsf T} L x = 0$, so every squared gap is 0: friends have equal numbers. Walk along links and the number never changes, so $x$ is constant on each piece of the network. It may take a different constant on each piece.
+Suppose $`Lx = 0`$. Then $`x^{\mathsf T} L x = 0`$, so every squared gap is 0: friends have equal numbers. Walk along links and the number never changes, so $`x`$ is constant on each piece of the network. It may take a different constant on each piece.
 
-The other way round: the list that is 1 on one piece and 0 elsewhere has no link where it changes, so it gives 0 disagreement, and $L$ sends it to 0. There is one such list per piece, and they are independent (no two overlap), and every list $L$ sends to 0 is built from them. So the eigenvalue 0 has one independent eigenvector per piece, and, by the spectral theorem, 0 appears among $\lambda_1, \dots, \lambda_n$ once per piece.
+The other way round: the list that is 1 on one piece and 0 elsewhere has no link where it changes, so it gives 0 disagreement, and $`L`$ sends it to 0. There is one such list per piece, and they are independent (no two overlap), and every list $`L`$ sends to 0 is built from them. So the eigenvalue 0 has one independent eigenvector per piece, and, by the spectral theorem, 0 appears among $`\lambda_1, \dots, \lambda_n`$ once per piece.
 
-Cut the bridge between Cal and Dev. The eigenvalues become 0, 0, 3, 3, 3, 3: two zeros, two pieces. A flood fill (start at one person, mark their friends, then their friends' friends, until no one new turns up; no eigenvalues at all) also finds 2. Do the same to the 5,000 by deleting the 1,250 crossing links: $\lambda_2$ drops to 0.000000, and the flood finds 2 pieces.
+Cut the bridge between Cal and Dev. The eigenvalues become 0, 0, 3, 3, 3, 3: two zeros, two pieces. A flood fill (start at one person, mark their friends, then their friends' friends, until no one new turns up; no eigenvalues at all) also finds 2. Do the same to the 5,000 by deleting the 1,250 crossing links: $`\lambda_2`$ drops to 0.000000, and the flood finds 2 pieces.
 
-So $\lambda_2 > 0$ exactly when the network is in one piece. How far above 0 it sits says how close the network is to falling apart.
+So $`\lambda_2 > 0`$ exactly when the network is in one piece. How far above 0 it sits says how close the network is to falling apart.
 
 ### Step 3: a cut is a disagreement score
 
-Split the people into a group $S$ and the rest. Label $S$ with $+1$ and everyone else with $-1$. A link inside a group has gap 0. A link that crosses has gap 2, squared 4. So
+Split the people into a group $`S`$ and the rest. Label $`S`$ with $`+1`$ and everyone else with $`-1`$. A link inside a group has gap 0. A link that crosses has gap 2, squared 4. So
 
-$$x^{\mathsf T} L\, x = 4\,\mathrm{cut}(S).$$
+```math
+x^{\mathsf T} L\, x = 4\,\mathrm{cut}(S).
+```
 
-If the split is half-and-half, the labels add up to zero, so $x \perp \mathbf 1$, and $x^{\mathsf T} x = n$. The best balanced cut is the $\pm 1$ labelling with the smallest disagreement. That is a search over all even splits, which is the hopeless part.
+If the split is half-and-half, the labels add up to zero, so $`x \perp \mathbf 1`$, and $`x^{\mathsf T} x = n`$. The best balanced cut is the $`\pm 1`$ labelling with the smallest disagreement. That is a search over all even splits, which is the hopeless part.
 
 ### Step 4: relax the labels, and the eigenvector answers
 
-Drop the demand that labels be $\pm 1$. Allow any real numbers, as long as they add up to zero. Over that larger set, the smallest disagreement per unit of labelling is $\lambda_2$, reached at $v_2$. The fold has the two-line proof.
+Drop the demand that labels be $`\pm 1`$. Allow any real numbers, as long as they add up to zero. Over that larger set, the smallest disagreement per unit of labelling is $`\lambda_2`$, reached at $`v_2`$. The fold has the two-line proof.
 
-Every balanced $\pm 1$ labelling is in the larger set, so its ratio $4\,\mathrm{cut}/n$ is at least $\lambda_2$. For the towns: the true split cuts 1,250 links, ratio $4 \times 1250/5000 = 1.000000$, and $\lambda_2 = 0.898010$ sits just below it. For the six friends: the bridge split gives $4 \times 1/6 = 0.666667$, and $\lambda_2 = 0.438447$.
+Every balanced $`\pm 1`$ labelling is in the larger set, so its ratio $`4\,\mathrm{cut}/n`$ is at least $`\lambda_2`$. For the towns: the true split cuts 1,250 links, ratio $`4 \times 1250/5000 = 1.000000`$, and $`\lambda_2 = 0.898010`$ sits just below it. For the six friends: the bridge split gives $`4 \times 1/6 = 0.666667`$, and $`\lambda_2 = 0.438447`$.
 
-The relaxed answer has real numbers, not $\pm 1$. Round it back by its signs. When the communities are clear, $v_2$ is close to $+$ something on one and $-$ something on the other, and rounding loses little. The chart shows exactly that.
+The relaxed answer has real numbers, not $`\pm 1`$. Round it back by its signs. When the communities are clear, $`v_2`$ is close to $`+`$ something on one and $`-`$ something on the other, and rounding loses little. The chart shows exactly that.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -136,55 +142,55 @@ xychart-beta
     line [-1.18, -1.07, -1.06, -1.05, -1.04, -1.03, -1.00, -0.95, -0.93, -0.89, 0.62, 0.90, 0.94, 0.95, 0.99, 1.03, 1.04, 1.05, 1.06, 1.07, 1.19]
 ```
 
-The one line is the 5,000 entries of $v_2$, sorted and scaled so a typical entry is near 1; every 250th is plotted. Two shelves, one near −1 and one near +1, with a jump between rank 2,500 and 2,501: the first 2,500 are one town, all negative, and the rest are the other, all positive. The sign split is reading that jump.
+The one line is the 5,000 entries of $`v_2`$, sorted and scaled so a typical entry is near 1; every 250th is plotted. Two shelves, one near −1 and one near +1, with a jump between rank 2,500 and 2,501: the first 2,500 are one town, all negative, and the rest are the other, all positive. The sign split is reading that jump.
 
 <details>
 <summary>Detailed proof: the smallest ratio among labellings that add to zero is the second eigenvalue</summary>
 
-Take perpendicular unit eigenvectors $v_1, \dots, v_n$ of $L$, with $v_1$ the all-ones list scaled to length 1. Write any labelling as $x = a_1 v_1 + \dots + a_n v_n$.
+Take perpendicular unit eigenvectors $`v_1, \dots, v_n`$ of $`L`$, with $`v_1`$ the all-ones list scaled to length 1. Write any labelling as $`x = a_1 v_1 + \dots + a_n v_n`$.
 
-The labels add to zero exactly when $x$ is perpendicular to $v_1$, that is, when $a_1 = 0$.
+The labels add to zero exactly when $`x`$ is perpendicular to $`v_1`$, that is, when $`a_1 = 0`$.
 
-Because the $v_k$ are perpendicular and $L v_k = \lambda_k v_k$: $x^{\mathsf T} x = a_2^2 + \dots + a_n^2$ and $x^{\mathsf T} L x = \lambda_2 a_2^2 + \dots + \lambda_n a_n^2$.
+Because the $`v_k`$ are perpendicular and $`L v_k = \lambda_k v_k`$: $`x^{\mathsf T} x = a_2^2 + \dots + a_n^2`$ and $`x^{\mathsf T} L x = \lambda_2 a_2^2 + \dots + \lambda_n a_n^2`$.
 
-Every $\lambda_k$ with $k \ge 2$ is at least $\lambda_2$, so $x^{\mathsf T} L x \ge \lambda_2\, x^{\mathsf T} x$. Equality holds at $x = v_2$. So the minimum of the ratio is $\lambda_2$, and $v_2$ achieves it.
+Every $`\lambda_k`$ with $`k \ge 2`$ is at least $`\lambda_2`$, so $`x^{\mathsf T} L x \ge \lambda_2\, x^{\mathsf T} x`$. Equality holds at $`x = v_2`$. So the minimum of the ratio is $`\lambda_2`$, and $`v_2`$ achieves it.
 
 </details>
 
 ### Step 5: computing the Fiedler vector for 5,000 people
 
-Nobody writes out a 5,000 by 5,000 table. The code stores each person's friend list and computes $Lx$ person by person: degree times own number, minus the friends' numbers.
+Nobody writes out a 5,000 by 5,000 table. The code stores each person's friend list and computes $`Lx`$ person by person: degree times own number, minus the friends' numbers.
 
-To find $v_2$, it runs power iteration, the repeated multiplying of [PageRank by power iteration](02-power-iteration-and-the-damping-factor.md), on $cI - L$ ($I$ the identity, $c$ a shift), and subtracts the average label at every step. Multiplying by $cI - L$ turns each eigenvalue $\lambda$ into $c - \lambda$. With $c$ above $\lambda_{\max}$, the smallest $\lambda$ becomes the biggest $c - \lambda$, and repeated multiplying grows that direction fastest. Subtracting the average removes the all-ones direction, which would otherwise win with $c - 0$. What wins instead is $v_2$.
+To find $`v_2`$, it runs power iteration, the repeated multiplying of [PageRank by power iteration](02-power-iteration-and-the-damping-factor.md), on $`cI - L`$ ($`I`$ the identity, $`c`$ a shift), and subtracts the average label at every step. Multiplying by $`cI - L`$ turns each eigenvalue $`\lambda`$ into $`c - \lambda`$. With $`c`$ above $`\lambda_{\max}`$, the smallest $`\lambda`$ becomes the biggest $`c - \lambda`$, and repeated multiplying grows that direction fastest. Subtracting the average removes the all-ones direction, which would otherwise win with $`c - 0`$. What wins instead is $`v_2`$.
 
-The code first estimates $\lambda_{\max}$ by 300 plain steps, at about 42.11 (an estimate, which can only fall short of the true value), then uses the estimate plus 1, $c = 43.108260$. Any $c$ above halfway between $\lambda_{\max}$ and $\lambda_2$ would do. After 400 steps the leftover, the length of $Lx - \lambda_2 x$, is below 1e-9.
+The code first estimates $`\lambda_{\max}`$ by 300 plain steps, at about 42.11 (an estimate, which can only fall short of the true value), then uses the estimate plus 1, $`c = 43.108260`$. Any $`c`$ above halfway between $`\lambda_{\max}`$ and $`\lambda_2`$ would do. After 400 steps the leftover, the length of $`Lx - \lambda_2 x`$, is below 1e-9.
 
-The matrix-tree theorem of [Spanning trees](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/03-spanning-trees-and-cayleys-formula.md) reads the same table a third way. That card counts spanning trees as the determinant of $L$ with one row and its column cut; equivalently (Godsil and Royle, Sources), the count is the product of the non-zero eigenvalues divided by $n$. For the six friends, $(0.438447 \times 4.561553 \times 3 \times 3 \times 3)/6 = 9.000000$, and listing every choice of five links finds 9 trees.
+The matrix-tree theorem of [Spanning trees](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/03-spanning-trees-and-cayleys-formula.md) reads the same table a third way. That card counts spanning trees as the determinant of $`L`$ with one row and its column cut; equivalently (Godsil and Royle, Sources), the count is the product of the non-zero eigenvalues divided by $`n`$. For the six friends, $`(0.438447 \times 4.561553 \times 3 \times 3 \times 3)/6 = 9.000000`$, and listing every choice of five links finds 9 trees.
 
 ---
 
 ## Worked numbers, by hand
 
-The six friends. A labelling that respects the mirror symmetry is $(1, 1, b, -b, -1, -1)$ for Ana to Fay.
+The six friends. A labelling that respects the mirror symmetry is $`(1, 1, b, -b, -1, -1)`$ for Ana to Fay.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | degrees, Ana to Fay | count each person's friends | 2, 2, 3, 3, 2, 2 |
-| Cal's row of $L$ | 3 on the diagonal, −1 for Ana, Ben, Dev | −1, −1, 3, −1, 0, 0 |
-| Ana's row of $Lx = \lambda x$ | $2 \cdot 1 - 1 - b = \lambda \cdot 1$ | $b = 1 - \lambda$ |
-| Cal's row of $Lx = \lambda x$ | $3b - 1 - 1 - (-b) = \lambda b$ | $4b - 2 = \lambda b$ |
-| substitute $b = 1 - \lambda$ | $4(1 - \lambda) - 2 = \lambda(1 - \lambda)$ | $\lambda^2 - 5\lambda + 2 = 0$ |
-| smaller root | $(5 - \sqrt{17})/2$ | **0.438447** |
-| Cal's label | $1 - 0.438447$ | 0.561553 |
-| disagreement $x^{\mathsf T}Lx$ | $4(1 - 0.561553)^2 + (2 \times 0.561553)^2$ | 2.030310 |
-| length squared $x^{\mathsf T}x$ | $4 + 2 \times 0.561553^2$ | 4.630683 |
+| Cal's row of $`L`$ | 3 on the diagonal, −1 for Ana, Ben, Dev | −1, −1, 3, −1, 0, 0 |
+| Ana's row of $`Lx = \lambda x`$ | $`2 \cdot 1 - 1 - b = \lambda \cdot 1`$ | $`b = 1 - \lambda`$ |
+| Cal's row of $`Lx = \lambda x`$ | $`3b - 1 - 1 - (-b) = \lambda b`$ | $`4b - 2 = \lambda b`$ |
+| substitute $`b = 1 - \lambda`$ | $`4(1 - \lambda) - 2 = \lambda(1 - \lambda)`$ | $`\lambda^2 - 5\lambda + 2 = 0`$ |
+| smaller root | $`(5 - \sqrt{17})/2`$ | **0.438447** |
+| Cal's label | $`1 - 0.438447`$ | 0.561553 |
+| disagreement $`x^{\mathsf T}Lx`$ | $`4(1 - 0.561553)^2 + (2 \times 0.561553)^2`$ | 2.030310 |
+| length squared $`x^{\mathsf T}x`$ | $`4 + 2 \times 0.561553^2`$ | 4.630683 |
 | ratio, the check | 2.030310 / 4.630683 | 0.438447 |
 | sign split | Ana, Ben, Cal positive; Dev, Eve, Fay negative | **1 link cut** |
-| bound from that split | $4 \times 1 / 6$ | 0.666667 |
+| bound from that split | $`4 \times 1 / 6`$ | 0.666667 |
 
 The larger root, 4.561553, is the other mirror-image eigenvalue. A full numerical solve (Jacobi rotations in the code) finds all six: 0, 0.438447, 3, 3, 3, 4.561553. The smallest non-zero one, 0.438447, says the six hold together, but only just: one link is all that joins the halves.
 
-The 5,000, by the code: $\lambda_2 = 0.898010$, below the 1.000000 the true split allows; signs split 2,500 against 2,500, all 5,000 in their right town, 1,250 links cut.
+The 5,000, by the code: $`\lambda_2 = 0.898010`$, below the 1.000000 the true split allows; signs split 2,500 against 2,500, all 5,000 in their right town, 1,250 links cut.
 
 ### What breaks if you drop a piece
 
@@ -192,26 +198,26 @@ The 5,000, by the code: $\lambda_2 = 0.898010$, below the 1.000000 the true spli
 | --- | --- | --- |
 | Skip subtracting the average in the iteration | disagreement 0.000000, everyone on one side: 0 against 5,000 | The all-ones list has eigenvalue 0 and wins the iteration. It says "one piece" and nothing else. |
 | Use the eigenvector of the largest eigenvalue | 2,318 against 2,682; 2,950 right; 28,263 of 51,250 links cut, from a 300-step approximation of that vector | The true vector makes friends disagree as much as possible; even 300 steps towards it cut more than half the links instead of sparing them. |
-| A chain of 3 people hangs off person 0 | $\lambda_2 = 0.188124$; 0.999368 of the vector's squared length on 4 people; split 16 against 4,987; 2,511 right | The "no thin fringe" assumption fails: chopping off 3 people by one link is cheaper per person than separating the towns. |
+| A chain of 3 people hangs off person 0 | $`\lambda_2 = 0.188124`$; 0.999368 of the vector's squared length on 4 people; split 16 against 4,987; 2,511 right | The "no thin fringe" assumption fails: chopping off 3 people by one link is cheaper per person than separating the towns. |
 | Count zero eigenvalues with `== 0.0` (bridge cut) | 0 pieces, not 2 | Rounding leaves tiny non-zero numbers. Use a tolerance, such as 1e-9. |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The script builds the 5,000-person network from seed 2026 with a written-out SplitMix64 generator, so both languages build the same network. It never stores $L$: it computes $Lx$ from friend lists. It takes **three independent roads**. On the six friends:
+The script builds the 5,000-person network from seed 2026 with a written-out SplitMix64 generator, so both languages build the same network. It never stores $`L`$: it computes $`Lx`$ from friend lists. It takes **three independent roads**. On the six friends:
 
-- the closed form $(5 - \sqrt{17})/2$, a full Jacobi eigenvalue solve, and power iteration must agree;
+- the closed form $`(5 - \sqrt{17})/2`$, a full Jacobi eigenvalue solve, and power iteration must agree;
 - zero eigenvalues must match a flood-fill count of pieces;
 - the product of eigenvalues must match a brute-force count of spanning trees.
 
 On the 5,000:
 
 - the sign split is scored against the towns the generator planted;
-- $\lambda_2$ must sit below the planted split's bound $4\,\mathrm{cut}/n$;
+- $`\lambda_2`$ must sit below the planted split's bound $`4\,\mathrm{cut}/n`$;
 - the flood fill must find 1 piece before the crossing links are deleted and 2 after.
 
-The experiments at the end also run the normalised Laplacian: the same iteration, with each person's number divided by the square root of their degree before and after $L$ is applied.
+The experiments at the end also run the normalised Laplacian: the same iteration, with each person's number divided by the square root of their degree before and after $`L`$ is applied.
 
 ### Python
 
@@ -585,13 +591,13 @@ ALL CHECKS PASS
 
 Lean proves the card's two theorems and the sum-of-squares identity for every network of two-way links, and checks the six friends' numbers.
 
-- The number of eigenvalues of $L$ equal to 0, counted with repeats, is the number of pieces.
-- Take any labelling $x$. Then $x^{\mathsf T} L\, x$ is the sum, over all links, of the squared gap $(x_u - x_v)^2$.
-- Take any half-and-half split $S$ of the $n$ people. Then $\lambda_2 \le 4\,\mathrm{cut}(S)/n$.
+- The number of eigenvalues of $`L`$ equal to 0, counted with repeats, is the number of pieces.
+- Take any labelling $`x`$. Then $`x^{\mathsf T} L\, x`$ is the sum, over all links, of the squared gap $`(x_u - x_v)^2`$.
+- Take any half-and-half split $`S`$ of the $`n`$ people. Then $`\lambda_2 \le 4\,\mathrm{cut}(S)/n`$.
 - For the six friends, the degrees are 2, 2, 3, 3, 2, 2.
-- Cal's row of $L$ is −1, −1, 3, −1, 0, 0.
+- Cal's row of $`L`$ is −1, −1, 3, −1, 0, 0.
 - The sign split Ana, Ben, Cal against Dev, Eve, Fay cuts exactly 1 link.
-- For the 5,000 people, $4 \times 1250/5000 = 1$, and with 20,000 links across, $4 \times 20000/5000 = 16$.
+- For the 5,000 people, $`4 \times 1250/5000 = 1`$, and with 20,000 links across, $`4 \times 20000/5000 = 16`$.
 
 The eigenvalues themselves, the Fiedler vector, the power iteration and the 5,000-person runs are left to the Python and Rust checks.
 
@@ -845,9 +851,9 @@ example : (4 * 20000 : ℚ) / 5000 = 16 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> - Guess first: does the split need 400 steps? Set the last run to `30` steps. It still puts 4,999 of 5,000 in their right town, with $\lambda_2$ estimated at 0.902299 instead of 0.898010. Signs settle long before the number does.
-> - Guess first: how many crossing links before the sign split loses the towns? Set `across` to 10,000. $\lambda_2$ rises to 6.9551 and 4,996 people are still placed right.
-> - Guess first: and at 20,000 crossing links? The towns are still there: each person has 20 friends at home and 8 across. But $\lambda_2$ is 11.7903, the sign split is lopsided, 3,969 against 1,031, and only 2,757 are placed right: close to a coin toss. The normalised Laplacian, on the same network, places 4,934 right.
+> - Guess first: does the split need 400 steps? Set the last run to `30` steps. It still puts 4,999 of 5,000 in their right town, with $`\lambda_2`$ estimated at 0.902299 instead of 0.898010. Signs settle long before the number does.
+> - Guess first: how many crossing links before the sign split loses the towns? Set `across` to 10,000. $`\lambda_2`$ rises to 6.9551 and 4,996 people are still placed right.
+> - Guess first: and at 20,000 crossing links? The towns are still there: each person has 20 friends at home and 8 across. But $`\lambda_2`$ is 11.7903, the sign split is lopsided, 3,969 against 1,031, and only 2,757 are placed right: close to a coin toss. The normalised Laplacian, on the same network, places 4,934 right.
 > - Guess first: cut the six friends' bridge. The eigenvalues become 0, 0, 3, 3, 3, 3: two zeros for two pieces.
 
 ---
@@ -857,14 +863,14 @@ example : (4 * 20000 : ℚ) / 5000 = 16 := by norm_num
 > [!warning]
 > **Trusting a split without checking it.** Spectral clustering always returns two sides, and nothing in its output says whether they are the real groups. With 20,000 crossing links the two towns are still plainly there: each person has 20 friends at home and 8 across. Yet the plain Laplacian's labelling of least disagreement is lopsided, 3,969 against 1,031, and places only 2,757 of 5,000 people right, barely above the 2,500 of a coin.
 >
-> The normalised Laplacian of Shi and Malik (Sources), which weighs each person by their degree, places 4,934 right on the same network. Check any split against something: a known label, the bound $4\,\mathrm{cut}/n$, or the community score on [Communities](06-community-detection.md).
+> The normalised Laplacian of Shi and Malik (Sources), which weighs each person by their degree, places 4,934 right on the same network. Check any split against something: a known label, the bound $`4\,\mathrm{cut}/n`$, or the community score on [Communities](06-community-detection.md).
 >
 > The same check guards the opposite case: on a network with no groups at all, the method still hands back two sides.
 >
 > Smaller traps, each with the number it produces:
 > - **Forgetting the all-ones direction.** Without subtracting the average each step, the iteration returns the constant labelling: 0 against 5,000.
 > - **Reaching for the wrong end of the spectrum.** After 300 steps towards the largest eigenvalue's vector, its signs cut 28,263 of 51,250 links, more than half. That end of the spectrum rewards disagreement.
-> - **Ignoring a thin fringe.** A chain of 3 people drops $\lambda_2$ to 0.188124 and drags the split to 16 against 4,987. The normalised Laplacian above, which divides each cut by the links on each side, is the usual repair.
+> - **Ignoring a thin fringe.** A chain of 3 people drops $`\lambda_2`$ to 0.188124 and drags the split to 16 against 4,987. The normalised Laplacian above, which divides each cut by the links on each side, is the usual repair.
 > - **Testing for exact zero.** The bridge-cut six friends have 2 zero eigenvalues, but `== 0.0` counts 0.
 
 ---
@@ -874,11 +880,11 @@ example : (4 * 20000 : ℚ) / 5000 = 16 := by norm_num
 - **Image segmentation.** Normalised-cut methods treat pixels as people and similar neighbouring colours as friendships, then split the picture with a normalised version of this Laplacian.
 - **Social networks.** Researchers split friendship networks into communities this way before reading what each side posts.
 - **Chip layout.** Splitting a circuit's components between two areas of a chip with few wires crossing is a balanced cut; the Fiedler vector gives a fast first answer.
-- **Bike-share planning.** Treat a city's 1,200 docking stations as people and frequent trips as links: the signs of $v_2$ suggest where to split the fleet between two depots.
-- **Network resilience.** Engineers watch $\lambda_2$ of a power grid or a data-centre network: a small value warns that a few failed links could split it.
+- **Bike-share planning.** Treat a city's 1,200 docking stations as people and frequent trips as links: the signs of $`v_2`$ suggest where to split the fleet between two depots.
+- **Network resilience.** Engineers watch $`\lambda_2`$ of a power grid or a data-centre network: a small value warns that a few failed links could split it.
 
 > **Say it back**
-> The graph Laplacian is degrees minus friendships, $L = D - A$. Fed a labelling, it returns the total squared disagreement between friends. Its zero eigenvalues count the separate pieces, because only labellings constant on each piece give zero disagreement. The second eigenvalue is the least disagreement any non-constant labelling can reach, and it is a lower bound on every balanced cut. Reading the signs of its eigenvector, the Fiedler vector, split 5,000 people into their two towns, cutting exactly the 1,250 links between them.
+> The graph Laplacian is degrees minus friendships, $`L = D - A`$. Fed a labelling, it returns the total squared disagreement between friends. Its zero eigenvalues count the separate pieces, because only labellings constant on each piece give zero disagreement. The second eigenvalue is the least disagreement any non-constant labelling can reach, and it is a lower bound on every balanced cut. Reading the signs of its eigenvector, the Fiedler vector, split 5,000 people into their two towns, cutting exactly the 1,250 links between them.
 
 ---
 
@@ -894,9 +900,9 @@ example : (4 * 20000 : ℚ) / 5000 = 16 := by norm_num
 ## Where this goes next
 
 - [Communities](06-community-detection.md): more than two groups, and a score (modularity) that says whether a split is better than chance.
-- [Expanders](07-expanders-and-mixing.md): networks whose $\lambda_2$ stays large, so they have no cheap cut, and random walks on them mix fast.
+- [Expanders](07-expanders-and-mixing.md): networks whose $`\lambda_2`$ stays large, so they have no cheap cut, and random walks on them mix fast.
 
-This card leaves open how close the sign split comes to the best possible cut: $\lambda_2$ bounds every balanced cut from below, and Cheeger's inequality bounds from above the best cut that can be read off the Fiedler vector.
+This card leaves open how close the sign split comes to the best possible cut: $`\lambda_2`$ bounds every balanced cut from below, and Cheeger's inequality bounds from above the best cut that can be read off the Fiedler vector.
 
 ---
 
@@ -904,7 +910,7 @@ This card leaves open how close the sign split comes to the best possible cut: $
 
 Verified 2026-11-11: every link below resolves to the publisher's page.
 
-- Fiedler, Miroslav. "Algebraic connectivity of graphs." *Czechoslovak Mathematical Journal* 23, no. 2 (1973): 298–305. [doi:10.21136/CMJ.1973.101168](https://doi.org/10.21136/CMJ.1973.101168). Names $\lambda_2$ the algebraic connectivity and proves it is positive exactly when the graph is in one piece.
+- Fiedler, Miroslav. "Algebraic connectivity of graphs." *Czechoslovak Mathematical Journal* 23, no. 2 (1973): 298–305. [doi:10.21136/CMJ.1973.101168](https://doi.org/10.21136/CMJ.1973.101168). Names $`\lambda_2`$ the algebraic connectivity and proves it is positive exactly when the graph is in one piece.
 - von Luxburg, Ulrike. "A tutorial on spectral clustering." *Statistics and Computing* 17, no. 4 (2007): 395–416. [doi:10.1007/s11222-007-9033-z](https://doi.org/10.1007/s11222-007-9033-z). The sum-of-squares identity, the pieces count, and the relaxation of the balanced cut, all in one place.
 - Shi, Jianbo, and Jitendra Malik. "Normalized cuts and image segmentation." *IEEE Transactions on Pattern Analysis and Machine Intelligence* 22, no. 8 (2000): 888–905. [doi:10.1109/34.868688](https://doi.org/10.1109/34.868688). The normalised cut that repairs the thin-fringe failure, used on images.
 - Newman, Mark. *Networks*, 2nd ed. Oxford University Press, 2018. [doi:10.1093/oso/9780198805090.001.0001](https://doi.org/10.1093/oso/9780198805090.001.0001). The graph Laplacian and spectral partitioning in a network-science setting.

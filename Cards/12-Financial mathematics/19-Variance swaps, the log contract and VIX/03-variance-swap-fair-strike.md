@@ -38,34 +38,38 @@ Orange: the variance swap, $2,500 per variance point. Green: a straight line pay
 
 ## The formula
 
-Notation first, in words. Volatility is quoted in **vol points**: 20 percent is 20. Variance is quoted in **variance points**, vol points squared: 20 squared is 400. In the maths, the same numbers appear as decimals: 0.20 and 0.04. $P(K)$ and $C(K)$ are today's prices of a put and a call on Acme struck at $K$ and expiring at $T$. The integral sign sums over every strike, as on [Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md).
+Notation first, in words. Volatility is quoted in **vol points**: 20 percent is 20. Variance is quoted in **variance points**, vol points squared: 20 squared is 400. In the maths, the same numbers appear as decimals: 0.20 and 0.04. $`P(K)`$ and $`C(K)`$ are today's prices of a put and a call on Acme struck at $`K`$ and expiring at $`T`$. The integral sign sums over every strike, as on [Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md).
 
 The contract pays the buyer, at expiry,
 
-$$\text{payoff} = N_{var}\,\bigl(\sigma_R^2 - K_{vol}^2\bigr), \qquad N_{var} = \frac{N_{vega}}{2\,K_{vol}}$$
+```math
+\text{payoff} = N_{var}\,\bigl(\sigma_R^2 - K_{vol}^2\bigr), \qquad N_{var} = \frac{N_{vega}}{2\,K_{vol}}
+```
 
 with both squares in variance points. The fair strike, in decimals, is
 
-$$K_{var} = \frac{2\,e^{rT}}{T}\left[\int_0^{F}\frac{P(K)}{K^2}\,dK + \int_F^{\infty}\frac{C(K)}{K^2}\,dK\right], \qquad K_{vol} = 100\sqrt{K_{var}}$$
+```math
+K_{var} = \frac{2\,e^{rT}}{T}\left[\int_0^{F}\frac{P(K)}{K^2}\,dK + \int_F^{\infty}\frac{C(K)}{K^2}\,dK\right], \qquad K_{vol} = 100\sqrt{K_{var}}
+```
 
 **Read it aloud:** buy every put below the forward and every call above it, one over strike squared of each; the strip's cost, grown to expiry and doubled, divided by the years, is the fair variance.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\sigma_R$ | realised volatility: what Acme actually did, in vol points | unknown today; 25 in the payoff story | the buyer gains, faster and faster |
-| $K_{var}$ | the fair variance strike, as a decimal | 0.04000 | — |
-| $K_{vol}$ | the same strike quoted in vol points | 20.00 | the buyer needs more movement to win |
-| $N_{var}$ | variance notional: dollars per variance point | $2,500 | every payoff scales with it |
-| $N_{vega}$ | vega notional: dollars per vol point near the strike | $100,000 | every payoff scales with it |
-| $T$ | years to expiry | 1 | the strip is divided by more years |
-| $r$, $q$ | the bank rate and Acme's dividend yield, continuously compounded | 5%, 2% | $r$ grows the strip's cost to expiry |
-| $S$, $S_T$, $F$, $F_t$ | Acme today, Acme at expiry, the forward price $F = S e^{(r-q)T}$, and the forward at time t, with $F_0 = F$ and $F_T = S_T$ | $100, unknown, $103.05 | $F$ is where puts hand over to calls |
-| $K$ | an option's strike, the variable being summed over | every price from near 0 upward | its weight $1/K^2$ falls fast |
-| $P(K)$, $C(K)$ | today's put and call prices at strike $K$ | put 90: $2.71; call 120: $2.71 | more expensive options, higher strike |
-| $\sigma$, $\sigma_t$ | the implied volatility the options are priced at; the volatility at moment t along a path | 20% on every strike; 20% in the simulation | fair variance rises as its square |
-| $e^{rT}$ | grows today's cost to its value at expiry, when the swap settles | 1.051271 | — |
+| $`\sigma_R`$ | realised volatility: what Acme actually did, in vol points | unknown today; 25 in the payoff story | the buyer gains, faster and faster |
+| $`K_{var}`$ | the fair variance strike, as a decimal | 0.04000 | — |
+| $`K_{vol}`$ | the same strike quoted in vol points | 20.00 | the buyer needs more movement to win |
+| $`N_{var}`$ | variance notional: dollars per variance point | $2,500 | every payoff scales with it |
+| $`N_{vega}`$ | vega notional: dollars per vol point near the strike | $100,000 | every payoff scales with it |
+| $`T`$ | years to expiry | 1 | the strip is divided by more years |
+| $`r`$, $`q`$ | the bank rate and Acme's dividend yield, continuously compounded | 5%, 2% | $`r`$ grows the strip's cost to expiry |
+| $`S`$, $`S_T`$, $`F`$, $`F_t`$ | Acme today, Acme at expiry, the forward price $`F = S e^{(r-q)T}`$, and the forward at time t, with $`F_0 = F`$ and $`F_T = S_T`$ | $100, unknown, $103.05 | $`F`$ is where puts hand over to calls |
+| $`K`$ | an option's strike, the variable being summed over | every price from near 0 upward | its weight $`1/K^2`$ falls fast |
+| $`P(K)`$, $`C(K)`$ | today's put and call prices at strike $`K`$ | put 90: $2.71; call 120: $2.71 | more expensive options, higher strike |
+| $`\sigma`$, $`\sigma_t`$ | the implied volatility the options are priced at; the volatility at moment t along a path | 20% on every strike; 20% in the simulation | fair variance rises as its square |
+| $`e^{rT}`$ | grows today's cost to its value at expiry, when the swap settles | 1.051271 | — |
 
-The $2e^{rT}/T$ in front is 2.102542 here. $K_{var}$ is a decimal; $K_{vol}$ multiplies its root by 100 to reach vol points.
+The $`2e^{rT}/T`$ in front is 2.102542 here. $`K_{var}`$ is a decimal; $`K_{vol}`$ multiplies its root by 100 to reach vol points.
 
 Conventions verified 27 Sep 2026: strike quoted in vol points; variance notional equals vega notional over twice the strike; realised variance summed over 252 trading days a year with no average subtracted. A term sheet can override any of them.
 
@@ -96,52 +100,60 @@ dollar gamma, Acme at   the 1/K^2 strip      calls struck at 100, scaled to matc
      140                ███████████  1.90    ██  0.42
 ```
 
-The strip holds 1.90 everywhere, which is $2e^{-rT}/T$ = 1.902459. The calls count moves well only near their strike: at $60 they count less than a twentieth as much.
+The strip holds 1.90 everywhere, which is $`2e^{-rT}/T`$ = 1.902459. The calls count moves well only near their strike: at $60 they count less than a twentieth as much.
 
 ### Step 1: the hedged log contract earns realised variance, path by path
 
-Work with the forward $F$ rather than the share, so interest and dividends drop out: a forward moves only when the share's outlook moves. Itô's lemma ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)) compares the forward's log with its percentage change over a small time step dt, when the forward moves with a volatility that may itself change from moment to moment, written with a subscript t:
+Work with the forward $`F`$ rather than the share, so interest and dividends drop out: a forward moves only when the share's outlook moves. Itô's lemma ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)) compares the forward's log with its percentage change over a small time step dt, when the forward moves with a volatility that may itself change from moment to moment, written with a subscript t:
 
-$$d(\ln F_t) = \frac{dF_t}{F_t} - \tfrac12\,\sigma_t^2\,dt$$
+```math
+d(\ln F_t) = \frac{dF_t}{F_t} - \tfrac12\,\sigma_t^2\,dt
+```
 
 The square of the move is the only difference between the two. Rearrange and add up over the year:
 
-$$\frac1T\int_0^T \sigma_t^2\,dt = \frac2T\left[\int_0^T \frac{dF_t}{F_t} - \ln\frac{F_T}{F_0}\right]$$
+```math
+\frac1T\int_0^T \sigma_t^2\,dt = \frac2T\left[\int_0^T \frac{dF_t}{F_t} - \ln\frac{F_T}{F_0}\right]
+```
 
-The left side is realised variance. The right side is a trading strategy. The first term: hold $2/(T F_t)$ forward contracts at each moment, rebalanced daily; each day it gains two over $T$ times the forward's percentage change. The second term: sell $2/T$ log contracts, which pay $\ln(F_T/F_0)$ at expiry. Nothing on the right assumes what that volatility is. The identity holds on every path, not on average.
+The left side is realised variance. The right side is a trading strategy. The first term: hold $`2/(T F_t)`$ forward contracts at each moment, rebalanced daily; each day it gains two over $`T`$ times the forward's percentage change. The second term: sell $`2/T`$ log contracts, which pay $`\ln(F_T/F_0)`$ at expiry. Nothing on the right assumes what that volatility is. The identity holds on every path, not on average.
 
 The simulation in the code runs it. On 4,000 simulated years of daily prices, the hedged log contract and realised variance never differed by more than 0.000121. On 1,000 years where volatility was 10 percent for six months and then 30 percent, the worst gap was 0.000260. The hedge did not know volatility changed.
 
 ### Step 2: price the strategy
 
-Forward contracts cost nothing to enter and, in the pricing world where every asset earns the bank rate, gain nothing on average. So the fair variance is two over $T$ times the value at expiry of the short log contract, which pays $-\ln(S_T/F)$ since $F_T = S_T$ and $F_0 = F$:
+Forward contracts cost nothing to enter and, in the pricing world where every asset earns the bank rate, gain nothing on average. So the fair variance is two over $`T`$ times the value at expiry of the short log contract, which pays $`-\ln(S_T/F)`$ since $`F_T = S_T`$ and $`F_0 = F`$:
 
-$$K_{var} = \frac2T\,\mathbb{E}\!\left[-\ln\frac{S_T}{F}\right]$$
+```math
+K_{var} = \frac2T\,\mathbb{E}\!\left[-\ln\frac{S_T}{F}\right]
+```
 
-Here $\mathbb{E}$ is the average in that pricing world. Grow a price to expiry by multiplying by $e^{rT}$, and this is $2e^{rT}/T$ times today's cost of the log contract.
+Here $`\mathbb{E}`$ is the average in that pricing world. Grow a price to expiry by multiplying by $`e^{rT}`$, and this is $`2e^{rT}/T`$ times today's cost of the log contract.
 
 ### Step 3: the log contract is a strip of options
 
-Nobody lists a log contract, but a strip of options builds one. The spanning result on [Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md) says any smooth payoff is a bond, a forward and options, each option weighted by the payoff's curvature at its strike. The curvature of the negative log at $K$ is $1/K^2$. Cut at the forward:
+Nobody lists a log contract, but a strip of options builds one. The spanning result on [Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md) says any smooth payoff is a bond, a forward and options, each option weighted by the payoff's curvature at its strike. The curvature of the negative log at $`K`$ is $`1/K^2`$. Cut at the forward:
 
-$$-\ln\frac{S_T}{F} = -\frac{S_T - F}{F} + \int_0^F \frac{(K - S_T)^+}{K^2}\,dK + \int_F^\infty \frac{(S_T - K)^+}{K^2}\,dK$$
+```math
+-\ln\frac{S_T}{F} = -\frac{S_T - F}{F} + \int_0^F \frac{(K - S_T)^+}{K^2}\,dK + \int_F^\infty \frac{(S_T - K)^+}{K^2}\,dK
+```
 
-The first piece is a forward struck at $F$, which costs nothing today. The rest are puts below $F$ and calls above, each weighted $1/K^2$. Their cost is the bracket in the formula. Step 2 finishes the proof.
+The first piece is a forward struck at $`F`$, which costs nothing today. The rest are puts below $`F`$ and calls above, each weighted $`1/K^2`$. Their cost is the bracket in the formula. Step 2 finishes the proof.
 
 <details>
 <summary>Detailed proof: the strip pays the log exactly</summary>
 
-Take a final price below the forward, $S_T < F$. Every call in the strip expires worthless. The puts struck from $S_T$ up to $F$ pay:
+Take a final price below the forward, $`S_T < F`$. Every call in the strip expires worthless. The puts struck from $`S_T`$ up to $`F`$ pay:
 
-$$\int_{S_T}^F \frac{K - S_T}{K^2}\,dK = \Bigl[\ln K + \frac{S_T}{K}\Bigr]_{S_T}^{F} = \ln\frac{F}{S_T} + \frac{S_T}{F} - 1$$
+$`\displaystyle \int_{S_T}^F \frac{K - S_T}{K^2}\,dK = \Bigl[\ln K + \frac{S_T}{K}\Bigr]_{S_T}^{F} = \ln\frac{F}{S_T} + \frac{S_T}{F} - 1`$
 
-Add the forward's payoff $-(S_T - F)/F = 1 - S_T/F$. The sum is $\ln(F/S_T)$, the log contract. A final price above $F$ runs the same way with the calls from $F$ up to $S_T$. At $S_T = F$ everything pays zero, and so does the log.
+Add the forward's payoff $`-(S_T - F)/F = 1 - S_T/F`$. The sum is $`\ln(F/S_T)`$, the log contract. A final price above $`F`$ runs the same way with the calls from $`F`$ up to $`S_T`$. At $`S_T = F`$ everything pays zero, and so does the log.
 
 </details>
 
 ### Step 4: a flat surface returns its own variance
 
-If every option is priced at one volatility $\sigma$, then $\ln(S_T/F)$ is bell-shaped with average $-\tfrac12\sigma^2T$ in the pricing world (the drift correction of [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md) once more). Step 2 then gives $(2/T)\cdot\tfrac12\sigma^2T = \sigma^2$. For Acme: 0.04. The code gets there three ways: the strip, the log contract averaged against the bell curve with no options at all, and the simulated hedge.
+If every option is priced at one volatility $`\sigma`$, then $`\ln(S_T/F)`$ is bell-shaped with average $`-\tfrac12\sigma^2T`$ in the pricing world (the drift correction of [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md) once more). Step 2 then gives $`(2/T)\cdot\tfrac12\sigma^2T = \sigma^2`$. For Acme: 0.04. The code gets there three ways: the strip, the log contract averaged against the bell curve with no options at all, and the simulated hedge.
 
 The strip does not need the surface to be flat. If options are priced as though volatility were 10 percent for half a year and 30 percent for the other half, their average variance is 0.05, and the strip returns 0.050000. Simulating that world, realised variance averaged 0.050395, about two standard errors (0.000183) away: simulation noise. When the surface is not flat, the strip reads whatever the options say.
 
@@ -185,12 +197,12 @@ The put at 90 and the call at 120 cost almost the same, yet the put's weight 0.0
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Leave out $e^{rT}$ | 0.038049 | The strip is paid for today and the swap settles in a year; the cost must be grown to expiry. |
+| Leave out $`e^{rT}`$ | 0.038049 | The strip is paid for today and the swap settles in a year; the cost must be grown to expiry. |
 | Cut at spot $100 instead of the forward, no correction | 0.040940 | Strikes between $100 and $103.05 are counted as calls, which are in the money there; their intrinsic value is not variance. |
 | Two strikes only | 0.033017 | Most of the log's curve has no option under it. |
-| At-the-money volatility squared, on a skewed surface | 0.040000 against a strip of 0.041146 | With a skew (volatility 1 point lower for every 10 percent a strike sits above the forward, 1 point higher for every 10 percent below), low-strike puts are richer, and the $1/K^2$ weights count them. |
+| At-the-money volatility squared, on a skewed surface | 0.040000 against a strip of 0.041146 | With a skew (volatility 1 point lower for every 10 percent a strike sits above the forward, 1 point higher for every 10 percent below), low-strike puts are richer, and the $`1/K^2`$ weights count them. |
 
-The rule of thumb from Demeterfi and co-authors for that skew, $0.04 \times (1 + 3Tb^2)$ with slope b = 0.10, gives 0.041200, close to the strip's 0.041146.
+The rule of thumb from Demeterfi and co-authors for that skew, $`0.04 \times (1 + 3Tb^2)`$ with slope b = 0.10, gives 0.041200, close to the strip's 0.041146.
 
 ### The Greeks
 
@@ -198,7 +210,7 @@ The rule of thumb from Demeterfi and co-authors for that skew, $0.04 \times (1 +
 | --- | --- | --- |
 | Value on day one | what the swap is worth when struck at the fair strike | $0 |
 | Delta | dollars gained per $1 move in Acme, fair strike re-read from the strip | 0.000000 on a flat surface |
-| Vega | dollars gained per vol point rise in implied volatility, by re-pricing the strip at 21% and 19% | $95,122.94, which is $e^{-rT}$ × $100,000 |
+| Vega | dollars gained per vol point rise in implied volatility, by re-pricing the strip at 21% and 19% | $95,122.94, which is $`e^{-rT}`$ × $100,000 |
 | Dollar gamma of the hedge strip | the strip's share price squared times gamma, per unit of decimal variance notional | 1.902459 at every spot |
 | Theta | how the value drifts as days pass | set by the variance already realised; see [Marking a variance swap](04-variance-swap-after-inception-and-forward-variance.md) |
 
@@ -208,7 +220,7 @@ The vega is the vega notional, discounted: the notional was built to mean exactl
 
 ## Code, from first principles, and it actually runs
 
-Both programs reach the fair variance three independent ways. Road 1 prices every out-of-the-money option on the flat 20 percent surface and integrates the strip by Simpson's rule in log-strike. Road 2 prices the log contract directly, averaging $-\ln(S_T/F)$ against the bell curve with no options at all. Road 3 simulates 4,000 years of daily prices, runs the hedged log contract of Step 1 on each, and compares it with realised variance path by path; then it repeats on 1,000 years where volatility jumps from 10 to 30 percent at mid-year. The programs also print the two-strike worked example, the what-breaks numbers, the notional conversion, the Greeks by bumping, the dollar-gamma bars and the chart points. The normal CDF is a written-out series; the random numbers come from a written-out generator (splitmix64 with the Box-Muller transform).
+Both programs reach the fair variance three independent ways. Road 1 prices every out-of-the-money option on the flat 20 percent surface and integrates the strip by Simpson's rule in log-strike. Road 2 prices the log contract directly, averaging $`-\ln(S_T/F)`$ against the bell curve with no options at all. Road 3 simulates 4,000 years of daily prices, runs the hedged log contract of Step 1 on each, and compares it with realised variance path by path; then it repeats on 1,000 years where volatility jumps from 10 to 30 percent at mid-year. The programs also print the two-strike worked example, the what-breaks numbers, the notional conversion, the Greeks by bumping, the dollar-gamma bars and the chart points. The normal CDF is a written-out series; the random numbers come from a written-out generator (splitmix64 with the Box-Muller transform).
 
 ### Python
 
@@ -629,9 +641,9 @@ The two outputs are identical to the printed precision.
 
 Lean proves Steps 2 and 3 of Why it works and the notional sizing, for any pricing world with a positive final price.
 
-- Suppose $S_T$ is positive and averages $F$, the log contract has a price, and each option costs its average payoff times $e^{-rT}$. Then the strip formula for $K_{var}$ equals $\tfrac2T\,\mathbb{E}[-\ln(S_T/F)]$ from Step 2.
-- Take a final price $S_T$ and a forward $F$, both positive. Then $-\ln(S_T/F)$ equals the forward's payoff plus the $1/K^2$ puts below $F$ and calls above it.
-- Take a positive strike and vega notional, and set variance notional to vega notional over twice the strike. Then the variance swap pays at least the chart's straight line, equal only when $\sigma_R = K_{vol}$.
+- Suppose $`S_T`$ is positive and averages $`F`$, the log contract has a price, and each option costs its average payoff times $`e^{-rT}`$. Then the strip formula for $`K_{var}`$ equals $`\tfrac2T\,\mathbb{E}[-\ln(S_T/F)]`$ from Step 2.
+- Take a final price $`S_T`$ and a forward $`F`$, both positive. Then $`-\ln(S_T/F)`$ equals the forward's payoff plus the $`1/K^2`$ puts below $`F`$ and calls above it.
+- Take a positive strike and vega notional, and set variance notional to vega notional over twice the strike. Then the variance swap pays at least the chart's straight line, equal only when $`\sigma_R = K_{vol}`$.
 - $100,000 per vol point struck at 20 is $2,500 per variance point, and 20 vol points is 400 variance points.
 - The variance swap's five chart points are exact, and so are the straight line's four points away from 20.
 
@@ -925,10 +937,10 @@ example : (20 : ℤ) ^ 2 = 400 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Taking the fair strike to be at-the-money implied volatility squared.** On a flat surface the two agree, 0.040000 each. On a real equity surface, where low strikes trade at higher volatility, the $1/K^2$ weights lean on those expensive puts and the strip comes out higher: 0.041146 against 0.040000 for a gentle skew, 0.044593 for a steeper one. The fair strike is a weighted average over the whole smile, not one point on it.
+> **Taking the fair strike to be at-the-money implied volatility squared.** On a flat surface the two agree, 0.040000 each. On a real equity surface, where low strikes trade at higher volatility, the $`1/K^2`$ weights lean on those expensive puts and the strip comes out higher: 0.041146 against 0.040000 for a gentle skew, 0.044593 for a steeper one. The fair strike is a weighted average over the whole smile, not one point on it.
 >
 > Smaller traps:
-> - **Leaving out the growth factor $e^{rT}$.** The strip comes out at 0.038049 instead of 0.040000, because the options are paid for today and the swap settles at expiry.
+> - **Leaving out the growth factor $`e^{rT}`$.** The strip comes out at 0.038049 instead of 0.040000, because the options are paid for today and the swap settles at expiry.
 > - **Cutting at spot instead of the forward.** 0.040940 instead of 0.040000; the options between $100 and $103.05 carry intrinsic value that is not variance. Cutting anywhere else needs a correction term.
 > - **Treating variance notional as vega notional.** $2,500 per variance point is not $100,000 per vol point away from the strike: at 25 the swap pays $562,500, not $500,000; at 15 it costs $437,500, not $500,000.
 > - **Reading the strike as a forecast.** It is the price of a replicating strip. Buyers pay for protection against wild markets, so the strike usually sits above the variance that later arrives.

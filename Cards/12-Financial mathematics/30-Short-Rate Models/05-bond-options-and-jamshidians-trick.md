@@ -35,50 +35,56 @@ Top line (orange): the option's payoff, the bond's price minus $101 or nothing. 
 
 ## The formula
 
-Notation first, in words. $P(t,u)$ is the price at time $t$ of a zero that pays $1 at time $u$, so $P(0,5)$ is today's price of $1 due in five years. $B(\tau)$ (tau, a length of time) is the Hull-White **rate sensitivity**: how much a zero with $\tau$ years left loses, in log terms, per unit rise in the short rate. $N(x)$ is the bell-curve area to the left of $x$. $a$ is the reversion speed, 0.3 a year, and $\sigma$ the short rate's volatility, 1 percent.
+Notation first, in words. $`P(t,u)`$ is the price at time $`t`$ of a zero that pays $1 at time $`u`$, so $`P(0,5)`$ is today's price of $1 due in five years. $`B(\tau)`$ (tau, a length of time) is the Hull-White **rate sensitivity**: how much a zero with $`\tau`$ years left loses, in log terms, per unit rise in the short rate. $`N(x)`$ is the bell-curve area to the left of $`x`$. $`a`$ is the reversion speed, 0.3 a year, and $`\sigma`$ the short rate's volatility, 1 percent.
 
-The call on the zero, written ZBC (zero-bond call), expiring at $T$, on a zero maturing at $S$, strike $K$ per $1 of face:
+The call on the zero, written ZBC (zero-bond call), expiring at $`T`$, on a zero maturing at $`S`$, strike $`K`$ per $1 of face:
 
-$$\mathrm{ZBC} = P(0,S)\,N(h) \;-\; K\,P(0,T)\,N(h - \sigma_P)$$
+```math
+\mathrm{ZBC} = P(0,S)\,N(h) \;-\; K\,P(0,T)\,N(h - \sigma_P)
+```
 
 **Read it aloud:** the zero you might receive, minus the strike you might pay, each weighted by its own chance, each already in today's money through today's curve.
 
 The two helpers:
 
-$$\sigma_P = \sigma\,B(S-T)\,\sqrt{\frac{1 - e^{-2aT}}{2a}}, \qquad h = \frac{1}{\sigma_P}\ln\frac{P(0,S)}{K\,P(0,T)} + \frac{\sigma_P}{2}, \qquad B(\tau) = \frac{1 - e^{-a\tau}}{a}$$
+```math
+\sigma_P = \sigma\,B(S-T)\,\sqrt{\frac{1 - e^{-2aT}}{2a}}, \qquad h = \frac{1}{\sigma_P}\ln\frac{P(0,S)}{K\,P(0,T)} + \frac{\sigma_P}{2}, \qquad B(\tau) = \frac{1 - e^{-a\tau}}{a}
+```
 
-$\sigma_P$ is the spread of the log of the zero's price on expiry day: the rate's spread, times the zero's sensitivity to the rate. $h$ is the forward bond price's lead over the strike, counted in those spreads, plus half a spread.
+$`\sigma_P`$ is the spread of the log of the zero's price on expiry day: the rate's spread, times the zero's sensitivity to the rate. $`h`$ is the forward bond price's lead over the strike, counted in those spreads, plus half a spread.
 
-The call on the coupon bond, written CBC (coupon-bond call), paying $c_i$ at times $T_i$, strike $X$:
+The call on the coupon bond, written CBC (coupon-bond call), paying $`c_i`$ at times $`T_i`$, strike $`X`$:
 
-$$\mathrm{CBC} = \sum_i c_i\,\mathrm{ZBC}(T, T_i, K_i), \qquad K_i = P(T, T_i;\, r^*), \qquad \sum_i c_i\,P(T, T_i;\, r^*) = X$$
+```math
+\mathrm{CBC} = \sum_i c_i\,\mathrm{ZBC}(T, T_i, K_i), \qquad K_i = P(T, T_i;\, r^*), \qquad \sum_i c_i\,P(T, T_i;\, r^*) = X
+```
 
-**Read it aloud:** find the one short rate $r^*$ at which the bond would be worth exactly the strike on expiry day; strike each zero at its own price at that rate; the coupon-bond call is the bundle of those zero calls.
+**Read it aloud:** find the one short rate $`r^*`$ at which the bond would be worth exactly the strike on expiry day; strike each zero at its own price at that rate; the coupon-bond call is the bundle of those zero calls.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
 | ZBC, CBC | today's price of the call on the zero; of the call on the coupon bond | 0.831720; 0.873631 per $100 face | — |
-| $r$ | the short rate, overnight borrowing, the model's one random number | 4 percent today | falls: bonds cheaper |
-| $a$ | reversion speed: how fast the rate is pulled back to its level | 0.3 a year | falls: rate moves die out sooner |
-| $\sigma$ | the short rate's volatility, in rate points per root-year | 1 percent | rises: more room to move |
-| $\theta(t)$ | Hull-White's drift, chosen so the model reprices today's curve | 0.015 at every date here | — (fixed by the curve) |
-| $P(t,u)$, $t$, $F$ | price at time $t$ of $1 due at $u$; $F$, a forward price, is a ratio of two of them | $P(0,1) = 0.959496$, $P(0,5) = 0.799856$ | — |
-| $T$, $S$ | option expiry; the zero's maturity | 1 year; 5 years | — |
-| $K$, $X$ | strikes: on the zero per $1 face; on the coupon bond per $100 | 0.83; $101 | falls: more to pay |
-| $B(\tau)$, $\tau$, $A$ | rate sensitivity of a zero with $\tau$ years left; $A$ is the rest of its price formula, free of the rate | $B(4) = 2.329353$ | — |
-| $\sigma_P$ | spread of the log zero price on expiry day | 0.020199 | rises: like any option's volatility |
-| $h$, $d_1$, $d_2$, $N(x)$ | lead over the strike in spreads, plus half (Black-76 calls it $d_1$, and $d_2 = d_1 - \sigma_P$); bell-curve area | $h = 0.225590$ | — |
-| $c_i$, $T_i$ | the bond's payments and their dates, after expiry | $5 at 2, 3, 4; $105 at 5 | — |
-| $r^*$, $K_i$ | the rate where the bond is worth $X$; each zero's price there | 4.3644 percent; 95.648004 … per $100 | — |
+| $`r`$ | the short rate, overnight borrowing, the model's one random number | 4 percent today | falls: bonds cheaper |
+| $`a`$ | reversion speed: how fast the rate is pulled back to its level | 0.3 a year | falls: rate moves die out sooner |
+| $`\sigma`$ | the short rate's volatility, in rate points per root-year | 1 percent | rises: more room to move |
+| $`\theta(t)`$ | Hull-White's drift, chosen so the model reprices today's curve | 0.015 at every date here | — (fixed by the curve) |
+| $`P(t,u)`$, $`t`$, $`F`$ | price at time $`t`$ of $1 due at $`u`$; $`F`$, a forward price, is a ratio of two of them | $`P(0,1) = 0.959496`$, $`P(0,5) = 0.799856`$ | — |
+| $`T`$, $`S`$ | option expiry; the zero's maturity | 1 year; 5 years | — |
+| $`K`$, $`X`$ | strikes: on the zero per $1 face; on the coupon bond per $100 | 0.83; $101 | falls: more to pay |
+| $`B(\tau)`$, $`\tau`$, $`A`$ | rate sensitivity of a zero with $`\tau`$ years left; $`A`$ is the rest of its price formula, free of the rate | $`B(4) = 2.329353`$ | — |
+| $`\sigma_P`$ | spread of the log zero price on expiry day | 0.020199 | rises: like any option's volatility |
+| $`h`$, $`d_1`$, $`d_2`$, $`N(x)`$ | lead over the strike in spreads, plus half (Black-76 calls it $`d_1`$, and $`d_2 = d_1 - \sigma_P`$); bell-curve area | $`h = 0.225590`$ | — |
+| $`c_i`$, $`T_i`$ | the bond's payments and their dates, after expiry | $5 at 2, 3, 4; $105 at 5 | — |
+| $`r^*`$, $`K_i`$ | the rate where the bond is worth $`X`$; each zero's price there | 4.3644 percent; 95.648004 … per $100 | — |
 
 ### When it holds
 
 - **One random driver.** Every rate on the curve moves because the one short rate moved, so all zero prices rise and fall together. With two drivers, long and short rates can move apart, the zeros stop switching off at one shared rate, and Jamshidian's split becomes an approximation: [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md).
-- **A normal short rate with fixed $a$ and $\sigma$.** That makes the log zero price normal, which is what makes Black-76 exact. The same normality lets the rate go below zero; here that chance is about 5 in 10 million. If the market's option prices imply a different volatility pattern, the fit is redone: [Calibrating Hull-White](08-calibrating-a-short-rate-model.md).
+- **A normal short rate with fixed $`a`$ and $`\sigma`$.** That makes the log zero price normal, which is what makes Black-76 exact. The same normality lets the rate go below zero; here that chance is about 5 in 10 million. If the market's option prices imply a different volatility pattern, the fit is redone: [Calibrating Hull-White](08-calibrating-a-short-rate-model.md).
 - **Every payment positive.** Positive payments are what make the bond's price fall steadily as the rate rises. A bond with a negative cash flow, a short position in one zero, can cross the strike twice, and the split fails.
 - **Exercise on one date.** An option exercisable on several dates, like most callable bonds, has no closed form; it needs [The Hull-White tree](06-hull-white-trinomial-tree.md).
 - **Strike in cash, on the bond's full price.** The formula compares the strike with the bond's full cash price, accrued interest included. Exchange and dealer quotes usually strike on the clean price, which leaves out the accrued interest; convert first or the strike is off by the accrued coupon. Here expiry falls on a coupon date, so the two coincide. Conventions verified 2026-09-28.
-- **Today's curve taken as given.** Hull-White reads $P(0,T)$ and $P(0,S)$ straight from the market. A wrong curve gives a wrong forward, and the price inherits the error one for one.
+- **Today's curve taken as given.** Hull-White reads $`P(0,T)`$ and $`P(0,S)`$ straight from the market. A wrong curve gives a wrong forward, and the price inherits the error one for one.
 
 ---
 
@@ -86,17 +92,19 @@ $$\mathrm{CBC} = \sum_i c_i\,\mathrm{ZBC}(T, T_i, K_i), \qquad K_i = P(T, T_i;\,
 
 ### Step 0: one number sets the whole curve
 
-In Hull-White, knowing the short rate on a future date fixes every bond price on that date. Each zero's price is an exponential of a straight line in the rate: $P(T,u) = A \, e^{-B(u-T)\,r}$, with a number $A$ that depends on the dates and today's curve but not on the rate ([Hull-White](04-hull-white-model.md)). Two consequences carry the card. The log of a zero's price is a straight line in the rate, so if the rate is bell-shaped the zero's price is lognormal: its log is bell-shaped. And every zero's price falls as the rate rises, all at once.
+In Hull-White, knowing the short rate on a future date fixes every bond price on that date. Each zero's price is an exponential of a straight line in the rate: $`P(T,u) = A \, e^{-B(u-T)\,r}`$, with a number $`A`$ that depends on the dates and today's curve but not on the rate ([Hull-White](04-hull-white-model.md)). Two consequences carry the card. The log of a zero's price is a straight line in the rate, so if the rate is bell-shaped the zero's price is lognormal: its log is bell-shaped. And every zero's price falls as the rate rises, all at once.
 
 The check confirms the fitted model is the one this shelf has been using. Reading Hull-White's drift off today's curve gives 0.015000 at half a year and at three years, which is 0.3 times 5 percent: a Vasicek model ([Vasicek](02-vasicek-model.md)). The fitted Hull-White price of the 5-year zero in a year, at a 5 percent rate, is 0.819121, and Vasicek's own formula gives 0.819121.
 
 ### Step 1: the zero's price on expiry day is lognormal, with a known spread
 
-The short rate in one year is bell-shaped. Its spread is not $\sigma\sqrt{T}$, as it would be for a rate left to wander. The pull back toward 5 percent erases part of every old shock, so the variance after $T$ years is $\sigma^2(1 - e^{-2aT})/(2a)$. Its square root at one year is $\sigma$ times 0.867168: the **damping** factor.
+The short rate in one year is bell-shaped. Its spread is not $`\sigma\sqrt{T}`$, as it would be for a rate left to wander. The pull back toward 5 percent erases part of every old shock, so the variance after $`T`$ years is $`\sigma^2(1 - e^{-2aT})/(2a)`$. Its square root at one year is $`\sigma`$ times 0.867168: the **damping** factor.
 
-The log of the zero's price moves $B(4) = 2.329353$ times as far as the rate, opposite way. So its spread is
+The log of the zero's price moves $`B(4) = 2.329353`$ times as far as the rate, opposite way. So its spread is
 
-$$\sigma_P = 0.01 \times 2.329353 \times 0.867168 = 0.020199.$$
+```math
+\sigma_P = 0.01 \times 2.329353 \times 0.867168 = 0.020199.
+```
 
 About 2 percent of the bond's price. That is the volatility Black-76 needs, and nobody has to guess it: the rate model hands it over.
 
@@ -111,50 +119,52 @@ xychart-beta
     line [0.00, 1.62, 2.02, 2.15, 2.13, 2.00, 1.77, 1.46, 1.06, 0.58, 0.00]
 ```
 
-The one line is $\sigma_P$ for expiries from today to year 5. It rises at first, because a longer wait lets the rate move further. It peaks at 2.15 percent at 1.5 years and falls to zero at year 5, because a bond near maturity is worth nearly its face whatever the rate: its sensitivity $B$ shrinks to nothing. This **pull to par** is why a single volatility for "the bond" makes no sense.
+The one line is $`\sigma_P`$ for expiries from today to year 5. It rises at first, because a longer wait lets the rate move further. It peaks at 2.15 percent at 1.5 years and falls to zero at year 5, because a bond near maturity is worth nearly its face whatever the rate: its sensitivity $`B`$ shrinks to nothing. This **pull to par** is why a single volatility for "the bond" makes no sense.
 
 ### Step 2: price in units of the expiry-date zero, and Black-76 falls out
 
-Measure every price in units of the zero that matures on expiry day, $P(t,T)$, rather than in dollars. This change of yardstick ([Changing the unit of account](../05-Black-Scholes%20from%20the%20Ground%20Up/05-change-of-numeraire-in-pricing.md)) has two useful properties. The option's value becomes $P(0,T)$ times a plain average of its payoff, because the yardstick is worth exactly 1 on expiry day. And any traded price divided by the yardstick is a **forward price** that drifts nowhere on average.
+Measure every price in units of the zero that matures on expiry day, $`P(t,T)`$, rather than in dollars. This change of yardstick ([Changing the unit of account](../05-Black-Scholes%20from%20the%20Ground%20Up/05-change-of-numeraire-in-pricing.md)) has two useful properties. The option's value becomes $`P(0,T)`$ times a plain average of its payoff, because the yardstick is worth exactly 1 on expiry day. And any traded price divided by the yardstick is a **forward price** that drifts nowhere on average.
 
-The forward price of the 5-year zero for delivery at year 1 is $P(0,5)/P(0,1)$: 83.362067 per $100 face. On expiry day it equals the zero's price itself. So under the new yardstick, the zero's price on expiry day is lognormal, averages 83.362067, and has log spread $\sigma_P$. Changing yardstick shifts where the bell curve sits but not how wide it is, so the spread from Step 1 carries over.
+The forward price of the 5-year zero for delivery at year 1 is $`P(0,5)/P(0,1)`$: 83.362067 per $100 face. On expiry day it equals the zero's price itself. So under the new yardstick, the zero's price on expiry day is lognormal, averages 83.362067, and has log spread $`\sigma_P`$. Changing yardstick shifts where the bell curve sits but not how wide it is, so the spread from Step 1 carries over.
 
-That is exactly Black-76's setting: a lognormal forward $F$ with no drift, a strike, a discount factor ([Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)). With $F = P(0,S)/P(0,T)$, discount $P(0,T)$ and total spread $\sigma_P$ in place of $\sigma\sqrt{T}$, Black-76 reads $P(0,T)\,[F\,N(d_1) - K\,N(d_2)]$ with $d_1 = h$ and $d_2 = h - \sigma_P$. Multiply $P(0,T)$ through and it is the formula.
+That is exactly Black-76's setting: a lognormal forward $`F`$ with no drift, a strike, a discount factor ([Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)). With $`F = P(0,S)/P(0,T)`$, discount $`P(0,T)`$ and total spread $`\sigma_P`$ in place of $`\sigma\sqrt{T}`$, Black-76 reads $`P(0,T)\,[F\,N(d_1) - K\,N(d_2)]`$ with $`d_1 = h`$ and $`d_2 = h - \sigma_P`$. Multiply $`P(0,T)`$ through and it is the formula.
 
 <details>
 <summary>Detailed proof: the spread of the rate, and why the yardstick keeps it</summary>
 
-Hull-White's rate obeys $dr = (\theta(t) - a r)\,dt + \sigma\,dW$, the last term a Brownian shock. Multiply by $e^{at}$: $d(e^{at} r) = e^{at}\theta(t)\,dt + \sigma e^{at}\,dW$. Integrate from 0 to $T$:
-$$r(T) = r(0)\,e^{-aT} + \int_0^T e^{-a(T-s)}\theta(s)\,ds + \sigma\int_0^T e^{-a(T-s)}\,dW(s).$$
-The last term is a sum of independent normal shocks, so $r(T)$ is normal. Its variance is $\sigma^2\int_0^T e^{-2a(T-s)}\,ds = \sigma^2(1 - e^{-2aT})/(2a)$, by the rule that a stochastic integral's variance is the ordinary integral of its squared weight.
+Hull-White's rate obeys $`dr = (\theta(t) - a r)\,dt + \sigma\,dW`$, the last term a Brownian shock. Multiply by $`e^{at}`$: $`d(e^{at} r) = e^{at}\theta(t)\,dt + \sigma e^{at}\,dW`$. Integrate from 0 to $`T`$:
 
-Under the expiry-date yardstick, Girsanov's theorem says the Brownian shock gains a drift, $dW = d\widetilde{W} - \sigma B(T-t)\,dt$, and nothing else changes. A drift moves the mean of $r(T)$, never its variance, so $\ln P(T,S) = \ln A - B(S-T)\,r(T)$ is still normal with variance $B(S-T)^2$ times the rate's variance, which is $\sigma_P^2$. Its mean is pinned by the no-drift rule: the average of $P(T,S)$ must be the forward $P(0,S)/P(0,T)$.
+$`\displaystyle r(T) = r(0)\,e^{-aT} + \int_0^T e^{-a(T-s)}\theta(s)\,ds + \sigma\int_0^T e^{-a(T-s)}\,dW(s).`$
 
-For a lognormal price with average $F$ and log spread $\sigma_P$, the average call payoff is $F\,N(d_1) - K\,N(d_1 - \sigma_P)$ with $d_1 = \ln(F/K)/\sigma_P + \sigma_P/2$; this is the Black-76 integral. Put $F = P(0,S)/P(0,T)$ and multiply by $P(0,T)$: $d_1$ is $h$ and the result is ZBC.
+The last term is a sum of independent normal shocks, so $`r(T)`$ is normal. Its variance is $`\sigma^2\int_0^T e^{-2a(T-s)}\,ds = \sigma^2(1 - e^{-2aT})/(2a)`$, by the rule that a stochastic integral's variance is the ordinary integral of its squared weight.
+
+Under the expiry-date yardstick, Girsanov's theorem says the Brownian shock gains a drift, $`dW = d\widetilde{W} - \sigma B(T-t)\,dt`$, and nothing else changes. A drift moves the mean of $`r(T)`$, never its variance, so $`\ln P(T,S) = \ln A - B(S-T)\,r(T)`$ is still normal with variance $`B(S-T)^2`$ times the rate's variance, which is $`\sigma_P^2`$. Its mean is pinned by the no-drift rule: the average of $`P(T,S)`$ must be the forward $`P(0,S)/P(0,T)`$.
+
+For a lognormal price with average $`F`$ and log spread $`\sigma_P`$, the average call payoff is $`F\,N(d_1) - K\,N(d_1 - \sigma_P)`$ with $`d_1 = \ln(F/K)/\sigma_P + \sigma_P/2`$; this is the Black-76 integral. Put $`F = P(0,S)/P(0,T)`$ and multiply by $`P(0,T)`$: $`d_1`$ is $`h`$ and the result is ZBC.
 
 </details>
 
 ### Step 3: the coupon bond is worth the strike at exactly one rate
 
-On expiry day the coupon bond is worth $\sum_i c_i\,P(T,T_i;\,r)$: four zeros, each falling as the rate rises. A sum of falling curves is falling. At very low rates it grows past any strike; at very high rates it sinks toward zero. So for any strike above zero there is exactly one rate, $r^*$, where the bond is worth $X$. Existence and uniqueness both come from Step 0 and from every $c_i$ being positive.
+On expiry day the coupon bond is worth $`\sum_i c_i\,P(T,T_i;\,r)`$: four zeros, each falling as the rate rises. A sum of falling curves is falling. At very low rates it grows past any strike; at very high rates it sinks toward zero. So for any strike above zero there is exactly one rate, $`r^*`$, where the bond is worth $`X`$. Existence and uniqueness both come from Step 0 and from every $`c_i`$ being positive.
 
-The boundary case: a strike of zero or less is always beaten, so the call is simply the forward bond minus the strike, discounted, and no $r^*$ is needed. Here a bisection search finds $r^* = 4.3644$ percent.
+The boundary case: a strike of zero or less is always beaten, so the call is simply the forward bond minus the strike, discounted, and no $`r^*`$ is needed. Here a bisection search finds $`r^* = 4.3644`$ percent.
 
-Set each zero's strike to its own price at that rate, $K_i = P(T,T_i;\,r^*)$. Per $100 of face: 95.648004 on the 2-year zero, 91.360803 on the 3-year, 87.180855 on the 4-year, 83.133826 on the 5-year. Weighted by the payments, they add back to $101: $\sum_i c_i K_i = X$ by construction.
+Set each zero's strike to its own price at that rate, $`K_i = P(T,T_i;\,r^*)`$. Per $100 of face: 95.648004 on the 2-year zero, 91.360803 on the 3-year, 87.180855 on the 4-year, 83.133826 on the 5-year. Weighted by the payments, they add back to $101: $`\sum_i c_i K_i = X`$ by construction.
 
 ### Step 4: the payoffs agree on every rate, so the prices agree
 
 Take any short rate on expiry day.
 
-- **Below $r^*$.** Every zero is worth more than it was at $r^*$, so each is above its strike. Every leg pays $c_i\,(P_i - K_i)$. Added up, that is the bond's price minus $X$, which is exactly what the coupon option pays, since the bond is above $X$.
-- **Above $r^*$.** Every zero is below its strike. Every leg pays nothing. The bond is below $X$, so the coupon option pays nothing too.
+- **Below $`r^*`$.** Every zero is worth more than it was at $`r^*`$, so each is above its strike. Every leg pays $`c_i\,(P_i - K_i)`$. Added up, that is the bond's price minus $`X`$, which is exactly what the coupon option pays, since the bond is above $`X`$.
+- **Above $`r^*`$.** Every zero is below its strike. Every leg pays nothing. The bond is below $`X`$, so the coupon option pays nothing too.
 
 The two payoffs match on every outcome, so the two prices match today; anything else would be a free profit. The chart in the overview is this argument drawn: every leg dies at 4.3644 percent.
 
 <details>
 <summary>Why the strikes have to be these ones</summary>
 
-For any two numbers, $\max(x + y, 0) \le \max(x, 0) + \max(y, 0)$, with equality exactly when the two never have opposite signs. A bundle of options is therefore worth at least the option on the bundle. Jamshidian's strikes are the one choice that makes every leg change sign at the same rate, so the inequality becomes an equality. Any other split gives legs that disagree on some rates and a bundle that costs more. Splitting $101 in proportion to each payment's forward value, a natural guess, gives 0.874018 against the true 0.873631: close, because those strikes nearly coincide with Jamshidian's, and too high, as the inequality demands.
+For any two numbers, $`\max(x + y, 0) \le \max(x, 0) + \max(y, 0)`$, with equality exactly when the two never have opposite signs. A bundle of options is therefore worth at least the option on the bundle. Jamshidian's strikes are the one choice that makes every leg change sign at the same rate, so the inequality becomes an equality. Any other split gives legs that disagree on some rates and a bundle that costs more. Splitting $101 in proportion to each payment's forward value, a natural guess, gives 0.874018 against the true 0.873631: close, because those strikes nearly coincide with Jamshidian's, and too high, as the inequality demands.
 
 </details>
 
@@ -170,29 +180,29 @@ The shelf's curve: short rate 4 percent, reversion 0.3 toward 5 percent, volatil
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| today's discount to year 1 | $P(0,1)$, from the curve | 0.959496 |
-| today's discount to year 5 | $P(0,5)$, from the curve | 0.799856 |
-| forward price of the zero | $100 \times 0.799856 / 0.959496$ | 83.362067 |
-| sensitivity at expiry, $B(4)$ | $(1 - e^{-1.2})/0.3$ | 2.329353 |
-| damping | $\sqrt{(1 - e^{-0.6})/0.6}$ | 0.867168 |
-| $\sigma_P$ | $0.01 \times 2.329353 \times 0.867168$ | 0.020199 |
-| lead over the strike | $\ln(83.362067/83)$ | 0.004353 |
-| $h$ | $0.004353/0.020199 + 0.020199/2$ | 0.225590 |
-| $N(h)$, $N(h - \sigma_P)$ | bell-curve areas | 0.589240, 0.581366 |
-| bond leg | $100 \times 0.799856 \times 0.589240$ | 47.130665 |
-| strike leg | $83 \times 0.959496 \times 0.581366$ | 46.298945 |
-| **call on the zero** | $47.130665 - 46.298945$ | **0.831720** |
+| today's discount to year 1 | $`P(0,1)`$, from the curve | 0.959496 |
+| today's discount to year 5 | $`P(0,5)`$, from the curve | 0.799856 |
+| forward price of the zero | $`100 \times 0.799856 / 0.959496`$ | 83.362067 |
+| sensitivity at expiry, $`B(4)`$ | $`(1 - e^{-1.2})/0.3`$ | 2.329353 |
+| damping | $`\sqrt{(1 - e^{-0.6})/0.6}`$ | 0.867168 |
+| $`\sigma_P`$ | $`0.01 \times 2.329353 \times 0.867168`$ | 0.020199 |
+| lead over the strike | $`\ln(83.362067/83)`$ | 0.004353 |
+| $`h`$ | $`0.004353/0.020199 + 0.020199/2`$ | 0.225590 |
+| $`N(h)`$, $`N(h - \sigma_P)`$ | bell-curve areas | 0.589240, 0.581366 |
+| bond leg | $`100 \times 0.799856 \times 0.589240`$ | 47.130665 |
+| strike leg | $`83 \times 0.959496 \times 0.581366`$ | 46.298945 |
+| **call on the zero** | $`47.130665 - 46.298945`$ | **0.831720** |
 
 **The call on the coupon bond, strike $101, expiring in a year:**
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | forward price of the bond | payments valued on today's curve, divided by 0.959496 | 101.262218 |
-| $r^*$ | bisection: bond worth $101 at this rate | 4.3644 percent |
-| 2-year leg | $5 \times$ call on $1 due at year 2, strike 0.95648004 | 0.016061 |
-| 3-year leg | $5 \times$ call, strike 0.91360803 | 0.026804 |
-| 4-year leg | $5 \times$ call, strike 0.87180855 | 0.033732 |
-| 5-year leg | $105 \times$ call, strike 0.83133826 | 0.797034 |
+| $`r^*`$ | bisection: bond worth $101 at this rate | 4.3644 percent |
+| 2-year leg | $`5 \times`$ call on $1 due at year 2, strike 0.95648004 | 0.016061 |
+| 3-year leg | $`5 \times`$ call, strike 0.91360803 | 0.026804 |
+| 4-year leg | $`5 \times`$ call, strike 0.87180855 | 0.033732 |
+| 5-year leg | $`105 \times`$ call, strike 0.83133826 | 0.797034 |
 | **call on the coupon bond** | sum of the four legs | **0.873631** |
 
 The fund pays about 87 cents per $100 of face for the right to buy at $101 a bond whose forward price is $101.26. Most of the value sits in the leg on the final payment, 0.797034; the three coupon legs add the rest.
@@ -201,10 +211,10 @@ The fund pays about 87 cents per $100 of face for the right to buy at $101 a bon
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| The rate's volatility used as the bond's, $\sigma\sqrt{T}$ | 0.521798 (right: 0.831720) | A bond moves $B$ times as far as the rate; 1 percent of rate is about 2 percent of price here |
-| Sensitivity measured today, $B(5)$ not $B(4)$ | 0.902078 | On expiry day the zero has 4 years left, not 5 |
-| No damping: $\sqrt{T}$ in place of the reversion factor | 0.928268 | Mean reversion erases old shocks; ignoring it overstates the spread |
-| Coupon bond treated as the 5-year zero, same $\sigma_P$ | 0.914164 (right: 0.873631) | Coupons shorten the bond's effective life, so its price moves less |
+| The rate's volatility used as the bond's, $`\sigma\sqrt{T}`$ | 0.521798 (right: 0.831720) | A bond moves $`B`$ times as far as the rate; 1 percent of rate is about 2 percent of price here |
+| Sensitivity measured today, $`B(5)`$ not $`B(4)`$ | 0.902078 | On expiry day the zero has 4 years left, not 5 |
+| No damping: $`\sqrt{T}`$ in place of the reversion factor | 0.928268 | Mean reversion erases old shocks; ignoring it overstates the spread |
+| Coupon bond treated as the 5-year zero, same $`\sigma_P`$ | 0.914164 (right: 0.873631) | Coupons shorten the bond's effective life, so its price moves less |
 | Strikes split in proportion to forward values | 0.874018 | Legs switch off at different rates; a bundle then overprices |
 
 ### How the price moves
@@ -214,7 +224,7 @@ Two sensitivities, each found by bumping the input and repricing with the formul
 | Bump | Zero call | Coupon call |
 | --- | --- | --- |
 | Whole curve up 1 basis point (0.01 percent) | −0.018806 | −0.020129 |
-| Volatility $\sigma$ up 0.1 percentage point | +0.062969 | +0.073486 |
+| Volatility $`\sigma`$ up 0.1 percentage point | +0.062969 | +0.073486 |
 
 A call on a bond is a bet on falling rates, so a curve shift up costs it about two cents. Volatility helps it, as it helps any option.
 
@@ -225,7 +235,7 @@ A call on a bond is a bet on falling rates, so a curve shift up costs it about t
 Nothing imported knows the answer. The normal curve's area comes from its power series, the root from a bisection loop, the integral from Simpson's rule and the equation from a Crank-Nicolson grid, each written out. Each option is priced three independent ways:
 
 - **Road 1** is the formula, with Jamshidian's split for the coupon bond.
-- **Road 2** never uses $\sigma_P$ or forward prices: it averages the payoff over the bell-shaped rate on expiry day, weighting each outcome by the expected discount along the rate's path given where the path ends.
+- **Road 2** never uses $`\sigma_P`$ or forward prices: it averages the payoff over the bell-shaped rate on expiry day, weighting each outcome by the expected discount along the rate's path given where the path ends.
 - **Road 3** solves the term-structure equation backwards from expiry on a grid of rates.
 
 Road 2 agrees with the formula to six decimals. Road 3 differs from the formula only in the fifth decimal; that gap is the grid's spacing. The checks also rebuild today's discount from the path average, read Hull-White's drift off the curve, test put-call parity against an independently integrated put, and reproduce every wrong answer and sensitivity above.
@@ -653,11 +663,11 @@ ALL CHECKS PASS
 
 Lean proves Jamshidian's split exactly, for any bond with positive payments whose zeros all fall as the short rate rises.
 
-- Suppose every $c_i$ is positive, every zero's price falls as the rate rises, and $\sum_i c_i K_i = X$. Then the coupon-bond call and the bundle of zero calls pay the same at every rate.
+- Suppose every $`c_i`$ is positive, every zero's price falls as the rate rises, and $`\sum_i c_i K_i = X`$. Then the coupon-bond call and the bundle of zero calls pay the same at every rate.
 - So their prices today agree too. Each price is the average of discount times payoff, assuming each zero call's average exists.
-- Take a bond with at least one payment, all positive, priced in Hull-White, and a strike $X$ above zero. Then exactly one short rate $r^*$ makes the bond worth $X$ on expiry day.
+- Take a bond with at least one payment, all positive, priced in Hull-White, and a strike $`X`$ above zero. Then exactly one short rate $`r^*`$ makes the bond worth $`X`$ on expiry day.
 
-The zero-bond call formula, Black-76 with $\sigma_P$, and every number on this card are left to the Python and Rust checks.
+The zero-bond call formula, Black-76 with $`\sigma_P`$, and every number on this card are left to the Python and Rust checks.
 
 ```lean
 -- Bond options: when every zero price falls as the one short rate rises and every payment is positive, a call on a coupon bond pays and costs exactly the same as a bundle of calls on its zeros struck at their prices at the one rate r* where the bond is worth the strike, and in Hull-White that rate exists and is unique.
@@ -791,13 +801,13 @@ theorem exists_unique_critical_rate {n : ℕ} (hn : 0 < n) (a T X : ℝ) (ha : 0
 ## The usual mistake
 
 > [!warning]
-> **Quoting the short rate's volatility as the bond's.** A 1 percent volatility in the short rate is not a 1 percent volatility in the bond. The bond's log price moves $B$ times as far as the rate, and $B(4)$ is 2.329353, while mean reversion damps the rate's own spread. Plugging $\sigma\sqrt{T}$ into Black-76 prices the zero call at 0.521798 instead of 0.831720, over a third too cheap.
+> **Quoting the short rate's volatility as the bond's.** A 1 percent volatility in the short rate is not a 1 percent volatility in the bond. The bond's log price moves $`B`$ times as far as the rate, and $`B(4)`$ is 2.329353, while mean reversion damps the rate's own spread. Plugging $`\sigma\sqrt{T}`$ into Black-76 prices the zero call at 0.521798 instead of 0.831720, over a third too cheap.
 >
 > Smaller traps:
-> - **Measuring the sensitivity today.** The zero has 4 years left on expiry day. Using $B(5)$ gives 0.902078.
-> - **Forgetting the damping.** $\sqrt{T}$ in place of $\sqrt{(1-e^{-2aT})/(2a)}$ gives 0.928268. The error grows with expiry.
-> - **One lognormal for the coupon bond.** Pricing the coupon bond as if it were the 5-year zero, with its $\sigma_P$, gives 0.914164 instead of 0.873631. Coupons make the bond shorter, and quieter.
-> - **Strikes chosen by eye.** Only Jamshidian's strikes, all read at one rate $r^*$, make the bundle exact. Any other split overprices; the pro-rata split gives 0.874018.
+> - **Measuring the sensitivity today.** The zero has 4 years left on expiry day. Using $`B(5)`$ gives 0.902078.
+> - **Forgetting the damping.** $`\sqrt{T}`$ in place of $`\sqrt{(1-e^{-2aT})/(2a)}`$ gives 0.928268. The error grows with expiry.
+> - **One lognormal for the coupon bond.** Pricing the coupon bond as if it were the 5-year zero, with its $`\sigma_P`$, gives 0.914164 instead of 0.873631. Coupons make the bond shorter, and quieter.
+> - **Strikes chosen by eye.** Only Jamshidian's strikes, all read at one rate $`r^*`$, make the bundle exact. Any other split overprices; the pro-rata split gives 0.874018.
 
 ---
 
@@ -805,26 +815,26 @@ theorem exists_unique_critical_rate {n : ℕ} (hn : 0 < n) (a T X : ℝ) (ha : 0
 
 - **Swaptions.** A swap exchanges fixed-rate interest payments for floating-rate ones. The right to enter a swap receiving a fixed rate is a call on a coupon bond, with the fixed rate as the coupon and par (the face value) as the strike. Desks running Hull-White price European swaptions exactly this way, by Jamshidian's split: [Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md).
 - **Caps and floors.** A caplet, insurance against one period's rate rising, is a put on a zero: the right to sell it at a fixed price. The zero-option formula prices each caplet in closed form: [Caplets and floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md).
-- **Calibration.** Because both formulas are fast, a desk fits $a$ and $\sigma$ by repricing dozens of quoted swaptions in a loop: [Calibrating Hull-White](08-calibrating-a-short-rate-model.md).
+- **Calibration.** Because both formulas are fast, a desk fits $`a`$ and $`\sigma`$ by repricing dozens of quoted swaptions in a loop: [Calibrating Hull-White](08-calibrating-a-short-rate-model.md).
 - **Callable bonds.** An issuer who may repay a bond early holds a call on its own debt. With one call date the call is this card's coupon-bond option; with many dates it is Bermudan and moves to a tree: [The Hull-White tree](06-hull-white-trinomial-tree.md).
 
 > **Say it back**
-> In Hull-White one short rate sets every bond price, and each zero's log price is a straight line in that rate. The rate on expiry day is bell-shaped, so a zero's price is lognormal, with spread $\sigma_P$: the rate's damped spread times the zero's sensitivity. Priced in units of the expiry-date zero, a call on it is Black-76 with that spread. A coupon bond is a bundle of zeros that all fall together as the rate rises, so there is one rate where it is worth the strike. Strike each zero at its price at that rate, and the bundle of zero calls pays exactly what the coupon-bond call pays.
+> In Hull-White one short rate sets every bond price, and each zero's log price is a straight line in that rate. The rate on expiry day is bell-shaped, so a zero's price is lognormal, with spread $`\sigma_P`$: the rate's damped spread times the zero's sensitivity. Priced in units of the expiry-date zero, a call on it is Black-76 with that spread. A coupon bond is a bundle of zeros that all fall together as the rate rises, so there is one rate where it is worth the strike. Strike each zero at its price at that rate, and the bundle of zero calls pays exactly what the coupon-bond call pays.
 
 ---
 
 ## What this builds on
 
 - [Hull-White](04-hull-white-model.md): the model itself, its fitted drift, and bond prices as exponentials of straight lines in the rate.
-- [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md): the option on a lognormal forward, which Step 2 reuses with $\sigma_P$ as its total spread.
+- [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md): the option on a lognormal forward, which Step 2 reuses with $`\sigma_P`$ as its total spread.
 
 ## Where this goes next
 
 - [The Hull-White tree](06-hull-white-trinomial-tree.md): options with several exercise dates, where no closed form exists, priced on a tree of the same model.
 - [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md): models where the curve can twist, and Jamshidian's split stops being exact.
-- [Calibrating Hull-White](08-calibrating-a-short-rate-model.md): running these formulas backwards, from quoted option prices to $a$ and $\sigma$.
+- [Calibrating Hull-White](08-calibrating-a-short-rate-model.md): running these formulas backwards, from quoted option prices to $`a`$ and $`\sigma`$.
 
-The formulas here take $a$ and $\sigma$ as given; which values the market's own option prices imply is the question calibration answers.
+The formulas here take $`a`$ and $`\sigma`$ as given; which values the market's own option prices imply is the question calibration answers.
 
 ---
 

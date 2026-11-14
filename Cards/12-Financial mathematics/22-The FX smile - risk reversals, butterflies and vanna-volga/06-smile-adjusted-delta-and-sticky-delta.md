@@ -38,29 +38,31 @@ Orange: the smile with spot at 1.100. Green: the same three quotes rebuilt with 
 
 ## The formula
 
-Notation first, in words. Write $\sigma(K; S)$ for the smile's volatility at strike $K$ when the spot rate is $S$; the semicolon separates the strike being read from the market state. A curly $\partial$ marks a slope with every other input frozen. The plain $d\sigma/dS$ is the change in one strike's vol per unit of spot, with the smile moving by the chosen rule.
+Notation first, in words. Write $`\sigma(K; S)`$ for the smile's volatility at strike $`K`$ when the spot rate is $`S`$; the semicolon separates the strike being read from the market state. A curly $`\partial`$ marks a slope with every other input frozen. The plain $`d\sigma/dS`$ is the change in one strike's vol per unit of spot, with the smile moving by the chosen rule.
 
-$$\Delta_{\text{smile}} \;=\; \Delta_{BS} \;+\; \mathcal{V}\,\frac{d\sigma}{dS}, \qquad \text{sticky delta:}\quad \frac{d\sigma}{dS} \;=\; -\,\frac{K}{S}\,\frac{\partial \sigma}{\partial K}$$
+```math
+\Delta_{\text{smile}} \;=\; \Delta_{BS} \;+\; \mathcal{V}\,\frac{d\sigma}{dS}, \qquad \text{sticky delta:}\quad \frac{d\sigma}{dS} \;=\; -\,\frac{K}{S}\,\frac{\partial \sigma}{\partial K}
+```
 
 **Read it aloud:** hold the Black-Scholes euros, plus vega times the vol change one unit of spot brings; under sticky delta that vol change is the smile's slope in strike, turned round and scaled by strike over spot.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $S$, $\lambda$ | spot rate: dollars per euro today; $\lambda$ a scaling factor, used in the proof | 1.10, then 1.111 | the whole smile slides right with it |
-| $K$, $K_1$, $K_3$ | strike of the option being hedged; the 25-delta put and call pillar strikes | $K_3$ = 1.201425, $K_1$ = 1.052466 | moves along the smile |
-| $\sigma$, $\sigma_i$, $\sigma_3$ | volatility; $\sigma(K; S)$ the smile's vol at strike $K$ with spot at $S$, read off the vanna-volga curve; $\sigma_i$ the pillar quotes, $\sigma_3$ the call pillar's | 9.75% at $K_3$, 10.75% at $K_1$ | $\Delta_{BS}$ drifts toward 0.5 |
-| $\partial\sigma/\partial K$, $g$ | the smile's slope in strike, spot frozen, vol per unit of strike (decimals); $g$ the smile as a function of $K/S$ alone | −0.005074 at $K_3$, −0.132631 at $K_1$ | the correction shrinks or changes sign |
-| $d\sigma/dS$ | the vol change at a fixed strike per unit of spot, by the chosen rule | +0.005542 at $K_3$, +0.126900 at $K_1$ | the hedge rises one for one with vega |
-| $\Delta_{BS}$, $a$ | Black-Scholes (Garman-Kohlhagen) spot delta: the option's exposure in euros per euro of notional, vol frozen; the hedge is the opposite position. $a$: the $d_1$ that gives spot delta 0.25 | +0.25 call, −0.25 put | — |
-| $\Delta_{\text{smile}}$, $h$ | the smile-adjusted delta: the delta that counts the vol move; $h$ any hedge ratio a desk might choose | +0.251910 call, −0.206269 put | — |
-| $\mathcal{V}$, $x_i$ | vega: price change per 1.00 of volatility, dollars per euro of notional; $x_i$ the vanna-volga weights | 0.344608 at both pillars | the correction grows in proportion |
-| $\Gamma$, $\delta$ | gamma: the change in delta per unit of spot; $\delta$ in front of a symbol: its change over one move | — | the unhedgeable leftover grows |
-| $F$, $r_d$, $r_f$, $T$ | forward rate $S\,e^{(r_d - r_f)T}$; dollar and euro interest rates, continuously compounded; years to expiry | 1.122221; 5%, 3%, 1 | the pillar strikes move with $F$ |
-| $d_1$, $d_2$, $N$, $\varphi$ | the Black-Scholes distances to strike, $d_2 = d_1 - \sigma\sqrt{T}$; bell-curve area to the left; bell-curve height | equal and opposite at the two pillars | — |
+| $`S`$, $`\lambda`$ | spot rate: dollars per euro today; $`\lambda`$ a scaling factor, used in the proof | 1.10, then 1.111 | the whole smile slides right with it |
+| $`K`$, $`K_1`$, $`K_3`$ | strike of the option being hedged; the 25-delta put and call pillar strikes | $`K_3`$ = 1.201425, $`K_1`$ = 1.052466 | moves along the smile |
+| $`\sigma`$, $`\sigma_i`$, $`\sigma_3`$ | volatility; $`\sigma(K; S)`$ the smile's vol at strike $`K`$ with spot at $`S`$, read off the vanna-volga curve; $`\sigma_i`$ the pillar quotes, $`\sigma_3`$ the call pillar's | 9.75% at $`K_3`$, 10.75% at $`K_1`$ | $`\Delta_{BS}`$ drifts toward 0.5 |
+| $`\partial\sigma/\partial K`$, $`g`$ | the smile's slope in strike, spot frozen, vol per unit of strike (decimals); $`g`$ the smile as a function of $`K/S`$ alone | −0.005074 at $`K_3`$, −0.132631 at $`K_1`$ | the correction shrinks or changes sign |
+| $`d\sigma/dS`$ | the vol change at a fixed strike per unit of spot, by the chosen rule | +0.005542 at $`K_3`$, +0.126900 at $`K_1`$ | the hedge rises one for one with vega |
+| $`\Delta_{BS}`$, $`a`$ | Black-Scholes (Garman-Kohlhagen) spot delta: the option's exposure in euros per euro of notional, vol frozen; the hedge is the opposite position. $`a`$: the $`d_1`$ that gives spot delta 0.25 | +0.25 call, −0.25 put | — |
+| $`\Delta_{\text{smile}}`$, $`h`$ | the smile-adjusted delta: the delta that counts the vol move; $`h`$ any hedge ratio a desk might choose | +0.251910 call, −0.206269 put | — |
+| $`\mathcal{V}`$, $`x_i`$ | vega: price change per 1.00 of volatility, dollars per euro of notional; $`x_i`$ the vanna-volga weights | 0.344608 at both pillars | the correction grows in proportion |
+| $`\Gamma`$, $`\delta`$ | gamma: the change in delta per unit of spot; $`\delta`$ in front of a symbol: its change over one move | — | the unhedgeable leftover grows |
+| $`F`$, $`r_d`$, $`r_f`$, $`T`$ | forward rate $`S\,e^{(r_d - r_f)T}`$; dollar and euro interest rates, continuously compounded; years to expiry | 1.122221; 5%, 3%, 1 | the pillar strikes move with $`F`$ |
+| $`d_1`$, $`d_2`$, $`N`$, $`\varphi`$ | the Black-Scholes distances to strike, $`d_2 = d_1 - \sigma\sqrt{T}`$; bell-curve area to the left; bell-curve height | equal and opposite at the two pillars | — |
 
-The helpers are the ones on [Four deltas for one option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/04-fx-delta-conventions.md): $\Delta_{BS} = e^{-r_fT}N(d_1)$ for a call and $-e^{-r_fT}N(-d_1)$ for a put, $\mathcal{V} = S\,e^{-r_fT}\varphi(d_1)\sqrt{T}$, with $d_1 = [\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)T]/(\sigma\sqrt{T})$ taken at the strike's own smile vol. The two 25-delta pillars have the same vega because their $d_1$ values are equal and opposite, and $\varphi$ is symmetric.
+The helpers are the ones on [Four deltas for one option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/04-fx-delta-conventions.md): $`\Delta_{BS} = e^{-r_fT}N(d_1)`$ for a call and $`-e^{-r_fT}N(-d_1)`$ for a put, $`\mathcal{V} = S\,e^{-r_fT}\varphi(d_1)\sqrt{T}`$, with $`d_1 = [\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)T]/(\sigma\sqrt{T})`$ taken at the strike's own smile vol. The two 25-delta pillars have the same vega because their $`d_1`$ values are equal and opposite, and $`\varphi`$ is symmetric.
 
-Under **sticky strike**, $d\sigma/dS = 0$ and the hedge is the Black-Scholes delta.
+Under **sticky strike**, $`d\sigma/dS = 0`$ and the hedge is the Black-Scholes delta.
 
 Conventions verified 27 Sep 2026 against the house cards and Reiswich and Wystup (2012): one-year EURUSD pillars on unadjusted spot delta, premium in dollars, at the money as the delta-neutral straddle. A premium-adjusted pair such as USDJPY puts the pillars at other strikes, and every number here moves with them.
 
@@ -77,67 +79,75 @@ Conventions verified 27 Sep 2026 against the house cards and Reiswich and Wystup
 
 ### Step 0: the option's mark depends on spot twice
 
-The desk marks the option at Garman-Kohlhagen with the smile's vol for its strike. The mark is $V(S, \sigma(K; S))$. Spot enters once directly and once through the vol the smile assigns. The chain rule for two inputs adds the two routes:
+The desk marks the option at Garman-Kohlhagen with the smile's vol for its strike. The mark is $`V(S, \sigma(K; S))`$. Spot enters once directly and once through the vol the smile assigns. The chain rule for two inputs adds the two routes:
 
-$$\frac{dV}{dS} = \frac{\partial V}{\partial S} + \frac{\partial V}{\partial \sigma}\,\frac{d\sigma}{dS} = \Delta_{BS} + \mathcal{V}\,\frac{d\sigma}{dS}.$$
+```math
+\frac{dV}{dS} = \frac{\partial V}{\partial S} + \frac{\partial V}{\partial \sigma}\,\frac{d\sigma}{dS} = \Delta_{BS} + \mathcal{V}\,\frac{d\sigma}{dS}.
+```
 
-That is the first formula. The general case, with three rules for the smile's motion and the minimum-variance version, is proved on [Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md). Everything on this card is about $d\sigma/dS$ for a smile built the way currency desks build it.
+That is the first formula. The general case, with three rules for the smile's motion and the minimum-variance version, is proved on [Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md). Everything on this card is about $`d\sigma/dS`$ for a smile built the way currency desks build it.
 
 ### Step 1: sticky delta pins every pillar strike to the forward
 
-A 25-delta call pillar is the strike where $e^{-r_fT}N(d_1) = 0.25$. Call the $d_1$ that does it $a$; it depends only on $r_f$ and $T$. Solving $d_1 = a$ for the strike gives
+A 25-delta call pillar is the strike where $`e^{-r_fT}N(d_1) = 0.25`$. Call the $`d_1`$ that does it $`a`$; it depends only on $`r_f`$ and $`T`$. Solving $`d_1 = a`$ for the strike gives
 
-$$K_3 = F\,\exp\!\big(-a\,\sigma_3\sqrt{T} + \tfrac12\sigma_3^2T\big),$$
+```math
+K_3 = F\,\exp\!\big(-a\,\sigma_3\sqrt{T} + \tfrac12\sigma_3^2T\big),
+```
 
-and the same shape for the put pillar and the at-the-money pillar ([Four deltas for one option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/04-fx-delta-conventions.md)). Here $\sigma_3$ = 9.75% is the call pillar's quoted vol. The bracket holds quotes and time only. So if the quotes stay put, each pillar strike is the forward times a fixed number. Move spot 1% and every pillar moves 1%. Checked: with spot at 1.111 the 25-delta call strike is 1.213439, 1.010000 times the old one, and its vol is still 9.75%.
+and the same shape for the put pillar and the at-the-money pillar ([Four deltas for one option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/04-fx-delta-conventions.md)). Here $`\sigma_3`$ = 9.75% is the call pillar's quoted vol. The bracket holds quotes and time only. So if the quotes stay put, each pillar strike is the forward times a fixed number. Move spot 1% and every pillar moves 1%. Checked: with spot at 1.111 the 25-delta call strike is 1.213439, 1.010000 times the old one, and its vol is still 9.75%.
 
 ### Step 2: the whole vanna-volga curve rides with the pillars
 
-The vanna-volga curve fills in the other strikes from the three pillars ([Vanna-volga pricing](04-vanna-volga-pricing.md)). Scale spot and every strike by the same factor and each piece of it scales cleanly: prices scale by the factor, weights do not change, implied vols do not change. So the vol at strike $K$ with spot $S$ depends only on the ratio $K/S$:
+The vanna-volga curve fills in the other strikes from the three pillars ([Vanna-volga pricing](04-vanna-volga-pricing.md)). Scale spot and every strike by the same factor and each piece of it scales cleanly: prices scale by the factor, weights do not change, implied vols do not change. So the vol at strike $`K`$ with spot $`S`$ depends only on the ratio $`K/S`$:
 
-$$\sigma(K; S) = g(K/S)$$
+```math
+\sigma(K; S) = g(K/S)
+```
 
-for one fixed function $g$. Differentiate both sides once in $S$ and once in $K$:
+for one fixed function $`g`$. Differentiate both sides once in $`S`$ and once in $`K`$:
 
-$$\frac{d\sigma}{dS} = -\frac{K}{S^2}\,g'(K/S), \qquad \frac{\partial\sigma}{\partial K} = \frac{1}{S}\,g'(K/S), \qquad\text{so}\qquad \frac{d\sigma}{dS} = -\frac{K}{S}\,\frac{\partial\sigma}{\partial K}.$$
+```math
+\frac{d\sigma}{dS} = -\frac{K}{S^2}\,g'(K/S), \qquad \frac{\partial\sigma}{\partial K} = \frac{1}{S}\,g'(K/S), \qquad\text{so}\qquad \frac{d\sigma}{dS} = -\frac{K}{S}\,\frac{\partial\sigma}{\partial K}.
+```
 
 A falling smile in strike means a rising vol at a fixed strike when spot rises. The fixed strike has become, relative to spot, a lower strike, and the smile is higher there.
 
 <details>
 <summary>Detailed proof: why the vanna-volga curve depends only on strike over spot</summary>
 
-Fix the rates and the expiry and let $\lambda > 0$. Garman-Kohlhagen's $d_1$ and $d_2$ depend on $S$ and $K$ only through $S/K$, so $C(\lambda S, \lambda K, \sigma) = \lambda\,C(S, K, \sigma)$: the price has degree 1. Differentiating in $\sigma$ and in $S$ gives vega of degree 1, vanna ($\partial\mathcal{V}/\partial S$) of degree 0 and volga ($\partial\mathcal{V}/\partial\sigma$) of degree 1.
+Fix the rates and the expiry and let $`\lambda > 0`$. Garman-Kohlhagen's $`d_1`$ and $`d_2`$ depend on $`S`$ and $`K`$ only through $`S/K`$, so $`C(\lambda S, \lambda K, \sigma) = \lambda\,C(S, K, \sigma)`$: the price has degree 1. Differentiating in $`\sigma`$ and in $`S`$ gives vega of degree 1, vanna ($`\partial\mathcal{V}/\partial S`$) of degree 0 and volga ($`\partial\mathcal{V}/\partial\sigma`$) of degree 1.
 
-By Step 1 the pillar strikes at spot $\lambda S$ are $\lambda K_i$, with unchanged vols $\sigma_i$. The vanna-volga weights $x_i$ solve three equations: the pillars' vega, vanna and volga, weighted, equal the target's. At $(\lambda S, \lambda K)$ each equation's two sides both scale by the same power of $\lambda$ (1, 0, 1), so the same $x_i$ solve it. The vanna-volga price is the flat-vol price plus $\sum_i x_i$ times each pillar's market-minus-flat price; every term has degree 1. So the price at $(\lambda S, \lambda K)$ is $\lambda$ times the price at $(S, K)$.
+By Step 1 the pillar strikes at spot $`\lambda S`$ are $`\lambda K_i`$, with unchanged vols $`\sigma_i`$. The vanna-volga weights $`x_i`$ solve three equations: the pillars' vega, vanna and volga, weighted, equal the target's. At $`(\lambda S, \lambda K)`$ each equation's two sides both scale by the same power of $`\lambda`$ (1, 0, 1), so the same $`x_i`$ solve it. The vanna-volga price is the flat-vol price plus $`\sum_i x_i`$ times each pillar's market-minus-flat price; every term has degree 1. So the price at $`(\lambda S, \lambda K)`$ is $`\lambda`$ times the price at $`(S, K)`$.
 
-The smile vol is the $\sigma$ that makes $C(S, K, \sigma)$ equal that price. It exists when that price lies between the call's no-arbitrage bounds, as it does at every strike on this card. Since $C(\lambda S, \lambda K, \sigma) = \lambda\,C(S, K, \sigma)$ for every $\sigma$, the same $\sigma$ solves both, and it is unique because a call's price rises strictly with $\sigma$. Hence $\sigma(\lambda K; \lambda S) = \sigma(K; S)$. Set $\lambda = 1/S$: $\sigma(K; S) = \sigma(K/S; 1) = g(K/S)$.
+The smile vol is the $`\sigma`$ that makes $`C(S, K, \sigma)`$ equal that price. It exists when that price lies between the call's no-arbitrage bounds, as it does at every strike on this card. Since $`C(\lambda S, \lambda K, \sigma) = \lambda\,C(S, K, \sigma)`$ for every $`\sigma`$, the same $`\sigma`$ solves both, and it is unique because a call's price rises strictly with $`\sigma`$. Hence $`\sigma(\lambda K; \lambda S) = \sigma(K; S)`$. Set $`\lambda = 1/S`$: $`\sigma(K; S) = \sigma(K/S; 1) = g(K/S)`$.
 
-Literal sticky delta, "each delta keeps its vol", follows. The option's delta depends on $K/S$ and $\sigma$ only; with $\sigma = g(K/S)$ it depends on $K/S$ alone. So a given delta sits at a given $K/S$ and carries the same vol whatever spot is. For this curve, sticky delta and sticky moneyness are one rule.
+Literal sticky delta, "each delta keeps its vol", follows. The option's delta depends on $`K/S`$ and $`\sigma`$ only; with $`\sigma = g(K/S)`$ it depends on $`K/S`$ alone. So a given delta sits at a given $`K/S`$ and carries the same vol whatever spot is. For this curve, sticky delta and sticky moneyness are one rule.
 
 </details>
 
 ### Step 3: the slope, read off the curve
 
-At the call pillar the smile falls 0.005074 per unit of strike. Step 2 turns that into $d\sigma/dS = -(1.201425/1.10) \times (-0.005074) = +0.005542$ per unit of spot. At the put pillar the smile is much steeper, −0.132631, and the vol rises 0.126900 per unit of spot.
+At the call pillar the smile falls 0.005074 per unit of strike. Step 2 turns that into $`d\sigma/dS = -(1.201425/1.10) \times (-0.005074) = +0.005542`$ per unit of spot. At the put pillar the smile is much steeper, −0.132631, and the vol rises 0.126900 per unit of spot.
 
-There is a closed-form route too. The first-order vanna-volga curve is the parabola in $\ln K$ through the three pillars. Its slope in $\ln K$ is a short formula in the pillar log-strikes, and $d\sigma/dS$ is minus that slope divided by $S$. It gives +0.006073 at the call pillar and +0.131280 at the put. Close, not equal: the full curve bends away from the parabola, most near its lowest point, which sits just past the call pillar.
+There is a closed-form route too. The first-order vanna-volga curve is the parabola in $`\ln K`$ through the three pillars. Its slope in $`\ln K`$ is a short formula in the pillar log-strikes, and $`d\sigma/dS`$ is minus that slope divided by $`S`$. It gives +0.006073 at the call pillar and +0.131280 at the put. Close, not equal: the full curve bends away from the parabola, most near its lowest point, which sits just past the call pillar.
 
 ### Step 4: the hedge
 
-Put the numbers in. At the call pillar, $\mathcal{V}\,d\sigma/dS = 0.344608 \times 0.005542 = 0.001910$, so the smile-adjusted delta is 0.251910. At the put pillar the same vega times 0.126900 is 0.043731, and the hedge is −0.25 + 0.043731 = −0.206269.
+Put the numbers in. At the call pillar, $`\mathcal{V}\,d\sigma/dS = 0.344608 \times 0.005542 = 0.001910`$, so the smile-adjusted delta is 0.251910. At the put pillar the same vega times 0.126900 is 0.043731, and the hedge is −0.25 + 0.043731 = −0.206269.
 
 The correction has the same sign for the call and the put: vega is positive for both, and at both strikes the vol rises with spot. For the put it shrinks the delta's size: the put loses less than Black-Scholes says as the euro rises, because its vol rises, so fewer euros are needed against it.
 
 ### Step 5: what the Black-Scholes hedge leaves behind
 
-Over a move $\delta S$, with $\delta\sigma$ the vol change it brings, the option's value changes by about $\Delta_{BS}\,\delta S + \tfrac12\Gamma\,\delta S^2 + \mathcal{V}\,\delta\sigma$ ([The Greeks together](../09-The%20Greeks%2C%20one%20each/09-greeks-together-taylor-pnl.md)). A hedge of $h$ euros leaves the value change minus $h\,\delta S$.
+Over a move $`\delta S`$, with $`\delta\sigma`$ the vol change it brings, the option's value changes by about $`\Delta_{BS}\,\delta S + \tfrac12\Gamma\,\delta S^2 + \mathcal{V}\,\delta\sigma`$ ([The Greeks together](../09-The%20Greeks%2C%20one%20each/09-greeks-together-taylor-pnl.md)). A hedge of $`h`$ euros leaves the value change minus $`h\,\delta S`$.
 
-- With $h = \Delta_{BS}$ the leftover is $\tfrac12\Gamma\,\delta S^2 + \mathcal{V}\,\delta\sigma$. The gamma term is the same on an up move and a down move; the vega term flips sign with the move. So the Black-Scholes hedge carries a directional bet.
-- With $h = \Delta_{\text{smile}}$ the vega term is cancelled to first order, since $\delta\sigma \approx (d\sigma/dS)\,\delta S$. What remains is gamma plus the curvature of the vol move.
+- With $`h = \Delta_{BS}`$ the leftover is $`\tfrac12\Gamma\,\delta S^2 + \mathcal{V}\,\delta\sigma`$. The gamma term is the same on an up move and a down move; the vega term flips sign with the move. So the Black-Scholes hedge carries a directional bet.
+- With $`h = \Delta_{\text{smile}}`$ the vega term is cancelled to first order, since $`\delta\sigma \approx (d\sigma/dS)\,\delta S`$. What remains is gamma plus the curvature of the vol move.
 
-Sticky strike and sticky delta disagree only through $\delta\sigma$.
+Sticky strike and sticky delta disagree only through $`\delta\sigma`$.
 
-A different route asks the market instead of a rule: fit the typical vol move per unit of spot from history and use it in place of $d\sigma/dS$. That is the minimum-variance delta of [Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md).
+A different route asks the market instead of a rule: fit the typical vol move per unit of spot from history and use it in place of $`d\sigma/dS`$. That is the minimum-variance delta of [Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md).
 
 ---
 
@@ -152,14 +162,14 @@ Pillars 1.052466, 1.127847, 1.201425. Notional EUR 10,000,000. Hedge the 25-delt
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | strike and vol | the 25-delta call pillar | 1.201425 at 9.75% |
-| Black-Scholes spot delta | $e^{-0.03}N(d_1)$ at 9.75% | 0.25 |
-| vega | $1.10 \times e^{-0.03}\,\varphi(d_1) \times 1$ | 0.344608 |
+| Black-Scholes spot delta | $`e^{-0.03}N(d_1)`$ at 9.75% | 0.25 |
+| vega | $`1.10 \times e^{-0.03}\,\varphi(d_1) \times 1`$ | 0.344608 |
 | smile slope in strike | slope of the vanna-volga curve at 1.201425 | −0.005074 |
-| slope in spot | $-(1.201425 / 1.10) \times (-0.005074)$ | +0.005542 |
-| correction | $0.344608 \times 0.005542$ | 0.001910 |
-| **smile-adjusted delta** | $0.25 + 0.001910$ | **0.251910** |
-| extra euros to sell | $10{,}000{,}000 \times 0.001910$ | EUR 19,098 (0.19% of notional) |
-| effect of skipping it over a 1% move | $19{,}098 \times 0.011$ | USD 210.08 |
+| slope in spot | $`-(1.201425 / 1.10) \times (-0.005074)`$ | +0.005542 |
+| correction | $`0.344608 \times 0.005542`$ | 0.001910 |
+| **smile-adjusted delta** | $`0.25 + 0.001910`$ | **0.251910** |
+| extra euros to sell | $`10{,}000{,}000 \times 0.001910`$ | EUR 19,098 (0.19% of notional) |
+| effect of skipping it over a 1% move | $`19{,}098 \times 0.011`$ | USD 210.08 |
 
 The desk should sell EUR 19,098 more than the Black-Scholes EUR 2,500,000. Skip them and a 1% rise in the euro pays the desk USD 210.08 more than it should, and a 1% fall costs it about the same. For the put pillar the same arithmetic gives a correction of 0.043731: EUR 437,307, or 4.37% of notional, worth USD 4,810.38 over the same move.
 
@@ -169,7 +179,7 @@ The desk should sell EUR 19,098 more than the Black-Scholes EUR 2,500,000. Skip 
 | --- | --- | --- |
 | Hedge the put at Black-Scholes delta in a sticky-delta market, euro up 1% | USD 6,212.85 left over (smile hedge: 1,402.48) | The put's vol rose 0.1420 points; the hedge ignored it |
 | The same, euro down 1% | USD −3,283.88 (smile hedge: +1,526.49) | The same vega bet, now losing: a long option, hedged, lost money |
-| Drop the minus sign in $-(K/S)\,\partial\sigma/\partial K$ | call hedge 0.248090 (right: 0.251910) | A falling smile in strike means a rising vol at a fixed strike as spot rises |
+| Drop the minus sign in $`-(K/S)\,\partial\sigma/\partial K`$ | call hedge 0.248090 (right: 0.251910) | A falling smile in strike means a rising vol at a fixed strike as spot rises |
 | Slope in vol points times vega per 1.00 | call hedge 0.440979 (right: 0.251910) | Vega per 1.00 of vol needs the slope as a decimal |
 | Trust the slope over a 1% move at the call pillar | 0.0061 vol points (actual: 0.0113) | Near the smile's lowest point the slope itself changes fast |
 
@@ -186,8 +196,8 @@ The mystery: the desk hedged, the quotes never changed, and the hedge still leak
 | vol change: slope × move, and actual | +0.0061, +0.0113 points | +0.1396, +0.1420 points |
 | value change, sticky delta | USD 29,719.28 | USD −21,287.15 |
 | value change if strikes kept their vols (sticky strike) | USD 29,299.45 | USD −25,935.21 |
-| gamma part, $\tfrac12\Gamma\,\delta S^2$ | USD 1,767.22 | USD 1,602.83 |
-| vega part, $\mathcal{V}\,\delta\sigma$ | USD 419.75 | USD 4,633.76 |
+| gamma part, $`\tfrac12\Gamma\,\delta S^2`$ | USD 1,767.22 | USD 1,602.83 |
+| vega part, $`\mathcal{V}\,\delta\sigma`$ | USD 419.75 | USD 4,633.76 |
 
 The two options have the same vega and nearly the same gamma. What separates them is the slope of the smile at their strikes. The call sits near the smile's floor, where it is almost flat. The put sits on the steep downside wing.
 
@@ -227,7 +237,7 @@ Orange: the correction, in percent of notional, for an option at each strike, sp
 
 ## Code, from first principles, and it actually runs
 
-The scripts build the house pillars from the three quotes, price any strike by the full vanna-volga method (weights by Gaussian elimination, the vol by halving), and read the smile. They reach $d\sigma/dS$ by three roads: the strike-slope identity of Step 2, spot bumped with the pillars rebuilt, and the first-order parabola's closed-form slope. They reach the hedge by two: the formula, and a full reprice of the vanna-volga price with spot bumped. Then they trace the 1% move under both rules, split the leftover into gamma and vega parts, and print every number and chart point on this card. The bell-curve area is summed from its series in both languages.
+The scripts build the house pillars from the three quotes, price any strike by the full vanna-volga method (weights by Gaussian elimination, the vol by halving), and read the smile. They reach $`d\sigma/dS`$ by three roads: the strike-slope identity of Step 2, spot bumped with the pillars rebuilt, and the first-order parabola's closed-form slope. They reach the hedge by two: the formula, and a full reprice of the vanna-volga price with spot bumped. Then they trace the 1% move under both rules, split the leftover into gamma and vega parts, and print every number and chart point on this card. The bell-curve area is summed from its series in both languages.
 
 ### Python
 
@@ -613,9 +623,9 @@ The two outputs agree line for line.
 
 Lean proves the hedge formula, the slope identity and the final step of the detailed proof, for every smile meeting the conditions below.
 
-- Suppose $\sigma(K; S) = g(K/S)$ for every strike and every spot $S > 0$, and the smile has a slope in strike. Then $d\sigma/dS = -(K/S)\,\partial\sigma/\partial K$.
-- Suppose also that the mark $V(S, \sigma)$ has a slope in both inputs together. Then $\Delta_{\text{smile}} = \Delta_{BS} - \mathcal{V}\,(K/S)\,\partial\sigma/\partial K$.
-- Suppose $\sigma(\lambda K; \lambda S) = \sigma(K; S)$ for every $\lambda > 0$, every strike and every spot $S > 0$. Then one function $g$ gives $\sigma(K; S) = g(K/S)$ for every strike and every spot $S > 0$.
+- Suppose $`\sigma(K; S) = g(K/S)`$ for every strike and every spot $`S > 0`$, and the smile has a slope in strike. Then $`d\sigma/dS = -(K/S)\,\partial\sigma/\partial K`$.
+- Suppose also that the mark $`V(S, \sigma)`$ has a slope in both inputs together. Then $`\Delta_{\text{smile}} = \Delta_{BS} - \mathcal{V}\,(K/S)\,\partial\sigma/\partial K`$.
+- Suppose $`\sigma(\lambda K; \lambda S) = \sigma(K; S)`$ for every $`\lambda > 0`$, every strike and every spot $`S > 0`$. Then one function $`g`$ gives $`\sigma(K; S) = g(K/S)`$ for every strike and every spot $`S > 0`$.
 - Lean also checks the sums behind the pillar vols 10.75% and 9.75%, the hedges 0.251910 and −0.206269, and their gap 0.041821.
 
 The Black-Scholes formulas, the vanna-volga curve's scaling and every number computed from the market are left to the Python and Rust checks.
@@ -739,14 +749,14 @@ example : (43731 : ℤ) - 1910 = 41821 := by norm_num
 > - **Steepen the risk reversal to −2%** (`RR = -0.02`). Guess: the whole smile tilts, so both pillars sit on steeper ground. The call's correction jumps from 0.19% to over 3% of notional and the put's grows past 5%. All asserts still pass.
 > - **Flip the risk reversal to +1%**, euro calls dearer than puts. Guess: the call now sits on a rising wing, so its correction turns negative and large. It does; the first-order-slope assert fails, because the put pillar now sits near the flat bottom, where the parabola's slope and the curve's differ by more than 10%.
 > - **Move spot down 1% instead of up** (both `S0 * 1.01` to `S0 * 0.99`). The put's leftovers swap sign as in the table above. The trapezoid assert fails for the call: near the smile's floor its vol barely moves on the way down, so the average-slope rule breaks.
-> - **Stop rebuilding the pillars**, so `pillars(s)` always uses 1.10. That is sticky strike. Every $d\sigma/dS$ becomes zero, the smile delta equals the Black-Scholes delta, and the assert that the strike slope and the rebuilt smile agree fails.
+> - **Stop rebuilding the pillars**, so `pillars(s)` always uses 1.10. That is sticky strike. Every $`d\sigma/dS`$ becomes zero, the smile delta equals the Black-Scholes delta, and the assert that the strike slope and the rebuilt smile agree fails.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Reading the smile's slope in strike as the vol's move with spot.** Today's smile says how vol changes across strikes with spot frozen. The hedge needs how one strike's vol changes as spot moves. Under sticky delta the two are linked by $-K/S$: opposite sign. On a downward-sloping FX smile, a fixed strike's vol **rises** when the euro rises. Get the sign wrong and the call hedge is 0.248090 instead of 0.251910; on the put the error is twice the whole 0.043731 correction.
+> **Reading the smile's slope in strike as the vol's move with spot.** Today's smile says how vol changes across strikes with spot frozen. The hedge needs how one strike's vol changes as spot moves. Under sticky delta the two are linked by $`-K/S`$: opposite sign. On a downward-sloping FX smile, a fixed strike's vol **rises** when the euro rises. Get the sign wrong and the call hedge is 0.248090 instead of 0.251910; on the put the error is twice the whole 0.043731 correction.
 >
 > Smaller traps:
 > - **Assuming sticky delta means "delta does not change".** It means each delta keeps its **vol**. The strike at 25 delta moves, 1.201425 to 1.213439, and every fixed option's delta moves with gamma as usual.

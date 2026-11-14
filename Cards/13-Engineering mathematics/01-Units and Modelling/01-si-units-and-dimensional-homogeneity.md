@@ -33,19 +33,23 @@ The pure number 32 adds nothing to the powers. The rejected formula has swapped 
 
 ## The formula
 
-Notation first, in words. Square brackets around a quantity, $[X]$, mean "the dimension of X": its recipe in base quantities, with no number and no unit attached. Seven base dimensions exist, written $\mathsf{M}$ mass, $\mathsf{L}$ length, $\mathsf{T}$ time, $\mathsf{I}$ electric current, $\Theta$ temperature, $\mathsf{N}$ amount of substance, $\mathsf{J}$ luminous intensity.
+Notation first, in words. Square brackets around a quantity, $`[X]`$, mean "the dimension of X": its recipe in base quantities, with no number and no unit attached. Seven base dimensions exist, written $`\mathsf{M}`$ mass, $`\mathsf{L}`$ length, $`\mathsf{T}`$ time, $`\mathsf{I}`$ electric current, $`\Theta`$ temperature, $`\mathsf{N}`$ amount of substance, $`\mathsf{J}`$ luminous intensity.
 
 Later cards also write a base dimension in brackets, [M] for mass, [L] for length; the rest of this wing uses this notation freely. Written that way, the pressure drop's recipe is [Δp] = [M][L]^-1[T]^-2, also written [M L^-1 T^-2]: the same recipe as M L^-1 T^-2.
 
 Every quantity's dimension is one product of powers of the seven:
 
-$$[X] = \mathsf{M}^{a}\,\mathsf{L}^{b}\,\mathsf{T}^{c}\,\mathsf{I}^{e}\,\Theta^{f}\,\mathsf{N}^{g}\,\mathsf{J}^{h}, \qquad \mathbf{d}(X) = (a, b, c, e, f, g, h)$$
+```math
+[X] = \mathsf{M}^{a}\,\mathsf{L}^{b}\,\mathsf{T}^{c}\,\mathsf{I}^{e}\,\Theta^{f}\,\mathsf{N}^{g}\,\mathsf{J}^{h}, \qquad \mathbf{d}(X) = (a, b, c, e, f, g, h)
+```
 
 **Read it aloud:** the dimension of X is mass to some power, times length to some power, and so on; the list of seven powers is its exponent list.
 
 The powers are whole numbers or fractions, and most are zero. Two rules follow from that form.
 
-$$\mathbf{d}(X^{p}\,Y^{q}) = p\,\mathbf{d}(X) + q\,\mathbf{d}(Y), \qquad A = B + C \text{ is allowed only if } \mathbf{d}(A) = \mathbf{d}(B) = \mathbf{d}(C)$$
+```math
+\mathbf{d}(X^{p}\,Y^{q}) = p\,\mathbf{d}(X) + q\,\mathbf{d}(Y), \qquad A = B + C \text{ is allowed only if } \mathbf{d}(A) = \mathbf{d}(B) = \mathbf{d}(C)
+```
 
 **Read it aloud:** multiplying quantities adds their exponent lists, and adding or equating quantities demands that their exponent lists be equal.
 
@@ -55,27 +59,29 @@ The seven base units of the SI (the International System of Units) are the secon
 
 The card's two pipe formulas, the right one (Hagen–Poiseuille, for smooth, slow flow) and the hand-copied one:
 
-$$\Delta p = \frac{128\,\mu\,\ell\,Q}{\pi D^{4}} \qquad\text{against}\qquad \Delta p \overset{?}{=} \frac{32\,\mu\,\ell\,Q}{D^{2}}$$
+```math
+\Delta p = \frac{128\,\mu\,\ell\,Q}{\pi D^{4}} \qquad\text{against}\qquad \Delta p \overset{?}{=} \frac{32\,\mu\,\ell\,Q}{D^{2}}
+```
 
 **Read it aloud:** the pressure drop is 128 over π, times viscosity, times length, times flow rate, divided by the fourth power of the bore; the quoted version divides by only the square.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $[X]$ | the dimension of a quantity X: its base-quantity recipe | pressure: M L^-1 T^-2 | — |
-| $\mathsf{M}$, $\mathsf{L}$, $\mathsf{T}$, $\mathsf{I}$, $\Theta$, $\mathsf{N}$, $\mathsf{J}$ | the seven base dimensions: mass, length, time, current, temperature, amount, luminous intensity | this card uses M, L, T | — |
-| $\mathbf{d}(X)$ | the exponent list of X, the seven powers in that order | viscosity: (1, -1, -1, 0, 0, 0, 0) | — |
-| $\Delta p$ | pressure drop along the tube, in pascals (Pa) | 2,550.55 Pa | the header tank must stand higher |
-| $\mu$ | dynamic viscosity: how hard the water resists sliding past itself, in Pa s | 1.0016 mPa s, water at 20 °C | drop rises in proportion |
-| $\ell$ | tube length | 1.0 m | drop rises in proportion |
-| $Q$ | volume flow rate, cubic metres per second | 1.0 mL/s, one millionth of a cubic metre per second | drop rises in proportion, until the flow turns turbulent |
-| $D$, $R$ | bore diameter, and radius R = D/2 | 2.0 mm | drop falls with the fourth power of the bore |
-| $r$ | distance from the tube's centre line, from 0 to R | 0 to 1.0 mm in the chart | the water slows, to zero at the wall |
-| $v$ | mean speed, flow rate divided by the bore's area | 0.318310 m/s | — |
-| $\rho$ | density of the water | 998.21 kg/m^3 | no change to the slow-flow drop; raises Re |
-| $g_n$ | standard acceleration of gravity, a fixed value (NIST CODATA) | 9.80665 m/s^2 | a given drop needs a lower tank |
-| $\mathrm{Re}$ | Reynolds number, ρ v D / μ: a pure number comparing the water's momentum with its viscosity | 634.4651 | past 2300 the formula stops applying |
-| $\lambda$ | the size of a new unit of length, in metres | 0.0100 for the centimetre, 0.3048 for the foot | a homogeneous formula's answer does not move |
-| $t$, $\tau$ | a time, and a fixed time it is measured against | only in the exp(-t/τ) trap in The usual mistake | — |
+| $`[X]`$ | the dimension of a quantity X: its base-quantity recipe | pressure: M L^-1 T^-2 | — |
+| $`\mathsf{M}`$, $`\mathsf{L}`$, $`\mathsf{T}`$, $`\mathsf{I}`$, $`\Theta`$, $`\mathsf{N}`$, $`\mathsf{J}`$ | the seven base dimensions: mass, length, time, current, temperature, amount, luminous intensity | this card uses M, L, T | — |
+| $`\mathbf{d}(X)`$ | the exponent list of X, the seven powers in that order | viscosity: (1, -1, -1, 0, 0, 0, 0) | — |
+| $`\Delta p`$ | pressure drop along the tube, in pascals (Pa) | 2,550.55 Pa | the header tank must stand higher |
+| $`\mu`$ | dynamic viscosity: how hard the water resists sliding past itself, in Pa s | 1.0016 mPa s, water at 20 °C | drop rises in proportion |
+| $`\ell`$ | tube length | 1.0 m | drop rises in proportion |
+| $`Q`$ | volume flow rate, cubic metres per second | 1.0 mL/s, one millionth of a cubic metre per second | drop rises in proportion, until the flow turns turbulent |
+| $`D`$, $`R`$ | bore diameter, and radius R = D/2 | 2.0 mm | drop falls with the fourth power of the bore |
+| $`r`$ | distance from the tube's centre line, from 0 to R | 0 to 1.0 mm in the chart | the water slows, to zero at the wall |
+| $`v`$ | mean speed, flow rate divided by the bore's area | 0.318310 m/s | — |
+| $`\rho`$ | density of the water | 998.21 kg/m^3 | no change to the slow-flow drop; raises Re |
+| $`g_n`$ | standard acceleration of gravity, a fixed value (NIST CODATA) | 9.80665 m/s^2 | a given drop needs a lower tank |
+| $`\mathrm{Re}`$ | Reynolds number, ρ v D / μ: a pure number comparing the water's momentum with its viscosity | 634.4651 | past 2300 the formula stops applying |
+| $`\lambda`$ | the size of a new unit of length, in metres | 0.0100 for the centimetre, 0.3048 for the foot | a homogeneous formula's answer does not move |
+| $`t`$, $`\tau`$ | a time, and a fixed time it is measured against | only in the exp(-t/τ) trap in The usual mistake | — |
 
 ### When it holds
 
@@ -104,7 +110,9 @@ Multiply two quantities, with length powers b1 and b2. Their numbers rescale by 
 
 Write the law with everything on one side: term 1 + term 2 + … = 0. Group the terms by their length power, say b1 for the first group and b2 for the second, and call the groups' summed numbers c1 and c2 in metres. After rescaling, the law reads
 
-$$c_1\,\lambda^{-b_1} + c_2\,\lambda^{-b_2} = 0 \quad\text{for every } \lambda > 0.$$
+```math
+c_1\,\lambda^{-b_1} + c_2\,\lambda^{-b_2} = 0 \quad\text{for every } \lambda > 0.
+```
 
 If b1 differs from b2, the two powers of λ grow at different rates. No fixed numbers c1 and c2 can cancel them for every λ unless both are zero. So each group sums to zero on its own. A single law whose terms carry different powers is either false or is several laws stapled together. The same argument runs for the mass power, the time power and the rest, one base at a time.
 
@@ -570,8 +578,8 @@ The two outputs are identical, line for line.
 Lean proves Steps 2 and 3 for any powers and any number of terms, and checks the arithmetic of Steps 4 and 5.
 
 - Suppose a law's terms, grouped by their exponent lists, sum to zero under every choice of the seven base units. Then each group sums to zero on its own.
-- Suppose $c_1\lambda^{-b_1} + \dots + c_k\lambda^{-b_k} = 0$ for every $\lambda > 0$, with distinct powers. Then every $c$ is zero.
-- Take a unit of length $\lambda > 0$ and two length powers $b_1$ and $b_2$. Then $\lambda^{-b_1}\lambda^{-b_2} = \lambda^{-(b_1+b_2)}$.
+- Suppose $`c_1\lambda^{-b_1} + \dots + c_k\lambda^{-b_k} = 0`$ for every $`\lambda > 0`$, with distinct powers. Then every $`c`$ is zero.
+- Take a unit of length $`\lambda > 0`$ and two length powers $`b_1`$ and $`b_2`$. Then $`\lambda^{-b_1}\lambda^{-b_2} = \lambda^{-(b_1+b_2)}`$.
 - The quoted formula 32 μ ℓ Q / D^2 has the list (1, 1, -2), not the pressure list (1, -1, -2).
 - The right formula, with D^4, has the list (1, -1, -2). Viscosity's list is (1, -1, -2) + (0, 0, 1) = (1, -1, -1).
 - In centimetres, λ = 0.0100, and λ^-2 = 10,000.

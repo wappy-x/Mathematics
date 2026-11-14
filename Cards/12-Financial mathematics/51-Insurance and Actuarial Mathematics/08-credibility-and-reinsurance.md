@@ -34,42 +34,46 @@ The forecast feeds both prices: the reinsurer prices the fleet at 1.6 claims a y
 
 ## The formula
 
-Notation first, in words. A bar over a letter is an average: $\bar X$ is the fleet's average yearly count. A hat marks an estimate: $\hat m$ is the forecast. The notation $(x)_+$ means "x if positive, otherwise zero", the same payoff shape as a call option, the right to buy at a fixed price called the strike. $E[\cdot]$ is expectation, the probability-weighted average, and $P(\cdot)$ is a probability.
+Notation first, in words. A bar over a letter is an average: $`\bar X`$ is the fleet's average yearly count. A hat marks an estimate: $`\hat m`$ is the forecast. The notation $`(x)_+`$ means "x if positive, otherwise zero", the same payoff shape as a call option, the right to buy at a fixed price called the strike. $`E[\cdot]`$ is expectation, the probability-weighted average, and $`P(\cdot)`$ is a probability.
 
 **Credibility** (Bühlmann, 1967):
 
-$$Z = \frac{n}{n + s/a}, \qquad \hat m = Z\,\bar X + (1 - Z)\,\mu$$
+```math
+Z = \frac{n}{n + s/a}, \qquad \hat m = Z\,\bar X + (1 - Z)\,\mu
+```
 
 **Read it aloud:** the weight on the fleet's own record is its number of years, divided by that number plus the ratio of year-to-year noise to fleet-to-fleet difference; the forecast is that weighted blend of the fleet's average and the class average.
 
 **Reinsurance**, per claim and per year (XL is excess of loss, SL is stop-loss):
 
-$$E[(Y - d)_+] = \int_d^\infty P(Y > t)\,dt, \qquad \text{XL premium} = \lambda\,E[(Y-d)_+], \qquad \text{SL premium} = E[(S - D)_+] = \int_D^\infty P(S > t)\,dt$$
+```math
+E[(Y - d)_+] = \int_d^\infty P(Y > t)\,dt, \qquad \text{XL premium} = \lambda\,E[(Y-d)_+], \qquad \text{SL premium} = E[(S - D)_+] = \int_D^\infty P(S > t)\,dt
+```
 
 **Read it aloud:** a layer's fair price adds up, over every dollar above the retention, the chance the loss gets that far; excess of loss applies it to each claim and multiplies by the expected number of claims, stop-loss applies it once to the year's total.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\Theta$, $m(\Theta)$ | the fleet's hidden risk type, and its true long-run claims a year | 1 or 3, equally likely | — |
-| $n$ | years of the fleet's own record | 3 | $Z$ rises: more years, less noise |
-| $X_j$, $j$, $\bar X$ | claims in year $j$, and their average | 1, 1, 2; average 1.33 | forecast rises by $Z$ per claim |
-| $\mu$ | class mean: average of $m(\Theta)$ over all fleets | 2 | forecast rises by $1 - Z$ |
-| $a$ | variance of hypothetical means (VHM): how much fleets truly differ | 1 | $Z$ rises: the record says more |
-| $s$ | expected process variance (EPV): one fleet's year-to-year jumpiness | 2 | $Z$ falls: the record is noisier |
-| $Z$, $k$ | the credibility weight, and $k = s/a$, the years needed for 50 percent | 0.6; $k = 2$ | forecast moves toward the fleet's own average |
-| $Y$, $d$, $t$ | one claim's cost, the per-claim retention (the insurer's share), and a dollar level above it | $1,000 or $4,000; $2,000 | $d$ up: premium falls |
-| $N$, $\lambda$ | claims in a year, and their expected number | Poisson, $\lambda = 1.6$ | XL premium rises in proportion |
-| $S$, $D$ | the year's total claims cost, and the annual retention | expected $4,000; $3,000 | $D$ up: premium falls |
-| $(x)_+$ | positive part: $x$ if above zero, else zero | $(4 - 2)_+ = 2$ | — |
-| $E[\cdot]$, $P(\cdot)$ | expectation and probability over the model | — | — |
+| $`\Theta`$, $`m(\Theta)`$ | the fleet's hidden risk type, and its true long-run claims a year | 1 or 3, equally likely | — |
+| $`n`$ | years of the fleet's own record | 3 | $`Z`$ rises: more years, less noise |
+| $`X_j`$, $`j`$, $`\bar X`$ | claims in year $`j`$, and their average | 1, 1, 2; average 1.33 | forecast rises by $`Z`$ per claim |
+| $`\mu`$ | class mean: average of $`m(\Theta)`$ over all fleets | 2 | forecast rises by $`1 - Z`$ |
+| $`a`$ | variance of hypothetical means (VHM): how much fleets truly differ | 1 | $`Z`$ rises: the record says more |
+| $`s`$ | expected process variance (EPV): one fleet's year-to-year jumpiness | 2 | $`Z`$ falls: the record is noisier |
+| $`Z`$, $`k`$ | the credibility weight, and $`k = s/a`$, the years needed for 50 percent | 0.6; $`k = 2`$ | forecast moves toward the fleet's own average |
+| $`Y`$, $`d`$, $`t`$ | one claim's cost, the per-claim retention (the insurer's share), and a dollar level above it | $1,000 or $4,000; $2,000 | $`d`$ up: premium falls |
+| $`N`$, $`\lambda`$ | claims in a year, and their expected number | Poisson, $`\lambda = 1.6`$ | XL premium rises in proportion |
+| $`S`$, $`D`$ | the year's total claims cost, and the annual retention | expected $4,000; $3,000 | $`D`$ up: premium falls |
+| $`(x)_+`$ | positive part: $`x`$ if above zero, else zero | $`(4 - 2)_+ = 2`$ | — |
+| $`E[\cdot]`$, $`P(\cdot)`$ | expectation and probability over the model | — | — |
 
-Two helper quantities, both from the model's two-type class. The class mean is $\mu = (1 + 3)/2 = 2$. The fleet-to-fleet variance is $a = ((1-2)^2 + (3-2)^2)/2 = 1$. Year-to-year counts are Poisson, a count law whose variance equals its mean, so the average within-fleet variance is $s = \mu = 2$.
+Two helper quantities, both from the model's two-type class. The class mean is $`\mu = (1 + 3)/2 = 2`$. The fleet-to-fleet variance is $`a = ((1-2)^2 + (3-2)^2)/2 = 1`$. Year-to-year counts are Poisson, a count law whose variance equals its mean, so the average within-fleet variance is $`s = \mu = 2`$.
 
 ### When it holds
 
-- **The risk type stays put.** Credibility assumes each fleet has one fixed $m(\Theta)$. If the fleet hires new drivers or changes routes, old years describe a different fleet and get too much weight.
+- **The risk type stays put.** Credibility assumes each fleet has one fixed $`m(\Theta)`$. If the fleet hires new drivers or changes routes, old years describe a different fleet and get too much weight.
 - **Years are comparable.** Each year must carry the same exposure: roughly the same number of vans. A fleet that doubled in size has a less noisy claims rate in its larger years; the fix weights years by exposure (the Bühlmann-Straub model), and the plain average used here then overweights the small years.
-- **The two variances are known.** Here $a$ and $s$ come from a stated model. In practice they are estimated from many peer fleets, and a bad estimate of $a$ moves $Z$ sharply (Try changing, below, shows 0.6 falling to 0.273). At the boundaries: fleets that do not differ ($a = 0$) give $Z = 0$; years with no noise ($s = 0$) give $Z = 1$.
+- **The two variances are known.** Here $`a`$ and $`s`$ come from a stated model. In practice they are estimated from many peer fleets, and a bad estimate of $`a`$ moves $`Z`$ sharply (Try changing, below, shows 0.6 falling to 0.273). At the boundaries: fleets that do not differ ($`a = 0`$) give $`Z = 0`$; years with no noise ($`s = 0`$) give $`Z = 1`$.
 - **Counts and sizes independent.** The excess-of-loss formula needs the number of claims independent of their sizes, and sizes independent of each other. A storm that causes many large claims at once breaks both.
 - **A finite mean.** If claim sizes have a tail so heavy that their mean is infinite, an unlimited layer has no finite price; a capped layer always does.
 
@@ -79,90 +83,92 @@ Two helper quantities, both from the model's two-type class. The class mean is $
 
 ### Step 0: two wrong answers with opposite faults
 
-The class mean, 2, is steady but ignores this fleet. Its error is the spread between fleets: on average $a = 1$ in squared claims. The fleet's own mean, 1.33, is about the right fleet but noisy. Its error is the year-to-year noise averaged over three years: $s/n = 2/3$. Neither is best. A blend of the two can beat both, because their errors pull in unrelated directions. Credibility picks the blend with the smallest expected squared error.
+The class mean, 2, is steady but ignores this fleet. Its error is the spread between fleets: on average $`a = 1`$ in squared claims. The fleet's own mean, 1.33, is about the right fleet but noisy. Its error is the year-to-year noise averaged over three years: $`s/n = 2/3`$. Neither is best. A blend of the two can beat both, because their errors pull in unrelated directions. Credibility picks the blend with the smallest expected squared error.
 
 ### Step 1: measure how the fleet's average moves with its true level
 
-Two facts about $\bar X$ drive everything. First, its total variance splits into the two sources: $\operatorname{Var}(\bar X) = a + s/n$. The first term is fleets differing; the second is noise around each fleet's own level. That is the law of total variance: variance of the conditional mean plus mean of the conditional variance.
+Two facts about $`\bar X`$ drive everything. First, its total variance splits into the two sources: $`\mathrm{Var}(\bar X) = a + s/n`$. The first term is fleets differing; the second is noise around each fleet's own level. That is the law of total variance: variance of the conditional mean plus mean of the conditional variance.
 
-Second, $\bar X$ tracks the true level exactly as much as fleets differ: $\operatorname{Cov}(m(\Theta), \bar X) = a$. The noise part is unrelated to the fleet's type, so it adds nothing to the covariance, the measure of how two quantities move together.
+Second, $`\bar X`$ tracks the true level exactly as much as fleets differ: $`\mathrm{Cov}(m(\Theta), \bar X) = a`$. The noise part is unrelated to the fleet's type, so it adds nothing to the covariance, the measure of how two quantities move together.
 
-For the fleet class: $\operatorname{Var}(\bar X) = 1 + 2/3 = 5/3$, and the covariance is 1.
+For the fleet class: $`\mathrm{Var}(\bar X) = 1 + 2/3 = 5/3`$, and the covariance is 1.
 
 ### Step 2: choose the weight that minimises the error
 
-Any straight-line forecast is an intercept plus a slope times the fleet average: $c + z\bar X$. Its expected squared error is smallest at $c = (1-z)\mu$, so the forecast is always a blend of the class mean and the fleet mean. With that intercept, the error is
+Any straight-line forecast is an intercept plus a slope times the fleet average: $`c + z\bar X`$. Its expected squared error is smallest at $`c = (1-z)\mu`$, so the forecast is always a blend of the class mean and the fleet mean. With that intercept, the error is
 
-$$E\big[(m(\Theta) - \mu - z(\bar X - \mu))^2\big] = a - 2za + z^2(a + s/n).$$
+```math
+E\big[(m(\Theta) - \mu - z(\bar X - \mu))^2\big] = a - 2za + z^2(a + s/n).
+```
 
-This is a parabola in $z$. Its lowest point is at $z = a/(a + s/n)$, the covariance divided by the variance. Divide top and bottom by $a$ and multiply by $n$: $Z = n/(n + s/a)$. For the fleet, $Z = 1/(5/3) = 3/5$.
+This is a parabola in $`z`$. Its lowest point is at $`z = a/(a + s/n)`$, the covariance divided by the variance. Divide top and bottom by $`a`$ and multiply by $`n`$: $`Z = n/(n + s/a)`$. For the fleet, $`Z = 1/(5/3) = 3/5`$.
 
-The error left over is $a(1 - Z) = 0.4$. Compare the two pure answers: 1 for the class mean, $2/3$ for the fleet mean. The blend beats both.
+The error left over is $`a(1 - Z) = 0.4`$. Compare the two pure answers: 1 for the class mean, $`2/3`$ for the fleet mean. The blend beats both.
 
 <details>
 <summary>Detailed proof: the two moments and the minimum</summary>
 
-Given $\Theta$, the years are independent with mean $m(\Theta)$ and variance $v(\Theta)$, so $E[\bar X \mid \Theta] = m(\Theta)$ and $\operatorname{Var}(\bar X \mid \Theta) = v(\Theta)/n$. Write $\bar X - \mu = (\bar X - m(\Theta)) + (m(\Theta) - \mu)$. The first bracket has conditional mean zero, so its product with the second has expectation zero, and $\operatorname{Var}(\bar X) = E[v(\Theta)]/n + \operatorname{Var}(m(\Theta)) = s/n + a$. For the covariance, condition on $\Theta$: $E[(m(\Theta) - \mu)(\bar X - \mu) \mid \Theta] = (m(\Theta) - \mu)^2$, whose expectation is $a$.
+Given $`\Theta`$, the years are independent with mean $`m(\Theta)`$ and variance $`v(\Theta)`$, so $`E[\bar X \mid \Theta] = m(\Theta)`$ and $`\mathrm{Var}(\bar X \mid \Theta) = v(\Theta)/n`$. Write $`\bar X - \mu = (\bar X - m(\Theta)) + (m(\Theta) - \mu)`$. The first bracket has conditional mean zero, so its product with the second has expectation zero, and $`\mathrm{Var}(\bar X) = E[v(\Theta)]/n + \mathrm{Var}(m(\Theta)) = s/n + a`$. For the covariance, condition on $`\Theta`$: $`E[(m(\Theta) - \mu)(\bar X - \mu) \mid \Theta] = (m(\Theta) - \mu)^2`$, whose expectation is $`a`$.
 
-For a fixed $z$, the error of $c + z\bar X$ is its variance part plus $(E[m(\Theta)] - c - z\mu)^2$, which vanishes at $c = (1-z)\mu$. Expand the remaining square with the two moments: $a - 2za + z^2(a + s/n)$. Completing the square gives $(a + s/n)(z - Z)^2 + a - a^2/(a + s/n)$, least at $z = Z$ and equal there to $a \cdot (s/n)/(a + s/n) = a(1 - Z)$. The argument uses only means, variances and one covariance; it never needs the counts to be Poisson.
+For a fixed $`z`$, the error of $`c + z\bar X`$ is its variance part plus $`(E[m(\Theta)] - c - z\mu)^2`$, which vanishes at $`c = (1-z)\mu`$. Expand the remaining square with the two moments: $`a - 2za + z^2(a + s/n)`$. Completing the square gives $`(a + s/n)(z - Z)^2 + a - a^2/(a + s/n)`$, least at $`z = Z`$ and equal there to $`a \cdot (s/n)/(a + s/n) = a(1 - Z)`$. The argument uses only means, variances and one covariance; it never needs the counts to be Poisson.
 
 </details>
 
 ### Step 3: when the straight line is the whole answer
 
-Credibility is the best *straight-line* forecast. The fully informed forecast is the Bayes posterior mean, $E[m(\Theta) \mid X_1, X_2, X_3]$: the average true level among all fleets that produced this exact record. It can bend.
+Credibility is the best *straight-line* forecast. The fully informed forecast is the Bayes posterior mean, $`E[m(\Theta) \mid X_1, X_2, X_3]`$: the average true level among all fleets that produced this exact record. It can bend.
 
 For two fleet types, it does. The record 1, 1, 2 points strongly at the low type, and the posterior mean comes to 1.33, not 1.6. Its expected squared error across all records is 0.296, below credibility's 0.4. The price of the straight line is that gap.
 
-When the risk levels follow a bell curve and each year is a bell-curve draw around the fleet's level, the Bayes answer is itself a straight line with exactly the weight $Z$ ([Normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md)). The code integrates that posterior numerically for a prior with mean 2 and variance 1 and years with variance 2. It lands on 1.6. The same exactness holds for Poisson counts with a gamma-distributed rate (the gamma law is a standard model for a positive, skewed quantity). Credibility is Bayes for those families, and the best available line for all others.
+When the risk levels follow a bell curve and each year is a bell-curve draw around the fleet's level, the Bayes answer is itself a straight line with exactly the weight $`Z`$ ([Normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md)). The code integrates that posterior numerically for a prior with mean 2 and variance 1 and years with variance 2. It lands on 1.6. The same exactness holds for Poisson counts with a gamma-distributed rate (the gamma law is a standard model for a positive, skewed quantity). Credibility is Bayes for those families, and the best available line for all others.
 
 ### Step 4: the reinsurer holds a call option on the loss
 
-An excess-of-loss reinsurer pays $(Y - d)_+$ on a claim of size $Y$: nothing up to the retention $d$, then every dollar above it. The insurer keeps $\min(Y, d)$. The payoff has the shape of a call with strike $d$ ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
+An excess-of-loss reinsurer pays $`(Y - d)_+`$ on a claim of size $`Y`$: nothing up to the retention $`d`$, then every dollar above it. The insurer keeps $`\min(Y, d)`$. The payoff has the shape of a call with strike $`d`$ ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
 
-Its expected value is a tail integral. Write the payoff as a stack of one-dollar slices: $(y - d)_+ = \int_d^\infty \mathbf{1}\{y > t\}\,dt$, where $\mathbf{1}\{y > t\}$ is 1 when the claim passes the level $t$ and 0 otherwise. Take expectations inside the integral: each slice is worth the chance of reaching it. So $E[(Y-d)_+] = \int_d^\infty P(Y > t)\,dt$.
+Its expected value is a tail integral. Write the payoff as a stack of one-dollar slices: $`(y - d)_+ = \int_d^\infty \mathbf{1}\{y > t\}\,dt`$, where $`\mathbf{1}\{y > t\}`$ is 1 when the claim passes the level $`t`$ and 0 otherwise. Take expectations inside the integral: each slice is worth the chance of reaching it. So $`E[(Y-d)_+] = \int_d^\infty P(Y > t)\,dt`$.
 
-For the fleet with $d = \$2{,}000$: a claim passes every level between $2,000 and $4,000 with chance one half, and none above. The integral is $2{,}000 \times 0.5 = \$1{,}000$ per claim.
+For the fleet with $`d = \$2{,}000`$: a claim passes every level between $2,000 and $4,000 with chance one half, and none above. The integral is $`2{,}000 \times 0.5 = \$1{,}000`$ per claim.
 
 ### Step 5: per claim factorises, per year does not
 
-Excess of loss applies the cut to every claim, then adds: $\sum_{i=1}^{N} (Y_i - d)_+$. Given $N$ claims, the expected total is $N$ times the per-claim value. Average over $N$ and the premium is $\lambda E[(Y - d)_+] = 1.6 \times \$1{,}000 = \$1{,}600$.
+Excess of loss applies the cut to every claim, then adds: $`\sum_{i=1}^{N} (Y_i - d)_+`$. Given $`N`$ claims, the expected total is $`N`$ times the per-claim value. Average over $`N`$ and the premium is $`\lambda E[(Y - d)_+] = 1.6 \times \$1{,}000 = \$1{,}600`$.
 
-Stop-loss adds first, then cuts: $(S - D)_+$ with $S = Y_1 + \dots + Y_N$. The cut after the sum cannot be pushed inside it. The whole law of $S$, the probability of every possible total, is needed.
+Stop-loss adds first, then cuts: $`(S - D)_+`$ with $`S = Y_1 + \dots + Y_N`$. The cut after the sum cannot be pushed inside it. The whole law of $`S`$, the probability of every possible total, is needed.
 
-A short route exists when the retention is low. Since $(S - D)_+ = S - D + (D - S)_+$, the premium is $E[S] - D$ plus a correction from years that finish below $D$. With $D = \$3{,}000$ and claims of $1,000 or $4,000, only totals of 0, 1 or 2 thousand fall short: no claims, one small claim, or two small ones. Their chances are $e^{-1.6} = 0.2019$, $1.6e^{-1.6}/2 = 0.1615$ and $(1.6^2/2)e^{-1.6}/4 = 0.0646$, where the halves and quarters are the chance each claim is the small one. So the premium, in thousands, is $4.0 - 3 + 3(0.2019) + 2(0.1615) + 1(0.0646) = 1.9933$.
+A short route exists when the retention is low. Since $`(S - D)_+ = S - D + (D - S)_+`$, the premium is $`E[S] - D`$ plus a correction from years that finish below $`D`$. With $`D = \$3{,}000`$ and claims of $1,000 or $4,000, only totals of 0, 1 or 2 thousand fall short: no claims, one small claim, or two small ones. Their chances are $`e^{-1.6} = 0.2019`$, $`1.6e^{-1.6}/2 = 0.1615`$ and $`(1.6^2/2)e^{-1.6}/4 = 0.0646`$, where the halves and quarters are the chance each claim is the small one. So the premium, in thousands, is $`4.0 - 3 + 3(0.2019) + 2(0.1615) + 1(0.0646) = 1.9933`$.
 
 <details>
 <summary>Detailed proof: the tail integral and the count factorisation</summary>
 
-For $y \ge 0$, the indicator $\mathbf{1}\{y > t\}$ is 1 for $t < y$ and 0 after, so $\int_d^\infty \mathbf{1}\{y > t\}\,dt = \max(y - d, 0)$. The integrand is non-negative, so expectation and integral can swap (Tonelli's theorem), even when the answer is infinite. The same step with $S$ in place of $Y$ gives the stop-loss formula.
+For $`y \ge 0`$, the indicator $`\mathbf{1}\{y > t\}`$ is 1 for $`t < y`$ and 0 after, so $`\int_d^\infty \mathbf{1}\{y > t\}\,dt = \max(y - d, 0)`$. The integrand is non-negative, so expectation and integral can swap (Tonelli's theorem), even when the answer is infinite. The same step with $`S`$ in place of $`Y`$ gives the stop-loss formula.
 
-For excess of loss, condition on $N = j$: independence of the count from the sizes gives $E[\sum_{i \le j}(Y_i - d)_+] = j\,E[(Y - d)_+]$. Averaging over the count gives $E[N]\,E[(Y-d)_+]$. For stop-loss the positive part wraps the sum, and $E[(\sum Y_i - D)_+]$ is not $\sum E[(Y_i - D)_+]$: a year of four $1,000 claims pays nothing under a per-claim cut at $3,000, but $1,000 under an annual one.
+For excess of loss, condition on $`N = j`$: independence of the count from the sizes gives $`E[\sum_{i \le j}(Y_i - d)_+] = j\,E[(Y - d)_+]`$. Averaging over the count gives $`E[N]\,E[(Y-d)_+]`$. For stop-loss the positive part wraps the sum, and $`E[(\sum Y_i - D)_+]`$ is not $`\sum E[(Y_i - D)_+]`$: a year of four $1,000 claims pays nothing under a per-claim cut at $3,000, but $1,000 under an annual one.
 
 </details>
 
-The full law of $S$ for any claim-size table comes from [Panjer's recursion](05-panjer-recursion-and-aggregate-claims.md); the code here builds it by counting how many claims are large.
+The full law of $`S`$ for any claim-size table comes from [Panjer's recursion](05-panjer-recursion-and-aggregate-claims.md); the code here builds it by counting how many claims are large.
 
 ---
 
 ## Worked numbers, by hand
 
-Fleet record 1, 1, 2 over $n = 3$ years; class types 1 or 3 claims a year, equally likely. Claim sizes $1,000 or $4,000, equally likely; per-claim retention $2,000; annual retention $3,000.
+Fleet record 1, 1, 2 over $`n = 3`$ years; class types 1 or 3 claims a year, equally likely. Claim sizes $1,000 or $4,000, equally likely; per-claim retention $2,000; annual retention $3,000.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| class mean $\mu$ | $(1 + 3)/2$ | 2 |
-| between-fleet spread $a$ | $((1-2)^2 + (3-2)^2)/2$ | 1 |
-| within-fleet noise $s$ | Poisson: equals the mean | 2 |
-| $k = s/a$ | $2/1$ | 2 |
-| credibility $Z$ | $3/(3 + 2)$ | **0.6** |
-| fleet average $\bar X$ | $(1 + 1 + 2)/3$ | 1.3333 |
-| forecast $\hat m$ | $0.6 \times 1.3333 + 0.4 \times 2$ | **1.6 claims a year** |
-| per-claim layer value | $0.5 \times (4{,}000 - 2{,}000)$ | $1,000.00 |
-| **excess-of-loss premium** | $1.6 \times 1{,}000$ | **$1,600.00** |
-| expected yearly total $E[S]$ | $1.6 \times 2{,}500$ | $4,000.00 |
-| $P(S = 0), P(S = 1), P(S = 2)$ | see Step 5 | 0.2019, 0.1615, 0.0646 |
-| **stop-loss premium** | $4{,}000 - 3{,}000 + 1{,}000(3 \times 0.2019 + 2 \times 0.1615 + 0.0646)$ | **$1,993.33** |
+| class mean $`\mu`$ | $`(1 + 3)/2`$ | 2 |
+| between-fleet spread $`a`$ | $`((1-2)^2 + (3-2)^2)/2`$ | 1 |
+| within-fleet noise $`s`$ | Poisson: equals the mean | 2 |
+| $`k = s/a`$ | $`2/1`$ | 2 |
+| credibility $`Z`$ | $`3/(3 + 2)`$ | **0.6** |
+| fleet average $`\bar X`$ | $`(1 + 1 + 2)/3`$ | 1.3333 |
+| forecast $`\hat m`$ | $`0.6 \times 1.3333 + 0.4 \times 2`$ | **1.6 claims a year** |
+| per-claim layer value | $`0.5 \times (4{,}000 - 2{,}000)`$ | $1,000.00 |
+| **excess-of-loss premium** | $`1.6 \times 1{,}000`$ | **$1,600.00** |
+| expected yearly total $`E[S]`$ | $`1.6 \times 2{,}500`$ | $4,000.00 |
+| $`P(S = 0), P(S = 1), P(S = 2)`$ | see Step 5 | 0.2019, 0.1615, 0.0646 |
+| **stop-loss premium** | $`4{,}000 - 3{,}000 + 1{,}000(3 \times 0.2019 + 2 \times 0.1615 + 0.0646)`$ | **$1,993.33** |
 
 The fleet's expected claims are 1.6 a year, and a reinsurer charging its expected payment asks $1,600.00 for the per-claim cover or $1,993.33 for the annual cover, before any loading for expenses, profit or capital.
 
@@ -170,16 +176,16 @@ The fleet's expected claims are 1.6 a year, and a reinsurer charging its expecte
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Credibility with the ratio flipped, $n/(n + a/s)$ | $Z = 0.857$, forecast 1.43 | Noise and spread swapped: a noisier fleet would earn more trust |
-| Stop-loss priced as $\lambda E[(Y - D)_+]$ | $800.00 (right: $1,993.33) | Cut each claim at $3,000 instead of the year's total |
-| Stop-loss priced as $E[S] - D$ | $1,000.00 (right: $1,993.33) | Forgot the positive part: quiet years were counted as refunds |
+| Credibility with the ratio flipped, $`n/(n + a/s)`$ | $`Z = 0.857`$, forecast 1.43 | Noise and spread swapped: a noisier fleet would earn more trust |
+| Stop-loss priced as $`\lambda E[(Y - D)_+]`$ | $800.00 (right: $1,993.33) | Cut each claim at $3,000 instead of the year's total |
+| Stop-loss priced as $`E[S] - D`$ | $1,000.00 (right: $1,993.33) | Forgot the positive part: quiet years were counted as refunds |
 | Reinsurance priced at the class mean, 2 claims | XL $2,000.00, SL $2,744.34 | Threw away the fleet's credible record before pricing its tail |
 
 ---
 
 ## How it moves: more years, higher retentions
 
-The weight is not fixed. Each new year of record lowers the noise in $\bar X$, and $Z$ climbs toward 1 without reaching it. The years needed for a 50 percent weight is $k = s/a = 2$.
+The weight is not fixed. Each new year of record lowers the noise in $`\bar X`$, and $`Z`$ climbs toward 1 without reaching it. The years needed for a 50 percent weight is $`k = s/a = 2`$.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -190,7 +196,7 @@ xychart-beta
     line [0.33, 0.50, 0.60, 0.67, 0.71, 0.75, 0.78, 0.80, 0.82, 0.83]
 ```
 
-The single line is $Z = n/(n + 2)$: one third after one year, 0.6 after three, five sixths after ten.
+The single line is $`Z = n/(n + 2)`$: one third after one year, 0.6 after three, five sixths after ten.
 
 The expected squared error of each forecast, in squared claims a year, from the enumeration in the code:
 
@@ -602,12 +608,12 @@ The two outputs are identical line for line, simulations included, because both 
 
 ### Lean
 
-Lean proves that $Z$ gives the best straight-line forecast, and both layer formulas for any claim law. It also checks the worked numbers.
+Lean proves that $`Z`$ gives the best straight-line forecast, and both layer formulas for any claim law. It also checks the worked numbers.
 
-- Suppose $n \ge 1$, and $m(\Theta)$ and $\bar X$ both have mean $\mu$, variances $a > 0$ and $a + s/n$, covariance $a$. Then $\hat m$ has the smallest expected squared error of any line $c + z\bar X$. That error is $a(1 - Z)$.
-- Take any claim size $Y$ and retention $d$. Then $E[(Y - d)_+] = \int_d^\infty P(Y > t)\,dt$, even when both sides are infinite. With $S$ and $D$ in their place, this is the stop-loss formula.
-- Suppose the count $N$ is independent of the claim sizes, and the sizes are independent with one common law. Then $E[\sum_{i=1}^{N} (Y_i - d)_+] = \lambda\,E[(Y - d)_+]$, with no Poisson assumption.
-- Take the fleet. Then $\mu = 2$, $a = 1$, $Z = 0.6$, $\bar X = 4/3$, $\hat m = 1.6$, and the error is 0.4, exactly.
+- Suppose $`n \ge 1`$, and $`m(\Theta)`$ and $`\bar X`$ both have mean $`\mu`$, variances $`a > 0`$ and $`a + s/n`$, covariance $`a`$. Then $`\hat m`$ has the smallest expected squared error of any line $`c + z\bar X`$. That error is $`a(1 - Z)`$.
+- Take any claim size $`Y`$ and retention $`d`$. Then $`E[(Y - d)_+] = \int_d^\infty P(Y > t)\,dt`$, even when both sides are infinite. With $`S`$ and $`D`$ in their place, this is the stop-loss formula.
+- Suppose the count $`N`$ is independent of the claim sizes, and the sizes are independent with one common law. Then $`E[\sum_{i=1}^{N} (Y_i - d)_+] = \lambda\,E[(Y - d)_+]`$, with no Poisson assumption.
+- Take the fleet. Then $`\mu = 2`$, $`a = 1`$, $`Z = 0.6`$, $`\bar X = 4/3`$, $`\hat m = 1.6`$, and the error is 0.4, exactly.
 - Take the claim sizes. Then the layer is worth $1,000 per claim, and the excess-of-loss premium is $1,600. The expected yearly total is $4,000.
 - The flipped ratio's 0.857 and the Try changing weights 0.833 and 0.273 also check.
 
@@ -823,7 +829,7 @@ example : (3 : ℚ) / (3 + 2 / (1 / 4)) = 3 / 11 := by norm_num
 > **Try changing**
 > Guess first, then run.
 > - **Ten years of record.** Call `Zof` with `n` = 10. The weight rises from 0.6 to **0.833**: the record now carries five sixths of the forecast.
-> - **Fleets that differ less.** Make the types 1.5 and 2.5, so $a = 0.25$. The weight falls to **0.273**: when fleets are nearly alike, a fleet's own record says little.
+> - **Fleets that differ less.** Make the types 1.5 and 2.5, so $`a = 0.25`$. The weight falls to **0.273**: when fleets are nearly alike, a fleet's own record says little.
 > - **A higher annual retention.** Set `D` to 5. The stop-loss premium drops from $1,993.33 to **$1,048.79**.
 > - **A capped layer.** Pay only the $1,000 above $2,000 on each claim, not all of it. The premium halves to **$800.00**, because each $4,000 claim now pays $1,000 instead of $2,000.
 
@@ -835,9 +841,9 @@ example : (3 : ℚ) / (3 + 2 / (1 / 4)) = 3 / 11 := by norm_num
 > **Reading the credibility weight as a confidence level.** It is not the chance the fleet's record is right. It is the weight that minimises expected squared error given how much fleets differ and how noisy years are. The same three years 1, 1, 2 earn 60 percent in this class and 27 percent in a class of near-identical fleets.
 >
 > Smaller traps:
-> - **Flipping the ratio.** $Z = n/(n + s/a)$, noise over spread. Flipped, the weight is 0.857 and the forecast 1.43.
+> - **Flipping the ratio.** $`Z = n/(n + s/a)`$, noise over spread. Flipped, the weight is 0.857 and the forecast 1.43.
 > - **Cutting the wrong thing.** A stop-loss cuts the year's total, not each claim. Priced per claim it comes out at $800.00 instead of $1,993.33.
-> - **Dropping the positive part.** $E[S] - D$ treats quiet years as money back from the reinsurer: $1,000.00 instead of $1,993.33.
+> - **Dropping the positive part.** $`E[S] - D`$ treats quiet years as money back from the reinsurer: $1,000.00 instead of $1,993.33.
 > - **Calling the pure premium a price.** The expected payment is the floor. A real treaty adds expenses, a margin for risk and capital, and terms such as reinstatements, the right to restore cover after a payout, for an extra premium.
 
 ---
@@ -852,7 +858,7 @@ example : (3 : ℚ) / (3 + 2 / (1 / 4)) = 3 / 11 := by norm_num
 - **Solvency.** Reinsurance lowers the chance that a bad year exhausts capital ([Ruin](06-ruin-theory-and-lundberg.md)).
 
 > **Say it back**
-> A short claims record is noisy and a class average ignores the fleet, so credibility blends them. The weight, $Z = n/(n + s/a)$, grows with years and with how much fleets truly differ, and shrinks with year-to-year noise. It is the best straight-line forecast, and the exact Bayes answer when risks and years follow bell curves. A reinsurance layer pays like a call on the loss, and its fair price adds up the chance of reaching each dollar above the retention. Per claim, that price multiplies by the expected count; on the year's total, it needs the whole law of the total.
+> A short claims record is noisy and a class average ignores the fleet, so credibility blends them. The weight, $`Z = n/(n + s/a)`$, grows with years and with how much fleets truly differ, and shrinks with year-to-year noise. It is the best straight-line forecast, and the exact Bayes answer when risks and years follow bell curves. A reinsurance layer pays like a call on the loss, and its fair price adds up the chance of reaching each dollar above the retention. Per claim, that price multiplies by the expected count; on the year's total, it needs the whole law of the total.
 
 ---
 
@@ -867,7 +873,7 @@ The claim-count model and the compound total come from [Aggregate claims](04-col
 
 - [Ruin](06-ruin-theory-and-lundberg.md): with a retention in place, the insurer's surplus faces only the retained claims; the ruin probability shows how much the treaty buys.
 - [Panjer's recursion](05-panjer-recursion-and-aggregate-claims.md): the full law of the yearly total for any claim-size table, which every stop-loss price needs.
-- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the same $(x - K)_+$ payoff priced in a market, where hedging replaces expectation under real-world odds.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the same $`(x - K)_+`$ payoff priced in a market, where hedging replaces expectation under real-world odds.
 
 The open question is how much retention to keep: a fair premium says what each layer costs, not which layer the insurer should buy, and that choice is a trade between premium paid and ruin risk avoided.
 

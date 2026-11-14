@@ -26,9 +26,11 @@ Drawn to scale at 100 units per metre in both directions; the bottom line is y =
 
 ## The formula
 
-Notation first, in words. The integral sign with a C at its foot means "add along the curve C". The $ds$ after it names what is added over: tiny lengths of wire, measured along the wire, never negative. The Greek letter $\rho$ (rho) stands for density.
+Notation first, in words. The integral sign with a C at its foot means "add along the curve C". The $`ds`$ after it names what is added over: tiny lengths of wire, measured along the wire, never negative. The Greek letter $`\rho`$ (rho) stands for density.
 
-$$M = \int_C \rho\, ds = \int_a^b \rho\big(x(t), y(t)\big)\,\sqrt{x'(t)^2 + y'(t)^2}\; dt$$
+```math
+M = \int_C \rho\, ds = \int_a^b \rho\big(x(t), y(t)\big)\,\sqrt{x'(t)^2 + y'(t)^2}\; dt
+```
 
 **Read it aloud:** the mass adds density times length along the wire; with a clock t, that is density at the point reached, times the speed there, added over the clock.
 
@@ -36,14 +38,14 @@ The square root is the clock's **speed**: metres of wire per unit of clock, as o
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $C$ | the curve the wire follows, run once | y = x^2/2, x from 1 to 2 m | a longer wire weighs more |
-| $M$ | the wire's mass, kg | 8.351913 kg | — |
-| $\rho$ | density at a point: kg per metre of wire | 3x, so 3 to 6 kg/m | mass rises in step |
-| $ds$ | a tiny length along the wire, always positive | — | — |
-| $t$, $a$, $b$ | a clock and its start and end | x = t, t from 1 to 2 | a faster clock changes speed, not mass |
-| $x(t)$, $y(t)$ | where the clock has reached | t and t^2/2 | — |
-| $x'(t)$, $y'(t)$ | their rates: metres per unit of clock | 1 and t | more speed, more wire per tick |
-| $n$ | number of straight pieces | 4 | more pieces, closer total |
+| $`C`$ | the curve the wire follows, run once | y = x^2/2, x from 1 to 2 m | a longer wire weighs more |
+| $`M`$ | the wire's mass, kg | 8.351913 kg | — |
+| $`\rho`$ | density at a point: kg per metre of wire | 3x, so 3 to 6 kg/m | mass rises in step |
+| $`ds`$ | a tiny length along the wire, always positive | — | — |
+| $`t`$, $`a`$, $`b`$ | a clock and its start and end | x = t, t from 1 to 2 | a faster clock changes speed, not mass |
+| $`x(t)`$, $`y(t)`$ | where the clock has reached | t and t^2/2 | — |
+| $`x'(t)`$, $`y'(t)`$ | their rates: metres per unit of clock | 1 and t | more speed, more wire per tick |
+| $`n`$ | number of straight pieces | 4 | more pieces, closer total |
 
 Units: kg/m times metres per unit of clock, added over the clock, leaves kg.
 
@@ -77,10 +79,12 @@ The tolerance game, on the wire: to land within 0.001 kg, sixteen equal pieces s
 <details>
 <summary>Detailed proof: the piece totals tend to the formula</summary>
 
-Let $q(t)$ be the density at the point reached at clock time t, and $v(t)$ the speed. Both are continuous (without jumps) on the closed stretch from a to b, so q is uniformly continuous. For every ε > 0 there is a δ > 0 such that clock times less than δ apart give densities less than ε apart. Let L be the wire's length, the integral of v.
+Let $`q(t)`$ be the density at the point reached at clock time t, and $`v(t)`$ the speed. Both are continuous (without jumps) on the closed stretch from a to b, so q is uniformly continuous. For every ε > 0 there is a δ > 0 such that clock times less than δ apart give densities less than ε apart. Let L be the wire's length, the integral of v.
 
-Cut the clock at $a = t_0 < t_1 < \dots < t_n = b$, every step shorter than δ, and pick a clock time $t_{i-1} \le \tau_i \le t_i$ in each step. The piece total is $S = \sum q(\tau_i)\,\ell_i$, where $\ell_i = \int_{t_{i-1}}^{t_i} v(t)\,dt$ is the length of piece i. Let I be the integral of q times v. Then
-$$\lvert S - I\rvert = \Big\lvert \sum \int_{t_{i-1}}^{t_i} \big(q(\tau_i) - q(t)\big)\,v(t)\,dt \Big\rvert \le \varepsilon \int_a^b v(t)\,dt = \varepsilon L.$$
+Cut the clock at $`a = t_0 < t_1 < \dots < t_n = b`$, every step shorter than δ, and pick a clock time $`t_{i-1} \le \tau_i \le t_i`$ in each step. The piece total is $`S = \sum q(\tau_i)\,\ell_i`$, where $`\ell_i = \int_{t_{i-1}}^{t_i} v(t)\,dt`$ is the length of piece i. Let I be the integral of q times v. Then
+
+$`\displaystyle \lvert S - I\rvert = \Big\lvert \sum \int_{t_{i-1}}^{t_i} \big(q(\tau_i) - q(t)\big)\,v(t)\,dt \Big\rvert \le \varepsilon \int_a^b v(t)\,dt = \varepsilon L.`$
+
 Since ε was any positive number, S tends to I whichever points are picked. Speed is never negative, so the bound needs no sign; that is also why reversing the clock cannot flip the total.
 
 </details>
@@ -91,11 +95,11 @@ Run the same wire with a different clock that still runs it once: the old clock 
 
 Two effects cancel: a clock twice as fast doubles the speed and halves the clock time. As integrals, this is [Substitution](../04-Integrals/03-substitution.md), the chain rule run backwards, which turns the new integral back into the old one.
 
-On the wire, the clock $x = \sqrt{u}$ for u from 1 to 4 gives speed $\sqrt{1 + u}/(2\sqrt{u})$ and density $3\sqrt{u}$. Their product is $\tfrac{3}{2}\sqrt{1+u}$, and its integral is again 8.351913 kg.
+On the wire, the clock $`x = \sqrt{u}`$ for u from 1 to 4 gives speed $`\sqrt{1 + u}/(2\sqrt{u})`$ and density $`3\sqrt{u}`$. Their product is $`\tfrac{3}{2}\sqrt{1+u}`$, and its integral is again 8.351913 kg.
 
 ### Step 4: running backwards changes nothing
 
-Reverse the orientation, starting at the far end: $x = 3 - s$, for s from 1 to 2. Now the rate of x is −1, but speed is a square root of squares, so it stays positive. The density met is the same, the lengths are the same, and the total is 8.351913 kg.
+Reverse the orientation, starting at the far end: $`x = 3 - s`$, for s from 1 to 2. Now the rate of x is −1, but speed is a square root of squares, so it stays positive. The density met is the same, the lengths are the same, and the total is 8.351913 kg.
 
 As substitution, a backwards clock brings two minus signs, one from taking the rate's size and one from limits in the other order, and they cancel.
 
@@ -112,7 +116,7 @@ A second road to the mass needs no clock at all: the piece totals themselves, st
 
 ## Worked numbers, by hand
 
-Use the clock x = t, so $x' = 1$ and $y' = t$.
+Use the clock x = t, so $`x' = 1`$ and $`y' = t`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -141,7 +145,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Two roads. One: density times speed, integrated by Simpson's rule on three clocks: x = t, x = sqrt(u), and the reversed x = 3 − s. Simpson's rule is a strip sum that fits a parabola over each pair of strips; the code uses 200 strips. Two: the definition, straight pieces times midpoint density, with the error printed as the pieces shrink. Both are checked against the antiderivative $(1 + t^2)^{3/2}$.
+Two roads. One: density times speed, integrated by Simpson's rule on three clocks: x = t, x = sqrt(u), and the reversed x = 3 − s. Simpson's rule is a strip sum that fits a parabola over each pair of strips; the code uses 200 strips. Two: the definition, straight pieces times midpoint density, with the error printed as the pieces shrink. Both are checked against the antiderivative $`(1 + t^2)^{3/2}`$.
 
 ### Python
 

@@ -40,7 +40,9 @@ Every question splits what is left into two halves of equal chance. That is why 
 
 Notation first, in words. X is the day's forecast, a random variable: an outcome fixed by chance ([Expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md)). The outcomes are numbered i = 1 to n, and p_i is the chance of outcome i. log2 is the logarithm to base 2: log2 8 = 3 because three 2s multiplied give 8 ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)). H(X), read "the entropy of X", is the new symbol, measured in bits.
 
-$$H(X) = \sum_{i=1}^{n} p_i \log_2 \frac{1}{p_i}$$
+```math
+H(X) = \sum_{i=1}^{n} p_i \log_2 \frac{1}{p_i}
+```
 
 **Read it aloud:** for every outcome, take its chance times the number of questions it costs, and add them up.
 
@@ -48,25 +50,29 @@ The cost of one outcome, log2(1/p_i), is its **surprise**. A sunny day (chance 0
 
 With only two outcomes, yes with chance p and no with chance 1 − p, the formula gets its own name, the **binary entropy** h(p):
 
-$$h(p) = p \log_2 \frac{1}{p} + (1 - p) \log_2 \frac{1}{1 - p}$$
+```math
+h(p) = p \log_2 \frac{1}{p} + (1 - p) \log_2 \frac{1}{1 - p}
+```
 
 The ceiling for n outcomes:
 
-$$H(X) \le \log_2 n, \quad \text{with equality exactly when every } p_i = \tfrac{1}{n}$$
+```math
+H(X) \le \log_2 n, \quad \text{with equality exactly when every } p_i = \tfrac{1}{n}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$ | the day's forecast, fixed by chance | sunny, cloudy, rain or snow | — |
-| $n$ | how many outcomes there are | 4 | the ceiling log2 n rises |
-| $i$ | which outcome, counted 1 to n | 1 = sunny, …, 4 = snow | — |
-| $p_i$ | the chance of outcome i | 0.5, 0.25, 0.125, 0.125 | H rises while p_i moves toward an equal share, falls past it |
-| $\log_2 \frac{1}{p_i}$ | the surprise of outcome i: the questions it costs | 1, 2, 3, 3 bits | a rarer outcome costs more questions |
-| $H(X)$ | the entropy: average surprise, in bits | 1.75 bits | more bits a day on the radio |
-| $p$ | in h(p), the chance of "yes" to one question | 0.5 for "sunny?" | h rises up to p = 0.5, then falls |
-| $h(p)$ | binary entropy: bits in one yes-or-no answer | h(0.5) = 1 bit | at most 1, at p = 0.5 |
+| $`X`$ | the day's forecast, fixed by chance | sunny, cloudy, rain or snow | — |
+| $`n`$ | how many outcomes there are | 4 | the ceiling log2 n rises |
+| $`i`$ | which outcome, counted 1 to n | 1 = sunny, …, 4 = snow | — |
+| $`p_i`$ | the chance of outcome i | 0.5, 0.25, 0.125, 0.125 | H rises while p_i moves toward an equal share, falls past it |
+| $`\log_2 \frac{1}{p_i}`$ | the surprise of outcome i: the questions it costs | 1, 2, 3, 3 bits | a rarer outcome costs more questions |
+| $`H(X)`$ | the entropy: average surprise, in bits | 1.75 bits | more bits a day on the radio |
+| $`p`$ | in h(p), the chance of "yes" to one question | 0.5 for "sunny?" | h rises up to p = 0.5, then falls |
+| $`h(p)`$ | binary entropy: bits in one yes-or-no answer | h(0.5) = 1 bit | at most 1, at p = 0.5 |
 | bit | one fair yes-or-no answer, the unit of H | 2 bits name one of 4 equal outcomes | — |
-| $\ln$ | the natural logarithm, base e; log2 y = ln y / ln 2 | 1 / ln 2 ≈ 1.4427 | — |
-| $x$, $y$ | any positive number, in the fact ln x ≤ x − 1 of Step 5 | y = 1/(n p_i) | — |
+| $`\ln`$ | the natural logarithm, base e; log2 y = ln y / ln 2 | 1 / ln 2 ≈ 1.4427 | — |
+| $`x`$, $`y`$ | any positive number, in the fact ln x ≤ x − 1 of Step 5 | y = 1/(n p_i) | — |
 
 ### When it holds
 
@@ -131,11 +137,15 @@ Why should H never pass log2 n? Here is the full argument. It uses one fact abou
 
 Write the gap between the ceiling and H as one sum, using p_1 + … + p_n = 1:
 
-$$H(X) - \log_2 n = \sum_i p_i \log_2 \frac{1}{n\,p_i}$$
+```math
+H(X) - \log_2 n = \sum_i p_i \log_2 \frac{1}{n\,p_i}
+```
 
 Change base, log2 y = ln y / ln 2, and apply ln y ≤ y − 1 to each term with y = 1/(n p_i):
 
-$$H(X) - \log_2 n \le \frac{1}{\ln 2} \sum_i p_i \left(\frac{1}{n\,p_i} - 1\right) = \frac{1}{\ln 2}\left(\sum_i \frac{1}{n} - \sum_i p_i\right) = \frac{1}{\ln 2}(1 - 1) = 0$$
+```math
+H(X) - \log_2 n \le \frac{1}{\ln 2} \sum_i p_i \left(\frac{1}{n\,p_i} - 1\right) = \frac{1}{\ln 2}\left(\sum_i \frac{1}{n} - \sum_i p_i\right) = \frac{1}{\ln 2}(1 - 1) = 0
+```
 
 (Outcomes with p_i = 0 are left out of the sum; they only shrink the first total, so the bound still holds.) Equality needs y = 1 in every term, so every p_i = 1/n. So H ≤ log2 n, and only the all-equal forecast reaches it.
 

@@ -38,28 +38,34 @@ Orange: the velocity, weighted by e^(−2t), added up from 0 to R. Teal: 2 times
 
 ## The formula
 
-Reminder from [The Laplace transform](01-the-laplace-transform.md): the curly $\mathcal{L}$ reads "the Laplace transform of", and the capital letter names the result, $Y = \mathcal{L}[y]$.
+Reminder from [The Laplace transform](01-the-laplace-transform.md): the curly $`\mathcal{L}`$ reads "the Laplace transform of", and the capital letter names the result, $`Y = \mathcal{L}[y]`$.
 
-$$Y(s)=\int_0^\infty e^{-st}\,y(t)\,dt$$
+```math
+Y(s)=\int_0^\infty e^{-st}\,y(t)\,dt
+```
 
 The theorem, for one derivative and for two:
 
-$$\mathcal{L}[y'](s) = sY(s) - y(0)$$
+```math
+\mathcal{L}[y'](s) = sY(s) - y(0)
+```
 
-$$\mathcal{L}[y''](s) = s^2Y(s) - s\,y(0) - y'(0)$$
+```math
+\mathcal{L}[y''](s) = s^2Y(s) - s\,y(0) - y'(0)
+```
 
 **Read it aloud:** the transform of the velocity is s times the transform of the height, minus the starting height; the transform of the acceleration is s squared times the transform, minus s times the starting height, minus the starting velocity.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time since release, in s | 0 to 30 s in the checks | — |
-| $y$, $y'$, $y''$ | height above level (cm), velocity (cm/s), acceleration (cm/s^2) | released at 1 cm, at rest | — |
-| $\mathcal{L}$, $Y$ | "transform it"; the height's transform, in cm·s | Y = 0.307692 at s = 2 | — |
-| $s$ | how fast the weight e^(−st) fades, per s | 2, and 0 | past s = 0.24, Y shrinks: the weight forgets sooner |
-| $y(0)$, $y'(0)$ | starting height and starting velocity | 1 cm and 0 cm/s | the numerator s + 2 changes |
-| $R$, $I_R$, $J_R$ | a finite cutoff; the weighted height and weighted velocity added up to it | R = 0.5 s | the end term at R shrinks |
-| $M$, $a$ | a growth bound: the size of y stays below M e^(at) | a = −1 for the car | a larger a needs a larger s |
-| $f$, $F$ | a signal with a jump; its transform | a step to 1 at t = 1 s | — |
+| $`t`$ | time since release, in s | 0 to 30 s in the checks | — |
+| $`y`$, $`y'`$, $`y''`$ | height above level (cm), velocity (cm/s), acceleration (cm/s^2) | released at 1 cm, at rest | — |
+| $`\mathcal{L}`$, $`Y`$ | "transform it"; the height's transform, in cm·s | Y = 0.307692 at s = 2 | — |
+| $`s`$ | how fast the weight e^(−st) fades, per s | 2, and 0 | past s = 0.24, Y shrinks: the weight forgets sooner |
+| $`y(0)`$, $`y'(0)`$ | starting height and starting velocity | 1 cm and 0 cm/s | the numerator s + 2 changes |
+| $`R`$, $`I_R`$, $`J_R`$ | a finite cutoff; the weighted height and weighted velocity added up to it | R = 0.5 s | the end term at R shrinks |
+| $`M`$, $`a`$ | a growth bound: the size of y stays below M e^(at) | a = −1 for the car | a larger a needs a larger s |
+| $`f`$, $`F`$ | a signal with a jump; its transform | a step to 1 at t = 1 s | — |
 
 ### When it holds
 
@@ -77,28 +83,30 @@ Differentiate e^(−st) and it comes back multiplied by −s. Integration by par
 
 ### Step 1: integrate by parts up to a finite cutoff
 
-Stop at a finite time R. Write $I_R$ for the weighted height added up from 0 to R, $J_R$ for the weighted velocity. By the product rule, e^(−st) y(t) has rate e^(−st) y'(t) − s e^(−st) y(t). Added up from 0 to R, that rate gives the product's value at R minus its value at 0, which is y(0). Rearranged:
+Stop at a finite time R. Write $`I_R`$ for the weighted height added up from 0 to R, $`J_R`$ for the weighted velocity. By the product rule, e^(−st) y(t) has rate e^(−st) y'(t) − s e^(−st) y(t). Added up from 0 to R, that rate gives the product's value at R minus its value at 0, which is y(0). Rearranged:
 
-$$J_R = e^{-sR}\,y(R) - y(0) + s\,I_R$$
+```math
+J_R = e^{-sR}\,y(R) - y(0) + s\,I_R
+```
 
-Nothing is dropped yet. For the car at s = 2 and R = 0.5 s the checks find $J_R$ = −0.229925 cm, s $I_R$ − y(0) = −0.444362 cm and the end term 0.214437 cm, which add up.
+Nothing is dropped yet. For the car at s = 2 and R = 0.5 s the checks find $`J_R`$ = −0.229925 cm, s $`I_R`$ − y(0) = −0.444362 cm and the end term 0.214437 cm, which add up.
 
 ### Step 2: the end term at R dies away
 
-The weight shrinks like e^(−sR) and the height is bounded by a fading exponential, so the end term dies. As R runs to infinity, $J_R$ becomes the transform of the velocity, $I_R$ becomes Y, and the identity becomes sY − y(0). The chart shows this closing.
+The weight shrinks like e^(−sR) and the height is bounded by a fading exponential, so the end term dies. As R runs to infinity, $`J_R`$ becomes the transform of the velocity, $`I_R`$ becomes Y, and the identity becomes sY − y(0). The chart shows this closing.
 
 <details>
 <summary>Detailed proof</summary>
 
-Assume y is continuous on t ≥ 0, y' is continuous there too, and both have size at most $M$ e^(at) for all t, with constants $M$ and $a$. Take s with real part σ greater than a.
+Assume y is continuous on t ≥ 0, y' is continuous there too, and both have size at most $`M`$ e^(at) for all t, with constants $`M`$ and $`a`$. Take s with real part σ greater than a.
 
-The integrals converge. The weighted height has size at most M e^(−(σ − a)t), whose integral from 0 to infinity is M/(σ − a); so $I_R$ tends to Y(s) by comparison ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)). The same bound makes $J_R$ converge.
+The integrals converge. The weighted height has size at most M e^(−(σ − a)t), whose integral from 0 to infinity is M/(σ − a); so $`I_R`$ tends to Y(s) by comparison ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)). The same bound makes $`J_R`$ converge.
 
 The end term vanishes. Its size is e^(−σR) times the size of y(R), at most M e^(−(σ − a)R), and σ − a > 0 sends that to 0 as R grows.
 
-Pass to the limit in $J_R = e^{-sR}y(R) - y(0) + sI_R$. Every term has a limit, so the limits satisfy the same identity: the transform of y' equals sY(s) − y(0).
+Pass to the limit in $`J_R = e^{-sR}y(R) - y(0) + sI_R`$. Every term has a limit, so the limits satisfy the same identity: the transform of y' equals sY(s) − y(0).
 
-For the second derivative, assume the same of y'' as well. The first rule applied to y' in place of y gives the transform of y'' as s times the transform of y', minus y'(0). Substitute the first rule for the transform of y': s(sY − y(0)) − y'(0), which is $s^2Y - s\,y(0) - y'(0)$.
+For the second derivative, assume the same of y'' as well. The first rule applied to y' in place of y gives the transform of y'' as s times the transform of y', minus y'(0). Substitute the first rule for the transform of y': s(sY − y(0)) − y'(0), which is $`s^2Y - s\,y(0) - y'(0)`$.
 
 For the car, height, velocity and acceleration each fade inside an envelope proportional to e^(−t) ([Complex roots](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md)), so a = −1 and s = 0 is allowed.
 
@@ -112,11 +120,15 @@ The velocity is itself a signal, so the rule applies to it: the transform of y''
 
 Transform every term of y'' + 2y' + 5y = 0:
 
-$$\bigl(s^2Y - s\,y(0) - y'(0)\bigr) + 2\bigl(sY - y(0)\bigr) + 5Y = 0$$
+```math
+\bigl(s^2Y - s\,y(0) - y'(0)\bigr) + 2\bigl(sY - y(0)\bigr) + 5Y = 0
+```
 
 Gather the Y terms on the left and the rest on the right:
 
-$$(s^2 + 2s + 5)\,Y = (s + 2)\,y(0) + y'(0)$$
+```math
+(s^2 + 2s + 5)\,Y = (s + 2)\,y(0) + y'(0)
+```
 
 The left side is the characteristic polynomial times Y; the right side holds the starting values alone. With y(0) = 1 cm and y'(0) = 0 it is s + 2. No constants are left to fit.
 
@@ -579,7 +591,7 @@ example : ((1 : ℚ) + 0 + 2 * 1) / 13 = 3 / 13 := by norm_num
 
 ## What this builds on
 
-- [The Laplace transform](01-the-laplace-transform.md): the weighted integral, where it converges, and the notation $\mathcal{L}$.
+- [The Laplace transform](01-the-laplace-transform.md): the weighted integral, where it converges, and the notation $`\mathcal{L}`$.
 - [Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): moving a derivative from one factor to the other for the price of an end term.
 
 ## Where this goes next

@@ -35,48 +35,56 @@ Orange, top: the first moment method's ceiling. Green, middle: the share of 10,0
 
 ## The formula
 
-A reminder of the notation. $P(A)$ is the chance of an event A. $X$ is a random variable, here the number of triangles in one club. $E[X]$ is its expectation, the long-run average count over many clubs. $\mathrm{Var}(X)$ is its variance, the average squared distance from $E[X]$. $\binom{n}{3}$, also written C(n, 3), counts the ways to pick 3 members from $n$.
+A reminder of the notation. $`P(A)`$ is the chance of an event A. $`X`$ is a random variable, here the number of triangles in one club. $`E[X]`$ is its expectation, the long-run average count over many clubs. $`\mathrm{Var}(X)`$ is its variance, the average squared distance from $`E[X]`$. $`\binom{n}{3}`$, also written C(n, 3), counts the ways to pick 3 members from $`n`$.
 
-The club is the random graph of [Random graphs](01-random-graphs-erdos-renyi.md): $n$ members, and each of the $\binom{n}{2}$ pairs linked with chance $p$, independently.
+The club is the random graph of [Random graphs](01-random-graphs-erdos-renyi.md): $`n`$ members, and each of the $`\binom{n}{2}`$ pairs linked with chance $`p`$, independently.
 
-**The first moment method.** For any count $X$, a random whole number that is never negative:
+**The first moment method.** For any count $`X`$, a random whole number that is never negative:
 
-$$P(X \ge 1) \le E[X]$$
+```math
+P(X \ge 1) \le E[X]
+```
 
 **Read it aloud:** the chance that at least one appears is at most the average number that appear.
 
-**The second moment method.** For any count with $E[X] > 0$:
+**The second moment method.** For any count with $`E[X] > 0`$:
 
-$$P(X = 0) \le \frac{\mathrm{Var}(X)}{E[X]^2}$$
+```math
+P(X = 0) \le \frac{\mathrm{Var}(X)}{E[X]^2}
+```
 
 **Read it aloud:** the chance that none appear is at most the variance divided by the square of the mean.
 
-**The triangle count.** For a club of $n$ members:
+**The triangle count.** For a club of $`n`$ members:
 
-$$E[X] = \binom{n}{3} p^3, \qquad \mathrm{Var}(X) = \binom{n}{3}\left(p^3 - p^6\right) + \binom{n}{3} \cdot 3(n-3)\left(p^5 - p^6\right)$$
+```math
+E[X] = \binom{n}{3} p^3, \qquad \mathrm{Var}(X) = \binom{n}{3}\left(p^3 - p^6\right) + \binom{n}{3} \cdot 3(n-3)\left(p^5 - p^6\right)
+```
 
 **Read it aloud:** the average count is the number of trios times the chance a trio is closed; the variance is each trio's own variance plus a covariance term for every pair of trios that share a friendship.
 
 Divided through, the ratio the second method needs is
 
-$$\frac{\mathrm{Var}(X)}{E[X]^2} = \frac{1 - p^3}{E[X]} + \frac{3(n-3)(1-p)}{\binom{n}{3}\, p}.$$
+```math
+\frac{\mathrm{Var}(X)}{E[X]^2} = \frac{1 - p^3}{E[X]} + \frac{3(n-3)(1-p)}{\binom{n}{3}\, p}.
+```
 
 **Read it aloud:** the ratio is small when the average count is large and the second term, the shared-friendship term, is small too.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$ | the number of triangles in one club | 0 in most clubs at p = 0.005 | — |
-| $n$ | members in the club | 100 | triangles arrive at a smaller $p$ |
-| $p$ | chance that a given pair are friends | 0.005 to 0.05 | $E[X]$ grows like $p^3$ |
-| $\binom{n}{3}$ | trios of members, C(n, 3) | 161,700 | more trios, more chances to close |
-| $T$, $S$ | one trio of members; a second trio | A, B, C and B, C, D | — |
-| $I_T$ | the indicator of $T$: 1 if the trio is a triangle, 0 if not | chance $p^3$ of reading 1 | — |
-| $E[X]$ | the average triangle count | 0.0202 at p = 0.005; 20.2125 at p = 0.05 | the first method's ceiling rises |
-| $\mathrm{Var}(X)$ | the variance of the count | 34.1793 at p = 0.05 | the second method's floor falls |
-| $\mathrm{Cov}(I_S, I_T)$ | covariance of two trios' indicators: how they rise and fall together | $p^5 - p^6$ when they share a pair | the variance grows |
-| $c$ | $n$ times $p$: the average number of friends a member has, roughly | 5 at p = 0.05 | $E[X]$ nears $c^3/6$ |
-| $\varepsilon$ | Chebyshev's distance from the mean, set to $E[X]$ in Step 4 | 20.2125 at p = 0.05 | the ceiling falls like $1/\varepsilon^2$ |
-| $t$ | shorthand for $\binom{n}{3}$ inside the detailed proof | 161,700 | — |
+| $`X`$ | the number of triangles in one club | 0 in most clubs at p = 0.005 | — |
+| $`n`$ | members in the club | 100 | triangles arrive at a smaller $`p`$ |
+| $`p`$ | chance that a given pair are friends | 0.005 to 0.05 | $`E[X]`$ grows like $`p^3`$ |
+| $`\binom{n}{3}`$ | trios of members, C(n, 3) | 161,700 | more trios, more chances to close |
+| $`T`$, $`S`$ | one trio of members; a second trio | A, B, C and B, C, D | — |
+| $`I_T`$ | the indicator of $`T`$: 1 if the trio is a triangle, 0 if not | chance $`p^3`$ of reading 1 | — |
+| $`E[X]`$ | the average triangle count | 0.0202 at p = 0.005; 20.2125 at p = 0.05 | the first method's ceiling rises |
+| $`\mathrm{Var}(X)`$ | the variance of the count | 34.1793 at p = 0.05 | the second method's floor falls |
+| $`\mathrm{Cov}(I_S, I_T)`$ | covariance of two trios' indicators: how they rise and fall together | $`p^5 - p^6`$ when they share a pair | the variance grows |
+| $`c`$ | $`n`$ times $`p`$: the average number of friends a member has, roughly | 5 at p = 0.05 | $`E[X]`$ nears $`c^3/6`$ |
+| $`\varepsilon`$ | Chebyshev's distance from the mean, set to $`E[X]`$ in Step 4 | 20.2125 at p = 0.05 | the ceiling falls like $`1/\varepsilon^2`$ |
+| $`t`$ | shorthand for $`\binom{n}{3}`$ inside the detailed proof | 161,700 | — |
 
 ### When it holds
 
@@ -84,7 +92,7 @@ $$\frac{\mathrm{Var}(X)}{E[X]^2} = \frac{1 - p^3}{E[X]} + \frac{3(n-3)(1-p)}{\bi
 - **The second method needs a mean above zero and a finite variance.** Any count over a finite club has both.
 - **The formulas for the triangle count need independent pairs.** The two inequalities do not. In a club where all 4,950 pairs are friends together with chance 0.1 and none otherwise, the average count is 16,170, yet 90% of such clubs have no triangle. The second method notices: its ratio is 9, which says nothing.
 - **A large mean alone proves nothing.** Only the ratio of variance to squared mean decides the second method. At p = 0.02 the ratio is 0.8612, so the method promises only 14% of clubs a triangle, though about 71% have one (a simulated 0.7068, standard error 0.0046).
-- **Thresholds are statements about growing clubs.** "Triangles appear once $c$, which is $n$ times $p$, is large" means: as $n$ grows, the chance of a triangle heads to 1. For a fixed club the inequalities give numbers, as in the chart, not a sharp line.
+- **Thresholds are statements about growing clubs.** "Triangles appear once $`c`$, which is $`n`$ times $`p`$, is large" means: as $`n`$ grows, the chance of a triangle heads to 1. For a fixed club the inequalities give numbers, as in the chart, not a sharp line.
 
 ---
 
@@ -96,15 +104,15 @@ A count is either 0 or at least 1: there is nothing between. So one tool that ca
 
 ### Step 1: the first moment method is Markov at 1
 
-Markov's inequality says a quantity that is never negative reaches a threshold with chance at most $E[X]$ divided by the threshold. Take the threshold to be 1. A count that is not 0 is at least 1, so $P(X \ge 1) \le E[X]$.
+Markov's inequality says a quantity that is never negative reaches a threshold with chance at most $`E[X]`$ divided by the threshold. Take the threshold to be 1. A count that is not 0 is at least 1, so $`P(X \ge 1) \le E[X]`$.
 
-Directly: $E[X] = 1 \cdot P(X = 1) + 2 \cdot P(X = 2) + \dots$, and every term is at least the chance it multiplies. The sum of those chances is $P(X \ge 1)$.
+Directly: $`E[X] = 1 \cdot P(X = 1) + 2 \cdot P(X = 2) + \dots`$, and every term is at least the chance it multiplies. The sum of those chances is $`P(X \ge 1)`$.
 
 ### Step 2: the average count, one trio at a time
 
-Give each trio $T$ an indicator $I_T$: a number that reads 1 if the trio is a triangle and 0 if not. The triangle count is the sum of all 161,700 indicators. A trio is a triangle when its three pairs are all friends: chance $p \cdot p \cdot p = p^3$. So each $I_T$ averages $p^3$.
+Give each trio $`T`$ an indicator $`I_T`$: a number that reads 1 if the trio is a triangle and 0 if not. The triangle count is the sum of all 161,700 indicators. A trio is a triangle when its three pairs are all friends: chance $`p \cdot p \cdot p = p^3`$. So each $`I_T`$ averages $`p^3`$.
 
-Averages add, even when the pieces depend on each other ([Expectation](../02-Random%20Variables/02-expectation.md)). So $E[X] = \binom{n}{3} p^3$. At p = 0.005 that is 161,700 × 0.000000125 = 0.0202. The first method: at most 2.02% of clubs contain a triangle.
+Averages add, even when the pieces depend on each other ([Expectation](../02-Random%20Variables/02-expectation.md)). So $`E[X] = \binom{n}{3} p^3`$. At p = 0.005 that is 161,700 × 0.000000125 = 0.0202. The first method: at most 2.02% of clubs contain a triangle.
 
 ### Step 3: the variance, pair of trios by pair of trios
 
@@ -113,8 +121,8 @@ The variance of a sum is the sum of every covariance between its pieces, each pi
 Pick one trio. Of the other 161,699 trios, 147,440 share no member with it, 13,968 share exactly one member, and 291 share exactly two. Only the last group matters.
 
 - **No common pair.** Sharing no member or one member means sharing no pair. The two trios' friendships are separate coin flips, so their indicators are independent: covariance 0.
-- **The same trio.** An indicator times itself is itself, so the covariance is $p^3 - (p^3)^2 = p^3 - p^6$.
-- **One common pair.** Trios A, B, C and B, C, D share the pair B, C. Both are triangles when five pairs are friends, not six: chance $p^5$. The covariance is $p^5 - p^3 \cdot p^3 = p^5 - p^6$. That extra is positive: if B and C are friends, both triangles are likelier.
+- **The same trio.** An indicator times itself is itself, so the covariance is $`p^3 - (p^3)^2 = p^3 - p^6`$.
+- **One common pair.** Trios A, B, C and B, C, D share the pair B, C. Both are triangles when five pairs are friends, not six: chance $`p^5`$. The covariance is $`p^5 - p^3 \cdot p^3 = p^5 - p^6`$. That extra is positive: if B and C are friends, both triangles are likelier.
 
 ### The picture: two triangles that share a friendship
 
@@ -122,55 +130,59 @@ Pick one trio. Of the other 161,699 trios, 147,440 share no member with it, 13,9
 
 Five friendships close both triangles, since the dashed one counts twice. That shared side is the whole reason the variance exceeds the sum of the trios' own variances.
 
-Each trio has $3(n-3)$ such partners: 3 ways to choose the shared pair, $n - 3$ choices for the fourth member. Adding everything up gives the variance formula. At p = 0.05 the own part is 20.2100 and the shared-edge part adds 13.9694: a variance of 34.1793.
+Each trio has $`3(n-3)`$ such partners: 3 ways to choose the shared pair, $`n - 3`$ choices for the fourth member. Adding everything up gives the variance formula. At p = 0.05 the own part is 20.2100 and the shared-edge part adds 13.9694: a variance of 34.1793.
 
-### Step 4: the second moment method is Chebyshev at distance $E[X]$
+### Step 4: the second moment method is Chebyshev at distance $`E[X]`$
 
-Chebyshev's inequality says $X$ lands at least a distance $\varepsilon$ from its mean with chance at most $\mathrm{Var}(X)/\varepsilon^2$. A count of 0 is exactly $E[X]$ below the mean. Take $\varepsilon = E[X]$:
+Chebyshev's inequality says $`X`$ lands at least a distance $`\varepsilon`$ from its mean with chance at most $`\mathrm{Var}(X)/\varepsilon^2`$. A count of 0 is exactly $`E[X]`$ below the mean. Take $`\varepsilon = E[X]`$:
 
-$$P(X = 0) \le P\big(\lvert X - E[X] \rvert \ge E[X]\big) \le \frac{\mathrm{Var}(X)}{E[X]^2}.$$
+```math
+P(X = 0) \le P\big(\lvert X - E[X] \rvert \ge E[X]\big) \le \frac{\mathrm{Var}(X)}{E[X]^2}.
+```
 
 At p = 0.05: 34.1793 divided by 20.2125 squared is 0.0837. At most 8.4% of clubs have no triangle; at least 91.6% have one.
 
 ### Step 5: the threshold is p near 1/n
 
-Write $p = c/n$, so $c$ is roughly each member's average number of friends. Then $\binom{n}{3} p^3$ is close to $n^3/6 \cdot c^3/n^3 = c^3/6$ for a large club. Three regimes follow.
+Write $`p = c/n`$, so $`c`$ is roughly each member's average number of friends. Then $`\binom{n}{3} p^3`$ is close to $`n^3/6 \cdot c^3/n^3 = c^3/6`$ for a large club. Three regimes follow.
 
-- **$c$ shrinking to 0** (p much smaller than $1/n$): $E[X]$ shrinks to 0, and the first method sends the chance of a triangle to 0.
-- **$c$ growing without limit** (p much larger than $1/n$): $E[X]$ grows without limit, and the second term of the ratio is about $18/(n c)$, which shrinks too. The second method sends the chance of no triangle to 0.
-- **$c$ fixed**: neither method decides. The count settles near a Poisson law ([Poisson](../03-Discrete%20Distributions/04-poisson.md)) with mean $c^3/6$, the law of rare events, so $P(X = 0)$ nears $e^{-c^3/6}$.
+- **$`c`$ shrinking to 0** (p much smaller than $`1/n`$): $`E[X]`$ shrinks to 0, and the first method sends the chance of a triangle to 0.
+- **$`c`$ growing without limit** (p much larger than $`1/n`$): $`E[X]`$ grows without limit, and the second term of the ratio is about $`18/(n c)`$, which shrinks too. The second method sends the chance of no triangle to 0.
+- **$`c`$ fixed**: neither method decides. The count settles near a Poisson law ([Poisson](../03-Discrete%20Distributions/04-poisson.md)) with mean $`c^3/6`$, the law of rare events, so $`P(X = 0)`$ nears $`e^{-c^3/6}`$.
 
-So $1/n$ is the **threshold** for triangles: well below it they are absent, well above it present. For 100 members the threshold sits near p = 0.01, where the average count is 0.1617 and about 15% of clubs have a triangle (a simulated 0.1484, standard error 0.0036).
+So $`1/n`$ is the **threshold** for triangles: well below it they are absent, well above it present. For 100 members the threshold sits near p = 0.01, where the average count is 0.1617 and about 15% of clubs have a triangle (a simulated 0.1484, standard error 0.0036).
 
 <details>
 <summary>Detailed proof: the threshold for triangles is 1/n</summary>
 
-Let $n$ grow, with $p = p(n)$ between 0 and 1. Put $t = \binom{n}{3}$. For $n \ge 3$, $(n-2)^3/6 \le t \le n^3/6$.
+Let $`n`$ grow, with $`p = p(n)`$ between 0 and 1. Put $`t = \binom{n}{3}`$. For $`n \ge 3`$, $`(n-2)^3/6 \le t \le n^3/6`$.
 
-**Below.** Suppose $np \to 0$. By Step 1, $P(X \ge 1) \le E[X] = t p^3 \le (np)^3/6 \to 0$.
+**Below.** Suppose $`np \to 0`$. By Step 1, $`P(X \ge 1) \le E[X] = t p^3 \le (np)^3/6 \to 0`$.
 
-**The variance.** Write $X = \sum_T I_T$ over all $t$ trios. Then $\mathrm{Var}(X) = \sum_S \sum_T \mathrm{Cov}(I_S, I_T)$. If $S$ and $T$ share at most one member, their three pairs each are disjoint sets of independent friendships, so the covariance is 0. If $S = T$, $\mathrm{Cov} = E[I_T^2] - E[I_T]^2 = p^3 - p^6$, since $I_T^2 = I_T$. If they share two members, they share one pair and $I_S I_T = 1$ needs five friendships, so $\mathrm{Cov} = p^5 - p^6$. Each $S$ has $3(n-3)$ partners of the last kind. Hence $\mathrm{Var}(X) = t(p^3 - p^6) + 3(n-3)t(p^5 - p^6)$.
+**The variance.** Write $`X = \sum_T I_T`$ over all $`t`$ trios. Then $`\mathrm{Var}(X) = \sum_S \sum_T \mathrm{Cov}(I_S, I_T)`$. If $`S`$ and $`T`$ share at most one member, their three pairs each are disjoint sets of independent friendships, so the covariance is 0. If $`S = T`$, $`\mathrm{Cov} = E[I_T^2] - E[I_T]^2 = p^3 - p^6`$, since $`I_T^2 = I_T`$. If they share two members, they share one pair and $`I_S I_T = 1`$ needs five friendships, so $`\mathrm{Cov} = p^5 - p^6`$. Each $`S`$ has $`3(n-3)`$ partners of the last kind. Hence $`\mathrm{Var}(X) = t(p^3 - p^6) + 3(n-3)t(p^5 - p^6)`$.
 
-**The ratio.** Divide by $E[X]^2 = t^2 p^6$:
-$$\frac{\mathrm{Var}(X)}{E[X]^2} = \frac{1 - p^3}{t p^3} + \frac{3(n-3)(1-p)}{t p} \le \frac{1}{E[X]} + \frac{18}{(n-2)^2 p}.$$
-The last step uses $t \ge (n-2)^3/6$ and $n - 3 \le n - 2$.
+**The ratio.** Divide by $`E[X]^2 = t^2 p^6`$:
 
-**Above.** Suppose $np \to \infty$. Then $(n-2)p \to \infty$ as well, so $E[X] \ge ((n-2)p)^3/6 \to \infty$ and $(n-2)^2 p \ge (n-2)p \to \infty$. Both terms go to 0, and by Step 4, $P(X = 0) \to 0$.
+$`\displaystyle \frac{\mathrm{Var}(X)}{E[X]^2} = \frac{1 - p^3}{t p^3} + \frac{3(n-3)(1-p)}{t p} \le \frac{1}{E[X]} + \frac{18}{(n-2)^2 p}.`$
 
-**Between.** With $np = c$ fixed, $P(X = 0) \to e^{-c^3/6}$. That needs every moment of $X$, not two, and is proved in Frieze and Karoński, chapter 5 (Sources).
+The last step uses $`t \ge (n-2)^3/6`$ and $`n - 3 \le n - 2`$.
+
+**Above.** Suppose $`np \to \infty`$. Then $`(n-2)p \to \infty`$ as well, so $`E[X] \ge ((n-2)p)^3/6 \to \infty`$ and $`(n-2)^2 p \ge (n-2)p \to \infty`$. Both terms go to 0, and by Step 4, $`P(X = 0) \to 0`$.
+
+**Between.** With $`np = c`$ fixed, $`P(X = 0) \to e^{-c^3/6}`$. That needs every moment of $`X`$, not two, and is proved in Frieze and Karoński, chapter 5 (Sources).
 
 </details>
 
 <details>
 <summary>A sharper floor from the same two numbers</summary>
 
-Chebyshev spends its allowance on both sides of the mean, but only the fall to 0 matters here. A one-sided argument (the Cauchy–Schwarz inequality, which says the average of a product is at most the square root of the product of the averages of the squares, applied to $X$ times the indicator of $X > 0$) gives $P(X > 0) \ge E[X]^2 / (E[X]^2 + \mathrm{Var}(X))$, the Paley–Zygmund bound. At p = 0.05 it is 0.9228, against Chebyshev's 0.9163. It never does worse, and the threshold proof goes through unchanged.
+Chebyshev spends its allowance on both sides of the mean, but only the fall to 0 matters here. A one-sided argument (the Cauchy–Schwarz inequality, which says the average of a product is at most the square root of the product of the averages of the squares, applied to $`X`$ times the indicator of $`X > 0`$) gives $`P(X > 0) \ge E[X]^2 / (E[X]^2 + \mathrm{Var}(X))`$, the Paley–Zygmund bound. At p = 0.05 it is 0.9228, against Chebyshev's 0.9163. It never does worse, and the threshold proof goes through unchanged.
 
 </details>
 
 The second method is not special to triangles. Any count built from indicators, one per trio, per person or per pair, has as its variance the sum of the covariances between its pieces, and Step 4 applies unchanged.
 
-The number of people with exactly k friends is one such count. Two people's indicators share only the single pair between them, so each covariance is at most $p$. With $p$ near $c/n$ the variance then grows at most like $n$ while the squared mean grows like $n^2$, so the share of a large town with k friends stays close to its average.
+The number of people with exactly k friends is one such count. Two people's indicators share only the single pair between them, so each covariance is at most $`p`$. With $`p`$ near $`c/n`$ the variance then grows at most like $`n`$ while the squared mean grows like $`n^2`$, so the share of a large town with k friends stays close to its average.
 
 The size of the giant component of [The giant component](02-the-giant-component.md) is pinned the same way: Chebyshev applied to the number of small tree-shaped pieces of each size fixes how many people sit outside the giant, as Frieze and Karoński work through in their chapter on evolution (Sources).
 
@@ -185,7 +197,7 @@ The first moment method has a second use, and it is the one on [The probabilisti
 | trios in the club | 100 × 99 × 98 / 6 | 161,700 |
 | a trio closed, p = 0.005 | 0.005 × 0.005 × 0.005 | 0.000000125 |
 | average count, p = 0.005 | 161,700 × 0.000000125 | 0.0202 |
-| **first method, p = 0.005** | $P(X \ge 1) \le 0.0202$ | **at most 2.02% of clubs** |
+| **first method, p = 0.005** | $`P(X \ge 1) \le 0.0202`$ | **at most 2.02% of clubs** |
 | a trio closed, p = 0.05 | 0.05 × 0.05 × 0.05 | 0.000125 |
 | average count, p = 0.05 | 161,700 × 0.000125 | 20.2125 |
 | own part of the variance | 161,700 × (p^3 − p^6) | 20.2100 |
@@ -195,15 +207,15 @@ The first moment method has a second use, and it is the one on [The probabilisti
 
 At half a percent, at most about 1 club in 50 has a triangle; at 5%, more than 9 in 10 do.
 
-The shelf's house example, a social network of 1,000 people, moves the threshold to about p = 0.001, one friend per person on average: the same $1/n$. There its average count is 0.1662, against 0.1617 for the 100-member club at p = 0.01; both have $c$ = 1.
+The shelf's house example, a social network of 1,000 people, moves the threshold to about p = 0.001, one friend per person on average: the same $`1/n`$. There its average count is 0.1662, against 0.1617 for the 100-member club at p = 0.01; both have $`c`$ = 1.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| The first method read backwards: "average above 1, so a triangle is certain" | at p = 0.02, $E[X]$ = 1.2936, but only 0.7068 of simulated clubs have one (standard error 0.0046) | Markov caps the chance from above; it never forces it up |
+| The first method read backwards: "average above 1, so a triangle is certain" | at p = 0.02, $`E[X]`$ = 1.2936, but only 0.7068 of simulated clubs have one (standard error 0.0046) | Markov caps the chance from above; it never forces it up |
 | The shared pairs left out of the variance | at p = 0.05, variance 20.2100 and a "bound" of 0.0495 instead of 0.0837 | Triangles sharing a pair rise and fall together; the covariance adds 13.9694 |
-| Independence dropped: all pairs friends together with chance 0.1 | $E[X]$ = 16,170, yet $P(X = 0)$ = 0.9; the ratio reads 9 | The mean is huge because a few clubs hold every triangle |
+| Independence dropped: all pairs friends together with chance 0.1 | $`E[X]`$ = 16,170, yet $`P(X = 0)`$ = 0.9; the ratio reads 9 | The mean is huge because a few clubs hold every triangle |
 
 The code prints all three.
 
@@ -211,7 +223,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Three roads lead to the same numbers. The formulas give $E[X]$, $\mathrm{Var}(X)$ and the ratio, the ratio twice, by the raw division and by the simplified form. A 6-member club has 15 pairs and so 32,768 friendship patterns; the scripts list every one, weigh it by its chance, and read off the exact mean, variance and chance of no triangle, at 99 values of $p$. And the scripts simulate 10,000 clubs of 100 members at each of eight values of $p$ and report each estimate with its standard error, the typical size of a simulation's miss. Friendships are drawn by skipping straight to the next friendly pair, with a gap drawn from its geometric law, from SplitMix64 (a short, well-tested recipe for pseudo-random whole numbers, written out in both languages so both draw the same clubs). The trio counts behind the covariance, and the triangles of the all-or-nothing club, are counted by brute force too.
+Three roads lead to the same numbers. The formulas give $`E[X]`$, $`\mathrm{Var}(X)`$ and the ratio, the ratio twice, by the raw division and by the simplified form. A 6-member club has 15 pairs and so 32,768 friendship patterns; the scripts list every one, weigh it by its chance, and read off the exact mean, variance and chance of no triangle, at 99 values of $`p`$. And the scripts simulate 10,000 clubs of 100 members at each of eight values of $`p`$ and report each estimate with its standard error, the typical size of a simulation's miss. Friendships are drawn by skipping straight to the next friendly pair, with a gap drawn from its geometric law, from SplitMix64 (a short, well-tested recipe for pseudo-random whole numbers, written out in both languages so both draw the same clubs). The trio counts behind the covariance, and the triangles of the all-or-nothing club, are counted by brute force too.
 
 ### Python
 
@@ -642,12 +654,12 @@ The two outputs match line for line. The `exact` column `1-exp(-E)` is the Poiss
 
 ### Lean
 
-Lean proves both methods for every count, and the triangle formulas for every club size and every chance $p$ from 0 to 1.
+Lean proves both methods for every count, and the triangle formulas for every club size and every chance $`p`$ from 0 to 1.
 
-- Take any count $X$. Then $P(X \ge 1) \le E[X]$, even when the average is infinite.
-- Suppose a count $X$ has a finite variance and $E[X] > 0$. Then $P(X = 0) \le \mathrm{Var}(X)/E[X]^2$.
-- Take a club of $n$ members, each pair friends with chance $p$, independently. Then its triangle count $X$ has $E[X] = \binom{n}{3} p^3$.
-- Take the same club. Then $\mathrm{Var}(X) = \binom{n}{3}(p^3 - p^6) + \binom{n}{3} \cdot 3(n-3)(p^5 - p^6)$.
+- Take any count $`X`$. Then $`P(X \ge 1) \le E[X]`$, even when the average is infinite.
+- Suppose a count $`X`$ has a finite variance and $`E[X] > 0`$. Then $`P(X = 0) \le \mathrm{Var}(X)/E[X]^2`$.
+- Take a club of $`n`$ members, each pair friends with chance $`p`$, independently. Then its triangle count $`X`$ has $`E[X] = \binom{n}{3} p^3`$.
+- Take the same club. Then $`\mathrm{Var}(X) = \binom{n}{3}(p^3 - p^6) + \binom{n}{3} \cdot 3(n-3)(p^5 - p^6)`$.
 - The worked arithmetic: the trio counts, both averages, the 8.37% bound, the 6-member club's moments, and the all-or-nothing club's ratio 9.
 
 The simulations, the chart, the threshold and the 32,768 patterns of the 6-member club are left to the Python and Rust checks.
@@ -1116,22 +1128,22 @@ example :
 > [!warning]
 > **"The average count is large, so the structure is there."** An average says nothing about how the count is shared out. A few clubs with many triangles and many clubs with none can average anything. At p = 0.02 the average is 1.2936 triangles, and about 29% of clubs have none (the simulation finds a triangle in 0.7068 of them, standard error 0.0046). Presence needs the second moment: the variance must be small beside the squared mean.
 >
-> - **Markov turned round.** $P(X \ge 1) \le E[X]$ is a ceiling. $E[X] \ge 1$ gives no floor at all.
+> - **Markov turned round.** $`P(X \ge 1) \le E[X]`$ is a ceiling. $`E[X] \ge 1`$ gives no floor at all.
 > - **Treating overlapping trios as independent.** The variance at p = 0.05 comes out 20.2100 instead of 34.1793, and the "bound" 0.0495 is not a proved bound.
-> - **Reading the threshold as a sharp line.** At p = 1/100 only about 15% of 100-member clubs have a triangle (a simulated 0.1484, standard error 0.0036). The threshold is where the chance moves from near 0 to near 1, over a window of a few multiples of $1/n$.
+> - **Reading the threshold as a sharp line.** At p = 1/100 only about 15% of 100-member clubs have a triangle (a simulated 0.1484, standard error 0.0036). The threshold is where the chance moves from near 0 to near 1, over a window of a few multiples of $`1/n`$.
 > - **Using the second method below the threshold.** At p = 0.01 the ratio is 6.3624: true, and says nothing.
 
 ---
 
 ## Where you meet it in real life
 
-- **Random graphs.** Every small pattern, a triangle, a square, four members all linked, has its threshold found by exactly these two steps: the first moment for below, the second for above. [Random graphs](01-random-graphs-erdos-renyi.md) sets up the model; [The giant component](02-the-giant-component.md) follows it past $p = 1/n$, where a large connected mass appears.
+- **Random graphs.** Every small pattern, a triangle, a square, four members all linked, has its threshold found by exactly these two steps: the first moment for below, the second for above. [Random graphs](01-random-graphs-erdos-renyi.md) sets up the model; [The giant component](02-the-giant-component.md) follows it past $`p = 1/n`$, where a large connected mass appears.
 - **Existence proofs.** If the average number of flaws in a random design is below 1, a flawless design exists. That is the first moment method on [The probabilistic method](03-probabilistic-method.md).
 - **Hashing and collisions.** With k items stored in m slots at random, the average number of colliding pairs is C(k, 2)/m. Below 1, collisions are rare by the first method; the second method shows they become near certain once it is large.
 - **Social networks.** Real friendship networks hold far more triangles than a random graph with the same number of friendships. The random graph's average count is the baseline the excess is measured against.
 
 > **Say it back**
-> A club of 100 members, each pair friends with chance $p$, holds a random number of triangles. If the average number is small, triangles are usually absent: the chance of at least one is at most the average. If the average is large and the variance is small beside its square, triangles are usually present: the chance of none is at most the variance over the squared mean. Trios that share a pair of members rise and fall together, and that covariance is the part of the variance that must be counted. The two methods together put the triangle threshold at $p$ near $1/n$: 0.01 for this club.
+> A club of 100 members, each pair friends with chance $`p`$, holds a random number of triangles. If the average number is small, triangles are usually absent: the chance of at least one is at most the average. If the average is large and the variance is small beside its square, triangles are usually present: the chance of none is at most the variance over the squared mean. Trios that share a pair of members rise and fall together, and that covariance is the part of the variance that must be counted. The two methods together put the triangle threshold at $`p`$ near $`1/n`$: 0.01 for this club.
 
 ---
 

@@ -35,32 +35,38 @@ The tent: at each distance t, how far a box at 0 and a box slid to t overlap. Th
 
 ## The formula
 
-Notation first, in words. A star, $f * g$, means "f smeared by g": the convolution, not multiplication. A hat, $\hat f(\omega)$, is the Fourier transform at frequency $\omega$ (omega).
+Notation first, in words. A star, $`f * g`$, means "f smeared by g": the convolution, not multiplication. A hat, $`\hat f(\omega)`$, is the Fourier transform at frequency $`\omega`$ (omega).
 
-$$(f * g)(t) = \int_{-\infty}^{\infty} f(s)\, g(t - s)\, ds$$
+```math
+(f * g)(t) = \int_{-\infty}^{\infty} f(s)\, g(t - s)\, ds
+```
 
 **Read it aloud:** to find the smeared signal at the point t, weight a copy of g, flipped and slid to t, by f at every point s, and add up.
 
 The transform, with the turning arrow e^(−iωt) (the unit-circle point at angle −ωt):
 
-$$\hat f(\omega) = \int_{-\infty}^{\infty} f(t)\, e^{-i\omega t}\, dt$$
+```math
+\hat f(\omega) = \int_{-\infty}^{\infty} f(t)\, e^{-i\omega t}\, dt
+```
 
 The theorem:
 
-$$\widehat{f * g}(\omega) = \hat f(\omega)\, \hat g(\omega)$$
+```math
+\widehat{f * g}(\omega) = \hat f(\omega)\, \hat g(\omega)
+```
 
 **Read it aloud:** the transform of the smear is the transform of one signal times the transform of the other, at each frequency separately.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $b$, $p$ | the box on −0.5 to 0.5 mm; the box on 0 to 1 mm, a one-sided motion blur | p-hat(π) = −0.636620i | — |
-| $f$, $g$ | two signals, such as a row's brightness and a blur | the box b, twice | a taller smear |
-| $s$ | the point being weighted, run over the line | −0.5 to 0.5 mm | — |
-| $t$ | where the smear is read | 0.25 mm | the tent falls |
-| $(f * g)(t)$ | the convolution: f smeared by g, read at t | 1 − \|t\|, the tent | — |
-| $\omega$ | frequency, radians per mm; stripes 2 mm apart have ω = π | π | finer stripes, mostly weaker |
-| $\hat f(\omega)$ | the transform: how much stripe at ω the signal holds | b-hat(π) = 0.636620 | — |
-| $e^{-i\omega t}$ | the turning arrow; i is the quarter turn, i^2 = −1 | e^(−iπ) = −1 at t = 1 mm | — |
+| $`b`$, $`p`$ | the box on −0.5 to 0.5 mm; the box on 0 to 1 mm, a one-sided motion blur | p-hat(π) = −0.636620i | — |
+| $`f`$, $`g`$ | two signals, such as a row's brightness and a blur | the box b, twice | a taller smear |
+| $`s`$ | the point being weighted, run over the line | −0.5 to 0.5 mm | — |
+| $`t`$ | where the smear is read | 0.25 mm | the tent falls |
+| $`(f * g)(t)`$ | the convolution: f smeared by g, read at t | 1 − \|t\|, the tent | — |
+| $`\omega`$ | frequency, radians per mm; stripes 2 mm apart have ω = π | π | finer stripes, mostly weaker |
+| $`\hat f(\omega)`$ | the transform: how much stripe at ω the signal holds | b-hat(π) = 0.636620 | — |
+| $`e^{-i\omega t}`$ | the turning arrow; i is the quarter turn, i^2 = −1 | e^(−iπ) = −1 at t = 1 mm | — |
 
 For the box, the transform works out by hand as b-hat(ω) = sin(ω/2)/(ω/2), the shelf's 2 sin(ω/2)/ω. The tent's is its square, sin^2(ω/2)/(ω/2)^2.
 

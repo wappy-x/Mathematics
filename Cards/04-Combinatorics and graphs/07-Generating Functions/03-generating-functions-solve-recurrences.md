@@ -34,37 +34,47 @@ Only the first arrow is new.
 
 ## The formula
 
-One reminder first. A **generating function** hangs the number at position n on x raised to the power n and adds the lot ([Generating functions](01-ordinary-generating-functions.md)); the letter takes no value, and "the coefficient of x^n" is the number sitting there. Write the Fibonacci series as $G(x)$, keeping $F$ for its numbers:
+One reminder first. A **generating function** hangs the number at position n on x raised to the power n and adds the lot ([Generating functions](01-ordinary-generating-functions.md)); the letter takes no value, and "the coefficient of x^n" is the number sitting there. Write the Fibonacci series as $`G(x)`$, keeping $`F`$ for its numbers:
 
-$$G(x) = F(0) + F(1)x + F(2)x^2 + \cdots = \sum_{n\ge 0} F(n)\,x^n$$
+```math
+G(x) = F(0) + F(1)x + F(2)x^2 + \cdots = \sum_{n\ge 0} F(n)\,x^n
+```
 
 The sigma sign means "add what follows over every n from 0 upward" ([The binomial theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md)).
 
-Any rule reaching two terms back with unchanging weights, $a(n) = c_1 a(n-1) + c_2 a(n-2)$ from n = 2, gives one polynomial over another:
+Any rule reaching two terms back with unchanging weights, $`a(n) = c_1 a(n-1) + c_2 a(n-2)`$ from n = 2, gives one polynomial over another:
 
-$$\sum_{n\ge 0} a(n)\,x^n = \frac{a(0) + \bigl(a(1) - c_1\,a(0)\bigr)x}{1 - c_1 x - c_2 x^2}$$
+```math
+\sum_{n\ge 0} a(n)\,x^n = \frac{a(0) + \bigl(a(1) - c_1\,a(0)\bigr)x}{1 - c_1 x - c_2 x^2}
+```
 
 **Read it aloud:** underneath, 1 minus each weight on its power of x; on top, the first value, then the second less the first weight times the first.
 
 The drum bar's weights are both 1, and Fibonacci's F(0) = 0, F(1) = 1 collapse the top to x:
 
-$$G(x) = \frac{x}{1 - x - x^2}$$
+```math
+G(x) = \frac{x}{1 - x - x^2}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x$ | the bookkeeping letter | labels a position | — |
-| $n$ | the position, the step | 13 | a larger count |
-| $G$, as $G(x)$ | the Fibonacci series | x/(1 − x − x^2) | — |
-| $F$, as $F(n)$, $a$, as $a(n)$ | a term | F(13) = 233, a(4) = 97 | — |
-| $c_1$, $c_2$ | the fixed weights | both 1 | faster growth |
-| $\varphi$, $\psi$ | phi, psi: the growth rates | 1.6180339887, −0.6180339887 | past 1, it climbs |
-| $A$, $B$ | how much of each piece | 0.4472135955, −0.4472135955 | scales it |
+| $`x`$ | the bookkeeping letter | labels a position | — |
+| $`n`$ | the position, the step | 13 | a larger count |
+| $`G`$, as $`G(x)`$ | the Fibonacci series | x/(1 − x − x^2) | — |
+| $`F`$, as $`F(n)`$, $`a`$, as $`a(n)`$ | a term | F(13) = 233, a(4) = 97 | — |
+| $`c_1`$, $`c_2`$ | the fixed weights | both 1 | faster growth |
+| $`\varphi`$, $`\psi`$ | phi, psi: the growth rates | 1.6180339887, −0.6180339887 | past 1, it climbs |
+| $`A`$, $`B`$ | how much of each piece | 0.4472135955, −0.4472135955 | scales it |
 
 The bottom factors, and the fraction then splits:
 
-$$1 - x - x^2 = (1 - \varphi x)(1 - \psi x), \qquad \varphi = \frac{1 + \sqrt{5}}{2}, \qquad \psi = \frac{1 - \sqrt{5}}{2}$$
+```math
+1 - x - x^2 = (1 - \varphi x)(1 - \psi x), \qquad \varphi = \frac{1 + \sqrt{5}}{2}, \qquad \psi = \frac{1 - \sqrt{5}}{2}
+```
 
-$$\frac{x}{(1 - \varphi x)(1 - \psi x)} = \frac{A}{1 - \varphi x} + \frac{B}{1 - \psi x}$$
+```math
+\frac{x}{(1 - \varphi x)(1 - \psi x)} = \frac{A}{1 - \varphi x} + \frac{B}{1 - \psi x}
+```
 
 The two amounts come from matching coefficients: two equations, two unknowns ([Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)).
 
@@ -86,13 +96,17 @@ The rule is an endless family of equations: F(2) = F(1) + F(0), then F(3) = F(2)
 
 The rule holds from n = 2 upward. Multiply both sides by x^n and add over all those n. On the left is every term but the first two; on the right, the series delayed one step and two:
 
-$$G(x) - F(0) - F(1)x = x\,G(x) + x^2 G(x)$$
+```math
+G(x) - F(0) - F(1)x = x\,G(x) + x^2 G(x)
+```
 
 Behind the single x sits the series without F(0), and F(0) is 0, so that side is x G(x); behind x^2 sits all of it. On the left, F(0) = 0 and F(1) = 1 leave G(x) − x.
 
 ### Step 2: collect and divide
 
-$$G(x)\bigl(1 - x - x^2\bigr) = x$$
+```math
+G(x)\bigl(1 - x - x^2\bigr) = x
+```
 
 Dividing x by 1 − x − x^2 one coefficient at a time hands back 0, 1, 1, 2, 3, 5, 8 and on to 233 at x^13.
 
@@ -117,11 +131,15 @@ Over the shared bottom, the right-hand side's top is A(1 − psi·x) + B(1 − p
 
 Each piece is a geometric series: for any number c,
 
-$$\frac{1}{1 - cx} = 1 + cx + c^2x^2 + c^3x^3 + \cdots$$
+```math
+\frac{1}{1 - cx} = 1 + cx + c^2x^2 + c^3x^3 + \cdots
+```
 
 Multiply the right-hand side by 1 − cx: every term is cancelled by the next, leaving 1. So its coefficient of x^n is c multiplied in n times, and the split gives every Fibonacci number:
 
-$$F(n) = A\,\varphi^n + B\,\psi^n = \frac{\varphi^n - \psi^n}{\sqrt{5}}$$
+```math
+F(n) = A\,\varphi^n + B\,\psi^n = \frac{\varphi^n - \psi^n}{\sqrt{5}}
+```
 
 Binet's formula, which [The characteristic equation](../05-Recurrences/04-characteristic-equation-and-binet.md) also reaches by guessing geometric sequences. The fraction is most useful when a rule adds something at each step, or when a sequence arrives as a product of series ([Counting by multiplying series](02-counting-with-generating-functions.md)).
 

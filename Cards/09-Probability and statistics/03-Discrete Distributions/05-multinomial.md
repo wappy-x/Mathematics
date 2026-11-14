@@ -39,43 +39,49 @@ The upper line is the average number of small cups, the lower line the average n
 Notation first, in words.
 
 - A **tally** is the list of counts, one per category, and its entries add to the number of customers.
-- The counts are random variables written with capital letters, $N_1$ for small, $N_2$ for medium, $N_3$ for large; on this card they are also called S, M and L.
-- Lower-case $k_1$, $k_2$, $k_3$ are particular values they might take.
-- The multinomial coefficient $C(n; k_1, \ldots, k_r)$ counts the ways to split $n$ distinct things into named piles of sizes $k_1$ to $k_r$ ([Splitting into groups](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/03-splitting-into-groups.md)).
-- Writing $(N_1, N_2, N_3) \sim \text{Multinomial}(20;\ 0.3, 0.5, 0.2)$ is read "the three counts follow the multinomial law with 20 trials and chances 0.3, 0.5 and 0.2".
+- The counts are random variables written with capital letters, $`N_1`$ for small, $`N_2`$ for medium, $`N_3`$ for large; on this card they are also called S, M and L.
+- Lower-case $`k_1`$, $`k_2`$, $`k_3`$ are particular values they might take.
+- The multinomial coefficient $`C(n; k_1, \ldots, k_r)`$ counts the ways to split $`n`$ distinct things into named piles of sizes $`k_1`$ to $`k_r`$ ([Splitting into groups](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/03-splitting-into-groups.md)).
+- Writing $`(N_1, N_2, N_3) \sim \text{Multinomial}(20;\ 0.3, 0.5, 0.2)`$ is read "the three counts follow the multinomial law with 20 trials and chances 0.3, 0.5 and 0.2".
 
 The joint mass, the chance of one whole tally:
 
-$$P(N_1 = k_1, \ldots, N_r = k_r) = \frac{n!}{k_1!\,k_2!\cdots k_r!}\; p_1^{k_1}\, p_2^{k_2} \cdots p_r^{k_r}, \qquad k_1 + \cdots + k_r = n$$
+```math
+P(N_1 = k_1, \ldots, N_r = k_r) = \frac{n!}{k_1!\,k_2!\cdots k_r!}\; p_1^{k_1}\, p_2^{k_2} \cdots p_r^{k_r}, \qquad k_1 + \cdots + k_r = n
+```
 
 **Read it aloud:** the number of customer orders that give this tally, times the chance of any single one of those orders.
 
-Any tally whose counts do not add to $n$ has chance zero.
+Any tally whose counts do not add to $`n`$ has chance zero.
 
 Each count alone, and each pair together:
 
-$$N_i \sim \text{Binomial}(n, p_i), \qquad E[N_i] = n p_i, \qquad \text{Var}(N_i) = n p_i (1 - p_i)$$
+```math
+N_i \sim \text{Binomial}(n, p_i), \qquad E[N_i] = n p_i, \qquad \text{Var}(N_i) = n p_i (1 - p_i)
+```
 
-$$\text{Cov}(N_i, N_j) = -\,n\, p_i\, p_j \quad (i \ne j)$$
+```math
+\text{Cov}(N_i, N_j) = -\,n\, p_i\, p_j \quad (i \ne j)
+```
 
 **Read it aloud:** each size taken alone behaves like a yes-or-no count; two different sizes co-move negatively, by the number of customers times their two chances.
 
-From the covariance and the two variances comes the correlation (the covariance divided by both standard deviations, a number between −1 and 1, defined when every chance lies strictly between 0 and 1): $-\sqrt{p_i p_j / ((1 - p_i)(1 - p_j))}$, which does not depend on $n$. For small against medium it is −0.6547.
+From the covariance and the two variances comes the correlation (the covariance divided by both standard deviations, a number between −1 and 1, defined when every chance lies strictly between 0 and 1): $`-\sqrt{p_i p_j / ((1 - p_i)(1 - p_j))}`$, which does not depend on $`n`$. For small against medium it is −0.6547.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $n$ | number of independent trials | 20 customers | every mean, variance and covariance grows in proportion |
-| $r$ | number of categories | 3 sizes | each chance is spread thinner |
-| $i$, $j$ | labels of two categories | small is 1, medium is 2, large is 3 | — |
-| $p_i$ | chance one trial lands in category $i$; they add to 1 | 0.3, 0.5, 0.2 | that count's mean rises, the others fall |
-| $N_i$; $N_1$, $N_2$, $N_3$ | random count of category $i$ (S, M, L) | on one morning, say 6, 10, 4 | — |
-| $k_i$; $k_1$, $k_2$, $k_3$, $k_r$ | a particular count asked about | 6, 10, 4 | — |
-| $C(n; k_1, \ldots, k_r)$ | the multinomial coefficient, $n!$ over the product of the $k_i!$ | 38,798,760 | peaks when the piles are near equal |
-| $E[N_i]$ | long-run average of the count | 6, 10, 4 | — |
-| $\text{Var}(N_i)$ | variance: average squared distance from that mean | 4.2, 5, 3.2 | largest when $p_i$ is 0.5 |
-| $\text{Cov}(N_i, N_j)$ | covariance: do the two counts rise together (positive) or trade off (negative)? | small with medium, −3 | more negative as either chance grows |
-| $m$ | a fixed medium count, in Step 5 | 10 | the others' averages fall along a line |
-| $t$, $s$, $A_t$, $A_s$, $B_t$ | customers, and 0-or-1 markers for "customer $t$ took category $i$ (or $j$)" | customer 7 took a medium | — |
+| $`n`$ | number of independent trials | 20 customers | every mean, variance and covariance grows in proportion |
+| $`r`$ | number of categories | 3 sizes | each chance is spread thinner |
+| $`i`$, $`j`$ | labels of two categories | small is 1, medium is 2, large is 3 | — |
+| $`p_i`$ | chance one trial lands in category $`i`$; they add to 1 | 0.3, 0.5, 0.2 | that count's mean rises, the others fall |
+| $`N_i`$; $`N_1`$, $`N_2`$, $`N_3`$ | random count of category $`i`$ (S, M, L) | on one morning, say 6, 10, 4 | — |
+| $`k_i`$; $`k_1`$, $`k_2`$, $`k_3`$, $`k_r`$ | a particular count asked about | 6, 10, 4 | — |
+| $`C(n; k_1, \ldots, k_r)`$ | the multinomial coefficient, $`n!`$ over the product of the $`k_i!`$ | 38,798,760 | peaks when the piles are near equal |
+| $`E[N_i]`$ | long-run average of the count | 6, 10, 4 | — |
+| $`\text{Var}(N_i)`$ | variance: average squared distance from that mean | 4.2, 5, 3.2 | largest when $`p_i`$ is 0.5 |
+| $`\text{Cov}(N_i, N_j)`$ | covariance: do the two counts rise together (positive) or trade off (negative)? | small with medium, −3 | more negative as either chance grows |
+| $`m`$ | a fixed medium count, in Step 5 | 10 | the others' averages fall along a line |
+| $`t`$, $`s`$, $`A_t`$, $`A_s`$, $`B_t`$ | customers, and 0-or-1 markers for "customer $`t`$ took category $`i`$ (or $`j`$)" | customer 7 took a medium | — |
 
 ### When it holds
 
@@ -95,7 +101,7 @@ Write the morning as a word of 20 letters, one per customer in arrival order: S,
 
 ### Step 1: the joint mass, by counting words
 
-Take the word with 6 S, then 10 M, then 4 L. Its chance is $0.3^6 \times 0.5^{10} \times 0.2^4$ = 0.000729 × 0.0009765625 × 0.0016 = 0.000000001139, about one in a billion.
+Take the word with 6 S, then 10 M, then 4 L. Its chance is $`0.3^6 \times 0.5^{10} \times 0.2^4`$ = 0.000729 × 0.0009765625 × 0.0016 = 0.000000001139, about one in a billion.
 
 How many words carry exactly 6 S, 10 M and 4 L? Choosing a word means sending each of the 20 customers into one of three named piles, the small pile of size 6, the medium pile of size 10, the large pile of size 4. That count is the multinomial coefficient: 20! / (6! 10! 4!) = 38,798,760.
 
@@ -103,11 +109,11 @@ Every one of those words is a different morning, none overlaps another, and each
 
 ### Step 2: the chances of all tallies add to 1
 
-Multiply out $(p_1 + p_2 + p_3)^{20}$ by picking one term from each of the 20 brackets. Each picking is a word; its product is that word's chance. Collect the words by tally and the expansion is exactly the list of joint masses. The left side is $1^{20} = 1$. That identity is the multinomial theorem, and it is why the distribution takes its name. The table built in the code sums its 231 tallies to 1.000000.
+Multiply out $`(p_1 + p_2 + p_3)^{20}`$ by picking one term from each of the 20 brackets. Each picking is a word; its product is that word's chance. Collect the words by tally and the expansion is exactly the list of joint masses. The left side is $`1^{20} = 1`$. That identity is the multinomial theorem, and it is why the distribution takes its name. The table built in the code sums its 231 tallies to 1.000000.
 
 ### Step 3: each count alone is binomial
 
-Look only at mediums. Each customer either takes a medium, with chance 0.5, or does not, with chance 0.5, independently of the rest. That is the setting of [Binomial](01-bernoulli-and-binomial.md) with "small or large" lumped into one "no". So $M \sim \text{Binomial}(20, 0.5)$, with mean 10 and variance 5. The same lumping gives $S \sim \text{Binomial}(20, 0.3)$ and $L \sim \text{Binomial}(20, 0.2)$.
+Look only at mediums. Each customer either takes a medium, with chance 0.5, or does not, with chance 0.5, independently of the rest. That is the setting of [Binomial](01-bernoulli-and-binomial.md) with "small or large" lumped into one "no". So $`M \sim \text{Binomial}(20, 0.5)`$, with mean 10 and variance 5. The same lumping gives $`S \sim \text{Binomial}(20, 0.3)`$ and $`L \sim \text{Binomial}(20, 0.2)`$.
 
 The code checks this the long way, summing the joint table over the other two counts, and the result matches the binomial law at every value to within 1e-12 (0.000000000001).
 
@@ -128,34 +134,38 @@ Lump small and medium together. Then S + M counts customers who did not take a l
 
 The variance of a sum is the two variances plus twice the covariance:
 
-$$\text{Var}(S + M) = \text{Var}(S) + \text{Var}(M) + 2\,\text{Cov}(S, M)$$
+```math
+\text{Var}(S + M) = \text{Var}(S) + \text{Var}(M) + 2\,\text{Cov}(S, M)
+```
 
-Put in the numbers: 3.2 = 4.2 + 5 + 2 Cov(S, M), so Cov(S, M) = −3. In general, lumping two categories gives a binomial count with chance $p_i + p_j$:
+Put in the numbers: 3.2 = 4.2 + 5 + 2 Cov(S, M), so Cov(S, M) = −3. In general, lumping two categories gives a binomial count with chance $`p_i + p_j`$:
 
-$$n (p_i + p_j)(1 - p_i - p_j) = n p_i (1 - p_i) + n p_j (1 - p_j) + 2\,\text{Cov}(N_i, N_j)$$
+```math
+n (p_i + p_j)(1 - p_i - p_j) = n p_i (1 - p_i) + n p_j (1 - p_j) + 2\,\text{Cov}(N_i, N_j)
+```
 
-Expand the left side, cancel what matches on the right, and $-2 n p_i p_j$ is all that is left over: $\text{Cov}(N_i, N_j) = -n p_i p_j$.
+Expand the left side, cancel what matches on the right, and $`-2 n p_i p_j`$ is all that is left over: $`\text{Cov}(N_i, N_j) = -n p_i p_j`$.
 
 Where the minus sign comes from, in words: on one customer, "took a small" and "took a medium" cannot both be yes. Each customer's pair of answers is negatively related, customers are independent, and 20 of them add up.
 
 <details>
 <summary>Detailed proof: the covariance from one customer at a time</summary>
 
-For customer $t$, let $A_t$ be 1 if that customer takes category $i$ and 0 otherwise, and $B_t$ be 1 for category $j$, 0 otherwise. Then $N_i = A_1 + \cdots + A_n$ and $N_j = B_1 + \cdots + B_n$.
+For customer $`t`$, let $`A_t`$ be 1 if that customer takes category $`i`$ and 0 otherwise, and $`B_t`$ be 1 for category $`j`$, 0 otherwise. Then $`N_i = A_1 + \cdots + A_n`$ and $`N_j = B_1 + \cdots + B_n`$.
 
-Covariance adds over sums in each argument, so $\text{Cov}(N_i, N_j)$ is the sum of $\text{Cov}(A_s, B_t)$ over all $n^2$ pairs of customers $s$ and $t$.
+Covariance adds over sums in each argument, so $`\text{Cov}(N_i, N_j)`$ is the sum of $`\text{Cov}(A_s, B_t)`$ over all $`n^2`$ pairs of customers $`s`$ and $`t`$.
 
-For two different customers, $A_s$ and $B_t$ are independent, so their covariance is 0.
+For two different customers, $`A_s`$ and $`B_t`$ are independent, so their covariance is 0.
 
-For the same customer, $A_t B_t$ is always 0, since one customer takes one size. So $E[A_t B_t] = 0$ and $\text{Cov}(A_t, B_t) = 0 - p_i p_j = -p_i p_j$.
+For the same customer, $`A_t B_t`$ is always 0, since one customer takes one size. So $`E[A_t B_t] = 0`$ and $`\text{Cov}(A_t, B_t) = 0 - p_i p_j = -p_i p_j`$.
 
-There are $n$ such same-customer pairs, so $\text{Cov}(N_i, N_j) = -n p_i p_j$. With $i = j$ the same sum gives $n(p_i - p_i^2)$, the binomial variance: the one line covers the whole covariance table.
+There are $`n`$ such same-customer pairs, so $`\text{Cov}(N_i, N_j) = -n p_i p_j`$. With $`i = j`$ the same sum gives $`n(p_i - p_i^2)`$, the binomial variance: the one line covers the whole covariance table.
 
 </details>
 
 ### Step 5: given one count, the others are binomial on what is left
 
-Fix the mediums at $m$. The other $20 - m$ customers each took small or large, and among customers who did not take a medium, the share taking small is 0.3 / (0.3 + 0.2) = 0.6. So given $M = m$, the small count is Binomial($20 - m$, 0.6), with average $0.6\,(20 - m)$. That is the falling line in the overview picture: 12.00 at no mediums, 6.00 at ten, 0.00 at twenty. A straight line with slope −0.6 is a negative covariance made visible.
+Fix the mediums at $`m`$. The other $`20 - m`$ customers each took small or large, and among customers who did not take a medium, the share taking small is 0.3 / (0.3 + 0.2) = 0.6. So given $`M = m`$, the small count is Binomial($`20 - m`$, 0.6), with average $`0.6\,(20 - m)`$. That is the falling line in the overview picture: 12.00 at no mediums, 6.00 at ten, 0.00 at twenty. A straight line with slope −0.6 is a negative covariance made visible.
 
 The same numbers are reached twice more in the code: a table that adds one customer at a time, never using a factorial, and a simulation of 100,000 mornings.
 
@@ -575,12 +585,12 @@ The two outputs match line for line, the simulation included, because both draw 
 
 ### Lean
 
-Lean proves the formulas above for any $n$ customers choosing independently among any $r$ sizes, with the same chances each time.
+Lean proves the formulas above for any $`n`$ customers choosing independently among any $`r`$ sizes, with the same chances each time.
 
-- Suppose the counts $k_1$ to $k_r$ add to $n$. Then the tally has chance $C(n; k_1, \ldots, k_r)$ times $p_1^{k_1} \cdots p_r^{k_r}$.
-- Suppose the counts do not add to $n$. Then that tally has chance zero.
-- Take any size $i$. Then $N_i \sim \text{Binomial}(n, p_i)$.
-- Take two different sizes $i$ and $j$. Then $\text{Cov}(N_i, N_j) = -n p_i p_j$.
+- Suppose the counts $`k_1`$ to $`k_r`$ add to $`n`$. Then the tally has chance $`C(n; k_1, \ldots, k_r)`$ times $`p_1^{k_1} \cdots p_r^{k_r}`$.
+- Suppose the counts do not add to $`n`$. Then that tally has chance zero.
+- Take any size $`i`$. Then $`N_i \sim \text{Binomial}(n, p_i)`$.
+- Take two different sizes $`i`$ and $`j`$. Then $`\text{Cov}(N_i, N_j) = -n p_i p_j`$.
 - The hand arithmetic holds exactly: 38,798,760 orders, the chance of 6, 10, 4, the 231 tallies, the means, variances and covariances.
 
 The exact table, the simulation, the correlation and Step 5's binomial given one count are left to the Python and Rust checks.

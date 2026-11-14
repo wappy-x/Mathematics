@@ -26,36 +26,42 @@ To scale: 60 units per 1, 0 at (180, 170), R = 2, ε = 0.25. Segments (60.00, 17
 
 ## The formula
 
-A reminder: the residue $\operatorname{Res}(f, a)$ is the coefficient of 1/(z − a) in f's expansion near a pole a, and a loop integral is 2πi times the residues inside ([The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)). At a **simple pole** f behaves like c/(z − a), nothing worse.
+A reminder: the residue $`\mathrm{Res}(f, a)`$ is the coefficient of 1/(z − a) in f's expansion near a pole a, and a loop integral is 2πi times the residues inside ([The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)). At a **simple pole** f behaves like c/(z − a), nothing worse.
 
 The definition: cut a gap of half-width ε either side of the pole a, integrate the rest, then shrink the gap and widen the ends:
 
-$$\operatorname{PV}\int_{-\infty}^{\infty} f(x)\,dx = \lim_{\varepsilon \to 0,\ R \to \infty}\left(\int_{-R}^{a-\varepsilon} f(x)\,dx + \int_{a+\varepsilon}^{R} f(x)\,dx\right).$$
+```math
+\mathrm{PV}\,\int_{-\infty}^{\infty} f(x)\,dx = \lim_{\varepsilon \to 0,\ R \to \infty}\left(\int_{-R}^{a-\varepsilon} f(x)\,dx + \int_{a+\varepsilon}^{R} f(x)\,dx\right).
+```
 
 **Read it aloud:** the integral with equal gaps cut round the pole, in the limit as the gaps close.
 
-The dent. Let $\Gamma_\varepsilon$ be the arc $z = a + \varepsilon e^{it}$, with t running from an angle α to an angle β. At a simple pole with residue c,
+The dent. Let $`\Gamma_\varepsilon`$ be the arc $`z = a + \varepsilon e^{it}`$, with t running from an angle α to an angle β. At a simple pole with residue c,
 
-$$\lim_{\varepsilon \to 0} \int_{\Gamma_\varepsilon} f(z)\,dz = i(\beta - \alpha)\,c.$$
+```math
+\lim_{\varepsilon \to 0} \int_{\Gamma_\varepsilon} f(z)\,dz = i(\beta - \alpha)\,c.
+```
 
 **Read it aloud:** a shrinking arc round a simple pole picks up i times the angle it sweeps times the residue.
 
-The upper dent runs from angle π to 0, so it picks up −iπc. When the big arc $C_R$ fades as R grows,
+The upper dent runs from angle π to 0, so it picks up −iπc. When the big arc $`C_R`$ fades as R grows,
 
-$$\operatorname{PV}\int_{-\infty}^{\infty} f(x)\,dx = 2\pi i \sum_{\operatorname{Im} b > 0} \operatorname{Res}(f, b) + i\pi \sum_{a \text{ real}} \operatorname{Res}(f, a).$$
+```math
+\mathrm{PV}\,\int_{-\infty}^{\infty} f(x)\,dx = 2\pi i \sum_{\mathrm{Im}\, b > 0} \mathrm{Res}(f, b) + i\pi \sum_{a \text{ real}} \mathrm{Res}(f, a).
+```
 
 **Read it aloud:** full residues above the axis, half residues on it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f$, $x$, $z$ | the function; a real point; a point of the plane | e^(iz)/z, then 1/(z(1 + z^2)) | — |
-| $a$, $c$ | a simple pole on the real line; its residue | a = 0, c = 1 in both | the dent's share grows |
-| $b$ | a pole above the real axis | i, for the second example | — |
-| $\varepsilon$, $\Gamma_\varepsilon$ | the dent's radius; the dent itself | 0.5, 0.1, 0.01 | dent moves away from −iπc |
-| $R$, $C_R$ | the big arc's radius; the big arc | 5, 10, 20 | the arc fades |
-| $t$, $\alpha$, $\beta$ | angle along an arc; its start and end | π to 0 on the dent | a bigger share |
-| $\operatorname{PV}$ | principal value: equal gaps, then the limit | iπ, then 0 | — |
-| $i$, $\pi$ | the quarter turn, i^2 = −1; a half turn in radians | the dent sweeps π | — |
+| $`f`$, $`x`$, $`z`$ | the function; a real point; a point of the plane | e^(iz)/z, then 1/(z(1 + z^2)) | — |
+| $`a`$, $`c`$ | a simple pole on the real line; its residue | a = 0, c = 1 in both | the dent's share grows |
+| $`b`$ | a pole above the real axis | i, for the second example | — |
+| $`\varepsilon`$, $`\Gamma_\varepsilon`$ | the dent's radius; the dent itself | 0.5, 0.1, 0.01 | dent moves away from −iπc |
+| $`R`$, $`C_R`$ | the big arc's radius; the big arc | 5, 10, 20 | the arc fades |
+| $`t`$, $`\alpha`$, $`\beta`$ | angle along an arc; its start and end | π to 0 on the dent | a bigger share |
+| $`\mathrm{PV}`$ | principal value: equal gaps, then the limit | iπ, then 0 | — |
+| $`i`$, $`\pi`$ | the quarter turn, i^2 = −1; a half turn in radians | the dent sweeps π | — |
 
 ### When it holds
 
@@ -74,9 +80,11 @@ The integral of 1/(z − a) round a pole counts only the angle swept, not the ra
 
 ### Step 1: prove the arc rule
 
-Near a simple pole, $f(z) = c/(z - a) + g(z)$, where g is holomorphic at a and so bounded, say by M, on a small disc. On the arc, z − a = εe^(it) and dz = iεe^(it) dt. The singular part integrates exactly:
+Near a simple pole, $`f(z) = c/(z - a) + g(z)`$, where g is holomorphic at a and so bounded, say by M, on a small disc. On the arc, z − a = εe^(it) and dz = iεe^(it) dt. The singular part integrates exactly:
 
-$$\int_\alpha^\beta \frac{c}{\varepsilon e^{it}}\, i\varepsilon e^{it}\,dt = i(\beta - \alpha)\,c.$$
+```math
+\int_\alpha^\beta \frac{c}{\varepsilon e^{it}}\, i\varepsilon e^{it}\,dt = i(\beta - \alpha)\,c.
+```
 
 The radius cancels. The remainder is at most M times the length ε|β − α|, which tends to 0.
 
@@ -88,15 +96,19 @@ Walk from −R to −ε, over the dent to ε, on to R, and back along the big ar
 
 At x and −x, e^(ix)/x adds to 2i sin x/x: the cosine parts cancel. So the segments give 2i times the area under sin x/x from ε to R. At ε = 0.1, R = 10 the pieces are 3.116806i, −2.941704i and −0.175103i, summing to 0. Jordan's lemma bounds the big arc by π/R. Let ε shrink and R grow:
 
-$$\operatorname{PV}\int_{-\infty}^{\infty} \frac{e^{ix}}{x}\,dx - i\pi = 0, \qquad \text{so} \qquad \int_{-\infty}^{\infty} \frac{\sin x}{x}\,dx = \pi.$$
+```math
+\mathrm{PV}\,\int_{-\infty}^{\infty} \frac{e^{ix}}{x}\,dx - i\pi = 0, \qquad \text{so} \qquad \int_{-\infty}^{\infty} \frac{\sin x}{x}\,dx = \pi.
+```
 
 The imaginary part is the shutter's area; sin x/x has no pole, so it needs no principal value.
 
 ### Step 3: a real pole with a pole inside
 
-For $f(z) = 1/(z(1 + z^2))$ the pole at 0 has residue 1 and the pole at i has residue 1/(i · 2i) = −1/2. The dented loop now encloses i:
+For $`f(z) = 1/(z(1 + z^2))`$ the pole at 0 has residue 1 and the pole at i has residue 1/(i · 2i) = −1/2. The dented loop now encloses i:
 
-$$\operatorname{PV}\int_{-\infty}^{\infty} \frac{dx}{x(1 + x^2)} + (-i\pi)(1) = 2\pi i\left(-\tfrac{1}{2}\right) = -i\pi.$$
+```math
+\mathrm{PV}\,\int_{-\infty}^{\infty} \frac{dx}{x(1 + x^2)} + (-i\pi)(1) = 2\pi i\left(-\tfrac{1}{2}\right) = -i\pi.
+```
 
 So the principal value is 0. On the big arc |f| ≤ 1/(R(R^2 − 1)) and the length is πR, so the arc is at most π/(R^2 − 1).
 

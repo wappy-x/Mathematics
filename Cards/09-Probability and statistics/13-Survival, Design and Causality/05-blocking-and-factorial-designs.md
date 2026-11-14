@@ -32,46 +32,52 @@ Follow any one treatment down the field and its yield climbs with the slope: nei
 
 ## The formula
 
-Notation first, in words. A bar over a letter means an average: $\bar y_{10}$ is the average yield of the plots with fertiliser on and water off. The first digit of the subscript is the fertiliser setting, the second the water setting; 1 means on, 0 off. So $\bar y_{00}$ is the untreated plots, $\bar y_{11}$ the plots with both. A hat marks an estimate, as on the estimation shelf.
+Notation first, in words. A bar over a letter means an average: $`\bar y_{10}`$ is the average yield of the plots with fertiliser on and water off. The first digit of the subscript is the fertiliser setting, the second the water setting; 1 means on, 0 off. So $`\bar y_{00}`$ is the untreated plots, $`\bar y_{11}`$ the plots with both. A hat marks an estimate, as on the estimation shelf.
 
-$$\hat F = \frac{\bar y_{10} + \bar y_{11}}{2} - \frac{\bar y_{00} + \bar y_{01}}{2}, \qquad \hat W = \frac{\bar y_{01} + \bar y_{11}}{2} - \frac{\bar y_{00} + \bar y_{10}}{2}$$
+```math
+\hat F = \frac{\bar y_{10} + \bar y_{11}}{2} - \frac{\bar y_{00} + \bar y_{01}}{2}, \qquad \hat W = \frac{\bar y_{01} + \bar y_{11}}{2} - \frac{\bar y_{00} + \bar y_{10}}{2}
+```
 
 **Read it aloud:** the fertiliser effect is the average yield of the fertilised half of the field minus the average of the unfertilised half; the water effect splits the same plots the other way.
 
-$$\hat I = \frac{(\bar y_{11} - \bar y_{01}) - (\bar y_{10} - \bar y_{00})}{2}$$
+```math
+\hat I = \frac{(\bar y_{11} - \bar y_{01}) - (\bar y_{10} - \bar y_{00})}{2}
+```
 
 **Read it aloud:** the interaction is half the gap between what fertiliser adds on watered plots and what it adds on dry ones.
 
-Each of these is a **contrast**: a sum of the four averages with weights that add to zero. $\hat F$ and $\hat W$ are the **main effects**, each averaged over both levels of the other factor. $\hat I$ is zero when the two factors act separately. The half in $\hat I$ follows Box, Hunter and Hunter; it makes all three contrasts carry weights of plus or minus a half, so all three have the same precision.
+Each of these is a **contrast**: a sum of the four averages with weights that add to zero. $`\hat F`$ and $`\hat W`$ are the **main effects**, each averaged over both levels of the other factor. $`\hat I`$ is zero when the two factors act separately. The half in $`\hat I`$ follows Box, Hunter and Hunter; it makes all three contrasts carry weights of plus or minus a half, so all three have the same precision.
 
-How precise? Write $\sigma$ for the standard deviation of the plot-to-plot noise, $r$ for the number of strips, $N = 4r$ for the number of plots, and $S_b^2$ for how much the strip effects vary across the $N$ plots (squared deviations from their average, summed, divided by $N - 1$).
+How precise? Write $`\sigma`$ for the standard deviation of the plot-to-plot noise, $`r`$ for the number of strips, $`N = 4r`$ for the number of plots, and $`S_b^2`$ for how much the strip effects vary across the $`N`$ plots (squared deviations from their average, summed, divided by $`N - 1`$).
 
-$$\operatorname{Var}(\hat F) = \frac{\sigma^2}{r} \ \text{with blocks}, \qquad \operatorname{Var}(\hat F) = \frac{\sigma^2 + S_b^2}{r} \ \text{with lots drawn over the whole field}$$
+```math
+\mathrm{Var}(\hat F) = \frac{\sigma^2}{r} \ \text{with blocks}, \qquad \mathrm{Var}(\hat F) = \frac{\sigma^2 + S_b^2}{r} \ \text{with lots drawn over the whole field}
+```
 
 **Read it aloud:** with blocks, only the noise inside a strip blurs the estimate; without them, the spread between strips joins the noise.
 
-The same holds for $\hat W$ and $\hat I$. The standard error, the square root of the variance, is the typical distance between an estimate and the truth. In the data, $\sigma$ is estimated by $s$, found from what is left of each yield after the strip and the treatment have been taken out (Step 5).
+The same holds for $`\hat W`$ and $`\hat I`$. The standard error, the square root of the variance, is the typical distance between an estimate and the truth. In the data, $`\sigma`$ is estimated by $`s`$, found from what is left of each yield after the strip and the treatment have been taken out (Step 5).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $\bar y_{fw}$ | average yield of the plots with fertiliser setting *f* and water setting *w* (each 0 or 1) | 19.67, 24.67, 26.00, 36.00 kg | moves the contrasts it enters |
-| $\mu_{fw}$ | the true long-run yield of that combination, averaged over the field | 20, 24, 26, 36 kg (built into the example) | the target the averages aim at |
-| $\hat F$ | fertiliser main effect | 7.50 kg (truth 7) | — |
-| $\hat W$ | water main effect | 8.83 kg (truth 9) | — |
-| $\hat I$ | fertiliser-by-water interaction | 2.50 kg (truth 3) | fertiliser and water help each other more |
-| $\beta_j$ | strip effect: how much richer strip number *j* is than the field's average | −4, 0, +4 kg | cancels out of every contrast |
-| $\bar\beta$, $\bar\varepsilon_{fw}$ | the average strip effect; the average noise of the plots with settings *f* and *w* | 0 kg; spread $\sigma/\sqrt r$, 0.87 kg | $\bar\beta$ cancels; $\bar\varepsilon_{fw}$ blurs the estimates |
-| $c_k$, $w_i$, $d_i$ | in the folded proof: a contrast's weight on combination *k*; plot *i*'s weight in $\hat F$; plot *i*'s strip effect minus the field average | ±1/2; ±1/6; −4, 0, +4 kg | — |
-| $\varepsilon$ | one plot's noise: what neither strip nor treatment explains | spread 1.5 kg | blurs every estimate |
-| $\sigma$ | standard deviation of the noise | 1.5 kg (truth) | wider standard errors |
-| $r$ | number of blocks, which is also the number of plots per combination | 3 | narrower standard errors, like $1/\sqrt r$ |
-| $N$ | total plots, four per block | 12 | same as raising $r$ |
-| $S_b^2$ | spread of the strip effects over all $N$ plots: squared deviations summed, divided by $N-1$ | 11.64 kg^2 | a bigger penalty for ignoring the strips |
-| $s$ | the estimate of $\sigma$ from this season's leftovers | 1.74 kg | wider quoted standard errors |
+| $`\bar y_{fw}`$ | average yield of the plots with fertiliser setting *f* and water setting *w* (each 0 or 1) | 19.67, 24.67, 26.00, 36.00 kg | moves the contrasts it enters |
+| $`\mu_{fw}`$ | the true long-run yield of that combination, averaged over the field | 20, 24, 26, 36 kg (built into the example) | the target the averages aim at |
+| $`\hat F`$ | fertiliser main effect | 7.50 kg (truth 7) | — |
+| $`\hat W`$ | water main effect | 8.83 kg (truth 9) | — |
+| $`\hat I`$ | fertiliser-by-water interaction | 2.50 kg (truth 3) | fertiliser and water help each other more |
+| $`\beta_j`$ | strip effect: how much richer strip number *j* is than the field's average | −4, 0, +4 kg | cancels out of every contrast |
+| $`\bar\beta`$, $`\bar\varepsilon_{fw}`$ | the average strip effect; the average noise of the plots with settings *f* and *w* | 0 kg; spread $`\sigma/\sqrt r`$, 0.87 kg | $`\bar\beta`$ cancels; $`\bar\varepsilon_{fw}`$ blurs the estimates |
+| $`c_k`$, $`w_i`$, $`d_i`$ | in the folded proof: a contrast's weight on combination *k*; plot *i*'s weight in $`\hat F`$; plot *i*'s strip effect minus the field average | ±1/2; ±1/6; −4, 0, +4 kg | — |
+| $`\varepsilon`$ | one plot's noise: what neither strip nor treatment explains | spread 1.5 kg | blurs every estimate |
+| $`\sigma`$ | standard deviation of the noise | 1.5 kg (truth) | wider standard errors |
+| $`r`$ | number of blocks, which is also the number of plots per combination | 3 | narrower standard errors, like $`1/\sqrt r`$ |
+| $`N`$ | total plots, four per block | 12 | same as raising $`r`$ |
+| $`S_b^2`$ | spread of the strip effects over all $`N`$ plots: squared deviations summed, divided by $`N-1`$ | 11.64 kg^2 | a bigger penalty for ignoring the strips |
+| $`s`$ | the estimate of $`\sigma`$ from this season's leftovers | 1.74 kg | wider quoted standard errors |
 
 ### When it holds
 
-- **Strip effects add.** A strip shifts every plot in it by the same amount. If fertiliser works better on wet soil, the strip effect and the treatment interact; the contrasts then report an average over the three strips, and $s$ grows to absorb the disagreement.
+- **Strip effects add.** A strip shifts every plot in it by the same amount. If fertiliser works better on wet soil, the strip effect and the treatment interact; the contrasts then report an average over the three strips, and $`s`$ grows to absorb the disagreement.
 - **A lottery inside every strip.** Without it, a pattern within a strip, such as a hedge shading the east end, can line up with one treatment and pass for its effect.
 - **Plots do not affect each other.** Water running from a watered plot into its downhill neighbour gives that neighbour a treatment it was not assigned, and every contrast mixes the two.
 - **Noise of one size, independent from plot to plot.** The variance formulas assume it. Plots that vary more under one treatment need a separate spread for each.
@@ -87,31 +93,39 @@ Two ideas carry the design. A comparison made within a strip cannot be fooled by
 
 ### Step 1: the strips cancel from every contrast
 
-Model each yield as the combination's true mean, plus its strip's effect, plus noise: yield $= \mu_{fw} + \beta_j + \varepsilon$. Each combination appears exactly once in each strip. So each average $\bar y_{fw}$ collects the same three strip effects, once each:
+Model each yield as the combination's true mean, plus its strip's effect, plus noise: yield $`= \mu_{fw} + \beta_j + \varepsilon`$. Each combination appears exactly once in each strip. So each average $`\bar y_{fw}`$ collects the same three strip effects, once each:
 
-$$\bar y_{fw} = \mu_{fw} + \bar\beta + \bar\varepsilon_{fw},$$
+```math
+\bar y_{fw} = \mu_{fw} + \bar\beta + \bar\varepsilon_{fw},
+```
 
-where $\bar\beta$ is the average strip effect and $\bar\varepsilon_{fw}$ the average noise of the three plots. Now put these into $\hat F$. The weights are $+\tfrac12, +\tfrac12, -\tfrac12, -\tfrac12$; they add to zero, so $\bar\beta$ appears twice with plus and twice with minus and cancels:
+where $`\bar\beta`$ is the average strip effect and $`\bar\varepsilon_{fw}`$ the average noise of the three plots. Now put these into $`\hat F`$. The weights are $`+\tfrac12, +\tfrac12, -\tfrac12, -\tfrac12`$; they add to zero, so $`\bar\beta`$ appears twice with plus and twice with minus and cancels:
 
-$$\hat F = \underbrace{\tfrac12(\mu_{10} + \mu_{11} - \mu_{00} - \mu_{01})}_{\text{true effect, } F} + \tfrac12(\bar\varepsilon_{10} + \bar\varepsilon_{11} - \bar\varepsilon_{00} - \bar\varepsilon_{01}).$$
+```math
+\hat F = \underbrace{\tfrac12(\mu_{10} + \mu_{11} - \mu_{00} - \mu_{01})}_{\text{true effect, } F} + \tfrac12(\bar\varepsilon_{10} + \bar\varepsilon_{11} - \bar\varepsilon_{00} - \bar\varepsilon_{01}).
+```
 
-The same happens in $\hat W$ and $\hat I$, whose weights also add to zero. No strip term is left, whatever the strips are. The noise averages to zero, so $\hat F$ is centred on the true fertiliser effect: it is **unbiased**.
+The same happens in $`\hat W`$ and $`\hat I`$, whose weights also add to zero. No strip term is left, whatever the strips are. The noise averages to zero, so $`\hat F`$ is centred on the true fertiliser effect: it is **unbiased**.
 
 The cancelling needs balance, not luck: each combination once per strip. It is exact on every season, not only on average.
 
 ### Step 2: every plot counts for every effect
 
-Each $\bar\varepsilon_{fw}$ averages three independent noises, so its variance is $\sigma^2/r$ ([Standard error](../07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)). The four averages use different plots, so they are independent, and variances of independent terms add. Four terms, each with weight squared $\tfrac14$:
+Each $`\bar\varepsilon_{fw}`$ averages three independent noises, so its variance is $`\sigma^2/r`$ ([Standard error](../07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)). The four averages use different plots, so they are independent, and variances of independent terms add. Four terms, each with weight squared $`\tfrac14`$:
 
-$$\operatorname{Var}(\hat F) = 4 \times \tfrac14 \times \frac{\sigma^2}{r} = \frac{\sigma^2}{r} = \frac{4\sigma^2}{N}.$$
+```math
+\mathrm{Var}(\hat F) = 4 \times \tfrac14 \times \frac{\sigma^2}{r} = \frac{\sigma^2}{r} = \frac{4\sigma^2}{N}.
+```
 
-With $\sigma = 1.5$ kg and three strips, the standard error is $1.5/\sqrt3 = 0.87$ kg. Every one of the twelve plots enters $\hat F$, with weight plus or minus one-sixth. It enters $\hat W$ and $\hat I$ too. Twelve plots give three answers, each as precise as if all twelve had been spent on that one question. Designers call this **hidden replication**.
+With $`\sigma = 1.5`$ kg and three strips, the standard error is $`1.5/\sqrt3 = 0.87`$ kg. Every one of the twelve plots enters $`\hat F`$, with weight plus or minus one-sixth. It enters $`\hat W`$ and $`\hat I`$ too. Twelve plots give three answers, each as precise as if all twelve had been spent on that one question. Designers call this **hidden replication**.
 
 ### Step 3: the one-at-a-time trial pays half as much again, and sees less
 
-The obvious alternative tests one change at a time: untreated plots, fertiliser-only plots, water-only plots, no combined plots. Spread twelve plots over three settings, four each. The fertiliser effect is then $\bar y_{10} - \bar y_{00}$, a difference of two averages of four:
+The obvious alternative tests one change at a time: untreated plots, fertiliser-only plots, water-only plots, no combined plots. Spread twelve plots over three settings, four each. The fertiliser effect is then $`\bar y_{10} - \bar y_{00}`$, a difference of two averages of four:
 
-$$\operatorname{Var} = \frac{\sigma^2}{4} + \frac{\sigma^2}{4} = \frac{6\sigma^2}{N}, \quad\text{against}\quad \frac{4\sigma^2}{N} \text{ for the factorial.}$$
+```math
+\mathrm{Var} = \frac{\sigma^2}{4} + \frac{\sigma^2}{4} = \frac{6\sigma^2}{N}, \quad\text{against}\quad \frac{4\sigma^2}{N} \text{ for the factorial.}
+```
 
 That is a standard error of 1.06 kg against 0.87 kg on the same twelve plots. To match the factorial the one-at-a-time trial needs 18 plots. Worse, it never grows the two together, so the interaction is invisible, and its fertiliser effect is the effect on dry plots only.
 
@@ -119,38 +133,46 @@ That is a standard error of 1.06 kg against 0.87 kg on the same twelve plots. To
 
 Suppose the grower skips the blocks and draws lots over the whole field: any three of the twelve plots may get "both", any three of the rest "fertiliser only", and so on. This is **complete randomisation**, the design of [Randomised experiments](04-randomised-experiments-and-ab-tests.md). Now a combination can land mostly downhill. The strip effects no longer cancel on each draw; they cancel only on average over the lottery.
 
-The lottery keeps $\hat F$ unbiased. But each draw carries a leftover strip imbalance, and its variance over all draws is exactly $S_b^2/r$. Adding the noise, which is independent of the draw:
+The lottery keeps $`\hat F`$ unbiased. But each draw carries a leftover strip imbalance, and its variance over all draws is exactly $`S_b^2/r`$. Adding the noise, which is independent of the draw:
 
-$$\operatorname{Var}(\hat F) = \frac{\sigma^2 + S_b^2}{r}.$$
+```math
+\mathrm{Var}(\hat F) = \frac{\sigma^2 + S_b^2}{r}.
+```
 
-Here $S_b^2 = 8 \times 4^2 / 11 = 11.64$: eight plots sit 4 kg from the average, four sit on it. The standard error grows from 0.87 to 2.15 kg. The variance ratio is 6.17: a completely randomised trial would need about six times as many plots to match three blocked strips.
+Here $`S_b^2 = 8 \times 4^2 / 11 = 11.64`$: eight plots sit 4 kg from the average, four sit on it. The standard error grows from 0.87 to 2.15 kg. The variance ratio is 6.17: a completely randomised trial would need about six times as many plots to match three blocked strips.
 
 <details>
 <summary>Detailed proof: the variance of the leftover strip imbalance</summary>
 
-Number the plots 1 to $N$. Let $d_1, \dots, d_N$ be each plot's strip effect minus the field average; these deviations sum to zero. Give contrast weights $c_k = \pm\tfrac12$ to the four combinations; they sum to zero and their squares sum to 1. The strip part of $\hat F$ is $\sum_i w_i d_i$, where $w_i = c_k / r$ for a plot that falls in combination number k.
+Number the plots 1 to $`N`$. Let $`d_1, \dots, d_N`$ be each plot's strip effect minus the field average; these deviations sum to zero. Give contrast weights $`c_k = \pm\tfrac12`$ to the four combinations; they sum to zero and their squares sum to 1. The strip part of $`\hat F`$ is $`\sum_i w_i d_i`$, where $`w_i = c_k / r`$ for a plot that falls in combination number k.
 
-Under complete randomisation each plot falls in each combination with chance $1/4$, so the average weight of any one plot is $\tfrac14 \sum_k c_k / r = 0$. The strip part averages zero: no bias.
+Under complete randomisation each plot falls in each combination with chance $`1/4`$, so the average weight of any one plot is $`\tfrac14 \sum_k c_k / r = 0`$. The strip part averages zero: no bias.
 
-Squares: the average of $w_i^2$ is $\tfrac14 \sum_k c_k^2 / r^2 = 1/(4r^2) = 1/(rN)$, using $N = 4r$.
+Squares: the average of $`w_i^2`$ is $`\tfrac14 \sum_k c_k^2 / r^2 = 1/(4r^2) = 1/(rN)`$, using $`N = 4r`$.
 
-Pairs: for two different plots, both land in one given combination with chance $\frac{r}{N}\cdot\frac{r-1}{N-1}$, and in two given different combinations, one each, with chance $\frac{r}{N}\cdot\frac{r}{N-1}$. Since $\sum_{k \ne k'} c_k c_{k'} = (\sum_k c_k)^2 - \sum_k c_k^2 = -1$, the average of $w_i w_{i'}$ is
-$$\frac{1}{r^2}\left[\frac{r(r-1)}{N(N-1)} - \frac{r^2}{N(N-1)}\right] = -\frac{1}{rN(N-1)}.$$
-Expand the square of $\sum_i w_i d_i$. The sum of $d_i d_{i'}$ over different pairs is $(\sum_i d_i)^2 - \sum_i d_i^2 = -\sum_i d_i^2$. So
-$$\operatorname{Var}\Big(\sum_i w_i d_i\Big) = \sum_i d_i^2\left[\frac{1}{rN} + \frac{1}{rN(N-1)}\right] = \frac{\sum_i d_i^2}{r(N-1)} = \frac{S_b^2}{r}.$$
-The noise is independent of the lottery and contributes $\sigma^2/r$ as in Step 2; the cross term averages zero. The checks confirm $S_b^2/r = 3.8788$ by listing all 369,600 ways to deal twelve plots into four groups of three.
+Pairs: for two different plots, both land in one given combination with chance $`\frac{r}{N}\cdot\frac{r-1}{N-1}`$, and in two given different combinations, one each, with chance $`\frac{r}{N}\cdot\frac{r}{N-1}`$. Since $`\sum_{k \ne k'} c_k c_{k'} = (\sum_k c_k)^2 - \sum_k c_k^2 = -1`$, the average of $`w_i w_{i'}`$ is
+
+$`\displaystyle \frac{1}{r^2}\left[\frac{r(r-1)}{N(N-1)} - \frac{r^2}{N(N-1)}\right] = -\frac{1}{rN(N-1)}.`$
+
+Expand the square of $`\sum_i w_i d_i`$. The sum of $`d_i d_{i'}`$ over different pairs is $`(\sum_i d_i)^2 - \sum_i d_i^2 = -\sum_i d_i^2`$. So
+
+$`\displaystyle \mathrm{Var}\Big(\sum_i w_i d_i\Big) = \sum_i d_i^2\left[\frac{1}{rN} + \frac{1}{rN(N-1)}\right] = \frac{\sum_i d_i^2}{r(N-1)} = \frac{S_b^2}{r}.`$
+
+The noise is independent of the lottery and contributes $`\sigma^2/r`$ as in Step 2; the cross term averages zero. The checks confirm $`S_b^2/r = 3.8788`$ by listing all 369,600 ways to deal twelve plots into four groups of three.
 
 </details>
 
 ### Step 5: estimate the noise from what is left over
 
-The formulas need $\sigma$, which nobody knows. Estimate it from each plot's **residual**: its yield, minus its strip's average, minus its combination's average, plus the overall average, 26.58 kg. That is what remains once strip and treatment are taken out. Square the twelve residuals and add: 18.17 kg^2.
+The formulas need $`\sigma`$, which nobody knows. Estimate it from each plot's **residual**: its yield, minus its strip's average, minus its combination's average, plus the overall average, 26.58 kg. That is what remains once strip and treatment are taken out. Square the twelve residuals and add: 18.17 kg^2.
 
 Divide by 6, not 12, because the fit spent six numbers (one overall level, two strip differences, three treatment contrasts) and only six independent leftovers remain:
 
-$$s^2 = \frac{18.17}{(r-1)(4-1)} = \frac{18.17}{6} = 3.03, \qquad \text{standard error} = \sqrt{s^2/r} = 1.00 \text{ kg}.$$
+```math
+s^2 = \frac{18.17}{(r-1)(4-1)} = \frac{18.17}{6} = 3.03, \qquad \text{standard error} = \sqrt{s^2/r} = 1.00 \text{ kg}.
+```
 
-The divisor 6 makes $s^2$ unbiased for $\sigma^2$. Over 20,000 simulated seasons the average $s^2$ is 2.2472, give or take 0.0092, against the true 2.25.
+The divisor 6 makes $`s^2`$ unbiased for $`\sigma^2`$. Over 20,000 simulated seasons the average $`s^2`$ is 2.2472, give or take 0.0092, against the true 2.25.
 
 The alternative route is least squares ([Multiple regression](../09-Regression/03-multiple-regression-and-gauss-markov.md)): regress the twelve yields on an intercept, two strip indicators and three columns of plus and minus ones. Twice each fitted slope is the matching contrast, and the leftover sum of squares is the same 18.17.
 
@@ -175,15 +197,15 @@ The season, strip by strip, in the order neither, fertiliser, water, both: top 1
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $\bar y_{00}$, neither | (17 + 19 + 23) / 3 | 19.67 kg |
-| $\bar y_{10}$, fertiliser only | (19 + 24 + 31) / 3 | 24.67 kg |
-| $\bar y_{01}$, water only | (22 + 27 + 29) / 3 | 26.00 kg |
-| $\bar y_{11}$, both | (34 + 35 + 39) / 3 | 36.00 kg |
-| $\hat F$ | (24.67 + 36.00)/2 − (19.67 + 26.00)/2 | 7.50 kg |
-| $\hat W$ | (26.00 + 36.00)/2 − (19.67 + 24.67)/2 | 8.83 kg |
-| $\hat I$ | ((36.00 − 26.00) − (24.67 − 19.67)) / 2 = (10.00 − 5.00) / 2 | 2.50 kg |
+| $`\bar y_{00}`$, neither | (17 + 19 + 23) / 3 | 19.67 kg |
+| $`\bar y_{10}`$, fertiliser only | (19 + 24 + 31) / 3 | 24.67 kg |
+| $`\bar y_{01}`$, water only | (22 + 27 + 29) / 3 | 26.00 kg |
+| $`\bar y_{11}`$, both | (34 + 35 + 39) / 3 | 36.00 kg |
+| $`\hat F`$ | (24.67 + 36.00)/2 − (19.67 + 26.00)/2 | 7.50 kg |
+| $`\hat W`$ | (26.00 + 36.00)/2 − (19.67 + 24.67)/2 | 8.83 kg |
+| $`\hat I`$ | ((36.00 − 26.00) − (24.67 − 19.67)) / 2 = (10.00 − 5.00) / 2 | 2.50 kg |
 | residual sum of squares | twelve residuals squared and added | 18.17 kg^2 |
-| $s^2$ | 18.17 / 6 | 3.03 kg^2 |
+| $`s^2`$ | 18.17 / 6 | 3.03 kg^2 |
 | standard error of each effect | √(3.03 / 3) | 1.00 kg |
 | **fertiliser effect** | | **7.50 ± 1.00 kg** |
 
@@ -208,7 +230,7 @@ The lower line is the unfertilised plots, the upper line the fertilised ones. Pa
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Analyse the blocked harvest as if the strips did not exist | standard error 2.34 kg, not 1.00 | the strips' 113.17 kg^2 of variation is counted as noise |
-| Lay the field out with no blocks: lots drawn over all twelve plots | spread of $\hat F$ 2.15 kg, not 0.87 | the strips no longer cancel; $S_b^2 = 11.64$ joins $\sigma^2 = 2.25$, a variance 6.17 times larger |
+| Lay the field out with no blocks: lots drawn over all twelve plots | spread of $`\hat F`$ 2.15 kg, not 0.87 | the strips no longer cancel; $`S_b^2 = 11.64`$ joins $`\sigma^2 = 2.25`$, a variance 6.17 times larger |
 | Test fertiliser on dry plots only, one factor at a time | 5.00 kg | the effect depends on water: 10.00 kg on watered plots; the same precision also costs 18 plots, not 12 |
 | Predict the "both" plots by adding the two separate gains | 31.00 kg, against 36.00 observed | assumes no interaction |
 
@@ -220,8 +242,8 @@ The code takes four roads.
 
 - Road one computes the contrasts from the four averages and the residual sum of squares by formula.
 - Road two fits the same model by least squares, solving the normal equations (the linear equations whose solution is the best fit) by Gaussian elimination, and must reproduce every effect and the residual sum of squares.
-- Road three lists all 369,600 complete randomisations of the twelve plots and measures the strip imbalance they leave, against $S_b^2/r$.
-- Road four simulates 20,000 seasons from the true model with a small seeded generator (SplitMix64) and the Box-Muller formula, which turns two uniform draws into one normal draw, under both designs, and compares the spread of $\hat F$ with the two variance formulas.
+- Road three lists all 369,600 complete randomisations of the twelve plots and measures the strip imbalance they leave, against $`S_b^2/r`$.
+- Road four simulates 20,000 seasons from the true model with a small seeded generator (SplitMix64) and the Box-Muller formula, which turns two uniform draws into one normal draw, under both designs, and compares the spread of $`\hat F`$ with the two variance formulas.
 
 The field plan's order inside each strip comes from the same generator.
 
@@ -607,15 +629,15 @@ The two outputs agree line for line.
 
 ### Lean
 
-Lean proves Steps 1, 2 and 4 of Why it works, for any number of strips $r \ge 1$.
+Lean proves Steps 1, 2 and 4 of Why it works, for any number of strips $`r \ge 1`$.
 
-- Take each yield as $\mu_{fw} + \beta_j + \varepsilon$, with each combination once in each strip. Then every contrast of the averages loses its strip term exactly, whatever the strip effects are.
-- Take independent plot noises, each averaging zero with variance $\sigma^2$. Then $\hat F$, $\hat W$ and $\hat I$ are unbiased, each with variance exactly $\sigma^2/r$.
-- Take complete randomisation, with every deal of the plots into four groups of $r$ equally likely. Then the leftover strip imbalance in each effect averages zero, with variance exactly $S_b^2/r$.
-- The hand arithmetic holds exactly: the four averages, the three effects, the residual sum of squares and $s^2$.
-- Also exact: $S_b^2$, the variance ratio, the 369,600 deals, the 18 plots of Step 3, and the Latin square's balance.
+- Take each yield as $`\mu_{fw} + \beta_j + \varepsilon`$, with each combination once in each strip. Then every contrast of the averages loses its strip term exactly, whatever the strip effects are.
+- Take independent plot noises, each averaging zero with variance $`\sigma^2`$. Then $`\hat F`$, $`\hat W`$ and $`\hat I`$ are unbiased, each with variance exactly $`\sigma^2/r`$.
+- Take complete randomisation, with every deal of the plots into four groups of $`r`$ equally likely. Then the leftover strip imbalance in each effect averages zero, with variance exactly $`S_b^2/r`$.
+- The hand arithmetic holds exactly: the four averages, the three effects, the residual sum of squares and $`s^2`$.
+- Also exact: $`S_b^2`$, the variance ratio, the 369,600 deals, the 18 plots of Step 3, and the Latin square's balance.
 
-The combined variance $(\sigma^2 + S_b^2)/r$, the decimals and the simulations are left to the Python and Rust checks.
+The combined variance $`(\sigma^2 + S_b^2)/r`$, the decimals and the simulations are left to the Python and Rust checks.
 
 ```lean
 -- Blocking and factorial designs: in a randomised block design the strip effects cancel exactly from every contrast of the treatment averages, each two-by-two factorial effect then has variance σ²/r, and under complete randomisation the leftover strip imbalance has average zero and average square S_b²/r.
@@ -999,8 +1021,8 @@ example :
 > [!TIP]
 > **Try changing**
 > - **Flatten the slope.** Guess first: what does blocking buy on a level field? Set `STRIP = (0.0, 0.0, 0.0)`. Both exact spreads become 0.8660 and the variance ratio 1.0000. Blocking then gains nothing, and in the analysis it costs two of the eight leftovers used to estimate the noise.
-> - **Steepen it.** Guess first: with strip effects of −8, 0 and +8 kg, how many times as many plots does complete randomisation need? Set `STRIP = (-8.0, 0.0, 8.0)`. $S_b^2$ becomes 46.5455 and the variance ratio 21.6869.
-> - **Make the plots noisier.** Guess first: does blocking matter more or less when $\sigma$ doubles? Set `SIGMA = 3.0`. The blocked spread is 1.7321, the unblocked 2.6227, a ratio of only 2.2929: the strips are now a smaller share of the blur.
+> - **Steepen it.** Guess first: with strip effects of −8, 0 and +8 kg, how many times as many plots does complete randomisation need? Set `STRIP = (-8.0, 0.0, 8.0)`. $`S_b^2`$ becomes 46.5455 and the variance ratio 21.6869.
+> - **Make the plots noisier.** Guess first: does blocking matter more or less when $`\sigma`$ doubles? Set `SIGMA = 3.0`. The blocked spread is 1.7321, the unblocked 2.6227, a ratio of only 2.2929: the strips are now a smaller share of the blur.
 > - **Remove the synergy.** Guess first: what are the true effects if both changes together give 30 kg? Set `TRUE = (20.0, 24.0, 26.0, 30.0)`. The true effects print as 4, 6 and 0, and the simulated seasons centre on 4.0081 for fertiliser. The fixed season `Y` does not change.
 
 ---

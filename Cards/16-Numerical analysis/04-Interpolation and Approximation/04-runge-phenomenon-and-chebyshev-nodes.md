@@ -39,42 +39,50 @@ Orange: equal spacing, worst error over the whole band. It climbs from 10^−0.3
 
 The Chebyshev nodes for degree n are n + 1 points on −1 to 1:
 
-$$x_j = \cos\frac{(2j+1)\pi}{2(n+1)}, \qquad j = 0, 1, \dots, n.$$
+```math
+x_j = \cos\frac{(2j+1)\pi}{2(n+1)}, \qquad j = 0, 1, \dots, n.
+```
 
 **Read it aloud:** split half a circle into n + 1 equal angles, take the middle of each, and drop it straight down onto the diameter.
 
 The interpolation error theorem ([The interpolation error theorem](03-polynomial-interpolation-error.md)) says how wrong the polynomial is at any point x:
 
-$$f(x) - p_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}\,\omega(x), \qquad \omega(x) = (x - x_0)(x - x_1)\cdots(x - x_n).$$
+```math
+f(x) - p_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}\,\omega(x), \qquad \omega(x) = (x - x_0)(x - x_1)\cdots(x - x_n).
+```
 
 **Read it aloud:** the error is a part that depends only on the curve, times the node product ω(x), which depends only on where the readings were taken.
 
-At the Chebyshev nodes the node product is a scaled Chebyshev polynomial $T_{n+1}$ (defined in Step 2 by $T_k(\cos\theta) = \cos k\theta$), and it is as small as any node product can be:
+At the Chebyshev nodes the node product is a scaled Chebyshev polynomial $`T_{n+1}`$ (defined in Step 2 by $`T_k(\cos\theta) = \cos k\theta`$), and it is as small as any node product can be:
 
-$$\omega(x) = \frac{T_{n+1}(x)}{2^{n}}, \qquad \max_{-1 \le x \le 1} |\omega(x)| = 2^{-n}.$$
+```math
+\omega(x) = \frac{T_{n+1}(x)}{2^{n}}, \qquad \max_{-1 \le x \le 1} |\omega(x)| = 2^{-n}.
+```
 
 **Read it aloud:** with Chebyshev nodes the node product never exceeds one over 2 to the n anywhere on the interval.
 
 For the resonance curve the error has an exact form, proved below. With 21 nodes placed symmetrically about 0:
 
-$$f(x) - p_{20}(x) = -\,\frac{x\,\omega(x)}{P\,(x^2 + 0.04)}, \qquad P = \prod_{x_k > 0} \left(x_k^2 + 0.04\right).$$
+```math
+f(x) - p_{20}(x) = -\,\frac{x\,\omega(x)}{P\,(x^2 + 0.04)}, \qquad P = \prod_{x_k > 0} \left(x_k^2 + 0.04\right).
+```
 
 **Read it aloud:** the error is the node product, times a factor no bigger than 2.5, divided by P, which measures how far the nodes sit from 0.2i, where the bell's formula divides by zero (Step 3).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $f(x)$ | the curve: response as a fraction of peak power | $1/(1 + 25x^2)$; $f(0.975) = 0.040379$ | a narrower peak (25 larger) is harder |
-| $x$ | detuning from 100.0 MHz, in MHz, from −1 to 1 | 0.975, where equal spacing is worst | toward ±1, equal spacing gets worse |
-| $n$ | degree of the polynomial; it passes through n + 1 readings | 20 | equal: error grows; Chebyshev: error shrinks |
-| $x_j$, $j$, $h$ | the reading points (nodes) and their index; the gap between equal nodes | $h = 0.1$; Chebyshev outer nodes 0.997204, 0.974928 | — |
-| $p_n(x)$ | the polynomial of degree n through every reading | $p(0.975) = -59.781930$ equal, 0.040337 Chebyshev | — |
-| $\omega(x)$ | node product: x minus each node, all multiplied | worst 2.336e-4 equal, 9.537e-7 Chebyshev | bigger error in step |
-| $f^{(n+1)}$, $\xi$ | the curve's (n+1)-th derivative; some unknown point in the interval | — | — |
-| $T_k$, $\theta$ | Chebyshev polynomial, $T_k(\cos\theta) = \cos k\theta$; an angle | $T_{21}$ | — |
-| $P$ | product over positive nodes of $x_k^2 + 0.04$ | 3.843513e-6 equal, 1.546419e-4 Chebyshev | smaller error |
-| $i$, $\rho$ | $i = \sqrt{-1}$; $\rho = 0.2 + \sqrt{1.04}$, set by where $1 + 25x^2 = 0$, at $x = \pm i/5$ | $\rho = 1.219804$ | faster fall with Chebyshev nodes |
-| $\Lambda_n$, $\ell_j$ | Lebesgue constant: the most a reading error can be magnified; Lagrange basis polynomial for node j | 10986.5 equal, 2.9008 Chebyshev | noise grows by this factor |
-| $q$, $r$, $g$, $m$, $N$, $s$, $k$ | helpers in the two proofs: a rival node product, a difference, a candidate polynomial, the product of $s - x_k^2$ over the positive nodes, a numerator, $s = x^2$, a counting index | — | — |
+| $`f(x)`$ | the curve: response as a fraction of peak power | $`1/(1 + 25x^2)`$; $`f(0.975) = 0.040379`$ | a narrower peak (25 larger) is harder |
+| $`x`$ | detuning from 100.0 MHz, in MHz, from −1 to 1 | 0.975, where equal spacing is worst | toward ±1, equal spacing gets worse |
+| $`n`$ | degree of the polynomial; it passes through n + 1 readings | 20 | equal: error grows; Chebyshev: error shrinks |
+| $`x_j`$, $`j`$, $`h`$ | the reading points (nodes) and their index; the gap between equal nodes | $`h = 0.1`$; Chebyshev outer nodes 0.997204, 0.974928 | — |
+| $`p_n(x)`$ | the polynomial of degree n through every reading | $`p(0.975) = -59.781930`$ equal, 0.040337 Chebyshev | — |
+| $`\omega(x)`$ | node product: x minus each node, all multiplied | worst 2.336e-4 equal, 9.537e-7 Chebyshev | bigger error in step |
+| $`f^{(n+1)}`$, $`\xi`$ | the curve's (n+1)-th derivative; some unknown point in the interval | — | — |
+| $`T_k`$, $`\theta`$ | Chebyshev polynomial, $`T_k(\cos\theta) = \cos k\theta`$; an angle | $`T_{21}`$ | — |
+| $`P`$ | product over positive nodes of $`x_k^2 + 0.04`$ | 3.843513e-6 equal, 1.546419e-4 Chebyshev | smaller error |
+| $`i`$, $`\rho`$ | $`i = \sqrt{-1}`$; $`\rho = 0.2 + \sqrt{1.04}`$, set by where $`1 + 25x^2 = 0`$, at $`x = \pm i/5`$ | $`\rho = 1.219804`$ | faster fall with Chebyshev nodes |
+| $`\Lambda_n`$, $`\ell_j`$ | Lebesgue constant: the most a reading error can be magnified; Lagrange basis polynomial for node j | 10986.5 equal, 2.9008 Chebyshev | noise grows by this factor |
+| $`q`$, $`r`$, $`g`$, $`m`$, $`N`$, $`s`$, $`k`$ | helpers in the two proofs: a rival node product, a difference, a candidate polynomial, the product of $`s - x_k^2`$ over the positive nodes, a numerator, $`s = x^2`$, a counting index | — | — |
 
 ### When it holds
 
@@ -89,7 +97,7 @@ $$f(x) - p_{20}(x) = -\,\frac{x\,\omega(x)}{P\,(x^2 + 0.04)}, \qquad P = \prod_{
 
 ### Step 0: the error splits into the curve's part and the nodes' part
 
-The interpolation error theorem writes the error as a product. One factor, $f^{(n+1)}(\xi)/(n+1)!$, belongs to the curve. The other, the node product ω(x), belongs only to where the readings were taken.
+The interpolation error theorem writes the error as a product. One factor, $`f^{(n+1)}(\xi)/(n+1)!`$, belongs to the curve. The other, the node product ω(x), belongs only to where the readings were taken.
 
 The curve is given. The nodes are chosen. So the whole repair is: choose nodes that keep ω(x) small everywhere on the interval.
 
@@ -109,21 +117,23 @@ So equal spacing puts a large factor exactly where the error shows up: near the 
 
 ### Step 2: the unit circle gives the Chebyshev polynomials
 
-Write x = cos θ, so x is the shadow, on the horizontal axis, of a point on the unit circle at angle θ ([The unit circle](../../05-Geometry%20and%20trig/03-Trigonometry/02-radians-and-the-unit-circle.md)). Define $T_k(x) = \cos k\theta$.
+Write x = cos θ, so x is the shadow, on the horizontal axis, of a point on the unit circle at angle θ ([The unit circle](../../05-Geometry%20and%20trig/03-Trigonometry/02-radians-and-the-unit-circle.md)). Define $`T_k(x) = \cos k\theta`$.
 
-This is a polynomial in x. The identity $\cos(k+1)\theta + \cos(k-1)\theta = 2\cos\theta\cos k\theta$ gives the recurrence
+This is a polynomial in x. The identity $`\cos(k+1)\theta + \cos(k-1)\theta = 2\cos\theta\cos k\theta`$ gives the recurrence
 
-$$T_0 = 1, \qquad T_1 = x, \qquad T_{k+1}(x) = 2x\,T_k(x) - T_{k-1}(x).$$
+```math
+T_0 = 1, \qquad T_1 = x, \qquad T_{k+1}(x) = 2x\,T_k(x) - T_{k-1}(x).
+```
 
-Each step multiplies the top power by 2x, so $T_{n+1}$ has degree n + 1 and leading coefficient $2^{n}$.
+Each step multiplies the top power by 2x, so $`T_{n+1}`$ has degree n + 1 and leading coefficient $`2^{n}`$.
 
 Three facts follow at once:
 
-1. **It never leaves −1 to 1.** It is a cosine, so $|T_{n+1}(x)| \le 1$ for every x in the interval.
-2. **Its zeros are the Chebyshev nodes.** $\cos(n+1)\theta = 0$ when $(n+1)\theta = (2j+1)\pi/2$, which gives the formula above.
-3. **So the node product is $T_{n+1}/2^n$.** Both are degree n + 1, both have leading coefficient 1 after dividing by $2^n$, and both vanish at the same n + 1 nodes.
+1. **It never leaves −1 to 1.** It is a cosine, so $`|T_{n+1}(x)| \le 1`$ for every x in the interval.
+2. **Its zeros are the Chebyshev nodes.** $`\cos(n+1)\theta = 0`$ when $`(n+1)\theta = (2j+1)\pi/2`$, which gives the formula above.
+3. **So the node product is $`T_{n+1}/2^n`$.** Both are degree n + 1, both have leading coefficient 1 after dividing by $`2^n`$, and both vanish at the same n + 1 nodes.
 
-Hence $|\omega(x)| \le 2^{-20} = 9.537e-7$ at degree 20. The check finds the largest |ω| on the grid to be 9.537e-7, and the recurrence matches $2^{20}\omega$ to within 1.110e-14.
+Hence $`|\omega(x)| \le 2^{-20} = 9.537e-7`$ at degree 20. The check finds the largest |ω| on the grid to be 9.537e-7, and the recurrence matches $`2^{20}\omega`$ to within 1.110e-14.
 
 The nodes crowd toward the ends because equal steps of angle near the ends of a half circle cast short shadows:
 
@@ -134,48 +144,52 @@ Drawn to scale, radius 1 = 150 units. The outermost Chebyshev gap is 0.022276; t
 <details>
 <summary>Detailed proof: no choice of nodes gives a smaller node product</summary>
 
-Suppose some nodes gave a node product q(x), of degree n + 1 with leading coefficient 1, with $|q(x)| < 2^{-n}$ everywhere on −1 to 1.
+Suppose some nodes gave a node product q(x), of degree n + 1 with leading coefficient 1, with $`|q(x)| < 2^{-n}`$ everywhere on −1 to 1.
 
-The scaled Chebyshev polynomial $T_{n+1}/2^n$ reaches $+2^{-n}$ and $-2^{-n}$ alternately at the n + 2 points $\cos(k\pi/(n+1))$, k = 0, …, n + 1.
+The scaled Chebyshev polynomial $`T_{n+1}/2^n`$ reaches $`+2^{-n}`$ and $`-2^{-n}`$ alternately at the n + 2 points $`\cos(k\pi/(n+1))`$, k = 0, …, n + 1.
 
-Let $r = T_{n+1}/2^n - q$. The leading terms cancel, so r has degree at most n. At each of the n + 2 points, r has the sign of $T_{n+1}$, because |q| is smaller there. So r changes sign n + 1 times and has at least n + 1 zeros.
+Let $`r = T_{n+1}/2^n - q`$. The leading terms cancel, so r has degree at most n. At each of the n + 2 points, r has the sign of $`T_{n+1}`$, because |q| is smaller there. So r changes sign n + 1 times and has at least n + 1 zeros.
 
-A nonzero polynomial of degree at most n has at most n zeros. So r is zero, and $q = T_{n+1}/2^n$, which reaches $2^{-n}$. That contradicts the assumption.
+A nonzero polynomial of degree at most n has at most n zeros. So r is zero, and $`q = T_{n+1}/2^n`$, which reaches $`2^{-n}`$. That contradicts the assumption.
 
 </details>
 
 ### Step 3: why this smooth bell is hard, and an exact error formula
 
-The bell 1/(1 + 25x²) has every derivative on the real line. But its formula divides by zero at x = ±i/5 = ±0.2i, a complex number only 0.2 from the middle of the interval. Its derivatives grow so fast that the factor $f^{(n+1)}/(n+1)!$ does not shrink.
+The bell 1/(1 + 25x²) has every derivative on the real line. But its formula divides by zero at x = ±i/5 = ±0.2i, a complex number only 0.2 from the middle of the interval. Its derivatives grow so fast that the factor $`f^{(n+1)}/(n+1)!`$ does not shrink.
 
 For this curve the error can be written exactly. With 21 nodes placed symmetrically about 0:
 
-$$f(x) - p_{20}(x) = -\,\frac{x\,\omega(x)}{P\,(x^2 + 0.04)}.$$
+```math
+f(x) - p_{20}(x) = -\,\frac{x\,\omega(x)}{P\,(x^2 + 0.04)}.
+```
 
 <details>
 <summary>Detailed proof: the exact error formula for the bell</summary>
 
-The 21 nodes are symmetric and include 0, so $\omega(x) = x\,m(x^2)$ with $m(s) = \prod_{k=1}^{10} (s - x_k^2)$ over the ten positive nodes. Note $f(x) = \tfrac{1}{25}/(x^2 + 0.04)$.
+The 21 nodes are symmetric and include 0, so $`\omega(x) = x\,m(x^2)`$ with $`m(s) = \prod_{k=1}^{10} (s - x_k^2)`$ over the ten positive nodes. Note $`f(x) = \tfrac{1}{25}/(x^2 + 0.04)`$.
 
-Let $g(x) = f(x) + x\,\omega(x)/(P(x^2 + 0.04))$. Over a common denominator,
+Let $`g(x) = f(x) + x\,\omega(x)/(P(x^2 + 0.04))`$. Over a common denominator,
 
-$$g(x) = \frac{P/25 + x^2 m(x^2)}{P\,(x^2 + 0.04)}.$$
+$`\displaystyle g(x) = \frac{P/25 + x^2 m(x^2)}{P\,(x^2 + 0.04)}.`$
 
-Write $s = x^2$. The numerator $N(s) = P/25 + s\,m(s)$ is a polynomial of degree 11 in s. At $s = -0.04$: $m(-0.04) = \prod(-0.04 - x_k^2) = (-1)^{10} P = P$, so $N(-0.04) = P/25 - 0.04P = 0$.
+Write $`s = x^2`$. The numerator $`N(s) = P/25 + s\,m(s)`$ is a polynomial of degree 11 in s. At $`s = -0.04`$: $`m(-0.04) = \prod(-0.04 - x_k^2) = (-1)^{10} P = P`$, so $`N(-0.04) = P/25 - 0.04P = 0`$.
 
-So $s + 0.04$ divides N(s), and g is a polynomial of degree 10 in s, which is degree 20 in x.
+So $`s + 0.04`$ divides N(s), and g is a polynomial of degree 10 in s, which is degree 20 in x.
 
 At every node ω = 0, so g equals f there. The polynomial of degree 20 through 21 points is unique, so g = p₂₀. Rearranging gives the formula.
 
-Also $\omega(i/5) = (i/5)\,m(-0.04) = iP/5$, so $P = 5\,|\omega(i/5)|$: P measures how far the nodes sit, all multiplied together, from the point where the bell breaks down.
+Also $`\omega(i/5) = (i/5)\,m(-0.04) = iP/5`$, so $`P = 5\,|\omega(i/5)|`$: P measures how far the nodes sit, all multiplied together, from the point where the bell breaks down.
 
 </details>
 
 The check confirms the formula against the polynomial itself on all 2,001 grid points, to within 1.918e-12.
 
-Now read off the error. The factor $|x|/(x^2 + 0.04)$ is at most 2.5, at x = 0.2. So
+Now read off the error. The factor $`|x|/(x^2 + 0.04)`$ is at most 2.5, at x = 0.2. So
 
-$$|f(x) - p_{20}(x)| \le 2.5 \times \frac{\max|\omega|}{P}.$$
+```math
+|f(x) - p_{20}(x)| \le 2.5 \times \frac{\max|\omega|}{P}.
+```
 
 | Nodes | max of \|ω\| | P | Bound 2.5 max\|ω\|/P | True worst error | True ÷ bound |
 | --- | --- | --- | --- | --- | --- |
@@ -186,22 +200,22 @@ Equal spacing loses twice. Its node product is large at the ends. And many of it
 
 ### Step 4: how fast Chebyshev nodes converge
 
-For Chebyshev nodes, $P = 5|\omega(i/5)| = 5\,|T_{21}(i/5)|/2^{20}$. The cosine formula, continued to complex x, gives $|T_{21}(i/5)| = (\rho^{21} - \rho^{-21})/2$ with $\rho = 0.2 + \sqrt{1.04} = 1.219804$.
+For Chebyshev nodes, $`P = 5|\omega(i/5)| = 5\,|T_{21}(i/5)|/2^{20}`$. The cosine formula, continued to complex x, gives $`|T_{21}(i/5)| = (\rho^{21} - \rho^{-21})/2`$ with $`\rho = 0.2 + \sqrt{1.04} = 1.219804`$.
 
-The check computes it three ways: by the recurrence, by the ρ formula, and as $2^{20}P/5$. All give 32.430765.
+The check computes it three ways: by the recurrence, by the ρ formula, and as $`2^{20}P/5`$. All give 32.430765.
 
 So the error shrinks by about 1/ρ = 0.8198 for each extra degree. The check observes 0.8200 per degree between degree 20 and degree 40.
 
-The general theorem (Trefethen, Sources): if a curve has no breakdown inside an ellipse around −1 to 1 whose half-axes add to ρ, its Chebyshev interpolant's error falls like $\rho^{-n}$. The bell's breakdown at ±0.2i sets ρ = 1.219804. A wider bell, 1/(1 + x²), breaks down at ±i, so ρ is larger and convergence is faster.
+The general theorem (Trefethen, Sources): if a curve has no breakdown inside an ellipse around −1 to 1 whose half-axes add to ρ, its Chebyshev interpolant's error falls like $`\rho^{-n}`$. The bell's breakdown at ±0.2i sets ρ = 1.219804. A wider bell, 1/(1 + x²), breaks down at ±i, so ρ is larger and convergence is faster.
 
 Equal spacing has its own theorem, stated here without proof (Epperson; Trefethen, Sources). For this bell, the equally spaced polynomial converges for |x| < 0.7266 and diverges beyond it. The chart's dark line, the middle half of the band, sits safely inside.
 
 ### Step 5: rounding and reading errors
 
-The Lebesgue constant $\Lambda_n$ is the largest, over x, of $|\ell_0(x)| + \dots + |\ell_n(x)|$, where $\ell_j$ is the Lagrange basis polynomial for node j ([One polynomial through n points](02-lagrange-and-newton-interpolation.md)). It is the most a reading error, or a rounding error, can be magnified.
+The Lebesgue constant $`\Lambda_n`$ is the largest, over x, of $`|\ell_0(x)| + \dots + |\ell_n(x)|`$, where $`\ell_j`$ is the Lagrange basis polynomial for node j ([One polynomial through n points](02-lagrange-and-newton-interpolation.md)). It is the most a reading error, or a rounding error, can be magnified.
 
-- Equal spacing, degree 20: $\Lambda_{20}$ = 10986.5 on the grid. It grows roughly like $2^n$, divided by n log n.
-- Chebyshev nodes, degree 20: $\Lambda_{20}$ = 2.9008, under the classical bound $(2/\pi)\log 21 + 1 = 2.9382$. It grows like log n.
+- Equal spacing, degree 20: $`\Lambda_{20}`$ = 10986.5 on the grid. It grows roughly like $`2^n`$, divided by n log n.
+- Chebyshev nodes, degree 20: $`\Lambda_{20}`$ = 2.9008, under the classical bound $`(2/\pi)\log 21 + 1 = 2.9382`$. It grows like log n.
 
 So equal spacing fails twice: the method diverges on this bell, and it magnifies noise ten-thousandfold. Chebyshev nodes fix both.
 
@@ -233,13 +247,13 @@ The equal-spacing polynomial reports a negative power at nearly 60 times the pea
 | Equal spacing at degree 20 | worst error 5.982e1 at \|x\| = 0.975 | the node product is 54,423 times larger near the end than in the middle |
 | Fix it with more equal readings: degree 40 | worst error 1.046e5 | the node product near the ends grows faster than the curve's factor shrinks |
 | Chebyshev nodes on a kink, \|x\| | 2.848e-2 at degree 20, 1.457e-2 at degree 40 | no derivative at 0, so no fast rate: the error only halves per doubling |
-| Equal spacing with readings off by ±0.001 | reading at 100.975 MHz moves by −10.985766 | $\Lambda_{20}$ = 10986.5 magnifies each 0.001 about ten thousand times |
+| Equal spacing with readings off by ±0.001 | reading at 100.975 MHz moves by −10.985766 | $`\Lambda_{20}`$ = 10986.5 magnifies each 0.001 about ten thousand times |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code builds the degree-20 polynomial on both sets of nodes and measures its error on 2,001 points, 0.001 apart. It takes three independent roads to the polynomial: the Lagrange form, Newton's divided differences, and the exact error formula. It takes three roads to $|T_{21}(i/5)|$: the recurrence, the ρ formula and the product P. The asserts check the blow-up, the repair, the $2^{-20}$ bound, the three values of $|T_{21}(i/5)|$ against each other, the bound against the true error and the observed rate against 1/ρ. Every number on this card is printed by both programs, with the same digits.
+The code builds the degree-20 polynomial on both sets of nodes and measures its error on 2,001 points, 0.001 apart. It takes three independent roads to the polynomial: the Lagrange form, Newton's divided differences, and the exact error formula. It takes three roads to $`|T_{21}(i/5)|`$: the recurrence, the ρ formula and the product P. The asserts check the blow-up, the repair, the $`2^{-20}`$ bound, the three values of $`|T_{21}(i/5)|`$ against each other, the bound against the true error and the observed rate against 1/ρ. Every number on this card is printed by both programs, with the same digits.
 
 ### Python
 
@@ -588,10 +602,10 @@ ALL CHECKS PASS
 
 Lean proves Step 2's node-product facts for every degree n, and Step 3's exact error formula for any 21 symmetric nodes.
 
-- With the n + 1 Chebyshev nodes, the node product ω(x) never exceeds $2^{-n}$ in size anywhere on −1 to 1.
-- No nodes do better. For any n + 1 nodes at all, the node product reaches at least $2^{-n}$ in size somewhere on −1 to 1.
-- At the Chebyshev nodes the node product is a scaled Chebyshev polynomial: $\omega(x) = T_{n+1}(x)/2^n$ for every real x.
-- For the bell 1/(1 + 25x²), take 21 nodes: 0, and ±x_k for ten different positive x_k. Let $p_{20}$ be the polynomial of degree at most 20 through the bell at all 21 nodes. Then $f(x) - p_{20}(x) = -x\,\omega(x)/(P\,(x^2 + 0.04))$ exactly, for every real x.
+- With the n + 1 Chebyshev nodes, the node product ω(x) never exceeds $`2^{-n}`$ in size anywhere on −1 to 1.
+- No nodes do better. For any n + 1 nodes at all, the node product reaches at least $`2^{-n}`$ in size somewhere on −1 to 1.
+- At the Chebyshev nodes the node product is a scaled Chebyshev polynomial: $`\omega(x) = T_{n+1}(x)/2^n`$ for every real x.
+- For the bell 1/(1 + 25x²), take 21 nodes: 0, and ±x_k for ten different positive x_k. Let $`p_{20}`$ be the polynomial of degree at most 20 through the bell at all 21 nodes. Then $`f(x) - p_{20}(x) = -x\,\omega(x)/(P\,(x^2 + 0.04))`$ exactly, for every real x.
 - The cost counts at degree 20 hold: 1,722 flops per point for the Lagrange form and 106 for the barycentric form. Newton's form costs 630 once, then 60 per point.
 - The equal gap at degree 20 is h = 2/20 = 0.1.
 
@@ -876,7 +890,7 @@ example : (2 : ℚ) / 20 = 1 / 10 := by norm_num
 ## What this builds on
 
 - [The interpolation error theorem](03-polynomial-interpolation-error.md): the error as the curve's derivative factor times the node product, the split this card's repair works on.
-- [The unit circle](../../05-Geometry%20and%20trig/03-Trigonometry/02-radians-and-the-unit-circle.md): cosine as the horizontal shadow of a turning point, which defines $T_k(\cos\theta) = \cos k\theta$ and places the nodes.
+- [The unit circle](../../05-Geometry%20and%20trig/03-Trigonometry/02-radians-and-the-unit-circle.md): cosine as the horizontal shadow of a turning point, which defines $`T_k(\cos\theta) = \cos k\theta`$ and places the nodes.
 
 ## Where this goes next
 
@@ -894,4 +908,4 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 - Trefethen, Lloyd N. *Approximation Theory and Approximation Practice, Extended Edition*. SIAM, 2019. [doi:10.1137/1.9781611975949](https://doi.org/10.1137/1.9781611975949). Chebyshev interpolation, its ρ^−n rate on an ellipse, Lebesgue constants and the Runge phenomenon.
 - Berrut, Jean-Paul, and Lloyd N. Trefethen. "Barycentric Lagrange interpolation." *SIAM Review* 46(3), 2004, 501–517. [doi:10.1137/S0036144502417715](https://doi.org/10.1137/S0036144502417715). How to evaluate the interpolant at Chebyshev nodes stably and in about 5n flops per point.
 - NIST Digital Library of Mathematical Functions, §3.3, "Interpolation". [dlmf.nist.gov/3.3](https://dlmf.nist.gov/3.3). The Lagrange formula with its error term and the node product.
-- NIST Digital Library of Mathematical Functions, §18.5, "Explicit representations". [dlmf.nist.gov/18.5](https://dlmf.nist.gov/18.5). The Chebyshev polynomial written as $T_n(\cos\theta) = \cos n\theta$.
+- NIST Digital Library of Mathematical Functions, §18.5, "Explicit representations". [dlmf.nist.gov/18.5](https://dlmf.nist.gov/18.5). The Chebyshev polynomial written as $`T_n(\cos\theta) = \cos n\theta`$.

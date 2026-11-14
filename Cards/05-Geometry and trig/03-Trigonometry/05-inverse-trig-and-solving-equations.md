@@ -26,7 +26,7 @@ Drawn to scale: 1 hour = 12 units across, 1 m = 50 units up. Rings mark the four
 
 ## The formula
 
-For a number u from −1 to 1, $\arcsin u$, "arc-sine of u", is the angle between −90° and 90° whose sine is u. Calculators write $\sin^{-1}$: the −1 marks an undo, as on [Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md), not one over the sine. $\arccos u$ and $\arctan u$ undo cosine and tangent. Each answers from a window, its **principal branch**.
+For a number u from −1 to 1, $`\arcsin u`$, "arc-sine of u", is the angle between −90° and 90° whose sine is u. Calculators write $`\sin^{-1}`$: the −1 marks an undo, as on [Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md), not one over the sine. $`\arccos u`$ and $`\arctan u`$ undo cosine and tangent. Each answers from a window, its **principal branch**.
 
 | Undo | Accepts (its domain) | Returns (its range) |
 | --- | --- | --- |
@@ -34,30 +34,34 @@ For a number u from −1 to 1, $\arcsin u$, "arc-sine of u", is the angle betwee
 | arccos u | −1 to 1 | 0 to π, ends included: 0° to 180° |
 | arctan u | any number | strictly between −π/2 and π/2: −90° to 90°, ends excluded |
 
-For an unknown angle $\theta$:
+For an unknown angle $`\theta`$:
 
-$$\sin\theta = u \quad\text{exactly when}\quad \theta = \alpha + 2\pi k \quad\text{or}\quad \theta = \pi - \alpha + 2\pi k, \qquad \alpha = \arcsin u$$
+```math
+\sin\theta = u \quad\text{exactly when}\quad \theta = \alpha + 2\pi k \quad\text{or}\quad \theta = \pi - \alpha + 2\pi k, \qquad \alpha = \arcsin u
+```
 
 **Read it aloud:** take the button's angle and its mirror image, half a turn minus it; then add any whole number of turns.
 
-For cosine the mirror is the horizontal axis: $\theta = \pm\beta + 2\pi k$, with $\beta = \arccos u$. For tangent the matching points are half a turn apart: $\theta = \arctan u + \pi k$.
+For cosine the mirror is the horizontal axis: $`\theta = \pm\beta + 2\pi k`$, with $`\beta = \arccos u`$. For tangent the matching points are half a turn apart: $`\theta = \arctan u + \pi k`$.
 
-The tide is the one on [Trig graphs](04-trig-graphs-amplitude-period-and-phase.md), with the gauge's zero moved up to low water. Its midline, the middle level, is 1.5 m; its amplitude, the rise above the midline, is 1.5 m; its period, one rise and fall, is 12.4 hours. It rises through the midline at $t = 1$, for $t$ in hours after midnight:
+The tide is the one on [Trig graphs](04-trig-graphs-amplitude-period-and-phase.md), with the gauge's zero moved up to low water. Its midline, the middle level, is 1.5 m; its amplitude, the rise above the midline, is 1.5 m; its period, one rise and fall, is 12.4 hours. It rises through the midline at $`t = 1`$, for $`t`$ in hours after midnight:
 
-$$h(t) = 1.5 + 1.5\sin\theta, \qquad \theta = \frac{2\pi\,(t - 1)}{12.4}$$
+```math
+h(t) = 1.5 + 1.5\sin\theta, \qquad \theta = \frac{2\pi\,(t - 1)}{12.4}
+```
 
-Above 2 m means $\sin\theta$ above $u = (2 - 1.5)/1.5$, which is 1/3.
+Above 2 m means $`\sin\theta`$ above $`u = (2 - 1.5)/1.5`$, which is 1/3.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | hours after midnight | 1.670675, i.e. 01:40 | — |
-| $h(t)$ | the gauge reading, in m | 2 at every crossing | — |
-| $\theta$ | an angle; on the tide, how far round its cycle, in radians | 0.339837 at 01:40 | a turn, $2\pi$, is one tide on |
-| $u$ | the value the sine must reach | 1/3 = 0.333333 | windows shrink; above 1, none |
-| $\alpha$ | $\arcsin u$, the principal angle | 0.339837 rad = 19.47° | rising crossing later |
-| $\beta$ | $\arccos u$, cosine's principal angle | 1.230959 rad = 70.53° | windows widen |
-| $k$ | a whole number of turns, negative ones too | 0 and 1 | one tide later |
-| $\pi$ | half a turn, in radians | $\pi - \alpha$ = 2.801756 | — |
+| $`t`$ | hours after midnight | 1.670675, i.e. 01:40 | — |
+| $`h(t)`$ | the gauge reading, in m | 2 at every crossing | — |
+| $`\theta`$ | an angle; on the tide, how far round its cycle, in radians | 0.339837 at 01:40 | a turn, $`2\pi`$, is one tide on |
+| $`u`$ | the value the sine must reach | 1/3 = 0.333333 | windows shrink; above 1, none |
+| $`\alpha`$ | $`\arcsin u`$, the principal angle | 0.339837 rad = 19.47° | rising crossing later |
+| $`\beta`$ | $`\arccos u`$, cosine's principal angle | 1.230959 rad = 70.53° | windows widen |
+| $`k`$ | a whole number of turns, negative ones too | 0 and 1 | one tide later |
+| $`\pi`$ | half a turn, in radians | $`\pi - \alpha`$ = 2.801756 | — |
 
 ### When it holds
 
@@ -65,7 +69,7 @@ Above 2 m means $\sin\theta$ above $u = (2 - 1.5)/1.5$, which is 1/3.
 - **Sine and cosine need a value from −1 to 1.** Outside it there is no solution, and clipping the value to 1 hides that.
 - **At exactly 1 or −1 the two families merge.** A level of 3.0 m is touched once per tide, not crossed twice.
 - **The tide must be one wave.** Real tides add several, so real crossings drift; the solving is exact, the model is not.
-- **One unit for angles and turns.** Radians with $2\pi$ to a turn, or degrees with 360°.
+- **One unit for angles and turns.** Radians with $`2\pi`$ to a turn, or degrees with 360°.
 
 ---
 
@@ -79,7 +83,7 @@ So cut the sine down to the angles from −90° to 90°. There it climbs steadil
 
 ### Step 1: why these three windows
 
-On the unit circle ([The unit circle](02-radians-and-the-unit-circle.md)) the point at angle $\theta$, measured anticlockwise from the rightward axis, is (cos θ, sin θ).
+On the unit circle ([The unit circle](02-radians-and-the-unit-circle.md)) the point at angle $`\theta`$, measured anticlockwise from the rightward axis, is (cos θ, sin θ).
 
 - **Arcsin:** the right half, bottom to top, passes every height, every sine, once.
 - **Arccos:** the top half, 0° to 180°, passes every left-right position, every cosine, once.
@@ -96,11 +100,11 @@ The line at height 1/3 cuts the circle in two points, mirror images across the v
 <details>
 <summary>Detailed proof: the two families hold every solution</summary>
 
-Let $\sin\theta = u$, with u strictly between −1 and 1. The point (cos θ, sin θ) is on the unit circle, where left-right position x and height y satisfy x^2 + y^2 = 1. Its height is u, so x = ±√(1 − u^2).
+Let $`\sin\theta = u`$, with u strictly between −1 and 1. The point (cos θ, sin θ) is on the unit circle, where left-right position x and height y satisfy x^2 + y^2 = 1. Its height is u, so x = ±√(1 − u^2).
 
-α = arcsin u has sine u and lies between −90° and 90°, where cosine is not negative, so the point at α is (+√(1 − u^2), u). If x is positive, θ names that point, and angles naming one point differ by whole turns: $\theta = \alpha + 2\pi k$.
+α = arcsin u has sine u and lies between −90° and 90°, where cosine is not negative, so the point at α is (+√(1 − u^2), u). If x is positive, θ names that point, and angles naming one point differ by whole turns: $`\theta = \alpha + 2\pi k`$.
 
-As cos(π − α) = −cos α and sin(π − α) = sin α ([Trig identities](03-trig-identities.md)), the point at π − α is (−√(1 − u^2), u). If x is negative, $\theta = \pi - \alpha + 2\pi k$.
+As cos(π − α) = −cos α and sin(π − α) = sin α ([Trig identities](03-trig-identities.md)), the point at π − α is (−√(1 − u^2), u). If x is negative, $`\theta = \pi - \alpha + 2\pi k`$.
 
 So every solution lies in one family, and every member of either has sine u: the two families are exactly the solutions. At u = ±1 they merge; beyond, nothing solves.
 
@@ -112,7 +116,7 @@ Sine after arcsin always returns the value. Arcsin after sine need not return th
 
 ### Step 4: from angles to times, and which side is above
 
-The angle shifts the time back an hour and stretches one tide to one turn; undoing both in reverse order ([Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md)) gives $t = 1 + 12.4\,\theta / 2\pi$. Rising crossings land at 1.670675 hours plus 12.4 times $k$, falling ones at 6.529325 plus the same. The day runs from $t = 0$ up to, not including, $t = 24$: only $k = 0$ and $k = 1$ count.
+The angle shifts the time back an hour and stretches one tide to one turn; undoing both in reverse order ([Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md)) gives $`t = 1 + 12.4\,\theta / 2\pi`$. Rising crossings land at 1.670675 hours plus 12.4 times $`k`$, falling ones at 6.529325 plus the same. The day runs from $`t = 0`$ up to, not including, $`t = 24`$: only $`k = 0`$ and $`k = 1`$ count.
 
 From α to 180° − α the arc lies above the line, so the water is above 2 m from each rising crossing to the next falling one.
 
@@ -449,7 +453,7 @@ example : π - arcsin (1 / 3) ≠ arcsin (1 / 3) := by
 > **Taking the button's answer as the answer.** Arcsin of 1/3 is 19.47°, one of endlessly many angles with that sine: 01:40 alone. The mirror, 160.53°, gives 06:32; whole turns give 14:04 and 18:56. The interval decides which count.
 >
 > - **Cancelling arcsin against sine.** At 06:32 θ is 160.53°, and arcsin of its sine is 19.47°: 01:40.
-> - **Reading $\sin^{-1}$ as one over the sine.** That is the cosecant, a number, not an angle.
+> - **Reading $`\sin^{-1}`$ as one over the sine.** That is the cosecant, a number, not an angle.
 > - **Degree mode against radian mode.** 19.47 as radians puts the first crossing at 39.43 h.
 
 ---

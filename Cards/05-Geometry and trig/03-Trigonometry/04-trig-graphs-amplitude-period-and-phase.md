@@ -35,30 +35,34 @@ Drawn to scale: 1 h = 12.5 units across, 1 m = 40 units up. Filled dots: the tid
 
 ## The formula
 
-Notation first, in words. Time is $t$, in hours after midnight; textbooks write $x$. The height above datum is $y$, in metres. The letters $a$, $b$, $c$ and $d$ are the four numbers, not a triangle's sides.
+Notation first, in words. Time is $`t`$, in hours after midnight; textbooks write $`x`$. The height above datum is $`y`$, in metres. The letters $`a`$, $`b`$, $`c`$ and $`d`$ are the four numbers, not a triangle's sides.
 
-$$y = a\sin\big(b\,(t - c)\big) + d$$
+```math
+y = a\sin\big(b\,(t - c)\big) + d
+```
 
 **Read it aloud:** the height is the midline plus a sine wave, stretched to the amplitude, run at the tide's pace and started at time c.
 
-Read back off a graph, with $P$ the period from one high water to the next:
+Read back off a graph, with $`P`$ the period from one high water to the next:
 
-$$a = \frac{\text{high} - \text{low}}{2}, \qquad d = \frac{\text{high} + \text{low}}{2}, \qquad b = \frac{2\pi}{P}, \qquad c = \text{a rising midline crossing}$$
+```math
+a = \frac{\text{high} - \text{low}}{2}, \qquad d = \frac{\text{high} + \text{low}}{2}, \qquad b = \frac{2\pi}{P}, \qquad c = \text{a rising midline crossing}
+```
 
-For this harbour, $y = 1.5\sin(0.5067(t - 1.0)) + 2.0$.
+For this harbour, $`y = 1.5\sin(0.5067(t - 1.0)) + 2.0`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$ | time, hours after midnight | 0 to 24 | — |
-| $y$ | water height above datum | 0.5 m to 3.5 m | — |
-| $a$ | amplitude: midline to high water | 1.5 m | higher highs, lower lows |
-| $d$ | midline: the level the water swings about | 2.0 m | lifts the whole curve |
-| $P$ | period: high water to high water | 12.4 h | highs further apart |
-| $b$ | angular speed, radians per hour (a full turn is $2\pi$ radians): $2\pi/P$ | 0.5067, or 29.03 degrees an hour | shorter period |
-| $c$ | phase shift: a time the curve rises through its midline | 1.0 h, so 01:00 | slides the curve later |
-| $\theta$ | the angle inside the sine, $b(t - c)$ | a quarter turn at 04:06 | — |
+| $`t`$ | time, hours after midnight | 0 to 24 | — |
+| $`y`$ | water height above datum | 0.5 m to 3.5 m | — |
+| $`a`$ | amplitude: midline to high water | 1.5 m | higher highs, lower lows |
+| $`d`$ | midline: the level the water swings about | 2.0 m | lifts the whole curve |
+| $`P`$ | period: high water to high water | 12.4 h | highs further apart |
+| $`b`$ | angular speed, radians per hour (a full turn is $`2\pi`$ radians): $`2\pi/P`$ | 0.5067, or 29.03 degrees an hour | shorter period |
+| $`c`$ | phase shift: a time the curve rises through its midline | 1.0 h, so 01:00 | slides the curve later |
+| $`\theta`$ | the angle inside the sine, $`b(t - c)`$ | a quarter turn at 04:06 | — |
 
-The cosine form, $y = a\cos(b(t - c)) + d$, keeps $a$, $b$ and $d$; its $c$ is a high water, 04:06, because a cosine starts at its peak ([Trig identities](03-trig-identities.md)).
+The cosine form, $`y = a\cos(b(t - c)) + d`$, keeps $`a`$, $`b`$ and $`d`$; its $`c`$ is a high water, 04:06, because a cosine starts at its peak ([Trig identities](03-trig-identities.md)).
 
 ### When it holds
 
@@ -74,7 +78,7 @@ The cosine form, $y = a\cos(b(t - c)) + d$, keeps $a$, $b$ and $d$; its $c$ is a
 
 ### Step 0: one curve, four moves
 
-Plot $\sin\theta$ against the angle $\theta$: the height of a point going round the unit circle. It is 0 and rising at $\theta = 0$, reaches 1 at $\theta = \pi/2$, bottoms at −1 at $\theta = 3\pi/2$, and starts over at $\theta = 2\pi$, a full turn.
+Plot $`\sin\theta`$ against the angle $`\theta`$: the height of a point going round the unit circle. It is 0 and rising at $`\theta = 0`$, reaches 1 at $`\theta = \pi/2`$, bottoms at −1 at $`\theta = 3\pi/2`$, and starts over at $`\theta = 2\pi`$, a full turn.
 
 Every sine wave is this curve stretched up by a, lifted by d, stretched or squeezed along until a cycle lasts 2π/b, and slid along by c. Each move changes one feature only, so a graph can be undone one move at a time.
 
@@ -84,22 +88,22 @@ The sine runs between −1 and 1. Multiply by a = 1.5: between −1.5 and 1.5. A
 
 ### Step 2: the stretch along gives the period
 
-The angle $\theta = b(t - c)$ gains b radians every hour. The plain curve repeats each time the angle gains a full turn, $2\pi$. That takes $2\pi/b$ hours, so $P = 2\pi/b$ and $b = 2\pi/P$: for the tide, 0.5067 radians an hour. No shorter slide lays the curve back on itself.
+The angle $`\theta = b(t - c)`$ gains b radians every hour. The plain curve repeats each time the angle gains a full turn, $`2\pi`$. That takes $`2\pi/b`$ hours, so $`P = 2\pi/b`$ and $`b = 2\pi/P`$: for the tide, 0.5067 radians an hour. No shorter slide lays the curve back on itself.
 
 <details>
 <summary>Detailed proof: nothing shorter than a full turn repeats the wave</summary>
 
-Suppose the height $P$ hours later always equals the height now. Those hours add b times P to the angle. Subtract d, divide by a (not zero), and $\sin(\theta + bP) = \sin\theta$ for every $\theta$.
+Suppose the height $`P`$ hours later always equals the height now. Those hours add b times P to the angle. Subtract d, divide by a (not zero), and $`\sin(\theta + bP) = \sin\theta`$ for every $`\theta`$.
 
-Take $\theta = \pi/2$, where the sine is 1. The sine is 1 only at the top of the circle, $\pi/2$ plus whole turns. So b times P is $2\pi$, or $4\pi$, or more whole turns; the smallest gives $P = 2\pi/b$, 12.4 h. A negative b runs the angle backwards, and the period is $2\pi$ over b without its sign.
+Take $`\theta = \pi/2`$, where the sine is 1. The sine is 1 only at the top of the circle, $`\pi/2`$ plus whole turns. So b times P is $`2\pi`$, or $`4\pi`$, or more whole turns; the smallest gives $`P = 2\pi/b`$, 12.4 h. A negative b runs the angle backwards, and the period is $`2\pi`$ over b without its sign.
 
 </details>
 
 ### Step 3: the slide gives the start
 
-At $t = c$ the angle is zero, so the wave is where the plain sine starts: on its midline, rising. High water follows a quarter period later, at c + P/4. Read backwards: a quarter period is 3.1 h, so c is 04:06 less 3.1 h, 01:00.
+At $`t = c`$ the angle is zero, so the wave is where the plain sine starts: on its midline, rising. High water follows a quarter period later, at c + P/4. Read backwards: a quarter period is 3.1 h, so c is 04:06 less 3.1 h, 01:00.
 
-The slide reads as a time only while b sits outside the brackets. Multiplied out, the model is $1.5\sin(0.5067t - 0.5067) + 2.0$. That second 0.5067 is b times c, an angle in radians; divided by b it gives the slide, 1.0 h.
+The slide reads as a time only while b sits outside the brackets. Multiplied out, the model is $`1.5\sin(0.5067t - 0.5067) + 2.0`$. That second 0.5067 is b times c, an angle in radians; divided by b it gives the slide, 1.0 h.
 
 ### Step 4: sketching and reading back use the same five points
 
@@ -132,8 +136,8 @@ At 09:00 the water stands 0.81 m above datum, still falling towards the 0.5 m lo
 | --- | --- | --- |
 | The 3 m swing used as the amplitude | highs of 5.0 m, lows of −1.0 m | The amplitude is half the swing |
 | High-water time used as c in the sine | first high water at 07:12 | A sine's top comes 3.1 h after c |
-| Shift read before factoring, from $\sin(0.5067t - 0.5067)$ | first high water at 03:36 | 0.5067 there is an angle; the slide is 1.0 h |
-| Period put where b goes, $\sin(12.4(t - 1.0))$ | a high water every 0.51 h, 48 a day | b is 2π ÷ 12.4 |
+| Shift read before factoring, from $`\sin(0.5067t - 0.5067)`$ | first high water at 03:36 | 0.5067 there is an angle; the slide is 1.0 h |
+| Period put where b goes, $`\sin(12.4(t - 1.0))`$ | a high water every 0.51 h, 48 a day | b is 2π ÷ 12.4 |
 
 The code prints all four.
 
@@ -493,7 +497,7 @@ example : (20 + 30 : ℤ) = 50 ∧ (20 - 30 : ℤ) = -10 := by decide  -- swing 
 > **Reading the start time off the high water.** In the sine form, c is where the wave crosses its midline going up, a quarter period before high water. Put 04:06 into the sine and high water lands at 07:12, 3.1 h late. The high-water time is c only in the cosine form.
 >
 > - **The swing as the amplitude.** It gives lows of −1.0 m, below datum.
-> - **Reading the shift before factoring.** In $\sin(0.5067t - 0.5067)$ the slide is 1.0 h; read as 0.5067 h, high water comes at 03:36.
+> - **Reading the shift before factoring.** In $`\sin(0.5067t - 0.5067)`$ the slide is 1.0 h; read as 0.5067 h, high water comes at 03:36.
 > - **The period in b's place.** It gives 48 high waters a day.
 
 ---
@@ -511,7 +515,7 @@ example : (20 + 30 : ℤ) = 50 ∧ (20 - 30 : ℤ) = -10 := by decide  -- swing 
 
 ## What this builds on
 
-- [The unit circle](02-radians-and-the-unit-circle.md): the sine as the height of a point on the unit circle, and the radian, which makes a full turn $2\pi$.
+- [The unit circle](02-radians-and-the-unit-circle.md): the sine as the height of a point on the unit circle, and the radian, which makes a full turn $`2\pi`$.
 
 ## Where this goes next
 

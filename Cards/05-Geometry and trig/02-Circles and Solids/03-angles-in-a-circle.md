@@ -30,7 +30,9 @@ A **chord** joins two points of a circle: here the stage's front edge AB. An **i
 
 The **central angle** has its corner at the centre O. Both stand on the arc from A to B that does not contain V. Three letters name the angle at the middle letter ([Congruent triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md)).
 
-$$\theta = \angle AVB = \tfrac12\,\angle AOB$$
+```math
+\theta = \angle AVB = \tfrac12\,\angle AOB
+```
 
 **Read it aloud:** the angle at the rim is half the angle at the centre, both standing on the same arc.
 
@@ -38,22 +40,24 @@ V's place on the arc does not enter, so every spot on it sees the same angle. A 
 
 When AB is a diameter the central angle is 180°, so the rim angle is 90°: **Thales' theorem**. A **tangent**, a straight line meeting the circle at one point only, meets the radius there at a right angle.
 
-Now let a straight aisle run back from a point $P$ on the stage line, square to it. P is $a$ from the near end and $b$ from the far end. The best spot $T$ on the aisle is where a circle through A and B touches it, $t$ back:
+Now let a straight aisle run back from a point $`P`$ on the stage line, square to it. P is $`a`$ from the near end and $`b`$ from the far end. The best spot $`T`$ on the aisle is where a circle through A and B touches it, $`t`$ back:
 
-$$t = \sqrt{ab}$$
+```math
+t = \sqrt{ab}
+```
 
 **Read it aloud:** the best spot is as far back as the square root of the two distances multiplied.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$, $B$ | the stage's ends | 12 m apart | a bigger circle |
-| $M$, $P$ | the stage's midpoint; the aisle's start | P 4 m left of A | — |
-| $V$ | the camera, on the circle | 10.39 m back from M | — |
-| $O$, $r$ | the circle's centre and radius | 3.46 m back from M; 6.93 m | a narrower view |
-| $\theta$ | the rim angle $\angle AVB$, in degrees: the field of view | 60° | the arc pulls in |
-| $\angle AOB$ | the central angle on the arc away from V | 120° | always twice $\theta$ |
-| $T$, $t$ | where a circle touches the aisle; how far back | 8 m | — |
-| $a$, $b$ | P to the near and far ends | 4 m, 16 m | the best spot moves back |
+| $`A`$, $`B`$ | the stage's ends | 12 m apart | a bigger circle |
+| $`M`$, $`P`$ | the stage's midpoint; the aisle's start | P 4 m left of A | — |
+| $`V`$ | the camera, on the circle | 10.39 m back from M | — |
+| $`O`$, $`r`$ | the circle's centre and radius | 3.46 m back from M; 6.93 m | a narrower view |
+| $`\theta`$ | the rim angle $`\angle AVB`$, in degrees: the field of view | 60° | the arc pulls in |
+| $`\angle AOB`$ | the central angle on the arc away from V | 120° | always twice $`\theta`$ |
+| $`T`$, $`t`$ | where a circle touches the aisle; how far back | 8 m | — |
+| $`a`$, $`b`$ | P to the near and far ends | 4 m, 16 m | the best spot moves back |
 
 ### When it holds
 
@@ -114,7 +118,7 @@ To scale, 1 m = 10 units. Dashed: OM and OB. The square marks the right angle at
 
 OT and the stage are both square to the aisle, so O and T are equally far back, and the radius is M's distance from the aisle: 4 + 6 = 10 m. In triangle OMB, OB = 10 m and MB = 6 m, so OM = √(10^2 − 6^2) = 8 m: T is 8 m back.
 
-In letters the radius is (a + b) ÷ 2 and MB is (b − a) ÷ 2; their squares differ by $a \times b$, so $t = \sqrt{ab}$.
+In letters the radius is (a + b) ÷ 2 and MB is (b − a) ÷ 2; their squares differ by $`a \times b`$, so $`t = \sqrt{ab}`$.
 
 The angle at T is half of angle AOB, which OM halves: it is angle MOB. Triangle OMB, sides 6, 8 and 10 m, is the 3, 4, 5 triangle doubled ([Similar triangles](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)), so that corner is the 36.87° one facing 3 ([Triangles](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). At 4 m or 16 m back the view shrinks to 30.96°.
 

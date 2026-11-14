@@ -35,40 +35,44 @@ Each bar is the return after adding one more effect. The first bar is the benchm
 
 ## The formula
 
-Notation first, in words. The fund is cut into **sectors**, here shares and bonds, and the letter $i$ names one sector. Lower-case $w_i$ is the fund's weight in sector $i$: its share of the fund's money at the start of the month. Capital $W_i$ is the benchmark's weight. Lower-case $r_i$ is the fund's return inside the sector; $b_i$ is the benchmark's return inside the same sector. A capital sigma, $\sum_i$, means "add this up over every sector".
+Notation first, in words. The fund is cut into **sectors**, here shares and bonds, and the letter $`i`$ names one sector. Lower-case $`w_i`$ is the fund's weight in sector $`i`$: its share of the fund's money at the start of the month. Capital $`W_i`$ is the benchmark's weight. Lower-case $`r_i`$ is the fund's return inside the sector; $`b_i`$ is the benchmark's return inside the same sector. A capital sigma, $`\sum_i`$, means "add this up over every sector".
 
 The two totals come first. Each is a weighted average of sector returns ([Two assets](../37-Portfolio%20Theory/01-two-asset-portfolio-risk-and-return.md)):
 
-$$R = \sum_i w_i\, r_i, \qquad B = \sum_i W_i\, b_i$$
+```math
+R = \sum_i w_i\, r_i, \qquad B = \sum_i W_i\, b_i
+```
 
 Then the split of their difference:
 
-$$R - B \;=\; \sum_i \underbrace{(w_i - W_i)(b_i - B)}_{A_i} \;+\; \sum_i \underbrace{W_i\,(r_i - b_i)}_{S_i} \;+\; \sum_i \underbrace{(w_i - W_i)(r_i - b_i)}_{I_i}$$
+```math
+R - B \;=\; \sum_i \underbrace{(w_i - W_i)(b_i - B)}_{A_i} \;+\; \sum_i \underbrace{W_i\,(r_i - b_i)}_{S_i} \;+\; \sum_i \underbrace{(w_i - W_i)(r_i - b_i)}_{I_i}
+```
 
 **Read it aloud:** the fund's lead equals the extra weight times how much that sector beat the whole benchmark, plus the benchmark's weight times how much the fund's picks beat the sector, plus the extra weight times the picks' extra return.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $i$, $\sum_i$ | which sector; add over every sector | shares, then bonds | — |
-| $w_i$ | the fund's weight in sector $i$ at the start | 60% shares, 40% bonds | allocation and interaction grow in that sector |
-| $W_i$ | the benchmark's weight in sector $i$ | 50%, 50% | the fund looks underweight: allocation shrinks |
-| $r_i$ | the fund's return inside sector $i$ | 6.8%, −2.2% | selection and interaction grow |
-| $b_i$ | the benchmark's return inside sector $i$ | 6.0%, −2.0% | allocation grows where the fund is overweight; selection shrinks |
-| $R$ | the fund's total return | 3.2% | active return grows |
-| $B$ | the benchmark's total return | 2.0% | active return shrinks |
-| $A_i$ | **allocation** in sector $i$: the reward for the weight bet | 0.4 and 0.4 points | — |
-| $S_i$ | **selection** in sector $i$: the reward for the picks, at benchmark weight | 0.4 and −0.1 points | — |
-| $I_i$ | **interaction** in sector $i$: weight bet times picks | 0.08 and 0.02 points | — |
-| $A$, $S$, $I$ | the three effects added over sectors | 0.8, 0.3, 0.1 points | — |
-| $R_t$, $B_t$, $t$ | fund and benchmark return in month $t$ (Across months) | 3.2% then −1.0%; 2.0% then 1.0% | — |
+| $`i`$, $`\sum_i`$ | which sector; add over every sector | shares, then bonds | — |
+| $`w_i`$ | the fund's weight in sector $`i`$ at the start | 60% shares, 40% bonds | allocation and interaction grow in that sector |
+| $`W_i`$ | the benchmark's weight in sector $`i`$ | 50%, 50% | the fund looks underweight: allocation shrinks |
+| $`r_i`$ | the fund's return inside sector $`i`$ | 6.8%, −2.2% | selection and interaction grow |
+| $`b_i`$ | the benchmark's return inside sector $`i`$ | 6.0%, −2.0% | allocation grows where the fund is overweight; selection shrinks |
+| $`R`$ | the fund's total return | 3.2% | active return grows |
+| $`B`$ | the benchmark's total return | 2.0% | active return shrinks |
+| $`A_i`$ | **allocation** in sector $`i`$: the reward for the weight bet | 0.4 and 0.4 points | — |
+| $`S_i`$ | **selection** in sector $`i`$: the reward for the picks, at benchmark weight | 0.4 and −0.1 points | — |
+| $`I_i`$ | **interaction** in sector $`i`$: weight bet times picks | 0.08 and 0.02 points | — |
+| $`A`$, $`S`$, $`I`$ | the three effects added over sectors | 0.8, 0.3, 0.1 points | — |
+| $`R_t`$, $`B_t`$, $`t`$ | fund and benchmark return in month $`t`$ (Across months) | 3.2% then −1.0%; 2.0% then 1.0% | — |
 
-Two helper readings. The bracket $(w_i - W_i)$ is the **weight bet**: positive for an overweight, negative for an underweight. The bracket $(r_i - b_i)$ is the **selection gap**: how much the fund's holdings beat the benchmark's inside one sector.
+Two helper readings. The bracket $`(w_i - W_i)`$ is the **weight bet**: positive for an overweight, negative for an underweight. The bracket $`(r_i - b_i)`$ is the **selection gap**: how much the fund's holdings beat the benchmark's inside one sector.
 
 ### When it holds
 
 - **One period, weights fixed at its start.** The identity is exact for one period in which nothing is bought or sold. If the fund trades mid-month, the start weights no longer produce its return, and a residual appears. Daily or transaction-level data fixes this.
 - **The same sectors on both sides.** Each fund sector needs a benchmark return to compare against. A fund-only holding, such as cash when the benchmark holds none, needs a return assigned by rule, or selection in that sector means nothing.
-- **Weights that each add to 1.** The proof below uses $\sum_i w_i = \sum_i W_i = 1$. Leave cash out of the fund's weights and allocation stops summing correctly: the centering by $B$ no longer cancels.
+- **Weights that each add to 1.** The proof below uses $`\sum_i w_i = \sum_i W_i = 1`$. Leave cash out of the fund's weights and allocation stops summing correctly: the centering by $`B`$ no longer cancels.
 - **Simple returns, not log returns.** Weighted averages of sector returns give the portfolio return only for simple returns ([Returns](../36-Returns%20and%20Utility/01-returns-simple-log-and-annualised.md)).
 - **Accounting, not cause.** The identity says where the lead arose in this ledger. It does not say the manager was skilful, or that the result will repeat.
 
@@ -80,10 +84,10 @@ Two helper readings. The bracket $(w_i - W_i)$ is the **weight bet**: positive f
 
 The fund made two changes to the benchmark: new weights and new holdings. To price each change on its own, imagine the portfolios that make only one of them. There are four in all, one for each mix of weights and returns:
 
-| | Benchmark returns $b_i$ | Fund returns $r_i$ |
+| | Benchmark returns $`b_i`$ | Fund returns $`r_i`$ |
 | --- | --- | --- |
-| **Benchmark weights** $W_i$ | Q1 = the benchmark = 2.0% | Q3 = benchmark weights, fund picks = 2.3% |
-| **Fund weights** $w_i$ | Q2 = fund weights, index picks = 2.8% | Q4 = the fund = 3.2% |
+| **Benchmark weights** $`W_i`$ | Q1 = the benchmark = 2.0% | Q3 = benchmark weights, fund picks = 2.3% |
+| **Fund weights** $`w_i`$ | Q2 = fund weights, index picks = 2.8% | Q4 = the fund = 3.2% |
 
 Q1 and Q4 are real. Q2 and Q3 are **notional portfolios**: each is a sum anyone can compute from the sector data, though no one held it. Moving from Q1 to Q2 changes only the weights. Moving from Q1 to Q3 changes only the holdings.
 
@@ -101,7 +105,9 @@ The two paths from Q1 to Q4 both climb 1.2 points. They disagree on how to split
 
 From Q1 to Q2 only the weights move, so
 
-$$\text{Q2} - \text{Q1} = \sum_i w_i b_i - \sum_i W_i b_i = \sum_i (w_i - W_i)\, b_i .$$
+```math
+\text{Q2} - \text{Q1} = \sum_i w_i b_i - \sum_i W_i b_i = \sum_i (w_i - W_i)\, b_i .
+```
 
 For the fund: 0.10 × 6.0 − 0.10 × (−2.0) = 0.6 + 0.2 = 0.8 points.
 
@@ -109,9 +115,11 @@ For the fund: 0.10 × 6.0 − 0.10 × (−2.0) = 0.6 + 0.2 = 0.8 points.
 
 Sector by sector, that raw version says the shares overweight earned 0.6 points and the bonds underweight 0.2. But the extra 10 percent in shares came out of bonds. Moving money from a sector that returned −2.0 percent into one that returned 6.0 percent is worth the gap between the two, not the 6.0 alone.
 
-The fix subtracts the benchmark's total return from every sector's return. Since the weight bets add to zero, $\sum_i (w_i - W_i) = 1 - 1 = 0$, subtracting the same $B$ from each sector changes no total:
+The fix subtracts the benchmark's total return from every sector's return. Since the weight bets add to zero, $`\sum_i (w_i - W_i) = 1 - 1 = 0`$, subtracting the same $`B`$ from each sector changes no total:
 
-$$\sum_i (w_i - W_i)(b_i - B) = \sum_i (w_i - W_i)\, b_i - B \cdot 0 .$$
+```math
+\sum_i (w_i - W_i)(b_i - B) = \sum_i (w_i - W_i)\, b_i - B \cdot 0 .
+```
 
 Now an overweight scores only when its sector beat the benchmark as a whole. Shares returned 6.0 against a benchmark of 2.0: 0.10 × 4.0 = 0.4 points. Bonds returned −2.0, four points under: the underweight earns −0.10 × (−4.0) = 0.4 points. Same total, 0.8, fairer labels. This centred version is the Brinson–Fachler rule of 1985.
 
@@ -119,7 +127,9 @@ Now an overweight scores only when its sector beat the benchmark as a whole. Sha
 
 From Q1 to Q3 only the returns inside each sector move, at benchmark weights:
 
-$$\text{Q3} - \text{Q1} = \sum_i W_i\,(r_i - b_i) = 0.5 \times 0.8 + 0.5 \times (-0.2) = 0.3 .$$
+```math
+\text{Q3} - \text{Q1} = \sum_i W_i\,(r_i - b_i) = 0.5 \times 0.8 + 0.5 \times (-0.2) = 0.3 .
+```
 
 Fund shares beat index shares by 0.8 points; fund bonds lagged index bonds by 0.2. At half weight each, the picks were worth 0.3 points.
 
@@ -127,7 +137,9 @@ Fund shares beat index shares by 0.8 points; fund bonds lagged index bonds by 0.
 
 Add allocation and selection and 0.1 points are missing. They sit in the corner of the table that needs both changes at once: extra weight in a sector where the picks also differ. Four portfolios, alternating signs, isolate it:
 
-$$\text{Q4} - \text{Q3} - \text{Q2} + \text{Q1} = \sum_i (w_i - W_i)(r_i - b_i) = 0.10 \times 0.8 + (-0.10) \times (-0.2) = 0.1 .$$
+```math
+\text{Q4} - \text{Q3} - \text{Q2} + \text{Q1} = \sum_i (w_i - W_i)(r_i - b_i) = 0.10 \times 0.8 + (-0.10) \times (-0.2) = 0.1 .
+```
 
 The fund put extra money where its picks were good, shares, and less where they were poor, bonds. Both halves help.
 
@@ -138,11 +150,15 @@ Q2 − Q1, Q3 − Q1 and Q4 − Q3 − Q2 + Q1 add to Q4 − Q1, since every oth
 <details>
 <summary>Detailed proof: the identity for any number of sectors</summary>
 
-Write each fund weight as the benchmark weight plus the bet, $w_i = W_i + (w_i - W_i)$, and each fund return as the benchmark return plus the gap, $r_i = b_i + (r_i - b_i)$. Multiply out one sector's fund contribution:
-$$w_i r_i = W_i b_i + (w_i - W_i)\, b_i + W_i\,(r_i - b_i) + (w_i - W_i)(r_i - b_i).$$
-Subtract $W_i b_i$ and add over sectors:
-$$R - B = \sum_i (w_i - W_i)\, b_i + \sum_i W_i\,(r_i - b_i) + \sum_i (w_i - W_i)(r_i - b_i).$$
-Both weight lists add to 1, so $\sum_i (w_i - W_i) = 0$ and $\sum_i (w_i - W_i) B = 0$. Subtracting that zero from the first sum gives $\sum_i (w_i - W_i)(b_i - B) = A$. The other two sums are $S$ and $I$. Hence $R - B = A + S + I$. Nothing was assumed about probability, markets or the size of the returns; only finite sums and weights that add to 1. The centring holds for the total, not sector by sector: in one sector the three effects miss the sector's raw contribution $w_i r_i - W_i b_i$ by $(w_i - W_i) B$, and those misses cancel across sectors.
+Write each fund weight as the benchmark weight plus the bet, $`w_i = W_i + (w_i - W_i)`$, and each fund return as the benchmark return plus the gap, $`r_i = b_i + (r_i - b_i)`$. Multiply out one sector's fund contribution:
+
+$`\displaystyle w_i r_i = W_i b_i + (w_i - W_i)\, b_i + W_i\,(r_i - b_i) + (w_i - W_i)(r_i - b_i).`$
+
+Subtract $`W_i b_i`$ and add over sectors:
+
+$`\displaystyle R - B = \sum_i (w_i - W_i)\, b_i + \sum_i W_i\,(r_i - b_i) + \sum_i (w_i - W_i)(r_i - b_i).`$
+
+Both weight lists add to 1, so $`\sum_i (w_i - W_i) = 0`$ and $`\sum_i (w_i - W_i) B = 0`$. Subtracting that zero from the first sum gives $`\sum_i (w_i - W_i)(b_i - B) = A`$. The other two sums are $`S`$ and $`I`$. Hence $`R - B = A + S + I`$. Nothing was assumed about probability, markets or the size of the returns; only finite sums and weights that add to 1. The centring holds for the total, not sector by sector: in one sector the three effects miss the sector's raw contribution $`w_i r_i - W_i b_i`$ by $`(w_i - W_i) B`$, and those misses cancel across sectors.
 
 </details>
 
@@ -161,8 +177,8 @@ A second road reaches the same split without sectors at all: compute Q1 to Q4 as
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| benchmark return $B$ | 0.5 × 6.0 + 0.5 × (−2.0) | 2.0% |
-| fund return $R$ | 0.6 × 6.8 + 0.4 × (−2.2) | 3.2% |
+| benchmark return $`B`$ | 0.5 × 6.0 + 0.5 × (−2.0) | 2.0% |
+| fund return $`R`$ | 0.6 × 6.8 + 0.4 × (−2.2) | 3.2% |
 | active return | 3.2 − 2.0 | 1.2 points |
 | shares allocation | (0.6 − 0.5) × (6.0 − 2.0) | 0.4 |
 | bonds allocation | (0.4 − 0.5) × (−2.0 − 2.0) | 0.4 |
@@ -170,9 +186,9 @@ A second road reaches the same split without sectors at all: compute Q1 to Q4 as
 | bonds selection | 0.5 × (−2.2 − (−2.0)) | −0.1 |
 | shares interaction | 0.1 × 0.8 | 0.08 |
 | bonds interaction | −0.1 × (−0.2) | 0.02 |
-| allocation $A$ | 0.4 + 0.4 | **0.8** |
-| selection $S$ | 0.4 − 0.1 | **0.3** |
-| interaction $I$ | 0.08 + 0.02 | **0.1** |
+| allocation $`A`$ | 0.4 + 0.4 | **0.8** |
+| selection $`S`$ | 0.4 − 0.1 | **0.3** |
+| interaction $`I`$ | 0.08 + 0.02 | **0.1** |
 | check | 0.8 + 0.3 + 0.1 | **1.2 points** |
 | two-effect selection | 0.3 + 0.1, or 0.6 × 0.8 + 0.4 × (−0.2) | **0.4** |
 
@@ -219,15 +235,17 @@ Add the two months' active returns: 1.2 − 2.0 = −0.8 points. Now compound. T
 
 ### Why: returns multiply
 
-Money earned in month 1 is itself invested in month 2. The fund's 1.2-point lead in month 1 was then exposed to month 2's returns. Algebra shows where the extra loss comes from. Add and subtract $(1 + R_1)(1 + B_2)$:
+Money earned in month 1 is itself invested in month 2. The fund's 1.2-point lead in month 1 was then exposed to month 2's returns. Algebra shows where the extra loss comes from. Add and subtract $`(1 + R_1)(1 + B_2)`$:
 
-$$(1+R_1)(1+R_2) - (1+B_1)(1+B_2) = (R_1 - B_1)(1 + B_2) + (1 + R_1)(R_2 - B_2).$$
+```math
+(1+R_1)(1+R_2) - (1+B_1)(1+B_2) = (R_1 - B_1)(1 + B_2) + (1 + R_1)(R_2 - B_2).
+```
 
-Check it by expanding: the cross-terms cancel and both sides equal $R_1 + R_2 + R_1 R_2 - B_1 - B_2 - B_1 B_2$.
+Check it by expanding: the cross-terms cancel and both sides equal $`R_1 + R_2 + R_1 R_2 - B_1 - B_2 - B_1 B_2`$.
 
 ### The fix: scale each month, then add
 
-The right-hand side says what to do. Month 1's active return is scaled by $(1 + B_2)$: the benchmark's growth afterwards. Month 2's is scaled by $(1 + R_1)$: the fund's growth before. Each month's allocation, selection and interaction carry the same scale as that month's total, so they still add up:
+The right-hand side says what to do. Month 1's active return is scaled by $`(1 + B_2)`$: the benchmark's growth afterwards. Month 2's is scaled by $`(1 + R_1)`$: the fund's growth before. Each month's allocation, selection and interaction carry the same scale as that month's total, so they still add up:
 
 | Effect | Month 1 × 1.01 | Month 2 × 1.032 | Linked |
 | --- | --- | --- | --- |
@@ -236,7 +254,7 @@ The right-hand side says what to do. Month 1's active return is scaled by $(1 + 
 | interaction | 0.1 | −0.15 | **−0.0538** |
 | total | 1.2 | −2.0 | **−0.852** |
 
-The linked effects add to the compounded gap exactly. With more months, the same telescoping works: month $t$ is scaled by the fund's growth over the months before it and the benchmark's growth over the months after it. Month $t$ uses $R_t$ and $B_t$ from its own ledger.
+The linked effects add to the compounded gap exactly. With more months, the same telescoping works: month $`t`$ is scaled by the fund's growth over the months before it and the benchmark's growth over the months after it. Month $`t`$ uses $`R_t`$ and $`B_t`$ from its own ledger.
 
 The scaling is not unique. Telescope the other way, benchmark before and fund after, and the labels change while the total does not. This is the interaction's problem again, in time instead of across sectors. Industry uses several named linking schemes; Bacon's review compares them. A report should name the one it uses.
 

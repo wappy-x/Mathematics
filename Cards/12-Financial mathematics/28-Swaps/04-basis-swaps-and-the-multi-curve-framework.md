@@ -41,55 +41,65 @@ Bottom line, orange: the overnight curve's forward rate for the three months end
 
 ## The formula
 
-Notation first, in words. $D(t)$ is the **discount factor**: what one dollar paid at time $t$, in years, is worth today. $H_3(t)$ and $H_6(t)$ are the two **forecast curves**. They look like discount factors and fall like them, but nobody trades them as prices: they exist only to store forecasts, and a forecast is read off the ratio of two neighbouring points.
+Notation first, in words. $`D(t)`$ is the **discount factor**: what one dollar paid at time $`t`$, in years, is worth today. $`H_3(t)`$ and $`H_6(t)`$ are the two **forecast curves**. They look like discount factors and fall like them, but nobody trades them as prices: they exist only to store forecasts, and a forecast is read off the ratio of two neighbouring points.
 
-A coupon period runs from a start date $t_{i-1}$ to an end date $t_i$, where it pays, and its length in years is the **accrual fraction** $\alpha$: 0.25 for a quarter, 0.5 for a half-year, 1 for a year.
+A coupon period runs from a start date $`t_{i-1}`$ to an end date $`t_i`$, where it pays, and its length in years is the **accrual fraction** $`\alpha`$: 0.25 for a quarter, 0.5 for a half-year, 1 for a year.
 
 The forecast of the index rate for one period is the growth the forecast curve implies across it:
 
-$$F_i \;=\; \frac{1}{\alpha}\left(\frac{H(t_{i-1})}{H(t_i)} - 1\right)$$
+```math
+F_i \;=\; \frac{1}{\alpha}\left(\frac{H(t_{i-1})}{H(t_i)} - 1\right)
+```
 
 A floating leg is its coupons, each forecast off its own index's curve and discounted off the shared one. Per dollar of **notional**, the amount the interest is calculated on:
 
-$$C \;=\; \sum_i \alpha \, F_i \, D(t_i)$$
+```math
+C \;=\; \sum_i \alpha \, F_i \, D(t_i)
+```
 
 **Read it aloud:** for every period, size the coupon from the index's forecast curve, then price the payment from the discount curve, and add them up.
 
-The tenor basis is the spread $s$, added to every 3-month coupon, that makes the two floating legs equal. Each basis point of $s$ is paid on every quarter, so it costs the quarterly **annuity** $A_3$, the discount factors weighted by accrual and added up:
+The tenor basis is the spread $`s`$, added to every 3-month coupon, that makes the two floating legs equal. Each basis point of $`s`$ is paid on every quarter, so it costs the quarterly **annuity** $`A_3`$, the discount factors weighted by accrual and added up:
 
-$$\boxed{\;s \;=\; \frac{C_6 - C_3}{A_3}, \qquad A_3 \;=\; \sum_i 0.25\, D(t_i)\;}$$
+```math
+\boxed{\;s \;=\; \frac{C_6 - C_3}{A_3}, \qquad A_3 \;=\; \sum_i 0.25\, D(t_i)\;}
+```
 
 **Read it aloud:** the basis is the gap between the two legs, spread over what one unit of quarterly coupon costs.
 
-A fixed-for-floating swap uses the same parts. Paying a fixed rate $K$ once a year on notional $N$ and receiving the 3-month leg is worth
+A fixed-for-floating swap uses the same parts. Paying a fixed rate $`K`$ once a year on notional $`N`$ and receiving the 3-month leg is worth
 
-$$V \;=\; N\left(C_3 - K A_f\right), \qquad A_f \;=\; D(1) + D(2) + \dots + D(5).$$
+```math
+V \;=\; N\left(C_3 - K A_f\right), \qquad A_f \;=\; D(1) + D(2) + \dots + D(5).
+```
 
-This card's forecast curves take the simplest shape that one quote can pin down: the discount curve, pulled down by a constant **spread** $b$ a year.
+This card's forecast curves take the simplest shape that one quote can pin down: the discount curve, pulled down by a constant **spread** $`b`$ a year.
 
-$$H_3(t) = D(t)\,e^{-b_3 t}, \qquad H_6(t) = D(t)\,e^{-b_6 t}$$
+```math
+H_3(t) = D(t)\,e^{-b_3 t}, \qquad H_6(t) = D(t)\,e^{-b_6 t}
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $D(t)$ | discount factor: today's value of a dollar paid at $t$ | 0.79621728 at five years | every leg and annuity is worth more |
-| $H_3(t)$, $H_6(t)$, $H$ | forecast curves: store the index forecasts, not prices | $D(t)$ pulled down by $b_3$ or $b_6$ | a steeper fall means bigger coupons |
-| $t_i$, $t_{i-1}$, $t$, $i$ | end and start of coupon period $i$; $t$ is any date, in years | quarters 0.25 to 5 | — |
-| $\alpha$ | accrual fraction: the period's length in years | 0.25, 0.5 or 1 | more interest per coupon |
-| $F_i$ | the index forecast for period $i$ | 4.23% for the first quarter | the floating leg is worth more |
-| $b_3$, $b_6$, $b$ | the forecast curve's spread over the discount curve, a year | 9.717966 and 17.521490 bp | that index's coupons grow |
-| $C_3$, $C_6$, $C$ | value today of a floating leg, per dollar | 0.208165 and 0.211732 | — |
-| $A_f$, $A_3$, $A_6$ | annuities: yearly, quarterly, half-yearly | 4.382424, 4.458117, 4.432789 | each unit of spread or fixed rate costs more |
-| $S_3$, $S_6$ | par rates: the fixed rate that makes a new swap against that index worth zero | 4.75% quoted; 4.8314% implied | — |
-| $s$ | tenor basis: the spread on the 3-month leg that balances the two | 8 bp | the 3-month side receives more |
-| $K$, $N$ | the house swap's fixed rate and notional | 4.5%, 10,000,000 dollars | the fixed payer loses |
-| $V$ | the swap's value today to the side paying fixed | 109,560.60 dollars | — |
-| $T$ | final payment date | 5 years | — |
+| $`D(t)`$ | discount factor: today's value of a dollar paid at $`t`$ | 0.79621728 at five years | every leg and annuity is worth more |
+| $`H_3(t)`$, $`H_6(t)`$, $`H`$ | forecast curves: store the index forecasts, not prices | $`D(t)`$ pulled down by $`b_3`$ or $`b_6`$ | a steeper fall means bigger coupons |
+| $`t_i`$, $`t_{i-1}`$, $`t`$, $`i`$ | end and start of coupon period $`i`$; $`t`$ is any date, in years | quarters 0.25 to 5 | — |
+| $`\alpha`$ | accrual fraction: the period's length in years | 0.25, 0.5 or 1 | more interest per coupon |
+| $`F_i`$ | the index forecast for period $`i`$ | 4.23% for the first quarter | the floating leg is worth more |
+| $`b_3`$, $`b_6`$, $`b`$ | the forecast curve's spread over the discount curve, a year | 9.717966 and 17.521490 bp | that index's coupons grow |
+| $`C_3`$, $`C_6`$, $`C`$ | value today of a floating leg, per dollar | 0.208165 and 0.211732 | — |
+| $`A_f`$, $`A_3`$, $`A_6`$ | annuities: yearly, quarterly, half-yearly | 4.382424, 4.458117, 4.432789 | each unit of spread or fixed rate costs more |
+| $`S_3`$, $`S_6`$ | par rates: the fixed rate that makes a new swap against that index worth zero | 4.75% quoted; 4.8314% implied | — |
+| $`s`$ | tenor basis: the spread on the 3-month leg that balances the two | 8 bp | the 3-month side receives more |
+| $`K`$, $`N`$ | the house swap's fixed rate and notional | 4.5%, 10,000,000 dollars | the fixed payer loses |
+| $`V`$ | the swap's value today to the side paying fixed | 109,560.60 dollars | — |
+| $`T`$ | final payment date | 5 years | — |
 
 ### When it holds
 
 - **One discount curve for all cash in the deal.** Both legs pay dollars under one collateral agreement, a contract under which each side posts cash to cover what it owes the other, so a dollar on a date has one price. If the legs were collateralised differently, or not at all, each would need its own discount curve; which curve is right is taken up in [Collateral discounting](05-ois-discounting-and-collateral.md).
 - **Each coupon is fixed at the start of its period and paid at the end.** Then the market's forward is the right forecast and no correction is needed. A coupon paid late, or fixed at the end of its own period, needs a small timing adjustment the formula above leaves out.
-- **The curve between quotes is a choice.** One quote per curve buys one number, $b_3$ or $b_6$. The fair 1-year basis this curve set prints, 7.981845 bp, comes from the flat-spread shape, not from any market. More quotes buy more shape.
+- **The curve between quotes is a choice.** One quote per curve buys one number, $`b_3`$ or $`b_6`$. The fair 1-year basis this curve set prints, 7.981845 bp, comes from the flat-spread shape, not from any market. More quotes buy more shape.
 - **Accruals in exact quarters and years.** Real contracts count days, so a real quarter is 0.25 only by coincidence; the error is a few dollars in a thousand on each coupon, not a change of method.
 - **Neither bank defaults.** A counterparty's failure is priced separately, as a valuation adjustment on top of this value.
 
@@ -105,43 +115,51 @@ A floating coupon is a promise of an unknown amount on a known date. Valuing it 
 
 ### Step 1: one curve forces the basis to zero
 
-Suppose the index is the discount curve's own rate, so $H = D$. Then each discounted coupon collapses:
+Suppose the index is the discount curve's own rate, so $`H = D`$. Then each discounted coupon collapses:
 
-$$\alpha F_i D(t_i) \;=\; \left(\frac{D(t_{i-1})}{D(t_i)} - 1\right) D(t_i) \;=\; D(t_{i-1}) - D(t_i).$$
+```math
+\alpha F_i D(t_i) \;=\; \left(\frac{D(t_{i-1})}{D(t_i)} - 1\right) D(t_i) \;=\; D(t_{i-1}) - D(t_i).
+```
 
-Summed over the periods, the middle terms cancel in pairs, a **telescope**, and the leg is worth $1 - D(T)$ whatever the period length. In the code the 3-month leg built with $b = 0$ comes to 0.203783, the same as $1 - D(5)$, and the single-curve basis prints 0.000000 bp. A 3-month leg and a 6-month leg ending on the same date are then worth the same, and the basis is zero.
+Summed over the periods, the middle terms cancel in pairs, a **telescope**, and the leg is worth $`1 - D(T)`$ whatever the period length. In the code the 3-month leg built with $`b = 0`$ comes to 0.203783, the same as $`1 - D(5)`$, and the single-curve basis prints 0.000000 bp. A 3-month leg and a 6-month leg ending on the same date are then worth the same, and the basis is zero.
 
 The contrapositive is the point. A market that quotes 8 bp cannot be priced off one curve. The 3-month and 6-month indices are not the rate that collateralised cash earns, and each needs its own forecast curve.
 
 ### Step 2: a forecast curve stores forecasts, and discounting stays with the cash
 
-Give each index a curve $H$ whose neighbouring ratios hold its forecasts, as in the $F_i$ formula. The coupon for period $i$ is $\alpha F_i$ per dollar, paid in cash at $t_i$. Cash at $t_i$ is worth $D(t_i)$ a dollar, whichever index sized it. So the discounted coupon is $\alpha F_i D(t_i)$. Now $D(t_i)$ and $H(t_i)$ are different numbers, the product no longer collapses, and the leg does not telescope.
+Give each index a curve $`H`$ whose neighbouring ratios hold its forecasts, as in the $`F_i`$ formula. The coupon for period $`i`$ is $`\alpha F_i`$ per dollar, paid in cash at $`t_i`$. Cash at $`t_i`$ is worth $`D(t_i)`$ a dollar, whichever index sized it. So the discounted coupon is $`\alpha F_i D(t_i)`$. Now $`D(t_i)`$ and $`H(t_i)`$ are different numbers, the product no longer collapses, and the leg does not telescope.
 
 <details>
 <summary>Why the forward is the right forecast</summary>
 
-The pricing rule of [Money markets](../02-Curves/03-money-market-instruments-and-sofr.md) and its neighbours values a payment as today's value of a dollar on the payment date, times the average payment taken under the probability that measures everything in units of that dated dollar. For a coupon fixed at $t_{i-1}$ and paid at $t_i$, that average is exactly the number the market's own swaps imply for the index over that period. It is not a prediction of where the index will fix. The forecast curve is a store for those market-implied averages, and $F_i$ reads one back.
+The pricing rule of [Money markets](../02-Curves/03-money-market-instruments-and-sofr.md) and its neighbours values a payment as today's value of a dollar on the payment date, times the average payment taken under the probability that measures everything in units of that dated dollar. For a coupon fixed at $`t_{i-1}`$ and paid at $`t_i`$, that average is exactly the number the market's own swaps imply for the index over that period. It is not a prediction of where the index will fix. The forecast curve is a store for those market-implied averages, and $`F_i`$ reads one back.
 
 </details>
 
 ### Step 3: with a flat spread, each leg is the overnight floater plus a spread annuity
 
-Put $H(t) = D(t) e^{-bt}$ into the coupon. The ratio of neighbouring points becomes the discount curve's ratio times $e^{b\alpha}$, and the leg becomes
+Put $`H(t) = D(t) e^{-bt}`$ into the coupon. The ratio of neighbouring points becomes the discount curve's ratio times $`e^{b\alpha}`$, and the leg becomes
 
-$$C \;=\; \bigl(1 - D(T)\bigr) \;+\; \bigl(e^{b\alpha} - 1\bigr) \sum_i D(t_{i-1}).$$
+```math
+C \;=\; \bigl(1 - D(T)\bigr) \;+\; \bigl(e^{b\alpha} - 1\bigr) \sum_i D(t_{i-1}).
+```
 
-The first part is the overnight floater from Step 1. The second is an extra coupon of $e^{b\alpha} - 1$ each period, discounted from the period's start. That closed form is the code's second road: it prints 0.208165 for the 3-month leg, matching the coupon-by-coupon sum.
+The first part is the overnight floater from Step 1. The second is an extra coupon of $`e^{b\alpha} - 1`$ each period, discounted from the period's start. That closed form is the code's second road: it prints 0.208165 for the 3-month leg, matching the coupon-by-coupon sum.
 
 <details>
 <summary>Detailed proof</summary>
 
-With $H(t) = D(t)e^{-bt}$, the ratio across one period is
-$$\frac{H(t_{i-1})}{H(t_i)} \;=\; \frac{D(t_{i-1})}{D(t_i)}\, e^{b(t_i - t_{i-1})} \;=\; \frac{D(t_{i-1})}{D(t_i)}\, e^{b\alpha}.$$
-So $\alpha F_i D(t_i) = D(t_{i-1}) e^{b\alpha} - D(t_i)$. Write $e^{b\alpha} = 1 + (e^{b\alpha} - 1)$ and split:
-$$\alpha F_i D(t_i) \;=\; \bigl(D(t_{i-1}) - D(t_i)\bigr) + \bigl(e^{b\alpha} - 1\bigr) D(t_{i-1}).$$
-The first bracket telescopes over the periods to $D(0) - D(T) = 1 - D(T)$. The second adds up to the spread term. Nothing about the discount curve's shape was used, so the result holds for any discount curve with $D(0) = 1$.
+With $`H(t) = D(t)e^{-bt}`$, the ratio across one period is
 
-**One quote, one spread.** Setting the leg equal to a quoted value $C$ gives $e^{b\alpha} - 1 = (C - 1 + D(T)) / \sum_i D(t_{i-1})$. The left side takes every value above −1 as $b$ runs over all real numbers, and it rises strictly with $b$, so every quote whose right side lies above −1 leaves exactly one spread: $b = \frac{1}{\alpha}\ln\!\bigl(1 + (C - 1 + D(T))/\sum_i D(t_{i-1})\bigr)$. A quote so low that the right side is −1 or below has no solution: it would need a coupon of minus 100 percent or worse.
+$`\displaystyle \frac{H(t_{i-1})}{H(t_i)} \;=\; \frac{D(t_{i-1})}{D(t_i)}\, e^{b(t_i - t_{i-1})} \;=\; \frac{D(t_{i-1})}{D(t_i)}\, e^{b\alpha}.`$
+
+So $`\alpha F_i D(t_i) = D(t_{i-1}) e^{b\alpha} - D(t_i)`$. Write $`e^{b\alpha} = 1 + (e^{b\alpha} - 1)`$ and split:
+
+$`\displaystyle \alpha F_i D(t_i) \;=\; \bigl(D(t_{i-1}) - D(t_i)\bigr) + \bigl(e^{b\alpha} - 1\bigr) D(t_{i-1}).`$
+
+The first bracket telescopes over the periods to $`D(0) - D(T) = 1 - D(T)`$. The second adds up to the spread term. Nothing about the discount curve's shape was used, so the result holds for any discount curve with $`D(0) = 1`$.
+
+**One quote, one spread.** Setting the leg equal to a quoted value $`C`$ gives $`e^{b\alpha} - 1 = (C - 1 + D(T)) / \sum_i D(t_{i-1})`$. The left side takes every value above −1 as $`b`$ runs over all real numbers, and it rises strictly with $`b`$, so every quote whose right side lies above −1 leaves exactly one spread: $`b = \frac{1}{\alpha}\ln\!\bigl(1 + (C - 1 + D(T))/\sum_i D(t_{i-1})\bigr)`$. A quote so low that the right side is −1 or below has no solution: it would need a coupon of minus 100 percent or worse.
 
 </details>
 
@@ -149,19 +167,19 @@ The first bracket telescopes over the periods to $D(0) - D(T) = 1 - D(T)$. The s
 
 The quotes are taken so each one leaves a single unknown.
 
-1. **Discount curve.** The house curve's five par quotes, 4.20, 4.40, 4.55, 4.62 and 4.65 percent, read as overnight index swap (OIS) quotes: fixed once a year against compounded overnight rates. Bootstrapping them, as on [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md), gives $D(1)$ to $D(5)$. Between those dates the log of $D$ runs in a straight line, a rule from [Between the pillars](../02-Curves/05-curve-interpolation-and-shape.md).
-2. **3-month forecast curve.** A five-year swap, fixed once a year against the 3-month index, is quoted at par at $S_3 = 4.75$ percent. At par the legs match, so $C_3 = S_3 A_f$. One equation, one unknown: $b_3$.
-3. **6-month forecast curve.** The five-year basis swap is quoted at 8 bp: 3-month plus 8 bp against 6-month is fair. So $C_6 = C_3 + 0.0008\,A_3$. One more equation, one more unknown: $b_6$.
+1. **Discount curve.** The house curve's five par quotes, 4.20, 4.40, 4.55, 4.62 and 4.65 percent, read as overnight index swap (OIS) quotes: fixed once a year against compounded overnight rates. Bootstrapping them, as on [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md), gives $`D(1)`$ to $`D(5)`$. Between those dates the log of $`D`$ runs in a straight line, a rule from [Between the pillars](../02-Curves/05-curve-interpolation-and-shape.md).
+2. **3-month forecast curve.** A five-year swap, fixed once a year against the 3-month index, is quoted at par at $`S_3 = 4.75`$ percent. At par the legs match, so $`C_3 = S_3 A_f`$. One equation, one unknown: $`b_3`$.
+3. **6-month forecast curve.** The five-year basis swap is quoted at 8 bp: 3-month plus 8 bp against 6-month is fair. So $`C_6 = C_3 + 0.0008\,A_3`$. One more equation, one more unknown: $`b_6`$.
 
-The code solves steps 2 and 3 twice: by halving a bracket until the leg sum hits the quote, and by the closed form in the folded proof. Both give $b_3$ = 9.717966 bp and $b_6$ = 17.521490 bp.
+The code solves steps 2 and 3 twice: by halving a bracket until the leg sum hits the quote, and by the closed form in the folded proof. Both give $`b_3`$ = 9.717966 bp and $`b_6`$ = 17.521490 bp.
 
 ### Step 5: price off the built curves
 
 With all three curves in place, any swap on these indices has a value. Three results follow.
 
-- **The house swap.** Pay 4.5 percent a year and receive 3-month on 10,000,000 dollars: $V = N(C_3 - K A_f)$ = 109,560.60 dollars. Since $C_3 = S_3 A_f$, this is also $N(S_3 - K)A_f$, which the code computes as a second road.
-- **The 6-month par rate.** Divide $C_6 = C_3 + s A_3$ by $A_f$: $S_6 = S_3 + s\,A_3/A_f$. The annuity ratio is above 1, because quarterly payments arrive sooner, so the par rates sit a shade more than 8 bp apart. $S_6$ = 4.8314 percent.
-- **A basis swap nobody quoted.** A basis swap struck last year at 10 bp, with five years left, is worth $N(0.0010 - 0.0008)A_3$ = 8,916.23 dollars to the side receiving the spread. Shorter basis swaps come straight off the curves: 7.989920 bp for two years, 7.998792 bp for four.
+- **The house swap.** Pay 4.5 percent a year and receive 3-month on 10,000,000 dollars: $`V = N(C_3 - K A_f)`$ = 109,560.60 dollars. Since $`C_3 = S_3 A_f`$, this is also $`N(S_3 - K)A_f`$, which the code computes as a second road.
+- **The 6-month par rate.** Divide $`C_6 = C_3 + s A_3`$ by $`A_f`$: $`S_6 = S_3 + s\,A_3/A_f`$. The annuity ratio is above 1, because quarterly payments arrive sooner, so the par rates sit a shade more than 8 bp apart. $`S_6`$ = 4.8314 percent.
+- **A basis swap nobody quoted.** A basis swap struck last year at 10 bp, with five years left, is worth $`N(0.0010 - 0.0008)A_3`$ = 8,916.23 dollars to the side receiving the spread. Shorter basis swaps come straight off the curves: 7.989920 bp for two years, 7.998792 bp for four.
 
 A second route builds each forecast curve pillar by pillar from a strip of quotes, one per maturity, exactly as the discount curve was built; that gives the basis a real term structure instead of this card's flat one. Running the build backwards, from values to rates and curve points, is the work of [Solving a swap backwards](07-swap-inverses-rate-and-curve-from-price.md).
 
@@ -174,13 +192,13 @@ The market: the house curve's par rates 4.20, 4.40, 4.55, 4.62, 4.65 percent at 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | discount factors | bootstrap the five OIS quotes | 0.95969290, 0.91740758, 0.87478903, 0.83431725, 0.79621728 |
-| yearly annuity $A_f$ | 0.95969290 + 0.91740758 + 0.87478903 + 0.83431725 + 0.79621728 | 4.382424 |
+| yearly annuity $`A_f`$ | 0.95969290 + 0.91740758 + 0.87478903 + 0.83431725 + 0.79621728 | 4.382424 |
 | overnight floater | 1 − 0.79621728 | 0.203783 |
 | 3-month leg at par | 0.0475 × 4.382424 | 0.208165 |
-| 3-month spread $b_3$ | 4 × ln(1 + (0.208165 − 0.203783) ÷ 18.036250) | 9.717966 bp |
-| quarterly annuity $A_3$ | 0.25 × the twenty quarterly discount factors | 4.458117 |
+| 3-month spread $`b_3`$ | 4 × ln(1 + (0.208165 − 0.203783) ÷ 18.036250) | 9.717966 bp |
+| quarterly annuity $`A_3`$ | 0.25 × the twenty quarterly discount factors | 4.458117 |
 | 6-month leg | 0.208165 + 0.0008 × 4.458117 | 0.211732 |
-| 6-month spread $b_6$ | 2 × ln(1 + (0.211732 − 0.203783) ÷ 9.069361) | 17.521490 bp |
+| 6-month spread $`b_6`$ | 2 × ln(1 + (0.211732 − 0.203783) ÷ 9.069361) | 17.521490 bp |
 | house swap | 10,000,000 × (0.208165 − 0.045 × 4.382424) | **109,560.60 dollars** |
 
 The sums 18.036250 and 9.069361 are the discount factors at the start of each quarter and each half-year, twenty and ten of them. The fixed payer is up 109,560.60 dollars: it pays 4.5 percent for a leg the market values at 4.75 percent, and 25 bp a year on 10,000,000 dollars, across an annuity of 4.382424, is that amount.
@@ -209,7 +227,7 @@ Forecasting is the error that matters: it cuts the answer by 40 percent. Discoun
 
 ## Code, from first principles, and it actually runs
 
-The scripts bootstrap the discount curve, build both forecast curves, value the house swap and price basis swaps. They take three roads. Road one adds coupons one by one and finds each spread with a bisection root finder written out in the script. Road two uses the closed forms of Step 3 and the par identity $V = N(K - S_3)A_f$. Road three is the control: with the spread set to zero, the coupon sum must equal the telescope $1 - D(5)$. Seven asserts compare roads; an eighth ties $D(5)$ and the single-curve value to [Interest rate swaps](01-interest-rate-swaps.md). Each would fail if a formula were broken.
+The scripts bootstrap the discount curve, build both forecast curves, value the house swap and price basis swaps. They take three roads. Road one adds coupons one by one and finds each spread with a bisection root finder written out in the script. Road two uses the closed forms of Step 3 and the par identity $`V = N(K - S_3)A_f`$. Road three is the control: with the spread set to zero, the coupon sum must equal the telescope $`1 - D(5)`$. Seven asserts compare roads; an eighth ties $`D(5)`$ and the single-curve value to [Interest rate swaps](01-interest-rate-swaps.md). Each would fail if a formula were broken.
 
 ### Python
 
@@ -549,16 +567,16 @@ The two outputs agree byte for byte.
 
 Lean proves the leg and basis formulas of Steps 1 and 3 for any discount curve, and checks four of the card's sums.
 
-- Suppose $D(0) = 1$, every discount factor is positive, and $n$ periods of length $\alpha > 0$ use $H(t) = D(t)e^{-bt}$. Then the leg is $C = (1 - D(T)) + (e^{b\alpha} - 1)\sum_i D(t_{i-1})$.
-- Suppose the index is forecast off the discount curve itself, so $H = D$, on any schedule starting today. Then the coupons telescope, and the leg is worth $1 - D(T)$ whatever the period lengths.
+- Suppose $`D(0) = 1`$, every discount factor is positive, and $`n`$ periods of length $`\alpha > 0`$ use $`H(t) = D(t)e^{-bt}`$. Then the leg is $`C = (1 - D(T)) + (e^{b\alpha} - 1)\sum_i D(t_{i-1})`$.
+- Suppose the index is forecast off the discount curve itself, so $`H = D`$, on any schedule starting today. Then the coupons telescope, and the leg is worth $`1 - D(T)`$ whatever the period lengths.
 - Take a second schedule with other period lengths, ending on the same date. Then the two legs are worth the same, and the tenor basis between them is zero.
-- Take the same curves, $n \ge 1$ periods and a leg quote $C$ with $(C - 1 + D(T))/\sum_i D(t_{i-1}) > -1$. Then exactly one spread gives that leg: $b = \frac{1}{\alpha}\ln(1 + (C - 1 + D(T))/\sum_i D(t_{i-1}))$.
+- Take the same curves, $`n \ge 1`$ periods and a leg quote $`C`$ with $`(C - 1 + D(T))/\sum_i D(t_{i-1}) > -1`$. Then exactly one spread gives that leg: $`b = \frac{1}{\alpha}\ln(1 + (C - 1 + D(T))/\sum_i D(t_{i-1}))`$.
 - Five years hold twenty quarterly coupons and ten half-yearly ones.
 - Paying 4.5 percent for a leg worth 4.75 percent gains 25 bp a year, which is 25,000 dollars a year on 10,000,000.
 - Reading the 8 bp as a gap between par rates gives the wrong 6-month par rate, 4.83 percent.
 - A basis swap struck at 10 bp against a fair 8 bp pays 2,000 dollars a year over fair, before discounting.
 
-The bootstrapped curves, the spreads $b_3$ and $b_6$, and every dollar value of the house swap are left to the Python and Rust checks.
+The bootstrapped curves, the spreads $`b_3`$ and $`b_6`$, and every dollar value of the house swap are left to the Python and Rust checks.
 
 ```lean
 -- Multi-curve: with a flat-spread forecast curve a floating leg is the overnight floater plus a spread annuity, with one curve the legs telescope so any two tenors are worth the same and the basis is zero, and one quote fixes exactly one spread.
@@ -727,9 +745,9 @@ example : ((10 : ℚ) - 8) / 10000 * 10000000 = 2000 := by norm_num
 > **Try changing**
 > Guess the direction first. Then run it.
 > - **Widen the basis to 15 bp.** Set `BASIS = 0.0015`. The house swap does not move, since it never touches the 6-month index. The implied 6-month par rate rises to **4.9026 percent**.
-> - **Lift every OIS quote by 10 bp and keep the 4.75 percent quote.** Set `OIS` to each value plus 0.001. The house swap falls only to **109,256.05 dollars**: $b_3$ shrinks to hold the 3-month leg at its quote, and only the annuity changes.
-> - **Quote the 3-month swap at the OIS rate, 4.65 percent.** Set `S3 = 0.0465`. Then $b_3$ is zero, the 3-month curve lands on the discount curve, and the house swap is worth **65,736.36 dollars**, the single-curve answer. One curve is the special case of two with no spread.
-> - **Strike a basis swap at 10 bp.** The row "basis swap struck at 10 bp" prints **8,916.23 dollars**, by summing both legs and by 2 bp times $A_3$.
+> - **Lift every OIS quote by 10 bp and keep the 4.75 percent quote.** Set `OIS` to each value plus 0.001. The house swap falls only to **109,256.05 dollars**: $`b_3`$ shrinks to hold the 3-month leg at its quote, and only the annuity changes.
+> - **Quote the 3-month swap at the OIS rate, 4.65 percent.** Set `S3 = 0.0465`. Then $`b_3`$ is zero, the 3-month curve lands on the discount curve, and the house swap is worth **65,736.36 dollars**, the single-curve answer. One curve is the special case of two with no spread.
+> - **Strike a basis swap at 10 bp.** The row "basis swap struck at 10 bp" prints **8,916.23 dollars**, by summing both legs and by 2 bp times $`A_3`$.
 
 ---
 
@@ -741,7 +759,7 @@ example : ((10 : ℚ) - 8) / 10000 * 10000000 = 2000 := by norm_num
 > Smaller traps:
 > - **Mixing the two ways a basis is quoted.** This card's 8 bp is a spread paid on the 3-month leg. The par rates against 3-month and 6-month are then 4.7500 and 4.8314 percent, a hair more than 8 bp apart, because the spread rides on quarterly coupons and the par rate on yearly ones. Some screens quote the basis as the gap between the two par rates instead. Read one convention as the other and a 10,000,000 dollar swap is mispriced by 605.54 dollars.
 > - **Moving the spread to the other leg and flipping its sign.** On the 6-month leg the fair spread is −8.045710 bp, not −8. The quote only means something with the leg it is paid on named.
-> - **Treating the forecast curve as prices.** $H_3(5)$ is not what a dollar in five years costs. Discount a cash flow with it and the pre-2007 answer returns: 109,890.97 dollars for the house swap.
+> - **Treating the forecast curve as prices.** $`H_3(5)`$ is not what a dollar in five years costs. Discount a cash flow with it and the pre-2007 answer returns: 109,890.97 dollars for the house swap.
 > - **Trusting the curve between quotes.** The fair 1-year basis of 7.981845 bp comes from the flat-spread shape, not from any trade. Where no quote pins a point, the number there is the builder's assumption.
 
 ---

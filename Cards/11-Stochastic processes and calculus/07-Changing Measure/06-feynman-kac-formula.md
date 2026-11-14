@@ -40,51 +40,59 @@ The flat line is the 5 percent world: the discounted price neither rises nor fal
 
 Reminders first.
 
-- $W_t$ is Brownian motion, "the random walk seen from far away".
-- A process $X_t$ follows the rule $dX_t = \mu(X_t, t)\,dt + \sigma(X_t, t)\,dW_t$: in each short slice of time it drifts by $\mu$ times the slice and takes a kick of $\sigma$ times the Brownian step; $dW_t$ is shorthand for an Ito integral, never a derivative, since the path has no slope.
-- A subscript on a function means a slope: $u_t$ in time, $u_x$ in space, $u_{xx}$ the curvature, the slope of the slope ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)).
-- On a process the subscript is a time instead: $S_t$, $W_t$, $X_t$ and $M_t$ are values at time t, while $u_t$ and $V_t$ are slopes.
+- $`W_t`$ is Brownian motion, "the random walk seen from far away".
+- A process $`X_t`$ follows the rule $`dX_t = \mu(X_t, t)\,dt + \sigma(X_t, t)\,dW_t`$: in each short slice of time it drifts by $`\mu`$ times the slice and takes a kick of $`\sigma`$ times the Brownian step; $`dW_t`$ is shorthand for an Ito integral, never a derivative, since the path has no slope.
+- A subscript on a function means a slope: $`u_t`$ in time, $`u_x`$ in space, $`u_{xx}`$ the curvature, the slope of the slope ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)).
+- On a process the subscript is a time instead: $`S_t`$, $`W_t`$, $`X_t`$ and $`M_t`$ are values at time t, while $`u_t`$ and $`V_t`$ are slopes.
 
-The equation, for a function $u$ of time and place, with a payoff at the end:
+The equation, for a function $`u`$ of time and place, with a payoff at the end:
 
-$$u_t + \mu(x,t)\,u_x + \tfrac12\,\sigma(x,t)^2\,u_{xx} - r\,u = 0 \quad (t < T), \qquad u(T, x) = g(x)$$
+```math
+u_t + \mu(x,t)\,u_x + \tfrac12\,\sigma(x,t)^2\,u_{xx} - r\,u = 0 \quad (t < T), \qquad u(T, x) = g(x)
+```
 
 The Feynman-Kac formula:
 
-$$u(t, x) = E\Big[\,e^{-r(T-t)}\, g(X_T) \;\Big|\; X_t = x\,\Big]$$
+```math
+u(t, x) = E\Big[\,e^{-r(T-t)}\, g(X_T) \;\Big|\; X_t = x\,\Big]
+```
 
 **Read it aloud:** the value now, at place x, is the average over all paths from x of the payoff where the path ends, discounted by the rate r over the time left.
 
-For the share, $X_t$ is the price $S_t$, and the average is taken under the pricing measure $Q$, the reweighting of paths under which the share drifts at the bank rate ($Q$ and its averages $E^Q$ are taught on [Changing the measure](01-change-of-measure-and-density-processes.md); the switch of drift is [Girsanov](02-girsanov-theorem.md)). Under $Q$ the share's rule is $dS_t = r S_t\,dt + \sigma S_t\,dW_t$, with $W_t$ now a Brownian motion under $Q$. So the drift function is $r\,s$, the kick function is $\sigma\,s$ with $\sigma$ now the constant volatility 0.20, and the equation becomes the Black-Scholes equation:
+For the share, $`X_t`$ is the price $`S_t`$, and the average is taken under the pricing measure $`Q`$, the reweighting of paths under which the share drifts at the bank rate ($`Q`$ and its averages $`E^Q`$ are taught on [Changing the measure](01-change-of-measure-and-density-processes.md); the switch of drift is [Girsanov](02-girsanov-theorem.md)). Under $`Q`$ the share's rule is $`dS_t = r S_t\,dt + \sigma S_t\,dW_t`$, with $`W_t`$ now a Brownian motion under $`Q`$. So the drift function is $`r\,s`$, the kick function is $`\sigma\,s`$ with $`\sigma`$ now the constant volatility 0.20, and the equation becomes the Black-Scholes equation:
 
-$$V_t + r\,s\,V_s + \tfrac12\,\sigma^2 s^2\, V_{ss} - r\,V = 0, \qquad V(T, s) = (s - K)^+$$
+```math
+V_t + r\,s\,V_s + \tfrac12\,\sigma^2 s^2\, V_{ss} - r\,V = 0, \qquad V(T, s) = (s - K)^+
+```
 
-$$V(t, s) = e^{-r(T-t)}\, E^Q\big[(S_T - K)^+ \,\big|\, S_t = s\big]$$
+```math
+V(t, s) = e^{-r(T-t)}\, E^Q\big[(S_T - K)^+ \,\big|\, S_t = s\big]
+```
 
-Here $(s - K)^+$ means s − K when that is positive and 0 otherwise. Done as an integral over the bell curve, the average is the closed form $V = s\,N(d_1) - K e^{-r\tau} N(d_2)$, where $\tau = T - t$ is the time left, $N$ is the bell-curve area to the left of a point and $d_2 = (\ln(s/K) + (r - \tfrac12\sigma^2)\tau)/(\sigma\sqrt{\tau})$, $d_1 = d_2 + \sigma\sqrt{\tau}$.
+Here $`(s - K)^+`$ means s − K when that is positive and 0 otherwise. Done as an integral over the bell curve, the average is the closed form $`V = s\,N(d_1) - K e^{-r\tau} N(d_2)`$, where $`\tau = T - t`$ is the time left, $`N`$ is the bell-curve area to the left of a point and $`d_2 = (\ln(s/K) + (r - \tfrac12\sigma^2)\tau)/(\sigma\sqrt{\tau})`$, $`d_1 = d_2 + \sigma\sqrt{\tau}`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $t$, $T$, $\tau$ | time now, the payoff date, and the time left $\tau = T - t$, in years | t = 0, T = 1, so $\tau$ = 1 | more time left: more room to finish above the strike, price rises |
-| $S_t$, $s$ | the share price at time t, and a value it might take | 100 dollars today | price rises, by less than a dollar per dollar |
-| $X_t$, $x$ | a general diffusion and a starting place for it | the share price | — |
-| $W_t$, $dW_t$ | Brownian motion, the source of every kick; its step, shorthand inside an Ito integral | one sample per path | — |
-| $\mu$ | drift: the average push per unit time | rs under Q; the real drift is 0.08 a year | under Q it is fixed by r, so the price does not move with the real drift |
-| $\sigma$ | volatility, the kick size per unit of square-root time | 0.20 a year | price rises: more chance of a large payoff, losses still capped |
-| $r$ | the bank rate, also the discount rate | 0.05 a year | call price rises: the strike paid later costs less today |
-| $K$, $g$ | the strike, and the payoff function at the end | K = 100, g(s) = $(s - K)^+$ | higher strike, lower price |
-| $N$, $d_1$, $d_2$ | bell-curve area to the left; two standardised distances | $N(d_2)$ = 0.559618, $N(d_1)$ = 0.636831 | — |
-| $V$, $u$, $M_t$ | the price as a function of (t, s); a general solution; the discounted price $M_t = e^{-rt}V(t, S_t)$ | V(0, 100) = 10.450584 | — |
-| $V_t$, $V_s$, $V_{ss}$, $u_t$, $u_x$, $u_{xx}$ | slopes of the price in time and in the share price, and its curvature | the curvature term carries the whole option value above the zero-volatility price | — |
-| $P$, $Q$, $E^Q$ | the real-world measure (drift 0.08); the pricing measure (drift 0.05); averages under Q | the two lines of the picture | — |
+| $`t`$, $`T`$, $`\tau`$ | time now, the payoff date, and the time left $`\tau = T - t`$, in years | t = 0, T = 1, so $`\tau`$ = 1 | more time left: more room to finish above the strike, price rises |
+| $`S_t`$, $`s`$ | the share price at time t, and a value it might take | 100 dollars today | price rises, by less than a dollar per dollar |
+| $`X_t`$, $`x`$ | a general diffusion and a starting place for it | the share price | — |
+| $`W_t`$, $`dW_t`$ | Brownian motion, the source of every kick; its step, shorthand inside an Ito integral | one sample per path | — |
+| $`\mu`$ | drift: the average push per unit time | rs under Q; the real drift is 0.08 a year | under Q it is fixed by r, so the price does not move with the real drift |
+| $`\sigma`$ | volatility, the kick size per unit of square-root time | 0.20 a year | price rises: more chance of a large payoff, losses still capped |
+| $`r`$ | the bank rate, also the discount rate | 0.05 a year | call price rises: the strike paid later costs less today |
+| $`K`$, $`g`$ | the strike, and the payoff function at the end | K = 100, g(s) = $`(s - K)^+`$ | higher strike, lower price |
+| $`N`$, $`d_1`$, $`d_2`$ | bell-curve area to the left; two standardised distances | $`N(d_2)`$ = 0.559618, $`N(d_1)`$ = 0.636831 | — |
+| $`V`$, $`u`$, $`M_t`$ | the price as a function of (t, s); a general solution; the discounted price $`M_t = e^{-rt}V(t, S_t)`$ | V(0, 100) = 10.450584 | — |
+| $`V_t`$, $`V_s`$, $`V_{ss}`$, $`u_t`$, $`u_x`$, $`u_{xx}`$ | slopes of the price in time and in the share price, and its curvature | the curvature term carries the whole option value above the zero-volatility price | — |
+| $`P`$, $`Q`$, $`E^Q`$ | the real-world measure (drift 0.08); the pricing measure (drift 0.05); averages under Q | the two lines of the picture | — |
 
-With a rate that changes with place or time, the discount becomes $\exp(-\int_t^T r(X_v, v)\,dv)$ inside the average; the proof is the same, and [A short-rate model](../../12-Financial%20mathematics/30-Short-Rate%20Models/01-the-term-structure-equation.md) uses that form.
+With a rate that changes with place or time, the discount becomes $`\exp(-\int_t^T r(X_v, v)\,dv)`$ inside the average; the proof is the same, and [A short-rate model](../../12-Financial%20mathematics/30-Short-Rate%20Models/01-the-term-structure-equation.md) uses that form.
 
 ### When it holds
 
 - **The process has the Markov property: its future depends on the past only through where it is now.** Solutions of a stochastic differential equation whose coefficients change at most in proportion to a change in x (Lipschitz) and grow at most linearly have it ([Stochastic differential equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md)). Without it, an average from x is not a function of x and t alone, and there is no equation to solve.
-- **The solution is smooth enough for Ito's lemma: one slope in time, two in space, all continuous before T.** The payoff may have a kink, as $(s - K)^+$ does at 100; the price is smooth for any time before T. If the average itself is not smooth, it still exists but solves the equation only in a weaker sense.
-- **The random part of the discounted price is a true martingale, not merely a local one.** A local martingale is fair up to every cap on its size, but can lose average value once the caps are removed ([Novikov](03-novikov-condition.md)). This is the condition usually left unstated. A finite $E\int_t^T (\sigma u_x)^2\,dv$ is enough. Drop it and the equation can have two solutions with the same payoff: for the rule $dX_t = X_t^2\,dW_t$, whose kick grows faster than linearly, started at 1, both u = x and the expectation, 0.682689, solve the same equation. The check prints both.
+- **The solution is smooth enough for Ito's lemma: one slope in time, two in space, all continuous before T.** The payoff may have a kink, as $`(s - K)^+`$ does at 100; the price is smooth for any time before T. If the average itself is not smooth, it still exists but solves the equation only in a weaker sense.
+- **The random part of the discounted price is a true martingale, not merely a local one.** A local martingale is fair up to every cap on its size, but can lose average value once the caps are removed ([Novikov](03-novikov-condition.md)). This is the condition usually left unstated. A finite $`E\int_t^T (\sigma u_x)^2\,dv`$ is enough. Drop it and the equation can have two solutions with the same payoff: for the rule $`dX_t = X_t^2\,dW_t`$, whose kick grows faster than linearly, started at 1, both u = x and the expectation, 0.682689, solve the same equation. The check prints both.
 - **No walls, or paths stopped at them.** On a rod with fixed end temperatures, the average runs over paths stopped at the first hit of an end.
 
 ---
@@ -93,82 +101,92 @@ With a rate that changes with place or time, the discount becomes $\exp(-\int_t^
 
 ### Step 0: a fair game cannot drift, and Ito's lemma says what its drift is
 
-Take the discounted price $M_t = e^{-rt}V(t, S_t)$. Ito's lemma writes its change over a short slice as a drift times dt plus a kick times $dW_t$. A fair game has zero drift wherever the share can go: that is the equation. With zero drift and a kick part that is a true martingale, today's value is the forecast of the final discounted payoff: that is the average. The theorem is this, run in each direction.
+Take the discounted price $`M_t = e^{-rt}V(t, S_t)`$. Ito's lemma writes its change over a short slice as a drift times dt plus a kick times $`dW_t`$. A fair game has zero drift wherever the share can go: that is the equation. With zero drift and a kick part that is a true martingale, today's value is the forecast of the final discounted payoff: that is the average. The theorem is this, run in each direction.
 
 ### Step 1: compute the drift of the discounted price
 
-Ito's product rule ([Ito's product rule](../06-Ito%20Calculus/03-ito-product-rule.md)) with the ordinary factor $e^{-rt}$, and Ito's lemma for $u(t, X_t)$, give
+Ito's product rule ([Ito's product rule](../06-Ito%20Calculus/03-ito-product-rule.md)) with the ordinary factor $`e^{-rt}`$, and Ito's lemma for $`u(t, X_t)`$, give
 
-$$d\big(e^{-rt}u(t, X_t)\big) = e^{-rt}\Big(u_t + \mu u_x + \tfrac12\sigma^2 u_{xx} - r u\Big)dt \;+\; e^{-rt}\,\sigma\,u_x\,dW_t$$
+```math
+d\big(e^{-rt}u(t, X_t)\big) = e^{-rt}\Big(u_t + \mu u_x + \tfrac12\sigma^2 u_{xx} - r u\Big)dt \;+\; e^{-rt}\,\sigma\,u_x\,dW_t
+```
 
-The bracket is the left side of the equation. The term $\tfrac12\sigma^2 u_{xx}$ is Ito's extra term; ordinary calculus would drop it. The $-ru$ comes from differentiating the discount factor.
+The bracket is the left side of the equation. The term $`\tfrac12\sigma^2 u_{xx}`$ is Ito's extra term; ordinary calculus would drop it. The $`-ru`$ comes from differentiating the discount factor.
 
 ### Step 2: from the equation to the average
 
-Suppose $u$ solves the equation. Then the bracket is zero at every (t, x), so along any path the dt part vanishes. Integrate from t to T:
+Suppose $`u`$ solves the equation. Then the bracket is zero at every (t, x), so along any path the dt part vanishes. Integrate from t to T:
 
-$$e^{-rT}u(T, X_T) - e^{-rt}u(t, X_t) = \int_t^T e^{-rv}\,\sigma\,u_x\,dW_v$$
+```math
+e^{-rT}u(T, X_T) - e^{-rt}u(t, X_t) = \int_t^T e^{-rv}\,\sigma\,u_x\,dW_v
+```
 
-The right side is an Ito integral. When it is a true martingale its average is zero ([Martingales](../02-Martingales/01-martingales.md)). Average both sides given $X_t = x$, use $u(T, \cdot) = g$, and multiply by $e^{rt}$:
+The right side is an Ito integral. When it is a true martingale its average is zero ([Martingales](../02-Martingales/01-martingales.md)). Average both sides given $`X_t = x`$, use $`u(T, \cdot) = g`$, and multiply by $`e^{rt}`$:
 
-$$u(t, x) = E\big[e^{-r(T-t)}g(X_T) \,\big|\, X_t = x\big]$$
+```math
+u(t, x) = E\big[e^{-r(T-t)}g(X_T) \,\big|\, X_t = x\big]
+```
 
 This direction also proves uniqueness: any two solutions in the class equal the same average, so they are equal.
 
 ### Step 3: from the average to the equation
 
-Now define $u(t, x)$ as the average. By the Markov property, the forecast at time v of the discounted payoff is $e^{-rv}u(v, X_v)$, the same average restarted from where the path is. Forecasts of one fixed quantity form a martingale, by the tower property (the forecast of a later forecast is today's forecast).
+Now define $`u(t, x)`$ as the average. By the Markov property, the forecast at time v of the discounted payoff is $`e^{-rv}u(v, X_v)`$, the same average restarted from where the path is. Forecasts of one fixed quantity form a martingale, by the tower property (the forecast of a later forecast is today's forecast).
 
-If $u$ is smooth, Step 1 applies. Subtract the Ito integral from this martingale and what remains is the dt part: still a (local) martingale, but an ordinary integral, with no roughness. A continuous martingale with zero quadratic variation (the sum of squared small steps, [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md)) is constant. So the dt part is zero. Shrink the time window to the start and the bracket is zero at (t, x). The start was arbitrary: the average solves the equation.
+If $`u`$ is smooth, Step 1 applies. Subtract the Ito integral from this martingale and what remains is the dt part: still a (local) martingale, but an ordinary integral, with no roughness. A continuous martingale with zero quadratic variation (the sum of squared small steps, [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md)) is constant. So the dt part is zero. Shrink the time window to the start and the bracket is zero at (t, x). The start was arbitrary: the average solves the equation.
 
 <details>
 <summary>Detailed proof: both directions, and the one step that needs the true-martingale condition</summary>
 
-**Setting.** The diffusion solves $dX_v = \mu(X_v, v)\,dv + \sigma(X_v, v)\,dW_v$ on $[t, T]$ from $X_t = x$, with coefficients continuous, Lipschitz in space and of linear growth, so the solution is unique and Markov. The rate r is constant; g is continuous with polynomial growth.
+**Setting.** The diffusion solves $`dX_v = \mu(X_v, v)\,dv + \sigma(X_v, v)\,dW_v`$ on $`[t, T]`$ from $`X_t = x`$, with coefficients continuous, Lipschitz in space and of linear growth, so the solution is unique and Markov. The rate r is constant; g is continuous with polynomial growth.
 
-**Equation to average.** Let $u$ be continuous on $[0, T] \times \mathbb{R}$, with $u_t$, $u_x$, $u_{xx}$ continuous on $[0, T) \times \mathbb{R}$, solving the equation with $u(T, \cdot) = g$, and suppose $E\int_t^{T} e^{-2rv}\sigma(X_v, v)^2 u_x(v, X_v)^2\,dv < \infty$. Fix $\varepsilon > 0$. On $[t, T - \varepsilon]$ every derivative is continuous, so Step 1 holds as an integral identity, and the equation makes its dv integral zero. The finite-energy condition makes the stochastic integral a square-integrable martingale (Ito isometry), with expectation zero: $u(t, x) = E[e^{-r(T - \varepsilon - t)}u(T - \varepsilon, X_{T-\varepsilon})]$. Let $\varepsilon \to 0$: paths are continuous and u is continuous up to T, so the integrand converges to $e^{-r(T-t)}g(X_T)$; if u also grows at most polynomially, that bound and finite moments of $\sup_v \lvert X_v\rvert$ (which linear growth gives) supply a dominating function, and dominated convergence finishes the proof.
+**Equation to average.** Let $`u`$ be continuous on $`[0, T] \times \mathbb{R}`$, with $`u_t`$, $`u_x`$, $`u_{xx}`$ continuous on $`[0, T) \times \mathbb{R}`$, solving the equation with $`u(T, \cdot) = g`$, and suppose $`E\int_t^{T} e^{-2rv}\sigma(X_v, v)^2 u_x(v, X_v)^2\,dv < \infty`$. Fix $`\varepsilon > 0`$. On $`[t, T - \varepsilon]`$ every derivative is continuous, so Step 1 holds as an integral identity, and the equation makes its dv integral zero. The finite-energy condition makes the stochastic integral a square-integrable martingale (Ito isometry), with expectation zero: $`u(t, x) = E[e^{-r(T - \varepsilon - t)}u(T - \varepsilon, X_{T-\varepsilon})]`$. Let $`\varepsilon \to 0`$: paths are continuous and u is continuous up to T, so the integrand converges to $`e^{-r(T-t)}g(X_T)`$; if u also grows at most polynomially, that bound and finite moments of $`\sup_v \lvert X_v\rvert`$ (which linear growth gives) supply a dominating function, and dominated convergence finishes the proof.
 
-**Average to equation.** Let $u(t, x) = E[e^{-r(T-t)}g(X_T) \mid X_t = x]$ and suppose $u$ has the smoothness above. Write $Y = e^{-rT}g(X_T)$, integrable by the growth bounds. With $\mathcal{F}_v$ the information known at time v, the Markov property gives $E[Y \mid \mathcal{F}_v] = e^{-rv}u(v, X_v)$ for each v, so this process is a martingale. Put $h = u_t + \mu u_x + \tfrac12\sigma^2u_{xx} - ru$, continuous. Ito gives $e^{-rv}u(v, X_v) - e^{-rt}u(t, x) = A_v + I_v$ with $A_v = \int_t^v e^{-rw}h(w, X_w)\,dw$ and $I_v = \int_t^v e^{-rw}\sigma u_x\,dW_w$, a continuous local martingale. Then A, a martingale minus I, is a continuous local martingale with paths of finite variation, so its quadratic variation is zero and A is identically zero almost surely. Hence $\int_t^{t+\delta} e^{-rw}h(w, X_w)\,dw = 0$ for every small $\delta > 0$. Divide by that length and let it shrink to zero: continuity of h and of the path give $h(t, x) = 0$. The start (t, x) was arbitrary, so u solves the equation.
+**Average to equation.** Let $`u(t, x) = E[e^{-r(T-t)}g(X_T) \mid X_t = x]`$ and suppose $`u`$ has the smoothness above. Write $`Y = e^{-rT}g(X_T)`$, integrable by the growth bounds. With $`\mathcal{F}_v`$ the information known at time v, the Markov property gives $`E[Y \mid \mathcal{F}_v] = e^{-rv}u(v, X_v)`$ for each v, so this process is a martingale. Put $`h = u_t + \mu u_x + \tfrac12\sigma^2u_{xx} - ru`$, continuous. Ito gives $`e^{-rv}u(v, X_v) - e^{-rt}u(t, x) = A_v + I_v`$ with $`A_v = \int_t^v e^{-rw}h(w, X_w)\,dw`$ and $`I_v = \int_t^v e^{-rw}\sigma u_x\,dW_w`$, a continuous local martingale. Then A, a martingale minus I, is a continuous local martingale with paths of finite variation, so its quadratic variation is zero and A is identically zero almost surely. Hence $`\int_t^{t+\delta} e^{-rw}h(w, X_w)\,dw = 0`$ for every small $`\delta > 0`$. Divide by that length and let it shrink to zero: continuity of h and of the path give $`h(t, x) = 0`$. The start (t, x) was arbitrary, so u solves the equation.
 
-**Where the proof needs its hypothesis.** Only the step "the stochastic integral has expectation zero" used the finite-energy condition. Without it, the stochastic integral is only a local martingale and its expectation can be negative, which is exactly the $dX_t = X_t^2\,dW_t$ example in What breaks. That example also leaves the Setting: its kick $x^2$ grows faster than linearly, and under linear growth a solution whose $u_x$ grows at most polynomially always has finite energy. The faster growth is what lets the condition fail even though u = x is as tame as a function can be.
+**Where the proof needs its hypothesis.** Only the step "the stochastic integral has expectation zero" used the finite-energy condition. Without it, the stochastic integral is only a local martingale and its expectation can be negative, which is exactly the $`dX_t = X_t^2\,dW_t`$ example in What breaks. That example also leaves the Setting: its kick $`x^2`$ grows faster than linearly, and under linear growth a solution whose $`u_x`$ grows at most polynomially always has finite energy. The faster growth is what lets the condition fail even though u = x is as tame as a function can be.
 
 </details>
 
 ### Step 4: the heat equation is the simplest case
 
-Take no drift, kick size 1 and no discount: $\mu = 0$, $\sigma = 1$, $r = 0$, so $X_T = x + (W_T - W_t)$. The equation is $u_t + \tfrac12 u_{xx} = 0$. In the time left, $\tau = T - t$, it reads $u_\tau = \tfrac12 u_{xx}$: the heat equation of [The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md), with diffusivity one half, run forward in the time left. Feynman-Kac solves it in one line:
+Take no drift, kick size 1 and no discount: $`\mu = 0`$, $`\sigma = 1`$, $`r = 0`$, so $`X_T = x + (W_T - W_t)`$. The equation is $`u_t + \tfrac12 u_{xx} = 0`$. In the time left, $`\tau = T - t`$, it reads $`u_\tau = \tfrac12 u_{xx}`$: the heat equation of [The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md), with diffusivity one half, run forward in the time left. Feynman-Kac solves it in one line:
 
-$$u(\tau, x) = E\big[g(x + W_\tau)\big] = \int g(y)\,\frac{1}{\sqrt{2\pi\tau}}\,e^{-(y - x)^2/(2\tau)}\,dy$$
+```math
+u(\tau, x) = E\big[g(x + W_\tau)\big] = \int g(y)\,\frac{1}{\sqrt{2\pi\tau}}\,e^{-(y - x)^2/(2\tau)}\,dy
+```
 
-The heat kernel, the spreading bell curve that solves the heat equation on an infinite rod, is the law of where a Brownian path from x has reached after time $\tau$: heat spreads as a crowd of random walkers does. A payoff of $x^2$ checks it by hand: $E[(x + W_\tau)^2] = x^2 + \tau$, and $u = x^2 + \tau$ has $u_\tau = 1$ and $\tfrac12 u_{xx} = 1$. A diffusivity κ instead of one half uses kicks of size $\sqrt{2\kappa}$.
+The heat kernel, the spreading bell curve that solves the heat equation on an infinite rod, is the law of where a Brownian path from x has reached after time $`\tau`$: heat spreads as a crowd of random walkers does. A payoff of $`x^2`$ checks it by hand: $`E[(x + W_\tau)^2] = x^2 + \tau`$, and $`u = x^2 + \tau`$ has $`u_\tau = 1`$ and $`\tfrac12 u_{xx} = 1`$. A diffusivity κ instead of one half uses kicks of size $`\sqrt{2\kappa}`$.
 
 ### Step 5: the Black-Scholes equation is the heat equation in disguise
 
-Write the share price through its logarithm, $x = \ln s$. Under $Q$, Ito's lemma gives the log price a constant drift $r - \tfrac12\sigma^2$ and constant kick $\sigma$, so
+Write the share price through its logarithm, $`x = \ln s`$. Under $`Q`$, Ito's lemma gives the log price a constant drift $`r - \tfrac12\sigma^2`$ and constant kick $`\sigma`$, so
 
-$$V(t, s) = e^{-r\tau}\int \Big(e^{\,\ln s + (r - \frac12\sigma^2)\tau + \sigma\sqrt{\tau}\,z} - K\Big)^+ \frac{e^{-z^2/2}}{\sqrt{2\pi}}\,dz$$
+```math
+V(t, s) = e^{-r\tau}\int \Big(e^{\,\ln s + (r - \frac12\sigma^2)\tau + \sigma\sqrt{\tau}\,z} - K\Big)^+ \frac{e^{-z^2/2}}{\sqrt{2\pi}}\,dz
+```
 
-That is the heat kernel with diffusivity $\tfrac12\sigma^2$, a centre that moves at $r - \tfrac12\sigma^2$, and a discount in front. Black and Scholes made the same change of variables and solved the heat equation; Feynman-Kac reads their answer as an average. Splitting the payoff where the share passes the strike gives the two terms of the closed form, as [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) does in full.
+That is the heat kernel with diffusivity $`\tfrac12\sigma^2`$, a centre that moves at $`r - \tfrac12\sigma^2`$, and a discount in front. Black and Scholes made the same change of variables and solved the heat equation; Feynman-Kac reads their answer as an average. Splitting the payoff where the share passes the strike gives the two terms of the closed form, as [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) does in full.
 
 ### Step 6: and back, one small step at a time
 
-Solve the Black-Scholes equation on a grid in $x = \ln s$, stepping backwards from the payoff. The explicit step replaces each value by a weighted sum of its three neighbours one step later, minus interest. At spacing 0.02 the weights are 0.2525, 0.5025 and 0.2450: positive, adding to one. Each grid step is a discounted average over a three-way random step of the log price, so the grid solution is Feynman-Kac on a lattice. When the time step is too long the middle weight turns negative, the step stops being an average, and the grid blows up.
+Solve the Black-Scholes equation on a grid in $`x = \ln s`$, stepping backwards from the payoff. The explicit step replaces each value by a weighted sum of its three neighbours one step later, minus interest. At spacing 0.02 the weights are 0.2525, 0.5025 and 0.2450: positive, adding to one. Each grid step is a discounted average over a three-way random step of the log price, so the grid solution is Feynman-Kac on a lattice. When the time step is too long the middle weight turns negative, the step stops being an average, and the grid blows up.
 
-Another route goes through the generator ([The generator](../08-Generators%2C%20Densities%20and%20Simulation/01-infinitesimal-generator.md)), the diffusion's average rate of change $\mu u_x + \tfrac12\sigma^2 u_{xx}$: [Kolmogorov backward equation](../08-Generators%2C%20Densities%20and%20Simulation/02-kolmogorov-backward-equation.md) derives the equation from it.
+Another route goes through the generator ([The generator](../08-Generators%2C%20Densities%20and%20Simulation/01-infinitesimal-generator.md)), the diffusion's average rate of change $`\mu u_x + \tfrac12\sigma^2 u_{xx}`$: [Kolmogorov backward equation](../08-Generators%2C%20Densities%20and%20Simulation/02-kolmogorov-backward-equation.md) derives the equation from it.
 
 ---
 
 ## Worked numbers, by hand
 
-The share at 100 dollars, strike 100, r = 0.05, $\sigma$ = 0.20, one year.
+The share at 100 dollars, strike 100, r = 0.05, $`\sigma`$ = 0.20, one year.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | log distance to the strike | ln(100/100) | 0 |
 | drift of the log price under Q | 0.05 − ½ × 0.20 × 0.20 | 0.030000 a year |
 | one standard deviation of the log price | 0.20 × √1 | 0.20 |
-| $d_2$, then $d_1$ | (0 + 0.030000) / 0.20, then add 0.20 | 0.150000 and 0.350000 |
-| $N(d_2)$, $N(d_1)$ | bell-curve areas | 0.559618 and 0.636831 |
+| $`d_2`$, then $`d_1`$ | (0 + 0.030000) / 0.20, then add 0.20 | 0.150000 and 0.350000 |
+| $`N(d_2)`$, $`N(d_1)`$ | bell-curve areas | 0.559618 and 0.636831 |
 | share half | 100 × 0.636831 | 63.683065 |
 | cash half | 100 × e^−0.05 × 0.559618 | 53.232482 |
 | **price** | 63.683065 − 53.232482 | **10.450584** |
@@ -182,17 +200,17 @@ The call costs $10.45, whatever the share's real 8 percent growth: the price [Bl
 | --- | --- | --- |
 | Average with the real drift 0.08, discount at 0.05 | 12.474510 | The discounted price is not a martingale under P; the rising line of the picture |
 | Real drift, discounted at 0.08 too | 12.105833 | Still the wrong measure; discounting at the share's own drift does not repair it |
-| Drop the curvature term $\tfrac12\sigma^2 s^2 V_{ss}$ | 4.877058 | The ordinary chain rule: the equation of a share that never wiggles, $(S - Ke^{-rT})^+$ |
+| Drop the curvature term $`\tfrac12\sigma^2 s^2 V_{ss}`$ | 4.877058 | The ordinary chain rule: the equation of a share that never wiggles, $`(S - Ke^{-rT})^+`$ |
 | Grid time step too long, 84 steps at spacing 0.02 | largest value about 10^10.2 | Middle weight −0.1905: the step is no longer an average |
-| Solution u = x for $dX_t = X_t^2\,dW_t$, payoff x | 1.000000, expectation 0.682689 | The kick integral is a local martingale, not a true one |
+| Solution u = x for $`dX_t = X_t^2\,dW_t`$, payoff x | 1.000000, expectation 0.682689 | The kick integral is a local martingale, not a true one |
 
-The last row is the hypothesis at work. The rule $dX_t = X_t^2\,dW_t$ has no drift, so u = x satisfies $u_t + \tfrac12 x^4 u_{xx} = 0$ with payoff x. Yet the average of X at time 1, from 1, is 0.682689: high paths are kicked so hard that the average leaks away. That average, $x(2N(1/(x\sqrt{\tau})) - 1)$, is a second solution of the same equation; the check measures its residual at x = 1 and at two places with $x \ne 1$, where the factor $x^4$ counts, and the largest is 0.000001, the error of the finite differences. In finance the gap is a price bubble.
+The last row is the hypothesis at work. The rule $`dX_t = X_t^2\,dW_t`$ has no drift, so u = x satisfies $`u_t + \tfrac12 x^4 u_{xx} = 0`$ with payoff x. Yet the average of X at time 1, from 1, is 0.682689: high paths are kicked so hard that the average leaks away. That average, $`x(2N(1/(x\sqrt{\tau})) - 1)`$, is a second solution of the same equation; the check measures its residual at x = 1 and at two places with $`x \ne 1`$, where the factor $`x^4`$ counts, and the largest is 0.000001, the error of the finite differences. In finance the gap is a price bubble.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code reaches 10.450584 by four independent roads: the closed form, with the bell-curve area built by Simpson's rule; the Feynman-Kac average as a heat-kernel integral, with no closed form in it; the Black-Scholes equation solved backwards on four grids, each half the spacing of the last; and 200000 seeded draws under Q (SplitMix64, normals by Box-Muller), with the standard error. It then averages the discounted price at five dates under Q and under the real drift, two ways each, and prints every row of What breaks. The rule $dX_t = X_t^2\,dW_t$ is sampled exactly: started at 1, it is one over the distance from the origin of a three-dimensional Brownian path started at distance 1.
+The code reaches 10.450584 by four independent roads: the closed form, with the bell-curve area built by Simpson's rule; the Feynman-Kac average as a heat-kernel integral, with no closed form in it; the Black-Scholes equation solved backwards on four grids, each half the spacing of the last; and 200000 seeded draws under Q (SplitMix64, normals by Box-Muller), with the standard error. It then averages the discounted price at five dates under Q and under the real drift, two ways each, and prints every row of What breaks. The rule $`dX_t = X_t^2\,dW_t`$ is sampled exactly: started at 1, it is one over the distance from the origin of a three-dimensional Brownian path started at distance 1.
 
 ### Python
 
@@ -613,11 +631,11 @@ The two outputs agree line for line.
 
 ### Lean
 
-Lean proves both directions and the second solution, for a diffusion with constant drift $\mu$ and constant kick size $\sigma$.
+Lean proves both directions and the second solution, for a diffusion with constant drift $`\mu`$ and constant kick size $`\sigma`$.
 
-- Take a continuous payoff $g$ of polynomial growth, and $u(t, x)$ its discounted average, smooth enough for Ito's lemma. Then $u$ solves the equation for every $t < T$.
-- Take a smooth solution $u$ of the equation with $u(T, x) = g(x)$, polynomial growth and finite energy. Then $u(t, x)$ equals the discounted average, so such a solution is unique.
-- Take the rule $dX_t = X_t^2\,dW_t$ with payoff x, for x > 0. Then the closed form $x(2N(1/(x\sqrt{\tau})) - 1)$ also solves the equation that u = x solves.
+- Take a continuous payoff $`g`$ of polynomial growth, and $`u(t, x)`$ its discounted average, smooth enough for Ito's lemma. Then $`u`$ solves the equation for every $`t < T`$.
+- Take a smooth solution $`u`$ of the equation with $`u(T, x) = g(x)`$, polynomial growth and finite energy. Then $`u(t, x)`$ equals the discounted average, so such a solution is unique.
+- Take the rule $`dX_t = X_t^2\,dW_t`$ with payoff x, for x > 0. Then the closed form $`x(2N(1/(x\sqrt{\tau})) - 1)`$ also solves the equation that u = x solves.
 - As the time left shrinks to 0, the closed form tends to x. From x = 1, after one year, it is below 1.
 
 Lean has no Ito integral, so every number, and the draws showing this closed form is the average, are left to the Python and Rust checks.
@@ -2074,7 +2092,7 @@ theorem local_martingale_gives_second_solution :
 > Guess first, then run it.
 > - **Average under the real drift.** In `heat_kernel`, replace `R - 0.5 * SIG * SIG` with `MU - 0.5 * SIG * SIG`. The price becomes 12.474510, the What-breaks number, and the first assert fails: the right average needs the right measure.
 > - **Lengthen the grid's time step.** The check already runs `grid(120, 1.2)`. Its middle weight is −0.1905 and the largest value on the grid reaches about 10^10.2 dollars. Raise the second argument of `grid` until the middle weight printed beside each grid turns negative, and the same blow-up follows.
-> - **Forget the interest.** Delete `- R * dt * v[i]` in `grid`. The grid lands near the undiscounted average, about $e^{rT}$ times the price, and the grid assert fails.
+> - **Forget the interest.** Delete `- R * dt * v[i]` in `grid`. The grid lands near the undiscounted average, about $`e^{rT}`$ times the price, and the grid assert fails.
 > - **Cut the draws.** Set `DRAWS = 50000`. The standard error grows as one over the square root of the number of draws, and the draws still land within a few standard errors.
 
 ---
@@ -2084,10 +2102,10 @@ theorem local_martingale_gives_second_solution :
 > [!warning]
 > **Averaging under the real-world drift.** Feynman-Kac turns an equation into an average under the drift that appears in the equation, and in the Black-Scholes equation that drift is r, not the share's real 8 percent. The real drift gives 12.474510, which is no price: it is the option's average payoff discounted at the bank rate. The equation came from a hedge that removed the real drift, so the average must be taken where it is gone.
 >
-> - **Dropping the curvature term.** Without $\tfrac12\sigma^2 s^2 V_{ss}$ the equation is the one for a share that never wiggles, and the call comes out at 4.877058. That term carries everything the option is worth beyond the zero-volatility price.
+> - **Dropping the curvature term.** Without $`\tfrac12\sigma^2 s^2 V_{ss}`$ the equation is the one for a share that never wiggles, and the call comes out at 4.877058. That term carries everything the option is worth beyond the zero-volatility price.
 > - **Reading u(T, x) as the start.** The payoff is given at the end and the equation runs backwards in time. Run it forwards from the payoff and the curvature term amplifies wiggles instead of smoothing them: the backward heat equation, which blows up.
 > - **Taking every solution as the price.** Without the true-martingale condition a solution need not be the average: u = x gives 1.000000 where the average is 0.682689.
-> - **Treating dW as a derivative.** The step from the equation to the average is an integral identity, $\int e^{-rv}\sigma u_x\,dW_v$, not a division by dt.
+> - **Treating dW as a derivative.** The step from the equation to the average is an integral identity, $`\int e^{-rv}\sigma u_x\,dW_v`$, not a division by dt.
 
 ---
 

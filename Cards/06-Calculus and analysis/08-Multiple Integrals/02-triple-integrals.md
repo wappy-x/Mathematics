@@ -26,28 +26,32 @@ Scale 1 cm = 10 units; the 10 cm height points out of the page. Density is 1.25 
 
 ## The formula
 
-Notation first, in words. Two integral signs add over a flat region ([Double integrals](01-double-integrals.md)). Three in a row, with the solid's name at the foot, add over a solid: $\iiint_E \rho\,dV$ is read "the integral over E of rho dV", where $dV$ is one tiny piece's volume and $\rho$ (rho) is density.
+Notation first, in words. Two integral signs add over a flat region ([Double integrals](01-double-integrals.md)). Three in a row, with the solid's name at the foot, add over a solid: $`\iiint_E \rho\,dV`$ is read "the integral over E of rho dV", where $`dV`$ is one tiny piece's volume and $`\rho`$ (rho) is density.
 
-$$M = \iiint_E \rho\,dV \qquad Q_x = \iiint_E x\,\rho\,dV \qquad \bar{x} = \frac{Q_x}{M}$$
+```math
+M = \iiint_E \rho\,dV \qquad Q_x = \iiint_E x\,\rho\,dV \qquad \bar{x} = \frac{Q_x}{M}
+```
 
-**Read it aloud:** mass $M$ is density times volume added over the solid; the moment $Q_x$ is the same sum with each piece also times its $x$, its distance from the tip along the wedge's middle line; the balance point $\bar{x}$ (x bar) is moment over mass. With $\rho = 1$ the first sum is plain volume.
+**Read it aloud:** mass $`M`$ is density times volume added over the solid; the moment $`Q_x`$ is the same sum with each piece also times its $`x`$, its distance from the tip along the wedge's middle line; the balance point $`\bar{x}`$ (x bar) is moment over mass. With $`\rho = 1`$ the first sum is plain volume.
 
-In cylindrical coordinates ([Cylindrical and spherical coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/07-cylindrical-and-spherical-coordinates.md)) $r$ is distance from the wheel's axis, $\theta$ (theta) the angle from the middle line in radians, and $z$ the height. The wedge, of radius $R$, height $H$ and angle $\alpha$ (alpha), is every point with $r$ from 0 to $R$, $\theta$ from $-\alpha/2$ to $\alpha/2$, and $z$ from 0 to $H$. Density is $1 + r/40$ g/cm^3. A tiny piece has volume $dV = r\,dr\,d\theta\,dz$, so
+In cylindrical coordinates ([Cylindrical and spherical coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/07-cylindrical-and-spherical-coordinates.md)) $`r`$ is distance from the wheel's axis, $`\theta`$ (theta) the angle from the middle line in radians, and $`z`$ the height. The wedge, of radius $`R`$, height $`H`$ and angle $`\alpha`$ (alpha), is every point with $`r`$ from 0 to $`R`$, $`\theta`$ from $`-\alpha/2`$ to $`\alpha/2`$, and $`z`$ from 0 to $`H`$. Density is $`1 + r/40`$ g/cm^3. A tiny piece has volume $`dV = r\,dr\,d\theta\,dz`$, so
 
-$$M = \int_{-\alpha/2}^{\alpha/2} \int_0^R \int_0^H \left(1 + \frac{r}{40}\right) r \, dz\, dr\, d\theta$$
+```math
+M = \int_{-\alpha/2}^{\alpha/2} \int_0^R \int_0^H \left(1 + \frac{r}{40}\right) r \, dz\, dr\, d\theta
+```
 
 **Read it aloud:** add up the height, then outward, then across the angle; each piece counts density times r times three small steps.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $E$, $V$ | the solid; its volume | the wedge; 2094.40 cm^3 | more mass |
-| $\rho$ | density, mass per cubic centimetre | 1 + r/40 g/cm^3: 1.0 at the tip, 1.5 at the rind | centre moves toward the denser part |
-| $x$, $y$, $z$ | position in cm: x from the tip along the middle line, y across, z up | x from 0 to 20 | — |
-| $r$, $\theta$ | distance from the wheel's axis; angle from the middle line, in radians | r from 0 to 20 | — |
-| $R$, $H$, $\alpha$ | wheel radius; height; wedge angle | 20 cm; 10 cm; 60 degrees = 1.047198 rad | wider angle pulls the centre inward |
-| $dV$, $h$ | volume of one tiny piece; side of a test cube | r dr dθ dz; 1, 0.50, 0.25 cm | smaller h, smaller gap |
-| $M$, $Q_x$, $m$ | mass; moment, mass times x added up; one piece's mass | 2792.53 g; 36666.67 g cm | — |
-| $\bar{x}$, $\bar{y}$, $\bar{z}$ | the centre of mass, read "x bar" and so on | 13.1303 cm, 0, 5.0000 cm | — |
+| $`E`$, $`V`$ | the solid; its volume | the wedge; 2094.40 cm^3 | more mass |
+| $`\rho`$ | density, mass per cubic centimetre | 1 + r/40 g/cm^3: 1.0 at the tip, 1.5 at the rind | centre moves toward the denser part |
+| $`x`$, $`y`$, $`z`$ | position in cm: x from the tip along the middle line, y across, z up | x from 0 to 20 | — |
+| $`r`$, $`\theta`$ | distance from the wheel's axis; angle from the middle line, in radians | r from 0 to 20 | — |
+| $`R`$, $`H`$, $`\alpha`$ | wheel radius; height; wedge angle | 20 cm; 10 cm; 60 degrees = 1.047198 rad | wider angle pulls the centre inward |
+| $`dV`$, $`h`$ | volume of one tiny piece; side of a test cube | r dr dθ dz; 1, 0.50, 0.25 cm | smaller h, smaller gap |
+| $`M`$, $`Q_x`$, $`m`$ | mass; moment, mass times x added up; one piece's mass | 2792.53 g; 36666.67 g cm | — |
+| $`\bar{x}`$, $`\bar{y}`$, $`\bar{z}`$ | the centre of mass, read "x bar" and so on | 13.1303 cm, 0, 5.0000 cm | — |
 
 ### When it holds
 
@@ -66,42 +70,44 @@ Inside a small cube density hardly changes, so its mass is density times volume 
 
 ### Step 1: add one direction at a time
 
-A sum over a grid of cubes can be added in any order: each vertical column first, then rows of columns. In the limit the column sums become an integral in $z$, leaving a double integral over the base. So a triple integral is three single integrals, innermost first.
+A sum over a grid of cubes can be added in any order: each vertical column first, then rows of columns. In the limit the column sums become an integral in $`z`$, leaving a double integral over the base. So a triple integral is three single integrals, innermost first.
 
 <details>
 <summary>Detailed proof: the cube limit exists and equals the one-at-a-time answer</summary>
 
-A continuous density on a closed box is uniformly continuous: for any allowed error $\varepsilon > 0$ there is a cube side $h$ below which density varies by less than $\varepsilon$ inside every cube. The sum using each cube's smallest density (lower sum) and the one using its largest (upper sum) then differ by at most $\varepsilon$ times the box's volume, and every cube sum lies between them. So all cube sums close on one number.
+A continuous density on a closed box is uniformly continuous: for any allowed error $`\varepsilon > 0`$ there is a cube side $`h`$ below which density varies by less than $`\varepsilon`$ inside every cube. The sum using each cube's smallest density (lower sum) and the one using its largest (upper sum) then differ by at most $`\varepsilon`$ times the box's volume, and every cube sum lies between them. So all cube sums close on one number.
 
 Each column's integral lies, cube by cube, between the smallest and largest densities times the cube's height; integrating the column totals over the base stays between the same lower and upper sums. Two numbers trapped between squeezing bounds are equal. Relabelling axes gives the other orders.
 
-For the wedge, set density to zero outside it. The jump sits on the surface. Cubes of side $h$ touching it number about a constant over $h^2$, so their volume is about a constant times $h$, which vanishes.
+For the wedge, set density to zero outside it. The jump sits on the surface. Cubes of side $`h`$ touching it number about a constant over $`h^2`$, so their volume is about a constant times $`h`$, which vanishes.
 
 </details>
 
 ### Step 2: describe the solid
 
-In x, y and z the wedge is awkward: y runs between the straight cuts until the rind's curve takes over, so the description splits in two. In cylindrical coordinates $r$, $\theta$ and $z$ each run over a fixed range: the wedge is a box.
+In x, y and z the wedge is awkward: y runs between the straight cuts until the rind's curve takes over, so the description splits in two. In cylindrical coordinates $`r`$, $`\theta`$ and $`z`$ each run over a fixed range: the wedge is a box.
 
 ### Step 3: a cylindrical cell's volume is r dr dθ dz
 
-A cell between radii $r$ and $r + dr$, across angle $d\theta$, is a slice of a ring. Its top face has area $\tfrac{1}{2}d\theta\,\left((r+dr)^2 - r^2\right) = (r + \tfrac{1}{2}dr)\,dr\,d\theta$. Times its height, the volume is $r\,dr\,d\theta\,dz$ plus a term that vanishes faster than the cell. The factor $r$ is there because an angle step is longer far out: tip cells are slivers, rind cells are fat, as the outlined cell shows.
+A cell between radii $`r`$ and $`r + dr`$, across angle $`d\theta`$, is a slice of a ring. Its top face has area $`\tfrac{1}{2}d\theta\,\left((r+dr)^2 - r^2\right) = (r + \tfrac{1}{2}dr)\,dr\,d\theta`$. Times its height, the volume is $`r\,dr\,d\theta\,dz`$ plus a term that vanishes faster than the cell. The factor $`r`$ is there because an angle step is longer far out: tip cells are slivers, rind cells are fat, as the outlined cell shows.
 
 ### Step 4: the centre of mass is where the moments cancel
 
-Pieces of mass $m$ at positions $x$ on a rod balance where the sum of $(x - \bar{x})$ times $m$ is zero ([Centre of mass](../05-Curves%20and%20Solids/05-centre-of-mass-and-pappus.md)). Solving, $\bar{x}$ is the sum of $x$ times $m$ over the sum of $m$. With shrinking cubes as pieces, the top becomes $Q_x$ and the bottom $M$.
+Pieces of mass $`m`$ at positions $`x`$ on a rod balance where the sum of $`(x - \bar{x})`$ times $`m`$ is zero ([Centre of mass](../05-Curves%20and%20Solids/05-centre-of-mass-and-pappus.md)). Solving, $`\bar{x}`$ is the sum of $`x`$ times $`m`$ over the sum of $`m`$. With shrinking cubes as pieces, the top becomes $`Q_x`$ and the bottom $`M`$.
 
-Every piece at $y$ has a mirror at $-y$ of equal density, so $\bar{y}$ is 0. Density ignores height, so $\bar{z}$ is half of $H$: 5.0000 cm.
+Every piece at $`y`$ has a mirror at $`-y`$ of equal density, so $`\bar{y}`$ is 0. Density ignores height, so $`\bar{z}`$ is half of $`H`$: 5.0000 cm.
 
 ### Step 5: the wedge, by hand
 
-Density depends on $r$ only, so the integrals separate: the height gives $H$, the angle $\alpha$, the radius $\int_0^R (r + r^2/40)\,dr = R^2/2 + R^3/120$. So
+Density depends on $`r`$ only, so the integrals separate: the height gives $`H`$, the angle $`\alpha`$, the radius $`\int_0^R (r + r^2/40)\,dr = R^2/2 + R^3/120`$. So
 
-$$M = \alpha H \left(\frac{R^2}{2} + \frac{R^3}{120}\right) = 10.4720 \times 266.6667 = 2792.53 \text{ g}$$
+```math
+M = \alpha H \left(\frac{R^2}{2} + \frac{R^3}{120}\right) = 10.4720 \times 266.6667 = 2792.53 \text{ g}
+```
 
-For the moment, $x = r\cos\theta$. Integrating $\cos\theta$ across the angle gives $2\sin(\alpha/2)$, which is 1 here. The radius integral gains an $r$: $R^3/3 + R^4/160$. So $Q_x = 2\sin(\alpha/2)\,H\,(R^3/3 + R^4/160)$, and dividing by $M$ gives $\bar{x}$.
+For the moment, $`x = r\cos\theta`$. Integrating $`\cos\theta`$ across the angle gives $`2\sin(\alpha/2)`$, which is 1 here. The radius integral gains an $`r`$: $`R^3/3 + R^4/160`$. So $`Q_x = 2\sin(\alpha/2)\,H\,(R^3/3 + R^4/160)`$, and dividing by $`M`$ gives $`\bar{x}`$.
 
-With density 1, the same steps give the uniform centroid (the shape's own balance point), $4R\sin(\alpha/2)/(3\alpha)$. The denser rind pulls the balance point outward, from 12.7324 to 13.1303 cm.
+With density 1, the same steps give the uniform centroid (the shape's own balance point), $`4R\sin(\alpha/2)/(3\alpha)`$. The denser rind pulls the balance point outward, from 12.7324 to 13.1303 cm.
 
 ---
 
@@ -138,7 +144,7 @@ Two roads that share no arithmetic. Road one evaluates Step 5's formulas.
 
 Road two is the definition: fill the bounding box with cubes of side 1, 0.50 and 0.25 cm, keep those whose centre is inside the wedge, add density times volume, and position times that for the moments.
 
-It works in x, y and z, never using the factor $r$, so agreement confirms Step 3; it also finds $\bar{y}$ and $\bar{z}$ without assuming symmetry. A second case runs road two with density 1 against the uniform-centroid formula.
+It works in x, y and z, never using the factor $`r`$, so agreement confirms Step 3; it also finds $`\bar{y}`$ and $`\bar{z}`$ without assuming symmetry. A second case runs road two with density 1 against the uniform-centroid formula.
 
 ### Python
 
@@ -336,8 +342,8 @@ Lean proves two general facts for every density meeting the card's conditions, a
 
 - On a box with continuous density, adding one direction at a time gives the triple integral, in all six orders of x, y and z.
 - Take a bounded solid with continuous density and positive total mass M. Masses times offsets from a point add to zero exactly when that point is the moments over M.
-- The wedge of radius R, height H and angle α up to a full turn, with density 1 + r/40, has mass $M = \alpha H (R^2/2 + R^3/120)$.
-- Its moment along the middle line is $Q_x = 2\sin(\alpha/2)\,H\,(R^3/3 + R^4/160)$.
+- The wedge of radius R, height H and angle α up to a full turn, with density 1 + r/40, has mass $`M = \alpha H (R^2/2 + R^3/120)`$.
+- Its moment along the middle line is $`Q_x = 2\sin(\alpha/2)\,H\,(R^3/3 + R^4/160)`$.
 - For the card's wedge, density is 1, 1.25 and 1.5 at 0, 10 and 20 cm out, and 2 sin(α/2) is 1.
 - The radius integrals are 800/3 for the mass and 11000/3 for the moment.
 - Exactly, the volume is 2000π/3, the mass 8000π/9 and the moment 110000/3, so the centre sits 165/(4π) cm out.
@@ -764,10 +770,10 @@ example : (110000 / 3) / (2000 * π / 3) = 55 / π := by
 ## The usual mistake
 
 > [!warning]
-> **Dropping the r in r dr dθ dz.** The wedge is a box in $r$, $\theta$ and $z$, yet its cells are not equal: an angle step is longer far out. Without the $r$ the "mass" is 261.80, in grams per centimetre: a length went missing.
+> **Dropping the r in r dr dθ dz.** The wedge is a box in $`r`$, $`\theta`$ and $`z`$, yet its cells are not equal: an angle step is longer far out. Without the $`r`$ the "mass" is 261.80, in grams per centimetre: a length went missing.
 >
 > - **The density halfway out as the average.** 1.25 g/cm^3 against a true average of 1.3333: too little mass.
-> - **The angle in degrees.** $\alpha$ must be in radians: 1.047198, not 60.
+> - **The angle in degrees.** $`\alpha`$ must be in radians: 1.047198, not 60.
 > - **Box bounds for a non-box.** Running y over a fixed range weighs a rectangle of cheese that was never there.
 
 ---

@@ -40,64 +40,74 @@ The rising line is the fund's net payment; the flat line is zero. They cross at 
 
 ## The formula
 
-Notation first, in words. The **reference index** $I$ is the price index the contract names; $I_0$ is its value at the start and $I_T$ its value at maturity, $T$ years later. Their ratio $J_T$ is the **index ratio**: 1.15 means prices rose 15 percent in total. The notional is $N$ and the fixed rate in the contract is $K$, quoted per year and compounded once a year.
+Notation first, in words. The **reference index** $`I`$ is the price index the contract names; $`I_0`$ is its value at the start and $`I_T`$ its value at maturity, $`T`$ years later. Their ratio $`J_T`$ is the **index ratio**: 1.15 means prices rose 15 percent in total. The notional is $`N`$ and the fixed rate in the contract is $`K`$, quoted per year and compounded once a year.
 
-Two bond prices carry the whole card. $D(T)$ is today's price of one dollar paid at $T$: a **nominal zero**, a bond with no coupons paying a fixed number of dollars. $R(T)$ is today's price, in dollars, of a payment at $T$ of $J_T$ dollars: a **real zero**, a bond paying the index's rise. Its price is set by a **real yield**: the yearly return above inflation ([Real rates](01-real-rates-and-the-fisher-equation.md)).
+Two bond prices carry the whole card. $`D(T)`$ is today's price of one dollar paid at $`T`$: a **nominal zero**, a bond with no coupons paying a fixed number of dollars. $`R(T)`$ is today's price, in dollars, of a payment at $`T`$ of $`J_T`$ dollars: a **real zero**, a bond paying the index's rise. Its price is set by a **real yield**: the yearly return above inflation ([Real rates](01-real-rates-and-the-fisher-equation.md)).
 
-The swap pays the inflation receiver, at $T$:
+The swap pays the inflation receiver, at $`T`$:
 
-$$N\,\bigl[\,J_T - (1+K)^T\,\bigr]$$
+```math
+N\,\bigl[\,J_T - (1+K)^T\,\bigr]
+```
 
 **Read it aloud:** the notional times the index's total rise, less the notional times the fixed rate's total growth.
 
 Its value today is the two bond prices, weighted:
 
-$$V = N\,\bigl[\,R(T) - (1+K)^T\,D(T)\,\bigr]$$
+```math
+V = N\,\bigl[\,R(T) - (1+K)^T\,D(T)\,\bigr]
+```
 
 **Read it aloud:** the inflation leg is worth the notional's worth of real zeros; the fixed leg is worth a known dollar amount's worth of nominal zeros; the swap is the difference.
 
-The **par rate** $k_T$ is the fixed rate that makes $V$ zero:
+The **par rate** $`k_T`$ is the fixed rate that makes $`V`$ zero:
 
-$$k_T = \left(\frac{R(T)}{D(T)}\right)^{1/T} - 1 \;=\; \frac{1+n_T}{1+y_T} - 1$$
+```math
+k_T = \left(\frac{R(T)}{D(T)}\right)^{1/T} - 1 \;=\; \frac{1+n_T}{1+y_T} - 1
+```
 
 **Read it aloud:** the swap rate is the real bond's price over the nominal bond's price, as a yearly rate; in yields, one plus the nominal yield over one plus the real yield, less one.
 
-The price ratio $A(T) = R(T)/D(T) = (1+k_T)^T$ is the **index forward**: the index ratio the market locks in for $T$. Two of them give the **forward inflation** $f$ between maturities $T_1$ and $T_2$:
+The price ratio $`A(T) = R(T)/D(T) = (1+k_T)^T`$ is the **index forward**: the index ratio the market locks in for $`T`$. Two of them give the **forward inflation** $`f`$ between maturities $`T_1`$ and $`T_2`$:
 
-$$1 + f = \left(\frac{A(T_2)}{A(T_1)}\right)^{1/(T_2-T_1)}$$
+```math
+1 + f = \left(\frac{A(T_2)}{A(T_1)}\right)^{1/(T_2-T_1)}
+```
 
 **Read it aloud:** the inflation priced between the two dates is the later index forward's extra growth, spread evenly over the gap.
 
-A running swap keeps its original start index and term. With $J_t$ the index ratio so far and $M$ the original term:
+A running swap keeps its original start index and term. With $`J_t`$ the index ratio so far and $`M`$ the original term:
 
-$$V = N\,\bigl[\,J_t\,R(T) - (1+K)^M D(T)\,\bigr]$$
+```math
+V = N\,\bigl[\,J_t\,R(T) - (1+K)^M D(T)\,\bigr]
+```
 
 **Read it aloud:** the inflation leg is the rise so far times the notional's worth of real zeros; the fixed leg still grows over the original term, and is discounted over the years left.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $N$ | the notional: both legs are computed on it; it never changes hands | 1,000,000.00 dollars | every dollar figure scales with it |
-| $T$, $M$, $T_1$, $T_2$ | years left; a running swap's original term; two curve maturities | 5; 7 | a longer swap moves more when rates move |
-| $K$ | the fixed rate written into the swap | 2.60 percent; 2.30 for the older swap | the receiver pays more, so its value falls |
-| $k_T$, $k_5$ | the par rate: the fixed rate that makes a new swap worth zero | 2.60 percent at 5 years | — |
-| $I$, $I_0$, $I_T$ | the reference index; its value at the start and at maturity | only the ratio matters | — |
-| $J_T$, $J_t$, $J_5$ | the index ratio at maturity; the ratio realised so far | 1.15 in the scenario; 1.06 so far | the receiver gains 951.47 dollars per 0.001 rise in $J_t$ |
-| $D(T)$ | today's price of one dollar paid at $T$ | 0.836867 | see the Greeks table |
-| $R(T)$ | today's price of $J_T$ dollars paid at $T$ | 0.951466 | the inflation leg gains |
-| $y_T$, $n_T$ | the real and nominal zero yields | 1.00 and 3.626 percent | real up: par rate down; nominal up: par rate up |
-| $A(T)$, $f$ | the index forward; forward inflation between two maturities | 1.136938; 3.00 percent from year 4 to 5 | — |
-| $V$ | the swap's value today to the inflation receiver | 0 new; 27,289.86 dollars for the older swap | — |
-| $\psi_s$, $J_s$, $s$ | in Step 4: a numbered state $s$, its state price, and the index ratio there | 4,000 states per economy | — |
+| $`N`$ | the notional: both legs are computed on it; it never changes hands | 1,000,000.00 dollars | every dollar figure scales with it |
+| $`T`$, $`M`$, $`T_1`$, $`T_2`$ | years left; a running swap's original term; two curve maturities | 5; 7 | a longer swap moves more when rates move |
+| $`K`$ | the fixed rate written into the swap | 2.60 percent; 2.30 for the older swap | the receiver pays more, so its value falls |
+| $`k_T`$, $`k_5`$ | the par rate: the fixed rate that makes a new swap worth zero | 2.60 percent at 5 years | — |
+| $`I`$, $`I_0`$, $`I_T`$ | the reference index; its value at the start and at maturity | only the ratio matters | — |
+| $`J_T`$, $`J_t`$, $`J_5`$ | the index ratio at maturity; the ratio realised so far | 1.15 in the scenario; 1.06 so far | the receiver gains 951.47 dollars per 0.001 rise in $`J_t`$ |
+| $`D(T)`$ | today's price of one dollar paid at $`T`$ | 0.836867 | see the Greeks table |
+| $`R(T)`$ | today's price of $`J_T`$ dollars paid at $`T`$ | 0.951466 | the inflation leg gains |
+| $`y_T`$, $`n_T`$ | the real and nominal zero yields | 1.00 and 3.626 percent | real up: par rate down; nominal up: par rate up |
+| $`A(T)`$, $`f`$ | the index forward; forward inflation between two maturities | 1.136938; 3.00 percent from year 4 to 5 | — |
+| $`V`$ | the swap's value today to the inflation receiver | 0 new; 27,289.86 dollars for the older swap | — |
+| $`\psi_s`$, $`J_s`$, $`s`$ | in Step 4: a numbered state $`s`$, its state price, and the index ratio there | 4,000 states per economy | — |
 
 **Conventions verified 28 Sep 2026** against Fleming and Sporn (2013), under Sources. US dollar inflation swaps reference the consumer price index for all urban consumers, not seasonally adjusted, the index that US Treasury inflation-protected securities (TIPS) use. It is read with a three-month lag.
 
-The fixed side is the notional times the annually compounded fixed rate, and only the net amount is paid, at maturity. The arithmetic here ignores the lag: $I$ is the contract's reference index, whatever month it describes.
+The fixed side is the notional times the annually compounded fixed rate, and only the net amount is paid, at maturity. The arithmetic here ignores the lag: $`I`$ is the contract's reference index, whatever month it describes.
 
 ### When it holds
 
 - **Both bonds trade, on the same index, lag and date.** Real linkers carry coupons, a principal floor and their own index rules ([Inflation-linked bonds](02-inflation-linked-bonds.md)), and trade less often than swaps, so the swap rate and the bond breakeven differ by a **basis**: a spread to explain, not free money.
 - **Nobody defaults.** Without collateral, a swap with a weaker counterparty is worth less to the side owed money.
-- **The fixed leg compounds for the whole term.** The swap pays $(1+K)^T$, not $1 + KT$. Treating it as simple interest turns the 13,061.94 dollar payout into 20,000.00.
+- **The fixed leg compounds for the whole term.** The swap pays $`(1+K)^T`$, not $`1 + KT`$. Treating it as simple interest turns the 13,061.94 dollar payout into 20,000.00.
 - **The payment is a straight line in the index.** A floor or cap on inflation is an option and needs a model of how inflation moves ([Inflation caps and floors in outline](05-inflation-options-in-outline.md)).
 
 ---
@@ -106,58 +116,60 @@ The fixed side is the notional times the annually compounded fixed rate, and onl
 
 ### Step 0: the unknown leg can be bought today
 
-Nobody knows $J_T$. But a real zero pays exactly $J_T$ dollars at $T$, and it has a price today, $R(T)$. Holding $N$ of them delivers the inflation leg in every outcome. Two things that pay the same in every outcome cost the same, or one could be sold against the other for a riskless profit ([No arbitrage](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md)). So the inflation leg is worth $N\,R(T)$, whatever anyone expects inflation to be.
+Nobody knows $`J_T`$. But a real zero pays exactly $`J_T`$ dollars at $`T`$, and it has a price today, $`R(T)`$. Holding $`N`$ of them delivers the inflation leg in every outcome. Two things that pay the same in every outcome cost the same, or one could be sold against the other for a riskless profit ([No arbitrage](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md)). So the inflation leg is worth $`N\,R(T)`$, whatever anyone expects inflation to be.
 
 ### Step 1: the fixed leg is a known number of dollars
 
-The fixed leg pays $N(1+K)^T$ dollars at $T$, a number fixed on the trade date. It is worth that many nominal zeros: $N(1+K)^T D(T)$.
+The fixed leg pays $`N(1+K)^T`$ dollars at $`T`$, a number fixed on the trade date. It is worth that many nominal zeros: $`N(1+K)^T D(T)`$.
 
 ### Step 2: subtract, and solve for the par rate
 
-The swap is the inflation leg less the fixed leg: $V = N[R(T) - (1+K)^T D(T)]$. A new swap is struck at the rate that makes $V$ zero, so $(1+k_T)^T = R(T)/D(T)$.
+The swap is the inflation leg less the fixed leg: $`V = N[R(T) - (1+K)^T D(T)]`$. A new swap is struck at the rate that makes $`V`$ zero, so $`(1+k_T)^T = R(T)/D(T)`$.
 
-Exactly one answer exists. Both bond prices are positive, so their ratio is positive. As $K$ runs upward from just above −100 percent, $(1+K)^T$ climbs steadily from 0 without bound, passing every positive number once. The boundary case is allowed: if the real bond costs less than the nominal bond, the ratio is below 1 and the par rate is negative, pricing falling prices.
+Exactly one answer exists. Both bond prices are positive, so their ratio is positive. As $`K`$ runs upward from just above −100 percent, $`(1+K)^T`$ climbs steadily from 0 without bound, passing every positive number once. The boundary case is allowed: if the real bond costs less than the nominal bond, the ratio is below 1 and the par rate is negative, pricing falling prices.
 
-Taking the $T$-th root gives the formula. The code also reaches 2.6 percent by bisection: halving an interval until $V$ changes sign, with no formula inverted.
+Taking the $`T`$-th root gives the formula. The code also reaches 2.6 percent by bisection: halving an interval until $`V`$ changes sign, with no formula inverted.
 
 ### Step 3: in yields, it is Fisher's product
 
-Write each bond price through its yield: $D(T) = (1+n_T)^{-T}$ and $R(T) = (1+y_T)^{-T}$. The ratio becomes $[(1+n_T)/(1+y_T)]^T$, and the par rate is
+Write each bond price through its yield: $`D(T) = (1+n_T)^{-T}`$ and $`R(T) = (1+y_T)^{-T}`$. The ratio becomes $`[(1+n_T)/(1+y_T)]^T`$, and the par rate is
 
-$$1 + k_T = \frac{1+n_T}{1+y_T}.$$
+```math
+1 + k_T = \frac{1+n_T}{1+y_T}.
+```
 
-That is the exact Fisher relation ([Real rates](01-real-rates-and-the-fisher-equation.md)): $1.03626 / 1.01 = 1.026$. So where both bonds trade, the swap rate equals the bond **breakeven**, the inflation at which the two bonds pay the same ([Breakeven inflation](03-breakeven-inflation.md)).
+That is the exact Fisher relation ([Real rates](01-real-rates-and-the-fisher-equation.md)): $`1.03626 / 1.01 = 1.026`$. So where both bonds trade, the swap rate equals the bond **breakeven**, the inflation at which the two bonds pay the same ([Breakeven inflation](03-breakeven-inflation.md)).
 
 ### Step 4: why no forecast enters
 
-List the possible states of the world at year 5, each with a **state price**: today's cost of one dollar paid only in that state ([State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)). A payment is worth its amount in each state times that state's price, added up. The swap's payment is $N$ times the index ratio, less a fixed amount.
+List the possible states of the world at year 5, each with a **state price**: today's cost of one dollar paid only in that state ([State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)). A payment is worth its amount in each state times that state's price, added up. The swap's payment is $`N`$ times the index ratio, less a fixed amount.
 
-So its sum needs only two totals: the state prices, which add to $D(T)$, and the state prices times the index ratio, which add to $R(T)$. How likely each state is and how investors feel about inflation risk enter only through those two bond prices.
+So its sum needs only two totals: the state prices, which add to $`D(T)`$, and the state prices times the index ratio, which add to $`R(T)`$. How likely each state is and how investors feel about inflation risk enter only through those two bond prices.
 
 The code builds four made-up economies of 4,000 states, each with its own random index ratios and state prices, rescaled so both bonds are priced right. Their plain averages of inflation, each state counted equally, are 2.60, 3.50, 1.21 and 1.68 percent a year. All four price the swap at 2.600000 percent and the older swap at 27,289.86 dollars.
 
 <details>
 <summary>Detailed proof: the value is model-free</summary>
 
-Let the states at $T$ be numbered $s = 1, \dots, S$, with state prices $\psi_s > 0$ and index ratios $J_s > 0$. No arbitrage makes today's price of any payment the sum, over states, of the state price times the amount paid in that state. The nominal zero pays 1 in every state, so the sum of $\psi_s$ is $D(T)$. The real zero pays $J_s$, so the sum of $\psi_s J_s$ is $R(T)$.
+Let the states at $`T`$ be numbered $`s = 1, \dots, S`$, with state prices $`\psi_s > 0`$ and index ratios $`J_s > 0`$. No arbitrage makes today's price of any payment the sum, over states, of the state price times the amount paid in that state. The nominal zero pays 1 in every state, so the sum of $`\psi_s`$ is $`D(T)`$. The real zero pays $`J_s`$, so the sum of $`\psi_s J_s`$ is $`R(T)`$.
 
-The swap pays $N[J_s - (1+K)^T]$ in state $s$. Its price is the sum of $\psi_s N J_s$ less the sum of $\psi_s N (1+K)^T$. Take the constants $N$ and $(1+K)^T$ outside each sum: the price is $N R(T) - N(1+K)^T D(T)$. Every other feature of the state prices and the index ratios has cancelled.
+The swap pays $`N[J_s - (1+K)^T]`$ in state $`s`$. Its price is the sum of $`\psi_s N J_s`$ less the sum of $`\psi_s N (1+K)^T`$. Take the constants $`N`$ and $`(1+K)^T`$ outside each sum: the price is $`N R(T) - N(1+K)^T D(T)`$. Every other feature of the state prices and the index ratios has cancelled.
 
-With a continuum of states, integrals replace sums. The argument fails once the payment stops being a straight line in $J_s$: a floor $\max(J_s, 1)$ needs more than the two totals.
+With a continuum of states, integrals replace sums. The argument fails once the payment stops being a straight line in $`J_s`$: a floor $`\max(J_s, 1)`$ needs more than the two totals.
 
 </details>
 
 ### Step 5: a running swap keeps its old base and its old term
 
-Two years ago someone entered a 7-year swap at 2.30 percent, receiving inflation. A swap already running is called **seasoned**. Since then the index has risen 6.00 percent: $J_t = 1.06$. Five years remain.
+Two years ago someone entered a 7-year swap at 2.30 percent, receiving inflation. A swap already running is called **seasoned**. Since then the index has risen 6.00 percent: $`J_t = 1.06`$. Five years remain.
 
-Split the ratio at today, when the index stands at $I_t$: $I_T/I_0 = (I_t/I_0)(I_T/I_t)$. The first factor is known, 1.06. The second is what a 5-year real zero bought today pays. So the inflation leg is worth $1.06\,N\,R(5)$.
+Split the ratio at today, when the index stands at $`I_t`$: $`I_T/I_0 = (I_t/I_0)(I_T/I_t)`$. The first factor is known, 1.06. The second is what a 5-year real zero bought today pays. So the inflation leg is worth $`1.06\,N\,R(5)`$.
 
-The fixed leg is still $N(1.023)^7$, worth $N(1.023)^7 D(5)$. The difference is 27,289.86 dollars to the receiver: inflation so far has outrun 2.30 percent, and the market prices 2.60 percent ahead. It is the swap's version of a forward valued after inception ([An old forward](../03-Contracts%20and%20No-Arbitrage/04-forward-value-after-inception.md)).
+The fixed leg is still $`N(1.023)^7`$, worth $`N(1.023)^7 D(5)`$. The difference is 27,289.86 dollars to the receiver: inflation so far has outrun 2.30 percent, and the market prices 2.60 percent ahead. It is the swap's version of a forward valued after inception ([An old forward](../03-Contracts%20and%20No-Arbitrage/04-forward-value-after-inception.md)).
 
 ### Step 6: many maturities make a curve
 
-Swap rates trade at several maturities, here 1, 2, 3, 4, 5, 7 and 10 years. Each quote converts to an index forward, $A(T) = (1+k_T)^T$, and consecutive index forwards give forward inflation. From year 4 to 5, $1.136938 / 1.103813 = 1.030010$: 3.00 percent is priced for that year, though the 5-year rate is 2.60.
+Swap rates trade at several maturities, here 1, 2, 3, 4, 5, 7 and 10 years. Each quote converts to an index forward, $`A(T) = (1+k_T)^T`$, and consecutive index forwards give forward inflation. From year 4 to 5, $`1.136938 / 1.103813 = 1.030010`$: 3.00 percent is priced for that year, though the 5-year rate is 2.60.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -175,9 +187,9 @@ Between the quoted maturities, the **pillars**, the curve needs a rule. **Flat f
 
 ### Step 7: the hedge cancels the index state by state
 
-A zero-coupon linker on 1,000,000 dollars pays $1{,}000{,}000\,J_5$ at year 5. A pay-inflation swap on the same notional pays $1{,}000{,}000\,[(1.026)^5 - J_5]$. The sum is 1,136,938.06 dollars whatever $J_5$ turns out to be. At an index ratio of 1.15 the linker pays 1,150,000.00 and the swap costs 13,061.94.
+A zero-coupon linker on 1,000,000 dollars pays $`1{,}000{,}000\,J_5`$ at year 5. A pay-inflation swap on the same notional pays $`1{,}000{,}000\,[(1.026)^5 - J_5]`$. The sum is 1,136,938.06 dollars whatever $`J_5`$ turns out to be. At an index ratio of 1.15 the linker pays 1,150,000.00 and the swap costs 13,061.94.
 
-A linker with coupons needs one swap per payment, a **strip** of swaps. Take a 5-year linker with the house 1 percent real coupon on 1,000,000 dollars, paid yearly: $10{,}000\,J_t$ each year, plus $1{,}000{,}000\,J_5$ at the end. Hedge each payment with a pay-inflation swap maturing that year, notional 10,000 dollars for years 1 to 4 and 1,010,000 at year 5. Each payment becomes its notional times that year's index forward, a fixed number of dollars.
+A linker with coupons needs one swap per payment, a **strip** of swaps. Take a 5-year linker with the house 1 percent real coupon on 1,000,000 dollars, paid yearly: $`10{,}000\,J_t`$ each year, plus $`1{,}000{,}000\,J_5`$ at the end. Hedge each payment with a pay-inflation swap maturing that year, notional 10,000 dollars for years 1 to 4 and 1,010,000 at year 5. Each payment becomes its notional times that year's index forward, a fixed number of dollars.
 
 The hedged package is a nominal bond, and its price matches: its fixed cash discounted at nominal rates is worth 1,000,000.00 dollars, as is the linker's real cash discounted at the 1 percent real yield. Across 20,000 random inflation paths, the largest gap between hedged cash and the locked amounts is 0.000000 dollars.
 
@@ -186,7 +198,7 @@ A US Treasury linker (TIPS) repays at maturity the larger of the inflated princi
 <details>
 <summary>Another way to see it: the index as an exchange rate</summary>
 
-Treat real dollars as a foreign currency and the index ratio as the exchange rate. A real zero is a foreign bond, and the swap is a currency forward. Then $1 + k_T = (1+n_T)/(1+y_T)$ is covered interest parity with the real yield as the foreign rate ([Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md)). Jarrow and Yildirim built their inflation model on exactly this analogy.
+Treat real dollars as a foreign currency and the index ratio as the exchange rate. A real zero is a foreign bond, and the swap is a currency forward. Then $`1 + k_T = (1+n_T)/(1+y_T)`$ is covered interest parity with the real yield as the foreign rate ([Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md)). Jarrow and Yildirim built their inflation model on exactly this analogy.
 
 </details>
 
@@ -200,16 +212,16 @@ The 5-year swap at 2.6 percent, on 1,000,000 dollars, with a nominal zero yield 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| nominal zero, $D(5)$ | $1 / 1.03626^5$ | 0.836867 |
-| real zero, $R(5)$ | $1 / 1.01^5$ | 0.951466 |
-| index forward, $A(5)$ | $0.951466 / 0.836867$ | 1.136938 |
-| par rate, $k_5$ | $1.136938^{1/5} - 1$, or $1.03626 / 1.01 - 1$ | **2.60 percent** |
-| fixed leg at year 5 | $1{,}000{,}000 \times 1.026^5$ | 1,136,938.06 dollars |
-| payout at index ratio 1.15 | $1{,}150{,}000 - 1{,}136{,}938.06$ | 13,061.94 dollars |
-| older swap, inflation leg | $1{,}000{,}000 \times 1.06 \times 0.951466$ | 1,008,553.63 dollars |
-| older swap, fixed factor | $1.023^7$ | 1.172545 |
-| older swap, fixed leg | $1{,}000{,}000 \times 1.172545 \times 0.836867$ | 981,263.77 dollars |
-| **older swap's value** | $1{,}008{,}553.63 - 981{,}263.77$ | **27,289.86 dollars** |
+| nominal zero, $`D(5)`$ | $`1 / 1.03626^5`$ | 0.836867 |
+| real zero, $`R(5)`$ | $`1 / 1.01^5`$ | 0.951466 |
+| index forward, $`A(5)`$ | $`0.951466 / 0.836867`$ | 1.136938 |
+| par rate, $`k_5`$ | $`1.136938^{1/5} - 1`$, or $`1.03626 / 1.01 - 1`$ | **2.60 percent** |
+| fixed leg at year 5 | $`1{,}000{,}000 \times 1.026^5`$ | 1,136,938.06 dollars |
+| payout at index ratio 1.15 | $`1{,}150{,}000 - 1{,}136{,}938.06`$ | 13,061.94 dollars |
+| older swap, inflation leg | $`1{,}000{,}000 \times 1.06 \times 0.951466`$ | 1,008,553.63 dollars |
+| older swap, fixed factor | $`1.023^7`$ | 1.172545 |
+| older swap, fixed leg | $`1{,}000{,}000 \times 1.172545 \times 0.836867`$ | 981,263.77 dollars |
+| **older swap's value** | $`1{,}008{,}553.63 - 981{,}263.77`$ | **27,289.86 dollars** |
 
 A new swap costs nothing; the two-year-old one could be sold today for 27,289.86 dollars.
 
@@ -217,11 +229,11 @@ A new swap costs nothing; the two-year-old one could be sold today for 27,289.86
 
 | Year | Linker pays | Swap notional | Locked cash, dollars |
 | --- | --- | --- | --- |
-| 1 | $10{,}000\,J_1$ | 10,000 | 10,200.00 |
-| 2 | $10{,}000\,J_2$ | 10,000 | 10,444.84 |
-| 3 | $10{,}000\,J_3$ | 10,000 | 10,721.70 |
-| 4 | $10{,}000\,J_4$ | 10,000 | 11,038.13 |
-| 5 | $1{,}010{,}000\,J_5$ | 1,010,000 | **1,148,307.44** |
+| 1 | $`10{,}000\,J_1`$ | 10,000 | 10,200.00 |
+| 2 | $`10{,}000\,J_2`$ | 10,000 | 10,444.84 |
+| 3 | $`10{,}000\,J_3`$ | 10,000 | 10,721.70 |
+| 4 | $`10{,}000\,J_4`$ | 10,000 | 11,038.13 |
+| 5 | $`1{,}010{,}000\,J_5`$ | 1,010,000 | **1,148,307.44** |
 
 Each locked amount is the notional times that year's index forward. At nominal rates the five are worth **1,000,000.00 dollars**, the linker's price.
 
@@ -241,7 +253,7 @@ The new swap is worth zero, and zero discounted at any rate is zero, so it carri
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Fixed leg as simple interest, $1 + 5 \times 0.026$ | payout 20,000.00 dollars, not 13,061.94; a new swap looks worth 5,806.23, not 0 | The quote compounds yearly: 1.136938, not 1.13 |
+| Fixed leg as simple interest, $`1 + 5 \times 0.026`$ | payout 20,000.00 dollars, not 13,061.94; a new swap looks worth 5,806.23, not 0 | The quote compounds yearly: 1.136938, not 1.13 |
 | Older swap marked as a new one: base reset, 5-year term | 13,829.21 dollars, not 27,289.86 | Threw away the 6 percent already earned and the two years of fixed already owed |
 | Older swap discounted at the real yield | 31,026.88 dollars, not 27,289.86 | The net payment is in dollars, so it discounts at the nominal rate |
 | Coupon linker hedged with the 5-year swap only, 4 percent inflation every year | coupons off the locked amounts by 2,555.71 dollars over five years | Each coupon needs its own swap |
@@ -644,10 +656,10 @@ The two outputs agree line for line.
 
 Lean proves the card's pricing formulas for any finite list of states with positive state prices, and checks six worked numbers.
 
-- Take finitely many states, each with a positive state price and a positive index ratio. Then the swap's value is $V = N[R(T) - (1+K)^T D(T)]$ for every fixed rate.
-- Suppose also $N > 0$ and $T > 0$. Then exactly one fixed rate above −100 percent makes a new swap worth zero: $k_T = (R(T)/D(T))^{1/T} - 1$.
-- Take a running swap with index ratio so far $J_t$, fixed rate $K$ and original term $M$. Then its value is $N[J_t R(T) - (1+K)^M D(T)]$.
-- Suppose $D(T) = (1+n_T)^{-T}$ and $R(T) = (1+y_T)^{-T}$, with both yields above −100 percent and $T > 0$. Then $1 + k_T = (1+n_T)/(1+y_T)$.
+- Take finitely many states, each with a positive state price and a positive index ratio. Then the swap's value is $`V = N[R(T) - (1+K)^T D(T)]`$ for every fixed rate.
+- Suppose also $`N > 0`$ and $`T > 0`$. Then exactly one fixed rate above −100 percent makes a new swap worth zero: $`k_T = (R(T)/D(T))^{1/T} - 1`$.
+- Take a running swap with index ratio so far $`J_t`$, fixed rate $`K`$ and original term $`M`$. Then its value is $`N[J_t R(T) - (1+K)^M D(T)]`$.
+- Suppose $`D(T) = (1+n_T)^{-T}`$ and $`R(T) = (1+y_T)^{-T}`$, with both yields above −100 percent and $`T > 0`$. Then $`1 + k_T = (1+n_T)/(1+y_T)`$.
 - Exact fractions confirm the 2.6 percent par rate, the 13,061.94 dollar payout, 27,289.86 dollars for the older swap, and the 20,000.00 simple-interest mistake.
 
 The random economies, the bisection, the breakeven curve, the Greeks and the hedge simulation are left to the Python and Rust checks.
@@ -803,9 +815,9 @@ example : (10000 : ℚ) * ((10302 / 10000) / (101 / 100)) = 10200 := by norm_num
 > **Reading the swap rate as the market's forecast of inflation.** It is not. The 2.60 percent comes from two bond prices, and Step 4 finds it in economies whose average inflation runs from 1.21 to 3.50 percent. It bundles expected inflation with a premium for bearing inflation risk and any difference in how easily the two bonds trade. Separating them takes a model.
 >
 > Smaller traps:
-> - **Simple interest on the fixed leg.** $1 + KT$ in place of $(1+K)^T$ turns a 13,061.94 dollar payout into 20,000.00.
+> - **Simple interest on the fixed leg.** $`1 + KT`$ in place of $`(1+K)^T`$ turns a 13,061.94 dollar payout into 20,000.00.
 > - **Resetting a running swap.** Its base index and fixed term are fixed at the trade. Marking it as a new 5-year swap gives 13,829.21 dollars, not 27,289.86.
-> - **Reading today's prices into $I_T$.** The index is lagged three months, so the final payment reflects prices a quarter old.
+> - **Reading today's prices into $`I_T`$.** The index is lagged three months, so the final payment reflects prices a quarter old.
 > - **Calling a linker plus one swap a nominal bond.** Coupons need their own swaps, and a TIPS floor leaves an option behind: 50,000.00 dollars at an index ratio of 0.95.
 
 ---

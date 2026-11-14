@@ -38,50 +38,58 @@ Take a plan with half its money in each asset. Its worst point in the box is the
 
 ## The formula
 
-Notation first, in words. The weights are a list $w$; $w_i$ is the fraction in asset $i$. The raised $\mathsf T$ turns a column into a row, so $\hat\mu^{\mathsf T} w$ means "multiply estimate by weight, asset by asset, and add". $\lVert w\rVert$ is the length of $w$: the square root of the sum of squared weights. The uncertainty set is a ball of radius $\delta$ (delta) around the estimates:
+Notation first, in words. The weights are a list $`w`$; $`w_i`$ is the fraction in asset $`i`$. The raised $`\mathsf T`$ turns a column into a row, so $`\hat\mu^{\mathsf T} w`$ means "multiply estimate by weight, asset by asset, and add". $`\lVert w\rVert`$ is the length of $`w`$: the square root of the sum of squared weights. The uncertainty set is a ball of radius $`\delta`$ (delta) around the estimates:
 
-$$\mathcal U = \{\,\hat\mu + \delta u \;:\; \lVert u\rVert \le 1\,\}.$$
+```math
+\mathcal U = \{\,\hat\mu + \delta u \;:\; \lVert u\rVert \le 1\,\}.
+```
 
-**Robust counterpart.** The worst expected return of a plan over every $\mu$ in $\mathcal U$ has a closed form:
+**Robust counterpart.** The worst expected return of a plan over every $`\mu`$ in $`\mathcal U`$ has a closed form:
 
-$$\min_{\mu \in \mathcal U}\; \mu^{\mathsf T} w \;=\; \hat\mu^{\mathsf T} w \;-\; \delta\,\lVert w\rVert.$$
+```math
+\min_{\mu \in \mathcal U}\; \mu^{\mathsf T} w \;=\; \hat\mu^{\mathsf T} w \;-\; \delta\,\lVert w\rVert.
+```
 
 **Read it aloud:** the worst the plan can expect is what the estimates promise, minus the radius of doubt times the length of the weight list.
 
-**Chance constraint.** If the year's returns $\xi$ are normal (bell-curve shaped) with mean $\hat\mu$ and covariance matrix $\Sigma$ (the table of how each pair of returns moves together), and $C$ is any matrix with $C C^{\mathsf T} = \Sigma$, then
+**Chance constraint.** If the year's returns $`\xi`$ are normal (bell-curve shaped) with mean $`\hat\mu`$ and covariance matrix $`\Sigma`$ (the table of how each pair of returns moves together), and $`C`$ is any matrix with $`C C^{\mathsf T} = \Sigma`$, then
 
-$$\Pr\big(\xi^{\mathsf T} w < -\ell\big) \le \varepsilon \quad\Longleftrightarrow\quad \hat\mu^{\mathsf T} w \;-\; z\,\lVert C^{\mathsf T} w\rVert \;\ge\; -\ell, \qquad z = N^{-1}(1 - \varepsilon).$$
+```math
+\Pr\big(\xi^{\mathsf T} w < -\ell\big) \le \varepsilon \quad\Longleftrightarrow\quad \hat\mu^{\mathsf T} w \;-\; z\,\lVert C^{\mathsf T} w\rVert \;\ge\; -\ell, \qquad z = N^{-1}(1 - \varepsilon).
+```
 
-**Read it aloud:** the chance of losing more than $\ell$ is at most $\varepsilon$ exactly when the expected return, less $z$ standard deviations, still sits above a loss of $\ell$.
+**Read it aloud:** the chance of losing more than $`\ell`$ is at most $`\varepsilon`$ exactly when the expected return, less $`z`$ standard deviations, still sits above a loss of $`\ell`$.
 
 The card's problem puts the two together:
 
-$$\text{maximise } \hat\mu^{\mathsf T} w - \delta\lVert w\rVert \quad\text{subject to}\quad \hat\mu^{\mathsf T} w - z\lVert C^{\mathsf T} w\rVert \ge -\ell,\quad \mathbf 1^{\mathsf T} w = 1,\quad w \ge 0.$$
+```math
+\text{maximise } \hat\mu^{\mathsf T} w - \delta\lVert w\rVert \quad\text{subject to}\quad \hat\mu^{\mathsf T} w - z\lVert C^{\mathsf T} w\rVert \ge -\ell,\quad \mathbf 1^{\mathsf T} w = 1,\quad w \ge 0.
+```
 
-The contrast, in one line: for the box $\{\mu : |\mu_i - \hat\mu_i| \le \delta \text{ for every } i\}$, the worst case is $\hat\mu^{\mathsf T} w - \delta(|w_1| + \dots + |w_5|)$, and with no shorting (no negative weights, $w \ge 0$) the bracket is 1. So the box's counterpart is "subtract 1 point from every estimate". It moves no weight and only lowers the promise.
+The contrast, in one line: for the box $`\{\mu : |\mu_i - \hat\mu_i| \le \delta \text{ for every } i\}`$, the worst case is $`\hat\mu^{\mathsf T} w - \delta(|w_1| + \dots + |w_5|)`$, and with no shorting (no negative weights, $`w \ge 0`$) the bracket is 1. So the box's counterpart is "subtract 1 point from every estimate". It moves no weight and only lowers the promise.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $w$, $v$, $\mathbf 1$ | the weights, the fraction of money in each asset ($v$: any other plan); a list of ones, so $\mathbf 1^{\mathsf T} w = 1$ says "fully invested" | 11.84, 38.11, 10.53, 22.52, 16.99 (%) | — |
-| $\hat\mu$ | the analysts' estimates of expected return, % a year | 7.00, 7.40, 6.80, 4.00, 5.00 | money moves toward the asset raised |
-| $\mu$ | the true expected returns, unknown, assumed to lie in $\mathcal U$ | — | — |
-| $\mathcal U$, $\delta$, $u$ | the uncertainty set; its radius in points of return; a direction of error with $\lVert u\rVert \le 1$ | ball of radius 1 | larger $\delta$: the plan spreads out and promises less |
-| $\lVert w\rVert$ | length of the weight list: 1 if all money sits in one asset, smaller when spread | 0.5000 | — |
-| $\mu^*$ | the worst-case estimates for the chosen plan, $\hat\mu - \delta w/\lVert w\rVert$ | 6.7632, 6.6377, 6.5894, 3.5495, 4.6601 | — |
-| $\xi$ | the five returns the year actually delivers, random | — | — |
-| $\Sigma$, $C$, $\mathcal E$ | the covariance matrix of the returns (the shelf's house figures); a factor with $C C^{\mathsf T} = \Sigma$, so $\lVert C^{\mathsf T} w\rVert$ is the plan's standard deviation; the ellipsoid $\hat\mu + zCu$ the chance constraint guards | standard deviation 9.7977% | more risk: money moves to gilts and gold |
-| $\varepsilon$, $z$, $N$, $\Pr$ | the allowed chance of a bad year; the point on the bell curve with $1 - \varepsilon$ of the area to its left; $N$, the bell-curve area left of a point, and $N^{-1}$ its inverse; $\Pr$, "the chance that" | 0.05; 1.644854 | smaller $\varepsilon$: larger $z$, a safer and lower-return plan |
-| $\ell$ | the loss limit, % of the fund | 10 | looser limit: more return, worth 0.2096 points per point at the margin |
-| $t$, $\lambda$ | the barrier weight in the solving method; the price on the loss rule it reports | $\lambda$ = 0.2096 | — |
-| $\nu$, $c$ | with no loss rule, the level every held asset's worst-case estimate is pushed down to; $c$, the total that scales the water-filling weights to add to 1 | 6.5460 | — |
+| $`w`$, $`v`$, $`\mathbf 1`$ | the weights, the fraction of money in each asset ($`v`$: any other plan); a list of ones, so $`\mathbf 1^{\mathsf T} w = 1`$ says "fully invested" | 11.84, 38.11, 10.53, 22.52, 16.99 (%) | — |
+| $`\hat\mu`$ | the analysts' estimates of expected return, % a year | 7.00, 7.40, 6.80, 4.00, 5.00 | money moves toward the asset raised |
+| $`\mu`$ | the true expected returns, unknown, assumed to lie in $`\mathcal U`$ | — | — |
+| $`\mathcal U`$, $`\delta`$, $`u`$ | the uncertainty set; its radius in points of return; a direction of error with $`\lVert u\rVert \le 1`$ | ball of radius 1 | larger $`\delta`$: the plan spreads out and promises less |
+| $`\lVert w\rVert`$ | length of the weight list: 1 if all money sits in one asset, smaller when spread | 0.5000 | — |
+| $`\mu^*`$ | the worst-case estimates for the chosen plan, $`\hat\mu - \delta w/\lVert w\rVert`$ | 6.7632, 6.6377, 6.5894, 3.5495, 4.6601 | — |
+| $`\xi`$ | the five returns the year actually delivers, random | — | — |
+| $`\Sigma`$, $`C`$, $`\mathcal E`$ | the covariance matrix of the returns (the shelf's house figures); a factor with $`C C^{\mathsf T} = \Sigma`$, so $`\lVert C^{\mathsf T} w\rVert`$ is the plan's standard deviation; the ellipsoid $`\hat\mu + zCu`$ the chance constraint guards | standard deviation 9.7977% | more risk: money moves to gilts and gold |
+| $`\varepsilon`$, $`z`$, $`N`$, $`\Pr`$ | the allowed chance of a bad year; the point on the bell curve with $`1 - \varepsilon`$ of the area to its left; $`N`$, the bell-curve area left of a point, and $`N^{-1}`$ its inverse; $`\Pr`$, "the chance that" | 0.05; 1.644854 | smaller $`\varepsilon`$: larger $`z`$, a safer and lower-return plan |
+| $`\ell`$ | the loss limit, % of the fund | 10 | looser limit: more return, worth 0.2096 points per point at the margin |
+| $`t`$, $`\lambda`$ | the barrier weight in the solving method; the price on the loss rule it reports | $`\lambda`$ = 0.2096 | — |
+| $`\nu`$, $`c`$ | with no loss rule, the level every held asset's worst-case estimate is pushed down to; $`c`$, the total that scales the water-filling weights to add to 1 | 6.5460 | — |
 
 ### When it holds
 
-- **The true expected returns lie in $\mathcal U$.** The promise of 5.6159% is a guarantee only inside the set. Outside it, nothing is promised. The set is a judgement about how wrong the analysts can be; a radius of 1 point is a choice, not a fact.
+- **The true expected returns lie in $`\mathcal U`$.** The promise of 5.6159% is a guarantee only inside the set. Outside it, nothing is promised. The set is a judgement about how wrong the analysts can be; a radius of 1 point is a choice, not a fact.
 - **The set is round (or an ellipsoid).** Then the worst case is a length, and the problem stays a second-order cone program (a problem whose limits say that the length of a list is at most a straight-line expression). A box gives a sum of absolute values, which with no shorting collapses to a constant shift. A set of finitely many scenarios gives one straight-line limit per scenario.
-- **The returns are normal, for the chance constraint.** Then $z$ comes from the bell curve. If they are not, the same mean and standard deviation can hide a 25.80% chance of a 10.50% loss, as the checks print. Guarding against every law (probability distribution of the returns) with that mean and spread needs $z$ = 4.3589 instead of 1.644854.
-- **$\varepsilon$ is below one half.** Then $z > 0$ and the chance constraint is a cone constraint, so the allowed set is convex (any mix of two allowed plans is allowed). Above one half, $z$ turns negative, the constraint rewards risk, and the allowed set has dents.
-- **The chance constraint uses the same estimates.** It is evaluated at $\hat\mu$. At the ball's worst estimates (errors of combined size 1 point), the plan's 95% loss level is 10.49997%, not 10%.
+- **The returns are normal, for the chance constraint.** Then $`z`$ comes from the bell curve. If they are not, the same mean and standard deviation can hide a 25.80% chance of a 10.50% loss, as the checks print. Guarding against every law (probability distribution of the returns) with that mean and spread needs $`z`$ = 4.3589 instead of 1.644854.
+- **$`\varepsilon`$ is below one half.** Then $`z > 0`$ and the chance constraint is a cone constraint, so the allowed set is convex (any mix of two allowed plans is allowed). Above one half, $`z`$ turns negative, the constraint rewards risk, and the allowed set has dents.
+- **The chance constraint uses the same estimates.** It is evaluated at $`\hat\mu`$. At the ball's worst estimates (errors of combined size 1 point), the plan's 95% loss level is 10.49997%, not 10%.
 
 ---
 
@@ -89,40 +97,42 @@ The contrast, in one line: for the box $\{\mu : |\mu_i - \hat\mu_i| \le \delta \
 
 ### Step 0: infinitely many limits become one
 
-"The plan must earn at least a given return for every $\mu$ in the set" is one limit per point of the ball, infinitely many. But a return is a straight-line function of $\mu$, and the lowest value of a straight-line function over a ball sits on its edge, straight against the direction the plan points. That point can be written down. So the infinitely many limits are equivalent to one: the limit at the worst point. That single limit is the **robust counterpart**.
+"The plan must earn at least a given return for every $`\mu`$ in the set" is one limit per point of the ball, infinitely many. But a return is a straight-line function of $`\mu`$, and the lowest value of a straight-line function over a ball sits on its edge, straight against the direction the plan points. That point can be written down. So the infinitely many limits are equivalent to one: the limit at the worst point. That single limit is the **robust counterpart**.
 
 ### Step 1: the worst point on the ball
 
-Write $\mu = \hat\mu + \delta u$. Then $\mu^{\mathsf T} w = \hat\mu^{\mathsf T} w + \delta\,u^{\mathsf T} w$. The Cauchy–Schwarz inequality (a list's product with another is at least minus the product of their lengths) gives $u^{\mathsf T} w \ge -\lVert u\rVert\,\lVert w\rVert \ge -\lVert w\rVert$. The choice $u = -w/\lVert w\rVert$ has length 1 and reaches it. So
+Write $`\mu = \hat\mu + \delta u`$. Then $`\mu^{\mathsf T} w = \hat\mu^{\mathsf T} w + \delta\,u^{\mathsf T} w`$. The Cauchy–Schwarz inequality (a list's product with another is at least minus the product of their lengths) gives $`u^{\mathsf T} w \ge -\lVert u\rVert\,\lVert w\rVert \ge -\lVert w\rVert`$. The choice $`u = -w/\lVert w\rVert`$ has length 1 and reaches it. So
 
-$$\min_{\mu\in\mathcal U} \mu^{\mathsf T} w = \hat\mu^{\mathsf T} w - \delta\lVert w\rVert, \qquad \text{reached at } \mu^* = \hat\mu - \delta\,\frac{w}{\lVert w\rVert}.$$
+```math
+\min_{\mu\in\mathcal U} \mu^{\mathsf T} w = \hat\mu^{\mathsf T} w - \delta\lVert w\rVert, \qquad \text{reached at } \mu^* = \hat\mu - \delta\,\frac{w}{\lVert w\rVert}.
+```
 
 The worst estimates cut each asset in proportion to how much the plan holds of it; for the robust plan, world shares, the largest holding, lose the most.
 
-For the box, each error is chosen separately, $\mu_i = \hat\mu_i - \delta$ wherever $w_i > 0$, which gives the one-line contrast under The formula. In the figure, the box's worst point is the corner and the ball's is where the dashed line touches.
+For the box, each error is chosen separately, $`\mu_i = \hat\mu_i - \delta`$ wherever $`w_i > 0`$, which gives the one-line contrast under The formula. In the figure, the box's worst point is the corner and the ball's is where the dashed line touches.
 
 ### Step 2: why the ball rewards spreading the money
 
-$\lVert w\rVert$ is 1 when all the money sits in one asset and shrinks as the money spreads. So the ball's penalty $\delta\lVert w\rVert$ is a charge for concentration.
+$`\lVert w\rVert`$ is 1 when all the money sits in one asset and shrinks as the money spreads. So the ball's penalty $`\delta\lVert w\rVert`$ is a charge for concentration.
 
 The reason is the shape of the set. The ball allows one estimate to be a full point out, but if several are out together, each must be out by less. A spread plan is exposed to several errors at once, so to each only partly.
 
-The trusting plan has $\lVert w\rVert$ = 0.6162 and loses 0.6162 points in its worst case; the robust plan has 0.5000 and loses half a point.
+The trusting plan has $`\lVert w\rVert`$ = 0.6162 and loses 0.6162 points in its worst case; the robust plan has 0.5000 and loses half a point.
 
 The box lets all five errors be a full point at once, so spreading earns nothing there.
 
 ### Step 3: the chance constraint is a worst case too
 
-The plan's return for the year, $\xi^{\mathsf T} w$, is a sum of normal returns, so it is normal. Its mean is $\hat\mu^{\mathsf T} w$; its variance is $w^{\mathsf T}\Sigma w = \lVert C^{\mathsf T} w\rVert^2$. The chance of falling below $-\ell$ is the bell-curve area $N\big((-\ell - \hat\mu^{\mathsf T}w)/\lVert C^{\mathsf T}w\rVert\big)$. That is at most $\varepsilon$ exactly when the argument is at most $-z$, which rearranges to the formula.
+The plan's return for the year, $`\xi^{\mathsf T} w`$, is a sum of normal returns, so it is normal. Its mean is $`\hat\mu^{\mathsf T} w`$; its variance is $`w^{\mathsf T}\Sigma w = \lVert C^{\mathsf T} w\rVert^2`$. The chance of falling below $`-\ell`$ is the bell-curve area $`N\big((-\ell - \hat\mu^{\mathsf T}w)/\lVert C^{\mathsf T}w\rVert\big)`$. That is at most $`\varepsilon`$ exactly when the argument is at most $`-z`$, which rearranges to the formula.
 
-Read as a loss, it says the plan's 95% value at risk (the loss exceeded with only a 5% chance) is at most $\ell$; the normal closed form is on [Value at risk](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md).
+Read as a loss, it says the plan's 95% value at risk (the loss exceeded with only a 5% chance) is at most $`\ell`$; the normal closed form is on [Value at risk](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md).
 
-Now run Step 1 backwards. With $\mathcal E = \{\hat\mu + zCu : \lVert u\rVert \le 1\}$, the lowest return over $\mathcal E$ is $\hat\mu^{\mathsf T} w - z\lVert C^{\mathsf T}w\rVert$. So the chance constraint says: **the plan loses at most $\ell$ for every outcome in an ellipsoid of size $z$ shaped by the risk**. Both constraints are robust constraints. They differ in what they doubt:
+Now run Step 1 backwards. With $`\mathcal E = \{\hat\mu + zCu : \lVert u\rVert \le 1\}`$, the lowest return over $`\mathcal E`$ is $`\hat\mu^{\mathsf T} w - z\lVert C^{\mathsf T}w\rVert`$. So the chance constraint says: **the plan loses at most $`\ell`$ for every outcome in an ellipsoid of size $`z`$ shaped by the risk**. Both constraints are robust constraints. They differ in what they doubt:
 
 | | Robust constraint | Chance constraint |
 | --- | --- | --- |
 | What is uncertain | the expected returns themselves | the year's outcome, with the expected returns taken as known |
-| The set | ball of radius 1 point | ellipsoid $\hat\mu + zCu$, $z$ = 1.644854 |
+| The set | ball of radius 1 point | ellipsoid $`\hat\mu + zCu`$, $`z`$ = 1.644854 |
 | The guarantee | certain, if the truth is in the set | 95%, if the returns are normal with these figures |
 | For the robust plan | worst expected return 5.6159% | 95% value at risk 10.0000% |
 
@@ -130,35 +140,37 @@ Now run Step 1 backwards. With $\mathcal E = \{\hat\mu + zCu : \lVert u\rVert \l
 
 The objective is a straight line minus a length, so it is concave (it bends downward, so any local best is the overall best); the loss rule is a cone constraint, so the allowed set is convex. The whole problem is a second-order cone program, the class on [Second-order cone programs](04-second-order-cone-programs.md).
 
-The code solves it with a **log-barrier method**: for a weight $t$ it maximises $t$ times the objective plus the logarithms of every slack (each weight, and the room left under the loss rule), by Newton steps (each heads for the best point of a quadratic fitted to the cost at the current split) on four free weights (the fifth is one minus the rest). Then $t$ grows tenfold, and the rounds stop once 6/$t$ is below 0.000001.
+The code solves it with a **log-barrier method**: for a weight $`t`$ it maximises $`t`$ times the objective plus the logarithms of every slack (each weight, and the room left under the loss rule), by Newton steps (each heads for the best point of a quadratic fitted to the cost at the current split) on four free weights (the fifth is one minus the rest). Then $`t`$ grows tenfold, and the rounds stop once 6/$`t`$ is below 0.000001.
 
-At each centred point the method hands back prices: $\lambda = 1/(t \times \text{room under the loss rule})$ on the loss rule and $1/(t\,w_i)$ on each weight's floor. These prices satisfy the KKT (Karush–Kuhn–Tucker) conditions (the slope of the objective is balanced by priced limits) exactly except that each price times its slack is $1/t$ instead of 0.
+At each centred point the method hands back prices: $`\lambda = 1/(t \times \text{room under the loss rule})`$ on the loss rule and $`1/(t\,w_i)`$ on each weight's floor. These prices satisfy the KKT (Karush–Kuhn–Tucker) conditions (the slope of the objective is balanced by priced limits) exactly except that each price times its slack is $`1/t`$ instead of 0.
 
-The barrier-method theorem (stated here, with its source, not proved) says this gives a dual bound: no allowed split beats the current one by more than (number of slacks)/$t$ = 6/$t$.
+The barrier-method theorem (stated here, with its source, not proved) says this gives a dual bound: no allowed split beats the current one by more than (number of slacks)/$`t`$ = 6/$`t`$.
 
 The code asserts the balance holds to 0.000001 and prints the gap: at most 0.0000006, after 43 Newton steps from a start of 10% in each of UK shares, world shares and property, 50% gilts and 20% gold.
 
 ### Step 5: with no loss rule, a closed form
 
-Drop the loss rule and the robust problem solves by hand. Every held asset's worst-case estimate is pushed down to one common level $\nu$, and assets whose estimate is already below $\nu$ are left out:
+Drop the loss rule and the robust problem solves by hand. Every held asset's worst-case estimate is pushed down to one common level $`\nu`$, and assets whose estimate is already below $`\nu`$ are left out:
 
-$$w_i \propto \max(\hat\mu_i - \nu,\, 0), \qquad \textstyle\sum_i \max(\hat\mu_i - \nu, 0)^2 = \delta^2.$$
+```math
+w_i \propto \max(\hat\mu_i - \nu,\, 0), \qquad \textstyle\sum_i \max(\hat\mu_i - \nu, 0)^2 = \delta^2.
+```
 
-This is **water-filling**: lower the level $\nu$ until the parts of the estimates above it have combined length $\delta$.
+This is **water-filling**: lower the level $`\nu`$ until the parts of the estimates above it have combined length $`\delta`$.
 
-Here $\nu$ = 6.5460 and the plan is 29.07% UK shares, 54.67% world shares and 16.26% property. It ignores risk entirely, and its 95% value at risk is 16.6024%, far over the limit, which is why the card's problem needs the loss rule too.
+Here $`\nu`$ = 6.5460 and the plan is 29.07% UK shares, 54.67% world shares and 16.26% property. It ignores risk entirely, and its 95% value at risk is 16.6024%, far over the limit, which is why the card's problem needs the loss rule too.
 
 <details>
 <summary>Detailed proof: water-filling is the best worst case, with a certificate</summary>
 
-Let $w$ be the water-filling plan and $c = \sum_i \max(\hat\mu_i - \nu, 0)$, so $w_i = \max(\hat\mu_i - \nu, 0)/c$. Then $\lVert w\rVert = \delta/c$, so $\delta w_i/\lVert w\rVert = \max(\hat\mu_i - \nu, 0)$.
+Let $`w`$ be the water-filling plan and $`c = \sum_i \max(\hat\mu_i - \nu, 0)`$, so $`w_i = \max(\hat\mu_i - \nu, 0)/c`$. Then $`\lVert w\rVert = \delta/c`$, so $`\delta w_i/\lVert w\rVert = \max(\hat\mu_i - \nu, 0)`$.
 
-Take $\mu^* = \hat\mu - \delta w/\lVert w\rVert$, the worst point for $w$ from Step 1. It lies in $\mathcal U$. Its entries are $\nu$ for every held asset and $\hat\mu_i \le \nu$ for every asset left out.
+Take $`\mu^* = \hat\mu - \delta w/\lVert w\rVert`$, the worst point for $`w`$ from Step 1. It lies in $`\mathcal U`$. Its entries are $`\nu`$ for every held asset and $`\hat\mu_i \le \nu`$ for every asset left out.
 
-1. **No plan beats $\nu$.** For any long-only, fully invested $v$, its worst case is at most its return at $\mu^*$, and $\mu^{*\mathsf T} v$ is an average of numbers that are all at most $\nu$. So $\min_{\mu\in\mathcal U}\mu^{\mathsf T}v \le \nu$.
-2. **$w$ reaches $\nu$.** By Step 1, $w$'s worst case is $\mu^{*\mathsf T} w$, an average of entries that all equal $\nu$, so it is exactly $\nu$.
+1. **No plan beats $`\nu`$.** For any long-only, fully invested $`v`$, its worst case is at most its return at $`\mu^*`$, and $`\mu^{*\mathsf T} v`$ is an average of numbers that are all at most $`\nu`$. So $`\min_{\mu\in\mathcal U}\mu^{\mathsf T}v \le \nu`$.
+2. **$`w`$ reaches $`\nu`$.** By Step 1, $`w`$'s worst case is $`\mu^{*\mathsf T} w`$, an average of entries that all equal $`\nu`$, so it is exactly $`\nu`$.
 
-So $w$ is optimal, and $\mu^*$ is the certificate: the checks print it as 6.5460, 6.5460, 6.5460, 4.0000, 5.0000. The pair ($w$, $\mu^*$) is a saddle point: neither the fund nor an adversary choosing the estimates can gain by moving alone.
+So $`w`$ is optimal, and $`\mu^*`$ is the certificate: the checks print it as 6.5460, 6.5460, 6.5460, 4.0000, 5.0000. The pair ($`w`$, $`\mu^*`$) is a saddle point: neither the fund nor an adversary choosing the estimates can gain by moving alone.
 
 </details>
 
@@ -170,14 +182,14 @@ The robust plan, as fractions to five places: 0.11841 UK shares, 0.38112 world s
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| $\lVert w\rVert^2$ | 0.11841² + 0.38112² + 0.10530² + 0.22523² + 0.16994² | 0.24997 |
-| $\lVert w\rVert$ | square root | 0.49997 |
-| promised return, $\hat\mu^{\mathsf T}w$ | 7.00 × 0.11841 + 7.40 × 0.38112 + 6.80 × 0.10530 + 4.00 × 0.22523 + 5.00 × 0.16994 | 6.11583 |
+| $`\lVert w\rVert^2`$ | 0.11841² + 0.38112² + 0.10530² + 0.22523² + 0.16994² | 0.24997 |
+| $`\lVert w\rVert`$ | square root | 0.49997 |
+| promised return, $`\hat\mu^{\mathsf T}w`$ | 7.00 × 0.11841 + 7.40 × 0.38112 + 6.80 × 0.10530 + 4.00 × 0.22523 + 5.00 × 0.16994 | 6.11583 |
 | worst case over the ball | 6.11583 − 1 × 0.49997 | **5.61586** |
-| worst estimates, $\hat\mu - w/\lVert w\rVert$ | UK: 7.00 − 0.11841/0.49997, and so on | 6.7632, 6.6377, 6.5894, 3.5495, 4.6601 |
+| worst estimates, $`\hat\mu - w/\lVert w\rVert`$ | UK: 7.00 − 0.11841/0.49997, and so on | 6.7632, 6.6377, 6.5894, 3.5495, 4.6601 |
 | check | return at those estimates | 5.6159 |
-| standard deviation, $\lVert C^{\mathsf T}w\rVert$ | from the covariance matrix | 9.79773 |
-| $z$ standard deviations | 1.644854 × 9.79773 | 16.11583 |
+| standard deviation, $`\lVert C^{\mathsf T}w\rVert`$ | from the covariance matrix | 9.79773 |
+| $`z`$ standard deviations | 1.644854 × 9.79773 | 16.11583 |
 | 95% value at risk | 16.11583 − 6.11583 | 10.00000 |
 
 So the plan promises 5.62% a year whichever estimates in the ball turn out true, and its loss rule is met exactly, with no room to spare: the rule binds, which is why it carries a price. That price, 0.2096, says that allowing a little more loss raises the guaranteed return by about 0.2096 points per point of loss allowed.
@@ -188,19 +200,19 @@ Against the trusting plan, in the world that is worst for the trusting plan, the
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Trust the estimates ($\delta$ = 0) | promises 6.1796%, can earn 5.5635% | the promise holds only if every estimate is right |
+| Trust the estimates ($`\delta`$ = 0) | promises 6.1796%, can earn 5.5635% | the promise holds only if every estimate is right |
 | Use the box instead of the ball | the trusting plan again, promise 5.1796% | with no shorting, the box's counterpart is a constant: it can never move a weight |
 | Drop the loss rule | 95% value at risk 16.6024% | robust about the mean, blind to the year's risk |
-| Assume normal when the year is crash-or-calm | 25.80% chance of losing 10.50%, else a gain of 11.8932% | the same mean and spread, a different law: the $z$ of the bell curve no longer applies |
+| Assume normal when the year is crash-or-calm | 25.80% chance of losing 10.50%, else a gain of 11.8932% | the same mean and spread, a different law: the $`z`$ of the bell curve no longer applies |
 | Check the loss rule at the estimates only | 95% value at risk 10.49997% at the worst estimates | the chance constraint trusted the same means the robust part doubts |
 
-The fourth row is a modelling assumption failing: a two-point year with the robust plan's mean and standard deviation. Guarding against every law with a given mean and spread needs $z$ = 4.3589 instead of 1.644854 (Cantelli's inequality), which is the price of doubting the bell curve too.
+The fourth row is a modelling assumption failing: a two-point year with the robust plan's mean and standard deviation. Guarding against every law with a given mean and spread needs $`z`$ = 4.3589 instead of 1.644854 (Cantelli's inequality), which is the price of doubting the bell curve too.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code builds the covariance matrix from the shelf's house figures, finds $z$ by bisection on a bell-curve area it integrates itself, and reaches the answer by **four independent roads**:
+The code builds the covariance matrix from the shelf's house figures, finds $`z`$ by bisection on a bell-curve area it integrates itself, and reaches the answer by **four independent roads**:
 
 1. Road 1 is the log-barrier method with its gap certificate and KKT balance.
 2. Road 2 tries every split in steps of 2% and checks that none beats the barrier.
@@ -585,14 +597,14 @@ The grid's best split, 14%, 36%, 10%, 22%, 18%, guarantees 5.6141%, 0.0018 below
 
 ### Lean
 
-Lean proves the card's three exact results for any number of assets, any weights and any radius $\delta \ge 0$, plus the figure's sums.
+Lean proves the card's three exact results for any number of assets, any weights and any radius $`\delta \ge 0`$, plus the figure's sums.
 
-- For the ball of radius $\delta$ around the estimates, the worst expected return exists and equals $\hat\mu^{\mathsf T} w - \delta\lVert w\rVert$.
-- For the box, where every estimate may be up to $\delta$ out at once, the worst case is $\hat\mu^{\mathsf T} w - \delta(|w_1| + |w_2| + \dots)$.
-- Let the returns be normal with mean $\hat\mu$ and covariance matrix $\Sigma$, with $C C^{\mathsf T} = \Sigma$ and $\varepsilon$ between 0 and 1.
-- Then the chance of losing more than $\ell$ is at most $\varepsilon$ exactly when $\hat\mu^{\mathsf T} w - z\lVert C^{\mathsf T} w\rVert \ge -\ell$.
+- For the ball of radius $`\delta`$ around the estimates, the worst expected return exists and equals $`\hat\mu^{\mathsf T} w - \delta\lVert w\rVert`$.
+- For the box, where every estimate may be up to $`\delta`$ out at once, the worst case is $`\hat\mu^{\mathsf T} w - \delta(|w_1| + |w_2| + \dots)`$.
+- Let the returns be normal with mean $`\hat\mu`$ and covariance matrix $`\Sigma`$, with $`C C^{\mathsf T} = \Sigma`$ and $`\varepsilon`$ between 0 and 1.
+- Then the chance of losing more than $`\ell`$ is at most $`\varepsilon`$ exactly when $`\hat\mu^{\mathsf T} w - z\lVert C^{\mathsf T} w\rVert \ge -\ell`$.
 - In the figure, the half-and-half plan's worst point in the box returns 6.2.
-- The same plan's weight list has squared length 1/2, so the ball charges only $1/\sqrt 2$ of a point.
+- The same plan's weight list has squared length 1/2, so the ball charges only $`1/\sqrt 2`$ of a point.
 - With no shorting, the box's bracket is 1, for example for the even split of 1/5 in each asset.
 
 The best plans, the barrier certificate, water-filling, the 2% grid and the simulated years are left to the Python and Rust checks.
@@ -804,7 +816,7 @@ example : 5 * |(1 / 5 : ℚ)| = 1 := by norm_num
 > [!TIP]
 > **Try changing**
 > - Guess first: loosen the loss limit to 12% (`ELL = 12.0`). Will the guarantee rise by twice the price of 0.2096, or by less? By less: the plan moves to 13.55%, 44.15%, 15.60%, 10.18%, 16.53% and guarantees 5.9848%, up from 5.6159%, because the price itself falls, to 0.1644.
-> - Guess first: double the doubt (`DELTA = 2.0`). The robust plan spreads further, to 16.59%, 31.18%, 11.78%, 21.75%, 18.70%, with $\lVert w\rVert$ = 0.4700, guaranteeing 5.1347%. The trusting plan's worst case drops to 4.9473%.
+> - Guess first: double the doubt (`DELTA = 2.0`). The robust plan spreads further, to 16.59%, 31.18%, 11.78%, 21.75%, 18.70%, with $`\lVert w\rVert`$ = 0.4700, guaranteeing 5.1347%. The trusting plan's worst case drops to 4.9473%.
 > - Guess first: change the seed to `0x2026111100000002`. The simulation counts 9,866 bad years, 0.0493, still within four standard errors of 0.05; the ball's lowest sampled return becomes 5.6178, still above 5.6159.
 
 ---
@@ -816,7 +828,7 @@ example : 5 * |(1 / 5 : ℚ)| = 1 := by norm_num
 >
 > Smaller traps:
 > - **Reading a chance constraint as a guarantee.** A 95% limit allows a loss beyond 10% in one year in twenty. The simulation found 10,038 such years in 200,000.
-> - **Trusting $z$ = 1.644854 without normality.** A crash-or-calm year with the same mean and spread reaches a 10.50% loss with chance 25.80%, more than five times the allowance.
+> - **Trusting $`z`$ = 1.644854 without normality.** A crash-or-calm year with the same mean and spread reaches a 10.50% loss with chance 25.80%, more than five times the allowance.
 > - **Mixing the two kinds of doubt.** The chance constraint uses the estimates as if exact; at the robust plan's worst estimates, its 95% value at risk is 10.49997%.
 > - **Calling the grid's answer optimal.** The 2% grid's 5.6141% is a best found. Only the barrier's gap bound, 0.0000006, certifies the 5.6159%.
 
@@ -838,7 +850,7 @@ example : 5 * |(1 / 5 : ℚ)| = 1 := by norm_num
 
 - [Second-order cone programs](04-second-order-cone-programs.md): the problem class both constraints fall into, and the barrier method and conic dual that solve and certify it.
 - [Stochastic gradient](08-stochastic-gradient-and-sample-average-approximation.md): sample average approximation, which replaces an expectation by an average over draws; road 4 replaces a probability by a count over 200,000 drawn years in the same spirit.
-- [Value at risk](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md): the loss level exceeded with a given small chance, and its normal closed form, mean less $z$ standard deviations.
+- [Value at risk](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md): the loss level exceeded with a given small chance, and its normal closed form, mean less $`z`$ standard deviations.
 
 ## Where this goes next
 
@@ -857,5 +869,5 @@ Verified 2026-11-11: every link below resolves to the publisher's page.
 - Ben-Tal, Aharon, and Arkadi Nemirovski. "Robust Convex Optimization." *Mathematics of Operations Research* 23, no. 4 (1998): 769–805. [doi:10.1287/moor.23.4.769](https://doi.org/10.1287/moor.23.4.769). Uncertainty sets and robust counterparts; the ellipsoid case as a cone constraint.
 - Charnes, A., and W. W. Cooper. "Chance-Constrained Programming." *Management Science* 6, no. 1 (1959): 73–79. [doi:10.1287/mnsc.6.1.73](https://doi.org/10.1287/mnsc.6.1.73). The original chance constraint and its reduction for normal data.
 - Goldfarb, D., and G. Iyengar. "Robust Portfolio Selection Problems." *Mathematics of Operations Research* 28, no. 1 (2003): 1–38. [doi:10.1287/moor.28.1.1.14260](https://doi.org/10.1287/moor.28.1.1.14260). Robust portfolios with ellipsoidal sets around the mean estimates, solved as second-order cone programs.
-- El Ghaoui, Laurent, Maksim Oks, and Francois Oustry. "Worst-Case Value-at-Risk and Robust Portfolio Optimization: A Conic Programming Approach." *Operations Research* 51, no. 4 (2003): 543–556. [doi:10.1287/opre.51.4.543.16101](https://doi.org/10.1287/opre.51.4.543.16101). Value at risk over every law with a given mean and covariance: the $z = \sqrt{(1-\varepsilon)/\varepsilon}$ of the What breaks table.
-- Boyd, Stephen, and Lieven Vandenberghe. *Convex Optimization*. Cambridge University Press, 2004. [Publisher page](https://www.cambridge.org/core/books/convex-optimization/17D2FAA54F641A2F62C7CCD01DFA97C4). Linear programs with random and ellipsoidal data as cone programs (section 4.4.2), and the barrier method's gap bound $m/t$ (section 11.2), stated on this card.
+- El Ghaoui, Laurent, Maksim Oks, and Francois Oustry. "Worst-Case Value-at-Risk and Robust Portfolio Optimization: A Conic Programming Approach." *Operations Research* 51, no. 4 (2003): 543–556. [doi:10.1287/opre.51.4.543.16101](https://doi.org/10.1287/opre.51.4.543.16101). Value at risk over every law with a given mean and covariance: the $`z = \sqrt{(1-\varepsilon)/\varepsilon}`$ of the What breaks table.
+- Boyd, Stephen, and Lieven Vandenberghe. *Convex Optimization*. Cambridge University Press, 2004. [Publisher page](https://www.cambridge.org/core/books/convex-optimization/17D2FAA54F641A2F62C7CCD01DFA97C4). Linear programs with random and ellipsoidal data as cone programs (section 4.4.2), and the barrier method's gap bound $`m/t`$ (section 11.2), stated on this card.

@@ -40,7 +40,9 @@ Each arrow is one family: the data it needs, and the kind of program that suits 
 
 The sorting rule is in [A partial differential equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/01-what-a-pde-says.md). In one line: write the top-order part as A u_xx + B u_xy + C u_yy, where u_xx is the second derivative of u in x, u_xy the mixed one (once in x, once in y) and u_yy the second in y, and read the sign of B^2 − 4AC. When time is one of the variables, it plays the part of y. This card adds what the sign means for a program:
 
-$$B^2 - 4AC \;\begin{cases} < 0 & \text{elliptic: solve every grid point at once} \\ = 0 & \text{parabolic: march forward in time, implicit steps} \\ > 0 & \text{hyperbolic: march forward in time, explicit steps} \end{cases}$$
+```math
+B^2 - 4AC \;\begin{cases} < 0 & \text{elliptic: solve every grid point at once} \\ = 0 & \text{parabolic: march forward in time, implicit steps} \\ > 0 & \text{hyperbolic: march forward in time, explicit steps} \end{cases}
+```
 
 **Read it aloud:** negative, solve the whole grid together; zero, step forward and solve each new time level together; positive, step forward and compute each new value from old ones.
 
@@ -48,24 +50,26 @@ Each family also needs its own data, as [A partial differential equation](../../
 
 The two marching families have explicit step limits, proved below:
 
-$$\Delta t \le \frac{h^2}{2\alpha} \quad \text{(heat)}, \qquad \Delta t \le \frac{h}{c} \quad \text{(sound)}$$
+```math
+\Delta t \le \frac{h^2}{2\alpha} \quad \text{(heat)}, \qquad \Delta t \le \frac{h}{c} \quad \text{(sound)}
+```
 
 **Read it aloud:** an explicit heat step must shrink with the square of the grid spacing; an explicit sound step only in proportion to it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $u$ | the unknown: temperature, or how far the steel has moved | 100 C at the start; 1 µm ring | — |
-| $x$, $y$, $t$ | place along the bar or plate; place up the plate; time | 0 to 1 m; 0 to 3600 s | — |
-| $A$, $B$, $C$ | the numbers in front of u_xx, u_xy, u_yy | heat 1.2e-5, 0, 0; sound 2.55e7, 0, −1 | B^2 − 4AC moves, maybe across 0 |
-| $\alpha$ | diffusivity: how fast heat spreads, in m^2/s; wing 08 writes it κ, which this wing keeps for the condition number | 1.2e-5 (illustrative, typical of steel) | heat limit shrinks |
-| $c$ | speed of sound along the bar, in m/s | 5047.5 (illustrative) | sound limit shrinks |
-| $h$ | grid spacing | 0.01 m bar; 0.05 m plate | coarser, less accurate |
-| $\Delta t$ | time step | 4 s or 60 s heat; 0.9906 µs sound | fewer steps, until a limit breaks |
-| $r$ | mesh ratio αΔt/h^2 | 0.48 at 4 s; 0.54 at 4.5 s | explicit heat blows up past 0.5 |
-| $k$, $\lambda_k$ | a grid wave with k humps; its rate | k = 1: 9.8688; k = 99: 39990.13 | rates spread as h falls |
-| $\omega_k$ | how fast grid wave k rings, in radians per second: c times the square root of λ_k | k = 1: 15857 rad/s | — |
-| $n$ | unknowns per solve | 99 on the bar; 361 on the plate | more work per step or sweep |
-| $j$, $a_m$, $g$, $i$ | grid point number; one wave's size at step m; its factor per step; the square root of −1 | g of size 1 for leapfrog inside h/c | above 1, the wave blows up |
+| $`u`$ | the unknown: temperature, or how far the steel has moved | 100 C at the start; 1 µm ring | — |
+| $`x`$, $`y`$, $`t`$ | place along the bar or plate; place up the plate; time | 0 to 1 m; 0 to 3600 s | — |
+| $`A`$, $`B`$, $`C`$ | the numbers in front of u_xx, u_xy, u_yy | heat 1.2e-5, 0, 0; sound 2.55e7, 0, −1 | B^2 − 4AC moves, maybe across 0 |
+| $`\alpha`$ | diffusivity: how fast heat spreads, in m^2/s; wing 08 writes it κ, which this wing keeps for the condition number | 1.2e-5 (illustrative, typical of steel) | heat limit shrinks |
+| $`c`$ | speed of sound along the bar, in m/s | 5047.5 (illustrative) | sound limit shrinks |
+| $`h`$ | grid spacing | 0.01 m bar; 0.05 m plate | coarser, less accurate |
+| $`\Delta t`$ | time step | 4 s or 60 s heat; 0.9906 µs sound | fewer steps, until a limit breaks |
+| $`r`$ | mesh ratio αΔt/h^2 | 0.48 at 4 s; 0.54 at 4.5 s | explicit heat blows up past 0.5 |
+| $`k`$, $`\lambda_k`$ | a grid wave with k humps; its rate | k = 1: 9.8688; k = 99: 39990.13 | rates spread as h falls |
+| $`\omega_k`$ | how fast grid wave k rings, in radians per second: c times the square root of λ_k | k = 1: 15857 rad/s | — |
+| $`n`$ | unknowns per solve | 99 on the bar; 361 on the plate | more work per step or sweep |
+| $`j`$, $`a_m`$, $`g`$, $`i`$ | grid point number; one wave's size at step m; its factor per step; the square root of −1 | g of size 1 for leapfrog inside h/c | above 1, the wave blows up |
 
 ### When it holds
 
@@ -89,7 +93,9 @@ A grid program passes information between neighbours. The scheme must pass it at
 
 On the bar, the grid bend at point j is (u_(j−1) − 2u_j + u_(j+1))/h^2. Put in a grid wave with k humps, u_j = sin(kπjh). The identity sin(a − b) + sin(a + b) = 2 sin a cos b turns the bend into a multiple of the wave itself:
 
-$$\frac{u_{j-1} - 2u_j + u_{j+1}}{h^2} = -\lambda_k\, u_j, \qquad \lambda_k = \frac{4}{h^2}\sin^2\!\left(\frac{k\pi h}{2}\right).$$
+```math
+\frac{u_{j-1} - 2u_j + u_{j+1}}{h^2} = -\lambda_k\, u_j, \qquad \lambda_k = \frac{4}{h^2}\sin^2\!\left(\frac{k\pi h}{2}\right).
+```
 
 With h = 0.01 m there are 99 grid waves. The smoothest has λ_1 = 9.8688, almost π^2 = 9.8696. The roughest has λ_99 = 39990.13, almost 4/h^2 = 40000. Any starting profile is a sum of these waves, and each one moves on its own.
 

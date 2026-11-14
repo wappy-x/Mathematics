@@ -34,47 +34,53 @@ Bars: the average claim within each region, $4,100, $4,500 and $9,800. Flat line
 
 ## The formula
 
-Notation first, in words. As on [Expectation](02-expectation.md), $E[X]$ is the long-run average value of $X$. A vertical bar inside the brackets means "given", as in $P(A \mid B)$: $E[X \mid Y = y]$ is read "the average of X given that Y equals y". A capital sigma, Σ, with x beneath it means: add one term for every value x that X can take.
+Notation first, in words. As on [Expectation](02-expectation.md), $`E[X]`$ is the long-run average value of $`X`$. A vertical bar inside the brackets means "given", as in $`P(A \mid B)`$: $`E[X \mid Y = y]`$ is read "the average of X given that Y equals y". A capital sigma, Σ, with x beneath it means: add one term for every value x that X can take.
 
-Let $X$ be the size of one claim and $Y$ its region. The joint table ([Two variables at once](04-joint-distributions-and-covariance.md)) gives $P(X = x, Y = y)$, the chance that a claim has size $x$ and region $y$.
+Let $`X`$ be the size of one claim and $`Y`$ its region. The joint table ([Two variables at once](04-joint-distributions-and-covariance.md)) gives $`P(X = x, Y = y)`$, the chance that a claim has size $`x`$ and region $`y`$.
 
-$$E[X \mid Y = y] \;=\; \sum_x x\,P(X = x \mid Y = y) \;=\; \frac{\sum_x x\,P(X = x,\ Y = y)}{P(Y = y)}$$
+```math
+E[X \mid Y = y] \;=\; \sum_x x\,P(X = x \mid Y = y) \;=\; \frac{\sum_x x\,P(X = x,\ Y = y)}{P(Y = y)}
+```
 
 **Read it aloud:** keep only the row of the table for region y, rescale its chances so they add to one, and take the ordinary average.
 
-Doing this for every region gives a rule $g$ that turns a region into a number: $g(y) = E[X \mid Y = y]$. Feeding in the region that actually occurs gives a new random amount:
+Doing this for every region gives a rule $`g`$ that turns a region into a number: $`g(y) = E[X \mid Y = y]`$. Feeding in the region that actually occurs gives a new random amount:
 
-$$E[X \mid Y] \;=\; g(Y)$$
+```math
+E[X \mid Y] \;=\; g(Y)
+```
 
 **Read it aloud:** the average of X given Y is the regional average of whichever region turns up.
 
 The tower rule says that averaging this random amount returns the plain average:
 
-$$E\big[\,E[X \mid Y]\,\big] \;=\; \sum_y P(Y = y)\,E[X \mid Y = y] \;=\; E[X]$$
+```math
+E\big[\,E[X \mid Y]\,\big] \;=\; \sum_y P(Y = y)\,E[X \mid Y = y] \;=\; E[X]
+```
 
 **Read it aloud:** the average of the group averages, each weighted by its group's chance, is the overall average.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $X$ | the uncertain amount being averaged | one claim's size, $1,000, $5,000 or $20,000 | a bigger claim raises every average it enters |
-| $Y$ | the information: which group the outcome falls in | the claim's region | — |
-| $x$, $y$ | one value of $X$, of $Y$ | $20,000; Coast | — |
-| $P(X = x, Y = y)$ | a cell of the joint table: chance of size x and region y | Coast and $20,000: 0.08 | more weight on that cell pulls its region's average toward x |
-| $P(Y = y)$ | a row total: chance of region y | Coast: 0.20 | a region's average moves the overall average more |
-| $E[X]$ | the plain average of X | $5,360 | — |
-| $E[X \mid Y = y]$ | the average of X among outcomes with Y = y: one number | Coast: $9,800 | — |
-| $g$ | the rule that sends each region to its average | North to $4,100, Inland to $4,500, Coast to $9,800 | — |
-| $E[X \mid Y]$ | $g(Y)$: a random amount, fixed once Y is known | $4,100, $4,500 or $9,800 | — |
-| $h$, $c$ | a rival guess: a rule by region, or one number | $5,360 for every claim | its squared error rises above the regional averages' |
-| $N$, $n$ | number of claims in a month, and one value of it | 0, 1, 2 or 3; average 1.70 | the month's total rises in step |
-| $S$, $X_1$, $X_2$, $X_3$ | the month's total, $X_1 + \dots + X_N$, and its claims' sizes | average total $9,112; each claim $5,360 | — |
+| $`X`$ | the uncertain amount being averaged | one claim's size, $1,000, $5,000 or $20,000 | a bigger claim raises every average it enters |
+| $`Y`$ | the information: which group the outcome falls in | the claim's region | — |
+| $`x`$, $`y`$ | one value of $`X`$, of $`Y`$ | $20,000; Coast | — |
+| $`P(X = x, Y = y)`$ | a cell of the joint table: chance of size x and region y | Coast and $20,000: 0.08 | more weight on that cell pulls its region's average toward x |
+| $`P(Y = y)`$ | a row total: chance of region y | Coast: 0.20 | a region's average moves the overall average more |
+| $`E[X]`$ | the plain average of X | $5,360 | — |
+| $`E[X \mid Y = y]`$ | the average of X among outcomes with Y = y: one number | Coast: $9,800 | — |
+| $`g`$ | the rule that sends each region to its average | North to $4,100, Inland to $4,500, Coast to $9,800 | — |
+| $`E[X \mid Y]`$ | $`g(Y)`$: a random amount, fixed once Y is known | $4,100, $4,500 or $9,800 | — |
+| $`h`$, $`c`$ | a rival guess: a rule by region, or one number | $5,360 for every claim | its squared error rises above the regional averages' |
+| $`N`$, $`n`$ | number of claims in a month, and one value of it | 0, 1, 2 or 3; average 1.70 | the month's total rises in step |
+| $`S`$, $`X_1`$, $`X_2`$, $`X_3`$ | the month's total, $`X_1 + \dots + X_N`$, and its claims' sizes | average total $9,112; each claim $5,360 | — |
 
 ### When it holds
 
-- **Every region has a positive chance.** The formula divides by $P(Y = y)$. A region with chance zero has no average from the table; information of that kind needs the measure-based construction of wing 10, [Conditional expectation on a sigma-algebra](../../10-Measure%20and%20integration/09-Conditional%20Expectation/02-conditional-expectation-on-a-sigma-algebra.md).
+- **Every region has a positive chance.** The formula divides by $`P(Y = y)`$. A region with chance zero has no average from the table; information of that kind needs the measure-based construction of wing 10, [Conditional expectation on a sigma-algebra](../../10-Measure%20and%20integration/09-Conditional%20Expectation/02-conditional-expectation-on-a-sigma-algebra.md).
 - **The average of X exists.** On a finite table it always does. If a claim law's average is infinite, the tower says nothing useful.
-- **The weights are the real chances of each region.** The tower weights each regional average by $P(Y = y)$. Weighting the three averages equally gives $6,133.33 instead of $5,360.
-- **For the random-sum shortcut of Step 4 only: claim sizes do not depend on how many claims arrive.** If busy months are storm months with coastal claims, $E[N] \times E[X]$ gives $9,112 while the true average is $11,776. The tower itself still holds and finds the right answer.
+- **The weights are the real chances of each region.** The tower weights each regional average by $`P(Y = y)`$. Weighting the three averages equally gives $6,133.33 instead of $5,360.
+- **For the random-sum shortcut of Step 4 only: claim sizes do not depend on how many claims arrive.** If busy months are storm months with coastal claims, $`E[N] \times E[X]`$ gives $9,112 while the true average is $11,776. The tower itself still holds and finds the right answer.
 
 ---
 
@@ -82,50 +88,54 @@ $$E\big[\,E[X \mid Y]\,\big] \;=\; \sum_y P(Y = y)\,E[X \mid Y = y] \;=\; E[X]$$
 
 ### Step 0: grouping the terms of a sum does not change the sum
 
-The plain average $E[X]$ is a sum over every cell of the table: size times chance. Sorting those cells by region before adding them cannot change the total. Everything below is that sentence, done carefully.
+The plain average $`E[X]`$ is a sum over every cell of the table: size times chance. Sorting those cells by region before adding them cannot change the total. Everything below is that sentence, done carefully.
 
 ### Step 1: a conditional average is a plain average with rescaled chances
 
-The Coast row of the table holds the chances 0.06, 0.06 and 0.08 for $1,000, $5,000 and $20,000. They add to 0.20, not 1: they are chances out of all claims. Given that a claim is from the Coast, the chances out of Coast claims are each divided by 0.20: 0.30, 0.30, 0.40. That division is conditional probability, $P(X = x \mid Y = y) = P(X = x, Y = y) / P(Y = y)$ ([Conditional probability](../01-Chance%20and%20Events/05-conditional-probability.md)).
+The Coast row of the table holds the chances 0.06, 0.06 and 0.08 for $1,000, $5,000 and $20,000. They add to 0.20, not 1: they are chances out of all claims. Given that a claim is from the Coast, the chances out of Coast claims are each divided by 0.20: 0.30, 0.30, 0.40. That division is conditional probability, $`P(X = x \mid Y = y) = P(X = x, Y = y) / P(Y = y)`$ ([Conditional probability](../01-Chance%20and%20Events/05-conditional-probability.md)).
 
 With rescaled chances, the average is the ordinary one: 0.30 × 1,000 + 0.30 × 5,000 + 0.40 × 20,000 = 9,800 dollars.
 
 ### Step 2: before the region is known, the regional average is random
 
-Once $Y$ is revealed, $E[X \mid Y]$ is one number. Before, it is a random variable ([Random variables](01-random-variables-and-distributions.md)) whose law is read off the row totals: $4,100 with chance 0.50, $4,500 with chance 0.30, $9,800 with chance 0.20.
+Once $`Y`$ is revealed, $`E[X \mid Y]`$ is one number. Before, it is a random variable ([Random variables](01-random-variables-and-distributions.md)) whose law is read off the row totals: $4,100 with chance 0.50, $4,500 with chance 0.30, $9,800 with chance 0.20.
 
 ### Step 3: the tower rule
 
-Average $E[X \mid Y]$ with those weights:
+Average $`E[X \mid Y]`$ with those weights:
 
-$$\sum_y P(Y = y) \cdot \frac{\sum_x x\,P(X = x, Y = y)}{P(Y = y)} \;=\; \sum_y \sum_x x\,P(X = x, Y = y) \;=\; \sum_x x\,P(X = x) \;=\; E[X].$$
+```math
+\sum_y P(Y = y) \cdot \frac{\sum_x x\,P(X = x, Y = y)}{P(Y = y)} \;=\; \sum_y \sum_x x\,P(X = x, Y = y) \;=\; \sum_x x\,P(X = x) \;=\; E[X].
+```
 
-The region's chance multiplies and divides, so it cancels. What remains is every cell, size times chance, added region by region; adding down the columns instead gives the size law $P(X = x)$: 0.51, 0.33, 0.16. That is Step 0. For the claims, 0.50 × 4,100 + 0.30 × 4,500 + 0.20 × 9,800 = 2,050 + 1,350 + 1,960 = 5,360 dollars.
+The region's chance multiplies and divides, so it cancels. What remains is every cell, size times chance, added region by region; adding down the columns instead gives the size law $`P(X = x)`$: 0.51, 0.33, 0.16. That is Step 0. For the claims, 0.50 × 4,100 + 0.30 × 4,500 + 0.20 × 9,800 = 2,050 + 1,350 + 1,960 = 5,360 dollars.
 
 ### Step 4: split a hard average into easy ones
 
-The insurer wants the average total paid in a month, $S$. The number of claims $N$ is random: none with chance 0.10, one with 0.30, two with 0.40, three with 0.20. Each claim's size follows the table. Averaging $S$ directly means listing every possible month.
+The insurer wants the average total paid in a month, $`S`$. The number of claims $`N`$ is random: none with chance 0.10, one with 0.30, two with 0.40, three with 0.20. Each claim's size follows the table. Averaging $`S`$ directly means listing every possible month.
 
-Condition on $N$ instead. Given $N = n$, the month is $n$ claims. Each still follows the table, because size does not depend on the count. An average of a sum is the sum of the averages, so $E[S \mid N = n] = n \times 5{,}360$: $0, $5,360, $10,720 or $16,080. As a random amount, $E[S \mid N] = N \times E[X]$. The tower rule then averages over $N$:
+Condition on $`N`$ instead. Given $`N = n`$, the month is $`n`$ claims. Each still follows the table, because size does not depend on the count. An average of a sum is the sum of the averages, so $`E[S \mid N = n] = n \times 5{,}360`$: $0, $5,360, $10,720 or $16,080. As a random amount, $`E[S \mid N] = N \times E[X]`$. The tower rule then averages over $`N`$:
 
-$$E[S] \;=\; E\big[\,E[S \mid N]\,\big] \;=\; E[N]\,E[X] \;=\; 1.70 \times 5{,}360 \;=\; 9{,}112.$$
+```math
+E[S] \;=\; E\big[\,E[S \mid N]\,\big] \;=\; E[N]\,E[X] \;=\; 1.70 \times 5{,}360 \;=\; 9{,}112.
+```
 
 One hard average became two easy ones. The identity is Wald's; actuaries call it frequency times severity.
 
 ### Step 5: the conditional average is the best guess from the information
 
-Why this particular number? Among all guesses that may use the region and nothing else, $E[X \mid Y]$ has the smallest average squared error. Guessing $4,100, $4,500 or $9,800 by region leaves an average squared error of 39,072,000 dollars squared. Guessing $5,360 for every claim leaves 44,030,400, which is the variance of $X$ ([Variance](03-variance-and-standard-deviation.md)). Shifting every regional guess up or down by $500 leaves 39,322,000: worse by exactly 500 × 500.
+Why this particular number? Among all guesses that may use the region and nothing else, $`E[X \mid Y]`$ has the smallest average squared error. Guessing $4,100, $4,500 or $9,800 by region leaves an average squared error of 39,072,000 dollars squared. Guessing $5,360 for every claim leaves 44,030,400, which is the variance of $`X`$ ([Variance](03-variance-and-standard-deviation.md)). Shifting every regional guess up or down by $500 leaves 39,322,000: worse by exactly 500 × 500.
 
 The difference, 4,958,400, is the variance of the regional averages: the variance splits into spread within regions plus spread between them. Region removes 11% of the squared error. Most of what makes a claim large is not its region.
 
 <details>
 <summary>Detailed proof: the best guess, and the variance split</summary>
 
-Fix a region $y$ and write $g = g(y)$. For any number $c$, expand $(x - c)^2 = (x - g)^2 + 2(x - g)(g - c) + (g - c)^2$ and average with the chances $P(X = x \mid Y = y)$. The middle term averages to $2(g - c)$ times $\sum_x (x - g)\,P(X = x \mid Y = y) = g - g = 0$. So within the region, the average squared error of guess $c$ is the within-region spread plus $(g - c)^2$.
+Fix a region $`y`$ and write $`g = g(y)`$. For any number $`c`$, expand $`(x - c)^2 = (x - g)^2 + 2(x - g)(g - c) + (g - c)^2`$ and average with the chances $`P(X = x \mid Y = y)`$. The middle term averages to $`2(g - c)`$ times $`\sum_x (x - g)\,P(X = x \mid Y = y) = g - g = 0`$. So within the region, the average squared error of guess $`c`$ is the within-region spread plus $`(g - c)^2`$.
 
-Now let the guess $h(y)$ depend on the region, weight each region by $P(Y = y)$ and add. The average squared error of $h$ is the average within-region spread, 39,072,000 here, plus $\sum_y P(Y = y)\,(g(y) - h(y))^2$. The second part is never negative and is zero only when $h = g$. So $g$ is the best guess. Shifting every guess by 500 adds 500 × 500 = 250,000.
+Now let the guess $`h(y)`$ depend on the region, weight each region by $`P(Y = y)`$ and add. The average squared error of $`h`$ is the average within-region spread, 39,072,000 here, plus $`\sum_y P(Y = y)\,(g(y) - h(y))^2`$. The second part is never negative and is zero only when $`h = g`$. So $`g`$ is the best guess. Shifting every guess by 500 adds 500 × 500 = 250,000.
 
-Take $h$ to be the constant $E[X]$. The error on the left is then the variance of $X$, and the second part is $\sum_y P(Y = y)\,(g(y) - E[X])^2$, the variance of the regional averages, by Step 3. That is the variance split: 44,030,400 = 39,072,000 + 4,958,400.
+Take $`h`$ to be the constant $`E[X]`$. The error on the left is then the variance of $`X`$, and the second part is $`\sum_y P(Y = y)\,(g(y) - E[X])^2`$, the variance of the regional averages, by Step 3. That is the variance split: 44,030,400 = 39,072,000 + 4,958,400.
 
 </details>
 
@@ -161,9 +171,9 @@ A claim of unknown region costs $5,360 on average, a Coast claim $9,800, a month
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Average the three regional averages equally | $6,133.33 | Coast is one claim in five, not one in three: the tower weights by $P(Y = y)$ |
+| Average the three regional averages equally | $6,133.33 | Coast is one claim in five, not one in three: the tower weights by $`P(Y = y)`$ |
 | Forget to divide the Coast row by 0.20 | $1,960 | Chances out of all claims, not out of Coast claims: the row does not add to one |
-| Use $E[N] \times E[X]$ when three-claim months are storm months with Coast claims | $9,112 (right: $11,776) | Claim size now depends on $N$; conditioning on $N$ and using 9,800 on the three-claim branch gives the truth |
+| Use $`E[N] \times E[X]`$ when three-claim months are storm months with Coast claims | $9,112 (right: $11,776) | Claim size now depends on $`N`$; conditioning on $`N`$ and using 9,800 on the three-claim branch gives the truth |
 
 The code prints all three.
 
@@ -556,10 +566,10 @@ The outputs agree line for line. Each simulated average sits within about one st
 
 Lean proves the tower rule, the best guess and the random-sum shortcut whenever the conditions below hold, and the card's numbers exactly.
 
-- Suppose $Y$ takes finitely many values, each with a positive chance, and the average of $X$ exists. Then $E\big[E[X \mid Y]\big] = E[X]$.
-- Take the same setting. Then $\sum_y P(Y = y)\,E[X \mid Y = y] = E[X]$.
-- Suppose also that $X$ has a finite variance, and $h$ is any guess that uses only the region. Then the average squared error of $h$ is that of $g$, plus $\sum_y P(Y = y)\,(g(y) - h(y))^2$. That added sum is never negative, so $g$ is the best guess.
-- Suppose every claim follows the same law, the count $N$ has a fixed cap, and $N$ does not depend on any claim's size. Then $E[S] = E[N] \times E[X]$.
+- Suppose $`Y`$ takes finitely many values, each with a positive chance, and the average of $`X`$ exists. Then $`E\big[E[X \mid Y]\big] = E[X]`$.
+- Take the same setting. Then $`\sum_y P(Y = y)\,E[X \mid Y = y] = E[X]`$.
+- Suppose also that $`X`$ has a finite variance, and $`h`$ is any guess that uses only the region. Then the average squared error of $`h`$ is that of $`g`$, plus $`\sum_y P(Y = y)\,(g(y) - h(y))^2`$. That added sum is never negative, so $`g`$ is the best guess.
+- Suppose every claim follows the same law, the count $`N`$ has a fixed cap, and $`N`$ does not depend on any claim's size. Then $`E[S] = E[N] \times E[X]`$.
 - From the table, the regional averages are $4,100, $4,500 and $9,800, and the overall average is $5,360 by rows and by columns.
 - Equal weights on the three regional averages give 18,400 / 3, about $6,133.33, not $5,360.
 - The variance of X is 44,030,400. It splits into 39,072,000 within regions plus 4,958,400 between them.
@@ -805,12 +815,12 @@ example : ((3 : ℚ) / 10 * 5360 + 4 / 10 * (2 * 5360) + 2 / 10 * (3 * 9800)) = 
 ## The usual mistake
 
 > [!warning]
-> **Treating $E[X \mid Y]$ as one number.** $E[X]$ is a number. $E[X \mid Y = \text{Coast}]$ is a number. $E[X \mid Y]$ is not: it is a random amount that becomes $4,100, $4,500 or $9,800 once the region is known. The tower rule averages that random amount; a single number has nothing to average.
+> **Treating $`E[X \mid Y]`$ as one number.** $`E[X]`$ is a number. $`E[X \mid Y = \text{Coast}]`$ is a number. $`E[X \mid Y]`$ is not: it is a random amount that becomes $4,100, $4,500 or $9,800 once the region is known. The tower rule averages that random amount; a single number has nothing to average.
 >
 > - **Equal weights on the groups.** Averaging $4,100, $4,500 and $9,800 as if each region were equally common gives $6,133.33, too high. The weights are the regions' chances.
 > - **Forgetting to rescale.** Summing size times chance along the Coast row gives $1,960, a number far below every claim size. The row's chances add to 0.20; divide by it.
 > - **Reading a group average as a cause.** Coast claims average $9,800, but moving a house inland does not make its claims smaller. The table says which claims occur together, not what produces them.
-> - **Multiplying averages across dependence.** $E[N] \times E[X]$ needs claim size independent of the count. In the storm case it gives $9,112 against a true $11,776; the tower, used branch by branch, still gets it right.
+> - **Multiplying averages across dependence.** $`E[N] \times E[X]`$ needs claim size independent of the count. In the storm case it gives $9,112 against a true $11,776; the tower, used branch by branch, still gets it right.
 
 ---
 
@@ -818,7 +828,7 @@ example : ((3 : ℚ) / 10 * 5360 + 4 / 10 * (2 * 5360) + 2 / 10 * (3 * 9800)) = 
 
 - **Insurance pricing.** A regional premium is the region's average claim times its expected claim count; by the tower rule, the regional premiums average back to the book's. Step 4 is the actuary's frequency times severity.
 - **Polls by region.** A poll that averages each region's answers and weights them by population share is using the tower rule; weighting regions equally is the $6,133.33 mistake.
-- **Regression.** $E[X \mid Y = y]$ plotted against $y$ is the regression curve; Step 5 is why least squares aims at it, and a straight regression line is the best straight-line fit to it.
+- **Regression.** $`E[X \mid Y = y]`$ plotted against $`y`$ is the regression curve; Step 5 is why least squares aims at it, and a straight regression line is the best straight-line fit to it.
 - **Analysis of variance.** Splitting spread into within-group and between-group parts, as in Step 5, is the core of that statistical method.
 
 > **Say it back**
@@ -829,7 +839,7 @@ example : ((3 : ℚ) / 10 * 5360 + 4 / 10 * (2 * 5360) + 2 / 10 * (3 * 9800)) = 
 ## What this builds on
 
 - [Two variables at once](04-joint-distributions-and-covariance.md): the joint table of two random variables, its row and column totals.
-- [Conditional probability](../01-Chance%20and%20Events/05-conditional-probability.md): $P(A \mid B)$, the rescaling that turns a row of the table into a law of its own.
+- [Conditional probability](../01-Chance%20and%20Events/05-conditional-probability.md): $`P(A \mid B)`$, the rescaling that turns a row of the table into a law of its own.
 
 ## Where this goes next
 

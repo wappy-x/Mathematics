@@ -40,53 +40,63 @@ Orange: the market's forward curve, flat inside each gap and stepping at each qu
 
 Notation first, in words.
 
-- The **short rate** $r(t)$ is the rate for borrowing over one instant at time $t$, in years from today.
-- $dr$ is its change over the next instant, $dt$ is that instant's length, and $dW$ is a random kick with mean zero and variance $dt$: the Brownian step of [Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md).
-- $D(T)$ is the discount factor: today's price of a dollar due at time $T$.
-- $f(0,t)$ is today's forward rate for the instant at $t$, and $f'(0,t)$ is its slope, how fast it changes with the date. They are tied by $D(T) = e^{-\int_0^T f(0,s)\,ds}$: a future dollar is discounted at the forward rate of every instant on the way.
-- $a$ is the pull speed and $\sigma$ the noise size, Vasicek's two constants.
-- $\theta(t)$ is the drift term.
+- The **short rate** $`r(t)`$ is the rate for borrowing over one instant at time $`t`$, in years from today.
+- $`dr`$ is its change over the next instant, $`dt`$ is that instant's length, and $`dW`$ is a random kick with mean zero and variance $`dt`$: the Brownian step of [Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md).
+- $`D(T)`$ is the discount factor: today's price of a dollar due at time $`T`$.
+- $`f(0,t)`$ is today's forward rate for the instant at $`t`$, and $`f'(0,t)`$ is its slope, how fast it changes with the date. They are tied by $`D(T) = e^{-\int_0^T f(0,s)\,ds}`$: a future dollar is discounted at the forward rate of every instant on the way.
+- $`a`$ is the pull speed and $`\sigma`$ the noise size, Vasicek's two constants.
+- $`\theta(t)`$ is the drift term.
 
 The model:
 
-$$dr \;=\; \bigl(\theta(t) - a\,r\bigr)\,dt \;+\; \sigma\,dW$$
+```math
+dr \;=\; \bigl(\theta(t) - a\,r\bigr)\,dt \;+\; \sigma\,dW
+```
 
 The drift that fits the curve:
 
-$$\boxed{\;\theta(t) \;=\; f'(0,t) \;+\; a\,f(0,t) \;+\; \frac{\sigma^2}{2a}\bigl(1 - e^{-2at}\bigr)\;}$$
+```math
+\boxed{\;\theta(t) \;=\; f'(0,t) \;+\; a\,f(0,t) \;+\; \frac{\sigma^2}{2a}\bigl(1 - e^{-2at}\bigr)\;}
+```
 
 **Read it aloud:** the push at each date is the forward curve's slope, plus the pull speed times the forward level, plus a small lift that pays for the noise.
 
-Once theta is set, a zero-coupon bond (one dollar at $T$, nothing before) is worth, at a later date $t$ with the short rate at $r(t)$:
+Once theta is set, a zero-coupon bond (one dollar at $`T`$, nothing before) is worth, at a later date $`t`$ with the short rate at $`r(t)`$:
 
-$$P(t,T) \;=\; \frac{D(T)}{D(t)}\,\exp\!\Bigl(B\,f(0,t) \;-\; \frac{\sigma^2}{4a}\bigl(1 - e^{-2at}\bigr)B^2 \;-\; B\,r(t)\Bigr), \qquad B = B(t,T) = \frac{1 - e^{-a(T-t)}}{a}$$
+```math
+P(t,T) \;=\; \frac{D(T)}{D(t)}\,\exp\!\Bigl(B\,f(0,t) \;-\; \frac{\sigma^2}{4a}\bigl(1 - e^{-2at}\bigr)B^2 \;-\; B\,r(t)\Bigr), \qquad B = B(t,T) = \frac{1 - e^{-a(T-t)}}{a}
+```
 
-Everything in front of $e^{-B\,r(t)}$ is called $A(t,T)$. At $t = 0$ with the rate starting at the curve's own front end, $r(0) = f(0,0)$, this is $D(T)$ for every $T$. That is the fit, by construction.
+Everything in front of $`e^{-B\,r(t)}`$ is called $`A(t,T)`$. At $`t = 0`$ with the rate starting at the curve's own front end, $`r(0) = f(0,0)`$, this is $`D(T)`$ for every $`T`$. That is the fit, by construction.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $r(t)$, $r$ | the short rate: borrowing for one instant at time $t$ | starts at 3.9605 percent, the first forward | every bond falls; its logarithm by $B$ per unit of rate |
-| $t$, $T$ | today-to-date in years; $T$ a bond's payment date | 0 to 5 | a later $T$ is discounted longer |
-| $a$ | the pull speed: how hard the rate is drawn to its target | 0.3 a year, half-life 2.31 years | the noise fades faster; the lift shrinks |
-| $\sigma$ | the noise size, per year | 1 percent | the lift grows; zero prices stay fixed, theta rises |
-| $dW$, $dt$, $dr$ | a random kick with variance $dt$; one instant of time; the rate's change over it | — | — |
-| $\theta(t)$ | the drift: the push toward the moving target | 1.4400 percent a year at 2.5 years | the rate's mean path rises; bonds fall |
-| $f(0,t)$, $f'(0,t)$ | today's forward rate at $t$; its slope | 4.7569 percent in the third year; slope 0 inside a gap | theta rises with either |
-| $D(T)$ | today's price of a dollar due at $T$: the curve | 0.79621728 at five years | — |
-| $P(t,T)$ | the model's price at $t$ of a dollar due at $T$ | 0.848232 at 1.5 years, if the rate sits at its expected 4.5134 percent | — |
-| $B(t,T)$, $A$ | $B$: the bond's exposure to the rate, in years of the rate's memory left; $A$: everything in front of $e^{-B r}$ | $B$ = 2.589566 for $t = 0$, $T = 5$ | the bond swings more per unit of rate |
-| $x(t)$, $\varphi(t)$ | the rate's noise part, pulled to zero and starting there; its known part, the expected path | $\varphi$ = 4.5134 percent at 1.5 years | — |
-| $V(T)$ | the variance of the total rate paid from today to $T$ | 0.001561 at five years | the price lift from averaging grows |
+| $`r(t)`$, $`r`$ | the short rate: borrowing for one instant at time $`t`$ | starts at 3.9605 percent, the first forward | every bond falls; its logarithm by $`B`$ per unit of rate |
+| $`t`$, $`T`$ | today-to-date in years; $`T`$ a bond's payment date | 0 to 5 | a later $`T`$ is discounted longer |
+| $`a`$ | the pull speed: how hard the rate is drawn to its target | 0.3 a year, half-life 2.31 years | the noise fades faster; the lift shrinks |
+| $`\sigma`$ | the noise size, per year | 1 percent | the lift grows; zero prices stay fixed, theta rises |
+| $`dW`$, $`dt`$, $`dr`$ | a random kick with variance $`dt`$; one instant of time; the rate's change over it | — | — |
+| $`\theta(t)`$ | the drift: the push toward the moving target | 1.4400 percent a year at 2.5 years | the rate's mean path rises; bonds fall |
+| $`f(0,t)`$, $`f'(0,t)`$ | today's forward rate at $`t`$; its slope | 4.7569 percent in the third year; slope 0 inside a gap | theta rises with either |
+| $`D(T)`$ | today's price of a dollar due at $`T`$: the curve | 0.79621728 at five years | — |
+| $`P(t,T)`$ | the model's price at $`t`$ of a dollar due at $`T`$ | 0.848232 at 1.5 years, if the rate sits at its expected 4.5134 percent | — |
+| $`B(t,T)`$, $`A`$ | $`B`$: the bond's exposure to the rate, in years of the rate's memory left; $`A`$: everything in front of $`e^{-B r}`$ | $`B`$ = 2.589566 for $`t = 0`$, $`T = 5`$ | the bond swings more per unit of rate |
+| $`x(t)`$, $`\varphi(t)`$ | the rate's noise part, pulled to zero and starting there; its known part, the expected path | $`\varphi`$ = 4.5134 percent at 1.5 years | — |
+| $`V(T)`$ | the variance of the total rate paid from today to $`T`$ | 0.001561 at five years | the price lift from averaging grows |
 
 Two helper pieces, used in Why it works. The **lift** is how far the rate's expected path sits above the forward curve:
 
-$$\text{lift}(t) \;=\; \frac{\sigma^2}{2a^2}\bigl(1 - e^{-at}\bigr)^2$$
+```math
+\text{lift}(t) \;=\; \frac{\sigma^2}{2a^2}\bigl(1 - e^{-at}\bigr)^2
+```
 
 It is 0.0335 percent at five years. The variance of the rate paid over the whole life is
 
-$$V(T) \;=\; \frac{\sigma^2}{a^2}\Bigl(T - 2B(0,T) + \frac{1 - e^{-2aT}}{2a}\Bigr)$$
+```math
+V(T) \;=\; \frac{\sigma^2}{a^2}\Bigl(T - 2B(0,T) + \frac{1 - e^{-2aT}}{2a}\Bigr)
+```
 
-**Existence, uniqueness and the edges.** For fixed $a$ and $\sigma$, theta exists wherever the forward curve has a slope, and it is unique: the curve fixes it with no freedom left. Where the forward jumps, as it does at each quoted date on this curve, the slope is a one-off step and theta carries a **kick**: at that instant the rate is lifted by the size of the jump. As $a$ falls to zero the formula tends to $f'(0,t) + \sigma^2 t$, the Ho-Lee model's drift, with no pull at all. As $\sigma$ falls to zero the lift vanishes and the rate simply walks along the forward curve.
+**Existence, uniqueness and the edges.** For fixed $`a`$ and $`\sigma`$, theta exists wherever the forward curve has a slope, and it is unique: the curve fixes it with no freedom left. Where the forward jumps, as it does at each quoted date on this curve, the slope is a one-off step and theta carries a **kick**: at that instant the rate is lifted by the size of the jump. As $`a`$ falls to zero the formula tends to $`f'(0,t) + \sigma^2 t`$, the Ho-Lee model's drift, with no pull at all. As $`\sigma`$ falls to zero the lift vanishes and the rate simply walks along the forward curve.
 
 ### When it holds
 
@@ -102,13 +112,15 @@ $$V(T) \;=\; \frac{\sigma^2}{a^2}\Bigl(T - 2B(0,T) + \frac{1 - e^{-2aT}}{2a}\Big
 
 ### Step 0: a bond price depends on the rate's average path and its spread, and only the drift touches the average
 
-A zero-coupon bond pays one dollar at $T$. Its price today is the average, over every path the rate might take (weighted the pricing way, not by real-world odds), of the discount $e^{-\int_0^T r\,dt}$ ([A short-rate model](01-the-term-structure-equation.md)). In a Vasicek-type model the total rate paid, $\int_0^T r\,dt$, is normally distributed. So the price depends on two things only: the total's mean and its variance. The noise sets the variance, and the drift cannot change it. The drift sets the mean. A moving target can steer the mean path one date at a time, and a curve is one condition per date. That match of freedom to conditions is the whole idea.
+A zero-coupon bond pays one dollar at $`T`$. Its price today is the average, over every path the rate might take (weighted the pricing way, not by real-world odds), of the discount $`e^{-\int_0^T r\,dt}`$ ([A short-rate model](01-the-term-structure-equation.md)). In a Vasicek-type model the total rate paid, $`\int_0^T r\,dt`$, is normally distributed. So the price depends on two things only: the total's mean and its variance. The noise sets the variance, and the drift cannot change it. The drift sets the mean. A moving target can steer the mean path one date at a time, and a curve is one condition per date. That match of freedom to conditions is the whole idea.
 
 ### Step 1: split the rate into a known path and pure noise
 
-Write the rate as $r(t) = \varphi(t) + x(t)$. Here $\varphi(t)$ (phi) is a path known today, the rate's expected path. $x(t)$ is the noise part: it obeys $dx = -a\,x\,dt + \sigma\,dW$ and starts at zero. That is an Ornstein-Uhlenbeck process, pulled toward zero ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)). Adding the two equations shows the split works whenever
+Write the rate as $`r(t) = \varphi(t) + x(t)`$. Here $`\varphi(t)`$ (phi) is a path known today, the rate's expected path. $`x(t)`$ is the noise part: it obeys $`dx = -a\,x\,dt + \sigma\,dW`$ and starts at zero. That is an Ornstein-Uhlenbeck process, pulled toward zero ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)). Adding the two equations shows the split works whenever
 
-$$\theta(t) \;=\; \varphi'(t) + a\,\varphi(t)$$
+```math
+\theta(t) \;=\; \varphi'(t) + a\,\varphi(t)
+```
 
 So choosing theta and choosing the mean path are the same choice.
 
@@ -116,59 +128,69 @@ So choosing theta and choosing the mean path are the same choice.
 
 The known path comes out of the average untouched:
 
-$$P(0,T) \;=\; e^{-\int_0^T \varphi(t)\,dt}\;\cdot\;\text{average of } e^{-\int_0^T x\,dt}$$
+```math
+P(0,T) \;=\; e^{-\int_0^T \varphi(t)\,dt}\;\cdot\;\text{average of } e^{-\int_0^T x\,dt}
+```
 
-The total noise $\int_0^T x\,dt$ is normal with mean zero and variance $V(T)$. For a normal quantity with mean zero and variance $V$, the average of its negative exponential is $e^{V/2}$: the exponential weighs low values more than it discounts high ones, so averaging lifts the price. Hence
+The total noise $`\int_0^T x\,dt`$ is normal with mean zero and variance $`V(T)`$. For a normal quantity with mean zero and variance $`V`$, the average of its negative exponential is $`e^{V/2}`$: the exponential weighs low values more than it discounts high ones, so averaging lifts the price. Hence
 
-$$P(0,T) \;=\; \exp\Bigl(-\int_0^T \varphi(t)\,dt \;+\; \tfrac12 V(T)\Bigr)$$
+```math
+P(0,T) \;=\; \exp\Bigl(-\int_0^T \varphi(t)\,dt \;+\; \tfrac12 V(T)\Bigr)
+```
 
 The Monte Carlo road in the code (an average over simulated random paths) measures that lift directly. At five years it finds 1.00078107, with standard error 0.00000781; the formula says 1.00078061.
 
 ### Step 3: force every price onto the curve
 
-The market says $P(0,T) = D(T) = e^{-\int_0^T f(0,s)\,ds}$ for every $T$. Setting the two exponents equal:
+The market says $`P(0,T) = D(T) = e^{-\int_0^T f(0,s)\,ds}`$ for every $`T`$. Setting the two exponents equal:
 
-$$\int_0^T \varphi(t)\,dt \;=\; \int_0^T f(0,t)\,dt \;+\; \tfrac12 V(T) \quad\text{for every } T$$
+```math
+\int_0^T \varphi(t)\,dt \;=\; \int_0^T f(0,t)\,dt \;+\; \tfrac12 V(T) \quad\text{for every } T
+```
 
-Two quantities equal for every $T$ have equal slopes in $T$. The slope of $V$ is $(\sigma^2/a^2)(1 - e^{-aT})^2$. So
+Two quantities equal for every $`T`$ have equal slopes in $`T`$. The slope of $`V`$ is $`(\sigma^2/a^2)(1 - e^{-aT})^2`$. So
 
-$$\varphi(t) \;=\; f(0,t) \;+\; \frac{\sigma^2}{2a^2}\bigl(1 - e^{-at}\bigr)^2 \;=\; f(0,t) + \text{lift}(t)$$
+```math
+\varphi(t) \;=\; f(0,t) \;+\; \frac{\sigma^2}{2a^2}\bigl(1 - e^{-at}\bigr)^2 \;=\; f(0,t) + \text{lift}(t)
+```
 
 The expected rate must sit above the forward curve by exactly the lift. The lift adds up over the life to exactly half the variance, and that cancels the averaging bonus of Step 2. At five years both come to 0.000780.
 
 ### Step 4: read the drift off the mean path
 
-Put this $\varphi(t)$ into Step 1's rule, $\theta = \varphi' + a\varphi$:
+Put this $`\varphi(t)`$ into Step 1's rule, $`\theta = \varphi' + a\varphi`$:
 
-$$\theta(t) \;=\; f'(0,t) + a\,f(0,t) + \frac{\sigma^2}{a}\bigl(1 - e^{-at}\bigr)e^{-at} + \frac{\sigma^2}{2a}\bigl(1 - e^{-at}\bigr)^2$$
+```math
+\theta(t) \;=\; f'(0,t) + a\,f(0,t) + \frac{\sigma^2}{a}\bigl(1 - e^{-at}\bigr)e^{-at} + \frac{\sigma^2}{2a}\bigl(1 - e^{-at}\bigr)^2
+```
 
-The last two terms share the factor $1 - e^{-at}$; the bracket left over is $2e^{-at} + 1 - e^{-at} = 1 + e^{-at}$, and $(1 - e^{-at})(1 + e^{-at}) = 1 - e^{-2at}$. That is the boxed formula.
+The last two terms share the factor $`1 - e^{-at}`$; the bracket left over is $`2e^{-at} + 1 - e^{-at} = 1 + e^{-at}`$, and $`(1 - e^{-at})(1 + e^{-at}) = 1 - e^{-2at}`$. That is the boxed formula.
 
-Uniqueness comes from the same chain run backwards. The curve fixes $\int_0^T \varphi$ for every $T$, so it fixes $\varphi$, so it fixes theta. Nothing was chosen along the way except $a$ and $\sigma$.
+Uniqueness comes from the same chain run backwards. The curve fixes $`\int_0^T \varphi`$ for every $`T`$, so it fixes $`\varphi`$, so it fixes theta. Nothing was chosen along the way except $`a`$ and $`\sigma`$.
 
 ### Step 5: the fit holds by construction, and at later dates too
 
-At $t = 0$, $B(0,T)$ multiplies $f(0,0) - r(0)$, which is zero, and the other correction has the factor $1 - e^{0} = 0$. The price formula returns $D(T)$ exactly. At a later date, the same split gives the price in terms of the noise part $x(t)$. Substituting $x(t) = r(t) - f(0,t) - \text{lift}(t)$ turns it into the $A$, $B$ form in The formula.
+At $`t = 0`$, $`B(0,T)`$ multiplies $`f(0,0) - r(0)`$, which is zero, and the other correction has the factor $`1 - e^{0} = 0`$. The price formula returns $`D(T)`$ exactly. At a later date, the same split gives the price in terms of the noise part $`x(t)`$. Substituting $`x(t) = r(t) - f(0,t) - \text{lift}(t)`$ turns it into the $`A`$, $`B`$ form in The formula.
 
 <details>
 <summary>Detailed proof: the bond price at a later date</summary>
 
-Fix $t < T$ and condition on the noise part $x(t)$. From $t$ on, $x$ decays as $x(t)e^{-a(u-t)}$ plus fresh noise, so $\int_t^T x\,du$ is normal with mean $B(t,T)\,x(t)$ and variance $V(T - t)$, the same formula as $V$ with the clock restarted.
+Fix $`t < T`$ and condition on the noise part $`x(t)`$. From $`t`$ on, $`x`$ decays as $`x(t)e^{-a(u-t)}`$ plus fresh noise, so $`\int_t^T x\,du`$ is normal with mean $`B(t,T)\,x(t)`$ and variance $`V(T - t)`$, the same formula as $`V`$ with the clock restarted.
 
-The known path contributes $\int_t^T \varphi = \int_t^T f(0,u)\,du + \tfrac12\bigl(V(T) - V(t)\bigr)$, by Step 3 at two dates. And $e^{-\int_t^T f(0,u)\,du} = D(T)/D(t)$. So
+The known path contributes $`\int_t^T \varphi = \int_t^T f(0,u)\,du + \tfrac12\bigl(V(T) - V(t)\bigr)`$, by Step 3 at two dates. And $`e^{-\int_t^T f(0,u)\,du} = D(T)/D(t)`$. So
 
-$$P(t,T) = \frac{D(T)}{D(t)}\exp\Bigl(-\tfrac12\bigl[V(T) - V(t) - V(T-t)\bigr] - B\,x(t)\Bigr)$$
+$`\displaystyle P(t,T) = \frac{D(T)}{D(t)}\exp\Bigl(-\tfrac12\bigl[V(T) - V(t) - V(T-t)\bigr] - B\,x(t)\Bigr)`$
 
-Write $E = e^{-at}$ and $F = e^{-a(T-t)}$, so $e^{-aT} = EF$ and $aB = 1 - F$. Expanding the three $V$ terms, the plain time terms cancel and
+Write $`E = e^{-at}`$ and $`F = e^{-a(T-t)}`$, so $`e^{-aT} = EF`$ and $`aB = 1 - F`$. Expanding the three $`V`$ terms, the plain time terms cancel and
 
-$$\tfrac12\bigl[V(T) - V(t) - V(T-t)\bigr] = \frac{\sigma^2}{2a^3}\Bigl[2(1-E)(1-F) - \tfrac12(1-E^2)(1-F^2)\Bigr]$$
+$`\displaystyle \tfrac12\bigl[V(T) - V(t) - V(T-t)\bigr] = \frac{\sigma^2}{2a^3}\Bigl[2(1-E)(1-F) - \tfrac12(1-E^2)(1-F^2)\Bigr]`$
 
-Put $1 - F = aB$ and $1 - F^2 = aB(2 - aB)$. The bracket becomes $aB\bigl[(1-E)^2 + \tfrac12(1-E^2)\,aB\bigr]$,
-so the whole term equals $\frac{\sigma^2}{2a^2}(1-E)^2 B + \frac{\sigma^2}{4a}(1-E^2)B^2$, that is, $B\cdot\text{lift}(t) + \frac{\sigma^2}{4a}(1 - e^{-2at})B^2$. Substituting $x(t) = r(t) - f(0,t) - \text{lift}(t)$ cancels the $B\cdot\text{lift}(t)$ term and leaves the $A$, $B$ formula. The fourth road in the code tests the result independently: it simulates the rate to 1.5 years, prices the remaining bond with the formula, discounts along each path, and averages back to 0.79621618 against the market's 0.79621728, well inside the standard error of 0.00000337.
+Put $`1 - F = aB`$ and $`1 - F^2 = aB(2 - aB)`$. The bracket becomes $`aB\bigl[(1-E)^2 + \tfrac12(1-E^2)\,aB\bigr]`$,
+so the whole term equals $`\frac{\sigma^2}{2a^2}(1-E)^2 B + \frac{\sigma^2}{4a}(1-E^2)B^2`$, that is, $`B\cdot\text{lift}(t) + \frac{\sigma^2}{4a}(1 - e^{-2at})B^2`$. Substituting $`x(t) = r(t) - f(0,t) - \text{lift}(t)`$ cancels the $`B\cdot\text{lift}(t)`$ term and leaves the $`A`$, $`B`$ formula. The fourth road in the code tests the result independently: it simulates the rate to 1.5 years, prices the remaining bond with the formula, discounts along each path, and averages back to 0.79621618 against the market's 0.79621728, well inside the standard error of 0.00000337.
 
 </details>
 
-The same drift falls out of a different road. [Heath-Jarrow-Morton](../31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md) models the whole forward curve, lets no-arbitrage fix its drift, and recovers Hull-White when each forward's volatility fades as $\sigma e^{-a(T-t)}$. [The Hull-White tree](06-hull-white-trinomial-tree.md) finds theta numerically instead, one tree step at a time.
+The same drift falls out of a different road. [Heath-Jarrow-Morton](../31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md) models the whole forward curve, lets no-arbitrage fix its drift, and recovers Hull-White when each forward's volatility fades as $`\sigma e^{-a(T-t)}`$. [The Hull-White tree](06-hull-white-trinomial-tree.md) finds theta numerically instead, one tree step at a time.
 
 ---
 
@@ -176,7 +198,7 @@ The same drift falls out of a different road. [Heath-Jarrow-Morton](../31-Forwar
 
 The curve first: the six discount factors and the forward in each gap, from the bootstrap ladder.
 
-| Gap, years | $D$ at the gap's end | Forward in the gap, percent | Kick at the gap's end, percentage points |
+| Gap, years | $`D`$ at the gap's end | Forward in the gap, percent | Kick at the gap's end, percentage points |
 | --- | --- | --- | --- |
 | 0 to 0.5 | 0.98039216 | 3.9605 | +0.3073 |
 | 0.5 to 1 | 0.95969290 | 4.2679 | +0.2383 |
@@ -193,13 +215,13 @@ Theta at 2.5 years, and the five-year zero rebuilt from it:
 | --- | --- | --- |
 | forward at 2.5 years | the 2-to-3 gap | 4.7569 percent |
 | pull times forward | 0.3 × 4.7569 | 1.4271 percent |
-| noise term | $\frac{0.01^2}{0.6}(1 - e^{-1.5})$ | 0.0129 percent |
+| noise term | $`\frac{0.01^2}{0.6}(1 - e^{-1.5})`$ | 0.0129 percent |
 | **theta at 2.5 years** | 1.4271 + 0.0129 | **1.4400 percent a year** |
 | the target it pulls toward | theta ÷ 0.3 | 4.8001 percent |
-| forward rate paid, 0 to 5 years | $-\ln D(5)$, the gaps' forwards times their lengths | 0.227883 |
+| forward rate paid, 0 to 5 years | $`-\ln D(5)`$, the gaps' forwards times their lengths | 0.227883 |
 | lift paid, 0 to 5 years | integral of the lift | 0.000780 |
-| half the variance | $\tfrac12 V(5)$, with $B(0,5) = 2.589566$ | 0.000780 |
-| **five-year zero** | $e^{-0.227883 - 0.000780 + 0.000780}$ | **0.79621728** |
+| half the variance | $`\tfrac12 V(5)`$, with $`B(0,5) = 2.589566`$ | 0.000780 |
+| **five-year zero** | $`e^{-0.227883 - 0.000780 + 0.000780}`$ | **0.79621728** |
 
 The expected rate pays a little more than the forward curve, and the spread of outcomes hands exactly that back.
 
@@ -213,7 +235,7 @@ The five-year zero, rebuilt from a damaged theta, against the market's 0.7962172
 | --- | --- | --- |
 | Drop the noise term from theta | 0.79683882, 6,215.38 too much | The expected rate sits on the forward curve, and averaging over the spread lifts the price |
 | Drop the kicks at the quoted dates | 0.81007656, 138,592.78 too much | The slope term is gone, so the rate never climbs the curve's steps |
-| Start the rate at 4 percent, not the curve's 3.9605 | 0.79540379, 8,134.93 too little | The fit needs $r(0) = f(0,0)$; the gap fades only at the pull speed, worth $B(0,5) = 2.59$ years of it |
+| Start the rate at 4 percent, not the curve's 3.9605 | 0.79540379, 8,134.93 too little | The fit needs $`r(0) = f(0,0)`$; the gap fades only at the pull speed, worth $`B(0,5) = 2.59`$ years of it |
 | Plain Vasicek, fixed target 5 percent | 0.79985563, 36,383.48 too much | Three numbers cannot draw this curve |
 
 Vasicek's miss is not one number. It changes sign along the curve.
@@ -239,7 +261,7 @@ Both programs build the slice E curve (the code's name for the six-quote curve i
 - Road 1 is the closed form, which matches by construction.
 - Road 2 feeds theta, kicks included, into the equation for the rate's mean path, solves it step by step (fourth-order Runge-Kutta, 400 steps a year), and prices each quoted date from the result; it never uses the lift formula.
 - Road 3 simulates the noise part with exact pull-to-zero steps, 50 a year, 20,000 paths each paired with its mirror image, and measures the averaging lift.
-- Road 4 simulates to 1.5 years, prices the remaining bond with the $A$, $B$ formula, and discounts back.
+- Road 4 simulates to 1.5 years, prices the remaining bond with the $`A`$, $`B`$ formula, and discounts back.
 - Road 5 hands theta's formula plain Vasicek's own curve, differentiated numerically, and must get back Vasicek's fixed push, 0.3 × 5 percent = 0.01500000.
 
 The random numbers are a 64-bit linear congruential generator and Box-Muller, written out; the normal CDF is Simpson's rule.
@@ -636,17 +658,17 @@ The two outputs are identical, digit for digit, including the Monte Carlo lines:
 
 Lean proves the fit and its uniqueness for any pull speed above zero, any noise, and any forward curve with a continuous slope.
 
-- Suppose the rate starts at $f(0,0)$ and follows the model with the boxed $\theta(t)$. Then every zero-coupon price equals $D(T)$, for every $T \ge 0$.
-- Suppose another continuous drift, with the same start and the same noise, also prices every zero-coupon bond at $D(T)$. Then it equals the boxed $\theta(t)$ at every date from today on.
-- Take any date $T$. Then the lift, added up from 0 to $T$, comes to exactly $\tfrac12 V(T)$.
-- Suppose an expected path $\varphi$ is continuous and meets Step 3's condition at every date. Then $\varphi(t) = f(0,t) + \text{lift}(t)$ for every $t \ge 0$.
-- Take the path $f(0,t) + \text{lift}(t)$. Then its slope plus $a$ times the path is the boxed $\theta(t)$, at every date.
-- Take $t = 0$, with the rate at $f(0,0)$. Then the closed-form price $P(0,T)$ equals $D(T)$ for every $T$.
-- Take any dates $t$ and $T$. Then the variance identity at the end of the detailed proof holds exactly.
-- The first two rungs of the ladder are exact: $D(0.5) = 50/51$ and $D(1) = 500/521$.
-- At 2.5 years, $\sigma^2/(2a)$ is exactly 1/6000 and $2at$ is exactly 1.5.
+- Suppose the rate starts at $`f(0,0)`$ and follows the model with the boxed $`\theta(t)`$. Then every zero-coupon price equals $`D(T)`$, for every $`T \ge 0`$.
+- Suppose another continuous drift, with the same start and the same noise, also prices every zero-coupon bond at $`D(T)`$. Then it equals the boxed $`\theta(t)`$ at every date from today on.
+- Take any date $`T`$. Then the lift, added up from 0 to $`T`$, comes to exactly $`\tfrac12 V(T)`$.
+- Suppose an expected path $`\varphi`$ is continuous and meets Step 3's condition at every date. Then $`\varphi(t) = f(0,t) + \text{lift}(t)`$ for every $`t \ge 0`$.
+- Take the path $`f(0,t) + \text{lift}(t)`$. Then its slope plus $`a`$ times the path is the boxed $`\theta(t)`$, at every date.
+- Take $`t = 0`$, with the rate at $`f(0,0)`$. Then the closed-form price $`P(0,T)`$ equals $`D(T)`$ for every $`T`$.
+- Take any dates $`t`$ and $`T`$. Then the variance identity at the end of the detailed proof holds exactly.
+- The first two rungs of the ladder are exact: $`D(0.5) = 50/51`$ and $`D(1) = 500/521`$.
+- At 2.5 years, $`\sigma^2/(2a)`$ is exactly 1/6000 and $`2at`$ is exactly 1.5.
 - Plain Vasicek's fixed push, 0.3 times 5 percent, is exactly 0.015.
-- Take $E = e^{-at}$. Then Step 4's bracket $2E + 1 - E$ is $1 + E$, and $(1 - E)(1 + E) = 1 - E^2$.
+- Take $`E = e^{-at}`$. Then Step 4's bracket $`2E + 1 - E`$ is $`1 + E`$, and $`(1 - E)(1 + E) = 1 - E^2`$.
 
 The stepped curve with its kicks, the later-date price and every simulated number are left to the Python and Rust checks.
 
@@ -1393,11 +1415,11 @@ end HullWhiteModel
 ## The usual mistake
 
 > [!warning]
-> **Reading theta as a forecast of rates.** Theta is the curve rewritten as a push. It holds no view on where rates are going; it holds whatever the six quotes said this morning, plus a noise term. Only $a$ and $\sigma$ are the model's own, and they are fitted to option prices, never to the curve.
+> **Reading theta as a forecast of rates.** Theta is the curve rewritten as a push. It holds no view on where rates are going; it holds whatever the six quotes said this morning, plus a noise term. Only $`a`$ and $`\sigma`$ are the model's own, and they are fitted to option prices, never to the curve.
 >
-> - **Reading theta as the target level.** The target is theta ÷ $a$: 4.8001 percent at 2.5 years, not theta's 1.4400.
-> - **Starting the rate anywhere but the curve's front end.** The fit needs $r(0) = f(0,0)$, here 3.9605 percent. Starting at a round 4 percent makes the five-year zero 0.79540379, 8,134.93 dollars short on 10,000,000.
-> - **Dropping the slope term.** Writing theta as $a f + \dots$ without $f'$ leaves the rate unable to follow a rising curve: 138,592.78 dollars too much at five years here.
+> - **Reading theta as the target level.** The target is theta ÷ $`a`$: 4.8001 percent at 2.5 years, not theta's 1.4400.
+> - **Starting the rate anywhere but the curve's front end.** The fit needs $`r(0) = f(0,0)`$, here 3.9605 percent. Starting at a round 4 percent makes the five-year zero 0.79540379, 8,134.93 dollars short on 10,000,000.
+> - **Dropping the slope term.** Writing theta as $`a f + \dots`$ without $`f'`$ leaves the rate unable to follow a rising curve: 138,592.78 dollars too much at five years here.
 > - **Dropping the noise term.** It is small, 0.0129 percent a year at 2.5 years, and without it the five-year zero is 6,215.38 dollars too dear.
 > - **Believing the prices between quotes.** The model matches whatever curve it is given. Between the quoted dates that curve is an interpolation rule, and theta's kicks are the rule's steps, not the market's.
 
@@ -1405,10 +1427,10 @@ end HullWhiteModel
 
 ## Where you meet it in real life
 
-- **Rates option desks.** The one-factor Hull-White model is a standard engine for Bermudan swaptions (options to enter a swap, exercisable on any of several set dates) and callable bonds: fit the curve with theta, fit $a$ and $\sigma$ to swaption quotes, price on a tree. The tree is [The Hull-White tree](06-hull-white-trinomial-tree.md).
+- **Rates option desks.** The one-factor Hull-White model is a standard engine for Bermudan swaptions (options to enter a swap, exercisable on any of several set dates) and callable bonds: fit the curve with theta, fit $`a`$ and $`\sigma`$ to swaption quotes, price on a tree. The tree is [The Hull-White tree](06-hull-white-trinomial-tree.md).
 - **Bond and cap options in closed form.** Because the rate stays normal, an option on a zero-coupon bond has a Black-type formula, and a caplet is a put on a zero. That is [Bond options](05-bond-options-and-jamshidians-trick.md).
 - **Futures convexity.** The gap between a rate future and the matching forward rate agreement is a Hull-White calculation on most desks: [Futures against forwards](../32-Convexity%20and%20Exotics/01-futures-forward-convexity.md).
-- **Risk and valuation adjustments.** Exposure simulations need thousands of future curves consistent with today's; each is the $A$, $B$ formula at one simulated rate.
+- **Risk and valuation adjustments.** Exposure simulations need thousands of future curves consistent with today's; each is the $`A`$, $`B`$ formula at one simulated rate.
 - **Negative rates.** Euro, Swiss franc and yen rates went below zero from 2014 onward; a normal model allowed that, positive-rate models did not.
 
 > **Say it back**
@@ -1424,14 +1446,14 @@ end HullWhiteModel
 
 ## Where this goes next
 
-- [Bond options](05-bond-options-and-jamshidians-trick.md): numbered next on this shelf. It prices an option on a zero with the $A$, $B$ formula, and an option on a coupon bond as a bundle of them.
+- [Bond options](05-bond-options-and-jamshidians-trick.md): numbered next on this shelf. It prices an option on a zero with the $`A`$, $`B`$ formula, and an option on a coupon bond as a bundle of them.
 - [The Hull-White tree](06-hull-white-trinomial-tree.md): theta found numerically on a lattice, for payoffs with early exercise.
 - [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md): a second noise so the curve can twist, and lognormal models that keep rates positive.
 - [Heath-Jarrow-Morton](../31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md): the same fit seen from the forward curve, where no-arbitrage fixes the drift of every maturity at once.
 - [Futures against forwards](../32-Convexity%20and%20Exotics/01-futures-forward-convexity.md): the model's first everyday job, the gap between a rate future and a forward.
-- [Calibrating Hull-White](08-calibrating-a-short-rate-model.md): fits $a$ and $\sigma$ to option quotes, the two numbers the curve leaves open.
+- [Calibrating Hull-White](08-calibrating-a-short-rate-model.md): fits $`a`$ and $`\sigma`$ to option quotes, the two numbers the curve leaves open.
 
-The curve fixes theta but leaves $a$ and $\sigma$ open, and they decide every option price.
+The curve fixes theta but leaves $`a`$ and $`\sigma`$ open, and they decide every option price.
 
 ---
 

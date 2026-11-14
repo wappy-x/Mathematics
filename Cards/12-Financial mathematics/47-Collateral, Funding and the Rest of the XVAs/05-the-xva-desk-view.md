@@ -37,40 +37,48 @@ DVA and MVA are zero on the bilateral trade, and CVA and FVA near zero on the cl
 
 ## The formula
 
-Notation first, in words. Each adjustment has a three-letter name ending in VA, "valuation adjustment", and the family is called **XVA**. The **exposure** $\mathrm{EE}(t)$ is the average amount Northwind would owe the bank at date $t$, and $D(t) = e^{-rt}$ shrinks a dollar at $t$ back to today. $Q(t)$ is the chance Northwind is still alive at $t$. Their product, added up over the year, is the **exposure annuity** $A_E$: the average amount at stake, in today's dollars, over the days the trade is alive.
+Notation first, in words. Each adjustment has a three-letter name ending in VA, "valuation adjustment", and the family is called **XVA**. The **exposure** $`\mathrm{EE}(t)`$ is the average amount Northwind would owe the bank at date $`t`$, and $`D(t) = e^{-rt}`$ shrinks a dollar at $`t`$ back to today. $`Q(t)`$ is the chance Northwind is still alive at $`t`$. Their product, added up over the year, is the **exposure annuity** $`A_E`$: the average amount at stake, in today's dollars, over the days the trade is alive.
 
-$$V_{\text{adj}} = C_0 - \mathrm{CVA} + \mathrm{DVA} - \mathrm{FVA} - \mathrm{MVA} - \mathrm{KVA}$$
+```math
+V_{\text{adj}} = C_0 - \mathrm{CVA} + \mathrm{DVA} - \mathrm{FVA} - \mathrm{MVA} - \mathrm{KVA}
+```
 
 **Read it aloud:** the desk price is the clean price, less the expected loss from the other side's default, plus the expected saving from the bank's own, less the costs of funding the trade, funding its margin, and holding capital against it.
 
 For the uncollateralised call bought from Northwind, three of the charges are a rate times one annuity, and two are zero:
 
-$$A_E = \int_0^T D(t)\,\mathrm{EE}(t)\,Q(t)\,dt, \qquad \mathrm{CVA} = (1-R)\,\lambda\,A_E, \quad \mathrm{FVA} = s_F\,A_E, \quad \mathrm{KVA} = h\,k\,A_E.$$
+```math
+A_E = \int_0^T D(t)\,\mathrm{EE}(t)\,Q(t)\,dt, \qquad \mathrm{CVA} = (1-R)\,\lambda\,A_E, \quad \mathrm{FVA} = s_F\,A_E, \quad \mathrm{KVA} = h\,k\,A_E.
+```
 
 DVA is zero because the bank never owes Northwind anything: it paid the whole premium on day one. MVA is zero because no initial margin changes hands on an uncollateralised trade.
 
 Cleared, the stack keeps only the costs a clearing house brings:
 
-$$V_{\text{clr}} = C_0 - \mathrm{MVA} - \mathrm{DFC}, \qquad \mathrm{MVA} = s_{IM}\,\mathrm{IM}\,T, \quad \mathrm{DFC} = h\,f\,\mathrm{IM}\,T.$$
+```math
+V_{\text{clr}} = C_0 - \mathrm{MVA} - \mathrm{DFC}, \qquad \mathrm{MVA} = s_{IM}\,\mathrm{IM}\,T, \quad \mathrm{DFC} = h\,f\,\mathrm{IM}\,T.
+```
 
 | Symbol | Plain meaning | In our example | Push it up and the desk price… |
 | --- | --- | --- | --- |
-| $C_0$ | the clean price: Black–Scholes, riskless counterparty, funded at the riskless rate | \$9.227006 | rises one for one |
-| $V_{\text{adj}}$, $V_{\text{clr}}$ | the desk price, bilateral and cleared | \$8.923712; \$9.145418 | — |
-| $\mathrm{CVA}$, $\mathrm{DVA}$ | credit valuation adjustment (the other side's default); debit valuation adjustment (the bank's own) | 0.109624; 0 | falls with CVA, rises with DVA |
-| $\mathrm{FVA}$, $s_F$ | funding valuation adjustment; the bank's unsecured funding spread over the riskless rate | 0.091353; 1% | falls |
-| $\mathrm{MVA}$, $\mathrm{IM}$, $s_{IM}$ | margin valuation adjustment; initial margin, cash posted up front and held for the trade's life; the spread paid to fund it | 0.027196; \$5.439166; 0.5% | falls |
-| $\mathrm{KVA}$, $h$, $k$ | capital valuation adjustment; the **hurdle rate** shareholders demand on capital; capital held per dollar of exposure | 0.102316; 10%; 0.112 | falls |
-| $A_E$, $D(t)$, $\mathrm{EE}(t)$ | the exposure annuity; the discount factor; the expected exposure at $t$ | 9.135348; $e^{-0.05t}$; $D(t)\,\mathrm{EE}(t) = C_0$ for a bought call | the charges rise in proportion |
-| $\lambda$, $Q(t)$ | Northwind's **hazard**, its yearly default rate among survivors ("lambda"); its survival chance $e^{-\lambda t}$ | 2% | falls: more CVA, slightly less FVA and KVA per year alive |
-| $R$ | recovery: the fraction of a claim collected after a default | 40% | rises: less lost |
-| $\mathrm{DFC}$, $f$ | cost of the default-fund contribution; the contribution as a share of initial margin | 0.054392; 10% | falls |
-| $\lambda_B$, $\tau_B$, $\mathrm{FBA}$ | the bank's own hazard; its default date; funding benefit adjustment, the saving from holding a liability instead of borrowing | 1/60; 0.091505 on the sold call | — |
-| $S$, $K$, $r$, $q$, $\sigma$, $T$, $t$, $\Delta$, $z_{99}$ | Acme's price, the strike, riskless rate, dividend yield, volatility, expiry, a date; the call's **delta** (dollars of value per dollar of Acme); the 99% point of the bell curve | \$100, \$100, 5%, 2%, 20%, 1 year; 0.586851; 2.326348 | through $C_0$ and $\mathrm{IM}$ |
+| $`C_0`$ | the clean price: Black–Scholes, riskless counterparty, funded at the riskless rate | \$9.227006 | rises one for one |
+| $`V_{\text{adj}}`$, $`V_{\text{clr}}`$ | the desk price, bilateral and cleared | \$8.923712; \$9.145418 | — |
+| $`\mathrm{CVA}`$, $`\mathrm{DVA}`$ | credit valuation adjustment (the other side's default); debit valuation adjustment (the bank's own) | 0.109624; 0 | falls with CVA, rises with DVA |
+| $`\mathrm{FVA}`$, $`s_F`$ | funding valuation adjustment; the bank's unsecured funding spread over the riskless rate | 0.091353; 1% | falls |
+| $`\mathrm{MVA}`$, $`\mathrm{IM}`$, $`s_{IM}`$ | margin valuation adjustment; initial margin, cash posted up front and held for the trade's life; the spread paid to fund it | 0.027196; \$5.439166; 0.5% | falls |
+| $`\mathrm{KVA}`$, $`h`$, $`k`$ | capital valuation adjustment; the **hurdle rate** shareholders demand on capital; capital held per dollar of exposure | 0.102316; 10%; 0.112 | falls |
+| $`A_E`$, $`D(t)`$, $`\mathrm{EE}(t)`$ | the exposure annuity; the discount factor; the expected exposure at $`t`$ | 9.135348; $`e^{-0.05t}`$; $`D(t)\,\mathrm{EE}(t) = C_0`$ for a bought call | the charges rise in proportion |
+| $`\lambda`$, $`Q(t)`$ | Northwind's **hazard**, its yearly default rate among survivors ("lambda"); its survival chance $`e^{-\lambda t}`$ | 2% | falls: more CVA, slightly less FVA and KVA per year alive |
+| $`R`$ | recovery: the fraction of a claim collected after a default | 40% | rises: less lost |
+| $`\mathrm{DFC}`$, $`f`$ | cost of the default-fund contribution; the contribution as a share of initial margin | 0.054392; 10% | falls |
+| $`\lambda_B`$, $`\tau_B`$, $`\mathrm{FBA}`$ | the bank's own hazard; its default date; funding benefit adjustment, the saving from holding a liability instead of borrowing | 1/60; 0.091505 on the sold call | — |
+| $`S`$, $`K`$, $`r`$, $`q`$, $`\sigma`$, $`T`$, $`t`$, $`\Delta`$, $`z_{99}`$ | Acme's price, the strike, riskless rate, dividend yield, volatility, expiry, a date; the call's **delta** (dollars of value per dollar of Acme); the 99% point of the bell curve | \$100, \$100, 5%, 2%, 20%, 1 year; 0.586851; 2.326348 | through $`C_0`$ and $`\mathrm{IM}`$ |
 
-The capital per dollar is $k = 8\% \times 100\% \times 1.4$: the regulatory minimum of 8% of risk-weighted assets, a 100% risk weight for a corporate like Northwind, and the multiplier 1.4 that turns expected exposure into **exposure at default**, the amount the rules count. The margin is a 99% ten-day move priced by delta:
+The capital per dollar is $`k = 8\% \times 100\% \times 1.4`$: the regulatory minimum of 8% of risk-weighted assets, a 100% risk weight for a corporate like Northwind, and the multiplier 1.4 that turns expected exposure into **exposure at default**, the amount the rules count. The margin is a 99% ten-day move priced by delta:
 
-$$\mathrm{IM} = \Delta\,S\,\sigma\,\sqrt{10/252}\;z_{99}.$$
+```math
+\mathrm{IM} = \Delta\,S\,\sigma\,\sqrt{10/252}\;z_{99}.
+```
 
 In words: how far the call's value could fall in ten trading days, 99 times out of 100.
 
@@ -91,11 +99,13 @@ Black–Scholes prices the call as if the seller always pays, the bank borrows a
 
 ### Step 1: one number carries most of the stack
 
-Every bilateral charge accrues on the amount at stake while the trade is alive. Credit loss accrues at rate $(1-R)\lambda$ on what Northwind owes. Funding costs $s_F$ a year on the premium borrowed, which is the call's value. Capital costs $h$ a year on $k$ times the exposure. Each is a rate times the same running amount, weighted by survival and discounted. That weighted, discounted sum is $A_E$.
+Every bilateral charge accrues on the amount at stake while the trade is alive. Credit loss accrues at rate $`(1-R)\lambda`$ on what Northwind owes. Funding costs $`s_F`$ a year on the premium borrowed, which is the call's value. Capital costs $`h`$ a year on $`k`$ times the exposure. Each is a rate times the same running amount, weighted by survival and discounted. That weighted, discounted sum is $`A_E`$.
 
-For a bought call, $D(t)\,\mathrm{EE}(t)$ does not change with $t$: the average value of the call at any date, discounted back, is today's price, because the pricing world makes discounted prices drift neither up nor down ([CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md), Step 3). So
+For a bought call, $`D(t)\,\mathrm{EE}(t)`$ does not change with $`t`$: the average value of the call at any date, discounted back, is today's price, because the pricing world makes discounted prices drift neither up nor down ([CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md), Step 3). So
 
-$$A_E = C_0\int_0^T e^{-\lambda t}\,dt = C_0\,\frac{1-e^{-\lambda T}}{\lambda} = 9.135348.$$
+```math
+A_E = C_0\int_0^T e^{-\lambda t}\,dt = C_0\,\frac{1-e^{-\lambda T}}{\lambda} = 9.135348.
+```
 
 The checks confirm it a second way: 52 weeks, each week's discounted exposure found by averaging the call's value over every price Acme could have that week (800 Simpson slices across the bell curve), then added. They get 9.135347.
 
@@ -103,7 +113,9 @@ The checks confirm it a second way: 52 weeks, each week's discounted exposure fo
 
 With the common annuity in hand:
 
-$$C_0 - V_{\text{adj}} = \bigl[(1-R)\lambda + s_F + h\,k\bigr]\,A_E = (0.012 + 0.010 + 0.0112)\times 9.135348 = 0.303294.$$
+```math
+C_0 - V_{\text{adj}} = \bigl[(1-R)\lambda + s_F + h\,k\bigr]\,A_E = (0.012 + 0.010 + 0.0112)\times 9.135348 = 0.303294.
+```
 
 Credit costs 1.2% a year on the amount at stake, funding 1%, capital 1.12%. Three near-equal rates make the overview's three near-equal bars. An all-in spread on the exposure annuity shows at a glance which charge dominates.
 
@@ -111,29 +123,31 @@ Credit costs 1.2% a year on the amount at stake, funding 1%, capital 1.12%. Thre
 
 **DVA against the funding benefit.** Turn the trade round: Northwind buys the call and the bank sells it. The bank now owes, and takes in \$9.23 of premium that it need not borrow. Two adjustments claim that position.
 
-- **DVA**: the bank may fail and pay only 40 cents in the dollar of what it owes. Priced like a CVA from the other side, it is worth $(1-R)\,\lambda_B\,A_E^B$, where $A_E^B$ uses the bank's own survival ([DVA](../46-Counterparty%20Risk%20and%20CVA/04-dva-and-bilateral-cva.md)).
-- **FBA**: the premium replaces borrowing at spread $s_F$, a saving of $s_F\,A_E^B$.
+- **DVA**: the bank may fail and pay only 40 cents in the dollar of what it owes. Priced like a CVA from the other side, it is worth $`(1-R)\,\lambda_B\,A_E^B`$, where $`A_E^B`$ uses the bank's own survival ([DVA](../46-Counterparty%20Risk%20and%20CVA/04-dva-and-bilateral-cva.md)).
+- **FBA**: the premium replaces borrowing at spread $`s_F`$, a saving of $`s_F\,A_E^B`$.
 
-The bank's unsecured spread is the market's price of its default: lenders charge $s_F = (1-R)\lambda_B$ to be paid for the chance of losing $1-R$. With $s_F = 1\%$ and $R = 40\%$ that makes $\lambda_B = 1/60$ a year, and the two formulas are the same number:
+The bank's unsecured spread is the market's price of its default: lenders charge $`s_F = (1-R)\lambda_B`$ to be paid for the chance of losing $`1-R`$. With $`s_F = 1\%`$ and $`R = 40\%`$ that makes $`\lambda_B = 1/60`$ a year, and the two formulas are the same number:
 
-$$\mathrm{DVA} = (1-R)\,\lambda_B\,A_E^B = s_F\,A_E^B = \mathrm{FBA} = 0.091505.$$
+```math
+\mathrm{DVA} = (1-R)\,\lambda_B\,A_E^B = s_F\,A_E^B = \mathrm{FBA} = 0.091505.
+```
 
 The checks reach it by two weightings in the 52-week grid, one by the chance the bank defaults in each week, one by its chance of surviving to mid-week, and both print 0.091505. Counting both, a desk would credit itself 0.183011 for a single benefit: the bank's credit spread, collected once when it borrows less.
 
 <details>
 <summary>Detailed proof: DVA and FBA are the same money</summary>
 
-Let the bank owe $V(t) \ge 0$ to Northwind at each date and let its default time be $\tau_B$, with constant hazard $\lambda_B$. DVA is the average, discounted, of the fraction it fails to pay: $(1-R)\,\mathbb{E}[D(\tau_B)V(\tau_B);\ \tau_B \le T] = (1-R)\int_0^T D(t)\,\mathbb{E}[V(t)]\,\lambda_B e^{-\lambda_B t}\,dt$, using independence.
+Let the bank owe $`V(t) \ge 0`$ to Northwind at each date and let its default time be $`\tau_B`$, with constant hazard $`\lambda_B`$. DVA is the average, discounted, of the fraction it fails to pay: $`(1-R)\,\mathbb{E}[D(\tau_B)V(\tau_B);\ \tau_B \le T] = (1-R)\int_0^T D(t)\,\mathbb{E}[V(t)]\,\lambda_B e^{-\lambda_B t}\,dt`$, using independence.
 
-FBA is the spread saved on each dollar not borrowed, for as long as the bank is alive to borrow: $s_F\int_0^T D(t)\,\mathbb{E}[V(t)]\,e^{-\lambda_B t}\,dt$.
+FBA is the spread saved on each dollar not borrowed, for as long as the bank is alive to borrow: $`s_F\int_0^T D(t)\,\mathbb{E}[V(t)]\,e^{-\lambda_B t}\,dt`$.
 
-Both integrals are the same annuity $A_E^B$, times $(1-R)\lambda_B$ and $s_F$. A lender to the bank breaks even when the spread pays for the expected loss: over a short stretch of time the lender earns the spread for that stretch and loses $1-R$ with chance $\lambda_B$ times its length, so $s_F = (1-R)\lambda_B$. Then DVA = FBA exactly. When the bank's spread also carries a liquidity part above its default risk, FBA exceeds DVA by that part alone, and only that part is new.
+Both integrals are the same annuity $`A_E^B`$, times $`(1-R)\lambda_B`$ and $`s_F`$. A lender to the bank breaks even when the spread pays for the expected loss: over a short stretch of time the lender earns the spread for that stretch and loses $`1-R`$ with chance $`\lambda_B`$ times its length, so $`s_F = (1-R)\lambda_B`$. Then DVA = FBA exactly. When the bank's spread also carries a liquidity part above its default risk, FBA exceeds DVA by that part alone, and only that part is new.
 
 </details>
 
 The fix in practice: count the bank's own spread once. Accounting fair value keeps DVA; a desk that also books a funding benefit takes it net of the own-credit part.
 
-**KVA against CVA capital.** Capital comes in two layers. One covers Northwind defaulting outright: that is the $k$ on this card. The other covers the CVA itself swinging in value as Northwind's credit spread moves, a separate regulatory charge (the basic and standardised approaches, BA-CVA and SA-CVA, [CVA risk numbers](../46-Counterparty%20Risk%20and%20CVA/06-cva-risk-numbers-and-hedging.md)). When the CVA desk buys credit protection on Northwind to hedge its CVA, that second layer shrinks. The overlap has two edges:
+**KVA against CVA capital.** Capital comes in two layers. One covers Northwind defaulting outright: that is the $`k`$ on this card. The other covers the CVA itself swinging in value as Northwind's credit spread moves, a separate regulatory charge (the basic and standardised approaches, BA-CVA and SA-CVA, [CVA risk numbers](../46-Counterparty%20Risk%20and%20CVA/06-cva-risk-numbers-and-hedging.md)). When the CVA desk buys credit protection on Northwind to hedge its CVA, that second layer shrinks. The overlap has two edges:
 
 - The CVA desk pays for the hedge, and that payment is inside what it charges as CVA. KVA must then be charged on capital *after* the hedge. Charging KVA on unhedged CVA capital and also paying for the hedge prices the same risk twice.
 - CVA already books the expected default loss. Capital is for the unexpected part. Basel's default-risk rules let a bank reduce the exposure it holds capital against by CVA already written off, so the same dollar is not both reserved and capitalised.
@@ -143,8 +157,8 @@ The fix in practice: count the bank's own spread once. Accounting fair value kee
 Now the same call faces a **clearing house** (a central counterparty, CCP: an institution that stands between the two sides of every trade, buying from each seller and selling to each buyer). Three things change.
 
 - **Variation margin** moves every day by the change in the call's value, so the clearing house never owes the bank more than a day's move. Under futures-style margining, no premium changes hands at the start either: the call's value arrives as margin. So there is almost nothing to lose in a default, and nothing to fund. CVA and FVA go to near zero.
-- **Initial margin** is posted by the bank and held against a ten-day adverse move. The bank must borrow it: $\mathrm{MVA} = 0.005 \times 5.439166 = 0.027196$. The clearing house is treated as unable to fail, so no survival weight applies; facing Northwind, [MVA](03-mva.md) weights the same margin by survival and gets 0.026926.
-- **Default-fund contribution**: every member pays into a shared pool that absorbs losses beyond a defaulter's own margin. The bank's share here is taken as 10% of its initial margin, \$0.543917, and is charged at the hurdle rate because it is capital at risk: $\mathrm{DFC} = 0.054392$.
+- **Initial margin** is posted by the bank and held against a ten-day adverse move. The bank must borrow it: $`\mathrm{MVA} = 0.005 \times 5.439166 = 0.027196`$. The clearing house is treated as unable to fail, so no survival weight applies; facing Northwind, [MVA](03-mva.md) weights the same margin by survival and gets 0.026926.
+- **Default-fund contribution**: every member pays into a shared pool that absorbs losses beyond a defaulter's own margin. The bank's share here is taken as 10% of its initial margin, \$0.543917, and is charged at the hurdle rate because it is capital at risk: $`\mathrm{DFC} = 0.054392`$.
 
 The pool sits in a fixed order of who loses first, the **default waterfall**:
 
@@ -190,25 +204,25 @@ The alternative route to the whole stack is one pricing equation with every cost
 
 ## Worked numbers, by hand
 
-The bilateral trade: Acme call, $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$; Northwind $\lambda = 2\%$, $R = 40\%$; $s_F = 1\%$, $h = 10\%$, $k = 0.112$.
+The bilateral trade: Acme call, $`S = K = 100`$, $`r = 5\%`$, $`q = 2\%`$, $`\sigma = 20\%`$, $`T = 1`$; Northwind $`\lambda = 2\%`$, $`R = 40\%`$; $`s_F = 1\%`$, $`h = 10\%`$, $`k = 0.112`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| clean price $C_0$ | Black–Scholes | 9.227006 |
-| exposure annuity $A_E$ | $9.227006 \times (1 - e^{-0.02})/0.02$ | 9.135348 |
-| CVA | $0.6 \times 0.02 \times 9.135348$ | 0.109624 |
+| clean price $`C_0`$ | Black–Scholes | 9.227006 |
+| exposure annuity $`A_E`$ | $`9.227006 \times (1 - e^{-0.02})/0.02`$ | 9.135348 |
+| CVA | $`0.6 \times 0.02 \times 9.135348`$ | 0.109624 |
 | DVA | the bank owes nothing | 0 |
-| FVA | $0.01 \times 9.135348$ | 0.091353 |
+| FVA | $`0.01 \times 9.135348`$ | 0.091353 |
 | MVA | no initial margin | 0 |
-| KVA | $0.10 \times 0.112 \times 9.135348$ | 0.102316 |
-| total charges | $0.0332 \times 9.135348$ | 0.303294 |
-| **desk price, bilateral** | $9.227006 - 0.303294$ | **\$8.923712** |
-| initial margin | $0.586851 \times 100 \times 0.20 \times \sqrt{10/252} \times 2.326348$ | 5.439166 |
-| MVA, cleared | $0.005 \times 5.439166$ | 0.027196 |
-| default-fund cost | $0.10 \times (0.10 \times 5.439166)$ | 0.054392 |
-| **desk price, cleared** | $9.227006 - 0.027196 - 0.054392$ | **\$9.145418** |
+| KVA | $`0.10 \times 0.112 \times 9.135348`$ | 0.102316 |
+| total charges | $`0.0332 \times 9.135348`$ | 0.303294 |
+| **desk price, bilateral** | $`9.227006 - 0.303294`$ | **\$8.923712** |
+| initial margin | $`0.586851 \times 100 \times 0.20 \times \sqrt{10/252} \times 2.326348`$ | 5.439166 |
+| MVA, cleared | $`0.005 \times 5.439166`$ | 0.027196 |
+| default-fund cost | $`0.10 \times (0.10 \times 5.439166)`$ | 0.054392 |
+| **desk price, cleared** | $`9.227006 - 0.027196 - 0.054392`$ | **\$9.145418** |
 
-In round figures, $9.227 - 0.110 + 0 - 0.091 - 0 - 0.10 \approx 8.93$; at full precision the rounding of KVA falls away and the price is \$8.92. Northwind should be quoted no more than that for a call whose textbook price is \$9.23: 30 cents of real costs, each owed to a different part of the bank. The same call through a clearing house costs 8 cents.
+In round figures, $`9.227 - 0.110 + 0 - 0.091 - 0 - 0.10 \approx 8.93`$; at full precision the rounding of KVA falls away and the price is \$8.92. Northwind should be quoted no more than that for a call whose textbook price is \$9.23: 30 cents of real costs, each owed to a different part of the bank. The same call through a clearing house costs 8 cents.
 
 ### What breaks if you drop a piece
 
@@ -597,10 +611,10 @@ The two outputs agree line for line, including the simulated margin: both langua
 
 Lean proves the card's three exact identities for any exposure, with a constant hazard and defaults independent of Acme.
 
-- Suppose the bank's spread is $s_F = (1-R)\lambda_B$. Then DVA equals the funding benefit FBA, for any amount owed and any expiry.
-- Suppose $D(t)\,\mathrm{EE}(t) = C_0$ at every date. Then the exposure annuity is $A_E = C_0(1-e^{-\lambda T})/\lambda$.
-- Take CVA, FVA and KVA as on this card, with DVA and MVA zero. Then $C_0 - V_{\text{adj}} = [(1-R)\lambda + s_F + hk]\,A_E$.
-- Lean also checks the rate arithmetic: $k = 0.112$, the all-in rate 0.0332, and $\lambda_B = 1/60$.
+- Suppose the bank's spread is $`s_F = (1-R)\lambda_B`$. Then DVA equals the funding benefit FBA, for any amount owed and any expiry.
+- Suppose $`D(t)\,\mathrm{EE}(t) = C_0`$ at every date. Then the exposure annuity is $`A_E = C_0(1-e^{-\lambda T})/\lambda`$.
+- Take CVA, FVA and KVA as on this card, with DVA and MVA zero. Then $`C_0 - V_{\text{adj}} = [(1-R)\lambda + s_F + hk]\,A_E`$.
+- Lean also checks the rate arithmetic: $`k = 0.112`$, the all-in rate 0.0332, and $`\lambda_B = 1/60`$.
 
 The Black–Scholes price, the margin and every decimal printed above are left to the Python and Rust checks.
 
@@ -743,7 +757,7 @@ example : (1 - 40 / 100 : ℚ) * (1 / 60) = 1 / 100 := by norm_num
 > [!warning]
 > **Adding every adjustment that has a name.** The stack is not a checklist. DVA and the funding benefit are one number seen from two desks; KVA on unhedged CVA capital and the cost of the CVA hedge are one risk paid twice. Counting both sides of an overlap on the sold call credits 0.183011 where 0.091505 is right.
 >
-> - **Putting the funding rate into Black–Scholes as $r$ instead of adding FVA.** A 6% rate moves Acme's drift as well as the discounting, and gives 9.728524 for the call, above the clean 9.227006: the wrong sign for a cost.
+> - **Putting the funding rate into Black–Scholes as $`r`$ instead of adding FVA.** A 6% rate moves Acme's drift as well as the discounting, and gives 9.728524 for the call, above the clean 9.227006: the wrong sign for a cost.
 > - **Charging bilateral CVA on a cleared trade.** Daily variation margin leaves at most a day's move at risk. The charges that replace CVA are MVA and the default-fund cost, 0.081587 together here.
 > - **Reading a DVA gain as good news.** On the sold call, DVA rises by 0.089993 when the bank's own spread doubles. The bank is worth less, not more.
 > - **Mixing margin models.** Delta says 5.439166, full revaluation 4.558428. Pick one and use it for both the margin posted and the MVA charged.

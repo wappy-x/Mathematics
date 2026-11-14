@@ -38,63 +38,60 @@ xychart-beta
     line [40, 40, 40, 40, 40, 40, 40, 40, 40]
 ```
 
-Orange, the hill: the bound $q(\lambda)$ at each price. Green, flat: the cost of the best plan, £40.00 an hour. The hill never rises above the flat line, at any price. Its top touches the line at 40p. The trial price of 35p sits one step down the left slope, at £39.225; 45p, one step down the right slope, gives the same.
+Orange, the hill: the bound $`q(\lambda)`$ at each price. Green, flat: the cost of the best plan, £40.00 an hour. The hill never rises above the flat line, at any price. Its top touches the line at 40p. The trial price of 35p sits one step down the left slope, at £39.225; 45p, one step down the right slope, gives the same.
 
 ---
 
 ## The formula
 
-The pieces of a constrained problem are named on the [KKT conditions](02-kkt-conditions.md) card: the objective $f_0$ to minimise, inequality functions $f_i(x) \le 0$, equality functions $h_j(x) = 0$, a multiplier $\lambda_i \ge 0$ for each inequality and $\nu_j$ (any sign) for each equality, and the best cost $p^\star$. This card adds two names, in words first: the **dual function** $q(\lambda, \nu)$ is the lowest priced cost at the prices $(\lambda, \nu)$, and the **dual optimal value** $d^\star$ is the highest that bound ever gets.
+The pieces of a constrained problem are named on the [KKT conditions](02-kkt-conditions.md) card: the objective $`f_0`$ to minimise, inequality functions $`f_i(x) \le 0`$, equality functions $`h_j(x) = 0`$, a multiplier $`\lambda_i \ge 0`$ for each inequality and $`\nu_j`$ (any sign) for each equality, and the best cost $`p^\star`$. This card adds two names, in words first: the **dual function** $`q(\lambda, \nu)`$ is the lowest priced cost at the prices $`(\lambda, \nu)`$, and the **dual optimal value** $`d^\star`$ is the highest that bound ever gets.
 
-$$
-\mathcal L(x, \lambda, \nu) = f_0(x) + \sum_{i=1}^{m} \lambda_i f_i(x) + \sum_{j=1}^{p} \nu_j h_j(x),
-\qquad
-q(\lambda, \nu) = \min_{x}\, \mathcal L(x, \lambda, \nu),
-$$
+```math
+\mathcal L(x, \lambda, \nu) = f_0(x) + \sum_{i=1}^{m} \lambda_i f_i(x) + \sum_{j=1}^{p} \nu_j h_j(x), \qquad q(\lambda, \nu) = \min_{x}\, \mathcal L(x, \lambda, \nu),
+```
 
-$$
-\text{weak duality: } q(\lambda, \nu) \le d^\star \le p^\star \text{ for every } \lambda \ge 0 \text{ and every } \nu,
-\qquad d^\star = \max_{\lambda \ge 0,\ \nu} q(\lambda, \nu).
-$$
+```math
+\text{weak duality: } q(\lambda, \nu) \le d^\star \le p^\star \text{ for every } \lambda \ge 0 \text{ and every } \nu, \qquad d^\star = \max_{\lambda \ge 0,\ \nu} q(\lambda, \nu).
+```
 
 **Read it aloud:** add each constraint to the cost with a price on it, let the plan be anything at all, and the cheapest priced cost is a floor under the true best, for every price that charges for breaking an "at most" rule.
 
-The **Lagrangian** $\mathcal L$ is the priced cost. The minimum in $q$ is taken over every plan, legal or not, so the dual function is a single number for each price. (Where the minimum is not reached, it is the greatest lower bound, written inf; on this card it is always reached.)
+The **Lagrangian** $`\mathcal L`$ is the priced cost. The minimum in $`q`$ is taken over every plan, legal or not, so the dual function is a single number for each price. (Where the minimum is not reached, it is the greatest lower bound, written inf; on this card it is always reached.)
 
-For the pumps, write $x_1, x_2$ for the two pump powers in kW and keep $x \ge 0$ inside the minimum, since a pump cannot run backwards. Only the demand rule is priced:
+For the pumps, write $`x_1, x_2`$ for the two pump powers in kW and keep $`x \ge 0`$ inside the minimum, since a pump cannot run backwards. Only the demand rule is priced:
 
-$$
+```math
 f_0(x) = 0.30x_1 + 0.00625x_1^2 + 0.30x_2 + 0.00375x_2^2, \qquad f_1(x) = 140 - 2.0x_1 - 1.5x_2 \le 0,
-$$
+```
 
-$$
+```math
 q(\lambda) = \min_{x \ge 0} \big[f_0(x) + \lambda f_1(x)\big] = 140\lambda - \frac{(2\lambda - 0.3)^2}{0.025} - \frac{(1.5\lambda - 0.3)^2}{0.015} \quad\text{for } \lambda \ge 0.20.
-$$
+```
 
-The cost is in £ an hour, $f_1$ is the shortfall in litres a second, and $\lambda$ is in £ an hour per litre a second.
+The cost is in £ an hour, $`f_1`$ is the shortfall in litres a second, and $`\lambda`$ is in £ an hour per litre a second.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $x = (x_1, x_2)$, $x(\lambda)$ | the choice: power of pump 1 and pump 2, kW; $x(\lambda)$ is the plan that minimises the priced cost at price $\lambda$ | (40, 40) at the best; $x(0.35) = (32, 30)$ | — |
-| $f_0$ | the objective: cost to minimise, £ an hour | £40.00 at the best | — |
-| $f_1$, $f_i$, $h_j$ | constraint functions: kept at most 0, or equal to 0 | $f_1$: shortfall below 140 L/s | — |
-| $m$, $p$; $i$, $j$ | how many inequality and equality rules there are, and the counters that number them ($p$ alone is a count, not the best cost $p^\star$) | $m = 1$, $p = 0$ | — |
-| $D$ | the demand, litres a second (`D` in the code) | 140 | $p^\star$ and $\lambda^\star$ rise: 160 gives £48.3226 and 0.4323 |
-| $\lambda$, $\lambda_i$, $\lambda^\star$ | price on breaking an "at most" rule, at least 0; $\lambda^\star$ the best price | 0.35 on trial, $\lambda^\star = 0.40$ £/h per L/s | the bound rises, peaks at $\lambda^\star$, then falls |
-| $\nu_j$ | price on an equality rule, any sign | none here | — |
-| $\mathcal L$ | the Lagrangian: cost plus priced constraints | $f_0(x) + \lambda f_1(x)$ | — |
-| $q(\lambda)$ | dual function: lowest priced cost at that price | £39.225 at 0.35 | — |
-| $p^\star$, $d^\star$ | best cost; best bound | both £40.00 | — |
-| $\theta$ | a mixing weight between 0 and 1, used in the concavity proof | — | — |
-| $\alpha$, $k$, $\lambda_k$ | step size and step count of the price climb, and the price after $k$ steps | 0.001; $\lambda_0 = 0.35$ at $k = 0$ | faster up to $1/620$, slower beyond, and above 0.003226 it diverges |
+| $`x = (x_1, x_2)`$, $`x(\lambda)`$ | the choice: power of pump 1 and pump 2, kW; $`x(\lambda)`$ is the plan that minimises the priced cost at price $`\lambda`$ | (40, 40) at the best; $`x(0.35) = (32, 30)`$ | — |
+| $`f_0`$ | the objective: cost to minimise, £ an hour | £40.00 at the best | — |
+| $`f_1`$, $`f_i`$, $`h_j`$ | constraint functions: kept at most 0, or equal to 0 | $`f_1`$: shortfall below 140 L/s | — |
+| $`m`$, $`p`$; $`i`$, $`j`$ | how many inequality and equality rules there are, and the counters that number them ($`p`$ alone is a count, not the best cost $`p^\star`$) | $`m = 1`$, $`p = 0`$ | — |
+| $`D`$ | the demand, litres a second (`D` in the code) | 140 | $`p^\star`$ and $`\lambda^\star`$ rise: 160 gives £48.3226 and 0.4323 |
+| $`\lambda`$, $`\lambda_i`$, $`\lambda^\star`$ | price on breaking an "at most" rule, at least 0; $`\lambda^\star`$ the best price | 0.35 on trial, $`\lambda^\star = 0.40`$ £/h per L/s | the bound rises, peaks at $`\lambda^\star`$, then falls |
+| $`\nu_j`$ | price on an equality rule, any sign | none here | — |
+| $`\mathcal L`$ | the Lagrangian: cost plus priced constraints | $`f_0(x) + \lambda f_1(x)`$ | — |
+| $`q(\lambda)`$ | dual function: lowest priced cost at that price | £39.225 at 0.35 | — |
+| $`p^\star`$, $`d^\star`$ | best cost; best bound | both £40.00 | — |
+| $`\theta`$ | a mixing weight between 0 and 1, used in the concavity proof | — | — |
+| $`\alpha`$, $`k`$, $`\lambda_k`$ | step size and step count of the price climb, and the price after $`k`$ steps | 0.001; $`\lambda_0 = 0.35`$ at $`k = 0`$ | faster up to $`1/620`$, slower beyond, and above 0.003226 it diverges |
 
 ### When it holds
 
-- **The price on an "at most" rule is at least zero.** Weak duality needs $\lambda f_1(x) \le 0$ for every legal plan: a legal plan has $f_1 \le 0$, so a non-negative price can only lower its priced cost. A negative price would reward a legal plan for its surplus, and the floor argument breaks.
-- **The minimum is over all plans, not just legal ones.** That is what makes $q$ easy to compute (each pump decides alone) and what makes it only a bound. Restrict the minimum to legal plans and $q$ is no easier than the problem itself.
+- **The price on an "at most" rule is at least zero.** Weak duality needs $`\lambda f_1(x) \le 0`$ for every legal plan: a legal plan has $`f_1 \le 0`$, so a non-negative price can only lower its priced cost. A negative price would reward a legal plan for its surplus, and the floor argument breaks.
+- **The minimum is over all plans, not just legal ones.** That is what makes $`q`$ easy to compute (each pump decides alone) and what makes it only a bound. Restrict the minimum to legal plans and $`q`$ is no easier than the problem itself.
 - **Strong duality needs convexity.** A convex cost curves upward or not at all, and a convex set of plans has no dents: the straight line between two legal plans stays legal ([Convex functions](../01-Convexity/03-convex-functions-and-their-tests.md), [Convex sets](../01-Convexity/02-convex-sets.md)). Replace pump 2 with a fixed-speed unit, off or at 70 kW, and the best bound stops at £44.40 while the best plan costs £46.54: a 4.60 percent gap no price closes.
-- **Strong duality also needs a strictly feasible point** (Slater's condition): a plan that meets every inequality with room to spare. Here 50 kW on each pump delivers 175 litres a second, well over 140. Without such a point a convex problem can lose its best price, the bound only creeping up towards $p^\star$ ([Slater's condition](05-slaters-condition-and-duality-gaps.md)), and some convex problems even keep a gap.
-- **The model is a model.** Flow rising in a straight line with power, and cost as a square, are fitting assumptions for this card's numbers, not pump physics. The duality results hold for whatever $f_0$ and $f_1$ are; only the numbers depend on them.
+- **Strong duality also needs a strictly feasible point** (Slater's condition): a plan that meets every inequality with room to spare. Here 50 kW on each pump delivers 175 litres a second, well over 140. Without such a point a convex problem can lose its best price, the bound only creeping up towards $`p^\star`$ ([Slater's condition](05-slaters-condition-and-duality-gaps.md)), and some convex problems even keep a gap.
+- **The model is a model.** Flow rising in a straight line with power, and cost as a square, are fitting assumptions for this card's numbers, not pump physics. The duality results hold for whatever $`f_0`$ and $`f_1`$ are; only the numbers depend on them.
 
 ---
 
@@ -102,51 +99,57 @@ The cost is in £ an hour, $f_1$ is the shortfall in litres a second, and $\lamb
 
 ### Step 0: a legal plan never pays the charge
 
-Put a price $\lambda \ge 0$ on the shortfall. A legal plan has shortfall at most zero, so its charge $\lambda f_1(x)$ is zero or negative: pricing can only make a legal plan look cheaper than it is. The cheapest priced plan, searched over everything, is cheaper still. So it sits below every legal plan's true cost, including the best one. That is the whole of weak duality. Everything else on this card is about how good the floor is.
+Put a price $`\lambda \ge 0`$ on the shortfall. A legal plan has shortfall at most zero, so its charge $`\lambda f_1(x)`$ is zero or negative: pricing can only make a legal plan look cheaper than it is. The cheapest priced plan, searched over everything, is cheaper still. So it sits below every legal plan's true cost, including the best one. That is the whole of weak duality. Everything else on this card is about how good the floor is.
 
 ### Step 1: the dual function splits into easy pieces
 
 With the demand priced, the pumps no longer need to coordinate. Each one minimises its own running cost minus what it earns:
 
-$$\min_{x_1 \ge 0}\ \big(0.30x_1 + 0.00625x_1^2 - 2.0\lambda x_1\big), \qquad \min_{x_2 \ge 0}\ \big(0.30x_2 + 0.00375x_2^2 - 1.5\lambda x_2\big).$$
+```math
+\min_{x_1 \ge 0}\ \big(0.30x_1 + 0.00625x_1^2 - 2.0\lambda x_1\big), \qquad \min_{x_2 \ge 0}\ \big(0.30x_2 + 0.00375x_2^2 - 1.5\lambda x_2\big).
+```
 
 Each is a parabola. Setting its slope to zero gives
 
-$$x_1(\lambda) = \frac{2.0\lambda - 0.30}{0.0125}, \qquad x_2(\lambda) = \frac{1.5\lambda - 0.30}{0.0075},$$
+```math
+x_1(\lambda) = \frac{2.0\lambda - 0.30}{0.0125}, \qquad x_2(\lambda) = \frac{1.5\lambda - 0.30}{0.0075},
+```
 
-or zero if that comes out negative. Pump 1 switches on above a price of 0.15, pump 2 above 0.20. Put these back into $f_0 + \lambda f_1$ and the result is the formula for $q(\lambda)$ above. This splitting is the practical reason duality is used: a price turns one big coupled decision into many small independent ones (the [Saddle points](06-saddle-points-and-minimax.md) card reads the same pair as a game).
+or zero if that comes out negative. Pump 1 switches on above a price of 0.15, pump 2 above 0.20. Put these back into $`f_0 + \lambda f_1`$ and the result is the formula for $`q(\lambda)`$ above. This splitting is the practical reason duality is used: a price turns one big coupled decision into many small independent ones (the [Saddle points](06-saddle-points-and-minimax.md) card reads the same pair as a game).
 
 ### Step 2: weak duality, as an inequality chain
 
-For any legal $x$ and any $\lambda \ge 0$:
+For any legal $`x`$ and any $`\lambda \ge 0`$:
 
-$$q(\lambda) \;\le\; \mathcal L(x, \lambda) \;=\; f_0(x) + \lambda f_1(x) \;\le\; f_0(x).$$
+```math
+q(\lambda) \;\le\; \mathcal L(x, \lambda) \;=\; f_0(x) + \lambda f_1(x) \;\le\; f_0(x).
+```
 
-The first step holds because $q$ is the minimum of $\mathcal L$ over all plans. The second because $\lambda \ge 0$ and $f_1(x) \le 0$. Take the best legal plan and $q(\lambda) \le p^\star$. The code checks this on 846 legal plans on a 2 kW grid and 101 prices: the smallest margin is 0.0000, at the best plan and the best price.
+The first step holds because $`q`$ is the minimum of $`\mathcal L`$ over all plans. The second because $`\lambda \ge 0`$ and $`f_1(x) \le 0`$. Take the best legal plan and $`q(\lambda) \le p^\star`$. The code checks this on 846 legal plans on a 2 kW grid and 101 prices: the smallest margin is 0.0000, at the best plan and the best price.
 
 <details>
 <summary>Detailed proof: weak duality with many constraints</summary>
 
-Let $x$ satisfy $f_i(x) \le 0$ for $i = 1, \dots, m$ and $h_j(x) = 0$ for $j = 1, \dots, p$. Let $\lambda \ge 0$ entry by entry and $\nu$ be any vector. Then each $\lambda_i f_i(x) \le 0$, since it is a non-negative number times a non-positive one, and each $\nu_j h_j(x) = 0$. So
+Let $`x`$ satisfy $`f_i(x) \le 0`$ for $`i = 1, \dots, m`$ and $`h_j(x) = 0`$ for $`j = 1, \dots, p`$. Let $`\lambda \ge 0`$ entry by entry and $`\nu`$ be any vector. Then each $`\lambda_i f_i(x) \le 0`$, since it is a non-negative number times a non-positive one, and each $`\nu_j h_j(x) = 0`$. So
 
-$$\mathcal L(x, \lambda, \nu) = f_0(x) + \sum_i \lambda_i f_i(x) + \sum_j \nu_j h_j(x) \le f_0(x).$$
+$`\displaystyle \mathcal L(x, \lambda, \nu) = f_0(x) + \sum_i \lambda_i f_i(x) + \sum_j \nu_j h_j(x) \le f_0(x).`$
 
-The dual function is the minimum of $\mathcal L$ over all $x$, so $q(\lambda, \nu) \le \mathcal L(x, \lambda, \nu) \le f_0(x)$. This holds for every legal $x$, so $q(\lambda, \nu) \le p^\star$; and it holds for every $\lambda \ge 0$ and $\nu$, so $d^\star \le p^\star$. Nothing here used convexity: weak duality holds for every problem, including integer ones. If no legal $x$ exists, $p^\star = +\infty$ and the statement is empty.
+The dual function is the minimum of $`\mathcal L`$ over all $`x`$, so $`q(\lambda, \nu) \le \mathcal L(x, \lambda, \nu) \le f_0(x)`$. This holds for every legal $`x`$, so $`q(\lambda, \nu) \le p^\star`$; and it holds for every $`\lambda \ge 0`$ and $`\nu`$, so $`d^\star \le p^\star`$. Nothing here used convexity: weak duality holds for every problem, including integer ones. If no legal $`x`$ exists, $`p^\star = +\infty`$ and the statement is empty.
 
 </details>
 
 ### Step 3: the dual function is always concave
 
-Fix one plan $x$. Then $\mathcal L(x, \lambda) = f_0(x) + \lambda f_1(x)$ is a straight line in $\lambda$: height $f_0(x)$, slope $f_1(x)$. The dual function is the lowest of all these lines, one per plan. The lower edge of a bundle of straight lines bends downward or not at all: it is **concave**. So $q$ is a hill with no false tops: any top it reaches is the highest, whatever the original problem looked like.
+Fix one plan $`x`$. Then $`\mathcal L(x, \lambda) = f_0(x) + \lambda f_1(x)`$ is a straight line in $`\lambda`$: height $`f_0(x)`$, slope $`f_1(x)`$. The dual function is the lowest of all these lines, one per plan. The lower edge of a bundle of straight lines bends downward or not at all: it is **concave**. So $`q`$ is a hill with no false tops: any top it reaches is the highest, whatever the original problem looked like.
 
 <details>
 <summary>Detailed proof: q is concave</summary>
 
-Take prices $(\lambda, \nu)$ and $(\lambda', \nu')$ and a weight $\theta$ between 0 and 1. The Lagrangian is affine in the prices (a weighted sum plus a constant), so for any plan $x$,
+Take prices $`(\lambda, \nu)`$ and $`(\lambda', \nu')`$ and a weight $`\theta`$ between 0 and 1. The Lagrangian is affine in the prices (a weighted sum plus a constant), so for any plan $`x`$,
 
-$$\mathcal L\big(x, \theta\lambda + (1-\theta)\lambda', \theta\nu + (1-\theta)\nu'\big) = \theta\,\mathcal L(x, \lambda, \nu) + (1-\theta)\,\mathcal L(x, \lambda', \nu') \ge \theta\, q(\lambda, \nu) + (1-\theta)\, q(\lambda', \nu').$$
+$`\displaystyle \mathcal L\big(x, \theta\lambda + (1-\theta)\lambda', \theta\nu + (1-\theta)\nu'\big) = \theta\,\mathcal L(x, \lambda, \nu) + (1-\theta)\,\mathcal L(x, \lambda', \nu') \ge \theta\, q(\lambda, \nu) + (1-\theta)\, q(\lambda', \nu').`$
 
-The right side does not depend on $x$, so it is also below the minimum of the left side over $x$, which is $q$ at the mixed price. That is the definition of concave. Again, no convexity of $f_0$ or $f_i$ was used.
+The right side does not depend on $`x`$, so it is also below the minimum of the left side over $`x`$, which is $`q`$ at the mixed price. That is the definition of concave. Again, no convexity of $`f_0`$ or $`f_i`$ was used.
 
 </details>
 
@@ -154,63 +157,67 @@ The code tests this on every pair of 101 prices between 0 and 1: the bound at th
 
 ### Step 4: the slope of the hill is the shortfall
 
-At the trial price the pumps deliver 109 litres a second, 31 short. Raising the price a little makes both pumps run harder, and the bound rises at a rate equal to that shortfall: $q'(\lambda) = f_1\big(x(\lambda)\big)$.
+At the trial price the pumps deliver 109 litres a second, 31 short. Raising the price a little makes both pumps run harder, and the bound rises at a rate equal to that shortfall: $`q'(\lambda) = f_1\big(x(\lambda)\big)`$.
 
-For prices above 0.20, with both pumps on, pump 1 delivers $2.0\,x_1(\lambda) = 320\lambda - 48$ litres a second and pump 2 delivers $1.5\,x_2(\lambda) = 300\lambda - 60$. So the shortfall is $140 - (320\lambda - 48) - (300\lambda - 60) = 248 - 620\lambda$. It falls by 620 litres a second for each unit of price (£1 an hour per litre a second), and the hill's top is where it is zero, $\lambda^\star = 248/620 = 0.40$.
+For prices above 0.20, with both pumps on, pump 1 delivers $`2.0\,x_1(\lambda) = 320\lambda - 48`$ litres a second and pump 2 delivers $`1.5\,x_2(\lambda) = 300\lambda - 60`$. So the shortfall is $`140 - (320\lambda - 48) - (300\lambda - 60) = 248 - 620\lambda`$. It falls by 620 litres a second for each unit of price (£1 an hour per litre a second), and the hill's top is where it is zero, $`\lambda^\star = 248/620 = 0.40`$.
 
-That gives the simplest way to climb, **dual ascent**: from a start $\lambda_0$, raise the price in proportion to the shortfall,
+That gives the simplest way to climb, **dual ascent**: from a start $`\lambda_0`$, raise the price in proportion to the shortfall,
 
-$$\lambda_{k+1} = \max\big(0,\ \lambda_k + \alpha\, f_1(x(\lambda_k))\big).$$
+```math
+\lambda_{k+1} = \max\big(0,\ \lambda_k + \alpha\, f_1(x(\lambda_k))\big).
+```
 
-With $\alpha = 0.001$ the distance to the top is multiplied by $1 - 620 \times 0.001 = 0.38$ at every step. Above $\alpha = 2/620 = 0.003226$ that factor is below $-1$, and the price swings ever wider.
+With $`\alpha = 0.001`$ the distance to the top is multiplied by $`1 - 620 \times 0.001 = 0.38`$ at every step. Above $`\alpha = 2/620 = 0.003226`$ that factor is below $`-1`$, and the price swings ever wider.
 
 ### Step 5: strong duality, certified for the pumps
 
-At $\lambda^\star = 0.40$ each pump's own choice is 40 kW. Those two choices deliver $80 + 60 = 140$ litres a second: exactly the demand, so the plan is legal and its charge is zero. That gives a sandwich:
+At $`\lambda^\star = 0.40`$ each pump's own choice is 40 kW. Those two choices deliver $`80 + 60 = 140`$ litres a second: exactly the demand, so the plan is legal and its charge is zero. That gives a sandwich:
 
-$$q(0.40) \;\le\; p^\star \;\le\; f_0(40, 40) \;=\; f_0(40, 40) + 0.40 \times 0 \;=\; q(0.40) \;=\; 40.00.$$
+```math
+q(0.40) \;\le\; p^\star \;\le\; f_0(40, 40) \;=\; f_0(40, 40) + 0.40 \times 0 \;=\; q(0.40) \;=\; 40.00.
+```
 
-Floor and ceiling are both £40.00, so $p^\star = d^\star = 40.00$ and the plan is proved best. This is the certificate the code prints: a plan, a price, and a zero gap between them. The two conditions that made it work are the [KKT conditions](02-kkt-conditions.md): the plan minimises the priced cost (stationarity), and the price times the shortfall is zero (complementary slackness).
+Floor and ceiling are both £40.00, so $`p^\star = d^\star = 40.00`$ and the plan is proved best. This is the certificate the code prints: a plan, a price, and a zero gap between them. The two conditions that made it work are the [KKT conditions](02-kkt-conditions.md): the plan minimises the priced cost (stationarity), and the price times the shortfall is zero (complementary slackness).
 
 The general theorem says when such a price must exist.
 
-> **Strong duality (Slater's theorem).** Over a convex set of allowed plans, suppose $f_0, f_1, \dots, f_m$ are convex on it, every $h_j$ is affine, and some plan inside that set has $f_i(x) < 0$ for every $i$ and $h_j(x) = 0$ for every $j$. Then $d^\star = p^\star$, and if $p^\star$ is finite, some $(\lambda^\star, \nu^\star)$ with $\lambda^\star \ge 0$ attains it: $q(\lambda^\star, \nu^\star) = p^\star$.
+> **Strong duality (Slater's theorem).** Over a convex set of allowed plans, suppose $`f_0, f_1, \dots, f_m`$ are convex on it, every $`h_j`$ is affine, and some plan inside that set has $`f_i(x) < 0`$ for every $`i`$ and $`h_j(x) = 0`$ for every $`j`$. Then $`d^\star = p^\star`$, and if $`p^\star`$ is finite, some $`(\lambda^\star, \nu^\star)`$ with $`\lambda^\star \ge 0`$ attains it: $`q(\lambda^\star, \nu^\star) = p^\star`$.
 
-It is stated here, with its proof in Boyd and Vandenberghe (section 5.3.2); the [Slater's condition](05-slaters-condition-and-duality-gaps.md) card proves the case of one inequality. The pump plan meets every hypothesis: the cost is a sum of upward parabolas, the shortfall is a straight line, and 50 kW on each pump delivers 175 litres a second. The rule $x \ge 0$, kept inside the minimum, is the convex set of allowed plans, and the strictly feasible plan (50, 50) lies inside it.
+It is stated here, with its proof in Boyd and Vandenberghe (section 5.3.2); the [Slater's condition](05-slaters-condition-and-duality-gaps.md) card proves the case of one inequality. The pump plan meets every hypothesis: the cost is a sum of upward parabolas, the shortfall is a straight line, and 50 kW on each pump delivers 175 litres a second. The rule $`x \ge 0`$, kept inside the minimum, is the convex set of allowed plans, and the strictly feasible plan (50, 50) lies inside it.
 
 ### Step 6: the best price is also the marginal cost
 
-The top of the hill has a second meaning. Raise the demand by one litre a second and the best cost rises by about $\lambda^\star$. The code moves the demand from 139 to 141 and the best cost moves at 0.4000 £ an hour per litre a second. So $\lambda^\star$ is the **shadow price** of demand: what one more litre a second costs the company, an hour. The [LP duality](../04-Linear%20Programming/04-lp-duality-and-complementary-slackness.md) card reads linear programs' prices the same way.
+The top of the hill has a second meaning. Raise the demand by one litre a second and the best cost rises by about $`\lambda^\star`$. The code moves the demand from 139 to 141 and the best cost moves at 0.4000 £ an hour per litre a second. So $`\lambda^\star`$ is the **shadow price** of demand: what one more litre a second costs the company, an hour. The [LP duality](../04-Linear%20Programming/04-lp-duality-and-complementary-slackness.md) card reads linear programs' prices the same way.
 
 ---
 
 ## Worked numbers, by hand
 
-The trial price $\lambda_0 = 0.35$, then the best price.
+The trial price $`\lambda_0 = 0.35`$, then the best price.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| pump 1 at the trial price | $(2.0 \times 0.35 - 0.30) / 0.0125 = 0.40 / 0.0125$ | 32 kW |
-| pump 2 at the trial price | $(1.5 \times 0.35 - 0.30) / 0.0075 = 0.225 / 0.0075$ | 30 kW |
-| water delivered | $2.0 \times 32 + 1.5 \times 30 = 64 + 45$ | 109 L/s |
-| shortfall | $140 - 109$ | 31 L/s |
-| running cost | $f_0(32, 30)$ | £28.375 an hour |
-| bound at the trial price | $28.375 + 0.35 \times 31$ | £39.225 an hour |
-| best price | shortfall $140 - (320\lambda - 48) - (300\lambda - 60) = 248 - 620\lambda = 0$ | $\lambda^\star = 248/620 = 0.40$ |
-| pumps at the best price | $0.50 / 0.0125$ and $0.30 / 0.0075$ | 40 and 40 kW |
-| delivered | $80 + 60$ | 140 L/s, no shortfall |
-| bound at the best price | $f_0(40, 40) + 0.40 \times 0$ | £40.00 an hour |
-| gap at the trial price | $(40.00 - 39.225) / 40.00$ | **1.94 percent** |
+| pump 1 at the trial price | $`(2.0 \times 0.35 - 0.30) / 0.0125 = 0.40 / 0.0125`$ | 32 kW |
+| pump 2 at the trial price | $`(1.5 \times 0.35 - 0.30) / 0.0075 = 0.225 / 0.0075`$ | 30 kW |
+| water delivered | $`2.0 \times 32 + 1.5 \times 30 = 64 + 45`$ | 109 L/s |
+| shortfall | $`140 - 109`$ | 31 L/s |
+| running cost | $`f_0(32, 30)`$ | £28.375 an hour |
+| bound at the trial price | $`28.375 + 0.35 \times 31`$ | £39.225 an hour |
+| best price | shortfall $`140 - (320\lambda - 48) - (300\lambda - 60) = 248 - 620\lambda = 0`$ | $`\lambda^\star = 248/620 = 0.40`$ |
+| pumps at the best price | $`0.50 / 0.0125`$ and $`0.30 / 0.0075`$ | 40 and 40 kW |
+| delivered | $`80 + 60`$ | 140 L/s, no shortfall |
+| bound at the best price | $`f_0(40, 40) + 0.40 \times 0`$ | £40.00 an hour |
+| gap at the trial price | $`(40.00 - 39.225) / 40.00`$ | **1.94 percent** |
 
 At 35p the bound already says no plan costs less than £39.225 an hour; at 40p it says no plan costs less than £40.00, and the plan at 40 kW each costs exactly that, so it is the best.
 
-The gap has a neat form. Near the top the hill is a parabola with curvature $-620$, so the gap at a price $0.05$ off is $310 \times 0.05^2 = 0.775$ pounds an hour. A price 5p too high costs the same: $q(0.45) = 39.225$.
+The gap has a neat form. Near the top the hill is a parabola with curvature $`-620`$, so the gap at a price $`0.05`$ off is $`310 \times 0.05^2 = 0.775`$ pounds an hour. A price 5p too high costs the same: $`q(0.45) = 39.225`$.
 
 ### Climbing to the best price
 
-Dual ascent from $\lambda_0 = 0.35$ with step $\alpha = 0.001$, stopping when the shortfall is under 0.01 litres a second:
+Dual ascent from $`\lambda_0 = 0.35`$ with step $`\alpha = 0.001`$, stopping when the shortfall is under 0.01 litres a second:
 
-| $k$ | price $\lambda_k$ | shortfall, L/s | bound $q$, £/h | gap, percent |
+| $`k`$ | price $`\lambda_k`$ | shortfall, L/s | bound $`q`$, £/h | gap, percent |
 | ---: | ---: | ---: | ---: | ---: |
 | 0 | 0.35000 | 31.0000 | 39.2250 | 1.9375 |
 | 1 | 0.38100 | 11.7800 | 39.8881 | 0.2798 |
@@ -227,9 +234,9 @@ The shortfall shrinks by the factor 0.38 each step and the gap by the square of 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Pump 2 is fixed-speed: off or 70 kW | best bound £44.40 against a best plan of £46.54, a 4.60 percent gap | The legal plans no longer form a convex set. At 0.375 the price makes pump 2 indifferent between off and on, and the bound behaves as if it could run part-on; no real plan does |
-| Step $\alpha = 0.004$ in the climb | prices 0.350, 0.474, 0.290, 0.562, 0.160, 0.707, 0.000; gap 100.00 percent after 6 steps | The step is above $2/620 = 0.003226$, so each step overshoots the top by more than it started below it |
+| Step $`\alpha = 0.004`$ in the climb | prices 0.350, 0.474, 0.290, 0.562, 0.160, 0.707, 0.000; gap 100.00 percent after 6 steps | The step is above $`2/620 = 0.003226`$, so each step overshoots the top by more than it started below it |
 | Reading the trial-price plan as the answer | £28.375 an hour, delivering 109 of 140 L/s | The plan that minimises the priced cost need not be legal; only the bound is guaranteed |
-| Leaving the $\lambda \times 140$ term out of $\mathcal L$ | a "bound" of −£9.775 | Still below the truth, so not false, but useless: the demand itself is what the price is charged against |
+| Leaving the $`\lambda \times 140`$ term out of $`\mathcal L`$ | a "bound" of −£9.775 | Still below the truth, so not false, but useless: the demand itself is what the price is charged against |
 
 The code prints all four. In the fixed-speed case the best plan runs pump 2 at 70 kW (105 litres a second) and pump 1 at 17.50 kW; Slater's point still exists, so it is convexity that failed.
 
@@ -237,7 +244,7 @@ The code prints all four. In the fixed-speed case the best plan runs pump 2 at 7
 
 ## Code, from first principles, and it actually runs
 
-The code builds the dual function from its definition, each pump minimising its own priced cost, and reaches the best cost by **three independent roads**. Road 1 never sees a price: it puts the demand in exactly and searches the remaining one-dimensional cost by golden-section search (repeatedly cutting the interval at the golden ratio). Road 2 finds the price at which the pumps meet demand by bisection, and reads $d^\star = q(\lambda^\star)$. Road 3 solves the stationarity equation for $\lambda^\star$ directly. Then the road-1 plan and the road-2 price are fed to the KKT conditions, weak duality is checked on a grid of 846 legal plans and 101 prices, concavity by 10,201 midpoint tests, and the shadow price by moving the demand. Every number on the card is printed.
+The code builds the dual function from its definition, each pump minimising its own priced cost, and reaches the best cost by **three independent roads**. Road 1 never sees a price: it puts the demand in exactly and searches the remaining one-dimensional cost by golden-section search (repeatedly cutting the interval at the golden ratio). Road 2 finds the price at which the pumps meet demand by bisection, and reads $`d^\star = q(\lambda^\star)`$. Road 3 solves the stationarity equation for $`\lambda^\star`$ directly. Then the road-1 plan and the road-2 price are fed to the KKT conditions, weak duality is checked on a grid of 846 legal plans and 101 prices, concavity by 10,201 midpoint tests, and the shadow price by moving the demand. Every number on the card is printed.
 
 ### Python
 
@@ -587,11 +594,11 @@ The two outputs match line for line.
 
 Lean proves weak duality and concavity for every problem, and strong duality for the two pumps.
 
-- At every price of at least 0 on the "at most" rules, and any price on the equalities, $q(\lambda, \nu) \le p^\star$. So $d^\star \le p^\star$ too.
+- At every price of at least 0 on the "at most" rules, and any price on the equalities, $`q(\lambda, \nu) \le p^\star`$. So $`d^\star \le p^\star`$ too.
 - This needs no convexity. It holds when the minimum is only a greatest lower bound, and when no legal plan exists.
-- For any two prices and a weight $\theta$ between 0 and 1, the bound at the mixed price is at least the mixed bound. So $q$ is concave.
-- For the two pumps, with $x \ge 0$ kept inside the minimum, $q(\lambda)$ equals the card's formula at every price of at least 0.20.
-- At 40p the bound is £40.00, and both $p^\star$ and $d^\star$ are exactly £40.00.
+- For any two prices and a weight $`\theta`$ between 0 and 1, the bound at the mixed price is at least the mixed bound. So $`q`$ is concave.
+- For the two pumps, with $`x \ge 0`$ kept inside the minimum, $`q(\lambda)`$ equals the card's formula at every price of at least 0.20.
+- At 40p the bound is £40.00, and both $`p^\star`$ and $`d^\star`$ are exactly £40.00.
 - The hand arithmetic holds exactly: trial and best prices, the plan (50, 50), the gap, the chart, the step factor and fixed-speed numbers.
 
 Slater's theorem in general stays with Boyd and Vandenberghe; the climb, shadow price and fixed-speed gap are left to the Python and Rust checks.
@@ -854,7 +861,7 @@ end LagrangianDuality
 > Guess first, then run it. Some asserts are pinned to this card's pumps, so a change may stop the program at an assert after everything is printed.
 > - **Guess first: does a higher demand raise the price?** Set `D` to `160.0`. The best price rises to 0.4323 and the best cost to £48.3226 an hour, with the pumps at 45.16 and 46.45 kW: each extra litre a second costs more than the last.
 > - **Guess first: is a price 5p too high better than 5p too low?** Set `LAM0` to `0.45`. The bound is £39.225 again: the hill is symmetric near its top, so both errors cost the same 1.94 percent.
-> - **Guess first: how few steps can the climb take?** Set `STEP` to `1 / 620`. One step lands on 0.400000, because that step is exactly one over the hill's curvature: it is Newton's method on $q$.
+> - **Guess first: how few steps can the climb take?** Set `STEP` to `1 / 620`. One step lands on 0.400000, because that step is exactly one over the hill's curvature: it is Newton's method on $`q`$.
 
 ---
 
@@ -866,14 +873,14 @@ end LagrangianDuality
 > - **Assuming the gap always closes.** With pump 2 fixed-speed the best bound is £44.40 and the best plan £46.54: 4.60 percent apart at every price. Strong duality needs convexity and a strictly feasible point.
 > - **Thinking a higher price is a safer bound.** The bound is a hill, not a ramp. At 0.45 it is £39.225, exactly as low as at 0.35.
 > - **Stepping too boldly.** With step 0.004 the price swings 0.350, 0.474, 0.290, 0.562 and reaches 0.000 by step 6, where the bound is worthless: a 100.00 percent gap.
-> - **Pricing the delivery but not the demand.** Leave the $140\lambda$ term out and the "bound" at 35p is −£9.775.
+> - **Pricing the delivery but not the demand.** Leave the $`140\lambda`$ term out and the "bound" at 35p is −£9.775.
 
 ---
 
 ## Where you meet it in real life
 
 - **Water and power networks.** Pump and generator scheduling minimise cost against demand at every hour. The multiplier on demand is the marginal price of supply, and the dual bound tells the operator how far any schedule can be from the best; on/off units make the problem non-convex, and the gap in "What breaks" is the reason.
-- **Electricity markets.** A market's clearing price is the multiplier on the demand balance in the dispatch problem, exactly as $\lambda^\star$ is here. Generators that must run at a fixed minimum or not at all leave a gap, which markets cover with side payments.
+- **Electricity markets.** A market's clearing price is the multiplier on the demand balance in the dispatch problem, exactly as $`\lambda^\star`$ is here. Generators that must run at a fixed minimum or not at all leave a gap, which markets cover with side payments.
 - **Interior point solvers.** They carry a plan and a price together and stop when the duality gap is below a tolerance; that gap is the certificate they print ([Interior point methods](08-interior-point-methods.md)).
 - **Machine learning.** A support vector machine is trained by solving its dual, where the prices pick out the few points that hold up the margin.
 - **Integer programs.** Weak duality needs no convexity, so pricing an awkward rule of an integer program still gives a bound for branch-and-bound to prune with, gap and all. Branch-and-bound splits the problem into cases and drops any case whose bound is already worse than a plan in hand ([Integer programs](../../14-Applied%20and%20computational/05-Operations%20Research/03-integer-programming-and-branch-and-bound.md)).
@@ -885,7 +892,7 @@ end LagrangianDuality
 
 ## What this builds on
 
-- [KKT conditions](02-kkt-conditions.md): the multipliers $\lambda_i \ge 0$ and $\nu_j$, and the conditions that hold at the best plan. On this card those same conditions are what close the gap: stationarity and complementary slackness are exactly the sandwich of Step 5.
+- [KKT conditions](02-kkt-conditions.md): the multipliers $`\lambda_i \ge 0`$ and $`\nu_j`$, and the conditions that hold at the best plan. On this card those same conditions are what close the gap: stationarity and complementary slackness are exactly the sandwich of Step 5.
 
 ## Where this goes next
 

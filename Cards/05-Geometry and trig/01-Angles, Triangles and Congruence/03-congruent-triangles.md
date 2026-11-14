@@ -26,9 +26,11 @@ Drawn to scale, 1 m = 100 units; the dashed line is where the leaves meet. Equal
 
 ## The formula
 
-Notation, in words. $\triangle ABC$ is the triangle with corners A, B, C. Two corner letters together, such as AB, name the distance between them. $\angle A$ is the angle at corner A; three letters, as in angle ABG, name the angle at the middle letter. The sign $\cong$ reads "is congruent to", with corners listed in matching order. Congruence means all six parts match:
+Notation, in words. $`\triangle ABC`$ is the triangle with corners A, B, C. Two corner letters together, such as AB, name the distance between them. $`\angle A`$ is the angle at corner A; three letters, as in angle ABG, name the angle at the middle letter. The sign $`\cong`$ reads "is congruent to", with corners listed in matching order. Congruence means all six parts match:
 
-$$\triangle ABC \cong \triangle DEF \iff AB = DE,\; BC = EF,\; CA = FD,\; \angle A = \angle D,\; \angle B = \angle E,\; \angle C = \angle F$$
+```math
+\triangle ABC \cong \triangle DEF \iff AB = DE,\; BC = EF,\; CA = FD,\; \angle A = \angle D,\; \angle B = \angle E,\; \angle C = \angle F
+```
 
 **Read it aloud:** the triangles are congruent exactly when every side and every angle equals its partner, partners fixed by the letter order.
 
@@ -43,14 +45,14 @@ Each test needs only three of the six. In the names, S is a matching side and A 
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $A$, $B$, $C$ | corners of the first triangle | left leaf: corner, rail and stile holes | — |
-| $D$, $E$, $F$ | matching corners of the second | right leaf, same roles, mirrored | — |
-| $AB$, $BC$, $CA$ | distances between corners | 1.50 m, 1.70 m, 0.80 m | a longer rail needs a longer brace |
-| $\angle A$ | angle at corner A | square, a right angle | opening it lengthens the brace |
-| $\triangle ABC$ | triangle with corners A, B, C | left brace triangle | — |
-| $\cong$ | "is congruent to" | left and right triangles | — |
-| $\iff$ | "exactly when" | — | — |
-| $s$ | unknown brace length in the SSA trap | 1.700 m or 0.947 m | — |
+| $`A`$, $`B`$, $`C`$ | corners of the first triangle | left leaf: corner, rail and stile holes | — |
+| $`D`$, $`E`$, $`F`$ | matching corners of the second | right leaf, same roles, mirrored | — |
+| $`AB`$, $`BC`$, $`CA`$ | distances between corners | 1.50 m, 1.70 m, 0.80 m | a longer rail needs a longer brace |
+| $`\angle A`$ | angle at corner A | square, a right angle | opening it lengthens the brace |
+| $`\triangle ABC`$ | triangle with corners A, B, C | left brace triangle | — |
+| $`\cong`$ | "is congruent to" | left and right triangles | — |
+| $`\iff`$ | "exactly when" | — | — |
+| $`s`$ | unknown brace length in the SSA trap | 1.700 m or 0.947 m | — |
 
 ### When it holds
 
@@ -332,7 +334,7 @@ Lean proves the four tests for any two triangles in a flat plane, and shows that
 - SSS, SAS, ASA and RHS each force all six parts to match, partners in letter order. Neither triangle may have its corners on one line.
 - SSA: the 1.50 m rail, the 0.80 m stile and the brace angle at the rail hole fit braces of 1.700 m and 0.947 m.
 - AAA: a triangle and a copy at twice its size match in all three angles, but not in size.
-- The card's sums in centimetres: $150^2 + 80^2 = 170^2$ on both leaves, the 70 cm miss, and the 0.8-size copy 34 cm short.
+- The card's sums in centimetres: $`150^2 + 80^2 = 170^2`$ on both leaves, the 70 cm miss, and the 0.8-size copy 34 cm short.
 
 The grid constructions, the halving search, the scan and the figure coordinates are left to the Python and Rust checks.
 

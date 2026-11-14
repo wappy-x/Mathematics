@@ -34,41 +34,45 @@ Orange: the exponential CDF, from its formula. Green: the share of 100,000 simul
 
 ## The formula
 
-Notation first. A capital $U$ is a uniform draw, a random variable spread evenly on the stretch from 0 to 1; $U \sim \text{Uniform}(0,1)$ reads "U follows the uniform law on 0 to 1". A lower-case $u$ is one particular value of it. $F(x)$ is the CDF of the law wanted: the chance of a value at or below $x$. The **quantile function** $Q(u)$ is the CDF run backwards: the smallest value $x$ with at least chance $u$ at or below it.
+Notation first. A capital $`U`$ is a uniform draw, a random variable spread evenly on the stretch from 0 to 1; $`U \sim \text{Uniform}(0,1)`$ reads "U follows the uniform law on 0 to 1". A lower-case $`u`$ is one particular value of it. $`F(x)`$ is the CDF of the law wanted: the chance of a value at or below $`x`$. The **quantile function** $`Q(u)`$ is the CDF run backwards: the smallest value $`x`$ with at least chance $`u`$ at or below it.
 
-$$Q(u) = \min\{\,x : F(x) \ge u\,\}, \qquad U \sim \text{Uniform}(0,1) \;\Longrightarrow\; P\big(Q(U) \le x\big) = F(x)$$
+```math
+Q(u) = \min\{\,x : F(x) \ge u\,\}, \qquad U \sim \text{Uniform}(0,1) \;\Longrightarrow\; P\big(Q(U) \le x\big) = F(x)
+```
 
-**Read it aloud:** the quantile of $u$ is the first value where the running chance reaches $u$; feed it a uniform draw and what comes out has CDF $F$.
+**Read it aloud:** the quantile of $`u`$ is the first value where the running chance reaches $`u`$; feed it a uniform draw and what comes out has CDF $`F`$.
 
-When $F$ is a smooth curve that only climbs, $Q$ is the ordinary inverse: solve $F(x) = u$ for $x$. For the toll booth the gap $T$ has rate $\lambda$ cars per minute and CDF $F(t) = 1 - e^{-\lambda t}$. Solving $u = 1 - e^{-\lambda t}$ gives
+When $`F`$ is a smooth curve that only climbs, $`Q`$ is the ordinary inverse: solve $`F(x) = u`$ for $`x`$. For the toll booth the gap $`T`$ has rate $`\lambda`$ cars per minute and CDF $`F(t) = 1 - e^{-\lambda t}`$. Solving $`u = 1 - e^{-\lambda t}`$ gives
 
-$$T = Q(U) = -\frac{\ln(1 - U)}{\lambda}$$
+```math
+T = Q(U) = -\frac{\ln(1 - U)}{\lambda}
+```
 
 **Read it aloud:** the gap is minus the log of one minus the uniform draw, divided by the rate.
 
-For a count $X$ taking values $k = 1, 2, 3, 4$ with chances $p_k$, the CDF is a staircase of running totals, and $Q(u)$ is the first value whose running total reaches $u$.
+For a count $`X`$ taking values $`k = 1, 2, 3, 4`$ with chances $`p_k`$, the CDF is a staircase of running totals, and $`Q(u)`$ is the first value whose running total reaches $`u`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $U$ | a uniform draw: a random number spread evenly between 0 and 1 | first draw 0.827679 | a longer gap, or a bigger count |
-| $u$ | one particular value of $U$ | 0.50 | the returned value climbs, never falls |
-| $F$ | the CDF: chance of a value at or below the one given | $1 - e^{-0.25t}$ | — |
-| $Q$ | the quantile function: the CDF run backwards | $Q(0.5) = 2.7726$ minutes | — |
-| $T$ | the gap until the next car, in minutes | mean 4 | — |
-| $x$ | one value of the law wanted, a gap or a count | 10 minutes, or 3 passengers | more chance at or below it |
-| $t$ | one particular number of minutes | 10 | more chance below it |
-| $\lambda$ | the rate: cars per minute | 0.25 | every gap shrinks in proportion |
-| $\Phi$ | the standard normal CDF, from the normal card | no closed-form inverse | — |
-| $X$ | passengers in the next car, a count | 1 to 4 | — |
-| $k$ | one possible count | 3 | — |
-| $p_k$ | the chance of exactly $k$ passengers | 0.50, 0.30, 0.15, 0.05 | the stair at $k$ gets taller |
-| $n$ | the number of simulated draws | 100,000 | standard errors shrink like one over its square root |
+| $`U`$ | a uniform draw: a random number spread evenly between 0 and 1 | first draw 0.827679 | a longer gap, or a bigger count |
+| $`u`$ | one particular value of $`U`$ | 0.50 | the returned value climbs, never falls |
+| $`F`$ | the CDF: chance of a value at or below the one given | $`1 - e^{-0.25t}`$ | — |
+| $`Q`$ | the quantile function: the CDF run backwards | $`Q(0.5) = 2.7726`$ minutes | — |
+| $`T`$ | the gap until the next car, in minutes | mean 4 | — |
+| $`x`$ | one value of the law wanted, a gap or a count | 10 minutes, or 3 passengers | more chance at or below it |
+| $`t`$ | one particular number of minutes | 10 | more chance below it |
+| $`\lambda`$ | the rate: cars per minute | 0.25 | every gap shrinks in proportion |
+| $`\Phi`$ | the standard normal CDF, from the normal card | no closed-form inverse | — |
+| $`X`$ | passengers in the next car, a count | 1 to 4 | — |
+| $`k`$ | one possible count | 3 | — |
+| $`p_k`$ | the chance of exactly $`k`$ passengers | 0.50, 0.30, 0.15, 0.05 | the stair at $`k`$ gets taller |
+| $`n`$ | the number of simulated draws | 100,000 | standard errors shrink like one over its square root |
 
 ### When it holds
 
 - **The input is uniform on 0 to 1.** Feed in the square of a uniform draw instead, which crowds towards 0, and the mean gap falls from 4 minutes to 2.4548.
-- **The CDF is the running total, not the separate chances.** Compare $u$ with each $p_k$ alone and the mean passenger count comes out at 2.5, not 1.75.
-- **The draw never reaches the far end.** At $u = 1$ the exponential quantile is infinite. This card's generator returns at most $1 - 2^{-53}$, just short of 1, so its longest possible gap is 146.95 minutes. The true law puts chance $2^{-53}$ beyond that, far too small to matter.
+- **The CDF is the running total, not the separate chances.** Compare $`u`$ with each $`p_k`$ alone and the mean passenger count comes out at 2.5, not 1.75.
+- **The draw never reaches the far end.** At $`u = 1`$ the exponential quantile is infinite. This card's generator returns at most $`1 - 2^{-53}`$, just short of 1, so its longest possible gap is 146.95 minutes. The true law puts chance $`2^{-53}`$ beyond that, far too small to matter.
 - **The quantile can be computed.** The exponential's has a closed form: a formula built from familiar functions such as the logarithm. The normal law's does not: it needs a numerical inverse or a different method, as Why it works says at the end.
 - **One draw per value, independent draws.** Each simulated gap uses its own uniform. Reusing a draw for two gaps makes them equal, not independent.
 
@@ -78,40 +82,46 @@ For a count $X$ taking values $k = 1, 2, 3, 4$ with chances $p_k$, the CDF is a 
 
 ### Step 0: a uniform draw is a chance picked at random
 
-For a uniform draw, the chance of landing at or below any number $u$ between 0 and 1 is $u$ itself: $P(U \le u) = u$. The draw lands at or below 0.50 half the time. So a uniform draw is a chance picked at random, and the CDF translates between chances and values. Going from chance to value, through the quantile, turns "chance at or below $u$ is $u$" into "chance at or below $x$ is $F(x)$". That is the whole idea; the steps below make it exact. [Uniform](../04-Continuous%20Distributions/02-uniform-distribution.md) met the rule with a short proof; this card is its home, proving it for any CDF and putting it to work on waits and counts.
+For a uniform draw, the chance of landing at or below any number $`u`$ between 0 and 1 is $`u`$ itself: $`P(U \le u) = u`$. The draw lands at or below 0.50 half the time. So a uniform draw is a chance picked at random, and the CDF translates between chances and values. Going from chance to value, through the quantile, turns "chance at or below $`u`$ is $`u`$" into "chance at or below $`x`$ is $`F(x)`$". That is the whole idea; the steps below make it exact. [Uniform](../04-Continuous%20Distributions/02-uniform-distribution.md) met the rule with a short proof; this card is its home, proving it for any CDF and putting it to work on waits and counts.
 
 ### Step 1: invert the exponential CDF
 
-The chance that a gap is at most $t$ minutes is $F(t) = 1 - e^{-0.25t}$. Set that equal to a chance $u$ and solve for $t$:
+The chance that a gap is at most $`t`$ minutes is $`F(t) = 1 - e^{-0.25t}`$. Set that equal to a chance $`u`$ and solve for $`t`$:
 
-$$u = 1 - e^{-0.25t} \;\Longrightarrow\; e^{-0.25t} = 1 - u \;\Longrightarrow\; t = -\frac{\ln(1-u)}{0.25}$$
+```math
+u = 1 - e^{-0.25t} \;\Longrightarrow\; e^{-0.25t} = 1 - u \;\Longrightarrow\; t = -\frac{\ln(1-u)}{0.25}
+```
 
-At $u = 0.5$: $1 - u = 0.5$, $\ln 0.5 = -0.6931$, and $t = 0.6931 / 0.25 = 2.7726$ minutes. Half of all gaps are shorter than that. At $u = 0.99$ the gap is 18.4207 minutes: only 1 gap in 100 is longer.
+At $`u = 0.5`$: $`1 - u = 0.5`$, $`\ln 0.5 = -0.6931`$, and $`t = 0.6931 / 0.25 = 2.7726`$ minutes. Half of all gaps are shorter than that. At $`u = 0.99`$ the gap is 18.4207 minutes: only 1 gap in 100 is longer.
 
 ### Step 2: the proof, when the CDF only climbs
 
-Take any gap length $t$. The quantile climbs as $u$ climbs, because a larger chance needs a longer gap to accumulate. So the quantile of $U$ is at most $t$ exactly when $U$ itself is at most $F(t)$:
+Take any gap length $`t`$. The quantile climbs as $`u`$ climbs, because a larger chance needs a longer gap to accumulate. So the quantile of $`U`$ is at most $`t`$ exactly when $`U`$ itself is at most $`F(t)`$:
 
-$$Q(U) \le t \iff U \le F(t)$$
+```math
+Q(U) \le t \iff U \le F(t)
+```
 
-The two sides describe the same event, so they have the same chance. The right side has chance $F(t)$ by Step 0. Therefore
+The two sides describe the same event, so they have the same chance. The right side has chance $`F(t)`$ by Step 0. Therefore
 
-$$P(T \le t) = P\big(U \le F(t)\big) = F(t).$$
+```math
+P(T \le t) = P\big(U \le F(t)\big) = F(t).
+```
 
-The simulated gaps have exactly the CDF wanted, for every $t$ at once. With $t = 10$: the chance of a gap over 10 minutes is $e^{-2.5} = 0.0821$, and 8.22 percent of the simulated gaps exceed 10 minutes.
+The simulated gaps have exactly the CDF wanted, for every $`t`$ at once. With $`t = 10`$: the chance of a gap over 10 minutes is $`e^{-2.5} = 0.0821`$, and 8.22 percent of the simulated gaps exceed 10 minutes.
 
 ### Step 3: a count is a staircase, and each stair has the right width
 
 Passengers per car: 1 with chance 0.50, 2 with 0.30, 3 with 0.15, 4 with 0.05. The running totals are 0.50, 0.80, 0.95, 1.00. They cut the stretch from 0 to 1 into four pieces:
 
-| Draw $u$ lands in | Returns | Width of the piece |
+| Draw $`u`$ lands in | Returns | Width of the piece |
 | --- | --- | --- |
 | 0 to 0.50 | 1 passenger | 0.50 |
 | 0.50 to 0.80 | 2 passengers | 0.30 |
 | 0.80 to 0.95 | 3 passengers | 0.15 |
 | 0.95 to 1 | 4 passengers | 0.05 |
 
-A uniform draw lands in a piece with chance equal to its width, by Step 0. Each width is one $p_k$, so each count comes out with its own chance. A draw of 0.87 passes 0.50 and 0.80, first reaches 0.95, and returns 3.
+A uniform draw lands in a piece with chance equal to its width, by Step 0. Each width is one $`p_k`$, so each count comes out with its own chance. A draw of 0.87 passes 0.50 and 0.80, first reaches 0.95, and returns 3.
 
 ### The picture: the passenger staircase, simulated
 
@@ -129,37 +139,39 @@ Orange bars: the share of 100,000 simulated cars with each count, one uniform dr
 
 ### Step 4: one rule covers curves, stairs and flat stretches
 
-The exponential CDF is a smooth climb; the passenger CDF jumps at each count and stays flat between counts. Solving $F(x) = u$ fails on a staircase: at $u = 0.87$ no count has running total exactly 0.87. It also fails on a flat stretch, where many values share one running total. The rule "the smallest $x$ with $F(x) \ge u$" never fails. At a jump it returns the value where the total first reaches $u$. On a flat stretch it returns the left end. And for every law and every $x$,
+The exponential CDF is a smooth climb; the passenger CDF jumps at each count and stays flat between counts. Solving $`F(x) = u`$ fails on a staircase: at $`u = 0.87`$ no count has running total exactly 0.87. It also fails on a flat stretch, where many values share one running total. The rule "the smallest $`x`$ with $`F(x) \ge u`$" never fails. At a jump it returns the value where the total first reaches $`u`$. On a flat stretch it returns the left end. And for every law and every $`x`$,
 
-$$Q(u) \le x \iff u \le F(x),$$
+```math
+Q(u) \le x \iff u \le F(x),
+```
 
 which is all Step 2 used. So the proof in Step 2 goes through word for word, for any CDF whatever.
 
 <details>
 <summary>Detailed proof: the smallest value exists, and the equivalence holds</summary>
 
-Fix $u$ strictly between 0 and 1, and call the values $x$ with $F(x) \ge u$ the qualifying values. Every CDF climbs (never falls), tends to 0 far to the left and to 1 far to the right ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)), and is right-continuous: at each point it equals its limit from the right ([Random variables](../02-Random%20Variables/01-random-variables-and-distributions.md)).
+Fix $`u`$ strictly between 0 and 1, and call the values $`x`$ with $`F(x) \ge u`$ the qualifying values. Every CDF climbs (never falls), tends to 0 far to the left and to 1 far to the right ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)), and is right-continuous: at each point it equals its limit from the right ([Random variables](../02-Random%20Variables/01-random-variables-and-distributions.md)).
 
-**Some value qualifies.** $F$ tends to 1 and $u < 1$, so far enough right $F(x) \ge u$.
+**Some value qualifies.** $`F`$ tends to 1 and $`u < 1`$, so far enough right $`F(x) \ge u`$.
 
-**The qualifying values have a left end.** $F$ tends to 0 and $u > 0$, so far enough left some value has $F$ below $u$. Every qualifying value lies to the right of it, since $F$ never falls. So the qualifying values are bounded on the left, and because $F$ never falls, everything to the right of a qualifying value qualifies too: together they form a stretch running off to the right, with a left end.
+**The qualifying values have a left end.** $`F`$ tends to 0 and $`u > 0`$, so far enough left some value has $`F`$ below $`u`$. Every qualifying value lies to the right of it, since $`F`$ never falls. So the qualifying values are bounded on the left, and because $`F`$ never falls, everything to the right of a qualifying value qualifies too: together they form a stretch running off to the right, with a left end.
 
-**The left end qualifies.** Take qualifying values closing in on the left end from the right. Each has $F \ge u$. Right-continuity makes $F$ at the left end the limit of those values, so it is at least $u$ and the left end qualifies. So the minimum exists; it is $Q(u)$.
+**The left end qualifies.** Take qualifying values closing in on the left end from the right. Each has $`F \ge u`$. Right-continuity makes $`F`$ at the left end the limit of those values, so it is at least $`u`$ and the left end qualifies. So the minimum exists; it is $`Q(u)`$.
 
-**The equivalence.** If $u \le F(x)$ then $x$ qualifies, so $Q(u) \le x$. If $Q(u) \le x$ then $F(x) \ge F(Q(u)) \ge u$, since $F$ never falls. So $Q(u) \le x$ exactly when $u \le F(x)$.
+**The equivalence.** If $`u \le F(x)`$ then $`x`$ qualifies, so $`Q(u) \le x`$. If $`Q(u) \le x`$ then $`F(x) \ge F(Q(u)) \ge u`$, since $`F`$ never falls. So $`Q(u) \le x`$ exactly when $`u \le F(x)`$.
 
-**The law.** A uniform $U$ lands strictly between 0 and 1 with chance 1, and for those draws the events $Q(U) \le x$ and $U \le F(x)$ coincide. Hence $P(Q(U) \le x) = P(U \le F(x)) = F(x)$ for every $x$. Two laws with the same CDF are the same law ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)), so $Q(U)$ has the chosen law.
+**The law.** A uniform $`U`$ lands strictly between 0 and 1 with chance 1, and for those draws the events $`Q(U) \le x`$ and $`U \le F(x)`$ coincide. Hence $`P(Q(U) \le x) = P(U \le F(x)) = F(x)`$ for every $`x`$. Two laws with the same CDF are the same law ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)), so $`Q(U)`$ has the chosen law.
 
 </details>
 
 <details>
 <summary>The same fact read backwards</summary>
 
-If a quantity $X$ has a CDF with no jumps, then $F(X)$ is uniform on 0 to 1: the chance that $F(X) \le u$ is $u$. Feeding each observed toll-booth gap through $1 - e^{-0.25t}$ should give numbers spread evenly between 0 and 1; if they bunch, the exponential law is wrong for that road. This reverse direction is called the probability integral transform, and it underlies goodness-of-fit checks (tests of whether data follow a proposed law) and copulas (recipes for joining several laws into one). With jumps it fails: the passenger CDF turns every car into one of only four numbers.
+If a quantity $`X`$ has a CDF with no jumps, then $`F(X)`$ is uniform on 0 to 1: the chance that $`F(X) \le u`$ is $`u`$. Feeding each observed toll-booth gap through $`1 - e^{-0.25t}`$ should give numbers spread evenly between 0 and 1; if they bunch, the exponential law is wrong for that road. This reverse direction is called the probability integral transform, and it underlies goodness-of-fit checks (tests of whether data follow a proposed law) and copulas (recipes for joining several laws into one). With jumps it fails: the passenger CDF turns every car into one of only four numbers.
 
 </details>
 
-A second route is needed when the quantile has no formula. The standard normal law's CDF, written $\Phi$ on [Normal](../04-Continuous%20Distributions/04-normal-distribution.md), has no closed-form inverse, so $\Phi^{-1}(u)$ must be found by solving $\Phi(x) = u$ numerically ([Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md)), one root-find per draw. Methods that avoid the inverse altogether are on [Rejection sampling and Box-Muller](03-rejection-sampling-and-box-muller.md).
+A second route is needed when the quantile has no formula. The standard normal law's CDF, written $`\Phi`$ on [Normal](../04-Continuous%20Distributions/04-normal-distribution.md), has no closed-form inverse, so $`\Phi^{-1}(u)`$ must be found by solving $`\Phi(x) = u`$ numerically ([Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md)), one root-find per draw. Methods that avoid the inverse altogether are on [Rejection sampling and Box-Muller](03-rejection-sampling-and-box-muller.md).
 
 ---
 
@@ -169,14 +181,14 @@ The toll booth, rate 0.25 cars per minute, then one passenger count.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the quantile | solve $u = 1 - e^{-0.25t}$ for $t$ | $t = -\ln(1-u)/0.25$ |
-| $u = 0.10$ | $-\ln 0.90 / 0.25 = 0.1054/0.25$ | 0.4214 min |
-| $u = 0.50$ | $-\ln 0.50 / 0.25 = 0.6931/0.25$ | 2.7726 min |
-| $u = 0.90$ | $-\ln 0.10 / 0.25 = 2.3026/0.25$ | 9.2103 min |
-| first generator draw, 0.827679 | $-\ln(1 - 0.827679) / 0.25$ | 7.0336 min |
-| mean gap, exact | $1/\lambda = 1/0.25$ | 4.0000 min |
+| the quantile | solve $`u = 1 - e^{-0.25t}`$ for $`t`$ | $`t = -\ln(1-u)/0.25`$ |
+| $`u = 0.10`$ | $`-\ln 0.90 / 0.25 = 0.1054/0.25`$ | 0.4214 min |
+| $`u = 0.50`$ | $`-\ln 0.50 / 0.25 = 0.6931/0.25`$ | 2.7726 min |
+| $`u = 0.90`$ | $`-\ln 0.10 / 0.25 = 2.3026/0.25`$ | 9.2103 min |
+| first generator draw, 0.827679 | $`-\ln(1 - 0.827679) / 0.25`$ | 7.0336 min |
+| mean gap, exact | $`1/\lambda = 1/0.25`$ | 4.0000 min |
 | mean gap, 100,000 draws | average of the simulated gaps | **4.0154 min, standard error 0.0127** |
-| passengers, $u = 0.87$ | running totals 0.50, 0.80, 0.95: first to reach 0.87 | **3** |
+| passengers, $`u = 0.87`$ | running totals 0.50, 0.80, 0.95: first to reach 0.87 | **3** |
 
 The simulated mean sits 1.22 standard errors from the true 4 minutes, well inside the ordinary wobble of 100,000 draws: the planner's simulated night has the right rhythm of cars.
 
@@ -184,17 +196,17 @@ The simulated mean sits 1.22 standard errors from the true 4 minutes, well insid
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Multiply by the rate instead of dividing, $-\lambda \ln(1-U)$ | mean gap 0.2500 min, simulated 0.2510 | The rate, 0.25 cars per minute, took the place of the mean gap, 4 minutes |
-| Feed in $U$ squared, not $U$ | mean gap 2.4548 min, simulated 2.4680 | The input is no longer uniform: squaring crowds draws towards 0 |
-| Compare $u$ with each chance, not the running totals | mean 2.5000 passengers, simulated 2.5029 | Draws above 0.50 fail every test and fall through to 4 |
+| Multiply by the rate instead of dividing, $`-\lambda \ln(1-U)`$ | mean gap 0.2500 min, simulated 0.2510 | The rate, 0.25 cars per minute, took the place of the mean gap, 4 minutes |
+| Feed in $`U`$ squared, not $`U`$ | mean gap 2.4548 min, simulated 2.4680 | The input is no longer uniform: squaring crowds draws towards 0 |
+| Compare $`u`$ with each chance, not the running totals | mean 2.5000 passengers, simulated 2.5029 | Draws above 0.50 fail every test and fall through to 4 |
 
-The exact mean for the squared input is $4(2 - 2\ln 2)$, from integrating $-\ln(1 - u^2)$ over 0 to 1; the code also gets it by a grid. The third mistake returns 1 or 4 passengers, half the time each. The code prints all three and asserts each simulated mean against its exact value.
+The exact mean for the squared input is $`4(2 - 2\ln 2)`$, from integrating $`-\ln(1 - u^2)`$ over 0 to 1; the code also gets it by a grid. The third mistake returns 1 or 4 passengers, half the time each. The code prints all three and asserts each simulated mean against its exact value.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported except the logarithm, exponential and square root. Every uniform draw comes from SplitMix64, a small generator written out in both languages with seed 20260929, so the two programs draw identical numbers. The answer is reached three ways that share no arithmetic beyond the quantile itself: the exact formula; a grid of 100,000 evenly spaced values of $u$ pushed through the quantile, which averages it by the midpoint rule (each slice of width 1/100,000 represented by its centre) with no randomness at all; and a seeded simulation of 100,000 gaps and 100,000 cars, every estimate printed with its standard error. The asserts compare grid and simulation against the formulas, allowing 4 standard errors for anything simulated.
+Nothing is imported except the logarithm, exponential and square root. Every uniform draw comes from SplitMix64, a small generator written out in both languages with seed 20260929, so the two programs draw identical numbers. The answer is reached three ways that share no arithmetic beyond the quantile itself: the exact formula; a grid of 100,000 evenly spaced values of $`u`$ pushed through the quantile, which averages it by the midpoint rule (each slice of width 1/100,000 represented by its centre) with no randomness at all; and a seeded simulation of 100,000 gaps and 100,000 cars, every estimate printed with its standard error. The asserts compare grid and simulation against the formulas, allowing 4 standard errors for anything simulated.
 
 ### Python
 
@@ -558,12 +570,12 @@ The two outputs match line for line.
 
 Lean proves the method for every law, and the exponential quantile for every rate above 0.
 
-- Take any law with CDF $F$, and a uniform draw $U$ on 0 to 1. Then $Q(U)$ follows that law exactly: $P(Q(U) \le x) = F(x)$ for every $x$.
-- Take any law with CDF $F$, and a chance $u$ strictly between 0 and 1. Then the smallest $x$ with $F(x) \ge u$ exists, and $Q(u) \le x$ exactly when $u \le F(x)$.
-- Take the exponential law with rate $\lambda > 0$, and $u$ strictly between 0 and 1. Then $Q(u) = -\ln(1-u)/\lambda$.
+- Take any law with CDF $`F`$, and a uniform draw $`U`$ on 0 to 1. Then $`Q(U)`$ follows that law exactly: $`P(Q(U) \le x) = F(x)`$ for every $`x`$.
+- Take any law with CDF $`F`$, and a chance $`u`$ strictly between 0 and 1. Then the smallest $`x`$ with $`F(x) \ge u`$ exists, and $`Q(u) \le x`$ exactly when $`u \le F(x)`$.
+- Take the exponential law with rate $`\lambda > 0`$, and $`u`$ strictly between 0 and 1. Then $`Q(u) = -\ln(1-u)/\lambda`$.
 - The toll-booth arithmetic holds exactly: a rate of 0.25 gives a mean gap of 4 minutes, and multiplying by the rate gives 0.25 minutes.
 - The passenger arithmetic holds exactly: running totals 0.50, 0.80, 0.95 and 1, a draw of 0.87 returns 3, and the mean is 1.75.
-- Comparing $u$ with each chance alone returns 1 or 4 passengers, half the time each, for a mean of 2.5.
+- Comparing $`u`$ with each chance alone returns 1 or 4 passengers, half the time each, for a mean of 2.5.
 
 The decimals, the simulated gaps and counts, the standard errors and the squared-input mistake are left to the Python and Rust checks.
 
@@ -733,7 +745,7 @@ example : (1 : ℚ) * (1 / 2) + 4 * (1 / 2) = 5 / 2 := by norm_num
 > **Try changing**
 > Guess first, then run it.
 > - **A busier road.** Set `LAM = 0.5`. Guess: every gap halves, and the mean with it. It does: the mean comes out at 2.0077 against an exact 2, and every assert passes, since each exact value is worked out from `LAM`.
-> - **Flip the input.** The variant line already feeds in $1 - U$ in place of $U$, the form $-\ln(U)/\lambda$ seen in many textbooks. Guess: the individual gaps change, the law does not. The mean comes out at 3.9851, 1.19 standard errors below 4.
+> - **Flip the input.** The variant line already feeds in $`1 - U`$ in place of $`U`$, the form $`-\ln(U)/\lambda`$ seen in many textbooks. Guess: the individual gaps change, the law does not. The mean comes out at 3.9851, 1.19 standard errors below 4.
 > - **Equal passenger chances.** Set `CHANCES` to four equal chances of 0.25. Guess the mean count. The grid gives four equal counts and the mean becomes 2.5. All asserts pass, since each compares against `CHANCES`. Mistake 3 moves to 3.25: every draw above 0.25 now falls through to 4.
 > - **Forget the running total.** Set `CUMUL = CHANCES`. The fifth assert stops it: the grid counts no longer match the chances.
 
@@ -742,24 +754,24 @@ example : (1 : ℚ) * (1 / 2) + 4 * (1 / 2) = 5 / 2 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Plugging the uniform draw into the CDF instead of its inverse.** The CDF takes a value and returns a chance; the sampler needs the opposite direction. $1 - e^{-0.25u}$ for $u$ between 0 and 1 gives numbers below $1 - e^{-0.25}$: all chances, none of them minutes. The method runs the CDF backwards: a chance in, a value out.
+> **Plugging the uniform draw into the CDF instead of its inverse.** The CDF takes a value and returns a chance; the sampler needs the opposite direction. $`1 - e^{-0.25u}`$ for $`u`$ between 0 and 1 gives numbers below $`1 - e^{-0.25}`$: all chances, none of them minutes. The method runs the CDF backwards: a chance in, a value out.
 >
-> - **Rate used as mean.** $-0.25 \ln(1-u)$ gives a mean gap of 0.2500 minutes against the true 4.
-> - **Separate chances used as the staircase.** Testing $u \le 0.50$, then $u \le 0.30$, then $u \le 0.15$ never catches a draw above 0.50, so the mean count is 2.5000, not 1.75.
+> - **Rate used as mean.** $`-0.25 \ln(1-u)`$ gives a mean gap of 0.2500 minutes against the true 4.
+> - **Separate chances used as the staircase.** Testing $`u \le 0.50`$, then $`u \le 0.30`$, then $`u \le 0.15`$ never catches a draw above 0.50, so the mean count is 2.5000, not 1.75.
 > - **A non-uniform input.** Squared draws, or draws from a flawed generator, give the wrong law with no error message; here the mean gap is 2.4548 minutes, not 4.
-> - **Letting the draw reach 1.** $-\ln(1 - 1)$ is infinite. Generators that return values in $[0, 1)$, as this card's does, are safe with $1 - U$; one that can return exactly 1 needs that value excluded.
+> - **Letting the draw reach 1.** $`-\ln(1 - 1)`$ is infinite. Generators that return values in $`[0, 1)`$, as this card's does, are safe with $`1 - U`$; one that can return exactly 1 needs that value excluded.
 
 ---
 
 ## Where you meet it in real life
 
-- **Queues and traffic.** Arrival gaps at booths, call centres and server farms are drawn as $-\ln(1-U)/\lambda$, one line per customer; the gap law itself is on [Exponential](../04-Continuous%20Distributions/03-exponential-distribution.md).
+- **Queues and traffic.** Arrival gaps at booths, call centres and server farms are drawn as $`-\ln(1-U)/\lambda`$, one line per customer; the gap law itself is on [Exponential](../04-Continuous%20Distributions/03-exponential-distribution.md).
 - **Discrete events in games and surveys.** A loot table, a weighted menu of outcomes, or a survey's category mix is sampled by walking the running totals, as the passenger staircase does.
 - **Reliability and credit.** A failure time or a default time with a known survival curve is drawn by inverting it; the finance version is [Simulating a default time](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md).
-- **Normal draws in bulk.** Many numerical libraries draw normals as $\Phi^{-1}(U)$ with a fast approximate inverse ([Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md)); evenly spread inputs then stay evenly spread, which [Variance reduction](05-variance-reduction.md) exploits.
+- **Normal draws in bulk.** Many numerical libraries draw normals as $`\Phi^{-1}(U)`$ with a fast approximate inverse ([Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md)); evenly spread inputs then stay evenly spread, which [Variance reduction](05-variance-reduction.md) exploits.
 
 > **Say it back**
-> A uniform draw is a chance picked at random: it lands at or below any number $u$ between 0 and 1 with chance $u$. Running the CDF backwards turns that chance into a value, and the value at or below $x$ comes out exactly when the draw is at or below $F(x)$, which has chance $F(x)$. So the values follow the chosen law. For exponential gaps the backwards CDF is $-\ln(1-u)/\lambda$; for a count it is "the first value whose running total reaches $u$". The method needs a uniform input and a quantile that can be computed.
+> A uniform draw is a chance picked at random: it lands at or below any number $`u`$ between 0 and 1 with chance $`u`$. Running the CDF backwards turns that chance into a value, and the value at or below $`x`$ comes out exactly when the draw is at or below $`F(x)`$, which has chance $`F(x)`$. So the values follow the chosen law. For exponential gaps the backwards CDF is $`-\ln(1-u)/\lambda`$; for a count it is "the first value whose running total reaches $`u`$". The method needs a uniform input and a quantile that can be computed.
 
 ---
 
