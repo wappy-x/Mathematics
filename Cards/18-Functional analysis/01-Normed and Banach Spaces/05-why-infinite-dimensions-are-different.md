@@ -79,8 +79,8 @@ In $`\ell^2`$ the spikes are a Schauder basis: the amount $`a_n`$ is the n-th en
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`X`$, $`\|x\|`$ | a normed space, and the size of a member | price records, sized by $`\|x\|_2`$ | — |
-| $`\|x\|_1`$, $`\|x\|_2`$, $`\|x\|_\infty`$ | sum, square-root-of-squares and largest-entry sizes | 2, 1.414214, 1 for $`e_3 - e_7`$ | — |
+| $`X`$, $`\Vert x\Vert`$ | a normed space, and the size of a member | price records, sized by $`\Vert x\Vert_2`$ | — |
+| $`\Vert x\Vert_1`$, $`\Vert x\Vert_2`$, $`\Vert x\Vert_\infty`$ | sum, square-root-of-squares and largest-entry sizes | 2, 1.414214, 1 for $`e_3 - e_7`$ | — |
 | $`\ell^2`$, $`\ell^\infty`$, $`c_0`$ | endless records with a finite sum of squares; bounded endless records; records that fade to 0 | the fading shock $`y`$ | — |
 | $`e_n`$ | the spike: 1 at hour n, 0 elsewhere | $`e_3`$, $`e_7`$ | — |
 | $`N`$ | hours kept in a truncation, or terms kept in a sum | 10, 100, 168, 10000 | more balls needed; smaller error |

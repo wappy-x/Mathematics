@@ -73,15 +73,15 @@ The **Hilbert-Schmidt norm** $`\|K\|_{HS}`$ is the rms size of the kernel over t
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
 | $`x`$, $`y`$ | positions along the rod, in m | the middle, 0.5 | — |
-| $`H`$, $`f`$, $`\|f\|_2`$ | the profile space; a start profile in °C; its rms size | the flat start; 100 °C | outputs scale with it |
+| $`H`$, $`f`$, $`\Vert f\Vert_2`$ | the profile space; a start profile in °C; its rms size | the flat start; 100 °C | outputs scale with it |
 | $`\kappa`$, $`t`$ | thermal diffusivity in m^2/s; smoothing time in s | 1.11e-4 (illustrative) and 450.5; only κt = 0.05 m^2 enters the numbers | more smoothing, fewer modes needed |
 | $`k(x, y)`$, $`K`$, $`L`$ | the kernel, per m; the smoothing operator; a second compact operator | heat from y reaching x | — |
 | $`v_n`$, $`c_n`$ | mode n, $`\sqrt{2}\sin(n\pi x)`$, of rms 1; the start's amount of it, in °C | $`c_1`$ = 90.0316 | — |
 | $`\lambda_n`$ | the fraction of mode n that survives | 0.6105, 0.1389, 0.01178, 3.7235e-04 | — |
 | $`N`$, $`K_N`$, $`k_N`$ | a rank; a finite-rank copy of $`K`$; its kernel | N = 3 | smaller error |
 | $`P_N`$ | keeps a profile's first N modes, smoothing nothing | N = 9: 20.10 °C missed | — |
-| $`T`$, $`F`$, $`\|T\|`$ | any operator; any finite-rank operator; its largest gain | $`\|K\|`$ = 0.610498 | — |
-| $`\|K\|_{HS}`$ | rms size of the kernel over the square | 0.626213 | — |
+| $`T`$, $`F`$, $`\Vert T\Vert`$ | any operator; any finite-rank operator; its largest gain | $`\Vert K\Vert`$ = 0.610498 | — |
+| $`\Vert K\Vert_{HS}`$ | rms size of the kernel over the square | 0.626213 | — |
 | $`A`$, $`B`$, $`I`$, $`\alpha`$ | bounded operators; the identity, which changes nothing; a number | $`B`$ a would-be un-smoother | — |
 | $`\varepsilon`$ | a target accuracy, as a fraction of the input size | 1% needs 3 modes | more modes |
 
