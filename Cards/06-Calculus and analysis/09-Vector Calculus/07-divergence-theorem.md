@@ -542,7 +542,7 @@ example : -((6:ℚ) * 10) = -60 ∧ (5:ℚ) * 10 = 50 ∧ (50:ℚ) ≠ 60 := by 
 
 - [Maxwell's equations](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/07-maxwells-equations.md): Gauss's law for electric and magnetic flux.
 - [Navier-Stokes](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/03-navier-stokes-and-the-reynolds-number.md): conservation of mass and momentum, cell by cell.
-- Energy methods: the theorem moves derivatives onto the boundary to prove a solution is unique.
+- [Energy methods](../../19-Partial%20differential%20equations/01-Classification%20and%20Well-Posedness/07-energy-methods-and-uniqueness.md): the theorem moves derivatives onto the boundary to prove a solution is unique.
 - The fundamental solution: the hose field, made into the building block for every source.
 - Green, divergence and curl theorems: this theorem, Green's and Stokes' as one statement.
 

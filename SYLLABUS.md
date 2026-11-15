@@ -4,7 +4,7 @@ The whole library in reading order: **25 wings, 255 shelves and 1,866 cards**, f
 
 **Each wing has its own page.** Click a wing to see its shelves and every card on them, then click a card's title to read it.
 
-**1,407 of 1,866 cards are ready to read.**
+**1,433 of 1,866 cards are ready to read.**
 
 | # | Wing | What it's about | Shelves | Ready to read |
 | --- | --- | --- | ---: | --- |
@@ -26,7 +26,7 @@ The whole library in reading order: **25 wings, 255 shelves and 1,866 cards**, f
 | 16 | [Numerical analysis](Cards/16-Numerical%20analysis/README.md) | Computing answers you can trust, and knowing how far off they are. | 8 | 68 of 68 |
 | 17 | [Topology](Cards/17-Topology/README.md) | Shape without measurement: stretching, holes and knots. | 6 | 28 of 51 |
 | 18 | [Functional analysis](Cards/18-Functional%20analysis/README.md) | Infinite-dimensional spaces behind modern analysis. | 6 | 29 of 56 |
-| 19 | [Partial differential equations](Cards/19-Partial%20differential%20equations/README.md) | Heat, waves and fluids. | 7 | 0 of 62 · planned |
+| 19 | [Partial differential equations](Cards/19-Partial%20differential%20equations/README.md) | Heat, waves and fluids. | 7 | 26 of 62 |
 | 20 | [Harmonic analysis](Cards/20-Harmonic%20analysis/README.md) | Breaking signals into waves. | 6 | 0 of 52 · planned |
 | 21 | [Algebraic and analytic number theory](Cards/21-Algebraic%20and%20analytic%20number%20theory/README.md) | Primes in depth: zeta, L-functions and Galois. | 8 | 0 of 72 · planned |
 | 22 | [Algebraic geometry](Cards/22-Algebraic%20geometry/README.md) | Shapes defined by equations. | 6 | 0 of 54 · planned |

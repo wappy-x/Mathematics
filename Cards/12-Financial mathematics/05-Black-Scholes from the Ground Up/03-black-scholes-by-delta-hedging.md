@@ -876,7 +876,7 @@ example (r q S VS : ℚ) : -q * S * VS + r * S * VS = (r - q) * S * VS := by rin
 
 - [Black-Scholes by expectation](04-black-scholes-by-risk-neutral-expectation.md): the other door — the same price as an average payoff, discounted, with no hedge written down at all.
 - [Pricing on a grid](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): the grid road done properly, with schemes that stay stable on steps this card's explicit march could not take.
-- Black-Scholes is the heat equation after a change of variables: three changes of variable that turn this equation into heat spreading along a line.
+- [Black-Scholes is the heat equation after a change of variables](../../19-Partial%20differential%20equations/03-The%20Heat%20Equation%20in%20Depth/07-black-scholes-to-the-heat-equation.md): three changes of variable that turn this equation into heat spreading along a line.
 
 This card produced an equation and checked that the call formula obeys it, but it never derived that formula: the wall at expiry was handed over from a neighbour. Solving the equation from the payoff alone, so that $`N(d_1)`$ and $`N(d_2)`$ come out rather than in, is the next card's job.
 

@@ -812,7 +812,7 @@ example : (55 / 1000 : ℚ) + (-15 / 100) * (1 / 100) / (3 / 10) = 5 / 100 := by
 ## Where this goes next
 
 - [Vasicek](02-vasicek-model.md): solves this card's equation in closed form for the example rate, giving every maturity's price as an exponential of a straight line in today's rate.
-- Convection-diffusion: the term structure equation seen as a physicist would, drift carrying the price along and volatility spreading it out, with the $`-rp`$ term as a steady leak.
+- [Convection-diffusion](../../19-Partial%20differential%20equations/03-The%20Heat%20Equation%20in%20Depth/06-convection-diffusion-and-drift.md): the term structure equation seen as a physicist would, drift carrying the price along and volatility spreading it out, with the $`-rp`$ term as a steady leak.
 
 The equation says what every bond price must satisfy but not what it is; solving it for a named rate model, and seeing how the level, speed and volatility shape the whole yield curve, is the work of [Vasicek](02-vasicek-model.md).
 

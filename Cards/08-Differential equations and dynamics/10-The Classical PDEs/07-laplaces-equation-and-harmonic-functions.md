@@ -546,7 +546,7 @@ example : ((2 : ℚ) + 2 + 21 / 10 + 19 / 10) / 4 = 2 := by norm_num
 ## Where this goes next
 
 - [Laplace on a rectangle](08-laplace-on-a-rectangle.md): the sine series the code sums, by separation of variables.
-- Maximum principles: the principle for wider families of equations, heat included.
+- [Maximum principles](../../19-Partial%20differential%20equations/01-Classification%20and%20Well-Posedness/08-maximum-principles.md): the principle for wider families of equations, heat included.
 - [Harmonic functions](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/04-harmonic-functions-and-conjugates.md): each harmonic function's partner, whose level curves are the heat's flow lines.
 
 Left open: the edge fixes the settled pattern, but where does the sine series that writes it down come from? [Laplace on a rectangle](08-laplace-on-a-rectangle.md) builds it.

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 480" width="680" height="480" font-family="Helvetica, Arial, sans-serif" font-size="13">
+  <title>A motorway jam on a map of place against time: the lane is blocked at 0 km for 6 minutes, the jam's tail moves back at 10 km/h, its head moves back at 18 km/h after the lane reopens, and the two meet 2.25 km back at 13.5 minutes; four cars stop and restart</title>
+  <rect x="0" y="0" width="680" height="480" fill="#ffffff"/>
+  <!-- to scale: 160 px per km across (x = -3 km at 80 px, 0 km at 560 px), 20 px per minute up (t = 0 at 420 px) -->
+  <g stroke="#1d1d1d" stroke-width="1.2" fill="none">
+    <line x1="80" y1="420" x2="650" y2="420"/>
+    <line x1="80" y1="420" x2="80" y2="50"/>
+    <line x1="80" y1="420" x2="80" y2="425"/><line x1="240" y1="420" x2="240" y2="425"/><line x1="400" y1="420" x2="400" y2="425"/><line x1="560" y1="420" x2="560" y2="425"/>
+    <line x1="75" y1="300" x2="80" y2="300"/><line x1="75" y1="180" x2="80" y2="180"/><line x1="75" y1="60" x2="80" y2="60"/>
+  </g>
+  <g fill="#1d1d1d" text-anchor="middle">
+    <text x="80" y="440">−3</text><text x="240" y="440">−2</text><text x="400" y="440">−1</text><text x="560" y="440">0</text>
+    <text x="360" y="465">place x (km), the crash at 0, traffic driving to the right</text>
+  </g>
+  <g fill="#1d1d1d" text-anchor="end">
+    <text x="70" y="424">0</text><text x="70" y="304">6</text><text x="70" y="184">12</text><text x="70" y="64">18</text>
+  </g>
+  <text x="24" y="240" fill="#1d1d1d" transform="rotate(-90 24 240)" text-anchor="middle">time t (min)</text>
+  <!-- the jam: 150 cars/km, everyone stopped -->
+  <polygon points="560,420 560,300 200,150" fill="#f4c7b8" stroke="none"/>
+  <!-- the blocked lane, 0 to 6 min -->
+  <line x1="560" y1="420" x2="560" y2="300" stroke="#1d1d1d" stroke-width="5"/>
+  <!-- tail: Rankine-Hugoniot, -10 km/h -->
+  <line x1="560" y1="420" x2="200" y2="150" stroke="#e76f51" stroke-width="3"/>
+  <!-- head: backward wave, -18 km/h -->
+  <line x1="560" y1="300" x2="200" y2="150" stroke="#264653" stroke-width="3"/>
+  <!-- free front after the jam ends: +90 km/h, reaches the crash site at 15 min -->
+  <line x1="200" y1="150" x2="560" y2="120" stroke="#264653" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <circle cx="200" cy="150" r="4" fill="#1d1d1d"/>
+  <!-- cars 0, 100, 200, 300: drive at 90 km/h, stop at the tail, restart when the head arrives -->
+  <g stroke="#2a9d8f" stroke-width="1.6" fill="none">
+    <polyline points="560,420 560,300 640,293.3"/>
+    <polyline points="80,371.1 453.3,340 453.3,255.6 640,240"/>
+    <polyline points="80,282.2 346.7,260 346.7,211.1 640,186.7"/>
+    <polyline points="80,193.3 240,180 240,166.7 640,133.3"/>
+  </g>
+  <g fill="#1d1d1d">
+    <text x="568" y="372">lane blocked</text>
+    <text x="568" y="388">0 to 6 min</text>
+    <text x="380" y="392" fill="#e76f51">tail, −10 km/h</text>
+    <text x="440" y="300" text-anchor="end">jam</text>
+    <text x="420" y="228" fill="#264653">head, −18 km/h</text>
+    <text x="96" y="132">jam ends: −2.25 km, 13.5 min</text>
+    <text x="568" y="112">15 min</text>
+    <text x="96" y="100" fill="#2a9d8f">green: cars 0, 100, 200, 300</text>
+  </g>
+</svg>

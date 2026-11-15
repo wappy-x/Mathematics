@@ -781,7 +781,7 @@ example : (1 : ℚ) + (1 / 20) ^ 2 * ((981 / 100) / 1) * 1 = 102452500 / 1000000
 - [Lagrangian and Hamiltonian mechanics](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/04-lagrangian-and-hamiltonian-mechanics-for-engineers.md): machines with several coordinates.
 - [Symmetry and conservation](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/08-symmetry-and-conserved-quantities.md): a coordinate missing from $`H`$ has a conserved momentum.
 - [Symplectic steps](../05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md): why kept area bounds the energy error.
-- Hamilton-Jacobi: a function whose slopes are the momenta.
+- [Hamilton-Jacobi](../../19-Partial%20differential%20equations/02-First-Order%20Equations%20and%20Characteristics/05-hamilton-jacobi-equations.md): a function whose slopes are the momenta.
 - Symplectic form: the kept area as a geometric object.
 - Einstein equations: variational field equations on curved spacetime.
 

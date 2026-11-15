@@ -1168,7 +1168,7 @@ example (r q S VS : ℚ) : -q * S * VS + r * S * VS = (r - q) * S * VS := by rin
 - [The Black-Scholes assumptions](09-black-scholes-assumptions-and-failures.md): each assumption in "When it holds" broken on purpose, with the size of the damage.
 - [Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md): the daily budget above as a trading business, re-hedged move by move.
 - [The exercise boundary and smooth pasting](../15-American%20and%20Bermudan%20exercise/04-exercise-boundary-and-smooth-pasting.md): what happens to the equation when the holder may exercise early.
-- Black-Scholes is the heat equation after a change of variables: the change of variables that turns this equation into spreading heat, and hands back the closed formula.
+- [Black-Scholes is the heat equation after a change of variables](../../19-Partial%20differential%20equations/03-The%20Heat%20Equation%20in%20Depth/07-black-scholes-to-the-heat-equation.md): the change of variables that turns this equation into spreading heat, and hands back the closed formula.
 
 The equation pins the price, but not which payoffs have a closed form: most are solved on a grid, to the grid's accuracy. What survives when the assumptions behind the hedge fail is the next question, and the assumptions card answers it.
 

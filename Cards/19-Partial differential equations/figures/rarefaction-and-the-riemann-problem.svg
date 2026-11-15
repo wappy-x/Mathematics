@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 410" width="600" height="410" font-family="Helvetica, Arial, sans-serif" font-size="13">
+  <title>Green light at a jammed queue: characteristics fan out from the light between -25 m/s and +25 m/s, and the car 100 m back waits 4 s, then crosses the light at 16 s</title>
+  <rect x="0" y="0" width="600" height="410" fill="#ffffff"/>
+  <!-- to scale: 0.24 px per m across (x = -1000 m at 70 px, 0 at 310 px), 7 px per s up (t = 0 at 330 px) -->
+  <g stroke="#1d1d1d" stroke-width="1.2" fill="none">
+    <line x1="70" y1="330" x2="550" y2="330"/>
+    <line x1="70" y1="330" x2="70" y2="50"/>
+    <line x1="70" y1="330" x2="70" y2="335"/><line x1="190" y1="330" x2="190" y2="335"/><line x1="310" y1="330" x2="310" y2="335"/><line x1="430" y1="330" x2="430" y2="335"/><line x1="550" y1="330" x2="550" y2="335"/>
+    <line x1="65" y1="260" x2="70" y2="260"/><line x1="65" y1="190" x2="70" y2="190"/><line x1="65" y1="120" x2="70" y2="120"/><line x1="65" y1="50" x2="70" y2="50"/>
+  </g>
+  <g fill="#1d1d1d" text-anchor="middle">
+    <text x="70" y="350">−1000</text><text x="190" y="350">−500</text><text x="310" y="350">0</text><text x="430" y="350">+500</text><text x="550" y="350">+1000</text>
+    <text x="310" y="372">place x (m), the light at 0</text>
+  </g>
+  <g fill="#1d1d1d" text-anchor="end">
+    <text x="60" y="334">0</text><text x="60" y="264">10</text><text x="60" y="194">20</text><text x="60" y="124">30</text><text x="60" y="54">40</text>
+  </g>
+  <text x="24" y="190" fill="#1d1d1d" transform="rotate(-90 24 190)" text-anchor="middle">time t (s)</text>
+  <!-- queue at 150 cars/km: wave speed -25 m/s; empty road: +25 m/s -->
+  <g stroke="#2a9d8f" stroke-width="1.6">
+    <line x1="262" y1="330" x2="70" y2="106"/>
+    <line x1="214" y1="330" x2="70" y2="162"/>
+    <line x1="166" y1="330" x2="70" y2="218"/>
+    <line x1="118" y1="330" x2="70" y2="274"/>
+    <line x1="358" y1="330" x2="550" y2="106"/>
+    <line x1="406" y1="330" x2="550" y2="162"/>
+    <line x1="454" y1="330" x2="550" y2="218"/>
+    <line x1="502" y1="330" x2="550" y2="274"/>
+  </g>
+  <!-- the fan: u = x/t, lines from the light every 5 m/s from -25 to 25 m/s, reaching x = 40u at 40 s -->
+  <g stroke="#264653" stroke-width="1.4" stroke-dasharray="5 3">
+    <line x1="310" y1="330" x2="118" y2="50"/>
+    <line x1="310" y1="330" x2="166" y2="50"/>
+    <line x1="310" y1="330" x2="214" y2="50"/>
+    <line x1="310" y1="330" x2="262" y2="50"/>
+    <line x1="310" y1="330" x2="310" y2="50"/>
+    <line x1="310" y1="330" x2="358" y2="50"/>
+    <line x1="310" y1="330" x2="406" y2="50"/>
+    <line x1="310" y1="330" x2="454" y2="50"/>
+    <line x1="310" y1="330" x2="502" y2="50"/>
+  </g>
+  <g stroke="#264653" stroke-width="2.4">
+    <line x1="310" y1="330" x2="70" y2="50"/>
+    <line x1="310" y1="330" x2="550" y2="50"/>
+  </g>
+  <!-- car 100 m back: x = 25 t - 100 sqrt(t) once the fan reaches it at 4 s -->
+  <polyline fill="none" stroke="#e76f51" stroke-width="3" points="286.0,330.0 286.0,302.0 286.1,298.5 286.3,295.0 286.7,291.5 287.2,288.0 287.8,284.5 288.5,281.0 289.3,277.5 290.1,274.0 291.0,270.5 292.0,267.0 293.0,263.5 294.1,260.0 295.2,256.5 296.4,253.0 297.6,249.5 298.9,246.0 300.1,242.5 301.5,239.0 302.8,235.5 304.2,232.0 305.6,228.5 307.0,225.0 308.5,221.5 310.0,218.0 311.5,214.5 313.0,211.0 314.6,207.5 316.2,204.0 317.8,200.5 319.4,197.0 321.0,193.5 322.7,190.0 324.3,186.5 326.0,183.0 327.7,179.5 329.4,176.0 331.2,172.5 332.9,169.0 334.7,165.5 336.4,162.0 338.2,158.5 340.0,155.0 341.8,151.5 343.6,148.0 345.5,144.5 347.3,141.0 349.1,137.5 351.0,134.0 352.9,130.5 354.8,127.0 356.6,123.5 358.5,120.0 360.5,116.5 362.4,113.0 364.3,109.5 366.2,106.0 368.2,102.5 370.1,99.0 372.1,95.5 374.1,92.0 376.0,88.5 378.0,85.0 380.0,81.5 382.0,78.0 384.0,74.5 386.0,71.0 388.0,67.5 390.1,64.0 392.1,60.5 394.1,57.0 396.2,53.5 398.2,50.0"/>
+  <circle cx="310" cy="218" r="4" fill="#e76f51"/>
+  <circle cx="286" cy="302" r="4" fill="#e76f51"/>
+  <g fill="#1d1d1d">
+    <text x="80" y="300">queue, 150 cars/km</text>
+    <text x="440" y="300">empty, 0 cars/km</text>
+    <text x="74" y="42">fan edge −25 m/s</text>
+    <text x="546" y="42" text-anchor="end">fan edge +25 m/s</text>
+    <text x="280" y="306" text-anchor="end">starts at 4 s</text>
+    <text x="318" y="222">crosses the light at 16 s</text>
+    <text x="404" y="64">car 100 m back</text>
+  </g>
+</svg>

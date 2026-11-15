@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 400" width="420" height="400" font-family="Helvetica, Arial, sans-serif" font-size="12">
+  <title>The 1 m square steel plate drawn to scale, with the condition on each edge and the outward normal n on each edge</title>
+  <defs>
+    <marker id="tip" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1d1d1d"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="420" height="400" fill="#ffffff"/>
+  <rect x="60" y="40" width="300" height="300" fill="#f2f2f2" stroke="none"/>
+  <line x1="60" y1="340" x2="360" y2="340" stroke="#b03a2e" stroke-width="5"/>
+  <line x1="60" y1="40" x2="60" y2="340" stroke="#1d1d1d" stroke-width="5"/>
+  <line x1="360" y1="40" x2="360" y2="340" stroke="#1d1d1d" stroke-width="5"/>
+  <line x1="60" y1="40" x2="360" y2="40" stroke="#1d5f8a" stroke-width="5" stroke-dasharray="10 5"/>
+  <line x1="210" y1="340" x2="210" y2="376" stroke="#1d1d1d" stroke-width="1.6" marker-end="url(#tip)"/>
+  <line x1="210" y1="40" x2="210" y2="4" stroke="#1d1d1d" stroke-width="1.6" marker-end="url(#tip)"/>
+  <line x1="60" y1="190" x2="24" y2="190" stroke="#1d1d1d" stroke-width="1.6" marker-end="url(#tip)"/>
+  <line x1="360" y1="190" x2="396" y2="190" stroke="#1d1d1d" stroke-width="1.6" marker-end="url(#tip)"/>
+  <text x="218" y="370" fill="#1d1d1d">n = (0, −1)</text>
+  <text x="218" y="16" fill="#1d1d1d">n = (0, 1)</text>
+  <text x="22" y="182" fill="#1d1d1d">n</text>
+  <text x="390" y="182" fill="#1d1d1d">n</text>
+  <text x="210" y="62" text-anchor="middle" fill="#1d5f8a">top: held 20 °C, insulated, or air-cooled</text>
+  <text x="210" y="328" text-anchor="middle" fill="#b03a2e">bottom: held at 20 + 60 sin(πx) °C</text>
+  <text x="74" y="300" fill="#1d1d1d">left side held 20 °C</text>
+  <text x="346" y="300" text-anchor="end" fill="#1d1d1d">right side held 20 °C</text>
+  <circle cx="210" cy="190" r="4" fill="#1d1d1d"/>
+  <text x="210" y="212" text-anchor="middle" fill="#1d1d1d">centre: 31.96, 32.99, 32.85 °C</text>
+  <text x="210" y="396" text-anchor="middle" fill="#1d1d1d" font-size="11">1 m square, 300 px per m</text>
+</svg>

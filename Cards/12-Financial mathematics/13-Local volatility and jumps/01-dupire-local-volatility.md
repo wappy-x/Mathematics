@@ -851,7 +851,7 @@ theorem dupire_flat_surface_returns_sigma (S K r q σ T : ℝ)
 
 - [Local volatility in implied-vol terms](02-local-volatility-from-implied-volatility.md): the same formula written in implied volatilities, applied to a skewed surface.
 - [Barriers on a smile](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md): what a local-volatility model changes in the price of a barrier.
-- Dupire's equation: the forward equation as a partial differential equation, with its solvers.
+- [Dupire's equation](../../19-Partial%20differential%20equations/03-The%20Heat%20Equation%20in%20Depth/10-dupire-and-forward-equations.md): the forward equation as a partial differential equation, with its solvers.
 
 This card reads a volatility off call prices; desks quote implied volatilities instead, and the next card shows how a skew in those quotes becomes a steeper skew in local volatility.
 

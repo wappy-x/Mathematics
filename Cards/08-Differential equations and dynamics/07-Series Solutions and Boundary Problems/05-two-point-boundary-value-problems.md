@@ -832,7 +832,7 @@ example (A B : ℝ) : -A * sin 0 + B * cos 0 = B ∧ -A * sin π + B * cos π = 
 - [Viscosity](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/02-viscosity-and-pipe-flow.md): flow fixed at two walls.
 - [Lax-Milgram](../../18-Functional%20analysis/02-Hilbert%20Spaces/07-lax-milgram-theorem.md): one answer from an energy argument.
 - Weak solutions: answers without a second derivative.
-- Boundary conditions: the three types on a surface.
+- [Boundary conditions](../../19-Partial%20differential%20equations/01-Classification%20and%20Well-Posedness/03-boundary-conditions-dirichlet-neumann-and-robin.md): the three types on a surface.
 - Jacobi field: zero-end solutions on curved surfaces.
 
 The question this card leaves open: when no formula like A cos x + B sin x exists, how do you find the one answer, and at which lengths does D become 0?

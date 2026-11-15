@@ -828,7 +828,7 @@ end ConvolutionImpulse
 - [Linear and time-invariant](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/01-linear-time-invariant-systems-and-convolution.md): systems described by g alone.
 - Fundamental solution: the impulse response for any linear operator.
 - Duhamel: the blend in infinite dimensions.
-- Duhamel's principle: a heat source as a stream of starts.
+- [Duhamel's principle](../../19-Partial%20differential%20equations/03-The%20Heat%20Equation%20in%20Depth/03-duhamels-principle.md): a heat source as a stream of starts.
 - The convolution theorem: convolution on the whole line.
 
 One function of time now carries everything the car will do; for a temperature along a rod, that role passes to [The heat kernel](../10-The%20Classical%20PDEs/10-the-heat-kernel.md).

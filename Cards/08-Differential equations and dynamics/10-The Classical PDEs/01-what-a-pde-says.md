@@ -598,7 +598,7 @@ example : (4 : ℤ) ^ 2 - 4 * 0 * 0 = (-2) ^ 2 * 4 := by norm_num
 - [Navier-Stokes](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/03-navier-stokes-and-the-reynolds-number.md): a nonlinear system mixing families.
 - [Three families](../../16-Numerical%20analysis/07-PDE%20Solvers/01-pde-families-elliptic-parabolic-hyperbolic.md): a grid solver for each family.
 - Weak solutions: solutions with corners, where u_xx fails to exist.
-- A PDE problem: well-posedness in general.
+- [A PDE problem](../../19-Partial%20differential%20equations/01-Classification%20and%20Well-Posedness/01-what-a-pde-problem-is.md): well-posedness in general.
 
 The question this card leaves open: when does a PDE problem have exactly one solution that moves little when its data move?
 
