@@ -697,7 +697,7 @@ example : ∀ i < 24, ∀ j < 24, ∀ k < 24, dialDist i k ≤ dialDist i j + di
 
 - [Topological manifold](../03-Surfaces%20and%20Manifolds/01-topological-manifolds.md): spaces with a countable basis that look locally flat, which the metrisation theorem makes metric.
 - Brouwer and Borsuk-Ulam (planned): why the circle's identity cannot be filled in over the disc.
-- Hahn-Banach (planned): the extension idea again, for linear measurements, with the size bound kept.
+- [Hahn-Banach](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/06-hahn-banach-theorem.md): the extension idea again, for linear measurements, with the size bound kept.
 
 Urysohn's theorem says when a distance exists, but not when a complete one does, or which spaces without a countable basis are metric: that is the question this card leaves open.
 

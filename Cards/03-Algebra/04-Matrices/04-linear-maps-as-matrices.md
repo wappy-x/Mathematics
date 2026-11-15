@@ -538,7 +538,7 @@ example : squareFirst ((2 : ℝ) • ![1, 1]) ≠ (2 : ℝ) • squareFirst ![1,
 - [Rank and nullity](../05-Solving%20Systems/05-rank-nullity.md): what a map keeps and what it destroys, and why the counts add up.
 - [Change of basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md): the same map against different axis arrows, and how its matrix changes.
 - [Moving shapes with matrices](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/04-transformations-with-matrices.md): the same recipe in space, three axis arrows and a 3 × 3 matrix.
-- Bounded operators: linear maps whose input lists never end, sized by the most they stretch a vector.
+- [Bounded operators](../../18-Functional%20analysis/03-Bounded%20Operators/01-bounded-operators-and-the-operator-norm.md): linear maps whose input lists never end, sized by the most they stretch a vector.
 
 The matrix says where every point goes, but not how much room it leaves: whether the sprite is leaned or flattened onto a line is the one number [Determinants](../05-Solving%20Systems/04-determinants.md) reads off.
 

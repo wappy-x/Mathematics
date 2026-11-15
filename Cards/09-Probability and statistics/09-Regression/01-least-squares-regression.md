@@ -891,7 +891,7 @@ example : slope area ![165, 205, 229, 267, 327, 437] = 373 / 130 ∧
 - [Loss and empirical risk](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/01-loss-functions-and-empirical-risk.md): squared error as one loss among several.
 - [Nonlinear least squares](../../15-Optimization/02-Unconstrained%20Methods/09-nonlinear-least-squares-gauss-newton-and-levenberg-marquardt.md): the same score when the model is curved in its parameters.
 - [Least squares two ways](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/06-least-squares-normal-equations-versus-qr.md): why software avoids the raw normal equations of road 2 on hard problems.
-- Reproducing kernels: least squares over whole spaces of functions.
+- [Reproducing kernels](../../18-Functional%20analysis/02-Hilbert%20Spaces/08-reproducing-kernel-hilbert-spaces.md): least squares over whole spaces of functions.
 
 The fitted $2,100 is one draw from a pile of possible slopes; how wide that pile is, judged from a single sample of sales, is [Regression error bars](02-regression-inference.md).
 

@@ -822,7 +822,7 @@ example : (1 : ℚ) / (Nat.factorial 3) = 1 / 6 := by norm_num [Nat.factorial]
 - [Isolated singularities](02-classifying-singularities.md): the principal part sorts bad points into kinds.
 - [The z-transform](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/08-z-transform-and-discrete-time-systems.md): the ring as a region of convergence.
 - [Pade approximants](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/09-pade-and-rational-approximation.md): fractions matched to series.
-- Spectrum: the outer series for operators.
+- [Spectrum](../../18-Functional%20analysis/03-Bounded%20Operators/07-spectrum-and-resolvent.md): the outer series for operators.
 - Divisors and Riemann-Roch: the lowest power as a zero's or pole's order.
 
 The question this card leaves open: on the ring 0 < |z − a| < R, what do the negative powers say about the bad point a itself?

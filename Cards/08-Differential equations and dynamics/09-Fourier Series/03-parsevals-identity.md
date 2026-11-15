@@ -822,7 +822,7 @@ end ParsevalCard
 ## Where this goes next
 
 - [The complex form](05-complex-fourier-series-and-the-transform-in-outline.md): the same ledger with complex exponentials, one squared size per frequency.
-- Plancherel: Parseval for signals that never repeat, as a transform that keeps every length.
+- [Plancherel](../../18-Functional%20analysis/03-Bounded%20Operators/04-the-fourier-transform-as-a-unitary-operator.md): Parseval for signals that never repeat, as a transform that keeps every length.
 - Convergence in energy: every finite-energy signal, and the converse: every square-summable list of coefficients is some signal.
 
 Parseval balances the books for a repeating signal; what balances for a pulse that never repeats is the transform's question.

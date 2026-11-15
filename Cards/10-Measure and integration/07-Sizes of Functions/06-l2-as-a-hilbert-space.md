@@ -864,8 +864,8 @@ example : (5 : ℚ) + 11/2 = 21/2 := by norm_num
 - [The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md): von Neumann's proof applies Riesz representation on an L2 space to produce a density.
 - [Conditional expectation as a projection](../09-Conditional%20Expectation/03-conditional-expectation-as-projection.md): conditional expectation defined as the projection onto the functions of the known information.
 - [Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md): projection onto hat functions, tent-shaped pieces that are linear between grid points, to solve differential equations.
-- Inner products: the same geometry on any complete inner product space.
-- Riesz representation: the representation theorem for every Hilbert space and its consequences.
+- [Inner products](../../18-Functional%20analysis/02-Hilbert%20Spaces/01-inner-products-and-hilbert-spaces.md): the same geometry on any complete inner product space.
+- [Riesz representation](../../18-Functional%20analysis/02-Hilbert%20Spaces/06-riesz-representation-theorem.md): the representation theorem for every Hilbert space and its consequences.
 - The Fredholm alternative: solvability of equations read off from perpendicular complements.
 - Fourier coefficients: sines and cosines as a perpendicular family in L2.
 - Partial sums are the best fit: the projection theorem applied to trigonometric polynomials.

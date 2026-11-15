@@ -941,7 +941,7 @@ example : 215 - 40 = 175 := by norm_num
 ## Where this goes next
 
 - [Spectrograms](09-short-time-fourier-and-spectrograms.md): one fixed window for every frequency, the other answer to the same time-against-frequency trade-off; wavelets use short windows for fine detail and long ones for coarse.
-- The Haar wavelet (planned): the Haar functions on a continuous line, the box and the up-down step, and why they form a complete basis.
+- [The Haar wavelet](../../20-Harmonic%20analysis/05-Wavelets%20and%20Time-Frequency/03-haar-wavelet-and-multiresolution.md): the Haar functions on a continuous line, the box and the up-down step, and why they form a complete basis.
 
 Haar's patterns are flat steps, so a smooth shading or a photograph needs many middle-sized details; which longer wavelets keep such signals sparse, and how to build them, is the question this card leaves open.
 

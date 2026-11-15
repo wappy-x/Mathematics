@@ -804,9 +804,9 @@ example : (1 : ℚ) / 2 * (1 / 1000) * 1 = 1 / 2000 ∧ (1 : ℚ) / (1 / 2000) =
 - [Open balls, open sets and closed sets](03-open-and-closed-sets.md): the open sets that equivalent metrics share, built from balls in any metric space.
 - [Limits and continuity with distances](04-convergence-and-continuity-in-metric-spaces.md): why equivalent metrics agree on limits and continuity.
 - [Complete space](05-completeness-and-completion.md): lists whose terms bunch together (Cauchy lists), spaces where every such list lands on a point, and the completion that fills the gaps; the sandwich here gives the three point metrics the same bunched-up lists.
-- Normed and Banach spaces (planned): the norm as its own object, and complete normed spaces.
-- Function spaces C and Lp (planned): the worst-gap and average-gap distances as the spaces of continuous and of integrable functions, and why the worst gap makes the continuous functions complete while the average gap does not.
-- Equivalent norms (planned): the proof that all norms on finitely many coordinates are equivalent.
+- [Normed and Banach spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/01-normed-spaces-and-banach-spaces.md): the norm as its own object, and complete normed spaces.
+- [Function spaces C and Lp](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/03-function-spaces-c-and-lp.md): the worst-gap and average-gap distances as the spaces of continuous and of integrable functions, and why the worst gap makes the continuous functions complete while the average gap does not.
+- [Equivalent norms](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/04-equivalence-of-norms-in-finite-dimensions.md): the proof that all norms on finitely many coordinates are equivalent.
 
 The question this card leaves open: if the two distances on routes disagree about nearness, which one makes the space of routes complete, so that every bunched-up sequence of routes lands on a route?
 

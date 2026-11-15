@@ -612,8 +612,8 @@ example : (1 / 2 : ℚ) * (-(7 / 10) * (3 / 10)) = -105 / 1000 := by norm_num
 
 ## Where this goes next
 
-- Three model operators: the map from load to sag as an operator.
-- Fredholm alternative: the sliding-ends failure made general.
+- [Three model operators](../../18-Functional%20analysis/03-Bounded%20Operators/02-integral-operators-and-the-shift.md): the map from load to sag as an operator.
+- [Fredholm alternative](../../18-Functional%20analysis/03-Bounded%20Operators/09-fredholm-alternative-and-integral-equations.md): the sliding-ends failure made general.
 - Fundamental solution: the unit bag made exact.
 - Green's function: the same idea on a drumhead.
 - Integral equations: the unknown inside such a sum.

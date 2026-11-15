@@ -572,7 +572,7 @@ example : ((4 / 5 : ℚ) - 5 / 7) * (7 / 10) - (3 / 10) * (1 / 5) = 0 := by norm
 - [The graph Laplacian](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/03-graph-laplacian-and-spectral-clustering.md): network cuts.
 - [Every root at once](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/08-polynomial-roots-and-companion-matrices.md): the trick reversed.
 - [Eigenvalues by iteration](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/07-eigenvalues-power-iteration-and-the-qr-algorithm.md): no quadratic.
-- Spectrum: infinite dimensions.
+- [Spectrum](../../18-Functional%20analysis/03-Bounded%20Operators/07-spectrum-and-resolvent.md): infinite dimensions.
 - Finitely many solutions: polynomial systems.
 - Smith normal form: all the shapes.
 - Lie algebra: matrix generators.

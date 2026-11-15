@@ -570,9 +570,9 @@ example : ((2 * 4) * (2 * (4 * 2 ^ 2)) - (2 * (4 * 2)) ^ 2 : ℚ) = 0 ∧
 - [Gradient descent](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/02-gradient-descent-and-stochastic-gradient.md): how fast the downhill walk closes.
 - [Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md): a classifier from a convex problem.
 - [Convex functions](../../15-Optimization/01-Convexity/03-convex-functions-and-their-tests.md): more tests, and operations that keep convexity.
-- Hahn-Banach: a linear rule kept under a convex bound.
-- Separation: flat walls touching convex sets.
-- Lax-Milgram: one answer in infinitely many variables.
+- [Hahn-Banach](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/06-hahn-banach-theorem.md): a linear rule kept under a convex bound.
+- [Separation](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/07-hahn-banach-separation-and-supporting-walls.md): flat walls touching convex sets.
+- [Lax-Milgram](../../18-Functional%20analysis/02-Hilbert%20Spaces/07-lax-milgram-theorem.md): one answer in infinitely many variables.
 - Krein-Milman: convex sets rebuilt from corners.
 - The slope transform: slopes at corners.
 - Riemannian Hessian: the Hessian test on curved spaces.

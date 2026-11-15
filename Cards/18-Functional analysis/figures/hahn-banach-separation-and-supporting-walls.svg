@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 440" width="440" height="440" font-family="Helvetica, Arial, sans-serif" font-size="12">
+  <title>The two-hour budget set, the cheaper bundle just outside it, and the supporting wall at the worst-case prices</title>
+  <rect x="0" y="0" width="440" height="440" fill="#ffffff"/>
+  <!-- axes: 15 px per MWh, origin at (220, 220); night across, evening up -->
+  <line x1="20" y1="220" x2="425" y2="220" stroke="#888888" stroke-width="1"/>
+  <line x1="220" y1="425" x2="220" y2="20" stroke="#888888" stroke-width="1"/>
+  <text x="300" y="434" fill="#1d1d1d">night, MWh (across)</text>
+  <text x="226" y="30" fill="#1d1d1d">evening, MWh (up)</text>
+  <text x="392" y="214" fill="#1d1d1d">12</text>
+  <text x="30" y="214" fill="#1d1d1d">-12</text>
+  <text x="196" y="404" fill="#1d1d1d">-12</text>
+  <!-- the budget set: corners from the checks -->
+  <polygon points="40,400 400,400 400,247.5 345,220 220,178.33 40,138.33" fill="#2a9d8f" fill-opacity="0.18" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="80" y="300" fill="#1d1d1d">budget set</text>
+  <!-- the all-high wall: 60 x night + 180 x evening = 500 -->
+  <line x1="280" y1="198.33" x2="415" y2="243.33" stroke="#264653" stroke-width="1.2" stroke-dasharray="2,3"/>
+  <text x="300" y="184" fill="#264653">all-high wall (misses x0)</text>
+  <!-- the supporting wall: 60 x night + 120 x evening = 500 -->
+  <line x1="280" y1="187.5" x2="415" y2="255" stroke="#e76f51" stroke-width="2" stroke-dasharray="7,4"/>
+  <text x="300" y="168" fill="#e76f51">supporting wall</text>
+  <!-- the ray from 0 to x0, the supporting point, and x0 -->
+  <line x1="220" y1="220" x2="385" y2="235" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="3,3"/>
+  <circle cx="372.78" cy="233.89" r="3.5" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+  <circle cx="385" cy="235" r="4" fill="#e76f51" stroke="#1d1d1d" stroke-width="1"/>
+  <text x="352" y="276" fill="#1d1d1d">x0 = (11, -1)</text>
+  <line x1="384" y1="239" x2="378" y2="264" stroke="#1d1d1d" stroke-width="0.8"/>
+  <text x="232" y="262" fill="#1d1d1d">x0 / 1.08</text>
+  <line x1="290" y1="256" x2="369" y2="237" stroke="#1d1d1d" stroke-width="0.8"/>
+  <text x="206" y="234" fill="#1d1d1d">0</text>
+</svg>

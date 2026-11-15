@@ -559,8 +559,8 @@ example : (1 : ℚ) / 2 ^ 12 < 1 / 3000 ∧ ¬ ((1 : ℚ) / 2 ^ 11 < 1 / 3000) :
 - [Modes of convergence](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md): uniform beside other kinds of convergence.
 - [Weierstrass and the minimax fit](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/08-weierstrass-and-best-approximation.md): polynomials approximating uniformly.
 - [Arzela-Ascoli](../../17-Topology/01-Metric%20Spaces/09-arzela-ascoli.md): when uniformly convergent subsequences must exist.
-- Function spaces C and Lp: the worst gap as a distance between functions.
-- Weak convergence: a far looser convergence.
+- [Function spaces C and Lp](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/03-function-spaces-c-and-lp.md): the worst gap as a distance between functions.
+- [Weak convergence](../../18-Functional%20analysis/02-Hilbert%20Spaces/09-weak-convergence-and-banach-alaoglu.md): a far looser convergence.
 - Convolution and mollifiers: smoothing that converges uniformly.
 - Dirichlet's theorem: both modes for Fourier series.
 - Equidistribution: step functions approximated by smooth ones.

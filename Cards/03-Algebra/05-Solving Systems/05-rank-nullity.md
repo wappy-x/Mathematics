@@ -498,8 +498,8 @@ example : (!![1, 0, 0; 0, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3,
 - [Can you steer every state, and can you see every state](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/03-controllability-and-observability.md): rank deciding whether a machine can be steered.
 - Homology groups: these two counts along one map after another.
 - Mayer-Vietoris and exact sequences: the same bookkeeping along a chain of maps.
-- Compact operators: rank where the inputs are functions.
-- Fredholm alternative: which equations have answers.
+- [Compact operators](../../18-Functional%20analysis/03-Bounded%20Operators/05-compact-operators.md): rank where the inputs are functions.
+- [Fredholm alternative](../../18-Functional%20analysis/03-Bounded%20Operators/09-fredholm-alternative-and-integral-equations.md): which equations have answers.
 - Dimension and tangent space: rank of a slope matrix as a dimension.
 - Diffeomorphism, immersion, submersion: full rank as the test for a map that folds nothing.
 

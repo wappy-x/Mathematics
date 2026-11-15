@@ -869,7 +869,7 @@ example : (1 / 2 : ℝ) - 1 / 2 * Real.cos (2 * pi * (0 : ℕ) / 8192) = 0 := by
 - [Digital filters](04-digital-filters-fir-and-iir.md): the window method for FIR (finite impulse response, no feedback) filters, where the same main-lobe-against-sidelobe trade sets a filter's transition width (how sharply it switches from passing to blocking) and its stopband depth (how far down it pushes what it blocks).
 - [Spectral estimation](06-spectral-estimation-and-periodograms.md): averaging windowed spectra of many frames to measure noise, where the ENBW correction becomes essential.
 - [Spectrograms](09-short-time-fourier-and-spectrograms.md): sliding a window along a changing sound, where the window's length also sets how sharply events are placed in time.
-- Short-time Fourier transform (planned): the sliding windowed transform as an invertible tool, with overlap and reconstruction.
+- [Short-time Fourier transform](../../20-Harmonic%20analysis/05-Wavelets%20and%20Time-Frequency/01-short-time-fourier-and-gabor.md): the sliding windowed transform as an invertible tool, with overlap and reconstruction.
 
 This card treats each tone as steady inside the frame; how sharply a window can pin down a tone whose pitch changes as it plays is the question it leaves open.
 

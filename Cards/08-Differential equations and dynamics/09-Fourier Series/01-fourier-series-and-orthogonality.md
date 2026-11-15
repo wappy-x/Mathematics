@@ -742,8 +742,8 @@ end FourierSeries
 - [Sampling](../../13-Engineering%20mathematics/05-Signals/01-sampling-and-the-nyquist-theorem.md): why sampling faster than twice the top harmonic's frequency captures a signal.
 - [Wavelets](../../13-Engineering%20mathematics/05-Signals/08-wavelets-and-multiresolution.md): waves confined in time, where sines run for ever.
 - [Von Neumann analysis](../../16-Numerical%20analysis/07-PDE%20Solvers/03-von-neumann-analysis-and-the-cfl-condition.md): a numerical scheme tested one Fourier mode at a time.
-- Orthonormal bases: orthogonality in any space with a dot product.
-- Completeness of sines and cosines: why no repeating signal lies outside all harmonics.
+- [Orthonormal bases](../../18-Functional%20analysis/02-Hilbert%20Spaces/03-orthonormal-bases-and-parseval.md): orthogonality in any space with a dot product.
+- [Completeness of sines and cosines](../../18-Functional%20analysis/02-Hilbert%20Spaces/04-completeness-of-the-trigonometric-system.md): why no repeating signal lies outside all harmonics.
 - Fourier coefficients: the same amounts, proofs at full strength.
 
 Left open: adding tones shrinks the mean-square miss, but near the jump the sum still overshoots; does that overshoot ever go away? That is [Convergence](02-convergence-jumps-and-gibbs.md).

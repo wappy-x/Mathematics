@@ -451,7 +451,7 @@ example : (10 : ℤ) * (1 - 10) = -90 ∧ (100 : ℤ) * (1 - 100) = -9900 := by 
 - [Uniform continuity](08-uniform-continuity-and-lipschitz.md): uses the same subsequence argument.
 - [Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md): a guaranteed top, combined with slopes.
 - [What compactness and connectedness buy](../../17-Topology/02-Topological%20Spaces/08-images-of-compact-and-connected-sets.md): the theorem for compact sets.
-- Equivalent norms: a minimum on a sphere that must exist.
+- [Equivalent norms](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/04-equivalence-of-norms-in-finite-dimensions.md): a minimum on a sphere that must exist.
 - Hopf-Rinow: shortest paths that must exist.
 
 Continuity gives each point its own input distance for a tolerance; whether one distance serves the whole interval at once is [Uniform continuity](08-uniform-continuity-and-lipschitz.md).

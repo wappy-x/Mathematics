@@ -557,7 +557,7 @@ example : (1 / (2 * Real.pi)) * (2 * Real.pi) = 1 := by have := Real.pi_ne_zero;
 - [Transform pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md): option prices from the inversion integral.
 - [Sampling](../../13-Engineering%20mathematics/05-Signals/01-sampling-and-the-nyquist-theorem.md): how often to sample a signal whose spectrum stops, and sampling as multiplying by a train of spikes.
 - [Uncertainty](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/05-uncertainty-principle.md): narrow in time forces wide in frequency.
-- Plancherel: the transform keeps energy, up to 2π.
+- [Plancherel](../../18-Functional%20analysis/03-Bounded%20Operators/04-the-fourier-transform-as-a-unitary-operator.md): the transform keeps energy, up to 2π.
 - Tempered distributions: a transform for f = 1 and other signals without finite area.
 - The Fourier transform of an absolutely integrable signal, and why it fades at infinity: why every finite-area signal's spectrum fades at high frequency.
 

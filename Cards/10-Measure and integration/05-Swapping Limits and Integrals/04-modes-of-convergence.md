@@ -949,7 +949,7 @@ example : (1 : ℚ) / 10 ≤ 1 / 10 ∧ ¬ ((1 : ℚ) / 9 ≤ 1 / 10) ∧ (1 : �
 - [The Borel-Cantelli lemmas](../10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md): the summing argument of Step 3 as a statement about events.
 - [The weak law of large numbers](../10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md): convergence in probability of averages, from Step 1's inequality.
 - [Convergence in distribution](../10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md): the weakest mode, comparing laws only.
-- Weak convergence: convergence tested against every fixed function, weaker than in mean.
+- [Weak convergence](../../18-Functional%20analysis/02-Hilbert%20Spaces/09-weak-convergence-and-banach-alaoglu.md): convergence tested against every fixed function, weaker than in mean.
 
 The spike shows that settling at almost every point cannot carry the integral along without help; what the help must be, exactly, is the question [Uniform integrability](05-uniform-integrability.md) answers.
 

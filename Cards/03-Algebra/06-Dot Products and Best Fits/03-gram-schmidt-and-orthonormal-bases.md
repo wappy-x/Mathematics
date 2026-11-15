@@ -607,8 +607,8 @@ example : (1 : ℚ) - 4 / 10 * 3 - 2 / 10 * (-1) = 0 ∧ (1 : ℚ) - 4 / 10 * 1 
 - [Wavelets](../../13-Engineering%20mathematics/05-Signals/08-wavelets-and-multiresolution.md): perpendicular unit directions, one per band of frequencies.
 - [Lattices](../../14-Applied%20and%20computational/04-Cryptography/09-lattices-and-post-quantum-cryptography.md): a skewed basis as the secret, straightening it as the attack.
 - [QR](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/05-qr-householder-and-gram-schmidt.md): the same factorisation from reflections, steady at machine size.
-- Orthonormal bases: endlessly many such directions, squared length still a sum of squares.
-- Orthogonal polynomials: this loop on 1, x, x^2, with an integral as the dot product.
+- [Orthonormal bases](../../18-Functional%20analysis/02-Hilbert%20Spaces/03-orthonormal-bases-and-parseval.md): endlessly many such directions, squared length still a sum of squares.
+- [Orthogonal polynomials](../../18-Functional%20analysis/02-Hilbert%20Spaces/05-orthogonal-polynomials-from-gram-schmidt.md): this loop on 1, x, x^2, with an integral as the dot product.
 - The Haar wavelet: the plainest one, built by halving an interval.
 
 Gram-Schmidt builds its directions from whatever lines it is handed; which matrices arrive with such a basis already fitted is the spectral theorem's answer.

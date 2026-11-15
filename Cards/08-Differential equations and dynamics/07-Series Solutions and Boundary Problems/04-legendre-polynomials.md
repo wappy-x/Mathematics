@@ -745,7 +745,7 @@ example : (∫ x in (-1 : ℝ)..1, 30 * x ^ 2) = 20 := by
 ## Where this goes next
 
 - [Hydrogen in outline](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/07-the-hydrogen-atom-in-outline.md): P_n in the shapes of electron states.
-- Orthogonal polynomials: the same polynomials from 1, x, x^2, … with no equation.
+- [Orthogonal polynomials](../../18-Functional%20analysis/02-Hilbert%20Spaces/05-orthogonal-polynomials-from-gram-schmidt.md): the same polynomials from 1, x, x^2, … with no equation.
 - The Laplacian in round coordinates, and the modes it splits into: the equation's origin and the factor (r/R)^n.
 
 Orthogonality came from the equation's shape; [Sturm-Liouville](09-sturm-liouville-and-orthogonality.md) says which equations share it, so their solutions can always be read off one at a time.

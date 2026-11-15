@@ -543,7 +543,7 @@ example : (2 : ℚ) * 3 = 6 ∧ (1 / 1000 : ℚ) / 4 = 1 / 4000 := by norm_num
 - [Fixed points](../03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md): K from a bounded derivative; K below 1 forces one fixed point, with iteration error bounded by powers of K.
 - [Uniform convergence](../06-Series/07-uniform-convergence.md): "one tolerance first" for a sequence of functions.
 - Uniform continuity, the Topology wing's card: Heine–Cantor for any distance, compactness replacing closed and bounded.
-- Bounded operators: for linear maps, K is the operator norm.
+- [Bounded operators](../../18-Functional%20analysis/03-Bounded%20Operators/01-bounded-operators-and-the-operator-norm.md): for linear maps, K is the operator norm.
 - Approximate identities: uniform continuity making smoothing converge everywhere at once.
 
 The question this card leaves open: what takes the place of "closed and bounded" when the inputs are not numbers on a line?

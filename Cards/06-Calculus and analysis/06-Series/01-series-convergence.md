@@ -511,7 +511,7 @@ example : (1 : ℚ) / 3 + 1 / 4 ≥ 1 / 2 ∧ (1 : ℚ) / 5 + 1 / 6 + 1 / 7 + 1 
 - [Outer measure](../../10-Measure%20and%20integration/02-Length%20Done%20Properly/01-lebesgue-outer-measure.md): interval lengths summed as a series.
 - [The monotone convergence theorem](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md): rising totals passed inside an integral.
 - [Annuities](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md): the finite geometric sum pricing a loan.
-- Sequence spaces: sequences whose sizes sum.
+- [Sequence spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/02-sequence-spaces-lp-and-c0.md): sequences whose sizes sum.
 - Wiener's lemma: the geometric series inverting 1 − r for operators.
 - Big O and twiddle: how fast harmonic totals grow.
 - Mertens' theorems: the harmonic series over primes.

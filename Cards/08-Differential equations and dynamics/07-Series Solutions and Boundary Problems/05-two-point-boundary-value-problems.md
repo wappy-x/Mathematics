@@ -830,7 +830,7 @@ example (A B : ℝ) : -A * sin 0 + B * cos 0 = B ∧ -A * sin π + B * cos π = 
 - [Boundary layers](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/06-boundary-layers-and-singular-perturbation.md): a tiny coefficient on y'' makes a thin end layer.
 - [Stress, strain and bending](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/07-stress-strain-and-beam-bending.md): the beam law behind the strut.
 - [Viscosity](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/02-viscosity-and-pipe-flow.md): flow fixed at two walls.
-- Lax-Milgram: one answer from an energy argument.
+- [Lax-Milgram](../../18-Functional%20analysis/02-Hilbert%20Spaces/07-lax-milgram-theorem.md): one answer from an energy argument.
 - Weak solutions: answers without a second derivative.
 - Boundary conditions: the three types on a surface.
 - Jacobi field: zero-end solutions on curved surfaces.

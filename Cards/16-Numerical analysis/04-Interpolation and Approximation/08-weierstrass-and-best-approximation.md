@@ -879,7 +879,7 @@ example : ((3 : ℚ) / 10) ^ 2 + (3 / 10) * (1 - 3 / 10) / 10 = 111 / 1000 := by
 ## Where this goes next
 
 - [Pade approximants](09-pade-and-rational-approximation.md): ratios of polynomials matched at one point, which cope with poles; the equal-ripple best rational fit is left open there.
-- Function spaces C and Lp (planned): the uniform norm becomes the norm of the space of continuous functions, and Weierstrass's theorem says polynomials are dense in it.
+- [Function spaces C and Lp](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/03-function-spaces-c-and-lp.md): the uniform norm becomes the norm of the space of continuous functions, and Weierstrass's theorem says polynomials are dense in it.
 
 Also on this shelf: [Runge's phenomenon](04-runge-phenomenon-and-chebyshev-nodes.md) supplies the Chebyshev nodes and $`T_n`$, and [Fitting instead of passing through](07-least-squares-and-orthogonal-polynomials.md) minimises the average squared error instead of the worst one.
 

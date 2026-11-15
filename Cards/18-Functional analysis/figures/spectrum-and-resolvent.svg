@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 320" width="440" height="320" font-family="Helvetica, Arial, sans-serif" font-size="12">
+  <title>The delay line's spectrum: the closed unit disc in the complex plane, to scale at 80 px per unit</title>
+  <rect x="0" y="0" width="440" height="320" fill="#ffffff"/>
+  <line x1="20" y1="160" x2="430" y2="160" stroke="#555555" stroke-width="1"/>
+  <line x1="180" y1="20" x2="180" y2="300" stroke="#555555" stroke-width="1"/>
+  <text x="414" y="152" fill="#1d1d1d">Re</text>
+  <text x="186" y="30" fill="#1d1d1d">Im</text>
+  <circle cx="180" cy="160" r="80" fill="#d9d9d9" stroke="none"/>
+  <circle cx="180" cy="160" r="80" fill="none" stroke="#1d1d1d" stroke-width="3"/>
+  <circle cx="340" cy="160" r="80" fill="none" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="5,4"/>
+  <circle cx="180" cy="160" r="4" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+  <circle cx="220" cy="160" r="4" fill="#1d1d1d"/>
+  <circle cx="260" cy="160" r="4" fill="#1d1d1d"/>
+  <circle cx="280" cy="160" r="4" fill="#1d1d1d"/>
+  <circle cx="340" cy="160" r="4" fill="#1d1d1d"/>
+  <text x="168" y="178" fill="#1d1d1d">0</text>
+  <text x="212" y="148" fill="#1d1d1d">0.5</text>
+  <text x="252" y="178" fill="#1d1d1d">1</text>
+  <text x="276" y="148" fill="#1d1d1d">1.25</text>
+  <text x="336" y="178" fill="#1d1d1d">2</text>
+  <text x="122" y="118" fill="#1d1d1d">residual</text>
+  <text x="96" y="62" fill="#1d1d1d">continuous: the circle</text>
+  <text x="300" y="60" fill="#1d1d1d">resolvent set</text>
+  <text x="300" y="268" fill="#1d1d1d">safe disc round 2</text>
+</svg>

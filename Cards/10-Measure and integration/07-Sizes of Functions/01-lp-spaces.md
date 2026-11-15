@@ -762,14 +762,14 @@ example : (1 : ℚ) - 1 / 2 - 1 / 3 = 1 / 6 := by norm_num
 - [Jensen's inequality](04-jensens-inequality.md): why the p-norms rise with p on a probability.
 - [Assembly and error](../../16-Numerical%20analysis/07-PDE%20Solvers/08-finite-element-assembly-and-error.md): L^2 norms as the yardstick for simulation error.
 - [The distance menu](../../17-Topology/01-Metric%20Spaces/02-distances-on-vectors-and-functions.md): the p-norm of a difference as a distance.
-- Sequence spaces: the counting-measure case on the whole numbers.
-- Function spaces C and Lp: L^p beside the continuous functions, as normed spaces.
-- Dual spaces: L^q as the dual of L^p for conjugate exponents.
-- Reflexive spaces: L^p as its own second dual for 1 < p < ∞.
+- [Sequence spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/02-sequence-spaces-lp-and-c0.md): the counting-measure case on the whole numbers.
+- [Function spaces C and Lp](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/03-function-spaces-c-and-lp.md): L^p beside the continuous functions, as normed spaces.
+- [Dual spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/09-dual-spaces-and-lp-duality.md): L^q as the dual of L^p for conjugate exponents.
+- [Reflexive spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/10-reflexive-spaces-and-the-second-dual.md): L^p as its own second dual for 1 < p < ∞.
 - Weak derivatives: functions whose derivatives also lie in L^p.
 - Unbounded operators: operators defined only on part of L^2.
 - Sobolev spaces: L^p sizes of a solution and its derivatives.
-- Plancherel: the Fourier transform preserving the L^2 norm.
+- [Plancherel](../../18-Functional%20analysis/03-Bounded%20Operators/04-the-fourier-transform-as-a-unitary-operator.md): the Fourier transform preserving the L^2 norm.
 - Convolution: L^p norms of a smoothed function.
 - The maximal function: an operator bounded on L^p for p > 1 but not on L^1.
 - Singular integrals: L^p bounds for the Hilbert transform.

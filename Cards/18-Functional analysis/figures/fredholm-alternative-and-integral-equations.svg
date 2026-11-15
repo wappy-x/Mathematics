@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 420" width="420" height="420" font-family="Helvetica, Arial, sans-serif" font-size="13">
+  <title>Cross-section of a round tunnel of radius 2 m, with the square (N = 4) and octagon (N = 8) rehearsals drawn inside; the top quarter is the lamp, the bottom quarter the floor</title>
+  <rect x="0" y="0" width="420" height="420" fill="#ffffff"/>
+  <circle cx="210" cy="210" r="160" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+  <polygon points="210,50 323.137,96.863 370,210 323.137,323.137 210,370 96.863,323.137 50,210 96.863,96.863" fill="none" stroke="#2a6f68" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <polygon points="96.863,96.863 323.137,96.863 323.137,323.137 96.863,323.137" fill="none" stroke="#7a3b1e" stroke-width="1.5"/>
+  <path d="M 96.863 96.863 A 160 160 0 0 1 323.137 96.863" fill="none" stroke="#b5651d" stroke-width="7"/>
+  <path d="M 323.137 323.137 A 160 160 0 0 1 96.863 323.137" fill="none" stroke="#1d1d1d" stroke-width="7"/>
+  <line x1="210" y1="210" x2="370" y2="210" stroke="#1d1d1d" stroke-width="1"/>
+  <circle cx="210" cy="210" r="2.5" fill="#1d1d1d"/>
+  <text x="290" y="203" text-anchor="middle">2 m</text>
+  <text x="210" y="28" text-anchor="middle">lamp: top quarter, 100 W/m²</text>
+  <text x="210" y="402" text-anchor="middle">floor: bottom quarter</text>
+  <text x="210" y="150" text-anchor="middle" fill="#7a3b1e">square, N = 4</text>
+  <text x="210" y="270" text-anchor="middle" fill="#2a6f68">octagon, N = 8 (dashed)</text>
+</svg>

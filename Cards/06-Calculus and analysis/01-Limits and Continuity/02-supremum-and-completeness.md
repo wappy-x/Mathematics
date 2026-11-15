@@ -515,8 +515,8 @@ example : 40 + 250 * (0 : ℚ) = 40 ∧ 40 + 250 * ((1 : ℚ) / 2) = 165 ∧ 40 
 - [Sums, products, sups and limits](../../10-Measure%20and%20integration/03-Measurable%20Functions/02-limits-of-measurable-functions.md): suprema of functions, point by point.
 - [Bounded variation](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/01-functions-of-bounded-variation.md): total wiggle as a supremum over cuttings.
 - [Complete space](../../17-Topology/01-Metric%20Spaces/05-completeness-and-completion.md): no gaps in any space with a distance.
-- Normed and Banach spaces: sizes of functions as suprema, in spaces with no gaps.
-- Reflexive spaces: suprema that are, or are not, reached.
+- [Normed and Banach spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/01-normed-spaces-and-banach-spaces.md): sizes of functions as suprema, in spaces with no gaps.
+- [Reflexive spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/10-reflexive-spaces-and-the-second-dual.md): suprema that are, or are not, reached.
 
 Completeness promises the lowest ceiling but not a way to reach it; a rising sequence closing in on it is [Sequences](03-sequences-and-limits.md).
 

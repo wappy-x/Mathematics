@@ -1047,7 +1047,7 @@ example : 13 * 360 * 16 = 74880 := by norm_num
 
 - [Weierstrass and the minimax fit](08-weierstrass-and-best-approximation.md), the next card: least squares makes the *sum* of squared misses smallest; the minimax fit makes the *worst* single miss smallest.
 - [Gaussian quadrature](../05-Quadrature/03-gaussian-quadrature.md): the zeros of an orthogonal polynomial are the sample points of the most accurate integration rules, and recurrence numbers like $`\alpha_k`$ and $`\beta_k`$ give them.
-- Orthogonal polynomials (planned): the families that other weights produce, Chebyshev, Hermite and Laguerre, and their common theory.
+- [Orthogonal polynomials](../../18-Functional%20analysis/02-Hilbert%20Spaces/05-orthogonal-polynomials-from-gram-schmidt.md): the families that other weights produce, Chebyshev, Hermite and Laguerre, and their common theory.
 
 This card leaves open which degree to fit when the noise is unknown, and how to fit a trend that a single polynomial cannot follow at all.
 

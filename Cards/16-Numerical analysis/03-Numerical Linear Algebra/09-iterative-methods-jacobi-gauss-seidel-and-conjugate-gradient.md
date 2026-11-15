@@ -1263,7 +1263,7 @@ example : jacobiSweep badMatrix 0 ![1, 1, 1] = (-8 / 5 : ℝ) • ![1, 1, 1] := 
 ## Where this goes next
 
 - [Sparse storage and Krylov methods](10-sparse-matrices-and-krylov-methods.md): how to store only the nonzeros, preconditioners that shrink κ, and Krylov methods such as GMRES for matrices that are not symmetric.
-- Neumann series (planned): Jacobi's sweeps add up the series I + G + G² + …, and that card shows when such a series gives the inverse.
+- [Neumann series](../../18-Functional%20analysis/03-Bounded%20Operators/06-neumann-series-and-inverting-close-to-the-identity.md): Jacobi's sweeps add up the series I + G + G² + …, and that card shows when such a series gives the inverse.
 
 This card leaves open how to transform A so that κ becomes small, which is what preconditioning sets out to do.
 

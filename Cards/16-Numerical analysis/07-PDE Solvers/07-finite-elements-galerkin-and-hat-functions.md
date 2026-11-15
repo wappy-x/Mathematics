@@ -1324,7 +1324,7 @@ example : 8 * (1024 - 1) - 7 = 8177 := by decide
 
 - [Assembly and error](08-finite-element-assembly-and-error.md): element matrices added into one sparse system, fixed and free ends, and the error estimate in general.
 - Galerkin (planned): the method with any family of trial and test shapes, including different ones (Petrov-Galerkin).
-- Lax-Milgram (planned): why the weak form has exactly one solution whenever the pairing is bounded and positive.
+- [Lax-Milgram](../../18-Functional%20analysis/02-Hilbert%20Spaces/07-lax-milgram-theorem.md): why the weak form has exactly one solution whenever the pairing is bounded and positive.
 - Weak derivatives (planned): what $`y'`$ means for a curve with corners, made precise.
 - Weak solutions (planned): problems whose only solutions are weak ones, such as a cable under a point load.
 
