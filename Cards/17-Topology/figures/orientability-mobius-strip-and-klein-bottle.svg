@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 370" width="580" height="370" font-family="Helvetica, Arial, sans-serif" font-size="14">
+<title>Gluing diagrams: a paper band and a Mobius strip, 30 cm by 3 cm, and squares for the torus, Klein bottle and projective plane</title>
+<rect x="0" y="0" width="580" height="370" fill="#ffffff"/>
+<rect x="40" y="40" width="300" height="30" fill="#e9eef2"/>
+<line x1="40" y1="40" x2="340" y2="40" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="40" y1="70" x2="340" y2="70" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="40" y1="70" x2="40" y2="40" stroke="#1d1d1d" stroke-width="3"/>
+<polyline points="45,58 40,51 35,58" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<text x="28" y="60" fill="#1d1d1d" font-style="italic" text-anchor="middle">a</text>
+<line x1="340" y1="70" x2="340" y2="40" stroke="#1d1d1d" stroke-width="3"/>
+<polyline points="345,58 340,51 335,58" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<text x="352" y="60" fill="#1d1d1d" font-style="italic" text-anchor="middle">a</text>
+<text x="370" y="52" fill="#1d1d1d" text-anchor="start">paper band</text>
+<text x="370" y="70" fill="#1d1d1d" text-anchor="start">ends glued straight</text>
+<rect x="40" y="110" width="300" height="30" fill="#e9eef2"/>
+<line x1="40" y1="110" x2="340" y2="110" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="40" y1="140" x2="340" y2="140" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="40" y1="140" x2="40" y2="110" stroke="#1d1d1d" stroke-width="3"/>
+<polyline points="45,128 40,121 35,128" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<text x="28" y="130" fill="#1d1d1d" font-style="italic" text-anchor="middle">a</text>
+<line x1="340" y1="110" x2="340" y2="140" stroke="#1d1d1d" stroke-width="3"/>
+<polyline points="335,122 340,129 345,122" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<text x="352" y="130" fill="#1d1d1d" font-style="italic" text-anchor="middle">a</text>
+<text x="370" y="122" fill="#1d1d1d" text-anchor="start">Mobius strip</text>
+<text x="370" y="140" fill="#1d1d1d" text-anchor="start">ends glued with a flip</text>
+<text x="190" y="98" fill="#1d1d1d" text-anchor="middle">30 cm</text>
+<text x="190" y="168" fill="#1d1d1d" text-anchor="middle">30 cm</text>
+<rect x="40" y="190" width="120" height="120" fill="#e9eef2"/>
+<line x1="40" y1="310" x2="160" y2="310" stroke="#1d1d1d" stroke-width="3"/>
+<polyline points="97,315 104,310 97,305" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<polyline points="90,315 97,310 90,305" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<text x="100" y="330" fill="#1d1d1d" font-style="italic" text-anchor="middle">b</text>
+<line x1="40" y1="310" x2="40" y2="190" stroke="#1d1d1d" stroke-width="3"/>
+<polyline points="45,253 40,246 35,253" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<text x="28" y="255" fill="#1d1d1d" font-style="italic" text-anchor="middle">a</text>
+<line x1="160" y1="310" x2="160" y2="190" stroke="#1d1d1d" stroke-width="3"/>
+<polyline points="165,253 160,246 155,253" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<text x="172" y="255" fill="#1d1d1d" font-style="italic" text-anchor="middle">a</text>
+<line x1="40" y1="190" x2="160" y2="190" stroke="#1d1d1d" stroke-width="3"/>
+<polyline points="97,195 104,190 97,185" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<polyline points="90,195 97,190 90,185" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<text x="100" y="182" fill="#1d1d1d" font-style="italic" text-anchor="middle">b</text>
+<text x="100" y="350" fill="#1d1d1d" text-anchor="middle">torus</text>
+<text x="100" y="367" fill="#1d1d1d" text-anchor="middle">b a b⁻¹ a⁻¹</text>
+<rect x="220" y="190" width="120" height="120" fill="#e9eef2"/>
+<line x1="220" y1="310" x2="340" y2="310" stroke="#1d1d1d" stroke-width="3"/>
+<polyline points="277,315 284,310 277,305" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<polyline points="270,315 277,310 270,305" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<text x="280" y="330" fill="#1d1d1d" font-style="italic" text-anchor="middle">b</text>
+<line x1="220" y1="310" x2="220" y2="190" stroke="#1d1d1d" stroke-width="3"/>
+<polyline points="225,253 220,246 215,253" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<text x="208" y="255" fill="#1d1d1d" font-style="italic" text-anchor="middle">a</text>
+<line x1="340" y1="310" x2="340" y2="190" stroke="#1d1d1d" stroke-width="3"/>
+<polyline points="345,253 340,246 335,253" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<text x="352" y="255" fill="#1d1d1d" font-style="italic" text-anchor="middle">a</text>
+<line x1="340" y1="190" x2="220" y2="190" stroke="#1d1d1d" stroke-width="3"/>
+<polyline points="283,185 276,190 283,195" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<polyline points="290,185 283,190 290,195" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<text x="280" y="182" fill="#1d1d1d" font-style="italic" text-anchor="middle">b</text>
+<text x="280" y="350" fill="#1d1d1d" text-anchor="middle">Klein bottle</text>
+<text x="280" y="367" fill="#1d1d1d" text-anchor="middle">b a b a⁻¹</text>
+<rect x="400" y="190" width="120" height="120" fill="#e9eef2"/>
+<line x1="400" y1="310" x2="520" y2="310" stroke="#1d1d1d" stroke-width="3"/>
+<polyline points="457,315 464,310 457,305" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<polyline points="450,315 457,310 450,305" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<text x="460" y="330" fill="#1d1d1d" font-style="italic" text-anchor="middle">b</text>
+<line x1="400" y1="310" x2="400" y2="190" stroke="#1d1d1d" stroke-width="3"/>
+<polyline points="405,253 400,246 395,253" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<text x="388" y="255" fill="#1d1d1d" font-style="italic" text-anchor="middle">a</text>
+<line x1="520" y1="190" x2="520" y2="310" stroke="#1d1d1d" stroke-width="3"/>
+<polyline points="515,247 520,254 525,247" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<text x="532" y="255" fill="#1d1d1d" font-style="italic" text-anchor="middle">a</text>
+<line x1="520" y1="190" x2="400" y2="190" stroke="#1d1d1d" stroke-width="3"/>
+<polyline points="463,185 456,190 463,195" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<polyline points="470,185 463,190 470,195" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<text x="460" y="182" fill="#1d1d1d" font-style="italic" text-anchor="middle">b</text>
+<text x="460" y="350" fill="#1d1d1d" text-anchor="middle">projective plane</text>
+<text x="460" y="367" fill="#1d1d1d" text-anchor="middle">b a⁻¹ b a⁻¹</text>
+</svg>

@@ -465,8 +465,8 @@ example : (-1 : ℤ) ^ 3 - (-1) = 0 ∧ (0 : ℤ) ^ 3 - 0 = 0 ∧ (1 : ℤ) ^ 3 
 - [Correlation from a quanto price](../../12-Financial%20mathematics/24-Quantos%20and%20composites/05-implied-correlation-from-a-quanto.md): correlation from a quanto price.
 - [Correlation from a spread option](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/06-implied-correlation-from-a-spread-option.md): correlation from a spread option.
 - [Bisection](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/01-bisection-and-bracketing.md): halving as an algorithm, with stopping rules.
-- Connected and path-connected: the property of an interval the proof uses.
-- What compactness and connectedness buy: the theorem in general form.
+- [Connected and path-connected](../../17-Topology/02-Topological%20Spaces/07-connectedness-and-path-connectedness.md): the property of an interval the proof uses.
+- [What compactness and connectedness buy](../../17-Topology/02-Topological%20Spaces/08-images-of-compact-and-connected-sets.md): the theorem in general form.
 
 The theorem fills in every value between the end values but says nothing about values beyond them; whether a highest and a lowest are actually reached is [Extreme value theorem](07-extreme-value-theorem.md).
 

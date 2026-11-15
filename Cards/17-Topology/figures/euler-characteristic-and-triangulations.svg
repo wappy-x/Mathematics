@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 340" width="400" height="340">
+  <title>Schematic: the inner tube as a 3 by 3 grid of squares, each cut into two triangles, with opposite sides glued</title>
+  <rect x="0" y="0" width="400" height="340" fill="#ffffff"/>
+  <line x1="60" y1="280" x2="60" y2="40" stroke="#b5452b" stroke-width="4"/>
+  <line x1="140" y1="280" x2="140" y2="40" stroke="#1d1d1d" stroke-width="1.5"/>
+  <line x1="220" y1="280" x2="220" y2="40" stroke="#1d1d1d" stroke-width="1.5"/>
+  <line x1="300" y1="280" x2="300" y2="40" stroke="#b5452b" stroke-width="4"/>
+  <line x1="60" y1="280" x2="300" y2="280" stroke="#2a7d74" stroke-width="4"/>
+  <line x1="60" y1="200" x2="300" y2="200" stroke="#1d1d1d" stroke-width="1.5"/>
+  <line x1="60" y1="120" x2="300" y2="120" stroke="#1d1d1d" stroke-width="1.5"/>
+  <line x1="60" y1="40" x2="300" y2="40" stroke="#2a7d74" stroke-width="4"/>
+  <line x1="60" y1="280" x2="140" y2="200" stroke="#555555" stroke-width="1"/>
+  <line x1="60" y1="200" x2="140" y2="120" stroke="#555555" stroke-width="1"/>
+  <line x1="60" y1="120" x2="140" y2="40" stroke="#555555" stroke-width="1"/>
+  <line x1="140" y1="280" x2="220" y2="200" stroke="#555555" stroke-width="1"/>
+  <line x1="140" y1="200" x2="220" y2="120" stroke="#555555" stroke-width="1"/>
+  <line x1="140" y1="120" x2="220" y2="40" stroke="#555555" stroke-width="1"/>
+  <line x1="220" y1="280" x2="300" y2="200" stroke="#555555" stroke-width="1"/>
+  <line x1="220" y1="200" x2="300" y2="120" stroke="#555555" stroke-width="1"/>
+  <line x1="220" y1="120" x2="300" y2="40" stroke="#555555" stroke-width="1"/>
+  <path d="M 53 166.0 L 60 154.0 L 67 166.0" fill="none" stroke="#b5452b" stroke-width="3"/>
+  <path d="M 293 166.0 L 300 154.0 L 307 166.0" fill="none" stroke="#b5452b" stroke-width="3"/>
+  <path d="M 168.0 33 L 180.0 40 L 168.0 47" fill="none" stroke="#2a7d74" stroke-width="3"/>
+  <path d="M 180.0 33 L 192.0 40 L 180.0 47" fill="none" stroke="#2a7d74" stroke-width="3"/>
+  <path d="M 168.0 273 L 180.0 280 L 168.0 287" fill="none" stroke="#2a7d74" stroke-width="3"/>
+  <path d="M 180.0 273 L 192.0 280 L 180.0 287" fill="none" stroke="#2a7d74" stroke-width="3"/>
+  <circle cx="60" cy="280" r="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="60" y="285" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">0</text>
+  <circle cx="60" cy="200" r="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="60" y="205" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">1</text>
+  <circle cx="60" cy="120" r="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="60" y="125" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">2</text>
+  <circle cx="60" cy="40" r="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="60" y="45" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">0</text>
+  <circle cx="140" cy="280" r="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="140" y="285" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">3</text>
+  <circle cx="140" cy="200" r="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="140" y="205" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">4</text>
+  <circle cx="140" cy="120" r="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="140" y="125" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">5</text>
+  <circle cx="140" cy="40" r="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="140" y="45" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">3</text>
+  <circle cx="220" cy="280" r="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="220" y="285" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">6</text>
+  <circle cx="220" cy="200" r="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="220" y="205" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">7</text>
+  <circle cx="220" cy="120" r="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="220" y="125" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">8</text>
+  <circle cx="220" cy="40" r="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="220" y="45" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">6</text>
+  <circle cx="300" cy="280" r="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="300" y="285" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">0</text>
+  <circle cx="300" cy="200" r="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="300" y="205" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">1</text>
+  <circle cx="300" cy="120" r="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="300" y="125" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">2</text>
+  <circle cx="300" cy="40" r="11" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="300" y="45" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">0</text>
+  <text x="200" y="310" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">single arrows: left side glued to right; double: bottom to top</text>
+  <text x="200" y="328" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">9 corners, 27 edges, 18 triangles once glued (schematic)</text>
+</svg>

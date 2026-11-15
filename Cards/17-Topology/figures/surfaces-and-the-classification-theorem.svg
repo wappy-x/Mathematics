@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 230" width="480" height="230">
+  <title>Three gluing diagrams on a square (schematic): the torus a b a^-1 b^-1, the Klein bottle a b a^-1 b, and the sphere a a^-1 b b^-1</title>
+  <rect x="0" y="0" width="480" height="230" fill="#ffffff"/>
+  <text x="240" y="22" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">Glue edges with the same letter so their arrows match (schematic)</text>
+  <rect x="20" y="40" width="120" height="120" fill="#f4f1ea" stroke="none"/>
+  <line x1="20" y1="160" x2="140" y2="160" stroke="#b5452b" stroke-width="3"/>
+  <polygon points="88,160 74,166 74,154" fill="#b5452b"/>
+  <text x="80" y="148" font-family="Helvetica, Arial, sans-serif" font-size="14" font-style="italic" fill="#b5452b" text-anchor="middle">a</text>
+  <line x1="140" y1="160" x2="140" y2="40" stroke="#1f5f8b" stroke-width="3"/>
+  <polygon points="140,92 146,106 134,106" fill="#1f5f8b"/>
+  <text x="126" y="105" font-family="Helvetica, Arial, sans-serif" font-size="14" font-style="italic" fill="#1f5f8b" text-anchor="middle">b</text>
+  <line x1="140" y1="40" x2="20" y2="40" stroke="#b5452b" stroke-width="3"/>
+  <polygon points="88,40 74,46 74,34" fill="#b5452b"/>
+  <text x="80" y="62" font-family="Helvetica, Arial, sans-serif" font-size="14" font-style="italic" fill="#b5452b" text-anchor="middle">a</text>
+  <line x1="20" y1="40" x2="20" y2="160" stroke="#1f5f8b" stroke-width="3"/>
+  <polygon points="20,92 26,106 14,106" fill="#1f5f8b"/>
+  <text x="34" y="105" font-family="Helvetica, Arial, sans-serif" font-size="14" font-style="italic" fill="#1f5f8b" text-anchor="middle">b</text>
+  <text x="80" y="200" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">torus: a b a⁻¹ b⁻¹</text>
+  <text x="80" y="218" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#444444" text-anchor="middle">inner tube, genus 1</text>
+  <rect x="180" y="40" width="120" height="120" fill="#f4f1ea" stroke="none"/>
+  <line x1="180" y1="160" x2="300" y2="160" stroke="#b5452b" stroke-width="3"/>
+  <polygon points="248,160 234,166 234,154" fill="#b5452b"/>
+  <text x="240" y="148" font-family="Helvetica, Arial, sans-serif" font-size="14" font-style="italic" fill="#b5452b" text-anchor="middle">a</text>
+  <line x1="300" y1="160" x2="300" y2="40" stroke="#1f5f8b" stroke-width="3"/>
+  <polygon points="300,92 306,106 294,106" fill="#1f5f8b"/>
+  <text x="286" y="105" font-family="Helvetica, Arial, sans-serif" font-size="14" font-style="italic" fill="#1f5f8b" text-anchor="middle">b</text>
+  <line x1="300" y1="40" x2="180" y2="40" stroke="#b5452b" stroke-width="3"/>
+  <polygon points="248,40 234,46 234,34" fill="#b5452b"/>
+  <text x="240" y="62" font-family="Helvetica, Arial, sans-serif" font-size="14" font-style="italic" fill="#b5452b" text-anchor="middle">a</text>
+  <line x1="180" y1="40" x2="180" y2="160" stroke="#1f5f8b" stroke-width="3"/>
+  <polygon points="180,108 174,94 186,94" fill="#1f5f8b"/>
+  <text x="194" y="105" font-family="Helvetica, Arial, sans-serif" font-size="14" font-style="italic" fill="#1f5f8b" text-anchor="middle">b</text>
+  <text x="240" y="200" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">Klein bottle: a b a⁻¹ b</text>
+  <text x="240" y="218" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#444444" text-anchor="middle">one-sided, 2 crosscaps</text>
+  <rect x="340" y="40" width="120" height="120" fill="#f4f1ea" stroke="none"/>
+  <line x1="340" y1="160" x2="460" y2="160" stroke="#b5452b" stroke-width="3"/>
+  <polygon points="408,160 394,166 394,154" fill="#b5452b"/>
+  <text x="400" y="148" font-family="Helvetica, Arial, sans-serif" font-size="14" font-style="italic" fill="#b5452b" text-anchor="middle">a</text>
+  <line x1="460" y1="160" x2="460" y2="40" stroke="#b5452b" stroke-width="3"/>
+  <polygon points="460,108 454,94 466,94" fill="#b5452b"/>
+  <text x="446" y="105" font-family="Helvetica, Arial, sans-serif" font-size="14" font-style="italic" fill="#b5452b" text-anchor="middle">a</text>
+  <line x1="460" y1="40" x2="340" y2="40" stroke="#1f5f8b" stroke-width="3"/>
+  <polygon points="392,40 406,34 406,46" fill="#1f5f8b"/>
+  <text x="400" y="62" font-family="Helvetica, Arial, sans-serif" font-size="14" font-style="italic" fill="#1f5f8b" text-anchor="middle">b</text>
+  <line x1="340" y1="40" x2="340" y2="160" stroke="#1f5f8b" stroke-width="3"/>
+  <polygon points="340,92 346,106 334,106" fill="#1f5f8b"/>
+  <text x="354" y="105" font-family="Helvetica, Arial, sans-serif" font-size="14" font-style="italic" fill="#1f5f8b" text-anchor="middle">b</text>
+  <text x="400" y="200" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">sphere: a a⁻¹ b b⁻¹</text>
+  <text x="400" y="218" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#444444" text-anchor="middle">dome, genus 0</text>
+</svg>

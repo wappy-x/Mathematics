@@ -481,7 +481,7 @@ example : -(1000 : ℚ) * (1 / 100) = -10 := by norm_num
 ## Where this goes next
 
 - [Stepping the heat equation on a grid](../10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md): the same step limit on a heat grid, and the Crank-Nicolson step, which is this trapezoid.
-- Stiffness: stability regions in the complex plane, and the order barrier.
+- [Stiffness](../../16-Numerical%20analysis/06-ODE%20Solvers/05-stiffness-a-stability-and-the-dahlquist-barriers.md): stability regions in the complex plane, and the order barrier.
 
 Backward Euler pays for stability with first-order accuracy, the trapezoid for accuracy with ringing. Whether one method can have high order, full damping and stability together is what the Dahlquist barriers settle.
 

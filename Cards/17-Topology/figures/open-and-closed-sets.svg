@@ -1,0 +1,47 @@
+<svg viewBox="0 0 420 380" xmlns="http://www.w3.org/2000/svg" width="420" height="380">
+<title>Fare zone 1 on the city grid: the walking-distance zone under 5 blocks from Central is a diamond with a dashed rim; the Cafe has 2 blocks of room inside, the Library sits on the rim, the Stadium has 2 blocks of room outside; the straight-line circle of radius 5 passes through the Stadium</title>
+<rect x="0" y="0" width="420" height="380" fill="#ffffff"/>
+<line x1="0" y1="20" x2="0" y2="370" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="30" y1="20" x2="30" y2="370" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="60" y1="20" x2="60" y2="370" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="90" y1="20" x2="90" y2="370" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="120" y1="20" x2="120" y2="370" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="150" y1="20" x2="150" y2="370" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="180" y1="20" x2="180" y2="370" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="210" y1="20" x2="210" y2="370" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="240" y1="20" x2="240" y2="370" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="270" y1="20" x2="270" y2="370" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="300" y1="20" x2="300" y2="370" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="330" y1="20" x2="330" y2="370" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="360" y1="20" x2="360" y2="370" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="390" y1="20" x2="390" y2="370" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="10" y1="350" x2="410" y2="350" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="10" y1="320" x2="410" y2="320" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="10" y1="290" x2="410" y2="290" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="10" y1="260" x2="410" y2="260" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="10" y1="230" x2="410" y2="230" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="10" y1="200" x2="410" y2="200" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="10" y1="170" x2="410" y2="170" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="10" y1="140" x2="410" y2="140" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="10" y1="110" x2="410" y2="110" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="10" y1="80" x2="410" y2="80" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="10" y1="50" x2="410" y2="50" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="10" y1="20" x2="410" y2="20" stroke="#d0d0d0" stroke-width="1"/>
+<circle cx="180" cy="200" r="150" fill="none" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="1,4"/>
+<polygon points="330,200 180,50 30,200 180,350" fill="#2a9d8f" fill-opacity="0.15" stroke="#1d1d1d" stroke-width="2" stroke-dasharray="7,5"/>
+<polygon points="300,170 240,110 180,170 240,230" fill="none" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="3,3"/>
+<polygon points="360,110 300,50 240,110 300,170" fill="#e76f51" fill-opacity="0.12" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="3,3"/>
+<circle cx="270" cy="140" r="9" fill="none" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="180" cy="200" r="4" fill="#1d1d1d"/>
+<circle cx="240" cy="170" r="4" fill="#1d1d1d"/>
+<circle cx="270" cy="140" r="4" fill="#1d1d1d"/>
+<circle cx="300" cy="110" r="4" fill="#1d1d1d"/>
+<text x="130" y="218" font-family="sans-serif" font-size="13" fill="#1d1d1d">Central</text>
+<text x="196" y="186" font-family="sans-serif" font-size="13" fill="#1d1d1d">Cafe</text>
+<text x="282" y="150" font-family="sans-serif" font-size="13" fill="#1d1d1d">Library</text>
+<text x="310" y="104" font-family="sans-serif" font-size="13" fill="#1d1d1d">Stadium</text>
+<text x="14" y="334" font-family="sans-serif" font-size="13" fill="#1d1d1d">zone rim: walking 5</text>
+<text x="14" y="58" font-family="sans-serif" font-size="13" fill="#1d1d1d">straight line 5</text>
+<text x="196" y="244" font-family="sans-serif" font-size="13" fill="#1d1d1d">Cafe's room: 2</text>
+<text x="262" y="40" font-family="sans-serif" font-size="13" fill="#1d1d1d">Stadium's room: 2</text>
+</svg>

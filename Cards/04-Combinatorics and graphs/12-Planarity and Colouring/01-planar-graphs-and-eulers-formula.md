@@ -398,7 +398,7 @@ The two outputs match line for line.
 - [Why some graphs cannot be drawn flat](02-edge-bound-and-kuratowski.md): the count as a ceiling on a flat drawing's lines, and the two networks that break it.
 - [Polyhedra](../../05-Geometry%20and%20trig/02-Circles%20and%20Solids/06-polyhedra-and-eulers-formula.md): the same count on solids, where Euler found it.
 - [The graph Laplacian](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/03-graph-laplacian-and-spectral-clustering.md): dots and lines as a matrix, for large drawings.
-- Euler characteristic: the same count elsewhere, where the 2 names the surface.
+- [Euler characteristic](../../17-Topology/03-Surfaces%20and%20Manifolds/04-euler-characteristic-and-triangulations.md): the same count elsewhere, where the 2 names the surface.
 - Cycle double cover: the six faces here are cycles that cover each of the 12 tracks exactly twice; whether every network with no bridge (a line whose removal splits it) has such cycles, flat or not, is open.
 
 This card assumes a crossing-free drawing is in hand and never asks whether one exists; deciding that is [Why some graphs cannot be drawn flat](02-edge-bound-and-kuratowski.md).

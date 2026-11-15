@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -15 330 330" width="330" height="330" font-family="Helvetica, Arial, sans-serif">
+  <title>Two open arcs of the circle of headings, A from 330 to 210 degrees and B from 150 to 30 degrees, overlapping in two separate pieces</title>
+  <rect x="-15" y="-15" width="330" height="330" fill="#ffffff"/>
+  <circle cx="150" cy="150" r="110" fill="none" stroke="#9a9a9a" stroke-width="1.5"/>
+  <g stroke="#1d1d1d" stroke-width="1.5">
+    <line x1="150" y1="48" x2="150" y2="32"/><line x1="201" y1="61.67" x2="209" y2="47.81"/>
+    <line x1="238.33" y1="99" x2="252.19" y2="91"/><line x1="252" y1="150" x2="268" y2="150"/>
+    <line x1="238.33" y1="201" x2="252.19" y2="209"/><line x1="201" y1="238.33" x2="209" y2="252.19"/>
+    <line x1="150" y1="252" x2="150" y2="268"/><line x1="99" y1="238.33" x2="91" y2="252.19"/>
+    <line x1="61.67" y1="201" x2="47.81" y2="209"/><line x1="48" y1="150" x2="32" y2="150"/>
+    <line x1="61.67" y1="99" x2="47.81" y2="91"/><line x1="99" y1="61.67" x2="91" y2="47.81"/>
+  </g>
+  <path d="M 86.00,39.15 A 128 128 0 1 1 86.00,260.85" fill="none" stroke="#1f5f8b" stroke-width="3"/>
+  <path d="M 196.00,229.67 A 92 92 0 1 1 196.00,70.33" fill="none" stroke="#a63d1f" stroke-width="3"/>
+  <path d="M 95.00,54.74 A 110 110 0 0 1 205.00,54.74" fill="none" stroke="#1d1d1d" stroke-width="7"/>
+  <path d="M 205.00,245.26 A 110 110 0 0 1 95.00,245.26" fill="none" stroke="#1d1d1d" stroke-width="7"/>
+  <g fill="#ffffff" stroke-width="2">
+    <circle cx="86.00" cy="39.15" r="4" stroke="#1f5f8b"/><circle cx="86.00" cy="260.85" r="4" stroke="#1f5f8b"/>
+    <circle cx="196.00" cy="229.67" r="4" stroke="#a63d1f"/><circle cx="196.00" cy="70.33" r="4" stroke="#a63d1f"/>
+  </g>
+  <g font-size="12" fill="#1d1d1d" text-anchor="middle">
+    <text x="150" y="-2">0°</text><text x="300" y="154">90°</text>
+    <text x="150" y="310">180°</text><text x="0" y="154">270°</text>
+    <text x="74" y="24">330°</text><text x="226" y="24">30°</text>
+    <text x="228" y="284">150°</text><text x="72" y="284">210°</text>
+  </g>
+  <g font-size="11" text-anchor="middle">
+    <text x="150" y="128" fill="#1f5f8b">A, outer: 330° to 210°</text>
+    <text x="150" y="146" fill="#a63d1f">B, inner: 150° to 30°</text>
+    <text x="150" y="164" fill="#1d1d1d">thick: A ∩ B, two pieces</text>
+    <text x="150" y="180" fill="#1d1d1d">(330°, 30°) and (150°, 210°)</text>
+  </g>
+</svg>

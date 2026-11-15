@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 460" width="460" height="460">
+<title>The circle covered by ten open arcs U_0 to U_9, drawn to scale in angle</title>
+<rect x="0" y="0" width="460" height="460" fill="#ffffff"/>
+<circle cx="230" cy="230" r="80" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<path d="M 307.67 286.43 A 96 96 0 0 0 307.67 173.57" fill="none" stroke="#e76f51" stroke-width="5" stroke-linecap="butt"/>
+<circle cx="307.67" cy="286.43" r="3.2" fill="#ffffff" stroke="#e76f51" stroke-width="1.6"/>
+<circle cx="307.67" cy="173.57" r="3.2" fill="#ffffff" stroke="#e76f51" stroke-width="1.6"/>
+<text x="326.00" y="234.00" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1d1d1d" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">U0</text>
+<path d="M 176.00 136.47 A 108 108 0 1 0 338.00 230.00" fill="none" stroke="#264653" stroke-width="5" stroke-linecap="butt"/>
+<circle cx="176.00" cy="136.47" r="3.2" fill="#ffffff" stroke="#264653" stroke-width="1.6"/>
+<circle cx="338.00" cy="230.00" r="3.2" fill="#ffffff" stroke="#264653" stroke-width="1.6"/>
+<text x="176.00" y="327.53" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1d1d1d" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">U1</text>
+<path d="M 230.00 110.00 A 120 120 0 0 0 110.00 230.00" fill="none" stroke="#2a9d8f" stroke-width="5" stroke-linecap="butt"/>
+<circle cx="230.00" cy="110.00" r="3.2" fill="#ffffff" stroke="#2a9d8f" stroke-width="1.6"/>
+<circle cx="110.00" cy="230.00" r="3.2" fill="#ffffff" stroke="#2a9d8f" stroke-width="1.6"/>
+<text x="145.15" y="149.15" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1d1d1d" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">U2</text>
+<path d="M 270.79 104.46 A 132 132 0 0 0 164.00 115.68" fill="none" stroke="#264653" stroke-width="5" stroke-linecap="butt"/>
+<circle cx="270.79" cy="104.46" r="3.2" fill="#ffffff" stroke="#264653" stroke-width="1.6"/>
+<circle cx="164.00" cy="115.68" r="3.2" fill="#ffffff" stroke="#264653" stroke-width="1.6"/>
+<text x="216.20" y="102.72" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1d1d1d" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">U3</text>
+<path d="M 302.00 105.29 A 144 144 0 0 0 230.00 86.00" fill="none" stroke="#2a9d8f" stroke-width="5" stroke-linecap="butt"/>
+<circle cx="302.00" cy="105.29" r="3.2" fill="#ffffff" stroke="#2a9d8f" stroke-width="1.6"/>
+<circle cx="230.00" cy="86.00" r="3.2" fill="#ffffff" stroke="#2a9d8f" stroke-width="1.6"/>
+<text x="267.27" y="94.91" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1d1d1d" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">U4</text>
+<path d="M 327.26 108.03 A 156 156 0 0 0 278.21 81.64" fill="none" stroke="#264653" stroke-width="5" stroke-linecap="butt"/>
+<circle cx="327.26" cy="108.03" r="3.2" fill="#ffffff" stroke="#264653" stroke-width="1.6"/>
+<circle cx="278.21" cy="81.64" r="3.2" fill="#ffffff" stroke="#264653" stroke-width="1.6"/>
+<text x="303.92" y="96.63" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1d1d1d" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">U5</text>
+<path d="M 348.79 111.21 A 168 168 0 0 0 314.00 84.51" fill="none" stroke="#2a9d8f" stroke-width="5" stroke-linecap="butt"/>
+<circle cx="348.79" cy="111.21" r="3.2" fill="#ffffff" stroke="#2a9d8f" stroke-width="1.6"/>
+<circle cx="314.00" cy="84.51" r="3.2" fill="#ffffff" stroke="#2a9d8f" stroke-width="1.6"/>
+<text x="332.27" y="100.72" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1d1d1d" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">U6</text>
+<path d="M 367.89 114.30 A 180 180 0 0 0 342.23 89.27" fill="none" stroke="#264653" stroke-width="5" stroke-linecap="butt"/>
+<circle cx="367.89" cy="114.30" r="3.2" fill="#ffffff" stroke="#264653" stroke-width="1.6"/>
+<circle cx="342.23" cy="89.27" r="3.2" fill="#ffffff" stroke="#264653" stroke-width="1.6"/>
+<text x="355.68" y="105.14" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1d1d1d" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">U7</text>
+<path d="M 385.33 117.15 A 192 192 0 0 0 365.76 94.24" fill="none" stroke="#2a9d8f" stroke-width="5" stroke-linecap="butt"/>
+<circle cx="385.33" cy="117.15" r="3.2" fill="#ffffff" stroke="#2a9d8f" stroke-width="1.6"/>
+<circle cx="365.76" cy="94.24" r="3.2" fill="#ffffff" stroke="#2a9d8f" stroke-width="1.6"/>
+<text x="376.00" y="109.31" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1d1d1d" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">U8</text>
+<path d="M 401.62 119.71 A 204 204 0 0 0 386.27 98.87" fill="none" stroke="#264653" stroke-width="5" stroke-linecap="butt"/>
+<circle cx="401.62" cy="119.71" r="3.2" fill="#ffffff" stroke="#264653" stroke-width="1.6"/>
+<circle cx="386.27" cy="98.87" r="3.2" fill="#ffffff" stroke="#264653" stroke-width="1.6"/>
+<text x="394.28" y="113.05" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1d1d1d" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">U9</text>
+<circle cx="150.00" cy="230.00" r="3" fill="#1d1d1d"/>
+<circle cx="190.00" cy="160.72" r="3" fill="#1d1d1d"/>
+<circle cx="230.00" cy="150.00" r="3" fill="#1d1d1d"/>
+<circle cx="254.72" cy="153.92" r="3" fill="#1d1d1d"/>
+<circle cx="270.00" cy="160.72" r="3" fill="#1d1d1d"/>
+<circle cx="279.88" cy="167.45" r="3" fill="#1d1d1d"/>
+<circle cx="286.57" cy="173.43" r="3" fill="#1d1d1d"/>
+<circle cx="291.28" cy="178.58" r="3" fill="#1d1d1d"/>
+<circle cx="294.72" cy="182.98" r="3" fill="#1d1d1d"/>
+<circle cx="310.00" cy="230.00" r="4.5" fill="#e76f51" stroke="#1d1d1d"/>
+<text x="230" y="226" font-family="sans-serif" font-size="12" fill="#1d1d1d" text-anchor="middle">circle</text>
+<text x="230" y="242" font-family="sans-serif" font-size="12" fill="#1d1d1d" text-anchor="middle">glue point 0 at east</text>
+</svg>

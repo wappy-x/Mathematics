@@ -393,7 +393,7 @@ The two outputs match line for line.
 
 ## Where this goes next
 
-- Euler characteristic: the count on any surface; each tunnel lowers it by 2.
+- [Euler characteristic](../../17-Topology/03-Surfaces%20and%20Manifolds/04-euler-characteristic-and-triangulations.md): the count on any surface; each tunnel lowers it by 2.
 - Gauss-Bonnet: the 720° of gaps, spread over a curved surface as curvature.
 
 Left open: why no way of cutting a surface into faces changes its count, which Euler characteristic settles.

@@ -593,7 +593,7 @@ example : ∀ x : ℝ, 1 ≤ x → x + 1 / x ≠ x := by
 - [Yield from price](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/07-yield-from-price.md): a yield recovered by iteration.
 - [The Bellman operator contracts](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/04-the-bellman-operator-as-a-contraction.md): the discount factor as q.
 - [Fixed points](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/06-fixed-point-iteration-and-contraction.md): rates, rounding and acceleration.
-- Banach's fixed point theorem: the same proof in any complete space.
+- [Banach's fixed point theorem](../../17-Topology/01-Metric%20Spaces/08-banach-fixed-point-in-metric-spaces.md): the same proof in any complete space.
 - Brouwer and Borsuk-Ulam: fixed points without shrinking, or a way to find them.
 - Neumann series: inverting a matrix by pressing.
 

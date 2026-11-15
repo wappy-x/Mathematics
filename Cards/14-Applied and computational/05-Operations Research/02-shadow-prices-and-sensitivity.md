@@ -949,7 +949,7 @@ example : 27 * 40 = 1080 ∧ 30 * 30 + 27 * 20 = 1440 ∧ 30 * 50 = 1500 := by d
 ## Where this goes next
 
 - [Integer programs](03-integer-programming-and-branch-and-bound.md): when batches or depots must be whole numbers, the relaxed program's prices still guide the search, but they no longer price a limit exactly.
-- Shadow prices (planned): the optimisation wing's treatment, with prices for curved and many-limit problems.
+- [Shadow prices](../../15-Optimization/04-Linear%20Programming/05-sensitivity-and-shadow-prices.md): the optimisation wing's treatment, with prices for curved and many-limit problems.
 - [LP duality](../../15-Optimization/04-Linear%20Programming/04-lp-duality-and-complementary-slackness.md): the dual program as a theorem: why its best value always equals the original's, and how the simplex method (the standard solver, which walks from corner to better corner) finds both at once.
 
 This card leaves open what to do when the limits themselves are uncertain, so that the prices one plan relies on may not be the ones that turn up.

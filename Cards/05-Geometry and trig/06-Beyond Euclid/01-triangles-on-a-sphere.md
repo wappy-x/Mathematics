@@ -1226,7 +1226,7 @@ example (R A B C K : ℝ) (h : 4 * A * R ^ 2 + 4 * B * R ^ 2 + 4 * C * R ^ 2 = 4
 ## Where this goes next
 
 - [Three geometries](02-spherical-and-hyperbolic-geometry.md): the sphere beside the plane and a surface where triangles fall short.
-- Topological manifold: spaces that look flat up close, as a small patch of globe does.
+- [Topological manifold](../../17-Topology/03-Surfaces%20and%20Manifolds/01-topological-manifolds.md): spaces that look flat up close, as a small patch of globe does.
 - Theorema Egregium: curvature measured from inside a surface.
 - Sphere, plane and hyperbolic space: excess per unit area, 1/R^2, as curvature.
 

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 420" width="420" height="420" font-family="Helvetica, Arial, sans-serif" font-size="13">
+  <title>The circle pushed straight out onto the square, glued from two pieces</title>
+  <rect x="0" y="0" width="420" height="420" fill="#ffffff"/>
+  <!-- overlap lines |x| = |y|, where the two pieces meet -->
+  <line x1="60" y1="60" x2="360" y2="360" stroke="#888888" stroke-width="1" stroke-dasharray="5 5"/>
+  <line x1="60" y1="360" x2="360" y2="60" stroke="#888888" stroke-width="1" stroke-dasharray="5 5"/>
+  <!-- the square, max(|x|, |y|) = 1, and the circle, radius 1; 150 units a step -->
+  <rect x="60" y="60" width="300" height="300" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+  <circle cx="210" cy="210" r="150" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+  <!-- rays from the centre: (4/5, 3/5) to (1, 3/4), and (3/5, 4/5) to (3/4, 1) -->
+  <line x1="210" y1="210" x2="360" y2="97.5" stroke="#e76f51" stroke-width="1.5"/>
+  <line x1="210" y1="210" x2="322.5" y2="60" stroke="#2a9d8f" stroke-width="1.5"/>
+  <circle cx="210" cy="210" r="3" fill="#1d1d1d"/>
+  <circle cx="330" cy="120" r="5" fill="#e76f51"/>
+  <circle cx="360" cy="97.5" r="5" fill="#ffffff" stroke="#e76f51" stroke-width="2"/>
+  <circle cx="300" cy="90" r="5" fill="#2a9d8f"/>
+  <circle cx="322.5" cy="60" r="5" fill="#ffffff" stroke="#2a9d8f" stroke-width="2"/>
+  <text x="282" y="166" fill="#1d1d1d">(4/5, 3/5)</text>
+  <text x="366" y="94" fill="#1d1d1d">(1, 3/4)</text>
+  <text x="232" y="88" fill="#1d1d1d">(3/5, 4/5)</text>
+  <text x="300" y="48" fill="#1d1d1d">(3/4, 1)</text>
+  <text x="216" y="228" fill="#1d1d1d">0</text>
+  <!-- which piece of s works where -->
+  <text x="372" y="214" fill="#1d1d1d">p/|x|</text>
+  <text x="14" y="214" fill="#1d1d1d">p/|x|</text>
+  <text x="140" y="48" fill="#1d1d1d">p/|y|</text>
+  <text x="194" y="384" fill="#1d1d1d">p/|y|</text>
+  <text x="168" y="404" fill="#555555" font-size="11">dashed: |x| = |y|</text>
+</svg>

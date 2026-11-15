@@ -471,7 +471,7 @@ example : |(0 : ℚ) - 1 / 2| = 1 / 2 ∧ |(1 : ℚ) - 1 / 2| = 1 / 2 ∧ (1 / 4
 - [Continuity](05-continuity.md): limit and value agree.
 - [The derivative](../02-Derivatives/01-the-derivative.md): the limit of a rate of change.
 - [Final value and bandwidth](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/05-final-value-theorem-and-steady-gain.md): a system's limit as time runs on.
-- Limits and continuity with distances: the same promise with other distances.
+- [Limits and continuity with distances](../../17-Topology/01-Metric%20Spaces/04-convergence-and-continuity-in-metric-spaces.md): the same promise with other distances.
 
 Cancelling worked because the fraction was a line in disguise; most rules are not, and building their limits from simpler ones is [Limit laws and the squeeze](04-limit-laws-and-the-squeeze.md).
 

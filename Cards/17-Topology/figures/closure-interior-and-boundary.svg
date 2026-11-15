@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 270" width="400" height="270">
+  <title>The unit circle cut into four pieces: the open top arc, the open bottom arc, and the points east and west</title>
+  <rect x="0" y="0" width="400" height="270" fill="#ffffff"/>
+  <line x1="60" y1="135" x2="340" y2="135" stroke="#bbbbbb" stroke-width="1" stroke-dasharray="4 4"/>
+  <path d="M 300 135 A 100 100 0 0 0 100 135" fill="none" stroke="#b5452b" stroke-width="6"/>
+  <path d="M 300 135 A 100 100 0 0 1 100 135" fill="none" stroke="#444444" stroke-width="2"/>
+  <circle cx="300" cy="135" r="7" fill="#1d1d1d"/>
+  <circle cx="100" cy="135" r="7" fill="#1d1d1d"/>
+  <circle cx="200" cy="135" r="2.5" fill="#1d1d1d"/>
+  <text x="200" y="22" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#b5452b" text-anchor="middle">top: the open arc y &gt; 0</text>
+  <text x="200" y="258" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#444444" text-anchor="middle">bottom: the open arc y &lt; 0</text>
+  <text x="312" y="130" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#1d1d1d">east (1, 0)</text>
+  <text x="88" y="130" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#1d1d1d" text-anchor="end">west (-1, 0)</text>
+  <text x="200" y="152" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#1d1d1d" text-anchor="middle">centre (0, 0), radius 1</text>
+  <text x="200" y="185" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#1d1d1d" text-anchor="middle">east and west: the boundary of {top}</text>
+</svg>

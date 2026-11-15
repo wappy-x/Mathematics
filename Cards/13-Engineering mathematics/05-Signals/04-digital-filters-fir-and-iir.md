@@ -907,8 +907,8 @@ example : (List.range' 1 5).map (fun k => k * 500 / 10) = [50, 100, 150, 200, 25
 - [Changing rate](05-resampling-decimation-and-interpolation.md): a low-pass filter must come before throwing readings away, and the running-sum average is the cheap filter used there.
 - [Wiener and LMS](07-adaptive-and-optimal-filters.md): filters whose weights are chosen from the data, including one that tracks the hum as it drifts.
 - [Wavelets](08-wavelets-and-multiresolution.md): pairs of short FIR filters that split a signal into coarse and fine parts, again and again.
-- The convolution theorem (planned): Step 0's multiplication by H, proved in full in harmonic analysis.
-- Blurring and unblurring (planned): the same filters in two dimensions, on images.
+- [The convolution theorem](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/02-convolution-theorem-and-impulse-response.md): Step 0's multiplication by H, proved in full in harmonic analysis.
+- [Blurring and unblurring](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/05-smoothing-blurring-and-deconvolution.md): the same filters in two dimensions, on images.
 - Mallat's algorithm (planned): the fast way to run wavelet filters.
 - Filter banks (planned): many filters side by side, each taking one band.
 

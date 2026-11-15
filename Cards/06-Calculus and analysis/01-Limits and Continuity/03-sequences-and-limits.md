@@ -531,8 +531,8 @@ example : (1 : ℚ) + 10 / 2 = 6 := by norm_num
 - [Continuity and subadditivity](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md): monotone convergence for growing sets.
 - [Sums, products, sups and limits](../../10-Measure%20and%20integration/03-Measurable%20Functions/02-limits-of-measurable-functions.md): function sequences, point by point.
 - [Riesz-Fischer](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/05-completeness-of-lp.md): Cauchy lists of functions settle.
-- Limits and continuity with distances: the tolerance game with any distance.
-- Compactness three ways: every list has a settling sub-list.
+- [Limits and continuity with distances](../../17-Topology/01-Metric%20Spaces/04-convergence-and-continuity-in-metric-spaces.md): the tolerance game with any distance.
+- [Compactness three ways](../../17-Topology/01-Metric%20Spaces/06-compactness-in-metric-spaces.md): every list has a settling sub-list.
 
 This card leaves one question open: how do limits behave when lists are added, multiplied or divided, and when the terms are functions instead of numbers?
 

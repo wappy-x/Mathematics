@@ -741,7 +741,7 @@ example : let v : ℕ → ℚ := fun i => i * (10 - i) / 20
 - [Green's function](10-greens-function-for-a-boundary-problem.md): the exact solution as an integral of the load.
 - [Stepping the heat equation on a grid](../10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md): the same difference, now with time steps.
 - [Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md): small elements on any shape.
-- Two-point boundary problems: nonlinear problems and higher-order methods.
+- [Two-point boundary problems](../../16-Numerical%20analysis/06-ODE%20Solvers/07-boundary-value-problems-shooting-and-collocation.md): nonlinear problems and higher-order methods.
 - Galerkin: why finite elements converge.
 
 Left open: if the load depends on the sag itself, the grid equations stop being linear and one sweep no longer solves them; what replaces it?

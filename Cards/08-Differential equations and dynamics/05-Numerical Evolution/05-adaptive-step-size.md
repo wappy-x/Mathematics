@@ -449,7 +449,7 @@ example : 2 ^ 4 - 1 = 15 ∧ 2 ^ 5 - 1 = 31 := by decide
 
 ## Where this goes next
 
-- Embedded pairs: how the order conditions fix the pair's weights, and controllers that remember past steps.
+- [Embedded pairs](../../16-Numerical%20analysis/06-ODE%20Solvers/03-embedded-pairs-and-adaptive-steps.md): how the order conditions fix the pair's weights, and controllers that remember past steps.
 
 This card took the pair's weights on trust; where they come from is what that card works out.
 

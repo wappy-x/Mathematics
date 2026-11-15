@@ -808,7 +808,7 @@ example : ((({∅, {0, 1}, {2, 3}, Finset.univ} : Finset (Finset (Fin 4))) ×ˢ
 - [Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md): length and area built, and the Lebesgue sets as the completion of the Borel sets.
 - [Modes of convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md): convergence almost surely against its weaker cousins.
 - [Absolutely continuous and singular measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md): comparing two measures by their null sets.
-- Baire category theorem: a different notion of "small", which can disagree with null.
+- [Baire category theorem](../../17-Topology/01-Metric%20Spaces/10-baire-category-theorem.md): a different notion of "small", which can disagree with null.
 - Boundary values and compactness: giving a function boundary values although the boundary is null.
 - Carleson's theorem in outline: Fourier series converging almost everywhere.
 - Calderon-Zygmund decomposition: splitting a function into good and bad parts, with inequalities that hold almost everywhere.

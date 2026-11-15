@@ -1,0 +1,35 @@
+<svg viewBox="0 0 420 410" xmlns="http://www.w3.org/2000/svg" width="420" height="410" style="color:#24292f">
+<title>Three open balls of radius 5 km round drop A at (3, 4) km, drawn to scale: the grid-distance diamond inside the crow-flying disc inside the worst-case square. Drop B at (8, 1) km sits on the edge of the square and outside the disc and the diamond.</title><rect x="0" y="0" width="420" height="410" rx="8" fill="#ffffff"/>
+<line x1="40" y1="350" x2="40" y2="50" stroke="#d0d7de" stroke-width="1"/>
+<line x1="70" y1="350" x2="70" y2="50" stroke="#d0d7de" stroke-width="1"/>
+<line x1="100" y1="350" x2="100" y2="50" stroke="#d0d7de" stroke-width="1"/>
+<line x1="130" y1="350" x2="130" y2="50" stroke="#d0d7de" stroke-width="1"/>
+<line x1="160" y1="350" x2="160" y2="50" stroke="#d0d7de" stroke-width="1"/>
+<line x1="190" y1="350" x2="190" y2="50" stroke="#d0d7de" stroke-width="1"/>
+<line x1="220" y1="350" x2="220" y2="50" stroke="#d0d7de" stroke-width="1"/>
+<line x1="250" y1="350" x2="250" y2="50" stroke="#d0d7de" stroke-width="1"/>
+<line x1="280" y1="350" x2="280" y2="50" stroke="#d0d7de" stroke-width="1"/>
+<line x1="310" y1="350" x2="310" y2="50" stroke="#d0d7de" stroke-width="1"/>
+<line x1="340" y1="350" x2="340" y2="50" stroke="#d0d7de" stroke-width="1"/>
+<line x1="40" y1="350" x2="340" y2="350" stroke="#d0d7de" stroke-width="1"/>
+<line x1="40" y1="320" x2="340" y2="320" stroke="#d0d7de" stroke-width="1"/>
+<line x1="40" y1="290" x2="340" y2="290" stroke="#d0d7de" stroke-width="1"/>
+<line x1="40" y1="260" x2="340" y2="260" stroke="#d0d7de" stroke-width="1"/>
+<line x1="40" y1="230" x2="340" y2="230" stroke="#d0d7de" stroke-width="1"/>
+<line x1="40" y1="200" x2="340" y2="200" stroke="#d0d7de" stroke-width="1"/>
+<line x1="40" y1="170" x2="340" y2="170" stroke="#d0d7de" stroke-width="1"/>
+<line x1="40" y1="140" x2="340" y2="140" stroke="#d0d7de" stroke-width="1"/>
+<line x1="40" y1="110" x2="340" y2="110" stroke="#d0d7de" stroke-width="1"/>
+<line x1="40" y1="80" x2="340" y2="80" stroke="#d0d7de" stroke-width="1"/>
+<line x1="40" y1="50" x2="340" y2="50" stroke="#d0d7de" stroke-width="1"/>
+<rect x="40" y="50" width="300" height="300" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<circle cx="190" cy="200" r="150" fill="none" stroke="#1d1d1d" stroke-width="2" stroke-dasharray="8 5"/>
+<polygon points="340,200 190,50 40,200 190,350" fill="none" stroke="#1d1d1d" stroke-width="2.5"/>
+<polyline points="190,200 340,200 340,290" fill="none" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="3 3"/>
+<circle cx="190" cy="200" r="4" fill="#1d1d1d"/>
+<circle cx="340" cy="290" r="4" fill="#1d1d1d"/>
+<text x="184" y="192" font-size="14" text-anchor="end" fill="#1d1d1d">A (3, 4)</text>
+<text x="348" y="305" font-size="14" fill="#1d1d1d">B (8, 1)</text>
+<text x="210" y="372" font-size="13" text-anchor="middle" fill="#1d1d1d">grid squares 1 km; the dotted route is the van's 5 km east, then 3 km south</text>
+<text x="210" y="392" font-size="13" text-anchor="middle" fill="#1d1d1d">solid diamond: grid &lt; 5 · dashed disc: crow &lt; 5 · square: worst case &lt; 5</text>
+</svg>

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 330" font-family="Helvetica, Arial, sans-serif" font-size="12">
+  <title>The field with its oxbow, to scale, and three rays</title>
+  <rect x="0" y="0" width="460" height="330" fill="#ffffff"/>
+  <!-- stream along the north side, and the oxbow bend that dips into the field -->
+  <rect x="10" y="12" width="440" height="28" fill="#cfe3f2"/>
+  <polygon points="240,40 240,70 280,90 290,140 260,180 200,180 170,140 180,90 220,70 220,40" fill="#cfe3f2"/>
+  <!-- the field: 16 corners, 5 drawing units a metre, south-west corner at (30, 290) -->
+  <polygon points="30,290 430,290 430,40 330,40 240,40 240,70 280,90 290,140 260,180 200,180 170,140 180,90 220,70 220,40 130,40 30,40" fill="#eef4e4" stroke="#1d1d1d" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- rays: north from the well, east from the heron and the cow -->
+  <line x1="230" y1="240" x2="230" y2="14" stroke="#1d1d1d" stroke-width="1.3" stroke-dasharray="5 4"/>
+  <line x1="230" y1="130" x2="452" y2="130" stroke="#1d1d1d" stroke-width="1.3" stroke-dasharray="5 4"/>
+  <line x1="130" y1="120" x2="452" y2="120" stroke="#1d1d1d" stroke-width="1.3" stroke-dasharray="2 3"/>
+  <circle cx="230" cy="240" r="5" fill="#1d1d1d"/>
+  <circle cx="230" cy="130" r="5" fill="#ffffff" stroke="#1d1d1d" stroke-width="2"/>
+  <circle cx="130" cy="120" r="5" fill="#1d1d1d"/>
+  <text x="238" y="254">well (40, 10)</text>
+  <text x="238" y="150">heron (40, 32)</text>
+  <text x="62" y="112">cow (20, 34)</text>
+  <text x="60" y="30">stream</text>
+  <text x="184" y="104">oxbow</text>
+  <text x="310" y="230">field, 3564 m²</text>
+  <text x="12" y="306">(0, 0)</text>
+  <text x="400" y="306">(80, 0)</text>
+  <!-- scale bar: 10 m = 50 drawing units -->
+  <line x1="330" y1="318" x2="380" y2="318" stroke="#1d1d1d" stroke-width="2"/>
+  <text x="386" y="322">10 m</text>
+</svg>

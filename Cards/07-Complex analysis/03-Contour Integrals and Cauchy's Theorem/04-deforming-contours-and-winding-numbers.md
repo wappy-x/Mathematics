@@ -975,7 +975,7 @@ example : (1 : ℤ) * 3 + 1 * 1 ≠ 1 * 3 + (-1) * 1 ∧ (1 : ℤ) ≠ 2 := by d
 - [Laurent series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md): the part that blows up at a hole.
 - [The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md): the several-hole sum in general.
 - [Nyquist and margins](../../13-Engineering%20mathematics/03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): winding round −1 as a stability test.
-- Jordan curve theorem: a loop that never crosses itself winds ±1 inside, 0 outside.
+- [Jordan curve theorem](../../17-Topology/03-Surfaces%20and%20Manifolds/05-jordan-curve-theorem.md): a loop that never crosses itself winds ±1 inside, 0 outside.
 - The circle's fundamental group is the integers: winding without integrals.
 - Turning and winding numbers: the turns of a curve's own direction.
 

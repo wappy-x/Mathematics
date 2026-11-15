@@ -523,7 +523,7 @@ Orange: the miss for each aim. Green: zero, the target. The miss crosses zero tw
 
 - [Finite differences](07-finite-differences-for-boundary-problems.md): solves for all interior points at once, with no aiming.
 - [Eigenvalue problems](08-eigenvalues-and-eigenfunctions.md): shooting on a parameter instead of the slope, to find the values where a nonzero solution exists.
-- Two-point boundary problems: multiple shooting, which aims from several points at once, and collocation, which fits a curve to all conditions together.
+- [Two-point boundary problems](../../16-Numerical%20analysis/06-ODE%20Solvers/07-boundary-value-problems-shooting-and-collocation.md): multiple shooting, which aims from several points at once, and collocation, which fits a curve to all conditions together.
 
 Shooting fails when a tiny change of aim moves the landing enormously; multiple shooting splits the interval so the far end stops amplifying each error.
 

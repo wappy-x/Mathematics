@@ -121,7 +121,7 @@ A sine is the difference of a point and its mirror, so folding about a multiple 
 
 ### Step 2: sampling copies the spectrum every $`f_s`$
 
-Step 1, applied to every frequency at once, says that the readings carry the spectrum $`X(f)`$ plus copies of it shifted by every whole multiple of $`f_s`$: $`\pm f_s`$, $`\pm 2f_s`$ and on. This is the Poisson summation formula; it is stated here and proved in Poisson summation and sampling (planned).
+Step 1, applied to every frequency at once, says that the readings carry the spectrum $`X(f)`$ plus copies of it shifted by every whole multiple of $`f_s`$: $`\pm f_s`$, $`\pm 2f_s`$ and on. This is the Poisson summation formula; it is stated here and proved in [Poisson summation and sampling](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/08-poisson-summation-and-sampling.md).
 
 If $`X`$ sits inside $`-B`$ to $`B`$, the copy at $`+f_s`$ starts at $`f_s - B`$. The copies stay clear of the original exactly when $`f_s - B > B`$, that is $`f_s > 2B`$. Then the readings hold an undamaged copy of $`X`$, and Step 3 recovers it. If the copies overlap, two frequencies share each spot and no rule can split them.
 
@@ -851,7 +851,7 @@ sampling rate   Butterworth order for 96.33 dB above the stop edge
 
 - [The DFT and the FFT](02-discrete-fourier-transform-and-the-fft.md): road 3 done properly, a block of readings turned into a list of frequencies, fast.
 - [Changing rate](05-resampling-decimation-and-interpolation.md): oversampling's second half, filtering digitally and dropping readings without aliasing.
-- Poisson summation and sampling (planned): Step 2's copies of the spectrum, proved, and sampling of signals in a band away from zero.
+- [Poisson summation and sampling](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/08-poisson-summation-and-sampling.md): Step 2's copies of the spectrum, proved, and sampling of signals in a band away from zero.
 - Sampling (planned): the same theorem seen from functional analysis, where a row of spikes explains why evenly spaced readings suffice.
 - [Spectral methods](../../16-Numerical%20analysis/07-PDE%20Solvers/10-spectral-methods-and-the-fft.md): the transform used to solve differential equations, where taking a derivative becomes multiplying each frequency's amount by a number.
 

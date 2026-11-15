@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 290" font-family="Helvetica, Arial, sans-serif" font-size="13">
+  <title>Two stereographic charts on a slice of the globe through both poles</title>
+  <rect x="0" y="0" width="520" height="290" fill="#ffffff"/>
+  <line x1="20" y1="140" x2="500" y2="140" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="22" y="132" fill="#1d1d1d">equator plane</text>
+  <circle cx="240" cy="140" r="100" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+  <line x1="240" y1="40" x2="320" y2="200" stroke="#2a6f97" stroke-width="1.5"/>
+  <line x1="240" y1="240" x2="440" y2="140" stroke="#b5432a" stroke-width="1.5"/>
+  <circle cx="240" cy="40" r="4" fill="#1d1d1d"/>
+  <text x="250" y="36" fill="#1d1d1d">N, North Pole (0, 1)</text>
+  <circle cx="240" cy="240" r="4" fill="#1d1d1d"/>
+  <text x="250" y="262" fill="#1d1d1d">S, South Pole (0, −1)</text>
+  <circle cx="320" cy="200" r="4" fill="#1d1d1d"/>
+  <text x="330" y="214" fill="#1d1d1d">P = (4/5, −3/5)</text>
+  <circle cx="290" cy="140" r="4" fill="#2a6f97"/>
+  <text x="262" y="162" fill="#2a6f97">1/2</text>
+  <circle cx="440" cy="140" r="4" fill="#b5432a"/>
+  <text x="432" y="128" fill="#b5432a">2</text>
+  <text x="300" y="80" fill="#2a6f97">from N: φ₂(P) = 1/2</text>
+  <text x="370" y="180" fill="#b5432a">from S: φ₁(P) = 2</text>
+  <circle cx="240" cy="140" r="2.5" fill="#1d1d1d"/>
+  <text x="226" y="158" fill="#1d1d1d">0</text>
+</svg>

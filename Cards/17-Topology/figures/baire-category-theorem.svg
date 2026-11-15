@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 250" width="440" height="250" font-family="Helvetica, Arial, sans-serif" font-size="11">
+  <title>The Baire chase on a metre stick: four dodges, each keeping a closed third that misses the next fraction</title>
+  <rect x="0" y="0" width="440" height="250" fill="#ffffff"/>
+  <g stroke="#9a9a9a" stroke-width="1">
+    <line x1="20" y1="45" x2="420" y2="45"/>
+    <line x1="20" y1="90" x2="420" y2="90"/>
+    <line x1="20" y1="135" x2="420" y2="135"/>
+    <line x1="20" y1="180" x2="420" y2="180"/>
+    <line x1="20" y1="225" x2="420" y2="225"/>
+  </g>
+  <g stroke="#1d1d1d" stroke-width="7" stroke-linecap="butt">
+    <line x1="20" y1="45" x2="420" y2="45"/>
+    <line x1="153.3" y1="90" x2="286.7" y2="90"/>
+    <line x1="153.3" y1="135" x2="197.8" y2="135"/>
+    <line x1="153.3" y1="180" x2="168.1" y2="180"/>
+    <line x1="158.3" y1="225" x2="163.2" y2="225"/>
+  </g>
+  <g fill="#ffffff" stroke="#b03a2e" stroke-width="2">
+    <circle cx="20" cy="45" r="5"/>
+    <circle cx="420" cy="90" r="5"/>
+    <circle cx="220" cy="135" r="5"/>
+    <circle cx="153.3" cy="180" r="5"/>
+  </g>
+  <g fill="#1d1d1d">
+    <text x="20" y="27">start: the whole stick, 0 m to 1 m; next dodge: 0</text>
+    <text x="20" y="72">after 1 dodge: [1/3, 2/3]; next dodge: 1</text>
+    <text x="20" y="117">after 2 dodges: [1/3, 4/9]; next dodge: 1/2</text>
+    <text x="20" y="162">after 3 dodges: [1/3, 10/27]; next dodge: 1/3, its left end</text>
+    <text x="20" y="207">after 4 dodges: [28/81, 29/81]; the chase goes on forever</text>
+  </g>
+</svg>

@@ -514,7 +514,7 @@ example : 40 + 250 * (0 : ℚ) = 40 ∧ 40 + 250 * ((1 : ℚ) / 2) = 165 ∧ 40 
 - [Outer measure](../../10-Measure%20and%20integration/02-Length%20Done%20Properly/01-lebesgue-outer-measure.md): length as an infimum of covering lengths.
 - [Sums, products, sups and limits](../../10-Measure%20and%20integration/03-Measurable%20Functions/02-limits-of-measurable-functions.md): suprema of functions, point by point.
 - [Bounded variation](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/01-functions-of-bounded-variation.md): total wiggle as a supremum over cuttings.
-- Complete space: no gaps in any space with a distance.
+- [Complete space](../../17-Topology/01-Metric%20Spaces/05-completeness-and-completion.md): no gaps in any space with a distance.
 - Normed and Banach spaces: sizes of functions as suprema, in spaces with no gaps.
 - Reflexive spaces: suprema that are, or are not, reached.
 

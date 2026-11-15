@@ -658,7 +658,7 @@ end
 - [Limit cycles](../06-Nonlinear%20Dynamics%20in%20the%20Plane/08-limit-cycles-and-van-der-pol.md): RK4 tracing a closed loop in the plane.
 - [Shooting](../07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md): RK4 inside a root finder.
 - [The Lorenz system](../11-Discrete%20Dynamics%20and%20Chaos/06-the-lorenz-system-and-strange-attractors.md): errors that grow.
-- Runge-Kutta: the whole family and its order conditions.
+- [Runge-Kutta](../../16-Numerical%20analysis/06-ODE%20Solvers/01-runge-kutta-and-butcher-tableaux.md): the whole family and its order conditions.
 - Geodesic and exponential map: shortest paths on curved surfaces, stepped.
 
 Left open: a fixed step never reports its own error, so how should a solver choose h as it runs?

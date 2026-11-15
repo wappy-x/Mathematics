@@ -527,7 +527,7 @@ example : 3 ^ 6 = 729 ∧ (729 : ℚ) / 4 ^ 6 = (3 / 4) ^ 6 := by norm_num
 
 - [The Cantor set](../../10-Measure%20and%20integration/02-Length%20Done%20Properly/07-the-cantor-set.md): the simplest self-similar set, two copies a third the size, and why its total length is zero.
 - [The Lorenz system](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/06-the-lorenz-system-and-strange-attractors.md): a fractal from three weather equations, whose dimension is estimated from how fast paths stretch and squeeze, not counted from copies.
-- The test spaces: shapes like the Koch curve as test cases for what "curve" and "connected" mean.
+- [The test spaces](../../17-Topology/02-Topological%20Spaces/09-standard-examples-and-counterexamples.md): shapes like the Koch curve as test cases for what "curve" and "connected" mean.
 
 This card counted copies of a shape defined by an endless process. What the finished shape is as a set of points, and in what sense the stages approach it, is what topology answers.
 
