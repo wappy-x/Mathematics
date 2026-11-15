@@ -37,10 +37,7 @@ The angles are to scale. All the arcs lie on the one circle; each is drawn at it
 The definition and its mirror image:
 
 ```math
-\begin{aligned}
-X \text{ is compact} &\iff \text{every open cover } \{U_i\}_{i \in I} \text{ of } X \text{ has a finite subcover} \\
-&\iff \text{every family of closed sets with the FIP has a point common to all its sets}
-\end{aligned}
+\begin{aligned} X \text{ is compact} &\iff \text{every open cover } \{U_i\}_{i \in I} \text{ of } X \text{ has a finite subcover} \\ &\iff \text{every family of closed sets with the FIP has a point common to all its sets} \end{aligned}
 ```
 
 **Read it aloud:** X is compact when every way of covering it with open sets can be cut down to finitely many; equivalently, when closed sets that meet in every finite batch also meet all together.

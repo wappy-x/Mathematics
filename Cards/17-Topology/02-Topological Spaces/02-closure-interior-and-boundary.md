@@ -33,11 +33,7 @@ The top arc's closure adds east and west; its boundary is those two points. The 
 [Topological space](01-topological-spaces-and-bases.md) gives the setting: a set $`X`$ with a chosen family $`\tau`$ of **open sets**, closed under any unions and under overlaps of two. A set is **closed** when everything outside it, $`X \setminus A`$, is open.
 
 ```math
-\begin{aligned}
-\mathrm{int}\,A &= \text{the union of every open } U \text{ with } U \subseteq A \\
-\overline{A} &= \{\, x \in X : \text{every open } U \text{ containing } x \text{ meets } A \,\} \\
-\partial A &= \overline{A} \setminus \mathrm{int}\,A
-\end{aligned}
+\begin{aligned} \mathrm{int}\,A &= \text{the union of every open } U \text{ with } U \subseteq A \\ \overline{A} &= \{\, x \in X : \text{every open } U \text{ containing } x \text{ meets } A \,\} \\ \partial A &= \overline{A} \setminus \mathrm{int}\,A \end{aligned}
 ```
 
 **Read it aloud:** the interior is all the open sets that fit inside A, put together; the closure is every point that cannot be fenced off from A by an open set; the boundary is what the closure has and the interior lacks.

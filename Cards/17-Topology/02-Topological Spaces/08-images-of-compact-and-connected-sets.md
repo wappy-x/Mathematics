@@ -54,11 +54,7 @@ The terms used below come from earlier cards. Each gets a one-line reminder.
 The three theorems, for a continuous map $`f`$:
 
 ```math
-\begin{aligned}
-K \text{ compact} &\;\Longrightarrow\; f(K) \text{ compact} \\
-C \text{ connected} &\;\Longrightarrow\; f(C) \text{ connected} \\
-X \text{ compact},\ Y \text{ Hausdorff},\ f : X \to Y \text{ a bijection} &\;\Longrightarrow\; f^{-1} \text{ continuous, so } X \cong Y
-\end{aligned}
+\begin{aligned} K \text{ compact} &\;\Longrightarrow\; f(K) \text{ compact} \\ C \text{ connected} &\;\Longrightarrow\; f(C) \text{ connected} \\ X \text{ compact},\ Y \text{ Hausdorff},\ f : X \to Y \text{ a bijection} &\;\Longrightarrow\; f^{-1} \text{ continuous, so } X \cong Y \end{aligned}
 ```
 
 **Read it aloud:** a continuous map cannot break a compact set into something non-compact, cannot tear a connected set apart, and, from a compact space onto a Hausdorff one, cannot be one-to-one without being a homeomorphism.

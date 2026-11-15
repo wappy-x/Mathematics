@@ -101,6 +101,7 @@ GitHub runs Markdown over `$…$` and `$$…$$` before it draws the maths. That 
 
 - Inline maths: `` $`x^* = \{0.19\}`$ ``.
 - Display maths: a `math` block. It also works inside quote boxes and lists.
+- Keep each display formula on one line inside its block, even a long `aligned` one with `\\` row breaks. GitHub adds a backslash at every line break inside a `math` block.
 - Display maths inside a `<details>` fold: GitHub shows a `math` block there as code. Give the formula its own paragraph instead, with a blank line before and after: `` $`\displaystyle f(x) = 8.2 + 5x`$ ``.
 - Never `\operatorname`: GitHub refuses it. Write `\mathrm{Var}(X)`, with `\,` before a following letter: `\mathrm{argmin}\, f`.
 

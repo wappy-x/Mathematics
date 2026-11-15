@@ -49,9 +49,7 @@ U \text{ is open} \iff \text{for every } x \in U \text{ there is an } r > 0 \tex
 A set $`F`$ is **closed** when its **complement** $`X \setminus F`$ (every point of $`X`$ not in $`F`$, from [Set operations](../../01-Foundations/07-Sets/03-set-operations.md)) is open. Two facts turn these definitions into tools. The first gives the room inside a ball; the second builds every open set from balls:
 
 ```math
-y \in B(c, r) \implies B\big(y,\ r - d(c, y)\big) \subseteq B(c, r),
-\qquad
-U \text{ open} \iff U = \bigcup_{x \in U} B(x, r_x)
+y \in B(c, r) \implies B\big(y,\ r - d(c, y)\big) \subseteq B(c, r), \qquad U \text{ open} \iff U = \bigcup_{x \in U} B(x, r_x)
 ```
 
 **Read it aloud:** a point inside a ball has room equal to the radius minus its distance from the centre; and a set is open exactly when it is the union of one ball round each of its points, each ball inside the set.

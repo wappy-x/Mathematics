@@ -39,12 +39,7 @@ Each solid arrow means "is also". Each dotted arrow names a space that has the r
 [Topological space](01-topological-spaces-and-bases.md) gives the setting: a set $`X`$ with a chosen family $`\tau`$ of **open sets**. A set is **closed** when everything outside it is open. "Pried apart" means: placed inside two open sets that share no point.
 
 ```math
-\begin{aligned}
-\textbf{Hausdorff:}\quad & x \neq y \;\Rightarrow\; \text{open } U \ni x,\ V \ni y \text{ with } U \cap V = \{\} \\
-\textbf{regular:}\quad & x \notin C,\ C \text{ closed} \;\Rightarrow\; \text{open } U \ni x,\ V \supseteq C \text{ with } U \cap V = \{\} \\
-\textbf{normal:}\quad & C \cap D = \{\},\ C, D \text{ closed} \;\Rightarrow\; \text{open } U \supseteq C,\ V \supseteq D \text{ with } U \cap V = \{\} \\
-\textbf{the payoff:}\quad & X \text{ Hausdorff},\ a_n \to L,\ a_n \to M \;\Rightarrow\; L = M
-\end{aligned}
+\begin{aligned} \textbf{Hausdorff:}\quad & x \neq y \;\Rightarrow\; \text{open } U \ni x,\ V \ni y \text{ with } U \cap V = \{\} \\ \textbf{regular:}\quad & x \notin C,\ C \text{ closed} \;\Rightarrow\; \text{open } U \ni x,\ V \supseteq C \text{ with } U \cap V = \{\} \\ \textbf{normal:}\quad & C \cap D = \{\},\ C, D \text{ closed} \;\Rightarrow\; \text{open } U \supseteq C,\ V \supseteq D \text{ with } U \cap V = \{\} \\ \textbf{the payoff:}\quad & X \text{ Hausdorff},\ a_n \to L,\ a_n \to M \;\Rightarrow\; L = M \end{aligned}
 ```
 
 **Read it aloud:** two different points, a point and a closed set it is not in, or two closed sets that do not touch, can each be wrapped in their own open set with no overlap; and in a Hausdorff space a sequence that heads for L and for M forces L to equal M.

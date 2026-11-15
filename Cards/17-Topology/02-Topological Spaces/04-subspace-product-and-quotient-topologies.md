@@ -41,11 +41,7 @@ Three new pieces of notation, in words first.
 - $`T^2`$, the **torus**, is the surface of an inner tube.
 
 ```math
-\begin{aligned}
-\text{subspace:}\quad & V \text{ is open in } A \iff V = U \cap A \text{ for some } U \text{ open in } X \\
-\text{product:}\quad & W \text{ is open in } X \times Y \iff W \text{ is a union of boxes } U \times V,\ U \text{ open in } X,\ V \text{ open in } Y \\
-\text{quotient:}\quad & V \text{ is open in } X/{\sim} \iff q^{-1}(V) \text{ is open in } X
-\end{aligned}
+\begin{aligned} \text{subspace:}\quad & V \text{ is open in } A \iff V = U \cap A \text{ for some } U \text{ open in } X \\ \text{product:}\quad & W \text{ is open in } X \times Y \iff W \text{ is a union of boxes } U \times V,\ U \text{ open in } X,\ V \text{ open in } Y \\ \text{quotient:}\quad & V \text{ is open in } X/{\sim} \iff q^{-1}(V) \text{ is open in } X \end{aligned}
 ```
 
 **Read it aloud:** a piece's open sets are the big space's open sets trimmed to the piece; a product's open sets are unions of open boxes; a glued set's open sets are those whose points, unglued, form an open set.

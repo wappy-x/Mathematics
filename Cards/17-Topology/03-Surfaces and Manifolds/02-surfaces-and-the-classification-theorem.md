@@ -42,10 +42,7 @@ The words first, one sentence each.
 The theorem lists the surfaces.
 
 ```math
-M \;\cong\; \begin{cases}
-S^2 \# \underbrace{T^2 \# \cdots \# T^2}_{g \text{ handles}}, & \chi = 2 - 2g, \text{ if } M \text{ is two-sided} \\[2ex]
-\underbrace{\mathbb{RP}^2 \# \cdots \# \mathbb{RP}^2}_{k \text{ crosscaps}}, & \chi = 2 - k, \text{ if } M \text{ is one-sided}
-\end{cases}
+M \;\cong\; \begin{cases} S^2 \# \underbrace{T^2 \# \cdots \# T^2}_{g \text{ handles}}, & \chi = 2 - 2g, \text{ if } M \text{ is two-sided} \\[2ex] \underbrace{\mathbb{RP}^2 \# \cdots \# \mathbb{RP}^2}_{k \text{ crosscaps}}, & \chi = 2 - k, \text{ if } M \text{ is one-sided} \end{cases}
 ```
 
 **Read it aloud:** a closed surface with two sides is a sphere with g handles and has Euler characteristic two minus twice g; a closed surface with one side is a sphere with k crosscaps and has Euler characteristic two minus k.

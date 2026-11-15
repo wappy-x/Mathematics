@@ -37,11 +37,7 @@ Drawn to scale: 1 block = 60 drawing units, home at (60, 360), the turn at (240,
 A **point** is one member of a set $`X`$: here $`X`$ is the 36 street corners of a 6 by 6 grid. A **metric** on $`X`$ is a function $`d`$ that takes two points and returns a number, their distance. A function hands every input exactly one output ([Functions](../../01-Foundations/08-Relations%20and%20Functions/02-functions.md)); here the input is a pair of points, $`(x, y)`$. For all points $`x`$, $`y`$ and $`z`$ in $`X`$:
 
 ```math
-\begin{aligned}
-&\text{Rule 1:} && d(x, y) = 0 \iff x = y \\
-&\text{Rule 2:} && d(x, y) = d(y, x) \\
-&\text{Rule 3:} && d(x, z) \le d(x, y) + d(y, z)
-\end{aligned}
+\begin{aligned} &\text{Rule 1:} && d(x, y) = 0 \iff x = y \\ &\text{Rule 2:} && d(x, y) = d(y, x) \\ &\text{Rule 3:} && d(x, z) \le d(x, y) + d(y, z) \end{aligned}
 ```
 
 **Read it aloud:** the distance is zero exactly when the two points are the same point. It reads the same both ways. And going from $`x`$ to $`z`$ direct is never longer than going via $`y`$.
