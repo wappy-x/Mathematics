@@ -582,7 +582,7 @@ example : (1 : ℚ) - 10 / 5 = -1 ∧ (1 : ℚ) - 5 / 5 = 0 := by norm_num
 - [Symplectic steps](07-symplectic-steps-for-oscillators.md): a reordered step that keeps a spring's energy.
 - [Euler-Maruyama](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md): the same step with random noise added.
 - [Runge-Kutta](../../16-Numerical%20analysis/06-ODE%20Solvers/01-runge-kutta-and-butcher-tableaux.md): Euler as the simplest entry in a table of methods.
-- Splitting: Step 3's compounding limit, for operators.
+- [Splitting](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/07-operator-splitting-and-the-trotter-formula.md): Step 3's compounding limit, for operators.
 - Geodesic on a surface: shortest paths traced step by step.
 - Parallel transport: carrying a vector along a curve in small steps.
 

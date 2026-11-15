@@ -938,7 +938,7 @@ example : 101 ^ 3 = 1030301 := by norm_num
 
 ## Where this goes next
 
-- The slope transform: the conjugate taken further, as a tool in its own right.
+- [The slope transform](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/07-legendre-fenchel-and-subgradients.md): the conjugate taken further, as a tool in its own right.
 - [Building convex functions](09-operations-that-preserve-convexity.md): a conjugate is a maximum of lines, one of the operations that cannot break the bowl.
 - [The standard convex problem](10-the-convex-problem-in-standard-form.md): the form in which the dual of a constrained problem is written.
 

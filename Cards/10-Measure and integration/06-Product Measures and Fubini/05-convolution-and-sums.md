@@ -788,7 +788,7 @@ example : (1 : ℚ) / 2 * (1 / 2) = 1 / 4 ∧ (1 : ℚ) / 4 ≠ 1 / 8 := by norm
 
 ## Where this goes next
 
-- Convolution and mollifiers: convolving with a smooth narrow bump makes any integrable function smooth, and recovers it as the bump shrinks.
+- [Convolution and mollifiers](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/03-convolution-and-mollifiers.md): convolving with a smooth narrow bump makes any integrable function smooth, and recovers it as the bump shrinks.
 - Convolution: convolution of functions that are not densities, and how its size is bounded by the sizes of the two ingredients.
 - Densities add by convolution: the Fourier transform turns the convolution of two laws into a product of their transforms.
 

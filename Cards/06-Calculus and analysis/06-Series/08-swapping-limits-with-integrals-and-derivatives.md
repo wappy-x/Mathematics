@@ -640,7 +640,7 @@ example : (10 : ℚ) * (1 / 10) = 1 ∧ (1000 : ℚ) * (1 / 1000) = 1 := by
 ## Where this goes next
 
 - [Differentiating under the integral](../08-Multiple%20Integrals/05-differentiating-under-the-integral.md): the same swap, with a difference quotient as the limit.
-- Distributions: the spikes' limit made into an object, the delta.
+- [Distributions](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/01-test-functions-and-distributions.md): the spikes' limit made into an object, the delta.
 - Differentiating a series term by term: both theorems applied to sums of waves.
 - Fourier inversion: a swap over an unbounded line, beyond this card's bounded interval.
 

@@ -717,7 +717,7 @@ end StableMatching
 ## Where this goes next
 
 - [Auctions](../../14-Applied%20and%20computational/05-Operations%20Research/10-auctions-and-mechanism-design.md): rules under which nobody gains by misreporting.
-- Minimax: another existence theorem for two opposed sides.
+- [Minimax](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/08-minimax-theorem-and-convex-duality.md): another existence theorem for two opposed sides.
 
 This card assumed true rankings; whether anyone gains by lying about theirs is Auctions.
 

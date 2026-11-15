@@ -806,7 +806,7 @@ example : (7/32 : ℚ) - 1/32 = 3/16 ∧ (7/16 + 15/16 + 15/16 + 7/16) * (1/4 : 
 - [Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md): limits pass through the integral when one integrable function sits above every term.
 - [Uniform integrability](../05-Swapping%20Limits%20and%20Integrals/05-uniform-integrability.md): small sets carrying small integrals, uniformly across a whole family of functions.
 - [Lp spaces](../07-Sizes%20of%20Functions/01-lp-spaces.md): the integral of the absolute value becomes a distance between functions, and L^1 one of a family of spaces.
-- Distributions: functions integrable on bounded sets, used as generalised functions.
+- [Distributions](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/01-test-functions-and-distributions.md): functions integrable on bounded sets, used as generalised functions.
 - The Fourier transform of an absolutely integrable signal, and why it fades at infinity: the Fourier transform on integrable functions, and why it fades at high frequencies.
 
 A bump that slides away keeps its integral while vanishing at every point, so integrals of a sequence need not follow its limit; when they do is the question [Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md) answers.

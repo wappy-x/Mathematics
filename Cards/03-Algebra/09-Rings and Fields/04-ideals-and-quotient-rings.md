@@ -507,7 +507,7 @@ example : ((Finset.univ : Finset (ZMod 9)).filter (fun a => a ≠ 0 ∧ ∃ b, a
 ## Where this goes next
 
 - [Finite fields](05-finite-fields.md): collapse by a polynomial that cannot be factored, and division appears.
-- Banach algebras: rings of functions, where a maximal ideal gives a number.
+- [Banach algebras](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/01-banach-algebras-and-the-gelfand-transform.md): rings of functions, where a maximal ideal gives a number.
 - Splitting fields: the x^2 + 1 move on purpose, to make a root.
 - Ideals factor uniquely even where numbers do not: factorisation into ideals where numbers fail.
 - Ideals and varieties: an ideal as every equation a shape satisfies.

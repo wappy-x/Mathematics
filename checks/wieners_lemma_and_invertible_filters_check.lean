@@ -1,0 +1,357 @@
+-- Wiener's lemma: a filter whose taps have finite total size and whose gain is never zero on the circle has an inverse filter whose taps also have finite total size.
+import Mathlib.Analysis.Normed.Lp.lpSpace
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Analysis.CStarAlgebra.GelfandDuality
+
+open Complex
+
+lemma norm_exp_neg_int_mul_real_mul_I (n : ℤ) (θ : ℝ) :
+    ‖exp (-((n : ℂ) * (θ : ℂ) * I))‖ = 1 := by
+  rw [Complex.norm_exp]; simp
+
+lemma summable_norm_of_memℓp_one {h : ℤ → ℂ} (hh : Memℓp h 1) : Summable fun n => ‖h n‖ := by
+  have := hh.summable (by norm_num)
+  simpa using this
+
+lemma fourier_conv (h g : ℤ → ℂ) (hh : Summable fun n => ‖h n‖) (hg : Summable fun n => ‖g n‖)
+    (θ : ℝ) :
+    (∑' n : ℤ, h n * exp (-((n : ℂ) * (θ : ℂ) * I))) *
+        (∑' n : ℤ, g n * exp (-((n : ℂ) * (θ : ℂ) * I))) =
+      ∑' n : ℤ, (∑' k : ℤ, h k * g (n - k)) * exp (-((n : ℂ) * (θ : ℂ) * I)) := by
+  have hn : ∀ n : ℤ, ‖exp (-((n : ℂ) * (θ : ℂ) * I))‖ = 1 :=
+    fun n => norm_exp_neg_int_mul_real_mul_I n θ
+  have hh' : Summable fun n : ℤ => ‖h n * exp (-((n : ℂ) * (θ : ℂ) * I))‖ := by
+    simpa [hn] using hh
+  have hg' : Summable fun n : ℤ => ‖g n * exp (-((n : ℂ) * (θ : ℂ) * I))‖ := by
+    simpa [hn] using hg
+  rw [tsum_mul_tsum_of_summable_norm hh' hg']
+  let σ : ℤ × ℤ ≃ ℤ × ℤ :=
+    { toFun := fun p => (p.2, p.1 - p.2)
+      invFun := fun q => (q.1 + q.2, q.1)
+      left_inv := fun p => by simp
+      right_inv := fun q => by simp }
+  have hsum := summable_mul_of_summable_norm hh' hg'
+  have hsum' := (σ.summable_iff).mpr hsum
+  have hk : ∀ n k : ℤ, h k * exp (-((k : ℂ) * (θ : ℂ) * I)) *
+      (g (n - k) * exp (-(((n - k : ℤ) : ℂ) * (θ : ℂ) * I))) =
+      h k * g (n - k) * exp (-((n : ℂ) * (θ : ℂ) * I)) := by
+    intro n k
+    have : exp (-((k : ℂ) * (θ : ℂ) * I)) * exp (-(((n - k : ℤ) : ℂ) * (θ : ℂ) * I)) =
+        exp (-((n : ℂ) * (θ : ℂ) * I)) := by
+      rw [← Complex.exp_add]
+      congr 1; push_cast; ring
+    linear_combination (h k * g (n - k)) * this
+  calc _ = ∑' c : ℤ × ℤ, ((fun x : ℤ × ℤ => h x.1 * exp (-((x.1 : ℂ) * (θ : ℂ) * I)) *
+        (g x.2 * exp (-((x.2 : ℂ) * (θ : ℂ) * I)))) ∘ σ) c := (σ.tsum_eq _).symm
+    _ = ∑' n : ℤ, ∑' k : ℤ, ((fun x : ℤ × ℤ => h x.1 * exp (-((x.1 : ℂ) * (θ : ℂ) * I)) *
+        (g x.2 * exp (-((x.2 : ℂ) * (θ : ℂ) * I)))) ∘ σ) (n, k) := hsum'.tsum_prod
+    _ = _ := by
+      congr 1
+      ext n
+      simp only [Function.comp_apply, σ, Equiv.coe_fn_mk, hk]
+      rw [tsum_mul_right]
+
+lemma fourier_mul_eq_one (h g : ℤ → ℂ) (hh : Summable fun n => ‖h n‖)
+    (hg : Summable fun n => ‖g n‖)
+    (hinv : ∀ n : ℤ, ∑' k : ℤ, h k * g (n - k) = if n = 0 then 1 else 0) (θ : ℝ) :
+    (∑' n : ℤ, h n * exp (-((n : ℂ) * (θ : ℂ) * I))) *
+        (∑' n : ℤ, g n * exp (-((n : ℂ) * (θ : ℂ) * I))) = 1 := by
+  rw [fourier_conv h g hh hg θ]
+  simp_rw [hinv]
+  rw [tsum_eq_single 0 (fun n hn => by simp [hn])]
+  simp
+
+lemma memℓp_shift (x : lp (fun _ : ℤ => ℂ) 1) (k : ℤ) : Memℓp (fun n : ℤ => x (n - k)) 1 := by
+  have hx := summable_norm_of_memℓp_one (lp.memℓp x)
+  rw [memℓp_gen_iff (by norm_num)]
+  simp only [ENNReal.toReal_one, Real.rpow_one]
+  exact (Equiv.subRight k).summable_iff.mpr hx
+
+lemma norm_shift (x : lp (fun _ : ℤ => ℂ) 1) (k : ℤ) :
+    ‖(⟨fun n => x (n - k), memℓp_shift x k⟩ : lp (fun _ : ℤ => ℂ) 1)‖ = ‖x‖ := by
+  rw [lp.norm_eq_tsum_rpow (by norm_num), lp.norm_eq_tsum_rpow (by norm_num)]
+  simp only [ENNReal.toReal_one, Real.rpow_one, div_one]
+  exact (Equiv.subRight k).tsum_eq (fun n => ‖x n‖)
+
+/-- Delay by `k` samples, as a bounded operator on `ℓ¹(ℤ)`. -/
+noncomputable def shiftL (k : ℤ) : lp (fun _ : ℤ => ℂ) 1 →L[ℂ] lp (fun _ : ℤ => ℂ) 1 :=
+  LinearMap.mkContinuous
+    { toFun := fun x => ⟨fun n => x (n - k), memℓp_shift x k⟩
+      map_add' := fun x y => lp.ext (funext fun n => rfl)
+      map_smul' := fun c x => lp.ext (funext fun n => rfl) }
+    1 (fun x => by simp only [LinearMap.coe_mk, AddHom.coe_mk]; rw [norm_shift, one_mul])
+
+lemma shiftL_apply (k : ℤ) (x : lp (fun _ : ℤ => ℂ) 1) (n : ℤ) : shiftL k x n = x (n - k) := rfl
+
+lemma shiftL_norm_le (k : ℤ) : ‖shiftL k‖ ≤ 1 :=
+  LinearMap.mkContinuous_norm_le _ zero_le_one _
+
+lemma shiftL_add (j k : ℤ) : shiftL (j + k) = shiftL j * shiftL k := by
+  refine ContinuousLinearMap.ext fun x => lp.ext (funext fun n => ?_)
+  show x (n - (j + k)) = x (n - j - k)
+  rw [sub_sub]
+
+lemma shiftL_zero : shiftL 0 = 1 := by
+  refine ContinuousLinearMap.ext fun x => lp.ext (funext fun n => ?_)
+  rw [shiftL_apply, sub_zero]; rfl
+
+instance isMulCommutative_adjoin_shiftL :
+    IsMulCommutative (Algebra.adjoin ℂ (Set.range shiftL)) :=
+  Algebra.isMulCommutative_adjoin ℂ (by
+    rintro _ ⟨j, rfl⟩ _ ⟨k, rfl⟩ _
+    show shiftL j * shiftL k = shiftL k * shiftL j
+    rw [← shiftL_add, ← shiftL_add, add_comm])
+
+/-- The closed algebra of operators generated by the delays: a commutative Banach algebra. -/
+noncomputable def shiftAlg : Subalgebra ℂ (lp (fun _ : ℤ => ℂ) 1 →L[ℂ] lp (fun _ : ℤ => ℂ) 1) :=
+  (Algebra.adjoin ℂ (Set.range shiftL)).topologicalClosure
+
+instance : IsMulCommutative shiftAlg := by unfold shiftAlg; infer_instance
+
+noncomputable instance : NormedCommRing shiftAlg :=
+  { (inferInstance : NormedRing shiftAlg) with mul_comm := fun a b => Std.Commutative.comm a b }
+
+instance : CompleteSpace shiftAlg :=
+  (Subalgebra.isClosed_topologicalClosure _).completeSpace_coe
+
+lemma norm_smul_shiftAlg_le (c : ℂ) (b : shiftAlg) : ‖c • b‖ ≤ ‖c‖ * ‖b‖ := by
+  show ‖((c • b : shiftAlg) : lp (fun _ : ℤ => ℂ) 1 →L[ℂ] lp (fun _ : ℤ => ℂ) 1)‖ ≤ _
+  rw [Subalgebra.coe_smul]
+  exact norm_smul_le _ _
+
+lemma shiftL_mem (k : ℤ) : shiftL k ∈ shiftAlg :=
+  Subalgebra.le_topologicalClosure _ (Algebra.subset_adjoin ⟨k, rfl⟩)
+
+/-- Wiener's lemma. If a filter `h` on the two-sided samples `ℤ` has taps of finite total size
+(`h ∈ ℓ¹(ℤ)`) and its gain `ĥ(θ) = ∑ₙ hₙ e^{-inθ}` is never zero at any frequency `θ`, then there is
+a filter `g`, also with taps of finite total size, that undoes it: `h * g` is the click `δ`
+(1 at sample 0, 0 elsewhere), and the gain of `g` is one over the gain of `h`. -/
+theorem wieners_lemma (h : ℤ → ℂ) (hh : Memℓp h 1)
+    (hne : ∀ θ : ℝ, ∑' n : ℤ, h n * exp (-((n : ℂ) * (θ : ℂ) * I)) ≠ 0) :
+    ∃ g : ℤ → ℂ, Memℓp g 1 ∧
+      (∀ n : ℤ, ∑' k : ℤ, h k * g (n - k) = if n = 0 then 1 else 0) ∧
+      ∀ θ : ℝ, ∑' n : ℤ, g n * exp (-((n : ℂ) * (θ : ℂ) * I)) =
+        (∑' n : ℤ, h n * exp (-((n : ℂ) * (θ : ℂ) * I)))⁻¹ := by
+  have hsum := summable_norm_of_memℓp_one hh
+  let Tb : ℤ → shiftAlg := fun k => ⟨shiftL k, shiftL_mem k⟩
+  have hTb_norm : ∀ k, ‖Tb k‖ ≤ 1 := fun k => shiftL_norm_le k
+  have hTb_add : ∀ j k, Tb (j + k) = Tb j * Tb k := fun j k => Subtype.ext (shiftL_add j k)
+  have hTb_zero : Tb 0 = 1 := Subtype.ext shiftL_zero
+  have hs : Summable fun k => h k • Tb k := Summable.of_norm_bounded hsum (fun k => by
+    exact (norm_smul_shiftAlg_le _ _).trans (mul_le_of_le_one_right (norm_nonneg _) (hTb_norm k)))
+  obtain ⟨HB, hHB⟩ := hs
+  -- how `HB` acts on a signal
+  have hact : ∀ (x : lp (fun _ : ℤ => ℂ) 1) (n : ℤ),
+      ((HB : lp (fun _ : ℤ => ℂ) 1 →L[ℂ] lp (fun _ : ℤ => ℂ) 1) x) n = ∑' k, h k * x (n - k) := by
+    intro x n
+    let ev : shiftAlg →+ ℂ := AddMonoidHom.mk'
+      (fun b => ((b : lp (fun _ : ℤ => ℂ) 1 →L[ℂ] lp (fun _ : ℤ => ℂ) 1) x) n)
+      (fun a b => by simp)
+    have hev : Continuous ev :=
+      (lp.lipschitzWith_one_eval 1 n).continuous.comp
+        ((ContinuousLinearMap.apply ℂ _ x).continuous.comp continuous_subtype_val)
+    have := (hHB.map ev hev).tsum_eq
+    show ev HB = _
+    rw [← this]
+    congr 1
+  -- no character kills `HB`
+  have hunit : IsUnit HB := by
+    by_contra hnu
+    obtain ⟨φ, hφ⟩ := WeakDual.CharacterSpace.exists_apply_eq_zero hnu
+    have hφle : ∀ b : shiftAlg, ‖φ b‖ ≤ ‖b‖ := by
+      intro b
+      have h1 := WeakDual.CharacterSpace.norm_le_norm_one φ
+      have h2 : ‖(1 : shiftAlg)‖ ≤ 1 := ContinuousLinearMap.norm_id_le
+      have h3 := (WeakDual.toStrongDual (φ : WeakDual ℂ shiftAlg)).le_opNorm b
+      calc ‖φ b‖ = ‖WeakDual.toStrongDual (φ : WeakDual ℂ shiftAlg) b‖ := rfl
+        _ ≤ _ := h3
+        _ ≤ 1 * ‖b‖ := by gcongr; exact h1.trans h2
+        _ = ‖b‖ := one_mul _
+    set z := φ (Tb 1) with hz
+    have hzinv : z * φ (Tb (-1)) = 1 := by
+      rw [hz, ← map_mul, ← hTb_add]; simp [hTb_zero]
+    have hz0 : z ≠ 0 := left_ne_zero_of_mul_eq_one hzinv
+    have hzinv' : φ (Tb (-1)) = z⁻¹ := eq_inv_of_mul_eq_one_right hzinv
+    have hpow : ∀ k : ℤ, φ (Tb k) = z ^ k := by
+      intro k
+      induction k using Int.induction_on with
+      | zero => simp [hTb_zero]
+      | succ i ih => rw [hTb_add, map_mul, ih, ← hz, zpow_add_one₀ hz0]
+      | pred i ih =>
+        rw [sub_eq_add_neg, hTb_add, map_mul, ih, hzinv', zpow_add₀ hz0, zpow_neg_one]
+    have hz1 : ‖z‖ = 1 := by
+      have a1 : ‖z‖ ≤ 1 := (hφle _).trans (hTb_norm 1)
+      have a2 : ‖φ (Tb (-1))‖ ≤ 1 := (hφle _).trans (hTb_norm (-1))
+      have a3 : ‖z‖ * ‖φ (Tb (-1))‖ = 1 := by rw [← norm_mul, hzinv, norm_one]
+      nlinarith [norm_nonneg z, norm_nonneg (φ (Tb (-1)))]
+    have hzexp : exp (↑(arg z) * I) = z := by
+      have := norm_mul_exp_arg_mul_I z
+      rw [hz1] at this
+      simpa using this
+    have hφH : φ HB = ∑' k : ℤ, h k * exp (-((k : ℂ) * ((-arg z : ℝ) : ℂ) * I)) := by
+      rw [← (hHB.map φ (map_continuous φ)).tsum_eq]
+      congr 1
+      ext k
+      simp only [Function.comp_apply, map_smul, smul_eq_mul, hpow]
+      congr 1
+      have hzk : z ^ k = exp (k * (arg z * I)) := by rw [Complex.exp_int_mul, hzexp]
+      rw [hzk]
+      congr 1; push_cast; ring
+    exact hne (-arg z) (hφH ▸ hφ)
+  obtain ⟨u, hu⟩ := hunit
+  let δ : lp (fun _ : ℤ => ℂ) 1 := lp.single 1 0 (1 : ℂ)
+  let g : ℤ → ℂ := ((↑(u⁻¹ : shiftAlgˣ) : shiftAlg) :
+    lp (fun _ : ℤ => ℂ) 1 →L[ℂ] lp (fun _ : ℤ => ℂ) 1) δ
+  have hg : Memℓp g 1 := lp.memℓp _
+  have hinv : ∀ n : ℤ, ∑' k : ℤ, h k * g (n - k) = if n = 0 then 1 else 0 := by
+    intro n
+    rw [← hact]
+    have hmul : (HB : lp (fun _ : ℤ => ℂ) 1 →L[ℂ] lp (fun _ : ℤ => ℂ) 1) *
+        ((↑(u⁻¹ : shiftAlgˣ) : shiftAlg) : lp (fun _ : ℤ => ℂ) 1 →L[ℂ] lp (fun _ : ℤ => ℂ) 1) = 1 := by
+      rw [← Subalgebra.coe_mul, ← hu, Units.mul_inv, Subalgebra.coe_one]
+    have := congrArg (fun T : lp (fun _ : ℤ => ℂ) 1 →L[ℂ] lp (fun _ : ℤ => ℂ) 1 => (T δ) n) hmul
+    exact this.trans (by simp [δ, Pi.single_apply])
+  refine ⟨g, hg, hinv, fun θ => ?_⟩
+  exact eq_inv_of_mul_eq_one_right
+    (fourier_mul_eq_one h g hsum (summable_norm_of_memℓp_one hg) hinv θ)
+
+/-- The three-tap case, by hand. For the symmetric filter with side taps `h₁` and middle tap `h₀`,
+where `h₀ > 2h₁ > 0`, the taps `gₙ = C r^|n|` with `r = (-h₀ + √(h₀² - 4h₁²)) / (2h₁)` and
+`C = 1 / (h₁ (r - 1/r))` undo the filter (`h₁ g_{n-1} + h₀ gₙ + h₁ g_{n+1}` is the click),
+`|r| < 1`, and the total size of the taps is `C (1 + |r|) / (1 - |r|)`, which equals
+`1 / (h₀ - 2h₁)`, the largest inverse gain. -/
+theorem three_tap_inverse (h₀ h₁ : ℝ) (h₁pos : 0 < h₁) (hlt : 2 * h₁ < h₀) :
+    let r := (-h₀ + Real.sqrt (h₀ ^ 2 - 4 * h₁ ^ 2)) / (2 * h₁)
+    let C := 1 / (h₁ * (r - 1 / r))
+    let g : ℤ → ℝ := fun n => C * r ^ n.natAbs
+    (∀ n : ℤ, h₁ * g (n - 1) + h₀ * g n + h₁ * g (n + 1) = if n = 0 then 1 else 0) ∧
+      |r| < 1 ∧
+      Summable (fun n : ℤ => |g n|) ∧
+      ∑' n : ℤ, |g n| = C * (1 + |r|) / (1 - |r|) ∧
+      C * (1 + |r|) / (1 - |r|) = 1 / (h₀ - 2 * h₁) := by
+  intro r C g
+  have hr : r = (-h₀ + Real.sqrt (h₀ ^ 2 - 4 * h₁ ^ 2)) / (2 * h₁) := rfl
+  have hCdef : C = 1 / (h₁ * (r - 1 / r)) := rfl
+  have hgdef : g = fun n => C * r ^ n.natAbs := rfl
+  clear_value r C g
+  have hD : 0 < h₀ ^ 2 - 4 * h₁ ^ 2 := by nlinarith
+  have hs2 : Real.sqrt (h₀ ^ 2 - 4 * h₁ ^ 2) ^ 2 = h₀ ^ 2 - 4 * h₁ ^ 2 := Real.sq_sqrt hD.le
+  have hspos : 0 < Real.sqrt (h₀ ^ 2 - 4 * h₁ ^ 2) := Real.sqrt_pos.mpr hD
+  generalize Real.sqrt (h₀ ^ 2 - 4 * h₁ ^ 2) = s at hr hs2 hspos
+  have hslt : s < h₀ := by nlinarith
+  have hsgt : h₀ - 2 * h₁ < s := by nlinarith
+  have h2h : 0 < 2 * h₁ := by linarith
+  have hrneg : r < 0 := by rw [hr]; apply div_neg_of_neg_of_pos <;> linarith
+  have hrgt : -1 < r := by rw [hr, lt_div_iff₀ h2h]; linarith
+  have hrne : r ≠ 0 := hrneg.ne
+  have hquad : h₁ * r ^ 2 + h₀ * r + h₁ = 0 := by
+    rw [hr]; field_simp; nlinarith [hs2]
+  have hden : h₁ * (r - 1 / r) = s := by
+    have h1 : h₁ * (r - 1 / r) = 2 * h₁ * r + h₀ := by
+      field_simp; linear_combination (-1 : ℝ) * hquad
+    rw [h1, hr]; field_simp; ring
+  have hC : C = 1 / s := by rw [hCdef, hden]
+  have hCpos : 0 < C := by rw [hC]; positivity
+  have habs : |r| = -r := abs_of_neg hrneg
+  have hr1 : |r| < 1 := by rw [habs]; linarith
+  have hr0 : 0 ≤ |r| := abs_nonneg r
+  -- the convolution identity
+  have conv : ∀ n : ℤ, h₁ * g (n - 1) + h₀ * g n + h₁ * g (n + 1) = if n = 0 then 1 else 0 := by
+    intro n
+    simp only [hgdef]
+    rcases lt_trichotomy n 0 with hn | hn | hn
+    · simp only [hn.ne, ↓reduceIte]
+      obtain ⟨m, rfl⟩ : ∃ m : ℕ, n = -((m : ℤ) + 1) := ⟨(-n - 1).toNat, by omega⟩
+      have e1 : (-((m : ℤ) + 1) - 1).natAbs = m + 2 := by omega
+      have e2 : (-((m : ℤ) + 1)).natAbs = m + 1 := by omega
+      have e3 : (-((m : ℤ) + 1) + 1).natAbs = m := by omega
+      rw [e1, e2, e3]
+      linear_combination (C * r ^ m) * hquad
+    · subst hn
+      norm_num
+      rw [hC]
+      have : h₁ * r + h₀ * 1 + h₁ * r = s := by rw [hr]; field_simp; ring
+      field_simp
+      linear_combination this
+    · simp only [hn.ne', ↓reduceIte]
+      obtain ⟨m, rfl⟩ : ∃ m : ℕ, n = (m : ℤ) + 1 := ⟨(n - 1).toNat, by omega⟩
+      have e1 : ((m : ℤ) + 1 - 1).natAbs = m := by omega
+      have e2 : ((m : ℤ) + 1).natAbs = m + 1 := by omega
+      have e3 : ((m : ℤ) + 1 + 1).natAbs = m + 2 := by omega
+      rw [e1, e2, e3]
+      linear_combination (C * r ^ m) * hquad
+  -- the sum of the sizes
+  have hgabs : ∀ n : ℤ, |g n| = C * |r| ^ n.natAbs := by
+    intro n; rw [hgdef, abs_mul, abs_pow, abs_of_pos hCpos]
+  have hgeom := hasSum_geometric_of_lt_one hr0 hr1
+  have hpos : HasSum (fun m : ℕ => |g m|) (C * (1 - |r|)⁻¹) := by
+    simp only [hgabs, Int.natAbs_natCast]
+    exact hgeom.mul_left C
+  have hneg : HasSum (fun m : ℕ => |g (-((m : ℤ) + 1))|) (C * |r| * (1 - |r|)⁻¹) := by
+    have e : ∀ m : ℕ, (-((m : ℤ) + 1)).natAbs = m + 1 := fun m => by omega
+    simp only [hgabs, e, pow_succ]
+    convert hgeom.mul_left (C * |r|) using 1
+    ext m; ring
+  have hall : HasSum (fun n : ℤ => |g n|) (C * (1 - |r|)⁻¹ + C * |r| * (1 - |r|)⁻¹) :=
+    HasSum.of_nat_of_neg_add_one (f := fun n : ℤ => |g n|) hpos hneg
+  have h1r : 0 < 1 - |r| := by linarith
+  refine ⟨conv, hr1, hall.summable, ?_, ?_⟩
+  · rw [hall.tsum_eq]; field_simp
+  · rw [hC, habs]
+    have hne : h₀ - 2 * h₁ ≠ 0 := by linarith
+    have h1r' : 1 - -r ≠ 0 := by linarith
+    rw [div_eq_div_iff (by positivity) hne]
+    field_simp
+    rw [hr]
+    field_simp
+    linear_combination (-1 : ℝ) * hs2
+
+/-- What breaks: a gain that reaches zero leaves no stable inverse. If `h` and `g` both have taps
+of finite total size and `h * g` is the click, then the gain of `h` is never zero. -/
+theorem no_stable_inverse_if_gain_vanishes (h g : ℤ → ℂ) (hh : Memℓp h 1) (hg : Memℓp g 1)
+    (hinv : ∀ n : ℤ, ∑' k : ℤ, h k * g (n - k) = if n = 0 then 1 else 0) :
+    ∀ θ : ℝ, ∑' n : ℤ, h n * exp (-((n : ℂ) * (θ : ℂ) * I)) ≠ 0 := by
+  intro θ
+  exact left_ne_zero_of_mul_eq_one
+    (fourier_mul_eq_one h g (summable_norm_of_memℓp_one hh) (summable_norm_of_memℓp_one hg) hinv θ)
+
+-- The treble cut 0.2, 0.6, 0.2: gain 1 at 0 Hz and 0.2 at 24 kHz (θ = π, where cos θ = -1).
+example : (3 : ℚ) / 5 + 2 * (1 / 5) * 1 = 1 := by norm_num
+example : (3 : ℚ) / 5 + 2 * (1 / 5) * (-1) = 1 / 5 := by norm_num
+
+-- The inverse's total size 5 is one over the smallest gain, and its plain sum is one over the gain at 0 Hz.
+example : (1 : ℚ) / ((3 / 5) - 2 * (1 / 5)) = 5 := by norm_num
+example : (1 : ℚ) / ((3 / 5) + 2 * (1 / 5)) = 1 := by norm_num
+
+-- r = (-3 + √5)/2 is a zero of z² + 3z + 1, and the centre tap C = √5 passes the check at sample 0:
+-- 0.6 C + 2 × 0.2 × C r = 1.
+example : ((-3 + Real.sqrt 5) / 2) ^ 2 + 3 * ((-3 + Real.sqrt 5) / 2) + 1 = 0 := by
+  have h5 : Real.sqrt 5 ^ 2 = 5 := Real.sq_sqrt (by norm_num)
+  linear_combination (1 / 4 : ℝ) * h5
+example : 3 / 5 * Real.sqrt 5 + 2 * (1 / 5) * Real.sqrt 5 * ((-3 + Real.sqrt 5) / 2) = 1 := by
+  have h5 : Real.sqrt 5 ^ 2 = 5 := Real.sq_sqrt (by norm_num)
+  linear_combination (1 / 5 : ℝ) * h5
+
+-- The blur 0.25, 0.5, 0.25: its looped-clip worst-case gains (N² + 1)/2 at N = 9, 17, 33, 65.
+example : [9, 17, 33, 65].map (fun N : ℕ => (N ^ 2 + 1) / 2) = [41, 145, 545, 2113] := by decide
+-- The blur's gain at 24 kHz is 0, and taps 0.3, 0.4, 0.3 have gain 0 where cos θ = -2/3.
+example : (1 : ℚ) / 2 + 2 * (1 / 4) * (-1) = 0 := by norm_num
+example : (2 : ℚ) / 5 + 2 * (3 / 10) * (-2 / 3) = 0 := by norm_num
+
+#print axioms norm_exp_neg_int_mul_real_mul_I
+#print axioms summable_norm_of_memℓp_one
+#print axioms fourier_conv
+#print axioms fourier_mul_eq_one
+#print axioms memℓp_shift
+#print axioms norm_shift
+#print axioms shiftL_apply
+#print axioms shiftL_norm_le
+#print axioms shiftL_add
+#print axioms shiftL_zero
+#print axioms norm_smul_shiftAlg_le
+#print axioms shiftL_mem
+#print axioms wieners_lemma
+#print axioms three_tap_inverse
+#print axioms no_stable_inverse_if_gain_vanishes

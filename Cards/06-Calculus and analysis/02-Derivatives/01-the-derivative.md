@@ -428,7 +428,7 @@ example : (50 / 5 : ℚ) = 10 ∧ (10 : ℚ) * 2 = 20 := by norm_num
 - [Partial derivatives](../07-Several%20Variables/01-partial-derivatives.md): several inputs, one moved at a time.
 - [The complex derivative](../../07-Complex%20analysis/02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md): the window may point any direction in a plane.
 - [A differential equation](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md): equations that state a rate and ask for the function.
-- Unbounded operators: differentiation as an operation on whole functions.
+- [Unbounded operators](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/01-unbounded-operators-and-domains.md): differentiation as an operation on whole functions.
 
 Left open: every derivative on this card took its own limit; can the derivative of a product or a chain of functions come from the parts' derivatives, with no new limit?
 

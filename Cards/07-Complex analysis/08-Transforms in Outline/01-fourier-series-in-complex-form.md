@@ -698,7 +698,7 @@ example : (1 : ℚ) + 1 / 9 + 1 / 25 = 259 / 225 := by norm_num
 - [The discrete Fourier transform](02-discrete-fourier-transform.md): the same coefficients from finitely many samples.
 - [The Fourier transform](03-fourier-transform.md): a signal that never repeats; the tones fill a continuum.
 - [Completeness of sines and cosines](../../18-Functional%20analysis/02-Hilbert%20Spaces/04-completeness-of-the-trigonometric-system.md): why the arrows are enough; Parseval in full.
-- Wiener's lemma: when a filter's action on the coefficients can be undone.
+- [Wiener's lemma](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/02-wieners-lemma-and-invertible-filters.md): when a filter's action on the coefficients can be undone.
 - Fourier coefficients: the three kinds of convergence, proved.
 - Poisson summation and sampling: series and transform tied together.
 - Equidistribution: arrow averages deciding whether a sequence spreads evenly.

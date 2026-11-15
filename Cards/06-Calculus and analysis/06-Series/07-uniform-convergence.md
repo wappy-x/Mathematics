@@ -561,7 +561,7 @@ example : (1 : ℚ) / 2 ^ 12 < 1 / 3000 ∧ ¬ ((1 : ℚ) / 2 ^ 11 < 1 / 3000) :
 - [Arzela-Ascoli](../../17-Topology/01-Metric%20Spaces/09-arzela-ascoli.md): when uniformly convergent subsequences must exist.
 - [Function spaces C and Lp](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/03-function-spaces-c-and-lp.md): the worst gap as a distance between functions.
 - [Weak convergence](../../18-Functional%20analysis/02-Hilbert%20Spaces/09-weak-convergence-and-banach-alaoglu.md): a far looser convergence.
-- Convolution and mollifiers: smoothing that converges uniformly.
+- [Convolution and mollifiers](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/03-convolution-and-mollifiers.md): smoothing that converges uniformly.
 - Dirichlet's theorem: both modes for Fourier series.
 - Equidistribution: step functions approximated by smooth ones.
 - Partition of unity: uniform approximation on curved spaces.

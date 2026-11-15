@@ -665,7 +665,7 @@ example : (List.range' 1 3).map (fun n => 2 * n - 1) = [1, 3, 5] := by decide
 - [Half-range series](../09-Fourier%20Series/04-half-range-sine-and-cosine-series.md): any pluck shape written as a sum of these sines.
 - [Buckling](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/08-buckling-and-stability.md): the lowest eigenvalue as the load a column can bear.
 - [Schrodinger's equation](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/03-schrodinger-equation-and-the-particle-in-a-box.md): eigenvalues as the energies an electron may have.
-- Self-adjoint extensions: end conditions as the choice that makes the operator (here "take the second derivative and flip its sign") symmetric.
+- [Self-adjoint extensions](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/02-self-adjoint-extensions-and-the-spectral-theorem.md): end conditions as the choice that makes the operator (here "take the second derivative and flip its sign") symmetric.
 - Helmholtz: the same question for a drum or a room.
 - Volume form and Laplace-Beltrami: the bending operator on a curved surface.
 

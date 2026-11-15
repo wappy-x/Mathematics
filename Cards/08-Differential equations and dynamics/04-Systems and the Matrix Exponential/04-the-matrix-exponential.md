@@ -588,7 +588,7 @@ example : !![(-1 : ℝ), 1; 0, -1] *ᵥ ![1, 0] = (-1 : ℝ) • ![1, 0] := by
 - [Forced systems](06-forced-systems-and-variation-of-constants.md): the heating back on, with e^(A(t−s)) inside an integral.
 - [Discretising a design](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/09-zero-order-hold-and-tustin-discretisation.md): e^(Ah) as the exact step of a sampled system.
 - [State space](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/01-state-space-models-and-the-matrix-exponential.md): the same object with inputs and outputs attached.
-- Evolution as an equation: e^(A(s+t)) = e^(As) e^(At) kept when A acts on functions and the series fails.
+- [Evolution as an equation](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/03-the-abstract-cauchy-problem-and-the-operator-exponential.md): e^(A(s+t)) = e^(As) e^(At) kept when A acts on functions and the series fails.
 - Lie algebra: from rates to rotations.
 
 The long-run shape read from A alone is [Trace and determinant](05-classifying-equilibria-by-trace-and-determinant.md).

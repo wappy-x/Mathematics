@@ -590,7 +590,7 @@ example : ((!![3, 1; 2, -1] : Matrix (Fin 2) (Fin 2) ℚ) * !![1, 0; 0, (1/2) ^ 
 - [PageRank by power iteration](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/02-power-iteration-and-the-damping-factor.md): why repetition finds one direction.
 - [Eigenvalues by iteration](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/07-eigenvalues-power-iteration-and-the-qr-algorithm.md): eigenvalues for a thousand rows.
 - [Bounded and symmetric](../../18-Functional%20analysis/03-Bounded%20Operators/10-spectral-theorem-for-bounded-self-adjoint-operators.md): infinitely many directions.
-- Semigroups: with time as the power.
+- [Semigroups](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/04-strongly-continuous-semigroups.md): with time as the power.
 
 This card was handed its eigenvectors and got lucky; the next names a family where that luck is guaranteed and the eigenvectors arrive at right angles.
 

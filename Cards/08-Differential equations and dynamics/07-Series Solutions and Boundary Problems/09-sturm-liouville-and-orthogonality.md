@@ -703,7 +703,7 @@ end SturmLiouville
 - [Fourier series](../09-Fourier%20Series/01-fourier-series-and-orthogonality.md): the sine and cosine case, and convergence.
 - [Schrodinger's equation](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/03-schrodinger-equation-and-the-particle-in-a-box.md): the string equation as allowed energies.
 - [Compact and symmetric](../../18-Functional%20analysis/03-Bounded%20Operators/08-spectral-theorem-for-compact-self-adjoint-operators.md): the proof of completeness.
-- Self-adjoint extensions: end conditions as a choice of operator.
+- [Self-adjoint extensions](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/02-self-adjoint-extensions-and-the-spectral-theorem.md): end conditions as a choice of operator.
 - Helmholtz: the theorem in two and three dimensions.
 
 This card leaves one question open: why do the modes leave nothing over, so that every shape is a sum of them?

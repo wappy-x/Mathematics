@@ -606,8 +606,8 @@ example : (20 / 8 : ℚ) = 25 / 10 := by norm_num
 - [Feynman-Kac](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/06-feynman-kac-formula.md): the equation as an average over random paths.
 - [Fourier's law](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/05-heat-conduction-and-fouriers-law.md): real materials and walls.
 - [Three families](../../16-Numerical%20analysis/07-PDE%20Solvers/01-pde-families-elliptic-parabolic-hyperbolic.md): the model parabolic equation, one rate in time and a bend in space, which smooths as time runs.
-- Hille-Yosida: when such a law defines an evolution.
-- Two evolutions: the solution as an exponential of the bend.
+- [Hille-Yosida](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/05-hille-yosida-and-generators.md): when such a law defines an evolution.
+- [Two evolutions](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/09-the-heat-and-schrodinger-semigroups.md): the solution as an exponential of the bend.
 - Solving differential equations by transform: the $`n^2`$ decay as a multiplier.
 - Volume form and Laplace-Beltrami: the bend on a curved surface.
 - Ricci flow: a heat equation smoothing a space's shape.

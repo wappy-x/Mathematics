@@ -831,7 +831,7 @@ example (A B : ℝ) : -A * sin 0 + B * cos 0 = B ∧ -A * sin π + B * cos π = 
 - [Stress, strain and bending](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/07-stress-strain-and-beam-bending.md): the beam law behind the strut.
 - [Viscosity](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/02-viscosity-and-pipe-flow.md): flow fixed at two walls.
 - [Lax-Milgram](../../18-Functional%20analysis/02-Hilbert%20Spaces/07-lax-milgram-theorem.md): one answer from an energy argument.
-- Weak solutions: answers without a second derivative.
+- [Weak solutions](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/08-weak-solutions-of-differential-equations.md): answers without a second derivative.
 - [Boundary conditions](../../19-Partial%20differential%20equations/01-Classification%20and%20Well-Posedness/03-boundary-conditions-dirichlet-neumann-and-robin.md): the three types on a surface.
 - Jacobi field: zero-end solutions on curved surfaces.
 

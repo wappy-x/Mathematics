@@ -546,7 +546,7 @@ end
 
 - [Hamilton's equations](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/05-hamiltons-equations.md): motion written from its energy function; symplectic in general.
 - [Symplectic steps](../../16-Numerical%20analysis/06-ODE%20Solvers/06-symplectic-integrators.md): the numerical analysis wing's card, which takes leapfrog to a pendulum and states the theorem behind the planet's band.
-- Splitting: kick–drift–kick as one case of splitting a flow into exactly solvable pieces.
+- [Splitting](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/07-operator-splitting-and-the-trotter-formula.md): kick–drift–kick as one case of splitting a flow into exactly solvable pieces.
 
 The question this card leaves open: the spring's band comes from a hidden energy written in closed form, so what traps the planet's energy, where this card writes no such formula?
 

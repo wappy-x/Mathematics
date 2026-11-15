@@ -558,7 +558,7 @@ example : (1 / (2 * Real.pi)) * (2 * Real.pi) = 1 := by have := Real.pi_ne_zero;
 - [Sampling](../../13-Engineering%20mathematics/05-Signals/01-sampling-and-the-nyquist-theorem.md): how often to sample a signal whose spectrum stops, and sampling as multiplying by a train of spikes.
 - [Uncertainty](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/05-uncertainty-principle.md): narrow in time forces wide in frequency.
 - [Plancherel](../../18-Functional%20analysis/03-Bounded%20Operators/04-the-fourier-transform-as-a-unitary-operator.md): the transform keeps energy, up to 2π.
-- Tempered distributions: a transform for f = 1 and other signals without finite area.
+- [Tempered distributions](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/05-tempered-distributions-and-the-fourier-transform.md): a transform for f = 1 and other signals without finite area.
 - The Fourier transform of an absolutely integrable signal, and why it fades at infinity: why every finite-area signal's spectrum fades at high frequency.
 
 The flash's spectrum is known; what multiplying it by a filter's spectrum does back in time is [Convolution](04-convolution-theorem.md).

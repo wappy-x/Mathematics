@@ -744,7 +744,7 @@ example : (List.range 6).map (fun n => ∑ k ∈ Finset.range (n + 1),
 - [Jensen's inequality](../07-Sizes%20of%20Functions/04-jensens-inequality.md): why E[X^2] beats (E[X])^2, and every convex function does the same.
 - [Densities and likelihood ratios](../08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md): when a law has a density, and averaging under a changed probability.
 - [Conditioning on a partition](../09-Conditional%20Expectation/01-conditioning-on-a-partition.md): expectations taken separately on each piece of a partition of the outcomes.
-- States: expectation as a positive linear functional of total 1, a state.
+- [States](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/04-states-representations-and-the-gns-construction.md): expectation as a positive linear functional of total 1, a state.
 - [Characteristic functions](../10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md): E[e^(iuX)], one integral against the law that determines the law.
 
 The expectation is one number, 2/3 m; how rarely the depth can stray far from it, and how the variance 4/45 m^2 limits that, is [Markov and Chebyshev](07-markov-and-chebyshev.md).

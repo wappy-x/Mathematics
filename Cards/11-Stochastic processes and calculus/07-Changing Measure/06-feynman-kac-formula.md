@@ -2132,7 +2132,7 @@ theorem local_martingale_gives_second_solution :
 
 - [Kolmogorov backward equation](../08-Generators%2C%20Densities%20and%20Simulation/02-kolmogorov-backward-equation.md): the same backward equation without discount or payoff, written with the generator, for the transition probabilities themselves.
 - [A short-rate model](../../12-Financial%20mathematics/30-Short-Rate%20Models/01-the-term-structure-equation.md): Feynman-Kac with a rate that wanders, pricing bonds.
-- Feller semigroups: the averages as a family of operators, one for each length of time, and the equation as their rate of change.
+- [Feller semigroups](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/08-feller-semigroups-and-markov-processes.md): the averages as a family of operators, one for each length of time, and the equation as their rate of change.
 - Feynman-Kac, in the partial differential equations wing: the theorem from the equation's side, with boundaries, potentials and the weaker solutions that hold when the average is not smooth.
 
 This card assumed the average was smooth or the solution was given; when an average fails to be smooth, which equation does it still solve, and in what sense?

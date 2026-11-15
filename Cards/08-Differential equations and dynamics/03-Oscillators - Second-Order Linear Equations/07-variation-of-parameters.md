@@ -632,7 +632,7 @@ example : (2 : ℤ) * 3 = 6 := by norm_num
 ## Where this goes next
 
 - [Forced systems](../04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md): the same method for several linked equations, with the matrix exponential in place of the free pair.
-- Duhamel: proves that every forced linear evolution is the free evolution of each past push, added up; here the kernel sin(t − s) came from a trigonometric identity.
+- [Duhamel](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/06-duhamels-principle-for-a-forced-evolution.md): proves that every forced linear evolution is the free evolution of each past push, added up; here the kernel sin(t − s) came from a trigonometric identity.
 
 The card leaves open whether the kernel is always the free motion started by a unit push, for every linear law and not only for this cart.
 

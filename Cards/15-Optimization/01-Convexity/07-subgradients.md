@@ -694,7 +694,7 @@ example : (780 + 15 * (100 - 70) : ℤ) = 1230 ∧ (0 + 8 * (100 - 0) : ℤ) = 8
 - [Convex conjugates](08-conjugates-and-fenchel-duality.md): describes a function by its supporting lines, one for each slope, so the subdifferential becomes the link between a point and its slopes.
 - [Lagrangian relaxation](../05-Integer%20and%20Combinatorial%20Optimisation/07-lagrangian-relaxation-and-decomposition.md): the dual function is a minimum of lines, kinked like the bill here, and subgradients are how it is climbed.
 - [Proximal gradient](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/06-proximal-methods-ista-fista-and-the-lasso.md): a method that handles the kink of $`|x|`$ in one exact step instead of guessing a slope.
-- The slope transform: the same bookkeeping of left and right slopes, turned into a transform between a curve and its slopes.
+- [The slope transform](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/07-legendre-fenchel-and-subgradients.md): the same bookkeeping of left and right slopes, turned into a transform between a curve and its slopes.
 
 The zero rule checks a point once you have it; finding the kink in a function of thousands of variables, where a subgradient step need not go downhill, is the question this card leaves open.
 

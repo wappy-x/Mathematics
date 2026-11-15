@@ -517,8 +517,8 @@ example : !![(1 : ℤ), 0; 0, 0] * !![0, 0; 0, 1] = 0 := by decide
 - [Ideals and quotient rings](04-ideals-and-quotient-rings.md): rings from declared zeros.
 - [Pell's equation](../10-For%20the%20Curious/04-pell-equation-and-root-two.md): endless units.
 - [Boolean algebra](../10-For%20the%20Curious/05-boolean-algebra-and-lattices.md): and and or.
-- Banach algebras: members with size.
-- C-star algebras: Banach algebras with a mirror operation, like swapping $`i`$ for $`-i`$ in a complex number.
+- [Banach algebras](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/01-banach-algebras-and-the-gelfand-transform.md): members with size.
+- [C-star algebras](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/03-c-star-algebras-in-outline.md): Banach algebras with a mirror operation, like swapping $`i`$ for $`-i`$ in a complex number.
 - Algebraic integers: numbers beyond the whole numbers that still form a ring.
 - Rings of integers: the algebraic integers inside one larger number system.
 - Domains, principal ideals and unique factorisation: factoring into primes.

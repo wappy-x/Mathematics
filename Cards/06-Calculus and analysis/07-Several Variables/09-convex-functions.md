@@ -573,8 +573,8 @@ example : ((2 * 4) * (2 * (4 * 2 ^ 2)) - (2 * (4 * 2)) ^ 2 : ℚ) = 0 ∧
 - [Hahn-Banach](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/06-hahn-banach-theorem.md): a linear rule kept under a convex bound.
 - [Separation](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/07-hahn-banach-separation-and-supporting-walls.md): flat walls touching convex sets.
 - [Lax-Milgram](../../18-Functional%20analysis/02-Hilbert%20Spaces/07-lax-milgram-theorem.md): one answer in infinitely many variables.
-- Krein-Milman: convex sets rebuilt from corners.
-- The slope transform: slopes at corners.
+- [Krein-Milman](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/06-krein-milman-and-extreme-points.md): convex sets rebuilt from corners.
+- [The slope transform](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/07-legendre-fenchel-and-subgradients.md): slopes at corners.
 - Riemannian Hessian: the Hessian test on curved spaces.
 - Relaxation and rounding: a convex stand-in, then rounding back.
 

@@ -539,8 +539,8 @@ example : 2 * (2 * 10 + 2 * 10 - 40 : ℤ) * 2 = 0 := by decide
 - [Almgren-Chriss](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/04-optimal-execution-almgren-chriss.md): selling a fixed block at least cost.
 - [Lagrangian and Hamiltonian mechanics](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/04-lagrangian-and-hamiltonian-mechanics-for-engineers.md): the multiplier as a force.
 - [Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md): multipliers pick support points.
-- The slope transform: prices as a transform.
-- Minimax: solve for the prices first.
+- [The slope transform](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/07-legendre-fenchel-and-subgradients.md): prices as a transform.
+- [Minimax](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/08-minimax-theorem-and-convex-duality.md): solve for the prices first.
 - Regular value theorem: a regular rule cuts a smooth surface.
 - Riemannian gradient descent: walking the rule itself.
 

@@ -1195,8 +1195,8 @@ end InfinitesimalGenerator
 
 - [Kolmogorov backward equation](02-kolmogorov-backward-equation.md): the generator's slope at the start, extended to every time: $`E_x f(X_t)`$ solves $`\partial u/\partial t = Lu`$.
 - [Stochastic control](../09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md): a controller who can turn the drift and noise dials picks the generator that does best; the HJB equation is a maximum over generators.
-- Hille-Yosida: the generator as the derivative at zero of the family of averaging operators, and which operators arise this way.
-- Feller semigroups: the general theory, where a Markov process is built from its generator rather than from an SDE.
+- [Hille-Yosida](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/05-hille-yosida-and-generators.md): the generator as the derivative at zero of the family of averaging operators, and which operators arise this way.
+- [Feller semigroups](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/08-feller-semigroups-and-markov-processes.md): the general theory, where a Markov process is built from its generator rather than from an SDE.
 
 The generator gives the slope of every average at the start; the backward equation answers what those averages are at every later time.
 

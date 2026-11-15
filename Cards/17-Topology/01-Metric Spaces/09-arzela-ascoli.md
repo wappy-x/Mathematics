@@ -804,7 +804,7 @@ example : 144 * 10 = 24 * 60 ∧ 144 * 150 * 4 = 24 * 60 * 60 := by decide
 
 ## Where this goes next
 
-- Schauder (planned): a continuous map that sends a closed convex set into a compact part of itself has a fixed point. This card supplies the compact sets of functions, and Peano's theorem follows.
+- [Schauder](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/05-schauder-fixed-point-theorem.md): a continuous map that sends a closed convex set into a compact part of itself has a fixed point. This card supplies the compact sets of functions, and Peano's theorem follows.
 - [Baire category theorem](10-baire-category-theorem.md): another theorem that needs completeness, about how large a complete space must be.
 
 Left open: the theorem finds a settling run but says nothing about how fast it settles or whether its limit is unique, so can such bare existence still prove that an equation has a solution?

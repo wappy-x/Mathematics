@@ -554,7 +554,7 @@ example : (1 / 4 : ℚ) / 5 = 1 / 20 := by rw [div_div]; norm_num
 ## Where this goes next
 
 - [The eigenvalue method](../04-Systems%20and%20the%20Matrix%20Exponential/02-the-eigenvalue-method.md): a chain of tanks, or a drug moving between blood and tissue, is a system of balances; the method splits it into plain exponentials.
-- Evolution as an equation: the same balance with the state a whole function; that card settles when the answer is still an exponential.
+- [Evolution as an equation](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/03-the-abstract-cauchy-problem-and-the-operator-exponential.md): the same balance with the state a whole function; that card settles when the answer is still an exponential.
 
 The question this card leaves open: how do you solve several tanks that feed each other at once?
 

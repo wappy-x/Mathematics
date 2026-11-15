@@ -672,7 +672,7 @@ example : (claimF 400 - 1 / 10) - claimF 350 = -65 / 1000 := by norm_num [claimF
 - [Lebesgue decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md): every law splits into a part with a density, a jump part and a Cantor-like part.
 - [Convergence in distribution](../10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md): laws converging when their distribution functions converge at points without jumps.
 - [The Lebesgue-Stieltjes integral](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md): integrating against $`\mu_F`$.
-- The delta: the jump's "derivative" made into an object, a point mass.
+- [The delta](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/02-the-dirac-delta-and-derivatives-of-jumps.md): the jump's "derivative" made into an object, a point mass.
 
 The claim's law is a jump plus a spread, which suggests every law is; whether a continuous F can carry mass that no density describes is what [The Cantor set](07-the-cantor-set.md) answers.
 

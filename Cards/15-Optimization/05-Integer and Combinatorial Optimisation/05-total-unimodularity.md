@@ -915,7 +915,7 @@ example : ¬ (!![1, 0, 1; 1, 1, 0; 0, 1, 1] : Matrix (Fin 3) (Fin 3) ℤ).IsTota
 
 ## Where this goes next
 
-- Krein-Milman (planned): a closed bounded convex region is the convex hull of its corners (the smallest region with no dents containing them), the reason "every corner whole" means the whole region is the hull of the whole plans.
+- [Krein-Milman](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/06-krein-milman-and-extreme-points.md): a closed bounded convex region is the convex hull of its corners (the smallest region with no dents containing them), the reason "every corner whole" means the whole region is the hull of the whole plans.
 - [Four classic models](06-classic-integer-models-knapsack-assignment-and-covering.md): assignment among knapsack, covering and routing, and which of them keep this shape.
 - [Lagrangian relaxation](07-lagrangian-relaxation-and-decomposition.md): price the awkward row and solve what is left.
 

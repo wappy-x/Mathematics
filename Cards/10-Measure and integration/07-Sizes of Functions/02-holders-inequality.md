@@ -921,7 +921,7 @@ example : (1 / 3 + 1 / 3 : ℚ) ≠ 1 := by norm_num
 - [Minkowski's inequality](03-minkowskis-inequality.md): Holder on $`\lvert f + g \rvert^{p-1}`$ proves the triangle inequality for p-sizes.
 - [L2 as a Hilbert space](06-l2-as-a-hilbert-space.md): Cauchy-Schwarz makes $`\int fg \, d\mu`$ an inner product, with angles and projections.
 - [Dual spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/09-dual-spaces-and-lp-duality.md): the equality case makes $`L^q`$ the dual of $`L^p`$.
-- Sobolev and Poincare: Holder turns bounds on a derivative into bounds on the function.
+- [Sobolev and Poincare](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/09-sobolev-embedding-and-poincare-inequality.md): Holder turns bounds on a derivative into bounds on the function.
 - The uncertainty principle: Cauchy-Schwarz caps how concentrated a signal and its spectrum can be together.
 - Interpolation: Holder's convexity in 1/p grows into operator bounds between the ends.
 

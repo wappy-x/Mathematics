@@ -593,7 +593,7 @@ end Impulses
 
 - [Convolution](07-convolution-and-the-impulse-response.md): any forcing as a sum of blows, and the response as a sum of ring-downs.
 - [Linear and time-invariant](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/01-linear-time-invariant-systems-and-convolution.md): the impulse response as the full description of a linear system.
-- The delta: the delta as a rule on smooth test signals, and the derivative of a step.
+- [The delta](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/02-the-dirac-delta-and-derivatives-of-jumps.md): the delta as a rule on smooth test signals, and the derivative of a step.
 - Schwartz space and tempered distributions: the delta under the Fourier transform.
 
 The question this card leaves open: how does the car respond to a long, uneven push, such as a rough road, instead of one clean blow?

@@ -6,18 +6,18 @@
 
 Work in infinite-dimensional spaces as steadily as in ordinary space: measure size with a norm, rely on completeness, name the dual, and read an operator through its spectrum. Differentiate kinks and spikes, pose an equation weakly in a Sobolev space, and turn a generator into an evolution that runs forward in time.
 
-6 shelves · **29 of 56 cards ready to read**
+6 shelves · **56 of 56 cards ready to read**
 
-Click a shelf to jump to its cards, then click a card's title to read it. A title without a link is planned and not written yet.
+Click a shelf to jump to its cards, then click a card's title to read it.
 
-| Shelf | Cards | Ready to read |
-| --- | ---: | ---: |
-| [01 · Normed and Banach Spaces](#s01) | 10 | 10 of 10 |
-| [02 · Hilbert Spaces](#s02) | 9 | 9 of 9 |
-| [03 · Bounded Operators](#s03) | 10 | 10 of 10 |
-| [04 · Distributions and Sobolev Spaces](#s04) | 10 | 0 of 10 · planned |
-| [05 · Unbounded Operators and Semigroups](#s05) | 9 | 0 of 9 · planned |
-| [06 · Banach Algebras and Fixed Points](#s06) | 8 | 0 of 8 · planned |
+| Shelf | Cards |
+| --- | ---: |
+| [01 · Normed and Banach Spaces](#s01) | 10 |
+| [02 · Hilbert Spaces](#s02) | 9 |
+| [03 · Bounded Operators](#s03) | 10 |
+| [04 · Distributions and Sobolev Spaces](#s04) | 10 |
+| [05 · Unbounded Operators and Semigroups](#s05) | 9 |
+| [06 · Banach Algebras and Fixed Points](#s06) | 8 |
 
 <a name="s01"></a>
 
@@ -77,55 +77,55 @@ Click a shelf to jump to its cards, then click a card's title to read it. A titl
 
 <a name="s04"></a>
 
-## 04 · Distributions and Sobolev Spaces · 10 cards · planned
+## 04 · Distributions and Sobolev Spaces · 10 cards
 
 *test functions and distributions; delta and jumps; convolution and mollifiers; tempered transforms; weak derivatives and Sobolev estimates*
 
-1. Distributions: objects defined only by what they read on smooth probes
-2. The delta: a spike of unit mass, and the derivative of a switch
-3. Convolution and mollifiers: smoothing a rough object without moving it
-4. Fundamental solution: solve once for a spike, then convolve for any load
-5. Tempered distributions: taking the Fourier transform of a hum or a spike
-6. Sampling: a row of spikes explains why evenly spaced samples suffice
-7. Weak derivatives: differentiating a kink, and the spaces that keep score
-8. Weak solutions: asking an equation to hold only against smooth probes
-9. Sobolev and Poincare: trading derivative control for size and smoothness
-10. Boundary values and compactness: the two Sobolev results existence proofs lean on
+1. [Distributions: objects defined only by what they read on smooth probes](04-Distributions%20and%20Sobolev%20Spaces/01-test-functions-and-distributions.md)
+2. [The delta: a spike of unit mass, and the derivative of a switch](04-Distributions%20and%20Sobolev%20Spaces/02-the-dirac-delta-and-derivatives-of-jumps.md)
+3. [Convolution and mollifiers: smoothing a rough object without moving it](04-Distributions%20and%20Sobolev%20Spaces/03-convolution-and-mollifiers.md)
+4. [Fundamental solution: solve once for a spike, then convolve for any load](04-Distributions%20and%20Sobolev%20Spaces/04-fundamental-solutions-and-the-response-to-a-spike.md)
+5. [Tempered distributions: taking the Fourier transform of a hum or a spike](04-Distributions%20and%20Sobolev%20Spaces/05-tempered-distributions-and-the-fourier-transform.md)
+6. [Sampling: a row of spikes explains why evenly spaced samples suffice](04-Distributions%20and%20Sobolev%20Spaces/06-sampling-the-dirac-comb-and-nyquist.md)
+7. [Weak derivatives: differentiating a kink, and the spaces that keep score](04-Distributions%20and%20Sobolev%20Spaces/07-weak-derivatives-and-sobolev-spaces.md)
+8. [Weak solutions: asking an equation to hold only against smooth probes](04-Distributions%20and%20Sobolev%20Spaces/08-weak-solutions-of-differential-equations.md)
+9. [Sobolev and Poincare: trading derivative control for size and smoothness](04-Distributions%20and%20Sobolev%20Spaces/09-sobolev-embedding-and-poincare-inequality.md)
+10. [Boundary values and compactness: the two Sobolev results existence proofs lean on](04-Distributions%20and%20Sobolev%20Spaces/10-trace-and-rellich-kondrachov-in-outline.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s05"></a>
 
-## 05 · Unbounded Operators and Semigroups · 9 cards · planned
+## 05 · Unbounded Operators and Semigroups · 9 cards
 
 *domains, closedness and self-adjointness; semigroups and their generators; forcing, splitting, and probabilistic evolutions*
 
-1. Unbounded operators: differentiation only works where you let it
-2. Self-adjoint extensions: symmetric is not enough, the domain decides
-3. Evolution as an equation: rate of change equals an operator times the state
-4. Semigroups: a family of operators that composes like elapsed time
-5. Hille-Yosida: exactly which operators drive a well-behaved evolution
-6. Duhamel: add up each nudge, carried forward by the unforced flow
-7. Splitting: alternate two evolutions in tiny steps to get their combination
-8. Feller semigroups: the evolution of averages along a random path
-9. Two evolutions: heat smooths at once, waves only rotate
+1. [Unbounded operators: differentiation only works where you let it](05-Unbounded%20Operators%20and%20Semigroups/01-unbounded-operators-and-domains.md)
+2. [Self-adjoint extensions: symmetric is not enough, the domain decides](05-Unbounded%20Operators%20and%20Semigroups/02-self-adjoint-extensions-and-the-spectral-theorem.md)
+3. [Evolution as an equation: rate of change equals an operator times the state](05-Unbounded%20Operators%20and%20Semigroups/03-the-abstract-cauchy-problem-and-the-operator-exponential.md)
+4. [Semigroups: a family of operators that composes like elapsed time](05-Unbounded%20Operators%20and%20Semigroups/04-strongly-continuous-semigroups.md)
+5. [Hille-Yosida: exactly which operators drive a well-behaved evolution](05-Unbounded%20Operators%20and%20Semigroups/05-hille-yosida-and-generators.md)
+6. [Duhamel: add up each nudge, carried forward by the unforced flow](05-Unbounded%20Operators%20and%20Semigroups/06-duhamels-principle-for-a-forced-evolution.md)
+7. [Splitting: alternate two evolutions in tiny steps to get their combination](05-Unbounded%20Operators%20and%20Semigroups/07-operator-splitting-and-the-trotter-formula.md)
+8. [Feller semigroups: the evolution of averages along a random path](05-Unbounded%20Operators%20and%20Semigroups/08-feller-semigroups-and-markov-processes.md)
+9. [Two evolutions: heat smooths at once, waves only rotate](05-Unbounded%20Operators%20and%20Semigroups/09-the-heat-and-schrodinger-semigroups.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s06"></a>
 
-## 06 · Banach Algebras and Fixed Points · 8 cards · planned
+## 06 · Banach Algebras and Fixed Points · 8 cards
 
 *multiplying in a complete space; the Gelfand picture and C-star algebras; fixed points; extreme points and convex duality*
 
-1. Banach algebras: a complete space you can also multiply in
-2. Wiener's lemma: a filter that never vanishes has a well-behaved inverse
-3. C-star algebras: an algebra with a mirror operation whose sizes match exactly
-4. States: an expectation on an algebra, and the space it builds
-5. Schauder: a continuous map of a compact convex set must leave a point unmoved
-6. Krein-Milman: a compact convex set is rebuilt from its corners
-7. The slope transform: recoding a convex function by its supporting lines
-8. Minimax: under convexity the best worst case equals the worst best case
+1. [Banach algebras: a complete space you can also multiply in](06-Banach%20Algebras%20and%20Fixed%20Points/01-banach-algebras-and-the-gelfand-transform.md)
+2. [Wiener's lemma: a filter that never vanishes has a well-behaved inverse](06-Banach%20Algebras%20and%20Fixed%20Points/02-wieners-lemma-and-invertible-filters.md)
+3. [C-star algebras: an algebra with a mirror operation whose sizes match exactly](06-Banach%20Algebras%20and%20Fixed%20Points/03-c-star-algebras-in-outline.md)
+4. [States: an expectation on an algebra, and the space it builds](06-Banach%20Algebras%20and%20Fixed%20Points/04-states-representations-and-the-gns-construction.md)
+5. [Schauder: a continuous map of a compact convex set must leave a point unmoved](06-Banach%20Algebras%20and%20Fixed%20Points/05-schauder-fixed-point-theorem.md)
+6. [Krein-Milman: a compact convex set is rebuilt from its corners](06-Banach%20Algebras%20and%20Fixed%20Points/06-krein-milman-and-extreme-points.md)
+7. [The slope transform: recoding a convex function by its supporting lines](06-Banach%20Algebras%20and%20Fixed%20Points/07-legendre-fenchel-and-subgradients.md)
+8. [Minimax: under convexity the best worst case equals the worst best case](06-Banach%20Algebras%20and%20Fixed%20Points/08-minimax-theorem-and-convex-duality.md)
 
 [↑ Back to the shelves](#top)
 

@@ -541,7 +541,7 @@ example : star (![-1 - 2 * I, 3 + 4 * I] : Fin 2 → ℂ) ⬝ᵥ ![-1 - 2 * I, 3
 - [The discrete Fourier transform](../08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): a unitary matrix of roots of unity.
 - [States as vectors](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/02-state-vectors-operators-and-measurement.md): Hermitian measurements, unitary time steps.
 - [Adjoints](../../18-Functional%20analysis/03-Bounded%20Operators/03-adjoints-self-adjoint-and-unitary-operators.md): the star in infinitely many coordinates.
-- C-star algebras: the star turned into an axiom.
+- [C-star algebras](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/03-c-star-algebras-in-outline.md): the star turned into an axiom.
 - Qubits: unit complex vectors as quantum states.
 
 The question this card leaves open: what does the star become when a vector has infinitely many coordinates?

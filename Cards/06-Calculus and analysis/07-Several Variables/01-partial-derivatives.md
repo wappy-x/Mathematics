@@ -661,7 +661,7 @@ example : (20 : ℚ) * (120 / 2 + 5 / 2 * 21) - 20 * (120 / 2 + 5 / 2 * 20) = 50
 - [Dupire local volatility](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md): volatility from partials.
 - [The thermodynamic laws](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/07-thermodynamic-laws-and-entropy.md): the frozen quantity named.
 - [Finite differences on a grid](../../16-Numerical%20analysis/07-PDE%20Solvers/02-finite-differences-consistency-stability-and-convergence.md), [Two space dimensions](../../16-Numerical%20analysis/07-PDE%20Solvers/05-adi-and-multidimensional-grids.md): quotients on grids.
-- Weak derivatives: rough functions.
+- [Weak derivatives](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/07-weak-derivatives-and-sobolev-spaces.md): rough functions.
 - Smooth and singular points: all partials vanishing.
 - Levi-Civita connection: curved distance.
 
