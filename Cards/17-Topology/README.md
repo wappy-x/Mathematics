@@ -6,18 +6,18 @@
 
 Work in a metric or an abstract topological space, and prove the compactness and connectedness facts that every analysis wing has been leaning on. Classify a closed surface by hand, compute a fundamental group and a homology group on a concrete example, and run persistent homology on real data while saying honestly what it is worth.
 
-6 shelves · **28 of 51 cards ready to read**
+6 shelves · **51 of 51 cards ready to read**
 
-Click a shelf to jump to its cards, then click a card's title to read it. A title without a link is planned and not written yet.
+Click a shelf to jump to its cards, then click a card's title to read it.
 
-| Shelf | Cards | Ready to read |
-| --- | ---: | ---: |
-| [01 · Metric Spaces](#s01) | 10 | 10 of 10 |
-| [02 · Topological Spaces](#s02) | 10 | 10 of 10 |
-| [03 · Surfaces and Manifolds](#s03) | 8 | 8 of 8 |
-| [04 · Homotopy](#s04) | 8 | 0 of 8 · planned |
-| [05 · Homology](#s05) | 8 | 0 of 8 · planned |
-| [06 · Topological Data Analysis](#s06) | 7 | 0 of 7 · planned |
+| Shelf | Cards |
+| --- | ---: |
+| [01 · Metric Spaces](#s01) | 10 |
+| [02 · Topological Spaces](#s02) | 10 |
+| [03 · Surfaces and Manifolds](#s03) | 8 |
+| [04 · Homotopy](#s04) | 8 |
+| [05 · Homology](#s05) | 8 |
+| [06 · Topological Data Analysis](#s06) | 7 |
 
 <a name="s01"></a>
 
@@ -76,51 +76,51 @@ Click a shelf to jump to its cards, then click a card's title to read it. A titl
 
 <a name="s04"></a>
 
-## 04 · Homotopy · 8 cards · planned
+## 04 · Homotopy · 8 cards
 
 *Deforming maps continuously, the group of loops, and the two fixed-point theorems it pays for*
 
-1. Homotopy: sliding one map into another, and spaces that squash into each other
-2. Contractible and simply connected: no holes at all, and every loop can be shrunk
-3. The fundamental group: loops at a point, multiplied by running one after the other
-4. The circle's fundamental group is the integers: winding number does all the counting
-5. Covering spaces: unroll a space so its loops become paths you can follow
-6. Van Kampen's theorem: glue two pieces together and glue their loop groups together
-7. CW complexes: build a space by gluing cells, then read its invariants off the recipe
-8. Brouwer and Borsuk-Ulam: a disc map fixes a point, and antipodes give equal readings
+1. [Homotopy: sliding one map into another, and spaces that squash into each other](04-Homotopy/01-homotopy-and-homotopy-equivalence.md)
+2. [Contractible and simply connected: no holes at all, and every loop can be shrunk](04-Homotopy/02-contractible-and-simply-connected.md)
+3. [The fundamental group: loops at a point, multiplied by running one after the other](04-Homotopy/03-the-fundamental-group.md)
+4. [The circle's fundamental group is the integers: winding number does all the counting](04-Homotopy/04-fundamental-group-of-the-circle.md)
+5. [Covering spaces: unroll a space so its loops become paths you can follow](04-Homotopy/05-covering-spaces.md)
+6. [Van Kampen's theorem: glue two pieces together and glue their loop groups together](04-Homotopy/06-van-kampens-theorem.md)
+7. [CW complexes: build a space by gluing cells, then read its invariants off the recipe](04-Homotopy/07-cw-complexes-and-gluing-cells.md)
+8. [Brouwer and Borsuk-Ulam: a disc map fixes a point, and antipodes give equal readings](04-Homotopy/08-brouwer-and-borsuk-ulam.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s05"></a>
 
-## 05 · Homology · 8 cards · planned
+## 05 · Homology · 8 cards
 
 *Counting holes with linear algebra: chains, cycles, boundaries, and the sequences that compute them*
 
-1. Simplicial complexes and chains: triangles glued up, with a boundary that squares to zero
-2. Homology groups: cycles that are not boundaries, one hole count per dimension
-3. Smith normal form: the matrix routine that turns boundary matrices into hole counts
-4. Homotopy invariance: spaces you can deform into each other have identical hole counts
-5. Cellular homology: hole counts read straight off the gluing recipe, quick by hand
-6. Mayer-Vietoris and exact sequences: the holes of a whole from two overlapping pieces
-7. Homology of spheres, and degree: how many times one sphere wraps around another
-8. Cohomology and the cup product in outline: the dual view, carrying a multiplication
+1. [Simplicial complexes and chains: triangles glued up, with a boundary that squares to zero](05-Homology/01-simplicial-complexes-and-chains.md)
+2. [Homology groups: cycles that are not boundaries, one hole count per dimension](05-Homology/02-homology-groups.md)
+3. [Smith normal form: the matrix routine that turns boundary matrices into hole counts](05-Homology/03-computing-homology-by-smith-normal-form.md)
+4. [Homotopy invariance: spaces you can deform into each other have identical hole counts](05-Homology/04-homotopy-invariance-of-homology.md)
+5. [Cellular homology: hole counts read straight off the gluing recipe, quick by hand](05-Homology/05-cellular-homology.md)
+6. [Mayer-Vietoris and exact sequences: the holes of a whole from two overlapping pieces](05-Homology/06-mayer-vietoris-and-long-exact-sequences.md)
+7. [Homology of spheres, and degree: how many times one sphere wraps around another](05-Homology/07-homology-of-spheres-and-degree.md)
+8. [Cohomology and the cup product in outline: the dual view, carrying a multiplication](05-Homology/08-cohomology-and-cup-product-in-outline.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s06"></a>
 
-## 06 · Topological Data Analysis · 7 cards · planned
+## 06 · Topological Data Analysis · 7 cards
 
 *Turning data into shapes at every scale, reading the diagram, and knowing when to believe it*
 
-1. Filtration and persistent homology: watch each hole appear and close as the scale grows
-2. Vietoris-Rips, Cech and alpha complexes: three ways to make a shape out of points
-3. The persistence algorithm: column reduction pairs every birth with its death
-4. Persistence diagram and stability: noise in the data moves the picture only a little
-5. Comparing diagrams: bottleneck distance, landscapes, images, and honest error bars
-6. Mapper and Reeb graphs: a network summary of a dataset along a chosen lens
-7. Persistence in practice: the shape of a time series, and what that shape is worth
+1. [Filtration and persistent homology: watch each hole appear and close as the scale grows](06-Topological%20Data%20Analysis/01-filtrations-and-persistent-homology.md)
+2. [Vietoris-Rips, Cech and alpha complexes: three ways to make a shape out of points](06-Topological%20Data%20Analysis/02-vietoris-rips-and-cech-complexes.md)
+3. [The persistence algorithm: column reduction pairs every birth with its death](06-Topological%20Data%20Analysis/03-the-persistence-algorithm.md)
+4. [Persistence diagram and stability: noise in the data moves the picture only a little](06-Topological%20Data%20Analysis/04-persistence-diagrams-and-stability.md)
+5. [Comparing diagrams: bottleneck distance, landscapes, images, and honest error bars](06-Topological%20Data%20Analysis/05-comparing-diagrams-and-vectorising-them.md)
+6. [Mapper and Reeb graphs: a network summary of a dataset along a chosen lens](06-Topological%20Data%20Analysis/06-mapper-and-reeb-graphs.md)
+7. [Persistence in practice: the shape of a time series, and what that shape is worth](06-Topological%20Data%20Analysis/07-persistence-in-practice.md)
 
 [↑ Back to the shelves](#top)
 

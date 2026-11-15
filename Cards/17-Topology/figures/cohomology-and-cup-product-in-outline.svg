@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 300" width="540" height="300">
+  <title>Schematic. Left: the torus as a 3 by 3 grid of squares with opposite sides glued, each square cut into two panels; the six struts where the cochain a is nonzero in orange, the six where b is nonzero in teal, and the one panel 0, 6, 8 where a cup b is nonzero shaded. Right: two hollow triangles and the surface of a tetrahedron joined at joint 0.</title>
+  <rect x="0" y="0" width="540" height="300" fill="#ffffff"/>
+  <polygon points="160,110 220,50 160,50" fill="#f4c7b8"/>
+  <g stroke="#1d1d1d" stroke-width="1.2" fill="none">
+    <line x1="40" y1="230" x2="220" y2="230"/><line x1="40" y1="170" x2="220" y2="170"/>
+    <line x1="40" y1="110" x2="220" y2="110"/><line x1="40" y1="50" x2="220" y2="50"/>
+    <line x1="40" y1="230" x2="40" y2="50"/><line x1="100" y1="230" x2="100" y2="50"/>
+    <line x1="160" y1="230" x2="160" y2="50"/><line x1="220" y1="230" x2="220" y2="50"/>
+    <line x1="40" y1="230" x2="220" y2="50"/><line x1="100" y1="230" x2="220" y2="110"/>
+    <line x1="160" y1="230" x2="220" y2="170"/><line x1="40" y1="170" x2="160" y2="50"/>
+    <line x1="40" y1="110" x2="100" y2="50"/>
+  </g>
+  <g stroke="#e76f51" stroke-width="4" stroke-linecap="round">
+    <line x1="160" y1="230" x2="220" y2="230"/><line x1="160" y1="170" x2="220" y2="170"/>
+    <line x1="160" y1="110" x2="220" y2="110"/><line x1="160" y1="50" x2="220" y2="50"/>
+    <line x1="160" y1="230" x2="220" y2="170"/><line x1="160" y1="170" x2="220" y2="110"/>
+    <line x1="160" y1="110" x2="220" y2="50"/>
+  </g>
+  <g stroke="#2a9d8f" stroke-width="4" stroke-linecap="round" stroke-dasharray="8 5">
+    <line x1="40" y1="110" x2="40" y2="50"/><line x1="100" y1="110" x2="100" y2="50"/>
+    <line x1="160" y1="110" x2="160" y2="50"/><line x1="220" y1="110" x2="220" y2="50"/>
+    <line x1="40" y1="110" x2="100" y2="50"/><line x1="100" y1="110" x2="160" y2="50"/>
+    <line x1="160" y1="110" x2="220" y2="50"/>
+  </g>
+  <g font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d">
+    <text x="28" y="246">0</text><text x="96" y="246">3</text><text x="156" y="246">6</text><text x="224" y="246">0</text>
+    <text x="28" y="184">1</text><text x="104" y="184">4</text><text x="164" y="184">7</text><text x="224" y="184">1</text>
+    <text x="28" y="124">2</text><text x="104" y="124">5</text><text x="164" y="124">8</text><text x="224" y="124">2</text>
+    <text x="28" y="46">0</text><text x="96" y="44">3</text><text x="156" y="44">6</text><text x="224" y="46">0</text>
+    <text x="40" y="275">torus: opposite sides glued</text>
+    <text x="300" y="275">two hoops and a sphere at joint 0</text>
+  </g>
+  <g fill="#e8e8e8" stroke="#1d1d1d" stroke-width="1.2" stroke-linejoin="round">
+    <polygon points="370,150 460,100 430,210"/>
+    <polygon points="460,100 500,190 430,210" fill="#d4d4d4"/>
+  </g>
+  <line x1="370" y1="150" x2="500" y2="190" stroke="#1d1d1d" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <g stroke="#1d1d1d" stroke-width="1.8" fill="none" stroke-linejoin="round">
+    <polygon points="370,150 330,60 410,60"/>
+    <polygon points="370,150 300,220 360,250"/>
+  </g>
+  <g fill="#1d1d1d">
+    <circle cx="370" cy="150" r="4"/><circle cx="330" cy="60" r="3"/><circle cx="410" cy="60" r="3"/>
+    <circle cx="300" cy="220" r="3"/><circle cx="360" cy="250" r="3"/>
+    <circle cx="460" cy="100" r="3"/><circle cx="500" cy="190" r="3"/><circle cx="430" cy="210" r="3"/>
+  </g>
+  <g font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d">
+    <text x="352" y="146">0</text><text x="318" y="54">1</text><text x="414" y="54">2</text>
+    <text x="286" y="222">3</text><text x="364" y="264">4</text>
+    <text x="464" y="94">5</text><text x="504" y="196">6</text><text x="424" y="226">7</text>
+  </g>
+</svg>

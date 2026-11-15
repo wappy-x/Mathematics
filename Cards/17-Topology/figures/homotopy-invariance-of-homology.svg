@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 390" width="520" height="390">
+<title>A mug of 30 unit cubes and a doughnut of 8, each with the loop it collapses onto</title>
+<rect x="0" y="0" width="520" height="390" fill="#ffffff"/>
+<rect x="40" y="250" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="40" y="210" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="40" y="170" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="80" y="250" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="80" y="210" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="80" y="170" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="120" y="250" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="120" y="210" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="120" y="170" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="160" y="250" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="200" y="250" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="200" y="210" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="200" y="170" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="160" y="170" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="80" y="170" width="40" height="80" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="4 3"/>
+<polygon points="140.0,270.0 180.0,270.0 220.0,270.0 220.0,230.0 220.0,190.0 180.0,190.0 140.0,190.0 140.0,230.0" fill="none" stroke="#c0392b" stroke-width="3"/>
+<rect x="330" y="250" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="370" y="250" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="410" y="250" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="410" y="210" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="410" y="170" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="370" y="170" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="330" y="170" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="330" y="210" width="40" height="40" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="1.5"/>
+<polygon points="350.0,270.0 390.0,270.0 430.0,270.0 430.0,230.0 430.0,190.0 390.0,190.0 350.0,190.0 350.0,230.0" fill="none" stroke="#c0392b" stroke-width="3"/>
+<text x="140" y="40" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#1d1d1d" text-anchor="middle">Mug, seen from the front</text>
+<text x="390" y="40" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#1d1d1d" text-anchor="middle">Doughnut, seen from above</text>
+<text x="12" y="120" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#1d1d1d" text-anchor="start">well, open at the top (dashed)</text>
+<text x="250" y="92" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#1d1d1d" text-anchor="middle">gap under the handle</text>
+<line x1="240" y1="98" x2="180.0" y2="230.0" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="100" y1="126" x2="100.0" y2="170" stroke="#1d1d1d" stroke-width="1"/>
+<text x="140" y="320" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#1d1d1d" text-anchor="middle">30 cubes: 25 in the cup, 5 in the handle</text>
+<text x="390" y="320" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#1d1d1d" text-anchor="middle">8 cubes around a gap</text>
+<text x="260" y="350" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d" text-anchor="middle">Red: a loop each solid can be squeezed onto. Hole counts 1, 1, 0, 0 for both.</text>
+<text x="260" y="370" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#1d1d1d" text-anchor="middle">Squares are unit cubes, to scale.</text>
+</svg>

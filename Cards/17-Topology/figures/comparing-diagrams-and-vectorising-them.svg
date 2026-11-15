@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 470 470" font-family="Helvetica, Arial, sans-serif" font-size="12">
+<title>Persistence diagrams of a calm and a stormy simulated month, with the bottleneck matching and both noise bands</title>
+<rect x="0" y="0" width="470" height="470" fill="#ffffff"/>
+<polygon points="50.0,420.0 440.0,30.0 368.0,30.0 50.0,348.0" fill="#e8e8e8"/>
+<polygon points="50.0,420.0 440.0,30.0 408.5,30.0 50.0,388.5" fill="#c8c8c8"/>
+<line x1="50.0" y1="420.0" x2="440.0" y2="30.0" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="50.0" y1="420.0" x2="440.0" y2="420.0" stroke="#1d1d1d"/>
+<line x1="50.0" y1="420.0" x2="50.0" y2="30.0" stroke="#1d1d1d"/>
+<line x1="50.0" y1="420.0" x2="50.0" y2="425.0" stroke="#1d1d1d"/>
+<text x="50.0" y="438.0" text-anchor="middle" fill="#1d1d1d">0</text>
+<line x1="45.0" y1="420.0" x2="50.0" y2="420.0" stroke="#1d1d1d"/>
+<text x="42.0" y="424.0" text-anchor="end" fill="#1d1d1d">0</text>
+<line x1="170.0" y1="420.0" x2="170.0" y2="425.0" stroke="#1d1d1d"/>
+<text x="170.0" y="438.0" text-anchor="middle" fill="#1d1d1d">0.4</text>
+<line x1="45.0" y1="300.0" x2="50.0" y2="300.0" stroke="#1d1d1d"/>
+<text x="42.0" y="304.0" text-anchor="end" fill="#1d1d1d">0.4</text>
+<line x1="290.0" y1="420.0" x2="290.0" y2="425.0" stroke="#1d1d1d"/>
+<text x="290.0" y="438.0" text-anchor="middle" fill="#1d1d1d">0.8</text>
+<line x1="45.0" y1="180.0" x2="50.0" y2="180.0" stroke="#1d1d1d"/>
+<text x="42.0" y="184.0" text-anchor="end" fill="#1d1d1d">0.8</text>
+<line x1="410.0" y1="420.0" x2="410.0" y2="425.0" stroke="#1d1d1d"/>
+<text x="410.0" y="438.0" text-anchor="middle" fill="#1d1d1d">1.2</text>
+<line x1="45.0" y1="60.0" x2="50.0" y2="60.0" stroke="#1d1d1d"/>
+<text x="42.0" y="64.0" text-anchor="end" fill="#1d1d1d">1.2</text>
+<text x="245.0" y="458" text-anchor="middle" fill="#1d1d1d">birth scale b, radius r in percent</text>
+<text x="14" y="225.0" text-anchor="middle" fill="#1d1d1d" transform="rotate(-90 14 225.0)">death scale d, radius r in percent</text>
+<line x1="95.0" y1="370.5" x2="97.2" y2="372.8" stroke="#1d1d1d" stroke-dasharray="3,3"/>
+<line x1="99.5" y1="369.0" x2="100.2" y2="369.8" stroke="#1d1d1d" stroke-dasharray="3,3"/>
+<line x1="206.0" y1="207.0" x2="234.5" y2="235.5" stroke="#1d1d1d" stroke-dasharray="3,3"/>
+<line x1="366.5" y1="60.0" x2="388.2" y2="81.8" stroke="#1d1d1d" stroke-dasharray="3,3"/>
+<line x1="218.0" y1="237.0" x2="201.5" y2="207.0" stroke="#1d1d1d" stroke-width="2"/>
+<circle cx="95.0" cy="370.5" r="4.5" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="99.5" cy="369.0" r="4.5" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="218.0" cy="237.0" r="4.5" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="197.0" y="202.5" width="9" height="9" fill="#1d1d1d"/>
+<rect x="201.5" y="202.5" width="9" height="9" fill="#1d1d1d"/>
+<rect x="362.0" y="55.5" width="9" height="9" fill="#1d1d1d"/>
+<circle cx="70" cy="30" r="4.5" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/><text x="82" y="34" fill="#1d1d1d">calm month bar</text>
+<rect x="65.5" y="45.5" width="9" height="9" fill="#1d1d1d"/><text x="82" y="54" fill="#1d1d1d">stormy month bar</text>
+<line x1="62" y1="70" x2="78" y2="70" stroke="#1d1d1d" stroke-width="2"/><text x="82" y="74" fill="#1d1d1d">matched pair, cost 0.10</text>
+<line x1="62" y1="90" x2="78" y2="90" stroke="#1d1d1d" stroke-dasharray="3,3"/><text x="82" y="94" fill="#1d1d1d">sent to the diagonal</text>
+<rect x="62" y="104" width="16" height="10" fill="#c8c8c8"/><text x="82" y="113" fill="#1d1d1d">calm noise band, lifetime under 0.105</text>
+<rect x="62" y="122" width="16" height="10" fill="#e8e8e8" stroke="#999999" stroke-width="0.5"/><text x="82" y="131" fill="#1d1d1d">stormy noise band, lifetime under 0.24</text>
+</svg>

@@ -820,8 +820,8 @@ example : (10472 / 9 : ℚ) / (6212 / 3) = 2618 / 4659 := by
 
 - [Autoregression](02-ar-models.md): a model in which today is a fraction of yesterday plus a fresh shock, and the correlogram it produces.
 - [Spectral estimation](../../13-Engineering%20mathematics/05-Signals/06-spectral-estimation-and-periodograms.md): the periodogram used as road 2, turned into an estimate of how much each frequency contributes.
-- Filtration and persistent homology: shapes in data built from distances, including sliding windows of a time series.
-- Persistence in practice: detecting periodic behaviour in a series by its loops rather than by its correlogram.
+- [Filtration and persistent homology](../../17-Topology/06-Topological%20Data%20Analysis/01-filtrations-and-persistent-homology.md): shapes in data built from distances, including sliding windows of a time series.
+- [Persistence in practice](../../17-Topology/06-Topological%20Data%20Analysis/07-persistence-in-practice.md): detecting periodic behaviour in a series by its loops rather than by its correlogram.
 - Correlation: sliding correlation used to find a known pattern in noise.
 - Wiener-Khinchin: why the autocovariance and the power spectrum are one object seen two ways.
 

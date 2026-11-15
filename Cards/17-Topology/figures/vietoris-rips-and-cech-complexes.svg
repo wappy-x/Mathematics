@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 470" width="460" height="470" font-family="Helvetica, Arial, sans-serif">
+<title>Twelve sensor sites to scale with 50 m discs, the 15 Rips edges, the two triangles Cech fills, and the blind spot inside triangle 0, 1, 8</title>
+<rect x="0" y="0" width="460" height="470" fill="#ffffff"/>
+<circle cx="330" cy="190" r="50" fill="#9ecae1" fill-opacity="0.35" stroke="#4a6f8a" stroke-width="0.8"/>
+<circle cx="295" cy="105" r="50" fill="#9ecae1" fill-opacity="0.35" stroke="#4a6f8a" stroke-width="0.8"/>
+<circle cx="210" cy="70" r="50" fill="#9ecae1" fill-opacity="0.35" stroke="#4a6f8a" stroke-width="0.8"/>
+<circle cx="125" cy="105" r="50" fill="#9ecae1" fill-opacity="0.35" stroke="#4a6f8a" stroke-width="0.8"/>
+<circle cx="90" cy="190" r="50" fill="#9ecae1" fill-opacity="0.35" stroke="#4a6f8a" stroke-width="0.8"/>
+<circle cx="125" cy="275" r="50" fill="#9ecae1" fill-opacity="0.35" stroke="#4a6f8a" stroke-width="0.8"/>
+<circle cx="210" cy="310" r="50" fill="#9ecae1" fill-opacity="0.35" stroke="#4a6f8a" stroke-width="0.8"/>
+<circle cx="295" cy="275" r="50" fill="#9ecae1" fill-opacity="0.35" stroke="#4a6f8a" stroke-width="0.8"/>
+<circle cx="390" cy="112" r="50" fill="#9ecae1" fill-opacity="0.35" stroke="#4a6f8a" stroke-width="0.8"/>
+<circle cx="162" cy="75" r="50" fill="#9ecae1" fill-opacity="0.35" stroke="#4a6f8a" stroke-width="0.8"/>
+<circle cx="60" cy="270" r="50" fill="#9ecae1" fill-opacity="0.35" stroke="#4a6f8a" stroke-width="0.8"/>
+<circle cx="260" cy="380" r="50" fill="#9ecae1" fill-opacity="0.35" stroke="#4a6f8a" stroke-width="0.8"/>
+<polygon points="210,70 125,105 162,75" fill="#264653" fill-opacity="0.45" stroke="none"/>
+<polygon points="90,190 125,275 60,270" fill="#264653" fill-opacity="0.45" stroke="none"/>
+<line x1="330" y1="190" x2="295" y2="105" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="330" y1="190" x2="295" y2="275" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="330" y1="190" x2="390" y2="112" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="295" y1="105" x2="210" y2="70" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="295" y1="105" x2="390" y2="112" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="210" y1="70" x2="125" y2="105" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="210" y1="70" x2="162" y2="75" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="125" y1="105" x2="90" y2="190" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="125" y1="105" x2="162" y2="75" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="90" y1="190" x2="125" y2="275" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="90" y1="190" x2="60" y2="270" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="125" y1="275" x2="210" y2="310" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="125" y1="275" x2="60" y2="270" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="210" y1="310" x2="295" y2="275" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="210" y1="310" x2="260" y2="380" stroke="#1d1d1d" stroke-width="1.2"/>
+<polygon points="330,190 295,105 390,112" fill="none" stroke="#c0392b" stroke-width="2" stroke-dasharray="6 4"/>
+<path d="M 336.48 131.98 L 344.48 139.98 M 336.48 139.98 L 344.48 131.98" stroke="#c0392b" stroke-width="2"/>
+<circle cx="330" cy="190" r="3.5" fill="#1d1d1d"/>
+<text x="336" y="184" font-size="13" fill="#1d1d1d">0</text>
+<circle cx="295" cy="105" r="3.5" fill="#1d1d1d"/>
+<text x="301" y="99" font-size="13" fill="#1d1d1d">1</text>
+<circle cx="210" cy="70" r="3.5" fill="#1d1d1d"/>
+<text x="216" y="64" font-size="13" fill="#1d1d1d">2</text>
+<circle cx="125" cy="105" r="3.5" fill="#1d1d1d"/>
+<text x="131" y="99" font-size="13" fill="#1d1d1d">3</text>
+<circle cx="90" cy="190" r="3.5" fill="#1d1d1d"/>
+<text x="96" y="184" font-size="13" fill="#1d1d1d">4</text>
+<circle cx="125" cy="275" r="3.5" fill="#1d1d1d"/>
+<text x="131" y="269" font-size="13" fill="#1d1d1d">5</text>
+<circle cx="210" cy="310" r="3.5" fill="#1d1d1d"/>
+<text x="216" y="304" font-size="13" fill="#1d1d1d">6</text>
+<circle cx="295" cy="275" r="3.5" fill="#1d1d1d"/>
+<text x="301" y="269" font-size="13" fill="#1d1d1d">7</text>
+<circle cx="390" cy="112" r="3.5" fill="#1d1d1d"/>
+<text x="396" y="106" font-size="13" fill="#1d1d1d">8</text>
+<circle cx="162" cy="75" r="3.5" fill="#1d1d1d"/>
+<text x="168" y="69" font-size="13" fill="#1d1d1d">9</text>
+<circle cx="60" cy="270" r="3.5" fill="#1d1d1d"/>
+<text x="66" y="264" font-size="13" fill="#1d1d1d">10</text>
+<circle cx="260" cy="380" r="3.5" fill="#1d1d1d"/>
+<text x="266" y="374" font-size="13" fill="#1d1d1d">11</text>
+<text x="210" y="190" font-size="13" text-anchor="middle" fill="#1d1d1d">reservoir</text>
+<line x1="20" y1="455" x2="120" y2="455" stroke="#1d1d1d" stroke-width="2"/><text x="70" y="448" font-size="12" text-anchor="middle" fill="#1d1d1d">100 m</text>
+</svg>

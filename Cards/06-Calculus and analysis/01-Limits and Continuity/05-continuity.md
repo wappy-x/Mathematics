@@ -513,7 +513,7 @@ example : 3 + 2 * ⌈(1 / 2 * 4 : ℚ)⌉ = 7 ∧ 3 + 2 * ⌈(1 / 2 * (4000001 /
 - [Bounded variation](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/01-functions-of-bounded-variation.md): finite total up-and-down movement, jumps included.
 - [Limits and continuity with distances](../../17-Topology/01-Metric%20Spaces/04-convergence-and-continuity-in-metric-spaces.md): the same game with any notion of distance.
 - [Continuity by pre-images, and homeomorphism](../../17-Topology/02-Topological%20Spaces/03-continuity-and-homeomorphism.md): continuity with no distances at all.
-- Homotopy: continuous deformations of one map into another.
+- [Homotopy](../../17-Topology/04-Homotopy/01-homotopy-and-homotopy-equivalence.md): continuous deformations of one map into another.
 
 Left open: the stepped fare jumps from $5 to $7 and skips every fare between; must a function with no jumps on an interval show every value between its end values? That is the [Intermediate value theorem](06-intermediate-value-theorem.md).
 

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 300" width="420" height="300" font-family="sans-serif" font-size="12">
+  <title>A lamp post at the centre, the 2 m walk wound once round it, the bench walk beside it, and the halfway frame of each straight slide to the owner, drawn to scale at 60 units per metre</title>
+  <rect x="0" y="0" width="420" height="300" fill="#ffffff"/>
+  <circle cx="150" cy="150" r="120" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+  <circle cx="210" cy="150" r="60" fill="none" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <circle cx="330" cy="150" r="60" fill="none" stroke="#264653" stroke-width="2"/>
+  <circle cx="300" cy="150" r="30" fill="none" stroke="#264653" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <circle cx="150" cy="150" r="6" fill="#e76f51" stroke="#1d1d1d" stroke-width="1"/>
+  <circle cx="270" cy="150" r="4" fill="#1d1d1d"/>
+  <polygon points="150,26 160,30 150,34" fill="#1d1d1d" transform="rotate(180 150 30)"/>
+  <text x="130" y="176" fill="#1d1d1d">post</text>
+  <text x="248" y="168" fill="#1d1d1d">owner</text>
+  <text x="34" y="60" fill="#1d1d1d">wound once, 2 m</text>
+  <text x="168" y="104" fill="#1d1d1d">t = 1/2</text>
+  <text x="300" y="80" fill="#264653">bench walk</text>
+  <text x="286" y="198" fill="#264653">t = 1/2</text>
+  <text x="10" y="292" fill="#1d1d1d">To scale: 60 units = 1 m. Solid: walks. Dashed: halfway frames.</text>
+</svg>

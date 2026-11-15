@@ -493,7 +493,7 @@ example : (1 : Matrix (Fin 2) (Fin 2) ℤ).trace = 2 := by decide
 - [Matrix times vector](02-matrix-times-vector.md): the sales table meets a price list, and the answer reads two ways.
 - [The adjacency matrix](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/07-adjacency-matrix-and-walk-counting.md): a square table of which dots are joined.
 - [AES](../../14-Applied%20and%20computational/04-Cryptography/02-symmetric-ciphers-and-aes.md): the Advanced Encryption Standard, a widely used cipher, holds its state as a 4 by 4 table of bytes.
-- Simplicial complexes and chains: tables recording which piece borders which, signs included.
+- [Simplicial complexes and chains](../../17-Topology/05-Homology/01-simplicial-complexes-and-chains.md): tables recording which piece borders which, signs included.
 - Lie group: square matrices that form groups in their own right.
 - BQP (the problems a quantum computer can solve efficiently): a quantum gate is a square table acting on a list of numbers.
 

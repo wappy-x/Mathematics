@@ -864,7 +864,7 @@ example : ((Finset.range 5).biUnion fun k => ({k, k + 5} : Finset ℕ)) = Finset
 - [Loss and empirical risk](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/01-loss-functions-and-empirical-risk.md): training error as empirical risk, for losses other than the squared miss.
 - [Bayesian optimisation](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/08-global-optimisation-and-bayesian-optimisation.md): searching many tuning settings when each cross-validation run is expensive.
 - [Fitting instead of passing through](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/07-least-squares-and-orthogonal-polynomials.md): polynomial fits that stay stable at high degree, and why equally spaced interpolation swings at the ends.
-- Persistence in practice: telling real shape from noise, asked of holes and loops.
+- [Persistence in practice](../../17-Topology/06-Topological%20Data%20Analysis/07-persistence-in-practice.md): telling real shape from noise, asked of holes and loops.
 - Learning with a guarantee: bounds on the gap between training and true error that hold before any data are held out.
 
 Cross-validation measures the gap between training and true error after the fact, one record at a time; how large that gap can be before any data are held out, for a whole family of curves at once, is the question Learning with a guarantee answers.

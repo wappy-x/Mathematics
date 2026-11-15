@@ -615,7 +615,7 @@ example : (ring.cliqueFinset 3).card = 0 âˆ§ (tourist.cliqueFinset 3).card = 0 â
 - [Friends and strangers](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/01-friends-and-strangers.md): six vertices force three all joined or three all unjoined.
 - [Random graphs](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/01-random-graphs-erdos-renyi.md): which pairs get a line, chosen at random.
 - [Small worlds and hubs](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/04-small-world-and-scale-free-models.md): the tallies real networks show.
-- Vietoris-Rips, Cech and alpha complexes: joining nearby data points, then filling triangles.
+- [Vietoris-Rips, Cech and alpha complexes](../../17-Topology/06-Topological%20Data%20Analysis/02-vietoris-rips-and-cech-complexes.md): joining nearby data points, then filling triangles.
 - Graph isomorphism: how hard sameness is when renamings cannot all be tried.
 
 Every renaming was tried here; a real network has far too many, and cutting that search down is what this shelf opens.

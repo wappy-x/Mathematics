@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 460" width="440" height="460">
+  <title>Persistence diagram of two price feeds: births across, deaths up, both from 89 to 106 dollars at 20 pixels per dollar. One dip sits far above the diagonal at (96.00, 104.00); four small dips sit inside the band within 0.30 of the diagonal; the second feed's points (rings) sit beside the first feed's (dots)</title>
+  <rect x="0" y="0" width="440" height="460" fill="#ffffff"/>
+  <polygon points="60,400 400,60 388,60 60,388" fill="#f4c7b8" stroke="none"/>
+  <g stroke="#1d1d1d" stroke-width="1.5" fill="none">
+    <line x1="60" y1="400" x2="400" y2="400"/>
+    <line x1="60" y1="400" x2="60" y2="60"/>
+    <line x1="60" y1="400" x2="400" y2="60"/>
+    <line x1="60" y1="35" x2="400" y2="35" stroke-dasharray="6 4"/>
+    <line x1="200" y1="100" x2="280" y2="180" stroke-dasharray="4 3" stroke-width="1"/>
+  </g>
+  <g stroke="#1d1d1d" stroke-width="1">
+    <line x1="80" y1="400" x2="80" y2="406"/><line x1="180" y1="400" x2="180" y2="406"/>
+    <line x1="280" y1="400" x2="280" y2="406"/><line x1="380" y1="400" x2="380" y2="406"/>
+    <line x1="54" y1="380" x2="60" y2="380"/><line x1="54" y1="280" x2="60" y2="280"/>
+    <line x1="54" y1="180" x2="60" y2="180"/><line x1="54" y1="80" x2="60" y2="80"/>
+  </g>
+  <g fill="none" stroke="#2a9d8f" stroke-width="2">
+    <circle cx="122.4" cy="326.8" r="6"/><circle cx="201" cy="102.6" r="6"/><circle cx="214" cy="232.4" r="6"/>
+    <circle cx="245.4" cy="210.4" r="6"/><circle cx="349.2" cy="108" r="6"/><circle cx="82.2" cy="35" r="6"/>
+  </g>
+  <g fill="#1d1d1d" stroke="none">
+    <circle cx="118" cy="332" r="4"/><circle cx="200" cy="100" r="4"/><circle cx="216" cy="234" r="4"/>
+    <circle cx="242" cy="206" r="4"/><circle cx="344" cy="108" r="4"/><circle cx="80" cy="35" r="4"/>
+  </g>
+  <g font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d">
+    <text x="80" y="422" text-anchor="middle">90</text><text x="180" y="422" text-anchor="middle">95</text>
+    <text x="280" y="422" text-anchor="middle">100</text><text x="380" y="422" text-anchor="middle">105</text>
+    <text x="50" y="384" text-anchor="end">90</text><text x="50" y="284" text-anchor="end">95</text>
+    <text x="50" y="184" text-anchor="end">100</text><text x="50" y="84" text-anchor="end">105</text>
+    <text x="50" y="39" text-anchor="end">inf</text>
+    <text x="230" y="445" text-anchor="middle">birth b: the dip's lowest close, dollars</text>
+    <text x="18" y="230" text-anchor="middle" transform="rotate(-90 18 230)">death d: the level where it merges, dollars</text>
+    <text x="212" y="96">the big dip (96.00, 104.00)</text>
+    <text x="252" y="132">4.00 to the diagonal</text>
+    <text x="96" y="30">never dies: the lowest close, 90.00</text>
+    <text x="190" y="300">band: within 0.30</text>
+    <text x="190" y="316">of the diagonal</text>
+    <text x="290" y="370">dot: feed 1</text>
+    <text x="290" y="386" fill="#1f7a6f">ring: feed 2</text>
+  </g>
+</svg>

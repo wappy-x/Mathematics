@@ -562,7 +562,7 @@ example : 2 * 5 - 2 - 4 = 4 ∧ 3 * 5 - 3 - 4 = 8 ∧ Nat.choose 5 3 = 10 := by 
 
 ## Where this goes next
 
-- Vietoris-Rips, Cech and alpha complexes: grow a disc round each point and join points whose discs meet.
+- [Vietoris-Rips, Cech and alpha complexes](../../17-Topology/06-Topological%20Data%20Analysis/02-vietoris-rips-and-cech-complexes.md): grow a disc round each point and join points whose discs meet.
 
 The map answers who is nearest; what shape a cloud of points has, seen at every scale at once, is the question a later card takes up.
 

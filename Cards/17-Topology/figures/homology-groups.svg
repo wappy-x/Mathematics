@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 300" width="420" height="300">
+  <title>A triangulated annulus: inner triangle 0, 1, 2 and outer triangle 3, 4, 5, joined by six panels; the inner rim z and the outer rim w are marked</title>
+  <rect x="0" y="0" width="420" height="300" fill="#ffffff"/>
+  <g fill="#e8e8e8" stroke="#1d1d1d" stroke-width="1.5" stroke-linejoin="round">
+    <polygon points="210,130 158,220 210,30"/>
+    <polygon points="158,220 210,30 71,270"/>
+    <polygon points="158,220 262,220 71,270"/>
+    <polygon points="262,220 71,270 349,270"/>
+    <polygon points="262,220 210,130 349,270"/>
+    <polygon points="210,130 349,270 210,30"/>
+  </g>
+  <polygon points="210,130 158,220 262,220" fill="#ffffff" stroke="#e76f51" stroke-width="4" stroke-linejoin="round"/>
+  <polygon points="210,30 71,270 349,270" fill="none" stroke="#2a9d8f" stroke-width="4" stroke-linejoin="round"/>
+  <g fill="#1d1d1d" stroke="none">
+    <circle cx="210" cy="130" r="4"/><circle cx="158" cy="220" r="4"/><circle cx="262" cy="220" r="4"/>
+    <circle cx="210" cy="30" r="4"/><circle cx="71" cy="270" r="4"/><circle cx="349" cy="270" r="4"/>
+  </g>
+  <g font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#1d1d1d">
+    <text x="192" y="127">0</text>
+    <text x="164" y="212">1</text>
+    <text x="244" y="212">2</text>
+    <text x="218" y="26">3</text>
+    <text x="52" y="285">4</text>
+    <text x="356" y="285">5</text>
+    <text x="196" y="203" fill="#b5442a">z</text>
+    <text x="118" y="140" fill="#1f7a6f">w</text>
+  </g>
+</svg>

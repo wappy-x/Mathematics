@@ -752,7 +752,7 @@ example : transvection (2 : Fin 3) 1 (-1 : ℚ) *ᵥ (transvection 2 0 (-(3/2)) 
 - [Kirchhoff's laws](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/01-kirchhoffs-laws-and-equivalent-circuits.md): currents in a circuit.
 - [LU with partial pivoting](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/02-lu-decomposition-and-pivoting.md): the multipliers kept and reused.
 - Smith normal form, in Topology: the moves over whole numbers.
-- The persistence algorithm: elimination on shapes.
+- [The persistence algorithm](../../17-Topology/06-Topological%20Data%20Analysis/03-the-persistence-algorithm.md): elimination on shapes.
 - Smith normal form, in Algebraic geometry: one standard staircase that every whole-number matrix reduces to.
 
 The staircase is thrown away once these days are answered; keeping the moves, so tomorrow's takings cost one multiplication, is [The inverse matrix](03-inverse-matrix.md).

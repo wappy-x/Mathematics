@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 400" width="420" height="400">
+<title>Three walks of a dog from its owner at (2, 0) m, round a lamp post at (0, 0) m, drawn to scale at 40 pixels per metre</title>
+<rect x="0" y="0" width="420" height="400" fill="#ffffff"/>
+<g stroke="#bbbbbb" stroke-width="1">
+<line x1="180" y1="180" x2="400" y2="180" stroke-dasharray="6 5"/>
+</g>
+<text x="330" y="196" font-family="sans-serif" font-size="12" fill="#555555">ray east</text>
+<polyline points="260,180 300,180 300,60 60,60 60,300 300,300 300,180 260,180" fill="none" stroke="#264653" stroke-width="2" stroke-dasharray="8 4"/>
+<polyline points="260,180 260,100 100,100 100,260 260,260 260,180" fill="none" stroke="#1d1d1d" stroke-width="3"/>
+<polyline points="260,180 300,180 300,140 260,140 260,180" fill="none" stroke="#e76f51" stroke-width="2"/>
+<polygon points="170,100 184,93 184,107" fill="#1d1d1d"/>
+<polygon points="170,60 184,53 184,67" fill="#264653"/>
+<polygon points="300,150 293,164 307,164" fill="#e76f51"/>
+<circle cx="180" cy="180" r="8" fill="#1d1d1d"/>
+<text x="150" y="205" font-family="sans-serif" font-size="12" fill="#1d1d1d">post (0, 0)</text>
+<rect x="276" y="156" width="8" height="8" fill="#e76f51"/>
+<circle cx="260" cy="180" r="5" fill="#ffffff" stroke="#1d1d1d" stroke-width="2"/>
+<text x="206" y="173" font-family="sans-serif" font-size="12" fill="#1d1d1d">owner (2, 0)</text>
+<text x="104" y="94" font-family="sans-serif" font-size="12" fill="#1d1d1d">a: 16 m, winding 1</text>
+<text x="64" y="54" font-family="sans-serif" font-size="12" fill="#264653">wide: 26 m, winding 1</text>
+<text x="306" y="136" font-family="sans-serif" font-size="12" fill="#e76f51">bin: 4 m, winding 0</text>
+<text x="20" y="335" font-family="sans-serif" font-size="12" fill="#1d1d1d">Grid unit 1 m. Both laps run anticlockwise and cross the ray once;</text>
+<text x="20" y="352" font-family="sans-serif" font-size="12" fill="#1d1d1d">the bin loop crosses it up and back down, so its count is 0.</text>
+</svg>

@@ -549,7 +549,7 @@ example : 3 * 6 = 18 ∧ Nat.lcm 3 6 = 6 := by decide
 
 ## Where this goes next
 
-- Van Kampen's theorem: the group of loops on a shape glued from two pieces, built from the pieces' groups — the same move where the parts interfere.
+- [Van Kampen's theorem](../../17-Topology/04-Homotopy/06-van-kampens-theorem.md): the group of loops on a shape glued from two pieces, built from the pieces' groups — the same move where the parts interfere.
 - Mordell-Weil: the points on a curve form a commutative group built from clocks and copies of the whole numbers, whose count is the rank.
 
 Pairing builds a group from parts. The reverse is harder: given a group, which parts is it made of, and what to do when the parts will not leave each other alone.

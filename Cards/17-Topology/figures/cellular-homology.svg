@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 270" width="700" height="270">
+<title>Three gluing recipes, schematic: the torus square abAB, the Klein bottle square abAb, the projective plane disc aa</title>
+<rect x="0" y="0" width="700" height="270" fill="#ffffff"/>
+<rect x="40" y="50" width="160" height="160" fill="#eef3f7" stroke="#1d1d1d" stroke-width="2.5"/>
+<polygon points="113,204 127,210 113,216" fill="#1d1d1d"/>
+<polygon points="113,44 127,50 113,56" fill="#1d1d1d"/>
+<polygon points="194,137 200,123 206,137" fill="#1d1d1d"/>
+<polygon points="34,137 40,123 46,137" fill="#1d1d1d"/>
+<text x="120" y="236" font-family="Georgia, serif" font-size="18" text-anchor="middle" font-style="italic" fill="#1d1d1d">a</text>
+<text x="120" y="38" font-family="Georgia, serif" font-size="18" text-anchor="middle" font-style="italic" fill="#1d1d1d">a</text>
+<text x="216" y="136" font-family="Georgia, serif" font-size="18" text-anchor="middle" font-style="italic" fill="#1d1d1d">b</text>
+<text x="24" y="136" font-family="Georgia, serif" font-size="18" text-anchor="middle" font-style="italic" fill="#1d1d1d">b</text>
+<circle cx="40" cy="50" r="4.5" fill="#1d1d1d"/>
+<circle cx="40" cy="210" r="4.5" fill="#1d1d1d"/>
+<circle cx="200" cy="50" r="4.5" fill="#1d1d1d"/>
+<circle cx="200" cy="210" r="4.5" fill="#1d1d1d"/>
+<rect x="260" y="50" width="160" height="160" fill="#eef3f7" stroke="#1d1d1d" stroke-width="2.5"/>
+<polygon points="333,204 347,210 333,216" fill="#1d1d1d"/>
+<polygon points="333,44 347,50 333,56" fill="#1d1d1d"/>
+<polygon points="414,137 420,123 426,137" fill="#1d1d1d"/>
+<polygon points="254,123 260,137 266,123" fill="#1d1d1d"/>
+<text x="340" y="236" font-family="Georgia, serif" font-size="18" text-anchor="middle" font-style="italic" fill="#1d1d1d">a</text>
+<text x="340" y="38" font-family="Georgia, serif" font-size="18" text-anchor="middle" font-style="italic" fill="#1d1d1d">a</text>
+<text x="436" y="136" font-family="Georgia, serif" font-size="18" text-anchor="middle" font-style="italic" fill="#1d1d1d">b</text>
+<text x="244" y="136" font-family="Georgia, serif" font-size="18" text-anchor="middle" font-style="italic" fill="#1d1d1d">b</text>
+<circle cx="260" cy="50" r="4.5" fill="#1d1d1d"/>
+<circle cx="260" cy="210" r="4.5" fill="#1d1d1d"/>
+<circle cx="420" cy="50" r="4.5" fill="#1d1d1d"/>
+<circle cx="420" cy="210" r="4.5" fill="#1d1d1d"/>
+<circle cx="560" cy="130" r="80" fill="#eef3f7" stroke="#1d1d1d" stroke-width="2.5"/>
+<polygon points="567,44 553,50 567,56" fill="#1d1d1d"/>
+<polygon points="553,204 567,210 553,216" fill="#1d1d1d"/>
+<text x="560" y="38" font-family="Georgia, serif" font-size="18" text-anchor="middle" font-style="italic" fill="#1d1d1d">a</text>
+<text x="560" y="236" font-family="Georgia, serif" font-size="18" text-anchor="middle" font-style="italic" fill="#1d1d1d">a</text>
+<circle cx="480" cy="130" r="4.5" fill="#1d1d1d"/>
+<circle cx="640" cy="130" r="4.5" fill="#1d1d1d"/>
+<text x="120" y="264" font-family="Georgia, serif" font-size="15" text-anchor="middle"  fill="#1d1d1d">torus: rim abAB</text>
+<text x="340" y="264" font-family="Georgia, serif" font-size="15" text-anchor="middle"  fill="#1d1d1d">Klein bottle: rim abAb</text>
+<text x="560" y="264" font-family="Georgia, serif" font-size="15" text-anchor="middle"  fill="#1d1d1d">projective plane: rim aa</text>
+<text x="120" y="136" font-family="Georgia, serif" font-size="20" text-anchor="middle"  fill="#1d1d1d">T</text>
+<text x="340" y="136" font-family="Georgia, serif" font-size="20" text-anchor="middle"  fill="#1d1d1d">K</text>
+<text x="560" y="136" font-family="Georgia, serif" font-size="20" text-anchor="middle"  fill="#1d1d1d">P</text>
+</svg>

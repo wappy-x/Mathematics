@@ -836,7 +836,7 @@ theorem resample_max_rank_prob (n : ℕ) (k : Fin n) :
 ## Where this goes next
 
 - [Historical and Monte Carlo VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md): resampling past market days to estimate a loss quantile.
-- Comparing diagrams: bootstrap bands that separate real features of a data set's shape from noise.
+- [Comparing diagrams](../../17-Topology/06-Topological%20Data%20Analysis/05-comparing-diagrams-and-vectorising-them.md): bootstrap bands that separate real features of a data set's shape from noise.
 
 This card resampled claims as independent draws; whether resampling past days is safe when bad days cluster together is the question [Historical and Monte Carlo VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md) takes up.
 

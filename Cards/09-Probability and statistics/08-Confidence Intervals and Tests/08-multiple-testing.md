@@ -1148,7 +1148,7 @@ end MultipleTesting
 ## Where this goes next
 
 - [Trying many strategies](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/06-deflated-sharpe-and-multiple-testing.md): many backtested strategies as one family of tests, and a Sharpe ratio discounted for the number tried.
-- Comparing diagrams: shape summaries turned into many features and tested together, where the same corrections decide which features count.
+- [Comparing diagrams](../../17-Topology/06-Topological%20Data%20Analysis/05-comparing-diagrams-and-vectorising-them.md): shape summaries turned into many features and tested together, where the same corrections decide which features count.
 
 Both guarantees here count errors among tests already chosen; what these cards take up is how to count honestly when the family is a search over strategies or features, and the number of tests is itself hard to pin down.
 

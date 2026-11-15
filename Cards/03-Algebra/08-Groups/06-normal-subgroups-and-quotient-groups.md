@@ -506,8 +506,8 @@ example : (24 : ℕ) / 2 = 12 := by norm_num
 
 - [Ideals and quotient rings](../09-Rings%20and%20Fields/04-ideals-and-quotient-rings.md): the same collapse, two operations.
 - [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): chains of normal subgroups, and where they end.
-- Van Kampen's theorem: quotients gluing two pieces' loop groups.
-- Homology groups: holes as one quotient per dimension.
+- [Van Kampen's theorem](../../17-Topology/04-Homotopy/06-van-kampens-theorem.md): quotients gluing two pieces' loop groups.
+- [Homology groups](../../17-Topology/05-Homology/02-homology-groups.md): holes as one quotient per dimension.
 - The Galois correspondence: normal subgroups matched with fields between roots and rationals.
 - Class groups: a quotient measuring how badly factorisation fails.
 - Modules: the same machinery, ring multiplication allowed.

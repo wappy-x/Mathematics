@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 380" width="420" height="380">
+  <title>Schematic: the hollow tetrahedron, four joints numbered 0 to 3, six struts each arrowed from its lower number to its higher, four triangular panels</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1d1d1d"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="420" height="380" fill="#ffffff"/>
+  <polygon points="70,270 230,340 210,60" fill="#e9eef2" stroke="none"/>
+  <polygon points="350,270 230,340 210,60" fill="#d6e2ea" stroke="none"/>
+  <polyline points="70,270 210,270 350,270" fill="none" stroke="#1d1d1d" stroke-width="2" stroke-dasharray="7,5" marker-mid="url(#arrow)"/>
+  <polyline points="70,270 150,305 230,340" fill="none" stroke="#1d1d1d" stroke-width="2.5" marker-mid="url(#arrow)"/>
+  <polyline points="70,270 140,165 210,60" fill="none" stroke="#1d1d1d" stroke-width="2.5" marker-mid="url(#arrow)"/>
+  <polyline points="350,270 290,305 230,340" fill="none" stroke="#1d1d1d" stroke-width="2.5" marker-mid="url(#arrow)"/>
+  <polyline points="350,270 280,165 210,60" fill="none" stroke="#1d1d1d" stroke-width="2.5" marker-mid="url(#arrow)"/>
+  <polyline points="230,340 220,200 210,60" fill="none" stroke="#1d1d1d" stroke-width="2.5" marker-mid="url(#arrow)"/>
+  <circle cx="70" cy="270" r="6" fill="#1d1d1d"/>
+  <circle cx="350" cy="270" r="6" fill="#1d1d1d"/>
+  <circle cx="230" cy="340" r="6" fill="#1d1d1d"/>
+  <circle cx="210" cy="60" r="6" fill="#1d1d1d"/>
+  <g font-family="Helvetica, Arial, sans-serif" font-size="20" fill="#1d1d1d">
+    <text x="42" y="276">0</text>
+    <text x="364" y="276">1</text>
+    <text x="224" y="368">2</text>
+    <text x="204" y="44">3</text>
+  </g>
+  <g font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d">
+    <text x="130" y="292">[0,1], behind</text>
+    <text x="116" y="226">panel [0,2,3]</text>
+    <text x="232" y="226">panel [1,2,3]</text>
+  </g>
+</svg>

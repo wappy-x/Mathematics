@@ -810,7 +810,7 @@ end TheArgumentPrinciple
 - [Rouche's theorem](07-rouches-theorem.md): two functions close on the loop have the same count.
 - [Zeta's zeros and the primes](../09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md): where zeta's zeros sit, and why primes care.
 - [Nyquist and margins](../../13-Engineering%20mathematics/03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): the count as a stability test.
-- Homology of spheres, and degree: winding number as degree.
+- [Homology of spheres, and degree](../../17-Topology/05-Homology/07-homology-of-spheres-and-degree.md): winding number as degree.
 - The prime number theorem: no zeta zeros on the line Re s = 1.
 - Counting the zeros: the zero count up to height T.
 

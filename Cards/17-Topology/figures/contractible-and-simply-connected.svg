@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 270" font-family="Helvetica, Arial, sans-serif" font-size="12">
+  <title>A disc, an annulus and a punctured plane, each with the walker's 8 m square loop, to scale</title>
+  <rect x="0" y="0" width="700" height="270" fill="#ffffff"/>
+  <!-- 10 drawing units a metre; panel centres (120, 130), (350, 130), (580, 130) -->
+  <!-- panel 1: the disc, radius 10 m; the loop shrinks to the centre -->
+  <circle cx="120" cy="130" r="100" fill="#eef4e4" stroke="#1d1d1d" stroke-width="2"/>
+  <rect x="80" y="90" width="80" height="80" fill="none" stroke="#1d1d1d" stroke-width="2.5"/>
+  <rect x="100" y="110" width="40" height="40" fill="none" stroke="#1d1d1d" stroke-width="1.3" stroke-dasharray="5 4"/>
+  <rect x="110" y="120" width="20" height="20" fill="none" stroke="#1d1d1d" stroke-width="1.3" stroke-dasharray="5 4"/>
+  <circle cx="120" cy="130" r="3" fill="#1d1d1d"/>
+  <text x="120" y="252" text-anchor="middle">disc: the lawn, no post</text>
+  <!-- panel 2: the annulus, 1 m to 10 m; the shrinking square touches the base at t = 3/4 -->
+  <circle cx="350" cy="130" r="100" fill="#eef4e4" stroke="#1d1d1d" stroke-width="2"/>
+  <circle cx="350" cy="130" r="10" fill="#9a9a9a" stroke="#1d1d1d" stroke-width="2"/>
+  <rect x="310" y="90" width="80" height="80" fill="none" stroke="#1d1d1d" stroke-width="2.5"/>
+  <rect x="340" y="120" width="20" height="20" fill="none" stroke="#1d1d1d" stroke-width="1.3" stroke-dasharray="5 4"/>
+  <text x="350" y="252" text-anchor="middle">annulus: the lawn round the post</text>
+  <!-- panel 3: the punctured plane; the loop retracts onto the circle of radius 1 m -->
+  <rect x="470" y="20" width="220" height="220" fill="#eef4e4" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="540" y="90" width="80" height="80" fill="none" stroke="#1d1d1d" stroke-width="2.5"/>
+  <circle cx="580" cy="130" r="10" fill="none" stroke="#1d1d1d" stroke-width="1.3" stroke-dasharray="5 4"/>
+  <circle cx="580" cy="130" r="3" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="580" y="252" text-anchor="middle">punctured plane: one point gone</text>
+</svg>

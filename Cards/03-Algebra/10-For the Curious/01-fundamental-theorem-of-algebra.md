@@ -519,7 +519,7 @@ example : (5 * 1 ^ 2 - 20 * 1 + 25 : ℤ) = 10 ∧ (5 * 3 ^ 2 - 20 * 3 + 25 : �
 - [Gaussian integers](03-gaussian-integers-and-sums-of-two-squares.md): whole numbers a + bi, with their own primes.
 - [Complex numbers](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/01-complex-numbers.md): a + bi as a point on a plane.
 - [Liouville's theorem](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md): the missing existence proof.
-- Homology of spheres, and degree: the wrap count of Step 0, made into a tool.
+- [Homology of spheres, and degree](../../17-Topology/05-Homology/07-homology-of-spheres-and-degree.md): the wrap count of Step 0, made into a tool.
 - Splitting fields: the property stated above has a name there, **algebraically closed**.
 
 The n roots exist; finding them is another matter — [Why there is no quintic formula](02-why-no-quintic-formula.md).

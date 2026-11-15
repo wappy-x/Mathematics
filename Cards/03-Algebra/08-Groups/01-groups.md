@@ -538,7 +538,7 @@ example : (2 * 3 : ZMod 6) = 0 := by decide
 - [Elliptic curves](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): an operation built to fit.
 - [Symmetry and conservation](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/08-symmetry-and-conserved-quantities.md): symmetry paying out.
 - [Diffie-Hellman and ElGamal](../../14-Applied%20and%20computational/04-Cryptography/05-diffie-hellman-and-elgamal.md): key exchange.
-- The fundamental group: loops end to end.
+- [The fundamental group](../../17-Topology/04-Homotopy/03-the-fundamental-group.md): loops end to end.
 - Rational points on a cubic: generating a curve's points.
 - The group law: its hard rule proved.
 - Lie group: every angle, not four.
