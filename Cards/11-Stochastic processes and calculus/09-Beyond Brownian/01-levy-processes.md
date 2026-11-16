@@ -1031,7 +1031,7 @@ example : (3 / 25 : ℚ) * 2 ^ 2 = 12 / 25 ∧ (2 : ℚ) * (3 / 25) = 6 / 25 := 
 ## Where this goes next
 
 - [Jump diffusions](02-jump-diffusions.md): a stochastic differential equation with a jump term.
-- Infinitely divisible laws: the complete proof that every infinitely divisible law has a Lévy–Khintchine exponent.
+- [Infinitely divisible laws](../../20-Harmonic%20analysis/04-Characteristic%20Functions%20and%20Probability/07-infinitely-divisible-laws-and-levy-khintchine.md): the complete proof that every infinitely divisible law has a Lévy–Khintchine exponent.
 
 A Lévy process moves the same way wherever it is, so this card leaves open how to model a price whose drift and jumps depend on its current level, as a spiking electricity price needs.
 

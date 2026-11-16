@@ -609,7 +609,7 @@ example : (1 : ℚ) - 4 / 10 * 3 - 2 / 10 * (-1) = 0 ∧ (1 : ℚ) - 4 / 10 * 1 
 - [QR](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/05-qr-householder-and-gram-schmidt.md): the same factorisation from reflections, steady at machine size.
 - [Orthonormal bases](../../18-Functional%20analysis/02-Hilbert%20Spaces/03-orthonormal-bases-and-parseval.md): endlessly many such directions, squared length still a sum of squares.
 - [Orthogonal polynomials](../../18-Functional%20analysis/02-Hilbert%20Spaces/05-orthogonal-polynomials-from-gram-schmidt.md): this loop on 1, x, x^2, with an integral as the dot product.
-- The Haar wavelet: the plainest one, built by halving an interval.
+- [The Haar wavelet](../../20-Harmonic%20analysis/05-Wavelets%20and%20Time-Frequency/03-haar-wavelet-and-multiresolution.md): the plainest one, built by halving an interval.
 
 Gram-Schmidt builds its directions from whatever lines it is handed; which matrices arrive with such a basis already fitted is the spectral theorem's answer.
 

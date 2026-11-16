@@ -758,7 +758,7 @@ example : (12 : ℕ) * 2 = 24 := by norm_num
 - [Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md): a Poisson number of price jumps added to a smooth stock path.
 - [The order book](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/01-the-limit-order-book.md): order arrivals as Poisson streams.
 - [Queues](../../14-Applied%20and%20computational/05-Operations%20Research/07-queueing-theory-and-littles-law.md): what Poisson arrivals do to a queue.
-- Infinitely divisible laws: the Poisson law as a building block of every law that splits into any number of independent equal parts.
+- [Infinitely divisible laws](../../20-Harmonic%20analysis/04-Characteristic%20Functions%20and%20Probability/07-infinitely-divisible-laws-and-levy-khintchine.md): the Poisson law as a building block of every law that splits into any number of independent equal parts.
 
 ---
 

@@ -806,8 +806,8 @@ example (t : ℚ) : (2 * t) ^ 2 / 2 = 2 * t ^ 2 := by ring
 
 ## Where this goes next
 
-- Levy's inversion formula: Lévy's formula and uniqueness proved for every law, with or without a density.
-- Levy's continuity theorem: characteristic functions that converge give laws that converge, the engine of the central limit theorem.
+- [Levy's inversion formula](../../20-Harmonic%20analysis/04-Characteristic%20Functions%20and%20Probability/03-levy-inversion-and-uniqueness.md): Lévy's formula and uniqueness proved for every law, with or without a density.
+- [Levy's continuity theorem](../../20-Harmonic%20analysis/04-Characteristic%20Functions%20and%20Probability/04-levy-continuity-theorem.md): characteristic functions that converge give laws that converge, the engine of the central limit theorem.
 - [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md): smoothness, moments from derivatives at zero, and which functions can be characteristic functions.
 - [Levy processes](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/01-levy-processes.md): random motions whose increments are described by one characteristic function.
 - [Pricing Heston exactly](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md): an option price computed by inverting a characteristic function.

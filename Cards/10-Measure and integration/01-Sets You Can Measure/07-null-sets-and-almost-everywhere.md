@@ -811,8 +811,8 @@ example : ((({∅, {0, 1}, {2, 3}, Finset.univ} : Finset (Finset (Fin 4))) ×ˢ
 - [Baire category theorem](../../17-Topology/01-Metric%20Spaces/10-baire-category-theorem.md): a different notion of "small", which can disagree with null.
 - [Boundary values and compactness](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/10-trace-and-rellich-kondrachov-in-outline.md): giving a function boundary values although the boundary is null.
 - [Carleson's theorem in outline](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/09-carleson-in-outline.md): Fourier series converging almost everywhere.
-- Calderon-Zygmund decomposition: splitting a function into good and bad parts, with inequalities that hold almost everywhere.
-- Restriction and Kakeya in outline: sets that hold a needle in every direction yet can have size zero.
+- [Calderon-Zygmund decomposition](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/02-calderon-zygmund-decomposition-in-outline.md): splitting a function into good and bad parts, with inequalities that hold almost everywhere.
+- [Restriction and Kakeya in outline](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/06-restriction-and-kakeya-in-outline.md): sets that hold a needle in every direction yet can have size zero.
 
 The dart's rule "chance equals area over π" was taken on trust here; building area so that it exists on every Borel set, and proving that its completion gives the Lebesgue sets, is [Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md).
 

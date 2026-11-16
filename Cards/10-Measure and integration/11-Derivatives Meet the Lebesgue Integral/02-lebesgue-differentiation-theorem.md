@@ -814,7 +814,7 @@ example : (1 / (1 / 10) : ℚ) - 1 = 9 ∧ (9 : ℚ) ≤ 3 / (1 / 10) ∧ (3 / (
 ## Where this goes next
 
 - [Lebesgue's theorem on monotone functions](03-monotone-functions-differentiable-almost-everywhere.md): every rising function has a slope almost everywhere, whether or not it is a running total.
-- The maximal function: the maximal function in higher dimensions, its bounds on $`L^p`$, and the averaging kernels it controls.
+- [The maximal function](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/01-hardy-littlewood-maximal-function.md): the maximal function in higher dimensions, its bounds on $`L^p`$, and the averaging kernels it controls.
 
 This card integrates and then differentiates. The question it leaves open is the reverse: which functions are the running totals of their own slopes? [Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md) answers it.
 

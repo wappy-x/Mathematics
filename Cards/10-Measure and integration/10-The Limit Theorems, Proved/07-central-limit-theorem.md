@@ -1117,8 +1117,8 @@ example : ((Finset.univ : Finset (Fin 6)).filter (fun i => i.val + 1 ≤ 3)).car
 
 ## Where this goes next
 
-- The central limit theorem in four lines, once you have fingerprints: the Fourier proof in four lines.
-- How big must n be: the Berry–Esseen bound in use, and a skewness correction.
+- [The central limit theorem in four lines, once you have fingerprints](../../20-Harmonic%20analysis/04-Characteristic%20Functions%20and%20Probability/05-central-limit-theorem-by-characteristic-functions.md): the Fourier proof in four lines.
+- [How big must n be](../../20-Harmonic%20analysis/04-Characteristic%20Functions%20and%20Probability/06-berry-esseen-and-the-rate.md): the Berry–Esseen bound in use, and a skewness correction.
 
 This card proves the limit and only states the rate; how big n must be in practice is answered on How big must n be.
 

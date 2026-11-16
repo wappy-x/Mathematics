@@ -506,7 +506,7 @@ example : ‖(2 * I) ^ 2 + 1‖ = 3 := by norm_num [mul_pow]
 
 ## Where this goes next
 
-- Interpolation: on a strip, the principle becomes the three-lines bound. It says the largest modulus on a line between the two edges is at most a weighted geometric mean of the largest moduli on the edges. That bound proves Riesz–Thorin: a linear map bounded at two sizes is bounded at every size between.
+- [Interpolation](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/04-interpolation-riesz-thorin-and-marcinkiewicz.md): on a strip, the principle becomes the three-lines bound. It says the largest modulus on a line between the two edges is at most a weighted geometric mean of the largest moduli on the edges. That bound proves Riesz–Thorin: a linear map bounded at two sizes is bounded at every size between.
 
 On an unbounded region the plain statement fails, as e^z on the half-plane showed; how two edges and a limit on growth restore control is the three-lines bound on that card.
 

@@ -923,9 +923,9 @@ example : (Finset.univ.filter (fun e : Finset (Fin 4) =>
 - [Product measure](../06-Product%20Measures%20and%20Fubini/02-product-measure.md): area and volume as products of $`\lambda`$.
 - [Infinitely many coin tosses](../06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md): $`\lambda`$ on [0, 1] as a coin tossed forever.
 - [The Lebesgue differentiation theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/02-lebesgue-differentiation-theorem.md): averages over shrinking intervals recover a function at almost every point, with regularity doing the covering.
-- The maximal function: the largest local average, bounded through $`\lambda`$ of the set where it is big.
-- Calderon-Zygmund decomposition: splitting a function by cutting the line into intervals measured by $`\lambda`$.
-- Restriction and Kakeya in outline: how small a set can be while holding a segment in every direction, measured by $`\lambda`$ in the plane.
+- [The maximal function](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/01-hardy-littlewood-maximal-function.md): the largest local average, bounded through $`\lambda`$ of the set where it is big.
+- [Calderon-Zygmund decomposition](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/02-calderon-zygmund-decomposition-in-outline.md): splitting a function by cutting the line into intervals measured by $`\lambda`$.
+- [Restriction and Kakeya in outline](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/06-restriction-and-kakeya-in-outline.md): how small a set can be while holding a segment in every direction, measured by $`\lambda`$ in the plane.
 
 Every Borel set now has a length, and so does everything a null set away from one; whether every subset of the line has one is what [Translation invariance and the Vitali set](04-translation-invariance-and-the-vitali-set.md) settles, and the answer is no.
 

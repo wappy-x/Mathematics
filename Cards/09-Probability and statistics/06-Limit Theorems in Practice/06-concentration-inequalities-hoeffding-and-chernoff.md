@@ -976,7 +976,7 @@ example : (2 : ℚ) * 1000 * (1 / 10) ^ 2 = 20 := by norm_num
 ## Where this goes next
 
 - [Tail bounds](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/02-tail-bounds-and-repeated-trials.md): Chernoff sets how many repeats drive an algorithm's error below any target.
-- Moments and cumulants: the logarithm of $`M(t)`$, minimised over here, as a generator of cumulants.
+- [Moments and cumulants](../../20-Harmonic%20analysis/04-Characteristic%20Functions%20and%20Probability/02-moments-and-cumulants-from-the-fingerprint.md): the logarithm of $`M(t)`$, minimised over here, as a generator of cumulants.
 - BPP: why "right 2 times in 3" is as good as "right almost always".
 - Streaming: independent copies of a rough estimate, combined, and Chernoff counting the copies.
 

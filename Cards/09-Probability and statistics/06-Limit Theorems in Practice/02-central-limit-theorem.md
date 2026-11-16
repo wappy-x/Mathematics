@@ -970,7 +970,7 @@ example : (6 : ℕ) ^ 10 = 60466176 := by norm_num
 - [The central limit theorem, proved](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/07-central-limit-theorem.md): the full proof, by Lindeberg's swap and by characteristic functions, and Lindeberg's condition.
 - [Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md): the running sum, rescaled, becomes a random path that is normal at every time.
 - [Characteristic functions](04-characteristic-functions-and-inversion.md): the generating function's complex cousin, which exists for every law and carries the theorem to every law with a finite spread.
-- The central limit theorem in four lines, once you have fingerprints: the proof for every finite spread, through Fourier transforms.
+- [The central limit theorem in four lines, once you have fingerprints](../../20-Harmonic%20analysis/04-Characteristic%20Functions%20and%20Probability/05-central-limit-theorem-by-characteristic-functions.md): the proof for every finite spread, through Fourier transforms.
 - Erdos-Kac: the bell in the count of prime factors of whole numbers.
 
 The theorem says the miss tends to a bell but guarantees nothing at 30 or 1,000 rolls; bounds that hold at every number of rolls, bell or no bell, are [Concentration](06-concentration-inequalities-hoeffding-and-chernoff.md).

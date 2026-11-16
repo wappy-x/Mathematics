@@ -801,7 +801,7 @@ example : (508295 / 10 ^ 7 : ℚ) ≤
 
 - [Intervals for a proportion](../08-Confidence%20Intervals%20and%20Tests/02-intervals-for-proportions.md): the same bell turned round, to put an interval on an unknown chance p from an observed count.
 - [Cox-Ross-Rubinstein](../../12-Financial%20mathematics/04-Binomial%20Trees/04-crr-tree-and-convergence.md): a binomial tree of stock prices converging to the lognormal bell (a bell for the logarithm of the price).
-- How big must n be: a guaranteed bound on the bell's error at a given n.
+- [How big must n be](../../20-Harmonic%20analysis/04-Characteristic%20Functions%20and%20Probability/06-berry-esseen-and-the-rate.md): a guaranteed bound on the bell's error at a given n.
 
 This card measured the bell's error case by case; how large that error can be for any n and p, with a bound that holds in advance, is what How big must n be answers.
 

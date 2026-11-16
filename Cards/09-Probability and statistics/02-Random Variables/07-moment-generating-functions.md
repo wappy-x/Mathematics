@@ -795,7 +795,7 @@ example : (10 : ℚ) * (1 / 2) = 5 ∧ (10 : ℚ) * (1 / 4) = 5 / 2 := by norm_n
 - [Concentration](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md): the function turned into exponentially small tail bounds.
 - [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md): the uniqueness theorem proved, and the swap of derivative and average justified.
 - [Compound Poisson](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md): a random number of random amounts, handled by composing functions.
-- Moments and cumulants: cumulants, the derivatives of the logarithm, and what they measure.
+- [Moments and cumulants](../../20-Harmonic%20analysis/04-Characteristic%20Functions%20and%20Probability/02-moments-and-cumulants-from-the-fingerprint.md): cumulants, the derivatives of the logarithm, and what they measure.
 
 The coin's function exists for every dial, but the heavy-tailed count's does not; a transform that exists for every law, and still multiplies over independent sums, is what [Characteristic functions](../06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md) builds.
 

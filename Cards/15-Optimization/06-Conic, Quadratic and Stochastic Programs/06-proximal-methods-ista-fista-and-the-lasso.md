@@ -1064,7 +1064,7 @@ On the garden centre's small table, coordinate descent wins: 26 sweeps against F
 ## Where this goes next
 
 - [ADMM](07-admm.md): gives the fit and the charge separate copies of the coefficients, solves each exactly, and reconciles the copies with a price; the same split spreads one fit across many machines.
-- Wavelet denoising: soft thresholding applied once, in a basis where the matrix is orthogonal (it keeps lengths and angles unchanged), so a single prox step is the exact answer.
+- [Wavelet denoising](../../20-Harmonic%20analysis/05-Wavelets%20and%20Time-Frequency/07-wavelet-denoising.md): soft thresholding applied once, in a basis where the matrix is orthogonal (it keeps lengths and angles unchanged), so a single prox step is the exact answer.
 
 Both rate bounds are worst cases, and ISTA ran far faster than its bound once the nine signals were found; when that faster, straight-line rate can be promised in advance is the question this card leaves open.
 

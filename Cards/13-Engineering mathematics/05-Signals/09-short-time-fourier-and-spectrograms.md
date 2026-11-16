@@ -909,7 +909,7 @@ example : hannWin 512 0 = 0 := by norm_num [hannWin]
 ## Where this goes next
 
 - [Uncertainty](../09-Quantum%20Mechanics%20in%20Outline/05-uncertainty-principle.md): proves $`\Delta t\,\Delta f \ge 1/(4\pi)`$ for every window and shows why only the Gaussian bell reaches it.
-- Short-time Fourier transform (planned): the sliding transform in its own right, with continuous time, its inverse formula, and which windows and hops let any signal be rebuilt.
+- [Short-time Fourier transform](../../20-Harmonic%20analysis/05-Wavelets%20and%20Time-Frequency/01-short-time-fourier-and-gabor.md): the sliding transform in its own right, with continuous time, its inverse formula, and which windows and hops let any signal be rebuilt.
 
 This card fixes one window for the whole picture. Whether any time-frequency picture at all, of any construction, can beat the floor the uncertainty card sets is the question left open here.
 

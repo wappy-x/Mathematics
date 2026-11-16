@@ -6,18 +6,18 @@
 
 Prove the convergence theorems for Fourier series and the inversion and Plancherel theorems for the transform, and use convolution, kernels and approximate identities as everyday tools. Derive the probability results that rest on characteristic functions, build and use wavelets, and read a modern harmonic-analysis statement about maximal functions, singular integrals and restriction.
 
-6 shelves · **28 of 52 cards ready to read**
+6 shelves · **52 of 52 cards ready to read**
 
-Click a shelf to jump to its cards, then click a card's title to read it. A title without a link is planned and not written yet.
+Click a shelf to jump to its cards, then click a card's title to read it.
 
-| Shelf | Cards | Ready to read |
-| --- | ---: | ---: |
-| [01 · Fourier Series in Depth](#s01) | 9 | 9 of 9 |
-| [02 · The Fourier Transform](#s02) | 10 | 10 of 10 |
-| [03 · Convolution and Approximate Identities](#s03) | 9 | 9 of 9 |
-| [04 · Characteristic Functions and Probability](#s04) | 9 | 0 of 9 · planned |
-| [05 · Wavelets and Time-Frequency](#s05) | 9 | 0 of 9 · planned |
-| [06 · Maximal Functions and Beyond](#s06) | 6 | 0 of 6 · planned |
+| Shelf | Cards |
+| --- | ---: |
+| [01 · Fourier Series in Depth](#s01) | 9 |
+| [02 · The Fourier Transform](#s02) | 10 |
+| [03 · Convolution and Approximate Identities](#s03) | 9 |
+| [04 · Characteristic Functions and Probability](#s04) | 9 |
+| [05 · Wavelets and Time-Frequency](#s05) | 9 |
+| [06 · Maximal Functions and Beyond](#s06) | 6 |
 
 <a name="s01"></a>
 
@@ -76,52 +76,52 @@ Click a shelf to jump to its cards, then click a card's title to read it. A titl
 
 <a name="s04"></a>
 
-## 04 · Characteristic Functions and Probability · 9 cards · planned
+## 04 · Characteristic Functions and Probability · 9 cards
 
 *Fourier analysis of probability laws: inversion, continuity, the central limit theorem, jump laws and option pricing*
 
-1. Characteristic functions: the transform of a probability law, which always exists
-2. Moments and cumulants: what differentiating the fingerprint at zero tells you
-3. Levy's inversion formula: getting the law back out of its fingerprint
-4. Levy's continuity theorem: when fingerprints converge, the laws converge too
-5. The central limit theorem in four lines, once you have fingerprints
-6. How big must n be: the Berry-Esseen bound and the skewness correction
-7. Infinitely divisible laws: the Levy-Khintchine recipe of drift, wobble and jumps
-8. Stable laws: the limits you reach when the variance is infinite
-9. Pricing by transform: Carr-Madan turns a fingerprint into a ladder of option prices
+1. [Characteristic functions: the transform of a probability law, which always exists](04-Characteristic%20Functions%20and%20Probability/01-characteristic-functions-in-depth.md)
+2. [Moments and cumulants: what differentiating the fingerprint at zero tells you](04-Characteristic%20Functions%20and%20Probability/02-moments-and-cumulants-from-the-fingerprint.md)
+3. [Levy's inversion formula: getting the law back out of its fingerprint](04-Characteristic%20Functions%20and%20Probability/03-levy-inversion-and-uniqueness.md)
+4. [Levy's continuity theorem: when fingerprints converge, the laws converge too](04-Characteristic%20Functions%20and%20Probability/04-levy-continuity-theorem.md)
+5. [The central limit theorem in four lines, once you have fingerprints](04-Characteristic%20Functions%20and%20Probability/05-central-limit-theorem-by-characteristic-functions.md)
+6. [How big must n be: the Berry-Esseen bound and the skewness correction](04-Characteristic%20Functions%20and%20Probability/06-berry-esseen-and-the-rate.md)
+7. [Infinitely divisible laws: the Levy-Khintchine recipe of drift, wobble and jumps](04-Characteristic%20Functions%20and%20Probability/07-infinitely-divisible-laws-and-levy-khintchine.md)
+8. [Stable laws: the limits you reach when the variance is infinite](04-Characteristic%20Functions%20and%20Probability/08-stable-laws-and-heavy-tails.md)
+9. [Pricing by transform: Carr-Madan turns a fingerprint into a ladder of option prices](04-Characteristic%20Functions%20and%20Probability/09-carr-madan-and-fourier-pricing.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s05"></a>
 
-## 05 · Wavelets and Time-Frequency · 9 cards · planned
+## 05 · Wavelets and Time-Frequency · 9 cards
 
 *Seeing when each frequency happens: windows, scales, filter banks, denoising and compression*
 
-1. Short-time Fourier transform: run the transform on sliding windows
-2. Continuous wavelet transform: compare the signal with stretched and shifted wiggles
-3. The Haar wavelet: averages and differences, and the ladder of coarse-to-fine views
-4. Mallat's algorithm: every scale in linear time by filtering and halving
-5. Filter banks: when splitting and rejoining returns the signal unchanged
-6. Daubechies wavelets: short, smooth, and blind to polynomial trends
-7. Wavelet denoising: keep the big coefficients, throw the small ones away
-8. Compression by wavelets: why a few coefficients carry a whole picture
-9. Frames in outline: redundant building blocks that still rebuild a signal stably
+1. [Short-time Fourier transform: run the transform on sliding windows](05-Wavelets%20and%20Time-Frequency/01-short-time-fourier-and-gabor.md)
+2. [Continuous wavelet transform: compare the signal with stretched and shifted wiggles](05-Wavelets%20and%20Time-Frequency/02-continuous-wavelet-transform-and-the-scalogram.md)
+3. [The Haar wavelet: averages and differences, and the ladder of coarse-to-fine views](05-Wavelets%20and%20Time-Frequency/03-haar-wavelet-and-multiresolution.md)
+4. [Mallat's algorithm: every scale in linear time by filtering and halving](05-Wavelets%20and%20Time-Frequency/04-mallats-fast-wavelet-transform.md)
+5. [Filter banks: when splitting and rejoining returns the signal unchanged](05-Wavelets%20and%20Time-Frequency/05-filter-banks-and-perfect-reconstruction.md)
+6. [Daubechies wavelets: short, smooth, and blind to polynomial trends](05-Wavelets%20and%20Time-Frequency/06-daubechies-and-vanishing-moments.md)
+7. [Wavelet denoising: keep the big coefficients, throw the small ones away](05-Wavelets%20and%20Time-Frequency/07-wavelet-denoising.md)
+8. [Compression by wavelets: why a few coefficients carry a whole picture](05-Wavelets%20and%20Time-Frequency/08-wavelet-compression-and-image-coding.md)
+9. [Frames in outline: redundant building blocks that still rebuild a signal stably](05-Wavelets%20and%20Time-Frequency/09-frames-in-outline.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s06"></a>
 
-## 06 · Maximal Functions and Beyond · 6 cards · planned
+## 06 · Maximal Functions and Beyond · 6 cards
 
 *The tools of modern harmonic analysis, proved where the proof is short and stated where it is deep*
 
-1. The maximal function: the biggest average around a point, and the bound it obeys
-2. Calderon-Zygmund decomposition: halve the boxes until the average is just big enough
-3. Singular integrals: kernels that only just fail to be integrable, yet stay bounded
-4. Interpolation: bounds at two sizes give bounds at every size between
-5. Bochner's theorem: which functions are fingerprints, and which are spectra
-6. Restriction and Kakeya in outline: what a spectrum living on a sphere can tell you
+1. [The maximal function: the biggest average around a point, and the bound it obeys](06-Maximal%20Functions%20and%20Beyond/01-hardy-littlewood-maximal-function.md)
+2. [Calderon-Zygmund decomposition: halve the boxes until the average is just big enough](06-Maximal%20Functions%20and%20Beyond/02-calderon-zygmund-decomposition-in-outline.md)
+3. [Singular integrals: kernels that only just fail to be integrable, yet stay bounded](06-Maximal%20Functions%20and%20Beyond/03-singular-integrals-and-the-hilbert-transform-bound.md)
+4. [Interpolation: bounds at two sizes give bounds at every size between](06-Maximal%20Functions%20and%20Beyond/04-interpolation-riesz-thorin-and-marcinkiewicz.md)
+5. [Bochner's theorem: which functions are fingerprints, and which are spectra](06-Maximal%20Functions%20and%20Beyond/05-bochner-and-positive-definite-functions.md)
+6. [Restriction and Kakeya in outline: what a spectrum living on a sphere can tell you](06-Maximal%20Functions%20and%20Beyond/06-restriction-and-kakeya-in-outline.md)
 
 [↑ Back to the shelves](#top)
 

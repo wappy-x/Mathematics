@@ -790,7 +790,7 @@ example : ∀ A : Finset (Fin 6), ∑ i ∈ A, dieDensity i * (1/6) = ∑ i ∈ 
 - [Lebesgue decomposition](05-lebesgue-decomposition.md): what to do with the stranded part when absolute continuity fails.
 - [Conditional expectation on a sigma-algebra](../09-Conditional%20Expectation/02-conditional-expectation-on-a-sigma-algebra.md): conditional expectation built as a density on a smaller sigma-algebra.
 - [Absolutely continuous functions and the fundamental theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/04-absolutely-continuous-functions-and-the-fundamental-theorem.md): the same idea for functions on the line, where the density becomes an ordinary derivative.
-- Bochner's theorem: a positive-definite function as the Fourier transform of a measure; when that measure has a density against length, the density is an ordinary function behind it.
+- [Bochner's theorem](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/05-bochner-and-positive-definite-functions.md): a positive-definite function as the Fourier transform of a measure; when that measure has a density against length, the density is an ordinary function behind it.
 
 The theorem guarantees a density but no formula for it; [The Radon-Nikodym derivative](04-radon-nikodym-derivative.md) takes the density as given and asks how it behaves.
 

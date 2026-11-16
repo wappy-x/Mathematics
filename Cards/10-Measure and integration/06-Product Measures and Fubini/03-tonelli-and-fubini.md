@@ -768,7 +768,7 @@ example : ∑ i ∈ Finset.Icc 1 10, ∑ j ∈ Finset.Icc 1 11, |pmTable i j| = 
 - [The layer-cake formula](06-layer-cake-and-tail-integrals.md): an integral rewritten as the integral of its tail sizes, by Tonelli.
 - [Conditioning on a random variable](../09-Conditional%20Expectation/05-conditioning-on-a-random-variable.md): conditional averages computed by integrating out one coordinate.
 - [Fourier inversion](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/04-fourier-inversion-theorem.md): recovering a function from its transform, with Fubini justifying each swap.
-- Levy's inversion formula: a distribution recovered from its characteristic function, again by swapping integrals.
+- [Levy's inversion formula](../../20-Harmonic%20analysis/04-Characteristic%20Functions%20and%20Probability/03-levy-inversion-and-uniqueness.md): a distribution recovered from its characteristic function, again by swapping integrals.
 
 What the swap buys for two independent quantities, whose joint law is a product, is [Independence as a product](04-independence-as-a-product-measure.md).
 

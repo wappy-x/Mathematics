@@ -923,7 +923,7 @@ example : (1 / 3 + 1 / 3 : ℚ) ≠ 1 := by norm_num
 - [Dual spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/09-dual-spaces-and-lp-duality.md): the equality case makes $`L^q`$ the dual of $`L^p`$.
 - [Sobolev and Poincare](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/09-sobolev-embedding-and-poincare-inequality.md): Holder turns bounds on a derivative into bounds on the function.
 - [The uncertainty principle](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/07-uncertainty-principle.md): Cauchy-Schwarz caps how concentrated a signal and its spectrum can be together.
-- Interpolation: Holder's convexity in 1/p grows into operator bounds between the ends.
+- [Interpolation](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/04-interpolation-riesz-thorin-and-marcinkiewicz.md): Holder's convexity in 1/p grows into operator bounds between the ends.
 
 Holder caps the integral of a product; whether the p-size of a sum is capped by the sum of the p-sizes is the question [Minkowski's inequality](03-minkowskis-inequality.md) answers.
 
