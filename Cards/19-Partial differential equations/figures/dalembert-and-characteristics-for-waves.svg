@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 410" font-family="Helvetica, Arial, sans-serif" font-size="12">
+<title>The plucked A string in the place-time plane: the two corners ride characteristics at 143 m/s, bounce between bridge and nut, and meet again after one period of 9.09 ms; drawn to scale</title>
+<rect x="0" y="0" width="500" height="410" fill="#ffffff"/>
+<line x1="60" y1="330" x2="450.0" y2="330" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="60" y1="330" x2="60" y2="30.00" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="450.0" y1="330" x2="450.0" y2="30.00" stroke="#1d1d1d" stroke-width="1.2"/>
+<text x="60" y="24.00" text-anchor="middle" fill="#1d1d1d">bridge</text>
+<text x="450.0" y="24.00" text-anchor="middle" fill="#1d1d1d">nut</text>
+<line x1="60" y1="330" x2="60" y2="335" stroke="#1d1d1d"/><text x="60" y="348" text-anchor="middle" fill="#1d1d1d">0</text>
+<line x1="120" y1="330" x2="120" y2="335" stroke="#1d1d1d"/><text x="120" y="348" text-anchor="middle" fill="#1d1d1d">10</text>
+<line x1="180" y1="330" x2="180" y2="335" stroke="#1d1d1d"/><text x="180" y="348" text-anchor="middle" fill="#1d1d1d">20</text>
+<line x1="240" y1="330" x2="240" y2="335" stroke="#1d1d1d"/><text x="240" y="348" text-anchor="middle" fill="#1d1d1d">30</text>
+<line x1="300" y1="330" x2="300" y2="335" stroke="#1d1d1d"/><text x="300" y="348" text-anchor="middle" fill="#1d1d1d">40</text>
+<line x1="360" y1="330" x2="360" y2="335" stroke="#1d1d1d"/><text x="360" y="348" text-anchor="middle" fill="#1d1d1d">50</text>
+<line x1="420" y1="330" x2="420" y2="335" stroke="#1d1d1d"/><text x="420" y="348" text-anchor="middle" fill="#1d1d1d">60</text>
+<line x1="450" y1="330" x2="450" y2="335" stroke="#1d1d1d"/><text x="450" y="348" text-anchor="middle" fill="#1d1d1d">65</text>
+<line x1="55" y1="330" x2="60" y2="330" stroke="#1d1d1d"/><text x="52" y="334" text-anchor="end" fill="#1d1d1d">0</text>
+<line x1="55" y1="270" x2="60" y2="270" stroke="#1d1d1d"/><text x="52" y="274" text-anchor="end" fill="#1d1d1d">2</text>
+<line x1="55" y1="210" x2="60" y2="210" stroke="#1d1d1d"/><text x="52" y="214" text-anchor="end" fill="#1d1d1d">4</text>
+<line x1="55" y1="150" x2="60" y2="150" stroke="#1d1d1d"/><text x="52" y="154" text-anchor="end" fill="#1d1d1d">6</text>
+<line x1="55" y1="90" x2="60" y2="90" stroke="#1d1d1d"/><text x="52" y="94" text-anchor="end" fill="#1d1d1d">8</text>
+<line x1="60" y1="57.27" x2="450.0" y2="57.27" stroke="#1d1d1d" stroke-width="0.8" stroke-dasharray="2 3"/>
+<text x="454.0" y="61.27" fill="#1d1d1d" font-size="10">9.09</text>
+<text x="255.0" y="366" text-anchor="middle" fill="#1d1d1d">place along the string, x (cm from the bridge)</text>
+<text x="18" y="180" text-anchor="middle" fill="#1d1d1d" transform="rotate(-90 18 180)">time, t (ms)</text>
+<polyline points="190.00,330.00 450.00,239.09 60.00,102.73 190.00,57.27" fill="none" stroke="#1d1d1d" stroke-width="2.5"/>
+<polyline points="190.00,330.00 60.00,284.55 450.00,148.18 190.00,57.27" fill="none" stroke="#1d1d1d" stroke-width="2.5" stroke-dasharray="9 5"/>
+<circle cx="190.00" cy="330" r="4" fill="#1d1d1d"/><text x="190.00" y="308" text-anchor="end" fill="#1d1d1d" font-size="10">pluck</text>
+<circle cx="320.00" cy="193.64" r="4" fill="#1d1d1d"/><text x="328.00" y="197.64" fill="#1d1d1d" font-size="10">corners meet: −3 mm</text>
+<line x1="255.0" y1="302.73" x2="177.0" y2="330" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="255.0" y1="302.73" x2="333.0" y2="330" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="3 3"/>
+<circle cx="255.0" cy="302.73" r="3.5" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/><text x="255.0" y="294.73" text-anchor="middle" fill="#1d1d1d" font-size="10">P</text>
+<line x1="70" y1="392" x2="100" y2="392" stroke="#1d1d1d" stroke-width="2.5"/><text x="106" y="396" fill="#1d1d1d" font-size="10">corner moving right at first</text>
+<line x1="270" y1="392" x2="300" y2="392" stroke="#1d1d1d" stroke-width="2.5" stroke-dasharray="9 5"/><text x="306" y="396" fill="#1d1d1d" font-size="10">corner moving left at first</text>
+</svg>

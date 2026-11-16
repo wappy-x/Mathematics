@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 170" width="460" height="170" font-family="Helvetica, Arial, sans-serif" font-size="12">
+  <title>The first three mode shapes of a 0.6 m by 0.4 m simply supported steel plate, drawn to scale at 200 px per m, with their nodal lines and the sign of each lobe</title>
+  <rect x="0" y="0" width="460" height="170" fill="#ffffff"/>
+  <text x="230" y="18" text-anchor="middle" fill="#1d1d1d">0.6 m by 0.4 m plate, 200 px per m; dashed: nodal lines</text>
+  <rect x="20" y="30" width="120" height="80" fill="#f4d6cc" stroke="#1d1d1d" stroke-width="2"/>
+  <text x="80" y="75" text-anchor="middle" fill="#1d1d1d" font-size="16">+</text>
+  <rect x="170" y="30" width="60" height="80" fill="#f4d6cc" stroke="none"/>
+  <rect x="230" y="30" width="60" height="80" fill="#cfe8e5" stroke="none"/>
+  <rect x="170" y="30" width="120" height="80" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+  <line x1="230" y1="30" x2="230" y2="110" stroke="#1d1d1d" stroke-width="1.6" stroke-dasharray="6 4"/>
+  <text x="200" y="75" text-anchor="middle" fill="#1d1d1d" font-size="16">+</text>
+  <text x="260" y="75" text-anchor="middle" fill="#1d1d1d" font-size="16">−</text>
+  <rect x="320" y="30" width="120" height="40" fill="#f4d6cc" stroke="none"/>
+  <rect x="320" y="70" width="120" height="40" fill="#cfe8e5" stroke="none"/>
+  <rect x="320" y="30" width="120" height="80" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+  <line x1="320" y1="70" x2="440" y2="70" stroke="#1d1d1d" stroke-width="1.6" stroke-dasharray="6 4"/>
+  <text x="380" y="57" text-anchor="middle" fill="#1d1d1d" font-size="16">+</text>
+  <text x="380" y="97" text-anchor="middle" fill="#1d1d1d" font-size="16">−</text>
+  <text x="80" y="132" text-anchor="middle" fill="#1d1d1d">mode (1,1)</text>
+  <text x="80" y="150" text-anchor="middle" fill="#1d1d1d">66.11 Hz</text>
+  <text x="230" y="132" text-anchor="middle" fill="#1d1d1d">mode (2,1)</text>
+  <text x="230" y="150" text-anchor="middle" fill="#1d1d1d">127.13 Hz</text>
+  <text x="380" y="132" text-anchor="middle" fill="#1d1d1d">mode (1,2)</text>
+  <text x="380" y="150" text-anchor="middle" fill="#1d1d1d">203.41 Hz</text>
+</svg>

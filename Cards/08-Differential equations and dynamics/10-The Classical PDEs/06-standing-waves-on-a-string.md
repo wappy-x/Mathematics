@@ -811,7 +811,7 @@ example : (2 : ℚ) / (2 ^ 2 * ((1 / 4) * (1 - 1 / 4))) = 32 / 12 := by norm_num
 
 - [Electromagnetic waves](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/08-electromagnetic-waves.md): the same equation for light, standing in a cavity.
 - [Waves on strings and drums](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/01-wave-equation-for-strings-and-membranes.md): harmonics as the model for quantised states.
-- Drumheads: a drum's harmonics, no longer whole multiples.
+- [Drumheads](../../19-Partial%20differential%20equations/05-Waves/08-membranes-and-bessel-modes.md): a drum's harmonics, no longer whole multiples.
 
 Left open: what are the harmonics of a drumhead or an uneven string, where the shapes are no longer sines and the frequencies no longer whole multiples?
 

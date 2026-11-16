@@ -797,7 +797,7 @@ example : (80 : ℚ) * 250 + 160 * 250 = 60000 := by norm_num
 
 - [The brachistochrone](02-the-brachistochrone-and-the-beltrami-identity.md): a shortcut when $`F`$ has no $`x`$ slot, and the curve of fastest descent.
 - [Lagrangian mechanics](04-lagrangian-mechanics.md): time in place of distance, and the laws of motion.
-- Dirichlet's principle: a surface as the unknown, and Laplace's equation.
+- [Dirichlet's principle](../../19-Partial%20differential%20equations/04-Laplace%2C%20Poisson%20and%20Potentials/06-dirichlet-principle-and-variational-form.md): a surface as the unknown, and Laplace's equation.
 - Minimal surface: least area spanning a wire loop.
 - Geodesic and exponential map: shortest routes on curved ground.
 - Noether: why a missing slot, as in Step 5, gives a conserved quantity.

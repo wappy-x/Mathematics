@@ -823,7 +823,7 @@ example : (100 : ℚ) * (9/10) ^ 44 < 1 ∧ 1 ≤ (100 : ℚ) * (9/10) ^ 43 := b
 ## Where this goes next
 
 - [Spectrum](07-spectrum-and-resolvent.md): the numbers λ for which λI − T has no inverse. The series shows every λ with |λ| > ‖T‖ is safe, and that the safe set is open.
-- The Fredholm alternative (planned): what happens to x = b + Kx when the loop is too strong for the series, for compact K: either one solution for every b, or finitely many obstructions.
+- [The Fredholm alternative](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/08-fredholm-alternative-and-compact-operators.md): what happens to x = b + Kx when the loop is too strong for the series, for compact K: either one solution for every b, or finitely many obstructions.
 
 The norm test is one-way: the c = 8 blur converges with norm above 1. The exact dividing line between loops that settle and loops that run away is the question this card leaves open.
 

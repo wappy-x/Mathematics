@@ -1506,7 +1506,7 @@ example : 8 * 4 - 7 = 25 ∧ 8 * 1024 - 7 = 8185 := by decide
 
 ## Where this goes next
 
-- Galerkin (planned): Galerkin's method in general, beyond the cable's symmetric energy form, where Céa's lemma gains the constant $`M/\alpha`$.
+- [Galerkin](../../19-Partial%20differential%20equations/06-Weak%20Solutions%20and%20Free%20Boundaries/04-galerkin-and-finite-elements.md): Galerkin's method in general, beyond the cable's symmetric energy form, where Céa's lemma gains the constant $`M/\alpha`$.
 - [Spectral methods](10-spectral-methods-and-the-fft.md): use smooth global functions in place of hats, and gain accuracy much faster than any power of $`h`$ when the answer is smooth.
 
 This card leaves open what happens when the curvature is concentrated in a few places: how to find them from the computed answer alone, and how to refine there.

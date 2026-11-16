@@ -991,7 +991,7 @@ end BesselDrum
 
 - [Sturm-Liouville](09-sturm-liouville-and-orthogonality.md): why the zeros never run out, and why the shapes are orthogonal: two different shapes multiplied together average to zero over the head's area.
 - [Waves on strings and drums](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/01-wave-equation-for-strings-and-membranes.md): the wave equation behind the ring balance.
-- Drumheads: every mode, including those with still diameters.
+- [Drumheads](../../19-Partial%20differential%20equations/05-Waves/08-membranes-and-bessel-modes.md): every mode, including those with still diameters.
 
 A real strike sounds many notes at once; how much of each it contains is the orthogonality question Sturm-Liouville answers.
 

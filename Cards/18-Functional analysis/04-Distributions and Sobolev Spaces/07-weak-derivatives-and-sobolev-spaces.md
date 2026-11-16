@@ -913,7 +913,7 @@ example : (32 / 3 : ℚ) * 60 = 640 ∧ (32 : ℚ) / 60 = 8 / 15 := by norm_num
 - [Unbounded operators](../05-Unbounded%20Operators%20and%20Semigroups/01-unbounded-operators-and-domains.md): the derivative as an operator whose domain is a Sobolev space.
 - [Weak solutions](08-weak-solutions-of-differential-equations.md): the partial differential equations wing's use of the same idea.
 - [Leray's weak solutions](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/02-leray-weak-solutions-of-navier-stokes.md): fluid flow posed in Sobolev spaces.
-- Sobolev spaces (planned): the full theory in several dimensions.
+- [Sobolev spaces](../../19-Partial%20differential%20equations/06-Weak%20Solutions%20and%20Free%20Boundaries/02-sobolev-spaces-for-pdes.md): the full theory in several dimensions.
 
 Left open: how much does an $`H^1`$ bound on the load control its largest value, and how fast can it change between two instants?
 

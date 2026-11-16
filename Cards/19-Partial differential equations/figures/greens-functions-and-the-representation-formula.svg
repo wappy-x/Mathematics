@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 420" width="480" height="420" font-family="Helvetica, Arial, sans-serif" font-size="13">
+  <title>Side view of the 1 m concrete cube, drawn to scale at 300 px per metre: hot plate at 80 C on top, 20 C on the other walls, the heater at a, the sensor at b and the centre c</title>
+  <rect x="0" y="0" width="480" height="420" fill="#ffffff"/>
+  <rect x="60" y="60" width="300" height="300" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+  <line x1="60" y1="60" x2="360" y2="60" stroke="#c0392b" stroke-width="7"/>
+  <text x="210" y="45" text-anchor="middle" fill="#1d1d1d">hot plate, 80 °C</text>
+  <text x="210" y="382" text-anchor="middle" fill="#1d1d1d">bottom, 20 °C</text>
+  <text x="52" y="214" text-anchor="end" fill="#1d1d1d">20 °C</text>
+  <text x="368" y="214" fill="#1d1d1d">20 °C</text>
+  <line x1="120" y1="240" x2="210" y2="120" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="5,4"/>
+  <circle cx="120" cy="240" r="7" fill="#e76f51" stroke="#1d1d1d"/>
+  <text x="112" y="262" text-anchor="middle" fill="#1d1d1d">heater a, 20 W</text>
+  <rect x="204" y="114" width="12" height="12" fill="#2a9d8f" stroke="#1d1d1d"/>
+  <text x="224" y="124" fill="#1d1d1d">sensor b</text>
+  <circle cx="210" cy="210" r="4" fill="#1d1d1d"/>
+  <text x="218" y="214" fill="#1d1d1d">centre c</text>
+  <text x="60" y="404" fill="#1d1d1d">x = 0</text>
+  <text x="360" y="404" text-anchor="end" fill="#1d1d1d">x = 1 m</text>
+  <text x="420" y="64" fill="#1d1d1d">z = 1 m</text>
+  <text x="420" y="364" fill="#1d1d1d">z = 0</text>
+</svg>

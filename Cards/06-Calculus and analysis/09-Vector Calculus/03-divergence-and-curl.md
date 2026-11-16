@@ -680,7 +680,7 @@ example : (-(1 : ℚ) / 10) * 40 * 30 = -120 := by norm_num
 - [Electric fields](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/04-electrostatics-gauss-and-potential.md): divergence of the electric field as charge.
 - [Continuity and Bernoulli](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/01-continuity-and-bernoulli.md): zero divergence as conservation of fluid.
 - [Navier-Stokes](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/03-navier-stokes-and-the-reynolds-number.md): both operators in the fluid equations.
-- Vorticity: the curl of a flow, followed in time.
+- [Vorticity](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/04-vorticity-and-the-euler-equations.md): the curl of a flow, followed in time.
 - Exterior derivative: gradient, curl and divergence as one operation.
 
 Divergence and curl work one point at a time; what local spreading adds up to over a solid is [Divergence theorem](07-divergence-theorem.md), and local spin over a surface, [Stokes' theorem](08-stokes-theorem.md).

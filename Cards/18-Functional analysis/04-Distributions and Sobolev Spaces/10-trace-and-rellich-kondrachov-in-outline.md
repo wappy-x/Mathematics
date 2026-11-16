@@ -1062,7 +1062,7 @@ On this shelf, [Weak derivatives](07-weak-derivatives-and-sobolev-spaces.md) def
 
 ## Where this goes next
 
-- Sobolev spaces (planned): fractional-order spaces such as $`H^{1/2}(\partial\Omega)`$, the exact set of traces, and the full chain of embeddings.
+- [Sobolev spaces](../../19-Partial%20differential%20equations/06-Weak%20Solutions%20and%20Free%20Boundaries/02-sobolev-spaces-for-pdes.md): fractional-order spaces such as $`H^{1/2}(\partial\Omega)`$, the exact set of traces, and the full chain of embeddings.
 
 Which edge profiles are traces, exactly, and how to measure half a derivative, is the question this card leaves open.
 

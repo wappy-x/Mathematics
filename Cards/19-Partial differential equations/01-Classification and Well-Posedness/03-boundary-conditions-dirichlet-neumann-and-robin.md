@@ -1219,7 +1219,7 @@ example : (120 : ℚ) * 50 * (1 / 100) = 60 ∧ (110 : ℚ) * 50 * (1 / 100) = 5
 - [Energy methods](07-energy-methods-and-uniqueness.md): Step 5's uniqueness argument in general.
 - [Maximum principles](08-maximum-principles.md): why the held plate's hottest point sits on its edge.
 - [Weak solutions](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/08-weak-solutions-of-differential-equations.md): in the weak form a flow condition is built in for free, while a value condition must be imposed.
-- The Fredholm alternative: the compatibility condition is one case of a general rule for when an equation with free solutions can be solved.
+- [The Fredholm alternative](../07-Nonlinear%20PDE%20and%20Fluids/08-fredholm-alternative-and-compact-operators.md): the compatibility condition is one case of a general rule for when an equation with free solutions can be solved.
 
 See also [Linear or not](02-linear-nonlinear-and-superposition.md): one hot edge at a time, then add, works only for linear conditions.
 

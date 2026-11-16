@@ -1050,7 +1050,7 @@ example : (100 : ℚ) ^ 2 * (6 / 10 - 4 / 10) = 2000 := by norm_num
 
 ## Where this goes next
 
-- Schrodinger and Klein-Gordon (planned): the wave equation of relativity, where a second time derivative changes the dispersion and the conserved quantity.
+- [Schrodinger and Klein-Gordon](../../19-Partial%20differential%20equations/05-Waves/07-schrodinger-and-klein-gordon-in-outline.md): the wave equation of relativity, where a second time derivative changes the dispersion and the conserved quantity.
 
 Related cards on this shelf: [Unbounded operators](01-unbounded-operators-and-domains.md), [Self-adjoint extensions](02-self-adjoint-extensions-and-the-spectral-theorem.md), [Evolution as an equation](03-the-abstract-cauchy-problem-and-the-operator-exponential.md), [Semigroups](04-strongly-continuous-semigroups.md), [Duhamel](06-duhamels-principle-for-a-forced-evolution.md) for either evolution with a source term, [Splitting](07-operator-splitting-and-the-trotter-formula.md) for adding a potential by alternating $`e^{-isA}`$ with a multiplication, and [Feller semigroups](08-feller-semigroups-and-markov-processes.md) for the heat semigroup read as the average over random paths.
 

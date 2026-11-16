@@ -735,7 +735,7 @@ example : (3 * I - I) / (3 * I + I) = (1 / 2 : ℂ) := by
 ## Where this goes next
 
 - [Solving by mapping](07-solving-boundary-problems-by-mapping.md): other shapes, mapped to the disc first.
-- Method of images: Step 2's reflected point as a mirror charge.
+- [Method of images](../../19-Partial%20differential%20equations/04-Laplace%2C%20Poisson%20and%20Potentials/05-method-of-images.md): Step 2's reflected point as a mirror charge.
 - [The Gaussian and Poisson kernels](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/04-gaussian-and-poisson-kernels.md): the kernel among positive weights that pile up at a point.
 
 The formula needs a skin that nothing presses on; how high a skin stands when a load presses inside, like the pressed drum above, is left open.

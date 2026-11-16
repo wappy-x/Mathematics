@@ -866,7 +866,7 @@ example : (5 : ℚ) + 11/2 = 21/2 := by norm_num
 - [Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md): projection onto hat functions, tent-shaped pieces that are linear between grid points, to solve differential equations.
 - [Inner products](../../18-Functional%20analysis/02-Hilbert%20Spaces/01-inner-products-and-hilbert-spaces.md): the same geometry on any complete inner product space.
 - [Riesz representation](../../18-Functional%20analysis/02-Hilbert%20Spaces/06-riesz-representation-theorem.md): the representation theorem for every Hilbert space and its consequences.
-- The Fredholm alternative: solvability of equations read off from perpendicular complements.
+- [The Fredholm alternative](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/08-fredholm-alternative-and-compact-operators.md): solvability of equations read off from perpendicular complements.
 - [Fourier coefficients](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/01-fourier-coefficients-and-orthogonality.md): sines and cosines as a perpendicular family in L2.
 - [Partial sums are the best fit](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/02-best-approximation-and-bessels-inequality.md): the projection theorem applied to trigonometric polynomials.
 

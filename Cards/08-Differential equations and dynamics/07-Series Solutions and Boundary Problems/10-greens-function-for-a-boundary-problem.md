@@ -615,8 +615,8 @@ example : (1 / 2 : ℚ) * (-(7 / 10) * (3 / 10)) = -105 / 1000 := by norm_num
 - [Three model operators](../../18-Functional%20analysis/03-Bounded%20Operators/02-integral-operators-and-the-shift.md): the map from load to sag as an operator.
 - [Fredholm alternative](../../18-Functional%20analysis/03-Bounded%20Operators/09-fredholm-alternative-and-integral-equations.md): the sliding-ends failure made general.
 - [Fundamental solution](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/04-fundamental-solutions-and-the-response-to-a-spike.md): the unit bag made exact.
-- Green's function: the same idea on a drumhead.
-- Integral equations: the unknown inside such a sum.
+- [Green's function](../../19-Partial%20differential%20equations/04-Laplace%2C%20Poisson%20and%20Potentials/04-greens-functions-and-the-representation-formula.md): the same idea on a drumhead.
+- [Integral equations](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/07-integral-equations-fredholm-and-volterra.md): the unknown inside such a sum.
 - [Solving differential equations by transform](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/09-fourier-methods-for-differential-equations.md): with no brackets, the sum becomes a convolution.
 
 The tent settles a strip held at two brackets; what replaces it on a surface, where a point load's sag grows without bound near the point, is what the plane Green's function answers.

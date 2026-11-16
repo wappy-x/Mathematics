@@ -768,7 +768,7 @@ example : (1 : ℚ) - 1 / 2 - 1 / 3 = 1 / 6 := by norm_num
 - [Reflexive spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/10-reflexive-spaces-and-the-second-dual.md): L^p as its own second dual for 1 < p < ∞.
 - [Weak derivatives](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/07-weak-derivatives-and-sobolev-spaces.md): functions whose derivatives also lie in L^p.
 - [Unbounded operators](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/01-unbounded-operators-and-domains.md): operators defined only on part of L^2.
-- Sobolev spaces: L^p sizes of a solution and its derivatives.
+- [Sobolev spaces](../../19-Partial%20differential%20equations/06-Weak%20Solutions%20and%20Free%20Boundaries/02-sobolev-spaces-for-pdes.md): L^p sizes of a solution and its derivatives.
 - [Plancherel](../../18-Functional%20analysis/03-Bounded%20Operators/04-the-fourier-transform-as-a-unitary-operator.md): the Fourier transform preserving the L^2 norm.
 - Convolution: L^p norms of a smoothed function.
 - [The maximal function](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/01-hardy-littlewood-maximal-function.md): an operator bounded on L^p for p > 1 but not on L^1.

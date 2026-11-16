@@ -1081,7 +1081,7 @@ open AmericanLCP
 
 ## Where this goes next
 
-- An American option: the same three conditions as a variational inequality, sought in a space of functions rather than at nodes.
+- [An American option](../../19-Partial%20differential%20equations/06-Weak%20Solutions%20and%20Free%20Boundaries/09-american-options-as-a-free-boundary-problem.md): the same three conditions as a variational inequality, sought in a space of functions rather than at nodes.
 
 This card computes a line and checks it against two bounds, but never shows that the line exists, is a single curve, or is smooth; that is what a later card establishes.
 

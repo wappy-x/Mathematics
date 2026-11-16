@@ -533,7 +533,7 @@ example : ((2 : ℤ) - 3) + (-2 - 3) = -6 := by norm_num
 ## Where this goes next
 
 - [The Poisson formula](06-poisson-integral-formula.md): a weighted frame average gives the height at any inside point.
-- Harnack and regularity: mean values in any dimension, bounding how fast a positive harmonic function varies.
+- [Harnack and regularity](../../19-Partial%20differential%20equations/04-Laplace%2C%20Poisson%20and%20Potentials/10-harnack-and-regularity-in-outline.md): mean values in any dimension, bounding how fast a positive harmonic function varies.
 
 Left open: this card shows a frame allows at most one film, but does every frame hold one at all?
 

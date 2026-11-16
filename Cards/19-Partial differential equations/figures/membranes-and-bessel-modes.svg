@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 200" width="580" height="200" font-family="Helvetica, Arial, sans-serif" font-size="12">
+  <title>The four lowest mode shapes of a drumhead 30 cm across, drawn to scale at 400 px per m, with their nodal lines and the sign of each region</title>
+  <rect x="0" y="0" width="580" height="200" fill="#ffffff"/>
+  <text x="290" y="18" text-anchor="middle" fill="#1d1d1d">Drumhead 30 cm across, 400 px per m; dashed: nodal lines</text>
+  <circle cx="80" cy="90" r="60" fill="#f4d6cc" stroke="#1d1d1d" stroke-width="2"/>
+  <text x="80" y="95" text-anchor="middle" fill="#1d1d1d" font-size="16">+</text>
+  <circle cx="220" cy="90" r="60" fill="#cfe8e5" stroke="none"/>
+  <path d="M220,30 A60,60 0 0,1 220,150 Z" fill="#f4d6cc" stroke="none"/>
+  <circle cx="220" cy="90" r="60" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+  <line x1="220" y1="30" x2="220" y2="150" stroke="#1d1d1d" stroke-width="1.6" stroke-dasharray="6 4"/>
+  <text x="250" y="95" text-anchor="middle" fill="#1d1d1d" font-size="16">+</text>
+  <text x="190" y="95" text-anchor="middle" fill="#1d1d1d" font-size="16">−</text>
+  <circle cx="360" cy="90" r="60" fill="#cfe8e5" stroke="none"/>
+  <path d="M360,90 L402.43,47.57 A60,60 0 0,1 402.43,132.43 Z" fill="#f4d6cc" stroke="none"/>
+  <path d="M360,90 L317.57,132.43 A60,60 0 0,1 317.57,47.57 Z" fill="#f4d6cc" stroke="none"/>
+  <circle cx="360" cy="90" r="60" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+  <line x1="317.57" y1="47.57" x2="402.43" y2="132.43" stroke="#1d1d1d" stroke-width="1.6" stroke-dasharray="6 4"/>
+  <line x1="317.57" y1="132.43" x2="402.43" y2="47.57" stroke="#1d1d1d" stroke-width="1.6" stroke-dasharray="6 4"/>
+  <text x="392" y="95" text-anchor="middle" fill="#1d1d1d" font-size="16">+</text>
+  <text x="328" y="95" text-anchor="middle" fill="#1d1d1d" font-size="16">+</text>
+  <text x="360" y="63" text-anchor="middle" fill="#1d1d1d" font-size="16">−</text>
+  <text x="360" y="127" text-anchor="middle" fill="#1d1d1d" font-size="16">−</text>
+  <circle cx="500" cy="90" r="60" fill="#cfe8e5" stroke="none"/>
+  <circle cx="500" cy="90" r="26.1" fill="#f4d6cc" stroke="#1d1d1d" stroke-width="1.6" stroke-dasharray="6 4"/>
+  <circle cx="500" cy="90" r="60" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+  <text x="500" y="95" text-anchor="middle" fill="#1d1d1d" font-size="16">+</text>
+  <text x="500" y="52" text-anchor="middle" fill="#1d1d1d" font-size="16">−</text>
+  <text x="80" y="172" text-anchor="middle" fill="#1d1d1d">mode (0,1)</text>
+  <text x="80" y="190" text-anchor="middle" fill="#1d1d1d">255.2 Hz</text>
+  <text x="220" y="172" text-anchor="middle" fill="#1d1d1d">mode (1,1)</text>
+  <text x="220" y="190" text-anchor="middle" fill="#1d1d1d">406.6 Hz</text>
+  <text x="360" y="172" text-anchor="middle" fill="#1d1d1d">mode (2,1)</text>
+  <text x="360" y="190" text-anchor="middle" fill="#1d1d1d">544.9 Hz</text>
+  <text x="500" y="172" text-anchor="middle" fill="#1d1d1d">mode (0,2)</text>
+  <text x="500" y="190" text-anchor="middle" fill="#1d1d1d">585.7 Hz</text>
+</svg>

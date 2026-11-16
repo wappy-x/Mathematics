@@ -636,7 +636,7 @@ example : (1 / 4 : ℚ) * (1 / 2) - (1 / 2) ^ 3 = 0 ∧ (1 / 4 : ℚ) * (-1 / 2)
 ## Where this goes next
 
 - [Buckling](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/08-buckling-and-stability.md): the pitchfork in a loaded column.
-- Reaction-diffusion: a uniform state losing stability across space.
+- [Reaction-diffusion](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/05-reaction-diffusion-and-pattern-formation.md): a uniform state losing stability across space.
 
 This card leaves open how to see a fold coming in real data, before the resting state is gone.
 

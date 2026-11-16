@@ -6,19 +6,19 @@
 
 Classify a second-order equation, say whether its problem is well posed, and solve the model equations by characteristics, kernels, Green's functions and eigenfunction expansions. Say what a weak or a viscosity solution is, set up a free boundary problem such as an American option, and read the Navier-Stokes regularity question as a precise statement.
 
-7 shelves · **26 of 62 cards ready to read**
+7 shelves · **62 of 62 cards ready to read**
 
-Click a shelf to jump to its cards, then click a card's title to read it. A title without a link is planned and not written yet.
+Click a shelf to jump to its cards, then click a card's title to read it.
 
-| Shelf | Cards | Ready to read |
-| --- | ---: | ---: |
-| [01 · Classification and Well-Posedness](#s01) | 9 | 9 of 9 |
-| [02 · First-Order Equations and Characteristics](#s02) | 7 | 7 of 7 |
-| [03 · The Heat Equation in Depth](#s03) | 10 | 10 of 10 |
-| [04 · Laplace, Poisson and Potentials](#s04) | 10 | 0 of 10 · planned |
-| [05 · Waves](#s05) | 8 | 0 of 8 · planned |
-| [06 · Weak Solutions and Free Boundaries](#s06) | 9 | 0 of 9 · planned |
-| [07 · Nonlinear PDE and Fluids](#s07) | 9 | 0 of 9 · planned |
+| Shelf | Cards |
+| --- | ---: |
+| [01 · Classification and Well-Posedness](#s01) | 9 |
+| [02 · First-Order Equations and Characteristics](#s02) | 7 |
+| [03 · The Heat Equation in Depth](#s03) | 10 |
+| [04 · Laplace, Poisson and Potentials](#s04) | 10 |
+| [05 · Waves](#s05) | 8 |
+| [06 · Weak Solutions and Free Boundaries](#s06) | 9 |
+| [07 · Nonlinear PDE and Fluids](#s07) | 9 |
 
 <a name="s01"></a>
 
@@ -75,73 +75,73 @@ Click a shelf to jump to its cards, then click a card's title to read it. A titl
 
 <a name="s04"></a>
 
-## 04 · Laplace, Poisson and Potentials · 10 cards · planned
+## 04 · Laplace, Poisson and Potentials · 10 cards
 
 *Harmonic functions, potentials, Green's functions, and the eigenvalue problem behind every mode*
 
-1. Harmonic functions: the value at a point is the average around it
-2. The fundamental solution: the potential of a single point source
-3. Poisson's equation: smear the point sources to get the potential
-4. Green's function: one poke's response rebuilds the whole solution
-5. Method of images: a mirror source satisfies the boundary for free
-6. Dirichlet's principle: the steady state stores the least energy
-7. The Laplacian in round coordinates, and the modes it splits into
-8. Helmholtz: the shapes and frequencies a region can hold
-9. Subharmonic functions: trap the solution between under and over shapes
-10. Harnack and regularity: harmonic functions cannot spike, and are smooth
+1. [Harmonic functions: the value at a point is the average around it](04-Laplace%2C%20Poisson%20and%20Potentials/01-harmonic-functions-and-mean-values.md)
+2. [The fundamental solution: the potential of a single point source](04-Laplace%2C%20Poisson%20and%20Potentials/02-fundamental-solution-of-the-laplacian.md)
+3. [Poisson's equation: smear the point sources to get the potential](04-Laplace%2C%20Poisson%20and%20Potentials/03-poissons-equation-and-the-newtonian-potential.md)
+4. [Green's function: one poke's response rebuilds the whole solution](04-Laplace%2C%20Poisson%20and%20Potentials/04-greens-functions-and-the-representation-formula.md)
+5. [Method of images: a mirror source satisfies the boundary for free](04-Laplace%2C%20Poisson%20and%20Potentials/05-method-of-images.md)
+6. [Dirichlet's principle: the steady state stores the least energy](04-Laplace%2C%20Poisson%20and%20Potentials/06-dirichlet-principle-and-variational-form.md)
+7. [The Laplacian in round coordinates, and the modes it splits into](04-Laplace%2C%20Poisson%20and%20Potentials/07-laplacian-in-polar-and-spherical-coordinates.md)
+8. [Helmholtz: the shapes and frequencies a region can hold](04-Laplace%2C%20Poisson%20and%20Potentials/08-helmholtz-and-eigenfunctions.md)
+9. [Subharmonic functions: trap the solution between under and over shapes](04-Laplace%2C%20Poisson%20and%20Potentials/09-subharmonic-functions-and-perrons-method.md)
+10. [Harnack and regularity: harmonic functions cannot spike, and are smooth](04-Laplace%2C%20Poisson%20and%20Potentials/10-harnack-and-regularity-in-outline.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s05"></a>
 
-## 05 · Waves · 8 cards · planned
+## 05 · Waves · 8 cards
 
 *Waves by characteristics and closed formulas, their energy, their dispersion and their modes*
 
-1. d'Alembert: a wave splits into a left-mover and a right-mover
-2. Wave energy is conserved, and nothing outruns the wave speed
-3. Reflection: a clamped end is a mirror placed in the data
-4. Kirchhoff's formula: in three dimensions a pulse passes and leaves silence
-5. The retarded Green's function: the answer arrives only after the poke
-6. Dispersion: when each wavelength travels at its own speed
-7. Schrodinger and Klein-Gordon: spreading that never dies away
-8. Drumheads: the modes of a round membrane are Bessel patterns
+1. [d'Alembert: a wave splits into a left-mover and a right-mover](05-Waves/01-dalembert-and-characteristics-for-waves.md)
+2. [Wave energy is conserved, and nothing outruns the wave speed](05-Waves/02-energy-and-finite-speed.md)
+3. [Reflection: a clamped end is a mirror placed in the data](05-Waves/03-reflection-at-a-wall-and-the-half-line.md)
+4. [Kirchhoff's formula: in three dimensions a pulse passes and leaves silence](05-Waves/04-kirchhoff-and-huygens.md)
+5. [The retarded Green's function: the answer arrives only after the poke](05-Waves/05-retarded-greens-function-and-forced-waves.md)
+6. [Dispersion: when each wavelength travels at its own speed](05-Waves/06-dispersion-group-velocity-and-kdv-in-outline.md)
+7. [Schrodinger and Klein-Gordon: spreading that never dies away](05-Waves/07-schrodinger-and-klein-gordon-in-outline.md)
+8. [Drumheads: the modes of a round membrane are Bessel patterns](05-Waves/08-membranes-and-bessel-modes.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s06"></a>
 
-## 06 · Weak Solutions and Free Boundaries · 9 cards · planned
+## 06 · Weak Solutions and Free Boundaries · 9 cards
 
 *Solutions that need no second derivative, the existence theory for them, and boundaries found as part of the answer*
 
-1. Weak solutions: multiply by a test function and integrate by parts
-2. Sobolev spaces: the right home for a solution of limited smoothness
-3. Lax-Milgram: one weak solution when the form is bounded and coercive
-4. Galerkin: solve the weak form on finitely many chosen shapes
-5. Elliptic regularity: the weak solution turns out to be smooth after all
-6. Viscosity solutions: test with smooth functions that touch the graph
-7. Free boundaries: when the edge of the region is part of the answer
-8. The obstacle problem: a membrane that must clear an obstacle
-9. An American option: the boundary where holding stops beating exercising
+1. [Weak solutions: multiply by a test function and integrate by parts](06-Weak%20Solutions%20and%20Free%20Boundaries/01-weak-solutions-and-the-weak-formulation.md)
+2. [Sobolev spaces: the right home for a solution of limited smoothness](06-Weak%20Solutions%20and%20Free%20Boundaries/02-sobolev-spaces-for-pdes.md)
+3. [Lax-Milgram: one weak solution when the form is bounded and coercive](06-Weak%20Solutions%20and%20Free%20Boundaries/03-lax-milgram-and-elliptic-existence.md)
+4. [Galerkin: solve the weak form on finitely many chosen shapes](06-Weak%20Solutions%20and%20Free%20Boundaries/04-galerkin-and-finite-elements.md)
+5. [Elliptic regularity: the weak solution turns out to be smooth after all](06-Weak%20Solutions%20and%20Free%20Boundaries/05-elliptic-regularity-in-outline.md)
+6. [Viscosity solutions: test with smooth functions that touch the graph](06-Weak%20Solutions%20and%20Free%20Boundaries/06-viscosity-solutions.md)
+7. [Free boundaries: when the edge of the region is part of the answer](06-Weak%20Solutions%20and%20Free%20Boundaries/07-free-boundaries-and-the-stefan-problem.md)
+8. [The obstacle problem: a membrane that must clear an obstacle](06-Weak%20Solutions%20and%20Free%20Boundaries/08-obstacle-problems-and-variational-inequalities.md)
+9. [An American option: the boundary where holding stops beating exercising](06-Weak%20Solutions%20and%20Free%20Boundaries/09-american-options-as-a-free-boundary-problem.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s07"></a>
 
-## 07 · Nonlinear PDE and Fluids · 9 cards · planned
+## 07 · Nonlinear PDE and Fluids · 9 cards
 
 *The fluid equations, the regularity question, patterns and solitons, and equations with the unknown under an integral*
 
-1. Navier-Stokes: mass and momentum balance for a moving fluid
-2. Leray's weak solutions: they exist in three dimensions, but may not be unique
-3. The energy inequality, and the gap it leaves in three dimensions
-4. Vorticity: the spin form of the equations, and the zero-viscosity limit
-5. Reaction-diffusion: spreading plus local growth makes fronts and patterns
-6. Solitons: when steepening and spreading balance exactly
-7. Integral equations: the unknown sits inside the integral
-8. The Fredholm alternative: either exactly one solution, or extra free ones
-9. When prices jump: a pricing equation with an integral term
+1. [Navier-Stokes: mass and momentum balance for a moving fluid](07-Nonlinear%20PDE%20and%20Fluids/01-navier-stokes-derivation.md)
+2. [Leray's weak solutions: they exist in three dimensions, but may not be unique](07-Nonlinear%20PDE%20and%20Fluids/02-leray-weak-solutions-of-navier-stokes.md)
+3. [The energy inequality, and the gap it leaves in three dimensions](07-Nonlinear%20PDE%20and%20Fluids/03-energy-inequality-and-the-regularity-question.md)
+4. [Vorticity: the spin form of the equations, and the zero-viscosity limit](07-Nonlinear%20PDE%20and%20Fluids/04-vorticity-and-the-euler-equations.md)
+5. [Reaction-diffusion: spreading plus local growth makes fronts and patterns](07-Nonlinear%20PDE%20and%20Fluids/05-reaction-diffusion-and-pattern-formation.md)
+6. [Solitons: when steepening and spreading balance exactly](07-Nonlinear%20PDE%20and%20Fluids/06-nonlinear-schrodinger-and-solitons-in-outline.md)
+7. [Integral equations: the unknown sits inside the integral](07-Nonlinear%20PDE%20and%20Fluids/07-integral-equations-fredholm-and-volterra.md)
+8. [The Fredholm alternative: either exactly one solution, or extra free ones](07-Nonlinear%20PDE%20and%20Fluids/08-fredholm-alternative-and-compact-operators.md)
+9. [When prices jump: a pricing equation with an integral term](07-Nonlinear%20PDE%20and%20Fluids/09-partial-integro-differential-equations-for-jumps.md)
 
 [↑ Back to the shelves](#top)
 

@@ -781,7 +781,7 @@ theorem pricing_operator_on_payoff {σ r q K S τ : ℝ}
 ## Where this goes next
 
 - [The perpetual American put](05-perpetual-american-put.md): take the clock away and the free-boundary problem solves exactly; smooth pasting becomes one line of algebra.
-- An American option: the same problem as a variational inequality, with existence, uniqueness and the regularity that makes the tangent possible.
+- [An American option](../../19-Partial%20differential%20equations/06-Weak%20Solutions%20and%20Free%20Boundaries/09-american-options-as-a-free-boundary-problem.md): the same problem as a variational inequality, with existence, uniqueness and the regularity that makes the tangent possible.
 
 This card finds the line numerically and proves it is tangent; what it leaves open is whether any American put has a line that can be written down exactly, and the perpetual put is the one case where it can.
 

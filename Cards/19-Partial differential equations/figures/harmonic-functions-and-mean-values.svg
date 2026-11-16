@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 460" width="480" height="460">
+  <title>Mid-height slice of a 3 m cube room, sunny wall at 30 C along the bottom, other walls at 18 C; the centre with a 1 m averaging sphere and the point P, 1 m from the sunny wall, with a 0.5 m sphere</title>
+  <rect x="0" y="0" width="480" height="460" fill="#ffffff"/>
+  <rect x="60" y="40" width="360" height="360" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+  <line x1="60" y1="400" x2="420" y2="400" stroke="#c0392b" stroke-width="6"/>
+  <text x="240" y="425" font-family="sans-serif" font-size="14" fill="#1d1d1d" text-anchor="middle">sunny wall, 30 C</text>
+  <text x="240" y="30" font-family="sans-serif" font-size="14" fill="#1d1d1d" text-anchor="middle">far wall, 18 C</text>
+  <text x="50" y="224" font-family="sans-serif" font-size="14" fill="#1d1d1d" text-anchor="end">18 C</text>
+  <text x="430" y="224" font-family="sans-serif" font-size="14" fill="#1d1d1d">18 C</text>
+  <circle cx="240" cy="220" r="120" fill="none" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <circle cx="240" cy="280" r="60" fill="none" stroke="#264653" stroke-width="1.5"/>
+  <circle cx="240" cy="220" r="4" fill="#1d1d1d"/>
+  <circle cx="240" cy="280" r="4" fill="#264653"/>
+  <text x="248" y="214" font-family="sans-serif" font-size="13" fill="#1d1d1d">centre 20.00 C</text>
+  <text x="248" y="296" font-family="sans-serif" font-size="13" fill="#264653">P 21.99 C</text>
+  <text x="300" y="120" font-family="sans-serif" font-size="12" fill="#1d1d1d">sphere r = 1 m</text>
+  <text x="304" y="318" font-family="sans-serif" font-size="12" fill="#264653">r = 0.5 m</text>
+  <text x="240" y="450" font-family="sans-serif" font-size="12" fill="#1d1d1d" text-anchor="middle">to scale: 120 units per metre, slice at mid-height</text>
+</svg>

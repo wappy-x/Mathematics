@@ -742,7 +742,7 @@ example : let v : ℕ → ℚ := fun i => i * (10 - i) / 20
 - [Stepping the heat equation on a grid](../10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md): the same difference, now with time steps.
 - [Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md): small elements on any shape.
 - [Two-point boundary problems](../../16-Numerical%20analysis/06-ODE%20Solvers/07-boundary-value-problems-shooting-and-collocation.md): nonlinear problems and higher-order methods.
-- Galerkin: why finite elements converge.
+- [Galerkin](../../19-Partial%20differential%20equations/06-Weak%20Solutions%20and%20Free%20Boundaries/04-galerkin-and-finite-elements.md): why finite elements converge.
 
 Left open: if the load depends on the sag itself, the grid equations stop being linear and one sweep no longer solves them; what replaces it?
 

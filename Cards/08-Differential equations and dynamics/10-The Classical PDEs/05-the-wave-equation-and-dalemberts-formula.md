@@ -916,7 +916,7 @@ The line: the formula with its velocity term.
 
 - [Standing waves](06-standing-waves-on-a-string.md): the finite string, where reflected copies add into standing patterns.
 - [Electromagnetic waves](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/08-electromagnetic-waves.md): the same equation for light.
-- d'Alembert: characteristics, energy and uniqueness in full.
+- [d'Alembert](../../19-Partial%20differential%20equations/05-Waves/01-dalembert-and-characteristics-for-waves.md): characteristics, energy and uniqueness in full.
 
 The formula leaves open what the string does once the copies hit the held ends at 0.50 s.
 

@@ -1052,8 +1052,8 @@ example : (100000 : ℚ) / (40000000 * (1 / 40)) * 1000 = 100 := by
 
 ## Where this goes next
 
-- The fundamental solution (planned): the general theory for any operator with constant coefficients, and the Malgrange–Ehrenpreis existence theorem.
-- Poisson's equation (planned): the Laplacian's fundamental solution in two and three dimensions, and the potential of any charge or mass.
+- [The fundamental solution](../../19-Partial%20differential%20equations/04-Laplace%2C%20Poisson%20and%20Potentials/02-fundamental-solution-of-the-laplacian.md): the general theory for any operator with constant coefficients, and the Malgrange–Ehrenpreis existence theorem.
+- [Poisson's equation](../../19-Partial%20differential%20equations/04-Laplace%2C%20Poisson%20and%20Potentials/03-poissons-equation-and-the-newtonian-potential.md): the Laplacian's fundamental solution in two and three dimensions, and the potential of any charge or mass.
 - [Tempered distributions](05-tempered-distributions-and-the-fourier-transform.md): the next card on this shelf, the Fourier transform of distributions, which turns an equation like $`LG = \delta`$ into division by a polynomial (Step 4's second door).
 - [Weak solutions](08-weak-solutions-of-differential-equations.md): solving equations through probes when the load is not a single spike and the operator is not the same everywhere.
 

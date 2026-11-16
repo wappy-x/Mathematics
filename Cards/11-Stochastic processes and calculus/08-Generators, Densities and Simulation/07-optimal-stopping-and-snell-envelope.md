@@ -1058,7 +1058,7 @@ example : (8 * 415000 + 2 * 430000) / 10 - 3000 = 415000 := by norm_num
 - [Early exercise](../../12-Financial%20mathematics/04-Binomial%20Trees/05-american-exercise-on-a-tree.md): the same recursion on a share-price tree, priced under the risk-neutral measure.
 - [American options](../../12-Financial%20mathematics/15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md): when early exercise pays, and the exercise boundary.
 - [Optimal stopping](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/06-optimal-stopping-as-a-dynamic-program.md): the recursion as a Bellman equation, with states in place of paths.
-- An American option: in continuous time the bar becomes a curve found with the solution.
+- [An American option](../../19-Partial%20differential%20equations/06-Weak%20Solutions%20and%20Free%20Boundaries/09-american-options-as-a-free-boundary-problem.md): in continuous time the bar becomes a curve found with the solution.
 
 The house has one bar per month because it has three dates and fixed chances; when the reward is a share price that moves at every instant and can be hedged, the bar becomes a boundary in price and time, and the American-option cards find it.
 

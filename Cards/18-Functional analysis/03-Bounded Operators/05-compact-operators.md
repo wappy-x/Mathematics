@@ -790,7 +790,7 @@ example : ‖(EuclideanSpace.single 0 1 - EuclideanSpace.single 1 1 : EuclideanS
 - [Compact and symmetric](08-spectral-theorem-for-compact-self-adjoint-operators.md): a compact symmetric operator has a perpendicular basis of eigenvectors, with eigenvalues dying away like the $`\lambda_n`$ here.
 - [Boundary values and compactness](../04-Distributions%20and%20Sobolev%20Spaces/10-trace-and-rellich-kondrachov-in-outline.md): compact inverses of differential operators give their eigenfunction expansions.
 - [Schauder](../06-Banach%20Algebras%20and%20Fixed%20Points/05-schauder-fixed-point-theorem.md): a compact map of a closed convex set into itself has a fixed point.
-- The Fredholm alternative: the identity minus a compact operator behaves like a square matrix.
+- [The Fredholm alternative](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/08-fredholm-alternative-and-compact-operators.md): the identity minus a compact operator behaves like a square matrix.
 
 Nearby on this shelf, [Spectrum](07-spectrum-and-resolvent.md) gives the missing inverse a name: 0 lies in the spectrum of every compact operator on an infinite-dimensional space. The question left open: for a compact operator that is symmetric, are the modes always there to cut along, as they were for the rod?
 
