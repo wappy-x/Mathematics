@@ -838,7 +838,7 @@ example : (1 : ℚ) + 1 / 9 = 10 / 9 ∧ (1 : ℚ) + 1 / 9 + 1 / 25 = 259 / 225 
 
 - [Separation of variables](../10-The%20Classical%20PDEs/04-separation-of-variables-for-the-heat-equation.md): each mode here decays at its own rate once heat flows.
 - Reflection: the two reflections solving waves on a half-line.
-- The Gibbs overshoot and the cure: the overshoot beside an end not at zero, and how averaging tames it.
+- [The Gibbs overshoot and the cure](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/08-gibbs-and-summability.md): the overshoot beside an end not at zero, and how averaging tames it.
 
 The question this card leaves open: once the string is released or the rod starts to cool, how does each mode change with time?
 

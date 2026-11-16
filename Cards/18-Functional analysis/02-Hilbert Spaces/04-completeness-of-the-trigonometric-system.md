@@ -949,7 +949,7 @@ example : 500 * 47 = 23500 ∧ 500 * 47 ≤ 48000 / 2 ∧ 48000 / 2 < 500 * 49 :
 
 ## Where this goes next
 
-- Convergence in energy (planned): how fast the energy gap closes, read from the smoothness of the signal.
+- [Convergence in energy](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/05-l2-convergence-and-riesz-fischer.md): how fast the energy gap closes, read from the smoothness of the signal.
 - [Orthogonal polynomials](05-orthogonal-polynomials-from-gram-schmidt.md): another complete perpendicular family, built from the powers of x by Gram-Schmidt.
 - [Riesz representation](06-riesz-representation-theorem.md): every continuous measurement on $`L^2`$ is an inner product with one fixed signal, here a list of Fourier amounts.
 - [Reproducing kernels](08-reproducing-kernel-hilbert-spaces.md): spaces where reading off a value at one point is itself an inner product, which $`L^2`$ is not.

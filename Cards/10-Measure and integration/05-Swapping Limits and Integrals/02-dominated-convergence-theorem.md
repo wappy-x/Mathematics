@@ -854,8 +854,8 @@ example : (28 / 5 : ℚ) - 2 ^ 2 = 2 * (1 - 2 / 10) ∧ (28 / 5 : ℚ) - 2 ^ 2 =
 - [Differentiating under the integral sign](03-differentiating-under-the-integral.md): difference quotients under one dominating function give the derivative of an integral.
 - [Modes of convergence](04-modes-of-convergence.md): where total-error convergence sits among the other modes, with this theorem as the arrow from almost everywhere to in mean; the version for convergence in probability runs through [Uniform integrability](05-uniform-integrability.md).
 - [The rules of conditional expectation](../09-Conditional%20Expectation/04-rules-of-conditional-expectation.md): the conditional version of dominated convergence.
-- The Fourier transform of an absolutely integrable signal, and why it fades at infinity: continuity of the transform, one dominating function for all frequencies.
-- Approximate identities: smoothing kernels that shrink to a point, whose limits are justified by domination.
+- [The Fourier transform of an absolutely integrable signal, and why it fades at infinity](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/01-fourier-transform-on-l1-and-riemann-lebesgue.md): continuity of the transform, one dominating function for all frequencies.
+- [Approximate identities](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/03-approximate-identities.md): smoothing kernels that shrink to a point, whose limits are justified by domination.
 
 This card asks for one integrable roof over the whole sequence; what weaker promise about the tails is exactly enough is the question [Uniform integrability](05-uniform-integrability.md) answers.
 

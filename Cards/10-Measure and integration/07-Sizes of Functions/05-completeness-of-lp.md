@@ -671,7 +671,7 @@ example : ((Finset.Icc 1 257).image (fun n : ℕ => 256 / n)).card = 32 := by de
 - [L2 as a Hilbert space](06-l2-as-a-hilbert-space.md): completeness plus an inner product, giving orthogonal projection.
 - [The Lebesgue differentiation theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/02-lebesgue-differentiation-theorem.md): density of continuous functions, used to prove that averages over shrinking intervals recover a function.
 - [Function spaces C and Lp](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/03-function-spaces-c-and-lp.md): $`L^p`$ and the continuous functions side by side as Banach spaces.
-- Convergence in energy: the 1907 form, square-summable coefficients matched to square-integrable functions.
+- [Convergence in energy](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/05-l2-convergence-and-riesz-fischer.md): the 1907 form, square-summable coefficients matched to square-integrable functions.
 - [Plancherel](../../18-Functional%20analysis/03-Bounded%20Operators/04-the-fourier-transform-as-a-unitary-operator.md): a transform extended from nice functions to all of $`L^2`$ by density and completeness.
 
 Completeness guarantees limits exist, but says nothing about the nearest point of a subspace; in $`L^2`$, where lengths come with angles, that nearest point exists and is found by dropping a perpendicular, which is [L2 as a Hilbert space](06-l2-as-a-hilbert-space.md).

@@ -709,7 +709,7 @@ example : (1 : ℚ) / (1 + (1 / 2) ^ 2) = 4 / 5 := by norm_num
 - [Joint densities](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/02-joint-densities-and-marginals.md): the inner integral integrates a variable out.
 - [Product measure](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/02-product-measure.md): Fubini in full, and the hypothesis the spike breaks.
 - [Many dimensions](../../16-Numerical%20analysis/05-Quadrature/06-multidimensional-and-monte-carlo-quadrature.md): grids and random points in many dimensions.
-- Transforms in two and three dimensions: scanner readings are strip integrals.
+- [Transforms in two and three dimensions](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/10-multidimensional-transform-and-tomography.md): scanner readings are strip integrals.
 - [Surface area](../05-Curves%20and%20Solids/04-surface-area-of-revolution.md): patch area on a curved surface.
 
 Rain soaking into the ground fills a solid, and adding over a volume is [Triple integrals](02-triple-integrals.md).

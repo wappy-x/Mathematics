@@ -880,7 +880,7 @@ end WellPosednessAndHadamard
 ## Where this goes next
 
 - [Energy methods](07-energy-methods-and-uniqueness.md): the next card proves uniqueness and stability for forward heat and waves with an energy that cannot grow.
-- Blurring and unblurring (planned): restores stability to backward heat by adding a known bound on the answer.
+- [Blurring and unblurring](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/05-smoothing-blurring-and-deconvolution.md): restores stability to backward heat by adding a known bound on the answer.
 
 The question left open: how much of yesterday's plate can be recovered, if a bound on its temperature is known in advance?
 

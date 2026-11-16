@@ -750,7 +750,7 @@ example : -(∑ k ∈ Finset.Icc 1 11,
 - [Tempered distributions](05-tempered-distributions-and-the-fourier-transform.md): probes that decay fast at infinity, so the Fourier transform can act.
 - [Weak derivatives](07-weak-derivatives-and-sobolev-spaces.md): functions whose distributional derivative is again a function, and the spaces that keep score.
 - [Weak solutions](08-weak-solutions-of-differential-equations.md): equations asked to hold only against probes.
-- Schwartz space and tempered distributions: the space of fast-decaying probes treated in full.
+- [Schwartz space and tempered distributions](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/06-schwartz-space-and-tempered-distributions.md): the space of fast-decaying probes treated in full.
 - Also on this shelf: [Fundamental solution](04-fundamental-solutions-and-the-response-to-a-spike.md), [Sampling](06-sampling-the-dirac-comb-and-nyquist.md), [Sobolev and Poincare](09-sobolev-embedding-and-poincare-inequality.md), [Boundary values and compactness](10-trace-and-rellich-kondrachov-in-outline.md).
 
 Every distribution has a derivative, but which distributions live at a single instant, and what is the derivative of a jump in general?

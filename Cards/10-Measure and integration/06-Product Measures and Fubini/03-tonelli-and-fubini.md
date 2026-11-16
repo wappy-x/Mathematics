@@ -767,7 +767,7 @@ example : ∑ i ∈ Finset.Icc 1 10, ∑ j ∈ Finset.Icc 1 11, |pmTable i j| = 
 - [Independence as a product](04-independence-as-a-product-measure.md): independence as a product law, and the average of a product as a product of averages.
 - [The layer-cake formula](06-layer-cake-and-tail-integrals.md): an integral rewritten as the integral of its tail sizes, by Tonelli.
 - [Conditioning on a random variable](../09-Conditional%20Expectation/05-conditioning-on-a-random-variable.md): conditional averages computed by integrating out one coordinate.
-- Fourier inversion: recovering a function from its transform, with Fubini justifying each swap.
+- [Fourier inversion](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/04-fourier-inversion-theorem.md): recovering a function from its transform, with Fubini justifying each swap.
 - Levy's inversion formula: a distribution recovered from its characteristic function, again by swapping integrals.
 
 What the swap buys for two independent quantities, whose joint law is a product, is [Independence as a product](04-independence-as-a-product-measure.md).

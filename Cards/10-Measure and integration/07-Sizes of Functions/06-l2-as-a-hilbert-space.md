@@ -867,8 +867,8 @@ example : (5 : ℚ) + 11/2 = 21/2 := by norm_num
 - [Inner products](../../18-Functional%20analysis/02-Hilbert%20Spaces/01-inner-products-and-hilbert-spaces.md): the same geometry on any complete inner product space.
 - [Riesz representation](../../18-Functional%20analysis/02-Hilbert%20Spaces/06-riesz-representation-theorem.md): the representation theorem for every Hilbert space and its consequences.
 - The Fredholm alternative: solvability of equations read off from perpendicular complements.
-- Fourier coefficients: sines and cosines as a perpendicular family in L2.
-- Partial sums are the best fit: the projection theorem applied to trigonometric polynomials.
+- [Fourier coefficients](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/01-fourier-coefficients-and-orthogonality.md): sines and cosines as a perpendicular family in L2.
+- [Partial sums are the best fit](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/02-best-approximation-and-bessels-inequality.md): the projection theorem applied to trigonometric polynomials.
 
 Left open: in Lp for finite p above 1 other than 2, a closest point in a closed subspace still exists and is unique, but with no inner product there is no right angle, so what describes it?
 

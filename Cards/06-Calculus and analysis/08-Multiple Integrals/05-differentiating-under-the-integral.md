@@ -595,7 +595,7 @@ example : ((Nat.factorial 3 : ℚ) / 1 ^ 4) / ((Nat.factorial 3 : ℚ) / 2 ^ 4) 
 
 ## Where this goes next
 
-- The transform rulebook: differentiating a transform in its frequency brings down a factor of x inside the integral, the same move on an infinite range.
+- [The transform rulebook](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/02-shift-scale-and-derivative-rules.md): differentiating a transform in its frequency brings down a factor of x inside the integral, the same move on an infinite range.
 
 Left open: on an infinite range with no tail bound that holds for every t at once, when can the derivative still go inside?
 

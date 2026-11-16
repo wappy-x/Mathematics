@@ -1144,7 +1144,7 @@ example : (1000 : ℚ) * (1 / 100) ^ 2 = 1 / 10 := by norm_num
 - [The geometric Asian call](../../12-Financial%20mathematics/17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/01-geometric-asian-kemna-vorst.md): an average of Brownian positions is still normal, with variance from the min(s, t) covariance.
 - [Knock-out and knock-in](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/02-barrier-options-by-reflection.md): barrier prices from the reflected Brownian path.
 - [Kemna-Vorst](../../12-Financial%20mathematics/27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/02-kemna-vorst-geometric-asian.md): the same covariance, applied to commodity averages.
-- Wiener-Khinchin: how a random signal's correlations become its spectrum.
+- [Wiener-Khinchin](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/07-wiener-khinchin-and-the-power-spectrum.md): how a random signal's correlations become its spectrum.
 
 The definition fixes the law at any finite set of times; what one path looks like when zoomed in, and why it has a slope nowhere, is what [Brownian paths](02-scaling-and-path-roughness.md) answers.
 

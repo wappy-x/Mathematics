@@ -617,7 +617,7 @@ example : (1 / 2 : ℚ) * (-(7 / 10) * (3 / 10)) = -105 / 1000 := by norm_num
 - [Fundamental solution](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/04-fundamental-solutions-and-the-response-to-a-spike.md): the unit bag made exact.
 - Green's function: the same idea on a drumhead.
 - Integral equations: the unknown inside such a sum.
-- Solving differential equations by transform: with no brackets, the sum becomes a convolution.
+- [Solving differential equations by transform](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/09-fourier-methods-for-differential-equations.md): with no brackets, the sum becomes a convolution.
 
 The tent settles a strip held at two brackets; what replaces it on a surface, where a point load's sag grows without bound near the point, is what the plane Green's function answers.
 

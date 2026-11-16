@@ -947,7 +947,7 @@ end
 
 ## Where this goes next
 
-- The uncertainty principle (planned): the full mathematical treatment, with the operators' domains handled properly and the sharper forms of the floor.
+- [The uncertainty principle](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/07-uncertainty-principle.md): the full mathematical treatment, with the operators' domains handled properly and the sharper forms of the floor.
 - [Spin one-half](06-spin-and-two-state-systems.md): the 2 × 2 spin matrices for different axes, which do not commute, so the Robertson form in Step 4's fold gives them a floor that depends on the state.
 - [Symmetry and conservation](08-symmetry-and-conserved-quantities.md): commutators again, this time between an operator and the energy, deciding what is conserved.
 

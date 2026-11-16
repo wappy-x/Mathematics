@@ -634,7 +634,7 @@ example : (1 - (-1 : ℤ) ^ 1 = 2) ∧ (1 - (-1 : ℤ) ^ 2 = 0) ∧ (1 - (-1 : �
 - [The heat equation](../10-The%20Classical%20PDEs/03-the-heat-equation.md): where u_t = κ u_xx comes from.
 - [The heat kernel](../10-The%20Classical%20PDEs/10-the-heat-kernel.md): the rod's answer as a blend of bell curves.
 - [Convolution](../../07-Complex%20analysis/08-Transforms%20in%20Outline/04-convolution-theorem.md): why multiplying transforms blends signals.
-- The Fourier transform of an absolutely integrable signal, and why it fades at infinity: the theory of the transform in full.
+- [The Fourier transform of an absolutely integrable signal, and why it fades at infinity](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/01-fourier-transform-on-l1-and-riemann-lebesgue.md): the theory of the transform in full.
 
 The transform solved the rod one frequency at a time; why the same answer is a blend of spreading bells is [The heat kernel](../10-The%20Classical%20PDEs/10-the-heat-kernel.md).
 

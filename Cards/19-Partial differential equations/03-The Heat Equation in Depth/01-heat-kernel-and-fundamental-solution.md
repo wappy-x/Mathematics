@@ -2249,7 +2249,7 @@ example : (1000 : ℚ) / 400 = 5 / 2 ∧ (1000 : ℚ) / 800 = 5 / 4 ∧ (1000 : 
 - [Diffusion smooths instantly, and is felt everywhere at once](05-smoothing-and-infinite-speed.md): why the bell is positive everywhere at once, and smooth at once.
 - [Convection-diffusion](06-convection-diffusion-and-drift.md): the bell carried along by a flow.
 - [Reaction-diffusion](../07-Nonlinear%20PDE%20and%20Fluids/05-reaction-diffusion-and-pattern-formation.md): the bell with heat made or used up as it spreads.
-- The Gaussian and Poisson kernels (planned): shrinking bells as tools for smoothing other functions.
+- [The Gaussian and Poisson kernels](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/04-gaussian-and-poisson-kernels.md): shrinking bells as tools for smoothing other functions.
 
 The open question this card leaves: when heat is fed in steadily from a source rather than all at once, how does the single bell build the answer?
 

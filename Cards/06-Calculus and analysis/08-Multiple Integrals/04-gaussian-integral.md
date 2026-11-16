@@ -472,7 +472,7 @@ theorem integral_bell_curve_eq_one :
 - [Black-Scholes by expectation](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/04-black-scholes-by-risk-neutral-expectation.md): an option price as a Gaussian integral.
 - [Weighted Gauss rules](../../16-Numerical%20analysis/05-Quadrature/04-gauss-hermite-and-weighted-rules.md): integrating against e^(−x^2) with a few well-placed points.
 - [Similarity solutions](../../19-Partial%20differential%20equations/03-The%20Heat%20Equation%20in%20Depth/02-similarity-solutions-and-the-error-function.md): the area up to a point, not the whole line.
-- Two pairs worth memorising: the Gaussian as its own frequency picture.
+- [Two pairs worth memorising](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/03-gaussian-and-sinc-transform-pairs.md): the Gaussian as its own frequency picture.
 
 The question this card leaves open: the area up to a given point, not the whole line, has no formula of this kind, so how is it found?
 

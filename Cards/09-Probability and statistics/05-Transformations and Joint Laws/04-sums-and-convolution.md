@@ -751,7 +751,7 @@ example : (55 : ℚ) * (1 / 10) + 25 * (1 / 10) ^ 2 / 2 = 45 / 8 ∧
 
 ## Where this goes next
 
-- Densities add by convolution: convolution as an operation on functions, where Fourier transforms turn it into multiplication and smoothing into approximation.
+- [Densities add by convolution](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/08-convolution-of-densities.md): convolution as an operation on functions, where Fourier transforms turn it into multiplication and smoothing into approximation.
 - [Bivariate normal](05-bivariate-normal-and-conditioning.md): the legs taken together, correlated or not, and what one tells about the other.
 - [Multivariate normal](06-multivariate-normal.md): any number of bells, and every weighted total of them normal.
 

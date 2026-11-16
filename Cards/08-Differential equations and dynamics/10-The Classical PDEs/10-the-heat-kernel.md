@@ -1028,7 +1028,7 @@ example : (200 : ℚ) * (1 / 2) = 100 ∧ (200 : ℚ) * (1 / 10) ^ 2 = 2 := by n
 - [Fokker-Planck](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/03-fokker-planck-forward-equation.md): the spread of a random walker, with drift.
 - [Two evolutions](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/09-the-heat-and-schrodinger-semigroups.md): convolving with G as one operator.
 - The heat kernel, in wing 19 (a planned card, not this one): the kernel in n dimensions, uniqueness in full.
-- The Gaussian and Poisson kernels: shrinking bells as smoothing tools.
+- [The Gaussian and Poisson kernels](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/04-gaussian-and-poisson-kernels.md): shrinking bells as smoothing tools.
 
 What the bell means for one molecule moving at random, and how drift reshapes it, is the question [Fokker-Planck](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/03-fokker-planck-forward-equation.md) answers.
 

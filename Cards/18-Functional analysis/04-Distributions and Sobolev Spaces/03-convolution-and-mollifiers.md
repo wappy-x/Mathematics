@@ -1007,7 +1007,7 @@ example : ((List.zipWith (fun a b => |b - a|) [0, 2, -3, 4, -2, 3, -4, 2, -4, 3,
 
 - [Fundamental solution](04-fundamental-solutions-and-the-response-to-a-spike.md): solve once for the tap, then convolve with any load; mollifying the tap makes that solution smooth.
 - [Weak derivatives](07-weak-derivatives-and-sobolev-spaces.md): mollifiers show that smooth functions are dense in the Sobolev spaces, so weak derivatives are limits of ordinary ones.
-- Approximate identities (planned): any family of unit-area kernels that concentrates at a point, including bell curves and the averaging kernels of Fourier series.
+- [Approximate identities](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/03-approximate-identities.md): any family of unit-area kernels that concentrates at a point, including bell curves and the averaging kernels of Fourier series.
 
 The card leaves open how fast the gap closes for a track rougher than a corner but smoother than a jump, and how to measure that roughness.
 

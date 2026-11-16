@@ -828,7 +828,7 @@ end IndentedContoursAndPrincipalValues
 
 ## Where this goes next
 
-- The Hilbert transform: the principal value against 1/(x − t) as a transform in its own right.
+- [The Hilbert transform](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/09-hilbert-transform-and-analytic-signals.md): the principal value against 1/(x − t) as a transform in its own right.
 
 A dent handles one pole; taking the principal value against 1/(x − t) at every t at once is an operation on whole signals, and what it does to a wave is the Hilbert transform.
 

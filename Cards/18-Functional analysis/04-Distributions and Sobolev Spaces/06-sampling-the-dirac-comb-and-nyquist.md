@@ -827,7 +827,7 @@ example : (∑ n ∈ Finset.Icc (-100 : ℤ) 100, (-1 : ℤ) ^ n.natAbs) = 1 := 
 
 ## Where this goes next
 
-- Poisson summation and sampling (planned): Poisson summation for signals that are only integrable, with the conditions it needs.
+- [Poisson summation and sampling](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/08-poisson-summation-and-sampling.md): Poisson summation for signals that are only integrable, with the conditions it needs.
 - [Weak derivatives](07-weak-derivatives-and-sobolev-spaces.md), the next card on this shelf: derivatives defined by probes, as the comb and the delta are.
 - [Windows](../../13-Engineering%20mathematics/05-Signals/03-windows-and-spectral-leakage.md): what happens to each copy when the comb has only finitely many spikes.
 

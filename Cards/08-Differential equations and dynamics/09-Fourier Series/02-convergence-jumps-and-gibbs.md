@@ -1121,8 +1121,8 @@ example : π / (2 * (50 : ℕ)) = π / 100 := by push_cast; ring
 
 - [Parseval's identity](03-parsevals-identity.md): the energy in the error, which does shrink to 0 even with a jump.
 - [Windows](../../13-Engineering%20mathematics/05-Signals/03-windows-and-spectral-leakage.md): tapering the top harmonics to tame the ringing.
-- Dirichlet's theorem: the two kinds of convergence this card contrasts, made exact.
-- The Gibbs overshoot and the cure: averaging the partial sums, which removes the overshoot entirely.
+- [Dirichlet's theorem](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/04-pointwise-and-uniform-convergence.md): the two kinds of convergence this card contrasts, made exact.
+- [The Gibbs overshoot and the cure](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/08-gibbs-and-summability.md): averaging the partial sums, which removes the overshoot entirely.
 
 The overshoot never falls toward 0, but it lives in a sliver of width about π/(2N); whether the total error, measured as energy, still goes to zero is what Parseval's identity answers.
 

@@ -731,7 +731,7 @@ example : (0 : ℤ) + 2 * 2 = 4 := by norm_num
 - [Mean value and maximum principle](05-mean-value-and-maximum-principle-for-harmonic-functions.md): circle averages, and no hot spot inside a steady plate.
 - [Laplace's equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/07-laplaces-equation-and-harmonic-functions.md): the same settled plate without complex numbers, where the edge temperatures fix the inside.
 - Harmonic functions, in Partial differential equations: Laplace in any dimension, with no complex partner.
-- The Hilbert transform: the conjugate taken on a line, as a transform of signals.
+- [The Hilbert transform](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/09-hilbert-transform-and-analytic-signals.md): the conjugate taken on a line, as a transform of signals.
 
 Here the holomorphic function came first; how the plate's edges alone fix the temperature inside begins with the circle averages of [Mean value and maximum principle](05-mean-value-and-maximum-principle-for-harmonic-functions.md).
 

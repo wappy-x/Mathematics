@@ -608,7 +608,7 @@ example : (20 / 8 : ℚ) = 25 / 10 := by norm_num
 - [Three families](../../16-Numerical%20analysis/07-PDE%20Solvers/01-pde-families-elliptic-parabolic-hyperbolic.md): the model parabolic equation, one rate in time and a bend in space, which smooths as time runs.
 - [Hille-Yosida](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/05-hille-yosida-and-generators.md): when such a law defines an evolution.
 - [Two evolutions](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/09-the-heat-and-schrodinger-semigroups.md): the solution as an exponential of the bend.
-- Solving differential equations by transform: the $`n^2`$ decay as a multiplier.
+- [Solving differential equations by transform](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/09-fourier-methods-for-differential-equations.md): the $`n^2`$ decay as a multiplier.
 - Volume form and Laplace-Beltrami: the bend on a curved surface.
 - Ricci flow: a heat equation smoothing a space's shape.
 

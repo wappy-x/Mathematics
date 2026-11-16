@@ -699,8 +699,8 @@ example : (1 : ℚ) + 1 / 9 + 1 / 25 = 259 / 225 := by norm_num
 - [The Fourier transform](03-fourier-transform.md): a signal that never repeats; the tones fill a continuum.
 - [Completeness of sines and cosines](../../18-Functional%20analysis/02-Hilbert%20Spaces/04-completeness-of-the-trigonometric-system.md): why the arrows are enough; Parseval in full.
 - [Wiener's lemma](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/02-wieners-lemma-and-invertible-filters.md): when a filter's action on the coefficients can be undone.
-- Fourier coefficients: the three kinds of convergence, proved.
-- Poisson summation and sampling: series and transform tied together.
+- [Fourier coefficients](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/01-fourier-coefficients-and-orthogonality.md): the three kinds of convergence, proved.
+- [Poisson summation and sampling](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/08-poisson-summation-and-sampling.md): series and transform tied together.
 - Equidistribution: arrow averages deciding whether a sequence spreads evenly.
 - Isoperimetric and four-vertex: Parseval proving the circle encloses the most area.
 

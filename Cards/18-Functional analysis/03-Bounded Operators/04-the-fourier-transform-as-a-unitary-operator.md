@@ -999,7 +999,7 @@ end
 
 - [Tempered distributions](../04-Distributions%20and%20Sobolev%20Spaces/05-tempered-distributions-and-the-fourier-transform.md): the transform of signals with infinite energy, such as a constant or a spike, defined through probes.
 - [Two evolutions](../05-Unbounded%20Operators%20and%20Semigroups/09-the-heat-and-schrodinger-semigroups.md): the heat and Schrödinger flows, where $`\mathcal{F}`$ turns each into multiplication, one shrinking and one rotating.
-- Plancherel (planned): the harmonic-analysis wing's version on the hertz form, with the theory of $`L^p`$ transforms.
+- [Plancherel](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/05-plancherel-and-l2.md): the harmonic-analysis wing's version on the hertz form, with the theory of $`L^p`$ transforms.
 - [Bounded and symmetric](10-spectral-theorem-for-bounded-self-adjoint-operators.md): the spectral theorem says every self-adjoint operator becomes multiplication after a unitary change of frame, as the blur did here.
 - [Spectrum](07-spectrum-and-resolvent.md): the spectrum of $`\mathcal{F}`$ is the four points 1, −i, −1, i.
 

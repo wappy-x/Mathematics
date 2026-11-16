@@ -829,7 +829,7 @@ end ConvolutionImpulse
 - [Fundamental solution](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/04-fundamental-solutions-and-the-response-to-a-spike.md): the impulse response for any linear operator.
 - [Duhamel](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/06-duhamels-principle-for-a-forced-evolution.md): the blend in infinite dimensions.
 - [Duhamel's principle](../../19-Partial%20differential%20equations/03-The%20Heat%20Equation%20in%20Depth/03-duhamels-principle.md): a heat source as a stream of starts.
-- The convolution theorem: convolution on the whole line.
+- [The convolution theorem](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/02-convolution-theorem-and-impulse-response.md): convolution on the whole line.
 
 One function of time now carries everything the car will do; for a temperature along a rod, that role passes to [The heat kernel](../10-The%20Classical%20PDEs/10-the-heat-kernel.md).
 
