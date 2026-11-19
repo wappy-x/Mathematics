@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 400" width="420" height="400" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<title>The lattice Z[sqrt-5] drawn to scale, with the circles of norm 2, 3, 4, 6 and 9</title>
+<rect x="0" y="0" width="420" height="400" fill="#ffffff"/>
+<line x1="20" y1="190" x2="400" y2="190" stroke="#999999" stroke-width="1"/>
+<line x1="210" y1="30" x2="210" y2="350" stroke="#999999" stroke-width="1"/>
+<circle cx="210" cy="190" r="70.7107" fill="none" stroke="#777777" stroke-width="1.2" stroke-dasharray="4 4"/>
+<circle cx="210" cy="190" r="86.6025" fill="none" stroke="#777777" stroke-width="1.2" stroke-dasharray="4 4"/>
+<circle cx="210" cy="190" r="100.0000" fill="none" stroke="#264653" stroke-width="1.8"/>
+<circle cx="210" cy="190" r="122.4745" fill="none" stroke="#e76f51" stroke-width="1.8"/>
+<circle cx="210" cy="190" r="150.0000" fill="none" stroke="#2a9d8f" stroke-width="1.8"/>
+<circle cx="60" cy="301.8034" r="3.5" fill="#1d1d1d"/>
+<circle cx="60" cy="190.0000" r="5" fill="#2a9d8f"/>
+<circle cx="60" cy="78.1966" r="3.5" fill="#1d1d1d"/>
+<circle cx="110" cy="301.8034" r="5" fill="#2a9d8f"/>
+<circle cx="110" cy="190.0000" r="5" fill="#264653"/>
+<circle cx="110" cy="78.1966" r="5" fill="#2a9d8f"/>
+<circle cx="160" cy="301.8034" r="5" fill="#e76f51"/>
+<circle cx="160" cy="190.0000" r="3.5" fill="#1d1d1d"/>
+<circle cx="160" cy="78.1966" r="5" fill="#e76f51"/>
+<circle cx="210" cy="301.8034" r="3.5" fill="#1d1d1d"/>
+<circle cx="210" cy="190.0000" r="3.5" fill="#1d1d1d"/>
+<circle cx="210" cy="78.1966" r="3.5" fill="#1d1d1d"/>
+<circle cx="260" cy="301.8034" r="5" fill="#e76f51"/>
+<circle cx="260" cy="190.0000" r="3.5" fill="#1d1d1d"/>
+<circle cx="260" cy="78.1966" r="5" fill="#e76f51"/>
+<circle cx="310" cy="301.8034" r="5" fill="#2a9d8f"/>
+<circle cx="310" cy="190.0000" r="5" fill="#264653"/>
+<circle cx="310" cy="78.1966" r="5" fill="#2a9d8f"/>
+<circle cx="360" cy="301.8034" r="3.5" fill="#1d1d1d"/>
+<circle cx="360" cy="190.0000" r="5" fill="#2a9d8f"/>
+<circle cx="360" cy="78.1966" r="3.5" fill="#1d1d1d"/>
+<text x="230.0" y="64.2" fill="#1d1d1d">1 + √−5, norm 6</text>
+<text x="230.0" y="325.8" fill="#1d1d1d">1 − √−5, norm 6</text>
+<text x="316.0" y="182.0" fill="#1d1d1d">2, norm 4</text>
+<text x="356.0" y="210.0" fill="#1d1d1d">3, norm 9</text>
+<text x="214.0" y="184.0" fill="#1d1d1d">0</text>
+<text x="30.0" y="68.2" fill="#1d1d1d">−2 + √−5, norm 9</text>
+<text x="20" y="372" fill="#1d1d1d">Dashed circles: norm 2 and norm 3. No lattice point lies on them.</text>
+<text x="20" y="390" fill="#1d1d1d">Across: a. Up: b times √5 = 2.23607. Scale 50 px per unit.</text>
+</svg>

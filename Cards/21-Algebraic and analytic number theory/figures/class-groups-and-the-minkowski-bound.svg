@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 420" width="420" height="420" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<title>The ideal p = (2, 1 + sqrt -5) as a lattice in the plane, with the Minkowski disc of area four times its cell</title>
+<rect x="0" y="0" width="420" height="420" fill="#ffffff"/>
+<line x1="10" y1="210" x2="410" y2="210" stroke="#bbbbbb" stroke-width="1"/>
+<line x1="210" y1="10" x2="210" y2="410" stroke="#bbbbbb" stroke-width="1"/>
+<polygon points="210.0,210.0 290.0,210.0 330.0,120.6 250.0,120.6" fill="#e9c46a" fill-opacity="0.45" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="210" cy="210" r="95.4" fill="none" stroke="#e76f51" stroke-width="2"/>
+<circle cx="10.0" cy="388.9" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="50.0" cy="388.9" r="5" fill="#1d1d1d"/>
+<circle cx="90.0" cy="388.9" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="130.0" cy="388.9" r="5" fill="#1d1d1d"/>
+<circle cx="170.0" cy="388.9" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="210.0" cy="388.9" r="5" fill="#1d1d1d"/>
+<circle cx="250.0" cy="388.9" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="290.0" cy="388.9" r="5" fill="#1d1d1d"/>
+<circle cx="330.0" cy="388.9" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="370.0" cy="388.9" r="5" fill="#1d1d1d"/>
+<circle cx="410.0" cy="388.9" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="10.0" cy="299.4" r="5" fill="#1d1d1d"/>
+<circle cx="50.0" cy="299.4" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="90.0" cy="299.4" r="5" fill="#1d1d1d"/>
+<circle cx="130.0" cy="299.4" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="170.0" cy="299.4" r="5" fill="#1d1d1d"/>
+<circle cx="210.0" cy="299.4" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="250.0" cy="299.4" r="5" fill="#1d1d1d"/>
+<circle cx="290.0" cy="299.4" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="330.0" cy="299.4" r="5" fill="#1d1d1d"/>
+<circle cx="370.0" cy="299.4" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="410.0" cy="299.4" r="5" fill="#1d1d1d"/>
+<circle cx="10.0" cy="210.0" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="50.0" cy="210.0" r="5" fill="#1d1d1d"/>
+<circle cx="90.0" cy="210.0" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="130.0" cy="210.0" r="5" fill="#1d1d1d"/>
+<circle cx="170.0" cy="210.0" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="210.0" cy="210.0" r="5" fill="#1d1d1d"/>
+<circle cx="250.0" cy="210.0" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="290.0" cy="210.0" r="5" fill="#1d1d1d"/>
+<circle cx="330.0" cy="210.0" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="370.0" cy="210.0" r="5" fill="#1d1d1d"/>
+<circle cx="410.0" cy="210.0" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="10.0" cy="120.6" r="5" fill="#1d1d1d"/>
+<circle cx="50.0" cy="120.6" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="90.0" cy="120.6" r="5" fill="#1d1d1d"/>
+<circle cx="130.0" cy="120.6" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="170.0" cy="120.6" r="5" fill="#1d1d1d"/>
+<circle cx="210.0" cy="120.6" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="250.0" cy="120.6" r="5" fill="#1d1d1d"/>
+<circle cx="290.0" cy="120.6" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="330.0" cy="120.6" r="5" fill="#1d1d1d"/>
+<circle cx="370.0" cy="120.6" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="410.0" cy="120.6" r="5" fill="#1d1d1d"/>
+<circle cx="10.0" cy="31.1" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="50.0" cy="31.1" r="5" fill="#1d1d1d"/>
+<circle cx="90.0" cy="31.1" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="130.0" cy="31.1" r="5" fill="#1d1d1d"/>
+<circle cx="170.0" cy="31.1" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="210.0" cy="31.1" r="5" fill="#1d1d1d"/>
+<circle cx="250.0" cy="31.1" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="290.0" cy="31.1" r="5" fill="#1d1d1d"/>
+<circle cx="330.0" cy="31.1" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<circle cx="370.0" cy="31.1" r="5" fill="#1d1d1d"/>
+<circle cx="410.0" cy="31.1" r="4" fill="#ffffff" stroke="#777777" stroke-width="1.5"/>
+<text x="196.0" y="228.0">0</text>
+<text x="292.0" y="228.0">2</text>
+<text x="220.0" y="110.6">1 + √−5</text>
+<line x1="210" y1="210" x2="269.3" y2="284.8" stroke="#e76f51" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="254.0" y="250.0" fill="#b5462b">radius 2.386</text>
+</svg>

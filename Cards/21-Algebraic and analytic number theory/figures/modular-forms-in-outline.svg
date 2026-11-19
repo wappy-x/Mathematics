@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 360" width="420" height="360" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<title>The fundamental domain of the modular group, with z = 0.3 + 1.1i and its image -1/z, drawn to scale</title>
+<rect x="0" y="0" width="420" height="360" fill="#ffffff"/>
+<path d="M 135.0 37.5 L 135.0 200.1 A 150 150 0 0 1 285.0 200.1 L 285.0 37.5 Z" fill="#e9c46a" fill-opacity="0.45" stroke="none"/>
+<line x1="20" y1="330" x2="400" y2="330" stroke="#1d1d1d" stroke-width="1.2"/>
+<line x1="210" y1="330" x2="210" y2="20" stroke="#bbbbbb" stroke-width="1"/>
+<path d="M 60 330 A 150 150 0 0 1 360 330" fill="none" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="4 3"/>
+<path d="M 135.0 200.1 A 150 150 0 0 1 285.0 200.1" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="135.0" y1="200.1" x2="135.0" y2="37.5" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="285.0" y1="200.1" x2="285.0" y2="37.5" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="255.0" y1="165.0" x2="175.4" y2="203.1" stroke="#e76f51" stroke-width="1.5" stroke-dasharray="5 3"/>
+<circle cx="210" cy="180" r="4" fill="#1d1d1d"/>
+<circle cx="135.0" cy="200.1" r="4" fill="#1d1d1d"/>
+<circle cx="285.0" cy="200.1" r="4" fill="#1d1d1d"/>
+<circle cx="255.0" cy="165.0" r="5" fill="#e76f51"/>
+<circle cx="175.4" cy="203.1" r="5" fill="#2a9d8f"/>
+<text x="216" y="174" fill="#1d1d1d">i</text>
+<text x="117.0" y="194.1" fill="#1d1d1d">ρ</text>
+<text x="291.0" y="194.1" fill="#1d1d1d">ρ + 1</text>
+<text x="196.0" y="151.0" fill="#1d1d1d">z = 0.3 + 1.1i</text>
+<text x="145.4" y="225.1" fill="#1d1d1d">-1/z</text>
+<text x="184" y="67.5" fill="#1d1d1d">region F</text>
+<text x="54" y="348" fill="#1d1d1d">-1</text>
+<text x="121.0" y="348" fill="#1d1d1d">-1/2</text>
+<text x="206" y="348" fill="#1d1d1d">0</text>
+<text x="275.0" y="348" fill="#1d1d1d">1/2</text>
+<text x="356" y="348" fill="#1d1d1d">1</text>
+</svg>
