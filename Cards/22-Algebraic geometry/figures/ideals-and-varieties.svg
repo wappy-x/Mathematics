@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" width="520" height="360" font-family="Helvetica, Arial, sans-serif" font-size="13">
+  <title>Two range circles, 6 km about beacon A at (0, 0) and 8 km about beacon B at (10, 0), meeting at the two fixes (3.6, 4.8) and (3.6, -4.8); the dashed line 5x - 18 = 0 passes through both. Drawn to scale, 20 px per km; real points only.</title>
+  <rect x="0" y="0" width="520" height="360" fill="#ffffff"/>
+  <line x1="140" y1="180" x2="340" y2="180" stroke="#888888" stroke-width="1"/>
+  <text x="240" y="196" text-anchor="middle" fill="#555555">10 km</text>
+  <circle cx="140" cy="180" r="120" fill="none" stroke="#264653" stroke-width="2"/>
+  <circle cx="340" cy="180" r="160" fill="none" stroke="#2a9d8f" stroke-width="2"/>
+  <line x1="212" y1="10" x2="212" y2="350" stroke="#e76f51" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="218" y="24" fill="#b5462c">5x − 18 = 0</text>
+  <circle cx="140" cy="180" r="4" fill="#264653"/>
+  <text x="132" y="174" text-anchor="end" fill="#264653">A</text>
+  <circle cx="340" cy="180" r="4" fill="#2a9d8f"/>
+  <text x="348" y="174" fill="#1f7a6f">B</text>
+  <text x="40" y="96" fill="#264653">6 km</text>
+  <text x="460" y="60" fill="#1f7a6f">8 km</text>
+  <circle cx="212" cy="84" r="5" fill="#1d1d1d"/>
+  <text x="222" y="80" fill="#1d1d1d">(3.6, 4.8)</text>
+  <circle cx="212" cy="276" r="5" fill="#1d1d1d"/>
+  <text x="222" y="292" fill="#1d1d1d">(3.6, −4.8)</text>
+</svg>

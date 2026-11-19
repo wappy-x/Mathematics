@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 460" width="640" height="460" font-family="Helvetica, Arial, sans-serif" font-size="15">
+  <title>The arm's two circles, the line 8x - 21 = 0 and the two elbow positions, drawn to scale (1 m = 60 px)</title>
+  <rect x="0" y="0" width="640" height="460" fill="#ffffff"/>
+  <line x1="30" y1="230" x2="625" y2="230" stroke="#bbbbbb" stroke-width="1"/>
+  <circle cx="250" cy="230" r="180" fill="none" stroke="#264653" stroke-width="2"/>
+  <circle cx="490" cy="230" r="120" fill="none" stroke="#2a9d8f" stroke-width="2"/>
+  <line x1="407.5" y1="32" x2="407.5" y2="428" stroke="#e76f51" stroke-width="2" stroke-dasharray="7 5"/>
+  <polyline points="250,230 407.5,142.858 490,230" fill="none" stroke="#1d1d1d" stroke-width="4" stroke-linejoin="round"/>
+  <polyline points="250,230 407.5,317.142 490,230" fill="none" stroke="#1d1d1d" stroke-width="2" stroke-dasharray="4 4"/>
+  <circle cx="250" cy="230" r="6" fill="#1d1d1d"/>
+  <circle cx="490" cy="230" r="6" fill="#1d1d1d"/>
+  <circle cx="407.5" cy="142.858" r="6" fill="#e76f51"/>
+  <circle cx="407.5" cy="317.142" r="6" fill="#e76f51"/>
+  <text x="200" y="252" fill="#1d1d1d">shoulder (0, 0)</text>
+  <text x="498" y="252" fill="#1d1d1d">target (4, 0)</text>
+  <text x="418" y="132" fill="#1d1d1d">elbow (2.625, 1.452)</text>
+  <text x="418" y="343" fill="#1d1d1d">elbow (2.625, -1.452)</text>
+  <text x="415" y="28" fill="#e76f51">8x - 21 = 0</text>
+  <text x="70" y="70" fill="#264653">f1 = 0: 3 m from the shoulder</text>
+  <text x="395" y="400" fill="#2a9d8f">f2 = 0: 2 m from the target</text>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 420" width="420" height="420" font-family="Helvetica, Arial, sans-serif" font-size="13">
+  <title>Two slices of the cone x^2 + y^2 = z^2, top view to scale, real points only: the wall z = 5 gives a smooth circle of radius 5; the plane 4z = 5y through the apex gives two lines x = 3y/4 and x = -3y/4 crossing at the apex</title>
+  <rect x="0" y="0" width="420" height="420" fill="#ffffff"/>
+  <!-- 30 px per metre, origin at (210, 210), y up -->
+  <g stroke="#b0b0b0" stroke-width="1">
+    <line x1="30" y1="210" x2="390" y2="210"/>
+    <line x1="210" y1="30" x2="210" y2="390"/>
+  </g>
+  <g fill="#555555" font-size="12">
+    <text x="394" y="214">x</text>
+    <text x="214" y="26">y</text>
+  </g>
+  <circle cx="210" cy="210" r="150" fill="none" stroke="#1d1d1d" stroke-width="2.5"/>
+  <g stroke="#c0392b" stroke-width="2.5">
+    <line x1="75" y1="390" x2="345" y2="30"/>
+    <line x1="345" y1="390" x2="75" y2="30"/>
+  </g>
+  <circle cx="210" cy="210" r="5" fill="#c0392b"/>
+  <circle cx="300" cy="90" r="5" fill="#1d1d1d"/>
+  <circle cx="120" cy="90" r="5" fill="#1d1d1d"/>
+  <g fill="#1d1d1d">
+    <text x="240" y="230">apex: singular</text>
+    <text x="308" y="86">P (3, 4)</text>
+    <text x="46" y="86">Q (−3, 4)</text>
+    <text x="250" y="410">circle: wall z = 5</text>
+    <text x="8" y="410" fill="#c0392b">lines x = ±3y/4: plane 4z = 5y</text>
+  </g>
+</svg>

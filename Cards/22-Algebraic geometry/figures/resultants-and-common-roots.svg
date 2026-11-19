@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 480" width="500" height="480" font-family="Helvetica, Arial, sans-serif" font-size="13">
+  <title>Two gears on one shaft: tip paths of radius 5 cm and 10 cm, gauges at x = 3 cm and y = 8 cm, both touched at the shaft angle 53.13 degrees; drawn to scale, 20 px per cm, real points only</title>
+  <rect x="0" y="0" width="500" height="480" fill="#ffffff"/>
+  <!-- origin (shaft centre) at (240, 240); 1 cm = 20 px; y up -->
+  <line x1="20" y1="240" x2="480" y2="240" stroke="#999999" stroke-width="1"/>
+  <line x1="240" y1="20" x2="240" y2="460" stroke="#999999" stroke-width="1"/>
+  <circle cx="240" cy="240" r="100" fill="none" stroke="#264653" stroke-width="2"/>
+  <circle cx="240" cy="240" r="200" fill="none" stroke="#264653" stroke-width="2"/>
+  <line x1="300" y1="20" x2="300" y2="460" stroke="#e76f51" stroke-width="2" stroke-dasharray="6 4"/>
+  <line x1="20" y1="80" x2="480" y2="80" stroke="#e76f51" stroke-width="2" stroke-dasharray="6 4"/>
+  <line x1="240" y1="240" x2="360" y2="80" stroke="#1d1d1d" stroke-width="1.5"/>
+  <line x1="240" y1="240" x2="360" y2="400" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="3 3"/>
+  <path d="M 270 240 A 30 30 0 0 0 258 216" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+  <circle cx="300" cy="160" r="5" fill="#2a9d8f" stroke="#1d1d1d"/>
+  <circle cx="360" cy="80" r="5" fill="#2a9d8f" stroke="#1d1d1d"/>
+  <circle cx="300" cy="320" r="5" fill="#ffffff" stroke="#1d1d1d"/>
+  <circle cx="360" cy="400" r="5" fill="#ffffff" stroke="#1d1d1d"/>
+  <circle cx="240" cy="240" r="3" fill="#1d1d1d"/>
+  <text x="308" y="172" fill="#1d1d1d">tip A (3, 4)</text>
+  <text x="368" y="98" fill="#1d1d1d">tip B (6, 8)</text>
+  <text x="308" y="336" fill="#1d1d1d">(3, -4)</text>
+  <text x="368" y="416" fill="#1d1d1d">(6, -8): misses</text>
+  <text x="276" y="232" fill="#1d1d1d">53.13°</text>
+  <text x="306" y="36" fill="#1d1d1d">gauge x = 3 cm</text>
+  <text x="26" y="72" fill="#1d1d1d">gauge y = 8 cm</text>
+  <text x="112" y="372" fill="#264653">gear A tip path, r = 5 cm</text>
+  <text x="20" y="472" fill="#264653">gear B tip path, r = 10 cm</text>
+  <text x="200" y="256" fill="#1d1d1d">shaft</text>
+</svg>

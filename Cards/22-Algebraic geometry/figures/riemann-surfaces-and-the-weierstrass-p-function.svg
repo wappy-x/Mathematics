@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 590" font-family="Helvetica, Arial, sans-serif" font-size="13">
+  <title>The square lattice of 1 and i, its unit square glued edge to edge into a torus, and the two real circles of the cubic</title>
+  <rect x="0" y="0" width="440" height="590" fill="#ffffff"/>
+  <!-- 120 px per unit; z = a + bi sits at (160 + 120a, 340 - 120b) -->
+  <rect x="160" y="220" width="120" height="120" fill="#e9f2f1" stroke="none"/>
+  <g stroke="#bbbbbb" stroke-width="1">
+    <line x1="40" y1="340" x2="400" y2="340"/><line x1="160" y1="100" x2="160" y2="460"/>
+  </g>
+  <g fill="#1d1d1d">
+    <circle cx="40" cy="460" r="4"/><circle cx="160" cy="460" r="4"/><circle cx="280" cy="460" r="4"/><circle cx="400" cy="460" r="4"/>
+    <circle cx="40" cy="340" r="4"/><circle cx="160" cy="340" r="4"/><circle cx="280" cy="340" r="4"/><circle cx="400" cy="340" r="4"/>
+    <circle cx="40" cy="220" r="4"/><circle cx="160" cy="220" r="4"/><circle cx="280" cy="220" r="4"/><circle cx="400" cy="220" r="4"/>
+    <circle cx="40" cy="100" r="4"/><circle cx="160" cy="100" r="4"/><circle cx="280" cy="100" r="4"/><circle cx="400" cy="100" r="4"/>
+  </g>
+  <!-- gluing marks: one arrow on bottom and top, two on left and right -->
+  <g stroke="#1d1d1d" stroke-width="1.5" fill="none">
+    <line x1="160" y1="220" x2="280" y2="220"/><line x1="280" y1="220" x2="280" y2="340"/><line x1="160" y1="220" x2="160" y2="340"/>
+    <polyline points="244,214 252,220 244,226"/><polyline points="244,334 252,340 244,346"/>
+    <polyline points="154,262 160,254 166,262"/><polyline points="154,270 160,262 166,270"/>
+    <polyline points="274,262 280,254 286,262"/><polyline points="274,270 280,262 286,270"/>
+  </g>
+  <line x1="160" y1="340" x2="280" y2="340" stroke="#e76f51" stroke-width="4"/>
+  <line x1="160" y1="280" x2="280" y2="280" stroke="#2a9d8f" stroke-width="4" stroke-dasharray="8 5"/>
+  <g fill="#1d1d1d">
+    <rect x="215" y="335" width="10" height="10"/><rect x="155" y="275" width="10" height="10"/><rect x="215" y="275" width="10" height="10"/>
+  </g>
+  <circle cx="190" cy="340" r="5" fill="#ffffff" stroke="#1d1d1d" stroke-width="2"/>
+  <g fill="#1d1d1d">
+    <text x="146" y="358" text-anchor="end">0</text><text x="290" y="358">1</text>
+    <text x="146" y="214" text-anchor="end">i</text><text x="290" y="214">1 + i</text>
+    <text x="400" y="334" text-anchor="end">Re z</text><text x="168" y="112">Im z</text>
+  </g>
+  <g fill="#1d1d1d">
+    <text x="20" y="500">Dots: the lattice of 1 and i. Shaded: one copy of the</text>
+    <text x="20" y="517">torus; arrows show which edges are glued.</text>
+    <text x="20" y="536">Squares: 1/2, i/2, (1 + i)/2, where p = 6.875186, −6.875186, 0.</text>
+    <text x="20" y="555">Open dot: z = 1/4, sent to (16.598167, −123.096963).</text>
+    <text x="20" y="574">Solid line: Im z = 0. Dashed line: Im z = 1/2.</text>
+  </g>
+</svg>

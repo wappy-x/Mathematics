@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 450" width="480" height="450" font-family="Helvetica, Arial, sans-serif" font-size="13">
+  <title>A pipe of radius 5 cm cut across: the beam 3x + 4y = 25 touches it at P (3, 4); the beam moved 0.2 cm in, 3x + 4y = 24, crosses it at (4, 3) and (1.76, 4.68); drawn to scale, 36 px per cm, real points only</title>
+  <rect x="0" y="0" width="480" height="450" fill="#ffffff"/>
+  <!-- origin (pipe centre) at (190, 250); 1 cm = 36 px; y up -->
+  <line x1="10" y1="250" x2="470" y2="250" stroke="#999999" stroke-width="1"/>
+  <line x1="190" y1="10" x2="190" y2="440" stroke="#999999" stroke-width="1"/>
+  <circle cx="190" cy="250" r="180" fill="none" stroke="#264653" stroke-width="2"/>
+  <line x1="190" y1="250" x2="298" y2="106" stroke="#999999" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="220" y1="47.5" x2="460" y2="227.5" stroke="#1d1d1d" stroke-width="2"/>
+  <line x1="220" y1="56.5" x2="460" y2="236.5" stroke="#e76f51" stroke-width="2" stroke-dasharray="6 4"/>
+  <circle cx="298" cy="106" r="5" fill="#2a9d8f" stroke="#1d1d1d"/>
+  <circle cx="334" cy="142" r="4" fill="#ffffff" stroke="#e76f51" stroke-width="2"/>
+  <circle cx="253.36" cy="81.52" r="4" fill="#ffffff" stroke="#e76f51" stroke-width="2"/>
+  <circle cx="190" cy="250" r="3" fill="#1d1d1d"/>
+  <text x="306" y="100" fill="#1d1d1d">P (3, 4): touches, counts 2</text>
+  <text x="328" y="160" text-anchor="end" fill="#e76f51">(4, 3)</text>
+  <text x="248" y="104" text-anchor="end" fill="#e76f51">(1.76, 4.68)</text>
+  <text x="10" y="20" fill="#1d1d1d">solid: beam 3x + 4y = 25</text>
+  <text x="10" y="38" fill="#e76f51">dashed: moved 0.2 cm in,</text>
+  <text x="10" y="56" fill="#e76f51">3x + 4y = 24</text>
+  <text x="198" y="266" fill="#1d1d1d">centre (0, 0)</text>
+  <text x="270" y="440" fill="#264653">pipe x² + y² = 25, r = 5 cm</text>
+</svg>

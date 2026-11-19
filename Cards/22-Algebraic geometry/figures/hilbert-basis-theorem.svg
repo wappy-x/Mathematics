@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 420" width="420" height="420" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<title>The monomials x^a y^b with a times b at least 6: a staircase with four corners</title>
+<rect x="0" y="0" width="420" height="420" fill="#ffffff"/>
+<polygon points="100,80 100,140 140,140 140,260 180,260 180,300 300,300 300,340 360,340 360,80" fill="#f3e3d3" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="60" y1="380" x2="60" y2="80" stroke="#d0d0d0" stroke-width="0.6"/>
+<line x1="60" y1="380" x2="360" y2="380" stroke="#d0d0d0" stroke-width="0.6"/>
+<text x="60" y="398" text-anchor="middle" fill="#1d1d1d">0</text>
+<text x="50" y="384" text-anchor="end" fill="#1d1d1d">0</text>
+<line x1="100" y1="380" x2="100" y2="80" stroke="#d0d0d0" stroke-width="0.6"/>
+<line x1="60" y1="340" x2="360" y2="340" stroke="#d0d0d0" stroke-width="0.6"/>
+<text x="100" y="398" text-anchor="middle" fill="#1d1d1d">1</text>
+<text x="50" y="344" text-anchor="end" fill="#1d1d1d">1</text>
+<line x1="140" y1="380" x2="140" y2="80" stroke="#d0d0d0" stroke-width="0.6"/>
+<line x1="60" y1="300" x2="360" y2="300" stroke="#d0d0d0" stroke-width="0.6"/>
+<text x="140" y="398" text-anchor="middle" fill="#1d1d1d">2</text>
+<text x="50" y="304" text-anchor="end" fill="#1d1d1d">2</text>
+<line x1="180" y1="380" x2="180" y2="80" stroke="#d0d0d0" stroke-width="0.6"/>
+<line x1="60" y1="260" x2="360" y2="260" stroke="#d0d0d0" stroke-width="0.6"/>
+<text x="180" y="398" text-anchor="middle" fill="#1d1d1d">3</text>
+<text x="50" y="264" text-anchor="end" fill="#1d1d1d">3</text>
+<line x1="220" y1="380" x2="220" y2="80" stroke="#d0d0d0" stroke-width="0.6"/>
+<line x1="60" y1="220" x2="360" y2="220" stroke="#d0d0d0" stroke-width="0.6"/>
+<text x="220" y="398" text-anchor="middle" fill="#1d1d1d">4</text>
+<text x="50" y="224" text-anchor="end" fill="#1d1d1d">4</text>
+<line x1="260" y1="380" x2="260" y2="80" stroke="#d0d0d0" stroke-width="0.6"/>
+<line x1="60" y1="180" x2="360" y2="180" stroke="#d0d0d0" stroke-width="0.6"/>
+<text x="260" y="398" text-anchor="middle" fill="#1d1d1d">5</text>
+<text x="50" y="184" text-anchor="end" fill="#1d1d1d">5</text>
+<line x1="300" y1="380" x2="300" y2="80" stroke="#d0d0d0" stroke-width="0.6"/>
+<line x1="60" y1="140" x2="360" y2="140" stroke="#d0d0d0" stroke-width="0.6"/>
+<text x="300" y="398" text-anchor="middle" fill="#1d1d1d">6</text>
+<text x="50" y="144" text-anchor="end" fill="#1d1d1d">6</text>
+<line x1="340" y1="380" x2="340" y2="80" stroke="#d0d0d0" stroke-width="0.6"/>
+<line x1="60" y1="100" x2="360" y2="100" stroke="#d0d0d0" stroke-width="0.6"/>
+<text x="340" y="398" text-anchor="middle" fill="#1d1d1d">7</text>
+<text x="50" y="104" text-anchor="end" fill="#1d1d1d">7</text>
+<line x1="60" y1="380" x2="360" y2="380" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="60" y1="380" x2="60" y2="80" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="360.0,348.0 342.4,346.0 326.7,344.0 312.6,342.0 300.0,340.0 288.6,338.0 278.2,336.0 268.7,334.0 260.0,332.0 252.0,330.0 244.6,328.0 237.8,326.0 231.4,324.0 225.5,322.0 220.0,320.0 214.8,318.0 210.0,316.0 205.5,314.0 201.2,312.0 197.1,310.0 193.3,308.0 189.7,306.0 186.3,304.0 183.1,302.0 180.0,300.0 177.1,298.0 174.3,296.0 171.6,294.0 169.1,292.0 166.7,290.0 164.3,288.0 162.1,286.0 160.0,284.0 158.0,282.0 156.0,280.0 154.1,278.0 152.3,276.0 150.6,274.0 148.9,272.0 147.3,270.0 145.7,268.0 144.2,266.0 142.8,264.0 141.4,262.0 140.0,260.0 138.7,258.0 137.4,256.0 136.2,254.0 135.0,252.0 133.8,250.0 132.7,248.0 131.6,246.0 130.6,244.0 129.6,242.0 128.6,240.0 127.6,238.0 126.7,236.0 125.8,234.0 124.9,232.0 124.0,230.0 123.2,228.0 122.3,226.0 121.5,224.0 120.8,222.0 120.0,220.0 119.3,218.0 118.5,216.0 117.8,214.0 117.1,212.0 116.5,210.0 115.8,208.0 115.2,206.0 114.5,204.0 113.9,202.0 113.3,200.0 112.7,198.0 112.2,196.0 111.6,194.0 111.1,192.0 110.5,190.0 110.0,188.0 109.5,186.0 109.0,184.0 108.5,182.0 108.0,180.0 107.5,178.0 107.1,176.0 106.6,174.0 106.2,172.0 105.7,170.0 105.3,168.0 104.9,166.0 104.4,164.0 104.0,162.0 103.6,160.0 103.2,158.0 102.9,156.0 102.5,154.0 102.1,152.0 101.7,150.0 101.4,148.0 101.0,146.0 100.7,144.0 100.3,142.0 100.0,140.0 99.7,138.0 99.3,136.0 99.0,134.0 98.7,132.0 98.4,130.0 98.1,128.0 97.8,126.0 97.5,124.0 97.2,122.0 96.9,120.0 96.6,118.0 96.4,116.0 96.1,114.0 95.8,112.0 95.6,110.0 95.3,108.0 95.0,106.0 94.8,104.0 94.5,102.0 94.3,100.0 94.0,98.0 93.8,96.0 93.6,94.0 93.3,92.0 93.1,90.0 92.9,88.0 92.7,86.0 92.4,84.0 92.2,82.0 92.0,80.0" fill="none" stroke="#2a6f97" stroke-width="1.5" stroke-dasharray="5,3"/>
+<circle cx="60" cy="380" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="60" cy="340" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="60" cy="300" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="60" cy="260" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="60" cy="220" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="60" cy="180" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="60" cy="140" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="60" cy="100" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="100" cy="380" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="100" cy="340" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="100" cy="300" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="100" cy="260" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="100" cy="220" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="100" cy="180" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="100" cy="140" r="4" fill="#1d1d1d"/>
+<circle cx="100" cy="100" r="4" fill="#1d1d1d"/>
+<circle cx="140" cy="380" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="140" cy="340" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="140" cy="300" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="140" cy="260" r="4" fill="#1d1d1d"/>
+<circle cx="140" cy="220" r="4" fill="#1d1d1d"/>
+<circle cx="140" cy="180" r="4" fill="#1d1d1d"/>
+<circle cx="140" cy="140" r="4" fill="#1d1d1d"/>
+<circle cx="140" cy="100" r="4" fill="#1d1d1d"/>
+<circle cx="180" cy="380" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="180" cy="340" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="180" cy="300" r="4" fill="#1d1d1d"/>
+<circle cx="180" cy="260" r="4" fill="#1d1d1d"/>
+<circle cx="180" cy="220" r="4" fill="#1d1d1d"/>
+<circle cx="180" cy="180" r="4" fill="#1d1d1d"/>
+<circle cx="180" cy="140" r="4" fill="#1d1d1d"/>
+<circle cx="180" cy="100" r="4" fill="#1d1d1d"/>
+<circle cx="220" cy="380" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="220" cy="340" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="220" cy="300" r="4" fill="#1d1d1d"/>
+<circle cx="220" cy="260" r="4" fill="#1d1d1d"/>
+<circle cx="220" cy="220" r="4" fill="#1d1d1d"/>
+<circle cx="220" cy="180" r="4" fill="#1d1d1d"/>
+<circle cx="220" cy="140" r="4" fill="#1d1d1d"/>
+<circle cx="220" cy="100" r="4" fill="#1d1d1d"/>
+<circle cx="260" cy="380" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="260" cy="340" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="260" cy="300" r="4" fill="#1d1d1d"/>
+<circle cx="260" cy="260" r="4" fill="#1d1d1d"/>
+<circle cx="260" cy="220" r="4" fill="#1d1d1d"/>
+<circle cx="260" cy="180" r="4" fill="#1d1d1d"/>
+<circle cx="260" cy="140" r="4" fill="#1d1d1d"/>
+<circle cx="260" cy="100" r="4" fill="#1d1d1d"/>
+<circle cx="300" cy="380" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="300" cy="340" r="4" fill="#1d1d1d"/>
+<circle cx="300" cy="300" r="4" fill="#1d1d1d"/>
+<circle cx="300" cy="260" r="4" fill="#1d1d1d"/>
+<circle cx="300" cy="220" r="4" fill="#1d1d1d"/>
+<circle cx="300" cy="180" r="4" fill="#1d1d1d"/>
+<circle cx="300" cy="140" r="4" fill="#1d1d1d"/>
+<circle cx="300" cy="100" r="4" fill="#1d1d1d"/>
+<circle cx="340" cy="380" r="3.5" fill="#ffffff" stroke="#888888" stroke-width="1"/>
+<circle cx="340" cy="340" r="4" fill="#1d1d1d"/>
+<circle cx="340" cy="300" r="4" fill="#1d1d1d"/>
+<circle cx="340" cy="260" r="4" fill="#1d1d1d"/>
+<circle cx="340" cy="220" r="4" fill="#1d1d1d"/>
+<circle cx="340" cy="180" r="4" fill="#1d1d1d"/>
+<circle cx="340" cy="140" r="4" fill="#1d1d1d"/>
+<circle cx="340" cy="100" r="4" fill="#1d1d1d"/>
+<circle cx="100" cy="140" r="9" fill="none" stroke="#c0392b" stroke-width="2.2"/>
+<text x="112" y="130" fill="#c0392b" font-weight="bold">(1, 6)</text>
+<circle cx="140" cy="260" r="9" fill="none" stroke="#c0392b" stroke-width="2.2"/>
+<text x="152" y="250" fill="#c0392b" font-weight="bold">(2, 3)</text>
+<circle cx="180" cy="300" r="9" fill="none" stroke="#c0392b" stroke-width="2.2"/>
+<text x="192" y="290" fill="#c0392b" font-weight="bold">(3, 2)</text>
+<circle cx="300" cy="340" r="9" fill="none" stroke="#c0392b" stroke-width="2.2"/>
+<text x="312" y="330" fill="#c0392b" font-weight="bold">(6, 1)</text>
+<text x="210" y="416" text-anchor="middle" fill="#1d1d1d">a, the power of x</text>
+<text x="18" y="230" text-anchor="middle" fill="#1d1d1d" transform="rotate(-90 18 230)">b, the power of y</text>
+<text x="232" y="362" fill="#2a6f97">dashed curve: a × b = 6</text>
+</svg>
