@@ -609,7 +609,7 @@ example : (![0, 0, -1/100] : Fin 3 → ℚ) ⬝ᵥ ![0, 3/4, -1] * 12 * 1000 = 1
 - [Divergence theorem](07-divergence-theorem.md): flux out of a closed surface from the divergence inside.
 - [Stokes' theorem](08-stokes-theorem.md): curl flux through a sheet from circulation round its edge.
 - [Electric fields](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/04-electrostatics-gauss-and-potential.md): electric flux and enclosed charge.
-- Integration on an oriented manifold: the area vector as a form, in any dimension.
+- [Integration on an oriented manifold](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/05-integration-on-manifolds.md): the area vector as a form, in any dimension.
 
 The taut and sagging tarps differ in area yet match in flux, because they share an edge; when flux depends only on the edge is what the divergence theorem and Stokes' theorem decide.
 

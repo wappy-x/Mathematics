@@ -891,7 +891,7 @@ example : (1200 * 1 ^ 2 - 400 * 1 + 2 : ℚ) = 802 ∧ (802 + 200 : ℚ) = 1002 
 - [Line search](04-line-search-armijo-and-wolfe.md): choosing each step $`\alpha_k`$ as the walk goes, with no $`L`$ known in advance.
 - [Proximal gradient](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/06-proximal-methods-ista-fista-and-the-lasso.md): the same step, followed by a shrink, for costs with a corner.
 - [Stochastic gradient](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/08-stochastic-gradient-and-sample-average-approximation.md): the noisy gradient, and the shrinking steps that make it settle.
-- Riemannian gradient descent (planned): stepping downhill on a curved surface instead of a flat map.
+- [Riemannian gradient descent](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/05-optimisation-on-manifolds.md): stepping downhill on a curved surface instead of a flat map.
 
 What, other than the curvature itself, could let a method stop zigzagging across the floor and run along it?
 

@@ -702,7 +702,7 @@ example : (1 : ℚ) + 1 / 9 + 1 / 25 = 259 / 225 := by norm_num
 - [Fourier coefficients](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/01-fourier-coefficients-and-orthogonality.md): the three kinds of convergence, proved.
 - [Poisson summation and sampling](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/08-poisson-summation-and-sampling.md): series and transform tied together.
 - [Equidistribution](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/03-equidistribution-and-weyls-criterion.md): arrow averages deciding whether a sequence spreads evenly.
-- Isoperimetric and four-vertex: Parseval proving the circle encloses the most area.
+- [Isoperimetric and four-vertex](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/09-isoperimetric-and-four-vertex-theorems.md): Parseval proving the circle encloses the most area.
 
 A repeating signal has a list of tones; a camera shutter's one-second pulse never repeats, and what replaces the list is [The Fourier transform](03-fourier-transform.md).
 

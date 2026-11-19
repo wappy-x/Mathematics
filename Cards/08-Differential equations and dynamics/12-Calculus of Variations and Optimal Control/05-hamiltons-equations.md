@@ -782,8 +782,8 @@ example : (1 : ℚ) + (1 / 20) ^ 2 * ((981 / 100) / 1) * 1 = 102452500 / 1000000
 - [Symmetry and conservation](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/08-symmetry-and-conserved-quantities.md): a coordinate missing from $`H`$ has a conserved momentum.
 - [Symplectic steps](../05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md): why kept area bounds the energy error.
 - [Hamilton-Jacobi](../../19-Partial%20differential%20equations/02-First-Order%20Equations%20and%20Characteristics/05-hamilton-jacobi-equations.md): a function whose slopes are the momenta.
-- Symplectic form: the kept area as a geometric object.
-- Einstein equations: variational field equations on curved spacetime.
+- [Symplectic form](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/10-symplectic-form-and-hamiltonian-flow.md): the kept area as a geometric object.
+- [Einstein equations](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/02-einstein-equations-in-outline.md): variational field equations on curved spacetime.
 
 Left open: the swing has nothing to steer. If a push could be chosen at each moment, which pushes reach a goal at the least cost?
 

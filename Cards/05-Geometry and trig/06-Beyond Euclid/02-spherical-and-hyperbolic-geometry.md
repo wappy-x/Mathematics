@@ -632,8 +632,8 @@ example : (0 : ℚ) ^ 2 + (5 / 4 - 1 / 2) ^ 2 = (3 / 4) ^ 2 ∧ (0 : ℚ) ^ 2 + 
 
 ## Where this goes next
 
-- Riemannian metric: the disc's factor 2/(1 − r^2) as one length rule set point by point.
-- Sphere, plane and hyperbolic space: the three worlds of constant curvature, with the angle-sum rules proved in general.
+- [Riemannian metric](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/01-riemannian-metrics.md): the disc's factor 2/(1 − r^2) as one length rule set point by point.
+- [Sphere, plane and hyperbolic space](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/05-model-spaces-of-constant-curvature.md): the three worlds of constant curvature, with the angle-sum rules proved in general.
 
 This card never said what curvature is; later cards define it and show that one number fixes angle sums, parallels and circle growth together.
 

@@ -1283,7 +1283,7 @@ example : 5 * π / 4 = π + π / 4 := by ring
 
 ## Where this goes next
 
-- Minimal surface (planned): the exact soap film, with area in place of Dirichlet energy. Its Euler-Lagrange equation is nonlinear, and Laplace's equation is its small-slope form.
+- [Minimal surface](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/07-minimal-surfaces-and-soap-films.md): the exact soap film, with area in place of Dirichlet energy. Its Euler-Lagrange equation is nonlinear, and Laplace's equation is its small-slope form.
 - [Poisson's equation](03-poissons-equation-and-the-newtonian-potential.md): add a load, and the minimiser solves $`-\Delta u = f`$.
 - [Helmholtz](08-helmholtz-and-eigenfunctions.md): the same energy over the summed squared height, the Rayleigh quotient, gives the frequencies a region can hold.
 - [Subharmonic functions](09-subharmonic-functions-and-perrons-method.md): Perron's road to existence, which needs no energy and so handles rims like Hadamard's.

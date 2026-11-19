@@ -968,7 +968,7 @@ example (x y : ℝ) : rosen 1 1 ≤ rosen x y := by
 ## Where this goes next
 
 - [Nonlinear least squares](09-nonlinear-least-squares-gauss-newton-and-levenberg-marquardt.md): the next card. Gauss-Newton's model of a sum of squares, and Levenberg-Marquardt as a trust region whose radius is set through a damping number.
-- Riemannian Hessian (planned): the same model, step and ratio test when the choices live on a curved surface rather than in flat space.
+- [Riemannian Hessian](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/06-riemannian-hessian-and-trust-regions.md): the same model, step and ratio test when the choices live on a curved surface rather than in flat space.
 - [Conjugate gradient](07-conjugate-gradient-method.md): with a million variables, the circle problem is solved by running conjugate gradient on the model and stopping where it leaves the circle. That stopped version, truncated conjugate gradient, is not worked through on either card.
 
 The open question is what to do when the Hessian is not a bowl: the dogleg then falls back on the straight-downhill step, and better steps follow the curvature's downhill directions.

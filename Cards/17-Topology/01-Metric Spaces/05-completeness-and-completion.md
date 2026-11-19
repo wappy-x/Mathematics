@@ -702,7 +702,7 @@ example : 99 * 10 ^ 4 / 70 = 14142 ∧ 99 * 10 ^ 5 / 70 = 141428 ∧ 141428 ≠ 
 - [Normed and Banach spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/01-normed-spaces-and-banach-spaces.md): complete spaces of vectors and functions.
 - [Three Banach theorems](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/08-open-mapping-closed-graph-and-uniform-boundedness.md): the big results that need completeness of a function space.
 - [The p-adic numbers](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/10-p-adic-numbers-and-hensels-lemma.md): a different distance on the fractions, and a completely different completion.
-- Hopf-Rinow (planned): on a curved surface, completeness guarantees that shortest paths always exist.
+- [Hopf-Rinow](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/10-hopf-rinow-and-completeness.md): on a curved surface, completeness guarantees that shortest paths always exist.
 
 The completion of the fractions depended on the distance $`\lvert x - y\rvert`$; which other distances on the fractions are possible, and what do their completions look like?
 

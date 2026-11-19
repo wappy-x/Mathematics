@@ -689,7 +689,7 @@ example : ((Finset.Icc (-3 : ℤ) 3) ×ˢ (Finset.Icc (-3 : ℤ) 3)).card = 49 :
 
 - [Covering spaces](05-covering-spaces.md): the wrap $`w`$ is the first covering space, and lifting works the same way over any covering.
 - [Brouwer and Borsuk-Ulam](08-brouwer-and-borsuk-ulam.md): the count shows the rim of a disc is not a retract, which forces fixed points.
-- Turning and winding numbers: the count applied to a curve's tangent direction, the way a car's steering winds over a closed drive.
+- [Turning and winding numbers](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/08-turning-number-and-winding-number.md): the count applied to a curve's tangent direction, the way a car's steering winds over a closed drive.
 
 This card counts loops on one circle; what the loops on two circles joined at a point, or on a torus, look like is the question [Van Kampen's theorem](06-van-kampens-theorem.md) answers.
 

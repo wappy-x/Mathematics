@@ -559,8 +559,8 @@ example : ∀ d ∈ [(![5, 0] : Fin 2 → ℤ), ![4, 3], ![3, 4], ![0, 5], ![-3,
 - [The distance menu](../../17-Topology/01-Metric%20Spaces/02-distances-on-vectors-and-functions.md): distance without dot products.
 - [Inner products](../../18-Functional%20analysis/02-Hilbert%20Spaces/01-inner-products-and-hilbert-spaces.md): the same rules, endlessly.
 - [Riesz representation](../../18-Functional%20analysis/02-Hilbert%20Spaces/06-riesz-representation-theorem.md): every linear reading is a dot product.
-- First fundamental form: lengths on curved surfaces.
-- Covectors and tensor fields: the second list as a machine.
+- [First fundamental form](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/02-first-fundamental-form.md): lengths on curved surfaces.
+- [Covectors and tensor fields](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/05-covectors-and-tensor-fields.md): the second list as a machine.
 
 Nothing here splits a vector into a part along another and a part square to it; that split, and the shadow it names, comes next.
 

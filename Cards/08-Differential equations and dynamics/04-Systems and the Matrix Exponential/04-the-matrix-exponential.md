@@ -589,7 +589,7 @@ example : !![(-1 : ℝ), 1; 0, -1] *ᵥ ![1, 0] = (-1 : ℝ) • ![1, 0] := by
 - [Discretising a design](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/09-zero-order-hold-and-tustin-discretisation.md): e^(Ah) as the exact step of a sampled system.
 - [State space](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/01-state-space-models-and-the-matrix-exponential.md): the same object with inputs and outputs attached.
 - [Evolution as an equation](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/03-the-abstract-cauchy-problem-and-the-operator-exponential.md): e^(A(s+t)) = e^(As) e^(At) kept when A acts on functions and the series fails.
-- Lie algebra: from rates to rotations.
+- [Lie algebra](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/02-lie-algebras-and-the-exponential-map.md): from rates to rotations.
 
 The long-run shape read from A alone is [Trace and determinant](05-classifying-equilibria-by-trace-and-determinant.md).
 

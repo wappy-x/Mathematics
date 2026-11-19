@@ -634,9 +634,9 @@ example : ![(3 : ℚ), -2] ⬝ᵥ (!![4, 6; 6, 9] *ᵥ ![(3 : ℚ), -2]) = 0 := 
 - [Cholesky](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/04-cholesky-decomposition.md): the fastest test.
 - [Iterating instead of factoring](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md): solving downhill.
 - [Elliptic, parabolic, hyperbolic](../../19-Partial%20differential%20equations/01-Classification%20and%20Well-Posedness/04-classification-elliptic-parabolic-hyperbolic.md): naming equations.
-- Point types: bowl, dome, saddle.
-- Riemannian metric: measuring length.
-- Covariance matrices: their own space.
+- [Point types](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/06-classification-of-surface-points.md): bowl, dome, saddle.
+- [Riemannian metric](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/01-riemannian-metrics.md): measuring length.
+- [Covariance matrices](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/07-the-manifold-of-covariance-matrices.md): their own space.
 
 This card leaves open where the matrix comes from when a surface is measured rather than a mix: second derivatives, a later card's business.
 

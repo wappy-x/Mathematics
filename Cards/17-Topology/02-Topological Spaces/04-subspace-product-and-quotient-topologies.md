@@ -782,7 +782,7 @@ example : (openSets torus16).length = 430 := by decide +kernel
 - [Hausdorff and its ladder](05-separation-axioms-and-hausdorff.md): squeezing pieces to points can destroy unique limits (in the four-point circle, the sequence top, top, top, ... tends to top, east and west); that card says when points can be kept apart.
 - [Topological manifold](../03-Surfaces%20and%20Manifolds/01-topological-manifolds.md): spaces that look like the plane near every point, built by exactly these gluings.
 - [Riemann surfaces](../../22-Algebraic%20geometry/03-Plane%20Curves/08-riemann-surfaces-and-the-weierstrass-p-function.md): surfaces built by gluing patches of the complex plane.
-- Sphere, torus and projective plane (planned): more surfaces from a square with its edges glued in other patterns.
+- [Sphere, torus and projective plane](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/02-example-manifolds-sphere-torus-and-projective-space.md): more surfaces from a square with its edges glued in other patterns.
 
 The siblings on this shelf use these constructions throughout: [Topological space](01-topological-spaces-and-bases.md), [Closure, interior and boundary](02-closure-interior-and-boundary.md), [Compactness with no distances, and Tychonoff](06-compactness-and-tychonoff.md), [Connected and path-connected](07-connectedness-and-path-connectedness.md), [What compactness and connectedness buy](08-images-of-compact-and-connected-sets.md), [The test spaces](09-standard-examples-and-counterexamples.md) and [Urysohn and Tietze](10-urysohn-tietze-and-metrisation.md).
 

@@ -1018,7 +1018,7 @@ example : (52 / 100 : ℚ) * (48 / 100) / 1000 = 156 / 625000 := by norm_num
 ## Where this goes next
 
 - [Likelihood ratio tests](../08-Confidence%20Intervals%20and%20Tests/07-likelihood-ratio-tests.md): the score's zero average and its variance, the information, are the two facts behind Wilks' rule that twice the log of a likelihood ratio follows a chi-square law ([The reference distributions](03-chi-square-t-and-f-distributions.md)) in large samples.
-- Fisher metric: the information, followed from one value of p to the next, read as a ruler on the space of models, so that two coins are far apart when data tell them apart easily.
+- [Fisher metric](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/09-information-geometry-and-the-fisher-metric.md): the information, followed from one value of p to the next, read as a ruler on the space of models, so that two coins are far apart when data tell them apart easily.
 
 This card fixed how precisely one sample can pin down one unknown; whether a model with an extra parameter fits better than chance allows, and how far apart two models are, are the questions those cards answer with the same information.
 

@@ -541,7 +541,7 @@ example : (2 * 3 : ZMod 6) = 0 := by decide
 - [The fundamental group](../../17-Topology/04-Homotopy/03-the-fundamental-group.md): loops end to end.
 - [Rational points on a cubic](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/05-elliptic-curves-over-q-and-mordell-weil.md): generating a curve's points.
 - [The group law](../../22-Algebraic%20geometry/04-Elliptic%20Curves/01-elliptic-curves-and-the-group-law.md): its hard rule proved.
-- Lie group: every angle, not four.
+- [Lie group](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/01-lie-groups-and-matrix-groups.md): every angle, not four.
 - Categories and functors: undos dropped.
 - Adjunctions: loose undos.
 - Monoids and monads: three rules only.

@@ -798,7 +798,7 @@ example : (340 : ℚ) - 20 = 4 / 5 * 400 := by norm_num
 
 - [Surface area](04-surface-area-of-revolution.md): spins each small length round an axis.
 - [Line integrals of a function](../09-Vector%20Calculus/01-scalar-line-integrals.md): weights each small length by a density.
-- Regular curve and arc length: length itself as the clock.
+- [Regular curve and arc length](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/01-regular-curves-and-arc-length.md): length itself as the clock.
 
 Arc length adds plain metres of curve; how to add something that varies along it, such as the cable's weight per metre, is what a line integral answers.
 

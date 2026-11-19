@@ -826,7 +826,7 @@ example (nx ny nz : ℝ) :
 
 - [Hydrogen in outline](07-the-hydrogen-atom-in-outline.md): spin joins the electron's orbit to make the full set of quantum numbers, and its magnet splits the spectral lines.
 - [Symmetry and conservation](08-symmetry-and-conserved-quantities.md): turning matrices like $`U(t)`$ as symmetries, and what they conserve. A field along z leaves the spin along z unchanged, as the flat green line shows.
-- Mass gap (planned): the gauge theories built on the same 2 × 2 matrices.
+- [Mass gap](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/04-the-mass-gap-statement.md): the gauge theories built on the same 2 × 2 matrices.
 - Qubits (planned): two-state systems as computing units, gates as turning matrices, and the loss of phase that limits them.
 
 What this card leaves open is two spins together: a pair of spin one-half particles needs four complex numbers, not two, and some of its states cannot be split into one column per particle.

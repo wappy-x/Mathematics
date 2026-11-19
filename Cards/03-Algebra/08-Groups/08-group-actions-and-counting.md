@@ -541,7 +541,7 @@ example : (∑ k : ZMod 4,
 
 - [Round tables and bracelets](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md): necklaces and seatings counted with the rotations, the average replacing the list.
 - [The Galois correspondence](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/05-galois-groups-and-the-fundamental-theorem.md): a group acting on a polynomial's roots, a root's stabiliser matched with a field.
-- Group action and homogeneous space: the same promises with a continuous group, an orbit becoming a surface.
+- [Group action and homogeneous space](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/06-homogeneous-spaces-and-group-actions.md): the same promises with a continuous group, an orbit becoming a surface.
 
 Six orbits came out of 16 patterns listed in full, impossible for twenty beads; a later card asks how far the average alone carries.
 

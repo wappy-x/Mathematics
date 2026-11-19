@@ -782,7 +782,7 @@ example : (15368 / 9 : ℚ) + 100 / 27 = 46204 / 27 := by norm_num
 - [Exact equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/08-exact-equations.md): equal mixed partials test exactness.
 - [Linearisation](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/02-linearisation-about-an-equilibrium.md): the expansion cut after one term, for moving systems.
 - [Optimality conditions](../../15-Optimization/02-Unconstrained%20Methods/01-optimality-conditions.md): tests for a best design.
-- Riemannian Hessian: the Hessian on curved spaces.
+- [Riemannian Hessian](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/06-riemannian-hessian-and-trust-regions.md): the Hessian on curved spaces.
 
 Left open: at a flat point, can the Hessian alone tell a pit from a peak?
 

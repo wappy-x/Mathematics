@@ -512,7 +512,7 @@ example : Matrix.det !![(4 : ℤ), 2, 2; 0, 1, 1; 1, 0, 4] = 16 := by
 - [Vanna-volga pricing](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md): a 3 by 3 solve behind hedge weights.
 - [LU with partial pivoting](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/02-lu-decomposition-and-pivoting.md): elimination packaged, row swaps carrying the sign.
 - [The resultant](../../22-Algebraic%20geometry/01-Polynomial%20Systems/06-resultants-and-common-roots.md): zero exactly when two polynomials share a root.
-- Differential form: the alternating rule made an algebra.
+- [Differential form](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/01-forms-and-the-wedge-product.md): the alternating rule made an algebra.
 - Permanent against determinant: the same sum without minus signs is hard.
 
 One number says whether the sprite survived, not which directions stretched or by how much; those come next.

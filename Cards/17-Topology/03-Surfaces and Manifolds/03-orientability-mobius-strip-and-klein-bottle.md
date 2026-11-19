@@ -877,7 +877,7 @@ example : (20 : ℤ) - 30 + 10 = 0 ∧ (9 : ℤ) - 18 + 9 = 0 ∧ (10 : ℤ) - 1
 ## Where this goes next
 
 - [Euler characteristic](04-euler-characteristic-and-triangulations.md): the count $`V - E + F`$ that, together with orientability, names every closed surface.
-- Sphere, torus and projective plane (planned): the three surfaces compared by their invariants.
+- [Sphere, torus and projective plane](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/02-example-manifolds-sphere-torus-and-projective-space.md): the three surfaces compared by their invariants.
 - [Jordan curve theorem](05-jordan-curve-theorem.md): the plane version of "a closed surface in space has an inside and an outside".
 
 The loop test says whether a surface twists; how to count, by algebra, the loops that cannot be shrunk is the question this card leaves open.

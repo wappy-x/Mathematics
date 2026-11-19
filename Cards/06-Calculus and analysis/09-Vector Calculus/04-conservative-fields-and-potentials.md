@@ -663,7 +663,7 @@ example : ∀ g R : ℚ, -(g * R) = 2 * (-(g * R / 2)) := by intro g R; ring
 ## Where this goes next
 
 - [Electric fields](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/04-electrostatics-gauss-and-potential.md): the electric potential, found this way.
-- Closed and exact forms: zero curl and having a potential in any dimension, and why they agree without holes.
+- [Closed and exact forms](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/04-closed-and-exact-forms-and-the-poincare-lemma.md): zero curl and having a potential in any dimension, and why they agree without holes.
 - [De Rham cohomology](../../22-Algebraic%20geometry/05-Cohomology%20and%20the%20Hodge%20Conjecture/02-de-rham-cohomology-of-varieties.md): counting holes with such fields.
 
 A hole can hide a loop worth 2π; fields that pass the test yet have no potential end up counting holes.

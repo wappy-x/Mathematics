@@ -973,8 +973,8 @@ example : ((8 : ℚ) / 5) ^ 2 = 64 / 25 := by norm_num
 ## Where this goes next
 
 - [Electromagnetic waves](08-electromagnetic-waves.md): the two loop laws in empty space become the wave equation, with speed $`1/\sqrt{\mu_0\varepsilon_0}`$.
-- Hodge star (planned): the four equations rewritten as two, with div and curl replaced by one operation on forms.
-- Yang-Mills (planned): field equations of the same pattern, for the forces inside the nucleus.
+- [Hodge star](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/09-hodge-star-and-maxwell-in-forms.md): the four equations rewritten as two, with div and curl replaced by one operation on forms.
+- [Yang-Mills](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/03-yang-mills-fields-and-gauge-theory.md): field equations of the same pattern, for the forces inside the nucleus.
 
 Charge conservation fixes only the outflow of Maxwell's term; why nature adds nothing more than the simplest term that passes is the question the move to forms and gauge fields takes up.
 

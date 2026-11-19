@@ -627,8 +627,8 @@ example : companion (![1, 3, 3] : Fin 3 → ℤ) = !![0, 1, 0; 0, 0, 1; -1, -3, 
 - [The eigenvalue method](02-the-eigenvalue-method.md): solving x' = Ax along eigenvectors.
 - [Phase portraits and nullclines](../06-Nonlinear%20Dynamics%20in%20the%20Plane/01-phase-portraits-and-nullclines.md): the plane of states for nonlinear laws.
 - [Continuous-time chains](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md): a vector of chances with a rate matrix, the same shape.
-- Fundamental theorem of curves: a curve's moving frame obeys a linear system.
-- Lie bracket: a first-order system as a vector field.
+- [Fundamental theorem of curves](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/07-fundamental-theorem-of-curves.md): a curve's moving frame obeys a linear system.
+- [Lie bracket](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/08-lie-brackets-and-frobenius-theorem.md): a first-order system as a vector field.
 
 The rewriting turns any linear equation into x' = Ax, but not yet into a formula for x(t); how to solve it from every starting state at once is [The eigenvalue method](02-the-eigenvalue-method.md).
 

@@ -575,7 +575,7 @@ example : ((2 * 4) * (2 * (4 * 2 ^ 2)) - (2 * (4 * 2)) ^ 2 : ℚ) = 0 ∧
 - [Lax-Milgram](../../18-Functional%20analysis/02-Hilbert%20Spaces/07-lax-milgram-theorem.md): one answer in infinitely many variables.
 - [Krein-Milman](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/06-krein-milman-and-extreme-points.md): convex sets rebuilt from corners.
 - [The slope transform](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/07-legendre-fenchel-and-subgradients.md): slopes at corners.
-- Riemannian Hessian: the Hessian test on curved spaces.
+- [Riemannian Hessian](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/06-riemannian-hessian-and-trust-regions.md): the Hessian test on curved spaces.
 - Relaxation and rounding: a convex stand-in, then rounding back.
 
 One answer exists and downhill finds it; testing convexity when the Hessian varies from point to point is [Convex functions](../../15-Optimization/01-Convexity/03-convex-functions-and-their-tests.md).

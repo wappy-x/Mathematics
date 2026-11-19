@@ -681,7 +681,7 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Cohomology and the cup product in outline](08-cohomology-and-cup-product-in-outline.md): the next card; the dual groups, which carry a multiplication that tells apart spaces with equal homology.
-- Sard's theorem and degree: why almost every target point is typical, so the signed count works for smooth maps with no triangles at all.
+- [Sard's theorem and degree](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/10-sards-theorem-and-degree.md): why almost every target point is typical, so the signed count works for smooth maps with no triangles at all.
 
 Homology counts holes but cannot multiply them, so spaces with equal groups can still differ: the torus and a sphere with two loops attached at one point have the same homology. What extra structure tells them apart?
 

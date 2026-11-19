@@ -697,7 +697,7 @@ example : (4 : ℤ) - (-200) = 1 + 101 + 101 + 1 := by decide
 ## Where this goes next
 
 - [Line bundles and divisors](06-line-bundles-and-divisor-classes.md): a curve on a surface gives a class of type (1, 1); this is the next card on the shelf.
-- Hodge star (planned): the operator that defines harmonic forms, and the full proof of Hodge's theorem.
+- [Hodge star](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/09-hodge-star-and-maxwell-in-forms.md): the operator that defines harmonic forms, and the full proof of Hodge's theorem.
 - [The Hodge conjecture](08-hodge-conjecture-statement-and-known-cases.md): the statement on this shelf, asking which rational classes of type (p, p) come from subvarieties.
 - [The Hodge conjecture](08-hodge-conjecture-statement-and-known-cases.md): the open problem's status and known cases, kept in the Frontier wing.
 

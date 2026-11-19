@@ -940,7 +940,7 @@ example : (List.range 5).map (fun n => (n + 1) * 110) = [110, 220, 330, 440, 550
 
 - [The quantum oscillator](04-quantum-harmonic-oscillator.md): replace the walls by a spring-like V that rises as x². The levels become evenly spaced, and the ground level is again above zero.
 - [Hydrogen in outline](07-the-hydrogen-atom-in-outline.md): the same equation in three dimensions with the electric pull of a nucleus as V. The levels crowd together as they rise.
-- Mass gap (planned): why some systems have a lowest level strictly above zero, the zero-point energy of Step 3, asked as a general question.
+- [Mass gap](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/04-the-mass-gap-statement.md): why some systems have a lowest level strictly above zero, the zero-point energy of Step 3, asked as a general question.
 
 This card left the walls perfectly hard. What happens to the levels, and to the electron, when the wall is thin enough for the wave to reach through it is the question it leaves open.
 

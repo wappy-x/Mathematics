@@ -609,7 +609,7 @@ The orange line is the hoop's spin, from road two: 4.53 when the bead is highest
 
 - [Hamilton's equations](05-hamiltons-equations.md): trade each speed for its momentum and get two first-order equations per coordinate.
 - [Lagrangian and Hamiltonian mechanics](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/04-lagrangian-and-hamiltonian-mechanics-for-engineers.md): the same recipe for linkages and vibrating structures.
-- Noether: every continuous symmetry of the action, and the quantity it conserves.
+- [Noether](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/08-noethers-theorem.md): every continuous symmetry of the action, and the quantity it conserves.
 
 Left open: the hoop's momentum appeared only at the end, as a slope of $`L`$. What changes if momentum is a working variable from the start, beside position?
 

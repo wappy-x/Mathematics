@@ -543,7 +543,7 @@ example : (1 / 2 : ℝ) • (!![1, 1; 1, -1] * !![1, 0; 0, 3] * (!![1, 1; 1, -1]
 - [Iterating instead of factoring](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md): factors set solver speed.
 - [Adjoints](../../18-Functional%20analysis/03-Bounded%20Operators/03-adjoints-self-adjoint-and-unitary-operators.md): Step 0 as a definition.
 - [Compact and symmetric](../../18-Functional%20analysis/03-Bounded%20Operators/08-spectral-theorem-for-compact-self-adjoint-operators.md): the infinite version.
-- Principal, mean and Gaussian curvature: how a surface bends.
+- [Principal, mean and Gaussian curvature](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/05-principal-mean-and-gaussian-curvature.md): how a surface bends.
 
 The quadratic runs out past 2 by 2, so finding the axes at any size is a numerical problem. What the factors' signs say about a table's shape is the next card's question.
 

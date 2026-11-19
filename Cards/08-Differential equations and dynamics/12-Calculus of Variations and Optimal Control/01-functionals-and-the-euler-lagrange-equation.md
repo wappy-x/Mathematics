@@ -798,9 +798,9 @@ example : (80 : ℚ) * 250 + 160 * 250 = 60000 := by norm_num
 - [The brachistochrone](02-the-brachistochrone-and-the-beltrami-identity.md): a shortcut when $`F`$ has no $`x`$ slot, and the curve of fastest descent.
 - [Lagrangian mechanics](04-lagrangian-mechanics.md): time in place of distance, and the laws of motion.
 - [Dirichlet's principle](../../19-Partial%20differential%20equations/04-Laplace%2C%20Poisson%20and%20Potentials/06-dirichlet-principle-and-variational-form.md): a surface as the unknown, and Laplace's equation.
-- Minimal surface: least area spanning a wire loop.
-- Geodesic and exponential map: shortest routes on curved ground.
-- Noether: why a missing slot, as in Step 5, gives a conserved quantity.
+- [Minimal surface](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/07-minimal-surfaces-and-soap-films.md): least area spanning a wire loop.
+- [Geodesic and exponential map](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/04-geodesics-and-the-exponential-map.md): shortest routes on curved ground.
+- [Noether](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/08-noethers-theorem.md): why a missing slot, as in Step 5, gives a conserved quantity.
 
 Left open: what if the route must also meet a budget, such as a fixed length of cable? That is [Paths with a budget](03-constrained-paths-and-the-hanging-chain.md).
 

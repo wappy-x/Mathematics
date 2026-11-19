@@ -659,7 +659,7 @@ end
 - [Shooting](../07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md): RK4 inside a root finder.
 - [The Lorenz system](../11-Discrete%20Dynamics%20and%20Chaos/06-the-lorenz-system-and-strange-attractors.md): errors that grow.
 - [Runge-Kutta](../../16-Numerical%20analysis/06-ODE%20Solvers/01-runge-kutta-and-butcher-tableaux.md): the whole family and its order conditions.
-- Geodesic and exponential map: shortest paths on curved surfaces, stepped.
+- [Geodesic and exponential map](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/04-geodesics-and-the-exponential-map.md): shortest paths on curved surfaces, stepped.
 
 Left open: a fixed step never reports its own error, so how should a solver choose h as it runs?
 

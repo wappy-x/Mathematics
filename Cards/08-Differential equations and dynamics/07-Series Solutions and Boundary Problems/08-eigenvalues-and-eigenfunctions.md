@@ -667,7 +667,7 @@ example : (List.range' 1 3).map (fun n => 2 * n - 1) = [1, 3, 5] := by decide
 - [Schrodinger's equation](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/03-schrodinger-equation-and-the-particle-in-a-box.md): eigenvalues as the energies an electron may have.
 - [Self-adjoint extensions](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/02-self-adjoint-extensions-and-the-spectral-theorem.md): end conditions as the choice that makes the operator (here "take the second derivative and flip its sign") symmetric.
 - [Helmholtz](../../19-Partial%20differential%20equations/04-Laplace%2C%20Poisson%20and%20Potentials/08-helmholtz-and-eigenfunctions.md): the same question for a drum or a room.
-- Volume form and Laplace-Beltrami: the bending operator on a curved surface.
+- [Volume form and Laplace-Beltrami](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/08-volume-form-and-the-laplace-beltrami-operator.md): the bending operator on a curved surface.
 
 Left open: on a string wound heavier in one half, the eigenvalues leave n^2π^2, so which facts about the modes survive?
 

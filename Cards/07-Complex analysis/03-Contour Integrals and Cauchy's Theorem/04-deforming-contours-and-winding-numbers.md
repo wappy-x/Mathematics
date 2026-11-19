@@ -977,7 +977,7 @@ example : (1 : ℤ) * 3 + 1 * 1 ≠ 1 * 3 + (-1) * 1 ∧ (1 : ℤ) ≠ 2 := by d
 - [Nyquist and margins](../../13-Engineering%20mathematics/03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): winding round −1 as a stability test.
 - [Jordan curve theorem](../../17-Topology/03-Surfaces%20and%20Manifolds/05-jordan-curve-theorem.md): a loop that never crosses itself winds ±1 inside, 0 outside.
 - [The circle's fundamental group is the integers](../../17-Topology/04-Homotopy/04-fundamental-group-of-the-circle.md): winding without integrals.
-- Turning and winding numbers: the turns of a curve's own direction.
+- [Turning and winding numbers](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/08-turning-number-and-winding-number.md): the turns of a curve's own direction.
 
 A small circle round a hole gives 2πi times its strength; what the circle gives for $`f(z)/(z - a)`$, with $`f`$ holomorphic, is [Cauchy's integral formula](05-cauchys-integral-formula.md).
 

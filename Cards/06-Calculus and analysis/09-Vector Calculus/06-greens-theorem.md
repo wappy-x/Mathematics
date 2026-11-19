@@ -666,7 +666,7 @@ example : (12:ℚ) + 23 / 5 = 83 / 5 ∧ (24:ℚ) / 5 + -(24 / 5) = 0 := by norm
 - [Cauchy's theorem](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md): loop integrals of complex-differentiable functions vanish; Green's theorem gives one proof.
 - [Poincare-Bendixson](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/09-poincare-bendixson-and-bendixsons-criterion.md): the flux form rules out closed orbits where the divergence keeps one sign.
 - [Divergence theorem](07-divergence-theorem.md): the flux form in three dimensions, flow out of a closed surface against divergence inside.
-- Green, divergence and curl theorems: Green, Stokes and divergence as one theorem about boundaries.
+- [Green, divergence and curl theorems](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/07-classical-vector-calculus-as-stokes.md): Green, Stokes and divergence as one theorem about boundaries.
 
 Left open: this fence lies flat on the ground; what does the theorem say when the loop is the rim of a curved sheet, such as a bowl?
 

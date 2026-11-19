@@ -533,7 +533,7 @@ example : vecMulVec (fun i => (recipe * schedule) i 1) (fun j => month 1 j) = !!
 - [The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md): matrix powers added up to move a system in time.
 - [Markov chains](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/01-markov-chains.md): a table of chances multiplied per step.
 - [Rating transition matrices](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md): a year of rating moves multiplied out.
-- Riemann curvature tensor: products of tables of rates, measuring how space bends.
+- [Riemann curvature tensor](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/06-riemann-curvature-tensor.md): products of tables of rates, measuring how space bends.
 
 Nothing here says which matrix, if any, undoes a step once taken: that is [The inverse matrix](../05-Solving%20Systems/03-inverse-matrix.md).
 

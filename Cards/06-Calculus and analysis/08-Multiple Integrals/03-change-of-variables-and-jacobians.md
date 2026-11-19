@@ -673,7 +673,7 @@ example : 2 * π * (100 ^ 2 / 2) = 10000 * π := by norm_num; ring
 - [Surface integrals](../09-Vector%20Calculus/05-surface-integrals-and-flux.md): a stretch factor for a curved surface.
 - [Rejection sampling and Box-Muller](../../09-Probability%20and%20statistics/11-Simulation/03-rejection-sampling-and-box-muller.md): the same factor keeps total probability at 1.
 - [Transforms in two and three dimensions](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/10-multidimensional-transform-and-tomography.md): polar coordinates in frequency.
-- Pullback: the theorem again, with the sign of the determinant kept.
+- [Pullback](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/02-pullback-and-change-of-variables.md): the theorem again, with the sign of the determinant kept.
 
 The bell curve e^(−x^2) has no antiderivative in familiar functions; whether the factor r totals it over the infinite plane is what [The Gaussian integral](04-gaussian-integral.md) settles.
 

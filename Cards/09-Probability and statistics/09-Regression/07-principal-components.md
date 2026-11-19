@@ -922,8 +922,8 @@ end PrincipalComponents
 - [Singular value decomposition](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/08-svd-and-the-pseudoinverse.md): computing the components stably from the data table.
 - [Mapper and Reeb graphs](../../17-Topology/06-Topological%20Data%20Analysis/06-mapper-and-reeb-graphs.md): principal component scores as the lens for mapping the shape of data.
 - [Reproducing kernels](../../18-Functional%20analysis/02-Hilbert%20Spaces/08-reproducing-kernel-hilbert-spaces.md): kernel PCA, the same eigenvalue problem after a curved change of coordinates.
-- Frechet mean: averages and principal directions when the data live on a curved space.
-- Manifold learning: when the data lie near a curved surface that no flat subspace fits.
+- [Frechet mean](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/08-frechet-means-and-statistics-on-curved-data.md): averages and principal directions when the data live on a curved space.
+- [Manifold learning](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/10-manifold-learning-and-the-manifold-hypothesis.md): when the data lie near a curved surface that no flat subspace fits.
 
 PCA finds the best flat summary through the centre of the data; what to do when the data bend away from every flat subspace is the question the manifold-learning cards answer.
 

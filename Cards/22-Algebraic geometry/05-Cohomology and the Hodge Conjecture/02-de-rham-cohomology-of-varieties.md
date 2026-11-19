@@ -1168,7 +1168,7 @@ example : (4 : ℤ) ^ 3 - 4 * 4 ^ 2 + 6 * 4 = 24 ∧ (24 : ℤ) - 2 = 22 := by n
 ## Where this goes next
 
 - [Cohomology of projective space](03-cohomology-of-projective-space.md): the first compact example, with one independent class in every even degree.
-- de Rham cohomology (planned): forms of every degree on manifolds, the wedge in full, and the proof of de Rham's theorem.
+- [de Rham cohomology](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/08-de-rham-cohomology.md): forms of every degree on manifolds, the wedge in full, and the proof of de Rham's theorem.
 - [Hodge decomposition](05-hodge-decomposition.md) and [Algebraic cycles](07-algebraic-cycles-and-cycle-classes.md): splitting these groups by type, and asking which classes come from subvarieties.
 
 Classes in degree 1 are read by loops; which classes in higher degrees are read by subvarieties is the question [The Hodge conjecture](08-hodge-conjecture-statement-and-known-cases.md) makes exact.

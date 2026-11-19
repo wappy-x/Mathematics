@@ -508,8 +508,8 @@ The card also leans on the dot product for lengths and right angles ([The dot pr
 - [Surface integrals](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/05-surface-integrals-and-flux.md): area vectors of small patches, added over a surface.
 - [Magnetic fields](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/05-magnetism-and-faradays-law.md): the push on a moving charge, square to motion and field.
 - [Precession](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/03-gyroscopes-and-precession.md): torque turning a spinning axis.
-- Frenet-Serret frame: a curve's third frame direction from the first two.
-- Differential form: the shadows kept as they are, in any dimension.
+- [Frenet-Serret frame](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/04-frenet-serret-frames.md): a curve's third frame direction from the first two.
+- [Differential form](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/01-forms-and-the-wedge-product.md): the shadows kept as they are, in any dimension.
 
 The panel now has a normal and an area, but nothing yet says which points in space lie on its plane or where a straight flight path would strike it; that is [Lines and planes](02-lines-and-planes-in-space.md).
 

@@ -780,8 +780,8 @@ example : (1 / 2 : ℝ) * Real.cos (Real.pi / 3) = 1 / 4 := by
 
 ## Where this goes next
 
-- Noether (planned): the same theorem with symmetries as smooth groups, and for fields.
-- Lie algebra (planned): the brackets of the generators, $`\{S_x, S_y\} = S_z`$, as the structure of the rotation group itself.
+- [Noether](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/08-noethers-theorem.md): the same theorem with symmetries as smooth groups, and for fields.
+- [Lie algebra](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/02-lie-algebras-and-the-exponential-map.md): the brackets of the generators, $`\{S_x, S_y\} = S_z`$, as the structure of the rotation group itself.
 
 Left open: how a symmetry of a field, rather than of a few coordinates, becomes a conserved current flowing through space.
 

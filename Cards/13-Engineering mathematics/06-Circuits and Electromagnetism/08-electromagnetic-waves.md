@@ -1012,7 +1012,7 @@ example : √(9 / 4 : ℝ) = 3 / 2 := by
 ## Where this goes next
 
 - [AC power](09-power-and-three-phase.md): the next card, back in the wires. At 50 Hz the wavelength is 5,996 km, which is why the mains can be treated as lumped circuits.
-- Hodge star (planned): the differential-geometry wing rewrites the same four equations as two equations on forms, and shows the wave's speed is built into the geometry of space and time.
+- [Hodge star](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/09-hodge-star-and-maxwell-in-forms.md): the differential-geometry wing rewrites the same four equations as two equations on forms, and shows the wave's speed is built into the geometry of space and time.
 
 The question left open: how much power does the wave carry, and how does an antenna turn a field of 1 mV/m into the microvolts a tuner works with?
 

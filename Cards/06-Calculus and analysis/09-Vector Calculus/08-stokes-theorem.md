@@ -654,7 +654,7 @@ example : (1 : ℚ) * (2 * 2 ^ 2) = 8 ∧ (8 : ℚ) = 2 * 4 := by norm_num
 - [Maxwell's equations](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/07-maxwells-equations.md): loop laws turned into curl laws at each point.
 - [Cohomology and the cup product in outline](../../17-Topology/05-Homology/08-cohomology-and-cup-product-in-outline.md): counting holes by the loops that bound nothing.
 - [De Rham cohomology](../../22-Algebraic%20geometry/05-Cohomology%20and%20the%20Hodge%20Conjecture/02-de-rham-cohomology-of-varieties.md): curl-free fields modulo gradients, as a measure of shape.
-- Stokes on manifolds: Green, Stokes, divergence and the fundamental theorem of calculus as one statement.
+- [Stokes on manifolds](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/06-stokes-theorem-on-manifolds.md): Green, Stokes, divergence and the fundamental theorem of calculus as one statement.
 
 The drain wind leaves a question open: when a field with zero curl wherever it is defined still circulates, what does that say about the holes in its space?
 

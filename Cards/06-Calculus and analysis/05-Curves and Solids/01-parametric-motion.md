@@ -538,8 +538,8 @@ example : (16 : ℕ) ^ 2 = 256 := by norm_num
 ## Where this goes next
 
 - [Arc length](02-arc-length.md): adding up speed over time to get distance along the path.
-- Regular curve and arc length: curves whose velocity never vanishes, measured by their own length instead of a clock.
-- Curvature: how sharply the path bends, separated from how fast it is travelled.
+- [Regular curve and arc length](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/01-regular-curves-and-arc-length.md): curves whose velocity never vanishes, measured by their own length instead of a clock.
+- [Curvature](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/02-curvature-of-plane-curves.md): how sharply the path bends, separated from how fast it is travelled.
 
 The speed is known at every instant; how far the ball travels along its arch is the question [Arc length](02-arc-length.md) answers.
 

@@ -1137,7 +1137,7 @@ end HomologyGroups
 - [Homotopy invariance](04-homotopy-invariance-of-homology.md): why the Betti numbers belong to the space, not to the triangulation: stretching that can be undone is proved never to change them, and the link to homology without triangles is cited.
 - [Filtration and persistent homology](../06-Topological%20Data%20Analysis/01-filtrations-and-persistent-homology.md): Betti numbers tracked as a complex grows, so each hole gets a birth and a death.
 - [De Rham cohomology](../../22-Algebraic%20geometry/05-Cohomology%20and%20the%20Hodge%20Conjecture/02-de-rham-cohomology-of-varieties.md): the same hole counts read from calculus on smooth spaces.
-- Sard's theorem and degree (planned): how many times one sphere covers another, counted through top-dimensional homology.
+- [Sard's theorem and degree](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/10-sards-theorem-and-degree.md): how many times one sphere covers another, counted through top-dimensional homology.
 
 The ranks here come from one triangulation; this card leaves open why every other triangulation of the same space gives the same counts.
 

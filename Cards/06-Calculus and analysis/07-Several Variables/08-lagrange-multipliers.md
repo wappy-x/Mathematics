@@ -541,8 +541,8 @@ example : 2 * (2 * 10 + 2 * 10 - 40 : ℤ) * 2 = 0 := by decide
 - [Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md): multipliers pick support points.
 - [The slope transform](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/07-legendre-fenchel-and-subgradients.md): prices as a transform.
 - [Minimax](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/08-minimax-theorem-and-convex-duality.md): solve for the prices first.
-- Regular value theorem: a regular rule cuts a smooth surface.
-- Riemannian gradient descent: walking the rule itself.
+- [Regular value theorem](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/06-submanifolds-and-the-regular-value-theorem.md): a regular rule cuts a smooth surface.
+- [Riemannian gradient descent](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/05-optimisation-on-manifolds.md): walking the rule itself.
 
 This card proves the line-up for one equality rule in the plane. The open question is whether it survives many rules, many dials and "at most" rules: [Lagrange multipliers, proved](../../15-Optimization/03-Constrained%20Optimisation/01-lagrange-multipliers-revisited.md) answers it.
 

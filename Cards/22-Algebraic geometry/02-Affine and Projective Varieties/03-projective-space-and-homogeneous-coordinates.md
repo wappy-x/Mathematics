@@ -757,7 +757,7 @@ example : (Finset.univ.filter fun q : ZMod 5 × ZMod 5 => q.1 ^ 2 + q.2 ^ 2 = 1)
 ## Where this goes next
 
 - [Projective varieties](04-projective-varieties-and-closure.md): equations of one degree in $`\mathbb{P}^n`$, and how to complete an affine curve such as the wall's hyperbola by adding its points at infinity.
-- Sphere, torus and projective plane: the real projective plane as a surface, built by gluing.
+- [Sphere, torus and projective plane](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/02-example-manifolds-sphere-torus-and-projective-space.md): the real projective plane as a surface, built by gluing.
 - [Degree](09-degree-and-the-hilbert-polynomial.md): counts of intersection points, which come out the same every time only in projective space.
 
 This card adds the points at infinity; which equations still make sense once they are added, and how to find a curve's points there, is the open question.

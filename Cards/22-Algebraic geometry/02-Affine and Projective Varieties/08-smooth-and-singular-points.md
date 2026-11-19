@@ -808,7 +808,7 @@ example : (0 : ℤ) ^ 2 + 0 ^ 2 - 0 ^ 2 - 1 = -1 := by norm_num
 ## Where this goes next
 
 - [Degree](09-degree-and-the-hilbert-polynomial.md): counts the points where a general line or plane of the right size meets a variety; at a singular point every line meets with order 2 or more, as the line test showed, so it counts more than once there.
-- Regular value theorem (planned): when every point of a level set has full rank, the whole set is a smooth manifold, the global version of this card's local test.
+- [Regular value theorem](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/06-submanifolds-and-the-regular-value-theorem.md): when every point of a level set has full rank, the whole set is a smooth manifold, the global version of this card's local test.
 
 The question this card leaves open: the apex of the cone and the crossing of two lines are both singular, so how is one singular point told from another, and can a singular point be pulled apart into smooth ones?
 
