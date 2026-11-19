@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img alt="cards" src="https://img.shields.io/badge/cards-1%2C571%20of%201%2C866-7aa7ff?style=flat-square">
+  <img alt="cards" src="https://img.shields.io/badge/cards-1%2C697%20of%201%2C866-7aa7ff?style=flat-square">
   <img alt="wings" src="https://img.shields.io/badge/wings-25-67e8f9?style=flat-square">
   <img alt="checks" src="https://img.shields.io/badge/every%20card-Python%20%2B%20Rust%20checks-b48cff?style=flat-square">
   <img alt="proofs" src="https://img.shields.io/badge/proofs-Lean%204%20%2B%20Mathlib-a78bfa?style=flat-square">
@@ -27,7 +27,7 @@ A library of short, self-contained **cards**, each teaching one idea of mathemat
 
 The cards are arranged like a ladder. They start with place value and fractions, climb through algebra, calculus and probability, and end at topology, number theory and the famous unsolved problems. Each card only uses ideas from the cards before it, so you can start at the bottom and keep going, or jump straight to whatever you need.
 
-**1,571 of 1,866 cards are ready to read.** The [syllabus](SYLLABUS.md) lists all 25 wings, and each wing has its own page showing its shelves and every card on them.
+**1,697 of 1,866 cards are ready to read.** The [syllabus](SYLLABUS.md) lists all 25 wings, and each wing has its own page showing its shelves and every card on them.
 
 ## What's on a card
 
@@ -82,8 +82,8 @@ The library has 25 **wings**, each split into shelves of cards. Click a wing to 
 | 18 | [**Functional analysis**](Cards/18-Functional%20analysis/README.md) | Infinite-dimensional spaces behind modern analysis. | 56 of 56 |
 | 19 | [**Partial differential equations**](Cards/19-Partial%20differential%20equations/README.md) | Heat, waves and fluids. | 62 of 62 |
 | 20 | [**Harmonic analysis**](Cards/20-Harmonic%20analysis/README.md) | Breaking signals into waves. | 52 of 52 |
-| 21 | [**Algebraic and analytic number theory**](Cards/21-Algebraic%20and%20analytic%20number%20theory/README.md) | Primes in depth: zeta, L-functions and Galois. | 0 of 72 · planned |
-| 22 | [**Algebraic geometry**](Cards/22-Algebraic%20geometry/README.md) | Shapes defined by equations. | 0 of 54 · planned |
+| 21 | [**Algebraic and analytic number theory**](Cards/21-Algebraic%20and%20analytic%20number%20theory/README.md) | Primes in depth: zeta, L-functions and Galois. | 72 of 72 |
+| 22 | [**Algebraic geometry**](Cards/22-Algebraic%20geometry/README.md) | Shapes defined by equations. | 54 of 54 |
 | 23 | [**Differential geometry and Lie groups**](Cards/23-Differential%20geometry%20and%20Lie%20groups/README.md) | Curved space, symmetry and physics. | 0 of 69 · planned |
 | 24 | [**Computability and complexity**](Cards/24-Computability%20and%20complexity/README.md) | What computers can and can't do, and how fast. | 0 of 57 · planned |
 | 25 | [**Frontier**](Cards/25-Frontier/README.md) | How research works, and the great open problems. | 0 of 43 · planned |
@@ -149,7 +149,7 @@ The cards are written by AI agents working to a strict house standard, then chec
 Help is welcome, from a one-word fix to a whole shelf of new cards.
 
 - **Spotted a mistake?** [Open an issue](https://github.com/wappy-x/Mathematics/issues) with the card and what's wrong, or send a pull request with the fix.
-- **Want to build cards?** 295 cards are still to write, all listed in the [syllabus](SYLLABUS.md). Claim a shelf, give your AI agent the [agent brief](.github/AGENTS.md), and send the cards back as a pull request. The [contributing guide](.github/CONTRIBUTING.md) walks through it, using the next shelf as the example.
+- **Want to build cards?** 169 cards are still to write, all listed in the [syllabus](SYLLABUS.md). Claim a shelf, give your AI agent the [agent brief](.github/AGENTS.md), and send the cards back as a pull request. The [contributing guide](.github/CONTRIBUTING.md) walks through it, using the next shelf as the example.
 
 ## Licence
 

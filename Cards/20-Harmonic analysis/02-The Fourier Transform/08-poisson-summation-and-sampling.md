@@ -854,7 +854,7 @@ Earlier on this shelf, [Plancherel](05-plancherel-and-l2.md) carries the transfo
 ## Where this goes next
 
 - Sphere packing, solved in dimensions 8 and 24 (planned): Poisson summation over a lattice, with a cleverly chosen signal, gives the bound that settles the densest packing in those dimensions.
-- The functional equation (planned): Poisson summation applied to a bell curve relates a theta function at $`x`$ and at $`1/x`$, the first step to the zeta function's symmetry.
+- [The functional equation](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/02-functional-equation-proved.md): Poisson summation applied to a bell curve relates a theta function at $`x`$ and at $`1/x`$, the first step to the zeta function's symmetry.
 
 The question left open: how fast must a spectrum fall for Poisson summation to hold, when the signal is continuous but the decay conditions fail?
 

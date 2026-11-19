@@ -933,7 +933,7 @@ example : ((18 : ℚ) / 10000) / 4 = 45 / 100000 := by norm_num
 - [Densities and likelihood ratios](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md): what a density height is, made exact, and why its version matters at an edge.
 - [KL divergence](../../14-Applied%20and%20computational/03-Information%20Theory/03-kl-divergence-and-cross-entropy.md): maximising likelihood as minimising a distance between the data and the model.
 - [EM](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/08-em-algorithm.md): climbing the likelihood when part of the data is hidden.
-- Algebraic statistics: when two different parameter values give the same likelihood everywhere.
+- [Algebraic statistics](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/08-algebraic-statistics-and-identifiability.md): when two different parameter values give the same likelihood everywhere.
 - Fisher metric: the curvature of the log-likelihood as a way to measure distance between models.
 
 The poll's estimate came with a standard error read off the curvature of one peak; whether any other rule could squeeze a smaller error out of the same 1,000 calls is the question [Fisher information](07-fisher-information-and-cramer-rao.md) answers.

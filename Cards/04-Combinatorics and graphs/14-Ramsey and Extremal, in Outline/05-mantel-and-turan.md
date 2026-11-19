@@ -629,7 +629,7 @@ example : [2, 4, 6, 8, 10].map (fun n => n ^ 2 / 4) = [1, 4, 9, 16, 25] := by de
 
 ## Where this goes next
 
-- Erdos problems: Erdős's open extremal questions, including the densest network with no ring of four.
+- [Erdos problems](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/07-erdos-problems-and-computer-search.md): Erdős's open extremal questions, including the densest network with no ring of four.
 - [The probabilistic method](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md): networks that avoid a shape, shown to exist by chance and averages rather than built.
 
 Turán settles every full clique; for a shape that is not one, such as a ring of four, the densest count is known only roughly, and that open ground is where Erdős-style extremal problems begin.

@@ -1652,7 +1652,7 @@ example : (2 - (-2 : ℤ)) / 2 = 2 ∧ 2 - (-1 : ℤ) = 3 := by decide
 
 - [Orientability](03-orientability-mobius-strip-and-klein-bottle.md): the test for one-sidedness, the Möbius strip and $`\mathbb{RP}^2`$, and, stated with a source, the fact that no homeomorphism changes the answer.
 - [Euler characteristic](04-euler-characteristic-and-triangulations.md): why every triangulation of one surface gives the same $`\chi`$.
-- Genus (planned): handles counted as loops that cut the surface without splitting it.
+- [Genus](../../22-Algebraic%20geometry/03-Plane%20Curves/06-genus-and-the-degree-genus-formula.md): handles counted as loops that cut the surface without splitting it.
 - Gauss-Bonnet (planned): total curvature equals $`2\pi\chi`$, so geometry knows the genus.
 - Hairy ball theorem (planned): every smooth wind pattern on a sphere has a calm point, because $`\chi = 2`$ is not 0.
 - Ricci flow (planned): the route to the three-dimensional version, where the list is far harder.

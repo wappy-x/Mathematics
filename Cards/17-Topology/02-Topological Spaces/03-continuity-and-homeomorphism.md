@@ -878,7 +878,7 @@ example : (4 : ℚ) - 2 / 9 * (9 / 2) = 3 ∧ (4 : ℚ) - 2 / 9 * 9 = 2 ∧ (4 :
 - [Subspace, product and quotient](04-subspace-product-and-quotient-topologies.md): the circle as a piece of the plane, as an interval with its ends glued, and as one factor of the torus, each with its open sets; with the ends glued, the wrap becomes a homeomorphism.
 - [Topological manifold](../03-Surfaces%20and%20Manifolds/01-topological-manifolds.md): a space in which every point has an open set around it homeomorphic to flat space, the setting for the mug and the doughnut.
 - [Homotopy](../04-Homotopy/01-homotopy-and-homotopy-equivalence.md): deforming one continuous map into another, which yields invariants that can tell the torus from the sphere.
-- Sheaves (planned): data attached to the open sets of a space, carried between spaces by pre-images under continuous maps.
+- [Sheaves](../../22-Algebraic%20geometry/05-Cohomology%20and%20the%20Hodge%20Conjecture/01-sheaves-in-outline.md): data attached to the open sets of a space, carried between spaces by pre-images under continuous maps.
 
 The question this card leaves open: cutting out one point separates the circle from the interval, but not the torus from the sphere, so which invariant does?
 

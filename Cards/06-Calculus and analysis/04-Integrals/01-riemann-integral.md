@@ -969,8 +969,8 @@ example : (Finset.range 20).sum (fun k => 3 + (k + 1)) = 270 ∧ 270 / 2 = 135 :
 - [The hazard rate](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): survival from a default rate.
 - [Pricing a CDS](../../12-Financial%20mathematics/42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md): swap legs as integrals over time.
 - [Trapezoid, midpoint and Simpson](../../16-Numerical%20analysis/05-Quadrature/01-newton-cotes-and-composite-rules.md): slicing rules with error bounds.
-- Average orders: sums compared with integrals.
-- Partial summation: sums turned into integrals.
+- [Average orders](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/05-average-orders-and-the-hyperbola-method.md): sums compared with integrals.
+- [Partial summation](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/06-abel-and-partial-summation.md): sums turned into integrals.
 
 The tank reached 130 only because a counting formula was at hand; most rates have none, and the fundamental theorem of calculus replaces the sum with an antiderivative.
 

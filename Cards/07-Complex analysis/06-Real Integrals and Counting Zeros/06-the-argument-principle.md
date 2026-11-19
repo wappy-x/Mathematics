@@ -811,8 +811,8 @@ end TheArgumentPrinciple
 - [Zeta's zeros and the primes](../09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md): where zeta's zeros sit, and why primes care.
 - [Nyquist and margins](../../13-Engineering%20mathematics/03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): the count as a stability test.
 - [Homology of spheres, and degree](../../17-Topology/05-Homology/07-homology-of-spheres-and-degree.md): winding number as degree.
-- The prime number theorem: no zeta zeros on the line Re s = 1.
-- Counting the zeros: the zero count up to height T.
+- [The prime number theorem](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/05-prime-number-theorem-proved.md): no zeta zeros on the line Re s = 1.
+- [Counting the zeros](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/08-counting-the-zeros-riemann-von-mangoldt.md): the zero count up to height T.
 
 Left open: when f is hard to walk, can a simpler function that stays close to f on the loop give the same count?
 

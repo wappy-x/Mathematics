@@ -710,7 +710,7 @@ example : (1 : ℚ) / (Nat.factorial 2) = 1 / 2 := by
 ## Where this goes next
 
 - [The residue theorem](05-the-residue-theorem.md): a loop round several booths pays the sum of their tolls, 2πi times the sum of their residues.
-- Perron's formula: residues turning a sum over whole numbers into a loop integral.
+- [Perron's formula](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/04-perrons-formula.md): residues turning a sum over whole numbers into a loop integral.
 
 The question this card leaves open: why does a loop round several booths pay exactly the sum of their tolls?
 

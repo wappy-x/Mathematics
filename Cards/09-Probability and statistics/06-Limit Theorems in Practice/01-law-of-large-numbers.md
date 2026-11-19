@@ -863,7 +863,7 @@ example : 1000 ≤ 5 * |2 * (3400 : ℤ) - 7 * 1000| ∧ 1000 ≤ 5 * |2 * (3600
 - [Typical sequences](../../14-Applied%20and%20computational/03-Information%20Theory/04-typical-sequences-and-the-aep.md): the law applied to the log-probability of a message, which is why data compresses.
 - [Stochastic gradient](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/08-stochastic-gradient-and-sample-average-approximation.md): optimising a sample average in place of an expectation.
 - [Q-learning](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/05-q-learning-and-temporal-differences.md): running averages of rewards that settle on expected values.
-- Large gaps: primes modelled as random draws, whose counts obey the law.
+- [Large gaps](../../21-Algebraic%20and%20analytic%20number%20theory/04-Sieves%20and%20Prime%20Gaps/06-large-gaps-and-the-cramer-model.md): primes modelled as random draws, whose counts obey the law.
 
 The law says the average lands close; it does not say how the misses are shaped, or why the exact 0.9346 sits so far above the guaranteed 0.7083. The bell curve that answers both is [Central limit theorem](02-central-limit-theorem.md).
 

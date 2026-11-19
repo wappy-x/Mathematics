@@ -500,7 +500,7 @@ example : (!![1, 0, 0; 0, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3,
 - [Mayer-Vietoris and exact sequences](../../17-Topology/05-Homology/06-mayer-vietoris-and-long-exact-sequences.md): the same bookkeeping along a chain of maps.
 - [Compact operators](../../18-Functional%20analysis/03-Bounded%20Operators/05-compact-operators.md): rank where the inputs are functions.
 - [Fredholm alternative](../../18-Functional%20analysis/03-Bounded%20Operators/09-fredholm-alternative-and-integral-equations.md): which equations have answers.
-- Dimension and tangent space: rank of a slope matrix as a dimension.
+- [Dimension and tangent space](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/07-dimension-and-tangent-spaces.md): rank of a slope matrix as a dimension.
 - Diffeomorphism, immersion, submersion: full rank as the test for a map that folds nothing.
 
 Rank counts directions, but not how close a matrix is to losing one more, which is what measured data needs: that grading waits for [The singular value decomposition](../07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md).

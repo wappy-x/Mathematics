@@ -524,7 +524,7 @@ example : (50 : ℚ) * (-3/2) / 15 = -5 ∧ ((-15/2 : ℚ) + (-15/4)) / 2 = -45/
 
 ## Where this goes next
 
-- Projective space: projective space in any dimension, and shapes cut out by its equations.
+- [Projective space](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/03-projective-space-and-homogeneous-coordinates.md): projective space in any dimension, and shapes cut out by its equations.
 
 Here the points at infinity came from a camera; whether projective space stands as a geometry on its own, with no favoured slice, is what a later card settles.
 

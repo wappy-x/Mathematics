@@ -609,9 +609,9 @@ example : (2 : ℂ) ^ 4 = 16 ∧ (2 : ℂ) ^ 4 ≠ -16 := by
 - [Complex vectors and matrices](07-complex-vectors-and-matrices.md): roots of unity filling the Fourier matrix.
 - [Branch cuts and complex powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md): choosing one root continuously.
 - [The discrete Fourier transform](../08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): a signal split along the roots of unity.
-- Dirichlet characters: clock arithmetic mapped into roots of unity.
-- Gauss sums: sums of roots of unity that do not cancel.
-- Cyclotomic fields: number systems built from a primitive root.
+- [Dirichlet characters](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/01-dirichlet-characters.md): clock arithmetic mapped into roots of unity.
+- [Gauss sums](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/06-gauss-sums.md): sums of roots of unity that do not cancel.
+- [Cyclotomic fields](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/08-cyclotomic-extensions-and-roots-of-unity.md): number systems built from a primitive root.
 
 Left open: a fractional power such as 1/3 has three candidate roots, so which one should a formula return, and can that choice move smoothly as the number circles 0?
 

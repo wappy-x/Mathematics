@@ -519,9 +519,9 @@ example : !![(1 : ℤ), 0; 0, 0] * !![0, 0; 0, 1] = 0 := by decide
 - [Boolean algebra](../10-For%20the%20Curious/05-boolean-algebra-and-lattices.md): and and or.
 - [Banach algebras](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/01-banach-algebras-and-the-gelfand-transform.md): members with size.
 - [C-star algebras](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/03-c-star-algebras-in-outline.md): Banach algebras with a mirror operation, like swapping $`i`$ for $`-i`$ in a complex number.
-- Algebraic integers: numbers beyond the whole numbers that still form a ring.
-- Rings of integers: the algebraic integers inside one larger number system.
-- Domains, principal ideals and unique factorisation: factoring into primes.
+- [Algebraic integers](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/01-algebraic-integers-and-number-fields.md): numbers beyond the whole numbers that still form a ring.
+- [Rings of integers](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/03-rings-of-integers-and-integral-bases.md): the algebraic integers inside one larger number system.
+- [Domains, principal ideals and unique factorisation](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/01-integral-domains-pids-and-unique-factorisation.md): factoring into primes.
 
 Dividing stays a privilege of the few here, which is the next card's question: what changes when every nonzero member has an undo.
 

@@ -497,9 +497,9 @@ example : IsPrimePow 4 ∧ ¬ IsPrimePow 6 ∧ ¬ IsPrimePow 10 := by decide
 - [Hamming and Reed-Solomon](../../14-Applied%20and%20computational/03-Information%20Theory/08-error-correcting-codes-hamming-and-reed-solomon.md): the codes behind it.
 - [AES](../../14-Applied%20and%20computational/04-Cryptography/02-symmetric-ciphers-and-aes.md): the field inside a cipher.
 - [Elliptic curves](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): curves over a finite field.
-- Quadratic reciprocity: squares on a prime clock.
+- [Quadratic reciprocity](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/07-quadratic-reciprocity-via-gauss-sums.md): squares on a prime clock.
 - Finite fields, in Algebraic and analytic number theory: existence, uniqueness, symmetry.
-- The curve mod p: counting points field by field.
+- [The curve mod p](../../22-Algebraic%20geometry/04-Elliptic%20Curves/05-reduction-mod-p-and-hasse.md): counting points field by field.
 
 Degree two over GF(2) was easy by hand; whether an irreducible polynomial of every degree exists is the next question.
 

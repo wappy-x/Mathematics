@@ -1505,7 +1505,7 @@ end FiltrationsPersistentHomology
 - [Comparing diagrams](05-comparing-diagrams-and-vectorising-them.md): distances between barcodes, and error bars on them.
 - [Mapper and Reeb graphs](06-mapper-and-reeb-graphs.md): a network summary of the same cloud along one chosen direction.
 - [Persistence in practice](07-persistence-in-practice.md): sliding windows on real returns, and what their bars are worth.
-- Modules (planned): the algebra behind the structure theorem.
+- [Modules](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/05-modules-and-the-structure-theorem.md): the algebra behind the structure theorem.
 
 This card had no noise to fight; it leaves open how long a bar must be before it is a feature of the data and not of the noise.
 

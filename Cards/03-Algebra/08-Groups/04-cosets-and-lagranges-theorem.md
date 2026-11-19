@@ -498,7 +498,7 @@ example : 2 ^ 12 % 12 = 4 := by norm_num
 - [Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md): maps whose equal-value blocks are one subgroup's cosets.
 - [Group actions](08-group-actions-and-counting.md): equal blocks counting arrangements.
 - [Covering spaces](../../17-Topology/04-Homotopy/05-covering-spaces.md): the index counting sheets above a space.
-- The Galois correspondence: subgroups sized by the index.
+- [The Galois correspondence](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/05-galois-groups-and-the-fundamental-theorem.md): subgroups sized by the index.
 - Group action and homogeneous space: cosets forming a smooth space.
 
 The blocks are so far a list of sets with no way to combine two of them; when they form a group of their own is [Normal subgroups and quotient groups](06-normal-subgroups-and-quotient-groups.md).

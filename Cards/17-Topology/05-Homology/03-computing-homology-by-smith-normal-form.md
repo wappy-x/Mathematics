@@ -1461,8 +1461,8 @@ example : (1 + 0, 1 + 1 + 0, 0 + 0 + 1) = ((1 : ℕ), (2 : ℕ), (1 : ℕ)) := b
 
 - [Homotopy invariance](04-homotopy-invariance-of-homology.md): why every cutting of the Klein bottle, and every space that deforms onto it, gives these same groups.
 - [The persistence algorithm](../06-Topological%20Data%20Analysis/03-the-persistence-algorithm.md): boundary-matrix reduction run mod 2 on a growing complex, column by column.
-- Smith normal form (planned): the same diagonal over polynomial rings, in the algebraic-geometry wing.
-- Modules (planned): the structure theorem in full, for modules over a principal ideal domain.
+- [Smith normal form](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/06-smith-normal-form-and-canonical-forms.md): the same diagonal over polynomial rings, in the algebraic-geometry wing.
+- [Modules](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/05-modules-and-the-structure-theorem.md): the structure theorem in full, for modules over a principal ideal domain.
 
 The 2-triangle model and the 9-corner triangulation gave the same groups here, but this card computed only two cuttings; why every cutting must agree is the question it leaves open.
 

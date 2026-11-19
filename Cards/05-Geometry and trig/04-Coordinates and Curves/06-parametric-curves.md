@@ -439,7 +439,7 @@ theorem valve_from_hub_on_circle (b θ : ℝ) :
 
 - [Parametric motion](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/01-parametric-motion.md): velocity and arch length, exactly.
 - [The brachistochrone](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/02-the-brachistochrone-and-the-beltrami-identity.md): the upside-down cycloid as the fastest slide.
-- Elimination: when a parameter can be removed exactly.
+- [Elimination](../../22-Algebraic%20geometry/01-Polynomial%20Systems/05-elimination-and-implicitisation.md): when a parameter can be removed exactly.
 
 This card measured the arch by short pieces and the speed by one small click; getting both exactly, at every instant, is what a later card does.
 

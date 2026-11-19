@@ -573,7 +573,7 @@ example : ((4 / 5 : ℚ) - 5 / 7) * (7 / 10) - (3 / 10) * (1 / 5) = 0 := by norm
 - [Every root at once](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/08-polynomial-roots-and-companion-matrices.md): the trick reversed.
 - [Eigenvalues by iteration](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/07-eigenvalues-power-iteration-and-the-qr-algorithm.md): no quadratic.
 - [Spectrum](../../18-Functional%20analysis/03-Bounded%20Operators/07-spectrum-and-resolvent.md): infinite dimensions.
-- Finitely many solutions: polynomial systems.
+- [Finitely many solutions](../../22-Algebraic%20geometry/01-Polynomial%20Systems/07-solving-zero-dimensional-systems.md): polynomial systems.
 - [Smith normal form](../../17-Topology/05-Homology/03-computing-homology-by-smith-normal-form.md): all the shapes.
 - Lie algebra: matrix generators.
 

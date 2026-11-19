@@ -563,7 +563,7 @@ example : (1 : ℚ) / 2 ^ 12 < 1 / 3000 ∧ ¬ ((1 : ℚ) / 2 ^ 11 < 1 / 3000) :
 - [Weak convergence](../../18-Functional%20analysis/02-Hilbert%20Spaces/09-weak-convergence-and-banach-alaoglu.md): a far looser convergence.
 - [Convolution and mollifiers](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/03-convolution-and-mollifiers.md): smoothing that converges uniformly.
 - [Dirichlet's theorem](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/04-pointwise-and-uniform-convergence.md): both modes for Fourier series.
-- Equidistribution: step functions approximated by smooth ones.
+- [Equidistribution](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/03-equidistribution-and-weyls-criterion.md): step functions approximated by smooth ones.
 - Partition of unity: uniform approximation on curved spaces.
 
 Left open: sin(nx)/n converges uniformly, yet its slopes do not settle. When may a limit pass through a derivative or an integral? [Swapping limits](08-swapping-limits-with-integrals-and-derivatives.md) answers that.

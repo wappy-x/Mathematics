@@ -805,7 +805,7 @@ example : ((-2 : ℚ) - 1 / 20) / (36 / 25) = -205 / 144 := by norm_num
 - [EM](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/08-em-algorithm.md): fitting a mixture of bells.
 - [Weighted Gauss rules](../../16-Numerical%20analysis/05-Quadrature/04-gauss-hermite-and-weighted-rules.md): averages under the bell by a few weighted points.
 - [The heat kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md): heat spreading as a widening bell.
-- Erdos-Kac: the count of a number's prime factors follows the bell.
+- [Erdos-Kac](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/02-erdos-kac-theorem.md): the count of a number's prime factors follows the bell.
 
 The bell's tails are too thin for real markets; which laws fit when big days come every few years is [Heavy tails](08-heavy-tails-pareto-and-cauchy.md).
 

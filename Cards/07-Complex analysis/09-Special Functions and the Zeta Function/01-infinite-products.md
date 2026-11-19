@@ -498,7 +498,7 @@ example : (1 : ℚ) - 3 ^ 2 / 3 ^ 2 = 0 := by
 ## Where this goes next
 
 - [The zeta function](05-zeta-function-and-euler-product.md): the product over primes that equals the sum of 1/n^s.
-- Mertens' theorems: how fast the product of 1 − 1/p over primes p sinks to zero.
+- [Mertens' theorems](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/09-mertens-theorems.md): how fast the product of 1 − 1/p over primes p sinks to zero.
 
 The question this card leaves open: zeta's product has one factor per prime, not one per zero, so for which s do its small parts have a finite total, and what does the product equal?
 

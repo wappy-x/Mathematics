@@ -533,7 +533,7 @@ example : (-80 : ℤ) ^ 2 - 4 * 1600 = 0 := by norm_num
 
 - [Ellipses and hyperbolas](05-ellipses-and-hyperbolas.md): two foci, with a fixed sum or a fixed difference of distances.
 - [Elliptic curves](../06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): a cubic curve where a line through two points meets a third.
-- Conics: every curve of degree two, tilted or not, and its points listed by one parameter.
+- [Conics](../../22-Algebraic%20geometry/03-Plane%20Curves/01-conics-and-rational-parametrisation.md): every curve of degree two, tilted or not, and its points listed by one parameter.
 - Osculating circle: the circle that hugs a curve best at a point; at the dish's vertex its radius is 2p.
 
 A parabola has one focus and a line; a curve kept a fixed total distance from two foci closes up into an oval, and the next card finds its equation.

@@ -650,8 +650,8 @@ example : (297 : ℚ) / 210 = 99 / 70 := by norm_num
 
 ## Where this goes next
 
-- The unit theorem: how many units a number family has, in general.
-- Pell's equation: any whole number under the root, the continued fraction supplying the first solution.
+- [The unit theorem](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/07-dirichlets-unit-theorem.md): how many units a number family has, in general.
+- [Pell's equation](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/01-pell-and-continued-fractions-revisited.md): any whole number under the root, the continued fraction supplying the first solution.
 
 This card starts from (3, 2) and never says where that pair came from: finding the first solution is a later card's job.
 

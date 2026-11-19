@@ -888,7 +888,7 @@ end
 
 - [The standard maps](03-standard-maps-and-composing-them.md): chains with powers and the exponential.
 - [The Poisson formula](06-poisson-integral-formula.md): disc temperatures from the rim, carried by C.
-- Modular forms: functions that keep their shape under Mobius maps with whole-number entries and determinant 1.
+- [Modular forms](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/07-modular-forms-in-outline.md): functions that keep their shape under Mobius maps with whole-number entries and determinant 1.
 
 Mobius maps reach only regions bounded by circles and lines; reaching a wedge, a strip or a slit plane is the job of [The standard maps](03-standard-maps-and-composing-them.md).
 

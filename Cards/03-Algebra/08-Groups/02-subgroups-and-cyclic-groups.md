@@ -499,8 +499,8 @@ example : (List.range 13).filter (fun d => 0 < d ∧ 12 % d = 0) = [1, 2, 3, 4, 
 - [Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md): shifted copies like 1, 5 and 9 get a name, and prove a subgroup's size divides the group's.
 - [Direct products](07-direct-products.md): two groups bolted together, and the smallest commutative group no member generates.
 - The circle's fundamental group is the whole numbers under addition: loops on a circle are Step 4's infinite cyclic group.
-- Cyclotomic fields: n points round a circle, multiplied not added: the same clock.
-- Torsion points: curve points that come home after finitely many additions.
+- [Cyclotomic fields](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/08-cyclotomic-extensions-and-roots-of-unity.md): n points round a circle, multiplied not added: the same clock.
+- [Torsion points](../../22-Algebraic%20geometry/04-Elliptic%20Curves/04-torsion-and-nagell-lutz.md): curve points that come home after finitely many additions.
 
 The cyclic subgroups came out at sizes 1, 2, 3, 4, 6 and 12: every divisor of 12, one each. Quirk of clocks or law about all finite groups? [Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md) settles it.
 

@@ -736,7 +736,7 @@ example : 3141592653 = 47936 * 65536 + 58957 ∧ 65536 + 47936 = 113472 := by no
 
 - [Digital signatures](07-digital-signatures.md): what any signature promises, with ECDSA as one scheme among several.
 - [Lattices](09-lattices-and-post-quantum-cryptography.md): the replacement when a quantum computer could undo kP.
-- Curves for keys (planned): how standard curves are chosen and checked against the special weaknesses.
+- [Curves for keys](../../22-Algebraic%20geometry/04-Elliptic%20Curves/09-elliptic-curve-cryptography-and-schoof.md): how standard curves are chosen and checked against the special weaknesses.
 
 The open question this card leaves: is the square-root attack really the best possible on a well-chosen curve, or does a classical shortcut exist that nobody has found?
 

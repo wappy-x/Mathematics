@@ -583,8 +583,8 @@ example : ((Icc 1 30).filter (fun x => ¬ 2 ∣ x ∧ ¬ 3 ∣ x ∧ ¬ 5 ∣ x)
 - [Derangements](02-derangements.md): the sieve's flagship count.
 - [Onto functions](03-counting-surjections.md): the same layers, on onto functions.
 - [Stopping the sieve early](04-union-bound-and-bonferroni.md): what a truncated sum is worth.
-- Sieving by inclusion-exclusion: the sieve run over the primes, and where it stalls.
-- Sum-product: counting overlaps far too many to list.
+- [Sieving by inclusion-exclusion](../../21-Algebraic%20and%20analytic%20number%20theory/04-Sieves%20and%20Prime%20Gaps/01-the-legendre-sieve-and-the-parity-problem.md): the sieve run over the primes, and where it stalls.
+- [Sum-product](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/06-sum-product-and-additive-energy.md): counting overlaps far too many to list.
 
 The formula is exact but doubles in length with each property added; what a partial sum is worth is the next question ([Stopping the sieve early](04-union-bound-and-bonferroni.md)).
 

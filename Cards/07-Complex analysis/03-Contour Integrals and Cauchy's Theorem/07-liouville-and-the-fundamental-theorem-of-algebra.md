@@ -496,7 +496,7 @@ example (z : ℂ) :
 - [Homology of spheres, and degree](../../17-Topology/05-Homology/07-homology-of-spheres-and-degree.md): the winding-count proof, with no derivatives.
 - [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): counts the roots inside a loop without finding them.
 - [Rouche's theorem](../06-Real%20Integrals%20and%20Counting%20Zeros/07-rouches-theorem.md): the fundamental theorem again, in two lines.
-- Splitting fields: a number system where every polynomial splits is **algebraically closed**.
+- [Splitting fields](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/03-splitting-fields-and-algebraic-closure.md): a number system where every polynomial splits is **algebraically closed**.
 
 This card proves the n roots exist but not where they lie; how many sit inside a given loop is the question [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md) answers.
 

@@ -506,10 +506,10 @@ example : Λ 6 = 0 := by
 
 ## Where this goes next
 
-- The zero-free region: no zero on Re s = 1.
-- The prime number theorem: the theorem in full.
-- The explicit formula: Step 3's estimates.
-- The Riemann hypothesis: equivalent forms.
+- [The zero-free region](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/03-the-zero-free-region.md): no zero on Re s = 1.
+- [The prime number theorem](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/05-prime-number-theorem-proved.md): the theorem in full.
+- [The explicit formula](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/07-the-explicit-formula.md): Step 3's estimates.
+- [The Riemann hypothesis](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/09-riemann-hypothesis-statement-and-equivalents.md): equivalent forms.
 
 The question this card leaves open: do all the zeros in the strip lie on the line Re s = 1/2, as the 29 found here do?
 

@@ -6,7 +6,9 @@
 
 Compute with polynomial systems: choose a term order, run Buchberger's algorithm, eliminate variables, and count the solutions of a finite system. Read a variety in affine and projective space, work with a plane curve and its singularities, do arithmetic on an elliptic curve up to the statements of Mordell-Weil and Birch-Swinnerton-Dyer, and state the Hodge conjecture precisely.
 
-6 shelves · **0 of 54 cards ready to read** · all planned, not written yet
+6 shelves · **54 of 54 cards ready to read**
+
+Click a shelf to jump to its cards, then click a card's title to read it.
 
 | Shelf | Cards |
 | --- | ---: |
@@ -23,15 +25,15 @@ Compute with polynomial systems: choose a term order, run Buchberger's algorithm
 
 *Ideals, term orders, Grobner bases, elimination, and the two theorems that make polynomial algebra finite*
 
-1. Ideals and varieties: the equations you may add, and the points that survive them
-2. Monomial orders: ranking terms so that division in several variables has an answer
-3. Grobner bases: the generating set that makes division give a definite answer
-4. Normal forms: deciding whether one equation is a consequence of the others
-5. Elimination: removing variables to solve a system or to find a curve's equation
-6. The resultant: one determinant that says when two polynomials share a root
-7. Finitely many solutions: counting them first, then finding them all
-8. Hilbert's basis theorem: every polynomial system, however large, is really a finite one
-9. The Nullstellensatz: over the complex numbers the points know the equations up to roots
+1. [Ideals and varieties: the equations you may add, and the points that survive them](01-Polynomial%20Systems/01-ideals-and-varieties.md)
+2. [Monomial orders: ranking terms so that division in several variables has an answer](01-Polynomial%20Systems/02-monomial-orders-and-division.md)
+3. [Grobner bases: the generating set that makes division give a definite answer](01-Polynomial%20Systems/03-grobner-bases-and-buchberger.md)
+4. [Normal forms: deciding whether one equation is a consequence of the others](01-Polynomial%20Systems/04-reduced-grobner-bases-and-ideal-membership.md)
+5. [Elimination: removing variables to solve a system or to find a curve's equation](01-Polynomial%20Systems/05-elimination-and-implicitisation.md)
+6. [The resultant: one determinant that says when two polynomials share a root](01-Polynomial%20Systems/06-resultants-and-common-roots.md)
+7. [Finitely many solutions: counting them first, then finding them all](01-Polynomial%20Systems/07-solving-zero-dimensional-systems.md)
+8. [Hilbert's basis theorem: every polynomial system, however large, is really a finite one](01-Polynomial%20Systems/08-hilbert-basis-theorem.md)
+9. [The Nullstellensatz: over the complex numbers the points know the equations up to roots](01-Polynomial%20Systems/09-nullstellensatz.md)
 
 [↑ Back to the shelves](#top)
 
@@ -41,15 +43,15 @@ Compute with polynomial systems: choose a term order, run Buchberger's algorithm
 
 *Varieties in affine and projective space, the maps between them, dimension, tangent spaces and smoothness*
 
-1. Affine varieties: the zero set of a system, and its ring of polynomial functions
-2. The Zariski topology: calling solution sets closed, and splitting a shape into pieces
-3. Projective space: adding points at infinity so that parallel lines meet
-4. Projective varieties: equations of one degree, and the closure of an affine shape
-5. Maps between varieties: polynomial maps, and ratios with a bad set
-6. Birational equivalence: the same away from a small bad set, and the field that detects it
-7. Dimension and tangent space: how many directions a shape has at a point
-8. Smooth and singular points: the Jacobian test for a clean tangent direction
-9. Degree: how many points a slice meets, and the polynomial that records it
+1. [Affine varieties: the zero set of a system, and its ring of polynomial functions](02-Affine%20and%20Projective%20Varieties/01-affine-varieties-and-coordinate-rings.md)
+2. [The Zariski topology: calling solution sets closed, and splitting a shape into pieces](02-Affine%20and%20Projective%20Varieties/02-zariski-topology-and-irreducibility.md)
+3. [Projective space: adding points at infinity so that parallel lines meet](02-Affine%20and%20Projective%20Varieties/03-projective-space-and-homogeneous-coordinates.md)
+4. [Projective varieties: equations of one degree, and the closure of an affine shape](02-Affine%20and%20Projective%20Varieties/04-projective-varieties-and-closure.md)
+5. [Maps between varieties: polynomial maps, and ratios with a bad set](02-Affine%20and%20Projective%20Varieties/05-regular-and-rational-maps.md)
+6. [Birational equivalence: the same away from a small bad set, and the field that detects it](02-Affine%20and%20Projective%20Varieties/06-birational-equivalence-and-function-fields.md)
+7. [Dimension and tangent space: how many directions a shape has at a point](02-Affine%20and%20Projective%20Varieties/07-dimension-and-tangent-spaces.md)
+8. [Smooth and singular points: the Jacobian test for a clean tangent direction](02-Affine%20and%20Projective%20Varieties/08-smooth-and-singular-points.md)
+9. [Degree: how many points a slice meets, and the polynomial that records it](02-Affine%20and%20Projective%20Varieties/09-degree-and-the-hilbert-polynomial.md)
 
 [↑ Back to the shelves](#top)
 
@@ -59,15 +61,15 @@ Compute with polynomial systems: choose a term order, run Buchberger's algorithm
 
 *Curves in the plane: how they meet, how they fail to be smooth, how many holes they have, and the functions on them*
 
-1. Conics: every smooth degree-two curve is a line in disguise
-2. Intersection multiplicity: how tightly two curves touch where they meet
-3. Bezout's theorem: two curves meet in exactly the product of their degrees
-4. Nodes and cusps: the standard ways a curve fails to be smooth
-5. Blowing up: replacing a point by all the directions through it to pull branches apart
-6. Genus: the number of holes, and how degree and singular points fix it
-7. Divisors and Riemann-Roch: counting the functions with the poles you prescribe
-8. Riemann surfaces: a complex curve is a surface, and a doughnut is a rolled-up plane
-9. Inflections and Cayley-Bacharach: nine points on a cubic, and the ninth for free
+1. [Conics: every smooth degree-two curve is a line in disguise](03-Plane%20Curves/01-conics-and-rational-parametrisation.md)
+2. [Intersection multiplicity: how tightly two curves touch where they meet](03-Plane%20Curves/02-intersection-multiplicity-and-tangency.md)
+3. [Bezout's theorem: two curves meet in exactly the product of their degrees](03-Plane%20Curves/03-bezouts-theorem.md)
+4. [Nodes and cusps: the standard ways a curve fails to be smooth](03-Plane%20Curves/04-singularities-nodes-and-cusps.md)
+5. [Blowing up: replacing a point by all the directions through it to pull branches apart](03-Plane%20Curves/05-blowing-up-a-point.md)
+6. [Genus: the number of holes, and how degree and singular points fix it](03-Plane%20Curves/06-genus-and-the-degree-genus-formula.md)
+7. [Divisors and Riemann-Roch: counting the functions with the poles you prescribe](03-Plane%20Curves/07-divisors-and-riemann-roch.md)
+8. [Riemann surfaces: a complex curve is a surface, and a doughnut is a rolled-up plane](03-Plane%20Curves/08-riemann-surfaces-and-the-weierstrass-p-function.md)
+9. [Inflections and Cayley-Bacharach: nine points on a cubic, and the ninth for free](03-Plane%20Curves/09-inflections-and-the-cayley-bacharach-theorem.md)
 
 [↑ Back to the shelves](#top)
 
@@ -77,16 +79,16 @@ Compute with polynomial systems: choose a term order, run Buchberger's algorithm
 
 *The group law on a cubic, arithmetic over Q and over finite fields, the two big theorems, and the cryptography*
 
-1. The group law: three points on a line add up to zero
-2. Weierstrass form: the standard cubic, its discriminant and its j-invariant
-3. Adding points by formula: slopes, the doubling case, and big multiples fast
-4. Torsion points: the ones that return to zero, and how to list them all
-5. The curve mod p: counting its points, and Hasse's bound on the count
-6. Mordell-Weil: every rational point comes from a finite list of them
-7. The L-function: every prime's point count packed into one series
-8. Birch and Swinnerton-Dyer: the rank equals the order of vanishing at s equals 1
-9. Curves for keys: the discrete logarithm problem, and counting points to pick a safe curve
-10. What curves answer: congruent numbers, and the modularity theorem
+1. [The group law: three points on a line add up to zero](04-Elliptic%20Curves/01-elliptic-curves-and-the-group-law.md)
+2. [Weierstrass form: the standard cubic, its discriminant and its j-invariant](04-Elliptic%20Curves/02-weierstrass-forms-discriminant-and-j-invariant.md)
+3. [Adding points by formula: slopes, the doubling case, and big multiples fast](04-Elliptic%20Curves/03-point-arithmetic-and-double-and-add.md)
+4. [Torsion points: the ones that return to zero, and how to list them all](04-Elliptic%20Curves/04-torsion-and-nagell-lutz.md)
+5. [The curve mod p: counting its points, and Hasse's bound on the count](04-Elliptic%20Curves/05-reduction-mod-p-and-hasse.md)
+6. [Mordell-Weil: every rational point comes from a finite list of them](04-Elliptic%20Curves/06-mordell-weil-and-rank.md)
+7. [The L-function: every prime's point count packed into one series](04-Elliptic%20Curves/07-l-functions-of-elliptic-curves.md)
+8. [Birch and Swinnerton-Dyer: the rank equals the order of vanishing at s equals 1](04-Elliptic%20Curves/08-birch-and-swinnerton-dyer-statement.md)
+9. [Curves for keys: the discrete logarithm problem, and counting points to pick a safe curve](04-Elliptic%20Curves/09-elliptic-curve-cryptography-and-schoof.md)
+10. [What curves answer: congruent numbers, and the modularity theorem](04-Elliptic%20Curves/10-modularity-and-the-congruent-number-problem.md)
 
 [↑ Back to the shelves](#top)
 
@@ -96,14 +98,14 @@ Compute with polynomial systems: choose a term order, run Buchberger's algorithm
 
 *Cohomology in outline for varieties, the Hodge decomposition, cycle classes, and one Clay problem stated exactly*
 
-1. Sheaves: data that exists locally, glued together with bookkeeping
-2. De Rham cohomology: closed forms modulo exact ones, counted degree by degree
-3. Cohomology of projective space: one class in every even degree
-4. Complex manifolds and Kahler forms: holomorphic charts and a metric that fits them
-5. Hodge decomposition: cohomology of a compact Kahler manifold splits by type
-6. Line bundles and divisors: a codimension-one shape as a cohomology class
-7. Algebraic cycles: subvarieties added with weights, and the classes they leave behind
-8. The Hodge conjecture: every rational class of type p and p comes from a cycle
+1. [Sheaves: data that exists locally, glued together with bookkeeping](05-Cohomology%20and%20the%20Hodge%20Conjecture/01-sheaves-in-outline.md)
+2. [De Rham cohomology: closed forms modulo exact ones, counted degree by degree](05-Cohomology%20and%20the%20Hodge%20Conjecture/02-de-rham-cohomology-of-varieties.md)
+3. [Cohomology of projective space: one class in every even degree](05-Cohomology%20and%20the%20Hodge%20Conjecture/03-cohomology-of-projective-space.md)
+4. [Complex manifolds and Kahler forms: holomorphic charts and a metric that fits them](05-Cohomology%20and%20the%20Hodge%20Conjecture/04-complex-manifolds-and-kahler-forms.md)
+5. [Hodge decomposition: cohomology of a compact Kahler manifold splits by type](05-Cohomology%20and%20the%20Hodge%20Conjecture/05-hodge-decomposition.md)
+6. [Line bundles and divisors: a codimension-one shape as a cohomology class](05-Cohomology%20and%20the%20Hodge%20Conjecture/06-line-bundles-and-divisor-classes.md)
+7. [Algebraic cycles: subvarieties added with weights, and the classes they leave behind](05-Cohomology%20and%20the%20Hodge%20Conjecture/07-algebraic-cycles-and-cycle-classes.md)
+8. [The Hodge conjecture: every rational class of type p and p comes from a cycle](05-Cohomology%20and%20the%20Hodge%20Conjecture/08-hodge-conjecture-statement-and-known-cases.md)
 
 [↑ Back to the shelves](#top)
 
@@ -113,15 +115,15 @@ Compute with polynomial systems: choose a term order, run Buchberger's algorithm
 
 *The language the subject is written in now: Spec, schemes, morphisms, modules, moduli, and what computation can do*
 
-1. Domains, principal ideals and unique factorisation: how the good rings nest
-2. The spectrum of a ring: prime ideals as points, so every ring becomes a space
-3. Localisation: inverting chosen functions to zoom in on one point
-4. Morphisms of schemes: ring maps read backwards, and fibres as products
-5. Modules: vector spaces over a ring, and the classification when the ring is a PID
-6. Smith normal form: reducing an integer matrix until the module is readable off it
-7. Moduli spaces: a space whose points are the shapes of a given kind
-8. Algebraic statistics: a model is a variety, identifiability a question about ideals
-9. Tropical geometry and computation: curves become polygons, and bases can blow up
+1. [Domains, principal ideals and unique factorisation: how the good rings nest](06-Schemes%20and%20Modern%20Language/01-integral-domains-pids-and-unique-factorisation.md)
+2. [The spectrum of a ring: prime ideals as points, so every ring becomes a space](06-Schemes%20and%20Modern%20Language/02-spectrum-of-a-ring-and-schemes.md)
+3. [Localisation: inverting chosen functions to zoom in on one point](06-Schemes%20and%20Modern%20Language/03-localisation-and-local-rings.md)
+4. [Morphisms of schemes: ring maps read backwards, and fibres as products](06-Schemes%20and%20Modern%20Language/04-morphisms-and-fibre-products-in-outline.md)
+5. [Modules: vector spaces over a ring, and the classification when the ring is a PID](06-Schemes%20and%20Modern%20Language/05-modules-and-the-structure-theorem.md)
+6. [Smith normal form: reducing an integer matrix until the module is readable off it](06-Schemes%20and%20Modern%20Language/06-smith-normal-form-and-canonical-forms.md)
+7. [Moduli spaces: a space whose points are the shapes of a given kind](06-Schemes%20and%20Modern%20Language/07-moduli-spaces-in-outline.md)
+8. [Algebraic statistics: a model is a variety, identifiability a question about ideals](06-Schemes%20and%20Modern%20Language/08-algebraic-statistics-and-identifiability.md)
+9. [Tropical geometry and computation: curves become polygons, and bases can blow up](06-Schemes%20and%20Modern%20Language/09-tropical-and-computational-geometry-in-outline.md)
 
 [↑ Back to the shelves](#top)
 

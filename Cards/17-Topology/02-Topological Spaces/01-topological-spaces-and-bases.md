@@ -668,7 +668,7 @@ example : 132 * 132 = 17424 := by norm_num
 ## Where this goes next
 
 - [Closure, interior and boundary](02-closure-interior-and-boundary.md): the closed sets and edges that the open sets determine.
-- The Zariski topology (planned): open sets named by polynomials, with no distances anywhere.
+- [The Zariski topology](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/02-zariski-topology-and-irreducibility.md): open sets named by polynomials, with no distances anywhere.
 - [Continuity by pre-images, and homeomorphism](03-continuity-and-homeomorphism.md): maps that respect open sets, and when two spaces are the same.
 - [Subspace, product and quotient](04-subspace-product-and-quotient-topologies.md): the circle in the plane, glued from an interval, and as a factor of the torus.
 - [The test spaces](09-standard-examples-and-counterexamples.md): the coarsest and finest topologies, and what each one breaks.

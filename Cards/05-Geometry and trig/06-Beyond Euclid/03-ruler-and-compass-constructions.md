@@ -1333,7 +1333,7 @@ example : 17 - 1 = 2 ^ 4 ∧ 7 - 1 = 2 * 3 := by
 
 ## Where this goes next
 
-- Straightedge and compass: field degrees, the full n-gon test, and π out of reach.
+- [Straightedge and compass](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/10-constructibility-and-the-classical-problems.md): field degrees, the full n-gon test, and π out of reach.
 
 The cubic argument settles 7 but not why Fermat primes always work; field degrees answer that next.
 

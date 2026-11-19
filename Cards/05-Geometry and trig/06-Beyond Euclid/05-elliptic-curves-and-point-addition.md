@@ -694,8 +694,8 @@ open EllipticCard
 ## Where this goes next
 
 - [Elliptic curves](../../14-Applied%20and%20computational/04-Cryptography/06-elliptic-curve-cryptography.md): the mod-a-prime version at full size, and why undoing is hard.
-- Rational points on a cubic: finitely many rational points generate all the others.
-- The group law: O made precise, and associativity proved.
+- [Rational points on a cubic](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/05-elliptic-curves-over-q-and-mordell-weil.md): finitely many rational points generate all the others.
+- [The group law](../../22-Algebraic%20geometry/04-Elliptic%20Curves/01-elliptic-curves-and-the-group-law.md): O made precise, and associativity proved.
 
 Every rational point here came from Q; whether a finite handful always generates the rest, Rational points on a cubic answers.
 

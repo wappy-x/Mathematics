@@ -579,9 +579,9 @@ example : [-2, -1, 1, 2].map (fun t : ℤ => t ^ 2 - 2) = [2, -1, -1, 2] := by d
 - [Ideals and quotient rings](04-ideals-and-quotient-rings.md): keep only remainders, as clock time does after 12, and a number system appears.
 - [Gaussian integers](../10-For%20the%20Curious/03-gaussian-integers-and-sums-of-two-squares.md): the same division with a square root of -1.
 - [Pell's equation](../10-For%20the%20Curious/04-pell-equation-and-root-two.md): the loop on numbers built from root 2.
-- Field extensions: an irreducible divisor makes a bigger field.
-- Minimal polynomials: each new number carries one irreducible polynomial.
-- Domains, principal ideals and unique factorisation: the Euclidean domain, PID and UFD hierarchy named above, proved.
+- [Field extensions](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/01-field-extensions-and-degree.md): an irreducible divisor makes a bigger field.
+- [Minimal polynomials](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/02-minimal-polynomials-and-conjugates.md): each new number carries one irreducible polynomial.
+- [Domains, principal ideals and unique factorisation](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/01-integral-domains-pids-and-unique-factorisation.md): the Euclidean domain, PID and UFD hierarchy named above, proved.
 
 The loop returns x - 1 and stops. Treat all polynomials with the same remainder as one object and the remainders become a number system: that is the next card.
 

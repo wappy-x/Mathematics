@@ -533,7 +533,7 @@ example : [1, 3, 5, 7].map (fun u => (List.range' 1 8).find? (fun n => u ^ n % 8
 - [Normal subgroups and quotient groups](06-normal-subgroups-and-quotient-groups.md): glue each kernel pair into one member and the wall clock appears with no map.
 - [Direct products](07-direct-products.md): a bigger group built from two smaller ones, and how to spot one.
 - [The fundamental group](../../17-Topology/04-Homotopy/03-the-fundamental-group.md): loops followed one after another, where a map of shapes becomes a homomorphism.
-- Dirichlet characters: homomorphisms from clock arithmetic to numbers on a circle.
+- [Dirichlet characters](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/01-dirichlet-characters.md): homomorphisms from clock arithmetic to numbers on a circle.
 - Representation: homomorphisms into groups of matrices.
 
 Collapsing this kernel would turn a lossy map into an exact match — but not every subgroup can be collapsed, and the next card says which.

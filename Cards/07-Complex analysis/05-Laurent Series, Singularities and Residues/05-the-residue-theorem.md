@@ -922,7 +922,7 @@ end TheResidueTheorem
 - [The keyhole contour](../06-Real%20Integrals%20and%20Counting%20Zeros/05-keyhole-contours.md): loops dodging a branch cut.
 - [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): the residues of f′/f count zeros.
 - [Inverting a Laplace transform](../08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md): signals as sums over poles.
-- The explicit formula: primes as a residue sum.
+- [The explicit formula](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/07-the-explicit-formula.md): primes as a residue sum.
 
 This card leaves one question open: how does an integral along the real line, which is not a loop, become one the theorem can price?
 

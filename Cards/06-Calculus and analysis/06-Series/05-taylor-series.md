@@ -740,8 +740,8 @@ example : ∑ k ∈ range 21, 2 ^ k = 2097151 := by
 - [Regular perturbation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/05-regular-perturbation.md): answers in powers of a small parameter.
 - [Pade approximants](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/09-pade-and-rational-approximation.md): fractions of polynomials reaching past the radius.
 - [Gaussian quadrature](../../16-Numerical%20analysis/05-Quadrature/03-gaussian-quadrature.md): rules exact for polynomials.
-- Chasing an algebraic number with fractions: fast series building numbers no polynomial equation has as roots.
-- Nodes and cusps: the lowest terms shape a curve at a point.
+- [Chasing an algebraic number with fractions](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/10-diophantine-approximation-liouville-to-roth.md): fast series building numbers no polynomial equation has as roots.
+- [Nodes and cusps](../../22-Algebraic%20geometry/03-Plane%20Curves/04-singularities-nodes-and-cusps.md): the lowest terms shape a curve at a point.
 
 Four functions now equal their series and one does not; whether (1 + x) to a fractional power has one too, and how such sums pin down e, is [The binomial series and the number e](06-binomial-series-and-e.md).
 

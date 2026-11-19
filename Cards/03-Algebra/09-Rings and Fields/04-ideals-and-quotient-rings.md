@@ -508,11 +508,11 @@ example : ((Finset.univ : Finset (ZMod 9)).filter (fun a => a ≠ 0 ∧ ∃ b, a
 
 - [Finite fields](05-finite-fields.md): collapse by a polynomial that cannot be factored, and division appears.
 - [Banach algebras](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/01-banach-algebras-and-the-gelfand-transform.md): rings of functions, where a maximal ideal gives a number.
-- Splitting fields: the x^2 + 1 move on purpose, to make a root.
-- Ideals factor uniquely even where numbers do not: factorisation into ideals where numbers fail.
-- Ideals and varieties: an ideal as every equation a shape satisfies.
-- Affine varieties: that quotient ring as functions on a shape.
-- The spectrum of a ring: prime ideals as a space, a ring as geometry.
+- [Splitting fields](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/03-splitting-fields-and-algebraic-closure.md): the x^2 + 1 move on purpose, to make a root.
+- [Ideals factor uniquely even where numbers do not](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/04-ideals-and-unique-factorisation-in-dedekind-domains.md): factorisation into ideals where numbers fail.
+- [Ideals and varieties](../../22-Algebraic%20geometry/01-Polynomial%20Systems/01-ideals-and-varieties.md): an ideal as every equation a shape satisfies.
+- [Affine varieties](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/01-affine-varieties-and-coordinate-rings.md): that quotient ring as functions on a shape.
+- [The spectrum of a ring](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/02-spectrum-of-a-ring-and-schemes.md): prime ideals as a space, a ring as geometry.
 - Two algebra questions: one-sided absorbing sets, and an open question.
 
 This collapse kept addition and multiplication and lost division. Which ideals leave a world where division works? The next card.

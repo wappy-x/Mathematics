@@ -661,7 +661,7 @@ example : (Finset.univ.filter fun σ : Perm (Fin 5) => σ.support.card = 3).card
 
 ## Where this goes next
 
-- Solvable by radicals: the bridge proved, and how to test one equation rather than a whole degree.
+- [Solvable by radicals](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/07-solvability-by-radicals-and-the-quintic.md): the bridge proved, and how to test one equation rather than a whole degree.
 
 This card takes that bridge on trust: the one thing left to earn.
 

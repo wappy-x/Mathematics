@@ -508,9 +508,9 @@ example : (24 : ℕ) / 2 = 12 := by norm_num
 - [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): chains of normal subgroups, and where they end.
 - [Van Kampen's theorem](../../17-Topology/04-Homotopy/06-van-kampens-theorem.md): quotients gluing two pieces' loop groups.
 - [Homology groups](../../17-Topology/05-Homology/02-homology-groups.md): holes as one quotient per dimension.
-- The Galois correspondence: normal subgroups matched with fields between roots and rationals.
-- Class groups: a quotient measuring how badly factorisation fails.
-- Modules: the same machinery, ring multiplication allowed.
+- [The Galois correspondence](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/05-galois-groups-and-the-fundamental-theorem.md): normal subgroups matched with fields between roots and rationals.
+- [Class groups](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/05-class-groups-and-the-minkowski-bound.md): a quotient measuring how badly factorisation fails.
+- [Modules](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/05-modules-and-the-structure-theorem.md): the same machinery, ring multiplication allowed.
 
 Both collapses here run on one operation; what a subgroup must satisfy when a second one appears is the next question.
 

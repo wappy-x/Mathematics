@@ -916,7 +916,7 @@ end CupOutline
 
 ## Where this goes next
 
-- Cohomology of projective space (planned): one class in every even degree, each a cup power of the first.
+- [Cohomology of projective space](../../22-Algebraic%20geometry/05-Cohomology%20and%20the%20Hodge%20Conjecture/03-cohomology-of-projective-space.md): one class in every even degree, each a cup power of the first.
 - De Rham cohomology (planned), in the algebraic-geometry wing, and de Rham cohomology (planned), in the differential-geometry wing: the same measurements as closed forms, with the cup product as the wedge product of forms.
 - [Smith normal form](03-computing-homology-by-smith-normal-form.md), [Homotopy invariance](04-homotopy-invariance-of-homology.md), [Cellular homology](05-cellular-homology.md) and [Mayer-Vietoris and exact sequences](06-mayer-vietoris-and-long-exact-sequences.md): each has a cohomology version with the arrows reversed, not built in this outline.
 

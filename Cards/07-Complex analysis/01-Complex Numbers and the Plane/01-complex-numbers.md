@@ -511,7 +511,7 @@ example : I * ((3 : ℂ) + 4 * I) ≠ 4 - 3 * I := by
 
 - [Conjugate and modulus](02-conjugate-and-modulus.md): the mirror image of a point, its distance from 0, and division.
 - [Complex eigenvalues](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/03-complex-eigenvalues-and-spirals.md): complex roots of a system's equation, seen as turning motion.
-- Complex manifolds and Kahler forms: spaces that look like the complex plane up close.
+- [Complex manifolds and Kahler forms](../../22-Algebraic%20geometry/05-Cohomology%20and%20the%20Hodge%20Conjecture/04-complex-manifolds-and-kahler-forms.md): spaces that look like the complex plane up close.
 - Rotation group: the quaternions, which do for turns in space what i does for the plane.
 
 Times i turns the drone a quarter turn, but how far does w = 1 + 2i turn it, as an angle? That is [Polar form](03-polar-form-and-argument.md).

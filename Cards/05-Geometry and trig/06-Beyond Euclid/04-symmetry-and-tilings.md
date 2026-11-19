@@ -738,7 +738,7 @@ example :
 ## Where this goes next
 
 - [Orientability](../../17-Topology/03-Surfaces%20and%20Manifolds/03-orientability-mobius-strip-and-klein-bottle.md): the folded wall `××` is a one-sided Klein bottle.
-- Modular forms: functions unchanged by symmetries of the saddle-shaped plane.
+- [Modular forms](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/07-modular-forms-in-outline.md): functions unchanged by symmetries of the saddle-shaped plane.
 - Sphere, torus and projective plane: the torus a plain repeating wall, `∘`, folds into.
 
 A wall folded by its symmetries is a surface, a torus or a Klein bottle; which surfaces exist, and which have one side, the orientability card answers.

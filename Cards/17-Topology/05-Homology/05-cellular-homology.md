@@ -876,7 +876,7 @@ The card also uses [Simplicial complexes and chains](01-simplicial-complexes-and
 ## Where this goes next
 
 - [Mayer-Vietoris and exact sequences](06-mayer-vietoris-and-long-exact-sequences.md): the exact sequences that Step 4's proof runs on, and a second quick route that splits a space into two overlapping pieces.
-- Cohomology of projective space (planned): complex projective space, built from one cell in each even dimension. With no cells in odd dimensions, every cellular boundary is zero, so there is one class in each even degree, and each is a power of the first under the multiplication that [Cohomology and the cup product in outline](08-cohomology-and-cup-product-in-outline.md) introduces.
+- [Cohomology of projective space](../../22-Algebraic%20geometry/05-Cohomology%20and%20the%20Hodge%20Conjecture/03-cohomology-of-projective-space.md): complex projective space, built from one cell in each even dimension. With no cells in odd dimensions, every cellular boundary is zero, so there is one class in each even degree, and each is a power of the first under the multiplication that [Cohomology and the cup product in outline](08-cohomology-and-cup-product-in-outline.md) introduces.
 
 Left open: cellular homology adds classes but cannot multiply them, so when every boundary is zero, as on complex projective space, what links the class in one even degree to the next?
 

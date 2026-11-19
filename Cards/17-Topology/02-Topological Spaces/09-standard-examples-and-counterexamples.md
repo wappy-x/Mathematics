@@ -865,7 +865,7 @@ example : max ((3 : ℚ) ^ (-2 : ℤ)) ((3 : ℚ) ^ (-3 : ℤ)) = (3 : ℚ) ^ (-
 ## Where this goes next
 
 - [Urysohn and Tietze](10-urysohn-tietze-and-metrisation.md): when a topology comes from some distance; the indiscrete space on two or more points and the cofinite $`\mathbb{N}`$ never do; the Cantor set and the discrete space do.
-- The Zariski topology (planned): a cofinite-like topology on the solution sets of polynomials, where the cofinite line is the simplest case.
+- [The Zariski topology](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/02-zariski-topology-and-irreducibility.md): a cofinite-like topology on the solution sets of polynomials, where the cofinite line is the simplest case.
 
 The indiscrete space and the cofinite $`\mathbb{N}`$ fail a separation property, the discrete $`\mathbb{N}`$ fails compactness, and the Cantor set fails neither, though it is totally disconnected. That leaves the question of which mix of properties forces a topology to come from a distance at all.
 

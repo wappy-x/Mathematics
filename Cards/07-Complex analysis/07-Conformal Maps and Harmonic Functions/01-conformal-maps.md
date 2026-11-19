@@ -564,7 +564,7 @@ example : (starRingEnd ℂ) (1 + I) = 1 - I := by simp [sub_eq_add_neg]
 ## Where this goes next
 
 - [Mobius transformations](02-mobius-transformations-and-the-point-at-infinity.md): the conformal maps that are one-to-one on the whole plane with infinity added.
-- Modular forms: functions that keep their shape under a whole group of conformal maps of the half plane.
+- [Modular forms](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/07-modular-forms-in-outline.md): functions that keep their shape under a whole group of conformal maps of the half plane.
 
 Left open: angles survive near every point, but which maps are one-to-one on a whole region?
 

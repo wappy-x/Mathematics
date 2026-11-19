@@ -491,8 +491,8 @@ example : (Finset.Icc 2 12).filter Nat.Prime = {2, 3, 5, 7, 11} := by decide
 - [Polynomials behave like integers](03-polynomials-behave-like-integers.md): polynomials dividing with a remainder, over a field.
 - [Finite fields](05-finite-fields.md): fields of size 4, 8 and 9, which no cycle gives.
 - [Ruler and compass](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/03-ruler-and-compass-constructions.md): what a ruler and compass reach, settled by fields.
-- Field extensions: one field inside another, and the step's size.
-- The Nullstellensatz: solution sets once the field holds every root.
+- [Field extensions](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/01-field-extensions-and-degree.md): one field inside another, and the step's size.
+- [The Nullstellensatz](../../22-Algebraic%20geometry/01-Polynomial%20Systems/09-nullstellensatz.md): solution sets once the field holds every root.
 
 One equation in one unknown is settled over any field. Open still is higher degree, where roots may need a larger field than the coefficients.
 

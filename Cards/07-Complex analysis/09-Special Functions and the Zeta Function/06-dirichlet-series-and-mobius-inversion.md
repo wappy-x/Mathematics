@@ -533,9 +533,9 @@ example : ∑ d ∈ Nat.divisors 4, (-1 : ℤ) ^ (Ω d) = 1 := by decide +kernel
 ## Where this goes next
 
 - [Zeta's zeros and the primes](09-zeros-of-zeta-and-the-primes.md): where 1/ζ blows up.
-- The Mobius function: the totient recovered from its divisor sum.
-- Dirichlet L-functions: weights repeating around a clock.
-- The class number formula: a zeta built on ideals.
+- [The Mobius function](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/03-mobius-inversion.md): the totient recovered from its divisor sum.
+- [Dirichlet L-functions](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/03-dirichlet-l-functions.md): weights repeating around a clock.
+- [The class number formula](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/06-class-number-formula-and-the-dedekind-zeta-function.md): a zeta built on ideals.
 
 Everything here stops at Re s > 1, where zeta cannot vanish. Whether 1/ζ stays finite further left, once [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md) carries zeta there, and what that says about the primes, is [Zeta's zeros and the primes](09-zeros-of-zeta-and-the-primes.md).
 

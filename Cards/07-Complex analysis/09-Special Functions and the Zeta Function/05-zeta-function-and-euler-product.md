@@ -785,10 +785,10 @@ example : (1 / (1 - 1/2^2 : ℚ)) * (1 / (1 - 1/3^2)) * (1 / (1 - 1/5^2)) = 25/1
 
 - [Dirichlet series](06-dirichlet-series-and-mobius-inversion.md): general sums of a(n)/n^s.
 - [The Mellin transform](07-mellin-transform.md): zeta times gamma as an integral.
-- The von Mangoldt function: the product's logarithmic derivative.
-- Squarefree numbers: 6/π^2 again.
-- Zeta of a complex variable: the product pushed to the line Re s = 1.
-- The L-function: Euler products built from a curve's point counts.
+- [The von Mangoldt function](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/04-von-mangoldt-and-the-logarithmic-derivative.md): the product's logarithmic derivative.
+- [Squarefree numbers](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/07-squarefree-numbers-and-their-density.md): 6/π^2 again.
+- [Zeta of a complex variable](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/01-zeta-and-the-euler-product-revisited.md): the product pushed to the line Re s = 1.
+- [The L-function](../../22-Algebraic%20geometry/04-Elliptic%20Curves/07-l-functions-of-elliptic-curves.md): Euler products built from a curve's point counts.
 
 Left of the line Re s = 1 the sum fails; zeta reaches there by [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md).
 

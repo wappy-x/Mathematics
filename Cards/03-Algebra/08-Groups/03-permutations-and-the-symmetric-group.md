@@ -550,8 +550,8 @@ example : ¬ Function.Bijective (![1, 1, 0] : Fin 3 → Fin 3) := by decide
 - [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): why five roots refuse to break up.
 - [Derangements](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md): shuffles leaving nothing in its own place.
 - [Counting shuffles by their loops](../../04-Combinatorics%20and%20graphs/08-Partitions/05-permutations-by-cycles.md): counting shuffles by their cycle shape.
-- Computing a Galois group: the shuffles of a polynomial's roots.
-- Solvable by radicals: which equations have a formula in radicals.
+- [Computing a Galois group](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/06-computing-a-galois-group.md): the shuffles of a polynomial's roots.
+- [Solvable by radicals](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/07-solvability-by-radicals-and-the-quintic.md): which equations have a formula in radicals.
 
 Even and odd is a label this card computes but cannot use: a later card makes it a map from $`S_n`$ onto a two-member group, and such maps are how groups are compared.
 

@@ -900,7 +900,7 @@ example : 2 ^ 10 = 1024 ∧ 460 + 564 = 1024 := by decide
 ## Where this goes next
 
 - [First and second moments](04-first-and-second-moment-methods.md): E[X] small forces X = 0 usually, and the variance decides when E[X] large forces X > 0 usually.
-- Long progressions: random-looking structure inside the primes, where comparing with a random model is the central move.
+- [Long progressions](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/05-szemeredi-and-green-tao-in-outline.md): random-looking structure inside the primes, where comparing with a random model is the central move.
 
 This card shows that some choice does at least as well as the average; when the average is large, whether most random choices hold at least one bad set, or only a few do, is the question [First and second moments](04-first-and-second-moment-methods.md) answers with the variance.
 
