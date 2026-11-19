@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 440" width="420" height="440" font-family="Helvetica, Arial, sans-serif">
+<title>The 16 points of y^2 = x^3 + 2x + 4 over F_13, plus O at infinity: 17 in all</title>
+<rect x="0" y="0" width="420" height="440" fill="#ffffff"/>
+<text x="210" y="24" font-size="14" text-anchor="middle" fill="#1d1d1d">y² = x³ + 2x + 4 over F₁₃: 16 points here, plus O</text>
+<line x1="50" y1="390" x2="50" y2="78" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="50" y1="390" x2="362" y2="390" stroke="#d0d0d0" stroke-width="1"/>
+<text x="50" y="408" font-size="11" text-anchor="middle" fill="#1d1d1d">0</text>
+<text x="40" y="394" font-size="11" text-anchor="end" fill="#1d1d1d">0</text>
+<line x1="76" y1="390" x2="76" y2="78" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="50" y1="364" x2="362" y2="364" stroke="#d0d0d0" stroke-width="1"/>
+<text x="76" y="408" font-size="11" text-anchor="middle" fill="#1d1d1d">1</text>
+<text x="40" y="368" font-size="11" text-anchor="end" fill="#1d1d1d">1</text>
+<line x1="102" y1="390" x2="102" y2="78" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="50" y1="338" x2="362" y2="338" stroke="#d0d0d0" stroke-width="1"/>
+<text x="102" y="408" font-size="11" text-anchor="middle" fill="#1d1d1d">2</text>
+<text x="40" y="342" font-size="11" text-anchor="end" fill="#1d1d1d">2</text>
+<line x1="128" y1="390" x2="128" y2="78" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="50" y1="312" x2="362" y2="312" stroke="#d0d0d0" stroke-width="1"/>
+<text x="128" y="408" font-size="11" text-anchor="middle" fill="#1d1d1d">3</text>
+<text x="40" y="316" font-size="11" text-anchor="end" fill="#1d1d1d">3</text>
+<line x1="154" y1="390" x2="154" y2="78" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="50" y1="286" x2="362" y2="286" stroke="#d0d0d0" stroke-width="1"/>
+<text x="154" y="408" font-size="11" text-anchor="middle" fill="#1d1d1d">4</text>
+<text x="40" y="290" font-size="11" text-anchor="end" fill="#1d1d1d">4</text>
+<line x1="180" y1="390" x2="180" y2="78" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="50" y1="260" x2="362" y2="260" stroke="#d0d0d0" stroke-width="1"/>
+<text x="180" y="408" font-size="11" text-anchor="middle" fill="#1d1d1d">5</text>
+<text x="40" y="264" font-size="11" text-anchor="end" fill="#1d1d1d">5</text>
+<line x1="206" y1="390" x2="206" y2="78" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="50" y1="234" x2="362" y2="234" stroke="#d0d0d0" stroke-width="1"/>
+<text x="206" y="408" font-size="11" text-anchor="middle" fill="#1d1d1d">6</text>
+<text x="40" y="238" font-size="11" text-anchor="end" fill="#1d1d1d">6</text>
+<line x1="232" y1="390" x2="232" y2="78" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="50" y1="208" x2="362" y2="208" stroke="#d0d0d0" stroke-width="1"/>
+<text x="232" y="408" font-size="11" text-anchor="middle" fill="#1d1d1d">7</text>
+<text x="40" y="212" font-size="11" text-anchor="end" fill="#1d1d1d">7</text>
+<line x1="258" y1="390" x2="258" y2="78" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="50" y1="182" x2="362" y2="182" stroke="#d0d0d0" stroke-width="1"/>
+<text x="258" y="408" font-size="11" text-anchor="middle" fill="#1d1d1d">8</text>
+<text x="40" y="186" font-size="11" text-anchor="end" fill="#1d1d1d">8</text>
+<line x1="284" y1="390" x2="284" y2="78" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="50" y1="156" x2="362" y2="156" stroke="#d0d0d0" stroke-width="1"/>
+<text x="284" y="408" font-size="11" text-anchor="middle" fill="#1d1d1d">9</text>
+<text x="40" y="160" font-size="11" text-anchor="end" fill="#1d1d1d">9</text>
+<line x1="310" y1="390" x2="310" y2="78" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="50" y1="130" x2="362" y2="130" stroke="#d0d0d0" stroke-width="1"/>
+<text x="310" y="408" font-size="11" text-anchor="middle" fill="#1d1d1d">10</text>
+<text x="40" y="134" font-size="11" text-anchor="end" fill="#1d1d1d">10</text>
+<line x1="336" y1="390" x2="336" y2="78" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="50" y1="104" x2="362" y2="104" stroke="#d0d0d0" stroke-width="1"/>
+<text x="336" y="408" font-size="11" text-anchor="middle" fill="#1d1d1d">11</text>
+<text x="40" y="108" font-size="11" text-anchor="end" fill="#1d1d1d">11</text>
+<line x1="362" y1="390" x2="362" y2="78" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="50" y1="78" x2="362" y2="78" stroke="#d0d0d0" stroke-width="1"/>
+<text x="362" y="408" font-size="11" text-anchor="middle" fill="#1d1d1d">12</text>
+<text x="40" y="82" font-size="11" text-anchor="end" fill="#1d1d1d">12</text>
+<line x1="50" y1="221.0" x2="362" y2="221.0" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="368" y="225.0" font-size="10" fill="#1d1d1d">mirror</text>
+<text x="206" y="428" font-size="12" text-anchor="middle" fill="#1d1d1d">x (remainder mod 13)</text>
+<text x="16" y="234" font-size="12" text-anchor="middle" fill="#1d1d1d" transform="rotate(-90 16 234)">y (remainder mod 13)</text>
+<circle cx="50" cy="338" r="6" fill="#e76f51" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="59" y="330" font-size="12" font-weight="bold" text-anchor="start" fill="#1d1d1d">G</text>
+<circle cx="50" cy="104" r="5" fill="#1d1d1d"/>
+<circle cx="102" cy="286" r="5" fill="#1d1d1d"/>
+<circle cx="102" cy="156" r="5" fill="#1d1d1d"/>
+<circle cx="180" cy="312" r="5" fill="#1d1d1d"/>
+<circle cx="180" cy="130" r="6" fill="#e76f51" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="189" y="122" font-size="12" font-weight="bold" text-anchor="start" fill="#1d1d1d">QP = 6G</text>
+<circle cx="232" cy="234" r="5" fill="#1d1d1d"/>
+<circle cx="232" cy="208" r="5" fill="#1d1d1d"/>
+<circle cx="258" cy="260" r="6" fill="#e76f51" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="267" y="252" font-size="12" font-weight="bold" text-anchor="start" fill="#1d1d1d">QL = 9G</text>
+<circle cx="258" cy="182" r="5" fill="#1d1d1d"/>
+<circle cx="284" cy="234" r="5" fill="#1d1d1d"/>
+<circle cx="284" cy="208" r="5" fill="#1d1d1d"/>
+<circle cx="310" cy="234" r="5" fill="#1d1d1d"/>
+<circle cx="310" cy="208" r="5" fill="#1d1d1d"/>
+<circle cx="362" cy="364" r="6" fill="#e76f51" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="354" y="356" font-size="12" font-weight="bold" text-anchor="end" fill="#1d1d1d">S = 3G</text>
+<circle cx="362" cy="78" r="5" fill="#1d1d1d"/>
+</svg>

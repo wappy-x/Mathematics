@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 480" width="300" height="480" font-family="Helvetica, Arial, sans-serif" font-size="11">
+  <title>The real points of y squared equals x cubed minus 2, to scale: the tangent at P = (3, 5) meets the curve again at R, and the vertical line through R meets O at the top; its other point is 2P</title>
+  <rect x="0" y="0" width="300" height="480" fill="#ffffff"/>
+  <line x1="10" y1="240" x2="175" y2="240" stroke="#888888" stroke-width="1"/>
+  <line x1="40" y1="12" x2="40" y2="468" stroke="#888888" stroke-width="1"/>
+  <text x="178" y="244" fill="#1d1d1d">x</text>
+  <text x="44" y="22" fill="#1d1d1d">y</text>
+  <text x="66" y="233" fill="#555555" font-size="9">1</text>
+  <line x1="70" y1="237" x2="70" y2="243" stroke="#888888"/>
+  <polyline points="151.3,450.0 139.5,416.2 128.8,386.8 119.1,361.3 110.4,339.3 102.8,320.3 96.2,304.1 90.6,290.1 86.0,277.9 82.4,267.2 79.8,257.5 78.3,248.6 77.8,240.0 78.3,231.4 79.8,222.5 82.4,212.8 86.0,202.1 90.6,189.9 96.2,175.9 102.8,159.7 110.4,140.7 119.1,118.7 128.8,93.2 139.5,63.8 151.3,30.0" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+  <line x1="70.0" y1="252.0" x2="142.0" y2="57.6" stroke="#2a6f97" stroke-width="1.5"/>
+  <line x1="78.7" y1="12.0" x2="78.7" y2="468.0" stroke="#b5462f" stroke-width="1.2" stroke-dasharray="5,4"/>
+  <polygon points="78.7,4 74.7,13 82.7,13" fill="#b5462f"/>
+  <text x="86" y="16" fill="#b5462f">to O, top of every vertical</text>
+  <circle cx="130.0" cy="90.0" r="4" fill="#1d1d1d"/>
+  <text x="137" y="94" fill="#1d1d1d">P = (3, 5), counted twice</text>
+  <circle cx="78.7" cy="228.5" r="3.5" fill="#2a6f97"/>
+  <text x="86" y="224" fill="#2a6f97">R = (129/100, 383/1000)</text>
+  <circle cx="78.7" cy="251.5" r="3.5" fill="#b5462f"/>
+  <text x="86" y="262" fill="#b5462f">2P = (129/100, &#8722;383/1000)</text>
+  <text x="146" y="60" fill="#2a6f97">tangent at P</text>
+  <text x="10" y="474" fill="#555555" font-size="9">1 unit = 30 drawing units</text>
+</svg>

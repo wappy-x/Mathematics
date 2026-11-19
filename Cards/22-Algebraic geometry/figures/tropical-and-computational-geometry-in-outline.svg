@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 310" width="480" height="310" font-family="Helvetica, Arial, sans-serif" font-size="12">
+<title>The tropical line min(0, X - 2, Y - 1) with vertex (2, 1), and its Newton triangle</title>
+<rect x="0" y="0" width="480" height="310" fill="#ffffff"/>
+<!-- left panel: prices X (good A) and Y (good B) from -4 to 7, 20 px per unit; px = 40 + 20(X + 4), py = 260 - 20(Y + 4) -->
+<rect x="40" y="40" width="220" height="220" fill="none" stroke="#999999" stroke-width="1"/>
+<line x1="120" y1="40" x2="120" y2="260" stroke="#cccccc" stroke-width="1"/>
+<line x1="40" y1="180" x2="260" y2="180" stroke="#cccccc" stroke-width="1"/>
+<text x="116" y="274" fill="#555555">0</text>
+<text x="28" y="184" fill="#555555">0</text>
+<line x1="160" y1="160" x2="260" y2="160" stroke="#1d1d1d" stroke-width="3"/>
+<line x1="160" y1="160" x2="160" y2="40" stroke="#1d1d1d" stroke-width="3"/>
+<line x1="160" y1="160" x2="60" y2="260" stroke="#1d1d1d" stroke-width="3"/>
+<circle cx="160" cy="160" r="5" fill="#c0392b"/>
+<text x="166" y="176" fill="#c0392b">(2, 1)</text>
+<text x="196" y="96" fill="#1d1d1d">buy nothing</text>
+<text x="60" y="110" fill="#1d1d1d">buy A</text>
+<text x="190" y="220" fill="#1d1d1d">buy B</text>
+<text x="226" y="154" fill="#1d1d1d">(1, 0)</text>
+<text x="166" y="54" fill="#1d1d1d">(0, 1)</text>
+<text x="92" y="256" fill="#1d1d1d">(-1, -1)</text>
+<text x="100" y="292" fill="#1d1d1d">X: price of A, -4 to 7</text>
+<text x="40" y="26" fill="#1d1d1d">Y: price of B, -4 to 7</text>
+<!-- right panel: Newton triangle (0,0) (1,0) (0,1), 120 px per unit, origin at (320, 230) -->
+<polygon points="320,230 440,230 320,110" fill="#f2f2f2" stroke="#1d1d1d" stroke-width="2"/>
+<circle cx="320" cy="230" r="4" fill="#1d1d1d"/>
+<circle cx="440" cy="230" r="4" fill="#1d1d1d"/>
+<circle cx="320" cy="110" r="4" fill="#1d1d1d"/>
+<text x="300" y="248" fill="#1d1d1d">1: (0, 0)</text>
+<text x="420" y="248" fill="#1d1d1d">x: (1, 0)</text>
+<text x="330" y="104" fill="#1d1d1d">y: (0, 1)</text>
+<line x1="380" y1="230" x2="380" y2="200" stroke="#2a6f97" stroke-width="2"/>
+<line x1="320" y1="170" x2="350" y2="170" stroke="#2a6f97" stroke-width="2"/>
+<line x1="380" y1="170" x2="359" y2="191" stroke="#2a6f97" stroke-width="2"/>
+<text x="384" y="214" fill="#2a6f97">(0, 1)</text>
+<text x="326" y="164" fill="#2a6f97">(1, 0)</text>
+<text x="388" y="166" fill="#2a6f97">(-1, -1)</text>
+<text x="300" y="282" fill="#1d1d1d">Newton triangle, inward normals</text>
+<text x="300" y="298" fill="#1d1d1d">match the three rays</text>
+</svg>

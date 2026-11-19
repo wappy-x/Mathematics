@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 230" width="560" height="230" font-family="Helvetica, Arial, sans-serif">
+<title>Spec Z, schematic: one closed point per prime, V(60) ringed, and the generic point (0) spread under all of them</title>
+<rect x="0" y="0" width="560" height="230" fill="#ffffff"/>
+<text x="280" y="28" text-anchor="middle" font-size="16" fill="#1d1d1d">Spec Z (schematic, not to scale)</text>
+<line x1="20" y1="100" x2="530" y2="100" stroke="#888888" stroke-width="1" stroke-dasharray="4 4"/>
+<circle cx="40" cy="100" r="5" fill="#1d1d1d"/>
+<text x="40" y="132" text-anchor="middle" font-size="14" fill="#1d1d1d">(2)</text>
+<circle cx="40" cy="100" r="11" fill="none" stroke="#c0392b" stroke-width="2"/>
+<circle cx="92" cy="100" r="5" fill="#1d1d1d"/>
+<text x="92" y="132" text-anchor="middle" font-size="14" fill="#1d1d1d">(3)</text>
+<circle cx="92" cy="100" r="11" fill="none" stroke="#c0392b" stroke-width="2"/>
+<circle cx="144" cy="100" r="5" fill="#1d1d1d"/>
+<text x="144" y="132" text-anchor="middle" font-size="14" fill="#1d1d1d">(5)</text>
+<circle cx="144" cy="100" r="11" fill="none" stroke="#c0392b" stroke-width="2"/>
+<circle cx="196" cy="100" r="5" fill="#1d1d1d"/>
+<text x="196" y="132" text-anchor="middle" font-size="14" fill="#1d1d1d">(7)</text>
+<circle cx="248" cy="100" r="5" fill="#1d1d1d"/>
+<text x="248" y="132" text-anchor="middle" font-size="14" fill="#1d1d1d">(11)</text>
+<circle cx="300" cy="100" r="5" fill="#1d1d1d"/>
+<text x="300" y="132" text-anchor="middle" font-size="14" fill="#1d1d1d">(13)</text>
+<circle cx="352" cy="100" r="5" fill="#1d1d1d"/>
+<text x="352" y="132" text-anchor="middle" font-size="14" fill="#1d1d1d">(17)</text>
+<circle cx="404" cy="100" r="5" fill="#1d1d1d"/>
+<text x="404" y="132" text-anchor="middle" font-size="14" fill="#1d1d1d">(19)</text>
+<circle cx="456" cy="100" r="5" fill="#1d1d1d"/>
+<text x="456" y="132" text-anchor="middle" font-size="14" fill="#1d1d1d">(23)</text>
+<circle cx="40" cy="100" r="16" fill="none" stroke="#c0392b" stroke-width="2"/>
+<text x="508" y="105" font-size="18" fill="#1d1d1d">...</text>
+<text x="20" y="62" font-size="13" fill="#c0392b">V(60): the points where 60 is zero; (2) ringed twice, as 60 = 2 x 2 x 3 x 5</text>
+<rect x="20" y="160" width="520" height="20" rx="10" fill="#e8e8e8" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="30" y="175" font-size="13" fill="#1d1d1d">(0)</text>
+<text x="280" y="205" text-anchor="middle" font-size="13" fill="#1d1d1d">the generic point (0): lies in every non-empty open set; its closure is all of Spec Z</text>
+</svg>

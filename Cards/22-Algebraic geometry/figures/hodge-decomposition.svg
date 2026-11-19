@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 420" width="420" height="420">
+<title>The square lattice Z + Zi in the complex plane, its fundamental square, and the loops a and b, to scale at 150 px per unit</title>
+<rect x="0" y="0" width="420" height="420" fill="#ffffff"/>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1d1d1d"/></marker></defs>
+<rect x="60" y="210" width="150" height="150" fill="#e9e4d8" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="20" y1="360" x2="400" y2="360" stroke="#888888" stroke-width="1"/>
+<line x1="60" y1="400" x2="60" y2="20" stroke="#888888" stroke-width="1"/>
+<line x1="60" y1="360" x2="206" y2="360" stroke="#b5452a" stroke-width="3" marker-end="url(#ar)"/>
+<line x1="60" y1="360" x2="60" y2="214" stroke="#1f6f66" stroke-width="3" marker-end="url(#ar)"/>
+<polyline points="60.0,360.0 63.8,355.3 67.5,350.7 71.2,346.4 75.0,342.4 78.8,338.8 82.5,335.7 86.2,333.3 90.0,331.5 93.8,330.4 97.5,330.0 101.2,330.4 105.0,331.5 108.8,333.3 112.5,335.7 116.2,338.8 120.0,342.4 123.8,346.4 127.5,350.7 131.2,355.3 135.0,360.0 138.8,364.7 142.5,369.3 146.2,373.6 150.0,377.6 153.8,381.2 157.5,384.3 161.2,386.7 165.0,388.5 168.8,389.6 172.5,390.0 176.2,389.6 180.0,388.5 183.8,386.7 187.5,384.3 191.2,381.2 195.0,377.6 198.8,373.6 202.5,369.3 206.2,364.7 210.0,360.0" fill="none" stroke="#b5452a" stroke-width="1.5" stroke-dasharray="5,4"/>
+<polyline points="60.0,360.0 64.7,356.2 69.3,352.5 73.6,348.8 77.6,345.0 81.2,341.2 84.3,337.5 86.7,333.8 88.5,330.0 89.6,326.2 90.0,322.5 89.6,318.8 88.5,315.0 86.7,311.2 84.3,307.5 81.2,303.8 77.6,300.0 73.6,296.2 69.3,292.5 64.7,288.8 60.0,285.0 55.3,281.2 50.7,277.5 46.4,273.8 42.4,270.0 38.8,266.2 35.7,262.5 33.3,258.8 31.5,255.0 30.4,251.2 30.0,247.5 30.4,243.8 31.5,240.0 33.3,236.2 35.7,232.5 38.8,228.8 42.4,225.0 46.4,221.2 50.7,217.5 55.3,213.8 60.0,210.0" fill="none" stroke="#1f6f66" stroke-width="1.5" stroke-dasharray="5,4"/>
+<circle cx="60" cy="360" r="4" fill="#1d1d1d"/><circle cx="60" cy="210" r="4" fill="#1d1d1d"/><circle cx="60" cy="60" r="4" fill="#1d1d1d"/><circle cx="210" cy="360" r="4" fill="#1d1d1d"/><circle cx="210" cy="210" r="4" fill="#1d1d1d"/><circle cx="210" cy="60" r="4" fill="#1d1d1d"/><circle cx="360" cy="360" r="4" fill="#1d1d1d"/><circle cx="360" cy="210" r="4" fill="#1d1d1d"/><circle cx="360" cy="60" r="4" fill="#1d1d1d"/>
+<g font-family="sans-serif" font-size="15" fill="#1d1d1d">
+<text x="38" y="382">0</text><text x="206" y="384">1</text>
+<text x="40" y="204">i</text><text x="216" y="204">1+i</text>
+<text x="127.5" y="384" fill="#b5452a">a</text><text x="36" y="277.5" fill="#1f6f66">b</text>
+<text x="97.5" y="277.5" font-size="13">one copy</text><text x="97.5" y="292.5" font-size="13">of the torus</text>
+</g>
+</svg>
