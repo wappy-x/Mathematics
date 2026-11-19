@@ -1,0 +1,29 @@
+<svg viewBox="0 0 460 410" xmlns="http://www.w3.org/2000/svg" width="460" height="410" style="color:#1d1d1d">
+<title>A slice through the globe along the Greenwich meridian, to scale: radius 6371 km drawn as 160 px. The North sheet keeps a point's X and sees the upper half; the Greenwich sheet keeps its Z and sees the right half. London sits at X 3965.4 km, Z 4986.5 km; Accra sits close to the North sheet's rim.</title>
+<rect x="0" y="0" width="460" height="410" fill="#ffffff"/>
+<circle cx="190" cy="210" r="160" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 20 210 A 170 170 0 0 1 360 210" fill="none" stroke="currentColor" stroke-width="3"/>
+<circle cx="20" cy="210" r="4" fill="#ffffff" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="360" cy="210" r="4" fill="#ffffff" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 190 30 A 180 180 0 0 1 190 390" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="9,5"/>
+<circle cx="190" cy="30" r="4" fill="#ffffff" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="190" cy="390" r="4" fill="#ffffff" stroke="currentColor" stroke-width="1.5"/>
+<line x1="30" y1="210" x2="350" y2="210" stroke="currentColor" stroke-width="2"/>
+<line x1="190" y1="50" x2="190" y2="370" stroke="currentColor" stroke-width="2"/>
+<line x1="289.59" y1="84.77" x2="289.59" y2="210" stroke="currentColor" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="289.59" y1="84.77" x2="190" y2="84.77" stroke="currentColor" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="349.23" y1="194.38" x2="349.23" y2="210" stroke="currentColor" stroke-width="1" stroke-dasharray="3,3"/>
+<circle cx="289.59" cy="84.77" r="4" fill="currentColor"/>
+<circle cx="349.23" cy="194.38" r="4" fill="currentColor"/>
+<text x="278" y="70" font-size="13" text-anchor="end" fill="currentColor">London</text>
+<text x="342" y="190" font-size="13" text-anchor="end" fill="currentColor">Accra</text>
+<text x="289.59" y="228" font-size="12" text-anchor="middle" fill="currentColor">X = 3965.4 km</text>
+<text x="184" y="80" font-size="12" text-anchor="end" fill="currentColor">Z = 4986.5 km</text>
+<text x="198" y="66" font-size="13" fill="currentColor">N</text>
+<text x="40" y="228" font-size="12" fill="currentColor">equator plane</text>
+<text x="8" y="22" font-size="13" fill="currentColor">North sheet's half</text>
+<text x="8" y="38" font-size="12" fill="currentColor">(solid arc)</text>
+<text x="364" y="290" font-size="13" fill="currentColor">Greenwich</text>
+<text x="364" y="306" font-size="13" fill="currentColor">sheet's half</text>
+<text x="364" y="322" font-size="12" fill="currentColor">(dashed arc)</text>
+</svg>

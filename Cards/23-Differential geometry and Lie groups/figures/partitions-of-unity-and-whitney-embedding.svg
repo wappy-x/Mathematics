@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-70 0 580 440" font-family="Helvetica, Arial, sans-serif" font-size="12">
+<title>Bump supports of four map sheets on a slice through the globe along the Greenwich meridian, to scale</title>
+<rect x="-70" y="0" width="580" height="440" fill="#ffffff"/>
+<circle cx="220" cy="220" r="160" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="60" y1="220" x2="380" y2="220" stroke="#1d1d1d" stroke-width="0.6" stroke-dasharray="2 3"/>
+<path d="M 372.4 132.0 A 176 176 0 0 0 67.6 132.0" fill="none" stroke="#1d1d1d" stroke-width="5"/>
+<path d="M 67.6 308.0 A 176 176 0 0 0 372.4 308.0" fill="none" stroke="#1d1d1d" stroke-width="5"/>
+<path d="M 316.0 386.3 A 192 192 0 0 0 316.0 53.7" fill="none" stroke="#555555" stroke-width="5" stroke-dasharray="10 4"/>
+<path d="M 124.0 53.7 A 192 192 0 0 0 124.0 386.3" fill="none" stroke="#555555" stroke-width="5" stroke-dasharray="10 4"/>
+<line x1="220" y1="220" x2="397.5" y2="117.5" stroke="#1d1d1d" stroke-width="0.6" stroke-dasharray="2 3"/>
+<line x1="220" y1="220" x2="322.5" y2="42.5" stroke="#1d1d1d" stroke-width="0.6" stroke-dasharray="2 3"/>
+<text x="403.6" y="118.0">30° N</text>
+<text x="322.0" y="36.4">60° N</text>
+<circle cx="319.6" cy="94.8" r="4" fill="#1d1d1d"/>
+<line x1="273" y1="93" x2="315" y2="94.5" stroke="#1d1d1d" stroke-width="0.8"/>
+<text x="270" y="97" text-anchor="end">London: North 0.63,</text>
+<text x="270" y="112" text-anchor="end">Greenwich 0.37</text>
+<text x="220" y="22" text-anchor="middle" font-weight="bold">North bump (solid)</text>
+<text x="220" y="430" text-anchor="middle" font-weight="bold">South bump (solid)</text>
+<text x="420" y="224" font-weight="bold">Greenwich</text>
+<text x="420" y="238">(dashed)</text>
+<text x="20" y="224" text-anchor="end" font-weight="bold">Date line</text>
+<text x="20" y="238" text-anchor="end">(dashed)</text>
+<text x="220" y="236" text-anchor="middle">equator plane</text>
+</svg>

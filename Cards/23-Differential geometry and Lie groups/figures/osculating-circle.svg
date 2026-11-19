@@ -1,0 +1,25 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" width="400" height="400" style="color:#24292f">
+<title>A bus corner drawn to scale: the bus path from (0, 20) to (20, 0) metres, its osculating circle at the apex P (5, 5) with centre C (15, 15) and radius 14.14 m, and the kerb arc of radius 12.39 m round the same centre</title><rect x="0" y="0" width="400" height="400" rx="8" fill="#ffffff"/>
+<line x1="60" y1="140" x2="60" y2="340" stroke="currentColor" stroke-width="1" stroke-dasharray="3,4"/>
+<line x1="60" y1="340" x2="260" y2="340" stroke="currentColor" stroke-width="1" stroke-dasharray="3,4"/>
+<line x1="60" y1="0" x2="60" y2="140" stroke="currentColor" stroke-width="2.5"/>
+<path d="M 60 140 Q 60 340 260 340" fill="none" stroke="currentColor" stroke-width="2.5"/>
+<line x1="260" y1="340" x2="400" y2="340" stroke="currentColor" stroke-width="2.5"/>
+<circle cx="210" cy="190" r="141.42" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6,4"/>
+<path d="M 86.08 0 L 86.08 190 A 123.92 123.92 0 0 0 210 313.92 L 400 313.92" fill="none" stroke="currentColor" stroke-width="4"/>
+<line x1="110" y1="290" x2="210" y2="190" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="110" cy="290" r="3.5" fill="currentColor"/>
+<circle cx="210" cy="190" r="3.5" fill="currentColor"/>
+<circle cx="60" cy="340" r="3" fill="currentColor"/>
+<text x="218" y="186" font-size="13" fill="currentColor">C (15, 15)</text>
+<text x="104" y="300" font-size="13" text-anchor="end" fill="currentColor">P (5, 5)</text>
+<text x="164" y="256" font-size="13" fill="currentColor">14.14 m</text>
+<text x="52" y="356" font-size="13" text-anchor="end" fill="currentColor">O</text>
+<text x="54" y="136" font-size="13" text-anchor="end" fill="currentColor">(0, 20)</text>
+<text x="260" y="358" font-size="13" text-anchor="middle" fill="currentColor">(20, 0)</text>
+<text x="54" y="30" font-size="13" text-anchor="end" fill="currentColor">in</text>
+<text x="390" y="358" font-size="13" text-anchor="end" fill="currentColor">out</text>
+<text x="394" y="302" font-size="13" text-anchor="end" fill="currentColor">kerb 12.39 m</text>
+<text x="226" y="40" font-size="13" fill="currentColor">osculating circle at P</text>
+<text x="270" y="152" font-size="13" text-anchor="middle" fill="currentColor">corner block</text>
+</svg>

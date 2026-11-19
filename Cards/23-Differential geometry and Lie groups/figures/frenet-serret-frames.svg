@@ -1,0 +1,25 @@
+<svg viewBox="0 0 340 215" xmlns="http://www.w3.org/2000/svg" width="340" height="215" style="color:#24292f">
+<title>The climbing left turn r(t) = 15(t, t^2/2, t^3/3) m in an orthographic view from above the south-east, with the rig's axes T, N and B drawn 6 m long at the start and 18.30 m along the track</title>
+<defs><marker id="head" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#24292f"/></marker></defs>
+<rect x="0" y="0" width="340" height="215" rx="8" fill="#ffffff"/>
+<polyline points="70.0,170.0 78.9,174.6 88.7,178.6 99.3,181.6 110.7,183.6 123.0,184.3 136.2,183.5 150.2,181.1 165.0,176.8 180.7,170.4 197.3,161.8 214.7,150.8 232.9,137.1 252.0,120.5 271.9,101.0 292.7,78.1" fill="none" stroke="#8c959f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="70.0" y1="170.0" x2="103.9" y2="189.6" stroke="#24292f" stroke-width="1.8" marker-end="url(#head)"/>
+<line x1="70.0" y1="170.0" x2="103.9" y2="150.4" stroke="#24292f" stroke-width="1.8" marker-end="url(#head)"/>
+<line x1="70.0" y1="170.0" x2="70.0" y2="130.8" stroke="#24292f" stroke-width="1.8" stroke-dasharray="4,3" marker-end="url(#head)"/>
+<line x1="197.3" y1="161.8" x2="236.5" y2="139.2" stroke="#24292f" stroke-width="1.8" marker-end="url(#head)"/>
+<line x1="197.3" y1="161.8" x2="173.3" y2="120.3" stroke="#24292f" stroke-width="1.8" marker-end="url(#head)"/>
+<line x1="197.3" y1="161.8" x2="183.4" y2="169.8" stroke="#24292f" stroke-width="1.8" stroke-dasharray="4,3" marker-end="url(#head)"/>
+<circle cx="70.0" cy="170.0" r="3" fill="#24292f"/>
+<circle cx="197.3" cy="161.8" r="3" fill="#24292f"/>
+<text x="107" y="200" font-size="13" fill="currentColor">T</text>
+<text x="107" y="150" font-size="13" fill="currentColor">N</text>
+<text x="62" y="124" font-size="13" fill="currentColor">B</text>
+<text x="240" y="138" font-size="13" fill="currentColor">T</text>
+<text x="164" y="116" font-size="13" fill="currentColor">N</text>
+<text x="170" y="182" font-size="13" fill="currentColor">B</text>
+<text x="14" y="190" font-size="12" fill="currentColor">start, t = 0</text>
+<text x="206" y="178" font-size="12" fill="currentColor">t = 1, s = 18.30 m</text>
+<text x="246" y="70" font-size="12" fill="currentColor">track rises</text>
+<text x="14" y="24" font-size="12" fill="currentColor">1 m = 8 units; east runs down-right,</text>
+<text x="14" y="40" font-size="12" fill="currentColor">north up-right, up straight up</text>
+</svg>

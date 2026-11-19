@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 440" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<title>Gauss map of the stadium roof: each roof point is sent to its unit normal on a globe of radius 1, seen from straight above</title>
+<rect x="0" y="0" width="720" height="440" fill="#ffffff"/>
+<circle cx="190" cy="220" r="150" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="40" y1="220" x2="340" y2="220" stroke="#888" stroke-dasharray="4 4"/>
+<line x1="190" y1="70" x2="190" y2="370" stroke="#888" stroke-dasharray="4 4"/>
+<text x="190" y="48" text-anchor="middle" fill="#1d1d1d">Dome (east end): half-cap, radius 0.6</text>
+<text x="190" y="64" text-anchor="middle" fill="#555" font-size="11">N</text>
+<text x="350" y="224" fill="#555" font-size="11">E</text>
+<circle cx="190" cy="220" r="3" fill="#1d1d1d"/>
+<circle cx="530" cy="220" r="150" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="380" y1="220" x2="680" y2="220" stroke="#888" stroke-dasharray="4 4"/>
+<line x1="530" y1="70" x2="530" y2="370" stroke="#888" stroke-dasharray="4 4"/>
+<text x="530" y="48" text-anchor="middle" fill="#1d1d1d">Saddle panel: corners land swapped</text>
+<text x="530" y="64" text-anchor="middle" fill="#555" font-size="11">N</text>
+<text x="690" y="224" fill="#555" font-size="11">E</text>
+<circle cx="530" cy="220" r="3" fill="#1d1d1d"/>
+<polygon points="190.0,310.0 197.1,309.7 204.1,308.9 211.0,307.5 217.8,305.6 224.4,303.1 230.9,300.2 237.0,296.7 242.9,292.8 248.5,288.4 253.6,283.6 258.4,278.5 262.8,272.9 266.7,267.0 270.2,260.9 273.1,254.4 275.6,247.8 277.5,241.0 278.9,234.1 279.7,227.1 280.0,220.0 279.7,212.9 278.9,205.9 277.5,199.0 275.6,192.2 273.1,185.6 270.2,179.1 266.7,173.0 262.8,167.1 258.4,161.5 253.6,156.4 248.5,151.6 242.9,147.2 237.0,143.3 230.9,139.8 224.4,136.9 217.8,134.4 211.0,132.5 204.1,131.1 197.1,130.3 190.0,130.0" fill="#e76f51" fill-opacity="0.25" stroke="#1d1d1d" stroke-width="2"/>
+<text x="198" y="238" fill="#1d1d1d" font-size="11">crown</text>
+<text x="190" y="394" text-anchor="middle" fill="#1d1d1d" font-size="12">globe area 0.628319 = 2261.95 m² × 1/3600</text>
+<polygon points="465.7,262.9 465.2,258.9 464.7,254.8 464.3,250.6 464.0,246.4 463.7,242.1 463.4,237.8 463.2,233.4 463.0,228.9 462.9,224.5 462.9,220.0 462.9,215.5 463.0,211.1 463.2,206.6 463.4,202.2 463.7,197.9 464.0,193.6 464.3,189.4 464.7,185.2 465.2,181.1 465.7,177.1 471.1,176.4 476.8,175.7 482.7,175.0 488.9,174.4 495.4,173.8 502.0,173.4 508.9,173.0 515.8,172.8 522.9,172.6 530.0,172.6 537.1,172.6 544.2,172.8 551.1,173.0 558.0,173.4 564.6,173.8 571.1,174.4 577.3,175.0 583.2,175.7 588.9,176.4 594.3,177.1 594.8,181.1 595.3,185.2 595.7,189.4 596.0,193.6 596.3,197.9 596.6,202.2 596.8,206.6 597.0,211.1 597.1,215.5 597.1,220.0 597.1,224.5 597.0,228.9 596.8,233.4 596.6,237.8 596.3,242.1 596.0,246.4 595.7,250.6 595.3,254.8 594.8,258.9 594.3,262.9 588.9,263.6 583.2,264.3 577.3,265.0 571.1,265.6 564.6,266.2 558.0,266.6 551.1,267.0 544.2,267.2 537.1,267.4 530.0,267.4 522.9,267.4 515.8,267.2 508.9,267.0 502.0,266.6 495.4,266.2 488.9,265.6 482.7,265.0 476.8,264.3 471.1,263.6" fill="#2a9d8f" fill-opacity="0.25" stroke="#1d1d1d" stroke-width="2"/>
+<circle cx="465.7" cy="177.1" r="4" fill="#1d1d1d"/>
+<text x="457.7" y="169.1" text-anchor="end" fill="#1d1d1d" font-size="12">P (30, 20)</text>
+<circle cx="594.3" cy="177.1" r="4" fill="#1d1d1d"/>
+<text x="602.3" y="169.1" text-anchor="start" fill="#1d1d1d" font-size="12">(-30, 20)</text>
+<circle cx="594.3" cy="262.9" r="4" fill="#1d1d1d"/>
+<text x="602.3" y="280.9" text-anchor="start" fill="#1d1d1d" font-size="12">(-30, -20)</text>
+<circle cx="465.7" cy="262.9" r="4" fill="#1d1d1d"/>
+<text x="457.7" y="280.9" text-anchor="end" fill="#1d1d1d" font-size="12">(30, -20)</text>
+<text x="538" y="238" fill="#1d1d1d" font-size="11">O</text>
+<text x="530" y="394" text-anchor="middle" fill="#1d1d1d" font-size="12">roof corner P (north-east) lands north-west</text>
+<text x="360" y="428" text-anchor="middle" fill="#555" font-size="11">Globe of radius 1 seen from straight above (orthographic), 150 px per unit; north up, east right</text>
+</svg>
