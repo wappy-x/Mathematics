@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 340" width="420" height="340" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<title>Schematic plaquette on a one-site lattice: four links round a unit square whose corners are all the same site</title>
+<defs><marker id="h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1d1d1d"/></marker></defs>
+<rect x="0" y="0" width="420" height="340" fill="#ffffff"/>
+<rect x="100" y="60" width="220" height="220" fill="#f3f3f3" stroke="none"/>
+<line x1="108" y1="280" x2="306" y2="280" stroke="#1d1d1d" stroke-width="2.5" marker-end="url(#h)"/>
+<line x1="320" y1="272" x2="320" y2="74" stroke="#1d1d1d" stroke-width="2.5" marker-end="url(#h)"/>
+<line x1="312" y1="60" x2="114" y2="60" stroke="#1d1d1d" stroke-width="2.5" marker-end="url(#h)"/>
+<line x1="100" y1="68" x2="100" y2="266" stroke="#1d1d1d" stroke-width="2.5" marker-end="url(#h)"/>
+<circle cx="100" cy="280" r="5" fill="#1d1d1d"/>
+<circle cx="320" cy="280" r="5" fill="#1d1d1d"/>
+<circle cx="320" cy="60" r="5" fill="#1d1d1d"/>
+<circle cx="100" cy="60" r="5" fill="#1d1d1d"/>
+<text x="210" y="302" text-anchor="middle" fill="#1d1d1d">1. along x: U_x</text>
+<text x="330" y="175" text-anchor="start" fill="#1d1d1d">2. U_y</text>
+<text x="210" y="48" text-anchor="middle" fill="#1d1d1d">3. back along x: U_x⁻¹</text>
+<text x="90" y="175" text-anchor="end" fill="#1d1d1d">4. U_y⁻¹</text>
+<text x="92" y="298" text-anchor="end" fill="#1d1d1d">start</text>
+<text x="210" y="160" text-anchor="middle" fill="#1d1d1d">plaquette U_p</text>
+<text x="210" y="180" text-anchor="middle" fill="#1d1d1d">comes back turned</text>
+<text x="210" y="200" text-anchor="middle" fill="#1d1d1d">0.244988 rad</text>
+<text x="210" y="330" text-anchor="middle" fill="#1d1d1d" font-size="12">schematic: side a = 0.1 fm; all four dots are the one site</text>
+</svg>
