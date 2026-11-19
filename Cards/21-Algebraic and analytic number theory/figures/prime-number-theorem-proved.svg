@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 350" width="480" height="350" font-family="Helvetica, Arial, sans-serif" font-size="11">
+  <title>The contour of the proof at x = one million, drawn to scale: the rectangle from Re s = 0.976 to Re s = 1.072 and from height -41.1 to 41.1 surrounds the pole at 1, stays inside the zero-free region, and holds no zero of zeta; the sixteen zeros up to height 45 sit on the line Re s = 1/2, fourteen of them below T = 41.1</title>
+  <rect x="0" y="0" width="480" height="350" fill="#ffffff"/>
+  <!-- X = 60 + 300 Re s, Y = 170 - 3.5 Im s; strip 0 <= Re s <= 1 for -45 <= Im s <= 45 -->
+  <rect x="60" y="12.5" width="300" height="315" fill="#f1efe8"/>
+  <!-- zero-free region: Re s > 1 - 1/(5.558691 ln|t|) for |t| >= 2, joined by a vertical segment for |t| < 2 -->
+  <polygon points="345.8,12.5 344.1,65.0 342.0,100.0 338.3,128.0 334.0,142.0 326.5,152.5 310.9,159.5 282.1,163.0 282.1,177.0 310.9,180.5 326.5,187.5 334.0,198.0 338.3,212.0 342.0,240.0 344.1,275.0 345.8,327.5 430,327.5 430,12.5" fill="#bfe3dc"/>
+  <polyline points="345.8,12.5 344.1,65.0 342.0,100.0 338.3,128.0 334.0,142.0 326.5,152.5 310.9,159.5 282.1,163.0 282.1,177.0 310.9,180.5 326.5,187.5 334.0,198.0 338.3,212.0 342.0,240.0 344.1,275.0 345.8,327.5" fill="none" stroke="#1f6f63" stroke-width="1.4"/>
+  <!-- axes and the lines Re s = 0, 1/2, 1 -->
+  <line x1="40" y1="170" x2="435" y2="170" stroke="#1d1d1d" stroke-width="1"/>
+  <line x1="60" y1="8" x2="60" y2="332" stroke="#1d1d1d" stroke-width="1.2"/>
+  <line x1="210" y1="12.5" x2="210" y2="327.5" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="360" y1="12.5" x2="360" y2="327.5" stroke="#1d1d1d" stroke-width="1"/>
+  <!-- zeros at heights 14.134725 ... 43.327073 and their mirror images -->
+  <g fill="#1d1d1d">
+    <circle cx="210" cy="120.5" r="3"/><circle cx="210" cy="96.4" r="3"/><circle cx="210" cy="82.5" r="3"/><circle cx="210" cy="63.5" r="3"/>
+    <circle cx="210" cy="54.7" r="3"/><circle cx="210" cy="38.4" r="3"/><circle cx="210" cy="26.8" r="3"/><circle cx="210" cy="18.4" r="3"/>
+    <circle cx="210" cy="219.5" r="3"/><circle cx="210" cy="243.6" r="3"/><circle cx="210" cy="257.5" r="3"/><circle cx="210" cy="276.5" r="3"/>
+    <circle cx="210" cy="285.3" r="3"/><circle cx="210" cy="301.6" r="3"/><circle cx="210" cy="313.2" r="3"/><circle cx="210" cy="321.6" r="3"/>
+  </g>
+  <!-- the contour: up Re s = c, left along height T, down Re s = sigma1, right along height -T -->
+  <rect x="352.7" y="26.0" width="29.0" height="288.0" fill="none" stroke="#b03a2e" stroke-width="2"/>
+  <polygon points="381.7,92 377.2,102 386.2,102" fill="#b03a2e"/>
+  <polygon points="352.7,248 348.2,238 357.2,238" fill="#b03a2e"/>
+  <!-- the pole at s = 1 -->
+  <path d="M355,165 L365,175 M365,165 L355,175" stroke="#1d1d1d" stroke-width="2"/>
+  <g fill="#1d1d1d">
+    <text x="54" y="184" text-anchor="end">0</text>
+    <text x="214" y="184">1/2</text>
+    <text x="388" y="166">pole at 1</text>
+    <text x="388" y="22">height T = 41.1</text>
+    <text x="388" y="320">height -T</text>
+    <text x="384" y="344">c = 1.072</text>
+    <text x="350" y="344" text-anchor="end">sigma1 = 0.976</text>
+    <text x="216" y="70">zeros on Re s = 1/2</text>
+    <text x="250" y="344" text-anchor="end">zero-free region (green)</text>
+    <text x="64" y="22">Im s</text>
+    <text x="432" y="184" text-anchor="end">Re s</text>
+  </g>
+</svg>

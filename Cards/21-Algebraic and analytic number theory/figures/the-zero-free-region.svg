@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 300" width="440" height="300" font-family="Helvetica, Arial, sans-serif" font-size="11">
+  <title>The critical strip up to height 50, drawn to scale: the zero-free region hugs the line Re s = 1 and narrows as the height grows; at height 14.13 the first zero sits on the critical line while the point 1 + 14.13i is no zero</title>
+  <rect x="0" y="0" width="440" height="300" fill="#ffffff"/>
+  <!-- critical strip 0 <= sigma <= 1, t from 0 to 50: x = 60 + 300 sigma, y = 260 - 5 t -->
+  <rect x="60" y="10" width="300" height="250" fill="#f1efe8"/>
+  <!-- zero-free region: boundary sigma = 1 - 1/(5.558691 ln t) for t >= 2, plus everything right of it -->
+  <polygon points="282.1,250.0 310.9,245.0 326.5,235.0 336.6,210.0 342.0,160.0 344.1,110.0 345.4,60.0 346.2,10.0 400,10 400,250" fill="#bfe3dc"/>
+  <polyline points="282.1,250.0 310.9,245.0 326.5,235.0 336.6,210.0 342.0,160.0 344.1,110.0 345.4,60.0 346.2,10.0" fill="none" stroke="#1f6f63" stroke-width="1.6"/>
+  <!-- axes and lines -->
+  <line x1="30" y1="260" x2="405" y2="260" stroke="#1d1d1d" stroke-width="1.2"/>
+  <line x1="60" y1="265" x2="60" y2="10" stroke="#1d1d1d" stroke-width="1.2"/>
+  <line x1="360" y1="260" x2="360" y2="10" stroke="#1d1d1d" stroke-width="1.2"/>
+  <line x1="210" y1="260" x2="210" y2="10" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="4 3"/>
+  <g fill="#1d1d1d">
+    <text x="60" y="276" text-anchor="middle">0</text>
+    <text x="210" y="276" text-anchor="middle">1/2</text>
+    <text x="360" y="276" text-anchor="middle">1</text>
+    <text x="215" y="292" text-anchor="middle">real part σ</text>
+    <text x="54" y="213" text-anchor="end">10</text>
+    <text x="54" y="163" text-anchor="end">20</text>
+    <text x="54" y="113" text-anchor="end">30</text>
+    <text x="54" y="63" text-anchor="end">40</text>
+    <text x="54" y="13" text-anchor="end">50</text>
+    <text x="20" y="140" text-anchor="middle" transform="rotate(-90 20 140)">height t</text>
+  </g>
+  <g stroke="#1d1d1d" stroke-width="1">
+    <line x1="56" y1="210" x2="60" y2="210"/><line x1="56" y1="160" x2="60" y2="160"/>
+    <line x1="56" y1="110" x2="60" y2="110"/><line x1="56" y1="60" x2="60" y2="60"/><line x1="56" y1="10" x2="60" y2="10"/>
+  </g>
+  <!-- the pole at s = 1 -->
+  <g stroke="#1d1d1d" stroke-width="1.6"><line x1="355" y1="255" x2="365" y2="265"/><line x1="355" y1="265" x2="365" y2="255"/></g>
+  <text x="372" y="252" fill="#1d1d1d">pole</text>
+  <!-- the first zero and the edge point at height 14.13 -->
+  <line x1="210" y1="189.3" x2="360" y2="189.3" stroke="#e76f51" stroke-width="1" stroke-dasharray="2 2"/>
+  <circle cx="210" cy="189.3" r="4.5" fill="#e76f51"/>
+  <circle cx="360" cy="189.3" r="4.5" fill="#ffffff" stroke="#e76f51" stroke-width="2"/>
+  <text x="203" y="182" text-anchor="end" fill="#1d1d1d">first zero, 1/2 + 14.13i</text>
+  <text x="366" y="203" fill="#1d1d1d">1 + 14.13i:</text>
+  <text x="366" y="216" fill="#1d1d1d">no zero</text>
+  <text x="290" y="40" text-anchor="end" fill="#1f6f63">zero-free region →</text>
+  <text x="135" y="40" text-anchor="middle" fill="#1d1d1d">critical strip</text>
+</svg>
