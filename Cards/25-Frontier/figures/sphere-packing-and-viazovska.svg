@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 240" font-family="Helvetica, Arial, sans-serif" font-size="12">
+<title>Oranges seen from above: square stacking against hexagonal stacking, to scale</title>
+<rect x="0" y="0" width="440" height="240" fill="#ffffff"/>
+<text x="100" y="26" text-anchor="middle" fill="#1d1d1d">Square: 78.5% covered</text>
+<text x="330" y="26" text-anchor="middle" fill="#1d1d1d">Hexagonal: 90.7% covered</text>
+<circle cx="40" cy="60" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="40" cy="100" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="40" cy="140" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="40" cy="180" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="80" cy="60" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="80" cy="100" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="80" cy="140" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="80" cy="180" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="120" cy="60" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="120" cy="100" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="120" cy="140" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="120" cy="180" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="160" cy="60" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="160" cy="100" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="160" cy="140" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="160" cy="180" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="60" cy="80" r="8.284" fill="none" stroke="#264653" stroke-width="1.5" stroke-dasharray="3 2"/>
+<circle cx="250" cy="60.000" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="290" cy="60.000" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="330" cy="60.000" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="370" cy="60.000" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="270" cy="94.641" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="310" cy="94.641" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="350" cy="94.641" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="390" cy="94.641" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="250" cy="129.282" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="290" cy="129.282" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="330" cy="129.282" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="370" cy="129.282" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="270" cy="163.923" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="310" cy="163.923" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="350" cy="163.923" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<circle cx="390" cy="163.923" r="20" fill="#f4a261" stroke="#1d1d1d" stroke-width="1.2"/>
+<text x="8" y="222" text-anchor="start" fill="#1d1d1d">dashed: largest gap ball, radius 0.207</text>
+<text x="330" y="222" text-anchor="middle" fill="#1d1d1d">rows 0.866 apart, not 1</text>
+</svg>
