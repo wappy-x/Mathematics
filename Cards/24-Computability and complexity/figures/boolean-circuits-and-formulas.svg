@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" width="800" height="350">
+<title>Schematic of a two-bit adder built from 13 AND, OR and NOT gates, drawn with one column per depth: inputs at depth 0, the sum bit s0 ready at depth 3, the carry-out s2 at depth 5 and the sum bit s1 at depth 6</title>
+<rect x="0" y="0" width="800" height="350" fill="#ffffff"/>
+<text x="50" y="24" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1d1d1d">depth 0</text>
+<text x="150" y="24" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1d1d1d">depth 1</text>
+<line x1="150" y1="32" x2="150" y2="340" stroke="#cfcfcf" stroke-width="1" stroke-dasharray="3 4"/>
+<text x="250" y="24" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1d1d1d">depth 2</text>
+<line x1="250" y1="32" x2="250" y2="340" stroke="#cfcfcf" stroke-width="1" stroke-dasharray="3 4"/>
+<text x="350" y="24" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1d1d1d">depth 3</text>
+<line x1="350" y1="32" x2="350" y2="340" stroke="#cfcfcf" stroke-width="1" stroke-dasharray="3 4"/>
+<text x="450" y="24" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1d1d1d">depth 4</text>
+<line x1="450" y1="32" x2="450" y2="340" stroke="#cfcfcf" stroke-width="1" stroke-dasharray="3 4"/>
+<text x="550" y="24" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1d1d1d">depth 5</text>
+<line x1="550" y1="32" x2="550" y2="340" stroke="#cfcfcf" stroke-width="1" stroke-dasharray="3 4"/>
+<text x="650" y="24" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1d1d1d">depth 6</text>
+<line x1="650" y1="32" x2="650" y2="340" stroke="#cfcfcf" stroke-width="1" stroke-dasharray="3 4"/>
+<text x="736" y="125" font-family="sans-serif" font-size="14" font-weight="bold" fill="#1d1d1d">s0</text>
+<text x="736" y="225" font-family="sans-serif" font-size="14" font-weight="bold" fill="#1d1d1d">s2</text>
+<text x="736" y="275" font-family="sans-serif" font-size="14" font-weight="bold" fill="#1d1d1d">s1</text>
+<polyline points="62,70 87,70 87,63 123,63" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="62,120 94,120 94,77 123,77" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="62,70 87,70 87,113 123,113" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="62,120 94,120 94,127 123,127" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="177,70 223,70" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="277,70 287,70 287,113 323,113" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="177,120 187,120 187,127 323,127" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="62,220 101,220 101,213 123,213" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="62,270 108,270 108,227 123,227" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="62,220 101,220 101,263 123,263" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="62,270 108,270 108,277 123,277" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="177,220 223,220" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="277,220 294,220 294,263 323,263" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="177,270 194,270 194,277 323,277" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="177,70 201,70 201,163 423,163" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="377,270 387,270 387,177 423,177" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="177,70 201,70 201,313 423,313" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="377,270 387,270 387,327 423,327" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="477,170 523,170" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="577,170 587,170 587,263 623,263" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="477,320 487,320 487,277 623,277" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="477,170 494,170 494,213 523,213" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="177,220 208,220 208,195 501,195 501,227 523,227" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="377,120 730,120" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="577,220 730,220" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="677,270 730,270" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="87" cy="70" r="2.5" fill="#1d1d1d"/>
+<circle cx="94" cy="120" r="2.5" fill="#1d1d1d"/>
+<circle cx="101" cy="220" r="2.5" fill="#1d1d1d"/>
+<circle cx="108" cy="270" r="2.5" fill="#1d1d1d"/>
+<circle cx="201" cy="70" r="2.5" fill="#1d1d1d"/>
+<circle cx="387" cy="270" r="2.5" fill="#1d1d1d"/>
+<circle cx="494" cy="170" r="2.5" fill="#1d1d1d"/>
+<circle cx="208" cy="220" r="2.5" fill="#1d1d1d"/>
+<circle cx="58" cy="70" r="4" fill="#1d1d1d"/>
+<text x="48" y="75" text-anchor="end" font-family="sans-serif" font-size="14" font-weight="bold" fill="#1d1d1d">a0</text>
+<circle cx="58" cy="120" r="4" fill="#1d1d1d"/>
+<text x="48" y="125" text-anchor="end" font-family="sans-serif" font-size="14" font-weight="bold" fill="#1d1d1d">b0</text>
+<circle cx="58" cy="220" r="4" fill="#1d1d1d"/>
+<text x="48" y="225" text-anchor="end" font-family="sans-serif" font-size="14" font-weight="bold" fill="#1d1d1d">a1</text>
+<circle cx="58" cy="270" r="4" fill="#1d1d1d"/>
+<text x="48" y="275" text-anchor="end" font-family="sans-serif" font-size="14" font-weight="bold" fill="#1d1d1d">b1</text>
+<rect x="123" y="56" width="54" height="28" rx="4" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="150" y="71" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1d1d1d">AND</text>
+<text x="150" y="81" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1d1d1d">g1</text>
+<rect x="123" y="106" width="54" height="28" rx="4" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="150" y="121" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1d1d1d">OR</text>
+<text x="150" y="131" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1d1d1d">g2</text>
+<rect x="223" y="56" width="54" height="28" rx="4" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="250" y="71" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1d1d1d">NOT</text>
+<text x="250" y="81" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1d1d1d">g3</text>
+<rect x="323" y="106" width="54" height="28" rx="4" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="350" y="121" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1d1d1d">AND</text>
+<text x="350" y="131" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1d1d1d">g4</text>
+<rect x="123" y="206" width="54" height="28" rx="4" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="150" y="221" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1d1d1d">AND</text>
+<text x="150" y="231" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1d1d1d">g5</text>
+<rect x="123" y="256" width="54" height="28" rx="4" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="150" y="271" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1d1d1d">OR</text>
+<text x="150" y="281" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1d1d1d">g6</text>
+<rect x="223" y="206" width="54" height="28" rx="4" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="250" y="221" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1d1d1d">NOT</text>
+<text x="250" y="231" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1d1d1d">g7</text>
+<rect x="323" y="256" width="54" height="28" rx="4" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="350" y="271" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1d1d1d">AND</text>
+<text x="350" y="281" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1d1d1d">g8</text>
+<rect x="423" y="156" width="54" height="28" rx="4" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="450" y="171" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1d1d1d">AND</text>
+<text x="450" y="181" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1d1d1d">g9</text>
+<rect x="423" y="306" width="54" height="28" rx="4" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="450" y="321" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1d1d1d">OR</text>
+<text x="450" y="331" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1d1d1d">g10</text>
+<rect x="523" y="156" width="54" height="28" rx="4" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="550" y="171" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1d1d1d">NOT</text>
+<text x="550" y="181" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1d1d1d">g11</text>
+<rect x="623" y="256" width="54" height="28" rx="4" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="650" y="271" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1d1d1d">AND</text>
+<text x="650" y="281" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1d1d1d">g12</text>
+<rect x="523" y="206" width="54" height="28" rx="4" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="550" y="221" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1d1d1d">OR</text>
+<text x="550" y="231" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1d1d1d">g13</text>
+</svg>

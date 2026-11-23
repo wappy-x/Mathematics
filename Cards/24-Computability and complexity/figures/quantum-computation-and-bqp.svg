@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 220" width="500" height="220" font-family="Helvetica, Arial, sans-serif" font-size="15">
+  <title>Deutsch's one-query circuit on two qubits (schematic)</title>
+  <rect x="0" y="0" width="500" height="220" fill="#ffffff"/>
+  <g stroke="#1d1d1d" stroke-width="2" fill="none">
+    <line x1="50" y1="70" x2="410" y2="70"/>
+    <line x1="50" y1="150" x2="470" y2="150"/>
+  </g>
+  <g fill="#1d1d1d">
+    <text x="10" y="75">|0⟩</text>
+    <text x="10" y="155">|0⟩</text>
+    <text x="110" y="30" font-size="13">x, the input qubit</text>
+    <text x="300" y="205" font-size="13">y, the answer qubit</text>
+  </g>
+  <g stroke="#1d1d1d" stroke-width="2" fill="#ffffff">
+    <rect x="72" y="132" width="36" height="36"/>
+    <rect x="152" y="52" width="36" height="36"/>
+    <rect x="152" y="132" width="36" height="36"/>
+    <rect x="225" y="48" width="70" height="124"/>
+    <rect x="332" y="52" width="36" height="36"/>
+    <rect x="408" y="50" width="44" height="40"/>
+  </g>
+  <g fill="#1d1d1d" text-anchor="middle">
+    <text x="90" y="155">X</text>
+    <text x="170" y="75">H</text>
+    <text x="170" y="155">H</text>
+    <text x="260" y="115">U_f</text>
+    <text x="350" y="75">H</text>
+  </g>
+  <path d="M 416 82 A 14 14 0 0 1 444 82" stroke="#1d1d1d" stroke-width="2" fill="none"/>
+  <line x1="430" y1="82" x2="442" y2="60" stroke="#1d1d1d" stroke-width="2"/>
+  <text x="430" y="112" fill="#1d1d1d" font-size="13" text-anchor="middle">read: 0 or 1</text>
+</svg>

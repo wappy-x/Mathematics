@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 350" width="900" height="350">
+<title>Schematic of two mirrored commutative diagrams: on the left the product of drinks and pastries, with arrows f and g from three tables, the dashed pairing arrow into A × B and the projections fst and snd out of it; on the right the sum, with the same shape and every arrow reversed: inl and inr into A + B, the dashed case-split arrow out of it, and the prices p and q into Y</title>
+<rect x="0" y="0" width="900" height="350" fill="#ffffff"/>
+<line x1="450" y1="12" x2="450" y2="318" stroke="#cfcfcf" stroke-width="1" stroke-dasharray="3 4"/>
+<text x="220" y="22" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="14" font-weight="bold">Product: arrows come out of A × B</text>
+<text x="680" y="22" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="14" font-weight="bold">Sum: arrows go into A + B</text>
+<path d="M 135 60 Q 80 60 80.0 252.0" fill="none" stroke="#1d1d1d" stroke-width="1.6"/>
+<polygon points="80.0,261.0 75.0,250.0 85.0,250.0" fill="#1d1d1d"/>
+<text x="72.0" y="110.0" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="15" font-style="italic">f</text>
+<path d="M 305 60 Q 360 60 360.0 252.0" fill="none" stroke="#1d1d1d" stroke-width="1.6"/>
+<polygon points="360.0,261.0 355.0,250.0 365.0,250.0" fill="#1d1d1d"/>
+<text x="368.0" y="110.0" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="15" font-style="italic">g</text>
+<line x1="220.0" y1="77.0" x2="220.0" y2="142.0" stroke="#1d1d1d" stroke-width="1.6" stroke-dasharray="6 4"/>
+<polygon points="220.0,151.0 215.0,140.0 225.0,140.0" fill="#1d1d1d"/>
+<text x="250.4" y="119.0" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="15" font-style="italic">⟨f, g⟩</text>
+<line x1="198.4" y1="187.0" x2="110.3" y2="256.2" stroke="#1d1d1d" stroke-width="1.6"/>
+<polygon points="103.2,261.8 108.8,251.0 114.9,258.9" fill="#1d1d1d"/>
+<text x="160.7" y="242.0" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="15" font-style="italic">fst</text>
+<line x1="241.6" y1="187.0" x2="329.7" y2="256.2" stroke="#1d1d1d" stroke-width="1.6"/>
+<polygon points="336.8,261.8 325.1,258.9 331.2,251.0" fill="#1d1d1d"/>
+<text x="279.3" y="242.0" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="15" font-style="italic">snd</text>
+<path d="M 540 263 Q 540 60 584.0 60.0" fill="none" stroke="#1d1d1d" stroke-width="1.6"/>
+<polygon points="593.0,60.0 582.0,65.0 582.0,55.0" fill="#1d1d1d"/>
+<text x="532.0" y="110.0" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="15" font-style="italic">p</text>
+<path d="M 820 263 Q 820 60 776.0 60.0" fill="none" stroke="#1d1d1d" stroke-width="1.6"/>
+<polygon points="767.0,60.0 778.0,55.0 778.0,65.0" fill="#1d1d1d"/>
+<text x="828.0" y="110.0" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="15" font-style="italic">q</text>
+<line x1="680.0" y1="153.0" x2="680.0" y2="88.0" stroke="#1d1d1d" stroke-width="1.6" stroke-dasharray="6 4"/>
+<polygon points="680.0,79.0 685.0,90.0 675.0,90.0" fill="#1d1d1d"/>
+<text x="710.4" y="121.0" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="15" font-style="italic">[p, q]</text>
+<line x1="561.6" y1="263.0" x2="649.7" y2="193.8" stroke="#1d1d1d" stroke-width="1.6"/>
+<polygon points="656.8,188.2 651.2,199.0 645.1,191.1" fill="#1d1d1d"/>
+<text x="619.1" y="243.2" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="15" font-style="italic">inl</text>
+<line x1="798.4" y1="263.0" x2="710.3" y2="193.8" stroke="#1d1d1d" stroke-width="1.6"/>
+<polygon points="703.2,188.2 714.9,191.1 708.8,199.0" fill="#1d1d1d"/>
+<text x="740.9" y="243.2" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="15" font-style="italic">inr</text>
+<rect x="135.0" y="43.0" width="170" height="34" rx="6" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.4"/>
+<text x="220" y="65" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="13">X: 3 tables</text>
+<rect x="135.0" y="153.0" width="170" height="34" rx="6" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.4"/>
+<text x="220" y="175" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="13">A × B: 6 meal deals</text>
+<rect x="18.0" y="263.0" width="124" height="34" rx="6" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.4"/>
+<text x="80" y="285" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="13">A: 2 drinks</text>
+<rect x="298.0" y="263.0" width="124" height="34" rx="6" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.4"/>
+<text x="360" y="285" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="13">B: 3 pastries</text>
+<rect x="595.0" y="43.0" width="170" height="34" rx="6" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.4"/>
+<text x="680" y="65" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="13">Y: prices in pence</text>
+<rect x="595.0" y="153.0" width="170" height="34" rx="6" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.4"/>
+<text x="680" y="175" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="13">A + B: 5 voucher items</text>
+<rect x="478.0" y="263.0" width="124" height="34" rx="6" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.4"/>
+<text x="540" y="285" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="13">A: 2 drinks</text>
+<rect x="758.0" y="263.0" width="124" height="34" rx="6" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.4"/>
+<text x="820" y="285" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="13">B: 3 pastries</text>
+<text x="450" y="340" text-anchor="middle" font-family="sans-serif" fill="#1d1d1d" font-size="13">Schematic. The same shape twice: every arrow on the right is an arrow on the left, reversed.</text>
+</svg>

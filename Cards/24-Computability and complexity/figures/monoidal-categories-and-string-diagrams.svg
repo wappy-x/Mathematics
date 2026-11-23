@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 300" width="700" height="300">
+<title>Schematic string diagram of two parcels on two parallel wires: parcel A, 1,200 g, passes a box machine to 1,350 g and a pricing machine to 435 p; parcel B, 800 g, passes a wrap machine to 850 g and a pricing machine to 385 p; an add box joins the two wires into one carrying 820 p. Dashed uprights cut the picture into stages, a dashed level line cuts it into lanes.</title>
+<rect x="0" y="0" width="700" height="300" fill="#ffffff"/>
+<g font-family="sans-serif" fill="#1d1d1d" font-size="20" font-weight="bold" text-anchor="middle">
+<text x="200" y="30">stage 1</text>
+<text x="400" y="30">stage 2</text>
+<text x="600" y="30">merge</text>
+<text x="25" y="97">A</text>
+<text x="25" y="197">B</text>
+</g>
+<g stroke="#1d1d1d" stroke-width="2.5" fill="none">
+<line x1="45" y1="90" x2="575" y2="90"/>
+<line x1="45" y1="190" x2="575" y2="190"/>
+<line x1="625" y1="140" x2="695" y2="140"/>
+</g>
+<g stroke="#8a8a8a" stroke-width="1.6" stroke-dasharray="7 6" fill="none">
+<line x1="345" y1="48" x2="345" y2="232"/>
+<line x1="530" y1="48" x2="530" y2="232"/>
+<line x1="60" y1="140" x2="555" y2="140"/>
+</g>
+<g stroke="#1d1d1d" stroke-width="2" fill="#ffffff">
+<rect x="165" y="68" width="70" height="44" rx="6"/>
+<rect x="165" y="168" width="70" height="44" rx="6"/>
+<rect x="365" y="68" width="70" height="44" rx="6"/>
+<rect x="365" y="168" width="70" height="44" rx="6"/>
+<rect x="575" y="68" width="50" height="144" rx="6"/>
+</g>
+<g font-family="sans-serif" fill="#1d1d1d" font-size="20" text-anchor="middle">
+<text x="200" y="97">box</text>
+<text x="200" y="197">wrap</text>
+<text x="400" y="97">price</text>
+<text x="400" y="197">price</text>
+<text x="600" y="147">add</text>
+<text x="110" y="80">1,200 g</text>
+<text x="290" y="80">1,350 g</text>
+<text x="478" y="80">435 p</text>
+<text x="110" y="180">800 g</text>
+<text x="290" y="180">850 g</text>
+<text x="478" y="180">385 p</text>
+<text x="660" y="128">820 p</text>
+</g>
+<g font-family="sans-serif" fill="#1d1d1d" font-size="19" text-anchor="middle">
+<text x="350" y="262">Cut at the dashed uprights: stages, then add.</text>
+<text x="350" y="288">Cut at the dashed level line: lanes, then add.</text>
+</g>
+</svg>
