@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400" font-family="Helvetica, Arial, sans-serif">
+  <title>The language ladder: four nested classes of patterns, one example pattern on each rung (schematic)</title>
+  <rect x="0" y="0" width="640" height="400" fill="#ffffff"/>
+  <g fill="none" stroke="#1d1d1d" stroke-width="2">
+    <rect x="10" y="10" width="620" height="380" rx="14"/>
+    <rect x="40" y="60" width="560" height="300" rx="12"/>
+    <rect x="70" y="110" width="500" height="220" rx="10"/>
+    <rect x="100" y="160" width="440" height="140" rx="8" fill="#f3efe6"/>
+  </g>
+  <g fill="#1d1d1d" font-size="14">
+    <text x="26" y="31" font-weight="bold">Rung 0: any tape machine, unbounded tape</text>
+    <text x="26" y="50">Blank-tape HALT: codes of machines that stop on a blank tape</text>
+    <text x="56" y="81" font-weight="bold">Rung 1: context-sensitive, a tape as long as the input</text>
+    <text x="56" y="100">ww: one word written twice, such as abbaabba</text>
+    <text x="86" y="131" font-weight="bold">Rung 2: context-free, one stack</text>
+    <text x="86" y="150">a^n b^n: n letters a, then n letters b, such as aaabbb</text>
+    <text x="320" y="216" text-anchor="middle" font-weight="bold">Rung 3: regular, fixed memory (3 states)</text>
+    <text x="320" y="240" text-anchor="middle">a*b*: every a before every b, such as aabbb</text>
+    <text x="320" y="270" text-anchor="middle" font-size="12">each boundary is a proved strict inclusion</text>
+  </g>
+</svg>
