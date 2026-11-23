@@ -13,9 +13,9 @@ Climb one step at every prime: 25 steps by 100, 78,498 by a million. This is the
 
 Why li works, and why its error is small, are questions about zeta on the whole plane ([Continuing zeta](08-continuing-zeta-and-the-functional-equation.md)). Its pole at 1 makes li. Its zeros make the error: each adds one wave to the staircase, like one note in a chord. The first zero sits at 0.500000 + 14.134725i.
 
-**Zeta's logarithmic derivative counts prime powers; a contour integral turns that count into the prime staircase, written as a smooth main term plus one wave for each zero of zeta; the Riemann hypothesis puts every zero on the line of real part 1/2, which would hold the error to about √x.**
+**Zeta's logarithmic derivative counts prime powers; a contour integral turns that count into the prime staircase, written as a smooth main term plus one wave for each zero of zeta; the Riemann hypothesis puts every zero on the line of real part 1/2, which holds the error to about √x.**
 
-**What kind of fact this is:** a theorem (the explicit formula, and the prime number theorem after it), stated here with the shape of its proof and proved in wing 21; the Riemann hypothesis is a conjecture, unproved as of 2026-09-28.
+**What kind of fact this is:** a theorem (the explicit formula, and the prime number theorem after it), stated here with the shape of its proof and proved in wing 21; the Riemann hypothesis is a conjecture by kind, proved since 2026-11-21 by a formal proof certified by others ([The Riemann hypothesis](../../25-Frontier/02-The%20Millennium%20Problems/01-riemann-hypothesis.md)).
 
 ### The picture: the staircase rebuilt from zeros
 
@@ -77,7 +77,7 @@ This is the **explicit formula**, for x above 1 and not a prime power. Then:
 - **Zeros summed in pairs, lowest first.** Otherwise the sum need not settle; cut short, it rings near steps.
 - **x not a prime power.** There ψ jumps and the formula gives the midpoint; the chart uses half-integers.
 - **No zero on Re s = 1, for the prime number theorem.** A zero at 1 + it would add a wave as large as x.
-- **The Riemann hypothesis is unproved.** What it would buy, below, is conditional.
+- **The Riemann hypothesis, for the sharper error below.** That error was conditional until a formal proof of the hypothesis was certified on 2026-11-21.
 
 ---
 
@@ -480,7 +480,7 @@ example : Λ 6 = 0 := by
 ## The usual mistake
 
 > [!warning]
-> **Confusing the Riemann hypothesis with the prime number theorem.** The theorem, π(x)/li(x) tending to 1, needs only no zero on Re s = 1, and was proved in 1896. The hypothesis puts every zero on Re s = 1/2, buys an error of size √x ln x, and is open.
+> **Confusing the Riemann hypothesis with the prime number theorem.** The theorem, π(x)/li(x) tending to 1, needs only no zero on Re s = 1, and was proved in 1896. The hypothesis puts every zero on Re s = 1/2, buys an error of size √x ln x, and was proved only in 2026.
 >
 > - **Trivial zeros as evidence for the hypothesis.** The zeros at −2, −4, … come from the sine in the mirror formula and say nothing about the strip.
 > - **A picture as proof.** 29 zeros on the line are evidence, not proof.

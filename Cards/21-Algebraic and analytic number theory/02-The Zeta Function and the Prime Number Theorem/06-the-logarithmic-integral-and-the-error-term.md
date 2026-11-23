@@ -176,7 +176,7 @@ Partial summation: π(x) = θ(x)/log x + ∫ θ(t)/(t log² t) dt from 2 to x, w
 At ten million this allows 71,553.29, against a true gap of 339.41: 210.8 times too generous. It even allows more than the 44,158 miss of x/log x. Searching upward from ten million, this explicit bound first proves li closer than the size x/log² x of that miss once log x passes 172, that is x beyond about 10^74.7.
 - **The sign.** O bounds |π(x) − li(x)| only. It cannot say whether li stays ahead.
 
-If the Riemann hypothesis holds (every zero has β = 1/2), Schoenfeld's bound gives √x log x/(8π) for x ≥ 2657: 2,028.03 at ten million. That is conditional ([The Riemann hypothesis](09-riemann-hypothesis-statement-and-equivalents.md)).
+If the Riemann hypothesis holds (every zero has β = 1/2), Schoenfeld's bound gives √x log x/(8π) for x ≥ 2657: 2,028.03 at ten million. That was conditional until a formal proof of the hypothesis was certified on 2026-11-21 ([The Riemann hypothesis](09-riemann-hypothesis-statement-and-equivalents.md)).
 
 ### Step 5: why li runs ahead at every size checked
 
@@ -822,9 +822,9 @@ example : Nat.factorial 0 = 1 ∧ Nat.factorial 1 = 1 ∧ Nat.factorial 2 = 2 �
 
 - [The explicit formula](07-the-explicit-formula.md): ψ(x) written exactly as x minus one wave per zero; Steps 5 and 6 used the same waves, in Riemann's form for Π(x), in words.
 - [Counting the zeros](08-counting-the-zeros-riemann-von-mangoldt.md): how densely the zeros pack, which makes the wave sizes add up without bound.
-- [The Riemann hypothesis](09-riemann-hypothesis-statement-and-equivalents.md): every zero on the line, which would cut the error to about √x log x, the bound printed above.
+- [The Riemann hypothesis](09-riemann-hypothesis-statement-and-equivalents.md): every zero on the line, proved in 2026, which cuts the error to about √x log x, the bound printed above.
 
-The question this card leaves open: can any error of size x^(1−δ), for a fixed δ > 0, be proved without the Riemann hypothesis?
+The question this card leaves open: the 2026 proof of the Riemann hypothesis gives an error near √x; can any error of size x^(1−δ), for a fixed δ > 0, be proved without it?
 
 ---
 

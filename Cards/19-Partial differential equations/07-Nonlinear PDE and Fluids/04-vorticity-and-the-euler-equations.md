@@ -33,7 +33,7 @@ The second half of the card asks what viscosity does. Water's viscosity is small
 
 **Taking the curl of the fluid equations removes the pressure and leaves one equation for spin, in which the flow carries vorticity, stretches and tilts it in three dimensions, and viscosity spreads it; dropping viscosity gives the Euler equations, whose stretched cores never stop thinning.**
 
-**What kind of fact this is:** the vorticity equation is a theorem, proved on this card in Why it works. The bath swirl is an exact solution of it (the Burgers vortex, proved here too), used as a model of a drain. Whether three-dimensional Euler or Navier-Stokes flows stay smooth for all time is open as of 2026-11-15.
+**What kind of fact this is:** the vorticity equation is a theorem, proved on this card in Why it works. The bath swirl is an exact solution of it (the Burgers vortex, proved here too), used as a model of a drain. Whether three-dimensional Euler or Navier-Stokes flows stay smooth for all time is open as of 2026-11-15. For Navier-Stokes driven by a specially built outside force, a September 2026 claim of blow-up is not yet refereed ([The September 2026 Navier-Stokes claim](../../25-Frontier/05-Analysis%20and%20Dynamics/01-navier-stokes-blow-up-claim-2026.md)).
 
 ---
 
@@ -1124,7 +1124,7 @@ example : 2 * π * (50 / 1000) * (π * (25 / 10 ^ 6)) = 2 * π * (100 / 1000) * 
 
 ## Where this goes next
 
-- The Navier-Stokes card on wing 25 (planned): the Clay problem statement and the 2026 blow-up claim.
+- [Navier-Stokes](../../25-Frontier/02-The%20Millennium%20Problems/04-navier-stokes-existence-and-smoothness.md) and [The September 2026 Navier-Stokes claim](../../25-Frontier/05-Analysis%20and%20Dynamics/01-navier-stokes-blow-up-claim-2026.md), on wing 25: the Clay problem statement and the 2026 blow-up claim.
 
 Related cards earlier on this shelf:
 

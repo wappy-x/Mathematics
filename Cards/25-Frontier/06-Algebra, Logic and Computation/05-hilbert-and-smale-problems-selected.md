@@ -112,7 +112,7 @@ Codes for the tallies below: **S** answered and proved, **M** partly (a summary:
 | 5 | Are continuous groups automatically smooth? | S: yes, Gleason and Montgomery–Zippin 1952 |
 | 6 | Axiomatise physics | V: a programme; probability was axiomatised by Kolmogorov in 1933 |
 | 7 | Is $`a^b`$ transcendental (a root of no polynomial) for algebraic a ≠ 0, 1 and irrational algebraic b? | S: yes, Gelfond and Schneider 1934 |
-| 8 | The Riemann hypothesis, Goldbach, twin primes | O |
+| 8 | The Riemann hypothesis, Goldbach, twin primes | M: the Riemann hypothesis, proved 2026-11-21 by a formal proof certified by others ([The Riemann hypothesis](../02-The%20Millennium%20Problems/01-riemann-hypothesis.md)); Goldbach and twin primes, open |
 | 9 | The most general reciprocity law | M: abelian case, Artin 1927; beyond, open |
 | 10 | A process to decide whole-number solvability | S: no process exists, Matiyasevich 1970 |
 | 11 | Quadratic forms over number fields | M: over the fields, Hasse 1923; over their whole numbers, partly open |
@@ -133,7 +133,7 @@ Codes for the tallies below: **S** answered and proved, **M** partly (a summary:
 
 | # | The question, short | Status as of 2026-11-23 |
 | --- | --- | --- |
-| 1 | The Riemann hypothesis | O (Hilbert's 8th) |
+| 1 | The Riemann hypothesis | S: proved 2026-11-21, by a formal proof certified by others; no refereed paper yet, and Clay still says "Active" (part of Hilbert's 8th) |
 | 2 | The Poincaré conjecture | S: proved, Perelman 2002–03; Clay prize awarded 2010, declined ([The Poincare conjecture, solved](../02-The%20Millennium%20Problems/07-poincare-conjecture-solved.md)) |
 | 3 | P versus NP | O |
 | 4 | Integer zeros of a polynomial (the tau conjecture) | O |
@@ -147,7 +147,7 @@ Codes for the tallies below: **S** answered and proved, **M** partly (a summary:
 | 12 | Centralisers of diffeomorphisms | M: the $`C^1`$ case (once continuously differentiable maps), Bonatti, Crovisier and Wilkinson 2009; smoother, open |
 | 13 | Hilbert's 16th, limit-cycle half | O |
 | 14 | Is the Lorenz attractor a strange attractor? | S: yes, Tucker 2002, computer-assisted |
-| 15 | Navier–Stokes | O (a 2026 claim: see the picks below) |
+| 15 | Navier–Stokes | O: Clay's versions A and B, without a driving force, open; versions C and D, with one, claimed in September 2026 and unrefereed (see the picks below) |
 | 16 | The Jacobian conjecture | M: refuted for three or more variables, 2026-07, by a counterexample with an independent formal proof; two variables, open ([The Jacobian conjecture](../05-Analysis%20and%20Dynamics/04-jacobian-conjecture.md)) |
 | 17 | Approximate roots of polynomial systems in average polynomial time | S: yes, Beltrán and Pardo 2009, Lairez 2017 |
 | 18 | Limits of intelligence | V: a programme |
@@ -158,20 +158,20 @@ The rows other than the six picks below name a result and a year as leads. Their
 
 ```
 Hilbert, 23   proved   ########### 11
-              partly   #####        5
-              open     ##           2
+              partly   ######       6
+              open     #            1
               note     #####        5
-Smale, 18     proved   ###          3
+Smale, 18     proved   ####         4
               partly   #####        5
-              open     ########     8
+              open     #######      7
               note     ##           2
 ```
 
-Two problems sit on both lists: Hilbert 8 is Smale 1, and Hilbert 16 is Smale 13. After 126 years, 11 of Hilbert's 23 are settled outright. After 28 years, 3 of Smale's 18 are, and a fourth, the Jacobian conjecture, is refuted for three or more variables (2026-07) and open for two.
+Two problems sit on both lists: Smale 1, the Riemann hypothesis, is part of Hilbert 8, and Hilbert 16 is Smale 13. After 126 years, 11 of Hilbert's 23 are settled outright. After 28 years, 4 of Smale's 18 are, the Riemann hypothesis since 2026-11-21, and a fifth, the Jacobian conjecture, is refuted for three or more variables (2026-07) and open for two.
 
 The picks are the problems this library's earlier wings lead straight to:
 
-- **Hilbert 8**, the Riemann hypothesis: open. Stated on wing 21's [The Riemann hypothesis](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/09-riemann-hypothesis-statement-and-equivalents.md); its dated status is on this wing's [The Riemann hypothesis](../02-The%20Millennium%20Problems/01-riemann-hypothesis.md).
+- **Hilbert 8**, the Riemann hypothesis: proved, 2026-11-21, by a formal proof certified by others; Goldbach and twin primes, the rest of Hilbert 8, are open. Stated on wing 21's [The Riemann hypothesis](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/09-riemann-hypothesis-statement-and-equivalents.md); its dated status is on this wing's [The Riemann hypothesis](../02-The%20Millennium%20Problems/01-riemann-hypothesis.md).
 - **Hilbert 10**, the example: no process exists, proved 1970.
 - **Hilbert 16**, limit cycles: open, even for degree 2.
 - **Smale 3**, P versus NP: open. The statement and the barriers are on wing 24's [P versus NP](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/08-p-versus-np-what-is-known.md); its dated status is on this wing's [P versus NP](../02-The%20Millennium%20Problems/03-p-versus-np.md).
@@ -282,11 +282,11 @@ The code first keeps the ledger. Each list's statuses are typed twice, row by ro
 # by the card's formula; limit cycles of a degree-7 field, by a computed return map
 # against the exact radii; Newton's method on x^5 - x - 1 against bisection.
 import math
-HIL = "SMSVSVSOMSMMMSVOSSSVSSV"   # S answered: proved, M partly, O open, V kind note
-SMA = "OSOOOMOVOMMMOSOMSV"
-BY_STATUS = {"hilbert": ("1 3 5 7 10 14 17 18 19 21 22", "2 9 11 12 13", "8 16", "4 6 15 20 23"),
-             "smale": ("2 14 17", "6 10 11 12 16", "1 3 4 5 7 9 13 15", "8 18")}   # typed again, by status
-PICKS = [("Hilbert 8", "O", "Riemann hypothesis, Goldbach, twin primes", "open"),
+HIL = "SMSVSVSMMSMMMSVOSSSVSSV"   # S answered: proved, M partly, O open, V kind note
+SMA = "SSOOOMOVOMMMOSOMSV"
+BY_STATUS = {"hilbert": ("1 3 5 7 10 14 17 18 19 21 22", "2 8 9 11 12 13", "16", "4 6 15 20 23"),
+             "smale": ("1 2 14 17", "6 10 11 12 16", "3 4 5 7 9 13 15", "8 18")}   # typed again, by status
+PICKS = [("Hilbert 8", "M", "Riemann hypothesis, Goldbach, twin primes", "RH proved 2026-11-21; Goldbach, twin primes open"),
          ("Hilbert 10", "S", "a test for whole-number solutions", "no test exists: proved 1970"),
          ("Hilbert 16", "O", "most limit cycles at degree n", "open; degree 2 has at least 4, 1979"),
          ("Smale 3", "O", "P versus NP", "open"),
@@ -298,8 +298,8 @@ for name, codes in (("hilbert", HIL), ("smale", SMA)):
     print(f"{name:<7} tally: proved {t[0]}, partly {t[1]}, open {t[2]}, kind note {t[3]}, total {sum(t)}")
     rows = [" ".join(str(i + 1) for i, x in enumerate(codes) if x == c) for c in "SMOV"]
     assert sum(t) == len(codes) and tuple(rows) == BY_STATUS[name]   # the two typings agree
-print("on both lists: Hilbert 8 = Smale 1 (Riemann), Hilbert 16 = Smale 13 (limit cycles)")
-assert HIL[7] == SMA[0] and HIL[15] == SMA[12]   # one problem, typed in both lists
+print("on both lists: Hilbert 8 includes Smale 1 (Riemann), Hilbert 16 = Smale 13 (limit cycles)")
+assert (HIL[7], SMA[0]) == ("M", "S") and HIL[15] == SMA[12]   # Smale 1 is the settled part of Hilbert 8
 for name, code, what, status in PICKS:
     lst, num = name.split()
     assert (HIL if lst == "Hilbert" else SMA)[int(num) - 1] == code   # lines match ledger
@@ -411,12 +411,12 @@ print("ALL CHECKS PASS")
 **Ran 2026-11-23 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
-hilbert 1-23: S M S V S V S O M S M M M S V O S S S V S S V
-hilbert tally: proved 11, partly 5, open 2, kind note 5, total 23
-smale   1-18: O S O O O M O V O M M M O S O M S V
-smale   tally: proved 3, partly 5, open 8, kind note 2, total 18
-on both lists: Hilbert 8 = Smale 1 (Riemann), Hilbert 16 = Smale 13 (limit cycles)
-Hilbert 8  Riemann hypothesis, Goldbach, twin primes  open
+hilbert 1-23: S M S V S V S M M S M M M S V O S S S V S S V
+hilbert tally: proved 11, partly 6, open 1, kind note 5, total 23
+smale   1-18: S S O O O M O V O M M M O S O M S V
+smale   tally: proved 4, partly 5, open 7, kind note 2, total 18
+on both lists: Hilbert 8 includes Smale 1 (Riemann), Hilbert 16 = Smale 13 (limit cycles)
+Hilbert 8  Riemann hypothesis, Goldbach, twin primes  RH proved 2026-11-21; Goldbach, twin primes open
 Hilbert 10 a test for whole-number solutions          no test exists: proved 1970
 Hilbert 16 most limit cycles at degree n              open; degree 2 has at least 4, 1979
 Smale 3    P versus NP                                open
@@ -452,12 +452,12 @@ Same numbers, same labels, built with `rustc --edition 2021 -O`.
 // against a second road: Matiyasevich's 1970 Fibonacci lemma, by direct remainders and
 // by the card's formula; limit cycles of a degree-7 field, by a computed return map
 // against the exact radii; Newton's method on x^5 - x - 1 against bisection.
-const HIL: &str = "SMSVSVSOMSMMMSVOSSSVSSV"; // S answered: proved, M partly, O open, V kind note
-const SMA: &str = "OSOOOMOVOMMMOSOMSV";
-const BY_STATUS: [[&str; 4]; 2] = [["1 3 5 7 10 14 17 18 19 21 22", "2 9 11 12 13", "8 16", "4 6 15 20 23"],
-                                   ["2 14 17", "6 10 11 12 16", "1 3 4 5 7 9 13 15", "8 18"]]; // typed again, by status
+const HIL: &str = "SMSVSVSMMSMMMSVOSSSVSSV"; // S answered: proved, M partly, O open, V kind note
+const SMA: &str = "SSOOOMOVOMMMOSOMSV";
+const BY_STATUS: [[&str; 4]; 2] = [["1 3 5 7 10 14 17 18 19 21 22", "2 8 9 11 12 13", "16", "4 6 15 20 23"],
+                                   ["1 2 14 17", "6 10 11 12 16", "3 4 5 7 9 13 15", "8 18"]]; // typed again, by status
 const PICKS: [(&str, char, &str, &str); 6] = [
-    ("Hilbert 8", 'O', "Riemann hypothesis, Goldbach, twin primes", "open"),
+    ("Hilbert 8", 'M', "Riemann hypothesis, Goldbach, twin primes", "RH proved 2026-11-21; Goldbach, twin primes open"),
     ("Hilbert 10", 'S', "a test for whole-number solutions", "no test exists: proved 1970"),
     ("Hilbert 16", 'O', "most limit cycles at degree n", "open; degree 2 has at least 4, 1979"),
     ("Smale 3", 'O', "P versus NP", "open"),
@@ -511,9 +511,9 @@ fn main() {
             .map(|(i, _)| (i + 1).to_string()).collect::<Vec<_>>().join(" ")).collect();
         assert!(t.iter().sum::<usize>() == codes.len() && rows == BY_STATUS[li]); // the two typings agree
     }
-    println!("on both lists: Hilbert 8 = Smale 1 (Riemann), Hilbert 16 = Smale 13 (limit cycles)");
+    println!("on both lists: Hilbert 8 includes Smale 1 (Riemann), Hilbert 16 = Smale 13 (limit cycles)");
     let (h, s): (Vec<char>, Vec<char>) = (HIL.chars().collect(), SMA.chars().collect());
-    assert!(h[7] == s[0] && h[15] == s[12]);    // one problem, typed in both lists
+    assert!(h[7] == 'M' && s[0] == 'S' && h[15] == s[12]); // Smale 1 is the settled part of Hilbert 8
     for (name, code, what, status) in PICKS {
         let mut parts = name.split(' ');
         let (lst, num) = (parts.next().unwrap(), parts.next().unwrap().parse::<usize>().unwrap());
@@ -605,12 +605,12 @@ fn main() {
 **Ran 2026-11-23 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
-hilbert 1-23: S M S V S V S O M S M M M S V O S S S V S S V
-hilbert tally: proved 11, partly 5, open 2, kind note 5, total 23
-smale   1-18: O S O O O M O V O M M M O S O M S V
-smale   tally: proved 3, partly 5, open 8, kind note 2, total 18
-on both lists: Hilbert 8 = Smale 1 (Riemann), Hilbert 16 = Smale 13 (limit cycles)
-Hilbert 8  Riemann hypothesis, Goldbach, twin primes  open
+hilbert 1-23: S M S V S V S M M S M M M S V O S S S V S S V
+hilbert tally: proved 11, partly 6, open 1, kind note 5, total 23
+smale   1-18: S S O O O M O V O M M M O S O M S V
+smale   tally: proved 4, partly 5, open 7, kind note 2, total 18
+on both lists: Hilbert 8 includes Smale 1 (Riemann), Hilbert 16 = Smale 13 (limit cycles)
+Hilbert 8  Riemann hypothesis, Goldbach, twin primes  RH proved 2026-11-21; Goldbach, twin primes open
 Hilbert 10 a test for whole-number solutions          no test exists: proved 1970
 Hilbert 16 most limit cycles at degree n              open; degree 2 has at least 4, 1979
 Smale 3    P versus NP                                open
@@ -867,7 +867,7 @@ example : fib 20 = 6765 ∧ 20 * fib 20 = 135300 := by decide
 - **Reading research news.** Any headline "a famous problem solved" can be tested against the rule here: which question, which answer, what status, which source, what date.
 
 > **Say it back**
-> Hilbert listed 23 problems in 1900 and Smale 18 in 1998. Each is marked by the status of its answer: proved, refuted, claimed or open, case by case when a problem splits, or a kind note when it is not a yes-or-no question. Hilbert's tenth is settled because "no process exists" is proved, Matiyasevich 1970. His key step was that $`F_n^2`$ divides $`F_m`$ only when $`n F_n`$ divides m, which turns divisibility into power-like growth. Of the six picks, Hilbert 10 and Smale 17 are proved; Hilbert 8 and 16 and Smale 3 and 15 are open.
+> Hilbert listed 23 problems in 1900 and Smale 18 in 1998. Each is marked by the status of its answer: proved, refuted, claimed or open, case by case when a problem splits, or a kind note when it is not a yes-or-no question. Hilbert's tenth is settled because "no process exists" is proved, Matiyasevich 1970. His key step was that $`F_n^2`$ divides $`F_m`$ only when $`n F_n`$ divides m, which turns divisibility into power-like growth. Of the six picks, Hilbert 10 and Smale 17 are proved; Hilbert 8 is partly settled, its Riemann hypothesis proved in 2026 and Goldbach and twin primes open; Hilbert 16 and Smale 3 and 15 are open.
 
 ---
 

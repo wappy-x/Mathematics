@@ -5,11 +5,11 @@
 # by the card's formula; limit cycles of a degree-7 field, by a computed return map
 # against the exact radii; Newton's method on x^5 - x - 1 against bisection.
 import math
-HIL = "SMSVSVSOMSMMMSVOSSSVSSV"   # S answered: proved, M partly, O open, V kind note
-SMA = "OSOOOMOVOMMMOSOMSV"
-BY_STATUS = {"hilbert": ("1 3 5 7 10 14 17 18 19 21 22", "2 9 11 12 13", "8 16", "4 6 15 20 23"),
-             "smale": ("2 14 17", "6 10 11 12 16", "1 3 4 5 7 9 13 15", "8 18")}   # typed again, by status
-PICKS = [("Hilbert 8", "O", "Riemann hypothesis, Goldbach, twin primes", "open"),
+HIL = "SMSVSVSMMSMMMSVOSSSVSSV"   # S answered: proved, M partly, O open, V kind note
+SMA = "SSOOOMOVOMMMOSOMSV"
+BY_STATUS = {"hilbert": ("1 3 5 7 10 14 17 18 19 21 22", "2 8 9 11 12 13", "16", "4 6 15 20 23"),
+             "smale": ("1 2 14 17", "6 10 11 12 16", "3 4 5 7 9 13 15", "8 18")}   # typed again, by status
+PICKS = [("Hilbert 8", "M", "Riemann hypothesis, Goldbach, twin primes", "RH proved 2026-11-21; Goldbach, twin primes open"),
          ("Hilbert 10", "S", "a test for whole-number solutions", "no test exists: proved 1970"),
          ("Hilbert 16", "O", "most limit cycles at degree n", "open; degree 2 has at least 4, 1979"),
          ("Smale 3", "O", "P versus NP", "open"),
@@ -21,8 +21,8 @@ for name, codes in (("hilbert", HIL), ("smale", SMA)):
     print(f"{name:<7} tally: proved {t[0]}, partly {t[1]}, open {t[2]}, kind note {t[3]}, total {sum(t)}")
     rows = [" ".join(str(i + 1) for i, x in enumerate(codes) if x == c) for c in "SMOV"]
     assert sum(t) == len(codes) and tuple(rows) == BY_STATUS[name]   # the two typings agree
-print("on both lists: Hilbert 8 = Smale 1 (Riemann), Hilbert 16 = Smale 13 (limit cycles)")
-assert HIL[7] == SMA[0] and HIL[15] == SMA[12]   # one problem, typed in both lists
+print("on both lists: Hilbert 8 includes Smale 1 (Riemann), Hilbert 16 = Smale 13 (limit cycles)")
+assert (HIL[7], SMA[0]) == ("M", "S") and HIL[15] == SMA[12]   # Smale 1 is the settled part of Hilbert 8
 for name, code, what, status in PICKS:
     lst, num = name.split()
     assert (HIL if lst == "Hilbert" else SMA)[int(num) - 1] == code   # lines match ledger

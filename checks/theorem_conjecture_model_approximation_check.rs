@@ -10,7 +10,7 @@ const LEDGER: [(&str, &str, &str, u32, &str); 10] = [ // claim, kind, status, ye
     ("Fermat's last theorem", "conjecture", "proved", 1995, "open 1637 to 1993"),
     ("Poincare conjecture", "conjecture", "proved", 2006, "checked by three teams"),
     ("Goldbach", "conjecture", "open", 2026, "checked to 4e18 in 2014"),
-    ("Riemann hypothesis", "conjecture", "open", 2026, "zeros checked to 3e12"),
+    ("Riemann hypothesis", "conjecture", "proved", 2026, "formal proof certified 2026-11-21"),
     ("Polya: L(n) <= 0 for n >= 2", "conjecture", "refuted", 1958, "Haselgrove; first failure 906150257"),
     ("Black-Scholes call 9.23", "model", "proved", 1973, "inside the model; fit is evidence"),
     ("P(<= 55 heads) ~ Phi(1.1)", "approximation", "proved", 2026, "error computed below"),

@@ -1093,7 +1093,7 @@ example : Nat.sqrt 48612265 + 1 = 6973 ∧ 2 ^ 5 * 13946 ^ 2 = 6223709312 := by 
 - [Sphere packing, solved in dimensions 8 and 24](06-sphere-packing-and-viazovska.md): lattices in many dimensions, settled exactly in two of them.
 - [Cycle double cover](04-cycle-double-cover-conjecture.md) and [Sunflowers and union-closed families](05-sunflower-and-union-closed-conjectures.md): combinatorial conjectures with recent progress, at different statuses.
 - [Machines that prove](../07-Physics%2C%20Finance%20and%20Machines/02-ai-and-mathematics-2026.md): the audit list applied to the 2026 disproof and three other machine claims.
-- The status register (planned, shelf 07): where this problem's dated status lines are kept.
+- [The status register](../07-Physics%2C%20Finance%20and%20Machines/05-the-status-register.md): where this problem's dated status lines are kept.
 
 The open question: is the true exponent of $`u(n)`$ closer to 1 or to 4/3, and does it even exist as a single limit?
 

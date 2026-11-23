@@ -4,12 +4,12 @@
 // against a second road: Matiyasevich's 1970 Fibonacci lemma, by direct remainders and
 // by the card's formula; limit cycles of a degree-7 field, by a computed return map
 // against the exact radii; Newton's method on x^5 - x - 1 against bisection.
-const HIL: &str = "SMSVSVSOMSMMMSVOSSSVSSV"; // S answered: proved, M partly, O open, V kind note
-const SMA: &str = "OSOOOMOVOMMMOSOMSV";
-const BY_STATUS: [[&str; 4]; 2] = [["1 3 5 7 10 14 17 18 19 21 22", "2 9 11 12 13", "8 16", "4 6 15 20 23"],
-                                   ["2 14 17", "6 10 11 12 16", "1 3 4 5 7 9 13 15", "8 18"]]; // typed again, by status
+const HIL: &str = "SMSVSVSMMSMMMSVOSSSVSSV"; // S answered: proved, M partly, O open, V kind note
+const SMA: &str = "SSOOOMOVOMMMOSOMSV";
+const BY_STATUS: [[&str; 4]; 2] = [["1 3 5 7 10 14 17 18 19 21 22", "2 8 9 11 12 13", "16", "4 6 15 20 23"],
+                                   ["1 2 14 17", "6 10 11 12 16", "3 4 5 7 9 13 15", "8 18"]]; // typed again, by status
 const PICKS: [(&str, char, &str, &str); 6] = [
-    ("Hilbert 8", 'O', "Riemann hypothesis, Goldbach, twin primes", "open"),
+    ("Hilbert 8", 'M', "Riemann hypothesis, Goldbach, twin primes", "RH proved 2026-11-21; Goldbach, twin primes open"),
     ("Hilbert 10", 'S', "a test for whole-number solutions", "no test exists: proved 1970"),
     ("Hilbert 16", 'O', "most limit cycles at degree n", "open; degree 2 has at least 4, 1979"),
     ("Smale 3", 'O', "P versus NP", "open"),
@@ -63,9 +63,9 @@ fn main() {
             .map(|(i, _)| (i + 1).to_string()).collect::<Vec<_>>().join(" ")).collect();
         assert!(t.iter().sum::<usize>() == codes.len() && rows == BY_STATUS[li]); // the two typings agree
     }
-    println!("on both lists: Hilbert 8 = Smale 1 (Riemann), Hilbert 16 = Smale 13 (limit cycles)");
+    println!("on both lists: Hilbert 8 includes Smale 1 (Riemann), Hilbert 16 = Smale 13 (limit cycles)");
     let (h, s): (Vec<char>, Vec<char>) = (HIL.chars().collect(), SMA.chars().collect());
-    assert!(h[7] == s[0] && h[15] == s[12]);    // one problem, typed in both lists
+    assert!(h[7] == 'M' && s[0] == 'S' && h[15] == s[12]); // Smale 1 is the settled part of Hilbert 8
     for (name, code, what, status) in PICKS {
         let mut parts = name.split(' ');
         let (lst, num) = (parts.next().unwrap(), parts.next().unwrap().parse::<usize>().unwrap());

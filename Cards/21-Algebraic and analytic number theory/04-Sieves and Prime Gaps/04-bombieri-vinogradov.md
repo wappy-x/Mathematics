@@ -12,7 +12,7 @@ Call that worst miss E(q). Now do it for every modulus from 1 to 1,000, which is
 
 The Bombieri-Vinogradov theorem says this total stays small for every large x, for all moduli up to about $`\sqrt{x}`$ at once. It does not promise that each modulus behaves. It promises that the moduli behave on average. For most proofs about primes, the average is enough.
 
-That average is exactly what the generalized Riemann hypothesis (GRH: every non-trivial zero of every Dirichlet L-function has real part 1/2) would give. So the theorem works as a proved stand-in for GRH in sieve methods, and the sharper twin-prime bounds and the bounded-gap results on this shelf rest on it.
+That average is exactly what the generalized Riemann hypothesis (GRH: every non-trivial zero of every Dirichlet L-function has real part 1/2) gives. GRH for these L-functions was proved only in 2026, with the Riemann hypothesis; for decades before, the theorem worked as a proved stand-in for it in sieve methods, and the sharper twin-prime bounds and the bounded-gap results on this shelf rest on it.
 
 **For every power A there is a power B such that the worst class errors π(y; q, a) − li(y)/φ(q), added over all moduli q up to $`\sqrt{x}/(\log x)^B`$, total at most a constant times $`x/(\log x)^A`$: the primes have level of distribution 1/2, the same range GRH would give, proved without it.**
 

@@ -16,7 +16,7 @@ The same sum is the only answer to Catalan's equation: $`3^2 - 2^3 = 1`$ is the 
 
 **If a + b = c with no common factor, then c is less than a constant, fixed by ε, times the product of the distinct primes in abc, raised to the power 1 + ε, for any small ε > 0.**
 
-**What kind of fact this is:** a conjecture, not accepted as proved as of 2026-11-15. Its current status belongs to the frontier wing's planned card. On this card three things are proved: that the ε cannot be dropped, that abc would imply the Fermat, Catalan and Fermat-Catalan results in the picture, and that Szpiro's curve inequality implies a weaker abc. That abc implies Szpiro is stated with sources. Every search count is evidence only.
+**What kind of fact this is:** a conjecture, not accepted as proved as of 2026-11-15. Its dated status is on the frontier wing's [The abc conjecture](../../25-Frontier/03-Primes%20and%20Numbers/04-abc-conjecture.md). On this card three things are proved: that the ε cannot be dropped, that abc would imply the Fermat, Catalan and Fermat-Catalan results in the picture, and that Szpiro's curve inequality implies a weaker abc. That abc implies Szpiro is stated with sources. Every search count is evidence only.
 
 ### The picture: what abc would decide
 

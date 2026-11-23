@@ -775,7 +775,7 @@ example : (T 1 + T 3 - T 4 : LaurentPolynomial ℤ) ≠ T (-1) + T (-3) - T (-4)
 
 ## Where this goes next
 
-- Knot theory in depth (planned, wing 25 Frontier): the HOMFLY polynomial, which extends the skein relation to two letters, and Khovanov homology, which replaces each power of $`t`$ by a group (Khovanov, Sources). Its alternating count of ranks returns the Jones polynomial, up to a standard factor, much as the alternating count of vertices, edges and faces returns a surface's Euler characteristic.
+- Knot theory in depth, not yet a card in this library: the HOMFLY polynomial, which extends the skein relation to two letters, and Khovanov homology, which replaces each power of $`t`$ by a group (Khovanov, Sources). Its alternating count of ranks returns the Jones polynomial, up to a standard factor, much as the alternating count of vertices, edges and faces returns a surface's Euler characteristic.
 
 The question the rule leaves open: is the unknot the only knot whose Jones polynomial is 1? As of 2026-11-14 nobody knows.
 

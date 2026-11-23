@@ -263,7 +263,7 @@ In three dimensions the square is at most a constant times $`\lVert\mathbf{w}\rV
 
 In two dimensions the same weak solution is unique and, for smooth data, smooth. The energy estimate behind this closes in two dimensions and not in three; the measurement of that gap is on [The energy inequality, and the gap it leaves in three dimensions](03-energy-inequality-and-the-regularity-question.md).
 
-Whether smooth solutions in three dimensions last forever is one of the Clay Millennium Problems. Its statement is on Navier-Stokes (planned), in wing 25. A 2026 claim of forced blow-up (a smooth flow, driven by a specially built outside force, becoming infinite in finite time) is on The September 2026 Navier-Stokes claim (planned). This card judges neither.
+Whether smooth solutions in three dimensions last forever is one of the Clay Millennium Problems. Its statement is on [Navier-Stokes](../../25-Frontier/02-The%20Millennium%20Problems/04-navier-stokes-existence-and-smoothness.md), in wing 25. A 2026 claim of forced blow-up (a smooth flow, driven by a specially built outside force, becoming infinite in finite time) is on [The September 2026 Navier-Stokes claim](../../25-Frontier/05-Analysis%20and%20Dynamics/01-navier-stokes-blow-up-claim-2026.md). This card judges neither.
 
 ---
 
@@ -1089,7 +1089,7 @@ example : (16 * (1 / 30) / 2 : ℚ) = 4 / 15 := by norm_num
 ## Where this goes next
 
 - [The energy inequality, and the gap it leaves in three dimensions](03-energy-inequality-and-the-regularity-question.md): the next card, which measures why the estimate that gives uniqueness closes in two dimensions and not in three.
-- Navier-Stokes (planned): the Clay Millennium Problem statement in wing 25. The 2026 claim of a forced blow-up has its own planned card there, The September 2026 Navier-Stokes claim.
+- [Navier-Stokes](../../25-Frontier/02-The%20Millennium%20Problems/04-navier-stokes-existence-and-smoothness.md): the Clay Millennium Problem statement in wing 25. The 2026 claim of a forced blow-up has its own card there, [The September 2026 Navier-Stokes claim](../../25-Frontier/05-Analysis%20and%20Dynamics/01-navier-stokes-blow-up-claim-2026.md).
 
 This card proves that weak solutions exist. It leaves open whether, in three dimensions, they are unique and stay smooth.
 

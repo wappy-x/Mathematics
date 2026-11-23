@@ -32,7 +32,7 @@ def ledger : List Row :=
    ⟨"Fermat's last theorem", conjecture, proved, 1995⟩,
    ⟨"Poincare conjecture", conjecture, proved, 2006⟩,
    ⟨"Goldbach", conjecture, «open», 2026⟩,
-   ⟨"Riemann hypothesis", conjecture, «open», 2026⟩,
+   ⟨"Riemann hypothesis", conjecture, proved, 2026⟩,
    ⟨"Polya: L(n) <= 0 for n >= 2", conjecture, refuted, 1958⟩,
    ⟨"Black-Scholes call 9.23", model, proved, 1973⟩,
    ⟨"P(<= 55 heads) ~ Phi(1.1)", approximation, proved, 2026⟩,
@@ -103,7 +103,7 @@ theorem status_can_move_backwards :
 -- statuses across (open, claimed, proved, refuted).
 example : [«theorem», conjecture, model, approximation].map
       (fun k => [«open», claimed, proved, refuted].map (gridCount k)) =
-    [[0, 0, 1, 0], [2, 0, 3, 1], [0, 0, 1, 0], [0, 0, 2, 0]] := by decide
+    [[0, 0, 1, 0], [1, 0, 4, 1], [0, 0, 1, 0], [0, 0, 2, 0]] := by decide
 -- One kind, conjecture, sits under three statuses; one status, proved, sits beside all four kinds.
 example : (((ledger.filter (·.kind = conjecture)).map (·.status)).dedup).length = 3 := by decide
 example : (((ledger.filter (·.status = proved)).map (·.kind)).dedup).length = 4 := by decide

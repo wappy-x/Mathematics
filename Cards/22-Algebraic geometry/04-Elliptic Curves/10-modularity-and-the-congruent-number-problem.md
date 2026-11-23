@@ -163,7 +163,7 @@ The rank decides everything, and rank is hard to compute. [The L-function](07-l-
 
 That series is only guaranteed to converge when the real part of $`s`$ is above 3/2. The [Birch and Swinnerton-Dyer](08-birch-and-swinnerton-dyer-statement.md) conjecture is about $`s = 1`$, outside that range. Something must give $`L(E, 1)`$ a meaning.
 
-The **modularity theorem** does. It says the $`a_m`$ are the coefficients of a weight-2 modular form of level $`N`$: a function on the upper half plane with a large group of symmetries. The level is the conductor $`N`$, and weight 2 fixes the factor, here $`t^2`$, that each symmetry multiplies by. Wiles, and Taylor and Wiles, proved it in 1995 for semistable curves, a large class that includes the curves Fermat's Last Theorem needs; Breuil, Conrad, Diamond and Taylor finished every curve over $`\mathbb{Q}`$ in 2001. Modularity (planned, number-theory wing) states the theorem and follows it to Fermat's Last Theorem.
+The **modularity theorem** does. It says the $`a_m`$ are the coefficients of a weight-2 modular form of level $`N`$: a function on the upper half plane with a large group of symmetries. The level is the conductor $`N`$, and weight 2 fixes the factor, here $`t^2`$, that each symmetry multiplies by. Wiles, and Taylor and Wiles, proved it in 1995 for semistable curves, a large class that includes the curves Fermat's Last Theorem needs; Breuil, Conrad, Diamond and Taylor finished every curve over $`\mathbb{Q}`$ in 2001. [Modularity](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/08-modularity-and-the-proof-of-fermat.md), on the number-theory wing, states the theorem and follows it to Fermat's Last Theorem.
 
 What it gives a curve, in three lines:
 
@@ -826,7 +826,7 @@ example : ¬ IsSquare (15450 : ℕ) := by decide +kernel
 
 - **Fibonacci's 1225 contest problem.** At the court of Frederick II he was asked for a square that stays a square when 5 is added or taken away. That is Step 0 with $`n = 5`$, and the triangle 3/2, 20/3, 41/6 answers it.
 - **Fermat's area-1 theorem.** Fermat proved by descent that no rational right triangle has area 1. On this card that is the statement that $`E_1`$ has rank 0, and Tunnell's counts confirm it.
-- **Fermat's Last Theorem.** The modularity theorem, applied to a curve built from a supposed solution, rules the solution out. Modularity (planned) tells that story.
+- **Fermat's Last Theorem.** The modularity theorem, applied to a curve built from a supposed solution, rules the solution out. [Modularity](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/08-modularity-and-the-proof-of-fermat.md) tells that story.
 - **Computer algebra and curve databases.** Ranks, signs $`w`$ and L-values for millions of curves are computed with sums like $`g(t)`$, whose fast convergence only modularity justifies.
 - **Point counting for keys.** The routine that finds $`a_p`$ here is the slow version of the one in [Curves for keys](09-elliptic-curve-cryptography-and-schoof.md), where counts decide whether a curve is safe.
 
@@ -844,7 +844,7 @@ example : ¬ IsSquare (15450 : ℕ) := by decide +kernel
 
 ## Where this goes next
 
-- Birch and Swinnerton-Dyer (planned, Frontier wing): the conjecture's status and prize, and the exact gap that leaves "$`2A = B`$ implies congruent" open.
+- [Birch and Swinnerton-Dyer](../../25-Frontier/02-The%20Millennium%20Problems/02-birch-and-swinnerton-dyer.md), on the Frontier wing: the conjecture's status and prize, and the exact gap that leaves "$`2A = B`$ implies congruent" open.
 - [Modularity](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/08-modularity-and-the-proof-of-fermat.md): the same theorem used for Fermat, where the curve has no complex multiplication and the 1995 proof is essential.
 
 The question this card leaves open: is every square-free number that leaves 5, 6 or 7 on division by 8 congruent?

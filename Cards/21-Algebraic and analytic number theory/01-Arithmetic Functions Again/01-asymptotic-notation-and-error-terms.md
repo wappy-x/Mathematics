@@ -846,7 +846,7 @@ example : Nat.primeCounting 58 = 16 := by
 - [Chebyshev's bounds](08-chebyshev-bounds.md) and [Mertens' theorems](09-mertens-theorems.md): the first proved O and ~ statements about primes.
 - [Sieving by inclusion-exclusion](../04-Sieves%20and%20Prime%20Gaps/01-the-legendre-sieve-and-the-parity-problem.md): where a main term is easy and the error term decides everything.
 
-The question this card leaves open is how small the prime count's error term can be made. With wing 07's logarithmic integral as the main term, the Riemann hypothesis is equivalent to an error of O(√x log x); it is open as of 2026-11-15, and the next shelf's card [The Riemann hypothesis](../02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/09-riemann-hypothesis-statement-and-equivalents.md) states it exactly.
+The question this card leaves open is how small the prime count's error term can be made. With wing 07's logarithmic integral as the main term, the Riemann hypothesis is equivalent to an error of O(√x log x); it was open until a formal proof was certified on 2026-11-21 ([its status](../../25-Frontier/02-The%20Millennium%20Problems/01-riemann-hypothesis.md)), and the next shelf's card [The Riemann hypothesis](../02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/09-riemann-hypothesis-statement-and-equivalents.md) states it exactly.
 
 ---
 

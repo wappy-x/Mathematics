@@ -34,4 +34,4 @@ The whole library in reading order: **25 wings, 255 shelves and 1,866 cards**, f
 | 24 | [Computability and complexity](Cards/24-Computability%20and%20complexity/README.md) | What computers can and can't do, and how fast. | 7 | 57 of 57 |
 | 25 | [Frontier](Cards/25-Frontier/README.md) | How research works, and the great open problems. | 7 | 43 of 43 |
 
-Want to help write the planned cards? The [contributing guide](.github/CONTRIBUTING.md) shows how to claim a shelf and build it.
+Want to help? The [contributing guide](.github/CONTRIBUTING.md) shows how to report a mistake, improve a card or build new ones.

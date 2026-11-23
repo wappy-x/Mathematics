@@ -14,7 +14,7 @@ A check to a height is evidence about all heights, never proof. What is proved f
 
 **On the critical line, zeta turned by a known angle is a real function Z(t), so each sign change proves a zero on the line; matched against an exact count of all zeros, this has placed every zero below height 3 × 10^12, about 12,362,403,019,661 of them, on the line, while proofs for all heights reach only a share above two fifths.**
 
-**What kind of fact this is:** theorems and one computation. Hardy's theorem is proved here in outline, with a folded sketch; Selberg's, Levinson's and Conrey's are stated with their key idea and sources. The verified range proves the hypothesis up to height 3 × 10^12 and says nothing above it. The full Riemann hypothesis is open as of 2026-11-15.
+**What kind of fact this is:** theorems and one computation. Hardy's theorem is proved here in outline, with a folded sketch; Selberg's, Levinson's and Conrey's are stated with their key idea and sources. The verified range proves the hypothesis up to height 3 × 10^12 and says nothing above it. The full Riemann hypothesis was open until 2026-11-21, when a formal proof was certified ([The Riemann hypothesis](../../25-Frontier/02-The%20Millennium%20Problems/01-riemann-hypothesis.md)).
 
 ### The picture: Hardy's function crossing zero
 
@@ -81,7 +81,7 @@ N(T) = \frac{\vartheta(T)}{\pi} + 1 + S(T) \approx \frac{T}{2\pi}\log\frac{T}{2\
 - **A sign change proves a zero; no sign change proves nothing.** Two zeros inside one sampling step cancel. Sampling every 2 units up to 100 finds 25 of the 29.
 - **The share theorems are about large heights.** They say nothing about the first ten trillion zeros, or about any one zero.
 - **The count of all zeros must be exact.** The smooth part of $`N(100)`$ is 29.0024; only an exact count (argument principle, or Turing's method) shows it is 29.
-- **None of this is the Riemann hypothesis.** More than two fifths on the line leaves the rest unproved.
+- **None of this is the Riemann hypothesis.** More than two fifths on the line leaves the rest unproved by these methods; the hypothesis was proved in 2026 by a formal proof.
 
 ---
 
@@ -1855,10 +1855,10 @@ theorem sign_change_of_hardyZ_gives_zero_on_line (a b : ℝ) (hab : a < b)
 
 ## Where this goes next
 
-- [The Riemann hypothesis](09-riemann-hypothesis-statement-and-equivalents.md): the frontier wing's account of the conjecture today.
+- [The Riemann hypothesis](../../25-Frontier/02-The%20Millennium%20Problems/01-riemann-hypothesis.md): the frontier wing's account of the problem today, proved since 2026-11-21.
 - [The August 2026 zeta-zeros claim](../../25-Frontier/05-Analysis%20and%20Dynamics/03-zeta-zero-proportion-2026.md): a recent claim about the share of zeros on the line.
 
-The question this card leaves open: can the share of zeros on the line be pushed all the way to 1, and would even that prove that every zero is on it?
+The question this card leaves open: the 2026 proof puts every zero on the line by another road; can the counting methods here, alone, push the share all the way to 1?
 
 ---
 

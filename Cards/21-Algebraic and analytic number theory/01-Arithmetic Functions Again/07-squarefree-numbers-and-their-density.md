@@ -183,7 +183,7 @@ Yet the claim is false. Haselgrove proved in 1958 that it fails somewhere, and T
 
 - **Proved here:** $`Q(x) = 6x/\pi^2 + E(x)`$ with $`|E(x)| \le D + x/D \le 3\sqrt{x}`$, so the density is $`6/\pi^2`$.
 - **Evidence only:** for every $`x`$ up to a million, $`|E(x)|/\sqrt{x}`$ stays below 0.68. The largest value, 0.67909, comes at $`x = 3`$. At a million it is 0.00110.
-- **Open as of 2026-11-15:** an error at most a power of $`x`$ below one half, such as $`x^{0.49}`$, without assuming anything about where the zeros of zeta lie. The error is governed by those zeros, the subject of [The Riemann hypothesis](../02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/09-riemann-hypothesis-statement-and-equivalents.md).
+- **Open until 2026-11-21:** an error at most a power of $`x`$ below one half, such as $`x^{0.49}`$. The error is governed by the zeros of zeta, the subject of [The Riemann hypothesis](../02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/09-riemann-hypothesis-statement-and-equivalents.md). Such a power was known only by assuming the hypothesis, until a formal proof of it was certified on 2026-11-21 ([its status](../../25-Frontier/02-The%20Millennium%20Problems/01-riemann-hypothesis.md)).
 
 ---
 

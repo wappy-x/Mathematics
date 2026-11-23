@@ -757,7 +757,7 @@ example : -1 / (2 * π ^ 2) * (π ^ 2 / 6) = -1 / 12 := by
 - [Zeta's zeros and the primes](09-zeros-of-zeta-and-the-primes.md): the zeros in the strip, and the primes.
 - [The functional equation](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/02-functional-equation-proved.md): the mirror proved by theta and Poisson summation.
 
-Do all the zeros in the strip 0 < Re s < 1 lie on the mirror line Re s = 1/2? That is the Riemann hypothesis, unproved as of 2026-11-11.
+Do all the zeros in the strip 0 < Re s < 1 lie on the mirror line Re s = 1/2? That is the Riemann hypothesis, open from 1859 until a formal proof was certified on 2026-11-21 ([The Riemann hypothesis](../../25-Frontier/02-The%20Millennium%20Problems/01-riemann-hypothesis.md)).
 
 ---
 

@@ -890,7 +890,7 @@ example : Nat.gcd 360 2002 = 2 := by decide
 - [The von Mangoldt function](04-von-mangoldt-and-the-logarithmic-derivative.md): takes logs of the product form to weight prime powers by log p.
 - [Squarefree numbers](07-squarefree-numbers-and-their-density.md): uses the same signs to count the numbers with no squared prime, about six in every ten.
 
-This card makes the signs exact, but not their running total. How small does μ(1) + μ(2) + … + μ(x) stay as x grows? Proving it is a vanishing share of x is known to be equivalent to the prime number theorem. Holding it below x raised to every power above one half is equivalent to the Riemann hypothesis, open as of 2026-11-15.
+This card makes the signs exact, but not their running total. How small does μ(1) + μ(2) + … + μ(x) stay as x grows? Proving it is a vanishing share of x is known to be equivalent to the prime number theorem. Holding it below x raised to every power above one half is equivalent to the Riemann hypothesis, open until a formal proof was certified on 2026-11-21 ([The Riemann hypothesis](../../25-Frontier/02-The%20Millennium%20Problems/01-riemann-hypothesis.md)).
 
 ---
 

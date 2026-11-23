@@ -8,7 +8,7 @@
 
 A ten-digit calculator shows $`1782^{12} + 1841^{12}`$ and $`1922^{12}`$ as the same number, 2.541210259e39, as if Fermat's last theorem failed for the power 12. It does not: the left side is odd and the right side even ([Machines in proofs](../01-How%20Research%20Works/06-computer-assistance-and-formal-verification.md) works this near miss). The calculator produced a **candidate**: an output that looks like a result. It did not produce a **confirmation**: a result that survives a check that does not depend on the thing being checked.
 
-In 2026, AI systems (computer programs trained on large amounts of text and code) reported four results in research mathematics. AI labs announced them on these dates:
+In 2026, AI systems (computer programs trained on large amounts of text and code) reported several results in research mathematics. This card audits four, which AI labs announced on these dates:
 
 - **2026-05-20, unit distances.** A disproof of a 1946 conjecture about how many pairs of points in the plane can be exactly one unit apart.
 - **2026-08-10, zeta zeros.** A proof that at least two thirds of the zeros of the Riemann zeta function, counted with multiplicity, are simple (not repeated) and lie on the critical line (the line of complex numbers with real part 1/2). The best earlier bound for the line alone was five twelfths.
@@ -122,7 +122,7 @@ So a claim is never upgraded beyond its source: an announcement stays claimed un
 | Fermat formalised: the Lean line above | exact; matched by a tool to the library's statement | public Lean repository, linked from the outside checker's post | pass: an outsider compiled it and ran the matching tool, 2026-09-04 | formalisation: proved; the theorem itself: proved 1995 |
 | Navier-Stokes: for every viscosity above zero, smooth data and a smooth force with no global smooth solution | exact, in the repository; offered as alternatives to Clay's versions C and D | paper; Lean files | none: two expositions by outside mathematicians (2026-09-28, 2026-11-04) retell it and claim no original contribution; a critique, 2026-10-06, finds the Lean files do not match the written proof | claimed |
 
-The "Zeta zeros" row needs one warning. A lower bound of 67.25 percent is a claimed floor on a share, not a measured share. A share of 100 percent would need every zero to be simple as well as on the line. The Riemann hypothesis says nothing about repeats, and that every zero is simple is a separate conjecture, open as of 2026-11-23.
+The "Zeta zeros" row needs one warning. A lower bound of 67.25 percent is a claimed floor on a share, not a measured share. A share of 100 percent would need every zero to be simple as well as on the line. The Riemann hypothesis, proved since 2026-11-21, puts every zero on the line but does not make every zero simple; that every zero is simple is a separate conjecture, open as of 2026-11-23.
 
 <details>
 <summary>What each 2026 claim says, in one paragraph each</summary>

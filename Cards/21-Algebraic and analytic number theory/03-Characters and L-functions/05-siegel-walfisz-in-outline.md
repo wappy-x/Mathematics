@@ -696,7 +696,7 @@ example : 78498 = 7 * 11214 := by norm_num
 >
 > - **Taking "uniform" to mean "for every modulus".** The range is $`q \le (\log x)^A`$ with A fixed as x grows: with A = 2, up to 190.87 at a million. A modulus growing like a power of x leaves every such range (Step 6). One count cannot show it: at q = 9,973 the classes hold 1 to 17 primes, the scatter of small counts (7.87 per class, standard deviation 2.04), and 9,973 is inside the range for A = 4.
 > - **Blaming the leftover gap on an exceptional zero.** The squares mod 7 trail by 103 primes. That is Chebyshev's bias, the same size as $`\sqrt{x}/\log x`$ = 72.38. It comes from prime squares, which all land in square classes. A zero at 0.6 would force a gap of 563.
-> - **Thinking GRH is needed for the theorem.** It is not: Siegel-Walfisz is proved. GRH, the generalized Riemann hypothesis (every non-trivial zero of every L(s, χ) has real part 1/2), would give the stronger, effective error $`\sqrt{x}\log x`$ for q up to nearly $`\sqrt{x}`$.
+> - **Thinking GRH is needed for the theorem.** It is not: Siegel-Walfisz is proved. GRH, the generalized Riemann hypothesis (every non-trivial zero of every L(s, χ) has real part 1/2), gives the stronger, effective error $`\sqrt{x}\log x`$ for q up to nearly $`\sqrt{x}`$; it was proved in 2026, with the Riemann hypothesis.
 
 ---
 

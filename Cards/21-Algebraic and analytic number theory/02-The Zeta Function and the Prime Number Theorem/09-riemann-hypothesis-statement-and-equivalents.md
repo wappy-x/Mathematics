@@ -21,7 +21,7 @@ A third equivalent, about sums of divisors, is stated with its source and checke
 
 **RH says every zero of zeta in the critical strip has real part exactly 1/2; this is the same statement as "the prime count misses Li(x) by at most about √x log x" and as "M(x) grows no faster than x^(1/2 + ε)", because the growth of a counting function decides how far left its Dirichlet series converges, and that decides where zeta can be zero.**
 
-**What kind of fact this is:** RH is a conjecture, unproved as of 2026-11-15. Every zero up to height 3 × 10^12 is on the line (Platt and Trudgian, 2021). The equivalences are theorems. The Mertens equivalence and the prime-count equivalence are proved on this card in Why it works, with one quoted bound on 1/ζ named there. Robin's divisor-sum equivalent is stated with its source. The checks to a million are evidence, not proof.
+**What kind of fact this is:** RH is a conjecture by kind. It was unproved until 2026-11-21, when others certified a formal proof released the day before; its dated status is on [The Riemann hypothesis](../../25-Frontier/02-The%20Millennium%20Problems/01-riemann-hypothesis.md). Every zero up to height 3 × 10^12 is on the line (Platt and Trudgian, 2021). The equivalences are theorems. The Mertens equivalence and the prime-count equivalence are proved on this card in Why it works, with one quoted bound on 1/ζ named there. Robin's divisor-sum equivalent is stated with its source. The checks to a million are evidence, not proof.
 
 ### The picture: M(x) inside the band ±√x
 
@@ -583,9 +583,9 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Prime tables without counting.** Explicit bounds such as Schoenfeld's give guaranteed ranges for π(x) and for gaps between primes, if RH holds. Unconditional versions, without RH, are much weaker.
+- **Prime tables without counting.** Explicit bounds such as Schoenfeld's give guaranteed ranges for π(x) and for gaps between primes. They assumed RH, so they hold outright since its 2026 proof; versions proved without RH are much weaker.
 - **Primality testing.** Miller's 1976 deterministic version of the Miller–Rabin test is proved correct only under the generalized Riemann hypothesis, the same statement for Dirichlet L-functions.
-- **Conditional theorems.** Many papers prove results "assuming RH". Each equivalent on this card is a route into those results, and each gives a way to test RH with a computer.
+- **Conditional theorems.** Many papers prove results "assuming RH"; since the 2026 proof they hold outright. Each equivalent on this card is a route into those results, and each gave a way to test RH with a computer.
 - **A prize problem.** RH has been one of the seven Millennium Prize problems, with a million-dollar prize, since 2000.
 
 > **Say it back**
@@ -604,7 +604,7 @@ ALL CHECKS PASS
 - [Zeros on the line](10-zeros-on-the-critical-line-and-proportion-results.md): what is proved instead of RH. Infinitely many zeros lie on the line (Hardy), and a positive share of them do (Selberg, Levinson, Conrey).
 - [The Riemann hypothesis](../../25-Frontier/02-The%20Millennium%20Problems/01-riemann-hypothesis.md): the frontier card on the current state of the problem.
 
-The question this card leaves open: every equivalent here is as hard as RH itself, so is there any counting statement, provable with today's tools, that pins the zeros to the line?
+The question this card leaves open: the 2026 proof is a formal library of about 17 million lines, so is there a proof a person can read, through one of the counting statements here?
 
 ---
 

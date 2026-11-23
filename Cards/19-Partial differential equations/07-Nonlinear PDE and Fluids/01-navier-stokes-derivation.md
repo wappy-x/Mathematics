@@ -86,7 +86,7 @@ And the pressure's own equation, found from the velocity alone:
 - **The density is fixed.** That turns mass balance into $`\nabla\cdot\mathbf u = 0`$. It holds far below the speed of sound: excellent at 1 m/s, wrong in a jet engine, where pressure and density are tied by a law of state and pressure has a different job.
 - **The fluid is Newtonian.** Stress grows in proportion to the rate of shearing, with one fixed $`\mu`$. Paint, blood at low shear and sewage sludge break this, and the $`\mu\,\Delta\mathbf u`$ term is wrong.
 - **One temperature.** $`\mu`$ is taken as fixed. Warm water is less viscous, so use $`\mu`$ at the water's real temperature.
-- **"A solution" means a classical one** (all the derivatives the equation uses exist and are continuous). Poiseuille flow is one. In three dimensions, a smooth start is proved to give a classical solution for some time; whether it lasts for all time is unproved. The weaker kind that always exists is [Leray's weak solutions](02-leray-weak-solutions-of-navier-stokes.md).
+- **"A solution" means a classical one** (all the derivatives the equation uses exist and are continuous). Poiseuille flow is one. In three dimensions, a smooth start is proved to give a classical solution for some time; whether it lasts for all time is unproved; a 2026 claim of blow-up under a specially built outside force is not yet refereed ([The September 2026 Navier-Stokes claim](../../25-Frontier/05-Analysis%20and%20Dynamics/01-navier-stokes-blow-up-claim-2026.md)). The weaker kind that always exists is [Leray's weak solutions](02-leray-weak-solutions-of-navier-stokes.md).
 
 ---
 
@@ -1173,7 +1173,7 @@ example : (998207 / 1000 : ℝ) * 1 ^ 2 / 4 * (cos 0 + cos 0) = 4991035 / 10000 
 - [Leray's weak solutions](02-leray-weak-solutions-of-navier-stokes.md): solutions that exist for all time in three dimensions, at the price of smoothness and, perhaps, uniqueness.
 - [Vorticity](04-vorticity-and-the-euler-equations.md): take the curl and the pressure disappears, leaving an equation for the spin.
 - [The energy inequality, and the gap it leaves in three dimensions](03-energy-inequality-and-the-regularity-question.md): the energy count that closes in two dimensions and not in three.
-- Wing 25's planned cards, "Navier-Stokes" (the Clay problem statement) and "The September 2026 Navier-Stokes claim", state the open problem and the 2026 claim.
+- [Navier-Stokes](../../25-Frontier/02-The%20Millennium%20Problems/04-navier-stokes-existence-and-smoothness.md) and [The September 2026 Navier-Stokes claim](../../25-Frontier/05-Analysis%20and%20Dynamics/01-navier-stokes-blow-up-claim-2026.md), on wing 25: the Clay problem statement, and the 2026 claim.
 
 Left open: in three dimensions, does a smooth start always stay smooth, or can the velocity blow up in finite time?
 

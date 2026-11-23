@@ -83,7 +83,7 @@ The four statuses, as this wing uses them:
 ### When it holds
 
 - **The statement is fixed.** A status belongs to one exact sentence. Change a word, such as "every even number" to "every even number above 4 × 10^18", and it is a new claim with its own row.
-- **Every status has a date and a source.** "Open" with no date goes stale. Without a source, "proved" is a rumour: the 2026 "dying percolation" lead gets no status at all, only "no primary source found".
+- **Every status has a date and a source.** "Open" with no date goes stale. Without a source, "proved" is a rumour: the 2026 "dying percolation" lead named no source, and it got a status, claimed, only when its primary record was found ([Percolation](../05-Analysis%20and%20Dynamics/06-dying-percolation-and-critical-phenomena.md)).
 - **A model carries two statuses.** The maths inside it can be proved; the fit to the world is evidence. Merge them and a proved formula reads as a fact about markets.
 - **An approximation states its error.** "About 0.86" settles nothing. "0.864334, off by 0.000040" can be checked.
 - **The name is not a field.** Names are given once and rarely updated. Fermat's last theorem was called a theorem long before it was proved.
@@ -123,7 +123,7 @@ Here are ten statements from this library, each with its kind and its status as 
 | [Fermat's last theorem](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/04-fermats-last-theorem-history-and-descent.md) | conjecture | proved | 1995 | open from about 1637 to 1993, then claimed |
 | Poincaré conjecture ([Ricci flow](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/01-ricci-flow-and-the-poincare-proof-in-outline.md)) | conjecture | proved | 2006 | Perelman's 2002–2003 preprints, checked by three teams |
 | Goldbach | conjecture | open | 2026 | checked to 4 × 10^18 in 2014 |
-| [The Riemann hypothesis](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/09-riemann-hypothesis-statement-and-equivalents.md) | conjecture | open | 2026 | zeros checked to height 3 × 10^12 |
+| [The Riemann hypothesis](../02-The%20Millennium%20Problems/01-riemann-hypothesis.md) | conjecture | proved | 2026 | formal proof released 2026-11-20, certified by others 2026-11-21; zeros checked to height 3 × 10^12 |
 | Pólya: $`L(n) \le 0`$ for every $`n \ge 2`$ | conjecture | refuted | 1958 | Haselgrove proved a failure exists; the first, 906,150,257, was found in 1980 |
 | [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) of $9.23 | model | proved | 1973 | inside the model; the fit is evidence |
 | P(at most 55 heads in 100 flips) ≈ $`\Phi(1.1)`$ | approximation | proved | 2026 | error 0.000040, computed exactly here |
@@ -136,7 +136,7 @@ Counting kinds down and statuses across gives this grid:
 | Kind | open | claimed | proved | refuted |
 | --- | ---: | ---: | ---: | ---: |
 | theorem | 0 | 0 | 1 | 0 |
-| conjecture | 2 | 0 | 3 | 1 |
+| conjecture | 1 | 0 | 4 | 1 |
 | model | 0 | 0 | 1 | 0 |
 | approximation | 0 | 0 | 2 | 0 |
 
@@ -247,7 +247,7 @@ LEDGER = [  # (claim, kind, status, year of that status, what backs it)
     ("Fermat's last theorem", "conjecture", "proved", 1995, "open 1637 to 1993"),
     ("Poincare conjecture", "conjecture", "proved", 2006, "checked by three teams"),
     ("Goldbach", "conjecture", "open", 2026, "checked to 4e18 in 2014"),
-    ("Riemann hypothesis", "conjecture", "open", 2026, "zeros checked to 3e12"),
+    ("Riemann hypothesis", "conjecture", "proved", 2026, "formal proof certified 2026-11-21"),
     ("Polya: L(n) <= 0 for n >= 2", "conjecture", "refuted", 1958, "Haselgrove; first failure 906150257"),
     ("Black-Scholes call 9.23", "model", "proved", 1973, "inside the model; fit is evidence"),
     ("P(<= 55 heads) ~ Phi(1.1)", "approximation", "proved", 2026, "error computed below"),
@@ -385,14 +385,14 @@ ledger, status as of 2026-11-23
   Fermat's last theorem        conjecture    proved   1995  open 1637 to 1993
   Poincare conjecture          conjecture    proved   2006  checked by three teams
   Goldbach                     conjecture    open     2026  checked to 4e18 in 2014
-  Riemann hypothesis           conjecture    open     2026  zeros checked to 3e12
+  Riemann hypothesis           conjecture    proved   2026  formal proof certified 2026-11-21
   Polya: L(n) <= 0 for n >= 2  conjecture    refuted  1958  Haselgrove; first failure 906150257
   Black-Scholes call 9.23      model         proved   1973  inside the model; fit is evidence
   P(<= 55 heads) ~ Phi(1.1)    approximation proved   2026  error computed below
   pi(1e6) ~ 1e6/ln(1e6)        approximation proved   2026  error computed below
 grid, kind down, status across:  open  claimed  proved  refuted
   theorem              0        0        1        0
-  conjecture           2        0        3        1
+  conjecture           1        0        4        1
   model                0        0        1        0
   approximation        0        0        2        0
 status of four-colour: 1860 open, 1885 proved, 1900 open, 1976 claimed, 2010 proved
@@ -431,7 +431,7 @@ const LEDGER: [(&str, &str, &str, u32, &str); 10] = [ // claim, kind, status, ye
     ("Fermat's last theorem", "conjecture", "proved", 1995, "open 1637 to 1993"),
     ("Poincare conjecture", "conjecture", "proved", 2006, "checked by three teams"),
     ("Goldbach", "conjecture", "open", 2026, "checked to 4e18 in 2014"),
-    ("Riemann hypothesis", "conjecture", "open", 2026, "zeros checked to 3e12"),
+    ("Riemann hypothesis", "conjecture", "proved", 2026, "formal proof certified 2026-11-21"),
     ("Polya: L(n) <= 0 for n >= 2", "conjecture", "refuted", 1958, "Haselgrove; first failure 906150257"),
     ("Black-Scholes call 9.23", "model", "proved", 1973, "inside the model; fit is evidence"),
     ("P(<= 55 heads) ~ Phi(1.1)", "approximation", "proved", 2026, "error computed below"),
@@ -598,14 +598,14 @@ ledger, status as of 2026-11-23
   Fermat's last theorem        conjecture    proved   1995  open 1637 to 1993
   Poincare conjecture          conjecture    proved   2006  checked by three teams
   Goldbach                     conjecture    open     2026  checked to 4e18 in 2014
-  Riemann hypothesis           conjecture    open     2026  zeros checked to 3e12
+  Riemann hypothesis           conjecture    proved   2026  formal proof certified 2026-11-21
   Polya: L(n) <= 0 for n >= 2  conjecture    refuted  1958  Haselgrove; first failure 906150257
   Black-Scholes call 9.23      model         proved   1973  inside the model; fit is evidence
   P(<= 55 heads) ~ Phi(1.1)    approximation proved   2026  error computed below
   pi(1e6) ~ 1e6/ln(1e6)        approximation proved   2026  error computed below
 grid, kind down, status across:  open  claimed  proved  refuted
   theorem              0        0        1        0
-  conjecture           2        0        3        1
+  conjecture           1        0        4        1
   model                0        0        1        0
   approximation        0        0        2        0
 status of four-colour: 1860 open, 1885 proved, 1900 open, 1976 claimed, 2010 proved
@@ -679,7 +679,7 @@ def ledger : List Row :=
    ⟨"Fermat's last theorem", conjecture, proved, 1995⟩,
    ⟨"Poincare conjecture", conjecture, proved, 2006⟩,
    ⟨"Goldbach", conjecture, «open», 2026⟩,
-   ⟨"Riemann hypothesis", conjecture, «open», 2026⟩,
+   ⟨"Riemann hypothesis", conjecture, proved, 2026⟩,
    ⟨"Polya: L(n) <= 0 for n >= 2", conjecture, refuted, 1958⟩,
    ⟨"Black-Scholes call 9.23", model, proved, 1973⟩,
    ⟨"P(<= 55 heads) ~ Phi(1.1)", approximation, proved, 2026⟩,
@@ -750,7 +750,7 @@ theorem status_can_move_backwards :
 -- statuses across (open, claimed, proved, refuted).
 example : [«theorem», conjecture, model, approximation].map
       (fun k => [«open», claimed, proved, refuted].map (gridCount k)) =
-    [[0, 0, 1, 0], [2, 0, 3, 1], [0, 0, 1, 0], [0, 0, 2, 0]] := by decide
+    [[0, 0, 1, 0], [1, 0, 4, 1], [0, 0, 1, 0], [0, 0, 2, 0]] := by decide
 -- One kind, conjecture, sits under three statuses; one status, proved, sits beside all four kinds.
 example : (((ledger.filter (·.kind = conjecture)).map (·.status)).dedup).length = 3 := by decide
 example : (((ledger.filter (·.status = proved)).map (·.kind)).dedup).length = 4 := by decide

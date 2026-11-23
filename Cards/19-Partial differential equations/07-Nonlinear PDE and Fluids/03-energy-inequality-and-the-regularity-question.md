@@ -14,7 +14,7 @@ The one bound every solution obeys is the **energy inequality**. The kinetic ene
 
 That bound settles the question in two dimensions. In a flat repeating cell the spin of the water cannot grow; with walls, such as the pipe's cross-section, it can grow, but only by a bounded amount. Either way the flow stays smooth forever. In three dimensions, spin can be stretched. At the start, stretching raises our eddy's spin 173.0 times faster than friction removes it. The energy bound is too weak to stop that, because a tiny, fast eddy carries very little energy.
 
-**Multiplying the Navier-Stokes equations by the velocity shows that kinetic energy can only drain into heat; in two dimensions that bound also caps the spin, so flows stay smooth forever, but in three dimensions vortex stretching needs a stronger bound than energy gives, and whether smooth flows can blow up is open.**
+**Multiplying the Navier-Stokes equations by the velocity shows that kinetic energy can only drain into heat; in two dimensions that bound also caps the spin, so flows stay smooth forever, but in three dimensions vortex stretching needs a stronger bound than energy gives, and whether smooth flows can blow up is open without an outside force, and claimed, not yet refereed, with one.**
 
 **What kind of fact this is:** the energy inequality and the two-dimensional result are theorems, derived on this card for smooth flows in a repeating box. Smoothness for all time in three dimensions is an open problem: no proof and no counterexample has been accepted as of 2026-11-15.
 
@@ -226,7 +226,7 @@ For our eddy, $`\lVert\mathbf{u}_0\rVert\,\lVert\nabla\mathbf{u}_0\rVert`$ = 0.0
 
 **The regularity question**, in the repeating-box form of the official problem description. Statement (B): take any smooth, divergence-free starting velocity $`\mathbf{u}_0`$ that repeats across a cube, and no outside force. Then there is a smooth solution $`\mathbf{u}`$, $`p`$ that repeats across the cube and lasts for all $`t \ge 0`$. The prize also accepts the opposite in a weaker form, statement (D): a smooth repeating start and a smooth outside force, repeating across the cube and fading fast in time, for which no such smooth solution exists. A proof of either answers the problem.
 
-The Clay Millennium Prize statement, in full and also for all of space, is on Navier-Stokes (planned) in wing 25.
+The Clay Millennium Prize statement, in full and also for all of space, is on [Navier-Stokes](../../25-Frontier/02-The%20Millennium%20Problems/04-navier-stokes-existence-and-smoothness.md) in wing 25.
 
 ---
 
@@ -1101,7 +1101,7 @@ example : (2 : ℝ) - 2 * √(1 / 10 ^ 6) = 1998 / 1000 := by
 - **The Clay Millennium Prize.** The open question in Step 7 is one of the seven Millennium Prize Problems, with a prize of one million US dollars.
 
 > **Say it back**
-> Multiply Navier-Stokes by the velocity and integrate: stirring and pressure only move energy around, and friction only removes it. So the energy now, plus the heat made so far, never exceeds the starting energy. In two dimensions, in a repeating cell, the same trick one level up shows that spin can never grow; with walls it grows only by a bounded amount. Either way the flow stays smooth forever. In three dimensions, stirring stretches vortices and raises spin, and energy is too weak to stop it because small, fast eddies cost little energy. Whether a smooth three-dimensional flow can blow up is open.
+> Multiply Navier-Stokes by the velocity and integrate: stirring and pressure only move energy around, and friction only removes it. So the energy now, plus the heat made so far, never exceeds the starting energy. In two dimensions, in a repeating cell, the same trick one level up shows that spin can never grow; with walls it grows only by a bounded amount. Either way the flow stays smooth forever. In three dimensions, stirring stretches vortices and raises spin, and energy is too weak to stop it because small, fast eddies cost little energy. Whether a smooth three-dimensional flow can blow up is open without an outside force; with one, a 2026 claim is not yet refereed.
 
 ---
 
@@ -1113,7 +1113,7 @@ example : (2 : ℝ) - 2 * √(1 / 10 ^ 6) = 1998 / 1000 := by
 
 ## Where this goes next
 
-- Navier-Stokes (planned): the frontier wing's card with the full Clay statement, for all of space and for the repeating box.
+- [Navier-Stokes](../../25-Frontier/02-The%20Millennium%20Problems/04-navier-stokes-existence-and-smoothness.md): the frontier wing's card with the full Clay statement, for all of space and for the repeating box.
 - [The September 2026 Navier-Stokes claim](../../25-Frontier/05-Analysis%20and%20Dynamics/01-navier-stokes-blow-up-claim-2026.md): a claimed blow-up driven by an outside force, the kind of answer statement (D) and its all-of-space twin allow, set out there and not judged here.
 - [Vorticity](04-vorticity-and-the-euler-equations.md): the spin form of the equations, where the stretching term of Step 4 is the main actor.
 

@@ -683,7 +683,7 @@ example : (-1 : ℤ) + 1 = 0 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Taking the zero-free region for the Riemann hypothesis, or for a step close to it.** The region clears a band 0.067921 wide at height 14.13 and 0.006262 wide at 3 × 10^12. The Riemann hypothesis claims no zero lies right of 1/2. No proof yet clears even a band of fixed width.
+> **Taking the zero-free region for the Riemann hypothesis, or for a step close to it.** The region clears a band 0.067921 wide at height 14.13 and 0.006262 wide at 3 × 10^12. The Riemann hypothesis says no zero lies right of 1/2. Until its formal proof was certified on 2026-11-21, no proof cleared even a band of fixed width.
 >
 > - **A scan as proof.** The smallest size 0.326037 on the edge up to height 40 is evidence; only Step 4 covers every height.
 > - **An edge zero taken as harmless.** At a million its pair would make a wave 0.055242 times x, against 0.000141 from the true first pair.
@@ -714,7 +714,7 @@ example : (-1 : ℤ) + 1 = 0 := by norm_num
 
 - [Perron's formula](04-perrons-formula.md): turns the zeros below a height into a prime count, where the region controls every term.
 - [Siegel-Walfisz](../03-Characters%20and%20L-functions/05-siegel-walfisz-in-outline.md): the same region for L-functions of characters, and the one zero it cannot rule out.
-- [The Riemann hypothesis](09-riemann-hypothesis-statement-and-equivalents.md): the claim that the clear zone reaches all the way to σ = 1/2.
+- [The Riemann hypothesis](09-riemann-hypothesis-statement-and-equivalents.md): the statement, proved in 2026, that the clear zone reaches all the way to σ = 1/2.
 
 The question this card leaves open: can the clear zone be widened to a band of fixed width at every height: every σ above some fixed number below 1?
 

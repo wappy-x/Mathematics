@@ -183,7 +183,7 @@ These proofs come far too late. A gap of 1,132 by the factorial needs $`1{,}132!
 
 Choosing the remainders cleverly, so small primes cover a longer stretch, gives more. Westzynthius (1931) proved that G(x)/log x is unbounded. Erdős (1935) and Rankin (1938) sharpened the rate. Ford, Green, Konyagin, Maynard and Tao (2018) proved the lower bound in The formula. Without its constant, its shape at p is only 23.4. That is below Step 1's floor of about log p = 35.07: at this size the iterated logs in the shape are small, and it overtakes log x only for far larger x. The 2018 bound wins by its growth, not at any size where gaps have been computed.
 
-**From above, by counting primes in short intervals.** Baker, Harman and Pintz (2001) proved that every interval $`[x - x^{0.525}, x]`$ holds a prime for all large enough x, so $`G(x) \ll x^{0.525}`$. At p the shape $`x^{0.525}`$ is 9.887 × 10^7. Assuming the Riemann hypothesis ([The Riemann hypothesis](../02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/09-riemann-hypothesis-statement-and-equivalents.md)), Cramér proved $`G(x) \ll \sqrt{x}\log x`$, whose shape at p is 1.443 × 10^9. That is larger here, but it wins for large x.
+**From above, by counting primes in short intervals.** Baker, Harman and Pintz (2001) proved that every interval $`[x - x^{0.525}, x]`$ holds a prime for all large enough x, so $`G(x) \ll x^{0.525}`$. At p the shape $`x^{0.525}`$ is 9.887 × 10^7. Cramér proved $`G(x) \ll \sqrt{x}\log x`$ assuming the Riemann hypothesis ([The Riemann hypothesis](../02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/09-riemann-hypothesis-statement-and-equivalents.md)), itself proved in 2026; the bound's shape at p is 1.443 × 10^9. That is larger here, but it wins for large x.
 
 The truth, about 1,132, sits between a proved floor of about log p = 35.07 (Step 1) and a proved 10^8-shaped ceiling.
 
@@ -793,7 +793,7 @@ example : ∀ p q, p < q → q ≤ 100 → p.Prime → q.Prime → (∀ m, p < m
 - [Bounded gaps](05-bounded-gaps-zhang-maynard.md): the other end of the problem. It shows that gaps below a fixed bound occur infinitely often; this card asks how large gaps get.
 - [Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): why the model's prime count, a sum of independent coin flips, settles near its expected value.
 
-The card also uses [The prime number theorem](../02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/05-prime-number-theorem-proved.md) for the average gap log x, [Sieving by inclusion-exclusion](01-the-legendre-sieve-and-the-parity-problem.md) for the constant $`2e^{-\gamma}`$, and [The Riemann hypothesis](../02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/09-riemann-hypothesis-statement-and-equivalents.md) for Cramér's conditional upper bound.
+The card also uses [The prime number theorem](../02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/05-prime-number-theorem-proved.md) for the average gap log x, [Sieving by inclusion-exclusion](01-the-legendre-sieve-and-the-parity-problem.md) for the constant $`2e^{-\gamma}`$, and [The Riemann hypothesis](../02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/09-riemann-hypothesis-statement-and-equivalents.md) for Cramér's upper bound, conditional until 2026.
 
 ## Where this goes next
 
