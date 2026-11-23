@@ -86,9 +86,7 @@ so the analytic rank is 1, and the point $`(-4, 6)`$ shows the rank is at least 
 
 - **Not the strong form.** Clay's Remark 1 describes a refined version, which predicts the leading coefficient itself. In the notation of the algebraic-geometry wing's [Birch and Swinnerton-Dyer](../../22-Algebraic%20geometry/04-Elliptic%20Curves/08-birch-and-swinnerton-dyer-statement.md), which names every term:
 
-  ```math
-  \lim_{s \to 1} \frac{L(E, s)}{(s - 1)^r} = \frac{\Omega_E \cdot \mathrm{Reg}_E \cdot \prod_p c_p \cdot \#\text{Ш}(E)}{\left(\#E(\mathbb{Q})_{\mathrm{tors}}\right)^2}
-  ```
+  $`\displaystyle \lim_{s \to 1} \frac{L(E, s)}{(s - 1)^r} = \frac{\Omega_E \cdot \mathrm{Reg}_E \cdot \prod_p c_p \cdot \#\text{Ш}(E)}{\left(\#E(\mathbb{Q})_{\mathrm{tors}}\right)^2}`$
 
   In words: period, regulator, Tamagawa numbers and the size of Ш multiplied, over the number of torsion points squared. Here $`L(E, s)`$ is Clay's completed L-series, with the Euler factors at primes dividing $`2\Delta`$ put back. The prize statement is the rank equation alone.
 - **Not number fields or abelian varieties.** Clay's Remark 2 notes the conjecture can be stated there too. The prize statement is for elliptic curves over $`\mathbb{Q}`$.
