@@ -545,7 +545,7 @@ example : (2 * 3 : ZMod 6) = 0 := by decide
 - [Categories and functors](../../24-Computability%20and%20complexity/07-Category%20Theory%20in%20Outline/01-categories-and-functors.md): undos dropped.
 - [Adjunctions](../../24-Computability%20and%20complexity/07-Category%20Theory%20in%20Outline/06-adjunctions.md): loose undos.
 - [Monoids and monads](../../24-Computability%20and%20complexity/07-Category%20Theory%20in%20Outline/07-monoids-and-monads-for-programmers.md): three rules only.
-- Two algebra questions: infinite from finite.
+- [Two algebra questions](../../25-Frontier/05-Analysis%20and%20Dynamics/05-sofic-groups-and-kothe.md): infinite from finite.
 
 The four turns alone pass all four rules, which is the next card's question: which parts of a group are groups, and what one member generates alone.
 

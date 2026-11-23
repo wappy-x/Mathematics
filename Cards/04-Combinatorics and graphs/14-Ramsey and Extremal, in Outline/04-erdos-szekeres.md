@@ -728,7 +728,7 @@ example : ∀ t : Finset (Fin 9), (∀ i ∈ t, ∀ j ∈ t, i < j → nineDays 
 ## Where this goes next
 
 - [Erdos problems](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/07-erdos-problems-and-computer-search.md): more of Erdős's questions, many with no exact threshold known.
-- The unit-distance problem: another Erdős question about points in the plane, still open.
+- [The unit-distance problem](../../25-Frontier/04-Geometry%20and%20Combinatorics/01-unit-distance-problem.md): another Erdős question about points in the plane, still open.
 
 The lemma was built to force a convex polygon out of enough scattered points, and exactly how many points that takes is still open. The frontier cards pick up Erdős's questions about points in the plane.
 

@@ -949,7 +949,7 @@ example : 5 ^ 3 ∣ 125 := by decide
 
 ## Where this goes next
 
-- The Hodge conjecture (planned): the Frontier wing's record of the conjecture's status, the partial results and the prize.
+- [The Hodge conjecture](../../25-Frontier/02-The%20Millennium%20Problems/05-hodge-conjecture.md): the Frontier wing's record of the conjecture's status, the partial results and the prize.
 
 The open question is the one this card names: for p ≥ 2, is every rational class of type (p, p) on a smooth projective variety a combination of subvarieties?
 

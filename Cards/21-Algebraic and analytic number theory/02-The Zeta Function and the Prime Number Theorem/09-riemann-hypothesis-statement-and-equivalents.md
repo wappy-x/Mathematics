@@ -602,7 +602,7 @@ ALL CHECKS PASS
 ## Where this goes next
 
 - [Zeros on the line](10-zeros-on-the-critical-line-and-proportion-results.md): what is proved instead of RH. Infinitely many zeros lie on the line (Hardy), and a positive share of them do (Selberg, Levinson, Conrey).
-- The Riemann hypothesis (planned): the frontier card on the current state of the problem.
+- [The Riemann hypothesis](../../25-Frontier/02-The%20Millennium%20Problems/01-riemann-hypothesis.md): the frontier card on the current state of the problem.
 
 The question this card leaves open: every equivalent here is as hard as RH itself, so is there any counting statement, provable with today's tools, that pins the zeros to the line?
 

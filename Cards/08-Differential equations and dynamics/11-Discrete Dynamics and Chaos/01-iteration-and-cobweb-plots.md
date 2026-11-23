@@ -518,7 +518,7 @@ example : ((14 / 5 : ℚ) * (1 / 5) * (1 - 1 / 5)) ^ 2 = 3136 / 15625 := by norm
 
 - [Fixed points of a map](02-fixed-points-of-a-map.md): the slope test that says which resting levels attract an orbit and which repel it.
 - [Dynamic programming](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md): a value table iterated until it stops changing.
-- Collatz: a one-line whole-number rule whose orbits no one can yet predict.
+- [Collatz](../../25-Frontier/05-Analysis%20and%20Dynamics/02-collatz-conjecture.md): a one-line whole-number rule whose orbits no one can yet predict.
 
 Left open: the fish stock settles at $`r`$ = 2.8 but wanders at $`r`$ = 3.9, so where between them does settling stop?
 

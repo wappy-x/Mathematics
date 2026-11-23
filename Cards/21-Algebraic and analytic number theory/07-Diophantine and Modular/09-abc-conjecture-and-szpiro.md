@@ -1061,8 +1061,8 @@ example : (1 * 6560 * 6561) ^ 2 / 2 ^ 8 = 7236153800100 ∧
 ## Where this goes next
 
 - [Chasing an algebraic number with fractions](10-diophantine-approximation-liouville-to-roth.md): another inequality with an ε margin, where Roth's theorem proves exponent 2 + ε.
-- The abc conjecture (planned): the frontier wing's card on where abc stands now.
-- Beal's conjecture (planned): the frontier wing's card on the equation with three different exponents, and its prize.
+- [The abc conjecture](../../25-Frontier/03-Primes%20and%20Numbers/04-abc-conjecture.md): the frontier wing's card on where abc stands now.
+- [Beal's conjecture](../../25-Frontier/03-Primes%20and%20Numbers/05-beal-conjecture.md): the frontier wing's card on the equation with three different exponents, and its prize.
 
 Is there any triple of quality above 2? None is known, and abc does not forbid it.
 

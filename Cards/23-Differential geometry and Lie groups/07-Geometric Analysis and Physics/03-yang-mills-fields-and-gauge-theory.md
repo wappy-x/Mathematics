@@ -946,7 +946,7 @@ open YangMills
 ## Where this goes next
 
 - [Mass gap](04-the-mass-gap-statement.md): the next card. It states precisely what must be proved about the quantum theory built from this energy.
-- Yang-Mills existence and mass gap (planned): the prize problem's record, and the lattice evidence from Wilson's action, set out in Step 2 of this card.
+- [Yang-Mills existence and mass gap](../../25-Frontier/02-The%20Millennium%20Problems/06-yang-mills-and-the-mass-gap.md): the prize problem's record, and the lattice evidence from Wilson's action, set out in Step 2 of this card.
 
 The question this card leaves open: the classical field equations have massless waves, so where would a smallest positive energy, a mass gap, come from in the quantum theory?
 

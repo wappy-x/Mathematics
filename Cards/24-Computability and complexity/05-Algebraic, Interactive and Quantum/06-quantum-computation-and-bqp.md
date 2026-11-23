@@ -904,7 +904,7 @@ end QuantumBQP
 ## Where this goes next
 
 - [Shor and Grover](07-shors-and-grovers-algorithms.md): the two algorithms that make BQP matter, period finding that factors and search that gains a square root.
-- Quantum advantage (planned): which tasks a real device has done that classical machines cannot match, and how such claims are checked.
+- [Quantum advantage](../../25-Frontier/07-Physics%2C%20Finance%20and%20Machines/01-quantum-supremacy-and-bqp.md): which tasks a real device has done that classical machines cannot match, and how such claims are checked.
 
 Left open: does BQP contain a problem outside BPP? Factoring is the best candidate, but no one has proved it hard for classical machines.
 

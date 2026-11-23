@@ -773,7 +773,7 @@ example : ((Finset.univ : Finset (DihedralGroup 4)).powerset.filter
 - [Cyclotomic fields](08-cyclotomic-extensions-and-roots-of-unity.md): fields of roots of unity, whose groups are the units mod $`n`$, read through this dictionary.
 - [Finite fields](09-finite-fields-and-frobenius.md): every finite field has a cyclic Galois group, so its subfields match the divisors of its degree.
 - [Chebotarev](../06-Algebraic%20Numbers/09-chebotarev-density-and-splitting-statistics.md): the proved statement behind the prime count in the code.
-- The inverse Galois problem (planned): which finite groups occur as Galois groups over $`\mathbb{Q}`$.
+- [The inverse Galois problem](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/01-inverse-galois-problem.md): which finite groups occur as Galois groups over $`\mathbb{Q}`$.
 
 This card computes the group of one polynomial by listing every map; it leaves open how to find the Galois group of a polynomial whose roots cannot be written down.
 

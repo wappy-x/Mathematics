@@ -616,7 +616,7 @@ example : ∀ V : ℚ, 0 * V - 1 * (8314 / 1000) * 1 ≠ 0 := by intro V; norm_n
 - [Lagrange multipliers, proved](../../15-Optimization/03-Constrained%20Optimisation/01-lagrange-multipliers-revisited.md): constraints as local graphs, regularity made precise.
 - [Diffeomorphism, immersion, submersion](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/04-diffeomorphisms-immersions-and-embeddings.md): an invertible Jacobian as a local change of coordinates.
 - [Regular value theorem](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/06-submanifolds-and-the-regular-value-theorem.md): the solutions of F = 0 forming a smooth surface.
-- The Jacobian conjecture: whether a polynomial map with constant nonzero Jacobian determinant has a global polynomial inverse, still open.
+- [The Jacobian conjecture](../../25-Frontier/05-Analysis%20and%20Dynamics/04-jacobian-conjecture.md): whether a polynomial map with constant nonzero Jacobian determinant has a global polynomial inverse, still open.
 
 ---
 

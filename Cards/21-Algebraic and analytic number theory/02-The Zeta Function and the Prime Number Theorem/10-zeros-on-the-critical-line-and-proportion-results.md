@@ -1856,7 +1856,7 @@ theorem sign_change_of_hardyZ_gives_zero_on_line (a b : ℝ) (hab : a < b)
 ## Where this goes next
 
 - [The Riemann hypothesis](09-riemann-hypothesis-statement-and-equivalents.md): the frontier wing's account of the conjecture today.
-- The August 2026 zeta-zeros claim (planned): a recent claim about the share of zeros on the line.
+- [The August 2026 zeta-zeros claim](../../25-Frontier/05-Analysis%20and%20Dynamics/03-zeta-zero-proportion-2026.md): a recent claim about the share of zeros on the line.
 
 The question this card leaves open: can the share of zeros on the line be pushed all the way to 1, and would even that prove that every zero is on it?
 

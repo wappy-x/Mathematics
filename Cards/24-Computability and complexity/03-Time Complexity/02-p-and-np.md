@@ -945,7 +945,7 @@ end PAndNP
 - [Reductions](03-polynomial-reductions-and-np-completeness.md): translating one problem into another at polynomial cost, and what NP-complete means.
 - [Above NP](08-conp-pspace-and-the-polynomial-hierarchy.md): coNP for short proofs of no, PSPACE, and the classes built by stacking quantifiers.
 - [BPP](../04-Beyond%20Worst%20Case/03-randomised-complexity-and-bpp.md): problems solved quickly by a machine that flips coins and may err with small probability.
-- Graph isomorphism (planned): a problem in NP that is not known to be in P and not known to be NP-complete.
+- [Graph isomorphism](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/04-graph-isomorphism.md): a problem in NP that is not known to be in P and not known to be NP-complete.
 - [P versus NP](../04-Beyond%20Worst%20Case/08-p-versus-np-what-is-known.md): the precise open question and the barriers that block a proof.
 
 Left open: does SUDOKU, or any problem in NP, need more than polynomial time?

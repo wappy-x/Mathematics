@@ -513,7 +513,7 @@ example : ((Finset.univ : Finset (ZMod 9)).filter (fun a => a ≠ 0 ∧ ∃ b, a
 - [Ideals and varieties](../../22-Algebraic%20geometry/01-Polynomial%20Systems/01-ideals-and-varieties.md): an ideal as every equation a shape satisfies.
 - [Affine varieties](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/01-affine-varieties-and-coordinate-rings.md): that quotient ring as functions on a shape.
 - [The spectrum of a ring](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/02-spectrum-of-a-ring-and-schemes.md): prime ideals as a space, a ring as geometry.
-- Two algebra questions: one-sided absorbing sets, and an open question.
+- [Two algebra questions](../../25-Frontier/05-Analysis%20and%20Dynamics/05-sofic-groups-and-kothe.md): one-sided absorbing sets, and an open question.
 
 This collapse kept addition and multiplication and lost division. Which ideals leave a world where division works? The next card.
 

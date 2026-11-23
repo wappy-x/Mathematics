@@ -1097,7 +1097,7 @@ end LPDuality
 
 - [Shadow prices](05-sensitivity-and-shadow-prices.md): the dual prices as rates of change, with the stretch of stock over which each price holds.
 - [Network flows](06-network-flows-as-linear-programs.md): shipping problems whose dual prices are values at the nodes, and whose slackness picks out the routes used.
-- Optimal transport (planned): the dual of moving one distribution onto another, where the prices become potentials.
+- [Optimal transport](../../25-Frontier/07-Physics%2C%20Finance%20and%20Machines/04-optimal-transport-and-machine-learning-theory.md): the dual of moving one distribution onto another, where the prices become potentials.
 
 The question this card leaves open: the prices are exact only at the margin, so how far can a stock move before the best corner, and with it the price list, changes?
 

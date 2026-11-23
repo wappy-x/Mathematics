@@ -1083,7 +1083,7 @@ end FisherMetric
 ## Where this goes next
 
 - [Manifold learning](10-manifold-learning-and-the-manifold-hypothesis.md): data points, not models, that lie near a curved surface, and how to recover that surface's geometry from the points.
-- Optimal transport (planned): a second geometry on probability models, which measures the cost of moving probability from place to place rather than how fast data tell models apart.
+- [Optimal transport](../../25-Frontier/07-Physics%2C%20Finance%20and%20Machines/04-optimal-transport-and-machine-learning-theory.md): a second geometry on probability models, which measures the cost of moving probability from place to place rather than how fast data tell models apart.
 
 The question this card leaves open: when two models are far apart, the divergence and the Fisher distance disagree, so which one should decide between them?
 

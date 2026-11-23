@@ -985,7 +985,7 @@ example (r : ℚ) (hr : r ≠ 0) : r / (r / 2 ^ 2) = 4 := by field_simp; norm_nu
 
 ## Where this goes next
 
-- The Poincare conjecture, solved (planned): surgery at the pinches in full, the history of the proof and its status record.
+- [The Poincare conjecture, solved](../../25-Frontier/02-The%20Millennium%20Problems/07-poincare-conjecture-solved.md): surgery at the pinches in full, the history of the proof and its status record.
 - [Einstein equations](02-einstein-equations-in-outline.md): the next card, where Ricci curvature is set equal to matter and energy instead of a rate of change.
 
 The question this card leaves open: when a 3-dimensional neck pinches, how can the flow be cut and restarted so that the cuts stop after finitely many?

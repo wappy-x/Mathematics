@@ -148,7 +148,7 @@ A quantum field theory is a structure that must be built and then shown to obey 
 4. **Gauge-invariant observables.** Only quantities unchanged by gauge changes are measurable, such as $`\mathrm{Tr}\,F^2`$.
 5. **The right short-distance behaviour.** Correlations at short distance must match asymptotic freedom, so the theory is truly Yang-Mills and not trivial (a theory of free, non-interacting fields would pass the other rules).
 
-These rules are made precise by two sets of axioms. The Wightman axioms describe the theory in real time. The Osterwalder-Schrader axioms describe its imaginary-time correlations, from which the real-time theory can be rebuilt. Both are set out on Yang-Mills existence and mass gap (planned).
+These rules are made precise by two sets of axioms. The Wightman axioms describe the theory in real time. The Osterwalder-Schrader axioms describe its imaginary-time correlations, from which the real-time theory can be rebuilt. Both are set out on [Yang-Mills existence and mass gap](../../25-Frontier/02-The%20Millennium%20Problems/06-yang-mills-and-the-mass-gap.md).
 
 No non-trivial relativistic field theory in four dimensions is yet known to satisfy these axioms, so existence alone would be a breakthrough.
 
@@ -746,7 +746,7 @@ example : (1 / 1 : ℚ) / (1 / 2) = 2 := by norm_num
 
 ## Where this goes next
 
-- Yang-Mills existence and mass gap (planned): the Wightman and Osterwalder-Schrader axioms in full, the lattice evidence, and the record of partial results.
+- [Yang-Mills existence and mass gap](../../25-Frontier/02-The%20Millennium%20Problems/06-yang-mills-and-the-mass-gap.md): the Wightman and Osterwalder-Schrader axioms in full, the lattice evidence, and the record of partial results.
 
 The question this card leaves open is the prize itself: does the gap survive as the lattice spacing goes to zero and the box grows without limit?
 

@@ -734,7 +734,7 @@ example : ((Finset.range 100).filter (fun p => p.Prime ∧ p ≠ 2)).card = 24 :
 
 - [Rational points on a cubic](05-elliptic-curves-over-q-and-mordell-weil.md): a twin descent proves $`a^4 - b^4 = c^2`$ has no positive solution. A solution would put the point $`(a^2/b^2,\, ac/b^3)`$ on the shelf's curve $`y^2 = x^3 - x`$, whose only rational points besides the curve's zero O have y = 0. A search over fractions finds just x = −1, 0, 1.
 - [The abc conjecture](09-abc-conjecture-and-szpiro.md): a single inequality that would give Fermat for all large exponents at once.
-- Beal's conjecture: the same equation with three different exponents.
+- [Beal's conjecture](../../25-Frontier/03-Primes%20and%20Numbers/05-beal-conjecture.md): the same equation with three different exponents.
 
 Kummer's test is exact, yet whether infinitely many primes are regular is open as of 2026-11-15, though infinitely many are known to be irregular.
 

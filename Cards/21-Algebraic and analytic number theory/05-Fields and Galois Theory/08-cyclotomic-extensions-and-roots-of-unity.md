@@ -814,7 +814,7 @@ example : ([5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71
 
 - [Fermat's last theorem](../07-Diophantine%20and%20Modular/04-fermats-last-theorem-history-and-descent.md): Kummer's attack inside $`\mathbb{Q}(\zeta_p)`$, and the regular primes.
 - [Modular forms](../07-Diophantine%20and%20Modular/07-modular-forms-in-outline.md): forms are written in powers of $`q = e^{2\pi i z}`$, a point inside the same unit circle when z lies above the real axis, and forms of level N, a whole number fixed for each form, carry characters of $`(\mathbb{Z} \bmod N)^{\times}`$, the group met here.
-- The inverse Galois problem: every finite abelian group is a symmetry group over the rationals, cut out of a cyclotomic field; whether every finite group is one is open as of 2026-11-15.
+- [The inverse Galois problem](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/01-inverse-galois-problem.md): every finite abelian group is a symmetry group over the rationals, cut out of a cyclotomic field; whether every finite group is one is open as of 2026-11-15.
 
 The question this card leaves open: which fields with non-commuting symmetries, like the eight of $`x^4 - 2`$, can still be described by something as explicit as roots of unity?
 

@@ -815,7 +815,7 @@ example : (3 / 10 : ℚ) ^ 2 * 64 = 144 / 25 := by norm_num
 
 ## Where this goes next
 
-- Open questions in finance mathematics: pricing options when volatility is rough, the computational cost of its long memory, and what remains unsettled.
+- [Open questions in finance mathematics](../../25-Frontier/07-Physics%2C%20Finance%20and%20Machines/03-rough-volatility-and-open-finance-questions.md): pricing options when volatility is rough, the computational cost of its long memory, and what remains unsettled.
 
 Rough paths rescue the integral; pricing when volatility remembers its whole past is that card's question.
 

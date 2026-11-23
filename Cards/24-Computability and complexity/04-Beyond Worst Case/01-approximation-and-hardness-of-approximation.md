@@ -172,7 +172,7 @@ The class entries "no PTAS" and "not in APX" are conditional too: they hold only
 
 For set cover with 30 shifts, greedy's ceiling H(30) is 3.995, and ln 30 is 3.401. The limit says that, for large n, no fast method can promise below (1 − ε) ln n (Dinur and Steurer). Greedy is within a small slack of the best possible promise.
 
-For vertex cover the gap between √2 and 2 is open. Under the unique games conjecture, unproved as of 2026-11-11, 2 is the exact limit; The unique games conjecture (planned) takes it up.
+For vertex cover the gap between √2 and 2 is open. Under the unique games conjecture, unproved as of 2026-11-11, 2 is the exact limit; [The unique games conjecture](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/03-unique-games-conjecture.md) takes it up.
 
 ---
 
@@ -780,7 +780,7 @@ example : (22 : ℚ) / 20 = 11 / 10 := by norm_num
 
 - [Relaxation and rounding](02-relaxation-and-rounding.md): the next card. Fractional versions give floors and ratios, and their gaps show where rounding must lose.
 - [Parameterised complexity](05-parameterised-complexity.md): a second measure, such as the number of staff, under which some hard problems become fast.
-- The unique games conjecture (planned): the conjecture that would make 2 the exact limit for vertex cover.
+- [The unique games conjecture](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/03-unique-games-conjecture.md): the conjecture that would make 2 the exact limit for vertex cover.
 
 The question left open: for vertex cover, is the limit √2, 2, or something between?
 

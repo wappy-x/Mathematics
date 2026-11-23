@@ -659,7 +659,7 @@ The two outputs match line for line. Rust has no big integers, so it checks the 
 ## Where this goes next
 
 - [Kolmogorov complexity](05-kolmogorov-complexity.md): the next card measures a string by its shortest program, another quantity no program can compute.
-- Hilbert's and Smale's lists (planned): Hilbert's other problems, and the later list from 1998, with what each answer needed.
+- [Hilbert's and Smale's lists](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/05-hilbert-and-smale-problems-selected.md): Hilbert's other problems, and the later list from 1998, with what each answer needed.
 
 The theorem needs many unknowns; is there a test for equations in two or three unknowns, such as $`x^3 + y^3 + z^3 = k`$?
 

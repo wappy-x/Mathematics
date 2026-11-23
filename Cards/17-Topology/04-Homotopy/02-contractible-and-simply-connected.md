@@ -708,7 +708,7 @@ example : (16 : ℚ) * ((1 - 1 / 2) ^ 2 + (1 / 2) ^ 2) = 8 := by norm_num
 ## Where this goes next
 
 - [The fundamental group](03-the-fundamental-group.md): collects all the loops at a point, up to homotopy, into a group; simply connected means that group has one member.
-- The Poincare conjecture, solved (planned): a closed three-dimensional space that is simply connected is a three-dimensional sphere, conjectured in 1904 and proved a century later.
+- [The Poincare conjecture, solved](../../25-Frontier/02-The%20Millennium%20Problems/07-poincare-conjecture-solved.md): a closed three-dimensional space that is simply connected is a three-dimensional sphere, conjectured in 1904 and proved a century later.
 
 The winding number shows the annulus has some loop that cannot shrink; whether winding numbers capture every loop round the hole, so that the annulus's loops are exactly the integers, is the question this card leaves open.
 

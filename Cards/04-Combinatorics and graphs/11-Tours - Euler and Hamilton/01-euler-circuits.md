@@ -1005,7 +1005,7 @@ end EulerCircuits
 - [The Chinese postman](02-chinese-postman.md): choosing the repeats at least cost once streets have lengths.
 - [Hamiltonian cycles](03-hamiltonian-cycles.md): every dot once instead of every line once, an easy test turned hard search.
 - [De Bruijn sequences](05-de-bruijn-sequences.md): Euler circuits at work, building the shortest string holding every window.
-- Cycle double cover: the conjecture that any network with no single line whose removal splits it has loops covering every line exactly twice, still unproved.
+- [Cycle double cover](../../25-Frontier/04-Geometry%20and%20Combinatorics/04-cycle-double-cover-conjecture.md): the conjecture that any network with no single line whose removal splits it has loops covering every line exactly twice, still unproved.
 
 This card says whether a closed sweep exists and builds one when it does; the cheapest way to fix a network that fails is [The Chinese postman](02-chinese-postman.md).
 

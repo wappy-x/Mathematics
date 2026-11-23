@@ -616,7 +616,7 @@ example : (ring.cliqueFinset 3).card = 0 âˆ§ (tourist.cliqueFinset 3).card = 0 â
 - [Random graphs](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/01-random-graphs-erdos-renyi.md): which pairs get a line, chosen at random.
 - [Small worlds and hubs](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/04-small-world-and-scale-free-models.md): the tallies real networks show.
 - [Vietoris-Rips, Cech and alpha complexes](../../17-Topology/06-Topological%20Data%20Analysis/02-vietoris-rips-and-cech-complexes.md): joining nearby data points, then filling triangles.
-- Graph isomorphism: how hard sameness is when renamings cannot all be tried.
+- [Graph isomorphism](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/04-graph-isomorphism.md): how hard sameness is when renamings cannot all be tried.
 
 Every renaming was tried here; a real network has far too many, and cutting that search down is what this shelf opens.
 

@@ -1033,7 +1033,7 @@ example : 8 * 7 / 2 = 28 := by norm_num
 
 ## Where this goes next
 
-- Quantum advantage (planned): where quantum machines have outrun ordinary ones in practice, and what the claims rest on.
+- [Quantum advantage](../../25-Frontier/07-Physics%2C%20Finance%20and%20Machines/01-quantum-supremacy-and-bqp.md): where quantum machines have outrun ordinary ones in practice, and what the claims rest on.
 
 This card leaves open whether factoring is hard for ordinary computers at all: if a fast ordinary method exists, Shor's speedup disappears while Grover's remains.
 

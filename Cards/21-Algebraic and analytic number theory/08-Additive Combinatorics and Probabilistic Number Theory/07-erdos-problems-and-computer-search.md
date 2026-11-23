@@ -894,10 +894,10 @@ example : ((List.range 12).map fun n =>
 
 ## Where this goes next
 
-- Erdos problems (planned): the frontier wing's survey of the problem database, its prizes and the ones a search can touch.
-- Proof (planned): what separates a proof from a verified range, in general.
-- Working on a problem (planned): how to choose, bound and attack an open problem in practice.
-- Collatz (planned): the frontier wing's card on the problem's current status.
+- [Erdos problems](../../25-Frontier/03-Primes%20and%20Numbers/07-erdos-problems-selected.md): the frontier wing's survey of the problem database, its prizes and the ones a search can touch.
+- [Proof](../../25-Frontier/01-How%20Research%20Works/01-what-counts-as-a-proof.md): what separates a proof from a verified range, in general.
+- [Working on a problem](../../25-Frontier/01-How%20Research%20Works/07-how-to-work-on-an-open-problem.md): how to choose, bound and attack an open problem in practice.
+- [Collatz](../../25-Frontier/05-Analysis%20and%20Dynamics/02-collatz-conjecture.md): the frontier wing's card on the problem's current status.
 
 Other cards on this shelf: [Typical numbers have about log log n distinct prime factors](01-hardy-ramanujan-and-typical-prime-factor-counts.md), [Erdos-Kac](02-erdos-kac-theorem.md), [Equidistribution](03-equidistribution-and-weyls-criterion.md), [Three distances](04-three-distance-theorem.md) and [Long progressions](05-szemeredi-and-green-tao-in-outline.md).
 

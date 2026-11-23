@@ -863,7 +863,7 @@ example : (1 : ℚ) / (1 - 1 / 2) = 2 := by norm_num
 
 ## Where this goes next
 
-- Percolation: the same switch on grids and real networks, and what happens exactly at the threshold, where the largest component grows like $`n^{2/3}`$ and sizes follow power laws.
+- [Percolation](../../25-Frontier/05-Analysis%20and%20Dynamics/06-dying-percolation-and-critical-phenomena.md): the same switch on grids and real networks, and what happens exactly at the threshold, where the largest component grows like $`n^{2/3}`$ and sizes follow power laws.
 
 This card settles both sides of one friend each; what happens exactly at one, and on grids, where each person can befriend only near neighbours, is the question Percolation takes up.
 

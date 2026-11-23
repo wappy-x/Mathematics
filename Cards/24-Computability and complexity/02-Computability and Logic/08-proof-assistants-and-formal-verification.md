@@ -704,10 +704,10 @@ Each line lists the axioms one theorem rests on: some of Lean's three standard a
 
 ## Where this goes next
 
-- Machines in proofs (planned): computer-assisted proofs, from the four colour theorem on, and how far each is checked.
-- Fermat's last theorem, proved in 1995 and reported formalised in 2026 (planned): what a large formalisation claims, and how to read the claim.
-- Machines that prove (planned): programs that search for proofs, with a kernel still doing the checking.
-- The September 2026 Navier-Stokes claim (planned): a case study in asking "what exactly was checked?"
+- [Machines in proofs](../../25-Frontier/01-How%20Research%20Works/06-computer-assistance-and-formal-verification.md): computer-assisted proofs, from the four colour theorem on, and how far each is checked.
+- [Fermat's last theorem, proved in 1995 and reported formalised in 2026](../../25-Frontier/03-Primes%20and%20Numbers/06-fermats-last-theorem-formalised.md): what a large formalisation claims, and how to read the claim.
+- [Machines that prove](../../25-Frontier/07-Physics%2C%20Finance%20and%20Machines/02-ai-and-mathematics-2026.md): programs that search for proofs, with a kernel still doing the checking.
+- [The September 2026 Navier-Stokes claim](../../25-Frontier/05-Analysis%20and%20Dynamics/01-navier-stokes-blow-up-claim-2026.md): a case study in asking "what exactly was checked?"
 
 A kernel can confirm a proof quickly, but finding one is still hard; the open question is how much of that search machines can take over.
 

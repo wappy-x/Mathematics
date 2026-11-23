@@ -1088,7 +1088,7 @@ example : (3 / 10 : ℚ) * 6 = 9 / 5 ∧ (7 / 10 : ℚ) ^ 3 = 343 / 1000 := by n
 - [Random walks on a graph](05-random-walks-on-graphs-and-mixing.md): wandering from friend to friend, and how fast a walk forgets where it began.
 - [Small worlds and hubs](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/04-small-world-and-scale-free-models.md): models that add the clustering and the hubs this one lacks.
 - [Epidemics on a network](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/05-epidemics-on-networks.md): infection spreading along random edges.
-- Percolation: the sharp change at the threshold, seen as a physical phase change.
+- [Percolation](../../25-Frontier/05-Analysis%20and%20Dynamics/06-dying-percolation-and-critical-phenomena.md): the sharp change at the threshold, seen as a physical phase change.
 
 This card counts friends one person at a time; whether those friendships knit the town into one connected whole is the question [The giant component](02-the-giant-component.md) answers.
 

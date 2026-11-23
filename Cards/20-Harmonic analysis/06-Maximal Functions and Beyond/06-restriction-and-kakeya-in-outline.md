@@ -159,7 +159,7 @@ The Kakeya needle problem, posed in 1917, asks: what is the smallest area in whi
 
 The check finds the triangle and deltoid areas by the shoelace formula (the area of a polygon from its corner points), against $`1/\sqrt3`$ and $`\pi/8`$.
 
-A **Kakeya set** is a closed bounded set that holds a needle of length 1 pointing in every direction. Besicovitch's construction gives one of area 0. Area is the wrong measure, so the question becomes its **dimension**: roughly, the exponent $`s`$ such that covering it takes about $`\varepsilon^{-s}`$ squares (or cubes) of side $`\varepsilon`$. The **Kakeya conjecture** says a Kakeya set in $`d`$ dimensions has dimension $`d`$. It is proved in the plane; Step 5 proves the box-counting version. The three-dimensional case was proved in 2025; Kakeya (planned) tells that story. It is open in four or more dimensions.
+A **Kakeya set** is a closed bounded set that holds a needle of length 1 pointing in every direction. Besicovitch's construction gives one of area 0. Area is the wrong measure, so the question becomes its **dimension**: roughly, the exponent $`s`$ such that covering it takes about $`\varepsilon^{-s}`$ squares (or cubes) of side $`\varepsilon`$. The **Kakeya conjecture** says a Kakeya set in $`d`$ dimensions has dimension $`d`$. It is proved in the plane; Step 5 proves the box-counting version. The three-dimensional case was proved in 2025; [Kakeya](../../25-Frontier/04-Geometry%20and%20Combinatorics/02-kakeya-and-restriction.md) tells that story. It is open in four or more dimensions.
 
 ### Step 5: the needle bound in the plane, proved
 
@@ -1124,7 +1124,7 @@ end RestrictionKakeya
 ## The usual mistake
 
 > [!warning]
-> **Reading the bridge backwards.** The proved implication runs from restriction to Kakeya: a bound on the field forces needles to spread out. A needle bound has never been shown to give the restriction bound in three or more dimensions. The proof of the three-dimensional Kakeya conjecture, named in Kakeya (planned), left the restriction conjecture in three dimensions open as of 2026-11-15. The other proved link also runs from needles to transforms only as an obstruction: tightly packed needles break the ball multiplier.
+> **Reading the bridge backwards.** The proved implication runs from restriction to Kakeya: a bound on the field forces needles to spread out. A needle bound has never been shown to give the restriction bound in three or more dimensions. The proof of the three-dimensional Kakeya conjecture, named in [Kakeya](../../25-Frontier/04-Geometry%20and%20Combinatorics/02-kakeya-and-restriction.md), left the restriction conjecture in three dimensions open as of 2026-11-15. The other proved link also runs from needles to transforms only as an obstruction: tightly packed needles break the ball multiplier.
 >
 > Smaller traps:
 > - **Treating $`p = 4`$ as allowed.** The $`L^4`$ total reaches 300.0 at 64 m and gains about 26.13 every doubling, forever.
@@ -1158,7 +1158,7 @@ Related cards on this shelf: [The maximal function](01-hardy-littlewood-maximal-
 
 ## Where this goes next
 
-- Kakeya (planned): the 2025 proof that Kakeya sets in three dimensions have dimension 3, and where the problem stands in higher dimensions.
+- [Kakeya](../../25-Frontier/04-Geometry%20and%20Combinatorics/02-kakeya-and-restriction.md): the 2025 proof that Kakeya sets in three dimensions have dimension 3, and where the problem stands in higher dimensions.
 
 Left open: in three dimensions, does every bounded amplitude on the sphere give a field with a finite $`p`$-th power total for every $`p`$ above 3?
 

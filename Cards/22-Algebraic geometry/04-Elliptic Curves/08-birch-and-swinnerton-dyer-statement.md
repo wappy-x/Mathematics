@@ -778,7 +778,7 @@ example : ¬ IsSquare (2 : ℕ) := by decide +kernel
 - **Curve tables.** Databases of elliptic curves, such as the LMFDB (the L-functions and modular forms database), list every term of the strong form for each curve. For $`y^2 = x^3 - 2`$, label 1728.o3, they agree with every value on this card.
 - **Finding ranks in practice.** Software computes the analytic rank first, because it is fast, then searches for that many independent points. When the analytic rank is 1, the Gross–Zagier construction (a Heegner point) gives a point of infinite order, which software then divides down to a generator, even when its fractions have hundreds of digits.
 - **Right triangles with rational sides.** Whether a whole number is the area of such a triangle is a rank question on a different cubic curve ($`y^2 = x^3 - 49x`$ for area 7); the weak form would settle every case. That use belongs to the number-theory wing's card, Birch-Swinnerton-Dyer (planned), and to [What curves answer](10-modularity-and-the-congruent-number-problem.md).
-- **The open-problem lists.** The conjecture is one of the central open problems of number theory. Its status and the record of partial results are kept in the Frontier wing's card, Birch and Swinnerton-Dyer (planned).
+- **The open-problem lists.** The conjecture is one of the central open problems of number theory. Its status and the record of partial results are kept in the Frontier wing's card, [Birch and Swinnerton-Dyer](../../25-Frontier/02-The%20Millennium%20Problems/02-birch-and-swinnerton-dyer.md).
 
 > **Say it back**
 > An elliptic curve's rank is the number of independent rational points of infinite order. Its L-function is built from point counts modulo primes. The weak form says the rank equals how many times the L-function vanishes at s = 1; the strong form says the first non-zero coefficient equals period times regulator times Tamagawa numbers times the order of Ш, over the torsion count squared. For y² = x³ − 2 the L-function vanishes once, with slope 2.920054768253, and the period times the height of (3, 5) gives the same number, so the predicted order of Ш is 1. The weak form is proved when the L-function vanishes to order 0 or 1, and open beyond that.
@@ -797,7 +797,7 @@ example : ¬ IsSquare (2 : ℕ) := by decide +kernel
 
 - [Curves for keys](09-elliptic-curve-cryptography-and-schoof.md): the same counts $`N_p`$, now for one huge prime, decide whether a curve is safe for cryptography.
 - [What curves answer](10-modularity-and-the-congruent-number-problem.md): modularity, which is what gives $`L(E, s)`$ a value at $`s = 1`$, and the right-triangle question the conjecture would settle.
-- Birch and Swinnerton-Dyer (planned): the Frontier wing's record of what is proved and what remains open.
+- [Birch and Swinnerton-Dyer](../../25-Frontier/02-The%20Millennium%20Problems/02-birch-and-swinnerton-dyer.md): the Frontier wing's record of what is proved and what remains open.
 
 The question this card leaves open: for a curve whose L-function vanishes twice or more at s = 1, how could anyone prove that its Tate–Shafarevich group is finite?
 

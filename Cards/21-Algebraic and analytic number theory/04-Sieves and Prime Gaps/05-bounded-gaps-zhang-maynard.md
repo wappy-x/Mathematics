@@ -588,8 +588,8 @@ ALL CHECKS PASS
 
 - [Large gaps](06-large-gaps-and-the-cramer-model.md): the opposite question, how wide gaps can grow, and the random model that predicts them.
 - [Landau's four problems](08-landau-problems-and-legendre.md): twin primes beside three other simple questions about primes that are still open.
-- Twin primes (planned): the conjecture at gap 2 and its status.
-- Reading a paper (planned): how to follow a research article such as Maynard's.
+- [Twin primes](../../25-Frontier/03-Primes%20and%20Numbers/01-twin-primes-and-bounded-gaps.md): the conjecture at gap 2 and its status.
+- [Reading a paper](../../25-Frontier/01-How%20Research%20Works/05-reading-a-research-paper.md): how to follow a research article such as Maynard's.
 
 Sibling cards: [Sieving by inclusion-exclusion](01-the-legendre-sieve-and-the-parity-problem.md), [Brun's sieve and Selberg's](02-brun-and-selberg-sieves.md), [The large sieve](03-the-large-sieve.md) and [Goldbach](07-goldbach-and-chens-theorem.md).
 

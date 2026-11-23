@@ -649,7 +649,7 @@ The card also uses [Sieving by inclusion-exclusion](01-the-legendre-sieve-and-th
 
 ## Where this goes next
 
-- Landau's four problems (planned): the frontier wing's card, with the status of each problem as research stands.
+- [Landau's four problems](../../25-Frontier/03-Primes%20and%20Numbers/03-landau-problems.md): the frontier wing's card, with the status of each problem as research stands.
 - [Large gaps](06-large-gaps-and-the-cramer-model.md): the other end of the gap question, how far apart consecutive primes can be, with the Cramér model's predictions.
 
 The question this card leaves open: is there a method, beyond counting multiples, that can tell a number with one prime factor from a number with two?

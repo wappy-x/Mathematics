@@ -897,7 +897,7 @@ end GodelCard
 
 - [Hilbert's tenth problem](04-hilberts-tenth-problem.md): the unsettled sentences can be whole-number equations, and no program can test whether one has a solution.
 - [Proof assistants](08-proof-assistants-and-formal-verification.md): proof checkers in practice, and what they can and cannot certify.
-- The continuum hypothesis (planned): a natural question that the standard axioms for sets do not settle.
+- [The continuum hypothesis](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/02-continuum-hypothesis-and-independence.md): a natural question that the standard axioms for sets do not settle.
 
 The question this card leaves open: which concrete, natural questions of ordinary mathematics are unprovable, and not only sentences built to talk about themselves?
 

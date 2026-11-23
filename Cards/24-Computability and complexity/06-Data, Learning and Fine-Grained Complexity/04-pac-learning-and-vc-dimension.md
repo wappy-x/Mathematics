@@ -882,7 +882,7 @@ example : 1 / 100 < 2 * (19 / 20 : ℚ) ^ 93 - (9 / 10 : ℚ) ^ 93 := by norm_nu
 ## Where this goes next
 
 - [Regret](05-online-learning-and-regret.md): drops the fair-sample assumption. Examples may come in any order, even chosen by an opponent, and the learner is judged against the best single rule in hindsight.
-- Optimal transport (planned): measures how far one mix of quotes is from another, the tool for asking how much a learned rule degrades when future quotes differ from the log.
+- [Optimal transport](../../25-Frontier/07-Physics%2C%20Finance%20and%20Machines/04-optimal-transport-and-machine-learning-theory.md): measures how far one mix of quotes is from another, the tool for asking how much a learned rule degrades when future quotes differ from the log.
 
 The question this card leaves open: when the mix of future quotes drifts away from the log's, how many sales are enough then?
 

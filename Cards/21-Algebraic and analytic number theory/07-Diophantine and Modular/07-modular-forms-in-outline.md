@@ -729,7 +729,7 @@ example : 240 * σ 3 1 = 240 ∧ 240 * σ 3 2 = 2160 ∧ 240 * σ 3 3 = 6720 := 
 
 - [Modularity](08-modularity-and-the-proof-of-fermat.md): every elliptic curve over the rationals has a weight-2 form, as the house curve does at level 32, and Fermat follows.
 - [What curves answer](../../22-Algebraic%20geometry/04-Elliptic%20Curves/10-modularity-and-the-congruent-number-problem.md): what the modular form of a curve says about its rational points.
-- Sphere packing, solved in dimensions 8 and 24 (planned): the $`E_8`$ and Leech theta series used to prove the best packings.
+- [Sphere packing, solved in dimensions 8 and 24](../../25-Frontier/04-Geometry%20and%20Combinatorics/06-sphere-packing-and-viazovska.md): the $`E_8`$ and Leech theta series used to prove the best packings.
 
 The question this card leaves open: which sequences of numbers, beyond these, are secretly the coefficients of a modular form?
 

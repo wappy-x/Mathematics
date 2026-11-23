@@ -848,7 +848,7 @@ example : (pdeOrder [(0, 0, 2), (4, 0, 0), (2, 2, 0), (0, 4, 0)],
 - [Well posed](06-well-posedness-and-hadamard.md): one answer that moves little when the data move.
 - [Characteristics](../02-First-Order%20Equations%20and%20Characteristics/01-method-of-characteristics.md): first-order problems, where data must sit on the right part of the boundary.
 - [The heat kernel](../03-The%20Heat%20Equation%20in%20Depth/01-heat-kernel-and-fundamental-solution.md): the Cauchy problem for heat, solved on the endless sheet.
-- Reading a statement: how to read a problem as printed in books and papers.
+- [Reading a statement](../../25-Frontier/01-How%20Research%20Works/04-reading-a-mathematical-statement.md): how to read a problem as printed in books and papers.
 
 The open question this card leaves: given a full problem statement, how can one tell in advance that an answer exists, is unique, and moves little when the data move?
 

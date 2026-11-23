@@ -1114,7 +1114,7 @@ example : (2 : ℝ) - 2 * √(1 / 10 ^ 6) = 1998 / 1000 := by
 ## Where this goes next
 
 - Navier-Stokes (planned): the frontier wing's card with the full Clay statement, for all of space and for the repeating box.
-- The September 2026 Navier-Stokes claim (planned): a claimed blow-up driven by an outside force, the kind of answer statement (D) and its all-of-space twin allow, set out there and not judged here.
+- [The September 2026 Navier-Stokes claim](../../25-Frontier/05-Analysis%20and%20Dynamics/01-navier-stokes-blow-up-claim-2026.md): a claimed blow-up driven by an outside force, the kind of answer statement (D) and its all-of-space twin allow, set out there and not judged here.
 - [Vorticity](04-vorticity-and-the-euler-equations.md): the spin form of the equations, where the stretching term of Step 4 is the main actor.
 
 The question this card leaves open is the regularity problem itself: does every smooth flow in three dimensions stay smooth forever?

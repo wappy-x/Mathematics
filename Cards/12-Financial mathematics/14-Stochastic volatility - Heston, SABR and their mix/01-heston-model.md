@@ -1119,7 +1119,7 @@ end HestonModel
 - [SABR and Hagan's formula](04-sabr-model-and-hagan-formula.md): a tilt dial and a bend dial on a forward, with a formula for the smile itself.
 - [The volatility swap and the jump bias](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md): paying the square root of average variance, and the same curvature that took 20 cents off the call here.
 - [Barriers on a smile](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md): pricing a barrier when the smile moves with the spot.
-- Open questions in finance mathematics: why short-dated skews need a rougher variance than this model's.
+- [Open questions in finance mathematics](../../25-Frontier/07-Physics%2C%20Finance%20and%20Machines/03-rough-volatility-and-open-finance-questions.md): why short-dated skews need a rougher variance than this model's.
 
 Every price on this card carries a standard error from simulation; the next card removes it, pricing each strike exactly from the model's characteristic function.
 

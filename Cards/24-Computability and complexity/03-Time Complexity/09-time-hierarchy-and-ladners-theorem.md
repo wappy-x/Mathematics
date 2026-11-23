@@ -850,7 +850,7 @@ example : 1000 ^ 2 = 1000000 ∧ 1000 ^ 3 = 1000000000 := by norm_num
 ## Where this goes next
 
 - [P versus NP](../04-Beyond%20Worst%20Case/08-p-versus-np-what-is-known.md): why diagonalisation alone cannot settle P versus NP, since it works the same for machines given an oracle (a black box that answers one fixed problem in a single step).
-- Graph isomorphism (planned): the leading candidate for Ladner's middle ground, and the quasi-polynomial algorithm (slower than any polynomial, far faster than exponential) found in 2015.
+- [Graph isomorphism](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/04-graph-isomorphism.md): the leading candidate for Ladner's middle ground, and the quasi-polynomial algorithm (slower than any polynomial, far faster than exponential) found in 2015.
 
 On this shelf, the classes sit beside [P and NP](02-p-and-np.md), [Reductions](03-polynomial-reductions-and-np-completeness.md), [Cook-Levin](04-cook-levin-theorem.md) and [Karp's list](05-karps-problems-and-hardness-recipes.md).
 

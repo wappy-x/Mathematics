@@ -515,7 +515,7 @@ example : 41 + 17 + 8 + 36 + 52 + 12 + 29 + 4 + 31 = 230 ∧ 230 % 10 = 0 := by 
 
 - [Friends and strangers](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/01-friends-and-strangers.md): three mutual friends or three mutual strangers among any six people.
 - [Erdos-Szekeres](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/04-erdos-szekeres.md): two labels at once as boxes, forcing a long run that only rises or only falls.
-- Sunflowers and union-closed families: questions of this shape nobody has settled. A sunflower is a group of sets that all overlap in exactly the same shared part, and the open question is how many sets force one. A union-closed family contains the union of any two of its sets, and the open question is whether some element always lies in at least half of them.
+- [Sunflowers and union-closed families](../../25-Frontier/04-Geometry%20and%20Combinatorics/05-sunflower-and-union-closed-conjectures.md): questions of this shape nobody has settled. A sunflower is a group of sets that all overlap in exactly the same shared part, and the open question is how many sets force one. A union-closed family contains the union of any two of its sets, and the open question is whether some element always lies in at least half of them.
 
 A crowded box is not yet a pattern, and forcing patterns rather than mere crowding is the Ramsey cards' work.
 
