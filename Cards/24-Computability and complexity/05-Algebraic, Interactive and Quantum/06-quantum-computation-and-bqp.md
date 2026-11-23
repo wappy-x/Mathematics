@@ -198,7 +198,7 @@ The code runs each broken circuit on all four functions: constant 0, constant 1,
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Leave y at 0, skip the X | Pr[reads 1] = 0, 0, 0, 0 | y is not in $`|-\rangle`$, so no sign kicks back; balanced reads as constant |
+| Leave y at 0, skip the X | Pr[reads 1] = 0, 0, 0, 0 | y is not in $`\lvert -\rangle`$, so no sign kicks back; balanced reads as constant |
 | Skip the final H | Pr[reads 1] = 0.5, 0.5, 0.5, 0.5 | the signs are never added, so the reading is a fair coin |
 | A box that overwrites y with f(x) | total probability 0 on constant 0 | not reversible, so not unitary; the amplitudes cancel to nothing |
 | Each run wrong with chance 1/2 | majority of 15 runs wrong 50% of the time | no gap, so voting cannot help |
