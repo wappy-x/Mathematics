@@ -965,8 +965,8 @@ example : ∀ C : Finset (Fin 3), (∀ s ∈ ring, s.1 ∈ C ∨ s.2 ∈ C) → 
 
 - [The assignment problem](../../14-Applied%20and%20computational/05-Operations%20Research/05-assignment-and-the-hungarian-algorithm.md): the cover as the fewest lines through every zero of a cost table, which tells the method where to move.
 - [Approximation](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/06-approximation-algorithms.md): both ends of a matching as a cover at most twice the smallest, on graphs without two sides.
-- Karp's list: smallest vertex cover as one of Karp's original hard problems, once the two sides are gone.
-- Parameterised complexity: how fast a small cover can still be found on a general graph, with the cover's size as the dial.
+- [Karp's list](../../24-Computability%20and%20complexity/03-Time%20Complexity/05-karps-problems-and-hardness-recipes.md): smallest vertex cover as one of Karp's original hard problems, once the two sides are gone.
+- [Parameterised complexity](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/05-parameterised-complexity.md): how fast a small cover can still be found on a general graph, with the cover's size as the dial.
 
 The river makes a smallest cover easy to find; later cards ask how hard it is without one.
 

@@ -880,8 +880,8 @@ example : 256 - 2 * 32 - 2 = 190 := by decide
 ## Where this goes next
 
 - [Diffie-Hellman and ElGamal](05-diffie-hellman-and-elgamal.md): the next card. Two parties agree a secret in public, with a different hard problem underneath.
-- Average-case hardness (planned): why "hard" must mean hard for random keys, not just for the worst one.
-- P versus NP (planned): where factoring sits among hard problems, and why no proof of its hardness exists.
+- [Average-case hardness](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/06-average-case-and-cryptographic-hardness.md): why "hard" must mean hard for random keys, not just for the worst one.
+- [P versus NP](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/08-p-versus-np-what-is-known.md): where factoring sits among hard problems, and why no proof of its hardness exists.
 
 The question this card leaves open: is decrypting without d really as hard as splitting n, and is splitting n really hard?
 

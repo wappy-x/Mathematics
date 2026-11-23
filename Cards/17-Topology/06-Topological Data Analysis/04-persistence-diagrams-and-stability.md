@@ -781,7 +781,7 @@ end PersistenceStability
 
 - [Comparing diagrams](05-comparing-diagrams-and-vectorising-them.md): the bottleneck distance at scale, landscapes and images that turn diagrams into vectors, and error bars when noise is random rather than bounded.
 - [Persistence in practice](07-persistence-in-practice.md): diagrams of time series built from sliding windows, and what they are worth.
-- Natural transformations and Yoneda (planned): the shift maps of Step 2, seen as natural transformations.
+- [Natural transformations and Yoneda](../../24-Computability%20and%20complexity/07-Category%20Theory%20in%20Outline/03-natural-transformations-and-yoneda.md): the shift maps of Step 2, seen as natural transformations.
 - Optimal transport (planned): the general theory behind $`W_p`$, moving mass at least cost.
 
 Left open: the bound here needs every data value within $`\delta`$. Real noise is random and sometimes large, so how far can a diagram be trusted when one value in a thousand is wild?

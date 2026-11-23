@@ -4,7 +4,7 @@ The whole library in reading order: **25 wings, 255 shelves and 1,866 cards**, f
 
 **Each wing has its own page.** Click a wing to see its shelves and every card on them, then click a card's title to read it.
 
-**1,766 of 1,866 cards are ready to read.**
+**1,823 of 1,866 cards are ready to read.**
 
 | # | Wing | What it's about | Shelves | Ready to read |
 | --- | --- | --- | ---: | --- |
@@ -31,7 +31,7 @@ The whole library in reading order: **25 wings, 255 shelves and 1,866 cards**, f
 | 21 | [Algebraic and analytic number theory](Cards/21-Algebraic%20and%20analytic%20number%20theory/README.md) | Primes in depth: zeta, L-functions and Galois. | 8 | 72 of 72 |
 | 22 | [Algebraic geometry](Cards/22-Algebraic%20geometry/README.md) | Shapes defined by equations. | 6 | 54 of 54 |
 | 23 | [Differential geometry and Lie groups](Cards/23-Differential%20geometry%20and%20Lie%20groups/README.md) | Curved space, symmetry and physics. | 7 | 69 of 69 |
-| 24 | [Computability and complexity](Cards/24-Computability%20and%20complexity/README.md) | What computers can and can't do, and how fast. | 7 | 0 of 57 · planned |
+| 24 | [Computability and complexity](Cards/24-Computability%20and%20complexity/README.md) | What computers can and can't do, and how fast. | 7 | 57 of 57 |
 | 25 | [Frontier](Cards/25-Frontier/README.md) | How research works, and the great open problems. | 7 | 0 of 43 · planned |
 
 Want to help write the planned cards? The [contributing guide](.github/CONTRIBUTING.md) shows how to claim a shelf and build it.

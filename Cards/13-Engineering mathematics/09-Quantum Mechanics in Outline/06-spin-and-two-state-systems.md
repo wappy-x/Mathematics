@@ -79,7 +79,7 @@ Here σ is the Pauli matrix, not a stress or a standard deviation. $`\langle \ma
 - **One spin one-half carries the magnetism.** Silver has 47 electrons; 46 pair off with no net moment, and the outer one has no orbital motion, so its spin is the whole magnet. An atom with spin 1 makes three spots and needs 3 × 3 matrices.
 - **The field is strong compared with the electron's magnetic coupling to the nucleus.** The silver nucleus has a small spin of its own, also one-half. In a weak field the two spins lock into one combined spin of 1. Nearly all the magnetism is still the electron's, but it now rides on twice the spin, so it turns at half the rate: in Earth's 50 μT the electron-alone formula says 1.4012 MHz, but the silver atom turns at about 0.7006 MHz. In the 0.5 T magnet the electron goes its own way and the two-state model holds.
 - **The atom flies like a ball, and has no charge.** A silver atom is heavy and neutral, so its path through the magnet is a classical one with one of two forces. Free electrons cannot be sorted this way: their charge feels a far larger sideways force from the field, and its spread across the beam's width blurs the two spots together.
-- **Nothing disturbs the phase.** The swinging chance in time assumes an isolated spin. Collisions and field noise blur the relative phase of $`a`$ and $`b`$, and the swing dies away; that loss is the central problem of Qubits (planned).
+- **Nothing disturbs the phase.** The swinging chance in time assumes an isolated spin. Collisions and field noise blur the relative phase of $`a`$ and $`b`$, and the swing dies away; that loss is the central problem of [Qubits](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/05-qubits-superposition-and-measurement.md).
 
 ---
 
@@ -809,7 +809,7 @@ example (nx ny nz : ℝ) :
 - **Electron spin resonance.** A lab spectrometer tunes a microwave source near 9.5 GHz and sweeps a magnet through 0.3390 T. When the field makes the spin's rate match the microwaves, the sample absorbs. It finds unpaired electrons, for instance in reactive molecule fragments, catalysts and irradiated materials.
 - **MRI scanners.** The hydrogen nucleus, a proton, is also spin one-half, with a far smaller moment. In a 1.5 T scanner it turns at 63.8662 MHz, and the scanner listens for that radio signal from water in the body.
 - **Atomic magnetometers.** The swinging rate is proportional to $`B`$, so timing it measures the field. Atomic magnetometers time it to read fields far weaker than Earth's 50 μT, for instance from the heart and brain.
-- **Qubits.** A quantum computer's basic unit is any two-state system run by exactly these matrices: Qubits (planned).
+- **Qubits.** A quantum computer's basic unit is any two-state system run by exactly these matrices: [Qubits](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/05-qubits-superposition-and-measurement.md).
 
 > **Say it back**
 > A silver atom in an uneven magnetic field lands in one of two spots, so its spin is a column of two complex numbers. Each magnet axis has a 2 × 2 matrix built from the three Pauli matrices; its two eigenvectors are the two spots, and the chance of a spot is the squared overlap with its eigenvector. For a magnet tilted α from the prepared axis that chance is cos² of α/2: 0.75 at 60°. In a steady field the spin turns about the field at ω = gμ_B B / ħ, 14.0125 GHz at 0.5 T, which swings the chances for axes across the field and leaves the chance along the field fixed.
@@ -827,7 +827,7 @@ example (nx ny nz : ℝ) :
 - [Hydrogen in outline](07-the-hydrogen-atom-in-outline.md): spin joins the electron's orbit to make the full set of quantum numbers, and its magnet splits the spectral lines.
 - [Symmetry and conservation](08-symmetry-and-conserved-quantities.md): turning matrices like $`U(t)`$ as symmetries, and what they conserve. A field along z leaves the spin along z unchanged, as the flat green line shows.
 - [Mass gap](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/04-the-mass-gap-statement.md): the gauge theories built on the same 2 × 2 matrices.
-- Qubits (planned): two-state systems as computing units, gates as turning matrices, and the loss of phase that limits them.
+- [Qubits](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/05-qubits-superposition-and-measurement.md): two-state systems as computing units, gates as turning matrices, and the loss of phase that limits them.
 
 What this card leaves open is two spins together: a pair of spin one-half particles needs four complex numbers, not two, and some of its states cannot be split into one column per particle.
 

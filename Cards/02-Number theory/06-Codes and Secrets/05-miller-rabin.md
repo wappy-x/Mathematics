@@ -389,7 +389,7 @@ example : 13 ^ 55 % 221 ≠ 1 ∧ 13 ^ 55 % 221 ≠ 220 ∧ 13 ^ 110 % 221 ≠ 2
 ## Where this goes next
 
 - [Randomised algorithms](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/01-randomised-algorithms-and-expectation.md): coin-flipping algorithms and their error bounds.
-- P and NP: where fast primality sits among problems computers solve quickly.
+- [P and NP](../../24-Computability%20and%20complexity/03-Time%20Complexity/02-p-and-np.md): where fast primality sits among problems computers solve quickly.
 
 Left open: can a number this size be proved prime quickly, with no doubt at all?
 

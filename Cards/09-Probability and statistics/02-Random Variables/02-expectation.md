@@ -677,7 +677,7 @@ example : (∑ j ∈ Finset.Icc 1 40, (2 : ℚ) ^ j * (1 / 2) ^ j) = 40 := by
 - [Entropy](../../14-Applied%20and%20computational/03-Information%20Theory/01-entropy.md): the expectation of surprise.
 - [Nash equilibrium](../../14-Applied%20and%20computational/05-Operations%20Research/09-game-theory-and-nash-equilibrium.md): players choosing mixed moves by expected payoff.
 - [States](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/04-states-representations-and-the-gns-construction.md): expectation taken as a linear rule in its own right.
-- Regret: expected loss against the best fixed choice.
+- [Regret](../../24-Computability%20and%20complexity/06-Data%2C%20Learning%20and%20Fine-Grained%20Complexity/05-online-learning-and-regret.md): expected loss against the best fixed choice.
 
 The ticket averages $1 yet pays $0 or $100, so the mean alone says nothing about how far one result lands from it; measuring that swing is [Variance](03-variance-and-standard-deviation.md).
 

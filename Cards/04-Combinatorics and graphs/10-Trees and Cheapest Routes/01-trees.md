@@ -527,7 +527,7 @@ example : 2 ^ Nat.choose 5 2 = 1024 ∧ Nat.choose 10 4 = 210 ∧ 210 - 125 = 85
 - [Rooted trees](02-rooted-and-binary-trees.md): the same tree with one house named the top, so every other has a parent and a depth.
 - [Spanning trees](03-spanning-trees-and-cayleys-formula.md): trees inside a larger map, and how many a map holds.
 - [Planar graphs](../12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md): what becomes of $`m = n - 1`$ when loops are allowed but crossings are not.
-- Grammars and a stack: trees as the record of how a sentence or a program was built.
+- [Grammars and a stack](../../24-Computability%20and%20complexity/01-Models%20of%20Computation/05-context-free-grammars-and-pushdown-automata.md): trees as the record of how a sentence or a program was built.
 
 Nothing here told one lane from another: put a price on each and the cheapest skeleton becomes a question, [The cheapest skeleton](04-minimum-spanning-trees.md).
 

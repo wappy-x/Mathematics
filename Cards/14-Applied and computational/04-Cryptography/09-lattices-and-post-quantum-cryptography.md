@@ -852,7 +852,7 @@ end LatticesAndPostQuantumCryptography
 
 ## Where this goes next
 
-- Shor and Grover (planned): the quantum algorithms themselves, with the period-finding step this card does by brute force.
+- [Shor and Grover](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/07-shors-and-grovers-algorithms.md): the quantum algorithms themselves, with the period-finding step this card does by brute force.
 
 The open question this card leaves: is learning with errors truly hard for quantum computers, or has nobody yet found the structure that would make it easy?
 

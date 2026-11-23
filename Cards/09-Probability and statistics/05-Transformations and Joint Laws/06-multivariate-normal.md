@@ -1084,7 +1084,7 @@ example : (1 : ℚ) - (9/10) ^ 2 - ((0 - 9/10 * (9/10)) ^ 2 / (1 - (9/10) ^ 2)) 
 - [Parametric VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/02-parametric-var-and-delta-normal.md): the portfolio's bell turned into a regulatory loss figure.
 - [The Kalman filter](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/07-kalman-filter.md): linear maps and conditioning of normal vectors, repeated every time step.
 - [Covariance matrices](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/07-the-manifold-of-covariance-matrices.md): the positive definite matrices as a curved space of their own.
-- Random projection: a matrix of independent normal draws used to shrink data while keeping distances.
+- [Random projection](../../24-Computability%20and%20complexity/06-Data%2C%20Learning%20and%20Fine-Grained%20Complexity/02-dimension-reduction-and-random-projection.md): a matrix of independent normal draws used to shrink data while keeping distances.
 
 The normal vector ties its readings together only through Σ, and its joint tails are thin; what a joint law looks like when each share keeps its own shape and crashes arrive together is the question [Copulas](07-copulas-and-sklars-theorem.md) answers.
 

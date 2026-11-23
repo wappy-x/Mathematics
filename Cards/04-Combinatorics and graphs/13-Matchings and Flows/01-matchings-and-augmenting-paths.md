@@ -995,7 +995,7 @@ example : (symmDiff greedyPairs otherPerfect).card = 9 ∧ (otherPerfect \ greed
 - [Stable matching](04-stable-matching-gale-shapley.md): pairings that respect preferences, not only size.
 - [The assignment problem](../../14-Applied%20and%20computational/05-Operations%20Research/05-assignment-and-the-hungarian-algorithm.md): the cheapest perfect matching when every pair has a cost.
 - [Total unimodularity](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/05-total-unimodularity.md): why matching problems solved with fractions still land on whole pairs.
-- Permanent against determinant: counting perfect matchings, the 2 here, is easy to state and hard to compute.
+- [Permanent against determinant](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/03-algebraic-complexity-permanent-versus-determinant.md): counting perfect matchings, the 2 here, is easy to state and hard to compute.
 
 Berge says when a matching is stuck but not why; which crowded group of volunteers blocks a full pairing is the question [Hall's theorem](02-halls-marriage-theorem.md) answers.
 

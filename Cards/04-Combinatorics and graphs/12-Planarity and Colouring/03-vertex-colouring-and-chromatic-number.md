@@ -601,7 +601,7 @@ example : (cycleGraph 5).cliqueNum = 2 ∧ (cycleGraph 5).chromaticNumber = 3 :=
 - [Colouring maps](05-five-and-four-colour-theorems.md): the ceiling for graphs drawn flat with no crossings.
 - [Edge colouring](06-edge-colouring-and-round-robin.md): the same question asked of the lines.
 - [Local search](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/07-local-search-and-metaheuristics.md): clash graphs with thousands of exams.
-- Reductions: why no fast exact method is known.
+- [Reductions](../../24-Computability%20and%20complexity/03-Time%20Complexity/03-polynomial-reductions-and-np-completeness.md): why no fast exact method is known.
 - Colouring the plane: the same count over every point of the plane.
 
 The limits pinned this graph only because they met; on most graphs they leave a range, which the next card closes by counting colourings rather than hunting one.

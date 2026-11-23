@@ -729,7 +729,7 @@ end Pavement
 - [Brouwer and Borsuk-Ulam](08-brouwer-and-borsuk-ulam.md): the induced map and its two rules prove that a disc map fixes a point.
 - [Ricci flow](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/01-ricci-flow-and-the-poincare-proof-in-outline.md): a way of smoothing a space, used to settle when trivial loops force a sphere.
 - The Poincare conjecture, solved (planned): a closed three-dimensional space in which every loop shrinks is a sphere.
-- Categories and functors (planned): the general pattern of spaces to groups and maps to homomorphisms.
+- [Categories and functors](../../24-Computability%20and%20complexity/07-Category%20Theory%20in%20Outline/01-categories-and-functors.md): the general pattern of spaces to groups and maps to homomorphisms.
 
 Left open: is every loop round the post in the class of some whole number of laps, or are there classes that winding number cannot see?
 

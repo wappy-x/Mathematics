@@ -630,7 +630,7 @@ example : (![6, 2, 3] : Fin 3 → ℝ) - ![6, 2, 0] = ![0, 0, 3] ∧
 - [Conditional expectation as a projection](../../10-Measure%20and%20integration/09-Conditional%20Expectation/03-conditional-expectation-as-projection.md): a forecast as the projection of a random quantity.
 - Projection, a planned card in Functional analysis: this proof where the directions never run out.
 - [Partial sums are the best fit](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/02-best-approximation-and-bessels-inequality.md): how much a few waves capture, and the miss left.
-- Random projection: random directions that shrink data, keeping distances.
+- [Random projection](../../24-Computability%20and%20complexity/06-Data%2C%20Learning%20and%20Fine-Grained%20Complexity/02-dimension-reduction-and-random-projection.md): random directions that shrink data, keeping distances.
 
 Each adds shadows onto several directions at once, which step 4 allows only while they stay perpendicular; [Gram-Schmidt](03-gram-schmidt-and-orthonormal-bases.md) makes them so.
 

@@ -854,7 +854,7 @@ end HamiltonianCycles
 ## Where this goes next
 
 - [The travelling salesman](04-travelling-salesman-in-outline.md): the same round with a cost on every edge, where finding one stops being the hard part.
-- Karp's list: where "no quick test is known" becomes a precise claim about a family of problems.
+- [Karp's list](../../24-Computability%20and%20complexity/03-Time%20Complexity/05-karps-problems-and-hardness-recipes.md): where "no quick test is known" becomes a precise claim about a family of problems.
 
 The search opened 274 partial routes where a blind sift of ten depots faces 181440 orders — encouraging until the depots number a thousand. What to do when the exact answer is out of reach is the next card's business.
 

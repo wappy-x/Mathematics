@@ -844,7 +844,7 @@ example : ((Finset.univ : Finset (Finset (Fin 5))).filter
 
 ## Where this goes next
 
-- Relaxation and rounding: the general pattern of Steps 4 and 5, relaxing a hard problem and rounding back with a proved ratio, across many problems.
+- [Relaxation and rounding](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/02-relaxation-and-rounding.md): the general pattern of Steps 4 and 5, relaxing a hard problem and rounding back with a proved ratio, across many problems.
 - The unique games conjecture: if it is true, and P ≠ NP (the widely held belief that some quickly checked answers cannot be found quickly), no fast method beats the 0.878567 ratio for max-cut, so the rounding on this card would be the best possible.
 - [Proximal gradient](06-proximal-methods-ista-fista-and-the-lasso.md): the next card, where the hard part of each step is solved exactly in closed form, as a proximal map; for the lasso that map is soft thresholding.
 

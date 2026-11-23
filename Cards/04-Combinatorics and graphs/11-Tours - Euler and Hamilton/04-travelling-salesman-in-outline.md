@@ -1020,7 +1020,7 @@ example : 5 * 2 ^ 4 = 80 ∧ 19 * 2 ^ 18 = 4980736 := by norm_num
 - [Integer programs](../../14-Applied%20and%20computational/05-Operations%20Research/03-integer-programming-and-branch-and-bound.md): floors and pruning made into an exact method.
 - [Four classic models](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/06-classic-integer-models-knapsack-assignment-and-covering.md): the tour as whole-number variables and constraints.
 - [Heuristics with a promise](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/08-heuristics-and-approximation-guarantees.md): how close a quick method can be promised to get.
-- Karp's list: the family this problem joins, and how membership is proved.
+- [Karp's list](../../24-Computability%20and%20complexity/03-Time%20Complexity/05-karps-problems-and-hardness-recipes.md): the family this problem joins, and how membership is proved.
 
 This card costs all 60 tours and shrugs at the twenty-town count; what "quick" means precisely is [Polynomial or exponential](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/03-polynomial-versus-exponential-time.md).
 

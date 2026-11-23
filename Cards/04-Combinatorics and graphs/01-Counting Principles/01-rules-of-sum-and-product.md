@@ -489,8 +489,8 @@ example : 20 * 20 = 400 := by decide
 - [Factorials](03-factorial.md): a stage shrinking by one each time, all the way down.
 - [Pigeonhole, extended](../04-Inclusion-Exclusion%20and%20Pigeonhole/05-pigeonhole-extended.md): what these counts force once outcomes outnumber options.
 - [Recurrences](../05-Recurrences/01-recurrences-and-fibonacci.md): counts built from smaller counts, the cases being one decision's branches.
-- Incompressibility: counting descriptions against things described, to show most have no short one.
-- Circuit lower bounds: counting circuits against the functions they must compute.
+- [Incompressibility](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/06-incompressibility-and-randomness.md): counting descriptions against things described, to show most have no short one.
+- [Circuit lower bounds](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/07-circuit-complexity-and-lower-bounds.md): counting circuits against the functions they must compute.
 
 Here the stages differ in size; when every stage offers the same options, the product becomes a power — [Strings with repetition](02-strings-and-powers.md).
 

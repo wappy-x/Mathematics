@@ -951,7 +951,7 @@ example : 16807 ^ 10000 * 1 % (2 ^ 31 - 1) = 1043618065 := by decide +kernel
 - [Randomised algorithms](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/01-randomised-algorithms-and-expectation.md): algorithms that flip coins to run faster, and what their average cost means.
 - [Fair choices from a list you cannot hold](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/03-shuffling-and-reservoir-sampling.md): fair shuffles and samples built from a generator's draws.
 - [Seeds](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/03-reproducible-simulation-and-seeds.md): seeds, parallel streams and version pinning in practice.
-- Pseudorandomness: when a fixed rule can provably replace true randomness.
+- [Pseudorandomness](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/04-derandomisation-and-pseudorandomness.md): when a fixed rule can provably replace true randomness.
 
 A generator hands out flat draws between 0 and 1, but a simulation needs waiting times, heights and prices with other shapes; [Inverse transform](02-inverse-transform-sampling.md) turns one into the other.
 

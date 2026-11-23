@@ -545,8 +545,8 @@ example : ¬ ∃ c ∈ Nat.divisors 12, Nat.gcd 6 c = 1 ∧ Nat.lcm 6 c = 12 := 
 
 ## Where this goes next
 
-- Cook-Levin: whether some row of a formula comes out true — one question standing in for every problem with quickly checked answers.
-- Boolean circuits: the gates a network needs, a formula as cost rather than truth.
+- [Cook-Levin](../../24-Computability%20and%20complexity/03-Time%20Complexity/04-cook-levin-theorem.md): whether some row of a formula comes out true — one question standing in for every problem with quickly checked answers.
+- [Boolean circuits](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/01-boolean-circuits-and-formulas.md): the gates a network needs, a formula as cost rather than truth.
 
 Eight rows can be read by hand. The laws say nothing about the cost of finding whether some row of a large rule comes out true — a later card's question.
 

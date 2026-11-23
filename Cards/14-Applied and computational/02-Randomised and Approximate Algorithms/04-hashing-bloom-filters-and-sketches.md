@@ -891,7 +891,7 @@ example : 389921 * 8 = 3119368 := by norm_num
 
 ## Where this goes next
 
-- Streaming: methods that see each item once in a stream too large to store, of which these sketches are the first examples, with frequency counts and heavy hitters added.
+- [Streaming](../../24-Computability%20and%20complexity/06-Data%2C%20Learning%20and%20Fine-Grained%20Complexity/01-streaming-and-sketching.md): methods that see each item once in a stream too large to store, of which these sketches are the first examples, with frequency counts and heavy hitters added.
 
 The question this card leaves open: how small can a sketch be and still count to within a chosen error, and which sketches can be merged, subtracted or intersected without losing that promise?
 

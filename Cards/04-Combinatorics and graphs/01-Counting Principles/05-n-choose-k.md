@@ -510,7 +510,7 @@ example : 167960 * 11 ! = 6704425728000 := by decide
 - [Mantel and Turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/05-mantel-and-turan.md): how many such lines a network holds before a triangle is forced.
 - [Counting chances](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/04-equally-likely-outcomes-and-counting.md): favourable picks over possible picks, where lottery odds come from.
 - [Hypergeometric](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/03-hypergeometric.md): counting the picks holding a stated number of winners.
-- Counting: counting when no formula like this one exists.
+- [Counting](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/02-counting-solutions-and-sharp-p.md): counting when no formula like this one exists.
 
 Every count here assumed 49 different numbers, each taken once; what to do when some things are identical is [Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md).
 
