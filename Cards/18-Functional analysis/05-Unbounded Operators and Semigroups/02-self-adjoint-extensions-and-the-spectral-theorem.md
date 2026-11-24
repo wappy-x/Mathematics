@@ -1011,7 +1011,7 @@ open SelfAdjointExtensions
 
 - **Heat in rods and walls.** An insulated end and an end held at a set temperature are two self-adjoint domains; engineers pick the one that matches the physical end.
 - **Quantum mechanics.** Energy and momentum must be self-adjoint, so that measured values are real. A particle in a box needs end conditions; on the half-line, momentum $`-i\,d/dx`$ has $`n_+ = 1`$ and $`n_- = 0`$, so it is not an observable there.
-- **Atoms.** The hydrogen atom's energy operator adds a $`1/r`$ pull to minus the Laplacian, the second derivative in three directions. The Kato-Rellich theorem, cited here and not taught, shows that this keeps the operator self-adjoint on the same domain.
+- **Atoms.** The hydrogen atom's energy operator adds a $`1/r`$ pull to minus the Laplacian, the second derivative in three directions. The Kato-Rellich theorem ([Kato-Rellich](11-kato-rellich-and-perturbed-eigenvalues.md)) shows that this keeps the operator self-adjoint on the same domain.
 - **Point interactions.** Models of an atom-sized scatterer, or a junction in a wire, are exactly a choice of end conditions among the self-adjoint extensions.
 
 > **Say it back**
@@ -1032,6 +1032,8 @@ open SelfAdjointExtensions
 - [Semigroups](04-strongly-continuous-semigroups.md): the family $`e^{-\kappa t A}`$ that composes like elapsed time.
 - [Hille-Yosida](05-hille-yosida-and-generators.md): which operators drive a well-behaved evolution, self-adjoint or not.
 - [Two evolutions](09-the-heat-and-schrodinger-semigroups.md): the same self-adjoint A driving heat and the Schrödinger equation.
+- [Friedrichs extension](10-friedrichs-extension-and-energy-forms.md): start from the energy, and a lower-bounded operator gets one natural self-adjoint version.
+- [Kato-Rellich](11-kato-rellich-and-perturbed-eigenvalues.md): a small enough addition keeps an operator self-adjoint, and eigenvalues move smoothly.
 
 The card leaves one question open: when an operator is not self-adjoint, such as heat with a drift, what decides whether its evolution still exists?
 

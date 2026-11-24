@@ -792,6 +792,7 @@ example : (1 : ℚ) / 2 - 1 / 3 = 1 / 6 := by norm_num
 ## Where this goes next
 
 - [Symmetry and conservation](08-symmetry-and-conserved-quantities.md): the next card. Turning the atom changes nothing, so angular momentum is kept, which is why l and m are good labels.
+- [Kato-Rellich](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/11-kato-rellich-and-perturbed-eigenvalues.md): a small enough addition keeps an operator self-adjoint, and eigenvalues move smoothly.
 
 The question this card leaves open: when relativity, the electron's spin and the proton's own magnetism are added, how do the shells split, and which of those splittings gives the radio line that maps hydrogen across the galaxy?
 

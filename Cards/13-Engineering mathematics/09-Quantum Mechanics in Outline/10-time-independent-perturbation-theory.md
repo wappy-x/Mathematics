@@ -780,6 +780,7 @@ example : (4 : ℕ) ^ 2 - 1 ^ 2 = 15 := by decide
 ## Where this goes next
 
 - [Two particles](11-two-particle-states-and-entanglement.md): two electrons in one box. That card sets aside the electrons' electric push on each other. Treating that push as a nudge is the natural next use of this method, and that card shows the push is not small at 1 nm, so the ε check in When it holds decides whether the series can be trusted.
+- [Kato-Rellich](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/11-kato-rellich-and-perturbed-eigenvalues.md): a small enough addition keeps an operator self-adjoint, and eigenvalues move smoothly.
 
 This card held the nudge steady. What happens when the nudge switches on and off in time, as a passing light wave does, and the electron jumps between levels, is the question it leaves open.
 

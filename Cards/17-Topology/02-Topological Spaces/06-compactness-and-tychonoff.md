@@ -750,6 +750,10 @@ example : 3 * 2 ^ 4 - 3 * 2 ^ 2 + 1 * 2 ^ 1 = 38 ∧ 2 ^ 10 = 1024 ∧ 3 ^ 10 = 
 - [Connected and path-connected](07-connectedness-and-path-connectedness.md): the other property continuous maps carry across, one piece instead of finitely many.
 - [What compactness and connectedness buy](08-images-of-compact-and-connected-sets.md): why the arm's best pose exists, and why a continuous bijection from a compact space to a Hausdorff space has a continuous inverse.
 - [Urysohn and Tietze](10-urysohn-tietze-and-metrisation.md): a normal space carries continuous dials between its closed sets, so by Step 7 every compact Hausdorff space does.
+- [Nets and filters](11-nets-and-filters.md): when sequences are too short to find every limit.
+- [Stone-Cech compactification](12-stone-cech-compactification.md): the biggest compact space a space sits densely inside.
+- [Paracompactness](13-paracompactness-and-nagata-smirnov.md): every cover can be thinned to one that is locally finite, and partitions of unity follow.
+- [Mapping spaces](../07-Higher%20Homotopy%20and%20Mapping%20Spaces/01-mapping-spaces-and-the-compact-open-topology.md): the continuous maps between two spaces form a space of their own.
 
 The question this card leaves open: compact spaces are where maxima exist, so which continuous maps carry compactness, and connectedness, from one space to another?
 

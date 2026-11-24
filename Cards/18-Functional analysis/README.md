@@ -6,22 +6,22 @@
 
 Work in infinite-dimensional spaces as steadily as in ordinary space: measure size with a norm, rely on completeness, name the dual, and read an operator through its spectrum. Differentiate kinks and spikes, pose an equation weakly in a Sobolev space, and turn a generator into an evolution that runs forward in time.
 
-6 shelves · **56 of 56 cards ready to read**
+6 shelves · **67 of 67 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
 | Shelf | Cards |
 | --- | ---: |
-| [01 · Normed and Banach Spaces](#s01) | 10 |
-| [02 · Hilbert Spaces](#s02) | 9 |
-| [03 · Bounded Operators](#s03) | 10 |
+| [01 · Normed and Banach Spaces](#s01) | 11 |
+| [02 · Hilbert Spaces](#s02) | 10 |
+| [03 · Bounded Operators](#s03) | 16 |
 | [04 · Distributions and Sobolev Spaces](#s04) | 10 |
-| [05 · Unbounded Operators and Semigroups](#s05) | 9 |
-| [06 · Banach Algebras and Fixed Points](#s06) | 8 |
+| [05 · Unbounded Operators and Semigroups](#s05) | 11 |
+| [06 · Banach Algebras and Fixed Points](#s06) | 9 |
 
 <a name="s01"></a>
 
-## 01 · Normed and Banach Spaces · 10 cards
+## 01 · Normed and Banach Spaces · 11 cards
 
 *length and completeness in spaces of sequences and functions; the three Banach theorems; Hahn-Banach and the dual space*
 
@@ -35,12 +35,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [Three Banach theorems: completeness turns weak checks into full continuity](01-Normed%20and%20Banach%20Spaces/08-open-mapping-closed-graph-and-uniform-boundedness.md)
 9. [Dual spaces: the continuous measurements on a space, and what they turn out to be](01-Normed%20and%20Banach%20Spaces/09-dual-spaces-and-lp-duality.md)
 10. [Reflexive spaces: when a space is exactly the dual of its own dual](01-Normed%20and%20Banach%20Spaces/10-reflexive-spaces-and-the-second-dual.md)
+11. [Locally convex and Frechet spaces: a whole family of size checks instead of one norm](01-Normed%20and%20Banach%20Spaces/11-locally-convex-and-frechet-spaces.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s02"></a>
 
-## 02 · Hilbert Spaces · 9 cards
+## 02 · Hilbert Spaces · 10 cards
 
 *inner products and angles; projection; orthonormal expansions and Parseval; representation of functionals; kernels; weak limits*
 
@@ -53,12 +54,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 7. [Lax-Milgram: a bounded energy form that stays away from zero has one solution](02-Hilbert%20Spaces/07-lax-milgram-theorem.md)
 8. [Reproducing kernels: a space where reading off a value is an inner product](02-Hilbert%20Spaces/08-reproducing-kernel-hilbert-spaces.md)
 9. [Weak convergence: only the measurements must settle, and that buys compactness](02-Hilbert%20Spaces/09-weak-convergence-and-banach-alaoglu.md)
+10. [Compactness in Lp: small shifts must change a family only a little, and in L1 no mass may pile up](02-Hilbert%20Spaces/10-compactness-in-lp-kolmogorov-riesz-and-dunford-pettis.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s03"></a>
 
-## 03 · Bounded Operators · 10 cards
+## 03 · Bounded Operators · 16 cards
 
 *operator norm and continuity; the model operators; adjoints; compactness; spectrum and resolvent; the two spectral theorems*
 
@@ -72,6 +74,12 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [Compact and symmetric: an orthonormal basis of eigenvectors, eigenvalues dying away](03-Bounded%20Operators/08-spectral-theorem-for-compact-self-adjoint-operators.md)
 9. [Fredholm alternative: either always solvable, or finitely many obstructions](03-Bounded%20Operators/09-fredholm-alternative-and-integral-equations.md)
 10. [Bounded and symmetric: diagonal against a family of projections, not eigenvectors](03-Bounded%20Operators/10-spectral-theorem-for-bounded-self-adjoint-operators.md)
+11. [Polar decomposition: every operator is a stretch followed by a partial turn](03-Bounded%20Operators/11-polar-decomposition-and-partial-isometries.md)
+12. [Trace class: the operators small enough to have a trace, and Lidskii's theorem that the trace adds the eigenvalues](03-Bounded%20Operators/12-trace-class-and-schatten-operators.md)
+13. [Operator topologies: three meanings of 'these operators converge', and Goldstine's density theorem](03-Bounded%20Operators/13-strong-and-weak-operator-topologies.md)
+14. [Holomorphic functional calculus: put any operator into an analytic function, and cut out part of its spectrum](03-Bounded%20Operators/14-holomorphic-functional-calculus-and-riesz-projections.md)
+15. [Fredholm index: dimension of the kernel minus the dimension of what the range misses, and compact changes cannot move it](03-Bounded%20Operators/15-fredholm-operators-and-the-index.md)
+16. [Numerical range: the set of averages <x, Tx> is convex, holds the spectrum, and bounds how fast an evolution settles](03-Bounded%20Operators/16-numerical-range-and-spectral-gap.md)
 
 [↑ Back to the shelves](#top)
 
@@ -96,7 +104,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s05"></a>
 
-## 05 · Unbounded Operators and Semigroups · 9 cards
+## 05 · Unbounded Operators and Semigroups · 11 cards
 
 *domains, closedness and self-adjointness; semigroups and their generators; forcing, splitting, and probabilistic evolutions*
 
@@ -109,12 +117,14 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 7. [Splitting: alternate two evolutions in tiny steps to get their combination](05-Unbounded%20Operators%20and%20Semigroups/07-operator-splitting-and-the-trotter-formula.md)
 8. [Feller semigroups: the evolution of averages along a random path](05-Unbounded%20Operators%20and%20Semigroups/08-feller-semigroups-and-markov-processes.md)
 9. [Two evolutions: heat smooths at once, waves only rotate](05-Unbounded%20Operators%20and%20Semigroups/09-the-heat-and-schrodinger-semigroups.md)
+10. [Friedrichs extension: start from the energy, and a lower-bounded operator gets one natural self-adjoint version](05-Unbounded%20Operators%20and%20Semigroups/10-friedrichs-extension-and-energy-forms.md)
+11. [Kato-Rellich: a small enough addition keeps an operator self-adjoint, and eigenvalues move smoothly](05-Unbounded%20Operators%20and%20Semigroups/11-kato-rellich-and-perturbed-eigenvalues.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s06"></a>
 
-## 06 · Banach Algebras and Fixed Points · 8 cards
+## 06 · Banach Algebras and Fixed Points · 9 cards
 
 *multiplying in a complete space; the Gelfand picture and C-star algebras; fixed points; extreme points and convex duality*
 
@@ -126,6 +136,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Krein-Milman: a compact convex set is rebuilt from its corners](06-Banach%20Algebras%20and%20Fixed%20Points/06-krein-milman-and-extreme-points.md)
 7. [The slope transform: recoding a convex function by its supporting lines](06-Banach%20Algebras%20and%20Fixed%20Points/07-legendre-fenchel-and-subgradients.md)
 8. [Minimax: under convexity the best worst case equals the worst best case](06-Banach%20Algebras%20and%20Fixed%20Points/08-minimax-theorem-and-convex-duality.md)
+9. [Factors in outline: von Neumann algebras with a trivial centre, sorted by the sizes their projections can take](06-Banach%20Algebras%20and%20Fixed%20Points/09-von-neumann-algebras-and-factors-in-outline.md)
 
 [↑ Back to the shelves](#top)
 

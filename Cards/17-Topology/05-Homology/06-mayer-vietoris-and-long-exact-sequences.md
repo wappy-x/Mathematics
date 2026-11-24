@@ -869,6 +869,10 @@ example : ((0 : ℤ) + 0 - 0) + (1 - 1) = 0 ∧ (0 : ℤ) - 0 + 1 = 2 - 1 := by 
 
 - [Homology of spheres, and degree](07-homology-of-spheres-and-degree.md): the caps argument repeated in every dimension, then the degree of a map from a sphere to itself, read from its top homology.
 - [Cohomology and the cup product in outline](08-cohomology-and-cup-product-in-outline.md): the same two-piece sequence with every arrow reversed.
+- [Singular homology](09-singular-homology-and-excision.md): hole counts for any space, with no triangulation, and excision proved.
+- [Eilenberg-Steenrod axioms](10-eilenberg-steenrod-axioms.md): five rules that force every homology theory to agree on cell complexes.
+- [Higher homotopy groups](../07-Higher%20Homotopy%20and%20Mapping%20Spaces/02-higher-homotopy-groups-and-fibrations.md): wrap a sphere around a space, and the Hopf fibration that wraps S^3 around S^2.
+- [Spectral sequences in outline](../07-Higher%20Homotopy%20and%20Mapping%20Spaces/04-spectral-sequences-and-eilenberg-maclane-spaces-in-outline.md): compute the homology of a fibration page by page.
 
 This card leaves open what a map between two spaces does to their holes, and how the connecting map of the caps turns that into a single number for spheres.
 

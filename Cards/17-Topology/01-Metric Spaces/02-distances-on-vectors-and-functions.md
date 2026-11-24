@@ -807,6 +807,7 @@ example : (1 : ℚ) / 2 * (1 / 1000) * 1 = 1 / 2000 ∧ (1 : ℚ) / (1 / 2000) =
 - [Normed and Banach spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/01-normed-spaces-and-banach-spaces.md): the norm as its own object, and complete normed spaces.
 - [Function spaces C and Lp](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/03-function-spaces-c-and-lp.md): the worst-gap and average-gap distances as the spaces of continuous and of integrable functions, and why the worst gap makes the continuous functions complete while the average gap does not.
 - [Equivalent norms](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/04-equivalence-of-norms-in-finite-dimensions.md): the proof that all norms on finitely many coordinates are equivalent.
+- [Mapping spaces](../07-Higher%20Homotopy%20and%20Mapping%20Spaces/01-mapping-spaces-and-the-compact-open-topology.md): the continuous maps between two spaces form a space of their own.
 
 The question this card leaves open: if the two distances on routes disagree about nearness, which one makes the space of routes complete, so that every bunched-up sequence of routes lands on a route?
 

@@ -413,6 +413,7 @@ The two outputs match line for line.
 
 - [Colouring maps](05-five-and-four-colour-theorems.md): that dot of degree 5 or less, used until a map is coloured.
 - [Graph minors](09-graph-minors-and-wagner.md): delete and contract edges, Wagner's theorem that flat graphs are exactly those without K5 or K(3,3) as a minor, and Robertson-Seymour in outline.
+- [Covering dimension](../../17-Topology/04-Homotopy/09-lebesgue-covering-dimension.md): count how many pieces of a fine cover must overlap at one point.
 
 This card finds the leftover dot and stops; what to do with it is a later card's work.
 

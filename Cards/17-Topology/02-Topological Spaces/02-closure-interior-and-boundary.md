@@ -669,6 +669,7 @@ example : (3 / 5 * (2001 / 2000) : ℚ) ^ 2 + (4 / 5 * (2001 / 2000)) ^ 2 = 4004
 - [Subspace, product and quotient](04-subspace-product-and-quotient-topologies.md): the four-point circle as a quotient, and why the circle's interior changes with the surrounding space.
 - [Hausdorff and its ladder](05-separation-axioms-and-hausdorff.md): spaces where a sequence has at most one limit, unlike top, top, top, ...
 - [The test spaces](09-standard-examples-and-counterexamples.md): the discrete, indiscrete and cofinite topologies, where these three words behave in extreme ways.
+- [Nets and filters](11-nets-and-filters.md): when sequences are too short to find every limit.
 
 The question this card leaves open: when are two spaces, built on different sets with different open sets, really the same space, with closures, interiors and boundaries matching point for point?
 

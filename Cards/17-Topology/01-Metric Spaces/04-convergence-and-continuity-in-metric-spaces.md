@@ -693,6 +693,7 @@ Elsewhere on this shelf:
 - [Uniform continuity](07-uniform-continuity-and-heine-cantor.md): one window $`\delta`$ that serves every point at once.
 - [Banach's fixed point theorem](08-banach-fixed-point-in-metric-spaces.md): any map with stretch factor under 1 on a complete space settles on exactly one fixed point, the general form of Step 2.
 - [Compactness three ways](06-compactness-in-metric-spaces.md): spaces in which every list has a part that converges.
+- [Nets and filters](../02-Topological%20Spaces/11-nets-and-filters.md): when sequences are too short to find every limit.
 
 This card proved the firm's readings converge by knowing the answer first; how to prove a list converges without knowing its limit is the question it leaves open.
 

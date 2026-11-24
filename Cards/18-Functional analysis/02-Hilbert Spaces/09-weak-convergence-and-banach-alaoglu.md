@@ -867,6 +867,8 @@ example : (36 : ℚ) / 100 = (3 / 5) ^ 2 := by norm_num
 ## Where this goes next
 
 - [Krein-Milman](../06-Banach%20Algebras%20and%20Fixed%20Points/06-krein-milman-and-extreme-points.md) takes the weak-star compact unit ball from Banach–Alaoglu and shows it is rebuilt from its extreme points, its corners.
+- [Compactness in Lp](10-compactness-in-lp-kolmogorov-riesz-and-dunford-pettis.md): small shifts must change a family only a little, and in L1 no mass may pile up.
+- [Operator topologies](../03-Bounded%20Operators/13-strong-and-weak-operator-topologies.md): three meanings of 'these operators converge', and Goldstine's density theorem.
 
 The swaps leave one question open: weak limits can lose size, so when does a cost that depends on the squared size still reach its least value at the limit?
 

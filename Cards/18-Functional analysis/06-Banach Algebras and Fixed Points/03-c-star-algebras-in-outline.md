@@ -742,6 +742,7 @@ On this shelf, [Wiener's lemma](02-wieners-lemma-and-invertible-filters.md) work
 ## Where this goes next
 
 - [States](04-states-representations-and-the-gns-construction.md): positive functionals on a C-star algebra, and the GNS construction that turns any C-star algebra into operators on a Hilbert space.
+- [Factors in outline](09-von-neumann-algebras-and-factors-in-outline.md): von Neumann algebras with a trivial centre, sorted by the sizes their projections can take.
 
 Later on the shelf, [Schauder](05-schauder-fixed-point-theorem.md), [Krein-Milman](06-krein-milman-and-extreme-points.md), [The slope transform](07-legendre-fenchel-and-subgradients.md) and [Minimax](08-minimax-theorem-and-convex-duality.md) turn to fixed points and convexity.
 

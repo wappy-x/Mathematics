@@ -793,6 +793,7 @@ Step 3 writes the matrix as one piece per factor: $`\sigma_1`$ times the grid ma
 - [Several inputs, several outputs](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/06-multivariable-feedback-and-singular-values.md): singular values, zeros and the RGA.
 - [Subspace identification](../../13-Engineering%20mathematics/11-Models%20from%20Data/03-subspace-identification-and-hankel-matrices.md): the Hankel matrix's rank is the model's order.
 - [Matrix completion](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/13-matrix-completion-and-the-nuclear-norm.md): fill the missing entries with the table of lowest nuclear norm.
+- [Polar decomposition](../../18-Functional%20analysis/03-Bounded%20Operators/11-polar-decomposition-and-partial-isometries.md): every operator is a stretch followed by a partial turn.
 
 One question stays open, and every application above turns on it: the fold "Keeping only the biggest stretches" measures what a dropped factor costs the matrix, never what it costs the answer.
 

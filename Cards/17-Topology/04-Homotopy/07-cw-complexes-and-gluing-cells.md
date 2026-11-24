@@ -856,6 +856,9 @@ example : (Finset.univ.filter fun w : Fin 4 → Fin 4 =>
 
 - [Brouwer and Borsuk-Ulam](08-brouwer-and-borsuk-ulam.md): spheres and discs, the simplest cell complexes, used to prove that a disc map fixes a point.
 - [Cellular homology](../05-Homology/05-cellular-homology.md): hole counts in every dimension, computed from the same recipe with a boundary matrix per dimension, and the proof that $`\chi`$ does not depend on the cells chosen.
+- [Nielsen-Schreier](10-nielsen-schreier-and-covers-of-graphs.md): every subgroup of a free group is free, read off a covering graph.
+- [Cofibrations](11-cofibrations-mapping-cylinders-and-mapping-cones.md): a homotopy on a piece always extends, so collapsing the piece is safe.
+- [Hurewicz and Whitehead](../07-Higher%20Homotopy%20and%20Mapping%20Spaces/03-hurewicz-and-whitehead-theorems.md): the first hole that homotopy sees, homology sees too.
 
 This card reads the loop group off the 2-skeleton and ignores the higher cells. It leaves open what the 3-cells and higher do count, which homology answers.
 

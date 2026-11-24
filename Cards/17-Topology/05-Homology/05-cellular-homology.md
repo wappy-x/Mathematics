@@ -877,6 +877,10 @@ The card also uses [Simplicial complexes and chains](01-simplicial-complexes-and
 
 - [Mayer-Vietoris and exact sequences](06-mayer-vietoris-and-long-exact-sequences.md): the exact sequences that Step 4's proof runs on, and a second quick route that splits a space into two overlapping pieces.
 - [Cohomology of projective space](../../22-Algebraic%20geometry/05-Cohomology%20and%20the%20Hodge%20Conjecture/03-cohomology-of-projective-space.md): complex projective space, built from one cell in each even dimension. With no cells in odd dimensions, every cellular boundary is zero, so there is one class in each even degree, and each is a power of the first under the multiplication that [Cohomology and the cup product in outline](08-cohomology-and-cup-product-in-outline.md) introduces.
+- [Eilenberg-Steenrod axioms](10-eilenberg-steenrod-axioms.md): five rules that force every homology theory to agree on cell complexes.
+- [Universal coefficients and Kunneth](11-universal-coefficients-and-kunneth.md): change the number system, or multiply two spaces, and see what twists survive.
+- [Hurewicz and Whitehead](../07-Higher%20Homotopy%20and%20Mapping%20Spaces/03-hurewicz-and-whitehead-theorems.md): the first hole that homotopy sees, homology sees too.
+- [Spectral sequences in outline](../07-Higher%20Homotopy%20and%20Mapping%20Spaces/04-spectral-sequences-and-eilenberg-maclane-spaces-in-outline.md): compute the homology of a fibration page by page.
 
 Left open: cellular homology adds classes but cannot multiply them, so when every boundary is zero, as on complex projective space, what links the class in one even degree to the next?
 

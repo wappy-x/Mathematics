@@ -1067,6 +1067,8 @@ example : (∫ x in (0 : ℝ)..1, x * (1 - x)) = 1 / 6 := by
 - [Bounded and symmetric](10-spectral-theorem-for-bounded-self-adjoint-operators.md): the theorem without compactness, with the sum over modes replaced by an integral.
 - [Helmholtz](../../19-Partial%20differential%20equations/04-Laplace%2C%20Poisson%20and%20Potentials/08-helmholtz-and-eigenfunctions.md): the same theorem for a drum or a room, in two and three dimensions.
 - [The Fredholm alternative](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/08-fredholm-alternative-and-compact-operators.md): the solvability test for boundary problems in the PDE wing.
+- [Trace class](12-trace-class-and-schatten-operators.md): the operators small enough to have a trace, and Lidskii's theorem that the trace adds the eigenvalues.
+- [Numerical range](16-numerical-range-and-spectral-gap.md): the set of averages <x, Tx> is convex, holds the spectrum, and bounds how fast an evolution settles.
 
 This card leaves one question open: when a symmetric operator has no eigenvectors at all, like multiplication by $`x`$, what takes the place of the modes?
 

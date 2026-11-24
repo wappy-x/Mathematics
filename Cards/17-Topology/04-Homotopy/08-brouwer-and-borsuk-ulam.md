@@ -959,6 +959,7 @@ example : ((13 * 4 - 21 * 2) + (21 * 11 - 15 * 4) + (15 * 2 - 13 * 11) : ℤ) = 
 - [Schauder](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/05-schauder-fixed-point-theorem.md): Brouwer for maps of a compact convex set in a space of infinitely many dimensions, used to prove that differential equations have solutions.
 - [Homology of spheres, and degree](../05-Homology/07-homology-of-spheres-and-degree.md): the hole counts of $`S^{n-1}`$ that prove no retraction in every dimension, and the degree of a map.
 - Hairy ball theorem (planned, in the differential geometry wing): every tangent arrow field on $`S^2`$ vanishes somewhere, proved with degree.
+- [Covering dimension](09-lebesgue-covering-dimension.md): count how many pieces of a fine cover must overlap at one point.
 
 Brouwer guarantees a point that stays put, and the cell hunt found this one; how many steps such a search needs in the worst case is the question this card leaves open.
 

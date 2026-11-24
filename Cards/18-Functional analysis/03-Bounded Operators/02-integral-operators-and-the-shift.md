@@ -867,6 +867,9 @@ example : ([0, 3, 1, 4, 1, 5].map (· ^ 2)).sum = 52 ∧
 - [Compact operators](05-compact-operators.md): why the running total reaches its norm and the blur does not.
 - [Spectrum](07-spectrum-and-resolvent.md): the near-eigenvectors of the mask, and the shift's spectrum, the closed unit disc.
 - [Fredholm alternative](09-fredholm-alternative-and-integral-equations.md): solving equations built from kernel operators.
+- [Polar decomposition](11-polar-decomposition-and-partial-isometries.md): every operator is a stretch followed by a partial turn.
+- [Operator topologies](13-strong-and-weak-operator-topologies.md): three meanings of 'these operators converge', and Goldstine's density theorem.
+- [Fredholm index](15-fredholm-operators-and-the-index.md): dimension of the kernel minus the dimension of what the range misses, and compact changes cannot move it.
 
 The delay and the advance undo each other from one side only; what exact relation ties an operator to its "transpose" when there is no matrix to flip?
 

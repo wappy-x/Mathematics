@@ -1248,6 +1248,8 @@ example : (269 : ℚ) / 200 + 1 = 469 / 200 := by norm_num
 
 - [Boundary values and compactness](10-trace-and-rellich-kondrachov-in-outline.md): what an $`H^1`$ function's edge value means in more than one dimension, and why bounded slope energy gives convergent subsequences.
 - [Sobolev spaces](../../19-Partial%20differential%20equations/06-Weak%20Solutions%20and%20Free%20Boundaries/02-sobolev-spaces-for-pdes.md): the full $`W^{k,p}`$ theory that partial differential equations use, in any dimension.
+- [Friedrichs extension](../05-Unbounded%20Operators%20and%20Semigroups/10-friedrichs-extension-and-energy-forms.md): start from the energy, and a lower-bounded operator gets one natural self-adjoint version.
+- [Kato-Rellich](../05-Unbounded%20Operators%20and%20Semigroups/11-kato-rellich-and-perturbed-eigenvalues.md): a small enough addition keeps an operator self-adjoint, and eigenvalues move smoothly.
 
 Left open: a weak solution in two or three dimensions is in $`H^1`$ but need not be continuous, so when does it gain the extra derivatives that make it smooth?
 

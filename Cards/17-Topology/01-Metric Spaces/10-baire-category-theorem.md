@@ -716,6 +716,7 @@ example : (3 : ℚ) / 4 + 1 / (4 * 2 ^ 10) = 3073 / 4096 := by norm_num
 ## Where this goes next
 
 - [Three Banach theorems](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/08-open-mapping-closed-graph-and-uniform-boundedness.md): uniform boundedness, open mapping and closed graph, each proved by finding a ball that a meagre pile cannot fill.
+- [Locally convex and Frechet spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/11-locally-convex-and-frechet-spaces.md): a whole family of size checks instead of one norm.
 
 The question this card leaves open: when a property holds for a comeagre set of points and fails for a set of full length, which kind of "almost every" should decide what is typical?
 

@@ -879,6 +879,7 @@ example : (20 : ℤ) - 30 + 10 = 0 ∧ (9 : ℤ) - 18 + 9 = 0 ∧ (10 : ℤ) - 1
 - [Euler characteristic](04-euler-characteristic-and-triangulations.md): the count $`V - E + F`$ that, together with orientability, names every closed surface.
 - [Sphere, torus and projective plane](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/02-example-manifolds-sphere-torus-and-projective-space.md): the three surfaces compared by their invariants.
 - [Jordan curve theorem](05-jordan-curve-theorem.md): the plane version of "a closed surface in space has an inside and an outside".
+- [Poincare duality](../05-Homology/12-cap-product-and-poincare-duality.md): on a closed oriented manifold, k-dimensional holes match (n - k)-dimensional ones.
 
 The loop test says whether a surface twists; how to count, by algebra, the loops that cannot be shrunk is the question this card leaves open.
 

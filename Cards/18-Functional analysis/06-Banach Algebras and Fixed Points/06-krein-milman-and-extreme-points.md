@@ -956,6 +956,7 @@ example : ((2 - 1) ^ 2, (3 - 1) ^ 2, (4 - 1) ^ 2) = (1, 4, 9) := by decide
 - [Minimax](08-minimax-theorem-and-convex-duality.md): mixed strategies as averages of pure ones, and a saddle point found on compact convex sets.
 - [The slope transform](07-legendre-fenchel-and-subgradients.md): describing a convex function by its supporting lines, the dual view of a convex set.
 - [States](04-states-representations-and-the-gns-construction.md): the states of an algebra form a weak-star compact convex set whose extreme points are the pure states.
+- [Factors in outline](09-von-neumann-algebras-and-factors-in-outline.md): von Neumann algebras with a trivial centre, sorted by the sizes their projections can take.
 
 The rebuild here is rarely unique. When does every point have exactly one rebuild, by a spread of mass over the extreme points rather than finitely many weights? That is Choquet theory, which this card leaves open.
 

@@ -855,6 +855,7 @@ example : ((40 : ℚ) ^ 2 / 12) / 500 ^ 2 = 1 / 1875 := by norm_num
 
 - [Weak solutions](../04-Distributions%20and%20Sobolev%20Spaces/08-weak-solutions-of-differential-equations.md): boundary problems whose answers have corners, where this theorem supplies existence.
 - [Lax-Milgram](../../19-Partial%20differential%20equations/06-Weak%20Solutions%20and%20Free%20Boundaries/03-lax-milgram-and-elliptic-existence.md), in the partial differential equations wing: the same two checks for problems on regions in the plane and in space.
+- [Friedrichs extension](../05-Unbounded%20Operators%20and%20Semigroups/10-friedrichs-extension-and-energy-forms.md): start from the energy, and a lower-bounded operator gets one natural self-adjoint version.
 
 Other cards on this shelf: [Inner products](01-inner-products-and-hilbert-spaces.md), [Projection](02-projection-theorem-and-orthogonal-complements.md), [Orthonormal bases](03-orthonormal-bases-and-parseval.md), [Completeness of sines and cosines](04-completeness-of-the-trigonometric-system.md), [Orthogonal polynomials](05-orthogonal-polynomials-from-gram-schmidt.md), [Reproducing kernels](08-reproducing-kernel-hilbert-spaces.md), [Weak convergence](09-weak-convergence-and-banach-alaoglu.md).
 

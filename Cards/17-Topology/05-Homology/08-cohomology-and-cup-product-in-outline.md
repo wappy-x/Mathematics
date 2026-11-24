@@ -159,11 +159,11 @@ A homotopy equivalence (a map with an inverse up to deformation, ≃) carries co
 P_{T}(t) = (1 + t)(1 + t) = 1 + 2t + t^2
 ```
 
-That matches the 1, 2, 1 read from the matrices; three circles give 1, 3, 3, 1. Over the integers the formula gains a correction term, Tor, which no card here teaches; Hatcher's Section 3.B proves it.
+That matches the 1, 2, 1 read from the matrices; three circles give 1, 3, 3, 1. Over the integers the formula gains a correction term, Tor, which [Universal coefficients and Kunneth](11-universal-coefficients-and-kunneth.md) builds for finitely generated groups; Hatcher's Section 3.B proves the general formula.
 
 ### Step 8: what this outline leaves out
 
-The cap product, universal coefficients, Steenrod squares and duality in higher dimensions. On smooth spaces the same cohomology comes from calculus, as closed forms modulo derivatives: de Rham cohomology, planned in two later wings.
+The cap product and duality in higher dimensions ([Poincare duality](12-cap-product-and-poincare-duality.md)), universal coefficients and Steenrod squares. On smooth spaces the same cohomology comes from calculus, as closed forms modulo derivatives: de Rham cohomology, in two later wings.
 
 ---
 
@@ -917,8 +917,10 @@ end CupOutline
 ## Where this goes next
 
 - [Cohomology of projective space](../../22-Algebraic%20geometry/05-Cohomology%20and%20the%20Hodge%20Conjecture/03-cohomology-of-projective-space.md): one class in every even degree, each a cup power of the first.
-- De Rham cohomology (planned), in the algebraic-geometry wing, and de Rham cohomology (planned), in the differential-geometry wing: the same measurements as closed forms, with the cup product as the wedge product of forms.
+- [De Rham cohomology](../../22-Algebraic%20geometry/05-Cohomology%20and%20the%20Hodge%20Conjecture/02-de-rham-cohomology-of-varieties.md), in the algebraic-geometry wing, and [de Rham cohomology](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/08-de-rham-cohomology.md), in the differential-geometry wing: the same measurements as closed forms, with the cup product as the wedge product of forms.
 - [Smith normal form](03-computing-homology-by-smith-normal-form.md), [Homotopy invariance](04-homotopy-invariance-of-homology.md), [Cellular homology](05-cellular-homology.md) and [Mayer-Vietoris and exact sequences](06-mayer-vietoris-and-long-exact-sequences.md): each has a cohomology version with the arrows reversed, not built in this outline.
+- [Poincare duality](12-cap-product-and-poincare-duality.md): on a closed oriented manifold, k-dimensional holes match (n - k)-dimensional ones.
+- [Spectral sequences in outline](../07-Higher%20Homotopy%20and%20Mapping%20Spaces/04-spectral-sequences-and-eilenberg-maclane-spaces-in-outline.md): compute the homology of a fibration page by page.
 
 This card leaves open how the product behaves in higher dimensions, where duality pairs degree k with degree n − k.
 

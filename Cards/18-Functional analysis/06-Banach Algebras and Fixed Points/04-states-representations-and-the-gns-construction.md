@@ -178,7 +178,7 @@ For the fair coin, $`\pi_\omega(\mathcal A) = \{A \otimes 1\}`$ and its commutan
 
 At $`p = 1`$ the commutant is only the multiples of the identity. Such a representation is **irreducible**: no smaller subspace is left alone by every operator. Irreducible GNS representations come exactly from **pure** states, those that are not averages of two others (stated, with sources below). The fair coin averages "always heads" and "always tails", so its commutant is larger.
 
-**Von Neumann's double commutant theorem:** for a star-algebra of operators that contains the identity, the double commutant equals the closure in the **weak operator topology**, where $`T_n \to T`$ means $`\langle u, T_n v\rangle \to \langle u, Tv\rangle`$ for all vectors $`u`$, $`v`$. In finite dimensions every subspace is closed, so the algebra is its own double commutant, as the table shows.
+**Von Neumann's double commutant theorem:** for a star-algebra of operators that contains the identity, the double commutant equals the closure in the **weak operator topology** ([Operator topologies](../03-Bounded%20Operators/13-strong-and-weak-operator-topologies.md)), where $`T_n \to T`$ means $`\langle u, T_n v\rangle \to \langle u, Tv\rangle`$ for all vectors $`u`$, $`v`$. In finite dimensions every subspace is closed, so the algebra is its own double commutant, as the table shows.
 
 ### Step 6: infinitely many flips, where the weak closure grows
 
@@ -848,6 +848,7 @@ example : 3 * ((List.range (2 ^ 2)).countP (fun m => 3 * m < 2 ^ 2)) = 2 ^ 2 + 2
 
 - [Krein-Milman](06-krein-milman-and-extreme-points.md): the states form a convex set, and the pure states are its corners; the fair coin is the midpoint of "always heads" and "always tails".
 - [Bounded and symmetric](../03-Bounded%20Operators/10-spectral-theorem-for-bounded-self-adjoint-operators.md): the spectral theorem, where a state on the algebra of one self-adjoint operator becomes a probability measure on its spectrum.
+- [Factors in outline](09-von-neumann-algebras-and-factors-in-outline.md): von Neumann algebras with a trivial centre, sorted by the sizes their projections can take.
 
 Related cards on this shelf: [Banach algebras](01-banach-algebras-and-the-gelfand-transform.md), [Wiener's lemma](02-wieners-lemma-and-invertible-filters.md), [Schauder](05-schauder-fixed-point-theorem.md), [The slope transform](07-legendre-fenchel-and-subgradients.md) and [Minimax](08-minimax-theorem-and-convex-duality.md).
 

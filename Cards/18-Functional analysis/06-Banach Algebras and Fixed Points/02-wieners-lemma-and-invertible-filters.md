@@ -1066,6 +1066,7 @@ example : (2 : ℚ) / 5 + 2 * (3 / 10) * (-2 / 3) = 0 := by norm_num
 
 - [C-star algebras](03-c-star-algebras-in-outline.md): adds a mirror operation (for a filter: reverse the taps and take complex conjugates) and asks when sizes match exactly; there the Gelfand picture becomes a perfect copy of a function space.
 - [States](04-states-representations-and-the-gns-construction.md): turns an averaging rule on such an algebra into a space it acts on.
+- [Factors in outline](09-von-neumann-algebras-and-factors-in-outline.md): von Neumann algebras with a trivial centre, sorted by the sizes their projections can take.
 
 The question this card leaves open: a two-sided inverse may use future samples, so which filters have an inverse that is both stable and causal, using only the past?
 

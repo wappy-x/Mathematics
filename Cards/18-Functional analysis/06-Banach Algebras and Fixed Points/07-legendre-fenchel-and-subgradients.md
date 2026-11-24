@@ -1042,6 +1042,7 @@ example : (3 / 100 : ℚ) * 16 - 9 / 100 = 39 / 100 ∧ (16 : ℚ) - 6 = 10 ∧
 
 - [Minimax](08-minimax-theorem-and-convex-duality.md): the next card. The same separation shows the best worst case equals the worst best case, which turns Fenchel duality into a saddle point in infinite dimensions.
 - [Hamilton-Jacobi](../../19-Partial%20differential%20equations/02-First-Order%20Equations%20and%20Characteristics/05-hamilton-jacobi-equations.md): the slope transform of the Hamiltonian solves the Hamilton-Jacobi equation by a formula (Hopf and Lax).
+- [Factors in outline](09-von-neumann-algebras-and-factors-in-outline.md): von Neumann algebras with a trivial centre, sorted by the sizes their projections can take.
 
 The question this card leaves open: when a problem is a sum of two convex energies on a Banach space, when does the best load bound meet the best shape exactly, with no gap?
 

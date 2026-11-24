@@ -884,6 +884,7 @@ example : (2 * (30 * (1 / 4) / 2) / 24 : ℚ) = 5 / 4 * (1 / 4) ∧ (5 / 4 * (1 
 - [Hahn-Banach](06-hahn-banach-theorem.md): bounded measurements, such as the day's mean, extended from part of a space to all of it.
 - [Bounded operators](../03-Bounded%20Operators/01-bounded-operators-and-the-operator-norm.md): maps between these spaces, such as the binning average, and their size, which depends on the norms chosen.
 - [Distributions](../04-Distributions%20and%20Sobolev%20Spaces/01-test-functions-and-distributions.md): the value at one moment, which no average can bound, becomes a proper measurement once only very smooth records are measured.
+- [Compactness in Lp](../02-Hilbert%20Spaces/10-compactness-in-lp-kolmogorov-riesz-and-dunford-pettis.md): small shifts must change a family only a little, and in L1 no mass may pile up.
 
 The question this card leaves open: in finitely many bins the worst moment and the average always agree within a factor N, so is every pair of norms on a finite list tied together like this?
 

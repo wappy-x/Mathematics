@@ -844,6 +844,7 @@ example : ∑ k ∈ range 7, (25 : ℚ) / 2 ^ k = 50 * (1 - 1 / 2 ^ 7) := by
 - [Three Banach theorems](08-open-mapping-closed-graph-and-uniform-boundedness.md): the open mapping, closed graph and uniform boundedness theorems, which need completeness.
 - [Inner products](../02-Hilbert%20Spaces/01-inner-products-and-hilbert-spaces.md): norms that come from an angle, like the square-root norm, and the Hilbert spaces they make.
 - [Bounded operators](../03-Bounded%20Operators/01-bounded-operators-and-the-operator-norm.md): maps between normed spaces, and a norm on the maps themselves.
+- [Locally convex and Frechet spaces](11-locally-convex-and-frechet-spaces.md): a whole family of size checks instead of one norm.
 
 The 168-hour space treated all three norms as interchangeable up to a fixed factor; which norms on an infinite-dimensional space can still be compared like that, and what is lost when none can?
 

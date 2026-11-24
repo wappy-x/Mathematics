@@ -834,6 +834,7 @@ example : (454 - 62 : ℤ) = 4 * 98 ∧ (208 - 308 : ℤ) = 4 * (-25) := by norm
 - [Projection](02-projection-theorem-and-orthogonal-complements.md): in a Hilbert space the closest point of a closed subspace exists, with a perpendicular miss; completeness and the parallelogram law do the work.
 - [Weak convergence](09-weak-convergence-and-banach-alaoglu.md): vectors converge weakly when every inner product with a fixed vector converges, a looser limit for infinite dimensions.
 - [Adjoints](../03-Bounded%20Operators/03-adjoints-self-adjoint-and-unitary-operators.md): each bounded operator has a partner, its adjoint, that moves it from one slot of the inner product to the other.
+- [Numerical range](../03-Bounded%20Operators/16-numerical-range-and-spectral-gap.md): the set of averages <x, Tx> is convex, holds the spectrum, and bounds how fast an evolution settles.
 
 On this shelf, [Orthonormal bases](03-orthonormal-bases-and-parseval.md) matches the inner product of coefficient lists with that of the signals, and [Riesz representation](06-riesz-representation-theorem.md) shows every continuous linear measurement on H is an inner product with one fixed vector.
 

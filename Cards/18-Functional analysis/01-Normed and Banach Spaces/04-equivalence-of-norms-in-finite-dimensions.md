@@ -838,6 +838,7 @@ example : (920 : ℚ) = 168 * (920 / 168) := by norm_num
 - [Infinite dimensions](05-why-infinite-dimensions-are-different.md): Riesz's lemma, which shows the unit sphere is compact only in finite dimensions, so Step 3 fails in every infinite-dimensional space.
 - [Three Banach theorems](08-open-mapping-closed-graph-and-uniform-boundedness.md): its bounded inverse theorem, applied to the identity map, shows that two complete norms with one pin are equivalent, a partial rescue of this card's theorem in infinite dimensions.
 - [Dual spaces](09-dual-spaces-and-lp-duality.md): on a finite-dimensional space every linear measurement is continuous, by the pins from Steps 1 and 3; in infinite dimensions that is a real condition.
+- [Locally convex and Frechet spaces](11-locally-convex-and-frechet-spaces.md): a whole family of size checks instead of one norm.
 
 The question this card leaves open: in an infinite-dimensional space, where no pin comes free, how can one tell whether two norms give the same limits?
 

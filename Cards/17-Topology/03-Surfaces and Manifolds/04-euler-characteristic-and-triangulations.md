@@ -1145,6 +1145,7 @@ open EulerTriangulation
 - [Jordan curve theorem](05-jordan-curve-theorem.md): why a closed loop drawn in the plane has an inside and an outside, which the planar-graph proof took on trust.
 - [Simplicial complexes and chains](../05-Homology/01-simplicial-complexes-and-chains.md): triangulations as algebra, and the proof that chi is the alternating count of loops of each dimension.
 - [Gauss-Bonnet](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/10-gauss-bonnet-theorem.md): Step 6's corner sum as total curvature, $`2\pi\chi`$.
+- [Nielsen-Schreier](../04-Homotopy/10-nielsen-schreier-and-covers-of-graphs.md): every subgroup of a free group is free, read off a covering graph.
 
 [Closed surfaces classified](02-surfaces-and-the-classification-theorem.md) shows that chi and the number of sides name every closed surface. This card leaves open how to count the loops that make chi what it is, without choosing any triangulation.
 

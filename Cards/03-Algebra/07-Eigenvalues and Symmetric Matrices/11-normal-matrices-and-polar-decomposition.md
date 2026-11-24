@@ -773,6 +773,7 @@ end NormalMatricesAndPolarDecomposition
 
 - [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): the complex dot product in full, with Hermitian and unitary matrices at work.
 - [Bilinear forms](12-bilinear-forms-and-sylvesters-law.md): the next card on this shelf, on pairing two vectors through a matrix.
+- [Polar decomposition](../../18-Functional%20analysis/03-Bounded%20Operators/11-polar-decomposition-and-partial-isometries.md): every operator is a stretch followed by a partial turn.
 
 Schur's corner measures how far a matrix is from normal; what that distance costs when computing its powers is left open.
 

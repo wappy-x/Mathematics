@@ -951,6 +951,7 @@ end DiracDeltaJumps
 ## Where this goes next
 
 - [Convolution and mollifiers](03-convolution-and-mollifiers.md): smoothing a distribution by averaging, where the ramp switch becomes a general method.
+- [Friedrichs extension](../05-Unbounded%20Operators%20and%20Semigroups/10-friedrichs-extension-and-energy-forms.md): start from the energy, and a lower-bounded operator gets one natural self-adjoint version.
 
 The question this card leaves open: the ramp converged to the delta only as readings on probes, so how can a rough object be smoothed into true smooth functions that converge to it?
 

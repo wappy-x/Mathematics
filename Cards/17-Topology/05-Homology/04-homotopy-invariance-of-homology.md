@@ -174,9 +174,9 @@ The code collapses each space until no free face is left. For the block, the mug
 
 ### Step 7: from collapses to every continuous squeeze
 
-Collapses only reach squeezes that run simplex by simplex. Steps 1 to 3 cover every continuous squeeze in **singular homology**: the version built from all continuous maps of simplices into the space, which needs no triangulation. The prism argument works there word for word (Hatcher, Theorem 2.10).
+Collapses only reach squeezes that run simplex by simplex. Steps 1 to 3 cover every continuous squeeze in **singular homology** ([Singular homology](09-singular-homology-and-excision.md)): the version built from all continuous maps of simplices into the space, which needs no triangulation. The prism argument works there word for word (Hatcher, Theorem 2.10).
 
-One fact, stated here and not proved, links the two versions: **simplicial and singular homology agree** on any space cut into simplices (Hatcher, Theorem 2.27). That gives the claim promised on [Homology groups](02-homology-groups.md): two cuttings of one space give the same counts, because both equal the space's singular counts.
+One fact, stated here and not proved, links the two versions: **simplicial and singular homology agree** on any space cut into simplices (Hatcher, Theorem 2.27). [Eilenberg-Steenrod axioms](10-eilenberg-steenrod-axioms.md) gives the general reason: theories that obey the same five rules agree on cell complexes. That gives the claim promised on [Homology groups](02-homology-groups.md): two cuttings of one space give the same counts, because both equal the space's singular counts.
 
 ---
 
@@ -763,6 +763,7 @@ end HomotopyInvarianceOfHomology
 - [Mayer-Vietoris and exact sequences](06-mayer-vietoris-and-long-exact-sequences.md): the counts of a whole from two overlapping pieces, each first squeezed to something simple.
 - [Homology of spheres, and degree](07-homology-of-spheres-and-degree.md): every sphere's counts, and maps between spheres told apart by what they do to holes.
 - [Cohomology and the cup product in outline](08-cohomology-and-cup-product-in-outline.md): a finer invariant, also unchanged by squeezing.
+- [Singular homology](09-singular-homology-and-excision.md): hole counts for any space, with no triangulation, and excision proved.
 
 Equal counts leave the question this card cannot answer: when two spaces share every hole count, what finer invariant tells whether they really squeeze into each other?
 

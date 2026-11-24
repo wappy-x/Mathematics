@@ -381,6 +381,7 @@ example : Nat.factorial 4 = 24 ∧ 24 / 3 = 8 := by decide
 
 - [Cardinal arithmetic](09-cardinal-arithmetic.md): well-ordering gives every set a cardinal, the least ordinal of its size.
 - [Compactness with no distances, and Tychonoff](../../17-Topology/02-Topological%20Spaces/06-compactness-and-tychonoff.md): Zorn's lemma at work on families of sets.
+- [Stone-Cech compactification](../../17-Topology/02-Topological%20Spaces/12-stone-cech-compactification.md): the biggest compact space a space sits densely inside.
 
 Left open: which theorems need full choice, and which need only a weaker form?
 

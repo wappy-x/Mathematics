@@ -6,18 +6,19 @@
 
 Work in a metric or an abstract topological space, and prove the compactness and connectedness facts that every analysis wing has been leaning on. Classify a closed surface by hand, compute a fundamental group and a homology group on a concrete example, and run persistent homology on real data while saying honestly what it is worth.
 
-6 shelves · **51 of 51 cards ready to read**
+7 shelves · **65 of 65 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
 | Shelf | Cards |
 | --- | ---: |
 | [01 · Metric Spaces](#s01) | 10 |
-| [02 · Topological Spaces](#s02) | 10 |
+| [02 · Topological Spaces](#s02) | 13 |
 | [03 · Surfaces and Manifolds](#s03) | 8 |
-| [04 · Homotopy](#s04) | 8 |
-| [05 · Homology](#s05) | 8 |
+| [04 · Homotopy](#s04) | 11 |
+| [05 · Homology](#s05) | 12 |
 | [06 · Topological Data Analysis](#s06) | 7 |
+| [07 · Higher Homotopy and Mapping Spaces](#s07) | 4 |
 
 <a name="s01"></a>
 
@@ -40,7 +41,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s02"></a>
 
-## 02 · Topological Spaces · 10 cards
+## 02 · Topological Spaces · 13 cards
 
 *Nearness with no distances at all, the three standard constructions, and the separation and compactness theorems*
 
@@ -54,6 +55,9 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [What compactness and connectedness buy: attained maxima, crossed values, free inverses](02-Topological%20Spaces/08-images-of-compact-and-connected-sets.md)
 9. [The test spaces: discrete, indiscrete, cofinite, the Cantor set, and what each one breaks](02-Topological%20Spaces/09-standard-examples-and-counterexamples.md)
 10. [Urysohn and Tietze: a dial between closed sets, and when a space is secretly metric](02-Topological%20Spaces/10-urysohn-tietze-and-metrisation.md)
+11. [Nets and filters: when sequences are too short to find every limit](02-Topological%20Spaces/11-nets-and-filters.md)
+12. [Stone-Cech compactification: the biggest compact space a space sits densely inside](02-Topological%20Spaces/12-stone-cech-compactification.md)
+13. [Paracompactness: every cover can be thinned to one that is locally finite, and partitions of unity follow](02-Topological%20Spaces/13-paracompactness-and-nagata-smirnov.md)
 
 [↑ Back to the shelves](#top)
 
@@ -76,7 +80,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s04"></a>
 
-## 04 · Homotopy · 8 cards
+## 04 · Homotopy · 11 cards
 
 *Deforming maps continuously, the group of loops, and the two fixed-point theorems it pays for*
 
@@ -88,12 +92,15 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Van Kampen's theorem: glue two pieces together and glue their loop groups together](04-Homotopy/06-van-kampens-theorem.md)
 7. [CW complexes: build a space by gluing cells, then read its invariants off the recipe](04-Homotopy/07-cw-complexes-and-gluing-cells.md)
 8. [Brouwer and Borsuk-Ulam: a disc map fixes a point, and antipodes give equal readings](04-Homotopy/08-brouwer-and-borsuk-ulam.md)
+9. [Covering dimension: count how many pieces of a fine cover must overlap at one point](04-Homotopy/09-lebesgue-covering-dimension.md)
+10. [Nielsen-Schreier: every subgroup of a free group is free, read off a covering graph](04-Homotopy/10-nielsen-schreier-and-covers-of-graphs.md)
+11. [Cofibrations: a homotopy on a piece always extends, so collapsing the piece is safe](04-Homotopy/11-cofibrations-mapping-cylinders-and-mapping-cones.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s05"></a>
 
-## 05 · Homology · 8 cards
+## 05 · Homology · 12 cards
 
 *Counting holes with linear algebra: chains, cycles, boundaries, and the sequences that compute them*
 
@@ -105,6 +112,10 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Mayer-Vietoris and exact sequences: the holes of a whole from two overlapping pieces](05-Homology/06-mayer-vietoris-and-long-exact-sequences.md)
 7. [Homology of spheres, and degree: how many times one sphere wraps around another](05-Homology/07-homology-of-spheres-and-degree.md)
 8. [Cohomology and the cup product in outline: the dual view, carrying a multiplication](05-Homology/08-cohomology-and-cup-product-in-outline.md)
+9. [Singular homology: hole counts for any space, with no triangulation, and excision proved](05-Homology/09-singular-homology-and-excision.md)
+10. [Eilenberg-Steenrod axioms: five rules that force every homology theory to agree on cell complexes](05-Homology/10-eilenberg-steenrod-axioms.md)
+11. [Universal coefficients and Kunneth: change the number system, or multiply two spaces, and see what twists survive](05-Homology/11-universal-coefficients-and-kunneth.md)
+12. [Poincare duality: on a closed oriented manifold, k-dimensional holes match (n - k)-dimensional ones](05-Homology/12-cap-product-and-poincare-duality.md)
 
 [↑ Back to the shelves](#top)
 
@@ -121,6 +132,19 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Comparing diagrams: bottleneck distance, landscapes, images, and honest error bars](06-Topological%20Data%20Analysis/05-comparing-diagrams-and-vectorising-them.md)
 6. [Mapper and Reeb graphs: a network summary of a dataset along a chosen lens](06-Topological%20Data%20Analysis/06-mapper-and-reeb-graphs.md)
 7. [Persistence in practice: the shape of a time series, and what that shape is worth](06-Topological%20Data%20Analysis/07-persistence-in-practice.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s07"></a>
+
+## 07 · Higher Homotopy and Mapping Spaces · 4 cards
+
+*Spaces of maps, spheres wrapped around a space, and the theorems that tie homotopy back to homology*
+
+1. [Mapping spaces: the continuous maps between two spaces form a space of their own](07-Higher%20Homotopy%20and%20Mapping%20Spaces/01-mapping-spaces-and-the-compact-open-topology.md)
+2. [Higher homotopy groups: wrap a sphere around a space, and the Hopf fibration that wraps S^3 around S^2](07-Higher%20Homotopy%20and%20Mapping%20Spaces/02-higher-homotopy-groups-and-fibrations.md)
+3. [Hurewicz and Whitehead: the first hole that homotopy sees, homology sees too](07-Higher%20Homotopy%20and%20Mapping%20Spaces/03-hurewicz-and-whitehead-theorems.md)
+4. [Spectral sequences in outline: compute the homology of a fibration page by page](07-Higher%20Homotopy%20and%20Mapping%20Spaces/04-spectral-sequences-and-eilenberg-maclane-spaces-in-outline.md)
 
 [↑ Back to the shelves](#top)
 

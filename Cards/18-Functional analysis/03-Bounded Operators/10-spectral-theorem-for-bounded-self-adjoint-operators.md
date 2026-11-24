@@ -1543,6 +1543,9 @@ The shelf supplies the rest: [Three model operators](02-integral-operators-and-t
 ## Where this goes next
 
 - [Self-adjoint extensions](../05-Unbounded%20Operators%20and%20Semigroups/02-self-adjoint-extensions-and-the-spectral-theorem.md): unbounded operators such as minus the second derivative. Once the domain is chosen so the operator is self-adjoint, the same theorem holds, with an unbounded multiplier g.
+- [Polar decomposition](11-polar-decomposition-and-partial-isometries.md): every operator is a stretch followed by a partial turn.
+- [Operator topologies](13-strong-and-weak-operator-topologies.md): three meanings of 'these operators converge', and Goldstine's density theorem.
+- [Holomorphic functional calculus](14-holomorphic-functional-calculus-and-riesz-projections.md): put any operator into an analytic function, and cut out part of its spectrum.
 
 The open question: differentiation, the heat flow's operator and the energy of a quantum particle are all unbounded, so which domains make them self-adjoint, and does each choice give a different multiplier?
 

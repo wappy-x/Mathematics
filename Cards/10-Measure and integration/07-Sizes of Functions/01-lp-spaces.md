@@ -774,6 +774,7 @@ example : (1 : ℚ) - 1 / 2 - 1 / 3 = 1 / 6 := by norm_num
 - [The maximal function](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/01-hardy-littlewood-maximal-function.md): an operator bounded on L^p for p > 1 but not on L^1.
 - [Singular integrals](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/03-singular-integrals-and-the-hilbert-transform-bound.md): L^p bounds for the Hilbert transform.
 - [Interpolation](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/04-interpolation-riesz-thorin-and-marcinkiewicz.md): bounds at two exponents giving bounds at every exponent between.
+- [Compactness in Lp](../../18-Functional%20analysis/02-Hilbert%20Spaces/10-compactness-in-lp-kolmogorov-riesz-and-dunford-pettis.md): small shifts must change a family only a little, and in L1 no mass may pile up.
 
 The p-norm is a size, but a size is not yet a distance one can take limits in: whether a sequence whose members crowd together in p-norm always has a limit inside L^p is the question [Riesz-Fischer](05-completeness-of-lp.md) answers.
 

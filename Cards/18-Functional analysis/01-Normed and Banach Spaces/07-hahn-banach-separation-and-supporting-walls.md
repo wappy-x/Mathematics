@@ -773,6 +773,7 @@ example :
 - [The slope transform](../06-Banach%20Algebras%20and%20Fixed%20Points/07-legendre-fenchel-and-subgradients.md): a convex function is rebuilt from its supporting lines, the bipolar theorem for functions.
 - [Dual spaces](09-dual-spaces-and-lp-duality.md): the space of all bounded functionals. This card shows it has enough of them to separate any point from any closed convex set.
 - [Reflexive spaces](10-reflexive-spaces-and-the-second-dual.md): when every wall is a point of the original kind, unlike the price-list example above.
+- [Locally convex and Frechet spaces](11-locally-convex-and-frechet-spaces.md): a whole family of size checks instead of one norm.
 
 The question this card leaves open: when the set has no interior and the space is a space of bounded lists, which walls can be written down, and which exist only by choice?
 

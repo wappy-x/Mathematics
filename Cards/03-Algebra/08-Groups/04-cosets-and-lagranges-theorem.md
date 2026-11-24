@@ -503,6 +503,7 @@ example : 2 ^ 12 % 12 = 4 := by norm_num
 - [Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md): a group sorted into classes of look-alikes, and why every group of prime-power size has a centre.
 - [The Sylow theorems](11-sylow-theorems.md): for the largest prime power dividing a group's size, subgroups of exactly that size exist, are all conjugate, and number 1 more than a multiple of p.
 - [A_n is simple for n at least 5](13-simplicity-of-alternating-groups.md): the even shuffles have no normal subgroup to collapse by, which is the group-theory heart of the quintic.
+- [Nielsen-Schreier](../../17-Topology/04-Homotopy/10-nielsen-schreier-and-covers-of-graphs.md): every subgroup of a free group is free, read off a covering graph.
 
 The blocks are so far a list of sets with no way to combine two of them; when they form a group of their own is [Normal subgroups and quotient groups](06-normal-subgroups-and-quotient-groups.md).
 

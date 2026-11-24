@@ -877,6 +877,7 @@ example : (77 / 100 : ℚ) / (7 / 200) = 22 := by norm_num
 - [Sobolev and Poincare](09-sobolev-embedding-and-poincare-inequality.md): the inequality behind coercivity, in any dimension, and why an $`H^1`$ profile in one dimension is continuous.
 - [Boundary values and compactness](10-trace-and-rellich-kondrachov-in-outline.md): what a face value such as $`u(0) = 20`$ means for a profile known only up to sets of zero length, in higher dimensions.
 - [Weak solutions](../../19-Partial%20differential%20equations/06-Weak%20Solutions%20and%20Free%20Boundaries/01-weak-solutions-and-the-weak-formulation.md): the partial-differential-equations wing takes the weak form to two and three dimensions and asks when a weak solution is smooth.
+- [Friedrichs extension](../05-Unbounded%20Operators%20and%20Semigroups/10-friedrichs-extension-and-energy-forms.md): start from the energy, and a lower-bounded operator gets one natural self-adjoint version.
 
 This card leaves open how smooth a weak solution is: inside each layer here it is a straight line, but in a room corner or around a wall tie, how many derivatives does it really have?
 

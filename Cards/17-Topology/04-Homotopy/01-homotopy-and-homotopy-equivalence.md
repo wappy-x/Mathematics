@@ -948,6 +948,8 @@ example : ((Finset.range 11 ×ˢ Finset.range 11).filter
 
 - [Contractible and simply connected](02-contractible-and-simply-connected.md): spaces homotopy equivalent to a point, like the lawn, and spaces where every loop slides free.
 - [Homotopy invariance](../05-Homology/04-homotopy-invariance-of-homology.md): homotopy equivalent spaces have identical hole counts, so the ground and the ring share all of them.
+- [Cofibrations](11-cofibrations-mapping-cylinders-and-mapping-cones.md): a homotopy on a piece always extends, so collapsing the piece is safe.
+- [Mapping spaces](../07-Higher%20Homotopy%20and%20Mapping%20Spaces/01-mapping-spaces-and-the-compact-open-topology.md): the continuous maps between two spaces form a space of their own.
 
 The question this card leaves open: the winding number tells caught from free round one post, but which loops slide into which in a space with two posts, or with holes of other kinds? [The fundamental group](03-the-fundamental-group.md) turns that question into algebra.
 

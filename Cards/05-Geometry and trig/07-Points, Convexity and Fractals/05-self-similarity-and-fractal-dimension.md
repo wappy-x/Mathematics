@@ -531,6 +531,7 @@ example : 3 ^ 6 = 729 ∧ (729 : ℚ) / 4 ^ 6 = (3 / 4) ^ 6 := by norm_num
 - [The Smale horseshoe](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/08-smale-horseshoe.md): stretch, fold and lay back, and every coin-toss sequence becomes an orbit.
 - [The Henon map](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/09-the-henon-map.md): a two-line rule that folds the plane onto a strange attractor.
 - [Hausdorff measure and dimension](../../10-Measure%20and%20integration/02-Length%20Done%20Properly/08-hausdorff-measure-and-dimension.md): cover with pieces of any shape, weigh each by its size to the power s, and a fractal gets a size in its own dimension.
+- [Covering dimension](../../17-Topology/04-Homotopy/09-lebesgue-covering-dimension.md): count how many pieces of a fine cover must overlap at one point.
 
 This card counted copies of a shape defined by an endless process. What the finished shape is as a set of points, and in what sense the stages approach it, is what topology answers.
 

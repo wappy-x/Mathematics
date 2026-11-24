@@ -1021,6 +1021,8 @@ example : Matrix.det (!![Complex.I, 1; -1, Complex.I]) = 0 ∧
 - [Compact and symmetric](08-spectral-theorem-for-compact-self-adjoint-operators.md): for compact self-adjoint operators the spectrum is eigenvalues dying away to 0, with an orthonormal basis of eigenvectors.
 - [Hille-Yosida](../05-Unbounded%20Operators%20and%20Semigroups/05-hille-yosida-and-generators.md): an unbounded generator is tested by the size of its resolvent on a half-line of λ.
 - [Banach algebras](../06-Banach%20Algebras%20and%20Fixed%20Points/01-banach-algebras-and-the-gelfand-transform.md): spectrum and Gelfand's formula for any element of an algebra with a norm.
+- [Holomorphic functional calculus](14-holomorphic-functional-calculus-and-riesz-projections.md): put any operator into an analytic function, and cut out part of its spectrum.
+- [Numerical range](16-numerical-range-and-spectral-gap.md): the set of averages <x, Tx> is convex, holds the spectrum, and bounds how fast an evolution settles.
 
 The delay line is not self-adjoint, and its spectrum alone does not describe it; the open question is which operators are fully described by their spectrum, answered for symmetric ones by [Bounded and symmetric](10-spectral-theorem-for-bounded-self-adjoint-operators.md).
 

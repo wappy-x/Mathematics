@@ -882,6 +882,8 @@ example : (1 / 2 : ℚ) ^ 5 - (1 / 2) ^ 10 = 31 / 1024 := by norm_num
 - [Neumann series](06-neumann-series-and-inverting-close-to-the-identity.md): inverting $`I - T`$ by a series of powers that converges because $`B(X)`$ is complete and gains multiply.
 - [Unbounded operators](../05-Unbounded%20Operators%20and%20Semigroups/01-unbounded-operators-and-domains.md): maps such as the continuous unblur $`g + \tau g'`$, which work only on a chosen domain.
 - [Banach algebras](../06-Banach%20Algebras%20and%20Fixed%20Points/01-banach-algebras-and-the-gelfand-transform.md): $`B(X)`$ as a space where operators can be added, multiplied and measured, with $`\lVert ST \rVert \le \lVert S \rVert\,\lVert T \rVert`$.
+- [Operator topologies](13-strong-and-weak-operator-topologies.md): three meanings of 'these operators converge', and Goldstine's density theorem.
+- [Holomorphic functional calculus](14-holomorphic-functional-calculus-and-riesz-projections.md): put any operator into an analytic function, and cut out part of its spectrum.
 
 The question this card leaves open: when an operator's inverse is unbounded, as the continuous unblur is, how much of the input can still be recovered from a noisy output?
 

@@ -781,6 +781,9 @@ example : (4000 + 1 : ℕ) * (3000 + 1) = 12007001 := by norm_num
 - [Compact operators](../../18-Functional%20analysis/03-Bounded%20Operators/05-compact-operators.md): linear maps that send bounded sets into compact ones.
 - [Boundary values and compactness](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/10-trace-and-rellich-kondrachov-in-outline.md): compactness as the route to solutions of boundary value problems.
 - [Schauder](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/05-schauder-fixed-point-theorem.md): a fixed point for continuous maps of a compact convex set into itself.
+- [Covering dimension](../04-Homotopy/09-lebesgue-covering-dimension.md): count how many pieces of a fine cover must overlap at one point.
+- [Singular homology](../05-Homology/09-singular-homology-and-excision.md): hole counts for any space, with no triangulation, and excision proved.
+- [Compactness in Lp](../../18-Functional%20analysis/02-Hilbert%20Spaces/10-compactness-in-lp-kolmogorov-riesz-and-dunford-pettis.md): small shifts must change a family only a little, and in L1 no mass may pile up.
 
 Compactness here is tested with distances and lists; what it means in a space with open sets but no distance is the open question this card leaves.
 

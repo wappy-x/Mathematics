@@ -806,6 +806,7 @@ example : 144 * 10 = 24 * 60 ∧ 144 * 150 * 4 = 24 * 60 * 60 := by decide
 
 - [Schauder](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/05-schauder-fixed-point-theorem.md): a continuous map that sends a closed convex set into a compact part of itself has a fixed point. This card supplies the compact sets of functions, and Peano's theorem follows.
 - [Baire category theorem](10-baire-category-theorem.md): another theorem that needs completeness, about how large a complete space must be.
+- [Compactness in Lp](../../18-Functional%20analysis/02-Hilbert%20Spaces/10-compactness-in-lp-kolmogorov-riesz-and-dunford-pettis.md): small shifts must change a family only a little, and in L1 no mass may pile up.
 
 Left open: the theorem finds a settling run but says nothing about how fast it settles or whether its limit is unique, so can such bare existence still prove that an equation has a solution?
 

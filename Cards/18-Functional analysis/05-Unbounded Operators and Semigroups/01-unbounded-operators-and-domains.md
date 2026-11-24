@@ -1400,6 +1400,7 @@ example : (1 : ℚ) / 3 - (-2 / 3) = 1 * 1 ^ 2 - 0 * 0 ^ 2 := by
 
 - [Self-adjoint extensions](02-self-adjoint-extensions-and-the-spectral-theorem.md): when $`A^* = A`$, domain included, and which end conditions achieve it.
 - [Evolution as an equation](03-the-abstract-cauchy-problem-and-the-operator-exponential.md): the state of the bar changes at a rate set by an unbounded operator, so the domain decides which evolutions make sense.
+- [Friedrichs extension](10-friedrichs-extension-and-energy-forms.md): start from the energy, and a lower-bounded operator gets one natural self-adjoint version.
 
 Related cards on this shelf: [Semigroups](04-strongly-continuous-semigroups.md), [Hille-Yosida](05-hille-yosida-and-generators.md), [Duhamel](06-duhamels-principle-for-a-forced-evolution.md), [Splitting](07-operator-splitting-and-the-trotter-formula.md), [Feller semigroups](08-feller-semigroups-and-markov-processes.md) and [Two evolutions](09-the-heat-and-schrodinger-semigroups.md).
 

@@ -1007,6 +1007,7 @@ This card closes the shelf. Three earlier cards use its swap, and are worth rere
 - [Convex conjugates](../../15-Optimization/01-Convexity/08-conjugates-and-fenchel-duality.md): Fenchel duality worked in finite dimensions, the pattern Step 5 extends.
 - [Robust and chance constraints](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/10-robust-and-chance-constrained-optimisation.md): worst-case planning turned into a program by exactly this swap.
 - [H-infinity design](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/03-h-infinity-control-in-outline.md): a min-max over signals, where the infinite-dimensional version is the one in use.
+- [Factors in outline](09-von-neumann-algebras-and-factors-in-outline.md): von Neumann algebras with a trivial centre, sorted by the sizes their projections can take.
 
 On the shelf, the other cards are [Banach algebras](01-banach-algebras-and-the-gelfand-transform.md), [Wiener's lemma](02-wieners-lemma-and-invertible-filters.md), [C-star algebras](03-c-star-algebras-in-outline.md), [States](04-states-representations-and-the-gns-construction.md) and [Schauder](05-schauder-fixed-point-theorem.md).
 

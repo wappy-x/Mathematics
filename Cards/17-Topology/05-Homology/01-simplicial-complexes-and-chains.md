@@ -919,6 +919,7 @@ end SimplicialChains
 - [Homology groups](02-homology-groups.md): cycles that are not boundaries, counted in each dimension; the hollow tetrahedron's shell becomes its one void.
 - [Smith normal form](03-computing-homology-by-smith-normal-form.md): reducing these integer matrices to read off the counts, with and without the signs.
 - [Cellular homology](05-cellular-homology.md): the same boundary idea for pieces glued more freely than a vertex list allows.
+- [Singular homology](09-singular-homology-and-excision.md): hole counts for any space, with no triangulation, and excision proved.
 
 The question this card leaves open: the shell is a cycle that nothing in the hollow complex fills, so how many independent unfilled cycles does a complex have in each dimension?
 

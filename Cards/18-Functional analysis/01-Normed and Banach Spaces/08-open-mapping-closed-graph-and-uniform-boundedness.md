@@ -752,6 +752,8 @@ example : ∀ k ∈ ({1, 10, 100} : Finset ℕ),
 - [Reflexive spaces](10-reflexive-spaces-and-the-second-dual.md): the second dual and the spaces it gives back exactly; it uses Step 5's consequence that weakly convergent sequences are bounded.
 - [Bounded operators](../03-Bounded%20Operators/01-bounded-operators-and-the-operator-norm.md): the space of all bounded maps between two Banach spaces, and why bounded means continuous.
 - [Unbounded operators](../05-Unbounded%20Operators%20and%20Semigroups/01-unbounded-operators-and-domains.md): maps like the joist's load-from-sag map, defined only on part of the space, with closed graphs.
+- [Locally convex and Frechet spaces](11-locally-convex-and-frechet-spaces.md): a whole family of size checks instead of one norm.
+- [Fredholm index](../03-Bounded%20Operators/15-fredholm-operators-and-the-index.md): dimension of the kernel minus the dimension of what the range misses, and compact changes cannot move it.
 
 Left open: if the backward map can never be bounded, how much of the load can be recovered from a noisy sag, and at what cost?
 

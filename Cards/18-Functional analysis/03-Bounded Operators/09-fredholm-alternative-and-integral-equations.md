@@ -1190,6 +1190,7 @@ example : ![(4 : ℚ), 3, 4, 3] ⬝ᵥ ![0, -100, 100, 0] = 100 := by
 - [Bounded and symmetric](10-spectral-theorem-for-bounded-self-adjoint-operators.md): the next card, the spectral theorem without compactness, where a spectrum can be a whole interval and Step 3's list of eigenvalues is gone.
 - [Integral equations](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/07-integral-equations-fredholm-and-volterra.md): numerical methods for second-kind equations, and first-kind equations, where the answer can jump when the data move slightly.
 - [The Fredholm alternative](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/08-fredholm-alternative-and-compact-operators.md): the PDE wing's solvability test for boundary problems, with either exactly one solution or extra free ones.
+- [Fredholm index](15-fredholm-operators-and-the-index.md): dimension of the kernel minus the dimension of what the range misses, and compact changes cannot move it.
 
 The question this card leaves open: when $`I - K`$ is replaced by an operator that is not identity minus compact, can the two null spaces have different dimensions, and what does the difference measure?
 

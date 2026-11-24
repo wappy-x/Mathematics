@@ -1128,6 +1128,8 @@ example : (50 : ℤ) * 1 - 50 * 0 = 50 ∧ (60 : ℤ) - 40 = 20 ∧ (1 : ℤ) + 
 ## Where this goes next
 
 - [Weak convergence](../02-Hilbert%20Spaces/09-weak-convergence-and-banach-alaoglu.md) takes weak convergence in full, adds weak-star convergence, and proves Banach–Alaoglu: the unit ball of a dual space is compact in the weak-star sense, reflexive or not.
+- [Compactness in Lp](../02-Hilbert%20Spaces/10-compactness-in-lp-kolmogorov-riesz-and-dunford-pettis.md): small shifts must change a family only a little, and in L1 no mass may pile up.
+- [Operator topologies](../03-Bounded%20Operators/13-strong-and-weak-operator-topologies.md): three meanings of 'these operators converge', and Goldstine's density theorem.
 
 The bumps leave one question open: in $`\ell^\infty = (\ell^1)'`$, which is not reflexive, what kind of limit can every bounded sequence of price lists still be promised?
 

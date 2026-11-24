@@ -2223,6 +2223,7 @@ Shelf companions it uses: [The fundamental group](03-the-fundamental-group.md) d
 ## Where this goes next
 
 - [CW complexes](07-cw-complexes-and-gluing-cells.md): build a space by gluing cells. Van Kampen there says each 2-cell adds one relation, its boundary word, so a recipe of cells is a presentation.
+- [Nielsen-Schreier](10-nielsen-schreier-and-covers-of-graphs.md): every subgroup of a free group is free, read off a covering graph.
 
 The question this card leaves open: two presentations can look different yet give the same group, so how can anyone tell whether two spaces' loop groups are really different?
 

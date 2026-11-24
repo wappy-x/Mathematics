@@ -913,6 +913,7 @@ end Tricolour
 ## Where this goes next
 
 - [Knot polynomials in outline](08-knot-polynomials-in-outline.md): one skein rule turns a diagram into a polynomial, proved invariant by the same move-by-move checks, and strong enough to tell the figure-eight from the ring.
+- [Higher homotopy groups](../07-Higher%20Homotopy%20and%20Mapping%20Spaces/02-higher-homotopy-groups-and-fibrations.md): wrap a sphere around a space, and the Hopf fibration that wraps S^3 around S^2.
 
 The three-colour test cannot see the figure-eight's knot: which number, computed move by move in the same way, can?
 

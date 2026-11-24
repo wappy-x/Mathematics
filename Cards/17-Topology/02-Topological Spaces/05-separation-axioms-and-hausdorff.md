@@ -723,6 +723,8 @@ example : (1 / 12 : ℚ) < 1999989 / 22000000 ∧ (1999989 / 22000000 : ℚ) < 1
 
 - [Compactness with no distances, and Tychonoff](06-compactness-and-tychonoff.md): open covers, the finite intersection property, Tychonoff's theorem and where choice enters; with covers, compact sets in a Hausdorff space are closed, and a compact Hausdorff space is normal.
 - [Urysohn and Tietze](10-urysohn-tietze-and-metrisation.md): a normal space has enough continuous functions to separate closed sets, and a regular space with a countable basis has a distance.
+- [Stone-Cech compactification](12-stone-cech-compactification.md): the biggest compact space a space sits densely inside.
+- [Paracompactness](13-paracompactness-and-nagata-smirnov.md): every cover can be thinned to one that is locally finite, and partitions of unity follow.
 
 The question this card leaves open: once two closed sets can be pried apart by open sets, can a continuous function do it, reading 0 on one and 1 on the other?
 

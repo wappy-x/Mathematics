@@ -891,6 +891,7 @@ end
 - [Modular forms](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/07-modular-forms-in-outline.md): functions that keep their shape under Mobius maps with whole-number entries and determinant 1.
 - [Schwarz-Pick](09-schwarz-pick-and-the-hyperbolic-disc.md): a holomorphic map of the disc into itself never stretches hyperbolic distance.
 - [Impedance matching](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/12-impedance-matching-and-the-smith-chart.md): a quarter wave or a stub, read off the Smith chart.
+- [Higher homotopy groups](../../17-Topology/07-Higher%20Homotopy%20and%20Mapping%20Spaces/02-higher-homotopy-groups-and-fibrations.md): wrap a sphere around a space, and the Hopf fibration that wraps S^3 around S^2.
 
 Mobius maps reach only regions bounded by circles and lines; reaching a wedge, a strip or a slit plane is the job of [The standard maps](03-standard-maps-and-composing-them.md).
 

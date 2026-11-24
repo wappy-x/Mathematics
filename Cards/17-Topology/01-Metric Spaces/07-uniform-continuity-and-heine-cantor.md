@@ -614,6 +614,7 @@ example : (22 : ℤ) - 18 = 4 := by decide
 
 - [Banach's fixed point theorem](08-banach-fixed-point-in-metric-spaces.md): a map with Lipschitz constant below 1 on a complete space has exactly one fixed point.
 - [Arzela-Ascoli](09-arzela-ascoli.md): one tolerance shared by a whole family of functions, equicontinuity, is what lets a sequence of functions have a convergent subsequence.
+- [Covering dimension](../04-Homotopy/09-lebesgue-covering-dimension.md): count how many pieces of a fine cover must overlap at one point.
 
 The question this card leaves open: when do many functions share one tolerance, so that a limit of them stays continuous?
 

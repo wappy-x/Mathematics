@@ -931,6 +931,7 @@ example : 2 * (5 * (1000 - 1)) = 9990 := by norm_num
 ## Where this goes next
 
 - [Hille-Yosida](05-hille-yosida-and-generators.md): which unbounded operators generate a strongly continuous semigroup, tested by the size of their resolvents.
+- [Friedrichs extension](10-friedrichs-extension-and-energy-forms.md): start from the energy, and a lower-bounded operator gets one natural self-adjoint version.
 
 Related cards on this shelf: [Unbounded operators](01-unbounded-operators-and-domains.md), [Self-adjoint extensions](02-self-adjoint-extensions-and-the-spectral-theorem.md), [Duhamel](06-duhamels-principle-for-a-forced-evolution.md), [Splitting](07-operator-splitting-and-the-trotter-formula.md), [Feller semigroups](08-feller-semigroups-and-markov-processes.md) and [Two evolutions](09-the-heat-and-schrodinger-semigroups.md).
 

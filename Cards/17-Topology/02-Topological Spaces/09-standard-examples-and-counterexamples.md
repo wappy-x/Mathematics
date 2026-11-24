@@ -146,7 +146,7 @@ Each tail lies between 0 and $`\sum_{k > n} 2/3^k = 3^{-n}`$. So $`y - x`$ is at
 
 </details>
 
-In an ultrametric every triangle has its two longest sides equal, and two balls either nest or do not meet. The same rule measures the **p-adic numbers**, where two whole numbers are close when their difference is divisible by a high power of a fixed prime, such as 2; the number-theory wing builds them on The p-adic numbers (planned).
+In an ultrametric every triangle has its two longest sides equal, and two balls either nest or do not meet. The same rule measures the **p-adic numbers**, where two whole numbers are close when their difference is divisible by a high power of a fixed prime, such as 2; the number-theory wing builds them on [The p-adic numbers](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/10-p-adic-numbers-and-hensels-lemma.md).
 
 ### Step 7: the Cantor set is totally disconnected
 
@@ -866,6 +866,8 @@ example : max ((3 : ℚ) ^ (-2 : ℤ)) ((3 : ℚ) ^ (-3 : ℤ)) = (3 : ℚ) ^ (-
 
 - [Urysohn and Tietze](10-urysohn-tietze-and-metrisation.md): when a topology comes from some distance; the indiscrete space on two or more points and the cofinite $`\mathbb{N}`$ never do; the Cantor set and the discrete space do.
 - [The Zariski topology](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/02-zariski-topology-and-irreducibility.md): a cofinite-like topology on the solution sets of polynomials, where the cofinite line is the simplest case.
+- [Nets and filters](11-nets-and-filters.md): when sequences are too short to find every limit.
+- [Covering dimension](../04-Homotopy/09-lebesgue-covering-dimension.md): count how many pieces of a fine cover must overlap at one point.
 
 The indiscrete space and the cofinite $`\mathbb{N}`$ fail a separation property, the discrete $`\mathbb{N}`$ fails compactness, and the Cantor set fails neither, though it is totally disconnected. That leaves the question of which mix of properties forces a topology to come from a distance at all.
 

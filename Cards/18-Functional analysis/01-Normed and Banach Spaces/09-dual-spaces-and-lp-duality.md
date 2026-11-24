@@ -1764,6 +1764,7 @@ example : (![3/2, 1, 1, 1/2, 1/2, 1, 3/2, 1] : Fin 8 → ℚ) ⬝ᵥ ![0, 0, 0, 
 - [Reflexive spaces](10-reflexive-spaces-and-the-second-dual.md): the dual of the dual, and the spaces, like ℓ^p for 1 < p < ∞, that it gives back exactly.
 - [Riesz representation](../02-Hilbert%20Spaces/06-riesz-representation-theorem.md): in any Hilbert space every functional is an inner product with one fixed vector.
 - [Distributions](../04-Distributions%20and%20Sobolev%20Spaces/01-test-functions-and-distributions.md): functionals on smooth test functions, where the noon reading becomes the Dirac delta.
+- [Compactness in Lp](../02-Hilbert%20Spaces/10-compactness-in-lp-kolmogorov-riesz-and-dunford-pettis.md): small shifts must change a family only a little, and in L1 no mass may pile up.
 
 The question this card leaves open: the dual of ℓ^∞ holds the limit rule and its relatives, so which spaces equal the dual of their own dual, and what does that buy?
 

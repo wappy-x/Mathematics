@@ -1066,6 +1066,7 @@ end SpanningTreesAndCayleysFormula
 
 - [The cheapest skeleton](04-minimum-spanning-trees.md): the same skeletons priced, and a greedy rule that finds the cheapest.
 - [The matrix-tree theorem](07-matrix-tree-theorem.md): cut one row and column from the graph's Laplacian, and the determinant counts its spanning trees.
+- [Nielsen-Schreier](../../17-Topology/04-Homotopy/10-nielsen-schreier-and-covers-of-graphs.md): every subgroup of a free group is free, read off a covering graph.
 
 The costs in the opening never entered the count: all 16 plans were counted alike. Which of them is cheapest, found without listing all 16, is the next card.
 

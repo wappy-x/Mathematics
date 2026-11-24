@@ -845,6 +845,7 @@ example : 1 / Real.pi ^ 2 + 1 / 8 + (2 / Real.pi ^ 2) * ((Real.pi ^ 2 - 8) / 16)
 - [Plancherel](../03-Bounded%20Operators/04-the-fourier-transform-as-a-unitary-operator.md): the harmonic-analysis treatment of the transform's energy balance.
 - [The Haar wavelet](../../20-Harmonic%20analysis/05-Wavelets%20and%20Time-Frequency/03-haar-wavelet-and-multiresolution.md): an orthonormal basis of steps and jumps, which follows a clip in time as well as frequency.
 - [Frames in outline](../../20-Harmonic%20analysis/05-Wavelets%20and%20Time-Frequency/09-frames-in-outline.md): families that are not perpendicular, yet still keep energy within fixed bounds.
+- [Trace class](../03-Bounded%20Operators/12-trace-class-and-schatten-operators.md): the operators small enough to have a trace, and Lidskii's theorem that the trace adds the eigenvalues.
 
 On this shelf, [Riesz representation](06-riesz-representation-theorem.md) reads every measurement on $`H`$ as an inner product, which in a basis is a sum of coefficient products.
 
