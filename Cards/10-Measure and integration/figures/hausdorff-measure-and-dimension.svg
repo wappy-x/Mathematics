@@ -1,0 +1,33 @@
+<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" width="360" height="240" style="color:#24292f">
+<title>The Cantor set on a 1 km road at stages 0 to 3, drawn to scale at 324 units per km; each piece of stage k weighs its length to the power 0.6309, which is 1/2 to the k, so every stage weighs 1; the dashed set U from 200 m to 300 m meets one stage-2 piece</title><rect x="0" y="0" width="360" height="240" rx="8" fill="#ffffff"/>
+<rect x="82.80" y="96" width="32.40" height="72" fill="#e76f51" fill-opacity="0.18" stroke="#e76f51" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="18" y="17" font-size="12" fill="currentColor">stage 0</text>
+<rect x="18.00" y="22" width="324.00" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="18" y="59" font-size="12" fill="currentColor">stage 1</text>
+<rect x="18.00" y="64" width="108.00" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="234.00" y="64" width="108.00" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="18" y="101" font-size="12" fill="currentColor">stage 2</text>
+<rect x="18.00" y="106" width="36.00" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="90.00" y="106" width="36.00" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="234.00" y="106" width="36.00" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="306.00" y="106" width="36.00" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="18" y="143" font-size="12" fill="currentColor">stage 3</text>
+<rect x="18.00" y="148" width="12.00" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="42.00" y="148" width="12.00" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="90.00" y="148" width="12.00" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="114.00" y="148" width="12.00" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="234.00" y="148" width="12.00" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="258.00" y="148" width="12.00" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="306.00" y="148" width="12.00" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<rect x="330.00" y="148" width="12.00" height="12" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5"/>
+<text x="99" y="184" font-size="12" fill="#c4502f" text-anchor="middle">U</text>
+<line x1="18" y1="200" x2="18" y2="206" stroke="currentColor" stroke-width="1.5"/>
+<text x="18" y="222" font-size="12" fill="currentColor" text-anchor="start">0</text>
+<line x1="82.8" y1="200" x2="82.8" y2="206" stroke="currentColor" stroke-width="1.5"/>
+<text x="82.8" y="222" font-size="12" fill="currentColor" text-anchor="end">200 m</text>
+<line x1="115.2" y1="200" x2="115.2" y2="206" stroke="currentColor" stroke-width="1.5"/>
+<text x="115.2" y="222" font-size="12" fill="currentColor" text-anchor="start">300 m</text>
+<line x1="342" y1="200" x2="342" y2="206" stroke="currentColor" stroke-width="1.5"/>
+<text x="342" y="222" font-size="12" fill="currentColor" text-anchor="end">1 km</text>
+<line x1="18" y1="203" x2="342" y2="203" stroke="currentColor" stroke-width="1.5"/>
+</svg>
