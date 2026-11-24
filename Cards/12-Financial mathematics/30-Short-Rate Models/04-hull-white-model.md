@@ -1452,6 +1452,9 @@ end HullWhiteModel
 - [Heath-Jarrow-Morton](../31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md): the same fit seen from the forward curve, where no-arbitrage fixes the drift of every maturity at once.
 - [Futures against forwards](../32-Convexity%20and%20Exotics/01-futures-forward-convexity.md): the model's first everyday job, the gap between a rate future and a forward.
 - [Calibrating Hull-White](08-calibrating-a-short-rate-model.md): fits $`a`$ and $`\sigma`$ to option quotes, the two numbers the curve leaves open.
+- [Long-dated FX](09-long-dated-fx-and-prdc-notes.md): the forward's volatility once both interest rates move, and the PRDC note that is a strip of such options.
+- [Cheyette](../31-Forward-Rate%20Models/08-cheyette-quasi-gaussian-model.md): the whole forward curve driven by two state variables, so a PDE can price Bermudans with a skew.
+- [Jarrow-Yildirim](../34-Inflation%20and%20Real%20Rates/07-jarrow-yildirim-and-zero-coupon-inflation-floors.md): inflation as an exchange rate between nominal and real money, and the zero-coupon floor that protects a linker's principal.
 
 The curve fixes theta but leaves $`a`$ and $`\sigma`$ open, and they decide every option price.
 

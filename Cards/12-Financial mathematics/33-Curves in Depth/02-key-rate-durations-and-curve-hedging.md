@@ -841,6 +841,7 @@ example : (4559 : ℕ) + 213266 = 217825 := by norm_num
 ## Where this goes next
 
 - [Fitting a curve with four or six parameters](03-nelson-siegel-and-svensson-fitting.md): a curve described by four or six smooth parameters instead of ten quotes, whose sensitivities are a different way to cut the same risk.
+- [Solving every curve at once](07-multi-curve-calibration-and-jacobian-risk.md): Newton on OIS and basis quotes together, and the Jacobian that turns zero-rate risk into quote risk.
 
 Key rates assume the curve bends only at a few chosen pillars; the open question is what shape a real curve takes between them, and a fitted curve is one answer.
 

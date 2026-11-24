@@ -773,6 +773,7 @@ Conventions verified 2026-09-28: a US inflation-protected Treasury pays interest
 ## Where this goes next
 
 - [Inflation swaps](04-zero-coupon-inflation-swaps.md): prices the swap whose fixed rate this card set beside the bond breakeven, and builds a curve of those rates by maturity.
+- [Index lag and seasonality](06-inflation-index-lag-and-seasonality.md): the price index a bond actually uses, and the monthly pattern a short inflation curve must carry.
 
 This card read the price of inflation from two bonds and found a second quote in the swap; what sets the swap's fixed rate, and why it can sit 10 basis points away, is the question the swap card answers.
 

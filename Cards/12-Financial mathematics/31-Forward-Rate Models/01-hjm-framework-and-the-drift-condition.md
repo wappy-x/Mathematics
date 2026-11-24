@@ -860,6 +860,7 @@ example : ((1 : ℝ) / 100) ^ 2 / (4 * (3 / 10)) = 1 / 12000 := by norm_num
 ## Where this goes next
 
 - [Forward measures](02-forward-measures-for-rates.md): counting value in units of a bond instead of the bank account. Under that choice the forward rate for the bond's date loses its drift altogether.
+- [Cheyette](08-cheyette-quasi-gaussian-model.md): the whole forward curve driven by two state variables, so a PDE can price Bermudans with a skew.
 
 This card fixes the drift under the bank account's pricing rule; the open question is which unit of account makes a given forward rate drift-free, so that a caplet on it prices with a Black-style formula.
 

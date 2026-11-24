@@ -804,6 +804,7 @@ example : (1 : ℚ) - 95 / 100 = 1 / 20 := by norm_num
 
 - [CVA](03-cva.md): the discounted EE profile, weighted by Northwind's chance of failing in each period and by the loss given default, becomes the \$0.1096 credit charge on the Acme call.
 - [Collateral](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/01-collateral-and-the-residual-exposure.md): what remains of these profiles once Northwind posts collateral.
+- [American Monte Carlo for exposure](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/08-american-monte-carlo-for-exposure.md): regress future values on the simulated state, so exposure profiles work for any trade.
 
 The profile says how much is at stake on each date; it does not yet say what that stake is worth, which needs Northwind's chance of failing and the pricing that turns both into dollars today.
 

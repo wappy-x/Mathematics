@@ -1269,6 +1269,7 @@ example : (120 : ℚ) * 1 - 100 * 1 = 20 := by norm_num
 - [Caplets and floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md): the interest-rate version, where the discount and the volatility finally run to different dates.
 - [Bond options](../30-Short-Rate%20Models/05-bond-options-and-jamshidians-trick.md): forward bond prices, and a trick turning one awkward option into a bundle of these.
 - [Options on a CDS](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/05-cds-option-and-implied-spread-volatility.md): the same engine pointed at a forward credit spread.
+- [VIX futures and options](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/07-vix-futures-and-vix-options.md): a future on a square root, priced below the square root of forward variance.
 
 This card held the bank rate fixed and known, so one discount factor sufficed; what to do when the rate itself is the random thing the option is written on is the caplet and swaption cards' question.
 

@@ -998,6 +998,7 @@ example : (7 : ℚ) * (1 / 4) = 7 / 4 ∧ (7 : ℚ) / 4 + 1 / 4 = 2 := by norm_n
 - [Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md): the same stripping with the caplet formula swapped for a normal or shifted one, as markets quote today.
 - [SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md): caplet volatilities at many strikes, smoothed by one model per expiry.
 - [Solving rate options backwards](09-rate-option-inverses.md): the full catalogue of solving rate options backwards, with their existence and boundary cases.
+- [Caplets on compounded SOFR](10-compounded-rfr-caplets.md): a rate still moving after its period starts, and the one-third rule for its variance.
 
 Stripping gives one volatility per caplet at one strike; what it cannot say is how the volatility changes with the strike, or how the eight forward rates move together, and those are the questions the smile and swaption cards answer.
 

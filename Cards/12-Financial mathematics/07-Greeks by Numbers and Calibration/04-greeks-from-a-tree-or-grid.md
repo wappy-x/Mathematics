@@ -995,6 +995,7 @@ example (S x : ℝ) : S * exp x * exp (-x) = S := by
 ## Where this goes next
 
 - [American Greeks and implied volatility](../15-American%20and%20Bermudan%20exercise/07-american-greeks-and-implied-volatility.md): the same readings on a tree that also decides, at every node, whether to exercise early.
+- [Convertible risk](../53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/05-convertible-bond-greeks-and-implied-volatility.md): delta, gamma, credit sensitivity, and the volatility and spread a price implies.
 
 Every reading here leaned on smooth ground between the nodes; an American tree carries a kink that moves with the exercise boundary, and a later card must read a slope across ground that is not smooth.
 

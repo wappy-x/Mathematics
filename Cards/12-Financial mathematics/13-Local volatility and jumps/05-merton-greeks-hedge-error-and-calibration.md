@@ -944,6 +944,8 @@ example : exp (-(1 / 2 : ℝ)) * (1 / 2) ^ 1 / (Nat.factorial 1) = (1 / 2) * exp
 - [Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): repricing with a nudged input, used here to check the series Greeks and to build the fit's sensitivity table.
 
 ## Where this goes next
+- [Beyond Merton](06-kou-and-variance-gamma-models.md): Kou's double-exponential jumps and the variance gamma process, priced through their characteristic functions.
+
 
 Independent gaps average out over long horizons, so this model's smile flattens with maturity; a model in which volatility itself wanders holds the skew up at longer dates, and the next shelf starts there: [The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md).
 

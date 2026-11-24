@@ -647,6 +647,7 @@ example : (1 / 20 : ℚ) + 1 / 50 - (84 / 80 - 1) / 1 = 1 / 50 := by
 ## Where this goes next
 
 - [Contango and backwardation](04-contango-backwardation-and-roll-yield.md): what the curve's slope means for someone who holds futures and rolls them month to month, and why a high convenience yield turns into a positive roll return.
+- [Gibson-Schwartz](07-gibson-schwartz-two-factor-commodity-model.md): a convenience yield that moves on its own, and the curve twists one factor cannot make.
 
 A convenience yield read from one forward is one point; a curve of forwards gives one at every date, and the next question is what an investor earns by riding that curve.
 

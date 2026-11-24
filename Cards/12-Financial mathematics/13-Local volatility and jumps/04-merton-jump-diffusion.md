@@ -80,7 +80,7 @@ $`\sigma_n`$ is the branch's width: the wiggle's variance plus $`n`$ jumps' wort
 ### When it holds
 
 - **Jumps arrive one at a time, at a steady rate, with no memory.** That makes the count Poisson. If one crash makes the next likelier, two or three jumps are likelier than $`w_n`$ says, and the series underprices the far left tail.
-- **Jump sizes are lognormal, independent of each other and of the wiggle.** That keeps each branch one bell curve in the log price. Other jump laws, such as Kou's double-exponential jumps, need a different formula.
+- **Jump sizes are lognormal, independent of each other and of the wiggle.** That keeps each branch one bell curve in the log price. Other jump laws, such as Kou's double-exponential jumps, need a different formula ([Beyond Merton](06-kou-and-variance-gamma-models.md)).
 - **Constant $`\sigma`$, $`r`$, $`q`$ and jump numbers,** as in Black-Scholes; if they move, the series runs on the wrong inputs.
 - **Jump risk earns no premium.** No mix of shares and cash follows a gap, so no hedge forces the price. Merton assumed a stock's jumps are unrelated to the wider market, so diversified investors need no reward for them and pricing may use jump numbers measured from history. If investors do demand a reward, a price built on history is off by it.
 - **European exercise:** the call is used only at expiry.
@@ -806,6 +806,7 @@ example : (-1 / 10 : ℚ) + (3 / 20 : ℚ) ^ 2 / 2 = -71 / 800 := by norm_num
 - [Greeks under jumps](05-merton-greeks-hedge-error-and-calibration.md): the Greeks from the series, the error a gap leaves in a hedge, and reading the jump numbers back from a smile.
 - [The volatility swap and the jump bias](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md): what jumps do to the replication of variance.
 - [Power that cannot be stored](../26-Options%20on%20commodity%20futures%20and%20spreads/07-electricity-and-the-spark-spread.md): a market where jumps are the main event.
+- [Beyond Merton](06-kou-and-variance-gamma-models.md): Kou's double-exponential jumps and the variance gamma process, priced through their characteristic functions.
 
 The call now has a price but no perfect hedge; how far a delta hedge misses when Acme gaps, and whether the jump numbers can be read back from the strip at all, is the next card's question.
 

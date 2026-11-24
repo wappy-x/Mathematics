@@ -678,6 +678,7 @@ example : (11 / 10 : ℝ) * Real.exp ((4 / 100 - 4 / 100) * 1) = 11 / 10 := by
 - [The quanto adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): a forward paid in the wrong currency, where the exchange rate's wobble adds a correction.
 - [Gold forward](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/01-gold-forward-and-the-lease-rate.md): the same carry with a metal's lease rate as the foreign rate.
 - [Cross-currency swaps](../28-Swaps/06-cross-currency-swaps-and-basis.md): a string of these forwards, exchanged as interest payments over many years.
+- [Knock-in and knock-out forwards](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/09-kiko-forwards-and-zero-cost-structures.md): the corporate hedge that costs nothing upfront, and the strike that makes it free.
 
 This card fixes the forward from quoted deposit rates; what it leaves open is how the market actually quotes and trades that forward, in points over spot, which the forward-points card takes up.
 

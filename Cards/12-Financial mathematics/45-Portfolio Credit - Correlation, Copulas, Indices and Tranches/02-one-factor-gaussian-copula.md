@@ -966,6 +966,7 @@ example : (20 / 100 : ℚ) + 1 = 12 / 10 := by norm_num
 - [Vasicek's large-pool loss curve](03-vasicek-loss-distribution-and-basel-capital.md): let the pool grow without limit; the loss fraction becomes $`q(M)`$ itself, with a closed-form law and the regulator's 99.9% point.
 - [Tail dependence](07-tail-dependence-and-the-t-copula.md): keep the single-name chances, swap the Gaussian copula for one with fatter joint extremes, and measure the difference.
 - [Wrong-way risk](../46-Counterparty%20Risk%20and%20CVA/05-wrong-way-risk.md): the same shared-factor idea linking a counterparty's default to the exposure it leaves behind.
+- [First-to-default and nth-to-default baskets](08-nth-to-default-baskets.md): protection on the first name to fail, and how correlation moves it.
 
 This card left the pool at 100 firms and counted defaults by mixing binomials; what the loss curve looks like when the pool is so large that only the economy is left to be random is the question the Vasicek card answers.
 

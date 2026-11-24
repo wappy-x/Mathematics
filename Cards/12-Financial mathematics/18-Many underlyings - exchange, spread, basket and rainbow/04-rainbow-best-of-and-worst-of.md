@@ -810,6 +810,7 @@ example : max (max (130 : ℤ) 110 - 100) 0 = 30 ∧ max (min (130 : ℤ) 110 - 
 ## Where this goes next
 
 - [Correlation Greeks and implied correlation](05-correlation-greeks-and-implied-correlation.md): the sensitivity to correlation measured properly, and a correlation read back out of the prices of best-of, worst-of and basket contracts.
+- [Worst-of autocallables](../53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/03-worst-of-autocallables-and-their-risk.md): three shares, one correlation, and Greeks that change sign near the barriers.
 
 This card prices a best-of and a worst-of given a correlation, but no exchange quotes a correlation the way it quotes a share price; how much a desk is exposed to it, and how to recover it from traded prices, is the next card's question.
 

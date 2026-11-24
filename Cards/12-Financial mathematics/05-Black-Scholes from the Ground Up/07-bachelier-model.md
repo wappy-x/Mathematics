@@ -991,6 +991,9 @@ example : (60 : ℚ) * 2 = 120 ∧ (60 : ℚ) * 4 = 240 ∧ (2 : ℚ) ^ 2 = 4 :=
 
 - [Shifted lognormal and volatility conversion](08-shifted-lognormal-and-volatility-conversion.md): a floor put somewhere other than zero, and the conversion done properly in both directions.
 - [Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md): this model on barrels and spreads, where the level went negative in public.
+- [Caplets on compounded SOFR](../29-Caps%2C%20Floors%20and%20Swaptions/10-compounded-rfr-caplets.md): a rate still moving after its period starts, and the one-third rule for its variance.
+- [CMS spread options](../32-Convexity%20and%20Exotics/07-cms-spread-options.md): paying the slope of the curve, priced as a normal spread with a correlation the desk must choose.
+- [Collateral in several currencies](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/06-multi-currency-csa-and-colva.md): the poster picks the cheapest, and the option that choice is worth.
 
 This card removed the floor at zero altogether, right for a rate and wrong for a share: the next asks where the floor should sit, and prices what it costs to put it there.
 

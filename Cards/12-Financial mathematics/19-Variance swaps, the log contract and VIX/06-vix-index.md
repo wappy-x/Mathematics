@@ -860,7 +860,7 @@ example : 100 * √((1 : ℝ) / 25) = 20 := by
 ## Where you meet it in real life
 
 - **The S&P 500.** The VIX runs on SPX and SPXW options (the exchange's codes for S&P 500 index options: the standard monthly series and the weekly series), the weekly expiries included so that two expiries bracket 30 days almost every day.
-- **VIX futures and their term structure.** Futures on the VIX for each coming month trace a curve, usually rising (contango) in calm markets and falling in stress; the curve is the market's forecast of future VIX levels plus a premium.
+- **VIX futures and their term structure.** Futures on the VIX ([VIX futures and options](07-vix-futures-and-vix-options.md)) for each coming month trace a curve, usually rising (contango) in calm markets and falling in stress; the curve is the market's forecast of future VIX levels plus a premium.
 - **Other volatility indices.** The same recipe, with a different underlying or target length, produces shorter and longer VIX horizons, and volatility indices on other stock indices, gold and single stocks. The exchange's mathematics methodology is written once for all of them.
 - **Variance swaps.** Dealers mark 30-day index variance off the same strip. The VIX squared, turned from points back into a decimal, is close to a 30-day variance swap strike, differing by strike spacing and by the tails cut off by the zero-bid rule.
 - **Settlement.** VIX futures and options settle on the Special Opening Quotation, the recipe run on opening prices of a single expiry exactly 30 days out, with no blend.
@@ -881,6 +881,8 @@ example : 100 * √((1 : ℝ) / 25) = 20 := by
 
 - [The volatility swap and the jump bias](05-volatility-swap-and-jump-bias.md): why the square root of a variance price overstates a fair price for volatility, and how gaps in the index break the strip.
 - [The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): a model in which variance itself moves, the setting for pricing futures and options on the VIX.
+- [VIX futures and options](07-vix-futures-and-vix-options.md): a future on a square root, priced below the square root of forward variance.
+- [Dispersion](09-dispersion-trades-and-correlation-swaps.md): selling index variance against member variance, and the correlation swap it approximates.
 
 The VIX prices today's view of the next 30 days; what the market will pay today for the VIX a month from now needs a model of how variance itself moves, which is where [The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md) begins.
 

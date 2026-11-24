@@ -970,6 +970,8 @@ example : (20 : ℤ) ^ 2 = 400 := by norm_num
 
 - [Marking a variance swap](04-variance-swap-after-inception-and-forward-variance.md): valuing the swap once some variance has already been realised, and the variance between two future dates.
 - [The VIX](06-vix-index.md): the same strip with listed strikes, a 30-day horizon and a published recipe.
+- [Capped and corridor variance](08-capped-and-corridor-variance-swaps.md): the 2.5-times cap written into street variance swaps, and the strip that counts only days inside a corridor.
+- [Dispersion](09-dispersion-trades-and-correlation-swaps.md): selling index variance against member variance, and the correlation swap it approximates.
 
 A variance swap is fair on the day it is struck; the open question is what it is worth a month later, when some of the year's variance is already in the books and the strip covers only what remains.
 

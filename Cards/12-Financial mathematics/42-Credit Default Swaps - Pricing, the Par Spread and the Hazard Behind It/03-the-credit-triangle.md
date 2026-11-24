@@ -1008,6 +1008,7 @@ example : (2 / 5 : ℚ) * (2 / 100) = 80 / 10000 ∧ (300 / 10000 : ℚ) / (2 / 
 ## Where this goes next
 
 - [Implied hazard from one CDS quote](04-implied-hazard-from-a-cds-quote.md): the backwards direction done properly, with a bracketed solver seeded by s/(1 − R) and the default probabilities it implies.
+- [Quanto CDS](10-quanto-cds-and-sovereign-protection.md): protection on a sovereign paid in euros or in dollars, and the currency drop at default that separates the two spreads.
 
 The triangle says roughly what hazard a quote carries; the question it leaves open is how to get that hazard exactly, with its existence and its sensitivity to recovery pinned down, which is what the implied-hazard card answers.
 

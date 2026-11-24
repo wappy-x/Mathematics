@@ -689,6 +689,7 @@ example : ((25 : ℚ) / 100) ^ 2 * (1 / 2) ≤ ((20 : ℚ) / 100) ^ 2 * 1 := by 
 - [The volatility surface](03-volatility-surface-and-its-arbitrage-rules.md): strikes and expiries together, with the calendar rule and the smile rules applied across the whole grid.
 - [Forward-start options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/06-forward-start-options-and-forward-volatility.md): the contract that pays on this card's number, and what changes when volatility itself is random.
 - [Marking a variance swap](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/04-variance-swap-after-inception-and-forward-variance.md): forward variance traded outright, with no option model in between.
+- [SSVI](06-ssvi-surface-without-calendar-arbitrage.md): one formula for every expiry, and the inequalities that keep the whole surface free of arbitrage.
 
 This card subtracts two expiries at one moneyness; what remains open is how a whole grid of strikes and expiries must fit together at once, which the surface card answers.
 

@@ -889,6 +889,8 @@ example : (3 : ℚ) * ((1 / 2) * (0 / 2) + (1 / 2) * (12 / 4)) = 9 / 2 := by nor
 ## Where this goes next
 
 - [Caplets and floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md): the annuity and bond units used in earnest, where rates move and the choice of unit is no longer optional.
+- [Long-dated FX](../30-Short-Rate%20Models/09-long-dated-fx-and-prdc-notes.md): the forward's volatility once both interest rates move, and the PRDC note that is a strip of such options.
+- [Inverse contracts](../54-Digital%20assets%20-%20perpetuals%2C%20inverse%20contracts%20and%20AMMs/02-inverse-futures-and-coin-margined-options.md): futures and options paid in bitcoin on a dollar price, and the convexity that comes with it.
 
 Each formula here priced a call on something that is a fair bet under the matching odds — but nothing said how that quantity is allowed to wander, and lognormal is only one answer. That is the next question on the shelf.
 

@@ -807,6 +807,7 @@ example : (4 / 7 : ℚ) + 3 / 7 = 1 ∧ 5 * (4 / 7 : ℚ) + 40 * (3 / 7) = 20 :=
 
 - [Imperfect hedges](03-hedge-ratios-basis-risk-and-cross-hedging.md): when no instrument matches the risk exactly, the best hedge ratio and the basis risk left over.
 - [Stress tests](05-scenario-grids-and-stress-tests.md): the full-revaluation grid that shows what a hedged book loses in large, joint moves.
+- [Leland's volatility](07-leland-transaction-cost-volatility.md): hedging at fixed intervals with costs, and the volatility a dealer marks up or down.
 
 This card makes the book flat to small moves in a model with one volatility; the open question is what the hedge is worth when the instruments do not track the risk exactly, which is where hedge ratios and basis risk take over.
 

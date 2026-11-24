@@ -1014,7 +1014,7 @@ example : (3 / 25 : ℚ) * 2 ^ 2 = 12 / 25 ∧ (2 : ℚ) * (3 / 25) = 6 / 25 := 
 - **Share prices with crashes.** Merton's 1976 model is this process with normal jump sizes: [Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md). Option prices follow from $`\psi`$ by Fourier inversion: [Transform pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md).
 - **Electricity prices.** Power prices spike when demand outruns supply, then fall back. The falling back needs a drift that depends on the current price, past Lévy processes. A stochastic differential equation with a jump term allows that ([Jump diffusions](02-jump-diffusions.md)), and the pull back to a level is the mean reversion of [Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md).
 - **Insurance.** An insurer's claims total is a compound Poisson process, the pure-jump Lévy process with finite $`\nu`$ ([Compound Poisson](../04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md)).
-- **Infinitely many small jumps.** The variance-gamma and CGMY return models use Lévy measures like Step 6's and no Brownian part; the small jumps do the wobbling.
+- **Infinitely many small jumps.** The variance-gamma and CGMY return models ([Beyond Merton](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/06-kou-and-variance-gamma-models.md)) use Lévy measures like Step 6's and no Brownian part; the small jumps do the wobbling.
 - **Stochastic calculus beyond Brownian motion.** Lévy processes are the simplest semimartingales with jumps: [Semimartingales](05-semimartingales-in-outline.md).
 
 > **Say it back**
@@ -1032,6 +1032,7 @@ example : (3 / 25 : ℚ) * 2 ^ 2 = 12 / 25 ∧ (2 : ℚ) * (3 / 25) = 6 / 25 := 
 
 - [Jump diffusions](02-jump-diffusions.md): a stochastic differential equation with a jump term.
 - [Infinitely divisible laws](../../20-Harmonic%20analysis/04-Characteristic%20Functions%20and%20Probability/07-infinitely-divisible-laws-and-levy-khintchine.md): the complete proof that every infinitely divisible law has a Lévy–Khintchine exponent.
+- [Beyond Merton](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/06-kou-and-variance-gamma-models.md): Kou's double-exponential jumps and the variance gamma process, priced through their characteristic functions.
 
 A Lévy process moves the same way wherever it is, so this card leaves open how to model a price whose drift and jumps depend on its current level, as a spiking electricity price needs.
 

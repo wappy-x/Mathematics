@@ -937,6 +937,7 @@ Two more cards on this shelf feed straight in. [Spot, forward and par rates](01-
 
 - [Option-adjusted spread](../35-Mortgages%2C%20Callables%20and%20Prepayment/04-option-adjusted-spread.md): the same idea for a bond whose payments are not fixed, with the embedded option priced and removed first.
 - [Implied hazard from a bond price, and why the CDS disagrees](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/02-implied-hazard-from-a-bond-price-and-the-cds-bond-basis.md): the spread split into a default rate and a recovery, and checked against what the insurance costs.
+- [Floating-rate notes](07-floating-rate-notes-and-discount-margin.md): why a floater sits at par on a reset date, and the discount margin that prices it when it does not.
 
 This card turns a price into a rate but says nothing about what that rate is made of; how much of Northwind's 120 basis points is the chance of default and how much is the price of bearing it is the next question.
 

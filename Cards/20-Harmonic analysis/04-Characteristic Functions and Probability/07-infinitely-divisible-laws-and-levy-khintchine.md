@@ -2428,7 +2428,7 @@ end LevyKhintchine
 ## Where you meet it in real life
 
 - **Insurance.** Actuaries model a surplus as premiums in, a diffusion wobble, and compound Poisson claims out. That is the insurer's recipe here, studied by Dufresne and Gerber. Splitting into days or hours is what lets the model run on any time scale.
-- **Financial returns.** Jump models of share prices, such as the variance gamma model, choose a law for one day's log return. It must be infinitely divisible, so that minutes, hours and days fit together. [Pricing by transform](09-carr-madan-and-fourier-pricing.md) prices options straight from the exponent $`\psi`$.
+- **Financial returns.** Jump models of share prices, such as the variance gamma model ([Beyond Merton](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/06-kou-and-variance-gamma-models.md)), choose a law for one day's log return. It must be infinitely divisible, so that minutes, hours and days fit together. [Pricing by transform](09-carr-madan-and-fourier-pricing.md) prices options straight from the exponent $`\psi`$.
 - **Limit theorems.** Every limit of row sums of many small independent pieces is infinitely divisible. The bell curve of [The central limit theorem in four lines, once you have fingerprints](05-central-limit-theorem-by-characteristic-functions.md) and the Poisson law are the two simplest cases.
 - **Counting claims per policy.** The negative binomial law, used for the number of claims per driver, is infinitely divisible. It is a compound Poisson total whose jumps follow the logarithmic law.
 

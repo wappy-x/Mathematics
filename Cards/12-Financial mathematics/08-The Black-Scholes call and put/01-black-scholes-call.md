@@ -1064,6 +1064,7 @@ If any of these felt shaky tonight, go back one card. Each one hands this card a
 - [Black-Scholes by hedging](../05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md): how the seller of an option protects themselves. Step 0 of this card, done for real, day after day.
 - [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md): the cash half of this formula sold as an option on its own.
 - [The Black-Scholes equation](07-black-scholes-equation.md): the other door. The hedge written as an equation the price must obey.
+- [Warrants and employee options](../15-American%20and%20Bermudan%20exercise/08-warrants-dilution-and-employee-stock-options.md): calls a company writes on its own shares, the dilution that shrinks them, and the early exercise employees cannot avoid.
 
 The question this card leaves open: real option prices need a different $`\sigma`$ at each strike, so what does one fixed $`\sigma`$ miss?
 

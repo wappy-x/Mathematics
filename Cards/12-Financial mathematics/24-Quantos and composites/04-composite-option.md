@@ -828,6 +828,7 @@ example : (11 / 10 : ℚ) * max (110 - 100) 0 = 11 := by norm_num
 
 - [Correlation from a quanto price](05-implied-correlation-from-a-quanto.md): every input here is quoted in a market except $`\rho`$. A quoted quanto price pins it, and that implied correlation then prices the composite.
 - [Hedging a quanto](03-quanto-greeks-and-hedging.md): the hedge that the composite gets for free, one euro share position, is two positions for the quanto.
+- [Long-dated FX](../30-Short-Rate%20Models/09-long-dated-fx-and-prdc-notes.md): the forward's volatility once both interest rates move, and the PRDC note that is a strip of such options.
 
 The question this card leaves open: every input except $`\rho`$ is quoted in a market, so where does the correlation come from?
 

@@ -92,7 +92,7 @@ Conventions verified 28 Sep 2026: the card's bonds pay one coupon a year, on ann
 ### When it holds
 
 - **The curve really is one level, one fade and one or two humps.** When the market's curve has an extra bend, the fit smears the miss across neighbouring bonds. Here Nelson-Siegel's misses reach 20.58 cents because the true curve has a second hump.
-- **The prices are comparable.** Same settlement date, clean and accrued interest handled the same way, no bond priced for a special reason such as being the cheapest to deliver into a futures contract. Otherwise the misses measure the data, not the curve.
+- **The prices are comparable.** Same settlement date, clean and accrued interest handled the same way, no bond priced for a special reason such as being the cheapest to deliver into a futures contract ([Treasury bond futures](08-bond-futures-cheapest-to-deliver-and-implied-repo.md)). Otherwise the misses measure the data, not the curve.
 - **The dials are identified.** Svensson with $`\tau_1 = \tau_2`$, or with $`\beta_3 = 0`$, has more dials than the prices can pin down. The fit still prices the bonds; the reading of the dials is lost.
 - **Inside the bonds' range.** Past 30 years the curve runs on its assumed shape alone, with no price to check it.
 - **One morning at a time.** A fit describes today's curve, not how rates move tomorrow.

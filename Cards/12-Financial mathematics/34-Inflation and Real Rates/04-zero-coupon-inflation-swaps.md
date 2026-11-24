@@ -845,6 +845,7 @@ example : (10000 : ℚ) * ((10302 / 10000) / (101 / 100)) = 10200 := by norm_num
 ## Where this goes next
 
 - [Inflation caps and floors in outline](05-inflation-options-in-outline.md): payments that are not straight lines in the index, such as the TIPS floor and caps on inflation, and the model they need.
+- [Index lag and seasonality](06-inflation-index-lag-and-seasonality.md): the price index a bond actually uses, and the monthly pattern a short inflation curve must carry.
 
 The swap prices every straight-line bet on the index without a model; the floor left over in Step 7 is not a straight line. The question this card leaves open: how widely can inflation spread, and what is that floor worth?
 

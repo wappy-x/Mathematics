@@ -90,7 +90,7 @@ In words: step once with today's drift; recompute every drift on that trial curv
 - **Rates stay positive.** A lognormal rate cannot cross zero. Euro and yen rates sat below zero for much of 2014 to 2022; there a desk shifts every rate by a constant first (a displaced market model), or the model cannot price the book at all.
 - **Volatilities are fixed in advance.** Each $`\sigma_i`$ is a known number, so each caplet has one Black-76 volatility at every strike. Real caplet prices show a smile (different volatilities at different strikes); fitting it needs a random volatility on top, and this card's prices away from the money are then off.
 - **One curve.** The same bonds set the forward rates and discount the cash. Since 2008 desks project and discount on separate curves; the drift weights then come from the discount curve, and a one-curve drift misprices multi-rate payoffs.
-- **The rate is known when its period starts.** That was LIBOR (the London Interbank Offered Rate, the old benchmark): fixed at $`T_i`$, paid at $`T_{i+1}`$. A SOFR (Secured Overnight Financing Rate) coupon compounds a daily overnight rate through the period and is known only at its end. Before the period starts, the expected compounded rate still satisfies the bond identity above, so the model carries over; inside the period it needs the extension of Lyashenko and Mercurio (see Sources).
+- **The rate is known when its period starts.** That was LIBOR (the London Interbank Offered Rate, the old benchmark): fixed at $`T_i`$, paid at $`T_{i+1}`$. A SOFR (Secured Overnight Financing Rate) coupon compounds a daily overnight rate through the period and is known only at its end ([The forward market model](07-forward-market-model-for-backward-looking-rates.md)). Before the period starts, the expected compounded rate still satisfies the bond identity above, so the model carries over; inside the period it needs the extension of Lyashenko and Mercurio (see Sources).
 - **The step is an approximation.** The corrector cuts the average error; it does not make the discrete step exact, and a step that crosses a reset date must stop there and freeze the rate that fixed.
 
 Conventions verified 28 Sep 2026: the UK regulator's announcement of 5 March 2021 ended the sterling, euro, Swiss franc, yen and some dollar LIBOR panels after 31 December 2021 and the remaining US dollar panels after 30 June 2023.
@@ -866,6 +866,7 @@ example : Ioo 9 10 = (∅ : Finset ℕ) := by decide
 
 - [Calibrating a market model](04-calibrating-a-market-model.md): choosing the volatility lists and correlations so the simulated strip reprices quoted caplets and swaptions.
 - [Bermudan swaptions](06-bermudan-swaptions-by-regression.md): the simulated strip, run past several reset dates, with an exercise decision at each one.
+- [The forward market model](07-forward-market-model-for-backward-looking-rates.md): compounded overnight rates that stay random through their own period, simulated in one framework.
 
 This card leaves one question open: the swaption here has no Black-76 formula of its own, so can any one model give exact Black-76 prices to both caplets and swaptions?
 

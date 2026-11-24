@@ -861,6 +861,8 @@ example : (6049 / 200 : ℚ) ≤ 60 * (184 / 365) ∧ (60 : ℚ) * (184 / 365) <
 - [Real rates](../34-Inflation%20and%20Real%20Rates/01-real-rates-and-the-fisher-equation.md): what the 5% is worth once inflation has taken its cut.
 - [Callable bonds](../35-Mortgages%2C%20Callables%20and%20Prepayment/01-callable-bonds-and-yield-to-worst.md): contracts the issuer can end early, which breaks the fixed-payment assumption on purpose.
 - [A risky bond from the hazard curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md): payments that might not arrive, weighted by the chance they do.
+- [Treasury bond futures](../33-Curves%20in%20Depth/08-bond-futures-cheapest-to-deliver-and-implied-repo.md): conversion factors, the cheapest bond to deliver, the implied repo rate, and the switch option.
+- [Convertible bonds](../53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/04-convertible-bonds-on-a-tree.md): a bond the holder may swap for shares, priced on a tree that splits cash from equity.
 
 This card takes the yield as given and hands back a price. Every quoted market does the opposite — the price is what is visible — and whether one yield always comes back out of one price is the question of [Yield from price](07-yield-from-price.md).
 

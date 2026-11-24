@@ -785,6 +785,7 @@ example : ((10 : ℚ) - 8) / 10000 * 10000000 = 2000 := by norm_num
 ## Where this goes next
 
 - [Collateral discounting](05-ois-discounting-and-collateral.md): why a collateralised swap's cash is discounted at the overnight rate, the choice this card took as given, and what the house swap loses when the discount curve changes.
+- [Solving every curve at once](../33-Curves%20in%20Depth/07-multi-curve-calibration-and-jacobian-risk.md): Newton on OIS and basis quotes together, and the Jacobian that turns zero-rate risk into quote risk.
 
 This card used the overnight curve to discount without proving it the right one; why collateral makes it so is the question [Collateral discounting](05-ois-discounting-and-collateral.md) answers.
 

@@ -924,6 +924,8 @@ theorem common_random_numbers_paired_difference_le (D a K S h : ℝ)
 - [Asian Greeks and the average already banked](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/04-asian-greeks-and-the-running-average.md): bumping a price that depends on an average.
 - [CDS risk numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md): bumping a credit spread instead of a share price.
 - [CVA risk numbers](../46-Counterparty%20Risk%20and%20CVA/06-cva-risk-numbers-and-hedging.md): bumping a portfolio, where a second pricing run is what binds.
+- [TARFs and accumulators](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/10-target-redemption-forwards-and-accumulators.md): forwards that stop once the client has gained enough, and the leverage that pays for it.
+- [Worst-of autocallables](../53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/03-worst-of-autocallables-and-their-risk.md): three shares, one correlation, and Greeks that change sign near the barriers.
 
 Every answer here came from calling the pricer again: two runs per input, ten digits at best. The next card asks what happens when the slope is taken *inside* the simulation, where no bump has to be chosen and nothing nearly equal is ever subtracted.
 

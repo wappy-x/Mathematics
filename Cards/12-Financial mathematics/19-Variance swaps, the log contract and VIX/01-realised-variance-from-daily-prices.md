@@ -982,6 +982,8 @@ example : (4 / 100 + 39312 / 1000000 : ℚ) = 79312 / 1000000 := by norm_num
 
 - [The variance swap](03-variance-swap-fair-strike.md): a contract that pays realised variance, and the price of that promise today, from a strip of options through [Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md).
 - [Persistence in practice](../../17-Topology/06-Topological%20Data%20Analysis/07-persistence-in-practice.md): another way to summarise the shape of a price history from sliding windows of returns, used alongside realised variance to flag turbulent stretches.
+- [Capped and corridor variance](08-capped-and-corridor-variance-swaps.md): the 2.5-times cap written into street variance swaps, and the strip that counts only days inside a corridor.
+- [Dispersion](09-dispersion-trades-and-correlation-swaps.md): selling index variance against member variance, and the correlation swap it approximates.
 
 Realised variance says what a month delivered. The question it leaves open: what does the market charge today for the variance next month will deliver, and how do options replicate that payment? [The variance swap](03-variance-swap-fair-strike.md) answers it.
 

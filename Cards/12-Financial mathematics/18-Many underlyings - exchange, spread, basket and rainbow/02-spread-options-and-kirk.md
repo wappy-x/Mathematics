@@ -818,6 +818,7 @@ example : max ((-10 : ℤ) - 5) 0 - max (5 - (-10)) 0 = -10 - 5 := by decide
 ## Where this goes next
 
 - [Basket options](03-basket-options.md): an option on a weighted sum of shares, where a sum of lognormals again has no closed form and a moment-matched lognormal takes Kirk's place.
+- [CMS spread options](../32-Convexity%20and%20Exotics/07-cms-spread-options.md): paying the slope of the curve, priced as a normal spread with a correlation the desk must choose.
 
 This card leaves a sum of lognormal prices unpriced in closed form; the next card prices the most common such sum, a basket, by matching its first two moments.
 

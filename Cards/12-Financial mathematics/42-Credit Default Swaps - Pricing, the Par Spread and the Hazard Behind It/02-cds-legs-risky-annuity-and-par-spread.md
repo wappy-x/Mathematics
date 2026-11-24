@@ -827,6 +827,8 @@ example : ((40 : ℚ) / 100) / (1 - 40 / 100) = 2 / 3 := by norm_num
 - [A risky bond from the hazard curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md): the same survival-weighted sums pricing a bond.
 - [A random hazard](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md): the legs when the hazard itself moves at random.
 - [CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md): the protection leg turned round, to price the chance a trading partner defaults.
+- [Quanto CDS](10-quanto-cds-and-sovereign-protection.md): protection on a sovereign paid in euros or in dollars, and the currency drop at default that separates the two spreads.
+- [First-to-default and nth-to-default baskets](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/08-nth-to-default-baskets.md): protection on the first name to fail, and how correlation moves it.
 
 This card prices a CDS from a known hazard; the market runs the other way, quoting the spread and leaving the hazard to be found, and the credit triangle is the first, quickest way to find it.
 

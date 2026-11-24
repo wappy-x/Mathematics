@@ -860,7 +860,7 @@ A Greek is the change in the option's value for a small change in one input. Eac
 - **Tolling agreements.** A trading house pays a plant owner a fixed fee for the right to deliver gas and take power for several years. That right is the strip on this card, and the fee is set from it.
 - **Buying and selling plants.** Bidders value a gas plant as a strip of spark spread options plus capacity payments, then subtract start-up and maintenance costs that the simple strip ignores.
 - **Hedging a generator.** Owners sell power forward and buy gas forward in the delta amounts, about 0.97 MWh and 7.22 MMBtu per MWh of July capacity here, and rebalance as prices move.
-- **Clean spark and dark spreads.** Where carbon is priced, a clean spark spread subtracts the plant's emissions per MWh times the carbon price as a third leg. A coal plant's margin is the dark spread. Same option, different fuel.
+- **Clean spark and dark spreads.** Where carbon is priced ([Weather and carbon](09-weather-and-emissions-derivatives.md)), a clean spark spread subtracts the plant's emissions per MWh times the carbon price as a third leg. A coal plant's margin is the dark spread. Same option, different fuel.
 - **Correlation trading.** Spark spread options quoted by brokers let traders back out the power-gas correlation, as in [Correlation from a spread option](06-implied-correlation-from-a-spread-option.md).
 
 > **Say it back**
@@ -878,7 +878,8 @@ A Greek is the change in the option's value for a small change in one input. Eac
 
 - [Greeks of a spread option](05-spread-option-greeks.md): the power and gas deltas behind a generator's hedge.
 - [Correlation from a spread option](06-implied-correlation-from-a-spread-option.md): where the 0.70 correlation comes from in a market.
-- Plants with start-up costs, gas storage and swing contracts, where each choice changes the next, need dynamic programming, held for a later shelf.
+- Plants with start-up costs, gas storage and swing contracts, where each choice changes the next, need dynamic programming; storage and swing are on [Gas storage and swing contracts](08-gas-storage-and-swing-options.md).
+- [Weather and carbon](09-weather-and-emissions-derivatives.md): degree-day options on a quantity nobody can store, and allowance forwards that can be banked.
 
 A monthly strip prices a plant that decides once a month; the open question is what a plant that decides every hour, and pays to start, is worth.
 

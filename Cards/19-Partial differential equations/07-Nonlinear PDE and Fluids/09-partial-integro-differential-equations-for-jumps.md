@@ -752,7 +752,7 @@ theorem average_jump_eq_compensator (μJ δ : ℝ) :
 ## Where you meet it in real life
 
 - **Equity index options.** Index options show a steep skew: low-strike puts are dear. Desks fit jump-diffusion PIDEs to that skew, as Andersen and Andreasen did, and price the exotic options the skew affects on PIDE grids.
-- **Default risk.** A company's shares can jump to near zero on bankruptcy. A jump to default is a PIDE whose jump lands at one price, and equity and credit desks price convertible bonds this way.
+- **Default risk.** A company's shares can jump to near zero on bankruptcy. A jump to default is a PIDE whose jump lands at one price, and equity and credit desks price convertible bonds this way ([Convertible bonds](../../12-Financial%20mathematics/53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/04-convertible-bonds-on-a-tree.md)).
 - **Electricity prices.** A cold snap or a failed power station makes the price spike. Options on power use the same PIDE, with upward jumps ([Jump diffusions](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/02-jump-diffusions.md)).
 - **Insurance.** An insurer's capital rises steadily with premiums and drops at each claim. Its chance of ruin satisfies an integro-differential equation of the same shape, with the claim-size law as the kernel.
 

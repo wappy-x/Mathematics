@@ -1025,6 +1025,8 @@ open BlackScholesGrid
 - [The exercise boundary and smooth pasting](../15-American%20and%20Bermudan%20exercise/04-exercise-boundary-and-smooth-pasting.md): the curve the grid finds by itself, and the condition it satisfies.
 - [Two walls](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/05-double-barriers-and-double-no-touch.md): contracts whose edges are the whole point.
 - [Crank-Nicolson and the theta family](../../16-Numerical%20analysis/07-PDE%20Solvers/04-crank-nicolson-and-theta-methods.md): the dial as numerical analysis treats it, with the error orders proved.
+- [Cheyette](../31-Forward-Rate%20Models/08-cheyette-quasi-gaussian-model.md): the whole forward curve driven by two state variables, so a PDE can price Bermudans with a skew.
+- [Burgard-Kjaer](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/09-burgard-kjaer-funding-pde.md): one pricing equation with funding and default inside, and why borrowing dearer than lending makes it nonlinear.
 
 This grid priced a contract with one fixed exercise date. Let the holder exercise on any day and every row needs a floor under it before the next sweep, which is a different animal: [American options on a grid](08-american-options-by-psor-and-lcp.md).
 

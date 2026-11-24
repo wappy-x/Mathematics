@@ -1300,6 +1300,7 @@ end OrnsteinUhlenbeckCIR
 - [One-dimensional diffusions](../08-Generators%2C%20Densities%20and%20Simulation/10-scale-function-speed-measure-and-boundaries.md): the scale function, the speed measure, and what happens at the edges.
 - [Stochastic PDEs in outline](../09-Beyond%20Brownian/09-stochastic-pdes-in-outline.md): the heat equation driven by space-time noise.
 - [McKean-Vlasov equations in outline](../09-Beyond%20Brownian/10-mckean-vlasov-and-mean-field-limits-in-outline.md): particles that feel the crowd's average.
+- [Gibson-Schwartz](../../12-Financial%20mathematics/25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/07-gibson-schwartz-two-factor-commodity-model.md): a convenience yield that moves on its own, and the curve twists one factor cannot make.
 
 This card fixes kappa, theta and sigma and solves for the rate; it leaves open how to step the rate exactly on a computer and how to read the three numbers off an observed rate, which the simulation and trading cards answer.
 

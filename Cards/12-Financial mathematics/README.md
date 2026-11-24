@@ -6,63 +6,66 @@
 
 Price, hedge, risk-manage and solve backwards the main products across rates, equity, FX, commodities, credit and their combinations, plus portfolio, risk, trading and insurance mathematics. Each formula is solved for each of its inputs where that is possible, and the card says when it is not and on what domain.
 
-51 shelves · **332 of 332 cards ready to read**
+54 shelves · **375 of 375 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
 | Shelf | Cards |
 | --- | ---: |
 | [01 · Money, Dates and Discounting](#s01) | 7 |
-| [02 · Curves](#s02) | 6 |
+| [02 · Curves](#s02) | 7 |
 | [03 · Contracts and No-Arbitrage](#s03) | 7 |
 | [04 · Binomial Trees](#s04) | 6 |
 | [05 · Black-Scholes from the Ground Up](#s05) | 8 |
-| [06 · Numerical Methods for Pricing](#s06) | 9 |
+| [06 · Numerical Methods for Pricing](#s06) | 10 |
 | [07 · Greeks by Numbers and Calibration](#s07) | 7 |
 | [08 · The Black-Scholes call and put](#s08) | 9 |
 | [09 · The Greeks, one each](#s09) | 10 |
 | [10 · Digitals and the implied density](#s10) | 6 |
 | [11 · Implied volatility and the vanilla inverses](#s11) | 5 |
-| [12 · The smile and the surface](#s12) | 5 |
-| [13 · Local volatility and jumps](#s13) | 5 |
+| [12 · The smile and the surface](#s12) | 6 |
+| [13 · Local volatility and jumps](#s13) | 6 |
 | [14 · Stochastic volatility: Heston, SABR and their mix](#s14) | 6 |
-| [15 · American and Bermudan exercise](#s15) | 7 |
-| [16 · Barriers, touches and lookbacks](#s16) | 7 |
+| [15 · American and Bermudan exercise](#s15) | 8 |
+| [16 · Barriers, touches and lookbacks](#s16) | 9 |
 | [17 · Averages, choosers, compounds and forward-starts](#s17) | 7 |
 | [18 · Many underlyings: exchange, spread, basket and rainbow](#s18) | 5 |
-| [19 · Variance swaps, the log contract and VIX](#s19) | 6 |
+| [19 · Variance swaps, the log contract and VIX](#s19) | 9 |
 | [20 · FX spot, forwards and interest parity](#s20) | 5 |
 | [21 · FX vanilla options: Garman-Kohlhagen and the desk conventions](#s21) | 7 |
 | [22 · The FX smile: risk reversals, butterflies and vanna-volga](#s22) | 6 |
-| [23 · FX exotics as desks use them: digitals, touches and barriers](#s23) | 8 |
+| [23 · FX exotics as desks use them: digitals, touches and barriers](#s23) | 10 |
 | [24 · Quantos and composites](#s24) | 5 |
-| [25 · Commodity forwards: carry, storage, convenience yield and the curve](#s25) | 6 |
-| [26 · Options on commodity futures and spreads](#s26) | 7 |
+| [25 · Commodity forwards: carry, storage, convenience yield and the curve](#s25) | 7 |
+| [26 · Options on commodity futures and spreads](#s26) | 9 |
 | [27 · Averages: commodity swaps and Asian options](#s27) | 5 |
 | [28 · Swaps](#s28) | 7 |
-| [29 · Caps, Floors and Swaptions](#s29) | 9 |
-| [30 · Short-Rate Models](#s30) | 8 |
-| [31 · Forward-Rate Models](#s31) | 6 |
-| [32 · Convexity and Exotics](#s32) | 6 |
-| [33 · Curves in Depth](#s33) | 6 |
-| [34 · Inflation and Real Rates](#s34) | 5 |
+| [29 · Caps, Floors and Swaptions](#s29) | 11 |
+| [30 · Short-Rate Models](#s30) | 9 |
+| [31 · Forward-Rate Models](#s31) | 8 |
+| [32 · Convexity and Exotics](#s32) | 7 |
+| [33 · Curves in Depth](#s33) | 8 |
+| [34 · Inflation and Real Rates](#s34) | 7 |
 | [35 · Mortgages, Callables and Prepayment](#s35) | 5 |
 | [36 · Returns and Utility](#s36) | 6 |
 | [37 · Portfolio Theory](#s37) | 8 |
 | [38 · Performance and Multi-Period](#s38) | 5 |
 | [39 · Value at Risk and Expected Shortfall](#s39) | 8 |
-| [40 · Hedging, Volatility Forecasts and Stress](#s40) | 6 |
+| [40 · Hedging, Volatility Forecasts and Stress](#s40) | 7 |
 | [41 · Default, Survival and the Hazard Rate](#s41) | 5 |
-| [42 · Credit Default Swaps: Pricing, the Par Spread and the Hazard Behind It](#s42) | 9 |
+| [42 · Credit Default Swaps: Pricing, the Par Spread and the Hazard Behind It](#s42) | 10 |
 | [43 · Structural Models: Default from the Balance Sheet](#s43) | 6 |
 | [44 · Reduced-Form Models: Risky Bonds, Spreads and Random Hazards](#s44) | 5 |
-| [45 · Portfolio Credit: Correlation, Copulas, Indices and Tranches](#s45) | 7 |
+| [45 · Portfolio Credit: Correlation, Copulas, Indices and Tranches](#s45) | 8 |
 | [46 · Counterparty Risk and CVA](#s46) | 6 |
-| [47 · Collateral, Funding and the Rest of the XVAs](#s47) | 5 |
+| [47 · Collateral, Funding and the Rest of the XVAs](#s47) | 9 |
 | [48 · Regulatory Capital in Outline](#s48) | 5 |
 | [49 · Microstructure and Execution](#s49) | 7 |
 | [50 · Signals, Mean Reversion and Backtesting](#s50) | 7 |
 | [51 · Insurance and Actuarial Mathematics](#s51) | 8 |
+| [52 · Equity financing - borrow, total return swaps and dividends](#s52) | 3 |
+| [53 · Equity structured notes - reverse convertibles, autocallables and convertibles](#s53) | 5 |
+| [54 · Digital assets - perpetuals, inverse contracts and AMMs](#s54) | 3 |
 
 <a name="s01"></a>
 
@@ -82,7 +85,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s02"></a>
 
-## 02 · Curves · 6 cards
+## 02 · Curves · 7 cards
 
 *Building the discount curve from market quotes, reading forward rates off it, and the instruments that define it*
 
@@ -92,6 +95,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [Bootstrapping: solving for discount factors one maturity at a time](02-Curves/04-bootstrapping-the-discount-curve.md)
 5. [Between the pillars: log-linear, monotone convex and Nelson-Siegel, and what each does to forwards](02-Curves/05-curve-interpolation-and-shape.md)
 6. [Spreads over the curve: the z-spread and asset-swap spread of a risky bond](02-Curves/06-z-spread-and-asset-swap-spread.md)
+7. [Floating-rate notes: why a floater sits at par on a reset date, and the discount margin that prices it when it does not](02-Curves/07-floating-rate-notes-and-discount-margin.md)
 
 [↑ Back to the shelves](#top)
 
@@ -145,7 +149,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s06"></a>
 
-## 06 · Numerical Methods for Pricing · 9 cards
+## 06 · Numerical Methods for Pricing · 10 cards
 
 *The engines every product card calls as a second road: simulation, grids, transforms and regression for early exercise*
 
@@ -158,6 +162,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 7. [Pricing on a grid: explicit, implicit and Crank-Nicolson schemes](06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md)
 8. [American options on a grid: the free boundary as a complementarity problem](06-Numerical%20Methods%20for%20Pricing/08-american-options-by-psor-and-lcp.md)
 9. [Transform pricing: prices from a characteristic function by FFT or cosine series](06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md)
+10. [Multilevel Monte Carlo: most paths on a coarse grid, a few on fine grids, and a telescoping sum that keeps the fine-grid answer](06-Numerical%20Methods%20for%20Pricing/10-multilevel-monte-carlo.md)
 
 [↑ Back to the shelves](#top)
 
@@ -245,7 +250,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s12"></a>
 
-## 12 · The smile and the surface · 5 cards
+## 12 · The smile and the surface · 6 cards
 
 *Why implied vol varies with strike and expiry, how to measure skew and term structure, forward volatility between two expiries, the surface grid and its butterfly and calendar arbitrage tests, the SVI fit, and how the hedge changes once the smile moves with spot.*
 
@@ -254,12 +259,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [The volatility surface: a grid of vols in strike and expiry, and the two tests that keep it honest](12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md)
 4. [The SVI smile: five numbers that fit one expiry, and the constraints that keep it arbitrage-free](12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md)
 5. [Smile-adjusted delta: when vol moves with spot, the hedge ratio is not the Black-Scholes delta](12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md)
+6. [SSVI: one formula for every expiry, and the inequalities that keep the whole surface free of arbitrage](12-The%20smile%20and%20the%20surface/06-ssvi-surface-without-calendar-arbitrage.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s13"></a>
 
-## 13 · Local volatility and jumps · 5 cards
+## 13 · Local volatility and jumps · 6 cards
 
 *Dupire's local volatility read off a surface (from prices and from implied vols), pricing under it and its flat forward smile, then Merton's jump-diffusion as the first model that makes a smile on its own, with its Greeks, hedge error and calibration.*
 
@@ -268,6 +274,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [Pricing with local volatility: it reprices every vanilla exactly, then predicts a future smile that is too flat](13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md)
 4. [Merton jump-diffusion: add sudden gaps, and the price is a weighted sum of Black-Scholes prices](13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md)
 5. [Greeks under jumps: the delta hedge that cannot be perfect, and fitting the three jump numbers to the smile](13-Local%20volatility%20and%20jumps/05-merton-greeks-hedge-error-and-calibration.md)
+6. [Beyond Merton: Kou's double-exponential jumps and the variance gamma process, priced through their characteristic functions](13-Local%20volatility%20and%20jumps/06-kou-and-variance-gamma-models.md)
 
 [↑ Back to the shelves](#top)
 
@@ -288,7 +295,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s15"></a>
 
-## 15 · American and Bermudan exercise · 7 cards
+## 15 · American and Bermudan exercise · 8 cards
 
 *Options you may exercise early: what the price is, the tree that finds it, Merton's theorem for calls, Bermudan dates, the exercise boundary and smooth pasting, the perpetual put's closed form, the Barone-Adesi-Whaley shortcut, and the Greeks and implied volatility of an American option.*
 
@@ -299,12 +306,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [The perpetual American put: the one American option with an exact answer, and the boundary it hands you](15-American%20and%20Bermudan%20exercise/05-perpetual-american-put.md)
 6. [Barone-Adesi-Whaley: an American price in a microsecond by bolting one lump onto the European price](15-American%20and%20Bermudan%20exercise/06-barone-adesi-whaley-approximation.md)
 7. [American Greeks and implied volatility: sensitivities off the tree, a delta that hits -1, and a unique implied vol](15-American%20and%20Bermudan%20exercise/07-american-greeks-and-implied-volatility.md)
+8. [Warrants and employee options: calls a company writes on its own shares, the dilution that shrinks them, and the early exercise employees cannot avoid](15-American%20and%20Bermudan%20exercise/08-warrants-dilution-and-employee-stock-options.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s16"></a>
 
-## 16 · Barriers, touches and lookbacks · 7 cards
+## 16 · Barriers, touches and lookbacks · 9 cards
 
 *Options that depend on the running maximum or minimum: knock-outs and knock-ins with in-out parity, the eight closed forms, the daily-monitoring correction, the hedge at the wall, one-touch and no-touch bets, lookbacks, and the inverses (barrier level from a premium; the volatility that is not unique).*
 
@@ -315,6 +323,8 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [One-touch and no-touch: a fixed sum if the line is ever reached, priced from the chance of touching](16-Barriers%2C%20touches%20and%20lookbacks/05-one-touch-and-no-touch.md)
 6. [Lookback options: buy at the lowest, sell at the highest, and what never regretting costs](16-Barriers%2C%20touches%20and%20lookbacks/06-lookback-options.md)
 7. [Barrier inverses: the barrier level from a premium is unique, the volatility from a knock-out price is not](16-Barriers%2C%20touches%20and%20lookbacks/07-barrier-inverses-level-and-volatility.md)
+8. [Static barrier hedges: a fixed set of vanillas worth exactly nothing on the barrier, when rates and dividends differ](16-Barriers%2C%20touches%20and%20lookbacks/08-static-replication-of-barriers.md)
+9. [Window and Parisian barriers: a knock-out that only watches part of the time, or only after enough days outside](16-Barriers%2C%20touches%20and%20lookbacks/09-window-and-parisian-barriers.md)
 
 [↑ Back to the shelves](#top)
 
@@ -350,7 +360,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s19"></a>
 
-## 19 · Variance swaps, the log contract and VIX · 6 cards
+## 19 · Variance swaps, the log contract and VIX · 9 cards
 
 *Volatility as a thing you can trade: realised variance from daily prices, any payoff from a strip of options (Carr-Madan) with the log contract as the case that matters, the variance swap's model-free fair strike, marking it after inception with forward variance, the volatility swap's convexity and the jump bias, and the VIX recipe.*
 
@@ -360,6 +370,9 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [Marking a variance swap: accrued realised plus the remaining forward variance, and the forward variance two expiries imply](19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/04-variance-swap-after-inception-and-forward-variance.md)
 5. [The volatility swap and the jump bias: why a swap on vol is worth less than the root of the variance strike, and why gaps break the strip](19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md)
 6. [The VIX: the published recipe that turns listed index options into a thirty-day volatility number](19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/06-vix-index.md)
+7. [VIX futures and options: a future on a square root, priced below the square root of forward variance](19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/07-vix-futures-and-vix-options.md)
+8. [Capped and corridor variance: the 2.5-times cap written into street variance swaps, and the strip that counts only days inside a corridor](19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/08-capped-and-corridor-variance-swaps.md)
+9. [Dispersion: selling index variance against member variance, and the correlation swap it approximates](19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/09-dispersion-trades-and-correlation-swaps.md)
 
 [↑ Back to the shelves](#top)
 
@@ -410,7 +423,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s23"></a>
 
-## 23 · FX exotics as desks use them: digitals, touches and barriers · 8 cards
+## 23 · FX exotics as desks use them: digitals, touches and barriers · 10 cards
 
 *Digitals paying in either currency with the smile's slope; single barriers by reflection and the full eight-type table with rebates; one-touch and no-touch; double barriers and the double no-touch; the Greeks that blow up at the wall; the survival-weighted smile correction; and the inverses: barrier level from a budget, touch level from a price.*
 
@@ -422,6 +435,8 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Greeks at the wall: delta past one, gamma turning negative, vega flipping sign, and how desks bend the barrier to survive it](23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/06-barrier-and-touch-greeks.md)
 7. [Barriers on a smile: vanna-volga weighted by the chance of survival, and where it stops being enough](23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md)
 8. [Solving for the barrier: the knock-out level that makes the option cost what the client will pay, and the touch level a price implies](23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/08-barrier-level-from-a-target-premium.md)
+9. [Knock-in and knock-out forwards: the corporate hedge that costs nothing upfront, and the strike that makes it free](23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/09-kiko-forwards-and-zero-cost-structures.md)
+10. [TARFs and accumulators: forwards that stop once the client has gained enough, and the leverage that pays for it](23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/10-target-redemption-forwards-and-accumulators.md)
 
 [↑ Back to the shelves](#top)
 
@@ -441,7 +456,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s25"></a>
 
-## 25 · Commodity forwards: carry, storage, convenience yield and the curve · 6 cards
+## 25 · Commodity forwards: carry, storage, convenience yield and the curve · 7 cards
 
 *The forward for a commodity you can borrow (gold) and one you cannot (wheat, oil); storage as negative income; why the reverse trade fails so carry gives a ceiling, not an equality; the convenience yield read backwards from the market; contango, backwardation and the roll; seasonal gas curves; and the mean-reverting spot model that shapes a futures strip.*
 
@@ -451,12 +466,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [Contango and backwardation: reading a futures strip, and the roll that pays or bleeds a long-only holder](25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/04-contango-backwardation-and-roll-yield.md)
 5. [Seasonal curves: natural gas forwards that hump every winter, and the storage trade that keeps summer-to-winter spreads bounded](25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/05-seasonality-and-the-gas-curve.md)
 6. [A spot price that reverts: the Schwartz one-factor model, its futures formula, and why long-dated futures barely move](25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md)
+7. [Gibson-Schwartz: a convenience yield that moves on its own, and the curve twists one factor cannot make](25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/07-gibson-schwartz-two-factor-commodity-model.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s26"></a>
 
-## 26 · Options on commodity futures and spreads · 7 cards
+## 26 · Options on commodity futures and spreads · 9 cards
 
 *Black-76 applied to a futures option with its two expiry dates and margined premium; the Greeks in lots with rho equal to minus time times price; implied vol and the upward commodity skew with Samuelson decay; spread options by Margrabe and Kirk with their Greeks and the implied correlation; electricity, where carry fails and the spark spread is an option on a power plant.*
 
@@ -467,6 +483,8 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Greeks of a spread option: a delta for each leg, a cross gamma, two vegas, and the sensitivity to correlation](26-Options%20on%20commodity%20futures%20and%20spreads/05-spread-option-greeks.md)
 6. [Correlation from a spread option: the market's number for how two prices move together, and when no number fits](26-Options%20on%20commodity%20futures%20and%20spreads/06-implied-correlation-from-a-spread-option.md)
 7. [Power that cannot be stored: why carry fails, hourly shapes and spikes, and the spark spread as an option on a power plant](26-Options%20on%20commodity%20futures%20and%20spreads/07-electricity-and-the-spark-spread.md)
+8. [Gas storage and swing contracts: exercise limited by volume, solved backwards with inventory as part of the state](26-Options%20on%20commodity%20futures%20and%20spreads/08-gas-storage-and-swing-options.md)
+9. [Weather and carbon: degree-day options on a quantity nobody can store, and allowance forwards that can be banked](26-Options%20on%20commodity%20futures%20and%20spreads/09-weather-and-emissions-derivatives.md)
 
 [↑ Back to the shelves](#top)
 
@@ -502,7 +520,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s29"></a>
 
-## 29 · Caps, Floors and Swaptions · 9 cards
+## 29 · Caps, Floors and Swaptions · 11 cards
 
 *Options on rates: the Black formulas, the measures that justify them, the volatility conventions and the inverses*
 
@@ -515,12 +533,14 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 7. [SABR for rates: the smile across strikes, expiries and tenors](29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md)
 8. [Swaption Greeks: delta in swaps, vega in the cube, and the annuity's own sensitivity](29-Caps%2C%20Floors%20and%20Swaptions/08-swaption-greeks-and-hedging.md)
 9. [Solving rate options backwards: implied volatility, strike from delta, and rate from price](29-Caps%2C%20Floors%20and%20Swaptions/09-rate-option-inverses.md)
+10. [Caplets on compounded SOFR: a rate still moving after its period starts, and the one-third rule for its variance](29-Caps%2C%20Floors%20and%20Swaptions/10-compounded-rfr-caplets.md)
+11. [Cash-settled swaptions: an annuity computed at the swap rate itself, and the convexity it adds](29-Caps%2C%20Floors%20and%20Swaptions/11-cash-settled-swaptions-and-the-irr-annuity.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s30"></a>
 
-## 30 · Short-Rate Models · 8 cards
+## 30 · Short-Rate Models · 9 cards
 
 *Models of the overnight rate: closed-form bonds, options on bonds, trees, and how to calibrate them*
 
@@ -532,12 +552,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [The Hull-White tree: a trinomial lattice for the short rate that handles any payoff](30-Short-Rate%20Models/06-hull-white-trinomial-tree.md)
 7. [Beyond one factor: G2++, Black-Karasinski and Black-Derman-Toy in outline](30-Short-Rate%20Models/07-two-factor-and-lognormal-short-rate-models.md)
 8. [Calibrating Hull-White: reversion and volatility from swaptions](30-Short-Rate%20Models/08-calibrating-a-short-rate-model.md)
+9. [Long-dated FX: the forward's volatility once both interest rates move, and the PRDC note that is a strip of such options](30-Short-Rate%20Models/09-long-dated-fx-and-prdc-notes.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s31"></a>
 
-## 31 · Forward-Rate Models · 6 cards
+## 31 · Forward-Rate Models · 8 cards
 
 *Modelling the whole curve: HJM, forward measures, and the market models banks calibrate*
 
@@ -547,12 +568,14 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [Calibrating a market model: caplet volatilities exactly, swaptions approximately](31-Forward-Rate%20Models/04-calibrating-a-market-model.md)
 5. [Swap market model: lognormal swap rates instead of forwards, and why you cannot have both](31-Forward-Rate%20Models/05-swap-market-model-in-outline.md)
 6. [Bermudan swaptions: many exercise dates, priced by regression on simulated curves](31-Forward-Rate%20Models/06-bermudan-swaptions-by-regression.md)
+7. [The forward market model: compounded overnight rates that stay random through their own period, simulated in one framework](31-Forward-Rate%20Models/07-forward-market-model-for-backward-looking-rates.md)
+8. [Cheyette: the whole forward curve driven by two state variables, so a PDE can price Bermudans with a skew](31-Forward-Rate%20Models/08-cheyette-quasi-gaussian-model.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s32"></a>
 
-## 32 · Convexity and Exotics · 6 cards
+## 32 · Convexity and Exotics · 7 cards
 
 *Where a payoff and its natural measure disagree, and the products that live in that gap*
 
@@ -562,12 +585,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [Quanto rates: a foreign rate paid in domestic currency](32-Convexity%20and%20Exotics/04-quanto-adjustments-for-rates.md)
 5. [Callable and cancellable swaps: a swap plus a Bermudan swaption](32-Convexity%20and%20Exotics/05-callable-and-cancellable-swaps.md)
 6. [Structured rate notes: range accruals, inverse floaters and target redemption, in outline](32-Convexity%20and%20Exotics/06-structured-notes-in-outline.md)
+7. [CMS spread options: paying the slope of the curve, priced as a normal spread with a correlation the desk must choose](32-Convexity%20and%20Exotics/07-cms-spread-options.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s33"></a>
 
-## 33 · Curves in Depth · 6 cards
+## 33 · Curves in Depth · 8 cards
 
 *Reading, hedging and forecasting a whole curve*
 
@@ -577,12 +601,14 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [What a curve says: expectations, term premium, and why an inverted curve worries people](33-Curves%20in%20Depth/04-term-premium-and-expectations.md)
 5. [Carry and roll-down: what a bond earns if the curve does not move](33-Curves%20in%20Depth/05-carry-and-roll-down.md)
 6. [Negative rates: what breaks, what is floored, and which models survive](33-Curves%20in%20Depth/06-negative-rates-and-floors.md)
+7. [Solving every curve at once: Newton on OIS and basis quotes together, and the Jacobian that turns zero-rate risk into quote risk](33-Curves%20in%20Depth/07-multi-curve-calibration-and-jacobian-risk.md)
+8. [Treasury bond futures: conversion factors, the cheapest bond to deliver, the implied repo rate, and the switch option](33-Curves%20in%20Depth/08-bond-futures-cheapest-to-deliver-and-implied-repo.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s34"></a>
 
-## 34 · Inflation and Real Rates · 5 cards
+## 34 · Inflation and Real Rates · 7 cards
 
 *Real against nominal: the bonds, swaps and options that trade inflation*
 
@@ -591,6 +617,8 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [Breakeven inflation: the inflation rate at which a linker and a nominal bond tie](34-Inflation%20and%20Real%20Rates/03-breakeven-inflation.md)
 4. [Inflation swaps: a fixed rate against realised inflation](34-Inflation%20and%20Real%20Rates/04-zero-coupon-inflation-swaps.md)
 5. [Inflation caps and floors in outline: year-on-year options priced with a shifted Black formula](34-Inflation%20and%20Real%20Rates/05-inflation-options-in-outline.md)
+6. [Index lag and seasonality: the price index a bond actually uses, and the monthly pattern a short inflation curve must carry](34-Inflation%20and%20Real%20Rates/06-inflation-index-lag-and-seasonality.md)
+7. [Jarrow-Yildirim: inflation as an exchange rate between nominal and real money, and the zero-coupon floor that protects a linker's principal](34-Inflation%20and%20Real%20Rates/07-jarrow-yildirim-and-zero-coupon-inflation-floors.md)
 
 [↑ Back to the shelves](#top)
 
@@ -673,7 +701,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s40"></a>
 
-## 40 · Hedging, Volatility Forecasts and Stress · 6 cards
+## 40 · Hedging, Volatility Forecasts and Stress · 7 cards
 
 *Greeks at the portfolio level, hedge ratios for imperfect hedges, volatility forecasts and stress scenarios*
 
@@ -683,6 +711,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [Tomorrow's volatility: EWMA, GARCH and realised measures compared](40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/04-volatility-forecasting-ewma-garch-and-realised.md)
 5. [Stress tests: spot-and-volatility grids, historical replays and hypothetical shocks](40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/05-scenario-grids-and-stress-tests.md)
 6. [Limits: notional, sensitivity, VaR and drawdown limits, and the appetite statement behind them](40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/06-risk-limits-and-risk-appetite.md)
+7. [Leland's volatility: hedging at fixed intervals with costs, and the volatility a dealer marks up or down](40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/07-leland-transaction-cost-volatility.md)
 
 [↑ Back to the shelves](#top)
 
@@ -702,7 +731,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s42"></a>
 
-## 42 · Credit Default Swaps: Pricing, the Par Spread and the Hazard Behind It · 9 cards
+## 42 · Credit Default Swaps: Pricing, the Par Spread and the Hazard Behind It · 10 cards
 
 *The CDS contract and its conventions; the two legs, the risky annuity and the par spread; the credit triangle; implied hazard from one quote; recovery assumptions; bootstrapping a curve from several quotes; marking an old trade and the upfront convention; CDS risk numbers; market-implied versus historical default probability.*
 
@@ -715,6 +744,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 7. [Valuing an existing CDS: (par spread minus contract spread) times the risky annuity, and the fixed-coupon-plus-upfront convention](42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/07-marking-a-cds-to-market-and-the-upfront.md)
 8. [CDS risk numbers: CS01, jump-to-default, recovery and rate sensitivity, and the carry of a position](42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md)
 9. [Two default probabilities: what history shows and what the market charges, and why both are right](42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/09-market-implied-versus-historical-default-probability.md)
+10. [Quanto CDS: protection on a sovereign paid in euros or in dollars, and the currency drop at default that separates the two spreads](42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/10-quanto-cds-and-sovereign-protection.md)
 
 [↑ Back to the shelves](#top)
 
@@ -749,7 +779,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s45"></a>
 
-## 45 · Portfolio Credit: Correlation, Copulas, Indices and Tranches · 7 cards
+## 45 · Portfolio Credit: Correlation, Copulas, Indices and Tranches · 8 cards
 
 *Default correlation and joint default; the one-factor Gaussian copula; Vasicek's large-pool loss curve and the Basel capital formula; credit indices; tranches in outline; implied and base correlation; tail dependence and the t copula.*
 
@@ -760,6 +790,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Tranches: slicing a pool's losses into layers, and pricing a layer as its expected loss over time](45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/05-cdo-tranches-in-outline.md)
 6. [Implied correlation: the correlation that reprices a tranche, why a mezzanine quote can have two answers or none, and base correlation's fix](45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/06-implied-and-base-correlation.md)
 7. [Tail dependence: the Gaussian copula's calm at the extremes, and the Student-t copula that fails together](45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/07-tail-dependence-and-the-t-copula.md)
+8. [First-to-default and nth-to-default baskets: protection on the first name to fail, and how correlation moves it](45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/08-nth-to-default-baskets.md)
 
 [↑ Back to the shelves](#top)
 
@@ -780,7 +811,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s47"></a>
 
-## 47 · Collateral, Funding and the Rest of the XVAs · 5 cards
+## 47 · Collateral, Funding and the Rest of the XVAs · 9 cards
 
 *Collateral agreements and the exposure they leave; FVA and the discounting argument behind it; MVA for initial margin; KVA for capital; the assembled adjusted price and its overlaps, with central clearing in outline.*
 
@@ -789,6 +820,10 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [MVA: initial margin sits idle for the life of the trade, and its funding cost is priced](47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/03-mva.md)
 4. [KVA: the capital a trade ties up over its life, charged at the bank's hurdle rate](47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/04-kva.md)
 5. [Putting the adjustments together: clean price minus CVA plus DVA minus FVA, MVA and KVA, what overlaps, and who charges whom](47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/05-the-xva-desk-view.md)
+6. [Collateral in several currencies: the poster picks the cheapest, and the option that choice is worth](47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/06-multi-currency-csa-and-colva.md)
+7. [ISDA SIMM: initial margin from sensitivities, risk weights and correlations, and why a hedge lowers it](47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/07-isda-simm-initial-margin.md)
+8. [American Monte Carlo for exposure: regress future values on the simulated state, so exposure profiles work for any trade](47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/08-american-monte-carlo-for-exposure.md)
+9. [Burgard-Kjaer: one pricing equation with funding and default inside, and why borrowing dearer than lending makes it nonlinear](47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/09-burgard-kjaer-funding-pde.md)
 
 [↑ Back to the shelves](#top)
 
@@ -852,6 +887,44 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Ruin: the chance an insurer's surplus ever goes below zero](51-Insurance%20and%20Actuarial%20Mathematics/06-ruin-theory-and-lundberg.md)
 7. [Reserving: estimating claims not yet reported from a run-off triangle](51-Insurance%20and%20Actuarial%20Mathematics/07-reserving-chain-ladder-and-bornhuetter-ferguson.md)
 8. [Credibility and reinsurance: weighting a policy's own history, and laying off the tail](51-Insurance%20and%20Actuarial%20Mathematics/08-credibility-and-reinsurance.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s52"></a>
+
+## 52 · Equity financing - borrow, total return swaps and dividends · 3 cards
+
+*What it costs to hold or short a share, the swaps that hand over its return, and the dividends traded on their own*
+
+1. [Stock borrow and repo: the fee to short a share, the forward it sets, and the implied repo read from the market](52-Equity%20financing%20-%20borrow%2C%20total%20return%20swaps%20and%20dividends/01-stock-borrow-repo-and-the-equity-forward.md)
+2. [Total return swaps: owning a share's return without owning the share, and the funding spread that prices it](52-Equity%20financing%20-%20borrow%2C%20total%20return%20swaps%20and%20dividends/02-equity-swaps-and-total-return-swaps.md)
+3. [Dividend futures and swaps: trading the dividends alone, and the implied dividend strip read from options](52-Equity%20financing%20-%20borrow%2C%20total%20return%20swaps%20and%20dividends/03-dividend-futures-and-dividend-swaps.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s53"></a>
+
+## 53 · Equity structured notes - reverse convertibles, autocallables and convertibles · 5 cards
+
+*Notes that pay a high coupon for a sold put, repay early when the share rises, or convert into shares, priced and solved for their coupon*
+
+1. [Reverse convertibles: a bond plus a sold put, and the barrier version that sells a knock-in put](53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/01-reverse-convertibles.md)
+2. [Autocallables: a note that repays early when the share is up, the Phoenix coupon with memory, and the coupon that makes it fair](53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/02-autocallables-and-phoenix-notes.md)
+3. [Worst-of autocallables: three shares, one correlation, and Greeks that change sign near the barriers](53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/03-worst-of-autocallables-and-their-risk.md)
+4. [Convertible bonds: a bond the holder may swap for shares, priced on a tree that splits cash from equity](53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/04-convertible-bonds-on-a-tree.md)
+5. [Convertible risk: delta, gamma, credit sensitivity, and the volatility and spread a price implies](53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/05-convertible-bond-greeks-and-implied-volatility.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s54"></a>
+
+## 54 · Digital assets - perpetuals, inverse contracts and AMMs · 3 cards
+
+*Futures that never expire, contracts paid in the coin itself, and pools that make markets by formula*
+
+1. [Perpetual futures: a future that never expires, held near spot by a funding payment](54-Digital%20assets%20-%20perpetuals%2C%20inverse%20contracts%20and%20AMMs/01-perpetual-futures-and-the-funding-rate.md)
+2. [Inverse contracts: futures and options paid in bitcoin on a dollar price, and the convexity that comes with it](54-Digital%20assets%20-%20perpetuals%2C%20inverse%20contracts%20and%20AMMs/02-inverse-futures-and-coin-margined-options.md)
+3. [Automated market makers: the constant-product pool as a short-gamma position, and the loss to rebalancers it pays all the time](54-Digital%20assets%20-%20perpetuals%2C%20inverse%20contracts%20and%20AMMs/03-amm-constant-product-and-loss-versus-rebalancing.md)
 
 [↑ Back to the shelves](#top)
 

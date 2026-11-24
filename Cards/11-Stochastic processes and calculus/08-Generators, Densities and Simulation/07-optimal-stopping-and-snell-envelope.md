@@ -1060,6 +1060,7 @@ example : (8 * 415000 + 2 * 430000) / 10 - 3000 = 415000 := by norm_num
 - [Optimal stopping](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/06-optimal-stopping-as-a-dynamic-program.md): the recursion as a Bellman equation, with states in place of paths.
 - [An American option](../../19-Partial%20differential%20equations/06-Weak%20Solutions%20and%20Free%20Boundaries/09-american-options-as-a-free-boundary-problem.md): in continuous time the bar becomes a curve found with the solution.
 - [Backward SDEs in outline](../09-Beyond%20Brownian/08-backward-sdes-in-outline.md): equations solved from a known end value.
+- [Gas storage and swing contracts](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/08-gas-storage-and-swing-options.md): exercise limited by volume, solved backwards with inventory as part of the state.
 
 The house has one bar per month because it has three dates and fixed chances; when the reward is a share price that moves at every instant and can be hedged, the bar becomes a boundary in price and time, and the American-option cards find it.
 

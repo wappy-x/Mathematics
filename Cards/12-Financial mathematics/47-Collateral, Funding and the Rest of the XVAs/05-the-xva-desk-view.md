@@ -198,7 +198,7 @@ A bank's annual report shows the adjustments as reserves against the clean value
 
 Conventions verified 2026-09-28 against the Sources: DVA sits in accounting fair value and is removed from regulatory capital; CVA-risk capital uses BA-CVA or SA-CVA (Basel revisions of July 2020); the default-waterfall order follows the CPMI–IOSCO principles, and each clearing house's rulebook sets its own details.
 
-The alternative route to the whole stack is one pricing equation with every cost written in as a cash flow, solved at once (Burgard and Kjaer's replication approach). It gives the same pieces when they do not interact; this card keeps the pieces separate because each is charged by a different desk.
+The alternative route to the whole stack is one pricing equation with every cost written in as a cash flow, solved at once (Burgard and Kjaer's replication approach: [Burgard-Kjaer](09-burgard-kjaer-funding-pde.md)). It gives the same pieces when they do not interact; this card keeps the pieces separate because each is charged by a different desk.
 
 ---
 

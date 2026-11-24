@@ -1479,7 +1479,7 @@ end EightBarriers
 ## Where you meet it in real life
 
 - **Corporate hedging desks.** Reverse knock-outs and knock-ins are sold to importers and exporters as cheaper forms of protection. The up-and-in call is the protection that arrives only after a big move; the up-and-out call the protection that leaves before one.
-- **Structured products.** A barrier with a rebate is a building block of accumulators and target-redemption forwards; the rebate is a one-touch or no-touch folded inside ([One-touch and no-touch](04-fx-one-touch-and-no-touch.md)).
+- **Structured products.** A barrier with a rebate is a building block of accumulators and target-redemption forwards ([TARFs and accumulators](10-target-redemption-forwards-and-accumulators.md)); the rebate is a one-touch or no-touch folded inside ([One-touch and no-touch](04-fx-one-touch-and-no-touch.md)).
 - **Quoting in the other currency.** The same table prices the euro-premium version after the change of numeraire (the currency that prices are counted in) on [One option, two currencies](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/02-premium-currency-and-foreign-domestic-symmetry.md): a EUR call with a wall above becomes a USD put with a wall below.
 - **Choosing the wall.** Desks invert this table to find the barrier that hits a target premium: [Solving for the barrier](08-barrier-level-from-a-target-premium.md). The payout at the wall itself is the digital of [Currency digitals](01-fx-digitals.md).
 
@@ -1500,6 +1500,7 @@ end EightBarriers
 
 - [Two walls](05-double-barriers-and-double-no-touch.md): two walls at once, where one mirror becomes an infinite row of them.
 - [Greeks at the wall](06-barrier-and-touch-greeks.md): delta and gamma as the rate approaches the wall, where the reverse knock-out's hedge flips sign and blows up.
+- [Knock-in and knock-out forwards](09-kiko-forwards-and-zero-cost-structures.md): the corporate hedge that costs nothing upfront, and the strike that makes it free.
 
 The table prices each option with one wall; the open question is what happens when a contract has a wall on each side, and a touch of either one decides it.
 

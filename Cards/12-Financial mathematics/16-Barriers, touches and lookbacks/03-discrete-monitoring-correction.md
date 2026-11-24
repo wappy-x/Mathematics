@@ -1262,6 +1262,7 @@ example : 2 * 100000 = 200000 := by norm_num
 ## Where this goes next
 
 - [Barrier Greeks](04-barrier-greeks-at-the-wall.md): how the price of a barrier option moves with the spot and with time as the price nears the wall, where hedges are hardest to hold.
+- [Window and Parisian barriers](09-window-and-parisian-barriers.md): a knock-out that only watches part of the time, or only after enough days outside.
 
 The price is now right for the check schedule the contract actually has; what remains open is how that price swings as Acme drifts toward $80, which decides whether the option can be hedged at all.
 

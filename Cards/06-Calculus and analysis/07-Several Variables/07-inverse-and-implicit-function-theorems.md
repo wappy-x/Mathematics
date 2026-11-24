@@ -619,6 +619,7 @@ example : ∀ V : ℚ, 0 * V - 1 * (8314 / 1000) * 1 ≠ 0 := by intro V; norm_n
 - [The Jacobian conjecture](../../25-Frontier/05-Analysis%20and%20Dynamics/04-jacobian-conjecture.md): whether a polynomial map with constant nonzero Jacobian determinant has a global polynomial inverse: refuted in 2026 for three or more variables, still open for two.
 - [Constant rank theorem](10-constant-rank-theorem.md): a map whose derivative keeps the same rank is a projection in disguise.
 - [Change of variables in n dimensions, proved](../08-Multiple%20Integrals/08-change-of-variables-proved.md): break the map into moves that change one coordinate at a time.
+- [Solving every curve at once](../../12-Financial%20mathematics/33-Curves%20in%20Depth/07-multi-curve-calibration-and-jacobian-risk.md): Newton on OIS and basis quotes together, and the Jacobian that turns zero-rate risk into quote risk.
 
 ---
 

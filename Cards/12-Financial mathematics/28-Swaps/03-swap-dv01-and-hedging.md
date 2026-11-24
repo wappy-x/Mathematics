@@ -854,6 +854,7 @@ example : 438242 / 100 < 10000000 * annuityBefore houseQuotes 5 * (1 / 10000) âˆ
 
 - [Multi-curve](04-basis-swaps-and-the-multi-curve-framework.md): the floating rate and the discounting on separate curves, so one DV01 becomes two and a hedge must match both.
 - [Key-rate durations](../33-Curves%20in%20Depth/02-key-rate-durations-and-curve-hedging.md): DV01 split quote by quote, and hedges that survive twists.
+- [ISDA SIMM](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/07-isda-simm-initial-margin.md): initial margin from sensitivities, risk weights and correlations, and why a hedge lowers it.
 
 A DV01 hedge leaves the book open to a twist that cost 43,535.84 dollars here; key rate durations measure that exposure one maturity at a time, so it can be hedged as well.
 

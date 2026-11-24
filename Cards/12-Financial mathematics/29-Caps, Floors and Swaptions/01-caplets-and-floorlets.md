@@ -71,7 +71,7 @@ $`d_1`$ and $`d_2`$ are the distance from the forward to the strike, in standard
 
 - **The rate is lognormal around its forward, with one volatility.** The market quotes each strike with its own volatility (a smile). With a single $`\sigma`$ the price is right at the quoted strike and off elsewhere, by roughly vega (the price change per point of volatility, in The Greeks below) times the volatility gap.
 - **The rate is positive.** $`\ln(F/K)`$ needs a positive forward and strike. With rates near or below zero the market prices caplets with a shifted or a normal model instead ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)).
-- **The rate is fixed at the start of the period and paid at the end.** That is the term-rate convention of LIBOR, the London interbank rate retired in 2023. Rates compounded from overnight fixings (SOFR in dollars, SONIA in sterling) are only known at the period's end, so the uncertainty runs past $`T_1`$ into the period; Lyashenko and Mercurio extend the formula for that case.
+- **The rate is fixed at the start of the period and paid at the end.** That is the term-rate convention of LIBOR, the London interbank rate retired in 2023. Rates compounded from overnight fixings (SOFR in dollars, SONIA in sterling) are only known at the period's end ([Caplets on compounded SOFR](10-compounded-rfr-caplets.md)), so the uncertainty runs past $`T_1`$ into the period; Lyashenko and Mercurio extend the formula for that case.
 - **One curve gives both the forward and the discount.** Since 2008 the forward comes from a projection curve for the index and the discount factor from the overnight curve. The formula survives with each input read from its own curve; reading both from one curve misprices by the spread between them.
 - **The seller pays.** No allowance is made for the insurer defaulting.
 
@@ -794,6 +794,7 @@ example : (1 : ℚ) / (1 + 1 / 4 * (5 / 100)) = 80 / 81 := by norm_num
 ## Where this goes next
 
 - [Caps and floors](02-caps-floors-and-parity.md): a cap is a strip of caplets priced one by one and added, and cap minus floor is a swap.
+- [Caplets on compounded SOFR](10-compounded-rfr-caplets.md): a rate still moving after its period starts, and the one-third rule for its variance.
 
 One caplet covers one quarter; a borrower needs every quarter covered, and the question left open is what a whole strip costs and how it ties to a swap.
 

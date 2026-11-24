@@ -786,6 +786,8 @@ theorem implied_rate_and_forward_from_box
 
 - [The VIX](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/06-vix-index.md): the volatility index, which reads its forward off the call-put pair by exactly this rule before anything else.
 - [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): implied volatility read at every strike, each priced off the forward this card recovers.
+- [Stock borrow and repo](../52-Equity%20financing%20-%20borrow%2C%20total%20return%20swaps%20and%20dividends/01-stock-borrow-repo-and-the-equity-forward.md): the fee to short a share, the forward it sets, and the implied repo read from the market.
+- [Dividend futures and swaps](../52-Equity%20financing%20-%20borrow%2C%20total%20return%20swaps%20and%20dividends/03-dividend-futures-and-dividend-swaps.md): trading the dividends alone, and the implied dividend strip read from options.
 
 The carry is now read from the market, but it arrives as one number for rate less dividend less borrowing fee, and telling those three apart is a question that parity alone cannot answer.
 

@@ -843,7 +843,7 @@ example : (2500 : ℚ) * ((41 / 2) ^ 2 - 20 ^ 2) = 50625 := by norm_num
 - **Daily marks on a derivatives desk.** Every running variance swap is revalued each evening exactly this way: banked realised from the day's closes ([Realised variance](01-realised-variance-from-daily-prices.md)), plus a fresh strip quote for the rest.
 - **Forward-start variance swaps.** A swap on a period that starts in the future is struck at the forward variance, and dealers build it from two ordinary swaps, as Step 3 does with a long 2 and a short 1.
 - **Forward variance models.** Lorenzo Bergomi's models take the whole curve of forward variances, one for each future instant, as the thing that moves at random; the running swap's mark is then a sum of today's forward variances over the time left.
-- **VIX futures.** The index is a 30-day variance quote rebuilt every day ([The VIX](06-vix-index.md)); a future on it trades a quote that starts in the future, which is why forward variance is where VIX futures traders start.
+- **VIX futures.** The index is a 30-day variance quote rebuilt every day ([The VIX](06-vix-index.md)); a future on it trades a quote that starts in the future, which is why forward variance is where VIX futures traders start ([VIX futures and options](07-vix-futures-and-vix-options.md)).
 
 > **Say it back**
 > A variance swap's payoff is realised variance, and realised variance is a time-weighted sum of the part already lived and the part to come. The lived part is a fixed number; the part to come is worth its fair strike today, priced by a strip of options. So the mark is the discounted notional times banked plus quoted, weighted by time, minus the strike. Two quoted expiries, split the same way, give the forward variance between them, which is also the break-even for a swap whose first half went to plan. The swap's vega runs down with the time left, and its hedge has the same dollar gamma at every price, which is why it pays on every day's squared move alike.
@@ -858,6 +858,8 @@ example : (2500 : ℚ) * ((41 / 2) ^ 2 - 20 ^ 2) = 50625 := by norm_num
 ## Where this goes next
 
 - [The volatility swap and the jump bias](05-volatility-swap-and-jump-bias.md): a swap on volatility itself, whose payoff is the square root of this card's, and what jumps do to the strip.
+- [VIX futures and options](07-vix-futures-and-vix-options.md): a future on a square root, priced below the square root of forward variance.
+- [Dispersion](09-dispersion-trades-and-correlation-swaps.md): selling index variance against member variance, and the correlation swap it approximates.
 
 This card's mark is exact because variance splits cleanly along the calendar; volatility, its square root, does not split at all, and pricing a swap on it needs a view of how uncertain the variance still to come is.
 

@@ -872,6 +872,7 @@ example : (15 : ℚ) / 100 - 30 / 100 = -15 / 100 := by norm_num
 
 - [Swaption Greeks](08-swaption-greeks-and-hedging.md): the hedge road to the same price, and what happens to the hedge when the annuity itself moves with rates.
 - [Options on a CDS](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/05-cds-option-and-implied-spread-volatility.md): the annuity measure rebuilt on a risky annuity, which prices options on credit spreads with the same Black shape.
+- [Cash-settled swaptions](11-cash-settled-swaptions-and-the-irr-annuity.md): an annuity computed at the swap rate itself, and the convexity it adds.
 
 This card proves the forward swap rate is fair in annuity units but says nothing about how to hedge a swaption whose unit itself shifts with every rate move; the Greeks card answers that.
 

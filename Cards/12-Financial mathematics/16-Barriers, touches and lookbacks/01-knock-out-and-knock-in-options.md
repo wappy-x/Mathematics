@@ -930,6 +930,8 @@ example : 2 * 2 * 2 = 8 := by decide
 - [The eight barrier formulas](02-reiner-rubinstein-barrier-formulas.md): all eight contracts, barriers above the strike, and rebates, in one family of formulas.
 - [One-touch and no-touch](05-one-touch-and-no-touch.md): the touch event priced on its own, with no option attached.
 - [Black-Cox](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/05-black-cox-first-passage-default.md): the same first-touch mathematics applied to a company's assets and its debt.
+- [Window and Parisian barriers](09-window-and-parisian-barriers.md): a knock-out that only watches part of the time, or only after enough days outside.
+- [Reverse convertibles](../53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/01-reverse-convertibles.md): a bond plus a sold put, and the barrier version that sells a knock-in put.
 
 This card priced one barrier contract with one subtraction; what it leaves open is the other seven, and the barrier above the strike where one subtraction is no longer enough.
 

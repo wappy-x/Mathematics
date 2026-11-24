@@ -869,6 +869,7 @@ example : [2, 4, 6, 8, 10, 12].map (fun n : ℕ => n ^ 2) = [4, 16, 36, 64, 100,
 - [Performance measures](../38-Performance%20and%20Multi-Period/01-sharpe-information-and-drawdown.md): drawdown measured on a real track record, with error bars.
 - [Kelly](../36-Returns%20and%20Utility/05-kelly-criterion-and-growth.md): sizing a book to grow fastest, and why half that size is safer: sizing from the reward side rather than the loss side.
 - [Market-risk capital](../48-Regulatory%20Capital%20in%20Outline/04-frtb-and-the-shift-to-expected-shortfall.md): the regulator's version of the VaR limit, and why it moved to the average loss beyond VaR.
+- [Leland's volatility](07-leland-transaction-cost-volatility.md): hedging at fixed intervals with costs, and the volatility a dealer marks up or down.
 
 This card sets the limits of one desk from one stop; the question it leaves open is how to share one firm-wide cap among several desks whose losses move together, which the component-VaR card answers.
 

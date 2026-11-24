@@ -928,6 +928,8 @@ example : 1 + 40 = 41 := by norm_num
 - [Breakeven inflation](../34-Inflation%20and%20Real%20Rates/03-breakeven-inflation.md): an inverse whose unknown is a rate two markets disagree about.
 - [Implied hazard from one CDS quote](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/04-implied-hazard-from-a-cds-quote.md): a default intensity backed out of a spread, with a flat-slope problem of its own.
 - [Implied correlation](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/06-implied-and-base-correlation.md): the inverse that breaks uniqueness, where two inputs can fit one quote.
+- [Autocallables](../53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/02-autocallables-and-phoenix-notes.md): a note that repays early when the share is up, the Phoenix coupon with memory, and the coupon that makes it fair.
+- [Convertible risk](../53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/05-convertible-bond-greeks-and-implied-volatility.md): delta, gamma, credit sensitivity, and the volatility and spread a price implies.
 
 This card inverted one price for one unknown, and the slope said exactly how much to believe. A surface of forty quotes and a model with five dials has no exact answer and no single slope to divide by. What "as close as possible" means there, and how to know when a fit is finished, is [Calibration](06-calibration-as-least-squares.md).
 

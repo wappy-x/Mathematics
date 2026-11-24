@@ -930,7 +930,7 @@ end MertonNoEarlyExercise
 
 - **Listed calls on non-dividend shares.** Listed share options are mostly American. On shares that pay nothing, the European formula prices the calls with no correction.
 - **Dividend-capture exercise.** The evening before a large dividend goes ex, deep in-the-money calls get exercised in bulk. A holder who misses that evening keeps a call on a share about to drop, and loses the difference.
-- **Employee stock options.** They cannot be sold, so Step 0's "sell rather than exercise" is closed. Employees exercise early to diversify or to meet a tax date. The price has not changed; the holder's exit has.
+- **Employee stock options.** They cannot be sold, so Step 0's "sell rather than exercise" is closed. Employees exercise early to diversify or to meet a tax date. The price has not changed; the holder's exit has ([Warrants and employee options](08-warrants-dilution-and-employee-stock-options.md)).
 - **Negative rates.** Several central banks set deposit rates below zero in the 2010s. The chain in The formula breaks at $`K e^{-r\tau} \le K`$, and early exercise of calls could pay without any dividend.
 - **Puts.** At a positive rate every American put carries an early-exercise premium. Where the exercise line sits is mapped by [The perpetual American put](05-perpetual-american-put.md) for a put with no expiry and [The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md) for the general case.
 
@@ -951,6 +951,7 @@ end MertonNoEarlyExercise
 - [The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md): the $110.75 crossing generalised to a whole curve of share prices through time.
 - [Barone-Adesi-Whaley](06-barone-adesi-whaley-approximation.md): a fast price for American options under a continuous yield, where exercise can pay on any day.
 - [American Greeks and implied volatility](07-american-greeks-and-implied-volatility.md): sensitivities and implied volatility once the premium is not zero.
+- [Warrants and employee options](08-warrants-dilution-and-employee-stock-options.md): calls a company writes on its own shares, the dilution that shrinks them, and the early exercise employees cannot avoid.
 
 This card finds the one date a call might be exercised; what it leaves open is where the line between exercising and holding runs when every date is a candidate, as it is for a put.
 

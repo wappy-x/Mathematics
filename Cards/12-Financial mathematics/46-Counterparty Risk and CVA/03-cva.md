@@ -810,6 +810,8 @@ example : (1 : ℚ) - 40 / 100 = 60 / 100 := by norm_num
 - [Wrong-way risk](05-wrong-way-risk.md): CVA when default and exposure move together, and the product of averages breaks.
 - [CVA risk numbers](06-cva-risk-numbers-and-hedging.md): how CVA moves with Northwind's spread and Acme's price, and the CDS amounts that hedge it.
 - [Collateral](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/01-collateral-and-the-residual-exposure.md): what is left of the exposure, and of CVA, once collateral changes hands.
+- [American Monte Carlo for exposure](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/08-american-monte-carlo-for-exposure.md): regress future values on the simulated state, so exposure profiles work for any trade.
+- [Burgard-Kjaer](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/09-burgard-kjaer-funding-pde.md): one pricing equation with funding and default inside, and why borrowing dearer than lending makes it nonlinear.
 
 This card charges the bank for Northwind's default as if the bank could not fail; Northwind sees the same trade from the other side and charges for the bank's default, and the DVA card asks what price both can agree on.
 

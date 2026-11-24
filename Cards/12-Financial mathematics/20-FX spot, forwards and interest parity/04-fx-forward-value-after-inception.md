@@ -763,6 +763,7 @@ example : ((10000000 : ℚ) * (11500 / 10000) + (-4000000) * (11300 / 10000)) /
 ## Where this goes next
 
 - [Commodity swap](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/01-commodity-swap-and-average-price-forward.md): a row of forwards at one shared price, one per payment date, marked leg by leg with this card's discounted gap and summed.
+- [TARFs and accumulators](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/10-target-redemption-forwards-and-accumulators.md): forwards that stop once the client has gained enough, and the leverage that pays for it.
 
 This card marks forwards that all settle on one day; the open question is how to value and find the flat price of a contract whose legs settle on many days, which is what the commodity swap answers.
 

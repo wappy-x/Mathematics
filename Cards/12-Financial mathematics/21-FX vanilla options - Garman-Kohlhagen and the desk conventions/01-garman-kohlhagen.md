@@ -963,6 +963,9 @@ example : (53556 / 100 : ℚ) * (1 / 10000) = 53556 / 1000000 := by norm_num
 - [Implied vol for a currency option](07-fx-implied-volatility.md): the formula run backwards, premium in, vol out.
 - [Knock-out and knock-in](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/02-barrier-options-by-reflection.md): currency options that die or come alive when spot touches a level.
 - [The quanto adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): a third currency, and the correlation it brings into the drift.
+- [Knock-in and knock-out forwards](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/09-kiko-forwards-and-zero-cost-structures.md): the corporate hedge that costs nothing upfront, and the strike that makes it free.
+- [Long-dated FX](../30-Short-Rate%20Models/09-long-dated-fx-and-prdc-notes.md): the forward's volatility once both interest rates move, and the PRDC note that is a strip of such options.
+- [Inverse contracts](../54-Digital%20assets%20-%20perpetuals%2C%20inverse%20contracts%20and%20AMMs/02-inverse-futures-and-coin-margined-options.md): futures and options paid in bitcoin on a dollar price, and the convexity that comes with it.
 
 The price here is one number in dollars per euro; the question it leaves open is how the same contract looks to a desk that counts in euros, and why its premium can be quoted four ways.
 

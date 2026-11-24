@@ -888,6 +888,8 @@ example : ((21 : ℚ) * (1 / 21) ^ 2) / (252 * (1 / 252) ^ 2) = 12 := by norm_nu
 
 - [Greeks under jumps](../13-Local%20volatility%20and%20jumps/05-merton-greeks-hedge-error-and-calibration.md): what happens to this book when the share can jump, and no rebalancing frequency removes the loss.
 - [Realised variance](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/01-realised-variance-from-daily-prices.md): how the realised variance that settles this bet is measured from daily closing prices.
+- [Leland's volatility](../40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/07-leland-transaction-cost-volatility.md): hedging at fixed intervals with costs, and the volatility a dealer marks up or down.
+- [Automated market makers](../54-Digital%20assets%20-%20perpetuals%2C%20inverse%20contracts%20and%20AMMs/03-amm-constant-product-and-loss-versus-rebalancing.md): the constant-product pool as a short-gamma position, and the loss to rebalancers it pays all the time.
 
 A hedged option is a bet on variance with an awkward weight, gamma along the path; how to strip that weight off and trade variance cleanly is what the variance-swap shelf answers.
 

@@ -784,6 +784,7 @@ example : (5 : ℚ) / 100 + 2 / 100 = 7 / 100 := by norm_num
 - [A spot price that reverts](06-mean-reverting-spot-and-the-futures-curve.md): a spot that is pulled back to a normal level, which bends the strip toward that level and explains backwardation after a price spike.
 - [Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md): options priced off one point of the strip.
 - [Commodity swap](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/01-commodity-swap-and-average-price-forward.md): a fixed price for a whole stretch of the strip, set from its average.
+- [Gibson-Schwartz](07-gibson-schwartz-two-factor-commodity-model.md): a convenience yield that moves on its own, and the curve twists one factor cannot make.
 
 This card gave the whole strip one slope; when the slope changes from month to month, as gas does between summer and winter, the roll a holder earns depends on the calendar, and [Seasonal curves](05-seasonality-and-the-gas-curve.md) prices that.
 

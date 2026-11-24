@@ -752,6 +752,7 @@ theorem floating_rate_note_par_at_every_reset (n : ℕ) (N : ℝ) (α L V : ℕ 
 
 - [The par swap rate](02-par-swap-rate-and-annuity.md): the fixed rate that makes a new swap worth nothing, as a weighted average of the forwards.
 - [Inflation swaps](../34-Inflation%20and%20Real%20Rates/04-zero-coupon-inflation-swaps.md): the same two-leg valuation with realised inflation in place of the floating rate.
+- [Total return swaps](../52-Equity%20financing%20-%20borrow%2C%20total%20return%20swaps%20and%20dividends/02-equity-swaps-and-total-return-swaps.md): owning a share's return without owning the share, and the funding spread that prices it.
 
 Linden's swap is worth something only because 4.50 percent is no longer the market's rate; which single fixed rate would make a five-year swap worth nothing this morning, and why it is an average of the forwards weighted by the annuity, is [The par swap rate](02-par-swap-rate-and-annuity.md).
 

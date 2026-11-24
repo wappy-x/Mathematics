@@ -1013,6 +1013,7 @@ The pieces this outline takes as given are built on cards elsewhere in the wing:
 - [Forward measures](../31-Forward-Rate%20Models/02-forward-measures-for-rates.md): why each payment date gets its own pricing measure, which is where Step 4's correction comes from once nominal rates move too.
 - [Quanto rates](../32-Convexity%20and%20Exotics/04-quanto-adjustments-for-rates.md): the same kind of correlation correction, for a rate paid in another currency; in Jarrow and Yildirim's model the real economy plays the foreign currency and the index the exchange rate.
 - [SABR for rates](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md): a volatility for every strike and expiry, the smile a single shifted lognormal cannot fit.
+- [Jarrow-Yildirim](07-jarrow-yildirim-and-zero-coupon-inflation-floors.md): inflation as an exchange rate between nominal and real money, and the zero-coupon floor that protects a linker's principal.
 
 This card prices the floor one year at a time; the open question is how the years, real rates and the index move together, and those cards supply the machinery for a joint model.
 

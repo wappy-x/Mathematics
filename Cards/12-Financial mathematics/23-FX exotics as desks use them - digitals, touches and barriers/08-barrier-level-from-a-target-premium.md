@@ -883,6 +883,7 @@ Hump: the digital's price as volatility grows. Flat line: the price at 10 percen
 - [Barriers on a smile](07-barriers-with-the-smile.md): the same inversion with a volatility that differs by level, where the solved barrier shifts with the smile's shape.
 - [Two walls](05-double-barriers-and-double-no-touch.md): two walls solved for one target, a range width instead of a level.
 - [Barrier inverses](../16-Barriers%2C%20touches%20and%20lookbacks/07-barrier-inverses-level-and-volatility.md): the equity version, which adds the knock-out's own volatility inverse and its two roots.
+- [Knock-in and knock-out forwards](09-kiko-forwards-and-zero-cost-structures.md): the corporate hedge that costs nothing upfront, and the strike that makes it free.
 
 The level inverse is safe because payoffs are ordered path by path; what this card leaves open is what happens to that safety once the volatility itself depends on where the rate is.
 

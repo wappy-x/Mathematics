@@ -894,6 +894,7 @@ example : (1 - 94 / 100 : ℚ) + 94 / 100 = 1 := by norm_num
 
 - [Stress tests](05-scenario-grids-and-stress-tests.md): replaces one forecast number with a grid of explicit moves in price and volatility.
 - [Limits](06-risk-limits-and-risk-appetite.md): sets how much forecast risk a desk may carry.
+- [Leland's volatility](07-leland-transaction-cost-volatility.md): hedging at fixed intervals with costs, and the volatility a dealer marks up or down.
 
 A forecast says how big a normal tomorrow is; the open question is what the book loses on an abnormal one, which a stress grid answers.
 

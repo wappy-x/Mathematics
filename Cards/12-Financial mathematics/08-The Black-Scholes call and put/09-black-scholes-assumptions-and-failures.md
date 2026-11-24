@@ -201,7 +201,7 @@ Same option, same $9.23 premium, one idealisation dropped at a time.
 | One constant volatility: 20% marked, 25.50% delivered | mean −$2.11, worst −$6.89 | $`\sigma`$ sets the width of the future, and the copy used the wrong one |
 | No gaps: a 10% overnight fall at mid-year | mean −$1.06, worst −$2.84 | $`\delta`$ is a slope, and the curve pulls away from it over a big move |
 | Continuous hedging: once a day instead | spread of $0.45 about a mean of $0.02, worst −$1.77 | the bend's bill arrives in lumps, not smoothly; Boyle-Emanuel puts the spread at $0.42 |
-| Free trading: ten basis points a trade | $0.53 of bill, $0.47 of it rebalancing | the formula has nowhere to put a commission; Leland's form says $0.47 |
+| Free trading: ten basis points a trade | $0.53 of bill, $0.47 of it rebalancing | the formula has nowhere to put a commission; Leland's form ([Leland's volatility](../40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/07-leland-transaction-cost-volatility.md)) says $0.47 |
 | One rate: borrow at 7%, lend at 3% | a band from $8.27 to $10.24, $1.98 wide | two rates give two costs of carry, so there is no one price |
 | Lognormal moves: a 10% down day | 8.38 standard deviations, one per $`10^{14}`$ years | a bell curve on the log price leaves no room for a day markets keep having |
 | European exercise: an American put instead | $6.66 against $6.33 | the payoff is no longer read at one date, so no closed formula fits |
@@ -849,6 +849,7 @@ Each failure measured here has its repair elsewhere in this wing.
 - [Model risk](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md): what to do about a parameter that will not hold still.
 - [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): the formula run backwards, which is how the market states its disagreement with it.
 - [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): one volatility per strike, the market's own correction to the first idealisation.
+- [Leland's volatility](../40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/07-leland-transaction-cost-volatility.md): hedging at fixed intervals with costs, and the volatility a dealer marks up or down.
 
 Every measurement here used one number, 20%, marked for a whole year; what the market quotes instead, and how a volatility is read out of each traded price, is where the next shelves start.
 

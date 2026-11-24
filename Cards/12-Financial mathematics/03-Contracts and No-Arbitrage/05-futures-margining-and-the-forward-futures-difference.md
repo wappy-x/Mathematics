@@ -847,6 +847,8 @@ theorem forward_price_eq_futures_price_add_cov
 
 - [Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md): options written on the futures quote rather than the share. The quote's being a plain risk-neutral average is what lets the familiar formula price them with the quote in place of the spot.
 - [Futures against forwards](../32-Convexity%20and%20Exotics/01-futures-forward-convexity.md): the same gap on real interest-rate contracts, where the correlation is strongest and the numbers are large enough to trade on.
+- [Treasury bond futures](../33-Curves%20in%20Depth/08-bond-futures-cheapest-to-deliver-and-implied-repo.md): conversion factors, the cheapest bond to deliver, the implied repo rate, and the switch option.
+- [Perpetual futures](../54-Digital%20assets%20-%20perpetuals%2C%20inverse%20contracts%20and%20AMMs/01-perpetual-futures-and-the-funding-rate.md): a future that never expires, held near spot by a funding payment.
 
 This card gives the sign of the difference and its size on one two-step tree. It cannot give the size in a market where the rate wanders continuously and the contract runs for years: that number is the convexity adjustment, a later card's subject.
 

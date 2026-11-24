@@ -105,7 +105,7 @@ Over ten days a call moves by about its dollar delta times Acme's percentage mov
 
 The two margin engines in use are richer versions of this line.
 
-- **ISDA SIMM**, the Standard Initial Margin Model of the International Swaps and Derivatives Association, is what most dealers use between themselves. It takes sensitivities (delta, vega for sensitivity to volatility, and a curvature term for gamma), multiplies each by a published risk weight, and aggregates them across risk types with published correlations. For a single equity delta, the risk weight plays the part of $`z_{0.99}\sigma\sqrt{h}`$.
+- **ISDA SIMM** ([ISDA SIMM](07-isda-simm-initial-margin.md)), the Standard Initial Margin Model of the International Swaps and Derivatives Association, is what most dealers use between themselves. It takes sensitivities (delta, vega for sensitivity to volatility, and a curvature term for gamma), multiplies each by a published risk weight, and aggregates them across risk types with published correlations. For a single equity delta, the risk weight plays the part of $`z_{0.99}\sigma\sqrt{h}`$.
 - **A VaR-based model** reprices the whole netting set (all trades with one counterparty) under historical or stressed ten-day scenarios and takes the 99% loss. The international baseline asks for exactly this: a one-tailed 99% interval over ten days, calibrated on a period that includes stress, or a standard schedule of percentages of notional.
 
 Conventions verified 2026-09-28 against the BCBS-IOSCO text and MGN20 (the first two Sources): 99% one-tailed, ten business days with daily variation margin, segregated initial margin; 252 trading days a year is this card's choice.
@@ -791,6 +791,7 @@ theorem mva_exceeds_cva_iff_hazard_below_crossover (s IM0 C0 R lam T : ℝ)
 ## Where this goes next
 
 - [KVA](04-kva.md): regulatory capital is another balance the bank must hold for the life of the trade; KVA prices its rent at the return shareholders demand.
+- [ISDA SIMM](07-isda-simm-initial-margin.md): initial margin from sensitivities, risk weights and correlations, and why a hedge lowers it.
 
 MVA prices the cash locked up against a default the margin was built to survive; what it leaves open is the cost of the capital held against the losses no margin can cover.
 

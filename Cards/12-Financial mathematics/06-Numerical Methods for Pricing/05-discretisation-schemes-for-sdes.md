@@ -1317,6 +1317,8 @@ example : (1 - 183 / 521 : ℚ) / (5200 / 521) = 65 / 1000 ∧
 
 - [Longstaff-Schwartz](06-longstaff-schwartz-least-squares-monte-carlo.md): stepped paths when the holder may exercise early, so the payoff turns on a decision taken at every step.
 - [Market models](../31-Forward-Rate%20Models/03-libor-and-sofr-market-models.md): many rates stepped together, each one's drift depending on all the others, none with an exact step.
+- [Multilevel Monte Carlo](10-multilevel-monte-carlo.md): most paths on a coarse grid, a few on fine grids, and a telescoping sum that keeps the fine-grid answer.
+- [The forward market model](../31-Forward-Rate%20Models/07-forward-market-model-for-backward-looking-rates.md): compounded overnight rates that stay random through their own period, simulated in one framework.
 
 Every bias here was measured against an exact rule that happened to exist; the open question is what to do when none does, answered by refining the step until the answer stops moving, and by pricing on a grid instead.
 

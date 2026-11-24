@@ -830,7 +830,7 @@ example : treeValue true = 9751 / 10 := by norm_num [treeValue, treeNode, coinDi
 - **Private banking and retail notes.** Range accruals on overnight rates, or on the gap between two swap rates, sell as high-coupon notes. The coupon is high because the holder has sold digitals.
 - **Callable range accruals.** Many range accruals are also callable. The issuer calls when rates sit deep in the band and the note is expensive to carry, exactly when the holder would most like to keep it.
 - **Inverse floaters in municipal and agency markets.** Inverse floaters were a large part of the Orange County portfolio that collapsed in 1994 when rates rose: a leveraged inverse coupon loses twice as fast as rates climb.
-- **Target redemption notes and forwards.** Target notes are common in rates and in foreign exchange, where the same "stop once enough has been paid" rule caps what the issuing bank pays out.
+- **Target redemption notes and forwards.** Target notes are common in rates and in foreign exchange ([TARFs and accumulators](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/10-target-redemption-forwards-and-accumulators.md)), where the same "stop once enough has been paid" rule caps what the issuing bank pays out.
 - **Coupons on longer rates.** When the reference is a ten-year swap rate rather than a short rate, each digital needs the convexity correction of [Constant-maturity swaps](02-cms-and-the-convexity-adjustment.md) before it is priced.
 
 > **Say it back**

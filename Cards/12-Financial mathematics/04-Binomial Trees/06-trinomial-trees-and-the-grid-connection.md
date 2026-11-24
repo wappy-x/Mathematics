@@ -1068,6 +1068,7 @@ end TrinomialTree
 ## Where this goes next
 
 - [The Hull-White tree](../30-Short-Rate%20Models/06-hull-white-trinomial-tree.md): the same three branches carrying an interest rate pulled back towards a level, with the branching switched at the top and bottom rungs to keep every weight positive.
+- [Gas storage and swing contracts](../26-Options%20on%20commodity%20futures%20and%20spreads/08-gas-storage-and-swing-options.md): exercise limited by volume, solved backwards with inventory as part of the state.
 
 The spacing here is free but chosen once and held for the whole tree; what to do when the thing being modelled drags the nodes around is the question the short-rate shelf opens with.
 

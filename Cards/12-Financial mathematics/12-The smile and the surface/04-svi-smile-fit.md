@@ -233,7 +233,7 @@ A parabola in $`k`$, the other obvious curve to fit, fails this at once: its tot
 
 ### Step 6: many expiries at once, named
 
-Fitting SVI separately at each expiry can produce two curves that cross, which is calendar arbitrage. Gatheral and Jacquier's **SSVI** ("surface SVI") writes every expiry with the same shape, scaled by that expiry's at-the-money total variance:
+Fitting SVI separately at each expiry can produce two curves that cross, which is calendar arbitrage. Gatheral and Jacquier's **SSVI** ("surface SVI"; [SSVI](06-ssvi-surface-without-calendar-arbitrage.md)) writes every expiry with the same shape, scaled by that expiry's at-the-money total variance:
 
 ```math
 w(k, \theta) = \frac{\theta}{2}\left(1 + \rho\,\varphi(\theta)\,k + \sqrt{\big(\varphi(\theta)\,k + \rho\big)^2 + 1 - \rho^2}\right)
@@ -1026,6 +1026,7 @@ theorem svi_wings_straight_and_lee_bound
 - [Smile-adjusted delta](05-smile-adjusted-delta.md): with a smooth smile in hand, the hedge ratio picks up a term from the smile's slope.
 - [Local volatility in implied-vol terms](../13-Local%20volatility%20and%20jumps/02-local-volatility-from-implied-volatility.md): the fitted curve's derivatives become a volatility for every price and time.
 - [Heston Greeks and calibration](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/03-heston-greeks-and-calibration.md): fitting a model whose smile SVI imitates, instead of the imitation.
+- [SSVI](06-ssvi-surface-without-calendar-arbitrage.md): one formula for every expiry, and the inequalities that keep the whole surface free of arbitrage.
 
 SVI describes the smile without explaining it; the question it leaves open is what the smile does when the share price moves, which is where the delta and the models behind the curve come in.
 

@@ -991,6 +991,10 @@ example : 5000 - 1000 = 4000 ∧ 100000 - 75000 = 25000 ∧ 100000 - 10000 = 900
 - [Expected exposure over time](../46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md): what a counterparty might owe, path by path and date by date.
 - [Monte Carlo integration](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/05-monte-carlo-integration-in-many-dimensions.md): why the square-root law ignores the count of dimensions.
 - [Seeds](../../14-Applied%20and%20computational/08-Scientific%20Computing%20Practice/03-reproducible-simulation-and-seeds.md): keeping a run repeatable, and what a seed does not prove.
+- [Multilevel Monte Carlo](10-multilevel-monte-carlo.md): most paths on a coarse grid, a few on fine grids, and a telescoping sum that keeps the fine-grid answer.
+- [Window and Parisian barriers](../16-Barriers%2C%20touches%20and%20lookbacks/09-window-and-parisian-barriers.md): a knock-out that only watches part of the time, or only after enough days outside.
+- [TARFs and accumulators](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/10-target-redemption-forwards-and-accumulators.md): forwards that stop once the client has gained enough, and the leverage that pays for it.
+- [Autocallables](../53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/02-autocallables-and-phoenix-notes.md): a note that repays early when the share is up, the Phoenix coupon with memory, and the coupon that makes it fair.
 
 A four-cent error bar cost a hundred thousand futures, and the square-root law prices a one-cent bar at sixteen times as many. The next card shrinks the bar without paying that bill, by making each draw carry more information ([Cheaper Monte Carlo](02-variance-reduction-for-pricing.md)).
 

@@ -816,6 +816,7 @@ example : (∑ k ∈ Finset.Icc 1 5, (3 : ℚ) / 4 ^ k * (2 ^ k) ^ 2) = 15 ∧
 - [Conditioning on a random variable](05-conditioning-on-a-random-variable.md): the forecast as a function of an observed quantity, such as the season.
 - [Filtrations and martingales](06-filtrations-and-martingales.md): projections onto information that grows over time.
 - [Von Neumann's mean ergodic theorem](../12-Ergodic%20Theory/03-von-neumann-mean-ergodic-theorem.md): time averages converge in L2 to the projection onto the invariant functions.
+- [American Monte Carlo for exposure](../../12-Financial%20mathematics/47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/08-american-monte-carlo-for-exposure.md): regress future values on the simulated state, so exposure profiles work for any trade.
 
 Step 6 dropped twice, onto the seasons and then onto the lines, and landed where one drop would; that two drops onto nested sigma-algebras always equal one drop onto the smaller is the tower rule, proved in [The rules of conditional expectation](04-rules-of-conditional-expectation.md).
 

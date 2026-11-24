@@ -868,6 +868,7 @@ example : (1000 : ℕ) * 100 = 100000 := by decide
 
 - [Historical and Monte Carlo VaR](03-historical-and-monte-carlo-var.md): drops the bell curve, and replays past days or simulates new ones.
 - [Whose risk is it](06-var-decomposition-euler-and-component-var.md): component, marginal and incremental VaR for any risk measure that scales with the book.
+- [ISDA SIMM](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/07-isda-simm-initial-margin.md): initial margin from sensitivities, risk weights and correlations, and why a hedge lowers it.
 
 The covariance matrix gave one answer from two assumptions, straight lines and bell curves; whether the book's own history agrees is the question [Historical and Monte Carlo VaR](03-historical-and-monte-carlo-var.md) answers.
 

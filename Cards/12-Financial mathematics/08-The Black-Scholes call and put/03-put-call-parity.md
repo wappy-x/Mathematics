@@ -827,6 +827,7 @@ example : max ((140 : ℤ) - 100) 0 + 100 = max (100 - 140) 0 + 140 := by norm_n
 - [Chooser options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/04-chooser-options.md): a ticket whose holder picks call or put later, priced by parity.
 - [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): currency options, where the dividend slot holds the foreign interest rate.
 - [Merton's model](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/01-merton-model-equity-as-a-call.md): shares as a call on a company's assets, its risky debt as a bond minus a put.
+- [Static barrier hedges](../16-Barriers%2C%20touches%20and%20lookbacks/08-static-replication-of-barriers.md): a fixed set of vanillas worth exactly nothing on the barrier, when rates and dividends differ.
 
 Parity fixes the difference between the two prices and says nothing about the level of either. So a call could still be quoted above the share itself and pass this test; what rules that out is the next card, [Option price bounds](04-option-price-bounds.md).
 

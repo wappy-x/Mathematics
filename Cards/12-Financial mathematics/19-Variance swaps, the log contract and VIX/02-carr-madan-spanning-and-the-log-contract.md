@@ -850,6 +850,8 @@ Orange: the log contract's dollar gamma, in size, the same at every price. Green
 ## Where this goes next
 
 - [The variance swap](03-variance-swap-fair-strike.md): the log strip scaled by 2/T, plus a daily hedge, becomes a contract that pays realised variance.
+- [Capped and corridor variance](08-capped-and-corridor-variance-swaps.md): the 2.5-times cap written into street variance swaps, and the strip that counts only days inside a corridor.
+- [Dispersion](09-dispersion-trades-and-correlation-swaps.md): selling index variance against member variance, and the correlation swap it approximates.
 
 The strip prices the log contract with no model, but its link to realised variance needs a daily hedge and smooth paths: what does that hedge really collect, and what happens when the price jumps?
 

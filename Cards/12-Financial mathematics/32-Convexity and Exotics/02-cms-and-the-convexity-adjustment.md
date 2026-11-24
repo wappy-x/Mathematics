@@ -801,7 +801,7 @@ example :
 ## Where you meet it in real life
 
 - **CMS swaps and CMS legs.** Insurers and pension funds receive CMS rates to match liabilities tied to long rates. Every coupon is priced as a forward plus its adjustment, one strip per fixing date.
-- **CMS spread notes.** Notes paying the gap between the 10-year and 2-year rates, the "steepeners", need two adjusted rates and how they move together: [Structured rate notes](06-structured-notes-in-outline.md).
+- **CMS spread notes.** Notes paying the gap between the 10-year and 2-year rates, the "steepeners", need two adjusted rates and how they move together: [CMS spread options](07-cms-spread-options.md) and [Structured rate notes](06-structured-notes-in-outline.md).
 - **CMS caps and floors.** An option on a CMS rate is the same replication with a different $`h`$: weights start at the strike instead of at the forward.
 - **Rates paid in another currency.** A CMS rate paid in a second currency adds a correlation term on top: [Quanto rates](04-quanto-adjustments-for-rates.md).
 - **Smile calibration at the wings.** Because CMS prices depend on far out-of-the-money payers, dealers use quoted CMS spreads to pin down the upper wing of the swaption smile ([SABR for rates](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md)).
@@ -820,6 +820,7 @@ example :
 
 - [Timing adjustments](03-timing-and-in-arrears-adjustments.md): a rate paid on a date other than its natural one, for the simpler case of a single floating rate; the payment lag that set the sign here becomes the whole subject.
 - [Callable and cancellable swaps](05-callable-and-cancellable-swaps.md): swaps with an option to walk away, priced from the same swaptions with the exercise decision added.
+- [CMS spread options](07-cms-spread-options.md): paying the slope of the curve, priced as a normal spread with a correlation the desk must choose.
 
 The question this card leaves open: when the curve twists instead of moving with the 10-year rate, how much of a CMS price can a strip of swaptions on one rate still capture?
 

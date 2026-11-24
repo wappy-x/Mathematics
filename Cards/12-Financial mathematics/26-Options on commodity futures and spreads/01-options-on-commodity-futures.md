@@ -1001,6 +1001,8 @@ example :
 - [Greeks of a futures option](02-futures-option-greeks.md): the Greeks table taken apart, including the two meanings of rho.
 - [Spread options](04-margrabe-and-kirk-spread-options.md): an option on the gap between two futures.
 - [Kemna-Vorst](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/02-kemna-vorst-geometric-asian.md): an option on the average futures price over a month, the way most physical oil is priced.
+- [Gas storage and swing contracts](08-gas-storage-and-swing-options.md): exercise limited by volume, solved backwards with inventory as part of the state.
+- [Weather and carbon](09-weather-and-emissions-derivatives.md): degree-day options on a quantity nobody can store, and allowance forwards that can be banked.
 
 This card prices one future against a fixed strike; the question it leaves open is how to price an option whose strike is itself another moving futures price.
 

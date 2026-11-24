@@ -84,7 +84,7 @@ In words: the price at the level, $`e^a`$, nudged up by the long-run spread of t
 
 ### When it holds
 
-- **The level is fixed.** If the level itself drifts (new reserves, new technology), long-dated futures move far more than 0.20 percent a year. Gibson and Schwartz add a second random factor that gives the long end moves of its own; it is named here, not built.
+- **The level is fixed.** If the level itself drifts (new reserves, new technology), long-dated futures move far more than 0.20 percent a year. Gibson and Schwartz add a second random factor that gives the long end moves of its own; it is built on [Gibson-Schwartz](07-gibson-schwartz-two-factor-commodity-model.md).
 - **Speed and volatility are constant.** Crude reverts faster in a glut than in a squeeze. With one fixed speed the curve's bend is the same in every regime, and the fit below then blames the strip's noise. The strip is the row of quoted futures prices, one per delivery date.
 - **The level is the pricing-world level.** A futures price is an average taken in the pricing (risk-neutral) world, where the reward for bearing oil risk is folded into the drift. The $`a`$ read off futures is that pricing-world level, not a forecast. Treating it as a forecast mistakes a price for a prediction.
 - **Interest rates are not random, or at least not tied to oil.** Then a futures price equals the pricing-world average of spot at delivery. If rates move with oil, futures and forwards separate and the formula needs a correction.
@@ -174,7 +174,7 @@ The first method computes the best level in closed form for each trial speed, th
 
 ### The other road: a second factor
 
-Gibson and Schwartz (1990) let the convenience yield, the benefit of holding the physical barrel ([Convenience yield](03-convenience-yield-implied-by-the-forward.md)), follow its own mean-reverting process. The one-factor model is the special case where that yield is tied to the price: in carry language it says the convenience yield is high when spot is high, which is what pulls the curve down. With a second factor the long end gets its own random moves. That model is named here and not built.
+Gibson and Schwartz (1990; [Gibson-Schwartz](07-gibson-schwartz-two-factor-commodity-model.md)) let the convenience yield, the benefit of holding the physical barrel ([Convenience yield](03-convenience-yield-implied-by-the-forward.md)), follow its own mean-reverting process. The one-factor model is the special case where that yield is tied to the price: in carry language it says the convenience yield is high when spot is high, which is what pulls the curve down. With a second factor the long end gets its own random moves. That model is named here and not built.
 
 ---
 
@@ -870,6 +870,8 @@ example : ((3 : ℚ) / 10) ^ 2 / (4 * 1) = 9 / 400 := by norm_num
 ## Where this goes next
 
 - [Implied vol on a futures option and the commodity smile](../26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md): options on these futures, where the fading volatility $`\sigma e^{-\kappa T}`$ becomes an implied volatility that depends on the contract, and the call skew appears.
+- [Gibson-Schwartz](07-gibson-schwartz-two-factor-commodity-model.md): a convenience yield that moves on its own, and the curve twists one factor cannot make.
+- [Gas storage and swing contracts](../26-Options%20on%20commodity%20futures%20and%20spreads/08-gas-storage-and-swing-options.md): exercise limited by volume, solved backwards with inventory as part of the state.
 
 A strip pins the speed and the level but not the volatility; what option prices on the futures reveal about $`\sigma`$, and why they disagree across strikes, is the question left open here.
 

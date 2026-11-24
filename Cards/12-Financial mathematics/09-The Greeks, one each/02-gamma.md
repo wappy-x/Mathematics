@@ -1000,6 +1000,7 @@ example : (0 : ℚ) + 3 / 20 + 1 / 10 = 1 / 4 := by norm_num
 - [Barrier Greeks](../16-Barriers%2C%20touches%20and%20lookbacks/04-barrier-greeks-at-the-wall.md): gamma that blows up at a price level other than the strike.
 - [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): the same gamma in currency markets, with desk quoting conventions.
 - [Options in the book](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/04-delta-gamma-var-and-cornish-fisher.md): the curved loss of a hedged book turned into a risk number.
+- [Automated market makers](../54-Digital%20assets%20-%20perpetuals%2C%20inverse%20contracts%20and%20AMMs/03-amm-constant-product-and-loss-versus-rebalancing.md): the constant-product pool as a short-gamma position, and the loss to rebalancers it pays all the time.
 
 Gamma says a hedged option gains about half gamma times the move squared from every move; the open question is who pays for that gain, and theta answers it.
 

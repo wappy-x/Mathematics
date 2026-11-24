@@ -829,6 +829,10 @@ example : (100 : ℚ) * (1 + 5 / 100 - 2 / 100) = 103 := by norm_num
 - [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): the forward rebuilt from a call and a put, how a market's forward is read off option screens.
 - [Implied forward and dividend from parity](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/05-implied-forward-and-dividend-from-parity.md): this card run backwards, recovering the income the market assumes.
 - [Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md) and [Gold forward](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/01-gold-forward-and-the-lease-rate.md): the same carry with the yield replaced by a foreign rate, and by storage against usefulness.
+- [Weather and carbon](../26-Options%20on%20commodity%20futures%20and%20spreads/09-weather-and-emissions-derivatives.md): degree-day options on a quantity nobody can store, and allowance forwards that can be banked.
+- [Treasury bond futures](../33-Curves%20in%20Depth/08-bond-futures-cheapest-to-deliver-and-implied-repo.md): conversion factors, the cheapest bond to deliver, the implied repo rate, and the switch option.
+- [Stock borrow and repo](../52-Equity%20financing%20-%20borrow%2C%20total%20return%20swaps%20and%20dividends/01-stock-borrow-repo-and-the-equity-forward.md): the fee to short a share, the forward it sets, and the implied repo read from the market.
+- [Perpetual futures](../54-Digital%20assets%20-%20perpetuals%2C%20inverse%20contracts%20and%20AMMs/01-perpetual-futures-and-the-funding-rate.md): a future that never expires, held near spot by a funding payment.
 
 This card priced a contract on the day it is signed, the one day it is worth nothing; what it is worth on every day after that is the next card's question.
 

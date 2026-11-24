@@ -931,6 +931,7 @@ example : (10000 : ℚ) ^ 2 = 10 ^ 8 ∧ 2 * ((10000 : ℚ) - 1) = 19998 := by n
 - [Semimartingales](05-semimartingales-in-outline.md): the one class of processes on which Ito's formula holds, jumps of every size and number included.
 - [When prices jump](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/09-partial-integro-differential-equations-for-jumps.md): the averaged rate of Step 6, with its $`E[f(xY)] - f(x)`$ term, as an equation for prices and expectations.
 - [Stable laws](../../20-Harmonic%20analysis/04-Characteristic%20Functions%20and%20Probability/08-stable-laws-and-heavy-tails.md): jump laws with tails so heavy that the variance on this card is infinite.
+- [Beyond Merton](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/06-kou-and-variance-gamma-models.md): Kou's double-exponential jumps and the variance gamma process, priced through their characteristic functions.
 
 This card handles finitely many jumps, cut out one at a time; what Ito's formula becomes when infinitely many small jumps arrive in every second, and what a stochastic integral against such a path means, is the question [Semimartingales](05-semimartingales-in-outline.md) answers.
 

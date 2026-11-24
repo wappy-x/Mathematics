@@ -995,6 +995,8 @@ end AmericanTree
 ## Where this goes next
 
 - [Longstaff-Schwartz](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md): the same comparison when there is no tree to walk, with the holding value estimated by fitting a curve through simulated paths.
+- [Warrants and employee options](../15-American%20and%20Bermudan%20exercise/08-warrants-dilution-and-employee-stock-options.md): calls a company writes on its own shares, the dilution that shrinks them, and the early exercise employees cannot avoid.
+- [Convertible bonds](../53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/04-convertible-bonds-on-a-tree.md): a bond the holder may swap for shares, priced on a tree that splits cash from equity.
 
 The comparison needs the holding value at every node, and a tree hands it over for one share. Put five shares in the payoff and the nodes multiply beyond counting. Where does the holding value come from then?
 

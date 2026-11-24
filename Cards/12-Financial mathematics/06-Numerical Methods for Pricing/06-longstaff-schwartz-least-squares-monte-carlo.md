@@ -901,6 +901,8 @@ example : (([98, 95, 88, 97] : List ℚ).map (fun s => (s / 100) ^ 2)).sum
 
 - [Bermudan options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md): the contract this method actually prices — exercise on a fixed list of dates — and what the schedule is worth.
 - [Bermudan swaptions](../31-Forward-Rate%20Models/06-bermudan-swaptions-by-regression.md): the same backwards fit where the underlying is a whole yield curve and no tree will fit.
+- [Gas storage and swing contracts](../26-Options%20on%20commodity%20futures%20and%20spreads/08-gas-storage-and-swing-options.md): exercise limited by volume, solved backwards with inventory as part of the state.
+- [American Monte Carlo for exposure](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/08-american-monte-carlo-for-exposure.md): regress future values on the simulated state, so exposure profiles work for any trade.
 
 This card returns a floor, and a floor alone cannot say how far from the truth it sits. Closing the gap needs an upper bound built from the dual form of the stopping problem, which is where [Bermudan options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md) goes next.
 

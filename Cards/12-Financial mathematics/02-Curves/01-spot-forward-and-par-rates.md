@@ -817,6 +817,7 @@ example : (2 * (5 : ℝ) / 100 - 4 / 100) = 6 / 100 ∧ (6 / 100 : ℝ) < 25 / 4
 - [Forward rate agreements](02-forward-rate-agreements.md): the forward rate as a traded contract, with the cash settlement worked out.
 - [Bootstrapping](04-bootstrapping-the-discount-curve.md): the ladder that extracts the discount factors from real quotes, one maturity at a time.
 - [Commodity swap](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/01-commodity-swap-and-average-price-forward.md): the same discounting over a stream of averaged prices.
+- [Floating-rate notes](07-floating-rate-notes-and-discount-margin.md): why a floater sits at par on a reset date, and the discount margin that prices it when it does not.
 
 This card was handed five spot rates and asked what follows from them. Where those five numbers come from — a morning of deposits, futures and swaps quoted from one week to thirty years, stripped down to one price per date — is [Bootstrapping](04-bootstrapping-the-discount-curve.md).
 

@@ -849,6 +849,7 @@ example : (79621728 / 10 ^ 8 : ℚ) < 826221623729000 / 1037683609775631 ∧
 - [Spreads over the curve](06-z-spread-and-asset-swap-spread.md): measuring one bond against the finished curve.
 - [Interest rate swaps](../28-Swaps/01-interest-rate-swaps.md): the contract whose quotes built the long end, valued away from its start date.
 - [Bootstrapping a hazard curve](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md): the same ladder climbed with credit quotes, stripping out the chance of default.
+- [Solving every curve at once](../33-Curves%20in%20Depth/07-multi-curve-calibration-and-jacobian-risk.md): Newton on OIS and basis quotes together, and the Jacobian that turns zero-rate risk into quote risk.
 
 This curve is six points and nothing else, while a trade can settle on any date; what fills the gaps, and what that choice does to the forward rates between the pillars, is [Between the pillars](05-curve-interpolation-and-shape.md).
 

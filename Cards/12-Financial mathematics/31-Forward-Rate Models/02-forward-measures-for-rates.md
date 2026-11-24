@@ -954,6 +954,7 @@ example : ((3 / 10) ^ 2 * (7 / 4) : ℚ) = 63 / 400 := by norm_num
 ## Where this goes next
 
 - [Market models](03-libor-and-sofr-market-models.md): many quarterly forwards simulated together under one unit, with the Step 5 drift for every forward whose own unit was not chosen.
+- [The forward market model](07-forward-market-model-for-backward-looking-rates.md): compounded overnight rates that stay random through their own period, simulated in one framework.
 
 Each caplet here was priced in its own unit, which works only while each payoff depends on one rate; the open question is how to move all the forwards at once when a product depends on several of them.
 

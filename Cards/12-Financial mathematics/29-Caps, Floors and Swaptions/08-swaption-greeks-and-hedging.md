@@ -1112,6 +1112,7 @@ example : (-29885 : ℚ) / 100 + 2721 / 100 = -27164 / 100 := by norm_num
 ## Where this goes next
 
 - [Solving rate options backwards](09-rate-option-inverses.md): running the formulas backwards, from a quoted price to the volatility and from a target delta to the strike, with existence and uniqueness first.
+- [Cash-settled swaptions](11-cash-settled-swaptions-and-the-irr-annuity.md): an annuity computed at the swap rate itself, and the convexity it adds.
 
 This card goes from a volatility to a price and a hedge; the question it leaves open is the reverse: given a quoted price, which volatility produced it, and is there only one?
 

@@ -809,6 +809,7 @@ example : max ((1 : ℚ) - 6 / 5) 0 = 0 ∧ (6 / 5 : ℚ) * max (5 / 6 - 1) 0 = 
 - [Implied vol for a currency option](07-fx-implied-volatility.md): running the formula backwards from a quoted premium, which starts by putting the quote into USD pips.
 - [Currency digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md): a bet that pays a fixed amount of one currency; paying in euros instead of dollars is the Frankfurt reading of the same bet.
 - [The eight single barriers in one table](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/03-the-eight-barrier-types.md): options that switch on or off at a level; the symmetry turns an up-barrier in EURUSD into a down-barrier in USDEUR.
+- [Inverse contracts](../54-Digital%20assets%20-%20perpetuals%2C%20inverse%20contracts%20and%20AMMs/02-inverse-futures-and-coin-margined-options.md): futures and options paid in bitcoin on a dollar price, and the convexity that comes with it.
 
 The price is now fixed in any unit; what is still open is how fast it moves when spot, vol and time move, and the Greeks card answers that.
 

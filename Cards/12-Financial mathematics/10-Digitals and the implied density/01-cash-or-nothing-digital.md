@@ -782,6 +782,7 @@ example : (1 : ℚ) - 519939 / 1000000 = 480061 / 1000000 := by norm_num
 - [One-touch and no-touch](../16-Barriers%2C%20touches%20and%20lookbacks/05-one-touch-and-no-touch.md): the dollar paid on touching the line, any time before expiry.
 - [Currency digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md): the same contract on a currency pair, as desks quote it.
 - [Structured rate notes](../32-Convexity%20and%20Exotics/06-structured-notes-in-outline.md): digitals packaged inside notes sold to investors.
+- [Autocallables](../53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/02-autocallables-and-phoenix-notes.md): a note that repays early when the share is up, the Phoenix coupon with memory, and the coupon that makes it fair.
 
 This card priced a payout of cash; what changes when the payout is the share itself, worth most in exactly the outcomes where it is paid, is [Asset-or-nothing digital](02-asset-or-nothing-digital.md).
 

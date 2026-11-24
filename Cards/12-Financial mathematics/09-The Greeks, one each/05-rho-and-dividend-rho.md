@@ -968,7 +968,7 @@ example : (1 : ℝ) / (1 / 5 * √1) = 5 := by norm_num
 ## Where you meet it in real life
 
 - **Long-dated options and warrants.** A ten-year Acme call has rho 341.37: a one-point rate rise moves it by $3.41, over 11 percent of its price. Rate risk is part of hedging them.
-- **Employee stock options.** Grants often run many years, so the rate assumed in their accounting value shifts that value noticeably.
+- **Employee stock options.** Grants often run many years, so the rate assumed in their accounting value shifts that value noticeably ([Warrants and employee options](../15-American%20and%20Bermudan%20exercise/08-warrants-dilution-and-employee-stock-options.md)).
 - **Dividend forecasts.** Long-dated equity options carry dividend risk through dividend rho. A cut in Acme's expected payout lifts every call and lowers every put.
 - **Currency options.** The dividend yield becomes the foreign interest rate. Dividend rho becomes the foreign-rate rho, of the same order of size as the domestic one ([The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md)).
 - **Options on futures.** The underlying futures price already contains the rate, so $`q`$ is replaced by $`r`$ and the two rho terms combine into Step 6's $`-T C`$ ([Greeks of a futures option](../26-Options%20on%20commodity%20futures%20and%20spreads/02-futures-option-greeks.md)).
@@ -989,6 +989,7 @@ example : (1 : ℝ) / (1 / 5 * √1) = 5 := by norm_num
 - [The Greeks together](09-greeks-together-taylor-pnl.md): every slope on this shelf, summed into one estimate of the day's gain or loss.
 - [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): the same two rhos with a domestic and a foreign interest rate, where neither is small.
 - [Greeks of a futures option](../26-Options%20on%20commodity%20futures%20and%20spreads/02-futures-option-greeks.md): when the underlying is a futures price, the two rhos merge into one.
+- [Dividend futures and swaps](../52-Equity%20financing%20-%20borrow%2C%20total%20return%20swaps%20and%20dividends/03-dividend-futures-and-dividend-swaps.md): trading the dividends alone, and the implied dividend strip read from options.
 
 Rho treats the rate as a single fixed number. The open question is what happens when both rates and the share move on the same day; [The Greeks together](09-greeks-together-taylor-pnl.md) adds every slope together to answer it.
 

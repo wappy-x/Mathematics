@@ -732,6 +732,8 @@ example : (465 / 10000 : ℚ) - 1 / 100 = 365 / 10000 := by norm_num
 
 - [Cross-currency swaps](06-cross-currency-swaps-and-basis.md): two currencies, two overnight rates, and collateral that can be posted in either.
 - [FVA](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/02-fva.md): the uncovered part of a trade, where the funding rate stays in the price.
+- [Solving every curve at once](../33-Curves%20in%20Depth/07-multi-curve-calibration-and-jacobian-risk.md): Newton on OIS and basis quotes together, and the Jacobian that turns zero-rate risk into quote risk.
+- [Collateral in several currencies](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/06-multi-currency-csa-and-colva.md): the poster picks the cheapest, and the option that choice is worth.
 
 This card assumed collateral in the swap's own currency; when the collateral can be posted in a second currency, the discount rate becomes that currency's overnight rate converted back, which is the question cross-currency swaps answer.
 

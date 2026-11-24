@@ -953,6 +953,9 @@ example : (55 / 100 : ℚ) * 120 + (45 / 100) * 84 = 1038 / 10 := by norm_num
 
 - [Quanto option](02-quanto-option.md): an option on the same share paid at the fixed rate is the Black-Scholes call run on the quanto drift.
 - [Quanto rates](../32-Convexity%20and%20Exotics/04-quanto-adjustments-for-rates.md): the same correction applied to an interest rate paid in another currency.
+- [Long-dated FX](../30-Short-Rate%20Models/09-long-dated-fx-and-prdc-notes.md): the forward's volatility once both interest rates move, and the PRDC note that is a strip of such options.
+- [Jarrow-Yildirim](../34-Inflation%20and%20Real%20Rates/07-jarrow-yildirim-and-zero-coupon-inflation-floors.md): inflation as an exchange rate between nominal and real money, and the zero-coupon floor that protects a linker's principal.
+- [Quanto CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/10-quanto-cds-and-sovereign-protection.md): protection on a sovereign paid in euros or in dollars, and the currency drop at default that separates the two spreads.
 
 This card fixes the level at which a quanto costs nothing; what it leaves open is the price of the right, but not the duty, to trade at a level, which the quanto option prices from this drift.
 

@@ -984,6 +984,10 @@ example : 52 + 13 = 65 ∧ 52 * 1 + 13 * 3 = 91 := by decide
 ## Where this goes next
 
 - [Multi-curve](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md): what happens when one trade's coupon is set from compounded overnight rates while its cash is discounted on another curve, and how the market prices the gap between two floating rates.
+- [Floating-rate notes](07-floating-rate-notes-and-discount-margin.md): why a floater sits at par on a reset date, and the discount margin that prices it when it does not.
+- [Caplets on compounded SOFR](../29-Caps%2C%20Floors%20and%20Swaptions/10-compounded-rfr-caplets.md): a rate still moving after its period starts, and the one-third rule for its variance.
+- [Treasury bond futures](../33-Curves%20in%20Depth/08-bond-futures-cheapest-to-deliver-and-implied-repo.md): conversion factors, the cheapest bond to deliver, the implied repo rate, and the switch option.
+- [Stock borrow and repo](../52-Equity%20financing%20-%20borrow%2C%20total%20return%20swaps%20and%20dividends/01-stock-borrow-repo-and-the-equity-forward.md): the fee to short a share, the forward it sets, and the implied repo read from the market.
 
 Every rate here was read off cash that is repaid in full at the end, on one curve; the open question is which curve does the discounting when the rate that sets a coupon and the rate that funds it are no longer the same one.
 

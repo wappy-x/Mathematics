@@ -1170,6 +1170,7 @@ example : ¬ ((1 / 2 : ℚ) ≤ 1 / 4) ∧ ¬ ((1 : ℚ) ≤ 1 / 4) := by norm_n
 - [Order statistics](08-order-statistics-and-extremes.md): the law of the largest and smallest of a sample, the tail of one variable where this card studied the tail of two.
 - [The one-factor Gaussian copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md): the Gaussian copula put to work on a hundred loans at once.
 - [Tail dependence](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/07-tail-dependence-and-the-t-copula.md): a copula with tail dependence in both corners, and what it does to senior credit risk.
+- [CMS spread options](../../12-Financial%20mathematics/32-Convexity%20and%20Exotics/07-cms-spread-options.md): paying the slope of the curve, priced as a normal spread with a correlation the desk must choose.
 
 A copula says how often two markets crash together; how bad the worst day of a long run gets, for one market alone, is the question order statistics answer.
 

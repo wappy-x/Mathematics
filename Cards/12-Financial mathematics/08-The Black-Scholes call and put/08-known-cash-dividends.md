@@ -1166,6 +1166,8 @@ example : (1000 + 1) * (1000 + 1) = 1002001 ∧ 1002001 / (2000 + 1) = 500 := by
 ## Where this goes next
 
 - [Merton's theorem](../15-American%20and%20Bermudan%20exercise/02-mertons-no-early-exercise-theorem.md): with no dividend an American call should never be exercised early, and a known cash dividend is exactly what breaks that.
+- [Stock borrow and repo](../52-Equity%20financing%20-%20borrow%2C%20total%20return%20swaps%20and%20dividends/01-stock-borrow-repo-and-the-equity-forward.md): the fee to short a share, the forward it sets, and the implied repo read from the market.
+- [Dividend futures and swaps](../52-Equity%20financing%20-%20borrow%2C%20total%20return%20swaps%20and%20dividends/03-dividend-futures-and-dividend-swaps.md): trading the dividends alone, and the implied dividend strip read from options.
 
 This card kept the option sealed until the last day, so the escrow could sit untouched. The moment the holder may exercise early, it has to be added back at every node, which is where Merton's early-exercise theorem starts.
 

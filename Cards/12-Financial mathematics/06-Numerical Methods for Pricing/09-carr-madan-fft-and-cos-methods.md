@@ -1005,6 +1005,7 @@ example : 4096 / 2 = 2048 ∧ 2048 - 32 = 2016 ∧ 2048 + 32 = 2080 := by norm_n
 
 - [Spectral methods](../../16-Numerical%20analysis/07-PDE%20Solvers/10-spectral-methods-and-the-fft.md): the same transform used to solve differential equations, where a cosine expansion becomes a way of differentiating.
 - [Pricing by transform](../../20-Harmonic%20analysis/04-Characteristic%20Functions%20and%20Probability/09-carr-madan-and-fourier-pricing.md): the same identity as harmonic analysis, with the integrability conditions proved rather than assumed.
+- [Beyond Merton](../13-Local%20volatility%20and%20jumps/06-kou-and-variance-gamma-models.md): Kou's double-exponential jumps and the variance gamma process, priced through their characteristic functions.
 
 Both machines were handed a model whose parameters were already chosen. Turning that around — starting from quoted prices and searching for the parameters that reproduce them — is calibration ([Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md)), and it is why anyone needs prices this fast.
 

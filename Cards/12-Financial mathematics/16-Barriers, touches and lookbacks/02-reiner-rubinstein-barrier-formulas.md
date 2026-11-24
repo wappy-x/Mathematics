@@ -1146,6 +1146,9 @@ end ReinerRubinstein
 
 - [Daily monitoring](03-discrete-monitoring-correction.md): real barriers are checked once a day, not every instant, and a shifted barrier repairs these formulas for that.
 - [Two walls](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/05-double-barriers-and-double-no-touch.md): a floor and a ceiling on one contract, priced by the repeated mirror that Step 5 only names.
+- [Static barrier hedges](08-static-replication-of-barriers.md): a fixed set of vanillas worth exactly nothing on the barrier, when rates and dividends differ.
+- [Window and Parisian barriers](09-window-and-parisian-barriers.md): a knock-out that only watches part of the time, or only after enough days outside.
+- [Reverse convertibles](../53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/01-reverse-convertibles.md): a bond plus a sold put, and the barrier version that sells a knock-in put.
 
 This card prices one line at a time; what it leaves open is a contract with two lines, where one mirror is no longer enough.
 

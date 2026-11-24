@@ -838,6 +838,7 @@ example : ((101 : ℝ) - 103045453 / 1000000) * exp (-((5 / 100) * 0)) = -204545
 - [Futures](05-futures-margining-and-the-forward-futures-difference.md): the same trade on an exchange, where the mark is paid over in cash nightly and the contract is reborn at zero.
 - [Valuing an old currency forward](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/04-fx-forward-value-after-inception.md): the same two lines in a currency, with the foreign interest rate in the dividend yield's seat.
 - [Commodity swap](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/01-commodity-swap-and-average-price-forward.md): a long row of these marks, summed, which is what a swap is.
+- [Total return swaps](../52-Equity%20financing%20-%20borrow%2C%20total%20return%20swaps%20and%20dividends/02-equity-swaps-and-total-return-swaps.md): owning a share's return without owning the share, and the funding spread that prices it.
 
 This card assumed nothing changes hands until delivery day. The next asks what happens when the mark is settled in cash every evening instead, and whether the price agreed under that arrangement is still 103.05.
 

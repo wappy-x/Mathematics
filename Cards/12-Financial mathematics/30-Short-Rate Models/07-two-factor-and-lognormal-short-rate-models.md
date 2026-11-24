@@ -901,6 +901,7 @@ end TwoFactorShortRate
 
 - [Calibrating Hull-White](08-calibrating-a-short-rate-model.md): which market prices pin which parameters, starting with Hull-White.
 - [Heath-Jarrow-Morton](../31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md): model the whole forward curve instead of one short rate, with as many factors as needed.
+- [Cheyette](../31-Forward-Rate%20Models/08-cheyette-quasi-gaussian-model.md): the whole forward curve driven by two state variables, so a PDE can price Bermudans with a skew.
 
 This card shows that a model's factor count sets its correlations and its lognormality sets its sign; the open question is which market prices can tell a model's parameters apart, and that is what [Calibrating Hull-White](08-calibrating-a-short-rate-model.md) answers.
 

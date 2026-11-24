@@ -852,6 +852,7 @@ example : (586851 : ℕ) + 393348 = 980199 := by decide
 - [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): currency deltas, where the dividend yield becomes a foreign rate and desks keep several deltas at once.
 - [Greeks of a futures option](../26-Options%20on%20commodity%20futures%20and%20spreads/02-futures-option-greeks.md): delta when the thing bought is a futures contract.
 - [How the balance-sheet claims move](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/02-structural-model-sensitivities.md): delta of a company's equity in its assets.
+- [Convertible risk](../53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/05-convertible-bond-greeks-and-implied-volatility.md): delta, gamma, credit sensitivity, and the volatility and spread a price implies.
 
 A delta hedge cancels the first-order move and leaves the bend; how big that leftover is, and how fast delta itself changes, is gamma's question.
 

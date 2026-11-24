@@ -894,6 +894,7 @@ example : (2 / 100 : ℚ) * (1 - 40 / 100) * 10000 = 120 ∧
 ## Where this goes next
 
 - [Implied hazard from a bond price, and why the CDS disagrees](02-implied-hazard-from-a-bond-price-and-the-cds-bond-basis.md): this card run backwards, from a bond's market price to the hazard it implies, and why that hazard differs from the default swap's.
+- [Convertible bonds](../53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/04-convertible-bonds-on-a-tree.md): a bond the holder may swap for shares, priced on a tree that splits cash from equity.
 
 This card turns a hazard into a price; the open question is what hazard a quoted price implies, and why the bond market and the default-swap market read the same company differently.
 

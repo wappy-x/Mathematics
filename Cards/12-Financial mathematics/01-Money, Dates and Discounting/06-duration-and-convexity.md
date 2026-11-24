@@ -1270,6 +1270,7 @@ example : (266485 / 10000000 : ℝ) ≤
 - [Swap DV01](../28-Swaps/03-swap-dv01-and-hedging.md): DV01 applied to an instrument with two legs, and the trade that sets a book's rate risk to zero.
 - [Negative convexity](../35-Mortgages%2C%20Callables%20and%20Prepayment/03-negative-convexity.md): what happens when the payments themselves react to rates, and the bend turns the wrong way.
 - [Key-rate durations](../33-Curves%20in%20Depth/02-key-rate-durations-and-curve-hedging.md): one duration for each point on the curve, for a curve that twists.
+- [Treasury bond futures](../33-Curves%20in%20Depth/08-bond-futures-cheapest-to-deliver-and-implied-repo.md): conversion factors, the cheapest bond to deliver, the implied repo rate, and the switch option.
 
 This card held two things still: the payments were fixed, and the whole yield moved as one block. Let go of the first and convexity can turn negative; let go of the second and one number per bond stops being enough — and those are the two doors later cards go through.
 

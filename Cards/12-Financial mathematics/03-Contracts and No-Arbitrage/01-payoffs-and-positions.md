@@ -764,6 +764,7 @@ example : ((120 : ℝ) - 100)⁺ - ((100 : ℝ) - 120)⁺ = 20 := by norm_num [p
 ## Where this goes next
 
 - [No arbitrage](02-no-arbitrage-and-the-law-of-one-price.md): the rule that two contracts paying the same cash in every ending must cost the same today — the step from a shape to a price.
+- [Automated market makers](../54-Digital%20assets%20-%20perpetuals%2C%20inverse%20contracts%20and%20AMMs/03-amm-constant-product-and-loss-versus-rebalancing.md): the constant-product pool as a short-gamma position, and the loss to rebalancers it pays all the time.
 
 The $9.23 and $6.33 used here were quoted, never justified. What forces those two numbers to be what they are is the next card, and the identity in Step 3 is the lever it uses.
 

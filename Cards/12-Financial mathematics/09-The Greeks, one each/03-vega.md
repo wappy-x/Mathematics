@@ -930,6 +930,7 @@ example :
 - [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): the same formula for currencies, in desk units.
 - [Greeks of a futures option](../26-Options%20on%20commodity%20futures%20and%20spreads/02-futures-option-greeks.md): the same formula on a futures price.
 - [How the balance-sheet claims move](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/02-structural-model-sensitivities.md): shares as a call on a firm's assets, and what the asset volatility's vega says about its debt.
+- [Leland's volatility](../40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/07-leland-transaction-cost-volatility.md): hedging at fixed intervals with costs, and the volatility a dealer marks up or down.
 
 Vega answers what one point of volatility is worth, but only for a small move and a fixed share price; how vega itself shifts when volatility or the share price moves is the question [Volga](07-volga.md) and [Vanna](06-vanna.md) answer.
 

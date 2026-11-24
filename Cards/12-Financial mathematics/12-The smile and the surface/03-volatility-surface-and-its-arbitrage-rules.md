@@ -1052,7 +1052,7 @@ example : ((18 : ℚ) + 20) / 2 = 19 := by norm_num
 ## Where you meet it in real life
 
 - **End-of-day marking.** Desks and exchanges build a surface from the day's quotes, run both tests, and repair or drop the few quotes that fail before any risk is computed from it.
-- **Exotic pricing.** Barrier and autocallable prices depend on the whole surface. A negative density means a negative probability in the pricer, and an imaginary local volatility ([Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md)).
+- **Exotic pricing.** Barrier and autocallable ([Autocallables](../53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/02-autocallables-and-phoenix-notes.md)) prices depend on the whole surface. A negative density means a negative probability in the pricer, and an imaginary local volatility ([Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md)).
 - **The VIX.** The index is a weighted strip of out-of-the-money options across strikes at two expiries ([The VIX](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/06-vix-index.md)); a bad quote in the strip moves the number.
 - **Currency options.** FX desks are quoted only a few points per expiry, as at-the-money, risk reversal and butterfly, and fill in the smile from them ([The vanna-volga smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/05-vanna-volga-smile-curve.md)). The same two tests apply to the result.
 - **When Acme moves.** A surface is a snapshot. If Acme jumps to $105, "sticky strike" keeps each strike's vol; "sticky delta" keeps each log-moneyness's vol, so the whole smile slides with the forward. The choice changes the hedge ([Smile-adjusted delta](05-smile-adjusted-delta.md)); the shape of a single slice is the subject of [The volatility smile and skew](01-volatility-smile-and-skew.md).
@@ -1075,6 +1075,7 @@ example : ((18 : ℚ) + 20) / 2 = 19 := by norm_num
 - [Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md): turns an honest surface into one volatility per price and date, with the butterfly and calendar quantities in its denominator and numerator.
 - [The VIX](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/06-vix-index.md): integrates one slice of the surface into a single number for the market's expected variance.
 - [The vanna-volga smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/05-vanna-volga-smile-curve.md): builds a whole smile from three quotes, which must then pass these tests.
+- [SSVI](06-ssvi-surface-without-calendar-arbitrage.md): one formula for every expiry, and the inequalities that keep the whole surface free of arbitrage.
 
 This card can test a surface and patch a point, but its linear pieces leave kinks in the density; the next card fits a smooth smile that is honest by construction.
 

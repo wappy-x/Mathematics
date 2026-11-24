@@ -1124,6 +1124,8 @@ example : (100 : ℚ) - 633 / 100 = 9367 / 100 := by norm_num
 - [Chooser options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/04-chooser-options.md): one contract holding both this payoff and the call's, decided later.
 - [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): the same two halves when the "share" is a foreign currency, whose own interest rate takes the dividend's seat.
 - [Merton's model](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/01-merton-model-equity-as-a-call.md): a company's debt priced as riskless lending minus one of these puts.
+- [Static barrier hedges](../16-Barriers%2C%20touches%20and%20lookbacks/08-static-replication-of-barriers.md): a fixed set of vanillas worth exactly nothing on the barrier, when rates and dividends differ.
+- [Reverse convertibles](../53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/01-reverse-convertibles.md): a bond plus a sold put, and the barrier version that sells a knock-in put.
 
 This card priced one put, at one strike, on one day. What ties that price to the call beside it, so two quotes on one share cannot contradict each other, is what put-call parity settles.
 

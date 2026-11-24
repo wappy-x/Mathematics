@@ -933,6 +933,7 @@ example : (1 / 20 : ℚ) - 1 / 50 = (1 / 20) - (1 / 5) ^ 2 / 2 := by norm_num
 
 - [The fundamental theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md): why the drift can be replaced by the bank rate less the dividend yield without changing any price, and what "no free money" has to do with it.
 - [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): road four turned into a pricing machine, with error bars that shrink like the square root of the years simulated.
+- [Automated market makers](../54-Digital%20assets%20-%20perpetuals%2C%20inverse%20contracts%20and%20AMMs/03-amm-constant-product-and-loss-versus-rebalancing.md): the constant-product pool as a short-gamma position, and the loss to rebalancers it pays all the time.
 
 The drift on this card is an opinion, and no two traders hold the same one — yet they trade options with each other at a single price. The next card shows how the opinion drops out.
 

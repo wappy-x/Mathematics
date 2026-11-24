@@ -972,6 +972,7 @@ example : (3000 : ℤ) ^ 2 - 4 * 1200 * 2000 = -600000 := by norm_num
 
 - [Spreads over the curve](../02-Curves/06-z-spread-and-asset-swap-spread.md): the same search with a better unknown — not one flat rate, but the constant extra spread over a whole curve of dated rates.
 - [Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): the machinery on its own, bracketing and tangents combined, aimed at every other quoted price that hides a parameter.
+- [Floating-rate notes](../02-Curves/07-floating-rate-notes-and-discount-margin.md): why a floater sits at par on a reset date, and the discount margin that prices it when it does not.
 
 This card assumed one rate could stand for every date, because one contract was being inverted; the moment two bonds with different dates are priced together, that assumption has to go, and a later card replaces it with a curve.
 

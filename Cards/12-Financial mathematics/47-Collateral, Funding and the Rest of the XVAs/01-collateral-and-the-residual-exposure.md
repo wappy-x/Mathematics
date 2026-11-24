@@ -817,6 +817,7 @@ theorem instant_margin_cva_ceiling_eq
 ## Where this goes next
 
 - [FVA](02-fva.md): what it costs the bank to fund the part of a trade that collateral does not cover, and the hedges around it.
+- [Collateral in several currencies](06-multi-currency-csa-and-colva.md): the poster picks the cheapest, and the option that choice is worth.
 
 Collateral answers who bears the loss if Northwind fails, but not who pays for the cash in the meantime: the bank carries value it has not been paid for, above the threshold and on its hedges, and the FVA card prices that funding.
 

@@ -955,6 +955,7 @@ example : (1 / 400 : ℚ) + (11 / 190) * (1 / 400) = 201 / 76000 := by norm_num
 
 - [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md): the shared-economy model behind Step 6, which turns an asset correlation into a full joint model of every loan in the pool.
 - [Credit indices (CDX and iTraxx in outline)](04-credit-indices.md): a traded pool of borrowers, where the average loss sets the price and correlation sets how the loss is shared.
+- [First-to-default and nth-to-default baskets](08-nth-to-default-baskets.md): protection on the first name to fail, and how correlation moves it.
 
 Pairs fix the spread but not the tail, so the open question is which full model of 100 loans to trust; the one-factor Gaussian copula is the market's first answer.
 

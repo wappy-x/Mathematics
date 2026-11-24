@@ -1088,6 +1088,7 @@ example : (1 / 2 : ℚ) ^ 2 + (1 - (1 / 2) ^ 2) = 1 := by norm_num
 ## Where this goes next
 
 - [Rainbow options](04-rainbow-best-of-and-worst-of.md): options on the best or worst of the shares, not their total.
+- [Dispersion](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/09-dispersion-trades-and-correlation-swaps.md): selling index variance against member variance, and the correlation swap it approximates.
 
 A basket blends the shares; the next question is what an option is worth when it picks the winner or the loser instead, where correlation works in the opposite direction for one of them.
 

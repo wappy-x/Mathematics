@@ -814,6 +814,7 @@ Orange: the storage trade's January profit if run regardless. Green: its value t
 ## Where this goes next
 
 - [Power that cannot be stored](../26-Options%20on%20commodity%20futures%20and%20spreads/07-electricity-and-the-spark-spread.md): a commodity that cannot be stored, so the cap vanishes, and the spread between power and the gas that makes it becomes the traded object.
+- [Gas storage and swing contracts](../26-Options%20on%20commodity%20futures%20and%20spreads/08-gas-storage-and-swing-options.md): exercise limited by volume, solved backwards with inventory as part of the state.
 
 Storage made the spread's ceiling a fixed cost; the open question is what a spread is worth when nothing can carry the commodity from one date to another, and that is where electricity starts.
 

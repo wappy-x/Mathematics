@@ -880,6 +880,8 @@ example : (-1 / 10 : ℚ) ^ 4 + 6 * (-1 / 10) ^ 2 * (3 / 20) ^ 2 + 3 * (3 / 20) 
 ## Where this goes next
 
 - [The VIX](06-vix-index.md): the same option strip, run on 30 days of S&P 500 options and published as an index.
+- [VIX futures and options](07-vix-futures-and-vix-options.md): a future on a square root, priced below the square root of forward variance.
+- [Dispersion](09-dispersion-trades-and-correlation-swaps.md): selling index variance against member variance, and the correlation swap it approximates.
 
 The strip turns option prices into a variance number with no model; the open question is how that number is computed from a finite list of real quotes, with gaps between strikes and a last strike where quotes stop.
 

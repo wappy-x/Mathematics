@@ -813,6 +813,8 @@ example : (1 : ℚ) / (2 / 100) = 50 := by norm_num
 ## Where this goes next
 
 - [A risky bond from the hazard curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md): prices a risky bond from the survival curve in closed form; this card's draws are the second road to each of its prices.
+- [Quanto CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/10-quanto-cds-and-sovereign-protection.md): protection on a sovereign paid in euros or in dollars, and the currency drop at default that separates the two spreads.
+- [First-to-default and nth-to-default baskets](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/08-nth-to-default-baskets.md): protection on the first name to fail, and how correlation moves it.
 
 The draws price a promise, but they do not say what a bond's price reveals about the curve; the bond card runs that link in both directions.
 

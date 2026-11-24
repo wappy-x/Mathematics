@@ -910,6 +910,7 @@ example (cva dva : ℚ)
 
 - [FVA](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/02-fva.md): the cost and benefit of funding an uncollateralised trade, and how it overlaps with DVA.
 - [Wrong-way risk](05-wrong-way-risk.md): what happens when the independence assumed here fails.
+- [Burgard-Kjaer](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/09-burgard-kjaer-funding-pde.md): one pricing equation with funding and default inside, and why borrowing dearer than lending makes it nonlinear.
 
 DVA is a gain that is not cash, which leaves the question of what an unsecured trade really costs to carry: the answer is the funding adjustment, FVA.
 

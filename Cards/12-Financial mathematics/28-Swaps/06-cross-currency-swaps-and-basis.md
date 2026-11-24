@@ -810,6 +810,7 @@ example : (100 : ℚ) * (21 / 20) - 110 = -5 := by norm_num
 - [Solving a swap backwards](07-swap-inverses-rate-and-curve-from-price.md): solving a swap backwards for its rate or its curve, of which Step 4's bootstrap is one case.
 - [Swap DV01](03-swap-dv01-and-hedging.md): sensitivities and hedges; the $253.0 thousand per 5 basis points above is a basis DV01.
 - [The interest rate a forward implies](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/05-implied-yield-and-cross-currency-basis.md): the one-period basis read from a single forward, the short end of the curve built here.
+- [Collateral in several currencies](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/06-multi-currency-csa-and-colva.md): the poster picks the cheapest, and the option that choice is worth.
 
 This card priced the swap on curves it was handed and showed the basis moving its value; what remains open is how to solve backwards from a quoted price for the rate or the whole curve, with the existence and uniqueness that makes the answer trustworthy.
 

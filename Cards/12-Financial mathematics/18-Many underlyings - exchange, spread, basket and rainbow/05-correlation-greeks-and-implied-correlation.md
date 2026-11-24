@@ -810,7 +810,7 @@ example : max (max (120 : ℤ) 90 - 100) 0 + max (min (120 : ℤ) 90 - 100) 0 = 
 ## Where you meet it in real life
 
 - **Index options against member options.** The gap between an index option's volatility and its members' volatilities is the implied correlation. Conventions verified 24 Sep 2026: Cboe publishes a 3-Month Implied Correlation Index, ticker COR3M, read off the same kind of gap.
-- **Dispersion trading.** Sell index volatility and buy the members' volatility, or the reverse: a position that profits if the shares turn out less correlated than the index price implied. It is a trade on this card's number.
+- **Dispersion trading.** Sell index volatility and buy the members' volatility, or the reverse: a position that profits if the shares turn out less correlated than the index price implied. It is a trade on this card's number ([Dispersion](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/09-dispersion-trades-and-correlation-swaps.md)).
 - **Structured notes on the worst of several shares.** A note that pays unless the worst of three shares falls below a level is built from worst-of options. The bank that sells it keeps a correlation Greek it cannot unwind share by share, only by trading other correlation-dependent products.
 - **The rest of the shelf.** The exchange option ([The exchange option](01-exchange-option-margrabe.md)) and the spread option ([Spread options](02-spread-options-and-kirk.md)) depend on the volatility of a difference, where the cross term enters with a minus sign: their correlation Greeks are negative, like the best-of's.
 
@@ -832,6 +832,7 @@ example : max (max (120 : ℤ) 90 - 100) 0 + max (min (120 : ℤ) 90 - 100) 0 = 
 
 - [Implied correlation](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/06-implied-and-base-correlation.md): the same backing-out for credit tranches, where a quote can imply two correlations or none.
 - [Stencils to order](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/02-stencils-for-higher-and-mixed-derivatives.md): derives the four-corner cross-gamma rule used here, over $`4h^2`$, and gives its error.
+- [Dispersion](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/09-dispersion-trades-and-correlation-swaps.md): selling index variance against member variance, and the correlation swap it approximates.
 
 The question it leaves open is what correlation will actually be: implied correlation is a price, and whether it is worth paying is a trading question about how correlations behave in calm and in crashes.
 

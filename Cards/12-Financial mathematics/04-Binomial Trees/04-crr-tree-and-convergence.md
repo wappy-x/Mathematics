@@ -1226,6 +1226,8 @@ example : (Finset.Icc 10 40).card = 31 := by decide
 - [American options](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md): when acting early is worth money, and how much.
 - [Bermudan options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md): exercise on a list of dates, a tree with the comparison switched on at some layers only.
 - [Daily monitoring](../16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md): the same grid-against-continuum gap, for contracts watched on a schedule.
+- [Warrants and employee options](../15-American%20and%20Bermudan%20exercise/08-warrants-dilution-and-employee-stock-options.md): calls a company writes on its own shares, the dilution that shrinks them, and the early exercise employees cannot avoid.
+- [Convertible bonds](../53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/04-convertible-bonds-on-a-tree.md): a bond the holder may swap for shares, priced on a tree that splits cash from equity.
 
 Every number here came from a European call, whose holder can do nothing until the last day. The next card hands that holder the right to act at every node, and asks what the freedom is worth.
 

@@ -975,6 +975,7 @@ example : ((1 : ℚ) + 2 * (-1/2)) / 3 = 0 ∧ ((1 : ℚ) + 2 * 0) / 3 = 1 / 3 �
 - [Spread options](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/02-spread-options-and-kirk.md): the difference of two shares, where no exact formula exists and these paths are one honest answer.
 - [Basket options](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/03-basket-options.md): the weighted sum, with the chart above as its price sensitivity.
 - [Cholesky](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/04-cholesky-decomposition.md): the same factoring as numerical linear algebra, with its cost, its stability, and tables only almost possible.
+- [Worst-of autocallables](../53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/03-worst-of-autocallables-and-their-risk.md): three shares, one correlation, and Greeks that change sign near the barriers.
 
 This card takes the dial as given, the one input no market quotes outright: where its numbers come from ([Correlation Greeks and implied correlation](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/05-correlation-greeks-and-implied-correlation.md)), and how to mend a table no factor will accept, is what later cards pick up.
 

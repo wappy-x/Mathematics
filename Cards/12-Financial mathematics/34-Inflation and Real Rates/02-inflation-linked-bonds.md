@@ -883,7 +883,7 @@ example : (1000 : ℚ) * max (130 / 100) 1 = 1300 := by norm_num
 - **Other governments' linkers.** The UK indexes to its retail price index, and France issues bonds tied to French and to euro-area consumer prices. Lags and floors differ by issuer, so the index ratio rule is read from each prospectus.
 - **Breakeven inflation.** The gap between an ordinary bond's yield and a linker's real yield of the same maturity is the market's breakeven, the 2.5% on this card ([Breakeven inflation](03-breakeven-inflation.md)).
 - **Inflation swaps.** A swap that pays the change in the index for a fixed rate prices the same index ratio without a bond ([Inflation swaps](04-zero-coupon-inflation-swaps.md)).
-- **The deflation floor as an option.** A floor on principal is a put on the index; valuing it takes the models of [Inflation caps and floors in outline](05-inflation-options-in-outline.md).
+- **The deflation floor as an option.** A floor on principal is a put on the index; valuing it takes the models of [Inflation caps and floors in outline](05-inflation-options-in-outline.md) and [Jarrow-Yildirim](07-jarrow-yildirim-and-zero-coupon-inflation-floors.md).
 - **Pension funds.** A fund that owes pensions rising with prices holds linkers because their payments rise the same way.
 
 > **Say it back**
@@ -900,6 +900,7 @@ example : (1000 : ℚ) * max (130 / 100) 1 = 1300 := by norm_num
 - [Breakeven inflation](03-breakeven-inflation.md): set a linker's real yield beside an ordinary bond's yield and read off the inflation the market is pricing.
 - [Inflation swaps](04-zero-coupon-inflation-swaps.md): the same index ratio traded as a swap.
 - [Inflation caps and floors in outline](05-inflation-options-in-outline.md): the deflation floor priced as an option.
+- [Index lag and seasonality](06-inflation-index-lag-and-seasonality.md): the price index a bond actually uses, and the monthly pattern a short inflation curve must carry.
 
 This card prices a linker without saying what inflation the market expects; [Breakeven inflation](03-breakeven-inflation.md) reads that expectation off the gap between the two yields.
 

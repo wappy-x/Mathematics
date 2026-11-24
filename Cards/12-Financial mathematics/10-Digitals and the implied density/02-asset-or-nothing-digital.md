@@ -933,7 +933,7 @@ example : (9802 / 100 : ℚ) - 5869 / 100 = 3933 / 100 := by norm_num
 ## Where you meet it in real life
 
 - **Inside every call price.** The share half of the Black-Scholes call, $`S\,e^{-qT}N(d_1)`$, is this contract. The call's hedge, $`e^{-qT}N(d_1)`$ shares worth \$58.69 in total, holds exactly the asset digital's value in stock ([Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md)).
-- **Reverse convertibles.** A structured note that repays \$100 cash if a share finishes above a strike, and delivers the share if it finishes below, is 100 cash digitals plus one asset put.
+- **Reverse convertibles.** A structured note that repays \$100 cash if a share finishes above a strike, and delivers the share if it finishes below, is 100 cash digitals plus one asset put ([Reverse convertibles](../53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/01-reverse-convertibles.md)).
 - **Currency digitals.** In foreign exchange the asset is a unit of foreign currency, $`q`$ becomes the foreign interest rate, and "paid in the other currency" is an asset digital ([Currency digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md)).
 - **Reading volatility off prices.** Desks run the formula backwards to find the volatility or strike behind a quoted digital, with the non-monotone volatility effect above as the catch ([Digital inverses](06-digital-inverses-vol-and-strike.md)).
 - **The market's view of where Acme ends.** Cash digitals across strikes trace the pretend world's chances, and their slope is its density ([The butterfly and the implied density](05-butterfly-and-the-implied-density.md)).
@@ -953,6 +953,7 @@ example : (9802 / 100 : ℚ) - 5869 / 100 = 3933 / 100 := by norm_num
 - [Digital Greeks and pin risk](03-digital-greeks-and-pin-risk.md): the Greeks above as expiry nears, when a hedge must flip across the jump.
 - [Digital inverses](06-digital-inverses-vol-and-strike.md): the formula run backwards, with its existence and boundary cases.
 - [Currency digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md): the same contract when the asset is a currency.
+- [Reverse convertibles](../53-Equity%20structured%20notes%20-%20reverse%20convertibles%2C%20autocallables%20and%20convertibles/01-reverse-convertibles.md): a bond plus a sold put, and the barrier version that sells a knock-in put.
 
 The price rests on one volatility for every strike; what a digital is worth when the market quotes a smile is the question [A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md) answers.
 

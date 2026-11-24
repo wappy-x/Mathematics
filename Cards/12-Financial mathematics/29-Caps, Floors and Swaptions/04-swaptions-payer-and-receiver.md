@@ -95,7 +95,7 @@ Premiums are quoted three ways: upfront as a percentage of notional (1.91 percen
 - **Rates stay positive.** A lognormal rate can never touch zero, and the formula cannot even be evaluated at a negative forward. Since the 2010s desks quote in normal volatility (the spread in basis points) or shifted volatility (lognormal on the rate plus a fixed shift) instead ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)).
 - **One exercise date.** This is a European swaption. A Bermudan swaption, exercisable on several dates, has no closed formula.
 - **One curve, no default.** The shortcut $`F = (D(T_0) - D(T_n))/A`$ needs the same curve to forecast and discount, and both parties to pay; otherwise the floating leg is summed coupon by coupon on its own curve ([Multi-curve](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md)).
-- **Physical settlement.** A cash-settled swaption pays a formula annuity in place of $`A_T`$, so the random ratio does not cancel: the formula is then an approximation, and payer minus receiver need not equal the forward swap.
+- **Physical settlement.** A cash-settled swaption ([Cash-settled swaptions](11-cash-settled-swaptions-and-the-irr-annuity.md)) pays a formula annuity in place of $`A_T`$, so the random ratio does not cancel: the formula is then an approximation, and payer minus receiver need not equal the forward swap.
 - **Parity needs none of the rest.** It is a statement about payoffs, true for any volatility and any smile.
 
 ---
@@ -942,6 +942,7 @@ Falling line: the payer, cheaper as the fixed rate it must pay goes up. Rising l
 - [The annuity measure](05-the-annuity-measure.md): Step 2 in full: why dividing by a traded price makes every other price driftless, and what it changes in the model.
 - [Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md): the same swaption priced when rates can be zero or negative, and the conversion between the two volatility quotes.
 - [Constant-maturity swaps](../32-Convexity%20and%20Exotics/02-cms-and-the-convexity-adjustment.md): a payment of the swap rate itself on one date, with no annuity attached, priced by a strip of these swaptions.
+- [Cash-settled swaptions](11-cash-settled-swaptions-and-the-irr-annuity.md): an annuity computed at the swap rate itself, and the convexity it adds.
 
 This card used the annuity measure in one step, on a short proof in a world of finitely many outcomes; [The annuity measure](05-the-annuity-measure.md) shows why it works for any traded unit in continuous time, and what else it prices.
 

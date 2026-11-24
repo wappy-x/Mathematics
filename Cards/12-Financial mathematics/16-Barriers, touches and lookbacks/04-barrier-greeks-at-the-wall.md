@@ -838,6 +838,7 @@ example : (100 : ℝ) / 80 = 5 / 4 ∧ (80 : ℝ) ^ 2 / 100 = 64 := by norm_num
 ## Where this goes next
 
 - [Barrier inverses](07-barrier-inverses-level-and-volatility.md): running the formula backwards, from a price to the barrier or the volatility. Because vega can change sign, one price can match two volatilities, and that card states when.
+- [Static barrier hedges](08-static-replication-of-barriers.md): a fixed set of vanillas worth exactly nothing on the barrier, when rates and dividends differ.
 
 This card leaves one question open: given a knock-out's market price, which volatility does it imply, and is that volatility unique when vega can be zero or negative?
 

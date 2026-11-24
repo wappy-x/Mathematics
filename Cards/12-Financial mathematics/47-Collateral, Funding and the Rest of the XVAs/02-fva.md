@@ -778,6 +778,7 @@ theorem stream_linear_fva (sF C ρ : ℝ) (Y : ℕ) :
 ## Where this goes next
 
 - [MVA](03-mva.md): the funding cost of the initial margin a collateralised trade must post, the bill that replaces FVA once collateral removes it.
+- [Burgard-Kjaer](09-burgard-kjaer-funding-pde.md): one pricing equation with funding and default inside, and why borrowing dearer than lending makes it nonlinear.
 
 The question this card leaves open: collateral removes FVA, but a margined trade must also post initial margin, and the bank has to fund that cash too; what does it cost?
 
