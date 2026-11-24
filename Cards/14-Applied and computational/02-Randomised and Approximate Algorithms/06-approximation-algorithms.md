@@ -150,7 +150,7 @@ The run checks each price against its allowance: 1/16 against 3/30, 1/8 against 
 
 **Why H(n) is a log.** Each term 1/j, from j = 2 on, is less than the area under the curve 1/t between t = j − 1 and t = j, since the curve is higher than 1/j across that step. Those areas add to the area from 1 to n, which is ln n. So H(n) ≤ 1 + ln n: for 30 routes, 3.995 against 4.401.
 
-How far these ratios can be pushed is a question for the complexity wing. For set cover, a fast method that beat ln n by any fixed fraction would prove P = NP: the claim, unproved and widely doubted, that every problem whose answers can be checked fast can also be solved fast. For vertex cover, nobody knows a fast method that beats 2 by any fixed amount. Both are stated here without proof; Approximation, a planned card in the complexity wing, takes them up.
+How far these ratios can be pushed is a question for the complexity wing. For set cover, a fast method that beat ln n by any fixed fraction would prove P = NP: the claim, unproved and widely doubted, that every problem whose answers can be checked fast can also be solved fast. For vertex cover, nobody knows a fast method that beats 2 by any fixed amount. Both are stated here without proof; [Approximation](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/01-approximation-and-hardness-of-approximation.md), in the complexity wing, takes them up.
 
 ---
 
@@ -943,6 +943,7 @@ example : (5 : ℚ) ≤ harmonic 30 * 3 ∧ harmonic 30 * 3 < 12 := by
 - Approximation, in the complexity wing: why some ratios cannot be beaten unless P = NP.
 - [Heuristics with a promise](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/08-heuristics-and-approximation-guarantees.md): further methods that carry a proved ratio.
 - [Integer programs](../05-Operations%20Research/03-integer-programming-and-branch-and-bound.md): the LP relaxation in general, and the integrality gap between a fractional floor and the whole-number best.
+- [Online algorithms](09-online-algorithms-and-competitive-analysis.md): decide before the future arrives, and compare with hindsight.
 
 The question left open: for vertex cover, is 2 the best ratio any fast method can promise?
 

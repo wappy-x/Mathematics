@@ -448,6 +448,7 @@ end LagrangeRootBound
 - [Every prime clock has a primitive root](08-primitive-roots-mod-p.md): uses this bound to find a number whose powers visit the whole clock.
 - [Gauss's lemma](12-gauss-lemma.md): uses the same count to sort squares on a prime clock.
 - [Roots and factors](../../03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem.md): the full factor theorem for ordinary polynomials.
+- [Finding a pattern in text](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/11-string-matching-kmp-and-rabin-karp.md): never re-read a character, or compare fingerprints.
 
 Left open: on other clocks, what decides the number of roots?
 

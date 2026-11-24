@@ -579,6 +579,8 @@ example : (1 : ℤ) ^ 2 - 4 * 1 = -3 ∧ (1 : ℚ) / 2 > 0 := by norm_num
 - [Global bifurcations](14-homoclinic-and-heteroclinic-bifurcations.md): a cycle can die by touching a saddle, and its period grows without bound on the way.
 - [Poincare maps](../11-Discrete%20Dynamics%20and%20Chaos/07-poincare-return-maps.md): watch a flow only when it crosses a wall, and a periodic orbit becomes a fixed point.
 - [Two-timing and averaging](../13-Rhythms%20and%20Synchronisation/01-two-timing-and-averaging.md): let the amplitude drift slowly, and a weak nonlinearity becomes a simple equation for the swing's size.
+- [Multiple scales](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/09-method-of-multiple-scales.md): a slow clock beside the fast one kills the secular terms.
+- [Describing functions](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/08-describing-functions-and-limit-cycles.md): predict a loop's oscillation by keeping one harmonic.
 
 This card found each loop by a formula or by Liénard's theorem. The question it leaves open: for a general law in the plane, how do you prove a loop exists, or that none can?
 

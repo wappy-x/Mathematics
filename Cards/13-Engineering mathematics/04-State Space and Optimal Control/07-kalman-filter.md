@@ -916,6 +916,8 @@ example : !![(0 : ℤ), 1; 16, 0] * !![0, 1; 16, 0] = (16 : ℤ) • (1 : Matrix
 
 - [Filtering a nonlinear plant](08-extended-kalman-filter-and-nonlinear-estimation.md): the pole swung far from upright, where $`\sin\theta`$ is not $`\theta`$ and the recursion must be linearised as it runs.
 - [LQG](09-lqg-and-the-separation-principle.md): the regulator fed the filter's estimates, and why the two can be designed apart.
+- [Particle filters](11-particle-filters.md): a cloud of weighted guesses for beliefs with more than one hump.
+- [Smoothing and square roots](12-rts-smoothing-and-square-root-filters.md): use tomorrow's readings, and keep the covariance honest.
 
 This card assumes $`Q`$ and $`R`$ are known; it leaves open how to estimate them from the surprises themselves when they are not.
 

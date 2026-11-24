@@ -1014,6 +1014,7 @@ example : (1 + 2 * (1 / 36 : ℚ) * (1 - 1 / 31)) / 31 = 98 / 2883 := by norm_nu
 ## Where this goes next
 
 - [Wiener and LMS](07-adaptive-and-optimal-filters.md): the best filter for separating a signal from noise is written in terms of spectra like these, and estimated from them.
+- [Measured Bode plots](../11-Models%20from%20Data/02-frequency-response-estimation-and-coherence.md): divide the cross-spectrum by the input spectrum, and trust the coherence.
 
 Every estimate on this card uses one taper per segment; whether several different tapers on the same segment can buy steadiness without the blur is the question left open here.
 

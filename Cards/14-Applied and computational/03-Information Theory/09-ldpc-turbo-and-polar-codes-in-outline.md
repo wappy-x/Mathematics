@@ -805,6 +805,7 @@ example : 63 * 7 = 441 ∧ 63 * 4 = 252 := by decide
 ## Where this goes next
 
 - [Rate and distortion](10-lossy-compression-and-rate-distortion-in-outline.md): from sending every bit correctly to deciding how much error a compressed copy may carry.
+- [Graphical models](../06-Machine%20Learning%20Mathematics/12-bayesian-networks-and-belief-propagation.md): draw who depends on whom, then sum out variables in a good order.
 
 This card watched belief propagation work; it leaves open how to predict, before any simulation, the noise level at which a family of LDPC codes stops working.
 

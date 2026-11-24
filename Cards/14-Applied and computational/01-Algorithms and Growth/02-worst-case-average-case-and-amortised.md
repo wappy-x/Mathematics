@@ -776,6 +776,8 @@ example : 524289 * 1000000 = 524289000000 := by norm_num
 ## Where this goes next
 
 - [Data structures](06-data-structures-heaps-hashes-and-trees.md): heaps, hash tables and trees, each quoted with its case: a hash table's lookup is average-case constant, its resizing amortised, and a balanced tree's worst case logarithmic.
+- [Beating n log n, and finding the median in linear time](10-linear-time-sorting-and-selection.md): builds on this card.
+- [Online algorithms](../02-Randomised%20and%20Approximate%20Algorithms/09-online-algorithms-and-competitive-analysis.md): decide before the future arrives, and compare with hindsight.
 
 The open question: can a structure keep the 3n total and also cap every single add at a constant, so that no add ever stalls?
 

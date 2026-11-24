@@ -707,6 +707,7 @@ example : Matrix.det !![(16 : ℚ), 8; 8, 4] = 0 := by norm_num [Matrix.det_fin_
 - [Least squares two ways](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/06-least-squares-normal-equations-versus-qr.md): why software never forms $`A^T A`$.
 - [Fitting instead of passing through](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/07-least-squares-and-orthogonal-polynomials.md): perpendicular columns, so curves fit without the small matrix.
 - [The four fundamental subspaces](05-four-fundamental-subspaces.md): every matrix splits its inputs into row space and null space, its outputs into column space and left null space, at right angles.
+- [ARX identification](../../13-Engineering%20mathematics/11-Models%20from%20Data/01-arx-models-and-least-squares-identification.md): fit a difference equation to logged data by least squares.
 
 Nothing here says how far to trust −3.4, and that question opens [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md).
 

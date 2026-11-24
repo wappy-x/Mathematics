@@ -834,6 +834,8 @@ example : ((Finset.univ : Finset (Fin 4 × Fin 4)).filter (fun x =>
 ## Where this goes next
 
 - [AES](02-symmetric-ciphers-and-aes.md): the practical answer to the pad's price. A 128- or 256-bit key (that card uses 256), reused safely for many messages, with security measured as about 2^128 or 2^256 operations if no shortcut exists, instead of perfect.
+- [SHA-3 and ChaCha20](11-sponge-hashing-and-stream-ciphers.md): absorb and squeeze, or add, rotate and xor.
+- [Secret sharing](12-shamir-secret-sharing.md): hide a number in a polynomial, and any k shares bring it back.
 
 The open question this card leaves: how can a short key, used again and again, come close enough to a pad that no realistic attacker can tell the difference?
 

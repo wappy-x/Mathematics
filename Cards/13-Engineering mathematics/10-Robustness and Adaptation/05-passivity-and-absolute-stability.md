@@ -1012,6 +1012,8 @@ example : -(2000 : ℚ) * (-3 / 100) ^ 2 = -9 / 5 := by norm_num
 - [Robust tests](02-robust-stability-and-robust-performance.md): from "stable for a family" to "still performs well for a family", for linear plants with a bounded error.
 - [H-infinity design](03-h-infinity-control-in-outline.md): designing the controller to shrink the worst case, rather than checking a design afterwards.
 - [Adapting as you go](04-gain-scheduling-and-adaptive-control.md): model-reference adaptive laws built on a Lyapunov function are proved stable by this bookkeeping, with the learning law chosen so that the estimator is passive; the least-squares loop on that card has no such proof and is shown working by simulation.
+- [Describing functions](08-describing-functions-and-limit-cycles.md): predict a loop's oscillation by keeping one harmonic.
+- [Nonlinear design](09-feedback-linearisation-and-sliding-mode.md): cancel the nonlinearity, or slide along a surface you chose.
 
 This card leaves open what to do when a loop fails the band test but should not need to: how to find a better storage function, or a sharper test, without giving up the guarantee for every curve in the band.
 

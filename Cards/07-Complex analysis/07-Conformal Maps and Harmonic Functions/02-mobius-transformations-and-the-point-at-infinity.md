@@ -870,7 +870,7 @@ end
 
 ## Where you meet it in real life
 
-- **Radio engineering.** The Smith chart for matching antennas to cables maps impedances, a half plane, into the disc by (z − 1)/(z + 1), which is C(iz).
+- **Radio engineering.** The Smith chart ([Impedance matching](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/12-impedance-matching-and-the-smith-chart.md)) for matching antennas to cables maps impedances, a half plane, into the disc by (z − 1)/(z + 1), which is C(iz).
 - **Heat in a disc.** A half-plane problem moves to the disc by C; [The Poisson formula](06-poisson-integral-formula.md) solves it there.
 - **Non-Euclidean geometry.** The maps keeping the disc are the rigid motions of the hyperbolic plane.
 
@@ -890,6 +890,7 @@ end
 - [The Poisson formula](06-poisson-integral-formula.md): disc temperatures from the rim, carried by C.
 - [Modular forms](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/07-modular-forms-in-outline.md): functions that keep their shape under Mobius maps with whole-number entries and determinant 1.
 - [Schwarz-Pick](09-schwarz-pick-and-the-hyperbolic-disc.md): a holomorphic map of the disc into itself never stretches hyperbolic distance.
+- [Impedance matching](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/12-impedance-matching-and-the-smith-chart.md): a quarter wave or a stub, read off the Smith chart.
 
 Mobius maps reach only regions bounded by circles and lines; reaching a wedge, a strip or a slit plane is the job of [The standard maps](03-standard-maps-and-composing-them.md).
 

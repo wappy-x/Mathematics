@@ -714,6 +714,7 @@ theorem borda_carnot_loss (ρ v₁ v₂ : ℝ) :
 
 - [Viscosity](02-viscosity-and-pipe-flow.md): friction added. The pressure falls along a straight pipe too, and that loss, not the taper, sets the pump size for a heating loop.
 - [Navier-Stokes](03-navier-stokes-and-the-reynolds-number.md): Euler's equation with viscosity, and the Reynolds number that decides when the friction-free picture on this card is good enough.
+- [Compressible flow](11-compressible-flow-nozzles-and-shocks.md): past Mach 1 a nozzle must widen, and a shock can stand still.
 
 Bernoulli tells the engineer what a fitting does to pressure, but not what a whole loop of pipe costs the pump; that needs friction.
 

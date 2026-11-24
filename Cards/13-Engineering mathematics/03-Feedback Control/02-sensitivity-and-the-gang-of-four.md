@@ -763,6 +763,7 @@ example : (2 : ℚ) * 5 = 10 := by norm_num
 ## Where this goes next
 
 - [Writing down model error](../10-Robustness%20and%20Adaptation/01-model-uncertainty-and-the-small-gain-theorem.md): $`T`$ measures how a model error in the room is fed back on itself, and the small-gain theorem turns that into a guarantee of stability.
+- [Op-amps](../06-Circuits%20and%20Electromagnetism/10-op-amp-circuits.md): huge gain wrapped in feedback, so two resistors set the answer.
 
 This card shows that a 4 min pipe lag left out of the model raised the peak of $`\lvert S\rvert`$ from 1 to 1.6580; how large a model error a loop can survive without going unstable is the question the small-gain theorem answers.
 

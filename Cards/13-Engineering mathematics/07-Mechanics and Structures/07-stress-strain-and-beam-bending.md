@@ -789,6 +789,8 @@ example : (192 : ℕ) = 4 * 48 := by decide
 
 - [Buckling](08-buckling-and-stability.md): the same $`EI`$ under end compression, where a slender member bends away long before it is crushed.
 - [Finite elements](../08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md): beams, plates and shells of any shape, solved by splitting them into small pieces, each obeying the relations on this card.
+- [Stress in 3D](10-stress-tensor-and-mohrs-circle.md): a symmetric matrix, its principal axes, and Mohr's circle.
+- [Torsion and yield](11-torsion-and-yield-criteria.md): twist a shaft, then ask whether the steel gives way.
 
 This card treats one beam on two pins; how a whole frame of joists, girders and columns shares a crowd's weight, with joints that are neither pins nor clamps, is the question it leaves open.
 

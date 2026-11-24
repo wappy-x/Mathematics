@@ -547,6 +547,7 @@ example : (2 : ℚ) * 3 = 6 ∧ (1 / 1000 : ℚ) / 4 = 1 / 4000 := by norm_num
 - [Approximate identities](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/03-approximate-identities.md): uniform continuity making smoothing converge everywhere at once.
 - [Peano's theorem](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/06-peano-existence-theorem.md): continuity alone is enough for a solution, built from Euler polygons.
 - [Rademacher's theorem](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/07-rademachers-theorem.md): a Lipschitz function on R^n has a derivative almost everywhere.
+- [Universal approximation](../../14-Applied%20and%20computational/09-Deep%20Networks/01-universal-approximation-theorem.md): one hidden layer can fit any continuous curve, at a price.
 
 The question this card leaves open: what takes the place of "closed and bounded" when the inputs are not numbers on a line?
 

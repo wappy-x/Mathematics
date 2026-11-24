@@ -876,6 +876,7 @@ example : (1 : ℚ) * (1 / 2) ^ 2 / 2 = 1 / 8 ∧ (1 : ℚ) * (1 / 2) = 1 / 2 :=
 - [Stability of a state-space model](05-hurwitz-schur-and-lyapunov-stability.md): reading from $`A`$'s eigenvalues, or from a Lyapunov equation, whether every start dies away.
 - [Pole placement](04-pole-placement-and-observers.md): feeding the measured state back into the push to move the falling pole at +4 to where it should be.
 - [The Kalman filter](07-kalman-filter.md): estimating the hidden rate from the noisy encoder, using this model to predict each tick.
+- [Subspace identification](../11-Models%20from%20Data/03-subspace-identification-and-hankel-matrices.md): the Hankel matrix's rank is the model's order.
 
 This card commands the push in advance and cannot keep the rod up; how to choose the push from the state as it is measured, moment by moment, is the question it leaves open.
 

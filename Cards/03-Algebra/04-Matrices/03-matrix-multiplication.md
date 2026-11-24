@@ -535,6 +535,8 @@ example : vecMulVec (fun i => (recipe * schedule) i 1) (fun j => month 1 j) = !!
 - [Rating transition matrices](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md): a year of rating moves multiplied out.
 - [Riemann curvature tensor](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/06-riemann-curvature-tensor.md): products of tables of rates, measuring how space bends.
 - [Tensor products](../11-Duals%2C%20Quotients%20and%20Tensors/03-tensor-products.md): pair every basis vector of one space with every basis vector of another, so a 2-space and a 3-space make a 6-space, and most of its members are not simple pairs.
+- [Two-ports](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/13-two-port-networks-and-s-parameters.md): four numbers describe any box with an input and an output.
+- [Attention](../../14-Applied%20and%20computational/09-Deep%20Networks/04-attention-and-transformers.md): every word looks at every other word, weighted by a softmax.
 
 Nothing here says which matrix, if any, undoes a step once taken: that is [The inverse matrix](../05-Solving%20Systems/03-inverse-matrix.md).
 

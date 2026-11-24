@@ -764,7 +764,7 @@ example : (3 : ℤ) - 7 = -4 := by decide
 ## Where you meet it in real life
 
 - **Nearest-neighbour search.** Databases of images, songs or documents store distances to a few reference points. The lower bound rules out a far item without computing its distance, which is the whole idea of a metric tree.
-- **Spell checkers.** Edit distance, the number of single-letter changes from one word to another, obeys all three rules. A search for close spellings uses the bound to skip most of the dictionary.
+- **Spell checkers.** Edit distance ([Edit distance](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/13-edit-distance-and-sequence-alignment.md)), the number of single-letter changes from one word to another, obeys all three rules. A search for close spellings uses the bound to skip most of the dictionary.
 - **Maps and ride apps.** Driving times with one-way streets break rule 2. Routing code that assumes symmetry gives wrong return times.
 - **Clustering.** k-means groups data points by squared distance. Its fast versions apply rule 3 shortcuts to the unsquared distance, because squared distance is not a metric.
 - **Grid cities and chip design.** Walking distance, also called taxicab distance, measures wiring on a chip, where wires run only along two directions. [The distance menu](02-distances-on-vectors-and-functions.md) lists it with its neighbours.

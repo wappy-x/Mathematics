@@ -68,7 +68,7 @@ I = \frac{230}{40 + j30} = 3.68 - j2.76 \text{ A}, \qquad |I| = 4.6 \text{ A}, \
 - **One frequency, steady.** Every source must be a sine at the same $`f`$. A second frequency needs its own phasor calculation, and the two answers add afterwards.
 - **Long after switch-on.** At the instant of switching, the phasor answer says 5.20 A while the real current is 0. The gap dies as $`e^{-t/\tau}`$, with $`\tau`$ = 2.387 ms; at 10 ms it is down to 0.0789 A. Step 5 shows it.
 - **Linear parts.** An iron-cored coil saturates: past some current its inductance falls, the current stops being a sine and no single phasor describes it. The 95.49 mH here is an air-cored figure.
-- **Lumped parts.** The circuit is small beside the wavelength, thousands of kilometres at 50 Hz, the same condition as [Kirchhoff's laws](01-kirchhoffs-laws-and-equivalent-circuits.md). At radio frequencies a long lead is a transmission line, not a wire.
+- **Lumped parts.** The circuit is small beside the wavelength, thousands of kilometres at 50 Hz, the same condition as [Kirchhoff's laws](01-kirchhoffs-laws-and-equivalent-circuits.md). At radio frequencies a long lead is a transmission line ([Transmission lines](11-transmission-lines-and-reflections.md)), not a wire.
 - **Ideal coil.** A real coil has its own winding resistance. Lump it into $`R`$; the method is unchanged.
 
 ---
@@ -740,6 +740,9 @@ example : (184 : ℕ) + 138 = 322 := by norm_num
 - [RLC resonance](03-rlc-circuits-and-resonance.md): the next card. Add a capacitor, let the frequency vary, and find the one frequency where the reactances cancel.
 - [Transformers](06-transformers-and-mutual-inductance.md): two coils sharing a magnetic field, solved with the same impedances plus a coupling term.
 - [AC power](09-power-and-three-phase.md): multiply a voltage phasor by a current phasor and ask what the 36.87° lag does to the power delivered.
+- [Op-amps](10-op-amp-circuits.md): huge gain wrapped in feedback, so two resistors set the answer.
+- [Transmission lines](11-transmission-lines-and-reflections.md): when the cable is long, the voltage travels and bounces.
+- [Impedance matching](12-impedance-matching-and-the-smith-chart.md): a quarter wave or a stub, read off the Smith chart.
 
 This card handles one frequency at a time; how a circuit treats a wave made of many frequencies at once, such as a square wave or speech, is the question it leaves open.
 

@@ -951,6 +951,7 @@ example : (1 : ℚ) / (1 - 1/2) = 2 := by norm_num
 
 - [Epidemics on a network](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/05-epidemics-on-networks.md): the branching-process threshold applied to infections spreading over a network, where people with many contacts change the average.
 - [Percolation](../../25-Frontier/05-Analysis%20and%20Dynamics/06-dying-percolation-and-critical-phenomena.md): the same switch at a critical value on grids, where the family-tree picture breaks because branches meet again.
+- [The stochastic block model](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/10-stochastic-block-model-and-detectability.md): planted groups, and the point below which no method can find them.
 
 This card treats one type of individual and a law that never changes; what happens when there are several types, or when the law depends on how crowded the population is, is the question that multi-type branching processes and population models with crowding take up.
 

@@ -913,6 +913,7 @@ end DecisionTheory
 ## Where this goes next
 
 - [Nash equilibrium](09-game-theory-and-nash-equilibrium.md): the weather does not care what the manager orders; a rival stall does, and choosing against a player who chooses back needs a different idea.
+- [Games in turns](11-extensive-form-games-and-subgame-perfection.md): draw the tree, solve from the leaves, and ignore empty threats.
 
 This card leaves open how to plan when the decisions repeat, Saturday after Saturday, and each week's sales teach something about next week's demand.
 

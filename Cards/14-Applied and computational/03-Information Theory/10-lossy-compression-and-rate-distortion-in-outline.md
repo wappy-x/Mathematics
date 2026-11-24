@@ -1150,6 +1150,8 @@ example : (8 : ℚ) / (8 / 10) = 10 := by norm_num
 - [The discrete Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): a unitary transform and Parseval's identity, the reason the error on the weights equals the error on the pixels.
 
 ## Where this goes next
+- [Differential entropy and water-filling](11-differential-entropy-and-water-filling.md): bits for measured values, and power poured where noise is low.
+
 
 R(D) has a formula for a bell curve; for a real photo it does not, and how close practical codes come to a photo's own R(D) is the question this card leaves open.
 

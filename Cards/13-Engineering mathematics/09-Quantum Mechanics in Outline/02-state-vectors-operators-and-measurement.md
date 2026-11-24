@@ -890,6 +890,9 @@ example : 1 < (1 + Real.sqrt 3) / 2 := by
 - [Schrodinger's equation](03-schrodinger-equation-and-the-particle-in-a-box.md): how a state moves between measurements, driven by the energy operator, and the electron in a box whose energy eigenvalues are its levels.
 - [Uncertainty](05-uncertainty-principle.md): two devices whose matrices do not commute, such as the 0° and 45° polarisers, cannot both give certain readings on one state.
 - [Spin one-half](06-spin-and-two-state-systems.md): the two-state system in full, with three matrices for the three axes.
+- [Tunnelling](09-quantum-tunnelling.md): a particle gets through a wall it cannot climb.
+- [Perturbation theory](10-time-independent-perturbation-theory.md): nudge the energy levels without solving again.
+- [Two particles](11-two-particle-states-and-entanglement.md): product states, the singlet, and the CHSH bound.
 
 This card measured a two-state system with two exits; how the recipe stretches to position, which has a continuum of possible readings, is the open question.
 

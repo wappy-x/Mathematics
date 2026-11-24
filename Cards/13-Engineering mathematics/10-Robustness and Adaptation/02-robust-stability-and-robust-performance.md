@@ -81,7 +81,7 @@ The three tests, each required at every angular frequency $`\omega`$, with $`S`$
 - **Linear and unsaturated.** The drive is taken never to hit its torque limit. Each rad/s of speed error asks for 3.0 N·m at once, so a 10 rad/s step asks for 30 N·m; a 20 N·m drive clips, and none of these tests describes the clipped loop. This card's 5 rad/s step asks for 15 N·m.
 - **The load changes slowly.** Each plant in the family is fixed in time. A belt loaded within a fraction of a second is a time-varying plant, which frequency tests on frozen plants do not cover; [Adapting as you go](04-gain-scheduling-and-adaptive-control.md) treats loads that move.
 - **The model loop is stable.** Every test starts from a stable empty-belt loop. Its Hurwitz ratio is 44.200, well above 1.
-- **One input, one output.** With several motors coupled through one belt, $`\Delta`$ becomes a matrix and the sum of two sizes is no longer exact; the tool then is the structured singular value (the size of the smallest error of the allowed shape that breaks the loop), which is beyond this shelf.
+- **One input, one output.** With several motors coupled through one belt, $`\Delta`$ becomes a matrix and the sum of two sizes is no longer exact; the tool then is the structured singular value (the size of the smallest error of the allowed shape that breaks the loop), on [The structured singular value](07-structured-singular-value.md).
 
 ---
 
@@ -800,6 +800,8 @@ example : 3 * 10 = 30 ∧ 20 < 3 * 10 ∧ 3 * 5 = 15 ∧ 3 * 5 ≤ 20 := by deci
 
 - [H-infinity design](03-h-infinity-control-in-outline.md): turns the test into a design method, choosing the controller that makes the weighted peak as small as possible.
 - [Adapting as you go](04-gain-scheduling-and-adaptive-control.md): when one controller cannot serve the whole family, measure the load and change the gains with it.
+- [Several inputs, several outputs](06-multivariable-feedback-and-singular-values.md): singular values, zeros and the RGA.
+- [The structured singular value](07-structured-singular-value.md): robustness when the uncertainty has a known shape.
 
 The question this card leaves open: when the family is one real number, like this inertia, how much of the gap between 0.881 and 0.600 can a sharper test close?
 

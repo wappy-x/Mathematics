@@ -572,6 +572,7 @@ example : !![(1/2 : ℚ), 1/2; -1/2, 1/2] *ᵥ ![1, 1] = ![1, 0] := by
 - [Representation](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/05-representations-in-outline.md): conjugation (the $`P^{-1} A P`$ sandwich) again, for matrices forming a group, a set closed under multiplying and undoing ([Groups](../08-Groups/01-groups.md)).
 - [Jordan form](10-jordan-canonical-form.md): every matrix is a stack of blocks, each an eigenvalue with ones just above the diagonal, and the block sizes are read from ranks.
 - [Bilinear forms](12-bilinear-forms-and-sylvesters-law.md): a matrix that pairs two vectors instead of moving one, the symmetric ones are quadratic forms, the alternating ones measure signed area, and the sign count never changes.
+- [Stress in 3D](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/10-stress-tensor-and-mohrs-circle.md): a symmetric matrix, its principal axes, and Mohr's circle.
 
 Any invertible $`P`$ gives a new address book, and nothing here says which book is worth having; that is what a later card asks.
 

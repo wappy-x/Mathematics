@@ -664,6 +664,7 @@ example : (20 : ℚ) * (120 / 2 + 5 / 2 * 21) - 20 * (120 / 2 + 5 / 2 * 20) = 50
 - [Weak derivatives](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/07-weak-derivatives-and-sobolev-spaces.md): rough functions.
 - [Smooth and singular points](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/08-smooth-and-singular-points.md): all partials vanishing.
 - [Levi-Civita connection](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/02-levi-civita-connection-and-christoffel-symbols.md): curved distance.
+- [Free energies](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/10-thermodynamic-potentials-and-maxwell-relations.md): the right potential for each pair of held-fixed variables.
 
 Partials see two lines only, board alone or glass alone; whether they predict a change in both at once is [Tangent planes](02-differentiability-and-tangent-planes.md).
 

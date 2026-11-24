@@ -877,7 +877,7 @@ example : 6 * 100 = 20 * 30 ∧ 14 * 100 = 20 * 70 ∧ 15 * 100 = 50 * 30 ∧ 35
 
 ## Where you meet it in real life
 
-- **Decision trees in machine learning.** A tree chooses which question to ask first by its "information gain", which is exactly I(question; label) computed from the training table.
+- **Decision trees in machine learning.** A tree ([Decision trees and forests](../06-Machine%20Learning%20Mathematics/10-decision-trees-and-random-forests.md)) chooses which question to ask first by its "information gain", which is exactly I(question; label) computed from the training table.
 - **Medical image alignment.** Software lines up a CT scan with an MRI scan of the same head by sliding one until the mutual information between their pixel brightnesses is largest. The two scans show tissue in different brightnesses, so plain correlation fails; mutual information does not need the brightnesses to match.
 - **Neuroscience.** Experimenters ask how many bits a nerve cell's firing carries about a sound or a picture. Their records are short, so the upward bias of the short-record row above is a working problem, with published corrections.
 - **The radio link itself.** Channel capacity is the largest mutual information between what goes into a noisy link and what comes out, over every way of choosing the inputs.
@@ -897,6 +897,8 @@ example : 6 * 100 = 20 * 30 ∧ 14 * 100 = 20 * 70 ∧ 15 * 100 = 50 * 30 ∧ 35
 
 - [KL divergence](03-kl-divergence-and-cross-entropy.md): the fourth form of I(X; Y) is a KL divergence, the gap between the real table and the table independence would give, and that card explains why such a gap is always at least zero.
 - [Channel capacity](07-channel-capacity-and-the-noisy-channel-theorem.md): treats the radio as a channel and asks for the largest I between what is sent and what arrives, then proves that number is the fastest rate of reliable messages.
+- [Many users](12-slepian-wolf-and-the-multiple-access-channel.md): compress apart, decode together, and share one channel.
+- [Decision trees and forests](../06-Machine%20Learning%20Mathematics/10-decision-trees-and-random-forests.md): ask the best question, then average many noisy trees.
 
 This card measured what a reading tells, given the table; how close a real link can come to sending that much without errors is the question it leaves open.
 

@@ -192,7 +192,7 @@ The two paths to $`|0\rangle`$ added (0.8 + 0.6). The two paths to $`|1\rangle`$
 
 All three coins read the same when read directly. One gate later they differ completely. The amplitudes hold information the chances hide.
 
-For entangled pairs read far apart, Bell's theorem rules out every local hidden-coin model, not only this kind. It is stated here without proof (Bell, 1964, in Sources); loophole-free experiments since 2015 confirm the quantum prediction.
+For entangled pairs ([Two particles](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/11-two-particle-states-and-entanglement.md)) read far apart, Bell's theorem rules out every local hidden-coin model, not only this kind. It is stated here without proof (Bell, 1964, in Sources); loophole-free experiments since 2015 confirm the quantum prediction.
 
 ---
 

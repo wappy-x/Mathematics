@@ -838,6 +838,7 @@ theorem resample_max_rank_prob (n : ℕ) (k : Fin n) :
 - [Historical and Monte Carlo VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md): resampling past market days to estimate a loss quantile.
 - [Comparing diagrams](../../17-Topology/06-Topological%20Data%20Analysis/05-comparing-diagrams-and-vectorising-them.md): bootstrap bands that separate real features of a data set's shape from noise.
 - [The empirical CDF](../15-Nonparametric%20Inference/01-empirical-cdf-and-kolmogorov-smirnov.md): the data's own staircase, and the Kolmogorov-Smirnov test.
+- [Decision trees and forests](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/10-decision-trees-and-random-forests.md): ask the best question, then average many noisy trees.
 
 This card resampled claims as independent draws; whether resampling past days is safe when bad days cluster together is the question [Historical and Monte Carlo VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md) takes up.
 

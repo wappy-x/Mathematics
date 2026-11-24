@@ -1009,6 +1009,7 @@ example : (6 / 5 : ℚ) * (35 ^ 2 - 25 ^ 2) = 720 := by norm_num
 - [The z-transform](08-z-transform-and-discrete-time-systems.md): the left half-plane becomes the inside of the unit circle.
 - [Routh-Hurwitz](../03-Feedback%20Control/04-routh-hurwitz-criterion.md): the sign of every pole's real part from the coefficients, no roots needed.
 - [State space](../04-State%20Space%20and%20Optimal%20Control/01-state-space-models-and-the-matrix-exponential.md): poles as eigenvalues, and the hidden modes a cancelled pole leaves behind.
+- [Op-amps](../06-Circuits%20and%20Electromagnetism/10-op-amp-circuits.md): huge gain wrapped in feedback, so two resistors set the answer.
 
 The poles say whether the car settles and how it rings; [Damping ratio and natural frequency](06-second-order-systems-damping-and-natural-frequency.md) turns a pole pair into overshoot and settling numbers, and choosing the gain that puts the poles where those numbers are met is the work of [Root locus](../03-Feedback%20Control/05-root-locus.md).
 

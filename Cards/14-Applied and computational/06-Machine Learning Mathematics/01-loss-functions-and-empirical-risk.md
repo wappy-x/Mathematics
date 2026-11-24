@@ -823,6 +823,8 @@ end LossAndEmpiricalRisk
 ## Where this goes next
 
 - [Gradient descent](02-gradient-descent-and-stochastic-gradient.md): how to find the bottom of an empirical risk when no equation gives it directly, by walking downhill, and with a cheap noisy step when the rows number millions.
+- [Decision trees and forests](10-decision-trees-and-random-forests.md): ask the best question, then average many noisy trees.
+- [Boosting](11-boosting-adaboost-and-gradient-boosting.md): many weak rules, each fixing the last one's mistakes.
 
 The question left open: squared loss had a formula for its bottom, but hinge loss, log loss and absolute loss with 12 numbers do not, so how is their lowest average found?
 

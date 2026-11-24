@@ -873,6 +873,7 @@ example : (-2 : ℚ) / (1 / 2) = -4 ∧ (10 : ℚ) * (1 / 2) = 5 := by norm_num
 ## Where this goes next
 
 - [Predictive control](../04-State%20Space%20and%20Optimal%20Control/10-model-predictive-control.md): steps the ZOH model forward over a horizon and chooses the next few heater powers by solving a small optimisation each tick.
+- [Optimal filters](../05-Signals/11-equiripple-fir-and-optimal-iir-design.md): spread the error evenly, and buy sharpness with ripple.
 
 The thermostat now has an exact model of what one tick of heater power does; what it lacks is a rule for choosing that power when the heater can only heat and the sensor must not overshoot, which model predictive control supplies.
 

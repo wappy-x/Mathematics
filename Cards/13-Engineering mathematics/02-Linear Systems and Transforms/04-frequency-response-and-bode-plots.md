@@ -954,6 +954,8 @@ open BodePlots
 - [Final value and bandwidth](05-final-value-theorem-and-steady-gain.md): the left end of the plot as the settled answer to a step, and the bandwidth read off the magnitude curve.
 - [Nyquist and margins](../03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): the same complex numbers used to judge a closed loop, and the gain and phase margins read straight off a Bode plot.
 - [Sampling](../05-Signals/01-sampling-and-the-nyquist-theorem.md): what happens to the frequency axis when the signal is only measured at sample times.
+- [Op-amps](../06-Circuits%20and%20Electromagnetism/10-op-amp-circuits.md): huge gain wrapped in feedback, so two resistors set the answer.
+- [Measured Bode plots](../11-Models%20from%20Data/02-frequency-response-estimation-and-coherence.md): divide the cross-spectrum by the input spectrum, and trust the coherence.
 
 This card says how much and how late the car follows each wobble on its own; whether a controller wrapped around it settles or rings is the question the Nyquist card answers from these same curves.
 

@@ -82,7 +82,7 @@ In the shorthand of [Big-O](01-big-o-and-growth-rates.md), where Θ(g) means "gr
 
 ### When it holds
 
-- **Comparisons only.** The floor counts questions of the form "is x before y?". A method that reads the key's value directly is not bound by it: counting sort tallies 1,000,000 whole-second lengths into 361 slots with 0 comparisons.
+- **Comparisons only.** The floor counts questions of the form "is x before y?". A method that reads the key's value directly is not bound by it: counting sort tallies 1,000,000 whole-second lengths into 361 slots with 0 comparisons ([Beating n log n, and finding the median in linear time](10-linear-time-sorting-and-selection.md)).
 - **Every order possible.** The count n! assumes different tracks. With many equal keys there are fewer distinct orders and the floor drops.
 - **Worst case, or average over all orders.** The floor does not bind each single input. Quicksort sorted our eight in 13, under the floor of 16, because this order was lucky. See [Which case are you quoting? Worst, average and amortised cost](02-worst-case-average-case-and-amortised.md).
 - **Quicksort's average assumes a random arrival order.** Hand it a playlist that is already sorted, with the first track as pivot, and it makes 28 comparisons on eight tracks and 499,500 on 1,000.
@@ -1238,6 +1238,8 @@ end SortingSearching
 
 - [Data structures](06-data-structures-heaps-hashes-and-trees.md): heaps and search trees keep a library in order while tracks are added and removed.
 - [Randomised algorithms](../02-Randomised%20and%20Approximate%20Algorithms/01-randomised-algorithms-and-expectation.md): a random pivot turns quicksort's average into a promise on every input, holding on average over the method's own coin flips.
+- [Beating n log n, and finding the median in linear time](10-linear-time-sorting-and-selection.md): builds on this card.
+- [Suffix arrays](12-suffix-arrays-and-text-indexing.md): sort every ending of the text once, then search it by halving.
 
 The floor limits comparisons only, so the question left open is how much faster a sort can go when it is allowed to read the keys themselves.
 

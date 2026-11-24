@@ -527,6 +527,7 @@ example : 2 * (1/10 : ℚ) / (1/10) ^ 2 = 20 := by norm_num
 - [Error bounds and Romberg](../../16-Numerical%20analysis/05-Quadrature/02-error-bounds-and-romberg.md): the integral remainder at work.
 - [Runge-Kutta](../../16-Numerical%20analysis/06-ODE%20Solvers/01-runge-kutta-and-butcher-tableaux.md): steps built to match Taylor terms.
 - [Forward, backward and central differences](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/01-forward-backward-and-central-differences.md): difference formulas ranked by Taylor terms.
+- [Universal approximation](../../14-Applied%20and%20computational/09-Deep%20Networks/01-universal-approximation-theorem.md): one hidden layer can fit any continuous curve, at a price.
 
 The theorem controls one polynomial of fixed degree; whether adding terms forever recovers e^x far from 0 is the question [Taylor series](../06-Series/05-taylor-series.md) answers.
 

@@ -972,6 +972,7 @@ example : Nat.choose 60 20 = 4191844505805495 := by
 - [The simplex method](../../15-Optimization/04-Linear%20Programming/03-simplex-method.md): the real solver that walks from corner to better corner, and whose final table proves the last corner is best.
 - [LP duality](../../15-Optimization/04-Linear%20Programming/04-lp-duality-and-complementary-slackness.md): duality for linear programs (LP is short for linear program). The certificate from Step 4 is proved for every linear program: when a best plan exists, the best cap equals the best margin.
 - [Corners are enough](../../15-Optimization/04-Linear%20Programming/02-corners-and-the-fundamental-theorem.md): the corner theorem for any number of decisions.
+- [Sharing a joint cost](12-cooperative-games-shapley-value-and-core.md): the Shapley value and the core.
 
 This card leaves one question open: when a solver walks from corner to corner, why does it reach the best one long before it has visited the 4,191,844,505,805,495 candidates?
 

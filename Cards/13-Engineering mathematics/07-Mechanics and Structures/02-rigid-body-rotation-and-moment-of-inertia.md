@@ -775,6 +775,7 @@ example : (3000 : ℚ) / 2 = 1500 := by norm_num
 - [Precession](03-gyroscopes-and-precession.md): what happens when the torque is not along the spin axis. The angular momentum still changes at the rate of the torque, but now it turns sideways.
 - [Lagrangian and Hamiltonian mechanics](04-lagrangian-and-hamiltonian-mechanics-for-engineers.md): write the energies, including $`\tfrac12 I\omega^2`$, and get the equations of motion without drawing every force.
 - [Vibration modes](06-vibration-modes-and-resonance.md): the bench swing is one mass ringing at one frequency; connected masses and springs ring in several shapes at several frequencies, and a turning part enters those equations through its moment of inertia.
+- [Torsion and yield](11-torsion-and-yield-criteria.md): twist a shaft, then ask whether the steel gives way.
 
 This card spun the disc about one fixed axis. The question it leaves open is what a body does when it is free to tumble about all three directions at once.
 

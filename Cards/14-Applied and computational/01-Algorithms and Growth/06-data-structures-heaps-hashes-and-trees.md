@@ -875,6 +875,7 @@ example : avlMinSize 21 ≤ 60000 ∧ 60000 < avlMinSize 22 := by decide
 
 - [Graph algorithms as code](09-graph-algorithms-in-practice.md): the heap running inside Dijkstra's method, beside union-find and other structures that make graph theorems fast.
 - [Hashing for size](../02-Randomised%20and%20Approximate%20Algorithms/04-hashing-bloom-filters-and-sketches.md): what happens when even a hash table is too big, and a structure answers "probably yes" or "certainly no" in a fixed number of bits.
+- [Finding a pattern in text](11-string-matching-kmp-and-rabin-karp.md): never re-read a character, or compare fingerprints.
 
 The question this card leaves open: can a hash be chosen so that no input, however hostile, crowds the buckets?
 

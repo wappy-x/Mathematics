@@ -918,6 +918,9 @@ example : centralCost 12 64 = 1496196 := by norm_num [centralCost, paramCount, f
 - [Softmax and cross-entropy](05-softmax-and-cross-entropy-for-classification.md): the next card. A network that sorts orders into classes, and a loss whose backpropagated error at the output is again just prediction minus truth.
 - [Automatic differentiation](../../15-Optimization/02-Unconstrained%20Methods/10-automatic-differentiation-and-backpropagation.md): the general machinery that builds the backward pass for any program, not only a layered network.
 - [Reverse mode](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/07-reverse-mode-automatic-differentiation.md): reverse-mode differentiation in general, with its memory cost and the trade-offs that come with it.
+- [Universal approximation](../09-Deep%20Networks/01-universal-approximation-theorem.md): one hidden layer can fit any continuous curve, at a price.
+- [Convolutional networks](../09-Deep%20Networks/02-convolutional-networks.md): one small filter slid everywhere, so a shift in gives a shift out.
+- [Residual connections and normalisation](../09-Deep%20Networks/03-residual-networks-and-normalisation.md): keep the gradient alive through fifty layers.
 
 Backpropagation hands over an exact gradient at the current weights; how far to trust it on a curved surface, and how to step along it, is left open.
 

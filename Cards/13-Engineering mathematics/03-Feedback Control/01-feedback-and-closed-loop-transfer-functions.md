@@ -791,7 +791,7 @@ example : (5 : ℚ) / (1 - 5) = -5 / 4 := by norm_num
 ## Where you meet it in real life
 
 - **Room and building heating.** Every thermostat, radiator valve and boiler loop. The house is slow, the sensor sits on a wall, and the tuning of the gain against the lags is [PID control](07-pid-control-and-tuning.md).
-- **Feedback amplifiers.** Harold Black's feedback amplifier wraps an amplifier of gain A in a resistor network that feeds back a fraction β. The closed-loop gain A/(1 + Aβ) is close to 1/β when Aβ is large, so it is set by stable resistors rather than by the drifting vacuum tubes; every operational-amplifier circuit uses the same formula.
+- **Feedback amplifiers.** Harold Black's feedback amplifier wraps an amplifier of gain A in a resistor network that feeds back a fraction β. The closed-loop gain A/(1 + Aβ) is close to 1/β when Aβ is large, so it is set by stable resistors rather than by the drifting vacuum tubes; every operational-amplifier circuit uses the same formula ([Op-amps](../06-Circuits%20and%20Electromagnetism/10-op-amp-circuits.md)).
 - **Cruise control.** The car of [Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md) with a controller round it: a hill is a disturbance, cut by one plus the loop gain.
 - **Valves that hit their stops.** When the actuator saturates, the linear formula stops applying, and an integrating controller winds up; that is [PID in practice](08-pid-on-real-hardware.md).
 - **Loops with dead time.** A shower whose hot water takes seconds to arrive is a loop with a delay, where the gain must be much lower: [Time delays](10-smith-predictor-and-time-delays.md).
@@ -811,6 +811,7 @@ example : (5 : ℚ) / (1 - 5) = -5 / 4 := by norm_num
 - [Steady-state error](03-steady-state-error-and-system-type.md): why a proportional loop stays short, here 0.1667 °C on a 1 °C change, and what removes the gap. Its thermostat has no preset, so there the step the loop must hold is the whole inside-outside difference, not only a change of setting.
 - [Routh-Hurwitz](04-routh-hurwitz-criterion.md): the test on the coefficients of 1 + L that gave k = 31.5, for any order.
 - [Nyquist and margins](06-nyquist-criterion-and-stability-margins.md): stability read from L(jω) alone, as margins an engineer can measure.
+- [Op-amps](../06-Circuits%20and%20Electromagnetism/10-op-amp-circuits.md): huge gain wrapped in feedback, so two resistors set the answer.
 
 The formula says how much a loop shrinks a disturbance at each frequency, but not what that costs in sensor noise and robustness; [Sensitivity functions](02-sensitivity-and-the-gang-of-four.md) answers that.
 

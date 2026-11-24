@@ -6,24 +6,25 @@
 
 Analyse an algorithm's cost and choose a data structure, use randomness and approximation on purpose, measure information in bits and code it for storage and for a noisy channel, follow modern cryptography from the one-time pad to lattices, formulate an operations-research model and read a solver's answer, do the mathematics behind machine learning, and analyse a network as a matrix. Theory that belongs elsewhere is named and linked rather than half-taught: algorithms and duality for optimisation in wing 15, method derivations and error bounds in wing 16, complexity classes in wing 24.
 
-8 shelves · **71 of 71 cards ready to read**
+9 shelves · **92 of 92 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
 | Shelf | Cards |
 | --- | ---: |
-| [01 · Algorithms and Growth](#s01) | 9 |
-| [02 · Randomised and Approximate Algorithms](#s02) | 8 |
-| [03 · Information Theory](#s03) | 10 |
-| [04 · Cryptography](#s04) | 10 |
-| [05 · Operations Research](#s05) | 10 |
-| [06 · Machine Learning Mathematics](#s06) | 9 |
-| [07 · Network Science and Spectral Graphs](#s07) | 8 |
+| [01 · Algorithms and Growth](#s01) | 13 |
+| [02 · Randomised and Approximate Algorithms](#s02) | 9 |
+| [03 · Information Theory](#s03) | 12 |
+| [04 · Cryptography](#s04) | 13 |
+| [05 · Operations Research](#s05) | 12 |
+| [06 · Machine Learning Mathematics](#s06) | 12 |
+| [07 · Network Science and Spectral Graphs](#s07) | 10 |
 | [08 · Scientific Computing Practice](#s08) | 7 |
+| [09 · Deep Networks](#s09) | 4 |
 
 <a name="s01"></a>
 
-## 01 · Algorithms and Growth · 9 cards
+## 01 · Algorithms and Growth · 13 cards
 
 *How cost grows, which case you are quoting, and the workhorse patterns: divide and conquer, sorting, structures, tables, greed*
 
@@ -36,12 +37,16 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 7. [Dynamic programming: solve each small piece once and write the answer down](01-Algorithms%20and%20Growth/07-dynamic-programming.md)
 8. [Greedy: take the best next step, and the argument that it is safe](01-Algorithms%20and%20Growth/08-greedy-algorithms-and-matroids.md)
 9. [Graph algorithms as code: the structures that make wing 04's theorems run fast](01-Algorithms%20and%20Growth/09-graph-algorithms-in-practice.md)
+10. [Beating n log n, and finding the median in linear time](01-Algorithms%20and%20Growth/10-linear-time-sorting-and-selection.md)
+11. [Finding a pattern in text: never re-read a character, or compare fingerprints](01-Algorithms%20and%20Growth/11-string-matching-kmp-and-rabin-karp.md)
+12. [Suffix arrays: sort every ending of the text once, then search it by halving](01-Algorithms%20and%20Growth/12-suffix-arrays-and-text-indexing.md)
+13. [Edit distance: the fewest typos between two words, by a table and a traceback](01-Algorithms%20and%20Growth/13-edit-distance-and-sequence-alignment.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s02"></a>
 
-## 02 · Randomised and Approximate Algorithms · 8 cards
+## 02 · Randomised and Approximate Algorithms · 9 cards
 
 *Randomness as a design tool: expectation, tail bounds, sketches, guaranteed ratios, and sampling used as computation*
 
@@ -53,12 +58,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Approximation: a guaranteed ratio when the exact answer is out of reach](02-Randomised%20and%20Approximate%20Algorithms/06-approximation-algorithms.md)
 7. [Local search: hill climbing, restarts, annealing and genetic moves](02-Randomised%20and%20Approximate%20Algorithms/07-local-search-and-metaheuristics.md)
 8. [MCMC as a tool: Metropolis-Hastings when you cannot sample directly](02-Randomised%20and%20Approximate%20Algorithms/08-markov-chain-monte-carlo-for-computation.md)
+9. [Online algorithms: decide before the future arrives, and compare with hindsight](02-Randomised%20and%20Approximate%20Algorithms/09-online-algorithms-and-competitive-analysis.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s03"></a>
 
-## 03 · Information Theory · 10 cards
+## 03 · Information Theory · 12 cards
 
 *Measuring information in bits, compressing it, and pushing it through a channel that makes mistakes*
 
@@ -72,12 +78,14 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [Hamming and Reed-Solomon: codes that repair what the channel broke](03-Information%20Theory/08-error-correcting-codes-hamming-and-reed-solomon.md)
 9. [LDPC, turbo and polar codes: how modern links get within a whisker of capacity](03-Information%20Theory/09-ldpc-turbo-and-polar-codes-in-outline.md)
 10. [Rate and distortion: how many bits for a picture you can live with](03-Information%20Theory/10-lossy-compression-and-rate-distortion-in-outline.md)
+11. [Differential entropy and water-filling: bits for measured values, and power poured where noise is low](03-Information%20Theory/11-differential-entropy-and-water-filling.md)
+12. [Many users: compress apart, decode together, and share one channel](03-Information%20Theory/12-slepian-wolf-and-the-multiple-access-channel.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s04"></a>
 
-## 04 · Cryptography · 10 cards
+## 04 · Cryptography · 13 cards
 
 *What each primitive promises, what breaks it, and the arithmetic underneath: pads, block ciphers, hashes, RSA, curves, lattices, proofs*
 
@@ -91,12 +99,15 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [The TLS handshake: every primitive in one short conversation](04-Cryptography/08-key-exchange-in-practice-the-tls-handshake.md)
 9. [Lattices: hard problems a quantum computer does not break, and the new standards](04-Cryptography/09-lattices-and-post-quantum-cryptography.md)
 10. [Zero-knowledge: convincing someone you know a secret without showing it](04-Cryptography/10-zero-knowledge-proofs-in-outline.md)
+11. [SHA-3 and ChaCha20: absorb and squeeze, or add, rotate and xor](04-Cryptography/11-sponge-hashing-and-stream-ciphers.md)
+12. [Secret sharing: hide a number in a polynomial, and any k shares bring it back](04-Cryptography/12-shamir-secret-sharing.md)
+13. [Computing on secrets: add shares, multiply with a triple, or compute under encryption](04-Cryptography/13-secure-multiparty-computation-and-homomorphic-encryption.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s05"></a>
 
-## 05 · Operations Research · 10 cards
+## 05 · Operations Research · 12 cards
 
 *Writing a decision as a model a solver can answer, then reading the answer: programs, schedules, stock, queues, decisions, games*
 
@@ -110,12 +121,14 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [Deciding under uncertainty: expected utility, and what a perfect forecast is worth](05-Operations%20Research/08-decision-theory-and-the-value-of-information.md)
 9. [Nash equilibrium: nobody gains by moving alone, in pure or mixed strategies](05-Operations%20Research/09-game-theory-and-nash-equilibrium.md)
 10. [Auctions: why a second-price rule makes honesty the best policy](05-Operations%20Research/10-auctions-and-mechanism-design.md)
+11. [Games in turns: draw the tree, solve from the leaves, and ignore empty threats](05-Operations%20Research/11-extensive-form-games-and-subgame-perfection.md)
+12. [Sharing a joint cost: the Shapley value and the core](05-Operations%20Research/12-cooperative-games-shapley-value-and-core.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s06"></a>
 
-## 06 · Machine Learning Mathematics · 9 cards
+## 06 · Machine Learning Mathematics · 12 cards
 
 *The mathematics under the libraries: a loss to minimise, a gradient to follow, and the linear algebra behind the rest*
 
@@ -128,12 +141,15 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 7. [Principal components: the few directions that carry most of the variation](06-Machine%20Learning%20Mathematics/07-principal-components-and-dimension-reduction.md)
 8. [EM: guess the hidden labels, refit, repeat until nothing moves](06-Machine%20Learning%20Mathematics/08-em-algorithm.md)
 9. [Support vector machines: the widest safe margin, and the kernel trick](06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md)
+10. [Decision trees and forests: ask the best question, then average many noisy trees](06-Machine%20Learning%20Mathematics/10-decision-trees-and-random-forests.md)
+11. [Boosting: many weak rules, each fixing the last one's mistakes](06-Machine%20Learning%20Mathematics/11-boosting-adaboost-and-gradient-boosting.md)
+12. [Graphical models: draw who depends on whom, then sum out variables in a good order](06-Machine%20Learning%20Mathematics/12-bayesian-networks-and-belief-propagation.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s07"></a>
 
-## 07 · Network Science and Spectral Graphs · 8 cards
+## 07 · Network Science and Spectral Graphs · 10 cards
 
 *Networks as matrices: who matters, where the groups are, and how fast news, a virus or a random walker spreads*
 
@@ -145,6 +161,8 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Communities: modularity, and the algorithms that chase it](07-Network%20Science%20and%20Spectral%20Graphs/06-community-detection.md)
 7. [Expanders: sparse networks that are hard to cut and quick to mix](07-Network%20Science%20and%20Spectral%20Graphs/07-expanders-and-mixing.md)
 8. [Random walks as circuits: hitting times, resistance and commute times](07-Network%20Science%20and%20Spectral%20Graphs/08-random-walks-and-electrical-networks.md)
+9. [Robustness: random failures barely hurt, attacks on hubs break the network](07-Network%20Science%20and%20Spectral%20Graphs/09-configuration-model-and-network-robustness.md)
+10. [The stochastic block model: planted groups, and the point below which no method can find them](07-Network%20Science%20and%20Spectral%20Graphs/10-stochastic-block-model-and-detectability.md)
 
 [↑ Back to the shelves](#top)
 
@@ -161,6 +179,19 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Tolerances: never test two computed numbers for equality](08-Scientific%20Computing%20Practice/05-tolerances-and-comparing-computed-numbers.md)
 6. [Two roads and a mutation: a test that would notice if the answer were wrong](08-Scientific%20Computing%20Practice/06-testing-numerical-code-two-roads-and-mutations.md)
 7. [The check script: asserts that can fail, run on every card](08-Scientific%20Computing%20Practice/07-writing-a-check-script.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s09"></a>
+
+## 09 · Deep Networks · 4 cards
+
+*The mathematics inside modern networks: what one layer can fit, convolution, skip connections, normalisation and attention*
+
+1. [Universal approximation: one hidden layer can fit any continuous curve, at a price](09-Deep%20Networks/01-universal-approximation-theorem.md)
+2. [Convolutional networks: one small filter slid everywhere, so a shift in gives a shift out](09-Deep%20Networks/02-convolutional-networks.md)
+3. [Residual connections and normalisation: keep the gradient alive through fifty layers](09-Deep%20Networks/03-residual-networks-and-normalisation.md)
+4. [Attention: every word looks at every other word, weighted by a softmax](09-Deep%20Networks/04-attention-and-transformers.md)
 
 [↑ Back to the shelves](#top)
 

@@ -882,6 +882,7 @@ example : 256 - 2 * 32 - 2 = 190 := by decide
 - [Diffie-Hellman and ElGamal](05-diffie-hellman-and-elgamal.md): the next card. Two parties agree a secret in public, with a different hard problem underneath.
 - [Average-case hardness](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/06-average-case-and-cryptographic-hardness.md): why "hard" must mean hard for random keys, not just for the worst one.
 - [P versus NP](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/08-p-versus-np-what-is-known.md): where factoring sits among hard problems, and why no proof of its hardness exists.
+- [Computing on secrets](13-secure-multiparty-computation-and-homomorphic-encryption.md): add shares, multiply with a triple, or compute under encryption.
 
 The question this card leaves open: is decrypting without d really as hard as splitting n, and is splitting n really hard?
 

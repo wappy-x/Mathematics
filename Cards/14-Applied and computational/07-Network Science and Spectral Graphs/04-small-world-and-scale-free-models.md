@@ -989,6 +989,7 @@ example : 2 * 5 = 10 := by norm_num
 - [Epidemics on a network](05-epidemics-on-networks.md): how a disease spreads on these three networks, and why the hubs decide whether it takes off.
 - [Communities](06-community-detection.md): finding the tight groups that high clustering hints at.
 - [Expanders](07-expanders-and-mixing.md): networks with no bottlenecks, where short paths are guaranteed rather than typical.
+- [Robustness](09-configuration-model-and-network-robustness.md): random failures barely hurt, attacks on hubs break the network.
 
 Left open: which simple growth rule gives hubs *and* high clustering together, as real social networks have?
 

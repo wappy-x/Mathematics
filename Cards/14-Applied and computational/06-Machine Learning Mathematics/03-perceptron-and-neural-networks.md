@@ -854,6 +854,9 @@ example : 8 * 12 + 8 + 8 + 1 = 113 := by norm_num
 
 - [Backpropagation](04-backpropagation.md): the next card. With a smooth squashing function, the chain rule gives every weight in every layer its slope, so the XOR network can be trained instead of set by hand.
 - [Support vector machines](09-kernels-and-support-vector-machines.md): of all the lines that separate the data, pick the one with the widest margin $`\gamma`$, the quantity that controls this card's bound.
+- [Universal approximation](../09-Deep%20Networks/01-universal-approximation-theorem.md): one hidden layer can fit any continuous curve, at a price.
+- [Convolutional networks](../09-Deep%20Networks/02-convolutional-networks.md): one small filter slid everywhere, so a shift in gives a shift out.
+- [Attention](../09-Deep%20Networks/04-attention-and-transformers.md): every word looks at every other word, weighted by a softmax.
 
 This card set the two-layer weights by hand; how a network finds such weights by itself, when the step function has no slope, is the question it leaves open.
 

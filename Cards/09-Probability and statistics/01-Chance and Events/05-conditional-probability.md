@@ -730,6 +730,7 @@ example : ((Finset.range 10000).filter (fun i => i < 90 ∨ (100 ≤ i ∧ i < 5
 - [The hazard rate](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): conditional chances of default, chained through time by the multiplication rule.
 - [Sufficient statistics](../07-Sampling%20and%20Estimation/09-sufficient-statistics-and-factorisation.md): the summary that keeps everything the data say about the parameter.
 - [Causal graphs](../13-Survival%2C%20Design%20and%20Causality/08-causal-graphs-and-back-door-adjustment.md): arrows for cause, and the back-door rule for which variables to adjust for.
+- [Graphical models](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/12-bayesian-networks-and-belief-propagation.md): draw who depends on whom, then sum out variables in a good order.
 
 This card turns "positive given sick" into "sick given positive" only by a count; the question it leaves open is how to make that reversal a single rule that can be applied again as each new piece of evidence arrives, which [Bayes' rule](06-bayes-rule.md) answers.
 

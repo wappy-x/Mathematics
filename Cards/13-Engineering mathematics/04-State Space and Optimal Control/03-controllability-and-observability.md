@@ -1163,6 +1163,8 @@ example : (!![8 / 3, 2; 2, 2] : Matrix (Fin 2) (Fin 2) ℚ)⁻¹ 0 0 = 3 / 2 ∧
 
 - [Pole placement](04-pole-placement-and-observers.md): controllability is exactly what lets a gain put the closed-loop poles anywhere, and observability is what lets an observer rebuild the unseen states.
 - [The Kalman filter](07-kalman-filter.md): an estimator whose error stays bounded only for a detectable plant. It tracks only the rod's lean and lean rate, which the pivot encoder sees fully and the cart encoder not at all.
+- [Subspace identification](../11-Models%20from%20Data/03-subspace-identification-and-hankel-matrices.md): the Hankel matrix's rank is the model's order.
+- [Model reduction](../11-Models%20from%20Data/04-minimal-realisations-and-balanced-truncation.md): drop the states that are hard to reach and hard to see.
 
 The rank tests ask whether a state can be seen at all; how well it can be seen through a noisy encoder, and what estimate is best, is the question this card leaves open.
 

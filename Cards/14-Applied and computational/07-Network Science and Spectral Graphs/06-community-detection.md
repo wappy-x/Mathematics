@@ -863,6 +863,8 @@ end CommunityDetection
 
 - [Expanders](07-expanders-and-mixing.md): the next card, on networks built to have no communities at all, where every split cuts many lines.
 - [Small worlds and hubs](04-small-world-and-scale-free-models.md): random-network models to hold a real network up against, as this card holds the league up against chance.
+- [Robustness](09-configuration-model-and-network-robustness.md): random failures barely hurt, attacks on hubs break the network.
+- [The stochastic block model](10-stochastic-block-model-and-detectability.md): planted groups, and the point below which no method can find them.
 
 How should a score for groups be built so that it does not swallow small groups and does not find groups in pure noise?
 

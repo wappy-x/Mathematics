@@ -1089,6 +1089,7 @@ example : (3 / 10 : ℚ) * 6 = 9 / 5 ∧ (7 / 10 : ℚ) ^ 3 = 343 / 1000 := by n
 - [Small worlds and hubs](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/04-small-world-and-scale-free-models.md): models that add the clustering and the hubs this one lacks.
 - [Epidemics on a network](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/05-epidemics-on-networks.md): infection spreading along random edges.
 - [Percolation](../../25-Frontier/05-Analysis%20and%20Dynamics/06-dying-percolation-and-critical-phenomena.md): the sharp change at the threshold, seen as a physical phase change.
+- [The stochastic block model](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/10-stochastic-block-model-and-detectability.md): planted groups, and the point below which no method can find them.
 
 This card counts friends one person at a time; whether those friendships knit the town into one connected whole is the question [The giant component](02-the-giant-component.md) answers.
 

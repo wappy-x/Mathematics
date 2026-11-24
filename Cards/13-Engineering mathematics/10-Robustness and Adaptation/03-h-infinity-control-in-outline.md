@@ -799,6 +799,8 @@ example : (7 : ℕ) * 3 = 21 ∧ 20 < (7 : ℕ) * 3 := by norm_num
 - [Adapting as you go](04-gain-scheduling-and-adaptive-control.md): when one controller cannot serve the whole family, as design B cannot for robust performance, measure the load and change the gains with it.
 - [Passivity](05-passivity-and-absolute-stability.md): a different worst-case guarantee, built from energy instead of gain, that also covers nonlinear parts such as a saturating drive.
 - [Numerical analysis](../../16-Numerical%20analysis/README.md) and [Optimization](../../15-Optimization/README.md): the Riccati solvers and the linear-matrix-inequality form of the synthesis, which give the true optimum this card only brackets.
+- [The structured singular value](07-structured-singular-value.md): robustness when the uncertainty has a known shape.
+- [Model reduction](../11-Models%20from%20Data/04-minimal-realisations-and-balanced-truncation.md): drop the states that are hard to reach and hard to see.
 
 The question this card leaves open: $`\gamma_{\text{opt}}`$ for design B's weights lies between 0.5081 and 0.9696; how much of that gap does a controller of unrestricted form close?
 

@@ -985,6 +985,9 @@ example : (2 : ℕ) ^ 2 = 4 ∧ (4 : ℕ) ^ 3 = 64 := by decide
 ## Where this goes next
 
 - [Boundary layers](06-boundary-layers-and-singular-perturbation.md): what to do when setting the small number to zero throws away a condition, and the answer changes sharply in a thin layer.
+- [WKB](08-wkb-approximation.md): when the coefficient drifts slowly, the wave keeps its local wavelength.
+- [Multiple scales](09-method-of-multiple-scales.md): a slow clock beside the fast one kills the secular terms.
+- [Perturbation theory](../09-Quantum%20Mechanics%20in%20Outline/10-time-independent-perturbation-theory.md): nudge the energy levels without solving again.
 
 Regular perturbation needs the easy problem to keep every condition of the hard one; when a small number multiplies the highest derivative, it does not, and the next card shows how to stitch an inner answer to an outer one.
 

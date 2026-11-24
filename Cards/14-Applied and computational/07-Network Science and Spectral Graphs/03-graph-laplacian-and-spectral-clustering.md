@@ -901,6 +901,7 @@ example : (4 * 20000 : ℚ) / 5000 = 16 := by norm_num
 
 - [Communities](06-community-detection.md): more than two groups, and a score (modularity) that says whether a split is better than chance.
 - [Expanders](07-expanders-and-mixing.md): networks whose $`\lambda_2`$ stays large, so they have no cheap cut, and random walks on them mix fast.
+- [The stochastic block model](10-stochastic-block-model-and-detectability.md): planted groups, and the point below which no method can find them.
 
 This card leaves open how close the sign split comes to the best possible cut: $`\lambda_2`$ bounds every balanced cut from below, and Cheeger's inequality bounds from above the best cut that can be read off the Fiedler vector.
 

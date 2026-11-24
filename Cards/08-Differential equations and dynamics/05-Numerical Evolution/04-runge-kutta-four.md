@@ -661,6 +661,7 @@ end
 - [Runge-Kutta](../../16-Numerical%20analysis/06-ODE%20Solvers/01-runge-kutta-and-butcher-tableaux.md): the whole family and its order conditions.
 - [Geodesic and exponential map](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/04-geodesics-and-the-exponential-map.md): shortest paths on curved surfaces, stepped.
 - [The Kuramoto model](../13-Rhythms%20and%20Synchronisation/03-the-kuramoto-model.md): a crowd of oscillators with different speeds falls into step once the coupling passes a threshold.
+- [Multiple scales](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/09-method-of-multiple-scales.md): a slow clock beside the fast one kills the secular terms.
 
 Left open: a fixed step never reports its own error, so how should a solver choose h as it runs?
 

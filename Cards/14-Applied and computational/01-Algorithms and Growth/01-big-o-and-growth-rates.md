@@ -777,6 +777,8 @@ example : 2 ^ 16 = 2 ^ 8 * 16 ^ 2 := by norm_num
 - [Cost in practice](../08-Scientific%20Computing%20Practice/04-computational-cost-and-vectorisation.md): counted operations against a real machine's caches and memory.
 - [Time and space classes](../../24-Computability%20and%20complexity/03-Time%20Complexity/01-time-and-space-classes.md): memory as a cost alongside comparisons.
 - [Counting the work](../../16-Numerical%20analysis/01-Floating%20Point%20and%20Error/08-operation-counts-and-cost.md): turning a loop into a cost formula line by line.
+- [Finding a pattern in text](11-string-matching-kmp-and-rabin-karp.md): never re-read a character, or compare fingerprints.
+- [Edit distance](13-edit-distance-and-sequence-alignment.md): the fewest typos between two words, by a table and a traceback.
 
 Big-O says which method wins for large n; whether the cost quoted is the one you will actually meet, worst, typical or averaged over many calls, is still open.
 

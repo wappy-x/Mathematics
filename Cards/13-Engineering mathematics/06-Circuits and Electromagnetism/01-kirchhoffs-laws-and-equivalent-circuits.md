@@ -1007,6 +1007,9 @@ example : (24 : ℝ) * 6 / (2 + 6) / (3 + 6) = 2 ∧
 
 - [Phasors](02-phasors-and-impedance.md): with an alternating battery, coils and capacitors join the resistors. Each part's straight-line law becomes complex arithmetic, and the same two laws, node matrix and stand-ins carry over with impedance in place of resistance.
 - [Random walks as circuits](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/08-random-walks-and-electrical-networks.md): a walker steps from node to node, choosing each wire with a chance in proportion to its conductance. Hold one node at 1 V and another at 0 V, and each node's voltage is the chance that the walker reaches the 1 V node first.
+- [Op-amps](10-op-amp-circuits.md): huge gain wrapped in feedback, so two resistors set the answer.
+- [Transmission lines](11-transmission-lines-and-reflections.md): when the cable is long, the voltage travels and bounces.
+- [Two-ports](13-two-port-networks-and-s-parameters.md): four numbers describe any box with an input and an output.
 
 This card's circuit sits still: nothing in it stores energy. What happens when a part holds charge or magnetic field, and the answer depends on time, is the question left open.
 

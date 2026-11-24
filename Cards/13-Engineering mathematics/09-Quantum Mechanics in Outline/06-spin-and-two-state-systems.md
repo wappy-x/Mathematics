@@ -828,6 +828,8 @@ example (nx ny nz : ℝ) :
 - [Symmetry and conservation](08-symmetry-and-conserved-quantities.md): turning matrices like $`U(t)`$ as symmetries, and what they conserve. A field along z leaves the spin along z unchanged, as the flat green line shows.
 - [Mass gap](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/04-the-mass-gap-statement.md): the gauge theories built on the same 2 × 2 matrices.
 - [Qubits](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/05-qubits-superposition-and-measurement.md): two-state systems as computing units, gates as turning matrices, and the loss of phase that limits them.
+- [Perturbation theory](10-time-independent-perturbation-theory.md): nudge the energy levels without solving again.
+- [Two particles](11-two-particle-states-and-entanglement.md): product states, the singlet, and the CHSH bound.
 
 What this card leaves open is two spins together: a pair of spin one-half particles needs four complex numbers, not two, and some of its states cannot be split into one column per particle.
 

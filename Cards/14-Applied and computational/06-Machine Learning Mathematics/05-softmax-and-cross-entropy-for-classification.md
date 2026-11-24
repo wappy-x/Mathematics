@@ -845,6 +845,7 @@ example : -logb 2 (1 / 3 : ℝ) = logb 2 3 := by norm_num [logb_div, logb_self_e
 
 - [EM](08-em-algorithm.md): its responsibilities, the chance each hidden group explains a point, are a softmax of log-weights, computed the same way.
 - [Support vector machines](09-kernels-and-support-vector-machines.md): a rival loss, the hinge, that cares only about the margin of the top class and gives no chances at all.
+- [Attention](../09-Deep%20Networks/04-attention-and-transformers.md): every word looks at every other word, weighted by a softmax.
 
 This card fits a straight-line score in one feature; what scores should be made of when the shop uses all 12 numbers, or images of the parcels, is the question it leaves open.
 

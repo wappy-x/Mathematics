@@ -870,6 +870,7 @@ example : (256 : ℚ) * (2 * 3 + (3 - 5) ^ 2) / 5 ^ 2 = 512 / 5 := by norm_num
 - [Wavelet denoising](../../20-Harmonic%20analysis/05-Wavelets%20and%20Time-Frequency/07-wavelet-denoising.md): shrinking coefficients to strip noise from a signal.
 - [Decision theory](../10-Bayesian%20Inference/07-risk-admissibility-and-steins-paradox.md): risk, minimax, admissibility, and Stein's paradox.
 - [Kernel density estimation](../15-Nonparametric%20Inference/03-kernel-density-estimation.md): a smooth histogram, and the bandwidth that balances bias and noise.
+- [Decision trees and forests](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/10-decision-trees-and-random-forests.md): ask the best question, then average many noisy trees.
 
 The shrunk rule beat the average by accepting bias; among rules that refuse any bias, how small can the variance be made? The next card, [Fisher information](07-fisher-information-and-cramer-rao.md), sets that floor.
 

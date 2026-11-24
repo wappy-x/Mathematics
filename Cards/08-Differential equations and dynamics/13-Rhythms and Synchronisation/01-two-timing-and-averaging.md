@@ -607,6 +607,7 @@ example : (1 : ℚ) + 1 / 10 * 3 / 4 = 43 / 40 := by norm_num
 - [The Kuramoto model](03-the-kuramoto-model.md): the same phase equation for a crowd of rhythms falling into step.
 - [Delay equations](04-delay-differential-equations.md): a different cause of oscillation, a delayed feedback.
 - [Regular perturbation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/05-regular-perturbation.md): the Lindstedt-Poincaré method, which stretches the time axis to correct the frequency.
+- [Multiple scales](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/09-method-of-multiple-scales.md): a slow clock beside the fast one kills the secular terms.
 
 The question this card leaves open: what happens when two rhythms pull on each other's phase?
 

@@ -1124,6 +1124,7 @@ theorem matching_fixes_inner_constant (A : ℝ) :
 ## Where this goes next
 
 - [Lift and drag](../08-Fluids%20and%20Heat/04-lift-drag-and-boundary-layers.md): real aerofoils, where the outer speed varies along the chord, the layer can separate, and turbulent friction takes over.
+- [WKB](08-wkb-approximation.md): when the coefficient drifts slowly, the wave keeps its local wavelength.
 
 This card's wing is a flat skin in a uniform stream; what the layer does when the aerofoil's shape speeds the air up and then slows it, and when that costs lift, is the question [Lift and drag](../08-Fluids%20and%20Heat/04-lift-drag-and-boundary-layers.md) answers.
 

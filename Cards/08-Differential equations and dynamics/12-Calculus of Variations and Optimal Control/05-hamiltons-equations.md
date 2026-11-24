@@ -785,6 +785,7 @@ example : (1 : ℚ) + (1 / 20) ^ 2 * ((981 / 100) / 1) * 1 = 102452500 / 1000000
 - [Symplectic form](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/10-symplectic-form-and-hamiltonian-flow.md): the kept area as a geometric object.
 - [Einstein equations](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/02-einstein-equations-in-outline.md): variational field equations on curved spacetime.
 - [Action-angle variables and KAM](10-action-angle-variables-and-kam.md): an integrable system winds round tori, and most tori survive a small push.
+- [Free energies](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/10-thermodynamic-potentials-and-maxwell-relations.md): the right potential for each pair of held-fixed variables.
 
 Left open: the swing has nothing to steer. If a push could be chosen at each moment, which pushes reach a goal at the least cost?
 

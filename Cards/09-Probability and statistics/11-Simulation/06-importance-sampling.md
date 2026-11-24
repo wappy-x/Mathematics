@@ -885,6 +885,7 @@ example : (-1 : ℚ) + 1 / (2 * (1 / 2)) = 0 := by norm_num
 - [Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md): the same reweighting for whole random paths, where moving the centre becomes changing the drift.
 - [Historical and Monte Carlo VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md): simulated tail losses, where plain simulation is short of draws in exactly the way the bolts were.
 - [Propensity scores](../13-Survival%2C%20Design%20and%20Causality/09-propensity-scores-and-weighting.md): comparing like with like when treatment was not randomised.
+- [Particle filters](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/11-particle-filters.md): a cloud of weighted guesses for beliefs with more than one hump.
 
 The weight here was a ratio of two densities on a line. What that ratio means when the thing drawn is a whole path through time, with no density to divide, is the question the Radon-Nikodym and Girsanov cards answer.
 

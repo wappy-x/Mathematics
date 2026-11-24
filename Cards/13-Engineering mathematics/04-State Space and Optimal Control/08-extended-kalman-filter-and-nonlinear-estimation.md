@@ -929,7 +929,7 @@ example : !![(0 : ℤ), 1; -16, 0] * !![(0 : ℤ), 1; -16, 0] = !![(-16 : ℤ), 
 - **Spacecraft navigation.** The extended filter was developed for the Apollo programme's navigation, relinearising orbital mechanics around each new estimate.
 - **Drones and phones.** Orientation is nonlinear in any set of angles; flight controllers run extended or unscented filters on gyroscope and accelerometer readings.
 - **Battery gauges.** Voltage is a curved function of state of charge; the gauge linearises it at its current guess, or samples it.
-- **Robot localisation.** Ranges and bearings to landmarks are curved functions of position. A lost robot, whose belief has many humps, needs particle filters: many weighted samples, not one bell curve.
+- **Robot localisation.** Ranges and bearings to landmarks are curved functions of position. A lost robot, whose belief has many humps, needs [Particle filters](11-particle-filters.md): many weighted samples, not one bell curve.
 
 > **Say it back**
 > A Kalman filter is exact only for a linear model, and a wide swing is far from linear. The extended filter redraws the model's tangent at every step, at the current estimate. The unscented filter pushes five points with the belief's centre and spread through the true model and measures where they land, which catches how the curve bends the mean. While the belief is narrow they agree; when it is wide, the extended filter's claim can shrink while the truth spreads. The surprises, squared over their claimed variance, show divergence and which covariance to retune.
@@ -946,6 +946,8 @@ example : !![(0 : ℤ), 1; -16, 0] * !![(0 : ℤ), 1; -16, 0] = !![(-16 : ℤ), 
 
 - [LQG](09-lqg-and-the-separation-principle.md): a regulator fed a filter's estimate; with a nonlinear plant an extended filter takes the Kalman filter's place, and the separation guarantee is no longer exact.
 - [Predictive control](10-model-predictive-control.md): plans over a horizon from the current estimate, which on a swinging pole comes from a filter like these.
+- [Particle filters](11-particle-filters.md): a cloud of weighted guesses for beliefs with more than one hump.
+- [Smoothing and square roots](12-rts-smoothing-and-square-root-filters.md): use tomorrow's readings, and keep the covariance honest.
 
 This card set $`Q`$ and $`R`$ by hand and checked them by the surprises; it leaves open how to estimate them, and the pole's length, from the readings while the filter runs, and how to carry a two-humped belief like the 2.5 s dropout's, which takes many weighted samples (a particle filter) instead of one bell curve.
 

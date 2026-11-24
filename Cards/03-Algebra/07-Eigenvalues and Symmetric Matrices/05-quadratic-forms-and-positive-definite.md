@@ -638,6 +638,8 @@ example : ![(3 : ℚ), -2] ⬝ᵥ (!![4, 6; 6, 9] *ᵥ ![(3 : ℚ), -2]) = 0 := 
 - [Riemannian metric](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/01-riemannian-metrics.md): measuring length.
 - [Covariance matrices](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/07-the-manifold-of-covariance-matrices.md): their own space.
 - [Bilinear forms](12-bilinear-forms-and-sylvesters-law.md): a matrix that pairs two vectors instead of moving one, the symmetric ones are quadratic forms, the alternating ones measure signed area, and the sign count never changes.
+- [Smoothing and square roots](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/12-rts-smoothing-and-square-root-filters.md): use tomorrow's readings, and keep the covariance honest.
+- [Stress in 3D](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/10-stress-tensor-and-mohrs-circle.md): a symmetric matrix, its principal axes, and Mohr's circle.
 
 This card leaves open where the matrix comes from when a surface is measured rather than a mix: second derivatives, a later card's business.
 

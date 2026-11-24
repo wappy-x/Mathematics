@@ -856,7 +856,7 @@ example : 2 * 20 + 9 * 6 + 9 = 103 ∧ 103 + 2 = 105 := by norm_num
 - **Other quadratic problems.** The same kind of chain from SAT gives quadratic floors for the longest common subsequence, dynamic time warping (aligning two sound or sensor recordings) and the discrete Fréchet distance between two paths.
 
 > **Say it back**
-> Edit distance is the fewest inserts, deletes and changes between two strings, and the table computes it in $`n^2`$ steps. SETH says no method saves a fixed fraction of the exponent of brute force for k-SAT once clauses are wide enough. Splitting the variables in half turns a formula into two lists of $`2^{N/2}`$ vectors, with satisfying settings exactly the orthogonal pairs. Backurs and Indyk turn the lists into two strings of nearly the same length. So an $`n^{2-\varepsilon}`$ method for edit distance would break SETH: quadratic is the floor unless SETH is false.
+> [Edit distance](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/13-edit-distance-and-sequence-alignment.md) is the fewest inserts, deletes and changes between two strings, and the table computes it in $`n^2`$ steps. SETH says no method saves a fixed fraction of the exponent of brute force for k-SAT once clauses are wide enough. Splitting the variables in half turns a formula into two lists of $`2^{N/2}`$ vectors, with satisfying settings exactly the orthogonal pairs. Backurs and Indyk turn the lists into two strings of nearly the same length. So an $`n^{2-\varepsilon}`$ method for edit distance would break SETH: quadratic is the floor unless SETH is false.
 
 ---
 

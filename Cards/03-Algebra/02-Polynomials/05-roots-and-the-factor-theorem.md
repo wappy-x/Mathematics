@@ -500,6 +500,7 @@ example : ∀ x : ZMod 12, (x ^ 2 - 1 = 0 ↔ x = 1 ∨ x = 5 ∨ x = 7 ∨ x = 
 
 - [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): peeling factors off a polynomial is the same move as pulling primes out of a whole number.
 - [The fundamental theorem of algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md): what it takes to turn "at most n" into "exactly n".
+- [Secret sharing](../../14-Applied%20and%20computational/04-Cryptography/12-shamir-secret-sharing.md): hide a number in a polynomial, and any k shares bring it back.
 
 The cubic for a volume of 12 has degree 3 but only one root, 4. Whether its missing roots live somewhere beyond the ordinary number line is the question this card leaves open.
 

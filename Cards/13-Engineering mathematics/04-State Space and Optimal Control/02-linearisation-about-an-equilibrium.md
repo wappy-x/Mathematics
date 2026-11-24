@@ -798,6 +798,7 @@ example : (16 : ℤ) - 32 = -16 ∧ (-4 : ℤ) ^ 2 + 8 * (-4) + 16 = 0 := by nor
 - [Can you steer every state, and can you see every state](03-controllability-and-observability.md): the first questions asked of A, B and C. Here, does one cart push reach the lean, and does one encoder see the cart?
 - [Filtering a nonlinear plant](08-extended-kalman-filter-and-nonlinear-estimation.md): linearisation repeated at every tick, around a moving estimate instead of a fixed rest.
 - [Equations of motion of a vehicle](../07-Mechanics%20and%20Structures/05-vehicle-equations-of-motion.md): a full vehicle model whose trim points are linearised exactly as on this card.
+- [Nonlinear design](../10-Robustness%20and%20Adaptation/09-feedback-linearisation-and-sliding-mode.md): cancel the nonlinearity, or slide along a surface you chose.
 
 The question left open: the straight model says nothing about the size of the region where it can be trusted, and finding that region, here the 1.1656 rad, takes the curved model every time.
 

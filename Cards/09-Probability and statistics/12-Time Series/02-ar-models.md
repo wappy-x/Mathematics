@@ -1003,6 +1003,7 @@ example : (365 : ℚ) * (6 / 5) ^ 2 = 2628 / 5 := by norm_num
 - [GARCH](06-garch-and-volatility-clustering.md): autoregression applied to the size of the shocks, not their direction.
 - [Mean reversion](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/01-ornstein-uhlenbeck-mean-reversion-trading.md): AR(1) in continuous time, traded.
 - [Spectral estimation](../../13-Engineering%20mathematics/05-Signals/06-spectral-estimation-and-periodograms.md): the same memory seen as a spectrum, and AR fits as a spectral estimate.
+- [ARX identification](../../13-Engineering%20mathematics/11-Models%20from%20Data/01-arx-models-and-least-squares-identification.md): fit a difference equation to logged data by least squares.
 
 An AR model keeps memory in past values, so every shock echoes forever; the open question is how to model a shock that matters for exactly one or two days and then vanishes, which [Moving average and ARMA](03-ma-and-arma.md) answers.
 

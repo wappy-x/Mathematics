@@ -1025,6 +1025,8 @@ example : (5 / 100 : ℚ) / 4 = 125 / 10000 := by norm_num
 - [Gradient descent](../../15-Optimization/02-Unconstrained%20Methods/02-gradient-descent-and-its-rate.md): the optimisation wing's proofs of the rates for smooth and convex losses in general.
 - [Stochastic gradient](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/08-stochastic-gradient-and-sample-average-approximation.md): shrinking steps, and the proof that the noisy walk reaches the bottom.
 - [Momentum and Adam](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/09-momentum-adam-and-step-size-schedules.md): the accelerated rates sketched in Step 4, and step sizes that adapt for each weight.
+- [Boosting](11-boosting-adaboost-and-gradient-boosting.md): many weak rules, each fixing the last one's mistakes.
+- [Residual connections and normalisation](../09-Deep%20Networks/03-residual-networks-and-normalisation.md): keep the gradient alive through fifty layers.
 
 On a loss that is not a bowl, with many dips and flat ridges, what does the noise in a batch gradient do to where the walk ends up?
 

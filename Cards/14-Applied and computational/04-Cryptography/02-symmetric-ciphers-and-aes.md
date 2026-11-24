@@ -794,6 +794,7 @@ example : 2 ^ 97 / (2 ^ 32 * (2 ^ 32 - 1)) = 8589934594 := by norm_num
 ## Where this goes next
 
 - [Hashes and MACs](03-hash-functions-and-macs.md): checksums without a block cipher, the birthday bound in general, and MACs (message authentication codes, keyed checksums), of which the GCM tag is one kind.
+- [SHA-3 and ChaCha20](11-sponge-hashing-and-stream-ciphers.md): absorb and squeeze, or add, rotate and xor.
 
 The question this card leaves open: GCM's tag needs the secret key, so how can anyone check that a file is unchanged with no key at all, and how long must such a fingerprint be before two different files are unlikely to share one?
 

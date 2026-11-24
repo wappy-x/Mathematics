@@ -787,7 +787,7 @@ example (ω : ℝ) : ‖2 / ((ω : ℂ) * I - 1) - (-1)‖ = 1 := by
 - **Tuning by the ultimate gain.** Raising a P-only (proportional-only) gain until the loop just oscillates finds the gain margin's critical gain, the ultimate gain, 12.7585 here, and its 13.52 min period. Classical tuning rules start from those two numbers ([PID control](07-pid-control-and-tuning.md)).
 - **Specifications.** Controller specifications set minimum gain and phase margins, checked against a Bode or Nyquist plot measured on the plant itself.
 - **Feedback amplifiers.** Nyquist's own setting: too much loop gain where the phase reaches −180°, and the amplifier sings.
-- **Multivariable loops.** With several valves and several rooms, $`L`$ becomes a matrix; the generalised criterion counts turns of a determinant, and its sizes become singular values, the largest and smallest stretch the matrix gives any input ([Writing down model error](../10-Robustness%20and%20Adaptation/01-model-uncertainty-and-the-small-gain-theorem.md)).
+- **Multivariable loops.** With several valves and several rooms, $`L`$ becomes a matrix; the generalised criterion counts turns of a determinant, and its sizes become singular values, the largest and smallest stretch the matrix gives any input ([Several inputs, several outputs](../10-Robustness%20and%20Adaptation/06-multivariable-feedback-and-singular-values.md); [Writing down model error](../10-Robustness%20and%20Adaptation/01-model-uncertainty-and-the-small-gain-theorem.md)).
 
 > **Say it back**
 > The closed loop has a pole wherever the loop gain equals −1. The argument principle counts those poles in the right half-plane by how often the open-loop frequency-response curve turns round −1, corrected by the open loop's own unstable poles: Z = N + P. The heated room's curve does not encircle −1, so it settles. Its negative-axis crossing at −0.5016 gives a gain margin of 1.99, or 5.99 dB, and its unit-circle crossing gives 39.81° of phase margin, worth 2.52 min of extra pipe. The margins hold one at a time; spending part of both made the room hunt.
@@ -806,6 +806,8 @@ example (ω : ℝ) : ‖2 / ((ω : ℂ) * I - 1) - (-1)‖ = 1 := by
 - [Loop shaping](09-lead-lag-compensation-and-loop-shaping.md): bending the curve away from −1 on purpose, buying phase margin near the crossover without giving up gain at low frequency.
 - [Time delays](10-smith-predictor-and-time-delays.md): a controller that models the pipe and so removes most of the delay's lag from the loop.
 - [Writing down model error](../10-Robustness%20and%20Adaptation/01-model-uncertainty-and-the-small-gain-theorem.md): replacing two one-at-a-time margins by a guarantee against every model error up to a stated size.
+- [Several inputs, several outputs](../10-Robustness%20and%20Adaptation/06-multivariable-feedback-and-singular-values.md): singular values, zeros and the RGA.
+- [Describing functions](../10-Robustness%20and%20Adaptation/08-describing-functions-and-limit-cycles.md): predict a loop's oscillation by keeping one harmonic.
 
 The margins measure how far the curve is from −1; how to reshape the curve so that it keeps that distance while the thermostat works harder is the question loop shaping answers.
 

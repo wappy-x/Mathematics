@@ -766,6 +766,8 @@ example : (100 : ℕ) - 75 = 25 := by decide
 ## Where this goes next
 
 - [Heat engines](08-heat-engines-and-carnot-efficiency.md): the next card. It runs the two ledgers round a cycle and finds the most work any engine can take from heat between two temperatures.
+- [Free energies](10-thermodynamic-potentials-and-maxwell-relations.md): the right potential for each pair of held-fixed variables.
+- [Compressible flow](11-compressible-flow-nozzles-and-shocks.md): past Mach 1 a nozzle must widen, and a shock can stand still.
 
 This card measured lost work against one room at one temperature; how much of a hot flame's heat could ever become work is the question it leaves open.
 

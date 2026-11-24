@@ -1029,6 +1029,7 @@ example : (2716 : ℚ) * (2 ^ 14)⁻¹ = 2716 / 16384 := by norm_num
 
 - [Huffman coding](05-source-coding-and-huffman.md): a real code that gets within one bit per symbol of H, and reaches 1.75 exactly for this station.
 - [Channel capacity](07-channel-capacity-and-the-noisy-channel-theorem.md): typical sets of sent and received records, used to prove the noisy-channel theorem.
+- [Many users](12-slepian-wolf-and-the-multiple-access-channel.md): compress apart, decode together, and share one channel.
 
 The station's readings were taken as independent; when today's weather leans on yesterday's, what replaces 1.75 bits a day, and how is it measured?
 

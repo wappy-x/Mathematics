@@ -1003,6 +1003,8 @@ example : (5 / 2 : ℝ) * 4 / ((2 - 1) * (4 - 499 / 500 * 2 + 1 / 2)) = 1250 / 3
 - [Discretising a design](09-zero-order-hold-and-tustin-discretisation.md): the exact a and b for a heater held over each tick, and how an s-plane controller becomes a z-plane one.
 - [Sampling](../05-Signals/01-sampling-and-the-nyquist-theorem.md): why the point z = −1, half the sampling rate, is the fastest wobble a sampled system can see, and what happens to faster ones.
 - [Digital filters](../05-Signals/04-digital-filters-fir-and-iir.md): difference equations designed on purpose, with poles and zeros placed to pass some frequencies and stop others.
+- [Finite word length](../05-Signals/12-finite-word-length-filters-and-quantisation.md): rounded coefficients move poles, rounded sums add noise.
+- [ARX identification](../11-Models%20from%20Data/01-arx-models-and-least-squares-identification.md): fit a difference equation to logged data by least squares.
 
 This card took the update rule a = 0.998, b = 0.04 as given. Where do those numbers come from when a continuous tip is sampled every 0.1 s, and how much does the choice of sampling map change the poles? [Discretising a design](09-zero-order-hold-and-tustin-discretisation.md) answers that.
 

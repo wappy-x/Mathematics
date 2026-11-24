@@ -671,7 +671,7 @@ example (J : ℚ) :
 - **Conveyors, winders and packaging lines.** Loads change through the shift. One controller certified across the whole range avoids retuning, and the certificate says how much more change, here a factor of 1.59, is safe.
 - **Drives on a network.** Speed and position often arrive over a fieldbus with a few milliseconds of delay. The small gain rule with a delay envelope certified 19.38 ms here, close to the true limit of 20.94 ms.
 - **Robot arms.** A gripped payload changes the arm's inertia by a percentage, which is the multiplicative form; when the percentage is too large for one controller, gains are scheduled by payload ([Adapting as you go](04-gain-scheduling-and-adaptive-control.md)).
-- **Multivariable plants.** Distillation columns and aircraft have several inputs and outputs; $`\lvert\cdot\rvert`$ becomes the largest singular value $`\bar\sigma`$, and the same rule certifies the loop.
+- **Multivariable plants.** Distillation columns and aircraft have several inputs and outputs; $`\lvert\cdot\rvert`$ becomes the largest singular value $`\bar\sigma`$, and the same rule certifies the loop ([Several inputs, several outputs](06-multivariable-feedback-and-singular-values.md)).
 - **Nonlinear parts.** A part whose output never exceeds its input in size, such as a saturation, has gain at most 1, so the rule applies to it too; [Passivity](05-passivity-and-absolute-stability.md) gives a sharper test for parts that only absorb energy.
 
 > **Say it back**
@@ -688,6 +688,9 @@ example (J : ℚ) :
 ## Where this goes next
 
 - [Robust tests](02-robust-stability-and-robust-performance.md): from "stays stable" to "still performs", with weights on $`S`$ and $`T`$ tested together for every plant in the family.
+- [Several inputs, several outputs](06-multivariable-feedback-and-singular-values.md): singular values, zeros and the RGA.
+- [The structured singular value](07-structured-singular-value.md): robustness when the uncertainty has a known shape.
+- [Nonlinear design](09-feedback-linearisation-and-sliding-mode.md): cancel the nonlinearity, or slide along a surface you chose.
 
 The certificate checks a controller someone already designed; how to choose the controller that makes the worst-case gain as small as possible is the question [H-infinity design](03-h-infinity-control-in-outline.md) takes up.
 

@@ -719,6 +719,7 @@ example : (90 : ℝ) / 70 = 9 / 7 := by norm_num
 
 - [Convection and radiation](06-convection-and-radiation.md), back on this shelf: how big the temperature gap across a radiator or a heat exchanger must be to move a given heat. That gap is the 5 K this card took as given, and it sets how far below the limit a real pump must sit.
 - [Fourier's law](05-heat-conduction-and-fouriers-law.md), also back on this shelf: heat moving through a wall or pipe, which is where the entropy a real machine creates is made.
+- [Free energies](10-thermodynamic-potentials-and-maxwell-relations.md): the right potential for each pair of held-fixed variables.
 
 The question left open is how fast: a reversible machine reaches the limit only at zero power, and how much efficiency a machine must give up to deliver real power depends on how quickly its heat exchangers can move heat.
 

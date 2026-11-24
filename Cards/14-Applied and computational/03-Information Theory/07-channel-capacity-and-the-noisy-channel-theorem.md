@@ -176,7 +176,7 @@ Write X for the n bits sent and Y for the n bits received. The information is I 
 
 A radio does not really send bits. It sends pulses of chosen height, and the receiver measures each pulse plus normal noise ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). Call the average signal power S and the noise power N.
 
-Step 1 carries over, with entropy for measured values in place of bits. One fact is needed. A normal value has an uncertainty score, its differential entropy, of ½ log2(2πe × its variance), where e ≈ 2.718 is the base of natural logs. Among all values with the same variance, the normal scores highest (Cover and Thomas, chapter 8). The score is not a count of bits and can even be negative; only the difference of two scores counts as bits, and the steps below use only differences.
+Step 1 carries over, with entropy for measured values in place of bits. One fact is needed. A normal value has an uncertainty score, its differential entropy, of ½ log2(2πe × its variance), where e ≈ 2.718 is the base of natural logs. Among all values with the same variance, the normal scores highest (Cover and Thomas, chapter 8; [Differential entropy and water-filling](11-differential-entropy-and-water-filling.md)). The score is not a count of bits and can even be negative; only the difference of two scores counts as bits, and the steps below use only differences.
 
 - Given the pulse sent, the uncertainty left is the noise's: ½ log2(2πe N).
 - The received value has variance at most S + N, so its uncertainty is at most ½ log2(2πe(S + N)), reached when the sent heights are themselves normal.
@@ -897,6 +897,8 @@ example : 1 - binEntropy (99 / 100) / log 2 = 1 - binEntropy (1 / 100) / log 2 :
 
 - [Hamming and Reed-Solomon](08-error-correcting-codes-hamming-and-reed-solomon.md): the next card. Codes built by design rather than at random, with fast decoders, and how far they sit from capacity.
 - [Rate and distortion](10-lossy-compression-and-rate-distortion-in-outline.md): the mirror question. If some error is acceptable, how few bits will do?
+- [Differential entropy and water-filling](11-differential-entropy-and-water-filling.md): bits for measured values, and power poured where noise is low.
+- [Many users](12-slepian-wolf-and-the-multiple-access-channel.md): compress apart, decode together, and share one channel.
 
 The theorem promises good codes but builds none that can be decoded quickly. How to get close to 0.919 with a decoder that runs in real time is the question it leaves open.
 

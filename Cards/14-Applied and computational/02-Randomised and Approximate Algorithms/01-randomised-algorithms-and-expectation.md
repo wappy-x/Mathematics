@@ -1015,6 +1015,7 @@ example : (40320 : ℚ) * (2 / (5 - 4 + 1)) = 40320 := by norm_num
 - [Monte Carlo integration](05-monte-carlo-integration-in-many-dimensions.md): Monte Carlo as estimation, where the answer is a number with a standard error.
 - [Seeds](../08-Scientific%20Computing%20Practice/03-reproducible-simulation-and-seeds.md): how fixed seeds make random programs repeatable, and when they make them predictable.
 - [BPP](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/03-randomised-complexity-and-bpp.md): the class of problems a Monte Carlo method solves quickly with a small error.
+- [Online algorithms](09-online-algorithms-and-competitive-analysis.md): decide before the future arrives, and compare with hindsight.
 
 This card leaves open how far one run can stray from 293,906,261: an average says nothing about the worst night.
 

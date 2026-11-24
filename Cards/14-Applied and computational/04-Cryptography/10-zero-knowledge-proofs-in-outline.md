@@ -707,6 +707,7 @@ example : (List.range 11).findIdx (fun k => (4 : ZMod 23) ^ k = 8) = 7 := by dec
 ## Where this goes next
 
 - [Interactive proofs](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/04-interactive-proofs-ip-pspace-and-the-pcp-theorem.md): the general theory of prover and checker, for claims beyond "I know a discrete log".
+- [Computing on secrets](13-secure-multiparty-computation-and-homomorphic-encryption.md): add shares, multiply with a triple, or compute under encryption.
 
 The open question this card leaves: can every claim that has a short checkable proof also be proved in zero knowledge, and how short can such a proof be?
 

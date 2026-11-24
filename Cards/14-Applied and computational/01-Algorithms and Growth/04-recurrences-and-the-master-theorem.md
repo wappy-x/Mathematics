@@ -760,6 +760,7 @@ example : 2 ^ 20 * 20 = 20971520 := by norm_num
 
 - [Sorting and searching](05-sorting-and-searching.md): merge sort, quicksort and binary search in full, and why no comparison sort beats the n log n floor.
 - [Dynamic programming](07-dynamic-programming.md): when the calls overlap, store each answer once and the tree collapses to a table.
+- [Beating n log n, and finding the median in linear time](10-linear-time-sorting-and-selection.md): builds on this card.
 
 This card costs quicksort in its worst case and for a fixed split. What it costs on average over every order of the playlist needs expectation (an average weighted by probability), and is the question this card leaves open. [Sorting and searching](05-sorting-and-searching.md) answers it by counting which pairs of tracks ever meet.
 

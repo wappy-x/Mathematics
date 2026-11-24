@@ -580,6 +580,7 @@ example : ((4 / 5 : ℚ) - 5 / 7) * (7 / 10) - (3 / 10) * (1 / 5) = 0 := by norm
 - [Cayley-Hamilton and the minimal polynomial](08-cayley-hamilton-and-minimal-polynomial.md): every matrix satisfies its own characteristic equation, and the smallest such equation says whether it can be diagonalised.
 - [Schur's lemma and orthogonality](../12-Group%20Representations/02-schurs-lemma-and-character-orthogonality.md): a map between two irreducible pieces is zero or an isomorphism, so their traces are perpendicular.
 - [Floquet theory](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/08-floquet-theory-and-parametric-resonance.md): a system with periodic coefficients is a constant one seen through a periodic lens, and pumping at twice the natural rate makes it grow.
+- [The structured singular value](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/07-structured-singular-value.md): robustness when the uncertainty has a known shape.
 
 This card says nothing about a mixture of the two patterns, which is every other pattern there is. Splitting any column into its two is next.
 

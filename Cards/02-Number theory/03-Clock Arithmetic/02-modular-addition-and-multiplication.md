@@ -352,6 +352,7 @@ example : 47 * 24 = 1128 ∧ 1128 % 9 = 3 := by decide
 - [Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): multiplying on the clock over and over, so huge powers stay small.
 - [Barcode check digits](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/01-barcode-check-digit.md): this check, built into every barcode.
 - [Day of the week for any date](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md): the 7-hour clock, and what day a date lands on.
+- [Finding a pattern in text](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/11-string-matching-kmp-and-rabin-karp.md): never re-read a character, or compare fingerprints.
 
 This card leaves division open: when can you divide on the clock? [The modular inverse](04-modular-inverse.md) answers it.
 

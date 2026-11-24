@@ -863,6 +863,7 @@ example (h u : ℕ → ℝ) (h0 : h 0 = 0) :
 - [Transfer functions](02-impulse-response-and-transfer-functions.md): the continuous impulse response turned into a transfer function, what the system does to each exponential, where convolution becomes multiplication. The sampled h[k] gets its transform on the z-transform card below.
 - [Poles and zeros](03-poles-zeros-and-stability.md): when a pulse response fades and bounded inputs give bounded outputs.
 - [The z-transform](08-z-transform-and-discrete-time-systems.md): the second-by-second recurrence used as road three, written as an algebra of delays.
+- [Convolutional networks](../../14-Applied%20and%20computational/09-Deep%20Networks/02-convolutional-networks.md): one small filter slid everywhere, so a shift in gives a shift out.
 
 Convolution needs the whole pulse response and a fresh sum of every past second for each new output; the transfer function replaces that sum with one multiplication per frequency, and that is what makes a cruise controller designable by hand.
 

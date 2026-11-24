@@ -923,6 +923,7 @@ example : (26 : ℕ) ^ 8 * (2 * 100000 + 2) * 10 ^ 6 = 41765830569329152000000 :
 - [RSA in full](04-rsa-in-full.md): encryption and signatures with a public key; RSA pads and signs using a hash, so this card's collision bound sets the hash size it needs.
 - [Digital signatures](07-digital-signatures.md): hash then sign, and why a hash collision becomes a signature forgery.
 - [The TLS handshake](08-key-exchange-in-practice-the-tls-handshake.md): HMAC used to turn one shared secret into the keys for a whole connection.
+- [SHA-3 and ChaCha20](11-sponge-hashing-and-stream-ciphers.md): absorb and squeeze, or add, rotate and xor.
 
 The question this card leaves open: a MAC needs a key both sides already share, so how do a laptop and a bank that have never met agree on one?
 

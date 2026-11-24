@@ -700,6 +700,7 @@ example : (1 : ℚ) ^ 4 / 4 + 0 ^ 2 / 2 = 25 / 100 := by norm_num
 - [Passivity](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/05-passivity-and-absolute-stability.md): stored energy as V for whole families of feedback loops.
 - [Invariant manifolds](12-stable-unstable-and-centre-manifolds.md): the curves into and out of a saddle, and the slow curve that decides when the linear part is silent.
 - [The Hopf bifurcation](13-hopf-bifurcation.md): a spiral turns unstable and a cycle is born gently, or a big swing appears all at once.
+- [Nonlinear design](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/09-feedback-linearisation-and-sliding-mode.md): cancel the nonlinearity, or slide along a surface you chose.
 
 The question this card leaves open: when V' is only ≤ 0, as for the ball in honey with E as V, how do you prove it still settles?
 

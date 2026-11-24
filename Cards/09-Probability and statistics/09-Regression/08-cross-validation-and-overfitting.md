@@ -869,6 +869,9 @@ example : ((Finset.range 5).biUnion fun k => ({k, k + 5} : Finset ℕ)) = Finset
 - [AIC and BIC](11-aic-and-bic.md): scoring models by fit minus a price for each parameter.
 - [Kernel density estimation](../15-Nonparametric%20Inference/03-kernel-density-estimation.md): a smooth histogram, and the bandwidth that balances bias and noise.
 - [Smoothing a scatter](../15-Nonparametric%20Inference/04-kernel-regression-and-smoothing-splines.md): kernel regression and smoothing splines.
+- [ARX identification](../../13-Engineering%20mathematics/11-Models%20from%20Data/01-arx-models-and-least-squares-identification.md): fit a difference equation to logged data by least squares.
+- [Decision trees and forests](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/10-decision-trees-and-random-forests.md): ask the best question, then average many noisy trees.
+- [Boosting](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/11-boosting-adaboost-and-gradient-boosting.md): many weak rules, each fixing the last one's mistakes.
 
 Cross-validation measures the gap between training and true error after the fact, one record at a time; how large that gap can be before any data are held out, for a whole family of curves at once, is the question Learning with a guarantee answers.
 

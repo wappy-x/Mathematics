@@ -80,7 +80,7 @@ u = G_1(1 - T + T u), \qquad z = 1 - G_0(1 - T + T u)
 
 ### When it holds
 
-- **Friendships wired at random, given each person's degree.** This is the configuration model (shuffle all friendship ends and pair them off). Real friends share friends. Wire the same 5,000 people as a ring, each linked to the 3 nearest on each side: the formula says 74.62% fall ill at T = 0.30, but no simulated outbreak passed 100 people. The ring breaks two things at once. Friends share friends, so infections are wasted on people already ill. And the ring is a thin chain: only 6 friendships cross any point of it, so an outbreak stops at the first point where all 6 fail.
+- **Friendships wired at random, given each person's degree.** This is the configuration model (shuffle all friendship ends and pair them off; see [Robustness](09-configuration-model-and-network-robustness.md)). Real friends share friends. Wire the same 5,000 people as a ring, each linked to the 3 nearest on each side: the formula says 74.62% fall ill at T = 0.30, but no simulated outbreak passed 100 people. The ring breaks two things at once. Friends share friends, so infections are wasted on people already ill. And the ring is a thin chain: only 6 friendships cross any point of it, so an outbreak stops at the first point where all 6 fail.
 - **A large network.** The formula describes an endlessly large network. At 5,000 people, with the 50 busiest vaccinated and the flu below the threshold, 0.15% of 2,000 introductions still passed 100 people, 133 on average, before dying out.
 - **One fixed chance per friendship, independent of the others.** If illness length varies from person to person, one long illness raises the chance on all of that person's friendships at once. Then fewer introductions take off than $`z`$ says, though a large outbreak's size stays close to the formula.
 - **Immunity lasts.** This is SIR: recovered people cannot catch it again. If they can, the disease can settle in for good and the threshold changes.
@@ -1120,6 +1120,7 @@ example : 3 + 2 + 1 = 6 := by decide
 - [Communities](06-community-detection.md): finding the tight groups whose shared friends break this card's random-wiring assumption.
 - [Expanders](07-expanders-and-mixing.md): networks that are hard to cut, where anything that spreads reaches everyone quickly.
 - [Centrality](01-centrality-and-pagerank.md): other ways to rank who matters; degree is the one this card's vaccination used.
+- [Robustness](09-configuration-model-and-network-robustness.md): random failures barely hurt, attacks on hubs break the network.
 
 This card treats every friendship as equally likely to carry flu and every person as equally likely to catch it; how the threshold moves when friendships cluster into communities is the question it leaves open.
 

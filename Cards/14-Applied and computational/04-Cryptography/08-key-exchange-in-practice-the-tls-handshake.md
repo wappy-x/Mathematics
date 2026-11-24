@@ -95,7 +95,7 @@ Public-key maths is slow and moves only short numbers. So the handshake uses it 
 
 Z is a number with structure (it lies in a group), not uniform bytes. The KDF fixes that. HKDF first runs HMAC (the standard MAC built from a hash) with Z as input (the "extract" step), then runs HMAC again with a label and h(T) (the "expand" step) to produce as many key bytes as needed. Different labels give independent keys: one for each direction, and one for each Finished message ([Hashes and MACs](03-hash-functions-and-macs.md)).
 
-The order then goes through a DEM: encrypt, then attach a 16-byte tag computed under the same key. Real TLS uses AES-GCM or ChaCha20-Poly1305, two ciphers with a built-in tag ([AES](02-symmetric-ciphers-and-aes.md)). The toy uses an HMAC keystream and an HMAC tag, which play the same two roles. Flip one bit on the wire and the tag fails: the bank refuses the order instead of reading a changed one.
+The order then goes through a DEM: encrypt, then attach a 16-byte tag computed under the same key. Real TLS uses AES-GCM or ChaCha20-Poly1305, two ciphers with a built-in tag ([AES](02-symmetric-ciphers-and-aes.md); [SHA-3 and ChaCha20](11-sponge-hashing-and-stream-ciphers.md)). The toy uses an HMAC keystream and an HMAC tag, which play the same two roles. Flip one bit on the wire and the tag fails: the bank refuses the order instead of reading a changed one.
 
 A 2003 theorem (Cramer and Shoup, in Sources) says the split is safe: a KEM and a DEM that each resist chosen-ciphertext attack (an attacker who can get other ciphertexts opened) together make public-key encryption that resists it too. Each half can be designed and checked on its own.
 

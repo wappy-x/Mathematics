@@ -992,7 +992,7 @@ example : √(9 / 4 : ℝ) = 3 / 2 := by
 ## Where you meet it in real life
 
 - **The radio set itself.** Its antenna is cut to a fraction of the 2.9979 m wave, and its RLC tuner picks the one frequency out of the field the antenna feels ([RLC resonance](03-rlc-circuits-and-resonance.md)).
-- **Circuit boards and the lumped-circuit rule.** [Kirchhoff's laws](01-kirchhoffs-laws-and-equivalent-circuits.md) hold while a circuit is small beside the wavelength. A tuner a few centimetres across is tiny beside 3 m; a board trace carrying 3 GHz, where the wave is 0.0999 m, is not, and designers treat it as a transmission line.
+- **Circuit boards and the lumped-circuit rule.** [Kirchhoff's laws](01-kirchhoffs-laws-and-equivalent-circuits.md) hold while a circuit is small beside the wavelength. A tuner a few centimetres across is tiny beside 3 m; a board trace carrying 3 GHz, where the wave is 0.0999 m, is not, and designers treat it as a transmission line ([Transmission lines](11-transmission-lines-and-reflections.md)).
 - **Coaxial cable and matching stubs.** Inside the cable the wave travels at about two-thirds of $`c`$, so every length cut to a fraction of a wave is cut shorter than in air.
 - **Polarised sunglasses and satellite dishes.** Both choose a direction of $`\mathbf E`$. A sunglass lens blocks the horizontal glare; a satellite feed is turned to the polarisation the satellite sends.
 - **Light, microwaves, X-rays.** All the same wave at other frequencies; only the wavelength changes. A microwave oven at 2.45 GHz uses a wave 0.1224 m long.
@@ -1013,6 +1013,8 @@ example : √(9 / 4 : ℝ) = 3 / 2 := by
 
 - [AC power](09-power-and-three-phase.md): the next card, back in the wires. At 50 Hz the wavelength is 5,996 km, which is why the mains can be treated as lumped circuits.
 - [Hodge star](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/09-hodge-star-and-maxwell-in-forms.md): the differential-geometry wing rewrites the same four equations as two equations on forms, and shows the wave's speed is built into the geometry of space and time.
+- [Transmission lines](11-transmission-lines-and-reflections.md): when the cable is long, the voltage travels and bounces.
+- [Impedance matching](12-impedance-matching-and-the-smith-chart.md): a quarter wave or a stub, read off the Smith chart.
 
 The question left open: how much power does the wave carry, and how does an antenna turn a field of 1 mV/m into the microvolts a tuner works with?
 

@@ -6,26 +6,27 @@
 
 Turn a physical system into equations, choose the scales that matter, transform it, and decide whether it is stable. Design and tune a controller, process a sampled signal, estimate hidden states, and read the equations of circuits, structures, fluids, heat and quantum mechanics well enough to follow an engineering text.
 
-10 shelves · **86 of 86 cards ready to read**
+11 shelves · **111 of 111 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
 | Shelf | Cards |
 | --- | ---: |
-| [01 · Units and Modelling](#s01) | 7 |
+| [01 · Units and Modelling](#s01) | 9 |
 | [02 · Linear Systems and Transforms](#s02) | 9 |
 | [03 · Feedback Control](#s03) | 10 |
-| [04 · State Space and Optimal Control](#s04) | 10 |
-| [05 · Signals](#s05) | 10 |
-| [06 · Circuits and Electromagnetism](#s06) | 9 |
-| [07 · Mechanics and Structures](#s07) | 9 |
-| [08 · Fluids and Heat](#s08) | 9 |
-| [09 · Quantum Mechanics in Outline](#s09) | 8 |
-| [10 · Robustness and Adaptation](#s10) | 5 |
+| [04 · State Space and Optimal Control](#s04) | 12 |
+| [05 · Signals](#s05) | 12 |
+| [06 · Circuits and Electromagnetism](#s06) | 13 |
+| [07 · Mechanics and Structures](#s07) | 11 |
+| [08 · Fluids and Heat](#s08) | 11 |
+| [09 · Quantum Mechanics in Outline](#s09) | 11 |
+| [10 · Robustness and Adaptation](#s10) | 9 |
+| [11 · Models from Data](#s11) | 4 |
 
 <a name="s01"></a>
 
-## 01 · Units and Modelling · 7 cards
+## 01 · Units and Modelling · 9 cards
 
 *Units, dimensionless groups, scaling, small parameters and how measurement error spreads*
 
@@ -36,6 +37,8 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Regular perturbation: solve the easy problem, then correct in powers of a small number](01-Units%20and%20Modelling/05-regular-perturbation.md)
 6. [Boundary layers: when the small term cannot be dropped near a wall](01-Units%20and%20Modelling/06-boundary-layers-and-singular-perturbation.md)
 7. [Error propagation: measurement slop in the inputs becomes slop in the answer](01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md)
+8. [WKB: when the coefficient drifts slowly, the wave keeps its local wavelength](01-Units%20and%20Modelling/08-wkb-approximation.md)
+9. [Multiple scales: a slow clock beside the fast one kills the secular terms](01-Units%20and%20Modelling/09-method-of-multiple-scales.md)
 
 [↑ Back to the shelves](#top)
 
@@ -78,7 +81,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s04"></a>
 
-## 04 · State Space and Optimal Control · 10 cards
+## 04 · State Space and Optimal Control · 12 cards
 
 *Many states at once: simulate, test what you can steer and see, place poles, optimise and estimate*
 
@@ -92,12 +95,14 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [Filtering a nonlinear plant: relinearise each step, or push sample points through](04-State%20Space%20and%20Optimal%20Control/08-extended-kalman-filter-and-nonlinear-estimation.md)
 9. [LQG: design regulator and estimator apart, then bolt them together](04-State%20Space%20and%20Optimal%20Control/09-lqg-and-the-separation-principle.md)
 10. [Predictive control: plan a whole future, use the first move, replan next tick](04-State%20Space%20and%20Optimal%20Control/10-model-predictive-control.md)
+11. [Particle filters: a cloud of weighted guesses for beliefs with more than one hump](04-State%20Space%20and%20Optimal%20Control/11-particle-filters.md)
+12. [Smoothing and square roots: use tomorrow's readings, and keep the covariance honest](04-State%20Space%20and%20Optimal%20Control/12-rts-smoothing-and-square-root-filters.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s05"></a>
 
-## 05 · Signals · 10 cards
+## 05 · Signals · 12 cards
 
 *Sampled data: spectra, windows, filters, rate changes, spectral estimates and time-frequency pictures*
 
@@ -111,12 +116,14 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [Wavelets: a coarse picture plus the detail you left out at every scale](05-Signals/08-wavelets-and-multiresolution.md)
 9. [Spectrograms: one spectrum per slice of time, and the blur you cannot avoid](05-Signals/09-short-time-fourier-and-spectrograms.md)
 10. [Compressed sensing: few measurements suffice when the signal is mostly zeros](05-Signals/10-compressed-sensing-in-outline.md)
+11. [Optimal filters: spread the error evenly, and buy sharpness with ripple](05-Signals/11-equiripple-fir-and-optimal-iir-design.md)
+12. [Finite word length: rounded coefficients move poles, rounded sums add noise](05-Signals/12-finite-word-length-filters-and-quantisation.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s06"></a>
 
-## 06 · Circuits and Electromagnetism · 9 cards
+## 06 · Circuits and Electromagnetism · 13 cards
 
 *Circuits solved as algebra, then the four field equations underneath them*
 
@@ -129,12 +136,16 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 7. [Maxwell's equations: four statements holding all of classical electromagnetism](06-Circuits%20and%20Electromagnetism/07-maxwells-equations.md)
 8. [Electromagnetic waves: the two curl equations feed each other and light falls out](06-Circuits%20and%20Electromagnetism/08-electromagnetic-waves.md)
 9. [AC power: real, reactive and apparent, and why the grid uses three phases](06-Circuits%20and%20Electromagnetism/09-power-and-three-phase.md)
+10. [Op-amps: huge gain wrapped in feedback, so two resistors set the answer](06-Circuits%20and%20Electromagnetism/10-op-amp-circuits.md)
+11. [Transmission lines: when the cable is long, the voltage travels and bounces](06-Circuits%20and%20Electromagnetism/11-transmission-lines-and-reflections.md)
+12. [Impedance matching: a quarter wave or a stub, read off the Smith chart](06-Circuits%20and%20Electromagnetism/12-impedance-matching-and-the-smith-chart.md)
+13. [Two-ports: four numbers describe any box with an input and an output](06-Circuits%20and%20Electromagnetism/13-two-port-networks-and-s-parameters.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s07"></a>
 
-## 07 · Mechanics and Structures · 9 cards
+## 07 · Mechanics and Structures · 11 cards
 
 *Forces, rotation, energy methods, ringing modes, and what makes a member bend or buckle*
 
@@ -147,12 +158,14 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 7. [Stress, strain and bending: how a beam carries load and how far it sags](07-Mechanics%20and%20Structures/07-stress-strain-and-beam-bending.md)
 8. [Buckling: a slender column bends away long before it is crushed](07-Mechanics%20and%20Structures/08-buckling-and-stability.md)
 9. [Orbits: inverse-square gravity gives conic sections and Kepler's three laws](07-Mechanics%20and%20Structures/09-orbital-mechanics-and-the-kepler-problem.md)
+10. [Stress in 3D: a symmetric matrix, its principal axes, and Mohr's circle](07-Mechanics%20and%20Structures/10-stress-tensor-and-mohrs-circle.md)
+11. [Torsion and yield: twist a shaft, then ask whether the steel gives way](07-Mechanics%20and%20Structures/11-torsion-and-yield-criteria.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s08"></a>
 
-## 08 · Fluids and Heat · 9 cards
+## 08 · Fluids and Heat · 11 cards
 
 *Flow and heat as conservation laws, with the dimensionless numbers that decide the behaviour*
 
@@ -165,12 +178,14 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 7. [The thermodynamic laws: energy is conserved and entropy only grows](08-Fluids%20and%20Heat/07-thermodynamic-laws-and-entropy.md)
 8. [Heat engines: the best efficiency anything between two temperatures can reach](08-Fluids%20and%20Heat/08-heat-engines-and-carnot-efficiency.md)
 9. [Finite elements: cut the shape into pieces and solve one stiffness matrix](08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md)
+10. [Free energies: the right potential for each pair of held-fixed variables](08-Fluids%20and%20Heat/10-thermodynamic-potentials-and-maxwell-relations.md)
+11. [Compressible flow: past Mach 1 a nozzle must widen, and a shock can stand still](08-Fluids%20and%20Heat/11-compressible-flow-nozzles-and-shocks.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s09"></a>
 
-## 09 · Quantum Mechanics in Outline · 8 cards
+## 09 · Quantum Mechanics in Outline · 11 cards
 
 *Enough quantum mechanics to read the equations: states, levels, uncertainty, spin and symmetry*
 
@@ -182,12 +197,15 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Spin one-half: the smallest quantum system, run by three two-by-two matrices](09-Quantum%20Mechanics%20in%20Outline/06-spin-and-two-state-systems.md)
 7. [Hydrogen in outline: separate the angles and shells with quantum numbers appear](09-Quantum%20Mechanics%20in%20Outline/07-the-hydrogen-atom-in-outline.md)
 8. [Symmetry and conservation: each continuous symmetry hands you a conserved quantity](09-Quantum%20Mechanics%20in%20Outline/08-symmetry-and-conserved-quantities.md)
+9. [Tunnelling: a particle gets through a wall it cannot climb](09-Quantum%20Mechanics%20in%20Outline/09-quantum-tunnelling.md)
+10. [Perturbation theory: nudge the energy levels without solving again](09-Quantum%20Mechanics%20in%20Outline/10-time-independent-perturbation-theory.md)
+11. [Two particles: product states, the singlet, and the CHSH bound](09-Quantum%20Mechanics%20in%20Outline/11-two-particle-states-and-entanglement.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s10"></a>
 
-## 10 · Robustness and Adaptation · 5 cards
+## 10 · Robustness and Adaptation · 9 cards
 
 *What to do when the model is wrong: bounded uncertainty, worst-case design, scheduling and learning*
 
@@ -196,6 +214,23 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [H-infinity design: shrink the worst-case gain from disturbance to error](10-Robustness%20and%20Adaptation/03-h-infinity-control-in-outline.md)
 4. [Adapting as you go: schedule the gains, or let the controller learn the plant](10-Robustness%20and%20Adaptation/04-gain-scheduling-and-adaptive-control.md)
 5. [Passivity: join two parts that only absorb energy and the loop cannot blow up](10-Robustness%20and%20Adaptation/05-passivity-and-absolute-stability.md)
+6. [Several inputs, several outputs: singular values, zeros and the RGA](10-Robustness%20and%20Adaptation/06-multivariable-feedback-and-singular-values.md)
+7. [The structured singular value: robustness when the uncertainty has a known shape](10-Robustness%20and%20Adaptation/07-structured-singular-value.md)
+8. [Describing functions: predict a loop's oscillation by keeping one harmonic](10-Robustness%20and%20Adaptation/08-describing-functions-and-limit-cycles.md)
+9. [Nonlinear design: cancel the nonlinearity, or slide along a surface you chose](10-Robustness%20and%20Adaptation/09-feedback-linearisation-and-sliding-mode.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s11"></a>
+
+## 11 · Models from Data · 4 cards
+
+*Getting a model from logged data and cutting it down to size: least-squares fits, measured frequency responses, Hankel matrices and balanced truncation*
+
+1. [ARX identification: fit a difference equation to logged data by least squares](11-Models%20from%20Data/01-arx-models-and-least-squares-identification.md)
+2. [Measured Bode plots: divide the cross-spectrum by the input spectrum, and trust the coherence](11-Models%20from%20Data/02-frequency-response-estimation-and-coherence.md)
+3. [Subspace identification: the Hankel matrix's rank is the model's order](11-Models%20from%20Data/03-subspace-identification-and-hankel-matrices.md)
+4. [Model reduction: drop the states that are hard to reach and hard to see](11-Models%20from%20Data/04-minimal-realisations-and-balanced-truncation.md)
 
 [↑ Back to the shelves](#top)
 

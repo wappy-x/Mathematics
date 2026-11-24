@@ -517,6 +517,7 @@ example : (1 : ℚ) / 3 + 1 / 4 ≥ 1 / 2 ∧ (1 : ℚ) / 5 + 1 / 6 + 1 / 7 + 1 
 - [Mertens' theorems](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/09-mertens-theorems.md): the harmonic series over primes.
 - [Cauchy condensation](10-cauchy-condensation-test.md): test a shrinking series by its terms at the powers of 2.
 - [Summation by parts](11-summation-by-parts-and-dirichlets-test.md): Dirichlet's and Abel's tests for series that converge by cancellation.
+- [Two-ports](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/13-two-port-networks-and-s-parameters.md): four numbers describe any box with an input and an output.
 
 The geometric series came with a formula for its partial sums; most series do not, and deciding their fate anyway is [Convergence tests](02-comparison-ratio-and-root-tests.md).
 

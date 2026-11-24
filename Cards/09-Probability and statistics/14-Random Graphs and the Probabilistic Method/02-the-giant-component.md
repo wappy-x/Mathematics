@@ -865,6 +865,8 @@ example : (1 : ℚ) / (1 - 1 / 2) = 2 := by norm_num
 
 - [Percolation](../../25-Frontier/05-Analysis%20and%20Dynamics/06-dying-percolation-and-critical-phenomena.md): the same switch on grids and real networks, and what happens exactly at the threshold, where the largest component grows like $`n^{2/3}`$ and sizes follow power laws.
 - [Branching processes](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/09-galton-watson-branching-processes.md): family trees that die out or explode.
+- [Robustness](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/09-configuration-model-and-network-robustness.md): random failures barely hurt, attacks on hubs break the network.
+- [The stochastic block model](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/10-stochastic-block-model-and-detectability.md): planted groups, and the point below which no method can find them.
 
 This card settles both sides of one friend each; what happens exactly at one, and on grids, where each person can befriend only near neighbours, is the question Percolation takes up.
 

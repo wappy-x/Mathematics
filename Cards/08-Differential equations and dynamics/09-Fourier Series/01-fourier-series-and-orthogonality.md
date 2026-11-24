@@ -747,6 +747,7 @@ end FourierSeries
 - [Fourier coefficients](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/01-fourier-coefficients-and-orthogonality.md): the same amounts, proofs at full strength.
 - [Ergodicity and mixing](../../10-Measure%20and%20integration/12-Ergodic%20Theory/02-ergodicity-and-mixing.md): a map that cannot be split into two invariant parts, and one that stirs every set evenly.
 - [Stochastic PDEs in outline](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/09-stochastic-pdes-in-outline.md): the heat equation driven by space-time noise.
+- [Describing functions](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/08-describing-functions-and-limit-cycles.md): predict a loop's oscillation by keeping one harmonic.
 
 Left open: adding tones shrinks the mean-square miss, but near the jump the sum still overshoots; does that overshoot ever go away? That is [Convergence](02-convergence-jumps-and-gibbs.md).
 

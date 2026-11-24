@@ -804,6 +804,7 @@ example : ((1 / 6 : ℚ) * (1 / 6)) / (3 / 36) = 1 / 3 := by norm_num
 - [Hidden Markov models](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/08-hidden-markov-models.md): Bayes' rule applied step after step to a hidden state that changes over time.
 - [The spread](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/02-bid-ask-spread-and-adverse-selection.md): a dealer's quote as the answer to a Bayes update on who is trading.
 - [Deciding under uncertainty](../../14-Applied%20and%20computational/05-Operations%20Research/08-decision-theory-and-the-value-of-information.md): what a test is worth before it is run, priced by the decisions its result would change.
+- [Graphical models](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/12-bayesian-networks-and-belief-propagation.md): draw who depends on whom, then sum out variables in a good order.
 
 [Independence](07-independence.md) answers the question Step 5 left open: when does a second piece of evidence carry fresh information, so that its likelihood ratio may be multiplied in?
 

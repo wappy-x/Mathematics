@@ -763,6 +763,8 @@ end DynamicProgramming
 - [Greedy](08-greedy-algorithms-and-matroids.md): the next card. When taking the best next step is provably safe, the table is not needed.
 - [Four classic models](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/06-classic-integer-models-knapsack-assignment-and-covering.md): the rucksack as one of four yes-or-no shapes, beside assignment, covering and routing; there the rucksack table picks the acts for a festival line-up.
 - [Backward induction](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/01-finite-horizon-dynamic-programming-and-backward-induction.md): the same recursion when chance decides what happens next, and each tail is an average.
+- [Edit distance](13-edit-distance-and-sequence-alignment.md): the fewest typos between two words, by a table and a traceback.
+- [Games in turns](../05-Operations%20Research/11-extensive-form-games-and-subgame-perfection.md): draw the tree, solve from the leaves, and ignore empty threats.
 
 The question left open: when the room is too large for a table, how close can a fast method get to the best packing, and can it promise how close?
 

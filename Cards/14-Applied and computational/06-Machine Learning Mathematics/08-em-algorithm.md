@@ -1021,6 +1021,7 @@ end EMCard
 
 - [Support vector machines](09-kernels-and-support-vector-machines.md): the next card on this shelf. It draws a boundary between groups whose labels *are* known, the opposite situation from this card's.
 - [Hidden Markov models](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/08-hidden-markov-models.md): hidden labels that follow a chain through time. Fitting one is EM run along the chain.
+- [Graphical models](12-bayesian-networks-and-belief-propagation.md): draw who depends on whom, then sum out variables in a good order.
 
 This card fixed the number of kinds of shopper at two; how to let the data choose that number is the question it leaves open.
 

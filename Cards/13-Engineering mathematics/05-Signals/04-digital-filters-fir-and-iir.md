@@ -911,6 +911,8 @@ example : (List.range' 1 5).map (fun k => k * 500 / 10) = [50, 100, 150, 200, 25
 - [Blurring and unblurring](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/05-smoothing-blurring-and-deconvolution.md): the same filters in two dimensions, on images.
 - [Mallat's algorithm](../../20-Harmonic%20analysis/05-Wavelets%20and%20Time-Frequency/04-mallats-fast-wavelet-transform.md): the fast way to run wavelet filters.
 - [Filter banks](../../20-Harmonic%20analysis/05-Wavelets%20and%20Time-Frequency/05-filter-banks-and-perfect-reconstruction.md): many filters side by side, each taking one band.
+- [Optimal filters](11-equiripple-fir-and-optimal-iir-design.md): spread the error evenly, and buy sharpness with ripple.
+- [Finite word length](12-finite-word-length-filters-and-quantisation.md): rounded coefficients move poles, rounded sums add noise.
 
 Left open: how to get an FIR as sharp as the Butterworth with far fewer than 53 multiplies, which is where optimal (equiripple) design and multirate tricks come in.
 

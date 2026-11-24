@@ -738,6 +738,7 @@ example : (∑ k ∈ Finset.range 11, ((k : ℚ) - 5) ^ 2) / 11 = 10 := by
 
 - [Random numbers from a computer](../11-Simulation/01-pseudo-random-numbers.md): how a deterministic program such as SplitMix64 makes numbers that pass for uniform draws, and how to test that they do.
 - [Simulating a default time](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md): the inverse-transform rule applied to a survival curve to draw the date a borrower defaults.
+- [Finite word length](../../13-Engineering%20mathematics/05-Signals/12-finite-word-length-filters-and-quantisation.md): rounded coefficients move poles, rounded sums add noise.
 
 Everything on this card assumed a supply of genuinely uniform draws; whether a machine that follows fixed rules can supply them is the question [Random numbers from a computer](../11-Simulation/01-pseudo-random-numbers.md) answers.
 

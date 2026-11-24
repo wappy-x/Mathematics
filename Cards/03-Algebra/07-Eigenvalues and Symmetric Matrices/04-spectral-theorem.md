@@ -545,6 +545,8 @@ example : (1 / 2 : ℝ) • (!![1, 1; 1, -1] * !![1, 0; 0, 3] * (!![1, 1; 1, -1]
 - [Compact and symmetric](../../18-Functional%20analysis/03-Bounded%20Operators/08-spectral-theorem-for-compact-self-adjoint-operators.md): the infinite version.
 - [Principal, mean and Gaussian curvature](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/05-principal-mean-and-gaussian-curvature.md): how a surface bends.
 - [Normal matrices and the polar form](11-normal-matrices-and-polar-decomposition.md): the matrices that commute with their conjugate transpose are exactly those with perpendicular eigenvectors, and every matrix is a rotation times a stretch.
+- [Stress in 3D](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/10-stress-tensor-and-mohrs-circle.md): a symmetric matrix, its principal axes, and Mohr's circle.
+- [Perturbation theory](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/10-time-independent-perturbation-theory.md): nudge the energy levels without solving again.
 
 The quadratic runs out past 2 by 2, so finding the axes at any size is a numerical problem. What the factors' signs say about a table's shape is the next card's question.
 

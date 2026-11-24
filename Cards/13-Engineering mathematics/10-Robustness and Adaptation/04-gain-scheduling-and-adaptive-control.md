@@ -848,6 +848,8 @@ example : (5 : ℚ) * ((20 / 100) / (2 / 100)) = 50 := by norm_num
 
 - [Passivity](05-passivity-and-absolute-stability.md), the next card: a different way to guarantee stability, by energy, which also underlies the stability proofs of many adaptive laws.
 - [H-infinity design](03-h-infinity-control-in-outline.md): one fixed controller designed for the worst case, the alternative to adapting.
+- [Nonlinear design](09-feedback-linearisation-and-sliding-mode.md): cancel the nonlinearity, or slide along a surface you chose.
+- [ARX identification](../11-Models%20from%20Data/01-arx-models-and-least-squares-identification.md): fit a difference equation to logged data by least squares.
 
 The question this card leaves open: how can the adaptive loop be proved stable while it learns, rather than shown stable in one simulation?
 

@@ -808,6 +808,7 @@ example : ((-2 : ℚ) - 1 / 20) / (36 / 25) = -205 / 144 := by norm_num
 - [Erdos-Kac](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/02-erdos-kac-theorem.md): the count of a number's prime factors follows the bell.
 - [Exponential families](../07-Sampling%20and%20Estimation/10-exponential-families.md): one formula behind the binomial, Poisson, normal and gamma.
 - [Kernel density estimation](../15-Nonparametric%20Inference/03-kernel-density-estimation.md): a smooth histogram, and the bandwidth that balances bias and noise.
+- [Differential entropy and water-filling](../../14-Applied%20and%20computational/03-Information%20Theory/11-differential-entropy-and-water-filling.md): bits for measured values, and power poured where noise is low.
 
 The bell's tails are too thin for real markets; which laws fit when big days come every few years is [Heavy tails](08-heavy-tails-pareto-and-cauchy.md).
 

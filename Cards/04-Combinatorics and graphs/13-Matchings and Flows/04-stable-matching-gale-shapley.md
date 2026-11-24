@@ -718,6 +718,7 @@ end StableMatching
 
 - [Auctions](../../14-Applied%20and%20computational/05-Operations%20Research/10-auctions-and-mechanism-design.md): rules under which nobody gains by misreporting.
 - [Minimax](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/08-minimax-theorem-and-convex-duality.md): another existence theorem for two opposed sides.
+- [Sharing a joint cost](../../14-Applied%20and%20computational/05-Operations%20Research/12-cooperative-games-shapley-value-and-core.md): the Shapley value and the core.
 
 This card assumed true rankings; whether anyone gains by lying about theirs is Auctions.
 
