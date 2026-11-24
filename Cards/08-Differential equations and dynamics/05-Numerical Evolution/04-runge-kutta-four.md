@@ -660,6 +660,7 @@ end
 - [The Lorenz system](../11-Discrete%20Dynamics%20and%20Chaos/06-the-lorenz-system-and-strange-attractors.md): errors that grow.
 - [Runge-Kutta](../../16-Numerical%20analysis/06-ODE%20Solvers/01-runge-kutta-and-butcher-tableaux.md): the whole family and its order conditions.
 - [Geodesic and exponential map](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/04-geodesics-and-the-exponential-map.md): shortest paths on curved surfaces, stepped.
+- [The Kuramoto model](../13-Rhythms%20and%20Synchronisation/03-the-kuramoto-model.md): a crowd of oscillators with different speeds falls into step once the coupling passes a threshold.
 
 Left open: a fixed step never reports its own error, so how should a solver choose h as it runs?
 

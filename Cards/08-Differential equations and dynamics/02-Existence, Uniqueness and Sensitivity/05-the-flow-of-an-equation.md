@@ -557,6 +557,8 @@ example : (1 : ℚ) / (1 - 3/2 * 1) = -2 := by norm_num
 - [The transport equation](../10-The%20Classical%20PDEs/02-the-transport-equation-and-characteristics.md): a partial differential equation solved by riding a flow.
 - [Semigroups](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/04-strongly-continuous-semigroups.md): the composition law as a definition, for heat spreading in a rod.
 - [Vector field and its flow](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/07-vector-fields-and-flows.md): flows on curved spaces.
+- [Invariant manifolds](../06-Nonlinear%20Dynamics%20in%20the%20Plane/12-stable-unstable-and-centre-manifolds.md): the curves into and out of a saddle, and the slow curve that decides when the linear part is silent.
+- [Poincare maps](../11-Discrete%20Dynamics%20and%20Chaos/07-poincare-return-maps.md): watch a flow only when it crosses a wall, and a periodic orbit becomes a fixed point.
 
 Here the state is one number; when the state is a whole temperature profile along a rod, what still composes like elapsed time is the question Semigroups answers.
 

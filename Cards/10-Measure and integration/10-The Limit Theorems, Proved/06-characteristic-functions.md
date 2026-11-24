@@ -228,7 +228,7 @@ The right side sees X only through $`\varphi_X`$, so Y + σZ′, with Z′ an in
 P\big(|X| > 2/u\big) \le \frac1u\int_{-u}^{u}\big(1 - \varphi_X(t)\big)\,dt.
 ```
 Fubini moves the t-integral inside, where $`\frac1u\int_{-u}^{u}(1 - e^{itx})\,dt = 2\big(1 - \frac{\sin ux}{ux}\big)`$: never negative, and at least 1 when |ux| ≥ 2, since then |sin ux| ≤ 1 ≤ |ux|/2. If g is continuous at 0, with g(0) = 1, the bound for g is small once u is small; dominated convergence passes this to every large n. So one u keeps $`P(|X_n| > 2/u)`$ small for all large n: the laws are **tight**.
-- **Some subsequence converges.** Helly's selection theorem, in the same chapter of Durrett: every tight sequence of laws has a subsequence converging in distribution to a probability law.
+- **Some subsequence converges.** Helly's selection theorem, in the same chapter of Durrett: every tight sequence of laws has a subsequence converging in distribution to a probability law; [Tightness and Prokhorov's theorem](11-tightness-and-prokhorovs-theorem.md) proves this.
 - **Every limit is the same.** By (a) each such limit has characteristic function g; by uniqueness they are one law; so the whole sequence converges to it.
 
 At u = 1 on 100 scaled rolls, the chance of |W_100| > 2 is 0.043221 and the bound 0.288900. On 400 unscaled rolls the chance of |T_400| > 2 is 0.941674 and the bound 1.926643: true and useless, because φ has collapsed everywhere but at 0.
@@ -858,6 +858,7 @@ example : (100 : ℚ) * (35 / 12) = 875 / 3 := by norm_num
 
 - [The central limit theorem, proved](07-central-limit-theorem.md): in its second road, a second-order expansion of φ near 0 shows the scaled total's characteristic function tends to e^(−t^2/2) for every law with a finite variance; Lévy's converse finishes the proof.
 - [Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md): the same object read as a Fourier transform, opening the shelf that proves Lévy's inversion formula and his continuity theorem in full.
+- [Tightness and Prokhorov's theorem](11-tightness-and-prokhorovs-theorem.md): if no mass escapes to infinity, every sequence of laws has a convergent subsequence.
 
 This card showed that convergence of characteristic functions is enough; it left open why, for every law with a finite variance, the scaled totals' characteristic functions converge to the normal's, and that is what the central limit theorem's second road supplies.
 

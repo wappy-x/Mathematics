@@ -1021,6 +1021,7 @@ Within the shelf, [Dominated convergence](02-dominated-convergence-theorem.md) i
 ## Where this goes next
 
 - [Stopping without a bound](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/06-uniform-integrability-and-unbounded-stopping.md): UI as the condition under which a fair game stopped at an unbounded random time keeps its fair value, and why the doubling strategy fails it.
+- [Birkhoff's ergodic theorem](../12-Ergodic%20Theory/04-birkhoff-pointwise-ergodic-theorem.md): along almost every orbit, the time average equals the space average.
 
 Which fair games stopped at an unbounded random time are UI is the question [Stopping without a bound](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/06-uniform-integrability-and-unbounded-stopping.md) answers.
 

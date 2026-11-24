@@ -673,6 +673,7 @@ example : (claimF 400 - 1 / 10) - claimF 350 = -65 / 1000 := by norm_num [claimF
 - [Convergence in distribution](../10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md): laws converging when their distribution functions converge at points without jumps.
 - [The Lebesgue-Stieltjes integral](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md): integrating against $`\mu_F`$.
 - [The delta](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/02-the-dirac-delta-and-derivatives-of-jumps.md): the jump's "derivative" made into an object, a point mass.
+- [Tightness and Prokhorov's theorem](../10-The%20Limit%20Theorems%2C%20Proved/11-tightness-and-prokhorovs-theorem.md): if no mass escapes to infinity, every sequence of laws has a convergent subsequence.
 
 The claim's law is a jump plus a spread, which suggests every law is; whether a continuous F can carry mass that no density describes is what [The Cantor set](07-the-cantor-set.md) answers.
 

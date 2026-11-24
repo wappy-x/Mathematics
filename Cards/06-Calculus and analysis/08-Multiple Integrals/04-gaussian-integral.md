@@ -473,6 +473,7 @@ theorem integral_bell_curve_eq_one :
 - [Weighted Gauss rules](../../16-Numerical%20analysis/05-Quadrature/04-gauss-hermite-and-weighted-rules.md): integrating against e^(−x^2) with a few well-placed points.
 - [Similarity solutions](../../19-Partial%20differential%20equations/03-The%20Heat%20Equation%20in%20Depth/02-similarity-solutions-and-the-error-function.md): the area up to a point, not the whole line.
 - [Two pairs worth memorising](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/03-gaussian-and-sinc-transform-pairs.md): the Gaussian as its own frequency picture.
+- [Change of variables for Lebesgue measure](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/08-lebesgue-change-of-variables-and-polar-coordinates.md): a linear map scales every volume by |det A|, a smooth map does so point by point, and polar coordinates follow.
 
 The question this card leaves open: the area up to a given point, not the whole line, has no formula of this kind, so how is it found?
 

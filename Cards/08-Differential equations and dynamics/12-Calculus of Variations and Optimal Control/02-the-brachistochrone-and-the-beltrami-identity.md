@@ -606,6 +606,7 @@ example : (1 / 2 : ℝ) * (π - sin π) = π / 2 ∧ (1 / 2 : ℝ) * (1 - cos π
 ## Where this goes next
 
 - [Paths with a budget](03-constrained-paths-and-the-hanging-chain.md): a fixed length of chain, where a budget joins the functional and Beltrami finds the catenary, the curve a hanging chain takes.
+- [The second variation](09-second-variation-and-free-endpoints.md): when a stationary path is truly a minimum, and what a free end must satisfy.
 
 Left open: here the slide's length is free; what is the best shape when the length is fixed in advance, as for a hanging chain?
 

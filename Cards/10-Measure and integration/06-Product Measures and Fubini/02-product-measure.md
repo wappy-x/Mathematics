@@ -724,6 +724,8 @@ example :
 - [Tonelli and Fubini](03-tonelli-and-fubini.md): from sizes of sets to integrals of functions, in either order.
 - [Independence as a product](04-independence-as-a-product-measure.md): independence read as a joint law that is a product measure.
 - [Infinitely many coin tosses](07-infinite-sequences-and-kolmogorov-extension.md): a product of infinitely many factors, for a coin tossed forever.
+- [Change of variables for Lebesgue measure](08-lebesgue-change-of-variables-and-polar-coordinates.md): a linear map scales every volume by |det A|, a smooth map does so point by point, and polar coordinates follow.
+- [The Ionescu-Tulcea theorem](09-ionescu-tulcea-theorem.md): give the law of the next step given the whole past, and the infinite process exists on any measurable spaces.
 
 This card slices sets, where every section size is non-negative; whether a function taking both signs can be integrated in either order, and what goes wrong when it cannot, is [Tonelli and Fubini](03-tonelli-and-fubini.md).
 

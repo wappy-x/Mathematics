@@ -778,6 +778,7 @@ example : 1 * 2 ^ 1 + 1 = 3 ∧ 2 * 2 ^ 2 + 1 = 9 ∧ 8 * 2 ^ 8 + 1 = 2049 := by
 - [The integral of a simple function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md): the area under a simple function, value times size of piece, and why any way of writing it gives the same answer.
 - [The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md): the integral as the best area reached by simple functions from below.
 - [The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md): why the staircases' areas converge to the function's area.
+- [Lusin's theorem](../05-Swapping%20Limits%20and%20Integrals/06-lusins-theorem.md): every measurable function is continuous once you delete a set as small as you like.
 
 The staircases reach the curve at every point, but that their areas must reach the curve's area is not yet proved; it starts with giving a simple function an area, on [The integral of a simple function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md).
 

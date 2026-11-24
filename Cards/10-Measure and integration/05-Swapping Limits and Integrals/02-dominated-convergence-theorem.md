@@ -856,6 +856,9 @@ example : (28 / 5 : ℚ) - 2 ^ 2 = 2 * (1 - 2 / 10) ∧ (28 / 5 : ℚ) - 2 ^ 2 =
 - [The rules of conditional expectation](../09-Conditional%20Expectation/04-rules-of-conditional-expectation.md): the conditional version of dominated convergence.
 - [The Fourier transform of an absolutely integrable signal, and why it fades at infinity](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/01-fourier-transform-on-l1-and-riemann-lebesgue.md): continuity of the transform, one dominating function for all frequencies.
 - [Approximate identities](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/03-approximate-identities.md): smoothing kernels that shrink to a point, whose limits are justified by domination.
+- [Lusin's theorem](06-lusins-theorem.md): every measurable function is continuous once you delete a set as small as you like.
+- [Rademacher's theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/07-rademachers-theorem.md): a Lipschitz function on R^n has a derivative almost everywhere.
+- [Birkhoff's ergodic theorem](../12-Ergodic%20Theory/04-birkhoff-pointwise-ergodic-theorem.md): along almost every orbit, the time average equals the space average.
 
 This card asks for one integrable roof over the whole sequence; what weaker promise about the tails is exactly enough is the question [Uniform integrability](05-uniform-integrability.md) answers.
 

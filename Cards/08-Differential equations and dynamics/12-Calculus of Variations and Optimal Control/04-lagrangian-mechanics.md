@@ -102,7 +102,7 @@ Let $`x = x(q)`$, with $`x_q = dx/dq`$, so $`x' = x_q\,q'`$. Set $`\tilde L(q, q
 
 ### Step 3: the action really is stationary on the true swing
 
-Nudge the true path by $`\varepsilon\,\eta(t)`$, with $`\eta = \sin(\pi t)`$ zero at both ends and $`\varepsilon`$ = ±0.01 rad. The first-order change is 0.001001 J s per rad, a higher-order residue; on a straight line between the same ends it is −41.245344. The second-order change, 154.8110, matches the second variation $`\tfrac12\int (m l^2\eta'^2 - m g l\cos\theta\,\eta^2)\,dt`$ = 154.8101. Positive: this nudge raises the action. Over this second every nudge does, because 1 s is shorter than half the small-swing period, $`\pi\sqrt{l/g}`$ = 1.42 s. Over longer windows the true path can be a saddle; the principle promises stationary, not least.
+Nudge the true path by $`\varepsilon\,\eta(t)`$, with $`\eta = \sin(\pi t)`$ zero at both ends and $`\varepsilon`$ = ±0.01 rad. The first-order change is 0.001001 J s per rad, a higher-order residue; on a straight line between the same ends it is −41.245344. The second-order change, 154.8110, matches the second variation $`\tfrac12\int (m l^2\eta'^2 - m g l\cos\theta\,\eta^2)\,dt`$ = 154.8101. Positive: this nudge raises the action; [The second variation](09-second-variation-and-free-endpoints.md) takes this test further. Over this second every nudge does, because 1 s is shorter than half the small-swing period, $`\pi\sqrt{l/g}`$ = 1.42 s. Over longer windows the true path can be a saddle; the principle promises stationary, not least.
 
 ### Step 4: a missing coordinate is a conserved momentum
 
@@ -610,6 +610,8 @@ The orange line is the hoop's spin, from road two: 4.53 when the bead is highest
 - [Hamilton's equations](05-hamiltons-equations.md): trade each speed for its momentum and get two first-order equations per coordinate.
 - [Lagrangian and Hamiltonian mechanics](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/04-lagrangian-and-hamiltonian-mechanics-for-engineers.md): the same recipe for linkages and vibrating structures.
 - [Noether](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/08-noethers-theorem.md): every continuous symmetry of the action, and the quantity it conserves.
+- [The second variation](09-second-variation-and-free-endpoints.md): when a stationary path is truly a minimum, and what a free end must satisfy.
+- [Action-angle variables and KAM](10-action-angle-variables-and-kam.md): an integrable system winds round tori, and most tori survive a small push.
 
 Left open: the hoop's momentum appeared only at the end, as a slope of $`L`$. What changes if momentum is a working variable from the start, beside position?
 

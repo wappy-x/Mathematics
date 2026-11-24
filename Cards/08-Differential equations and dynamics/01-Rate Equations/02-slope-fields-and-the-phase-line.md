@@ -741,6 +741,7 @@ example : (49 / 5 : ℚ) + 1 / 5 * (-49) = 0 := by norm_num
 - [Phase portraits and nullclines](../06-Nonlinear%20Dynamics%20in%20the%20Plane/01-phase-portraits-and-nullclines.md): the phase line grown into a plane, for two quantities at once.
 - [Bifurcations](../06-Nonlinear%20Dynamics%20in%20the%20Plane/10-bifurcations-of-equilibria.md): rests appearing and vanishing as a constant in the law is turned.
 - [Iteration](../11-Discrete%20Dynamics%20and%20Chaos/01-iteration-and-cobweb-plots.md): rules applied in steps, where overshooting like the 10 s walk here is the main event.
+- [Phase locking](../13-Rhythms%20and%20Synchronisation/02-flows-on-the-circle-and-phase-locking.md): a rhythm pulled by another either locks at a fixed lag or slips, and the slips get rarer near the edge.
 
 Left open: when two quantities push on each other, one line of arrows cannot hold both, so what picture replaces it?
 

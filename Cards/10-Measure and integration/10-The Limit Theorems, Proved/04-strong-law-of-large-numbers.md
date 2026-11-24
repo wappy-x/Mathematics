@@ -938,6 +938,9 @@ example : ∀ f ∈ Finset.Icc (1 : ℤ) 6, 1 < 5 * |2 * f - 7| := by decide
 - [Convergence in distribution](05-convergence-in-distribution.md): the weakest mode, comparing laws only, which the error of the average obeys.
 - [Characteristic functions](06-characteristic-functions.md): the tool behind the Cauchy average and the central limit theorem.
 - [The central limit theorem, proved](07-central-limit-theorem.md): the size and shape of the error left after the average has settled.
+- [Kolmogorov's three-series theorem](08-kolmogorov-three-series-theorem.md): exactly when a sum of independent random terms converges.
+- [The law of the iterated logarithm](09-law-of-the-iterated-logarithm.md): a fair random walk's highs reach sqrt(2n log log n) again and again, and never beyond.
+- [Birkhoff's ergodic theorem](../12-Ergodic%20Theory/04-birkhoff-pointwise-ergodic-theorem.md): along almost every orbit, the time average equals the space average.
 
 The strong law says where the average goes, not how far from 3.5 it typically sits at roll n; that the error shrinks like one over the square root of n and takes the bell shape is the question [The central limit theorem, proved](07-central-limit-theorem.md) answers.
 

@@ -758,6 +758,7 @@ example : (2 / 3 : ℚ) ^ 10 = 1024 / 59049 ∧ (1024 : ℚ) * (1 / 1024) = 1 :=
 
 - [Signed measures](02-signed-measures-and-hahn-jordan.md): the difference of two measures, and the split of the space into where each one wins.
 - [Absolutely continuous functions and the fundamental theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/04-absolutely-continuous-functions-and-the-fundamental-theorem.md): the epsilon-delta form moved from measures to functions, and the Cantor function as the singular case.
+- [Complex measures](07-complex-measures-and-total-variation.md): sizes that are complex numbers, their total variation, and the polar form d nu = h d|nu| with |h| = 1.
 
 A density was shown to give absolute continuity; whether every absolutely continuous measure has a density is [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md), whose proof runs through the Hahn decomposition of [Signed measures](02-signed-measures-and-hahn-jordan.md).
 

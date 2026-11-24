@@ -732,6 +732,7 @@ example : (∑ n ∈ Finset.Icc 1 6, ((2 : ℚ) ^ n / 2 ^ n)) = 6 := by simp
 
 - [Conditional expectation as a projection](03-conditional-expectation-as-projection.md): the same forecast as the best mean-squared guess, and a second existence proof.
 - [The rules of conditional expectation](04-rules-of-conditional-expectation.md): linearity, taking out what is known, and the tower rule that turned the season forecast into the wet-or-not forecast.
+- [Von Neumann's mean ergodic theorem](../12-Ergodic%20Theory/03-von-neumann-mean-ergodic-theorem.md): time averages converge in L2 to the projection onto the invariant functions.
 
 The definition says the forecast exists and is unique, but not in what sense it is the best guess; [Conditional expectation as a projection](03-conditional-expectation-as-projection.md) answers that.
 

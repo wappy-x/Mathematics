@@ -602,6 +602,7 @@ example : ((5 : ℝ) - 50 / 10) ^ 2 = 0 := by norm_num
 ## Where this goes next
 
 - [The flow](05-the-flow-of-an-equation.md): every start carried forward by its own solution, defined only where each start's life span reaches.
+- [Peano's theorem](06-peano-existence-theorem.md): continuity alone is enough for a solution, built from Euler polygons.
 
 A life span says how long one solution lasts; how far two nearby starts drift apart while both last is the question [Gronwall's inequality](04-gronwall-and-continuous-dependence.md) answers.
 

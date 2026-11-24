@@ -537,6 +537,7 @@ example : (2 : ℝ) - Real.log 2 + 1 - Real.log 1 - 1 = 2 - Real.log 2 := by sim
 - [Linearisation](02-linearisation-and-the-jacobian.md): the type of each rest, read from the rates' slopes there.
 - [Predator and prey](06-predator-prey.md): the reserve's model in full, with its conserved quantity.
 - [The SIR model](07-the-sir-epidemic-model.md): the drawing for an outbreak.
+- [Index theory](11-index-theory-in-the-plane.md): count how often the arrows turn as you walk round a loop, and a closed orbit must enclose rests whose counts add to one.
 
 The sketch says the reserve turns round (1, 1) but not whether nearby paths spiral in, spiral out or circle; [Linearisation](02-linearisation-and-the-jacobian.md) settles that for paths close to a rest.
 

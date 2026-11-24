@@ -6,23 +6,24 @@
 
 Say which sets have a size, build Lebesgue measure and the Lebesgue integral from scratch, swap limits and integrals with the right theorem, integrate on products, change measure with a density, and condition on a sigma-algebra. Probability is rebuilt on that footing: random variables as measurable maps, expectation as an integral, conditional expectation, modes of convergence, and the laws of large numbers and central limit theorem proved.
 
-11 shelves · **68 of 68 cards ready to read**
+12 shelves · **84 of 84 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
 | Shelf | Cards |
 | --- | ---: |
 | [01 · Sets You Can Measure](#s01) | 7 |
-| [02 · Length Done Properly](#s02) | 7 |
+| [02 · Length Done Properly](#s02) | 8 |
 | [03 · Measurable Functions](#s03) | 5 |
 | [04 · The Lebesgue Integral](#s04) | 7 |
-| [05 · Swapping Limits and Integrals](#s05) | 5 |
-| [06 · Product Measures and Fubini](#s06) | 7 |
+| [05 · Swapping Limits and Integrals](#s05) | 6 |
+| [06 · Product Measures and Fubini](#s06) | 9 |
 | [07 · Sizes of Functions](#s07) | 6 |
-| [08 · Densities and Changing Measure](#s08) | 6 |
+| [08 · Densities and Changing Measure](#s08) | 7 |
 | [09 · Conditional Expectation](#s09) | 6 |
-| [10 · The Limit Theorems, Proved](#s10) | 7 |
-| [11 · Derivatives Meet the Lebesgue Integral](#s11) | 5 |
+| [10 · The Limit Theorems, Proved](#s10) | 11 |
+| [11 · Derivatives Meet the Lebesgue Integral](#s11) | 8 |
+| [12 · Ergodic Theory](#s12) | 4 |
 
 <a name="s01"></a>
 
@@ -42,7 +43,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s02"></a>
 
-## 02 · Length Done Properly · 7 cards
+## 02 · Length Done Properly · 8 cards
 
 *Outer measure, Caratheodory's criterion, Lebesgue measure with regularity and completion, translation invariance and the Vitali set, the general extension theorem, Lebesgue-Stieltjes measures and distribution functions, the Cantor set and function.*
 
@@ -53,6 +54,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Caratheodory's extension theorem: size the simple sets consistently and a measure on the generated sigma-algebra follows, unique when sigma-finite](02-Length%20Done%20Properly/05-caratheodory-extension-theorem.md)
 6. [Distribution functions and Lebesgue-Stieltjes measures: every increasing right-continuous function names one measure, and every probability law on the line has one](02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)
 7. [The Cantor set: an uncountable set of length zero, and the staircase that climbs from 0 to 1 with slope zero almost everywhere](02-Length%20Done%20Properly/07-the-cantor-set.md)
+8. [Hausdorff measure and dimension: cover with pieces of any shape, weigh each by its size to the power s, and a fractal gets a size in its own dimension](02-Length%20Done%20Properly/08-hausdorff-measure-and-dimension.md)
 
 [↑ Back to the shelves](#top)
 
@@ -88,7 +90,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s05"></a>
 
-## 05 · Swapping Limits and Integrals · 5 cards
+## 05 · Swapping Limits and Integrals · 6 cards
 
 *Fatou's lemma, dominated convergence with its corollaries, differentiation under the integral sign, the modes of convergence and their map, uniform integrability and Vitali's theorem.*
 
@@ -97,12 +99,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [Differentiating under the integral sign: when the derivative of an average is the average of the derivative](05-Swapping%20Limits%20and%20Integrals/03-differentiating-under-the-integral.md)
 4. [Modes of convergence: almost everywhere, in measure, in mean, and the map of which implies which](05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)
 5. [Uniform integrability: no mass escaping to infinity, and the exact condition for convergence in mean](05-Swapping%20Limits%20and%20Integrals/05-uniform-integrability.md)
+6. [Lusin's theorem: every measurable function is continuous once you delete a set as small as you like](05-Swapping%20Limits%20and%20Integrals/06-lusins-theorem.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s06"></a>
 
-## 06 · Product Measures and Fubini · 7 cards
+## 06 · Product Measures and Fubini · 9 cards
 
 *Product sigma-algebras and sections, product measure and area, Tonelli and Fubini, independence as a product, convolution, the layer-cake formula, infinite sequences and the Kolmogorov extension theorem.*
 
@@ -113,6 +116,8 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Convolution: the law of a sum of independent quantities, and why densities convolve](06-Product%20Measures%20and%20Fubini/05-convolution-and-sums.md)
 6. [The layer-cake formula: an integral is the area under the tail sizes, so averages become statements about probabilities](06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md)
 7. [Infinitely many coin tosses: build them from one uniform number, and Kolmogorov's theorem for every other infinite sequence](06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md)
+8. [Change of variables for Lebesgue measure: a linear map scales every volume by |det A|, a smooth map does so point by point, and polar coordinates follow](06-Product%20Measures%20and%20Fubini/08-lebesgue-change-of-variables-and-polar-coordinates.md)
+9. [The Ionescu-Tulcea theorem: give the law of the next step given the whole past, and the infinite process exists on any measurable spaces](06-Product%20Measures%20and%20Fubini/09-ionescu-tulcea-theorem.md)
 
 [↑ Back to the shelves](#top)
 
@@ -133,7 +138,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s08"></a>
 
-## 08 · Densities and Changing Measure · 6 cards
+## 08 · Densities and Changing Measure · 7 cards
 
 *Absolutely continuous and singular measures, signed measures with Hahn-Jordan and total variation, the Radon-Nikodym theorem, the derivative with its chain rule and change of measure under an integral, the Lebesgue decomposition, densities and likelihood ratios with KL divergence and exponential tilting.*
 
@@ -143,6 +148,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [The Radon-Nikodym derivative: an exchange rate between measures, with a chain rule and a rule for changing measure under an integral](08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md)
 5. [Lebesgue decomposition: any measure splits into a part with a density and a part on a null set, and on the line that means density, jumps and staircase](08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md)
 6. [Densities and likelihood ratios: the everyday density is a Radon-Nikodym derivative against length, and a ratio of two tilts one model into another](08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md)
+7. [Complex measures: sizes that are complex numbers, their total variation, and the polar form d nu = h d|nu| with |h| = 1](08-Densities%20and%20Changing%20Measure/07-complex-measures-and-total-variation.md)
 
 [↑ Back to the shelves](#top)
 
@@ -163,7 +169,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s10"></a>
 
-## 10 · The Limit Theorems, Proved · 7 cards
+## 10 · The Limit Theorems, Proved · 11 cards
 
 *Borel-Cantelli, the zero-one law, the weak and strong laws of large numbers, convergence in distribution, characteristic functions, and the central limit theorem with a rate.*
 
@@ -174,12 +180,16 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Convergence in distribution: laws converge when their distribution functions converge at every continuity point, which is the same as averages of bounded continuous functions converging](10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md)
 6. [Characteristic functions: the average of e^(itX) pins down the law, and convergence of these functions is convergence of the laws](10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md)
 7. [The central limit theorem, proved: standardised sums of independent copies with finite variance converge to the normal law, by swapping one summand at a time](10-The%20Limit%20Theorems%2C%20Proved/07-central-limit-theorem.md)
+8. [Kolmogorov's three-series theorem: exactly when a sum of independent random terms converges](10-The%20Limit%20Theorems%2C%20Proved/08-kolmogorov-three-series-theorem.md)
+9. [The law of the iterated logarithm: a fair random walk's highs reach sqrt(2n log log n) again and again, and never beyond](10-The%20Limit%20Theorems%2C%20Proved/09-law-of-the-iterated-logarithm.md)
+10. [Cramer's theorem: the chance that an average strays decays exponentially, at a rate given by the Legendre transform of the log-moment function](10-The%20Limit%20Theorems%2C%20Proved/10-cramers-theorem-and-large-deviations.md)
+11. [Tightness and Prokhorov's theorem: if no mass escapes to infinity, every sequence of laws has a convergent subsequence](10-The%20Limit%20Theorems%2C%20Proved/11-tightness-and-prokhorovs-theorem.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s11"></a>
 
-## 11 · Derivatives Meet the Lebesgue Integral · 5 cards
+## 11 · Derivatives Meet the Lebesgue Integral · 8 cards
 
 *Bounded variation, the Lebesgue differentiation theorem, differentiability of monotone functions, absolutely continuous functions and the fundamental theorem for the Lebesgue integral, the Lebesgue-Stieltjes integral with integration by parts. No dependents inside the wing; wing 11 needs bounded variation and Stieltjes integrals.*
 
@@ -188,6 +198,22 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [Lebesgue's theorem on monotone functions: an increasing function has a derivative almost everywhere, and integrating that derivative can fall short](11-Derivatives%20Meet%20the%20Lebesgue%20Integral/03-monotone-functions-differentiable-almost-everywhere.md)
 4. [Absolutely continuous functions and the fundamental theorem: F is the integral of its derivative exactly when F moves little over any collection of short intervals](11-Derivatives%20Meet%20the%20Lebesgue%20Integral/04-absolutely-continuous-functions-and-the-fundamental-theorem.md)
 5. [The Lebesgue-Stieltjes integral: integrate against any increasing or bounded-variation function, so E\[g(X)\] is the integral of g against F, with integration by parts](11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md)
+6. [Radon measures and the Riesz representation theorem: every positive linear rule on continuous functions is an integral against exactly one measure](11-Derivatives%20Meet%20the%20Lebesgue%20Integral/06-radon-measures-and-riesz-representation.md)
+7. [Rademacher's theorem: a Lipschitz function on R^n has a derivative almost everywhere](11-Derivatives%20Meet%20the%20Lebesgue%20Integral/07-rademachers-theorem.md)
+8. [The area and coarea formulas: Jacobians turn the Hausdorff measure of images and of level sets into ordinary integrals](11-Derivatives%20Meet%20the%20Lebesgue%20Integral/08-area-and-coarea-formulas.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s12"></a>
+
+## 12 · Ergodic Theory · 4 cards
+
+*Maps that keep measure, the recurrence they force, ergodicity and mixing, and the mean and pointwise ergodic theorems: along almost every orbit, time averages equal space averages.*
+
+1. [Measure-preserving maps and Poincare recurrence: a map that keeps sizes brings almost every point back near where it started, again and again](12-Ergodic%20Theory/01-measure-preserving-maps-and-poincare-recurrence.md)
+2. [Ergodicity and mixing: a map that cannot be split into two invariant parts, and one that stirs every set evenly](12-Ergodic%20Theory/02-ergodicity-and-mixing.md)
+3. [Von Neumann's mean ergodic theorem: time averages converge in L2 to the projection onto the invariant functions](12-Ergodic%20Theory/03-von-neumann-mean-ergodic-theorem.md)
+4. [Birkhoff's ergodic theorem: along almost every orbit, the time average equals the space average](12-Ergodic%20Theory/04-birkhoff-pointwise-ergodic-theorem.md)
 
 [↑ Back to the shelves](#top)
 

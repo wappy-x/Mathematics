@@ -665,6 +665,10 @@ example : ((4 : ℚ) / 45) / (1 / 2) = 8 / 45 ∧ (8 : ℚ) / 45 < 16 / 45 := by
 
 - [The weak law of large numbers](../10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md): Chebyshev on an average of independent readings proves the average converges in probability to the mean: the chance of missing it by any fixed amount shrinks to 0.
 - [The Lebesgue differentiation theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/02-lebesgue-differentiation-theorem.md): a Markov-type bound on the maximal function shows that averages over shrinking intervals recover an integrable function almost everywhere.
+- [Kolmogorov's three-series theorem](../10-The%20Limit%20Theorems%2C%20Proved/08-kolmogorov-three-series-theorem.md): exactly when a sum of independent random terms converges.
+- [The law of the iterated logarithm](../10-The%20Limit%20Theorems%2C%20Proved/09-law-of-the-iterated-logarithm.md): a fair random walk's highs reach sqrt(2n log log n) again and again, and never beyond.
+- [Cramer's theorem](../10-The%20Limit%20Theorems%2C%20Proved/10-cramers-theorem-and-large-deviations.md): the chance that an average strays decays exponentially, at a rate given by the Legendre transform of the log-moment function.
+- [Tightness and Prokhorov's theorem](../10-The%20Limit%20Theorems%2C%20Proved/11-tightness-and-prokhorovs-theorem.md): if no mass escapes to infinity, every sequence of laws has a convergent subsequence.
 
 Markov and Chebyshev bound one quantity at a time; whether the average of many independent readings must settle at the mean, and how fast, is answered on [The weak law of large numbers](../10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md).
 

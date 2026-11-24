@@ -623,6 +623,8 @@ example : ((15 : ℚ) + 0) / 2 = 15 / 2 := by norm_num
 - [Convolution](../08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md): the integral here is a convolution, and e^(At) is the response to a single kick.
 - [Pontryagin's principle](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/06-pontryagins-principle-and-bang-bang-control.md): choosing b(t) to reach a target state as fast as possible.
 - [State space](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/01-state-space-models-and-the-matrix-exponential.md): the engineer's state-space model, with measured outputs added.
+- [Floquet theory](08-floquet-theory-and-parametric-resonance.md): a system with periodic coefficients is a constant one seen through a periodic lens, and pumping at twice the natural rate makes it grow.
+- [Poincare maps](../11-Discrete%20Dynamics%20and%20Chaos/07-poincare-return-maps.md): watch a flow only when it crosses a wall, and a periodic orbit becomes a fixed point.
 
 ---
 

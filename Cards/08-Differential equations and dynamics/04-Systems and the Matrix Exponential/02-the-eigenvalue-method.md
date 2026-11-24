@@ -596,6 +596,7 @@ example : (!![-1, 1; 0, -1] : Matrix (Fin 2) (Fin 2) ℚ) *ᵥ ![1, 0] = (-1 : �
 - [The matrix exponential](04-the-matrix-exponential.md): the method as one matrix e^(At), missing eigenvectors included.
 - [Normal modes](07-coupled-oscillators-and-normal-modes.md): the same splitting where modes oscillate.
 - [Stiff equations](../05-Numerical%20Evolution/06-stiff-equations-and-backward-euler.md): a mode far faster than the rest forces tiny steps or blows up.
+- [Invariant manifolds](../06-Nonlinear%20Dynamics%20in%20the%20Plane/12-stable-unstable-and-centre-manifolds.md): the curves into and out of a saddle, and the slow curve that decides when the linear part is silent.
 
 Real eigenvalues give modes that only fade or grow; what a system does when its characteristic equation has no real roots is [Complex eigenvalues](03-complex-eigenvalues-and-spirals.md).
 

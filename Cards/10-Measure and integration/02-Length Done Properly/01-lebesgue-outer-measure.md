@@ -770,6 +770,8 @@ example : ((2 : ℤ) - 0) + (3 - 1) = 4 ∧ (3 : ℤ) - 0 = 3 := by norm_num
 ## Where this goes next
 
 - [Caratheodory's criterion](02-caratheodory-measurable-sets.md): the test that picks out the sets on which outer measure adds up.
+- [Hausdorff measure and dimension](08-hausdorff-measure-and-dimension.md): cover with pieces of any shape, weigh each by its size to the power s, and a fractal gets a size in its own dimension.
+- [Radon measures and the Riesz representation theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/06-radon-measures-and-riesz-representation.md): every positive linear rule on continuous functions is an integral against exactly one measure.
 
 Outer measure does not add up on every pair of sets with no common point; which sets it does add up on is the question [Caratheodory's criterion](02-caratheodory-measurable-sets.md) answers.
 

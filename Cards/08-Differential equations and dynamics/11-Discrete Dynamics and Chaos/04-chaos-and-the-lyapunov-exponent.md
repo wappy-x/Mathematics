@@ -807,6 +807,9 @@ example : |(39 / 10 : ℝ) * (1 - 2 * (1 / 5))| = 117 / 50 := by norm_num [abs_o
 
 - [The doubling map](05-the-doubling-map-and-symbolic-dynamics.md): the angle doubling of Step 3 read as a shift of binary digits.
 - [The Lorenz system](06-the-lorenz-system-and-strange-attractors.md): a positive exponent in a continuous flow in three dimensions.
+- [The Smale horseshoe](08-smale-horseshoe.md): stretch, fold and lay back, and every coin-toss sequence becomes an orbit.
+- [The Henon map](09-the-henon-map.md): a two-line rule that folds the plane onto a strange attractor.
+- [Feigenbaum renormalisation](10-feigenbaum-renormalisation.md): why every one-hump map doubles its period at the same rate 4.669.
 
 Left open: if every small gap keeps stretching, how do the orbits stay inside the range, and what shape do they trace there?
 

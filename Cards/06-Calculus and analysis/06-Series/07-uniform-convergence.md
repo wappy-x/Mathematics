@@ -569,6 +569,8 @@ example : (1 : ℚ) / 2 ^ 12 < 1 / 3000 ∧ ¬ ((1 : ℚ) / 2 ^ 11 < 1 / 3000) :
 - [Dini's theorem](15-dinis-theorem.md): when rising continuous functions with a continuous limit must converge uniformly.
 - [Weierstrass's monster](16-weierstrass-nowhere-differentiable-function.md): a continuous function with no derivative anywhere.
 - [Improper integrals with a dial](../08-Multiple%20Integrals/09-uniform-convergence-of-improper-integrals.md): the Weierstrass test that lets limits and derivatives pass inside.
+- [Peano's theorem](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/06-peano-existence-theorem.md): continuity alone is enough for a solution, built from Euler polygons.
+- [Lusin's theorem](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/06-lusins-theorem.md): every measurable function is continuous once you delete a set as small as you like.
 
 Left open: sin(nx)/n converges uniformly, yet its slopes do not settle. When may a limit pass through a derivative or an integral? [Swapping limits](08-swapping-limits-with-integrals-and-derivatives.md) answers that.
 

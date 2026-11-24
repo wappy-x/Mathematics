@@ -88,7 +88,7 @@ P(A) \ge 1 - \frac{\sigma^2}{n\varepsilon^2}, \qquad |A| \le 2^{n(H+\varepsilon)
 
 - **Independent readings.** Each day must tell nothing about the next. A stuck station that repeats its first reading for all 1,000 days sends a record whose surprise per day, by the independent formula, is 1.00, 2.00 or 3.00 bits: never in the window. The chance of a typical record is 0.
 - **The same chances every day.** The average surprise settles on the average of the daily entropies. If the chances drift with the seasons, it settles there, not on 1.75.
-- **Readings that depend on yesterday.** The property survives for a source whose statistics do not change over time and whose long runs reflect its long-run averages (a stationary ergodic source). Then $`H`$ becomes the **entropy rate**: the bits per reading once the past is known. This is the Shannon–McMillan–Breiman theorem, stated here and not proved.
+- **Readings that depend on yesterday.** The property survives for a source whose statistics do not change over time and whose long runs reflect its long-run averages (a stationary ergodic source). Then $`H`$ becomes the **entropy rate**: the bits per reading once the past is known. This is the Shannon–McMillan–Breiman theorem, stated here and not proved. Its engine is [Birkhoff's ergodic theorem](../../10-Measure%20and%20integration/12-Ergodic%20Theory/04-birkhoff-pointwise-ergodic-theorem.md).
 - **A finite variance of the surprise, for this proof.** Chebyshev's inequality, the bound used in Step 2, needs $`\sigma^2`$. With four readings it is 0.6875; a finite alphabet always has one.
 - **A long record.** The promises speak about large $`n`$. At 100 days only 0.4924 of the chance is typical.
 

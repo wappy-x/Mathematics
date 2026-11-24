@@ -642,6 +642,7 @@ example (K P : ℝ) (hP : 0 < P) (hPK : P < K) :
 ## Where this goes next
 
 - [Bernoulli and Riccati equations](09-bernoulli-and-riccati-substitutions.md): the logistic law is a Bernoulli equation, and the substitution u = 1/P turns it into a linear one, a second road to the same S-curve.
+- [Delay equations](../13-Rhythms%20and%20Synchronisation/04-delay-differential-equations.md): a rate that reacts to the past can oscillate even with one variable.
 
 Here the rate and the ceiling stay fixed; what happens to the rests when a dial such as a yearly catch turns slowly is [Bifurcations](../06-Nonlinear%20Dynamics%20in%20the%20Plane/10-bifurcations-of-equilibria.md).
 

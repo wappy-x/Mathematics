@@ -124,7 +124,7 @@ Expand the rate in $`u`$ and the dial at a rest with zero slope. If the dial mov
 
 With two variables a rest can be a **spiral point**: nearby motion winds around it. Its linearised eigenvalues are complex: a growth rate (real part) and a turning rate (imaginary part). Turn the dial so the growth rate passes from negative to positive while the turning rate stays away from zero. The spiral turns from winding in to winding out.
 
-Typically a small stable limit cycle (a closed loop that nearby motion settles onto) is born, its radius growing like the square root of the dial's distance past the crossing. Otherwise a small unstable cycle shrinks onto the point and vanishes. The cubic terms decide which (Kuznetsov). That is the **Hopf bifurcation**.
+Typically a small stable limit cycle (a closed loop that nearby motion settles onto) is born, its radius growing like the square root of the dial's distance past the crossing. Otherwise a small unstable cycle shrinks onto the point and vanishes. The cubic terms decide which (Kuznetsov). That is the **Hopf bifurcation** ([The Hopf bifurcation](13-hopf-bifurcation.md)).
 
 The polar model of [Limit cycles](08-limit-cycles-and-van-der-pol.md) with a dial, $`r' = r(\mu - r^2)`$, $`\theta' = 1`$, shows the first case: a cycle of radius $`\sqrt{\mu}`$ once $`\mu > 0`$. Here $`r`$ is the distance from the rest and $`\theta`$ the angle around it. Van der Pol's cycle appears at full size, radius about 2: a degenerate case.
 
@@ -637,6 +637,10 @@ example : (1 / 4 : ℚ) * (1 / 2) - (1 / 2) ^ 3 = 0 ∧ (1 / 4 : ℚ) * (-1 / 2)
 
 - [Buckling](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/08-buckling-and-stability.md): the pitchfork in a loaded column.
 - [Reaction-diffusion](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/05-reaction-diffusion-and-pattern-formation.md): a uniform state losing stability across space.
+- [Invariant manifolds](12-stable-unstable-and-centre-manifolds.md): the curves into and out of a saddle, and the slow curve that decides when the linear part is silent.
+- [The Hopf bifurcation](13-hopf-bifurcation.md): a spiral turns unstable and a cycle is born gently, or a big swing appears all at once.
+- [Global bifurcations](14-homoclinic-and-heteroclinic-bifurcations.md): a cycle can die by touching a saddle, and its period grows without bound on the way.
+- [Phase locking](../13-Rhythms%20and%20Synchronisation/02-flows-on-the-circle-and-phase-locking.md): a rhythm pulled by another either locks at a fixed lag or slips, and the slips get rarer near the edge.
 
 This card leaves open how to see a fold coming in real data, before the resting state is gone.
 

@@ -863,6 +863,7 @@ example : (3 : ℚ) / 12 = 1 / 4 ∧ (12 : ℕ) ^ 2 = 144 := by norm_num
 ## Where this goes next
 
 - [The strong law of large numbers](04-strong-law-of-large-numbers.md): almost sure convergence of the average, for independent draws from one law with a finite mean.
+- [Cramer's theorem](10-cramers-theorem-and-large-deviations.md): the chance that an average strays decays exponentially, at a rate given by the Legendre transform of the log-moment function.
 
 The weak law bounds the chance of a miss at each n but says nothing about a single run over time; whether almost every infinite sequence of rolls has averages that settle at 3.5 and stay there is proved on [The strong law of large numbers](04-strong-law-of-large-numbers.md).
 

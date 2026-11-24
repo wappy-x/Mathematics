@@ -859,6 +859,7 @@ example : ({4, 5, 6} : Finset ℕ) ∉
 - [Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md): two variables pushed forward together onto the plane, and independence as that joint law being a product.
 - [Infinitely many coin tosses](../06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md): laws of a whole sequence of claims, one year after another.
 - [Convergence in distribution](../10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md): laws converging while the variables may live on different spaces.
+- [Measure-preserving maps and Poincare recurrence](../12-Ergodic%20Theory/01-measure-preserving-maps-and-poincare-recurrence.md): a map that keeps sizes brings almost every point back near where it started, again and again.
 
 The law says how likely each set of amounts is, but not what the policy costs on average; that needs an integral against the law, built in [Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md).
 

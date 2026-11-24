@@ -641,6 +641,8 @@ example : (10 : ℚ) * (10 + 8 / 3 + 3) / (10 - 8 / 3 - 1) = 470 / 19 ∧ (470 /
 - [The doubling map](05-the-doubling-map-and-symbolic-dynamics.md): a path coded as symbols, here left and right lobes.
 - [Runge-Kutta](../../16-Numerical%20analysis/06-ODE%20Solvers/01-runge-kutta-and-butcher-tableaux.md): higher-order steppers, which push the computed horizon back only a few units.
 - [Stochastic differential equations](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/04-stochastic-differential-equations.md): rate laws with noise.
+- [Poincare maps](07-poincare-return-maps.md): watch a flow only when it crosses a wall, and a periodic orbit becomes a fixed point.
+- [The Henon map](09-the-henon-map.md): a two-line rule that folds the plane onto a strange attractor.
 
 One path is unforecastable past 25 units, yet the average height is near 23.5 from every start tried: averages over the butterfly can be forecast when single paths cannot.
 

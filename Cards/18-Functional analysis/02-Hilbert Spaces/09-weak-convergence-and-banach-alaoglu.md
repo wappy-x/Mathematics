@@ -846,7 +846,7 @@ example : (36 : ℚ) / 100 = (3 / 5) ^ 2 := by norm_num
 - **Best pacing.** Keller's theory of competitive running finds the best pace for a race as an optimal-control problem. Existence proofs for such problems take pacing plans whose cost falls to its least value, extract a weakly convergent subsequence, and use that a convex cost cannot rise in a weak limit.
 - **Equations solved weakly.** Existence proofs for nonlinear equations, such as those of fluid flow, approximate the solution in finite-dimensional pieces. The approximations are bounded in a Hilbert space, so a subsequence converges weakly, and its limit is shown to solve the equation. For linear problems such as a beam, [Lax-Milgram](07-lax-milgram-theorem.md) gives the solution directly and the pieces converge in size.
 - **Layered materials.** A laminate of thin stiff and soft layers has stiffness that oscillates ever faster. The stiffness converges weakly to its average, yet for a load across the layers the laminate's true stiffness is the harmonic mean, because stiffness and strain multiply and products do not pass to weak limits.
-- **Probability.** Convergence in distribution is weak-star convergence of laws. Prokhorov's theorem, which finds convergent subsequences of laws, is Banach–Alaoglu plus a condition that keeps mass from escaping.
+- **Probability.** Convergence in distribution is weak-star convergence of laws. Prokhorov's theorem ([Tightness and Prokhorov's theorem](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/11-tightness-and-prokhorovs-theorem.md)), which finds convergent subsequences of laws, is Banach–Alaoglu plus a condition that keeps mass from escaping.
 - **Audio.** A run of one-second pure tones of rising pitch keeps its energy, yet each tone's reading against any fixed clip fades, as the clip's Fourier coefficients do. The tones converge weakly to silence.
 
 > **Say it back**
@@ -866,7 +866,7 @@ example : (36 : ℚ) / 100 = (3 / 5) ^ 2 := by norm_num
 
 ## Where this goes next
 
-- Krein-Milman, a planned card on this wing's sixth shelf, takes the weak-star compact unit ball from Banach–Alaoglu and shows it is rebuilt from its extreme points, its corners.
+- [Krein-Milman](../06-Banach%20Algebras%20and%20Fixed%20Points/06-krein-milman-and-extreme-points.md) takes the weak-star compact unit ball from Banach–Alaoglu and shows it is rebuilt from its extreme points, its corners.
 
 The swaps leave one question open: weak limits can lose size, so when does a cost that depends on the squared size still reach its least value at the limit?
 

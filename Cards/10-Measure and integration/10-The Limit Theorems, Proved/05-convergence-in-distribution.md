@@ -860,6 +860,7 @@ example : ∀ d ∈ Finset.Icc (1 : ℤ) 6, 1 ≤ |(7 - d) - d| := by decide
 - [Characteristic functions](06-characteristic-functions.md): one family of test functions, cosines and sines, that identifies a law.
 - [The central limit theorem, proved](07-central-limit-theorem.md): the proof that the standardised die total, and any sum of independent terms with finite variance, converges in distribution to the bell.
 - Lévy's continuity theorem, proved on [Characteristic functions](06-characteristic-functions.md): convergence of characteristic functions is equivalent to convergence in distribution.
+- [Tightness and Prokhorov's theorem](11-tightness-and-prokhorovs-theorem.md): if no mass escapes to infinity, every sequence of laws has a convergent subsequence.
 
 Testing every bounded continuous function is impractical; which small family suffices is the question [Characteristic functions](06-characteristic-functions.md) answers.
 

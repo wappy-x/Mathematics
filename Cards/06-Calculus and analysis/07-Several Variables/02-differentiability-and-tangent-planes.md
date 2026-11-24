@@ -635,6 +635,7 @@ example : (125 : ℚ) / 2 - 225 / 1000 * 110 - 1 / 4 * 70 = 2025 / 100 := by nor
 - [Dimension and tangent space](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/07-dimension-and-tangent-spaces.md): tangent spaces of shapes cut out by polynomials.
 - [Complex manifolds and Kahler forms](../../22-Algebraic%20geometry/05-Cohomology%20and%20the%20Hodge%20Conjecture/04-complex-manifolds-and-kahler-forms.md): spaces with a flat model at every point.
 - [Regular surface](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/01-regular-surfaces-and-tangent-planes.md): tangent planes for surfaces such as a sphere, not graphs of a height.
+- [Rademacher's theorem](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/07-rademachers-theorem.md): a Lipschitz function on R^n has a derivative almost everywhere.
 
 The plane gives the slope along every direction, but not yet which direction is steepest or how steep it is; [Gradient](03-gradient-and-directional-derivatives.md) answers both.
 

@@ -136,7 +136,7 @@ Gaps shrinking by a nearly fixed ratio form a geometric series with a finite sum
 <details>
 <summary>Why the same 4.669 appears in other systems</summary>
 
-Near the pile-up, the map applied twice, seen on a small window at the hump's top and magnified, looks like the map at an earlier dial. The magnification depends only on the shape of the top, so every map with a rounded top shares it. Feigenbaum found this between 1975 and 1978.
+Near the pile-up, the map applied twice, seen on a small window at the hump's top and magnified, looks like the map at an earlier dial. The magnification depends only on the shape of the top, so every map with a rounded top shares it. Feigenbaum found this between 1975 and 1978 ([Feigenbaum renormalisation](10-feigenbaum-renormalisation.md)).
 
 </details>
 
@@ -641,6 +641,7 @@ example : logistic (14 / 5) (9 / 14) = 9 / 14 := by norm_num [logistic]
 ## Where this goes next
 
 - [The Lyapunov exponent](04-chaos-and-the-lyapunov-exponent.md): the average log-slope along an orbit, negative while a cycle attracts, positive in chaos. The log-slope is the logarithm of the slope's size, and an orbit is the run of shares from one start.
+- [Feigenbaum renormalisation](10-feigenbaum-renormalisation.md): why every one-hump map doubles its period at the same rate 4.669.
 
 Past 3.569946, telling chaos from a very long cycle needs a measure of whether nearby shares drift apart: the Lyapunov exponent.
 

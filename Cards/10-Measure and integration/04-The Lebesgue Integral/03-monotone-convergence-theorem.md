@@ -712,6 +712,7 @@ example : (2 : ℚ) - 4 / 3 = 2 / 3 := by
 - [Fatou's lemma](../05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md): this theorem applied to running minimums, giving an inequality for sequences that do not rise.
 - [Product measure](../06-Product%20Measures%20and%20Fubini/02-product-measure.md): areas of sets in a plane built slice by slice, with this theorem swapping sums and integrals.
 - [The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md): a density found as the limit of a rising sequence, its integrals controlled by this theorem.
+- [Radon measures and the Riesz representation theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/06-radon-measures-and-riesz-representation.md): every positive linear rule on continuous functions is an integral against exactly one measure.
 
 Only non-negative functions have an integral so far, so the river's height above a datum, positive in the pools and negative over the shoals, has none; [Integrable functions](04-integrable-functions-and-l1.md) gives it one, and the additivity proved here is what makes that integral consistent.
 

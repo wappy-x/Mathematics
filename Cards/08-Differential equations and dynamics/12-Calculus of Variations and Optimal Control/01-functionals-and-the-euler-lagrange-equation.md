@@ -801,6 +801,7 @@ example : (80 : ℚ) * 250 + 160 * 250 = 60000 := by norm_num
 - [Minimal surface](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/07-minimal-surfaces-and-soap-films.md): least area spanning a wire loop.
 - [Geodesic and exponential map](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/04-geodesics-and-the-exponential-map.md): shortest routes on curved ground.
 - [Noether](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/08-noethers-theorem.md): why a missing slot, as in Step 5, gives a conserved quantity.
+- [The second variation](09-second-variation-and-free-endpoints.md): when a stationary path is truly a minimum, and what a free end must satisfy.
 
 Left open: what if the route must also meet a budget, such as a fixed length of cable? That is [Paths with a budget](03-constrained-paths-and-the-hanging-chain.md).
 

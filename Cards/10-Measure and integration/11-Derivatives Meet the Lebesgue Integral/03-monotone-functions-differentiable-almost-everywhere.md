@@ -740,6 +740,7 @@ example : (3 : ℚ) / 10 + 2 / 10 = 1 / 2 := by norm_num
 ## Where this goes next
 
 - [Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md): the functions with no singular part, for which the integral of the slope recovers the rise exactly, and how to recognise them without computing a decomposition.
+- [Rademacher's theorem](07-rademachers-theorem.md): a Lipschitz function on R^n has a derivative almost everywhere.
 
 The question this card leaves open: which rising functions lose nothing, so that the integral of the slope gives back the whole rise?
 

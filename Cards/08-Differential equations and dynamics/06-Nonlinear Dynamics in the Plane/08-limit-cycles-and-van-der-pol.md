@@ -102,7 +102,7 @@ Start on the positive $`x`$ axis at a point $`a`$ with $`v`$ = 0. Follow the pat
 
 A small patch of starts changes area at a relative rate equal to the Jacobian's trace, here $`\mu(1 - x^2)`$. Over one lap, a patch on the loop keeps its width along the loop, since loop points return to themselves, so the whole area change lands on the width across it.
 
-The return map's slope is the exponential of the trace integrated over a lap: 8.597e-04, a small gap cut to under a thousandth in one beat. The polar model gives $`e^{-4\pi}`$ again.
+The return map's slope is the exponential of the trace integrated over a lap: 8.597e-04, a small gap cut to under a thousandth in one beat. The polar model gives $`e^{-4\pi}`$ again. Return maps in general: [Poincare maps](../11-Discrete%20Dynamics%20and%20Chaos/07-poincare-return-maps.md).
 
 <details>
 <summary>Detailed proof: van der Pol has exactly one loop, and it attracts (Liénard's theorem)</summary>
@@ -575,6 +575,10 @@ example : (1 : ℤ) ^ 2 - 4 * 1 = -3 ∧ (1 : ℚ) / 2 > 0 := by norm_num
 
 - [Poincare-Bendixson](09-poincare-bendixson-and-bendixsons-criterion.md): when a trapped path must end on a loop, and when no loop can exist.
 - [Bifurcations](10-bifurcations-of-equilibria.md): how a loop is born from a rest point as a strength like $`\mu`$ crosses zero.
+- [The Hopf bifurcation](13-hopf-bifurcation.md): a spiral turns unstable and a cycle is born gently, or a big swing appears all at once.
+- [Global bifurcations](14-homoclinic-and-heteroclinic-bifurcations.md): a cycle can die by touching a saddle, and its period grows without bound on the way.
+- [Poincare maps](../11-Discrete%20Dynamics%20and%20Chaos/07-poincare-return-maps.md): watch a flow only when it crosses a wall, and a periodic orbit becomes a fixed point.
+- [Two-timing and averaging](../13-Rhythms%20and%20Synchronisation/01-two-timing-and-averaging.md): let the amplitude drift slowly, and a weak nonlinearity becomes a simple equation for the swing's size.
 
 This card found each loop by a formula or by Liénard's theorem. The question it leaves open: for a general law in the plane, how do you prove a loop exists, or that none can?
 

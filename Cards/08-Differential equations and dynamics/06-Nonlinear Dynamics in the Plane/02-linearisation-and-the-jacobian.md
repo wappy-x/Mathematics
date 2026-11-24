@@ -110,7 +110,7 @@ At a centre the margin is 0, no δ leaves anything over, and the leftover alone 
 
 ### Step 4: a saddle stays a saddle
 
-The **Hartman–Grobman theorem** (Grobman 1959, Hartman 1960): at a hyperbolic rest, a continuous change of coordinates near the rest carries the linear paths onto the true ones, direction kept. So the true swing has one curve in and one out at the top. Their tangency to the pictured lines is a further result, the stable manifold theorem (Perko §2.7). The proof is in Hartman's paper and Perko §2.8.
+The **Hartman–Grobman theorem** (Grobman 1959, Hartman 1960): at a hyperbolic rest, a continuous change of coordinates near the rest carries the linear paths onto the true ones, direction kept. So the true swing has one curve in and one out at the top. Their tangency to the pictured lines is a further result, the stable manifold theorem (Perko §2.7; [Invariant manifolds](12-stable-unstable-and-centre-manifolds.md)). The proof is in Hartman's paper and Perko §2.8.
 
 ### Step 5: at a centre the matrix says nothing
 
@@ -832,6 +832,7 @@ example : -Real.sin (Real.pi / 2) - 1/2 * (0 : ℝ) = -1 := by norm_num
 - [Predator and prey](06-predator-prey.md): a linear centre that truly is one.
 - [Limit cycles](08-limit-cycles-and-van-der-pol.md): an unstable rest whose paths settle on a loop.
 - [Linearisation](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/02-linearisation-about-an-equilibrium.md): the same step with a control input.
+- [Invariant manifolds](12-stable-unstable-and-centre-manifolds.md): the curves into and out of a saddle, and the slow curve that decides when the linear part is silent.
 
 Left open: at a centre the matrix is silent, so what else can prove whether the swing settles?
 

@@ -650,6 +650,7 @@ end LaplaceCard
 
 - [Transforming a derivative](02-transforms-of-derivatives.md): the rate rule in full, with second derivatives and the starting values they carry.
 - [Transfer functions](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md): a whole system summed up as one function of s.
+- [Delay equations](../13-Rhythms%20and%20Synchronisation/04-delay-differential-equations.md): a rate that reacts to the past can oscillate even with one variable.
 
 The table runs from signals to transforms; solving an equation needs the road back, which [Inverting](03-inverting-by-partial-fractions.md) builds.
 

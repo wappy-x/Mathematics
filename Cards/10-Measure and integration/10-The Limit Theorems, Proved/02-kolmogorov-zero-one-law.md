@@ -941,6 +941,7 @@ example : (4 + 3 + 4 + 3 + 3 : ℤ) * 10 = 34 * 5 := by norm_num
 ## Where this goes next
 
 - [The strong law of large numbers](04-strong-law-of-large-numbers.md): the running average of independent terms with a finite mean converges with probability 1, and the constant is the mean.
+- [Kolmogorov's three-series theorem](08-kolmogorov-three-series-theorem.md): exactly when a sum of independent random terms converges.
 
 This card shows the running average converges with probability 0 or 1, and to a constant if at all; that the answer is 1 and the constant is 3.5 is what [The strong law of large numbers](04-strong-law-of-large-numbers.md) proves.
 

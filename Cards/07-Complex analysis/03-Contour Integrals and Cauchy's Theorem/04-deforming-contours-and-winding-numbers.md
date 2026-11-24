@@ -979,6 +979,7 @@ example : (1 : ℤ) * 3 + 1 * 1 ≠ 1 * 3 + (-1) * 1 ∧ (1 : ℤ) ≠ 2 := by d
 - [The circle's fundamental group is the integers](../../17-Topology/04-Homotopy/04-fundamental-group-of-the-circle.md): winding without integrals.
 - [Turning and winding numbers](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/08-turning-number-and-winding-number.md): the turns of a curve's own direction.
 - [Cauchy's theorem for cycles](08-homology-form-of-cauchys-theorem.md): a loop integral is zero whenever the loops wind zero times round every point outside the domain.
+- [Index theory](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/11-index-theory-in-the-plane.md): count how often the arrows turn as you walk round a loop, and a closed orbit must enclose rests whose counts add to one.
 
 A small circle round a hole gives 2πi times its strength; what the circle gives for $`f(z)/(z - a)`$, with $`f`$ holomorphic, is [Cauchy's integral formula](05-cauchys-integral-formula.md).
 

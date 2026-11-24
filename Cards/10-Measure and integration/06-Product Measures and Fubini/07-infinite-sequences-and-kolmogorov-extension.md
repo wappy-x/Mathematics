@@ -176,7 +176,7 @@ Only item 3 uses real coordinates. For an arbitrary index set $`T`$ the proof ru
 
 </details>
 
-The sticky coin also has a road back to the dart: toss 1 is heads when $`U_1 < 0.5`$, and toss k + 1 repeats toss k when $`U_{k+1} < 0.8`$. Any sequence whose next term has a stated law given the past can be built by such conditional quantile maps; that is the Ionescu-Tulcea theorem. Kolmogorov's theorem asks only for the consistent laws of the first n terms.
+The sticky coin also has a road back to the dart: toss 1 is heads when $`U_1 < 0.5`$, and toss k + 1 repeats toss k when $`U_{k+1} < 0.8`$. Any sequence whose next term has a stated law given the past can be built by such conditional quantile maps; that is the Ionescu-Tulcea theorem ([The Ionescu-Tulcea theorem](09-ionescu-tulcea-theorem.md)). Kolmogorov's theorem asks only for the consistent laws of the first n terms.
 
 **What the code shows, and what only the proof shows.** The code checks every digit pattern of length at most 12, twenty digits of four piles, sticky-coin consistency up to 10 tosses, and 200,000 simulated darts. That every digit of every point behaves, and that every consistent family has a P, only the proofs cover.
 
@@ -1633,6 +1633,9 @@ example : (3 : ℚ) / 8 - 1 / 4 = 1 / 8 ∧ 2 * (1 / 12 : ℚ) - 1 / 8 = 1 / 24 
 ## Where this goes next
 
 - [Kolmogorov's zero-one law](../10-The%20Limit%20Theorems%2C%20Proved/02-kolmogorov-zero-one-law.md): on this card's space of independent tosses, every event unaffected by any finite number of tosses has chance 0 or 1.
+- [The Ionescu-Tulcea theorem](09-ionescu-tulcea-theorem.md): give the law of the next step given the whole past, and the infinite process exists on any measurable spaces.
+- [Measure-preserving maps and Poincare recurrence](../12-Ergodic%20Theory/01-measure-preserving-maps-and-poincare-recurrence.md): a map that keeps sizes brings almost every point back near where it started, again and again.
+- [Birkhoff's ergodic theorem](../12-Ergodic%20Theory/04-birkhoff-pointwise-ergodic-theorem.md): along almost every orbit, the time average equals the space average.
 
 This card builds one space that carries a whole independent sequence; which of its events can have a chance strictly between 0 and 1 is the question [Kolmogorov's zero-one law](../10-The%20Limit%20Theorems%2C%20Proved/02-kolmogorov-zero-one-law.md) answers for the events that live far out in the tail.
 

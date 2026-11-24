@@ -930,6 +930,7 @@ example : ∀ n : ℕ, 2 ≤ n → (n : ℚ) * (1 / n) / (1 / 2) = 2 := by
 
 - [Conditioning on a random variable](05-conditioning-on-a-random-variable.md): information given by a random variable's value, where the forecast becomes a function of that value.
 - [Filtrations and martingales](06-filtrations-and-martingales.md): information that grows month by month, and the tower as the fairness of a game.
+- [Birkhoff's ergodic theorem](../12-Ergodic%20Theory/04-birkhoff-pointwise-ergodic-theorem.md): along almost every orbit, the time average equals the space average.
 
 The rules here take the information as a sigma-algebra; when the information is the value of a random variable, such as a rain reading from a second gauge, whether the forecast can be written as a function of that reading is answered on [Conditioning on a random variable](05-conditioning-on-a-random-variable.md).
 

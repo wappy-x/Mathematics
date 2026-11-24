@@ -1049,6 +1049,7 @@ example : (2 / 10 - 1 / 6 : ℚ) + (4 / 10 - 1 / 6) = 4 / 15 ∧
 ## Where this goes next
 
 - [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md): one standard proof applies the Hahn split to $`\nu - c\mu`$, for measures $`\nu`$ and $`\mu`$ and each number c, to build a density.
+- [Complex measures](07-complex-measures-and-total-variation.md): sizes that are complex numbers, their total variation, and the polar form d nu = h d|nu| with |h| = 1.
 
 On the die the density of $`Q`$ against $`P`$ was in hand: $`q_i / p_i`$, face by face. Whether every measure that is zero wherever another is zero has such a density is what the Radon-Nikodym theorem answers.
 

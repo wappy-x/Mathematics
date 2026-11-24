@@ -711,6 +711,7 @@ example : (2 : ℚ) ^ 2 / 4 = 1 := by norm_num
 - [The Picard-Lindelof theorem](02-lipschitz-and-the-picard-lindelof-theorem.md): the limit exists, and it is the only solution.
 - [Banach's fixed point theorem](../../17-Topology/01-Metric%20Spaces/08-banach-fixed-point-in-metric-spaces.md): any map that shrinks distances has one fixed point, Picard's recipe being one.
 - [Schauder](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/05-schauder-fixed-point-theorem.md): a fixed point without shrinking, giving solutions when the rule has no Lipschitz constant.
+- [Peano's theorem](06-peano-existence-theorem.md): continuity alone is enough for a solution, built from Euler polygons.
 
 The guesses settle on a solution, but this card leaves open whether the Lipschitz constant rules out every other solution from the same start.
 

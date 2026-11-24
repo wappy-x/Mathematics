@@ -741,6 +741,7 @@ example : (4096 : ℚ) * (1 / 2 ^ 12) = 1 := by norm_num
 ## Where this goes next
 
 - [The Lebesgue-Stieltjes integral](05-lebesgue-stieltjes-integral.md): integrating against $`\mu_F`$ itself, so that an absolutely continuous $`F`$ gives $`\int g \, dF = \int g F' \, d\lambda`$ and the Cantor function gives an integral no density can express.
+- [Rademacher's theorem](07-rademachers-theorem.md): a Lipschitz function on R^n has a derivative almost everywhere.
 
 This card says when the integral of the derivative recovers the total change. The question it leaves open is how to integrate against a rising function that is not absolutely continuous, such as the Cantor staircase. [The Lebesgue-Stieltjes integral](05-lebesgue-stieltjes-integral.md) answers it.
 

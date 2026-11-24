@@ -745,6 +745,7 @@ end FourierSeries
 - [Orthonormal bases](../../18-Functional%20analysis/02-Hilbert%20Spaces/03-orthonormal-bases-and-parseval.md): orthogonality in any space with a dot product.
 - [Completeness of sines and cosines](../../18-Functional%20analysis/02-Hilbert%20Spaces/04-completeness-of-the-trigonometric-system.md): why no repeating signal lies outside all harmonics.
 - [Fourier coefficients](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/01-fourier-coefficients-and-orthogonality.md): the same amounts, proofs at full strength.
+- [Ergodicity and mixing](../../10-Measure%20and%20integration/12-Ergodic%20Theory/02-ergodicity-and-mixing.md): a map that cannot be split into two invariant parts, and one that stirs every set evenly.
 
 Left open: adding tones shrinks the mean-square miss, but near the jump the sum still overshoots; does that overshoot ever go away? That is [Convergence](02-convergence-jumps-and-gibbs.md).
 

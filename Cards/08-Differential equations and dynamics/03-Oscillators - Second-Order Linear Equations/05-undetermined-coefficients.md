@@ -792,6 +792,7 @@ example : (-1 : ℚ) ^ 2 + 2 * (-1) + 1 = 0 ∧ 2 * (-1 : ℚ) + 2 = 0 := by nor
 - [Variation of parameters](07-variation-of-parameters.md): any continuous push, no guess.
 - [The RLC circuit](08-the-rlc-circuit-and-the-spring.md): the same equations for a driven spring and circuit.
 - [The round trip](../08-Laplace%20Transforms%20for%20Initial-Value%20Problems/04-solving-an-initial-value-problem-by-transform.md): particular solution and start in one pass.
+- [Two-timing and averaging](../13-Rhythms%20and%20Synchronisation/01-two-timing-and-averaging.md): let the amplitude drift slowly, and a weak nonlinearity becomes a simple equation for the swing's size.
 
 What the swing does under a push off the short list, such as 1/t, is the question this card leaves open.
 

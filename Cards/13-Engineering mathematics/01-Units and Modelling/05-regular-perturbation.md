@@ -133,7 +133,7 @@ Orange: the true swing, stepped by RK4 (Runge-Kutta 4, a stepping rule that samp
 
 ### Step 3: let the frequency carry a series of its own
 
-Run the cosine on a stretched clock. Set $`\tau = \omega t`$ with $`\omega = 1 + \varepsilon\omega_1 + \varepsilon^2\omega_2`$, an unknown frequency with its own corrections. This is the Lindstedt-Poincaré method: still regular perturbation, but in two unknowns at once, the shape and the frequency. The law becomes $`\omega^2 u_{\tau\tau} + \sin(a u)/a = 0`$, where $`u_{\tau\tau}`$ is the second derivative in $`\tau`$; from here on a prime means a derivative in $`\tau`$. The rung with no $`\varepsilon`$ gives $`u_0 = \cos\tau`$ again. The rung with one $`\varepsilon`$ now has an extra term from $`\omega^2 = 1 + 2\varepsilon\omega_1 + \dots`$:
+Run the cosine on a stretched clock. Set $`\tau = \omega t`$ with $`\omega = 1 + \varepsilon\omega_1 + \varepsilon^2\omega_2`$, an unknown frequency with its own corrections. This is the Lindstedt-Poincaré method (compare [Two-timing and averaging](../../08-Differential%20equations%20and%20dynamics/13-Rhythms%20and%20Synchronisation/01-two-timing-and-averaging.md)): still regular perturbation, but in two unknowns at once, the shape and the frequency. The law becomes $`\omega^2 u_{\tau\tau} + \sin(a u)/a = 0`$, where $`u_{\tau\tau}`$ is the second derivative in $`\tau`$; from here on a prime means a derivative in $`\tau`$. The rung with no $`\varepsilon`$ gives $`u_0 = \cos\tau`$ again. The rung with one $`\varepsilon`$ now has an extra term from $`\omega^2 = 1 + 2\varepsilon\omega_1 + \dots`$:
 
 ```math
 u_1'' + u_1 = \Big(2\omega_1 + \tfrac18\Big)\cos\tau + \tfrac{1}{24}\cos 3\tau.

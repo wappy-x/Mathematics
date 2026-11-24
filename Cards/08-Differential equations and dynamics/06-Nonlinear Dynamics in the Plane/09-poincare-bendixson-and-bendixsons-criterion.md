@@ -534,6 +534,7 @@ example : -2 * Real.pi * Real.sqrt 5 * 5 ≠ 0 := by norm_num [Real.pi_ne_zero]
 
 - [The Lorenz system](../11-Discrete%20Dynamics%20and%20Chaos/06-the-lorenz-system-and-strange-attractors.md): three variables, a bounded restless path that never closes.
 - [Bifurcations](10-bifurcations-of-equilibria.md): how a loop like the oscillator's is born from a resting point as a setting is turned.
+- [Index theory](11-index-theory-in-the-plane.md): count how often the arrows turn as you walk round a loop, and a closed orbit must enclose rests whose counts add to one.
 
 In the plane a trapped path ends at a rest, a loop, or a cycle of rests joined by paths; the Lorenz system shows what else a third variable allows.
 

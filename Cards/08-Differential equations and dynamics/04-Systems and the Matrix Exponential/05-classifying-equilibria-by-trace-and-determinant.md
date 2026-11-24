@@ -1045,6 +1045,8 @@ example :
 - [Linearisation](../06-Nonlinear%20Dynamics%20in%20the%20Plane/02-linearisation-and-the-jacobian.md): the chart applied to the linear part of a curved rule, and where a centre fails to survive.
 - [Stability of a state-space model](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/05-hurwitz-schur-and-lyapunov-stability.md): the same verdict in any number of variables, without solving for eigenvalues.
 - [Equations of motion of a vehicle](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/05-vehicle-equations-of-motion.md): the absorber's trace and determinant from mass, spring and damper.
+- [Floquet theory](08-floquet-theory-and-parametric-resonance.md): a system with periodic coefficients is a constant one seen through a periodic lens, and pumping at twice the natural rate makes it grow.
+- [Index theory](../06-Nonlinear%20Dynamics%20in%20the%20Plane/11-index-theory-in-the-plane.md): count how often the arrows turn as you walk round a loop, and a closed orbit must enclose rests whose counts add to one.
 
 The chart judges a system left alone; what the rooms do when a heater switches on, a steady push added to x' = Ax, is [Forced systems](06-forced-systems-and-variation-of-constants.md).
 

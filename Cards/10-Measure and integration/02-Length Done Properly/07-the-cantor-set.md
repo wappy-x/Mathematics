@@ -1158,6 +1158,7 @@ example : (64 : ℚ) * (1 / 64) = 1 := by norm_num
 
 - [Lebesgue decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md): every law on the line splits into a part with a density, a part of point masses, and a singular continuous part like $`\mu_F`$.
 - [The test spaces](../../17-Topology/02-Topological%20Spaces/09-standard-examples-and-counterexamples.md): the Cantor set among the spaces that test topological definitions.
+- [Hausdorff measure and dimension](08-hausdorff-measure-and-dimension.md): cover with pieces of any shape, weigh each by its size to the power s, and a fractal gets a size in its own dimension.
 
 $`F`$ is continuous and never falls, yet its slope gives back nothing of its rise; which functions can be rebuilt from their slope is what [Absolutely continuous functions and the fundamental theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/04-absolutely-continuous-functions-and-the-fundamental-theorem.md) answers.
 

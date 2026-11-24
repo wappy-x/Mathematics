@@ -768,6 +768,8 @@ example : (1 / 4 : ℚ) * (1 / 2) = 1 / 8 ∧ (0 : ℚ) ≠ 1 / 8 := by norm_num
 - [The weak law of large numbers](../10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md): variances adding make the spread of an average shrink.
 - [Characteristic functions](../10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md): E[XY] = E[X]E[Y] for complex exponentials turns sums into products.
 - [The central limit theorem, proved](../10-The%20Limit%20Theorems%2C%20Proved/07-central-limit-theorem.md): the normal shape of a sum of many independent quantities.
+- [Kolmogorov's three-series theorem](../10-The%20Limit%20Theorems%2C%20Proved/08-kolmogorov-three-series-theorem.md): exactly when a sum of independent random terms converges.
+- [Ergodicity and mixing](../12-Ergodic%20Theory/02-ergodicity-and-mixing.md): a map that cannot be split into two invariant parts, and one that stirs every set evenly.
 
 Independence makes the pair's law a product; what law that product gives the sum x + y is the question [Convolution](05-convolution-and-sums.md) answers.
 

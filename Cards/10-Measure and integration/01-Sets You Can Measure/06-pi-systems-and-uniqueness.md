@@ -724,6 +724,8 @@ example :
 - [The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md): the law of a random quantity, pinned down by its distribution function.
 - [Product measure](../06-Product%20Measures%20and%20Fubini/02-product-measure.md): the measure on pairs, unique because rectangles form a pi-system.
 - [Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md): independence checked on half-lines only.
+- [Change of variables for Lebesgue measure](../06-Product%20Measures%20and%20Fubini/08-lebesgue-change-of-variables-and-polar-coordinates.md): a linear map scales every volume by |det A|, a smooth map does so point by point, and polar coordinates follow.
+- [Measure-preserving maps and Poincare recurrence](../12-Ergodic%20Theory/01-measure-preserving-maps-and-poincare-recurrence.md): a map that keeps sizes brings almost every point back near where it started, again and again.
 
 The theorem says at most one measure takes given values on a pi-system; whether any measure takes them, so that a distribution function or a length on intervals really defines something, is the question [Caratheodory's extension theorem](../02-Length%20Done%20Properly/05-caratheodory-extension-theorem.md) answers.
 

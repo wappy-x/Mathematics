@@ -1229,6 +1229,7 @@ example : (2 / 3 : ℚ) ^ 10 = 1024 / 59049 ∧ 173 / 10000 < (2 / 3 : ℚ) ^ 10
 - [Quadratic variation](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/03-quadratic-variation.md): why a Brownian path has unbounded variation, so no Lebesgue-Stieltjes integral against it exists.
 - [The Ito integral](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/01-ito-integral.md): an integral against such a path, built from left-tagged sums.
 - [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): the product rule again, with a correction term that plays the part ΔF ΔG plays here.
+- [Radon measures and the Riesz representation theorem](06-radon-measures-and-riesz-representation.md): every positive linear rule on continuous functions is an integral against exactly one measure.
 
 The jump term is finite because a function of bounded variation has summable jumps; what replaces it when a path moves by countless small steps with infinite total variation is the question [Quadratic variation](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/03-quadratic-variation.md) answers.
 

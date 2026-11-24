@@ -122,7 +122,7 @@ The Sierpinski triangle is the same count with 3 copies at half size. Stage 6 ha
 <details>
 <summary>Similarity dimension and the other dimensions</summary>
 
-The **Hausdorff dimension** makes Step 4 exact, covering a set with small pieces of any shape. Moran (1946) and Hutchinson (1981) proved it equals log N / log s when copies overlap at most along edges; the proof needs measure theory.
+The **Hausdorff dimension** ([Hausdorff measure and dimension](../../10-Measure%20and%20integration/02-Length%20Done%20Properly/08-hausdorff-measure-and-dimension.md)) makes Step 4 exact, covering a set with small pieces of any shape. Moran (1946) and Hutchinson (1981) proved it equals log N / log s when copies overlap at most along edges; the proof needs measure theory.
 
 </details>
 
@@ -528,6 +528,9 @@ example : 3 ^ 6 = 729 ∧ (729 : ℚ) / 4 ^ 6 = (3 / 4) ^ 6 := by norm_num
 - [The Cantor set](../../10-Measure%20and%20integration/02-Length%20Done%20Properly/07-the-cantor-set.md): the simplest self-similar set, two copies a third the size, and why its total length is zero.
 - [The Lorenz system](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/06-the-lorenz-system-and-strange-attractors.md): a fractal from three weather equations, whose dimension is estimated from how fast paths stretch and squeeze, not counted from copies.
 - [The test spaces](../../17-Topology/02-Topological%20Spaces/09-standard-examples-and-counterexamples.md): shapes like the Koch curve as test cases for what "curve" and "connected" mean.
+- [The Smale horseshoe](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/08-smale-horseshoe.md): stretch, fold and lay back, and every coin-toss sequence becomes an orbit.
+- [The Henon map](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/09-the-henon-map.md): a two-line rule that folds the plane onto a strange attractor.
+- [Hausdorff measure and dimension](../../10-Measure%20and%20integration/02-Length%20Done%20Properly/08-hausdorff-measure-and-dimension.md): cover with pieces of any shape, weigh each by its size to the power s, and a fractal gets a size in its own dimension.
 
 This card counted copies of a shape defined by an endless process. What the finished shape is as a set of points, and in what sense the stages approach it, is what topology answers.
 

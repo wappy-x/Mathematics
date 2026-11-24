@@ -652,6 +652,8 @@ example (F ω₀ : ℝ) (hF : F ≠ 0) (hω₀ : ω₀ ≠ 0) :
 ## Where this goes next
 
 - [RLC resonance](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/03-rlc-circuits-and-resonance.md): the same amplitude curve in a circuit.
+- [Floquet theory](../04-Systems%20and%20the%20Matrix%20Exponential/08-floquet-theory-and-parametric-resonance.md): a system with periodic coefficients is a constant one seen through a periodic lens, and pumping at twice the natural rate makes it grow.
+- [Two-timing and averaging](../13-Rhythms%20and%20Synchronisation/01-two-timing-and-averaging.md): let the amplitude drift slowly, and a weak nonlinearity becomes a simple equation for the swing's size.
 
 How damping sets the peak's width, and so how sharply a circuit picks one frequency, is left to that card.
 

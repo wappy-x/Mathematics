@@ -646,6 +646,9 @@ end FixedPointsOfAMap
 ## Where this goes next
 
 - [The logistic map](03-the-logistic-map-and-period-doubling.md): the two-summer cycle past 3, and why cycles keep doubling.
+- [Poincare maps](07-poincare-return-maps.md): watch a flow only when it crosses a wall, and a periodic orbit becomes a fixed point.
+- [The Henon map](09-the-henon-map.md): a two-line rule that folds the plane onto a strange attractor.
+- [Feigenbaum renormalisation](10-feigenbaum-renormalisation.md): why every one-hump map doubles its period at the same rate 4.669.
 
 The slope test says the fixed point lets go at 3, not where the moths go instead; that cycle and the cascade after it come next.
 

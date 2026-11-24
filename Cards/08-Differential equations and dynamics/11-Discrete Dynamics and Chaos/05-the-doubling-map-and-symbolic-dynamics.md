@@ -854,6 +854,8 @@ example : ¬ ((6 : ℚ) / 7 ≤ 1 / 2) ∧ 2 - 2 * (6 / 7 : ℚ) = 2 / 7 := by n
 ## Where this goes next
 
 - [The Lorenz system](06-the-lorenz-system-and-strange-attractors.md): stretching and folding inside three smooth rate equations.
+- [The Smale horseshoe](08-smale-horseshoe.md): stretch, fold and lay back, and every coin-toss sequence becomes an orbit.
+- [Measure-preserving maps and Poincare recurrence](../../10-Measure%20and%20integration/12-Ergodic%20Theory/01-measure-preserving-maps-and-poincare-recurrence.md): a map that keeps sizes brings almost every point back near where it started, again and again.
 
 Left open: where are the stretch, the fold and the symbols in a smooth flow that has no digits built in, such as the Lorenz system?
 

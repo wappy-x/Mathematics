@@ -545,6 +545,8 @@ example : (2 : ℚ) * 3 = 6 ∧ (1 / 1000 : ℚ) / 4 = 1 / 4000 := by norm_num
 - Uniform continuity, the Topology wing's card: Heine–Cantor for any distance, compactness replacing closed and bounded.
 - [Bounded operators](../../18-Functional%20analysis/03-Bounded%20Operators/01-bounded-operators-and-the-operator-norm.md): for linear maps, K is the operator norm.
 - [Approximate identities](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/03-approximate-identities.md): uniform continuity making smoothing converge everywhere at once.
+- [Peano's theorem](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/06-peano-existence-theorem.md): continuity alone is enough for a solution, built from Euler polygons.
+- [Rademacher's theorem](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/07-rademachers-theorem.md): a Lipschitz function on R^n has a derivative almost everywhere.
 
 The question this card leaves open: what takes the place of "closed and bounded" when the inputs are not numbers on a line?
 

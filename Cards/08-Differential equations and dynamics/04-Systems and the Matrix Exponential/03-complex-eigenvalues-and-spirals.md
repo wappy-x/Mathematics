@@ -639,6 +639,7 @@ example : 2 * Real.pi / 2 = Real.pi := by ring
 - [The matrix exponential](04-the-matrix-exponential.md): e^(At) times the start gives the same spiral with no eigenvector, and still works when eigenvectors run out.
 - [Trace and determinant](05-classifying-equilibria-by-trace-and-determinant.md): spirals, centres, nodes and saddles sorted from the trace and determinant alone.
 - [Normal modes](07-coupled-oscillators-and-normal-modes.md): several springs at once, each complex pair one decaying sway.
+- [The Hopf bifurcation](../06-Nonlinear%20Dynamics%20in%20the%20Plane/13-hopf-bifurcation.md): a spiral turns unstable and a cycle is born gently, or a big swing appears all at once.
 
 Left open: an absorber just strong enough to stop the turning gives one repeated real eigenvalue and only one eigenvector direction, so what moves the wheel then?
 

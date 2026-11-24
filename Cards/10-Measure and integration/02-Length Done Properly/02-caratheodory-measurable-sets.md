@@ -827,7 +827,7 @@ example : toyBill 2 + toyBill 13 = toyBill 15 ∧ toyBill 2 + toyBill 4 = 2 ∧ 
 - **Length, area and volume.** Lebesgue measure is Lebesgue outer measure kept on the sets passing this test ([Lebesgue measure](03-lebesgue-measure.md)); area and volume come the same way from rectangles and boxes.
 - **Probability distributions on the line.** Every running-total function of a distribution builds its measure through the same filter ([Distribution functions and Lebesgue-Stieltjes measures](06-lebesgue-stieltjes-measures.md)).
 - **Sets with no interior.** The Cantor set passes because it is closed, and its size, 0, is read from lengths removed ([The Cantor set](07-the-cantor-set.md)).
-- **Fractal sizes.** Hausdorff measure, which gives fractional dimensions to fractals, starts as an outer measure and becomes a measure through this same test.
+- **Fractal sizes.** Hausdorff measure ([Hausdorff measure and dimension](08-hausdorff-measure-and-dimension.md)), which gives fractional dimensions to fractals, starts as an outer measure and becomes a measure through this same test.
 
 > **Say it back**
 > Outer measure gives every set a size, but those sizes only promise to add up to at least the whole. Carathéodory keeps a set when it cuts every test set into two parts whose sizes add exactly to the test set's size. The kept sets form a sigma-algebra, and on them outer measure adds up over any list of separate pieces. For length on the line, every interval and every set of size zero is kept. On the fence, E = [0.5, 1.2] cuts the test set of size 1.6 into 0.5 and 1.1.
@@ -843,6 +843,8 @@ example : toyBill 2 + toyBill 13 = toyBill 15 ∧ toyBill 2 + toyBill 4 = 2 ∧ 
 
 - [Lebesgue measure](03-lebesgue-measure.md): the measure this card produces on the line, squeezed between open and closed sets.
 - [Caratheodory's extension theorem](05-caratheodory-extension-theorem.md): the same filter applied to any rule that sizes a simple family of sets.
+- [Hausdorff measure and dimension](08-hausdorff-measure-and-dimension.md): cover with pieces of any shape, weigh each by its size to the power s, and a fractal gets a size in its own dimension.
+- [Radon measures and the Riesz representation theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/06-radon-measures-and-riesz-representation.md): every positive linear rule on continuous functions is an integral against exactly one measure.
 
 The criterion gives a measure on a sigma-algebra; exactly which sets of the line it holds, and how tightly open and closed sets pin them, is the question [Lebesgue measure](03-lebesgue-measure.md) answers.
 

@@ -731,6 +731,7 @@ example : volume (Ico (-3 : ℝ) 3) = 6 := by
 - [Null sets and almost everywhere](07-null-sets-and-almost-everywhere.md): sets of size zero, and what may be ignored on them.
 - [The integral of a simple function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md): a function taking a few values, integrated by weighting each value by the measure of the set where it is taken.
 - Bounded and symmetric, in the functional analysis wing: a measure whose sizes are projections (maps that keep one part of a vector and drop the rest) instead of numbers.
+- [Measure-preserving maps and Poincare recurrence](../12-Ergodic%20Theory/01-measure-preserving-maps-and-poincare-recurrence.md): a map that keeps sizes brings almost every point back near where it started, again and again.
 
 The definition says what sizes of pieces must do, but not what happens to sizes along a rising or shrinking sequence of sets; [Continuity and subadditivity](05-continuity-of-measure.md) draws that out of countable additivity, and finds the one place it needs a finite size.
 

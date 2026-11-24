@@ -575,6 +575,7 @@ example : (1 : ℚ) / (1 + 1 / 2) ^ 2 = 4 / 9 := by norm_num
 
 - [Impulses](06-impulses-and-the-delta-function.md): a switch on and off in a vanishing moment, the dose held fixed.
 - [Time delays](../../13-Engineering%20mathematics/03-Feedback%20Control/10-smith-predictor-and-time-delays.md): e^(−as) inside a feedback loop, where delay threatens stability.
+- [Delay equations](../13-Rhythms%20and%20Synchronisation/04-delay-differential-equations.md): a rate that reacts to the past can oscillate even with one variable.
 
 Here the heater stays on for hours. The question left open: what does the room do if the same heat arrives all at once, in a single instant?
 

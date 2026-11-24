@@ -228,7 +228,7 @@ The integral: a continuous f on a closed interval is uniformly continuous, so th
 
 $`\displaystyle \varphi(f) = \lim \sum_k f(t_k) \big(\alpha(t_k) - \alpha(t_{k-1})\big) = \int_a^b f \, d\alpha .`$
 
-The reverse bound |∫ f dα| ≤ V(α) max |f| gives ‖φ‖ ≤ V(α), so ‖φ‖ = V(α). Normalising α (α(a) = 0, right-continuous inside the interval) makes it unique. Kakutani (1941) proved the version for any compact space, where α is replaced by a signed measure.
+The reverse bound |∫ f dα| ≤ V(α) max |f| gives ‖φ‖ ≤ V(α), so ‖φ‖ = V(α). Normalising α (α(a) = 0, right-continuous inside the interval) makes it unique. Kakutani (1941) proved the version for any compact space ([Radon measures and the Riesz representation theorem](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/06-radon-measures-and-riesz-representation.md)), where α is replaced by a signed measure.
 
 </details>
 

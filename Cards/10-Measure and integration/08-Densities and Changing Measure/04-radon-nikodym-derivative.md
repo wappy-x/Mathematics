@@ -774,6 +774,7 @@ example : (5 : ℚ) / 3 * (3 / 5) = 1 ∧ (5 : ℚ) / 6 * (6 / 5) = 1 ∧ (5 : �
 - [Conditioning on a random variable](../09-Conditional%20Expectation/05-conditioning-on-a-random-variable.md): abstract Bayes, a conditional average under new odds as the old conditional average of X times Z, divided by that of Z.
 - [Filtrations and martingales](../09-Conditional%20Expectation/06-filtrations-and-martingales.md): the exchange rate restricted to growing information, a martingale: a process whose expected next value, given what is known now, is its value now.
 - [Changing the measure](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/01-change-of-measure-and-density-processes.md): exchange rates that evolve in continuous time.
+- [Complex measures](07-complex-measures-and-total-variation.md): sizes that are complex numbers, their total variation, and the polar form d nu = h d|nu| with |h| = 1.
 
 Every rule here assumes one measure gives no weight where the other gives none; what can be said of a measure that breaks that, split into a part with a density and a part with none, is [Lebesgue decomposition](05-lebesgue-decomposition.md).
 

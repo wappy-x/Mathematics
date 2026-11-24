@@ -953,6 +953,9 @@ example : pendulumEnergy 0 (Real.sqrt 2) = 1 ∧ Real.cos (π / 2) = 1 - 1 := by
 - [LaSalle's principle](05-lasalle-and-the-damped-pendulum.md): the same energy with friction, which only falls.
 - [Lagrangian mechanics](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/04-lagrangian-mechanics.md): where the law and its conserved energy come from.
 - [Regular perturbation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/05-regular-perturbation.md): the period's growth as a series in the amplitude.
+- [Global bifurcations](14-homoclinic-and-heteroclinic-bifurcations.md): a cycle can die by touching a saddle, and its period grows without bound on the way.
+- [Action-angle variables and KAM](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/10-action-angle-variables-and-kam.md): an integrable system winds round tori, and most tori survive a small push.
+- [Phase locking](../13-Rhythms%20and%20Synchronisation/02-flows-on-the-circle-and-phase-locking.md): a rhythm pulled by another either locks at a fixed lag or slips, and the slips get rarer near the edge.
 
 Friction breaks the one fact this card rests on, so the question it leaves open is where a swing ends up once its energy can only fall.
 

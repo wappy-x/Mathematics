@@ -799,6 +799,8 @@ example : ∀ m : ℕ, ∑ k ∈ Finset.range m, (1/2 : ℚ) ^ (k + 1) ≤ 1 := 
 - [Kolmogorov's zero-one law](02-kolmogorov-zero-one-law.md): why "infinitely often" for independent events could only ever have chance 0 or 1.
 - [The strong law of large numbers](04-strong-law-of-large-numbers.md): the first lemma applied to the averages themselves, with miss chances summable over every n under a fourth moment, and Etemadi's sparse checkpoints with the gaps filled for any finite mean.
 - [Martingale convergence](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/04-martingale-convergence.md): the counting road of Step 2, where a finite average number of upcrossings (climbs from below a band to above it) means finitely many upcrossings, with probability 1.
+- [Kolmogorov's three-series theorem](08-kolmogorov-three-series-theorem.md): exactly when a sum of independent random terms converges.
+- [The law of the iterated logarithm](09-law-of-the-iterated-logarithm.md): a fair random walk's highs reach sqrt(2n log log n) again and again, and never beyond.
 
 The lemmas decide "infinitely often" only when the sum is finite or the events are independent; why, for independent events, no answer other than 0 or 1 was ever possible is [Kolmogorov's zero-one law](02-kolmogorov-zero-one-law.md).
 

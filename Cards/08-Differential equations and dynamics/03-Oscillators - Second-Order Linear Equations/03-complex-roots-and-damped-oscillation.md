@@ -617,6 +617,8 @@ example : (1 : ℚ) ^ 2 + (1 / 2) ^ 2 = 5 / 4 := by norm_num
 - [Complex eigenvalues](../04-Systems%20and%20the%20Matrix%20Exponential/03-complex-eigenvalues-and-spirals.md): a ± ib as eigenvalues, spiralling in the plane of height and velocity.
 - [Poles and zeros](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md): the sign of a as the test of settling.
 - [Damping ratio and natural frequency](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md): a and b recast as damping ratio and natural frequency.
+- [Two-timing and averaging](../13-Rhythms%20and%20Synchronisation/01-two-timing-and-averaging.md): let the amplitude drift slowly, and a weak nonlinearity becomes a simple equation for the swing's size.
+- [Delay equations](../13-Rhythms%20and%20Synchronisation/04-delay-differential-equations.md): a rate that reacts to the past can oscillate even with one variable.
 
 Here the car is left alone after one bump; what happens when the road keeps pushing, and the push feeds the ringing, is the question [Undetermined coefficients](05-undetermined-coefficients.md) and [Resonance](06-resonance-and-beats.md) answer.
 

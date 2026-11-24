@@ -6,24 +6,25 @@
 
 Write down a rate law for a real situation, solve it by hand where a formula exists, step it on a computer where none does, and say whether the answer is trustworthy, stable, oscillating or chaotic. Carry the same toolkit into heat, waves and steady states, into discrete iteration, and into choosing the best path or control, ready for the stochastic and financial versions in wings 11 and 12.
 
-12 shelves · **93 of 93 cards ready to read**
+13 shelves · **109 of 109 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
 | Shelf | Cards |
 | --- | ---: |
 | [01 · Rate Equations](#s01) | 9 |
-| [02 · Existence, Uniqueness and Sensitivity](#s02) | 5 |
+| [02 · Existence, Uniqueness and Sensitivity](#s02) | 6 |
 | [03 · Oscillators: Second-Order Linear Equations](#s03) | 9 |
-| [04 · Systems and the Matrix Exponential](#s04) | 7 |
+| [04 · Systems and the Matrix Exponential](#s04) | 8 |
 | [05 · Numerical Evolution](#s05) | 7 |
-| [06 · Nonlinear Dynamics in the Plane](#s06) | 10 |
+| [06 · Nonlinear Dynamics in the Plane](#s06) | 14 |
 | [07 · Series Solutions and Boundary Problems](#s07) | 10 |
 | [08 · Laplace Transforms for Initial-Value Problems](#s08) | 7 |
 | [09 · Fourier Series](#s09) | 5 |
 | [10 · The Classical PDEs](#s10) | 10 |
-| [11 · Discrete Dynamics and Chaos](#s11) | 6 |
-| [12 · Calculus of Variations and Optimal Control](#s12) | 8 |
+| [11 · Discrete Dynamics and Chaos](#s11) | 10 |
+| [12 · Calculus of Variations and Optimal Control](#s12) | 10 |
+| [13 · Rhythms and Synchronisation](#s13) | 4 |
 
 <a name="s01"></a>
 
@@ -45,7 +46,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s02"></a>
 
-## 02 · Existence, Uniqueness and Sensitivity · 5 cards
+## 02 · Existence, Uniqueness and Sensitivity · 6 cards
 
 *Picard iteration, the Lipschitz condition and the Picard-Lindelof theorem, non-uniqueness, finite-time blow-up and maximal intervals, Gronwall's inequality and continuous dependence, the flow map. Plain register; the contraction argument is done in outline on the card, the metric-space machinery is not built here.*
 
@@ -54,6 +55,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [Blow-up: a smooth equation can send its solution to infinity in finite time](02-Existence%2C%20Uniqueness%20and%20Sensitivity/03-blow-up-and-the-life-span-of-a-solution.md)
 4. [Gronwall's inequality: nearby starts stay nearby for a while, and here is the bound](02-Existence%2C%20Uniqueness%20and%20Sensitivity/04-gronwall-and-continuous-dependence.md)
 5. [The flow: a rule that moves every starting point forward by t, and running it twice is running it longer](02-Existence%2C%20Uniqueness%20and%20Sensitivity/05-the-flow-of-an-equation.md)
+6. [Peano's theorem: continuity alone is enough for a solution, built from Euler polygons](02-Existence%2C%20Uniqueness%20and%20Sensitivity/06-peano-existence-theorem.md)
 
 [↑ Back to the shelves](#top)
 
@@ -77,7 +79,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s04"></a>
 
-## 04 · Systems and the Matrix Exponential · 7 cards
+## 04 · Systems and the Matrix Exponential · 8 cards
 
 *Reducing to a first-order system, the eigenvalue method, complex eigenvalues and spirals, the matrix exponential including the defective case, the trace-determinant classification of linear equilibria, forced systems by variation of constants, coupled oscillators and normal modes.*
 
@@ -88,6 +90,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Trace and determinant: two numbers sort every planar linear system into node, saddle, spiral or centre](04-Systems%20and%20the%20Matrix%20Exponential/05-classifying-equilibria-by-trace-and-determinant.md)
 6. [Forced systems: the response is the start propagated forward plus every past input propagated to now](04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md)
 7. [Normal modes: two connected springs vibrate in a few pure patterns, and every motion mixes them](04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md)
+8. [Floquet theory: a system with periodic coefficients is a constant one seen through a periodic lens, and pumping at twice the natural rate makes it grow](04-Systems%20and%20the%20Matrix%20Exponential/08-floquet-theory-and-parametric-resonance.md)
 
 [↑ Back to the shelves](#top)
 
@@ -109,7 +112,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s06"></a>
 
-## 06 · Nonlinear Dynamics in the Plane · 10 cards
+## 06 · Nonlinear Dynamics in the Plane · 14 cards
 
 *Phase portraits and nullclines, linearisation and the Jacobian, the nonlinear pendulum, Lyapunov functions, LaSalle's principle, predator-prey cycles, the SIR epidemic, limit cycles and van der Pol, Poincare-Bendixson and Bendixson's criterion, bifurcations of equilibria.*
 
@@ -123,6 +126,10 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [Limit cycles: a self-sustaining rhythm that nearby states spiral onto, unlike the fragile circles of a centre](06-Nonlinear%20Dynamics%20in%20the%20Plane/08-limit-cycles-and-van-der-pol.md)
 9. [Poincare-Bendixson: in the plane a trapped path that cannot rest must loop, and a divergence test rules loops out](06-Nonlinear%20Dynamics%20in%20the%20Plane/09-poincare-bendixson-and-bendixsons-criterion.md)
 10. [Bifurcations: turn a dial slowly and a resting state can vanish, swap stability or split in two](06-Nonlinear%20Dynamics%20in%20the%20Plane/10-bifurcations-of-equilibria.md)
+11. [Index theory: count how often the arrows turn as you walk round a loop, and a closed orbit must enclose rests whose counts add to one](06-Nonlinear%20Dynamics%20in%20the%20Plane/11-index-theory-in-the-plane.md)
+12. [Invariant manifolds: the curves into and out of a saddle, and the slow curve that decides when the linear part is silent](06-Nonlinear%20Dynamics%20in%20the%20Plane/12-stable-unstable-and-centre-manifolds.md)
+13. [The Hopf bifurcation: a spiral turns unstable and a cycle is born gently, or a big swing appears all at once](06-Nonlinear%20Dynamics%20in%20the%20Plane/13-hopf-bifurcation.md)
+14. [Global bifurcations: a cycle can die by touching a saddle, and its period grows without bound on the way](06-Nonlinear%20Dynamics%20in%20the%20Plane/14-homoclinic-and-heteroclinic-bifurcations.md)
 
 [↑ Back to the shelves](#top)
 
@@ -196,7 +203,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s11"></a>
 
-## 11 · Discrete Dynamics and Chaos · 6 cards
+## 11 · Discrete Dynamics and Chaos · 10 cards
 
 *Iteration and cobweb plots, stability of fixed points of a map, the logistic map and period doubling, chaos and the Lyapunov exponent, the doubling map and symbolic dynamics, the Lorenz system and strange attractors. Fractal geometry is wing 05, Julia and Mandelbrot sets wing 07 ([Complex Dynamics](../07-Complex%20analysis/README.md#s11)), ergodic theory wing 10, chaos in data wing 14.*
 
@@ -206,12 +213,16 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [The Lyapunov exponent: how fast two nearly identical starts drift apart, and positive means chaos](11-Discrete%20Dynamics%20and%20Chaos/04-chaos-and-the-lyapunov-exponent.md)
 5. [The doubling map: doubling and dropping the whole part shifts the binary digits, which is why chaos can be proved](11-Discrete%20Dynamics%20and%20Chaos/05-the-doubling-map-and-symbolic-dynamics.md)
 6. [The Lorenz system: three weather equations that never settle and never repeat, on a butterfly no thicker than a sheet](11-Discrete%20Dynamics%20and%20Chaos/06-the-lorenz-system-and-strange-attractors.md)
+7. [Poincare maps: watch a flow only when it crosses a wall, and a periodic orbit becomes a fixed point](11-Discrete%20Dynamics%20and%20Chaos/07-poincare-return-maps.md)
+8. [The Smale horseshoe: stretch, fold and lay back, and every coin-toss sequence becomes an orbit](11-Discrete%20Dynamics%20and%20Chaos/08-smale-horseshoe.md)
+9. [The Henon map: a two-line rule that folds the plane onto a strange attractor](11-Discrete%20Dynamics%20and%20Chaos/09-the-henon-map.md)
+10. [Feigenbaum renormalisation: why every one-hump map doubles its period at the same rate 4.669](11-Discrete%20Dynamics%20and%20Chaos/10-feigenbaum-renormalisation.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s12"></a>
 
-## 12 · Calculus of Variations and Optimal Control · 8 cards
+## 12 · Calculus of Variations and Optimal Control · 10 cards
 
 *Functionals and the Euler-Lagrange equation, the brachistochrone and the Beltrami identity, constrained paths and the hanging chain, Lagrangian mechanics, Hamilton's equations, Pontryagin's principle and bang-bang control, dynamic programming and the Bellman equation, the HJB equation with the linear-quadratic regulator. Stochastic control, Merton and execution models are wings 11 and 12; MDPs and value iteration wing 15.*
 
@@ -223,6 +234,21 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Pontryagin's principle: the best control maximises a Hamiltonian at every instant, and often that means full throttle or full brake](12-Calculus%20of%20Variations%20and%20Optimal%20Control/06-pontryagins-principle-and-bang-bang-control.md)
 7. [Dynamic programming: any tail of a best plan is itself a best plan, so solve from the finish backwards](12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md)
 8. [The HJB equation: dynamic programming in continuous time, and for linear motion with squared costs the best control is a feedback gain](12-Calculus%20of%20Variations%20and%20Optimal%20Control/08-the-hjb-equation-and-the-linear-quadratic-regulator.md)
+9. [The second variation: when a stationary path is truly a minimum, and what a free end must satisfy](12-Calculus%20of%20Variations%20and%20Optimal%20Control/09-second-variation-and-free-endpoints.md)
+10. [Action-angle variables and KAM: an integrable system winds round tori, and most tori survive a small push](12-Calculus%20of%20Variations%20and%20Optimal%20Control/10-action-angle-variables-and-kam.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s13"></a>
+
+## 13 · Rhythms and Synchronisation · 4 cards
+
+*Slow amplitude equations by two-timing and averaging, a phase on a circle that locks or slips, a crowd of oscillators falling into step, and oscillation caused by delay.*
+
+1. [Two-timing and averaging: let the amplitude drift slowly, and a weak nonlinearity becomes a simple equation for the swing's size](13-Rhythms%20and%20Synchronisation/01-two-timing-and-averaging.md)
+2. [Phase locking: a rhythm pulled by another either locks at a fixed lag or slips, and the slips get rarer near the edge](13-Rhythms%20and%20Synchronisation/02-flows-on-the-circle-and-phase-locking.md)
+3. [The Kuramoto model: a crowd of oscillators with different speeds falls into step once the coupling passes a threshold](13-Rhythms%20and%20Synchronisation/03-the-kuramoto-model.md)
+4. [Delay equations: a rate that reacts to the past can oscillate even with one variable](13-Rhythms%20and%20Synchronisation/04-delay-differential-equations.md)
 
 [↑ Back to the shelves](#top)
 

@@ -722,6 +722,7 @@ example : ∀ x ∈ Finset.range 360,
 - [Caratheodory's extension theorem](05-caratheodory-extension-theorem.md): builds a measure from its values on intervals, on the sigma-algebra this card shows is needed.
 - [Distribution functions and Lebesgue-Stieltjes measures](06-lebesgue-stieltjes-measures.md): lengths that do change under sliding, weighted by a distribution function.
 - [The Cantor set](07-the-cantor-set.md): an uncountable set that is measurable and has length 0.
+- [Change of variables for Lebesgue measure](../06-Product%20Measures%20and%20Fubini/08-lebesgue-change-of-variables-and-polar-coordinates.md): a linear map scales every volume by |det A|, a smooth map does so point by point, and polar coordinates follow.
 
 Once some sets must go unmeasured, the question is how to build a measure on the sets that remain from nothing more than the lengths of intervals, and [Caratheodory's extension theorem](05-caratheodory-extension-theorem.md) answers it.
 

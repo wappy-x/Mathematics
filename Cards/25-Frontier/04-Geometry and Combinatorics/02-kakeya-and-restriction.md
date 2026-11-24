@@ -166,7 +166,7 @@ To reach zero area, Besicovitch let the trees get finer without end and passed t
 
 **Minkowski dimension (box counting).** Lay a grid of boxes of side $`\varepsilon`$ and count the boxes the set touches, $`N(\varepsilon)`$. If $`N(\varepsilon)`$ grows like $`\varepsilon^{-s}`$ as $`\varepsilon`$ shrinks, then $`\dim_M = s`$.
 
-**Hausdorff dimension (Felix Hausdorff, 1918).** Cover the set with pieces $`U_i`$ of any shape, each of diameter at most $`\varepsilon`$. Weigh each piece by its diameter to a trial power $`s`$, add up, and take the cheapest cover:
+**Hausdorff dimension (Felix Hausdorff, 1918).** Built in full on [Hausdorff measure and dimension](../../10-Measure%20and%20integration/02-Length%20Done%20Properly/08-hausdorff-measure-and-dimension.md). Cover the set with pieces $`U_i`$ of any shape, each of diameter at most $`\varepsilon`$. Weigh each piece by its diameter to a trial power $`s`$, add up, and take the cheapest cover:
 
 ```math
 \mathcal H^s(E) = \lim_{\varepsilon \to 0}\, \inf\Bigl\{\sum_i (\mathrm{diam}\, U_i)^s : E \subset \bigcup_i U_i,\ \mathrm{diam}\, U_i \le \varepsilon\Bigr\}, \qquad \dim_H E = \inf\{s : \mathcal H^s(E) = 0\}

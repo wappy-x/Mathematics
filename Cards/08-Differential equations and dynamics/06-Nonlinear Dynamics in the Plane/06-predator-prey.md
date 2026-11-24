@@ -916,6 +916,7 @@ example : (1 : ℝ) - Real.log 1 + 1 - Real.log 1 = 2 := by norm_num
 - [The SIR model](07-the-sir-epidemic-model.md): the product term in an outbreak that runs once.
 - [Limit cycles](08-limit-cycles-and-van-der-pol.md): an isolated loop that pulls paths onto itself.
 - [Poincare-Bendixson](09-poincare-bendixson-and-bendixsons-criterion.md): when a closed loop must exist, and when none can.
+- [Index theory](11-index-theory-in-the-plane.md): count how often the arrows turn as you walk round a loop, and a closed orbit must enclose rests whose counts add to one.
 
 The capped herd lost every loop to one small change; which cycles survive a small change is [Bifurcations](10-bifurcations-of-equilibria.md).
 

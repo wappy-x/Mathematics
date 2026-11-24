@@ -696,6 +696,7 @@ example : ∑ k ∈ Finset.range 5, Nat.stirlingSecond 4 k * 3 ^ k = 309 := by d
 - [Sums, products, sups and limits](02-limits-of-measurable-functions.md): sums, products, suprema (least upper bounds) and limits of measurable functions stay measurable.
 - [Random variables as measurable maps](04-random-variables-and-their-information.md): the family a reading settles, like the rounded log's 8 sets, as the information it carries.
 - [Product sigma-algebras](../06-Product%20Measures%20and%20Fubini/01-product-sigma-algebras.md): measurability for functions of two readings at once.
+- [Lusin's theorem](../05-Swapping%20Limits%20and%20Integrals/06-lusins-theorem.md): every measurable function is continuous once you delete a set as small as you like.
 
 One function passes the test; whether the total weight of a whole belt of parcels, or its heaviest parcel, passes too is [Sums, products, sups and limits](02-limits-of-measurable-functions.md).
 

@@ -1119,6 +1119,10 @@ example : ((Finset.univ : Finset (Fin 6)).filter (fun i => i.val + 1 ≤ 3)).car
 
 - [The central limit theorem in four lines, once you have fingerprints](../../20-Harmonic%20analysis/04-Characteristic%20Functions%20and%20Probability/05-central-limit-theorem-by-characteristic-functions.md): the Fourier proof in four lines.
 - [How big must n be](../../20-Harmonic%20analysis/04-Characteristic%20Functions%20and%20Probability/06-berry-esseen-and-the-rate.md): the Berry–Esseen bound in use, and a skewness correction.
+- [Kolmogorov's three-series theorem](08-kolmogorov-three-series-theorem.md): exactly when a sum of independent random terms converges.
+- [The law of the iterated logarithm](09-law-of-the-iterated-logarithm.md): a fair random walk's highs reach sqrt(2n log log n) again and again, and never beyond.
+- [Cramer's theorem](10-cramers-theorem-and-large-deviations.md): the chance that an average strays decays exponentially, at a rate given by the Legendre transform of the log-moment function.
+- [Tightness and Prokhorov's theorem](11-tightness-and-prokhorovs-theorem.md): if no mass escapes to infinity, every sequence of laws has a convergent subsequence.
 
 This card proves the limit and only states the rate; how big n must be in practice is answered on How big must n be.
 

@@ -552,6 +552,7 @@ example : ((2 : ℚ) ^ 4 / 4) = 4 := by norm_num
 ## Where this goes next
 
 - [Pullback](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/02-pullback-and-change-of-variables.md): the same theorem with the sign of the determinant kept, written in differential forms.
+- [Change of variables for Lebesgue measure](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/08-lebesgue-change-of-variables-and-polar-coordinates.md): a linear map scales every volume by |det A|, a smooth map does so point by point, and polar coordinates follow.
 
 This card needs a Jordan region and the Riemann integral; how far the formula reaches on wilder or unbounded regions is a question for the Lebesgue integral.
 

@@ -772,6 +772,7 @@ example : (2 : ℕ)^4 = 16 ∧ 16 * (16 + 5) = 336 := by decide
 ## Where this goes next
 
 - [Distribution functions and Lebesgue-Stieltjes measures](06-lebesgue-stieltjes-measures.md): swaps duration b − a for F(b) − F(a) on stretches (a, b] and gets one measure for every rising, right-continuous function F; this is which sizings of shifts are consistent, and so which measures on the line exist.
+- [The Ionescu-Tulcea theorem](../06-Product%20Measures%20and%20Fubini/09-ionescu-tulcea-theorem.md): give the law of the next step given the whole past, and the infinite process exists on any measurable spaces.
 
 ---
 

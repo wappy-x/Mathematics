@@ -502,6 +502,7 @@ example : Complex.exp (2 * (Real.pi : ℂ) * I) = 1 := by exact Complex.exp_two_
 - [Pricing Heston exactly](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md): that average prices options.
 - [Bode plots](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md): stretch and turn per frequency.
 - [Phasors](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/02-phasors-and-impedance.md): circuits with fixed arrows.
+- [Complex measures](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/07-complex-measures-and-total-variation.md): sizes that are complex numbers, their total variation, and the polar form d nu = h d|nu| with |h| = 1.
 
 Left open: exponents 2πi apart give the same point, so which exponent should undo it?
 

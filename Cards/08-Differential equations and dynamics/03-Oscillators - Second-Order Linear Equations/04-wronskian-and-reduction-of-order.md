@@ -709,6 +709,7 @@ example : (1 : ℤ) ^ 2 * ((-1) * |(-1 : ℤ)|) - (1 * |(1 : ℤ)|) * (-1) ^ 2 =
 ## Where this goes next
 
 - [Variation of parameters](07-variation-of-parameters.md): lets c1 and c2 vary with time, dividing by W, to solve the equation with a push on the right-hand side.
+- [Floquet theory](../04-Systems%20and%20the%20Matrix%20Exponential/08-floquet-theory-and-parametric-resonance.md): a system with periodic coefficients is a constant one seen through a periodic lens, and pumping at twice the natural rate makes it grow.
 
 Two solutions finish the unforced equation; what the weight does when an outside force keeps pushing is what variation of parameters answers.
 

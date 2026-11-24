@@ -519,6 +519,9 @@ example : Matrix.det !![(4 : ℤ), 2, 2; 0, 1, 1; 1, 0, 4] = 16 := by
 - [The matrix-tree theorem](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/07-matrix-tree-theorem.md): cut one row and column from the graph's Laplacian, and the determinant counts its spanning trees.
 - [Block designs](../../04-Combinatorics%20and%20graphs/16-Designs/01-block-designs-and-fishers-inequality.md): v points in b blocks of size k with every pair together exactly lambda times, two counts any design must obey, and Fisher's inequality that blocks never number fewer than points.
 - [Hadamard matrices](../../04-Combinatorics%20and%20graphs/16-Designs/04-hadamard-matrices.md): square tables of plus and minus ones with perpendicular rows, possible only in sizes 1, 2 and multiples of 4, and the largest determinant such a table can have.
+- [The Henon map](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/09-the-henon-map.md): a two-line rule that folds the plane onto a strange attractor.
+- [Change of variables for Lebesgue measure](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/08-lebesgue-change-of-variables-and-polar-coordinates.md): a linear map scales every volume by |det A|, a smooth map does so point by point, and polar coordinates follow.
+- [The area and coarea formulas](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/08-area-and-coarea-formulas.md): Jacobians turn the Hausdorff measure of images and of level sets into ordinary integrals.
 
 One number says whether the sprite survived, not which directions stretched or by how much; those come next.
 

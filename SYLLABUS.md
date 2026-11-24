@@ -1,10 +1,10 @@
 # Syllabus
 
-The whole library in reading order: **25 wings, 262 shelves and 1,987 cards**, from counting to the open problems of current research. Each card uses only ideas from the cards before it, so the library can be read from the first card to the last.
+The whole library in reading order: **25 wings, 264 shelves and 2,019 cards**, from counting to the open problems of current research. Each card uses only ideas from the cards before it, so the library can be read from the first card to the last.
 
 **Each wing has its own page.** Click a wing to see its shelves and every card on them, then click a card's title to read it.
 
-**1,987 of 1,987 cards are ready to read.**
+**2,019 of 2,019 cards are ready to read.**
 
 | # | Wing | What it's about | Shelves | Ready to read |
 | --- | --- | --- | ---: | --- |
@@ -15,9 +15,9 @@ The whole library in reading order: **25 wings, 262 shelves and 1,987 cards**, f
 | 05 | [Geometry and trig](Cards/05-Geometry%20and%20trig/README.md) | Shapes, angles, coordinates and space. | 7 | 62 of 62 |
 | 06 | [Calculus and analysis](Cards/06-Calculus%20and%20analysis/README.md) | Change, limits, areas and the infinitely small. | 9 | 85 of 85 |
 | 07 | [Complex analysis](Cards/07-Complex%20analysis/README.md) | What the square root of −1 unlocks. | 11 | 77 of 77 |
-| 08 | [Differential equations and dynamics](Cards/08-Differential%20equations%20and%20dynamics/README.md) | How things change over time: growth, orbits, chaos. | 12 | 93 of 93 |
+| 08 | [Differential equations and dynamics](Cards/08-Differential%20equations%20and%20dynamics/README.md) | How things change over time: growth, orbits, chaos. | 13 | 109 of 109 |
 | 09 | [Probability and statistics](Cards/09-Probability%20and%20statistics/README.md) | Chance, data and drawing honest conclusions. | 14 | 100 of 100 |
-| 10 | [Measure and integration](Cards/10-Measure%20and%20integration/README.md) | The rigorous floor under probability and calculus. | 11 | 68 of 68 |
+| 10 | [Measure and integration](Cards/10-Measure%20and%20integration/README.md) | The rigorous floor under probability and calculus. | 12 | 84 of 84 |
 | 11 | [Stochastic processes and calculus](Cards/11-Stochastic%20processes%20and%20calculus/README.md) | Randomness in motion: random walks to Brownian motion. | 9 | 60 of 60 |
 | 12 | [Financial mathematics](Cards/12-Financial%20mathematics/README.md) | Interest, pricing, risk and markets, from loans to derivatives. | 51 | 332 of 332 |
 | 13 | [Engineering mathematics](Cards/13-Engineering%20mathematics/README.md) | Units, signals, control, circuits, mechanics, heat. | 10 | 86 of 86 |

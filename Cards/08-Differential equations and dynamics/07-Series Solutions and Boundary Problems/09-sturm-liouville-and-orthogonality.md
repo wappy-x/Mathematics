@@ -705,6 +705,7 @@ end SturmLiouville
 - [Compact and symmetric](../../18-Functional%20analysis/03-Bounded%20Operators/08-spectral-theorem-for-compact-self-adjoint-operators.md): the proof of completeness.
 - [Self-adjoint extensions](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/02-self-adjoint-extensions-and-the-spectral-theorem.md): end conditions as a choice of operator.
 - [Helmholtz](../../19-Partial%20differential%20equations/04-Laplace%2C%20Poisson%20and%20Potentials/08-helmholtz-and-eigenfunctions.md): the theorem in two and three dimensions.
+- [The second variation](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/09-second-variation-and-free-endpoints.md): when a stationary path is truly a minimum, and what a free end must satisfy.
 
 This card leaves one question open: why do the modes leave nothing over, so that every shape is a sum of them?
 

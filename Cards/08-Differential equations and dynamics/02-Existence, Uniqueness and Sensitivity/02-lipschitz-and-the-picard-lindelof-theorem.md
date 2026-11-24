@@ -66,7 +66,7 @@ When $`f`$ has a derivative in the value, $`L`$ is its steepest slope in the box
 ### When it holds
 
 - **The rule is continuous in the box.** Drop this and there may be no solution: with rate −1 at zero and above, +1 below, every curve from zero is pushed back across.
-- **A Lipschitz bound on the state.** Drop it and a solution still exists (Peano's theorem: continuity alone gives existence, not uniqueness), but several may leave the same start. The bucket at empty has infinitely many.
+- **A Lipschitz bound on the state.** Drop it and a solution still exists ([Peano's theorem](06-peano-existence-theorem.md): continuity alone gives existence, not uniqueness), but several may leave the same start. The bucket at empty has infinitely many.
 - **Time only up to $`T`$.** The promise is local: $`y' = y^2`$ from $`y = 1`$ reaches infinity at $`t = 1`$ ([Blow-up](03-blow-up-and-the-life-span-of-a-solution.md)).
 
 ---
@@ -715,6 +715,7 @@ example : (1 / 30 : ℚ) * 5 = 1 / 6 ∧ ((5 : ℚ) - 5 / 10) ^ 2 = 81 / 4 ∧
 - [When an SDE has one solution](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/07-existence-and-uniqueness-for-sdes.md): the argument with noise added.
 - [From local error to global error](../../16-Numerical%20analysis/06-ODE%20Solvers/02-convergence-of-one-step-methods.md): $`L`$ controlling solver error.
 - [Vector field and its flow](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/07-vector-fields-and-flows.md): one solution through every point.
+- [Peano's theorem](06-peano-existence-theorem.md): continuity alone is enough for a solution, built from Euler polygons.
 
 The theorem certifies 10 minutes; how long a solution actually survives, and whether it can reach infinity in finite time, is answered in [Blow-up](03-blow-up-and-the-life-span-of-a-solution.md).
 

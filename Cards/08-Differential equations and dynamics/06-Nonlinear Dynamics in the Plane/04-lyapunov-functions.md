@@ -698,6 +698,8 @@ example : (1 : ℚ) ^ 4 / 4 + 0 ^ 2 / 2 = 25 / 100 := by norm_num
 - [LaSalle's principle](05-lasalle-and-the-damped-pendulum.md): settling proved from V' ≤ 0 alone, on the damped swing.
 - [Stability of a state-space model](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/05-hurwitz-schur-and-lyapunov-stability.md): for stable linear systems a quadratic V always exists, found from a matrix equation.
 - [Passivity](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/05-passivity-and-absolute-stability.md): stored energy as V for whole families of feedback loops.
+- [Invariant manifolds](12-stable-unstable-and-centre-manifolds.md): the curves into and out of a saddle, and the slow curve that decides when the linear part is silent.
+- [The Hopf bifurcation](13-hopf-bifurcation.md): a spiral turns unstable and a cycle is born gently, or a big swing appears all at once.
 
 The question this card leaves open: when V' is only ≤ 0, as for the ball in honey with E as V, how do you prove it still settles?
 

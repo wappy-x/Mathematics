@@ -860,6 +860,7 @@ example : ((1/2) * (2 - 1) : ℚ) = 1/2 := by norm_num
 
 - [Changing the measure](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/01-change-of-measure-and-density-processes.md): the likelihood ratio followed through time, as a process whose value on each day is dQ/dP for what is known by then.
 - [The fundamental theorems](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md): pricing under a second set of odds, reached from the real-world ones by a density.
+- [Cramer's theorem](../10-The%20Limit%20Theorems%2C%20Proved/10-cramers-theorem-and-large-deviations.md): the chance that an average strays decays exponentially, at a rate given by the Legendre transform of the log-moment function.
 
 This card compares two models on one draw; the open question is how the ratio behaves as draws pile up over time, and whether it can switch one random walk's drift for another's.
 
