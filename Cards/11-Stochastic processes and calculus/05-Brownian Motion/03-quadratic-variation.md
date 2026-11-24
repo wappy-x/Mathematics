@@ -1017,6 +1017,8 @@ example : ∀ a b : ℚ, 2 * b * (b - a) = 2 * a * (b - a) + 2 * (b - a) ^ 2 := 
 - [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md): defines the integral against W as the limit of left-point sums, the choice Step 5 forced, and shows the integral of 2W against W is the square of W minus t.
 - [Theta pays for gamma](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md): a hedged option's daily profit is half its gamma times the squared move, less its theta, and quadratic variation is why the two balance on average.
 - [Realised variance](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/01-realised-variance-from-daily-prices.md): the sum of squared daily returns, measured on real prices, as an estimate of variance and as a contract that pays it.
+- [The Stratonovich integral](../06-Ito%20Calculus/08-stratonovich-integral.md): the midpoint rule that keeps the ordinary chain rule.
+- [Doob-Meyer](../10-Continuous%20Martingales/02-doob-meyer-decomposition.md): every submartingale is a martingale plus a rising trend, and the bracket of a martingale.
 
 The squared moves of a Brownian path add up to the clock and cannot be dropped; what an integral against such a path should mean, and what the chain rule becomes once that dt term is kept, is the question the Itô integral answers.
 

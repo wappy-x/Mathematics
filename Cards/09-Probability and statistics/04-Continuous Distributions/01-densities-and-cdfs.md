@@ -763,6 +763,8 @@ example : (478 : ℚ) / 10000 - 466 / 10000 = 12 / 10000 := by norm_num
 - [The butterfly and the implied density](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md): a density read off option prices.
 - [The volatility smile and skew](../../12-Financial%20mathematics/12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): what the market's density looks like when it is not a bell.
 - [Stochastic dominance](../../12-Financial%20mathematics/36-Returns%20and%20Utility/04-stochastic-dominance.md): ranking two investments by comparing their CDFs.
+- [The empirical CDF](../15-Nonparametric%20Inference/01-empirical-cdf-and-kolmogorov-smirnov.md): the data's own staircase, and the Kolmogorov-Smirnov test.
+- [Kernel density estimation](../15-Nonparametric%20Inference/03-kernel-density-estimation.md): a smooth histogram, and the bandwidth that balances bias and noise.
 
 This card took the bell's formula on trust; where its constant comes from, and how every bell reduces to one standard table, is [Normal](04-normal-distribution.md).
 

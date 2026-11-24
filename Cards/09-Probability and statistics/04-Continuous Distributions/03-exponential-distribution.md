@@ -882,6 +882,7 @@ example : ((10 : ℚ) - 7) / (10 - 5) = 3 / 5 ∧ ((10 : ℚ) - 2) / 10 = 4 / 5 
 - [Weibull and hazards](09-weibull-and-hazard-rates.md): hazards that rise or fall with time, for parts that wear out or settle in.
 - [Poisson process](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/01-poisson-process.md): a whole stream of independent exponential gaps, and the proof that its window counts are independent Poisson.
 - [The hazard rate](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): the same survival curve priced into bonds, with the hazard read from market spreads.
+- [Extreme value theory](../05-Transformations%20and%20Joint%20Laws/09-extreme-value-theory-and-block-maxima.md): why the largest of many settles into one of three shapes.
 
 This card fixes the hazard; the question it leaves is what the wait looks like when the hazard moves with time, and the Weibull card answers it.
 

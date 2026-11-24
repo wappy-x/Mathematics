@@ -1480,6 +1480,9 @@ end RegressionInference
 ## Where this goes next
 
 - [Multiple regression](03-multiple-regression-and-gauss-markov.md): several predictors at once, the matrix form of these variances, and why least squares has the smallest ones among unbiased linear fits. It shows how a slope changes once other predictors enter the fit: there, a house's floor area once its age and distance to the station are held fixed.
+- [Analysis of variance](09-analysis-of-variance-and-the-f-test.md): comparing several means by splitting the spread.
+- [Mixed-effects models](12-mixed-effects-models.md): groups that share a mean, and the pull of each group toward it.
+- [Instrumental variables and difference-in-differences](../13-Survival%2C%20Design%20and%20Causality/10-instrumental-variables-and-difference-in-differences.md): causal effects when a confounder is unmeasured.
 
 Ten days gave heat the credit for everything that moves with it, such as a school holiday in the hot weeks; what the slope becomes once a second cause is held fixed is the question this card leaves open.
 

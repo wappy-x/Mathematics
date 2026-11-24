@@ -2134,6 +2134,8 @@ theorem local_martingale_gives_second_solution :
 - [A short-rate model](../../12-Financial%20mathematics/30-Short-Rate%20Models/01-the-term-structure-equation.md): Feynman-Kac with a rate that wanders, pricing bonds.
 - [Feller semigroups](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/08-feller-semigroups-and-markov-processes.md): the averages as a family of operators, one for each length of time, and the equation as their rate of change.
 - Feynman-Kac, in the partial differential equations wing: the theorem from the equation's side, with boundaries, potentials and the weaker solutions that hold when the average is not smooth.
+- [The Dirichlet problem by Brownian motion](../08-Generators%2C%20Densities%20and%20Simulation/09-brownian-motion-and-the-dirichlet-problem.md): boundary values averaged over where the path exits.
+- [Backward SDEs in outline](../09-Beyond%20Brownian/08-backward-sdes-in-outline.md): equations solved from a known end value.
 
 This card assumed the average was smooth or the solution was given; when an average fails to be smooth, which equation does it still solve, and in what sense?
 

@@ -1123,6 +1123,7 @@ example : walk 10 (fun i => if (i : ℕ) < 9 then pictured i else !pictured i) 2
 
 - [Hitting times](06-first-passage-and-hitting-times.md): the first-arrival round as a random time in its own right: why it comes for sure without a deadline, why its average is infinite, and the return time to the start.
 - [Reflection principle](../05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the same mirror for Brownian motion, the limit of this walk as its steps shrink and come faster, where the ending value can never sit exactly on the level and "twice the tail" becomes exact.
+- [Donsker's theorem](../05-Brownian%20Motion/10-donskers-invariance-principle.md): the whole random-walk path converges to Brownian motion.
 
 What this card leaves open: once the deadline is gone, the pile reaches 15 for sure, but how many rounds does that take on average?
 

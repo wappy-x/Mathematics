@@ -1519,6 +1519,8 @@ open TTest
 - [Chi-square tests](06-chi-square-tests.md): the same logic for counts and categories instead of measurements.
 - [Likelihood ratio tests](07-likelihood-ratio-tests.md): the general recipe behind tests built from fitted models.
 - [Many tests](08-multiple-testing.md): what happens to the 5 percent when many t-tests are run at once.
+- [Analysis of variance](../09-Regression/09-analysis-of-variance-and-the-f-test.md): comparing several means by splitting the spread.
+- [Rank tests](../15-Nonparametric%20Inference/02-rank-tests-wilcoxon-and-mann-whitney.md): Wilcoxon and Mann-Whitney, comparing groups by order alone.
 
 The t-test compares averages of measurements; the question it leaves open is how to test counts, such as how many patients in each group recovered, and the chi-square tests answer it.
 

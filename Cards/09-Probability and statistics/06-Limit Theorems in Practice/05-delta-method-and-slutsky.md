@@ -1085,6 +1085,7 @@ example : (401 : ℕ) * 401 = 160801 := by norm_num
 - [Bootstrap](../07-Sampling%20and%20Estimation/08-bootstrap.md): the same standard error by resampling, no derivative needed.
 - [Intervals for a proportion](../08-Confidence%20Intervals%20and%20Tests/02-intervals-for-proportions.md): the Wald interval is this card's recipe applied to one share, and where it fails.
 - [Logistic regression](../09-Regression/05-logistic-regression.md): log odds ratios as regression coefficients.
+- [Large-sample likelihood](../08-Confidence%20Intervals%20and%20Tests/09-mle-asymptotics-wald-and-score-tests.md): why the MLE is nearly normal, and the Wald, score and likelihood-ratio tests.
 
 The card builds a 95% interval and checks its coverage but leaves open what an interval promises in general and how to choose among recipes; that is [Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md).
 

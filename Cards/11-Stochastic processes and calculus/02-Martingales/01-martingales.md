@@ -988,6 +988,9 @@ example : (18 / 37 : ℚ) * (19 / 18) + (19 / 37) * (18 / 19) = 1 := by norm_num
 - [Brownian martingales](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md): $`W_t`$, $`W_t^2 - t`$ and the exponential martingale, the continuous-time versions of this card's three.
 - [Feynman-Kac](../07-Changing%20Measure/06-feynman-kac-formula.md): a martingale built from a function of a diffusion, turning an expectation into a differential equation.
 - [Ruin](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/06-ruin-theory-and-lundberg.md): the exponential martingale of a tilted game, bounding the chance of ruin.
+- [Azuma-Hoeffding and McDiarmid](08-azuma-hoeffding-and-mcdiarmid.md): a martingale with bounded steps rarely strays far.
+- [Branching processes](09-galton-watson-branching-processes.md): family trees that die out or explode.
+- [Doob-Meyer](../10-Continuous%20Martingales/02-doob-meyer-decomposition.md): every submartingale is a martingale plus a rising trend, and the bracket of a martingale.
 
 Every result here holds at fixed rounds; whether a gambler who picks the moment to stop, by watching the path, can beat a fair game is the question [Stopping times](03-stopping-times-and-optional-stopping.md) answers.
 

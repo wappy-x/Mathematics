@@ -130,7 +130,7 @@ $`\displaystyle P^*\bigl(\text{middle pair} = x_{(i)}, x_{(j)}\bigr) = \binom{20
 
 ### Step 4: why the swap is good enough
 
-As the book grows, the empirical distribution closes in on the true law of claims at every dollar amount at once; that is the Glivenko–Cantelli theorem, stated here and not proved, since its proof rests on the strong law of large numbers ([The strong law of large numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md)). Closeness here means the share of the book below each dollar amount is near the true chance of a claim below it.
+As the book grows, the empirical distribution closes in on the true law of claims at every dollar amount at once; that is the Glivenko–Cantelli theorem (see [The empirical CDF](../15-Nonparametric%20Inference/01-empirical-cdf-and-kolmogorov-smirnov.md)), stated here and not proved, since its proof rests on the strong law of large numbers ([The strong law of large numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md)). Closeness here means the share of the book below each dollar amount is near the true chance of a claim below it.
 
 For the median that is nearly enough. The true claim density at the middle, $`f(m)`$, is above zero, so the chance of a claim below a dollar amount climbs steadily through one half there. Move the law a little and the place where it crosses one half moves in proportion, by about that amount divided by $`f(m)`$.
 
@@ -837,6 +837,7 @@ theorem resample_max_rank_prob (n : ℕ) (k : Fin n) :
 
 - [Historical and Monte Carlo VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md): resampling past market days to estimate a loss quantile.
 - [Comparing diagrams](../../17-Topology/06-Topological%20Data%20Analysis/05-comparing-diagrams-and-vectorising-them.md): bootstrap bands that separate real features of a data set's shape from noise.
+- [The empirical CDF](../15-Nonparametric%20Inference/01-empirical-cdf-and-kolmogorov-smirnov.md): the data's own staircase, and the Kolmogorov-Smirnov test.
 
 This card resampled claims as independent draws; whether resampling past days is safe when bad days cluster together is the question [Historical and Monte Carlo VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md) takes up.
 

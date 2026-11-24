@@ -965,7 +965,7 @@ example : ((4 : ℝ≥0) - 0) * (10 - 4) / (10 - 0) = 12 / 5 := by
 - **Refining a simulation.** Draw a coarse path first, then fill in finer times on demand without disturbing what was drawn: the Brownian bridge construction in Glasserman's book.
 - **Pricing by quasi-random numbers.** Spending the best random numbers on the far end first, and the bridge on the middle, concentrates the important variation in few coordinates: [Quasi-Monte Carlo](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md).
 - **Did the path cross a level between samples?** Given the two ends of a step, the chance of crossing a level in between is a bridge fact, exp(−2(level − x)(level − y)/Δ) for both ends x and y below the level and a step of Δ seconds. Simulations use it so as not to miss crossings between grid points; the hitting law itself is [Reflection principle](04-reflection-principle-and-running-maximum.md).
-- **Testing whether data fit a distribution.** The gap between the share of a sample below each value and the share a model predicts, scaled by the square root of the sample size, behaves like a Brownian bridge: both shares start at 0 and end at 1, so the gap is pinned at both ends. The Kolmogorov-Smirnov test reads its largest gap off that bridge.
+- **Testing whether data fit a distribution.** The gap between the share of a sample below each value and the share a model predicts, scaled by the square root of the sample size, behaves like a Brownian bridge: both shares start at 0 and end at 1, so the gap is pinned at both ends. The Kolmogorov-Smirnov test reads its largest gap off that bridge ([The empirical CDF](../../09-Probability%20and%20statistics/15-Nonparametric%20Inference/01-empirical-cdf-and-kolmogorov-smirnov.md)).
 
 > **Say it back**
 > A Brownian path pinned at two times is a Brownian bridge. In between, each position is normal, centred on the straight line joining the pins, with variance the time since the left pin times the time to the right pin, over the gap. The reason is that the path minus that straight line is uncorrelated with the pins, and for normal variables that means independent. With pins every second, only the two neighbouring pins matter. That is how a simulation fills in finer times: midpoint plus half the square root of the gap times a normal draw, as often as needed.
@@ -981,6 +981,8 @@ example : ((4 : ℝ≥0) - 0) * (10 - 4) / (10 - 0) = 12 / 5 := by
 
 - [Quasi-Monte Carlo](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md): the bridge used to order the random inputs of a pricing simulation, so that quasi-random points do their best work.
 - On this shelf, [Brownian martingales](06-brownian-martingales-and-exponential-martingale.md) turns from the law of a pinned path to the fair games built from a free one.
+- [Building Brownian motion](08-constructing-brownian-motion.md): Levy's midpoint construction and Kolmogorov's continuity test.
+- [Gaussian processes](09-gaussian-processes-and-karhunen-loeve.md): random functions set by a covariance, and the Karhunen-Loeve series.
 
 The bridge says where a path goes between two known points; which quantities of a free path stay fair as time runs, and what they say about when and where the grain leaves an interval, is the question the next card answers.
 

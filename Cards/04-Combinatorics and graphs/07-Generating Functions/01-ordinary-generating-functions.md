@@ -458,6 +458,7 @@ example : ∑ k ∈ Finset.range 8, (if k ≤ 5 then 1 else 0) * (if 7 - k ≤ 5
 - [Solving a recurrence with a generating function](03-generating-functions-solve-recurrences.md): a recurrence turned into one equation for the series, then solved.
 - [Exponential generating functions](04-exponential-generating-functions.md): the labelled version, a factorial under each count.
 - [The Catalan generating function](05-catalan-generating-function.md): a series pinned down by an equation in itself.
+- [Branching processes](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/09-galton-watson-branching-processes.md): family trees that die out or explode.
 
 Every count here came off a product written down by hand for two dice; the next card supplies the recipe for choosing the factors, so that paying 50 cents becomes one multiplication.
 

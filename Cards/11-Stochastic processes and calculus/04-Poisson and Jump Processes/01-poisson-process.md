@@ -1468,6 +1468,8 @@ end PoissonProcess
 - [Renewal processes](06-renewal-processes-in-outline.md): independent gaps of any law, such as the evenly spread gaps above.
 - [Levy processes](../09-Beyond%20Brownian/01-levy-processes.md): independent, stationary increments in general, built from Poisson jumps and Brownian motion.
 - [Queues](../../14-Applied%20and%20computational/05-Operations%20Research/07-queueing-theory-and-littles-law.md): Poisson arrivals meeting a server.
+- [Arrivals whose rate changes](08-inhomogeneous-poisson-and-hawkes-processes.md): time-varying Poisson processes and self-exciting Hawkes processes.
+- [Doob-Meyer](../10-Continuous%20Martingales/02-doob-meyer-decomposition.md): every submartingale is a martingale plus a rising trend, and the bracket of a martingale.
 
 This card fixes how many calls a window holds; where inside the window they sit is what the arrival-times card answers.
 

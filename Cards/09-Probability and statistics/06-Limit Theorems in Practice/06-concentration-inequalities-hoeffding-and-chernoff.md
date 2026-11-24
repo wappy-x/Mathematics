@@ -980,6 +980,7 @@ example : (2 : ℚ) * 1000 * (1 / 10) ^ 2 = 20 := by norm_num
 - [BPP](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/03-randomised-complexity-and-bpp.md): why "right 2 times in 3" is as good as "right almost always".
 - [Streaming](../../24-Computability%20and%20complexity/06-Data%2C%20Learning%20and%20Fine-Grained%20Complexity/01-streaming-and-sketching.md): independent copies of a rough estimate, combined, and Chernoff counting the copies.
 - [Cramer's theorem](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/10-cramers-theorem-and-large-deviations.md): the chance that an average strays decays exponentially, at a rate given by the Legendre transform of the log-moment function.
+- [Azuma-Hoeffding and McDiarmid](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/08-azuma-hoeffding-and-mcdiarmid.md): a martingale with bounded steps rarely strays far.
 
 The card leaves open how many runs a randomised algorithm needs before its majority answer is almost never wrong; Tail bounds answers it with this card's Chernoff bound.
 

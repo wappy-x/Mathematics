@@ -84,7 +84,7 @@ The **probability current** turns the equation into bookkeeping. Write $`J = \mu
 
 ### When it holds
 
-- **An Ito equation with smooth coefficients.** The drift and noise must be smooth functions of position (time-dependent ones work the same way). If $`\sigma`$ is meant in the other, Stratonovich, convention, the drift changes by half of $`\sigma`$ times its slope; using one convention's equation with the other's coefficients moves the cloud to the wrong place.
+- **An Ito equation with smooth coefficients.** The drift and noise must be smooth functions of position (time-dependent ones work the same way). If $`\sigma`$ is meant in the other, Stratonovich, convention ([The Stratonovich integral](../06-Ito%20Calculus/08-stratonovich-integral.md)), the drift changes by half of $`\sigma`$ times its slope; using one convention's equation with the other's coefficients moves the cloud to the wrong place.
 - **A smooth density exists.** When the noise is never zero and the coefficients are smooth and bounded, it does (Friedman, in Sources). With no noise at all the "cloud" is a single point carried along an ordinary differential equation, and the equation holds only after integrating against payoffs.
 - **Probability stays on the line.** The derivation drops boundary terms because the density and its slope die away far out. A wall that swallows the speck keeps them: the free bell then claims all of the probability is still in the water, when after 1 second only 0.6827 of it is (What breaks).
 - **One dimension.** In several dimensions the same holds with a sum over directions and the noise square replaced by a matrix of covariances; this card stays on the line.
@@ -1018,6 +1018,8 @@ example : (2 : ℚ) ^ 2 / (2 * (1 / 2)) = 4 ∧ (2 : ℚ) ^ 2 = 4 := by norm_num
 - [Dupire local volatility](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md): the forward equation for a share price, solved backwards to read the noise size out of option prices.
 - Fokker-Planck, the planned card in the Partial differential equations wing: the equation as a parabolic PDE in its own right, with boundary conditions, several dimensions and the existence of the density.
 - [Euler-Maruyama](04-euler-maruyama-scheme.md): the stepping rule the simulation used, and how far its histogram can drift from the density.
+- [One-dimensional diffusions](10-scale-function-speed-measure-and-boundaries.md): the scale function, the speed measure, and what happens at the edges.
+- [McKean-Vlasov equations in outline](../09-Beyond%20Brownian/10-mckean-vlasov-and-mean-field-limits-in-outline.md): particles that feel the crowd's average.
 
 The forward equation says where the cloud goes when the equation is known; the open question is the reverse, how to recover the equation's noise from a cloud that is observed, and that is what Dupire's construction answers.
 

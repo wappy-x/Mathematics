@@ -962,6 +962,7 @@ example : (fun p : ℚ => (3 / 100 + p * (5 / 100) - (25 / 100) ^ 2 * p ^ 2 - 4 
 - [Merton's problem](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/03-mertons-portfolio-problem.md): the same problem in finance terms, with the rule followed quarter by quarter and the fraction's sensitivity to each input.
 - [Market making](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/05-market-making-avellaneda-stoikov.md): an HJB equation whose state is an inventory and whose controls are prices, solved for a dealer's quotes.
 - Viscosity solutions (planned, in the partial differential equations wing): the half this card states without proof: when the value function is smooth, and what HJB means when it is not.
+- [Backward SDEs in outline](08-backward-sdes-in-outline.md): equations solved from a known end value.
 
 This card assumed the value function is smooth enough to differentiate twice; what happens to HJB at a corner, where a cap on the control or a kinked payoff makes that false, is the open question the Viscosity solutions card answers.
 

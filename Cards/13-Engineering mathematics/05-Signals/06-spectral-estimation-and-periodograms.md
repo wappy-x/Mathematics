@@ -202,7 +202,7 @@ Too few poles and the fit cannot place both features: AR(2) invents a peak at 10
 
 AR(8) still has too few to make the line sharp. It smears the drum into a broad hump whose top, at 10.15 Hz, is only 1.02 times the curve's level at 5 Hz. The code's top/5 Hz column prints this ratio; AR(20)'s top at 20.15 Hz is 1489.36 times its level at 5 Hz. AR(8) also overshoots the panel peak, 0.008458 against the true 0.004872.
 
-Too many poles and the curve starts to chase the noise: AR(53) overshoots to 0.006277. Order 53 is what the standard order rule, Akaike's information criterion (AIC: $`N`$ times the log of $`E_p`$, plus a penalty of 2 per coefficient), picks. A pure tone is an infinitely sharp resonance, and the criterion keeps adding poles to sharpen it.
+Too many poles and the curve starts to chase the noise: AR(53) overshoots to 0.006277. Order 53 is what the standard order rule, Akaike's information criterion (AIC: $`N`$ times the log of $`E_p`$, plus a penalty of 2 per coefficient), picks ([AIC and BIC](../../09-Probability%20and%20statistics/09-Regression/11-aic-and-bic.md)). A pure tone is an infinitely sharp resonance, and the criterion keeps adding poles to sharpen it.
 
 AR(20) reads 0.89 of the true peak at 150.20 Hz and finds the drum at 20.15 Hz.
 

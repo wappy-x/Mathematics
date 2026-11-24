@@ -797,6 +797,8 @@ example : (10 : ℚ) * (1 / 2) = 5 ∧ (10 : ℚ) * (1 / 4) = 5 / 2 := by norm_n
 - [Compound Poisson](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md): a random number of random amounts, handled by composing functions.
 - [Moments and cumulants](../../20-Harmonic%20analysis/04-Characteristic%20Functions%20and%20Probability/02-moments-and-cumulants-from-the-fingerprint.md): cumulants, the derivatives of the logarithm, and what they measure.
 - [Cramer's theorem](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/10-cramers-theorem-and-large-deviations.md): the chance that an average strays decays exponentially, at a rate given by the Legendre transform of the log-moment function.
+- [Exponential families](../07-Sampling%20and%20Estimation/10-exponential-families.md): one formula behind the binomial, Poisson, normal and gamma.
+- [Branching processes](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/09-galton-watson-branching-processes.md): family trees that die out or explode.
 
 The coin's function exists for every dial, but the heavy-tailed count's does not; a transform that exists for every law, and still multiplies over independent sums, is what [Characteristic functions](../06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md) builds.
 

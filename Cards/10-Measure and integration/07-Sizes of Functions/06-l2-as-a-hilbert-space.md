@@ -871,6 +871,7 @@ example : (5 : ℚ) + 11/2 = 21/2 := by norm_num
 - [Partial sums are the best fit](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/02-best-approximation-and-bessels-inequality.md): the projection theorem applied to trigonometric polynomials.
 - [Ergodicity and mixing](../12-Ergodic%20Theory/02-ergodicity-and-mixing.md): a map that cannot be split into two invariant parts, and one that stirs every set evenly.
 - [Von Neumann's mean ergodic theorem](../12-Ergodic%20Theory/03-von-neumann-mean-ergodic-theorem.md): time averages converge in L2 to the projection onto the invariant functions.
+- [Gaussian processes](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/09-gaussian-processes-and-karhunen-loeve.md): random functions set by a covariance, and the Karhunen-Loeve series.
 
 Left open: in Lp for finite p above 1 other than 2, a closest point in a closed subspace still exists and is unique, but with no inner product there is no right angle, so what describes it?
 

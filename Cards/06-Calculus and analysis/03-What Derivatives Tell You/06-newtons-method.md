@@ -647,6 +647,7 @@ example : |(1 / 10 ^ 12 : ℚ) * (1 ^ 2 - 2)| < 1 / 10 ^ 10 ∧
 - [Newton and BFGS](../../15-Optimization/02-Unconstrained%20Methods/05-newton-and-quasi-newton-bfgs.md): Newton on the gradient, the slope in every direction; BFGS learns the bend from slopes alone.
 - [Newton and secant](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/02-newton-and-secant-with-convergence-orders.md): Newton without a derivative.
 - [Feigenbaum renormalisation](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/10-feigenbaum-renormalisation.md): why every one-hump map doubles its period at the same rate 4.669.
+- [Generalised linear models](../../09-Probability%20and%20statistics/09-Regression/10-generalised-linear-models.md): one recipe for counts, proportions and positive amounts.
 
 Left open: each step needs the slope $`f'`$. When the slope is costly or unknown, can a step still converge almost as fast?
 

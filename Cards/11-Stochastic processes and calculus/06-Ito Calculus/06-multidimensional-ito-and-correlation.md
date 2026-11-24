@@ -1207,6 +1207,9 @@ example : ∀ ρ : ℚ, 3 * ρ ^ 2 + (1 - ρ ^ 2) - ρ ^ 2 = 1 + ρ ^ 2 := by in
 - [The quanto adjustment](../../12-Financial%20mathematics/24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): the product of a foreign price and an exchange rate, and the drift shift its correlation causes.
 - [Spread options](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/04-margrabe-and-kirk-spread-options.md): the ratio of two prices, priced as an option to exchange one for the other.
 - [When an SDE has one solution](07-existence-and-uniqueness-for-sdes.md): when a system of equations like the two shares' has exactly one solution.
+- [Brownian motion in d dimensions](../08-Generators%2C%20Densities%20and%20Simulation/08-recurrence-and-transience-of-brownian-motion.md): recurrent in the plane, gone for good in space.
+- [McKean-Vlasov equations in outline](../09-Beyond%20Brownian/10-mckean-vlasov-and-mean-field-limits-in-outline.md): particles that feel the crowd's average.
+- [Levy's characterisation and Dubins-Schwarz](../10-Continuous%20Martingales/04-levys-characterisation-and-dubins-schwarz.md): every continuous martingale is Brownian motion on its own clock.
 
 This card showed how a function of several correlated prices moves; the open question is what a contract on such a function is worth.
 

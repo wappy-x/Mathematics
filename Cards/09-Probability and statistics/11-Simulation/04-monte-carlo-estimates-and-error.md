@@ -794,6 +794,7 @@ example : (2 : ℕ) ^ 2 = 4 ∧ (10 : ℕ) ^ 2 = 100 := by decide
 - [Monte Carlo integration](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/05-monte-carlo-integration-in-many-dimensions.md): why σ/√n with no dimension in it beats a grid in high dimensions.
 - [Many dimensions](../../16-Numerical%20analysis/05-Quadrature/06-multidimensional-and-monte-carlo-quadrature.md): grids and random points compared as quadrature rules, the recipes that turn a function's values into an integral.
 - [Bumping a simulated price](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/08-bumped-sensitivities-and-monte-carlo-noise.md): what the noise does to a difference of two simulated numbers.
+- [Malliavin calculus in outline](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/07-malliavin-calculus-in-outline.md): differentiating a random variable with respect to the noise.
 
 The error bar has two levers, n and σ, and n is the expensive one: a hundred times the work for one digit. Whether σ can be cut instead, at no extra draws, is the question [Variance reduction](05-variance-reduction.md) answers.
 

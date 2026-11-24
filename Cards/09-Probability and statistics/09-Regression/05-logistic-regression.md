@@ -980,6 +980,8 @@ example :
 - [The perceptron and its stack](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/03-perceptron-and-neural-networks.md): logistic units stacked in layers, fitted by the same likelihood.
 - [Softmax and cross-entropy](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/05-softmax-and-cross-entropy-for-classification.md): more than two outcomes, one score each.
 - [Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md): a dividing line chosen for its margin rather than its likelihood, which welcomes the separation that breaks this fit.
+- [Generalised linear models](10-generalised-linear-models.md): one recipe for counts, proportions and positive amounts.
+- [Propensity scores](../13-Survival%2C%20Design%20and%20Causality/09-propensity-scores-and-weighting.md): comparing like with like when treatment was not randomised.
 
 This card sorts each loan into two outcomes. When there are three or more, such as repaid, late and defaulted, the log-odds line becomes one score per outcome. How should those scores share out the chance? That is the question [Softmax and cross-entropy](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/05-softmax-and-cross-entropy-for-classification.md) answers.
 

@@ -47,7 +47,7 @@ k(x, x') = \sigma^2 \exp\!\Big(-\frac{\lVert x - x' \rVert^2}{2\ell^2}\Big),
 
 where $`\lVert x - x' \rVert`$ is the ordinary straight-line distance. Gather the kernel between every pair of trials into the $`n \times n`$ table $`K`$. Gather it between a new setting and each trial into the column $`k_n(x)`$. $`I`$ is the identity table and $`y - m`$ the column of readings minus the prior mean.
 
-The **surrogate** (a Gaussian process: a random function whose values at any finite set of settings are jointly normal) gives at every setting a mean and a spread:
+The **surrogate** (a Gaussian process: a random function whose values at any finite set of settings are jointly normal; see [Gaussian processes](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/09-gaussian-processes-and-karhunen-loeve.md)) gives at every setting a mean and a spread:
 
 ```math
 \mu_n(x) = m + k_n(x)^T (K + \tau^2 I)^{-1} (y - m), \qquad \sigma_n^2(x) = \sigma^2 - k_n(x)^T (K + \tau^2 I)^{-1} k_n(x)

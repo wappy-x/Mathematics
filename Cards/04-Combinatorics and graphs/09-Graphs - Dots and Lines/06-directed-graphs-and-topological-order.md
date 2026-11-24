@@ -536,6 +536,7 @@ example : ∀ v, ∃ u, metro.Adj u v := by decide
 - [Flows](../13-Matchings%20and%20Flows/05-flow-networks-and-ford-fulkerson.md): arcs with a capacity, and how much can be pushed along them.
 - [Classifying states](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/03-classifying-states.md): arrows weighted by how often they are taken, the pieces fixing which states are kept.
 - [Scheduling](../../14-Applied%20and%20computational/05-Operations%20Research/04-scheduling-and-the-critical-path.md): durations on the steps, so one of the 210 orders becomes the schedule to beat.
+- [Causal graphs](../../09-Probability%20and%20statistics/13-Survival%2C%20Design%20and%20Causality/08-causal-graphs-and-back-door-adjustment.md): arrows for cause, and the back-door rule for which variables to adjust for.
 
 Nothing here separates those 210 orders; give each step a duration and one sweep along a topological order finds the longest chain of arrows, fixing the earliest dinner — which is what scheduling asks.
 

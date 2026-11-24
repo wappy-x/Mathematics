@@ -801,6 +801,8 @@ example : ∀ m : ℕ, ∑ k ∈ Finset.range m, (1/2 : ℚ) ^ (k + 1) ≤ 1 := 
 - [Martingale convergence](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/04-martingale-convergence.md): the counting road of Step 2, where a finite average number of upcrossings (climbs from below a band to above it) means finitely many upcrossings, with probability 1.
 - [Kolmogorov's three-series theorem](08-kolmogorov-three-series-theorem.md): exactly when a sum of independent random terms converges.
 - [The law of the iterated logarithm](09-law-of-the-iterated-logarithm.md): a fair random walk's highs reach sqrt(2n log log n) again and again, and never beyond.
+- [Building Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/08-constructing-brownian-motion.md): Levy's midpoint construction and Kolmogorov's continuity test.
+- [Brownian paths up close](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/11-blumenthal-zero-one-law-and-the-brownian-lil.md): Blumenthal's zero-one law and the law of the iterated logarithm.
 
 The lemmas decide "infinitely often" only when the sum is finite or the events are independent; why, for independent events, no answer other than 0 or 1 was ever possible is [Kolmogorov's zero-one law](02-kolmogorov-zero-one-law.md).
 

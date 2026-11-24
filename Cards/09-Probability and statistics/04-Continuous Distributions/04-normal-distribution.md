@@ -806,6 +806,8 @@ example : ((-2 : ℚ) - 1 / 20) / (36 / 25) = -205 / 144 := by norm_num
 - [Weighted Gauss rules](../../16-Numerical%20analysis/05-Quadrature/04-gauss-hermite-and-weighted-rules.md): averages under the bell by a few weighted points.
 - [The heat kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md): heat spreading as a widening bell.
 - [Erdos-Kac](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/02-erdos-kac-theorem.md): the count of a number's prime factors follows the bell.
+- [Exponential families](../07-Sampling%20and%20Estimation/10-exponential-families.md): one formula behind the binomial, Poisson, normal and gamma.
+- [Kernel density estimation](../15-Nonparametric%20Inference/03-kernel-density-estimation.md): a smooth histogram, and the bandwidth that balances bias and noise.
 
 The bell's tails are too thin for real markets; which laws fit when big days come every few years is [Heavy tails](08-heavy-tails-pareto-and-cauchy.md).
 

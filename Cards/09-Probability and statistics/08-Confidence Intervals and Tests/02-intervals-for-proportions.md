@@ -191,7 +191,7 @@ Suppose the true rash rate is 2%. A trial of 100 then often sees no rash at all,
 
 The estimated spread is smallest exactly when the count happens to be low, so the low counts are the ones given too little room. Add up the chances and Wald catches 0.02 in 0.8664 of trials. Near 100% the same happens in reverse: at a true rate of 0.98, Wald again catches 0.8664. Wilson's allowance depends on the candidate, not on the count, so it does not shrink when the count is small.
 
-The coverage lines jump up and down because counts are whole numbers: as p moves, whole counts enter or leave the set that covers it. The Wilson interval is also what an inverted score test gives. A score test judges a candidate rate with the spread at that candidate: it rejects $`p`$ when $`\lvert \hat p - p\rvert > z\sqrt{p(1-p)/n}`$, which is Step 2's keep rule turned round. Step 0 is that link between tests and intervals in words; [Hypothesis tests](03-hypothesis-tests-and-p-values.md) builds tests and shows the same match for the trial's gap.
+The coverage lines jump up and down because counts are whole numbers: as p moves, whole counts enter or leave the set that covers it. The Wilson interval is also what an inverted score test gives ([Large-sample likelihood](09-mle-asymptotics-wald-and-score-tests.md)). A score test judges a candidate rate with the spread at that candidate: it rejects $`p`$ when $`\lvert \hat p - p\rvert > z\sqrt{p(1-p)/n}`$, which is Step 2's keep rule turned round. Step 0 is that link between tests and intervals in words; [Hypothesis tests](03-hypothesis-tests-and-p-values.md) builds tests and shows the same match for the trial's gap.
 
 <details>
 <summary>A fourth recipe: add two and two</summary>
@@ -1067,6 +1067,7 @@ example (p : ℝ) : lowerTail 100 0 p = (1 - p) ^ 100 := by
 
 - [Randomised experiments](../13-Survival%2C%20Design%20and%20Causality/04-randomised-experiments-and-ab-tests.md): two proportions, a treated group against a control, and why random assignment lets their difference be read as an effect.
 - [Hypothesis tests](03-hypothesis-tests-and-p-values.md): the same keep-or-rule-out test of Step 0, turned into a yes-or-no decision.
+- [Large-sample likelihood](09-mle-asymptotics-wald-and-score-tests.md): why the MLE is nearly normal, and the Wald, score and likelihood-ratio tests.
 
 One trial arm now has an honest range; whether 45 of 100 on the drug beats 35 of 100 on placebo by more than chance is the question [Hypothesis tests](03-hypothesis-tests-and-p-values.md) answers by comparing the two proportions.
 

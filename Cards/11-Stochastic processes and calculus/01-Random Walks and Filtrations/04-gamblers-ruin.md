@@ -1461,6 +1461,7 @@ example : (40 : ℚ) * (1 / 4) = 10 := by norm_num
 
 - [Hitting times](06-first-passage-and-hitting-times.md): the whole law of the first-passage time to one level, why the fair walk returns for sure, and why the mean wait is infinite.
 - [Random walks as circuits](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/08-random-walks-and-electrical-networks.md): the chance of hitting one wall first as a voltage, on any graph.
+- [Birth-and-death processes](../04-Poisson%20and%20Jump%20Processes/07-birth-and-death-processes.md): populations and queues that move one step at a time.
 
 What this card leaves open: with only one wall, how fast the chance of still waiting shrinks round by round, and whether a fair walk always comes back to where it started.
 

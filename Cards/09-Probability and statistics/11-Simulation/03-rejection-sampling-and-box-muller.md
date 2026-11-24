@@ -1033,6 +1033,7 @@ theorem half_normal_exponential_envelope :
 - [Monte Carlo](04-monte-carlo-estimates-and-error.md): turns these draws into an estimate, such as the $9.2326 call, and says where its ± comes from.
 - [Variance reduction](05-variance-reduction.md): shrinks that ± without more draws, for instance by pairing each Z with −Z.
 - [Importance sampling](06-importance-sampling.md): draws from a proposal as rejection does, but keeps every draw and weights it by the height ratio instead of throwing any away.
+- [Arrivals whose rate changes](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/08-inhomogeneous-poisson-and-hawkes-processes.md): time-varying Poisson processes and self-exciting Hawkes processes.
 
 Exact draws are now cheap; what remains open is how many are needed before an average of them, such as a simulated option price, can be trusted to a stated precision.
 

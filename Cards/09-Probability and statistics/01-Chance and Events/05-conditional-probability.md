@@ -728,6 +728,8 @@ example : ((Finset.range 10000).filter (fun i => i < 90 ∨ (100 ≤ i ∧ i < 5
 - [Random walks on a graph](../14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md): a walk whose next step is chosen given where it stands; total probability moves its whole distribution one step at a time.
 - [Conditioning on a partition](../../10-Measure%20and%20integration/09-Conditional%20Expectation/01-conditioning-on-a-partition.md): the same idea rebuilt on measure theory, reaching conditions of probability zero.
 - [The hazard rate](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): conditional chances of default, chained through time by the multiplication rule.
+- [Sufficient statistics](../07-Sampling%20and%20Estimation/09-sufficient-statistics-and-factorisation.md): the summary that keeps everything the data say about the parameter.
+- [Causal graphs](../13-Survival%2C%20Design%20and%20Causality/08-causal-graphs-and-back-door-adjustment.md): arrows for cause, and the back-door rule for which variables to adjust for.
 
 This card turns "positive given sick" into "sick given positive" only by a count; the question it leaves open is how to make that reversal a single rule that can be applied again as each new piece of evidence arrives, which [Bayes' rule](06-bayes-rule.md) answers.
 

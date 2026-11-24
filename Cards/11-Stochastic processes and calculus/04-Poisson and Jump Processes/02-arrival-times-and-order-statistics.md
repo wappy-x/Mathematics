@@ -240,7 +240,7 @@ Bars: the binomial law with 4 draws and chance 0.5, in percent. The counts-based
 
 The rising-rate numbers come by two roads in the code: Poisson counts with means 1 and 3 in the two halves, and a binomial with chance 1/4; the mean first call by Simpson's rule on the count-based survival chance, and by the closed form.
 
-The general rule for a varying rate: given n calls, the times are sorted independent draws whose density is proportional to the rate. A varying rate can be simulated by [Lewis and Shedler's](https://doi.org/10.1002/nav.3800260304) thinning: draw at the peak rate, then keep each call with chance rate now / peak rate.
+The general rule for a varying rate: given n calls, the times are sorted independent draws whose density is proportional to the rate. A varying rate can be simulated by [Lewis and Shedler's](https://doi.org/10.1002/nav.3800260304) thinning: draw at the peak rate, then keep each call with chance rate now / peak rate. More on varying rates: [Arrivals whose rate changes](08-inhomogeneous-poisson-and-hawkes-processes.md).
 
 ---
 
@@ -1572,6 +1572,7 @@ example : (1 : ℚ) / Nat.factorial 4 = 1 / 24 := by norm_num [Nat.factorial]
 - [Splitting and merging](03-splitting-and-superposition.md): sorting each scattered call into one of two types, and merging two independent streams; the factorisation in Step 5 in its general form.
 - [Compound Poisson](04-compound-poisson.md): attaching a random size to each arrival and adding them up.
 - [Renewal processes](06-renewal-processes-in-outline.md): waits that are not exponential, where the conditional uniformity fails.
+- [Arrivals whose rate changes](08-inhomogeneous-poisson-and-hawkes-processes.md): time-varying Poisson processes and self-exciting Hawkes processes.
 
 This card fixes the count and asks where the calls sit; the question it leaves open is what happens when each call is sent one of two ways at random, and whether the two streams are still Poisson.
 

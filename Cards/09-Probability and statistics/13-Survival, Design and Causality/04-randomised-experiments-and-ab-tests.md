@@ -985,6 +985,9 @@ example : (760 : ℚ) / 4000 - 280 / 16000 = 69 / 400 ∧ (400 : ℚ) / 16000 - 
 
 - [Blocking and factorial designs](05-blocking-and-factorial-designs.md): running the lottery separately inside groups known in advance, such as returning and new visitors, to shrink the spread; and testing several changes at once.
 - [Permutation tests](06-permutation-tests.md): a test that uses the lottery itself as the yardstick, with no bell curve.
+- [Causal graphs](08-causal-graphs-and-back-door-adjustment.md): arrows for cause, and the back-door rule for which variables to adjust for.
+- [Propensity scores](09-propensity-scores-and-weighting.md): comparing like with like when treatment was not randomised.
+- [Instrumental variables and difference-in-differences](10-instrumental-variables-and-difference-in-differences.md): causal effects when a confounder is unmeasured.
 
 A complete lottery balances returning and new visitors only on average, and one draw can still load an arm; whether the design can guarantee that balance, and what it buys in precision, is the question [Blocking and factorial designs](05-blocking-and-factorial-designs.md) answers.
 

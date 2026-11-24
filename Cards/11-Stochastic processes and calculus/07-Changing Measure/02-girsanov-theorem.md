@@ -181,7 +181,7 @@ For $`Q(A) > 0`$, divide by $`Q(A)`$: under $`Q`$ given $`A`$, $`D`$ has the mom
 
 ### Another route
 
-Lévy's characterization says a continuous martingale whose squared steps add up to the clock is a Brownian motion. With it, Girsanov takes two lines: $`\widetilde W Z`$ is a $`P`$-local martingale by the Ito product rule, and a drift does not change squared steps. Karatzas and Shreve take that route.
+Lévy's characterization ([Levy's characterisation and Dubins-Schwarz](../10-Continuous%20Martingales/04-levys-characterisation-and-dubins-schwarz.md)) says a continuous martingale whose squared steps add up to the clock is a Brownian motion. With it, Girsanov takes two lines: $`\widetilde W Z`$ is a $`P`$-local martingale by the Ito product rule, and a drift does not change squared steps. Karatzas and Shreve take that route.
 
 ---
 
@@ -954,6 +954,8 @@ example : (8 : ℚ) / 100 + 20 / 100 * (15 / 100) = 11 / 100 := by norm_num
 - [The fundamental theorems](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md): why pricing under $`Q`$ is forced by the absence of free money.
 - [Knock-out and knock-in](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/02-barrier-options-by-reflection.md): Girsanov removes the drift, reflection handles the barrier.
 - [The quanto adjustment](../../12-Financial%20mathematics/24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): a tilt in one currency moves the drift of a correlated price in another.
+- [Malliavin calculus in outline](../09-Beyond%20Brownian/07-malliavin-calculus-in-outline.md): differentiating a random variable with respect to the noise.
+- [Levy's characterisation and Dubins-Schwarz](../10-Continuous%20Martingales/04-levys-characterisation-and-dubins-schwarz.md): every continuous martingale is Brownian motion on its own clock.
 
 Bounded tilts are certified here; the question this card leaves open is which unbounded tilts still give weights that average 1, and [Novikov](03-novikov-condition.md) answers it.
 

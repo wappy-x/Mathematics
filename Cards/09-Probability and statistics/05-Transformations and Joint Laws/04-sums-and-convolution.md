@@ -754,6 +754,7 @@ example : (55 : ℚ) * (1 / 10) + 25 * (1 / 10) ^ 2 / 2 = 45 / 8 ∧
 - [Densities add by convolution](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/08-convolution-of-densities.md): convolution as an operation on functions, where Fourier transforms turn it into multiplication and smoothing into approximation.
 - [Bivariate normal](05-bivariate-normal-and-conditioning.md): the legs taken together, correlated or not, and what one tells about the other.
 - [Multivariate normal](06-multivariate-normal.md): any number of bells, and every weighted total of them normal.
+- [Kernel density estimation](../15-Nonparametric%20Inference/03-kernel-density-estimation.md): a smooth histogram, and the bandwidth that balances bias and noise.
 
 Given a one-hour trip, the bus most likely took 21.8 minutes. Why that is also the average bus time on such days is the subject of [Bivariate normal](05-bivariate-normal-and-conditioning.md).
 

@@ -979,6 +979,7 @@ example : (4 : ℚ) * (-1 / 10) ^ 2 = 1 * (-1 / 5) ^ 2 := by norm_num
 
 - [Rougher than Brownian](06-rough-paths-and-fractional-brownian-motion-in-outline.md): card 06 on this shelf, about paths too rough or too smooth to be semimartingales, and how to integrate against them anyway.
 - [Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md): the finance use, pricing options when the share can crash.
+- [Continuous martingales and local martingales](../10-Continuous%20Martingales/01-continuous-martingales-and-local-martingales.md): fair games in continuous time, and fair only up to a stopping time.
 
 Semimartingales are the largest class with an Ito integral of the usual kind; the open question is what calculus is left for a path outside it, such as fractional Brownian motion, which the rough-paths card answers.
 

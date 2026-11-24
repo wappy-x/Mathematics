@@ -1712,7 +1712,7 @@ example : 2 * 9 = 18 ∧ (9 : ℚ) / (9 - 2) = 9 / 7 ∧ (6 : ℚ) / (6 - 2) = 3
 
 - **Quality control.** A sample from a production line, a t ratio against the label, and a decision: [t-tests](../08-Confidence%20Intervals%20and%20Tests/05-t-tests-and-comparing-means.md).
 - **Laboratory measurement.** Five or ten repeat readings of one quantity give an interval of average ± t cutoff × S/√n: [Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md).
-- **Comparing spreads and groups.** Two instruments' precision, or several fertilisers' yields, are compared by F ratios; analysis of variance is built on them.
+- **Comparing spreads and groups.** Two instruments' precision, or several fertilisers' yields, are compared by F ratios; [Analysis of variance](../09-Regression/09-analysis-of-variance-and-the-f-test.md) is built on them.
 - **Finance.** Returns with heavy tails are often modelled with the t law, and dependence between defaults with the t copula: [Tail dependence](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/07-tail-dependence-and-the-t-copula.md).
 
 > **Say it back**
@@ -1731,6 +1731,7 @@ example : 2 * 9 = 18 ∧ (9 : ℚ) / (9 - 2) = 9 / 7 ∧ (6 : ℚ) / (6 - 2) = 3
 - [t-tests](../08-Confidence%20Intervals%20and%20Tests/05-t-tests-and-comparing-means.md): the t ratio as a test, for one sample, two samples and paired data.
 - [Chi-square tests](../08-Confidence%20Intervals%20and%20Tests/06-chi-square-tests.md): the chi-square law as the reference for counts in a table, against a model or between rows.
 - [Tail dependence](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/07-tail-dependence-and-the-t-copula.md): the t law's heavy tails used to make joint crashes more likely than a normal model allows.
+- [Analysis of variance](../09-Regression/09-analysis-of-variance-and-the-f-test.md): comparing several means by splitting the spread.
 
 These laws say how far a statistic strays when the model is true; how to turn that into a statement about the unknown mean, with a stated rate of being wrong, is [Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md).
 

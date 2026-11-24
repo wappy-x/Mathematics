@@ -96,7 +96,7 @@ the limit taken in mean square. Both theorems survive it. The pictured strategy,
 - **The holding is fixed before the move it multiplies.** Read the holding at the end of each stretch instead and the hold-the-excess strategy averages $20, not $0. A rule that buys in the second half only when the second half will rise averages $5.64. Neither is a strategy anyone can follow.
 - **The integrator is Brownian motion for the information used.** Each future move must be independent of $`\mathcal F_t`$. A trader who knows tomorrow's news is not trading against Brownian motion for her own information, and the zero mean goes.
 - **The strategy's mean square is finite**, $`E[\int_0^T H_t^2\,dt] < \infty`$. Then the integral exists, the isometry holds and the gain is a fair game. Strategies with only $`\int_0^T H_t^2\,dt`$ finite on each path still have an integral, built by stopping it before it grows large, but it can fail to be a martingale: continuous-time doubling lives there. This card states that case without proof; Karatzas and Shreve, Chapter 3, Section 2, builds the extension.
-- **The holding is read at the left end of each stretch by definition.** Reading it at the midpoint defines a different integral, the Stratonovich integral, with different values: a convention, not an error, but not this one.
+- **The holding is read at the left end of each stretch by definition.** Reading it at the midpoint defines a different integral, the Stratonovich integral ([The Stratonovich integral](08-stratonovich-integral.md)), with different values: a convention, not an error, but not this one.
 
 ---
 
@@ -1135,6 +1135,11 @@ example : (1 / 2 : ℚ) * 18 / 4 = 9 / 4 := by norm_num
 
 - [Ito's lemma](02-itos-lemma.md): the chain rule for a smooth function of $`W`$, with the extra half-second-derivative term that Step 5 found for $`W^2`$.
 - [Martingale representation](../07-Changing%20Measure/04-martingale-representation-theorem.md): the converse. Every fair game with a finite mean square, built on one Brownian motion's information, is a constant plus the Ito integral of some strategy.
+- [The Stratonovich integral](08-stratonovich-integral.md): the midpoint rule that keeps the ordinary chain rule.
+- [Malliavin calculus in outline](../09-Beyond%20Brownian/07-malliavin-calculus-in-outline.md): differentiating a random variable with respect to the noise.
+- [Continuous martingales and local martingales](../10-Continuous%20Martingales/01-continuous-martingales-and-local-martingales.md): fair games in continuous time, and fair only up to a stopping time.
+- [Doob-Meyer](../10-Continuous%20Martingales/02-doob-meyer-decomposition.md): every submartingale is a martingale plus a rising trend, and the bracket of a martingale.
+- [Local time and Tanaka's formula](../10-Continuous%20Martingales/05-local-time-and-tanakas-formula.md): Ito's rule for a function with a kink.
 
 The integral adds up a strategy's gains; what it leaves open is how a smooth function of the price itself changes, and Ito's lemma answers that with one extra term.
 

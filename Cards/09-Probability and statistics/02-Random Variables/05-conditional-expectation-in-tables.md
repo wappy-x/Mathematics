@@ -848,6 +848,8 @@ example : ((3 : ℚ) / 10 * 5360 + 4 / 10 * (2 * 5360) + 2 / 10 * (3 * 9800)) = 
 - [Forward-start options](../../12-Financial%20mathematics/17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/06-forward-start-options-and-forward-volatility.md): an option priced by conditioning on the price at its start date, then averaging with the tower rule.
 - [Conditional expectation on a sigma-algebra](../../10-Measure%20and%20integration/09-Conditional%20Expectation/02-conditional-expectation-on-a-sigma-algebra.md): the same average for information whose single values all have chance zero, built with measure.
 - [Conditional entropy and mutual information](../../14-Applied%20and%20computational/03-Information%20Theory/02-conditional-entropy-and-mutual-information.md): the same average-within-each-group step, applied to uncertainty instead of size.
+- [Rao-Blackwell and Lehmann-Scheffe](../07-Sampling%20and%20Estimation/11-rao-blackwell-and-lehmann-scheffe.md): improving an estimator by conditioning, and the best unbiased one.
+- [Azuma-Hoeffding and McDiarmid](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/08-azuma-hoeffding-and-mcdiarmid.md): a martingale with bounded steps rarely strays far.
 
 On this shelf, [Jensen's inequality](06-jensens-inequality.md) compares the average of a curved function with the function of the average.
 

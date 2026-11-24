@@ -805,6 +805,7 @@ example : ∀ w : Fin 4 → Bool,
 - [Representing a martingale](07-martingale-representation-in-discrete-time.md): the reverse direction. On a coin-toss tree every martingale is a martingale transform of the coin, so every fair payoff is some strategy's gain.
 - [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md): the same sum of stake times move, with rounds shrunk to nothing and the coin replaced by Brownian motion.
 - [Replication](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/06-replication-and-self-financing.md): the finance use, where the stake is a holding of shares and the gain is a self-financing portfolio's profit.
+- [Doob-Meyer](../10-Continuous%20Martingales/02-doob-meyer-decomposition.md): every submartingale is a martingale plus a rising trend, and the bracket of a martingale.
 
 No predictable strategy beats a fair game by a fixed round, and a stop with a deadline is one such strategy. This card leaves open a stop with no deadline: when may the average pass to that limit? Optional stopping raises that question, and [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md) answers it.
 

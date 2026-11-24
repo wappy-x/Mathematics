@@ -118,7 +118,7 @@ The code reaches $`\kappa`$ a second way, without squaring anything: it walks al
 
 ### Step 3: the threshold
 
-From the second generation on, the tree has $`T\kappa`$ children per member on average. By the branching-process result, it dies out for certain when $`T\kappa \le 1`$ and can grow without end when $`T\kappa > 1`$. Patient zero only sets how many trees start, not whether they grow. So the threshold is
+From the second generation on, the tree has $`T\kappa`$ children per member on average. By the branching-process result ([Branching processes](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/09-galton-watson-branching-processes.md)), it dies out for certain when $`T\kappa \le 1`$ and can grow without end when $`T\kappa > 1`$. Patient zero only sets how many trees start, not whether they grow. So the threshold is
 
 ```math
 T_c = \frac{1}{\kappa} = \frac{6.8536}{194.3964 - 6.8536} = 0.0365 .

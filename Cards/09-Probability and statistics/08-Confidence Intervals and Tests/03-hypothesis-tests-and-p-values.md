@@ -762,6 +762,7 @@ example : (Finset.range 101 ×ˢ Finset.range 101).card = 10201 := by
 - [Chi-square tests](06-chi-square-tests.md): tests on whole tables of counts, of which this trial is the two-by-two case.
 - [Many tests](08-multiple-testing.md): keeping the false-alarm promise when many tests run at once.
 - [Backtesting VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/08-backtesting-var.md): a bank's risk forecast put on trial by the same method.
+- [Bayes factors](../10-Bayesian%20Inference/09-bayes-factors-and-model-comparison.md): weighing two models by how well each predicted the data.
 
 This trial could not tell a 10-point benefit from luck, and the test says nothing about how many patients would have been enough; that question is [Power](04-power-and-sample-size.md).
 

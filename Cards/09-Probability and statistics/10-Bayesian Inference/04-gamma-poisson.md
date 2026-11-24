@@ -1059,6 +1059,7 @@ example : (69 : ℚ) / (5 + 1) = 23 / 2 := by norm_num
 
 - [Credible intervals and decisions](05-credible-intervals-and-decisions.md): credible intervals and choosing an action by its average loss over the posterior, taught on a coin; the same steps apply to Gamma(69, 5) and the desk's overflow chance.
 - [MCMC in outline](06-markov-chain-monte-carlo-in-outline.md): what to do when the prior is not conjugate and no two additions will do.
+- [Jeffreys priors](08-jeffreys-priors-and-invariance.md): a 'know-nothing' prior that does not depend on how you write the parameter.
 
 Here a conjugate pair made the posterior two additions. What it leaves open is how to report a posterior and act on it, and how to compute one when no such pair exists, which the two cards above answer.
 

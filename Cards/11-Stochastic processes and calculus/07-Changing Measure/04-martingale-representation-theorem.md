@@ -1044,6 +1044,8 @@ example : (100 : ℝ) ^ 2 / (2 * Real.pi) * (Real.pi / 2) = 2500 := by
 ## Where this goes next
 
 - [The fundamental theorems](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md): the two fundamental theorems of asset pricing. A risk-neutral measure exists exactly when there is no free money, and it is unique exactly when the market is complete, which this card supplies.
+- [Malliavin calculus in outline](../09-Beyond%20Brownian/07-malliavin-calculus-in-outline.md): differentiating a random variable with respect to the noise.
+- [Backward SDEs in outline](../09-Beyond%20Brownian/08-backward-sdes-in-outline.md): equations solved from a known end value.
 
 This card shows that every payoff can be hedged once a measure makes the share fair; the open question is why pricing by that measure's average is forced, and what changes when it is not unique.
 

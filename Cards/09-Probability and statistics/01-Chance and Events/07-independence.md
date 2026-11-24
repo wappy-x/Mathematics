@@ -752,6 +752,7 @@ example : 8543 ^ 2 = 72982849 := by norm_num
 
 - [Confounding](../13-Survival%2C%20Design%20and%20Causality/07-confounding-and-simpsons-paradox.md): when the group mix is itself caused by the thing compared, and which of the pooled or the within-group comparison answers a question about cause.
 - [Independence as a product](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md): the product rule for chances spread over a continuum, the rectangle picture made exact.
+- [Causal graphs](../13-Survival%2C%20Design%20and%20Causality/08-causal-graphs-and-back-door-adjustment.md): arrows for cause, and the back-door rule for which variables to adjust for.
 
 Left open: when the mix of groups is itself caused by the thing compared, which comparison answers a question about cause, the pooled one or the one inside each group?
 

@@ -170,7 +170,7 @@ $`E\sup_{s\le t}\lvert PY - PZ\rvert^2 \le 2TK^2\int_0^t E\lvert Y_s - Z_s\rvert
 
 The CIR drift is Lipschitz with constant 0.5. Its noise grows at most linearly, since $`\sqrt{x} \le (1 + x)/2`$; the code finds the ratio of the two never above 1.0000 on rates from 0 to 1. Only the Lipschitz condition fails, and only at zero. In its place the square root has a weaker property, $`\lvert\sqrt{x} - \sqrt{y}\rvert \le \sqrt{\lvert x - y\rvert}`$, with a largest ratio of exactly 1.0000 on rates from 0 to 4 percent: a change $`\delta`$ moves the noise by at most a constant times $`\sqrt{\delta}`$.
 
-The theorem of Toshio Yamada and Shinzo Watanabe (1971) uses exactly that. In one dimension, if the drift is Lipschitz and the noise size changes by at most $`h(\delta)`$ for a change $`\delta`$, where $`h`$ is so small near 0 that $`\int_0 h(u)^{-2}\,du`$ is infinite, then two solutions driven by the same noise agree.
+The theorem of Toshio Yamada and Shinzo Watanabe (1971) uses exactly that ([Weak solutions and the martingale problem](../10-Continuous%20Martingales/06-weak-solutions-and-the-martingale-problem.md)). In one dimension, if the drift is Lipschitz and the noise size changes by at most $`h(\delta)`$ for a change $`\delta`$, where $`h`$ is so small near 0 that $`\int_0 h(u)^{-2}\,du`$ is infinite, then two solutions driven by the same noise agree.
 
 With $`h(u) = 0.25\sqrt{u}`$, the integral is $`\int_0 du/(0.0625\,u)`$, which is infinite: uniqueness holds. With $`h(u) = u^{0.4}`$ it is finite, and for $`dX = \lvert X\rvert^{0.4}\,dW`$ from zero, both $`X \equiv 0`$ and a process that leaves zero are solutions (Karatzas and Shreve, Chapter 5). The square root sits exactly on the boundary that still works.
 
@@ -1001,6 +1001,9 @@ example : (1 : ℚ) / (1 - 3 / 10) = 10 / 7 ∧ (10 / 7 : ℚ) ^ 3 = 1000 / 343 
 ## Where this goes next
 
 - [Euler-Maruyama](../08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md): the step-by-step simulation used here, with its order of convergence proved under the same Lipschitz conditions.
+- [One-dimensional diffusions](../08-Generators%2C%20Densities%20and%20Simulation/10-scale-function-speed-measure-and-boundaries.md): the scale function, the speed measure, and what happens at the edges.
+- [Burkholder-Davis-Gundy](../10-Continuous%20Martingales/03-burkholder-davis-gundy-inequalities.md): the peak of a martingale is controlled by its clock.
+- [Weak solutions and the martingale problem](../10-Continuous%20Martingales/06-weak-solutions-and-the-martingale-problem.md): an SDE solved in law, not path by path.
 
 This card shows one path exists; [Euler-Maruyama](../08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md) answers how fast a scheme closes in on it.
 

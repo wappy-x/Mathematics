@@ -852,6 +852,9 @@ example : Fintype.card (Finset (Fin 11)) = 2048 := by simp
 ## Where this goes next
 
 - [Many tests](08-multiple-testing.md): what happens to the false-alarm rate when many such tests are run.
+- [Large-sample likelihood](09-mle-asymptotics-wald-and-score-tests.md): why the MLE is nearly normal, and the Wald, score and likelihood-ratio tests.
+- [Generalised linear models](../09-Regression/10-generalised-linear-models.md): one recipe for counts, proportions and positive amounts.
+- [AIC and BIC](../09-Regression/11-aic-and-bic.md): scoring models by fit minus a price for each parameter.
 
 One likelihood ratio test is calibrated by Wilks' rule; choosing a model by running many of them in turn is not, and keeping the false-alarm rate honest across many tests is what [Many tests](08-multiple-testing.md) answers.
 

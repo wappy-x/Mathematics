@@ -830,6 +830,7 @@ example : ((1023 / 1024) * 1 + (1 / 1024) * (-1023) : ℚ) = 0 := by norm_num
 - [Martingale convergence](04-martingale-convergence.md): the stopped game at ever later rounds, and when a fair game settles to a limit.
 - [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md): the conditions that let the deadline go.
 - [Optimal stopping](../08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md): when the game is not fair, the best stopping time and its value.
+- [Continuous martingales and local martingales](../10-Continuous%20Martingales/01-continuous-martingales-and-local-martingales.md): fair games in continuous time, and fair only up to a stopping time.
 
 This card leaves one question open: the quit-at-5 average jumps from 0 to 5 when the deadline goes, so which unbounded stopping times keep the game fair, and why?
 

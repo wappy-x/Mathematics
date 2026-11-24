@@ -876,6 +876,9 @@ example : ∀ m ≤ 110, (∑ k ∈ Icc 1 m, (2 * k - 1) : ℕ) = m ^ 2 := by de
 - [Representing a martingale](07-martingale-representation-in-discrete-time.md): every martingale on a coin tree written as a bet on the coin.
 - [Brownian martingales](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md): the exponential submartingale of Step 5, for Brownian motion.
 - [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md): the L2 inequality holding a whole stochastic integral path in place.
+- [Azuma-Hoeffding and McDiarmid](08-azuma-hoeffding-and-mcdiarmid.md): a martingale with bounded steps rarely strays far.
+- [Donsker's theorem](../05-Brownian%20Motion/10-donskers-invariance-principle.md): the whole random-walk path converges to Brownian motion.
+- [Burkholder-Davis-Gundy](../10-Continuous%20Martingales/03-burkholder-davis-gundy-inequalities.md): the peak of a martingale is controlled by its clock.
 
 Doob's bound is reached only when the game has no time limit, and stopping a fair game at an unbounded time can break fairness altogether; when it is safe is the question [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md) answers.
 

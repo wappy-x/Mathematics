@@ -812,6 +812,7 @@ example : ((10 : ℚ) ^ 2) * (1 / 2) * (1 - 1 / 2) = 25 := by norm_num
 - [Simple random walk](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/02-simple-random-walk.md): heads minus tails, followed flip by flip.
 - [Backtesting VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/08-backtesting-var.md): a binomial count of broken days as a test of a risk model.
 - [Default correlation](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/01-default-correlation-and-joint-default.md): counts of defaults when independence fails.
+- [Sufficient statistics](../07-Sampling%20and%20Estimation/09-sufficient-statistics-and-factorisation.md): the summary that keeps everything the data say about the parameter.
 
 The binomial law fixes the number of tries and asks how many succeed; the geometric law asks the reverse question, how many tries until the first success, and gets a law with no upper limit.
 

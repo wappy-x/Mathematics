@@ -1197,6 +1197,10 @@ end InfinitesimalGenerator
 - [Stochastic control](../09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md): a controller who can turn the drift and noise dials picks the generator that does best; the HJB equation is a maximum over generators.
 - [Hille-Yosida](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/05-hille-yosida-and-generators.md): the generator as the derivative at zero of the family of averaging operators, and which operators arise this way.
 - [Feller semigroups](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/08-feller-semigroups-and-markov-processes.md): the general theory, where a Markov process is built from its generator rather than from an SDE.
+- [Brownian motion in d dimensions](08-recurrence-and-transience-of-brownian-motion.md): recurrent in the plane, gone for good in space.
+- [The Dirichlet problem by Brownian motion](09-brownian-motion-and-the-dirichlet-problem.md): boundary values averaged over where the path exits.
+- [One-dimensional diffusions](10-scale-function-speed-measure-and-boundaries.md): the scale function, the speed measure, and what happens at the edges.
+- [Weak solutions and the martingale problem](../10-Continuous%20Martingales/06-weak-solutions-and-the-martingale-problem.md): an SDE solved in law, not path by path.
 
 The generator gives the slope of every average at the start; the backward equation answers what those averages are at every later time.
 

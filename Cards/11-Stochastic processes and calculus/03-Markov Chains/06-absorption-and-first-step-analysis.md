@@ -1066,6 +1066,7 @@ end AbsorptionAndFirstStepAnalysis
 - [MCMC](07-markov-chain-monte-carlo.md): designs a chain on purpose so that where it spends its time is a distribution worth sampling.
 - [Continuous-time chains](../04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md): the same first-step equations when moves come at random times, with rates in place of chances.
 - [Kolmogorov backward equation](../08-Generators%2C%20Densities%20and%20Simulation/02-kolmogorov-backward-equation.md): first-step analysis for a continuous path, where "one step, then average" becomes an equation in the starting point.
+- [Birth-and-death processes](../04-Poisson%20and%20Jump%20Processes/07-birth-and-death-processes.md): populations and queues that move one step at a time.
 
 Here every move takes one turn of a die; the question this card leaves open is what the same two equations become when moves come at random times, or when there are no steps at all.
 

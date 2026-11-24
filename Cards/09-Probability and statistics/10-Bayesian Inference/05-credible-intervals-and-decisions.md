@@ -846,6 +846,7 @@ example : (10 : ℚ) * (2 * (7 / 10) - 1) = 4 := by norm_num
 ## Where this goes next
 
 - [MCMC in outline](06-markov-chain-monte-carlo-in-outline.md): posteriors with no closed form, whose intervals and expected losses must be computed from draws, as the simulation road here did.
+- [Decision theory](07-risk-admissibility-and-steins-paradox.md): risk, minimax, admissibility, and Stein's paradox.
 
 Every area on this card came from a posterior with a formula. When the model has many unknowns and no formula, the question left open is how to draw from the posterior at all, which is what MCMC answers.
 

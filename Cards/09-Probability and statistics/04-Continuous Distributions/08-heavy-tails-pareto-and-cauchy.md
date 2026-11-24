@@ -860,6 +860,7 @@ example : (10 : ℕ) ^ 2 = 100 ∧ (100 : ℕ) ^ 2 = 10000 ∧ (1000 : ℕ) ^ 2 
 - [Aggregate claims](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/04-collective-risk-and-compound-poisson.md): yearly totals of heavy-tailed claims, where one claim can dominate the sum.
 - [Small worlds and hubs](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/04-small-world-and-scale-free-models.md): networks whose link counts follow a power law, grown by preferential attachment.
 - [Stable laws](../../20-Harmonic%20analysis/04-Characteristic%20Functions%20and%20Probability/08-stable-laws-and-heavy-tails.md): the proof that Cauchy averages stay Cauchy, and the laws that replace the bell curve as limits of heavy-tailed sums.
+- [Extreme value theory](../05-Transformations%20and%20Joint%20Laws/09-extreme-value-theory-and-block-maxima.md): why the largest of many settles into one of three shapes.
 
 The average of Pareto fortunes settles without a finite variance, and the question this card leaves open is what law its error follows instead of the bell curve; the stable-laws card answers it.
 

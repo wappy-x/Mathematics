@@ -633,6 +633,7 @@ example : (![6, 2, 3] : Fin 3 → ℝ) - ![6, 2, 0] = ![0, 0, 3] ∧
 - [Random projection](../../24-Computability%20and%20complexity/06-Data%2C%20Learning%20and%20Fine-Grained%20Complexity/02-dimension-reduction-and-random-projection.md): random directions that shrink data, keeping distances.
 - [The four fundamental subspaces](05-four-fundamental-subspaces.md): every matrix splits its inputs into row space and null space, its outputs into column space and left null space, at right angles.
 - [Representations](../12-Group%20Representations/01-representations-and-maschkes-theorem.md): a group acting by matrices, and Maschke's theorem that every one splits into pieces that cannot split further.
+- [Analysis of variance](../../09-Probability%20and%20statistics/09-Regression/09-analysis-of-variance-and-the-f-test.md): comparing several means by splitting the spread.
 
 Each adds shadows onto several directions at once, which step 4 allows only while they stay perpendicular; [Gram-Schmidt](03-gram-schmidt-and-orthonormal-bases.md) makes them so.
 

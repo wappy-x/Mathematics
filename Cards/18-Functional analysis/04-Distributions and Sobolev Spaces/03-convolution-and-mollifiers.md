@@ -986,7 +986,7 @@ example : ((List.zipWith (fun a b => |b - a|) [0, 2, -3, 4, -2, 3, -4, 2, -4, 3,
 - **Running and cycling apps.** A recorded route is smoothed with a symmetric window after the run, so corners round off without a lag. A live display can use only past fixes, so it lags.
 - **Photo editors.** A blur convolves the picture with a bump in two dimensions. A bell curve stands in for the bump; it is not zero outside a window, but it has area 1 and is symmetric, and the same theorem holds with one extra step for its tails.
 - **Differential equations.** Mollifying a rough solution gives smooth functions that converge to it. That is how [Weak derivatives](07-weak-derivatives-and-sobolev-spaces.md) shows weak and ordinary derivatives agree in the limit.
-- **Statistics.** A kernel density estimate places a small bump at each data point and adds them up. It is the convolution of the data's spikes with a bump, and its width, the bandwidth, trades smoothness for faithfulness exactly as ε does here.
+- **Statistics.** A kernel density estimate ([Kernel density estimation](../../09-Probability%20and%20statistics/15-Nonparametric%20Inference/03-kernel-density-estimation.md)) places a small bump at each data point and adds them up. It is the convolution of the data's spikes with a bump, and its width, the bandwidth, trades smoothness for faithfulness exactly as ε does here.
 - **Pricing.** A digital option's payoff jumps at the strike. Smoothing the jump with a narrow bump gives finite sensitivities to differentiate, at the cost of a gap of known size.
 
 > **Say it back**

@@ -147,7 +147,7 @@ For the mix, Step 2 turns that average into $`L(K, T)^2\,\mathbb{E}[v_T \mid S_T
 
 ### Step 4: the loop, and how simulated particles close it
 
-The average $`\mathbb{E}[v_t \mid S_t = S]`$ is taken under the mix itself. The mix depends on $`L`$, and $`L`$ depends on the average: the price equation contains the distribution of its own solution. Such an equation is called a **McKean equation**. No table can be read off in advance.
+The average $`\mathbb{E}[v_t \mid S_t = S]`$ is taken under the mix itself. The mix depends on $`L`$, and $`L`$ depends on the average: the price equation contains the distribution of its own solution. Such an equation is called a **McKean equation** ([McKean-Vlasov equations in outline](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/10-mckean-vlasov-and-mean-field-limits-in-outline.md)). No table can be read off in advance.
 
 **Exists, unique, and where it fails.** The leverage is solved for from prices, so three statements come first.
 

@@ -791,6 +791,7 @@ example : ((Finset.range 11).filter (fun n => n ≤ 5)).card = 6 := by decide
 - [Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md): the scaled walk's limit, where Donsker's theorem uses tightness through the modulus of continuity.
 - [Compactness three ways](../../17-Topology/01-Metric%20Spaces/06-compactness-in-metric-spaces.md): compact sets in metric spaces, the setting of Prokhorov's general form.
 - [Arzela-Ascoli](../../17-Topology/01-Metric%20Spaces/09-arzela-ascoli.md): which sets of curves are compact, the source of the modulus-of-continuity test.
+- [Donsker's theorem](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/10-donskers-invariance-principle.md): the whole random-walk path converges to Brownian motion.
 
 This card proved the converse of Prokhorov's theorem on the line and in d dimensions only; why completeness and separability are what the converse needs on a general metric space is left open here.
 

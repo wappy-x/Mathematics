@@ -2060,6 +2060,7 @@ example : (∑ k ∈ Finset.range 6, ((k : ℚ) + 1 - 7 / 2) ^ 2) / 6 = 35 / 12 
 - [Cramer's theorem](10-cramers-theorem-and-large-deviations.md): the chance that the walk is a fixed fraction of n away, which falls exponentially in n; the rate $`I`$ of Step 4 is its rate function.
 - [Doob's inequalities](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/05-doob-inequalities.md): maximal bounds for martingales, which give Step 2 without reflection and serve steps of any law.
 - [Brownian paths](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/02-scaling-and-path-roughness.md): Brownian motion, the walk with infinitely small steps, which obeys the same law as time grows and, turned around, near time 0.
+- [Brownian paths up close](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/11-blumenthal-zero-one-law-and-the-brownian-lil.md): Blumenthal's zero-one law and the law of the iterated logarithm.
 
 The LIL fixes the size of the highs but not how long the walk spends near them, nor how close to $`h(n)`$ it comes at its best: that question is answered by sharper boundary tests and, for whole paths, by Strassen's functional law.
 

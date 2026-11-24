@@ -884,6 +884,7 @@ example : (-1 : ℚ) + 1 / (2 * (1 / 2)) = 0 := by norm_num
 - [The Radon-Nikodym derivative](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md): the weight $`f/g`$ in general, for laws with or without densities, and exactly when it exists.
 - [Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md): the same reweighting for whole random paths, where moving the centre becomes changing the drift.
 - [Historical and Monte Carlo VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md): simulated tail losses, where plain simulation is short of draws in exactly the way the bolts were.
+- [Propensity scores](../13-Survival%2C%20Design%20and%20Causality/09-propensity-scores-and-weighting.md): comparing like with like when treatment was not randomised.
 
 The weight here was a ratio of two densities on a line. What that ratio means when the thing drawn is a whole path through time, with no density to divide, is the question the Radon-Nikodym and Girsanov cards answer.
 

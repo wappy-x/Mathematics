@@ -1383,6 +1383,10 @@ example : [25, 28, 21, 15, 19, 12, 7, 13, 9, 4, 11, 10].map (fun v => 60 - v) =
 - [Two walls](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/05-double-barriers-and-double-no-touch.md): two walls, mirrors of mirrors: the either-side row of What breaks.
 - [Black-Cox](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/05-black-cox-first-passage-default.md): default as the first touch of a floor by the firm's assets.
 - [Method of images](../../19-Partial%20differential%20equations/04-Laplace%2C%20Poisson%20and%20Potentials/05-method-of-images.md): the mirror as a way to solve heat and Laplace equations with a wall.
+- [Donsker's theorem](10-donskers-invariance-principle.md): the whole random-walk path converges to Brownian motion.
+- [Brownian paths up close](11-blumenthal-zero-one-law-and-the-brownian-lil.md): Blumenthal's zero-one law and the law of the iterated logarithm.
+- [Levy's arcsine laws](12-levys-arcsine-laws.md): why a fair game's lead rarely changes hands.
+- [Local time and Tanaka's formula](../10-Continuous%20Martingales/05-local-time-and-tanakas-formula.md): Ito's rule for a function with a kink.
 
 The mirror needs a symmetric motion; what happens when the grain drifts, or when the price grows in proportion to itself, is the question the barrier cards answer by changing the measure first and reflecting second.
 

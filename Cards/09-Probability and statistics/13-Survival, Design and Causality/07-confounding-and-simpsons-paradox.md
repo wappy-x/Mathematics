@@ -815,6 +815,8 @@ example :
 
 - [Conditioning on a partition](../../10-Measure%20and%20integration/09-Conditional%20Expectation/01-conditioning-on-a-partition.md): the departments are the cells of a partition, and each stratum rate is a cell average; the measure wing rebuilds that conditioning so it reaches a confounder measured on a scale, such as a grade, whose every exact value has chance zero.
 - [Densities and likelihood ratios](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md): Step 4's applicant weights $`w_d / w_{g,d}`$ are a ratio of two mixes; there the same reweighting turns an average under one model into an average under another.
+- [Causal graphs](08-causal-graphs-and-back-door-adjustment.md): arrows for cause, and the back-door rule for which variables to adjust for.
+- [Instrumental variables and difference-in-differences](10-instrumental-variables-and-difference-in-differences.md): causal effects when a confounder is unmeasured.
 
 The design answers sit earlier on this shelf: [Randomised experiments](04-randomised-experiments-and-ab-tests.md) equalises every mix at once by lottery, [Blocking and factorial designs](05-blocking-and-factorial-designs.md) fixes a known confounder by randomising within each stratum, and [Permutation tests](06-permutation-tests.md) tests a gap by reshuffling the labels, valid exactly when a lottery assigned them.
 

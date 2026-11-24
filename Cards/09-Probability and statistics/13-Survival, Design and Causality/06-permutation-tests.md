@@ -912,6 +912,8 @@ example : (((univ : Finset (Fin 16)).powersetCard 8).filter
 ## Where this goes next
 
 - [Confounding](07-confounding-and-simpsons-paradox.md): what goes wrong when no lottery assigned the groups, and why the comparison can then reverse.
+- [The empirical CDF](../15-Nonparametric%20Inference/01-empirical-cdf-and-kolmogorov-smirnov.md): the data's own staircase, and the Kolmogorov-Smirnov test.
+- [Rank tests](../15-Nonparametric%20Inference/02-rank-tests-wilcoxon-and-mann-whitney.md): Wilcoxon and Mann-Whitney, comparing groups by order alone.
 
 A permutation test earns its guarantee from the lottery; what a comparison is worth when there was no lottery at all is the question confounding answers.
 

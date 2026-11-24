@@ -77,7 +77,7 @@ The binomial coefficient $`\binom{2n}{n}`$ counts the ways to choose which n of 
 - **Independent rounds with the same p.** After each hit the game restarts afresh, which the first-step equations use. If the chance drifts from round to round, the formulas do not apply.
 - **Exact fairness, for the sure return and the infinite mean.** At p = 0.4 or 0.6 the chance of ever being level again drops to 0.8. At p = 0.6 the wait to reach +1 has a finite average of 5 rounds.
 - **No floor and no deadline.** A gambler with 10 chips who stops at 0 or 11 plays 10 rounds on average. The infinite mean needs unlimited credit and time.
-- **One dimension.** Pólya proved in 1921 that a walk on a street grid also returns for sure in two dimensions, but not in three. This card proves only the line.
+- **One dimension.** Pólya proved in 1921 that a walk on a street grid also returns for sure in two dimensions, but not in three. This card proves only the line; [Brownian motion in d dimensions](../08-Generators%2C%20Densities%20and%20Simulation/08-recurrence-and-transience-of-brownian-motion.md) has the continuous version.
 
 ---
 
@@ -1840,6 +1840,8 @@ example : matchScore pictured 7 = -7 ∧ (∀ k ∈ Icc 1 15, matchScore picture
 - [Classifying states](../03-Markov%20Chains/03-classifying-states.md): recurrence and transience for any chain.
 - [Absorption](../03-Markov%20Chains/06-absorption-and-first-step-analysis.md): Step 1's first-step equation, solved on any finite chain.
 - [Reflection principle](../05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the same hitting times for the walk seen from far away, Brownian motion.
+- [Levy's arcsine laws](../05-Brownian%20Motion/12-levys-arcsine-laws.md): why a fair game's lead rarely changes hands.
+- [Brownian motion in d dimensions](../08-Generators%2C%20Densities%20and%20Simulation/08-recurrence-and-transience-of-brownian-motion.md): recurrent in the plane, gone for good in space.
 
 What this card leaves open: when stopping a fair game at such an unbounded time keeps it fair.
 

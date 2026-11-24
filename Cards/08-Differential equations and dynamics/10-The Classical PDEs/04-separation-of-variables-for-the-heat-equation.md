@@ -811,6 +811,7 @@ end SeparationOfVariables
 - [Laplace on a rectangle](08-laplace-on-a-rectangle.md): separation in two space directions.
 - [Fourier's law](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/05-heat-conduction-and-fouriers-law.md): the heat equation in real materials and units.
 - [Spectral methods](../../16-Numerical%20analysis/07-PDE%20Solvers/10-spectral-methods-and-the-fft.md): computing with modes, summed by a fast transform.
+- [Stochastic PDEs in outline](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/09-stochastic-pdes-in-outline.md): the heat equation driven by space-time noise.
 
 Left open: what heat does on a bar with no ends, where there is no list of modes; [The heat kernel](10-the-heat-kernel.md) answers it.
 

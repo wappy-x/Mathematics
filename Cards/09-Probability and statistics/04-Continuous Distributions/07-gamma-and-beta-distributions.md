@@ -965,6 +965,7 @@ example : (2 : ℚ) / (2 + 8) = 1 / 5 ∧ (2 : ℚ) * 3 / (10 * 11) = 3 / 55 ∧
 
 - [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md): a sum of squared standard normals is a gamma law with half-whole shape, and ratios of such sums give the t and F laws used in testing.
 - [Beta-binomial](../10-Bayesian%20Inference/02-beta-binomial.md): visitors who buy or leave update Beta(a, b) to a new beta law by adding counts to a and b.
+- [Exponential families](../07-Sampling%20and%20Estimation/10-exponential-families.md): one formula behind the binomial, Poisson, normal and gamma.
 
 This card sets up a belief about the conversion rate before any visitor arrives; the question it leaves open is how that belief should move once visitors start buying, and the beta-binomial card answers it.
 

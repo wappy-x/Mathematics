@@ -1022,6 +1022,8 @@ example : (2 : ℕ) ^ 2 = 4 ∧ 2 * (2 : ℕ) ^ 4 = 32 := by
 - [Order statistics](08-order-statistics-and-extremes.md): the CDF route applied to the largest and smallest of a sample.
 - [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md): sums of squared normals, starting from this card's law.
 - [The law of a random variable](../../10-Measure%20and%20integration/03-Measurable%20Functions/05-pushforward-and-the-law.md): the CDF route stated for any map, lumps and all.
+- [Jeffreys priors](../10-Bayesian%20Inference/08-jeffreys-priors-and-invariance.md): a 'know-nothing' prior that does not depend on how you write the parameter.
+- [Levy's arcsine laws](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/12-levys-arcsine-laws.md): why a fair game's lead rarely changes hands.
 
 This card moves one variable through one map; when two readings are transformed together, the stretch factor becomes an area factor, the Jacobian of [Change of variables](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md), and [Bivariate normal](05-bivariate-normal-and-conditioning.md) uses it to build the tilted bell from two independent bells.
 

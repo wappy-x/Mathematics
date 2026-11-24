@@ -887,6 +887,9 @@ example : 2 + 2 * 7 = 16 ∧ 2 + 2 * 3 = 8 ∧
 
 - [Gamma-Poisson](04-gamma-poisson.md): the same add-the-counts update for a rate of events rather than a proportion.
 - [Credible intervals and decisions](05-credible-intervals-and-decisions.md): turning Beta(9, 5) into an interval for θ and into a decision.
+- [Decision theory](07-risk-admissibility-and-steins-paradox.md): risk, minimax, admissibility, and Stein's paradox.
+- [Jeffreys priors](08-jeffreys-priors-and-invariance.md): a 'know-nothing' prior that does not depend on how you write the parameter.
+- [Bayes factors](09-bayes-factors-and-model-comparison.md): weighing two models by how well each predicted the data.
 
 This card ends with a whole law for θ and one number to bet on; how to report a range for θ, and how to act on it, is what credible intervals and decisions settle.
 

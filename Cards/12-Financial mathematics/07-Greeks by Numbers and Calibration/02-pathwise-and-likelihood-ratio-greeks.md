@@ -237,7 +237,7 @@ The expensive one: the score estimator is a payment times pure noise, so the sig
 
 ### The other doors
 
-Malliavin integration by parts generalises the score idea, shifting the derivative off the payment by integrating by parts along the path, which yields weights for payments depending on the whole path. Where a book has many inputs, the pathwise derivative can instead be propagated backwards through the pricing calculation once — [Adjoint differentiation](03-adjoint-differentiation-in-outline.md).
+Malliavin integration by parts ([Malliavin calculus in outline](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/07-malliavin-calculus-in-outline.md)) generalises the score idea, shifting the derivative off the payment by integrating by parts along the path, which yields weights for payments depending on the whole path. Where a book has many inputs, the pathwise derivative can instead be propagated backwards through the pricing calculation once — [Adjoint differentiation](03-adjoint-differentiation-in-outline.md).
 
 ---
 

@@ -201,7 +201,7 @@ What the truncation hides: $`H_k`$ is infinite-dimensional, one direction per fe
 
 ## Worked numbers, by hand
 
-Readings 16, 13 and 12 °C at 1, 2 and 3 m; deep ground 10 °C; $`\lambda`$ = 1/16. Read as a Gaussian process (Where you meet it), $`\lambda`$ = 1/16 assumes the thermometers' noise variance is one sixteenth of the ground's own variance, so the noise is a quarter as large as the variation the bumps describe (illustrative). That is why the fit may miss the 16 °C reading by 0.3722 °C.
+Readings 16, 13 and 12 °C at 1, 2 and 3 m; deep ground 10 °C; $`\lambda`$ = 1/16. Read as a Gaussian process (Where you meet it; [Gaussian processes](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/09-gaussian-processes-and-karhunen-loeve.md)), $`\lambda`$ = 1/16 assumes the thermometers' noise variance is one sixteenth of the ground's own variance, so the noise is a quarter as large as the variation the bumps describe (illustrative). That is why the fit may miss the 16 °C reading by 0.3722 °C.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -910,7 +910,7 @@ example : dotProduct ![(1 : ℤ), -1, 1]
 
 - **Geostatistics (kriging).** Maps of soil temperature, ore grade or rainfall from scattered boreholes use this fit, with the kernel as a covariance. The surface direction's squared length, 0.6921, is the share of the variance left at 0 m when readings carry no noise.
 - **Gaussian-process regression.** A machine-learning model that predicts with error bars gives the same mean prediction as kernel ridge, when $`\lambda`$ is the noise variance divided by the signal variance.
-- **Smoothing splines.** The cubic smoothing spline, a standard curve-smoother, is a straight line plus a sum of kernels at the data, for one particular kernel; the 1971 paper in Sources proved it.
+- **Smoothing splines.** The cubic smoothing spline ([Smoothing a scatter](../../09-Probability%20and%20statistics/15-Nonparametric%20Inference/04-kernel-regression-and-smoothing-splines.md)), a standard curve-smoother, is a straight line plus a sum of kernels at the data, for one particular kernel; the 1971 paper in Sources proved it.
 - **Support vector machines.** The weight vector is a sum over training points ([Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md)); the representer theorem is why that holds for any kernel.
 
 > **Say it back**

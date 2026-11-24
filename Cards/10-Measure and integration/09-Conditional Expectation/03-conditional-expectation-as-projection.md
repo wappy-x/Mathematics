@@ -792,7 +792,7 @@ example : (∑ k ∈ Finset.Icc 1 5, (3 : ℚ) / 4 ^ k * (2 ^ k) ^ 2) = 15 ∧
 ## Where you meet it in real life
 
 - **Weather and demand forecasting.** A forecast scored by mean squared error should be a conditional mean given what is known at forecast time; the skill score is the share of variance it removes, 0.84 here.
-- **Analysis of variance.** One-way ANOVA splits a sum of squares into within-group and between-group parts: the law of total variance on the sample.
+- **Analysis of variance.** One-way ANOVA ([Analysis of variance](../../09-Probability%20and%20statistics/09-Regression/09-analysis-of-variance-and-the-f-test.md)) splits a sum of squares into within-group and between-group parts: the law of total variance on the sample.
 - **Regression.** Fitted values are projections of the response; R^2 is between over total ([Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)).
 - **Martingales.** A square-integrable martingale is a sequence of projections onto growing information, and its increments are orthogonal ([Filtrations and martingales](06-filtrations-and-martingales.md)).
 

@@ -172,7 +172,7 @@ Dividing both averages by $`(1-p)^n`$ turns each into a polynomial in the odds p
 
 So every unbiased rule is $`\hat p`$ plus a "noise" term that sums to zero inside each head-count group, and that noise is uncorrelated with $`\hat p`$. Its variance is Var($`\hat p`$) plus the noise's average square, never less.
 
-This is the coin's case of the Rao–Blackwell and Lehmann–Scheffé theorems. The code draws 2,000 such rules at random: the smallest variance found is 0.046875, the floor, and none is biased at p = 0.1, 0.25 or 0.7.
+This is the coin's case of the Rao–Blackwell and Lehmann–Scheffé theorems ([Rao-Blackwell and Lehmann-Scheffe](11-rao-blackwell-and-lehmann-scheffe.md)). The code draws 2,000 such rules at random: the smallest variance found is 0.046875, the floor, and none is biased at p = 0.1, 0.25 or 0.7.
 
 ---
 
@@ -1019,6 +1019,10 @@ example : (52 / 100 : ℚ) * (48 / 100) / 1000 = 156 / 625000 := by norm_num
 
 - [Likelihood ratio tests](../08-Confidence%20Intervals%20and%20Tests/07-likelihood-ratio-tests.md): the score's zero average and its variance, the information, are the two facts behind Wilks' rule that twice the log of a likelihood ratio follows a chi-square law ([The reference distributions](03-chi-square-t-and-f-distributions.md)) in large samples.
 - [Fisher metric](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/09-information-geometry-and-the-fisher-metric.md): the information, followed from one value of p to the next, read as a ruler on the space of models, so that two coins are far apart when data tell them apart easily.
+- [Sufficient statistics](09-sufficient-statistics-and-factorisation.md): the summary that keeps everything the data say about the parameter.
+- [Rao-Blackwell and Lehmann-Scheffe](11-rao-blackwell-and-lehmann-scheffe.md): improving an estimator by conditioning, and the best unbiased one.
+- [Large-sample likelihood](../08-Confidence%20Intervals%20and%20Tests/09-mle-asymptotics-wald-and-score-tests.md): why the MLE is nearly normal, and the Wald, score and likelihood-ratio tests.
+- [Jeffreys priors](../10-Bayesian%20Inference/08-jeffreys-priors-and-invariance.md): a 'know-nothing' prior that does not depend on how you write the parameter.
 
 This card fixed how precisely one sample can pin down one unknown; whether a model with an extra parameter fits better than chance allows, and how far apart two models are, are the questions those cards answer with the same information.
 

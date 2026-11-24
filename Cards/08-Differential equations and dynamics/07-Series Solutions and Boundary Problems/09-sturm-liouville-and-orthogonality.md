@@ -706,6 +706,7 @@ end SturmLiouville
 - [Self-adjoint extensions](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/02-self-adjoint-extensions-and-the-spectral-theorem.md): end conditions as a choice of operator.
 - [Helmholtz](../../19-Partial%20differential%20equations/04-Laplace%2C%20Poisson%20and%20Potentials/08-helmholtz-and-eigenfunctions.md): the theorem in two and three dimensions.
 - [The second variation](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/09-second-variation-and-free-endpoints.md): when a stationary path is truly a minimum, and what a free end must satisfy.
+- [Gaussian processes](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/09-gaussian-processes-and-karhunen-loeve.md): random functions set by a covariance, and the Karhunen-Loeve series.
 
 This card leaves one question open: why do the modes leave nothing over, so that every shape is a sum of them?
 

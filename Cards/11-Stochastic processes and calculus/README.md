@@ -6,21 +6,22 @@
 
 Follow randomness through time: random walks, martingales, Markov chains, Poisson arrivals, Brownian motion and the calculus built on it. Write and solve a stochastic differential equation, change the probability measure, simulate a path honestly, and state the theorems the finance wing rests on.
 
-9 shelves · **60 of 60 cards ready to read**
+10 shelves · **83 of 83 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
 | Shelf | Cards |
 | --- | ---: |
 | [01 · Random Walks and Filtrations](#s01) | 6 |
-| [02 · Martingales](#s02) | 7 |
+| [02 · Martingales](#s02) | 9 |
 | [03 · Markov Chains](#s03) | 8 |
-| [04 · Poisson and Jump Processes](#s04) | 6 |
-| [05 · Brownian Motion](#s05) | 7 |
-| [06 · Ito Calculus](#s06) | 7 |
+| [04 · Poisson and Jump Processes](#s04) | 8 |
+| [05 · Brownian Motion](#s05) | 12 |
+| [06 · Ito Calculus](#s06) | 8 |
 | [07 · Changing Measure](#s07) | 6 |
-| [08 · Generators, Densities and Simulation](#s08) | 7 |
-| [09 · Beyond Brownian](#s09) | 6 |
+| [08 · Generators, Densities and Simulation](#s08) | 10 |
+| [09 · Beyond Brownian](#s09) | 10 |
+| [10 · Continuous Martingales](#s10) | 6 |
 
 <a name="s01"></a>
 
@@ -39,7 +40,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s02"></a>
 
-## 02 · Martingales · 7 cards
+## 02 · Martingales · 9 cards
 
 *Fair games in time: the definition, the strategies that cannot beat them, and when you may stop*
 
@@ -50,6 +51,8 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Doob's inequalities: the maximum of a martingale is controlled by its endpoint](02-Martingales/05-doob-inequalities.md)
 6. [Stopping without a bound: the uniform integrability that makes it safe](02-Martingales/06-uniform-integrability-and-unbounded-stopping.md)
 7. [Representing a martingale: on a binary tree every martingale is a bet on the coin](02-Martingales/07-martingale-representation-in-discrete-time.md)
+8. [Azuma-Hoeffding and McDiarmid: a martingale with bounded steps rarely strays far](02-Martingales/08-azuma-hoeffding-and-mcdiarmid.md)
+9. [Branching processes: family trees that die out or explode](02-Martingales/09-galton-watson-branching-processes.md)
 
 [↑ Back to the shelves](#top)
 
@@ -72,7 +75,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s04"></a>
 
-## 04 · Poisson and Jump Processes · 6 cards
+## 04 · Poisson and Jump Processes · 8 cards
 
 *Arrivals that come one at a time: the Poisson process, its variants, and chains that jump in continuous time*
 
@@ -82,12 +85,14 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [Compound Poisson: random arrivals with random sizes](04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md)
 5. [Continuous-time chains: rates instead of probabilities, and the M/M/1 queue](04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md)
 6. [Renewal processes: arrivals with any gap distribution](04-Poisson%20and%20Jump%20Processes/06-renewal-processes-in-outline.md)
+7. [Birth-and-death processes: populations and queues that move one step at a time](04-Poisson%20and%20Jump%20Processes/07-birth-and-death-processes.md)
+8. [Arrivals whose rate changes: time-varying Poisson processes and self-exciting Hawkes processes](04-Poisson%20and%20Jump%20Processes/08-inhomogeneous-poisson-and-hawkes-processes.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s05"></a>
 
-## 05 · Brownian Motion · 7 cards
+## 05 · Brownian Motion · 12 cards
 
 *The continuous limit of the random walk: its definition, its strange paths, and its most useful properties*
 
@@ -98,12 +103,17 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Brownian bridge: Brownian motion pinned at both ends](05-Brownian%20Motion/05-brownian-bridge.md)
 6. [Brownian martingales: W, W squared minus t, and the exponential martingale](05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md)
 7. [Geometric Brownian motion: a price whose log is Brownian](05-Brownian%20Motion/07-geometric-brownian-motion.md)
+8. [Building Brownian motion: Levy's midpoint construction and Kolmogorov's continuity test](05-Brownian%20Motion/08-constructing-brownian-motion.md)
+9. [Gaussian processes: random functions set by a covariance, and the Karhunen-Loeve series](05-Brownian%20Motion/09-gaussian-processes-and-karhunen-loeve.md)
+10. [Donsker's theorem: the whole random-walk path converges to Brownian motion](05-Brownian%20Motion/10-donskers-invariance-principle.md)
+11. [Brownian paths up close: Blumenthal's zero-one law and the law of the iterated logarithm](05-Brownian%20Motion/11-blumenthal-zero-one-law-and-the-brownian-lil.md)
+12. [Levy's arcsine laws: why a fair game's lead rarely changes hands](05-Brownian%20Motion/12-levys-arcsine-laws.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s06"></a>
 
-## 06 · Ito Calculus · 7 cards
+## 06 · Ito Calculus · 8 cards
 
 *Integrating against Brownian motion, the chain rule with its extra term, and solving stochastic differential equations*
 
@@ -114,6 +124,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Mean reversion: the Ornstein-Uhlenbeck and Cox-Ingersoll-Ross processes](06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)
 6. [Several Brownian motions: correlated noise and the multidimensional Ito formula](06-Ito%20Calculus/06-multidimensional-ito-and-correlation.md)
 7. [When an SDE has one solution: Lipschitz and growth conditions](06-Ito%20Calculus/07-existence-and-uniqueness-for-sdes.md)
+8. [The Stratonovich integral: the midpoint rule that keeps the ordinary chain rule](06-Ito%20Calculus/08-stratonovich-integral.md)
 
 [↑ Back to the shelves](#top)
 
@@ -134,7 +145,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s08"></a>
 
-## 08 · Generators, Densities and Simulation · 7 cards
+## 08 · Generators, Densities and Simulation · 10 cards
 
 *The operator that describes a diffusion, the equations its densities obey, and how to simulate it without fooling yourself*
 
@@ -145,12 +156,15 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Milstein and the two kinds of error: path error and average error](08-Generators%2C%20Densities%20and%20Simulation/05-milstein-and-strong-weak-convergence.md)
 6. [Exact simulation: when you can skip the time steps](08-Generators%2C%20Densities%20and%20Simulation/06-exact-simulation-of-gbm-and-ou.md)
 7. [Optimal stopping: when to stop a process to maximise an expected reward](08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md)
+8. [Brownian motion in d dimensions: recurrent in the plane, gone for good in space](08-Generators%2C%20Densities%20and%20Simulation/08-recurrence-and-transience-of-brownian-motion.md)
+9. [The Dirichlet problem by Brownian motion: boundary values averaged over where the path exits](08-Generators%2C%20Densities%20and%20Simulation/09-brownian-motion-and-the-dirichlet-problem.md)
+10. [One-dimensional diffusions: the scale function, the speed measure, and what happens at the edges](08-Generators%2C%20Densities%20and%20Simulation/10-scale-function-speed-measure-and-boundaries.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s09"></a>
 
-## 09 · Beyond Brownian · 6 cards
+## 09 · Beyond Brownian · 10 cards
 
 *Jumps, control and filtering: the processes that finance and engineering need beyond the diffusion*
 
@@ -160,6 +174,25 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [Filtering: estimating a hidden state from noisy observations in continuous time](09-Beyond%20Brownian/04-filtering-and-the-kalman-bucy-filter.md)
 5. [Semimartingales: the largest class you can integrate against](09-Beyond%20Brownian/05-semimartingales-in-outline.md)
 6. [Rougher than Brownian: fractional Brownian motion and why rough volatility needs new tools](09-Beyond%20Brownian/06-rough-paths-and-fractional-brownian-motion-in-outline.md)
+7. [Malliavin calculus in outline: differentiating a random variable with respect to the noise](09-Beyond%20Brownian/07-malliavin-calculus-in-outline.md)
+8. [Backward SDEs in outline: equations solved from a known end value](09-Beyond%20Brownian/08-backward-sdes-in-outline.md)
+9. [Stochastic PDEs in outline: the heat equation driven by space-time noise](09-Beyond%20Brownian/09-stochastic-pdes-in-outline.md)
+10. [McKean-Vlasov equations in outline: particles that feel the crowd's average](09-Beyond%20Brownian/10-mckean-vlasov-and-mean-field-limits-in-outline.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s10"></a>
+
+## 10 · Continuous Martingales · 6 cards
+
+*Fair games in continuous time: their clock, the bounds on their peaks, why each is a Brownian motion on its own clock, and SDEs solved in law.*
+
+1. [Continuous martingales and local martingales: fair games in continuous time, and fair only up to a stopping time](10-Continuous%20Martingales/01-continuous-martingales-and-local-martingales.md)
+2. [Doob-Meyer: every submartingale is a martingale plus a rising trend, and the bracket of a martingale](10-Continuous%20Martingales/02-doob-meyer-decomposition.md)
+3. [Burkholder-Davis-Gundy: the peak of a martingale is controlled by its clock](10-Continuous%20Martingales/03-burkholder-davis-gundy-inequalities.md)
+4. [Levy's characterisation and Dubins-Schwarz: every continuous martingale is Brownian motion on its own clock](10-Continuous%20Martingales/04-levys-characterisation-and-dubins-schwarz.md)
+5. [Local time and Tanaka's formula: Ito's rule for a function with a kink](10-Continuous%20Martingales/05-local-time-and-tanakas-formula.md)
+6. [Weak solutions and the martingale problem: an SDE solved in law, not path by path](10-Continuous%20Martingales/06-weak-solutions-and-the-martingale-problem.md)
 
 [↑ Back to the shelves](#top)
 

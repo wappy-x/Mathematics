@@ -6,7 +6,7 @@
 
 Model chance with the standard distributions, compute and simulate probabilities, estimate from data with honest error bars, test claims, fit regressions and time series, and say what a result does and does not show. Proofs of the limit theorems are in wing 10; this wing states them and uses them.
 
-14 shelves · **100 of 100 cards ready to read**
+15 shelves · **120 of 120 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
@@ -16,16 +16,17 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 | [02 · Random Variables](#s02) | 8 |
 | [03 · Discrete Distributions](#s03) | 7 |
 | [04 · Continuous Distributions](#s04) | 9 |
-| [05 · Transformations and Joint Laws](#s05) | 8 |
+| [05 · Transformations and Joint Laws](#s05) | 9 |
 | [06 · Limit Theorems in Practice](#s06) | 6 |
-| [07 · Sampling and Estimation](#s07) | 8 |
-| [08 · Confidence Intervals and Tests](#s08) | 8 |
-| [09 · Regression](#s09) | 8 |
-| [10 · Bayesian Inference](#s10) | 6 |
+| [07 · Sampling and Estimation](#s07) | 11 |
+| [08 · Confidence Intervals and Tests](#s08) | 9 |
+| [09 · Regression](#s09) | 12 |
+| [10 · Bayesian Inference](#s10) | 10 |
 | [11 · Simulation](#s11) | 6 |
 | [12 · Time Series](#s12) | 7 |
-| [13 · Survival, Design and Causality](#s13) | 7 |
+| [13 · Survival, Design and Causality](#s13) | 10 |
 | [14 · Random Graphs and the Probabilistic Method](#s14) | 5 |
+| [15 · Nonparametric Inference](#s15) | 4 |
 
 <a name="s01"></a>
 
@@ -96,7 +97,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s05"></a>
 
-## 05 · Transformations and Joint Laws · 8 cards
+## 05 · Transformations and Joint Laws · 9 cards
 
 *Functions of random variables, several continuous variables together, and the multivariate normal*
 
@@ -108,6 +109,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Multivariate normal: a vector of correlated normals and its covariance matrix](05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)
 7. [Copulas: separating what each variable does from how they move together](05-Transformations%20and%20Joint%20Laws/07-copulas-and-sklars-theorem.md)
 8. [Order statistics: the largest, the smallest and the median of a sample](05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md)
+9. [Extreme value theory: why the largest of many settles into one of three shapes](05-Transformations%20and%20Joint%20Laws/09-extreme-value-theory-and-block-maxima.md)
 
 [↑ Back to the shelves](#top)
 
@@ -128,7 +130,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s07"></a>
 
-## 07 · Sampling and Estimation · 8 cards
+## 07 · Sampling and Estimation · 11 cards
 
 *Estimating a number from a sample and saying how wrong you might be*
 
@@ -140,12 +142,15 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Bias and variance: the two ways an estimator can be wrong](07-Sampling%20and%20Estimation/06-bias-variance-and-mean-squared-error.md)
 7. [Fisher information: how much a sample can tell you, and the floor on any estimator's error](07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md)
 8. [Bootstrap: resampling your own data to see how your estimate wobbles](07-Sampling%20and%20Estimation/08-bootstrap.md)
+9. [Sufficient statistics: the summary that keeps everything the data say about the parameter](07-Sampling%20and%20Estimation/09-sufficient-statistics-and-factorisation.md)
+10. [Exponential families: one formula behind the binomial, Poisson, normal and gamma](07-Sampling%20and%20Estimation/10-exponential-families.md)
+11. [Rao-Blackwell and Lehmann-Scheffe: improving an estimator by conditioning, and the best unbiased one](07-Sampling%20and%20Estimation/11-rao-blackwell-and-lehmann-scheffe.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s08"></a>
 
-## 08 · Confidence Intervals and Tests · 8 cards
+## 08 · Confidence Intervals and Tests · 9 cards
 
 *Error bars, tests, p-values, power, and what goes wrong when you test many things*
 
@@ -157,12 +162,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Chi-square tests: does the table fit the model, and are the rows independent](08-Confidence%20Intervals%20and%20Tests/06-chi-square-tests.md)
 7. [Likelihood ratio tests: comparing two fits, and Wilks' chi-square rule](08-Confidence%20Intervals%20and%20Tests/07-likelihood-ratio-tests.md)
 8. [Many tests: why one in twenty lies, and Bonferroni and false discovery control](08-Confidence%20Intervals%20and%20Tests/08-multiple-testing.md)
+9. [Large-sample likelihood: why the MLE is nearly normal, and the Wald, score and likelihood-ratio tests](08-Confidence%20Intervals%20and%20Tests/09-mle-asymptotics-wald-and-score-tests.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s09"></a>
 
-## 09 · Regression · 8 cards
+## 09 · Regression · 12 cards
 
 *Fitting lines and planes to data, saying how sure the fit is, and the models that extend it*
 
@@ -174,12 +180,16 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Regularisation: shrinking coefficients to trade bias for stability](09-Regression/06-ridge-and-lasso.md)
 7. [Principal components: the directions your data varies most](09-Regression/07-principal-components.md)
 8. [Overfitting: a model that memorises, and the held-out test that catches it](09-Regression/08-cross-validation-and-overfitting.md)
+9. [Analysis of variance: comparing several means by splitting the spread](09-Regression/09-analysis-of-variance-and-the-f-test.md)
+10. [Generalised linear models: one recipe for counts, proportions and positive amounts](09-Regression/10-generalised-linear-models.md)
+11. [AIC and BIC: scoring models by fit minus a price for each parameter](09-Regression/11-aic-and-bic.md)
+12. [Mixed-effects models: groups that share a mean, and the pull of each group toward it](09-Regression/12-mixed-effects-models.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s10"></a>
 
-## 10 · Bayesian Inference · 6 cards
+## 10 · Bayesian Inference · 10 cards
 
 *Priors, posteriors, conjugate updates, and decisions from a posterior*
 
@@ -189,6 +199,10 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [Gamma-Poisson: updating a rate from counts and hours, then predicting the next hour](10-Bayesian%20Inference/04-gamma-poisson.md)
 5. [Credible intervals and decisions: what the posterior lets you say and do](10-Bayesian%20Inference/05-credible-intervals-and-decisions.md)
 6. [MCMC in outline: sampling a posterior you cannot write down](10-Bayesian%20Inference/06-markov-chain-monte-carlo-in-outline.md)
+7. [Decision theory: risk, minimax, admissibility, and Stein's paradox](10-Bayesian%20Inference/07-risk-admissibility-and-steins-paradox.md)
+8. [Jeffreys priors: a 'know-nothing' prior that does not depend on how you write the parameter](10-Bayesian%20Inference/08-jeffreys-priors-and-invariance.md)
+9. [Bayes factors: weighing two models by how well each predicted the data](10-Bayesian%20Inference/09-bayes-factors-and-model-comparison.md)
+10. [Hierarchical models: many related groups, each borrowing strength from the rest](10-Bayesian%20Inference/10-hierarchical-models-and-empirical-bayes.md)
 
 [↑ Back to the shelves](#top)
 
@@ -225,7 +239,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s13"></a>
 
-## 13 · Survival, Design and Causality · 7 cards
+## 13 · Survival, Design and Causality · 10 cards
 
 *Time-to-event data, designing an experiment that can answer a question, and when correlation says nothing about cause*
 
@@ -236,6 +250,9 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Blocking and factorial designs: getting more from fewer trials](13-Survival%2C%20Design%20and%20Causality/05-blocking-and-factorial-designs.md)
 6. [Permutation tests: shuffle the labels to get the null distribution](13-Survival%2C%20Design%20and%20Causality/06-permutation-tests.md)
 7. [Confounding: the hidden variable that reverses a conclusion](13-Survival%2C%20Design%20and%20Causality/07-confounding-and-simpsons-paradox.md)
+8. [Causal graphs: arrows for cause, and the back-door rule for which variables to adjust for](13-Survival%2C%20Design%20and%20Causality/08-causal-graphs-and-back-door-adjustment.md)
+9. [Propensity scores: comparing like with like when treatment was not randomised](13-Survival%2C%20Design%20and%20Causality/09-propensity-scores-and-weighting.md)
+10. [Instrumental variables and difference-in-differences: causal effects when a confounder is unmeasured](13-Survival%2C%20Design%20and%20Causality/10-instrumental-variables-and-difference-in-differences.md)
 
 [↑ Back to the shelves](#top)
 
@@ -250,6 +267,19 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [The probabilistic method: proving something exists by showing a random choice works](14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md)
 4. [First and second moments: showing a random count is zero, or is not](14-Random%20Graphs%20and%20the%20Probabilistic%20Method/04-first-and-second-moment-methods.md)
 5. [Random walks on a graph: where a wanderer ends up, and how fast](14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s15"></a>
+
+## 15 · Nonparametric Inference · 4 cards
+
+*Estimating and testing without assuming a bell curve: the data's own CDF, ranks, and smooth curves fitted straight from the points.*
+
+1. [The empirical CDF: the data's own staircase, and the Kolmogorov-Smirnov test](15-Nonparametric%20Inference/01-empirical-cdf-and-kolmogorov-smirnov.md)
+2. [Rank tests: Wilcoxon and Mann-Whitney, comparing groups by order alone](15-Nonparametric%20Inference/02-rank-tests-wilcoxon-and-mann-whitney.md)
+3. [Kernel density estimation: a smooth histogram, and the bandwidth that balances bias and noise](15-Nonparametric%20Inference/03-kernel-density-estimation.md)
+4. [Smoothing a scatter: kernel regression and smoothing splines](15-Nonparametric%20Inference/04-kernel-regression-and-smoothing-splines.md)
 
 [↑ Back to the shelves](#top)
 

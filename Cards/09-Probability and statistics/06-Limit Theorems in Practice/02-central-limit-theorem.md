@@ -972,6 +972,8 @@ example : (6 : ℕ) ^ 10 = 60466176 := by norm_num
 - [Characteristic functions](04-characteristic-functions-and-inversion.md): the generating function's complex cousin, which exists for every law and carries the theorem to every law with a finite spread.
 - [The central limit theorem in four lines, once you have fingerprints](../../20-Harmonic%20analysis/04-Characteristic%20Functions%20and%20Probability/05-central-limit-theorem-by-characteristic-functions.md): the proof for every finite spread, through Fourier transforms.
 - [Erdos-Kac](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/02-erdos-kac-theorem.md): the bell in the count of prime factors of whole numbers.
+- [Large-sample likelihood](../08-Confidence%20Intervals%20and%20Tests/09-mle-asymptotics-wald-and-score-tests.md): why the MLE is nearly normal, and the Wald, score and likelihood-ratio tests.
+- [Donsker's theorem](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/10-donskers-invariance-principle.md): the whole random-walk path converges to Brownian motion.
 
 The theorem says the miss tends to a bell but guarantees nothing at 30 or 1,000 rolls; bounds that hold at every number of rolls, bell or no bell, are [Concentration](06-concentration-inequalities-hoeffding-and-chernoff.md).
 

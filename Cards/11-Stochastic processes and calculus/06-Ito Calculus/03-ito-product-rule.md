@@ -878,6 +878,7 @@ example : 2 * (5 / 100 : ℚ) + (20 / 100) ^ 2 = 14 / 100 := by norm_num
 - [Semimartingales](../09-Beyond%20Brownian/05-semimartingales-in-outline.md): the product rule for processes that can jump, where the covariation also collects the products of jumps.
 - [Stochastic differential equations](04-stochastic-differential-equations.md): equations of the form $`dX_t = \mu(X_t, t)\,dt + \sigma(X_t, t)\,dW_t`$, several of them solved with this rule.
 - [Girsanov](../07-Changing%20Measure/02-girsanov-theorem.md): how to build the measure under which the share's drift is the bank rate.
+- [The Stratonovich integral](08-stratonovich-integral.md): the midpoint rule that keeps the ordinary chain rule.
 
 This card showed that the discounted share is a fair game exactly when the share's drift equals the bank rate. The open question is how to make that true for a real share whose drift is 8%, and Girsanov's theorem answers it by changing the measure.
 

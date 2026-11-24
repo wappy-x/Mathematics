@@ -993,6 +993,10 @@ example : 5 * 124 + 18 * 140 + 6 * 172 + 14 * 200 + 9 * 180 + 26 * 171 + 10 * 26
 - [Logistic regression](05-logistic-regression.md): the same columns predicting a yes-or-no outcome, where the fit is no longer linear in the data.
 - [Regularisation](06-ridge-and-lasso.md): step outside the unbiased class on purpose, trading a little bias for less spread.
 - [Factor models](../../12-Financial%20mathematics/37-Portfolio%20Theory/05-factor-models-and-apt.md): returns explained by several factors at once.
+- [Analysis of variance](09-analysis-of-variance-and-the-f-test.md): comparing several means by splitting the spread.
+- [Generalised linear models](10-generalised-linear-models.md): one recipe for counts, proportions and positive amounts.
+- [Mixed-effects models](12-mixed-effects-models.md): groups that share a mean, and the pull of each group toward it.
+- [Instrumental variables and difference-in-differences](../13-Survival%2C%20Design%20and%20Causality/10-instrumental-variables-and-difference-in-differences.md): causal effects when a confounder is unmeasured.
 
 Gauss–Markov says least squares is best when its assumptions hold; the open question is how to tell from twelve misses whether they do.
 

@@ -930,7 +930,7 @@ Also used: [Linear interpolation](01-linear-interpolation-and-extrapolation.md),
 
 - [Fitting instead of passing through](07-least-squares-and-orthogonal-polynomials.md): when quotes carry noise, forcing the curve through every one of them is the wrong goal, and a fitted curve trades exactness for calm.
 
-This card trusted every quote exactly and asked only what to do between them and beyond them; the question it leaves open is how much smoothness to buy when the quotes themselves are uncertain, which is the job of a smoothing spline.
+This card trusted every quote exactly and asked only what to do between them and beyond them; the question it leaves open is how much smoothness to buy when the quotes themselves are uncertain, which is the job of a smoothing spline ([Smoothing a scatter](../../09-Probability%20and%20statistics/15-Nonparametric%20Inference/04-kernel-regression-and-smoothing-splines.md)).
 
 ---
 

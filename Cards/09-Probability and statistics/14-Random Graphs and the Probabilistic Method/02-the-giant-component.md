@@ -91,7 +91,7 @@ q = e^{c\,(q - 1)}, \qquad \zeta = 1 - q.
 
 Find the component of one person $`v`$ by breadth-first search: list $`v`$'s friends, then their friends not yet seen, generation by generation. The search stops when a generation brings no one new. The component is everyone found.
 
-While few people have been found, almost everyone is unseen, so each explored person brings new people at the same rate. That is a **family tree**, or **branching process**: every member independently has a random number of children. A small component is a tree that died out. The giant is where trees that do not die out end up.
+While few people have been found, almost everyone is unseen, so each explored person brings new people at the same rate. That is a **family tree**, or **branching process** ([Branching processes](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/09-galton-watson-branching-processes.md)): every member independently has a random number of children. A small component is a tree that died out. The giant is where trees that do not die out end up.
 
 ```mermaid
 flowchart TB
@@ -864,6 +864,7 @@ example : (1 : ℚ) / (1 - 1 / 2) = 2 := by norm_num
 ## Where this goes next
 
 - [Percolation](../../25-Frontier/05-Analysis%20and%20Dynamics/06-dying-percolation-and-critical-phenomena.md): the same switch on grids and real networks, and what happens exactly at the threshold, where the largest component grows like $`n^{2/3}`$ and sizes follow power laws.
+- [Branching processes](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/09-galton-watson-branching-processes.md): family trees that die out or explode.
 
 This card settles both sides of one friend each; what happens exactly at one, and on grids, where each person can befriend only near neighbours, is the question Percolation takes up.
 

@@ -1190,6 +1190,7 @@ example (x : ℝ) : exp (x / 2) * exp (-(x / 2)) = 1 := by rw [← exp_add]; sim
 
 - [Martingale representation](04-martingale-representation-theorem.md): every Q-martingale is an Ito integral, which turns a certified change of measure into a hedge.
 - [Change of numeraire](05-change-of-numeraire.md): weights built from a traded asset's price, where the martingale property is the asset's own fairness.
+- [Continuous martingales and local martingales](../10-Continuous%20Martingales/01-continuous-martingales-and-local-martingales.md): fair games in continuous time, and fair only up to a stopping time.
 
 With the weights certified, the open question is what the reweighted world buys: which payoffs can be built from the share and cash, and at what cost.
 

@@ -174,7 +174,7 @@ Putting the data's own $`\bar X`$ in place of $`\mu`$ gives a rule that can be r
 <details>
 <summary>Shrinking many averages at once</summary>
 
-For one offset, no fixed pull beats the plain average at every offset, as Step 4 showed. Now take three or more unrelated offsets with bell-shaped noise, scored by their total squared miss. For that case, Charles Stein (1956) and then Willard James with Stein (1961) showed something different. A data-chosen pull of all the averages toward a common point has smaller total mean squared error than the plain averages, at every possible set of offsets.
+For one offset, no fixed pull beats the plain average at every offset, as Step 4 showed. Now take three or more unrelated offsets with bell-shaped noise, scored by their total squared miss. For that case, Charles Stein (1956) and then Willard James with Stein (1961; see [Decision theory](../10-Bayesian%20Inference/07-risk-admissibility-and-steins-paradox.md)) showed something different. A data-chosen pull of all the averages toward a common point has smaller total mean squared error than the plain averages, at every possible set of offsets.
 
 Efron and Morris's account in the Sources reads it through baseball batting averages. The proof needs tools beyond this card; [Regularisation](../09-Regression/06-ridge-and-lasso.md) uses the same pull.
 
@@ -868,6 +868,8 @@ example : (256 : ℚ) * (2 * 3 + (3 - 5) ^ 2) / 5 ^ 2 = 512 / 5 := by norm_num
 - [Estimation error](../../12-Financial%20mathematics/37-Portfolio%20Theory/07-estimation-error-and-shrinkage.md): the same pull applied to noisy return and risk estimates.
 - [Loss and empirical risk](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/01-loss-functions-and-empirical-risk.md): squared error as one loss among several, averaged over data.
 - [Wavelet denoising](../../20-Harmonic%20analysis/05-Wavelets%20and%20Time-Frequency/07-wavelet-denoising.md): shrinking coefficients to strip noise from a signal.
+- [Decision theory](../10-Bayesian%20Inference/07-risk-admissibility-and-steins-paradox.md): risk, minimax, admissibility, and Stein's paradox.
+- [Kernel density estimation](../15-Nonparametric%20Inference/03-kernel-density-estimation.md): a smooth histogram, and the bandwidth that balances bias and noise.
 
 The shrunk rule beat the average by accepting bias; among rules that refuse any bias, how small can the variance be made? The next card, [Fisher information](07-fisher-information-and-cramer-rao.md), sets that floor.
 

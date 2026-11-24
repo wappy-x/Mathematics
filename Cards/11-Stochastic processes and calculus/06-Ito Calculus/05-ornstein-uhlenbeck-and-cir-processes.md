@@ -194,7 +194,7 @@ Start between a low level $`\varepsilon`$ and a high level $`B`$. Stopped on lea
 
 Near zero, $`S'(x)`$ behaves like $`x^{-\nu}`$, and $`\int_0 x^{-\nu}\,dx`$ is infinite exactly when $`\nu \ge 1`$. Then $`S(\varepsilon) \to -\infty`$ as $`\varepsilon \to 0`$, so reaching zero before $`B`$ has chance 0 for every $`B`$. The coefficients grow at most linearly, so a path stays below some $`B`$ over any finite time, and zero is never reached.
 
-Left to the sources: a unique solution exists although $`\sqrt{r}`$ is not Lipschitz at zero (Yamada and Watanabe; Karatzas and Shreve, Section 5.2); for $`\nu < 1`$ zero is reached (Feller 1951; Karatzas and Shreve, Section 5.5); the stationary law is gamma with shape $`\nu`$ and scale $`\sigma^2/(2\kappa)`$ (Cox, Ingersoll and Ross 1985).
+Left to the sources: a unique solution exists although $`\sqrt{r}`$ is not Lipschitz at zero (Yamada and Watanabe; Karatzas and Shreve, Section 5.2); for $`\nu < 1`$ zero is reached (Feller 1951; Karatzas and Shreve, Section 5.5; [One-dimensional diffusions](../08-Generators%2C%20Densities%20and%20Simulation/10-scale-function-speed-measure-and-boundaries.md)); the stationary law is gamma with shape $`\nu`$ and scale $`\sigma^2/(2\kappa)`$ (Cox, Ingersoll and Ross 1985).
 
 </details>
 
@@ -1297,6 +1297,9 @@ end OrnsteinUhlenbeckCIR
 - [The Heston model](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): a CIR variance under a stock price.
 - [A spot price that reverts](../../12-Financial%20mathematics/25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md): the futures curve of an OU log price.
 - [Mean reversion](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/01-ornstein-uhlenbeck-mean-reversion-trading.md): fitting the three numbers to data.
+- [One-dimensional diffusions](../08-Generators%2C%20Densities%20and%20Simulation/10-scale-function-speed-measure-and-boundaries.md): the scale function, the speed measure, and what happens at the edges.
+- [Stochastic PDEs in outline](../09-Beyond%20Brownian/09-stochastic-pdes-in-outline.md): the heat equation driven by space-time noise.
+- [McKean-Vlasov equations in outline](../09-Beyond%20Brownian/10-mckean-vlasov-and-mean-field-limits-in-outline.md): particles that feel the crowd's average.
 
 This card fixes kappa, theta and sigma and solves for the rate; it leaves open how to step the rate exactly on a computer and how to read the three numbers off an observed rate, which the simulation and trading cards answer.
 

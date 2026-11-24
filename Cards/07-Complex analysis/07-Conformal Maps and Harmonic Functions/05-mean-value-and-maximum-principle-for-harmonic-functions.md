@@ -535,6 +535,7 @@ example : ((2 : ℤ) - 3) + (-2 - 3) = -6 := by norm_num
 - [The Poisson formula](06-poisson-integral-formula.md): a weighted frame average gives the height at any inside point.
 - [Harnack and regularity](../../19-Partial%20differential%20equations/04-Laplace%2C%20Poisson%20and%20Potentials/10-harnack-and-regularity-in-outline.md): mean values in any dimension, bounding how fast a positive harmonic function varies.
 - [Jensen's formula](../10-Entire%20and%20Meromorphic%20Functions/02-jensens-formula-and-order-of-growth.md): the average of log |f| round a circle counts the zeros inside, so slow growth means few zeros.
+- [The Dirichlet problem by Brownian motion](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/09-brownian-motion-and-the-dirichlet-problem.md): boundary values averaged over where the path exits.
 
 Left open: this card shows a frame allows at most one film, but does every frame hold one at all?
 

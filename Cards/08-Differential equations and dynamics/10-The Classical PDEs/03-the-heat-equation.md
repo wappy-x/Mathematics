@@ -611,6 +611,7 @@ example : (20 / 8 : ℚ) = 25 / 10 := by norm_num
 - [Solving differential equations by transform](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/09-fourier-methods-for-differential-equations.md): the $`n^2`$ decay as a multiplier.
 - [Volume form and Laplace-Beltrami](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/08-volume-form-and-the-laplace-beltrami-operator.md): the bend on a curved surface.
 - [Ricci flow](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/01-ricci-flow-and-the-poincare-proof-in-outline.md): a heat equation smoothing a space's shape.
+- [Stochastic PDEs in outline](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/09-stochastic-pdes-in-outline.md): the heat equation driven by space-time noise.
 
 Left open: a single sine keeps its shape as it fades, but how does any other start, such as the tent in the code, change?
 

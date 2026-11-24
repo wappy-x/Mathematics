@@ -776,6 +776,7 @@ example : ((Finset.Icc (-10 : ℤ) 10).erase 0).card = 20 := by decide
 
 - [MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md): the general method on two unknowns: Metropolis–Hastings and Gibbs sampling, why the wanted law is the chain's resting state, the convergence hypotheses checked, and the exact price of correlation.
 - [MCMC as a tool](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/08-markov-chain-monte-carlo-for-computation.md): the walk on many unknowns at once: Gibbs sampling, gradient-guided proposals, and diagnostics across several chains.
+- [Hierarchical models](10-hierarchical-models-and-empirical-bayes.md): many related groups, each borrowing strength from the rest.
 
 This card checked the walk against a posterior it could compute exactly; what it leaves open is how to know a walk has converged when no exact answer exists, which is what the theory of mixing times (how many steps a chain needs to forget its start) answers.
 

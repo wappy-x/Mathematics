@@ -890,6 +890,8 @@ example : 1 - (10 : ℚ) / 100 = 9 / 10 ∧ 1 - (10 : ℚ) / 1000 = 99 / 100 := 
 ## Where this goes next
 
 - [Representing a martingale](07-martingale-representation-in-discrete-time.md): every martingale on coin tosses is a betting strategy on those tosses.
+- [Brownian motion in d dimensions](../08-Generators%2C%20Densities%20and%20Simulation/08-recurrence-and-transience-of-brownian-motion.md): recurrent in the plane, gone for good in space.
+- [Continuous martingales and local martingales](../10-Continuous%20Martingales/01-continuous-martingales-and-local-martingales.md): fair games in continuous time, and fair only up to a stopping time.
 
 Stopping tells what a fair game is worth at the end; which betting strategy produces a given fair game, toss by toss, is the question that [Representing a martingale](07-martingale-representation-in-discrete-time.md) answers.
 

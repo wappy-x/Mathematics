@@ -1559,6 +1559,8 @@ example : (20 : ℚ) / (20 + 3) = 20 / 23 ∧ (200 : ℚ) / (200 + 3) = 200 / 20
 
 - [Changing the measure](../07-Changing%20Measure/01-change-of-measure-and-density-processes.md): $`M_T`$ is positive with average 1, so it can reweight every path; under the new weights the grain acquires a drift of θ per second.
 - [Geometric Brownian motion](07-geometric-brownian-motion.md): the exponential martingale times a steady growth factor is the standard model of a share price.
+- [Brownian motion in d dimensions](../08-Generators%2C%20Densities%20and%20Simulation/08-recurrence-and-transience-of-brownian-motion.md): recurrent in the plane, gone for good in space.
+- [Levy's characterisation and Dubins-Schwarz](../10-Continuous%20Martingales/04-levys-characterisation-and-dubins-schwarz.md): every continuous martingale is Brownian motion on its own clock.
 
 Every fair game here was built from a grain with no drift; what a positive martingale with average 1 does when it is used to reweight the paths, and why the reweighted grain drifts, is the question [Changing the measure](../07-Changing%20Measure/01-change-of-measure-and-density-processes.md) answers.
 

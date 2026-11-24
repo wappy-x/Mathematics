@@ -935,6 +935,8 @@ example : ((18 : ℚ) / 10000) / 4 = 45 / 100000 := by norm_num
 - [EM](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/08-em-algorithm.md): climbing the likelihood when part of the data is hidden.
 - [Algebraic statistics](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/08-algebraic-statistics-and-identifiability.md): when two different parameter values give the same likelihood everywhere.
 - [Fisher metric](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/09-information-geometry-and-the-fisher-metric.md): the curvature of the log-likelihood as a way to measure distance between models.
+- [Sufficient statistics](09-sufficient-statistics-and-factorisation.md): the summary that keeps everything the data say about the parameter.
+- [AIC and BIC](../09-Regression/11-aic-and-bic.md): scoring models by fit minus a price for each parameter.
 
 The poll's estimate came with a standard error read off the curvature of one peak; whether any other rule could squeeze a smaller error out of the same 1,000 calls is the question [Fisher information](07-fisher-information-and-cramer-rao.md) answers.
 

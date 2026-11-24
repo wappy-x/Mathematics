@@ -1072,6 +1072,7 @@ example : ((10 ^ 6 - 1000 : ℚ)) / (10 ^ 6 - 1) = 999000 / 999999 := by norm_nu
 
 - [Standard error](02-sample-mean-and-standard-error.md): the noise of any sample average, and how to estimate it from the sample when $`p`$ is unknown.
 - [Maximum likelihood](04-maximum-likelihood.md): a general recipe for building estimators, which returns the share for the poll.
+- [Sufficient statistics](09-sufficient-statistics-and-factorisation.md): the summary that keeps everything the data say about the parameter.
 
 This card judged the share with the true $`p`$ in hand; a real pollster has only the 520 yeses. How to put an honest error bar on 0.52 using the sample alone is [Standard error](02-sample-mean-and-standard-error.md).
 

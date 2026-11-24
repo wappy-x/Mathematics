@@ -75,7 +75,7 @@ dS_t = \mu S_t\,dt + \sigma S_t\,dW_t, \qquad S_t = S_0 \exp\!\Big(\big(\mu - \t
 
 ### When it holds
 
-- **The Ito reading of the noise.** The noise size is read at the start of each step. Read it at the midpoint instead, called the Stratonovich reading, and the same symbols describe a different share: its solution is $`S_0 e^{\mu t + \sigma W_t}`$, with a median of $105.13 instead of $103.05. The code shows each formula failing the other reading's integral equation.
+- **The Ito reading of the noise.** The noise size is read at the start of each step. Read it at the midpoint instead, called the Stratonovich reading ([The Stratonovich integral](08-stratonovich-integral.md)), and the same symbols describe a different share: its solution is $`S_0 e^{\mu t + \sigma W_t}`$, with a median of $105.13 instead of $103.05. The code shows each formula failing the other reading's integral equation.
 - **Well-behaved coefficients.** A drift and noise size that grow at most in proportion to $`x`$, and change by at most a fixed multiple of any change in $`x`$ (the Lipschitz condition), guarantee exactly one solution. Drop that, and an SDE can explode in finite time or have two solutions from one start; [When an SDE has one solution](07-existence-and-uniqueness-for-sdes.md) shows both. The share's coefficients pass.
 - **Built from the past only.** A solution at time $`t`$ may use the noise path up to $`t`$ and nothing later; in the wing's terms it is adapted to the filtration $`F_t`$, what is known by time $`t`$. A formula that used $`W_1`$ to set the price at half a year would not be a solution, whatever its algebra.
 - **Constant $`\mu`$ and $`\sigma`$.** The closed form is for this SDE. Most SDEs, including the share with a volatility that moves, have no closed form. They are solved by simulation, which this card also does.
@@ -763,6 +763,7 @@ example : -(3 / 100 : ℚ) / (1 / 5) = -15 / 100 := by norm_num
 - [When an SDE has one solution](07-existence-and-uniqueness-for-sdes.md): when an SDE has exactly one solution, by Picard iteration, and one that explodes.
 - [Euler-Maruyama](../08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md): the simulation loop of Step 5, with its order of convergence proved.
 - [A random hazard](../../12-Financial%20mathematics/44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md): an SDE for a default rate, priced into a risky bond.
+- [The Stratonovich integral](08-stratonovich-integral.md): the midpoint rule that keeps the ordinary chain rule.
 
 The share's SDE had one solution because its coefficients were tame; which SDEs have exactly one solution, and which explode or split, is the question [When an SDE has one solution](07-existence-and-uniqueness-for-sdes.md) answers.
 

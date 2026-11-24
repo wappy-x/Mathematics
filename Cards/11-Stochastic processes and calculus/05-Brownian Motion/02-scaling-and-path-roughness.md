@@ -1050,6 +1050,8 @@ example : √((4 : ℝ) * 4096) = 2 * √4096 := by norm_num
 
 - [Quadratic variation](03-quadratic-variation.md): the sum of squared moves, which stays at the elapsed time however fine the frames, and is the quantity Ito calculus is built on.
 - [Rougher than Brownian](../09-Beyond%20Brownian/06-rough-paths-and-fractional-brownian-motion-in-outline.md): paths that scale with other exponents, and calculus for paths too rough for ordinary rules.
+- [Building Brownian motion](08-constructing-brownian-motion.md): Levy's midpoint construction and Kolmogorov's continuity test.
+- [Brownian paths up close](11-blumenthal-zero-one-law-and-the-brownian-lil.md): Blumenthal's zero-one law and the law of the iterated logarithm.
 
 The chord's slope runs away like one over root h, but its square, divided back by the time, does not: whether a path with no slope still has a measurable roughness that adds up exactly is what [Quadratic variation](03-quadratic-variation.md) answers.
 

@@ -86,7 +86,7 @@ Integrating gives the share's price in closed form: $`S_T = S_0 \exp\big((\mu - 
 
 ### When it holds
 
-- **$`f`$ has a continuous curvature in $`x`$ and a continuous time slope.** At a kink the curvature is a spike: for $`f(x) = |x|`$ the formula needs an extra term, local time, which measures how long the path lingers at the kink.
+- **$`f`$ has a continuous curvature in $`x`$ and a continuous time slope.** At a kink the curvature is a spike: for $`f(x) = |x|`$ the formula needs an extra term, local time ([Local time and Tanaka's formula](../10-Continuous%20Martingales/05-local-time-and-tanakas-formula.md)), which measures how long the path lingers at the kink.
 - **The path is continuous.** A jump's square arrives in one instant, not spread over $`dt`$, so the dW-times-dW rule fails. Jump paths need their own version: [Jump diffusions](../09-Beyond%20Brownian/02-jump-diffusions.md).
 - **The integral is Ito's, built from left-end sums.** From right ends, the sum for $`\int W\,dW`$ averages +0.9993 (standard error 0.0111) instead of zero (code below). A standard error (se) is the typical size of the chance error in a simulated average. Midpoints (Stratonovich's integral) keep the ordinary chain rule but lose the fair-game property.
 - **The drift and kick sizes use only the past.** They may depend on time and the path so far, with $`\int|a|\,dt`$ and $`\int b^2\,dt`$ finite. A coefficient that peeks at the future breaks the left-end construction.
@@ -767,7 +767,7 @@ example : (1024 : ℚ) * (2 * (1 / 1024) ^ 2) = 2 * 1 * (1 / 1024) := by norm_nu
 >
 > - **Confusing the average's growth with the typical path's growth.** $`\mu`$ = 0.10 is the growth rate of the average price; the middle price grows at 0.02. Both are right; they answer different questions.
 > - **Forgetting that the kick size can carry the state.** For the share, the kick is $`\sigma S_t`$, not $`\sigma`$, so $`(dS)^2 = \sigma^2 S^2\,dt`$. Using $`\sigma^2`$ alone in the log's correction gives $`-\tfrac12\sigma^2/S^2`$, too small by a factor of the price squared.
-> - **Mixing Ito and Stratonovich.** The midpoint integral keeps the ordinary chain rule. A formula derived one way and simulated the other is off by the Ito term.
+> - **Mixing Ito and Stratonovich.** The midpoint integral keeps the ordinary chain rule ([The Stratonovich integral](08-stratonovich-integral.md)). A formula derived one way and simulated the other is off by the Ito term.
 > - **Using the lemma across a jump.** A jump's square is not $`dt`$; the lemma as stated misses it entirely.
 
 ---
@@ -807,6 +807,10 @@ example : (1024 : ℚ) * (2 * (1 / 1024) ^ 2) = 2 * 1 * (1 / 1024) := by norm_nu
 - [A spot price that reverts](../../12-Financial%20mathematics/25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md): a log spot price that is pulled back to a level, priced forward with this lemma.
 - [Heath-Jarrow-Morton](../../12-Financial%20mathematics/31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md): Ito's lemma on bond prices fixes the drift of forward rates.
 - [Backing out the unobservable](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/04-asset-value-and-volatility-from-the-share-price.md): the lemma linking a firm's equity volatility to its asset volatility.
+- [The Stratonovich integral](08-stratonovich-integral.md): the midpoint rule that keeps the ordinary chain rule.
+- [Malliavin calculus in outline](../09-Beyond%20Brownian/07-malliavin-calculus-in-outline.md): differentiating a random variable with respect to the noise.
+- [Burkholder-Davis-Gundy](../10-Continuous%20Martingales/03-burkholder-davis-gundy-inequalities.md): the peak of a martingale is controlled by its clock.
+- [Local time and Tanaka's formula](../10-Continuous%20Martingales/05-local-time-and-tanakas-formula.md): Ito's rule for a function with a kink.
 
 This card handles one function of one path; what happens when two random paths are multiplied, and the second-order term comes from their shared kicks, is the question [Ito's product rule](03-ito-product-rule.md) answers.
 

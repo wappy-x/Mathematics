@@ -84,7 +84,7 @@ For the urn K is 1/2: the fraction is never negative, so its average size is its
 
 - **A martingale or a supermartingale** (a game fair or tilted against the player). Without fairness, boundedness is not enough: a sequence alternating between 0.4 and 0.6 never settles.
 - **A ceiling on the average size.** A fair $1 game with unlimited credit has $`E|S_n|`$ = 7.9589 after 100 rounds and 25.2250 after 1,000, and moves a dollar every round: it settles nowhere.
-- **Discrete time.** The continuous-time version needs right-continuous paths; this card does not prove it.
+- **Discrete time.** The continuous-time version needs right-continuous paths; this card does not prove it (see [Continuous martingales and local martingales](../10-Continuous%20Martingales/01-continuous-martingales-and-local-martingales.md)).
 - **Convergence of paths, not of averages.** The doubling strategy has average 0 at every round and still settles at +1 on almost every path.
 
 ---
@@ -964,6 +964,7 @@ example : (1 : ℚ) - 1 / 2 ^ 10 = 1023 / 1024 ∧ (2 : ℚ) - 2 / 2 ^ 10 = 1023
 
 - [Doob's inequalities](05-doob-inequalities.md): the next card; bounds on the largest value a martingale reaches on the way.
 - [Optimal stopping](../08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md): the best stopping rule's value is a supermartingale, whose long run this theorem governs.
+- [Branching processes](09-galton-watson-branching-processes.md): family trees that die out or explode.
 
 The theorem settles each path but can lose the average on the way, as the gambler without credit shows; when the limit keeps the starting average is the question [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md) answers.
 

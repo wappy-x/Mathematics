@@ -174,7 +174,7 @@ Left alone, the worst of n days drifts ever further out as n grows, or piles up 
 - **Fréchet**, for power tails, where the chance of a loss beyond x falls like a power of x, as for the Pareto law.
 - **Weibull**, for a law with a hard ceiling that no day can pass.
 
-The three are one family with a single shape dial, the **generalised extreme value law**. This card states the theorem without proof; it is set out in Embrechts, Klüppelberg and Mikosch, chapter 3. Fitting the family to real maxima, and the matching law for losses past a high line, the generalised Pareto, is [Extreme value theory](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md).
+The three are one family with a single shape dial, the **generalised extreme value law** ([Extreme value theory](09-extreme-value-theory-and-block-maxima.md)). This card states the theorem without proof; it is set out in Embrechts, Klüppelberg and Mikosch, chapter 3. Fitting the family to real maxima, and the matching law for losses past a high line, the generalised Pareto, is [Extreme value theory](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md).
 
 </details>
 
@@ -920,6 +920,7 @@ example : 1 - (99 / 100 : ℚ) ^ 20 < 20 * (1 / 100) := by norm_num
 - [Given n arrivals, when did they happen](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/02-arrival-times-and-order-statistics.md): given how many events a Poisson stream delivered, their arrival times are sorted uniform draws.
 - [Extreme value theory](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md): the losses past a high line, whose law settles to the generalised Pareto, fitted to real data to estimate losses beyond the sample.
 - [Auctions](../../14-Applied%20and%20computational/05-Operations%20Research/10-auctions-and-mechanism-design.md): the expected second-highest bid, and why different auction rules raise the same revenue.
+- [Extreme value theory](09-extreme-value-theory-and-block-maxima.md): why the largest of many settles into one of three shapes.
 
 The worst of 20 days averages $18,675 and of 250 days $28,192, growing ever more slowly; how to put a number on losses the sample has never seen, by fitting the many days that cross a high line, is [Extreme value theory](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md).
 

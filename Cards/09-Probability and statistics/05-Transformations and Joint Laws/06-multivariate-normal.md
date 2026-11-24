@@ -1085,6 +1085,10 @@ example : (1 : ℚ) - (9/10) ^ 2 - ((0 - 9/10 * (9/10)) ^ 2 / (1 - (9/10) ^ 2)) 
 - [The Kalman filter](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/07-kalman-filter.md): linear maps and conditioning of normal vectors, repeated every time step.
 - [Covariance matrices](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/07-the-manifold-of-covariance-matrices.md): the positive definite matrices as a curved space of their own.
 - [Random projection](../../24-Computability%20and%20complexity/06-Data%2C%20Learning%20and%20Fine-Grained%20Complexity/02-dimension-reduction-and-random-projection.md): a matrix of independent normal draws used to shrink data while keeping distances.
+- [Mixed-effects models](../09-Regression/12-mixed-effects-models.md): groups that share a mean, and the pull of each group toward it.
+- [Decision theory](../10-Bayesian%20Inference/07-risk-admissibility-and-steins-paradox.md): risk, minimax, admissibility, and Stein's paradox.
+- [Building Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/08-constructing-brownian-motion.md): Levy's midpoint construction and Kolmogorov's continuity test.
+- [Gaussian processes](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/09-gaussian-processes-and-karhunen-loeve.md): random functions set by a covariance, and the Karhunen-Loeve series.
 
 The normal vector ties its readings together only through Σ, and its joint tails are thin; what a joint law looks like when each share keeps its own shape and crashes arrive together is the question [Copulas](07-copulas-and-sklars-theorem.md) answers.
 

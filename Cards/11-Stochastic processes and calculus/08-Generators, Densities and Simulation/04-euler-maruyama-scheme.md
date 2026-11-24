@@ -1017,6 +1017,8 @@ example : (2 : ℚ) * 256 * (1 / 256) ^ 2 = 2 * 1 * (1 / 256) ∧ (2 : ℚ) * 1 
 - [Pricing with local volatility](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md): a model priced by simulation because no formula exists.
 - [The Heston model](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): a variance that must stay positive, where the long-step trap bites.
 - [SABR and Hagan's formula](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md): an approximate formula checked against simulated paths.
+- [Stochastic PDEs in outline](../09-Beyond%20Brownian/09-stochastic-pdes-in-outline.md): the heat equation driven by space-time noise.
+- [McKean-Vlasov equations in outline](../09-Beyond%20Brownian/10-mckean-vlasov-and-mean-field-limits-in-outline.md): particles that feel the crowd's average.
 
 This card found the dropped term and put it back only after the run; [Milstein and the two kinds of error](05-milstein-and-strong-weak-convergence.md) builds it into every step, and asks whether a price, which is an average, needs the path error small at all.
 

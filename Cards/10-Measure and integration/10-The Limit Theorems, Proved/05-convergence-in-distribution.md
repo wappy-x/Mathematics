@@ -841,7 +841,7 @@ example : ∀ d ∈ Finset.Icc (1 : ℤ) 6, 1 ≤ |(7 - d) - d| := by decide
 
 - **Normal approximations in statistics.** Every "approximately normal" test statistic and confidence interval rests on this mode, the central limit theorem's ([Central limit theorem](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md)). Continuous functions and sums with constants carry it along, the Slutsky rules ([Delta method](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md)).
 - **Rare events.** Successes in many trials, each unlikely, converge in distribution to a Poisson count: claims, defects, decays ([Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md)).
-- **Goodness-of-fit.** The Kolmogorov-Smirnov test measures the worst gap between two distribution functions, the quantity printed above for the dice.
+- **Goodness-of-fit.** The Kolmogorov-Smirnov test ([The empirical CDF](../../09-Probability%20and%20statistics/15-Nonparametric%20Inference/01-empirical-cdf-and-kolmogorov-smirnov.md)) measures the worst gap between two distribution functions, the quantity printed above for the dice.
 - **Option pricing on a tree.** A binomial tree's final log-price converges in distribution to a normal. A put's payoff is bounded and continuous, so the tree's put price converges to the Black-Scholes price; the call follows by parity ([Cox-Ross-Rubinstein](../../12-Financial%20mathematics/04-Binomial%20Trees/04-crr-tree-and-convergence.md)).
 
 > **Say it back**
@@ -861,6 +861,7 @@ example : ∀ d ∈ Finset.Icc (1 : ℤ) 6, 1 ≤ |(7 - d) - d| := by decide
 - [The central limit theorem, proved](07-central-limit-theorem.md): the proof that the standardised die total, and any sum of independent terms with finite variance, converges in distribution to the bell.
 - Lévy's continuity theorem, proved on [Characteristic functions](06-characteristic-functions.md): convergence of characteristic functions is equivalent to convergence in distribution.
 - [Tightness and Prokhorov's theorem](11-tightness-and-prokhorovs-theorem.md): if no mass escapes to infinity, every sequence of laws has a convergent subsequence.
+- [Donsker's theorem](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/10-donskers-invariance-principle.md): the whole random-walk path converges to Brownian motion.
 
 Testing every bounded continuous function is impractical; which small family suffices is the question [Characteristic functions](06-characteristic-functions.md) answers.
 

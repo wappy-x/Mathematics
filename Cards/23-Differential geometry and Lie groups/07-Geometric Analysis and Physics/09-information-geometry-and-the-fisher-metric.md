@@ -1062,7 +1062,7 @@ end FisherMetric
 - **Training neural networks.** Natural-gradient training rescales each update by the inverse Fisher matrix. Practical methods approximate that matrix in blocks, because the full matrix is too large to invert.
 - **Reinforcement learning.** Trust-region methods for training a control policy (the rule mapping situations to actions) cap the divergence between the old policy and the new one. To second order this is a cap on the Fisher length of the step.
 - **Search by evolution.** Some optimizers sample trial points from a bell curve and update its mean and spread by natural-gradient steps. The step has the shape of Step 6.
-- **Fitting statistical models.** Fisher scoring, Step 6 with a fixed step size of 1, is the standard fitting routine for generalized linear models such as logistic regression.
+- **Fitting statistical models.** Fisher scoring, Step 6 with a fixed step size of 1, is the standard fitting routine for generalized linear models ([Generalised linear models](../../09-Probability%20and%20statistics/09-Regression/10-generalised-linear-models.md)) such as logistic regression.
 
 > **Say it back**
 > The Fisher metric measures a small step between two models by how fast data tell them apart. Half its squared length is the evidence one observation gives, the divergence. The coin family is a quarter circle of radius 2, so a gap of 0.01 is four times longer near 0.98 than near 0.50. The normal family's metric is $`(d\mu^2 + 2\,d\sigma^2)/\sigma^2`$, which makes it a hyperbolic plane with curvature −1/2. The natural gradient is the steepest way uphill under this ruler; on the coin weights it puts the mean on the data in one step and finishes in five.

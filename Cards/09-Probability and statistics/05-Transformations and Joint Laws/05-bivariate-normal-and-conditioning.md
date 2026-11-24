@@ -1034,6 +1034,7 @@ example : 1 / 4 + arcsin (1 / 2) / (2 * π) = 1 / 3 := by
 - [Spread options](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/04-margrabe-and-kirk-spread-options.md): the gap between two correlated prices.
 - [The one-factor Gaussian copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md): many firms, one shared factor, conditioning on it.
 - [Kyle's model](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/03-kyle-model-and-price-impact.md): a market maker's best guess of value given order flow, a straight-line conditional mean.
+- [Mixed-effects models](../09-Regression/12-mixed-effects-models.md): groups that share a mean, and the pull of each group toward it.
 
 Two measurements need one ρ; three or more need a whole table of covariances, and which tables are possible and how to draw from one is the question [Multivariate normal](06-multivariate-normal.md) answers.
 

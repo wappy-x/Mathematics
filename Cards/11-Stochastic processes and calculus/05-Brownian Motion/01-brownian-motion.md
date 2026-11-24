@@ -184,9 +184,9 @@ Each bar is the exact walk's error with its sign dropped. Each is very nearly ha
 
 The fourth property, continuous paths, is not a statement about finitely many times, and no finite computation checks it. This card states it with sources.
 
-Norbert Wiener built a process with all four properties in 1923. A standard modern route (Durrett, section 7.1) first builds the bell curves at every time that is a fraction with a power of 2 below, then uses Kolmogorov's continuity theorem: because $`E[(W_t - W_s)^4] = 3(t - s)^2`$ (the average fourth power of a move is three times the squared time elapsed), the values at those fractions join up into a continuous path almost surely (with probability 1).
+Norbert Wiener built a process with all four properties in 1923 ([Building Brownian motion](08-constructing-brownian-motion.md)). A standard modern route (Durrett, section 7.1) first builds the bell curves at every time that is a fraction with a power of 2 below, then uses Kolmogorov's continuity theorem: because $`E[(W_t - W_s)^4] = 3(t - s)^2`$ (the average fourth power of a move is three times the squared time elapsed), the values at those fractions join up into a continuous path almost surely (with probability 1).
 
-Donsker's theorem (Durrett, section 8.1) then says the whole scaled walk, joined by straight lines, converges in distribution to Brownian motion as a random curve, not only at finitely many times. This card has proved the convergence at finitely many times and cites the rest. The missing step is tightness: [Tightness and Prokhorov's theorem](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/11-tightness-and-prokhorovs-theorem.md).
+Donsker's theorem ([Donsker's theorem](10-donskers-invariance-principle.md); Durrett, section 8.1) then says the whole scaled walk, joined by straight lines, converges in distribution to Brownian motion as a random curve, not only at finitely many times. This card has proved the convergence at finitely many times and cites the rest. The missing step is tightness: [Tightness and Prokhorov's theorem](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/11-tightness-and-prokhorovs-theorem.md).
 
 What the continuity buys and what it does not: the path never jumps, yet with probability 1 it has no slope anywhere. That roughness is [Brownian paths](02-scaling-and-path-roughness.md), and the fact that its squared moves add up to elapsed time is [Quadratic variation](03-quadratic-variation.md).
 
@@ -1145,6 +1145,10 @@ example : (1000 : ℚ) * (1 / 100) ^ 2 = 1 / 10 := by norm_num
 - [Knock-out and knock-in](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/02-barrier-options-by-reflection.md): barrier prices from the reflected Brownian path.
 - [Kemna-Vorst](../../12-Financial%20mathematics/27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/02-kemna-vorst-geometric-asian.md): the same covariance, applied to commodity averages.
 - [Wiener-Khinchin](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/07-wiener-khinchin-and-the-power-spectrum.md): how a random signal's correlations become its spectrum.
+- [Building Brownian motion](08-constructing-brownian-motion.md): Levy's midpoint construction and Kolmogorov's continuity test.
+- [Gaussian processes](09-gaussian-processes-and-karhunen-loeve.md): random functions set by a covariance, and the Karhunen-Loeve series.
+- [Donsker's theorem](10-donskers-invariance-principle.md): the whole random-walk path converges to Brownian motion.
+- [Brownian paths up close](11-blumenthal-zero-one-law-and-the-brownian-lil.md): Blumenthal's zero-one law and the law of the iterated logarithm.
 
 The definition fixes the law at any finite set of times; what one path looks like when zoomed in, and why it has a slope nowhere, is what [Brownian paths](02-scaling-and-path-roughness.md) answers.
 

@@ -1063,6 +1063,7 @@ example : (3 / 4 : ℚ) ^ 4 = 81 / 256 ∧ -(4 : ℚ) * (1 / 4) * (3 / 4) = -3 /
 - [Compound Poisson](04-compound-poisson.md): each call carries an amount, and splitting by type becomes splitting by size.
 - [Continuous-time chains](05-continuous-time-markov-chains-and-queues.md): split and merged streams feeding queues and chains that jump at exponential times.
 - [Renewal processes](06-renewal-processes-in-outline.md): the rota's sales stream, whose gaps are sums of four exponential waits, is a renewal process, not a Poisson one.
+- [Arrivals whose rate changes](08-inhomogeneous-poisson-and-hawkes-processes.md): time-varying Poisson processes and self-exciting Hawkes processes.
 
 This card counts the calls of each type; the question it leaves open is what the calls add up to when each one carries a random amount, which the next card answers.
 
