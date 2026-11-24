@@ -499,6 +499,9 @@ example : 20 * 20 = 400 ∧ 400 / 2 = 200 := by decide
 - [The reflection principle](../06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md): a bijection that flips part of a path to count the bad cases.
 - [Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md): the slip count as a statement about dots and lines.
 - [Spanning trees](../10-Trees%20and%20Cheapest%20Routes/03-spanning-trees-and-cayleys-formula.md): a hard count made easy by matching each object with a string.
+- [Polya counting](06-polya-enumeration.md): record each move's cycles in one polynomial, the cycle index, and substitute colours to count patterns by type.
+- [Beyond Turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/06-erdos-stone-and-kovari-sos-turan.md): forbid any graph H and its colour count sets the edge cap (Erdos-Stone), except when H is two-sided, where Kovari-Sos-Turan caps a network with no 4-cycle near n^(3/2)/2 edges.
+- [Block designs](../16-Designs/01-block-designs-and-fishers-inequality.md): v points in b blocks of size k with every pair together exactly lambda times, two counts any design must obey, and Fisher's inequality that blocks never number fewer than points.
 
 Each identity here took its own argument, invented on the spot; a later card gets every value of C(n, k) from a single split, so the counts can be generated rather than re-argued.
 

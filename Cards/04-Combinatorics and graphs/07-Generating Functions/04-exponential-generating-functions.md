@@ -606,6 +606,7 @@ example : Nat.factorial 4 / (Nat.factorial 2 * Nat.factorial 2) + Nat.factorial 
 ## Where this goes next
 
 - [The Catalan generating function](05-catalan-generating-function.md): a series that never stops, handled by a closed form instead of a finite multiplication.
+- [The exponential formula](06-exponential-formula.md): if the connected pieces have generating function C(x), the structures built from sets of them have generating function e^C(x).
 
 Every factor here stops, because a tile runs out. A part with no limit gives a series that never stops, and reading a count off one needs a closed form — the shelf's last card makes that move.
 

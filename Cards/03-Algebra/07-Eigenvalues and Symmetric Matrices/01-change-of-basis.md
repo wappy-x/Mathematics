@@ -570,6 +570,8 @@ example : !![(1/2 : ℚ), 1/2; -1/2, 1/2] *ᵥ ![1, 1] = ![1, 0] := by
 - [Diagonalisation](03-diagonalisation-and-matrix-powers.md): the payoff — the book that makes $`A_B`$ diagonal turns many moves into small multiplies.
 - [The DFT and the FFT](../../13-Engineering%20mathematics/05-Signals/02-discrete-fourier-transform-and-the-fft.md): the same translation on a whole signal, samples in time becoming pure tones.
 - [Representation](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/05-representations-in-outline.md): conjugation (the $`P^{-1} A P`$ sandwich) again, for matrices forming a group, a set closed under multiplying and undoing ([Groups](../08-Groups/01-groups.md)).
+- [Jordan form](10-jordan-canonical-form.md): every matrix is a stack of blocks, each an eigenvalue with ones just above the diagonal, and the block sizes are read from ranks.
+- [Bilinear forms](12-bilinear-forms-and-sylvesters-law.md): a matrix that pairs two vectors instead of moving one, the symmetric ones are quadratic forms, the alternating ones measure signed area, and the sign count never changes.
 
 Any invertible $`P`$ gives a new address book, and nothing here says which book is worth having; that is what a later card asks.
 

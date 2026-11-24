@@ -647,7 +647,7 @@ example : (∀ S : Finset (Fin 6), S.card ≤ (S.biUnion noAccounts).card + 1) �
 ## Where you meet it in real life
 
 - **Rosters and timetables.** Staff qualified for some shifts, rooms licensed for some classes: the condition says whether a full roster exists.
-- **Filling a grid.** Adding a row to a Latin square filled in row by row (a grid where no symbol repeats in a row or column) means giving each column a symbol it may still take. Hall's condition always holds there, so a grid of complete rows can always be finished.
+- **Filling a grid.** Adding a row to a Latin square filled in row by row (a grid where no symbol repeats in a row or column) means giving each column a symbol it may still take. Hall's condition always holds there, so a grid of complete rows can always be finished. Pairs of such grids: [Finite planes and orthogonal Latin squares](../16-Designs/03-projective-planes-and-orthogonal-latin-squares.md).
 - **The even case is free.** If every applicant qualifies for the same number of posts, and every post has that many qualified applicants, the condition holds unchecked: a group's lines all land in its reach, and each post there takes only that many.
 
 > **Say it back**
@@ -665,6 +665,8 @@ example : (∀ S : Finset (Fin 6), S.card ≤ (S.biUnion noAccounts).card + 1) �
 - [Konig's theorem](03-konigs-theorem-and-vertex-cover.md): the same fact as the fewest dots touching every line.
 - [Max-flow min-cut](06-max-flow-min-cut.md): the crowded group as the cheapest cut of a network.
 - [The assignment problem](../../14-Applied%20and%20computational/05-Operations%20Research/05-assignment-and-the-hungarian-algorithm.md): from "a placement exists" to "the cheapest one".
+- [Tutte's theorem](08-tutte-one-factor-theorem.md): a graph has a perfect matching exactly when removing any set S leaves at most |S| pieces of odd size.
+- [Finite planes and orthogonal Latin squares](../16-Designs/03-projective-planes-and-orthogonal-latin-squares.md): build a plane of order q from a field with q elements, read off q - 1 Latin squares that pair perfectly, and why order 6 has none.
 
 Checking the condition meant listing all 64 groups, a count that doubles with each applicant; finding the crowded group without that list is [Konig's theorem](03-konigs-theorem-and-vertex-cover.md).
 

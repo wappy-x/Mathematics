@@ -78,7 +78,7 @@ The repair, where a triangle between two sets of lines means the lines in exactl
 
 ### When it holds
 
-- **Any finite graph, not only two-sided ones.** The proof never uses the two groups; the code's simple search does, since an odd loop can fool it, and general graphs need Edmonds' blossom method, a later wing.
+- **Any finite graph, not only two-sided ones.** The proof never uses the two groups; the code's simple search does, since an odd loop can fool it, and general graphs need [Edmonds' blossom algorithm](09-edmonds-blossom-algorithm.md).
 - **Both ends free.** A route ending at a matched dot only moves the gap: stopping the swap at Lena leaves 4 pairs.
 - **Size, not preference or cost.** Who would rather do what, and what a pairing costs, are [Stable matching](04-stable-matching-gale-shapley.md) and [The assignment problem](../../14-Applied%20and%20computational/05-Operations%20Research/05-assignment-and-the-hungarian-algorithm.md).
 
@@ -996,6 +996,8 @@ example : (symmDiff greedyPairs otherPerfect).card = 9 ∧ (otherPerfect \ greed
 - [The assignment problem](../../14-Applied%20and%20computational/05-Operations%20Research/05-assignment-and-the-hungarian-algorithm.md): the cheapest perfect matching when every pair has a cost.
 - [Total unimodularity](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/05-total-unimodularity.md): why matching problems solved with fractions still land on whole pairs.
 - [Permanent against determinant](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/03-algebraic-complexity-permanent-versus-determinant.md): counting perfect matchings, the 2 here, is easy to state and hard to compute.
+- [Tutte's theorem](08-tutte-one-factor-theorem.md): a graph has a perfect matching exactly when removing any set S leaves at most |S| pieces of odd size.
+- [Edmonds' blossom algorithm](09-edmonds-blossom-algorithm.md): search for improving routes in any graph by shrinking odd loops to a single point.
 
 Berge says when a matching is stuck but not why; which crowded group of volunteers blocks a full pairing is the question [Hall's theorem](02-halls-marriage-theorem.md) answers.
 

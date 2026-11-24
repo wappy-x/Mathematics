@@ -737,6 +737,9 @@ example : IsTwoSideCut metro {0, 2, 4} {1, 3, 5} := by
 - [Matchings](../13-Matchings%20and%20Flows/01-matchings-and-augmenting-paths.md): pairing the sides one to one.
 - [Mantel and Turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/05-mantel-and-turan.md): how many lines a triangle-free graph carries, its record holders bipartite.
 - [Communities](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/06-community-detection.md): groups in a network where no split is clean.
+- [Perfect graphs](../12-Planarity%20and%20Colouring/08-perfect-and-chordal-graphs.md): graphs where the largest clique always gives the colour count, chordal graphs as the friendly family, and the strong perfect graph theorem.
+- [Tutte's theorem](../13-Matchings%20and%20Flows/08-tutte-one-factor-theorem.md): a graph has a perfect matching exactly when removing any set S leaves at most |S| pieces of odd size.
+- [Beyond Turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/06-erdos-stone-and-kovari-sos-turan.md): forbid any graph H and its colour count sets the edge cap (Erdos-Stone), except when H is two-sided, where Kovari-Sos-Turan caps a network with no 4-cycle near n^(3/2)/2 edges.
 
 This card decides whether two heaps exist; who works which shift, one each, is the matching card's question.
 

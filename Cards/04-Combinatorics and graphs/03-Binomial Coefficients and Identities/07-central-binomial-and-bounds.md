@@ -570,6 +570,7 @@ example : 4 ^ 10 / 2 = 524288 := by
 - [Counting coin-flip paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/05-random-walk-path-counts.md): 184,756 as the 20-step walks that end where they began.
 - [Erdos's counting trick](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/03-probabilistic-method-by-counting.md): existence proved by bounding counts nobody can compute.
 - [Chebyshev's bounds](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/08-chebyshev-bounds.md): this sandwich turned into how many primes lie below a number.
+- [Sperner's theorem](../15-Orders%20and%20Set%20Systems/02-sperner-and-lym.md): a family of subsets in which none contains another has at most the middle binomial coefficient of members, by the LYM inequality.
 
 The sandwich never tightens: a factor of 21 for row 20, as wide as the row is long for any other. What it cannot say is that the middle entry's share of its row, 0.1762 here, keeps shrinking as rows grow — the fact that decides how far a 20-step walk strays, in [Counting coin-flip paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/05-random-walk-path-counts.md).
 

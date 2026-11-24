@@ -80,7 +80,7 @@ The links of $`T(n, r)`$ are all pairs minus the pairs inside each group: for gr
 ### When it holds
 
 - **Plain links.** At most one per pair, none from a server to itself. Allow repeated cables and the count has no ceiling, since repeats close no trio.
-- **A full clique is forbidden.** Forbid a ring of four instead and the cap is a different, much smaller count from a harder theory.
+- **A full clique is forbidden.** Forbid a ring of four instead and the cap is a different, much smaller count from a harder theory ([Beyond Turan](06-erdos-stone-and-kovari-sos-turan.md)).
 - **The cap is a best case.** A star, one hub and nine leaves, has 9 links; each of its 36 missing links closes a trio.
 
 ---
@@ -631,6 +631,8 @@ example : [2, 4, 6, 8, 10].map (fun n => n ^ 2 / 4) = [1, 4, 9, 16, 25] := by de
 
 - [Erdos problems](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/07-erdos-problems-and-computer-search.md): Erdős's open extremal questions, including the densest network with no ring of four.
 - [The probabilistic method](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md): networks that avoid a shape, shown to exist by chance and averages rather than built.
+- [Beyond Turan](06-erdos-stone-and-kovari-sos-turan.md): forbid any graph H and its colour count sets the edge cap (Erdos-Stone), except when H is two-sided, where Kovari-Sos-Turan caps a network with no 4-cycle near n^(3/2)/2 edges.
+- [The regularity lemma](07-szemeredi-regularity-lemma.md): every large network splits into a bounded number of parts with random-looking links between almost every pair.
 
 Turán settles every full clique; for a shape that is not one, such as a ring of four, the densest count is known only roughly, and that open ground is where Erdős-style extremal problems begin.
 

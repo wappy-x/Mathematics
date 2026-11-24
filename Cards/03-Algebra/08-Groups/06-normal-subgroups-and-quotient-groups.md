@@ -511,6 +511,12 @@ example : (24 : ℕ) / 2 = 12 := by norm_num
 - [The Galois correspondence](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/05-galois-groups-and-the-fundamental-theorem.md): normal subgroups matched with fields between roots and rationals.
 - [Class groups](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/05-class-groups-and-the-minkowski-bound.md): a quotient measuring how badly factorisation fails.
 - [Modules](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/05-modules-and-the-structure-theorem.md): the same machinery, ring multiplication allowed.
+- [The isomorphism theorems](09-isomorphism-theorems-and-correspondence.md): collapsing in two stages is collapsing once, and the subgroups of a quotient are the subgroups above the kernel.
+- [Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md): a group sorted into classes of look-alikes, and why every group of prime-power size has a centre.
+- [Semidirect products](12-semidirect-products.md): glue two groups where one acts on the other, so the tile group is four turns twisted by one flip.
+- [A_n is simple for n at least 5](13-simplicity-of-alternating-groups.md): the even shuffles have no normal subgroup to collapse by, which is the group-theory heart of the quintic.
+- [Presentations](15-group-presentations.md): describe a group by generators and the rules they obey, and von Dyck's theorem turns the rules into maps.
+- [Direct sums and quotient spaces](../11-Duals%2C%20Quotients%20and%20Tensors/01-direct-sums-and-quotient-spaces.md): split a space into independent pieces, or blur a subspace to a point and count what is left.
 
 Both collapses here run on one operation; what a subgroup must satisfy when a second one appears is the next question.
 

@@ -118,7 +118,7 @@ Build a square table, one row and column per place: on the diagonal how many roa
 -1  -1   3
 ```
 
-whose determinant ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)) is 3(9 − 1) + 1(−3 − 1) − 1(1 + 3) = 24 − 4 − 4 = 16, the layout count, whichever row is cut: the **matrix-tree theorem**, proved in Godsil and Royle under Sources, not here.
+whose determinant ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)) is 3(9 − 1) + 1(−3 − 1) − 1(1 + 3) = 24 − 4 − 4 = 16, the layout count, whichever row is cut: the **matrix-tree theorem**, proved on [The matrix-tree theorem](07-matrix-tree-theorem.md) and in Godsil and Royle under Sources.
 
 </details>
 
@@ -1065,6 +1065,7 @@ end SpanningTreesAndCayleysFormula
 ## Where this goes next
 
 - [The cheapest skeleton](04-minimum-spanning-trees.md): the same skeletons priced, and a greedy rule that finds the cheapest.
+- [The matrix-tree theorem](07-matrix-tree-theorem.md): cut one row and column from the graph's Laplacian, and the determinant counts its spanning trees.
 
 The costs in the opening never entered the count: all 16 plans were counted alike. Which of them is cheapest, found without listing all 16, is the next card.
 

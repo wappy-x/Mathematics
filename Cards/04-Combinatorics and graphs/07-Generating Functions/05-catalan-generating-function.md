@@ -514,6 +514,7 @@ example : Nat.factorial 5 = 120 := by decide
 ## Where this goes next
 
 - [The binomial series and the number e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md): Newton's series for a fractional power, the step that turns the closed form into C(2n, n)/(n + 1).
+- [Lagrange inversion](07-lagrange-inversion.md): when a series is defined by T = x phi(T), its coefficients come straight from powers of phi.
 
 The equation holds every count, but the rounds give them up one at a time; whether a line of algebra can name the coefficient of x^n outright is what that expansion settles.
 

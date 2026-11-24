@@ -134,7 +134,7 @@ Otherwise some wave r has $`|\widehat{1_A}(r)| \ge \delta^2 N/2`$. Split the clo
 
 ### Step 3: Szemerédi's theorem for every k
 
-For four terms and more, single waves are not enough. A set can avoid wave patterns and still be skewed by quadratic ones like $`e(\alpha n^2)`$. Szemerédi's 1975 proof avoided waves altogether. It was a long counting argument, and it introduced the **regularity lemma**: every large graph splits into a few pieces between which the edges look random.
+For four terms and more, single waves are not enough. A set can avoid wave patterns and still be skewed by quadratic ones like $`e(\alpha n^2)`$. Szemerédi's 1975 proof avoided waves altogether. It was a long counting argument, and it introduced the **regularity lemma** ([The regularity lemma](../../04-Combinatorics%20and%20graphs/14-Ramsey%20and%20Extremal%2C%20in%20Outline/07-szemeredi-regularity-lemma.md)): every large graph splits into a few pieces between which the edges look random.
 
 Two more proofs followed. Furstenberg recast the problem in 1977 as a question about repeated returns in a dynamical system (a space with a rule that moves its points one step at a time). Gowers in 2001 extended Roth's argument with new measures of randomness, now called **Gowers norms**, and got the first reasonable bound: $`r_k(N) \le N (\log\log N)^{-c_k}`$ with $`c_k = 2^{-2^{k+9}}`$.
 
@@ -236,7 +236,7 @@ So the example is as long as a step of 6 allows; every longer prime progression 
 | Expect any infinite set to hold progressions | powers of 2: 20 numbers up to a million, 0 three-term progressions | Their share is 0. Density is the hypothesis, not size. |
 | Expect a two-colouring of 1 to 8 to force a one-colour 3-term progression | 6 colourings dodge, such as BBRRBBRR; none of 1 to 9 do | Forcing starts at 9. The theorems promise a threshold, not a small one. |
 
-The last row is van der Waerden's theorem (1927), the colouring form of the question: colour the whole numbers with finitely many colours, and one colour holds long progressions. It follows from Szemerédi, because one colour class fills at least its fair share.
+The last row is van der Waerden's theorem (1927; see [Ramsey theory on the whole numbers](../../04-Combinatorics%20and%20graphs/14-Ramsey%20and%20Extremal%2C%20in%20Outline/09-schur-and-van-der-waerden.md)), the colouring form of the question: colour the whole numbers with finitely many colours, and one colour holds long progressions. It follows from Szemerédi, because one colour class fills at least its fair share.
 
 ---
 

@@ -134,7 +134,7 @@ Let x be the cars in A, so 1000 − x are in B. Next month A holds 0.8x + 0.3(10
 <details>
 <summary>A 2 by 2 matrix obeys its own quadratic</summary>
 
-Put the matrix into its own characteristic quadratic — itself times itself, the identity carrying the constant — and out comes the zero matrix: A A − 1.5 A + 0.5 I, largest entry 0.000000 in both checks. That is Cayley–Hamilton at size 2: A times A is 1.5 A − 0.5 I, so higher powers are mixes of those two.
+Put the matrix into its own characteristic quadratic — itself times itself, the identity carrying the constant — and out comes the zero matrix: A A − 1.5 A + 0.5 I, largest entry 0.000000 in both checks. That is Cayley–Hamilton at size 2 ([Cayley-Hamilton and the minimal polynomial](08-cayley-hamilton-and-minimal-polynomial.md)): A times A is 1.5 A − 0.5 I, so higher powers are mixes of those two.
 
 </details>
 
@@ -576,6 +576,9 @@ example : ((4 / 5 : ℚ) - 5 / 7) * (7 / 10) - (3 / 10) * (1 / 5) = 0 := by norm
 - [Finitely many solutions](../../22-Algebraic%20geometry/01-Polynomial%20Systems/07-solving-zero-dimensional-systems.md): polynomial systems.
 - [Smith normal form](../../17-Topology/05-Homology/03-computing-homology-by-smith-normal-form.md): all the shapes.
 - [Lie algebra](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/02-lie-algebras-and-the-exponential-map.md): matrix generators.
+- [Schur's triangle](07-schur-triangularisation.md): every square matrix is upper triangular in some perpendicular basis, with its eigenvalues on the diagonal.
+- [Cayley-Hamilton and the minimal polynomial](08-cayley-hamilton-and-minimal-polynomial.md): every matrix satisfies its own characteristic equation, and the smallest such equation says whether it can be diagonalised.
+- [Schur's lemma and orthogonality](../12-Group%20Representations/02-schurs-lemma-and-character-orthogonality.md): a map between two irreducible pieces is zero or an isomorphism, so their traces are perpendicular.
 
 This card says nothing about a mixture of the two patterns, which is every other pattern there is. Splitting any column into its two is next.
 

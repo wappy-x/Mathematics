@@ -149,7 +149,7 @@ Let $`W`$ be kept by every move, and let $`w`$ be at right angles to all of $`W`
 
 $`\displaystyle \rho(g)w \cdot u = \rho(g)w \cdot \rho(g)\rho(g^{-1})u = w \cdot \rho(g^{-1})u = 0.`$
 
-So $`\rho(g)w`$ is at right angles to $`W`$ as well. For a group whose matrices do not keep the dot product, average the dot product over the group first; it then is kept. This is Maschke's theorem, proved in Serre, Chapter 1 (Sources). The shear group has no finite average, which is why it fails.
+So $`\rho(g)w`$ is at right angles to $`W`$ as well. For a group whose matrices do not keep the dot product, average the dot product over the group first; it then is kept. This is Maschke's theorem, proved on [Representations](../../03-Algebra/12-Group%20Representations/01-representations-and-maschkes-theorem.md) and in Serre, Chapter 1 (Sources). The shear group has no finite average, which is why it fails.
 
 </details>
 

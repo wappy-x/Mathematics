@@ -514,6 +514,11 @@ example : Matrix.det !![(4 : ℤ), 2, 2; 0, 1, 1; 1, 0, 4] = 16 := by
 - [The resultant](../../22-Algebraic%20geometry/01-Polynomial%20Systems/06-resultants-and-common-roots.md): zero exactly when two polynomials share a root.
 - [Differential form](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/01-forms-and-the-wedge-product.md): the alternating rule made an algebra.
 - [Permanent against determinant](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/03-algebraic-complexity-permanent-versus-determinant.md): the same sum without minus signs is hard.
+- [Cramer's rule](06-cramers-rule-and-the-adjugate.md): each unknown is a ratio of two determinants, and the inverse is the cofactor table divided by the determinant.
+- [Bilinear forms](../07-Eigenvalues%20and%20Symmetric%20Matrices/12-bilinear-forms-and-sylvesters-law.md): a matrix that pairs two vectors instead of moving one, the symmetric ones are quadratic forms, the alternating ones measure signed area, and the sign count never changes.
+- [The matrix-tree theorem](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/07-matrix-tree-theorem.md): cut one row and column from the graph's Laplacian, and the determinant counts its spanning trees.
+- [Block designs](../../04-Combinatorics%20and%20graphs/16-Designs/01-block-designs-and-fishers-inequality.md): v points in b blocks of size k with every pair together exactly lambda times, two counts any design must obey, and Fisher's inequality that blocks never number fewer than points.
+- [Hadamard matrices](../../04-Combinatorics%20and%20graphs/16-Designs/04-hadamard-matrices.md): square tables of plus and minus ones with perpendicular rows, possible only in sizes 1, 2 and multiples of 4, and the largest determinant such a table can have.
 
 One number says whether the sprite survived, not which directions stretched or by how much; those come next.
 

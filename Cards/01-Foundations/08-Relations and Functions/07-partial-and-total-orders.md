@@ -378,6 +378,7 @@ example : ∀ a ∈ Nat.divisors 8, ∀ b ∈ Nat.divisors 8, a ∣ b ∨ b ∣ 
 - [Knaster-Tarski](09-complete-lattices-and-knaster-tarski.md): an order-keeping map on a complete lattice always has a fixed point.
 - [Ordinals](../09-Sizes%20of%20Infinity/06-ordinals.md): counting past infinity, where omega + 1 is bigger but 1 + omega is not.
 - [Zorn's lemma and the well-ordering theorem](../09-Sizes%20of%20Infinity/08-zorns-lemma-and-well-ordering.md): the axiom of choice in two more sets of clothes, and why they are the same.
+- [Dilworth's theorem](../../04-Combinatorics%20and%20graphs/15-Orders%20and%20Set%20Systems/01-dilworths-theorem.md): the fewest chains that cover an order equals the most items no two of which compare.
 
 ---
 

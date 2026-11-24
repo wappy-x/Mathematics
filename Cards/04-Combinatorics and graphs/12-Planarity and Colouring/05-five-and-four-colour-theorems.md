@@ -375,6 +375,7 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Edge colouring](06-edge-colouring-and-round-robin.md): colouring the borders instead of the regions, where the busiest ward, not flatness, sets the count.
+- [List colouring](07-list-colouring-and-choosability.md): when every vertex brings its own short list of allowed colours, and Thomassen's proof that five per vertex always suffice on a flat map.
 
 The question left open is about proofs, not maps: nobody knows whether four colours can be settled in a way one person could read.
 

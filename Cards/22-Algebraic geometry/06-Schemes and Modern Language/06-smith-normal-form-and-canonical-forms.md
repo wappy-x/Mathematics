@@ -95,7 +95,7 @@ P_A^{-1} A P_A = C(x - 2) \oplus C(x^2 - 5x + 6) = \begin{pmatrix} 2 & 0 & 0 \\ 
 - **Only units as scale factors.** Over ℤ a row may be multiplied by −1 only. Allowing a row times 2, undone only by ½, is computing over ℚ: every nonzero entry becomes 1, and the supercell's $`\mathbb{Z}/2 \oplus \mathbb{Z}/6`$ vanishes.
 - **The divisibility chain.** Without $`d_i \mid d_{i+1}`$ the list is not unique: a plain 2 by 2 by 3 box reads (2, 2, 3), the supercell reads (1, 2, 6), and both are the same module.
 - **A square matrix over one field.** The canonical form compares A and B over k. Similarity over ℚ and over ℂ agree, because the reduction of $`xI - A`$ never leaves ℚ[x].
-- **Not the Jordan form.** The rational canonical form exists without roots. The Jordan form, which splits each block further by eigenvalue, needs every root of $`\chi_A`$ in k.
+- **Not the Jordan form.** The rational canonical form exists without roots. The [Jordan form](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/10-jordan-canonical-form.md), which splits each block further by eigenvalue, needs every root of $`\chi_A`$ in k.
 
 ---
 

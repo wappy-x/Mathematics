@@ -625,6 +625,7 @@ example : ∑ k ∈ Ico 1 6, (-1 : ℤ) ^ (5 - k) * (Nat.choose 5 k : ℤ) *
 ## Where this goes next
 
 - [Inclusion-exclusion for any number of sets](../04-Inclusion-Exclusion%20and%20Pigeonhole/01-inclusion-exclusion-for-n-sets.md): the same alternating signs applied to overlapping sets, each size of overlap a term of the row.
+- [Mobius inversion on an order](../15-Orders%20and%20Set%20Systems/03-mobius-inversion-on-posets.md): a sum over everything below can always be undone, and inclusion-exclusion and number theory's Mobius function are two cases.
 
 This card cancels a row indexed by size; what happens when the things counted overlap in named ways is [Inclusion-exclusion for any number of sets](../04-Inclusion-Exclusion%20and%20Pigeonhole/01-inclusion-exclusion-for-n-sets.md).
 

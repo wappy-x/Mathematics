@@ -131,7 +131,7 @@ Five cannot be lowered to four: the icosahedron's skeleton, the twenty-triangle 
 
 Insert a junction box along a pipe: the network gains a dot of degree 2, and the result is a **subdivision** of the original. Erase the inserted dots from a flat drawing of the subdivision and a flat drawing of the original is left. Any part of a flat drawing is itself one, so a network holding a subdivision of K(5) or K(3,3) cannot be drawn flat.
 
-Kuratowski's theorem (1930) is the converse, and the surprise: **a finite network can be drawn flat exactly when it holds no subdivision of K(5) and none of K(3,3).** Klaus Wagner's 1937 version contracts lines — merging two joined dots — and reaches the same two.
+Kuratowski's theorem (1930) is the converse, and the surprise: **a finite network can be drawn flat exactly when it holds no subdivision of K(5) and none of K(3,3).** Klaus Wagner's 1937 version contracts lines — merging two joined dots — and reaches the same two ([Graph minors](09-graph-minors-and-wagner.md)).
 
 Petersen shows why the theorem is needed: a pentagon, a five-pointed star inside, five spokes joining them, 10 dots and 15 lines. Both ceilings stay silent, 15 being under 24 and under 16, and still no flat drawing exists. The code exhausts all 1024 cyclic orders (the orders in which lines leave each dot, going round it) and reaches 5 regions where 7 are needed. Kuratowski's test fires where counting cannot — a subdivision of K(3,3) sits inside.
 
@@ -412,6 +412,7 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Colouring maps](05-five-and-four-colour-theorems.md): that dot of degree 5 or less, used until a map is coloured.
+- [Graph minors](09-graph-minors-and-wagner.md): delete and contract edges, Wagner's theorem that flat graphs are exactly those without K5 or K(3,3) as a minor, and Robertson-Seymour in outline.
 
 This card finds the leftover dot and stops; what to do with it is a later card's work.
 

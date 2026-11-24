@@ -602,6 +602,7 @@ example : (twoTeams.cliqueFinset 3).card = 0 ∧ (twoTeams.indepSetFinset 3).car
 ## Where this goes next
 
 - [Ramsey numbers](02-ramsey-numbers.md): the same question for trios of any two sizes, what is known about those numbers, and why so little is.
+- [Ramsey theory on the whole numbers](09-schur-and-van-der-waerden.md): Schur's single-coloured x + y = z, van der Waerden's single-coloured progressions, and the Hales-Jewett theorem behind both.
 
 Exhaustive search does not survive a bigger party: the labellings number 2 multiplied in C(n, 2) times. The next card needs arguments that never list them.
 

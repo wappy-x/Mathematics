@@ -119,7 +119,7 @@ Repeat a bead and an arrangement can survive a move. Its family is then smaller 
 
 Take six beads, two red, two blue, one green, one yellow: R R B B G Y. There are 180 different orders in a row and 30 necklaces, so halving gives 15 — but the brute force in the code finds 16 bracelets. The gap is the 2 necklaces left unchanged when the ring is turned over: they have no partner to pair with, so 16 = (30 + 2) / 2.
 
-The general repair counts what each move leaves unchanged and averages over the moves ([Group actions](../../03-Algebra/08-Groups/08-group-actions-and-counting.md)). Where only the do-nothing move spares anything, that average collapses back to the division used here.
+The general repair counts what each move leaves unchanged and averages over the moves ([Group actions](../../03-Algebra/08-Groups/08-group-actions-and-counting.md)). Where only the do-nothing move spares anything, that average collapses back to the division used here. [Polya counting](06-polya-enumeration.md) goes further, counting patterns colour by colour.
 
 ---
 
@@ -607,6 +607,9 @@ example : Nat.factorial 6 / (2 * 2) = 180 ∧ 180 / 6 = 30 ∧ 30 / 2 = 15 ∧ (
 - [Group actions](../../03-Algebra/08-Groups/08-group-actions-and-counting.md): the turns and the flip as a set of moves, and the count that survives unequal families.
 
 ## Where this goes next
+- [Polya counting](06-polya-enumeration.md): record each move's cycles in one polynomial, the cycle index, and substitute colours to count patterns by type.
+- [Erdos-Ko-Rado](../15-Orders%20and%20Set%20Systems/04-erdos-ko-rado-and-shadows.md): if every two k-sets in a family share a member, the family is no bigger than all k-sets through one point, provided n is at least 2k.
+
 
 Every division here needed the families to come out equal, a promise dividing cannot make on its own. Matching one collection against another can, and [Bijections and double counting](05-bijection-and-double-counting.md) turns that into a method: Step 3 already used it, with Ada nailed to her chair.
 

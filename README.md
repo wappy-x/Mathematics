@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img alt="cards" src="https://img.shields.io/badge/cards-1%2C942%20of%201%2C942-7aa7ff?style=flat-square">
+  <img alt="cards" src="https://img.shields.io/badge/cards-1%2C987%20of%201%2C987-7aa7ff?style=flat-square">
   <img alt="wings" src="https://img.shields.io/badge/wings-25-67e8f9?style=flat-square">
   <img alt="checks" src="https://img.shields.io/badge/every%20card-Python%20%2B%20Rust%20checks-b48cff?style=flat-square">
   <img alt="proofs" src="https://img.shields.io/badge/proofs-Lean%204%20%2B%20Mathlib-a78bfa?style=flat-square">
@@ -27,7 +27,7 @@ A library of short, self-contained **cards**, each teaching one idea of mathemat
 
 The cards are arranged like a ladder. They start with place value and fractions, climb through algebra, calculus and probability, and end at topology, number theory and the famous unsolved problems. Each card only uses ideas from the cards before it, so you can start at the bottom and keep going, or jump straight to whatever you need.
 
-**1,942 of 1,942 cards are ready to read.** The [syllabus](SYLLABUS.md) lists all 25 wings, and each wing has its own page showing its shelves and every card on them.
+**1,987 of 1,987 cards are ready to read.** The [syllabus](SYLLABUS.md) lists all 25 wings, and each wing has its own page showing its shelves and every card on them.
 
 ## What's on a card
 
@@ -64,8 +64,8 @@ The library has 25 **wings**, each split into shelves of cards. Click a wing to 
 | --- | --- | --- | --- |
 | 01 | [**Foundations**](Cards/01-Foundations/README.md) | Numbers, fractions, powers, logic and proof: the toolkit everything else uses. | 70 of 70 |
 | 02 | [**Number theory**](Cards/02-Number%20theory/README.md) | Primes, remainders, clock arithmetic, codes and secrets. | 57 of 57 |
-| 03 | [**Algebra**](Cards/03-Algebra/README.md) | Equations, vectors, matrices, groups and fields. | 51 of 51 |
-| 04 | [**Combinatorics and graphs**](Cards/04-Combinatorics%20and%20graphs/README.md) | Counting cleverly, networks, routes and puzzles. | 82 of 82 |
+| 03 | [**Algebra**](Cards/03-Algebra/README.md) | Equations, vectors, matrices, groups and fields. | 72 of 72 |
+| 04 | [**Combinatorics and graphs**](Cards/04-Combinatorics%20and%20graphs/README.md) | Counting cleverly, networks, routes and puzzles. | 106 of 106 |
 | 05 | [**Geometry and trig**](Cards/05-Geometry%20and%20trig/README.md) | Shapes, angles, coordinates and space. | 62 of 62 |
 | 06 | [**Calculus and analysis**](Cards/06-Calculus%20and%20analysis/README.md) | Change, limits, areas and the infinitely small. | 85 of 85 |
 | 07 | [**Complex analysis**](Cards/07-Complex%20analysis/README.md) | What the square root of −1 unlocks. | 77 of 77 |
@@ -94,7 +94,7 @@ The library has 25 **wings**, each split into shelves of cards. Click a wing to 
 Mathematics should be right, so every card is checked in several ways:
 
 - **Every number is computed, not typed.** Each card's Python and Rust programs work out every number the card states, and the two must print exactly the same output.
-- **The key results are proved in Lean.** Almost every card carries a [Lean 4](https://lean-lang.org) proof, built on the [Mathlib](https://leanprover-community.github.io) library and checked by computer. Every proof is complete and uses only Lean's standard axioms. Lean proves the exact maths; the worked numbers and real-world models stay with the Python and Rust checks, and each card says which is which. 17 of the 1,942 cards have no Lean yet, because Mathlib does not yet cover enough of their subject: planar drawings and polyhedra, the homology of spheres, interpolation of operators, Bézout's theorem, rational points on elliptic curves, Hilbert's tenth problem, and the prime number theorem and the results built on it.
+- **The key results are proved in Lean.** Almost every card carries a [Lean 4](https://lean-lang.org) proof, built on the [Mathlib](https://leanprover-community.github.io) library and checked by computer. Every proof is complete and uses only Lean's standard axioms. Lean proves the exact maths; the worked numbers and real-world models stay with the Python and Rust checks, and each card says which is which. 17 of the 1,987 cards have no Lean yet, because Mathlib does not yet cover enough of their subject: planar drawings and polyhedra, the homology of spheres, interpolation of operators, Bézout's theorem, rational points on elliptic curves, Hilbert's tenth problem, and the prime number theorem and the results built on it.
 - **Every check can fail.** The checks compare independent routes to the same answer (a formula against a brute-force count, a simulation, or an exact calculation), so a wrong formula trips them. They're tested by deliberately breaking the maths.
 - **Every card passes a strict linter** that checks its shape, links, symbols and sources, and every DOI in a source list is verified.
 - **Independent reviewers** recompute the numbers, test the proofs and look for anything misleading, and what they find gets fixed.

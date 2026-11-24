@@ -695,6 +695,8 @@ example : Nat.choose 17 4 = 2380 ∧ Nat.choose 13 5 = 1287 ∧
 - [Erdos's counting trick](03-probabilistic-method-by-counting.md): floors for R(k,k) by counting bad surfacings.
 - [The probabilistic method](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md): the same idea with chance made precise.
 - [Long progressions](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/05-szemeredi-and-green-tao-in-outline.md): forced patterns among whole numbers.
+- [The Lovasz local lemma](08-lovasz-local-lemma.md): many bad events, each rare and each tied to few others, can all be avoided at once.
+- [Ramsey theory on the whole numbers](09-schur-and-van-der-waerden.md): Schur's single-coloured x + y = z, van der Waerden's single-coloured progressions, and the Hales-Jewett theorem behind both.
 
 Here floors come only from finding a county; how to prove a dodging county exists without finding one is the next card's question.
 

@@ -511,6 +511,8 @@ example : 167960 * 11 ! = 6704425728000 := by decide
 - [Counting chances](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/04-equally-likely-outcomes-and-counting.md): favourable picks over possible picks, where lottery odds come from.
 - [Hypergeometric](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/03-hypergeometric.md): counting the picks holding a stated number of winners.
 - [Counting](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/02-counting-solutions-and-sharp-p.md): counting when no formula like this one exists.
+- [Sperner's theorem](../15-Orders%20and%20Set%20Systems/02-sperner-and-lym.md): a family of subsets in which none contains another has at most the middle binomial coefficient of members, by the LYM inequality.
+- [Erdos-Ko-Rado](../15-Orders%20and%20Set%20Systems/04-erdos-ko-rado-and-shadows.md): if every two k-sets in a family share a member, the family is no bigger than all k-sets through one point, provided n is at least 2k.
 
 Every count here assumed 49 different numbers, each taken once; what to do when some things are identical is [Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md).
 

@@ -109,7 +109,7 @@ The other half builds a round: add every street on a cheapest pairing's walks, d
 
 A program listing them settles three pairings, or 945, in no time. But the count keeps multiplying, so listing stops being possible at a few dozen odd junctions — and a city map has hundreds.
 
-Edmonds' 1965 matching algorithm, blossom, finds the cheapest pairing without listing any, in a time growing like a fixed power of the junction count. A matching is a set of pairs with no junction used twice, so a pairing is a matching that uses every odd junction ([Matchings](../13-Matchings%20and%20Flows/01-matchings-and-augmenting-paths.md)). This card leans on it, unbuilt.
+Edmonds' 1965 matching algorithm, blossom ([Edmonds' blossom algorithm](../13-Matchings%20and%20Flows/09-edmonds-blossom-algorithm.md)), finds the cheapest pairing without listing any, in a time growing like a fixed power of the junction count. A matching is a set of pairs with no junction used twice, so a pairing is a matching that uses every odd junction ([Matchings](../13-Matchings%20and%20Flows/01-matchings-and-augmenting-paths.md)). This card leans on it, unbuilt.
 
 A second road reaches the same 400 m with no pairings and no shortest walks: keep every set of streets whose own odd junctions are exactly B, D, F and H, then take the smallest, every street here being 100 m — Step 1 read forwards.
 

@@ -132,7 +132,7 @@ Reusing one elimination is less work than forming $`A^{-1}`$, even for many days
 <details>
 <summary>Cramer's rule, the 2 by 2 shortcut</summary>
 
-Each unknown is one determinant over another: replace a column of $`A`$ with the takings, divide that determinant by $`\det A`$. With $`\det A`$ = 1: `[[11, 1], [7, 1]]` gives 11 × 1 − 1 × 7 = 4, the coffee; `[[2, 11], [1, 7]]` gives 2 × 7 − 11 × 1 = 3, the pastry. Past 2 by 2 the work outgrows the payoff.
+Each unknown is one determinant over another: replace a column of $`A`$ with the takings, divide that determinant by $`\det A`$. With $`\det A`$ = 1: `[[11, 1], [7, 1]]` gives 11 × 1 − 1 × 7 = 4, the coffee; `[[2, 11], [1, 7]]` gives 2 × 7 − 11 × 1 = 3, the pastry. Past 2 by 2 the work outgrows the payoff. The rule at every size: [Cramer's rule](06-cramers-rule-and-the-adjugate.md).
 
 </details>
 
@@ -565,6 +565,7 @@ example : (2 : ZMod 4) ≠ 0 ∧ ∀ x : ZMod 4, 2 * x ≠ 1 := by decide
 - [Vanna-volga pricing](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md): three option prices fixed by inverting a 3 by 3.
 - [The efficient frontier](../../12-Financial%20mathematics/37-Portfolio%20Theory/02-efficient-frontier-and-minimum-variance.md): portfolio weights from the inverse of a covariance table.
 - [Matrix norms and the condition number](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/01-matrix-norms-and-the-condition-number.md): how far an almost-flat matrix magnifies an error.
+- [Cramer's rule](06-cramers-rule-and-the-adjugate.md): each unknown is a ratio of two determinants, and the inverse is the cofactor table divided by the determinant.
 
 The determinant has been only a number that must not be zero; what it measures, and why zero flattens, is [Determinants](04-determinants.md).
 

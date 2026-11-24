@@ -6,7 +6,7 @@
 
 Solve equations, work with polynomials, vectors and matrices, solve linear systems, fit data by least squares, find eigenvalues, and meet the abstract structures behind them: groups, rings and fields.
 
-10 shelves · **51 of 51 cards ready to read**
+12 shelves · **72 of 72 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
@@ -16,12 +16,14 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 | [02 · Polynomials](#s02) | 5 |
 | [03 · Vectors](#s03) | 5 |
 | [04 · Matrices](#s04) | 4 |
-| [05 · Solving Systems](#s05) | 5 |
-| [06 · Dot Products and Best Fits](#s06) | 4 |
-| [07 · Eigenvalues and Symmetric Matrices](#s07) | 6 |
-| [08 · Groups](#s08) | 8 |
+| [05 · Solving Systems](#s05) | 6 |
+| [06 · Dot Products and Best Fits](#s06) | 5 |
+| [07 · Eigenvalues and Symmetric Matrices](#s07) | 12 |
+| [08 · Groups](#s08) | 15 |
 | [09 · Rings and Fields](#s09) | 5 |
 | [10 · For the Curious](#s10) | 5 |
+| [11 · Duals, Quotients and Tensors](#s11) | 3 |
+| [12 · Group Representations](#s12) | 3 |
 
 <a name="s01"></a>
 
@@ -79,7 +81,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s05"></a>
 
-## 05 · Solving Systems · 5 cards
+## 05 · Solving Systems · 6 cards
 
 *Ax = b as a system of equations, Gaussian elimination, the inverse matrix, determinants, and rank-nullity.*
 
@@ -88,12 +90,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [The inverse matrix: the matrix that undoes another, the 2 by 2 formula, and when no inverse exists](05-Solving%20Systems/03-inverse-matrix.md)
 4. [Determinants: the one number that says how much a matrix stretches area, and zero means it squashed something flat](05-Solving%20Systems/04-determinants.md)
 5. [Rank and nullity: what a matrix keeps and what it kills, and why the two counts add up to the number of inputs](05-Solving%20Systems/05-rank-nullity.md)
+6. [Cramer's rule: each unknown is a ratio of two determinants, and the inverse is the cofactor table divided by the determinant](05-Solving%20Systems/06-cramers-rule-and-the-adjugate.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s06"></a>
 
-## 06 · Dot Products and Best Fits · 4 cards
+## 06 · Dot Products and Best Fits · 5 cards
 
 *The dot product, length and perpendicularity, projection onto a line and a plane, Gram-Schmidt and orthonormal bases, least squares as projection. Needs roots; the angle is named but trigonometry is not used.*
 
@@ -101,12 +104,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 2. [Projection: the shadow of one vector on another, and the leftover that is always perpendicular](06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md)
 3. [Gram-Schmidt: straighten a skewed basis into perpendicular unit directions, and coordinates become dot products](06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md)
 4. [Least squares: the best-fit line is a projection, and the normal equations hand it to you in one step](06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md)
+5. [The four fundamental subspaces: every matrix splits its inputs into row space and null space, its outputs into column space and left null space, at right angles](06-Dot%20Products%20and%20Best%20Fits/05-four-fundamental-subspaces.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s07"></a>
 
-## 07 · Eigenvalues and Symmetric Matrices · 6 cards
+## 07 · Eigenvalues and Symmetric Matrices · 12 cards
 
 *Change of basis and similar matrices, eigenvalues and eigenvectors by the 2 by 2 characteristic equation, diagonalisation and fast matrix powers, the spectral theorem for symmetric matrices, quadratic forms and positive definiteness, the singular value decomposition in outline. Rests on shelves 4 and 5.*
 
@@ -116,12 +120,18 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [The spectral theorem: a symmetric matrix has real stretch factors along perpendicular axes, A = Q D Q^T](07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)
 5. [Quadratic forms: x^T A x as the risk of a mix, and positive definite means every mix has positive risk](07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)
 6. [The singular value decomposition: every matrix is rotate, stretch the axes, rotate, and the stretch factors are the singular values](07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md)
+7. [Schur's triangle: every square matrix is upper triangular in some perpendicular basis, with its eigenvalues on the diagonal](07-Eigenvalues%20and%20Symmetric%20Matrices/07-schur-triangularisation.md)
+8. [Cayley-Hamilton and the minimal polynomial: every matrix satisfies its own characteristic equation, and the smallest such equation says whether it can be diagonalised](07-Eigenvalues%20and%20Symmetric%20Matrices/08-cayley-hamilton-and-minimal-polynomial.md)
+9. [Generalised eigenvectors: when a matrix has too few eigenvectors, the vectors killed by a power of A minus lambda fill the gap](07-Eigenvalues%20and%20Symmetric%20Matrices/09-generalised-eigenvectors.md)
+10. [Jordan form: every matrix is a stack of blocks, each an eigenvalue with ones just above the diagonal, and the block sizes are read from ranks](07-Eigenvalues%20and%20Symmetric%20Matrices/10-jordan-canonical-form.md)
+11. [Normal matrices and the polar form: the matrices that commute with their conjugate transpose are exactly those with perpendicular eigenvectors, and every matrix is a rotation times a stretch](07-Eigenvalues%20and%20Symmetric%20Matrices/11-normal-matrices-and-polar-decomposition.md)
+12. [Bilinear forms: a matrix that pairs two vectors instead of moving one, the symmetric ones are quadratic forms, the alternating ones measure signed area, and the sign count never changes](07-Eigenvalues%20and%20Symmetric%20Matrices/12-bilinear-forms-and-sylvesters-law.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s08"></a>
 
-## 08 · Groups · 8 cards
+## 08 · Groups · 15 cards
 
 *The four group rules and the first examples, subgroups and cyclic groups with the order of an element, permutations and the symmetric group, cosets and Lagrange's theorem with Euler's theorem as the payoff, homomorphisms and isomorphisms, normal subgroups and quotient groups, direct products, group actions and counting orbits. Introduces group notation in words on the first card; leans on wing 02 clock arithmetic throughout.*
 
@@ -133,6 +143,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Normal subgroups and quotient groups: collapsing a group by a subgroup, and Z mod n is the model](08-Groups/06-normal-subgroups-and-quotient-groups.md)
 7. [Direct products: run two groups side by side, and when two clocks make one bigger clock](08-Groups/07-direct-products.md)
 8. [Group actions: a group moving the members of a set, with orbit size times stabiliser size equal to the group's size](08-Groups/08-group-actions-and-counting.md)
+9. [The isomorphism theorems: collapsing in two stages is collapsing once, and the subgroups of a quotient are the subgroups above the kernel](08-Groups/09-isomorphism-theorems-and-correspondence.md)
+10. [Conjugacy and the class equation: a group sorted into classes of look-alikes, and why every group of prime-power size has a centre](08-Groups/10-conjugacy-and-the-class-equation.md)
+11. [The Sylow theorems: for the largest prime power dividing a group's size, subgroups of exactly that size exist, are all conjugate, and number 1 more than a multiple of p](08-Groups/11-sylow-theorems.md)
+12. [Semidirect products: glue two groups where one acts on the other, so the tile group is four turns twisted by one flip](08-Groups/12-semidirect-products.md)
+13. [A_n is simple for n at least 5: the even shuffles have no normal subgroup to collapse by, which is the group-theory heart of the quintic](08-Groups/13-simplicity-of-alternating-groups.md)
+14. [Composition series: break a group into simple pieces, and Jordan-Holder says the pieces are the same however you break it](08-Groups/14-composition-series-and-jordan-holder.md)
+15. [Presentations: describe a group by generators and the rules they obey, and von Dyck's theorem turns the rules into maps](08-Groups/15-group-presentations.md)
 
 [↑ Back to the shelves](#top)
 
@@ -161,6 +178,30 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [Gaussian integers: whole numbers a + bi, where 5 is no longer prime, and which numbers are a sum of two squares](10-For%20the%20Curious/03-gaussian-integers-and-sums-of-two-squares.md)
 4. [Pell's equation: the whole-number solutions of x^2 - 2y^2 = 1 never run out, and each one is a better fraction for root 2](10-For%20the%20Curious/04-pell-equation-and-root-two.md)
 5. [Boolean algebra: true/false, sets and switches obey the same rules, and the power set drawn as a cube is a lattice](10-For%20the%20Curious/05-boolean-algebra-and-lattices.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s11"></a>
+
+## 11 · Duals, Quotients and Tensors · 3 cards
+
+*Building new vector spaces from old ones: direct sums and quotients, the dual space of price lists, and the tensor product that pairs two spaces. Rests on shelves 03 to 05.*
+
+1. [Direct sums and quotient spaces: split a space into independent pieces, or blur a subspace to a point and count what is left](11-Duals%2C%20Quotients%20and%20Tensors/01-direct-sums-and-quotient-spaces.md)
+2. [Dual spaces: the linear readings of a space form a space of their own, a basis gives a dual basis, and the transpose is the dual map](11-Duals%2C%20Quotients%20and%20Tensors/02-dual-spaces.md)
+3. [Tensor products: pair every basis vector of one space with every basis vector of another, so a 2-space and a 3-space make a 6-space, and most of its members are not simple pairs](11-Duals%2C%20Quotients%20and%20Tensors/03-tensor-products.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s12"></a>
+
+## 12 · Group Representations · 3 cards
+
+*A group acting by matrices: Maschke's splitting into irreducible pieces, Schur's lemma, and characters, the traces that identify every representation. Rests on shelves 07 and 08.*
+
+1. [Representations: a group acting by matrices, and Maschke's theorem that every one splits into pieces that cannot split further](12-Group%20Representations/01-representations-and-maschkes-theorem.md)
+2. [Schur's lemma and orthogonality: a map between two irreducible pieces is zero or an isomorphism, so their traces are perpendicular](12-Group%20Representations/02-schurs-lemma-and-character-orthogonality.md)
+3. [Character tables: as many irreducible pieces as conjugacy classes, their sizes squared add up to the group's size, and the table fingerprints the group](12-Group%20Representations/03-character-tables.md)
 
 [↑ Back to the shelves](#top)
 

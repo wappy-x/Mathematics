@@ -119,7 +119,7 @@ xychart-beta
     line [0.00, 3.03, 3.68, 3.35, 2.71, 2.05, 1.49, 1.06, 0.73]
 ```
 
-Orange: the room. Any 2 by 2 matrix with one eigenvector for a repeated eigenvalue λ becomes λI + N in suitable coordinates: the 2 by 2 Jordan form.
+Orange: the room. Any 2 by 2 matrix with one eigenvector for a repeated eigenvalue λ becomes λI + N in suitable coordinates: the 2 by 2 [Jordan form](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/10-jordan-canonical-form.md).
 
 ### Step 4: running forward s hours, then t more, is running s + t
 

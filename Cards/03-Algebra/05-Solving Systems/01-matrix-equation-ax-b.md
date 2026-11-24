@@ -582,6 +582,7 @@ example : !![(2 : ℝ), 1; 1, 1] *ᵥ ![-4, 15] = ![7, 11] := by
 - [Newton in several unknowns, and Broyden when a Jacobian is too expensive](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/07-newton-for-systems-and-broyden.md): a curved system, one solve per step, with the Jacobian (the table of slopes) as $`A`$.
 - [Matrix norms and the condition number](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/01-matrix-norms-and-the-condition-number.md): how far $`x`$ moves when $`b`$ is rounded.
 - [One polynomial through n points](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/02-lagrange-and-newton-interpolation.md): a curve through points, solved for coefficients.
+- [Cramer's rule](06-cramers-rule-and-the-adjugate.md): each unknown is a ratio of two determinants, and the inverse is the cofactor table divided by the determinant.
 
 Which outcome holds is settled here; reaching the answer when the counts fill a page is the bookkeeping of [Gaussian elimination](02-gaussian-elimination.md).
 

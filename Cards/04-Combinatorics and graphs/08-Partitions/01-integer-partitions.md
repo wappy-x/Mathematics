@@ -630,6 +630,8 @@ example : 2 ^ (8 - 1) = 128 := by norm_num
 
 - [Euler's product](02-partitions-generating-function.md): the build-up by note length written as one product, Euler's way into the later facts.
 - [The twelvefold way](06-twelvefold-way.md): the grid of named-or-unnamed items and boxes, with this card in one of its twelve cells.
+- [Young tableaux and the hook length formula](07-young-tableaux-and-hook-lengths.md): fill a partition's diagram with 1 to n rising along rows and down columns, and n! over the product of hook lengths counts the ways.
+- [The RSK correspondence](08-rsk-correspondence.md): every shuffle becomes a pair of same-shaped tableaux, so the squared tableau counts add up to n!, and the first row is the longest rising run.
 
 The build-up fills a row of counts without saying why they grow as they do; turning the loop into a product makes the pattern visible.
 

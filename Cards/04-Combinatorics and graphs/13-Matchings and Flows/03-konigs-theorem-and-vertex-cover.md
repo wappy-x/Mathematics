@@ -967,6 +967,7 @@ example : ∀ C : Finset (Fin 3), (∀ s ∈ ring, s.1 ∈ C ∨ s.2 ∈ C) → 
 - [Approximation](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/06-approximation-algorithms.md): both ends of a matching as a cover at most twice the smallest, on graphs without two sides.
 - [Karp's list](../../24-Computability%20and%20complexity/03-Time%20Complexity/05-karps-problems-and-hardness-recipes.md): smallest vertex cover as one of Karp's original hard problems, once the two sides are gone.
 - [Parameterised complexity](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/05-parameterised-complexity.md): how fast a small cover can still be found on a general graph, with the cover's size as the dial.
+- [Dilworth's theorem](../15-Orders%20and%20Set%20Systems/01-dilworths-theorem.md): the fewest chains that cover an order equals the most items no two of which compare.
 
 The river makes a smallest cover easy to find; later cards ask how hard it is without one.
 

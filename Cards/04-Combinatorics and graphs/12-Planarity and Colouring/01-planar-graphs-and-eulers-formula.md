@@ -401,6 +401,8 @@ The two outputs match line for line.
 - [Euler characteristic](../../17-Topology/03-Surfaces%20and%20Manifolds/04-euler-characteristic-and-triangulations.md): the same count elsewhere, where the 2 names the surface.
 - [Cycle double cover](../../25-Frontier/04-Geometry%20and%20Combinatorics/04-cycle-double-cover-conjecture.md): the six faces here are cycles that cover each of the 12 tracks exactly twice; whether every network with no bridge (a line whose removal splits it) has such cycles, flat or not, was open until a proof was claimed in July 2026; it is not yet refereed.
 - [Pick's theorem](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/07-picks-theorem.md): count the dots inside and on the edge, and the area falls out.
+- [List colouring](07-list-colouring-and-choosability.md): when every vertex brings its own short list of allowed colours, and Thomassen's proof that five per vertex always suffice on a flat map.
+- [Graph minors](09-graph-minors-and-wagner.md): delete and contract edges, Wagner's theorem that flat graphs are exactly those without K5 or K(3,3) as a minor, and Robertson-Seymour in outline.
 
 This card assumes a crossing-free drawing is in hand and never asks whether one exists; deciding that is [Why some graphs cannot be drawn flat](02-edge-bound-and-kuratowski.md).
 

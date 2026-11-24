@@ -681,6 +681,7 @@ end LatticePaths
 
 - [The reflection principle](02-reflection-principle-and-ballot-problem.md): counting the routes that break a rule by mirroring them, turning a forbidden line into an ordinary choose count.
 - [Many steps](../../12-Financial%20mathematics/04-Binomial%20Trees/03-multi-step-trees-and-backward-induction.md): the same routes carrying money, a payoff at the far corner and a price worked backwards.
+- [Young tableaux and the hook length formula](../08-Partitions/07-young-tableaux-and-hook-lengths.md): fill a partition's diagram with 1 to n rising along rows and down columns, and n! over the product of hook lengths counts the ways.
 
 Every route counted here was allowed. The next question is how many stay on one side of a line: of the 252 routes across a square 5-block grid, 42 never cross the diagonal, and the reflection principle explains that 42.
 

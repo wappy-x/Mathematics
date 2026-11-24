@@ -6,26 +6,28 @@
 
 Count any finite arrangement (orderings, selections, distributions, partitions) by formula and by brute-force listing, and turn a step rule or a counting problem into a recurrence or a generating function and read the answer off. Model a network as a graph and compute or prove the standard facts: degrees, paths and connectivity, trees and cheapest routes, Euler and Hamilton tours, planarity, colourings, matchings and flows, with Ramsey and extremal results in outline.
 
-14 shelves · **82 of 82 cards ready to read**
+16 shelves · **106 of 106 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
 | Shelf | Cards |
 | --- | ---: |
 | [01 · Counting Principles](#s01) | 6 |
-| [02 · Repeats, Groups and Double Counting](#s02) | 5 |
+| [02 · Repeats, Groups and Double Counting](#s02) | 6 |
 | [03 · Binomial Coefficients and Identities](#s03) | 7 |
 | [04 · Inclusion-Exclusion and Pigeonhole](#s04) | 5 |
 | [05 · Recurrences](#s05) | 7 |
 | [06 · Lattice Paths and Catalan Numbers](#s06) | 5 |
-| [07 · Generating Functions](#s07) | 5 |
-| [08 · Partitions](#s08) | 6 |
+| [07 · Generating Functions](#s07) | 7 |
+| [08 · Partitions](#s08) | 8 |
 | [09 · Graphs: Dots and Lines](#s09) | 7 |
-| [10 · Trees and Cheapest Routes](#s10) | 6 |
+| [10 · Trees and Cheapest Routes](#s10) | 7 |
 | [11 · Tours: Euler and Hamilton](#s11) | 5 |
-| [12 · Planarity and Colouring](#s12) | 6 |
-| [13 · Matchings and Flows](#s13) | 7 |
-| [14 · Ramsey and Extremal, in Outline](#s14) | 5 |
+| [12 · Planarity and Colouring](#s12) | 10 |
+| [13 · Matchings and Flows](#s13) | 9 |
+| [14 · Ramsey and Extremal, in Outline](#s14) | 9 |
+| [15 · Orders and Set Systems](#s15) | 4 |
+| [16 · Designs](#s16) | 4 |
 
 <a name="s01"></a>
 
@@ -44,7 +46,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s02"></a>
 
-## 02 · Repeats, Groups and Double Counting · 5 cards
+## 02 · Repeats, Groups and Double Counting · 6 cards
 
 *Arrangements with repeated items, distributing identical items (stars and bars, compositions), splitting into named and unnamed groups, circular arrangements, and proving a count by bijection or by counting twice.*
 
@@ -53,6 +55,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [Splitting into groups: the multinomial coefficient for named piles, and divide by k! when the piles are not named](02-Repeats%2C%20Groups%20and%20Double%20Counting/03-splitting-into-groups.md)
 4. [Round tables and bracelets: fix one seat to kill the rotations, halve again if flipping counts the same](02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md)
 5. [Bijections and double counting: match two collections one-to-one, or count one collection two ways, and the numbers must agree](02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)
+6. [Polya counting: record each move's cycles in one polynomial, the cycle index, and substitute colours to count patterns by type](02-Repeats%2C%20Groups%20and%20Double%20Counting/06-polya-enumeration.md)
 
 [↑ Back to the shelves](#top)
 
@@ -118,7 +121,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s07"></a>
 
-## 07 · Generating Functions · 5 cards
+## 07 · Generating Functions · 7 cards
 
 *Ordinary generating functions as formal bookkeeping, products as convolutions and constrained counting, solving recurrences, exponential generating functions for labelled objects, and the Catalan generating function.*
 
@@ -127,12 +130,14 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [Solving a recurrence with a generating function: the step rule becomes an equation for the series, and a ratio of polynomials falls out](07-Generating%20Functions/03-generating-functions-solve-recurrences.md)
 4. [Exponential generating functions: divide each count by n! and the series multiplies labelled objects correctly](07-Generating%20Functions/04-exponential-generating-functions.md)
 5. [The Catalan generating function: the first-return recurrence becomes C = 1 + x C^2, solved by iteration](07-Generating%20Functions/05-catalan-generating-function.md)
+6. [The exponential formula: if the connected pieces have generating function C(x), the structures built from sets of them have generating function e^C(x)](07-Generating%20Functions/06-exponential-formula.md)
+7. [Lagrange inversion: when a series is defined by T = x phi(T), its coefficients come straight from powers of phi](07-Generating%20Functions/07-lagrange-inversion.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s08"></a>
 
-## 08 · Partitions · 6 cards
+## 08 · Partitions · 8 cards
 
 *Integer partitions and Ferrers diagrams, Euler's product, set partitions and Bell numbers, Stirling numbers of the second kind, permutations counted by cycles, and the twelvefold way as the wing's counting map.*
 
@@ -142,6 +147,8 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [Stirling numbers of the second kind: distinct items into exactly k unnamed non-empty groups](08-Partitions/04-stirling-numbers-second-kind.md)
 5. [Counting shuffles by their loops: Stirling numbers of the first kind, and derangements are the no-short-loop case](08-Partitions/05-permutations-by-cycles.md)
 6. [The twelvefold way: every 'put n things into k boxes' question in one table](08-Partitions/06-twelvefold-way.md)
+7. [Young tableaux and the hook length formula: fill a partition's diagram with 1 to n rising along rows and down columns, and n! over the product of hook lengths counts the ways](08-Partitions/07-young-tableaux-and-hook-lengths.md)
+8. [The RSK correspondence: every shuffle becomes a pair of same-shaped tableaux, so the squared tableau counts add up to n!, and the first row is the longest rising run](08-Partitions/08-rsk-correspondence.md)
 
 [↑ Back to the shelves](#top)
 
@@ -163,7 +170,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s10"></a>
 
-## 10 · Trees and Cheapest Routes · 6 cards
+## 10 · Trees and Cheapest Routes · 7 cards
 
 *Trees and their characterisations, rooted and binary trees, spanning trees and Cayley's formula, minimum spanning trees by Kruskal and Prim, Dijkstra, and Bellman-Ford with negative cycles as currency arbitrage.*
 
@@ -173,6 +180,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [The cheapest skeleton: Kruskal adds the cheapest safe edge, Prim grows from one vertex, and the cut property says both are right](10-Trees%20and%20Cheapest%20Routes/04-minimum-spanning-trees.md)
 5. [Dijkstra's algorithm: settle the cheapest unsettled point, relax its neighbours, and the cheapest routes appear when no cost is negative](10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md)
 6. [Bellman-Ford: relax every edge n - 1 times, negative costs allowed, and a loop that still improves is a money machine](10-Trees%20and%20Cheapest%20Routes/06-bellman-ford-and-arbitrage.md)
+7. [The matrix-tree theorem: cut one row and column from the graph's Laplacian, and the determinant counts its spanning trees](10-Trees%20and%20Cheapest%20Routes/07-matrix-tree-theorem.md)
 
 [↑ Back to the shelves](#top)
 
@@ -192,7 +200,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s12"></a>
 
-## 12 · Planarity and Colouring · 6 cards
+## 12 · Planarity and Colouring · 10 cards
 
 *Planar graphs and Euler's formula, the edge bound and Kuratowski's two forbidden graphs, vertex colouring and the chromatic number, the chromatic polynomial, the five- and four-colour theorems, and edge colouring with round-robin fixtures.*
 
@@ -202,12 +210,16 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [The chromatic polynomial: count the colourings with q colours, by deleting an edge and contracting it](12-Planarity%20and%20Colouring/04-chromatic-polynomial.md)
 5. [Colouring maps: five colours always suffice by a short argument, four by a famous long one](12-Planarity%20and%20Colouring/05-five-and-four-colour-theorems.md)
 6. [Edge colouring: colour the edges so no two at a vertex match, and a league fixture list is exactly this](12-Planarity%20and%20Colouring/06-edge-colouring-and-round-robin.md)
+7. [List colouring: when every vertex brings its own short list of allowed colours, and Thomassen's proof that five per vertex always suffice on a flat map](12-Planarity%20and%20Colouring/07-list-colouring-and-choosability.md)
+8. [Perfect graphs: graphs where the largest clique always gives the colour count, chordal graphs as the friendly family, and the strong perfect graph theorem](12-Planarity%20and%20Colouring/08-perfect-and-chordal-graphs.md)
+9. [Graph minors: delete and contract edges, Wagner's theorem that flat graphs are exactly those without K5 or K(3,3) as a minor, and Robertson-Seymour in outline](12-Planarity%20and%20Colouring/09-graph-minors-and-wagner.md)
+10. [Treewidth: how close a graph is to a tree, measured by the thinnest tree of overlapping bags, and why hard problems turn easy on tree-like graphs](12-Planarity%20and%20Colouring/10-treewidth.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s13"></a>
 
-## 13 · Matchings and Flows · 7 cards
+## 13 · Matchings and Flows · 9 cards
 
 *Matchings and augmenting paths, Hall's theorem, Konig's theorem and vertex covers, stable matching by Gale-Shapley, flow networks with Ford-Fulkerson, the max-flow min-cut theorem, and connectivity with Menger's theorem.*
 
@@ -218,12 +230,14 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Flows: pipes with capacities from a source to a sink, and pushing along leftover routes, including undoing an earlier choice](13-Matchings%20and%20Flows/05-flow-networks-and-ford-fulkerson.md)
 6. [Max-flow min-cut: the most you can push equals the cheapest way to sever the network, and matching is a flow](13-Matchings%20and%20Flows/06-max-flow-min-cut.md)
 7. [How many cuts break a network: bridges, cut vertices, and Menger's theorem that separate routes equal the blocks needed](13-Matchings%20and%20Flows/07-connectivity-and-mengers-theorem.md)
+8. [Tutte's theorem: a graph has a perfect matching exactly when removing any set S leaves at most |S| pieces of odd size](13-Matchings%20and%20Flows/08-tutte-one-factor-theorem.md)
+9. [Edmonds' blossom algorithm: search for improving routes in any graph by shrinking odd loops to a single point](13-Matchings%20and%20Flows/09-edmonds-blossom-algorithm.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s14"></a>
 
-## 14 · Ramsey and Extremal, in Outline · 5 cards
+## 14 · Ramsey and Extremal, in Outline · 9 cards
 
 *Friends and strangers, Ramsey numbers and the theorem in outline, Erdos's counting lower bound as the first probabilistic-method argument, Erdos-Szekeres with Dilworth folded, and Mantel and Turan on triangle-free and clique-free graphs.*
 
@@ -232,6 +246,36 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [Erdos's counting trick: if the bad colourings are fewer than all colourings, a good one exists, so R(k,k) grows at least like 2^(k/2)](14-Ramsey%20and%20Extremal%2C%20in%20Outline/03-probabilistic-method-by-counting.md)
 4. [Erdos-Szekeres: any long enough list of numbers has a long rising run or a long falling run, by labelling and pigeonhole](14-Ramsey%20and%20Extremal%2C%20in%20Outline/04-erdos-szekeres.md)
 5. [Mantel and Turan: more than n^2/4 edges force a triangle, and the balanced multipartite graph is the most you can have without a clique](14-Ramsey%20and%20Extremal%2C%20in%20Outline/05-mantel-and-turan.md)
+6. [Beyond Turan: forbid any graph H and its colour count sets the edge cap (Erdos-Stone), except when H is two-sided, where Kovari-Sos-Turan caps a network with no 4-cycle near n^(3/2)/2 edges](14-Ramsey%20and%20Extremal%2C%20in%20Outline/06-erdos-stone-and-kovari-sos-turan.md)
+7. [The regularity lemma: every large network splits into a bounded number of parts with random-looking links between almost every pair](14-Ramsey%20and%20Extremal%2C%20in%20Outline/07-szemeredi-regularity-lemma.md)
+8. [The Lovasz local lemma: many bad events, each rare and each tied to few others, can all be avoided at once](14-Ramsey%20and%20Extremal%2C%20in%20Outline/08-lovasz-local-lemma.md)
+9. [Ramsey theory on the whole numbers: Schur's single-coloured x + y = z, van der Waerden's single-coloured progressions, and the Hales-Jewett theorem behind both](14-Ramsey%20and%20Extremal%2C%20in%20Outline/09-schur-and-van-der-waerden.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s15"></a>
+
+## 15 · Orders and Set Systems · 4 cards
+
+*Partial orders and families of sets: Dilworth's chains, Sperner's antichains, Mobius inversion on any order, and families in which every two sets meet.*
+
+1. [Dilworth's theorem: the fewest chains that cover an order equals the most items no two of which compare](15-Orders%20and%20Set%20Systems/01-dilworths-theorem.md)
+2. [Sperner's theorem: a family of subsets in which none contains another has at most the middle binomial coefficient of members, by the LYM inequality](15-Orders%20and%20Set%20Systems/02-sperner-and-lym.md)
+3. [Mobius inversion on an order: a sum over everything below can always be undone, and inclusion-exclusion and number theory's Mobius function are two cases](15-Orders%20and%20Set%20Systems/03-mobius-inversion-on-posets.md)
+4. [Erdos-Ko-Rado: if every two k-sets in a family share a member, the family is no bigger than all k-sets through one point, provided n is at least 2k](15-Orders%20and%20Set%20Systems/04-erdos-ko-rado-and-shadows.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s16"></a>
+
+## 16 · Designs · 4 cards
+
+*Arranging points into blocks so every pair meets equally often: block designs and Fisher's inequality, Steiner triple systems, finite planes with orthogonal Latin squares, and Hadamard matrices.*
+
+1. [Block designs: v points in b blocks of size k with every pair together exactly lambda times, two counts any design must obey, and Fisher's inequality that blocks never number fewer than points](16-Designs/01-block-designs-and-fishers-inequality.md)
+2. [Steiner triple systems: triples covering every pair exactly once, which exist exactly when v leaves remainder 1 or 3 on division by 6](16-Designs/02-steiner-triple-systems.md)
+3. [Finite planes and orthogonal Latin squares: build a plane of order q from a field with q elements, read off q - 1 Latin squares that pair perfectly, and why order 6 has none](16-Designs/03-projective-planes-and-orthogonal-latin-squares.md)
+4. [Hadamard matrices: square tables of plus and minus ones with perpendicular rows, possible only in sizes 1, 2 and multiples of 4, and the largest determinant such a table can have](16-Designs/04-hadamard-matrices.md)
 
 [↑ Back to the shelves](#top)
 

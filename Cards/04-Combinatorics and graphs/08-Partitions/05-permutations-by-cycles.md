@@ -706,6 +706,7 @@ example : 3 * 6 + 11 = 29 ∧ Nat.stirlingSecond 5 3 = 25 := by decide
 ## Where this goes next
 
 - [The twelvefold way](06-twelvefold-way.md): the table sorting this family of questions — labelled or unlabelled things into labelled or unlabelled boxes — and placing loops and blocks in it.
+- [The RSK correspondence](08-rsk-correspondence.md): every shuffle becomes a pair of same-shaped tableaux, so the squared tableau counts add up to n!, and the first row is the longest rising run.
 
 Beside it, [Stirling numbers of the second kind](04-stirling-numbers-second-kind.md) counts the same keys into blocks, and [Set partitions and Bell numbers](03-set-partitions-and-bell-numbers.md) adds those counts along a row.
 

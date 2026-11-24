@@ -119,7 +119,7 @@ Take $`n`$ different numbers, labelled as in Step 0. By Step 1 the $`n`$ label p
 
 Day i sits below day j when i is earlier **and** its price is lower ([Orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md)). A **chain**, a set whose members all compare, is a rising run. An **antichain**, a set in which no two compare, is a falling run: later days are lower.
 
-Days sharing a rising label never compare, by Step 1, so the labels cut the days into $`A`$ antichains of at most $`B`$ days each. So $`n`$ is at most $`A \times B`$ (Mirsky's theorem). Dilworth's theorem (1950) is the mirror: $`B`$ chains of at most $`A`$ days each.
+Days sharing a rising label never compare, by Step 1, so the labels cut the days into $`A`$ antichains of at most $`B`$ days each. So $`n`$ is at most $`A \times B`$ (Mirsky's theorem). [Dilworth's theorem](../15-Orders%20and%20Set%20Systems/01-dilworths-theorem.md) (1950) is the mirror: $`B`$ chains of at most $`A`$ days each.
 
 </details>
 
@@ -729,6 +729,7 @@ example : ∀ t : Finset (Fin 9), (∀ i ∈ t, ∀ j ∈ t, i < j → nineDays 
 
 - [Erdos problems](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/07-erdos-problems-and-computer-search.md): more of Erdős's questions, many with no exact threshold known.
 - [The unit-distance problem](../../25-Frontier/04-Geometry%20and%20Combinatorics/01-unit-distance-problem.md): another Erdős question about points in the plane; his guess was refuted in 2026, and the true answer is still open.
+- [Dilworth's theorem](../15-Orders%20and%20Set%20Systems/01-dilworths-theorem.md): the fewest chains that cover an order equals the most items no two of which compare.
 
 The lemma was built to force a convex polygon out of enough scattered points, and exactly how many points that takes is still open. The frontier cards pick up Erdős's questions about points in the plane.
 

@@ -964,6 +964,7 @@ example : (24 : ℕ) + 6 = 30 ∧ 24 < 24 + 6 := by norm_num
 
 - [Colouring maps](05-five-and-four-colour-theorems.md): whether a flat map's count is ever 0 at four colours, Birkhoff's plan.
 - [Edge colouring](06-edge-colouring-and-round-robin.md): the same question, asked of the lines.
+- [Graph minors](09-graph-minors-and-wagner.md): delete and contract edges, Wagner's theorem that flat graphs are exactly those without K5 or K(3,3) as a minor, and Robertson-Seymour in outline.
 
 Every wall doubles the split, so a real floor plan is past hand calculation. And nothing here rules out a flat map whose count reads 0 at four colours: that is the next card's question.
 

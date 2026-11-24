@@ -561,6 +561,8 @@ example : ∀ d ∈ [(![5, 0] : Fin 2 → ℤ), ![4, 3], ![3, 4], ![0, 5], ![-3,
 - [Riesz representation](../../18-Functional%20analysis/02-Hilbert%20Spaces/06-riesz-representation-theorem.md): every linear reading is a dot product.
 - [First fundamental form](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/02-first-fundamental-form.md): lengths on curved surfaces.
 - [Covectors and tensor fields](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/05-covectors-and-tensor-fields.md): the second list as a machine.
+- [The four fundamental subspaces](05-four-fundamental-subspaces.md): every matrix splits its inputs into row space and null space, its outputs into column space and left null space, at right angles.
+- [Dual spaces](../11-Duals%2C%20Quotients%20and%20Tensors/02-dual-spaces.md): the linear readings of a space form a space of their own, a basis gives a dual basis, and the transpose is the dual map.
 
 Nothing here splits a vector into a part along another and a part square to it; that split, and the shadow it names, comes next.
 

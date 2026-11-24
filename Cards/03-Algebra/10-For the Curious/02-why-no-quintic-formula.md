@@ -56,7 +56,7 @@ One measurement carries the proof. Take two shuffles of the roots, $`g`$ and $`h
 
 where $`g^{-1}`$ undoes $`g`$. This is their **commutator**: if the two commute, either order giving the same result, it all cancels and nothing moves. A commutator records how much order mattered.
 
-Collect the commutators of every pair in a group of shuffles and close them under "do one, then the next". Out comes a group inside the original, its **peel**, with what commuted dropped. The standard name for it is the **commutator subgroup**. A group is **solvable** when repeated peeling reaches the do-nothing shuffle.
+Collect the commutators of every pair in a group of shuffles and close them under "do one, then the next". Out comes a group inside the original, its **peel**, with what commuted dropped. The standard name for it is the **commutator subgroup**. A group is **solvable** when repeated peeling reaches the do-nothing shuffle. [Composition series](../08-Groups/14-composition-series-and-jordan-holder.md) gives a second test for it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |

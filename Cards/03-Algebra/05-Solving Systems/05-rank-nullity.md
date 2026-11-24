@@ -102,7 +102,7 @@ Every column sits in exactly one pile, so the two counts are all $`n`$ columns: 
 <details>
 <summary>What about the rows?</summary>
 
-The **row space** is everything you can build out of the rows, and its size is also the rank — which is why nobody says "column rank" out loud. Its leftover is the **left null space**: mixtures of rows cancelling to nothing, $`m`$ minus the rank of them. With this card's two, these are the four fundamental subspaces.
+The **row space** is everything you can build out of the rows, and its size is also the rank — which is why nobody says "column rank" out loud. Its leftover is the **left null space**: mixtures of rows cancelling to nothing, $`m`$ minus the rank of them. With this card's two, these are the four fundamental subspaces ([The four fundamental subspaces](../06-Dot%20Products%20and%20Best%20Fits/05-four-fundamental-subspaces.md)).
 
 </details>
 
@@ -503,6 +503,12 @@ example : (!![1, 0, 0; 0, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3,
 - [Dimension and tangent space](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/07-dimension-and-tangent-spaces.md): rank of a slope matrix as a dimension.
 - [Diffeomorphism, immersion, submersion](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/04-diffeomorphisms-immersions-and-embeddings.md): full rank as the test for a map that folds nothing.
 - [Constant rank theorem](../../06-Calculus%20and%20analysis/07-Several%20Variables/10-constant-rank-theorem.md): a map whose derivative keeps the same rank is a projection in disguise.
+- [The four fundamental subspaces](../06-Dot%20Products%20and%20Best%20Fits/05-four-fundamental-subspaces.md): every matrix splits its inputs into row space and null space, its outputs into column space and left null space, at right angles.
+- [Generalised eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/09-generalised-eigenvectors.md): when a matrix has too few eigenvectors, the vectors killed by a power of A minus lambda fill the gap.
+- [Jordan form](../07-Eigenvalues%20and%20Symmetric%20Matrices/10-jordan-canonical-form.md): every matrix is a stack of blocks, each an eigenvalue with ones just above the diagonal, and the block sizes are read from ranks.
+- [Direct sums and quotient spaces](../11-Duals%2C%20Quotients%20and%20Tensors/01-direct-sums-and-quotient-spaces.md): split a space into independent pieces, or blur a subspace to a point and count what is left.
+- [Dual spaces](../11-Duals%2C%20Quotients%20and%20Tensors/02-dual-spaces.md): the linear readings of a space form a space of their own, a basis gives a dual basis, and the transpose is the dual map.
+- [Block designs](../../04-Combinatorics%20and%20graphs/16-Designs/01-block-designs-and-fishers-inequality.md): v points in b blocks of size k with every pair together exactly lambda times, two counts any design must obey, and Fisher's inequality that blocks never number fewer than points.
 
 Rank counts directions, but not how close a matrix is to losing one more, which is what measured data needs: that grading waits for [The singular value decomposition](../07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md).
 

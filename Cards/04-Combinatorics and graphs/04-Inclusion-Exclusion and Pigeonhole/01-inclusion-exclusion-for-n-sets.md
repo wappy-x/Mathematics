@@ -585,6 +585,7 @@ example : ((Icc 1 30).filter (fun x => ¬ 2 ∣ x ∧ ¬ 3 ∣ x ∧ ¬ 5 ∣ x)
 - [Stopping the sieve early](04-union-bound-and-bonferroni.md): what a truncated sum is worth.
 - [Sieving by inclusion-exclusion](../../21-Algebraic%20and%20analytic%20number%20theory/04-Sieves%20and%20Prime%20Gaps/01-the-legendre-sieve-and-the-parity-problem.md): the sieve run over the primes, and where it stalls.
 - [Sum-product](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/06-sum-product-and-additive-energy.md): counting overlaps far too many to list.
+- [Mobius inversion on an order](../15-Orders%20and%20Set%20Systems/03-mobius-inversion-on-posets.md): a sum over everything below can always be undone, and inclusion-exclusion and number theory's Mobius function are two cases.
 
 The formula is exact but doubles in length with each property added; what a partial sum is worth is the next question ([Stopping the sieve early](04-union-bound-and-bonferroni.md)).
 

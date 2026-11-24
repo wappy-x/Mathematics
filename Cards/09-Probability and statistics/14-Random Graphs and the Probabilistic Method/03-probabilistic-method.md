@@ -152,7 +152,7 @@ An office has 10 staff and 15 pairs who clash. Two rooms are free. Put each pers
 
 The rule holds for any network: a graph with $`m`$ edges (lines joining dots) has a **cut**, a split of the dots into two groups, crossed by at least $`m/2`$ edges. Nothing about the network's shape was used.
 
-A different route to existence with dependent bad events is the Lovász local lemma, which gains another factor of about 1.4142 on Ramsey bounds (Spencer, in Sources). When $`E[X]`$ is large, the question flips to whether $`X`$ is above 0 for most choices, which needs the variance: [First and second moments](04-first-and-second-moment-methods.md).
+A different route to existence with dependent bad events is the Lovász local lemma ([The Lovasz local lemma](../../04-Combinatorics%20and%20graphs/14-Ramsey%20and%20Extremal%2C%20in%20Outline/08-lovasz-local-lemma.md)), which gains another factor of about 1.4142 on Ramsey bounds (Spencer, in Sources). When $`E[X]`$ is large, the question flips to whether $`X`$ is above 0 for most choices, which needs the variance: [First and second moments](04-first-and-second-moment-methods.md).
 
 ---
 

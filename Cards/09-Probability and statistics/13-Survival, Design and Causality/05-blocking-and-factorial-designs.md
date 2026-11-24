@@ -176,7 +176,7 @@ The divisor 6 makes $`s^2`$ unbiased for $`\sigma^2`$. Over 20,000 simulated sea
 
 The alternative route is least squares ([Multiple regression](../09-Regression/03-multiple-regression-and-gauss-markov.md)): regress the twelve yields on an intercept, two strip indicators and three columns of plus and minus ones. Twice each fitted slope is the matching contrast, and the leftover sum of squares is the same 18.17.
 
-When a block is too small to hold every combination, balanced arrangements like the league fixture lists of [Edge colouring](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/06-edge-colouring-and-round-robin.md) take over. That card's fixture grid, with one more symbol on its diagonal, is a **Latin square**: every symbol once in each row and once in each column. It blocks two ways at once.
+When a block is too small to hold every combination, balanced arrangements ([Block designs](../../04-Combinatorics%20and%20graphs/16-Designs/01-block-designs-and-fishers-inequality.md)) like the league fixture lists of [Edge colouring](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/06-edge-colouring-and-round-robin.md) take over. That card's fixture grid, with one more symbol on its diagonal, is a **Latin square**: every symbol once in each row and once in each column. It blocks two ways at once.
 
 On a field that also changed from west to east, four strips of four plots could be laid out as the grid for a four-team league, with rounds 1, 2 and 3 standing for fertiliser, water and both, and neither on the diagonal:
 

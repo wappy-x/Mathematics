@@ -131,7 +131,7 @@ Three multiplications, whatever n is. One month gives (800, 200); twelve give (6
 
 The shear `[[1, 1], [0, 1]]` slides points sideways in proportion to their height. Its eigenvalue equation is (1 − stretch)^2 = 0: eigenvalue 1, twice over. Subtract $`I`$ and `[[0, 1], [0, 0]]` is left, sending (x, y) to (y, 0), zero only when y is 0.
 
-Every eigenvector lies along (1, 0): one direction where two are needed, so P's columns would be multiples of each other, P would have no inverse, and there is no factorisation. Such a matrix is **defective**, and its replacement, the Jordan form, belongs to the applied and computational wing.
+Every eigenvector lies along (1, 0): one direction where two are needed, so P's columns would be multiples of each other, P would have no inverse, and there is no factorisation. Such a matrix is **defective**, and its replacement is the [Jordan form](10-jordan-canonical-form.md).
 
 Its powers stay easy by hand — `[[1, n], [0, 1]]` after n months, `[[1, 12], [0, 1]]` after twelve — just not this way.
 
@@ -591,6 +591,10 @@ example : ((!![3, 1; 2, -1] : Matrix (Fin 2) (Fin 2) ℚ) * !![1, 0; 0, (1/2) ^ 
 - [Eigenvalues by iteration](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/07-eigenvalues-power-iteration-and-the-qr-algorithm.md): eigenvalues for a thousand rows.
 - [Bounded and symmetric](../../18-Functional%20analysis/03-Bounded%20Operators/10-spectral-theorem-for-bounded-self-adjoint-operators.md): infinitely many directions.
 - [Semigroups](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/04-strongly-continuous-semigroups.md): with time as the power.
+- [Schur's triangle](07-schur-triangularisation.md): every square matrix is upper triangular in some perpendicular basis, with its eigenvalues on the diagonal.
+- [Cayley-Hamilton and the minimal polynomial](08-cayley-hamilton-and-minimal-polynomial.md): every matrix satisfies its own characteristic equation, and the smallest such equation says whether it can be diagonalised.
+- [Generalised eigenvectors](09-generalised-eigenvectors.md): when a matrix has too few eigenvectors, the vectors killed by a power of A minus lambda fill the gap.
+- [Jordan form](10-jordan-canonical-form.md): every matrix is a stack of blocks, each an eigenvalue with ones just above the diagonal, and the block sizes are read from ranks.
 
 This card was handed its eigenvectors and got lucky; the next names a family where that luck is guaranteed and the eigenvectors arrive at right angles.
 

@@ -637,6 +637,7 @@ example : ![(3 : ℚ), -2] ⬝ᵥ (!![4, 6; 6, 9] *ᵥ ![(3 : ℚ), -2]) = 0 := 
 - [Point types](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/06-classification-of-surface-points.md): bowl, dome, saddle.
 - [Riemannian metric](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/01-riemannian-metrics.md): measuring length.
 - [Covariance matrices](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/07-the-manifold-of-covariance-matrices.md): their own space.
+- [Bilinear forms](12-bilinear-forms-and-sylvesters-law.md): a matrix that pairs two vectors instead of moving one, the symmetric ones are quadratic forms, the alternating ones measure signed area, and the sign count never changes.
 
 This card leaves open where the matrix comes from when a surface is measured rather than a mix: second derivatives, a later card's business.
 
