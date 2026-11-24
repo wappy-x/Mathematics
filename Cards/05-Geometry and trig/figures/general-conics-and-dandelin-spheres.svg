@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" font-family="Helvetica, Arial, sans-serif" font-size="11">
+  <title>Dandelin spheres for a lamp's beam on flat ground, side view through the beam's axis, 1 m = 40 units</title>
+  <rect x="0" y="0" width="400" height="400" fill="#ffffff"/>
+  <rect x="0" y="90" width="400" height="310" fill="#f2efe8"/>
+  <text x="265" y="390" fill="#555555">below ground (imagined)</text>
+  <line x1="5" y1="90" x2="395" y2="90" stroke="#1d1d1d" stroke-width="1.2"/>
+  <text x="340" y="84" fill="#1d1d1d">ground</text>
+  <line x1="30" y1="33.43" x2="223.14" y2="226.57" stroke="#555555" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="150" y="190" fill="#555555">beam axis</text>
+  <line x1="30" y1="33.43" x2="119.03" y2="365.71" stroke="#1d1d1d" stroke-width="1.4"/>
+  <line x1="30" y1="33.43" x2="362.28" y2="122.47" stroke="#1d1d1d" stroke-width="1.4"/>
+  <circle cx="63.14" cy="66.57" r="23.43" fill="none" stroke="#2a9d8f" stroke-width="1.6"/>
+  <circle cx="223.14" cy="226.57" r="136.57" fill="none" stroke="#2a9d8f" stroke-width="1.6"/>
+  <line x1="40.50" y1="72.63" x2="69.20" y2="43.94" stroke="#2a9d8f" stroke-width="1" stroke-dasharray="2 2"/>
+  <line x1="91.22" y1="261.92" x2="258.48" y2="94.65" stroke="#2a9d8f" stroke-width="1" stroke-dasharray="2 2"/>
+  <line x1="45.16" y1="90" x2="241.12" y2="90" stroke="#e76f51" stroke-width="4"/>
+  <text x="58" y="104" fill="#e76f51">lit patch, 4.899 m</text>
+  <circle cx="30" cy="33.43" r="4" fill="#1d1d1d"/>
+  <text x="10" y="22" fill="#1d1d1d">lamp, 1.414 m up</text>
+  <circle cx="63.14" cy="90" r="3.5" fill="#1d1d1d"/>
+  <text x="58" y="118" fill="#1d1d1d">F1</text>
+  <circle cx="223.14" cy="90" r="3.5" fill="#1d1d1d"/>
+  <text x="216" y="118" fill="#1d1d1d">F2</text>
+  <text x="110" y="38" fill="#2a9d8f">small sphere, r 0.586 m</text>
+  <text x="250" y="200" fill="#2a9d8f">large sphere,</text>
+  <text x="250" y="214" fill="#2a9d8f">r 3.414 m</text>
+</svg>

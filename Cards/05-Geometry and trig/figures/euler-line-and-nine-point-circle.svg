@@ -1,0 +1,24 @@
+<svg viewBox="0 0 360 310" xmlns="http://www.w3.org/2000/svg" width="360" height="310" style="color:#24292f">
+<title>Triangle A (0, 0), B (6, 0), C (2, 4) with its dotted altitudes meeting at H; the dashed circumcircle centred at O; the Euler line through H, N, G and O; and the half-size nine-point circle centred at N through the three side midpoints, the three altitude feet and the three midpoints between H and the corners</title><rect x="0" y="0" width="360" height="310" rx="8" fill="#ffffff"/>
+<polygon points="60,200 300,200 140,40" fill="currentColor" fill-opacity="0.10" stroke="currentColor" stroke-width="2"/>
+<circle cx="180" cy="160" r="126.49" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<circle cx="160" cy="140" r="63.25" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="140" y1="40" x2="140" y2="200" stroke="currentColor" stroke-width="1" stroke-dasharray="2,3"/>
+<line x1="60" y1="200" x2="180" y2="80" stroke="currentColor" stroke-width="1" stroke-dasharray="2,3"/>
+<line x1="300" y1="200" x2="108" y2="104" stroke="currentColor" stroke-width="1" stroke-dasharray="2,3"/>
+<line x1="80" y1="60" x2="260" y2="240" stroke="currentColor" stroke-width="2.5"/>
+<g fill="currentColor">
+<circle cx="220" cy="120" r="3"/><circle cx="100" cy="120" r="3"/><circle cx="180" cy="200" r="3"/>
+<circle cx="180" cy="80" r="3"/><circle cx="108" cy="104" r="3"/><circle cx="140" cy="200" r="3"/>
+<circle cx="100" cy="160" r="3"/><circle cx="220" cy="160" r="3"/><circle cx="140" cy="80" r="3"/>
+<rect x="136" y="116" width="8" height="8"/><rect x="156" y="136" width="8" height="8"/>
+<rect x="162.67" y="142.67" width="8" height="8"/><rect x="176" y="156" width="8" height="8"/>
+</g>
+<g font-size="14" fill="currentColor">
+<text x="44" y="214">A</text><text x="304" y="214">B</text><text x="134" y="32">C</text>
+</g>
+<g font-size="13" fill="currentColor">
+<text x="120" y="124">H</text><text x="166" y="132">N</text><text x="176" y="148">G</text><text x="190" y="166">O</text>
+<text x="352" y="302" text-anchor="end">Euler line x + y = 4</text>
+</g>
+</svg>

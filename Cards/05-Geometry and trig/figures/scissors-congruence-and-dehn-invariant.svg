@@ -1,0 +1,24 @@
+<svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg" width="400" height="240" style="color:#24292f">
+<title>The 3 m by 4 m right triangle cut into four pieces T, O, Q and R, and the same four pieces moved into a square of side 2.449 m</title><rect x="0" y="0" width="400" height="240" rx="8" fill="#ffffff"/>
+<polygon points="40.00,200.00 137.98,200.00 40.00,120.00" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="40.00,120.00 62.02,137.98 62.02,120.00" fill="currentColor" fill-opacity="0.55" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="137.98,200.00 160.00,200.00 100.00,120.00 62.02,120.00 62.02,137.98" fill="currentColor" fill-opacity="0.22" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="40.00,120.00 100.00,120.00 40.00,40.00" fill="currentColor" fill-opacity="0.38" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="72.66" y="177.33" font-size="13" text-anchor="middle" fill="currentColor">T</text>
+<line x1="54.68" y1="125.99" x2="26.00" y2="109.99" stroke="currentColor" stroke-width="1"/>
+<text x="16.00" y="113.99" font-size="12" fill="currentColor">O</text>
+<text x="104.40" y="159.60" font-size="13" text-anchor="middle" fill="currentColor">Q</text>
+<text x="60.00" y="97.33" font-size="13" text-anchor="middle" fill="currentColor">R</text>
+<polygon points="240.00,200.00 337.98,200.00 240.00,120.00" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="315.96,182.02 337.98,200.00 337.98,182.02" fill="currentColor" fill-opacity="0.55" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="315.96,182.02 337.98,182.02 277.98,102.02 240.00,102.02 240.00,120.00" fill="currentColor" fill-opacity="0.22" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="337.98,102.02 277.98,102.02 337.98,182.02" fill="currentColor" fill-opacity="0.38" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="272.66" y="177.33" font-size="13" text-anchor="middle" fill="currentColor">T</text>
+<line x1="330.64" y1="188.01" x2="341.64" y2="206.01" stroke="currentColor" stroke-width="1"/>
+<text x="344.64" y="210.01" font-size="12" fill="currentColor">O</text>
+<text x="282.38" y="141.62" font-size="13" text-anchor="middle" fill="currentColor">Q</text>
+<text x="317.98" y="132.69" font-size="13" text-anchor="middle" fill="currentColor">R</text>
+<text x="100" y="225" font-size="12" text-anchor="middle" fill="currentColor">triangle, legs 3 m and 4 m</text>
+<text x="288.99" y="225" font-size="12" text-anchor="middle" fill="currentColor">square, side 2.449 m</text>
+<path d="M178,120 H218 M210,114 L218,120 L210,126" fill="none" stroke="currentColor" stroke-width="1.5"/>
+</svg>

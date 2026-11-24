@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 400" width="420" height="400" font-family="Helvetica, Arial, sans-serif" font-size="14">
+  <title>The 2 by 3 rectangle of dots for 5 and 7, cut by the diagonal from (0,0) to (2.5,3.5)</title>
+  <rect x="0" y="0" width="420" height="400" fill="#ffffff"/>
+  <!-- one unit = 80 px; origin at (60, 340) -->
+  <line x1="60" y1="340" x2="300" y2="340" stroke="#1d1d1d" stroke-width="1.5"/>
+  <line x1="60" y1="340" x2="60" y2="30" stroke="#1d1d1d" stroke-width="1.5"/>
+  <rect x="60" y="60" width="200" height="280" fill="none" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="5 4"/>
+  <line x1="60" y1="340" x2="260" y2="60" stroke="#c0392b" stroke-width="2.5"/>
+  <circle cx="140" cy="260" r="8" fill="#1d1d1d"/>
+  <circle cx="220" cy="260" r="8" fill="#1d1d1d"/>
+  <circle cx="220" cy="180" r="8" fill="#1d1d1d"/>
+  <circle cx="140" cy="180" r="8" fill="#ffffff" stroke="#1d1d1d" stroke-width="2.5"/>
+  <circle cx="140" cy="100" r="8" fill="#ffffff" stroke="#1d1d1d" stroke-width="2.5"/>
+  <circle cx="220" cy="100" r="8" fill="#ffffff" stroke="#1d1d1d" stroke-width="2.5"/>
+  <text x="140" y="362" text-anchor="middle" fill="#1d1d1d">1</text>
+  <text x="220" y="362" text-anchor="middle" fill="#1d1d1d">2</text>
+  <text x="260" y="384" text-anchor="middle" fill="#1d1d1d">2.5</text>
+  <text x="44" y="265" text-anchor="end" fill="#1d1d1d">1</text>
+  <text x="44" y="185" text-anchor="end" fill="#1d1d1d">2</text>
+  <text x="44" y="105" text-anchor="end" fill="#1d1d1d">3</text>
+  <text x="44" y="65" text-anchor="end" fill="#1d1d1d">3.5</text>
+  <text x="50" y="358" text-anchor="end" fill="#1d1d1d">0</text>
+  <text x="268" y="52" fill="#c0392b">(2.5, 3.5)</text>
+  <text x="290" y="250" fill="#1d1d1d">● below: 3</text>
+  <text x="290" y="272" fill="#1d1d1d">○ above: 3</text>
+  <text x="210" y="20" text-anchor="middle" fill="#1d1d1d">5 and 7: six dots, split 3 and 3</text>
+</svg>

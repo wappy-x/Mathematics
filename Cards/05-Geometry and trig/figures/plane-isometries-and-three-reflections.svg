@@ -1,0 +1,21 @@
+<svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg" width="300" height="220" style="color:#24292f">
+<title>The triangle O, X, Y reflected in the mirrors x = 1, then x = 2, then y = 0: the first two flips slide it 2 to the right, the third flips it over the line y = 0, giving the glide reflection</title><rect x="0" y="0" width="300" height="220" rx="8" fill="#ffffff"/>
+<line x1="105" y1="12" x2="105" y2="208" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="165" y1="12" x2="165" y2="208" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="12" y1="110" x2="288" y2="110" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="109" y="24" font-size="12" fill="currentColor">x = 1</text>
+<text x="169" y="24" font-size="12" fill="currentColor">x = 2</text>
+<text x="286" y="104" font-size="12" text-anchor="end" fill="currentColor">y = 0</text>
+<polygon points="45,110 105,110 45,50" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="2"/>
+<polygon points="165,110 105,110 165,50" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 3"/>
+<polygon points="165,110 225,110 165,50" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="7 4"/>
+<polygon points="165,110 225,110 165,170" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="2"/>
+<text x="38" y="125" font-size="13" fill="currentColor">O</text>
+<text x="86" y="125" font-size="13" fill="currentColor">X</text>
+<text x="34" y="52" font-size="13" fill="currentColor">Y</text>
+<text x="146" y="92" font-size="12" text-anchor="middle" fill="currentColor">1</text>
+<text x="184" y="92" font-size="12" text-anchor="middle" fill="currentColor">2</text>
+<text x="150" y="124" font-size="13" fill="currentColor">O′</text>
+<text x="228" y="124" font-size="13" fill="currentColor">X′</text>
+<text x="150" y="180" font-size="13" fill="currentColor">Y′</text>
+</svg>

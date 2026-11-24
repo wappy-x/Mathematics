@@ -1,0 +1,21 @@
+<svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg" width="420" height="260" style="color:#24292f">
+<title>Top view to scale: the screw axis seen end-on at (0.5, 0.5), the drone's start (2, 3) and end (-2, 2) seen from above, a quarter-circle arc between them about the axis, and dashed radii meeting at a right angle</title><rect x="0" y="0" width="420" height="260" rx="8" fill="#ffffff"/>
+<line x1="25" y1="220" x2="370" y2="220" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+<line x1="200" y1="248" x2="200" y2="30" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+<text x="376" y="224" font-size="13" fill="currentColor">x</text>
+<text x="205" y="36" font-size="13" fill="currentColor">y</text>
+<text x="186" y="238" font-size="13" fill="currentColor">O</text>
+<line x1="225" y1="195" x2="300" y2="70" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="225" y1="195" x2="100" y2="120" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5,4"/>
+<polyline points="231.17,184.71 220.88,178.54 214.71,188.83" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<path d="M 300 70 A 145.77 145.77 0 0 0 100 120" fill="none" stroke="currentColor" stroke-width="2"/>
+<polygon points="100,120 109.44,114.00 100.86,108.86" fill="currentColor"/>
+<circle cx="225" cy="195" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="225" cy="195" r="1.5" fill="currentColor"/>
+<circle cx="300" cy="70" r="3.5" fill="currentColor"/>
+<circle cx="100" cy="120" r="3.5" fill="currentColor"/>
+<text x="235" y="210" font-size="13" fill="currentColor">screw axis (0.5, 0.5), end-on</text>
+<text x="308" y="66" font-size="13" fill="currentColor">start (2, 3, 5)</text>
+<text x="94" y="106" font-size="13" text-anchor="end" fill="currentColor">end (-2, 2, 7)</text>
+<text x="300" y="40" font-size="13" text-anchor="middle" fill="currentColor">turn 90°, rise 2 m</text>
+</svg>

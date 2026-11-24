@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 250" font-family="Helvetica, Arial, sans-serif" font-size="12">
+  <title>The survey field cut into four triangles with corners coloured 1, 2, 3 and guards at A and D; the 12-corner comb with the floor strip each prong tip can see</title>
+  <rect x="0" y="0" width="640" height="250" fill="#ffffff"/>
+  <polygon points="82,196 290,196 316,66 212,118 160,14 82,66" fill="#f3efe6" stroke="#1d1d1d" stroke-width="2"/>
+  <line x1="82" y1="66" x2="290" y2="196" stroke="#1d1d1d" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <line x1="290" y1="196" x2="212" y2="118" stroke="#1d1d1d" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <line x1="82" y1="66" x2="212" y2="118" stroke="#1d1d1d" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <circle cx="82" cy="196" r="6" fill="#1d1d1d"/>
+  <circle cx="212" cy="118" r="6" fill="#1d1d1d"/>
+  <text x="64" y="212">A 1</text>
+  <text x="288" y="214">B 2</text>
+  <text x="320" y="64">C 3</text>
+  <text x="200" y="140">D 1</text>
+  <text x="168" y="16">E 2</text>
+  <text x="56" y="62">F 3</text>
+  <text x="120" y="244">Survey field: 4 triangles, guards at A and D</text>
+  <polygon points="370,222 622,222 604,96 586,204 550,204 532,96 514,204 478,204 460,96 442,204 406,204 388,96" fill="#f3efe6" stroke="#1d1d1d" stroke-width="2"/>
+  <g stroke="#1d1d1d" stroke-width="1" stroke-dasharray="3 3" fill="none">
+    <polyline points="370,222 388,96 409,222"/>
+    <polyline points="439,222 460,96 481,222"/>
+    <polyline points="511,222 532,96 553,222"/>
+    <polyline points="583,222 604,96 622,222"/>
+  </g>
+  <text x="380" y="88">l</text>
+  <text x="456" y="88">i</text>
+  <text x="528" y="88">f</text>
+  <text x="600" y="88">c</text>
+  <text x="400" y="244">Comb: 12 corners, 4 prongs</text>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 250" width="600" height="250" font-family="Helvetica, Arial, sans-serif" font-size="11">
+  <title>One hyperbolic triangle O, A, B and the point Q drawn in the Poincare disc, the Klein disc and the upper half-plane</title>
+  <rect x="0" y="0" width="600" height="250" fill="#ffffff"/>
+  <!-- Poincare disc: rim radius 1 = 85 units, centre (100, 115) -->
+  <circle cx="100" cy="115" r="85" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+  <path d="M 100 115 L 142.5 115 A 123.9 123.9 0 0 1 100 72.5 Z" fill="#2a9d8f" fill-opacity="0.15" stroke="#1d1d1d" stroke-width="1.5"/>
+  <circle cx="100" cy="115" r="2.5" fill="#1d1d1d"/>
+  <circle cx="142.5" cy="115" r="2.5" fill="#1d1d1d"/>
+  <circle cx="100" cy="72.5" r="2.5" fill="#1d1d1d"/>
+  <circle cx="128.3" cy="115" r="3" fill="#e76f51"/>
+  <text x="88" y="128">O</text>
+  <text x="145" y="128">A</text>
+  <text x="88" y="70">B</text>
+  <text x="122" y="128" fill="#b4472d">Q</text>
+  <text x="100" y="222" text-anchor="middle" font-weight="bold">Poincaré disc</text>
+  <text x="100" y="238" text-anchor="middle">angle at A: 30.96°</text>
+  <!-- Klein disc: rim radius 1 = 85 units, centre (300, 115) -->
+  <circle cx="300" cy="115" r="85" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+  <path d="M 300 115 L 368 115 L 300 47 Z" fill="#2a9d8f" fill-opacity="0.15" stroke="#1d1d1d" stroke-width="1.5"/>
+  <circle cx="300" cy="115" r="2.5" fill="#1d1d1d"/>
+  <circle cx="368" cy="115" r="2.5" fill="#1d1d1d"/>
+  <circle cx="300" cy="47" r="2.5" fill="#1d1d1d"/>
+  <circle cx="351" cy="115" r="3" fill="#e76f51"/>
+  <text x="288" y="128">O</text>
+  <text x="371" y="128">A</text>
+  <text x="288" y="45">B</text>
+  <text x="345" y="128" fill="#b4472d">Q</text>
+  <text x="300" y="222" text-anchor="middle" font-weight="bold">Klein disc</text>
+  <text x="300" y="238" text-anchor="middle">drawn angle at A: 45°</text>
+  <!-- Upper half-plane: 1 unit = 55 units, 0 at (500, 205) -->
+  <line x1="405" y1="205" x2="595" y2="205" stroke="#1d1d1d" stroke-width="1.5"/>
+  <path d="M 500 150 L 500 40 A 320.7 320.7 0 0 0 456 172 A 55 55 0 0 1 500 150 Z" fill="#2a9d8f" fill-opacity="0.15" stroke="#1d1d1d" stroke-width="1.5"/>
+  <circle cx="500" cy="150" r="2.5" fill="#1d1d1d"/>
+  <circle cx="500" cy="40" r="2.5" fill="#1d1d1d"/>
+  <circle cx="456" cy="172" r="2.5" fill="#1d1d1d"/>
+  <circle cx="500" cy="95" r="3" fill="#e76f51"/>
+  <text x="505" y="154">O = i</text>
+  <text x="505" y="44">A = 3i</text>
+  <text x="430" y="178">B</text>
+  <text x="505" y="99" fill="#b4472d">Q = 2i</text>
+  <text x="590" y="200" text-anchor="end">real line</text>
+  <text x="500" y="222" text-anchor="middle" font-weight="bold">Upper half-plane</text>
+  <text x="500" y="238" text-anchor="middle">angle at A: 30.96°</text>
+</svg>

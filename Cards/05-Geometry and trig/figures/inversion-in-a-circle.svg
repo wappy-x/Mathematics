@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 340" width="420" height="340" font-family="Helvetica, Arial, sans-serif" font-size="13">
+  <title>Inversion in the unit circle: the line x = 1/2 turns into the circle with centre (1, 0) and radius 1, and the circle through P, P' and B meets the mirror at right angles</title>
+  <rect x="0" y="0" width="420" height="340" fill="#ffffff"/>
+  <!-- 1 unit = 80 units of drawing; O at (100, 250) -->
+  <line x1="10" y1="250" x2="410" y2="250" stroke="#9a9a9a" stroke-width="1"/>
+  <line x1="100" y1="10" x2="100" y2="335" stroke="#9a9a9a" stroke-width="1"/>
+  <!-- the mirror: unit circle -->
+  <circle cx="100" cy="250" r="80" fill="none" stroke="#1d1d1d" stroke-width="2.5"/>
+  <!-- the line x = 1/2 and its image, the circle centre (1, 0), radius 1 -->
+  <line x1="140" y1="10" x2="140" y2="335" stroke="#c4502f" stroke-width="2"/>
+  <circle cx="180" cy="250" r="80" fill="none" stroke="#c4502f" stroke-width="2" stroke-dasharray="7 4"/>
+  <!-- the circle through P, P' and B: centre (1.25, 1.25), radius 1.457738 -->
+  <circle cx="200" cy="150" r="116.6" fill="none" stroke="#1f7a70" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <path d="M 178.6 264.6 A 116.6 116.6 0 0 1 85.4 171.4" fill="none" stroke="#1f7a70" stroke-width="3"/>
+  <!-- points -->
+  <g fill="#1d1d1d">
+    <circle cx="100" cy="250" r="3"/>
+    <circle cx="140" cy="250" r="3.5"/>
+    <circle cx="260" cy="250" r="3.5"/>
+    <circle cx="140" cy="210" r="3.5"/>
+    <circle cx="180" cy="170" r="3.5"/>
+    <circle cx="100" cy="210" r="3.5"/>
+    <circle cx="100" cy="90" r="3.5"/>
+  </g>
+  <g fill="#1d1d1d">
+    <text x="86" y="266">O</text>
+    <text x="144" y="266">P</text>
+    <text x="264" y="266">P′</text>
+    <text x="146" y="214">Q</text>
+    <text x="186" y="166">Q′</text>
+    <text x="84" y="206">B</text>
+    <text x="84" y="86">B′</text>
+    <text x="8" y="162">mirror, radius 1</text>
+    <text x="146" y="24" fill="#c4502f">line x = 1/2</text>
+    <text x="268" y="300" fill="#c4502f">its image</text>
+    <text x="262" y="30" fill="#1f7a70">circle through P, P′, B</text>
+  </g>
+</svg>

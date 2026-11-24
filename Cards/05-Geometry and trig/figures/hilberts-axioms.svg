@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" width="560" height="400" font-family="Helvetica, Arial, sans-serif" font-size="15">
+  <title>Euclid I.1 to scale: circles of radius 4 cm about A and B, 4 cm apart, cross at C (2, 3.464) and C' (2, -3.464); a line enters triangle ABC through D on AB and leaves through BC at E</title>
+  <rect x="0" y="0" width="560" height="400" fill="#ffffff"/>
+  <circle cx="200" cy="200" r="160" fill="none" stroke="#777777" stroke-width="1.5"/>
+  <circle cx="360" cy="200" r="160" fill="none" stroke="#777777" stroke-width="1.5"/>
+  <polygon points="200,200 360,200 280,61.4" fill="#e8eef5" stroke="#1d1d1d" stroke-width="2.5"/>
+  <line x1="200" y1="240" x2="360" y2="80" stroke="#b5402a" stroke-width="2" stroke-dasharray="7 5"/>
+  <line x1="240" y1="200" x2="316.1" y2="123.9" stroke="#b5402a" stroke-width="3"/>
+  <circle cx="200" cy="200" r="4" fill="#1d1d1d"/>
+  <circle cx="360" cy="200" r="4" fill="#1d1d1d"/>
+  <circle cx="280" cy="61.4" r="4" fill="#1d1d1d"/>
+  <circle cx="280" cy="338.6" r="4" fill="#1d1d1d"/>
+  <circle cx="240" cy="200" r="4" fill="#b5402a"/>
+  <circle cx="316.1" cy="123.9" r="4" fill="#b5402a"/>
+  <text x="180" y="218" fill="#1d1d1d">A</text>
+  <text x="368" y="218" fill="#1d1d1d">B</text>
+  <text x="290" y="58" fill="#1d1d1d">C (2, 3.464)</text>
+  <text x="290" y="356" fill="#1d1d1d">C' (2, −3.464)</text>
+  <text x="232" y="220" fill="#b5402a">D</text>
+  <text x="326" y="138" fill="#b5402a">E</text>
+  <text x="16" y="392" fill="#1d1d1d" font-size="13">1 cm = 40 units; AB = 4 cm</text>
+</svg>

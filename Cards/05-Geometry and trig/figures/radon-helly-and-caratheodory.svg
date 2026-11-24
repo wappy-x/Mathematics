@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 240" width="520" height="240" font-family="Helvetica, Arial, sans-serif" font-size="12">
+  <title>Left: the four points (0, 0), (4, 0), (0, 4) and (1, 1), with (1, 1) inside the triangle of the other three, the Radon split. Right: the survey polygon A to F with reflex corner D, the average x of its corners, and the triangle B, E, F of three corners that holds x.</title>
+  <rect x="0" y="0" width="520" height="240" fill="#ffffff"/>
+  <!-- left panel: 40 units per grid unit, origin (40, 200) -->
+  <text x="20" y="20" fill="#1d1d1d">Radon: four points</text>
+  <polygon points="40,200 200,200 40,40" fill="#e9c46a" fill-opacity="0.35" stroke="#1d1d1d" stroke-width="2"/>
+  <circle cx="40" cy="200" r="4" fill="#1d1d1d"/>
+  <circle cx="200" cy="200" r="4" fill="#1d1d1d"/>
+  <circle cx="40" cy="40" r="4" fill="#1d1d1d"/>
+  <circle cx="80" cy="160" r="5" fill="#e76f51" stroke="#1d1d1d"/>
+  <text x="22" y="218" fill="#1d1d1d">(0, 0)</text>
+  <text x="182" y="218" fill="#1d1d1d">(4, 0)</text>
+  <text x="48" y="44" fill="#1d1d1d">(0, 4)</text>
+  <text x="88" y="158" fill="#1d1d1d">(1, 1)</text>
+  <!-- right panel: 22 units per grid step, origin at (250, 215) -->
+  <text x="262" y="20" fill="#1d1d1d">Carathéodory: three corners</text>
+  <polygon points="294,193 470,193 492,83 404,127 360,39 294,83" fill="#2a9d8f" fill-opacity="0.18" stroke="#1d1d1d" stroke-width="2"/>
+  <polygon points="470,193 360,39 294,83" fill="none" stroke="#e76f51" stroke-width="2" stroke-dasharray="6 4"/>
+  <circle cx="385.7" cy="119.7" r="5" fill="#e76f51" stroke="#1d1d1d"/>
+  <text x="368" y="124" fill="#1d1d1d">x</text>
+  <text x="280" y="208" fill="#1d1d1d">A</text>
+  <text x="472" y="208" fill="#1d1d1d">B</text>
+  <text x="497" y="82" fill="#1d1d1d">C</text>
+  <text x="408" y="142" fill="#1d1d1d">D</text>
+  <text x="356" y="33" fill="#1d1d1d">E</text>
+  <text x="280" y="80" fill="#1d1d1d">F</text>
+</svg>
