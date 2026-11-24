@@ -880,7 +880,7 @@ example : corating.det = 24 * 216 := by
 
 - **Recommender systems.** A rank-k taste model is a point on a Grassmann manifold (the set of k-dimensional subspaces). This card is its smallest case: k = 1, where a subspace is a direction up to sign, and $`x`$ and $`-x`$ give the same recommender.
 - **Principal component analysis.** The best taste direction is the first principal direction of the ratings. Trust-region methods on the sphere and on the Grassmann manifold compute leading eigenvectors of very large matrices.
-- **Low-rank matrix completion.** When most ratings are missing, the unknown table is searched over the set of fixed-rank matrices, a curved set. Riemannian trust regions with exact Hessians are a standard solver there.
+- **Low-rank matrix completion.** When most ratings are missing, the unknown table is searched over the set of fixed-rank matrices, a curved set. Riemannian trust regions with exact Hessians are a standard solver there; [Matrix completion](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/13-matrix-completion-and-the-nuclear-norm.md) takes the convex route.
 - **Rotations and poses.** Robotics and computer vision fit camera orientations on the rotation group. The same recipe applies: tangent model, Riemannian Hessian with its correction, retraction back to the group.
 
 > **Say it back**

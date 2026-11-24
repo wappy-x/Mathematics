@@ -892,6 +892,11 @@ example : (1200 * 1 ^ 2 - 400 * 1 + 2 : ℚ) = 802 ∧ (802 + 200 : ℚ) = 1002 
 - [Proximal gradient](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/06-proximal-methods-ista-fista-and-the-lasso.md): the same step, followed by a shrink, for costs with a corner.
 - [Stochastic gradient](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/08-stochastic-gradient-and-sample-average-approximation.md): the noisy gradient, and the shrinking steps that make it settle.
 - [Riemannian gradient descent](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/05-optimisation-on-manifolds.md): stepping downhill on a curved surface instead of a flat map.
+- [The subgradient method](11-subgradient-method-and-polyak-steps.md): steps that need not go downhill, and the 1/sqrt(k) guarantee.
+- [Frank-Wolfe](../08-First-Order%20Methods%20at%20Scale/01-frank-wolfe-conditional-gradient.md): step toward the best corner and never project.
+- [Coordinate descent](../08-First-Order%20Methods%20at%20Scale/02-block-coordinate-descent.md): improve one block at a time, and when that is enough.
+- [The speed limit](../08-First-Order%20Methods%20at%20Scale/03-lower-bounds-for-first-order-methods.md): no gradient method can beat 1/k^2 on smooth convex problems.
+- [SVRG and SAGA](../08-First-Order%20Methods%20at%20Scale/04-variance-reduced-stochastic-gradient.md): stochastic steps whose noise dies out near the answer.
 
 What, other than the curvature itself, could let a method stop zigzagging across the floor and run along it?
 

@@ -895,6 +895,7 @@ example : (2 : ℚ) / 20 = 1 / 10 := by norm_num
 ## Where this goes next
 
 - [Cubic splines](05-splines.md): low-degree pieces joined smoothly, the repair when the readings sit on a grid you cannot move.
+- [Radial basis functions](11-radial-basis-function-interpolation.md): interpolate scattered points in any dimension with one kernel.
 
 This card leaves open what the very best polynomial of degree 20 would be, the one with the smallest worst error, and how close Chebyshev interpolation comes to it.
 

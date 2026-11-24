@@ -952,6 +952,7 @@ end BranchAndBound
 
 - [Cutting planes](04-cutting-planes.md): add constraints that slice off fractional answers, so ceilings drop and the tree shrinks.
 - [Lagrangian relaxation](07-lagrangian-relaxation-and-decomposition.md): the price $`\lambda`$ of Step 1, grown into a method that prices the hard constraints and gives ceilings for problems with no easy fill.
+- [Column generation](09-column-generation-and-dantzig-wolfe.md): let a small pricing problem write the columns the master program needs.
 
 Which act to split on and which node to open next were fixed by rule here; the open question is how a solver should choose them on a problem with thousands of variables, where the tree's size depends on it.
 

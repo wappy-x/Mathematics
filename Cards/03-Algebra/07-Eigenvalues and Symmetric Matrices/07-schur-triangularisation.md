@@ -652,6 +652,7 @@ example : (1 : ℤ) ^ 2 + 1 ^ 2 + (-1) ^ 2 + 3 ^ 2 = 12 ∧ (2 : ℤ) ^ 2 + (-2)
 - [Jordan form](10-jordan-canonical-form.md): the simplest triangle, with axes no longer perpendicular.
 - [Normal matrices and the polar form](11-normal-matrices-and-polar-decomposition.md): exactly when the triangle is diagonal.
 - [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): complex dot products and unitary matrices in full.
+- [Computing e^A](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/10-computing-the-matrix-exponential.md): scale down, use Pade, square back up, and why eigenvectors are a trap.
 
 The triangle hides the eigenvector structure in its corner: what is the simplest form A takes when the axes need not be perpendicular?
 

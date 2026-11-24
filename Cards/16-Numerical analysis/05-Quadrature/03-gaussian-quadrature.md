@@ -1071,6 +1071,8 @@ example : (1000 * 12 ^ 2 * 6 ^ 5 / (945 * 20000) : ℚ) = 10368 / 175 ∧
 - [Weighted Gauss rules](04-gauss-hermite-and-weighted-rules.md): the same theorem with a weight inside the integral, giving Hermite nodes for a bell curve and Laguerre nodes for a decaying tail.
 - [Adaptive quadrature and awkward integrals](05-adaptive-and-improper-quadrature.md): spending points where the curve misbehaves, which cures the square-root crawl.
 - [Orthogonal polynomials](../../18-Functional%20analysis/02-Hilbert%20Spaces/05-orthogonal-polynomials-from-gram-schmidt.md): every family of orthogonal polynomials has a three-term rule like Bonnet's, and that rule gives the Golub–Welsch matrix whose eigenvalues are the nodes.
+- [Implicit Runge-Kutta](../06-ODE%20Solvers/08-implicit-runge-kutta-methods.md): Gauss and Radau collocation, A-stable at every order.
+- [Discontinuous Galerkin](../07-PDE%20Solvers/14-discontinuous-galerkin-methods.md): finite elements that may jump at edges, joined by an upwind flux.
 
 A Gauss rule gives a number but no estimate of its own error, and its nodes for n points share none with its nodes for n + 1; this card leaves open how to check a Gauss answer without knowing the curve's derivatives.
 

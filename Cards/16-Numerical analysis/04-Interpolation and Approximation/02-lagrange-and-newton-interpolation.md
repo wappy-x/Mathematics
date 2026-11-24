@@ -866,6 +866,8 @@ example : (979/210 : ℚ) - 1489/2520 * 30 + 89/630 * 30^2 - 4/315 * 30^3 + 1/25
 
 - [The interpolation error theorem](03-polynomial-interpolation-error.md): how far the curve can be from the true function, as a high derivative times $`\omega(x)`$.
 - [Fitting instead of passing through](07-least-squares-and-orthogonal-polynomials.md): when quotes carry noise, a lower-degree curve that misses each point a little is better than one that hits them all.
+- [Computing e^A](10-computing-the-matrix-exponential.md): scale down, use Pade, square back up, and why eigenvectors are a trap.
+- [Radial basis functions](11-radial-basis-function-interpolation.md): interpolate scattered points in any dimension with one kernel.
 
 The shelf also takes this curve to [Runge's phenomenon](04-runge-phenomenon-and-chebyshev-nodes.md), [Cubic splines](05-splines.md), [Ends and shape](06-spline-end-conditions-and-shape.md), [Weierstrass and the minimax fit](08-weierstrass-and-best-approximation.md) and [Pade approximants](09-pade-and-rational-approximation.md).
 

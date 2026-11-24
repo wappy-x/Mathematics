@@ -959,6 +959,10 @@ example : (2 * 500 ^ 3 + 3 * 500 ^ 2 + 500) / 6 = 41791750 ∧
 ## Where this goes next
 
 - [Iterating instead of factoring](09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md): for a large sparse symmetric positive definite matrix, conjugate gradient avoids the factor and its n³/3 cost altogether.
+- [Saddle-point systems](12-symmetric-indefinite-systems-ldlt-and-minres.md): LDL^T with 2-by-2 pivots, and MINRES.
+- [Generalised eigenproblems](15-generalised-eigenvalue-problems.md): Kx = lambda M x, from masses on springs to the QZ algorithm.
+- [Radial basis functions](../04-Interpolation%20and%20Approximation/11-radial-basis-function-interpolation.md): interpolate scattered points in any dimension with one kernel.
+- [Incomplete factorisations](../09-Fast%20Solvers%20for%20Large%20Grids/01-incomplete-factorisation-preconditioners.md): LU and Cholesky that keep only the nonzeros you can afford.
 
 This card factors a matrix that is valid or not; it leaves open how to repair a correlation matrix that fails, by finding the nearest one that passes.
 

@@ -824,6 +824,7 @@ example : 19 * 0 + 38 * 32 = 1216 ∧ 19 * 32 + 38 * 16 = 1216 := by norm_num
 - [Corners are enough](02-corners-and-the-fundamental-theorem.md): why the best plan, when there is one, sits at a corner, so a finite list of bases always contains it.
 - [Modelling tricks](07-piecewise-linear-and-minimax-objectives-as-lps.md): absolute values, worst cases and kinked costs rewritten into this standard form.
 - [Integer programs](../05-Integer%20and%20Combinatorial%20Optimisation/01-integer-programs-and-relaxations.md): the same walls, with only whole-number plans allowed.
+- [Frank-Wolfe](../08-First-Order%20Methods%20at%20Scale/01-frank-wolfe-conditional-gradient.md): step toward the best corner and never project.
 
 The workshop has 10 bases to try; a factory with thousands of products has far too many to list, so how to reach the best corner without listing them is the question [The simplex method](03-simplex-method.md) answers.
 

@@ -1196,6 +1196,7 @@ example : (10 + 4 + 4 * 6 : ℕ) ≤ 38 := by decide
 - [Penalties and augmented Lagrangians](07-penalty-and-augmented-lagrangian-methods.md): methods that replace caps with fines and recover the multipliers from them.
 - [Interior point methods](08-interior-point-methods.md): methods that hold each product $`\lambda_i f_i`$ at a small negative number instead of zero, then shrink it, so they never guess the active set.
 - [Quadratic programs](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/01-quadratic-programs-and-markowitz.md): the pump problem's class, a quadratic cost with linear limits, where the KKT conditions are a linear system for each active set.
+- [Saddle-point systems](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/12-symmetric-indefinite-systems-ldlt-and-minres.md): LDL^T with 2-by-2 pivots, and MINRES.
 
 This card checks a point and guesses the active set by listing all four options; how to find the right active set when there are thousands of limits is the question the algorithm cards answer.
 

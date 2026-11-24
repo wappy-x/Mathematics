@@ -351,6 +351,7 @@ example : 100 + 10000 = 10100 ∧ (100 + 10000) / 2 = 5050 ∧ 2 * 4 = 8 := by n
 ## Where this goes next
 
 - [Natural log and doubling time](../04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md): the base growth picks for itself, and the log law turned into a time.
+- [Geometric programs](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/11-geometric-programming-and-the-exponential-cone.md): posynomials become convex after taking logs, and the exponential cone.
 
 This card leaves one question open: when something grows a little each year, not tenfold, how many years make one step?
 

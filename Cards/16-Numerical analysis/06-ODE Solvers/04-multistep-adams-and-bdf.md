@@ -998,6 +998,7 @@ example : (2 : ℕ) ^ 4 = 16 := by decide
 - [Embedded pairs](03-embedded-pairs-and-adaptive-steps.md): step control from two answers of different accuracy, the one-step version of the predictor-corrector gap.
 - [Symplectic steps](06-symplectic-integrators.md): for many laps, a step that keeps the orbit's energy from drifting matters more than a small error per lap.
 - [Two-point boundary problems](07-boundary-value-problems-shooting-and-collocation.md): shooting needs a fast initial-value solver inside a root finder, and a multistep method is one.
+- [Differential-algebraic equations](09-differential-algebraic-equations.md): when some equations carry no derivative, and the index that measures the trouble.
 
 Left open: a zero-stable method still needs small steps on problems with fast decaying parts; which multistep methods escape that, and what does it cost in order?
 

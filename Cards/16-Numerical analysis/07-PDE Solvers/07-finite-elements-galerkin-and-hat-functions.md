@@ -1327,6 +1327,9 @@ example : 8 * (1024 - 1) - 7 = 8177 := by decide
 - [Lax-Milgram](../../18-Functional%20analysis/02-Hilbert%20Spaces/07-lax-milgram-theorem.md): why the weak form has exactly one solution whenever the pairing is bounded and positive.
 - [Weak derivatives](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/07-weak-derivatives-and-sobolev-spaces.md): what $`y'`$ means for a curve with corners, made precise.
 - [Weak solutions](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/08-weak-solutions-of-differential-equations.md): problems whose only solutions are weak ones, such as a cable under a point load.
+- [Mixed finite elements](13-mixed-finite-elements-and-the-inf-sup-condition.md): two unknowns at once, and the inf-sup test that keeps the pressure honest.
+- [Discontinuous Galerkin](14-discontinuous-galerkin-methods.md): finite elements that may jump at edges, joined by an upwind flux.
+- [Domain decomposition](../09-Fast%20Solvers%20for%20Large%20Grids/04-domain-decomposition-and-schwarz-methods.md): solve on overlapping pieces, and add a coarse grid so the pieces agree.
 
 The proof here bounds the energy error, but the node heights fell twice as fast: what makes the heights more accurate than the slopes?
 

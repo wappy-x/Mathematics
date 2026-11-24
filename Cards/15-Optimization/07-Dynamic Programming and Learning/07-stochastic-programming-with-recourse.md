@@ -1112,6 +1112,7 @@ open TwoStage Reservoir
 - [Backward induction](01-finite-horizon-dynamic-programming-and-backward-induction.md): with a decision every month, the tree grows to 531441 leaves after a year. Backward induction is the other way to handle many stages: it solves from the last month back, and needs only a value per storage level, not a copy per leaf.
 - [Stochastic gradient](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/08-stochastic-gradient-and-sample-average-approximation.md): solving on a sample of scenarios, and how far that answer can sit from the true one.
 - [Robust and chance constraints](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/10-robust-and-chance-constrained-optimisation.md): for an operator who cannot accept a 20 percent chance of flooding, a limit on the bad leaves instead of an average over them.
+- [Benders decomposition](10-benders-decomposition-and-the-l-shaped-method.md): fix the first-stage choice, and let each scenario send back a cut.
 
 The question this card leaves open is where the three leaves come from: real rain is a continuum, and choosing a few scenarios that lead to nearly the right release is its own problem.
 

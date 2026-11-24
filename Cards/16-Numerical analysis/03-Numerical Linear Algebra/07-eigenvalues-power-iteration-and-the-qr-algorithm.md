@@ -1190,7 +1190,7 @@ example : frameA.det = 1 := by
 
 ## Where you meet it in real life
 
-- **Building and bridge design.** Seismic codes set the design force from the fundamental period. Engineering software finds the lowest few modes by shifted inverse iteration, or by the Lanczos method, which keeps every iteration vector instead of only the last.
+- **Building and bridge design.** Seismic codes set the design force from the fundamental period. Engineering software finds the lowest few modes by shifted inverse iteration, or by the [Lanczos](14-lanczos-and-rayleigh-ritz.md) method, which keeps every iteration vector instead of only the last.
 - **Web search.** [PageRank by power iteration](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/02-power-iteration-and-the-damping-factor.md) runs plain power iteration on a matrix of links. Its damping factor sets $`\gamma`$ to at most 0.85.
 - **Data analysis.** The first principal component of a data table is the top eigenvector of its covariance matrix. Power iteration finds it without forming every eigenvalue.
 - **Physics and chemistry.** The ground state of a quantum system is the lowest eigenvalue of its energy matrix. Inverse iteration with a shift near a known energy finds it.
@@ -1211,7 +1211,11 @@ example : frameA.det = 1 := by
 ## Where this goes next
 
 - [Singular value decomposition](08-svd-and-the-pseudoinverse.md): the singular values are square roots of the eigenvalues of $`A^{\mathsf T} A`$, and they are computed by a QR-style iteration.
-- [Sparse storage and Krylov methods](10-sparse-matrices-and-krylov-methods.md): keeping every power-iteration vector, not only the last, gives Lanczos and Arnoldi, which find a few eigenvalues of huge sparse matrices.
+- [Sparse storage and Krylov methods](10-sparse-matrices-and-krylov-methods.md): keeping every power-iteration vector, not only the last, gives [Lanczos](14-lanczos-and-rayleigh-ritz.md) and Arnoldi, which find a few eigenvalues of huge sparse matrices.
+- [Lanczos](14-lanczos-and-rayleigh-ritz.md): the extreme eigenvalues of a huge symmetric matrix from a three-term recurrence.
+- [Generalised eigenproblems](15-generalised-eigenvalue-problems.md): Kx = lambda M x, from masses on springs to the QZ algorithm.
+- [Randomised SVD](17-randomised-svd-and-the-range-finder.md): a few random products find the range, then a small SVD finishes.
+- [Computing e^A](../04-Interpolation%20and%20Approximation/10-computing-the-matrix-exponential.md): scale down, use Pade, square back up, and why eigenvectors are a trap.
 
 The question this card leaves open: for a matrix with a million rows, where even one QR step is too costly, how many products with $`A`$ does it take to find the lowest ten modes?
 

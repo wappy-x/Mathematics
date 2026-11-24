@@ -777,6 +777,7 @@ example : 38 * 4 + 19 * 4 = 228 ∧ 222 < 228 := by norm_num
 - [Four classic models](06-classic-integer-models-knapsack-assignment-and-covering.md): knapsack, assignment, covering and routing, where sub-tour cuts (loop bans there) earn their keep.
 - [Lagrangian relaxation](07-lagrangian-relaxation-and-decomposition.md): another way to lower the ceiling, by pricing a hard limit instead of adding cuts.
 - [Heuristics with a promise](08-heuristics-and-approximation-guarantees.md): quick answers with a proved bound on how far from the best they can be, which also give branch and cut its first plan to prune against.
+- [Benders decomposition](../07-Dynamic%20Programming%20and%20Learning/10-benders-decomposition-and-the-l-shaped-method.md): fix the first-stage choice, and let each scenario send back a cut.
 
 The open question is which cuts are worth their cost: a deeper cut lowers the ceiling more, but finding the deepest one is itself a hard problem.
 

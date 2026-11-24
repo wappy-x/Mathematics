@@ -988,6 +988,7 @@ example : 30000 * 999 * 5 = 149850000 := by norm_num
 
 - [Crank-Nicolson and the theta family](04-crank-nicolson-and-theta-methods.md): the next card. It uses g to show that averaging the old and new levels is stable at any step, with second-order accuracy in time.
 - [Flow problems](06-upwind-schemes-and-conservation-laws.md): upwind and conservative schemes for transport, where the angle of g, not just its size, decides how a pulse is smeared or wobbles.
+- [Godunov's method](11-godunov-method-and-riemann-solvers.md): solve a small Riemann problem at every cell edge.
 
 Von Neumann analysis needs constant weights and a linear scheme: what keeps a scheme stable when the weights change along the bar, or when the equation is nonlinear?
 

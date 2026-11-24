@@ -847,6 +847,8 @@ example : ((Finset.univ : Finset (Finset (Fin 5))).filter
 - [Relaxation and rounding](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/02-relaxation-and-rounding.md): the general pattern of Steps 4 and 5, relaxing a hard problem and rounding back with a proved ratio, across many problems.
 - [The unique games conjecture](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/03-unique-games-conjecture.md): if it is true, and P ≠ NP (the widely held belief that some quickly checked answers cannot be found quickly), no fast method beats the 0.878567 ratio for max-cut, so the rounding on this card would be the best possible.
 - [Proximal gradient](06-proximal-methods-ista-fista-and-the-lasso.md): the next card, where the hard part of each step is solved exactly in closed form, as a proximal map; for the lasso that map is soft thresholding.
+- [Sums of squares](12-sum-of-squares-polynomial-optimisation.md): prove a polynomial is never negative by finding a positive semidefinite matrix.
+- [Matrix completion](13-matrix-completion-and-the-nuclear-norm.md): fill the missing entries with the table of lowest nuclear norm.
 
 The ring's relaxation was off by more than half a link; which networks make that gap as large as the 0.878 promise allows is the question this card leaves open.
 

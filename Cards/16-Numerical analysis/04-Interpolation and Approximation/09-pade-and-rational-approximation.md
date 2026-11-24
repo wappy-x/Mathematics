@@ -859,6 +859,7 @@ example : (1 / 3 : ℚ) / (2 / 15) = 5 / 2 := by norm_num
 
 - [Stiffness](../06-ODE%20Solvers/05-stiffness-a-stability-and-the-dahlquist-barriers.md): the step factors of implicit methods are ratios of polynomials, and the trapezoid rule's is the $`[1/1]`$ approximant of the exponential.
 - [Gaussian quadrature](../05-Quadrature/03-gaussian-quadrature.md): sample points at the zeros of an orthogonal polynomial, so n samples integrate every polynomial up to degree 2n − 1. A link not drawn there: the nodes and weights of a Gauss rule are the poles and residues of a Padé approximant, through continued fractions.
+- [Computing e^A](10-computing-the-matrix-exponential.md): scale down, use Pade, square back up, and why eigenvectors are a trap.
 
 The Padé ratio matches the function at one point; the open question is how to choose a ratio that is as good as possible over a whole interval at once.
 

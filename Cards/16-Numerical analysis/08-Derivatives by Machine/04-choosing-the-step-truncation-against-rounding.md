@@ -96,7 +96,7 @@ Here $`2\pi`$ is twice pi, the full turn of a sine wave.
 - **The function changes on the scale of $`x`$.** The rule assumes $`\lvert f^{(j)}\rvert \approx \lvert f\rvert/\lvert x\rvert^j`$ (Step 2). An input near zero breaks this; that is what $`x_{\text{typ}}`$ is for.
 - **The function is smooth across the bump.** The truncation law needs $`f''`$, $`f'''`$ or $`f''''`$ across $`[x - h, x + h]`$. At a kink no step helps.
 - **The step reaches the function intact.** If $`x + h`$ is rounded, the quotient divides by the wrong step (Step 3).
-- **The data are computed, not measured.** Measured or quoted data carry far larger noise, and the ill-posedness of differentiation then dominates (Step 5).
+- **The data are computed, not measured.** Measured or quoted data carry far larger noise, and the ill-posedness of differentiation then dominates (Step 5; [Ill-posed problems](../03-Numerical%20Linear%20Algebra/16-discrete-ill-posed-problems-and-regularisation.md)).
 
 ---
 

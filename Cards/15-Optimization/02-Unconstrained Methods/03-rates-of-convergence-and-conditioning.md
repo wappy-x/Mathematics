@@ -927,7 +927,7 @@ example : (2 / 3 : ℚ) ^ 35 < 1 / 10 ^ 6 ∧ 1 / 10 ^ 6 ≤ (2 / 3 : ℚ) ^ 34 
 
 - **Training machine-learning models.** When one input is measured in thousands and another in fractions, the loss surface is a stretched valley and gradient methods crawl. Rescaling each input to a similar spread lowers $`\kappa`$, which is why it is a standard first step.
 - **Square roots and division in hardware.** Some processors compute reciprocals and square roots by Newton's method from a rough table value, because doubling the correct digits reaches full precision in a handful of steps.
-- **Structural and fluid simulations.** Engineering solvers spend most of their time on huge linear systems. Their iteration counts are governed by a condition number, and preconditioning (changing variables to make the bowl rounder) is how they are kept practical.
+- **Structural and fluid simulations.** Engineering solvers spend most of their time on huge linear systems. Their iteration counts are governed by a condition number, and preconditioning (changing variables to make the bowl rounder) is how they are kept practical ([Incomplete factorisations](../../16-Numerical%20analysis/09-Fast%20Solvers%20for%20Large%20Grids/01-incomplete-factorisation-preconditioners.md)).
 - **Pricing options.** A trading desk backs out the volatility implied by a market price with Newton's method, since a few steps give full accuracy ([Solving for implied volatility](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md)).
 - **Ranking web pages.** The PageRank vector is found by power iteration, a linearly convergent method whose rate is set by the ratio of the two largest eigenvalues.
 
@@ -949,6 +949,7 @@ example : (2 / 3 : ℚ) ^ 35 < 1 / 10 ^ 6 ∧ 1 / 10 ^ 6 ≤ (2 / 3 : ℚ) ^ 34 
 - [Momentum and Adam](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/09-momentum-adam-and-step-size-schedules.md): adds memory of past steps to gradient descent. Heavy-ball momentum on a bowl, and Nesterov's method in general, bring the cost down to the square root of $`\kappa`$; Adam carries no such guarantee.
 - [Newton and secant](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/02-newton-and-secant-with-convergence-orders.md): the same rates for solving equations rather than minimising.
 - [Matrix norms and the condition number](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/01-matrix-norms-and-the-condition-number.md): the condition number in general, as the amplifier of errors in a linear system.
+- [The subgradient method](11-subgradient-method-and-polyak-steps.md): steps that need not go downhill, and the 1/sqrt(k) guarantee.
 
 The condition number here is read off the minimiser, which is not known in advance; how to estimate the stretch, or change variables to remove it, before the run starts is the question this card leaves open.
 

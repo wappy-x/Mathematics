@@ -591,6 +591,7 @@ example : !![(-1 : ℝ), 1; 0, -1] *ᵥ ![1, 0] = (-1 : ℝ) • ![1, 0] := by
 - [Evolution as an equation](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/03-the-abstract-cauchy-problem-and-the-operator-exponential.md): e^(A(s+t)) = e^(As) e^(At) kept when A acts on functions and the series fails.
 - [Lie algebra](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/02-lie-algebras-and-the-exponential-map.md): from rates to rotations.
 - [Floquet theory](08-floquet-theory-and-parametric-resonance.md): a system with periodic coefficients is a constant one seen through a periodic lens, and pumping at twice the natural rate makes it grow.
+- [Computing e^A](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/10-computing-the-matrix-exponential.md): scale down, use Pade, square back up, and why eigenvectors are a trap.
 
 The long-run shape read from A alone is [Trace and determinant](05-classifying-equilibria-by-trace-and-determinant.md).
 

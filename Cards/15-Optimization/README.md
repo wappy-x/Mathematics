@@ -6,19 +6,20 @@
 
 Recognise a convex problem, prove the optimality conditions that certify its answer, and run gradient, Newton, quasi-Newton, trust region, simplex, interior point and proximal methods knowing how fast each converges. Use duality to bound and certify an answer, handle integer, cone and uncertain problems, and set up a dynamic program over time.
 
-7 shelves · **64 of 64 cards ready to read**
+8 shelves · **82 of 82 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
 | Shelf | Cards |
 | --- | ---: |
 | [01 · Convexity](#s01) | 10 |
-| [02 · Unconstrained Methods](#s02) | 10 |
+| [02 · Unconstrained Methods](#s02) | 11 |
 | [03 · Constrained Optimisation](#s03) | 9 |
-| [04 · Linear Programming](#s04) | 8 |
-| [05 · Integer and Combinatorial Optimisation](#s05) | 8 |
-| [06 · Conic, Quadratic and Stochastic Programs](#s06) | 10 |
-| [07 · Dynamic Programming and Learning](#s07) | 9 |
+| [04 · Linear Programming](#s04) | 9 |
+| [05 · Integer and Combinatorial Optimisation](#s05) | 10 |
+| [06 · Conic, Quadratic and Stochastic Programs](#s06) | 13 |
+| [07 · Dynamic Programming and Learning](#s07) | 12 |
+| [08 · First-Order Methods at Scale](#s08) | 8 |
 
 <a name="s01"></a>
 
@@ -41,7 +42,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s02"></a>
 
-## 02 · Unconstrained Methods · 10 cards
+## 02 · Unconstrained Methods · 11 cards
 
 *Conditions for a minimum, then the standard descent algorithms and an honest account of how fast each one gets there*
 
@@ -55,6 +56,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [Trust regions: trust the model only as far as it has earned](02-Unconstrained%20Methods/08-trust-region-methods.md)
 9. [Nonlinear least squares: Gauss-Newton, and the damping that rescues it](02-Unconstrained%20Methods/09-nonlinear-least-squares-gauss-newton-and-levenberg-marquardt.md)
 10. [Automatic differentiation: exact derivatives from the code, not from small steps](02-Unconstrained%20Methods/10-automatic-differentiation-and-backpropagation.md)
+11. [The subgradient method: steps that need not go downhill, and the 1/sqrt(k) guarantee](02-Unconstrained%20Methods/11-subgradient-method-and-polyak-steps.md)
 
 [↑ Back to the shelves](#top)
 
@@ -78,7 +80,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s04"></a>
 
-## 04 · Linear Programming · 8 cards
+## 04 · Linear Programming · 9 cards
 
 *Linear programs from geometry to the simplex method, duality as a price system, and the interior point alternative*
 
@@ -90,12 +92,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Network flows: shipping problems that are linear programs with whole answers](04-Linear%20Programming/06-network-flows-as-linear-programs.md)
 7. [Modelling tricks: absolute values, worst cases and kinked costs as linear programs](04-Linear%20Programming/07-piecewise-linear-and-minimax-objectives-as-lps.md)
 8. [Interior point for linear programs: polynomial time, and when simplex still wins](04-Linear%20Programming/08-interior-point-for-lp-and-complexity.md)
+9. [The ellipsoid method: trap the answer in shrinking ellipsoids, and linear programming in polynomial time](04-Linear%20Programming/09-ellipsoid-method.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s05"></a>
 
-## 05 · Integer and Combinatorial Optimisation · 8 cards
+## 05 · Integer and Combinatorial Optimisation · 10 cards
 
 *Whole-number decisions: relaxations and bounds, search with pruning, cuts, the structures that make integrality free, and honest heuristics*
 
@@ -107,12 +110,14 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Four classic models: knapsack, assignment, covering and routing](05-Integer%20and%20Combinatorial%20Optimisation/06-classic-integer-models-knapsack-assignment-and-covering.md)
 7. [Lagrangian relaxation: price the awkward constraint and solve what is left](05-Integer%20and%20Combinatorial%20Optimisation/07-lagrangian-relaxation-and-decomposition.md)
 8. [Heuristics with a promise: greedy bounds and approximation ratios](05-Integer%20and%20Combinatorial%20Optimisation/08-heuristics-and-approximation-guarantees.md)
+9. [Column generation: let a small pricing problem write the columns the master program needs](05-Integer%20and%20Combinatorial%20Optimisation/09-column-generation-and-dantzig-wolfe.md)
+10. [Submodular functions: diminishing returns, the greedy 1 - 1/e promise, and the Lovasz extension](05-Integer%20and%20Combinatorial%20Optimisation/10-submodular-functions-and-the-greedy-bound.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s06"></a>
 
-## 06 · Conic, Quadratic and Stochastic Programs · 10 cards
+## 06 · Conic, Quadratic and Stochastic Programs · 13 cards
 
 *The problem classes solvers actually target, plus the proximal, splitting and sampling methods that scale*
 
@@ -126,12 +131,15 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [Stochastic gradient: a noisy step is cheap enough to take many times](06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/08-stochastic-gradient-and-sample-average-approximation.md)
 9. [Momentum and Adam: inertia, and a step size per variable](06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/09-momentum-adam-and-step-size-schedules.md)
 10. [Robust and chance constraints: answers that survive the data being wrong](06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/10-robust-and-chance-constrained-optimisation.md)
+11. [Geometric programs: posynomials become convex after taking logs, and the exponential cone](06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/11-geometric-programming-and-the-exponential-cone.md)
+12. [Sums of squares: prove a polynomial is never negative by finding a positive semidefinite matrix](06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/12-sum-of-squares-polynomial-optimisation.md)
+13. [Matrix completion: fill the missing entries with the table of lowest nuclear norm](06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/13-matrix-completion-and-the-nuclear-norm.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s07"></a>
 
-## 07 · Dynamic Programming and Learning · 9 cards
+## 07 · Dynamic Programming and Learning · 12 cards
 
 *Decisions over time: backward induction, Markov decision processes, the contraction that makes them solvable, learning when the model is unknown, and search when nothing is smooth*
 
@@ -144,6 +152,26 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 7. [Two-stage stochastic programming: decide now, adjust when you know more](07-Dynamic%20Programming%20and%20Learning/07-stochastic-programming-with-recourse.md)
 8. [Bayesian optimisation: choosing the next expensive experiment wisely](07-Dynamic%20Programming%20and%20Learning/08-global-optimisation-and-bayesian-optimisation.md)
 9. [Search without derivatives: Nelder-Mead, annealing and populations](07-Dynamic%20Programming%20and%20Learning/09-derivative-free-and-metaheuristic-search.md)
+10. [Benders decomposition: fix the first-stage choice, and let each scenario send back a cut](07-Dynamic%20Programming%20and%20Learning/10-benders-decomposition-and-the-l-shaped-method.md)
+11. [Multi-armed bandits: explore or exploit, UCB's logarithmic regret, and Thompson sampling](07-Dynamic%20Programming%20and%20Learning/11-multi-armed-bandits-ucb-and-thompson-sampling.md)
+12. [Policy gradients: nudge the decision rule itself, with a learned critic to cut the noise](07-Dynamic%20Programming%20and%20Learning/12-policy-gradient-and-actor-critic.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s08"></a>
+
+## 08 · First-Order Methods at Scale · 8 cards
+
+*Methods that use only gradients, judged by how many gradient calls they need: corner steps instead of projections, one coordinate at a time, mirror maps, regret when the data arrive one day at a time, variance reduction, the proven speed limit, operator splitting and entropic transport*
+
+1. [Frank-Wolfe: step toward the best corner and never project](08-First-Order%20Methods%20at%20Scale/01-frank-wolfe-conditional-gradient.md)
+2. [Coordinate descent: improve one block at a time, and when that is enough](08-First-Order%20Methods%20at%20Scale/02-block-coordinate-descent.md)
+3. [The speed limit: no gradient method can beat 1/k^2 on smooth convex problems](08-First-Order%20Methods%20at%20Scale/03-lower-bounds-for-first-order-methods.md)
+4. [SVRG and SAGA: stochastic steps whose noise dies out near the answer](08-First-Order%20Methods%20at%20Scale/04-variance-reduced-stochastic-gradient.md)
+5. [Mirror descent: measure distance the way the constraint set wants, and the simplex gets multiplicative updates](08-First-Order%20Methods%20at%20Scale/05-mirror-descent-and-bregman-divergences.md)
+6. [Online convex optimisation: commit, then see the loss, and keep regret below sqrt(T)](08-First-Order%20Methods%20at%20Scale/06-online-convex-optimisation-and-regret.md)
+7. [Monotone operators: the prox is a resolvent, and Douglas-Rachford and Chambolle-Pock split the work](08-First-Order%20Methods%20at%20Scale/07-monotone-operators-and-splitting.md)
+8. [Sinkhorn: transport made smooth by entropy, solved by rescaling rows and columns](08-First-Order%20Methods%20at%20Scale/08-entropic-optimal-transport-and-sinkhorn.md)
 
 [↑ Back to the shelves](#top)
 

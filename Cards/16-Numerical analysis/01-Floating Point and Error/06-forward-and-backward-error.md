@@ -682,6 +682,9 @@ example : -200 * (115 / 100 : ℚ) + 230 = 0 := by norm_num
 - [When to stop](../02-Root%20Finding%20and%20Fixed%20Points/03-stopping-criteria-and-error-estimates.md): the root-finding shelf's stopping tests, built on residual, step size and this card's rule.
 - [Newton's bad days](../02-Root%20Finding%20and%20Fixed%20Points/04-when-newton-fails.md): double roots, where the condition number is infinite and convergence slows.
 - [Matrix norms and the condition number](../03-Numerical%20Linear%20Algebra/01-matrix-norms-and-the-condition-number.md): the same rule for a linear system, with $`\kappa(A)`$.
+- [Iterative refinement](../03-Numerical%20Linear%20Algebra/11-iterative-refinement-and-mixed-precision.md): factor cheaply, compute the residual carefully, and win back full accuracy.
+- [Ill-posed problems](../03-Numerical%20Linear%20Algebra/16-discrete-ill-posed-problems-and-regularisation.md): when the data cannot pin down the answer, and truncated SVD, Tikhonov and the L-curve.
+- [Computing e^A](../04-Interpolation%20and%20Approximation/10-computing-the-matrix-exponential.md): scale down, use Pade, square back up, and why eigenvectors are a trap.
 
 How large can the backward error of a whole algorithm be, step by step, before it reaches the answer? That question is carried by the later shelves, one method at a time.
 

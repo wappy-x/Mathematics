@@ -811,6 +811,8 @@ example : !![(-24 : ℚ), 25; 25, -25] *ᵥ ![-1/10, 1/10] = ![49/10, -5] := by
 - [QR](05-qr-householder-and-gram-schmidt.md): factoring with length-keeping turns, which leave κ₂ unchanged.
 - [Iterating instead of factoring](09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md): methods whose number of steps grows with κ.
 - [Bounded operators](../../18-Functional%20analysis/03-Bounded%20Operators/01-bounded-operators-and-the-operator-norm.md): the same worst-stretch norm for maps on spaces with infinitely many directions.
+- [Iterative refinement](11-iterative-refinement-and-mixed-precision.md): factor cheaply, compute the residual carefully, and win back full accuracy.
+- [Ill-posed problems](16-discrete-ill-posed-problems-and-regularisation.md): when the data cannot pin down the answer, and truncated SVD, Tikhonov and the L-curve.
 
 The open question: Step 5 names Hager's method, which estimates ‖A⁻¹‖₁ from a few extra solves with the factors, but not how it works. How does it choose those solves, and how close does its estimate come to the true κ?
 

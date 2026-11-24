@@ -91,7 +91,7 @@ For the month: $`\eta = \sqrt{8 \ln 4 / 20} = 0.7447`$, and the ceiling is $`\sq
 - **Losses lie between 0 and 1.** The proof uses this range in Step 2. With delays in raw minutes the same rule overreacts, and the ceiling must be multiplied by the range: the 3.7233 becomes 74.47 minutes only after the factor 20.
 - **The coin is tossed after the losses are fixed.** The planner may see the past and even today's chances, but not today's coin. A planner who sees the pick itself can hit it every morning, and then no rule escapes a regret of $`T(1 - 1/N)`$: 15 of 20.
 - **The yardstick is one fixed expert.** The best route chosen afresh each morning lost only 42 minutes. No rule is promised anything against that, and the gap here is 87.40 minutes.
-- **Every expert's loss is seen after each round.** If only the chosen route's delay is seen, a different rule and a larger bound are needed (the bandit case, outside this card).
+- **Every expert's loss is seen after each round.** If only the chosen route's delay is seen, a different rule and a larger bound are needed (the bandit case, in [Multi-armed bandits](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/11-multi-armed-bandits-ucb-and-thompson-sampling.md)).
 - **$`T`$ is known in advance, to set $`\eta`$.** Without it, $`\eta`$ can shrink as the rounds pass, for a constant factor more regret (Cesa-Bianchi and Lugosi, chapter 2).
 
 ---
@@ -930,7 +930,7 @@ example : ∑ k ∈ range 21, Nat.choose 20 k * Nat.dist k 10 = 10 * Nat.choose 
 - **Blending forecasts.** Forecasts of electricity demand and of weather are often blended from several models, each an expert, with weights that shrink after each model's errors.
 - **Boosting.** The AdaBoost method, which builds a strong classifier from many weak ones, came out of the same 1997 paper as this rule for losses between 0 and 1, with the training examples in the role of experts.
 - **Solving games and linear programs.** Two players who each run the weighted-majority rule against each other end with average strategies close to a minimax pair (the strategy pair where neither player gains by changing alone). The same loop approximately solves linear programs and flow problems (Arora, Hazan and Kale).
-- **A website's visitor log read once.** A site that tries four page layouts treats each visitor as a round, in one pass like a [Streaming](01-streaming-and-sketching.md) summary. It sees only the chosen layout's result, which is the bandit case named in When it holds.
+- **A website's visitor log read once.** A site that tries four page layouts treats each visitor as a round, in one pass like a [Streaming](01-streaming-and-sketching.md) summary. It sees only the chosen layout's result, which is the bandit case of [Multi-armed bandits](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/11-multi-armed-bandits-ucb-and-thompson-sampling.md).
 
 > **Say it back**
 > Regret is a rule's total loss minus that of the best single choice in hindsight. The weighted-majority rule picks a choice with chance in proportion to its weight, and shrinks each weight by $`e^{-\eta \times \text{loss}}`$. The total weight can never fall below the best choice's weight, and it falls each round by about the rule's own loss, so the rule's loss cannot run far ahead of the best choice's. The result is regret at most $`\sqrt{T \ln N / 2}`$, which no rule beats by much, and only a rule that tosses a coin can get it. On the commute month the rule ended 21.40 minutes behind the train, inside a promise of 74.47.

@@ -1142,6 +1142,9 @@ example : ⌈(33495 / 10000 : ℚ) / ((4 / 10) ^ 2 * (1 / 10) ^ 2 * (5 / 100))�
 
 - [Momentum and Adam](09-momentum-adam-and-step-size-schedules.md): step schedules in practice, and methods that carry speed between noisy steps.
 - [Robust and chance constraints](10-robust-and-chance-constrained-optimisation.md): when the uncertainty sits in the limits, not only in the average cost.
+- [Policy gradients](../07-Dynamic%20Programming%20and%20Learning/12-policy-gradient-and-actor-critic.md): nudge the decision rule itself, with a learned critic to cut the noise.
+- [SVRG and SAGA](../08-First-Order%20Methods%20at%20Scale/04-variance-reduced-stochastic-gradient.md): stochastic steps whose noise dies out near the answer.
+- [Online convex optimisation](../08-First-Order%20Methods%20at%20Scale/06-online-convex-optimisation-and-regret.md): commit, then see the loss, and keep regret below sqrt(T).
 
 The bound here needs every customer's loss to curve upward; what can a sample guarantee when the loss is only convex, or has more than one dip?
 

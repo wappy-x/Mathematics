@@ -1100,6 +1100,7 @@ example : Nat.choose 5 3 = 10 := by decide
 - [The simplex method](03-simplex-method.md): walks from one basic feasible solution to a neighbouring one with better profit, swapping one basic column at a time, and must handle the degenerate corner (40, 0).
 - Krein-Milman (not written yet): every compact convex set is the closed convex hull of its corners, the same fact for shapes with infinitely many corners. A convex set holds the straight segment between any two of its points; the convex hull of the corners is every weighted average of them, and "closed" adds the limits of those averages. In finite dimensions, where compact means closed and bounded, it is Minkowski's theorem, and the plain convex hull is enough.
 - [LP duality](04-lp-duality-and-complementary-slackness.md): why the stock prices that certify £928 always exist.
+- [Frank-Wolfe](../08-First-Order%20Methods%20at%20Scale/01-frank-wolfe-conditional-gradient.md): step toward the best corner and never project.
 
 The theorem cuts the search to a finite list, but the list grows as $`\binom{n}{m}`$; how to reach the best corner without listing them all is the question the simplex method answers.
 

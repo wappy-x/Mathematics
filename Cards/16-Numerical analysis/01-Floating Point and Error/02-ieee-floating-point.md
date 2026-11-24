@@ -979,6 +979,7 @@ end IEEEFloatingPoint
 - [Machine epsilon and cancellation](03-rounding-cancellation-and-machine-epsilon.md): the gap next to 1, the unit roundoff $`u = 2^{-53}`$ from Step 3 turned into a model for every operation, and the digits a subtraction destroys.
 - [Adding a million numbers without losing the small ones](07-summation-kahan-and-welford.md): the tracker's total, repaired by carrying the lost low bits forward.
 - [Interval arithmetic](09-interval-arithmetic-in-outline.md): the round-down and round-up modes of Step 2 put to work, to carry a range that is sure to hold the true answer.
+- [Iterative refinement](../03-Numerical%20Linear%20Algebra/11-iterative-refinement-and-mixed-precision.md): factor cheaply, compute the residual carefully, and win back full accuracy.
 
 Left open: one rounding costs at most half an ulp, but how far can thousands of roundings in a row carry a result from the truth?
 

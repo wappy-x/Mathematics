@@ -1078,6 +1078,7 @@ example : 75 + 25 = 100 := by decide
 - [Importance sampling](06-importance-sampling.md): instead of arranging the darts, change where they are likely to land and reweight each score.
 - [Cheaper Monte Carlo](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md): the same three methods on option payoffs, with the Black–Scholes price (an exact formula for a simple option's price) as a control.
 - [Monte Carlo integration](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/05-monte-carlo-integration-in-many-dimensions.md): why grids fail in high dimension and what replaces them.
+- [SVRG and SAGA](../../15-Optimization/08-First-Order%20Methods%20at%20Scale/04-variance-reduced-stochastic-gradient.md): stochastic steps whose noise dies out near the answer.
 
 All three methods keep the darts on the board's own law; the open question is what happens when the law itself is changed to send the darts where the score varies most.
 

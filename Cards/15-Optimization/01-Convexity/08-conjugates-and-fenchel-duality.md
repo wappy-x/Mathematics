@@ -941,6 +941,8 @@ example : 101 ^ 3 = 1030301 := by norm_num
 - [The slope transform](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/07-legendre-fenchel-and-subgradients.md): the conjugate taken further, as a tool in its own right.
 - [Building convex functions](09-operations-that-preserve-convexity.md): a conjugate is a maximum of lines, one of the operations that cannot break the bowl.
 - [The standard convex problem](10-the-convex-problem-in-standard-form.md): the form in which the dual of a constrained problem is written.
+- [Mirror descent](../08-First-Order%20Methods%20at%20Scale/05-mirror-descent-and-bregman-divergences.md): measure distance the way the constraint set wants, and the simplex gets multiplicative updates.
+- [Monotone operators](../08-First-Order%20Methods%20at%20Scale/07-monotone-operators-and-splitting.md): the prox is a resolvent, and Douglas-Rachford and Chambolle-Pock split the work.
 
 The question this card leaves open is how to find the best price when there are many constraints and no formula, which is what [Lagrangian duality](../03-Constrained%20Optimisation/04-lagrangian-duality-weak-and-strong.md) and its algorithms answer.
 

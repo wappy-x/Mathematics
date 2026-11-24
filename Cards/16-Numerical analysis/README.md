@@ -6,7 +6,7 @@
 
 Say how accurate a computed number is and why, and choose, cost and analyse a method for roots, linear systems, eigenvalues, interpolation, integrals, ODEs and PDEs. Every convergence claim the practical wings leaned on is proved here, with its failure mode and its price in arithmetic named.
 
-8 shelves · **68 of 68 cards ready to read**
+9 shelves · **87 of 87 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
@@ -14,12 +14,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 | --- | ---: |
 | [01 · Floating Point and Error](#s01) | 9 |
 | [02 · Root Finding and Fixed Points](#s02) | 8 |
-| [03 · Numerical Linear Algebra](#s03) | 10 |
-| [04 · Interpolation and Approximation](#s04) | 9 |
+| [03 · Numerical Linear Algebra](#s03) | 17 |
+| [04 · Interpolation and Approximation](#s04) | 11 |
 | [05 · Quadrature](#s05) | 7 |
-| [06 · ODE Solvers](#s06) | 7 |
-| [07 · PDE Solvers](#s07) | 10 |
+| [06 · ODE Solvers](#s06) | 9 |
+| [07 · PDE Solvers](#s07) | 14 |
 | [08 · Derivatives by Machine](#s08) | 8 |
+| [09 · Fast Solvers for Large Grids](#s09) | 4 |
 
 <a name="s01"></a>
 
@@ -58,7 +59,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s03"></a>
 
-## 03 · Numerical Linear Algebra · 10 cards
+## 03 · Numerical Linear Algebra · 17 cards
 
 *Factorisations and their cost, how far a data error can be amplified, eigenvalues by iteration, and solvers that exploit sparsity*
 
@@ -72,12 +73,19 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [Singular value decomposition: rank you can trust, and the best low-rank fit](03-Numerical%20Linear%20Algebra/08-svd-and-the-pseudoinverse.md)
 9. [Iterating instead of factoring: Jacobi, Gauss-Seidel and conjugate gradient](03-Numerical%20Linear%20Algebra/09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md)
 10. [Sparse storage and Krylov methods: work only where the entries are](03-Numerical%20Linear%20Algebra/10-sparse-matrices-and-krylov-methods.md)
+11. [Iterative refinement: factor cheaply, compute the residual carefully, and win back full accuracy](03-Numerical%20Linear%20Algebra/11-iterative-refinement-and-mixed-precision.md)
+12. [Saddle-point systems: LDL^T with 2-by-2 pivots, and MINRES](03-Numerical%20Linear%20Algebra/12-symmetric-indefinite-systems-ldlt-and-minres.md)
+13. [BiCGSTAB: Krylov steps for non-symmetric systems without GMRES's growing memory](03-Numerical%20Linear%20Algebra/13-bicgstab-and-short-recurrences.md)
+14. [Lanczos: the extreme eigenvalues of a huge symmetric matrix from a three-term recurrence](03-Numerical%20Linear%20Algebra/14-lanczos-and-rayleigh-ritz.md)
+15. [Generalised eigenproblems: Kx = lambda M x, from masses on springs to the QZ algorithm](03-Numerical%20Linear%20Algebra/15-generalised-eigenvalue-problems.md)
+16. [Ill-posed problems: when the data cannot pin down the answer, and truncated SVD, Tikhonov and the L-curve](03-Numerical%20Linear%20Algebra/16-discrete-ill-posed-problems-and-regularisation.md)
+17. [Randomised SVD: a few random products find the range, then a small SVD finishes](03-Numerical%20Linear%20Algebra/17-randomised-svd-and-the-range-finder.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s04"></a>
 
-## 04 · Interpolation and Approximation · 9 cards
+## 04 · Interpolation and Approximation · 11 cards
 
 *Reading between data points, why high-degree polynomials misbehave, splines, best fits, and rational stand-ins*
 
@@ -90,6 +98,8 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 7. [Fitting instead of passing through: least squares in an orthogonal basis](04-Interpolation%20and%20Approximation/07-least-squares-and-orthogonal-polynomials.md)
 8. [Weierstrass and the minimax fit: as close as you like, and the smallest worst error](04-Interpolation%20and%20Approximation/08-weierstrass-and-best-approximation.md)
 9. [Pade approximants: a ratio of polynomials copes with a pole that a polynomial cannot](04-Interpolation%20and%20Approximation/09-pade-and-rational-approximation.md)
+10. [Computing e^A: scale down, use Pade, square back up, and why eigenvectors are a trap](04-Interpolation%20and%20Approximation/10-computing-the-matrix-exponential.md)
+11. [Radial basis functions: interpolate scattered points in any dimension with one kernel](04-Interpolation%20and%20Approximation/11-radial-basis-function-interpolation.md)
 
 [↑ Back to the shelves](#top)
 
@@ -111,7 +121,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s06"></a>
 
-## 06 · ODE Solvers · 7 cards
+## 06 · ODE Solvers · 9 cards
 
 *The Runge-Kutta family and its order conditions, step control, multistep formulas, stiffness, structure-preserving steps, and boundary problems*
 
@@ -122,12 +132,14 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Stiffness: when stability not accuracy sets the step, and the barriers on the cure](06-ODE%20Solvers/05-stiffness-a-stability-and-the-dahlquist-barriers.md)
 6. [Symplectic steps: schemes that keep a mechanical system's energy honest for ever](06-ODE%20Solvers/06-symplectic-integrators.md)
 7. [Two-point boundary problems: shoot and correct, or solve the whole grid at once](06-ODE%20Solvers/07-boundary-value-problems-shooting-and-collocation.md)
+8. [Implicit Runge-Kutta: Gauss and Radau collocation, A-stable at every order](06-ODE%20Solvers/08-implicit-runge-kutta-methods.md)
+9. [Differential-algebraic equations: when some equations carry no derivative, and the index that measures the trouble](06-ODE%20Solvers/09-differential-algebraic-equations.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s07"></a>
 
-## 07 · PDE Solvers · 10 cards
+## 07 · PDE Solvers · 14 cards
 
 *Which family a PDE belongs to, grids that converge, stability analysis, implicit steps, flow problems, finite elements, and spectral methods*
 
@@ -141,6 +153,10 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [Assembly and error: adding element matrices, the two boundary kinds, and the error bound](07-PDE%20Solvers/08-finite-element-assembly-and-error.md)
 9. [The fast Fourier transform: n log n instead of n squared, by splitting the sum in half](07-PDE%20Solvers/09-the-fast-fourier-transform.md)
 10. [Spectral methods: differentiate by transforming, and the accuracy smoothness buys](07-PDE%20Solvers/10-spectral-methods-and-the-fft.md)
+11. [Godunov's method: solve a small Riemann problem at every cell edge](07-PDE%20Solvers/11-godunov-method-and-riemann-solvers.md)
+12. [Flux limiters: second order where the wave is smooth, no wiggles where it is steep](07-PDE%20Solvers/12-tvd-schemes-and-flux-limiters.md)
+13. [Mixed finite elements: two unknowns at once, and the inf-sup test that keeps the pressure honest](07-PDE%20Solvers/13-mixed-finite-elements-and-the-inf-sup-condition.md)
+14. [Discontinuous Galerkin: finite elements that may jump at edges, joined by an upwind flux](07-PDE%20Solvers/14-discontinuous-galerkin-methods.md)
 
 [↑ Back to the shelves](#top)
 
@@ -158,6 +174,19 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Forward-mode automatic differentiation: differentiate the code, one operation at a time](08-Derivatives%20by%20Machine/06-forward-mode-automatic-differentiation.md)
 7. [Reverse mode: every sensitivity of one output for roughly the cost of one run](08-Derivatives%20by%20Machine/07-reverse-mode-automatic-differentiation.md)
 8. [Bumping a simulated price: why common random numbers rescue a noisy sensitivity](08-Derivatives%20by%20Machine/08-bumped-sensitivities-and-monte-carlo-noise.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s09"></a>
+
+## 09 · Fast Solvers for Large Grids · 4 cards
+
+*Solving the million-unknown systems that fine grids produce in work close to the number of unknowns: incomplete factors, smoothing plus coarse grids, coarsening read from the matrix alone, and splitting the domain*
+
+1. [Incomplete factorisations: LU and Cholesky that keep only the nonzeros you can afford](09-Fast%20Solvers%20for%20Large%20Grids/01-incomplete-factorisation-preconditioners.md)
+2. [Multigrid: smooth on the fine grid, correct on the coarse grid, and solve in O(N) work](09-Fast%20Solvers%20for%20Large%20Grids/02-multigrid-smoothing-and-the-v-cycle.md)
+3. [Algebraic multigrid: choose the coarse grid from the matrix alone](09-Fast%20Solvers%20for%20Large%20Grids/03-algebraic-multigrid.md)
+4. [Domain decomposition: solve on overlapping pieces, and add a coarse grid so the pieces agree](09-Fast%20Solvers%20for%20Large%20Grids/04-domain-decomposition-and-schwarz-methods.md)
 
 [↑ Back to the shelves](#top)
 

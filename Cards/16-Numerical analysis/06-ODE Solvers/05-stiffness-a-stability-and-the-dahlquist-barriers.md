@@ -69,7 +69,7 @@ The two barriers cap the order $`p`$ of linear multistep methods. The first is f
 
 - **A linear problem, or one frozen near a state.** The rates are the eigenvalues of the Jacobian (the matrix of partial derivatives of the rule). On a nonlinear problem they drift, and the test must hold all along the run.
 - **A full set of eigenvectors.** If the eigenvectors are nearly parallel, errors can grow for a while even when every $`z`$ is in $`S`$.
-- **Linear multistep methods, for the barriers.** Implicit Runge-Kutta methods, such as the Radau family, are A-stable at any order, at the price of a larger system per step.
+- **Linear multistep methods, for the barriers.** [Implicit Runge-Kutta](08-implicit-runge-kutta-methods.md) methods, such as the Radau family, are A-stable at any order, at the price of a larger system per step.
 - **Zero-stability, for the first barrier.** Drop it and three steps reach order 6, then blow up.
 - **Parts that really decay.** Backward Euler's region also covers most of the right half-plane, so a long step can damp a part that truly grows.
 
@@ -1242,8 +1242,10 @@ example : ((1 / 2 : ℚ) ^ 2 * (4 * (1 / 2) - 3)) / 3 = -1 / 12 := by norm_num
 - [Two-point boundary problems](07-boundary-value-problems-shooting-and-collocation.md): shooting runs an initial-value solver many times, and a stiff problem needs a stiff solver inside it.
 - [Embedded pairs](03-embedded-pairs-and-adaptive-steps.md): an explicit pair's step control on a stiff problem keeps hitting the stability limit, a sign to switch to an implicit method.
 - [Von Neumann analysis](../07-PDE%20Solvers/03-von-neumann-analysis-and-the-cfl-condition.md) and [Crank-Nicolson and the theta family](../07-PDE%20Solvers/04-crank-nicolson-and-theta-methods.md): the same region test, applied to every wave on a space grid.
+- [Implicit Runge-Kutta](08-implicit-runge-kutta-methods.md): Gauss and Radau collocation, A-stable at every order.
+- [Differential-algebraic equations](09-differential-algebraic-equations.md): when some equations carry no derivative, and the index that measures the trouble.
 
-Left open: the barriers cap multistep methods only; how much does an implicit Runge-Kutta method of high order cost to solve per step, and when is that worth it?
+Left open: the barriers cap multistep methods only; how much does an implicit Runge-Kutta method of high order cost to solve per step, and when is that worth it ([Implicit Runge-Kutta](08-implicit-runge-kutta-methods.md))?
 
 ---
 

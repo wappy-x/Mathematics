@@ -861,6 +861,7 @@ example : (8 : ℚ) * 22 - 5 = 171 ∧ (8 : ℚ) * 13 - 8 = 96 ∧ (8 : ℚ) * 1
 - [Subgradients](07-subgradients.md): a wall touching a convex function's graph from below is a subgradient, the slope that still works at a kink.
 - [Second-order cone programs](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/04-second-order-cone-programs.md): problems whose infeasibility and optimality are certified by walls against a cone, as in Step 4.
 - Separation (planned, wing 18): the same wall between two convex sets that miss each other, and in spaces of functions, where the Hahn–Banach theorem replaces the closest point.
+- [The ellipsoid method](../04-Linear%20Programming/09-ellipsoid-method.md): trap the answer in shrinking ellipsoids, and linear programming in polynomial time.
 
 This card separates a point from a set; whether two convex sets that merely touch can still be held apart by one wall, and what that does to duality, is left open here.
 

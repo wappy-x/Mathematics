@@ -872,6 +872,9 @@ example : (List.range 6).map (fun k => (k + 1) * (k + 2) / 2) = [1, 3, 6, 10, 15
 
 - [From local error to global error](02-convergence-of-one-step-methods.md): why an error of $`h^{p+1}`$ per step becomes $`h^p`$ over a whole run, for any tableau.
 - [Two-point boundary problems](07-boundary-value-problems-shooting-and-collocation.md): Runge-Kutta steps inside shooting, and collocation, which is an implicit Runge-Kutta method on a grid.
+- [Implicit Runge-Kutta](08-implicit-runge-kutta-methods.md): Gauss and Radau collocation, A-stable at every order.
+- [Flux limiters](../07-PDE%20Solvers/12-tvd-schemes-and-flux-limiters.md): second order where the wave is smooth, no wiggles where it is steep.
+- [Discontinuous Galerkin](../07-PDE%20Solvers/14-discontinuous-galerkin-methods.md): finite elements that may jump at edges, joined by an upwind flux.
 
 This card fixes the step size in advance. The open question is how a method can tell, from its own readings, how large its error is and how large the next step may be.
 

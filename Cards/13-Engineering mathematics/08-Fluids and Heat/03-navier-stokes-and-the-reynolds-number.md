@@ -794,6 +794,7 @@ theorem newtonian_stress_divergence_eq_mu_laplacian
 
 - [Lift and drag](04-lift-drag-and-boundary-layers.md): what happens at high Re near a surface, where the viscous term this card warned against dropping comes back in a thin layer.
 - [Navier-Stokes](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/01-navier-stokes-derivation.md): the mathematics of the equation itself, in the partial-differential-equations wing: weak solutions, and what is and isn't proved.
+- [Mixed finite elements](../../16-Numerical%20analysis/07-PDE%20Solvers/13-mixed-finite-elements-and-the-inf-sup-condition.md): two unknowns at once, and the inf-sup test that keeps the pressure honest.
 
 The question this card leaves open: at high Re the equation makes eddies within eddies, so does it always keep a smooth solution in three dimensions, or can the speed blow up in finite time?
 

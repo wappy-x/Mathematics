@@ -1065,6 +1065,11 @@ On the garden centre's small table, coordinate descent wins: 26 sweeps against F
 
 - [ADMM](07-admm.md): gives the fit and the charge separate copies of the coefficients, solves each exactly, and reconciles the copies with a price; the same split spreads one fit across many machines.
 - [Wavelet denoising](../../20-Harmonic%20analysis/05-Wavelets%20and%20Time-Frequency/07-wavelet-denoising.md): soft thresholding applied once, in a basis where the matrix is orthogonal (it keeps lengths and angles unchanged), so a single prox step is the exact answer.
+- [Matrix completion](13-matrix-completion-and-the-nuclear-norm.md): fill the missing entries with the table of lowest nuclear norm.
+- [Frank-Wolfe](../08-First-Order%20Methods%20at%20Scale/01-frank-wolfe-conditional-gradient.md): step toward the best corner and never project.
+- [Coordinate descent](../08-First-Order%20Methods%20at%20Scale/02-block-coordinate-descent.md): improve one block at a time, and when that is enough.
+- [The speed limit](../08-First-Order%20Methods%20at%20Scale/03-lower-bounds-for-first-order-methods.md): no gradient method can beat 1/k^2 on smooth convex problems.
+- [Monotone operators](../08-First-Order%20Methods%20at%20Scale/07-monotone-operators-and-splitting.md): the prox is a resolvent, and Douglas-Rachford and Chambolle-Pock split the work.
 
 Both rate bounds are worst cases, and ISTA ran far faster than its bound once the nine signals were found; when that faster, straight-line rate can be promised in advance is the question this card leaves open.
 

@@ -890,6 +890,7 @@ example : 2 + 2 * 7 = 16 ∧ 2 + 2 * 3 = 8 ∧
 - [Decision theory](07-risk-admissibility-and-steins-paradox.md): risk, minimax, admissibility, and Stein's paradox.
 - [Jeffreys priors](08-jeffreys-priors-and-invariance.md): a 'know-nothing' prior that does not depend on how you write the parameter.
 - [Bayes factors](09-bayes-factors-and-model-comparison.md): weighing two models by how well each predicted the data.
+- [Multi-armed bandits](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/11-multi-armed-bandits-ucb-and-thompson-sampling.md): explore or exploit, UCB's logarithmic regret, and Thompson sampling.
 
 This card ends with a whole law for θ and one number to bet on; how to report a range for θ, and how to act on it, is what credible intervals and decisions settle.
 

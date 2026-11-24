@@ -1440,6 +1440,7 @@ example : 4 * 7 = 28 := by decide
 
 - [Ends and shape](06-spline-end-conditions-and-shape.md): the next card. It chooses the two end conditions (natural, clamped, not-a-knot) and says what each assumes, and it keeps a curve from wiggling where it must not.
 - [Fitting instead of passing through](07-least-squares-and-orthogonal-polynomials.md): when the data are noisy, a curve that passes near the points beats one that passes through them.
+- [Radial basis functions](11-radial-basis-function-interpolation.md): interpolate scattered points in any dimension with one kernel.
 
 The question this card leaves open: the natural ends cost two orders of accuracy near the short end, so what should the end conditions be, and how can a curve stay smooth without overshooting between quotes?
 

@@ -911,6 +911,7 @@ example : kappa (1 / 10) 0 (1 / 5) (-2) = 4 ∧ crossing (1 / 10) 0 (1 / 5) (-2)
 ## Where this goes next
 
 - [Forward and backward error](06-forward-and-backward-error.md): names the error in the answer (forward) and the change in the data that explains it (backward), measures the backward error by the residual, and ties the two by κ for any problem.
+- [Computing e^A](../04-Interpolation%20and%20Approximation/10-computing-the-matrix-exponential.md): scale down, use Pade, square back up, and why eigenvectors are a trap.
 
 This card separates the problem from the method; the open question is how to measure a method's backward error for a computed answer when the exact answer is unknown.
 

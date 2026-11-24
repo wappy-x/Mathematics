@@ -871,7 +871,7 @@ example : 202 + 3459 + 228 + 273 + 6617 + 257 + 242 + 4854 + 1411 + 77 + 90 + 22
 
 - **Reservoirs, batteries and storage.** Where a simulator of inflows or prices exists but its probabilities are not written down, the same update learns a release or charge rule from simulated months, as this card does.
 - **Board games.** A backgammon program trained only by temporal differences, playing against itself, came close to the best human players in the early 1990s.
-- **Video games from the screen.** Q-learning with a neural network in place of the table learned dozens of classic arcade games from raw pixels in 2015. The table had to go, because the screens have far too many states.
+- **Video games from the screen.** Q-learning with a neural network in place of the table learned dozens of classic arcade games from raw pixels in 2015. The table had to go, because the screens have far too many states. [Policy gradients](12-policy-gradient-and-actor-critic.md) go further and learn the policy itself.
 - **The brain's reward signal.** Dopamine neurons in monkeys fire in a pattern that matches the TD error $`\delta`$: a burst for an unexpected reward, and a dip when an expected one fails to come.
 - **Lifts and traffic lights.** Dispatching a bank of lifts, or timing a junction, has been learned this way from simulated traffic.
 
@@ -890,6 +890,8 @@ example : 202 + 3459 + 228 + 273 + 6617 + 257 + 242 + 4854 + 1411 + 77 + 90 + 22
 - [Optimal stopping](06-optimal-stopping-as-a-dynamic-program.md): a decision with two actions, stop or continue. The same Q-table can learn it when the law of the prices is unknown.
 - [Two-stage stochastic programming](07-stochastic-programming-with-recourse.md): the model-based alternative for uncertain inflows, which writes the rain as scenarios and optimises over them directly.
 - [Bayesian optimisation](08-global-optimisation-and-bayesian-optimisation.md): exploring against exploiting again, with a model of what is still unknown deciding where to look next, in place of a fixed 10% coin.
+- [Multi-armed bandits](11-multi-armed-bandits-ucb-and-thompson-sampling.md): explore or exploit, UCB's logarithmic regret, and Thompson sampling.
+- [Policy gradients](12-policy-gradient-and-actor-critic.md): nudge the decision rule itself, with a learned critic to cut the noise.
 
 The question this card leaves open is what to do when the table is too big to store, and a fitted function must stand in for it without losing the guarantee.
 

@@ -987,6 +987,7 @@ example :
 - [Rougher than Brownian](../09-Beyond%20Brownian/06-rough-paths-and-fractional-brownian-motion-in-outline.md): fractional Brownian motion, the Gaussian process with memory, and why its paths need new calculus.
 - [Reproducing kernels](../../18-Functional%20analysis/02-Hilbert%20Spaces/08-reproducing-kernel-hilbert-spaces.md): the space of functions a kernel defines, and why fitting data with a kernel is a projection there.
 - [Bayesian optimisation](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/08-global-optimisation-and-bayesian-optimisation.md): a Gaussian process used as a cheap stand-in for an expensive experiment.
+- [Radial basis functions](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/11-radial-basis-function-interpolation.md): interpolate scattered points in any dimension with one kernel.
 
 The question this card leaves open: the series fixes the path's law and its variance, but which fine-scale facts about a single path, such as how high it climbs or how rough it is, can a few waves ever capture?
 

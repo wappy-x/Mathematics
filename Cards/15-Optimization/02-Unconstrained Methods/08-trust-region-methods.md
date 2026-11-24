@@ -953,7 +953,7 @@ example (x y : ℝ) : rosen 1 1 ≤ rosen x y := by
 - **Curve fitting and model calibration.** Fitting software minimises sums of squared misses with trust-region steps; Levenberg-Marquardt is the same idea with the radius written as a damping number. The finance wing's calibration fits five option quotes this way ([Calibration](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md)).
 - **Camera and map reconstruction.** Building a 3D model from photographs adjusts thousands of camera positions and points at once, and the standard solvers use dogleg or damped trust-region steps.
 - **Engineering design with costly simulations.** When each evaluation of f is a crash or airflow simulation, a cheap stand-in is fitted from a few runs and trusted only inside a radius, resized by the same ratio of delivered to promised improvement.
-- **Training control policies.** Some reinforcement-learning methods limit how far each update may move the policy (the rule that picks each action), a trust region measured in changed behaviour rather than in distance.
+- **Training control policies.** Some reinforcement-learning methods ([Policy gradients](../07-Dynamic%20Programming%20and%20Learning/12-policy-gradient-and-actor-critic.md)) limit how far each update may move the policy (the rule that picks each action), a trust region measured in changed behaviour rather than in distance.
 
 > **Say it back**
 > A quadratic model of the cost is accurate near the current point and can be badly wrong further away. A trust region takes the model's best step inside a circle, found cheaply by the dogleg. It then compares the fall it got with the fall the model promised. A poor ratio means the step is refused and the circle cut to a quarter; a good ratio on a step that hit the edge doubles it. On Rosenbrock's valley the radius-1 step promised 1.54 and delivered −0.64, the radius-0.25 retry promised 0.42 and delivered 0.43, and the run reached the certified minimum (1, 1) in 24 tries.
@@ -970,6 +970,7 @@ example (x y : ℝ) : rosen 1 1 ≤ rosen x y := by
 - [Nonlinear least squares](09-nonlinear-least-squares-gauss-newton-and-levenberg-marquardt.md): the next card. Gauss-Newton's model of a sum of squares, and Levenberg-Marquardt as a trust region whose radius is set through a damping number.
 - [Riemannian Hessian](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/06-riemannian-hessian-and-trust-regions.md): the same model, step and ratio test when the choices live on a curved surface rather than in flat space.
 - [Conjugate gradient](07-conjugate-gradient-method.md): with a million variables, the circle problem is solved by running conjugate gradient on the model and stopping where it leaves the circle. That stopped version, truncated conjugate gradient, is not worked through on either card.
+- [Policy gradients](../07-Dynamic%20Programming%20and%20Learning/12-policy-gradient-and-actor-critic.md): nudge the decision rule itself, with a learned critic to cut the noise.
 
 The open question is what to do when the Hessian is not a bowl: the dogleg then falls back on the straight-downhill step, and better steps follow the curvature's downhill directions.
 

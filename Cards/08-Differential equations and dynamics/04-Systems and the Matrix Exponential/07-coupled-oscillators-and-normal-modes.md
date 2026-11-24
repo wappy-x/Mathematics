@@ -819,6 +819,7 @@ example : (!![1, -1; -1, 1] : Matrix (Fin 2) (Fin 2) ℚ) *ᵥ ![1, 1] = (0 : �
 
 - [Symplectic steps](../05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md): a step rule that keeps an oscillator's energy from creeping up, the fix for the 2788 mJ.
 - [Vibration modes](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/06-vibration-modes-and-resonance.md): modes of real structures, with damping and a driving force.
+- [Generalised eigenproblems](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/15-generalised-eigenvalue-problems.md): Kx = lambda M x, from masses on springs to the QZ algorithm.
 
 This card leaves open what the modes do when friction slows them and a steady push drives one at its own frequency.
 

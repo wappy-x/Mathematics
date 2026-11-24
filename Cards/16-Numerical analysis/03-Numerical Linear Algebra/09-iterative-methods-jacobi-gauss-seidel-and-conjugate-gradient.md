@@ -1243,7 +1243,7 @@ example : jacobiSweep badMatrix 0 ![1, 1, 1] = (-8 / 5 : ℝ) • ![1, 1, 1] := 
 - **Water and gas networks.** Pressure solvers for mains balance flow at every junction, as in this card's network. Large networks are too big to factor densely, so their solvers use sparsity.
 - **Heat, electric potential and groundwater on grids.** A steady field on a grid gives a sparse, diagonally dominant system like the heated plate on [Laplace's equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/07-laplaces-equation-and-harmonic-functions.md). SOR was invented for exactly these problems.
 - **Structures and finite elements.** Stiffness matrices are symmetric positive definite and can have millions of rows. Conjugate gradient, usually with a preconditioner, is a standard solver for them.
-- **Multigrid solvers.** A few Gauss-Seidel sweeps remove the jagged part of the error quickly, even when they are slow on the smooth part. Multigrid uses them that way, as smoothers.
+- **Multigrid solvers.** A few Gauss-Seidel sweeps remove the jagged part of the error quickly, even when they are slow on the smooth part. [Multigrid](../09-Fast%20Solvers%20for%20Large%20Grids/02-multigrid-smoothing-and-the-v-cycle.md) uses them that way, as smoothers.
 - **Smoothing data.** The greenhouse thermometer on [Conjugate gradient](../../15-Optimization/02-Unconstrained%20Methods/07-conjugate-gradient-method.md) solves a 1,000-unknown system of the same kind.
 
 > **Say it back**
@@ -1264,6 +1264,12 @@ example : jacobiSweep badMatrix 0 ![1, 1, 1] = (-8 / 5 : ℝ) • ![1, 1, 1] := 
 
 - [Sparse storage and Krylov methods](10-sparse-matrices-and-krylov-methods.md): how to store only the nonzeros, preconditioners that shrink κ, and Krylov methods such as GMRES for matrices that are not symmetric.
 - [Neumann series](../../18-Functional%20analysis/03-Bounded%20Operators/06-neumann-series-and-inverting-close-to-the-identity.md): Jacobi's sweeps add up the series I + G + G² + …, and that card shows when such a series gives the inverse.
+- [Saddle-point systems](12-symmetric-indefinite-systems-ldlt-and-minres.md): LDL^T with 2-by-2 pivots, and MINRES.
+- [BiCGSTAB](13-bicgstab-and-short-recurrences.md): Krylov steps for non-symmetric systems without GMRES's growing memory.
+- [Lanczos](14-lanczos-and-rayleigh-ritz.md): the extreme eigenvalues of a huge symmetric matrix from a three-term recurrence.
+- [Incomplete factorisations](../09-Fast%20Solvers%20for%20Large%20Grids/01-incomplete-factorisation-preconditioners.md): LU and Cholesky that keep only the nonzeros you can afford.
+- [Multigrid](../09-Fast%20Solvers%20for%20Large%20Grids/02-multigrid-smoothing-and-the-v-cycle.md): smooth on the fine grid, correct on the coarse grid, and solve in O(N) work.
+- [Algebraic multigrid](../09-Fast%20Solvers%20for%20Large%20Grids/03-algebraic-multigrid.md): choose the coarse grid from the matrix alone.
 
 This card leaves open how to transform A so that κ becomes small, which is what preconditioning sets out to do.
 

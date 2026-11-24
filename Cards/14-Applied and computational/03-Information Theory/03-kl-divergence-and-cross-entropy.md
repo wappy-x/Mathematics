@@ -897,6 +897,9 @@ end KLDivergenceCard
 - [Rate and distortion](10-lossy-compression-and-rate-distortion-in-outline.md): when some error in the readings is allowed, the fewest bits per reading is a minimised mutual information, which is a divergence.
 - [Softmax and cross-entropy](../06-Machine%20Learning%20Mathematics/05-softmax-and-cross-entropy-for-classification.md): the cross-entropy as the training loss of a network that turns scores into chances.
 - [Differential entropy and water-filling](11-differential-entropy-and-water-filling.md): bits for measured values, and power poured where noise is low.
+- [Multi-armed bandits](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/11-multi-armed-bandits-ucb-and-thompson-sampling.md): explore or exploit, UCB's logarithmic regret, and Thompson sampling.
+- [Mirror descent](../../15-Optimization/08-First-Order%20Methods%20at%20Scale/05-mirror-descent-and-bregman-divergences.md): measure distance the way the constraint set wants, and the simplex gets multiplicative updates.
+- [Sinkhorn](../../15-Optimization/08-First-Order%20Methods%20at%20Scale/08-entropic-optimal-transport-and-sinkhorn.md): transport made smooth by entropy, solved by rescaling rows and columns.
 
 The divergence measures how far a model sits from the data; how many days of data it takes before the fitted table can be trusted to a given divergence is the question this card leaves open.
 

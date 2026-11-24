@@ -902,6 +902,7 @@ end LagrangianDuality
 - [LP duality](../04-Linear%20Programming/04-lp-duality-and-complementary-slackness.md): the same theory for linear programs, where the dual is another linear program and the gap closes whenever both sides are feasible.
 - [Support vector machines](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/03-support-vector-machines-as-a-quadratic-program.md): a classifier trained by solving its dual.
 - [Nash equilibrium](../../14-Applied%20and%20computational/05-Operations%20Research/09-game-theory-and-nash-equilibrium.md): zero-sum games, where one player's best guarantee meets the other's best hold. It is the game-theory form of the same max-min exchange.
+- [Sums of squares](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/12-sum-of-squares-polynomial-optimisation.md): prove a polynomial is never negative by finding a positive semidefinite matrix.
 
 The question this card leaves open: when the gap does not close, as with the fixed-speed pump, what is the best way to use the floor, and how much of the gap can a better formulation remove?
 

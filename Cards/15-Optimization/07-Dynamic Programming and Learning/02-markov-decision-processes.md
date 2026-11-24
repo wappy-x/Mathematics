@@ -902,6 +902,8 @@ example : 10 ^ 381 ≤ 3 ^ (2 * 20 ^ 2) ∧ 3 ^ (2 * 20 ^ 2) < 10 ^ 382 := by
 
 - [Value and policy iteration](03-value-and-policy-iteration.md): the two standard ways to solve the Bellman optimality equation, and how many sweeps each takes.
 - [Two-stage stochastic programming](07-stochastic-programming-with-recourse.md): decisions under uncertain data when the state is too big to tabulate, with the uncertainty written as a handful of scenarios.
+- [Multi-armed bandits](11-multi-armed-bandits-ucb-and-thompson-sampling.md): explore or exploit, UCB's logarithmic regret, and Thompson sampling.
+- [Policy gradients](12-policy-gradient-and-actor-critic.md): nudge the decision rule itself, with a learned critic to cut the noise.
 
 This card writes the equation and certifies a solution, but leaves open why repeated sweeps must reach that solution, and how fast.
 

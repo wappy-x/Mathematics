@@ -755,6 +755,7 @@ example : (1 / 2 : ℚ) ^ 2 + 0 ^ 2 = (1 / 2) ^ 2 := by norm_num
 
 - [Semidefinite programs](05-semidefinite-programs-and-relaxations.md): the next cone up, matrices that must stay positive semidefinite; every second-order cone constraint is a special case of one.
 - [Robust and chance constraints](10-robust-and-chance-constrained-optimisation.md): ellipsoidal uncertainty sets, whose worst cases are exactly the lengths this card turns into cones.
+- [Geometric programs](11-geometric-programming-and-the-exponential-cone.md): posynomials become convex after taking logs, and the exponential cone.
 
 The fund's answer trusts its expected returns to four decimals; what happens when those estimates are themselves uncertain is the open question this card leaves.
 

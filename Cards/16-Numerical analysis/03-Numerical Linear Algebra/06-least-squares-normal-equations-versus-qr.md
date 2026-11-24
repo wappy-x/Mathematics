@@ -926,6 +926,7 @@ example : 2 * 1000000 * 3 ^ 2 - 2 * 3 ^ 3 / 3 = 17999982 := by norm_num
 
 - [Singular value decomposition](08-svd-and-the-pseudoinverse.md): the stretches σ used in Step 1 as a factorisation, and a fit that still works when the columns are nearly or exactly dependent.
 - [Fitting instead of passing through](../04-Interpolation%20and%20Approximation/07-least-squares-and-orthogonal-polynomials.md): choose columns that are already at right angles, orthogonal polynomials, so κ stays near 1 and the conditioning problem never starts.
+- [Ill-posed problems](16-discrete-ill-posed-problems-and-regularisation.md): when the data cannot pin down the answer, and truncated SVD, Tikhonov and the L-curve.
 
 This card leaves open what to do when κ is so large that even QR's κu is too much, and the columns of A are close to dependent.
 

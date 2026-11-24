@@ -715,6 +715,7 @@ example : ∀ i : Fin 3,
 - [KKT conditions](02-kkt-conditions.md): rules with a ceiling, such as "head at most 40 m", where a multiplier must be zero or of one sign.
 - [Second-order conditions under constraints](03-second-order-conditions-for-constrained-problems.md): telling a minimum from other candidates using curvature on the allowed steps only.
 - [Lagrangian duality](04-lagrangian-duality-weak-and-strong.md): treating the prices as the unknowns and solving for them first.
+- [Mixed finite elements](../../16-Numerical%20analysis/07-PDE%20Solvers/13-mixed-finite-elements-and-the-inf-sup-condition.md): two unknowns at once, and the inf-sup test that keeps the pressure honest.
 
 This card assumes a best plan exists and prices it; whether the prices themselves can certify that nothing does better is the question duality takes up.
 

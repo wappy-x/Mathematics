@@ -935,6 +935,7 @@ example : 16 - 1 = 15 ∧ 8 + 1 = 9 := by norm_num
 ## Where this goes next
 
 - [Finite elements](../07-PDE%20Solvers/07-finite-elements-galerkin-and-hat-functions.md): instead of making the law hold at points, make its error average to zero against chosen test functions; the same tridiagonal systems appear, built from hat functions.
+- [Implicit Runge-Kutta](08-implicit-runge-kutta-methods.md): Gauss and Radau collocation, A-stable at every order.
 
 The open question: how should a solver place its mesh points by itself, so that the error is small where the solution is steep, without knowing the solution in advance?
 

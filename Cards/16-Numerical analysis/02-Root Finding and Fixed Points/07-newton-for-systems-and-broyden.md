@@ -1100,6 +1100,7 @@ example : 8 * 500 ^ 2 = 2000000 := by norm_num
 - [Nonlinear least squares](../../15-Optimization/02-Unconstrained%20Methods/09-nonlinear-least-squares-gauss-newton-and-levenberg-marquardt.md): more equations than unknowns, so no exact root; Gauss–Newton keeps this card's linear model and solves it by least squares, and damping rescues far starts.
 - [Every root at once](08-polynomial-roots-and-companion-matrices.md): the next card on this shelf finds all the roots of a polynomial together, so no start can pick the wrong one.
 - [LU with partial pivoting](../03-Numerical%20Linear%20Algebra/02-lu-decomposition-and-pivoting.md): the factorisation behind the $`2n^3/3`$ count, and how to reuse it when the table is frozen.
+- [Implicit Runge-Kutta](../06-ODE%20Solvers/08-implicit-runge-kutta-methods.md): Gauss and Radau collocation, A-stable at every order.
 
 This card's guarantees are all local, so it leaves one question open: how to make Newton safe from a far start in several unknowns, where no bracket exists to fall back on.
 

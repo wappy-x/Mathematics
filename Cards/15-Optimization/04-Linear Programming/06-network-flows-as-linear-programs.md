@@ -1013,6 +1013,7 @@ example : ∑ i, ∑ j, cardCost i j * (![![25, 8, 0, 7], ![0, 12, 15, 3]] : Fin
 - [Total unimodularity](../05-Integer%20and%20Combinatorial%20Optimisation/05-total-unimodularity.md): the property of the whole table, every square block with determinant −1, 0 or 1, that makes every corner whole for every whole right-hand side.
 - [Two-stage stochastic programming](../07-Dynamic%20Programming%20and%20Learning/07-stochastic-programming-with-recourse.md): the same shipping plan when the workshops' needs are uncertain and some choices wait until they are known.
 - [Optimal transport](../../25-Frontier/07-Physics%2C%20Finance%20and%20Machines/04-optimal-transport-and-machine-learning-theory.md), on the Frontier wing: the transportation problem with mass spread continuously, where its prices become a way to measure the distance between two distributions.
+- [Sinkhorn](../08-First-Order%20Methods%20at%20Scale/08-entropic-optimal-transport-and-sinkhorn.md): transport made smooth by entropy, solved by rescaling rows and columns.
 
 The certificate here came from the simplex method's tree; whether every network linear program with whole data also has whole prices, and what that says about cuts, is left for [Total unimodularity](../05-Integer%20and%20Combinatorial%20Optimisation/05-total-unimodularity.md).
 

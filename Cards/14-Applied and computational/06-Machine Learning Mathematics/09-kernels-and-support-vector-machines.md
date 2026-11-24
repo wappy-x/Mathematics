@@ -919,6 +919,7 @@ end KernelsAndSupportVectorMachines
 ## Where this goes next
 
 - [Support vector machines](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/03-support-vector-machines-as-a-quadratic-program.md): the same problem in the optimisation wing, as a quadratic program, with the KKT conditions proved and the solver's convergence shown.
+- [Radial basis functions](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/11-radial-basis-function-interpolation.md): interpolate scattered points in any dimension with one kernel.
 
 This card leaves open how to choose C and the kernel's reach without wasting data, and how to train on all 20,000 orders when the kernel table alone fills 3.2 GB.
 

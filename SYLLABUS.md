@@ -1,10 +1,10 @@
 # Syllabus
 
-The whole library in reading order: **25 wings, 271 shelves and 2,151 cards**, from counting to the open problems of current research. Each card uses only ideas from the cards before it, so the library can be read from the first card to the last.
+The whole library in reading order: **25 wings, 273 shelves and 2,188 cards**, from counting to the open problems of current research. Each card uses only ideas from the cards before it, so the library can be read from the first card to the last.
 
 **Each wing has its own page.** Click a wing to see its shelves and every card on them, then click a card's title to read it.
 
-**2,151 of 2,151 cards are ready to read.**
+**2,188 of 2,188 cards are ready to read.**
 
 | # | Wing | What it's about | Shelves | Ready to read |
 | --- | --- | --- | ---: | --- |
@@ -22,8 +22,8 @@ The whole library in reading order: **25 wings, 271 shelves and 2,151 cards**, f
 | 12 | [Financial mathematics](Cards/12-Financial%20mathematics/README.md) | Interest, pricing, risk and markets, from loans to derivatives. | 54 | 375 of 375 |
 | 13 | [Engineering mathematics](Cards/13-Engineering%20mathematics/README.md) | Units, signals, control, circuits, mechanics, heat. | 11 | 111 of 111 |
 | 14 | [Applied and computational](Cards/14-Applied%20and%20computational/README.md) | Algorithms, information, cryptography, machine learning. | 9 | 92 of 92 |
-| 15 | [Optimization](Cards/15-Optimization/README.md) | Finding the best choice under limits. | 7 | 64 of 64 |
-| 16 | [Numerical analysis](Cards/16-Numerical%20analysis/README.md) | Computing answers you can trust, and knowing how far off they are. | 8 | 68 of 68 |
+| 15 | [Optimization](Cards/15-Optimization/README.md) | Finding the best choice under limits. | 8 | 82 of 82 |
+| 16 | [Numerical analysis](Cards/16-Numerical%20analysis/README.md) | Computing answers you can trust, and knowing how far off they are. | 9 | 87 of 87 |
 | 17 | [Topology](Cards/17-Topology/README.md) | Shape without measurement: stretching, holes and knots. | 6 | 51 of 51 |
 | 18 | [Functional analysis](Cards/18-Functional%20analysis/README.md) | Infinite-dimensional spaces behind modern analysis. | 6 | 56 of 56 |
 | 19 | [Partial differential equations](Cards/19-Partial%20differential%20equations/README.md) | Heat, waves and fluids. | 7 | 62 of 62 |

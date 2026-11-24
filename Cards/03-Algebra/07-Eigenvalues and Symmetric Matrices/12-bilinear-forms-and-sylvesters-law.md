@@ -765,6 +765,7 @@ example : (!![(1 : ℤ), 1; 1, 1])ᵀ * !![(1 : ℤ), 2; 2, 1] * !![(1 : ℤ), 1
 - [Elliptic, parabolic, hyperbolic](../../19-Partial%20differential%20equations/01-Classification%20and%20Well-Posedness/04-classification-elliptic-parabolic-hyperbolic.md): Sylvester's law in any size, with a computer-checked proof, naming three families of equations.
 - [Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md): second-derivative sign counts telling peaks, pits and saddles apart.
 - [Symplectic form](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/10-symplectic-form-and-hamiltonian-flow.md): an alternating form that drives how mechanical systems move.
+- [Generalised eigenproblems](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/15-generalised-eigenvalue-problems.md): Kx = lambda M x, from masses on springs to the QZ algorithm.
 
 This card leaves open what survives when the numbers are not real: over the rationals, for example, a form keeps far more than its sign counts.
 

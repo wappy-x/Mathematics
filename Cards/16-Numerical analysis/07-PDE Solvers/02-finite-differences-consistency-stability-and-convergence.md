@@ -867,6 +867,8 @@ example : 24 * 90 = 2160 ∧ 49 * 360 = 17640 ∧ 99 * 1440 = 142560 ∧ 199 * 5
 - [Von Neumann analysis](03-von-neumann-analysis-and-the-cfl-condition.md): finds each wave shape's growth factor, a sharper stability test than the row-sum norm.
 - [Spectral methods](10-spectral-methods-and-the-fft.md): replace the three-point difference by a transform, and, for smooth solutions, trade order 2 for accuracy that improves faster than any power of h.
 - [Stencils to order](../08-Derivatives%20by%20Machine/02-stencils-for-higher-and-mixed-derivatives.md): builds higher-order and mixed difference formulas on the centred second difference used here.
+- [Godunov's method](11-godunov-method-and-riemann-solvers.md): solve a small Riemann problem at every cell edge.
+- [Multigrid](../09-Fast%20Solvers%20for%20Large%20Grids/02-multigrid-smoothing-and-the-v-cycle.md): smooth on the fine grid, correct on the coarse grid, and solve in O(N) work.
 
 The max-norm test here needs all weights positive; for a scheme with a negative weight, how can stability be decided without this test?
 

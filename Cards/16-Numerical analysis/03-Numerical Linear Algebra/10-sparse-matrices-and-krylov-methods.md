@@ -1007,7 +1007,7 @@ example : 2 * 50000 ^ 3 / 3 = 83333333333333 := by norm_num
 
 - **Traffic and transport models.** Steady flows on a road or rail network are sparse linear systems of this shape, with one row per link and a handful of nonzeros per row.
 - **Web search ranking.** PageRank solves a system of the same shape: the identity minus a damping share times a transposed table of how each page's links split among other pages. That table is sparse and nonsymmetric, like the turning table.
-- **Fluid flow and heat with wind.** A flow that carries heat one way makes the discretised matrix nonsymmetric. Solvers for such grids run GMRES with stronger preconditioners, such as incomplete LU: LU that keeps only the nonzeros A already has (Saad, 2003).
+- **Fluid flow and heat with wind.** A flow that carries heat one way makes the discretised matrix nonsymmetric. Solvers for such grids run GMRES with stronger preconditioners, such as incomplete LU ([Incomplete factorisations](../09-Fast%20Solvers%20for%20Large%20Grids/01-incomplete-factorisation-preconditioners.md)): LU that keeps only the nonzeros A already has (Saad, 2003).
 - **Water networks.** This shelf's 500-pipe water network gives a symmetric matrix after linearising. At city scale the same CSR storage holds it, and conjugate gradient takes the place of GMRES.
 
 > **Say it back**
@@ -1026,8 +1026,15 @@ example : 2 * 50000 ^ 3 / 3 = 83333333333333 := by norm_num
 ## Where this goes next
 
 - [Assembly and error](../07-PDE%20Solvers/08-finite-element-assembly-and-error.md): how a finite-element solver builds a sparse matrix from many small local pieces, and what error the solve leaves.
+- [Iterative refinement](11-iterative-refinement-and-mixed-precision.md): factor cheaply, compute the residual carefully, and win back full accuracy.
+- [Saddle-point systems](12-symmetric-indefinite-systems-ldlt-and-minres.md): LDL^T with 2-by-2 pivots, and MINRES.
+- [BiCGSTAB](13-bicgstab-and-short-recurrences.md): Krylov steps for non-symmetric systems without GMRES's growing memory.
+- [Lanczos](14-lanczos-and-rayleigh-ritz.md): the extreme eigenvalues of a huge symmetric matrix from a three-term recurrence.
+- [Incomplete factorisations](../09-Fast%20Solvers%20for%20Large%20Grids/01-incomplete-factorisation-preconditioners.md): LU and Cholesky that keep only the nonzeros you can afford.
+- [Algebraic multigrid](../09-Fast%20Solvers%20for%20Large%20Grids/03-algebraic-multigrid.md): choose the coarse grid from the matrix alone.
+- [Domain decomposition](../09-Fast%20Solvers%20for%20Large%20Grids/04-domain-decomposition-and-schwarz-methods.md): solve on overlapping pieces, and add a coarse grid so the pieces agree.
 
-This card used the simplest preconditioner, the diagonal; it leaves open how to choose a preconditioner for a matrix whose trouble is not just scaling.
+This card used the simplest preconditioner, the diagonal; it leaves open how to choose a preconditioner for a matrix whose trouble is not just scaling ([Incomplete factorisations](../09-Fast%20Solvers%20for%20Large%20Grids/01-incomplete-factorisation-preconditioners.md)).
 
 ---
 

@@ -948,6 +948,7 @@ example : 2 ^ 3 - 1 = 7 := by decide
 
 - [LP duality](04-lp-duality-and-complementary-slackness.md): the prices in the final profit row are the solution of a partner problem, and its value always equals the best profit.
 - [Interior point for linear programs](08-interior-point-for-lp-and-complexity.md): a method that cuts through the inside of the region instead of walking its edges, with a polynomial bound on its work.
+- [Column generation](../05-Integer%20and%20Combinatorial%20Optimisation/09-column-generation-and-dantzig-wolfe.md): let a small pricing problem write the columns the master program needs.
 
 Still open after this card: no pivot rule is known to make the simplex method take a polynomial number of pivots on every linear program.
 

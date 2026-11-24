@@ -568,6 +568,7 @@ example : (6 : ℤ) + 2 * 3 = 12 ∧ (6 : ℤ) - 2 * 3 = 0 := by norm_num
 - [The wave equation](05-the-wave-equation-and-dalemberts-formula.md): two transport equations, running in opposite directions, make a wave.
 - [Flow problems](../../16-Numerical%20analysis/07-PDE%20Solvers/06-upwind-schemes-and-conservation-laws.md): the grid of road 2, its stability limit and its smearing.
 - [Characteristics](../../19-Partial%20differential%20equations/02-First-Order%20Equations%20and%20Characteristics/01-method-of-characteristics.md): characteristics for general first-order PDEs, and what happens after they cross.
+- [Godunov's method](../../16-Numerical%20analysis/07-PDE%20Solvers/11-godunov-method-and-riemann-solvers.md): solve a small Riemann problem at every cell edge.
 
 Left open: what the solution does once two paths meet, a moving jump called a shock, answered in Characteristics.
 

@@ -612,6 +612,7 @@ The orange line is the hoop's spin, from road two: 4.53 when the bead is highest
 - [Noether](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/08-noethers-theorem.md): every continuous symmetry of the action, and the quantity it conserves.
 - [The second variation](09-second-variation-and-free-endpoints.md): when a stationary path is truly a minimum, and what a free end must satisfy.
 - [Action-angle variables and KAM](10-action-angle-variables-and-kam.md): an integrable system winds round tori, and most tori survive a small push.
+- [Differential-algebraic equations](../../16-Numerical%20analysis/06-ODE%20Solvers/09-differential-algebraic-equations.md): when some equations carry no derivative, and the index that measures the trouble.
 
 Left open: the hoop's momentum appeared only at the end, as a slope of $`L`$. What changes if momentum is a working variable from the start, beside position?
 

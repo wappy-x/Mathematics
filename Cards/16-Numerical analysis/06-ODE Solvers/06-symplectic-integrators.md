@@ -799,6 +799,7 @@ Also on this shelf: [Runge-Kutta](01-runge-kutta-and-butcher-tableaux.md) gives 
 
 - [Two-point boundary problems](07-boundary-value-problems-shooting-and-collocation.md): the next card, where the condition is given at both ends of the run, not only at the start.
 - Symplectic form (planned, in the differential geometry wing): the two-form whose preservation "keeps area" generalises to many degrees of freedom.
+- [Implicit Runge-Kutta](08-implicit-runge-kutta-methods.md): Gauss and Radau collocation, A-stable at every order.
 
 The question this card leaves open: can a method keep the energy and the clock at once, or must every fixed-step method give up one of them?
 

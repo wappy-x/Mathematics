@@ -963,6 +963,7 @@ example : ∑ k ∈ Finset.range 50, ((2 * (200 - k) - 1) + (50 - k - 1) * (4 * 
 
 - [Least squares two ways](06-least-squares-normal-equations-versus-qr.md): the fit solved through $`A^{\mathsf T}A`$ against through QR, and why the first squares $`\kappa`$.
 - [Eigenvalues by iteration](07-eigenvalues-power-iteration-and-the-qr-algorithm.md): QR repeated, to find every eigenvalue at once.
+- [Randomised SVD](17-randomised-svd-and-the-range-finder.md): a few random products find the range, then a small SVD finishes.
 
 Left open: Householder clears a whole column at once, but many tables are mostly zeros already; how can a factorisation clear one entry at a time and leave the zeros alone?
 

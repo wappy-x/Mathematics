@@ -773,6 +773,7 @@ example : ((8 + 9 : ℚ) + 2 * (2 * 2 * (872 / 128 - 7) * 5)) = 19 / 2 ∧
 ## Where this goes next
 
 - [The standard convex problem](10-the-convex-problem-in-standard-form.md): writes a certified convex objective and its constraints in the form every solver expects; a maximum of quotes becomes a new variable and three inequalities.
+- [Geometric programs](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/11-geometric-programming-and-the-exponential-cone.md): posynomials become convex after taking logs, and the exponential cone.
 
 These rules certify convexity from the way a function is built; when a function arrives with no recipe, deciding whether it is convex can be far harder, and no simple list settles it.
 

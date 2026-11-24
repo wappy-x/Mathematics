@@ -1098,6 +1098,10 @@ end LPDuality
 - [Shadow prices](05-sensitivity-and-shadow-prices.md): the dual prices as rates of change, with the stretch of stock over which each price holds.
 - [Network flows](06-network-flows-as-linear-programs.md): shipping problems whose dual prices are values at the nodes, and whose slackness picks out the routes used.
 - [Optimal transport](../../25-Frontier/07-Physics%2C%20Finance%20and%20Machines/04-optimal-transport-and-machine-learning-theory.md): the dual of moving one distribution onto another, where the prices become potentials.
+- [The ellipsoid method](09-ellipsoid-method.md): trap the answer in shrinking ellipsoids, and linear programming in polynomial time.
+- [Column generation](../05-Integer%20and%20Combinatorial%20Optimisation/09-column-generation-and-dantzig-wolfe.md): let a small pricing problem write the columns the master program needs.
+- [Benders decomposition](../07-Dynamic%20Programming%20and%20Learning/10-benders-decomposition-and-the-l-shaped-method.md): fix the first-stage choice, and let each scenario send back a cut.
+- [Sinkhorn](../08-First-Order%20Methods%20at%20Scale/08-entropic-optimal-transport-and-sinkhorn.md): transport made smooth by entropy, solved by rescaling rows and columns.
 
 The question this card leaves open: the prices are exact only at the margin, so how far can a stock move before the best corner, and with it the price list, changes?
 

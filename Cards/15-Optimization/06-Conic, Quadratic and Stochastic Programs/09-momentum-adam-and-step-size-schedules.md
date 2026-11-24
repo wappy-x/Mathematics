@@ -985,6 +985,7 @@ example : (adamRun 1 (fun _ => 3 / 10) (9 / 10) (999 / 1000) 10 1).1 = 97 / 10 �
 - [Proximal gradient](06-proximal-methods-ista-fista-and-the-lasso.md), earlier on this shelf: Nesterov's look-ahead carried onto non-smooth problems such as the lasso, as FISTA.
 - [Backpropagation](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/04-backpropagation.md), on the computing wing: the slopes that Adam consumes when a network is trained.
 - [Conjugate gradient](../02-Unconstrained%20Methods/07-conjugate-gradient-method.md), on the shelf of unconstrained methods: momentum whose α and β are chosen afresh each step, finishing a quadratic in as many steps as it has variables.
+- [The speed limit](../08-First-Order%20Methods%20at%20Scale/03-lower-bounds-for-first-order-methods.md): no gradient method can beat 1/k^2 on smooth convex problems.
 
 Adam is the method most often used and the least often guaranteed: which schedules and settings make it provably converge on the problems it is used for remains an open question.
 

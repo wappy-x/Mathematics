@@ -1009,6 +1009,9 @@ example : (4 * 2000 ^ 3 - 3 * 2000 ^ 2 - 2000) / 6 = 5331333000 ∧
 
 - [The Thomas algorithm](03-tridiagonal-systems-and-the-thomas-algorithm.md): LU on a matrix with only three diagonals, where the work grows like n instead of $`n^3`$.
 - [Cholesky](04-cholesky-decomposition.md): for a symmetric positive definite matrix, $`A = LL^T`$ needs no pivoting and half the flops.
+- [Iterative refinement](11-iterative-refinement-and-mixed-precision.md): factor cheaply, compute the residual carefully, and win back full accuracy.
+- [Saddle-point systems](12-symmetric-indefinite-systems-ldlt-and-minres.md): LDL^T with 2-by-2 pivots, and MINRES.
+- [Incomplete factorisations](../09-Fast%20Solvers%20for%20Large%20Grids/01-incomplete-factorisation-preconditioners.md): LU and Cholesky that keep only the nonzeros you can afford.
 
 Later on this shelf, [QR](05-qr-householder-and-gram-schmidt.md) factors by reflections, which keep every column's length, so no entry grows. [Iterating instead of factoring](09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md) avoids factoring a large sparse matrix at all.
 

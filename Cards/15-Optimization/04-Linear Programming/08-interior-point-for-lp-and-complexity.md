@@ -862,6 +862,7 @@ example : 2 ^ 80 - 1 = 1208925819614629174706175 := by norm_num
 
 - [Branch and bound](../05-Integer%20and%20Combinatorial%20Optimisation/03-branch-and-bound.md): whole-number plans by splitting into cases, each case one LP, re-solved from the last answer.
 - [Semidefinite programs](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/05-semidefinite-programs-and-relaxations.md): the primal-dual interior point idea with matrices in place of the vectors $`x`$ and $`s`$.
+- [The ellipsoid method](09-ellipsoid-method.md): trap the answer in shrinking ellipsoids, and linear programming in polynomial time.
 
 Whether some algorithm solves every linear program in a number of steps bounded by a polynomial in the number of variables and limits alone, with no dependence on the bits of the data, is unsolved as of 2026-11-11, and so is whether any pivot rule makes simplex polynomial.
 

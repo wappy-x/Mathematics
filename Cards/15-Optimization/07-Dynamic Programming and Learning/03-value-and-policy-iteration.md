@@ -1208,6 +1208,7 @@ example : 228 * 94 = 21432 ∧ 3288 * 5 = 16440 := by norm_num
 
 - [The Bellman operator contracts](04-the-bellman-operator-as-a-contraction.md): the proof that every sweep shrinks the error by the factor 0.95, used in Step 1 here.
 - [Q-learning](05-q-learning-and-temporal-differences.md): the same improvement when the rain chances are unknown, learned from simulated months.
+- [Policy gradients](12-policy-gradient-and-actor-critic.md): nudge the decision rule itself, with a learned critic to cut the noise.
 
 Policy iteration's rounds cost the cube of the number of states; is there a method between the two that evaluates each rule only partly, and still converges?
 

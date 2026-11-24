@@ -837,6 +837,7 @@ example :
 - [Two goals at once](02-multi-objective-trade-offs-and-the-pareto-frontier.md): expected return as a second goal, on a five-fund menu with figures of its own; the efficient frontier appears as the curve where risk cannot fall without return falling too.
 - [Support vector machines](03-support-vector-machines-as-a-quadratic-program.md): the same KKT conditions, where the assets with positive weight become the support vectors.
 - [Second-order cone programs](04-second-order-cone-programs.md): limits on risk itself, which are curved and need cones; its example caps tracking error, the risk of straying from a benchmark, with a five-asset risk model of its own.
+- [Frank-Wolfe](../08-First-Order%20Methods%20at%20Scale/01-frank-wolfe-conditional-gradient.md): step toward the best corner and never project.
 
 The active-set pass solves a fresh linear system for each guess, which is fast for five assets and slow for five thousand; how to handle a QP that large is the question this card leaves open.
 

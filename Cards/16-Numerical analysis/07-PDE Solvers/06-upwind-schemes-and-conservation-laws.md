@@ -892,8 +892,11 @@ example : 1 + (4 / 5 : ℝ) ^ 2 * Real.sin (Real.pi / 2) ^ 2 = 41 / 25 := by
 - [Crank-Nicolson and the theta family](04-crank-nicolson-and-theta-methods.md): the implicit time-centred step, met there on the heat equation. Used on the river with centred differences in space, it keeps $`|g| = 1`$: no growth and no smear, but the waves still disperse.
 - [Spectral methods](10-spectral-methods-and-the-fft.md): differentiate by transforming all the samples at once, shown there on a heated ring. For a smooth periodic function the error falls faster than any power of the number of points.
 - [Finite elements](07-finite-elements-galerkin-and-hat-functions.md): another way to build the grid equations, by integrating against test functions, shown there on a sagging cable. On a flow problem, plain Galerkin weighs both neighbours equally, as the centred step does.
+- [Godunov's method](11-godunov-method-and-riemann-solvers.md): solve a small Riemann problem at every cell edge.
+- [Flux limiters](12-tvd-schemes-and-flux-limiters.md): second order where the wave is smooth, no wiggles where it is steep.
+- [Discontinuous Galerkin](14-discontinuous-galerkin-methods.md): finite elements that may jump at edges, joined by an upwind flux.
 
-Left open: how to get second order where the pulse is smooth and no wobble where it is steep. Godunov's theorem forces the answer to be nonlinear, with weights that switch toward upwind near a steep edge.
+Left open: how to get second order where the pulse is smooth and no wobble where it is steep ([Flux limiters](12-tvd-schemes-and-flux-limiters.md)). Godunov's theorem forces the answer to be nonlinear, with weights that switch toward upwind near a steep edge.
 
 ---
 

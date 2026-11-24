@@ -974,6 +974,8 @@ end ConjugateGradient
 - [Trust regions](08-trust-region-methods.md): conjugate gradient, stopped at the region's edge, solves the inner problem.
 - [Nonlinear least squares](09-nonlinear-least-squares-gauss-newton-and-levenberg-marquardt.md): each Gauss-Newton step is a bowl that conjugate gradient can solve without forming its matrix.
 - [L-BFGS](06-l-bfgs-and-limited-memory-updates.md): the other fast method with a few stored lists; on a bowl with exact line searches it retraces conjugate gradient's steps.
+- [The speed limit](../08-First-Order%20Methods%20at%20Scale/03-lower-bounds-for-first-order-methods.md): no gradient method can beat 1/k^2 on smooth convex problems.
+- [Saddle-point systems](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/12-symmetric-indefinite-systems-ldlt-and-minres.md): LDL^T with 2-by-2 pivots, and MINRES.
 
 The open question: how to reshape the bowl so that $`\kappa`$, and the step count with it, falls before the first step.
 

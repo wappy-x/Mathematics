@@ -921,6 +921,7 @@ example : (2 / 5 : ℚ) + 2 * (4 / 5) = 2 ∧ (2 / 5 : ℚ) + 4 / 5 = 6 / 5 ∧
 ## Where this goes next
 
 - [Proximal gradient](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/06-proximal-methods-ista-fista-and-the-lasso.md): the shrink step as a general method for costs with corners, how fast it converges, and the noisy version of this card's fit.
+- [Matrix completion](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/13-matrix-completion-and-the-nuclear-norm.md): fill the missing entries with the table of lowest nuclear norm.
 
 This card leaves open what to do when the signal is sparse in no fixed basis, as a properly tuned guitar is not quite sparse on a 44.1 Hz grid: should the basis bend to fit the signal?
 

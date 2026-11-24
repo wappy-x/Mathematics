@@ -174,7 +174,7 @@ The same failure, seen as a wave: add to the prices a ripple of height $`\vareps
 Regularization means adding information that rules out the wild answers. Two common forms:
 
 - **A smooth family.** Allow only volatility curves with few numbers in them, then choose the numbers that best reprice the quotes.
-- **A penalty.** Allow any curve, but add to the misfit a cost for roughness (Tikhonov's method), with a weight that trades bias against noise.
+- **A penalty.** Allow any curve, but add to the misfit a cost for roughness (Tikhonov's method, in [Ill-posed problems](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/16-discrete-ill-posed-problems-and-regularisation.md)), with a weight that trades bias against noise.
 
 The check uses the first. It allows $`\sigma_{\text{loc}}(K) = a + b\ln(K/100)`$ and minimizes the squared misfit to the 60 quotes, by Gauss-Newton steps (each step solves a small linear problem built from the slopes of the misfit). Every trial pair costs one forward solve, which prices all 60 quotes. Starting from $`a`$ = 0.25 and $`b`$ = 0, two steps reach $`a`$ = 0.2000 and $`b`$ = −0.1503, and a third settles $`b`$ at −0.1506. The leftover price error is 0.0102 in root mean square, about the size of the noise put in.
 

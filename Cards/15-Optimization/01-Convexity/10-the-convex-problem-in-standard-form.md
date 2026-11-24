@@ -731,6 +731,7 @@ example : (225 / 28 : ℚ) < 105 / 13 := by norm_num
 
 - [Linear programs](../04-Linear%20Programming/01-linear-programs-and-polyhedra.md): the standard form with every piece affine. Drop the taste circle and the blend becomes one, and its answer moves to a corner of the feasible region.
 - [KKT conditions](../03-Constrained%20Optimisation/02-kkt-conditions.md): adds a price, a multiplier, for each limit, so a certificate like Step 6's still works when a limit such as the caffeine floor is tight.
+- [Geometric programs](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/11-geometric-programming-and-the-exponential-cone.md): posynomials become convex after taking logs, and the exponential cone.
 
 The certificate here worked because only one inequality, the taste rule, was tight; what evidence proves an answer optimal when several limits press at once is the question the constrained-optimisation shelf answers with multipliers.
 

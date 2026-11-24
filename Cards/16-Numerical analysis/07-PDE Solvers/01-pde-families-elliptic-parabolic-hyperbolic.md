@@ -146,7 +146,7 @@ The centre value comes from a symmetry. Turn the plate a quarter turn three time
 
 **Jacobi's method** sweeps the grid, replacing every inside value by its neighbours' average. The slowest errors are the smooth bump sin(πx) sin(πy) and the checkerboard: the same bump with its sign flipped at every other point. The bump's four neighbours average to cos(πh) times its own value (from cos(a − b) + cos(a + b) = 2 cos a cos b), the checkerboard's to −cos(πh) times its own, so each sweep shrinks both in size by cos(πh) = 0.98769 at h = 0.05 m. Cutting it a millionfold takes 1116 sweeps. For small h that count is close to 2.80/h^2, which gives 1120 at h = 0.05 m: it quadruples when h halves.
 
-So an elliptic grid is one big linear system with n unknowns, solved all at once. Jacobi shows the shape of the cost; better solvers (conjugate gradients, multigrid, or the tridiagonal solves of [Two space dimensions](05-adi-and-multidimensional-grids.md)) cut it.
+So an elliptic grid is one big linear system with n unknowns, solved all at once. Jacobi shows the shape of the cost; better solvers (conjugate gradients, [Multigrid](../09-Fast%20Solvers%20for%20Large%20Grids/02-multigrid-smoothing-and-the-v-cycle.md), or the tridiagonal solves of [Two space dimensions](05-adi-and-multidimensional-grids.md)) cut it.
 
 ### Step 5: the implicit heat step is a small elliptic problem
 

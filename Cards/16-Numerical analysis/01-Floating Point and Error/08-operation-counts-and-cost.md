@@ -896,6 +896,8 @@ example : 20 * (2 * 20 - 1) = 780 ∧ 20 ^ 2 + 2 * 20 = 440 ∧
 
 - [The fast Fourier transform](../07-PDE%20Solvers/09-the-fast-fourier-transform.md): the same counting turns a transform's flops from growing like $`n^2`$ to growing like $`n \log_2 n`$, by splitting the sum in half.
 - [LU with partial pivoting](../03-Numerical%20Linear%20Algebra/02-lu-decomposition-and-pivoting.md): elimination stored as factors, so each new right side costs about $`2n^2`$ flops instead of $`2n^3/3`$.
+- [Randomised SVD](../03-Numerical%20Linear%20Algebra/17-randomised-svd-and-the-range-finder.md): a few random products find the range, then a small SVD finishes.
+- [Multigrid](../09-Fast%20Solvers%20for%20Large%20Grids/02-multigrid-smoothing-and-the-v-cycle.md): smooth on the fine grid, correct on the coarse grid, and solve in O(N) work.
 
 This card counts flops and fetches but not accuracy: when do two methods with the same count give answers of different quality?
 

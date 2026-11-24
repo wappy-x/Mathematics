@@ -1195,6 +1195,7 @@ example :
 
 - [Stochastic gradient](08-stochastic-gradient-and-sample-average-approximation.md): the next card, for when there is too much data even for one linear solve per round, so each step uses a sample.
 - [Robust and chance constraints](10-robust-and-chance-constrained-optimisation.md): problems with a shared answer across many scenarios, where splitting by scenario and agreeing through a price is the same consensus idea.
+- [Monotone operators](../08-First-Order%20Methods%20at%20Scale/07-monotone-operators-and-splitting.md): the prox is a resolvent, and Douglas-Rachford and Chambolle-Pock split the work.
 
 The open question this card leaves: how to choose $`\rho`$ well before the run, rather than adjusting it during the run.
 

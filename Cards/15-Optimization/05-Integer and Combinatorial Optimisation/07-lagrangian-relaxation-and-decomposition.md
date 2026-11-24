@@ -980,10 +980,10 @@ open LagrangianRelaxation
 ## Where you meet it in real life
 
 - **Power-station scheduling.** Deciding which generators run each hour is coupled only by meeting demand; pricing demand lets each generator plan its own on-off schedule, and for many years this was the standard method.
-- **Airline crew rosters.** Each pairing of flights for one crew is a whole plan; the master problem blends plans so every flight is covered, which is the Dantzig–Wolfe form of Step 5, solved by generating plans as prices change.
+- **Airline crew rosters.** Each pairing of flights for one crew is a whole plan; the master problem blends plans so every flight is covered, which is the Dantzig–Wolfe form of Step 5, solved by generating plans as prices change ([Column generation](09-column-generation-and-dantzig-wolfe.md)).
 - **Travelling salesman bounds.** Pricing the "every city has two road ends" rule leaves a spanning-tree problem that is easy to solve; the Held–Karp bound found this way is the classic lower bound for tours (a minimisation, so the signs flip).
 - **Delivery fleets.** Each vehicle's route is a piece, linked only by "each customer is served once"; pricing that rule lets each route be planned alone.
-- **Planning under uncertain demand.** Benders decomposition splits the other way: it fixes the hard decisions, solves the rest as an LP, and sends back its prices as new constraints.
+- **Planning under uncertain demand.** [Benders decomposition](../07-Dynamic%20Programming%20and%20Learning/10-benders-decomposition-and-the-l-shaped-method.md) splits the other way: it fixes the hard decisions, solves the rest as an LP, and sends back its prices as new constraints.
 
 > **Say it back**
 > One rule, the shared 16 crew-hours, ties three stages' bookings together. Charging £$`\lambda`$k per crew-hour, and paying the stages the whole budget, removes the rule; each stage then books alone, and the priced total is a ceiling on any legal booking. The ceiling as a function of the price is a V, and subgradient steps walk to its bottom: £50k at £2k a crew-hour. That beats the LP relaxation's £53k because stages may blend whole plans but not slice acts. The best real booking, £48k, still has to be built and proved best, here by listing all 122 legal bookings.
@@ -1000,6 +1000,8 @@ open LagrangianRelaxation
 ## Where this goes next
 
 - [Heuristics with a promise](08-heuristics-and-approximation-guarantees.md): the next card. It builds bookings fast and proves how far from the best they can be, as the one-stage repair here did with the £50k bound as its yardstick.
+- [Column generation](09-column-generation-and-dantzig-wolfe.md): let a small pricing problem write the columns the master program needs.
+- [Benders decomposition](../07-Dynamic%20Programming%20and%20Learning/10-benders-decomposition-and-the-l-shaped-method.md): fix the first-stage choice, and let each scenario send back a cut.
 
 The question this card leaves open: when the best price still leaves a gap, how should the price, the repair and the branching work together to close it on a problem too large to list?
 

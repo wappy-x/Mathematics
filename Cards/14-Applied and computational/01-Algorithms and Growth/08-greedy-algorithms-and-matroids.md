@@ -1132,6 +1132,7 @@ end GreedyMatroids
 - [Graph algorithms as code](09-graph-algorithms-in-practice.md): the next card, with the heaps and union-find structures that make greedy graph walks fast.
 - [Approximation](../02-Randomised%20and%20Approximate%20Algorithms/06-approximation-algorithms.md): greedy answers with a proven ratio to the best, where no exact fast method is known.
 - [Communities](../07-Network%20Science%20and%20Spectral%20Graphs/06-community-detection.md): greedy merging of groups in a network, with no guarantee.
+- [Submodular functions](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/10-submodular-functions-and-the-greedy-bound.md): diminishing returns, the greedy 1 - 1/e promise, and the Lovasz extension.
 
 When no argument makes greed safe and no table is small enough, how close can a fast method be promised to get to the best answer?
 

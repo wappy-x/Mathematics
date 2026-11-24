@@ -1010,6 +1010,7 @@ example : (24 : ℝ) * 6 / (2 + 6) / (3 + 6) = 2 ∧
 - [Op-amps](10-op-amp-circuits.md): huge gain wrapped in feedback, so two resistors set the answer.
 - [Transmission lines](11-transmission-lines-and-reflections.md): when the cable is long, the voltage travels and bounces.
 - [Two-ports](13-two-port-networks-and-s-parameters.md): four numbers describe any box with an input and an output.
+- [Differential-algebraic equations](../../16-Numerical%20analysis/06-ODE%20Solvers/09-differential-algebraic-equations.md): when some equations carry no derivative, and the index that measures the trouble.
 
 This card's circuit sits still: nothing in it stores energy. What happens when a part holds charge or magnetic field, and the answer depends on time, is the question left open.
 

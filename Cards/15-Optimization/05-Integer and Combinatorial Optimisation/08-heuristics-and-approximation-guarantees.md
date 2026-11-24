@@ -1007,6 +1007,7 @@ Earlier cards on this shelf take a heuristic's answer further:
 - [Lagrangian relaxation](07-lagrangian-relaxation-and-decomposition.md): prices on awkward constraints, giving floors like the dual certificate here on much larger problems.
 - [Branch and bound](03-branch-and-bound.md): a heuristic's answer as the incumbent, and floors to close the search tree and certify the best.
 - [Integer programs](01-integer-programs-and-relaxations.md): the LP relaxation in general, and the gap between a fractional floor and the whole-number best.
+- [Submodular functions](10-submodular-functions-and-the-greedy-bound.md): diminishing returns, the greedy 1 - 1/e promise, and the Lovasz extension.
 
 The question this card leaves open is how to certify a two-opt round as the shortest when the rounds are far too many to list.
 

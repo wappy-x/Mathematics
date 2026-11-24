@@ -853,6 +853,8 @@ example : 999 ^ 2 = 998001 ∧ 4 * 998001 * 999 = 3988011996 ∧
 - [Finite elements](07-finite-elements-galerkin-and-hat-functions.md): the weak form and hat functions, on a cable in one dimension.
 - [Assembly and error](08-finite-element-assembly-and-error.md): the same method stated on triangles, the usual road for plates whose edges are not straight.
 - [Spectral methods](10-spectral-methods-and-the-fft.md): the fast Fourier transform splits grid values into waves that each step on their own, on a heated ring. Sine waves do the same for this card's five-point system.
+- [Incomplete factorisations](../09-Fast%20Solvers%20for%20Large%20Grids/01-incomplete-factorisation-preconditioners.md): LU and Cholesky that keep only the nonzeros you can afford.
+- [Multigrid](../09-Fast%20Solvers%20for%20Large%20Grids/02-multigrid-smoothing-and-the-v-cycle.md): smooth on the fine grid, correct on the coarse grid, and solve in O(N) work.
 
 This card leaves open how to split a problem whose pieces do not commute, such as a plate whose diffusivity varies from point to point.
 

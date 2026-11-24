@@ -904,6 +904,8 @@ example (θ x y : ℝ) : θ * (x - (θ * x + (1 - θ) * y)) + (1 - θ) * (y - (�
 - [Subgradients](07-subgradients.md): the tangent test kept where the graph has a kink and no gradient exists.
 - [Building convex functions](09-operations-that-preserve-convexity.md): proving convexity by assembly rules, without computing a Hessian.
 - [Quadratic programs](../06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/01-quadratic-programs-and-markowitz.md): a convex quadratic cost, whose constant Hessian makes the curvature test a single matrix check.
+- [Submodular functions](../05-Integer%20and%20Combinatorial%20Optimisation/10-submodular-functions-and-the-greedy-bound.md): diminishing returns, the greedy 1 - 1/e promise, and the Lovasz extension.
+- [Mirror descent](../08-First-Order%20Methods%20at%20Scale/05-mirror-descent-and-bregman-divergences.md): measure distance the way the constraint set wants, and the simplex gets multiplicative updates.
 
 The curvature test needs two derivatives; what certifies convexity for a function with corners, such as a cost whose price changes at a volume break, is the question this card leaves open.
 

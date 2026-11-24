@@ -934,6 +934,7 @@ example : ∀ p ∈ ([1, 2, 3, 4, 5] : List (Fin 6)).permutations', 2450 ≤ tou
 - [Heuristics with a promise](08-heuristics-and-approximation-guarantees.md): how far greedy can fall short, proved; for covering, within a factor that grows slowly with the largest post.
 - [Lagrangian relaxation](07-lagrangian-relaxation-and-decomposition.md): put a price on the awkward rule, such as the budget or the loop bans, and solve what is left.
 - [Pseudo-polynomial time](../../24-Computability%20and%20complexity/03-Time%20Complexity/06-pseudo-polynomial-time-and-numbers-in-the-input.md): why the knapsack table is fast while the budget counts few units, and slow when it counts millions.
+- [Column generation](09-column-generation-and-dantzig-wolfe.md): let a small pricing problem write the columns the master program needs.
 
 This card leaves one question open: given a new model, how close will its fractional bound sit to the best whole answer, and which extra rules can close the gap before the search starts?
 
