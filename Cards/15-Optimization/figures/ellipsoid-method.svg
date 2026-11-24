@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 270" width="430" height="270">
+<title>The workshop's region of plans to scale, tables across and chairs up, with the first ellipses of the ellipsoid method for a profit target of 900 pounds: the starting disc of radius 100 around the origin, the ellipses after one and two central cuts, and the small ellipse after 21 cuts whose centre (29.3879, 17.2231) is a plan earning 902.8308 pounds</title>
+<rect x="0" y="0" width="430" height="270" fill="#ffffff"/>
+<polygon points="170,140 214,140 205.2,122.4 170,104.8" fill="#1d1d1d" fill-opacity="0.25" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="170" y1="140" x2="305" y2="140" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="170" y1="140" x2="170" y2="20" stroke="#1d1d1d" stroke-width="1"/>
+<circle cx="170" cy="140" r="110" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<ellipse cx="195.3" cy="113.4" rx="127" ry="73.3" transform="rotate(43.5 195.3 113.4)" fill="none" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="7 4"/>
+<ellipse cx="194.7" cy="142.7" rx="138.3" ry="51.8" transform="rotate(31.2 194.7 142.7)" fill="none" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="2 3"/>
+<ellipse cx="202.3" cy="121.1" rx="14.4" ry="3.5" transform="rotate(45.8 202.3 121.1)" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<circle cx="202.3" cy="121.1" r="2" fill="#1d1d1d"/>
+<circle cx="170" cy="140" r="2.5" fill="#1d1d1d"/>
+<text x="150" y="156" font-size="13" text-anchor="middle" fill="#1d1d1d" font-family="sans-serif">(0, 0)</text>
+<text x="240" y="156" font-size="13" text-anchor="middle" fill="#1d1d1d" font-family="sans-serif">tables x1</text>
+<text x="186" y="14" font-size="13" fill="#1d1d1d" font-family="sans-serif">chairs x2</text>
+<line x1="332" y1="36" x2="356" y2="36" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="362" y="40" font-size="13" fill="#1d1d1d" font-family="sans-serif">k = 0</text>
+<line x1="332" y1="58" x2="356" y2="58" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="7 4"/>
+<text x="362" y="62" font-size="13" fill="#1d1d1d" font-family="sans-serif">k = 1</text>
+<line x1="332" y1="80" x2="356" y2="80" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="2 3"/>
+<text x="362" y="84" font-size="13" fill="#1d1d1d" font-family="sans-serif">k = 2</text>
+<line x1="332" y1="102" x2="356" y2="102" stroke="#1d1d1d" stroke-width="2"/>
+<text x="362" y="106" font-size="13" fill="#1d1d1d" font-family="sans-serif">k = 21</text>
+<rect x="336" y="118" width="16" height="12" fill="#1d1d1d" fill-opacity="0.25" stroke="#1d1d1d" stroke-width="1"/>
+<text x="362" y="128" font-size="13" fill="#1d1d1d" font-family="sans-serif">plans</text>
+<text x="362" y="144" font-size="13" fill="#1d1d1d" font-family="sans-serif">that fit</text>
+<text x="332" y="240" font-size="13" fill="#1d1d1d" font-family="sans-serif">drawn to scale</text>
+</svg>

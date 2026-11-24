@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240" font-family="sans-serif">
+<title>One lap of the dye bump on 10 cells: the exact curve, the piecewise-linear DG answer with small jumps at the cell edges, and the flattened piecewise-constant answer</title>
+<rect x="0" y="0" width="360" height="240" fill="#ffffff"/>
+<line x1="40" y1="200" x2="320" y2="200" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="40" y1="40" x2="40" y2="200" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="40" y1="200" x2="40" y2="205" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="68" y1="200" x2="68" y2="205" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="96" y1="200" x2="96" y2="205" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="124" y1="200" x2="124" y2="205" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="152" y1="200" x2="152" y2="205" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="180" y1="200" x2="180" y2="205" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="208" y1="200" x2="208" y2="205" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="236" y1="200" x2="236" y2="205" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="264" y1="200" x2="264" y2="205" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="292" y1="200" x2="292" y2="205" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="320" y1="200" x2="320" y2="205" stroke="#1d1d1d" stroke-width="1"/>
+<polyline points="40,200.0 54,196.1 68,184.7 82,167.0 96,144.7 110,120.0 124,95.3 138,73.0 152,55.3 166,43.9 180,40.0 194,43.9 208,55.3 222,73.0 236,95.3 250,120.0 264,144.7 278,167.0 292,184.7 306,196.1 320,200.0" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="40" y1="128.8" x2="68" y2="128.8" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="68" y1="122.6" x2="96" y2="122.6" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="96" y1="115.4" x2="124" y2="115.4" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="124" y1="110.0" x2="152" y2="110.0" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="152" y1="108.4" x2="180" y2="108.4" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="180" y1="111.2" x2="208" y2="111.2" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="208" y1="117.4" x2="236" y2="117.4" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="236" y1="124.6" x2="264" y2="124.6" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="264" y1="130.0" x2="292" y2="130.0" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="292" y1="131.6" x2="320" y2="131.6" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="40" y1="203.1" x2="68" y2="183.9" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="68" y1="186.5" x2="96" y2="145.0" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="96" y1="144.5" x2="124" y2="96.5" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="124" y1="93.2" x2="152" y2="57.0" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="152" y1="52.1" x2="180" y2="41.5" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="180" y1="36.9" x2="208" y2="56.1" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="208" y1="53.5" x2="236" y2="95.0" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="236" y1="95.5" x2="264" y2="143.5" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="264" y1="146.8" x2="292" y2="183.0" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="292" y1="187.9" x2="320" y2="198.5" stroke="#1d1d1d" stroke-width="2"/>
+<text x="148" y="26" font-size="13" fill="#1d1d1d">jump 0.029</text>
+<text x="232" y="20" font-size="13" fill="#1d1d1d">thick: p = 1</text>
+<text x="232" y="36" font-size="13" fill="#1d1d1d">dashed: p = 0</text>
+<text x="232" y="52" font-size="13" fill="#1d1d1d">thin: exact</text>
+<text x="26" y="204" font-size="13" fill="#1d1d1d">0</text>
+<text x="26" y="44" font-size="13" fill="#1d1d1d">1</text>
+<text x="36" y="219" font-size="13" fill="#1d1d1d">0</text>
+<text x="170" y="219" font-size="13" fill="#1d1d1d">0.5</text>
+<text x="308" y="219" font-size="13" fill="#1d1d1d">1 m</text>
+<text x="96" y="235" font-size="13" fill="#1d1d1d">place around the loop, 10 cells</text>
+</svg>

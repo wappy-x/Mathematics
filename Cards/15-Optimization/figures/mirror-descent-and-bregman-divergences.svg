@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 290" width="360" height="290" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<title>The three-asset weight triangle, to scale: from equal weights, entropy steps with slopes (1, 0, 2) and step ln 2 curve towards corner B while every weight stays positive; one Euclidean step of the same size lands on edge AB with asset C at zero</title>
+<rect x="0" y="0" width="360" height="290" fill="#ffffff"/>
+<polygon points="50.0,250.0 290.0,250.0 170.0,42.2" fill="#1d1d1d" fill-opacity="0.06" stroke="#1d1d1d" stroke-width="1.5"/>
+<polyline points="170.0,180.7 152.9,131.2 152.9,91.6 158.5,67.8 163.4,55.1" fill="none" stroke="#e76f51" stroke-width="2"/>
+<circle cx="152.9" cy="131.2" r="3" fill="#e76f51"/><circle cx="152.9" cy="91.6" r="3" fill="#e76f51"/><circle cx="158.5" cy="67.8" r="3" fill="#e76f51"/><circle cx="163.4" cy="55.1" r="3" fill="#e76f51"/>
+<line x1="170.0" y1="180.7" x2="151.6" y2="74.0" stroke="#2a9d8f" stroke-width="2" stroke-dasharray="6 4"/>
+<circle cx="151.6" cy="74.0" r="4" fill="#ffffff" stroke="#2a9d8f" stroke-width="2"/>
+<circle cx="170.0" cy="180.7" r="4" fill="#1d1d1d"/>
+<text x="34" y="266" fill="#1d1d1d">A</text>
+<text x="292" y="266" fill="#1d1d1d">C</text>
+<text x="166" y="34" fill="#1d1d1d">B</text>
+<text x="178" y="185" fill="#1d1d1d">start</text>
+<text x="131" y="136" fill="#e76f51">x1</text>
+<text x="222" y="100" fill="#e76f51">entropy steps</text>
+<text x="222" y="117" fill="#e76f51">x1 to x4</text>
+<text x="18" y="70" fill="#2a9d8f">Euclidean step:</text>
+<text x="18" y="87" fill="#2a9d8f">(0.15, 0.85, 0)</text>
+<text x="18" y="284" fill="#1d1d1d" font-size="12">weights (A, B, C); slopes g = (1, 0, 2); step ln 2</text>
+</svg>

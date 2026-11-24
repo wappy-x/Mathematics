@@ -1,0 +1,20 @@
+<svg viewBox="0 0 360 250" xmlns="http://www.w3.org/2000/svg" width="360" height="250" style="color:#24292f">
+<title>Contours of f(x, y) = x^2 + xy + y^2 - 3x at gaps 3, 0.75 and 0.1875 above the minimum, with the cyclic coordinate descent path from (0, 0): a staircase of horizontal and vertical moves closing in on (2, -1)</title><rect x="0" y="0" width="360" height="250" rx="8" fill="#ffffff"/>
+<line x1="50" y1="20" x2="50" y2="232" stroke="currentColor" stroke-width="1" stroke-dasharray="2,3"/>
+<line x1="20" y1="75" x2="300" y2="75" stroke="currentColor" stroke-width="1" stroke-dasharray="2,3"/>
+<ellipse cx="150" cy="125" rx="122.47" ry="70.71" transform="rotate(45 150 125)" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<ellipse cx="150" cy="125" rx="61.24" ry="35.36" transform="rotate(45 150 125)" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<ellipse cx="150" cy="125" rx="30.62" ry="17.68" transform="rotate(45 150 125)" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<polyline points="50,75 125,75 125,112.5 143.75,112.5 143.75,121.88 148.44,121.88 148.44,124.22 150,125" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="50" cy="75" r="3" fill="currentColor"/>
+<circle cx="125" cy="75" r="2.5" fill="currentColor"/>
+<circle cx="125" cy="112.5" r="2.5" fill="currentColor"/>
+<circle cx="150" cy="125" r="3" fill="currentColor"/>
+<line x1="154" y1="125" x2="262" y2="125" stroke="currentColor" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="8" y="68" font-size="13" fill="currentColor">start</text>
+<text x="104" y="68" font-size="13" fill="currentColor">x = 1.5</text>
+<text x="266" y="129" font-size="13" fill="currentColor">(2, −1)</text>
+<text x="210" y="64" font-size="13" fill="currentColor">gap 3</text>
+<text x="292" y="88" font-size="13" fill="currentColor">x</text>
+<text x="56" y="30" font-size="13" fill="currentColor">y</text>
+</svg>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 260" width="380" height="260" font-family="Helvetica, Arial, sans-serif">
+<title>The box limits with a square floor of side s and height h: in plain sizes the allowed region is bent and the midpoint of two allowed boxes falls outside; in logs the boundary is a straight line and the region is convex</title>
+<rect x="0" y="0" width="380" height="260" fill="#ffffff"/>
+<polygon points="45.0,205.0 45.0,40.0 63.8,40.0 66.1,58.3 68.4,73.0 70.8,85.0 73.1,95.0 75.5,103.5 77.8,110.7 80.2,117.0 82.5,122.5 84.8,127.4 87.2,131.7 89.5,135.5 91.9,139.0 94.2,142.1 96.6,145.0 98.9,147.6 101.2,150.0 103.6,152.2 105.9,154.2 108.3,156.1 110.6,157.9 113.0,159.5 115.3,161.0 117.7,162.4 120.0,163.8 122.3,165.0 124.7,166.2 127.0,167.3 129.4,168.3 131.7,169.3 134.1,170.3 136.4,171.2 138.8,172.0 141.1,172.8 143.4,173.6 145.8,174.3 148.1,175.0 150.5,175.7 152.8,176.3 155.2,176.9 157.5,177.5 157.5,205.0" fill="#d9d9d9" stroke="none"/>
+<polyline points="63.8,40.0 66.1,58.3 68.4,73.0 70.8,85.0 73.1,95.0 75.5,103.5 77.8,110.7 80.2,117.0 82.5,122.5 84.8,127.4 87.2,131.7 89.5,135.5 91.9,139.0 94.2,142.1 96.6,145.0 98.9,147.6 101.2,150.0 103.6,152.2 105.9,154.2 108.3,156.1 110.6,157.9 113.0,159.5 115.3,161.0 117.7,162.4 120.0,163.8 122.3,165.0 124.7,166.2 127.0,167.3 129.4,168.3 131.7,169.3 134.1,170.3 136.4,171.2 138.8,172.0 141.1,172.8 143.4,173.6 145.8,174.3 148.1,175.0 150.5,175.7 152.8,176.3 155.2,176.9 157.5,177.5 157.5,205.0" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="45" y1="205" x2="180.0" y2="205" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="45" y1="205" x2="45" y2="40.0" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="45.0" y1="205" x2="45.0" y2="209" stroke="#1d1d1d"/><text x="45.0" y="220" font-size="11" text-anchor="middle" fill="#1d1d1d">0</text>
+<line x1="101.2" y1="205" x2="101.2" y2="209" stroke="#1d1d1d"/><text x="101.2" y="220" font-size="11" text-anchor="middle" fill="#1d1d1d">5</text>
+<line x1="157.5" y1="205" x2="157.5" y2="209" stroke="#1d1d1d"/><text x="157.5" y="220" font-size="11" text-anchor="middle" fill="#1d1d1d">10</text>
+<line x1="41" y1="205.0" x2="45" y2="205.0" stroke="#1d1d1d"/><text x="39" y="209.0" font-size="11" text-anchor="end" fill="#1d1d1d">0</text>
+<line x1="41" y1="150.0" x2="45" y2="150.0" stroke="#1d1d1d"/><text x="39" y="154.0" font-size="11" text-anchor="end" fill="#1d1d1d">10</text>
+<line x1="41" y1="95.0" x2="45" y2="95.0" stroke="#1d1d1d"/><text x="39" y="99.0" font-size="11" text-anchor="end" fill="#1d1d1d">20</text>
+<line x1="41" y1="40.0" x2="45" y2="40.0" stroke="#1d1d1d"/><text x="39" y="44.0" font-size="11" text-anchor="end" fill="#1d1d1d">30</text>
+<text x="112.5" y="235" font-size="12" text-anchor="middle" fill="#1d1d1d">floor side s (dm)</text>
+<text x="21" y="122.5" font-size="12" text-anchor="middle" fill="#1d1d1d" transform="rotate(-90 21 122.5)">height h (dm)</text>
+<text x="112.5" y="32.0" font-size="13" text-anchor="middle" fill="#1d1d1d" font-weight="bold">plain sizes</text>
+<line x1="67.5" y1="67.5" x2="157.5" y2="177.5" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 4"/>
+<circle cx="67.5" cy="67.5" r="4" fill="#1d1d1d" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="74.5" y="71.5" font-size="12" fill="#1d1d1d">A</text>
+<circle cx="157.5" cy="177.5" r="4" fill="#1d1d1d" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="163.5" y="171.5" font-size="12" fill="#1d1d1d">B</text>
+<circle cx="112.5" cy="122.5" r="4" fill="#ffffff" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="119.5" y="118.5" font-size="12" fill="#1d1d1d">plain mix</text>
+<circle cx="95.3" cy="143.5" r="4" fill="#1d1d1d" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="50" y="149" font-size="12" fill="#1d1d1d">log mix</text>
+<polygon points="235.0,205.0 235.0,40.0 255.6,40.0 350.1,129.1 350.1,205.0" fill="#d9d9d9" stroke="none"/>
+<polyline points="255.6,40.0 350.1,129.1 350.1,205.0" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="235" y1="205" x2="360.0" y2="205" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="235" y1="205" x2="235" y2="40.0" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="235.0" y1="205" x2="235.0" y2="209" stroke="#1d1d1d"/><text x="235.0" y="220" font-size="11" text-anchor="middle" fill="#1d1d1d">0</text>
+<line x1="285.0" y1="205" x2="285.0" y2="209" stroke="#1d1d1d"/><text x="285.0" y="220" font-size="11" text-anchor="middle" fill="#1d1d1d">1</text>
+<line x1="335.0" y1="205" x2="335.0" y2="209" stroke="#1d1d1d"/><text x="335.0" y="220" font-size="11" text-anchor="middle" fill="#1d1d1d">2</text>
+<line x1="231" y1="205.0" x2="235" y2="205.0" stroke="#1d1d1d"/><text x="229" y="209.0" font-size="11" text-anchor="end" fill="#1d1d1d">0</text>
+<line x1="231" y1="157.9" x2="235" y2="157.9" stroke="#1d1d1d"/><text x="229" y="161.9" font-size="11" text-anchor="end" fill="#1d1d1d">1</text>
+<line x1="231" y1="110.7" x2="235" y2="110.7" stroke="#1d1d1d"/><text x="229" y="114.7" font-size="11" text-anchor="end" fill="#1d1d1d">2</text>
+<line x1="231" y1="63.6" x2="235" y2="63.6" stroke="#1d1d1d"/><text x="229" y="67.6" font-size="11" text-anchor="end" fill="#1d1d1d">3</text>
+<text x="297.5" y="235" font-size="12" text-anchor="middle" fill="#1d1d1d">log s</text>
+<text x="211" y="122.5" font-size="12" text-anchor="middle" fill="#1d1d1d" transform="rotate(-90 211 122.5)">log h</text>
+<text x="297.5" y="32.0" font-size="13" text-anchor="middle" fill="#1d1d1d" font-weight="bold">logs</text>
+<circle cx="269.7" cy="53.3" r="4" fill="#1d1d1d" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="276.7" y="57.3" font-size="12" fill="#1d1d1d">A</text>
+<circle cx="350.1" cy="129.1" r="4" fill="#1d1d1d" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="356.1" y="123.1" font-size="12" fill="#1d1d1d">B</text>
+<circle cx="309.9" cy="91.2" r="4" fill="#1d1d1d" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="316.9" y="87.2" font-size="12" fill="#1d1d1d">log mix</text>
+</svg>
