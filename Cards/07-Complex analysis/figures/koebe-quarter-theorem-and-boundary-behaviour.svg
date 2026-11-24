@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 280" width="500" height="280" font-family="Helvetica, Arial, sans-serif" font-size="12">
+<title>The Koebe function sends the unit disc onto the plane minus a slit from -1/4 leftwards</title>
+<rect x="0" y="0" width="500" height="280" fill="#ffffff"/>
+<line x1="20" y1="140" x2="180" y2="140" stroke="#999999" stroke-width="0.8"/>
+<line x1="100" y1="60" x2="100" y2="220" stroke="#999999" stroke-width="0.8"/>
+<circle cx="100" cy="140" r="70" fill="#eef3f7" stroke="#1d1d1d" stroke-width="1.6"/>
+<circle cx="100" cy="140" r="35" fill="none" stroke="#2a6f97" stroke-width="1.4" stroke-dasharray="4 3"/>
+<circle cx="30" cy="140" r="3.5" fill="#c0392b"/><text x="14" y="158">-1</text>
+<circle cx="100" cy="70" r="3" fill="#1d1d1d"/><text x="106" y="66">i</text>
+<circle cx="100" cy="210" r="3" fill="#1d1d1d"/><text x="106" y="224">-i</text>
+<circle cx="135" cy="140" r="3" fill="#2a6f97"/><text x="138" y="133">0.5</text>
+<text x="40" y="262">the unit disc, |z| = 0.5 dashed</text>
+<line x1="205" y1="140" x2="495" y2="140" stroke="#999999" stroke-width="0.8"/>
+<line x1="330" y1="30" x2="330" y2="250" stroke="#999999" stroke-width="0.8"/>
+<circle cx="330" cy="140" r="17.5" fill="#f6d8c4" stroke="#e76f51" stroke-width="1.2"/>
+<line x1="205" y1="140" x2="312.5" y2="140" stroke="#1d1d1d" stroke-width="3"/>
+<polygon points="470.0,140.0 463.2,104.5 445.0,75.2 420.0,55.8 393.5,46.8 369.4,46.1 349.6,51.0 334.5,58.9 323.7,68.0 316.2,77.0 311.3,85.5 308.3,93.0 306.7,99.6 305.9,105.2 305.7,110.1 305.9,114.2 306.3,117.7 306.9,120.7 307.6,123.2 308.3,125.4 309.0,127.2 309.7,128.9 310.3,130.3 310.9,131.5 311.4,132.6 311.9,133.5 312.4,134.4 312.8,135.2 313.1,135.8 313.5,136.5 313.7,137.1 313.9,137.6 314.1,138.1 314.3,138.6 314.4,139.1 314.4,139.5 314.4,140.0 314.4,140.5 314.4,140.9 314.3,141.4 314.1,141.9 313.9,142.4 313.7,142.9 313.5,143.5 313.1,144.2 312.8,144.8 312.4,145.6 311.9,146.5 311.4,147.4 310.9,148.5 310.3,149.7 309.7,151.1 309.0,152.8 308.3,154.6 307.6,156.8 306.9,159.3 306.3,162.3 305.9,165.8 305.7,169.9 305.9,174.8 306.7,180.4 308.3,187.0 311.3,194.5 316.2,203.0 323.7,212.0 334.5,221.1 349.6,229.0 369.4,233.9 393.5,233.2 420.0,224.2 445.0,204.8 463.2,175.5" fill="none" stroke="#2a6f97" stroke-width="1.4" stroke-dasharray="4 3"/>
+<circle cx="312.5" cy="140" r="3.5" fill="#c0392b"/><text x="292" y="162">-1/4</text>
+<circle cx="295" cy="140" r="3" fill="#1d1d1d"/><text x="222" y="124">k(±i) = -1/2</text>
+<circle cx="470" cy="140" r="3" fill="#2a6f97"/><text x="428" y="160">k(0.5) = 2</text>
+<text x="215" y="262">the image: slit plane, radius-1/4 disc shaded</text>
+</svg>

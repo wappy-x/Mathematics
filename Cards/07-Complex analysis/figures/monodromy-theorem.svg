@@ -1,0 +1,22 @@
+<svg viewBox="0 0 360 260" xmlns="http://www.w3.org/2000/svg" width="360" height="260" style="color:#24292f">
+<title>The square root continued from 1 along the upper half of the unit circle reaches i at minus 1, along the lower half it reaches minus i; dashed half-ellipses of heights 0.5 and 0.1 above and below show the slide between them, which must pass through 0</title><rect x="0" y="0" width="360" height="260" rx="8" fill="#ffffff"/>
+<line x1="20" y1="130" x2="340" y2="130" stroke="currentColor" stroke-width="1"/>
+<line x1="180" y1="250" x2="180" y2="10" stroke="currentColor" stroke-width="1"/>
+<path d="M 280 130 A 100 100 0 0 0 80 130" fill="none" stroke="currentColor" stroke-width="2.5"/>
+<path d="M 280 130 A 100 100 0 0 1 80 130" fill="none" stroke="currentColor" stroke-width="2.5"/>
+<path d="M 280 130 A 100 50 0 0 0 80 130" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="5,4"/>
+<path d="M 280 130 A 100 10 0 0 0 80 130" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="5,4"/>
+<path d="M 280 130 A 100 10 0 0 1 80 130" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="5,4"/>
+<path d="M 280 130 A 100 50 0 0 1 80 130" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="5,4"/>
+<polygon points="180,30 192,24 192,36" fill="currentColor"/>
+<polygon points="180,230 192,224 192,236" fill="currentColor"/>
+<circle cx="280" cy="130" r="4" fill="currentColor"/>
+<circle cx="80" cy="130" r="4" fill="currentColor"/>
+<circle cx="180" cy="130" r="5" fill="#ffffff" stroke="currentColor" stroke-width="2"/>
+<text x="288" y="150" font-size="13" fill="currentColor">start 1</text>
+<text x="288" y="166" font-size="13" fill="currentColor">√1 = 1</text>
+<text x="54" y="150" font-size="13" fill="currentColor">−1</text>
+<text x="196" y="22" font-size="13" fill="currentColor">upper half: √(−1) = i</text>
+<text x="196" y="250" font-size="13" fill="currentColor">lower half: √(−1) = −i</text>
+<text x="187" y="128" font-size="10" fill="currentColor">0</text>
+</svg>
