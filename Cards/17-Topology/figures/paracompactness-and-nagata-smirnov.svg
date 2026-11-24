@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 440" width="560" height="440">
+<title>Tent functions phi_n on the line and the cover by intervals U_n = (n - 1.5, n + 1.5), drawn to scale</title>
+<rect x="0" y="0" width="560" height="440" fill="#ffffff"/>
+<line x1="40" y1="110" x2="520" y2="110" stroke="#888888" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="40" y="30" font-family="sans-serif" font-size="11" fill="#1d1d1d">dashed line: height 1, the sum of the tents at every point</text>
+<line x1="40" y1="230" x2="520" y2="230" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="40" y1="230" x2="40" y2="235" stroke="#1d1d1d" stroke-width="1"/>
+<text x="40" y="248" font-family="sans-serif" font-size="11" fill="#1d1d1d" text-anchor="middle">-1</text>
+<line x1="120" y1="230" x2="120" y2="235" stroke="#1d1d1d" stroke-width="1"/>
+<text x="120" y="248" font-family="sans-serif" font-size="11" fill="#1d1d1d" text-anchor="middle">0</text>
+<line x1="200" y1="230" x2="200" y2="235" stroke="#1d1d1d" stroke-width="1"/>
+<text x="200" y="248" font-family="sans-serif" font-size="11" fill="#1d1d1d" text-anchor="middle">1</text>
+<line x1="280" y1="230" x2="280" y2="235" stroke="#1d1d1d" stroke-width="1"/>
+<text x="280" y="248" font-family="sans-serif" font-size="11" fill="#1d1d1d" text-anchor="middle">2</text>
+<line x1="360" y1="230" x2="360" y2="235" stroke="#1d1d1d" stroke-width="1"/>
+<text x="360" y="248" font-family="sans-serif" font-size="11" fill="#1d1d1d" text-anchor="middle">3</text>
+<line x1="440" y1="230" x2="440" y2="235" stroke="#1d1d1d" stroke-width="1"/>
+<text x="440" y="248" font-family="sans-serif" font-size="11" fill="#1d1d1d" text-anchor="middle">4</text>
+<line x1="520" y1="230" x2="520" y2="235" stroke="#1d1d1d" stroke-width="1"/>
+<text x="520" y="248" font-family="sans-serif" font-size="11" fill="#1d1d1d" text-anchor="middle">5</text>
+<polyline points="40.0,110.0 40.0,110.0 120.0,230.0" fill="none" stroke="#264653" stroke-width="2.5"/>
+<polyline points="40.0,230.0 120.0,110.0 200.0,230.0" fill="none" stroke="#e76f51" stroke-width="2.5"/>
+<text x="120" y="102" font-family="sans-serif" font-size="11" fill="#1d1d1d" text-anchor="middle">phi_0</text>
+<polyline points="120.0,230.0 200.0,110.0 280.0,230.0" fill="none" stroke="#2a9d8f" stroke-width="2.5"/>
+<text x="200" y="102" font-family="sans-serif" font-size="11" fill="#1d1d1d" text-anchor="middle">phi_1</text>
+<polyline points="200.0,230.0 280.0,110.0 360.0,230.0" fill="none" stroke="#264653" stroke-width="2.5"/>
+<text x="280" y="102" font-family="sans-serif" font-size="11" fill="#1d1d1d" text-anchor="middle">phi_2</text>
+<polyline points="280.0,230.0 360.0,110.0 440.0,230.0" fill="none" stroke="#e76f51" stroke-width="2.5"/>
+<text x="360" y="102" font-family="sans-serif" font-size="11" fill="#1d1d1d" text-anchor="middle">phi_3</text>
+<polyline points="360.0,230.0 440.0,110.0 520.0,230.0" fill="none" stroke="#2a9d8f" stroke-width="2.5"/>
+<text x="440" y="102" font-family="sans-serif" font-size="11" fill="#1d1d1d" text-anchor="middle">phi_4</text>
+<polyline points="440.0,230.0 520.0,110.0 520.0,110.0" fill="none" stroke="#264653" stroke-width="2.5"/>
+<text x="520" y="102" font-family="sans-serif" font-size="11" fill="#1d1d1d" text-anchor="middle">phi_5</text>
+<line x1="304.0" y1="104.0" x2="304.0" y2="392" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="3 3"/>
+<circle cx="304.0" cy="146.0" r="4" fill="#1d1d1d"/>
+<text x="312.0" y="150.0" font-family="sans-serif" font-size="11" fill="#1d1d1d">0.7</text>
+<circle cx="304.0" cy="194.0" r="4" fill="#1d1d1d"/>
+<text x="312.0" y="198.0" font-family="sans-serif" font-size="11" fill="#1d1d1d">0.3</text>
+<text x="304.0" y="406" font-family="sans-serif" font-size="11" fill="#1d1d1d" text-anchor="middle">x = 2.3</text>
+<line x1="40" y1="280" x2="240.0" y2="280" stroke="#e76f51" stroke-width="6"/>
+<circle cx="240.0" cy="280" r="4" fill="#ffffff" stroke="#e76f51" stroke-width="2"/>
+<text x="120" y="274" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1d1d1d" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">U0</text>
+<line x1="80.0" y1="302" x2="320.0" y2="302" stroke="#2a9d8f" stroke-width="6"/>
+<circle cx="80.0" cy="302" r="4" fill="#ffffff" stroke="#2a9d8f" stroke-width="2"/>
+<circle cx="320.0" cy="302" r="4" fill="#ffffff" stroke="#2a9d8f" stroke-width="2"/>
+<text x="200" y="296" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1d1d1d" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">U1</text>
+<line x1="160.0" y1="324" x2="400.0" y2="324" stroke="#264653" stroke-width="6"/>
+<circle cx="160.0" cy="324" r="4" fill="#ffffff" stroke="#264653" stroke-width="2"/>
+<circle cx="400.0" cy="324" r="4" fill="#ffffff" stroke="#264653" stroke-width="2"/>
+<text x="280" y="318" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1d1d1d" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">U2</text>
+<line x1="240.0" y1="346" x2="480.0" y2="346" stroke="#e76f51" stroke-width="6"/>
+<circle cx="240.0" cy="346" r="4" fill="#ffffff" stroke="#e76f51" stroke-width="2"/>
+<circle cx="480.0" cy="346" r="4" fill="#ffffff" stroke="#e76f51" stroke-width="2"/>
+<text x="360" y="340" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1d1d1d" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">U3</text>
+<line x1="320.0" y1="368" x2="520" y2="368" stroke="#2a9d8f" stroke-width="6"/>
+<circle cx="320.0" cy="368" r="4" fill="#ffffff" stroke="#2a9d8f" stroke-width="2"/>
+<text x="440" y="362" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1d1d1d" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">U4</text>
+<line x1="400.0" y1="390" x2="520" y2="390" stroke="#264653" stroke-width="6"/>
+<circle cx="400.0" cy="390" r="4" fill="#ffffff" stroke="#264653" stroke-width="2"/>
+<text x="520" y="384" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1d1d1d" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">U5</text>
+<text x="280" y="428" font-family="sans-serif" font-size="11" fill="#1d1d1d" text-anchor="middle">open ends drawn hollow; U0 runs on past the left edge, U4 and U5 past the right</text>
+</svg>

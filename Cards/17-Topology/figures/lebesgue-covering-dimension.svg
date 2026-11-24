@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 250" width="440" height="250" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<title>A 900 mm square panel in stretcher bond, where at most 3 blocks meet, beside the same panel in square tiles, where 4 meet</title>
+<rect x="0" y="0" width="440" height="250" fill="#ffffff"/>
+<rect x="20" y="15" width="180" height="180" fill="#f4efe6" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="20" y="150" width="90" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="110" y="150" width="90" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="20" y="105" width="45" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="65" y="105" width="90" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="155" y="105" width="45" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="20" y="60" width="90" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="110" y="60" width="90" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="20" y="15" width="45" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="65" y="15" width="90" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="155" y="15" width="45" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="65" cy="150" r="4" fill="#e76f51"/>
+<circle cx="65" cy="105" r="4" fill="#e76f51"/>
+<circle cx="65" cy="60" r="4" fill="#e76f51"/>
+<circle cx="110" cy="150" r="4" fill="#e76f51"/>
+<circle cx="110" cy="105" r="4" fill="#e76f51"/>
+<circle cx="110" cy="60" r="4" fill="#e76f51"/>
+<circle cx="155" cy="150" r="4" fill="#e76f51"/>
+<circle cx="155" cy="105" r="4" fill="#e76f51"/>
+<circle cx="155" cy="60" r="4" fill="#e76f51"/>
+<text x="110" y="217" text-anchor="middle" fill="#1d1d1d">Stretcher bond: 10 blocks</text>
+<text x="110" y="235" text-anchor="middle" fill="#1d1d1d">9 points in 3 blocks: order 3</text>
+<rect x="240" y="15" width="180" height="180" fill="#f4efe6" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="240" y="150" width="45" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="285" y="150" width="45" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="330" y="150" width="45" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="375" y="150" width="45" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="240" y="105" width="45" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="285" y="105" width="45" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="330" y="105" width="45" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="375" y="105" width="45" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="240" y="60" width="45" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="285" y="60" width="45" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="330" y="60" width="45" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="375" y="60" width="45" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="240" y="15" width="45" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="285" y="15" width="45" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="330" y="15" width="45" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<rect x="375" y="15" width="45" height="45" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="285" cy="150" r="4" fill="#264653"/>
+<circle cx="285" cy="105" r="4" fill="#264653"/>
+<circle cx="285" cy="60" r="4" fill="#264653"/>
+<circle cx="330" cy="150" r="4" fill="#264653"/>
+<circle cx="330" cy="105" r="4" fill="#264653"/>
+<circle cx="330" cy="60" r="4" fill="#264653"/>
+<circle cx="375" cy="150" r="4" fill="#264653"/>
+<circle cx="375" cy="105" r="4" fill="#264653"/>
+<circle cx="375" cy="60" r="4" fill="#264653"/>
+<text x="330" y="217" text-anchor="middle" fill="#1d1d1d">Square tiles: 16 tiles</text>
+<text x="330" y="235" text-anchor="middle" fill="#1d1d1d">9 points in 4 tiles: order 4</text>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 240" width="480" height="240" font-family="Helvetica, Arial, sans-serif" font-size="12">
+  <title>Left: the delay line's spectrum, the closed unit disc, with index -1 inside and the unit circle as its essential spectrum. Right: multiplication by x plus a rank-one term, with the band [0, 1] and one eigenvalue at 1.582</title>
+  <rect x="0" y="0" width="480" height="240" fill="#ffffff"/>
+  <line x1="20" y1="120" x2="225" y2="120" stroke="#888888" stroke-width="1"/>
+  <line x1="120" y1="20" x2="120" y2="220" stroke="#888888" stroke-width="1"/>
+  <circle cx="120" cy="120" r="80" fill="#d9d9d9" stroke="#1d1d1d" stroke-width="4"/>
+  <text x="120" y="112" text-anchor="middle" fill="#1d1d1d">index −1</text>
+  <text x="120" y="140" text-anchor="middle" fill="#1d1d1d">λ − S</text>
+  <text x="200" y="30" text-anchor="middle" fill="#1d1d1d">index 0</text>
+  <text x="120" y="232" text-anchor="middle" fill="#1d1d1d">heavy circle: essential spectrum of S</text>
+  <text x="204" y="134" fill="#1d1d1d">1</text>
+  <text x="124" y="134" fill="#1d1d1d">0</text>
+  <line x1="250" y1="120" x2="475" y2="120" stroke="#888888" stroke-width="1"/>
+  <line x1="270" y1="120" x2="390" y2="120" stroke="#1d1d1d" stroke-width="6"/>
+  <line x1="270" y1="112" x2="270" y2="128" stroke="#1d1d1d" stroke-width="1"/>
+  <line x1="390" y1="112" x2="390" y2="128" stroke="#1d1d1d" stroke-width="1"/>
+  <circle cx="459.837" cy="120" r="5" fill="#1d1d1d"/>
+  <text x="270" y="144" text-anchor="middle" fill="#1d1d1d">0</text>
+  <text x="390" y="144" text-anchor="middle" fill="#1d1d1d">1</text>
+  <text x="459.837" y="144" text-anchor="middle" fill="#1d1d1d">1.582</text>
+  <text x="330" y="100" text-anchor="middle" fill="#1d1d1d">band: essential</text>
+  <text x="452" y="100" text-anchor="middle" fill="#1d1d1d">discrete</text>
+  <text x="362" y="232" text-anchor="middle" fill="#1d1d1d">x + rank-one term on L2[0, 1]</text>
+</svg>

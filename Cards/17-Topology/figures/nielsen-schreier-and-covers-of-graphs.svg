@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 250" width="600" height="250" font-family="Helvetica, Arial, sans-serif" font-size="14">
+  <title>The figure eight and its two-sheeted covering graph for the even-length subgroup, with the spanning tree and three basis loops</title>
+  <rect x="0" y="0" width="600" height="250" fill="#ffffff"/>
+  <!-- base: the figure eight, two loops a and b at one vertex -->
+  <text x="120" y="28" text-anchor="middle" fill="#1d1d1d">base: figure eight</text>
+  <circle cx="75" cy="120" r="45" fill="none" stroke="#264653" stroke-width="2"/>
+  <circle cx="165" cy="120" r="45" fill="none" stroke="#e76f51" stroke-width="2"/>
+  <circle cx="120" cy="120" r="6" fill="#1d1d1d"/>
+  <text x="22" y="124" text-anchor="middle" fill="#264653">a</text>
+  <text x="218" y="124" text-anchor="middle" fill="#e76f51">b</text>
+  <polygon points="70,70 80,75 70,80" fill="#264653"/>
+  <polygon points="160,70 170,75 160,80" fill="#e76f51"/>
+  <!-- the covering map -->
+  <text x="272" y="112" text-anchor="middle" fill="#1d1d1d">p</text>
+  <line x1="300" y1="120" x2="250" y2="120" stroke="#1d1d1d" stroke-width="1.5"/>
+  <polygon points="250,115 240,120 250,125" fill="#1d1d1d"/>
+  <!-- cover: two vertices, four edges -->
+  <text x="410" y="18" text-anchor="middle" fill="#1d1d1d">cover: cosets of H</text>
+  <path d="M330,120 Q410,20 490,120" fill="none" stroke="#264653" stroke-width="5"/>
+  <polygon points="404,65 414,70 404,75" fill="#264653"/>
+  <text x="410" y="58" text-anchor="middle" fill="#264653">a, tree</text>
+  <path d="M490,120 Q410,80 330,120" fill="none" stroke="#264653" stroke-width="2"/>
+  <polygon points="416,95 406,100 416,105" fill="#264653"/>
+  <text x="410" y="120" text-anchor="middle" fill="#264653">a: x = aa</text>
+  <path d="M330,120 Q410,160 490,120" fill="none" stroke="#e76f51" stroke-width="2"/>
+  <polygon points="404,135 414,140 404,145" fill="#e76f51"/>
+  <text x="410" y="159" text-anchor="middle" fill="#e76f51">b: y = bA</text>
+  <path d="M490,120 Q410,220 330,120" fill="none" stroke="#e76f51" stroke-width="2"/>
+  <polygon points="416,165 406,170 416,175" fill="#e76f51"/>
+  <text x="410" y="192" text-anchor="middle" fill="#e76f51">b: z = ab</text>
+  <circle cx="330" cy="120" r="9" fill="#1d1d1d"/>
+  <circle cx="490" cy="120" r="9" fill="#1d1d1d"/>
+  <text x="330" y="232" text-anchor="middle" fill="#1d1d1d">0: H, even</text>
+  <text x="490" y="232" text-anchor="middle" fill="#1d1d1d">1: Ha, odd</text>
+  <line x1="330" y1="214" x2="330" y2="132" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="490" y1="214" x2="490" y2="132" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="3,3"/>
+</svg>

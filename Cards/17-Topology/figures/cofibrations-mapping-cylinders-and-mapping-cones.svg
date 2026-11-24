@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 280" width="640" height="280" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<title>Schematic: the mapping cylinder of z to z squared, and the theta graph with one edge collapsed to the figure eight</title>
+<rect x="0" y="0" width="640" height="280" fill="#ffffff"/>
+<g stroke="#1d1d1d" fill="none" stroke-width="2">
+<ellipse cx="150" cy="70" rx="90" ry="22"/>
+<ellipse cx="150" cy="210" rx="90" ry="22"/>
+</g>
+<g stroke="#2a6f97" stroke-width="1.3">
+<line x1="240.0" y1="70.0" x2="240.0" y2="210.0"/>
+<line x1="213.6" y1="85.6" x2="150.0" y2="232.0"/>
+<line x1="150.0" y1="92.0" x2="60.0" y2="210.0"/>
+<line x1="86.4" y1="85.6" x2="150.0" y2="188.0"/>
+<line x1="60.0" y1="70.0" x2="240.0" y2="210.0"/>
+<line x1="86.4" y1="54.4" x2="150.0" y2="232.0"/>
+<line x1="150.0" y1="48.0" x2="60.0" y2="210.0"/>
+<line x1="213.6" y1="54.4" x2="150.0" y2="188.0"/>
+</g>
+<g fill="#1d1d1d">
+<circle cx="240" cy="70" r="3.5"/><circle cx="60" cy="70" r="3.5"/><circle cx="240" cy="210" r="3.5"/>
+<text x="150" y="30" text-anchor="middle">X, the domain circle (top)</text>
+<text x="150" y="262" text-anchor="middle">Y, the target circle (bottom)</text>
+<text x="250" y="66">z = 1</text>
+<text x="8" y="66">z = −1</text>
+<text x="250" y="214">1</text>
+</g>
+<g stroke="#1d1d1d" fill="none" stroke-width="2">
+<path d="M400 80 Q470 20 540 80"/>
+<line x1="400" y1="80" x2="540" y2="80"/>
+<path d="M400 80 Q470 140 540 80" stroke="#c0392b" stroke-width="3.5"/>
+<circle cx="432" cy="215" r="38"/>
+<circle cx="508" cy="215" r="38"/>
+<line x1="470" y1="125" x2="470" y2="165"/>
+<path d="M463 157 L470 167 L477 157"/>
+</g>
+<g fill="#1d1d1d">
+<circle cx="400" cy="80" r="4"/><circle cx="540" cy="80" r="4"/><circle cx="470" cy="215" r="4"/>
+<text x="385" y="76" text-anchor="end">u</text>
+<text x="555" y="76">w</text>
+<text x="470" y="44" text-anchor="middle">x</text>
+<text x="470" y="74" text-anchor="middle">y</text>
+<text x="470" y="125" text-anchor="middle" fill="#c0392b">e</text>
+<text x="480" y="150">collapse e</text>
+<text x="388" y="219" text-anchor="end">x</text>
+<text x="552" y="219">y</text>
+</g>
+</svg>

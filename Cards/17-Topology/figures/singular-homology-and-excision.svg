@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 260" width="500" height="260" font-family="Helvetica, Arial, sans-serif" font-size="12">
+<title>A 1 m dome panel after one and two rounds of barycentric subdivision, to scale</title>
+<rect x="0" y="0" width="500" height="260" fill="#ffffff"/>
+<rect x="342.0" y="48.0" width="36.0" height="162.0" fill="#2a9d8f" fill-opacity="0.18"/>
+<polygon points="40.0,210.0 130.0,210.0 130.0,158.0" fill="none" stroke="#1d1d1d" stroke-width="1.4"/>
+<polygon points="40.0,210.0 85.0,132.1 130.0,158.0" fill="none" stroke="#1d1d1d" stroke-width="1.4"/>
+<polygon points="220.0,210.0 130.0,210.0 130.0,158.0" fill="none" stroke="#1d1d1d" stroke-width="1.4"/>
+<polygon points="220.0,210.0 175.0,132.1 130.0,158.0" fill="none" stroke="#1d1d1d" stroke-width="1.4"/>
+<polygon points="130.0,54.1 85.0,132.1 130.0,158.0" fill="none" stroke="#1d1d1d" stroke-width="1.4"/>
+<polygon points="130.0,54.1 175.0,132.1 130.0,158.0" fill="none" stroke="#1d1d1d" stroke-width="1.4"/>
+<polygon points="40.0,210.0 220.0,210.0 130.0,54.1" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<polygon points="270.0,210.0 315.0,210.0 330.0,192.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="270.0,210.0 315.0,184.0 330.0,192.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="360.0,210.0 315.0,210.0 330.0,192.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="360.0,210.0 360.0,184.0 330.0,192.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="360.0,158.0 315.0,184.0 330.0,192.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="360.0,158.0 360.0,184.0 330.0,192.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="270.0,210.0 292.5,171.0 315.0,166.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="270.0,210.0 315.0,184.0 315.0,166.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="315.0,132.1 292.5,171.0 315.0,166.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="315.0,132.1 337.5,145.0 315.0,166.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="360.0,158.0 315.0,184.0 315.0,166.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="360.0,158.0 337.5,145.0 315.0,166.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="450.0,210.0 405.0,210.0 390.0,192.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="450.0,210.0 405.0,184.0 390.0,192.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="360.0,210.0 405.0,210.0 390.0,192.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="360.0,210.0 360.0,184.0 390.0,192.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="360.0,158.0 405.0,184.0 390.0,192.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="360.0,158.0 360.0,184.0 390.0,192.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="450.0,210.0 427.5,171.0 405.0,166.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="450.0,210.0 405.0,184.0 405.0,166.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="405.0,132.1 427.5,171.0 405.0,166.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="405.0,132.1 382.5,145.0 405.0,166.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="360.0,158.0 405.0,184.0 405.0,166.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="360.0,158.0 382.5,145.0 405.0,166.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="360.0,54.1 337.5,93.1 345.0,114.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="360.0,54.1 360.0,106.1 345.0,114.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="315.0,132.1 337.5,93.1 345.0,114.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="315.0,132.1 337.5,145.0 345.0,114.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="360.0,158.0 360.0,106.1 345.0,114.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="360.0,158.0 337.5,145.0 345.0,114.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="360.0,54.1 382.5,93.1 375.0,114.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="360.0,54.1 360.0,106.1 375.0,114.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="405.0,132.1 382.5,93.1 375.0,114.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="405.0,132.1 382.5,145.0 375.0,114.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="360.0,158.0 360.0,106.1 375.0,114.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="360.0,158.0 382.5,145.0 375.0,114.7" fill="none" stroke="#1d1d1d" stroke-width="0.8"/>
+<polygon points="270.0,210.0 450.0,210.0 360.0,54.1" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="40" y1="210" x2="130.0" y2="158.0" stroke="#e76f51" stroke-width="3"/>
+<text x="130" y="232" text-anchor="middle">round 1: 6 triangles</text>
+<text x="78" y="205" font-size="11" fill="#c0482a">0.5774 m</text>
+<text x="360" y="232" text-anchor="middle">round 2: 36 triangles</text>
+<text x="360.0" y="42.0" text-anchor="middle" fill="#1f7a70">one strip, 0.4 to 0.6 m</text>
+</svg>
