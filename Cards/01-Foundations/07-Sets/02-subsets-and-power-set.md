@@ -379,6 +379,8 @@ example : 2 + 2 + 2 = (6 : ℕ) ∧ 2 + 2 + 2 ≠ (8 : ℕ) := by decide
 
 - [Set operations](03-set-operations.md): union, intersection, difference and complement — how two subsets of one set combine.
 - [Comparing infinities](../09-Sizes%20of%20Infinity/04-comparing-infinities.md): the power set is always bigger than the set it came from, infinite sets included — how one infinity beats another.
+- [The ZFC axioms](08-zfc-axioms.md): the rules that say which collections are sets, and how they stop Russell.
+- [Knaster-Tarski](../08-Relations%20and%20Functions/09-complete-lattices-and-knaster-tarski.md): an order-keeping map on a complete lattice always has a fixed point.
 
 Left open: how many of the 8 pizzas carry exactly two toppings, and how do you count subsets of one size without listing them?
 

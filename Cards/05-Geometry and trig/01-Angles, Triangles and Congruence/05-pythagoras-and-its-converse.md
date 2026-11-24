@@ -450,6 +450,7 @@ example : (3 : ℤ) ^ 2 + 5 ^ 2 - 4 ^ 2 = 18 := by decide
 - [Area](06-area-of-triangles-and-polygons.md): the half-rectangle area used in Step 3, extended to any triangle and polygon.
 - [Distance and midpoint](../04-Coordinates%20and%20Curves/01-distance-and-midpoint.md): the rule turned into the distance between two points on a grid.
 - [Law of cosines](../03-Trigonometry/06-law-of-cosines.md): what a wider ridge does to the span, and why a negative residual means an opened corner, once angles have a number.
+- [Power of a point](../02-Circles%20and%20Solids/07-power-of-a-point.md): every chord, secant and tangent through one point gives the same product.
 
 This card covers only a square corner; how long the tie beam must be when the rafters meet at any other angle is the question it leaves open.
 

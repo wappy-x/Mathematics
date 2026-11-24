@@ -344,6 +344,8 @@ example : 1 * (1 - 1) / 2 + 1 ≠ 0 := by norm_num
 
 - [Strong induction and the least element](05-strong-induction-and-well-ordering.md): when one step back is not enough, and the smallest-counterexample version.
 - [Peano's three rules](07-peano-and-one-plus-one.md): where induction comes from, as a rule of the counting numbers.
+- [Structural induction](08-structural-induction-and-recursion.md): prove a fact about every tree or formula by checking each way it can be built.
+- [Transfinite induction](../09-Sizes%20of%20Infinity/07-transfinite-induction-and-recursion.md): dominoes that keep falling past infinity, and definitions that use every earlier step.
 
 Left open: why base-plus-step is allowed at all, and what to do when the step needs more than the one size just below it.
 

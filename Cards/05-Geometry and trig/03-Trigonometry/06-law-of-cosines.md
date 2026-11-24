@@ -492,6 +492,7 @@ example : ¬ ((800 : ℝ) < 300 + 450) := by norm_num
 
 - [Law of sines](07-law-of-sines-and-the-ambiguous-case.md): triangles known from two angles and a side, or from an angle facing a known side.
 - [Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md): the cosine rule on a globe, which shrinks to this card's law for small triangles.
+- [Hyperbolic trigonometry](../06-Beyond%20Euclid/10-hyperbolic-trigonometry.md): Pythagoras becomes cosh c = cosh a cosh b, and every distance has an angle of parallelism.
 
 An angle that faces a known side, rather than lying between two, can leave none, one or two triangles; the law of sines sorts them.
 

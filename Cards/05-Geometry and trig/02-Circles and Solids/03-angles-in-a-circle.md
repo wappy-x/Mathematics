@@ -63,7 +63,7 @@ t = \sqrt{ab}
 
 - **The camera on the circle.** Inside it the view is wider, outside narrower (Step 3).
 - **The audience side.** Behind the stage, a spot on the same circle stands on the other arc and sees 120°.
-- **A straight aisle starting beyond the stage.** Slanted, the best spot is still √(ab) from P, but along the aisle, not straight back (Euclid III.36). An aisle starting on the stage is best at its start, 180°.
+- **A straight aisle starting beyond the stage.** Slanted, the best spot is still √(ab) from P, but along the aisle, not straight back (Euclid III.36; see [Power of a point](07-power-of-a-point.md)). An aisle starting on the stage is best at its start, 180°.
 
 ---
 
@@ -591,6 +591,9 @@ example : ((4 : ℝ) + 16) / 2 ≠ Real.sqrt (4 * 16) := by norm_num
 ## Where this goes next
 
 - [Law of sines](../03-Trigonometry/07-law-of-sines-and-the-ambiguous-case.md): this rule makes each side of a triangle, over the sine of the angle facing it, the diameter of the circle through its corners.
+- [Power of a point](07-power-of-a-point.md): every chord, secant and tangent through one point gives the same product.
+- [The Euler line and the nine-point circle](../04-Coordinates%20and%20Curves/11-euler-line-and-nine-point-circle.md): four centres on one line and nine points on one circle.
+- [Inversion in a circle](../06-Beyond%20Euclid/08-inversion-in-a-circle.md): turn the plane inside out, so lines and circles swap and angles survive.
 
 This card sized circles only for 60° and 90°; any other angle needs the sine ratio of [Sine, cosine and tangent](../03-Trigonometry/01-right-triangle-trigonometry.md).
 

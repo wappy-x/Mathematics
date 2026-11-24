@@ -514,6 +514,7 @@ example : ((9 : ℤ) - 3) ^ 2 + ((12 : ℤ) - 4) ^ 2 = 10 ^ 2 := by decide
 - [Circles and parabolas](04-circles-and-parabolas.md): a circle is this formula set equal to one number.
 - [k-means](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/06-k-means-and-clustering.md): distance and averaging over many points, to find groups.
 - [The unit-distance problem](../../25-Frontier/04-Geometry%20and%20Combinatorics/01-unit-distance-problem.md): how many pairs among many points can sit exactly one unit apart; Erdős's guess was refuted in 2026, and the true count is still open.
+- [k-d trees](../07-Points%2C%20Convexity%20and%20Fractals/10-kd-trees-and-nearest-neighbours.md): split the plane in half again and again to find the nearest point fast.
 
 This card measures between two fixed points; describing every point on a given line or at a given distance needs an equation, which starts with [Lines](02-lines-slopes-and-intersections.md).
 

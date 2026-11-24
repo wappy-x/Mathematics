@@ -368,6 +368,7 @@ example : Nat.gcd 6 4 = 2 := by norm_num
 - [Wilson's theorem](../04-Powers%20on%20the%20Clock/06-wilsons-theorem.md): pairing each number with the one that undoes it, on a prime clock.
 - [ISBN-10 and the prime modulus 11](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/02-isbn-check-digit.md): a check digit against a prime, and why a swap cannot slip past.
 - [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md): the primality test built on a prime dividing one factor.
+- [Lagrange's root bound](../04-Powers%20on%20the%20Clock/07-lagrange-root-bound.md): a degree-d polynomial has at most d roots on a prime clock, but x^2 = 1 has four on the 8-clock.
 
 Left open: one prime lands in one factor, but does every number break into primes in only one way?
 

@@ -793,6 +793,9 @@ example : ((4 : ℤ) - 0) ^ 2 + 0 ^ 2 = 16 ∧ ((4 : ℤ) - 8) ^ 2 + 0 ^ 2 = 16 
 - [Area](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md): half base times height, which gives the pond's radius as K over s.
 
 ## Where this goes next
+- [Ceva and Menelaus](10-ceva-and-menelaus.md): one product of side ratios says three lines meet, another says three points line up.
+- [The Euler line and the nine-point circle](11-euler-line-and-nine-point-circle.md): four centres on one line and nine points on one circle.
+
 
 The sibling [Circles and parabolas](04-circles-and-parabolas.md) writes the circumcircle as an equation.
 

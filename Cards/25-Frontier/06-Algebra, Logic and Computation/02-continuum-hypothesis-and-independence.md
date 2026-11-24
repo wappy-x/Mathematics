@@ -10,13 +10,13 @@ The counting numbers 0, 1, 2, 3, … can be listed one after another. Their size
 
 The line has as many points as there are sets of counting numbers. That size is written $`2^{\aleph_0}`$, because a set of 6 things has $`2^6 = 64`$ subsets. Every set is smaller than its power set ([Comparing infinities](../../01-Foundations/09-Sizes%20of%20Infinity/04-comparing-infinities.md)), so the line is a bigger infinity than the list.
 
-How much bigger? The first infinite size after $`\aleph_0`$ is called $`\aleph_1`$, "aleph one". In 1878 Georg Cantor guessed that every infinite set of points of the line is either listable or as big as the line; in the language of alephs, that the line has exactly size $`\aleph_1`$. The guess is the **continuum hypothesis**, CH for short ("the continuum" is an old name for the line). David Hilbert put it first on his list of 23 problems in 1900 ([Hilbert's and Smale's lists](05-hilbert-and-smale-problems-selected.md)).
+How much bigger? The first infinite size after $`\aleph_0`$ is called $`\aleph_1`$, "aleph one" ([Cardinal arithmetic](../../01-Foundations/09-Sizes%20of%20Infinity/09-cardinal-arithmetic.md) shows how these sizes add, multiply and climb). In 1878 Georg Cantor guessed that every infinite set of points of the line is either listable or as big as the line; in the language of alephs, that the line has exactly size $`\aleph_1`$. The guess is the **continuum hypothesis**, CH for short ("the continuum" is an old name for the line). David Hilbert put it first on his list of 23 problems in 1900 ([Hilbert's and Smale's lists](05-hilbert-and-smale-problems-selected.md)).
 
 The answer came in two halves. Kurt Gödel built a universe of sets where CH is true (announced 1938, monograph 1940). In 1963 Paul Cohen built one where it is false and the line has at least $`\aleph_2`$ points. Both universes obey every axiom of standard set theory. So those axioms can never prove CH, and can never refute it.
 
 **The continuum hypothesis says no infinite size lies between the counting numbers and the line; the standard axioms of set theory neither prove nor refute it, because Gödel built a world of sets where it holds and Cohen one where it fails.**
 
-**What kind of fact this is:** a question whose answer is a theorem. Kind: a question about sizes. Status: independent of ZFC (the standard axioms, defined in The formula), proved by Gödel (1938) and Cohen (1963), on the assumption that ZFC is consistent. Whether CH should count as true is a separate question about new axioms: open as of 2026-11-23, with no consensus.
+**What kind of fact this is:** a question whose answer is a theorem. Kind: a question about sizes. Status: independent of ZFC (the standard axioms, listed on [The ZFC axioms](../../01-Foundations/07-Sets/08-zfc-axioms.md) and in The formula), proved by Gödel (1938) and Cohen (1963), on the assumption that ZFC is consistent. Whether CH should count as true is a separate question about new axioms: open as of 2026-11-23, with no consensus.
 
 ### The picture: the route of the problem
 

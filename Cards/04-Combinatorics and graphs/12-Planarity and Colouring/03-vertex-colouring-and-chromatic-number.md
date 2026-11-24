@@ -603,6 +603,7 @@ example : (cycleGraph 5).cliqueNum = 2 ∧ (cycleGraph 5).chromaticNumber = 3 :=
 - [Local search](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/07-local-search-and-metaheuristics.md): clash graphs with thousands of exams.
 - [Reductions](../../24-Computability%20and%20complexity/03-Time%20Complexity/03-polynomial-reductions-and-np-completeness.md): why no fast exact method is known.
 - [Colouring the plane](../../25-Frontier/04-Geometry%20and%20Combinatorics/03-hadwiger-nelson-chromatic-number-of-the-plane.md): the same count over every point of the plane.
+- [Triangulating a polygon, and why n/3 guards can always watch a gallery with n walls](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/08-polygon-triangulation-and-art-gallery.md): builds on this card.
 
 The limits pinned this graph only because they met; on most graphs they leave a range, which the next card closes by counting colourings rather than hunting one.
 

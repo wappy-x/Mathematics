@@ -629,6 +629,9 @@ example : (shiftM 3 1 * turnM (-(π / 6)) * shiftM (-3) (-1)) *ᵥ ![7, 1, 1] =
 - [Symmetry](../06-Beyond%20Euclid/04-symmetry-and-tilings.md): the moves that leave a pattern unchanged, and how they combine.
 - [Spin one-half](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/06-spin-and-two-state-systems.md): rotation matrices acting on a quantum state instead of a logo.
 - [Rotation group](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/04-rotations-so3-and-quaternions.md): turns in three dimensions, and a four-number shortcut for chaining them.
+- [Desargues and Pappus](06-desargues-and-pappus.md): two theorems where only which lines meet matters, and the duality that swaps points and lines.
+- [Every rigid motion of the plane is at most three mirror flips, so there are only four kinds](08-plane-isometries-and-three-reflections.md): builds on this card.
+- [Rigid motions in space](09-rigid-motions-in-space-and-screws.md): every one is a screw, a turn about an axis plus a slide along it.
 
 Every move on this card keeps parallel lines parallel; how a camera makes parallel rails meet, by changing the bottom row, is [Perspective](05-perspective-and-projective-coordinates.md).
 

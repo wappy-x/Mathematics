@@ -410,6 +410,7 @@ example : (11 : ZMod 1013) ^ 46 = 1 ∧ ∀ k ∈ Finset.Icc 1 45, (11 : ZMod 10
 
 - [Diffie-Hellman key exchange](02-diffie-hellman.md): the hard direction turned into a shared secret.
 - [RSA in outline](03-rsa-in-outline.md): the same trick with factoring, plus locking and unlocking.
+- [Square roots on a prime clock](06-square-roots-mod-p.md): a one-line formula when p is 3 mod 4, and Tonelli-Shanks for the rest.
 
 Left open: can a street be one-way for all but its builder?
 

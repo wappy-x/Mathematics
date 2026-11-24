@@ -395,6 +395,8 @@ The two outputs match line for line.
 
 - [Euler characteristic](../../17-Topology/03-Surfaces%20and%20Manifolds/04-euler-characteristic-and-triangulations.md): the count on any surface; each tunnel lowers it by 2.
 - [Gauss-Bonnet](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/10-gauss-bonnet-theorem.md): the 720° of gaps, spread over a curved surface as curvature.
+- [Scissors congruence](08-scissors-congruence-and-dehn-invariant.md): equal-area polygons can always be cut into each other, but a cube and a tetrahedron of equal volume cannot.
+- [Pick's theorem](../07-Points%2C%20Convexity%20and%20Fractals/07-picks-theorem.md): count the dots inside and on the edge, and the area falls out.
 
 Left open: why no way of cutting a surface into faces changes its count, which Euler characteristic settles.
 

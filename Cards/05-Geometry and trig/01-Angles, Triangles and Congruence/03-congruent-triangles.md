@@ -73,7 +73,7 @@ Sliding, turning and flipping never stretch a length or open an angle, so congru
 
 Lay the left triangle on the right: A on D, rail AB along DE. Both rails are 1.50 m, so B lands on E. Both corners are square, so stile AC runs along DF, flipping over if needed. Both stiles are 0.80 m, so C lands on F. Two points fix one straight line, so brace BC lies along EF.
 
-This is Euclid's Book I, Proposition 4. His postulates never say a triangle can be moved, so Hilbert in 1899 made the SAS step an axiom.
+This is Euclid's Book I, Proposition 4. His postulates never say a triangle can be moved, so Hilbert in 1899 made the SAS step an axiom ([Hilbert's axioms](../06-Beyond%20Euclid/06-hilberts-axioms.md)).
 
 ### Step 2: ASA, by trying to break it
 
@@ -555,6 +555,8 @@ example : (170 : ℕ) - 136 = 34 := by norm_num
 ## Where this goes next
 
 - [Similar triangles](04-similar-triangles-and-scale.md): the AAA row as a theorem: same angles, sides in one ratio.
+- [Every rigid motion of the plane is at most three mirror flips, so there are only four kinds](../05-Vectors%20in%20Space/08-plane-isometries-and-three-reflections.md): builds on this card.
+- [Hilbert's axioms](../06-Beyond%20Euclid/06-hilberts-axioms.md): the betweenness and continuity rules Euclid used without writing down.
 
 The AAA copy matches every angle of the gate at 0.8 size; how its sides relate to the gate's is the question this card leaves open.
 

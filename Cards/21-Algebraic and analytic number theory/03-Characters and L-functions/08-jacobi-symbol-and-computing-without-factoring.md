@@ -853,7 +853,7 @@ example : ((Finset.range 1729).filter (fun a : ℕ => Nat.Coprime a 1729 ∧
 ## Where you meet it in real life
 
 - **Finding RSA primes.** The 1978 RSA paper uses the Solovay-Strassen test to find its large primes. Most libraries now use Miller-Rabin instead: it is never weaker, and its bound per base is a quarter, not a half.
-- **Square roots mod a prime.** Algorithms that take square roots mod p first need a non-square. They find one by testing small numbers until the symbol gives −1.
+- **Square roots mod a prime.** Algorithms that take square roots mod p ([Square roots on a prime clock](../../02-Number%20theory/06-Codes%20and%20Secrets/06-square-roots-mod-p.md)) first need a non-square. They find one by testing small numbers until the symbol gives −1.
 - **The quadratic residuosity problem.** Mod n = pq with secret primes p and q, half the numbers with symbol +1 are squares and half are not, as with 2 mod 15. Telling them apart seems to need the factors. The Goldwasser–Micali encryption scheme rests on that.
 
 > **Say it back**

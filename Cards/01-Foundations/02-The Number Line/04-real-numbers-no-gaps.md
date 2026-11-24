@@ -18,7 +18,7 @@ The **real numbers** are the fractions plus every landing place they miss.
 
 **Every point on the tape is a real number, and every real number is a point on the tape.**
 
-**What kind of fact this is:** an axiom, a starting rule that is not proved. Build the reals from cuts (Why it works, Step 3) and it becomes a theorem.
+**What kind of fact this is:** an axiom, a starting rule that is not proved. Build the reals from cuts (Why it works, Step 3, and in full on [Dedekind cuts](07-dedekind-cuts.md)) and it becomes a theorem.
 
 ### The picture: the marks closing in on the dart
 
@@ -90,7 +90,7 @@ The reals close that hole: wherever a squeeze like this happens, a number sits a
 
 That is **completeness**: what makes the reals the reals instead of the fractions, which obey every other rule of arithmetic and fail this one.
 
-Richard Dedekind, in 1872, took another route: split all the fractions into a left pile and a right pile so the left pile has no largest member, and call the split itself (a cut) a number.
+Richard Dedekind, in 1872, took another route: split all the fractions into a left pile and a right pile so the left pile has no largest member, and call the split itself (a cut) a number. [Dedekind cuts](07-dedekind-cuts.md) builds the whole line this way.
 
 ---
 
@@ -412,6 +412,7 @@ example : (14142 * 14142 : ℕ) < 2 * 10 ^ 8 := by norm_num
 ## Where this goes next
 
 - [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md): the same promise in symbols. The lowest ceiling is named the supremum and used to prove that roots exist.
+- [Dedekind cuts](07-dedekind-cuts.md): build the real numbers from fractions, and the no-gaps rule becomes a theorem.
 
 Nothing else on this shelf needs this card. It finishes with [Absolute value](05-absolute-value-and-distance.md), which does not need completeness.
 

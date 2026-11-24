@@ -367,6 +367,8 @@ example : 2 ^ 11 % 13 = 7 ∧ 2 * 7 = 1 * 13 + 1 := by norm_num
 
 - [Euler's theorem](04-eulers-theorem.md): the same statement without the word prime.
 - [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md): the theorem as a primality test, and the composites that pass anyway.
+- [Lagrange's root bound](07-lagrange-root-bound.md): a degree-d polynomial has at most d roots on a prime clock, but x^2 = 1 has four on the 8-clock.
+- [Gauss's lemma](12-gauss-lemma.md): count how many of a, 2a, 3a, ... land in the top half of the clock to tell whether a is a square.
 
 Left open: on a dial that is not prime, like 15, what power brings the reading back to 1?
 

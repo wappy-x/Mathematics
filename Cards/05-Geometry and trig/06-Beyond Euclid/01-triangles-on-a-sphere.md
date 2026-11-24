@@ -1229,6 +1229,7 @@ example (R A B C K : ℝ) (h : 4 * A * R ^ 2 + 4 * B * R ^ 2 + 4 * C * R ^ 2 = 4
 - [Topological manifold](../../17-Topology/03-Surfaces%20and%20Manifolds/01-topological-manifolds.md): spaces that look flat up close, as a small patch of globe does.
 - [Theorema Egregium](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/08-theorema-egregium.md): curvature measured from inside a surface.
 - [Sphere, plane and hyperbolic space](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/05-model-spaces-of-constant-curvature.md): excess per unit area, 1/R^2, as curvature.
+- [Hyperbolic trigonometry](10-hyperbolic-trigonometry.md): Pythagoras becomes cosh c = cosh a cosh b, and every distance has an angle of parallelism.
 
 The excess reveals curvature from inside the surface; whether a surface can curve the other way, so triangles fall short of 180°, is the next card's question.
 

@@ -375,6 +375,9 @@ example : ∀ a ∈ Nat.divisors 8, ∀ b ∈ Nat.divisors 8, a ∣ b ∨ b ∣ 
 ## Where this goes next
 
 - [Boolean algebra](../../03-Algebra/10-For%20the%20Curious/05-boolean-algebra-and-lattices.md): given two incomparable things, is there a nearest thing above both, and a nearest below? Lattices answer that.
+- [Knaster-Tarski](09-complete-lattices-and-knaster-tarski.md): an order-keeping map on a complete lattice always has a fixed point.
+- [Ordinals](../09-Sizes%20of%20Infinity/06-ordinals.md): counting past infinity, where omega + 1 is bigger but 1 + omega is not.
+- [Zorn's lemma and the well-ordering theorem](../09-Sizes%20of%20Infinity/08-zorns-lemma-and-well-ordering.md): the axiom of choice in two more sets of clothes, and why they are the same.
 
 ---
 

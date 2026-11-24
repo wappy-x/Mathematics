@@ -371,6 +371,7 @@ example : (!true || true) = true ∧ (!(true || true)) = false := by decide
 
 - [Quantifiers](04-quantifiers.md): "everyone" and "someone" are an "and" and an "or" stretched over a crowd; this flip waits there.
 - [Set operations](../07-Sets/03-set-operations.md): the same laws, with groups of things instead of sentences.
+- [Normal forms](07-normal-forms-and-complete-connectives.md): every truth table is an 'or' of 'and's, and NAND alone can build them all.
 
 The question this card leaves open: what does a "not" do to "everyone" and "someone"?
 

@@ -406,6 +406,8 @@ example : ¬ Nat.Prime 15 ∧ ¬ Nat.Prime 28 ∧ Nat.Coprime 15 28 := by norm_n
 - [The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md): undoing a multiplication on a clock face needs a coprime multiplier.
 - [Solving a x ≡ b (mod n)](../03-Clock%20Arithmetic/05-linear-congruences.md): which remainder puzzles have answers, decided by the shared factor.
 - [The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md): two remainders pin down one number when the counts are coprime.
+- [The coin problem](../03-Clock%20Arithmetic/07-frobenius-coin-problem.md): with 5-cent and 7-cent stamps every amount above 23 can be paid, and 23 cannot.
+- [Binary quadratic forms](../08-Quadratic%20Forms%20and%20Approximation/01-binary-quadratic-forms.md): which numbers x^2 + 5y^2 and its cousins can reach, read off the discriminant.
 
 Left open: a coprime pair can build 1, but how does that 1 undo a multiplication on a clock face?
 

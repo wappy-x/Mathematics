@@ -2033,6 +2033,9 @@ example : orient (150, 0) (170, 60) (70, 80) = 6400 := by norm_num [orient]
 ## Where this goes next
 
 - [Jordan curve theorem](../../17-Topology/03-Surfaces%20and%20Manifolds/05-jordan-curve-theorem.md): every closed curve that does not cross itself has exactly one inside and one outside.
+- [Pick's theorem](07-picks-theorem.md): count the dots inside and on the edge, and the area falls out.
+- [Triangulating a polygon, and why n/3 guards can always watch a gallery with n walls](08-polygon-triangulation-and-art-gallery.md): builds on this card.
+- [Sweeping a line across the plane](09-plane-sweep-segment-intersection.md): find every crossing among n segments without testing every pair.
 
 This card proved the two-sided split for straight-run fences; whether a curve with no straight pieces, even one too crinkled to have a length, still has a clean inside and outside is what the Jordan curve theorem answers.
 

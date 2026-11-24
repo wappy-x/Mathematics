@@ -397,6 +397,7 @@ example : (fun k : ℕ => min (k + 1) 3)^[3] 2 = 3 := by decide
 - [Strong induction and the least element](05-strong-induction-and-well-ordering.md): every non-empty collection of counting numbers has a smallest member, the least-element property.
 - [Division with a remainder](../../02-Number%20theory/01-Divisibility%20and%20Primes/04-division-with-remainder.md): the least-element property at work.
 - [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md): the reals, the last step.
+- [Structural induction](08-structural-induction-and-recursion.md): prove a fact about every tree or formula by checking each way it can be built.
 
 Left open: how are negatives, fractions and the reals built on these ropes?
 

@@ -210,7 +210,7 @@ For a triangle with three equal sides $`a`$ (in units of $`R`$), the laws of cos
 
 - **Sphere** ([Triangles on a sphere](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/01-triangles-on-a-sphere.md)): $`\cos a = \cos^2 a + \sin^2 a\cos A`$, so $`\cos A = \cos a/(1 + \cos a)`$.
 - **Plane:** $`\cos A = 1/2`$, so $`A = 60^\circ`$.
-- **Hyperbolic plane:** $`\cosh a = \cosh^2 a - \sinh^2 a\cos A`$, so $`\cos A = \cosh a/(1 + \cosh a)`$. This hyperbolic law of cosines is stated here, not proved. The code confirms it by measuring the drawn angle between two arcs, since the disc keeps angles true.
+- **Hyperbolic plane:** $`\cosh a = \cosh^2 a - \sinh^2 a\cos A`$, so $`\cos A = \cosh a/(1 + \cosh a)`$. This hyperbolic law of cosines is stated here and proved on [Hyperbolic trigonometry](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/10-hyperbolic-trigonometry.md). The code confirms it by measuring the drawn angle between two arcs, since the disc keeps angles true.
 
 ---
 

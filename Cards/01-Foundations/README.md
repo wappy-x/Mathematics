@@ -6,21 +6,21 @@
 
 Work fluently with whole numbers, fractions, decimals, percentages, powers, roots and logarithms; handle compound growth and discounting; read and write logic and proofs; and use sets, relations, functions and the sizes of infinity. This is the toolkit every later wing assumes.
 
-9 shelves · **59 of 59 cards ready to read**
+9 shelves · **70 of 70 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
 | Shelf | Cards |
 | --- | ---: |
 | [01 · Everyday Arithmetic](#s01) | 10 |
-| [02 · The Number Line](#s02) | 5 |
+| [02 · The Number Line](#s02) | 7 |
 | [03 · Powers, Roots and Logarithms](#s03) | 6 |
 | [04 · Compound Growth and Discounting](#s04) | 6 |
-| [05 · Logic](#s05) | 6 |
-| [06 · Proof](#s06) | 7 |
-| [07 · Sets](#s07) | 6 |
-| [08 · Relations and Functions](#s08) | 8 |
-| [09 · Sizes of Infinity](#s09) | 5 |
+| [05 · Logic](#s05) | 7 |
+| [06 · Proof](#s06) | 8 |
+| [07 · Sets](#s07) | 8 |
+| [08 · Relations and Functions](#s08) | 9 |
+| [09 · Sizes of Infinity](#s09) | 9 |
 
 <a name="s01"></a>
 
@@ -43,7 +43,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s02"></a>
 
-## 02 · The Number Line · 5 cards
+## 02 · The Number Line · 7 cards
 
 *The nested number families, order and inequalities, irrationals, why the reals have no gaps, absolute value as distance.*
 
@@ -52,6 +52,8 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [Irrational numbers: decimals that never repeat, and why root 2 is not a fraction](02-The%20Number%20Line/03-irrational-numbers.md)
 4. [The real numbers have no gaps: every point on the tape is a number](02-The%20Number%20Line/04-real-numbers-no-gaps.md)
 5. [Absolute value: distance from zero, and the triangle rule](02-The%20Number%20Line/05-absolute-value-and-distance.md)
+6. [Building the integers and fractions: a debt as a pair of counts, a fraction as a pair with a sameness rule](02-The%20Number%20Line/06-constructing-integers-and-fractions.md)
+7. [Dedekind cuts: build the real numbers from fractions, and the no-gaps rule becomes a theorem](02-The%20Number%20Line/07-dedekind-cuts.md)
 
 [↑ Back to the shelves](#top)
 
@@ -87,7 +89,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s05"></a>
 
-## 05 · Logic · 6 cards
+## 05 · Logic · 7 cards
 
 *Statements, and/or/not, if-then, equivalence and De Morgan, quantifiers and their negation, valid arguments.*
 
@@ -97,12 +99,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [Quantifiers: 'everyone' and 'someone', and why their order matters](05-Logic/04-quantifiers.md)
 5. [Negating a quantifier: to disprove 'every', find one; to disprove 'some', check them all](05-Logic/05-negating-quantifiers-and-counterexamples.md)
 6. [Valid arguments: modus ponens, modus tollens, and the two look-alikes that fail](05-Logic/06-valid-arguments.md)
+7. [Normal forms: every truth table is an 'or' of 'and's, and NAND alone can build them all](05-Logic/07-normal-forms-and-complete-connectives.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s06"></a>
 
-## 06 · Proof · 7 cards
+## 06 · Proof · 8 cards
 
 *What a proof is; direct, contrapositive, contradiction, induction, strong induction; choosing a strategy; Peano's rules as the payoff.*
 
@@ -113,12 +116,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Strong induction and the least element: assume every earlier case, or pick the smallest counterexample](06-Proof/05-strong-induction-and-well-ordering.md)
 6. [Choosing a proof strategy: which move fits which claim, plus existence, uniqueness and working backwards](06-Proof/06-choosing-a-proof-strategy.md)
 7. [Peano's three rules: building the counting numbers, and why 1 + 1 = 2 is a conclusion](06-Proof/07-peano-and-one-plus-one.md)
+8. [Structural induction: prove a fact about every tree or formula by checking each way it can be built](06-Proof/08-structural-induction-and-recursion.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s07"></a>
 
-## 07 · Sets · 6 cards
+## 07 · Sets · 8 cards
 
 *Sets and membership, subsets and power set, union/intersection/difference/complement, inclusion-exclusion, ordered pairs and products, Russell's paradox.*
 
@@ -128,12 +132,14 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [Inclusion-exclusion: count the overlap once, not twice](07-Sets/04-inclusion-exclusion.md)
 5. [Ordered pairs and the Cartesian product: the deck is suits times ranks](07-Sets/05-ordered-pairs-and-cartesian-product.md)
 6. [Russell's paradox: why 'the set of all sets that do not contain themselves' cannot exist](07-Sets/06-russells-paradox.md)
+7. [Indexed families: unions, intersections and products over any number of sets, and De Morgan for infinitely many](07-Sets/07-indexed-families-of-sets.md)
+8. [The ZFC axioms: the rules that say which collections are sets, and how they stop Russell](07-Sets/08-zfc-axioms.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s08"></a>
 
-## 08 · Relations and Functions · 8 cards
+## 08 · Relations and Functions · 9 cards
 
 *Relations and their four properties; functions, composition, one-to-one/onto, inverses; equivalence relations and partitions; orders; pigeonhole.*
 
@@ -145,12 +151,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Equivalence relations and partitions: a sameness rule cuts a set into blocks, and the blocks give the rule back](08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md)
 7. [Orders: rankings where some pairs may be incomparable, drawn as a Hasse diagram](08-Relations%20and%20Functions/07-partial-and-total-orders.md)
 8. [Pigeonhole: more pigeons than holes means some hole holds two](08-Relations%20and%20Functions/08-pigeonhole-principle.md)
+9. [Knaster-Tarski: an order-keeping map on a complete lattice always has a fixed point](08-Relations%20and%20Functions/09-complete-lattices-and-knaster-tarski.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s09"></a>
 
-## 09 · Sizes of Infinity · 5 cards
+## 09 · Sizes of Infinity · 9 cards
 
 *Same size by pairing, countable sets, Cantor's diagonal, comparing infinities, the axiom of choice.*
 
@@ -159,6 +166,10 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [Cantor's diagonal: the real numbers cannot be listed](09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md)
 4. [Comparing infinities: fits-both-ways means equal, and every set is smaller than its power set](09-Sizes%20of%20Infinity/04-comparing-infinities.md)
 5. [The axiom of choice: one pick from each of infinitely many boxes, and why it is debated](09-Sizes%20of%20Infinity/05-axiom-of-choice.md)
+6. [Ordinals: counting past infinity, where omega + 1 is bigger but 1 + omega is not](09-Sizes%20of%20Infinity/06-ordinals.md)
+7. [Transfinite induction: dominoes that keep falling past infinity, and definitions that use every earlier step](09-Sizes%20of%20Infinity/07-transfinite-induction-and-recursion.md)
+8. [Zorn's lemma and the well-ordering theorem: the axiom of choice in two more sets of clothes, and why they are the same](09-Sizes%20of%20Infinity/08-zorns-lemma-and-well-ordering.md)
+9. [Cardinal arithmetic: alephs, why aleph-null plus or times aleph-null is aleph-null, and two to the aleph-null is the line](09-Sizes%20of%20Infinity/09-cardinal-arithmetic.md)
 
 [↑ Back to the shelves](#top)
 

@@ -535,6 +535,7 @@ example : (-80 : ℤ) ^ 2 - 4 * 1600 = 0 := by norm_num
 - [Elliptic curves](../06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): a cubic curve where a line through two points meets a third.
 - [Conics](../../22-Algebraic%20geometry/03-Plane%20Curves/01-conics-and-rational-parametrisation.md): every curve of degree two, tilted or not, and its points listed by one parameter.
 - [Osculating circle](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/03-osculating-circle.md): the circle that hugs a curve best at a point; at the dish's vertex its radius is 2p.
+- [The Euler line and the nine-point circle](11-euler-line-and-nine-point-circle.md): four centres on one line and nine points on one circle.
 
 A parabola has one focus and a line; a curve kept a fixed total distance from two foci closes up into an oval, and the next card finds its equation.
 

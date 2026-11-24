@@ -405,6 +405,7 @@ example : univ.filter (fun b => wiring b ∈ soldOut) = {A3} := by decide
 
 - [Composing functions](03-composition.md): running one function into another, and what the domain and range do.
 - [One-to-one and onto](04-injective-surjective-bijective.md): what this card left open — repeats like crisps, gaps like the mints.
+- [Knaster-Tarski](09-complete-lattices-and-knaster-tarski.md): an order-keeping map on a complete lattice always has a fixed point.
 
 ---
 

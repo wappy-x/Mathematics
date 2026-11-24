@@ -163,7 +163,7 @@ A ring three fish lengths out holds 62.94 fish in Escher's world, 18.85 on flat 
 
 ## Code, from first principles, and it actually runs
 
-Two roads to each number. Fish ends: the closed form, then 200,000 thin slices of the ruler added back up. Rims: 2π sinh ρ or 2π sin ρ, then a 20,000-sided polygon, rescaled on the disc, straight chords on the ball. Arc AB: the circle through A, B and A's mirror in the rim. The mirror is (2, 0), on ray OA at drawn distance 1/0.5, and every rim-square circle through A also passes through it. Its angle is checked against atan(3/5). Parallels: where each circle through B crosses the rim, the two radii must be square. Four asserts compare them.
+Two roads to each number. Fish ends: the closed form, then 200,000 thin slices of the ruler added back up. Rims: 2π sinh ρ or 2π sin ρ, then a 20,000-sided polygon, rescaled on the disc, straight chords on the ball. Arc AB: the circle through A, B and A's mirror in the rim, its image under [Inversion in a circle](08-inversion-in-a-circle.md). The mirror is (2, 0), on ray OA at drawn distance 1/0.5, and every rim-square circle through A also passes through it. Its angle is checked against atan(3/5). Parallels: where each circle through B crosses the rim, the two radii must be square. Four asserts compare them.
 
 ### Python
 
@@ -632,8 +632,11 @@ example : (0 : ℚ) ^ 2 + (5 / 4 - 1 / 2) ^ 2 = (3 / 4) ^ 2 ∧ (0 : ℚ) ^ 2 + 
 
 ## Where this goes next
 
+- [Neutral geometry](07-neutral-geometry-and-saccheri-legendre.md): what holds before the parallel postulate is dropped, such as an angle sum of at most 180°.
 - [Riemannian metric](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/01-riemannian-metrics.md): the disc's factor 2/(1 − r^2) as one length rule set point by point.
 - [Sphere, plane and hyperbolic space](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/05-model-spaces-of-constant-curvature.md): the three worlds of constant curvature, with the angle-sum rules proved in general.
+- [Schwarz-Pick](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/09-schwarz-pick-and-the-hyperbolic-disc.md): a holomorphic map of the disc into itself never stretches hyperbolic distance.
+- [Three maps of one hyperbolic plane](09-hyperbolic-plane-models.md): the disc, the half-plane and the Klein disc, and the distance each one uses.
 
 This card never said what curvature is; later cards define it and show that one number fixes angle sums, parallels and circle growth together.
 

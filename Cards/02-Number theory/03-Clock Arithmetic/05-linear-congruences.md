@@ -477,6 +477,10 @@ theorem linear_congruence_answers_are_spaced_n_over_gcd (a b n : ℕ) (hn : 0 < 
 ## Where this goes next
 
 - [The Chinese remainder theorem](06-chinese-remainder-theorem.md): each clock is cut to one answer this way, then the answers stitched together.
+- [The coin problem](07-frobenius-coin-problem.md): with 5-cent and 7-cent stamps every amount above 23 can be paid, and 23 cannot.
+- [Lagrange's root bound](../04-Powers%20on%20the%20Clock/07-lagrange-root-bound.md): a degree-d polynomial has at most d roots on a prime clock, but x^2 = 1 has four on the 8-clock.
+- [Indices](../04-Powers%20on%20the%20Clock/10-discrete-logarithms-and-indices.md): logarithms on a prime clock turn powers into multiplication and solve x^k ≡ a.
+- [Binary quadratic forms](../08-Quadratic%20Forms%20and%20Approximation/01-binary-quadratic-forms.md): which numbers x^2 + 5y^2 and its cousins can reach, read off the discriminant.
 
 The question this card leaves open: when two dials each limit the clicks, is there one count that fits both at once?
 

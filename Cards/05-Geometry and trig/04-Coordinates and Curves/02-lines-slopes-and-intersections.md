@@ -490,6 +490,8 @@ example : (1 : ℚ) / (-2) = -1 / 2 ∧ (1 : ℚ) * 1 + (-2) * (-1 / 2) = 2 := b
 - [Triangle centres](08-triangle-centres.md): special lines of a triangle, intersected, locate its centres.
 - [Elliptic curves](../06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): a line through two points of a curve meets it in a third, which defines an addition.
 - [Linear interpolation](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/01-linear-interpolation-and-extrapolation.md): the line through two readings, used to estimate between them.
+- [Every rigid motion of the plane is at most three mirror flips, so there are only four kinds](../05-Vectors%20in%20Space/08-plane-isometries-and-three-reflections.md): builds on this card.
+- [Radon, Helly and Carathéodory](../07-Points%2C%20Convexity%20and%20Fractals/06-radon-helly-and-caratheodory.md): three counting facts about convex sets in the plane.
 
 Two distinct lines meet once or never; a line meeting a curve, possibly twice, is where [Circles and parabolas](04-circles-and-parabolas.md) begins.
 

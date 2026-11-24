@@ -374,6 +374,7 @@ example : (4 : ℚ) / 8 + 1 / 4 = 3 / 4 := by norm_num
 
 - [Decimals](08-decimals.md): fractions whose bottom is ten, a hundred, a thousand.
 - [Ratios and rates](09-ratios-and-rates.md): comparing two amounts and scaling both.
+- [Building the integers and fractions](../02-The%20Number%20Line/06-constructing-integers-and-fractions.md): a debt as a pair of counts, a fraction as a pair with a sameness rule.
 
 Left open: how to write 3/8 or 8/3 with a decimal point, and why one of them never ends.
 

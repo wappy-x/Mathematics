@@ -16,7 +16,7 @@ On the 7-clock those carries hit all six numbers you can multiply by and get bac
 
 **The order is how many steps a number's powers take to return to 1. It always divides the count of remainders you can get back from, and equalling that count makes the number a primitive root.**
 
-**What kind of fact this is:** a theorem, proved in Why it works; which clocks have a primitive root is stated without proof.
+**What kind of fact this is:** a theorem, proved in Why it works; which clocks have a primitive root is stated here and proved on [Which clocks have a primitive root](09-primitive-roots-mod-prime-powers.md).
 
 ### The picture
 
@@ -83,7 +83,7 @@ Now let the order be the whole of phi(n). Its first phi(n) powers are all differ
 <details>
 <summary>Which clocks have a primitive root at all</summary>
 
-Not all. Only 1, 2, 4, any power of an odd prime, and twice any power of an odd prime. The 8-clock and 12-clock have none. Gauss settled it; proof left off.
+Not all. Only 1, 2, 4, any power of an odd prime, and twice any power of an odd prime. The 8-clock and 12-clock have none. Gauss settled it; the proof is on [Which clocks have a primitive root](09-primitive-roots-mod-prime-powers.md).
 
 </details>
 
@@ -413,6 +413,8 @@ example : 10 % 3 = 1 ∧ 3 * 3 = 9 := by decide
 
 - [Perfect shuffles](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/05-perfect-shuffles.md): the order of 2 on a clock, riffles back to a fresh deck.
 - [Diffie-Hellman key exchange](../06-Codes%20and%20Secrets/02-diffie-hellman.md): why key exchange rests on a primitive root of a large prime.
+- [Every prime clock has a primitive root](08-primitive-roots-mod-p.md): count how many numbers have each order.
+- [Square roots on a prime clock](../06-Codes%20and%20Secrets/06-square-roots-mod-p.md): a one-line formula when p is 3 mod 4, and Tonelli-Shanks for the rest.
 
 Left open: on which clocks is 10 a primitive root, so that 1/n repeats as long as it can?
 

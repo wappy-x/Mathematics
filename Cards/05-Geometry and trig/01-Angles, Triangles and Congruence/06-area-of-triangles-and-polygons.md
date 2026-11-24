@@ -744,6 +744,8 @@ example : (3 : ℕ) * 2 = 6 := by decide
 
 - [Small angles](../03-Trigonometry/08-small-angles-and-the-sine-bound.md): compares a triangle's area with a circular slice to pin down how a small angle behaves.
 - [Shoelace formula](../07-Points%2C%20Convexity%20and%20Fractals/01-polygon-area-and-orientation.md): the area of any polygon straight from its corners' grid positions, the shoelace formula.
+- [Scissors congruence](../02-Circles%20and%20Solids/08-scissors-congruence-and-dehn-invariant.md): equal-area polygons can always be cut into each other, but a cube and a tetrahedron of equal volume cannot.
+- [Ceva and Menelaus](../04-Coordinates%20and%20Curves/10-ceva-and-menelaus.md): one product of side ratios says three lines meet, another says three points line up.
 
 Left open: when only the corners' grid positions are known, is there a rule that needs no heights at all?
 

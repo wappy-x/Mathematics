@@ -403,6 +403,8 @@ example : (3 : ℤ) ∣ 6 ∧ (3 : ℤ) ∣ 9 ∧ ¬ ((3 : ℤ) ∣ 4) := by dec
 - [Coprime numbers](05-coprime-numbers.md): what changes when the gcd is 1 and the mix lands on 1.
 - [Euclid's lemma](06-euclids-lemma.md): multiply that mix by another number; a prime dividing a product must divide a factor.
 - [The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md): the same counts, dividing on a clock.
+- [The coin problem](../03-Clock%20Arithmetic/07-frobenius-coin-problem.md): with 5-cent and 7-cent stamps every amount above 23 can be paid, and 23 cannot.
+- [Farey fractions and Ford circles](../08-Quadratic%20Forms%20and%20Approximation/04-farey-sequences-and-ford-circles.md): neighbours differ by one over the product of their bottoms, and their circles just touch.
 
 Left open: when two numbers share no factor and the mix lands on 1, what can that 1 be used for?
 

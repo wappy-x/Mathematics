@@ -386,6 +386,7 @@ example : (((3 : ℕ) : ℤ) : ℚ) = (3 : ℚ) / 1 := by norm_num
 - [The number line and inequalities](02-number-line-and-inequalities.md): all four families on one line, left meaning smaller.
 - [Peano's three rules](../06-Proof/07-peano-and-one-plus-one.md): the bottom rung built from "start at zero and take one more step".
 - [Countable sets](../09-Sizes%20of%20Infinity/02-countable-sets.md): as many fractions as counting numbers, and strictly more reals.
+- [Building the integers and fractions](06-constructing-integers-and-fractions.md): a debt as a pair of counts, a fraction as a pair with a sameness rule.
 
 The question this card leaves open: the reals were added to fill every spot the fractions miss, so what guarantees that no spot is still empty?
 

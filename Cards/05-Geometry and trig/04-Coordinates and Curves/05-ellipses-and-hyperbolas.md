@@ -121,7 +121,7 @@ Squaring can add points, so the reverse needs checking.
 
 </details>
 
-Another route names them: each is a flat slice of a double cone, hence "conic"; Projective varieties makes the four one curve.
+Another route names them: each is a flat slice of a double cone, hence "conic" ([Every conic](09-general-conics-and-dandelin-spheres.md) proves it with Dandelin spheres); Projective varieties makes the four one curve.
 
 ---
 
@@ -621,6 +621,7 @@ example : 1 + (9 : ℚ) / 16 = (5 / 4) ^ 2 := by norm_num
 
 - [Orbits](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/09-orbital-mechanics-and-the-kepler-problem.md): why an inverse-square pull sends a body along exactly these curves, sun at a focus.
 - [Projective varieties](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/04-projective-varieties-and-closure.md): points at infinity, where a hyperbola's two arms join and the four conics become one.
+- [Every conic](09-general-conics-and-dandelin-spheres.md): untangle a tilted equation by turning the axes, and the spheres that show a cone's slice is an ellipse.
 
 This card gives an orbit's shape, not the reason for it; why gravity produces a conic at all is the orbital mechanics card's result.
 

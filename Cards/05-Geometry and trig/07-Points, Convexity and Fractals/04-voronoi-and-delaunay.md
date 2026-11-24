@@ -563,6 +563,8 @@ example : 2 * 5 - 2 - 4 = 4 ∧ 3 * 5 - 3 - 4 = 8 ∧ Nat.choose 5 3 = 10 := by 
 ## Where this goes next
 
 - [Vietoris-Rips, Cech and alpha complexes](../../17-Topology/06-Topological%20Data%20Analysis/02-vietoris-rips-and-cech-complexes.md): grow a disc round each point and join points whose discs meet.
+- [Triangulating a polygon, and why n/3 guards can always watch a gallery with n walls](08-polygon-triangulation-and-art-gallery.md): builds on this card.
+- [k-d trees](10-kd-trees-and-nearest-neighbours.md): split the plane in half again and again to find the nearest point fast.
 
 The map answers who is nearest; what shape a cloud of points has, seen at every scale at once, is the question a later card takes up.
 

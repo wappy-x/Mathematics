@@ -527,6 +527,7 @@ example : (30 : ℝ) + 10 * cos 0 = 40 ∧ (10 : ℝ) * sin 0 = 0 := by
 - [The Lyapunov exponent](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/04-chaos-and-the-lyapunov-exponent.md): the logistic map's wildest case as angle doubling.
 - [AC power](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/09-power-and-three-phase.md): waves folded into one.
 - [Dirichlet and Fejer kernels](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/03-dirichlet-and-fejer-kernels.md): long sums of cosines collapsed.
+- [Every conic](../04-Coordinates%20and%20Curves/09-general-conics-and-dandelin-spheres.md): untangle a tilted equation by turning the axes, and the spheres that show a cone's slice is an ellipse.
 
 This card found $`R`$ from two lengths and a bend, unmeasured; why that expression gives the third side of every triangle is [Law of cosines](06-law-of-cosines.md).
 

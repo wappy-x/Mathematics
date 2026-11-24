@@ -367,6 +367,8 @@ example : ∀ k : ℕ, 8 + 3 * k ≠ 9 := by intro k; omega
 ## Where this goes next
 
 - [Choosing a proof strategy](06-choosing-a-proof-strategy.md): which move fits which claim.
+- [Structural induction](08-structural-induction-and-recursion.md): prove a fact about every tree or formula by checking each way it can be built.
+- [Ordinals](../09-Sizes%20of%20Infinity/06-ordinals.md): counting past infinity, where omega + 1 is bigger but 1 + omega is not.
 
 Left open: when a claim can be proved both ways, which shape gives the shorter proof.
 

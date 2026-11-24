@@ -135,7 +135,7 @@ A **partly ordered set** $`P`$ is a set with an order $`\le`$ in which some pair
 
 **Read it aloud:** if every rising chain has something on top of it, then something sits at the top with nothing above.
 
-This is **Zorn's lemma** (Zorn, 1935). It is equivalent to [The axiom of choice](../../01-Foundations/09-Sizes%20of%20Infinity/05-axiom-of-choice.md): each one proves the other from the other rules of set theory. Its role is to finish a construction that would otherwise take endlessly many steps, by jumping straight to a maximal member.
+This is **Zorn's lemma** (Zorn, 1935; see [Zorn's lemma and the well-ordering theorem](../../01-Foundations/09-Sizes%20of%20Infinity/08-zorns-lemma-and-well-ordering.md)). It is equivalent to [The axiom of choice](../../01-Foundations/09-Sizes%20of%20Infinity/05-axiom-of-choice.md): each one proves the other from the other rules of set theory. Its role is to finish a construction that would otherwise take endlessly many steps, by jumping straight to a maximal member.
 
 On a finite set no axiom is needed: keep enlarging until no step is left. The code checks this on a 3-point set $`\{a, b, c\}`$. Of the 256 families of its subsets, 38 have the FIP, counting the empty family. Exactly 3 are maximal, and each is "every set holding one point", such as the 4 sets holding $`a`$.
 

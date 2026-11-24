@@ -400,6 +400,8 @@ example : (1 * 3 * 5 * 7) % 8 = 1 ∧ (1 * 5 * 7 * 11) % 12 = 1 := by decide
 
 - [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md): a quick primality test, and the numbers that fool it.
 - [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md): the test RSA actually uses. RSA locks messages with two large primes ([RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md)).
+- [Lagrange's root bound](07-lagrange-root-bound.md): a degree-d polynomial has at most d roots on a prime clock, but x^2 = 1 has four on the 8-clock.
+- [Gauss's lemma](12-gauss-lemma.md): count how many of a, 2a, 3a, ... land in the top half of the clock to tell whether a is a square.
 
 Left open: is there a prime test as exact as this one, but fast enough for big numbers?
 

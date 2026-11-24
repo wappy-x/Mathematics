@@ -381,6 +381,8 @@ example : (297 : ℚ) / 210 = 99 / 70 := by norm_num
 - [Roots](../03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): root 2 as one of a family.
 - [Proof by contradiction](../06-Proof/03-proof-by-contradiction.md): the move used here, properly.
 - [Cantor's diagonal](../09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md): irrationals outnumber fractions.
+- [Dedekind cuts](07-dedekind-cuts.md): build the real numbers from fractions, and the no-gaps rule becomes a theorem.
+- [Periodic continued fractions](../../02-Number%20theory/08-Quadratic%20Forms%20and%20Approximation/03-periodic-continued-fractions.md): a pattern that repeats forever is exactly the mark of a quadratic irrational.
 
 This card leaves one question open: if root 2 falls between the fractions, what exactly fills the tape?
 

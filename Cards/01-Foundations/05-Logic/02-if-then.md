@@ -372,6 +372,7 @@ example : Odd (2 : ℕ) → (1 : ℕ) = 0 := by decide
 - [Logical equivalence and De Morgan](03-logical-equivalence-and-de-morgan.md): why the two readings count as one sentence.
 - [Valid arguments](06-valid-arguments.md): what you may conclude from an if-then and one half.
 - [Proof by contrapositive](../06-Proof/02-proof-by-contrapositive.md): proving the flipped sentence on purpose.
+- [Normal forms](07-normal-forms-and-complete-connectives.md): every truth table is an 'or' of 'and's, and NAND alone can build them all.
 
 Left open: given the warranty and one fact about a customer, which conclusions are safe to draw?
 

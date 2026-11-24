@@ -608,6 +608,7 @@ example : 4 / 3 * Real.pi * 2 ^ 3 = 8 * (4 / 3 * Real.pi * 1 ^ 3) := by ring
 ## Where this goes next
 
 - [Polyhedra](06-polyhedra-and-eulers-formula.md): flat-faced solids, the cube and pyramids among them, counted by corners, edges and faces.
+- [Every conic](../04-Coordinates%20and%20Curves/09-general-conics-and-dandelin-spheres.md): untangle a tilted equation by turning the axes, and the spheres that show a cone's slice is an ellipse.
 
 Cavalieri's principle and the ball's skin were checked here with ever thinner slabs and bands, not proved; calculus makes "ever thinner" an exact sum, in [Volumes](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md) and [Surface area](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/04-surface-area-of-revolution.md).
 

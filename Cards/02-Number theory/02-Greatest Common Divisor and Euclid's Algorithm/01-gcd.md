@@ -373,6 +373,8 @@ example : Nat.gcd 180 180 = 180 ∧ Nat.gcd 180 200 = 20 ∧ 2 * 2 * 5 = 20 := b
 - [Least common multiple](02-lcm.md): the other end — the first number both divide into, and why gcd times lcm is the product.
 - [Euclid's algorithm](03-euclidean-algorithm.md): the same answer by remainders, fast even for numbers nobody can factor.
 - [Coprime numbers](05-coprime-numbers.md): when the gcd is 1 and two numbers share nothing.
+- [Farey fractions and Ford circles](../08-Quadratic%20Forms%20and%20Approximation/04-farey-sequences-and-ford-circles.md): neighbours differ by one over the product of their bottoms, and their circles just touch.
+- [Pick's theorem](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/07-picks-theorem.md): count the dots inside and on the edge, and the area falls out.
 
 Left open: can 60 be made by adding and taking away whole 180s and 300s? That is [Bezout's identity](04-bezouts-identity.md).
 

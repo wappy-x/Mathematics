@@ -524,6 +524,8 @@ example : (180 : ℤ) - 100 - 90 = -10 := by decide
 ## Where this goes next
 
 - [Congruent triangles](03-congruent-triangles.md): when two triangles with some matching sides and angles must match everywhere.
+- [Hilbert's axioms](../06-Beyond%20Euclid/06-hilberts-axioms.md): the betweenness and continuity rules Euclid used without writing down.
+- [Neutral geometry](../06-Beyond%20Euclid/07-neutral-geometry-and-saccheri-legendre.md): what survives without the parallel postulate, and why a triangle's angles can never top 180 degrees.
 
 This card says when three panels close, not whether they can close in more than one shape; that question is congruence.
 

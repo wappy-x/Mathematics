@@ -348,6 +348,7 @@ example : 4 + 13 = 17 ∧ 4 * 12 = 48 := by norm_num
 ## Where this goes next
 
 - [Relations](../08-Relations%20and%20Functions/01-relations.md): keep only some of the pairs in A × B — a subset, in the sense of [Subsets and the power set](02-subsets-and-power-set.md) — and you have a relation: a rule saying which things go with which.
+- [Indexed families](07-indexed-families-of-sets.md): unions, intersections and products over any number of sets, and De Morgan for infinitely many.
 
 The question this card leaves open: of all 52 pairs, which belong together, and how do you say so?
 

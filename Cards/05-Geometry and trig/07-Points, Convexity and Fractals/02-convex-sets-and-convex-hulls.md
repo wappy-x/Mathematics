@@ -548,6 +548,8 @@ example : 0 ≤ turn (2, 0) (14, 2) (13 / 2, 4) ∧ 0 ≤ turn (14, 2) (8, 6) (1
 - [Convex sets](../../15-Optimization/01-Convexity/02-convex-sets.md) in Optimization: convex regions where minimising a cost is well behaved.
 - [Separation](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/07-hahn-banach-separation-and-supporting-walls.md): Step 4's string, in any dimension.
 - [Krein-Milman](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/06-krein-milman-and-extreme-points.md): a convex region rebuilt from its corners.
+- [Radon, Helly and Carathéodory](06-radon-helly-and-caratheodory.md): three counting facts about convex sets in the plane.
+- [Triangulating a polygon, and why n/3 guards can always watch a gallery with n walls](08-polygon-triangulation-and-art-gallery.md): builds on this card.
 
 Left open: if two herds graze in two convex paddocks that do not overlap, can one straight fence always run between them?
 

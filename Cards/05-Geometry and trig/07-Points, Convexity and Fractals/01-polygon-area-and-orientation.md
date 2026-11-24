@@ -2260,6 +2260,8 @@ open Shoelace
 - [Inside or outside](03-point-in-polygon-and-segment-tests.md): turn signs decide whether two fences cross and whether a point is inside.
 - [Fractals](05-self-similarity-and-fractal-dimension.md): polygons whose area settles while their perimeter grows without end.
 - [Green's theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/06-greens-theorem.md): the boundary sum for curved boundaries.
+- [Pick's theorem](07-picks-theorem.md): count the dots inside and on the edge, and the area falls out.
+- [Triangulating a polygon, and why n/3 guards can always watch a gallery with n walls](08-polygon-triangulation-and-art-gallery.md): builds on this card.
 
 The question this card leaves open: how do you find the area inside a curved boundary, where there are no corners to list?
 

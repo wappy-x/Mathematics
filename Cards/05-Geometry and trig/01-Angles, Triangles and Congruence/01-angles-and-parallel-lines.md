@@ -482,6 +482,7 @@ example : (Nat.divisors 100).card = 9 := by decide
 
 - [Triangles](02-triangle-angle-sum-and-inequality.md): the gutter-line trick, a parallel through a triangle's top corner, proves its angles total 180°.
 - [Ruler and compass](../06-Beyond%20Euclid/03-ruler-and-compass-constructions.md): drawing a parallel by copying an angle, the backwards direction of Step 3.
+- [Hilbert's axioms](../06-Beyond%20Euclid/06-hilberts-axioms.md): the betweenness and continuity rules Euclid used without writing down.
 
 Left open: on a curved surface, where the parallel postulate fails, do these angle rules still hold? [Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md) starts the answer.
 

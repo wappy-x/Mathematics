@@ -403,6 +403,7 @@ example : ∀ k : ℕ, 10 ^ k ≠ 5000000 := by
 ## Where this goes next
 
 - [Log laws and log scales](06-log-laws-and-log-scales.md): what happens when you multiply two numbers and log the result, and how an axis marked 1, 10, 100 reads.
+- [Indices](../../02-Number%20theory/04-Powers%20on%20the%20Clock/10-discrete-logarithms-and-indices.md): logarithms on a prime clock turn powers into multiplication and solve x^k ≡ a.
 
 Left open: how do you read a count that lands between two whole numbers?
 

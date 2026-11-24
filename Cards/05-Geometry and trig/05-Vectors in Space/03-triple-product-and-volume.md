@@ -527,6 +527,8 @@ example : ((![20, 0, 0] : Fin 3 → ℤ) ⨯₃ ![5, 15, 0]) ⬝ᵥ ![25, 15, -1
 - [Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): the 3 by 3 determinant and its meaning as a volume scale.
 
 ## Where this goes next
+- [Desargues and Pappus](06-desargues-and-pappus.md): two theorems where only which lines meet matters, and the duality that swaps points and lines.
+
 
 The triple product measures one box; what a matrix does to every box at once, scaling all volumes by one factor, is [Moving shapes with matrices](04-transformations-with-matrices.md).
 

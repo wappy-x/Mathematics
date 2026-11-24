@@ -579,6 +579,7 @@ example : (![0, -3, 4] : Fin 3 → ℚ) ⬝ᵥ ![2, 3, 9 / 4] = 0 ∧ (5 : ℚ) 
 
 - [Triple product](03-triple-product-and-volume.md): the normal dotted with a third arrow, a signed volume.
 - [Regular surface](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/01-regular-surfaces-and-tangent-planes.md): a curved surface has a plane like this one at every point, its tangent plane.
+- [Rigid motions in space](09-rigid-motions-in-space-and-screws.md): every one is a screw, a turn about an axis plus a slide along it.
 
 The gap $`n \cdot p - c`$ is secretly a box's volume; why, and what it says about three arrows lying flat, is the triple product.
 

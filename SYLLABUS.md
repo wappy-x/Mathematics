@@ -1,18 +1,18 @@
 # Syllabus
 
-The whole library in reading order: **25 wings, 257 shelves and 1,898 cards**, from counting to the open problems of current research. Each card uses only ideas from the cards before it, so the library can be read from the first card to the last.
+The whole library in reading order: **25 wings, 258 shelves and 1,942 cards**, from counting to the open problems of current research. Each card uses only ideas from the cards before it, so the library can be read from the first card to the last.
 
 **Each wing has its own page.** Click a wing to see its shelves and every card on them, then click a card's title to read it.
 
-**1,898 of 1,898 cards are ready to read.**
+**1,942 of 1,942 cards are ready to read.**
 
 | # | Wing | What it's about | Shelves | Ready to read |
 | --- | --- | --- | ---: | --- |
-| 01 | [Foundations](Cards/01-Foundations/README.md) | Numbers, fractions, powers, logic and proof: the toolkit everything else uses. | 9 | 59 of 59 |
-| 02 | [Number theory](Cards/02-Number%20theory/README.md) | Primes, remainders, clock arithmetic, codes and secrets. | 7 | 43 of 43 |
+| 01 | [Foundations](Cards/01-Foundations/README.md) | Numbers, fractions, powers, logic and proof: the toolkit everything else uses. | 9 | 70 of 70 |
+| 02 | [Number theory](Cards/02-Number%20theory/README.md) | Primes, remainders, clock arithmetic, codes and secrets. | 8 | 57 of 57 |
 | 03 | [Algebra](Cards/03-Algebra/README.md) | Equations, vectors, matrices, groups and fields. | 10 | 51 of 51 |
 | 04 | [Combinatorics and graphs](Cards/04-Combinatorics%20and%20graphs/README.md) | Counting cleverly, networks, routes and puzzles. | 14 | 82 of 82 |
-| 05 | [Geometry and trig](Cards/05-Geometry%20and%20trig/README.md) | Shapes, angles, coordinates and space. | 7 | 43 of 43 |
+| 05 | [Geometry and trig](Cards/05-Geometry%20and%20trig/README.md) | Shapes, angles, coordinates and space. | 7 | 62 of 62 |
 | 06 | [Calculus and analysis](Cards/06-Calculus%20and%20analysis/README.md) | Change, limits, areas and the infinitely small. | 9 | 85 of 85 |
 | 07 | [Complex analysis](Cards/07-Complex%20analysis/README.md) | What the square root of −1 unlocks. | 11 | 77 of 77 |
 | 08 | [Differential equations and dynamics](Cards/08-Differential%20equations%20and%20dynamics/README.md) | How things change over time: growth, orbits, chaos. | 12 | 93 of 93 |

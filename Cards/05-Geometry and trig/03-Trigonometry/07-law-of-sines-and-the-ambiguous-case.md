@@ -775,6 +775,7 @@ example : (105 : ℚ) / 30 = 7 / 2 := by norm_num
 
 - [Small angles](08-small-angles-and-the-sine-bound.md): a thin triangle's tiny angle.
 - [Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md): the law of sines on a globe, where sides are arcs.
+- [Hyperbolic trigonometry](../06-Beyond%20Euclid/10-hyperbolic-trigonometry.md): Pythagoras becomes cosh c = cosh a cosh b, and every distance has an angle of parallelism.
 
 Dividing by the tiny sine of a far ship's angle magnifies every error; how nearly that sine equals its angle, in radians, is the next card's question.
 

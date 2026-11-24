@@ -82,7 +82,7 @@ The stops build themselves from the steps: new top number = the step, times the 
 
 **No fraction with a bottom number up to 128 is closer to 0.2422 than 31/128 is.**
 
-Cutting the stack short is the only loss, and what you drop sits under every division above it. The stops overshoot and undershoot in turn, and the gap shrinks faster than the bottom number grows. Square roots give lists that repeat forever.
+Cutting the stack short is the only loss, and what you drop sits under every division above it. The stops overshoot and undershoot in turn, and the gap shrinks faster than the bottom number grows. Square roots give lists that repeat forever; [Periodic continued fractions](../08-Quadratic%20Forms%20and%20Approximation/03-periodic-continued-fractions.md) shows why.
 
 ---
 
@@ -629,10 +629,13 @@ example : (GenContFract.of (97 / 400 : ℚ)).h = 0 ∧
 ## Where this goes next
 
 - [Pell's equation](../../03-Algebra/10-For%20the%20Curious/04-pell-equation-and-root-two.md): the same steps on root 2, where every second stop solves an equation in whole numbers.
+- [Periodic continued fractions](../08-Quadratic%20Forms%20and%20Approximation/03-periodic-continued-fractions.md): a pattern that repeats forever is exactly the mark of a quadratic irrational.
+- [Farey fractions and Ford circles](../08-Quadratic%20Forms%20and%20Approximation/04-farey-sequences-and-ford-circles.md): neighbours differ by one over the product of their bottoms, and their circles just touch.
+- [Hurwitz's theorem](../08-Quadratic%20Forms%20and%20Approximation/05-hurwitz-approximation-theorem.md): every irrational has infinitely many fractions within 1/(root 5 q^2), and the golden ratio shows root 5 cannot be beaten.
 
 The rest of the shelf: [Pythagorean triples](01-pythagorean-triples.md), [Perfect numbers and Mersenne primes](02-perfect-numbers-and-mersenne.md), [How primes thin out](03-how-primes-thin-out.md), [Goldbach, twin primes and friends](04-goldbach-and-open-problems.md).
 
-This card leaves one question open: why does the list for a square root repeat forever?
+This card leaves one question open: why does the list for a square root repeat forever? [Periodic continued fractions](../08-Quadratic%20Forms%20and%20Approximation/03-periodic-continued-fractions.md) answers it.
 
 ---
 

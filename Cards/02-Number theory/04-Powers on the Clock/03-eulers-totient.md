@@ -361,6 +361,7 @@ example : ∀ n ∈ Finset.Icc 1 60,
 ## Where this goes next
 
 - [Euler's theorem](04-eulers-theorem.md): raise anything coprime to n to the phi(n) and the clock shows 1 — the rule of [Fermat's little theorem](02-fermats-little-theorem.md), freed from prime clocks.
+- [Every prime clock has a primitive root](08-primitive-roots-mod-p.md): count how many numbers have each order.
 
 The card leaves one question open: phi(n) counts the jumps that tour the clock, so what does it say when you multiply round the clock instead of adding?
 

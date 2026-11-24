@@ -404,6 +404,7 @@ example : 7 ^ 64 % 1000 = 401 := by norm_num
 - [Fermat's little theorem](02-fermats-little-theorem.md): on a prime clock the readings return to 1 on a schedule, shrinking the exponent before you climb.
 - [One-way streets](../06-Codes%20and%20Secrets/01-one-way-streets.md): easy forwards, and nobody knows how to run it backwards.
 - [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md): a primality test, one ladder per round.
+- [Square roots on a prime clock](../06-Codes%20and%20Secrets/06-square-roots-mod-p.md): a one-line formula when p is 3 mod 4, and Tonelli-Shanks for the rest.
 
 Left open: given only the reading 343, can anyone find the day count fast?
 

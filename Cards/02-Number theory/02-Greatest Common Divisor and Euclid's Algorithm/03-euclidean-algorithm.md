@@ -398,6 +398,7 @@ example : Nat.gcd 1071 460 = 1 := by norm_num
 
 - [Bezout's identity](04-bezouts-identity.md): run the same divisions backwards and the gcd comes out as whole-number helpings of the two starting numbers.
 - [Continued fractions](../07-For%20the%20Curious/05-continued-fractions-and-leap-years.md): the discarded quotients, in order, give the best simple fractions near a ratio — how calendars pick leap years.
+- [Reduced forms](../08-Quadratic%20Forms%20and%20Approximation/02-reduced-forms-and-class-numbers.md): every form slides to one tidy representative, and counting them gives the class number.
 
 Left open: 21 is the biggest length both drums share, but can 21 itself be built by adding and taking away whole drum-lengths?
 

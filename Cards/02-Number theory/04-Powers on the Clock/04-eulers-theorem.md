@@ -382,6 +382,8 @@ example : φ 7 = 6 ∧ 3 ^ 10 % 7 = 4 ∧ 3 ^ (10 % 6) % 7 = 4 ∧ 3 ^ (10 % 7) 
 
 - [The order of a number and primitive roots](05-order-and-primitive-roots.md): the smallest exponent returning to 1, often below 40.
 - [RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md): the theorem doing paid work.
+- [Which clocks have a primitive root](09-primitive-roots-mod-prime-powers.md): lifting from 7 to 49 to every power of 7, and why the 8-clock and 15-clock have none.
+- [Carmichael's function](11-carmichael-function.md): the smallest power that sends every coprime number home, often far below Euler's count.
 
 Left open: what is the smallest power that brings 3 back to 1?
 

@@ -6,19 +6,19 @@
 
 Measure and reason about shapes in the plane and in space: angles, lengths, areas and volumes by formula and by argument, any triangle from three pieces of data, points and curves by coordinates in three systems, and vectors in space. The wing ends where the flat plane stops being the only option, so that later wings can talk about spheres, curved space and points on a cubic curve.
 
-7 shelves · **43 of 43 cards ready to read**
+7 shelves · **62 of 62 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
 | Shelf | Cards |
 | --- | ---: |
 | [01 · Angles, Triangles and Congruence](#s01) | 6 |
-| [02 · Circles and Solids](#s02) | 6 |
+| [02 · Circles and Solids](#s02) | 8 |
 | [03 · Trigonometry](#s03) | 8 |
-| [04 · Coordinates and Curves](#s04) | 8 |
-| [05 · Vectors in Space](#s05) | 5 |
-| [06 · Beyond Euclid](#s06) | 5 |
-| [07 · Points, Convexity and Fractals](#s07) | 5 |
+| [04 · Coordinates and Curves](#s04) | 11 |
+| [05 · Vectors in Space](#s05) | 9 |
+| [06 · Beyond Euclid](#s06) | 10 |
+| [07 · Points, Convexity and Fractals](#s07) | 10 |
 
 <a name="s01"></a>
 
@@ -37,7 +37,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s02"></a>
 
-## 02 · Circles and Solids · 6 cards
+## 02 · Circles and Solids · 8 cards
 
 *Circle measurements, radians, angle facts at a circle, and volume and surface area of the standard solids*
 
@@ -47,6 +47,8 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [Prisms and cylinders: volume is cross-section times height](02-Circles%20and%20Solids/04-prisms-and-cylinders.md)
 5. [Pyramids, cones and spheres: the one-third rule and the sphere's four pi r squared](02-Circles%20and%20Solids/05-pyramids-cones-and-spheres.md)
 6. [Polyhedra: vertices minus edges plus faces is two, and what that forbids](02-Circles%20and%20Solids/06-polyhedra-and-eulers-formula.md)
+7. [Power of a point: every chord, secant and tangent through one point gives the same product](02-Circles%20and%20Solids/07-power-of-a-point.md)
+8. [Scissors congruence: equal-area polygons can always be cut into each other, but a cube and a tetrahedron of equal volume cannot](02-Circles%20and%20Solids/08-scissors-congruence-and-dehn-invariant.md)
 
 [↑ Back to the shelves](#top)
 
@@ -69,7 +71,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s04"></a>
 
-## 04 · Coordinates and Curves · 8 cards
+## 04 · Coordinates and Curves · 11 cards
 
 *Points, lines and curves as equations in Cartesian, polar, cylindrical and spherical coordinates*
 
@@ -81,12 +83,15 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Parametric curves: a point that moves with time](04-Coordinates%20and%20Curves/06-parametric-curves.md)
 7. [Cylindrical and spherical coordinates: two angles and a radius in space](04-Coordinates%20and%20Curves/07-cylindrical-and-spherical-coordinates.md)
 8. [Triangle centres: centroid, circumcentre and incentre, and the different questions they answer](04-Coordinates%20and%20Curves/08-triangle-centres.md)
+9. [Every conic: untangle a tilted equation by turning the axes, and the spheres that show a cone's slice is an ellipse](04-Coordinates%20and%20Curves/09-general-conics-and-dandelin-spheres.md)
+10. [Ceva and Menelaus: one product of side ratios says three lines meet, another says three points line up](04-Coordinates%20and%20Curves/10-ceva-and-menelaus.md)
+11. [The Euler line and the nine-point circle: four centres on one line and nine points on one circle](04-Coordinates%20and%20Curves/11-euler-line-and-nine-point-circle.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s05"></a>
 
-## 05 · Vectors in Space · 5 cards
+## 05 · Vectors in Space · 9 cards
 
 *Cross products, lines and planes, volumes, and moving shapes with matrices*
 
@@ -95,12 +100,16 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [Triple product: the volume of a slanted box and a test for four points in one plane](05-Vectors%20in%20Space/03-triple-product-and-volume.md)
 4. [Moving shapes with matrices: rotate, reflect, scale and shift with one multiplication](05-Vectors%20in%20Space/04-transformations-with-matrices.md)
 5. [Perspective: why parallel lines meet in a photograph, and the coordinates that make that legal](05-Vectors%20in%20Space/05-perspective-and-projective-coordinates.md)
+6. [Desargues and Pappus: two theorems where only which lines meet matters, and the duality that swaps points and lines](05-Vectors%20in%20Space/06-desargues-and-pappus.md)
+7. [Cross-ratio: the one number a perspective photo cannot change, and harmonic sets of points](05-Vectors%20in%20Space/07-cross-ratio-and-harmonic-points.md)
+8. [Every rigid motion of the plane is at most three mirror flips, so there are only four kinds](05-Vectors%20in%20Space/08-plane-isometries-and-three-reflections.md)
+9. [Rigid motions in space: every one is a screw, a turn about an axis plus a slide along it](05-Vectors%20in%20Space/09-rigid-motions-in-space-and-screws.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s06"></a>
 
-## 06 · Beyond Euclid · 5 cards
+## 06 · Beyond Euclid · 10 cards
 
 *Geometry on a sphere and in hyperbolic space, what a ruler and compass can build, and the curve on which points can be added*
 
@@ -109,12 +118,17 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [Ruler and compass: what can be built, and the three ancient problems that cannot](06-Beyond%20Euclid/03-ruler-and-compass-constructions.md)
 4. [Symmetry: the moves that leave a shape unchanged, and the seventeen ways to tile a wall](06-Beyond%20Euclid/04-symmetry-and-tilings.md)
 5. [Elliptic curves: a cubic curve whose points can be added like numbers](06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md)
+6. [Hilbert's axioms: the betweenness and continuity rules Euclid used without writing down](06-Beyond%20Euclid/06-hilberts-axioms.md)
+7. [Neutral geometry: what survives without the parallel postulate, and why a triangle's angles can never top 180 degrees](06-Beyond%20Euclid/07-neutral-geometry-and-saccheri-legendre.md)
+8. [Inversion in a circle: turn the plane inside out, so lines and circles swap and angles survive](06-Beyond%20Euclid/08-inversion-in-a-circle.md)
+9. [Three maps of one hyperbolic plane: the disc, the half-plane and the Klein disc, and the distance each one uses](06-Beyond%20Euclid/09-hyperbolic-plane-models.md)
+10. [Hyperbolic trigonometry: Pythagoras becomes cosh c = cosh a cosh b, and every distance has an angle of parallelism](06-Beyond%20Euclid/10-hyperbolic-trigonometry.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s07"></a>
 
-## 07 · Points, Convexity and Fractals · 5 cards
+## 07 · Points, Convexity and Fractals · 10 cards
 
 *Computational geometry a program can do, and a first look at shapes with fractional dimension*
 
@@ -123,6 +137,11 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [Inside or outside: ray casting, and whether two segments cross](07-Points%2C%20Convexity%20and%20Fractals/03-point-in-polygon-and-segment-tests.md)
 4. [Nearest-neighbour maps: Voronoi cells and the Delaunay triangulation behind them](07-Points%2C%20Convexity%20and%20Fractals/04-voronoi-and-delaunay.md)
 5. [Fractals: shapes made of smaller copies of themselves, and a dimension that is not a whole number](07-Points%2C%20Convexity%20and%20Fractals/05-self-similarity-and-fractal-dimension.md)
+6. [Radon, Helly and Carathéodory: three counting facts about convex sets in the plane](07-Points%2C%20Convexity%20and%20Fractals/06-radon-helly-and-caratheodory.md)
+7. [Pick's theorem: count the dots inside and on the edge, and the area falls out](07-Points%2C%20Convexity%20and%20Fractals/07-picks-theorem.md)
+8. [Triangulating a polygon, and why n/3 guards can always watch a gallery with n walls](07-Points%2C%20Convexity%20and%20Fractals/08-polygon-triangulation-and-art-gallery.md)
+9. [Sweeping a line across the plane: find every crossing among n segments without testing every pair](07-Points%2C%20Convexity%20and%20Fractals/09-plane-sweep-segment-intersection.md)
+10. [k-d trees: split the plane in half again and again to find the nearest point fast](07-Points%2C%20Convexity%20and%20Fractals/10-kd-trees-and-nearest-neighbours.md)
 
 [↑ Back to the shelves](#top)
 

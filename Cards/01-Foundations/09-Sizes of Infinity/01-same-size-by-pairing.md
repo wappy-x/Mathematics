@@ -408,6 +408,7 @@ example : ((Finset.Icc 1 8).filter Even).card = 4 := by decide
 - [Cantor's diagonal](03-cantors-diagonal-argument.md): a set that cannot be paired with them, however you try.
 - [Comparing infinities](04-comparing-infinities.md): fitting both ways means equal, and every set loses to its own power set, from [Subsets and the power set](../07-Sets/02-subsets-and-power-set.md).
 - [The axiom of choice](05-axiom-of-choice.md): what it takes to make infinitely many picks at once.
+- [Ordinals](06-ordinals.md): counting past infinity, where omega + 1 is bigger but 1 + omega is not.
 
 This card leaves one question open: can every endless set be paired with the counting numbers?
 

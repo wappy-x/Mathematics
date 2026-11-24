@@ -348,6 +348,7 @@ Nothing before it on this shelf. You need only read a sentence and say whether i
 
 - [If-then](02-if-then.md): the connective on the front of the sign — after 9 pm, *then* this rule applies — and the one row where it breaks.
 - Then the shelf: [Logical equivalence and De Morgan](03-logical-equivalence-and-de-morgan.md), [Quantifiers](04-quantifiers.md) on the sign's "everyone", [Negating a quantifier](05-negating-quantifiers-and-counterexamples.md), and [Valid arguments](06-valid-arguments.md).
+- [Normal forms](07-normal-forms-and-complete-connectives.md): every truth table is an 'or' of 'and's, and NAND alone can build them all.
 
 This card leaves one question open: the rule applies only after 9 pm, so is it true or false at 8 pm, when it asks for nothing?
 

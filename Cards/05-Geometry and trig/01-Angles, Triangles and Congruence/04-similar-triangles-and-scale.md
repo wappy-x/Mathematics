@@ -489,6 +489,9 @@ example : (100 : ℚ) * 960 / 120 = 800 := by norm_num
 
 - [Pythagoras](05-pythagoras-and-its-converse.md): the height dropped onto the long side of a right triangle splits it into two triangles similar to the whole, and that gives Pythagoras.
 - [Similarity](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/04-similarity-and-model-testing.md): scaling laws for whole machines, where lengths, areas and volumes grow at different rates.
+- [Power of a point](../02-Circles%20and%20Solids/07-power-of-a-point.md): every chord, secant and tangent through one point gives the same product.
+- [Ceva and Menelaus](../04-Coordinates%20and%20Curves/10-ceva-and-menelaus.md): one product of side ratios says three lines meet, another says three points line up.
+- [Inversion in a circle](../06-Beyond%20Euclid/08-inversion-in-a-circle.md): turn the plane inside out, so lines and circles swap and angles survive.
 
 Each area here came from a base and a height; finding one from the sides alone, or for shapes that are not triangles, is [Area](06-area-of-triangles-and-polygons.md).
 

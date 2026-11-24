@@ -357,6 +357,7 @@ example : (-1 : ℤ) + 2 = 1 := by norm_num
 - [The number families](../02-The%20Number%20Line/01-number-families.md): each family of numbers named by the sum the one before could not do.
 - [Absolute value](../02-The%20Number%20Line/05-absolute-value-and-distance.md): the "size, sign ignored" row above, made into its own tool.
 - [Exponents](../03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): a minus sign moved up into the count of the multiplications.
+- [Building the integers and fractions](../02-The%20Number%20Line/06-constructing-integers-and-fractions.md): a debt as a pair of counts, a fraction as a pair with a sameness rule.
 
 This card leaves one question open: −75 shares evenly over 3 months, but what number is 25 shared between 3?
 

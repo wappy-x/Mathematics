@@ -510,6 +510,7 @@ The card also leans on the dot product for lengths and right angles ([The dot pr
 - [Precession](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/03-gyroscopes-and-precession.md): torque turning a spinning axis.
 - [Frenet-Serret frame](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/04-frenet-serret-frames.md): a curve's third frame direction from the first two.
 - [Differential form](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/01-forms-and-the-wedge-product.md): the shadows kept as they are, in any dimension.
+- [Desargues and Pappus](06-desargues-and-pappus.md): two theorems where only which lines meet matters, and the duality that swaps points and lines.
 
 The panel now has a normal and an area, but nothing yet says which points in space lie on its plane or where a straight flight path would strike it; that is [Lines and planes](02-lines-and-planes-in-space.md).
 

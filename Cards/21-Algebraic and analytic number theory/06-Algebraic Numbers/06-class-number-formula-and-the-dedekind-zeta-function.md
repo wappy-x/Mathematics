@@ -113,7 +113,7 @@ For $`\mathbb{Z}[\sqrt{-5}]`$ the two classes give two whole-number formulas:
 | principal | $`O_K`$ | $`x + y\sqrt{-5}`$ | $`x^2 + 5y^2`$ |
 | the other | $`\mathfrak{p}_2 = (2, 1 + \sqrt{-5})`$, its own inverse since $`\mathfrak{p}_2^2 = (2)`$ | $`2x + y(1 + \sqrt{-5})`$ | $`\big((2x + y)^2 + 5y^2\big)/2 = 2x^2 + 2xy + 3y^2`$ |
 
-These are the two **reduced quadratic forms** of discriminant $`-20`$: Gauss showed that each class holds exactly one form of this tidy shape, so listing them is a second road to $`h_K = 2`$ (Cox, below).
+These are the two **reduced quadratic forms** ([Reduced forms](../../02-Number%20theory/08-Quadratic%20Forms%20and%20Approximation/02-reduced-forms-and-class-numbers.md)) of discriminant $`-20`$: Gauss showed that each class holds exactly one form of this tidy shape, so listing them is a second road to $`h_K = 2`$ (Cox, below).
 
 The house example sits in the table of counts. Norm 6 has 2 ideals, both principal: the four numbers $`\pm 1 \pm \sqrt{-5}`$ have norm 6, and dividing by the two units leaves $`(1 + \sqrt{-5})`$ and $`(1 - \sqrt{-5})`$. Norms 2 and 3 have only ideals of the other class, because $`x^2 + 5y^2`$ never equals 2 or 3. Those are ideals with no single generator. Two of them multiply to a principal one: $`(1 + \sqrt{-5}) = \mathfrak{p}_2\,\mathfrak{p}_3`$, where $`\mathfrak{p}_3 = (3, 1 + \sqrt{-5})`$ is a prime ideal of norm 3.
 

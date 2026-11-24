@@ -358,6 +358,7 @@ example : percentOff 50 = 40 ∧ percentOff (couponOff 50) = 36 := by norm_num [
 ## Where this goes next
 
 - [Inverse functions](05-inverse-functions.md): chaining a rule with the one that undoes it, and when that exists.
+- [Knaster-Tarski](09-complete-lattices-and-knaster-tarski.md): an order-keeping map on a complete lattice always has a fixed point.
 
 Left open: when can a chain run backwards, from the money paid to the tag price?
 

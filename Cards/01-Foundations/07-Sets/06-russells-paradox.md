@@ -359,6 +359,8 @@ example : (Finset.univ.filter (fun l : Finset (Fin 3) => l.card = 8)).card = 0 :
 - [Proof by contradiction](../06-Proof/03-proof-by-contradiction.md): assume it, reach a wreck, conclude it never existed.
 
 ## Where this goes next
+- [The ZFC axioms](08-zfc-axioms.md): the rules that say which collections are sets, and how they stop Russell.
+
 
 Last card on the Sets shelf. Its neighbours [Inclusion-exclusion](04-inclusion-exclusion.md) and [Ordered pairs and the Cartesian product](05-ordered-pairs-and-cartesian-product.md) build sets the safe way, from sets already in hand.
 

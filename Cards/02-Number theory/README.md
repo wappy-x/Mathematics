@@ -6,7 +6,7 @@
 
 Work with divisibility, primes and the greatest common divisor, compute with remainders on a clock, raise numbers to powers modulo n, and see how check digits, calendars and the codes behind secure messages rest on them.
 
-7 shelves · **43 of 43 cards ready to read**
+8 shelves · **57 of 57 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
@@ -14,11 +14,12 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 | --- | ---: |
 | [01 · Divisibility and Primes](#s01) | 8 |
 | [02 · Greatest Common Divisor and Euclid's Algorithm](#s02) | 8 |
-| [03 · Clock Arithmetic](#s03) | 6 |
-| [04 · Powers on the Clock](#s04) | 6 |
+| [03 · Clock Arithmetic](#s03) | 7 |
+| [04 · Powers on the Clock](#s04) | 13 |
 | [05 · Check Digits, Calendars and Cycles](#s05) | 5 |
-| [06 · Codes and Secrets](#s06) | 5 |
+| [06 · Codes and Secrets](#s06) | 6 |
 | [07 · For the Curious](#s07) | 5 |
+| [08 · Quadratic Forms and Approximation](#s08) | 5 |
 
 <a name="s01"></a>
 
@@ -56,7 +57,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s03"></a>
 
-## 03 · Clock Arithmetic · 6 cards
+## 03 · Clock Arithmetic · 7 cards
 
 *Congruence, adding and multiplying remainders, the n remainder buckets, inverses, solving a x = b on the clock, the Chinese remainder theorem. Needs negatives; no exponents.*
 
@@ -66,12 +67,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [The modular inverse: dividing on the clock works exactly when the number is coprime to the modulus](03-Clock%20Arithmetic/04-modular-inverse.md)
 5. [Solving a x ≡ b (mod n): when it has answers, how many, and how to find them all](03-Clock%20Arithmetic/05-linear-congruences.md)
 6. [The Chinese remainder theorem: three rotas, one day — day numbers on cycles that share no factor pin down one day, and how to rebuild it](03-Clock%20Arithmetic/06-chinese-remainder-theorem.md)
+7. [The coin problem: with 5-cent and 7-cent stamps every amount above 23 can be paid, and 23 cannot](03-Clock%20Arithmetic/07-frobenius-coin-problem.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s04"></a>
 
-## 04 · Powers on the Clock · 6 cards
+## 04 · Powers on the Clock · 13 cards
 
 *Fast powers by squaring, Fermat's little theorem, Euler's totient and theorem, orders and primitive roots, Wilson's theorem. First use of exponents from wing 01.*
 
@@ -81,6 +83,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [Euler's theorem: raise a coprime number to the clock's coprime count and get 1, Fermat set free of primes](04-Powers%20on%20the%20Clock/04-eulers-theorem.md)
 5. [The order of a number and primitive roots: how many steps until the powers return to 1, and the numbers that visit everything](04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md)
 6. [Wilson's theorem: multiply everything below a prime and the clock shows -1, and only primes do this](04-Powers%20on%20the%20Clock/06-wilsons-theorem.md)
+7. [Lagrange's root bound: a degree-d polynomial has at most d roots on a prime clock, but x^2 = 1 has four on the 8-clock](04-Powers%20on%20the%20Clock/07-lagrange-root-bound.md)
+8. [Every prime clock has a primitive root: count how many numbers have each order](04-Powers%20on%20the%20Clock/08-primitive-roots-mod-p.md)
+9. [Which clocks have a primitive root: lifting from 7 to 49 to every power of 7, and why the 8-clock and 15-clock have none](04-Powers%20on%20the%20Clock/09-primitive-roots-mod-prime-powers.md)
+10. [Indices: logarithms on a prime clock turn powers into multiplication and solve x^k ≡ a](04-Powers%20on%20the%20Clock/10-discrete-logarithms-and-indices.md)
+11. [Carmichael's function: the smallest power that sends every coprime number home, often far below Euler's count](04-Powers%20on%20the%20Clock/11-carmichael-function.md)
+12. [Gauss's lemma: count how many of a, 2a, 3a, ... land in the top half of the clock to tell whether a is a square](04-Powers%20on%20the%20Clock/12-gauss-lemma.md)
+13. [Quadratic reciprocity by counting dots: Eisenstein's rectangle proof](04-Powers%20on%20the%20Clock/13-quadratic-reciprocity-by-lattice-points.md)
 
 [↑ Back to the shelves](#top)
 
@@ -100,7 +109,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s06"></a>
 
-## 06 · Codes and Secrets · 5 cards
+## 06 · Codes and Secrets · 6 cards
 
 *One-way streets, Diffie-Hellman, RSA in outline, and the two primality tests RSA needs. Rests on shelves 2 to 4; no new wing 01 needs beyond exponents.*
 
@@ -109,6 +118,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [RSA in outline: lock with e, unlock with d, and Euler's theorem is why the message comes back](06-Codes%20and%20Secrets/03-rsa-in-outline.md)
 4. [The Fermat test: a quick primality check that can be fooled, and the Carmichael numbers that fool it every time](06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md)
 5. [The Miller-Rabin test: how RSA finds 300-digit primes, with an error as small as you like](06-Codes%20and%20Secrets/05-miller-rabin.md)
+6. [Square roots on a prime clock: a one-line formula when p is 3 mod 4, and Tonelli-Shanks for the rest](06-Codes%20and%20Secrets/06-square-roots-mod-p.md)
 
 [↑ Back to the shelves](#top)
 
@@ -123,6 +133,20 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [How primes thin out: the prime counting function and the n over log n rule](07-For%20the%20Curious/03-how-primes-thin-out.md)
 4. [Goldbach, twin primes and friends: the simple questions nobody has answered](07-For%20the%20Curious/04-goldbach-and-open-problems.md)
 5. [Continued fractions: Euclid's algorithm read as nested fractions, and why the leap-year rule is 97 in 400](07-For%20the%20Curious/05-continued-fractions-and-leap-years.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s08"></a>
+
+## 08 · Quadratic Forms and Approximation · 5 cards
+
+*Binary quadratic forms, their discriminant, reduction and class numbers; repeating continued fractions, Farey fractions, and how closely fractions can trap an irrational. Rests on shelves 3, 4 and 7.*
+
+1. [Binary quadratic forms: which numbers x^2 + 5y^2 and its cousins can reach, read off the discriminant](08-Quadratic%20Forms%20and%20Approximation/01-binary-quadratic-forms.md)
+2. [Reduced forms: every form slides to one tidy representative, and counting them gives the class number](08-Quadratic%20Forms%20and%20Approximation/02-reduced-forms-and-class-numbers.md)
+3. [Periodic continued fractions: a pattern that repeats forever is exactly the mark of a quadratic irrational](08-Quadratic%20Forms%20and%20Approximation/03-periodic-continued-fractions.md)
+4. [Farey fractions and Ford circles: neighbours differ by one over the product of their bottoms, and their circles just touch](08-Quadratic%20Forms%20and%20Approximation/04-farey-sequences-and-ford-circles.md)
+5. [Hurwitz's theorem: every irrational has infinitely many fractions within 1/(root 5 q^2), and the golden ratio shows root 5 cannot be beaten](08-Quadratic%20Forms%20and%20Approximation/05-hurwitz-approximation-theorem.md)
 
 [↑ Back to the shelves](#top)
 
