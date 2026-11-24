@@ -523,6 +523,7 @@ example : ((3 : ℂ) + 4 * I) * ((1 : ℂ) + 2 * I) = -5 + 10 * I := by
 
 - [Polar form](03-polar-form-and-argument.md): the modulus becomes the r of polar form, joined by an angle.
 - [Complex vectors and matrices](07-complex-vectors-and-matrices.md): the conjugate gives a complex vector its length.
+- [Filled Julia sets](../11-Complex%20Dynamics/01-filled-julia-sets-and-escape.md): iterate z squared plus c, and the starting points that never escape form a fractal.
 
 Left open: multiplying by $`w`$ stretches every length by $`\lvert w\rvert`$, but how does it turn the arrow?
 

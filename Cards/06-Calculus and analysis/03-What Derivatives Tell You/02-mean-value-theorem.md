@@ -477,6 +477,7 @@ example : ((200 : ℚ) * (1 / 2) - 0) / (1 - 0) = 100 := by norm_num
 - [Differentiating under the integral sign](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/03-differentiating-under-the-integral.md): slope bounds control quotients inside an integral.
 - [The interpolation error theorem](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/03-polynomial-interpolation-error.md): Rolle, repeated, measures an interpolation miss.
 - [Sobolev and Poincare](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/09-sobolev-embedding-and-poincare-inequality.md): size bounded by derivative size, in many dimensions.
+- [Darboux's theorem](09-darboux-theorem-for-derivatives.md): a derivative cannot jump, even when it is not continuous.
 
 The theorem uses one derivative at one unknown point; how much more the higher derivatives say about a function between the ends is the question [Taylor's theorem](05-taylors-theorem.md) answers.
 

@@ -497,6 +497,7 @@ example (z : ℂ) :
 - [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): counts the roots inside a loop without finding them.
 - [Rouche's theorem](../06-Real%20Integrals%20and%20Counting%20Zeros/07-rouches-theorem.md): the fundamental theorem again, in two lines.
 - [Splitting fields](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/03-splitting-fields-and-algebraic-closure.md): a number system where every polynomial splits is **algebraically closed**.
+- [Cauchy's theorem for cycles](08-homology-form-of-cauchys-theorem.md): a loop integral is zero whenever the loops wind zero times round every point outside the domain.
 
 This card proves the n roots exist but not where they lie; how many sit inside a given loop is the question [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md) answers.
 

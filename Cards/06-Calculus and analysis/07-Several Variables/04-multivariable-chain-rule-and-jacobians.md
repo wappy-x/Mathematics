@@ -591,6 +591,7 @@ The curve is the felt temperature along the walk; the straight line is its tange
 - [Canonical form](../../19-Partial%20differential%20equations/01-Classification%20and%20Well-Posedness/05-reduction-to-canonical-form.md): coordinates chosen to simplify an equation.
 - [Curvature and torsion at any speed](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/06-curvature-and-torsion-from-any-parametrisation.md): bending, whatever clock traces the curve.
 - [Tangent space and differential](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/03-tangent-spaces-and-differentials.md): the Jacobian without coordinates.
+- [Constant rank theorem](10-constant-rank-theorem.md): a map whose derivative keeps the same rank is a projection in disguise.
 
 Each table here is read at one point; how the tables change from point to point, bending the flat prediction, is [Hessian](05-hessian-and-second-order-approximation.md).
 

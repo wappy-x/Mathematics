@@ -188,7 +188,7 @@ S(T) is zeta's angle at 1/2 + iT, followed from ζ(2), over π. The path has two
 
 Let g(w) = (ζ(w + iT) + ζ(w − iT))/2 for complex w. On the real segment from 1/2 to 2, g(σ) is the real part of ζ(σ + iT), because ζ of the conjugate is the conjugate of ζ. So every point on the left leg where the real part of zeta is 0 is a zero of g.
 
-Jensen's formula: if g(2) ≠ 0 and g has n zeros in the disc of radius r about 2, then for a larger radius R,
+[Jensen's formula](../../07-Complex%20analysis/10-Entire%20and%20Meromorphic%20Functions/02-jensens-formula-and-order-of-growth.md): if g(2) ≠ 0 and g has n zeros in the disc of radius r about 2, then for a larger radius R,
 
 $`\displaystyle n \log\frac{R}{r} \le \max_{|w-2|=R} \log|g(w)| - \log|g(2)|`$
 

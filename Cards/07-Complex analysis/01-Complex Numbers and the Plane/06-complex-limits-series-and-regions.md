@@ -484,6 +484,7 @@ example : (1 - (4 / 5 : ℝ))⁻¹ = 5 := by norm_num
 - [Power series in the plane](../02-Holomorphic%20Functions/02-complex-power-series.md): discs of convergence.
 - [Fourier series](../08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): series of spinning arrows.
 - [The Laplace transform](../08-Transforms%20in%20Outline/05-laplace-transform.md): convergence on a half-plane.
+- [Filled Julia sets](../11-Complex%20Dynamics/01-filled-julia-sets-and-escape.md): iterate z squared plus c, and the starting points that never escape form a fractal.
 
 Left open: if the ratio becomes a variable z, for which z does the sum converge, and what function of z does it make?
 

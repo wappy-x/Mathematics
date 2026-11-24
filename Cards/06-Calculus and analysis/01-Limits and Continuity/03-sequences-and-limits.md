@@ -533,6 +533,9 @@ example : (1 : ℚ) + 10 / 2 = 6 := by norm_num
 - [Riesz-Fischer](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/05-completeness-of-lp.md): Cauchy lists of functions settle.
 - [Limits and continuity with distances](../../17-Topology/01-Metric%20Spaces/04-convergence-and-continuity-in-metric-spaces.md): the tolerance game with any distance.
 - [Compactness three ways](../../17-Topology/01-Metric%20Spaces/06-compactness-in-metric-spaces.md): every list has a settling sub-list.
+- [Compactness of [a, b]](09-compactness-of-closed-intervals.md): every bounded sequence has a settling subsequence, and every open cover has a finite one inside it.
+- [Limit superior and inferior](10-limsup-and-liminf.md): the eventual ceiling and floor of a sequence that will not settle.
+- [Monotone functions](11-monotone-functions-and-jump-discontinuities.md): one-sided limits always exist, every break is a jump, and there are only countably many.
 
 This card leaves one question open: how do limits behave when lists are added, multiplied or divided, and when the terms are functions instead of numbers?
 

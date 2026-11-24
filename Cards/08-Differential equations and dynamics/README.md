@@ -198,7 +198,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 11 · Discrete Dynamics and Chaos · 6 cards
 
-*Iteration and cobweb plots, stability of fixed points of a map, the logistic map and period doubling, chaos and the Lyapunov exponent, the doubling map and symbolic dynamics, the Lorenz system and strange attractors. Fractal geometry is wing 05, Julia and Mandelbrot sets wing 07, ergodic theory wing 10, chaos in data wing 14.*
+*Iteration and cobweb plots, stability of fixed points of a map, the logistic map and period doubling, chaos and the Lyapunov exponent, the doubling map and symbolic dynamics, the Lorenz system and strange attractors. Fractal geometry is wing 05, Julia and Mandelbrot sets wing 07 ([Complex Dynamics](../07-Complex%20analysis/README.md#s11)), ergodic theory wing 10, chaos in data wing 14.*
 
 1. [Iteration: apply one rule over and over, and the cobweb staircase shows where it goes](11-Discrete%20Dynamics%20and%20Chaos/01-iteration-and-cobweb-plots.md)
 2. [Fixed points of a map: a slope smaller than one in size pulls nearby points in, larger pushes them away](11-Discrete%20Dynamics%20and%20Chaos/02-fixed-points-of-a-map.md)

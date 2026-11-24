@@ -727,6 +727,10 @@ example : ∑ k ∈ range 6, (-1 : ℚ) ^ (twoUpOneDown k) / ((twoUpOneDown k : 
 
 - [Power series](04-power-series.md): at the edge of its range a power series often alternates, and this test settles it.
 - [Uniform convergence](07-uniform-convergence.md): one tail bound for every input at once.
+- [Cauchy condensation](10-cauchy-condensation-test.md): test a shrinking series by its terms at the powers of 2.
+- [Summation by parts](11-summation-by-parts-and-dirichlets-test.md): Dirichlet's and Abel's tests for series that converge by cancellation.
+- [Abel's limit theorem](12-abels-limit-theorem.md): a power series that converges at the edge of its interval is continuous there.
+- [The Cauchy product](13-cauchy-product-and-mertens-theorem.md): multiply two series term by term, and when the answer is the product of the sums.
 
 Left open: when each term depends on an input x, as in ln(1 + x), does one stopping point keep the miss small for every x at once?
 

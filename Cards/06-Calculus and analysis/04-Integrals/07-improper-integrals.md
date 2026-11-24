@@ -650,6 +650,7 @@ example : (-1 : ℚ) / 1 - (-1 / (-1)) = -2 := by norm_num
 - [Adaptive quadrature and awkward integrals](../../16-Numerical%20analysis/05-Quadrature/05-adaptive-and-improper-quadrature.md): computing them to a stated error.
 - [Partial summation](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/06-abel-and-partial-summation.md): sums turned into integrals.
 - [The logarithmic integral](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/06-the-logarithmic-integral-and-the-error-term.md): an integral of 1/ln t that estimates prime counts.
+- [Improper integrals with a dial](../08-Multiple%20Integrals/09-uniform-convergence-of-improper-integrals.md): the Weierstrass test that lets limits and derivatives pass inside.
 
 Left open: comparison can prove a total is finite without saying what it is; when no antiderivative exists, how is the exact value found?
 

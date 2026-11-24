@@ -801,6 +801,7 @@ example : (110000 / 3) / (2000 * π / 3) = 55 / π := by
 - [Divergence theorem](../09-Vector%20Calculus/07-divergence-theorem.md): outflow from each piece, added over a solid, equals the flow through its surface.
 - [Rotation](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/02-rigid-body-rotation-and-moment-of-inertia.md): squared distance times mass, for spinning bodies.
 - [Ricci and scalar curvature](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/07-ricci-and-scalar-curvature.md): volumes of small balls in curved space, integrated the same way.
+- [Jordan content](07-jordan-content-and-fubini-in-n-dimensions.md): which regions have an area, and Fubini on them in any dimension.
 
 This card leaves one question open: in coordinates other than cylindrical ones, what replaces the factor r in a cell's volume?
 

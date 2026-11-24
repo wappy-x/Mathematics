@@ -1,10 +1,10 @@
 # Syllabus
 
-The whole library in reading order: **25 wings, 255 shelves and 1,866 cards**, from counting to the open problems of current research. Each card uses only ideas from the cards before it, so the library can be read from the first card to the last.
+The whole library in reading order: **25 wings, 257 shelves and 1,898 cards**, from counting to the open problems of current research. Each card uses only ideas from the cards before it, so the library can be read from the first card to the last.
 
 **Each wing has its own page.** Click a wing to see its shelves and every card on them, then click a card's title to read it.
 
-**1,866 of 1,866 cards are ready to read.**
+**1,898 of 1,898 cards are ready to read.**
 
 | # | Wing | What it's about | Shelves | Ready to read |
 | --- | --- | --- | ---: | --- |
@@ -13,8 +13,8 @@ The whole library in reading order: **25 wings, 255 shelves and 1,866 cards**, f
 | 03 | [Algebra](Cards/03-Algebra/README.md) | Equations, vectors, matrices, groups and fields. | 10 | 51 of 51 |
 | 04 | [Combinatorics and graphs](Cards/04-Combinatorics%20and%20graphs/README.md) | Counting cleverly, networks, routes and puzzles. | 14 | 82 of 82 |
 | 05 | [Geometry and trig](Cards/05-Geometry%20and%20trig/README.md) | Shapes, angles, coordinates and space. | 7 | 43 of 43 |
-| 06 | [Calculus and analysis](Cards/06-Calculus%20and%20analysis/README.md) | Change, limits, areas and the infinitely small. | 9 | 70 of 70 |
-| 07 | [Complex analysis](Cards/07-Complex%20analysis/README.md) | What the square root of −1 unlocks. | 9 | 60 of 60 |
+| 06 | [Calculus and analysis](Cards/06-Calculus%20and%20analysis/README.md) | Change, limits, areas and the infinitely small. | 9 | 85 of 85 |
+| 07 | [Complex analysis](Cards/07-Complex%20analysis/README.md) | What the square root of −1 unlocks. | 11 | 77 of 77 |
 | 08 | [Differential equations and dynamics](Cards/08-Differential%20equations%20and%20dynamics/README.md) | How things change over time: growth, orbits, chaos. | 12 | 93 of 93 |
 | 09 | [Probability and statistics](Cards/09-Probability%20and%20statistics/README.md) | Chance, data and drawing honest conclusions. | 14 | 100 of 100 |
 | 10 | [Measure and integration](Cards/10-Measure%20and%20integration/README.md) | The rigorous floor under probability and calculus. | 11 | 68 of 68 |

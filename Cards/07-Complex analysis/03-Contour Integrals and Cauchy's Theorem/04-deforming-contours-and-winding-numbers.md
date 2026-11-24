@@ -978,6 +978,7 @@ example : (1 : ℤ) * 3 + 1 * 1 ≠ 1 * 3 + (-1) * 1 ∧ (1 : ℤ) ≠ 2 := by d
 - [Jordan curve theorem](../../17-Topology/03-Surfaces%20and%20Manifolds/05-jordan-curve-theorem.md): a loop that never crosses itself winds ±1 inside, 0 outside.
 - [The circle's fundamental group is the integers](../../17-Topology/04-Homotopy/04-fundamental-group-of-the-circle.md): winding without integrals.
 - [Turning and winding numbers](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/08-turning-number-and-winding-number.md): the turns of a curve's own direction.
+- [Cauchy's theorem for cycles](08-homology-form-of-cauchys-theorem.md): a loop integral is zero whenever the loops wind zero times round every point outside the domain.
 
 A small circle round a hole gives 2πi times its strength; what the circle gives for $`f(z)/(z - a)`$, with $`f`$ holomorphic, is [Cauchy's integral formula](05-cauchys-integral-formula.md).
 

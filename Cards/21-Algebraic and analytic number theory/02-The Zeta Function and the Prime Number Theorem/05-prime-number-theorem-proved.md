@@ -123,7 +123,7 @@ At x = a million, T = 41.1376 and σ₁ = 0.975800. The check samples |ζ′/ζ|
 <details>
 <summary>Detailed proof: the bound on zeta's log derivative</summary>
 
-The Hadamard product for zeta (zeta written as a product over its zeros), built on [The functional equation](02-functional-equation-proved.md), gives the partial-fraction formula: for −1 ≤ σ ≤ 2 and |t| ≥ 2,
+The [Hadamard product](../../07-Complex%20analysis/10-Entire%20and%20Meromorphic%20Functions/03-hadamard-factorization-theorem.md) for zeta (zeta written as a product over its zeros), built on [The functional equation](02-functional-equation-proved.md), gives the partial-fraction formula: for −1 ≤ σ ≤ 2 and |t| ≥ 2,
 
 $`\displaystyle \frac{\zeta'(s)}{\zeta(s)} = \sum_{|t_\rho - t| < 1} \frac{1}{s-\rho} + O(\log |t|)`$
 

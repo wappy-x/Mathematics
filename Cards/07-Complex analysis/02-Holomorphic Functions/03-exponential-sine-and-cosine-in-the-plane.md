@@ -522,6 +522,7 @@ example : Complex.sin (1 + 3 * I) =
 ## Where this goes next
 
 - [The Laplace transform](../08-Transforms%20in%20Outline/05-laplace-transform.md): signals weighted by e to the minus st, s complex.
+- [Phragmen-Lindelof](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/07-phragmen-lindelof-principle.md): the maximum principle on an unbounded strip, provided the function does not grow too fast.
 
 The exponential repeats every 2πi, so undoing it needs a choice of copy; that choice is [The complex logarithm](04-complex-logarithm.md).
 

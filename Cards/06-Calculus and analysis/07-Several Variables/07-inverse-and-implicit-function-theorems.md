@@ -617,6 +617,8 @@ example : ∀ V : ℚ, 0 * V - 1 * (8314 / 1000) * 1 ≠ 0 := by intro V; norm_n
 - [Diffeomorphism, immersion, submersion](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/04-diffeomorphisms-immersions-and-embeddings.md): an invertible Jacobian as a local change of coordinates.
 - [Regular value theorem](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/06-submanifolds-and-the-regular-value-theorem.md): the solutions of F = 0 forming a smooth surface.
 - [The Jacobian conjecture](../../25-Frontier/05-Analysis%20and%20Dynamics/04-jacobian-conjecture.md): whether a polynomial map with constant nonzero Jacobian determinant has a global polynomial inverse: refuted in 2026 for three or more variables, still open for two.
+- [Constant rank theorem](10-constant-rank-theorem.md): a map whose derivative keeps the same rank is a projection in disguise.
+- [Change of variables in n dimensions, proved](../08-Multiple%20Integrals/08-change-of-variables-proved.md): break the map into moves that change one coordinate at a time.
 
 ---
 

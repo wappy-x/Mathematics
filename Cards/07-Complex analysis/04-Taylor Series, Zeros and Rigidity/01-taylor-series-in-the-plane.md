@@ -529,6 +529,7 @@ example : (2 : ℕ) ^ 2 + 1 ^ 2 = 5 := by norm_num
 - [Limits of holomorphic functions](02-uniform-limits-of-holomorphic-functions.md): limits of holomorphic functions stay holomorphic, by the same circle average.
 - [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md): a power series' zeros are isolated, so a function is pinned by a small piece.
 - [Laurent series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md): past the pole, on a ring, a series needs negative powers.
+- [Runge's theorem](11-runges-theorem.md): holomorphic functions on a compact set are uniform limits of rational functions with poles you choose.
 
 The question this card leaves open: what does a function look like right around a pole, where no power series centred there can reach?
 

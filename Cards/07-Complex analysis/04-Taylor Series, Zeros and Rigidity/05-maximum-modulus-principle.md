@@ -127,7 +127,7 @@ If f has no zeros on the closure, 1/f is holomorphic inside and continuous up to
 
 </details>
 
-A second road is the **open mapping theorem**: a non-constant holomorphic function sends a small disc about a onto a set containing a whole disc about f(a). That disc holds a value of larger modulus near any candidate peak. Stein and Shakarchi prove it.
+A second road is the **[open mapping theorem](06-open-mapping-theorem-and-local-normal-form.md)**: a non-constant holomorphic function sends a small disc about a onto a set containing a whole disc about f(a). That disc holds a value of larger modulus near any candidate peak. Stein and Shakarchi prove it.
 
 ---
 
@@ -507,6 +507,8 @@ example : ‖(2 * I) ^ 2 + 1‖ = 3 := by norm_num [mul_pow]
 ## Where this goes next
 
 - [Interpolation](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/04-interpolation-riesz-thorin-and-marcinkiewicz.md): on a strip, the principle becomes the three-lines bound. It says the largest modulus on a line between the two edges is at most a weighted geometric mean of the largest moduli on the edges. That bound proves Riesz–Thorin: a linear map bounded at two sizes is bounded at every size between.
+- [Local normal form](06-open-mapping-theorem-and-local-normal-form.md): near any point a holomorphic function is z to the m in disguise, so open sets go to open sets.
+- [Phragmen-Lindelof](07-phragmen-lindelof-principle.md): the maximum principle on an unbounded strip, provided the function does not grow too fast.
 
 On an unbounded region the plain statement fails, as e^z on the half-plane showed; how two edges and a limit on growth restore control is the three-lines bound on that card.
 

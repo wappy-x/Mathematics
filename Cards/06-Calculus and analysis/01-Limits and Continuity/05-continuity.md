@@ -514,6 +514,7 @@ example : 3 + 2 * ⌈(1 / 2 * 4 : ℚ)⌉ = 7 ∧ 3 + 2 * ⌈(1 / 2 * (4000001 /
 - [Limits and continuity with distances](../../17-Topology/01-Metric%20Spaces/04-convergence-and-continuity-in-metric-spaces.md): the same game with any notion of distance.
 - [Continuity by pre-images, and homeomorphism](../../17-Topology/02-Topological%20Spaces/03-continuity-and-homeomorphism.md): continuity with no distances at all.
 - [Homotopy](../../17-Topology/04-Homotopy/01-homotopy-and-homotopy-equivalence.md): continuous deformations of one map into another.
+- [Monotone functions](11-monotone-functions-and-jump-discontinuities.md): one-sided limits always exist, every break is a jump, and there are only countably many.
 
 Left open: the stepped fare jumps from $5 to $7 and skips every fare between; must a function with no jumps on an interval show every value between its end values? That is the [Intermediate value theorem](06-intermediate-value-theorem.md).
 

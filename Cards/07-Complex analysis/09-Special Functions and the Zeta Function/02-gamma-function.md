@@ -676,6 +676,7 @@ example : ((-1 : ℚ) ^ 0 / (0 ! : ℚ), (-1 : ℚ) ^ 1 / (1 ! : ℚ), (-1 : ℚ
 - [The Mellin transform](07-mellin-transform.md): Euler's integral with e^(−t) replaced by any function.
 - [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md): gamma as the factor in zeta's symmetry.
 - [The functional equation](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/02-functional-equation-proved.md): that symmetry proved in full.
+- [Weierstrass factorization](../10-Entire%20and%20Meromorphic%20Functions/01-weierstrass-factorization-theorem.md): any list of zeros running off to infinity belongs to an entire function.
 
 The question this card leaves open: the ball volumes fall after n = 5 because gamma outgrows the power of π, so how fast does gamma grow?
 

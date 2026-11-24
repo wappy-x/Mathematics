@@ -472,6 +472,7 @@ example : Complex.exp 0 = 1 := by norm_num
 - [Derivatives from the boundary](06-derivatives-from-the-boundary.md): differentiate under the integral and every derivative of f comes from the rim too.
 - [The maximum modulus principle](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/05-maximum-modulus-principle.md): the centre is an average, so it cannot be a strict peak of |f|.
 - [Mean value and maximum principle](../07-Conformal%20Maps%20and%20Harmonic%20Functions/05-mean-value-and-maximum-principle-for-harmonic-functions.md): the rim average for steady temperatures and voltages.
+- [Cauchy's theorem for cycles](08-homology-form-of-cauchys-theorem.md): a loop integral is zero whenever the loops wind zero times round every point outside the domain.
 
 The rim fixes f(a); whether it also fixes f′(a), f″(a) and every higher derivative, so that one complex derivative forces infinitely many, is the question [Derivatives from the boundary](06-derivatives-from-the-boundary.md) answers.
 

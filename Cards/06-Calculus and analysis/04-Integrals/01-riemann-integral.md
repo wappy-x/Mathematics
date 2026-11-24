@@ -971,6 +971,7 @@ example : (Finset.range 20).sum (fun k => 3 + (k + 1)) = 270 ∧ 270 / 2 = 135 :
 - [Trapezoid, midpoint and Simpson](../../16-Numerical%20analysis/05-Quadrature/01-newton-cotes-and-composite-rules.md): slicing rules with error bounds.
 - [Average orders](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/05-average-orders-and-the-hyperbola-method.md): sums compared with integrals.
 - [Partial summation](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/06-abel-and-partial-summation.md): sums turned into integrals.
+- [Jordan content](../08-Multiple%20Integrals/07-jordan-content-and-fubini-in-n-dimensions.md): which regions have an area, and Fubini on them in any dimension.
 
 The tank reached 130 only because a counting formula was at hand; most rates have none, and the fundamental theorem of calculus replaces the sum with an antiderivative.
 

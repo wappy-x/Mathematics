@@ -490,6 +490,7 @@ example : (sin (π / 6) / cos (π / 6)) ^ 2 = 1 / 3 := by
 
 - [Implicit and inverse differentiation](06-implicit-and-inverse-differentiation.md): reads the rate of arcsin, the undo of sine, off sine's rate.
 - [Trig substitution](../04-Integrals/06-trig-substitution.md): runs these rules backwards, swapping a square root for a sine to find areas.
+- [Exp, log, sine, cosine and pi from series alone](../06-Series/14-exp-log-and-trig-from-power-series.md): the elementary functions rebuilt without pictures.
 
 Applying the rule twice turns sine into minus sine; which function is exactly its own rate, with no minus sign, is answered in [Derivatives of exp and log](05-derivatives-of-exp-and-log.md).
 

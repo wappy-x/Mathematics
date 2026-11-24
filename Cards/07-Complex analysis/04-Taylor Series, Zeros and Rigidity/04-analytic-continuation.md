@@ -123,7 +123,7 @@ There the sum would be 1 + 2 + 3 + …, which reaches 5050 by 100 terms and keep
 
 Smoothing shows Step 5's split: weight the n-th term by e^(−nt) for small $`t`$; the total is a growing 1/t^2, plus −1/12, plus vanishing terms. At t = 0.01 the total minus 1/t^2 is −0.083333.
 
-Another route, Schwarz reflection, mirrors a function real on part of the real axis across it.
+Another route, [Schwarz reflection](08-schwarz-reflection-principle.md), mirrors a function real on part of the real axis across it.
 
 ---
 
@@ -539,6 +539,8 @@ example : ∑ n ∈ Finset.range 101, n = 5050 := by decide
 - [Continuing zeta](../09-Special%20Functions%20and%20the%20Zeta%20Function/08-continuing-zeta-and-the-functional-equation.md): zeta continued, and −1/12 computed.
 - [Zeta's zeros and the primes](../09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md): continued zeta at work on primes.
 - [The maximum modulus principle](05-maximum-modulus-principle.md): size peaks on the rim, from the same rigidity.
+- [Schwarz reflection](08-schwarz-reflection-principle.md): a function real on the real axis extends across it by its own mirror image.
+- [The monodromy theorem](09-monodromy-theorem.md): continuing along homotopic paths gives the same answer, so a region without holes allows only one continuation.
 
 Uniqueness forces a continuation once it exists; which formula carries zeta past s = 1 is the question [Continuing zeta](../09-Special%20Functions%20and%20the%20Zeta%20Function/08-continuing-zeta-and-the-functional-equation.md) answers.
 

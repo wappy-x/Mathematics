@@ -511,6 +511,7 @@ example : Real.sqrt (1 / 1000) ^ 2 = 1 / 1000 := by
 
 - [Continuity](05-continuity.md): a limit that equals the value; the laws carry it through sums, products and quotients.
 - [Intermediate value theorem](06-intermediate-value-theorem.md): what that continuity guarantees on a whole interval.
+- [Darboux's theorem](../03-What%20Derivatives%20Tell%20You/09-darboux-theorem-for-derivatives.md): a derivative cannot jump, even when it is not continuous.
 
 Left open: the laws say where a function is heading near a, but when does it actually arrive, with the limit equal to the value at a?
 

@@ -466,6 +466,7 @@ example : (10 : ℚ) / 200 + 1 / 20 = 1 / 10 := by norm_num
 - [Implicit and inverse differentiation](06-implicit-and-inverse-differentiation.md): the rate of any inverse function.
 - [Hyperbolic functions](07-hyperbolic-functions.md): sinh and cosh, built from e^x and e^(−x).
 - [A differential equation](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md): "rate equals r times amount" as an equation.
+- [Exp, log, sine, cosine and pi from series alone](../06-Series/14-exp-log-and-trig-from-power-series.md): the elementary functions rebuilt without pictures.
 
 100e^(rt) grows at r times itself; whether it is the only balance that does is answered in [A differential equation](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md).
 

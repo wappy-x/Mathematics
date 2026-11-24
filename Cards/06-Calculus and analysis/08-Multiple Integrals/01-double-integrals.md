@@ -711,6 +711,7 @@ example : (1 : ℚ) / (1 + (1 / 2) ^ 2) = 4 / 5 := by norm_num
 - [Many dimensions](../../16-Numerical%20analysis/05-Quadrature/06-multidimensional-and-monte-carlo-quadrature.md): grids and random points in many dimensions.
 - [Transforms in two and three dimensions](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/10-multidimensional-transform-and-tomography.md): scanner readings are strip integrals.
 - [Surface area](../05-Curves%20and%20Solids/04-surface-area-of-revolution.md): patch area on a curved surface.
+- [Jordan content](07-jordan-content-and-fubini-in-n-dimensions.md): which regions have an area, and Fubini on them in any dimension.
 
 Rain soaking into the ground fills a solid, and adding over a volume is [Triple integrals](02-triple-integrals.md).
 

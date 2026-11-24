@@ -75,7 +75,7 @@ The card's two series, centred at c = 0:
 ### When it holds
 
 - **Strictly inside.** At distance exactly R the theorem is silent: the two series here behave differently at their endpoints.
-- **The ratio formula needs a limit.** If ratios never settle, or coefficients vanish, R still exists (Step 1) but the root test finds it ([Convergence tests](02-comparison-ratio-and-root-tests.md)).
+- **The ratio formula needs a limit.** If ratios never settle, or coefficients vanish, R still exists (Step 1) but the root test finds it ([Convergence tests](02-comparison-ratio-and-root-tests.md)), in general through the [lim sup](../01-Limits%20and%20Continuity/10-limsup-and-liminf.md).
 - **Term by term only inside.** At x = 1 the log series converges; its differentiated series 1 − 1 + 1 − … does not.
 
 ---
@@ -839,6 +839,8 @@ example : (1 : ℚ) / (1 - 2) = -1 ∧ (List.range 4).map (fun n : ℕ => (2 : �
 - [Power series in the plane](../../07-Complex%20analysis/02-Holomorphic%20Functions/02-complex-power-series.md): the fence becomes a circle, explaining the radius.
 - [Series solutions](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/01-power-series-at-an-ordinary-point.md): solving for a function by solving for its coefficients.
 - [Weierstrass and the minimax fit](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/08-weierstrass-and-best-approximation.md): polynomials good over a whole interval.
+- [Abel's limit theorem](12-abels-limit-theorem.md): a power series that converges at the edge of its interval is continuous there.
+- [The Cauchy product](13-cauchy-product-and-mertens-theorem.md): multiply two series term by term, and when the answer is the product of the sums.
 
 Both series here were found by hand; which coefficients a given function forces, and whether the series then equals that function, is [Taylor series](05-taylor-series.md).
 

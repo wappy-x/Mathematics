@@ -502,6 +502,7 @@ example : (!![1, 0, 0; 0, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3,
 - [Fredholm alternative](../../18-Functional%20analysis/03-Bounded%20Operators/09-fredholm-alternative-and-integral-equations.md): which equations have answers.
 - [Dimension and tangent space](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/07-dimension-and-tangent-spaces.md): rank of a slope matrix as a dimension.
 - [Diffeomorphism, immersion, submersion](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/04-diffeomorphisms-immersions-and-embeddings.md): full rank as the test for a map that folds nothing.
+- [Constant rank theorem](../../06-Calculus%20and%20analysis/07-Several%20Variables/10-constant-rank-theorem.md): a map whose derivative keeps the same rank is a projection in disguise.
 
 Rank counts directions, but not how close a matrix is to losing one more, which is what measured data needs: that grading waits for [The singular value decomposition](../07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md).
 

@@ -517,6 +517,9 @@ example : 40 + 250 * (0 : ℚ) = 40 ∧ 40 + 250 * ((1 : ℚ) / 2) = 165 ∧ 40 
 - [Complete space](../../17-Topology/01-Metric%20Spaces/05-completeness-and-completion.md): no gaps in any space with a distance.
 - [Normed and Banach spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/01-normed-spaces-and-banach-spaces.md): sizes of functions as suprema, in spaces with no gaps.
 - [Reflexive spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/10-reflexive-spaces-and-the-second-dual.md): suprema that are, or are not, reached.
+- [Compactness of [a, b]](09-compactness-of-closed-intervals.md): every bounded sequence has a settling subsequence, and every open cover has a finite one inside it.
+- [Limit superior and inferior](10-limsup-and-liminf.md): the eventual ceiling and floor of a sequence that will not settle.
+- [Monotone functions](11-monotone-functions-and-jump-discontinuities.md): one-sided limits always exist, every break is a jump, and there are only countably many.
 
 Completeness promises the lowest ceiling but not a way to reach it; a rising sequence closing in on it is [Sequences](03-sequences-and-limits.md).
 

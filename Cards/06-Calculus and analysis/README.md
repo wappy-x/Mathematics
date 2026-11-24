@@ -6,25 +6,25 @@
 
 Take limits, differentiate and integrate any function met in the library, say exactly when a limit argument is honest, handle series and several variables, and integrate along curves and over surfaces. Rigour and calculation share one route: every rule is proved once, then used.
 
-9 shelves · **70 of 70 cards ready to read**
+9 shelves · **85 of 85 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
 | Shelf | Cards |
 | --- | ---: |
-| [01 · Limits and Continuity](#s01) | 8 |
+| [01 · Limits and Continuity](#s01) | 11 |
 | [02 · Derivatives](#s02) | 8 |
-| [03 · What Derivatives Tell You](#s03) | 8 |
+| [03 · What Derivatives Tell You](#s03) | 9 |
 | [04 · Integrals](#s04) | 9 |
 | [05 · Curves and Solids](#s05) | 5 |
-| [06 · Series](#s06) | 9 |
-| [07 · Several Variables](#s07) | 9 |
-| [08 · Multiple Integrals](#s08) | 6 |
+| [06 · Series](#s06) | 16 |
+| [07 · Several Variables](#s07) | 10 |
+| [08 · Multiple Integrals](#s08) | 9 |
 | [09 · Vector Calculus](#s09) | 8 |
 
 <a name="s01"></a>
 
-## 01 · Limits and Continuity · 8 cards
+## 01 · Limits and Continuity · 11 cards
 
 *What a limit promises, why the real line has no gaps, and the three theorems continuity buys you*
 
@@ -36,6 +36,9 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Intermediate value theorem: a continuous function cannot skip a value](01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)
 7. [Extreme value theorem: a continuous function on a closed interval hits a highest and a lowest value](01-Limits%20and%20Continuity/07-extreme-value-theorem.md)
 8. [Uniform continuity: one tolerance for the whole interval, and the Lipschitz shortcut](01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md)
+9. [Compactness of [a, b]: every bounded sequence has a settling subsequence, and every open cover has a finite one inside it](01-Limits%20and%20Continuity/09-compactness-of-closed-intervals.md)
+10. [Limit superior and inferior: the eventual ceiling and floor of a sequence that will not settle](01-Limits%20and%20Continuity/10-limsup-and-liminf.md)
+11. [Monotone functions: one-sided limits always exist, every break is a jump, and there are only countably many](01-Limits%20and%20Continuity/11-monotone-functions-and-jump-discontinuities.md)
 
 [↑ Back to the shelves](#top)
 
@@ -58,7 +61,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s03"></a>
 
-## 03 · What Derivatives Tell You · 8 cards
+## 03 · What Derivatives Tell You · 9 cards
 
 *Approximation, the mean value theorem, optimisation, limits of quotients, and solving equations by tangent lines*
 
@@ -70,6 +73,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Newton's method: solving f(x) equals a target by sliding down tangent lines](03-What%20Derivatives%20Tell%20You/06-newtons-method.md)
 7. [Fixed points: iterating a function until it stops moving, and the contraction rule that guarantees it](03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md)
 8. [Numerical derivatives: forward and central differences, and why the step cannot be too small](03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md)
+9. [Darboux's theorem: a derivative cannot jump, even when it is not continuous](03-What%20Derivatives%20Tell%20You/09-darboux-theorem-for-derivatives.md)
 
 [↑ Back to the shelves](#top)
 
@@ -107,7 +111,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s06"></a>
 
-## 06 · Series · 9 cards
+## 06 · Series · 16 cards
 
 *Adding infinitely many terms, deciding when the sum exists, and functions written as power series*
 
@@ -120,12 +124,19 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 7. [Uniform convergence: one tolerance for every x, and why it keeps continuity](06-Series/07-uniform-convergence.md)
 8. [Swapping limits: when the integral of the limit is the limit of the integrals](06-Series/08-swapping-limits-with-integrals-and-derivatives.md)
 9. [Stirling's approximation: how big n factorial is, proved with integrals only](06-Series/09-stirlings-approximation.md)
+10. [Cauchy condensation: test a shrinking series by its terms at the powers of 2](06-Series/10-cauchy-condensation-test.md)
+11. [Summation by parts: Dirichlet's and Abel's tests for series that converge by cancellation](06-Series/11-summation-by-parts-and-dirichlets-test.md)
+12. [Abel's limit theorem: a power series that converges at the edge of its interval is continuous there](06-Series/12-abels-limit-theorem.md)
+13. [The Cauchy product: multiply two series term by term, and when the answer is the product of the sums](06-Series/13-cauchy-product-and-mertens-theorem.md)
+14. [Exp, log, sine, cosine and pi from series alone: the elementary functions rebuilt without pictures](06-Series/14-exp-log-and-trig-from-power-series.md)
+15. [Dini's theorem: when rising continuous functions with a continuous limit must converge uniformly](06-Series/15-dinis-theorem.md)
+16. [Weierstrass's monster: a continuous function with no derivative anywhere](06-Series/16-weierstrass-nowhere-differentiable-function.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s07"></a>
 
-## 07 · Several Variables · 9 cards
+## 07 · Several Variables · 10 cards
 
 *Partial derivatives, gradients, the chain rule in several variables, second-order models, and constrained extrema*
 
@@ -138,12 +149,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 7. [Inverse and implicit function theorems: when an equation can be solved for one variable locally](07-Several%20Variables/07-inverse-and-implicit-function-theorems.md)
 8. [Lagrange multipliers: the best point on a constraint is where the gradients line up](07-Several%20Variables/08-lagrange-multipliers.md)
 9. [Convex functions: bowls, chords above the graph, and why a local minimum is the global one](07-Several%20Variables/09-convex-functions.md)
+10. [Constant rank theorem: a map whose derivative keeps the same rank is a projection in disguise](07-Several%20Variables/10-constant-rank-theorem.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s08"></a>
 
-## 08 · Multiple Integrals · 6 cards
+## 08 · Multiple Integrals · 9 cards
 
 *Integrals over regions in the plane and in space, changing variables, and the Gaussian integral*
 
@@ -153,6 +165,9 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [The Gaussian integral: the integral of e to the minus x squared is root pi](08-Multiple%20Integrals/04-gaussian-integral.md)
 5. [Differentiating under the integral: when the derivative can go inside](08-Multiple%20Integrals/05-differentiating-under-the-integral.md)
 6. [Stieltjes integrals: integrating against a weight that can jump](08-Multiple%20Integrals/06-riemann-stieltjes-integral.md)
+7. [Jordan content: which regions have an area, and Fubini on them in any dimension](08-Multiple%20Integrals/07-jordan-content-and-fubini-in-n-dimensions.md)
+8. [Change of variables in n dimensions, proved: break the map into moves that change one coordinate at a time](08-Multiple%20Integrals/08-change-of-variables-proved.md)
+9. [Improper integrals with a dial: the Weierstrass test that lets limits and derivatives pass inside](08-Multiple%20Integrals/09-uniform-convergence-of-improper-integrals.md)
 
 [↑ Back to the shelves](#top)
 

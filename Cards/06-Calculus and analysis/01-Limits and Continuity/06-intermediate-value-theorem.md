@@ -467,6 +467,8 @@ example : (-1 : ℤ) ^ 3 - (-1) = 0 ∧ (0 : ℤ) ^ 3 - 0 = 0 ∧ (1 : ℤ) ^ 3 
 - [Bisection](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/01-bisection-and-bracketing.md): halving as an algorithm, with stopping rules.
 - [Connected and path-connected](../../17-Topology/02-Topological%20Spaces/07-connectedness-and-path-connectedness.md): the property of an interval the proof uses.
 - [What compactness and connectedness buy](../../17-Topology/02-Topological%20Spaces/08-images-of-compact-and-connected-sets.md): the theorem in general form.
+- [Darboux's theorem](../03-What%20Derivatives%20Tell%20You/09-darboux-theorem-for-derivatives.md): a derivative cannot jump, even when it is not continuous.
+- [Exp, log, sine, cosine and pi from series alone](../06-Series/14-exp-log-and-trig-from-power-series.md): the elementary functions rebuilt without pictures.
 
 The theorem fills in every value between the end values but says nothing about values beyond them; whether a highest and a lowest are actually reached is [Extreme value theorem](07-extreme-value-theorem.md).
 

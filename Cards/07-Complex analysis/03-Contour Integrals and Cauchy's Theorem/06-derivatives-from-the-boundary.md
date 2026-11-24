@@ -569,6 +569,7 @@ example : ((0 : ℚ) * 0 - 2 * 0 + (2 * 1 - 1 * 0) + (1 * 0 - 0 * 1)) / 2 = 1 :=
 - [Liouville's theorem](07-liouville-and-the-fundamental-theorem-of-algebra.md): the estimate |f′(a)| ≤ M/r on ever larger circles forces a bounded function holomorphic on the whole plane to be constant.
 - [Taylor series in the plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md): all the derivatives assembled into a power series that equals f.
 - [Harmonic functions](../07-Conformal%20Maps%20and%20Harmonic%20Functions/04-harmonic-functions-and-conjugates.md): the real part of f has second derivatives because f″ exists, which is what lets it be harmonic (its second derivatives in x and in y add to 0).
+- [Cauchy's theorem for cycles](08-homology-form-of-cauchys-theorem.md): a loop integral is zero whenever the loops wind zero times round every point outside the domain.
 
 The question this card leaves open: if one function stays below the same M on circles of every radius, how small must its derivatives be?
 

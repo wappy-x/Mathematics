@@ -515,6 +515,8 @@ example : (1 : ℚ) / 3 + 1 / 4 ≥ 1 / 2 ∧ (1 : ℚ) / 5 + 1 / 6 + 1 / 7 + 1 
 - [Wiener's lemma](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/02-wieners-lemma-and-invertible-filters.md): the geometric series inverting 1 − r for operators.
 - [Big O and twiddle](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/01-asymptotic-notation-and-error-terms.md): how fast harmonic totals grow.
 - [Mertens' theorems](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/09-mertens-theorems.md): the harmonic series over primes.
+- [Cauchy condensation](10-cauchy-condensation-test.md): test a shrinking series by its terms at the powers of 2.
+- [Summation by parts](11-summation-by-parts-and-dirichlets-test.md): Dirichlet's and Abel's tests for series that converge by cancellation.
 
 The geometric series came with a formula for its partial sums; most series do not, and deciding their fate anyway is [Convergence tests](02-comparison-ratio-and-root-tests.md).
 

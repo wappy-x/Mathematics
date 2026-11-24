@@ -134,7 +134,7 @@ The coefficient of z^2 in the product is minus the sum of 1/n^2; in sin(πz)/(π
 
 </details>
 
-Building any entire function (one holomorphic on the whole plane) from its zeros, the Weierstrass and Hadamard factorisations, is left to wing 21, Algebraic and analytic number theory.
+Building any entire function (one holomorphic on the whole plane) from its zeros, the [Weierstrass](../10-Entire%20and%20Meromorphic%20Functions/01-weierstrass-factorization-theorem.md) and [Hadamard](../10-Entire%20and%20Meromorphic%20Functions/03-hadamard-factorization-theorem.md) factorisations, is on the shelf Entire and Meromorphic Functions.
 
 ---
 
@@ -499,6 +499,8 @@ example : (1 : ℚ) - 3 ^ 2 / 3 ^ 2 = 0 := by
 
 - [The zeta function](05-zeta-function-and-euler-product.md): the product over primes that equals the sum of 1/n^s.
 - [Mertens' theorems](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/09-mertens-theorems.md): how fast the product of 1 − 1/p over primes p sinks to zero.
+- [Weierstrass factorization](../10-Entire%20and%20Meromorphic%20Functions/01-weierstrass-factorization-theorem.md): any list of zeros running off to infinity belongs to an entire function.
+- [Hadamard factorization](../10-Entire%20and%20Meromorphic%20Functions/03-hadamard-factorization-theorem.md): an entire function of finite order is its zeros times e to a polynomial.
 
 The question this card leaves open: zeta's product has one factor per prime, not one per zero, so for which s do its small parts have a finite total, and what does the product equal?
 

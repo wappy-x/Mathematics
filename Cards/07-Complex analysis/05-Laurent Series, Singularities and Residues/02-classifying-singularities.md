@@ -890,6 +890,7 @@ example : (1 : ℚ) / (Nat.factorial 3) = 1 / 6 := by norm_num [Nat.factorial]
 
 - [Rational functions](03-rational-functions-and-partial-fractions.md): quotients of polynomials, whose only singularities are poles, split into principal parts.
 - [Residues](04-residues.md): the coefficient on the power −1, found without the whole series.
+- [Picard's theorems](06-picards-theorems.md): a nonconstant entire function misses at most one value, and near an essential singularity every value but one comes up infinitely often.
 
 The question this card leaves open: a loop integral sees only $`c_{-1}`$, so how can that one coefficient be found at a pole without writing out the whole series?
 

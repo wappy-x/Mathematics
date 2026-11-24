@@ -512,6 +512,10 @@ example : Complex.log (exp (3 * π * I)) = π * I := by
 - [Conformal maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md): Log unrolls the plane into a strip.
 - [Infinite products](../09-Special%20Functions%20and%20the%20Zeta%20Function/01-infinite-products.md): products turned into sums of logs.
 - [The zeta function](../09-Special%20Functions%20and%20the%20Zeta%20Function/05-zeta-function-and-euler-product.md): the log of the zeta function as a sum over primes.
+- [Local normal form](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/06-open-mapping-theorem-and-local-normal-form.md): near any point a holomorphic function is z to the m in disguise, so open sets go to open sets.
+- [Picard's theorems](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/06-picards-theorems.md): a nonconstant entire function misses at most one value, and near an essential singularity every value but one comes up infinitely often.
+- [Weierstrass factorization](../10-Entire%20and%20Meromorphic%20Functions/01-weierstrass-factorization-theorem.md): any list of zeros running off to infinity belongs to an entire function.
+- [Jensen's formula](../10-Entire%20and%20Meromorphic%20Functions/02-jensens-formula-and-order-of-growth.md): the average of log |f| round a circle counts the zeros inside, so slow growth means few zeros.
 
 The log now has one value per point, bought with a cut; how many values i^i has, and where its cut goes, is the open question.
 

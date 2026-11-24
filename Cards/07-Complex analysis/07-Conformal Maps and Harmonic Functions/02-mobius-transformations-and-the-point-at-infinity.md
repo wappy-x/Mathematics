@@ -889,6 +889,7 @@ end
 - [The standard maps](03-standard-maps-and-composing-them.md): chains with powers and the exponential.
 - [The Poisson formula](06-poisson-integral-formula.md): disc temperatures from the rim, carried by C.
 - [Modular forms](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/07-modular-forms-in-outline.md): functions that keep their shape under Mobius maps with whole-number entries and determinant 1.
+- [Schwarz-Pick](09-schwarz-pick-and-the-hyperbolic-disc.md): a holomorphic map of the disc into itself never stretches hyperbolic distance.
 
 Mobius maps reach only regions bounded by circles and lines; reaching a wedge, a strip or a slit plane is the job of [The standard maps](03-standard-maps-and-composing-them.md).
 

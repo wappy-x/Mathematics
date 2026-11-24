@@ -611,6 +611,7 @@ example : (1 : ℚ) / 5 ^ 2 = 1 / 25 := by norm_num
 - [Infinite products](../09-Special%20Functions%20and%20the%20Zeta%20Function/01-infinite-products.md): products of holomorphic factors, shown holomorphic by taking logs and this theorem.
 - [The gamma function](../09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md): an integral as a uniform limit of holomorphic pieces.
 - [The zeta function](../09-Special%20Functions%20and%20the%20Zeta%20Function/05-zeta-function-and-euler-product.md): the sum of n^(−s), holomorphic on Re s > 1 by Step 6.
+- [Normal families](10-normal-families-montel-and-hurwitz.md): bounded holomorphic functions always have a convergent subsequence, and limits keep their zero count.
 
 The tower is known on the disc and the zeta sum on Re s > 1; whether a function known on a small set is fixed everywhere is [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md).
 

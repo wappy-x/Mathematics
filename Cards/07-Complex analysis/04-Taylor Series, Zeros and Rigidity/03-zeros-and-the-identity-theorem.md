@@ -507,6 +507,8 @@ example : Complex.sin (1 + 2 * I) ^ 2 + Complex.cos (1 + 2 * I) ^ 2 = 1 :=
 - [Analytic continuation](04-analytic-continuation.md): uniqueness used to push a function past the disc where its series converges.
 - [The maximum modulus principle](05-maximum-modulus-principle.md): a second rigidity, no peak of the modulus inside the domain.
 - [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): a contour integral that counts zeros with their orders.
+- [Local normal form](06-open-mapping-theorem-and-local-normal-form.md): near any point a holomorphic function is z to the m in disguise, so open sets go to open sets.
+- [The monodromy theorem](09-monodromy-theorem.md): continuing along homotopic paths gives the same answer, so a region without holes allows only one continuation.
 
 A small piece now fixes the function, but only inside the domain it came with. Whether the piece can be carried further, and whether the route matters, is what [Analytic continuation](04-analytic-continuation.md) settles.
 

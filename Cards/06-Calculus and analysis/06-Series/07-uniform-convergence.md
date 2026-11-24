@@ -565,6 +565,10 @@ example : (1 : ℚ) / 2 ^ 12 < 1 / 3000 ∧ ¬ ((1 : ℚ) / 2 ^ 11 < 1 / 3000) :
 - [Dirichlet's theorem](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/04-pointwise-and-uniform-convergence.md): both modes for Fourier series.
 - [Equidistribution](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/03-equidistribution-and-weyls-criterion.md): step functions approximated by smooth ones.
 - [Partition of unity](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/09-partitions-of-unity-and-whitney-embedding.md): uniform approximation on curved spaces.
+- [Abel's limit theorem](12-abels-limit-theorem.md): a power series that converges at the edge of its interval is continuous there.
+- [Dini's theorem](15-dinis-theorem.md): when rising continuous functions with a continuous limit must converge uniformly.
+- [Weierstrass's monster](16-weierstrass-nowhere-differentiable-function.md): a continuous function with no derivative anywhere.
+- [Improper integrals with a dial](../08-Multiple%20Integrals/09-uniform-convergence-of-improper-integrals.md): the Weierstrass test that lets limits and derivatives pass inside.
 
 Left open: sin(nx)/n converges uniformly, yet its slopes do not settle. When may a limit pass through a derivative or an integral? [Swapping limits](08-swapping-limits-with-integrals-and-derivatives.md) answers that.
 

@@ -829,6 +829,7 @@ example : (140 + 50 * (-2), 150 - 50 * (-1)) = ((40 : ℤ), (200 : ℤ)) ∧
 - [Deforming a loop](04-deforming-contours-and-winding-numbers.md): sliding loops, and counting turns round a hole.
 - [Where a transform lives](../08-Transforms%20in%20Outline/06-strips-of-convergence-and-shifting-the-line.md): moving a transform's line of integration.
 - [Cauchy's integral formula](05-cauchys-integral-formula.md): a loop round one hole recovers the function's value there.
+- [Cauchy's theorem for cycles](08-homology-form-of-cauchys-theorem.md): a loop integral is zero whenever the loops wind zero times round every point outside the domain.
 
 Left open: when a loop does surround a hole, what decides the total, and why does 1/z give exactly 2πi?
 

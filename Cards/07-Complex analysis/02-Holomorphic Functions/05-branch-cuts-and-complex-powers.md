@@ -647,6 +647,7 @@ example : (1 : ℂ) ^ ((1 : ℂ) / 2) = 1 := by simp
 - [The keyhole contour](../06-Real%20Integrals%20and%20Counting%20Zeros/05-keyhole-contours.md): a contour hugging both sides of a cut.
 - [The standard maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/03-standard-maps-and-composing-them.md): √z and z^a as maps that open and close wedges.
 - [Riemann surfaces](../../22-Algebraic%20geometry/03-Plane%20Curves/08-riemann-surfaces-and-the-weierstrass-p-function.md): the many-floored surface on which a many-valued function is single-valued.
+- [The monodromy theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/09-monodromy-theorem.md): continuing along homotopic paths gives the same answer, so a region without holes allows only one continuation.
 
 The jump e^(2πia) looks like a defect; a contour run along both sides of the cut turns it into a tool for real integrals.
 

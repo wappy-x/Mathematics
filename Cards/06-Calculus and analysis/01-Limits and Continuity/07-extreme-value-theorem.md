@@ -453,6 +453,8 @@ example : (10 : ℤ) * (1 - 10) = -90 ∧ (100 : ℤ) * (1 - 100) = -9900 := by 
 - [What compactness and connectedness buy](../../17-Topology/02-Topological%20Spaces/08-images-of-compact-and-connected-sets.md): the theorem for compact sets.
 - [Equivalent norms](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/04-equivalence-of-norms-in-finite-dimensions.md): a minimum on a sphere that must exist.
 - [Hopf-Rinow](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/10-hopf-rinow-and-completeness.md): shortest paths that must exist.
+- [Compactness of [a, b]](09-compactness-of-closed-intervals.md): every bounded sequence has a settling subsequence, and every open cover has a finite one inside it.
+- [Darboux's theorem](../03-What%20Derivatives%20Tell%20You/09-darboux-theorem-for-derivatives.md): a derivative cannot jump, even when it is not continuous.
 
 Continuity gives each point its own input distance for a tolerance; whether one distance serves the whole interval at once is [Uniform continuity](08-uniform-continuity-and-lipschitz.md).
 

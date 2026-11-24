@@ -742,6 +742,7 @@ example : ∑ k ∈ range 21, 2 ^ k = 2097151 := by
 - [Gaussian quadrature](../../16-Numerical%20analysis/05-Quadrature/03-gaussian-quadrature.md): rules exact for polynomials.
 - [Chasing an algebraic number with fractions](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/10-diophantine-approximation-liouville-to-roth.md): fast series building numbers no polynomial equation has as roots.
 - [Nodes and cusps](../../22-Algebraic%20geometry/03-Plane%20Curves/04-singularities-nodes-and-cusps.md): the lowest terms shape a curve at a point.
+- [Exp, log, sine, cosine and pi from series alone](14-exp-log-and-trig-from-power-series.md): the elementary functions rebuilt without pictures.
 
 Four functions now equal their series and one does not; whether (1 + x) to a fractional power has one too, and how such sums pin down e, is [The binomial series and the number e](06-binomial-series-and-e.md).
 

@@ -461,6 +461,7 @@ theorem norm_contour_integral_le_ml (f : ℂ → ℂ) (z z' : ℝ → ℂ) (a b 
 
 - [Antiderivatives](02-antiderivatives-and-path-independence.md): when an integral depends only on the path's two ends.
 - [Perron's formula](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/04-perrons-formula.md): a contour integral that counts primes.
+- [Cauchy's theorem for cycles](08-homology-form-of-cauchys-theorem.md): a loop integral is zero whenever the loops wind zero times round every point outside the domain.
 
 Round the track z gave 0 while z̄ and 1/z gave 2πi; why some functions give 0 on every loop is where the shelf goes from here.
 

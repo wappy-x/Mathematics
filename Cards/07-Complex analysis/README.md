@@ -6,7 +6,7 @@
 
 Compute with complex numbers, decide when a function is holomorphic, integrate round loops with residues, evaluate real integrals and count zeros by contour, map regions conformally and solve boundary problems on them, and use Fourier and Laplace transforms in outline. Meet the gamma and zeta functions, analytic continuation and the functional equation, and read the route to the Riemann hypothesis that wings 20, 21 and 25 climb.
 
-9 shelves · **60 of 60 cards ready to read**
+11 shelves · **77 of 77 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
@@ -14,13 +14,15 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 | --- | ---: |
 | [01 · Complex Numbers and the Plane](#s01) | 7 |
 | [02 · Holomorphic Functions](#s02) | 5 |
-| [03 · Contour Integrals and Cauchy's Theorem](#s03) | 7 |
-| [04 · Taylor Series, Zeros and Rigidity](#s04) | 5 |
-| [05 · Laurent Series, Singularities and Residues](#s05) | 5 |
+| [03 · Contour Integrals and Cauchy's Theorem](#s03) | 8 |
+| [04 · Taylor Series, Zeros and Rigidity](#s04) | 11 |
+| [05 · Laurent Series, Singularities and Residues](#s05) | 6 |
 | [06 · Real Integrals and Counting Zeros](#s06) | 7 |
-| [07 · Conformal Maps and Harmonic Functions](#s07) | 8 |
+| [07 · Conformal Maps and Harmonic Functions](#s07) | 10 |
 | [08 · Transforms in Outline](#s08) | 7 |
 | [09 · Special Functions and the Zeta Function](#s09) | 9 |
+| [10 · Entire and Meromorphic Functions](#s10) | 4 |
+| [11 · Complex Dynamics](#s11) | 3 |
 
 <a name="s01"></a>
 
@@ -54,7 +56,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s03"></a>
 
-## 03 · Contour Integrals and Cauchy's Theorem · 7 cards
+## 03 · Contour Integrals and Cauchy's Theorem · 8 cards
 
 *Integrals along paths and the ML bound, antiderivatives and path independence, Cauchy's theorem, deforming loops and winding numbers, Cauchy's integral formula, derivatives from the boundary with Cauchy's estimates, Liouville and the fundamental theorem of algebra. Needs wing 06 line integrals and Green's theorem.*
 
@@ -65,12 +67,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Cauchy's integral formula: the values on a loop fix every value inside](03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md)
 6. [Derivatives from the boundary: differentiate under the integral, so holomorphic once means holomorphic forever, with a size limit on every derivative](03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md)
 7. [Liouville's theorem: a bounded function holomorphic everywhere is constant, and so every polynomial has a root](03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md)
+8. [Cauchy's theorem for cycles: a loop integral is zero whenever the loops wind zero times round every point outside the domain](03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/08-homology-form-of-cauchys-theorem.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s04"></a>
 
-## 04 · Taylor Series, Zeros and Rigidity · 5 cards
+## 04 · Taylor Series, Zeros and Rigidity · 11 cards
 
 *Taylor series with radius = distance to the nearest singularity, uniform limits of holomorphic functions, isolated zeros and the identity theorem, analytic continuation, the maximum modulus principle. Rests on shelf 3.*
 
@@ -79,12 +82,18 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [Zeros and the identity theorem: zeros come singly, so a function known on a tiny stretch is known everywhere](04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/03-zeros-and-the-identity-theorem.md)
 4. [Analytic continuation: push a function past the edge of its formula, and the extension is the only one possible](04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/04-analytic-continuation.md)
 5. [The maximum modulus principle: |f| has no interior peak, so its largest value sits on the boundary](04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/05-maximum-modulus-principle.md)
+6. [Local normal form: near any point a holomorphic function is z to the m in disguise, so open sets go to open sets](04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/06-open-mapping-theorem-and-local-normal-form.md)
+7. [Phragmen-Lindelof: the maximum principle on an unbounded strip, provided the function does not grow too fast](04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/07-phragmen-lindelof-principle.md)
+8. [Schwarz reflection: a function real on the real axis extends across it by its own mirror image](04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/08-schwarz-reflection-principle.md)
+9. [The monodromy theorem: continuing along homotopic paths gives the same answer, so a region without holes allows only one continuation](04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/09-monodromy-theorem.md)
+10. [Normal families: bounded holomorphic functions always have a convergent subsequence, and limits keep their zero count](04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/10-normal-families-montel-and-hurwitz.md)
+11. [Runge's theorem: holomorphic functions on a compact set are uniform limits of rational functions with poles you choose](04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/11-runges-theorem.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s05"></a>
 
-## 05 · Laurent Series, Singularities and Residues · 5 cards
+## 05 · Laurent Series, Singularities and Residues · 6 cards
 
 *Laurent series in a ring, the three kinds of isolated singularity, rational functions as sums of principal parts, residues and how to compute them, the residue theorem. Rests on shelves 3 and 4.*
 
@@ -93,6 +102,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [Rational functions: a ratio of polynomials is the sum of its principal parts, one per pole](05-Laurent%20Series%2C%20Singularities%20and%20Residues/03-rational-functions-and-partial-fractions.md)
 4. [Residues: the one coefficient that survives a loop, and three ways to compute it](05-Laurent%20Series%2C%20Singularities%20and%20Residues/04-residues.md)
 5. [The residue theorem: a loop integral is 2 pi i times the sum of the residues inside](05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)
+6. [Picard's theorems: a nonconstant entire function misses at most one value, and near an essential singularity every value but one comes up infinitely often](05-Laurent%20Series%2C%20Singularities%20and%20Residues/06-picards-theorems.md)
 
 [↑ Back to the shelves](#top)
 
@@ -114,7 +124,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s07"></a>
 
-## 07 · Conformal Maps and Harmonic Functions · 8 cards
+## 07 · Conformal Maps and Harmonic Functions · 10 cards
 
 *Local rotate-and-stretch, Mobius maps and the point at infinity, the standard maps and how to compose them, harmonic functions and conjugates, mean value and maximum principle, the Poisson formula, transporting boundary problems by mapping, the Riemann mapping theorem and Schwarz-Christoffel in outline. Rests on shelves 2 and 3.*
 
@@ -126,6 +136,8 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [The Poisson formula: fill a disc from its rim by weighting each boundary value by how close it is](07-Conformal%20Maps%20and%20Harmonic%20Functions/06-poisson-integral-formula.md)
 7. [Solving by mapping: a harmonic function stays harmonic under a conformal map, so solve on the disc or half plane and carry the answer back](07-Conformal%20Maps%20and%20Harmonic%20Functions/07-solving-boundary-problems-by-mapping.md)
 8. [The Riemann mapping theorem: any region without holes, short of the whole plane, is a disc in disguise, and Schwarz-Christoffel writes the map for polygons](07-Conformal%20Maps%20and%20Harmonic%20Functions/08-riemann-mapping-theorem-and-schwarz-christoffel.md)
+9. [Schwarz-Pick: a holomorphic map of the disc into itself never stretches hyperbolic distance](07-Conformal%20Maps%20and%20Harmonic%20Functions/09-schwarz-pick-and-the-hyperbolic-disc.md)
+10. [Univalent maps: Koebe's quarter theorem, and when a Riemann map reaches the boundary](07-Conformal%20Maps%20and%20Harmonic%20Functions/10-koebe-quarter-theorem-and-boundary-behaviour.md)
 
 [↑ Back to the shelves](#top)
 
@@ -160,6 +172,31 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 7. [The Mellin transform: a Laplace transform on a log scale, whose first two examples are gamma and zeta](09-Special%20Functions%20and%20the%20Zeta%20Function/07-mellin-transform.md)
 8. [Continuing zeta: past s = 1 with an alternating series, a pole at 1, and a mirror that reflects s to 1 - s](09-Special%20Functions%20and%20the%20Zeta%20Function/08-continuing-zeta-and-the-functional-equation.md)
 9. [Zeta's zeros and the primes: the zeros are the frequencies hidden in the prime staircase, and the Riemann hypothesis says where they lie](09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s10"></a>
+
+## 10 · Entire and Meromorphic Functions · 4 cards
+
+*Building entire functions from their zeros and meromorphic functions from their poles, and how growth limits the number of zeros*
+
+1. [Weierstrass factorization: any list of zeros running off to infinity belongs to an entire function](10-Entire%20and%20Meromorphic%20Functions/01-weierstrass-factorization-theorem.md)
+2. [Jensen's formula: the average of log |f| round a circle counts the zeros inside, so slow growth means few zeros](10-Entire%20and%20Meromorphic%20Functions/02-jensens-formula-and-order-of-growth.md)
+3. [Hadamard factorization: an entire function of finite order is its zeros times e to a polynomial](10-Entire%20and%20Meromorphic%20Functions/03-hadamard-factorization-theorem.md)
+4. [Mittag-Leffler: put poles and principal parts wherever you like, as long as they run off to infinity](10-Entire%20and%20Meromorphic%20Functions/04-mittag-leffler-theorem.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s11"></a>
+
+## 11 · Complex Dynamics · 3 cards
+
+*Iterating z squared plus c: which starts escape, the fractal edge between them, and the map of every c*
+
+1. [Filled Julia sets: iterate z squared plus c, and the starting points that never escape form a fractal](11-Complex%20Dynamics/01-filled-julia-sets-and-escape.md)
+2. [Attracting and repelling cycles: the multiplier decides, and the Julia set is where the iterates stop being a normal family](11-Complex%20Dynamics/02-multipliers-and-the-fatou-and-julia-sets.md)
+3. [The Mandelbrot set: the c whose orbit of 0 stays bounded, and why that decides whether the Julia set is in one piece](11-Complex%20Dynamics/03-the-mandelbrot-set.md)
 
 [↑ Back to the shelves](#top)
 

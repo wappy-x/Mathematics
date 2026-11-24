@@ -537,6 +537,8 @@ example : (∑ n ∈ range 20, ((n : ℚ) + 1) / 2 ^ (n + 1)) = 2 - 22 / 2 ^ 20 
 - [Power series](04-power-series.md): ratio and root turned into a radius of convergence.
 - [Limits and regions in the plane](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md): the same tests on the sizes of complex terms.
 - [Infinite products](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/01-infinite-products.md): endless products, judged through sums like these.
+- [Cauchy condensation](10-cauchy-condensation-test.md): test a shrinking series by its terms at the powers of 2.
+- [The Cauchy product](13-cauchy-product-and-mertens-theorem.md): multiply two series term by term, and when the answer is the product of the sums.
 
 Every test here needs terms that are never negative; why 1 − 1/2 + 1/3 − … converges though the harmonic series does not is [Alternating series](03-alternating-and-conditional-convergence.md).
 

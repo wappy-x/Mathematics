@@ -114,7 +114,7 @@ With a moved centre, $`G = (\sin z - w_1)/(\sin z - \bar w_1)`$, $`w_1 = 1 + 2i`
 ### Step 4: existence, the shape of the proof
 
 1. **Squeeze D into the disc.** D misses a point p; with no holes, $`\sqrt{z - p}`$ is holomorphic on D. It never takes both q and −q, so its image misses a small disc, and a Möbius map moves it inside $`\mathbb{D}`$.
-2. **Take the most stretching map.** Among one-to-one maps into $`\mathbb{D}`$ sending $`z_0`$ to 0, Montel's theorem (bounded holomorphic families have convergent subsequences) gives one with largest $`\lvert F'(z_0)\rvert`$, still one-to-one.
+2. **Take the most stretching map.** Among one-to-one maps into $`\mathbb{D}`$ sending $`z_0`$ to 0, [Montel's theorem](../04-Taylor%20Series,%20Zeros%20and%20Rigidity/10-normal-families-montel-and-hurwitz.md) (bounded holomorphic families have convergent subsequences) gives one with largest $`\lvert F'(z_0)\rvert`$, still one-to-one.
 3. **It fills the disc.** If it missed a point, two Blaschke factors round a square root would stretch more at $`z_0`$.
 
 ### Step 5: why sin z maps the half strip onto the half plane
@@ -1960,6 +1960,7 @@ example : I * (-I / 2) * (Real.sqrt 2 : ℂ) = (Real.sqrt 2 : ℂ) / 2 := by
 ## Where this goes next
 
 - [The Poisson formula](06-poisson-integral-formula.md): the disc's formula now solves boundary problems on any such region.
+- [Univalent maps](10-koebe-quarter-theorem-and-boundary-behaviour.md): Koebe's quarter theorem, and when a Riemann map reaches the boundary.
 
 Left open: placing the $`x_k`$ for four or more corners, a numerical problem (Driscoll and Trefethen).
 

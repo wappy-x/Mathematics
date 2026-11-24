@@ -135,7 +135,7 @@ Far zeros pull in all directions and nearly cancel. Only the near ones can make 
 <details>
 <summary>Detailed proof: the partial-fraction formula for ζ′/ζ</summary>
 
-Hadamard's product for the completed zeta function ξ (zeta times a Gamma factor, with its pole and trivial zeros removed) gives, for every s that is not a zero or pole,
+[Hadamard's product](../../07-Complex%20analysis/10-Entire%20and%20Meromorphic%20Functions/03-hadamard-factorization-theorem.md) for the completed zeta function ξ (zeta times a Gamma factor, with its pole and trivial zeros removed) gives, for every s that is not a zero or pole,
 
 $`\displaystyle \frac{\zeta'(s)}{\zeta(s)} = b - \frac{1}{s-1} + \tfrac12 \log \pi - \tfrac12 \frac{\Gamma'(s/2 + 1)}{\Gamma(s/2 + 1)} + \sum_{\rho} \left(\frac{1}{s - \rho} + \frac{1}{\rho}\right)`$
 
