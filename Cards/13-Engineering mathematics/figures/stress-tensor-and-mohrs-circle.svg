@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 500" width="600" height="500" style="color:#24292f">
+<title>Mohr's circle for the girder web point, to scale at 3 px per MPa: centre 20 MPa, radius 67.08 MPa, points X (80, 30) and Y (-40, -30), principal stresses 87.08 and -47.08 MPa, with the two smaller circles of the 3D picture dashed</title>
+<rect x="0" y="0" width="600" height="500" rx="8" fill="#ffffff"/>
+<line x1="50" y1="250" x2="570" y2="250" stroke="currentColor" stroke-width="1"/>
+<polyline points="562,245 570,250 562,255" fill="none" stroke="currentColor" stroke-width="1"/>
+<text x="540" y="270" font-size="13" fill="currentColor">σ, MPa</text>
+<line x1="240" y1="20" x2="240" y2="480" stroke="currentColor" stroke-width="1"/>
+<polyline points="235,472 240,480 245,472" fill="none" stroke="currentColor" stroke-width="1"/>
+<text x="248" y="478" font-size="13" fill="currentColor">τ, MPa, drawn positive downward</text>
+<circle cx="300" cy="250" r="201.2" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="370.6" cy="250" r="130.6" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="5,4"/>
+<circle cx="169.4" cy="250" r="70.6" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="5,4"/>
+<line x1="120" y1="160" x2="480" y2="340" stroke="currentColor" stroke-width="1.5"/>
+<line x1="300" y1="48.8" x2="300" y2="451.2" stroke="currentColor" stroke-width="1" stroke-dasharray="2,3"/>
+<path d="M 350 250 A 50 50 0 0 1 344.72 272.36" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="356" y="276" font-size="12" fill="currentColor">2θp = 26.57°</text>
+<circle cx="480" cy="340" r="4" fill="currentColor"/>
+<text x="488" y="356" font-size="13" fill="currentColor">X (80, 30)</text>
+<circle cx="120" cy="160" r="4" fill="currentColor"/>
+<text x="70" y="150" font-size="13" fill="currentColor">Y (−40, −30)</text>
+<circle cx="300" cy="250" r="3" fill="currentColor"/>
+<text x="282" y="240" font-size="12" fill="currentColor">C = 20</text>
+<circle cx="501.2" cy="250" r="4" fill="currentColor"/>
+<text x="506" y="244" font-size="13" fill="currentColor">σ1 = 87.08</text>
+<circle cx="98.8" cy="250" r="4" fill="currentColor"/>
+<text x="20" y="244" font-size="13" fill="currentColor">σ3 = −47.08</text>
+<text x="244" y="266" font-size="12" fill="currentColor">σ2 = 0</text>
+<circle cx="300" cy="48.8" r="4" fill="currentColor"/>
+<text x="308" y="44" font-size="13" fill="currentColor">τ = −67.08 at θ = 58.28°, σ = 20</text>
+<circle cx="300" cy="451.2" r="4" fill="currentColor"/>
+<text x="308" y="462" font-size="12" fill="currentColor">τ = +67.08 at θ = 148.28°</text>
+</svg>

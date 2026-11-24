@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 240" width="420" height="240" font-family="Helvetica, Arial, sans-serif" font-size="12">
+  <title>Schematic of a 3 dB pi attenuator for 50 ohms: a 292.4 ohm resistor to ground at each port and a 17.6 ohm resistor in series between them, with incident waves a1, a2 and outgoing waves b1, b2 at the two ports</title>
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1d1d1d"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="420" height="240" fill="#ffffff"/>
+  <g stroke="#1d1d1d" stroke-width="2" fill="none">
+    <!-- top rail, broken by the series resistor -->
+    <line x1="40" y1="70" x2="180" y2="70"/>
+    <line x1="240" y1="70" x2="380" y2="70"/>
+    <rect x="180" y="61" width="60" height="18" fill="#ffffff"/>
+    <!-- bottom rail: the shared return wire -->
+    <line x1="40" y1="180" x2="380" y2="180"/>
+    <!-- shunt resistors -->
+    <line x1="140" y1="70" x2="140" y2="100"/>
+    <rect x="131" y="100" width="18" height="50" fill="#ffffff"/>
+    <line x1="140" y1="150" x2="140" y2="180"/>
+    <line x1="280" y1="70" x2="280" y2="100"/>
+    <rect x="271" y="100" width="18" height="50" fill="#ffffff"/>
+    <line x1="280" y1="150" x2="280" y2="180"/>
+    <!-- the pad's outline -->
+    <rect x="120" y="40" width="180" height="160" stroke-width="1" stroke-dasharray="5,4"/>
+  </g>
+  <g fill="#1d1d1d" stroke="none">
+    <circle cx="40" cy="70" r="4"/><circle cx="40" cy="180" r="4"/>
+    <circle cx="380" cy="70" r="4"/><circle cx="380" cy="180" r="4"/>
+    <circle cx="140" cy="70" r="3"/><circle cx="280" cy="70" r="3"/>
+    <circle cx="140" cy="180" r="3"/><circle cx="280" cy="180" r="3"/>
+    <text x="210" y="56" text-anchor="middle">17.6 Ω</text>
+    <text x="155" y="129">292.4 Ω</text>
+    <text x="265" y="129" text-anchor="end">292.4 Ω</text>
+    <text x="210" y="218" text-anchor="middle">the pad: 3 dB, 50 Ω</text>
+    <text x="40" y="130" text-anchor="middle">port 1</text>
+    <text x="380" y="130" text-anchor="middle">port 2</text>
+    <text x="60" y="30">a₁ in</text>
+    <text x="60" y="226">b₁ out</text>
+    <text x="360" y="30" text-anchor="end">a₂ in</text>
+    <text x="360" y="226" text-anchor="end">b₂ out</text>
+  </g>
+  <g stroke="#1d1d1d" stroke-width="1.5" marker-end="url(#ar)">
+    <line x1="50" y1="40" x2="105" y2="40"/>
+    <line x1="105" y1="208" x2="50" y2="208"/>
+    <line x1="370" y1="40" x2="315" y2="40"/>
+    <line x1="315" y1="208" x2="370" y2="208"/>
+  </g>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 262" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<title>Two rate regions drawn to scale. Left: the Slepian-Wolf region for two rain stations, every pair of rates on or beyond the boundary through the corners (1, 0.469) and (0.469, 1). Right: the capacity region of two radios of power 1 in noise 1, a pentagon with corners (0.5, 0.292) and (0.292, 0.5).</title>
+<rect x="0" y="0" width="520" height="262" fill="#ffffff"/>
+<polygon points="112.3,50.0 112.3,80.0 192.0,159.7 222.0,159.7 222.0,50.0" fill="#1d1d1d" fill-opacity="0.12" stroke="none"/>
+<polyline points="112.3,50.0 112.3,80.0 192.0,159.7 222.0,159.7" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="42" y1="230" x2="226.0" y2="230" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="42" y1="230" x2="42" y2="46.0" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="112.3" y1="230" x2="112.3" y2="225" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="192.0" y1="230" x2="192.0" y2="225" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="42" y1="159.7" x2="47" y2="159.7" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="42" y1="80.0" x2="47" y2="80.0" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="192.0" cy="80.0" r="3.5" fill="#1d1d1d"/>
+<circle cx="112.3" cy="80.0" r="3.5" fill="#1d1d1d"/>
+<circle cx="192.0" cy="159.7" r="3.5" fill="#1d1d1d"/>
+<text x="192.0" y="70.0" text-anchor="middle" fill="#1d1d1d">each alone (1, 1)</text>
+<text x="106.3" y="72.0" text-anchor="end" fill="#1d1d1d">(0.469, 1)</text>
+<text x="192.0" y="177.7" text-anchor="middle" fill="#1d1d1d">(1, 0.469)</text>
+<text x="112.3" y="246.0" text-anchor="middle" fill="#1d1d1d">0.469</text>
+<text x="192.0" y="246.0" text-anchor="middle" fill="#1d1d1d">1</text>
+<text x="38.0" y="163.7" text-anchor="end" fill="#1d1d1d">0.469</text>
+<text x="38.0" y="84.0" text-anchor="end" fill="#1d1d1d">1</text>
+<text x="224.0" y="246.0" text-anchor="middle" fill="#1d1d1d">R<tspan dy="4" font-size="10">A</tspan></text>
+<text x="50.0" y="56.0" fill="#1d1d1d">R<tspan dy="4" font-size="10">B</tspan></text>
+<text x="6.0" y="18.0" font-size="14" fill="#1d1d1d">Compress apart (bits per day)</text>
+<polygon points="300,230 460.0,230 460.0,136.4 393.6,70.0 300,70.0" fill="#1d1d1d" fill-opacity="0.12" stroke="#1d1d1d" stroke-width="2"/>
+<line x1="300" y1="230" x2="496.0" y2="230" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="300" y1="230" x2="300" y2="34.0" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="393.6" y1="230" x2="393.6" y2="225" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="300" y1="136.4" x2="305" y2="136.4" stroke="#1d1d1d" stroke-width="1.5"/>
+<circle cx="460.0" cy="136.4" r="3.5" fill="#1d1d1d"/>
+<circle cx="393.6" cy="70.0" r="3.5" fill="#1d1d1d"/>
+<text x="452.0" y="154.4" text-anchor="end" fill="#1d1d1d">(0.5, 0.292)</text>
+<text x="401.6" y="60.0" fill="#1d1d1d">(0.292, 0.5)</text>
+<text x="393.6" y="246.0" text-anchor="middle" fill="#1d1d1d">0.292</text>
+<text x="460.0" y="246.0" text-anchor="middle" fill="#1d1d1d">0.5</text>
+<text x="296.0" y="140.4" text-anchor="end" fill="#1d1d1d">0.292</text>
+<text x="296.0" y="74.0" text-anchor="end" fill="#1d1d1d">0.5</text>
+<text x="494.0" y="246.0" text-anchor="middle" fill="#1d1d1d">R<tspan dy="4" font-size="10">1</tspan></text>
+<text x="308.0" y="44.0" fill="#1d1d1d">R<tspan dy="4" font-size="10">2</tspan></text>
+<text x="282.0" y="18.0" font-size="14" fill="#1d1d1d">Share one channel (bits per pulse)</text>
+</svg>
