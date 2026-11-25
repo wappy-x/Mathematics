@@ -10,7 +10,9 @@ A catering firm has five staff — Ana, Ben, Cleo, Dan, Eve — and four shifts 
 
 Draw a dot per person, a dot per shift, a line per claim. Every line runs from a person to a shift, never between two people or two shifts. So the nine dots fall into two heaps, all nine lines crossing between them. A graph like that is **bipartite**.
 
-Five cafes round a small square give the other half of the story: Bean, Crema, Drip, Grind and Latte, each competing with the two next door, so the five rivalries close a ring. Splitting them over two tasting nights, no two rivals sharing a night, asks for the same two heaps. It cannot be had: colour round the ring and the colours alternate, until the fifth line closes it on two cafes of one colour. Five is odd, and that is the obstruction.
+Five cafes round a small square give the other half of the story: Bean, Crema, Drip, Grind and Latte, each competing with the two next door, so the five rivalries close a ring.
+
+Splitting them over two tasting nights, no two rivals sharing a night, asks for the same two heaps. It cannot be had: colour round the ring and the colours alternate, until the fifth line closes it on two cafes of one colour. Five is odd, and that is the obstruction.
 
 **A graph's dots split into two sides with every line crossing exactly when the graph holds no closed route of odd length.**
 
@@ -92,7 +94,9 @@ The pentagon fails on sight. Name the nights A and B: Bean A, Crema B, Drip A, G
 
 The other direction builds the cut from distances: colour every dot by the parity of $`d(v)`$. Every dot gets a colour: the search covers the root's whole piece, and any dot left over becomes a new root. What remains is to check that no line joins two dots of one colour.
 
-Suppose the line from $`u`$ to $`v`$ did. Each dot records the one dot it was reached from, so each has a single route back to the root, and that route is a shortest one. Let $`w`$ be the last dot the two routes share; past $`w`$ they have parted for good. Shortest routes make the stretch from $`w`$ to $`u`$ count $`d(u) - d(w)`$ lines. That stretch, the line, and the stretch from $`v`$ back to $`w`$ close a loop of
+Suppose the line from $`u`$ to $`v`$ did. Each dot records the one dot it was reached from, so each has a single route back to the root, and that route is a shortest one.
+
+Let $`w`$ be the last dot the two routes share; past $`w`$ they have parted for good. Shortest routes make the stretch from $`w`$ to $`u`$ count $`d(u) - d(w)`$ lines. That stretch, the line, and the stretch from $`v`$ back to $`w`$ close a loop of
 
 ```math
 (d(u) - d(w)) + 1 + (d(v) - d(w)) \text{ lines}
@@ -124,7 +128,9 @@ Both stretches are pieces of shortest routes, so neither repeats a dot; past $`w
 
 ### Step 3: the odd cycle is a certificate
 
-"This graph has no cut" reads like a claim about every pair of heaps. The clash line makes it checkable: that line plus the routes back to the meeting dot is a short list of dots, and three cheap tests settle it — no dot twice, at least three dots, every neighbouring pair joined. The check prints Drip Crema Bean Latte Grind, runs all three, and pins the count at 5, odd.
+"This graph has no cut" reads like a claim about every pair of heaps. The clash line makes it checkable: that line plus the routes back to the meeting dot is a short list of dots.
+
+Three cheap tests settle it: no dot twice, at least three dots, and every neighbouring pair joined. The check prints Drip Crema Bean Latte Grind, runs all three, and pins the count at 5, odd.
 
 The second road drops parity and tries every cut of the dots into two heaps: 2 of 512 work for the roster, 0 of 32 for the pentagon. Trying every cut stops being practical past about thirty dots; the layers read each line once. The recorded routes form a tree spanning the piece, and the same proof runs from any spanning tree.
 
@@ -158,7 +164,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Five graphs run: the roster, the cafes, this shelf's metro map, the roster with a line inside a side, and the roster and cafes as one graph. Two roads share no arithmetic. One colours dots by the parity of their distance from a root, found by breadth-first search (BFS in the code). The other tries every cut into two heaps and keeps those with no line inside a heap. Where the colours clash, a third step builds the loop and checks it is a real cycle.
+Nothing is imported. Five graphs run: the roster, the cafes, this shelf's metro map, the roster with a line inside a side, and the roster and cafes as one graph.
+
+Two roads share no arithmetic. One colours dots by the parity of their distance from a root, found by breadth-first search (BFS in the code). The other tries every cut into two heaps and keeps those with no line inside a heap. Where the colours clash, a third step builds the loop and checks it is a real cycle.
 
 ### Python
 
@@ -721,7 +729,7 @@ example : IsTwoSideCut metro {0, 2, 4} {1, 3, 5} := by
 - **Chessboards and dominoes.** Squares are dots, a line joins squares sharing an edge, light against dark is the cut. A domino covers one light and one dark square, so a board whose counts differ cannot be tiled.
 
 > **Say it back**
-> A graph is bipartite when its dots fall into two heaps with every line crossing between them, as staff and shifts do. Walking a line changes heap, so every closed route uses an even number of lines. It runs backwards too: colour each dot by the parity of its distance from a starting dot, and the colours are the heaps unless some line joins two of one colour. That line, plus the routes back to where they last met, is a closed route of odd length. Five cafes in a ring are the smallest case.
+> A graph is bipartite when its dots fall into two heaps with every line crossing between them, as staff and shifts do. Walking a line changes heap, so every closed route uses an even number of lines. It runs backwards too: colour each dot by the parity of its distance from a starting dot, and the colours are the heaps unless some line joins two of one colour. That line, plus the routes back to where they last met, is a closed route of odd length. A triangle is the shortest odd cycle, and five cafes in a ring are the smallest case with no triangle.
 
 ---
 
@@ -732,16 +740,17 @@ example : IsTwoSideCut metro {0, 2, 4} {1, 3, 5} := by
 
 ## Where this goes next
 
+- [Directed graphs](06-directed-graphs-and-topological-order.md): next on this shelf, replacing two-way lines with one-way arrows.
 - [Why some graphs cannot be drawn flat](../12-Planarity%20and%20Colouring/02-edge-bound-and-kuratowski.md): no odd cycle means every loop is even, which tightens the ceiling on lines a flat drawing allows.
 - [Colouring](../12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md): three colours or more, where no clean test survives.
 - [Matchings](../13-Matchings%20and%20Flows/01-matchings-and-augmenting-paths.md): pairing the sides one to one.
 - [Mantel and Turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/05-mantel-and-turan.md): how many lines a triangle-free graph carries, its record holders bipartite.
 - [Communities](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/06-community-detection.md): groups in a network where no split is clean.
-- [Perfect graphs](../12-Planarity%20and%20Colouring/08-perfect-and-chordal-graphs.md): graphs where the largest clique always gives the colour count, chordal graphs as the friendly family, and the strong perfect graph theorem.
-- [Tutte's theorem](../13-Matchings%20and%20Flows/08-tutte-one-factor-theorem.md): a graph has a perfect matching exactly when removing any set S leaves at most |S| pieces of odd size.
-- [Beyond Turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/06-erdos-stone-and-kovari-sos-turan.md): forbid any graph H and its colour count sets the edge cap (Erdos-Stone), except when H is two-sided, where Kovari-Sos-Turan caps a network with no 4-cycle near n^(3/2)/2 edges.
+- [Perfect graphs](../12-Planarity%20and%20Colouring/08-perfect-and-chordal-graphs.md): graphs that, like bipartite ones, forbid odd cycles (and their complements) of length five or more.
+- [Tutte's theorem](../13-Matchings%20and%20Flows/08-tutte-one-factor-theorem.md): when every vertex can be paired up even without a two-sided split.
+- [Beyond Turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/06-erdos-stone-and-kovari-sos-turan.md): how forbidding a bipartite pattern caps a network's lines far more tightly than forbidding a non-bipartite one.
 
-This card decides whether two heaps exist; who works which shift, one each, is the matching card's question.
+This card decides whether two heaps exist; pairing staff to shifts one-to-one waits for [Matchings](../13-Matchings%20and%20Flows/01-matchings-and-augmenting-paths.md) on shelf 13. Next on this shelf, [Directed graphs](06-directed-graphs-and-topological-order.md) turns two-way lines into one-way arrows.
 
 ---
 

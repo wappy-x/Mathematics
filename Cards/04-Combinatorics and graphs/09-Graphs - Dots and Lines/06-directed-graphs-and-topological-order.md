@@ -6,7 +6,7 @@
 
 ## General Overview
 
-A lasagne recipe lists eight prep steps in alphabetical order, so the page hints at no cooking order: bake, boil the water, chop the onion, cook the pasta sheets, grate the cheese, heat the oven, layer the dish, simmer the sauce.
+A lasagne recipe lists eight prep steps in alphabetical order, so the page hints at no cooking order. The steps are bake, boil the water, chop the onion, cook the pasta sheets, grate the cheese, heat the oven, layer the dish, simmer the sauce.
 
 Eight rules hold steps up: water before pasta, onion before sauce, pasta and cheese and sauce before layering, and the layered dish, a hot oven and grated cheese before baking.
 
@@ -102,7 +102,7 @@ Peeling the lowest-numbered source writes boil the water, chop the onion, cook t
 
 **No directed cycle means an order exists,** by induction on $`n`$. One vertex is its own order. Otherwise delete a source: a cycle in the remainder would be one of $`D`$, so the remainder is a DAG with an order by induction. Put the source in front; its in-degree was 0, so every arc touching it leaves it and runs forward.
 
-**Kahn's peeling is that induction run rather than argued.** Write all $`n`$ and the listing is an order; stop early and every unwritten vertex is still pointed at, so Step 1 on the leftover yields a cycle.
+**Kahn's peeling is that induction run rather than argued.** Write all $`n`$ and the listing is an order. Stop early and every unwritten vertex is still pointed at, so Step 1 on the leftover yields a cycle.
 
 </details>
 
@@ -148,17 +148,21 @@ The shelf's metro map tests the refusal. Make its eight lines one-way round the 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Hunting a loop with the arrowheads rubbed out | the 210 orders stand | an undirected loop, not a directed one |
+| Hunting a loop with the arrowheads rubbed out | falsely claims a loop (0 orders), though 210 stand | an undirected loop, not a directed one |
 | Peeling sinks, written left to right | 0 of 8 arrows forward | the order comes out backwards |
 | Adding in-degrees to out-degrees | 2 × 8 = 16, not 8 | each arc is one head and one tail |
 
-The code prints all three.
+The code prints the last two.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The recipe is a list of ordered pairs, and three roads share no arithmetic: Kahn's peeling on a running in-degree tally; all 40,320 listings tested arrow by arrow; and arrows followed to a standstill, which finds the loops and the pieces with no degrees at all.
+Nothing is imported. The recipe is a list of ordered pairs, checked by three roads that share no arithmetic:
+
+- Kahn's peeling on a running in-degree tally.
+- All 40,320 listings tested arrow by arrow.
+- Arrows followed to a standstill, finding the loops and the pieces with no degrees at all.
 
 ### Python
 
@@ -528,17 +532,18 @@ example : ∀ v, ∃ u, metro.Adj u v := by decide
 ## What this builds on
 
 - [Connected or not](04-connectivity-and-breadth-first-search.md): getting between vertices along the lines, which becomes reachability once they run one way.
-- [Orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md): an order leaving pairs undecided, and what extending it to decide every pair means.
+- [Orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md): the difference between a partial order (some pairs incomparable) and a total order (every pair ranked).
 
 ## Where this goes next
 
+- [The adjacency matrix](07-adjacency-matrix-and-walk-counting.md): next on this shelf, storing a graph (two-way or one-way) as a table of ones and zeros to count walks by matrix multiplication.
 - [De Bruijn sequences](../11-Tours%20-%20Euler%20and%20Hamilton/05-de-bruijn-sequences.md): a directed graph whose arcs, not vertices, are toured.
 - [Flows](../13-Matchings%20and%20Flows/05-flow-networks-and-ford-fulkerson.md): arcs with a capacity, and how much can be pushed along them.
 - [Classifying states](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/03-classifying-states.md): arrows weighted by how often they are taken, the pieces fixing which states are kept.
 - [Scheduling](../../14-Applied%20and%20computational/05-Operations%20Research/04-scheduling-and-the-critical-path.md): durations on the steps, so one of the 210 orders becomes the schedule to beat.
 - [Causal graphs](../../09-Probability%20and%20statistics/13-Survival%2C%20Design%20and%20Causality/08-causal-graphs-and-back-door-adjustment.md): arrows for cause, and the back-door rule for which variables to adjust for.
 
-Nothing here separates those 210 orders; give each step a duration and one sweep along a topological order finds the longest chain of arrows, fixing the earliest dinner — which is what scheduling asks.
+Next on this shelf, [The adjacency matrix](07-adjacency-matrix-and-walk-counting.md) turns both two-way and one-way maps into tables whose powers count walks. To separate the 210 recipe orders by step duration, [Scheduling](../../14-Applied%20and%20computational/05-Operations%20Research/04-scheduling-and-the-critical-path.md) sweeps along a topological order to find the longest chain of arrows.
 
 ---
 

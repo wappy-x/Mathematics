@@ -34,7 +34,7 @@ flowchart LR
 
 ## The formula
 
-Notation first, in words. Fix an order for the stations and keep it: A is station 1, F is station 6. The **adjacency matrix** $`A`$ is the square table with a row and a column per station, and its cell in row $`i`$, column $`j`$ — written $`A_{ij}`$ — holds 1 when a line joins those stations.
+Notation first, in words. Fix an order for the stations and keep it: A is station 1, F is station 6. The **adjacency matrix** $`A`$ is the square table with a row and a column per station. Its cell in row $`i`$, column $`j`$ — written $`A_{ij}`$ — holds 1 when a line joins those stations.
 
 ```math
 A_{ij} \;=\; 1 \text{ when a line joins } i \text{ and } j, \text{ otherwise } 0
@@ -52,7 +52,7 @@ A **walk** of length $`k`$ is a ride along $`k`$ lines in turn, stations and lin
 
 **Read it aloud:** multiply the table into itself k times and every cell counts the k-line routes from its row's station to its column's.
 
-The **trace** is the sum of a square table's diagonal. The **incidence matrix** $`M`$ is the same map line-by-station: eight rows, six columns, a 1 where a line touches a station — the grid of ends on [Degrees and the handshaking lemma](02-degree-and-handshaking.md), tipped over.
+The **trace** is the sum of a square table's diagonal. The **incidence matrix** $`M`$ is the same map line-by-station: eight rows, six columns, a 1 where a line touches a station. It is the grid of ends on [Degrees and the handshaking lemma](02-degree-and-handshaking.md), tipped over.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -83,30 +83,40 @@ Length 1 needs no work: joined stations have one one-line ride, unjoined ones no
 
 ### Step 1: one more line is one more multiply, and induction does the rest
 
-Sort the walks of length k+1 from i to j by the station u they stand at before the final line. A walk in u's pile is a walk of length k from i to u, then the line u-j, so u's pile holds the k-line count from i to u times row u, column j of $`A`$ — 1 if that line exists, 0 if not. Adding over every u:
+Sort the walks of length k+1 from i to j by the station u they stand at before the final line. A walk in u's pile is a walk of length k from i to u, then the line u-j.
+
+So u's pile holds the k-line count from i to u times row u, column j of $`A`$ — 1 if that line exists, 0 if not. Adding over every u:
 
 ```math
 \bigl(A^{k+1}\bigr)_{ij} \;=\; \sum_{u} \bigl(A^{k}\bigr)_{iu} \, A_{uj}
 ```
 
-The Greek capital sigma says "add this up as u runs over all six stations". The right-hand side is, symbol for symbol, row i, column j of a matrix product. Every walk of length k+1 lands in exactly one pile, so no walk is counted twice or missed. That carries "right at length k" to length k+1, so by induction ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)) the count table for length k is $`A^{k}`$.
+The Greek capital sigma says "add this up as u runs over all six stations". The right-hand side is, symbol for symbol, row i, column j of a matrix product. Every walk of length k+1 lands in exactly one pile, so no walk is counted twice or missed.
+
+That carries "right at length k" to length k+1, so by induction ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)) the count table for length k is $`A^{k}`$.
 
 <details>
 <summary>The same count on one-way lines</summary>
 
-No step used the fact that a line runs both ways: read $`A_{ij}`$ as "an arc leads from i to j" and the induction is unchanged, so powers of a one-way table count one-way routes ([Directed graphs](06-directed-graphs-and-topological-order.md)).
+No step used the fact that a line runs both ways. Read $`A_{ij}`$ as "an arc leads from i to j" and the induction is unchanged, so powers of a one-way table count one-way routes ([Directed graphs](06-directed-graphs-and-topological-order.md)).
 
 </details>
 
 ### Step 2: the diagonal counts what comes home
 
-A walk that finishes where it began lands on the diagonal. At length 2 such a ride is "take a line, take it back", so the squared diagonal reads 2 3 3 2 3 3 — the degrees — and its trace is 16, twice the eight lines. Off the diagonal the square counts shared neighbours: the 2 at row A, column C counts B and F, each joined to both.
+A walk that finishes where it began lands on the diagonal. At length 2 such a ride is "take a line, take it back". So the squared diagonal reads 2 3 3 2 3 3 — the degrees — and its trace is 16, twice the eight lines.
 
-With no loops, three lines can only come home by visiting three different stations, which is a triangle, and each triangle supplies six closed rides: three starting points, two directions. So the cubed trace is six times the triangles. Here it is 0, so the map holds none, agreeing with the count on [Graphs](01-graphs-vertices-and-edges.md). Add the line A-C and two triangles appear, A-B-C and A-C-F: that map's cubed trace reads 12, and 12 over 6 is 2.
+Off the diagonal the square counts shared neighbours: the 2 at row A, column C counts B and F, each joined to both.
+
+With no loops, three lines can only come home by visiting three different stations, which is a triangle. Each triangle supplies six closed rides: three starting points, two directions. So the cubed trace is six times the triangles.
+
+Here it is 0, so the map holds none, agreeing with the count on [Graphs](01-graphs-vertices-and-edges.md). Add the line A-C and two triangles appear, A-B-C and A-C-F: that map's cubed trace reads 12, and 12 over 6 is 2.
 
 ### Step 3: the line-by-station table gives the same map back
 
-Each row of the incidence matrix holds two ones, one per end: 16 ones in all, and each column adds to a degree. Tip it over and multiply: row u, column v of $`M^{T}M`$ counts the lines touching both u and v — 1 when a line joins two stations, the degree when v is u, 0 otherwise. So $`M^{T}M`$ equals $`A + D`$: a third road to the same map, checked cell by cell in the code.
+Each row of the incidence matrix holds two ones, one per end: 16 ones in all, and each column adds to a degree.
+
+Tip it over and multiply: row u, column v of $`M^{T}M`$ counts the lines touching both u and v. That is 1 when a line joins two stations, the degree when v is u, and 0 otherwise. So $`M^{T}M`$ equals $`A + D`$: a third road to the same map, checked cell by cell in the code.
 
 ---
 
@@ -140,9 +150,9 @@ A, C and E stay blank: every line crosses between the groups A, C, E and B, D, F
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Reading the cubed count as repeat-free routes | 6, not 2 | Walks double back |
-| Reading the 0 at row A, column F as "unreachable" | 0 | Parity (odd or even length), not distance |
+| Reading the 0 at row A, column F of $`A^{2}`$ as "unreachable" | 0 | Parity (no two-line route), not distance |
 | Squaring cell by cell | 1, where the square holds 0 | Cells paired, not rows with columns |
-| A 1 on the diagonal, letting a train wait | 9, not 6 | The one-line ride A-F returns once per waiting place: 3 + 6 |
+| A 1 on the diagonal, letting a train wait | 9, not 6 | The one-line ride A-F plus two waits happens in 3 orders (A-A-A-F, A-A-F-F, A-F-F-F): 3 + 6 |
 
 The code prints all four.
 
@@ -150,7 +160,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The walk counts come twice over by roads sharing no arithmetic: a written-out row-against-column loop, and a walk along the neighbour lists that builds each route as a string, forming no matrix. The two are compared cell by cell at lengths 1, 2 and 3. A third road runs the line-by-station table into the adjacency matrix plus the degrees, and the triangle rule is tried on the metro plus the line A-C, which has two.
+Nothing is imported. The walk counts come twice over by roads sharing no arithmetic: a written-out row-against-column loop, and a walk along the neighbour lists that builds each route as a string, forming no matrix. The two are compared cell by cell at lengths 1, 2 and 3.
+
+A third road runs the line-by-station table into the adjacency matrix plus the degrees, and the triangle rule is tried on the metro plus the line A-C, which has two.
 
 ### Python
 
@@ -545,7 +557,7 @@ end AdjacencyMatrixAndWalkCounting
 >
 > - **Reading a 0 as "no route at all".** Row A, column F of the square is 0, yet A-F is a line; cubed, it reads 6.
 > - **Squaring cell by cell.** Each entry times itself leaves every 1 a 1, giving 1 where the square holds 0.
-> - **A 1 on the diagonal to let a train wait.** That counts three moves, not three lines, and the one-line ride A-F comes back once per stop where the train waits: 3 + 6 = 9, not 6.
+> - **A 1 on the diagonal to let a train wait.** That counts three moves, not three lines. The one-line ride A-F comes back three ways once two waits are slotted around it (A-A-A-F, A-A-F-F, A-F-F-F): 3 + 6 = 9, not 6.
 
 ---
 
@@ -568,12 +580,13 @@ end AdjacencyMatrixAndWalkCounting
 
 ## Where this goes next
 
+- [Trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md): opens the next shelf, stripping a connected map down to its loop-free skeleton.
 - [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md): divide each row by its degree and the counts become chances for a wandering train.
 - [Centrality](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/01-centrality-and-pagerank.md): multiplying by the table over and over to rank pages by the traffic reaching them.
 - [Sparse storage and Krylov methods](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/10-sparse-matrices-and-krylov-methods.md): multiplying a table of mostly zeros on a network of millions.
-- [The matrix-tree theorem](../10-Trees%20and%20Cheapest%20Routes/07-matrix-tree-theorem.md): cut one row and column from the graph's Laplacian, and the determinant counts its spanning trees.
+- [The matrix-tree theorem](../10-Trees%20and%20Cheapest%20Routes/07-matrix-tree-theorem.md): form $`D - A`$ (the graph's Laplacian), drop one row and column, and the determinant counts the loop-free skeletons reaching every station.
 
-Each further power costs another full multiply; the escape is that a symmetric table splits into a handful of eigenvalues, its stretch factors ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)), and their directions, and every walk count follows from those.
+This finishes the graph basics; the next shelf opens with [Trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md), stripping a connected map down to its loop-free skeleton. On the matrix side, each further power costs another full multiply. [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md) escapes that cost by splitting a symmetric table into eigenvalues (its stretch factors) and their directions, giving every walk count at once.
 
 ---
 

@@ -54,7 +54,7 @@ An edge is an unordered pair of different stations, so the pairs available are t
 
 **Read it aloud:** the lines can never outnumber the pairs of stations, so 15 are possible and the city runs 8.
 
-A renaming $`f`$ matches the stations of one map one-to-one onto those of the other ([Relations](../../01-Foundations/08-Relations%20and%20Functions/01-relations.md)). It makes them **isomorphic** — "the same graph, differently named" — when
+A renaming $`f`$ matches the stations of one map one-to-one onto those of the other ([One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md)). It makes them **isomorphic** — "the same graph, differently named" — when
 
 ```math
 u\text{-}v \text{ is an edge of the first} \quad\text{exactly when}\quad f(u)\text{-}f(v) \text{ is an edge of the second}
@@ -99,7 +99,7 @@ By listing: A pairs with five others, B with four not yet counted, then three, t
 - **K(m, n), complete bipartite:** two groups, every cross pair joined, none inside a group, m × n edges. K(3, 3), 9.
 - **Q(3), the 3-cube:** the 8 corners of a cube, joined when they differ in one coordinate. Each corner has 3 coordinates to flip and each line has two ends: 8 × 3 / 2 = 12 lines, 4 per direction.
 
-A graph whose vertices all meet the same number of lines is **regular**, as Q(3) is; the ring map is not, its tally of lines per station being 2, 2, 3, 3, 3, 3 ([Degrees and the handshaking lemma](02-degree-and-handshaking.md) counts them properly).
+A graph whose vertices all meet the same number of lines is **regular**, as Q(3) is. The ring map is not: its line counts are 2, 2, 3, 3, 3, 3 ([Degrees and the handshaking lemma](02-degree-and-handshaking.md) counts them properly).
 
 Now place the ring map. Split the stations into A, C, E and B, D, F: all eight lines cross between the groups, none inside either. K(3, 3) holds nine such crossings, so the map is K(3, 3) less one line — the pair left out is A-D.
 
@@ -142,7 +142,9 @@ C, E then fill 5, 6 either way, B, F fill 1, 4 either way: four renamings keep t
 
 Some counts survive every renaming: the vertices, the edges, the sorted tally of lines per station, the triangles — three stations with all three lines present. Two drawings of one graph agree on all four.
 
-That is a cheap test and a trap. A third map, A-B, A-C, B-C, B-E, C-F, D-E, D-F, E-F, matches the ring map on the first three: 8 lines, the tally 2, 2, 3, 3, 3, 3. But it holds 2 triangles, A-B-C and D-E-F, where the ring map holds 0, and the search over all 720 returns zero. Fingerprints rule a difference out; never sameness in.
+That is a cheap test and a trap. A third map, A-B, A-C, B-C, B-E, C-F, D-E, D-F, E-F, matches the ring map on the first three: 8 lines, the tally 2, 2, 3, 3, 3, 3. But it holds 2 triangles, A-B-C and D-E-F, where the ring map holds 0, and the search over all 720 returns zero.
+
+Fingerprints rule sameness out, never in.
 
 A second route stores the graph as a square table of yes-and-no entries and reorders its rows and columns: the adjacency matrix, on [The adjacency matrix](07-adjacency-matrix-and-walk-counting.md).
 
@@ -604,7 +606,8 @@ example : (ring.cliqueFinset 3).card = 0 ∧ (tourist.cliqueFinset 3).card = 0 �
 ## What this builds on
 
 - [Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md): the count C(6, 2) = 15 of available pairs.
-- [Relations](../../01-Foundations/08-Relations%20and%20Functions/01-relations.md): joined pairs form a relation; a renaming is a function one-to-one and onto.
+- [Relations](../../01-Foundations/08-Relations%20and%20Functions/01-relations.md): joined pairs form a symmetric relation on the vertices.
+- [One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md): a renaming is a function matching stations one-to-one and onto.
 - [Ordered pairs and the Cartesian product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md): why an edge is an unordered pair.
 
 ## Where this goes next
@@ -618,7 +621,7 @@ example : (ring.cliqueFinset 3).card = 0 ∧ (tourist.cliqueFinset 3).card = 0 �
 - [Vietoris-Rips, Cech and alpha complexes](../../17-Topology/06-Topological%20Data%20Analysis/02-vietoris-rips-and-cech-complexes.md): joining nearby data points, then filling triangles.
 - [Graph isomorphism](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/04-graph-isomorphism.md): how hard sameness is when renamings cannot all be tried.
 
-Every renaming was tried here; a real network has far too many, and cutting that search down is what this shelf opens.
+Every renaming was tried here, and the first fingerprint that narrowed the field was each station's line count. What those counts must always add up to is the next card, [Degrees and the handshaking lemma](02-degree-and-handshaking.md).
 
 ---
 

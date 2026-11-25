@@ -14,7 +14,7 @@ Three tidier journeys have names: a **trail** repeats no line, a **path** no sta
 
 Cutting a repeat out of a walk never lengthens it and never moves its ends, so the fewest steps between two stations is reached by a repeat-free route: that count is the **distance**.
 
-**Strip the repeats out of any journey and a repeat-free route with the same ends is left, no longer than before — which is what makes "the fewest steps" a real number.**
+**Strip the repeats out of any journey and a repeat-free route with the same ends is left, no longer than before — which is what makes "the fewest steps" a well-defined whole number.**
 
 **What kind of fact this is:** definitions — walk, trail, path, cycle, distance, eccentricity, diameter, girth — resting on one theorem proved below: every walk contains a path with the same ends.
 
@@ -103,7 +103,9 @@ The move works on any repeat and shortens the walk each time, so the cutting sto
 <details>
 <summary>Detailed proof: every walk from u to v contains a path from u to v</summary>
 
-Write the walk as $`x_0, x_1, \ldots, x_k`$, with $`x_0 = u`$ and $`x_k = v`$, and induct on the step count. If no station repeats it is already a path. Otherwise one station sits at two positions, $`x_i = x_j`$ with the first earlier; delete the entries after the first up to and including the second. The result, $`x_0, \ldots, x_i, x_{j+1}, \ldots, x_k`$, is again a walk — the join holds because the deleted copy was joined to $`x_{j+1}`$ — and it is shorter, so induction finishes it.
+Write the walk as $`x_0, x_1, \ldots, x_k`$, with $`x_0 = u`$ and $`x_k = v`$, and induct on the step count. If no station repeats it is already a path. Otherwise one station sits at two positions, $`x_i = x_j`$ with the first earlier; delete the entries after the first up to and including the second.
+
+The result, $`x_0, \ldots, x_i, x_{j+1}, \ldots, x_k`$, is again a walk — the join holds because the deleted copy was joined to $`x_{j+1}`$ — and it is shorter, so induction finishes it.
 
 Nothing was added, so no shortest walk repeats a station; and a path visits each station at most once, so on six stations it takes at most 5 steps.
 
@@ -133,13 +135,13 @@ Stations at the radius form the **centre** — B, C, E, F — those at the diame
 \mathrm{rad}(G) \;\le\; \mathrm{diam}(G) \;\le\; 2 \times \mathrm{rad}(G)
 ```
 
-The left half is automatic: the smallest of six numbers cannot beat the largest. The right half is the rule above: route A and D through a centre station, say B, and the trip takes at most $`d(A,B) + d(B,D)`$ steps, each at most B's eccentricity — the radius. Here radius 2, diameter 3, twice the radius 4.
+The left half is automatic: the smallest of six numbers cannot beat the largest. The right half is the rule above: route A and D through a centre station, say B. The trip takes at most $`d(A,B) + d(B,D)`$ steps, each at most B's eccentricity — the radius. Here radius 2, diameter 3, twice the radius 4.
 
 ### Step 4: the shortest loop
 
 Girth takes the same two roads. Listing: a cycle through a line is a repeat-free route between that line's ends plus the line itself, so enumerate those and keep the shortest. Sweeping: remove a line, measure the distance between the stations it joined, add 1, take the smallest over the eight. Both give 4.
 
-Four, not three: no three stations here form a triangle. The map has no odd loop at all — every line joins one row of the picture to the next, so a loop comes down as often as it goes up — the subject of [Bipartite graphs](05-bipartite-graphs-and-odd-cycles.md).
+Four, not three: no three stations here form a triangle. The map has no odd loop at all. Every line joins one row of the picture to the next, so a loop comes down as often as it goes up — the subject of [Bipartite graphs](05-bipartite-graphs-and-odd-cycles.md).
 
 A third road counts walks instead of shortening them, by multiplying a square table of noughts and ones by itself ([The adjacency matrix](07-adjacency-matrix-and-walk-counting.md)).
 
@@ -412,7 +414,7 @@ theorem every_walk_contains_a_path {V : Type*} (G : SimpleGraph V) {u v : V} (p 
 
 /-- Distance is the fewest steps, and it behaves like distance. On a graph where every station
 can be reached from every other, the distance d(u, v) is the length of some path from u to v and
-no walk from u to v is shorter; d(u, v) = d(v, u); and going by way of a third station w never
+no walk from u to v is shorter; d(u, v) = d(v, u); and going by way of a third station v never
 saves a step: d(u, w) ≤ d(u, v) + d(v, w). -/
 theorem distance_is_shortest_path_length {V : Type*} (G : SimpleGraph V) (hG : G.Connected)
     (u v w : V) :
@@ -663,7 +665,7 @@ example : walkBCB.length = 2 ∧ ¬ walkBCB.IsCycle := by
 - **Molecules.** The girth of a bond graph is its smallest ring, the first thing a chemist reads off a structure.
 
 > **Say it back**
-> A walk is any journey along the lines, repeats allowed; a trail repeats no line, a path no station, a cycle nothing but its start. Tidy a walk and a path with the same ends is left, never longer, so the fewest steps between two stations is a real number: the distance. Eccentricity is a station's worst distance, the diameter the largest of those — 3 here, against a radius of 2. The girth, the shortest loop, is 4.
+> A walk is any journey along the lines, repeats allowed; a trail repeats no line, a path no station, a cycle nothing but its start. Tidy a walk and a path with the same ends is left, never longer, so the fewest steps between two stations is a well-defined whole number: the distance. Eccentricity is a station's worst distance, the diameter the largest of those — 3 here, against a radius of 2. The girth, the shortest loop, is 4.
 
 ---
 
@@ -676,7 +678,7 @@ example : walkBCB.length = 2 ∧ ¬ walkBCB.IsCycle := by
 - [Connected or not](04-connectivity-and-breadth-first-search.md): the sweep as a named procedure, and distance when no route exists.
 - [The adjacency matrix](07-adjacency-matrix-and-walk-counting.md): walks counted rather than shortened, by multiplying a table of noughts and ones.
 - [Trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md): maps with no cycle, where every pair has exactly one route.
-- [Planar graphs](../12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md): why the girth limits how many lines a map drawn without crossings can carry.
+- [Why some graphs cannot be drawn flat](../12-Planarity%20and%20Colouring/02-edge-bound-and-kuratowski.md): why the shortest cycle length limits how many lines a map drawn without crossings can carry.
 
 Every distance here assumed every station could be reached; running the sweep as a procedure, and saying what happens when one is cut off, is the next card.
 

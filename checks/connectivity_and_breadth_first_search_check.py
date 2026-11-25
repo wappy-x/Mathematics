@@ -1,5 +1,5 @@
-# Connected or not -- the check behind the card.  Nothing is imported.  A town's cycle paths: nine
-# junctions, S the station and A to H the rest; the river bridge D-F is shut, leaving ten paths.  Steps
+# Connected or not -- the check behind the card.  Nothing is imported.  A town's bike tracks: nine
+# junctions, S the station and A to H the rest; the river bridge D-F is shut, leaving ten tracks.  Steps
 # and pieces are found twice, by roads sharing no arithmetic: a flood ring by ring, and every route listed.
 NAMES = "SABCDEFGH"
 OPEN = [("S", "A"), ("S", "B"), ("A", "B"), ("A", "C"), ("B", "D"), ("C", "D"),
@@ -39,19 +39,19 @@ listed = {v: min((len(r) - 1 for r in routes(SHUT, "S", v)), default=-1) for v i
 deep, order = {}, []; dive(SHUT, "S", 0, deep, order)
 to_e = sorted(routes(SHUT, "S", "E"), key=len)
 inside = [e for e in SHUT if e[0] in parts[0] and e[1] in parts[0]]
-print(f"town after the bridge D-F shuts: {len(NAMES)} junctions, {len(SHUT)} paths")
+print(f"town after the bridge D-F shuts: {len(NAMES)} junctions, {len(SHUT)} tracks")
 for k in range(5): print(f"  ring {k} from S: {' '.join(sorted(v for v in NAMES if near[v] == k)) or '(nothing new: it halts)'}")
 print(f"steps from S, flooded:        {show(near)}")
 print(f"the same, every route listed: {show(listed)}")
 print(f"S to E: {len(to_e)} routes exist, the shortest is {'-'.join(to_e[0])} at {len(to_e[0]) - 1} steps")
 print(f"pieces, a fresh flood at each unreached junction: {' | '.join(' '.join(p) for p in parts)}, "
-      f"sizes {len(parts[0])} and {len(parts[1])}")
-print(f"the station's piece holds {len(inside)} of the {len(SHUT)} paths, the other {len(SHUT) - len(inside)} "
-      f"joining F G H; work: {joins} queue places, {len(inside)} paths seen twice = {2 * len(inside)}")
+      f"sizes {' and '.join(str(len(p)) for p in parts)}")
+print(f"the station's piece holds {len(inside)} of the {len(SHUT)} tracks, the other {len(SHUT) - len(inside)} "
+      f"joining F G H; work: {joins} queue places, {len(inside)} tracks seen twice = {2 * len(inside)}")
 print(f"depth-first from S: order {' '.join(order)}, the same {len(order)} junctions, E at depth {deep['E']}, where the flood says {near['E']}")
-print(f"bridge open again: {len(OPEN)} paths, {len(blocks(OPEN))} piece, steps to F G H = "
+print(f"bridge open again: {len(OPEN)} tracks, {len(blocks(OPEN))} piece, steps to F G H = "
       f"{open_d['F']} {open_d['G']} {open_d['H']}, so H is {open_d['H']} steps off, not none")
-print(f"one flood only, no fresh start: 1 piece of {len(parts[0])}, not {len(parts)} pieces sized {len(parts[0])} and {len(parts[1])}")
+print(f"one flood only, no fresh start: 1 piece of {len(parts[0])}, not {len(parts)} pieces sized {' and '.join(str(len(p)) for p in parts)}")
 assert near == listed                                          # two roads, every step count
 assert [len(p) for p in parts] == [6, 3] and set(parts[0]) == {v for v in NAMES if listed[v] >= 0}
 assert order == list("SABDCE") and deep["E"] == 5 and near["E"] == 3

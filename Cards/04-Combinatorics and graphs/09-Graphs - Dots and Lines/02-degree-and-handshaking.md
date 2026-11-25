@@ -8,7 +8,9 @@
 
 Nine people leave a party. Each is asked how many of the others they shook hands with, and each says three. At least one answer is wrong: add them and 9 × 3 = 27. Every handshake was reported twice, so the answers total twice the handshakes. Twice anything is even. 27 is odd.
 
-Parties are incidental. In any network of dots joined by lines — vertices and edges, in the standard words ([Graphs](01-graphs-vertices-and-edges.md)) — the count of line-ends meeting a dot is its **degree**. The degrees add to twice the line count, each line counted at both ends. This shelf's standing example is a six-station metro map: A to F, eight lines, degrees 2, 3, 3, 2, 3, 3, adding to 16 = 2 × 8.
+Parties are incidental. In any network of dots joined by lines — vertices and edges, in the standard words ([Graphs](01-graphs-vertices-and-edges.md)) — the count of line-ends meeting a dot is its **degree**. The degrees add to twice the line count, each line counted at both ends.
+
+This shelf's standing example is a six-station metro map: A to F, eight lines, degrees 2, 3, 3, 2, 3, 3, adding to 16 = 2 × 8.
 
 One more fact follows: odd-degree dots cannot themselves be odd in number, so no network has exactly three. The metro has four.
 
@@ -36,7 +38,9 @@ A and D sit on the ring only, the loop A-B-C-D-E-F-A; B, C, E and F each carry a
 
 ## The formula
 
-Notation first. The degree of a vertex $`v`$ is written $`\deg(v)`$, read "the degree of v". A **loop**, a line from a station back to itself, lays both ends there, adding two. The degrees largest first are the **degree sequence**, here 3, 3, 3, 3, 2, 2. Bars count a set's members, so $`\lvert E\rvert`$ is the line count, 8. A capital sigma says "add one term per item listed underneath", here every vertex $`v`$.
+Notation first. The degree of a vertex $`v`$ is written $`\deg(v)`$, read "the degree of v". A **loop**, a line from a station back to itself, lays both ends there, adding two.
+
+The degrees largest first are the **degree sequence**, here 3, 3, 3, 3, 2, 2. Bars count a set's members, so $`\lvert E\rvert`$ is the line count, 8. A capital sigma says "add one term per item listed underneath", here every vertex $`v`$.
 
 ```math
 \deg(A) + \deg(B) + \cdots + \deg(F) \;=\; 2\lvert E\rvert, \qquad\text{that is}\qquad \sum_{v \in V} \deg(v) \;=\; 2\lvert E\rvert
@@ -98,22 +102,32 @@ Split the vertices by parity of degree: whether the degree is even or odd. The e
 <details>
 <summary>Detailed proof, written out</summary>
 
-Let $`V`$ and $`E`$ be finite, and form one collection: every pair of a vertex and an end of an edge lying at it, a loop contributing two. Grouped by vertex, the group at $`v`$ holds $`\deg(v)`$ members, so the size is $`\sum_{v \in V} \deg(v)`$. Grouped by edge, each group holds two, so the size is $`2\lvert E\rvert`$, and two counts of one collection are equal. The odd-degree vertices, set apart, have degrees adding to $`2\lvert E\rvert`$ less the even degrees, both even; a sum of odd numbers is even only for an even count of them. No step used connectedness or any drawing.
+Let $`V`$ and $`E`$ be finite, and form one collection: every pair of a vertex and an end of an edge lying at it, a loop contributing two. Grouped by vertex, the group at $`v`$ holds $`\deg(v)`$ members, so the size is $`\sum_{v \in V} \deg(v)`$. Grouped by edge, each group holds two, so the size is $`2\lvert E\rvert`$, and two counts of one collection are equal.
+
+The odd-degree vertices, set apart, have degrees adding to $`2\lvert E\rvert`$ less the even degrees, both even. A sum of odd numbers is even only for an even count of them. No step used connectedness or any drawing.
 
 </details>
 
 ### Step 4: what the identity refuses
 
-Read backwards it is a veto. Nine people each shaking three hands need a degree total of 27, not twice any whole number, so no such network exists — and no arrangement helps, since none was assumed. Four hands each gives 36, twice 18: possible, with 18 handshakes. When every degree is the same — a **regular** network — that degree times the vertex count must be even: none has five stations each meeting three lines.
+Read backwards it is a veto. Nine people each shaking three hands need a degree total of 27, not twice any whole number, so no such network exists — and no arrangement helps, since none was assumed. Four hands each gives 36, twice 18: possible, with 18 handshakes.
 
-All 64 networks on four named stations satisfy the identity: 8 with no odd station, 48 with two, 8 with four.
+When every degree is the same — a **regular** network — that degree times the vertex count must be even: none has five stations each meeting three lines.
+
+All 64 simple networks (at most one line per pair, no loops) on four named stations satisfy the identity: 8 with no odd station, 48 with two, 8 with four.
 
 <details>
 <summary>Havel-Hakimi: when a wished-for degree list can be built</summary>
 
-An even total is required and is not enough. Those 64 networks show only 11 degree sequences between them, and 3, 3, 3, 1 — total 10 — is not one. A list some network does realise is **graphic**, the word the code prints.
+An even total is required and is not enough. Those 64 simple networks show only 11 degree sequences between them, and 3, 3, 3, 1 — total 10 — is not one. A list some simple network does realise is **graphic**, the word the code prints.
 
-The test, from Havel and Hakimi, serves the hungriest dot first and never returns to it. Sort the wish largest first; if every entry is 0 it is built. Otherwise zero the largest entry and subtract 1 from that many of the next entries — the hungriest dot joining the next hungriest. Run out, or hit an entry already at 0, and no network exists. On 3, 3, 3, 1 the first dot joins the other three, leaving 2, 2, 0; the next wants two partners and only one dot is still hungry, so it fails. No census is needed, at any size.
+The test, from Havel and Hakimi, serves the hungriest dot first and never returns to it:
+
+1. Sort the wish largest first. If every entry is 0, a simple network is built.
+2. Zero the largest entry and subtract 1 from that many of the next entries — the hungriest dot joining the next hungriest.
+3. Run out, or hit an entry already at 0, and no simple network exists.
+
+On 3, 3, 3, 1 the first dot joins the other three, leaving 2, 2, 0. The next wants two partners and only one dot is still hungry, so it fails. No census is needed, at any size.
 
 </details>
 
@@ -150,7 +164,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The degree total is reached twice by roads sharing no arithmetic: one walks the line list raising a counter at each end, the other adds the station-by-line grid down its columns. A census then tests the identity on all 64 networks on four named stations and collects the degree sequences they show, settling 3, 3, 3, 1 without Havel-Hakimi. Havel-Hakimi builds or refuses four wished-for lists, the first road recomputing the degrees of whatever it builds.
+Nothing is imported. The degree total is reached twice by roads sharing no arithmetic: one walks the line list raising a counter at each end, the other adds the station-by-line grid down its columns.
+
+A census then tests the identity on all 64 simple networks on four named stations and collects the degree sequences they show, settling 3, 3, 3, 1 without Havel-Hakimi. Havel-Hakimi builds or refuses four wished-for lists, the first road recomputing the degrees of whatever it builds.
 
 ### Python
 
@@ -359,7 +375,7 @@ Lean proves these facts for every finite network, not just the metro, with loops
 - The number of odd-degree dots is even.
 - In a regular network, the degree times the number of dots is even.
 
-It also checks the metro exactly: its degrees, its two roads to 16, its four odd stations, the loop and second-track mistakes, and the party numbers. The census of all 64 networks on four stations, and Havel-Hakimi, are left to the Python and Rust checks.
+It also checks the metro exactly: its degrees, its two roads to 16, its four odd stations, the loop and second-track mistakes, and the party numbers. The census of all 64 simple networks on four stations, and Havel-Hakimi, are left to the Python and Rust checks.
 
 ```lean
 -- Degrees and the handshaking lemma: in any finite network of dots and lines, loops and parallel lines allowed, the degrees add to twice the number of lines, so the odd-degree dots are even in number.
@@ -470,8 +486,8 @@ example : ¬ Even (3 * 5) := by decide
 > **Reading the degree total as the number of lines.** The metro's degrees add to 16 and the map has 8 lines: every line was counted twice, so the line count is the degree total halved. Quoting 16 lines, or 8 for the degree total, is one error in two directions.
 >
 > - **Degree read as the number of neighbours.** A second B-C track raises the degree at each end without adding a neighbour.
-> - **Taking an even total as permission to build.** The wish 3, 3, 3, 1 totals 10, and none of the 64 networks on four named stations has those degrees; Havel-Hakimi decides without a census.
-> - **Expecting one odd-degree dot, or three.** Across all 64 networks on four named stations the odd count is 0, 2 or 4 — 8, 48 and 8 of them — never anything else.
+> - **Taking an even total as permission to build.** The wish 3, 3, 3, 1 totals 10, and none of the 64 simple networks on four named stations has those degrees; Havel-Hakimi decides without a census.
+> - **Expecting one odd-degree dot, or three.** Across all 64 simple networks on four named stations the odd count is 0, 2 or 4 — 8, 48 and 8 of them — never anything else.
 
 ---
 
@@ -494,12 +510,13 @@ example : ¬ Even (3 * 5) := by decide
 
 ## Where this goes next
 
+- [Walks, paths and cycles](03-walks-paths-and-cycles.md): travelling the lines and measuring distance in steps.
 - [Euler circuits](../11-Tours%20-%20Euler%20and%20Hamilton/01-euler-circuits.md): degree parity turned into a test for a route using every line once.
 - [Edge colouring](../12-Planarity%20and%20Colouring/06-edge-colouring-and-round-robin.md): how few rounds a fixture list needs, bounded by the largest degree.
 - [Mantel and Turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/05-mantel-and-turan.md): the most lines a network carries with no triangle, argued through degrees.
 - [Random graphs](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/01-random-graphs-erdos-renyi.md): joining pairs at random, and what the degrees then look like.
 
-The lemma allows the metro's four odd stations and says nothing further: what 0, 2 or 4 of them decides about walking the whole map in one trip is [Euler circuits](../11-Tours%20-%20Euler%20and%20Hamilton/01-euler-circuits.md).
+Degrees count the lines at each station without travelling any of them. Next on this shelf, [Walks, paths and cycles](03-walks-paths-and-cycles.md) moves along the lines. Further ahead, [Euler circuits](../11-Tours%20-%20Euler%20and%20Hamilton/01-euler-circuits.md) shows how 0, 2 or 4 odd stations decide whether one trip can walk the whole map.
 
 ---
 

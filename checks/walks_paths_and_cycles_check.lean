@@ -19,7 +19,7 @@ theorem every_walk_contains_a_path {V : Type*} (G : SimpleGraph V) {u v : V} (p 
 
 /-- Distance is the fewest steps, and it behaves like distance. On a graph where every station
 can be reached from every other, the distance d(u, v) is the length of some path from u to v and
-no walk from u to v is shorter; d(u, v) = d(v, u); and going by way of a third station w never
+no walk from u to v is shorter; d(u, v) = d(v, u); and going by way of a third station v never
 saves a step: d(u, w) ≤ d(u, v) + d(v, w). -/
 theorem distance_is_shortest_path_length {V : Type*} (G : SimpleGraph V) (hG : G.Connected)
     (u v w : V) :

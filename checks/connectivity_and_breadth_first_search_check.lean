@@ -88,8 +88,8 @@ theorem flood_card_mem_iff (G : SimpleGraph V) [DecidableRel G.Adj] (v w : V) :
 #print axioms flood_card_mem_iff
 
 /-- Breadth-first search finds the start's piece and the fewest steps. On a finite graph whose
-paths run both ways and all count the same, the flood from `s` has marked a vertex by round `k`
-exactly when some route joins `s` to it and the fewest paths such a route needs is at most `k`
+tracks run both ways and all count the same, the flood from `s` has marked a vertex by round `k`
+exactly when some route joins `s` to it and the fewest tracks such a route needs is at most `k`
 (so a vertex's ring number is its fewest steps). The flood halts: some round adds nothing. And
 whenever a round adds nothing, the marked vertices are exactly those some route joins to `s`. -/
 theorem flood_marks_reachable_numbered_by_fewest_steps (G : SimpleGraph V) [DecidableRel G.Adj]
@@ -156,14 +156,14 @@ theorem connected_iff_flood_marks_all (G : SimpleGraph V) [DecidableRel G.Adj] (
   · intro h
     exact ⟨s, h⟩
 
-/-- The town's eleven cycle paths, junctions numbered S = 0, A = 1, B = 2, C = 3, D = 4, E = 5,
+/-- The town's eleven bike tracks, junctions numbered S = 0, A = 1, B = 2, C = 3, D = 4, E = 5,
 F = 6, G = 7, H = 8. The river bridge D-F is the pair `(4, 6)`. -/
-def openPaths : List (Fin 9 × Fin 9) :=
+def openTracks : List (Fin 9 × Fin 9) :=
   [(0, 1), (0, 2), (1, 2), (1, 3), (2, 4), (3, 4), (3, 5), (4, 5), (4, 6), (6, 7), (7, 8)]
-/-- The ten paths left once the bridge shuts. -/
-def shutPaths : List (Fin 9 × Fin 9) := openPaths.erase (4, 6)
+/-- The ten tracks left once the bridge shuts. -/
+def shutTracks : List (Fin 9 × Fin 9) := openTracks.erase (4, 6)
 
-/-- The town as a graph on its paths, each running both ways. -/
+/-- The town as a graph on its tracks, each running both ways. -/
 def townOf (P : List (Fin 9 × Fin 9)) (hP : ∀ p ∈ P, p.1 ≠ p.2) : SimpleGraph (Fin 9) where
   Adj u v := (u, v) ∈ P ∨ (v, u) ∈ P
   symm := ⟨fun _ _ h => h.symm⟩
@@ -173,34 +173,34 @@ instance (P : List (Fin 9 × Fin 9)) (hP) : DecidableRel (townOf P hP).Adj :=
   fun u v => inferInstanceAs (Decidable ((u, v) ∈ P ∨ (v, u) ∈ P))
 
 /-- The town with the bridge shut, and with it open. -/
-abbrev town : SimpleGraph (Fin 9) := townOf shutPaths (by decide)
-abbrev townOpen : SimpleGraph (Fin 9) := townOf openPaths (by decide)
+abbrev town : SimpleGraph (Fin 9) := townOf shutTracks (by decide)
+abbrev townOpen : SimpleGraph (Fin 9) := townOf openTracks (by decide)
 
--- Nine junctions, ten paths after the bridge shuts.
-example : shutPaths.length = 10 ∧ openPaths.length = 11 := by decide
+-- Nine junctions, ten tracks after the bridge shuts.
+example : shutTracks.length = 10 ∧ openTracks.length = 11 := by decide
 -- Rings 0 to 4 from S: S; A B; C D; E; nothing new, so the flood halts.
 example : flood town 0 0 = {0} := by decide
 example : flood town 0 1 \ flood town 0 0 = {1, 2} := by decide
 example : flood town 0 2 \ flood town 0 1 = {3, 4} := by decide
 example : flood town 0 3 \ flood town 0 2 = {5} := by decide
 example : flood town 0 4 = flood town 0 3 := by decide
--- The station's piece: 1 + 2 + 2 + 1 = 6 junctions, holding 10 − 2 = 8 paths.
+-- The station's piece: 1 + 2 + 2 + 1 = 6 junctions, holding 10 − 2 = 8 tracks.
 example : flood town 0 3 = {0, 1, 2, 3, 4, 5} ∧ (flood town 0 3).card = 6 := by decide
-example : (shutPaths.filter (fun p => p.1 ∈ flood town 0 3 ∧ p.2 ∈ flood town 0 3)).length = 8 := by
+example : (shutTracks.filter (fun p => p.1 ∈ flood town 0 3 ∧ p.2 ∈ flood town 0 3)).length = 8 := by
   decide
--- A fresh start at F marks F, G, H: 3 junctions, 2 paths.
+-- A fresh start at F marks F, G, H: 3 junctions, 2 tracks.
 example : flood town 6 2 = {6, 7, 8} ∧ flood town 6 3 = flood town 6 2 := by decide
-example : (shutPaths.filter (fun p => p.1 ∈ flood town 6 2 ∧ p.2 ∈ flood town 6 2)).length = 2 := by
+example : (shutTracks.filter (fun p => p.1 ∈ flood town 6 2 ∧ p.2 ∈ flood town 6 2)).length = 2 := by
   decide
 -- Two pieces, 6 + 3 = 9: not connected.
 example : (univ.image (fun v => flood town v 9)).card = 2 ∧ 6 + 3 = 9 := by decide
 example : flood town 0 9 ≠ univ := by decide
--- Fewest paths to E is 3, by S-A-C-E.
+-- Fewest tracks to E is 3, by S-A-C-E.
 example : 5 ∉ flood town 0 2 ∧ 5 ∈ flood town 0 3 := by decide
 example : town.Adj 0 1 ∧ town.Adj 1 3 ∧ town.Adj 3 5 := by decide
--- Work: 6 queue places, 8 paths seen twice = 16.
+-- Work: 6 queue places, 8 tracks seen twice = 16.
 example : 2 * 8 = 16 := by decide
--- The dive S-A-B-D-C-E puts E five paths down its chain, against a fewest of three.
+-- The dive S-A-B-D-C-E puts E five tracks down its chain, against a fewest of three.
 example : town.Adj 0 1 ∧ town.Adj 1 2 ∧ town.Adj 2 4 ∧ town.Adj 4 3 ∧ town.Adj 3 5 := by decide
 -- Bridge reopened: one flood covers all nine, F, G, H at 3, 4, 5 steps, one piece.
 example : flood townOpen 0 5 = univ ∧ 8 ∉ flood townOpen 0 4 := by decide
