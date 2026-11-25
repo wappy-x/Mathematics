@@ -102,7 +102,7 @@ No clock now: whole numbers, two unknowns, one equation. That is a **linear Diop
 <details>
 <summary>The same sum, in coins</summary>
 
-Six- and ten-cent coins, a 4-cent bill: four sixes over, two tens back. A 3-cent bill never settles: every mix is even.
+Pay a 4-cent bill using only 6-cent and 10-cent tokens: hand over four 6s (24 cents) and take two 10s back as change (20 cents). A 3-cent bill never settles: every mix of 6s and 10s is even.
 
 </details>
 
@@ -457,7 +457,7 @@ theorem linear_congruence_answers_are_spaced_n_over_gcd (a b n : ℕ) (hn : 0 < 
 
 ## Where you meet it in real life
 
-- **Cycles that must line up.** A 6-tooth advance on a 10-position ratchet reaches only the even stops: the gcd of step and cycle is the ceiling.
+- **Cycles that must line up.** A 6-tooth advance on a 10-position ratchet reaches only the even stops: the gcd of step and cycle, here 2, decides which stops it can reach.
 - **Cutting stock.** 6- and 10-metre lengths never combine to an odd metre count — the Diophantine costume above.
 - **Several clocks at once.** Each is cut to one answer, then stitched: [The Chinese remainder theorem](06-chinese-remainder-theorem.md).
 

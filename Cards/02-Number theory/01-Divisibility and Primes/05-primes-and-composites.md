@@ -69,7 +69,7 @@ Suppose 97 did split: rows times chairs per row, two numbers multiplied. One is 
 
 The short side cannot be big. If it were 10 or more, the long side would be too, and 10 × 10 = 100 is already past 97. So a split of 97 would have a short side of 9 or under — and every number up to 9 has been tried.
 
-**Keep going while the trial divisor times itself is at or below the number; stop the moment it passes.** Eight divisions settle 97. Four would do: once 2 fails, 4, 6 and 8 cannot go in either. Trying them all keeps the rule simple.
+**Keep going while the trial divisor times itself is at or below the number; stop the moment it passes.** Eight divisions settle 97. Four would do: once 2 fails, 4, 6 and 8 cannot go in, and once 3 fails, 9 cannot. Trying them all keeps the rule simple.
 
 ### Where 1 and 2 sit
 
@@ -343,7 +343,7 @@ example : ((Finset.range 100).filter (fun n => 1 < n ∧ n % 2 = 1)).card = 49 :
 
 > [!TIP]
 > **Try changing**
-> Guess first, then run it. The asserts are pinned to the house numbers, so expect one to fire.
+> Guess first, then run it. The asserts are pinned to this card's numbers, so expect one to fire.
 > - **Stop one step early.** In `trials`, change `if d * d > n` to `if d * d >= n`: the trials stop at the number, not past it. 4, 9, 25 and 49 turn prime, because every prime times itself slips through.
 > - **Drop the number itself from the divisor list.** In `divisors`, change `range(1, n + 1)` to `range(1, n)`: 97 shows 1 divisor, the two roads disagree, the assert fires.
 > - **Stop the trials at 5.** In `trials`, change `if d * d > n` to `if d > 5`: 49, 77 and 91 pass as prime, 28 primes below 100.

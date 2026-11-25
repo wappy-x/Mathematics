@@ -381,8 +381,8 @@ example : (1 * 3 * 5 * 7) % 8 = 1 ∧ (1 * 5 * 7 * 11) % 12 = 1 := by decide
 
 ## Where you meet it in real life
 
-- **Proving a number prime on paper.** An exact test both ways, no liars to rule out — unlike Fermat's ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md), [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md)).
-- **Square roots on a prime clock.** Step 1 stands alone: only 1 and the top hour are their own partner, so a square root has two answers or none.
+- **Proving a number prime on paper.** An exact test both ways, with no composite numbers slipping through, unlike Fermat's test ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md), [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md)).
+- **Square roots on a prime clock.** Step 1 stands alone: only 1 and the top hour are their own partner, so a nonzero number has two square roots or none.
 - **Multiplying only the numbers that have an undo.** On a clock that is not prime, multiply just the numbers sharing no factor above 1 with the clock size. They still pair off, but more of them can be their own partner, so the answer can change: an 8-clock and a 12-clock read 1. Only 2, 4, powers of an odd prime, and twice those read -1. These are exactly the clocks with a primitive root ([Which clocks have a primitive root](09-primitive-roots-mod-prime-powers.md)).
 
 > **Say it back**

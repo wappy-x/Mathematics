@@ -10,7 +10,9 @@ On the 7-clock (remainders after dividing by 7), the powers of 3 run 3, 2, 6, 4,
 
 On the 49-clock, 42 remainders share no factor with 49. One test shows 3 visits them all: $`3^6 = 729 = 14 \times 49 + 43`$ leaves 43, not 1.
 
-Some clocks have none: on the 8-clock every odd square leaves 1, short of the 4 steps needed; on the 15-clock, every fourth power, short of 8.
+Only numbers sharing no factor with the clock count here. A number's **order** is its steps back to 1. A **lift** of 3 is a number on a bigger clock leaving 3 on the 7-clock, like 31 on the 49-clock.
+
+Some clocks have none: on the 8-clock every odd square leaves 1, short of 4 steps; on the 15-clock every fourth power does, short of 8.
 
 **A primitive root of an odd prime p lifts to every power of p after one test, and if odd, to twice those; no other clock above 4 has one.**
 
@@ -69,9 +71,9 @@ n = 1,\ 2,\ 4,\ p^k \text{ or } 2p^k
 
 ### Step 0: the order on a bigger clock is squeezed
 
-The order of 3 is its count of steps back to 1. Leaving 1 on the 49-clock means leaving 1 on the 7-clock, so the order on the 49-clock is a multiple of 6.
+Leaving 1 on the 49-clock means leaving 1 on the 7-clock, so the order on the 49-clock is a multiple of 6.
 
-It also divides $`\varphi(49) = 42`$. [Euler's theorem](04-eulers-theorem.md) says $`3^{42}`$ leaves 1, and a run lands on 1 only at multiples of the order ([The order of a number and primitive roots](05-order-and-primitive-roots.md)). So it is 6 or 42. The test rules out 6.
+It also divides $`\varphi(49) = 42`$. [Euler's theorem](04-eulers-theorem.md) says $`3^{42}`$ leaves 1, and a run lands on 1 only at multiples of the order. So it is 6 or 42. The test rules out 6.
 
 ### Step 1: if the test fails, add p
 
@@ -90,7 +92,7 @@ $`p`$ divides neither $`p - 1`$ nor $`g`$, so the added term is no multiple of $
 
 ### Step 2: from 49 to every power of 7
 
-Write 43 as a gap from 1: $`43 = 1 + 6 \times 7`$. Each 7th power adds exactly one more factor of 7 to the gap: $`3^{42}`$ leaves $`295 = 1 + 6 \times 49`$ on the 343-clock. So the gap never closes.
+Write 43 as a gap from 1: $`43 = 1 + 6 \times 7`$. Each 7th power adds one more factor of 7 to the gap: $`3^{42}`$ leaves $`295 = 1 + 6 \times 49`$ on the 343-clock. So the gap never closes.
 
 Step 0's squeeze makes the order on a power of 7 six times a power of 7. Every candidate below phi divides a seventh of phi, where the gap is still open. So the order is phi: 294 on 343, 2058 on 2401.
 
@@ -107,7 +109,7 @@ Every later term is a multiple of $`p^{j+2}`$: middle coefficients like $`\tbino
 
 ### Step 3: the 98-clock
 
-By [The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md), a remainder on the 98-clock is a pair: one on the 2-clock, one on the 49-clock. An odd number leaves 1 on the 2-clock, which never moves. So 3, being odd, keeps order 42 = $`\varphi(98)`$. An even root needs 49 added, to make it odd.
+By [The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md), a remainder on the 98-clock is a pair: one on the 2-clock, one on the 49-clock. An odd number always leaves 1 on the 2-clock. So 3 keeps order 42 = $`\varphi(98)`$. An even root needs 49 added to make it odd.
 
 ### Step 4: the 8-clock
 
@@ -117,7 +119,7 @@ An odd number $`2m + 1`$ squares to $`4m(m+1) + 1`$, and $`m(m+1)`$ is even, so 
 
 $`15 = 3 \times 5`$, and 4 is a multiple of $`\varphi(3) = 2`$ and $`\varphi(5) = 4`$. So every fourth power leaves 1 on both parts: best order 4, but $`\varphi(15) = 8`$.
 
-In general, phi of a number above 2 is even: the numbers sharing no factor with it pair up as x and n minus x. Split a clock into two parts above 2 sharing no factor: the power $`\varphi(n)/2`$ is a multiple of both phis, so it leaves 1 on both. Every clock off Gauss's list splits so, or is 8, 16, 32 and on.
+In general, phi of a number above 2 is even: x and n minus x pair up. Split a clock into two parts above 2 sharing no factor: the power $`\varphi(n)/2`$ is a multiple of both phis, so it leaves 1 on both. Every clock off Gauss's list splits so, or is 8, 16, 32 and on.
 
 ---
 
@@ -132,7 +134,7 @@ In general, phi of a number above 2 is even: the numbers sharing no factor with 
 | orders on 343 and 2401 | equal to phi | 294, 2058 |
 | the 98-clock | 3 is odd | **42, equal to $`\varphi(98)`$** |
 
-3 is a primitive root on every power of 7 and twice each.
+So 3 is primitive on every power of 7 and twice each.
 
 ### What breaks if you drop a piece
 
@@ -260,8 +262,8 @@ ALL CHECKS PASS
 
 Lean proves the card's three claims for every odd prime and every clock size, not just 7.
 
-- Take an odd prime and a primitive root on its clock that passes the test. Then it is a primitive root on every power of that prime, and an odd one on twice each power.
-- Take a primitive root $`g`$ on an odd prime $`p`$-clock. Then $`g`$ or $`g + p`$ passes the test, so one of them is primitive on the p-squared clock.
+- A primitive root of an odd prime that passes the test is primitive on every power of that prime, and an odd one on twice each power.
+- If $`g`$ is a primitive root on an odd prime $`p`$-clock, $`g`$ or $`g + p`$ passes the test.
 - Gauss's list is exact: a clock has a primitive root just when it is 1, 2, 4, an odd prime power, or twice one.
 - It also re-checks the card's numbers: the 7-, 49-, 98- and 343-clocks, the failing lift 31, and the 8- and 15-clocks.
 
@@ -504,7 +506,7 @@ example : (∀ x, x < 15 → Nat.gcd x 15 = 1 → x ^ 4 % 15 = 1) ∧ Nat.totien
 - [Indices](10-discrete-logarithms-and-indices.md): a primitive root turns multiplying into adding exponents.
 - [Carmichael's function](11-carmichael-function.md): the best order on any clock, root or not.
 
-Left open: is 10 a primitive root on infinitely many prime clocks? This is Artin's conjecture, unproved as of 2026-11-23, so the question points beyond this shelf. The next card puts primitive roots to work as the base of clock logarithms.
+Left open: is 10 a primitive root on infinitely many prime clocks? That is Artin's conjecture, still unproved. The next card uses primitive roots as the base of clock logarithms.
 
 ---
 

@@ -492,7 +492,7 @@ example : ((passNumbers 100).foldl (sievePass (fun p => p * p)) (Finset.Icc 1 10
 
 - **Programs wanting many small primes.** Breaking a number into factors starts with a prime list, built faster by a sieve than by testing candidates: [Prime factorisation](07-prime-factorisation.md).
 - **The locks on bank and browser traffic.** Those keys are built from very large primes. Sieving out the small factors first means the costly test runs only on survivors.
-- **Rotas and clashes.** Weeks divisible by 2, 3 or 5 are booked: cross those out, and the free weeks are what is left standing.
+- **Checking a conjecture by computer.** Record searches, like the check of Goldbach's guess up to a 4 with eighteen zeros, sieve each block of numbers for its primes before testing the guess: [Goldbach, twin primes and friends](../07-For%20the%20Curious/04-goldbach-and-open-problems.md).
 
 > **Say it back**
 > 100 lockers, all open. Shut locker 1. Leave the first open door, slam every multiple of it, then move to the next open door. 2, then 3, then 5, then 7. Stop when the next open door times itself passes the end: 11 × 11 = 121. Every slammed door is composite; every composite was slammed by its smallest prime divisor's pass. The 25 still open are the primes.

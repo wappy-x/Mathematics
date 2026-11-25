@@ -357,7 +357,7 @@ example : (2 * 3 : ZMod 6) = 2 * 0 ∧ (3 : ZMod 6) ≠ 0 := by decide
 
 > [!TIP]
 > **Try changing**
-> Guess first, then run. The asserts are pinned to the house numbers, so the first change fires one.
+> Guess first, then run. The asserts are pinned to this card's numbers, so the first change fires one.
 > - **Walk by 6 semitones, not 7.** Change `walk(7, 12)` to `walk(6, 12)`: a tritone comes home after two buckets, 0 and 6.
 > - **Count the zero pairs out of 7.** In Python, change both `zero_pairs(6)` calls in the last print to `zero_pairs(7)` — the label still reads mod 6. Seven is prime, so the count prints 0, as out of 5. Nothing fires: the asserts keep their own 6. In Rust the print and the assert share `z6`, so changing it there fires the assert.
 

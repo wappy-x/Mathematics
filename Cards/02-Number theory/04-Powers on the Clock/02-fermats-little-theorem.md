@@ -333,7 +333,7 @@ example : 2 ^ 11 % 13 = 7 ∧ 2 * 7 = 1 * 13 + 1 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> Guess first, then run it. The asserts are pinned to house numbers, so expect one to fire.
+> Guess first, then run it. The asserts are pinned to this card's numbers, so expect one to fire.
 > - **Start from 3.** Set `BASE` to 3: the row still shuffles, the twelfth power still reads 1, the thousandth still reads 3. Only the first assert fires.
 > - **Move to a 15-dial.** Set `DIAL` to 15. The power, one less than the dial, becomes 14 by itself: the reading is 4, the last wrong answer above.
 

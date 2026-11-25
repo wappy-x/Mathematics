@@ -371,7 +371,7 @@ example : (11 : ZMod 1013) ^ 46 = 1 ∧ ∀ k ∈ Finset.Icc 1 45, (11 : ZMod 10
 
 > [!TIP]
 > **Try changing**
-> Guess first. The asserts are pinned to the house numbers, so one will fire.
+> Guess first. The asserts are pinned to this card's numbers, so one will fire.
 > - **Make the secret 614.** One step further round: it lands on 426, and the walk costs 614.
 > - **Set the clock to 1,013.** The power lands on 969, and the walk finds it in fifteen steps, not 613: there 11's powers reach only 46 slots, so the exponent is no longer unique. A short walk is a broken lock.
 

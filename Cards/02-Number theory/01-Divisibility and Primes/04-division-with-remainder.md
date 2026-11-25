@@ -332,7 +332,7 @@ example : 100 / 60 = 1 ∧ 100 % 60 = 40 := by decide
 
 > [!TIP]
 > **Try changing**
-> Guess first, then run it. The asserts are pinned to the house numbers.
+> Guess first, then run it. The asserts are pinned to this card's numbers.
 > - **Give every year 366 days.** Change the three year lengths to 366, 366, 366. The birthday moves two weekdays a year, and the last assert fires.
 > - **Take 5 away instead of 7.** Call `strip(365, 5)`: a quotient of 73, nothing over, because 5 goes into 365 exactly. A remainder of 0 is the [Divides](01-divides.md) case. This one runs clean.
 

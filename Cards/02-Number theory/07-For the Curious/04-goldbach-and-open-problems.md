@@ -331,8 +331,8 @@ example : 101 + 2 = 103 := by decide
 
 > [!TIP]
 > **Try changing**
-> Guess first, then run it. The asserts are pinned to the house numbers, so one will fire.
-> - **Move the house number.** Ask for the pairs of 102, not 100: eight lines print, still labelled 100 until you change the print too, and the first assert fires.
+> Guess first, then run it. The asserts are pinned to this card's numbers, so one will fire.
+> - **Change the even number.** Ask for the pairs of 102, not 100: eight lines print, still labelled 100 until you change the print too, and the first assert fires.
 > - **Break the second road.** Make the trial-division test answer yes to everything: the roads disagree and the second assert fires.
 
 ---
