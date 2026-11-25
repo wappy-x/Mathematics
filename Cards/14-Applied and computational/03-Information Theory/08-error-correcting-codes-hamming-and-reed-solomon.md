@@ -850,6 +850,7 @@ example : ∀ x ∈ ([1, 2, 4, 8, 3, 6, 12, 11] : List (ZMod 16)), 8 * x ^ 2 + 8
 - [LDPC, turbo and polar codes](09-ldpc-turbo-and-polar-codes-in-outline.md): long codes with sparse check matrices and iterative decoding that run close to capacity.
 - [Two roads and a mutation](../08-Scientific%20Computing%20Practice/06-testing-numerical-code-two-roads-and-mutations.md): this library's practice of checking every claim two ways and breaking the script on purpose, as the check above does with its decoders.
 - [Many users](12-slepian-wolf-and-the-multiple-access-channel.md): compress apart, decode together, and share one channel.
+- [Quantum error correction](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/12-quantum-error-correction-and-fault-tolerance.md): protect a qubit by spreading it out, and the threshold that makes large machines possible.
 
 Hamming (7,4) and Reed-Solomon guarantee repairs against a worst case of t errors; how close a code can come to capacity when errors are random, rather than worst-case, is left open here.
 

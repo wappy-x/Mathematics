@@ -894,6 +894,7 @@ end KolmogorovComplexity
 
 - [Incompressibility](06-incompressibility-and-randomness.md): Step 4's count turned into a definition of a random string, and into a proof method.
 - [Lambda calculus](07-lambda-calculus-in-outline.md): another universal machine, on which the same $`K`$ lives up to a constant.
+- [Kleene's recursion theorem](09-kleene-recursion-theorem.md): every program can get hold of its own code.
 
 Related on this shelf: [Busy beaver](02-the-busy-beaver-function.md) (knowing how long short programs can run would let a search compute $`K`$, so the busy beaver function is uncomputable too) and [Godel's theorems](03-godels-incompleteness-in-outline.md) (formal systems and proofs). Made to search through proofs, the Berry construction gives Chaitin's theorem, stated here with its source (Li and Vitányi): a consistent formal system that proves basic arithmetic, with axioms a program can list, proves $`K(x) > L`$ for no string $`x`$ once $`L`$ passes a fixed level that depends on the system.
 

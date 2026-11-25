@@ -416,6 +416,7 @@ example : 63 % 15 = 3 ∧ 15 % 3 = 0 ∧ Nat.gcd 63 15 = 3 := by
 
 - [Euclid's algorithm](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md): a recursion sure to stop, in daily use.
 - [Transfinite induction](../09-Sizes%20of%20Infinity/07-transfinite-induction-and-recursion.md): induction and recursion carried past every counting number.
+- [Formal proofs and soundness](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/11-formal-deduction-and-soundness.md): rules a machine can check, and why they never prove a falsehood.
 
 Left open: what if a build can go on past every finite step?
 

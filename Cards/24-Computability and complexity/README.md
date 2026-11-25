@@ -6,19 +6,19 @@
 
 Define computation precisely, prove that some problems cannot be solved at all and others cannot be solved fast under standard assumptions, and read P versus NP as a precise statement with a clear account of what is proved around it. Follow randomised, quantum and interactive models well enough to say what each one buys, and read category-theoretic language when it appears.
 
-7 shelves · **57 of 57 cards ready to read**
+7 shelves · **78 of 78 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
 | Shelf | Cards |
 | --- | ---: |
 | [01 · Models of Computation](#s01) | 10 |
-| [02 · Computability and Logic](#s02) | 8 |
-| [03 · Time Complexity](#s03) | 9 |
-| [04 · Beyond Worst Case](#s04) | 8 |
-| [05 · Algebraic, Interactive and Quantum](#s05) | 7 |
+| [02 · Computability and Logic](#s02) | 14 |
+| [03 · Time Complexity](#s03) | 12 |
+| [04 · Beyond Worst Case](#s04) | 12 |
+| [05 · Algebraic, Interactive and Quantum](#s05) | 12 |
 | [06 · Data, Learning and Fine-Grained Complexity](#s06) | 6 |
-| [07 · Category Theory in Outline](#s07) | 9 |
+| [07 · Category Theory in Outline](#s07) | 12 |
 
 <a name="s01"></a>
 
@@ -41,7 +41,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s02"></a>
 
-## 02 · Computability and Logic · 8 cards
+## 02 · Computability and Logic · 14 cards
 
 *decidable against semidecidable, incompleteness, undecidable equations, shortest-program information, and machine-checked proof*
 
@@ -53,12 +53,18 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Incompressibility: almost every file is its own shortest description](02-Computability%20and%20Logic/06-incompressibility-and-randomness.md)
 7. [Lambda calculus: computing with nothing but functions](02-Computability%20and%20Logic/07-lambda-calculus-in-outline.md)
 8. [Proof assistants: a machine checks every step of a proof](02-Computability%20and%20Logic/08-proof-assistants-and-formal-verification.md)
+9. [Kleene's recursion theorem: every program can get hold of its own code](02-Computability%20and%20Logic/09-kleene-recursion-theorem.md)
+10. [Turing degrees and the arithmetical hierarchy: ranking unsolvable problems by oracles and by quantifiers](02-Computability%20and%20Logic/10-turing-degrees-and-the-arithmetical-hierarchy.md)
+11. [Formal proofs and soundness: rules a machine can check, and why they never prove a falsehood](02-Computability%20and%20Logic/11-formal-deduction-and-soundness.md)
+12. [Godel's completeness theorem: whatever is true in every model has a formal proof](02-Computability%20and%20Logic/12-godels-completeness-theorem.md)
+13. [Compactness and Lowenheim-Skolem: finite checks decide everything, and no first-order theory can fix an infinite size](02-Computability%20and%20Logic/13-compactness-and-lowenheim-skolem.md)
+14. [Decidable theories: Presburger's arithmetic without times, and Tarski's real numbers](02-Computability%20and%20Logic/14-decidable-theories-presburger-and-tarski.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s03"></a>
 
-## 03 · Time Complexity · 9 cards
+## 03 · Time Complexity · 12 cards
 
 *cost classes, P and NP, reductions and completeness, Cook-Levin, the classes above NP, and strict hierarchies*
 
@@ -71,12 +77,15 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 7. [SAT solvers: hard in theory, often easy on the instance in hand](03-Time%20Complexity/07-sat-solvers-and-hard-problems-in-practice.md)
 8. [Above NP: alternating there-exists and for-all, and memory instead of time](03-Time%20Complexity/08-conp-pspace-and-the-polynomial-hierarchy.md)
 9. [Hierarchy and Ladner: more time really helps, and middle ground must exist](03-Time%20Complexity/09-time-hierarchy-and-ladners-theorem.md)
+10. [Logarithmic space: L and NL, where a few counters are all the memory you get](03-Time%20Complexity/10-logarithmic-space-l-and-nl.md)
+11. [NL = coNL: a guessing machine can certify that no path exists, by counting](03-Time%20Complexity/11-immerman-szelepcsenyi-theorem.md)
+12. [Space hierarchy: more memory really helps, and L is strictly smaller than PSPACE](03-Time%20Complexity/12-space-hierarchy-theorem.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s04"></a>
 
-## 04 · Beyond Worst Case · 8 cards
+## 04 · Beyond Worst Case · 12 cards
 
 *approximation with guarantees, coin flips, a second parameter, average-case hardness, lower bounds, and the barriers around P versus NP*
 
@@ -88,12 +97,16 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Average-case hardness: hard on the inputs you actually draw](04-Beyond%20Worst%20Case/06-average-case-and-cryptographic-hardness.md)
 7. [Circuit lower bounds: counting gates to prove nothing can be fast](04-Beyond%20Worst%20Case/07-circuit-complexity-and-lower-bounds.md)
 8. [P versus NP: the precise statement, and the barriers that block proof](04-Beyond%20Worst%20Case/08-p-versus-np-what-is-known.md)
+9. [Proof complexity: how long must a refutation be, and why that is NP versus coNP in disguise](04-Beyond%20Worst%20Case/09-proof-complexity-and-resolution.md)
+10. [Total search problems: a solution always exists, yet finding it may be hard](04-Beyond%20Worst%20Case/10-total-search-problems-and-ppad.md)
+11. [Randomness extractors: squeeze nearly perfect coin flips out of a biased source](04-Beyond%20Worst%20Case/11-randomness-extractors.md)
+12. [Boolean functions: decision trees, Fourier coefficients, and Huang's sensitivity theorem](04-Beyond%20Worst%20Case/12-boolean-functions-fourier-and-sensitivity.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s05"></a>
 
-## 05 · Algebraic, Interactive and Quantum · 7 cards
+## 05 · Algebraic, Interactive and Quantum · 12 cards
 
 *gates and depth, counting rather than deciding, permanent against determinant, proof by conversation or spot check, and quantum circuits*
 
@@ -104,6 +117,11 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Qubits: a unit vector of amplitudes, read once and collapsed](05-Algebraic%2C%20Interactive%20and%20Quantum/05-qubits-superposition-and-measurement.md)
 6. [BQP: what a quantum circuit does and does not speed up](05-Algebraic%2C%20Interactive%20and%20Quantum/06-quantum-computation-and-bqp.md)
 7. [Shor and Grover: period finding breaks RSA, search gains a square root](05-Algebraic%2C%20Interactive%20and%20Quantum/07-shors-and-grovers-algorithms.md)
+8. [P/poly: circuits with advice, why randomness fits inside, and Karp-Lipton](05-Algebraic%2C%20Interactive%20and%20Quantum/08-non-uniform-complexity-p-poly-and-karp-lipton.md)
+9. [NC and P-completeness: what parallel machines do fast, and what seems stubbornly sequential](05-Algebraic%2C%20Interactive%20and%20Quantum/09-parallel-complexity-nc-and-p-completeness.md)
+10. [Arthur-Merlin and two provers: public coins, separate questioning, and MIP = NEXP](05-Algebraic%2C%20Interactive%20and%20Quantum/10-arthur-merlin-and-multi-prover-interactive-proofs.md)
+11. [Quantum limits: why Grover cannot be beaten, and QMA, the quantum NP](05-Algebraic%2C%20Interactive%20and%20Quantum/11-quantum-lower-bounds-and-qma.md)
+12. [Quantum error correction: protect a qubit by spreading it out, and the threshold that makes large machines possible](05-Algebraic%2C%20Interactive%20and%20Quantum/12-quantum-error-correction-and-fault-tolerance.md)
 
 [↑ Back to the shelves](#top)
 
@@ -124,7 +142,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s07"></a>
 
-## 07 · Category Theory in Outline · 9 cards
+## 07 · Category Theory in Outline · 12 cards
 
 *categories and functors, naturality, universal properties, adjunctions, monoids and monads, folds, and side-by-side composition*
 
@@ -137,6 +155,9 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 7. [Monoids and monads: combining values, and sequencing steps that can fail](07-Category%20Theory%20in%20Outline/07-monoids-and-monads-for-programmers.md)
 8. [F-algebras: one step of a recursive structure, then folded away](07-Category%20Theory%20in%20Outline/08-f-algebras-and-folds.md)
 9. [Monoidal categories: things side by side, drawn as parallel wires](07-Category%20Theory%20in%20Outline/09-monoidal-categories-and-string-diagrams.md)
+10. [Equivalence of categories: the right notion of 'the same', weaker than isomorphism](07-Category%20Theory%20in%20Outline/10-equivalence-of-categories.md)
+11. [Cartesian closed categories: where functions are objects, and proofs are programs](07-Category%20Theory%20in%20Outline/11-cartesian-closed-categories-and-curry-howard.md)
+12. [Kan extensions: the best way to extend a functor along another, and why limits and adjoints are special cases](07-Category%20Theory%20in%20Outline/12-kan-extensions.md)
 
 [↑ Back to the shelves](#top)
 

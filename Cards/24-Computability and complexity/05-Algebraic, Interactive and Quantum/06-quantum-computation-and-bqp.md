@@ -905,6 +905,8 @@ end QuantumBQP
 
 - [Shor and Grover](07-shors-and-grovers-algorithms.md): the two algorithms that make BQP matter, period finding that factors and search that gains a square root.
 - [Quantum advantage](../../25-Frontier/07-Physics%2C%20Finance%20and%20Machines/01-quantum-supremacy-and-bqp.md): which tasks a real device has done that classical machines cannot match, and how such claims are checked.
+- [Quantum limits](11-quantum-lower-bounds-and-qma.md): why Grover cannot be beaten, and QMA, the quantum NP.
+- [Quantum error correction](12-quantum-error-correction-and-fault-tolerance.md): protect a qubit by spreading it out, and the threshold that makes large machines possible.
 
 Left open: does BQP contain a problem outside BPP? Factoring is the best candidate, but no one has proved it hard for classical machines.
 

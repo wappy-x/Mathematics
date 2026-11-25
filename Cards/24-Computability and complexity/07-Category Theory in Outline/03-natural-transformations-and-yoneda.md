@@ -662,6 +662,8 @@ example : Fintype.card (Fin 6 → Fin 6) = 46656 := by simp
 ## Where this goes next
 
 - [Universal properties](04-universal-properties-limits-and-colimits.md): defining an object by the arrows into or out of it, which Yoneda shows pins the object down to a unique renaming.
+- [Equivalence of categories](10-equivalence-of-categories.md): the right notion of 'the same', weaker than isomorphism.
+- [Kan extensions](12-kan-extensions.md): the best way to extend a functor along another, and why limits and adjoints are special cases.
 
 Elsewhere on the shelf, [Adjunctions](06-adjunctions.md) are natural matches between two kinds of arrows, and [Monoids and monads](07-monoids-and-monads-for-programmers.md) and [F-algebras](08-f-algebras-and-folds.md) build on natural families of list functions.
 

@@ -815,6 +815,9 @@ example : (queue 5).idxOf [1, 4, 1, 5, 6] + 1 = 2304 := by decide +kernel
 ## Where this goes next
 
 - [Busy beaver](02-the-busy-beaver-function.md): the longest any halting program of a given size runs. Knowing that number would turn "still running after N steps" into a proof of "never".
+- [Kleene's recursion theorem](09-kleene-recursion-theorem.md): every program can get hold of its own code.
+- [Turing degrees and the arithmetical hierarchy](10-turing-degrees-and-the-arithmetical-hierarchy.md): ranking unsolvable problems by oracles and by quantifiers.
+- [Godel's completeness theorem](12-godels-completeness-theorem.md): whatever is true in every model has a formal proof.
 
 The lister confirms every yes in time but cannot say how long a yes may take; the open question is how fast that waiting time grows with program size.
 

@@ -381,6 +381,7 @@ example : 3 + 4 = 7 ∧ 3 * 4 = 12 ∧ Fintype.card (Fin 3 → Bool) = 8 := by d
 ## Where this goes next
 
 - [The continuum hypothesis](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/02-continuum-hypothesis-and-independence.md): whether $`2^{\aleph_0} = \aleph_1`$, and why it cannot be settled.
+- [Compactness and Lowenheim-Skolem](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/13-compactness-and-lowenheim-skolem.md): finite checks decide everything, and no first-order theory can fix an infinite size.
 
 Left open: which aleph is the line?
 

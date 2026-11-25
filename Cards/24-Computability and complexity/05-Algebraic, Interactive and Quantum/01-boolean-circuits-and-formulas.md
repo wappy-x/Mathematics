@@ -1649,6 +1649,8 @@ end BooleanCircuits
 
 - [Counting](02-counting-solutions-and-sharp-p.md): instead of asking whether some input makes a formula output 1, ask how many inputs do.
 - [Qubits](05-qubits-superposition-and-measurement.md): gates that act on qubits instead of bits, with size and depth counted the same way. The shelf's two-qubit circuit starts there.
+- [P/poly](08-non-uniform-complexity-p-poly-and-karp-lipton.md): circuits with advice, why randomness fits inside, and Karp-Lipton.
+- [NC and P-completeness](09-parallel-complexity-nc-and-p-completeness.md): what parallel machines do fast, and what seems stubbornly sequential.
 
 This card counts gates for one function at a time. It leaves open whether any problem in NP needs circuits of more than polynomial size, which is the circuit form of P versus NP and is unproved as of 2026-11-11.
 

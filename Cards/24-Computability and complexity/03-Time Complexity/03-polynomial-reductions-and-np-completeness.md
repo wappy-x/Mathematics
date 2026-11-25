@@ -791,6 +791,9 @@ example : 4 * 3 / 2 = 6 ∧ 9 * 8 / 2 = 36 := by decide
 - [SAT solvers](07-sat-solvers-and-hard-problems-in-practice.md): why NP-complete problems are often solved fast on the instances that arise.
 - [Pseudo-polynomial time](06-pseudo-polynomial-time-and-numbers-in-the-input.md): what the input length means when numbers are written in the input.
 - [P versus NP](../04-Beyond%20Worst%20Case/08-p-versus-np-what-is-known.md): what is known about the conjecture every NP-completeness proof leans on.
+- [Logarithmic space](10-logarithmic-space-l-and-nl.md): L and NL, where a few counters are all the memory you get.
+- [Total search problems](../04-Beyond%20Worst%20Case/10-total-search-problems-and-ppad.md): a solution always exists, yet finding it may be hard.
+- [NC and P-completeness](../05-Algebraic%2C%20Interactive%20and%20Quantum/09-parallel-complexity-nc-and-p-completeness.md): what parallel machines do fast, and what seems stubbornly sequential.
 
 The question this card leaves open: every arrow here starts from a problem already known to be hard, so where does the first hard problem come from?
 

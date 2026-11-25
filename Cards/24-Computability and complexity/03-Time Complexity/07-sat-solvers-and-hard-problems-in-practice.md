@@ -1108,6 +1108,7 @@ example : (dpll league (numVars league + 1) (fun _ => none)).isSome = true := by
 
 - [Above NP](08-conp-pspace-and-the-polynomial-hierarchy.md): the next card. A "no schedule" answer is a coNP question, and its proofs can be long, as the squeezed league shows.
 - [Hierarchy and Ladner](09-time-hierarchy-and-ladners-theorem.md): proved limits on what more time can buy.
+- [Proof complexity](../04-Beyond%20Worst%20Case/09-proof-complexity-and-resolution.md): how long must a refutation be, and why that is NP versus coNP in disguise.
 
 The question this card leaves open: the squeezed league has a one-line counting proof, yet the solver's proof grows exponentially, so how short can a proof of "no" be?
 

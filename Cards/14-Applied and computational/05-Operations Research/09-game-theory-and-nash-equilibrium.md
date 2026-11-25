@@ -904,6 +904,7 @@ example : (1500 - 1200 : ℤ) = 300 := by norm_num
 - [Saddle points](../../15-Optimization/03-Constrained%20Optimisation/06-saddle-points-and-minimax.md): the minimax theorem, which proves that in every zero-sum game the kicker's best guarantee equals the keeper's best hold, as the grid found at 79.58%.
 - [Games in turns](11-extensive-form-games-and-subgame-perfection.md): draw the tree, solve from the leaves, and ignore empty threats.
 - [Sharing a joint cost](12-cooperative-games-shapley-value-and-core.md): the Shapley value and the core.
+- [Total search problems](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/10-total-search-problems-and-ppad.md): a solution always exists, yet finding it may be hard.
 
 The card leaves open which equilibrium players reach when a game has several, as the vicious price war does.
 

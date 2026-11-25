@@ -892,6 +892,8 @@ example : 389921 * 8 = 3119368 := by norm_num
 ## Where this goes next
 
 - [Streaming](../../24-Computability%20and%20complexity/06-Data%2C%20Learning%20and%20Fine-Grained%20Complexity/01-streaming-and-sketching.md): methods that see each item once in a stream too large to store, of which these sketches are the first examples, with frequency counts and heavy hitters added.
+- [Randomness extractors](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/11-randomness-extractors.md): squeeze nearly perfect coin flips out of a biased source.
+- [Arthur-Merlin and two provers](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/10-arthur-merlin-and-multi-prover-interactive-proofs.md): public coins, separate questioning, and MIP = NEXP.
 
 The question this card leaves open: how small can a sketch be and still count to within a chosen error, and which sketches can be merged, subtracted or intersected without losing that promise?
 

@@ -496,6 +496,7 @@ example : let σ : Perm (Fin 4) := c[0, 1] * c[2, 3]; let τ : Perm (Fin 4) := c
 - [Composition series](14-composition-series-and-jordan-holder.md): breaking any finite group into simple pieces, with $`A_5`$ as a piece that never breaks further.
 - [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): the chain of collapses for five roots, where this card's group blocks the way.
 - [Solvable by radicals](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/07-solvability-by-radicals-and-the-quintic.md): the bridge from equations to their groups of shuffles.
+- [NC and P-completeness](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/09-parallel-complexity-nc-and-p-completeness.md): what parallel machines do fast, and what seems stubbornly sequential.
 
 Which other finite groups are simple, and is the list complete, is the question this card leaves open.
 

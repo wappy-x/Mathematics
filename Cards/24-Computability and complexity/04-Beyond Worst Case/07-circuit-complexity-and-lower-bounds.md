@@ -1166,6 +1166,10 @@ end CircuitLowerBounds
 - [P versus NP](08-p-versus-np-what-is-known.md): the precise question, the three barriers that block restriction-style proofs, and what a circuit lower bound for NP would settle.
 - [Average-case hardness](06-average-case-and-cryptographic-hardness.md): hardness on typical inputs, the kind cryptography needs.
 - [Boolean circuits](../05-Algebraic%2C%20Interactive%20and%20Quantum/01-boolean-circuits-and-formulas.md): gates, size and depth as a cost model in their own right, with two-input gates.
+- [Proof complexity](09-proof-complexity-and-resolution.md): how long must a refutation be, and why that is NP versus coNP in disguise.
+- [Boolean functions](12-boolean-functions-fourier-and-sensitivity.md): decision trees, Fourier coefficients, and Huang's sensitivity theorem.
+- [P/poly](../05-Algebraic%2C%20Interactive%20and%20Quantum/08-non-uniform-complexity-p-poly-and-karp-lipton.md): circuits with advice, why randomness fits inside, and Karp-Lipton.
+- [NC and P-completeness](../05-Algebraic%2C%20Interactive%20and%20Quantum/09-parallel-complexity-nc-and-p-completeness.md): what parallel machines do fast, and what seems stubbornly sequential.
 
 The question this card leaves open: can anyone name a function in NP that provably needs more than a few gates per input in circuits of unlimited depth?
 

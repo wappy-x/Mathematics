@@ -696,6 +696,8 @@ example : 2 * 0 + 107 + 1 = 108 := by norm_num
 - [Decidable and semidecidable](../02-Computability%20and%20Logic/01-decidable-and-semidecidable-sets.md): the sets with programs that answer yes when the answer is yes, and the complement trick used in Case 2.
 - [Hilbert's tenth problem](../02-Computability%20and%20Logic/04-hilberts-tenth-problem.md): a reduction from HALT into whole-number equations.
 - [Reductions](../03-Time%20Complexity/03-polynomial-reductions-and-np-completeness.md): the same conversion, made fast, to compare problems by time instead of possibility.
+- [Kleene's recursion theorem](../02-Computability%20and%20Logic/09-kleene-recursion-theorem.md): every program can get hold of its own code.
+- [Turing degrees and the arithmetical hierarchy](../02-Computability%20and%20Logic/10-turing-degrees-and-the-arithmetical-hierarchy.md): ranking unsolvable problems by oracles and by quantifiers.
 
 DELETES is undecidable, but a program can still confirm a yes by running the macro until it deletes; which undecidable sets still allow that one-sided answer?
 

@@ -799,6 +799,8 @@ P, NP, reductions and SAT are defined on shelf 03: [P and NP](../03-Time%20Compl
 
 - [Fine-grained complexity](../06-Data%2C%20Learning%20and%20Fine-Grained%20Complexity/06-fine-grained-complexity-and-seth.md): ETH and SETH turned into exact floors for problems inside P, such as quadratic edit distance.
 - [P versus NP](../../25-Frontier/02-The%20Millennium%20Problems/03-p-versus-np.md): the frontier card, which reads the question as a Millennium problem and cites the barriers from this card.
+- [Proof complexity](09-proof-complexity-and-resolution.md): how long must a refutation be, and why that is NP versus coNP in disguise.
+- [Total search problems](10-total-search-problems-and-ppad.md): a solution always exists, yet finding it may be hard.
 
 Other cards on this shelf: [Approximation](01-approximation-and-hardness-of-approximation.md), with the unique games conjecture (unproved as of 2026-11-11); [Relaxation and rounding](02-relaxation-and-rounding.md); [BPP](03-randomised-complexity-and-bpp.md); [Pseudorandomness](04-derandomisation-and-pseudorandomness.md); [Parameterised complexity](05-parameterised-complexity.md); [Average-case hardness](06-average-case-and-cryptographic-hardness.md).
 

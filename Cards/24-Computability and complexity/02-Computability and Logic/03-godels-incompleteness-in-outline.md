@@ -67,7 +67,7 @@ Here $`G_R`$ is Rosser's version of $`G`$ (Step 4 below), and $`\mathrm{Con}(F)`
 ### When it holds
 
 - **A program can list the axioms.** Take every true sentence of arithmetic as an axiom and the system is complete, but no program can list those axioms. The first theorem says exactly that this set is not listable.
-- **Times is in the system.** With 0, next and plus only, arithmetic is complete and decidable (Presburger, 1929). Without times, no formula can pick out digit $`k`$ of a number, so sentences and proofs cannot be described.
+- **Times is in the system.** With 0, next and plus only, arithmetic is complete and decidable (Presburger, 1929; see [Decidable theories](14-decidable-theories-presburger-and-tarski.md)). Without times, no formula can pick out digit $`k`$ of a number, so sentences and proofs cannot be described.
 - **The system is consistent.** An inconsistent system proves every sentence, $`G`$ included. The code adds the axiom 0 = S0, and its checker accepts a proof that 2 × 2 = 5.
 - **Plain consistency is enough only for Rosser's sentence.** Godel's own $`G`$ needs a stronger condition (ω-consistency, below) to rule out a proof of $`\neg G`$.
 - **The usual proof of the second theorem needs induction.** $`F`$ must prove the first theorem's argument about itself. PA can; Robinson's Q (plus and times, no induction) cannot.
@@ -898,6 +898,11 @@ end GodelCard
 - [Hilbert's tenth problem](04-hilberts-tenth-problem.md): the unsettled sentences can be whole-number equations, and no program can test whether one has a solution.
 - [Proof assistants](08-proof-assistants-and-formal-verification.md): proof checkers in practice, and what they can and cannot certify.
 - [The continuum hypothesis](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/02-continuum-hypothesis-and-independence.md): a natural question that the standard axioms for sets do not settle.
+- [Kleene's recursion theorem](09-kleene-recursion-theorem.md): every program can get hold of its own code.
+- [Turing degrees and the arithmetical hierarchy](10-turing-degrees-and-the-arithmetical-hierarchy.md): ranking unsolvable problems by oracles and by quantifiers.
+- [Formal proofs and soundness](11-formal-deduction-and-soundness.md): rules a machine can check, and why they never prove a falsehood.
+- [Compactness and Lowenheim-Skolem](13-compactness-and-lowenheim-skolem.md): finite checks decide everything, and no first-order theory can fix an infinite size.
+- [Decidable theories](14-decidable-theories-presburger-and-tarski.md): Presburger's arithmetic without times, and Tarski's real numbers.
 
 The question this card leaves open: which concrete, natural questions of ordinary mathematics are unprovable, and not only sentences built to talk about themselves?
 

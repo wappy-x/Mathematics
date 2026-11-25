@@ -352,6 +352,7 @@ example : ∀ a b c : Bool,
 ## Where this goes next
 
 - [Valid arguments](06-valid-arguments.md): what follows from a claim once you know whether it is an "every" or a "some".
+- [Turing degrees and the arithmetical hierarchy](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/10-turing-degrees-and-the-arithmetical-hierarchy.md): ranking unsolvable problems by oracles and by quantifiers.
 
 This card shows how to knock a claim down. It leaves open which steps are safe when you build a new claim up from true ones.
 

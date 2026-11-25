@@ -586,6 +586,7 @@ example : ((-20 : ℝ) - 10) / 10 = -3 ∧ ((-20 : ℝ) + 10) / 10 = -1 ∧
 - [The fundamental theorem of algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md): where the answers go when the discriminant is negative.
 - [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): degree 3 and 4 have formulas like this one; degree 5 provably has none.
 - [Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): a 2 by 2 matrix hands you a quadratic; this formula finishes it.
+- [Decidable theories](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/14-decidable-theories-presburger-and-tarski.md): Presburger's arithmetic without times, and Tarski's real numbers.
 
 Left open: when the discriminant is below zero, as at 25 metres, are there truly no answers, or do they live off the number line?
 

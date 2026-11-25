@@ -833,6 +833,8 @@ example : 2 ^ 49 = 562949953421312 ∧ 16 * 2 ^ 50 = 18014398509481984 := by nor
 ## Where this goes next
 
 - [BQP](06-quantum-computation-and-bqp.md): circuits of many such gates as a model of computation, and what they can and cannot speed up.
+- [Arthur-Merlin and two provers](10-arthur-merlin-and-multi-prover-interactive-proofs.md): public coins, separate questioning, and MIP = NEXP.
+- [Quantum error correction](12-quantum-error-correction-and-fault-tolerance.md): protect a qubit by spreading it out, and the threshold that makes large machines possible.
 
 The other cards on this shelf, for comparison: [Counting](02-counting-solutions-and-sharp-p.md), [Permanent against determinant](03-algebraic-complexity-permanent-versus-determinant.md), [Interactive proofs](04-interactive-proofs-ip-pspace-and-the-pcp-theorem.md) and [Shor and Grover](07-shors-and-grovers-algorithms.md).
 

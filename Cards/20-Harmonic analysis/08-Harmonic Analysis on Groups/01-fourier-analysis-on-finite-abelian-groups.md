@@ -1016,6 +1016,7 @@ example : ((Finset.univ : Finset (ZMod 12)).filter (fun j => 3 * j = 0)) = {0, 4
 - [Dirichlet characters](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/01-dirichlet-characters.md): characters of the units of a clock, which pick out primes in one remainder class.
 - [Gauss sums](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/06-gauss-sums.md): a character of addition against a character of multiplication, with an exact size.
 - [Interactive proofs](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/04-interactive-proofs-ip-pspace-and-the-pcp-theorem.md): proofs checked by a few spot tests, where tests like the linearity test do the work.
+- [Boolean functions](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/12-boolean-functions-fourier-and-sensitivity.md): decision trees, Fourier coefficients, and Huang's sensitivity theorem.
 
 The question this card leaves open: the circle has infinitely many members, so what average replaces $`1/\lvert G\rvert`$ and keeps Steps 3 to 5 true?
 

@@ -708,6 +708,8 @@ Each line lists the axioms one theorem rests on: some of Lean's three standard a
 - [Fermat's last theorem, proved in 1995 and reported formalised in 2026](../../25-Frontier/03-Primes%20and%20Numbers/06-fermats-last-theorem-formalised.md): what a large formalisation claims, and how to read the claim.
 - [Machines that prove](../../25-Frontier/07-Physics%2C%20Finance%20and%20Machines/02-ai-and-mathematics-2026.md): programs that search for proofs, with a kernel still doing the checking.
 - [The September 2026 Navier-Stokes claim](../../25-Frontier/05-Analysis%20and%20Dynamics/01-navier-stokes-blow-up-claim-2026.md): a case study in asking "what exactly was checked?"
+- [Formal proofs and soundness](11-formal-deduction-and-soundness.md): rules a machine can check, and why they never prove a falsehood.
+- [Cartesian closed categories](../07-Category%20Theory%20in%20Outline/11-cartesian-closed-categories-and-curry-howard.md): where functions are objects, and proofs are programs.
 
 A kernel can confirm a proof quickly, but finding one is still hard; the open question is how much of that search machines can take over.
 

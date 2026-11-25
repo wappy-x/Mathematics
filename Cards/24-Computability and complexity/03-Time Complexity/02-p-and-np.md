@@ -947,6 +947,8 @@ end PAndNP
 - [BPP](../04-Beyond%20Worst%20Case/03-randomised-complexity-and-bpp.md): problems solved quickly by a machine that flips coins and may err with small probability.
 - [Graph isomorphism](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/04-graph-isomorphism.md): a problem in NP that is not known to be in P and not known to be NP-complete.
 - [P versus NP](../04-Beyond%20Worst%20Case/08-p-versus-np-what-is-known.md): the precise open question and the barriers that block a proof.
+- [Space hierarchy](12-space-hierarchy-theorem.md): more memory really helps, and L is strictly smaller than PSPACE.
+- [Total search problems](../04-Beyond%20Worst%20Case/10-total-search-problems-and-ppad.md): a solution always exists, yet finding it may be hard.
 
 Left open: does SUDOKU, or any problem in NP, need more than polynomial time?
 

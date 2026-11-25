@@ -465,6 +465,7 @@ example : [1, 0, 3, 5, 5].map (fun d => (d + 1) % 10) = [2, 1, 4, 6, 6] := by de
 
 - [Comparing infinities](04-comparing-infinities.md): fits-both-ways means equal size; every set is smaller than its collection of subsets.
 - [Cardinal arithmetic](09-cardinal-arithmetic.md): alephs, why aleph-null plus or times aleph-null is aleph-null, and two to the aleph-null is the line.
+- [Compactness and Lowenheim-Skolem](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/13-compactness-and-lowenheim-skolem.md): finite checks decide everything, and no first-order theory can fix an infinite size.
 
 Left open: is there an infinity between the counting numbers and the reals?
 

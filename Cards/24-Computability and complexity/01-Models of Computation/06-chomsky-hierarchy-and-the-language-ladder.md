@@ -1388,6 +1388,7 @@ example : 4 + 3 + 1 = 8 ∧ 4 + 1 = 5 := by norm_num
 - [Universal machines](09-universal-machines-and-the-halting-problem.md): the proof that HALT, for pairs of machine and input, cannot be decided; Step 4 carries it to the blank tape for the top step of this ladder.
 - [Church-Turing thesis](08-church-turing-thesis.md): why rung 0 is taken as the limit of every reasonable machine, and why that is a thesis, not a theorem.
 - [Decidable and semidecidable](../02-Computability%20and%20Logic/01-decidable-and-semidecidable-sets.md): the decidable languages, which sit strictly between rungs 1 and 0.
+- [NL = coNL](../03-Time%20Complexity/11-immerman-szelepcsenyi-theorem.md): a guessing machine can certify that no path exists, by counting.
 
 The question this card leaves open: can every pattern checked by a guessing tape machine in the input's own cells also be checked without guessing in the same cells? This is the LBA problem, asked by Kuroda in 1964 and unsolved as of 2026-11-19.
 

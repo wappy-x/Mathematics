@@ -380,6 +380,7 @@ example : (fractionQueue 4).tail[1]? = some (1, 2) ∧ (fractionQueue 4).tail[2]
 
 - [Cantor's diagonal](03-cantors-diagonal-argument.md): the guests who cannot be queued at all. Every list of the real numbers misses one, built out of the list itself.
 - [Cardinal arithmetic](09-cardinal-arithmetic.md): alephs, why aleph-null plus or times aleph-null is aleph-null, and two to the aleph-null is the line.
+- [Godel's completeness theorem](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/12-godels-completeness-theorem.md): whatever is true in every model has a formal proof.
 
 Left open: does every infinite set fit in one queue?
 

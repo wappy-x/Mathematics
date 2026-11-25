@@ -904,6 +904,8 @@ end LambdaOutline
 ## Where this goes next
 
 - [Proof assistants](08-proof-assistants-and-formal-verification.md): give every term a type, written a : A, and a term becomes a proof; a checker verifies it by checking its type, using reduction along the way.
+- [Kleene's recursion theorem](09-kleene-recursion-theorem.md): every program can get hold of its own code.
+- [Cartesian closed categories](../07-Category%20Theory%20in%20Outline/11-cartesian-closed-categories-and-curry-howard.md): where functions are objects, and proofs are programs.
 
 The question this card leaves open: if every term must carry a type, which programs are lost, and is the guarantee that every reduction stops worth the loss?
 

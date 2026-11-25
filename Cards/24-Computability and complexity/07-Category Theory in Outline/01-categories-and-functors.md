@@ -797,6 +797,7 @@ example : flipMap (![0, 1, 0] : Fin 3 → Fin 2) {0, 1, 2} = {1} ∧
 ## Where this goes next
 
 - [Commutative diagrams](02-commutative-diagrams-and-duality.md): draws the laws as diagrams of arrows, and turns every arrow round to get a second category from each.
+- [Equivalence of categories](10-equivalence-of-categories.md): the right notion of 'the same', weaker than isomorphism.
 
 The shelf goes on to [Natural transformations and Yoneda](03-natural-transformations-and-yoneda.md), [Universal properties](04-universal-properties-limits-and-colimits.md), [Pullbacks and pushouts](05-pullbacks-pushouts-and-gluing.md), [Adjunctions](06-adjunctions.md), [Monoids and monads](07-monoids-and-monads-for-programmers.md), [F-algebras](08-f-algebras-and-folds.md) and [Monoidal categories](09-monoidal-categories-and-string-diagrams.md).
 

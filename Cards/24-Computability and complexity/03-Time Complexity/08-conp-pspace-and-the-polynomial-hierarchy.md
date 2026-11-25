@@ -941,6 +941,13 @@ end AboveNP
 
 - [Hierarchy and Ladner](09-time-hierarchy-and-ladners-theorem.md): the proof that more time buys more, so P ≠ EXP and n by n draughts is provably hard.
 - [Interactive proofs](../05-Algebraic%2C%20Interactive%20and%20Quantum/04-interactive-proofs-ip-pspace-and-the-pcp-theorem.md): a verifier that may ask questions of a prover, a two-player game whose power turns out to equal PSPACE.
+- [Logarithmic space](10-logarithmic-space-l-and-nl.md): L and NL, where a few counters are all the memory you get.
+- [NL = coNL](11-immerman-szelepcsenyi-theorem.md): a guessing machine can certify that no path exists, by counting.
+- [Space hierarchy](12-space-hierarchy-theorem.md): more memory really helps, and L is strictly smaller than PSPACE.
+- [Proof complexity](../04-Beyond%20Worst%20Case/09-proof-complexity-and-resolution.md): how long must a refutation be, and why that is NP versus coNP in disguise.
+- [Total search problems](../04-Beyond%20Worst%20Case/10-total-search-problems-and-ppad.md): a solution always exists, yet finding it may be hard.
+- [P/poly](../05-Algebraic%2C%20Interactive%20and%20Quantum/08-non-uniform-complexity-p-poly-and-karp-lipton.md): circuits with advice, why randomness fits inside, and Karp-Lipton.
+- [Arthur-Merlin and two provers](../05-Algebraic%2C%20Interactive%20and%20Quantum/10-arthur-merlin-and-multi-prover-interactive-proofs.md): public coins, separate questioning, and MIP = NEXP.
 
 The question this card leaves open: is any rung of the ladder strictly bigger than the one below it?
 

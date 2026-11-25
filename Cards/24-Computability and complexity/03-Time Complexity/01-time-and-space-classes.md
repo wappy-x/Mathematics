@@ -92,7 +92,7 @@ On this shelf the grid is called n by n. This card keeps n for the input length,
 - **The input is written compactly.** A d by d grid takes $`d^2`$ cells of $`\lceil \log_2(d+1)\rceil`$ bits each: 324 bits for 9 by 9. Write numbers in unary (one mark per unit) and a slow method can look fast: see [Pseudo-polynomial time](06-pseudo-polynomial-time-and-numbers-in-the-input.md).
 - **The machine is deterministic and halts.** The space-to-time bridge fails for a machine that runs forever: the looping counter below stays inside 10 cells and never stops.
 - **Small classes depend on the model; P and EXP do not.** A machine with several tapes running t steps is simulated on one tape in $`O(t^2)`$ steps, and a random-access machine (numbered memory read in one step) in polynomially many. So TIME(n) changes with the model, while P and EXP stay the same.
-- **Space counts the input.** With s(n) at least n, as here, cells visited include the input. Classes below n, such as logarithmic space, need a separate read-only input tape.
+- **Space counts the input.** With s(n) at least n, as here, cells visited include the input. Classes below n, such as [logarithmic space](10-logarithmic-space-l-and-nl.md), need a separate read-only input tape.
 
 ---
 
@@ -1146,6 +1146,9 @@ example : (counterRun 2 42).isSome = true ∧ (counterRun 2 42).bind counterStep
 
 - [P and NP](02-p-and-np.md): the class of problems whose yes-answers can be checked quickly, where a filled-in sudoku is the certificate.
 - [Hierarchy and Ladner](09-time-hierarchy-and-ladners-theorem.md): the proof that more time really buys more, so P is strictly inside EXP.
+- [Logarithmic space](10-logarithmic-space-l-and-nl.md): L and NL, where a few counters are all the memory you get.
+- [Space hierarchy](12-space-hierarchy-theorem.md): more memory really helps, and L is strictly smaller than PSPACE.
+- [NC and P-completeness](../05-Algebraic%2C%20Interactive%20and%20Quantum/09-parallel-complexity-nc-and-p-completeness.md): what parallel machines do fast, and what seems stubbornly sequential.
 
 The question this card leaves open: can the $`2^n`$ search for a sudoku solution be replaced by a polynomial one, or does checking quickly not mean solving quickly?
 

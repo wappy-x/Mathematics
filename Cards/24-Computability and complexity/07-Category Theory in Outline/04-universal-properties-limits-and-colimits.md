@@ -639,6 +639,8 @@ example : 1 + 3 = 4 ∧ 4 + 4 = 8 ∧ 8 + 6 = 14 ∧ 14 + 8 = 22 := by norm_num
 
 - [Pullbacks and pushouts](05-pullbacks-pushouts-and-gluing.md): the limit of two arrows into one object, and its mirror, which glues spaces and sets together.
 - [Adjunctions](06-adjunctions.md): a universal arrow for every object at once, fitting together into a pair of functors.
+- [Cartesian closed categories](11-cartesian-closed-categories-and-curry-howard.md): where functions are objects, and proofs are programs.
+- [Kan extensions](12-kan-extensions.md): the best way to extend a functor along another, and why limits and adjoints are special cases.
 
 Each product here was a single universal arrow; when do such arrows, one for every object, fit together into one structure?
 

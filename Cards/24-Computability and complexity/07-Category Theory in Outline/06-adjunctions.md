@@ -722,6 +722,9 @@ example : 61 * 61 = 3721 := by norm_num
 
 - [Monoids and monads](07-monoids-and-monads-for-programmers.md): the next card. Free then forget, U F, is a monad: wrap a value, and flatten nested wrapping by the counit.
 - [F-algebras](08-f-algebras-and-folds.md): folds as the arrows out of a free structure, the same "say where the letters go" in recursive form.
+- [Equivalence of categories](10-equivalence-of-categories.md): the right notion of 'the same', weaker than isomorphism.
+- [Cartesian closed categories](11-cartesian-closed-categories-and-curry-howard.md): where functions are objects, and proofs are programs.
+- [Kan extensions](12-kan-extensions.md): the best way to extend a functor along another, and why limits and adjoints are special cases.
 
 This card leaves open how to tell, for a functor that keeps limits, whether a left adjoint exists at all; the adjoint functor theorems answer that, with a size condition.
 

@@ -790,6 +790,7 @@ example : 3 ^ 60 = 42391158275216203514294433201 := by norm_num
 - [Circuit lower bounds](07-circuit-complexity-and-lower-bounds.md): the attempt to *prove* a problem needs many steps, and why it is so hard.
 - [P versus NP](08-p-versus-np-what-is-known.md): the worst-case question that one-way functions would settle, and the barriers around it.
 - [Lattices](../../14-Applied%20and%20computational/04-Cryptography/09-lattices-and-post-quantum-cryptography.md): codes built on problems with a proved worst-case-to-average-case link.
+- [Total search problems](10-total-search-problems-and-ppad.md): a solution always exists, yet finding it may be hard.
 
 This card leaves open the central question: can worst-case hardness of an NP-complete problem ever be turned into average-case hardness, so that P ≠ NP alone would give cryptography?
 

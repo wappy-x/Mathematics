@@ -738,6 +738,7 @@ end EntropyCard
 - [Typical sequences](04-typical-sequences-and-the-aep.md): why a long run of forecasts almost always needs close to 1.75 bits a day, and where the limit comes from.
 - [Huffman coding](05-source-coding-and-huffman.md): the best whole-question tree for any chances, and the proof that none beats H.
 - [The one-time pad](../04-Cryptography/01-one-time-pad-and-perfect-secrecy.md): a key at full entropy hides a message completely.
+- [Randomness extractors](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/11-randomness-extractors.md): squeeze nearly perfect coin flips out of a biased source.
 
 This card measures one source with known chances. It leaves open what happens when the radio link itself makes mistakes, and how many bits a day can get through.
 

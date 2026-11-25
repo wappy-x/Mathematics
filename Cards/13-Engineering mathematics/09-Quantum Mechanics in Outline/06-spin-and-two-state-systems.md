@@ -830,6 +830,7 @@ example (nx ny nz : ℝ) :
 - [Qubits](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/05-qubits-superposition-and-measurement.md): two-state systems as computing units, gates as turning matrices, and the loss of phase that limits them.
 - [Perturbation theory](10-time-independent-perturbation-theory.md): nudge the energy levels without solving again.
 - [Two particles](11-two-particle-states-and-entanglement.md): product states, the singlet, and the CHSH bound.
+- [Quantum limits](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/11-quantum-lower-bounds-and-qma.md): why Grover cannot be beaten, and QMA, the quantum NP.
 
 What this card leaves open is two spins together: a pair of spin one-half particles needs four complex numbers, not two, and some of its states cannot be split into one column per particle.
 

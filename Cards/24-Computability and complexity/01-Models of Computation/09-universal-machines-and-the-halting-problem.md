@@ -723,6 +723,10 @@ example :
 ## Where this goes next
 
 - [Rice's theorem](10-rices-theorem-and-reductions.md): every question about what a program does, beyond the trivial ones, is as hard as halting, proved by turning HALT into that question.
+- [Kleene's recursion theorem](../02-Computability%20and%20Logic/09-kleene-recursion-theorem.md): every program can get hold of its own code.
+- [Turing degrees and the arithmetical hierarchy](../02-Computability%20and%20Logic/10-turing-degrees-and-the-arithmetical-hierarchy.md): ranking unsolvable problems by oracles and by quantifiers.
+- [Space hierarchy](../03-Time%20Complexity/12-space-hierarchy-theorem.md): more memory really helps, and L is strictly smaller than PSPACE.
+- [P/poly](../05-Algebraic%2C%20Interactive%20and%20Quantum/08-non-uniform-complexity-p-poly-and-karp-lipton.md): circuits with advice, why randomness fits inside, and Karp-Lipton.
 
 Left open: if halting cannot be decided, how much more is undecidable, and how can one impossible problem be shown to be at least as hard as another?
 

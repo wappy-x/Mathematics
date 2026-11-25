@@ -1132,6 +1132,7 @@ end DerandomisationAndPseudorandomness
 
 - [Average-case hardness](06-average-case-and-cryptographic-hardness.md): generators that fool every efficient test, built from problems that are hard on typical inputs, and why cryptography needs them.
 - [Streaming](../06-Data%2C%20Learning%20and%20Fine-Grained%20Complexity/01-streaming-and-sketching.md): one-pass algorithms whose sketches run on short seeds and limited independence.
+- [Randomness extractors](11-randomness-extractors.md): squeeze nearly perfect coin flips out of a biased source.
 
 Related on this shelf: [Approximation](01-approximation-and-hardness-of-approximation.md), [Relaxation and rounding](02-relaxation-and-rounding.md) (whose random roundings can often be derandomised this way), [Parameterised complexity](05-parameterised-complexity.md), [Circuit lower bounds](07-circuit-complexity-and-lower-bounds.md) and [P versus NP](08-p-versus-np-what-is-known.md).
 

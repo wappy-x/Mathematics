@@ -895,6 +895,7 @@ example : (Finset.univ.filter (fun x : Bool × Bool × Bool => x.1 || x.2.1 || x
 
 - [Qubits](05-qubits-superposition-and-measurement.md): the next card. It builds the quantum bit, the ingredient of the shelf's last three cards.
 - [BQP](06-quantum-computation-and-bqp.md): what a quantum computer decides with bounded error, the quantum version of BPP, and where it sits below PSPACE.
+- [Arthur-Merlin and two provers](10-arthur-merlin-and-multi-prover-interactive-proofs.md): public coins, separate questioning, and MIP = NEXP.
 
 The question this card leaves open: graph non-isomorphism has a short conversation, but does it have a short written receipt, that is, is it in NP?
 

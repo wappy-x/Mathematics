@@ -731,7 +731,7 @@ example : 3 * 2 ^ 4 - 3 * 2 ^ 2 + 1 * 2 ^ 1 = 38 ∧ 2 ^ 10 = 1024 ∧ 3 ^ 10 = 
 
 - **Robot arms.** A two-joint arm's poses form the torus $`S^1 \times S^1`$, compact by Step 3. So any continuous score, such as distance from gripper to target, has a best pose.
 - **Colouring infinite maps.** If every finite part of an infinite map can be coloured with four colours so that neighbours differ, the whole map can (de Bruijn and Erdős, 1951). The proof is Tychonoff on the space of all colourings: each finite part's rule is a closed set, and the FIP gives one colouring that obeys them all.
-- **Logic and puzzle solvers.** A list of infinitely many yes-or-no conditions can all be met at once if every finite batch can. This is the compactness theorem of logic, the same argument on the product of $`\{\text{true}, \text{false}\}`$ over all variables.
+- **Logic and puzzle solvers.** A list of infinitely many yes-or-no conditions can all be met at once if every finite batch can. This is the compactness theorem of logic ([Compactness and Lowenheim-Skolem](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/13-compactness-and-lowenheim-skolem.md)), the same argument on the product of $`\{\text{true}, \text{false}\}`$ over all variables.
 
 > **Say it back**
 > A space is compact when every open cover can be cut down to finitely many sets. Turned inside out, closed sets that meet in every finite batch then meet all together. The circle is compact: an endless cover by arcs cuts down to 10 of them, and removing one point breaks it. Tychonoff's theorem says any product of compact spaces is compact in the product topology, where an open set restricts only finitely many coordinates. The proof uses Zorn's lemma to build a maximal family and then picks one point in every factor; for arbitrary products the theorem is equivalent to the axiom of choice.
@@ -756,6 +756,7 @@ example : 3 * 2 ^ 4 - 3 * 2 ^ 2 + 1 * 2 ^ 1 = 38 ∧ 2 ^ 10 = 1024 ∧ 3 ^ 10 = 
 - [Mapping spaces](../07-Higher%20Homotopy%20and%20Mapping%20Spaces/01-mapping-spaces-and-the-compact-open-topology.md): the continuous maps between two spaces form a space of their own.
 - [Haar measure](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/02-haar-measure.md): the one fair way to measure size on a group.
 - [Pontryagin duality](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/03-pontryagin-duality.md): the line, the circle, the integers and the clock as one Fourier theory.
+- [Compactness and Lowenheim-Skolem](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/13-compactness-and-lowenheim-skolem.md): finite checks decide everything, and no first-order theory can fix an infinite size.
 
 The question this card leaves open: compact spaces are where maxima exist, so which continuous maps carry compactness, and connectedness, from one space to another?
 

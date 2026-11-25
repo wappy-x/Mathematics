@@ -961,6 +961,7 @@ example : ((13 * 4 - 21 * 2) + (21 * 11 - 15 * 4) + (15 * 2 - 13 * 11) : ℤ) = 
 - Hairy ball theorem (planned, in the differential geometry wing): every tangent arrow field on $`S^2`$ vanishes somewhere, proved with degree.
 - [Covering dimension](09-lebesgue-covering-dimension.md): count how many pieces of a fine cover must overlap at one point.
 - [Monotone operators](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/12-monotone-operators-and-minty-browder.md): Minty's trick solves nonlinear equations that have no energy.
+- [Total search problems](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/10-total-search-problems-and-ppad.md): a solution always exists, yet finding it may be hard.
 
 Brouwer guarantees a point that stays put, and the cell hunt found this one; how many steps such a search needs in the worst case is the question this card leaves open.
 

@@ -1612,6 +1612,8 @@ end CookLevin
 - [Circuit lower bounds](../04-Beyond%20Worst%20Case/07-circuit-complexity-and-lower-bounds.md): the same grid gives a circuit of polynomial size for any fast machine, so a proof that some NP problem needs huge circuits would separate P from NP.
 - [Boolean circuits](../05-Algebraic%2C%20Interactive%20and%20Quantum/01-boolean-circuits-and-formulas.md): the grid's local rules as gates, the form in which the construction is often stated.
 - [P versus NP](../04-Beyond%20Worst%20Case/08-p-versus-np-what-is-known.md): what is known about the question SAT now carries alone.
+- [Logarithmic space](10-logarithmic-space-l-and-nl.md): L and NL, where a few counters are all the memory you get.
+- [Quantum limits](../05-Algebraic%2C%20Interactive%20and%20Quantum/11-quantum-lower-bounds-and-qma.md): why Grover cannot be beaten, and QMA, the quantum NP.
 
 The question this card leaves open: SAT holds every NP problem inside it, so is there any polynomial-time algorithm for it at all?
 

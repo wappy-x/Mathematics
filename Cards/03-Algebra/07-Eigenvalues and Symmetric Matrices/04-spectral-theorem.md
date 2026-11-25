@@ -549,6 +549,7 @@ example : (1 / 2 : ℝ) • (!![1, 1; 1, -1] * !![1, 0; 0, 3] * (!![1, 1; 1, -1]
 - [Perturbation theory](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/10-time-independent-perturbation-theory.md): nudge the energy levels without solving again.
 - [Sums of squares](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/12-sum-of-squares-polynomial-optimisation.md): prove a polynomial is never negative by finding a positive semidefinite matrix.
 - [Lanczos](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/14-lanczos-and-rayleigh-ritz.md): the extreme eigenvalues of a huge symmetric matrix from a three-term recurrence.
+- [Boolean functions](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/12-boolean-functions-fourier-and-sensitivity.md): decision trees, Fourier coefficients, and Huang's sensitivity theorem.
 
 The quadratic runs out past 2 by 2, so finding the axes at any size is a numerical problem. What the factors' signs say about a table's shape is the next card's question.
 

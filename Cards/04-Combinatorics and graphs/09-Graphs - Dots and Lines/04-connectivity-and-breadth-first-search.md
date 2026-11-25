@@ -655,6 +655,7 @@ example : (univ.image (fun v => flood townOpen v 9)).card = 1 := by decide
 - [Flows](../13-Matchings%20and%20Flows/05-flow-networks-and-ford-fulkerson.md): floods over routes with room left.
 - [The giant component](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/02-the-giant-component.md): piece sizes when paths fall at random.
 - [Mapper and Reeb graphs](../../17-Topology/06-Topological%20Data%20Analysis/06-mapper-and-reeb-graphs.md): components of a map built from measurements.
+- [Logarithmic space](../../24-Computability%20and%20complexity/03-Time%20Complexity/10-logarithmic-space-l-and-nl.md): L and NL, where a few counters are all the memory you get.
 
 Every path here counted the same, which let the rings come out in order. The repair when one runs longer — serve the nearest junction, not the earliest — is [Dijkstra's algorithm](../10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md).
 

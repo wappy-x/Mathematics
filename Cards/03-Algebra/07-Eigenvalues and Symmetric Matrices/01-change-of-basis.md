@@ -573,6 +573,7 @@ example : !![(1/2 : ℚ), 1/2; -1/2, 1/2] *ᵥ ![1, 1] = ![1, 0] := by
 - [Jordan form](10-jordan-canonical-form.md): every matrix is a stack of blocks, each an eigenvalue with ones just above the diagonal, and the block sizes are read from ranks.
 - [Bilinear forms](12-bilinear-forms-and-sylvesters-law.md): a matrix that pairs two vectors instead of moving one, the symmetric ones are quadratic forms, the alternating ones measure signed area, and the sign count never changes.
 - [Stress in 3D](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/10-stress-tensor-and-mohrs-circle.md): a symmetric matrix, its principal axes, and Mohr's circle.
+- [Equivalence of categories](../../24-Computability%20and%20complexity/07-Category%20Theory%20in%20Outline/10-equivalence-of-categories.md): the right notion of 'the same', weaker than isomorphism.
 
 Any invertible $`P`$ gives a new address book, and nothing here says which book is worth having; that is what a later card asks.
 

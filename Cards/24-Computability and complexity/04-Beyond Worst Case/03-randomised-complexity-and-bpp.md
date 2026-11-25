@@ -883,6 +883,10 @@ example : 20 * (3 * 1000 ^ 2) * 100 = 6 * 1000 ^ 3 := by norm_num
 - [Pseudorandomness](04-derandomisation-and-pseudorandomness.md): replaces the coins by the output of a generator from a short seed, the route by which P = BPP would follow from hard functions.
 - [Average-case hardness](06-average-case-and-cryptographic-hardness.md): asks for problems that are hard on random inputs, not only on the worst one, the kind of hardness both cryptography and derandomisation need.
 - [Interactive proofs](../05-Algebraic%2C%20Interactive%20and%20Quantum/04-interactive-proofs-ip-pspace-and-the-pcp-theorem.md): gives a coin-flipping verifier a conversation with a prover, and finds it can check far more than NP.
+- [Randomness extractors](11-randomness-extractors.md): squeeze nearly perfect coin flips out of a biased source.
+- [Boolean functions](12-boolean-functions-fourier-and-sensitivity.md): decision trees, Fourier coefficients, and Huang's sensitivity theorem.
+- [P/poly](../05-Algebraic%2C%20Interactive%20and%20Quantum/08-non-uniform-complexity-p-poly-and-karp-lipton.md): circuits with advice, why randomness fits inside, and Karp-Lipton.
+- [Arthur-Merlin and two provers](../05-Algebraic%2C%20Interactive%20and%20Quantum/10-arthur-merlin-and-multi-prover-interactive-proofs.md): public coins, separate questioning, and MIP = NEXP.
 
 Left open: does every fast coin-flipping program have a fast program without coins, so that P = BPP?
 

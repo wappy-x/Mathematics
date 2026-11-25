@@ -607,6 +607,7 @@ example : (cycleGraph 5).cliqueNum = 2 ∧ (cycleGraph 5).chromaticNumber = 3 :=
 - [List colouring](07-list-colouring-and-choosability.md): when every vertex brings its own short list of allowed colours, and Thomassen's proof that five per vertex always suffice on a flat map.
 - [Perfect graphs](08-perfect-and-chordal-graphs.md): graphs where the largest clique always gives the colour count, chordal graphs as the friendly family, and the strong perfect graph theorem.
 - [Beyond Turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/06-erdos-stone-and-kovari-sos-turan.md): forbid any graph H and its colour count sets the edge cap (Erdos-Stone), except when H is two-sided, where Kovari-Sos-Turan caps a network with no 4-cycle near n^(3/2)/2 edges.
+- [Compactness and Lowenheim-Skolem](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/13-compactness-and-lowenheim-skolem.md): finite checks decide everything, and no first-order theory can fix an infinite size.
 
 The limits pinned this graph only because they met; on most graphs they leave a range, which the next card closes by counting colourings rather than hunting one.
 

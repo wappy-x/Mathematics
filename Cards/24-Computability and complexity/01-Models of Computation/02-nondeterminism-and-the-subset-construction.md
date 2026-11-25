@@ -992,6 +992,7 @@ example : [CX.c, CX.c, CX.x, CX.x] ∈ kthFromEndC 3 := ⟨[CX.c], [CX.x, CX.x],
 - [Regular expressions](03-regular-expressions-and-pattern-matching.md): patterns built from joining, choice and repetition. Each one turns into a guessing machine with ε-moves, and this card turns that into a DFA.
 - [Pumping and Myhill-Nerode](04-pumping-lemma-and-myhill-nerode.md): the smallest DFA for a language. It merges the 15 accepting sets here, which all behave alike, and it proves lower bounds like Step 4's.
 - [Grammars and a stack](05-context-free-grammars-and-pushdown-automata.md): machines with a stack. There, guessing does add power.
+- [Logarithmic space](../03-Time%20Complexity/10-logarithmic-space-l-and-nl.md): L and NL, where a few counters are all the memory you get.
 
 For finite automata, guessing is free in power. For machines whose running time is capped by a polynomial in the input length, whether guessing helps is the P versus NP question, unproved as of 2026-11-11.
 

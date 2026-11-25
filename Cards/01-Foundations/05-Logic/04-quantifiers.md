@@ -404,6 +404,7 @@ example : (Finset.univ.filter (fun k => carries ana k = true)).card = 2 ∧
 - [Negating a quantifier](05-negating-quantifiers-and-counterexamples.md): disproving each claim, and why one counterexample settles "every".
 - [Induction](../06-Proof/04-proof-by-induction.md): proving a "for every" claim about an endless list, one rung at a time.
 - [Sets](../07-Sets/01-sets-and-membership.md): writing the domain down as a set, so it never goes unsaid.
+- [Formal proofs and soundness](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/11-formal-deduction-and-soundness.md): rules a machine can check, and why they never prove a falsehood.
 
 This card leaves one question open: how do you prove each claim false, and how many cases must you check to do it?
 
