@@ -10,7 +10,7 @@ Apollo 11 landed on 20 July 1969. What day of the week was that?
 
 The calendar looks like a mess of 30s and 31s and one short month. Underneath it is one number: 7. Weeks never skip, so the question is only how far a date sits past a day you know.
 
-Four numbers do it. For 20 July 1969: the **20** itself, **6** for July, **69** years since 1900, **17** leap days in those years. They add to 112: 16 weeks exactly, nothing over. A leftover of 0 means Sunday. Apollo 11 touched down on a Sunday.
+Four numbers do it, for any date from 1900 to 2099. For 20 July 1969: the **20** itself, **6** for July, **69** years since 1900, **17** leap days in those years. They add to 112: 16 weeks exactly, nothing over. A leftover of 0 means Sunday. Apollo 11 touched down on a Sunday.
 
 **Every date carries four small numbers; add them, divide by 7, and the leftover names the day.**
 
@@ -71,7 +71,7 @@ You can throw 7 away whenever you like and keep what is left, 0 to 6 — congrue
 
 ### Step 2: each month starts a fixed distance into the year
 
-January's 1st is the anchor, offset 0. February's is 31 days later, and 31 ≡ 3 (mod 7), so 3. March's is 28 days on, and 28 ≡ 0 (mod 7), so 3 again. Walk the year out for the rest; July's is 6. That walk uses the short February, which is why January and February of a leap year need the step back.
+January's 1st is the anchor, offset 0. February's is 31 days later, and 31 ≡ 3 (mod 7), so 3. March's is 28 days on, and 28 ≡ 0 (mod 7), so 3 again. Walk the year out for the rest; July's is 6. That walk uses a 28-day February. Meanwhile, dividing by 4 in Step 1 already counts this year's 29 February. That makes March to December right, so January and February of a leap year take 1 back off.
 
 ### Step 3: one known day pins the rest
 
@@ -115,7 +115,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The rule runs for 20 July 1969, then the long road counts every day since 1 January 1900. The two are compared across every month.
+Nothing is imported. The rule runs for 20 July 1969, then the long road counts every day since 1 January 1900. The two are compared across every month, and on 29 February itself.
 
 ### Python
 
@@ -147,11 +147,11 @@ print("1 January 1900 " + DAYS[weekday(1, 1, 1900)] + ", 1 January 1904 " + DAYS
 print(f"the three mistakes come out at {DAYS[(sums[3] - 17) % 7]}, {DAYS[(sums[3] - OFFSET[6]) % 7]} and {DAYS[(1 + 0 + 4 + 1) % 7]}")
 assert weekday(20, 7, 1969) == (1 + n) % 7 == 0 and sums[3] == 112
 assert all(weekday(d, m, y) == (1 + by_counting(d, m, y)) % 7 for y in (1900, 1904, 1943, 2000, 2026, 2099) for m in range(1, 13) for d in (1, 28))
-assert n == 25402 and not leap(1900) and leap(2000)
+assert n == 25402 and not leap(1900) and leap(2000) and all(weekday(29, 2, y) == (1 + by_counting(29, 2, y)) % 7 for y in (1904, 1968, 2000, 2096))
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 the day of the month             20
@@ -208,12 +208,12 @@ fn main() {
              DAYS[((sums[3] - OFFSET[6]) % 7) as usize], DAYS[((1 + 0 + 4 + 1) % 7) as usize]);
     assert!(weekday(20, 7, 1969) == (1 + n) % 7 && (1 + n) % 7 == 0 && sums[3] == 112);
     for y in [1900, 1904, 1943, 2000, 2026, 2099] { for m in 1..=12 { for d in [1, 28] { assert!(weekday(d, m, y) == (1 + by_counting(d, m, y)) % 7); } } }
-    assert!(n == 25402 && !leap(1900) && leap(2000));
+    assert!(n == 25402 && !leap(1900) && leap(2000) && [1904, 1968, 2000, 2096].iter().all(|&y| weekday(29, 2, y) == (1 + by_counting(29, 2, y)) % 7));
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 the day of the month             20
@@ -395,7 +395,7 @@ example : 90 % 7 = 6 := by decide
 ## The usual mistake
 
 > [!warning]
-> **Counting leap days up to the date instead of up to 1 January.** Dividing by 4 counts every 29 February up to and including this year's. In January or February that one has not happened yet, so take it back off. Skip that and 1 January 1904 comes out Saturday, not Friday.
+> **Counting this year's leap day before 29 February.** Dividing by 4 counts every 29 February up to and including this year's. In January or February that one has not happened yet, so take it back off. Skip that and 1 January 1904 comes out Saturday, not Friday.
 >
 > - Using the calendar year, 1969, instead of the years since 1900, 69.
 > - Rounding 69 ÷ 4 up to 18: the fraction is dropped, not rounded.
@@ -423,9 +423,10 @@ example : 90 % 7 = 6 := by decide
 
 ## Where this goes next
 
-Nothing depends on this card. The shelf goes on to [When cycles meet again](04-cycles-that-realign.md), where cycles of different lengths meet again, and [Perfect shuffles](05-perfect-shuffles.md), where the cycle is a deck of cards.
+- [When cycles meet again](04-cycles-that-realign.md): two cycles of different lengths, and when they line up again.
+- [Day counts](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/02-day-counts-and-dates.md): calendar arithmetic put to work on bond coupons, with a weekday formula to find the Saturdays.
 
-The question this card leaves open: how to carry the rule past 2099, where century years stop being leap years.
+Left open: the week runs on 7 and the year on 365, so when do two cycles of different lengths come back to their start together?
 
 ---
 

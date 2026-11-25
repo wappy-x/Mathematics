@@ -14,7 +14,7 @@ One wrong digit shifts the total off the multiple. So does a swap, and that case
 
 **A swap shifts the total by one gap between weights times one gap between digits, and 11 divides no such product.**
 
-**What kind of fact this is:** a rule set by the ISBN (International Standard Book Number) standard, plus a theorem proved in Why it works: it catches every single wrong digit and every swap of two different digits.
+**What kind of fact this is:** a rule set by the ISBN (International Standard Book Number) standard, plus a theorem proved in Why it works. It catches every single wrong digit and every swap of two different digits.
 
 ```mermaid
 flowchart LR
@@ -80,6 +80,8 @@ On a clock of 10 this dies. 10 = 2 × 5. A weight gap of 2 and a digit gap of 5 
 
 ## Worked numbers, by hand
 
+There is also a second road with no weights. Keep a running total of the digits as you read them: 0, 3, 3, 9, 13, 13, 19, 20, 25, 27. Then add those ten totals.
+
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | the ten products, added | 10 × 0 + 9 × 3 + … + 2 × 5 + 1 × 2 | 132 |
@@ -105,7 +107,7 @@ The 2 the first nine demand is the 2 printed. The swap misses by 4 and bounces.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Road one multiplies each digit by its weight and adds. Road two never mentions a weight: it keeps a running total while reading the digits, then adds those ten totals. The first digit is inside all ten of them, so it is counted ten times. That is its weight. The second is inside nine. Then the check digit is rebuilt and the swap totalled.
+Nothing is imported. Road one multiplies each digit by its weight and adds. Road two never mentions a weight: it keeps a running total while reading the digits, then adds those ten totals. The first digit is inside all ten of them, so it is counted ten times. That is its weight. The second is inside nine. Then the check digit is rebuilt and the swap totalled. The last asserts try every single wrong digit and every swap of two different digits on this ISBN.
 
 ### Python
 
@@ -136,10 +138,13 @@ print(f"the three mistakes come out at {sum(DIGITS)}, {t % 10} and {nine % 11}")
 assert t == 132 and t == sum(runs) and t % 11 == 0
 assert check == DIGITS[9] and check == 2 and nine == 130
 assert s == 136 and s - t == (3 - 2) * (5 - 1) and s % 11 == 4
+assert all(total(DIGITS[:i] + [d] + DIGITS[i + 1:]) % 11 for i in range(10) for d in range(11) if d != DIGITS[i])
+assert all(total([DIGITS[j] if k == i else DIGITS[i] if k == j else DIGITS[k] for k in range(10)]) % 11
+           for i in range(10) for j in range(10) if DIGITS[i] != DIGITS[j])   # every wrong digit, every swap: caught
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 10 x 0 + 9 x 3 + 8 x 0 + 7 x 6 + 6 x 4 + 5 x 0 + 4 x 6 + 3 x 1 + 2 x 5 + 1 x 2 = 132
@@ -195,11 +200,13 @@ fn main() {
     assert!(t == 132 && t == runsum && t % 11 == 0);
     assert!(check == DIGITS[9] && check == 2 && nine == 130);
     assert!(s == 136 && s - t == (3 - 2) * (5 - 1) && s % 11 == 4);
+    for i in 0..10 { for d in 0..11 { let mut w = DIGITS; w[i] = d; assert!(d == DIGITS[i] || total(w) % 11 != 0); }   // every wrong digit,
+                     for j in 0..10 { let mut w = DIGITS; w.swap(i, j); assert!(DIGITS[i] == DIGITS[j] || total(w) % 11 != 0); } }   // every swap: caught
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 10 x 0 + 9 x 3 + 8 x 0 + 7 x 6 + 6 x 4 + 5 x 0 + 4 x 6 + 3 x 1 + 2 x 5 + 1 x 2 = 132
@@ -401,9 +408,9 @@ example : isbnTotal ![0, 3, 0, 6, 4, 0, 6, 1, 5, 3] = 133 ∧ 133 % 11 = 1 := by
 
 ## Where this goes next
 
-Nothing depends on this card yet. The shelf carries on with [Day of the week for any date](03-day-of-the-week.md), where the same remainder arithmetic names the day of the week for any date.
+- [Day of the week for any date](03-day-of-the-week.md): the same remainder arithmetic on a clock of 7, naming the day of the week for a date.
 
-Left open: one check digit catches one mistake, so how many extra digits does it take to catch two?
+Left open: this card throws away multiples of 11 to catch typos; can throwing away multiples of 7 tell you the weekday of a date decades ago?
 
 ---
 

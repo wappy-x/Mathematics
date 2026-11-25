@@ -34,5 +34,7 @@ fn main() {
     assert!(t == 132 && t == runsum && t % 11 == 0);
     assert!(check == DIGITS[9] && check == 2 && nine == 130);
     assert!(s == 136 && s - t == (3 - 2) * (5 - 1) && s % 11 == 4);
+    for i in 0..10 { for d in 0..11 { let mut w = DIGITS; w[i] = d; assert!(d == DIGITS[i] || total(w) % 11 != 0); }   // every wrong digit,
+                     for j in 0..10 { let mut w = DIGITS; w.swap(i, j); assert!(DIGITS[i] == DIGITS[j] || total(w) % 11 != 0); } }   // every swap: caught
     println!("ALL CHECKS PASS");
 }

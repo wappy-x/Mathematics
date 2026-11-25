@@ -1,6 +1,5 @@
-# Perfect shuffles -- the check behind the card.  Nothing is imported.  A deck
-# of 52, positions 0 to 51.  One perfect out-riffle doubles a position on the
-# 51-clock; 0 and 51 never move.  Two roads: the doubling, and a real riffle.
+# Perfect shuffles -- the check behind the card.  Nothing is imported.  A deck of 52, positions 0 to 51.  One perfect
+# out-riffle doubles a position on the 51-clock; 0 and 51 never move.  Two roads: the doubling, and a real riffle.
 def moved(p, n, times=1):            # where the card at position p sits after some riffles
     for _ in range(times): p = p if p == n - 1 else (2 * p) % (n - 1)
     return p
@@ -27,4 +26,5 @@ row("decks of 8, 10, 52, 64 come home after", *[by_doubling(n) for n in (8, 10, 
 assert [moved(10, 52, t) for t in range(9)] == [10, 20, 40, 29, 7, 14, 28, 5, 10]
 assert by_doubling(52) == 8 == by_riffling(52) and 2 ** 8 == 5 * 51 + 1 and by_riffling(52, 1) == 52
 assert [by_doubling(n) for n in (8, 10, 52, 64)] == [3, 6, 8, 6] and all(moved(p, 52, 8) == p for p in range(52))
+assert riffle(riffle(riffle(list(range(52)), 1)), 1).index(0) == 5   # binary 101: in, out, in puts the top card at 5
 print("ALL CHECKS PASS")

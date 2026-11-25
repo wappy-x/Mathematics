@@ -6,13 +6,13 @@
 
 ## General Overview
 
-A Chinese year carries two names. One list is ten long and names an element: Wood, Fire, Earth, Metal, Water, each used twice. The other is twelve long and names an animal: Rat, Ox, Tiger, on to Pig. The traditional words: **stems** and **branches**.
+A Chinese year carries two names. One list is ten long and names an element: Wood, Fire, Earth, Metal, Water. Each comes twice in a row, first in its Yang form and then its Yin form, so the ten stems are all different. The other is twelve long and names an animal: Rat, Ox, Tiger, on to Pig. The traditional words: **stems** and **branches**.
 
 1984 was the Wood Rat, both lists at their start. 2026 is 42 years later. Divide 42 by 10 and 2 is left over: the stems have moved 2 on, to Fire. Divide by 12 and 6 is left over: the branches, 6 on, to Horse. 2026 is the Fire Horse. The year turns in late winter, not on 1 January.
 
 Ten names against twelve looks like 120 combinations. Only 60 are ever a year: both lists read the same count, so both notice whether it is odd or even, and they must agree.
 
-**Two cycles come back together after their lengths multiplied and then divided by the biggest number both lengths share — and that shared part is also what rules pairs of positions out.**
+**Two cycles meet again after their lengths multiplied, then divided by the biggest number both share — and that shared number rules pairs out.**
 
 **What kind of fact this is:** a theorem about remainders, proved on this card in Why it works.
 
@@ -349,7 +349,7 @@ example : 94900 = 5 * 18980 ∧ 94900 / 365 = 260 := by decide
 
 ## Where you meet it in real life
 
-- **Two calendars at once.** A payday against a billing date: when are both back at the beginning ([Day of the week for any date](03-day-of-the-week.md)).
+- **Two calendars at once.** A payday every 14 days against a bill every 30 days: both fall on the same day again after lcm(14, 30) = 210 days.
 - **Gears.** A 10-tooth wheel driving a 12-tooth wheel: one pair of teeth meets again only after 60 tooth-steps.
 - **Anything that returns to the start.** The same counting says how many repeats undo an operation: [Perfect shuffles](05-perfect-shuffles.md).
 
@@ -365,7 +365,9 @@ example : 94900 = 5 * 18980 ∧ 94900 / 365 = 260 := by decide
 
 ## Where this goes next
 
-[Perfect shuffles](05-perfect-shuffles.md) asks it of one cycle: how many repeats bring a deck back.
+- [Perfect shuffles](05-perfect-shuffles.md): the same question asked of one operation, a perfect riffle, and how many repeats bring a deck back.
+
+Left open: when one riffle moves all 52 cards at once, how many riffles bring every card home together?
 
 ---
 

@@ -1,6 +1,5 @@
-// Perfect shuffles -- the same check as perfect_shuffles_check.py, in Rust.  No
-// crates.  A deck of 52, positions 0 to 51.  One perfect out-riffle doubles a
-// position on the 51-clock; 0 and 51 never move.  Doubling, then a real riffle.
+// Perfect shuffles -- the same check as perfect_shuffles_check.py, in Rust.  No crates.  A deck of 52, positions 0 to 51.
+// One perfect out-riffle doubles a position on the 51-clock; 0 and 51 never move.  Doubling, then a real riffle.
 fn moved(mut p: i64, n: i64, times: i64) -> i64 {   // where the card at p sits after riffles
     for _ in 0..times { p = if p == n - 1 { p } else { (2 * p) % (n - 1) }; }
     p
@@ -36,5 +35,6 @@ fn main() {
     assert!(trip == vec![10, 20, 40, 29, 7, 14, 28, 5, 10]);
     assert!(by_doubling(52) == 8 && by_riffling(52, false) == 8 && 2i64.pow(8) == 5 * 51 + 1 && by_riffling(52, true) == 52);
     assert!(sizes == vec![3, 6, 8, 6] && (0..52).all(|p| moved(p, 52, 8) == p));
+    assert!(riffle(&riffle(&riffle(&(0..52).collect::<Vec<i64>>(), true), false), true).iter().position(|&c| c == 0) == Some(5));   // binary 101: in, out, in puts the top card at 5
     println!("ALL CHECKS PASS");
 }

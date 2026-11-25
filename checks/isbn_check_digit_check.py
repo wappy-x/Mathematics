@@ -24,4 +24,7 @@ print(f"the three mistakes come out at {sum(DIGITS)}, {t % 10} and {nine % 11}")
 assert t == 132 and t == sum(runs) and t % 11 == 0
 assert check == DIGITS[9] and check == 2 and nine == 130
 assert s == 136 and s - t == (3 - 2) * (5 - 1) and s % 11 == 4
+assert all(total(DIGITS[:i] + [d] + DIGITS[i + 1:]) % 11 for i in range(10) for d in range(11) if d != DIGITS[i])
+assert all(total([DIGITS[j] if k == i else DIGITS[i] if k == j else DIGITS[k] for k in range(10)]) % 11
+           for i in range(10) for j in range(10) if DIGITS[i] != DIGITS[j])   # every wrong digit, every swap: caught
 print("ALL CHECKS PASS")

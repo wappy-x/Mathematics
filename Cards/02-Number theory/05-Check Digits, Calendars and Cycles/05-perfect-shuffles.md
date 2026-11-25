@@ -72,14 +72,16 @@ Position 0 has nothing above it before or after, so it stays, and doubling agree
 
 ### Step 3: eight brings the deck home
 
-Follow seat 1 on the 51-clock: 2, 4, 8, 16, 32, then 64, which is 51 + 13, so 13, then 26, then 52, which is 51 + 1, so 1. Home in eight.
+Follow seat 1 on the 51-clock: 2, 4, 8, 16, 32. Then 64, which is 51 + 13, so 13. Then 26, then 52, which is 51 + 1, so 1. Home in eight.
 
 That is multiplying by 256, and 256 = 5 × 51 + 1, which the clock reads as a multiplier of 1. Eight riffles therefore send seat 10 to 10 × 1, and every seat likewise. Seven leave seat 1 short, and 50 cards out of place.
 
 <details>
 <summary>The other perfect shuffle, and why nobody performs it</summary>
 
-Riffle so the top card gets buried and you have the in-shuffle: the same rule on a clock of 53, once the seats are numbered 1 to 52. There, 1 needs 52 doublings — useless for resetting a deck. That 52 is its use instead: write a seat number in binary, in-shuffle on each 1 and out-shuffle on each 0, and the top card lands there.
+Riffle so the top card gets buried and you have the in-shuffle: the same rule on a clock of 53, once the seats are numbered 1 to 52. There, 1 needs 52 doublings — useless for resetting a deck.
+
+Mixed with out-shuffles, it does a different job. Count positions 0 to 51 again. From the top half, an out-shuffle sends position p to 2p and an in-shuffle sends it to 2p + 1. So write a target position in binary, in-shuffle on each 1 and out-shuffle on each 0, and the top card lands there. For 5, binary 101: in, out, in takes it 0, 1, 2, 5.
 
 </details>
 
@@ -102,7 +104,7 @@ Position 10's card, riffle by riffle.
 | 7 | 28 doubled is 56, − 51 | 5 |
 | 8 | 5 doubled | **10** |
 
-Those eight riffles reset all 52 seats at once. Any even deck runs the same way, on a clock one spot smaller: a deck of 8 comes home after 3 riffles, a deck of 10 after 6, 52 after 8, 64 after 6. The bigger deck finishing sooner says the count is not about size.
+Those eight riffles reset all 52 seats at once. Any even deck runs the same way, on a clock one spot smaller. A deck of 8 comes home after 3 riffles, 10 after 6, 52 after 8, and 64 after 6. The bigger deck finishing sooner says the count is not about size.
 
 ### What breaks if you drop a piece
 
@@ -116,14 +118,13 @@ Those eight riffles reset all 52 seats at once. Any even deck runs the same way,
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The trip is doubled out on the 51-clock, then checked by a road that never divides: cut a real list in half, interleave, count riffles until it is in order.
+Nothing is imported. The trip is doubled out on the 51-clock, then checked by a road that never divides: cut a real list in half, interleave, count riffles until it is in order. The last assert tests the binary in-and-out trick on position 5.
 
 ### Python
 
 ```python
-# Perfect shuffles -- the check behind the card.  Nothing is imported.  A deck
-# of 52, positions 0 to 51.  One perfect out-riffle doubles a position on the
-# 51-clock; 0 and 51 never move.  Two roads: the doubling, and a real riffle.
+# Perfect shuffles -- the check behind the card.  Nothing is imported.  A deck of 52, positions 0 to 51.  One perfect
+# out-riffle doubles a position on the 51-clock; 0 and 51 never move.  Two roads: the doubling, and a real riffle.
 def moved(p, n, times=1):            # where the card at position p sits after some riffles
     for _ in range(times): p = p if p == n - 1 else (2 * p) % (n - 1)
     return p
@@ -150,10 +151,11 @@ row("decks of 8, 10, 52, 64 come home after", *[by_doubling(n) for n in (8, 10, 
 assert [moved(10, 52, t) for t in range(9)] == [10, 20, 40, 29, 7, 14, 28, 5, 10]
 assert by_doubling(52) == 8 == by_riffling(52) and 2 ** 8 == 5 * 51 + 1 and by_riffling(52, 1) == 52
 assert [by_doubling(n) for n in (8, 10, 52, 64)] == [3, 6, 8, 6] and all(moved(p, 52, 8) == p for p in range(52))
+assert riffle(riffle(riffle(list(range(52)), 1)), 1).index(0) == 5   # binary 101: in, out, in puts the top card at 5
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 one perfect riffle sends position 10 to     20
@@ -174,9 +176,8 @@ ALL CHECKS PASS
 Same labels and numbers; `rustc --edition 2021 -O`.
 
 ```rust
-// Perfect shuffles -- the same check as perfect_shuffles_check.py, in Rust.  No
-// crates.  A deck of 52, positions 0 to 51.  One perfect out-riffle doubles a
-// position on the 51-clock; 0 and 51 never move.  Doubling, then a real riffle.
+// Perfect shuffles -- the same check as perfect_shuffles_check.py, in Rust.  No crates.  A deck of 52, positions 0 to 51.
+// One perfect out-riffle doubles a position on the 51-clock; 0 and 51 never move.  Doubling, then a real riffle.
 fn moved(mut p: i64, n: i64, times: i64) -> i64 {   // where the card at p sits after riffles
     for _ in 0..times { p = if p == n - 1 { p } else { (2 * p) % (n - 1) }; }
     p
@@ -212,11 +213,12 @@ fn main() {
     assert!(trip == vec![10, 20, 40, 29, 7, 14, 28, 5, 10]);
     assert!(by_doubling(52) == 8 && by_riffling(52, false) == 8 && 2i64.pow(8) == 5 * 51 + 1 && by_riffling(52, true) == 52);
     assert!(sizes == vec![3, 6, 8, 6] && (0..52).all(|p| moved(p, 52, 8) == p));
+    assert!(riffle(&riffle(&riffle(&(0..52).collect::<Vec<i64>>(), true), false), true).iter().position(|&c| c == 0) == Some(5));   // binary 101: in, out, in puts the top card at 5
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 one perfect riffle sends position 10 to     20
@@ -243,7 +245,7 @@ Lean proves that eight perfect riffles restore 52 cards, and proves the doubling
 - A number of riffles restores every even deck exactly when doubling 1 that many times on that clock gives 1.
 - The card's numbers hold: the trip from 10, 50 cards out after seven riffles, decks of 8, 10 and 64, and the in-shuffle's 52.
 
-Printing the tables, and counting riffles on a list of cards, is left to the Python and Rust checks.
+Printing the tables, counting riffles on a list of cards, and the binary in-and-out trick are left to the Python and Rust checks.
 
 ```lean
 -- Perfect shuffles: eight perfect out-riffles put every 52-card deck back in its starting order, because one riffle sends the card at position p to 2p on a clock of 2m - 1 spots, so t riffles restore a deck of 2m cards exactly when 2^t leaves 1 on that clock.
@@ -467,8 +469,8 @@ example : 2 ^ 52 % 53 = 1 ∧ ∀ t < 52, 0 < t → 2 ^ t % 53 ≠ 1 := by decid
 > [!TIP]
 > **Try changing**
 > Guess first, then run. Watch the count on the line you changed.
-> - **Riffle the other way.** Pass 1 as the second argument to the real-deck road, burying the top card: 8 becomes 52.
-> - **Change the deck size.** Ask the doubling road for 64: home in 6.
+> - **Riffle the other way.** In the second `row` line, pass 1 (in Rust, `true`) as the second argument to the real-deck road, burying the top card: 8 becomes 52.
+> - **Change the deck size.** Put 100 in the list of deck sizes: home in 30, almost four times as long as 52.
 
 ---
 
@@ -501,12 +503,10 @@ example : 2 ^ 52 % 53 = 1 ∧ ∀ t < 52, 0 < t → 2 ^ t % 53 ≠ 1 := by decid
 
 ## Where this goes next
 
-Nothing follows on the shelf. Its neighbours run this arithmetic on other clocks:
+- [One-way streets](../06-Codes%20and%20Secrets/01-one-way-streets.md): opens the next shelf, where raising to a power on a clock is quick one way and slow to undo.
+- [Counting shuffles by their loops](../../04-Combinatorics%20and%20graphs/08-Partitions/05-permutations-by-cycles.md): splits any shuffle into separate loops and counts how many shuffles have each loop shape.
 
-- [Barcode check digits](01-barcode-check-digit.md) and [ISBN-10 and the prime modulus 11](02-isbn-check-digit.md): a last digit chosen so a total lands on a fixed spot, on a clock of ten and a prime-sized one.
-- [Day of the week for any date](03-day-of-the-week.md) and [When cycles meet again](04-cycles-that-realign.md): the calendar on a clock of seven, and two clocks at once.
-
-The question this card leaves open: if the count is not about size, why does a deck of 64 come home after 6 riffles and a deck of 52 after 8?
+Left open: doubling forward is quick, so if you see only where one card landed, how hard is it to work out how many riffles were made?
 
 ---
 

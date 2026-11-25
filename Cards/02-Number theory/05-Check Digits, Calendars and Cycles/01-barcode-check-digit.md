@@ -52,7 +52,7 @@ The next multiple of 10 above 83 is 90, so:
 ### When it holds
 
 - **One wrong digit at a time.** One wrong digit always moves the total off a multiple of 10. Two wrong digits can cancel each other and pass.
-- **Swapped neighbours that are not 5 apart.** Swap a 0 and a 5 and the total stays on a multiple of 10: 5950234123455 still comes to 90.
+- **Swapped neighbours that are not 5 apart.** The valid code 5905234123455 totals 100. Swap its 0 and 5 and you get 5950234123455, total 90: still a multiple of 10, so it passes.
 - **A weight of 3, which shares no factor with 10.** Make every weight 1 and every swap of neighbours turns invisible.
 
 ---
@@ -82,7 +82,7 @@ Now put a 0 and a 5 side by side. Change our fourth digit from 1 to 5 and redo t
 <details>
 <summary>The credit card version, folded</summary>
 
-A bank card uses **Luhn's rule**, patented by Hans Peter Luhn in 1960: double every second digit from the right, fold anything past 9 by adding its two digits — double 7 for 14, then 1 + 4 = 5 — and land on a multiple of 10. The fold is what closes the swap hole, all but one pair.
+A bank card uses **Luhn's rule**, patented by Hans Peter Luhn in 1960. Double every second digit from the right and fold anything past 9 by adding its two digits: double 7 for 14, then 1 + 4 = 5. The total must land on a multiple of 10. The fold is what closes the swap hole, all but one pair.
 
 </details>
 
@@ -112,7 +112,7 @@ Computed and printed agree, so nothing was misread.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The twelve digits are weighted and added the plain way; the check digit comes by the remainder on a 10-hour clock, then is matched against the printed digit. Then four codes: two caught, one valid, one that hides.
+Nothing is imported. The twelve digits are weighted and added the plain way; the check digit comes by the remainder on a 10-hour clock, then is matched against the printed digit. Then four codes: two caught, one valid, one that hides. The last asserts try every single wrong digit and every neighbour swap on both valid codes.
 
 ### Python
 
@@ -124,14 +124,10 @@ CODE = "5901234123457"
 def weighted(code):                 # 1, 3, 1, 3, ... starting at 1 on the left
     return [int(d) * (1 if i % 2 == 0 else 3) for i, d in enumerate(code)]
 
-def total(code):
-    return sum(weighted(code))
-
-def row(name, value, tail=""):
-    print(f"{name:<38}{value:>4}{tail}")
-
+def total(code): return sum(weighted(code))
+def row(name, value, tail=""): print(f"{name:<38}{value:>4}{tail}")
 first12 = total(CODE[:12])
-check = (10 - first12 % 10) % 10                      # the second road: no search
+check = (10 - first12 % 10) % 10                      # 10 minus the leftover; a leftover of 0 gives 0
 print("the twelve digits, weighted:  " + " ".join(str(v) for v in weighted(CODE[:12])))
 row("weighted sum of the first twelve", first12)
 row("the multiple of 10 it lands on", first12 + check)
@@ -146,10 +142,13 @@ print(f"a Luhn double folds: 2 x 7 = {2 * 7}, then {14 // 10} + {14 % 10} = {14 
 assert check == 7 and int(CODE[12]) == check and first12 == 83
 assert total(CODE) == 90 and total("5901834123457") == 96 and total("5091234123457") == 72
 assert total("5905234123455") == 100 and total("5950234123455") == 90
+for good in (CODE, "5905234123455"):     # every wrong digit is caught; a neighbour swap passes only on a gap of 0 or 5
+    assert all(total(good[:i] + str(d) + good[i + 1:]) % 10 for i in range(13) for d in range(10) if str(d) != good[i])
+    assert all((total(good[:i] + good[i + 1] + good[i] + good[i + 2:]) % 10 == 0) == (abs(int(good[i]) - int(good[i + 1])) in (0, 5)) for i in range(12))
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 the twelve digits, weighted:  5 27 0 3 2 9 4 3 2 9 4 15
@@ -174,20 +173,17 @@ Same numbers, same labels, built with `rustc --edition 2021 -O`.
 // Rust.  No crates.  The barcode 5901234123457: weights 1, 3, 1, 3, ... left
 // to right, and all thirteen weighted digits must add to a multiple of 10.
 const CODE: &str = "5901234123457";
-
 fn weighted(code: &str) -> Vec<i64> {   // 1, 3, 1, 3, ... starting at 1 on the left
     code.bytes().enumerate()
         .map(|(i, b)| ((b - b'0') as i64) * if i % 2 == 0 { 1 } else { 3 })
         .collect()
 }
-
 fn total(code: &str) -> i64 { weighted(code).iter().sum() }
-
 fn row(name: &str, value: i64, tail: &str) { println!("{:<38}{:>4}{}", name, value, tail); }
 
 fn main() {
     let first12 = total(&CODE[..12]);
-    let check = (10 - first12 % 10) % 10;             // the second road: no search
+    let check = (10 - first12 % 10) % 10;             // 10 minus the leftover; a leftover of 0 gives 0
     let parts: Vec<String> = weighted(&CODE[..12]).iter().map(|v| v.to_string()).collect();
     println!("the twelve digits, weighted:  {}", parts.join(" "));
     row("weighted sum of the first twelve", first12, "");
@@ -205,11 +201,17 @@ fn main() {
     assert!(check == 7 && (CODE.as_bytes()[12] - b'0') as i64 == check && first12 == 83);
     assert!(total(CODE) == 90 && total("5901834123457") == 96 && total("5091234123457") == 72);
     assert!(total("5905234123455") == 100 && total("5950234123455") == 90);
+    for good in [CODE, "5905234123455"] {  // every wrong digit is caught; a neighbour swap passes only on a gap of 0 or 5
+        let (g, t) = (good.as_bytes(), |c: &[u8]| total(std::str::from_utf8(c).unwrap()));
+        for i in 0..13 { for d in b'0'..=b'9' { let mut c = g.to_vec(); c[i] = d; assert!(d == g[i] || t(&c) % 10 != 0); } }
+        for i in 0..12 { let mut c = g.to_vec(); c.swap(i, i + 1); let gap = (g[i] as i64 - g[i + 1] as i64).abs();
+                         assert!((t(&c) % 10 == 0) == (gap == 0 || gap == 5)); }
+    }
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 the twelve digits, weighted:  5 27 0 3 2 9 4 3 2 9 4 15

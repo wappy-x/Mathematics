@@ -25,5 +25,5 @@ print("1 January 1900 " + DAYS[weekday(1, 1, 1900)] + ", 1 January 1904 " + DAYS
 print(f"the three mistakes come out at {DAYS[(sums[3] - 17) % 7]}, {DAYS[(sums[3] - OFFSET[6]) % 7]} and {DAYS[(1 + 0 + 4 + 1) % 7]}")
 assert weekday(20, 7, 1969) == (1 + n) % 7 == 0 and sums[3] == 112
 assert all(weekday(d, m, y) == (1 + by_counting(d, m, y)) % 7 for y in (1900, 1904, 1943, 2000, 2026, 2099) for m in range(1, 13) for d in (1, 28))
-assert n == 25402 and not leap(1900) and leap(2000)
+assert n == 25402 and not leap(1900) and leap(2000) and all(weekday(29, 2, y) == (1 + by_counting(29, 2, y)) % 7 for y in (1904, 1968, 2000, 2096))
 print("ALL CHECKS PASS")
