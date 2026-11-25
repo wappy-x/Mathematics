@@ -45,10 +45,10 @@ d(q, p) = \sqrt{(q_1 - p_1)^2 + (q_2 - p_2)^2 + \dots + (q_k - p_k)^2} \;\ge\; \
 **Read it aloud:** if the cut is at least as far as the best depot found, nothing beyond it can win. At the root, $`\lvert 9 - 7 \rvert = 2`$ is at least $`r = 1.41`$, so the three western depots are skipped.
 
 ```math
-\text{levels} = \lfloor \log_2 n \rfloor + 1
+\text{levels} = \lfloor \log_2 n \rfloor + 1 \qquad (n \ge 1)
 ```
 
-**Read it aloud:** cutting at the middle makes the number of levels the base-2 logarithm of the point count, rounded down (the brackets), plus one: 3 levels for 6 depots, 14 for 10,000.
+**Read it aloud:** for $`n \ge 1`$ points, cutting at the middle makes the number of levels the base-2 logarithm of the point count, rounded down (the brackets), plus one: 3 levels for 6 depots, 14 for 10,000.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -112,13 +112,19 @@ Every depot was measured or ruled out by Step 2, so (8, 1) at 1.41 km is exact. 
 
 ### Step 4: range search uses the same skip
 
-A **range search** reports every depot inside a box. The box 7.5 ≤ x ≤ 10, 0 ≤ y ≤ 3 lies east of x = 7, so the left half is skipped; it lies below y = 6, so only the lower side of (9, 6) is visited. Three depots are visited, and (8, 1) is found. In two dimensions the worst case is about $`\sqrt{n}`$ visits plus one per depot reported (de Berg and co-authors, chapter 5).
+A **range search** reports every depot inside a box. The box 7.5 ≤ x ≤ 10, 0 ≤ y ≤ 3 lies east of x = 7, so the left half is skipped; it lies below y = 6, so only the lower side of (9, 6) is visited. Three depots are visited, and (8, 1) is found.
+
+In two dimensions the worst case is about $`\sqrt{n}`$ visits plus one per depot reported (de Berg and co-authors, chapter 5).
 
 ### Step 5: why about log n, and why many dimensions hurt
 
-On spread-out points the circle of radius $`r`$ is small and crosses only a few cuts near the bottom. Friedman, Bentley and Finkel proved that, for a fixed dimension, the average work grows only like $`\log n`$: the walk down, plus a bounded number of extra points. Their tree cuts whichever coordinate is most spread out; the checks measure this tree at 10.9, 15.7 and 19.2 points per query for 100, 1000 and 10,000 random points in 2 dimensions.
+On spread-out points the circle of radius $`r`$ is small and crosses only a few cuts near the bottom. Friedman, Bentley and Finkel proved that, for a fixed dimension, the average work grows only like $`\log n`$: the walk down, plus a bounded number of extra points.
 
-Many dimensions break this. A tree of 10,000 points has 14 levels, so in 16 dimensions some coordinates are never cut, and boxes stay wide. Random points there are also all about equally far from a query, so the circle stays large and crosses almost every cut. The measured cost climbs to 65.3 in 4 dimensions, 753.0 in 8 and 9758.3 in 16.
+Their tree cuts whichever coordinate is most spread out; the checks measure this tree at 10.9, 15.7 and 19.2 points per query for 100, 1000 and 10,000 random points in 2 dimensions.
+
+Many dimensions break this. A tree of 10,000 points has 14 levels, so in 16 dimensions some coordinates are never cut, and boxes stay wide. Random points there are also all about equally far from a query, so the circle stays large and crosses almost every cut.
+
+The measured cost climbs to 65.3 in 4 dimensions, 753.0 in 8 and 9758.3 in 16.
 
 ---
 
@@ -151,7 +157,9 @@ The tow truck comes from (8, 1), proved without measuring (2, 3), (5, 4) or (4, 
 
 ## Code, from first principles, and it actually runs
 
-The code builds the tree, searches it with the skip rule, and logs each depot measured. Two independent roads reach each answer: the tree, and brute force (measure every point). They are compared on the depots, on a box search, and on 200 random queries in each of six clouds of up to 10,000 points in 2 to 16 dimensions. A fixed random-number formula gives Python and Rust the same points.
+The code builds the tree, searches it with the skip rule, and logs each depot measured. Two independent roads reach each answer: the tree, and brute force (measure every point). They are compared on the depots, on a box search, and on 200 random queries in each of six clouds of up to 10,000 points in 2 to 16 dimensions.
+
+A fixed random-number formula gives Python and Rust the same points.
 
 ### Python
 
@@ -503,8 +511,9 @@ example : Nat.log 2 10000 + 1 = 14 := by decide
 ## Where this goes next
 
 - [Data structures](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/06-data-structures-heaps-hashes-and-trees.md): search trees in general, and keeping them balanced as points arrive.
+- [Limits](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/01-limits.md): the first card of [Calculus and analysis](../../06-Calculus%20and%20analysis/README.md), where the syllabus continues after this wing.
 
-Left open: how to find a nearly nearest point fast among millions of points with hundreds of coordinates, where the tree slows to brute force.
+This finishes Wing 5 (Geometry and trig). Left open: how to find a nearly nearest point fast among millions of points with hundreds of coordinates, where the tree slows to brute force.
 
 ---
 

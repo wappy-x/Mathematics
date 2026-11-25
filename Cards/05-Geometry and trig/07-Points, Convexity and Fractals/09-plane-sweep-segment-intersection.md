@@ -17,9 +17,11 @@ Here is a small board, 6 cm by 4 cm, with four tracks. Positions are in centimet
 
 The obvious method tests every pair with the segment test from [Inside or outside](03-point-in-polygon-and-segment-tests.md). Four tracks make 6 pairs; 1,000 tracks make 499,500, almost none near each other.
 
-The plane sweep does better. Slide a vertical ruler left to right across the board. The tracks it cuts have an up-down order along it, and two tracks can only cross after they become next to each other in that order. So the sweep tests only next-door pairs. On this board it finds all 4 crossings and never tests S3 against S4. On a random 10 cm board of 1,000 short tracks, it finds all 186 crossings with 2,735 tests instead of 499,500.
+The plane sweep does better. Slide a vertical ruler left to right across the board. The tracks it cuts have an up-down order along it, and two tracks can only cross after they become next to each other in that order. So the sweep tests only next-door pairs.
 
-**Two segments that cross are next to each other in the up-down order just before they cross, so a line swept across the plane finds every crossing by testing only next-door pairs, at a cost that grows like (n + k) log2 n for n segments with k crossings.**
+On this board it finds all 4 crossings and never tests S3 against S4. On a random 10 cm board of 1,000 short tracks, it finds all 186 crossings with 2,735 tests instead of 499,500.
+
+**Two segments that cross (with no vertical segments, triple crossings or overlaps) are next to each other in the up-down order just before they cross, so a line swept across the plane finds every crossing by testing only next-door pairs, at a cost that grows like (n + k) log2 n for n segments with k crossings.**
 
 **What kind of fact this is:** an algorithm (a step-by-step method), first published in 1979; its correctness is a theorem, proved in Why it works for segments in general position (no shared $`x`$, triple crossing or overlap); its cost rests on textbook costs of two sorted structures (Step 3).
 
@@ -92,7 +94,9 @@ By Step 0, A and B are next-door just before P. They became next-door at some ev
 
 There are $`2n + k`$ events. Each one creates at most two new next-door pairs, so at most two tests. Each event also needs a lookup in the sorted status and in the event queue.
 
-With a balanced search tree for the status (a sorted structure that finds, inserts or removes an item in about $`\log_2 n`$ steps) and a heap for the queue (a structure that always hands out the smallest $`x`$ in about $`\log_2`$ of its size), each event costs about $`\log_2 n`$ steps. The queue never holds more than $`2n + n^2`$ events, and $`\log_2`$ of that is about $`\log_2 n^2 = 2\log_2 n`$. That gives about $`(2n + k)\log_2 n`$, at most twice the textbook's $`(n + k)\log_2 n`$ (Sources, chapter 2).
+With a balanced search tree for the status (a sorted structure that finds, inserts or removes an item in about $`\log_2 n`$ steps) and a heap for the queue (a structure that always hands out the smallest $`x`$ in about $`\log_2`$ of its size), each event costs about $`\log_2 n`$ steps.
+
+The queue never holds more than $`2n + n^2`$ events, and $`\log_2`$ of that is about $`\log_2 n^2 = 2\log_2 n`$. That gives about $`(2n + k)\log_2 n`$, at most twice the textbook's $`(n + k)\log_2 n`$ (Sources, chapter 2).
 
 The code here keeps the status as a plain list: up to $`n`$ steps per event, fine for a check, not for a real board.
 
@@ -132,7 +136,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-The code runs the sweep on the four tracks and prints the status after each $`x`$. It then builds a 1,000-track board from a fixed pseudo-random sequence (a formula that makes numbers that look random but repeat exactly). Positions there are in micrometres (thousandths of a millimetre); tracks start in a square 100,000 across and run at most 3,000 along and 3,000 up or down. Two independent roads reach the crossings: the sweep, and brute force over all pairs. A third check confirms each crossing point lies on both tracks.
+The code runs the sweep on the four tracks and prints the status after each $`x`$. It then builds a 1,000-track board from a fixed pseudo-random sequence (a formula that makes numbers that look random but repeat exactly). Positions there are in micrometres (thousandths of a millimetre); tracks start in a square 100,000 across and run at most 3,000 along and 3,000 up or down.
+
+Two independent roads reach the crossings: the sweep, and brute force over all pairs. A third check confirms each crossing point lies on both tracks.
 
 ### Python
 
@@ -633,10 +639,11 @@ example : 2 * 1000 + 186 = 2186 := by norm_num
 
 ## Where this goes next
 
+- [k-d trees](10-kd-trees-and-nearest-neighbours.md): another geometric tree structure that partitions the plane to answer nearest-neighbour and box queries fast.
 - [Sorting and searching](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/05-sorting-and-searching.md): why sorting the events costs about $`n\log_2 n`$, and how a sorted list is searched in $`\log_2 n`$ steps.
 - [Data structures](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/06-data-structures-heaps-hashes-and-trees.md): the heap and the balanced search tree that make each event cost about $`\log_2 n`$.
 
-The sweep pays about $`\log_2 n`$ for every crossing; whether crossings can be reported at a fixed cost each, for a total of about $`n\log_2 n + k`$, is what a 1992 algorithm in Sources answers, by a far harder method.
+The sweep pays about $`\log_2 n`$ for every crossing; whether crossings can be reported at a fixed cost each, for a total of about $`n\log_2 n + k`$, is what a 1992 algorithm in Sources answers, by a far harder method. Next, k-d trees closes this shelf with spatial search trees for nearest-neighbour queries.
 
 ---
 

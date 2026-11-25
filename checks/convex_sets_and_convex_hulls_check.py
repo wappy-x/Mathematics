@@ -18,10 +18,10 @@ def chain(pts, log):                     # one half of the monotone chain
 def wrap(pts):                           # gift wrapping from the lowest leftmost tree
     hull = [min(pts)]
     while True:
-        q = next(p for p in pts if p != hull[-1])
+        a, q = hull[-1], next(p for p in pts if p != hull[-1])
         for r in pts:
-            if turn(hull[-1], q, r) < 0:
-                q = r                    # r lies right of the string: swing to it
+            if (t := turn(a, q, r)) < 0 or (t == 0 and (r[0] - a[0]) ** 2 + (r[1] - a[1]) ** 2 > (q[0] - a[0]) ** 2 + (q[1] - a[1]) ** 2):
+                q = r                    # r lies right of the string, or straight along it and farther
         if q == hull[0]: return hull
         hull.append(q)
 area = lambda h: sum(turn((0, 0), h[i - 1], h[i]) for i in range(len(h))) / 2

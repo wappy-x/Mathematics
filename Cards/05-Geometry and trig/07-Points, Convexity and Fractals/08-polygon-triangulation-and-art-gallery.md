@@ -14,7 +14,7 @@ Two ideas answer this for any straight-fenced field. First, clip off "ears" one 
 
 A camera is a **guard** from here on, and the field a **gallery**, as the problem was first posed for an art gallery. A comb-shaped gallery with 12 corners and 4 prongs needs 4 guards, so n/3 cannot be lowered.
 
-**Clipping ears cuts any polygon with n corners into n − 2 triangles; three-colouring their corners and placing guards on the rarest colour watches the whole polygon with at most n/3 guards, rounded down, and some polygons need every one.**
+**Clipping ears cuts any simple polygon with n corners into n − 2 triangles; three-colouring their corners and placing guards on the rarest colour watches the whole polygon with at most n/3 guards, rounded down, and some polygons need every one.**
 
 **What kind of fact this is:** two theorems, the two-ears theorem and the art gallery theorem, both proved on this card in Why it works; ear clipping is a method built on the first.
 
@@ -38,7 +38,7 @@ The **turn test** from [Shoelace formula](01-polygon-area-and-orientation.md), o
 
 **Read it aloud:** walking from a to b to c, the number is positive for a left turn, negative for a right turn.
 
-A corner $`v`$ with neighbours $`u`$ before it and $`w`$ after it is an **ear** when two things hold. The walk turns left at it, $`\mathrm{turn}(u, v, w) > 0`$. And no other corner lies inside triangle $`uvw`$. Then $`uw`$ is a diagonal, and cutting along it clips off triangle $`uvw`$.
+A corner $`v`$ with neighbours $`u`$ before it and $`w`$ after it is an **ear** when two things hold. The walk turns left at it, $`\mathrm{turn}(u, v, w) > 0`$. And no other corner lies inside or on the edges of triangle $`uvw`$. Then $`uw`$ is a diagonal, and cutting along it clips off triangle $`uvw`$.
 
 ```math
 T = n - 2, \qquad g \le \left\lfloor \frac{n}{3} \right\rfloor
@@ -88,7 +88,9 @@ On the field, FAB, BCD and DEF each meet only FBD. These leaves give ears at A, 
 <details>
 <summary>Detailed proof: why a tree has two leaves</summary>
 
-A tree with $`k`$ members has $`k - 1`$ links, since each link joins a new member to those before it. Each link touches two members, so the link-ends add up to $`2(k - 1)`$. If at most one member had a single link, the other $`k - 1`$ would each have at least two, giving at least $`2(k - 1) + 1`$ link-ends. That is too many, so at least two members have one link each.
+A tree with $`k \ge 2`$ members is connected, so every member has at least one link. It has $`k - 1`$ links in all, since each link joins a new member to those before it, and each link touches two members, giving $`2(k - 1)`$ link-ends.
+
+If at most one member had a single link, the others would each have at least two, giving at least $`1 + 2(k - 1)`$ link-ends (or $`2k`$ if none had one). That is too many, so at least two members have one link each.
 
 </details>
 
@@ -104,7 +106,9 @@ On the field the clips ran A, then C, then B, leaving DEF. Colour D 1, E 2, F 3.
 
 ### Step 4: the rarest colour guards everything
 
-The n corners split into three colours, so the smallest group holds at most n/3 corners; it is a whole number, so at most $`\lfloor n/3 \rfloor`$. Every triangle has one corner of that colour. A triangle is convex (any two of its points see each other along a straight line inside it, [Convex sets](02-convex-sets-and-convex-hulls.md)), so a guard at its corner sees all of it. The triangles cover the polygon, so the guards see everything.
+The n corners split into three colours, so the smallest group holds at most n/3 corners; it is a whole number, so at most $`\lfloor n/3 \rfloor`$. Every triangle has one corner of that colour.
+
+A triangle is convex (any two of its points see each other along a straight line inside it, [Convex sets](02-convex-sets-and-convex-hulls.md)), so a guard at its corner sees all of it. The triangles cover the polygon, so the guards see everything.
 
 On the field, colours 1, 2 and 3 hold AD, BE and CF: each colour's pair works.
 
@@ -112,7 +116,9 @@ On the field, colours 1, 2 and 3 hold AD, BE and CF: each colour's pair works.
 
 The comb is 14 m wide on a spine 1 m deep, with four triangular prongs 6 m tall. Its corners, in metres, are listed in the code; the tips are l (1, 7), i (5, 7), f (9, 7) and c (13, 7).
 
-A tip sees a wedge between its prong's walls, extended; it widens downward, so it is widest at the floor. Tip l sees floor from 0.00 to 2.17 m, tip i from 3.83 to 6.17, tip f from 7.83 to 10.17, tip c from 11.83 to 14.00. These strips never overlap, so no two wedges meet and no point sees two tips. Each tip needs its own guard: 4 guards, and 12/3 = 4.
+A tip sees a wedge between its prong's walls, extended; it widens downward, so it is widest at the floor. Tip l sees floor from 0.00 to 2.17 m, tip i from 3.83 to 6.17, tip f from 7.83 to 10.17, tip c from 11.83 to 14.00.
+
+These strips never overlap, so no two wedges meet and no point sees two tips. Each tip needs its own guard: 4 guards, and 12/3 = 4.
 
 ---
 
@@ -144,7 +150,9 @@ Two cameras, on posts A and D, watch the field; B and E, or C and F, work too.
 
 ## Code, from first principles, and it actually runs
 
-Only `atan2` and `pi` are imported. Road one clips ears, colours by undoing the clips, and takes each colour's corners as guards. Road two never colours: it keeps grid points 0.1 units apart that pass the ray test of [Inside or outside](03-point-in-polygon-and-segment-tests.md), and checks each has a sight line to a guard crossing no wall. Road three checks the cut: every triangle turns left, the areas add to the shoelace area, and the count matches Step 2's angle sum. On the comb, road two confirms no grid point sees two tips.
+Only `atan2` and `pi` are imported. Road one clips ears, colours by undoing the clips, and takes each colour's corners as guards. Road two never colours: it keeps grid points 0.1 units apart that pass the ray test of [Inside or outside](03-point-in-polygon-and-segment-tests.md), and checks each has a sight line to a guard crossing no wall.
+
+Road three checks the cut: every triangle turns left, the areas add to the shoelace area, and the count matches Step 2's angle sum. On the comb, road two confirms no grid point sees two tips.
 
 ### Python
 
@@ -345,7 +353,7 @@ Lean proves the comb half of the main result: the 12-corner comb really needs 4 
 - Lean also checks the worked numbers. On the field, turn(C, D, E) = −20, and triangles FAB, BCD, FBD and DEF add to 41.5 ha.
 - Take the Step 3 colours on the field's 4 triangles. Then each triangle has one corner of each colour, and the rarest colour has 2 corners.
 
-The general results, n − 2 triangles and at most n/3 guards for every polygon, are not in Lean yet. Lean's maths library cannot yet prove that a polygon's loop has one clear inside, nor the two-ears theorem or the angle sum. Those general claims are left to the Python and Rust checks, which test them on the field and the comb.
+The general results, n − 2 triangles and at most n/3 guards for every polygon, are not in Lean yet. Mathlib does not yet include built-in theorems that a polygon's loop has one clear inside, nor the two-ears theorem or the angle sum. Those general claims are left to the Python and Rust checks, which test them on the field and the comb.
 
 ```lean
 -- Triangulating a polygon: the card's 12-corner comb is a simple polygon that needs 4 guards, wherever they stand, plus the card's worked numbers. The general n/3 guard bound and the n - 2 triangle count are not proved here.
@@ -413,7 +421,7 @@ the gallery: walls block sight, and a guard sees all the way round. -/
 def Sees {n : ℕ} [NeZero n] (P : Fin n → ℝ × ℝ) (g p : ℝ × ℝ) : Prop :=
   segment ℝ g p ⊆ gallery P
 
-/-- The comb from Step 5, in metres: a 14 m spine 1 m deep with four prongs 7 m tall. -/
+/-- The comb from Step 5, in metres: a 14 m spine 1 m deep with four prongs 6 m tall (reaching y = 7). -/
 def comb : Fin 12 → ℝ × ℝ :=
   ![(0, 0), (14, 0), (13, 7), (12, 1), (10, 1), (9, 7), (8, 1), (6, 1),
     (5, 7), (4, 1), (2, 1), (1, 7)]
@@ -758,7 +766,7 @@ end
 - **Engineering meshes.** Stress simulations split a part's outline into triangles first.
 
 > **Say it back**
-> An ear is a corner where the walk turns left and no other corner lies in its triangle. Every polygon with four or more corners has two ears, so clipping them one by one cuts n corners into n − 2 triangles. Undoing the clips colours the corners in three colours with one of each per triangle. The rarest colour has at most n/3 corners, rounded down, and guards there see every triangle. The 12-corner comb needs all 4, so the ceiling cannot be lowered.
+> An ear is a corner where the walk turns left and no other corner lies in or on its triangle. Every polygon with four or more corners has two ears, so clipping them one by one cuts n corners into n − 2 triangles. Undoing the clips colours the corners in three colours with one of each per triangle. The rarest colour has at most n/3 corners, rounded down, and guards there see every triangle. The 12-corner comb needs all 4, so the ceiling cannot be lowered.
 
 ---
 
@@ -774,7 +782,7 @@ end
 
 - [Sweeping a line across the plane](09-plane-sweep-segment-intersection.md): the sweep that finds crossing segments; textbooks adapt it to triangulate a polygon in about n log n steps, against ear clipping's n².
 
-The ceiling covers every gallery with n corners; how to find the fewest guards for one particular gallery is the question this card leaves open.
+The ceiling covers every gallery with n corners; how to find the fewest guards for one particular gallery is the question this card leaves open. Next on this shelf, Sweeping a line across the plane develops the plane sweep needed for faster triangulation.
 
 ---
 

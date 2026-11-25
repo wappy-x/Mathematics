@@ -12,9 +12,9 @@ The drone lies within the paddock's east–west and north–south spans, so a bo
 
 One small calculation answers both: which side of a line a point lies on. Send a ray (a half-line running forever one way) due east from the point and count the fences it meets. The drone's meets two: outside. The pilot's meets one: inside. The flight line crosses fence D–E at 98 m east, 70 m north.
 
-**A point is inside a fence that does not cross itself exactly when a ray from it meets the fence an odd number of times; and two straight segments cross exactly when each one's ends lie on opposite sides of the other.**
+**A point off a fence that does not cross itself is inside it exactly when an eastward ray, counting corners by the half-open rule, meets the fence an odd number of times; two segments with no end on the other's line cross exactly when each straddles the other.**
 
-**What kind of fact this is:** a method; the facts it rests on are theorems, proved on this card in Why it works for straight-sided fences, with the general curve in Jordan curve theorem.
+**What kind of fact this is:** a method; the facts it rests on are theorems, proved on this card in Why it works for straight-sided fences, with the general curve in [Jordan curve theorem](../../17-Topology/03-Surfaces%20and%20Manifolds/05-jordan-curve-theorem.md).
 
 ### The picture: the paddock, the drone and the pilot
 
@@ -50,7 +50,7 @@ It is the cross product of the arrows from $`a`$ to $`b`$ and from $`a`$ to $`c`
 
 The point is inside when the count $`n`$ of such edges is odd, outside when it is even.
 
-**Two segments.** The segment from $`p`$ to $`q`$ and the segment from $`r`$ to $`s`$ cross when
+**Two segments.** The segment from $`p`$ to $`q`$ and the segment from $`r`$ to $`s`$ cross properly (neither ending on the other's line) when
 
 ```math
 \mathrm{orient}(p, q, r)\,\mathrm{orient}(p, q, s) < 0 \quad\text{and}\quad \mathrm{orient}(r, s, p)\,\mathrm{orient}(r, s, q) < 0
@@ -89,7 +89,9 @@ Far enough east a ray is clear of the paddock: outside. Walking back to the poin
 
 An edge meets the horizontal line through $`p`$ only if one end is north of $`p`$ and the other is not: the rule's first half.
 
-For an edge running north, the crossing is east of $`p`$ exactly when $`p`$ is on the walk's left, orientation positive; running south, the sides swap. Multiplying by $`b_y - a_y`$, positive going north and negative going south, folds both into one sign. For the drone on D–E, orientation −2100 and the drop from 100 m to 50 m are both negative: the product is positive, and the crossing counts, at 112 m east. The decision never divides.
+For an edge running north, the crossing is east of $`p`$ exactly when $`p`$ is on the walk's left, orientation positive; running south, the sides swap. Multiplying by $`b_y - a_y`$, positive going north and negative going south, folds both into one sign.
+
+For the drone on D–E, orientation −2100 and the drop from 100 m to 50 m are both negative: the product is positive, and the crossing counts, at 112 m east. The decision never divides.
 
 ### Step 2: a corner on the ray counts once or not at all
 
@@ -99,7 +101,9 @@ So a corner at the ray's height counts as if just south of it (the half-open rul
 
 ### Step 3: two segments cross when each straddles the other
 
-If flight and fence cross, each straddles the other's line. Conversely, if D and E straddle the flight line, the fence segment meets that line; if pilot and drone straddle the fence line, the flight segment meets it. Two lines that are not parallel meet once, so that point is on both segments. Here orient(D, E, pilot) = 2100 against −2100 for the drone, and orient(pilot, drone, D) = −2520 against 1680 for E.
+If flight and fence cross, each straddles the other's line. Conversely, if D and E straddle the flight line, the fence segment meets that line; if pilot and drone straddle the fence line, the flight segment meets it. The two lines cannot be parallel (parallel lines keep a segment's ends on the same side), so they meet once, and that point lies on both segments.
+
+Here orient(D, E, pilot) = 2100 against −2100 for the drone, and orient(pilot, drone, D) = −2520 against 1680 for E.
 
 <details>
 <summary>Detailed proof: the fence has exactly two sides</summary>
@@ -108,7 +112,7 @@ Move $`p`$ along a path that never touches the fence. Its count changes only whe
 
 Two points close together either side of one edge, away from corners, have rays meeting the same edges except that one: their parities differ.
 
-Far away the count is 0. So points joined to far away without touching the fence are even, points just across an edge are odd, and no path joins the two without crossing the fence. That is the two-sided split for straight-run fences; for any closed curve that does not cross itself it is the Jordan curve theorem.
+Far away the count is 0. So points joined to far away without touching the fence are even, points just across an edge are odd, and no path joins the two without crossing the fence. That is the two-sided split for straight-run fences; for any closed curve that does not cross itself it is the [Jordan curve theorem](../../17-Topology/03-Surfaces%20and%20Manifolds/05-jordan-curve-theorem.md).
 
 </details>
 
@@ -2022,7 +2026,7 @@ example : orient (150, 0) (170, 60) (70, 80) = 6400 := by norm_num [orient]
 - **Collision checks.** Games and robot planners test moving segments against walls with the straddle test.
 
 > **Say it back**
-> Orientation says whether a point lies left or right of a line. A ray from a point meets a fence that does not cross itself an odd number of times exactly when the point is inside. A corner on the ray counts as just below it. Two segments cross exactly when each one's ends straddle the other. The drone's ray meets two fences: it is over the dam.
+> Orientation says whether a point lies left or right of a line. A ray from a point off a fence that does not cross itself meets the fence an odd number of times exactly when the point is inside. A corner on the ray counts as just below it. Two segments with no end on the other's line cross exactly when each one's ends straddle the other. The drone's ray meets two fences: it is over the dam.
 
 ---
 
@@ -2032,12 +2036,13 @@ example : orient (150, 0) (170, 60) (70, 80) = 6400 := by norm_num [orient]
 
 ## Where this goes next
 
+- [Nearest-neighbour maps](04-voronoi-and-delaunay.md): splits the plane into nearest-site polygons, where point-in-polygon tests identify which cell holds a query.
 - [Jordan curve theorem](../../17-Topology/03-Surfaces%20and%20Manifolds/05-jordan-curve-theorem.md): every closed curve that does not cross itself has exactly one inside and one outside.
 - [Pick's theorem](07-picks-theorem.md): count the dots inside and on the edge, and the area falls out.
-- [Triangulating a polygon, and why n/3 guards can always watch a gallery with n walls](08-polygon-triangulation-and-art-gallery.md): builds on this card.
+- [Triangulating a polygon, and why n/3 guards can always watch a gallery with n walls](08-polygon-triangulation-and-art-gallery.md): uses the ray test and segment-crossing test to check which walls block a guard's line of sight.
 - [Sweeping a line across the plane](09-plane-sweep-segment-intersection.md): find every crossing among n segments without testing every pair.
 
-This card proved the two-sided split for straight-run fences; whether a curve with no straight pieces, even one too crinkled to have a length, still has a clean inside and outside is what the Jordan curve theorem answers.
+This card proved the two-sided split for straight-run fences. Next on this shelf, Nearest-neighbour maps cuts the plane into polygons by nearest site; whether a curve with no straight pieces still has a clean inside and outside is what the Jordan curve theorem answers in Topology.
 
 ---
 

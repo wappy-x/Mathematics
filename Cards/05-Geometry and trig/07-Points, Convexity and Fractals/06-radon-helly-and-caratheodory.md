@@ -10,9 +10,11 @@ Two crews set marker posts: one at (0, 0), (4, 0) and (0, 4), the other at (1, 1
 
 A survey crew of four has free windows, in hours after 8 a.m., of [0, 5], [2, 7], [4, 9] and [3, 6]. Any two overlap, so all four share a time: hours 4 to 5, noon to 1 p.m. On a line pairs are enough; in the plane, triples. That is **Helly's theorem**.
 
-Read in metres, the survey field from [Shoelace formula](01-polygon-area-and-orientation.md) is a deck on six corner posts, A to F, one reflex (an inside angle over 180 degrees). A tank at x, the corners' average, can rest on just three posts, B, E and F. Posts only push, so their shares of its weight are a **mix** (a weighted average, weights never negative and adding to 1) that balances at x. Any point of a hull is a mix of three of the points. That is **Carathéodory's theorem**.
+Read in metres, the survey field from [Shoelace formula](01-polygon-area-and-orientation.md) is a deck on six corner posts, A to F, one reflex (an inside angle over 180 degrees). A tank at x, the corners' average, can rest on just three posts, B, E and F. Posts only push, so their shares of its weight are a **mix** (a weighted average, weights never negative and adding to 1) that balances at x.
 
-**In the plane, any 4 points split into two groups whose hulls meet; finitely many convex sets that meet three at a time all meet; and any point of a hull is a mix of 3 of the points, because any 4 points carry weights that add to 0 and balance.**
+Any point of a hull is a mix of at most three of the points. That is **Carathéodory's theorem**.
+
+**In the plane, any 4 points split into two groups whose hulls meet; finitely many convex sets (at least 3) that meet three at a time all meet; and any point of a hull is a mix of at most 3 of the points, because any 4 points carry weights that add to 0 and balance.**
 
 **What kind of fact this is:** three theorems, proved on this card in Why it works from one shared fact.
 
@@ -57,8 +59,8 @@ The three theorems, with $`d`$ the number of coordinates:
 | Theorem | In $`d`$ dimensions | In the plane | On a line |
 | --- | --- | --- | --- |
 | Radon | any $`d + 2`$ points split | 4 points | 3 points |
-| Helly | if every $`d + 1`$ sets meet, all meet | triples | pairs |
-| Carathéodory | a hull point mixes $`d + 1`$ points | 3 corners | 2 ends |
+| Helly | with at least $`d + 1`$ sets, if every $`d + 1`$ of them meet, all meet | triples (at least 3 sets) | pairs (at least 2 sets) |
+| Carathéodory | a hull point mixes at most $`d + 1`$ points | at most 3 corners | at most 2 ends |
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -74,7 +76,7 @@ The three theorems, with $`d`$ the number of coordinates:
 ### When it holds
 
 - **Convex sets.** Helly fails for sets with gaps: on a line, the two-point sets {1, 2}, {2, 3} and {1, 3} meet in pairs but share nothing.
-- **Finitely many sets, or compact ones.** The rays [n, ∞) for n = 1, 2, 3, … meet in every finite group but share no point.
+- **Finitely many sets, or compact ones (closed and bounded: each includes its edge and fits inside some box).** The rays [n, ∞) for n = 1, 2, 3, … meet in every finite group but share no point.
 - **The right count for the dimension.** In the plane pairs are not enough: a triangle's three sides meet in pairs but share no point. Three points are too few for Radon.
 - **A hull, not the shape.** Carathéodory's triangle B, E, F crosses the notch at D, outside the field.
 
@@ -86,7 +88,9 @@ The three theorems, with $`d`$ the number of coordinates:
 
 ### Step 0: more points than equations forces a dependence
 
-Weights on four plane points face three equations: the across sum, the up sum and the plain sum are zero. Four unknowns and three equations always leave a solution that is not all zero; the turn formula writes one down. If all four lie on one line, every turn is 0; instead, use three: weight −1 on the middle one and its mix weights on the outer two. In $`d`$ dimensions it is $`d + 1`$ equations against $`d + 2`$ unknowns.
+Weights on four plane points face three equations: the across sum, the up sum and the plain sum are zero. Four unknowns and three equations always leave a solution that is not all zero; the turn formula writes one down.
+
+If all four lie on one line, every turn is 0; instead, use three: weight −1 on the middle one and its mix weights on the outer two. In $`d`$ dimensions it is $`d + 1`$ equations against $`d + 2`$ unknowns.
 
 <details>
 <summary>Detailed proof: the turn weights add to 0 and balance</summary>
@@ -132,7 +136,9 @@ Start with $`x`$ as a mix of more than three points, all weights positive. Take 
 
 Replace each weight $`w_i`$ by $`w_i - t\lambda_i`$. The weights still add to 1, because the $`\lambda_i`$ add to 0. They still give $`x`$, because the $`\lambda_i p_i`$ add to the origin.
 
-Some $`\lambda_i`$ is positive: they add to 0 and are not all 0. Raise $`t`$ from 0 until the first weight reaches 0. That is the smallest ratio $`w_i / \lambda_i`$ over the positive $`\lambda_i`$. No weight goes negative, and one point drops out. Repeat until three remain. Flipping the signs of $`\lambda`$ can leave a different three.
+Some $`\lambda_i`$ is positive: they add to 0 and are not all 0. Raise $`t`$ from 0 until the first weight reaches 0. That is the smallest ratio $`w_i / \lambda_i`$ over the positive $`\lambda_i`$. No weight goes negative, and one point drops out.
+
+Repeat until three remain. Flipping the signs of $`\lambda`$ can leave a different three.
 
 The survey field starts with all six corners at weight 1/6. Three trims drop C, D and A, leaving B, E and F.
 
@@ -374,8 +380,8 @@ ALL CHECKS PASS
 Lean proves all three theorems in the plane, for any points and any finite family of convex sets.
 
 - Any 4 points of the plane split into two groups whose hulls meet.
-- Take finitely many convex sets in the plane, where any three of them meet. Then all of them share a point.
-- Take any point in the hull of a set of points in the plane. Then it is a mix of 3 of those points.
+- Take finitely many convex sets in the plane, where every group of at most three of them meets. Then all of them share a point.
+- Take any point in the hull of a set of points in the plane. Then it is a mix of 3 of those points (repeats allowed when fewer are needed).
 - The posts' weights 8, 4, 4 and −16 add to 0 and balance. The Radon point is (1, 1), inside the other crew's hull.
 - The crew windows share exactly hours 4 to 5. The sets {1, 2}, {2, 3} and {1, 3} meet in pairs but share nothing.
 - The corner average is x, and the mix on B, E and F, in exact fractions, adds to 1 and balances at x.
@@ -570,7 +576,7 @@ example : (40 / 93 : ℝ) + 15 / 62 + 61 / 186 = 1 ∧
 - **Scheduling.** A meeting time exists when each person has one free window and every two windows overlap, as with the crew's noon slot.
 
 > **Say it back**
-> Any four points of the plane carry weights, read from triangle areas, that add to zero and balance. Splitting by sign gives Radon: two groups whose hulls meet. Splitting one point per set gives Helly: finitely many convex sets meeting three at a time all meet; on a line, pairs suffice. Trimming the weights gives Carathéodory: a hull point is a mix of three points, such as the tank's posts B, E and F.
+> Any four points of the plane carry weights, read from triangle areas, that add to zero and balance. Splitting by sign gives Radon: two groups whose hulls meet. Splitting one point per set gives Helly: finitely many convex sets (at least three) meeting three at a time all meet; on a line, pairs suffice for at least two. Trimming the weights gives Carathéodory: a hull point is a mix of at most three points, such as the tank's posts B, E and F.
 
 ---
 
@@ -581,11 +587,11 @@ example : (40 / 93 : ℝ) + 15 / 62 + 61 / 186 = 1 ∧
 
 ## Where this goes next
 
+- [Pick's theorem](07-picks-theorem.md): counting grid points inside and on a polygon instead of overlapping sets.
 - [Convex sets](../../15-Optimization/01-Convexity/02-convex-sets.md) in Optimization: the same hulls in any number of dimensions.
-- [Separating hyperplanes](../../15-Optimization/01-Convexity/06-separating-hyperplanes.md): a flat wall between convex sets that miss, the companion tool to Helly.
-- [Pick's theorem](07-picks-theorem.md): counting grid points instead of sets.
+- [Separating hyperplanes](../../15-Optimization/01-Convexity/06-separating-hyperplanes.md): a flat wall between a point and a closed convex set it misses, the companion tool to Helly.
 
-Left open: Helly checks triples, but how many of a family's triples must meet before some point lies in a fixed fraction of all the sets?
+Left open: Helly checks triples, but how many of a family's triples must meet before some point lies in a fixed fraction of all the sets? Next on this shelf, Pick's theorem turns from overlapping sets to counting grid points inside a polygon.
 
 ---
 

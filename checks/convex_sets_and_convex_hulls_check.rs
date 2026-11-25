@@ -24,7 +24,10 @@ fn wrap(pts: &[Pt]) -> Vec<Pt> {                     // gift wrapping from the l
     loop {
         let last = *hull.last().unwrap();
         let mut q = *pts.iter().find(|&&p| p != last).unwrap();
-        for &r in pts { if turn(last, q, r) < 0.0 { q = r } } // r right of the string: swing to it
+        for &r in pts {
+            let t = turn(last, q, r);
+            if t < 0.0 || (t == 0.0 && (r.0 - last.0).powi(2) + (r.1 - last.1).powi(2) > (q.0 - last.0).powi(2) + (q.1 - last.1).powi(2)) { q = r }
+        } // r right of the string, or straight along it and farther
         if q == hull[0] { return hull }
         hull.push(q);
     }

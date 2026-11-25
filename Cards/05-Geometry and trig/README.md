@@ -4,7 +4,7 @@
 
 # 05 · Geometry and trig
 
-Measure and reason about shapes in the plane and in space: angles, lengths, areas and volumes by formula and by argument, any triangle from three pieces of data, points and curves by coordinates in three systems, and vectors in space. The wing ends where the flat plane stops being the only option, so that later wings can talk about spheres, curved space and points on a cubic curve.
+Measure and reason about shapes in the plane and in space: angles, lengths, areas and volumes by formula and by argument, any triangle from three pieces of data, points and curves by coordinates in three systems, vectors in space, non-Euclidean geometry, and computational geometry, convexity and fractals.
 
 7 shelves · **62 of 62 cards ready to read**
 
@@ -130,7 +130,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 07 · Points, Convexity and Fractals · 10 cards
 
-*Computational geometry a program can do, and a first look at shapes with fractional dimension*
+*Computational geometry a program can do, combinatorial convexity, lattice-point area, and a first look at shapes with fractional dimension*
 
 1. [Shoelace formula: area of any polygon from its corners, with a sign that says which way round](07-Points%2C%20Convexity%20and%20Fractals/01-polygon-area-and-orientation.md)
 2. [Convex sets: no dents, and the rubber band that finds the hull](07-Points%2C%20Convexity%20and%20Fractals/02-convex-sets-and-convex-hulls.md)

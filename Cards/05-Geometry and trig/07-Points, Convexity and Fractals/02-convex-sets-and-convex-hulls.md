@@ -102,7 +102,7 @@ Any convex region holding the trees holds every average: fold all but the last t
 
 ### Step 3: the sweep keeps only true corners
 
-Sort the trees left to right and walk along them, keeping a chain. When a tree arrives, check the last two kept. A right bend or straight on into the newcomer puts the middle tree on or above the shortcut, off the hull's bottom edge: drop it and check again.
+Sort the trees left to right (breaking ties bottom to top) and walk along them, keeping a chain. When a tree arrives, check the last two kept. A right bend or straight on into the newcomer puts the middle tree on or above the shortcut, off the hull's bottom edge: drop it and check again.
 
 That builds the **lower chain**; right to left builds the **upper chain**; joined, they are the hull: **Andrew's monotone chain** (1979). Both chains bend only left, so the loop is convex by Step 1, and every dropped tree ends inside it.
 
@@ -111,13 +111,15 @@ Sorting is the slow part, about $`n \log_2 n`$ comparisons, where $`\log_2 n`$ c
 <details>
 <summary>Detailed proof: a dropped tree is never a lower corner</summary>
 
-Sorted by x, kept tree a is at or left of m, newcomer p at or right. If turn(a, m, p) ≤ 0, m lies on or above segment a to p. The hull holds that segment, so its lower boundary is on or below it, and m can touch that boundary only mid-way along a straight run: not a corner. The final chain bends left from leftmost to rightmost with every tree on or above it: the lower boundary.
+Sorted by x, then y, kept tree a is at or left of m, newcomer p at or right. If turn(a, m, p) ≤ 0, m lies on or above segment a to p. The hull holds that segment, so its lower boundary is on or below it, and m can touch that boundary only mid-way along a straight run: not a corner.
+
+The final chain bends left from leftmost to rightmost with every tree on or above it: the lower boundary.
 
 </details>
 
 ### Step 4: gift wrapping, a second road
 
-Stretch a string from the leftmost tree, F, to any other. Whenever a tree lies to its right, swing the string to it. When none does, every tree is in the convex half-plane on the string's left, so the whole hull is: the string lies along a hull edge.
+Stretch a string from the leftmost tree (lowest if tied), F, to any other. Whenever a tree lies to its right—or straight along it and farther away—swing the string to it. When none does, every tree is in the convex half-plane on the string's left, so the whole hull is: the string lies along a hull edge.
 
 Walk to its far end and repeat until back at F. This is **gift wrapping** (Jarvis, 1973). Each hull edge costs one pass over all $`n`$ trees.
 
@@ -130,7 +132,9 @@ Any fence round the trees cuts down to the hull without lengthening, so none is 
 <details>
 <summary>Detailed proof: no fence round the trees is shorter</summary>
 
-Take a fence of straight pieces round every tree. Replace each inward dent by the segment across it: never longer, trees still inside. Once every bend is left, the fence is convex. Cut along each hull edge's line, keeping the trees' side: the path cut away is replaced by a segment between the same two points, never longer. After six cuts the fence is the hull's boundary.
+Take a fence of straight pieces round every tree. Replace each inward dent by the segment across it: never longer, trees still inside. Once every bend is left, the fence is convex.
+
+Cut along each hull edge's line, keeping the trees' side: the path cut away is replaced by a segment between the same two points, never longer. After one cut per hull edge (six here), the fence is the hull's boundary.
 
 </details>
 
@@ -186,10 +190,10 @@ def chain(pts, log):                     # one half of the monotone chain
 def wrap(pts):                           # gift wrapping from the lowest leftmost tree
     hull = [min(pts)]
     while True:
-        q = next(p for p in pts if p != hull[-1])
+        a, q = hull[-1], next(p for p in pts if p != hull[-1])
         for r in pts:
-            if turn(hull[-1], q, r) < 0:
-                q = r                    # r lies right of the string: swing to it
+            if (t := turn(a, q, r)) < 0 or (t == 0 and (r[0] - a[0]) ** 2 + (r[1] - a[1]) ** 2 > (q[0] - a[0]) ** 2 + (q[1] - a[1]) ** 2):
+                q = r                    # r lies right of the string, or straight along it and farther
         if q == hull[0]: return hull
         hull.append(q)
 area = lambda h: sum(turn((0, 0), h[i - 1], h[i]) for i in range(len(h))) / 2
@@ -228,7 +232,7 @@ assert min(w) > 0 and abs(mix[0] - G[0]) < 1e-9 and abs(mix[1] - G[1]) < 1e-9
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-24 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 road one, monotone chain: F A B C D E
@@ -283,7 +287,10 @@ fn wrap(pts: &[Pt]) -> Vec<Pt> {                     // gift wrapping from the l
     loop {
         let last = *hull.last().unwrap();
         let mut q = *pts.iter().find(|&&p| p != last).unwrap();
-        for &r in pts { if turn(last, q, r) < 0.0 { q = r } } // r right of the string: swing to it
+        for &r in pts {
+            let t = turn(last, q, r);
+            if t < 0.0 || (t == 0.0 && (r.0 - last.0).powi(2) + (r.1 - last.1).powi(2) > (q.0 - last.0).powi(2) + (q.1 - last.1).powi(2)) { q = r }
+        } // r right of the string, or straight along it and farther
         if q == hull[0] { return hull }
         hull.push(q);
     }
@@ -336,7 +343,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-24 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 road one, monotone chain: F A B C D E
@@ -544,15 +551,16 @@ example : 0 ≤ turn (2, 0) (14, 2) (13 / 2, 4) ∧ 0 ≤ turn (14, 2) (8, 6) (1
 
 ## Where this goes next
 
+- [Inside or outside](03-point-in-polygon-and-segment-tests.md): testing whether a point lies inside a fence when the fence has dents.
 - [Nearest-neighbour maps](04-voronoi-and-delaunay.md): the ground nearest each tree, rimmed by the hull.
 - [Convex sets](../../15-Optimization/01-Convexity/02-convex-sets.md) in Optimization: convex regions where minimising a cost is well behaved.
 - [Separation](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/07-hahn-banach-separation-and-supporting-walls.md): Step 4's string, in any dimension.
 - [Krein-Milman](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/06-krein-milman-and-extreme-points.md): a convex region rebuilt from its corners.
 - [Radon, Helly and Carathéodory](06-radon-helly-and-caratheodory.md): three counting facts about convex sets in the plane.
-- [Triangulating a polygon, and why n/3 guards can always watch a gallery with n walls](08-polygon-triangulation-and-art-gallery.md): builds on this card.
+- [Triangulating a polygon, and why n/3 guards can always watch a gallery with n walls](08-polygon-triangulation-and-art-gallery.md): cuts any simple polygon into convex triangles so one guard per triangle corner sees all of it.
 - [Toric varieties](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/13-toric-varieties.md): a fan of cones glues into a variety, and a polytope counts its sections.
 
-Left open: if two herds graze in two convex paddocks that do not overlap, can one straight fence always run between them?
+Left open: when a fence has dents instead of being convex, how do you tell inside from outside? The next card answers that; for whether a straight fence always runs between two disjoint convex paddocks, see Separation.
 
 ---
 

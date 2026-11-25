@@ -63,7 +63,7 @@ the gallery: walls block sight, and a guard sees all the way round. -/
 def Sees {n : ℕ} [NeZero n] (P : Fin n → ℝ × ℝ) (g p : ℝ × ℝ) : Prop :=
   segment ℝ g p ⊆ gallery P
 
-/-- The comb from Step 5, in metres: a 14 m spine 1 m deep with four prongs 7 m tall. -/
+/-- The comb from Step 5, in metres: a 14 m spine 1 m deep with four prongs 6 m tall (reaching y = 7). -/
 def comb : Fin 12 → ℝ × ℝ :=
   ![(0, 0), (14, 0), (13, 7), (12, 1), (10, 1), (9, 7), (8, 1), (6, 1),
     (5, 7), (4, 1), (2, 1), (1, 7)]

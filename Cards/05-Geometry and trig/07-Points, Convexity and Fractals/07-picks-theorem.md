@@ -12,7 +12,7 @@ Walk the fence and 14 trees stand right on the fence line. Walk inside and there
 
 The rule also runs backwards. The shoelace formula gives the area, one greatest common divisor per fence gives the trees on the line, and Pick's theorem says 10 trees stand inside, without anyone walking the plot.
 
-**For a polygon whose corners all sit on grid points, the area is the number of grid points inside plus half the number on the edges, minus one; each edge holds as many grid points as the greatest common divisor of its two steps.**
+**For a simple polygon with no holes whose corners all sit on grid points, the area is the number of grid points inside plus half the number on the edges, minus one; each edge holds as many grid points past its start as the greatest common divisor of its two steps.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works. It holds only in the flat plane: in three dimensions it fails, as Step 5 shows.
 
@@ -71,7 +71,9 @@ The proof has one idea. Give every grid polygon a score, $`I + B/2 - 1`$. The sc
 
 The roof edge from (4, 3) to (2, 5) steps −2 east and 2 north. Its greatest common divisor is 2, so the smallest grid step along it is (−1, 1). It passes (3, 4) halfway and reaches (2, 5): 2 points, counting the end but not the start.
 
-In general, divide both steps by $`g = \gcd(\lvert\Delta x\rvert, \lvert\Delta y\rvert)`$. The step $`(\Delta x/g, \Delta y/g)`$ lands on grid points. No shorter step does: a grid point partway along, at a fraction in lowest terms, needs the fraction's bottom number to divide both $`\Delta x`$ and $`\Delta y`$, so that number divides $`g`$. The edge is $`g`$ equal steps, so it holds $`g`$ points past its start.
+In general, divide both steps by $`g = \gcd(\lvert\Delta x\rvert, \lvert\Delta y\rvert)`$. The step $`(\Delta x/g, \Delta y/g)`$ lands on grid points. No shorter step does: a grid point partway along, at a fraction in lowest terms, needs the fraction's bottom number to divide both $`\Delta x`$ and $`\Delta y`$, so that number divides $`g`$.
+
+The edge is $`g`$ equal steps, so it holds $`g`$ points past its start.
 
 Round the plot the divisors add to 4 + 3 + 2 + 2 + 3 = 14 = $`B`$.
 
@@ -106,17 +108,23 @@ An $`a`$ by $`b`$ box with sides along the grid has $`(a - 1)(b - 1)`$ points in
 
 A box's diagonal cuts it into two right triangles. A half turn about the box's centre swaps them and maps grid points to grid points, so they have equal scores. By Step 1 the two scores add to the box's $`ab`$, so each is $`ab/2`$: its area.
 
-Any grid triangle sits in the smallest box around it: the triangle plus at most three right triangles, plus a small box when two of its corners are opposite corners of the box and the third is inside. Score and area both add and agree on every other piece, so they agree on the triangle. The roof sits in a 4 by 2 box with two right triangles of area 2 at its top corners: 8 − 2 − 2 = 4, matching its score.
+Any grid triangle sits in the smallest box around it: the triangle plus at most three right triangles, plus a small box when two of its corners are opposite corners of the box and the third is inside. Score and area both add and agree on every other piece, so they agree on the triangle.
+
+The roof sits in a 4 by 2 box with two right triangles of area 2 at its top corners: 8 − 2 − 2 = 4, matching its score.
 
 ### Step 4: any polygon
 
 Every polygon that does not cross itself cuts into triangles along inside diagonals (proved in [Shoelace formula](01-polygon-area-and-orientation.md)). Glue them back one at a time: each has score equal to area, and both totals add.
 
-A second proof cuts the polygon into the smallest grid triangles, those with no grid points except their corners. Euler's formula for flat networks, vertices minus edges plus faces equals 2 ([Planar graphs](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md)), counts them. Each has area 1/2: two copies form a parallelogram with no other grid points, whose copies tile the plane, one grid point per tile, so it covers one square.
+A second proof cuts the polygon into the smallest grid triangles, those with no grid points except their corners. Euler's formula for flat networks, vertices minus edges plus faces equals 2 ([Planar graphs](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md)), counts them.
+
+Each has area 1/2: two copies form a parallelogram with no other grid points, whose copies tile the plane, one grid point per tile, so it covers one square.
 
 ### Step 5: why it fails in three dimensions
 
-Take the tetrahedron (a solid with four triangular faces) with corners (0, 0, 0), (1, 0, 0), (0, 1, 0) and (1, 1, $`r`$). For $`r`$ = 1, 2, 3 it contains exactly 4 grid points, its corners, and none on its edges or inside. Yet six times its volume is 1, 2, 3. Same counts, different volumes, so no formula in the counts alone can give volume in space. These are Reeve's tetrahedra (1957).
+Take the tetrahedron (a solid with four triangular faces) with corners (0, 0, 0), (1, 0, 0), (0, 1, 0) and (1, 1, $`r`$). For $`r`$ = 1, 2, 3 it contains exactly 4 grid points, its corners, and none on its edges or inside. Yet six times its volume is 1, 2, 3.
+
+Same counts, different volumes, so no formula in the counts alone can give volume in space. These are Reeve's tetrahedra (1957).
 
 ---
 
@@ -344,7 +352,7 @@ Lean proves how many grid points sit on the edges, for every grid polygon, but n
 - Lean also counts the house directly. Its five gcds add to 14, and it has 10 grid points inside and 14 on the fence.
 - The card's other sums check out too: area 16, the survey field's 41.5, the doubled house's 64 and the three mistakes.
 
-Lean's library cannot yet prove a fence splits the plane into inside and outside, so the Python and Rust checks carry the area formula.
+Mathlib does not yet include a built-in theorem that a fence splits the plane into inside and outside, so the Python and Rust checks carry the area formula.
 
 ```lean
 -- Pick's theorem, the counting half: each straight run between grid points holds as many grid points past its start as the gcd of its two steps, and a fence that never crosses itself holds the sum of those counts. The area formula A = I + B/2 - 1 itself is not stated here.
@@ -622,7 +630,7 @@ example : (10 : ℚ) + 14 / 2 = 17 ∧ (10 : ℚ) + 5 / 2 - 1 = 23 / 2 ∧
 - **Counting solutions.** Integer optimisation counts whole-number points in a region. Pick is the flat case of Ehrhart theory, which tracks the counts as a shape is scaled up: doubling the plot gives $`B`$ = 28 and $`I`$ = 51.
 
 > **Say it back**
-> A grid polygon's area is the dots inside plus half the dots on the edges, minus one. Each edge holds as many dots as the greatest common divisor of its two steps. The house-shaped plot has 14 on the fence and 10 inside, so its area is 16 squares, 1,600 m². The proof gives each polygon a score that adds when pieces are glued, then checks boxes and triangles. In space the same counts can hide different volumes, so the rule is flat only.
+> A grid polygon's area is the dots inside plus half the dots on the edges, minus one. Each edge holds as many dots past its start as the greatest common divisor of its two steps. The house-shaped plot has 14 on the fence and 10 inside, so its area is 16 squares, 1,600 m². The proof gives each polygon a score that adds when pieces are glued, then checks boxes and triangles. In space the same counts can hide different volumes, so the rule is flat only.
 
 ---
 
@@ -637,7 +645,7 @@ example : (10 : ℚ) + 14 / 2 = 17 ∧ (10 : ℚ) + 5 / 2 - 1 = 23 / 2 ∧
 
 - [Triangulating a polygon, and why n/3 guards can always watch a gallery with n walls](08-polygon-triangulation-and-art-gallery.md): the cut into triangles that Step 4 relies on, built as an algorithm.
 
-The question this card leaves open: if dot counts cannot give a solid's volume, what can be said about the dots inside a solid in space?
+The question this card leaves open: if dot counts cannot give a solid's volume, what can be said about the dots inside a solid in space? In the plane, the next card turns Step 4's cut into triangles into an algorithm.
 
 ---
 

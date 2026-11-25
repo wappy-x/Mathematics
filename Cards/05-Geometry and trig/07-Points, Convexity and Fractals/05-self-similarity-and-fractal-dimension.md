@@ -12,7 +12,7 @@ Repeat on every side, without end: the **Koch snowflake**, published by Helge vo
 
 Each side of the finished snowflake is four copies of itself, a third the size: it is **self-similar**. A square is too, so copies alone do not make a **fractal**: a shape with new detail at every scale, whose dimension is usually not a whole number. The Koch edge's **similarity dimension** is 1.2619, between a line and a surface.
 
-**Magnify a self-similar shape s times and count the N copies of the original inside: its dimension D is the power with s^D = N, a whole number for a square, a fraction for the Koch edge.**
+**Magnify a self-similar shape s times and count the N copies of the original inside: its dimension D is the power with s^D = N, a whole number for a square, not a whole number for the Koch edge.**
 
 **What kind of fact this is:** the dimension is a definition; the snowflake's finite area and endless perimeter are theorems, proved in Why it works.
 
@@ -26,7 +26,7 @@ Drawn to scale, 1 cm = 7 units, centre at (180, 120). Dotted: the starting trian
 
 ## The formula
 
-Notation first, in words. A shape is magnified $`s`$ times, and $`N`$ counts the non-overlapping copies of the original inside the result. The **similarity dimension** $`D`$ is the power that turns $`s`$ into $`N`$.
+Notation first, in words. A shape is magnified $`s`$ times ($`s > 1`$), and $`N \ge 1`$ counts the non-overlapping copies of the original inside the result. The **similarity dimension** $`D`$ is the power that turns $`s`$ into $`N`$.
 
 ```math
 N = s^D \qquad\text{so}\qquad D = \frac{\log N}{\log s}
@@ -61,6 +61,7 @@ P_n = 3L\left(\tfrac{4}{3}\right)^n, \qquad A_n = A_0\left(\tfrac{8}{5} - \tfrac
 
 ### When it holds
 
+- **Magnification above 1 ($`s > 1`$) and at least one copy ($`N \ge 1`$).** At $`s = 1`$, $`\log s = 0`$ divides by zero.
 - **Every copy shrunk by the same factor.** Copies of mixed sizes need a sum over the pieces; one log ratio gives the wrong number.
 - **No overlaps.** Count a segment as four thirds, one counted twice, and the formula reports 1.2619 for a shape of dimension 1.
 - **Exact copies at every scale.** A coastline repeats its pattern only over a range of sizes, so its dimension is measured, not counted.
@@ -113,7 +114,9 @@ The triangle plus its three caps is a regular hexagon. Each cap holds a third of
 
 ### Step 4: why the power, and why it is not a whole number
 
-Measure one side at stage n in pieces of length L/3^n: there are 4^n. Add up each piece's size raised to a power d: 4^n × (L/3^n)^d. With d = 1 that is length, L × (4/3)^n, which grows without end. With d = 2 it is L^2 × (4/9)^n, an area, which shrinks toward nothing: the edge itself covers no area.
+Measure one side at stage n in pieces of length L/3^n: there are 4^n. Add up each piece's size raised to a power d: 4^n × (L/3^n)^d. With d = 1 that is length, L × (4/3)^n, which grows without end.
+
+With d = 2 it is L^2 × (4/9)^n, an area, which shrinks toward nothing: the edge itself covers no area.
 
 Only one power keeps the total steady: the d with 4 × (1/3)^d = 1, so four new pieces weigh what the old one did. That is 3^d = 4, the formula's s^D = N, and d = 1.2619.
 
@@ -126,7 +129,9 @@ The **Hausdorff dimension** ([Hausdorff measure and dimension](../../10-Measure%
 
 </details>
 
-A second road ignores the construction: lay grids of shrinking squares over the shape and count the squares it touches. The count grows like (1/size)^D, so the slope of log count against log(1/size) estimates D. On stage 6 the code gets 1.2466; the grid does not line up with the copies, so this is an estimate.
+A second road ignores the construction: lay grids of shrinking squares over the shape and count the squares it touches. The count grows like (1/size)^D, so the slope of log count against log(1/size) estimates D.
+
+On stage 6 the code gets 1.2466; the grid does not line up with the copies, so this is an estimate.
 
 ---
 
@@ -346,10 +351,10 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the dimension formula and the snowflake's perimeter and area facts for every magnification above 1 and every starting side.
+Lean proves the dimension formula and the snowflake's perimeter and area facts for every magnification above 1 and every positive starting side.
 
 - When $`s`$ is more than 1 and $`N`$ is at least 1, exactly one power $`D`$ has $`s^D = N`$: $`D`$ = log N / log s.
-- With first side $`L`$, stage n has 3 × 4^n sides of L/3^n, and this perimeter passes any length named in advance.
+- With positive first side $`L`$, stage n has 3 × 4^n sides of L/3^n, and this perimeter passes any length named in advance.
 - Stage n adds 3 × 4^(n−1) triangles of $`A_0`$ / 9^n, and these add up to the formula for $`A_n`$ at every stage.
 - The area stays below the hexagon's 2 × $`A_0`$ at every stage and settles at 8/5 × $`A_0`$.
 - log 4 / log 3 for the Koch edge and log 3 / log 2 for the Sierpinski triangle both lie strictly between 1 and 2.
@@ -525,15 +530,16 @@ example : 3 ^ 6 = 729 ∧ (729 : ℚ) / 4 ^ 6 = (3 / 4) ^ 6 := by norm_num
 
 ## Where this goes next
 
+- [Radon, Helly and Carathéodory](06-radon-helly-and-caratheodory.md): next on this shelf, returning to convex sets in the plane with three counting theorems.
 - [The Cantor set](../../10-Measure%20and%20integration/02-Length%20Done%20Properly/07-the-cantor-set.md): the simplest self-similar set, two copies a third the size, and why its total length is zero.
 - [The Lorenz system](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/06-the-lorenz-system-and-strange-attractors.md): a fractal from three weather equations, whose dimension is estimated from how fast paths stretch and squeeze, not counted from copies.
-- [The test spaces](../../17-Topology/02-Topological%20Spaces/09-standard-examples-and-counterexamples.md): shapes like the Koch curve as test cases for what "curve" and "connected" mean.
+- [The test spaces](../../17-Topology/02-Topological%20Spaces/09-standard-examples-and-counterexamples.md): uses the Cantor set alongside discrete, indiscrete and cofinite spaces to test what "compact" and "connected" mean.
 - [The Smale horseshoe](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/08-smale-horseshoe.md): stretch, fold and lay back, and every coin-toss sequence becomes an orbit.
 - [The Henon map](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/09-the-henon-map.md): a two-line rule that folds the plane onto a strange attractor.
 - [Hausdorff measure and dimension](../../10-Measure%20and%20integration/02-Length%20Done%20Properly/08-hausdorff-measure-and-dimension.md): cover with pieces of any shape, weigh each by its size to the power s, and a fractal gets a size in its own dimension.
 - [Covering dimension](../../17-Topology/04-Homotopy/09-lebesgue-covering-dimension.md): count how many pieces of a fine cover must overlap at one point.
 
-This card counted copies of a shape defined by an endless process. What the finished shape is as a set of points, and in what sense the stages approach it, is what topology answers.
+This card counted copies of a shape defined by an endless process. What the finished shape is as a set of points, and in what sense the stages approach it, is what Topology and Measure answer; next on this shelf, Radon, Helly and Carathéodory returns to convex sets in the plane.
 
 ---
 

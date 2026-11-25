@@ -12,7 +12,7 @@ A house at (4, 5) needs an ambulance. Straight-line distances: A 3.61 km, B 5.39
 
 To settle every house at once, shade each spot by its nearest hospital. The county splits into five regions, one per hospital: **Voronoi cells**, after Georgy Voronoi (1908), together the **Voronoi diagram**. Joining hospitals whose cells share an edge cuts the space between them into triangles: the **Delaunay triangulation**, after Boris Delaunay (1934).
 
-**Every edge of the map lies on the line of spots equally far from two hospitals; every corner is the centre of a circle through three hospitals with no hospital inside; and joining neighbours gives one triangle per corner.**
+**Every edge of the map lies on the line of spots equally far from two hospitals; with no four hospitals on one circle, every corner is the centre of an empty circle through three hospitals, and joining neighbours gives one triangle per corner.**
 
 **What kind of fact this is:** the cell is a definition; the empty-circle property and the corner-triangle match are theorems, proved on this card in Why it works.
 
@@ -40,9 +40,9 @@ V(P) = \{\, X : \lvert X - P\rvert \le \lvert X - Q\rvert \text{ for every other
 
 **Read it aloud:** the spots equally far from two hospitals form one straight line, square to the segment joining them, through its midpoint: the **perpendicular bisector**, where two cells meet.
 
-The **empty-circle property:** three hospitals form a Delaunay triangle exactly when the circle through them, of radius $`r`$, has no hospital strictly inside. Its centre is then a map corner.
+The **empty-circle property** (with no four hospitals on one circle): three hospitals not on one line form a Delaunay triangle exactly when the circle through them, of radius $`r`$, has no hospital strictly inside. Its centre is then a map corner.
 
-With $`n`$ hospitals, $`h`$ of them corners of the convex hull (the tightest convex shape round them all), and no four on one circle:
+With $`n \ge 3`$ hospitals not all on one line, $`h`$ of them on the boundary of the convex hull (the tightest convex shape round them all), and no four on one circle:
 
 ```math
 \text{triangles} = 2n - 2 - h, \qquad \text{edges} = 3n - 3 - h
@@ -57,14 +57,14 @@ With $`n`$ hospitals, $`h`$ of them corners of the convex hull (the tightest con
 | $`V(P)`$ | the Voronoi cell of P | E's cell, 17.00 square km | — |
 | $`r`$ | radius of the circle through three hospitals | 4.47 km for A, B, E | the corner is worse served |
 | $`n`$ | number of hospitals | 5 | more triangles, smaller cells |
-| $`h`$ | hospitals on the convex hull; their cells are open-ended | 4 | fewer triangles |
+| $`h`$ | hospitals on the convex hull's boundary; their cells are open-ended | 4 | fewer triangles |
 
 ### When it holds
 
 - **Straight-line distance.** Measured by travel time, the edges curve and the bisector rule fails.
 - **Every hospital counts the same.** Weighting by size bends the edges off the bisectors.
 - **No four hospitals on one circle.** Otherwise four cells share a corner and the triangulation is not unique.
-- **Not all hospitals on one line.** Then there is no triangle; the cells are parallel strips.
+- **At least three hospitals, not all on one line.** With one or two, or all on one line, there is no triangle; the cells are parallel strips.
 
 ---
 
@@ -74,13 +74,15 @@ With $`n`$ hospitals, $`h`$ of them corners of the convex hull (the tightest con
 
 A (1, 3) and B (9, 3) are level, so the spots equally far from both lie on x = 5.
 
-For any pair, expand with the dot product: $`\lvert X - P\rvert^2 = X\cdot X - 2\,P\cdot X + P\cdot P`$. Equate two such squared distances and $`X\cdot X`$ cancels, leaving the bisector equation of The formula. No square of X remains, so it is a straight line; Q − P is square to it, and the midpoint of P and Q satisfies it. For A and E it reads 3x + y = 16.
+For any pair, expand with the dot product: $`\lvert X - P\rvert^2 = X\cdot X - 2\,P\cdot X + P\cdot P`$. Equate two such squared distances and $`X\cdot X`$ cancels, leaving the bisector equation of The formula.
+
+No square of X remains, so it is a straight line; Q − P is square to it, and the midpoint of P and Q satisfies it. For A and E it reads 3x + y = 16.
 
 ### Step 1: a cell is convex
 
 The spots at least as close to P as to Q fill one side of that line, a **half-plane**. P's cell is what all its half-planes share. Half-planes are convex (the segment between two of their points stays inside), and so is what convex sets share ([Convex sets](02-convex-sets-and-convex-hulls.md)). So every cell is convex, with straight sides.
 
-A cell is open-ended exactly when its hospital is a hull corner. E sits inside the hull, and far enough out in any direction one of A, B, C, D is closer, so E's cell closes.
+A cell is open-ended exactly when its hospital lies on the boundary of the convex hull (just the hull corners when no hospital sits partway along a hull side). E sits inside the hull, and far enough out in any direction one of A, B, C, D is closer, so E's cell closes.
 
 ### Step 2: three bisectors meet at one point
 
@@ -88,7 +90,9 @@ A spot on both the A–B and the A–E bisector is as far from B as from A, and 
 
 ### Step 3: a corner is the centre of an empty circle
 
-A spot at distance $`r`$ from three hospitals is a map corner exactly when those three are nearest to it: when no hospital lies strictly inside the circle. From (5, 1) the next hospital, D, is 6.32 km away, beyond 4.47 km, so (5, 1) is a corner. Triple A, B, D fails: its centre (5.00, 3.50) is 4.03 km from the three but 2.50 km from E.
+A spot at distance $`r`$ from three hospitals is a map corner exactly when those three are nearest to it: when no hospital lies strictly inside the circle. From (5, 1) the next hospital, D, is 6.32 km away, beyond 4.47 km, so (5, 1) is a corner.
+
+Triple A, B, D fails: its centre (5.00, 3.50) is 4.03 km from the three but 2.50 km from E.
 
 ### Step 4: neighbours make triangles, one per corner
 
@@ -99,11 +103,11 @@ The county gives triangles A B E, A D E, B C E and C D E, centred at (5, 1), (4,
 <details>
 <summary>Detailed proof: the triangle and edge counts</summary>
 
-Take from de Berg and co-authors (chapter 9) that the triangles cover the hull without gaps or overlaps; assume no hospital lies partway along a hull side.
+Take from de Berg and co-authors (chapter 9) that the triangles cover the hull without gaps or overlaps.
 
-Count angles two ways. Each triangle holds 180°. At each of the $`n - h`$ inside hospitals the angles fill 360°; at the $`h`$ hull corners they fill the hull's angles, $`(h - 2)`$ × 180° in all. So triangles × 180° = $`(n - h)`$ × 360° + $`(h - 2)`$ × 180°, and triangles = $`2n - 2 - h`$.
+Count angles two ways. Each triangle holds 180°. At each of the $`n - h`$ inside hospitals the angles fill 360°; at the $`h`$ boundary hospitals they fill the hull's angles, $`(h - 2)`$ × 180° in all (counting 180° at any hospital partway along a hull side). So triangles × 180° = $`(n - h)`$ × 360° + $`(h - 2)`$ × 180°, and triangles = $`2n - 2 - h`$.
 
-Count sides: an inside edge serves two triangles, a hull side one. So 3 × triangles = 2 × edges − $`h`$, and edges = $`3n - 3 - h`$.
+Count sides: an inside edge serves two triangles, a hull boundary edge one. So 3 × triangles = 2 × edges − $`h`$, and edges = $`3n - 3 - h`$.
 
 </details>
 
@@ -562,11 +566,12 @@ example : 2 * 5 - 2 - 4 = 4 ∧ 3 * 5 - 3 - 4 = 8 ∧ Nat.choose 5 3 = 10 := by 
 
 ## Where this goes next
 
+- [Fractals](05-self-similarity-and-fractal-dimension.md): next on this shelf, turning from point-cloud maps to self-similar shapes and fractional dimension.
 - [Vietoris-Rips, Cech and alpha complexes](../../17-Topology/06-Topological%20Data%20Analysis/02-vietoris-rips-and-cech-complexes.md): grow a disc round each point and join points whose discs meet.
-- [Triangulating a polygon, and why n/3 guards can always watch a gallery with n walls](08-polygon-triangulation-and-art-gallery.md): builds on this card.
+- [Triangulating a polygon, and why n/3 guards can always watch a gallery with n walls](08-polygon-triangulation-and-art-gallery.md): triangulates the inside of a fixed polygon rather than a cloud of sites.
 - [k-d trees](10-kd-trees-and-nearest-neighbours.md): split the plane in half again and again to find the nearest point fast.
 
-The map answers who is nearest; what shape a cloud of points has, seen at every scale at once, is the question a later card takes up.
+The map answers who is nearest. What shape a cloud of points has at every scale at once is taken up by Vietoris-Rips, Cech and alpha complexes in Topology. Next on this shelf, Fractals turns to self-similar shapes.
 
 ---
 

@@ -14,7 +14,7 @@ The shoelace formula needs only the list. For each fence it makes one cross-mult
 
 The sum carries a sign. Walked A to F, anticlockwise, it is +41.5; walked backwards, −41.5. On three posts alone, the sign says whether the walk turns left or right. At D it turns right, which is how a program finds the reflex corner.
 
-**Half the sum of the cross products of consecutive corners is the polygon's area, plus for an anticlockwise walk and minus for a clockwise one; on three points, the same sign tells a left turn from a right turn.**
+**Half the sum of the cross products of consecutive corners is a simple polygon's area, plus for an anticlockwise walk and minus for a clockwise one; on three points, the same sign tells a left turn from a right turn.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; the turn test is a method built on it.
 
@@ -28,7 +28,9 @@ Drawn to scale, 100 m = 26 units, north up: peg (30, 222), A (82, 196), B (290, 
 
 ## The formula
 
-Notation first, in words. Corners are numbered 1 to $`n`$ in walking order; corner $`i`$ sits at $`(x_i, y_i)`$, east then north. The corner after the last is the first again, so the fence F to A counts. The capital sigma, Σ, means "add the bracket for every $`i`$ from 1 to $`n`$". A reminder from [Cross product](../05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md): for two arrows in the plane, $`u \times v`$ is east of u times north of v, minus north of u times east of v. It is the signed area of the parallelogram they span, positive when v lies anticlockwise from u.
+Notation first, in words. Corners are numbered 1 to $`n`$ in walking order; corner $`i`$ sits at $`(x_i, y_i)`$, east then north. The corner after the last is the first again, so the fence F to A counts.
+
+The capital sigma, Σ, means "add the bracket for every $`i`$ from 1 to $`n`$". A reminder from [Cross product](../05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md): for two arrows in the plane, $`u \times v`$ is east of u times north of v, minus north of u times east of v. It is the signed area of the parallelogram they span, positive when v lies anticlockwise from u.
 
 ```math
 S = \frac{1}{2}\sum_{i=1}^{n}\left(x_i\,y_{i+1} - y_i\,x_{i+1}\right), \qquad x_{n+1} = x_1,\ \ y_{n+1} = y_1
@@ -94,7 +96,9 @@ $`(b - a) \times (c - a) = b \times c - b \times a - a \times c + a \times a`$. 
 
 ### Step 3: cut the field into triangles; inside cuts cancel
 
-A diagonal is a segment joining two corners. Diagonals from D to F, A and B cut the field into triangles DEF, DFA, DAB, DBC, of 8.0, 12.5, 12.0 and 9.0 hectares: total 41.5. Write each as its three-fence sum from Step 2, all walked anticlockwise. Diagonal DF appears as $`D \times F`$ in one triangle and $`F \times D`$ in the next, and they cancel; so does every inside diagonal. Only the six outer fences survive, in walking order: the shoelace sum.
+A diagonal is a segment joining two corners. Diagonals from D to F, A and B cut the field into triangles DEF, DFA, DAB, DBC, of 8.0, 12.5, 12.0 and 9.0 hectares: total 41.5.
+
+Write each as its three-fence sum from Step 2, all walked anticlockwise. Diagonal DF appears as $`D \times F`$ in one triangle and $`F \times D`$ in the next, and they cancel; so does every inside diagonal. Only the six outer fences survive, in walking order: the shoelace sum.
 
 This rests on one fact: every simple polygon splits into triangles by inside diagonals. With a reflex corner, some diagonals leave the field, so it needs proof.
 
@@ -2261,9 +2265,9 @@ open Shoelace
 - [Fractals](05-self-similarity-and-fractal-dimension.md): polygons whose area settles while their perimeter grows without end.
 - [Green's theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/06-greens-theorem.md): the boundary sum for curved boundaries.
 - [Pick's theorem](07-picks-theorem.md): count the dots inside and on the edge, and the area falls out.
-- [Triangulating a polygon, and why n/3 guards can always watch a gallery with n walls](08-polygon-triangulation-and-art-gallery.md): builds on this card.
+- [Triangulating a polygon, and why n/3 guards can always watch a gallery with n walls](08-polygon-triangulation-and-art-gallery.md): clips ears using the turn test to cut any simple polygon into triangles and guard it with at most n/3 cameras.
 
-The question this card leaves open: how do you find the area inside a curved boundary, where there are no corners to list?
+The question this card leaves open: given scattered posts with no fence order, how does the same turn test find the tightest fence around them? (For curved boundaries with no corners at all, see Green's theorem above.)
 
 ---
 
