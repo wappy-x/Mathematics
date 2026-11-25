@@ -10,7 +10,9 @@ A hallway is two feet wide and ten feet long. Tiles one foot by two feet cover i
 
 That 89 comes from a step rule. The leftmost foot takes either one upright tile, leaving nine feet, or two flat tiles stacked, leaving eight — so the ten-foot count is the nine-foot count plus the eight-foot count ([Recurrences](01-recurrences-and-fibonacci.md)). Nine additions carry 1, 1 up to 89.
 
-Nine additions is nothing. A million is a nuisance, and the rule insists on visiting every foot. Hold both counts as a stacked pair instead. One step is then one multiplication by a fixed block of four numbers — a matrix — and ten steps are ten of those. A matrix power is reached by doubling rather than stepping ([Powers on the clock](../../02-Number%20theory/04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)), so the millionth term costs 25 multiplications.
+Nine additions is nothing. A million is a nuisance, and the rule insists on visiting every foot.
+
+Hold both counts as a stacked pair instead. One step is then one multiplication by a fixed block of four numbers — a matrix — and ten steps are ten of those. A matrix power is reached by doubling rather than stepping ([Powers on the clock](../../02-Number%20theory/04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)), so the millionth term costs 25 multiplications.
 
 **Stack the terms a two-step rule remembers into a column: one step is multiplication by a fixed 2 × 2 matrix, n steps is that matrix to the n-th power, and powers are reached by squaring.**
 
@@ -72,14 +74,16 @@ A rule looking back two terms cannot be driven by one number: 89 alone does not 
 
 ### Step 1: read the matrix off the rule
 
-The new top is $`T(n) + T(n-1)`$: one old top, one old bottom, so the top row is 1, 1. The new bottom is $`T(n)`$: one old top, none of the bottom, so the bottom row is 1, 0. That row adds nothing — it slides the old top down so the pair still holds the last two counts. On the stack (55, 34): top 89, bottom 55.
+The new top is $`T(n) + T(n-1)`$: one old top, one old bottom, so the top row is 1, 1. The new bottom is $`T(n)`$: one old top, none of the bottom, so the bottom row is 1, 0.
+
+That row adds nothing — it slides the old top down so the pair still holds the last two counts. On the stack (55, 34): top 89, bottom 55.
 
 ### Step 2: n steps is the n-th power
 
 One step is $`v_{n+1} = M v_n`$. Two steps is $`M(M v_n)`$, which regroups to $`(MM) v_n = M^2 v_n`$, since matrix multiplication rebrackets freely. Repeating that collects any number of steps into one power.
 
 <details>
-<summary>Detailed proof: why the entries of $M^n$ are tiling counts</summary>
+<summary>Detailed proof: why the entries of M^n are tiling counts</summary>
 
 **Base.** $`M^2 = MM`$ has top-left 1×1 + 1×1 = 2, top-right 1×1 + 1×0 = 1, bottom-left 1, bottom-right 1 — that is $`T(2)`$, $`T(1)`$, $`T(1)`$, $`T(0)`$, the zero-foot count being 1: laying no tile.
 

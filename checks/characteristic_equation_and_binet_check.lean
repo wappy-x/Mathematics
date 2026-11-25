@@ -100,9 +100,10 @@ example : ∀ n < 6, (1 + 2 * ((n + 2 : ℕ) : ℤ)) * 2 ^ (n + 2)
   decide
 example : (List.range 8).map (fun n : ℕ => (1 + 2 * (n : ℤ)) * 2 ^ n) = [1, 6, 20, 56, 144, 352, 832, 1920] := by
   decide
--- The three mistakes: 2^7 = 128, 11·(−2)^4 − 9·(−3)^4 = −553, 3·2^4 − 3^4 = −33.
+-- The three mistakes: 2^7 = 128, (−3·(−6)^4 + 17)/7 = −553 (from r^2 + 5r − 6 = 0, roots −6 and 1), 3·2^4 − 3^4 = −33.
 example : (2 : ℤ) ^ 7 = 128 := by norm_num
-example : 11 * (-2 : ℤ) ^ 4 - 9 * (-3) ^ 4 = -553 := by norm_num
+example : ((-6 : ℤ) ^ 2 + 5 * (-6) - 6 = 0) ∧ ((1 : ℤ) ^ 2 + 5 * 1 - 6 = 0) ∧
+    ((-3 : ℚ) / 7 * (-6) ^ 4 + 17 / 7 * 1 ^ 4 = -553) := by norm_num
 example : 3 * (2 : ℤ) ^ 4 - 3 ^ 4 = -33 := by norm_num
 
 #print axioms two_term_rule_solved_by_characteristic_roots

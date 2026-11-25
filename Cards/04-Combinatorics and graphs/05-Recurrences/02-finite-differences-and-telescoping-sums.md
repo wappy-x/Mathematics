@@ -10,7 +10,9 @@ A supermarket builds a display of tins: one on the top row, two below it, three 
 
 Subtract each total from the next: 2, 3, 4, 5, the row just added. Subtract again, and every answer is 1. That flat second row fixes the rule as degree 2, its largest power a square: for n rows the total is n(n+1)/2. Ten rows hold 55 tins.
 
-The subtraction also runs backwards. Suppose each number in a list to be added is itself a jump between two terms of a second list. Adding them writes every middle term twice, once to add and once to take away, so the middles cancel and two numbers survive. The ninety-nine fractions 1/(k(k+1)), with the counter k running from 1 to 99, collapse to one subtraction: exactly 0.99.
+The subtraction also runs backwards. Suppose each number in a list to be added is itself a jump between two terms of a second list. Adding them writes every middle term twice, once to add and once to take away, so the middles cancel and two numbers survive.
+
+The ninety-nine fractions 1/(k(k+1)), with the counter k running from 1 to 99, collapse to one subtraction: exactly 0.99.
 
 **The difference is the jump from one term to the next, and a sum of jumps collapses to the far end minus the near end: any sum written as differences is done in one subtraction.**
 
@@ -68,7 +70,7 @@ Each layer counts in as often as there are ways to choose that many steps from t
 ### When it holds
 
 - **No gaps, and exact differences.** Every term from the start to one past the end must exist, and each term added must be exactly a jump: a split wrong by a fixed amount leaves that amount behind once per term.
-- **Finite sums only.** The collapse is exact at any length: ninety-nine terms give 99/100. Whether an endless sum settles anywhere is a limit question, for a later wing.
+- **Finite sums only.** The collapse is exact at any length: ninety-nine terms give 99/100. Whether an endless sum settles anywhere is a limit question, covered on [Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md).
 - **A flat row names the rule only if the list keeps to it.** Five numbers alone fit many rules; here row n holds n tins by construction, so the flat row holds past the fifth.
 
 ---
@@ -93,13 +95,13 @@ A pocket telescope closes into two rings with nothing between: such a sum is sai
 
 ### Step 2: to add a list, find the list it is the jumps of
 
-The identity is most useful run backwards: given numbers to add, find the list whose jumps they are. For 1 + 2 + … + n that means Δa(n) = n, and since differencing drops a rule's degree by one, the list is degree 2. Try a(n) = n(n−1)/2:
+The identity is most useful run backwards: given numbers to add, find the list whose jumps they are. For 1 + 2 + … + n that means Δb(n) = n, and since differencing drops a rule's degree by one, the list is degree 2. Try b(n) = n(n−1)/2:
 
 ```math
-\Delta a(n) = \frac{(n+1)n}{2} - \frac{n(n-1)}{2} = \frac{n\,[(n+1) - (n-1)]}{2} = n
+\Delta b(n) = \frac{(n+1)n}{2} - \frac{n(n-1)}{2} = \frac{n\,[(n+1) - (n-1)]}{2} = n
 ```
 
-That is the list, and a(1) = 0, so the sum is a(n+1) − a(1) = n(n+1)/2:
+That is the list, and b(1) = 0, so the sum is b(n+1) − b(1) = n(n+1)/2:
 
 ```math
 1 + 2 + 3 + \cdots + n = \frac{n(n+1)}{2}
@@ -137,11 +139,11 @@ A flat k-th row makes the next row zero, so the edge stops at c(k). Since C(n−
 <details>
 <summary>When the terms are a product of two lists</summary>
 
-Δ(a(n)·b(n)) = a(n+1)·Δb(n) + b(n)·Δa(n). Summing both sides and collapsing the left turns a sum of a·Δb into two ends minus a sum of b·Δa — summation by parts, taught with the analysis wing.
+Δ(a(n)·b(n)) = a(n+1)·Δb(n) + b(n)·Δa(n). Summing both sides and collapsing the left turns a sum of a·Δb into two ends minus a sum of b·Δa — [Summation by parts](../../06-Calculus%20and%20analysis/06-Series/11-summation-by-parts-and-dirichlets-test.md).
 
 </details>
 
-[Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md), proving a claim for 1 and then each step from the one before, reaches n(n+1)/2 too, but only once the answer is guessed; telescoping produces it. Multiplying a step rule by a chosen factor until it telescopes solves a loan in [First-order recurrences](03-first-order-recurrences-and-loans.md).
+[Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md), proving a claim for 1 and then each step from the one before, reaches n(n+1)/2 too, but only once the answer is guessed; telescoping produces it. Dividing a first-order rule by a chosen power turns it into a telescoping sum — one of the routes noted on [First-order recurrences](03-first-order-recurrences-and-loans.md).
 
 ---
 
@@ -157,14 +159,14 @@ A flat k-th row makes the next row zero, so the edge stops at c(k). Since C(n−
 | the fractions to k = 99 | 1/1 − 1/100 | **0.99** |
 | the shelf's hallway | F(1) + … + F(9), against 89 − 1 | **88** |
 
-Fifty-five tins fill a ten-row display; the fractions land a hundredth short of 1. The last row checks the shelf's house example: a 2 × 10 hallway takes 1 × 2 tiles in F(11) = 89 ways ([Recurrences](01-recurrences-and-fibonacci.md)). Each Fibonacci number is the difference of the next two, so the first nine telescope to 88.
+Fifty-five tins fill a ten-row display; the fractions land a hundredth short of 1. The last row checks the hallway from [Recurrences](01-recurrences-and-fibonacci.md): a 2 × 10 hallway takes 1 × 2 tiles in F(11) = 89 ways. Each Fibonacci number is the difference of the next two, so the first nine telescope to 88.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | The flat 1 read as the rule n^2 | 25 at five rows, not 15 | the constant is twice the leading coefficient, the number in front of n^2 |
-| The collapse stopped at a(n) | 45 for ten rows, not 55 | the last jump ends one term further on |
+| The collapse stopped at b(n) | 45 for ten rows, not 55 | the last jump ends one term further on, at b(n+1) |
 | The split written with a plus | 9.36, not 0.99 | nothing cancels; every middle term survives |
 
 The code prints all three.
@@ -230,7 +232,7 @@ print(f"the same sum, telescoped: 1 - 1/{TERMS + 1} = {tele[0]}/{tele[1]} = {tel
 row("Fibonacci F(1) to F(11), the hallway count", fib)
 print(f"F(1)+...+F(9) added: {added}; telescoped F(11) - F(2) = {fib[10]} - {fib[1]} = {fib[10] - fib[1]}")
 print(f"mistake 1, second difference 1 read as the rule n^2: 5 rows -> {5 ** 2}, not {closed[4]}")
-print(f"mistake 2, the collapse stopped at a(n): {ROWS * (ROWS - 1) // 2}, not {totals[-1]}")
+print(f"mistake 2, the collapse stopped at b(n): {ROWS * (ROWS - 1) // 2}, not {totals[-1]}")
 print(f"mistake 3, the split written with a plus: {wrong:.2f}, not {exact[0] / exact[1]:.2f}")
 assert first == list(range(2, ROWS + 1)) and second == [1] * (ROWS - 2)
 assert totals == closed and closed == newton
@@ -239,7 +241,7 @@ assert added == fib[10] - fib[1] and fib[10] == 89
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-14 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 tins in rows 1 to 10                          1 2 3 4 5 6 7 8 9 10
@@ -257,7 +259,7 @@ the same sum, telescoped: 1 - 1/100 = 99/100 = 0.99
 Fibonacci F(1) to F(11), the hallway count    1 1 2 3 5 8 13 21 34 55 89
 F(1)+...+F(9) added: 88; telescoped F(11) - F(2) = 89 - 1 = 88
 mistake 1, second difference 1 read as the rule n^2: 5 rows -> 25, not 15
-mistake 2, the collapse stopped at a(n): 45, not 55
+mistake 2, the collapse stopped at b(n): 45, not 55
 mistake 3, the split written with a plus: 9.36, not 0.99
 ALL CHECKS PASS
 ```
@@ -323,8 +325,8 @@ fn main() {
     row("the same totals from n(n+1)/2", &strs(&closed));
     row("the same totals from Newton's formula", &strs(&newton));
     println!("Newton at n = 5: 1 + 2*C(4,1) + C(4,2) = 1 + {} + {} = {}", 2 * choose(4, 1), choose(4, 2), newton[4]);
-    println!("ten rows: {} tins by adding, {} from n(n+1)/2", totals[9], closed[9]);
-    println!("the jumps add to the trip: 2+3+...+{} = {} = {} - {}", ROWS, jumps, totals[9], totals[0]);
+    println!("ten rows: {} tins by adding, {} from n(n+1)/2", totals[(ROWS - 1) as usize], closed[(ROWS - 1) as usize]);
+    println!("the jumps add to the trip: 2+3+...+{} = {} = {} - {}", ROWS, jumps, totals[(ROWS - 1) as usize], totals[0]);
     row("the first three terms as differences",
         &(1..4).map(|k| format!("1/{}-1/{}", k, k + 1)).collect::<Vec<String>>());
     println!("1/(k(k+1)) added exactly to k = {}: {}/{} = {:.2}",
@@ -335,18 +337,18 @@ fn main() {
     println!("F(1)+...+F(9) added: {}; telescoped F(11) - F(2) = {} - {} = {}",
              added, fib[10], fib[1], fib[10] - fib[1]);
     println!("mistake 1, second difference 1 read as the rule n^2: 5 rows -> {}, not {}", 5 * 5, closed[4]);
-    println!("mistake 2, the collapse stopped at a(n): {}, not {}", ROWS * (ROWS - 1) / 2, totals[9]);
+    println!("mistake 2, the collapse stopped at b(n): {}, not {}", ROWS * (ROWS - 1) / 2, totals[(ROWS - 1) as usize]);
     println!("mistake 3, the split written with a plus: {:.2}, not {:.2}",
              wrong, exact.0 as f64 / exact.1 as f64);
     assert!(first == (2..=ROWS).collect::<Vec<i64>>() && second == vec![1; (ROWS - 2) as usize]);
     assert!(totals == closed && closed == newton);
-    assert!(jumps == totals[9] - totals[0] && exact == tele);
+    assert!(jumps == totals[(ROWS - 1) as usize] - totals[0] && exact == tele);
     assert!(added == fib[10] - fib[1] && fib[10] == 89);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-14 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 tins in rows 1 to 10                          1 2 3 4 5 6 7 8 9 10
@@ -364,7 +366,7 @@ the same sum, telescoped: 1 - 1/100 = 99/100 = 0.99
 Fibonacci F(1) to F(11), the hallway count    1 1 2 3 5 8 13 21 34 55 89
 F(1)+...+F(9) added: 88; telescoped F(11) - F(2) = 89 - 1 = 88
 mistake 1, second difference 1 read as the rule n^2: 5 rows -> 25, not 15
-mistake 2, the collapse stopped at a(n): 45, not 55
+mistake 2, the collapse stopped at b(n): 45, not 55
 mistake 3, the split written with a plus: 9.36, not 0.99
 ALL CHECKS PASS
 ```
@@ -483,7 +485,7 @@ example : 5 ^ 2 = 25 ∧ ∑ k ∈ Icc 1 9, k = 45 := by decide
 > [!warning]
 > **Treating a flat row in the triangle as proof of the rule.** Five totals fit endless rules that agree on those five and differ at the sixth. The flat row is safe here for a reason outside the table: row n holds n tins by construction.
 >
-> - **Stopping the collapse one term early.** a(n) − a(1) in place of a(n+1) − a(1): 45, not 55.
+> - **Stopping the collapse one term early.** b(n) − b(1) in place of b(n+1) − b(1): 45, not 55.
 > - **Reading the constant as the leading coefficient.** A flat second difference of 1 does not make the rule n^2: 25 at five rows, not 15.
 > - **Splitting with a plus.** 1/(k(k+1)) is not 1/k + 1/(k+1); nothing cancels: 9.36, not 0.99.
 
@@ -507,9 +509,10 @@ example : 5 ^ 2 = 25 ∧ ∑ k ∈ Icc 1 9, k = 45 := by decide
 
 ## Where this goes next
 
+- [First-order recurrences](03-first-order-recurrences-and-loans.md): rules that multiply by a fixed factor before adding a constant, solved by shifting to the fixed point or dividing through until the sum telescopes.
 - [Divide-and-conquer recurrences](07-divide-and-conquer-recurrences.md): the same collapse, run down the levels of a rule that halves its input.
 
-Telescoping needs terms that are jumps of a list one can name. That is easy enough when a rule steps one place at a time; what to do when it halves the problem starts a later card.
+Telescoping handles a rule whose next term adds a known jump; the next card, [First-order recurrences](03-first-order-recurrences-and-loans.md), handles a rule that also multiplies the previous term by a fixed factor.
 
 ---
 

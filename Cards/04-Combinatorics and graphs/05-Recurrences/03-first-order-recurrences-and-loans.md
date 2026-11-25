@@ -80,7 +80,7 @@ P = B_0\,\frac{(r-1)\,r^n}{r^n - 1}
 
 A step multiplies by $`r`$ and adds $`c`$. Which value comes back unchanged? It equals $`r`$ times itself plus $`c`$, so it is $`c`$ divided by $`1-r`$.
 
-Here $`c`$ is minus $469.70 and $`r`$ is 1.005, giving $93,940.12: a debt growing by exactly $469.70 a month, which the payment cancels. It would sit there forever.
+Here $`c`$ is minus $469.7006 (billed as $469.70) and $`r`$ is 1.005, giving $93,940.12: a debt growing by exactly $469.7006 a month, which the payment cancels. It would sit there forever.
 
 ### Step 1: measure from the fixed point and the constant disappears
 
@@ -125,7 +125,7 @@ The fixed point is the payment divided by the rate, so multiplying by $`r-1`$ fr
 
 ### Step 4: flip the sign and the same rule is a savings plan
 
-Pay $469.70 a month into an account starting at zero, at half a percent. Its fixed point is minus $93,940.12, below zero, so the gap starts at plus $93,940.12 and stretches by 1.005.
+Pay the same $469.7006 a month into an account starting at zero, at half a percent. Its fixed point is minus $93,940.12, below zero, so the gap starts at plus $93,940.12 and stretches by 1.005.
 
 After 48 months it holds $25,409.78, exactly what the debt would have grown to unpaid: 20,000.00 × 1.270489 is $25,409.78. The payment clearing a loan is the deposit matching the loan left alone — a road to the payment with no fixed point in it.
 

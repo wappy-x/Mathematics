@@ -63,7 +63,7 @@ fn main() {
     row("weights 4, -4 from seeds 1, 6:", &rep);
     row("the same list from (1 + 2n) 2^n:", &repclosed);
     println!("mistake 1, no n at the repeated root: a(7) = {}, not {}", 2i64.pow(7), rep[7]);
-    println!("mistake 2, signs carried straight across: a(4) = {}, not {}", 11 * (-2i64).pow(4) - 9 * (-3i64).pow(4), second[4]);
+    println!("mistake 2, signs carried straight across: a(4) = {}, not {}", (-3 * (-6i64).pow(4) + 17) / 7, second[4]);
     println!("mistake 3, constants fitted to seeds 2, 3: a(4) = {}, not {}", 3 * 2i64.pow(4) - 3i64.pow(4), second[4]);
     let bin20: Vec<i64> = (0..21).map(|n| binet(n).round() as i64).collect();
     assert!(hall == f[1..12].to_vec());          // laying tiles against the step rule

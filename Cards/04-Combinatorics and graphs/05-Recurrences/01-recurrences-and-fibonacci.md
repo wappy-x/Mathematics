@@ -10,7 +10,9 @@ A hallway is 2 tiles wide and 10 tiles long. Its floor tiles are 1 × 2: each co
 
 Ask one question instead: what covers the far end? Two answers, no others. One upright tile fills the last column, leaving a hallway one tile shorter; or two flat tiles cover the last two columns, one per row, leaving a hallway two shorter.
 
-So the count at length 10 is the count at 9 plus the count at 8, and the same holds at every length. A rule of that shape — a term written out of the terms just behind it — is a **recurrence**, the term used from here on. Count the two shortest hallways by hand, 1 floor and 2, and the rule walks forward alone: 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, so a 2 × 10 hallway has 89 floors.
+So the count at length 10 is the count at 9 plus the count at 8, and the same holds at every length. A rule of that shape — a term written out of the terms just behind it — is a **recurrence**, the term used from here on.
+
+Count the two shortest hallways by hand, 1 floor and 2, and the rule walks forward alone: 1, 2, 3, 5, 8, 13, 21, 34, 55, 89. A 2 × 10 hallway has 89 floors.
 
 Those counts are the Fibonacci numbers, written down by Leonardo of Pisa in 1202 while counting rabbits. They arrive here out of floor tiles because a step rule follows a problem's shape, not its subject.
 
@@ -78,11 +80,15 @@ A count too large to list is still pinned down if the collection splits into sma
 
 ### Step 1: the two answers split the floors, with no overlap
 
-Look at the tile covering the top square of the far column: it either stands upright and fills the column, or lies flat and reaches back a column. In that second case only a flat tile can cover the square below, reaching back as well. So the far end is one upright tile or two stacked flat tiles, never both, never neither: the counts add rather than multiply ([The rules of sum and product](../01-Counting%20Principles/01-rules-of-sum-and-product.md)).
+Look at the tile covering the top square of the far column: it either stands upright and fills the column, or lies flat and reaches back a column. In that second case only a flat tile can cover the square below, reaching back as well.
+
+So the far end is one upright tile or two stacked flat tiles, never both, never neither: the counts add rather than multiply ([The rules of sum and product](../01-Counting%20Principles/01-rules-of-sum-and-product.md)).
 
 ### Step 2: each part is a shorter hallway, matched one for one
 
-Rub the upright tile out of a floor that ends in one: a tiled 2 × 9 hallway is left, and adding it back returns the original. The two moves undo each other, so floors ending upright number exactly T(9), 55. Rubbing out the flat pair leaves a tiled 2 × 8 hallway, so those number T(8), 34. Adding: 55 + 34 = 89, and nothing there mentioned 10.
+Rub the upright tile out of a floor that ends in one: a tiled 2 × 9 hallway is left, and adding it back returns the original. The two moves undo each other, so floors ending upright number exactly T(9), 55.
+
+Rubbing out the flat pair leaves a tiled 2 × 8 hallway, so those number T(8), 34. Adding gives 55 + 34 = 89, and nothing there mentioned 10.
 
 ### Step 3: the seeds, and why exactly two
 
@@ -207,7 +213,7 @@ assert hanoi[-1] == 1023 and moves == hanoi[-1] and closed_h == hanoi[-1] and le
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-14 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 hallway 2 tiles wide, 1 x 2 tiles; n is its length in tiles, or the number of discs
@@ -299,22 +305,22 @@ fn main() {
              rule[N - 2], rule[N - 3], rule[N - 2], rule[N - 3], rule[N - 2] + rule[N - 3]);
     println!("Fibonacci from seeds 1, 1: F({}) = {}, so T(n) = F(n+1)", N + 1, fib[N]);
     println!("Tower of Hanoi, {} discs", DISCS);
-    println!("{:<39}: {}", "moves by the rule h(n) = 2 h(n-1) + 1", hanoi[N - 1]);
+    println!("{:<39}: {}", "moves by the rule h(n) = 2 h(n-1) + 1", hanoi[DISCS as usize - 1]);
     println!("{:<39}: {}, legal solve: {}", "moves by shifting the discs one by one", moves,
              if legal { "yes" } else { "no" });
     println!("{:<39}: {}", format!("moves by the closed form 2^{} - 1", DISCS), closed_h);
     println!("mistake 1, seeds 1 and 1 instead of 1 and 2: {}, not {}", fib[N - 1], listed[N - 1]);
     println!("mistake 2, the flat pair counted once per row: {}, not {}", by_rule(N, (1, 2), 2)[N - 1], listed[N - 1]);
-    println!("mistake 3, guessing h(n) = 2^n, first step unchecked: {}, not {}", 2i64.pow(DISCS), hanoi[N - 1]);
+    println!("mistake 3, guessing h(n) = 2^n, first step unchecked: {}, not {}", 2i64.pow(DISCS), hanoi[DISCS as usize - 1]);
     assert!(rule == listed);                                  // two roads, one sequence
     assert!(listed[N - 1] == 89 && rule[N - 2] + rule[N - 3] == listed[N - 1]);
     assert!(fib[N] == listed[N - 1] && fib[N - 1] == 55);      // Fibonacci, one place along
-    assert!(hanoi[N - 1] == 1023 && moves == hanoi[N - 1] && closed_h == hanoi[N - 1] && legal);
+    assert!(hanoi[DISCS as usize - 1] == 1023 && moves == hanoi[DISCS as usize - 1] && closed_h == hanoi[DISCS as usize - 1] && legal);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-14 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 hallway 2 tiles wide, 1 x 2 tiles; n is its length in tiles, or the number of discs
@@ -957,7 +963,7 @@ example : 2 ^ 0 ≠ 0 ∧ 2 ^ 10 = 1024 := by norm_num
 >
 > - **Cases that overlap.** Counting the flat pair once for the top row and again for the bottom turns every step into a doubling and ends at 512.
 > - **Trusting a pattern as a proof.** Terms running 1, 3, 7, 15, 31 make a closed form look certain; the guess h(n) = 2^n fits none and claims 1024.
-> - **Working each term out from scratch.** Recomputing T(n−1) and T(n−2) from the beginning repeats the same work over and over; keeping the last two answers gets there in n steps ([Dynamic programming](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md)).
+> - **Working each term out from scratch.** Recomputing T(n−1) and T(n−2) from the beginning repeats the same work over and over; keeping the last two answers gets there in n steps ([Dynamic programming](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/07-dynamic-programming.md)).
 
 ---
 
@@ -980,16 +986,16 @@ example : 2 ^ 0 ≠ 0 ∧ 2 ^ 10 = 1024 := by norm_num
 
 ## Where this goes next
 
-- [Finite differences](02-finite-differences-and-telescoping-sums.md): rules that collapse when terms are subtracted in pairs.
+- [Finite differences](02-finite-differences-and-telescoping-sums.md): finding a polynomial rule from its jumps, and collapsing sums where consecutive terms cancel.
 - [First-order recurrences](03-first-order-recurrences-and-loans.md): rules reaching back one place.
 - [The characteristic equation](04-characteristic-equation-and-binet.md): this rule's closed form, from an equation's roots.
 - [Divide-and-conquer recurrences](07-divide-and-conquer-recurrences.md): rules reaching back by halving, not stepping.
 - [Generating functions](../07-Generating%20Functions/01-ordinary-generating-functions.md): a whole sequence carried by one function.
 - [The chromatic polynomial](../12-Planarity%20and%20Colouring/04-chromatic-polynomial.md): a recurrence on networks, from deleting a link.
 - [Recurrences](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/04-recurrences-and-the-master-theorem.md): a running time read off a recurrence unsolved.
-- [Dynamic programming](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md): storing what a recurrence computed instead of recomputing it.
+- [Dynamic programming](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/07-dynamic-programming.md): storing what a recurrence computed instead of recomputing it.
 
-Stepping forward costs one step per position, hopeless far out; the next cards reach the answer in one jump.
+Stepping forward costs one step per position, hopeless far out; the next card, [Finite differences](02-finite-differences-and-telescoping-sums.md), starts turning step-by-step sums and rules into one-jump formulas.
 
 ---
 

@@ -117,11 +117,13 @@ level 8  ███████████████████████�
 level 9  ███████████████████████████████████████  39,366
 ```
 
-The bottom level alone does a third of the tree's work.
+The last merge level alone does a third of the tree's work, and beneath it sit 3^10 = 59,049 single-card leaves.
 
 ### Step 3: add the levels, which is a geometric sum
 
-Level costs that are each a fixed multiple of the one before make a geometric sum, which collapses by telescoping ([Finite differences](02-finite-differences-and-telescoping-sums.md)). Multiplier 1: flat levels, total one level times the level count. Above 1: the last term swamps the rest, so the bottom is the answer. Below 1: the sum never passes a fixed multiple of its first term, so the top is. Three cases, and nothing else.
+Level costs that are each a fixed multiple of the one before make a geometric sum, which collapses by telescoping ([Finite differences](02-finite-differences-and-telescoping-sums.md)). Multiplier 1: flat levels, total one level times the level count.
+
+Above 1: the last term swamps the rest, so the bottom is the answer. Below 1: the sum never passes a fixed multiple of its first term, so the top is. Three cases, and nothing else.
 
 <details>
 <summary>Detailed proof: the exact-power case</summary>
@@ -160,7 +162,7 @@ Flat, growing, shrinking: one deck, totals two hundred times apart. A second rou
 | the ceiling | 10 × 1,024 | **10,240** |
 | the deck merged | comparisons counted | **8,946** |
 | the deck searched | one look × 10 levels | **10** |
-| three pieces, not two | 2 × (3^10 − 2^10) | **116,050** |
+| three pieces, not two (3^10 = 59,049 leaves) | 2 × (3^10 − 2^10) | **116,050** |
 | a quadratic join | 2 × 1,024 × 1,023 | **2,095,104** |
 
 Ten thousand comparisons order 1,024 cards, and the 8,946 actually made sit under that ceiling, which is all a growth class promises.
@@ -171,7 +173,7 @@ Ten thousand comparisons order 1,024 cards, and the 8,946 actually made sit unde
 | --- | --- | --- |
 | Joining cost quoted as the answer | 1,024 | The top merge; nine levels unpaid |
 | Every halving rule read as n log n | 10,240 for three pieces | With a = 3, levels grow: 116,050 |
-| Bottom level times the level count | 590,490 | Only flat levels multiply: 116,050 |
+| Leaves (3^10 = 59,049) times the level count | 590,490 | Only flat levels multiply: 116,050 |
 
 The code prints all three.
 
@@ -179,7 +181,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported but a logarithm, for printing. Each rule is totalled twice by roads sharing no arithmetic: level by level from the piece counts and sizes, and by the closed form the proof gives. The deck is then actually sorted and searched, on a shuffle written out here so both languages deal the same cards. Each case is decided twice too: a against $`b^d`$, and the total against ten equal levels.
+Nothing is imported but a logarithm, for printing. Each rule is totalled twice by roads sharing no arithmetic: level by level from the piece counts and sizes, and by the closed form the proof gives.
+
+The deck is then actually sorted and searched, on a shuffle written out here so both languages deal the same cards. Each case is decided twice too: a against $`b^d`$, and the total against ten equal levels.
 
 ### Python
 
@@ -592,8 +596,8 @@ example : 2 ^ 0 * (1024 / 2 ^ 0) ^ 2 = 1048576 ∧ 2 ^ 9 * (1024 / 2 ^ 9) ^ 2 = 
 example : ∑ j ∈ Finset.range 10, 2 ^ j * (1024 / 2 ^ j) ^ 2 = 2095104 := by decide
 example : 2 * 1024 * 1023 = 2095104 := by norm_num
 
--- The mistakes: the top merge alone, and the bottom level times the level count.
-example : 2 ^ 9 * (1024 / 2 ^ 9) + 9 * 1024 = 10240 := by norm_num
+-- The mistakes: the top merge alone, and the leaves (3^10 = 59,049) times the level count.
+example : 2 ^ 0 * (1024 / 2 ^ 0) + 9 * 1024 = 10240 := by norm_num
 example : 3 ^ 10 = 59049 ∧ 3 ^ 10 * 10 = 590490 := by norm_num
 
 #print axioms master_theorem_exact_powers
@@ -601,7 +605,7 @@ example : 3 ^ 10 = 59049 ∧ 3 ^ 10 * 10 = 590490 := by norm_num
 #print axioms pieces_at_the_bottom_as_a_power
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'dcr_cast_rpow' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -628,7 +632,7 @@ example : 3 ^ 10 = 59049 ∧ 3 ^ 10 * 10 = 590490 := by norm_num
 > **Taking n log n to be what divide and conquer means.** It is what flat levels give, and only that. Merging splits in two and joins in n comparisons: ten equal levels, 10,240. Three half-sized pieces, and each level costs half again as much as the last: 116,050.
 >
 > - **The joining cost quoted as the answer.** The top merge is 1,024 comparisons; the nine levels beneath are the other 9,216.
-> - **The bottom level multiplied by the level count.** 59,049 times 10 is 590,490, against a true 116,050. Only flat levels sum that way.
+> - **The leaves multiplied by the level count.** 3^10 = 59,049 leaves times 10 levels is 590,490, against a true 116,050. Only flat levels sum that way.
 > - **Forcing a rule into a case it does not fit.** A joining cost between two powers is outside all three, and a guess is not an answer.
 
 ---
@@ -637,7 +641,7 @@ example : 3 ^ 10 = 59049 ∧ 3 ^ 10 * 10 = 590490 := by norm_num
 
 - **Sorting.** Every library sort that merges runs on the flat case: double the rows and the work roughly doubles, where comparing every pair would quadruple it.
 - **Multiplying long numbers.** Karatsuba's method uses three half-length multiplications where the schoolbook method uses four: T(n) = 3 T(n/2) + n. The bottom wins, at a watershed of 1.584963.
-- **Signal processing.** The fast Fourier transform splits a sequence in two and combines in one pass: the flat case (The fast Fourier transform).
+- **Signal processing.** The fast Fourier transform splits a sequence in two and combines in one pass: the flat case ([The fast Fourier transform](../../16-Numerical%20analysis/07-PDE%20Solvers/09-the-fast-fourier-transform.md)).
 
 > **Say it back**
 > A procedure calling itself on smaller copies obeys T(n) = a T(n/b) + f(n): a pieces, each b times smaller, plus cutting up and joining. Add the tree up level by level: each level costs a fixed multiple of the one above, so the levels are flat, growing downwards, or shrinking downwards. Flat means one level times the level count, growing means the bottom is the answer, shrinking means the top. On 1,024 cards: 10,240, 116,050, 2,095,104.
@@ -653,11 +657,12 @@ example : 3 ^ 10 = 59049 ∧ 3 ^ 10 * 10 = 590490 := by norm_num
 
 ## Where this goes next
 
+- [Lattice paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md): the next shelf in this wing, counting grid routes through Pascal's triangle.
 - [Recurrences](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/04-recurrences-and-the-master-theorem.md): writing the rule from real code, with rounding, uneven pieces and a joining cost of n log n.
 - [Sorting and searching](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/05-sorting-and-searching.md): quicksort, and the proof that no sort by comparisons beats about n log n.
 - [The fast Fourier transform](../../16-Numerical%20analysis/07-PDE%20Solvers/09-the-fast-fourier-transform.md): the flat case carrying a workhorse of engineering.
 
-The three cases cover the powers and nothing between them, so a joining cost of n times a logarithm has no answer here; supplying one is a later card's first job.
+The three cases cover pure powers and nothing between them; [Recurrences](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/04-recurrences-and-the-master-theorem.md) takes up rounding, uneven splits, and a joining cost of n log n, while this wing's next shelf opens on grid counting with [Lattice paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md).
 
 ---
 

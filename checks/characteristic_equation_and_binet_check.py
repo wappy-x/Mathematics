@@ -51,7 +51,7 @@ row("the same list from 2^n + 3^n:", closed)
 row("weights 4, -4 from seeds 1, 6:", rep)
 row("the same list from (1 + 2n) 2^n:", repclosed)
 print(f"mistake 1, no n at the repeated root: a(7) = {2 ** 7}, not {rep[7]}")
-print(f"mistake 2, signs carried straight across: a(4) = {11 * (-2) ** 4 - 9 * (-3) ** 4}, not {second[4]}")
+print(f"mistake 2, signs carried straight across: a(4) = {(-3 * (-6) ** 4 + 17) // 7}, not {second[4]}")
 print(f"mistake 3, constants fitted to seeds 2, 3: a(4) = {3 * 2 ** 4 - 3 ** 4}, not {second[4]}")
 assert hall == F[1:12]                                  # laying tiles against the step rule
 assert [round(binet(n)) for n in range(21)] == F        # Binet against the step rule

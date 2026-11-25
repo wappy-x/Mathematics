@@ -50,7 +50,7 @@ print(f"the same sum, telescoped: 1 - 1/{TERMS + 1} = {tele[0]}/{tele[1]} = {tel
 row("Fibonacci F(1) to F(11), the hallway count", fib)
 print(f"F(1)+...+F(9) added: {added}; telescoped F(11) - F(2) = {fib[10]} - {fib[1]} = {fib[10] - fib[1]}")
 print(f"mistake 1, second difference 1 read as the rule n^2: 5 rows -> {5 ** 2}, not {closed[4]}")
-print(f"mistake 2, the collapse stopped at a(n): {ROWS * (ROWS - 1) // 2}, not {totals[-1]}")
+print(f"mistake 2, the collapse stopped at b(n): {ROWS * (ROWS - 1) // 2}, not {totals[-1]}")
 print(f"mistake 3, the split written with a plus: {wrong:.2f}, not {exact[0] / exact[1]:.2f}")
 assert first == list(range(2, ROWS + 1)) and second == [1] * (ROWS - 2)
 assert totals == closed and closed == newton

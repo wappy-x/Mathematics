@@ -54,8 +54,8 @@ fn main() {
     row("the same totals from n(n+1)/2", &strs(&closed));
     row("the same totals from Newton's formula", &strs(&newton));
     println!("Newton at n = 5: 1 + 2*C(4,1) + C(4,2) = 1 + {} + {} = {}", 2 * choose(4, 1), choose(4, 2), newton[4]);
-    println!("ten rows: {} tins by adding, {} from n(n+1)/2", totals[9], closed[9]);
-    println!("the jumps add to the trip: 2+3+...+{} = {} = {} - {}", ROWS, jumps, totals[9], totals[0]);
+    println!("ten rows: {} tins by adding, {} from n(n+1)/2", totals[(ROWS - 1) as usize], closed[(ROWS - 1) as usize]);
+    println!("the jumps add to the trip: 2+3+...+{} = {} = {} - {}", ROWS, jumps, totals[(ROWS - 1) as usize], totals[0]);
     row("the first three terms as differences",
         &(1..4).map(|k| format!("1/{}-1/{}", k, k + 1)).collect::<Vec<String>>());
     println!("1/(k(k+1)) added exactly to k = {}: {}/{} = {:.2}",
@@ -66,12 +66,12 @@ fn main() {
     println!("F(1)+...+F(9) added: {}; telescoped F(11) - F(2) = {} - {} = {}",
              added, fib[10], fib[1], fib[10] - fib[1]);
     println!("mistake 1, second difference 1 read as the rule n^2: 5 rows -> {}, not {}", 5 * 5, closed[4]);
-    println!("mistake 2, the collapse stopped at a(n): {}, not {}", ROWS * (ROWS - 1) / 2, totals[9]);
+    println!("mistake 2, the collapse stopped at b(n): {}, not {}", ROWS * (ROWS - 1) / 2, totals[(ROWS - 1) as usize]);
     println!("mistake 3, the split written with a plus: {:.2}, not {:.2}",
              wrong, exact.0 as f64 / exact.1 as f64);
     assert!(first == (2..=ROWS).collect::<Vec<i64>>() && second == vec![1; (ROWS - 2) as usize]);
     assert!(totals == closed && closed == newton);
-    assert!(jumps == totals[9] - totals[0] && exact == tele);
+    assert!(jumps == totals[(ROWS - 1) as usize] - totals[0] && exact == tele);
     assert!(added == fib[10] - fib[1] && fib[10] == 89);
     println!("ALL CHECKS PASS");
 }

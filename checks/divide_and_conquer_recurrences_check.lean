@@ -200,8 +200,8 @@ example : 2 ^ 0 * (1024 / 2 ^ 0) ^ 2 = 1048576 ∧ 2 ^ 9 * (1024 / 2 ^ 9) ^ 2 = 
 example : ∑ j ∈ Finset.range 10, 2 ^ j * (1024 / 2 ^ j) ^ 2 = 2095104 := by decide
 example : 2 * 1024 * 1023 = 2095104 := by norm_num
 
--- The mistakes: the top merge alone, and the bottom level times the level count.
-example : 2 ^ 9 * (1024 / 2 ^ 9) + 9 * 1024 = 10240 := by norm_num
+-- The mistakes: the top merge alone, and the leaves (3^10 = 59,049) times the level count.
+example : 2 ^ 0 * (1024 / 2 ^ 0) + 9 * 1024 = 10240 := by norm_num
 example : 3 ^ 10 = 59049 ∧ 3 ^ 10 * 10 = 590490 := by norm_num
 
 #print axioms master_theorem_exact_powers

@@ -63,16 +63,16 @@ fn main() {
              rule[N - 2], rule[N - 3], rule[N - 2], rule[N - 3], rule[N - 2] + rule[N - 3]);
     println!("Fibonacci from seeds 1, 1: F({}) = {}, so T(n) = F(n+1)", N + 1, fib[N]);
     println!("Tower of Hanoi, {} discs", DISCS);
-    println!("{:<39}: {}", "moves by the rule h(n) = 2 h(n-1) + 1", hanoi[N - 1]);
+    println!("{:<39}: {}", "moves by the rule h(n) = 2 h(n-1) + 1", hanoi[DISCS as usize - 1]);
     println!("{:<39}: {}, legal solve: {}", "moves by shifting the discs one by one", moves,
              if legal { "yes" } else { "no" });
     println!("{:<39}: {}", format!("moves by the closed form 2^{} - 1", DISCS), closed_h);
     println!("mistake 1, seeds 1 and 1 instead of 1 and 2: {}, not {}", fib[N - 1], listed[N - 1]);
     println!("mistake 2, the flat pair counted once per row: {}, not {}", by_rule(N, (1, 2), 2)[N - 1], listed[N - 1]);
-    println!("mistake 3, guessing h(n) = 2^n, first step unchecked: {}, not {}", 2i64.pow(DISCS), hanoi[N - 1]);
+    println!("mistake 3, guessing h(n) = 2^n, first step unchecked: {}, not {}", 2i64.pow(DISCS), hanoi[DISCS as usize - 1]);
     assert!(rule == listed);                                  // two roads, one sequence
     assert!(listed[N - 1] == 89 && rule[N - 2] + rule[N - 3] == listed[N - 1]);
     assert!(fib[N] == listed[N - 1] && fib[N - 1] == 55);      // Fibonacci, one place along
-    assert!(hanoi[N - 1] == 1023 && moves == hanoi[N - 1] && closed_h == hanoi[N - 1] && legal);
+    assert!(hanoi[DISCS as usize - 1] == 1023 && moves == hanoi[DISCS as usize - 1] && closed_h == hanoi[DISCS as usize - 1] && legal);
     println!("ALL CHECKS PASS");
 }

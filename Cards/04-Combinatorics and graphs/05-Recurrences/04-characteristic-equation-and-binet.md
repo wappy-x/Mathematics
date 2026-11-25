@@ -138,7 +138,9 @@ A second rule in whole numbers: a(n) = 5a(n−1) − 6a(n−2) from 2 and 5. Its
 <details>
 <summary>Detailed proof: the fitted mixture is the only sequence obeying the rule</summary>
 
-Two sequences obeying the rule and agreeing at steps 0 and 1 agree everywhere, by induction: agreeing at steps n−1 and n−2, they take step n from the same numbers and weights. The fit is forced either way — different roots by the line above, one root twice by A = a(0) and (A + B)r = a(1), with r ≠ 0 since c2 is not. The fitted mixture obeys the rule and matches the first two terms, hence all of them. ∎
+Two sequences obeying the rule and agreeing at steps 0 and 1 agree everywhere, by induction: agreeing at steps n−1 and n−2, they take step n from the same numbers and weights.
+
+The fit is forced either way — different roots by the line above, one root twice by A = a(0) and (A + B)r = a(1), with r ≠ 0 since c2 is not. The fitted mixture obeys the rule and matches the first two terms, hence all of them. ∎
 
 </details>
 
@@ -150,7 +152,7 @@ A root standing twice means the quadratic is one bracket squared. Call that root
 c_1 (n-1) r^{n-1} + c_2 (n-2) r^{n-2} = 2(n-1)r^{n} - (n-2)r^{n} = n\,r^n
 ```
 
-Exactly what the rule demands. Worked: a(n) = 4a(n−1) − 4a(n−2) gives r^2 = 4r − 4, whose only root is 2, standing twice. From 1 and 6, A = 1 and (A + B) × 2 = 6, so B = 2, and (1 + 2n)·2^n runs 1, 6, 20, 56, 144, 352, 832, 1920; 2^n alone reaches 128 at step 7.
+Exactly what the rule demands. Worked: a(n) = 4a(n−1) − 4a(n−2) gives r^2 = 4r − 4, whose only root is 2, standing twice. From 1 and 6, A = 1 and (A + B) × 2 = 6, so B = 2. Then (1 + 2n)·2^n runs 1, 6, 20, 56, 144, 352, 832, 1920, while 2^n alone reaches 128 at step 7.
 
 ### Step 4: why rounding the big root is exact
 
@@ -246,7 +248,7 @@ row("the same list from 2^n + 3^n:", closed)
 row("weights 4, -4 from seeds 1, 6:", rep)
 row("the same list from (1 + 2n) 2^n:", repclosed)
 print(f"mistake 1, no n at the repeated root: a(7) = {2 ** 7}, not {rep[7]}")
-print(f"mistake 2, signs carried straight across: a(4) = {11 * (-2) ** 4 - 9 * (-3) ** 4}, not {second[4]}")
+print(f"mistake 2, signs carried straight across: a(4) = {(-3 * (-6) ** 4 + 17) // 7}, not {second[4]}")
 print(f"mistake 3, constants fitted to seeds 2, 3: a(4) = {3 * 2 ** 4 - 3 ** 4}, not {second[4]}")
 assert hall == F[1:12]                                  # laying tiles against the step rule
 assert [round(binet(n)) for n in range(21)] == F        # Binet against the step rule
@@ -255,7 +257,7 @@ assert rep == repclosed                                 # the repeated root need
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-14 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 sqrt(5) = 2.2360679775, phi = 1.6180339887, psi = -0.6180339887
@@ -346,7 +348,7 @@ fn main() {
     row("weights 4, -4 from seeds 1, 6:", &rep);
     row("the same list from (1 + 2n) 2^n:", &repclosed);
     println!("mistake 1, no n at the repeated root: a(7) = {}, not {}", 2i64.pow(7), rep[7]);
-    println!("mistake 2, signs carried straight across: a(4) = {}, not {}", 11 * (-2i64).pow(4) - 9 * (-3i64).pow(4), second[4]);
+    println!("mistake 2, signs carried straight across: a(4) = {}, not {}", (-3 * (-6i64).pow(4) + 17) / 7, second[4]);
     println!("mistake 3, constants fitted to seeds 2, 3: a(4) = {}, not {}", 3 * 2i64.pow(4) - 3i64.pow(4), second[4]);
     let bin20: Vec<i64> = (0..21).map(|n| binet(n).round() as i64).collect();
     assert!(hall == f[1..12].to_vec());          // laying tiles against the step rule
@@ -357,7 +359,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-14 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 sqrt(5) = 2.2360679775, phi = 1.6180339887, psi = -0.6180339887
@@ -495,9 +497,10 @@ example : ∀ n < 6, (1 + 2 * ((n + 2 : ℕ) : ℤ)) * 2 ^ (n + 2)
   decide
 example : (List.range 8).map (fun n : ℕ => (1 + 2 * (n : ℤ)) * 2 ^ n) = [1, 6, 20, 56, 144, 352, 832, 1920] := by
   decide
--- The three mistakes: 2^7 = 128, 11·(−2)^4 − 9·(−3)^4 = −553, 3·2^4 − 3^4 = −33.
+-- The three mistakes: 2^7 = 128, (−3·(−6)^4 + 17)/7 = −553 (from r^2 + 5r − 6 = 0, roots −6 and 1), 3·2^4 − 3^4 = −33.
 example : (2 : ℤ) ^ 7 = 128 := by norm_num
-example : 11 * (-2 : ℤ) ^ 4 - 9 * (-3) ^ 4 = -553 := by norm_num
+example : ((-6 : ℤ) ^ 2 + 5 * (-6) - 6 = 0) ∧ ((1 : ℤ) ^ 2 + 5 * 1 - 6 = 0) ∧
+    ((-3 : ℚ) / 7 * (-6) ^ 4 + 17 / 7 * 1 ^ 4 = -553) := by norm_num
 example : 3 * (2 : ℤ) ^ 4 - 3 ^ 4 = -33 := by norm_num
 
 #print axioms two_term_rule_solved_by_characteristic_roots
@@ -505,7 +508,7 @@ example : 3 * (2 : ℤ) ^ 4 - 3 ^ 4 = -33 := by norm_num
 #print axioms binet_formula
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'two_term_rule_solved_by_characteristic_roots' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -525,7 +528,7 @@ example : 3 * (2 : ℤ) ^ 4 - 3 ^ 4 = -33 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Reading the roots straight off the rule's signs.** a(n) = 5a(n−1) − 6a(n−2) gives r^2 = 5r − 6, so r^2 − 5r + 6 = 0, roots 2 and 3. Copying the 5 and the −6 across as they stand gives −2 and −3, and −553 at step 4 instead of 97.
+> **Reading the roots straight off the rule's signs.** a(n) = 5a(n−1) − 6a(n−2) gives r^2 = 5r − 6, so r^2 − 5r + 6 = 0, roots 2 and 3. Copying the 5 and the −6 across as they stand gives r^2 + 5r − 6 = 0, roots −6 and 1, and −553 at step 4 instead of 97.
 >
 > - **Dropping the n at a repeated root.** Two copies of one root are one sequence, not two: 2^n alone reaches 128 at step 7, not 1920.
 > - **Fitting the constants to the wrong start.** The roots choose the family, the start the member: 3·2^n − 3^n obeys the same rule from 2, 3 and gives −33 at step 4.
@@ -558,7 +561,7 @@ example : 3 * (2 : ℤ) ^ 4 - 3 ^ 4 = -33 := by norm_num
 - [A recurrence is a matrix](06-recurrences-as-matrix-powers.md): the same roots as eigenvalues, and huge steps by repeated squaring.
 - [Solving a recurrence with a generating function](../07-Generating%20Functions/03-generating-functions-solve-recurrences.md): the same closed form by splitting a fraction.
 
-Two weights and two starting values are settled; what a rule does when it looks back further, or pays a cost at every step, is the shelf's next question.
+Two weights and two starting values are settled; what a rule does when an outside amount is added at every step is the shelf's next card, [Recurrences with a driving term](05-nonhomogeneous-recurrences.md).
 
 ---
 
