@@ -590,7 +590,7 @@ example : ![(3 : ℚ), -2] ⬝ᵥ (!![4, 6; 6, 9] *ᵥ ![(3 : ℚ), -2]) = 0 := 
 > Guess first. An assert stops the program when a number comes out wrong; these are pinned to this pair.
 > - **Raise the covariance to 3.** Set `A` to `[[4.0, 3.0], [3.0, 9.0]]`. Does mixing still help? Half and half rises to 4.750000, the calmest mix to 3.857143 — under asset one's 4, barely. The table now disagrees with the matrix, so the first assert fires.
 > - **Raise it to 6.** The determinant becomes zero, the smaller eigenvalue prints as 0.000000, and the mix (3, -2) scores zero: semidefinite, not definite.
-> - **Flip every sign.** Set `A` to `[[-4.0, -1.0], [-1.0, -9.0]]`. Half and half prints -3.750000, though the score never hits zero.
+> - **Flip every sign.** Set `A` to `[[-4.0, -1.0], [-1.0, -9.0]]`. Half and half prints -3.750000, though the score hits zero only at all zeros.
 
 ---
 
@@ -599,8 +599,8 @@ example : ![(3 : ℚ), -2] ⬝ᵥ (!![4, 6; 6, 9] *ᵥ ![(3 : ℚ), -2]) = 0 := 
 > [!warning]
 > **Reading the entries and calling the matrix positive definite.** Every entry of `[[1, 2], [2, 1]]` is above zero, its eigenvalues are 3.000000 and -1.000000, and the mix (1, -1) scores -2.000000. The test asks about every mix, negative weights included.
 >
-> - **Trusting the determinant alone.** `[[-4, -1], [-1, -9]]` has determinant 35, and is negative on every mix.
-> - **Reading "never zero" as positive definite.** A negative definite matrix never hits zero either.
+> - **Trusting the determinant alone.** `[[-4, -1], [-1, -9]]` has determinant 35, and is negative on every mix except all zeros.
+> - **Reading "never zero" as positive definite.** A negative definite matrix also hits zero only at all zeros.
 > - **Mixing up the units.** These are variances, in percent squared, not percentages.
 
 ---
