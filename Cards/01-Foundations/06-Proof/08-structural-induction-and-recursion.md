@@ -63,9 +63,9 @@ The claim:
 
 - **Every bracket is built by the two rules.** A league, everyone playing everyone, is not.
 - **Each join adds exactly one game.** A third-place play-off adds two.
-- **The base case covers every starting piece.** Skip q, and formulas built from q (Step 5) are unproved.
+- **The base case covers every starting piece.** Formulas in Step 5 start from two plain statements, p and q. Skip q, and formulas built from q are unproved.
 - **Each recursive call is on a smaller piece.** Otherwise nothing guarantees it stops.
-- **Each object has one build.** Without parentheses, "not p and q" reads two ways, so a recursion can give two answers.
+- **Each object has one build.** Without parentheses, "not p and q" can mean "(not p) and q" or "not (p and q)", so a recursion can give two answers.
 
 ---
 
@@ -95,11 +95,13 @@ Both halves of a join are lower than the whole, so "true for every lower bracket
 
 The games rule calls itself on L and R, each with fewer teams than the whole. Team counts cannot fall forever, so the calls end at lone teams.
 
-The general form is **well-founded recursion**: each call is on something smaller, by a measure that cannot fall forever. [Euclid's algorithm](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md) is one. It finds the largest number dividing both of two numbers. Each call swaps the pair for the second number and the remainder of the first ÷ the second, until the second is 0. Remainders are smaller than the number divided by, so the second number falls: (63, 15) → (15, 3) → (3, 0). The answer is 3.
+The general form is **well-founded recursion**: each call is on something smaller, by a measure that cannot fall forever.
+
+[Euclid's algorithm](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md) is one. It finds the largest number dividing both of two numbers. Each call swaps the pair for the second number and the remainder of the first ÷ the second, until the second is 0. Remainders are smaller than the number divided by, so the second number falls: (63, 15) → (15, 3) → (3, 0). The answer is 3.
 
 ### Step 5: the same proof for formulas
 
-Formulas grow from p and q, two plain statements such as "it rains" ([Statements and connectives](../05-Logic/01-statements-and-connectives.md)), by two rules: from any formula A make not A; from formulas A and B make (A and B). Claim: each has as many "(" as ")".
+Formulas grow from p and q, two plain statements such as "it rains" ([Statements and connectives](../05-Logic/01-statements-and-connectives.md)). Two rules build them: from any formula A make not A; from formulas A and B make (A and B). Claim: each has as many "(" as ")".
 
 - **Base:** p and q have 0 of each.
 - **The not rule:** adds no parentheses, so the counts stay equal.
@@ -414,11 +416,12 @@ example : 63 % 15 = 3 ∧ 15 % 3 = 0 ∧ Nat.gcd 63 15 = 3 := by
 
 ## Where this goes next
 
+- [Sets](../07-Sets/01-sets-and-membership.md): the next shelf in Foundations. A set is a collection settled only by what belongs to it.
 - [Euclid's algorithm](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md): a recursion sure to stop, in daily use.
 - [Transfinite induction](../09-Sizes%20of%20Infinity/07-transfinite-induction-and-recursion.md): induction and recursion carried past every counting number.
 - [Formal proofs and soundness](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/11-formal-deduction-and-soundness.md): rules a machine can check, and why they never prove a falsehood.
 
-Left open: what if a build can go on past every finite step?
+Left open: what if a build can go on past every finite step? [Transfinite induction](../09-Sizes%20of%20Infinity/07-transfinite-induction-and-recursion.md) answers that two shelves on. First, the next shelf, [Sets](../07-Sets/01-sets-and-membership.md), settles what a collection is, which that answer needs.
 
 ---
 

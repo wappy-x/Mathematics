@@ -116,7 +116,7 @@ The search found one do-nothing among 41 candidates. The proof rules out the one
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Stopping once 0 turns up | 1 of 41 candidates | Existence proved, uniqueness untouched |
+| Stopping once 0 turns up | 1 of 41 candidates checked | Existence proved, uniqueness untouched |
 | One example for a "for every" claim | 7 is odd: one number of 41 checked | An example cannot cover all of them |
 | Guessing a witness, not checking it | 1 + 7 = 8, not 7 | A witness counts once the definition agrees |
 
@@ -345,7 +345,7 @@ example : (Finset.range 41).filter
 
 ## Where this goes next
 
-Nothing waits on this card: it is the sheet you keep beside the other five. The shelf closes with [Peano's three rules](07-peano-and-one-plus-one.md), where the counting numbers begin.
+Nothing waits on this card: it is the sheet you keep beside the other five. Next on the shelf is [Peano's three rules](07-peano-and-one-plus-one.md), where the counting numbers begin.
 
 The question this card leaves open: every move here leaned on the whole numbers, with 0, a next one and adding, so where do their rules come from?
 

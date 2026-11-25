@@ -10,7 +10,11 @@ A shepherd opens the gate at dawn with a rope. One sheep through, one knot. Anot
 
 At dusk a knot comes off for each sheep back. Bare rope, whole flock. Knots left, something is on the hill.
 
-Cut it at any knot and you have a rope of your own: a counting number. Three rules pin them down. There is a **starting point**: the rope before any knot. Every rope has **exactly one next** — one more knot. That next **never lands on the start, and no two ropes share one**. And **nothing else counts as a rope**: every one comes from tying knots up from the start.
+Cut it at any knot and you have a rope of your own: a counting number. Three rules pin them down.
+
+1. There is a **starting point**, the rope before any knot, and every rope has **exactly one next**: one more knot.
+2. That next **never lands on the start, and no two ropes share one**.
+3. **Nothing else counts as a rope**: every one comes from tying knots up from the start.
 
 That third rule is induction, the method [Induction](04-proof-by-induction.md) runs on — here not a technique but a rule saying what the counting numbers *are*.
 
@@ -90,7 +94,7 @@ The first two rules let a stray rope sit off to the side, never reached from the
 
 Rule one handles zero. Rule two peels a knot off the right-hand rope and hangs it outside: each use leaves that side shorter, so it bottoms out at rule one.
 
-So 1 + 1 = 2 is a conclusion, not a fact. Read 1 + 1 as 1 + next(zero), move the next outside, clear the inside by rule one, land on next(1): the name 2. Each step is a rule, a direct proof ([Direct proof](01-direct-proof.md)).
+So 1 + 1 = 2 is a conclusion, not a starting rule. Read 1 + 1 as 1 + next(zero), move the next outside, clear the inside by rule one, land on next(1): the name 2. Each step is a rule, a direct proof ([Direct proof](01-direct-proof.md)).
 
 ---
 
@@ -394,12 +398,11 @@ example : (fun k : ℕ => min (k + 1) 3)^[3] 2 = 3 := by decide
 
 ## Where this goes next
 
-- [Strong induction and the least element](05-strong-induction-and-well-ordering.md): every non-empty collection of counting numbers has a smallest member, the least-element property.
-- [Division with a remainder](../../02-Number%20theory/01-Divisibility%20and%20Primes/04-division-with-remainder.md): the least-element property at work.
-- [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md): the reals, the last step.
-- [Structural induction](08-structural-induction-and-recursion.md): prove a fact about every tree or formula by checking each way it can be built.
+- [Structural induction](08-structural-induction-and-recursion.md): the next card on this shelf. Prove a fact about every tree or formula by checking each way it can be built.
+- [Division with a remainder](../../02-Number%20theory/01-Divisibility%20and%20Primes/04-division-with-remainder.md): repeated subtraction must stop, because counting numbers cannot fall forever. That is the least-element property of [Strong induction and the least element](05-strong-induction-and-well-ordering.md), which rests on these rules.
+- [Building the integers and fractions](../02-The%20Number%20Line/06-constructing-integers-and-fractions.md) and [Dedekind cuts](../02-The%20Number%20Line/07-dedekind-cuts.md): negatives, fractions and then the reals, built on these counting numbers (back on the Number Line shelf).
 
-Left open: how are negatives, fractions and the reals built on these ropes?
+Left open: the rope grows by one rule, one knot after another. What about things built by several rules that branch, like a tournament draw, and how do you prove a fact about all of them?
 
 
 ---

@@ -26,7 +26,7 @@ It *is* the sign, respelled.
 flowchart TD
   A["Want: if your ticket is validated, you pay nothing"] --> B["Put a not on each half: not validated / you paid something"]
   B --> C["Swap the halves: if you paid something, your ticket was not validated"]
-  C --> D["Prove that one instead, standing on 'you paid $6'"]
+  C --> D["Prove that one instead, starting from 'you paid something'"]
   D --> E["The two sentences are one claim, so the original is proved"]
 ```
 
@@ -49,7 +49,7 @@ flowchart TD
 ### When it holds
 
 - **The claim is an if-then.** A claim with no if part has nothing to flip.
-- **Both halves get a *not*, and they swap.** Swap without the *nots* and you get the converse, which disagrees with the sign on 2 drivers.
+- **Both halves get a *not*, and they swap.** Swap without the *nots* and you get the converse, which disagrees with the sign on 2 of the 4 drivers in Worked numbers below.
 - **Each half is either true or false.** A ticket is validated or it is not; you paid nothing or you paid something. If a half could be neither, "not B" would miss a case, and the two sentences could come apart.
 
 ---
@@ -60,9 +60,9 @@ flowchart TD
 
 An if-then is false in one situation only: the if part happened, the then part did not.
 
-The sign is false for a driver validated and charged anyway. The contrapositive is false for a driver who paid and *was* validated. Same driver. Nothing tells them apart: one claim, two spellings ([Logical equivalence and De Morgan](../05-Logic/03-logical-equivalence-and-de-morgan.md) tables it).
+The sign is false for a driver validated and charged anyway. The contrapositive is false for a driver who paid and *was* validated. Same driver. Nothing tells them apart: one claim, two spellings ([If-then](../05-Logic/02-if-then.md) tables it; [Logical equivalence and De Morgan](../05-Logic/03-logical-equivalence-and-de-morgan.md) names that kind of sameness).
 
-Then why flip? A proof needs somewhere to stand. "Validated" gives you a stamp and nothing to compute. "You paid $6" gives you a number.
+Then why flip? A proof needs somewhere to stand. Often the original if part gives you nothing to write down, and the flipped if part hands you an equation. The twin claim below shows it.
 
 ### The twin claim, proved by the flip
 

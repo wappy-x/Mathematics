@@ -50,7 +50,7 @@ Letters cover every pair at once. Let m and n be the counts, a and b their row l
 
 - **Both counts are even.** Make one odd, 12 + 15, and the total is 27: 13 pairs, 1 over.
 - **Both parts carry the 2.** Pull it from one part only, 2 × 6 + 9, and you get 21, not 30.
-- **The cases cover every possibility.** Count only the rows that start black and the board gives 16, not 32.
+- **When a proof splits into cases, the cases cover every possibility.** On the chessboard in Step 3, count only the rows that start black and you get 16 black squares, not 32.
 
 ---
 

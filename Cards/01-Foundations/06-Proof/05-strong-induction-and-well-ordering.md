@@ -6,7 +6,7 @@
 
 ## General Overview
 
-The post office has sold out of everything except 3-cent and 5-cent stamps. You want to pay a postage exactly, no overpaying.
+The post office has sold out of everything except 3-cent and 5-cent stamps, the small ones used to top up a letter after a price rise. You want to pay a top-up exactly, no overpaying.
 
 8 cents: a 3 and a 5. 9: three 3s. 10: two 5s. 7 cents cannot be done.
 
@@ -370,7 +370,7 @@ example : ∀ k : ℕ, 8 + 3 * k ≠ 9 := by intro k; omega
 - [Structural induction](08-structural-induction-and-recursion.md): prove a fact about every tree or formula by checking each way it can be built.
 - [Ordinals](../09-Sizes%20of%20Infinity/06-ordinals.md): counting past infinity, where omega + 1 is bigger but 1 + omega is not.
 
-Left open: when a claim can be proved both ways, which shape gives the shorter proof.
+Left open: with five proof moves now on the table, how do you tell from a claim which move to try first?
 
 ---
 

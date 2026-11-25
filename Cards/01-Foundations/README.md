@@ -107,7 +107,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 06 · Proof · 8 cards
 
-*What a proof is; direct, contrapositive, contradiction, induction, strong induction; choosing a strategy; Peano's rules as the payoff.*
+*What a proof is; direct, contrapositive, contradiction, induction, strong induction; choosing a strategy; Peano's rules; structural induction and recursion.*
 
 1. [Direct proof: what a proof is, and the straight-line kind](06-Proof/01-direct-proof.md)
 2. [Proof by contrapositive: prove the flipped version](06-Proof/02-proof-by-contrapositive.md)

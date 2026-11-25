@@ -73,7 +73,9 @@ A party of one. Nobody to shake with: 0 handshakes. The claim says 1 × 0 ÷ 2, 
 
 Suppose the claim holds at some size k — one size, already known. That party has k × (k − 1) ÷ 2 handshakes. That assumption has a name: the **induction hypothesis**.
 
-One more guest walks in and shakes every hand in the room: k more, and nobody else shakes again. So the party of k + 1 has k × (k − 1) ÷ 2 + k. Put the k over 2 too: the top is k × (k − 1) + 2 × k, which is k × k + k, which is k × (k + 1). The count is (k + 1) × k ÷ 2.
+One more guest walks in and shakes every hand in the room: k more, and nobody else shakes again. So the party of k + 1 has k × (k − 1) ÷ 2 + k.
+
+Put the extra k over 2 too, as 2 × k ÷ 2. The top is k × (k − 1) + 2 × k. That is k × k − k + 2 × k, which is k × k + k, which is k × (k + 1). The count is (k + 1) × k ÷ 2.
 
 The claim at size k + 1 reads (k + 1) × ((k + 1) − 1) ÷ 2, and (k + 1) − 1 is k. Same thing — the claim survived the guest.
 

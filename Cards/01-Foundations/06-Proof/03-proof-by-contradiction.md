@@ -55,7 +55,7 @@ flowchart TD
 
 ### Step 0: there is no third box
 
-A claim is either true or false. If assuming it false leads somewhere impossible, the false box is empty and the claim sits in the true one. That two-box rule backs the move ([Valid arguments](../05-Logic/06-valid-arguments.md)).
+A claim is either true or false. If assuming it false leads somewhere impossible, the false box is empty and the claim sits in the true one. That two-box rule backs the move ([Statements and connectives](../05-Logic/01-statements-and-connectives.md)).
 
 ### Step 1: state the opposite exactly
 
@@ -75,7 +75,9 @@ Nobody laid a domino.
 
 ### The same move, one shelf over
 
-Root 2 is the number whose square is 2. Suppose a fraction, a top number p over a bottom number q in lowest terms — common factors divided out — squares to 2. Then p × p = 2 × q × q, which forces p even (an odd number times itself is odd, and 2 × q × q is even), and then q even too. Both even means a factor of 2 was still in there. Wall. Fractions get close and stay wrong: 99 × 99 is 9801; 2 × 70 × 70, 9800. [Irrational numbers](../02-The%20Number%20Line/03-irrational-numbers.md) runs it properly.
+Root 2 is the number whose square is 2. Suppose a fraction, a top number p over a bottom number q in lowest terms — common factors divided out — squares to 2. Then p × p = 2 × q × q, which is even. An odd number times itself is odd, so p must be even, and that forces q even too. Both even means a factor of 2 was still in there. Wall.
+
+Fractions get close and stay wrong: 99 × 99 is 9801; 2 × 70 × 70, 9800. [Irrational numbers](../02-The%20Number%20Line/03-irrational-numbers.md) runs it properly.
 
 ---
 
@@ -434,12 +436,13 @@ example : (99 : ℤ) * 99 = 9801 ∧ (2 : ℤ) * (70 * 70) = 9800 ∧ (9801 : �
 
 ## Where this goes next
 
+- [Induction](04-proof-by-induction.md): the next card on this shelf, for claims about every counting number — check the first case, then show each case carries the next.
 - [Choosing a proof strategy](06-choosing-a-proof-strategy.md): which move fits a claim, from its shape.
 - [Russell's paradox](../07-Sets/06-russells-paradox.md): a collection whose own definition walks into a wall.
 - [Pigeonhole](../08-Relations%20and%20Functions/08-pigeonhole-principle.md): suppose the crowding away, watch the total fail.
 - [Cantor's diagonal](../09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md): assume every decimal is listed, build one that is not.
 
-The question this card leaves open: when no colouring is in sight, how do you find the impossible thing to aim for?
+The question this card leaves open: a claim about every counting number has no single wall to aim for, so how do you prove all of them without checking them one by one?
 
 ---
 
