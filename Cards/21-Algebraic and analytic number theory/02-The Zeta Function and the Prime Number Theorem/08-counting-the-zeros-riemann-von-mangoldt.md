@@ -681,6 +681,7 @@ ALL CHECKS PASS
 ## Where this goes next
 
 - [The Riemann hypothesis](09-riemann-hypothesis-statement-and-equivalents.md): the conjecture that all the zeros counted here lie on the line of real part 1/2. This card's count is the tool that tests it up to a given height.
+- [Zero-density estimates](11-zero-density-estimates-and-primes-in-short-intervals.md): counting the zeros that might sit off the line, and what that buys for primes in short intervals.
 
 The question this card leaves open: N(T) counts the zeros in the whole strip, so how many of them actually sit on the line of real part 1/2?
 

@@ -843,6 +843,9 @@ example : (29 : ℤ) = 3 ^ 2 + 5 * 2 ^ 2 ∧ (41 : ℤ) = 6 ^ 2 + 5 * 1 ^ 2 ∧
 - [The class number formula](06-class-number-formula-and-the-dedekind-zeta-function.md): $`h_K`$ read off a zeta function, the third road in the code.
 - [The unit theorem](07-dirichlets-unit-theorem.md): the other half of the structure of $`\mathcal{O}_K`$: its units (the numbers with an inverse), which the class group ignores.
 - [Fermat's last theorem](../07-Diophantine%20and%20Modular/04-fermats-last-theorem-history-and-descent.md): Kummer's use of class numbers, and why it stopped at the regular primes.
+- [Composition and genus](11-gauss-composition-and-genus-theory.md): multiplying binary quadratic forms is multiplying ideal classes.
+- [Cubic reciprocity](12-cubic-reciprocity-and-jacobi-sums.md): Jacobi sums, primes in the Eisenstein integers, and when 2 is a cube.
+- [Artin reciprocity](../09-Local%20Fields%20and%20Class%20Field%20Theory/05-artin-reciprocity-and-the-hilbert-class-field.md): a prime's Frobenius depends only on its ideal class, and the Hilbert class field.
 
 The question this card leaves open: imaginary quadratic fields of class number 1 are finitely many, but are there infinitely many real quadratic fields with class number 1? Gauss expected so; as of 2026-11-15 it is unproved.
 

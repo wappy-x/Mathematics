@@ -1243,7 +1243,7 @@ example : ((range 50).filter (fun n => n.Prime ∧ n ≠ 2)).card = 14 := by dec
 
 - **Quadratic reciprocity.** Computing $`g^q`$ mod a second prime q in two ways links "is q a square mod p" to "is p a square mod q". [Quadratic reciprocity](07-quadratic-reciprocity-via-gauss-sums.md) does it with this card's $`g^2 = \left(\frac{-1}{p}\right) p`$.
 - **Square roots built from roots of unity.** Step 1 writes $`i\sqrt{7}`$ as a signed sum of 7th roots of unity, and $`\sqrt{5} = \zeta_5 - \zeta_5^2 - \zeta_5^3 + \zeta_5^4 = 2.236067977`$. So the square root of every odd prime, up to a factor i, lies in the field of its own roots of unity.
-- **L-functions.** The functional equation of a Dirichlet L-function links the series at each point to the series of the conjugate character at the mirror point. It carries the factor $`g(\chi)/\sqrt{q}`$, divided by i when $`\chi(-1) = -1`$. For the Legendre symbol mod p, Gauss's sign makes that factor exactly 1. The same holds for every real primitive character, by the composite-modulus version in the Sources. [Dirichlet L-functions](03-dirichlet-l-functions.md) introduces the series.
+- **L-functions.** The functional equation of a Dirichlet L-function ([The functional equation of L(s, chi)](09-dirichlet-l-functions-functional-equation.md)) links the series at each point to the series of the conjugate character at the mirror point. It carries the factor $`g(\chi)/\sqrt{q}`$, divided by i when $`\chi(-1) = -1`$. For the Legendre symbol mod p, Gauss's sign makes that factor exactly 1. The same holds for every real primitive character, by the composite-modulus version in the Sources. [Dirichlet L-functions](03-dirichlet-l-functions.md) introduces the series.
 - **Mobile phone signals.** Chu's sequences, the basis of the Zadoff–Chu sequences in 4G and 5G networks, are points on the unit circle whose angle grows with the square of the position: a "chirp". Every frequency of such a sequence has the same size, the square root of its length, by a Gauss sum. Phones use them to announce themselves to a base station.
 - **Concert-hall acoustics.** A quadratic-residue diffuser is a wall of wells whose depths follow the squares mod a prime. Its reflections spread sound evenly over angle, because the sum of $`\zeta^{x^2 + kx}`$ has the same size for every k.
 
@@ -1261,6 +1261,13 @@ example : ((range 50).filter (fun n => n.Prime ∧ n ≠ 2)).card = 14 := by dec
 ## Where this goes next
 
 - [Quadratic reciprocity](07-quadratic-reciprocity-via-gauss-sums.md): gives the number $`\left(\frac{-1}{p}\right) p`$, here −7, its own name, and turns $`g^2 = \left(\frac{-1}{p}\right) p`$ into the reciprocity law.
+- [The functional equation of L(s, chi)](09-dirichlet-l-functions-functional-equation.md): a twisted theta function, with the Gauss sum as the sign.
+- [Polya-Vinogradov](10-polya-vinogradov-inequality.md): a character sum over any stretch of numbers is at most about root q times log q.
+- [Kloosterman sums](11-kloosterman-sums.md): roots of unity at x and at 1/x, and why the total stays below 2 root p.
+- [Cubic reciprocity](../06-Algebraic%20Numbers/12-cubic-reciprocity-and-jacobi-sums.md): Jacobi sums, primes in the Eisenstein integers, and when 2 is a cube.
+- [Weyl differencing](../08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/08-weyl-differencing-and-van-der-corput.md): squaring an exponential sum to lower its degree, and van der Corput's bounds.
+- [The circle method](../08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/09-hardy-littlewood-circle-method.md): count solutions as an integral round the circle, split into major and minor arcs.
+- [Kronecker-Weber](../09-Local%20Fields%20and%20Class%20Field%20Theory/04-kronecker-weber-theorem.md): every abelian extension of Q sits inside a cyclotomic field.
 
 On this shelf, [Quadratic residues](02-quadratic-residues-and-the-legendre-symbol.md) builds the Legendre symbol used here, and [The Jacobi symbol](08-jacobi-symbol-and-computing-without-factoring.md) extends it to odd composite moduli.
 

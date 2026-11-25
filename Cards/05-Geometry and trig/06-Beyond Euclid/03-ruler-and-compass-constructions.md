@@ -14,7 +14,7 @@ Each crossing solves an equation of degree at most two, so adds at most one squa
 
 **Ruler and compass build exactly the numbers reachable from 1 by adding, subtracting, multiplying, dividing and taking square roots; a length that solves a cubic with fraction coefficients and no fraction root, such as the 7-gon's, can never be built.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works, except π's case, Lindemann's 1882 theorem, stated without proof.
+**What kind of fact this is:** a theorem, proved on this card in Why it works, except π's case, Lindemann's 1882 theorem, stated without proof here ([Transcendence of e and pi](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/13-transcendence-of-e-and-pi.md)).
 
 ### The picture: the 17-gon's first corner
 

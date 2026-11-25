@@ -597,6 +597,7 @@ example : ∑ k : Fin 8, ‖∑ m : Fin 8, (![11, 9, 10, 15, 20, 22, 19, 14] : F
 - [Sampling](../../13-Engineering%20mathematics/05-Signals/01-sampling-and-the-nyquist-theorem.md): why k past N/2 is a mirror.
 - [The large sieve](../../21-Algebraic%20and%20analytic%20number%20theory/04-Sieves%20and%20Prime%20Gaps/03-the-large-sieve.md): Parseval-type bounds used to count primes.
 - [Shor and Grover](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/07-shors-and-grovers-algorithms.md): the transform as a quantum circuit that finds periods.
+- [Roth's theorem](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/11-roths-theorem-on-three-term-progressions.md): a dense set of whole numbers must hold three in arithmetic progression.
 
 Eight readings give eight frequencies; what the spectrum becomes as readings grow dense and the record long is the question [The Fourier transform](03-fourier-transform.md) answers.
 

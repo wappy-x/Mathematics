@@ -795,6 +795,7 @@ The card also uses [Sieving by inclusion-exclusion](01-the-legendre-sieve-and-th
 
 - [Landau's four problems](08-landau-problems-and-legendre.md): the next card. Goldbach is the first of Landau's four; the card sets it beside twin primes, Legendre's question and primes of the form n² + 1.
 - [Goldbach](../../25-Frontier/03-Primes%20and%20Numbers/02-goldbach-conjecture.md), on the frontier wing: the current status of the binary problem and the newest partial results.
+- [The circle method](../08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/09-hardy-littlewood-circle-method.md): count solutions as an integral round the circle, split into major and minor arcs.
 
 The shelf's gap cards, [Bounded gaps](05-bounded-gaps-zhang-maynard.md) and [Large gaps](06-large-gaps-and-the-cramer-model.md), use the same sieves for the spacing of primes rather than their sums.
 

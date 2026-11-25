@@ -781,7 +781,7 @@ example : ((Finset.univ : Finset (ZMod 25 × ZMod 25)).filter
 
 ## Where you meet it in real life
 
-- **Bounds on character sums.** Weil's theorem caps sums of Legendre symbols and roots of unity over a finite field at a multiple of $`\sqrt q`$, as if they were coin tosses. The bound $`\lvert K \rvert \le 2\sqrt p`$ for Kloosterman sums is one consequence.
+- **Bounds on character sums.** Weil's theorem caps sums of Legendre symbols and roots of unity over a finite field at a multiple of $`\sqrt q`$, as if they were coin tosses. The bound $`\lvert K \rvert \le 2\sqrt p`$ in [Kloosterman sums](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/11-kloosterman-sums.md) is one consequence.
 - **Ramanujan's bound.** Deligne's 1974 proof gave $`\lvert \tau(p) \rvert \le 2p^{11/2}`$ for Ramanujan's tau function, through varieties attached to [Modular forms](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/07-modular-forms-in-outline.md). This card's curve is behind that card's level-32 form, whose fifth coefficient is the trace −2.
 - **Group sizes for keys.** An elliptic-curve or genus-2 key lives in a group of size $`P_1(1)`$, fixed by a few counts and bounded by the Riemann hypothesis ([The Jacobian](../03-Plane%20Curves/11-jacobians-and-abel-jacobi.md), [Curves for keys](../04-Elliptic%20Curves/09-elliptic-curve-cryptography-and-schoof.md)). A 5-element field is a toy, never a key.
 - **Error-correcting codes.** A code built from a curve's points is at most as long as the curve has points, so $`q + 1 + 2g\sqrt q`$ caps its length.

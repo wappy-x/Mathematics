@@ -693,6 +693,11 @@ example : (5 : ZMod 13) * 5 = -1 := by decide
 - [Dirichlet's theorem](04-dirichlets-theorem-on-primes-in-progressions.md): characters such as this one separate primes by remainder, and give infinitely many in each allowed class.
 - [Quadratic reciprocity](07-quadratic-reciprocity-via-gauss-sums.md): proves that $`(5/p)`$ depends only on the last digit of $`p`$, and more generally links $`(p/q)`$ with $`(q/p)`$.
 - [The curve mod p](../../22-Algebraic%20geometry/04-Elliptic%20Curves/05-reduction-mod-p-and-hasse.md): counts points on a curve over a prime clock, one Legendre symbol per value of $`x`$.
+- [Polya-Vinogradov](10-polya-vinogradov-inequality.md): a character sum over any stretch of numbers is at most about root q times log q.
+- [Kloosterman sums](11-kloosterman-sums.md): roots of unity at x and at 1/x, and why the total stays below 2 root p.
+- [Infinite Galois theory](../05-Fields%20and%20Galois%20Theory/12-infinite-galois-theory-and-the-krull-topology.md): the symmetries of all algebraic numbers at once, and why only closed subgroups count.
+- [The circle method](../08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/09-hardy-littlewood-circle-method.md): count solutions as an integral round the circle, split into major and minor arcs.
+- [Hasse-Minkowski](../09-Local%20Fields%20and%20Class%20Field%20Theory/01-hasse-minkowski-and-the-hilbert-symbol.md): a quadratic equation has a rational solution exactly when it has one in every completion.
 
 The shelf's other cards build on the symbol too: [Dirichlet L-functions](03-dirichlet-l-functions.md) attach a series to it, and [Gauss sums](06-gauss-sums.md) weight roots of unity by it.
 

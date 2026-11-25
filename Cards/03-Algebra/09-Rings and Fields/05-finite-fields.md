@@ -503,6 +503,7 @@ example : IsPrimePow 4 ∧ ¬ IsPrimePow 6 ∧ ¬ IsPrimePow 10 := by decide
 - [Finite planes and orthogonal Latin squares](../../04-Combinatorics%20and%20graphs/16-Designs/03-projective-planes-and-orthogonal-latin-squares.md): build a plane of order q from a field with q elements, read off q - 1 Latin squares that pair perfectly, and why order 6 has none.
 - [Secret sharing](../../14-Applied%20and%20computational/04-Cryptography/12-shamir-secret-sharing.md): hide a number in a polynomial, and any k shares bring it back.
 - [The Jacobian](../../22-Algebraic%20geometry/03-Plane%20Curves/11-jacobians-and-abel-jacobi.md): degree-zero divisor classes on a curve form a group that is itself a g-dimensional variety.
+- [Kloosterman sums](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/11-kloosterman-sums.md): roots of unity at x and at 1/x, and why the total stays below 2 root p.
 
 Degree two over GF(2) was easy by hand; whether an irreducible polynomial of every degree exists is the next question.
 

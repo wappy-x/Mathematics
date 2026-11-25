@@ -668,6 +668,7 @@ The proof also uses three cards on this shelf: [The zero-free region](03-the-zer
 - [The logarithmic integral](06-the-logarithmic-integral-and-the-error-term.md): the next card. It studies Li(x) itself, why it fits so much better than x/log x, and where its error changes sign.
 - [The explicit formula](07-the-explicit-formula.md): drops the cut-off and writes ψ(x) exactly as x minus one wave per zero.
 - [The Riemann hypothesis](09-riemann-hypothesis-statement-and-equivalents.md): what the error term becomes if every zero has real part 1/2.
+- [Apery's theorem](../07-Diophantine%20and%20Modular/15-irrationality-of-zeta-three.md): zeta of 3 is irrational, by Beukers' triple integral.
 
 The question this card leaves open: the error x·e^(−κ√log x) comes from a zero-free region of width 1/log t, so how much smaller is the true error, and how far could a wider region push it?
 

@@ -1145,6 +1145,7 @@ Related card on this shelf: [Interpolation](04-interpolation-riesz-thorin-and-ma
 
 - [Zeros on the line](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/10-zeros-on-the-critical-line-and-proportion-results.md): Hardy's proof that the zeta function has infinitely many zeros on the critical line bounds an integral of cosines whose phases turn ever faster, with a stationary-phase estimate.
 - [Strichartz estimates](../07-Multipliers%20and%20Estimates%20for%20PDE/06-strichartz-estimates-and-nonlinear-schrodinger.md): the same decay for the free Schrödinger and wave equations, turned into bounds that control nonlinear waves.
+- [Weyl differencing](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/08-weyl-differencing-and-van-der-corput.md): squaring an exponential sum to lower its degree, and van der Corput's bounds.
 
 Left open: when two stationary points merge, as in a rainbow, the leading term breaks down; what replaces it uniformly as they approach each other?
 

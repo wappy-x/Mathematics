@@ -563,6 +563,7 @@ example : mellin (fun t : ℝ => ((1 / (Real.exp t - 1) : ℝ) : ℂ)) 4 = (π :
 
 - [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md): this integral pushed past its strip, so zeta gains values left of 1.
 - [The functional equation](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/02-functional-equation-proved.md): the functional equation proved from a Mellin integral of this kind.
+- [The L-function of a modular form](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/12-l-functions-of-modular-forms.md): a Mellin transform that inherits the form's symmetry.
 
 The integral gives Γ(s)ζ(s) only right of Re s = 1; what zeta is to the left is the continuation card's question.
 

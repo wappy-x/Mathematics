@@ -143,7 +143,7 @@ Zhang's route, in outline. The weighted count of GPY shows two primes in a tuple
 | Birch-Bombieri | Type III (Lemma 12) | appendix to reference [6], 1985 | proved |
 | Deligne's proof of the Weil conjectures | under Birch-Bombieri | reference [4], 1974 | proved |
 
-Here $`\varepsilon`$ is any small positive constant. A **Kloosterman sum** is a sum of complex roots of unity over the remainders mod q; Weil's bound says it is far smaller than its number of terms. The **Siegel-Walfisz theorem** says primes spread evenly over the remainder classes of each small modulus.
+Here $`\varepsilon`$ is any small positive constant. A **Kloosterman sum** ([Kloosterman sums](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/11-kloosterman-sums.md)) is a sum of complex roots of unity over the remainders mod q; Weil's bound says it is far smaller than its number of terms. The **Siegel-Walfisz theorem** says primes spread evenly over the remainder classes of each small modulus.
 
 The table keeps the main outside results. Two smaller standard tools are left out: the truncated Poisson formula (Lemma 7, stated with no proof or reference) and the incomplete Kloosterman estimate (3.13), which the paper calls "well known" and points to reference [2]. A full list adds them as two more rows of the same kind.
 

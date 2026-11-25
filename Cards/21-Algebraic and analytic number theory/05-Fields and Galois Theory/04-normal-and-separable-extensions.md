@@ -718,6 +718,7 @@ example : (Finset.univ.filter (fun x : ZMod 11 => x ^ 3 = 2)).card = 1 := by dec
 - [The Galois correspondence](05-galois-groups-and-the-fundamental-theorem.md): for a normal, separable extension, subgroups of the symmetries match the fields in between.
 - [Computing a Galois group](06-computing-a-galois-group.md): reads the symmetry group from discriminants and from how the polynomial factors mod primes.
 - [Finite fields](09-finite-fields-and-frobenius.md): where every extension is automatically normal and separable.
+- [Kummer and Artin-Schreier](11-kummer-theory-and-hilbert-90.md): every cyclic extension is a root extraction, once the roots of unity are there.
 
 The question this card leaves open: once the count is full, which group are the six symmetries of $`\mathbb{Q}(\alpha, \omega)`$, and what do its subgroups say about the fields in between?
 

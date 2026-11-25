@@ -1166,6 +1166,7 @@ example : -4 * (-3 : ℤ) ^ 3 - 27 * 1 ^ 2 = 81 ∧ (81 : ℤ) = 9 ^ 2 := by nor
 
 - [Solvable by radicals](07-solvability-by-radicals-and-the-quintic.md): $`S_4`$ is solvable, so quartics have a formula; a quintic whose mod-p patterns show $`S_5`$ has none.
 - [Weierstrass form](../../22-Algebraic%20geometry/04-Elliptic%20Curves/02-weierstrass-forms-discriminant-and-j-invariant.md): the cubic in $`y^2 = x^3 + ax + b`$, whose discriminant test decides how the curve's points of order 2 are shuffled.
+- [Decomposition and inertia groups](../09-Local%20Fields%20and%20Class%20Field%20Theory/02-decomposition-and-inertia-groups.md): how one prime's splitting sits inside the Galois group.
 
 For degree 5 and above the resolvents grow fast, so the question this card leaves open is how few primes and how small a resolvent can still prove the group.
 

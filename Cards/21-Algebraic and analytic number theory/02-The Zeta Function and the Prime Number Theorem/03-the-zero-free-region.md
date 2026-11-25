@@ -715,6 +715,7 @@ example : (-1 : ℤ) + 1 = 0 := by norm_num
 - [Perron's formula](04-perrons-formula.md): turns the zeros below a height into a prime count, where the region controls every term.
 - [Siegel-Walfisz](../03-Characters%20and%20L-functions/05-siegel-walfisz-in-outline.md): the same region for L-functions of characters, and the one zero it cannot rule out.
 - [The Riemann hypothesis](09-riemann-hypothesis-statement-and-equivalents.md): the statement, proved in 2026, that the clear zone reaches all the way to σ = 1/2.
+- [Zero-density estimates](11-zero-density-estimates-and-primes-in-short-intervals.md): counting the zeros that might sit off the line, and what that buys for primes in short intervals.
 
 The question this card leaves open: can the clear zone be widened to a band of fixed width at every height: every σ above some fixed number below 1?
 

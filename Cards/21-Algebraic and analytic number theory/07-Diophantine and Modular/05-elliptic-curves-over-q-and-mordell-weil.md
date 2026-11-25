@@ -620,6 +620,7 @@ ALL CHECKS PASS
 - [Mordell-Weil](../../22-Algebraic%20geometry/04-Elliptic%20Curves/06-mordell-weil-and-rank.md): heights, and a complete descent for $`y^2 = x^3 - 2`$, a curve of rank 1, in the algebraic-geometry wing.
 - [Birch and Swinnerton-Dyer](../../22-Algebraic%20geometry/04-Elliptic%20Curves/08-birch-and-swinnerton-dyer-statement.md): the conjecture with its $`L`$-function, in the algebraic-geometry wing.
 - [Torsion points](../../22-Algebraic%20geometry/04-Elliptic%20Curves/04-torsion-and-nagell-lutz.md): Nagell–Lutz proved, one half in outline, and Mazur's list in detail.
+- [The L-function of a modular form](12-l-functions-of-modular-forms.md): a Mellin transform that inherits the form's symmetry.
 
 The question this card leaves open: given a curve, is there a method guaranteed to stop with its rank?
 

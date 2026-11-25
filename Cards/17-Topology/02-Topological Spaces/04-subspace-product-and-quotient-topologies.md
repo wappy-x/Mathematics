@@ -785,6 +785,7 @@ example : (openSets torus16).length = 430 := by decide +kernel
 - [Sphere, torus and projective plane](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/02-example-manifolds-sphere-torus-and-projective-space.md): more surfaces from a square with its edges glued in other patterns.
 - [Nets and filters](11-nets-and-filters.md): when sequences are too short to find every limit.
 - [Cofibrations](../04-Homotopy/11-cofibrations-mapping-cylinders-and-mapping-cones.md): a homotopy on a piece always extends, so collapsing the piece is safe.
+- [Infinite Galois theory](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/12-infinite-galois-theory-and-the-krull-topology.md): the symmetries of all algebraic numbers at once, and why only closed subgroups count.
 
 The siblings on this shelf use these constructions throughout: [Topological space](01-topological-spaces-and-bases.md), [Closure, interior and boundary](02-closure-interior-and-boundary.md), [Compactness with no distances, and Tychonoff](06-compactness-and-tychonoff.md), [Connected and path-connected](07-connectedness-and-path-connectedness.md), [What compactness and connectedness buy](08-images-of-compact-and-connected-sets.md), [The test spaces](09-standard-examples-and-counterexamples.md) and [Urysohn and Tietze](10-urysohn-tietze-and-metrisation.md).
 

@@ -762,6 +762,9 @@ example : 78660 / 10 = 7866 ∧ (19665 + 19621) / 2 = 19643 := by norm_num
 - [Quadratic residues](02-quadratic-residues-and-the-legendre-symbol.md): the real character mod a prime, the Legendre symbol, of which $`\chi_2`$ is the case p = 5.
 - [Dirichlet L-functions](03-dirichlet-l-functions.md): the series $`\sum \chi(n)/n^s`$ in a complex variable s, which has an Euler product because χ is completely multiplicative, and which controls $`S(\chi)`$.
 - [Gauss sums](06-gauss-sums.md): a character paired with the additive roots of unity, and the primitive characters that cannot be read off a smaller modulus.
+- [The functional equation of L(s, chi)](09-dirichlet-l-functions-functional-equation.md): a twisted theta function, with the Gauss sum as the sign.
+- [Polya-Vinogradov](10-polya-vinogradov-inequality.md): a character sum over any stretch of numbers is at most about root q times log q.
+- [Kloosterman sums](11-kloosterman-sums.md): roots of unity at x and at 1/x, and why the total stays below 2 root p.
 
 On this shelf, [Dirichlet's theorem](04-dirichlets-theorem-on-primes-in-progressions.md) turns the filter into infinitely many primes per class, and [Siegel-Walfisz](05-siegel-walfisz-in-outline.md) bounds the error uniformly in q. [Quadratic reciprocity](07-quadratic-reciprocity-via-gauss-sums.md) uses Gauss sums of the real characters.
 

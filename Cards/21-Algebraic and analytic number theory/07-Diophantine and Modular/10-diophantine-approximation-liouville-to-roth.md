@@ -847,6 +847,10 @@ example : ∀ x ∈ Finset.Icc (-14 : ℤ) 14, ∀ y ∈ Finset.Icc (-11 : ℤ) 
 ## Where this goes next
 
 - [Equidistribution](../08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/03-equidistribution-and-weyls-criterion.md): the multiples α, 2α, 3α, … spread evenly around a circle when α is irrational, and the irrationality exponent controls how fast they even out.
+- [Transcendence of e and pi](13-transcendence-of-e-and-pi.md): Hermite's integral trick, and Lindemann's step from e to pi.
+- [Apery's theorem](15-irrationality-of-zeta-three.md): zeta of 3 is irrational, by Beukers' triple integral.
+- [Weyl differencing](../08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/08-weyl-differencing-and-van-der-corput.md): squaring an exponential sum to lower its degree, and van der Corput's bounds.
+- [Roth's theorem](../08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/11-roths-theorem-on-three-term-progressions.md): a dense set of whole numbers must hold three in arithmetic progression.
 
 The rest of the shelf: [Pell's equation](01-pell-and-continued-fractions-revisited.md), [Two squares](02-sums-of-squares-and-gaussian-integers.md), [Four squares and beyond](03-four-squares-and-warings-problem.md), [Fermat's last theorem](04-fermats-last-theorem-history-and-descent.md), [Rational points on a cubic](05-elliptic-curves-over-q-and-mordell-weil.md), [Birch-Swinnerton-Dyer](06-birch-swinnerton-dyer-and-the-congruent-number-problem.md), [Modular forms](07-modular-forms-in-outline.md), [Modularity](08-modularity-and-the-proof-of-fermat.md), [The abc conjecture](09-abc-conjecture-and-szpiro.md).
 

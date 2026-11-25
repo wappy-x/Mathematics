@@ -844,6 +844,9 @@ example : ¬ ∃ x : ZMod 15, x ^ 2 = 2 := by decide
 ## Where this goes next
 
 - [The Jacobi symbol](08-jacobi-symbol-and-computing-without-factoring.md): extends (a/n) to odd composite n, so the flip chain runs without ever factoring the top number.
+- [Composition and genus](../06-Algebraic%20Numbers/11-gauss-composition-and-genus-theory.md): multiplying binary quadratic forms is multiplying ideal classes.
+- [Cubic reciprocity](../06-Algebraic%20Numbers/12-cubic-reciprocity-and-jacobi-sums.md): Jacobi sums, primes in the Eisenstein integers, and when 2 is a cube.
+- [Hasse-Minkowski](../09-Local%20Fields%20and%20Class%20Field%20Theory/01-hasse-minkowski-and-the-hilbert-symbol.md): a quadratic equation has a rational solution exactly when it has one in every completion.
 
 On this shelf, [Dirichlet characters](01-dirichlet-characters.md) supplies the real character $`\chi_2`$ that Step 8 identifies with (5/p), and [Dirichlet's theorem](04-dirichlets-theorem-on-primes-in-progressions.md) shows each of the two last-digit classes in Step 8 holds infinitely many primes.
 

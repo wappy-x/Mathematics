@@ -517,6 +517,7 @@ example : (24 : ℕ) / 2 = 12 := by norm_num
 - [A_n is simple for n at least 5](13-simplicity-of-alternating-groups.md): the even shuffles have no normal subgroup to collapse by, which is the group-theory heart of the quintic.
 - [Presentations](15-group-presentations.md): describe a group by generators and the rules they obey, and von Dyck's theorem turns the rules into maps.
 - [Direct sums and quotient spaces](../11-Duals%2C%20Quotients%20and%20Tensors/01-direct-sums-and-quotient-spaces.md): split a space into independent pieces, or blur a subspace to a point and count what is left.
+- [Decomposition and inertia groups](../../21-Algebraic%20and%20analytic%20number%20theory/09-Local%20Fields%20and%20Class%20Field%20Theory/02-decomposition-and-inertia-groups.md): how one prime's splitting sits inside the Galois group.
 
 Both collapses here run on one operation; what a subgroup must satisfy when a second one appears is the next question.
 

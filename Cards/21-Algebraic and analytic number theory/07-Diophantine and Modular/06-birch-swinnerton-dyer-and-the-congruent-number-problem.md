@@ -911,6 +911,7 @@ end BirchSwinnertonDyerCongruentNumber
 - [Modular forms](07-modular-forms-in-outline.md): the next card. The $`a_k`$ of this card are the coefficients of a modular form; that is where the functional equation comes from.
 - [Birch and Swinnerton-Dyer](../../22-Algebraic%20geometry/04-Elliptic%20Curves/08-birch-and-swinnerton-dyer-statement.md): the strong form in full, with the regulator, the local factors and the Tate–Shafarevich group.
 - [What curves answer](../../22-Algebraic%20geometry/04-Elliptic%20Curves/10-modularity-and-the-congruent-number-problem.md): the general map from triangles to points, and how modularity gives $`L(E_n, s)`$ its meaning at $`s = 1`$.
+- [The L-function of a modular form](12-l-functions-of-modular-forms.md): a Mellin transform that inherits the form's symmetry.
 
 The question this card leaves open: when $`L(E, s)`$ vanishes to order 2 or more, why should the curve have that many independent points?
 

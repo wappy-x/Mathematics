@@ -185,7 +185,7 @@ Road A uses $`j = 1728\, E_4^3 / (E_4^3 - E_6^2)`$. Road B uses the product $`\D
 
 </details>
 
-The whole numbers also come exactly from the curves, by the j formula of [Weierstrass form](02-weierstrass-forms-discriminant-and-j-invariant.md). Hilbert's twelfth problem asks for such special values in general. For fields like $`\mathbb{Q}(i)`$, CM j-values and torsion coordinates build the field's abelian extensions (larger fields whose symmetries commute), the story of Artin reciprocity.
+The whole numbers also come exactly from the curves, by the j formula of [Weierstrass form](02-weierstrass-forms-discriminant-and-j-invariant.md). Hilbert's twelfth problem asks for such special values in general. For fields like $`\mathbb{Q}(i)`$, CM j-values and torsion coordinates build the field's abelian extensions (larger fields whose symmetries commute), the story of [Artin reciprocity](../../21-Algebraic%20and%20analytic%20number%20theory/09-Local%20Fields%20and%20Class%20Field%20Theory/05-artin-reciprocity-and-the-hilbert-class-field.md).
 
 ---
 
@@ -1297,7 +1297,7 @@ example : (1728 * 4 * (-11) ^ 3 : ℚ) / (4 * (-11) ^ 3 + 27 * 14 ^ 2) = 66 ^ 3 
 
 - [The Weil pairing](13-weil-pairing.md): a pairing on torsion points. An endomorphism such as $`[i]`$ can move a point off its own cyclic group, which pairing-based keys on supersingular curves rely on.
 - [Moduli spaces](../06-Schemes%20and%20Modern%20Language/07-moduli-spaces-in-outline.md): the space of all lattice shapes, on which the CM points are special, isolated values of j.
-- Artin reciprocity: the Hilbert class field, which the j-values of CM lattices generate over imaginary quadratic fields.
+- [Artin reciprocity](../../21-Algebraic%20and%20analytic%20number%20theory/09-Local%20Fields%20and%20Class%20Field%20Theory/05-artin-reciprocity-and-the-hilbert-class-field.md): the Hilbert class field, which the j-values of CM lattices generate over imaginary quadratic fields.
 
 The rule $`a_p = 2a`$ fixes each trace exactly; how the traces of a curve without CM spread across Hasse's window as p grows, this card leaves open.
 

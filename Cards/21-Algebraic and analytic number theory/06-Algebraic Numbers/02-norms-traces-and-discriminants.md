@@ -831,6 +831,8 @@ example (θ : ℝ) (h : θ ^ 3 = 2) : (1 + θ) * (1 - θ + θ ^ 2) = 3 := by
 - [Ideals factor uniquely even where numbers do not](04-ideals-and-unique-factorisation-in-dedekind-domains.md): repairs the two factorisations of 6 with ideals, using the norm of an ideal.
 - [Class groups](05-class-groups-and-the-minkowski-bound.md): uses $`|d_K|`$ to bound how far one must search for ideals.
 - [The unit theorem](07-dirichlets-unit-theorem.md): counts the members of norm $`\pm 1`$.
+- [Gelfond-Schneider](../07-Diophantine%20and%20Modular/14-gelfond-schneider-theorem.md): 2 to the power root 2 is transcendental, Hilbert's seventh problem.
+- [Local fields](../09-Local%20Fields%20and%20Class%20Field%20Theory/03-local-fields-and-the-different.md): completing a number field at one prime, and the different that measures ramification.
 
 The norm proves that 6 has two factorisations, but it cannot say what single factorisation lies underneath them.
 

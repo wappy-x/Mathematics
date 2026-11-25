@@ -1173,6 +1173,7 @@ example : ((Nat.divisors 1105).filter (fun d => d % 4 = 1)).card = 8 ∧
 - [Four squares and beyond](03-four-squares-and-warings-problem.md): with four squares every whole number is reachable, and the count of representations has a divisor formula of its own.
 - [The unit-distance problem](../../25-Frontier/04-Geometry%20and%20Combinatorics/01-unit-distance-problem.md): circles through many grid points, built from numbers like 1105 with $`r_2 = 32`$, give point sets with many pairs at the same distance.
 - [Complex multiplication](../../22-Algebraic%20geometry/04-Elliptic%20Curves/12-complex-multiplication.md): curves with extra symmetries, and point counts read from p = a^2 + b^2.
+- [Hasse-Minkowski](../09-Local%20Fields%20and%20Class%20Field%20Theory/01-hasse-minkowski-and-the-hilbert-symbol.md): a quadratic equation has a rational solution exactly when it has one in every completion.
 
 This card decides exactly which numbers are sums of two squares; it leaves open how far the number of grid points in a growing disc can stray from the disc's area.
 

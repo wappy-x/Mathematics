@@ -896,7 +896,7 @@ example : ∀ x ∈ ({0, 1, 8} : Finset ℕ), ∀ y ∈ ({0, 1, 8} : Finset ℕ)
 
 - **Rotations in games, robots and spacecraft.** A turn in space is stored as four numbers whose squares add to 1, a unit quaternion. Combining two turns multiplies the quaternions, and Euler's identity is why the result still has squares adding to 1.
 - **Zero-knowledge range proofs.** In some cryptographic protocols a prover shows that a hidden number is not negative without revealing it. The prover commits to four numbers whose squares add to the hidden one; Lagrange's theorem guarantees they exist, and fast methods find them.
-- **The method behind Goldbach.** Hardy and Littlewood built their circle method (counting solutions by an integral around the unit circle in the complex plane) in the 1920s to count solutions of Waring's problem. The same method attacks Goldbach-type questions about sums of primes ([Goldbach, twin primes and friends](../../02-Number%20theory/07-For%20the%20Curious/04-goldbach-and-open-problems.md)).
+- **The method behind Goldbach.** Hardy and Littlewood built their circle method (counting solutions by an integral around the unit circle in the complex plane; see [The circle method](../08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/09-hardy-littlewood-circle-method.md)) in the 1920s to count solutions of Waring's problem. The same method attacks Goldbach-type questions about sums of primes ([Goldbach, twin primes and friends](../../02-Number%20theory/07-For%20the%20Curious/04-goldbach-and-open-problems.md)).
 
 > **Say it back**
 > Every whole number is a sum of four squares, and 7 = 4 + 1 + 1 + 1 shows four can be needed. Euler's identity multiplies sums of four squares, so only primes need work. For a prime, the pigeonhole principle gives four squares adding to a multiple of it, and descent shrinks the multiple to 1. Three squares fail exactly on the numbers $`4^e(8t+7)`$, about one number in six. Higher powers have fixed limits too: 9 cubes, 19 fourth powers, set by small awkward numbers such as 23.
@@ -914,6 +914,7 @@ example : ∀ x ∈ ({0, 1, 8} : Finset ℕ), ∀ y ∈ ({0, 1, 8} : Finset ℕ)
 
 - [Modular forms](07-modular-forms-in-outline.md): a generating series turns "how many ways is n a sum of four squares" into Jacobi's divisor formula, which this card states without proof.
 - [Fermat's last theorem](04-fermats-last-theorem-history-and-descent.md): asks when a sum of two k-th powers is itself a k-th power, and uses descent again, for k = 4.
+- [The circle method](../08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/09-hardy-littlewood-circle-method.md): count solutions as an integral round the circle, split into major and minor arcs.
 
 Four squares always suffice and nine cubes always suffice, but how many cubes every large number needs, somewhere from 4 to 7, is still unknown.
 

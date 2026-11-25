@@ -532,6 +532,7 @@ Nothing depends on this card, a detour. The rest of the shelf:
 - [How primes thin out](03-how-primes-thin-out.md): how many primes lie below a number, on average.
 - [Goldbach, twin primes and friends](04-goldbach-and-open-problems.md): simple questions about whole numbers that nobody has answered.
 - [Continued fractions](05-continued-fractions-and-leap-years.md): Euclid's algorithm read as nested fractions.
+- [Kummer and Artin-Schreier](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/11-kummer-theory-and-hilbert-90.md): every cyclic extension is a root extraction, once the roots of unity are there.
 
 The question this card leaves open: which whole numbers can be the long side of a triple? 5, 13 and 17 can, but the recipe alone does not say which others.
 

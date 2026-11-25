@@ -603,6 +603,7 @@ ALL CHECKS PASS
 
 - [Zeros on the line](10-zeros-on-the-critical-line-and-proportion-results.md): what is proved instead of RH. Infinitely many zeros lie on the line (Hardy), and a positive share of them do (Selberg, Levinson, Conrey).
 - [The Riemann hypothesis](../../25-Frontier/02-The%20Millennium%20Problems/01-riemann-hypothesis.md): the frontier card on the current state of the problem.
+- [Zero-density estimates](11-zero-density-estimates-and-primes-in-short-intervals.md): counting the zeros that might sit off the line, and what that buys for primes in short intervals.
 
 The question this card leaves open: the 2026 proof is a formal library of about 17 million lines, so is there a proof a person can read, through one of the counting statements here?
 

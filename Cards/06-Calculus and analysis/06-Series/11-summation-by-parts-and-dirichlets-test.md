@@ -589,6 +589,7 @@ example (a₁ a₂ a₃ b₁ b₂ b₃ : ℝ) :
 - [Partial summation](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/06-abel-and-partial-summation.md): the same move with an integral in place of the sum, used on sums over primes.
 - [Abel's limit theorem](12-abels-limit-theorem.md): the same regrouping with weights $`x^n`$ gives one bound for every x, so a power series that converges at the edge of its range is continuous up to it.
 - [Convergence](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/02-convergence-jumps-and-gibbs.md): where Fourier series such as the sawtooth's settle, and what they settle on.
+- [Weyl differencing](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/08-weyl-differencing-and-van-der-corput.md): squaring an exponential sum to lower its degree, and van der Corput's bounds.
 
 Left open: the bound 1/sin(x/2) blows up as x nears 0, so does the series of sin(nx)/n settle at the same rate for every x at once?
 

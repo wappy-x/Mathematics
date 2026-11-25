@@ -879,6 +879,7 @@ example : (X - 1) * (X ^ 3 + X ^ 2 + X + 1) = (X ^ 4 - 1 : ℤ[X]) := by ring
 - [The Galois correspondence](05-galois-groups-and-the-fundamental-theorem.md): the 8 self-relabellings of $`L`$ as a group, and its subgroups matched with the subfields.
 - [Computing a Galois group](06-computing-a-galois-group.md): reading the 2-root and 0-root shares in the prime table.
 - [Chebotarev](../06-Algebraic%20Numbers/09-chebotarev-density-and-splitting-statistics.md): why the share with all roots tends to one over the degree.
+- [Infinite Galois theory](12-infinite-galois-theory-and-the-krull-topology.md): the symmetries of all algebraic numbers at once, and why only closed subgroups count.
 
 The card leaves one question open: which subfields lie between $`\mathbb{Q}`$ and $`L`$, and how do the 8 relabellings see them?
 

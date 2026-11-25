@@ -793,6 +793,7 @@ theorem fourier_L2_bijective : Function.Bijective (fun f : L2Signal => (𝓕 f :
 - [Fourier multipliers](../07-Multipliers%20and%20Estimates%20for%20PDE/01-mihlin-hormander-multiplier-theorem.md): which equaliser settings are safe on every Lᵖ, by the Mihlin-Hörmander test.
 - [Littlewood-Paley](../07-Multipliers%20and%20Estimates%20for%20PDE/02-littlewood-paley-theory.md): split a signal into octaves, and its size is the size of the octaves' combined energy.
 - [Pontryagin duality](../08-Harmonic%20Analysis%20on%20Groups/03-pontryagin-duality.md): the line, the circle, the integers and the clock as one Fourier theory.
+- [Roth's theorem](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/11-roths-theorem-on-three-term-progressions.md): a dense set of whole numbers must hold three in arithmetic progression.
 
 The question this card leaves open: the transform keeps energy, the $`L^2`$ norm, exactly; what does it do to the other $`L^p`$ norms, between finite area and finite energy?
 

@@ -634,6 +634,7 @@ example : reducedList (-163) 8 = {(1, 1, 41)} := by decide +kernel
 
 - [Periodic continued fractions](03-periodic-continued-fractions.md): the loop when $`D > 0`$.
 - [The class number formula](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/06-class-number-formula-and-the-dedekind-zeta-function.md): reduced forms return as ideal classes.
+- [Composition and genus](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/11-gauss-composition-and-genus-theory.md): multiplying binary quadratic forms is multiplying ideal classes.
 
 Left open: families combine into a group. By what rule?
 

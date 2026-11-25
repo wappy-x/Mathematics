@@ -910,6 +910,7 @@ example : (3 : ℤ√(-5)) * 7 = 21 ∧ (⟨1, 2⟩ : ℤ√(-5)) * ⟨1, -2⟩ 
 - [Splitting and ramification](08-splitting-and-ramification.md): how each ordinary prime factors as an ideal, as 2 into $`\mathfrak{p}_2^{\,2}`$ and 3 into $`\mathfrak{p}_3\bar{\mathfrak{p}}_3`$.
 - [Two squares](../07-Diophantine%20and%20Modular/02-sums-of-squares-and-gaussian-integers.md): a ring where every ideal is principal, so numbers factor uniquely and primes of the form $`4k + 1`$ split into two squares.
 - [Domains, principal ideals and unique factorisation](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/01-integral-domains-pids-and-unique-factorisation.md): the general links between principal ideals and unique factorisation of numbers.
+- [Composition and genus](11-gauss-composition-and-genus-theory.md): multiplying binary quadratic forms is multiplying ideal classes.
 
 The rest of the shelf: [Norm, trace and discriminant](02-norms-traces-and-discriminants.md) supplies the norm, and [The class number formula](06-class-number-formula-and-the-dedekind-zeta-function.md), [The unit theorem](07-dirichlets-unit-theorem.md), [Chebotarev](09-chebotarev-density-and-splitting-statistics.md) and [The p-adic numbers](10-p-adic-numbers-and-hensels-lemma.md) study the same ring from other sides.
 

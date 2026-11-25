@@ -166,7 +166,7 @@ Selberg (1942) closed that gap with a **mollifier**: a short sum $`\sum_{n \le M
 
 Levinson (1974) stopped hunting sign changes. He bounds how many zeros of a related function lie to the **left** of the line, by averaging the logarithm of its size along a vertical line (Littlewood's lemma). Every zero of zeta not counted there must be on the line. With a mollifier of length $`M = T^{1/2}`$ the share came out above 0.3474.
 
-Conrey (1989) lengthened the mollifier to $`M = T^{4/7}`$, using deep bounds on Kloosterman sums (exponential sums with modular inverses). A longer mollifier cancels more of zeta's swings, and the share rose above 0.4088. Refinements of the mollifier have since raised the share slightly (Bui, Conrey and Young in 2011; Pratt, Robles, Zaharescu and Zeindler in 2020), still far short of 1.
+Conrey (1989) lengthened the mollifier to $`M = T^{4/7}`$, using deep bounds on [Kloosterman sums](../03-Characters%20and%20L-functions/11-kloosterman-sums.md) (exponential sums with modular inverses). A longer mollifier cancels more of zeta's swings, and the share rose above 0.4088. Refinements of the mollifier have since raised the share slightly (Bui, Conrey and Young in 2011; Pratt, Robles, Zaharescu and Zeindler in 2020), still far short of 1.
 
 ```
 bars, Levinson 1974    ##############                           0.3474
@@ -1857,6 +1857,7 @@ theorem sign_change_of_hardyZ_gives_zero_on_line (a b : ℝ) (hab : a < b)
 
 - [The Riemann hypothesis](../../25-Frontier/02-The%20Millennium%20Problems/01-riemann-hypothesis.md): the frontier wing's account of the problem today, proved since 2026-11-21.
 - [The August 2026 zeta-zeros claim](../../25-Frontier/05-Analysis%20and%20Dynamics/03-zeta-zero-proportion-2026.md): a recent claim about the share of zeros on the line.
+- [Zero-density estimates](11-zero-density-estimates-and-primes-in-short-intervals.md): counting the zeros that might sit off the line, and what that buys for primes in short intervals.
 
 The question this card leaves open: the 2026 proof puts every zero on the line by another road; can the counting methods here, alone, push the share all the way to 1?
 

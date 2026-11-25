@@ -149,7 +149,7 @@ Since $`-1`$ lies in $`H`$, each $`\eta_g`$ is a sum of cosines and so a real nu
 
 ### Step 5: what this proves, and what it does not
 
-Steps 1 to 4 prove that every finite abelian group occurs over $`\mathbb{Q}`$, inside a cyclotomic field. The reverse, that every abelian Galois field over $`\mathbb{Q}`$ lies in some $`\mathbb{Q}(\zeta_m)`$, is the Kronecker–Weber theorem, not needed here.
+Steps 1 to 4 prove that every finite abelian group occurs over $`\mathbb{Q}`$, inside a cyclotomic field. The reverse, that every abelian Galois field over $`\mathbb{Q}`$ lies in some $`\mathbb{Q}(\zeta_m)`$, is the Kronecker–Weber theorem ([Kronecker-Weber](../../21-Algebraic%20and%20analytic%20number%20theory/09-Local%20Fields%20and%20Class%20Field%20Theory/04-kronecker-weber-theorem.md)), not needed here.
 
 Roots of 1 go no further: every field inside a cyclotomic field has an abelian group, so $`S_3`$ needs a field outside them all.
 

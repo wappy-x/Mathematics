@@ -720,6 +720,7 @@ example :
 - [C-star algebras](../06-Banach%20Algebras%20and%20Fixed%20Points/03-c-star-algebras-in-outline.md): the identity $`\lVert T^*T\rVert = \lVert T\rVert^2`$ turned into the axioms of an algebra with a star.
 - [Polar decomposition](11-polar-decomposition-and-partial-isometries.md): every operator is a stretch followed by a partial turn.
 - [Numerical range](16-numerical-range-and-spectral-gap.md): the set of averages <x, Tx> is convex, holds the spectrum, and bounds how fast an evolution settles.
+- [Hecke operators](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/11-hecke-operators-and-eigenforms.md): averaging a modular form over matrices of determinant n, and why tau is multiplicative.
 
 Along the shelf, [Spectrum](07-spectrum-and-resolvent.md) replaces eigenvalues by the spectrum: the numbers λ at which $`\lambda I - T`$ has no bounded inverse. The question this card leaves open: when an operator such as multiplication by x has no eigenvectors at all, what replaces the perpendicular eigenbasis?
 

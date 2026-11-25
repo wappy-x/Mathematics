@@ -793,6 +793,7 @@ example : ((-1 : ℤ) ^ (2 + 1)) * ((-1 : ℤ) ^ (2 + 1)) = 1 ∧ (-1 : ℤ) ^ (
 - [The class number formula](../06-Algebraic%20Numbers/06-class-number-formula-and-the-dedekind-zeta-function.md): turns L(1, χ) for a real character into the class number of a quadratic field, explaining values such as 0.430409 mod 5.
 - [Birch-Swinnerton-Dyer](../07-Diophantine%20and%20Modular/06-birch-swinnerton-dyer-and-the-congruent-number-problem.md): the same build, a series with an Euler product, made from an elliptic curve, whose behaviour at s = 1 is conjectured to count its rational points.
 - [The L-function](../../22-Algebraic%20geometry/04-Elliptic%20Curves/07-l-functions-of-elliptic-curves.md): the general pattern of a series with an Euler product, a functional equation and zeros, of which zeta and these are the first cases.
+- [The functional equation of L(s, chi)](09-dirichlet-l-functions-functional-equation.md): a twisted theta function, with the Gauss sum as the sign.
 
 The siblings [Siegel-Walfisz](05-siegel-walfisz-in-outline.md) and [Gauss sums](06-gauss-sums.md) take L(s, χ) further: how many primes each class holds by x, and the functional equation's constant.
 

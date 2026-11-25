@@ -769,6 +769,7 @@ example : (freyCurve 9 12 2).Δ = 3 ^ 12 * 207360000 := by
 - [Fermat's last theorem, proved in 1995 and reported formalised in 2026](../../25-Frontier/03-Primes%20and%20Numbers/06-fermats-last-theorem-formalised.md): the full history and the current status of the proof.
 - [What curves answer](../../22-Algebraic%20geometry/04-Elliptic%20Curves/10-modularity-and-the-congruent-number-problem.md): what modularity and L-functions say about rank and points.
 - [The abc conjecture](09-abc-conjecture-and-szpiro.md): the same Frey curve, read for how large its discriminant can be against its conductor.
+- [Hecke operators](11-hecke-operators-and-eigenforms.md): averaging a modular form over matrices of determinant n, and why tau is multiplicative.
 
 The proof leaves open how far the modular method reaches: which other equations, over which other fields, can be beaten by a curve that is too clean.
 

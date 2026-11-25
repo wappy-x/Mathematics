@@ -849,6 +849,10 @@ example : 2 ^ 8 - 1 = 255 := by norm_num
 - [Computing a Galois group](06-computing-a-galois-group.md): Frobenius mod many primes reveals the cycle types of a polynomial's symmetries.
 - [Cyclotomic fields](08-cyclotomic-extensions-and-roots-of-unity.md): roots of one, where the field of size $`p^n`$ holds all the $`(p^n - 1)`$-th roots.
 - [The Weil conjectures](../../22-Algebraic%20geometry/08-Sheaf%20Cohomology%20and%20Differentials/07-weil-conjectures-and-etale-cohomology.md): point counts over every F_(q^n) packed into one rational function, explained by etale cohomology.
+- [Kummer and Artin-Schreier](11-kummer-theory-and-hilbert-90.md): every cyclic extension is a root extraction, once the roots of unity are there.
+- [Infinite Galois theory](12-infinite-galois-theory-and-the-krull-topology.md): the symmetries of all algebraic numbers at once, and why only closed subgroups count.
+- [Cubic reciprocity](../06-Algebraic%20Numbers/12-cubic-reciprocity-and-jacobi-sums.md): Jacobi sums, primes in the Eisenstein integers, and when 2 is a cube.
+- [Decomposition and inertia groups](../09-Local%20Fields%20and%20Class%20Field%20Theory/02-decomposition-and-inertia-groups.md): how one prime's splitting sits inside the Galois group.
 
 Step 7 proves an irreducible polynomial of every degree exists, but whether a method with no random choices can always find one in time polynomial in the degree and in the number of digits of p is open as of 2026-11-15, known only when p is small or if GRH, the generalized Riemann hypothesis, holds.
 

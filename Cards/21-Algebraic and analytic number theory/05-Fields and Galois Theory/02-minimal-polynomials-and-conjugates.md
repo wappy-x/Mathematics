@@ -176,7 +176,7 @@ So list the roots of the polynomials of height 1, then height 2, and so on. Ever
 
 </details>
 
-Naming a particular transcendental number is much harder. Hermite proved $`e`$ transcendental in 1873. Lindemann proved $`\pi`$ transcendental in 1882. Neither proof is on this card. Liouville's explicit construction is on the Liouville to Roth card, later in this wing.
+Naming a particular transcendental number is much harder. Hermite proved $`e`$ transcendental in 1873. Lindemann proved $`\pi`$ transcendental in 1882. Neither proof is on this card; [Transcendence of e and pi](../07-Diophantine%20and%20Modular/13-transcendence-of-e-and-pi.md) takes them up. Liouville's explicit construction is on the Liouville to Roth card, later in this wing.
 
 The code shows what a search can and cannot do. Among all 161,050 nonzero whole-number polynomials of degree at most 4 with coefficients from $`-5`$ to $`5`$, the smallest value at $`\pi`$ is $`5.147275 \times 10^{-3}`$, at $`-2x^4 + 5x^3 + 5x^2 - 4x + 3`$. Not zero, but a bigger search could always find something smaller. The search is evidence. Lindemann's theorem is the proof.
 
@@ -850,6 +850,7 @@ example : 11 ^ 5 - 1 = 161050 := by norm_num
 - [Splitting fields](03-splitting-fields-and-algebraic-closure.md): put all four conjugates of $`\alpha`$ into one field, $`\mathbb{Q}(\alpha, i)`$.
 - [Algebraic integers](../06-Algebraic%20Numbers/01-algebraic-integers-and-number-fields.md): numbers whose minimal polynomial has whole-number coefficients, like $`\alpha`$ and $`\beta`$, and the norm and trace built from conjugates.
 - [Dimension and tangent space](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/07-dimension-and-tangent-spaces.md): the transcendental side of this card; the dimension of a curve or surface counts how many independent transcendental coordinates its functions need.
+- [Transcendence of e and pi](../07-Diophantine%20and%20Modular/13-transcendence-of-e-and-pi.md): Hermite's integral trick, and Lindemann's step from e to pi.
 
 The other cards on this shelf use these tools: [Normal and separable](04-normal-and-separable-extensions.md), [The Galois correspondence](05-galois-groups-and-the-fundamental-theorem.md), [Computing a Galois group](06-computing-a-galois-group.md), [Solvable by radicals](07-solvability-by-radicals-and-the-quintic.md), [Cyclotomic fields](08-cyclotomic-extensions-and-roots-of-unity.md), [Finite fields](09-finite-fields-and-frobenius.md) and [Straightedge and compass](10-constructibility-and-the-classical-problems.md).
 

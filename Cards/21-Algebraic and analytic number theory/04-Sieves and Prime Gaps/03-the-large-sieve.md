@@ -2052,6 +2052,7 @@ example : 3044 * 100 ^ 2 = 30440000 ∧ 1999900 < 30440000 := by norm_num
 ## Where this goes next
 
 - [Bombieri-Vinogradov](04-bombieri-vinogradov.md): the large sieve with characters bounds the errors for primes in progressions, averaged over all moduli up to almost the square root of x.
+- [The circle method](../08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/09-hardy-littlewood-circle-method.md): count solutions as an integral round the circle, split into major and minor arcs.
 
 On this shelf, [Sieving by inclusion-exclusion](01-the-legendre-sieve-and-the-parity-problem.md) sets up the sieve problem, and [Bounded gaps](05-bounded-gaps-zhang-maynard.md), [Large gaps](06-large-gaps-and-the-cramer-model.md), [Goldbach](07-goldbach-and-chens-theorem.md) and [Landau's four problems](08-landau-problems-and-legendre.md) use these sieve bounds.
 

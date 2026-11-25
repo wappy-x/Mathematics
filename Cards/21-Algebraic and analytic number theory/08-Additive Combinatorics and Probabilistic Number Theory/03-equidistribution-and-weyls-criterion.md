@@ -1331,7 +1331,7 @@ example : ((Finset.Icc 1 1000).filter (fun n => 2 ^ n / 10 ^ Nat.log 10 (2 ^ n) 
 
 - **Leading digits of powers.** Since $`\log_{10} 2`$ is irrational, $`\{n\log_{10} 2\}`$ is equidistributed, and $`2^n`$ starts with 1 exactly when that point is below 0.301030. Of $`2^1`$ to $`2^{1000}`$, 301 start with 1 against 301.03 predicted, and 45 start with 9 against 45.76. This is the cleanest case of the leading-digit pattern called Benford's law.
 - **Sampling for numerical integration.** Quasi-Monte Carlo methods replace random sample points by sequences like $`\{n\sqrt 2\}`$. The average of a function over N such points tends to its integral by Step 3, and the small worst miscount, 2.6470 points at N = 10,000, makes the error small.
-- **Exponential sums in number theory.** Sums of e(f(n)) over primes or polynomials are the main tool of the circle method, used on Goldbach-type questions about sums of primes. Weyl's criterion is where such sums first earn their place.
+- **Exponential sums in number theory.** Sums of e(f(n)) over primes or polynomials are the main tool of the circle method, used on Goldbach-type questions about sums of primes. Weyl's criterion is where such sums first earn their place. [Weyl differencing](08-weyl-differencing-and-van-der-corput.md) bounds them for polynomials.
 
 > **Say it back**
 > A sequence is equidistributed when every interval of the stretch from 0 to 1 gets its fair share of fractional parts in the long run. Weyl's criterion swaps the endless interval test for one average per spin h: put each point on the circle, spin it h times, average, and ask that the result shrinks to 0. It works because interval counts are built from those arrows, by Fourier series and a squeeze. For multiples of an irrational number the arrows form a geometric series whose sum is capped, so every average shrinks. A rational step fails at h equal to its denominator, and the digits sequence of 1, 2, 3, … fails at h = 1.
@@ -1348,6 +1348,9 @@ example : ((Finset.Icc 1 1000).filter (fun n => 2 ^ n / 10 ^ Nat.log 10 (2 ^ n) 
 
 - [Three distances](04-three-distance-theorem.md): the first N multiples of an irrational number cut the circle into gaps of at most three lengths. It explains the even bins above point by point, not just in the limit.
 - [Long progressions](05-szemeredi-and-green-tao-in-outline.md): sums of arrows return as the tool that separates structured sets from random-looking ones, inside the search for arithmetic progressions.
+- [Weyl differencing](08-weyl-differencing-and-van-der-corput.md): squaring an exponential sum to lower its degree, and van der Corput's bounds.
+- [The circle method](09-hardy-littlewood-circle-method.md): count solutions as an integral round the circle, split into major and minor arcs.
+- [Roth's theorem](11-roths-theorem-on-three-term-progressions.md): a dense set of whole numbers must hold three in arithmetic progression.
 
 The question this card leaves open: Weyl's criterion says the multiples spread evenly, but how even can N points be, and which sequences come closest?
 

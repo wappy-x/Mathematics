@@ -485,6 +485,7 @@ example : (4 : ℤ) ^ 2 + 5 * 1 ^ 2 = 21 := by decide
 - [Reduced forms](02-reduced-forms-and-class-numbers.md): rename any form into a standard one and count forms per discriminant.
 - [Periodic continued fractions](03-periodic-continued-fractions.md), [Farey fractions and Ford circles](04-farey-sequences-and-ford-circles.md), [Hurwitz's theorem](05-hurwitz-approximation-theorem.md): the shelf's turn to approximation.
 - [Two squares](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/02-sums-of-squares-and-gaussian-integers.md) and [Gaussian integers](../../03-Algebra/10-For%20the%20Curious/03-gaussian-integers-and-sums-of-two-squares.md): the case D = −4, with one form, $`x^2 + y^2`$.
+- [Composition and genus](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/11-gauss-composition-and-genus-theory.md): multiplying binary quadratic forms is multiplying ideal classes.
 
 Left open: 3 and 7 need the second form, so why does their product 21 = 4² + 5 × 1² land on the first?
 

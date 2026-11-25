@@ -926,6 +926,7 @@ example : Nat.Prime 1327 ∧ Nat.Prime 1361 ∧ ∀ m ∈ Finset.Ioo 1327 1361, 
 - [Zeta's zeros and the primes](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md): the prime number theorem, where the trap closes to a ratio of 1.
 - [Large gaps](../04-Sieves%20and%20Prime%20Gaps/06-large-gaps-and-the-cramer-model.md): how long a stretch with no prime can be, far below Bertrand's n.
 - [Landau's four problems](../04-Sieves%20and%20Prime%20Gaps/08-landau-problems-and-legendre.md): Legendre's conjecture, a prime between every two squares, such as 503 between 22² = 484 and 23² = 529, open as of 2026-11-15. The best proved result is a prime in every window from x to $`x + x^{0.525}`$ for large x (Baker, Harman and Pintz, 2001). For scale, $`x^{0.525}`$ is 1,412.54 at a million, though the theorem is proved only for far larger x.
+- [Apery's theorem](../07-Diophantine%20and%20Modular/15-irrationality-of-zeta-three.md): zeta of 3 is irrational, by Beukers' triple integral.
 
 The question this card leaves open: the ratio of π(x) to x/log x stays between two constants, but does it settle down to one value?
 

@@ -908,6 +908,7 @@ example : Nat.primeCounting 1000 = 168 := by decide +kernel
 ## Where this goes next
 
 - [The functional equation](02-functional-equation-proved.md): reflects zeta from s to 1 − s, carrying the bounds proved here to the left half-plane.
+- [Apery's theorem](../07-Diophantine%20and%20Modular/15-irrationality-of-zeta-three.md): zeta of 3 is irrational, by Beukers' triple integral.
 
 The same estimates feed [The zero-free region](03-the-zero-free-region.md), [Perron's formula](04-perrons-formula.md) and [The prime number theorem](05-prime-number-theorem-proved.md).
 

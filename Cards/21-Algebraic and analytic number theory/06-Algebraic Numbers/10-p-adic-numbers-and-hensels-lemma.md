@@ -808,7 +808,7 @@ example : (3 : ℤ) ^ 2 + 5 = 2 * 7 ∧ (17 : ℤ) ^ 2 + 5 = 6 * 49 ∧ (311 : �
 - **Fast inverses in hardware and big-number code.** To divide by an odd number $`N`$ modulo $`2^{64}`$, libraries need $`N^{-1}`$. Newton's step in the 2-adics doubles the correct bits each round, so a handful of rounds reaches a full machine word. Montgomery multiplication, used inside public-key cryptography, starts this way.
 - **Square roots mod prime powers.** Solving $`x^2 \equiv c \pmod{p^k}`$ starts mod $`p`$ and lifts, as the 3, 10, 108 example does.
 - **Splitting of primes, the house example.** In $`\mathbb{Z}[\sqrt{-5}]`$, where 6 factors two ways, $`x^2 = -5`$ has the root 3 mod 7, and it lifts to 17 mod 49 and 311 mod 343 ($`3^2 + 5 = 14`$, $`17^2 + 5 = 294`$, $`311^2 + 5 = 96726`$, divisible by 7, 49 and 343). So $`\sqrt{-5}`$ lives in $`\mathbb{Q}_7`$, the p-adic sign that 7 splits into two prime ideals; [Splitting and ramification](08-splitting-and-ramification.md) explains why.
-- **Local-global questions.** The Hasse-Minkowski theorem says a quadratic equation in several variables has a rational solution exactly when it has one in the reals and in every $`\mathbb{Q}_p`$. Ostrowski's list is what "every" ranges over.
+- **Local-global questions.** The Hasse-Minkowski theorem ([Hasse-Minkowski](../09-Local%20Fields%20and%20Class%20Field%20Theory/01-hasse-minkowski-and-the-hilbert-symbol.md)) says a quadratic equation in several variables has a rational solution exactly when it has one in the reals and in every $`\mathbb{Q}_p`$. Ostrowski's list is what "every" ranges over.
 
 > **Say it back**
 > The p-adic size of a number is one over $`p`$ to the number of times $`p`$ divides it, so multiples of high powers of $`p`$ count as small. That size obeys the strong triangle inequality, and completing the fractions under it gives $`\mathbb{Q}_p`$. Hensel's lemma lifts a root mod $`p`$ with slope not divisible by $`p`$ to exactly one root mod every power, and so to one p-adic root: 3, 10, 108, 2166 for $`\sqrt{2}`$ in the 7-adics. The step is Newton's, and in Newton's form it doubles the digits. Ostrowski's theorem says the ordinary size and the p-adic sizes are the only sizes the fractions have.
@@ -831,6 +831,9 @@ See also [Splitting and ramification](08-splitting-and-ramification.md), earlier
 
 - [Rational points on a cubic](../07-Diophantine%20and%20Modular/05-elliptic-curves-over-q-and-mordell-weil.md): its Tate–Shafarevich group collects "fake" solutions that pass every local test, one in the reals and one in every $`\mathbb{Q}_p`$, yet give no rational point.
 - [Curves for keys](../../22-Algebraic%20geometry/04-Elliptic%20Curves/09-elliptic-curve-cryptography-and-schoof.md): Smart's attack lifts an elliptic curve with exactly $`p`$ points mod $`p`$, and its points, to the p-adic numbers, where a p-adic logarithm reads off the secret key.
+- [Hasse-Minkowski](../09-Local%20Fields%20and%20Class%20Field%20Theory/01-hasse-minkowski-and-the-hilbert-symbol.md): a quadratic equation has a rational solution exactly when it has one in every completion.
+- [Local fields](../09-Local%20Fields%20and%20Class%20Field%20Theory/03-local-fields-and-the-different.md): completing a number field at one prime, and the different that measures ramification.
+- [Adeles and ideles](../09-Local%20Fields%20and%20Class%20Field%20Theory/06-adeles-and-ideles.md): every completion of Q at once, and class field theory in a single group.
 
 The lemma lifts a root once it exists mod $`p`$, but it leaves open which $`p`$ give a starting root, a question about primes that the splitting laws answer.
 

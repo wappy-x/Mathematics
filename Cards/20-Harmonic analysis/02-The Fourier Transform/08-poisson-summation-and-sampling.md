@@ -856,6 +856,7 @@ Earlier on this shelf, [Plancherel](05-plancherel-and-l2.md) carries the transfo
 - [Sphere packing, solved in dimensions 8 and 24](../../25-Frontier/04-Geometry%20and%20Combinatorics/06-sphere-packing-and-viazovska.md): Poisson summation over a lattice, with a cleverly chosen signal, gives the bound that settles the densest packing in those dimensions.
 - [The functional equation](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/02-functional-equation-proved.md): Poisson summation applied to a bell curve relates a theta function at $`x`$ and at $`1/x`$, the first step to the zeta function's symmetry.
 - [Pontryagin duality](../08-Harmonic%20Analysis%20on%20Groups/03-pontryagin-duality.md): the line, the circle, the integers and the clock as one Fourier theory.
+- [The functional equation of L(s, chi)](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/09-dirichlet-l-functions-functional-equation.md): a twisted theta function, with the Gauss sum as the sign.
 
 The question left open: how fast must a spectrum fall for Poisson summation to hold, when the signal is continuous but the decay conditions fail?
 

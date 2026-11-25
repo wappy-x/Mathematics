@@ -1216,6 +1216,7 @@ example : (5 : ℤ) ^ 5 * 12 ^ 4 + 4 ^ 4 * (-5) ^ 5 = 64000000 ∧ (64000000 : �
 
 - [Straightedge and compass](10-constructibility-and-the-classical-problems.md): the same tower-and-chain matching with square roots only, deciding which lengths can be constructed.
 - [The inverse Galois problem](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/01-inverse-galois-problem.md): which groups occur as Galois groups over $`\mathbb{Q}`$ at all; $`x^5 - x - 1`$ shows that $`S_5`$ does.
+- [Kummer and Artin-Schreier](11-kummer-theory-and-hilbert-90.md): every cyclic extension is a root extraction, once the roots of unity are there.
 
 The card proves that one quintic has no radical formula; it leaves open how to decide, for a given group, whether some polynomial over $`\mathbb{Q}`$ has exactly that group.
 

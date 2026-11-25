@@ -886,6 +886,7 @@ example : ((Finset.Icc (-3 : ℤ) 3 ×ˢ Finset.Icc (-3 : ℤ) 3).filter
 - [Ideals factor uniquely even where numbers do not](04-ideals-and-unique-factorisation-in-dedekind-domains.md): with $`\mathcal{O}_K = \mathbb{Z}[\sqrt{-5}]`$ settled, 6 = 2 × 3 = $`(1 + \sqrt{-5})(1 - \sqrt{-5})`$ is repaired by factoring ideals instead of numbers. That works only in the full ring of integers.
 - [Splitting and ramification](08-splitting-and-ramification.md): the primes dividing $`d_K`$ are exactly the ramified ones, so 2 is unramified in $`\mathbb{Q}(\sqrt5)`$ and ramified in $`\mathbb{Q}(\sqrt{-5})`$.
 - [The unit theorem](07-dirichlets-unit-theorem.md) and [Class groups](05-class-groups-and-the-minkowski-bound.md): units such as $`\varphi`$ and the class group are computed from the integral basis found here.
+- [Cubic reciprocity](12-cubic-reciprocity-and-jacobi-sums.md): Jacobi sums, primes in the Eisenstein integers, and when 2 is a cube.
 
 The question this card leaves open: in $`\mathbb{Z}[\sqrt{-5}]`$ the number 6 still factors two ways, so what object does factor uniquely?
 

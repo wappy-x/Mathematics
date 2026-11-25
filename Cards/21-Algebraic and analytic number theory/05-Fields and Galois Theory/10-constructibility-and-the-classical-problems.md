@@ -1604,6 +1604,7 @@ Two earlier cards on this shelf take this card's questions further:
 
 - [Computing a Galois group](06-computing-a-galois-group.md): resolvent cubics and cycle types, which find the splitting-field degree and so decide any quartic, like $`x^4 - 4x + 2`$, that the power-of-2 test leaves open.
 - [Finite fields](09-finite-fields-and-frobenius.md): the arithmetic mod p behind the "no factor mod a prime" proofs, and why reduction mod p can certify a polynomial has no factor.
+- [Transcendence of e and pi](../07-Diophantine%20and%20Modular/13-transcendence-of-e-and-pi.md): Hermite's integral trick, and Lindemann's step from e to pi.
 
 The question this leaves open is arithmetic, not geometric: are 3, 5, 17, 257 and 65,537 the only Fermat primes, so that the list of buildable odd polygons is finite?
 

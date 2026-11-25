@@ -867,6 +867,7 @@ example : ((Finset.range 100).filter (fun p => p.Prime ∧ p % 4 = 3)).card = 13
 ## Where this goes next
 
 - [Siegel-Walfisz](05-siegel-walfisz-in-outline.md): the count π(x; q, a) with an error term, uniform while q is at most a fixed power of log x.
+- [Hasse-Minkowski](../09-Local%20Fields%20and%20Class%20Field%20Theory/01-hasse-minkowski-and-the-hilbert-symbol.md): a quadratic equation has a rational solution exactly when it has one in every completion.
 
 Other cards on this shelf use the same characters for other questions: [Gauss sums](06-gauss-sums.md), [Quadratic reciprocity](07-quadratic-reciprocity-via-gauss-sums.md) and [The Jacobi symbol](08-jacobi-symbol-and-computing-without-factoring.md).
 

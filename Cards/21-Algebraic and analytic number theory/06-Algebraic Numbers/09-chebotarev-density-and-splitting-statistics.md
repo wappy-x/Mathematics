@@ -788,6 +788,8 @@ example : ∀ x : ZMod 3, x ^ 3 - 2 = (x + 1) ^ 3 := by decide
 - [The p-adic numbers](10-p-adic-numbers-and-hensels-lemma.md): the next card. It looks at the field one prime at a time, where a split prime is one at which $`x^2 + 5`$ has a root that lifts to every power of $`p`$.
 - [Two squares](../07-Diophantine%20and%20Modular/02-sums-of-squares-and-gaussian-integers.md): $`p = x^2 + y^2`$ exactly when $`p`$ is 1 mod 4, the same splitting question in $`\mathbb{Q}(i)`$, whose ideals are all principal.
 - [Modularity](../07-Diophantine%20and%20Modular/08-modularity-and-the-proof-of-fermat.md): Frobenius elements acting on the points of an elliptic curve, whose traces are the coefficients of a modular form.
+- [Decomposition and inertia groups](../09-Local%20Fields%20and%20Class%20Field%20Theory/02-decomposition-and-inertia-groups.md): how one prime's splitting sits inside the Galois group.
+- [Artin reciprocity](../09-Local%20Fields%20and%20Class%20Field%20Theory/05-artin-reciprocity-and-the-hilbert-class-field.md): a prime's Frobenius depends only on its ideal class, and the Hilbert class field.
 
 The question this card leaves open: without assuming GRH, how large can the first prime with a given Frobenius class be?
 

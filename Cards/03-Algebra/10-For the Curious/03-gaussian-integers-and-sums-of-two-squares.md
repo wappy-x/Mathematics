@@ -567,6 +567,7 @@ example : (List.range 5).map (fun a => a ^ 2 + 3 ^ 2) = [9, 10, 13, 18, 25] ∧
 ## Where this goes next
 
 - [Two squares](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/02-sums-of-squares-and-gaussian-integers.md): proves the half stated here, and counts representations.
+- [Cubic reciprocity](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/12-cubic-reciprocity-and-jacobi-sums.md): Jacobi sums, primes in the Eisenstein integers, and when 2 is a cube.
 
 This card says which whole numbers are sums of two squares; it cannot say why remainder 1 suffices, nor why 65 has two representations and 45 one.
 

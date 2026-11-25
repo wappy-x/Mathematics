@@ -710,6 +710,7 @@ The two outputs match line for line.
 
 - [Counting the zeros](08-counting-the-zeros-riemann-von-mangoldt.md): proves the zero count N(T) and the log T bound per unit window that Steps 2 to 4 used.
 - [The Riemann hypothesis](09-riemann-hypothesis-statement-and-equivalents.md): reads this formula backwards, so that every wave of size √x is the same as an error of size √x log² x.
+- [Zero-density estimates](11-zero-density-estimates-and-primes-in-short-intervals.md): counting the zeros that might sit off the line, and what that buys for primes in short intervals.
 
 The question this card leaves open: every wave has size $`x^\beta`$ for its zero's real part β, so do all the zeros have β = 1/2?
 

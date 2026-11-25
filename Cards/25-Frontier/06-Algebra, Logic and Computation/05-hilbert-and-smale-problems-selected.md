@@ -111,12 +111,12 @@ Codes for the tallies below: **S** answered and proved, **M** partly (a summary:
 | 4 | All geometries whose straight lines are shortest paths | V: too broad for one answer |
 | 5 | Are continuous groups automatically smooth? | S: yes, Gleason and Montgomery–Zippin 1952 |
 | 6 | Axiomatise physics | V: a programme; probability was axiomatised by Kolmogorov in 1933 |
-| 7 | Is $`a^b`$ transcendental (a root of no polynomial) for algebraic a ≠ 0, 1 and irrational algebraic b? | S: yes, Gelfond and Schneider 1934 |
+| 7 | Is $`a^b`$ transcendental (a root of no polynomial) for algebraic a ≠ 0, 1 and irrational algebraic b? | S: yes, Gelfond and Schneider 1934 ([Gelfond-Schneider](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/14-gelfond-schneider-theorem.md)) |
 | 8 | The Riemann hypothesis, Goldbach, twin primes | M: the Riemann hypothesis, proved 2026-11-21 by a formal proof certified by others ([The Riemann hypothesis](../02-The%20Millennium%20Problems/01-riemann-hypothesis.md)); Goldbach and twin primes, open |
 | 9 | The most general reciprocity law | M: abelian case, Artin 1927; beyond, open |
 | 10 | A process to decide whole-number solvability | S: no process exists, Matiyasevich 1970 |
 | 11 | Quadratic forms over number fields | M: over the fields, Hasse 1923; over their whole numbers, partly open |
-| 12 | Extend the Kronecker–Weber theorem to every number field | M: imaginary quadratic fields, by complex multiplication; in general, open |
+| 12 | Extend the Kronecker–Weber theorem ([Kronecker-Weber](../../21-Algebraic%20and%20analytic%20number%20theory/09-Local%20Fields%20and%20Class%20Field%20Theory/04-kronecker-weber-theorem.md)) to every number field | M: imaginary quadratic fields, by complex multiplication; in general, open |
 | 13 | Solve the degree-7 equation with functions of two variables | M: continuous version, yes, Kolmogorov and Arnold 1957; algebraic version, open |
 | 14 | Are rings of invariants always finitely generated? | S: no, Nagata 1959 |
 | 15 | Make Schubert's counting calculus rigorous | V: a programme, largely carried out |

@@ -6,20 +6,21 @@
 
 Prove the prime number theorem with an error term, state the Riemann hypothesis precisely and say exactly what is proved around it, follow Dirichlet's theorem and the sieve results, and do Galois theory. Compute in a ring of algebraic integers and read the statements of Fermat, Birch-Swinnerton-Dyer and abc as mathematics rather than folklore.
 
-8 shelves · **72 of 72 cards ready to read**
+9 shelves · **95 of 95 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
 | Shelf | Cards |
 | --- | ---: |
 | [01 · Arithmetic Functions Again](#s01) | 9 |
-| [02 · The Zeta Function and the Prime Number Theorem](#s02) | 10 |
-| [03 · Characters and L-functions](#s03) | 8 |
+| [02 · The Zeta Function and the Prime Number Theorem](#s02) | 11 |
+| [03 · Characters and L-functions](#s03) | 11 |
 | [04 · Sieves and Prime Gaps](#s04) | 8 |
-| [05 · Fields and Galois Theory](#s05) | 10 |
-| [06 · Algebraic Numbers](#s06) | 10 |
-| [07 · Diophantine and Modular](#s07) | 10 |
-| [08 · Additive Combinatorics and Probabilistic Number Theory](#s08) | 7 |
+| [05 · Fields and Galois Theory](#s05) | 12 |
+| [06 · Algebraic Numbers](#s06) | 12 |
+| [07 · Diophantine and Modular](#s07) | 15 |
+| [08 · Additive Combinatorics and Probabilistic Number Theory](#s08) | 11 |
+| [09 · Local Fields and Class Field Theory](#s09) | 6 |
 
 <a name="s01"></a>
 
@@ -41,7 +42,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s02"></a>
 
-## 02 · The Zeta Function and the Prime Number Theorem · 10 cards
+## 02 · The Zeta Function and the Prime Number Theorem · 11 cards
 
 *Zeta as an analytic object, its functional equation and zero-free region, Perron's formula, the prime number theorem with an error term, and what the Riemann hypothesis would add*
 
@@ -55,12 +56,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [Counting the zeros: how many lie below a given height, and how tightly they pack](02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/08-counting-the-zeros-riemann-von-mangoldt.md)
 9. [The Riemann hypothesis: the exact statement, and three equivalents worth knowing](02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/09-riemann-hypothesis-statement-and-equivalents.md)
 10. [Zeros on the line: what is proved, from Hardy to a positive proportion](02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/10-zeros-on-the-critical-line-and-proportion-results.md)
+11. [Zero-density estimates: counting the zeros that might sit off the line, and what that buys for primes in short intervals](02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/11-zero-density-estimates-and-primes-in-short-intervals.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s03"></a>
 
-## 03 · Characters and L-functions · 8 cards
+## 03 · Characters and L-functions · 11 cards
 
 *Characters as periodic multiplicative patterns, their L-functions, primes in progressions, Gauss sums and quadratic reciprocity*
 
@@ -72,6 +74,9 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Gauss sums: weighted sums over roots of unity, with a size you can pin down exactly](03-Characters%20and%20L-functions/06-gauss-sums.md)
 7. [Quadratic reciprocity: swapping the two primes, proved with a Gauss sum](03-Characters%20and%20L-functions/07-quadratic-reciprocity-via-gauss-sums.md)
 8. [The Jacobi symbol: extending the symbol to odd moduli so it computes without factoring](03-Characters%20and%20L-functions/08-jacobi-symbol-and-computing-without-factoring.md)
+9. [The functional equation of L(s, chi): a twisted theta function, with the Gauss sum as the sign](03-Characters%20and%20L-functions/09-dirichlet-l-functions-functional-equation.md)
+10. [Polya-Vinogradov: a character sum over any stretch of numbers is at most about root q times log q](03-Characters%20and%20L-functions/10-polya-vinogradov-inequality.md)
+11. [Kloosterman sums: roots of unity at x and at 1/x, and why the total stays below 2 root p](03-Characters%20and%20L-functions/11-kloosterman-sums.md)
 
 [↑ Back to the shelves](#top)
 
@@ -94,7 +99,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s05"></a>
 
-## 05 · Fields and Galois Theory · 10 cards
+## 05 · Fields and Galois Theory · 12 cards
 
 *Degree and towers, splitting fields, the Galois correspondence, solvability by radicals, finite fields, and what a straightedge and compass cannot do*
 
@@ -108,12 +113,14 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [Cyclotomic fields: the nth roots of one, with the invertible remainders as symmetries](05-Fields%20and%20Galois%20Theory/08-cyclotomic-extensions-and-roots-of-unity.md)
 9. [Finite fields: exactly one of each prime power size, with Frobenius as its symmetry](05-Fields%20and%20Galois%20Theory/09-finite-fields-and-frobenius.md)
 10. [Straightedge and compass: why trisection and doubling the cube must fail](05-Fields%20and%20Galois%20Theory/10-constructibility-and-the-classical-problems.md)
+11. [Kummer and Artin-Schreier: every cyclic extension is a root extraction, once the roots of unity are there](05-Fields%20and%20Galois%20Theory/11-kummer-theory-and-hilbert-90.md)
+12. [Infinite Galois theory: the symmetries of all algebraic numbers at once, and why only closed subgroups count](05-Fields%20and%20Galois%20Theory/12-infinite-galois-theory-and-the-krull-topology.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s06"></a>
 
-## 06 · Algebraic Numbers · 10 cards
+## 06 · Algebraic Numbers · 12 cards
 
 *Algebraic integers, norms traces and discriminants, factorisation of ideals, class groups, units, ramification, and the p-adic view*
 
@@ -127,12 +134,14 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [Splitting and ramification: what becomes of an ordinary prime in a bigger ring](06-Algebraic%20Numbers/08-splitting-and-ramification.md)
 9. [Chebotarev: what share of the primes split in each possible pattern](06-Algebraic%20Numbers/09-chebotarev-density-and-splitting-statistics.md)
 10. [The p-adic numbers: closeness by divisibility, and lifting a root one power at a time](06-Algebraic%20Numbers/10-p-adic-numbers-and-hensels-lemma.md)
+11. [Composition and genus: multiplying binary quadratic forms is multiplying ideal classes](06-Algebraic%20Numbers/11-gauss-composition-and-genus-theory.md)
+12. [Cubic reciprocity: Jacobi sums, primes in the Eisenstein integers, and when 2 is a cube](06-Algebraic%20Numbers/12-cubic-reciprocity-and-jacobi-sums.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s07"></a>
 
-## 07 · Diophantine and Modular · 10 cards
+## 07 · Diophantine and Modular · 15 cards
 
 *Pell and continued fractions, sums of squares and powers, descent, rational points on cubics, modular forms, and the statements of Fermat, BSD and abc*
 
@@ -146,12 +155,17 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [Modularity: every rational elliptic curve is a modular form, and Fermat follows](07-Diophantine%20and%20Modular/08-modularity-and-the-proof-of-fermat.md)
 9. [The abc conjecture: sums whose prime factors are all small are rare](07-Diophantine%20and%20Modular/09-abc-conjecture-and-szpiro.md)
 10. [Chasing an algebraic number with fractions: how close you can get, from Liouville to Roth](07-Diophantine%20and%20Modular/10-diophantine-approximation-liouville-to-roth.md)
+11. [Hecke operators: averaging a modular form over matrices of determinant n, and why tau is multiplicative](07-Diophantine%20and%20Modular/11-hecke-operators-and-eigenforms.md)
+12. [The L-function of a modular form: a Mellin transform that inherits the form's symmetry](07-Diophantine%20and%20Modular/12-l-functions-of-modular-forms.md)
+13. [Transcendence of e and pi: Hermite's integral trick, and Lindemann's step from e to pi](07-Diophantine%20and%20Modular/13-transcendence-of-e-and-pi.md)
+14. [Gelfond-Schneider: 2 to the power root 2 is transcendental, Hilbert's seventh problem](07-Diophantine%20and%20Modular/14-gelfond-schneider-theorem.md)
+15. [Apery's theorem: zeta of 3 is irrational, by Beukers' triple integral](07-Diophantine%20and%20Modular/15-irrationality-of-zeta-three.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s08"></a>
 
-## 08 · Additive Combinatorics and Probabilistic Number Theory · 7 cards
+## 08 · Additive Combinatorics and Probabilistic Number Theory · 11 cards
 
 *Prime factor counts as a random variable, equidistribution, long progressions, sum-product, and problems attacked by computer*
 
@@ -162,6 +176,25 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Long progressions: dense sets must contain them, and so must the primes](08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/05-szemeredi-and-green-tao-in-outline.md)
 6. [Sum-product: a set of numbers cannot be small for adding and for multiplying at once](08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/06-sum-product-and-additive-energy.md)
 7. [Erdos problems: cheap to state, hard to settle, and often attacked by computer](08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/07-erdos-problems-and-computer-search.md)
+8. [Weyl differencing: squaring an exponential sum to lower its degree, and van der Corput's bounds](08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/08-weyl-differencing-and-van-der-corput.md)
+9. [The circle method: count solutions as an integral round the circle, split into major and minor arcs](08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/09-hardy-littlewood-circle-method.md)
+10. [Small doubling: Plunnecke-Ruzsa bounds every sum of copies, and Freiman finds the progression inside](08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/10-plunnecke-ruzsa-and-freiman.md)
+11. [Roth's theorem: a dense set of whole numbers must hold three in arithmetic progression](08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/11-roths-theorem-on-three-term-progressions.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s09"></a>
+
+## 09 · Local Fields and Class Field Theory · 6 cards
+
+*Quadratic equations decided prime by prime, how a prime's splitting sits in the Galois group, completions of number fields, and the abelian extensions that class field theory classifies*
+
+1. [Hasse-Minkowski: a quadratic equation has a rational solution exactly when it has one in every completion](09-Local%20Fields%20and%20Class%20Field%20Theory/01-hasse-minkowski-and-the-hilbert-symbol.md)
+2. [Decomposition and inertia groups: how one prime's splitting sits inside the Galois group](09-Local%20Fields%20and%20Class%20Field%20Theory/02-decomposition-and-inertia-groups.md)
+3. [Local fields: completing a number field at one prime, and the different that measures ramification](09-Local%20Fields%20and%20Class%20Field%20Theory/03-local-fields-and-the-different.md)
+4. [Kronecker-Weber: every abelian extension of Q sits inside a cyclotomic field](09-Local%20Fields%20and%20Class%20Field%20Theory/04-kronecker-weber-theorem.md)
+5. [Artin reciprocity: a prime's Frobenius depends only on its ideal class, and the Hilbert class field](09-Local%20Fields%20and%20Class%20Field%20Theory/05-artin-reciprocity-and-the-hilbert-class-field.md)
+6. [Adeles and ideles: every completion of Q at once, and class field theory in a single group](09-Local%20Fields%20and%20Class%20Field%20Theory/06-adeles-and-ideles.md)
 
 [↑ Back to the shelves](#top)
 

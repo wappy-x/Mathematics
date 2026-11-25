@@ -645,6 +645,8 @@ The base-3 sets in the output are the numbers whose base-3 digits are only 0 and
 
 - [Sum-product](06-sum-product-and-additive-energy.md): the next card. It measures additive structure in a set by counting solutions of a + b = c + d.
 - [Erdos problems](07-erdos-problems-and-computer-search.md): running a computer search on an open problem, and what a verified range does and does not prove.
+- [Small doubling](10-plunnecke-ruzsa-and-freiman.md): Plunnecke-Ruzsa bounds every sum of copies, and Freiman finds the progression inside.
+- [Roth's theorem](11-roths-theorem-on-three-term-progressions.md): a dense set of whole numbers must hold three in arithmetic progression.
 
 This card shows that the primes hold progressions of every length; whether they hold long progressions of consecutive primes is the question it leaves open.
 

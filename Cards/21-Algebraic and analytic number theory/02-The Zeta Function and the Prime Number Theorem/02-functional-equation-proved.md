@@ -784,6 +784,8 @@ example : (1 : ℤ) - (-2) = 3 := by norm_num
 - [Counting the zeros](08-counting-the-zeros-riemann-von-mangoldt.md): ξ and its mirror count the zeros up to height t.
 - [The explicit formula](07-the-explicit-formula.md): the prime count written as a sum over zeros, trivial and nontrivial.
 - [Zeros on the line](10-zeros-on-the-critical-line-and-proportion-results.md): the real function of Step 6, used to prove that infinitely many zeros lie on σ = 1/2.
+- [The functional equation of L(s, chi)](../03-Characters%20and%20L-functions/09-dirichlet-l-functions-functional-equation.md): a twisted theta function, with the Gauss sum as the sign.
+- [The L-function of a modular form](../07-Diophantine%20and%20Modular/12-l-functions-of-modular-forms.md): a Mellin transform that inherits the form's symmetry.
 
 The question this card leaves open: the mirror pairs a zero at σ with one at 1 − σ, so do all nontrivial zeros sit on the line σ = 1/2 itself?
 

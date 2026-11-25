@@ -471,6 +471,8 @@ theorem area_x_mul_exp_and_area_log_eq_one :
 - [The butterfly and the implied density](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md): a density read off call prices.
 - [Any payoff from a strip of options](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/02-carr-madan-spanning-and-the-log-contract.md): any payoff from calls and puts.
 - [Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md): the weak form, made by parts.
+- [Transcendence of e and pi](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/13-transcendence-of-e-and-pi.md): Hermite's integral trick, and Lindemann's step from e to pi.
+- [Apery's theorem](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/15-irrationality-of-zeta-three.md): zeta of 3 is irrational, by Beukers' triple integral.
 
 This card leaves open how fast the coefficients of a repeating curve, the weights of its waves, shrink; repeated parts answers it in [Fourier series](../../07-Complex%20analysis/08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): smoother curves, faster-shrinking coefficients.
 
