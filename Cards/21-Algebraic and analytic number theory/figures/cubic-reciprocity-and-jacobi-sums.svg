@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 440" width="420" height="440" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<title>The Eisenstein integers a + b omega near 0, with the twelve of norm 7 on the circle of radius root 7 and the Jacobi sum J = -1 - 3 omega among them</title>
+<rect x="0" y="0" width="420" height="440" fill="#ffffff"/>
+<line x1="15" y1="210" x2="405" y2="210" stroke="#888888" stroke-width="1"/>
+<line x1="210" y1="15" x2="210" y2="405" stroke="#888888" stroke-width="1"/>
+<circle cx="210" cy="210" r="145.52" fill="none" stroke="#1d1d1d" stroke-width="1.5" stroke-dasharray="5 4"/>
+<circle cx="45.00" cy="400.53" r="2.5" fill="#555555"/>
+<circle cx="17.50" cy="352.89" r="2.5" fill="#555555"/>
+<circle cx="100.00" cy="400.53" r="2.5" fill="#555555"/>
+<circle cx="72.50" cy="352.89" r="2.5" fill="#555555"/>
+<circle cx="45.00" cy="305.26" r="2.5" fill="#555555"/>
+<circle cx="17.50" cy="257.63" r="2.5" fill="#555555"/>
+<circle cx="155.00" cy="400.53" r="2.5" fill="#555555"/>
+<circle cx="127.50" cy="352.89" r="2.5" fill="#555555"/>
+<circle cx="100.00" cy="305.26" r="6" fill="#1d1d1d"/>
+<circle cx="72.50" cy="257.63" r="6" fill="#1d1d1d"/>
+<circle cx="45.00" cy="210.00" r="2.5" fill="#555555"/>
+<circle cx="17.50" cy="162.37" r="2.5" fill="#555555"/>
+<circle cx="210.00" cy="400.53" r="2.5" fill="#555555"/>
+<circle cx="182.50" cy="352.89" r="6" fill="#1d1d1d"/>
+<circle cx="155.00" cy="305.26" r="2.5" fill="#555555"/>
+<circle cx="127.50" cy="257.63" r="2.5" fill="#555555"/>
+<circle cx="100.00" cy="210.00" r="2.5" fill="#555555"/>
+<circle cx="72.50" cy="162.37" r="6" fill="#1d1d1d"/>
+<circle cx="45.00" cy="114.74" r="2.5" fill="#555555"/>
+<circle cx="17.50" cy="67.11" r="2.5" fill="#555555"/>
+<circle cx="265.00" cy="400.53" r="2.5" fill="#555555"/>
+<circle cx="237.50" cy="352.89" r="6" fill="#1d1d1d"/>
+<circle cx="210.00" cy="305.26" r="2.5" fill="#555555"/>
+<circle cx="182.50" cy="257.63" r="2.5" fill="#555555"/>
+<circle cx="155.00" cy="210.00" r="2.5" fill="#555555"/>
+<circle cx="127.50" cy="162.37" r="2.5" fill="#555555"/>
+<circle cx="100.00" cy="114.74" r="6" fill="#1d1d1d"/>
+<circle cx="72.50" cy="67.11" r="2.5" fill="#555555"/>
+<circle cx="45.00" cy="19.47" r="2.5" fill="#555555"/>
+<circle cx="320.00" cy="400.53" r="2.5" fill="#555555"/>
+<circle cx="292.50" cy="352.89" r="2.5" fill="#555555"/>
+<circle cx="265.00" cy="305.26" r="2.5" fill="#555555"/>
+<circle cx="237.50" cy="257.63" r="2.5" fill="#555555"/>
+<circle cx="210.00" cy="210.00" r="2.5" fill="#555555"/>
+<circle cx="182.50" cy="162.37" r="2.5" fill="#555555"/>
+<circle cx="155.00" cy="114.74" r="2.5" fill="#555555"/>
+<circle cx="127.50" cy="67.11" r="2.5" fill="#555555"/>
+<circle cx="100.00" cy="19.47" r="2.5" fill="#555555"/>
+<circle cx="375.00" cy="400.53" r="2.5" fill="#555555"/>
+<circle cx="347.50" cy="352.89" r="2.5" fill="#555555"/>
+<circle cx="320.00" cy="305.26" r="6" fill="#1d1d1d"/>
+<circle cx="292.50" cy="257.63" r="2.5" fill="#555555"/>
+<circle cx="265.00" cy="210.00" r="2.5" fill="#555555"/>
+<circle cx="237.50" cy="162.37" r="2.5" fill="#555555"/>
+<circle cx="210.00" cy="114.74" r="2.5" fill="#555555"/>
+<circle cx="182.50" cy="67.11" r="6" fill="#1d1d1d"/>
+<circle cx="155.00" cy="19.47" r="2.5" fill="#555555"/>
+<circle cx="402.50" cy="352.89" r="2.5" fill="#555555"/>
+<circle cx="375.00" cy="305.26" r="2.5" fill="#555555"/>
+<circle cx="347.50" cy="257.63" r="6" fill="#1d1d1d"/>
+<circle cx="320.00" cy="210.00" r="2.5" fill="#555555"/>
+<circle cx="292.50" cy="162.37" r="2.5" fill="#555555"/>
+<circle cx="265.00" cy="114.74" r="2.5" fill="#555555"/>
+<circle cx="237.50" cy="67.11" r="6" fill="#1d1d1d"/>
+<circle cx="210.00" cy="19.47" r="2.5" fill="#555555"/>
+<circle cx="402.50" cy="257.63" r="2.5" fill="#555555"/>
+<circle cx="375.00" cy="210.00" r="2.5" fill="#555555"/>
+<circle cx="347.50" cy="162.37" r="6" fill="#1d1d1d"/>
+<circle cx="320.00" cy="114.74" r="6" fill="#1d1d1d"/>
+<circle cx="292.50" cy="67.11" r="2.5" fill="#555555"/>
+<circle cx="265.00" cy="19.47" r="2.5" fill="#555555"/>
+<circle cx="402.50" cy="162.37" r="2.5" fill="#555555"/>
+<circle cx="375.00" cy="114.74" r="2.5" fill="#555555"/>
+<circle cx="347.50" cy="67.11" r="2.5" fill="#555555"/>
+<circle cx="320.00" cy="19.47" r="2.5" fill="#555555"/>
+<circle cx="402.50" cy="67.11" r="2.5" fill="#555555"/>
+<circle cx="375.00" cy="19.47" r="2.5" fill="#555555"/>
+<line x1="210" y1="210" x2="237.50" y2="352.89" stroke="#1d1d1d" stroke-width="2"/>
+<text x="247.50" y="368.89">J = −1 − 3ω</text>
+<text x="247.50" y="59.11">J̄ = 2 + 3ω</text>
+<text x="269.00" y="226">1</text>
+<text x="166.50" y="156.37">ω</text>
+<text x="229.25" y="285.50">|J| = √7</text>
+<text x="12" y="432" font-size="12">Large dots: the 12 numbers of norm 7. Dashed circle: radius √7.</text>
+</svg>
