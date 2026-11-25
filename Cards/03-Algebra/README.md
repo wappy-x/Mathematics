@@ -83,7 +83,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 05 · Solving Systems · 6 cards
 
-*Ax = b as a system of equations, Gaussian elimination, the inverse matrix, determinants, and rank-nullity.*
+*Ax = b as a system of equations, Gaussian elimination, the inverse matrix, determinants, rank-nullity, and Cramer's rule with the adjugate.*
 
 1. [Solving A x = b: one answer, no answer or a line of answers, and how to tell which before you start](05-Solving%20Systems/01-matrix-equation-ax-b.md)
 2. [Gaussian elimination: three legal row moves turn any system into a staircase you can read off from the bottom](05-Solving%20Systems/02-gaussian-elimination.md)

@@ -18,7 +18,7 @@ Three prices are missing: c for a coffee, p for a pastry, s for a sandwich. The 
 - c + p = 7
 - c + 2p + 2s = 22
 
-No line can be solved alone; each holds more than one unknown. But half of Tuesday — half a coffee, half a pastry, half the money — is still true, and taking it from Monday cancels the coffees.
+No line can be solved alone; each holds more than one unknown. But half of Monday — one coffee, half a pastry, half a sandwich, half the money — is still true, and taking it from Tuesday cancels the coffees.
 
 Repeat, and the unknowns fall away until a line holds one price: the sandwich, $6. That is Gaussian elimination. Direct solvers, the programs that solve a system in a fixed number of steps, run it.
 
@@ -79,7 +79,7 @@ Counts $`A`$ times prices $`x`$ give totals $`b`$, the matrix equation of [Solvi
 
 ### Step 0: every move has a way back, so no answer moves
 
-Half of Tuesday is true, so Monday minus half of Tuesday is true. Taking true equations from one another leaves a true equation, and every price list fitting the old rows fits the new ones. Nothing is lost.
+Half of Monday is true, so Tuesday minus half of Monday is true. Taking true equations from one another leaves a true equation, and every price list fitting the old rows fits the new ones. Nothing is lost.
 
 That is one direction. Add the half back and Tuesday returns; a swap undoes itself; a scaling by any number but zero is undone by dividing. Every move runs backwards, so nothing is gained: the staircase has exactly the solutions the till slips had.
 
@@ -103,7 +103,7 @@ Ignore the top row; it has done its job. The middle now has 0.5 pastries and the
 
 Nothing can be divided by it. Swap that row with one below that has a number in that spot — move one, at no cost.
 
-Solvers swap even for a small pivot, since dividing by a tiny number turns small rounding errors large; the column's biggest entry in the pivot seat is **partial pivoting**. Stored and reused, this is LU factorisation: L keeps the multipliers, U is the staircase. Its card is LU with partial pivoting.
+Solvers swap even for a small pivot, since dividing by a tiny number turns small rounding errors large; the column's biggest entry in the pivot seat is **partial pivoting**. Stored and reused, this is LU factorisation: L keeps the multipliers, U is the staircase. Its card is [LU with partial pivoting](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/02-lu-decomposition-and-pivoting.md).
 
 </details>
 
@@ -158,7 +158,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Road one is the method: pick a pivot, clear the rows below, print every move, back-substitute from the bottom. Road two tries every whole-dollar price list from $0 to $12, keeping those that fit all three days. One survives, the same one — a check on this example, while the three pivots rule out any other list, whole dollars or not. It also recombines the days so the top row has no coffee, forcing a swap, and runs the broken Wednesdays.
+Nothing is imported. Road one is the method: pick a pivot, clear the rows below, print every move, back-substitute from the bottom. Road two tries every whole-dollar price list from $0 to $12, keeping those that fit all three days.
+
+One survives, the same one. That checks this example; the three pivots are what rule out every other list, whole dollars or not. The code also recombines the days so the top row has no coffee, forcing a swap, and runs the broken Wednesdays.
 
 ### Python
 
@@ -727,8 +729,8 @@ example : transvection (2 : Fin 3) 1 (-1 : ℚ) *ᵥ (transvection 2 0 (-(3/2)) 
 
 ## Where you meet it in real life
 
-- **Numerical libraries.** Dense solvers, built for matrices with few zeros, run these moves, packaged for reuse on many sets of totals (LU with partial pivoting).
-- **Circuits.** One equation per loop of wire, one unknown current per branch (Kirchhoff's laws).
+- **Numerical libraries.** Dense solvers, built for matrices with few zeros, run these moves, packaged for reuse on many sets of totals ([LU with partial pivoting](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/02-lu-decomposition-and-pivoting.md)).
+- **Circuits.** One equation per loop of wire, one unknown current per branch ([Kirchhoff's laws](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/01-kirchhoffs-laws-and-equivalent-circuits.md)).
 - **Balancing a chemical equation.** One equation per element, one unknown per compound, usually with one left free.
 - **Deciding whether data says anything.** A row of zeros means one measurement repeated another — the verdict starting [Rank and nullity](05-rank-nullity.md).
 
@@ -751,9 +753,9 @@ example : transvection (2 : Fin 3) 1 (-1 : ℚ) *ᵥ (transvection 2 0 (-(3/2)) 
 - [Vanna-volga pricing](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md): three quotes, three weights.
 - [Kirchhoff's laws](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/01-kirchhoffs-laws-and-equivalent-circuits.md): currents in a circuit.
 - [LU with partial pivoting](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/02-lu-decomposition-and-pivoting.md): the multipliers kept and reused.
-- Smith normal form, in Topology: the moves over whole numbers.
+- [Smith normal form](../../17-Topology/05-Homology/03-computing-homology-by-smith-normal-form.md), in Topology: the moves over whole numbers, turning boundary matrices into hole counts.
 - [The persistence algorithm](../../17-Topology/06-Topological%20Data%20Analysis/03-the-persistence-algorithm.md): elimination on shapes.
-- Smith normal form, in Algebraic geometry: one standard staircase that every whole-number matrix reduces to.
+- [Smith normal form](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/06-smith-normal-form-and-canonical-forms.md), in Algebraic geometry: one standard diagonal that every whole-number matrix reduces to.
 - [Cramer's rule](06-cramers-rule-and-the-adjugate.md): each unknown is a ratio of two determinants, and the inverse is the cofactor table divided by the determinant.
 
 The staircase is thrown away once these days are answered; keeping the moves, so tomorrow's takings cost one multiplication, is [The inverse matrix](03-inverse-matrix.md).

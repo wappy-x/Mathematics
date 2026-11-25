@@ -520,10 +520,11 @@ example : adjugate (!![2, 1, 1; 1, 1, 2; 1, 2, 1] : Matrix (Fin 3) (Fin 3) ℤ) 
 
 ## Where this goes next
 
+- [The dot product](../06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): starts the next shelf, building length and right angles for systems with no exact answer.
 - [Matrix norms and the condition number](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/01-matrix-norms-and-the-condition-number.md): how much a nearly flat matrix magnifies errors in the takings.
 - [LU with partial pivoting](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/02-lu-decomposition-and-pivoting.md): elimination packaged so one factoring serves every new day.
 
-The open question: how far does each answer move when the takings are a little wrong?
+This closes exact square systems. The open question: with more days than items and slightly wrong takings, no prices fit every day, so which prices fit best? "Best" needs a length and a right angle, and the next shelf builds both, starting with [The dot product](../06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md).
 
 ---
 

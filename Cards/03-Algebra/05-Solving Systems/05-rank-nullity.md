@@ -466,7 +466,7 @@ example : (!![1, 0, 0; 0, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3,
 > [!warning]
 > **Adding up to the wrong number.** Rank plus nullity is the number of columns, not the number of rows. The projector has 2 rows and 3 columns; rank 2 plus nullity 1 is 3, the column count. Do it with rows and nullity comes out 0, saying the projector throws nothing away — while it is flattening a whole room onto a screen.
 >
-> - **Counting nonzero rows as the rank.** The flattener's rows both look full, but the second is twice the first, so elimination leaves rank 1 and the sum 4.
+> - **Counting nonzero rows as the rank.** The flattener's rows both look full, but the second is twice the first. Elimination leaves rank 1, and 1 + 2 = 3; skipping it counts rank 2 and the impossible sum 2 + 2 = 4.
 > - **Putting the null space in the wrong room.** The killed direction (0, 0, 1) has three numbers, because it is an input; screen points have two. Only the two counts are ever added.
 > - **Reading rank as how full the matrix looks.** The projector is mostly zeros and has rank 2; the flattener has no zero anywhere and has rank 1. Rank counts independence, not ink.
 
@@ -493,6 +493,7 @@ example : (!![1, 0, 0; 0, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3,
 
 ## Where this goes next
 
+- [Cramer's rule](06-cramers-rule-and-the-adjugate.md): on a square matrix with nullity 0, each unknown is a ratio of two determinants.
 - [The singular value decomposition](../07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md): rank read off a list of sizes.
 - [Buckingham Pi](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/02-dimensional-analysis-and-buckingham-pi.md): the same count on a table of units.
 - [Can you steer every state, and can you see every state](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/03-controllability-and-observability.md): rank deciding whether a machine can be steered.
@@ -503,14 +504,14 @@ example : (!![1, 0, 0; 0, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3,
 - [Dimension and tangent space](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/07-dimension-and-tangent-spaces.md): rank of a slope matrix as a dimension.
 - [Diffeomorphism, immersion, submersion](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/04-diffeomorphisms-immersions-and-embeddings.md): full rank as the test for a map that folds nothing.
 - [Constant rank theorem](../../06-Calculus%20and%20analysis/07-Several%20Variables/10-constant-rank-theorem.md): a map whose derivative keeps the same rank is a projection in disguise.
-- [The four fundamental subspaces](../06-Dot%20Products%20and%20Best%20Fits/05-four-fundamental-subspaces.md): every matrix splits its inputs into row space and null space, its outputs into column space and left null space, at right angles.
-- [Generalised eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/09-generalised-eigenvectors.md): when a matrix has too few eigenvectors, the vectors killed by a power of A minus lambda fill the gap.
-- [Jordan form](../07-Eigenvalues%20and%20Symmetric%20Matrices/10-jordan-canonical-form.md): every matrix is a stack of blocks, each an eigenvalue with ones just above the diagonal, and the block sizes are read from ranks.
-- [Direct sums and quotient spaces](../11-Duals%2C%20Quotients%20and%20Tensors/01-direct-sums-and-quotient-spaces.md): split a space into independent pieces, or blur a subspace to a point and count what is left.
-- [Dual spaces](../11-Duals%2C%20Quotients%20and%20Tensors/02-dual-spaces.md): the linear readings of a space form a space of their own, a basis gives a dual basis, and the transpose is the dual map.
-- [Block designs](../../04-Combinatorics%20and%20graphs/16-Designs/01-block-designs-and-fishers-inequality.md): v points in b blocks of size k with every pair together exactly lambda times, two counts any design must obey, and Fisher's inequality that blocks never number fewer than points.
+- [The four fundamental subspaces](../06-Dot%20Products%20and%20Best%20Fits/05-four-fundamental-subspaces.md): the rank sets the size of all four pieces: row space, null space, column space and left null space.
+- [Generalised eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/09-generalised-eigenvectors.md): null spaces of powers of A minus lambda fill in missing eigenvectors.
+- [Jordan form](../07-Eigenvalues%20and%20Symmetric%20Matrices/10-jordan-canonical-form.md): the sizes of its blocks are read from ranks.
+- [Direct sums and quotient spaces](../11-Duals%2C%20Quotients%20and%20Tensors/01-direct-sums-and-quotient-spaces.md): blur the null space to a point and what is left is the image, rank plus nullity again.
+- [Dual spaces](../11-Duals%2C%20Quotients%20and%20Tensors/02-dual-spaces.md): the transpose as the dual map, and why row rank equals column rank.
+- [Block designs](../../04-Combinatorics%20and%20graphs/16-Designs/01-block-designs-and-fishers-inequality.md): a full-rank matrix proves blocks never number fewer than points.
 
-Rank counts directions, but not how close a matrix is to losing one more, which is what measured data needs: that grading waits for [The singular value decomposition](../07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md).
+Nullity 0 on a square matrix says there is exactly one answer, but not what it is. A formula that writes each unknown straight from determinants is [Cramer's rule](06-cramers-rule-and-the-adjugate.md), the last card on this shelf.
 
 ---
 

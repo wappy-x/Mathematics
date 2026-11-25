@@ -73,7 +73,7 @@ Multiply on the left by $`A^{-1}`$: $`A^{-1} A`$ is $`I`$, and $`I`$ times $`x`$
 - **Square: as many rows as columns.** A 2 by 3 matrix turns three prices into two takings, and two numbers cannot pin down three ([Least squares](../06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md) fits those).
 - **A nonzero determinant.** At zero the idea fails, not just the formula: two price lists then share one set of takings.
 - **Numbers that divide.** On a clock the determinant needs an inverse there too: 2 is not zero mod 4 (on a 4-hour clock), yet nothing multiplies it to 1 ([The modular inverse](../../02-Number%20theory/03-Clock%20Arithmetic/04-modular-inverse.md)).
-- **Inputs exact enough.** With measured takings, a determinant small beside the entries makes the prices swing on rounding (Matrix norms and the condition number).
+- **Inputs exact enough.** With measured takings, a determinant small beside the entries makes the prices swing on rounding ([Matrix norms and the condition number](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/01-matrix-norms-and-the-condition-number.md)).
 
 ---
 
@@ -162,7 +162,7 @@ Set them beside `[[1, 0, 0], [0, 1, 0], [0, 0, 1]]`, run row moves until the lef
 | --- | --- | --- |
 | Flip the signs, no swap | prices (15, -4) | a pastry at minus $4 gives it away |
 | Swap the diagonal, no minus signs | prices (18, 25) | the rows reinforce, not cancel |
-| Skip the divide, three items, determinant −1 | prices (-4, -3, -6) | dividing by −1 flips every sign |
+| Skip the divide by the determinant, three items: the cofactor table of [Cramer's rule](06-cramers-rule-and-the-adjugate.md) alone, determinant −1 | prices (-4, -3, -6) | dividing by −1 flips every sign; the cafe's 2 by 2 has determinant 1, so there this slip hides |
 | Try it on `[[2, 4], [1, 2]]` | no answer at all | swap-and-flip times it is `[[0, 0], [0, 0]]` |
 
 The code prints all four.
@@ -543,7 +543,9 @@ example : (2 : ZMod 4) ≠ 0 ∧ ∀ x : ZMod 4, 2 * x ≠ 1 := by decide
 - **Changing the directions you measure in.** Swapping to a better set, and back, needs an inverse ([Change of basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md)).
 
 > **Say it back**
-> A matrix takes prices and hands back takings; its inverse does the reverse. Multiply the two in either order and out comes the identity, the do-nothing matrix. For a 2 by 2: swap the main diagonal, flip the sign of the other two, divide by ps − qr — the cafe's `[[2, 1], [1, 1]]` gives `[[1, -1], [-1, 2]]`, turning (11, 7) into (4, 3). Anything bigger comes out of Gauss-Jordan on [A | I]; at ps − qr = 0 there is no inverse at all.
+> A matrix takes prices and hands back takings; its inverse does the reverse. Multiply the two in either order and out comes the identity, the do-nothing matrix. For a 2 by 2: swap the main diagonal, flip the sign of the other two, divide by ps − qr.
+>
+> The cafe's `[[2, 1], [1, 1]]` gives `[[1, -1], [-1, 2]]`, turning (11, 7) into (4, 3). Anything bigger comes out of Gauss-Jordan on [A | I]; at ps − qr = 0 there is no inverse at all.
 
 ---
 

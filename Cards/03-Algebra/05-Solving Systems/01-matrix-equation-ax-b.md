@@ -16,7 +16,7 @@ Strip the words off the slips and only the counts are left, written row by row i
 
 **counts × prices = takings**, or in letters, $`A x = b`$.
 
-**That line asks one question: which mix of $`A`$'s columns lands exactly on $`b`$? One mix, a whole line of mixes, or none — and the columns of $`A`$ settle which case before $`b`$ is read.**
+**That line asks one question: which mix of $`A`$'s columns lands exactly on $`b`$? One mix, a whole line of mixes, or none — and the columns of $`A`$ say whether it is exactly one before $`b`$ is read.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; $`A x = b`$ itself is a definition.
 
@@ -112,7 +112,9 @@ Change that total to $23 and $`(11, 23)`$ is off the line: no mix reaches it, an
 | dependent, one a multiple of the other | on their line | a line of answers | takings (11, 22) |
 | dependent, one a multiple of the other | off their line | no answer | takings (11, 23) |
 
-That is the "before you start" in the title: for a square system, independent columns give one answer for every $`b`$, while dependent columns give none or infinitely many, and only then does $`b`$ matter. One number runs the test: top-left times bottom-right, minus top-right times bottom-left — 1 for the cafe, 0 for the doubled Tuesday, and zero is the collapse. That number is the determinant, [Determinants](04-determinants.md).
+That is the "before you start" in the title: for a square system, independent columns give one answer for every $`b`$. Dependent columns give none or infinitely many, and only then does $`b`$ matter.
+
+One number runs the test: top-left times bottom-right, minus top-right times bottom-left. It is 1 for the cafe and 0 for the doubled Tuesday, and zero is the collapse. That number is the determinant, [Determinants](04-determinants.md).
 
 <details>
 <summary>Detailed proof: why there is no fourth outcome</summary>
@@ -559,7 +561,9 @@ example : !![(2 : ℝ), 1; 1, 1] *ᵥ ![-4, 15] = ![7, 11] := by
 - **Fitting a line to data.** More rows than unknowns, so $`b`$ almost never lands on the span: no exact answer, and the closest miss is taken by least squares.
 
 > **Say it back**
-> A pile of linear equations is one matrix equation, $`A x = b`$: counts in $`A`$, unknowns in $`x`$, totals in $`b`$. Multiplying $`A`$ into $`x`$ mixes $`A`$'s columns, so solving means finding the mix that lands on $`b`$. Elimination does it: subtract a multiple of one row from another to kill an unknown, then read the answers back up. Independent columns in a square $`A`$ give one answer whatever $`b`$ is — the cafe's $4.00 coffee and $3.00 pastry. Collapsed onto one line, $`b`$ on the line gives a line of answers, $`b`$ off it none.
+> A pile of linear equations is one matrix equation, $`A x = b`$: counts in $`A`$, unknowns in $`x`$, totals in $`b`$. Multiplying $`A`$ into $`x`$ mixes $`A`$'s columns, so solving means finding the mix that lands on $`b`$. Elimination does it: subtract a multiple of one row from another to kill an unknown, then read the answers back up.
+>
+> Independent columns in a square $`A`$ give one answer whatever $`b`$ is — the cafe's $4.00 coffee and $3.00 pastry. Collapsed onto one line, $`b`$ on the line gives a line of answers, $`b`$ off it none.
 
 ---
 
