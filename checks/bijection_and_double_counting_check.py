@@ -50,7 +50,7 @@ print(f"swapping marks sends the {K}-team strings onto the {N - K}-team strings,
       f"{'yes' if flipped == fourteen else 'no'}")
 print(f"one pick: {pick} -> {marks(pick)} -> swapped -> {marks(rest)} -> {rest}")
 print(f"mistake 1, stopping at the slips: {len(ordered)} matches, not {len(listed)}")
-print(f"mistake 2, letting a team play itself: {N * N} slips, {N * N // 2} matches")
+print(f'mistake 2, counting self-slips and halving: {N * N} slips, {N * N // 2} "matches"')
 print(f"mistake 3, filing the {len(six)} picks under their smallest team: {buckets} buckets")
 assert len(listed) == N * (N - 1) // 2 == len(ordered) // 2
 assert by_listing == [m * (m - 1) // 2 for m in SMALL]

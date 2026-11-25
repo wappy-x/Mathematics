@@ -20,31 +20,31 @@ def choose(n, k):                             # Pascal's triangle: addition only
         row = [1] + [row[i] + row[i + 1] for i in range(len(row) - 1)] + [1]
     return row[k]
 def by_positions(counts):                     # road two: one kind's places at a time
-    left, steps, out = sum(counts), [], 1
+    left, steps, labels, out = sum(counts), [], [], 1
     for a in counts:
-        steps.append(choose(left, a))
-        out *= steps[-1]
-        left -= a
-    return out, steps
+        steps.append(choose(left, a)); labels.append(f"C({left},{a})")
+        out *= steps[-1]; left -= a
+    return out, steps, labels
 def by_listing(counts):                       # road three: build every arrangement
-    if sum(counts) == 0:
-        return 1
+    if sum(counts) == 0: return 1
     return sum(by_listing(counts[:i] + (a - 1,) + counts[i + 1:])
                for i, a in enumerate(counts) if a)
 
-drum_p, drum_s = by_positions(DRUM)
-word_p, word_s = by_positions(WORD)
-inside_drum, inside_word = factorial(3) * factorial(2) * factorial(1), factorial(4) ** 2 * factorial(2)
+drum_p, drum_s, drum_c = by_positions(DRUM)
+word_p, word_s, word_c = by_positions(WORD)
+drum_n, word_n = sum(DRUM), sum(WORD)
+inside_drum, inside_word = factorial(drum_n) // by_formula(DRUM), factorial(word_n) // by_formula(WORD)
 no_division, by_sum = factorial(11), factorial(4) + factorial(4) + factorial(2)
 one_block = no_division // (factorial(4) * factorial(4))
+drum_f, word_f = " x ".join(f"{a}!" for a in DRUM), " x ".join(f"{a}!" for a in WORD if a > 1)
 print(f"factorials in play: 2! = {factorial(2)}, 3! = {factorial(3)}, 4! = {factorial(4)}, 6! = {factorial(6)}, 11! = {no_division}")
 print("drum bar, 6 slots: 3 kicks, 2 snares, 1 hat")
-print(f"  numbered orderings {factorial(6)}, each bar counted 3! x 2! x 1! = {inside_drum} times, {factorial(6)} / {inside_drum} = {by_formula(DRUM)}")
-print(f"  road 2, one kind at a time: C(6,3) x C(3,2) x C(1,1) = {drum_s[0]} x {drum_s[1]} x {drum_s[2]} = {drum_p}")
+print(f"  numbered orderings {factorial(drum_n)}, each bar counted {drum_f} = {inside_drum} times, {factorial(drum_n)} / {inside_drum} = {by_formula(DRUM)}")
+print(f"  road 2, one kind at a time: {' x '.join(drum_c)} = {' x '.join(map(str, drum_s))} = {drum_p}")
 print(f"  road 3, distinct bars built one by one: {by_listing(DRUM)}")
 print("MISSISSIPPI, 11 letters: M 1, I 4, S 4, P 2")
-print(f"  numbered orderings {no_division}, each word counted 4! x 4! x 2! = {inside_word} times, {no_division} / {inside_word} = {by_formula(WORD)}")
-print(f"  road 2, one kind at a time: C(11,1) x C(10,4) x C(6,4) x C(2,2) = {word_s[0]} x {word_s[1]} x {word_s[2]} x {word_s[3]} = {word_p}")
+print(f"  numbered orderings {factorial(word_n)}, each word counted {word_f} = {inside_word} times, {factorial(word_n)} / {inside_word} = {by_formula(WORD)}")
+print(f"  road 2, one kind at a time: {' x '.join(word_c)} = {' x '.join(map(str, word_s))} = {word_p}")
 print(f"  road 3, distinct words built one by one: {by_listing(WORD)}")
 print(f"grid paths, 5 steps right and 3 steps up: 8! / (5! 3!) = {by_formula((5, 3))}, and C(8,3) = {choose(8, 3)}")
 print(f"mistake 1, no division at all: {no_division}")

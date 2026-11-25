@@ -214,20 +214,20 @@ comps = [c for k in range(1, TARGET + 1) for c in tubs_listed(TARGET, k, 1)]
 listed = [len(tubs_listed(TARGET, k, 1)) for k in range(1, TARGET + 1)]
 formula = [choose(TARGET - 1, k - 1) for k in range(1, TARGET + 1)]
 shapes = {tuple(sorted(t, reverse=True)) for t in tubs}
-shown = [(5, 0, 0), (2, 0, 3), (0, 5, 0), (1, 2, 2)]
+shown, slots, bars = [(5, 0, 0), (2, 0, 3), (0, 5, 0), (1, 2, 2)], SCOOPS + FLAVOURS - 1, FLAVOURS - 1
 print(f"{SCOOPS} scoops across {FLAVOURS} flavours, a flavour may be skipped")
 print("  four tubs written out: " + ", ".join(f"{t} -> {picture(t)}" for t in shown))
 print(f"  every tub listed: {len(tubs)}")
-print(f"  {SCOOPS} stars and {FLAVOURS - 1} bars in {SCOOPS + FLAVOURS - 1} slots: {len(rows)} rows, "
-      f"the same list: {'yes' if tubs == rows else 'no'}; C(7, 2) = {choose(7, 2)}")
+print(f"  {SCOOPS} stars and {bars} bars in {slots} slots: {len(rows)} rows, "
+      f"the same list: {'yes' if tubs == rows else 'no'}; C({slots}, {bars}) = {choose(slots, bars)}")
 print(f"  chocolate 0 to {SCOOPS}, the rest shared by two flavours: {ladder}, adding to {sum(ladder)}")
 print(f"{TINS} tins on {SHELVES} shelves, no shelf left empty")
-print(f"  every arrangement listed: {len(full)}; C(11, 2) = {choose(11, 2)}")
+print(f"  every arrangement listed: {len(full)}; C({TINS - 1}, {SHELVES - 1}) = {choose(TINS - 1, SHELVES - 1)}")
 print(f"  one tin to each shelf first, then {TINS - SHELVES} shared with empties allowed: {len(gift)}")
 print(f"{TARGET} as an ordered sum of positive parts: {len(comps)} ways")
 print(f"  split by number of parts, listed: {listed}")
-print(f"  split by number of parts, from C(5, parts - 1): {formula}")
-print(f"  cut or leave each of the {TARGET - 1} gaps: 2 x 2 x 2 x 2 x 2 = {2 ** (TARGET - 1)}")
+print(f"  split by number of parts, from C({TARGET - 1}, parts - 1): {formula}")
+print(f"  cut or leave each of the {TARGET - 1} gaps: {' x '.join(['2'] * (TARGET - 1))} = {2 ** (TARGET - 1)}")
 print(f"wrong turns on the {SCOOPS}-scoop tub: C(7, 3) = {choose(7, 3)}, C(5, 2) = {choose(5, 2)}, "
       f"C(4, 2) = {choose(4, 2)}, flavours left unlabelled = {len(shapes)}")
 assert tubs == rows and len(tubs) == choose(SCOOPS + FLAVOURS - 1, FLAVOURS - 1)
@@ -237,7 +237,7 @@ assert listed == formula and len(comps) == 2 ** (TARGET - 1)
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-14 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 5 scoops across 3 flavours, a flavour may be skipped
@@ -322,16 +322,17 @@ fn main() {
     println!("{} scoops across {} flavours, a flavour may be skipped", SCOOPS, FLAVOURS);
     println!("  four tubs written out: {}", four.join(", "));
     println!("  every tub listed: {}", tubs.len());
-    println!("  {} stars and {} bars in {} slots: {} rows, the same list: {}; C(7, 2) = {}", SCOOPS,
-             FLAVOURS - 1, SCOOPS + FLAVOURS - 1, rows.len(), if tubs == rows { "yes" } else { "no" }, choose(7, 2));
+    let (slots, bars) = (SCOOPS + FLAVOURS - 1, FLAVOURS - 1);
+    println!("  {} stars and {} bars in {} slots: {} rows, the same list: {}; C({}, {}) = {}", SCOOPS,
+             bars, slots, rows.len(), if tubs == rows { "yes" } else { "no" }, slots, bars, choose(slots, bars));
     println!("  chocolate 0 to {}, the rest shared by two flavours: {:?}, adding to {}", SCOOPS, ladder, sum_ladder);
     println!("{} tins on {} shelves, no shelf left empty", TINS, SHELVES);
-    println!("  every arrangement listed: {}; C(11, 2) = {}", full.len(), choose(11, 2));
+    println!("  every arrangement listed: {}; C({}, {}) = {}", full.len(), TINS - 1, SHELVES - 1, choose(TINS - 1, SHELVES - 1));
     println!("  one tin to each shelf first, then {} shared with empties allowed: {}", TINS - SHELVES, gift.len());
     println!("{} as an ordered sum of positive parts: {} ways", TARGET, comps.len());
     println!("  split by number of parts, listed: {:?}", listed);
-    println!("  split by number of parts, from C(5, parts - 1): {:?}", formula);
-    println!("  cut or leave each of the {} gaps: 2 x 2 x 2 x 2 x 2 = {}", TARGET - 1, 1i64 << (TARGET - 1));
+    println!("  split by number of parts, from C({}, parts - 1): {:?}", TARGET - 1, formula);
+    println!("  cut or leave each of the {} gaps: {} = {}", TARGET - 1, vec!["2"; (TARGET - 1) as usize].join(" x "), 1i64 << (TARGET - 1));
     println!("wrong turns on the {}-scoop tub: C(7, 3) = {}, C(5, 2) = {}, C(4, 2) = {}, \
 flavours left unlabelled = {}", SCOOPS, choose(7, 3), choose(5, 2), choose(4, 2), shapes.len());
     assert!(tubs == rows && tubs.len() as i64 == choose(SCOOPS + FLAVOURS - 1, FLAVOURS - 1));
@@ -342,7 +343,7 @@ flavours left unlabelled = {}", SCOOPS, choose(7, 3), choose(5, 2), choose(4, 2)
 }
 ```
 
-**Ran 2026-09-14 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 5 scoops across 3 flavours, a flavour may be skipped
@@ -369,7 +370,7 @@ Lean proves all three counts for every number of items and boxes, not just the g
 
 - $`n`$ identical items go into $`k`$ labelled boxes, empties allowed, in $`C(n + k - 1,\ k - 1)`$ ways.
 - With no box empty, the count is $`C(n - 1,\ k - 1)`$, which is 0 when there are fewer items than boxes.
-- A whole number $`n`$ has $`2^{n-1}`$ compositions: each of the $`n - 1`$ gaps is cut or left alone.
+- A whole number $`n`$ (at least 1) has $`2^{n-1}`$ compositions: each of the $`n - 1`$ gaps is cut or left alone.
 - The card's numbers: 21 tubs listed one by one, 6 using every flavour, 55 shelvings, 32 compositions, and the wrong turns 35, 10 and 6.
 
 Building and decoding the rows, and the 5 shapes left when the labels go, are left to the Python and Rust checks.
@@ -509,7 +510,7 @@ example : (5 + 4 - 1).choose (4 - 1) = 56 ∧ (6 + 3 - 1).choose (3 - 1) = 28 :=
 ## Where you meet it in real life
 
 - **Splitting a whole-number budget.** Twelve identical units among three named departments, none left out: 55 ways.
-- **Whole-number equations.** "How many whole-number solutions does x + y + z = 5 have?" is the tub question in algebra, and the answer is 21. Sampler boxes of coffee pods or paint testers ask the same question.
+- **Whole-number equations.** "How many non-negative whole-number solutions does x + y + z = 5 have?" is the tub question in algebra, and the answer is 21. Sampler boxes of coffee pods or paint testers ask the same question.
 - **Identical particles.** Physics counts how many identical particles sit at each energy level; that count is the core of Bose–Einstein statistics.
 - **Cutting a run into stretches.** A six-week job split into consecutive stages: 32 ways, one per set of cuts.
 
@@ -525,11 +526,12 @@ example : (5 + 4 - 1).choose (4 - 1) = 56 ∧ (6 + 3 - 1).choose (3 - 1) = 28 :=
 
 ## Where this goes next
 
+- [Splitting into groups](03-splitting-into-groups.md): the reverse setup, where distinct items are split into piles of fixed sizes, named or unnamed.
 - [Counting by multiplying series](../07-Generating%20Functions/02-counting-with-generating-functions.md): the same count read off a product, one factor per box, which is what makes capped boxes tractable.
 - [Integer partitions](../08-Partitions/01-integer-partitions.md): the labels torn off the boxes, where 21 tubs become 5 shapes.
 - [The twelvefold way](../08-Partitions/06-twelvefold-way.md): the grid of twelve counting problems, of which this card is two.
 
-This card counts items into boxes of unlimited size; cap a flavour at three scoops and the row picture counts too many, which is what later cards repair.
+Here the items were identical and the box counts varied freely. When the items are distinct and the group sizes are fixed in advance, [Splitting into groups](03-splitting-into-groups.md) takes over. Capped boxes wait for [Counting by multiplying series](../07-Generating%20Functions/02-counting-with-generating-functions.md).
 
 ---
 

@@ -604,12 +604,13 @@ example : Nat.factorial 6 / (2 * 2) = 180 ∧ 180 / 6 = 30 ∧ 30 / 2 = 15 ∧ (
 
 - [Factorials](../01-Counting%20Principles/03-factorial.md): the 40,320 orders in a row that everything here starts from.
 - [Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md): the same habit of dividing out an order nobody wanted counted.
-- [Group actions](../../03-Algebra/08-Groups/08-group-actions-and-counting.md): the turns and the flip as a set of moves, and the count that survives unequal families.
 
 ## Where this goes next
-- [Polya counting](06-polya-enumeration.md): record each move's cycles in one polynomial, the cycle index, and substitute colours to count patterns by type.
-- [Erdos-Ko-Rado](../15-Orders%20and%20Set%20Systems/04-erdos-ko-rado-and-shadows.md): if every two k-sets in a family share a member, the family is no bigger than all k-sets through one point, provided n is at least 2k.
 
+- [Bijections and double counting](05-bijection-and-double-counting.md): turns Step 3's one-for-one matching (Ada fixed in chair 1) and the division rule into general proof methods.
+- [Group actions](../../03-Algebra/08-Groups/08-group-actions-and-counting.md): formalises turns and flips as a group and proves Burnside's average, which fixes unequal families when beads repeat.
+- [Polya counting](06-polya-enumeration.md): extends that average with a cycle-index polynomial to count necklaces and bracelets with repeated beads colour by colour.
+- [Erdos-Ko-Rado](../15-Orders%20and%20Set%20Systems/04-erdos-ko-rado-and-shadows.md): seats $`n`$ items round a table in $`(n-1)!`$ ways to bound how many same-sized subsets can all overlap.
 
 Every division here needed the families to come out equal, a promise dividing cannot make on its own. Matching one collection against another can, and [Bijections and double counting](05-bijection-and-double-counting.md) turns that into a method: Step 3 already used it, with Ada nailed to her chair.
 

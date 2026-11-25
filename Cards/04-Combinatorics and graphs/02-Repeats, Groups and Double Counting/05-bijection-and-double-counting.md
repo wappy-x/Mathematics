@@ -40,7 +40,9 @@ Ten lines, so 10 matches. Counted from the teams instead, each of the 5 touches 
 
 ## The formula
 
-Notation first, in words. Bars count members: $`\lvert A \rvert`$ is how many things collection A holds. An arrow names a rule sending each member of one collection to a member of another, so $`f : A \to B`$ reads "f sends each member of A to a member of B"; a double arrow means "so". And C(n, k), read "n choose k", counts the ways of choosing k things out of n when order does not matter ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
+Notation first, in words. Bars count members: $`\lvert A \rvert`$ is how many things collection A holds. An arrow names a rule sending each member of one collection to a member of another, so $`f : A \to B`$ reads "f sends each member of A to a member of B".
+
+A double arrow means "so". And C(n, k), read "n choose k", counts the ways of choosing k things out of n when order does not matter ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
 
 ```math
 f : A \to B \ \text{one to one and onto} \quad \Longrightarrow \quad \lvert A \rvert = \lvert B \rvert
@@ -148,7 +150,7 @@ Choosing who is in is the same act as choosing who is out. Nothing is computed.
 
 The factorial formula reaches both identities too, and the check uses it as the second road ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)): quicker here, silent about why.
 
-The rest of this shelf is these two moves at work. [Stars and bars](02-stars-and-bars.md) matches each way of handing out items with a line of dots and dividers; [Arranging with repeats](01-multiset-permutations.md), [Splitting into groups](03-splitting-into-groups.md) and [Round tables and bracelets](04-circular-arrangements.md) each divide by a block of arrangements naming one thing.
+The rest of this shelf puts these two moves to work. [Stars and bars](02-stars-and-bars.md) matches each sharing-out with a line of stars and bars. [Arranging with repeats](01-multiset-permutations.md), [Splitting into groups](03-splitting-into-groups.md) and [Round tables and bracelets](04-circular-arrangements.md) divide by equal blocks. [Polya counting](06-polya-enumeration.md) uses double counting through Burnside's average when those blocks differ in size.
 
 ---
 
@@ -171,7 +173,7 @@ A 20-team round robin — everyone plays everyone once — runs 190 matches, and
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Stopping at the slips | 380 matches | Every match was written from both sides |
-| Letting a team play itself | 400 slips, 200 matches | A team has 19 opponents, not 20 |
+| Counting self-slips and halving | 400 slips, 200 "matches" | A team has 19 opponents, not 20 — and a self-match draws 1 slip, not 2 (210 if teams played themselves) |
 | Filing picks by smallest team | 38760 picks, 15 buckets | A many-to-one rule proves no equality |
 
 The code prints all three.
@@ -237,7 +239,7 @@ print(f"swapping marks sends the {K}-team strings onto the {N - K}-team strings,
       f"{'yes' if flipped == fourteen else 'no'}")
 print(f"one pick: {pick} -> {marks(pick)} -> swapped -> {marks(rest)} -> {rest}")
 print(f"mistake 1, stopping at the slips: {len(ordered)} matches, not {len(listed)}")
-print(f"mistake 2, letting a team play itself: {N * N} slips, {N * N // 2} matches")
+print(f'mistake 2, counting self-slips and halving: {N * N} slips, {N * N // 2} "matches"')
 print(f"mistake 3, filing the {len(six)} picks under their smallest team: {buckets} buckets")
 assert len(listed) == N * (N - 1) // 2 == len(ordered) // 2
 assert by_listing == [m * (m - 1) // 2 for m in SMALL]
@@ -246,7 +248,7 @@ assert flipped == fourteen and counts == [2]
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-14 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 league of 20 teams, each plays 19 others
@@ -262,7 +264,7 @@ picking 14 of 20: by listing marks 38760, by formula C(20, 14) = 38760
 swapping marks sends the 6-team strings onto the 14-team strings, none repeated: yes
 one pick: [2, 5, 9, 11, 14, 20] -> 01001000101001000001 -> swapped -> 10110111010110111110 -> [1, 3, 4, 6, 7, 8, 10, 12, 13, 15, 16, 17, 18, 19]
 mistake 1, stopping at the slips: 380 matches, not 190
-mistake 2, letting a team play itself: 400 slips, 200 matches
+mistake 2, counting self-slips and halving: 400 slips, 200 "matches"
 mistake 3, filing the 38760 picks under their smallest team: 15 buckets
 ALL CHECKS PASS
 ```
@@ -342,7 +344,7 @@ fn main() {
              K, N - K, if flipped == fourteen { "yes" } else { "no" });
     println!("one pick: {:?} -> {} -> swapped -> {} -> {:?}", pick, marks(&pick), marks(&rest), rest);
     println!("mistake 1, stopping at the slips: {} matches, not {}", ordered.len(), listed.len());
-    println!("mistake 2, letting a team play itself: {} slips, {} matches", N * N, N * N / 2);
+    println!("mistake 2, counting self-slips and halving: {} slips, {} \"matches\"", N * N, N * N / 2);
     println!("mistake 3, filing the {} picks under their smallest team: {} buckets", six.len(), lows.len());
     assert!(listed.len() as u32 == N * (N - 1) / 2 && listed.len() == ordered.len() / 2);
     assert!(by_listing == SMALL.iter().map(|&m| (m * (m - 1) / 2) as usize).collect::<Vec<usize>>());
@@ -352,7 +354,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-14 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 league of 20 teams, each plays 19 others
@@ -368,7 +370,7 @@ picking 14 of 20: by listing marks 38760, by formula C(20, 14) = 38760
 swapping marks sends the 6-team strings onto the 14-team strings, none repeated: yes
 one pick: [2, 5, 9, 11, 14, 20] -> 01001000101001000001 -> swapped -> 10110111010110111110 -> [1, 3, 4, 6, 7, 8, 10, 12, 13, 15, 16, 17, 18, 19]
 mistake 1, stopping at the slips: 380 matches, not 190
-mistake 2, letting a team play itself: 400 slips, 200 matches
+mistake 2, counting self-slips and halving: 400 slips, 200 "matches"
 mistake 3, filing the 38760 picks under their smallest team: 15 buckets
 ALL CHECKS PASS
 ```
@@ -494,16 +496,16 @@ example : 20 * 20 = 400 ∧ 400 / 2 = 200 := by decide
 
 ## Where this goes next
 
+- [Polya counting](06-polya-enumeration.md): double-counts (move, fixed pattern) pairs to prove Burnside's average, then packages every move's cycles into one polynomial to count symmetric patterns by colour.
 - [Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md): one identity generating every C(n, k), proved by splitting on one member.
 - [Committee and chair](../03-Binomial%20Coefficients%20and%20Identities/05-committee-chair-identity.md): a committee with a chair, counted two ways.
 - [The reflection principle](../06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md): a bijection that flips part of a path to count the bad cases.
 - [Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md): the slip count as a statement about dots and lines.
 - [Spanning trees](../10-Trees%20and%20Cheapest%20Routes/03-spanning-trees-and-cayleys-formula.md): a hard count made easy by matching each object with a string.
-- [Polya counting](06-polya-enumeration.md): record each move's cycles in one polynomial, the cycle index, and substitute colours to count patterns by type.
-- [Beyond Turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/06-erdos-stone-and-kovari-sos-turan.md): forbid any graph H and its colour count sets the edge cap (Erdos-Stone), except when H is two-sided, where Kovari-Sos-Turan caps a network with no 4-cycle near n^(3/2)/2 edges.
-- [Block designs](../16-Designs/01-block-designs-and-fishers-inequality.md): v points in b blocks of size k with every pair together exactly lambda times, two counts any design must obey, and Fisher's inequality that blocks never number fewer than points.
+- [Beyond Turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/06-erdos-stone-and-kovari-sos-turan.md): double-counts pairs of edges sharing a point to cap how many edges a network can hold without a four-step loop.
+- [Block designs](../16-Designs/01-block-designs-and-fishers-inequality.md): counts point–block memberships two ways to derive the two equations every balanced block design must satisfy.
 
-Each identity here took its own argument, invented on the spot; a later card gets every value of C(n, k) from a single split, so the counts can be generated rather than re-argued.
+Here every match drew the same number of slips, so plain division worked. When symmetries merge patterns into unequal families, double counting (move, fixed pattern) pairs gives Burnside's average and leads straight into [Polya counting](06-polya-enumeration.md).
 
 ---
 

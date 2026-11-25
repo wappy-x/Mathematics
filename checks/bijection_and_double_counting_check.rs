@@ -68,7 +68,7 @@ fn main() {
              K, N - K, if flipped == fourteen { "yes" } else { "no" });
     println!("one pick: {:?} -> {} -> swapped -> {} -> {:?}", pick, marks(&pick), marks(&rest), rest);
     println!("mistake 1, stopping at the slips: {} matches, not {}", ordered.len(), listed.len());
-    println!("mistake 2, letting a team play itself: {} slips, {} matches", N * N, N * N / 2);
+    println!("mistake 2, counting self-slips and halving: {} slips, {} \"matches\"", N * N, N * N / 2);
     println!("mistake 3, filing the {} picks under their smallest team: {} buckets", six.len(), lows.len());
     assert!(listed.len() as u32 == N * (N - 1) / 2 && listed.len() == ordered.len() / 2);
     assert!(by_listing == SMALL.iter().map(|&m| (m * (m - 1) / 2) as usize).collect::<Vec<usize>>());

@@ -14,7 +14,7 @@ A sharper question: of the 6 tiles, how many have exactly two black corners? Lis
 
 The trick: a move rearranges the corners in loops, called **cycles**. Record each move's cycle lengths as a product of letters and average over the moves: the result is the **cycle index**.
 
-**Record each move as the lengths of its cycles, average those records into one polynomial, and every count of patterns up to the moves (each orbit counted once), in total or colour by colour, is a substitution into that polynomial.**
+**Record each move's cycle lengths, average them into one polynomial, and substitute numbers or colour markers to count distinct patterns in total or by colour.**
 
 **What kind of fact this is:** a theorem, Pólya's enumeration theorem, proved on this card in Why it works from Burnside's lemma.
 
@@ -160,7 +160,8 @@ A ring of 6 beads has 12 moves and this cycle index:
 Z = \tfrac{1}{12}\left(x_1^6 + 2\,x_6 + 2\,x_3^2 + 4\,x_2^3 + 3\,x_1^2 x_2^2\right)
 ```
 
-For R R B B G Y, doing nothing fixes all 180 orders, and only the 3 flips through two opposite beads also fix some, 4 each: G and Y on those two beads, R and B on the 2-cycles, either way round. So (180 + 4 + 4 + 4) / 12 = 16 bracelets. For 2 chlorines on a 6-carbon benzene ring, doing nothing fixes 15, and the half turn and each flip fix 3, the chlorines on one 2-cycle or on the two carbons a flip keeps: 3 compounds.
+- **Six beads R R B B G Y.** Doing nothing fixes all 180 orders. Only the 3 flips through opposite beads fix any more, 4 each: G and Y on those two fixed beads (2 ways), and R and B on the two 2-cycles (2 ways). That gives (180 + 4 + 4 + 4) / 12 = **16 bracelets**.
+- **Two chlorines on a 6-carbon benzene ring.** Doing nothing fixes C(6, 2) = 15 placements. The half turn and all 6 flips fix 3 each: both chlorines on one 2-cycle, or on the two carbons a flip holds still. That gives (15 + 7 × 3) / 12 = **3 compounds**.
 
 ### What breaks if you drop a piece
 
@@ -843,11 +844,12 @@ example : ((180 + 4 + 4 + 4) / 12 : ℚ) = 16 := by norm_num
 
 ## Where this goes next
 
+- [Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md): opens the next shelf, turning from symmetry and grouping to the choose counts themselves and the triangle that builds them.
 - [Counting by multiplying series](../07-Generating%20Functions/02-counting-with-generating-functions.md): the colour-count polynomial is a generating function, read by that card's tools.
 - [Counting shuffles by their loops](../08-Partitions/05-permutations-by-cycles.md): all shuffles sorted by their cycles, the cycle index of the full symmetric group.
 - [Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md): when two drawings are the same graph, the question Pólya's method counts.
 
-The cycle index needs every move written out; for a group with millions of moves, can the count be found without listing them?
+The cycle index needs each cycle type counted. For a group with millions of moves like the full symmetric group, [Counting shuffles by their loops](../08-Partitions/05-permutations-by-cycles.md) groups moves by cycle type without listing them. That closes this shelf on repeats, groups and symmetry; the next shelf turns to binomial coefficients, starting with [Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md).
 
 ---
 

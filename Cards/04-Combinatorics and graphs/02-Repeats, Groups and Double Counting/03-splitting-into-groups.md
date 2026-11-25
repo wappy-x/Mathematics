@@ -41,7 +41,7 @@ Notation first, in words. Factorial is written with an exclamation mark: 9! mean
 
 The splitting count gets a notation of its own: write it $`C(n; n_1, n_2, \ldots, n_k)`$, the **multinomial coefficient**, the semicolon saying that a list of pile sizes follows, not one choice. Books often stack the sizes under the n instead.
 
-The binomial coefficient $`C(n, k)`$, "n choose k", is its two-pile case: the number of ways to pick k of n things when order does not matter ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
+The binomial coefficient $`C(n, r)`$, "n choose r", is its two-pile case: the number of ways to pick $`r`$ of $`n`$ things when order does not matter ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
 
 ```math
 C(n; n_1, n_2, \ldots, n_k) = \frac{n!}{n_1!\,n_2!\cdots n_k!}
@@ -66,13 +66,13 @@ All three piles are trios, so $`m`$ is 3 and the count is 1,680 / 6 = 280. With 
 | $`n_1`$, $`n_2`$, … , $`n_k`$ | the pile sizes, adding up to $`n`$ | 3, 3 and 3 | near-equal sizes give the largest count |
 | $`m`$ | how many unnamed piles share one size | 3 trios | the count shrinks by a factorial |
 | $`C(n; n_1, n_2, \ldots, n_k)`$ | the multinomial coefficient: splits into named piles | 1,680 | — |
-| $`C(n, k)`$ | the binomial coefficient, the two-pile case | C(9,3) = 84 | — |
+| $`C(n, r)`$ | the binomial coefficient, the two-pile case | C(9,3) = 84 | — |
 
 ### When it holds
 
 - **The things being split are distinct.** Nine named players. Where items repeat, the job is [Arranging with repeats](01-multiset-permutations.md).
-- **The sizes are fixed in advance and add up to $`n`$.** Let them vary and the question becomes how many size lists exist, which is [Stars and bars](02-stars-and-bars.md).
-- **Order inside a pile does not count.** Rank each table's three as first, second and third board (an order of play) and the divisions are wrong: the count is 362,880.
+- **The sizes are fixed in advance and add up to $`n`$.** Let the pile sizes vary and each player picks any named table freely: $`3^9 = 19,683`$ ways, or [Onto functions](../04-Inclusion-Exclusion%20and%20Pigeonhole/03-counting-surjections.md) if no table is empty. For unnamed non-empty piles, see [Stirling numbers of the second kind](../08-Partitions/04-stirling-numbers-second-kind.md). Counting only the possible size lists is [Stars and bars](02-stars-and-bars.md).
+- **Order inside a pile does not count.** Rank each table's three as first, second and third in the serving order, and the divisions are wrong: the count is 362,880.
 - **Only equal-sized unnamed piles get the extra division.** Piles of 4, 3 and 2 cannot be mistaken for each other, so named and unnamed agree at 1,260; dividing anyway gives 210.
 
 ---
@@ -735,7 +735,7 @@ example : Nat.factorial 9 / (Nat.factorial 3 * Nat.factorial 6) *
 > Guess first, then run it. The asserts are pinned to three trios, so expect one to stop the program.
 > - **Four tables: three, three, two and one.** Set `EVEN` to `(3, 3, 2, 1)`. The named count is 5,040, and since only the two trios can trade places the unnamed count is 2,520. The first assert stops the run: road three is wired to three trios.
 > - **Tables of five, three and one.** Set `ODD` to `(5, 3, 1)`. Nothing breaks: the run prints 504 as both counts, since no two piles share a size.
-> - **Rank the boards.** In `by_factorials`, drop the division by each pile's factorial. The count becomes 362,880, a count of line-ups, and the first assert stops the run.
+> - **Order the players at each table.** In `by_factorials`, drop the division by each pile's factorial. The count becomes 362,880, a count of line-ups, and the first assert stops the run.
 
 ---
 
@@ -765,14 +765,17 @@ example : Nat.factorial 9 / (Nat.factorial 3 * Nat.factorial 6) *
 
 ## What this builds on
 
+- [Factorials](../01-Counting%20Principles/03-factorial.md): the line-up count $`n!`$ that every split starts from, and the shuffles inside each pile that are divided out.
+- [Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md): choosing one table at a time, the two-pile case and the card's second road.
 - [Arranging with repeats](01-multiset-permutations.md): dividing a line-up count by the shuffles that change nothing, the move this card makes pile by pile.
 
 ## Where this goes next
 
+- [Round tables and bracelets](04-circular-arrangements.md): the same divide-by-overcount move when positions sit in a circle rather than in piles.
 - [The binomial theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md): the same coefficients appear when a sum is raised to a power, the two-term case first and the many-term case citing this card.
 - [Multinomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/05-multinomial.md): a chance attached to each pile, so this count becomes one factor in the chance of a tally.
 
-Every split counted here stands equal with every other, which the world rarely allows; what changes when each pile carries its own weight is where [Multinomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/05-multinomial.md) begins.
+Every count here divided out shuffles inside piles or between equal piles. When the items sit in a loop and turning the loop counts as the same arrangement, [Round tables and bracelets](04-circular-arrangements.md) applies the same division rule.
 
 ---
 

@@ -48,7 +48,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 02 · Repeats, Groups and Double Counting · 6 cards
 
-*Arrangements with repeated items, distributing identical items (stars and bars, compositions), splitting into named and unnamed groups, circular arrangements, and proving a count by bijection or by counting twice.*
+*Arrangements with repeated items, distributing identical items (stars and bars, compositions), splitting into named and unnamed groups, circular arrangements, proving a count by bijection or by counting twice, and Pólya counting with the cycle index.*
 
 1. [Arranging with repeats: divide out the orderings of the identical copies](02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md)
 2. [Stars and bars: identical items into labelled boxes, counted by placing dividers](02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md)

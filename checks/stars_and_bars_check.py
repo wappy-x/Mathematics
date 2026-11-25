@@ -37,20 +37,20 @@ comps = [c for k in range(1, TARGET + 1) for c in tubs_listed(TARGET, k, 1)]
 listed = [len(tubs_listed(TARGET, k, 1)) for k in range(1, TARGET + 1)]
 formula = [choose(TARGET - 1, k - 1) for k in range(1, TARGET + 1)]
 shapes = {tuple(sorted(t, reverse=True)) for t in tubs}
-shown = [(5, 0, 0), (2, 0, 3), (0, 5, 0), (1, 2, 2)]
+shown, slots, bars = [(5, 0, 0), (2, 0, 3), (0, 5, 0), (1, 2, 2)], SCOOPS + FLAVOURS - 1, FLAVOURS - 1
 print(f"{SCOOPS} scoops across {FLAVOURS} flavours, a flavour may be skipped")
 print("  four tubs written out: " + ", ".join(f"{t} -> {picture(t)}" for t in shown))
 print(f"  every tub listed: {len(tubs)}")
-print(f"  {SCOOPS} stars and {FLAVOURS - 1} bars in {SCOOPS + FLAVOURS - 1} slots: {len(rows)} rows, "
-      f"the same list: {'yes' if tubs == rows else 'no'}; C(7, 2) = {choose(7, 2)}")
+print(f"  {SCOOPS} stars and {bars} bars in {slots} slots: {len(rows)} rows, "
+      f"the same list: {'yes' if tubs == rows else 'no'}; C({slots}, {bars}) = {choose(slots, bars)}")
 print(f"  chocolate 0 to {SCOOPS}, the rest shared by two flavours: {ladder}, adding to {sum(ladder)}")
 print(f"{TINS} tins on {SHELVES} shelves, no shelf left empty")
-print(f"  every arrangement listed: {len(full)}; C(11, 2) = {choose(11, 2)}")
+print(f"  every arrangement listed: {len(full)}; C({TINS - 1}, {SHELVES - 1}) = {choose(TINS - 1, SHELVES - 1)}")
 print(f"  one tin to each shelf first, then {TINS - SHELVES} shared with empties allowed: {len(gift)}")
 print(f"{TARGET} as an ordered sum of positive parts: {len(comps)} ways")
 print(f"  split by number of parts, listed: {listed}")
-print(f"  split by number of parts, from C(5, parts - 1): {formula}")
-print(f"  cut or leave each of the {TARGET - 1} gaps: 2 x 2 x 2 x 2 x 2 = {2 ** (TARGET - 1)}")
+print(f"  split by number of parts, from C({TARGET - 1}, parts - 1): {formula}")
+print(f"  cut or leave each of the {TARGET - 1} gaps: {' x '.join(['2'] * (TARGET - 1))} = {2 ** (TARGET - 1)}")
 print(f"wrong turns on the {SCOOPS}-scoop tub: C(7, 3) = {choose(7, 3)}, C(5, 2) = {choose(5, 2)}, "
       f"C(4, 2) = {choose(4, 2)}, flavours left unlabelled = {len(shapes)}")
 assert tubs == rows and len(tubs) == choose(SCOOPS + FLAVOURS - 1, FLAVOURS - 1)

@@ -36,7 +36,7 @@ Rubbing out the numbers sends 720 orderings onto 60 bars, twelve onto each.
 
 Two pieces of notation, both from the shelf before. The factorial $`n!`$ means $`n`$ × ($`n`$ − 1) × … × 1, the number of orderings of $`n`$ distinct things ([Factorials](../01-Counting%20Principles/03-factorial.md)). The binomial coefficient $`C(n, k)`$, read "n choose k", counts the ways of picking k positions out of $`n`$, order ignored ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
 
-Let the line hold $`n`$ items of $`m`$ kinds: $`a_1`$ copies of the first kind, $`a_2`$ of the second, and so on to $`a_m`$ of the last, the copies together filling the line, so that $`a_1`$ + $`a_2`$ + … + $`a_m`$ = $`n`$.
+Let the line hold $`n`$ items of $`m`$ kinds: $`a_1`$ copies of the first kind, $`a_2`$ of the second, and so on to $`a_m`$ of the last. Together the copies fill the line, so $`a_1`$ + $`a_2`$ + … + $`a_m`$ = $`n`$.
 
 ```math
 \text{distinct arrangements} \;=\; \frac{n!}{a_1!\,a_2!\cdots a_m!}
@@ -114,7 +114,7 @@ Each numerator cancels the denominator before it, the last leftover being 0! = 1
 
 </details>
 
-A third road runs through algebra. Multiply (K + S + H) by itself six times and collect terms: the number in front of the term carrying three K's, two S's and one H is 60, since that term is built once per bar. Reading counts off a product is what [Exponential generating functions](../07-Generating%20Functions/04-exponential-generating-functions.md) are built for.
+A third road runs through algebra. Multiply (K + S + H) by itself six times and collect terms. The coefficient of three K's, two S's and one H is 60, built once per bar. That is the many-term version of [The binomial theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md); when counts also vary from a larger pool, [Exponential generating functions](../07-Generating%20Functions/04-exponential-generating-functions.md) handle the product.
 
 ---
 
@@ -151,7 +151,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Each count is reached three ways that share no arithmetic: the factorial formula; a product of binomial coefficients from Pascal's triangle, built by addition alone and never dividing; and a listing that builds every distinct arrangement one at a time. A second worked case counts the shortest routes across a street grid.
+Nothing is imported. Each count is reached three ways that share no arithmetic: the factorial formula, a product of binomial coefficients, and a listing that builds every arrangement one at a time.
+
+The binomial coefficients come from Pascal's triangle — the table built by adding the two entries above ([Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md)) — using addition alone. A third case counts the shortest routes across a street grid.
 
 ### Python
 
@@ -178,31 +180,31 @@ def choose(n, k):                             # Pascal's triangle: addition only
         row = [1] + [row[i] + row[i + 1] for i in range(len(row) - 1)] + [1]
     return row[k]
 def by_positions(counts):                     # road two: one kind's places at a time
-    left, steps, out = sum(counts), [], 1
+    left, steps, labels, out = sum(counts), [], [], 1
     for a in counts:
-        steps.append(choose(left, a))
-        out *= steps[-1]
-        left -= a
-    return out, steps
+        steps.append(choose(left, a)); labels.append(f"C({left},{a})")
+        out *= steps[-1]; left -= a
+    return out, steps, labels
 def by_listing(counts):                       # road three: build every arrangement
-    if sum(counts) == 0:
-        return 1
+    if sum(counts) == 0: return 1
     return sum(by_listing(counts[:i] + (a - 1,) + counts[i + 1:])
                for i, a in enumerate(counts) if a)
 
-drum_p, drum_s = by_positions(DRUM)
-word_p, word_s = by_positions(WORD)
-inside_drum, inside_word = factorial(3) * factorial(2) * factorial(1), factorial(4) ** 2 * factorial(2)
+drum_p, drum_s, drum_c = by_positions(DRUM)
+word_p, word_s, word_c = by_positions(WORD)
+drum_n, word_n = sum(DRUM), sum(WORD)
+inside_drum, inside_word = factorial(drum_n) // by_formula(DRUM), factorial(word_n) // by_formula(WORD)
 no_division, by_sum = factorial(11), factorial(4) + factorial(4) + factorial(2)
 one_block = no_division // (factorial(4) * factorial(4))
+drum_f, word_f = " x ".join(f"{a}!" for a in DRUM), " x ".join(f"{a}!" for a in WORD if a > 1)
 print(f"factorials in play: 2! = {factorial(2)}, 3! = {factorial(3)}, 4! = {factorial(4)}, 6! = {factorial(6)}, 11! = {no_division}")
 print("drum bar, 6 slots: 3 kicks, 2 snares, 1 hat")
-print(f"  numbered orderings {factorial(6)}, each bar counted 3! x 2! x 1! = {inside_drum} times, {factorial(6)} / {inside_drum} = {by_formula(DRUM)}")
-print(f"  road 2, one kind at a time: C(6,3) x C(3,2) x C(1,1) = {drum_s[0]} x {drum_s[1]} x {drum_s[2]} = {drum_p}")
+print(f"  numbered orderings {factorial(drum_n)}, each bar counted {drum_f} = {inside_drum} times, {factorial(drum_n)} / {inside_drum} = {by_formula(DRUM)}")
+print(f"  road 2, one kind at a time: {' x '.join(drum_c)} = {' x '.join(map(str, drum_s))} = {drum_p}")
 print(f"  road 3, distinct bars built one by one: {by_listing(DRUM)}")
 print("MISSISSIPPI, 11 letters: M 1, I 4, S 4, P 2")
-print(f"  numbered orderings {no_division}, each word counted 4! x 4! x 2! = {inside_word} times, {no_division} / {inside_word} = {by_formula(WORD)}")
-print(f"  road 2, one kind at a time: C(11,1) x C(10,4) x C(6,4) x C(2,2) = {word_s[0]} x {word_s[1]} x {word_s[2]} x {word_s[3]} = {word_p}")
+print(f"  numbered orderings {factorial(word_n)}, each word counted {word_f} = {inside_word} times, {factorial(word_n)} / {inside_word} = {by_formula(WORD)}")
+print(f"  road 2, one kind at a time: {' x '.join(word_c)} = {' x '.join(map(str, word_s))} = {word_p}")
 print(f"  road 3, distinct words built one by one: {by_listing(WORD)}")
 print(f"grid paths, 5 steps right and 3 steps up: 8! / (5! 3!) = {by_formula((5, 3))}, and C(8,3) = {choose(8, 3)}")
 print(f"mistake 1, no division at all: {no_division}")
@@ -217,7 +219,7 @@ assert by_formula((5, 3)) == choose(8, 3) == 56                      # formula m
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-14 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 factorials in play: 2! = 2, 3! = 6, 4! = 24, 6! = 720, 11! = 39916800
@@ -248,8 +250,8 @@ Same numbers, same labels, built with `rustc --edition 2021 -O`.
 // and the eleven letters of MISSISSIPPI.  Each count is reached three ways that
 // share no arithmetic: the factorial formula, a product of binomial
 // coefficients built by addition alone, and a listing of the arrangements.
-const DRUM: [u64; 3] = [3, 2, 1];
-const WORD: [u64; 4] = [1, 4, 4, 2];
+const DRUM: &[u64] = &[3, 2, 1];
+const WORD: &[u64] = &[1, 4, 4, 2];
 fn factorial(m: u64) -> u64 {                 // road one's only ingredient
     let mut out = 1;
     for i in 2..=m { out *= i }
@@ -268,45 +270,45 @@ fn choose(n: u64, k: usize) -> u64 {          // Pascal's triangle: addition onl
     }
     row[k]
 }
-fn by_positions(counts: &[u64]) -> (u64, Vec<u64>) {   // road two: one kind's places at a time
-    let (mut left, mut steps, mut out) = (counts.iter().sum::<u64>(), Vec::new(), 1);
+fn by_positions(counts: &[u64]) -> (u64, Vec<u64>, Vec<String>) {   // road two: one kind's places at a time
+    let (mut left, mut steps, mut labels, mut out) = (counts.iter().sum::<u64>(), Vec::new(), Vec::new(), 1);
     for &a in counts {
-        steps.push(choose(left, a as usize));
-        out *= steps[steps.len() - 1];
-        left -= a;
+        steps.push(choose(left, a as usize)); labels.push(format!("C({},{})", left, a));
+        out *= steps[steps.len() - 1]; left -= a;
     }
-    (out, steps)
+    (out, steps, labels)
 }
 fn by_listing(counts: &mut Vec<u64>) -> u64 { // road three: build every arrangement
     if counts.iter().all(|&a| a == 0) { return 1 }
     let mut out = 0;
     for i in 0..counts.len() {
-        if counts[i] > 0 {
-            counts[i] -= 1; out += by_listing(counts); counts[i] += 1;
-        }
+        if counts[i] > 0 { counts[i] -= 1; out += by_listing(counts); counts[i] += 1; }
     }
     out
 }
 fn main() {
-    let (drum_p, drum_s) = by_positions(&DRUM);
-    let (word_p, word_s) = by_positions(&WORD);
-    let (inside_drum, inside_word) = (factorial(3) * factorial(2) * factorial(1), factorial(4) * factorial(4) * factorial(2));
+    let ((drum_p, drum_s, drum_c), (word_p, word_s, word_c)) = (by_positions(DRUM), by_positions(WORD));
+    let (drum_n, word_n) = (DRUM.iter().sum::<u64>(), WORD.iter().sum::<u64>());
+    let (inside_drum, inside_word) = (factorial(drum_n) / by_formula(DRUM), factorial(word_n) / by_formula(WORD));
     let (no_division, by_sum) = (factorial(11), factorial(4) + factorial(4) + factorial(2));
     let one_block = no_division / (factorial(4) * factorial(4));
     let (drum_l, word_l) = (by_listing(&mut DRUM.to_vec()), by_listing(&mut WORD.to_vec()));
+    let drum_f = DRUM.iter().map(|a| format!("{}!", a)).collect::<Vec<_>>().join(" x ");
+    let word_f = WORD.iter().filter(|&&a| a > 1).map(|a| format!("{}!", a)).collect::<Vec<_>>().join(" x ");
+    let join = |v: &[u64]| v.iter().map(|x| x.to_string()).collect::<Vec<_>>().join(" x ");
     println!("factorials in play: 2! = {}, 3! = {}, 4! = {}, 6! = {}, 11! = {}",
              factorial(2), factorial(3), factorial(4), factorial(6), no_division);
     println!("drum bar, 6 slots: 3 kicks, 2 snares, 1 hat");
-    println!("  numbered orderings {}, each bar counted 3! x 2! x 1! = {} times, {} / {} = {}",
-             factorial(6), inside_drum, factorial(6), inside_drum, by_formula(&DRUM));
-    println!("  road 2, one kind at a time: C(6,3) x C(3,2) x C(1,1) = {} x {} x {} = {}",
-             drum_s[0], drum_s[1], drum_s[2], drum_p);
+    println!("  numbered orderings {}, each bar counted {} = {} times, {} / {} = {}",
+             factorial(drum_n), drum_f, inside_drum, factorial(drum_n), inside_drum, by_formula(DRUM));
+    println!("  road 2, one kind at a time: {} = {} = {}",
+             drum_c.join(" x "), join(&drum_s), drum_p);
     println!("  road 3, distinct bars built one by one: {}", drum_l);
     println!("MISSISSIPPI, 11 letters: M 1, I 4, S 4, P 2");
-    println!("  numbered orderings {}, each word counted 4! x 4! x 2! = {} times, {} / {} = {}",
-             no_division, inside_word, no_division, inside_word, by_formula(&WORD));
-    println!("  road 2, one kind at a time: C(11,1) x C(10,4) x C(6,4) x C(2,2) = {} x {} x {} x {} = {}",
-             word_s[0], word_s[1], word_s[2], word_s[3], word_p);
+    println!("  numbered orderings {}, each word counted {} = {} times, {} / {} = {}",
+             factorial(word_n), word_f, inside_word, factorial(word_n), inside_word, by_formula(WORD));
+    println!("  road 2, one kind at a time: {} = {} = {}",
+             word_c.join(" x "), join(&word_s), word_p);
     println!("  road 3, distinct words built one by one: {}", word_l);
     println!("grid paths, 5 steps right and 3 steps up: 8! / (5! 3!) = {}, and C(8,3) = {}",
              by_formula(&[5, 3]), choose(8, 3));
@@ -316,15 +318,15 @@ fn main() {
     println!("mistake 4, counting only where the four S's go, C(11,4): {}", choose(11, 4));
     println!("try changing: 3 kicks and 3 snares gives {}; a second M in MISSISSIPPI gives {}",
              by_formula(&[3, 3]), by_formula(&[2, 4, 4, 2]));
-    assert!(by_formula(&DRUM) == drum_p && drum_p == drum_l && drum_l == 60);
-    assert!(by_formula(&WORD) == word_p && word_p == word_l && word_l == 34650);
-    assert!(one_block == 2 * by_formula(&WORD) && one_block == 69300);
+    assert!(by_formula(DRUM) == drum_p && drum_p == drum_l && drum_l == 60);
+    assert!(by_formula(WORD) == word_p && word_p == word_l && word_l == 34650);
+    assert!(one_block == 2 * by_formula(WORD) && one_block == 69300);
     assert!(by_formula(&[5, 3]) == choose(8, 3) && choose(8, 3) == 56);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-14 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 factorials in play: 2! = 2, 3! = 6, 4! = 24, 6! = 720, 11! = 39916800
@@ -550,9 +552,9 @@ example : 12 ! / (2 ! * 4 ! * 4 ! * 2 !) = 207900 := by decide
 > [!warning]
 > **Dividing by the number of repeated letters instead of by each block's factorial.** Counting the repeated letters in MISSISSIPPI and dividing 39,916,800 once by that total is not the answer. The divisor is 4! for the I's times 4! for the S's times 2! for the P's: 1,152, giving 34,650.
 >
-> - **Adding the blocks instead of multiplying.** 4! + 4! + 2! = 50 gives 798,336. Each block's shuffles combine with every other block's, and combining is multiplying.
-> - **Forgetting the smallest block.** Dividing by 4! and 4! alone gives 69,300, exactly double, because the two P's are still being told apart.
-> - **Stopping after one kind.** C(11, 4) = 330 places the four S's and leaves seven letters in a heap.
+> - **Adding the blocks instead of multiplying.** Each block's shuffles combine with every other block's, and combining choices means multiplying, not adding.
+> - **Forgetting a small repeated block.** Leaving out even a pair's 2! still treats those two copies as distinct and doubles the answer.
+> - **Stopping after placing one kind.** Choosing the slots for one letter leaves the remaining letters unplaced.
 
 ---
 

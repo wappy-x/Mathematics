@@ -59,16 +59,17 @@ fn main() {
     println!("{} scoops across {} flavours, a flavour may be skipped", SCOOPS, FLAVOURS);
     println!("  four tubs written out: {}", four.join(", "));
     println!("  every tub listed: {}", tubs.len());
-    println!("  {} stars and {} bars in {} slots: {} rows, the same list: {}; C(7, 2) = {}", SCOOPS,
-             FLAVOURS - 1, SCOOPS + FLAVOURS - 1, rows.len(), if tubs == rows { "yes" } else { "no" }, choose(7, 2));
+    let (slots, bars) = (SCOOPS + FLAVOURS - 1, FLAVOURS - 1);
+    println!("  {} stars and {} bars in {} slots: {} rows, the same list: {}; C({}, {}) = {}", SCOOPS,
+             bars, slots, rows.len(), if tubs == rows { "yes" } else { "no" }, slots, bars, choose(slots, bars));
     println!("  chocolate 0 to {}, the rest shared by two flavours: {:?}, adding to {}", SCOOPS, ladder, sum_ladder);
     println!("{} tins on {} shelves, no shelf left empty", TINS, SHELVES);
-    println!("  every arrangement listed: {}; C(11, 2) = {}", full.len(), choose(11, 2));
+    println!("  every arrangement listed: {}; C({}, {}) = {}", full.len(), TINS - 1, SHELVES - 1, choose(TINS - 1, SHELVES - 1));
     println!("  one tin to each shelf first, then {} shared with empties allowed: {}", TINS - SHELVES, gift.len());
     println!("{} as an ordered sum of positive parts: {} ways", TARGET, comps.len());
     println!("  split by number of parts, listed: {:?}", listed);
-    println!("  split by number of parts, from C(5, parts - 1): {:?}", formula);
-    println!("  cut or leave each of the {} gaps: 2 x 2 x 2 x 2 x 2 = {}", TARGET - 1, 1i64 << (TARGET - 1));
+    println!("  split by number of parts, from C({}, parts - 1): {:?}", TARGET - 1, formula);
+    println!("  cut or leave each of the {} gaps: {} = {}", TARGET - 1, vec!["2"; (TARGET - 1) as usize].join(" x "), 1i64 << (TARGET - 1));
     println!("wrong turns on the {}-scoop tub: C(7, 3) = {}, C(5, 2) = {}, C(4, 2) = {}, \
 flavours left unlabelled = {}", SCOOPS, choose(7, 3), choose(5, 2), choose(4, 2), shapes.len());
     assert!(tubs == rows && tubs.len() as i64 == choose(SCOOPS + FLAVOURS - 1, FLAVOURS - 1));
