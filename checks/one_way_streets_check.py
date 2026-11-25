@@ -12,7 +12,7 @@ tries = next(i for i, p in enumerate(primes) if n % p == 0)              # trial
 row("primes tried before 1,009 turns up", tries)
 row("the check, going back: 1022117 / 1009", n // primes[tries])
 fast, steps = 1, 0
-for bit in bin(SECRET)[2:]:                     # square and multiply; the first squaring, of 1, is free
+for bit in bin(SECRET)[2:]:                     # square and multiply: 10 squarings, 5 multiplies
     fast, steps = fast * fast % CLOCK, steps + 1
     if bit == "1": fast, steps = fast * BASE % CLOCK, steps + 1
 slow, back = 1, 0
@@ -26,5 +26,5 @@ stop100 = sum(1 for p in primes if p < 100 and n % p == 0)   # trial division st
 print(f"the three mistakes come out at {stop100}, {4 * 4} and {fast * inv % CLOCK}")
 assert n == 1022117 and primes[tries] == A and n // primes[tries] == B
 assert tries == 168 and all(n % p for p in primes[:tries]) and inv == 367 and stop100 == 0
-assert fast == 956 and slow == fast and back == SECRET and fast * inv % CLOCK == 729
+assert fast == 956 and steps == 15 and slow == fast and back == SECRET and fast * inv % CLOCK == 729
 print("ALL CHECKS PASS")

@@ -78,6 +78,8 @@ Base 137 gives 188, then 205: not 1, never 221 − 1. No prime could do that, so
 
 For any odd composite, at least three in four bases are witnesses — taken on trust here. On 221 it is generous: 214 witnesses, 6 liars. Fermat is fooled by 16.
 
+Carmichael numbers fall too. On 561, from [The Fermat test](04-fermat-test-and-carmichael.md), 560 = 16 × 35, and base 2's chain is 263, 166, 67, 1. 67 squares to 1, so 2 is a witness. Only 10 of 560 bases lie.
+
 Bases are drawn fresh, so doubts multiply: one leaves one chance in 4, two one in 16, twenty less than the machine miscounting.
 
 <details>
@@ -120,11 +122,11 @@ Nothing is imported. Every power on show is taken twice — square-and-multiply,
 # 220 = 4 x 55, so every chain is one power then one squaring.  174 lies; 18 fools the
 # older Fermat test and is caught here; 137 is caught by both.  Every power taken twice.
 N, D = 221, 55
-def fast(a, e):                  # square and multiply, on the 221 clock
-    r, b = 1, a % N
+def fast(a, e, n=N):             # square and multiply, on the 221 clock unless told otherwise
+    r, b = 1, a % n
     while e:
-        if e % 2: r = r * b % N
-        b = b * b % N; e //= 2
+        if e % 2: r = r * b % n
+        b = b * b % n; e //= 2
     return r
 def slow(a, e):                  # the same power, one multiplication at a time
     r = 1
@@ -140,13 +142,15 @@ for a in (174, 18, 137):
     print(f"base {a:>3}: to the 55th {c[0]:>3}, squared {c[1]:>3} -> {v:<25}; to the 220th {f:>3} -> Fermat says {'prime' if f == 1 else 'composite'}")
 liars, fermat = [a for a in range(1, N) if passes(chain(a))], [a for a in range(1, N) if fast(a, N - 1) == 1]
 print(f"of the 220 bases, {len(fermat)} fool Fermat but only {len(liars)} fool Miller-Rabin; a quarter of 220 is {(N - 1) // 4}")
+c561, lie561 = [fast(2, 35 << k, 561) for k in range(4)], [a for a in range(1, 561) if fast(a, 35, 561) == 1 or any(fast(a, 35 << k, 561) == 560 for k in range(4))]
+print(f"561 = 3 x 11 x 17, a Carmichael number: 560 = 16 x 35, base 2's chain {c561} shows 67, a third root of 1, so a witness; {len(lie561)} of 560 bases lie")
 assert chain(174) == [47, 220] and chain(18) == [86, 103] and chain(137) == [188, 205]
 assert all(fast(a, D) == slow(a, D) for a in range(1, N)) and all(fast(a, 220) == slow(a, 220) for a in (174, 18, 137))
-assert 13 * 17 == N and len(fermat) == 16 and 4 * len(liars) <= N - 1 and len(liars) == 6
+assert 13 * 17 == N and len(fermat) == 16 and 4 * len(liars) <= N - 1 and len(liars) == 6 and c561 == [263, 166, 67, 1] and 67 * 67 % 561 == 1 and len(lie561) == 10
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 221 = 13 x 17, so composite; 220 = 4 x 55, so each chain is a power then a squaring
@@ -155,6 +159,7 @@ base 174: to the 55th  47, squared 220 -> liar, says prime         ; to the 220t
 base  18: to the 55th  86, squared 103 -> witness, proves composite; to the 220th   1 -> Fermat says prime
 base 137: to the 55th 188, squared 205 -> witness, proves composite; to the 220th  35 -> Fermat says composite
 of the 220 bases, 16 fool Fermat but only 6 fool Miller-Rabin; a quarter of 220 is 55
+561 = 3 x 11 x 17, a Carmichael number: 560 = 16 x 35, base 2's chain [263, 166, 67, 1] shows 67, a third root of 1, so a witness; 10 of 560 bases lie
 ALL CHECKS PASS
 ```
 
@@ -168,11 +173,11 @@ Same numbers, built with `rustc --edition 2021 -O`.
 // 18 fools the older Fermat test and is caught here; 137 is caught by both.
 const N: u64 = 221;
 const D: u64 = 55;
-fn fast(a: u64, mut e: u64) -> u64 {   // square and multiply, on the 221 clock
-    let (mut r, mut b) = (1u64, a % N);
+fn fast(a: u64, mut e: u64, n: u64) -> u64 {   // square and multiply, on the n clock
+    let (mut r, mut b) = (1u64, a % n);
     while e > 0 {
-        if e % 2 == 1 { r = r * b % N; }
-        b = b * b % N; e /= 2;
+        if e % 2 == 1 { r = r * b % n; }
+        b = b * b % n; e /= 2;
     }
     r
 }
@@ -181,8 +186,7 @@ fn slow(a: u64, e: u64) -> u64 {       // the same power, one multiplication at 
     for _ in 0..e { r = r * a % N; }
     r
 }
-// the base to the 55th, then that squared
-fn chain(a: u64) -> [u64; 2] { let f = fast(a, D); [f, f * f % N] }
+fn chain(a: u64) -> [u64; 2] { let f = fast(a, D, N); [f, f * f % N] }   // the base to the 55th, then squared
 // not a witness: 1 first, or 220 anywhere
 fn passes(c: [u64; 2]) -> bool { c[0] == 1 || c[0] == N - 1 || c[1] == N - 1 }
 fn main() {
@@ -190,21 +194,23 @@ fn main() {
     let roots: Vec<u64> = (0..N).filter(|x| x * x % N == 1).collect();
     println!("square roots of 1 here: {:?} -- a prime clock has only 1 and {}", roots, N - 1);
     for a in [174u64, 18, 137] {
-        let (c, f) = (chain(a), fast(a, N - 1));
+        let (c, f) = (chain(a), fast(a, N - 1, N));
         let v = if passes(c) { "liar, says prime" } else { "witness, proves composite" };
         println!("base {:>3}: to the 55th {:>3}, squared {:>3} -> {:<25}; to the 220th {:>3} -> Fermat says {}", a, c[0], c[1], v, f, if f == 1 { "prime" } else { "composite" });
     }
     let liars = (1..N).filter(|&a| passes(chain(a))).count() as u64;
-    let fermat = (1..N).filter(|&a| fast(a, N - 1) == 1).count() as u64;
+    let fermat = (1..N).filter(|&a| fast(a, N - 1, N) == 1).count() as u64;
     println!("of the 220 bases, {} fool Fermat but only {} fool Miller-Rabin; a quarter of 220 is {}", fermat, liars, (N - 1) / 4);
+    let (c561, lie561): (Vec<u64>, usize) = ((0..4).map(|k| fast(2, 35 << k, 561)).collect(), (1..561u64).filter(|&a| fast(a, 35, 561) == 1 || (0..4).any(|k| fast(a, 35 << k, 561) == 560)).count());
+    println!("561 = 3 x 11 x 17, a Carmichael number: 560 = 16 x 35, base 2's chain {:?} shows 67, a third root of 1, so a witness; {} of 560 bases lie", c561, lie561);
     assert!(chain(174) == [47, 220] && chain(18) == [86, 103] && chain(137) == [188, 205]);
-    assert!((1..N).all(|a| fast(a, D) == slow(a, D)) && [174u64, 18, 137].iter().all(|&a| fast(a, 220) == slow(a, 220)));
-    assert!(13 * 17 == N && fermat == 16 && 4 * liars <= N - 1 && liars == 6);
+    assert!((1..N).all(|a| fast(a, D, N) == slow(a, D)) && [174u64, 18, 137].iter().all(|&a| fast(a, 220, N) == slow(a, 220)));
+    assert!(13 * 17 == N && fermat == 16 && 4 * liars <= N - 1 && liars == 6 && c561 == vec![263, 166, 67, 1] && 67 * 67 % 561 == 1 && lie561 == 10);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 221 = 13 x 17, so composite; 220 = 4 x 55, so each chain is a power then a squaring
@@ -213,6 +219,7 @@ base 174: to the 55th  47, squared 220 -> liar, says prime         ; to the 220t
 base  18: to the 55th  86, squared 103 -> witness, proves composite; to the 220th   1 -> Fermat says prime
 base 137: to the 55th 188, squared 205 -> witness, proves composite; to the 220th  35 -> Fermat says composite
 of the 220 bases, 16 fool Fermat but only 6 fool Miller-Rabin; a quarter of 220 is 55
+561 = 3 x 11 x 17, a Carmichael number: 560 = 16 x 35, base 2's chain [263, 166, 67, 1] shows 67, a third root of 1, so a witness; 10 of 560 bases lie
 ALL CHECKS PASS
 ```
 
@@ -234,7 +241,7 @@ Lean proves Steps 0 and 2 for every prime and every base below it, then re-check
 - Of the 220 bases, 16 fool Fermat but only 6 fool Miller-Rabin, and 4 × 6 is at most 220.
 - Base 13, a factor of 221, is a witness.
 
-The two roads to each power and the printed lines stay with the Python and Rust checks; Rabin's three-in-four bound stays on trust.
+The two roads to each power, the 561 chain and the printed lines stay with the Python and Rust checks; Rabin's three-in-four bound stays on trust.
 
 ```lean
 -- The Miller-Rabin test: on a prime clock the chain of squarings of any base either starts at 1 or shows one-below the number, so a chain with neither shape proves the number composite, as bases 18 and 137 do for 221 = 13 × 17 while base 174 lies.
@@ -388,11 +395,11 @@ example : 13 ^ 55 % 221 ≠ 1 ∧ 13 ^ 55 % 221 ≠ 220 ∧ 13 ^ 110 % 221 ≠ 2
 
 ## Where this goes next
 
+- [Square roots on a prime clock](06-square-roots-mod-p.md): next on the shelf. It uses Step 0's two roots inside Tonelli-Shanks, and turns extra roots on a two-prime clock into factors.
 - [Randomised algorithms](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/01-randomised-algorithms-and-expectation.md): coin-flipping algorithms and their error bounds.
-- [P and NP](../../24-Computability%20and%20complexity/03-Time%20Complexity/02-p-and-np.md): where fast primality sits among problems computers solve quickly.
+- [BPP](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/03-randomised-complexity-and-bpp.md): where randomised tests like this one sit among the problems computers solve quickly.
 
-Left open: can a number this size be proved prime quickly, with no doubt at all?
-
+Left open: can a number this size be proved prime quickly, with no doubt at all? [BPP](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/03-randomised-complexity-and-bpp.md) answers it. The next card on the shelf turns instead to Step 0's square roots of 1, and asks how to find square roots of any number.
 
 ---
 

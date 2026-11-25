@@ -2,11 +2,11 @@
 # 220 = 4 x 55, so every chain is one power then one squaring.  174 lies; 18 fools the
 # older Fermat test and is caught here; 137 is caught by both.  Every power taken twice.
 N, D = 221, 55
-def fast(a, e):                  # square and multiply, on the 221 clock
-    r, b = 1, a % N
+def fast(a, e, n=N):             # square and multiply, on the 221 clock unless told otherwise
+    r, b = 1, a % n
     while e:
-        if e % 2: r = r * b % N
-        b = b * b % N; e //= 2
+        if e % 2: r = r * b % n
+        b = b * b % n; e //= 2
     return r
 def slow(a, e):                  # the same power, one multiplication at a time
     r = 1
@@ -22,7 +22,9 @@ for a in (174, 18, 137):
     print(f"base {a:>3}: to the 55th {c[0]:>3}, squared {c[1]:>3} -> {v:<25}; to the 220th {f:>3} -> Fermat says {'prime' if f == 1 else 'composite'}")
 liars, fermat = [a for a in range(1, N) if passes(chain(a))], [a for a in range(1, N) if fast(a, N - 1) == 1]
 print(f"of the 220 bases, {len(fermat)} fool Fermat but only {len(liars)} fool Miller-Rabin; a quarter of 220 is {(N - 1) // 4}")
+c561, lie561 = [fast(2, 35 << k, 561) for k in range(4)], [a for a in range(1, 561) if fast(a, 35, 561) == 1 or any(fast(a, 35 << k, 561) == 560 for k in range(4))]
+print(f"561 = 3 x 11 x 17, a Carmichael number: 560 = 16 x 35, base 2's chain {c561} shows 67, a third root of 1, so a witness; {len(lie561)} of 560 bases lie")
 assert chain(174) == [47, 220] and chain(18) == [86, 103] and chain(137) == [188, 205]
 assert all(fast(a, D) == slow(a, D) for a in range(1, N)) and all(fast(a, 220) == slow(a, 220) for a in (174, 18, 137))
-assert 13 * 17 == N and len(fermat) == 16 and 4 * len(liars) <= N - 1 and len(liars) == 6
+assert 13 * 17 == N and len(fermat) == 16 and 4 * len(liars) <= N - 1 and len(liars) == 6 and c561 == [263, 166, 67, 1] and 67 * 67 % 561 == 1 and len(lie561) == 10
 print("ALL CHECKS PASS")

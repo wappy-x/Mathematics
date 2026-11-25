@@ -1,4 +1,4 @@
-# Diffie-Hellman -- the check behind the card.  Nothing is imported.  A group chat
+# Diffie-Hellman -- the check behind the card.  Nothing is imported.  An open line
 # everyone can read: clock 23, base 5.  Mia keeps 6 to herself, Ray keeps 15.
 P, G, MIA, RAY = 23, 5, 6, 15
 def stepwise(base, count, p):          # the plain way: multiply, drop whole clocks

@@ -17,7 +17,7 @@ fn main() {
     row("the check, going back: 1022117 / 1009", n / primes[tries]);
     let (mut fast, mut steps) = (1i64, 0i64);
     let top = 63 - (SECRET as u64).leading_zeros() as i64;
-    for i in (0..=top).rev() {                      // square and multiply; the first squaring, of 1, is free
+    for i in (0..=top).rev() {                      // square and multiply: 10 squarings, 5 multiplies
         fast = fast * fast % CLOCK; steps += 1;
         if (SECRET >> i) & 1 == 1 { fast = fast * BASE % CLOCK; steps += 1; }
     }
@@ -31,6 +31,6 @@ fn main() {
     println!("the three mistakes come out at {}, {} and {}", stop100, 4 * 4, fast * inv % CLOCK);
     assert!(n == 1022117 && primes[tries] == A && n / primes[tries] == B);
     assert!(tries == 168 && primes[..tries].iter().all(|p| n % p != 0) && inv == 367 && stop100 == 0);
-    assert!(fast == 956 && slow == fast && back == SECRET && fast * inv % CLOCK == 729);
+    assert!(fast == 956 && steps == 15 && slow == fast && back == SECRET && fast * inv % CLOCK == 729);
     println!("ALL CHECKS PASS");
 }

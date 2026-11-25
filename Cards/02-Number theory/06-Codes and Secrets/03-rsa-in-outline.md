@@ -14,7 +14,7 @@ You held 2753 back. Raise 2790 to the 2753rd, take the 3233s off, and 65 is back
 
 The pair is a padlock handed out open: anyone can shut it, nobody can open it. 3233 and 17 are the **public key**, 2753 the **private key**. And 3233 is not random: it is 61 × 53, two primes you told nobody.
 
-**Locking is raising to 17 on a 3233 clock and unlocking is raising to 2753, and they undo each other because 17 × 2753 is one past a run of 3120s — the count Euler's theorem sends back to 1.**
+**Lock by raising to 17 on a 3233 clock; unlock by raising to 2753. They undo each other because 17 × 2753 is one past a run of 3120s, and Euler's theorem sends each run back to 1.**
 
 **What kind of fact this is:** a theorem, proved in Why it works: the message comes back. That it stays secret is not proved. It rests on splitting a large clock size being slow.
 
@@ -47,8 +47,8 @@ Making the keys:
 | the two primes | secret, never published | 61 and 53 |
 | the clock size | published; where counting wraps ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)) | 3233 |
 | the hidden count | the numbers up to 3233 sharing no factor above 1 with it ([Euler's totient](../04-Powers%20on%20the%20Clock/03-eulers-totient.md)) | 3120 |
-| the public exponent | how many copies of the message multiply together | 17 |
-| the private exponent | what undoes 17 on a clock of the hidden count ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)) | 2753 |
+| the public exponent, e | how many copies of the message multiply together | 17 |
+| the private exponent, d | what undoes 17 on a clock of the hidden count ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)) | 2753 |
 | the message | a number below the clock size, and what it becomes | 65, then 2790 |
 
 ### When it holds
@@ -78,7 +78,7 @@ Multiply 1 by 65 seventeen times, then multiply 1 by that result 2753 times: 65 
 
 ### Step 3: the hidden count, counted the other way
 
-60 × 52 = 3120 needs 61 and 53. Count the other way: from 1 to 3233, the numbers sharing a factor are the 53 multiples of 61 and the 61 multiples of 53, with 3233 (it is 53 × 61) in both lists, so 3233 − 53 − 61 + 1 = 3120 ([Inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md)).
+60 × 52 = 3120 needs 61 and 53. Count the other way: from 1 to 3233, 53 numbers are multiples of 61 and 61 are multiples of 53. Only 3233 (it is 53 × 61) is in both lists, so 3233 − 53 − 61 + 1 = 3120 ([Inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md)).
 
 An eavesdropper has 3233 and 17. To reach 3120 they must split 3233 into 61 × 53, the slow direction ([One-way streets](01-one-way-streets.md)) — and that is what keeps 2753 private.
 
@@ -412,9 +412,11 @@ example : 3298 = 65 + 3233 ∧ (3298 ^ 17 % 3233) ^ 2753 % 3233 = 65 := by decid
 
 ## Where this goes next
 
-Nothing later rests on this card. The rest of the shelf supplies what it assumed: [The Fermat test](04-fermat-test-and-carmichael.md) and [The Miller-Rabin test](05-miller-rabin.md) find primes the size real keys need.
+- [The Fermat test](04-fermat-test-and-carmichael.md): the quick screen that starts the hunt for primes this big.
+- [The Miller-Rabin test](05-miller-rabin.md): the test real key-makers use to find 300-digit primes.
+- [RSA in full](../../14-Applied%20and%20computational/04-Cryptography/04-rsa-in-full.md): real key sizes, padding, and why factoring is the whole game.
 
-The question this card leaves open: is splitting a large clock size truly slow? Nobody has proved it.
+Left open: how do you test whether a 300-digit number is prime, when trial division would take far too long?
 
 ---
 

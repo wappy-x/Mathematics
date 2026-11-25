@@ -6,13 +6,15 @@
 
 ## General Overview
 
-Mia and Ray share a shed. The padlock takes a number. Their only channel is a group chat with eleven other people: every word they type, everyone reads.
+Mia and Ray have never met. They want a private chat, but every message between them crosses the open internet, where anyone on the way can read it. First they need one secret number to lock the chat.
 
 Paint first. Both start from the same tin of yellow, in plain sight. Mia stirs in her blue, Ray his red, and both jars go on the table. Each then stirs their colour into the other's jar. The jars match; a watcher who copied both cannot unmix them.
 
-From here the paint is a number. The yellow is the **base**, where everyone starts. Stirring is multiplying on a clock: multiply, then take off whole rounds of a fixed size. On a 23 clock, 5 × 5 = 25, one 23 off, reads as 2 ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md), [Adding and multiplying on the clock](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md), [Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)). Lifting a colour out is the **discrete logarithm** — given the answer, find how many times the base went in ([One-way streets](01-one-way-streets.md)). Everyone writes the whole exchange **DH**.
+From here the paint is a number. The yellow is the **base**, where everyone starts. Stirring is multiplying on a clock: multiply, then take off whole rounds of a fixed size. On a 23 clock, 5 × 5 = 25, one 23 off, reads as 2 ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md), [Adding and multiplying on the clock](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md), [Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)).
 
-The chat sees clock size 23 and base 5. Mia keeps the count 6 and posts 8, Ray keeps 15 and posts 19. Both arrive at 2, which never crossed the line.
+Lifting a colour out is the **discrete logarithm** — given the answer, find how many times the base went in ([One-way streets](01-one-way-streets.md)).
+
+Every listener sees clock size 23 and base 5, toy sizes you can follow by hand. Mia keeps the count 6 and posts 8, Ray keeps 15 and posts 19. Both arrive at 2, which never crossed the line.
 
 **Multiply the base into itself Mia's 6 times and then Ray's 15 times, and it lands where the other order lands: two strangers reach a number the open line never carried.**
 
@@ -24,7 +26,7 @@ The chat sees clock size 23 and base 5. Mia keeps the count 6 and posts 8, Ray k
 flowchart LR
   A["clock 23, base 5<br>everyone can read this"] --> B["Mia keeps 6<br>posts 8"]
   A --> C["Ray keeps 15<br>posts 19"]
-  B -->|"Ray multiplies Mia's 8 out 15 times"| D["2, the padlock code"]
+  B -->|"Ray multiplies Mia's 8 out 15 times"| D["2, the shared key"]
   C -->|"Mia multiplies Ray's 19 out 6 times"| D
   B --> E["a listener holds 23, 5, 8, 19<br>and needs a count nobody posted"]
   C --> E
@@ -38,13 +40,13 @@ flowchart LR
 
 **5 multiplied out 6 times, then that answer multiplied out 15 times, is 5 multiplied out 90 times.**
 
-On the 23 clock, whole 23s dropped as you go, both routes land on the shed code:
+On the 23 clock, whole 23s dropped as you go, both routes land on the shared number:
 
 **19 multiplied out 6 times is 2. So is 8 multiplied out 15 times.**
 
 **Read it aloud:** both end up multiplying 5 into itself ninety times, so both land on the same number.
 
-| Piece | Plain meaning | In the group chat |
+| Piece | Plain meaning | On the open line |
 | --- | --- | --- |
 | the clock size | where counting wraps | 23 |
 | the base | what everyone starts multiplying | 5 |
@@ -99,7 +101,7 @@ Clock 23 and base 5, out loud.
 | either way, one pile | ninety 5s, on the 23 clock | **2** |
 | the listener's job | every count 1 to 22, against 8 | 6 |
 
-The padlock is set to 2, agreed in front of eleven readers.
+Mia and Ray now share 2, and no listener ever saw it.
 
 ### What breaks if you drop a piece
 
@@ -118,7 +120,7 @@ Nothing is imported. The exchange runs the plain way, one multiplication at a ti
 ### Python
 
 ```python
-# Diffie-Hellman -- the check behind the card.  Nothing is imported.  A group chat
+# Diffie-Hellman -- the check behind the card.  Nothing is imported.  An open line
 # everyone can read: clock 23, base 5.  Mia keeps 6 to herself, Ray keeps 15.
 P, G, MIA, RAY = 23, 5, 6, 15
 def stepwise(base, count, p):          # the plain way: multiply, drop whole clocks
@@ -150,7 +152,7 @@ assert counts == [MIA] and stepwise(G, MIA + 1, P) == 17 and pm * pr % P == 14 a
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 clock 23 and base 5 are public; Mia keeps 6, Ray keeps 15, and neither is ever posted
@@ -170,8 +172,8 @@ ALL CHECKS PASS
 Same labels, same numbers, built with `rustc --edition 2021 -O`.
 
 ```rust
-// Diffie-Hellman -- the same check as the Python twin, in Rust.  No crates.  A group
-// chat everyone can read: clock 23, base 5.  Mia keeps 6 to herself, Ray keeps 15.
+// Diffie-Hellman -- the same check as the Python twin, in Rust.  No crates.  An open
+// line everyone can read: clock 23, base 5.  Mia keeps 6 to herself, Ray keeps 15.
 const P: i64 = 23;  const G: i64 = 5;
 const MIA: u32 = 6;  const RAY: u32 = 15;
 fn stepwise(base: i64, count: u32, p: i64) -> i64 {   // the plain way: multiply, drop whole clocks
@@ -211,7 +213,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 clock 23 and base 5 are public; Mia keeps 6, Ray keeps 15, and neither is ever posted
@@ -341,7 +343,7 @@ example : (Finset.Icc 1 22).filter (fun c => 2 ^ c % 23 = 18) = {6, 17} := by de
 - [RSA in outline](03-rsa-in-outline.md): the same arithmetic, locking a message rather than agreeing a number.
 - [The Miller-Rabin test](05-miller-rabin.md): where primes big enough to matter come from.
 
-Left open: is working backwards truly slow, or is the fast road just not found yet?
+Left open: can the same powers lock a whole message that only one person can open?
 
 ---
 

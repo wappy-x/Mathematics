@@ -10,7 +10,7 @@ A Bitcoin key is a point on the curve y × y = x cubed + 7, sent as x and one bi
 
 At real size trying all is hopeless, but Bitcoin's prime leaves 3 on division by 4, so one power does it: on 23, 2 to the (23 + 1)/4 = 6th is 64 = 2 × 23 + 18.
 
-On 41, which leaves 1, **Tonelli-Shanks** guesses, then corrects. On a toy Rabin key, 77 = 7 × 11, the message 2 travels as 4; a key holder who unlocks it as 9 leaks the factor 7.
+On 41, which leaves 1, **Tonelli-Shanks** guesses, then corrects. **Rabin encryption** locks a message by squaring it on a clock of two secret primes; unlocking takes a square root. On a toy key, 77 = 7 × 11, the message 2 travels as 4; a key holder who unlocks it as 9 leaks the factor 7.
 
 **On a prime clock a square root costs a few powers; on a clock of two primes, it is as hard as factoring.**
 
@@ -77,7 +77,7 @@ Split p − 1 into its 2s and an odd rest: the rest gives a near-root; the 2s ar
 3. The **fix** is $`z^t`$: 3 to the 5th = 38, of order $`2^s`$ = 8 by Step 0, so it has powers of order 2, 4 and 8.
 4. Take the fix's power whose order is twice the error's: 38 itself. Multiply the guess by it and the error by its square; the error's order at least halves. 8 × 38 lands on 17, the error on 1: 17 × 17 lands on 2.
 
-At most s − 1 rounds finish. Cipolla's method also needs a non-square.
+At most s − 1 rounds finish.
 
 <details>
 <summary>Why the error's order halves</summary>
@@ -92,7 +92,7 @@ The fix power's square has the same order, so it also lands on p − 1 halfway: 
 
 [The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md) pairs a root of 4 on the 7 clock with one on the 11 clock, giving four roots on 77: 2, 9, 68 and 75.
 
-Roots 2 and 9 are **unrelated**: 9 is not 77 − 2. They agree on 7 and differ in sign on 11. So the **gcd** (greatest common divisor) of 9 − 2 and 77 is 7.
+Roots 2 and 9 are **unrelated**: 9 is neither 2 nor 77 − 2. They agree on 7 and differ in sign on 11. So the **gcd** (greatest common divisor) of 9 − 2 and 77 is 7.
 
 A root-finder handed 4 cannot know you began from 2, so half its answers, 9 and 68, give a factor. Knowing 7 and 11, roots are easy: one per clock, stitched.
 
@@ -250,7 +250,7 @@ Lean proves the shortcut, the two roots and the factor gcd on every clock where 
 - On 23 and 41, it re-checks the roots 18, 5, 16 and 17, and the Tonelli-Shanks guesses, errors and fix.
 - On 77, it re-checks the four roots 2, 9, 68 and 75 of 4, and the gcd 7.
 
-Running both methods on every square of 23 and 41 is left to the Python and Rust checks.
+Lean does not prove that Tonelli-Shanks always ends with a root; that rests on the written proof in Step 2. Running both methods on every square of 23 and 41 is left to the Python and Rust checks.
 
 ```lean
 -- Square roots on a prime clock: when p is a prime leaving 3 on division by 4, a^((p+1)/4) is a square root of every square a on the p clock, a nonzero square on an odd prime clock has exactly the two roots x and p - x, and two unrelated square roots of the same number on an n clock give a proper factor of n through a gcd.
@@ -391,12 +391,14 @@ example : Nat.gcd (9 - 2) 77 = 7 ∧ Nat.gcd (68 - 2) 77 = 11 ∧ Nat.gcd (75 - 
 - [The order of a number and primitive roots](../04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md): the order Tonelli-Shanks halves.
 - [The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md): why 4 has four roots on 77.
 - [One-way streets](01-one-way-streets.md): factoring as a one-way street.
+- [The Miller-Rabin test](05-miller-rabin.md): why only 1 and p − 1 square to 1.
 
 ## Where this goes next
 
-Nothing later rests on this card.
+- [Pythagorean triples](../07-For%20the%20Curious/01-pythagorean-triples.md): the next shelf, a detour of classic puzzles, starts with whole-number right triangles.
+- [The Jacobi symbol](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/08-jacobi-symbol-and-computing-without-factoring.md): a square test on 77 that needs no factors, though only its "no" is final.
 
-Left open: can you tell whether a number is a square on 77 without knowing 7 and 11?
+Left open: can you tell whether a number is a square on 77 without knowing 7 and 11? [The Jacobi symbol](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/08-jacobi-symbol-and-computing-without-factoring.md) takes this up. The next shelf is a detour and does not.
 
 ---
 

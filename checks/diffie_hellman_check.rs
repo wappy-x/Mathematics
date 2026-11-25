@@ -1,5 +1,5 @@
-// Diffie-Hellman -- the same check as the Python twin, in Rust.  No crates.  A group
-// chat everyone can read: clock 23, base 5.  Mia keeps 6 to herself, Ray keeps 15.
+// Diffie-Hellman -- the same check as the Python twin, in Rust.  No crates.  An open
+// line everyone can read: clock 23, base 5.  Mia keeps 6 to herself, Ray keeps 15.
 const P: i64 = 23;  const G: i64 = 5;
 const MIA: u32 = 6;  const RAY: u32 = 15;
 fn stepwise(base: i64, count: u32, p: i64) -> i64 {   // the plain way: multiply, drop whole clocks

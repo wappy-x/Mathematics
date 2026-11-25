@@ -111,7 +111,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 06 · Codes and Secrets · 6 cards
 
-*One-way streets, Diffie-Hellman, RSA in outline, and the two primality tests RSA needs. Rests on shelves 2 to 4; no new wing 01 needs beyond exponents.*
+*One-way streets, Diffie-Hellman, RSA in outline, the two primality tests RSA needs, and square roots on prime and composite clocks. Rests on shelves 2 to 4; no new wing 01 needs beyond exponents.*
 
 1. [One-way streets: multiplying two primes and raising to a power on the clock are easy, and undoing them is slow](06-Codes%20and%20Secrets/01-one-way-streets.md)
 2. [Diffie-Hellman key exchange: two strangers agree a secret over an open line using powers on a clock](06-Codes%20and%20Secrets/02-diffie-hellman.md)

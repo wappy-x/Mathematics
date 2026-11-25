@@ -12,7 +12,7 @@ Now the other way. Someone hands you 1,022,117 and says it is two primes multipl
 
 A minute out, an afternoon back, by hand; by machine, both under a second. Give each prime a few hundred digits: the way out is still under a second, the way back a research project. A 240-digit number came apart in 2020, after centuries of processor time.
 
-There is a second street. Multiply 11 by itself 613 times on a **clock** of 1,009: each time the total passes 1,009, drop a whole clock and keep the rest ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)). It lands on 956 — fifteen multiplications, done cleverly. Backwards: 956 is 11 multiplied by itself how many times? The clock threw the size away. You walk: 11, 121, 322, and on, 613 steps.
+There is a second street. Multiply 613 elevens together on a **clock** of 1,009: each time the total passes 1,009, drop a whole clock and keep the rest ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)). It lands on 956 — fifteen multiplications, done cleverly. Backwards: 956 is 11 multiplied by itself how many times? The clock threw the size away. You walk: 11, 121, 322, and on, 613 steps.
 
 Call it a one-way street to picture it. The real name is a **one-way function**: quick to do, slow to undo. Both are used: Diffie-Hellman rests on the clock, RSA on the primes.
 
@@ -130,7 +130,7 @@ tries = next(i for i, p in enumerate(primes) if n % p == 0)              # trial
 row("primes tried before 1,009 turns up", tries)
 row("the check, going back: 1022117 / 1009", n // primes[tries])
 fast, steps = 1, 0
-for bit in bin(SECRET)[2:]:                     # square and multiply; the first squaring, of 1, is free
+for bit in bin(SECRET)[2:]:                     # square and multiply: 10 squarings, 5 multiplies
     fast, steps = fast * fast % CLOCK, steps + 1
     if bit == "1": fast, steps = fast * BASE % CLOCK, steps + 1
 slow, back = 1, 0
@@ -144,11 +144,11 @@ stop100 = sum(1 for p in primes if p < 100 and n % p == 0)   # trial division st
 print(f"the three mistakes come out at {stop100}, {4 * 4} and {fast * inv % CLOCK}")
 assert n == 1022117 and primes[tries] == A and n // primes[tries] == B
 assert tries == 168 and all(n % p for p in primes[:tries]) and inv == 367 and stop100 == 0
-assert fast == 956 and slow == fast and back == SECRET and fast * inv % CLOCK == 729
+assert fast == 956 and steps == 15 and slow == fast and back == SECRET and fast * inv % CLOCK == 729
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 1,009 x 1,013, the easy way               1022117
@@ -186,7 +186,7 @@ fn main() {
     row("the check, going back: 1022117 / 1009", n / primes[tries]);
     let (mut fast, mut steps) = (1i64, 0i64);
     let top = 63 - (SECRET as u64).leading_zeros() as i64;
-    for i in (0..=top).rev() {                      // square and multiply; the first squaring, of 1, is free
+    for i in (0..=top).rev() {                      // square and multiply: 10 squarings, 5 multiplies
         fast = fast * fast % CLOCK; steps += 1;
         if (SECRET >> i) & 1 == 1 { fast = fast * BASE % CLOCK; steps += 1; }
     }
@@ -200,12 +200,12 @@ fn main() {
     println!("the three mistakes come out at {}, {} and {}", stop100, 4 * 4, fast * inv % CLOCK);
     assert!(n == 1022117 && primes[tries] == A && n / primes[tries] == B);
     assert!(tries == 168 && primes[..tries].iter().all(|p| n % p != 0) && inv == 367 && stop100 == 0);
-    assert!(fast == 956 && slow == fast && back == SECRET && fast * inv % CLOCK == 729);
+    assert!(fast == 956 && steps == 15 && slow == fast && back == SECRET && fast * inv % CLOCK == 729);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 1,009 x 1,013, the easy way               1022117
@@ -404,15 +404,15 @@ example : (11 : ZMod 1013) ^ 46 = 1 ∧ ∀ k ∈ Finset.Icc 1 45, (11 : ZMod 10
 - [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md): the clock, and taking whole clocks off.
 - [Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): 15 steps instead of 613.
 - [The order of a number and primitive roots](../04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md): why 11 visits all 1,008 slots.
-- [Linear versus exponential growth](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md): a cost that doubles against one that squares.
+- [Linear versus exponential growth](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md): adding a fixed amount against multiplying by a fixed factor, which is how extra digits grow the hunt.
 
 ## Where this goes next
 
 - [Diffie-Hellman key exchange](02-diffie-hellman.md): the hard direction turned into a shared secret.
 - [RSA in outline](03-rsa-in-outline.md): the same trick with factoring, plus locking and unlocking.
-- [Square roots on a prime clock](06-square-roots-mod-p.md): a one-line formula when p is 3 mod 4, and Tonelli-Shanks for the rest.
+- [Square roots on a prime clock](06-square-roots-mod-p.md): square roots are easy on a prime clock, but on a clock of two primes they are as hard as factoring.
 
-Left open: can a street be one-way for all but its builder?
+Left open: can a street be one-way for all but its builder? [RSA in outline](03-rsa-in-outline.md) answers it. Diffie-Hellman comes first because it needs only the clock.
 
 ---
 

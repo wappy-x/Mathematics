@@ -113,7 +113,7 @@ Base 2 says maybe; base 3 says composite, and that is final.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Testing with base 1 | 1 | 1 to any power is 1: it passes everything |
-| Raising to 341, not 340 | 2 | the other form, true only for primes; 341 is not prime, so a 2 proves nothing |
+| Raising to 341, not 340 | 2 | the other form: a prime lands on the base too, so "not 1" proves nothing, and 341 still passes |
 | Reading a pass as a verdict | calls 341 prime | base 3 answers 56 |
 
 The code prints all three.
@@ -329,8 +329,8 @@ example : ((Finset.range 1729).filter
 > [!TIP]
 > **Try changing**
 > Guess first.
-> - **Move the test to 561.** Swap the 341s for 561, the 340s for 560: base 2 answers 1 too, and the pinned asserts fire.
-> - **Add 1105 to the count.** All 768 of its coprime bases answer 1, as the run prints.
+> - **Move the test to 561.** Swap the 341s for 561, the 340s for 560. Base 2 answers 1 again, but base 3 answers 375: 3 divides 561, so it can never answer 1. The pinned asserts fire.
+> - **Add 2465 to the count.** Print `fermat(2465)`: all 1,792 of its coprime bases answer 1. It is 5 × 17 × 29, another Carmichael number.
 
 ---
 
@@ -349,7 +349,7 @@ example : ((Finset.range 1729).filter
 
 - **Finding a prime for a code.** [RSA in outline](03-rsa-in-outline.md) needs primes nobody has met. This is the cheap screen; the verdict comes from [The Miller-Rabin test](05-miller-rabin.md).
 - **Any screening test.** A fail rules out; a pass only fails to rule out — the converse trap in ordinary clothes ([If-then](../../01-Foundations/05-Logic/02-if-then.md)).
-- **1729.** The taxicab number is Carmichael too, answering 1 to all 1296 coprime bases.
+- **1729.** The "taxicab number", the smallest sum of two cubes in two ways, is Carmichael too, answering 1 to all 1296 coprime bases.
 
 > **Say it back**
 > Pick any base and raise it to one less than the number under test, on that number's clock. A prime forces a landing on 1, so landing elsewhere proves it composite without finding a factor: base 3 lands on 56 and settles 341. Landing on 1 proves nothing: base 2 lands on 1, yet 341 = 11 × 31. Most fakes fall to a second base; the Carmichael numbers, 561 the smallest, answer 1 to every coprime base.
