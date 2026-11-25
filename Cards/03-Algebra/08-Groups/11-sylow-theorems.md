@@ -105,7 +105,10 @@ $`\displaystyle (1 + x)^{p^a m} \equiv (1 + x^{p^a})^m \pmod{p}`$
 
 The coefficient of $`x^{p^a}`$ is $`\binom{p^a m}{p^a}`$ on the left and m on the right. The check prints three cases: 735471 and 3 leave 1 on dividing by 2; 455 and 5 leave 2 on dividing by 3; 3003 and 3 leave 3 on dividing by 5.
 
-A second proof inducts on the size with the class equation ([Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md)): either some class of more than one member has size free of p, and the members fixing one of its members form a smaller subgroup holding $`p^a`$, or p divides the size of the centre (the members that commute with everything). The centre is commutative, so it holds a member of order p (stated here without proof), and the quotient by the subgroup it makes is smaller. By induction that quotient has a subgroup of size $`p^{a-1}`$. Its members are cosets of size p, which together make a subgroup of G of size $`p^a`$ ([The isomorphism theorems](09-isomorphism-theorems-and-correspondence.md)).
+A second proof inducts on the size with the class equation ([Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md)). There are two cases.
+
+- **Some class of more than one member has a size free of p.** The members fixing one of its members form a smaller subgroup whose size $`p^a`$ divides. By induction it holds a subgroup of size $`p^a`$.
+- **Otherwise p divides the size of the centre** (the members that commute with everything). The centre is commutative, so it holds a member of order p (stated here without proof). The quotient by the subgroup that member makes is smaller. By induction that quotient has a subgroup of size $`p^{a-1}`$. Its members are cosets of size p, which together make a subgroup of G of size $`p^a`$ ([The isomorphism theorems](09-isomorphism-theorems-and-correspondence.md)).
 
 </details>
 
@@ -113,7 +116,7 @@ A second proof inducts on the size with the class equation ([Conjugacy and the c
 
 Let one Sylow subgroup P act on all of them by conjugation. P leaves itself untouched.
 
-Suppose P also leaves Q untouched. Then the products $`x * y`$, x in P and y in Q, form a subgroup ([The isomorphism theorems](09-isomorphism-theorems-and-correspondence.md)) of size $`\lvert P\rvert \lvert Q\rvert / \lvert P \cap Q\rvert`$, a power of p. By Lagrange, no subgroup has a power of p above $`p^a`$ as its size, so that subgroup is Q itself. P lies inside it and has the same size, so P = Q.
+Suppose P also leaves Q untouched. Then P lies inside the normaliser N(Q), where Q is normal. So the products $`x * y`$, x in P and y in Q, form a subgroup ([The isomorphism theorems](09-isomorphism-theorems-and-correspondence.md)) of size $`\lvert P\rvert \lvert Q\rvert / \lvert P \cap Q\rvert`$, a power of p. By Lagrange, no subgroup has a power of p above $`p^a`$ as its size, so that subgroup is Q itself. P lies inside it and has the same size, so P = Q.
 
 So exactly one Sylow subgroup is untouched, and Step 0 gives $`n_p \equiv 1 \pmod{p}`$. In S4 the tile's 8 ways keep their own square and swap the other two: orbits of 1 and 2.
 
@@ -162,7 +165,7 @@ Any group of 15 has a member of order 15, so it is the 15-dial.
 | "Divides m" alone, order 15 | n_3 may be 1 or 5 | The remainder rule is what removes 5 |
 | Size 4 as the power of 2 in S4 | 7 subgroups in 3 families | Conjugacy needs the largest power |
 | Any divisor as a size | A4 has 0 subgroups of size 6 | Sylow covers prime powers only |
-| n_3 = 1 at order 21 | 7 subgroups of size 3 in the maps x → ax + b mod 7 | 7 also leaves 1 on dividing by 3 |
+| n_3 = 1 at order 21 | 7 subgroups of size 3 in the 21 maps x → ax + b mod 7, a in 1, 2, 4 | 7 also leaves 1 on dividing by 3 |
 
 The code prints all four.
 

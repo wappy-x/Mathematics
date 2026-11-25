@@ -10,9 +10,11 @@ A square tile can be set down eight ways: four turns and four flips ([Groups](01
 
 Call a quarter turn r and the flip over the diagonal f. Every move is a string of r's and f's, called a **word**. Three rules hold: four quarter turns do nothing, two flips do nothing, and flip, turn, flip back is the reverse turn. These rules shorten any word to one of eight short forms.
 
-Letters plus the rules they obey are a **presentation**: a recipe for a group that lists no members. Von Dyck's theorem tests the recipe against real moves. If the real moves obey every rule, the whole group maps to them, and onto the moves they generate. The rules give at most 8 members, the map onto the tile gives at least 8, so the recipe makes exactly the tile group. The quaternion group, another recipe with 8 members, is a different group.
+Letters plus the rules they obey are a **presentation**: a recipe for a group that lists no members. Von Dyck's theorem tests the recipe against real moves. If the real moves obey every rule, the whole group maps to them, and onto the moves they generate.
 
-**A presentation names a group by its generators (letters) and the rules they obey; von Dyck's theorem says letters sent to members of any group that obey the rules extend to a homomorphism (a map that respects multiplication), so rules bound the size from above and a model from below.**
+The rules give at most 8 members, the map onto the tile gives at least 8, so the recipe makes exactly the tile group. The quaternion group, another recipe with 8 members, is a different group.
+
+**A presentation names a group by letters and rules: the rules bound its size from above, and von Dyck's theorem lets any model obeying them bound it from below.**
 
 **What kind of fact this is:** a definition (the presentation) and a theorem (von Dyck's), proved on this card in Why it works.
 
@@ -731,12 +733,13 @@ example : (Finset.univ.filter fun g : QuaternionGroup 2 => g ≠ 1 ∧ g * g = 1
 
 ## Where this goes next
 
+- [Rings](../09-Rings%20and%20Fields/01-rings.md): the first card of the next shelf; a second operation, multiplication, joins addition.
 - [Van Kampen's theorem](../../17-Topology/04-Homotopy/06-van-kampens-theorem.md): loop groups of glued spaces, produced as presentations.
 - [CW complexes](../../17-Topology/04-Homotopy/07-cw-complexes-and-gluing-cells.md): one relation for each disc glued on.
 - [Nielsen-Schreier](../../17-Topology/04-Homotopy/10-nielsen-schreier-and-covers-of-graphs.md): every subgroup of a free group is free, read off a covering graph.
-- [Root systems and Dynkin diagrams](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/03-root-systems-and-dynkin-diagrams.md): four infinite families and five exceptions.
+- [Root systems and Dynkin diagrams](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/03-root-systems-and-dynkin-diagrams.md): Weyl groups presented by reflections and Coxeter rules; four infinite families and five exceptions.
 
-The question this card leaves: when do two presentations make the same group? No algorithm decides it in general, as Adian and Rabin proved.
+The question this card leaves: when do two presentations make the same group? No algorithm decides it in general, as Adian and Rabin proved. That closes this shelf's one-operation story. The next shelf starts with [Rings](../09-Rings%20and%20Fields/01-rings.md), where a second operation joins the first.
 
 ---
 

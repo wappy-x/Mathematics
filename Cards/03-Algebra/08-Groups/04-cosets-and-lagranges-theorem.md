@@ -106,7 +106,9 @@ Combining a member with itself repeatedly gives a cycle that is a subgroup, of s
 
 ### Step 4: Euler's theorem is the same count
 
-Keep the twelve hours and multiply instead of adding, still wrapping at 12. Most hours lose their undo: no hour times 2 reads 1, since 2 times anything is even. The hours keeping one share no factor with 12 ([Euler's totient](../../02-Number%20theory/04-Powers%20on%20the%20Clock/03-eulers-totient.md)): 1, 5, 7 and 11, which is what phi(12) counts. They combine to give each other and each has an undo inside — a group of size 4, the **units** of the 12-clock.
+Keep the twelve hours and multiply instead of adding, still wrapping at 12. Most hours lose their undo: no hour times 2 reads 1, since 2 times anything is even.
+
+The hours keeping one share no factor with 12 ([Euler's totient](../../02-Number%20theory/04-Powers%20on%20the%20Clock/03-eulers-totient.md)): 1, 5, 7 and 11, which is what phi(12) counts. They combine to give each other and each has an undo inside — a group of size 4, the **units** of the 12-clock.
 
 Step 3 says every member's order divides 4, so four multiplies is a whole number of return trips to 1: each of 1, 5, 7 and 11 to the fourth power reads 1. That is Euler's theorem at this modulus ([Euler's theorem](../../02-Number%20theory/04-Powers%20on%20the%20Clock/04-eulers-theorem.md)), counted in blocks.
 
@@ -496,6 +498,7 @@ example : 2 ^ 12 % 12 = 4 := by norm_num
 ## Where this goes next
 
 - [Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md): maps whose equal-value blocks are one subgroup's cosets.
+- [Normal subgroups and quotient groups](06-normal-subgroups-and-quotient-groups.md): when the blocks combine into a group of their own.
 - [Group actions](08-group-actions-and-counting.md): equal blocks counting arrangements.
 - [Covering spaces](../../17-Topology/04-Homotopy/05-covering-spaces.md): the index counting sheets above a space.
 - [The Galois correspondence](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/05-galois-groups-and-the-fundamental-theorem.md): subgroups sized by the index.
@@ -504,10 +507,10 @@ example : 2 ^ 12 % 12 = 4 := by norm_num
 - [The Sylow theorems](11-sylow-theorems.md): for the largest prime power dividing a group's size, subgroups of exactly that size exist, are all conjugate, and number 1 more than a multiple of p.
 - [A_n is simple for n at least 5](13-simplicity-of-alternating-groups.md): the even shuffles have no normal subgroup to collapse by, which is the group-theory heart of the quintic.
 - [Nielsen-Schreier](../../17-Topology/04-Homotopy/10-nielsen-schreier-and-covers-of-graphs.md): every subgroup of a free group is free, read off a covering graph.
-- [Hecke operators](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/11-hecke-operators-and-eigenforms.md): averaging a modular form over matrices of determinant n, and why tau is multiplicative.
-- [Small doubling](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/10-plunnecke-ruzsa-and-freiman.md): Plunnecke-Ruzsa bounds every sum of copies, and Freiman finds the progression inside.
+- [Hecke operators](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/11-hecke-operators-and-eigenforms.md): the index of a subgroup of matrices, and the matrices of determinant n split into cosets, one sum per block.
+- [Small doubling](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/10-plunnecke-ruzsa-and-freiman.md): a subgroup is a set that does not grow when added to itself, and sets that barely grow sit inside a few of its slid copies.
 
-The blocks are so far a list of sets with no way to combine two of them; when they form a group of their own is [Normal subgroups and quotient groups](06-normal-subgroups-and-quotient-groups.md).
+The blocks are so far a list of sets with no way to combine two of them. The next card, [Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md), meets them as the sets a map sends to one value. When they form a group of their own is [Normal subgroups and quotient groups](06-normal-subgroups-and-quotient-groups.md).
 
 ---
 

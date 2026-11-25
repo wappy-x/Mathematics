@@ -124,7 +124,7 @@ Out-of-order pairs are a second road to the label: r has two, so it is even; the
 
 Lengths add when chains join, so even with even is even. The even shuffles close under the operation and hold each other's undos. They form a group inside $`S_n`$, the **alternating group**, exactly half of it from two places up: in $`S_3`$, e with (1 2 3) and (1 3 2).
 
-Written as +1 for even and −1 for odd, the label multiplies when shuffles compose; the map it becomes belongs to [Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md).
+Written as +1 for even and −1 for odd, the label multiplies when shuffles compose. A map that respects the operation like this is a homomorphism, the subject of [Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md).
 
 <details>
 <summary>Every finite group is a group of shuffles</summary>
@@ -545,6 +545,7 @@ example : ¬ Function.Bijective (![1, 1, 0] : Fin 3 → Fin 3) := by decide
 
 ## Where this goes next
 
+- [Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md): the next card; why a subgroup's size, like 3 of 6 or 8 of 24, always divides the group's.
 - [Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md): maps that respect the operation.
 - [Group actions](08-group-actions-and-counting.md): counting what symmetry repeats.
 - [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): why five roots refuse to break up.
@@ -555,7 +556,7 @@ example : ¬ Function.Bijective (![1, 1, 0] : Fin 3 → Fin 3) := by decide
 - [A_n is simple for n at least 5](13-simplicity-of-alternating-groups.md): the even shuffles have no normal subgroup to collapse by, which is the group-theory heart of the quintic.
 - [Polya counting](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/06-polya-enumeration.md): record each move's cycles in one polynomial, the cycle index, and substitute colours to count patterns by type.
 
-Even and odd is a label this card computes but cannot use: a later card makes it a map from $`S_n`$ onto a two-member group, and such maps are how groups are compared.
+The 3 even shuffles sit inside the 6 of $`S_3`$, and the tile's 8 rigid moves inside the 24 corner shuffles: each subgroup's size divides the group's. Is that always so? The next card, [Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md), proves it is.
 
 ---
 

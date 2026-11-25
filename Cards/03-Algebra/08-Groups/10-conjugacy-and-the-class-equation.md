@@ -543,11 +543,11 @@ example : (Finset.univ.image (fun x : Equiv.Perm (Fin 3) =>
 
 ## Where this goes next
 
-- [The Sylow theorems](11-sylow-theorems.md): the class equation and the prime-power centre, used to find subgroups of every prime-power size that divides the group's size.
+- [The Sylow theorems](11-sylow-theorems.md): the class equation and the prime-power centre, used to find subgroups of the largest prime-power size that divides the group's size.
 - [A_n is simple for n at least 5](13-simplicity-of-alternating-groups.md): a normal subgroup is a union of whole classes, and in A5 the class sizes rule out all but the trivial two.
 - [Composition series](14-composition-series-and-jordan-holder.md): chains of normal subgroups, of which the upper central series is one.
 
-How many different groups of a given prime-power size exist is the question this card leaves open.
+In a prime-power group the class equation forces a centre. The next card, [The Sylow theorems](11-sylow-theorems.md), turns the same counting on any finite group, to find subgroups of the largest prime-power size dividing its size.
 
 ---
 

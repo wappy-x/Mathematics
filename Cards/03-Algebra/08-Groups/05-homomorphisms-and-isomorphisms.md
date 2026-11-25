@@ -34,7 +34,9 @@ The top route adds, then translates; the bottom translates, then adds. A homomor
 
 ## The formula
 
-A group is a set with one operation, as in [Groups](01-groups.md). Combining never leaves the set, brackets can be moved, one member changes nothing, and every member can be undone. Where the operation could be either group's, this wing writes it as a star: $`a * b`$ means "combine these two as this group does". Call the group translated from $`G`$, the one translated into $`H`$, the translation $`f`$. Then $`f`$ is a homomorphism when
+A group is a set with one operation, as in [Groups](01-groups.md). Combining never leaves the set, brackets can be moved, one member changes nothing, and every member can be undone.
+
+Where the operation could be either group's, this wing writes it as a star: $`a * b`$ means "combine these two as this group does". Call the group translated from $`G`$, the one translated into $`H`$, the translation $`f`$. Then $`f`$ is a homomorphism when
 
 ```math
 f(a * b) = f(a) * f(b)
@@ -56,7 +58,9 @@ Both clocks add, one wrapping at 24 and one at 12. The map takes the remainder o
 | $`a^{-1}`$ | the member that undoes $`a`$ | 13 undoes 11 | no inverse, no group |
 | $`\ker f`$, $`f(G)`$ | the kernel and the image, below | {0, 12}, all 12 readings | a bigger kernel, a smaller image |
 
-The **kernel**, $`\ker f`$, holds the members of $`G`$ sent to the identity of $`H`$: the readings with remainder zero, 0 and 12. The **image**, $`f(G)`$, holds what $`f`$ reaches: all twelve readings. An **isomorphism** is a homomorphism that is one-to-one (no two members land in the same place) and onto (every member of $`H`$ is reached) — a bijection, from [One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md).
+The **kernel**, $`\ker f`$, holds the members of $`G`$ sent to the identity of $`H`$: the readings with remainder zero, 0 and 12. The **image**, $`f(G)`$, holds what $`f`$ reaches: all twelve readings.
+
+An **isomorphism** is a homomorphism that is one-to-one (no two members land in the same place) and onto (every member of $`H`$ is reached) — a bijection, from [One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md).
 
 ### When it holds
 
@@ -82,7 +86,9 @@ That is already a test: shifting every reading up by one sends 0 to 1, so it is 
 
 Combine one member with the inverse of another. Their translations cancel exactly when the two landed in the same place, so the combination lies in the kernel exactly when the two collide. Hence a homomorphism is one-to-one exactly when its kernel holds nothing but the identity.
 
-Here the kernel is {0, 12}, so each reading has two sources: 11 comes from 11 and from 23. Twelve pairs, and 24 divided by 2 is 12, the size of the image. The pairs are cosets of the kernel from [Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md), which is why they match in size. A coset is one reading added to each member of the kernel: {11, 23} is 11 + 0 and 11 + 12. The kernel is itself a subgroup, a group inside a group, from [Subgroups and cyclic groups](02-subgroups-and-cyclic-groups.md).
+Here the kernel is {0, 12}, so each reading has two sources: 11 comes from 11 and from 23. Twelve pairs, and 24 divided by 2 is 12, the size of the image.
+
+The pairs are cosets of the kernel from [Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md), which is why they match in size. A coset is one reading added to each member of the kernel: {11, 23} is 11 + 0 and 11 + 12. The kernel is itself a subgroup, a group inside a group, from [Subgroups and cyclic groups](02-subgroups-and-cyclic-groups.md).
 
 ### Step 3: an isomorphism is a translation with nothing lost
 
@@ -525,7 +531,7 @@ example : [1, 3, 5, 7].map (fun u => (List.range' 1 8).find? (fun n => u ^ n % 8
 
 - [Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md): the equal-sized pieces a subgroup cuts a group into.
 - [Permutations](03-permutations-and-the-symmetric-group.md): turns recorded as where corners land, and composed.
-- [Functions](../../01-Foundations/08-Relations%20and%20Functions/02-functions.md): what a map is, and when it has an inverse.
+- [Functions](../../01-Foundations/08-Relations%20and%20Functions/02-functions.md): what a map is: where it starts, where it lands, and what it reaches.
 - [One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md): maps that lose nothing and miss nothing, the two conditions an isomorphism adds.
 
 ## Where this goes next

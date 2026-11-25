@@ -133,7 +133,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 08 · Groups · 15 cards
 
-*The four group rules and the first examples, subgroups and cyclic groups with the order of an element, permutations and the symmetric group, cosets and Lagrange's theorem with Euler's theorem as the payoff, homomorphisms and isomorphisms, normal subgroups and quotient groups, direct products, group actions and counting orbits. Introduces group notation in words on the first card; leans on wing 02 clock arithmetic throughout.*
+*The four group rules and first examples, subgroups and cyclic groups, permutations, cosets and Lagrange's theorem with Euler's theorem as the payoff, homomorphisms and isomorphisms, normal subgroups and quotient groups, direct products, group actions and counting orbits, the isomorphism and correspondence theorems, conjugacy and the class equation, the Sylow theorems, semidirect products, the simplicity of A_n for n at least 5, composition series and Jordan-Holder, and group presentations. Introduces group notation in words on the first card; leans on wing 02 clock arithmetic throughout.*
 
 1. [Groups: one operation, four rules, and the same rules behind clocks, shuffles and symmetries](08-Groups/01-groups.md)
 2. [Subgroups and cyclic groups: a group inside a group, and the groups one element generates by repeating itself](08-Groups/02-subgroups-and-cyclic-groups.md)

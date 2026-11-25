@@ -10,7 +10,9 @@ A 12-hour clock is a group: the hours 0 to 11, added with wrap-round. Call it Z 
 
 Start again with the multiples of 3 (four hours), then of 6 (two hours), then 0. Now the factors are 3, 2 and 2. The order changed; the pieces did not, just as 12 = 2 × 2 × 3 has one prime factorisation however it is found.
 
-A **composition series** breaks a group down until no step can be split further. The **Jordan-Holder theorem** says every such breakdown of a finite group gives the same pieces. The pieces then decide whether the group is **solvable**. The shuffles of 4 cards break into pieces of sizes 2, 3, 2, 2, all prime: solvable. The shuffles of 5 cards hit a piece of size 60 that cannot split: not solvable, which is why the general fifth-degree equation has no formula in roots.
+A **composition series** breaks a group down until no step can be split further. The **Jordan-Holder theorem** says every such breakdown of a finite group gives the same pieces.
+
+The pieces then decide whether the group is **solvable**. The shuffles of 4 cards break into pieces of sizes 2, 3, 2, 2, all prime: solvable. The shuffles of 5 cards hit a piece of size 60 that cannot split: not solvable, which is why the general fifth-degree equation has no formula in roots.
 
 **Every finite group breaks down, one unsplittable step at a time, into simple pieces, and the list of pieces is the same however the breakdown is done.**
 
@@ -125,7 +127,7 @@ Refine a chain with commutative pieces until each step is simple. Each new piece
 <details>
 <summary>The second road: commutators</summary>
 
-The **commutator** of a and b is a, then b, then the undo of a, then the undo of b: do-nothing exactly when a and b commute. All commutators generate the **commutator subgroup**.
+The **commutator** of a and b is $`a b a^{-1} b^{-1}`$: undo b, undo a, then b, then a, rightmost first. It is do-nothing exactly when a and b commute. All commutators generate the **commutator subgroup**.
 
 If G/N commutes, every commutator lands in N. So down a chain with commutative pieces, repeated commutator subgroups reach 1; and the repeated commutator subgroups themselves form such a chain. That gives the test used on [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md). For S4 the sizes run 24, 12, 4, 1. For S5 they run 120, then 60, and A5's commutators give A5 again: stuck at 60.
 
@@ -145,7 +147,7 @@ If G/N commutes, every commutator lands in N. So down a chain with commutative p
 | S5 route | 120 ÷ 60, 60 ÷ 1 | 2, 60 |
 | verdict | all prime for S4; 60 not prime | **S4 solvable, S5 not** |
 
-Every route down the clock gives one 3 and two 2s; in all four groups, the brute-force search finds only one list of pieces.
+Every route down the clock gives one 3 and two 2s; in all four groups, the brute-force search finds only one list of pieces, up to order.
 
 ### What breaks if you drop a piece
 
@@ -828,9 +830,9 @@ open CompositionSeriesCard in
 
 - [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): the commutator test, applied to the roots of a fifth-degree equation.
 - [Solvable by radicals](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/07-solvability-by-radicals-and-the-quintic.md): why a formula in roots needs exactly a solvable group of root shuffles.
-- [Presentations](15-group-presentations.md): describing a group by generators and rules, one way to glue pieces together.
+- [Presentations](15-group-presentations.md): the next card; describing a group by generators and rules, which tells apart the tile and $`Q_8`$, two groups with the same pieces.
 
-Jordan-Holder fixes the pieces, not the gluing: which groups can one list of pieces build?
+Jordan-Holder fixes the pieces, not the group: Z mod 8 and the tile share 2, 2, 2. How can a group be named exactly? The next card, [Presentations](15-group-presentations.md), names one by generators and rules, and tells apart two groups with the same pieces.
 
 ---
 

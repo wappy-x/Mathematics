@@ -539,7 +539,8 @@ example : (∑ k : ZMod 4,
 
 ## Where this goes next
 
-- [Round tables and bracelets](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md): necklaces and seatings counted with the rotations, the average replacing the list.
+- [The isomorphism theorems](09-isomorphism-theorems-and-correspondence.md): the next card; the shelf returns to collapsing a group, in two stages and with its subgroups matched.
+- [Round tables and bracelets](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md): seatings and bracelets of distinct items, where every orbit has full size and dividing by the group's size works.
 - [The Galois correspondence](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/05-galois-groups-and-the-fundamental-theorem.md): a group acting on a polynomial's roots, a root's stabiliser matched with a field.
 - [Group action and homogeneous space](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/06-homogeneous-spaces-and-group-actions.md): the same promises with a continuous group, an orbit becoming a surface.
 - [Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md): a group sorted into classes of look-alikes, and why every group of prime-power size has a centre.
@@ -549,9 +550,9 @@ example : (∑ k : ZMod 4,
 - [Polya counting](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/06-polya-enumeration.md): record each move's cycles in one polynomial, the cycle index, and substitute colours to count patterns by type.
 - [Invariants of a finite group](../../22-Algebraic%20geometry/01-Polynomial%20Systems/10-invariant-theory-and-molien-series.md): the Reynolds average, Hilbert's finiteness, and Molien's count.
 - [Decomposition and inertia groups](../../21-Algebraic%20and%20analytic%20number%20theory/09-Local%20Fields%20and%20Class%20Field%20Theory/02-decomposition-and-inertia-groups.md): how one prime's splitting sits inside the Galois group.
-- [Root systems and Dynkin diagrams](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/03-root-systems-and-dynkin-diagrams.md): four infinite families and five exceptions.
+- [Root systems and Dynkin diagrams](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/03-root-systems-and-dynkin-diagrams.md): the Weyl group, made of reflections, acting on a root system; four infinite families and five exceptions.
 
-Six orbits came out of 16 patterns listed in full, impossible for twenty beads; a later card asks how far the average alone carries.
+Six orbits came out of 16 patterns listed in full, impossible for twenty beads. How far the average alone carries is [Polya counting](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/06-polya-enumeration.md). This shelf first finishes the story of quotients in [The isomorphism theorems](09-isomorphism-theorems-and-correspondence.md). Then [Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md) lets a group act on itself.
 
 ---
 

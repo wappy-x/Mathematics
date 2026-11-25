@@ -81,7 +81,9 @@ That is the **first isomorphism theorem**; the sign means isomorphic, one group 
 
 ### Step 0: normality removes the choice of name
 
-Pile 3 is the set ... -9, 3, 15, 27 ... and every member names the whole pile, so "pile 15 plus pile 8" and "pile 3 plus pile 8" must agree. That is **well-defined**: the answer belongs to the piles, not the names. So rename $`gN`$ as $`g`$ then a subgroup member $`h`$, and $`kN`$ as $`k`$ then $`h'`$, and combine, slipping the undo of $`k`$ beside $`k`$:
+Pile 3 is the set ... -9, 3, 15, 27 ... and every member names the whole pile, so "pile 15 plus pile 8" and "pile 3 plus pile 8" must agree. That is **well-defined**: the answer belongs to the piles, not the names.
+
+So rename $`gN`$ as $`g`$ then a subgroup member $`h`$, and $`kN`$ as $`k`$ then $`h'`$, and combine, slipping the undo of $`k`$ beside $`k`$:
 
 ```math
 (gh)(kh') = (gk)\,(k^{-1}hk)\,h'
@@ -97,9 +99,11 @@ The tile does not commute, so the test bites. A turn conjugated by a turn is a t
 
 A second road never names a pile: take each move as where it sends the 4 corners. Those maps rebuild all 64 products, and a flip is the corners running backwards, a count adding mod 2. Quicker still, any subgroup leaving exactly 2 piles is normal, the other pile being the leftovers.
 
-The failure: keep "do nothing" and one chosen flip, a subgroup since that flip twice is "do nothing". A quarter turn carries the mirror line with the tile, so the conjugate is a different flip, `(2, 1)` — two quarter turns, then 1 for flipped — outside the subgroup, while the half turn returns it unchanged. One position is no test.
+The code writes a move as a pair `(r, f)`: `f = 1` means flip first, and `r` counts the quarter turns done after. So `(2, 1)` is the flip, then a half turn, which [Groups](01-groups.md) calls r2f.
 
-And "do nothing" and the flip name one pile, yet each with a quarter turn lands in `[(1, 0), (1, 1)]` and `[(3, 0), (3, 1)]`: one product, 2 answers.
+The failure: keep "do nothing" and one chosen flip, a subgroup since that flip twice is "do nothing". A quarter turn carries the mirror line with the tile, so the conjugate is a different flip, `(2, 1)`, outside the subgroup. The half turn returns it unchanged. One position is no test.
+
+And "do nothing" and the flip name one pile. Yet each, written to the left of a quarter turn, lands in a different pile: `[(1, 0), (1, 1)]` and `[(3, 0), (3, 1)]`. One product, 2 answers.
 
 <details>
 <summary>Normal also means whole families of look-alikes</summary>
@@ -137,7 +141,7 @@ The clock, then the tile.
 | --- | --- | --- |
 | integers -24 to 35, by differences of 12 | 12 piles two ways | **12 piles** |
 | conjugates of the tile's 4 turns | all 32 stay turns; 8 / 4 | **normal, 2 piles** |
-| one pile, two names, each with a quarter turn | `[(1, 0), (1, 1)]` and `[(3, 0), (3, 1)]` | **2 answers** |
+| one pile, two names, each left of a quarter turn | `[(1, 0), (1, 1)]` and `[(3, 0), (3, 1)]` | **2 answers** |
 | the 24-clock by the kernel 0 and 12 | 24 / 2 | **12 piles, the 12-clock** |
 
 Two genuine subgroups: one collapses to a working group, one to no group at all.
@@ -467,7 +471,7 @@ example : (24 : ℕ) / 2 = 12 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert halts the program on a wrong number.
-> - **Collapse by six.** In `multiple_of_12`, subtract 6: 6 piles by subtraction against 12 by remainder, and the first assert halts it.
+> - **Collapse by six.** In `multiple_of_12`, change both 12s to 6: 6 piles by subtraction against 12 by remainder, and the first assert halts it.
 > - **Make the tile commutative.** In `mul`, drop the sign flip. The corner maps stop matching the products, the chosen flip stops moving, and the second assert halts it.
 > - **Use the wrong kernel.** Pick multiples of 8: 3 members, 8 piles, image still 12, counts adrift.
 
@@ -504,6 +508,7 @@ example : (24 : ℕ) / 2 = 12 := by norm_num
 
 ## Where this goes next
 
+- [Direct products](07-direct-products.md): the next card; the reverse of collapsing, building a bigger group from two smaller ones side by side.
 - [Ideals and quotient rings](../09-Rings%20and%20Fields/04-ideals-and-quotient-rings.md): the same collapse, two operations.
 - [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): chains of normal subgroups, and where they end.
 - [Van Kampen's theorem](../../17-Topology/04-Homotopy/06-van-kampens-theorem.md): quotients gluing two pieces' loop groups.
@@ -519,7 +524,7 @@ example : (24 : ℕ) / 2 = 12 := by norm_num
 - [Direct sums and quotient spaces](../11-Duals%2C%20Quotients%20and%20Tensors/01-direct-sums-and-quotient-spaces.md): split a space into independent pieces, or blur a subspace to a point and count what is left.
 - [Decomposition and inertia groups](../../21-Algebraic%20and%20analytic%20number%20theory/09-Local%20Fields%20and%20Class%20Field%20Theory/02-decomposition-and-inertia-groups.md): how one prime's splitting sits inside the Galois group.
 
-Both collapses here run on one operation; what a subgroup must satisfy when a second one appears is the next question.
+Collapsing breaks a group down; the next card, [Direct products](07-direct-products.md), goes the other way and builds one up from parts. Both collapses here run on one operation. What a subgroup must satisfy when a second operation appears is [Ideals and quotient rings](../09-Rings%20and%20Fields/04-ideals-and-quotient-rings.md).
 
 ---
 

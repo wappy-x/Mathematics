@@ -111,7 +111,7 @@ Now seven hours, 0 to 6, multiplied rather than added. Products wrap back inside
 
 Remove 0 and the six that remain pass: 7 is prime, so no product of two of them is a multiple of 7, and the undos of 1, 2, 3, 4, 5, 6 are 1, 4, 5, 2, 3, 6.
 
-That cut is no general repair: a six-hour clock without 0 loses closure, since 2 times 3 is 0. For any size the hours sharing no factor above 1 with it are the ones that work ([Diffie-Hellman and ElGamal](../../14-Applied%20and%20computational/04-Cryptography/05-diffie-hellman-and-elgamal.md)). Clock arithmetic reaches this definition from the other end, starting with wrapping sums rather than reversible moves.
+That cut is no general repair: a six-hour clock without 0 loses closure, since 2 times 3 is 0. For any size the hours sharing no factor above 1 with it are the ones that work ([The modular inverse](../../02-Number%20theory/03-Clock%20Arithmetic/04-modular-inverse.md)). Clock arithmetic reaches this definition from the other end, starting with wrapping sums rather than reversible moves.
 
 ---
 
@@ -519,7 +519,7 @@ example : (2 * 3 : ZMod 6) = 0 := by decide
 - **Public-key cryptography.** A key exchange runs in the nonzero hours of a prime clock, built in Step 3 ([Diffie-Hellman and ElGamal](../../14-Applied%20and%20computational/04-Cryptography/05-diffie-hellman-and-elgamal.md)).
 
 > **Say it back**
-> A group is a collection plus one way of combining two of its members. Four rules: combining stays inside, brackets move, one member changes nothing, every member has an undo inside. The tile's eight positions pass, and turn then flip still differs from flip then turn. Addition on the numbers and on a clock passes; a seven-hour clock under multiplication fails until 0 is thrown out.
+> A group is a collection plus one way of combining two of its members. Four rules: combining stays inside, brackets move, one member changes nothing, every member has an undo inside. The tile's eight moves pass, and turn then flip still differs from flip then turn. Addition on the numbers and on a clock passes; a seven-hour clock under multiplication fails until 0 is thrown out.
 
 ---
 

@@ -16,7 +16,7 @@ Pairing two groups with that twist built into the rule is a **semidirect product
 
 **A semidirect product pairs two groups and lets one relabel the other as pairs combine, so the same two pieces can build different groups.**
 
-**What kind of fact this is:** a definition, carrying two theorems proved in Why it works: a group splits as a semidirect product when a normal subgroup and a subgroup meet only in the identity and fill the group, and a group of order $`pq`$ is one of at most two groups.
+**What kind of fact this is:** a definition, carrying two theorems proved in Why it works. A group splits as a semidirect product when a normal subgroup and a subgroup meet only in the identity and fill the group, and a group of order $`pq`$ is one of at most two groups.
 
 ### The picture: a flip reverses a turn
 
@@ -701,7 +701,7 @@ example : 3 ∣ 7 - 1 ∧ ¬ 3 ∣ 5 - 1 ∧ 2 ∣ 3 - 1 := by decide
 
 ## Where you meet it in real life
 
-- **Rigid motions.** A rigid motion is a turn, then a shift. Shifts are normal, and turns act on them by turning them, as in [Fundamental theorem of curves](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/07-fundamental-theorem-of-curves.md).
+- **Rigid motions.** A rigid motion is a turn, then a shift. Shifts are normal, and turns act on them by turning them. [Fundamental theorem of curves](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/07-fundamental-theorem-of-curves.md) uses these motions: two curves with the same curvature and torsion differ by one.
 - **Wallpaper and crystals.** Many pattern groups are shifts twisted by one cell's turns and reflections.
 - **Affine ciphers.** An affine cipher encodes letter $`x`$ as $`u x + a`$ on the alphabet clock. Two in a row combine by the twisted rule.
 
@@ -719,11 +719,12 @@ example : 3 ∣ 7 - 1 ∧ ¬ 3 ∣ 5 - 1 ∧ 2 ∣ 3 - 1 := by decide
 
 ## Where this goes next
 
+- [A_n is simple for n at least 5](13-simplicity-of-alternating-groups.md): the next card; groups with no normal subgroup to split off at all.
 - [Composition series](14-composition-series-and-jordan-holder.md): a finite group's simple pieces are fixed, but order 21 shows the gluing is not.
 - [Presentations](15-group-presentations.md): the tile written as "a quarter turn r, a flip f, and f r f equals the undo of r".
-- [Lie group](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/01-lie-groups-and-matrix-groups.md): rigid motions as a smooth group, turns twisting shifts.
+- [Lie group](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/01-lie-groups-and-matrix-groups.md): groups that are also smooth spaces, such as the rotation matrices, which supply the turns in a rigid motion.
 
-Open: gluing when no partner exists, as for the 2-clock inside the 4-clock.
+Open: gluing when no partner exists, as for the 2-clock inside the 4-clock; this shelf leaves that case. Every split here starts from a normal subgroup. The next card, [A_n is simple for n at least 5](13-simplicity-of-alternating-groups.md), meets groups that have none to offer.
 
 ---
 

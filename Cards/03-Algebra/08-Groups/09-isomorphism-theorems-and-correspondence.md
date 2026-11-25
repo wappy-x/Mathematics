@@ -75,7 +75,7 @@ HN/N \;\cong\; H/(H\cap N), \qquad \lvert HN\rvert = \frac{\lvert H\rvert\,\lver
 
 ### Step 0: two theorems are the first one, applied to a well-chosen map
 
-[Normal subgroups and quotient groups](06-normal-subgroups-and-quotient-groups.md) proves the first isomorphism theorem: for a **homomorphism** (a map that respects the operation), the starting group over the **kernel** (what the map sends to the identity) is a copy of the **image** (what it reaches). Steps 1 and 2 each name a map and find its image and kernel.
+[Normal subgroups and quotient groups](06-normal-subgroups-and-quotient-groups.md) proves the first isomorphism theorem. Take a **homomorphism**, a map that respects the operation. Its **kernel** is what it sends to the identity, and its **image** is what it reaches. The starting group over the kernel is a copy of the image. Steps 1 and 2 each name a map and find its image and kernel.
 
 ### Step 1: the third theorem, from a map that forgets a little more
 
@@ -121,7 +121,9 @@ Let $`\pi`$ send $`g`$ to its pile $`gN`$. Coming back from a subgroup $`T`$ of 
 
 ### Step 4: listing subgroups with it
 
-**The 12-hour clock** is $`\mathbb{Z}/12\mathbb{Z}`$, the integers over the multiples of 12. A subgroup of the integers, other than 0 alone, is the multiples $`d\mathbb{Z}`$ of its smallest positive member $`d`$: any member's remainder on division by $`d`$ is a smaller member, so it is 0. It contains $`12\mathbb{Z}`$ exactly when $`d`$ divides 12. So the clock has six subgroups, of sizes 12, 6, 4, 3, 2 and 1. A search of all 4,096 subsets finds the same six.
+**The 12-hour clock** is $`\mathbb{Z}/12\mathbb{Z}`$, the integers over the multiples of 12. A subgroup of the integers, other than 0 alone, is the multiples $`d\mathbb{Z}`$ of its smallest positive member $`d`$: any member's remainder on division by $`d`$ is a smaller member, so it is 0. It contains $`12\mathbb{Z}`$ exactly when $`d`$ divides 12.
+
+So the clock has six subgroups, of sizes 12, 6, 4, 3, 2 and 1. A search of all 4,096 subsets finds the same six.
 
 ```mermaid
 flowchart BT
@@ -566,11 +568,12 @@ example : ((Finset.univ : Finset (Finset (DihedralGroup 4))).filter
 
 ## Where this goes next
 
+- [Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md): the next card; a group acting on itself, sorted into classes of look-alikes, with normal subgroups made of whole classes.
 - [Composition series](14-composition-series-and-jordan-holder.md): the diamond theorem proves that the simple pieces of a group do not depend on the chain chosen.
 - [The Sylow theorems](11-sylow-theorems.md): one standard proof finds a subgroup inside a quotient and lifts it back to the whole group through the correspondence.
 - [Exact sequences of modules](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/01-exact-sequences-and-the-snake-lemma.md): what one map hits the next one kills, and the snake lemma's connecting map.
 
-The question left open: how far can a group be collapsed into simple pieces, and are those pieces unique?
+The next card, [Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md), finds normal subgroups by sorting a group into look-alike classes. The question left open here, how far a group can be collapsed into simple pieces and whether those pieces are unique, waits for [Composition series](14-composition-series-and-jordan-holder.md).
 
 ---
 

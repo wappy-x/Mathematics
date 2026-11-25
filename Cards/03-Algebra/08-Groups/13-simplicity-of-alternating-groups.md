@@ -10,7 +10,9 @@ Five cards lie in five places. A shuffle that takes an even number of swaps is a
 
 Sort the 60 into look-alikes, shuffles that are one shuffle seen from another position ([Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md)). Five classes come out, of sizes 1, 12, 12, 15 and 20 (Step 0 counts them).
 
-A **normal subgroup** is one that looks the same from every position, so it can be collapsed to a point ([Normal subgroups and quotient groups](06-normal-subgroups-and-quotient-groups.md)). It must be made of whole classes, and it must hold do-nothing. So its size is 1 plus some of 12, 12, 15, 20. Its size must also divide 60 ([Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md)). The candidates are 13, 16, 21, 25, 28, 33, 36, 40, 45, 48, and none divides 60. Only the two trivial choices survive: do-nothing alone, or all 60.
+A **normal subgroup** is one that looks the same from every position, so it can be collapsed to a point ([Normal subgroups and quotient groups](06-normal-subgroups-and-quotient-groups.md)). It must be made of whole classes, and it must hold do-nothing. So its size is 1 plus some of 12, 12, 15, 20.
+
+Its size must also divide 60 ([Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md)). The candidates are 13, 16, 21, 25, 28, 33, 36, 40, 45, 48, and none divides 60. Only the two trivial choices survive: do-nothing alone, or all 60.
 
 A group with no normal subgroups except those two is **simple**: it cannot be collapsed into a smaller group. The card proves this for every $`A_n`$ with $`n`$ at least 5.
 
@@ -470,7 +472,7 @@ example : let σ : Perm (Fin 4) := c[0, 1] * c[2, 3]; let τ : Perm (Fin 4) := c
 >
 > - **Leaving out do-nothing.** Then 12, 15 and 20 look like possible sizes, since each divides 60. With do-nothing they are 13, 16 and 21, and none divides 60.
 > - **Expecting it at four places.** 1 + 3 = 4 divides 12, and the double swaps really are a normal subgroup.
-> - **Treating perfect as simple.** The quintic card shows $`A_5`$ equals its own commutator subgroup. That rules out only collapses onto a commuting group; this card's counting rules out all.
+> - **Treating perfect as simple.** [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md) shows $`A_5`$ equals its own commutator subgroup. That rules out only collapses onto a commuting group; this card's counting rules out all.
 
 ---
 
@@ -496,9 +498,9 @@ example : let σ : Perm (Fin 4) := c[0, 1] * c[2, 3]; let τ : Perm (Fin 4) := c
 - [Composition series](14-composition-series-and-jordan-holder.md): breaking any finite group into simple pieces, with $`A_5`$ as a piece that never breaks further.
 - [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): the chain of collapses for five roots, where this card's group blocks the way.
 - [Solvable by radicals](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/07-solvability-by-radicals-and-the-quintic.md): the bridge from equations to their groups of shuffles.
-- [NC and P-completeness](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/09-parallel-complexity-nc-and-p-completeness.md): what parallel machines do fast, and what seems stubbornly sequential.
+- [NC and P-completeness](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/09-parallel-complexity-nc-and-p-completeness.md): Barrington's theorem uses the even shuffles of five places, which do not break down, to run fast parallel circuits on five places of memory.
 
-Which other finite groups are simple, and is the list complete, is the question this card leaves open.
+Simple groups cannot be broken down further. The next card, [Composition series](14-composition-series-and-jordan-holder.md), asks whether every finite group breaks into simple pieces, and whether those pieces are always the same. Which finite groups are simple at all, and whether the list is complete, this shelf leaves open.
 
 ---
 

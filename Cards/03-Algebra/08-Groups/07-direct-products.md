@@ -16,7 +16,7 @@ Both devices are two groups side by side, each combining by its own rule, neithe
 
 **Pairing two groups makes a group in which each half minds its own business: the settings multiply, while whether the pair acts like one bigger clock turns on whether the two clock sizes share a factor.**
 
-**What kind of fact this is:** a definition, the pairing — with two theorems proved below in Why it works: a pair's return time is the least common multiple of its halves', and two clocks make one bigger clock exactly when their sizes share no factor.
+**What kind of fact this is:** a definition, the pairing, with two theorems proved below in Why it works. A pair's return time is the least common multiple of its halves' return times. Two clocks make one bigger clock exactly when their sizes share no factor.
 
 ### The picture: one move, four devices, how long until it comes home
 
@@ -549,13 +549,14 @@ example : 3 * 6 = 18 ∧ Nat.lcm 3 6 = 6 := by decide
 
 ## Where this goes next
 
+- [Group actions](08-group-actions-and-counting.md): the next card; a group moving the members of a set, used to count patterns its moves cannot tell apart.
 - [Van Kampen's theorem](../../17-Topology/04-Homotopy/06-van-kampens-theorem.md): the group of loops on a shape glued from two pieces, built from the pieces' groups — the same move where the parts interfere.
 - [Mordell-Weil](../../22-Algebraic%20geometry/04-Elliptic%20Curves/06-mordell-weil-and-rank.md): the points on a curve form a commutative group built from clocks and copies of the whole numbers, whose count is the rank.
 - [The Sylow theorems](11-sylow-theorems.md): for the largest prime power dividing a group's size, subgroups of exactly that size exist, are all conjugate, and number 1 more than a multiple of p.
 - [Semidirect products](12-semidirect-products.md): glue two groups where one acts on the other, so the tile group is four turns twisted by one flip.
 - [Fourier analysis on a finite abelian group](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/01-fourier-analysis-on-finite-abelian-groups.md): characters as the waves, and the transform on bit strings.
 
-Pairing builds a group from parts. The reverse is harder: given a group, which parts is it made of, and what to do when the parts will not leave each other alone.
+Pairing builds a group from parts. The reverse is harder: given a group, which parts is it made of, and what to do when the parts will not leave each other alone? [The Sylow theorems](11-sylow-theorems.md) and [Semidirect products](12-semidirect-products.md) answer later. Both need one tool first, a group moving the members of a set, which the next card, [Group actions](08-group-actions-and-counting.md), builds.
 
 ---
 
