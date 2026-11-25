@@ -510,6 +510,7 @@ example : Λ 6 = 0 := by
 - [The prime number theorem](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/05-prime-number-theorem-proved.md): the theorem in full.
 - [The explicit formula](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/07-the-explicit-formula.md): Step 3's estimates.
 - [The Riemann hypothesis](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/09-riemann-hypothesis-statement-and-equivalents.md): equivalent forms.
+- [The Weil conjectures](../../22-Algebraic%20geometry/08-Sheaf%20Cohomology%20and%20Differentials/07-weil-conjectures-and-etale-cohomology.md): point counts over every F_(q^n) packed into one rational function, explained by etale cohomology.
 
 The question this card leaves open: do all the zeros in the strip lie on the line Re s = 1/2, as the 29 found here do?
 

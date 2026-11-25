@@ -876,6 +876,8 @@ example : (40 : ℤ) ^ 2 = 12 ^ 3 - 128 := by norm_num
 - [Moduli spaces](../06-Schemes%20and%20Modern%20Language/07-moduli-spaces-in-outline.md): the j-line, where each value of $`j`$ is one curve over the complex numbers.
 - [Torsion points](04-torsion-and-nagell-lutz.md): bounds the points of finite order, using $`\Delta`$ to limit their coordinates.
 - [The curve mod p](05-reduction-mod-p-and-hasse.md): counts points at the primes that do not divide $`\Delta`$.
+- [Complex multiplication](12-complex-multiplication.md): curves with extra symmetries, and point counts read from p = a^2 + b^2.
+- [Quotients by group actions](../06-Schemes%20and%20Modern%20Language/14-geometric-invariant-theory-in-outline.md): geometric invariant theory keeps the stable orbits and drops the rest.
 
 The j-invariant finds all curves that agree over the complex numbers; how to list every twist of one curve over $`\mathbb{Q}`$, and tell them apart, is left open here.
 

@@ -159,7 +159,7 @@ A homotopy equivalence (a map with an inverse up to deformation, ≃) carries co
 P_{T}(t) = (1 + t)(1 + t) = 1 + 2t + t^2
 ```
 
-That matches the 1, 2, 1 read from the matrices; three circles give 1, 3, 3, 1. Over the integers the formula gains a correction term, Tor, which [Universal coefficients and Kunneth](11-universal-coefficients-and-kunneth.md) builds for finitely generated groups; Hatcher's Section 3.B proves the general formula.
+That matches the 1, 2, 1 read from the matrices; three circles give 1, 3, 3, 1. Over the integers the formula gains a correction term, Tor, which [Universal coefficients and Kunneth](11-universal-coefficients-and-kunneth.md) builds for finitely generated groups; [Tor](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/04-free-resolutions-and-tor.md) builds it in general, and Hatcher's Section 3.B proves the general formula.
 
 ### Step 8: what this outline leaves out
 
@@ -921,6 +921,8 @@ end CupOutline
 - [Smith normal form](03-computing-homology-by-smith-normal-form.md), [Homotopy invariance](04-homotopy-invariance-of-homology.md), [Cellular homology](05-cellular-homology.md) and [Mayer-Vietoris and exact sequences](06-mayer-vietoris-and-long-exact-sequences.md): each has a cohomology version with the arrows reversed, not built in this outline.
 - [Poincare duality](12-cap-product-and-poincare-duality.md): on a closed oriented manifold, k-dimensional holes match (n - k)-dimensional ones.
 - [Spectral sequences in outline](../07-Higher%20Homotopy%20and%20Mapping%20Spaces/04-spectral-sequences-and-eilenberg-maclane-spaces-in-outline.md): compute the homology of a fibration page by page.
+- [Ext](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/05-ext-and-extensions.md): resolve, apply Hom, and count the ways to glue two modules together.
+- [Cech cohomology](../../22-Algebraic%20geometry/08-Sheaf%20Cohomology%20and%20Differentials/04-cech-cohomology-of-projective-space.md): gluing failures counted on a cover, and the cohomology of O(d) on projective space.
 
 This card leaves open how the product behaves in higher dimensions, where duality pairs degree k with degree n − k.
 

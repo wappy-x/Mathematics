@@ -18,7 +18,7 @@ The bookkeeping that makes this work is the **divisor**: a list of points, each 
 
 **Record a function's zeros and poles as a weighted list of points, which adds to zero on a closed smooth curve; Riemann-Roch counts the independent functions whose poles fit a prescribed list: degree plus one minus genus, plus one correction term.**
 
-**What kind of fact this is:** definitions (divisor, linear equivalence, the space L(D)), a theorem proved here (a function's divisor has degree zero), and the Riemann-Roch theorem, stated precisely with its key steps and a source. On this cubic the card proves the count for every multiple of O and for P + Q directly.
+**What kind of fact this is:** definitions (divisor, linear equivalence, the space L(D)), a theorem proved here (a function's divisor has degree zero), and the Riemann-Roch theorem, stated precisely with its key steps and a source (taken further on [Serre duality](../08-Sheaf%20Cohomology%20and%20Differentials/06-serre-duality-and-riemann-roch.md)). On this cubic the card proves the count for every multiple of O and for P + Q directly.
 
 ### The picture: the line and the vertical that build u
 
@@ -853,6 +853,11 @@ example : ∀ t ∈ Finset.Icc (-3 : ℤ) 3,
 - [Inflections and Cayley-Bacharach](09-inflections-and-the-cayley-bacharach-theorem.md): a linear-algebra count of the cubics through eight points, the same kind of count as $`\ell(D)`$, forces them through a ninth.
 - [The group law](../04-Elliptic%20Curves/01-elliptic-curves-and-the-group-law.md): linear equivalence of degree-one divisors is the chord-and-tangent addition.
 - [Line bundles and divisors](../05-Cohomology%20and%20the%20Hodge%20Conjecture/06-line-bundles-and-divisor-classes.md): a divisor class as a line bundle, and the group of all classes.
+- [Hyperelliptic curves and the canonical map](10-hyperelliptic-curves-and-the-canonical-map.md): a curve's differentials embed it, unless it doubles over the line.
+- [The Jacobian](11-jacobians-and-abel-jacobi.md): degree-zero divisor classes on a curve form a group that is itself a g-dimensional variety.
+- [The Weil pairing](../04-Elliptic%20Curves/13-weil-pairing.md): a perfect pairing on the m-torsion, and how it moves a discrete log into a finite field.
+- [The canonical bundle and adjunction](../08-Sheaf%20Cohomology%20and%20Differentials/02-canonical-bundle-and-adjunction.md): top-degree differentials, and the genus of a curve inside a surface.
+- [Serre duality](../08-Sheaf%20Cohomology%20and%20Differentials/06-serre-duality-and-riemann-roch.md): cohomology in degree i pairs with degree n - i, and Riemann-Roch follows.
 
 This card counts functions with given poles; it leaves open how the classes of divisors themselves form a group, and how big that group is.
 

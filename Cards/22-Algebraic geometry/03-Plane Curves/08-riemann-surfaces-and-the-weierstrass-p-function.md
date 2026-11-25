@@ -799,8 +799,11 @@ example (X : ℚ) : 4 * ((X - 1 / 3) ^ 3 + (X - 1 / 3) ^ 2) = 4 * X ^ 3 - 4 / 3 
 - [Inflections and Cayley-Bacharach](09-inflections-and-the-cayley-bacharach-theorem.md): the cubic's nine inflection points are the torus points with $`3z`$ in the lattice; Step 6's three-on-a-line rule at work.
 - [The group law](../04-Elliptic%20Curves/01-elliptic-curves-and-the-group-law.md): three points on a line add to zero, which on the torus is plain addition of complex numbers.
 - [Weierstrass form](../04-Elliptic%20Curves/02-weierstrass-forms-discriminant-and-j-invariant.md): the short form $`y^2 = x^3 + ax + b`$, its discriminant, and j in terms of a and b.
+- [Hyperelliptic curves and the canonical map](10-hyperelliptic-curves-and-the-canonical-map.md): a curve's differentials embed it, unless it doubles over the line.
+- [The Jacobian](11-jacobians-and-abel-jacobi.md): degree-zero divisor classes on a curve form a group that is itself a g-dimensional variety.
+- [Complex multiplication](../04-Elliptic%20Curves/12-complex-multiplication.md): curves with extra symmetries, and point counts read from p = a^2 + b^2.
 
-The question this card leaves open: the torus is built over $`\mathbb{C}`$, so what remains of it when the curve has rational or finite-field coefficients, where no lattice exists?
+The question this card leaves open: the torus is built over $`\mathbb{C}`$, so what remains of it when the curve has rational or finite-field coefficients, where no lattice exists? [The Jacobian](11-jacobians-and-abel-jacobi.md) takes this question up.
 
 ---
 

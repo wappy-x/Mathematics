@@ -985,6 +985,7 @@ example : (Nat.digits 2 1085).length - 1 = 10 ∧ (Nat.digits 2 1085).count 1 - 
 
 - [Torsion points](04-torsion-and-nagell-lutz.md): the next card. Its division polynomials are the denominator recursion the checks use here, and its test shows that P = (3, 5) never returns to O over the fractions.
 - [Curves for keys](09-elliptic-curve-cryptography-and-schoof.md): curves and point counts at cryptographic size, where listing every x is impossible.
+- [Isogenies](11-isogenies-and-the-dual-isogeny.md): maps between elliptic curves that respect addition, and the dual that undoes them up to a multiple.
 
 This card counted 1033 points by trying all 1087 values of x; how to count points modulo a 256-bit prime without listing them is the question it leaves open.
 

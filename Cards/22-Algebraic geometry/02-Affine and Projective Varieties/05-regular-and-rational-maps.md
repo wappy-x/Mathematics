@@ -821,6 +821,8 @@ example : ((Finset.univ : Finset (ZMod 13 × ZMod 13)).filter
 - [Birational equivalence](06-birational-equivalence-and-function-fields.md): rational maps with rational inverses, such as the circle's slope map $`v/(1 + u)`$, and the field of fractions that the pullback of a rational map lands in.
 - [Sheaves](../05-Cohomology%20and%20the%20Hodge%20Conjecture/01-sheaves-in-outline.md): functions given by different formulas on different open sets, patched together, as the circle's two formulas were.
 - [The Jacobian conjecture](../../25-Frontier/05-Analysis%20and%20Dynamics/04-jacobian-conjecture.md): a regular map from the plane to itself whose Jacobian determinant (the determinant of its matrix of partial derivatives) is a nonzero constant, and whether its inverse must also be regular.
+- [Hyperelliptic curves and the canonical map](../03-Plane%20Curves/10-hyperelliptic-curves-and-the-canonical-map.md): a curve's differentials embed it, unless it doubles over the line.
+- [Isogenies](../04-Elliptic%20Curves/11-isogenies-and-the-dual-isogeny.md): maps between elliptic curves that respect addition, and the dual that undoes them up to a multiple.
 
 This card finds where one map fails; when two varieties are the same once each side's bad set is removed is the question it leaves open.
 

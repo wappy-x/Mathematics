@@ -869,6 +869,7 @@ example : 2 ^ 255 ≤ 2 ^ 256 - 2 ^ 224 + 2 ^ 192 + 2 ^ 96 - 1 ∧
 - [The TLS handshake](../../14-Applied%20and%20computational/04-Cryptography/08-key-exchange-in-practice-the-tls-handshake.md): the exchange and the signature inside a real connection.
 - [Lattices](../../14-Applied%20and%20computational/04-Cryptography/09-lattices-and-post-quantum-cryptography.md): the replacement for curves once quantum computers arrive.
 - Shor and Grover, in the computability wing: why period finding breaks the discrete logarithm on any curve.
+- [The Weil pairing](13-weil-pairing.md): a perfect pairing on the m-torsion, and how it moves a discrete log into a finite field.
 
 The card leaves one question open: whether any curve over a prime field has an attack faster than the square root of q, which nobody has proved impossible.
 

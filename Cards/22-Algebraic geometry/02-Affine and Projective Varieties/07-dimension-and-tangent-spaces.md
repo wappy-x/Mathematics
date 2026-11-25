@@ -1177,6 +1177,8 @@ example : Matrix.det !![(3 : ℤ), 4, 5; 4, 3, 5; -3, 4, 5] = -30 := by
 - [Smooth and singular points](08-smooth-and-singular-points.md): calls a point singular when its tangent space is bigger than the dimension, as at the apex, and studies the tangent cone and the local ring there.
 - [Algebraic statistics](../06-Schemes%20and%20Modern%20Language/08-algebraic-statistics-and-identifiability.md): the dimension of a statistical model as a variety, and the Jacobian-rank test for recovering its parameters.
 - [Tangent space and differential](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/03-tangent-spaces-and-differentials.md): the tangent space of a smooth manifold and the derivative of a map between tangent spaces.
+- [Nakayama's lemma](../07-Exact%20Sequences%2C%20Ext%20and%20Tor/03-nakayamas-lemma.md): over a local ring, generators can be checked modulo the maximal ideal.
+- [Kahler differentials](../08-Sheaf%20Cohomology%20and%20Differentials/01-kahler-differentials.md): derivatives built from algebra alone.
 
 The question this card leaves open: the apex has one extra tangent direction, but how bad is it, and can a change of the variety smooth it away?
 

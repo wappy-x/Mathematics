@@ -1031,6 +1031,8 @@ The ideal and its points come from [Ideals and varieties](01-ideals-and-varietie
 - [Normal forms](04-reduced-grobner-bases-and-ideal-membership.md): trims the basis to its unique reduced form, here $`x - 21/8`$ and $`y^2 - 135/64`$, and uses the definite remainder to test membership.
 - [Hilbert's basis theorem](08-hilbert-basis-theorem.md): proves Dickson's lemma, the reason Buchberger's loop always stops.
 - [Tropical geometry and computation](../06-Schemes%20and%20Modern%20Language/09-tropical-and-computational-geometry-in-outline.md): how hard these computations get, and the piecewise-linear shadow of a polynomial system.
+- [Invariants of a finite group](10-invariant-theory-and-molien-series.md): the Reynolds average, Hilbert's finiteness, and Molien's count.
+- [Hilbert's syzygy theorem](../07-Exact%20Sequences%2C%20Ext%20and%20Tor/06-hilbert-syzygy-theorem.md): every module over a polynomial ring has a free resolution of length at most the number of variables.
 
 The basis here still carries $`f_1`$ and $`f_2`$, which the new members make redundant; which list is the tidy one, and is it unique for each order?
 

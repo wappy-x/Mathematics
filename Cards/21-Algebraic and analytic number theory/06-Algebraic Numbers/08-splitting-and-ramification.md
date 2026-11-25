@@ -890,6 +890,7 @@ See also [Class groups](05-class-groups-and-the-minkowski-bound.md), earlier on 
 
 - [Chebotarev](09-chebotarev-density-and-splitting-statistics.md): proves that half the primes split in $`\mathbb{Z}[\sqrt{-5}]`$, and states, with a proof of the 1/6 share, that in $`\mathbb{Q}(\sqrt[3]{2})`$ the shares are 1/6, 1/2 and 1/3, against the counts 24, 86 and 56 of 166 printed here.
 - [The p-adic numbers](10-p-adic-numbers-and-hensels-lemma.md): lifts a root modulo $`p`$, such as 13 modulo 29, to a root modulo every power of $`p`$, the local picture of a split prime.
+- [Flat, smooth and etale](../../22-Algebraic%20geometry/08-Sheaf%20Cohomology%20and%20Differentials/03-flat-smooth-and-etale-morphisms.md): families without jumps, and maps that look locally like isomorphisms.
 
 This card says which primes split, but not how often in the long run, nor which pattern a given prime picks when the field has many symmetries.
 

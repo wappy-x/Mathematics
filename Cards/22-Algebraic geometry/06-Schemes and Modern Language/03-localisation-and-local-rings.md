@@ -759,6 +759,11 @@ example : (3 : ℕ) ^ 3 = 27 ∧ (3 : ℕ) ^ 2 * 3 ^ 1 = 27 := by norm_num
 
 - [Morphisms of schemes](04-morphisms-and-fibre-products-in-outline.md): the map $`R \to S^{-1}R`$ read backwards is the inclusion of a piece of $`\mathrm{Spec}\, R`$.
 - [Modules](05-modules-and-the-structure-theorem.md): the same fractions over a module, which pick out the part of a module that lives at one prime.
+- [Proj](10-proj-of-a-graded-ring.md): building projective schemes from graded rings, the way Spec builds affine ones.
+- [Quasi-coherent sheaves](11-quasi-coherent-and-coherent-sheaves.md): modules spread over a scheme, and the line bundles O(d) as shifted graded modules.
+- [Separated and proper](12-separated-and-proper-morphisms.md): no doubled points, and nothing escapes to infinity.
+- [Nakayama's lemma](../07-Exact%20Sequences%2C%20Ext%20and%20Tor/03-nakayamas-lemma.md): over a local ring, generators can be checked modulo the maximal ideal.
+- [Kahler differentials](../08-Sheaf%20Cohomology%20and%20Differentials/01-kahler-differentials.md): derivatives built from algebra alone.
 
 Every nonzero ideal of $`\mathbb{Q}[x]_{\mathfrak{m}}`$ is a power of one element; which local rings of curves and surfaces keep that property, and which fail at a singular point, is the question this card leaves open.
 

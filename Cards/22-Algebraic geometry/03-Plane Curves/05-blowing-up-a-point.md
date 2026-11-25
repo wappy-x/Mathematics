@@ -953,6 +953,8 @@ example : ((3 : ℚ) / 2) ^ 2 - 1 = 5 / 4 ∧ ((3 : ℚ) / 2) ^ 3 - 3 / 2 = 15 /
 - [Genus](06-genus-and-the-degree-genus-formula.md): the sum of $`m(m-1)/2`$ over every point blown up is the correction $`\delta_P`$ in the degree-genus formula, so the nodal cubic has genus 0.
 - [Riemann surfaces](08-riemann-surfaces-and-the-weierstrass-p-function.md): a resolved complex curve is a smooth surface, the setting for the doughnut picture of a cubic.
 - [Divisors and Riemann-Roch](07-divisors-and-riemann-roch.md): counting functions with given poles needs a smooth curve, which blowing up provides.
+- [Flat, smooth and etale](../08-Sheaf%20Cohomology%20and%20Differentials/03-flat-smooth-and-etale-morphisms.md): families without jumps, and maps that look locally like isomorphisms.
+- [Intersection numbers on a surface](../09-Intersection%20Theory%20and%20Surfaces/03-intersection-numbers-on-surfaces-and-blow-ups.md): blowing up a point makes a curve of self-intersection -1.
 
 This card makes a curve smooth; how many holes the smooth curve has, and how its degree and singular points decide that number, is the question this card leaves open.
 

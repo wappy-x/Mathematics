@@ -950,6 +950,7 @@ example : 5 ^ 3 ∣ 125 := by decide
 ## Where this goes next
 
 - [The Hodge conjecture](../../25-Frontier/02-The%20Millennium%20Problems/05-hodge-conjecture.md): the Frontier wing's record of the conjecture's status, the partial results and the prize.
+- [Intersection numbers on a surface](../09-Intersection%20Theory%20and%20Surfaces/03-intersection-numbers-on-surfaces-and-blow-ups.md): blowing up a point makes a curve of self-intersection -1.
 
 The open question is the one this card names: for p ≥ 2, is every rational class of type (p, p) on a smooth projective variety a combination of subvarieties?
 

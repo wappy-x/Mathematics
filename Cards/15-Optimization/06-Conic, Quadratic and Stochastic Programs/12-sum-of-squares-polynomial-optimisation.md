@@ -1291,6 +1291,7 @@ example : (X ^ 4 - 4 * X ^ 3 + 6 * X ^ 2 - 4 * X + 7 - 6 : ℝ[X]) = (X - 1) ^ 4
 - [Matrix completion](13-matrix-completion-and-the-nuclear-norm.md): the next card, another semidefinite program, which fills in a matrix's missing entries by keeping its rank low.
 - Lyapunov functions by sums of squares (planned): the SOS program of this card, used to prove a control system is stable.
 - The Positivstellensatz (planned): the full theory of certificates with multipliers, of which the Motzkin identity is one case.
+- [Sums of squares and the Positivstellensatz](../../22-Algebraic%20geometry/01-Polynomial%20Systems/11-sums-of-squares-and-the-positivstellensatz.md): certificates that a polynomial is never negative, or that a system has no real point.
 
 How large the Lasserre level must be before its floor equals the true minimum, for a given problem, is the question this card leaves open.
 

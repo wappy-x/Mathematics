@@ -683,6 +683,8 @@ ALL CHECKS PASS
 - [Nodes and cusps](04-singularities-nodes-and-cusps.md): why a line through C's node meets it at least twice there, read from the branches.
 - [Inflections and Cayley-Bacharach](09-inflections-and-the-cayley-bacharach-theorem.md): tangents that meet a cubic three times, like the line at infinity at O, and what nine meeting points of two cubics force on a third cubic.
 - [Genus](06-genus-and-the-degree-genus-formula.md): Bezout counts the points where a curve's tangent passes through a fixed point, which fixes the number of holes.
+- [Hyperelliptic curves and the canonical map](10-hyperelliptic-curves-and-the-canonical-map.md): a curve's differentials embed it, unless it doubles over the line.
+- [The Chow ring](../09-Intersection%20Theory%20and%20Surfaces/01-chow-rings-and-intersection-products.md): subvarieties up to deformation, multiplied by intersecting.
 
 The question this card leaves open: the nine points of two cubics are not free to sit anywhere, so how much does knowing eight of them say about the ninth?
 

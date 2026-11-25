@@ -184,7 +184,7 @@ The test in the second row works because "send y to 0, then x² to 0" keeps sums
 | A robot arm with 3 m and 2 m links aimed at a target 6 m away | elbow a = 41/12, b² = −385/144 | the target is unreachable in the plane, but a complex elbow exists, so no certificate exists |
 | Drop the root: expect every polynomial zero on V(I) to be in I | x vanishes at (0, 0) yet is not in ⟨y − x², y⟩ | the theorem returns $`\sqrt{I}`$; here x² is in I, x is not |
 
-The code prints all three. The first two cases have a real answer of a different shape. The **real Nullstellensatz** and the **Positivstellensatz** (Stengle, 1974) say a real system has no real point exactly when −1 equals a sum of squares plus a combination of the equations. For x² + 1 that is $`-1 = x^2 + (-1)(x^2 + 1)`$. For the arm, $`12a - 41`$ and then $`b^2 + 385/144`$ lie in the ideal, and $`-1 = (144/385)\,b^2 - (144/385)(b^2 + 385/144)`$. Such certificates are found by [Semidefinite programs](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/05-semidefinite-programs-and-relaxations.md) (Parrilo, 2003).
+The code prints all three. The first two cases have a real answer of a different shape. The **real Nullstellensatz** and the **Positivstellensatz** (Stengle, 1974; see [Sums of squares and the Positivstellensatz](11-sums-of-squares-and-the-positivstellensatz.md)) say a real system has no real point exactly when −1 equals a sum of squares plus a combination of the equations. For x² + 1 that is $`-1 = x^2 + (-1)(x^2 + 1)`$. For the arm, $`12a - 41`$ and then $`b^2 + 385/144`$ lie in the ideal, and $`-1 = (144/385)\,b^2 - (144/385)(b^2 + 385/144)`$. Such certificates are found by [Semidefinite programs](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/05-semidefinite-programs-and-relaxations.md) (Parrilo, 2003).
 
 ---
 
@@ -829,6 +829,7 @@ The other cards on this shelf supply the language and the tools: [Ideals and var
 ## Where this goes next
 
 - [Affine varieties](../02-Affine%20and%20Projective%20Varieties/01-affine-varieties-and-coordinate-rings.md): the dictionary in use. A variety's ring of polynomial functions is the polynomial ring collapsed by its radical ideal.
+- [Sums of squares and the Positivstellensatz](11-sums-of-squares-and-the-positivstellensatz.md): certificates that a polynomial is never negative, or that a system has no real point.
 
 The question this card leaves open: the dictionary matches shapes to radical ideals, so what extra geometry, such as the touching in system 2, do the non-radical ideals record?
 

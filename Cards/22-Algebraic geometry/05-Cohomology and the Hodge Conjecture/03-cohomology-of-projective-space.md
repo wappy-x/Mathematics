@@ -966,6 +966,9 @@ example : Matrix.det !![(1 : ℤ), 0, 0; 0, 1, 0; 1, 1, -1] = -1 := by
 - [Hodge decomposition](05-hodge-decomposition.md): splits each cohomology group by complex type; on projective space each power $`h^k`$ has the middle type (k, k).
 - [Line bundles and divisors](06-line-bundles-and-divisor-classes.md): h becomes the first Chern class of the line bundle whose sections are linear forms.
 - [The Hodge conjecture](08-hodge-conjecture-statement-and-known-cases.md): on projective space every class $`h^k`$ is the class of a linear subspace, so the conjecture holds there; the question is everywhere else.
+- [Cech cohomology](../08-Sheaf%20Cohomology%20and%20Differentials/04-cech-cohomology-of-projective-space.md): gluing failures counted on a cover, and the cohomology of O(d) on projective space.
+- [The Weil conjectures](../08-Sheaf%20Cohomology%20and%20Differentials/07-weil-conjectures-and-etale-cohomology.md): point counts over every F_(q^n) packed into one rational function, explained by etale cohomology.
+- [The Chow ring](../09-Intersection%20Theory%20and%20Surfaces/01-chow-rings-and-intersection-products.md): subvarieties up to deformation, multiplied by intersecting.
 
 The question this card leaves open: on a variety with more classes than the powers of h, such as the quartic surface with its 22, which classes come from curves?
 

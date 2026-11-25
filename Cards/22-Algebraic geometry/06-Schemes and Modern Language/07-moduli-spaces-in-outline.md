@@ -133,7 +133,7 @@ The curve's j and the lattice's j agree:
 | 2i | 1 by 2 rectangle | $`y^2 = x^3 - 11x + 14`$ | 287496 |
 | i/2 | the same rectangle, other basis | the same curve | 287496 |
 
-The lattice values are $`12^3`$, $`20^3`$ and $`66^3`$: whole cubes. That these special shapes give whole numbers is the theory of complex multiplication, beyond this card.
+The lattice values are $`12^3`$, $`20^3`$ and $`66^3`$: whole cubes. That these special shapes give whole numbers is the theory of complex multiplication, beyond this card; see [Complex multiplication](../04-Elliptic%20Curves/12-complex-multiplication.md).
 
 ### Step 4: families become maps
 
@@ -890,6 +890,7 @@ example : (5 ^ 2 + 1) * (5 ^ 2 + 5 + 1) = 806 ∧ (5 ^ 6 - 1) / (5 - 1) = 3906 :
 - [Algebraic statistics](08-algebraic-statistics-and-identifiability.md): the next card; parameter spaces of statistical models, and when a parameter can be recovered from the distribution.
 - [Tropical geometry and computation](09-tropical-and-computational-geometry-in-outline.md): what a computer can decide about the equations that cut out spaces like these.
 - [Dimension and tangent space](../02-Affine%20and%20Projective%20Varieties/07-dimension-and-tangent-spaces.md): the dimension 4 of $`G(2, 4)`$, read as a count of directions.
+- [Quotients by group actions](14-geometric-invariant-theory-in-outline.md): geometric invariant theory keeps the stable orbits and drops the rest.
 
 What remains open on this card is how to build a fine moduli space for curves that have symmetries: the j-line forgets them, and keeping them takes stacks.
 

@@ -717,6 +717,7 @@ example : (5 : ZMod 101) * 44 - 18 = 0 âˆ§ (25 : ZMod 101) * 25 ^ 2 - 576 = 0 âˆ
 - [Monomial orders](02-monomial-orders-and-division.md): ranking terms so that dividing by several polynomials at once has a definite meaning.
 - [Affine varieties](../02-Affine%20and%20Projective%20Varieties/01-affine-varieties-and-coordinate-rings.md): a variety as a shape, and the polynomial functions on it.
 - [Domains, principal ideals and unique factorisation](../06-Schemes%20and%20Modern%20Language/01-integral-domains-pids-and-unique-factorisation.md): when one generator is always enough, as with the multiples of 9.
+- [Sums of squares and the Positivstellensatz](11-sums-of-squares-and-the-positivstellensatz.md): certificates that a polynomial is never negative, or that a system has no real point.
 
 The ship's ideal split into one equation per unknown by hand. For a general system, how do you find generators that simple, and decide membership when no such shape is in sight?
 

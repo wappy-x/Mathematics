@@ -1570,6 +1570,8 @@ example : ((!![2, 1, 0; 0, 2, 1; 0, 0, 3] : Matrix (Fin 3) (Fin 3) ℤ) ^ 5) 0 =
 
 - [Moduli spaces](07-moduli-spaces-in-outline.md): sorting objects up to equivalence. Matrices up to similarity, sorted here by their invariant factors, are a first case of that question.
 - [Tropical geometry and computation](09-tropical-and-computational-geometry-in-outline.md): what exact algorithms such as this one cost, and what computation can decide.
+- [Exact sequences of modules](../07-Exact%20Sequences%2C%20Ext%20and%20Tor/01-exact-sequences-and-the-snake-lemma.md): what one map hits the next one kills, and the snake lemma's connecting map.
+- [Tor](../07-Exact%20Sequences%2C%20Ext%20and%20Tor/04-free-resolutions-and-tor.md): resolve one module by free ones, tensor, and measure the exactness that was lost.
 
 Two commuting matrices at once make a module over k[x, y], where ideals need several generators and no diagonal exists; how to classify such pairs is the question this card leaves open.
 

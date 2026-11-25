@@ -568,6 +568,7 @@ example : ((Finset.univ : Finset (Finset (DihedralGroup 4))).filter
 
 - [Composition series](14-composition-series-and-jordan-holder.md): the diamond theorem proves that the simple pieces of a group do not depend on the chain chosen.
 - [The Sylow theorems](11-sylow-theorems.md): one standard proof finds a subgroup inside a quotient and lifts it back to the whole group through the correspondence.
+- [Exact sequences of modules](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/01-exact-sequences-and-the-snake-lemma.md): what one map hits the next one kills, and the snake lemma's connecting map.
 
 The question left open: how far can a group be collapsed into simple pieces, and are those pieces unique?
 

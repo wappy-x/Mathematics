@@ -743,6 +743,8 @@ example : (1401 / 4 : ℚ) ≠ 354 := by norm_num
 ## Where this goes next
 
 - [The Nullstellensatz](09-nullstellensatz.md): with a finite list in hand, it asks which equations vanish on the solution points, and answers over the complex numbers.
+- [Invariants of a finite group](10-invariant-theory-and-molien-series.md): the Reynolds average, Hilbert's finiteness, and Molien's count.
+- [Hilbert's syzygy theorem](../07-Exact%20Sequences%2C%20Ext%20and%20Tor/06-hilbert-syzygy-theorem.md): every module over a polynomial ring has a free resolution of length at most the number of variables.
 
 The question this card leaves open: the theorem fixes the equations, but when do the points they define determine those equations back?
 

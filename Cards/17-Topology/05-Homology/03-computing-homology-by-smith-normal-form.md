@@ -192,7 +192,7 @@ Each move has an undo of the same kind, so the old gcd is also a multiple of the
 
 Counting mod 2, the Klein bottle's diagonal 2 becomes 0. The rank of $`\partial_2`$ drops from 2 to 1, so one more loop is not a rim, and one more chain of triangles has zero boundary: U + L has rim 2a − 2c, which is 0 mod 2. So mod 2 the Betti numbers are 1, 2, 1, against 1, 1, 0 over ℚ. Mod 3, the 2 is a unit (it has an inverse, 2 × 2 = 4 = 1 mod 3), so nothing changes.
 
-That is the counting rule in The formula. The full theorem, the **universal coefficient theorem**, builds a group called Tor to say which twists collapse mod p. This card uses only the count, as stated in Hatcher, section 3.A; [Universal coefficients and Kunneth](11-universal-coefficients-and-kunneth.md) builds Tor for finitely generated groups and proves the theorem for finite complexes.
+That is the counting rule in The formula. The full theorem, the **universal coefficient theorem**, builds a group called Tor to say which twists collapse mod p. This card uses only the count, as stated in Hatcher, section 3.A; [Universal coefficients and Kunneth](11-universal-coefficients-and-kunneth.md) builds Tor for finitely generated groups and proves the theorem for finite complexes, and [Tor](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/04-free-resolutions-and-tor.md) builds it in general.
 
 The 2-triangle model is a cell structure, not a simplicial complex: one corner serves as every vertex. [Cellular homology](05-cellular-homology.md) shows why such models give the right answer. The code checks it directly against an honest triangulation of the same Klein bottle: 9 corners, 27 edges and 18 triangles, the cutting used on [Euler characteristic](../03-Surfaces%20and%20Manifolds/04-euler-characteristic-and-triangulations.md). Its 27-by-18 boundary matrix reduces to seventeen 1s and one 2: the same group.
 
@@ -1464,6 +1464,7 @@ example : (1 + 0, 1 + 1 + 0, 0 + 0 + 1) = ((1 : ℕ), (2 : ℕ), (1 : ℕ)) := b
 - [Smith normal form](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/06-smith-normal-form-and-canonical-forms.md): the same diagonal over polynomial rings, in the algebraic-geometry wing.
 - [Modules](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/05-modules-and-the-structure-theorem.md): the structure theorem in full, for modules over a principal ideal domain.
 - [Eilenberg-Steenrod axioms](10-eilenberg-steenrod-axioms.md): five rules that force every homology theory to agree on cell complexes.
+- [Tor](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/04-free-resolutions-and-tor.md): resolve one module by free ones, tensor, and measure the exactness that was lost.
 
 The 2-triangle model and the 9-corner triangulation gave the same groups here, but this card computed only two cuttings; why every cutting must agree is the question it leaves open.
 

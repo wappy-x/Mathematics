@@ -185,7 +185,7 @@ For a smooth curve D of genus g on a smooth surface X with canonical class K (th
 
 $`\displaystyle D \cdot D + K \cdot D = 2g - 2.`$
 
-A smooth surface of degree d in projective 3-space has $`K = (d - 4)\,h`$, so on a quartic $`K = 0`$. Such a surface is a K3 surface. A smooth conic and a line are both copies of the projective line, so g = 0 and $`D \cdot D = -2`$. Huybrechts, in Sources, proves both facts.
+A smooth surface of degree d in projective 3-space has $`K = (d - 4)\,h`$, so on a quartic $`K = 0`$. Such a surface is a K3 surface. A smooth conic and a line are both copies of the projective line, so g = 0 and $`D \cdot D = -2`$. Huybrechts, in Sources, proves both facts; [The canonical bundle and adjunction](../08-Sheaf%20Cohomology%20and%20Differentials/02-canonical-bundle-and-adjunction.md) explains the formula.
 
 X itself is smooth: the four partial derivatives $`4x^3`$, $`-4y^3`$, $`-4z^3`$, $`4w^3`$ vanish together only at $`x = y = z = w = 0`$, which is not a point of projective space.
 
@@ -821,6 +821,8 @@ example : (1 : ℂ) * I - 0 * 0 = I := by simp
 
 - [The Hodge conjecture](08-hodge-conjecture-statement-and-known-cases.md): the rational classes of type (p, p), their count ρ in degree 2, and the claim that cycles reach them all.
 - Forms and integration on manifolds in full, in the differential geometry wing (planned): the wedge, Stokes' theorem and Poincaré duality proved.
+- [The canonical bundle and adjunction](../08-Sheaf%20Cohomology%20and%20Differentials/02-canonical-bundle-and-adjunction.md): top-degree differentials, and the genus of a curve inside a surface.
+- [The Chow ring](../09-Intersection%20Theory%20and%20Surfaces/01-chow-rings-and-intersection-products.md): subvarieties up to deformation, multiplied by intersecting.
 
 Every cycle class is type (p, p) with whole-number coordinates; whether every rational class of type (p, p) comes from some cycle with rational weights is the open question.
 

@@ -723,8 +723,10 @@ example : (-432 : ℤ) * (-2) ^ 2 = -1728 := by norm_num
 - [Modules](05-modules-and-the-structure-theorem.md): a module is a vector space over a ring, as $`k[x, y]`$ is over $`k[t]`$ through $`\varphi`$; over a PID such as $`k[t]`$, every finitely generated module splits into free and cyclic pieces.
 - [Moduli spaces](07-moduli-spaces-in-outline.md): spaces built so that every family is a map to them.
 - Pullbacks and pushouts (planned, wing 24): the fibre product as a universal property in any category.
+- [Separated and proper](12-separated-and-proper-morphisms.md): no doubled points, and nothing escapes to infinity.
+- [Flat, smooth and etale](../08-Sheaf%20Cohomology%20and%20Differentials/03-flat-smooth-and-etale-morphisms.md): families without jumps, and maps that look locally like isomorphisms.
 
-The question this card leaves open: which families hold together, so that degree and arithmetic genus stay constant even where one fibre turns singular? That is the question of flat families (Hartshorne III.9). This family is flat, yet its fibre over 0 is a cusp and its counts over $`\mathbb{F}_7`$ vary.
+The question this card leaves open: which families hold together, so that degree and arithmetic genus stay constant even where one fibre turns singular? That is the question of flat families (Hartshorne III.9; [Flat, smooth and etale](../08-Sheaf%20Cohomology%20and%20Differentials/03-flat-smooth-and-etale-morphisms.md)). This family is flat, yet its fibre over 0 is a cusp and its counts over $`\mathbb{F}_7`$ vary.
 
 ---
 

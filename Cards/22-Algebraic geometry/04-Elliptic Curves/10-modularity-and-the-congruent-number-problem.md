@@ -171,7 +171,7 @@ What it gives a curve, in three lines:
 2. **A meaning at every $`s`$.** The integral of $`g(t)\, t^{s-1}`$ from 0 to infinity equals $`L(E, s)`$ times a known factor built from $`N`$ and $`s`$. Split it at $`t = 1`$ and fold one half over with the symmetry. The result converges for every $`s`$, so $`L(E, s)`$ extends to the whole complex plane.
 3. **A forced zero.** At $`s = 1`$ the fold gives $`L(E, 1) = \sum (a_m / m)(1 + w)\,e^{-2\pi m/\sqrt{N}}`$. If $`w = -1`$, every term is zero and $`L(E, 1) = 0`$.
 
-The curves $`E_n`$ were known to be modular long before 1995. They have an extra symmetry, $`(x, y) \mapsto (-x, iy)`$ with $`i^2 = -1`$, called complex multiplication. That lets their L-functions be written down directly (Koblitz, chapter II). For congruent numbers, this earlier case is the one that matters.
+The curves $`E_n`$ were known to be modular long before 1995. They have an extra symmetry, $`(x, y) \mapsto (-x, iy)`$ with $`i^2 = -1`$, called complex multiplication ([Complex multiplication](12-complex-multiplication.md)). That lets their L-functions be written down directly (Koblitz, chapter II). For congruent numbers, this earlier case is the one that matters.
 
 The code tests the symmetry with counted coefficients only. For $`E_7`$, $`N = 1568`$: $`g(0.8) = -0.7675096764`$ and $`1.25^2\,g(1.25) = 0.7675096764`$. So $`w = -1`$, and $`L(E_7, 1) = 0`$. For $`E_1`$, $`N = 32`$, the sign is $`+1`$ and $`L(E_1, 1) = 0.6555143886`$.
 
@@ -846,6 +846,7 @@ example : ¬ IsSquare (15450 : ℕ) := by decide +kernel
 
 - [Birch and Swinnerton-Dyer](../../25-Frontier/02-The%20Millennium%20Problems/02-birch-and-swinnerton-dyer.md), on the Frontier wing: the conjecture's status and prize, and the exact gap that leaves "$`2A = B`$ implies congruent" open.
 - [Modularity](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/08-modularity-and-the-proof-of-fermat.md): the same theorem used for Fermat, where the curve has no complex multiplication and the 1995 proof is essential.
+- [Complex multiplication](12-complex-multiplication.md): curves with extra symmetries, and point counts read from p = a^2 + b^2.
 
 The question this card leaves open: is every square-free number that leaves 5, 6 or 7 on division by 8 congruent?
 

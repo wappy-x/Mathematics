@@ -626,6 +626,7 @@ example : let F : Matrix (Fin 2) (Fin 2) ℤ := !![8, 3; 2, 7]
 - [Jordan form](10-jordan-canonical-form.md): the simplest shape of a non-diagonalisable matrix; each root's power in the minimal polynomial is its largest block's size.
 - [Smith normal form](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/06-smith-normal-form-and-canonical-forms.md): another road, with no roots: the minimal polynomial is the last invariant factor of $`xI - A`$.
 - [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): division with remainder, borrowed in Step 4, and Euclid's algorithm, proved in full.
+- [Nakayama's lemma](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/03-nakayamas-lemma.md): over a local ring, generators can be checked modulo the maximal ideal.
 
 The minimal polynomial says A falls short of diagonal, not what it looks like instead: which basis makes A simplest?
 

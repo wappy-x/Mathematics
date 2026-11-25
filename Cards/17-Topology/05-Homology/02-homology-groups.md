@@ -1139,6 +1139,7 @@ end HomologyGroups
 - [De Rham cohomology](../../22-Algebraic%20geometry/05-Cohomology%20and%20the%20Hodge%20Conjecture/02-de-rham-cohomology-of-varieties.md): the same hole counts read from calculus on smooth spaces.
 - [Sard's theorem and degree](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/10-sards-theorem-and-degree.md): how many times one sphere covers another, counted through top-dimensional homology.
 - [Singular homology](09-singular-homology-and-excision.md): hole counts for any space, with no triangulation, and excision proved.
+- [Tor](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/04-free-resolutions-and-tor.md): resolve one module by free ones, tensor, and measure the exactness that was lost.
 
 The ranks here come from one triangulation; this card leaves open why every other triangulation of the same space gives the same counts.
 

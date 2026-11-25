@@ -135,7 +135,7 @@ The Frobenius map φ raises both coordinates to the power p: φ(x, y) = (x^p, y^
 
 Now treat 1 − φ as a map of the curve: Q goes to Q − φ(Q). It sends Q to O exactly when φ(Q) = Q. So the count is the number of points that 1 − φ sends to O.
 
-Two facts are borrowed, with proof in Silverman's book (Sources). Each map of this kind has a **degree**: a whole number, never negative, that measures its size the way degree measures a polynomial. First, for 1 − φ the degree equals the number of points sent to O. Second, the degree of m − nφ, for whole numbers m and n, is
+Two facts are borrowed, with proof in Silverman's book (Sources). Each map of this kind has a **degree** ([Isogenies](11-isogenies-and-the-dual-isogeny.md)): a whole number, never negative, that measures its size the way degree measures a polynomial. First, for 1 − φ the degree equals the number of points sent to O. Second, the degree of m − nφ, for whole numbers m and n, is
 
 ```math
 \deg(m - n\varphi) = m^2 - a_p\,mn + p\,n^2
@@ -952,6 +952,9 @@ example : ((0 : ZMod 3) ^ 2 = 2 ^ 3 - 2 ∧ 2 * (0 : ZMod 3) = 0 ∧ 3 * (2 : ZM
 - [Mordell-Weil](06-mordell-weil-and-rank.md): the rational points form a finitely generated group, and reduction mod good primes helps find its torsion.
 - [Curves for keys](09-elliptic-curve-cryptography-and-schoof.md): curves mod primes of 256 bits, and Schoof's method that counts their points without listing them.
 - [The L-function](07-l-functions-of-elliptic-curves.md): the traces $`a_p`$ assembled into one function.
+- [Isogenies](11-isogenies-and-the-dual-isogeny.md): maps between elliptic curves that respect addition, and the dual that undoes them up to a multiple.
+- [Complex multiplication](12-complex-multiplication.md): curves with extra symmetries, and point counts read from p = a^2 + b^2.
+- [The Weil conjectures](../08-Sheaf%20Cohomology%20and%20Differentials/07-weil-conjectures-and-etale-cohomology.md): point counts over every F_(q^n) packed into one rational function, explained by etale cohomology.
 
 The traces $`a_p`$ zigzag inside Hasse's window with no visible pattern; how they are spread across it, prime after prime, this card leaves open.
 

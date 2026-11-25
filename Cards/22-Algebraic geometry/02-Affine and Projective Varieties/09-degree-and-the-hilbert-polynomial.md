@@ -1077,6 +1077,9 @@ end DegreeCard
 - [Bezout's theorem](../03-Plane%20Curves/03-bezouts-theorem.md): two plane curves meet in exactly the product of their degrees, counted the same way as here.
 - [Genus](../03-Plane%20Curves/06-genus-and-the-degree-genus-formula.md): the degree-genus formula $`p_a = (d - 1)(d - 2)/2`$ for a plane curve of degree d, which gives 1 for the plane cubic, matching $`1 - \mathrm{HP}(0) = 1`$ here; and how singular points lower the number of holes.
 - [Cohomology of projective space](../05-Cohomology%20and%20the%20Hodge%20Conjecture/03-cohomology-of-projective-space.md): the hyperplane class h, under which a curve of degree d counts as d lines, and the Betti numbers of projective space.
+- [Proj](../06-Schemes%20and%20Modern%20Language/10-proj-of-a-graded-ring.md): building projective schemes from graded rings, the way Spec builds affine ones.
+- [Hilbert's syzygy theorem](../07-Exact%20Sequences%2C%20Ext%20and%20Tor/06-hilbert-syzygy-theorem.md): every module over a polynomial ring has a free resolution of length at most the number of variables.
+- [Flat, smooth and etale](../08-Sheaf%20Cohomology%20and%20Differentials/03-flat-smooth-and-etale-morphisms.md): families without jumps, and maps that look locally like isomorphisms.
 
 This card counts how a variety meets a plane; how two curves of given degrees meet each other, and why the answer is a product, is the open question.
 

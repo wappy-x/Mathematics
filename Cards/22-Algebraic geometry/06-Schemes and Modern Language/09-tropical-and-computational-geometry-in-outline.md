@@ -836,6 +836,7 @@ example : (2 : ℕ) ^ 10 = 1024 ∧ (2 : ℕ) ^ 20 = 1048576 := by norm_num
 - [Moduli spaces](07-moduli-spaces-in-outline.md): spaces of curves, whose tropical versions are spaces of graphs and trees.
 - [Modelling tricks](../../15-Optimization/04-Linear%20Programming/07-piecewise-linear-and-minimax-objectives-as-lps.md): a minimum of linear functions, like $`\mathrm{trop}\,f`$, written as a linear program.
 - Time and space classes (computability wing, planned): exponential space, the class in which ideal membership is complete.
+- [Toric varieties](13-toric-varieties.md): a fan of cones glues into a variety, and a polytope counts its sections.
 
 What remains open on this card is how far tropical shortcuts can replace exact Grobner work: for which systems the tropical picture alone already decides the answer.
 

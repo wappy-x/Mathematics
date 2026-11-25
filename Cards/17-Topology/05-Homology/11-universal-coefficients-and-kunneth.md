@@ -984,6 +984,8 @@ example : (2 : ℤ) * 1 + (-1) * 2 * 1 = 0 ∧ ((-((-1 : ℤ) * 2), (2 : ℤ)) =
 - [Poincare duality](12-cap-product-and-poincare-duality.md): on a closed oriented n-manifold, cohomology in dimension k matches homology in dimension n − k. Universal coefficients turn that into the statement that the twists of $`H_k`$ and $`H_{n-k-1}`$ agree.
 - [Modules](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/05-modules-and-the-structure-theorem.md): the structure theorem for finitely generated modules over a ring like $`\mathbb{Z}`$, which proves the free-subgroup fact Step 1 uses.
 - Tor and Ext for every module, by resolutions (planned, in the algebraic-geometry wing): the general functors, for groups that are not finitely generated.
+- [Tor](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/04-free-resolutions-and-tor.md): resolve one module by free ones, tensor, and measure the exactness that was lost.
+- [Ext](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/05-ext-and-extensions.md): resolve, apply Hom, and count the ways to glue two modules together.
 
 This card leaves open what the cup product does with the twists: on $`\mathbb{RP}^2`$ mod 2, the square of the dimension-1 class is the dimension-2 class, which no group count can see.
 

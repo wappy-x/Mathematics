@@ -818,6 +818,10 @@ example (t : ℚ) :
 - [Divisors and Riemann-Roch](07-divisors-and-riemann-roch.md): states Riemann-Roch. On a genus-0 curve it gives a function with one simple pole, which is the parametrisation; the adjoint count of Step 5 also rests on it.
 - [Tropical geometry and computation](../06-Schemes%20and%20Modern%20Language/09-tropical-and-computational-geometry-in-outline.md): for a typical curve, reads the genus off the polygon of its exponents, as the number of whole-number points strictly inside it.
 - [Riemann surfaces](08-riemann-surfaces-and-the-weierstrass-p-function.md): the genus-1 case, where the surface is a torus made from a lattice.
+- [Hyperelliptic curves and the canonical map](10-hyperelliptic-curves-and-the-canonical-map.md): a curve's differentials embed it, unless it doubles over the line.
+- [The Jacobian](11-jacobians-and-abel-jacobi.md): degree-zero divisor classes on a curve form a group that is itself a g-dimensional variety.
+- [The canonical bundle and adjunction](../08-Sheaf%20Cohomology%20and%20Differentials/02-canonical-bundle-and-adjunction.md): top-degree differentials, and the genus of a curve inside a surface.
+- [Sheaf cohomology](../08-Sheaf%20Cohomology%20and%20Differentials/05-sheaf-cohomology-as-a-derived-functor.md): global sections made exact, by injective resolutions.
 
 The genus says how many handles a curve has, but not what shape they take: curves of the same genus can still differ, and how they differ is left open here.
 

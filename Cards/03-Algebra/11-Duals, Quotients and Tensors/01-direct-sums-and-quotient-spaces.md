@@ -517,6 +517,7 @@ example : ((Finset.range 5 ×ˢ Finset.range 5 ×ˢ Finset.range 5).image
 
 - [Dual spaces](02-dual-spaces.md): the price list itself as a vector, a linear reading of baskets.
 - [Tensor products](03-tensor-products.md): a space built from two, where dimensions multiply.
+- [Exact sequences of modules](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/01-exact-sequences-and-the-snake-lemma.md): what one map hits the next one kills, and the snake lemma's connecting map.
 
 The determinant test sorted the baskets just as the bill did; why such readings form a space of their own is the question left open.
 

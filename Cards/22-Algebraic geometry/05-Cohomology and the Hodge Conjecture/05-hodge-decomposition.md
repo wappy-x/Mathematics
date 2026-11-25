@@ -168,7 +168,7 @@ The torus proof above is complete. The general proof has three steps, each a cha
 
 1. **Hodge's theorem.** On a compact manifold with a metric, every class has exactly one harmonic form. This needs the analysis of elliptic operators, which belongs to the differential-geometry wing.
 2. **The Kahler identities.** When the metric comes from a Kahler form ω, the full Laplacian is twice the Laplacian built from $`\bar\partial`$ alone. That Laplacian keeps type (p, q) fixed, so the harmonic parts split by type.
-3. **Dolbeault's theorem.** $`H^{p,q}`$ equals the sheaf cohomology in degree q of the holomorphic p-forms ([Sheaves](01-sheaves-in-outline.md)). This makes the Hodge numbers algebraic invariants of a projective variety, which Griffiths' Jacobian ring computes.
+3. **Dolbeault's theorem.** $`H^{p,q}`$ equals the sheaf cohomology in degree q of the holomorphic p-forms ([Sheaves](01-sheaves-in-outline.md), [Sheaf cohomology](../08-Sheaf%20Cohomology%20and%20Differentials/05-sheaf-cohomology-as-a-derived-functor.md)). This makes the Hodge numbers algebraic invariants of a projective variety, which Griffiths' Jacobian ring computes.
 
 The second of these, the Kahler identities, is where Kahler is used; the Hopf surface has no Kahler form, and the split fails there.
 
@@ -700,6 +700,7 @@ example : (4 : ℤ) - (-200) = 1 + 101 + 101 + 1 := by decide
 - [Hodge star](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/09-hodge-star-and-maxwell-in-forms.md): the operator that defines harmonic forms, and the full proof of Hodge's theorem.
 - [The Hodge conjecture](08-hodge-conjecture-statement-and-known-cases.md): the statement on this shelf, asking which rational classes of type (p, p) come from subvarieties.
 - [The Hodge conjecture](08-hodge-conjecture-statement-and-known-cases.md): the open problem's status and known cases, kept in the Frontier wing.
+- [Sheaf cohomology](../08-Sheaf%20Cohomology%20and%20Differentials/05-sheaf-cohomology-as-a-derived-functor.md): global sections made exact, by injective resolutions.
 
 The question this card leaves open: the quartic has 20 classes of type (1, 1), so how many of them are classes of actual curves on the surface?
 

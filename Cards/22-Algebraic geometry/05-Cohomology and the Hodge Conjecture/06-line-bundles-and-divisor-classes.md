@@ -870,6 +870,11 @@ example : 0 + 1 + 0 = 1 ∧ 1 + 20 + 1 = 22 := by norm_num
 
 - [Algebraic cycles](07-algebraic-cycles-and-cycle-classes.md): divisors are the codimension-one cycles; that card adds points on a surface and subvarieties of every dimension, each with its cohomology class.
 - [The Hodge conjecture](08-hodge-conjecture-statement-and-known-cases.md): Lefschetz (1,1) is its proved codimension-one case, and the card states the rest.
+- [Quasi-coherent sheaves](../06-Schemes%20and%20Modern%20Language/11-quasi-coherent-and-coherent-sheaves.md): modules spread over a scheme, and the line bundles O(d) as shifted graded modules.
+- [The canonical bundle and adjunction](../08-Sheaf%20Cohomology%20and%20Differentials/02-canonical-bundle-and-adjunction.md): top-degree differentials, and the genus of a curve inside a surface.
+- [The Chow ring](../09-Intersection%20Theory%20and%20Surfaces/01-chow-rings-and-intersection-products.md): subvarieties up to deformation, multiplied by intersecting.
+- [Chern classes and Hirzebruch-Riemann-Roch](../09-Intersection%20Theory%20and%20Surfaces/02-chern-classes-and-hirzebruch-riemann-roch.md): the Euler characteristic of a bundle from its classes.
+- [Intersection numbers on a surface](../09-Intersection%20Theory%20and%20Surfaces/03-intersection-numbers-on-surfaces-and-blow-ups.md): blowing up a point makes a curve of self-intersection -1.
 
 For divisors, the first Chern class reaches every whole-number class of type (1,1); whether the classes of type (p, p) in higher degrees all come from subvarieties is the open question the Hodge conjecture makes exact.
 

@@ -542,6 +542,10 @@ example : vecMulVec ![(1 : ℤ), 1] ![1, 1, 0] = !![1, 1, 0; 1, 1, 0] ∧
 - [Monoidal categories](../../24-Computability%20and%20complexity/07-Category%20Theory%20in%20Outline/09-monoidal-categories-and-string-diagrams.md): the tensor product as one case of placing things side by side.
 - [Two particles](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/11-two-particle-states-and-entanglement.md): product states, the singlet, and the CHSH bound.
 - [Universal coefficients and Kunneth](../../17-Topology/05-Homology/11-universal-coefficients-and-kunneth.md): change the number system, or multiply two spaces, and see what twists survive.
+- [Quasi-coherent sheaves](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/11-quasi-coherent-and-coherent-sheaves.md): modules spread over a scheme, and the line bundles O(d) as shifted graded modules.
+- [Projective, injective and flat](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/02-projective-injective-and-flat-modules.md): the modules that keep Hom and tensor exact.
+- [Kahler differentials](../../22-Algebraic%20geometry/08-Sheaf%20Cohomology%20and%20Differentials/01-kahler-differentials.md): derivatives built from algebra alone.
+- [Chern classes and Hirzebruch-Riemann-Roch](../../22-Algebraic%20geometry/09-Intersection%20Theory%20and%20Surfaces/02-chern-classes-and-hirzebruch-riemann-roch.md): the Euler characteristic of a bundle from its classes.
 
 A weeks-by-goods-by-shops table has three indices and no row rank; what replaces rank there is the question this card leaves open.
 

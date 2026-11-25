@@ -849,6 +849,7 @@ example : ((Finset.univ : Finset (Finset (Fin 5))).filter
 - [Proximal gradient](06-proximal-methods-ista-fista-and-the-lasso.md): the next card, where the hard part of each step is solved exactly in closed form, as a proximal map; for the lasso that map is soft thresholding.
 - [Sums of squares](12-sum-of-squares-polynomial-optimisation.md): prove a polynomial is never negative by finding a positive semidefinite matrix.
 - [Matrix completion](13-matrix-completion-and-the-nuclear-norm.md): fill the missing entries with the table of lowest nuclear norm.
+- [Sums of squares and the Positivstellensatz](../../22-Algebraic%20geometry/01-Polynomial%20Systems/11-sums-of-squares-and-the-positivstellensatz.md): certificates that a polynomial is never negative, or that a system has no real point.
 
 The ring's relaxation was off by more than half a link; which networks make that gap as large as the 0.878 promise allows is the question this card leaves open.
 

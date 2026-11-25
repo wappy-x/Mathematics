@@ -543,6 +543,7 @@ example : ¬ ∃ f : Fin 2 → ℚ, f ⬝ᵥ ![2, 1] = 1 ∧ f ⬝ᵥ ![4, 2] = 
 - [Dual spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/09-dual-spaces-and-lp-duality.md) in functional analysis: the continuous readings of infinite-dimensional spaces.
 - [Reflexive spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/10-reflexive-spaces-and-the-second-dual.md): the dual of the dual.
 - [Covectors and tensor fields](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/05-covectors-and-tensor-fields.md): a dual space at every point of a curved space.
+- [Projective, injective and flat](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/02-projective-injective-and-flat-modules.md): the modules that keep Hom and tensor exact.
 
 $`V`$ and $`V^*`$ have the same size, but matching them needs a chosen basis; what extra structure makes the match natural is the question this card leaves open.
 

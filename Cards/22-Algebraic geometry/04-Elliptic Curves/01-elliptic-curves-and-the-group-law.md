@@ -875,6 +875,7 @@ open GroupLawCard
 - [Adding points by formula](03-point-arithmetic-and-double-and-add.md): coordinates that divide only once in a whole run, and a large multiple of (3, 5), worked modulo a prime, by doubling and adding.
 - [The curve mod p](05-reduction-mod-p-and-hasse.md): the same law on remainders, and how many points the curve has mod each prime.
 - [Mordell-Weil](06-mordell-weil-and-rank.md): why finitely many rational points generate all of them.
+- [Isogenies](11-isogenies-and-the-dual-isogeny.md): maps between elliptic curves that respect addition, and the dual that undoes them up to a multiple.
 
 This card leaves open which rational points the curve has: is every one of them a multiple of (3, 5)?
 

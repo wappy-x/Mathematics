@@ -1467,6 +1467,7 @@ example : (3 / 8 : ℚ) ^ 2 = (1 / 2) ^ 3 + 1 / 64 := by norm_num
 ## Where this goes next
 
 - [The curve mod p](05-reduction-mod-p-and-hasse.md): counting the points $`N_p`$ properly, Hasse's bound on them, and why the counts here are near $`p + 1`$.
+- [Isogenies](11-isogenies-and-the-dual-isogeny.md): maps between elliptic curves that respect addition, and the dual that undoes them up to a multiple.
 
 The question this card leaves open: once the torsion is known, how many independent points of infinite order does the curve have? [Mordell-Weil](06-mordell-weil-and-rank.md) takes it up.
 

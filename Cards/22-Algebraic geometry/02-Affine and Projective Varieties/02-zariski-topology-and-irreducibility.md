@@ -1078,6 +1078,7 @@ example (x y : ZMod 13) : x ^ 2 + y ^ 2 = (x + 5 * y) * (x - 5 * y) := by
 
 - [Projective space](03-projective-space-and-homogeneous-coordinates.md): the next card adds points at infinity; its Zariski topology uses equations of one degree.
 - [The spectrum of a ring](../06-Schemes%20and%20Modern%20Language/02-spectrum-of-a-ring-and-schemes.md): the same topology placed on the prime ideals themselves, so the hidden parts of non-radical ideals get points.
+- [Separated and proper](../06-Schemes%20and%20Modern%20Language/12-separated-and-proper-morphisms.md): no doubled points, and nothing escapes to infinity.
 
 This card splits a shape into pieces but does not yet measure a piece. How many directions does each piece have? [Dimension and tangent space](07-dimension-and-tangent-spaces.md) answers that.
 

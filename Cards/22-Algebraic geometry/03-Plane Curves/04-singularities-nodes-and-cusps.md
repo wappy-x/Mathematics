@@ -1000,6 +1000,7 @@ example : -(0 : ℚ) * (4 + 27 * 0) = 0 ∧ -(-4 / 27 : ℚ) * (4 + 27 * (-4 / 2
 - [Blowing up](05-blowing-up-a-point.md): replaces the bad point by all the directions through it, so the node's two branches land at two different points and the cusp's branch becomes smooth.
 - [Genus](06-genus-and-the-degree-genus-formula.md): each node or cusp lowers the genus of a curve, which is why both singular cubics here have a parametrisation by one variable.
 - [Weierstrass form](../04-Elliptic%20Curves/02-weierstrass-forms-discriminant-and-j-invariant.md): a Weierstrass cubic with discriminant zero has exactly one node or one cusp, depending on whether its cubic has a double or a triple root.
+- [The Jacobian](11-jacobians-and-abel-jacobi.md): degree-zero divisor classes on a curve form a group that is itself a g-dimensional variety.
 
 This card names a point by its lowest terms and one cubic test; how to read every worse point, such as $`y^2 = x^4`$ or $`y^3 = x^4`$, in one uniform way is the question this card leaves open.
 

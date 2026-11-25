@@ -1016,6 +1016,7 @@ example : secondPoint (1 : ℚ) 0 (-1) 0 0 1 1 (1 / 2) = (-1 / 3, 1 / 3) ∧
 - [Nodes and cusps](04-singularities-nodes-and-cusps.md): the singular points of Step 4 in higher degree, including the node of the house example.
 - [Genus](06-genus-and-the-degree-genus-formula.md): why smooth conics (genus 0) are lines in disguise and smooth cubics are not.
 - [The group law](../04-Elliptic%20Curves/01-elliptic-curves-and-the-group-law.md): the same chord through known rational points, on a cubic, where it adds points instead of listing them.
+- [Proj](../06-Schemes%20and%20Modern%20Language/10-proj-of-a-graded-ring.md): building projective schemes from graded rings, the way Spec builds affine ones.
 
 This card turns one rational point into all of them on a degree-two curve; on a smooth cubic, where a line meets the curve three times, what can one or two known points produce?
 

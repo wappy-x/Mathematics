@@ -777,6 +777,7 @@ example : ((Finset.range 7 ×ˢ Finset.range 7).filter
 
 - [Localisation](03-localisation-and-local-rings.md): the rings $`R_f`$ on open sets and the local ring at a point, the pieces of the structure sheaf.
 - [Moduli spaces](07-moduli-spaces-in-outline.md): schemes whose points are themselves shapes, such as all lines in space.
+- [Proj](10-proj-of-a-graded-ring.md): building projective schemes from graded rings, the way Spec builds affine ones.
 
 This card puts a ring of functions on each open set but does not yet zoom into a single point. What do functions near one point look like, and what does the ring remember there?
 

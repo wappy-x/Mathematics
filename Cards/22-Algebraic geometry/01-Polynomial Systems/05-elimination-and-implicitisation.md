@@ -1075,6 +1075,7 @@ example : (21 / 8 : ℚ) ^ 2 + 135 / 64 = 9 ∧ (21 / 8 - 4 : ℚ) ^ 2 + 135 / 6
 - [The resultant](06-resultants-and-common-roots.md): removes one variable from two polynomials with a single determinant, the shared-root test on which the extension theorem's proof rests.
 - [Finitely many solutions](07-solving-zero-dimensional-systems.md): counts the solutions of a system first, then finds them all.
 - [Algebraic statistics](../06-Schemes%20and%20Modern%20Language/08-algebraic-statistics-and-identifiability.md): implicit equations of statistical models, found by the same elimination.
+- [Invariants of a finite group](10-invariant-theory-and-molien-series.md): the Reynolds average, Hilbert's finiteness, and Molien's count.
 
 Lex bases can grow very large; the question this card leaves open is whether a single variable can be removed more directly, without computing a whole basis.
 

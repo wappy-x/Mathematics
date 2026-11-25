@@ -981,6 +981,8 @@ end ProjectiveClosure
 - [Maps between varieties](05-regular-and-rational-maps.md): maps given by homogeneous polynomials, such as $`(s : t) \mapsto (s^2 : t^2 : st)`$, which this card used to count the closure.
 - [Degree](09-degree-and-the-hilbert-polynomial.md): the count of meeting points, projective, with multiplicity, over $`\mathbb{C}`$, which comes out the same every time only after the points at infinity are added.
 - [Smooth and singular points](08-smooth-and-singular-points.md): checking every point of the closure, the ones at infinity included, chart by chart.
+- [Proj](../06-Schemes%20and%20Modern%20Language/10-proj-of-a-graded-ring.md): building projective schemes from graded rings, the way Spec builds affine ones.
+- [The 27 lines on a cubic surface](../09-Intersection%20Theory%20and%20Surfaces/04-twenty-seven-lines-on-a-cubic-surface.md): the plane blown up at six points, with every line accounted for.
 
 This card finds the points a curve gains at infinity; how to map one projective variety to another, and when two of them are the same, is the open question.
 

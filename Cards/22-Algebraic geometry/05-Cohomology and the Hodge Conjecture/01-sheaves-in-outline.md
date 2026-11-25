@@ -853,8 +853,10 @@ example : (X ^ 5 : (ZMod 5)[X]) ≠ X := by
 - [Cohomology of projective space](03-cohomology-of-projective-space.md): the same two charts, now with their cohomology counted in every degree.
 - [Line bundles and divisors](06-line-bundles-and-divisor-classes.md): the twisted sheaves $`\mathcal{O}(d)`$, and what their gluing rules record.
 - [The Hodge conjecture](08-hodge-conjecture-statement-and-known-cases.md): the shelf's goal, stated with the cohomology these sheaves feed.
+- [Quasi-coherent sheaves](../06-Schemes%20and%20Modern%20Language/11-quasi-coherent-and-coherent-sheaves.md): modules spread over a scheme, and the line bundles O(d) as shifted graded modules.
+- [Cech cohomology](../08-Sheaf%20Cohomology%20and%20Differentials/04-cech-cohomology-of-projective-space.md): gluing failures counted on a cover, and the cohomology of O(d) on projective space.
 
-The question this card leaves open: the twist d = −2 left one Laurent term that no pair of local sections can produce; how is that leftover measured in general, and what does it say about the space?
+The question this card leaves open: the twist d = −2 left one Laurent term that no pair of local sections can produce; how is that leftover measured in general, and what does it say about the space? [Cech cohomology](../08-Sheaf%20Cohomology%20and%20Differentials/04-cech-cohomology-of-projective-space.md) measures it.
 
 ---
 
