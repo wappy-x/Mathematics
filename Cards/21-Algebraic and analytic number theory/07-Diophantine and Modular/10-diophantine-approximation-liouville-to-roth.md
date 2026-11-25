@@ -851,6 +851,7 @@ example : ∀ x ∈ Finset.Icc (-14 : ℤ) 14, ∀ y ∈ Finset.Icc (-11 : ℤ) 
 - [Apery's theorem](15-irrationality-of-zeta-three.md): zeta of 3 is irrational, by Beukers' triple integral.
 - [Weyl differencing](../08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/08-weyl-differencing-and-van-der-corput.md): squaring an exponential sum to lower its degree, and van der Corput's bounds.
 - [Roth's theorem](../08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/11-roths-theorem-on-three-term-progressions.md): a dense set of whole numbers must hold three in arithmetic progression.
+- [Schanuel's conjecture](../../25-Frontier/03-Primes%20and%20Numbers/08-schanuels-conjecture.md): one statement that would settle almost every open question about transcendental numbers.
 
 The rest of the shelf: [Pell's equation](01-pell-and-continued-fractions-revisited.md), [Two squares](02-sums-of-squares-and-gaussian-integers.md), [Four squares and beyond](03-four-squares-and-warings-problem.md), [Fermat's last theorem](04-fermats-last-theorem-history-and-descent.md), [Rational points on a cubic](05-elliptic-curves-over-q-and-mordell-weil.md), [Birch-Swinnerton-Dyer](06-birch-swinnerton-dyer-and-the-congruent-number-problem.md), [Modular forms](07-modular-forms-in-outline.md), [Modularity](08-modularity-and-the-proof-of-fermat.md), [The abc conjecture](09-abc-conjecture-and-szpiro.md).
 

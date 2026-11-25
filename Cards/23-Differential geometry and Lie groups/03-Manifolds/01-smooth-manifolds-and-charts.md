@@ -782,6 +782,7 @@ end SmoothManifoldsAndCharts
 - [Tangent space and differential](03-tangent-spaces-and-differentials.md): the walker's velocity as one object whose components change by $`J`$ from sheet to sheet.
 - [Partition of unity](09-partitions-of-unity-and-whitney-embedding.md): gluing work done sheet by sheet into one object on the whole manifold.
 - [Riemannian metric](../05-Riemannian%20Geometry/01-riemannian-metrics.md): lengths and angles, which turn the sheet speeds 0.7827 and 0.6224 back into the ground speed 1.
+- [The smooth Poincare conjecture in dimension four](../../25-Frontier/04-Geometry%20and%20Combinatorics/11-smooth-four-dimensional-poincare-conjecture.md): the one case still open.
 
 Smooth sheets fix what a derivative means at each point, but not how a velocity at London compares with one at Accra: what single object, the same on every sheet, is a velocity on a manifold?
 

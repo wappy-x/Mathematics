@@ -1017,6 +1017,7 @@ example : (1 / 3 : ℚ) • crossProduct ![(1 : ℚ), 1, -1] ![1, 1, 1 / 2] = ![
 - [Integration on an oriented manifold](05-integration-on-manifolds.md): integrating forms over curves, surfaces and solids, which turns a potential into a boundary value.
 - [Stokes on manifolds](06-stokes-theorem-on-manifolds.md): why the flux through the gate equals α's circulation round its edge.
 - [de Rham cohomology](08-de-rham-cohomology.md): closed forms modulo exact ones, a count of the holes.
+- [Darboux's theorem](11-darboux-theorem-and-the-moser-trick.md): every symplectic form looks the same up close.
 
 On a region with holes, how many genuinely different closed forms fail to be exact, and does that number depend on anything but the shape?
 

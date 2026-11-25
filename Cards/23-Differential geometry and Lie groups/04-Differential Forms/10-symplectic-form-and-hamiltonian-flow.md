@@ -1037,6 +1037,8 @@ example (a b : ℝ) :
 - [Lagrangian and Hamiltonian mechanics](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/04-lagrangian-and-hamiltonian-mechanics-for-engineers.md): machines with several coordinates, where $`\omega`$ has one term per coordinate.
 - [Noether](../06-Lie%20Groups/08-noethers-theorem.md): a symmetry of $`H`$ gives a conserved quantity, which in this language is a function whose flow, through $`\omega`$, is the symmetry.
 - [de Rham cohomology](08-de-rham-cohomology.md): closed forms up to exact ones; $`\omega`$ is closed, and on a compact surface without edge, such as a sphere, a symplectic form is never exact.
+- [Darboux's theorem](11-darboux-theorem-and-the-moser-trick.md): every symplectic form looks the same up close.
+- [Moment maps](../06-Lie%20Groups/12-moment-maps-and-symplectic-reduction.md): Noether's conserved quantities as one map, and reducing a system by its symmetry.
 
 The question this card leaves open: keeping $`\omega`$ is stronger than keeping volume, but how much stronger? One sharp answer is Gromov's non-squeezing theorem (1985), proved but not on this card: no Hamiltonian motion can squeeze a ball of states into a tube whose cross-section in one swing's plane is narrower than the ball, although volume alone would allow it.
 

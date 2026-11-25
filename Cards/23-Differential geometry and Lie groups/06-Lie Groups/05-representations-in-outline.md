@@ -1133,6 +1133,8 @@ end RepresentationsInOutline
 ## Where this goes next
 
 - [Group action and homogeneous space](06-homogeneous-spaces-and-group-actions.md): a group moving the points of a curved space, not only a flat space of lists.
+- [Lie's theorems](11-lies-theorems-and-covering-groups.md): the Lie algebra decides the group, up to a covering.
+- [Representations of sl(2)](../08-Roots%2C%20Weights%20and%20Representations/01-representations-of-sl2.md): every one is a ladder of weights that steps by two.
 
 For a continuous group such as the turns of space, the twelve-term average becomes an integral over the group; how the functions on a sphere then split into pieces is the question this card leaves open.
 

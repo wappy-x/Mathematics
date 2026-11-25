@@ -1018,6 +1018,7 @@ The `try:` lines and the gap lines of the output print each answer.
 - [Point types](06-classification-of-surface-points.md): the signs of those eigenvalues sort points into dome-like, saddle-like and flat-in-one-direction, as the dome, the saddle and the barrel vault show here.
 - [Theorema Egregium](08-theorema-egregium.md): $`\det W`$ comes out of $`E`$, $`F`$, $`G`$ alone, although $`W`$ was built from outside the surface.
 - [Gauss-Bonnet](10-gauss-bonnet-theorem.md): adding $`\det W`$ over a whole surface gives the total globe area its normals sweep; for a closed surface it depends only on how many holes the surface has.
+- [Gauss, Codazzi and Ricci equations](../05-Riemannian%20Geometry/11-second-fundamental-form-and-gauss-codazzi.md): a submanifold's curvature split into inside and outside.
 
 The question this card leaves open: $`W`$ is built using the normal, an arrow outside the surface, so how much of it could an inhabitant who never leaves the roof discover?
 

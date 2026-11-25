@@ -915,6 +915,7 @@ example : ∀ x ∈ ({0, 1, 8} : Finset ℕ), ∀ y ∈ ({0, 1, 8} : Finset ℕ)
 - [Modular forms](07-modular-forms-in-outline.md): a generating series turns "how many ways is n a sum of four squares" into Jacobi's divisor formula, which this card states without proof.
 - [Fermat's last theorem](04-fermats-last-theorem-history-and-descent.md): asks when a sum of two k-th powers is itself a k-th power, and uses descent again, for k = 4.
 - [The circle method](../08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/09-hardy-littlewood-circle-method.md): count solutions as an integral round the circle, split into major and minor arcs.
+- [Hilbert's tenth problem beyond the integers](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/07-hilberts-tenth-problem-over-number-fields.md): undecidable over every ring of integers, still open over the rationals.
 
 Four squares always suffice and nine cubes always suffice, but how many cubes every large number needs, somewhere from 4 to 7, is still unknown.
 

@@ -656,6 +656,7 @@ example : ∀ u : ℚ, 2 * u / 4 = u / 2 := by intro u; ring
 - [Curvature and torsion at any speed](06-curvature-and-torsion-from-any-parametrisation.md): the space-curve version of this card's formula.
 - [Fundamental theorem of curves](07-fundamental-theorem-of-curves.md): κ as a function of arc length fixes the plane curve's shape, up to where it sits.
 - [Turning and winding numbers](08-turning-number-and-winding-number.md): the total turn, the integral of κ over a closed loop, counted in whole turns.
+- [Mean curvature flow](../07-Geometric%20Analysis%20and%20Physics/11-mean-curvature-flow.md): surfaces that shrink to cut their own area fastest.
 
 The question this card leaves open: the bend at 4 s matches a circle of radius 8.9920 m, but in what precise sense is that circle the best fit?
 

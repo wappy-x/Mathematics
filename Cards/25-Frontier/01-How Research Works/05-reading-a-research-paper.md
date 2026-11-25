@@ -758,6 +758,7 @@ example : (1 / 2 + 7 / 300 : ℚ) = 157 / 300 := by norm_num
 ## Where this goes next
 
 - [Machines in proofs](06-computer-assistance-and-formal-verification.md): the next card on this shelf. When a dependency is a computer search or a formal proof, the reading record needs the audit list taught there.
+- [Prize citations](08-reading-a-prize-citation.md): what a Fields, Abel or Breakthrough citation says was proved, and what it does not.
 
 Sibling cards: [Proof](01-what-counts-as-a-proof.md), [Kinds of claim](02-theorem-conjecture-model-approximation.md), [Counterexamples](03-how-a-counterexample-works.md), [Reading a statement](04-reading-a-mathematical-statement.md), [Machines in proofs](06-computer-assistance-and-formal-verification.md) and [Working on a problem](07-how-to-work-on-an-open-problem.md).
 

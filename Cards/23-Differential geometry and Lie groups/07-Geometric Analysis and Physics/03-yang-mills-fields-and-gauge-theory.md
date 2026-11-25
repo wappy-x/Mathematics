@@ -929,7 +929,7 @@ open YangMills
 - **Lattice simulations of the strong force.** Quantum chromodynamics, the theory of the strong force, is Yang-Mills with group SU(3), plus quarks. Supercomputers run Wilson's action on grids to compute particle masses.
 - **The Standard Model.** The weak and electromagnetic forces together use SU(2) × U(1). Maxwell's theory is a U(1) inside it that mixes both factors, not the U(1) factor itself.
 - **Smoothing grid fields.** The Wilson flow follows the downhill direction of this energy, exactly as the code's single step did. Lattice groups use it to remove noise and to set the grid spacing.
-- **Geometry of surfaces and four-manifolds.** Atiyah and Bott used this energy over a closed surface as a height function whose critical points reveal the shape of the space of flat connections. Minimisers in four dimensions later helped tell four-manifolds apart.
+- **Geometry of surfaces and four-manifolds.** Atiyah and Bott used this energy over a closed surface as a height function ([Morse theory](../03-Manifolds/12-morse-theory-critical-points-and-handles.md)) whose critical points reveal the shape of the space of flat connections. Minimisers in four dimensions later helped tell four-manifolds apart.
 - **Gravity.** [Einstein equations](02-einstein-equations-in-outline.md) also set the first change of an energy to zero, with the metric in place of the connection.
 
 > **Say it back**

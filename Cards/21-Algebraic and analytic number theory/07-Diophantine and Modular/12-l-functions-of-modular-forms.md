@@ -873,6 +873,7 @@ example : (1 + 12 / 12 - 0 / 4 - 0 / 3 - 2 / 2 : ℚ) = 1 ∧ (1 + 36 / 12 - 0 /
 
 - [The L-function](../../22-Algebraic%20geometry/04-Elliptic%20Curves/07-l-functions-of-elliptic-curves.md): the same function built from the curve's side, with local factors from point counts over every field of size $`p^k`$.
 - Automorphic forms (planned): L-functions with the same continuation and mirror for forms on larger groups than $`\mathrm{SL}_2(\mathbb{Z})`$.
+- [The Langlands program](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/06-langlands-program-and-geometric-langlands.md): matching Galois representations with automorphic forms, and the 2024 geometric proof.
 
 The question this card leaves open: do all the nontrivial zeros of $`L(f, s)`$ lie on the line $`\mathrm{Re}\, s = 1`$, as the Riemann hypothesis asks for zeta?
 

@@ -838,6 +838,7 @@ example : 6 * (4 - 1) + 8 * (3 - 1) + 12 * (2 - 1) = 46 ∧ (24 - 1) * 2 = 46 :=
 ## Where this goes next
 
 - [Killing field](07-killing-fields-and-symmetries-of-a-metric.md): the velocity field $`\omega \times p`$ of Step 4, seen as a direction in which the globe's geometry does not change.
+- [Moment maps](12-moment-maps-and-symplectic-reduction.md): Noether's conserved quantities as one map, and reducing a system by its symmetry.
 
 The globe matches its circles of turns one for one but not smoothly as a single choice; how a whole group can sit over a space, one copy at each point, is the question this card leaves open, taken up in [Principal bundle and connection](10-principal-bundles-and-connections-in-outline.md).
 

@@ -951,6 +951,7 @@ example : Nat.choose (3 + 2) 2 = 10 ∧ Nat.choose (6 + 2) 2 = 28 ∧ Nat.choose
 
 - [Intersection numbers on a surface](03-intersection-numbers-on-surfaces-and-blow-ups.md): computes $`D \cdot D'`$ and $`K^2`$ directly, and shows how a blow-up changes them, the numbers this card fed into Riemann-Roch.
 - [The 27 lines on a cubic surface](04-twenty-seven-lines-on-a-cubic-surface.md): finds the lines on S through its blow-up model, where Riemann-Roch on a surface shows that each candidate class holds a curve, and checks them on the Fermat cubic.
+- [Chern-Weil](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/13-chern-weil-theory-and-characteristic-classes.md): whole numbers from curvature that no connection can change.
 
 Grothendieck-Riemann-Roch, which follows Euler characteristics along a map between varieties, is planned for a later card on K-theory in geometry. Left open: when do the higher cohomology groups vanish, so that the Euler characteristic is the number of sections?
 

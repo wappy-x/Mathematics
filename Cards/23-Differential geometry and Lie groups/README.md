@@ -6,7 +6,7 @@
 
 Compute the curvature of a curve or a surface by hand and in code, work on a smooth manifold with vector fields, differential forms and Stokes' theorem, and follow Riemannian curvature far enough to state Ricci flow and the Einstein equations. Use a Lie group as a symmetry, optimise on a curved constraint set, and read the Yang-Mills mass-gap problem as a precise statement rather than a slogan.
 
-7 shelves · **69 of 69 cards ready to read**
+8 shelves · **87 of 87 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
@@ -14,11 +14,12 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 | --- | ---: |
 | [01 · Curves](#s01) | 9 |
 | [02 · Surfaces](#s02) | 10 |
-| [03 · Manifolds](#s03) | 10 |
-| [04 · Differential Forms](#s04) | 10 |
-| [05 · Riemannian Geometry](#s05) | 10 |
-| [06 · Lie Groups](#s06) | 10 |
-| [07 · Geometric Analysis and Physics](#s07) | 10 |
+| [03 · Manifolds](#s03) | 12 |
+| [04 · Differential Forms](#s04) | 11 |
+| [05 · Riemannian Geometry](#s05) | 15 |
+| [06 · Lie Groups](#s06) | 13 |
+| [07 · Geometric Analysis and Physics](#s07) | 13 |
+| [08 · Roots, Weights and Representations](#s08) | 4 |
 
 <a name="s01"></a>
 
@@ -59,7 +60,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s03"></a>
 
-## 03 · Manifolds · 10 cards
+## 03 · Manifolds · 12 cards
 
 *calculus on a space that is flat only up close*
 
@@ -73,12 +74,14 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [Lie bracket: what changes when you swap the order of two motions](03-Manifolds/08-lie-brackets-and-frobenius-theorem.md)
 9. [Partition of unity: glue local work into one global object](03-Manifolds/09-partitions-of-unity-and-whitney-embedding.md)
 10. [Sard's theorem and degree: bad values are rare, wrapping is a whole number](03-Manifolds/10-sards-theorem-and-degree.md)
+11. [Transversality and cobordism: crossings that survive a wiggle, and shapes that bound together](03-Manifolds/11-transversality-intersection-numbers-and-cobordism.md)
+12. [Morse theory: a height function's critical points build the shape](03-Manifolds/12-morse-theory-critical-points-and-handles.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s04"></a>
 
-## 04 · Differential Forms · 10 cards
+## 04 · Differential Forms · 11 cards
 
 *one derivative and one boundary theorem behind all of vector calculus*
 
@@ -92,12 +95,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [de Rham cohomology: closed forms that are not derivatives count holes](04-Differential%20Forms/08-de-rham-cohomology.md)
 9. [Hodge star: Maxwell's equations in two lines](04-Differential%20Forms/09-hodge-star-and-maxwell-in-forms.md)
 10. [Symplectic form: the two-form behind Hamiltonian mechanics](04-Differential%20Forms/10-symplectic-form-and-hamiltonian-flow.md)
+11. [Darboux's theorem: every symplectic form looks the same up close](04-Differential%20Forms/11-darboux-theorem-and-the-moser-trick.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s05"></a>
 
-## 05 · Riemannian Geometry · 10 cards
+## 05 · Riemannian Geometry · 15 cards
 
 *a metric, the one connection it forces, and what curvature does to shortest paths*
 
@@ -111,12 +115,17 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [Volume form and Laplace-Beltrami: integrate and diffuse on a curved space](05-Riemannian%20Geometry/08-volume-form-and-the-laplace-beltrami-operator.md)
 9. [Jacobi field: curvature seen as nearby paths focusing or spreading](05-Riemannian%20Geometry/09-jacobi-fields-and-comparison-theorems.md)
 10. [Hopf-Rinow: when a shortest path is guaranteed to exist](05-Riemannian%20Geometry/10-hopf-rinow-and-completeness.md)
+11. [Gauss, Codazzi and Ricci equations: a submanifold's curvature split into inside and outside](05-Riemannian%20Geometry/11-second-fundamental-form-and-gauss-codazzi.md)
+12. [Hodge's theorem: every cohomology class has exactly one harmonic form](05-Riemannian%20Geometry/12-hodge-laplacian-and-harmonic-forms.md)
+13. [Bochner's theorem: positive Ricci curvature leaves no room for harmonic loops](05-Riemannian%20Geometry/13-bochner-technique-and-vanishing-theorems.md)
+14. [Bishop-Gromov: a lower bound on Ricci curvature caps the volume of every ball](05-Riemannian%20Geometry/14-bishop-gromov-volume-comparison.md)
+15. [Cheeger's inequality: a low first note forces a thin neck on a curved space](05-Riemannian%20Geometry/15-cheegers-inequality-and-spectral-geometry.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s06"></a>
 
-## 06 · Lie Groups · 10 cards
+## 06 · Lie Groups · 13 cards
 
 *continuous symmetry as a group that is also a manifold*
 
@@ -130,12 +139,15 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [Noether: every continuous symmetry hands you a conserved quantity](06-Lie%20Groups/08-noethers-theorem.md)
 9. [Hairy ball theorem: a field on a sphere must stand still somewhere](06-Lie%20Groups/09-vector-field-zeros-and-the-hairy-ball.md)
 10. [Principal bundle and connection: a symmetry group attached at every point](06-Lie%20Groups/10-principal-bundles-and-connections-in-outline.md)
+11. [Lie's theorems: the Lie algebra decides the group, up to a covering](06-Lie%20Groups/11-lies-theorems-and-covering-groups.md)
+12. [Moment maps: Noether's conserved quantities as one map, and reducing a system by its symmetry](06-Lie%20Groups/12-moment-maps-and-symplectic-reduction.md)
+13. [Chern-Weil: whole numbers from curvature that no connection can change](06-Lie%20Groups/13-chern-weil-theory-and-characteristic-classes.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s07"></a>
 
-## 07 · Geometric Analysis and Physics · 10 cards
+## 07 · Geometric Analysis and Physics · 13 cards
 
 *curvature that evolves, curvature as gravity, and geometry put to work on data*
 
@@ -149,6 +161,22 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [Frechet mean: the average of points on a curved space](07-Geometric%20Analysis%20and%20Physics/08-frechet-means-and-statistics-on-curved-data.md)
 9. [Fisher metric: a family of models as a curved space](07-Geometric%20Analysis%20and%20Physics/09-information-geometry-and-the-fisher-metric.md)
 10. [Manifold learning: coordinates for data lying near a curved sheet](07-Geometric%20Analysis%20and%20Physics/10-manifold-learning-and-the-manifold-hypothesis.md)
+11. [Mean curvature flow: surfaces that shrink to cut their own area fastest](07-Geometric%20Analysis%20and%20Physics/11-mean-curvature-flow.md)
+12. [Spinors and the Dirac operator: a square root of the Laplacian, and the index theorem in outline](07-Geometric%20Analysis%20and%20Physics/12-spinors-dirac-operators-and-the-index-theorem.md)
+13. [Lorentzian geometry: light cones, an expanding universe, a spinning black hole, and why singularities are forced](07-Geometric%20Analysis%20and%20Physics/13-lorentzian-geometry-causality-and-singularities.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s08"></a>
+
+## 08 · Roots, Weights and Representations · 4 cards
+
+*how a Lie algebra splits into root directions, how the roots classify the simple algebras, and how every representation grows from a highest weight*
+
+1. [Representations of sl(2): every one is a ladder of weights that steps by two](08-Roots%2C%20Weights%20and%20Representations/01-representations-of-sl2.md)
+2. [The Killing form and roots: a Lie algebra split into directions that a torus scales](08-Roots%2C%20Weights%20and%20Representations/02-killing-form-and-root-decomposition.md)
+3. [Root systems and Dynkin diagrams: four infinite families and five exceptions](08-Roots%2C%20Weights%20and%20Representations/03-root-systems-and-dynkin-diagrams.md)
+4. [Highest weights: every irreducible representation is fixed by its top weight, and Weyl's formula gives its size](08-Roots%2C%20Weights%20and%20Representations/04-highest-weight-theorem-and-weyl-dimension-formula.md)
 
 [↑ Back to the shelves](#top)
 

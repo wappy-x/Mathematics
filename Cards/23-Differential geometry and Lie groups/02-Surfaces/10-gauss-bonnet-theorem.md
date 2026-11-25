@@ -782,6 +782,9 @@ example (g : ℝ) : 2 * π * (2 - 2 * g) = 4 * π * (1 - g) := by ring
 
 - [Hairy ball theorem](../06-Lie%20Groups/09-vector-field-zeros-and-the-hairy-ball.md): every wind pattern on a ball has a calm point, because the indices of a field's zeros on a surface also add up to $`\chi`$.
 - [Parallel transport](../05-Riemannian%20Geometry/03-parallel-transport-and-holonomy.md): the turn of a carried arrow round a loop, which the local theorem equates with the curvature inside.
+- [Chern-Weil](../06-Lie%20Groups/13-chern-weil-theory-and-characteristic-classes.md): whole numbers from curvature that no connection can change.
+- [Spinors and the Dirac operator](../07-Geometric%20Analysis%20and%20Physics/12-spinors-dirac-operators-and-the-index-theorem.md): a square root of the Laplacian, and the index theorem in outline.
+- [Caratheodory's conjecture](../../25-Frontier/04-Geometry%20and%20Combinatorics/09-caratheodory-conjecture.md): does every smooth convex surface have two round points, and the competing 2026 claims.
 
 The question this card leaves open: Gauss-Bonnet ties curvature to a count on surfaces, so what plays the same role on spaces of higher dimension?
 

@@ -777,6 +777,7 @@ example : ((Finset.univ : Finset (DihedralGroup 4)).powerset.filter
 - [Kummer and Artin-Schreier](11-kummer-theory-and-hilbert-90.md): every cyclic extension is a root extraction, once the roots of unity are there.
 - [Infinite Galois theory](12-infinite-galois-theory-and-the-krull-topology.md): the symmetries of all algebraic numbers at once, and why only closed subgroups count.
 - [Decomposition and inertia groups](../09-Local%20Fields%20and%20Class%20Field%20Theory/02-decomposition-and-inertia-groups.md): how one prime's splitting sits inside the Galois group.
+- [The Langlands program](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/06-langlands-program-and-geometric-langlands.md): matching Galois representations with automorphic forms, and the 2024 geometric proof.
 
 This card computes the group of one polynomial by listing every map; it leaves open how to find the Galois group of a polynomial whose roots cannot be written down.
 

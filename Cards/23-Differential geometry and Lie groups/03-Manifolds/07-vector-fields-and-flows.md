@@ -770,6 +770,8 @@ example : (90 : ℕ) - 77 = 13 := by norm_num
 - [Lie bracket](08-lie-brackets-and-frobenius-theorem.md): two fields' flows, run one after the other, usually fail to commute, and the bracket measures by how much.
 - [Sard's theorem and degree](10-sards-theorem-and-degree.md): counting how often a map covers a point, a tool for counting a field's zeros.
 - [Hairy ball theorem](../06-Lie%20Groups/09-vector-field-zeros-and-the-hairy-ball.md): every smooth field on the sphere has a zero. This current has two, at 0°N 80°E and 0°N 100°W.
+- [Morse theory](12-morse-theory-critical-points-and-handles.md): a height function's critical points build the shape.
+- [Darboux's theorem](../04-Differential%20Forms/11-darboux-theorem-and-the-moser-trick.md): every symplectic form looks the same up close.
 
 This card's current never changes; when the field itself changes with the seasons, what replaces the single flow $`\varphi_t`$?
 

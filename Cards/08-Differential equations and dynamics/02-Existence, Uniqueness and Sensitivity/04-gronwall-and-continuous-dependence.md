@@ -547,6 +547,7 @@ example : ((50 : ℚ) / 10) ^ 2 = 25 := by norm_num
 - [The flow](05-the-flow-of-an-equation.md): the map from a start to its whole solution, now known to be continuous.
 - [From local error to global error](../../16-Numerical%20analysis/06-ODE%20Solvers/02-convergence-of-one-step-methods.md): step errors added up by this bound.
 - [Well posed](../../19-Partial%20differential%20equations/01-Classification%20and%20Well-Posedness/06-well-posedness-and-hadamard.md): well-posedness for equations in time and place, where it can fail.
+- [Darboux's theorem](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/11-darboux-theorem-and-the-moser-trick.md): every symplectic form looks the same up close.
 
 Gronwall says the solution moves continuously with its start; how fast it moves, as a rate that can be computed, is the question the flow answers.
 

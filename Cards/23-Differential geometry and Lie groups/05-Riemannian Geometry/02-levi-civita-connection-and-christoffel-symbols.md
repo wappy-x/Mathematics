@@ -931,6 +931,8 @@ example : 2 * (2 * (2 + 1) / 2) = 6 := by norm_num
 - [Parallel transport](03-parallel-transport-and-holonomy.md): carry an arrow along a path with $`\nabla`$ held at zero, and measure the turn it brings back round a loop.
 - [Geodesic and exponential map](04-geodesics-and-the-exponential-map.md): the courses with $`\nabla_e e = 0`$, the truly straight ones.
 - [Riemann curvature tensor](06-riemann-curvature-tensor.md): the failure of two connection derivatives to commute, which no chart can remove.
+- [Gauss, Codazzi and Ricci equations](11-second-fundamental-form-and-gauss-codazzi.md): a submanifold's curvature split into inside and outside.
+- [Bochner's theorem](13-bochner-technique-and-vanishing-theorems.md): positive Ricci curvature leaves no room for harmonic loops.
 
 The connection says how arrows change, point by point; what happens to an arrow carried all the way round a closed flight is the question this card leaves open.
 

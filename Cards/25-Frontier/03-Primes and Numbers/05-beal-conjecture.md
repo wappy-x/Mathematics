@@ -797,6 +797,7 @@ example : 3 * 3 + 3 * 3 + 3 * 3 = 3 * 3 * 3 ∧ 3 * 4 + 3 * 4 + 3 * 3 = 11 * 3 :
 - [The abc conjecture](04-abc-conjecture.md): this shelf's card on where abc stands now, the result that would bound Beal's exceptions.
 - [Fermat's last theorem, proved in 1995 and reported formalised in 2026](06-fermats-last-theorem-formalised.md): the equal-exponent case of this card, and the status of its machine-checked proof.
 - [Erdos problems](07-erdos-problems-selected.md): another set of open questions with prizes attached.
+- [Schanuel's conjecture](08-schanuels-conjecture.md): one statement that would settle almost every open question about transcendental numbers.
 
 Is there a single coprime solution with all three exponents at least 3? None is known, and none is ruled out.
 

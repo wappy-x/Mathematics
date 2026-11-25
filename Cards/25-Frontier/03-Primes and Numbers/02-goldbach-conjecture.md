@@ -808,6 +808,7 @@ example : (10001881889 : ℕ).Prime ∧ 10001881889 + 2000000 = 10003881889 := b
 - [Landau's four problems](03-landau-problems.md): the next card puts Goldbach beside three other open questions about primes, with the same status fields.
 - [Twin primes](01-twin-primes-and-bounded-gaps.md): the sibling problem about pairs of primes two apart, where the constant $`C_2`$ comes from.
 - [Erdos problems](07-erdos-problems-selected.md): more problems where a computer search can touch small cases and still settle nothing in general.
+- [Schanuel's conjecture](08-schanuels-conjecture.md): one statement that would settle almost every open question about transcendental numbers.
 
 Left open: is there an even number, beyond every bound anyone will check, that is not a sum of two primes?
 

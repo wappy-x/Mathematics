@@ -685,6 +685,7 @@ The two outputs match line for line.
 - [Singular homology](09-singular-homology-and-excision.md): hole counts for any space, with no triangulation, and excision proved.
 - [Eilenberg-Steenrod axioms](10-eilenberg-steenrod-axioms.md): five rules that force every homology theory to agree on cell complexes.
 - [Higher homotopy groups](../07-Higher%20Homotopy%20and%20Mapping%20Spaces/02-higher-homotopy-groups-and-fibrations.md): wrap a sphere around a space, and the Hopf fibration that wraps S^3 around S^2.
+- [Transversality and cobordism](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/11-transversality-intersection-numbers-and-cobordism.md): crossings that survive a wiggle, and shapes that bound together.
 
 Homology counts holes but cannot multiply them, so spaces with equal groups can still differ: the torus and a sphere with two loops attached at one point have the same homology. What extra structure tells them apart?
 

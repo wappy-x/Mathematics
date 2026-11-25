@@ -813,6 +813,10 @@ example : (![3/10, 2/5, 6/5] : Fin 3 → ℚ) ⨯₃ ![0, 0, 1/2] = ![1/5, -3/20
 - [Baker-Campbell-Hausdorff](03-baker-campbell-hausdorff-in-outline.md): the exact rate whose exp equals $`e^{X}e^{Y}`$, written as $`X + Y + \tfrac12[X, Y] + \cdots`$, with the matrix log.
 - [Rotation group](04-rotations-so3-and-quaternions.md): every rotation as exp of some rate, quaternions as a four-number shortcut, and smooth interpolation between turns.
 - [Principal bundle and connection](10-principal-bundles-and-connections-in-outline.md): a Lie-algebra-valued field at every point, whose bracket gives curvature.
+- [Lie's theorems](11-lies-theorems-and-covering-groups.md): the Lie algebra decides the group, up to a covering.
+- [Moment maps](12-moment-maps-and-symplectic-reduction.md): Noether's conserved quantities as one map, and reducing a system by its symmetry.
+- [Representations of sl(2)](../08-Roots%2C%20Weights%20and%20Representations/01-representations-of-sl2.md): every one is a ladder of weights that steps by two.
+- [The Killing form and roots](../08-Roots%2C%20Weights%20and%20Representations/02-killing-form-and-root-decomposition.md): a Lie algebra split into directions that a torus scales.
 
 The bracket of every pair of rates is known, but how much of the group can be rebuilt from the bracket alone?
 

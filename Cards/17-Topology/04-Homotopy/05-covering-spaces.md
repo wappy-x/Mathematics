@@ -728,6 +728,7 @@ example : (rampLift (loopAngles 3)).getLast?.map (· % 720) = some 360 ∧ ¬ (2
 - [Van Kampen's theorem](06-van-kampens-theorem.md): computes the loop group of a glued space, such as two circles joined at a point; its subgroups then name that space's covers, as Step 7 did for the circle.
 - [Nielsen-Schreier](10-nielsen-schreier-and-covers-of-graphs.md): every subgroup of a free group is free, read off a covering graph.
 - [Higher homotopy groups](../07-Higher%20Homotopy%20and%20Mapping%20Spaces/02-higher-homotopy-groups-and-fibrations.md): wrap a sphere around a space, and the Hopf fibration that wraps S^3 around S^2.
+- [Lie's theorems](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/11-lies-theorems-and-covering-groups.md): the Lie algebra decides the group, up to a covering.
 
 Every cover of the circle is the line or an n-fold circle; which spaces have a universal cover at all, and what their deck groups look like, is the question this card leaves open.
 

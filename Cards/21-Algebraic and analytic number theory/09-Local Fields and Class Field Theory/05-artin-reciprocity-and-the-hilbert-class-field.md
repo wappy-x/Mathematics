@@ -882,6 +882,7 @@ example : ∀ t : ZMod 7, t ^ 3 ≠ 2 := by decide
 ## Where this goes next
 
 - [Adeles and ideles](06-adeles-and-ideles.md): the next card. It rewrites the ray class groups as one group of ideles, so that Artin reciprocity becomes a single map for all moduli at once, glued from one map at each prime.
+- [The Langlands program](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/06-langlands-program-and-geometric-langlands.md): matching Galois representations with automorphic forms, and the 2024 geometric proof.
 
 The question this card leaves open: for a field $`K`$ that is not imaginary quadratic, how can a generator of its Hilbert class field be written down? This is Hilbert's twelfth problem: answered for $`\mathbb{Q}`$ and for imaginary quadratic fields, and open in general as of 2026-11-24.
 

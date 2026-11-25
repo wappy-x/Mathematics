@@ -1230,6 +1230,8 @@ example : det !![(1 : ℤ), 0; 0, -1] = -1 := by simp [det_fin_two_of]
 ## Where this goes next
 
 - [Principal bundle and connection](10-principal-bundles-and-connections-in-outline.md): the tangent arrows of a sphere form a twisted bundle; the Euler characteristic measures the twist.
+- [Chern-Weil](13-chern-weil-theory-and-characteristic-classes.md): whole numbers from curvature that no connection can change.
+- [Caratheodory's conjecture](../../25-Frontier/04-Geometry%20and%20Combinatorics/09-caratheodory-conjecture.md): does every smooth convex surface have two round points, and the competing 2026 claims.
 
 The count fixes the sum of the indices, but not where the calm spots sit or how many there are; what decides that for a given field is the question this card leaves open.
 

@@ -968,6 +968,7 @@ example : (3 * 90 : ℤ) - 180 = 90 ∧ (720 : ℤ) / 8 = 90 := by norm_num
 ## Where this goes next
 
 - [Tangent space and differential](03-tangent-spaces-and-differentials.md): the next card puts a plane of velocities at each point of these shapes, and turns the Jacobian $`J`$ into the differential of a map.
+- [The six-sphere](../../25-Frontier/04-Geometry%20and%20Combinatorics/08-complex-structures-on-the-six-sphere.md): does S^6 carry a true complex structure, and the 2026 claims that it does.
 
 The atlases say which shapes are manifolds, but not yet how to move on them: what a velocity is at a point that every chart describes differently.
 

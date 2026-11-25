@@ -1925,6 +1925,7 @@ end PeterWeyl
 - [Representation](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/05-representations-in-outline.md): representations of smooth groups, where the pieces of $`SO(3)`$ are found by their weights.
 - [Group action and homogeneous space](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/06-homogeneous-spaces-and-group-actions.md): the sphere as rotations modulo spins about one axis, the move in Step 5.
 - [Volume form and Laplace-Beltrami](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/08-volume-form-and-the-laplace-beltrami-operator.md): the Laplacian on a curved space, whose modes generalise the $`H_\ell`$.
+- [Highest weights](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/04-highest-weight-theorem-and-weyl-dimension-formula.md): every irreducible representation is fixed by its top weight, and Weyl's formula gives its size.
 
 Peter-Weyl needs compactness. What replaces the sum over pieces for a group like the motions of the plane, whose irreducible pieces come in a continuous family with no entry of finite energy, is left open here.
 

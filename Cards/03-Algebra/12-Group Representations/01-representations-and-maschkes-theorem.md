@@ -647,6 +647,7 @@ example : (!![2, 2, 2, 2; 2, 2, 2, 2; 2, 2, 2, 2; 2, 2, 2, 2] : Matrix (Fin 4) (
 - [Schur's lemma and orthogonality](02-schurs-lemma-and-character-orthogonality.md): which matrices commute with every move on an irreducible piece, and reading the pieces from traces alone.
 - [Character tables](03-character-tables.md): how many irreducible pieces a group has, and its table of traces.
 - [Representation](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/05-representations-in-outline.md): a snow crystal's symmetries on six arm lengths, quoting the theorem proved here.
+- [Representations of sl(2)](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/01-representations-of-sl2.md): every one is a ladder of weights that steps by two.
 
 This card shows a split exists, but not how many different irreducible pieces a group has, or whether the split is unique.
 

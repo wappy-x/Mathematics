@@ -1366,6 +1366,7 @@ end BooleanSensitivity
 - [Interactive proofs](../05-Algebraic%2C%20Interactive%20and%20Quantum/04-interactive-proofs-ip-pspace-and-the-pcp-theorem.md): spot checks that read a proof in a few places, where linearity tests and Fourier amounts do the work.
 - [Shor and Grover](../05-Algebraic%2C%20Interactive%20and%20Quantum/07-shors-and-grovers-algorithms.md): quantum calls, where OR of $`n`$ costs about $`\sqrt n`$ instead of $`n`$.
 - [Communication complexity](../06-Data%2C%20Learning%20and%20Fine-Grained%20Complexity/03-communication-complexity-in-outline.md): the cost of a rule when its inputs are split between two parties.
+- [MIP* = RE](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/09-mip-star-equals-re-and-connes-embedding.md): entangled provers can certify any halting question, and Connes' embedding problem falls.
 
 The question this card leaves open: the true gap between block sensitivity and sensitivity is somewhere between a square (Rubinstein's rules) and a fourth power (Huang's bound), and nobody knows where.
 

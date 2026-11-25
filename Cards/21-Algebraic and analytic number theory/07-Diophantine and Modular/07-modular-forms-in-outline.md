@@ -732,6 +732,8 @@ example : 240 * σ 3 1 = 240 ∧ 240 * σ 3 2 = 2160 ∧ 240 * σ 3 3 = 6720 := 
 - [Sphere packing, solved in dimensions 8 and 24](../../25-Frontier/04-Geometry%20and%20Combinatorics/06-sphere-packing-and-viazovska.md): the $`E_8`$ and Leech theta series used to prove the best packings.
 - [Hecke operators](11-hecke-operators-and-eigenforms.md): averaging a modular form over matrices of determinant n, and why tau is multiplicative.
 - [The L-function of a modular form](12-l-functions-of-modular-forms.md): a Mellin transform that inherits the form's symmetry.
+- [The Langlands program](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/06-langlands-program-and-geometric-langlands.md): matching Galois representations with automorphic forms, and the 2024 geometric proof.
+- [Andre-Oort and o-minimality](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/08-andre-oort-and-o-minimality.md): special points on modular curves, counted with logic.
 
 The question this card leaves open: which sequences of numbers, beyond these, are secretly the coefficients of a modular form?
 

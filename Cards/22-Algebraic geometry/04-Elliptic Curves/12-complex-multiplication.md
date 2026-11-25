@@ -1298,6 +1298,7 @@ example : (1728 * 4 * (-11) ^ 3 : ℚ) / (4 * (-11) ^ 3 + 27 * 14 ^ 2) = 66 ^ 3 
 - [The Weil pairing](13-weil-pairing.md): a pairing on torsion points. An endomorphism such as $`[i]`$ can move a point off its own cyclic group, which pairing-based keys on supersingular curves rely on.
 - [Moduli spaces](../06-Schemes%20and%20Modern%20Language/07-moduli-spaces-in-outline.md): the space of all lattice shapes, on which the CM points are special, isolated values of j.
 - [Artin reciprocity](../../21-Algebraic%20and%20analytic%20number%20theory/09-Local%20Fields%20and%20Class%20Field%20Theory/05-artin-reciprocity-and-the-hilbert-class-field.md): the Hilbert class field, which the j-values of CM lattices generate over imaginary quadratic fields.
+- [Andre-Oort and o-minimality](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/08-andre-oort-and-o-minimality.md): special points on modular curves, counted with logic.
 
 The rule $`a_p = 2a`$ fixes each trace exactly; how the traces of a curve without CM spread across Hasse's window as p grows, this card leaves open.
 

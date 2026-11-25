@@ -999,6 +999,7 @@ example : 1 < (2 : ℝ) * (11 / 20) ∧ Real.sqrt 7 * (7 / 20) < 1 := by
 - [The unit-distance problem](01-unit-distance-problem.md): the same graph, asked a different question: how many pairs at distance 1 can $`n`$ points have.
 - [Cycle double cover](04-cycle-double-cover-conjecture.md): another graph problem stated in one line and open for decades.
 - [Sphere packing, solved in dimensions 8 and 24](06-sphere-packing-and-viazovska.md): a geometry problem that was settled, for contrast with one that is not.
+- [Hadwiger's conjecture](12-hadwigers-conjecture.md): a graph with no K_t minor can be coloured with t - 1 colours.
 
 The question this card leaves open: is the plane's number 5, 6 or 7, and is it the same under every reasonable choice of axioms?
 

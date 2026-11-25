@@ -1282,6 +1282,7 @@ example : (1 : ℚ) / 60 ^ 2 = 1 / 3600 := by norm_num
 
 - [Geodesic on a surface](09-geodesics-on-surfaces.md): the next card. Shortest paths depend only on E, F and G too, and they are the straight walks that the circle test uses.
 - [Gauss-Bonnet](10-gauss-bonnet-theorem.md): adding K over a whole surface gives a number fixed by its shape as a whole, which also explains the curvature hidden in a cone's tip.
+- [Gauss, Codazzi and Ricci equations](../05-Riemannian%20Geometry/11-second-fundamental-form-and-gauss-codazzi.md): a submanifold's curvature split into inside and outside.
 
 The question this card leaves open: if K can be felt from inside, what does the "straight line" of a curved surface look like to the ant that walks it?
 

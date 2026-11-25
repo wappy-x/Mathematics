@@ -1157,6 +1157,7 @@ example : (-1 / 20 : ℚ) * 0 = 0 ∧ ((-1 / 20 : ℚ) + 0) / 2 = -1 / 40 := by 
 - [Point types](06-classification-of-surface-points.md): sorts every point by the signs of $`\kappa_1`$ and $`\kappa_2`$ into dome, saddle, trough or flat, and names umbilics.
 - [Theorema Egregium](08-theorema-egregium.md): proves that $`K`$ depends on $`E`$, $`F`$, $`G`$ alone, which is why flat copper cannot cover the dome without stretching.
 - [Gauss-Bonnet](10-gauss-bonnet-theorem.md): adds $`K`$ times area over a whole closed surface and gets $`2\pi`$ times a whole number fixed by its shape.
+- [Caratheodory's conjecture](../../25-Frontier/04-Geometry%20and%20Combinatorics/09-caratheodory-conjecture.md): does every smooth convex surface have two round points, and the competing 2026 claims.
 
 The question this card leaves open: $`K`$ survives bending without stretching while $`H`$ does not, so what is it about $`K`$ that a surveyor on the roof can measure?
 

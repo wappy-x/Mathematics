@@ -867,6 +867,7 @@ example : (3 / 2 : ℚ) * (667 / 200) / (26 / 25) = 2001 / 416 := by norm_num
 
 - [Hairy ball theorem](09-vector-field-zeros-and-the-hairy-ball.md): every Killing field on the sphere must vanish somewhere, as each rotation field does at its two poles.
 - [Principal bundle and connection](10-principal-bundles-and-connections-in-outline.md): symmetries that may act differently at every point of space, with a connection to compare them from point to point.
+- [Moment maps](12-moment-maps-and-symplectic-reduction.md): Noether's conserved quantities as one map, and reducing a system by its symmetry.
 
 Left open: when a symmetry acts on a field spread through space, rather than on a few coordinates, what flows in place of a single conserved number?
 

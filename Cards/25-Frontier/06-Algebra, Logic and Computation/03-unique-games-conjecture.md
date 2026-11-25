@@ -781,6 +781,7 @@ example : (univ.filter fun x : ZMod 5 → ZMod 2 =>
 - [Graph isomorphism](04-graph-isomorphism.md): the next card, another problem on the edge of NP, with Babai's 2015 quasipolynomial algorithm and its January 2017 correction.
 - [The continuum hypothesis](02-continuum-hypothesis-and-independence.md): a question proved independent of the usual axioms, a different kind of answer from "open".
 - [The inverse Galois problem](01-inverse-galois-problem.md) and [Hilbert's and Smale's lists](05-hilbert-and-smale-problems-selected.md): the shelf's open problems from algebra and from the great problem lists.
+- [MIP* = RE](09-mip-star-equals-re-and-connes-embedding.md): entangled provers can certify any halting question, and Connes' embedding problem falls.
 
 The two-to-two theorem reached hardness at about one half; whether the gap closes all the way to 1 − ε, or a fast method for nearly satisfiable unique games exists, is the question this card leaves open.
 

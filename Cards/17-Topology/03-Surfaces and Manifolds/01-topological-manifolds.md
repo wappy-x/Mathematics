@@ -860,6 +860,8 @@ example :
 - [Complex manifolds and Kahler forms](../../22-Algebraic%20geometry/05-Cohomology%20and%20the%20Hodge%20Conjecture/04-complex-manifolds-and-kahler-forms.md): transition maps that are holomorphic. Written as one complex number, the sphere's $`u / |u|^2`$ is 1 over the complex conjugate of $`u`$, which is not holomorphic; mirror one chart and it becomes $`1/u`$, which is.
 - [Covering dimension](../04-Homotopy/09-lebesgue-covering-dimension.md): count how many pieces of a fine cover must overlap at one point.
 - [Poincare duality](../05-Homology/12-cap-product-and-poincare-duality.md): on a closed oriented manifold, k-dimensional holes match (n - k)-dimensional ones.
+- [The smooth Poincare conjecture in dimension four](../../25-Frontier/04-Geometry%20and%20Combinatorics/11-smooth-four-dimensional-poincare-conjecture.md): the one case still open.
+- [The Hilbert-Smith conjecture](../../25-Frontier/04-Geometry%20and%20Combinatorics/14-hilbert-smith-conjecture.md): can the p-adic integers act faithfully on a manifold.
 
 The other cards on this shelf study surfaces with these tools: [Orientability](03-orientability-mobius-strip-and-klein-bottle.md), [Euler characteristic](04-euler-characteristic-and-triangulations.md), the [Jordan curve theorem](05-jordan-curve-theorem.md), and knots through [Knots and links](06-knots-and-invariants-in-outline.md), [Reidemeister moves and the three-colour test](07-reidemeister-moves-and-tricolourability.md) and [Knot polynomials in outline](08-knot-polynomials-in-outline.md).
 

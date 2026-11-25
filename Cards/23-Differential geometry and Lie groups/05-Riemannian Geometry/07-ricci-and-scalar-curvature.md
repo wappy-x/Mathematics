@@ -946,7 +946,7 @@ example : 20 - 10 = 10 := by decide
 - **General relativity.** Einstein's equation sets $`\mathrm{Ric} - \tfrac{1}{2} S g`$ in proportion to the energy and momentum present. In empty space Ric is 0: a small cloud of dust released at rest starts with no change of volume, to second order in time, while the Weyl part squeezes it in one direction and stretches it in another, the tides.
 - **Ricci flow.** The equation $`\partial g/\partial t = -2\,\mathrm{Ric}`$, with $`t`$ here meaning time, shrinks a metric where Ricci curvature is positive and swells it where negative. It was the tool in the proof of the Poincaré conjecture.
 - **Flight routes on the globe.** Take the Earth as a sphere of radius 6371 km, a model. Everything within 1000 km of an airport, measured along the surface, covers 6444.6 km² less than the flat formula gives.
-- **Comparison theorems.** On a complete space, a lower bound on Ricci curvature everywhere caps the volume of every ball (Bishop–Gromov). A positive lower bound also caps the diameter of the whole space (Bonnet–Myers). Ricci, not full Rm, is enough because, along each path, the growth rate of volume obeys an inequality that involves only Ricci (Petersen, in Sources).
+- **Comparison theorems.** On a complete space, a lower bound on Ricci curvature everywhere caps the volume of every ball ([Bishop-Gromov](14-bishop-gromov-volume-comparison.md)). A positive lower bound also caps the diameter of the whole space (Bonnet–Myers). Ricci, not full Rm, is enough because, along each path, the growth rate of volume obeys an inequality that involves only Ricci (Petersen, in Sources).
 
 > **Say it back**
 > The curvature tensor gives one curvature for each plane through a point. Ricci curvature adds those up over the planes through one direction, and scalar curvature adds Ricci up over a frame. Volume is a determinant, and a determinant's first change is a trace, so a small ball's volume sees only these traces to leading order. A small ball loses the fraction $`S r^2/(6(n+2))`$ of its flat volume. On a 30 m dome a 5 m patch is 78.3582 m², not 78.5398 m², and the shortfall gives the radius back.
@@ -965,6 +965,10 @@ example : 20 - 10 = 10 := by decide
 - [Ricci flow](../07-Geometric%20Analysis%20and%20Physics/01-ricci-flow-and-the-poincare-proof-in-outline.md): Ricci curvature used as a velocity, smoothing a metric over time.
 - [Einstein equations](../07-Geometric%20Analysis%20and%20Physics/02-einstein-equations-in-outline.md): Ricci and scalar curvature set equal to matter and energy.
 - [Jacobi field](09-jacobi-fields-and-comparison-theorems.md): the spreading of nearby paths in full, and the global bounds that a Ricci bound buys.
+- [Bochner's theorem](13-bochner-technique-and-vanishing-theorems.md): positive Ricci curvature leaves no room for harmonic loops.
+- [Bishop-Gromov](14-bishop-gromov-volume-comparison.md): a lower bound on Ricci curvature caps the volume of every ball.
+- [Cheeger's inequality](15-cheegers-inequality-and-spectral-geometry.md): a low first note forces a thin neck on a curved space.
+- [Lorentzian geometry](../07-Geometric%20Analysis%20and%20Physics/13-lorentzian-geometry-causality-and-singularities.md): light cones, an expanding universe, a spinning black hole, and why singularities are forced.
 
 The question this card leaves open: the leading volume correction sees only the traces, so what does the remaining Weyl part of curvature do, and can it be measured from inside?
 

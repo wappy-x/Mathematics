@@ -820,6 +820,7 @@ example : (3 : ℚ) * (-3 / 2) - 3 * (3 / 2) = -9 := by norm_num
 - [Green, divergence and curl theorems](07-classical-vector-calculus-as-stokes.md): the classical theorems read off this one statement, dimension by dimension.
 - [de Rham cohomology](08-de-rham-cohomology.md): forms with $`d\omega = 0`$ that are not derivatives, like the angle form, counted as holes.
 - [Hodge star](09-hodge-star-and-maxwell-in-forms.md): Maxwell's equations as forms, where Stokes gives the loop laws.
+- [Chern-Weil](../06-Lie%20Groups/13-chern-weil-theory-and-characteristic-classes.md): whole numbers from curvature that no connection can change.
 
 The angle form leaves a question open. A form with zero derivative everywhere still collects 6.283185 round the hem. How many independent such forms can a manifold carry, and what does that count measure?
 

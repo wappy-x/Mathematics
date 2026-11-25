@@ -727,6 +727,7 @@ example :
 - [Turing degrees and the arithmetical hierarchy](../02-Computability%20and%20Logic/10-turing-degrees-and-the-arithmetical-hierarchy.md): ranking unsolvable problems by oracles and by quantifiers.
 - [Space hierarchy](../03-Time%20Complexity/12-space-hierarchy-theorem.md): more memory really helps, and L is strictly smaller than PSPACE.
 - [P/poly](../05-Algebraic%2C%20Interactive%20and%20Quantum/08-non-uniform-complexity-p-poly-and-karp-lipton.md): circuits with advice, why randomness fits inside, and Karp-Lipton.
+- [MIP* = RE](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/09-mip-star-equals-re-and-connes-embedding.md): entangled provers can certify any halting question, and Connes' embedding problem falls.
 
 Left open: if halting cannot be decided, how much more is undecidable, and how can one impossible problem be shown to be at least as hard as another?
 

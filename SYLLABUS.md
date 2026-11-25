@@ -1,10 +1,10 @@
 # Syllabus
 
-The whole library in reading order: **25 wings, 280 shelves and 2,318 cards**, from counting to the open problems of current research. Each card uses only ideas from the cards before it, so the library can be read from the first card to the last.
+The whole library in reading order: **25 wings, 281 shelves and 2,351 cards**, from counting to the open problems of current research. Each card uses only ideas from the cards before it, so the library can be read from the first card to the last.
 
 **Each wing has its own page.** Click a wing to see its shelves and every card on them, then click a card's title to read it.
 
-**2,318 of 2,318 cards are ready to read.**
+**2,351 of 2,351 cards are ready to read.**
 
 | # | Wing | What it's about | Shelves | Ready to read |
 | --- | --- | --- | ---: | --- |
@@ -30,8 +30,8 @@ The whole library in reading order: **25 wings, 280 shelves and 2,318 cards**, f
 | 20 | [Harmonic analysis](Cards/20-Harmonic%20analysis/README.md) | Breaking signals into waves. | 8 | 70 of 70 |
 | 21 | [Algebraic and analytic number theory](Cards/21-Algebraic%20and%20analytic%20number%20theory/README.md) | Primes in depth: zeta, L-functions and Galois. | 9 | 95 of 95 |
 | 22 | [Algebraic geometry](Cards/22-Algebraic%20geometry/README.md) | Shapes defined by equations. | 9 | 83 of 83 |
-| 23 | [Differential geometry and Lie groups](Cards/23-Differential%20geometry%20and%20Lie%20groups/README.md) | Curved space, symmetry and physics. | 7 | 69 of 69 |
+| 23 | [Differential geometry and Lie groups](Cards/23-Differential%20geometry%20and%20Lie%20groups/README.md) | Curved space, symmetry and physics. | 8 | 87 of 87 |
 | 24 | [Computability and complexity](Cards/24-Computability%20and%20complexity/README.md) | What computers can and can't do, and how fast. | 7 | 78 of 78 |
-| 25 | [Frontier](Cards/25-Frontier/README.md) | How research works, and the great open problems. | 7 | 43 of 43 |
+| 25 | [Frontier](Cards/25-Frontier/README.md) | How research works, and the great open problems. | 7 | 58 of 58 |
 
 Want to help? The [contributing guide](.github/CONTRIBUTING.md) shows how to report a mistake, improve a card or build new ones.

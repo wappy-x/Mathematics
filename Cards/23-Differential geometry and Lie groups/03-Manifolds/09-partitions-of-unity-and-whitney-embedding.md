@@ -817,6 +817,7 @@ example : 2 * 2 = 4 := by norm_num
 - [Sard's theorem and degree](10-sards-theorem-and-degree.md): the next card; its theorem, applied to a map from a lower-dimensional space, shows almost every direction is safe to project along, which cuts F down toward Whitney's $`2n + 1`$.
 - [Integration on an oriented manifold](../04-Differential%20Forms/05-integration-on-manifolds.md): integrals done chart by chart and glued with a partition of unity.
 - [Riemannian metric](../05-Riemannian%20Geometry/01-riemannian-metrics.md): the glued ruler of Step 4, made into a way to measure lengths and angles on any manifold.
+- [Transversality and cobordism](11-transversality-intersection-numbers-and-cobordism.md): crossings that survive a wiggle, and shapes that bound together.
 
 Blending keeps whatever survives averaging, such as positive rulers, but a blend of nonzero wind fields can cancel to calm air: which global objects, such as a wind field on the globe that is nowhere calm, can a manifold carry at all?
 

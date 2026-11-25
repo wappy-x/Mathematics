@@ -851,6 +851,7 @@ example : 11 ^ 5 - 1 = 161050 := by norm_num
 - [Algebraic integers](../06-Algebraic%20Numbers/01-algebraic-integers-and-number-fields.md): numbers whose minimal polynomial has whole-number coefficients, like $`\alpha`$ and $`\beta`$, and the norm and trace built from conjugates.
 - [Dimension and tangent space](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/07-dimension-and-tangent-spaces.md): the transcendental side of this card; the dimension of a curve or surface counts how many independent transcendental coordinates its functions need.
 - [Transcendence of e and pi](../07-Diophantine%20and%20Modular/13-transcendence-of-e-and-pi.md): Hermite's integral trick, and Lindemann's step from e to pi.
+- [Schanuel's conjecture](../../25-Frontier/03-Primes%20and%20Numbers/08-schanuels-conjecture.md): one statement that would settle almost every open question about transcendental numbers.
 
 The other cards on this shelf use these tools: [Normal and separable](04-normal-and-separable-extensions.md), [The Galois correspondence](05-galois-groups-and-the-fundamental-theorem.md), [Computing a Galois group](06-computing-a-galois-group.md), [Solvable by radicals](07-solvability-by-radicals-and-the-quintic.md), [Cyclotomic fields](08-cyclotomic-extensions-and-roots-of-unity.md), [Finite fields](09-finite-fields-and-frobenius.md) and [Straightedge and compass](10-constructibility-and-the-classical-problems.md).
 

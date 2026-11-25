@@ -905,6 +905,7 @@ example : 9 - 6 = 3 := by decide
 ## Where this goes next
 
 - [Sard's theorem and degree](10-sards-theorem-and-degree.md): the values that fail the test are rare, measure zero, so almost every target gives a smooth level set.
+- [Transversality and cobordism](11-transversality-intersection-numbers-and-cobordism.md): crossings that survive a wiggle, and shapes that bound together.
 
 The question this card leaves open: the test fails at only one risk target here, $857.14; are failing targets that rare for every smooth map?
 

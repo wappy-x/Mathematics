@@ -895,6 +895,7 @@ example : (Finset.Icc 1 8).filter (fun n => n % 4 = 0) = {4, 8} ∧ 7 * 7 = 49 :
 - [Partial sums are the best fit](02-best-approximation-and-bessels-inequality.md): the coefficients give the closest sum of waves to any signal of finite power, and the shares' squares never add to more than the signal's power.
 - [Dirichlet and Fejer kernels](03-dirichlet-and-fejer-kernels.md): a partial sum written as the signal smeared by one fixed shape.
 - [Smoothness shows in the tail](06-decay-of-coefficients-and-smoothness.md): why the square wave's shares fall like $`1/n`$ and how smoother signals do better.
+- [Hodge's theorem](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/12-hodge-laplacian-and-harmonic-forms.md): every cohomology class has exactly one harmonic form.
 
 Other cards on this shelf: [Dirichlet's theorem](04-pointwise-and-uniform-convergence.md), [Convergence in energy](05-l2-convergence-and-riesz-fischer.md), [Differentiating a series term by term](07-term-by-term-differentiation-and-integration.md), [The Gibbs overshoot and the cure](08-gibbs-and-summability.md) and [Carleson's theorem in outline](09-carleson-in-outline.md).
 

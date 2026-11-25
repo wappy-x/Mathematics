@@ -898,6 +898,7 @@ Two subjects start here, named only:
 
 - **Connes' classification.** Connes split type III into types III_λ, with λ from 0 to 1; the Powers factor with ratio λ is type III_λ. Murray and von Neumann had already shown that R is the only II₁ factor built as a limit of matrix algebras.
 - **Algebraic quantum field theory.** Physics built on nets of type III factors, one for each region of spacetime.
+- [MIP* = RE](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/09-mip-star-equals-re-and-connes-embedding.md): entangled provers can certify any halting question, and Connes' embedding problem falls.
 
 The question this card leaves open: how can a type III factor, with no trace and no finite sizes, still carry a useful measure of its parts?
 

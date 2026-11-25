@@ -846,6 +846,7 @@ example : (29 : ℤ) = 3 ^ 2 + 5 * 2 ^ 2 ∧ (41 : ℤ) = 6 ^ 2 + 5 * 1 ^ 2 ∧
 - [Composition and genus](11-gauss-composition-and-genus-theory.md): multiplying binary quadratic forms is multiplying ideal classes.
 - [Cubic reciprocity](12-cubic-reciprocity-and-jacobi-sums.md): Jacobi sums, primes in the Eisenstein integers, and when 2 is a cube.
 - [Artin reciprocity](../09-Local%20Fields%20and%20Class%20Field%20Theory/05-artin-reciprocity-and-the-hilbert-class-field.md): a prime's Frobenius depends only on its ideal class, and the Hilbert class field.
+- [Andre-Oort and o-minimality](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/08-andre-oort-and-o-minimality.md): special points on modular curves, counted with logic.
 
 The question this card leaves open: imaginary quadratic fields of class number 1 are finitely many, but are there infinitely many real quadratic fields with class number 1? Gauss expected so; as of 2026-11-15 it is unproved.
 

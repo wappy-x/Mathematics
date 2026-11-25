@@ -166,7 +166,7 @@ The holomorphic 2-forms on a degree-d surface correspond to polynomials of degre
 
 The torus proof above is complete. The general proof has three steps, each a chapter of Voisin's first volume:
 
-1. **Hodge's theorem.** On a compact manifold with a metric, every class has exactly one harmonic form. This needs the analysis of elliptic operators, which belongs to the differential-geometry wing.
+1. **Hodge's theorem.** On a compact manifold with a metric, every class has exactly one harmonic form. This needs the analysis of elliptic operators, which belongs to the differential-geometry wing: [Hodge's theorem](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/12-hodge-laplacian-and-harmonic-forms.md).
 2. **The Kahler identities.** When the metric comes from a Kahler form ω, the full Laplacian is twice the Laplacian built from $`\bar\partial`$ alone. That Laplacian keeps type (p, q) fixed, so the harmonic parts split by type.
 3. **Dolbeault's theorem.** $`H^{p,q}`$ equals the sheaf cohomology in degree q of the holomorphic p-forms ([Sheaves](01-sheaves-in-outline.md), [Sheaf cohomology](../08-Sheaf%20Cohomology%20and%20Differentials/05-sheaf-cohomology-as-a-derived-functor.md)). This makes the Hodge numbers algebraic invariants of a projective variety, which Griffiths' Jacobian ring computes.
 

@@ -766,6 +766,7 @@ example : 7 + 13 + 7 + 1 = 28 := by norm_num
 ## Where this goes next
 
 - [Decidable theories](14-decidable-theories-presburger-and-tarski.md): Tarski's decision method for the reals, the source of the fact that the real algebraic numbers and the reals satisfy the same sentences, and Presburger's for addition alone.
+- [Andre-Oort and o-minimality](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/08-andre-oort-and-o-minimality.md): special points on modular curves, counted with logic.
 
 The question this card leaves open: if first-order sentences cannot fix the size of the counting numbers, what exactly do they fix, and which theories have only one model at each size?
 

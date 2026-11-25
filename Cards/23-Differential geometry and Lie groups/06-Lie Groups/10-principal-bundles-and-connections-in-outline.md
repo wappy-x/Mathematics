@@ -1059,6 +1059,7 @@ example : (!![0, 0, 1/10; 0, 0, 0; -1/10, 0, 0] : Matrix (Fin 3) (Fin 3) ℚ)
 ## Where this goes next
 
 - [Yang-Mills](../07-Geometric%20Analysis%20and%20Physics/03-yang-mills-fields-and-gauge-theory.md): give the curvature an energy, the integral of $`\lvert F\rvert^2`$, and ask which connections make it least.
+- [Chern-Weil](13-chern-weil-theory-and-characteristic-classes.md): whole numbers from curvature that no connection can change.
 
 The curvature is now a local quantity, but which whole numbers built from it can tell two bundles apart?
 

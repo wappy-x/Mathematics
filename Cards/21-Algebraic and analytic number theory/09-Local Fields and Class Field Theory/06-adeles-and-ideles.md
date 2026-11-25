@@ -1213,6 +1213,7 @@ example : (9 * 9 : ZMod 20) = 1 := by decide
 
 - [The inverse Galois problem](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/01-inverse-galois-problem.md): the non-abelian part of $`\mathrm{Gal}(\overline{\mathbb{Q}}/\mathbb{Q})`$, which the idele class group cannot see.
 - Tate's thesis and Hecke characters (planned): Fourier analysis on the adeles, giving the functional equations of L-functions.
+- [The Langlands program](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/06-langlands-program-and-geometric-langlands.md): matching Galois representations with automorphic forms, and the 2024 geometric proof.
 
 The card describes every abelian extension through one group; how to describe the non-abelian extensions the same way, which the Langlands programme conjectures through automorphic forms on adelic groups, is open as of 2026-11-24.
 

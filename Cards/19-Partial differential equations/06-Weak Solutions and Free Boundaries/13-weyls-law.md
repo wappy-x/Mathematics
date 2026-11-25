@@ -1106,6 +1106,7 @@ example : ((Finset.Icc 1 100 ×ˢ Finset.Icc 1 10).filter
 
 - The next card, [Schauder estimates](14-holder-spaces-and-schauder-estimates.md), turns from counting modes to measuring how smooth a solution is, in Hölder spaces.
 - A later shelf, Linear PDE Theory in Depth (planned), takes up Faber-Krahn, which says the disc has the lowest first note of all regions of one area, and Kac's question of whether the notes fix the shape.
+- [Cheeger's inequality](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/15-cheegers-inequality-and-spectral-geometry.md): a low first note forces a thin neck on a curved space.
 
 The question this card leaves open: the notes give the area and the edge length, but do they give the whole shape?
 

@@ -980,6 +980,8 @@ end HodgeMaxwell
 - [Yang-Mills](../07-Geometric%20Analysis%20and%20Physics/03-yang-mills-fields-and-gauge-theory.md): the same two lines with a group of turns in place of numbers, $`D_A F = 0`$ and $`D_A{\star}F = 0`$, where the field acts on itself.
 - [Einstein equations](../07-Geometric%20Analysis%20and%20Physics/02-einstein-equations-in-outline.md): the Minkowski metric taught here, curved by matter.
 - [Symplectic form](10-symplectic-form-and-hamiltonian-flow.md), the next card: another two-form, $`dq\wedge dp`$, that measures area in phase space without any metric.
+- [Hodge's theorem](../05-Riemannian%20Geometry/12-hodge-laplacian-and-harmonic-forms.md): every cohomology class has exactly one harmonic form.
+- [Lorentzian geometry](../07-Geometric%20Analysis%20and%20Physics/13-lorentzian-geometry-causality-and-singularities.md): light cones, an expanding universe, a spinning black hole, and why singularities are forced.
 
 The question this card leaves open: when the field acts on itself, as in Yang-Mills, and quantum theory is added, does the lightest wave carry a fixed minimum energy, unlike light? That is the [Mass gap](../07-Geometric%20Analysis%20and%20Physics/04-the-mass-gap-statement.md) problem, open as of 2026-11-19.
 

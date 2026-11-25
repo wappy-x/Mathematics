@@ -1105,6 +1105,9 @@ example : ¬ ∀ n : ℕ, Odd n → 9 ≤ n → ¬ Nat.Prime n →
 ## Where this goes next
 
 - [Reading a statement](04-reading-a-mathematical-statement.md): how to take a research statement apart into domain, hypotheses and conclusion. Those parts decide what counts as a witness.
+- [The sum-product problem](../04-Geometry%20and%20Combinatorics/07-sum-product-problem.md): false over the reals since May 2026, still open over the integers.
+- [Caratheodory's conjecture](../04-Geometry%20and%20Combinatorics/09-caratheodory-conjecture.md): does every smooth convex surface have two round points, and the competing 2026 claims.
+- [Two shape puzzles settled](../04-Geometry%20and%20Combinatorics/13-moving-sofa-and-ruperts-problem.md): Gerver's sofa is the largest, and a solid that cannot pass through a copy of itself.
 
 Also on this shelf: [Kinds of claim](02-theorem-conjecture-model-approximation.md) gives the status label "refuted" its exact meaning, and [Machines in proofs](06-computer-assistance-and-formal-verification.md) separates a computer search like Lander and Parkin's from other kinds of machine help.
 

@@ -1439,6 +1439,8 @@ example : 4 * 6 ^ 2 + 4 * 5 ^ 2 = 244 ∧ 6 ^ 3 = 216 := by decide
 - [Colouring the plane](03-hadwiger-nelson-chromatic-number-of-the-plane.md): another problem fixed by which distances points may have, still open in the plane.
 - [Kakeya](02-kakeya-and-restriction.md): Fourier analysis meeting geometry again, where the open questions are about how small a set can be.
 - [Cycle double cover](04-cycle-double-cover-conjecture.md) and [Sunflowers and union-closed families](05-sunflower-and-union-closed-conjectures.md): the shelf's combinatorial problems, rather than geometric ones.
+- [The six-sphere](08-complex-structures-on-the-six-sphere.md): does S^6 carry a true complex structure, and the 2026 claims that it does.
+- [The smooth Poincare conjecture in dimension four](11-smooth-four-dimensional-poincare-conjecture.md): the one case still open.
 
 The question this card leaves open: in which other dimensions, if any, does a Cohn–Elkies function exist whose bound meets a real packing, and what is the densest packing in dimension 4?
 

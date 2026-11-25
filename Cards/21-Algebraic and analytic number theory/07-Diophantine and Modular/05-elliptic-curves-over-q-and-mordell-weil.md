@@ -621,6 +621,8 @@ ALL CHECKS PASS
 - [Birch and Swinnerton-Dyer](../../22-Algebraic%20geometry/04-Elliptic%20Curves/08-birch-and-swinnerton-dyer-statement.md): the conjecture with its $`L`$-function, in the algebraic-geometry wing.
 - [Torsion points](../../22-Algebraic%20geometry/04-Elliptic%20Curves/04-torsion-and-nagell-lutz.md): Nagell–Lutz proved, one half in outline, and Mazur's list in detail.
 - [The L-function of a modular form](12-l-functions-of-modular-forms.md): a Mellin transform that inherits the form's symmetry.
+- [Prize citations](../../25-Frontier/01-How%20Research%20Works/08-reading-a-prize-citation.md): what a Fields, Abel or Breakthrough citation says was proved, and what it does not.
+- [Hilbert's tenth problem beyond the integers](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/07-hilberts-tenth-problem-over-number-fields.md): undecidable over every ring of integers, still open over the rationals.
 
 The question this card leaves open: given a curve, is there a method guaranteed to stop with its rank?
 

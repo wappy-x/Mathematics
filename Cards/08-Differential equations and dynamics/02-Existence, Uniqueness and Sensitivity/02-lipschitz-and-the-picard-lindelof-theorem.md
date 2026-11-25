@@ -716,6 +716,7 @@ example : (1 / 30 : ℚ) * 5 = 1 / 6 ∧ ((5 : ℚ) - 5 / 10) ^ 2 = 81 / 4 ∧
 - [From local error to global error](../../16-Numerical%20analysis/06-ODE%20Solvers/02-convergence-of-one-step-methods.md): $`L`$ controlling solver error.
 - [Vector field and its flow](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/07-vector-fields-and-flows.md): one solution through every point.
 - [Peano's theorem](06-peano-existence-theorem.md): continuity alone is enough for a solution, built from Euler polygons.
+- [Darboux's theorem](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/11-darboux-theorem-and-the-moser-trick.md): every symplectic form looks the same up close.
 
 The theorem certifies 10 minutes; how long a solution actually survives, and whether it can reach infinity in finite time, is answered in [Blow-up](03-blow-up-and-the-life-span-of-a-solution.md).
 

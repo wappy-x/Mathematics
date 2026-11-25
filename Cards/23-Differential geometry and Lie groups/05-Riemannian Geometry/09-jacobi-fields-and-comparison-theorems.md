@@ -910,7 +910,7 @@ theorem sphere_jacobi_field (R α : ℝ) (hR : 0 < R) :
 - **Air and sea navigation.** A heading error of 1° puts an aircraft 17.381 km from where it should be after 1,000 km of great-circle flight, and the Jacobi field gives that drift, to first order, at any distance.
 - **Geodesy.** Surveying and GPS software works on the WGS 84 ellipsoid. Comparison with two spheres gives a quick, guaranteed error bracket for a sphere-based shortcut.
 - **Gravity and tides.** In general relativity the same equation, called geodesic deviation, describes two freely falling objects drifting together or apart. Spacetime curvature is the tidal force.
-- **Shape from curvature.** Bonnet–Myers uses conjugate points to cap the size of any complete space with sectional curvature bounded below by a positive number. Volume comparison (Bishop–Gromov) runs the same idea on volumes of balls, using the averaged curvature of [Ricci and scalar curvature](07-ricci-and-scalar-curvature.md).
+- **Shape from curvature.** Bonnet–Myers uses conjugate points to cap the size of any complete space with sectional curvature bounded below by a positive number. Volume comparison ([Bishop-Gromov](14-bishop-gromov-volume-comparison.md)) runs the same idea on volumes of balls, using the averaged curvature of [Ricci and scalar curvature](07-ricci-and-scalar-curvature.md).
 
 > **Say it back**
 > A Jacobi field is the gap between a geodesic and its neighbour, to first order in the spread. It obeys $`J'' + \mathrm{Rm}(J, \gamma')\gamma' = 0`$, and on a surface $`f'' + K f = 0`$. On a sphere of radius R it is $`\alpha R\sin(s/R)`$: 78.580 km after 5,000 km for a 1° spread, back to zero at the opposite point. Curvature between two bounds traps the gap between the two model-space gaps. Past a conjugate point, where the gap returns to zero, a geodesic is no longer shortest; it can stop being shortest earlier, at a tie.
@@ -926,6 +926,9 @@ theorem sphere_jacobi_field (R α : ℝ) (hR : 0 < R) :
 ## Where this goes next
 
 - [Hopf-Rinow](10-hopf-rinow-and-completeness.md): when every two points are joined by a shortest geodesic, and why a geodesic past its conjugate point is not one.
+- [Bochner's theorem](13-bochner-technique-and-vanishing-theorems.md): positive Ricci curvature leaves no room for harmonic loops.
+- [Bishop-Gromov](14-bishop-gromov-volume-comparison.md): a lower bound on Ricci curvature caps the volume of every ball.
+- [Lorentzian geometry](../07-Geometric%20Analysis%20and%20Physics/13-lorentzian-geometry-causality-and-singularities.md): light cones, an expanding universe, a spinning black hole, and why singularities are forced.
 
 This card bounds the drift along one path; whether a curvature bound also fixes the shape of the whole space is the question it leaves open.
 

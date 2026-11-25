@@ -676,6 +676,7 @@ example : ∀ p ∈ List.zip (List.range' 3 14) [2, 4, 5, 8, 11, 16, 22, 32, 45,
 
 - [The probabilistic method](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md): the same argument with chance and averages, where the count becomes an expected number of bad cliques and reaches results this form cannot.
 - [The Lovasz local lemma](08-lovasz-local-lemma.md): many bad events, each rare and each tied to few others, can all be avoided at once.
+- [Diagonal Ramsey numbers](../../25-Frontier/04-Geometry%20and%20Combinatorics/10-diagonal-ramsey-numbers.md): R(k, k) between root 2 to the k and 4 to the k, and the first exponential improvement in 88 years.
 
 The count shows a good wiring plan exists but names none; how to write one down for every k, with 2^(k/2) machines, is the question this card leaves open.
 

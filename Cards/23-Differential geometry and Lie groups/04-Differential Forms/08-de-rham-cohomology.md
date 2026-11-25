@@ -1058,6 +1058,9 @@ example : (2 : ℤ) - 2 * 2 = -2 ∧ (1 : ℤ) + 1 - (2 - 2 * 2) = 4 := by decid
 - [Hodge star](09-hodge-star-and-maxwell-in-forms.md): the next card. With a metric, each class gets one best form, the harmonic one; on the flat torus that form for $`[\alpha]`$ is $`d\theta`$ itself, with the wobble removed.
 - [Hodge decomposition](../../22-Algebraic%20geometry/05-Cohomology%20and%20the%20Hodge%20Conjecture/05-hodge-decomposition.md): on a complex manifold, these groups split further by type.
 - [Cohomology and the cup product in outline](../../17-Topology/05-Homology/08-cohomology-and-cup-product-in-outline.md): the wedge of two classes becomes a product of classes; $`[d\theta] \wedge [d\psi]`$ spans the torus's degree 2.
+- [Hodge's theorem](../05-Riemannian%20Geometry/12-hodge-laplacian-and-harmonic-forms.md): every cohomology class has exactly one harmonic form.
+- [Bochner's theorem](../05-Riemannian%20Geometry/13-bochner-technique-and-vanishing-theorems.md): positive Ricci curvature leaves no room for harmonic loops.
+- [Chern-Weil](../06-Lie%20Groups/13-chern-weil-theory-and-characteristic-classes.md): whole numbers from curvature that no connection can change.
 
 The groups count the holes, but they do not choose a form for each class; which form is the natural one to pick is the question the Hodge star answers.
 

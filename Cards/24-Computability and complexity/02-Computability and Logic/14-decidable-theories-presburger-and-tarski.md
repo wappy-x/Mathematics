@@ -789,6 +789,8 @@ example : ∀ x < 1001, x * x ≠ 2 := by decide +kernel
 - [Above NP](../03-Time%20Complexity/08-conp-pspace-and-the-polynomial-hierarchy.md): alternating "there is" and "for all", the source of the cost in deciding quantified sentences.
 - [Hilbert's and Smale's lists](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/05-hilbert-and-smale-problems-selected.md): the problems where these decision questions began.
 - André–Oort (planned, wing 25): o-minimality, the property of Tarski's real field that its definable sets are finite unions of points and intervals, used to count special points.
+- [Hilbert's tenth problem beyond the integers](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/07-hilberts-tenth-problem-over-number-fields.md): undecidable over every ring of integers, still open over the rationals.
+- [Andre-Oort and o-minimality](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/08-andre-oort-and-o-minimality.md): special points on modular curves, counted with logic.
 
 Add the exponential function $`e^x`$ to Tarski's real numbers: is the theory still decidable? Tarski asked in 1951. The answer is yes if Schanuel's conjecture holds, and it is unproved as of 2026-11-24.
 

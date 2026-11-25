@@ -1600,6 +1600,7 @@ example : (16 : ℚ) * (3 / 10 * (3 / 5 - 3 / 10)) * (1 / 5 * (2 / 5 - 1 / 5)) /
 - The next card, [Subharmonic functions](09-subharmonic-functions-and-perrons-method.md), returns to λ = 0 and builds solutions of Laplace's equation from below.
 - [General elliptic operators](../06-Weak%20Solutions%20and%20Free%20Boundaries/12-hopf-lemma-fredholm-alternative-and-the-principal-eigenvalue.md): Hopf's lemma, the Fredholm alternative, and a first eigenvalue with a positive mode.
 - [Weyl's law](../06-Weak%20Solutions%20and%20Free%20Boundaries/13-weyls-law.md): a drum's area can be heard in how fast its notes pile up.
+- [Cheeger's inequality](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/15-cheegers-inequality-and-spectral-geometry.md): a low first note forces a thin neck on a curved space.
 
 Among all plates of one area, which outline has the lowest first note, and how much of the outline can the list of notes reveal?
 

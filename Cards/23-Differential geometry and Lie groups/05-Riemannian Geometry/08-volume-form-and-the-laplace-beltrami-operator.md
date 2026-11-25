@@ -800,6 +800,10 @@ Siblings used along the way: [Levi-Civita connection](02-levi-civita-connection-
 
 - [Jacobi field](09-jacobi-fields-and-comparison-theorems.md): the next card. The circle-length factor $`R\sin\varphi`$ in Step 7 is a Jacobi field's length, and comparison theorems turn "less room" into inequalities.
 - [Ricci flow](../07-Geometric%20Analysis%20and%20Physics/01-ricci-flow-and-the-poincare-proof-in-outline.md): the metric itself evolves by $`\partial g/\partial t = -2\,\mathrm{Ric}`$, and the scalar curvature then obeys a heat equation driven by $`\Delta_g`$.
+- [Hodge's theorem](12-hodge-laplacian-and-harmonic-forms.md): every cohomology class has exactly one harmonic form.
+- [Bochner's theorem](13-bochner-technique-and-vanishing-theorems.md): positive Ricci curvature leaves no room for harmonic loops.
+- [Bishop-Gromov](14-bishop-gromov-volume-comparison.md): a lower bound on Ricci curvature caps the volume of every ball.
+- [Cheeger's inequality](15-cheegers-inequality-and-spectral-geometry.md): a low first note forces a thin neck on a curved space.
 
 The question this card leaves open: the list of cooling rates $`\lambda_1, \lambda_2, \dots`$ is fixed by the shape, but how much of the shape can the list recover?
 

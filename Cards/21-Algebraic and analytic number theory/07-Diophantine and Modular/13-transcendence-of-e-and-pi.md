@@ -1262,6 +1262,7 @@ example : ((X ^ 3 - 2) * (X ^ 3 + 2) : ℤ[X]) = X ^ 6 - 4 := by ring
 
 - [Gelfond-Schneider](14-gelfond-schneider-theorem.md): the next card; $`\alpha^{\beta}`$ is transcendental for algebraic α and irrational algebraic β, so $`e^{\pi} = (-1)^{-i}`$ and $`2^{\sqrt{2}}`$ are transcendental, cases Lindemann-Weierstrass cannot touch.
 - [Apery's theorem](15-irrationality-of-zeta-three.md): the same auxiliary-construction idea, aimed at ζ(3).
+- [Schanuel's conjecture](../../25-Frontier/03-Primes%20and%20Numbers/08-schanuels-conjecture.md): one statement that would settle almost every open question about transcendental numbers.
 
 The question this card leaves open: is e + π transcendental, or even irrational? As of 2026-11-24 no one knows.
 

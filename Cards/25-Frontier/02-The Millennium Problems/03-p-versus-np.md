@@ -774,6 +774,7 @@ end PVersusNP
 
 - [Navier-Stokes](04-navier-stokes-existence-and-smoothness.md): the next card on this shelf, the other Clay problem where a resolution in either direction wins.
 - [Fine-grained complexity](../../24-Computability%20and%20complexity/06-Data%2C%20Learning%20and%20Fine-Grained%20Complexity/06-fine-grained-complexity-and-seth.md): what the exponential time hypothesis, a stronger guess than P ≠ NP, says about exact running times.
+- [MIP* = RE](../06-Algebra%2C%20Logic%20and%20Computation/09-mip-star-equals-re-and-connes-embedding.md): entangled provers can certify any halting question, and Connes' embedding problem falls.
 
 Other cards on this shelf: [The Riemann hypothesis](01-riemann-hypothesis.md), [Birch and Swinnerton-Dyer](02-birch-and-swinnerton-dyer.md), [The Hodge conjecture](05-hodge-conjecture.md), [Yang-Mills existence and mass gap](06-yang-mills-and-the-mass-gap.md) and [The Poincare conjecture, solved](07-poincare-conjecture-solved.md), the one prize problem already settled.
 

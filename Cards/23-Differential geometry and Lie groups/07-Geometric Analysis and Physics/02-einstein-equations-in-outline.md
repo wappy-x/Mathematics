@@ -848,6 +848,7 @@ The Minkowski metric and the signature $`(-, +, +, +)`$ come from [Hodge star](.
 - [Yang-Mills](03-yang-mills-fields-and-gauge-theory.md): the same pattern for the forces inside atoms: the curvature of a connection, set by its sources.
 - [Ricci flow](01-ricci-flow-and-the-poincare-proof-in-outline.md): Ricci curvature used as a velocity that smooths a metric, instead of set equal to matter.
 - [Mass gap](04-the-mass-gap-statement.md): the open problem about Yang-Mills fields, stated precisely.
+- [Lorentzian geometry](13-lorentzian-geometry-causality-and-singularities.md): light cones, an expanding universe, a spinning black hole, and why singularities are forced.
 
 The question this card leaves open: Ric = 0 was solved here for one round, still mass, so what do the equations allow when two masses orbit, and do the waves of curvature they send out carry energy away?
 

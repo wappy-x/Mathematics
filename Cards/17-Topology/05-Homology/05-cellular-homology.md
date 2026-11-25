@@ -881,6 +881,7 @@ The card also uses [Simplicial complexes and chains](01-simplicial-complexes-and
 - [Universal coefficients and Kunneth](11-universal-coefficients-and-kunneth.md): change the number system, or multiply two spaces, and see what twists survive.
 - [Hurewicz and Whitehead](../07-Higher%20Homotopy%20and%20Mapping%20Spaces/03-hurewicz-and-whitehead-theorems.md): the first hole that homotopy sees, homology sees too.
 - [Spectral sequences in outline](../07-Higher%20Homotopy%20and%20Mapping%20Spaces/04-spectral-sequences-and-eilenberg-maclane-spaces-in-outline.md): compute the homology of a fibration page by page.
+- [Morse theory](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/12-morse-theory-critical-points-and-handles.md): a height function's critical points build the shape.
 
 Left open: cellular homology adds classes but cannot multiply them, so when every boundary is zero, as on complex projective space, what links the class in one even degree to the next?
 

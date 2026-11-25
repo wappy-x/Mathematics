@@ -899,6 +899,7 @@ example : (4 : ℚ) / 3 < 16299 / 10000 ∧ (16300 : ℚ) / 10000 < 5 / 3 := by 
 - [Fermat's last theorem, proved in 1995 and reported formalised in 2026](06-fermats-last-theorem-formalised.md): the theorem abc would bound for n ≥ 4, proved another way, and what a formal proof adds.
 - [Erdos problems](07-erdos-problems-selected.md): more open questions about integers where a computer search can test small cases.
 - Sibling cards on the same shelf: [Twin primes](01-twin-primes-and-bounded-gaps.md), [Goldbach](02-goldbach-conjecture.md) and [Landau's four problems](03-landau-problems.md), each a prime question with its own dated status.
+- [Schanuel's conjecture](08-schanuels-conjecture.md): one statement that would settle almost every open question about transcendental numbers.
 
 The question this card leaves open: is there any triple at all of quality 2 or more?
 

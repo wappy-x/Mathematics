@@ -841,6 +841,7 @@ example : 864373 * 2 ^ 100 ≤ 10 ^ 6 * (∑ k ∈ Finset.range 56, Nat.choose 1
 - [Reading a paper](05-reading-a-research-paper.md): finding the theorem a paper actually proves, and what it depends on.
 - [Machines in proofs](06-computer-assistance-and-formal-verification.md): the audit list (statement, artifact, independent check, status) that decides when a computer-assisted claim counts as proved.
 - [Working on a problem](07-how-to-work-on-an-open-problem.md): the status ledger kept for one open problem, using these same fields.
+- [Prize citations](08-reading-a-prize-citation.md): what a Fields, Abel or Breakthrough citation says was proved, and what it does not.
 
 The question this card leaves open: when a proof is too long for any person to read, as with four colours, who decides that it has been "accepted in a source independent of the authors"?
 

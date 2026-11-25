@@ -1212,6 +1212,7 @@ example : 4 * 4 = 16 ∧ 2 * 3 * 4 = 24 := by norm_num
 
 - [Quantum error correction](12-quantum-error-correction-and-fault-tolerance.md): the next card, on how a quantum computer protects its amplitudes from noise; its codes are also described by local terms like Z ⊗ Z.
 - [Quantum advantage](../../25-Frontier/07-Physics%2C%20Finance%20and%20Machines/01-quantum-supremacy-and-bqp.md): where quantum machines have outrun ordinary ones in practice, and what the claims rest on.
+- [MIP* = RE](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/09-mip-star-equals-re-and-connes-embedding.md): entangled provers can certify any halting question, and Connes' embedding problem falls.
 
 This card leaves open whether a quantum proof is ever stronger than a classical one: whether QMA is larger than NP, or than MA, is unproved as of 2026-11-11.
 

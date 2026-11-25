@@ -1206,6 +1206,7 @@ example : ((Finset.range 10) ×ˢ (Finset.range 10)).card = 100 := by decide +ke
 
 - [Erdos problems](07-erdos-problems-and-computer-search.md): the Erdős–Szemerédi conjecture is one of many Erdős problems where a computer search, like the one on this card, gives evidence and sometimes a proof.
 - [Small doubling](10-plunnecke-ruzsa-and-freiman.md): Plunnecke-Ruzsa bounds every sum of copies, and Freiman finds the progression inside.
+- [The sum-product problem](../../25-Frontier/04-Geometry%20and%20Combinatorics/07-sum-product-problem.md): false over the reals since May 2026, still open over the integers.
 
 Other cards on this shelf: [Typical numbers have about log log n distinct prime factors](01-hardy-ramanujan-and-typical-prime-factor-counts.md), [Erdos-Kac](02-erdos-kac-theorem.md), [Equidistribution](03-equidistribution-and-weyls-criterion.md), [Three distances](04-three-distance-theorem.md) and [Long progressions](05-szemeredi-and-green-tao-in-outline.md).
 

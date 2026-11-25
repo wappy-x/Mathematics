@@ -1623,6 +1623,8 @@ example : (1393 : ℤ) ^ 2 - 2 * 985 ^ 2 = -1 := by norm_num
 - [Norm, trace and discriminant](../06-Algebraic%20Numbers/02-norms-traces-and-discriminants.md): the norm of a nonzero algebraic integer is a nonzero whole number, the source of Step 5's lower bound.
 
 ## Where this goes next
+- [Schanuel's conjecture](../../25-Frontier/03-Primes%20and%20Numbers/08-schanuels-conjecture.md): one statement that would settle almost every open question about transcendental numbers.
+
 
 Baker's theorem on linear forms in logarithms (1966) generalises Gelfond-Schneider from two logs to any number. It bounds $`b_1 \log a_1 + \dots + b_n \log a_n`$ away from 0, with a constant that can be computed, and is mentioned on [Chasing an algebraic number with fractions](10-diophantine-approximation-liouville-to-roth.md).
 

@@ -923,6 +923,7 @@ end CupOutline
 - [Spectral sequences in outline](../07-Higher%20Homotopy%20and%20Mapping%20Spaces/04-spectral-sequences-and-eilenberg-maclane-spaces-in-outline.md): compute the homology of a fibration page by page.
 - [Ext](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/05-ext-and-extensions.md): resolve, apply Hom, and count the ways to glue two modules together.
 - [Cech cohomology](../../22-Algebraic%20geometry/08-Sheaf%20Cohomology%20and%20Differentials/04-cech-cohomology-of-projective-space.md): gluing failures counted on a cover, and the cohomology of O(d) on projective space.
+- [Chern-Weil](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/13-chern-weil-theory-and-characteristic-classes.md): whole numbers from curvature that no connection can change.
 
 This card leaves open how the product behaves in higher dimensions, where duality pairs degree k with degree n − k.
 

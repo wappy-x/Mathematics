@@ -1213,6 +1213,7 @@ end NavierStokesClay
 - [Yang-Mills existence and mass gap](06-yang-mills-and-the-mass-gap.md): the other Millennium problem that asks for a physical theory to exist rigorously.
 - [The Poincare conjecture, solved](07-poincare-conjecture-solved.md): what an accepted solution of a Millennium problem looked like, from posted preprints to the 2010 award.
 - [P versus NP](03-p-versus-np.md): another problem where known methods are proved too weak, as Tao's averaged equation is here.
+- [Hilbert's sixth problem](../05-Analysis%20and%20Dynamics/07-hilberts-sixth-problem-boltzmann-and-fluids.md): fluid equations derived from colliding hard spheres.
 
 The question this card leaves open is the problem itself: does every smooth, fast-decaying start in three dimensions keep a smooth solution forever, or does some start blow up?
 

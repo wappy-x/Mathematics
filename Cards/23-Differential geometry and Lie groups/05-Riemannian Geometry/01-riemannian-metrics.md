@@ -912,6 +912,9 @@ example : (6371 : ℕ) ^ 2 = 40589641 := by norm_num
 - [Volume form and Laplace-Beltrami](08-volume-form-and-the-laplace-beltrami-operator.md): the metric's table measures areas and volumes, and gives the curved-space Laplacian.
 - [Killing field](../06-Lie%20Groups/07-killing-fields-and-symmetries-of-a-metric.md): motions, such as turning the globe in Step 4, that leave a metric unchanged.
 - [Riemannian gradient descent](../07-Geometric%20Analysis%20and%20Physics/05-optimisation-on-manifolds.md): optimisation where the metric defines the steepest step.
+- [Gauss, Codazzi and Ricci equations](11-second-fundamental-form-and-gauss-codazzi.md): a submanifold's curvature split into inside and outside.
+- [Hodge's theorem](12-hodge-laplacian-and-harmonic-forms.md): every cohomology class has exactly one harmonic form.
+- [Lorentzian geometry](../07-Geometric%20Analysis%20and%20Physics/13-lorentzian-geometry-causality-and-singularities.md): light cones, an expanding universe, a spinning black hole, and why singularities are forced.
 
 The metric gives lengths of paths, but not yet a way to find the shortest one from the inside, without trying every path: that needs a derivative of velocity, which the Levi-Civita connection supplies.
 

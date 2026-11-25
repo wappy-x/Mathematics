@@ -747,6 +747,7 @@ example : ∀ m : ℕ, 492113 < m → m < 492227 → ¬ m.Prime := by
 - [Goldbach](02-goldbach-conjecture.md): the next card. Its count of ways to write an even number as two primes is predicted by the same corrected-coin reasoning.
 - [Landau's four problems](03-landau-problems.md): twin primes stated beside three other open questions about primes.
 - [Erdos problems](07-erdos-problems-selected.md): a database of hundreds of open problems with prizes, and the ones a computer search can touch.
+- [Schanuel's conjecture](08-schanuels-conjecture.md): one statement that would settle almost every open question about transcendental numbers.
 
 Other cards on this shelf: [The abc conjecture](04-abc-conjecture.md), [Beal's conjecture](05-beal-conjecture.md) and [Fermat's last theorem, proved in 1995 and reported formalised in 2026](06-fermats-last-theorem-formalised.md).
 

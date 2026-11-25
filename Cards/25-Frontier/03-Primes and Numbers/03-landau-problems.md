@@ -676,6 +676,7 @@ example : Nat.Prime (2 ^ 2 - 1) ∧ ¬ Nat.Prime (3 ^ 2 - 1) := by norm_num
 - [Goldbach](02-goldbach-conjecture.md): the full status record for Landau's second problem, and the Goldbach count r(n), the number of ways to split n as two primes.
 - [Large gaps](../../21-Algebraic%20and%20analytic%20number%20theory/04-Sieves%20and%20Prime%20Gaps/06-large-gaps-and-the-cramer-model.md): how wide prime gaps can be, the quantity that decides how far Legendre can be checked.
 - [The abc conjecture](04-abc-conjecture.md): the shelf's next problem, about sums rather than primes, where the status itself is disputed.
+- [Schanuel's conjecture](08-schanuels-conjecture.md): one statement that would settle almost every open question about transcendental numbers.
 
 The question this card leaves open: which problem falls first, and will it be by a sieve that gets past the parity problem or by a sharper bound on prime gaps?
 

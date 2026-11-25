@@ -790,6 +790,7 @@ example : 40 ^ 2 + 40 + 41 = 41 * 41 ∧ ¬ Nat.Prime (40 ^ 2 + 40 + 41) := by n
 - [Kinds of claim](02-theorem-conjecture-model-approximation.md): theorem, conjecture, model and approximation, and the dated status each carries, kept as separate fields.
 - [Counterexamples](03-how-a-counterexample-works.md): how one failure refutes a universal claim, and how to check that a claimed failure is real.
 - Other cards on this shelf: [Reading a statement](04-reading-a-mathematical-statement.md), [Reading a paper](05-reading-a-research-paper.md), [Machines in proofs](06-computer-assistance-and-formal-verification.md) and [Working on a problem](07-how-to-work-on-an-open-problem.md).
+- [Prize citations](08-reading-a-prize-citation.md): what a Fields, Abel or Breakthrough citation says was proved, and what it does not.
 
 Left open: when a computer has checked a proof, what exactly has been certified, and who checks the checker?
 

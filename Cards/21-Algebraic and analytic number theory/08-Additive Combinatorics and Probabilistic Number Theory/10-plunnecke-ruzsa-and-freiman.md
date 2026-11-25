@@ -764,6 +764,7 @@ example : (({0, 1, 3} : Finset ℤ) + {0, 1, 3}).card = 6 ∧
 ## Where this goes next
 
 - [Roth's theorem](11-roths-theorem-on-three-term-progressions.md): the next card proves that dense sets hold three-term progressions, the first case of Szemerédi's theorem.
+- [The sum-product problem](../../25-Frontier/04-Geometry%20and%20Combinatorics/07-sum-product-problem.md): false over the reals since May 2026, still open over the integers.
 
 Other cards on this shelf: [Typical numbers have about log log n distinct prime factors](01-hardy-ramanujan-and-typical-prime-factor-counts.md), [Erdos-Kac](02-erdos-kac-theorem.md), [Equidistribution](03-equidistribution-and-weyls-criterion.md), [Three distances](04-three-distance-theorem.md), [Erdos problems](07-erdos-problems-and-computer-search.md), [Weyl differencing](08-weyl-differencing-and-van-der-corput.md) and [The circle method](09-hardy-littlewood-circle-method.md).
 

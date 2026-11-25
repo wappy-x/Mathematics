@@ -110,11 +110,11 @@ Codes for the tallies below: **S** answered and proved, **M** partly (a summary:
 | 3 | Can solids of equal volume always be cut into the same pieces? | S: no, Dehn 1900 |
 | 4 | All geometries whose straight lines are shortest paths | V: too broad for one answer |
 | 5 | Are continuous groups automatically smooth? | S: yes, Gleason and Montgomery–Zippin 1952 |
-| 6 | Axiomatise physics | V: a programme; probability was axiomatised by Kolmogorov in 1933 |
+| 6 | Axiomatise physics | V: a programme; probability was axiomatised by Kolmogorov in 1933; fluids from colliding spheres: [Hilbert's sixth problem](../05-Analysis%20and%20Dynamics/07-hilberts-sixth-problem-boltzmann-and-fluids.md) |
 | 7 | Is $`a^b`$ transcendental (a root of no polynomial) for algebraic a ≠ 0, 1 and irrational algebraic b? | S: yes, Gelfond and Schneider 1934 ([Gelfond-Schneider](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/14-gelfond-schneider-theorem.md)) |
 | 8 | The Riemann hypothesis, Goldbach, twin primes | M: the Riemann hypothesis, proved 2026-11-21 by a formal proof certified by others ([The Riemann hypothesis](../02-The%20Millennium%20Problems/01-riemann-hypothesis.md)); Goldbach and twin primes, open |
 | 9 | The most general reciprocity law | M: abelian case, Artin 1927; beyond, open |
-| 10 | A process to decide whole-number solvability | S: no process exists, Matiyasevich 1970 |
+| 10 | A process to decide whole-number solvability | S: no process exists, Matiyasevich 1970; other rings: [Hilbert's tenth problem beyond the integers](07-hilberts-tenth-problem-over-number-fields.md) |
 | 11 | Quadratic forms over number fields | M: over the fields, Hasse 1923; over their whole numbers, partly open |
 | 12 | Extend the Kronecker–Weber theorem ([Kronecker-Weber](../../21-Algebraic%20and%20analytic%20number%20theory/09-Local%20Fields%20and%20Class%20Field%20Theory/04-kronecker-weber-theorem.md)) to every number field | M: imaginary quadratic fields, by complex multiplication; in general, open |
 | 13 | Solve the degree-7 equation with functions of two variables | M: continuous version, yes, Kolmogorov and Arnold 1957; algebraic version, open |
@@ -883,6 +883,7 @@ example : fib 20 = 6765 ∧ 20 * fib 20 = 135300 := by decide
 - [The unique games conjecture](03-unique-games-conjecture.md): an open hardness assumption, in the spirit of Smale's 3rd.
 - [Graph isomorphism](04-graph-isomorphism.md): a decision question whose best algorithm sits between easy and hard.
 - [P versus NP](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/08-p-versus-np-what-is-known.md): Smale's 3rd, stated exactly.
+- [Hilbert's tenth problem beyond the integers](07-hilberts-tenth-problem-over-number-fields.md): undecidable over every ring of integers, still open over the rationals.
 
 Left open: is H(2), the most limit cycles a degree-2 field can have, even finite?
 

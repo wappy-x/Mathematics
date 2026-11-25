@@ -1101,6 +1101,8 @@ example : (296 + 64 : ℕ) = 360 := by
 - [Hairy ball theorem](../06-Lie%20Groups/09-vector-field-zeros-and-the-hairy-ball.md): the index of a zero of a vector field is a local degree, and the indices on the globe add up to 2.
 - [The fundamental theorem of algebra](../../03-Algebra/10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md): a polynomial of degree n has degree n as a map, so it must hit 0.
 - [Brouwer and Borsuk-Ulam](../../17-Topology/04-Homotopy/08-brouwer-and-borsuk-ulam.md): fixed points and antipodes, two classic results that degree proves in every dimension.
+- [Transversality and cobordism](11-transversality-intersection-numbers-and-cobordism.md): crossings that survive a wiggle, and shapes that bound together.
+- [Morse theory](12-morse-theory-critical-points-and-handles.md): a height function's critical points build the shape.
 
 The degree counts wrapping by points; can the same whole number be found by integrating, adding up how much area or volume the map covers with signs, as road 3 does on the circle? That is the question this card leaves open.
 

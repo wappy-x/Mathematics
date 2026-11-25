@@ -1847,6 +1847,8 @@ example :
 - [Lie algebra](../06-Lie%20Groups/02-lie-algebras-and-the-exponential-map.md): the bracket of left-invariant fields on a matrix group (fields that the group's own multiplication carries to themselves), read at the identity, is the matrix bracket $`XY - YX`$.
 - [Baker-Campbell-Hausdorff](../06-Lie%20Groups/03-baker-campbell-hausdorff-in-outline.md): the full series behind "two small motions leave a bracket behind".
 - [Killing field](../06-Lie%20Groups/07-killing-fields-and-symmetries-of-a-metric.md): a field whose flow keeps lengths, $`\mathcal{L}_X g = 0`$, using the Lie derivative from this card.
+- [Lie's theorems](../06-Lie%20Groups/11-lies-theorems-and-covering-groups.md): the Lie algebra decides the group, up to a covering.
+- [The six-sphere](../../25-Frontier/04-Geometry%20and%20Combinatorics/08-complex-structures-on-the-six-sphere.md): does S^6 carry a true complex structure, and the 2026 claims that it does.
 
 Brackets of the car's moves span every direction, so every state is reachable; the open question is the cheapest route, and how much driving the shortest parking manoeuvre needs.
 

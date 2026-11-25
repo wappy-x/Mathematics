@@ -968,6 +968,7 @@ example : 2 * ((4 : ℚ) + 3 / 2) = 11 ∧ 2 * ((4 : ℚ) - 3 / 2) = 5 := by nor
 - [Minimal surface](07-minimal-surfaces-and-soap-films.md): surfaces with $`H = 0`$ everywhere. Since $`\kappa_1 = -\kappa_2`$, every point is a saddle or flat.
 - [Theorema Egregium](08-theorema-egregium.md): $`K`$, and so the dome-or-saddle verdict, can be measured from inside the surface.
 - [Gauss-Bonnet](10-gauss-bonnet-theorem.md): the ring's dome part carries total $`K`$ of $`4\pi`$ and its saddle part $`-4\pi`$, so the whole ring totals 0; that total counts the hole.
+- [Caratheodory's conjecture](../../25-Frontier/04-Geometry%20and%20Combinatorics/09-caratheodory-conjecture.md): does every smooth convex surface have two round points, and the competing 2026 claims.
 
 Left open: the sign of $`K`$ is defined from the surface's bending in space, so can an inhabitant who never leaves the surface tell a dome point from a saddle point?
 

@@ -859,6 +859,7 @@ example : (Finset.univ.filter fun w : Fin 4 → Fin 4 =>
 - [Nielsen-Schreier](10-nielsen-schreier-and-covers-of-graphs.md): every subgroup of a free group is free, read off a covering graph.
 - [Cofibrations](11-cofibrations-mapping-cylinders-and-mapping-cones.md): a homotopy on a piece always extends, so collapsing the piece is safe.
 - [Hurewicz and Whitehead](../07-Higher%20Homotopy%20and%20Mapping%20Spaces/03-hurewicz-and-whitehead-theorems.md): the first hole that homotopy sees, homology sees too.
+- [Morse theory](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/12-morse-theory-critical-points-and-handles.md): a height function's critical points build the shape.
 
 This card reads the loop group off the 2-skeleton and ignores the higher cells. It leaves open what the 3-cells and higher do count, which homology answers.
 

@@ -815,6 +815,8 @@ example : 2002 - 1904 = 98 ∧ 2010 - 1904 = 106 := by decide
 - [Navier-Stokes](04-navier-stokes-existence-and-smoothness.md): the fluid problem, whose own status record is kept there.
 - [Yang-Mills existence and mass gap](06-yang-mills-and-the-mass-gap.md): the other problem on this shelf that sits next to geometry and physics.
 - [Birch and Swinnerton-Dyer](02-birch-and-swinnerton-dyer.md), [P versus NP](03-p-versus-np.md) and [The Hodge conjecture](05-hodge-conjecture.md): the rest of the seven, each with its status line.
+- [The six-sphere](../04-Geometry%20and%20Combinatorics/08-complex-structures-on-the-six-sphere.md): does S^6 carry a true complex structure, and the 2026 claims that it does.
+- [The smooth Poincare conjecture in dimension four](../04-Geometry%20and%20Combinatorics/11-smooth-four-dimensional-poincare-conjecture.md): the one case still open.
 
 The question this card leaves open: the proof recognises the 3-sphere through geometry and analysis, so is there a proof that uses topology alone?
 

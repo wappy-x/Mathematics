@@ -725,6 +725,8 @@ example : -2 * (1 / 2 : ℚ) = -1 ∧ (1 / 2 : ℚ) ^ 2 - 5 * (1 / 2) ^ 2 = -1 :
 - [Norm, trace and discriminant](02-norms-traces-and-discriminants.md): the two numbers $`2a`$ and $`a^2 - d\,b^2`$ of the test, made into tools; the norm proves 2, 3 and $`1 \pm \sqrt{-5}`$ have no proper factors.
 - [The p-adic numbers](10-p-adic-numbers-and-hensels-lemma.md): a second meaning of "integer", measured one prime at a time.
 - [Gelfond-Schneider](../07-Diophantine%20and%20Modular/14-gelfond-schneider-theorem.md): 2 to the power root 2 is transcendental, Hilbert's seventh problem.
+- [The sum-product problem](../../25-Frontier/04-Geometry%20and%20Combinatorics/07-sum-product-problem.md): false over the reals since May 2026, still open over the integers.
+- [Hilbert's tenth problem beyond the integers](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/07-hilberts-tenth-problem-over-number-fields.md): undecidable over every ring of integers, still open over the rationals.
 
 The rest of the shelf: [Rings of integers](03-rings-of-integers-and-integral-bases.md) finds $`\mathcal{O}_K`$ for every quadratic field, [Ideals factor uniquely even where numbers do not](04-ideals-and-unique-factorisation-in-dedekind-domains.md) repairs the house example, and [Class groups](05-class-groups-and-the-minkowski-bound.md), [The class number formula](06-class-number-formula-and-the-dedekind-zeta-function.md), [The unit theorem](07-dirichlets-unit-theorem.md), [Splitting and ramification](08-splitting-and-ramification.md) and [Chebotarev](09-chebotarev-density-and-splitting-statistics.md) measure the ring from other sides.
 

@@ -767,6 +767,7 @@ example : -((Real.pi / 2 - Real.pi / 6) * 180) = -(60 * Real.pi) := by
 - [Exterior derivative](03-exterior-derivative.md): the derivative d of a form, which commutes with pullback, so it gives the same answer in every chart.
 - [Integration on an oriented manifold](05-integration-on-manifolds.md): uses this card's integral identity to show that the integral of a form over a curved shape does not depend on the chart.
 - [Stokes on manifolds](06-stokes-theorem-on-manifolds.md): the boundary theorem, whose proof pulls everything back to a half-plane.
+- [Darboux's theorem](11-darboux-theorem-and-the-moser-trick.md): every symplectic form looks the same up close.
 
 The question this card leaves open: pullback carries forms backwards and keeps integrals, but how does it interact with differentiating a form, and why does that make d independent of coordinates?
 

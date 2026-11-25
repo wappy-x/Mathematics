@@ -376,6 +376,7 @@ The two outputs match line for line.
 
 - [Edge colouring](06-edge-colouring-and-round-robin.md): colouring the borders instead of the regions, where the busiest ward, not flatness, sets the count.
 - [List colouring](07-list-colouring-and-choosability.md): when every vertex brings its own short list of allowed colours, and Thomassen's proof that five per vertex always suffice on a flat map.
+- [Hadwiger's conjecture](../../25-Frontier/04-Geometry%20and%20Combinatorics/12-hadwigers-conjecture.md): a graph with no K_t minor can be coloured with t - 1 colours.
 
 The question left open is about proofs, not maps: nobody knows whether four colours can be settled in a way one person could read.
 

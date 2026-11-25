@@ -174,7 +174,7 @@ $`SO(3)`$ itself is one piece. Every turn is one turn by some angle about one ax
 
 Each entry of $`AB`$ is a sum of three products of entries: a polynomial, so smooth. Undoing is the transpose: entries move, nothing is computed. Both maps are smooth, and $`SO(3)`$ is a Lie group.
 
-The same argument covers every group in the table. A theorem of Élie Cartan goes further: any closed subgroup of $`GL(n,\mathbb{R})`$ is a Lie group. It is stated here, not proved; Hall (chapter 3) and Lee (chapter 20) prove it.
+The same argument covers every group in the table. A theorem of Élie Cartan goes further: any closed subgroup of $`GL(n,\mathbb{R})`$ is a Lie group. It is stated here, not proved; [Lie's theorems](11-lies-theorems-and-covering-groups.md) proves it, as do Hall (chapter 3) and Lee (chapter 20).
 
 ### Step 6: charts give the same 3
 
@@ -836,6 +836,8 @@ example : 3 ^ 2 = 9 ∧ 3 * (3 - 1) / 2 = 3 ∧ 3 ^ 2 - 1 = 8 := by norm_num
 - [Representation](05-representations-in-outline.md): a Lie group written as matrices acting on a space, so its symmetries can be computed.
 - [Rotation group](04-rotations-so3-and-quaternions.md): $`SO(3)`$ in detail, with a four-number shortcut that avoids gimbal lock.
 - [Group action and homogeneous space](06-homogeneous-spaces-and-group-actions.md): a Lie group moving the points of another space.
+- [Lie's theorems](11-lies-theorems-and-covering-groups.md): the Lie algebra decides the group, up to a covering.
+- [The Hilbert-Smith conjecture](../../25-Frontier/04-Geometry%20and%20Combinatorics/14-hilbert-smith-conjecture.md): can the p-adic integers act faithfully on a manifold.
 
 The question this card leaves open: every Lie group has a space of directions at the identity, so how much of the curved group can be rebuilt from that flat space alone?
 

@@ -903,8 +903,9 @@ example : (4 * 20000 : ℚ) / 5000 = 16 := by norm_num
 - [Expanders](07-expanders-and-mixing.md): networks whose $`\lambda_2`$ stays large, so they have no cheap cut, and random walks on them mix fast.
 - [The stochastic block model](10-stochastic-block-model-and-detectability.md): planted groups, and the point below which no method can find them.
 - [Algebraic multigrid](../../16-Numerical%20analysis/09-Fast%20Solvers%20for%20Large%20Grids/03-algebraic-multigrid.md): choose the coarse grid from the matrix alone.
+- [Cheeger's inequality](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/15-cheegers-inequality-and-spectral-geometry.md): a low first note forces a thin neck on a curved space.
 
-This card leaves open how close the sign split comes to the best possible cut: $`\lambda_2`$ bounds every balanced cut from below, and Cheeger's inequality bounds from above the best cut that can be read off the Fiedler vector.
+This card leaves open how close the sign split comes to the best possible cut: $`\lambda_2`$ bounds every balanced cut from below, and [Cheeger's inequality](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/15-cheegers-inequality-and-spectral-geometry.md) bounds from above the best cut that can be read off the Fiedler vector.
 
 ---
 

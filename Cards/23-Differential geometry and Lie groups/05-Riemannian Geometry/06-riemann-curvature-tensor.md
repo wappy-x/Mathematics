@@ -1079,6 +1079,7 @@ Also on this shelf: [Riemannian metric](01-riemannian-metrics.md) supplies $`g`$
 - [Ricci and scalar curvature](07-ricci-and-scalar-curvature.md): averages sec over all planes through a direction, then over all directions, and links the averages to how volumes grow.
 - [Jacobi field](09-jacobi-fields-and-comparison-theorems.md): shows sec acting on geodesics. Positive sec makes neighbouring shortest paths focus, as meridians meet at the poles.
 - [Einstein equations](../07-Geometric%20Analysis%20and%20Physics/02-einstein-equations-in-outline.md): sets a contraction of this tensor equal to the matter content of spacetime.
+- [Gauss, Codazzi and Ricci equations](11-second-fundamental-form-and-gauss-codazzi.md): a submanifold's curvature split into inside and outside.
 
 The question this card leaves open: the tensor holds 20 numbers in four dimensions, so which averages of them matter most, and what do they control?
 

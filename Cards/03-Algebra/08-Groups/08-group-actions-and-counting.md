@@ -549,6 +549,7 @@ example : (∑ k : ZMod 4,
 - [Polya counting](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/06-polya-enumeration.md): record each move's cycles in one polynomial, the cycle index, and substitute colours to count patterns by type.
 - [Invariants of a finite group](../../22-Algebraic%20geometry/01-Polynomial%20Systems/10-invariant-theory-and-molien-series.md): the Reynolds average, Hilbert's finiteness, and Molien's count.
 - [Decomposition and inertia groups](../../21-Algebraic%20and%20analytic%20number%20theory/09-Local%20Fields%20and%20Class%20Field%20Theory/02-decomposition-and-inertia-groups.md): how one prime's splitting sits inside the Galois group.
+- [Root systems and Dynkin diagrams](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/03-root-systems-and-dynkin-diagrams.md): four infinite families and five exceptions.
 
 Six orbits came out of 16 patterns listed in full, impossible for twenty beads; a later card asks how far the average alone carries.
 

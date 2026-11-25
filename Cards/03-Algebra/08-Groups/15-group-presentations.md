@@ -734,6 +734,7 @@ example : (Finset.univ.filter fun g : QuaternionGroup 2 => g ≠ 1 ∧ g * g = 1
 - [Van Kampen's theorem](../../17-Topology/04-Homotopy/06-van-kampens-theorem.md): loop groups of glued spaces, produced as presentations.
 - [CW complexes](../../17-Topology/04-Homotopy/07-cw-complexes-and-gluing-cells.md): one relation for each disc glued on.
 - [Nielsen-Schreier](../../17-Topology/04-Homotopy/10-nielsen-schreier-and-covers-of-graphs.md): every subgroup of a free group is free, read off a covering graph.
+- [Root systems and Dynkin diagrams](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/03-root-systems-and-dynkin-diagrams.md): four infinite families and five exceptions.
 
 The question this card leaves: when do two presentations make the same group? No algorithm decides it in general, as Adian and Rabin proved.
 

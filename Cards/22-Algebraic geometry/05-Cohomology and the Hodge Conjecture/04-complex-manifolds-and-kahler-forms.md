@@ -789,6 +789,7 @@ example : ‖(2 : ℂ) + I‖ ^ 2 = 5 := by
 ## Where this goes next
 
 - [Hodge decomposition](05-hodge-decomposition.md): the next card; on a compact Kahler manifold, cohomology splits by how many dz's and dz̄'s a form has.
+- [The six-sphere](../../25-Frontier/04-Geometry%20and%20Combinatorics/08-complex-structures-on-the-six-sphere.md): does S^6 carry a true complex structure, and the 2026 claims that it does.
 
 Other cards on this shelf use these tools: [Sheaves](01-sheaves-in-outline.md), [De Rham cohomology](02-de-rham-cohomology-of-varieties.md), [Line bundles and divisors](06-line-bundles-and-divisor-classes.md), [Algebraic cycles](07-algebraic-cycles-and-cycle-classes.md) and [The Hodge conjecture](08-hodge-conjecture-statement-and-known-cases.md).
 

@@ -859,6 +859,8 @@ theorem disc_slide_keeps_length_rule (p z : ℂ) (hp : ‖p‖ < 1) (hz : ‖z�
 - [Ricci and scalar curvature](07-ricci-and-scalar-curvature.md): how volumes grow compared with these three yardsticks.
 - [Jacobi field](09-jacobi-fields-and-comparison-theorems.md): the rim function $`f`$ as the spread of nearby geodesics, and comparison theorems that measure every space against these three.
 - [Hopf-Rinow](10-hopf-rinow-and-completeness.md): why the disc, though drawn bounded, is complete: its rim is infinitely far away.
+- [Bishop-Gromov](14-bishop-gromov-volume-comparison.md): a lower bound on Ricci curvature caps the volume of every ball.
+- [Cheeger's inequality](15-cheegers-inequality-and-spectral-geometry.md): a low first note forces a thin neck on a curved space.
 
 This card measured each surface near one point; which closed surfaces and spaces can be built by gluing pieces of these three geometries is a global question it leaves open.
 

@@ -1030,6 +1030,8 @@ example : (-1 / (1 + 2 ^ 2) ^ 2 : ℚ) = -1 / 25 := by norm_num
 - [Theorema Egregium](08-theorema-egregium.md): the next card: $`K`$ can be measured from inside the surface, which is why a catenoid bends onto a helicoid keeping $`K`$.
 - [Gauss-Bonnet](10-gauss-bonnet-theorem.md): adds $`K`$ over a surface and ties the total to its edge and its number of holes; on a piece of minimal surface, where $`K \le 0`$, that total is never positive.
 - [Geodesic on a surface](09-geodesics-on-surfaces.md): the shortest paths on a surface, the one-dimensional cousin of least area.
+- [Gauss, Codazzi and Ricci equations](../05-Riemannian%20Geometry/11-second-fundamental-form-and-gauss-codazzi.md): a submanifold's curvature split into inside and outside.
+- [Mean curvature flow](../07-Geometric%20Analysis%20and%20Physics/11-mean-curvature-flow.md): surfaces that shrink to cut their own area fastest.
 
 The question this card leaves open: zero mean curvature finds every candidate film, so what decides which candidates are stable, and how many films can one wire hold?
 

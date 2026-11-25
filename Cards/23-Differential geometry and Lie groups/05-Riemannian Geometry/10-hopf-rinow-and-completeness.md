@@ -903,6 +903,8 @@ end Globe
 - [Riemannian gradient descent](../07-Geometric%20Analysis%20and%20Physics/05-optimisation-on-manifolds.md): steps along geodesics on a curved set, which rely on completeness for every step size.
 - [Frechet mean](../07-Geometric%20Analysis%20and%20Physics/08-frechet-means-and-statistics-on-curved-data.md): the average of points on a curved space, unique when the points sit in a small enough ball, well away from each other's cut loci.
 - [Einstein equations](../07-Geometric%20Analysis%20and%20Physics/02-einstein-equations-in-outline.md): curved spacetime, where geodesics that stop in finite time mark singularities.
+- [Bishop-Gromov](14-bishop-gromov-volume-comparison.md): a lower bound on Ricci curvature caps the volume of every ball.
+- [Lorentzian geometry](../07-Geometric%20Analysis%20and%20Physics/13-lorentzian-geometry-causality-and-singularities.md): light cones, an expanding universe, a spinning black hole, and why singularities are forced.
 
 On a globe the cut locus is a single point, but on a slightly flattened Earth it is a short arc; how does the cut locus change shape as the curvature varies?
 

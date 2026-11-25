@@ -752,7 +752,7 @@ example : (freyCurve 9 12 2).Δ = 3 ^ 12 * 207360000 := by
 - **Other equations solved the same way.** The modular method settled $`x^n + y^n = 2z^n`$ (Darmon and Merel, 1997). It also showed the only perfect powers among the Fibonacci numbers are 0, 1, 8 and 144 (Bugeaud, Mignotte and Siksek, 2006).
 - **The Birch–Swinnerton-Dyer conjecture.** The proved cases, for analytic rank 0 or 1, need the curve's L-function to come from a modular form. Modularity supplies that for every curve over $`\mathbb{Q}`$; see [Birch-Swinnerton-Dyer](06-birch-swinnerton-dyer-and-the-congruent-number-problem.md).
 - **Tables of elliptic curves.** Curves are catalogued by conductor, and modularity means each conductor's curves match the weight-2 newforms of that level. Level 11 is the first with a form, and 11 is the smallest conductor of any curve over $`\mathbb{Q}`$.
-- **The Langlands programme.** Matching Galois representations with modular forms is its first great case. The same lifting method later proved the Sato–Tate law for how the traces $`a_\ell`$ are spread.
+- **The Langlands programme.** Matching Galois representations with modular forms is its first great case ([The Langlands program](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/06-langlands-program-and-geometric-langlands.md)). The same lifting method later proved the Sato–Tate law for how the traces $`a_\ell`$ are spread.
 
 > **Say it back**
 > A supposed Fermat solution builds the Frey curve, whose roots differ by $`a^p`$, $`b^p`$ and $`c^p`$. Its discriminant is $`16(abc)^{2p}`$, it is semistable, and its conductor is $`\mathrm{rad}(abc)`$. Wiles and Taylor proved semistable curves are modular, so the curve would have a weight-2 form. Ribet showed that form's mod-p picture could be moved to level 2. There are no weight-2 forms at level 2, so no solution exists.
@@ -770,6 +770,7 @@ example : (freyCurve 9 12 2).Δ = 3 ^ 12 * 207360000 := by
 - [What curves answer](../../22-Algebraic%20geometry/04-Elliptic%20Curves/10-modularity-and-the-congruent-number-problem.md): what modularity and L-functions say about rank and points.
 - [The abc conjecture](09-abc-conjecture-and-szpiro.md): the same Frey curve, read for how large its discriminant can be against its conductor.
 - [Hecke operators](11-hecke-operators-and-eigenforms.md): averaging a modular form over matrices of determinant n, and why tau is multiplicative.
+- [The Langlands program](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/06-langlands-program-and-geometric-langlands.md): matching Galois representations with automorphic forms, and the 2024 geometric proof.
 
 The proof leaves open how far the modular method reaches: which other equations, over which other fields, can be beaten by a curve that is too clean.
 

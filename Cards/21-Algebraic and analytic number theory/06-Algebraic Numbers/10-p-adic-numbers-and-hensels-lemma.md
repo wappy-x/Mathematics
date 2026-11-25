@@ -834,6 +834,7 @@ See also [Splitting and ramification](08-splitting-and-ramification.md), earlier
 - [Hasse-Minkowski](../09-Local%20Fields%20and%20Class%20Field%20Theory/01-hasse-minkowski-and-the-hilbert-symbol.md): a quadratic equation has a rational solution exactly when it has one in every completion.
 - [Local fields](../09-Local%20Fields%20and%20Class%20Field%20Theory/03-local-fields-and-the-different.md): completing a number field at one prime, and the different that measures ramification.
 - [Adeles and ideles](../09-Local%20Fields%20and%20Class%20Field%20Theory/06-adeles-and-ideles.md): every completion of Q at once, and class field theory in a single group.
+- [The Hilbert-Smith conjecture](../../25-Frontier/04-Geometry%20and%20Combinatorics/14-hilbert-smith-conjecture.md): can the p-adic integers act faithfully on a manifold.
 
 The lemma lifts a root once it exists mod $`p`$, but it leaves open which $`p`$ give a starting root, a question about primes that the splitting laws answer.
 

@@ -1037,6 +1037,7 @@ example : ∑ v, wheel.degree v ≠ wheel.edgeFinset.card := by decide +kernel
 ## Where this goes next
 
 - [Working on a problem](07-how-to-work-on-an-open-problem.md): small cases by machine, a status ledger that uses the audit list, and knowing when a computation has misled you.
+- [Two shape puzzles settled](../04-Geometry%20and%20Combinatorics/13-moving-sofa-and-ruperts-problem.md): Gerver's sofa is the largest, and a solid that cannot pass through a copy of itself.
 
 Left open: whether every machine-checked proof can be turned into an argument that a person can read and understand.
 

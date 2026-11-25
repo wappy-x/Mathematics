@@ -666,6 +666,8 @@ example : 1995 - 1637 = 358 ∧ 2026 - 1995 = 31 := by norm_num
 - [Erdos problems](07-erdos-problems-selected.md): open problems where machine search and machine proof now take part.
 - [Beal's conjecture](05-beal-conjecture.md): Fermat's equation with three different exponents, still open.
 - [The abc conjecture](04-abc-conjecture.md): a bound that would give Fermat's last theorem for all large exponents at once.
+- [Schanuel's conjecture](08-schanuels-conjecture.md): one statement that would settle almost every open question about transcendental numbers.
+- [The Langlands program](../06-Algebra%2C%20Logic%20and%20Computation/06-langlands-program-and-geometric-langlands.md): matching Galois representations with automorphic forms, and the 2024 geometric proof.
 
 The formal proof leaves open whether the modern proofs of the Langlands programme can be checked the same way, and what that will expose.
 

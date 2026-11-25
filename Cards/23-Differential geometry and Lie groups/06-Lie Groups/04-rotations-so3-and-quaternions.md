@@ -885,6 +885,9 @@ example : axisAngleQ ![0, 0, 1] (2 * Real.pi) = -1 ∧ axisAngleQ ![0, 0, 1] (4 
 - [Representation](05-representations-in-outline.md): the two-to-one map from $`SU(2)`$ onto $`SO(3)`$ as the first example of a group acting by matrices.
 - [Group action and homogeneous space](06-homogeneous-spaces-and-group-actions.md): turns moving the camera's viewing direction over the sphere of all directions.
 - [Noether](08-noethers-theorem.md): symmetry under every turn gives conservation of angular momentum.
+- [Lie's theorems](11-lies-theorems-and-covering-groups.md): the Lie algebra decides the group, up to a covering.
+- [Moment maps](12-moment-maps-and-symplectic-reduction.md): Noether's conserved quantities as one map, and reducing a system by its symmetry.
+- [Spinors and the Dirac operator](../07-Geometric%20Analysis%20and%20Physics/12-spinors-dirac-operators-and-the-index-theorem.md): a square root of the Laplacian, and the index theorem in outline.
 
 The question this card leaves open: the sphere $`S^3`$ covers the turns twice, so is there a physical object that can tell a 360° turn from no turn at all?
 

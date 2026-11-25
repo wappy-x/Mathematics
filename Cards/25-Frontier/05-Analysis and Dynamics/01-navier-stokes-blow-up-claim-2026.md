@@ -705,6 +705,7 @@ example : ((1 : ℚ) - 3 * (1 / 3)) / 2 = 0 := by norm_num
 - [Machines that prove](../07-Physics%2C%20Finance%20and%20Machines/02-ai-and-mathematics-2026.md): how to audit an AI-assisted claim, with this one as a case.
 - [The status register](../07-Physics%2C%20Finance%20and%20Machines/05-the-status-register.md): this claim's entry, kept with its date and sources.
 - On this shelf: [Collatz](02-collatz-conjecture.md), [The Jacobian conjecture](04-jacobian-conjecture.md), [Two algebra questions](05-sofic-groups-and-kothe.md) and [Percolation](06-dying-percolation-and-critical-phenomena.md), each another open question about equations and iterations.
+- [Hilbert's sixth problem](07-hilberts-sixth-problem-boltzmann-and-fluids.md): fluid equations derived from colliding hard spheres.
 
 The question this card leaves open is the one the claim does not touch: does a smooth fluid with no outside force stay smooth forever in three dimensions?
 

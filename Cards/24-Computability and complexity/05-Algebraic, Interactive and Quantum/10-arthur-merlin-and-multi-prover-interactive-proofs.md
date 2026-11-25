@@ -984,6 +984,7 @@ example : 2 ^ (2 ^ (1 + 1)) = 16 ∧ 2 ^ (2 ^ (4 + 1)) = 4294967296 := by norm_n
 - [Quantum limits](11-quantum-lower-bounds-and-qma.md): QMA, Merlin-Arthur with a quantum proof and a quantum verifier.
 - [Graph isomorphism](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/04-graph-isomorphism.md): where sameness of networks stands now, including Babai's quasipolynomial algorithm.
 - [The unique games conjecture](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/03-unique-games-conjecture.md): a conjecture about two-prover games with one round, and what it would mean for approximation.
+- [MIP* = RE](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/09-mip-star-equals-re-and-connes-embedding.md): entangled provers can certify any halting question, and Connes' embedding problem falls.
 
 The question this card leaves open: is graph non-isomorphism in NP, with a short written certificate of difference instead of a conversation?
 

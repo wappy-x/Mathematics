@@ -836,6 +836,7 @@ example (a b : ℝ) : crossProduct ![0, 0, a] ![0, 0, b] = ![0, 0, 0] := by
 - [Rotation group](04-rotations-so3-and-quaternions.md): turns in detail, with quaternions, whose product handles the bracket exactly with four numbers.
 - [Representation](05-representations-in-outline.md): because the bracket fixes the product near the identity, a group can be studied through matrices that keep its bracket.
 - [Principal bundle and connection](10-principal-bundles-and-connections-in-outline.md): a connection's curvature has a bracket part, the same leftover from a small loop, now taken around a loop in space.
+- [Lie's theorems](11-lies-theorems-and-covering-groups.md): the Lie algebra decides the group, up to a covering.
 
 The question this card leaves open: the series fixes the group near the identity, so how much of a whole Lie group does its bracket determine?
 

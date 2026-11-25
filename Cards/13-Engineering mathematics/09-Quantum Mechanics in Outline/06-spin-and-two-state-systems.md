@@ -831,6 +831,9 @@ example (nx ny nz : ℝ) :
 - [Perturbation theory](10-time-independent-perturbation-theory.md): nudge the energy levels without solving again.
 - [Two particles](11-two-particle-states-and-entanglement.md): product states, the singlet, and the CHSH bound.
 - [Quantum limits](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/11-quantum-lower-bounds-and-qma.md): why Grover cannot be beaten, and QMA, the quantum NP.
+- [Lie's theorems](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/11-lies-theorems-and-covering-groups.md): the Lie algebra decides the group, up to a covering.
+- [Spinors and the Dirac operator](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/12-spinors-dirac-operators-and-the-index-theorem.md): a square root of the Laplacian, and the index theorem in outline.
+- [Representations of sl(2)](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/01-representations-of-sl2.md): every one is a ladder of weights that steps by two.
 
 What this card leaves open is two spins together: a pair of spin one-half particles needs four complex numbers, not two, and some of its states cannot be split into one column per particle.
 

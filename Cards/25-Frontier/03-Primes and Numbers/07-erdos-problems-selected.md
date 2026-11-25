@@ -1126,6 +1126,9 @@ example : ({{0, 1}, {2, 3}, {4, 5}} : Finset (Finset (Fin 8))) ⊆ ring8 ∧
 - [Sunflowers and union-closed families](../04-Geometry%20and%20Combinatorics/05-sunflower-and-union-closed-conjectures.md): petals, core and the spread-family method.
 - [Machines that prove](../07-Physics%2C%20Finance%20and%20Machines/02-ai-and-mathematics-2026.md): how to audit a machine-assisted result like the unit-distance counterexample.
 - [The status register](../07-Physics%2C%20Finance%20and%20Machines/05-the-status-register.md): the wing's ledger, where these three status lines are kept.
+- [Schanuel's conjecture](08-schanuels-conjecture.md): one statement that would settle almost every open question about transcendental numbers.
+- [The sum-product problem](../04-Geometry%20and%20Combinatorics/07-sum-product-problem.md): false over the reals since May 2026, still open over the integers.
+- [Diagonal Ramsey numbers](../04-Geometry%20and%20Combinatorics/10-diagonal-ramsey-numbers.md): R(k, k) between root 2 to the k and 4 to the k, and the first exponential improvement in 88 years.
 
 Other cards on this shelf: [Twin primes](01-twin-primes-and-bounded-gaps.md), [Goldbach](02-goldbach-conjecture.md), [Landau's four problems](03-landau-problems.md), [The abc conjecture](04-abc-conjecture.md), [Beal's conjecture](05-beal-conjecture.md) and [Fermat's last theorem, proved in 1995 and reported formalised in 2026](06-fermats-last-theorem-formalised.md).
 
