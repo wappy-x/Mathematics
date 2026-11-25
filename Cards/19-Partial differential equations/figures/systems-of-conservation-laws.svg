@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 340" width="480" height="340" font-family="Helvetica, Arial, sans-serif" font-size="12">
+  <title>Dam break, place against time, to scale: a fan of characteristics runs upstream from the gate, the dye front moves downstream at 1.306 m/s and the bore at 4.183 m/s</title>
+  <rect x="0" y="0" width="480" height="340" fill="#ffffff"/>
+  <!-- to scale: 6.333 px per m across (x = -30 m at 50 px, 0 at 240 px, +30 m at 430 px), 44 px per s up (t = 0 at 270 px, 5 s at 50 px) -->
+  <g stroke="#1d1d1d" stroke-width="1.2" fill="none">
+    <line x1="50" y1="270" x2="430" y2="270"/>
+    <line x1="50" y1="270" x2="50" y2="50"/>
+    <line x1="50" y1="270" x2="50" y2="275"/><line x1="113.3" y1="270" x2="113.3" y2="275"/><line x1="176.7" y1="270" x2="176.7" y2="275"/><line x1="240" y1="270" x2="240" y2="275"/><line x1="303.3" y1="270" x2="303.3" y2="275"/><line x1="366.7" y1="270" x2="366.7" y2="275"/><line x1="430" y1="270" x2="430" y2="275"/>
+    <line x1="45" y1="226" x2="50" y2="226"/><line x1="45" y1="182" x2="50" y2="182"/><line x1="45" y1="138" x2="50" y2="138"/><line x1="45" y1="94" x2="50" y2="94"/><line x1="45" y1="50" x2="50" y2="50"/>
+  </g>
+  <g fill="#1d1d1d" text-anchor="middle">
+    <text x="50" y="290">−30</text><text x="113.3" y="290">−20</text><text x="176.7" y="290">−10</text><text x="240" y="290">0</text><text x="303.3" y="290">10</text><text x="366.7" y="290">20</text><text x="430" y="290">30</text>
+    <text x="240" y="310">place x (m), the gate at 0</text>
+  </g>
+  <g fill="#1d1d1d" text-anchor="end">
+    <text x="41" y="274">0</text><text x="41" y="230">1</text><text x="41" y="186">2</text><text x="41" y="142">3</text><text x="41" y="98">4</text><text x="41" y="54">5</text>
+  </g>
+  <text x="16" y="160" fill="#1d1d1d" text-anchor="middle" transform="rotate(-90 16 160)">time t (s)</text>
+  <line x1="50" y1="50" x2="430" y2="50" stroke="#bbbbbb" stroke-width="1"/>
+  <line x1="240" y1="270" x2="99.7" y2="50.0" stroke="#1d1d1d" stroke-width="2"/>
+  <line x1="240" y1="270" x2="115.2" y2="50.0" stroke="#1d1d1d" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <line x1="240" y1="270" x2="130.7" y2="50.0" stroke="#1d1d1d" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <line x1="240" y1="270" x2="146.3" y2="50.0" stroke="#1d1d1d" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <line x1="240" y1="270" x2="161.8" y2="50.0" stroke="#1d1d1d" stroke-width="2"/>
+  <line x1="240" y1="270" x2="281.4" y2="50.0" stroke="#2a6f97" stroke-width="2.2" stroke-dasharray="2 4"/>
+  <line x1="240" y1="270" x2="372.5" y2="50.0" stroke="#b23a48" stroke-width="3.5"/>
+  <g fill="#1d1d1d" font-size="11" text-anchor="middle">
+    <text x="99.7" y="42">−22.15</text><text x="161.8" y="42">−12.35</text><text x="281.4" y="42">6.53</text><text x="372.5" y="42">20.92</text>
+    <text x="80" y="160">2.000 m</text><text x="80" y="174">at rest</text>
+    <text x="150" y="110">fan</text>
+    <text x="232" y="110">1.454 m</text><text x="232" y="124">1.306 m/s</text>
+    <text x="272" y="78" text-anchor="end">dye front</text>
+    <text x="345" y="112" text-anchor="start">bore</text>
+    <text x="410" y="230">1.000 m</text><text x="410" y="244">at rest</text>
+  </g>
+  <text x="240" y="330" fill="#1d1d1d" font-size="11" text-anchor="middle">numbers along the top: where each wave is at 5 s, in m</text>
+</svg>
