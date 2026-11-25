@@ -33,7 +33,7 @@ A **field** is a set of numbers closed under adding, subtracting, multiplying an
 One construction step can only do this:
 
 ```math
-\text{new number} = p + q\sqrt{k}, \qquad p,\ q,\ k \text{ in } F
+\text{new number} = p + q\sqrt{k}, \qquad p,\ q,\ k \text{ in } F,\ \ k \ge 0
 ```
 
 **Read it aloud:** each step makes an old number plus an old number times the square root of an old number.
@@ -51,12 +51,12 @@ A,\ B = \frac{-1 \pm \sqrt{17}}{2}, \qquad A_1 = \frac{A + \sqrt{A^2 + 4}}{2}, \
 | $`n`$ | number of equal sides | 17, and 7 | corners closer together |
 | $`c`$ | cosine of 360°/n, on a unit circle | 0.932472 for 17; 0.623490 for 7 | corner nearer the start |
 | $`F`$ | the field of numbers built so far | fractions, then with √17 added | more in reach |
-| $`p`$, $`q`$, $`k`$ | numbers already in $`F`$; $`k`$ goes under the new root | $`k`$ = 17 at the first step | — |
+| $`p`$, $`q`$, $`k`$ | numbers already in $`F`$; $`k \ge 0`$ goes under the new root | $`k`$ = 17 at the first step | — |
 | $`A`$, $`B`$ | each twice a sum of four cosines | 1.561553 and −2.561553 | — |
 | $`A_1`$, $`B_1`$ | each twice a sum of two cosines | 2.049481 and 0.344151 | — |
 | $`x`$ | the unknown in a cubic | cos 20°, or the cube root of 2 | — |
 
-The full test, from Gauss and Wantzel: an n-gon can be built exactly when n is a power of 2 times distinct **Fermat primes**, primes of the form 2^(2^j) + 1 for a whole number j, such as 3, 5 and 17. From 3 to 20 that allows 3, 4, 5, 6, 8, 10, 12, 15, 16, 17 and 20, and rules out 7, 9, 11, 13, 14, 18 and 19.
+The full test, from Gauss and Wantzel: a regular n-gon (with $`n \ge 3`$) can be built exactly when n is a power of 2 times distinct **Fermat primes**, primes of the form 2^(2^j) + 1 for a whole number j, such as 3, 5 and 17. From 3 to 20 that allows 3, 4, 5, 6, 8, 10, 12, 15, 16, 17 and 20, and rules out 7, 9, 11, 13, 14, 18 and 19.
 
 ### When it holds
 
@@ -74,7 +74,7 @@ Put the page on a grid, known points at coordinates in $`F`$; lines and circles 
 
 ### Step 1: the tools reach every field operation and every square root
 
-Adding is laying lengths end to end. Multiplying uses parallel lines ([Angles](../01-Angles%2C%20Triangles%20and%20Congruence/01-angles-and-parallel-lines.md)): mark 1 and b on one arm of an angle and a on the other, join 1 to a, and the parallel through b meets the second arm at ab, by similar triangles ([Similar triangles](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)).
+Adding is laying lengths end to end; subtracting marks one length back along the other. Multiplying uses parallel lines ([Angles](../01-Angles%2C%20Triangles%20and%20Congruence/01-angles-and-parallel-lines.md)): mark 1 and b on one arm of an angle and a on the other, join 1 to a, and the parallel through b meets the second arm at ab, by similar triangles ([Similar triangles](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)). Dividing swaps 1 and b on the first arm, so the parallel through 1 meets the second arm at a/b.
 
 For a square root, lay 1 and 17 end to end, draw the half-circle on the whole 18, and raise a perpendicular at the join. Its top sees the diameter at a right angle ([Angles at a circle](../02-Circles%20and%20Solids/03-angles-in-a-circle.md)), so the two small triangles are similar and the height h has h × h = 1 × 17.
 
@@ -86,7 +86,7 @@ Halving: circles about each end of a segment, through the other end, cross twice
 
 ### Step 2: the 17-gon splits into halves, four times
 
-Write c1 to c8 for the cosines of 1, 2, …, 8 times 360°/17. For any odd n, the cosines of the first (n − 1)/2 multiples of 360°/n add to −1/2.
+Write c1 to c8 for the cosines of 1, 2, …, 8 times 360°/17. For any odd $`n \ge 3`$, the cosines of the first (n − 1)/2 multiples of 360°/n add to −1/2.
 
 <details>
 <summary>The algebra behind this, if you want it</summary>
@@ -124,7 +124,7 @@ Then $`p - q\sqrt{k}`$ gives X − Y√k = 0: a second root. A cubic's three roo
 - **Doubling the cube.** The side x of a cube of volume 2 solves x^3 − 2 = 0; ±1 and ±2 fail. The side, 1.259921, is out of reach.
 - **Squaring the circle.** A unit circle has area π, so the square needs side √π = 1.772454. Lindemann proved in 1882 that π solves no polynomial with fraction coefficients at all.
 
-Every built length solves such a polynomial, found by squaring away its roots one at a time, so √π cannot be built. The route by field degrees, which proves the full n-gon test, is Straightedge and compass.
+Every built length solves such a polynomial, found by squaring away its roots one at a time, so √π cannot be built. The route by field degrees, which proves the full n-gon test, is [Straightedge and compass](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/10-constructibility-and-the-classical-problems.md).
 
 ---
 
@@ -1333,10 +1333,11 @@ example : 17 - 1 = 2 ^ 4 ∧ 7 - 1 = 2 * 3 := by
 
 ## Where this goes next
 
+- [Symmetry](04-symmetry-and-tilings.md): next on this shelf, turning to the symmetries of regular polygons and repeating patterns.
 - [Straightedge and compass](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/10-constructibility-and-the-classical-problems.md): field degrees, the full n-gon test, and π out of reach.
 - [Hilbert's axioms](06-hilberts-axioms.md): the betweenness and continuity rules Euclid used without writing down.
 
-The cubic argument settles 7 but not why Fermat primes always work; field degrees answer that next.
+The cubic argument settles 7 but not why Fermat primes always work; [Straightedge and compass](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/10-constructibility-and-the-classical-problems.md) answers that with field degrees, while the next card on this shelf, [Symmetry](04-symmetry-and-tilings.md), turns to the symmetries of polygons and tilings.
 
 ---
 

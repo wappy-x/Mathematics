@@ -36,10 +36,10 @@ D_6 = \{\,R_{60k},\; F_{30k} \;:\; k = 0, 1, \dots, 5\,\}, \qquad F_\psi F_\varp
 
 **Read it aloud:** the snowflake has six turns by multiples of 60° and six flips in lines 30° apart; two flips make a turn by twice the angle between their mirrors.
 
-For a repeating pattern one more line decides which turns can occur. The **trace** of a matrix, written tr, is the sum of its two diagonal entries:
+For a repeating pattern one more line decides which turns can occur, for a positive whole number $`n \ge 1`$. The **trace** of a matrix, written tr, is the sum of its two diagonal entries:
 
 ```math
-\mathrm{tr}\, R_{360°/n} = 2\cos(360°/n) \in \{-2, -1, 0, 1, 2\} \quad\Longrightarrow\quad n \in \{1, 2, 3, 4, 6\}
+\mathrm{tr}\, R_{360°/n} = 2\cos(360°/n) \in \{-2, -1, 0, 1, 2\} \quad\Longrightarrow\quad n \in \{1, 2, 3, 4, 6\} \qquad (n \text{ a whole number } \ge 1)
 ```
 
 **Read it aloud:** on a wall, twice the cosine of the smallest turn is whole, so that turn is a full, half, third, quarter or sixth of a revolution.
@@ -104,7 +104,7 @@ H with a glide makes a slide shorter than the repeat, so they exclude each other
 
 ### Step 4: a wall turns only by a half, third, quarter or sixth
 
-A wallpaper's slides are the whole-number combinations of two shortest slides, **a** and **b**: a **lattice**, a grid that may lean. A symmetry turn maps the lattice to itself, so it sends **a** and **b** to whole-number combinations of **a** and **b**. On those axes its matrix has whole entries, and so does its trace.
+A wallpaper's slides are the whole-number combinations of a shortest nonzero slide **a** and a shortest slide **b** not along **a**: a **lattice**, a grid that may lean. A symmetry turn maps the lattice to itself, so it sends **a** and **b** to whole-number combinations of **a** and **b**. On those axes its matrix has whole entries, and so does its trace.
 
 The trace does not depend on the axes. On the usual axes it is 2 cos θ, so 2 cos θ is a whole number from −2 to 2: cos θ is −1, −½, 0, ½ or 1, turns of 180°, 120°, 90°, 60° or 360°. A five-fold turn has 2 cos 72° = 0.6180: no wallpaper has it.
 
@@ -119,8 +119,8 @@ New axes turn a matrix `M` into `P^-1 M P`, where `P` holds the new axes as colu
 
 Fold a wallpaper so that points a symmetry swaps become one point. What remains is a surface with marks, an **orbifold**, each mark with a cost:
 
-- a turn centre of fold n off every mirror, written n: (n − 1)/n;
-- a mirror line, written `*`: 1; a turn centre of fold n where mirrors cross, written n after the `*`: (n − 1)/(2n);
+- a turn centre of fold $`n \ge 2`$ off every mirror, written n: (n − 1)/n;
+- a mirror line, written `*`: 1; a turn centre of fold $`n \ge 2`$ where mirrors cross, written n after the `*`: (n − 1)/(2n);
 - a glide with no mirror, written `×`: 1; a handle, the hole of a doughnut, written `∘`: 2.
 
 Conway's **magic theorem**: a set of marks describes a flat wall exactly when the costs total 2. Flakes on a honeycomb grid make `*632`: 1 + 5/12 + 1/3 + 1/4 = 2. Every set costing exactly 2, listed, gives 17, using only folds 2, 3, 4 and 6, as Step 4 demands.
@@ -161,7 +161,12 @@ The classical route counts lattice shapes and the turn-and-flip groups each carr
 
 ## Code, from first principles, and it actually runs
 
-Only math's cos, sin, atan2 and degree conversions are imported. Four counts, two roads each: 12 moves by multiplying $`R_{60}`$ and $`F_0`$, and by 46656 tip relabellings; 7 strips from all 4096 strips two cells tall and six long, and from Step 3's rules; the turns by whole matrices of determinant 1, and by the trace; 17 walls by Conway's costs, their folds checked against the matrices. In the output `o` is `∘`, `x` is `×`.
+Only math's cos, sin, atan2 and degree conversions are imported. Four counts, two roads each (in the output `o` is `∘`, `x` is `×`):
+
+- **12 moves:** by multiplying $`R_{60}`$ and $`F_0`$, and by 46656 tip relabellings.
+- **7 strips:** from all 4096 strips two cells tall and six long, and from Step 3's rules.
+- **Allowed turns:** by whole matrices of determinant 1, and by the trace.
+- **17 walls:** by Conway's costs, their folds checked against the matrices.
 
 ### Python
 
@@ -354,7 +359,7 @@ ALL CHECKS PASS
 
 Lean proves the turn rule for every lattice, the two-flip rule for every pair of mirrors, and the snowflake's count of 12.
 
-- A turn by 360°/n can map a lattice to itself exactly when n is 1, 2, 3, 4 or 6. Each of those five turns does occur.
+- For any whole number $`n \ge 1`$, a turn by 360°/n can map a lattice to itself exactly when n is 1, 2, 3, 4 or 6. Each of those five turns does occur.
 - A flip in the mirror at φ, then a flip in the mirror at ψ, is the turn by 2(ψ − φ): $`F_\psi F_\varphi = R_{2(\psi - \varphi)}`$.
 - The distance-keeping moves that fix the centre and land the six tips on themselves form a group of exactly 12 moves.
 - The hand numbers come out exactly: 6 × 2 = 12, and the trace of $`R_{60}`$ is 1.
@@ -737,11 +742,12 @@ example :
 
 ## Where this goes next
 
+- [Elliptic curves](05-elliptic-curves-and-point-addition.md): next on this shelf, building another geometric group by adding points on a cubic curve.
 - [Orientability](../../17-Topology/03-Surfaces%20and%20Manifolds/03-orientability-mobius-strip-and-klein-bottle.md): the folded wall `××` is a one-sided Klein bottle.
 - [Modular forms](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/07-modular-forms-in-outline.md): functions unchanged by symmetries of the saddle-shaped plane.
 - [Sphere, torus and projective plane](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/02-example-manifolds-sphere-torus-and-projective-space.md): the torus a plain repeating wall, `∘`, folds into.
 
-A wall folded by its symmetries is a surface, a torus or a Klein bottle; which surfaces exist, and which have one side, the orientability card answers.
+A wall folded by its symmetries is a surface, a torus or a Klein bottle; which surfaces exist, and which have one side, [Orientability](../../17-Topology/03-Surfaces%20and%20Manifolds/03-orientability-mobius-strip-and-klein-bottle.md) answers, while the next card on this shelf, [Elliptic curves](05-elliptic-curves-and-point-addition.md), turns to another geometric group.
 
 ---
 

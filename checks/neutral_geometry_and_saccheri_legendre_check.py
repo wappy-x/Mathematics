@@ -20,7 +20,7 @@ print(f"suppose angles 60, 60, 61 sum to {s:g}: halve the 60 deg angle {n} times
 print("smallest angle after each halving: " + " -> ".join(steps))
 print(f"other two then sum to at least {s - small} > 180: impossible")
 print(f"stop at 5 halvings: smallest {60 / 32:g}, others {s - 60 / 32:g}, no clash")
-assert n == math.ceil(math.log2(60 / (s - 180))) and small == 60 / 2 ** n   # count and value match logs
+assert n == math.floor(math.log2(60 / (s - 180))) + 1 and small == 60 / 2 ** n   # count and value match logs
 tri, sums, halved = [pt(0, 0), pt(0.3, 0), pt(0.3, math.pi / 3)], [], []
 for step in range(7):                               # road 2: a real hyperbolic triangle
     A, B, C = tri

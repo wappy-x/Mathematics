@@ -10,7 +10,9 @@ Suppose someone claims a triangle with angles 60°, 60° and 61°, adding to 181
 
 Yes. In about 1794 Adrien-Marie Legendre found a move that rebuilds a triangle with the same angle sum and one angle at most half as big. Six moves take the 60° corner down to at most 0.9375°. The other two corners must then hold at least 180.0625°. But a theorem that never uses parallels says two angles of a triangle add to less than 180°. So the triangle cannot exist.
 
-The second example is a four-sided figure that Girolamo Saccheri studied in 1733. Take a base 4 long, stand a leg 3 long at each end at right angles, and join the tops. Without parallels the two top corners are still equal and at most 90°. In Euclid's flat plane they are exactly 90°. In the hyperbolic plane (the geometry on [Three geometries](02-spherical-and-hyperbolic-geometry.md) where a point off a line has infinitely many parallels) they are 5.91° each, with lengths in its natural unit.
+The second example is a four-sided figure that Girolamo Saccheri studied in 1733. Take a base 4 long, stand a leg 3 long at each end at right angles, and join the tops. Without parallels the two top corners are still equal and at most 90°.
+
+In Euclid's flat plane they are exactly 90°. In the hyperbolic plane (the geometry on [Three geometries](02-spherical-and-hyperbolic-geometry.md) where a point off a line has infinitely many parallels) they are 5.91° each, with lengths in its natural unit.
 
 The geometry built from [Hilbert's axioms](06-hilberts-axioms.md) with the parallel axiom left out is **neutral geometry**, also called absolute geometry. Every theorem proved in it holds in both the flat and the hyperbolic plane.
 
@@ -44,7 +46,7 @@ This is the **Saccheri–Legendre theorem**. If the angle sum is $`S = 180^\circ
 
 **Read it aloud:** halve the angle until it is smaller than the claimed excess. For 60° and 1°, six halvings give 0.9375°.
 
-For the quadrilateral, neutral geometry gives top corners $`\theta \le 90^\circ`$. The hyperbolic plane, measured in its natural unit (curvature −1), pins $`\theta`$ down exactly:
+For the quadrilateral, neutral geometry gives top corners $`\theta \le 90^\circ`$. The hyperbolic plane, measured in its natural unit (curvature −1), pins $`\theta`$ down exactly for any leg $`a > 0`$ and base $`b > 0`$:
 
 ```math
 \tan\theta = \frac{1}{\sinh a \, \tanh(b/2)}
@@ -68,7 +70,7 @@ For the quadrilateral, neutral geometry gives top corners $`\theta \le 90^\circ`
 - **Every Hilbert axiom except the parallel one.** Without the congruence axioms the copied triangle in Legendre's move need not match the original.
 - **Archimedes' axiom.** It says enough copies of a small length exceed any long one, and in angle form it lets halving beat any excess. Max Dehn built a geometry without it in 1900 whose triangles add to more than 180°.
 - **Lines that never close and two points on one line only.** A sphere breaks this. Its octant triangle, one-eighth of the globe, has three right angles, 270°, and two of its angles already make 180°.
-- **A triangle, not a curved patch.** The sides must be lines of the geometry; curved sides can enclose any angles.
+- **A genuine triangle, not a curved patch.** The three corners cannot lie on one line, and the sides must be lines of the geometry; curved sides can enclose any angles.
 
 ---
 
@@ -82,7 +84,11 @@ Repeat Legendre's move until one corner is tiny. Then "two angles stay under 180
 
 This is Euclid I.16, the **exterior angle theorem**: extend BC past C, and the outside angle at C beats each of A and B.
 
-Mark M, the midpoint of AC. Extend BM past M to E, with ME = BM. Triangles AMB and CME match side-angle-side (the crossing angles at M are equal), so angle MCE equals A. Point E lies inside the outside angle at C, by plane separation from [Hilbert's axioms](06-hilberts-axioms.md): M is between B and E, so E is across line AC from B, like the extension past C; and ray BM meets line BC only at B, so E is on A's side of it. So that outside angle beats A. On a sphere this fails, as great circles BM and BC meet twice: in the octant triangle E is the point opposite B, and the outside angle at C only equals A.
+Mark M, the midpoint of AC. Extend BM past M to E, with ME = BM. Triangles AMB and CME match side-angle-side (the crossing angles at M are equal), so angle MCE equals A.
+
+Point E lies inside the outside angle at C, by plane separation from [Hilbert's axioms](06-hilberts-axioms.md): M is between B and E, so E is across line AC from B, like the extension past C; and ray BM meets line BC only at B, so E is on A's side of it. So that outside angle beats A.
+
+On a sphere this fails, as great circles BM and BC meet twice: in the octant triangle E is the point opposite B, and the outside angle at C only equals A.
 
 The outside angle at C is 180° − C, so 180° − C > A, which says A + C < 180°. No step used parallels.
 
@@ -195,7 +201,7 @@ print(f"suppose angles 60, 60, 61 sum to {s:g}: halve the 60 deg angle {n} times
 print("smallest angle after each halving: " + " -> ".join(steps))
 print(f"other two then sum to at least {s - small} > 180: impossible")
 print(f"stop at 5 halvings: smallest {60 / 32:g}, others {s - 60 / 32:g}, no clash")
-assert n == math.ceil(math.log2(60 / (s - 180))) and small == 60 / 2 ** n   # count and value match logs
+assert n == math.floor(math.log2(60 / (s - 180))) + 1 and small == 60 / 2 ** n   # count and value match logs
 tri, sums, halved = [pt(0, 0), pt(0.3, 0), pt(0.3, math.pi / 3)], [], []
 for step in range(7):                               # road 2: a real hyperbolic triangle
     A, B, C = tri
@@ -235,7 +241,7 @@ print(f"figure, disc radius 150 at (170, 170): A {P(A)}, B {P(B)}, C {P(C)}, D {
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-11-23 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 suppose angles 60, 60, 61 sum to 181: halve the 60 deg angle 6 times
@@ -282,7 +288,7 @@ fn main() {
     println!("smallest angle after each halving: {}", steps.join(" -> "));
     println!("other two then sum to at least {} > 180: impossible", s - small);
     println!("stop at 5 halvings: smallest {}, others {}, no clash", 60.0 / 32.0, s - 60.0 / 32.0);
-    assert!(n == (60.0 / (s - 180.0)).log2().ceil() as i32 && small == 60.0 / 2f64.powi(n)); // count and value match logs
+    assert!(n == (60.0 / (s - 180.0)).log2().floor() as i32 + 1 && small == 60.0 / 2f64.powi(n)); // count and value match logs
     let mut tri = [pt(0.0, 0.0), pt(0.3, 0.0), pt(0.3, std::f64::consts::PI / 3.0)];
     let (mut sums, mut halved) = (vec![], vec![]);
     for _ in 0..7 {                                               // road 2: a real hyperbolic triangle
@@ -332,7 +338,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-11-23 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 suppose angles 60, 60, 61 sum to 181: halve the 60 deg angle 6 times
@@ -382,8 +388,10 @@ Archimedes' axiom. The flat (Euclidean) case is stated with Mathlib's own
 
 open EuclideanGeometry
 
-/-- Helper: halving beats any positive excess (same as `exists_halving_lt_excess`). -/
-theorem exists_halving_lt_excess_aux (a p : ℝ) (hp : 0 < p) :
+/-- **Halving beats any excess (Archimedes' axiom, Step 3).** However large an
+angle `a` and however small a positive excess `p`, some number `n` of halvings
+brings `a / 2 ^ n` below `p`. -/
+theorem exists_halving_lt_excess (a p : ℝ) (hp : 0 < p) :
     ∃ n : ℕ, a / 2 ^ n < p := by
   obtain ⟨n, hn⟩ := exists_nat_gt (a / p)
   refine ⟨n, ?_⟩
@@ -392,8 +400,6 @@ theorem exists_halving_lt_excess_aux (a p : ℝ) (hp : 0 < p) :
   rw [div_lt_iff₀ h2]
   rw [div_lt_iff₀ hp] at hn
   nlinarith
-
-#print axioms exists_halving_lt_excess_aux
 
 /-- **Saccheri-Legendre, the card's argument.** Suppose that in every triangle
 the two corners other than `A` add to less than 180 degrees (the exterior angle
@@ -419,23 +425,10 @@ theorem angle_sum_le_180_of_legendre_move {T : Type*} (A B C : T → ℝ)
   by_contra hgt
   rw [not_le] at hgt
   have hp : 0 < A t + B t + C t - 180 := by linarith
-  obtain ⟨n, hn⟩ := exists_halving_lt_excess_aux (A t) _ hp
+  obtain ⟨n, hn⟩ := exists_halving_lt_excess (A t) _ hp
   obtain ⟨t', hs, ha⟩ := iter n
   have := two_angles_lt t'
   linarith
-
-/-- **Halving beats any excess (Archimedes' axiom, Step 3).** However large an
-angle `a` and however small a positive excess `p`, some number `n` of halvings
-brings `a / 2 ^ n` below `p`. -/
-theorem exists_halving_lt_excess (a p : ℝ) (hp : 0 < p) :
-    ∃ n : ℕ, a / 2 ^ n < p := by
-  obtain ⟨n, hn⟩ := exists_nat_gt (a / p)
-  refine ⟨n, ?_⟩
-  have h2 : (0 : ℝ) < 2 ^ n := by positivity
-  have hle : (n : ℝ) < 2 ^ n := by exact_mod_cast Nat.lt_two_pow_self
-  rw [div_lt_iff₀ h2]
-  rw [div_lt_iff₀ hp] at hn
-  nlinarith
 
 /-- **The flat case.** In Euclid's plane (any real inner product space), a
 triangle's angles add to at most a half-turn, `π` radians, as neutral geometry
@@ -468,10 +461,9 @@ example : (361 / 2 : ℚ) - 60 / 2 ^ 7 = 180 + 1 / 32 := by norm_num
 #print axioms euclidean_angle_sum_le_pi
 ```
 
-**Checked 2026-11-23 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
-'exists_halving_lt_excess_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
 'angle_sum_le_180_of_legendre_move' depends on axioms: [propext, Classical.choice, Quot.sound]
 'exists_halving_lt_excess' depends on axioms: [propext, Classical.choice, Quot.sound]
 'euclidean_angle_sum_le_pi' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -512,10 +504,12 @@ example : (361 / 2 : ℚ) - 60 / 2 ^ 7 = 180 + 1 / 32 := by norm_num
 
 ## Where this goes next
 
-- [Three maps of one hyperbolic plane](09-hyperbolic-plane-models.md): the disc and the hyperboloid used by the code, and how they match.
+- [Inversion in a circle](08-inversion-in-a-circle.md): the geometric tool the next cards use to map between hyperbolic models.
+- [Three maps of one hyperbolic plane](09-hyperbolic-plane-models.md): the Poincaré disc drawn above, alongside the half-plane and Klein disc, and how they match.
 - [Hyperbolic trigonometry](10-hyperbolic-trigonometry.md): the hyperbolic law of cosines used in the code's check.
+- [Sphere, plane and hyperbolic space](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/05-model-spaces-of-constant-curvature.md): proves why a hyperbolic triangle's shortfall below 180° equals its area.
 
-Neutral geometry says the angle sum is at most 180°, not how far short it falls; that the shortfall equals the triangle's area is stated on Hyperbolic trigonometry and proved in wing 23.
+Neutral geometry says the angle sum is at most 180°, not how far short it falls. [Inversion in a circle](08-inversion-in-a-circle.md) next builds the tool used to map between hyperbolic models, while [Sphere, plane and hyperbolic space](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/05-model-spaces-of-constant-curvature.md) proves why the shortfall equals the triangle's area.
 
 ---
 

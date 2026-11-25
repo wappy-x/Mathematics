@@ -63,7 +63,7 @@ For $`p = 1/3`$: i × (4/3)/(2/3) = $`2i`$. For $`r = 1/3`$: (2/3)/(10/9) = 0.6.
 
 ### When it holds
 
-- **Points strictly above the edge.** The real line is the rim, infinitely far away; at $`y = 0`$ the formula divides by zero.
+- **Points strictly inside each model.** Half-plane: $`y > 0`$ ($`y = 0`$ divides by zero). Discs: $`\lvert p\rvert < 1`$, $`0 \le r < 1`$, $`0 \le s < 1`$ (the rim is infinitely far, $`p = 1`$ divides by zero, and $`s > 1`$ breaks $`\sqrt{1 - s^2}`$).
 - **Each ruler on its own map.** Klein's 0.6 in the disc's formula ln((1 + r)/(1 − r)) gives ln 4 = 1.386294, double the truth.
 - **Angles only in conformal models.** A **conformal** model keeps angles: the Poincaré disc and the half-plane are, the Klein disc is not.
 - **One scale.** All rulers match the disc ruler 2/(1 − r²) of [Three geometries](02-spherical-and-hyperbolic-geometry.md). Halve a ruler and every distance halves.
@@ -94,7 +94,7 @@ and the last part points straight up. Stretch over height gives 2/(1 − |p|²),
 
 ### Step 3: distance straight up
 
-From $`i`$ to $`2i`$, each thin slice counts its rise over its height. The slices add to ln 2 − ln 1 = ln 2 ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)). Sideways travel adds length and no height, so every other path is longer. From height $`a`$ to height $`b`$ the distance is ln(b/a).
+From $`i`$ to $`2i`$, each thin slice counts its rise over its height. The slices add to ln 2 − ln 1 = ln 2 ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)). Sideways travel adds length and no height, so every other path is longer. From height $`a`$ to $`b`$ ($`0 < a \le b`$) the distance is $`\ln(b/a)`$; in either order, $`\lvert\ln(b/a)\rvert`$.
 
 The formula agrees: cosh(ln(b/a)) = (b/a + a/b)/2 = (a² + b²)/(2ab) = 1 + (b − a)²/(2ab).
 
@@ -121,7 +121,7 @@ For a short piece, length and height both shrink by $`|z|^2`$, so the ruler's co
 
 ### Step 5: the Klein disc draws lines straight
 
-Turn the disc so a disc line's circle has its centre on the x-axis, at distance $`c`$ from O, with radius $`k`$. Meeting the rim square means c² = 1 + k² ([Three geometries](02-spherical-and-hyperbolic-geometry.md), Step 4).
+Diameters stay straight because the Klein map only slides each point along its radius. For any other disc line, turn the disc so its circle has its centre on the x-axis, at distance $`c`$ from O, with radius $`k`$. Meeting the rim square means c² = 1 + k² ([Three geometries](02-spherical-and-hyperbolic-geometry.md), Step 4).
 
 A point (x, y) at drawn distance $`r`$ lies on the circle when (x − c)² + y² = k², that is r² − 2cx + 1 = 0. So x = (1 + r²)/(2c).
 
@@ -585,7 +585,7 @@ example : (1 : ℚ) - (4 / 5) ^ 2 = (3 / 5) ^ 2 := by norm_num
 - [Mobius transformations](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/02-mobius-transformations-and-the-point-at-infinity.md): the Cayley map as one fraction (az + b)/(cz + d) among many.
 - [Sphere, plane and hyperbolic space](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/05-model-spaces-of-constant-curvature.md): the three rulers as one metric of constant curvature −1.
 
-Open question: which other rulers give the same plane, and what single number tells planes apart?
+Next, [Hyperbolic trigonometry](10-hyperbolic-trigonometry.md) turns the half-plane formula into hyperbolic Pythagoras, the laws of cosines and sines, and the angle of parallelism; [Sphere, plane and hyperbolic space](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/05-model-spaces-of-constant-curvature.md) shows which other rulers give the same plane.
 
 ---
 

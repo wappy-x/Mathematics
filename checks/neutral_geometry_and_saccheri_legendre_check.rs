@@ -20,7 +20,7 @@ fn main() {
     println!("smallest angle after each halving: {}", steps.join(" -> "));
     println!("other two then sum to at least {} > 180: impossible", s - small);
     println!("stop at 5 halvings: smallest {}, others {}, no clash", 60.0 / 32.0, s - 60.0 / 32.0);
-    assert!(n == (60.0 / (s - 180.0)).log2().ceil() as i32 && small == 60.0 / 2f64.powi(n)); // count and value match logs
+    assert!(n == (60.0 / (s - 180.0)).log2().floor() as i32 + 1 && small == 60.0 / 2f64.powi(n)); // count and value match logs
     let mut tri = [pt(0.0, 0.0), pt(0.3, 0.0), pt(0.3, std::f64::consts::PI / 3.0)];
     let (mut sums, mut halved) = (vec![], vec![]);
     for _ in 0..7 {                                               // road 2: a real hyperbolic triangle

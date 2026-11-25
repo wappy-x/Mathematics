@@ -111,7 +111,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 06 · Beyond Euclid · 10 cards
 
-*Geometry on a sphere and in hyperbolic space, what a ruler and compass can build, and the curve on which points can be added*
+*Geometry on a sphere and in hyperbolic space, ruler-and-compass constructions, symmetry and tilings, elliptic curves, Hilbert's axioms, neutral geometry, circle inversion, and hyperbolic models and trig*
 
 1. [Triangles on a sphere: angles add to more than 180 and the excess is the area](06-Beyond%20Euclid/01-triangles-on-a-sphere.md)
 2. [Three geometries: what changes when the parallel postulate is dropped](06-Beyond%20Euclid/02-spherical-and-hyperbolic-geometry.md)

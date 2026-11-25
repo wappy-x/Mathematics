@@ -26,7 +26,7 @@ Drawn to scale, 1 cm = 40 units: A at (200, 200), B at (360, 200), C at (280.0, 
 
 ## The formula
 
-Place one circle's centre at A = (0, 0) and the other's at B = (d, 0). Both have radius r. A point (x, y) on both obeys $`x^2 + y^2 = r^2`$ and $`(x - d)^2 + y^2 = r^2`$. Subtracting the second from the first cancels $`y^2`$ and leaves $`x = d/2`$:
+Place one circle's centre at A = (0, 0) and the other's at B = (d, 0), with $`d > 0`$. Both have radius $`r \ge 0`$. A point (x, y) on both obeys $`x^2 + y^2 = r^2`$ and $`(x - d)^2 + y^2 = r^2`$. Subtracting the second from the first cancels $`y^2`$ and leaves $`x = d/2`$:
 
 ```math
 x = \frac{d}{2}, \qquad y = \pm\sqrt{r^2 - \frac{d^2}{4}}
@@ -57,7 +57,7 @@ Pasch's axiom, the order rule this card uses, for a triangle ABC and a line $`\e
 
 ### When it holds
 
-- **Centres no more than 2r apart.** With centres 9 cm apart, $`y^2 = 16 - 20.25 = -4.25`$: no crossing at all.
+- **Distinct centres no more than 2r apart ($`0 < d \le 2r`$, with $`r \ge 0`$).** With centres 9 cm apart, $`y^2 = 16 - 20.25 = -4.25`$: no crossing at all.
 - **A line with no gaps.** In the fraction plane the same circles share no point, since 12 is not the square of a fraction.
 - **The line lies in the triangle's plane.** In space, a line through D straight out of the page touches the triangle only at D.
 - **The line misses the corners.** The line x = 2 enters through (2, 0) on AB and leaves through corner C, on two sides at once; Pasch's axiom sets this case aside.
@@ -78,7 +78,7 @@ Hilbert's 1899 *Foundations of Geometry*, in its 1902 English translation, lists
 
 | Group | What it governs | Axioms | One of them | What Euclid took from the picture |
 | --- | --- | --- | --- | --- |
-| I Connection | which points lie on which lines and planes | 7 | two points lie on exactly one line | — |
+| I Connection | which points lie on which lines and planes | 7 | two distinct points lie on exactly one line | — |
 | II Order | which of three points on a line is between the others | 5 | Pasch's axiom, II 5 | a line entering a triangle leaves it |
 | III Parallels | lines that never meet | 1 | through a point off a line, exactly one parallel | — (Euclid stated his own version) |
 | IV Congruence | equal segments and equal angles | 6 | the SAS step, IV 6 | sliding one triangle onto another |
@@ -107,7 +107,9 @@ Euclid read betweenness off the picture. The proof on [Triangles](../01-Angles%2
 
 Pasch's axiom is the key step in proving that a line splits the plane into two **sides**: two points are on the same side when the segment joining them misses the line.
 
-Suppose P and Q are on the same side of $`\ell`$, and Q and R are too. If segment PR crossed $`\ell`$, then $`\ell`$ would enter triangle PQR through side PR. Pasch's axiom says it must leave through PQ or QR. Both miss $`\ell`$, so PR misses it too: "same side" passes along.
+Suppose P and Q lie on one side of $`\ell`$, and Q and R do too. Off one line, if segment PR crossed $`\ell`$, Pasch's axiom forces $`\ell`$ through PQ or QR; both miss $`\ell`$, so PR misses it too: "same side" passes along.
+
+On one line, order axioms settle it: two distinct lines meet at most once.
 
 On squared paper, a line's equation gives a **sign test**. The red line is y = x − 1, so y − x + 1 is zero on it, positive on one side and negative on the other. For line AB, the x-axis, the test is the sign of y: + at C, − at C′. So Euclid's construction has two answers, one on each side of AB.
 
@@ -339,7 +341,7 @@ ALL CHECKS PASS
 
 Lean proves the crossing formula, the fraction-plane gap and Pasch's rule, on a plane with no gaps.
 
-- Take two circles of radius r, with centres d apart and d above 0. Then they meet exactly when d is at most 2r.
+- Take two circles of radius $`r \ge 0`$, with centres d apart and d above 0. Then they meet exactly when d is at most 2r.
 - Suppose a point lies on both circles. Then $`x = d/2`$ and $`y^2 = r^2 - d^2/4`$, and every such point lies on both.
 - In the fraction plane, the 4 cm circles about A and B share no point.
 - Take a triangle ABC and a line in its plane that misses the corners. Then if the line meets segment AB, it meets BC or CA.

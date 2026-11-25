@@ -16,8 +16,10 @@ Archimedes' axiom. The flat (Euclidean) case is stated with Mathlib's own
 
 open EuclideanGeometry
 
-/-- Helper: halving beats any positive excess (same as `exists_halving_lt_excess`). -/
-theorem exists_halving_lt_excess_aux (a p : ℝ) (hp : 0 < p) :
+/-- **Halving beats any excess (Archimedes' axiom, Step 3).** However large an
+angle `a` and however small a positive excess `p`, some number `n` of halvings
+brings `a / 2 ^ n` below `p`. -/
+theorem exists_halving_lt_excess (a p : ℝ) (hp : 0 < p) :
     ∃ n : ℕ, a / 2 ^ n < p := by
   obtain ⟨n, hn⟩ := exists_nat_gt (a / p)
   refine ⟨n, ?_⟩
@@ -26,8 +28,6 @@ theorem exists_halving_lt_excess_aux (a p : ℝ) (hp : 0 < p) :
   rw [div_lt_iff₀ h2]
   rw [div_lt_iff₀ hp] at hn
   nlinarith
-
-#print axioms exists_halving_lt_excess_aux
 
 /-- **Saccheri-Legendre, the card's argument.** Suppose that in every triangle
 the two corners other than `A` add to less than 180 degrees (the exterior angle
@@ -53,23 +53,10 @@ theorem angle_sum_le_180_of_legendre_move {T : Type*} (A B C : T → ℝ)
   by_contra hgt
   rw [not_le] at hgt
   have hp : 0 < A t + B t + C t - 180 := by linarith
-  obtain ⟨n, hn⟩ := exists_halving_lt_excess_aux (A t) _ hp
+  obtain ⟨n, hn⟩ := exists_halving_lt_excess (A t) _ hp
   obtain ⟨t', hs, ha⟩ := iter n
   have := two_angles_lt t'
   linarith
-
-/-- **Halving beats any excess (Archimedes' axiom, Step 3).** However large an
-angle `a` and however small a positive excess `p`, some number `n` of halvings
-brings `a / 2 ^ n` below `p`. -/
-theorem exists_halving_lt_excess (a p : ℝ) (hp : 0 < p) :
-    ∃ n : ℕ, a / 2 ^ n < p := by
-  obtain ⟨n, hn⟩ := exists_nat_gt (a / p)
-  refine ⟨n, ?_⟩
-  have h2 : (0 : ℝ) < 2 ^ n := by positivity
-  have hle : (n : ℝ) < 2 ^ n := by exact_mod_cast Nat.lt_two_pow_self
-  rw [div_lt_iff₀ h2]
-  rw [div_lt_iff₀ hp] at hn
-  nlinarith
 
 /-- **The flat case.** In Euclid's plane (any real inner product space), a
 triangle's angles add to at most a half-turn, `π` radians, as neutral geometry

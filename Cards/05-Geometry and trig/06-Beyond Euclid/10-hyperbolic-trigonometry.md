@@ -77,6 +77,7 @@ The angle of parallelism:
 - **Lengths in the plane's own unit.** A plane that bends more gently has a larger natural unit; sides in any other unit give wrong answers.
 - **The minus sign.** The sphere's law has a plus ([Triangles on a sphere](01-triangles-on-a-sphere.md)). Used here at 60°, it gives 1.787744 instead of 1.116327.
 - **Corners inside the plane.** A corner on the map's edge is infinitely far away; the laws fail there, and the angle of parallelism takes over.
+- **Distinct corners and a point off the line.** The law of sines needs $`a, b, c > 0`$ (no $`\sinh 0`$), and the angle of parallelism needs $`d > 0`$.
 
 ---
 
@@ -123,7 +124,7 @@ For the right triangle, $`y = 1/\cosh 1`$ = 0.648054, the height the code measur
 <details>
 <summary>Detailed proof: the height of B from the angle at C</summary>
 
-The arc through C and B is centred at (k, 0). Equal radii give $`k^2 + 1 = (x - k)^2 + y^2`$, so with Step 1:
+Put B at $`x > 0`$ ($`0^\circ < C < 180^\circ`$); at $`x = 0`$, $`y = e^{\pm a}`$ directly. The arc through C and B is centred at (k, 0). Equal radii give $`k^2 + 1 = (x - k)^2 + y^2`$, so with Step 1:
 
 $`\displaystyle k = \frac{x^2 + y^2 - 1}{2x} = \frac{y\cosh a - 1}{x}.`$
 
@@ -186,7 +187,7 @@ For small t, $`\cosh t \approx 1 + t^2/2`$ and $`\sinh t \approx t`$, and both l
 | Pythagoras | 1.543081 × 1.543081 | cosh c = 2.381098 |
 | third side | c = ln(e^c) = ln(cosh c + sinh c) = ln(2.381098 + 2.160932) | **c = 1.513374** |
 | a corner | sin A = sinh 1 / sinh c = 1.175201 / 2.160932 | A = 32.95° |
-| angle sum | 90 + 32.95 + 32.95 | 155.89°, short of 180° by 24.11° |
+| angle sum | 90 + 32.945 + 32.945 (unrounded) | 155.89°, short of 180° by 24.11° |
 | at 60° | cosh 1 × cosh 1 − sinh 1 × sinh 1 × cos 60° | cosh c = 1.690549, c = 1.116327 |
 | angle of parallelism | 2 × atan(e^(−1)) = 2 × atan(0.367879) | **Π(1) = 40.3951°** |
 | two speeds of tanh 1 = 0.761594, at right angles | tanh c | 0.907536 of light speed |
@@ -711,9 +712,10 @@ theorem angle_of_parallelism (d θ : ℝ) (hd : 0 < d) (hθ : 0 < θ) (hθ' : θ
 
 ## Where this goes next
 
+- [Shoelace formula](../07-Points%2C%20Convexity%20and%20Fractals/01-polygon-area-and-orientation.md): first card of the next shelf, turning back to flat computational geometry.
 - [Sphere, plane and hyperbolic space](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/05-model-spaces-of-constant-curvature.md): the three laws of cosines as one family set by curvature, and the proof that the angle shortfall is the area.
 
-The right triangle falls short of 180° by 0.420784 radians; why that shortfall is exactly its area is the question this card leaves open.
+This finishes Beyond Euclid; the next shelf starts with [Shoelace formula](../07-Points%2C%20Convexity%20and%20Fractals/01-polygon-area-and-orientation.md). Why the right triangle's 0.420784-radian shortfall equals its area is answered on [Sphere, plane and hyperbolic space](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/05-model-spaces-of-constant-curvature.md).
 
 ---
 

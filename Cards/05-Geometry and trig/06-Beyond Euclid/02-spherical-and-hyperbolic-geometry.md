@@ -14,7 +14,7 @@ That world is the **hyperbolic plane**, and the circle is its standard map, the 
 
 **Change the parallel rule and triangles, parallels and circles change together: on a sphere, angles add to more than 180°, circles grow slower than flat ones and no lines are parallel; in the hyperbolic plane, angles add to less than 180°, circles grow faster and parallels are endless.**
 
-**What kind of fact this is:** theorems, proved on this card for its examples. The disc's ruler, its rule for measuring length, is a definition, and its distance formula is checked by slices, not proved. The general angle-sum rules are proved on [Triangles on a sphere](01-triangles-on-a-sphere.md) and Sphere, plane and hyperbolic space.
+**What kind of fact this is:** theorems, proved on this card for its examples. The disc's ruler, its rule for measuring length, is a definition, and its distance formula is checked by slices, not proved. The general angle-sum rules are proved on [Triangles on a sphere](01-triangles-on-a-sphere.md) and [Sphere, plane and hyperbolic space](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/05-model-spaces-of-constant-curvature.md).
 
 ### The picture: ten equal fish on one line through the disc
 
@@ -68,7 +68,8 @@ S = 180^\circ \ \text{(flat)}, \qquad S > 180^\circ \ \text{(sphere)}, \qquad S 
 - **Straight in the world.** Sphere lines are great circles, the ball's biggest circles; disc lines are diameters and arcs meeting the rim square, at right angles. A drawn chord gives back 180°.
 - **Equal bending everywhere.** A potato or a saddle bends unevenly, and the formulas hold only roughly.
 - **The world's own units.** On the ball $`\rho`$ is the angle at its centre in radians; in the disc $`d`$ is true distance.
-- **Sphere triangles inside a half-sphere.** Opposite points, such as the poles, lie on endless great circles, so a side between them is not pinned down.
+- **Within each formula's range.** On a sphere of radius 1, $`C = 2\pi\sin\rho`$ holds for $`0 < \rho < \pi`$ (past $`\pi`$, the circle shrinks to the far pole); the strict three-way rim comparison needs $`\rho > 0`$. In the disc, $`d = \ln\frac{1+r}{1-r}`$ holds for $`0 \le r < 1`$ (and $`d \ge 0`$); at $`r = 1`$ it divides by zero.
+- **Genuine triangles, and inside a half-sphere on the ball.** Both $`S > 180^\circ`$ and $`S < 180^\circ`$ need three corners not on one line (or great circle). On a sphere, opposite points also share endless great circles, so a side between them is not pinned down.
 
 ---
 
@@ -123,7 +124,7 @@ Put A and B at drawn distance a along the two diameters, a between 0 and 1. The 
 
 That ratio is strictly between 0 and 1, so the angles at A and B are each under 45° and the sum under 180°. As a shrinks the ratio nears 1: at a = 0.05 the sum is 179.713522°, nearly flat.
 
-That every hyperbolic triangle falls short by its area needs curvature; Sphere, plane and hyperbolic space proves it.
+That every hyperbolic triangle falls short by its area needs curvature; [Sphere, plane and hyperbolic space](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/05-model-spaces-of-constant-curvature.md) proves it.
 
 </details>
 
@@ -133,7 +134,7 @@ Take the diameter OA as the given line and B as the point. For any u between −
 
 Its radius is under 1.25, so its lowest point stays above the diameter: 0.5 at u = 0, 0.348612 at u = 0.5. Each u gives a different line through B: infinitely many parallels.
 
-The disc's factor 2/(1 − r^2) is one example of a metric, a length rule set point by point, the subject of Riemannian metric.
+The disc's factor 2/(1 − r^2) is one example of a metric, a length rule set point by point, the subject of [Riemannian metric](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/01-riemannian-metrics.md).
 
 ---
 
@@ -144,7 +145,7 @@ The disc's factor 2/(1 − r^2) is one example of a metric, a length rule set po
 | first fish's far end | (e − 1)/(e + 1) = 1.718/3.718 | 0.462117 |
 | second fish's far end | (e^2 − 1)/(e^2 + 1) = 6.389/8.389 | 0.761594 |
 | second fish, drawn | 0.761594 − 0.462117 | 0.299 |
-| ring at radius 3, hyperbolic | sinh 3 = (20.086 − 0.050)/2 = 10.02; 2π × 10.02 | 62.94 |
+| ring at radius 3, hyperbolic | sinh 3 = 10.0179 (from (e^3 − e^(−3))/2); 2π × 10.0179 | 62.94 |
 | ring at radius 3, sphere | 2π × sin 3 = 2π × 0.141 | 0.89 |
 | disc angle at A | tangent 0.75/1.25 | 30.96° |
 | disc triangle | 90 + 30.96 + 30.96 | **151.93°** |
@@ -163,7 +164,12 @@ A ring three fish lengths out holds 62.94 fish in Escher's world, 18.85 on flat 
 
 ## Code, from first principles, and it actually runs
 
-Two roads to each number. Fish ends: the closed form, then 200,000 thin slices of the ruler added back up. Rims: 2π sinh ρ or 2π sin ρ, then a 20,000-sided polygon, rescaled on the disc, straight chords on the ball. Arc AB: the circle through A, B and A's mirror in the rim, its image under [Inversion in a circle](08-inversion-in-a-circle.md). The mirror is (2, 0), on ray OA at drawn distance 1/0.5, and every rim-square circle through A also passes through it. Its angle is checked against atan(3/5). Parallels: where each circle through B crosses the rim, the two radii must be square. Four asserts compare them.
+Two roads to each number; four asserts compare them.
+
+- **Fish ends:** the closed form, then 200,000 thin slices of the ruler added back up.
+- **Rims:** 2π sinh ρ or 2π sin ρ, then a 20,000-sided polygon, rescaled on the disc and straight chords on the ball.
+- **Arc AB:** the circle through A, B and A's mirror in the rim, its image under [Inversion in a circle](08-inversion-in-a-circle.md). The mirror is (2, 0), on ray OA at drawn distance 1/0.5, and every rim-square circle through A also passes through it. Its angle is checked against atan(3/5).
+- **Parallels:** where each circle through B crosses the rim, the two radii must be square.
 
 ### Python
 
@@ -363,7 +369,7 @@ The two outputs match line for line.
 
 Lean proves the rim, triangle and parallel claims for every true radius, every triangle shaped like O, A, B, and any two great circles.
 
-- The ball's rim, 2π sin ρ from Step 1, is less than the flat rim 2πρ, for every ρ above 0.
+- For $`0 < \rho < \pi`$, the ball's rim, 2π sin ρ from Step 1, is less than the flat rim 2πρ (Lean checks the inequality 2π sin ρ < 2πρ for every ρ above 0).
 - In the disc, take the drawn radius r whose thin slices of the ruler add to ρ. Its true rim, 2πr × 2/(1 − r^2), is more than 2πρ.
 - That disc rim is exactly 2π sinh ρ.
 - Put A and B at the same drawn distance a along two square diameters, a between 0 and 1. Triangle O, A, B has angles adding to less than 180°.
@@ -632,13 +638,14 @@ example : (0 : ℚ) ^ 2 + (5 / 4 - 1 / 2) ^ 2 = (3 / 4) ^ 2 ∧ (0 : ℚ) ^ 2 + 
 
 ## Where this goes next
 
-- [Neutral geometry](07-neutral-geometry-and-saccheri-legendre.md): what holds before the parallel postulate is dropped, such as an angle sum of at most 180°.
+- [Ruler and compass](03-ruler-and-compass-constructions.md): next on this shelf, turning to what Euclid's straightedge and compass can build on the flat plane.
+- [Neutral geometry](07-neutral-geometry-and-saccheri-legendre.md): what survives without the parallel postulate, such as an angle sum of at most 180°.
 - [Riemannian metric](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/01-riemannian-metrics.md): the disc's factor 2/(1 − r^2) as one length rule set point by point.
 - [Sphere, plane and hyperbolic space](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/05-model-spaces-of-constant-curvature.md): the three worlds of constant curvature, with the angle-sum rules proved in general.
 - [Schwarz-Pick](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/09-schwarz-pick-and-the-hyperbolic-disc.md): a holomorphic map of the disc into itself never stretches hyperbolic distance.
 - [Three maps of one hyperbolic plane](09-hyperbolic-plane-models.md): the disc, the half-plane and the Klein disc, and the distance each one uses.
 
-This card never said what curvature is; later cards define it and show that one number fixes angle sums, parallels and circle growth together.
+This card never said what curvature is; [Sphere, plane and hyperbolic space](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/05-model-spaces-of-constant-curvature.md) defines it and shows that one number fixes angle sums, parallels and circle growth together, while the next card on this shelf, [Ruler and compass](03-ruler-and-compass-constructions.md), turns to what Euclid's tools can build.
 
 ---
 

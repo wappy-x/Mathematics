@@ -66,7 +66,7 @@ The pole makes the inputs easy to read off a map ([Cylindrical and spherical coo
 ### When it holds
 
 - **An exact sphere.** The Earth bulges at the equator, so sphere distances are off by a fraction of a percent; surveyors use an ellipsoid, a flattened sphere.
-- **Sides the short way round**, each under 180°. Opposite points have endless shortest routes.
+- **Three distinct corners not on one great circle.** Each side runs the short way round, strictly between 0° and 180°. Coinciding corners divide by zero in the law of sines, opposite points have endless shortest routes, and three corners on one great circle give a flat 180° sum with zero area.
 - **Routes longer than a few metres.** For tiny c, cos c is so near 1 that rounding swamps it; software uses an equivalent form, the haversine formula.
 - **Radians in the length and the area.** Degrees in K = R^2 E make the triangle outgrow the Earth.
 
@@ -80,7 +80,9 @@ Arrows from the Earth's centre to London and New York meet at 50.094212°. The r
 
 ### Step 1: the law of cosines, from one dot product
 
-Turn the globe so C sits at the pole and A on longitude 0. On a sphere of radius 1 the arrows are C = (0, 0, 1), A = (sin b, 0, cos b) at colatitude b (90° minus latitude), and B = (sin a cos C, sin a sin C, cos a) at colatitude a and longitude C. The directions leaving the pole along those meridians are (1, 0, 0) and (cos C, sin C, 0), so the pole's corner is C.
+Turn the globe so C sits at the pole and A on longitude 0. On a sphere of radius 1 the arrows are C = (0, 0, 1), A = (sin b, 0, cos b) at colatitude b (90° minus latitude), and B = (sin a cos C, sin a sin C, cos a) at colatitude a and longitude C.
+
+The directions leaving the pole along those meridians are (1, 0, 0) and (cos C, sin C, 0), so the pole's corner is C.
 
 The dot product of two unit arrows is the cosine of the angle between them, here side c:
 
@@ -90,7 +92,9 @@ That is the law, and any triangle can be turned to put a corner at the pole.
 
 ### Step 2: the law of sines, from one volume
 
-The three arrows span a slanted box; its volume is the determinant of their coordinates, one number made from the nine coordinates by multiplying and adding ([Triple product](../05-Vectors%20in%20Space/03-triple-product-and-volume.md)). Turning the globe does not change it. With C at the pole it works out to sin a sin b sin C; with A there, sin b sin c sin A; with B there, sin c sin a sin B. Divide each by sin a sin b sin c and the ratios agree: 1.252344 each here.
+The three arrows span a slanted box; its volume is the determinant of their coordinates, one number made from the nine coordinates by multiplying and adding ([Triple product](../05-Vectors%20in%20Space/03-triple-product-and-volume.md)). Turning the globe does not change it.
+
+With C at the pole it works out to sin a sin b sin C; with A there, sin b sin c sin A; with B there, sin c sin a sin B. Divide each by sin a sin b sin c and the ratios agree: 1.252344 each here.
 
 <details>
 <summary>The algebra behind this</summary>
@@ -110,7 +114,9 @@ Extend the sides to full great circles. At each corner take the lune holding the
 
 At corner A the two sides, extended, meet again at the point opposite A, bounding a lune of angle A that holds the triangle. Its twin holds the mirror: the points opposite the triangle's. The pair has area 4AR^2; likewise 4BR^2 and 4CR^2.
 
-Each great circle splits the sphere into two halves. A point of the triangle lies in all three corner lunes; a point of the mirror, in all three twins. Any other point off the circles lies on the triangle's side of some circles and the far side of the rest. So exactly one pair of circles has it on the triangle's side of both, or the far side of both, and exactly one of the six lunes holds it.
+Each great circle splits the sphere into two halves. A point of the triangle lies in all three corner lunes; a point of the mirror, in all three twins.
+
+Any other point off the circles lies on the triangle's side of some circles and the far side of the rest. So exactly one pair of circles has it on the triangle's side of both, or the far side of both, and exactly one of the six lunes holds it.
 
 So the lunes add to the sphere plus two extra copies each of the triangle and its mirror, both of area K: 4AR^2 + 4BR^2 + 4CR^2 = 4πR^2 + 4K. Divide by 4 and rearrange; the circles have no area. This is Albert Girard's theorem of 1629.
 
@@ -343,7 +349,7 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves all three laws on a sphere of any radius, for any three corners not on one great circle.
+Lean proves all three laws on a sphere of any positive radius, for any three corners not on one great circle.
 
 - The corner angles, in radians, add to more than π.
 - The area the triangle encloses is R^2 times the excess: K = R^2 (A + B + C − π).

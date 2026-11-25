@@ -26,7 +26,7 @@ To scale: O at (100, 250), 1 unit = 80. Black: the mirror. Orange: the line x = 
 
 ## The formula
 
-The mirror is a circle with centre $`O`$ and radius $`r`$. A point $`P`$, other than $`O`$, goes to the point $`P'`$ (read "P prime") on the ray from $`O`$ through $`P`$ with
+The mirror is a circle with centre $`O`$ and radius $`r > 0`$. A point $`P`$, other than $`O`$, goes to the point $`P'`$ (read "P prime") on the ray from $`O`$ through $`P`$ with
 
 ```math
 OP \times OP' = r^2, \qquad\text{so}\qquad P' = \frac{r^2}{OP^2}\,P
@@ -34,7 +34,7 @@ OP \times OP' = r^2, \qquad\text{so}\qquad P' = \frac{r^2}{OP^2}\,P
 
 **Read it aloud:** a point's and its image's distances from the centre multiply to the radius squared.
 
-Written with complex numbers, a point (x, y) is $`z = x + iy`$, and $`\bar z = x - iy`$ is its **conjugate**, its mirror image in the x-axis ([Mobius transformations](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/02-mobius-transformations-and-the-point-at-infinity.md)). Then
+Written with complex numbers, a point (x, y) is $`z = x + iy`$, and $`\bar z = x - iy`$ is its **conjugate**, its mirror image in the x-axis ([Conjugate and modulus](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/02-conjugate-and-modulus.md)). Then
 
 ```math
 z' = \frac{r^2}{\bar z}
@@ -61,7 +61,7 @@ A circle other than the mirror, with centre $`C`$ and radius $`\rho`$ (rho), is 
 | $`F`$, $`F'`$, $`a`$ | a line's nearest point to $`O`$, its image, and its distance from $`O`$ | (1/2, 0), (2, 0), 1/2 | image circle shrinks, diameter $`r^2 / a`$ |
 | $`T`$ | where the line square to $`OP`$ meets the mirror | on the mirror, straight above P | — |
 | $`C`$, $`\rho`$; $`C'`$, $`\rho'`$ | a circle's centre and radius; those of its image | (1.5, 0) and 0.5 go to (0.75, 0) and 0.25 | — |
-| $`X`$, $`Y`$; $`\mathrm{pow}(O)`$ | where a ray from $`O`$ cuts that circle; $`OC^2 - \rho^2`$ | 2 here; 3.125 − 2.125 = 1 for the circle through P, P′, B | above or below $`r^2`$: the circle moves |
+| $`X`$, $`Y`$; $`\mathrm{pow}(O)`$ | where a line through $`O`$ cuts that circle; $`OC^2 - \rho^2`$ | 2 here; 3.125 − 2.125 = 1 for the circle through P, P′, B | above or below $`r^2`$: the circle moves |
 
 ### When it holds
 
@@ -76,13 +76,13 @@ A circle other than the mirror, with centre $`C`$ and radius $`\rho`$ (rho), is 
 
 ### Step 0: near swaps with far, and doing it twice changes nothing
 
-Along each ray, 1/2 becomes 2 and 2 becomes 1/2. So inversion undoes itself; only the mirror stays fixed.
+Along each ray, 1/2 becomes 2 and 2 becomes 1/2. So inversion undoes itself; only points on the mirror stay put one by one.
 
 ### Step 1: three ways to find the image
 
 - **Scaling.** $`P'`$ lies on the ray, at distance $`r^2 / OP`$, so $`P' = (r^2 / OP^2)\,P`$.
 - **Complex numbers.** $`z \bar z = x^2 + y^2 = OP^2`$, so $`r^2 / \bar z = r^2 z / OP^2`$: the same scaling.
-- **Construction** ([Ruler and compass](03-ruler-and-compass-constructions.md)). From $`P`$, go square to $`OP`$ to the mirror, at $`T`$; the tangent at $`T`$ meets the ray at $`P'`$. Right triangles $`OPT`$ and $`OTP'`$ share the angle at $`O`$, so $`OP \times OP' = OT^2 = r^2`$.
+- **Construction** ([Ruler and compass](03-ruler-and-compass-constructions.md)). For $`0 < OP < r`$, go square to $`OP`$ to the mirror at $`T`$; the tangent at $`T`$ meets the ray at $`P'`$. Right triangles $`OPT`$ and $`OTP'`$ share the angle at $`O`$, so $`OP \times OP' = OT^2 = r^2`$. For $`OP > r`$, reverse it: draw a tangent from $`P`$ to $`T`$ on the mirror and drop a perpendicular to $`OP`$.
 
 ### Step 2: two points and their images make similar triangles
 
@@ -98,7 +98,9 @@ By Thales' theorem ([Angles at a circle](../02-Circles%20and%20Solids/03-angles-
 
 ### Step 4: a circle missing O becomes a circle missing O
 
-A ray from $`O`$ cuts the circle at $`X`$ and $`Y`$ with $`OX \times OY = \mathrm{pow}(O)`$ (power of a point). So the image of $`X`$, at $`r^2 / OX`$, is $`Y`$ scaled from $`O`$ by $`r^2 / \mathrm{pow}(O)`$: the image is the circle scaled. For centre (1.5, 0), radius 0.5, the power is 2, so $`C'`$ = (0.75, 0) and $`\rho'`$ = 0.25.
+With $`O`$ outside, a ray from $`O`$ cuts the circle at $`X`$ and $`Y`$ with $`OX \times OY = \mathrm{pow}(O)`$ (power of a point), so $`X'`$ is $`Y`$ scaled from $`O`$ by $`r^2 / \mathrm{pow}(O)`$.
+
+With $`O`$ inside, $`\mathrm{pow}(O) < 0`$ and a line through $`O`$ cuts it on opposite sides; the same scaling applies with negative factor $`r^2 / \mathrm{pow}(O)`$ and radius $`\lvert r^2 / \mathrm{pow}(O)\rvert \times \rho`$. For centre (1.5, 0), radius 0.5, the power is 2, so $`C'`$ = (0.75, 0) and $`\rho'`$ = 0.25.
 
 ### Step 5: angles survive
 
@@ -747,7 +749,7 @@ example : (1 : ℚ) * (3 / 2) / 2 = 3 / 4 ∧ (1 : ℚ) * (1 / 2) / 2 = 1 / 4 :=
 - [Three maps of one hyperbolic plane](09-hyperbolic-plane-models.md): inversions carry the disc to the half-plane and act as reflections.
 - [Mobius transformations](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/02-mobius-transformations-and-the-point-at-infinity.md): an inversion then a flip in the x-axis gives $`z \mapsto 1/z`$, which keeps circles and angles without the flip.
 
-The question left open: which maps of the plane send every circle to a circle, and are inversions and reflections the only building blocks?
+Next, [Three maps of one hyperbolic plane](09-hyperbolic-plane-models.md) uses one inversion to map the Poincaré disc onto the upper half-plane; [Mobius transformations](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/02-mobius-transformations-and-the-point-at-infinity.md) asks which plane maps send every circle to a circle.
 
 ---
 

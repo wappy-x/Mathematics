@@ -14,7 +14,7 @@ Adding Q again and again gives (0, −1), (3, −5), (5, 11), then (1/4, 7/8), a
 
 **Chord, third crossing, reflection: that rule adds any two points of an elliptic curve and lands on the curve, and with one extra point as zero it obeys the laws of ordinary addition.**
 
-**What kind of fact this is:** a theorem. The rule is a definition. That it obeys the group laws, the rules ordinary addition follows, is proved in Why it works. The exception is associativity, the law that grouping never matters: it is checked in code and proved in Step 4 for points in general position. The full proof is on the planned card The group law.
+**What kind of fact this is:** a theorem. The rule is a definition. That it obeys the group laws, the rules ordinary addition follows, is proved in Why it works. The exception is associativity, the law that grouping never matters: it is checked in code and proved in Step 4 for points in general position. The full proof is on [The group law](../../22-Algebraic%20geometry/04-Elliptic%20Curves/01-elliptic-curves-and-the-group-law.md).
 
 ### The picture: adding P and Q
 
@@ -76,7 +76,9 @@ Put the line $`y = mx + k`$ into $`y^2 = x^3 + ax + b`$ and collect terms:
 x^3 - m^2x^2 + (a - 2mk)\,x + (b - k^2) = 0
 ```
 
-The crossings are its roots $`x_1`$, $`x_2`$, $`x_3`$, so the left side is $`(x - x_1)(x - x_2)(x - x_3)`$, whose $`x^2`$ term is minus the sum of the roots. So $`x_1 + x_2 + x_3 = m^2`$: the formula for $`x_3`$. $`R`$ has height $`mx_3 + k`$, which is $`y_1 + m(x_3 - x_1)`$; reflecting flips the sign, giving $`y_3`$. Only the four operations appear, so rational points give rational sums: the rule is closed.
+The crossings are its roots $`x_1`$, $`x_2`$, $`x_3`$, so the left side is $`(x - x_1)(x - x_2)(x - x_3)`$, whose $`x^2`$ term is minus the sum of the roots. So $`x_1 + x_2 + x_3 = m^2`$: the formula for $`x_3`$.
+
+$`R`$ has height $`mx_3 + k`$, which is $`y_1 + m(x_3 - x_1)`$; reflecting flips the sign, giving $`y_3`$. Only the four operations appear, so rational points give rational sums: the rule is closed.
 
 ### Step 2: the tangent slope, without calculus
 
@@ -115,9 +117,11 @@ for any third point $`W`$. It holds on every elliptic curve, but no single drawi
 <details>
 <summary>Detailed proof</summary>
 
-For points in general position (no two equal). Write S for P + Q and T for Q + W. Three lines: through P, Q, −S; through S, W, −(S + W); the vertical through T, −T, O. Three more: through Q, W, −T; the vertical through S, −S, O; through P, T, −(P + T).
+For points in general position (all nine points below distinct). Write S for P + Q and T for Q + W. Three lines: through P, Q, −S; through S, W, −(S + W); the vertical through T, −T, O. Three more: through Q, W, −T; the vertical through S, −S, O; through P, T, −(P + T).
 
-Each set of three lines is one cubic curve (multiply their equations). Both pass through the eight points P, Q, W, O, S, −S, T, −T. The Cayley–Bacharach theorem: when two cubics meet in exactly nine points, any cubic through eight of them passes through the ninth. The elliptic curve meets the first cubic in the eight and in −(S + W), so the second cubic passes through −(S + W) too. Its ninth point on the elliptic curve is −(P + T), so the two agree; reflect. Coinciding points need the algebraic proof in the MIT notes.
+Each set of three lines is one cubic curve (multiply their equations). Both pass through the eight points P, Q, W, O, S, −S, T, −T. The Cayley–Bacharach theorem: when two cubics meet in exactly nine points, any cubic through eight of them passes through the ninth.
+
+The elliptic curve meets the first cubic in the eight and in −(S + W), so the second cubic passes through −(S + W) too. Its ninth point on the elliptic curve is −(P + T), so the two agree; reflect. Coinciding points need the algebraic proof in the MIT notes.
 
 </details>
 
@@ -129,7 +133,7 @@ The same equation mod 7 has 12 points, $`O`$ included: (0,1), (0,6), (1,1), (1,6
 
 The code tries all 1728 triples. With finitely many points, that exhaustive check proves associativity for this one curve.
 
-The other road is algebra: expand both sides with the formulas, as The group law does.
+To handle coinciding points in general, [The group law](../../22-Algebraic%20geometry/04-Elliptic%20Curves/01-elliptic-curves-and-the-group-law.md) counts intersections with multiplicity (and checks a tangent case by an exact polynomial identity); Washington (Sources) gives the direct algebraic expansion.
 
 ---
 
@@ -693,11 +697,12 @@ open EllipticCard
 
 ## Where this goes next
 
+- [Hilbert's axioms](06-hilberts-axioms.md): next on this shelf, returning to the axioms behind flat and non-Euclidean geometry.
 - [Elliptic curves](../../14-Applied%20and%20computational/04-Cryptography/06-elliptic-curve-cryptography.md): the mod-a-prime version at full size, and why undoing is hard.
 - [Rational points on a cubic](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/05-elliptic-curves-over-q-and-mordell-weil.md): finitely many rational points generate all the others.
 - [The group law](../../22-Algebraic%20geometry/04-Elliptic%20Curves/01-elliptic-curves-and-the-group-law.md): O made precise, and associativity proved.
 
-Every rational point here came from Q; whether a finite handful always generates the rest, Rational points on a cubic answers.
+Every rational point here came from Q; whether a finite handful always generates the rest, [Rational points on a cubic](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/05-elliptic-curves-over-q-and-mordell-weil.md) answers. Next on this shelf, [Hilbert's axioms](06-hilberts-axioms.md) returns to the foundations of Euclidean and non-Euclidean geometry.
 
 ---
 
