@@ -12,9 +12,9 @@ Look down into the full tank. The water's surface is a circle 2 m across, of are
 
 Nothing in that count needs the layer to be round. Any solid that keeps one cross-section (the face a straight cut across it leaves) from end to end works the same way: a box, a beam, a tent, a pencil. With polygon ends (flat shapes with straight edges) it is a **prism**; with circular ends, a **cylinder**. Its skin, cut down one line and laid flat, is one rectangle plus the two ends.
 
-**A solid whose every slice matches its base holds the base's area times its height; standing upright, its walls unroll into one rectangle as wide as the base's perimeter.**
+**A solid whose parallel slices all match its base holds base area times height; straight walls square to the base unroll into one rectangle as wide as the base's perimeter.**
 
-**What kind of fact this is:** a theorem. Why it works proves the upright case from two rules for volume: a box holds length times width times height, and pieces that do not overlap add. The leaning case rests on Cavalieri's principle (equal slices at every height, equal volumes), proved on [Volumes](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md).
+**What kind of fact this is:** a theorem. Why it works proves the upright case from two rules for volume: a box holds length times width times height, and pieces that do not overlap add. The leaning case rests on Cavalieri's principle (equal slices at every height, equal volumes), which Fubini's theorem justifies on [Jordan content](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/07-jordan-content-and-fubini-in-n-dimensions.md).
 
 ### The picture: the tank as three one-metre slices
 
@@ -85,7 +85,7 @@ Push a stack of coins so it leans: each coin is unchanged, so the stack holds th
 
 Inside columns do not overlap and lie in the solid, so the volume is at least their squares' total area times $`h`$. Touching columns cover the solid, so it is at most their total area times $`h`$. As the grid is refined, both areas approach $`B`$: that is what the base having area $`B`$ means. A fixed number caught between two quantities that both approach $`B\,h`$ can only be $`B\,h`$.
 
-At every height a leaning prism's slice is the upright prism's, shifted sideways, so Cavalieri's principle gives it $`B\,h`$ too. [Volumes](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md) proves the principle.
+At every height a leaning prism's slice is the upright prism's, shifted sideways, so Cavalieri's principle gives it $`B\,h`$ too. Fubini's theorem on [Jordan content](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/07-jordan-content-and-fubini-in-n-dimensions.md) justifies computing volume slice by slice.
 
 </details>
 
@@ -107,7 +107,7 @@ Put a square inside the tank's circle, corners on the rim, and another outside, 
 
 At 16 sides the prisms hold 9184.40 to 9547.79 litres; at 4096, 9424.77 to 9424.78. Their walls close in on 18.849556 square metres. Every prism obeys $`V = B\,h`$ and $`L = P\,h`$, so the cylinder they close in on does too. Book XII of Euclid's *Elements* doubles the sides of an inside square the same way to compare cylinders.
 
-Solids whose slices change size need the slices added one by one: [Volumes](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md).
+Solids of revolution whose circular slices change size add the slices by integration: [Volumes](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md).
 
 ---
 
@@ -515,7 +515,8 @@ example : 344 * 30 = 10320 := by decide
 
 - [Pyramids, cones and spheres](05-pyramids-cones-and-spheres.md): slices that shrink to a point, and the sphere.
 - [Polyhedra](06-polyhedra-and-eulers-formula.md): counting a prism's faces, edges and corners.
-- [Volumes](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md): any solid as a sum of thin slabs, whatever its slices do.
+- [Volumes](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md): solids of revolution built from thin circular discs, washers or shells.
+- [Jordan content](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/07-jordan-content-and-fubini-in-n-dimensions.md): Fubini's theorem in any dimension, justifying volume by general slices (Cavalieri's principle).
 
 The hopper beneath the tank tapers to a point; how much a tapering solid holds is the question [Pyramids, cones and spheres](05-pyramids-cones-and-spheres.md) answers.
 

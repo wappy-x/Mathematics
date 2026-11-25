@@ -64,6 +64,7 @@ Landmarks: 30° is $`\pi`$/6 = 0.524 rad, 45° is $`\pi`$/4 = 0.785, 90° is $`\
 - **The angle is in radians.** Put 60 in for $`\theta`$ and the slice gets 900 cm of crust.
 - **The slice is cut from the centre.** Both straight edges must be radii; a square-cut party slice is no sector.
 - **At most one turn, for area.** Past 2$`\pi`$ the arc formula still gives the distance a spinning rim travels, but the area formula counts pizza twice.
+- **Non-negative radius and angle.** Arc length and sector area take $`r \ge 0`$ and $`\theta \ge 0`$; dividing by $`r`$ in $`\theta = s/r`$ needs $`r > 0`$.
 
 ---
 
@@ -88,7 +89,7 @@ In general, **an arc is its angle's share of a full turn, taken of the rim, and 
 
 Assume one fact: a slice inside a wider slice has less crust and less area.
 
-Cut the pizza into n equal slices, n any whole number. Rotation gives each 1/n of the rim. Say m of them fit inside the angle but m + 1 do not. The angle's share of a turn then lies between m/n and (m + 1)/n, and so does its crust's share of the rim, since its slice holds m small slices and fits inside m + 1.
+Cut the pizza into n equal slices, n any positive whole number (n ≥ 1). Rotation gives each 1/n of the rim. Say m of them fit inside the angle but m + 1 do not. The angle's share of a turn then lies between m/n and (m + 1)/n, and so does its crust's share of the rim, since its slice holds m small slices and fits inside m + 1.
 
 Two numbers in one gap of width 1/n differ by at most 1/n, for every n however large, so they are equal. Areas squeeze the same way. Euclid's *Elements* VI.33 makes the same comparison with multiples of arcs and angles.
 
@@ -112,7 +113,7 @@ The $`2\pi`$ above and below cancel. In degrees the same step gives
 s = \frac{\text{degrees}}{360} \times 2\pi r = \frac{\pi\, r \times \text{degrees}}{180},
 ```
 
-and nothing cancels: a formula in degrees carries the factor $`\pi`$/180 forever. The radian is the unit that makes that factor 1. For the slice, $`s`$ = 15 × 1.047 = 15.71 cm.
+and nothing cancels: a formula in degrees carries the factor $`\pi`$/180 forever. The radian is the unit that makes that factor 1. For the slice, $`s`$ = 15 × ($`\pi`$/3) = 15.71 cm.
 
 ### Step 4: the area formula, two ways
 
@@ -122,7 +123,7 @@ The sector is the same share of the whole area, $`\pi r^2`$:
 A = \frac{\theta}{2\pi} \times \pi r^2 = \tfrac12\, r^2\, \theta.
 ```
 
-The $`\pi`$ cancels and a half is left: ½ × 15 × 15 × 1.047 = 117.81 cm^2.
+The $`\pi`$ cancels and a half is left: ½ × 15 × 15 × ($`\pi`$/3) = 117.81 cm^2.
 
 The half has a picture. Cut the sector into thin slivers from the centre, each nearly a triangle with the radius for height and a stretch of crust for base. The bases add up to the arc, so
 
@@ -141,8 +142,8 @@ A second road starts from the circle of radius 1, where an angle in radians is i
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | convert to radians | 60 × $`\pi`$ ÷ 180 | 1.047 rad |
-| arc, the crust | 15 × 1.047 | **15.71 cm** |
-| sector, the pizza on it | ½ × 15 × 15 × 1.047 | **117.81 cm^2** |
+| arc, the crust | 15 × ($`\pi`$/3) | **15.71 cm** |
+| sector, the pizza on it | ½ × 15 × 15 × ($`\pi`$/3) | **117.81 cm^2** |
 | check: a sixth of the rim | 94.25 ÷ 6 | 15.71 cm |
 | check: a sixth of the pizza | 706.86 ÷ 6 | 117.81 cm^2 |
 
@@ -150,7 +151,7 @@ Either road, one slice carries 15.71 cm of crust and 117.81 cm^2 of pizza.
 
 ### A second case: a slice cut by crust length
 
-A slice with exactly 20 cm of crust spans $`\theta`$ = 20 ÷ 15 = 1.333 rad, which is 1.333 × 180/$`\pi`$ = 76.39°. Its area needs no angle: $`A`$ = ½ × 15 × 20 = 150 cm^2. No $`\pi`$ appears until degrees are wanted. The code reaches 76.39° again by walking 20 cm along its chords.
+A slice with exactly 20 cm of crust spans $`\theta`$ = 20 ÷ 15 = 4/3 ≈ 1.333 rad, which is (4/3) × 180/$`\pi`$ = 76.39°. Its area needs no angle: $`A`$ = ½ × 15 × 20 = 150 cm^2. No $`\pi`$ appears until degrees are wanted. The code reaches 76.39° again by walking 20 cm along its chords.
 
 ### What breaks if you drop a piece
 
@@ -361,7 +362,7 @@ The outputs match line for line. The chord totals climb to the formula from belo
 
 ### Lean
 
-Lean proves the arc formula, the sector formula and Step 0 for every radius and angle, with the sector up to one full turn.
+Lean proves the arc formula, the sector formula and Step 0 for every non-negative radius and angle (positive radii in Step 0), with the sector up to one full turn.
 
 - The arc cut by an angle of $`\theta`$ radians is $`r\theta`$ long, measured as the total of ever shorter chords along it.
 - That arc formula holds past one full turn too, as the distance the rim travels.

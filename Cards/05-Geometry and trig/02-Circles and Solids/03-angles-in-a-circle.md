@@ -12,7 +12,7 @@ One such spot is 10.39 m straight back from the stage's middle; another, 6.93 m 
 
 A 90° lens needs the half-circle across the stage: 6 m back at the middle. On a side aisle running straight back from 4 m beyond the left end, the widest view, 36.87°, is 8 m back, where a circle through the stage's ends touches it.
 
-**Every spot on one arc of a circle sees the arc's ends at half the angle they make at the centre, on the side away from the spot. A diameter is seen at a right angle. A line touching a circle meets the radius there at a right angle.**
+**Every spot on a circle's arc, other than its ends, sees those ends at half the central angle on the far side. A diameter is seen at a right angle from any other point on the circle. A line touching a circle meets the radius there at a right angle.**
 
 **What kind of fact this is:** three theorems, each proved on this card in Why it works.
 
@@ -36,7 +36,7 @@ The **central angle** has its corner at the centre O. Both stand on the arc from
 
 **Read it aloud:** the angle at the rim is half the angle at the centre, both standing on the same arc.
 
-V's place on the arc does not enter, so every spot on it sees the same angle. A 60° lens needs 120° at the centre. In radians a central angle is its arc over the radius ([Radians](02-radians-arcs-and-sectors.md)), so the rim angle is the far arc, behind the stage, over the diameter: 14.51 m ÷ 13.86 m = 1.0472 rad, which is 60°.
+V's place on the arc does not enter, so every spot on it sees the same angle. A 60° lens needs 120° at the centre. In radians a central angle is its arc over the radius ([Radians](02-radians-arcs-and-sectors.md)), so the rim angle is the far arc, behind the stage, over the diameter: 14.510 m ÷ 13.856 m = 1.0472 rad, which is 60°.
 
 When AB is a diameter the central angle is 180°, so the rim angle is 90°: **Thales' theorem**. A **tangent**, a straight line meeting the circle at one point only, meets the radius there at a right angle.
 
@@ -63,7 +63,7 @@ t = \sqrt{ab}
 
 - **The camera on the circle.** Inside it the view is wider, outside narrower (Step 3).
 - **The audience side.** Behind the stage, a spot on the same circle stands on the other arc and sees 120°.
-- **A straight aisle starting beyond the stage.** Slanted, the best spot is still √(ab) from P, but along the aisle, not straight back (Euclid III.36; see [Power of a point](07-power-of-a-point.md)). An aisle starting on the stage is best at its start, 180°.
+- **A straight aisle starting beyond the stage.** Slanted, the best spot is still √(ab) from P, but along the aisle, not straight back (Euclid III.36; see [Power of a point](07-power-of-a-point.md)). An aisle starting strictly between the stage's ends is best at its start, 180°.
 
 ---
 
@@ -132,9 +132,9 @@ Grid coordinates give a second road, the code's: see [Distance and midpoint](../
 | --- | --- | --- |
 | 90° lens | Thales: radius 12 ÷ 2 | **6 m** back |
 | 60° lens | OM halves the 120° at O, so triangle OMB is half an equilateral triangle | r = 2 × OM |
-| Pythagoras | (2 × OM)^2 = OM^2 + 6^2, so 3 × OM^2 = 36 | OM = 3.46 m, r = 6.93 m |
-| straight back from M | 3.46 + 6.93 | **10.39 m** |
-| straight back from B | far end of the diameter from A: 2 × 3.46 | **6.93 m** |
+| Pythagoras | (2 × OM)^2 = OM^2 + 6^2, so 3 × OM^2 = 36 | OM = 3.464 m, r = 6.928 m |
+| straight back from M | 3.464 + 6.928 | **10.39 m** |
+| straight back from B | far end of the diameter from A: 2 × 3.464 | **6.93 m** |
 | aisle, best spot | radius 10 m; √(10^2 − 6^2) = √(4 × 16) | **8 m** back, seeing **36.87°** |
 
 A 60° lens frames the stage from anywhere on the arc; on the aisle nothing beats 8 m back.
@@ -352,7 +352,7 @@ The two outputs match line for line.
 
 Lean proves the card's three theorems for every circle and every camera spot on it.
 
-- The rim rule: a spot V on the circle sees A and B at half the central angle on the arc away from V.
+- The rim rule: a spot V on the circle, other than A and B, sees A and B at half the central angle on the arc away from V.
 - When O and V are on opposite sides of AB, that arc goes the long way round: its central angle is 360° minus angle AOB.
 - Thales: every spot on a circle, other than a diameter's ends, sees that diameter at 90°.
 - A straight line meeting the circle at one point only meets the radius there at a right angle.
@@ -590,12 +590,13 @@ example : ((4 : ℝ) + 16) / 2 ≠ Real.sqrt (4 * 16) := by norm_num
 
 ## Where this goes next
 
+- [Prisms and cylinders](04-prisms-and-cylinders.md): next on this shelf, lifting circles from the flat plane into three dimensions.
 - [Law of sines](../03-Trigonometry/07-law-of-sines-and-the-ambiguous-case.md): this rule makes each side of a triangle, over the sine of the angle facing it, the diameter of the circle through its corners.
 - [Power of a point](07-power-of-a-point.md): every chord, secant and tangent through one point gives the same product.
 - [The Euler line and the nine-point circle](../04-Coordinates%20and%20Curves/11-euler-line-and-nine-point-circle.md): four centres on one line and nine points on one circle.
 - [Inversion in a circle](../06-Beyond%20Euclid/08-inversion-in-a-circle.md): turn the plane inside out, so lines and circles swap and angles survive.
 
-This card sized circles only for 60° and 90°; any other angle needs the sine ratio of [Sine, cosine and tangent](../03-Trigonometry/01-right-triangle-trigonometry.md).
+This card sized circles only for 60° and 90°; any other angle waits for the sine ratio of [Sine, cosine and tangent](../03-Trigonometry/01-right-triangle-trigonometry.md). Next on this shelf, [Prisms and cylinders](04-prisms-and-cylinders.md) lifts circles from the flat plane into three dimensions.
 
 ---
 

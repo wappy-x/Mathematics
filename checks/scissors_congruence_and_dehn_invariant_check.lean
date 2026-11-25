@@ -114,18 +114,22 @@ theorem cube_and_tetrahedron_dehn_invariants_differ :
 theorem arccos_one_third_ne_rat_mul_pi (q : ℚ) : arccos (1 / 3) ≠ (q : ℝ) * π := by
   exact arccos_one_third_irrational q
 
-/-- Step 2: a rectangle of length L > 0 and width W > 0 has square side s = √(L W). Sliding the
-piece above the cut from (0, W) to (s, 0) far enough to bring its right edge from L to s
-(a fraction t = (L − s)/s of the cut, so a rise of t · W) raises the top by exactly s − W.
-The overhanging triangle, with legs L − s and s − W, fits beside the square (L − s ≤ s)
-exactly when L ≤ 4W. -/
-theorem rectangle_slide_lands_on_square {L W : ℝ} (hL : 0 < L) (hW : 0 < W) :
-    (L - √(L * W)) / √(L * W) * W = √(L * W) - W ∧
+/-- Step 2: a rectangle oriented with its longer side along the base (0 < W ≤ L) has square side
+s = √(L W), which lies between W and L so the cut from (0, W) to (s, 0) lands on the base.
+Sliding the piece above the cut far enough to bring its right edge from L to s (a fraction
+t = (L − s)/s of the cut, so a rise of t · W) raises the top by exactly s − W. The overhanging
+triangle, with legs L − s and s − W, fits beside the square (L − s ≤ s) exactly when L ≤ 4W. -/
+theorem rectangle_slide_lands_on_square {L W : ℝ} (hW : 0 < W) (hWL : W ≤ L) :
+    W ≤ √(L * W) ∧ √(L * W) ≤ L ∧
+      (L - √(L * W)) / √(L * W) * W = √(L * W) - W ∧
       (L - √(L * W) ≤ √(L * W) ↔ L ≤ 4 * W) := by
+  have hL : 0 < L := lt_of_lt_of_le hW hWL
   have hLW : 0 < L * W := mul_pos hL hW
   have hs : 0 < √(L * W) := Real.sqrt_pos.2 hLW
   have hs2 : √(L * W) ^ 2 = L * W := Real.sq_sqrt hLW.le
-  refine ⟨?_, ?_⟩
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · nlinarith
+  · nlinarith
   · field_simp
     nlinarith
   · constructor
@@ -135,8 +139,8 @@ theorem rectangle_slide_lands_on_square {L W : ℝ} (hL : 0 < L) (hW : 0 < W) :
 -- The roof-truss triangle with legs 3 m and 4 m has area 6 m², and its 3 m by 2 m rectangle too.
 example : (3 * 4 : ℚ) / 2 = 6 := by norm_num
 example : (3 * 2 : ℕ) = 6 := by decide
--- The slide condition L ≤ 4W holds for L = 3, W = 2.
-example : (3 : ℕ) ≤ 4 * 2 := by decide
+-- The slide condition W ≤ L ≤ 4W holds for L = 3, W = 2.
+example : (2 : ℕ) ≤ 3 ∧ (3 : ℕ) ≤ 4 * 2 := by decide
 
 /-- a_n = 3^n cos(nθ) in whole numbers: a_0 = a_1 = 1 and a_{n+1} = 2 a_n − 9 a_{n−1}. -/
 def a : ℕ → ℤ

@@ -39,7 +39,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 02 · Circles and Solids · 8 cards
 
-*Circle measurements, radians, angle facts at a circle, and volume and surface area of the standard solids*
+*Circle measurements, radians, circle angles and power of a point, volume and surface area of standard solids, Euler's polyhedron formula, and scissors congruence*
 
 1. [Circles: where pi comes from and why area is pi r squared](02-Circles%20and%20Solids/01-circle-circumference-and-area.md)
 2. [Radians: measuring an angle by the arc it cuts, and why that makes formulas simple](02-Circles%20and%20Solids/02-radians-arcs-and-sectors.md)

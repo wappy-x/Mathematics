@@ -60,7 +60,7 @@ A second pond, radius 9 m, centre 28 m away: $`x = (28^2 + 5^2 - 9^2) \div 56 = 
 | $`A`$, $`B`$; $`C`$, $`D`$ | where two lines through $`P`$ meet the circle | 8 m and 18 m | product fixed |
 | $`T`$, $`PT`$ | the touching point; the tangent length | (1.923, 4.615) on the grid; 12 m | — |
 | $`M`$ | where a line from $`O`$ meets the chord $`AB`$ square on: its midpoint | O itself, on the line through O | — |
-| $`r_2`$, $`s`$ | second pond's radius; gap between the centres | 9 m; 28 m | $`r_2`$ up: axis moves toward O; $`s`$ up: away from both centres |
+| $`r_2`$, $`s`$ | second pond's radius; gap between the centres | 9 m; 28 m | $`r_2`$ up: axis moves toward O; for separate circles, $`s`$ up: away from both centres |
 | $`x`$, $`y`$ | grid position in metres, O at (0, 0); $`x`$ also places the axis | axis at x = 13 | — |
 
 ### When it holds
@@ -367,7 +367,9 @@ local notation "Plane" => EuclideanSpace ℝ (Fin 2)
 /-- **Power of a point** (Euclid III.35 and III.36). Take a circle in the plane with centre O
 and radius r, and a point P at distance d = PO from the centre. If a straight line through P
 meets the circle at A and B, then the two distances from P multiply to the size of the
-point's power: PA × PB = |d² − r²|. A tangent counts its one point twice (A = B). -/
+point's power: PA × PB = |d² − r²|. This covers any secant or chord meeting the circle at
+distinct points A and B (when A = B, line[ℝ, A, B] is just {A}, forcing P = A); the tangent
+case from outside is proved next. -/
 theorem mul_dist_eq_abs_dist_center_sq_sub_radius_sq {ω : Sphere Plane} {P A B : Plane}
     (hP : P ∈ line[ℝ, A, B]) (hA : A ∈ ω) (hB : B ∈ ω) :
     dist P A * dist P B = |dist P ω.center ^ 2 - ω.radius ^ 2| := by
@@ -434,7 +436,7 @@ example : (8 : ℤ) * 10 ≠ 13 ^ 2 - 5 ^ 2 := by norm_num
 #print axioms radical_axis_eq_vertical_line
 ```
 
-**Checked 2026-11-23 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'mul_dist_eq_abs_dist_center_sq_sub_radius_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -486,7 +488,7 @@ example : (8 : ℤ) * 10 ≠ 13 ^ 2 - 5 ^ 2 := by norm_num
 - [Inversion in a circle](../06-Beyond%20Euclid/08-inversion-in-a-circle.md): a map that sends each point to the point on the same ray from O whose distances from O multiply to $`r^2`$. The product rule here is the key step in showing it sends circles to circles.
 - [Circles and parabolas](../04-Coordinates%20and%20Curves/04-circles-and-parabolas.md): a circle's equation, with everything on one side and $`x^2`$ and $`y^2`$ each taken once, gives any point's power when the point's coordinates are put in.
 
-The card leaves open how to find a circle that crosses two given circles at right angles; its centre must lie on their radical axis, and inversion uses that.
+The card leaves open how to find a circle that crosses two given circles at right angles; its centre must lie on their radical axis, and inversion uses that. That completes the shelf's circle cards; next on this shelf, [Scissors congruence](08-scissors-congruence-and-dehn-invariant.md) returns to cutting polygons and polyhedra.
 
 ---
 

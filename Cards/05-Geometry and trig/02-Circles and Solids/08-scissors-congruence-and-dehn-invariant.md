@@ -28,7 +28,7 @@ Scale 1 m = 40 units. Left: the mid-line (Step 1) and the slanted cut (Step 2). 
 
 ## The formula
 
-A rectangle of length $`L`$ and width $`W`$ becomes a square of the same area $`A = L\,W`$:
+A rectangle of length $`L`$ and width $`W`$, turned so its longer side lies along the base ($`W \le L`$), becomes a square of the same area $`A = L\,W`$:
 
 ```math
 s = \sqrt{L\,W}, \qquad \text{slide} = (s - L,\; s - W)
@@ -51,7 +51,7 @@ An angle's cosine: walk that far anticlockwise round a circle of radius 1 from i
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
 | $`A`$ | the area to match, in m² | 6 | a bigger square |
-| $`L`$, $`W`$ | length and width of the rectangle | 3 m, 2 m | past $`L = 4W`$, halve first |
+| $`L`$, $`W`$ | length and width of the rectangle ($`W \le L`$) | 3 m, 2 m | past $`L = 4W`$, halve first |
 | $`s`$ | side of the square, $`\sqrt{A}`$ | 2.449490 m | — |
 | $`\ell_e`$, $`\alpha_e`$ | length and dihedral angle of edge $`e`$ | cube: 1 m and 90° | longer edges weigh more |
 | $`\theta`$ | the regular tetrahedron's dihedral angle, $`\arccos(1/3)`$ | 70.528779° | — |
@@ -62,7 +62,7 @@ An angle's cosine: walk that far anticlockwise round a circle of radius 1 from i
 ### When it holds
 
 - **Finitely many straight-cut pieces.** With five pieces too ragged to have a volume, a ball becomes two balls (the Banach–Tarski paradox).
-- **The slide needs $`L \le 4W`$.** Otherwise the overhang misses the gap: halve a long strip across its length and stack the halves first.
+- **The slide needs $`W \le L \le 4W`$.** Turn the rectangle so its longer side is along the base; if $`L > 4W`$, halve it across its length and stack the halves first.
 - **Flat shapes: area alone decides.** Solids need equal volume and Dehn invariant, which suffice (Sydler, 1965).
 - **Any valid score will do.** One that tells two solids apart is enough.
 
@@ -99,7 +99,9 @@ using $`s^2 = L W`$. So the top rises from W to exactly s. The overhang and the 
 
 ### Step 3: every polygon becomes a square
 
-Diagonals split any polygon into triangles. Each becomes a rectangle (Step 1), and the slide, aimed at a 1 m side (halving and stacking first if needed, as in When it holds), makes each 1 m wide. Stack the strips and apply Step 2. With Step 0, any two polygons of equal area are scissors congruent.
+Diagonals split any polygon into triangles, and each becomes a rectangle (Step 1). Halve across its length and stack while its base exceeds 2 m. Halve across its width and lay end to end while its base is under 1 m.
+
+Once the base lies between 1 m and 2 m, Step 2's slide, cut to (1, 0), turns it into a 1 m wide strip. Stack the strips and apply Step 2. With Step 0, any two polygons of equal area are scissors congruent.
 
 ### Step 4: in space, a second number survives cutting
 
@@ -122,12 +124,12 @@ Stand the tetrahedron on a face. Its top, the base's centre and the midpoint of 
 On the radius-1 circle, the points at $`(n \pm 1)\theta`$ mirror each other in the line from the centre through the point at $`n\theta`$. So their midpoint lies on it, cos θ = 1/3 of the way out (a right-angled triangle, longest side 1, angle θ), and its distance right of the centre, the average of theirs, is a third of that point's: the first equation. Times $`3^{n+1}`$ it is the second.
 
 ```math
-\cos((n+1)\theta) + \cos((n-1)\theta) = \tfrac{2}{3}\cos(n\theta), \qquad\text{so}\qquad a_{n+1} = 2a_n - 9a_{n-1}, \qquad a_0 = a_1 = 1
+\cos((n+1)\theta) + \cos((n-1)\theta) = \tfrac{2}{3}\cos(n\theta), \qquad\text{so}\qquad a_{n+1} = 2a_n - 9a_{n-1}\;(n \ge 1), \qquad a_0 = a_1 = 1
 ```
 
 Each term leaves the same remainder on division by 3 as twice the one before (1, 1, −7, −23, 17, 241), and $`a_1 = 1`$, so none is divisible by 3.
 
-If θ were π times a fraction, some whole number $`n`$ of copies of θ would make whole turns. Then $`\cos(n\theta) = 1`$ and $`a_n = 3^n`$, divisible by 3. Impossible.
+If θ were π times a fraction, some positive whole number $`n \ge 1`$ of copies of θ would make whole turns. Then $`\cos(n\theta) = 1`$ and $`a_n = 3^n`$, divisible by 3. Impossible.
 
 ### Step 6: the cube and the tetrahedron differ
 
@@ -369,7 +371,7 @@ The two outputs match line for line.
 
 Lean proves the slide for every rectangle, and the score fact for cubes and regular tetrahedra of every size.
 
-- Take a rectangle of length $`L`$ and width $`W`$, and slide as in Step 2. Then the top rises by exactly $`s - W`$.
+- Take a rectangle of length $`L`$ and width $`W`$ ($`0 < W \le L`$), and slide as in Step 2. Then $`W \le s \le L`$ and the top rises by exactly $`s - W`$.
 - Take the same rectangle. Then the overhang fits beside the square exactly when $`L \le 4W`$.
 - The tetrahedron's dihedral angle θ is not a rational multiple of π.
 - So an angle score $`f`$ with $`f(\theta) = 1`$ exists.
@@ -495,18 +497,22 @@ theorem cube_and_tetrahedron_dehn_invariants_differ :
 theorem arccos_one_third_ne_rat_mul_pi (q : ℚ) : arccos (1 / 3) ≠ (q : ℝ) * π := by
   exact arccos_one_third_irrational q
 
-/-- Step 2: a rectangle of length L > 0 and width W > 0 has square side s = √(L W). Sliding the
-piece above the cut from (0, W) to (s, 0) far enough to bring its right edge from L to s
-(a fraction t = (L − s)/s of the cut, so a rise of t · W) raises the top by exactly s − W.
-The overhanging triangle, with legs L − s and s − W, fits beside the square (L − s ≤ s)
-exactly when L ≤ 4W. -/
-theorem rectangle_slide_lands_on_square {L W : ℝ} (hL : 0 < L) (hW : 0 < W) :
-    (L - √(L * W)) / √(L * W) * W = √(L * W) - W ∧
+/-- Step 2: a rectangle oriented with its longer side along the base (0 < W ≤ L) has square side
+s = √(L W), which lies between W and L so the cut from (0, W) to (s, 0) lands on the base.
+Sliding the piece above the cut far enough to bring its right edge from L to s (a fraction
+t = (L − s)/s of the cut, so a rise of t · W) raises the top by exactly s − W. The overhanging
+triangle, with legs L − s and s − W, fits beside the square (L − s ≤ s) exactly when L ≤ 4W. -/
+theorem rectangle_slide_lands_on_square {L W : ℝ} (hW : 0 < W) (hWL : W ≤ L) :
+    W ≤ √(L * W) ∧ √(L * W) ≤ L ∧
+      (L - √(L * W)) / √(L * W) * W = √(L * W) - W ∧
       (L - √(L * W) ≤ √(L * W) ↔ L ≤ 4 * W) := by
+  have hL : 0 < L := lt_of_lt_of_le hW hWL
   have hLW : 0 < L * W := mul_pos hL hW
   have hs : 0 < √(L * W) := Real.sqrt_pos.2 hLW
   have hs2 : √(L * W) ^ 2 = L * W := Real.sq_sqrt hLW.le
-  refine ⟨?_, ?_⟩
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · nlinarith
+  · nlinarith
   · field_simp
     nlinarith
   · constructor
@@ -516,8 +522,8 @@ theorem rectangle_slide_lands_on_square {L W : ℝ} (hL : 0 < L) (hW : 0 < W) :
 -- The roof-truss triangle with legs 3 m and 4 m has area 6 m², and its 3 m by 2 m rectangle too.
 example : (3 * 4 : ℚ) / 2 = 6 := by norm_num
 example : (3 * 2 : ℕ) = 6 := by decide
--- The slide condition L ≤ 4W holds for L = 3, W = 2.
-example : (3 : ℕ) ≤ 4 * 2 := by decide
+-- The slide condition W ≤ L ≤ 4W holds for L = 3, W = 2.
+example : (2 : ℕ) ≤ 3 ∧ (3 : ℕ) ≤ 4 * 2 := by decide
 
 /-- a_n = 3^n cos(nθ) in whole numbers: a_0 = a_1 = 1 and a_{n+1} = 2 a_n − 9 a_{n−1}. -/
 def a : ℕ → ℤ
@@ -536,7 +542,7 @@ example : (241 : ℤ) ≠ 3 ^ 5 := by decide
 #print axioms rectangle_slide_lands_on_square
 ```
 
-**Checked 2026-11-23 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'tetSeq_succ_modEq' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -585,11 +591,12 @@ example : (241 : ℤ) ≠ 3 ^ 5 := by decide
 
 ## Where this goes next
 
+- [Sine, cosine and tangent](../03-Trigonometry/01-right-triangle-trigonometry.md): opens Shelf 03 with the right-triangle cosine and sine ratios behind Step 5.
 - [The unit circle](../03-Trigonometry/02-radians-and-the-unit-circle.md): cosine for every angle, used in Step 5.
 - [Trig identities](../03-Trigonometry/03-trig-identities.md): the addition formulas, which extend Step 5's midpoint rule.
 - [Inverse trig](../03-Trigonometry/05-inverse-trig-and-solving-equations.md): arccos as an undo of cosine, returning one angle from a fixed window.
 
-Left open: Sydler's 1965 converse, that equal volume and Dehn invariant suffice, is stated here without proof.
+Left open: Sydler's 1965 converse, that equal volume and Dehn invariant suffice, is stated here without proof. Next, Shelf 03 opens with [Sine, cosine and tangent](../03-Trigonometry/01-right-triangle-trigonometry.md) to build systematically the cosine and inverse trig used in Step 5.
 
 ---
 

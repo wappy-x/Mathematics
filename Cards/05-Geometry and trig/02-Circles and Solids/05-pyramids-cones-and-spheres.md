@@ -119,7 +119,7 @@ Slice both 0.6 m up. The half-ball's slice has radius 0.800000 m, by Pythagoras,
 
 ### Step 6: the ball's skin, from thin pyramids
 
-Cover the skin with small patches and join each to the centre: thin pyramids, each with a patch for base and the radius for height. So the ball holds a third of skin times radius: $`S = 3V/r`$ = 3 × 4.188790 = 12.566371 square metres, which is $`4\pi r^2`$.
+Cover the skin with small patches and join each to the centre: thin pyramids, each with a patch for base and the radius for height. So the ball holds a third of skin times radius: $`S = 3V/r`$ = 3 × (4$`\pi`$/3) ÷ 1 = 12.566371 square metres, which is $`4\pi r^2`$.
 
 The patches curve, so the pieces are only nearly pyramids; calculus makes "nearly" exact. The code spins a many-sided outline of the ball into bands, each a big cone's wall minus a small one's: π times its two radii added, times its slant width. 1000 bands give 12.566336. The skin equals the 2 m cylinder's curved wall, as Archimedes found.
 
@@ -349,7 +349,7 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the one-third rule for every base shape and tip, the ball's volume for every radius, and the three-pyramid cube.
+Lean proves the one-third rule for every measurable base shape and every tip at positive height above it, the ball's volume for every radius, and the three-pyramid cube.
 
 - A pyramid or cone holds one third of base area times height, with height square on. The base may be any shape with an area, and the cone may lean.
 - A ball of radius $`r`$ holds four thirds of pi r cubed.
@@ -609,8 +609,11 @@ example : 4 / 3 * Real.pi * 2 ^ 3 = 8 * (4 / 3 * Real.pi * 1 ^ 3) := by ring
 
 - [Polyhedra](06-polyhedra-and-eulers-formula.md): flat-faced solids, the cube and pyramids among them, counted by corners, edges and faces.
 - [Every conic](../04-Coordinates%20and%20Curves/09-general-conics-and-dandelin-spheres.md): untangle a tilted equation by turning the axes, and the spheres that show a cone's slice is an ellipse.
+- [Volumes](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md): makes the slab sum exact for solids of revolution such as the cone and sphere.
+- [Surface area](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/04-surface-area-of-revolution.md): makes the thin-band sum exact, proving the ball's skin is $`4\pi r^2`$.
+- [Jordan content](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/07-jordan-content-and-fubini-in-n-dimensions.md): proves Fubini's theorem in any dimension, justifying Cavalieri's slice-by-slice rule for general solids.
 
-Cavalieri's principle and the ball's skin were checked here with ever thinner slabs and bands, not proved; calculus makes "ever thinner" an exact sum, in [Volumes](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md) and [Surface area](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/04-surface-area-of-revolution.md).
+This card cut a cube into flat-faced pyramids; next on this shelf, [Polyhedra](06-polyhedra-and-eulers-formula.md) asks what rule ties every flat-faced solid's corners, edges and faces together.
 
 ---
 

@@ -73,7 +73,7 @@ Look into a cube through its top face as if it were glass: the bottom face shows
 <details>
 <summary>Detailed proof: the view through one face has no crossings</summary>
 
-Put the eye just beyond one face, the window, and on the solid's side of every other face's plane; every sightline to the rest of the surface then enters through the window. A straight line meets a convex solid in one unbroken piece, so it crosses the surface at most twice: in through the window, then out. Each point of the other faces thus has its own sightline, and marking where sightlines pierce the window draws those faces inside it, nothing overlapping. Dented solids without tunnels flatten by stretching instead: Euler characteristic.
+Put the eye just beyond one face, the window, and on the solid's side of every other face's plane; every sightline to the rest of the surface then enters through the window. A straight line meets a convex solid in one unbroken piece, so it crosses the surface at most twice: in through the window, then out. Each point of the other faces thus has its own sightline, and marking where sightlines pierce the window draws those faces inside it, nothing overlapping. Dented solids without tunnels flatten by stretching instead: [Euler characteristic](../../17-Topology/03-Surfaces%20and%20Manifolds/04-euler-characteristic-and-triangulations.md).
 
 </details>
 
@@ -113,7 +113,7 @@ E is positive, so one over p plus one over q beats a half. Multiplying by 2pq gi
 
 At a corner of a convex solid the face angles add to less than 360°; the shortfall is the corner's **gap**. A regular p-sided face has corners of 180° × (p − 2) ÷ p: cut from one corner, it makes p − 2 triangles ([Triangles](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). On a regular solid q such corners must fit under 360°, which rearranges to (p − 2)(q − 2) < 4 again: the same five pairs, with no edge counted. Euclid ends the *Elements* this way.
 
-The gaps always total 720°. Each ball corner has a 12° gap, and 60 corners make 720°; so does each regular solid. Every ball corner touches one pentagon, so each pentagon carries 5 × 12° = 60°, and 720° ÷ 60° = 12.
+The gaps always total 720°; every regular solid does too. On this 32-panel football, each corner meets one pentagon and two hexagons, giving a 12° gap, and 60 corners make 720°. More generally, each pentagon corner sits 12° below a hexagon's 120°, so every pentagon contributes 5 × 12° = 60°, forcing 720° ÷ 60° = 12 pentagons.
 
 <details>
 <summary>The algebra behind the 720°, if you want it</summary>
@@ -356,6 +356,134 @@ ALL CHECKS PASS
 
 The two outputs match line for line.
 
+### Lean
+
+Lean proves the card's algebraic consequences of Euler's count for every polyhedron satisfying $`V - E + F = 2`$.
+
+- Any ball of pentagons and hexagons meeting three at every corner and two along every edge has $`P = 12`$ pentagons, regardless of how many hexagons it holds.
+- For $`p \ge 3`$ and $`q \ge 3`$, $`(p - 2)(q - 2) < 4`$ allows only the five pairs (3, 3), (4, 3), (3, 4), (5, 3) and (3, 5).
+- Together with $`pF = 2E`$, $`qV = 2E`$, $`E > 0`$ and $`V - E + F = 2`$, those five pairs fix the exact $`(V, E, F)`$ counts of the five regular solids.
+- The corner-angle bound $`q \times 180(p - 2)/p < 360`$ is equivalent to $`(p - 2)(q - 2) < 4`$, and Descartes's total gap $`V \times 360 - (2E - 2F) \times 180`$ equals $`(V - E + F) \times 360`$.
+
+Euler's formula $`V - E + F = 2`$ for convex polyhedra is carried from [Planar graphs](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md); the 3D corner coordinates and figure positions are left to the Python and Rust checks.
+
+```lean
+-- Polyhedra and Euler's formula: from V − E + F = 2, every ball of pentagons and hexagons meeting three at a corner has exactly 12 pentagons, only five (p, q) pairs allow a regular solid (giving the five Platonic tuples for V, E, F), the same five pairs come from corner angles under 360°, and Descartes's total corner gap equals (V − E + F) × 360° = 720°.
+import Mathlib.Tactic
+
+/-- Step 2: the twelve pentagons are forced. Take any polyhedron of P pentagons and H hexagons
+meeting three at every corner and two along every edge, with Euler count V − E + F = 2.
+Then F = P + H, 2E = 5P + 6H, 3V = 5P + 6H, and the hexagons cancel, forcing P = 12. -/
+theorem twelve_pentagons_forced {P H V E F : ℕ}
+    (hF : F = P + H) (hE : 2 * E = 5 * P + 6 * H) (hV : 3 * V = 5 * P + 6 * H)
+    (hEuler : (V : ℤ) - E + F = 2) :
+    P = 12 := by
+  omega
+
+/-- Step 3 (algebraic core): for whole numbers p ≥ 3 and q ≥ 3, (p − 2)(q − 2) < 4 holds
+for exactly five pairs: (3, 3), (4, 3), (3, 4), (5, 3), and (3, 5). -/
+theorem five_regular_pairs {p q : ℕ} (hp : 3 ≤ p) (hq : 3 ≤ q) :
+    (p - 2) * (q - 2) < 4 ↔
+      (p, q) = (3, 3) ∨ (p, q) = (4, 3) ∨ (p, q) = (3, 4) ∨
+        (p, q) = (5, 3) ∨ (p, q) = (3, 5) := by
+  constructor
+  · intro h
+    have hp1 : 1 ≤ p - 2 := by omega
+    have hq1 : 1 ≤ q - 2 := by omega
+    have hp5 : p ≤ 5 := by
+      have : p - 2 ≤ 3 := by nlinarith
+      omega
+    have hq5 : q ≤ 5 := by
+      have : q - 2 ≤ 3 := by nlinarith
+      omega
+    interval_cases p <;> interval_cases q <;> simp_all
+  · rintro (h | h | h | h | h) <;> cases h <;> decide
+
+/-- Step 3 (Euler's count): if a regular solid has p ≥ 3 sides per face, q ≥ 3 faces per corner,
+E > 0 edges, pF = 2E, qV = 2E, and V − E + F = 2, then (p, q, V, E, F) is one of the five
+Platonic solids: tetrahedron, cube, octahedron, dodecahedron, or icosahedron. -/
+theorem five_regular_polyhedra {p q V E F : ℕ} (hp : 3 ≤ p) (hq : 3 ≤ q) (hEpos : 0 < E)
+    (hF : p * F = 2 * E) (hV : q * V = 2 * E) (hEuler : (V : ℤ) - E + F = 2) :
+    (p, q, V, E, F) = (3, 3, 4, 6, 4) ∨
+      (p, q, V, E, F) = (4, 3, 8, 12, 6) ∨
+      (p, q, V, E, F) = (3, 4, 6, 12, 8) ∨
+      (p, q, V, E, F) = (5, 3, 20, 30, 12) ∨
+      (p, q, V, E, F) = (3, 5, 12, 30, 20) := by
+  have h1 : (p : ℤ) * q * (V - E + F) = 2 * p * q := by rw [hEuler]; ring
+  have h2 : (2 * p + 2 * q - p * q : ℤ) * E = 2 * p * q := by
+    have hFi : (p : ℤ) * F = 2 * E := by exact_mod_cast hF
+    have hVi : (q : ℤ) * V = 2 * E := by exact_mod_cast hV
+    nlinarith
+  have hpos : (0 : ℤ) < 2 * p + 2 * q - p * q := by nlinarith
+  have hlt : (p - 2) * (q - 2) < 4 := by
+    have : ((p - 2 : ℕ) : ℤ) * ((q - 2 : ℕ) : ℤ) < 4 := by
+      have hp' : ((p - 2 : ℕ) : ℤ) = (p : ℤ) - 2 := by omega
+      have hq' : ((q - 2 : ℕ) : ℤ) = (q : ℤ) - 2 := by omega
+      rw [hp', hq']; nlinarith
+    exact_mod_cast this
+  rcases (five_regular_pairs hp hq).1 hlt with h | h | h | h | h
+  · rcases Prod.mk.inj h with ⟨rfl, rfl⟩; left; simp only [Prod.mk.injEq, true_and]; exact ⟨by omega, by omega, by omega⟩
+  · rcases Prod.mk.inj h with ⟨rfl, rfl⟩; right; left; simp only [Prod.mk.injEq, true_and]; exact ⟨by omega, by omega, by omega⟩
+  · rcases Prod.mk.inj h with ⟨rfl, rfl⟩; right; right; left; simp only [Prod.mk.injEq, true_and]; exact ⟨by omega, by omega, by omega⟩
+  · rcases Prod.mk.inj h with ⟨rfl, rfl⟩; right; right; right; left; simp only [Prod.mk.injEq, true_and]; exact ⟨by omega, by omega, by omega⟩
+  · rcases Prod.mk.inj h with ⟨rfl, rfl⟩; right; right; right; right; simp only [Prod.mk.injEq, true_and]; exact ⟨by omega, by omega, by omega⟩
+
+/-- Step 4 (corner angles): q regular p-sided faces meet at less than 360° if and only if
+(p − 2)(q − 2) < 4, yielding the same five pairs with no edge counted. -/
+theorem corner_angle_condition {p q : ℕ} (hp : 3 ≤ p) (hq : 3 ≤ q) :
+    (q : ℚ) * (180 * ((p : ℚ) - 2) / p) < 360 ↔ (p - 2) * (q - 2) < 4 := by
+  have hp0 : (0 : ℚ) < p := by positivity
+  rw [mul_div_assoc', div_lt_iff₀ hp0]
+  have hp' : ((p - 2 : ℕ) : ℚ) = (p : ℚ) - 2 := by
+    have : 2 ≤ p := by omega
+    exact Nat.cast_sub this
+  have hq' : ((q - 2 : ℕ) : ℚ) = (q : ℚ) - 2 := by
+    have : 2 ≤ q := by omega
+    exact Nat.cast_sub this
+  constructor
+  · intro h
+    have : ((p - 2 : ℕ) : ℚ) * ((q - 2 : ℕ) : ℚ) < 4 := by rw [hp', hq']; nlinarith
+    exact_mod_cast this
+  · intro h
+    have : ((p - 2 : ℕ) : ℚ) * ((q - 2 : ℕ) : ℚ) < 4 := by exact_mod_cast h
+    rw [hp', hq'] at this
+    nlinarith
+
+/-- Step 4 (Descartes's total gap): every face's interior angles sum to (sides − 2) × 180°,
+and the sides of all F faces total 2E, so all face angles total (2E − 2F) × 180°. Subtracting
+from V × 360° leaves (V − E + F) × 360°, which is 720° whenever V − E + F = 2. -/
+theorem descartes_total_gap (V E F : ℤ) :
+    V * 360 - (2 * E - 2 * F) * 180 = (V - E + F) * 360 := by
+  ring
+
+-- The 32-panel football: 12 pentagons, 20 hexagons -> 180 sides, E = 90, V = 60, V − E + F = 2.
+example : 5 * 12 + 6 * 20 = 180 ∧ 180 / 2 = 90 ∧ 180 / 3 = 60 ∧ (60 : ℤ) - 90 + 32 = 2 := by
+  decide
+-- One corner of the football: 108° + 120° + 120° = 348°, gap 12°, 60 corners give 720°.
+example : (180 * (5 - 2) : ℚ) / 5 = 108 ∧ (180 * (6 - 2) : ℚ) / 6 = 120 := by norm_num
+example : 360 - (108 + 120 + 120) = 12 ∧ 60 * 12 = 720 ∧ 720 / (5 * 12) = 12 := by decide
+-- Broken cases from When it holds and What breaks if you drop a piece.
+example : (60 : ℤ) - 180 + 32 = -88 ∧ (40 : ℤ) - 60 + 20 = 0 := by decide
+example : (8 : ℤ) - 12 + 5 = 1 ∧ (16 : ℤ) - 24 + 12 = 4 ∧ (16 : ℤ) - 32 + 16 = 0 := by decide
+example : (16 : ℤ) - 24 + 11 = 3 ∧ (12 : ℤ) - 30 + 12 = -6 := by decide
+
+#print axioms twelve_pentagons_forced
+#print axioms five_regular_pairs
+#print axioms five_regular_polyhedra
+#print axioms corner_angle_condition
+#print axioms descartes_total_gap
+```
+
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+
+```
+'twelve_pentagons_forced' depends on axioms: [propext, Quot.sound]
+'five_regular_pairs' depends on axioms: [propext, Classical.choice, Quot.sound]
+'five_regular_polyhedra' depends on axioms: [propext, Classical.choice, Quot.sound]
+'corner_angle_condition' depends on axioms: [propext, Classical.choice, Quot.sound]
+'descartes_total_gap' depends on axioms: [propext, Quot.sound]
+```
+
 > [!TIP]
 > **Try changing**
 > Guess first, then run the Python; each assert compares two roads.
@@ -395,10 +523,10 @@ The two outputs match line for line.
 
 - [Euler characteristic](../../17-Topology/03-Surfaces%20and%20Manifolds/04-euler-characteristic-and-triangulations.md): the count on any surface; each tunnel lowers it by 2.
 - [Gauss-Bonnet](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/10-gauss-bonnet-theorem.md): the 720° of gaps, spread over a curved surface as curvature.
-- [Scissors congruence](08-scissors-congruence-and-dehn-invariant.md): equal-area polygons can always be cut into each other, but a cube and a tetrahedron of equal volume cannot.
-- [Pick's theorem](../07-Points%2C%20Convexity%20and%20Fractals/07-picks-theorem.md): count the dots inside and on the edge, and the area falls out.
+- [Scissors congruence](08-scissors-congruence-and-dehn-invariant.md): takes two of our regular solids, the cube and tetrahedron, and proves equal volume is not enough to cut one into the other.
+- [Pick's theorem](../07-Points%2C%20Convexity%20and%20Fractals/07-picks-theorem.md): applies Euler's formula to a grid triangulation to get any grid polygon's area by counting dots.
 
-Left open: why no way of cutting a surface into faces changes its count, which Euler characteristic settles.
+Left open: why no way of cutting a surface into faces changes its count, which [Euler characteristic](../../17-Topology/03-Surfaces%20and%20Manifolds/04-euler-characteristic-and-triangulations.md) settles. Next on this shelf, [Power of a point](07-power-of-a-point.md) returns to circles in the plane before [Scissors congruence](08-scissors-congruence-and-dehn-invariant.md) returns to polyhedra.
 
 ---
 

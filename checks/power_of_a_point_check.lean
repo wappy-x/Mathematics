@@ -10,7 +10,9 @@ local notation "Plane" => EuclideanSpace ℝ (Fin 2)
 /-- **Power of a point** (Euclid III.35 and III.36). Take a circle in the plane with centre O
 and radius r, and a point P at distance d = PO from the centre. If a straight line through P
 meets the circle at A and B, then the two distances from P multiply to the size of the
-point's power: PA × PB = |d² − r²|. A tangent counts its one point twice (A = B). -/
+point's power: PA × PB = |d² − r²|. This covers any secant or chord meeting the circle at
+distinct points A and B (when A = B, line[ℝ, A, B] is just {A}, forcing P = A); the tangent
+case from outside is proved next. -/
 theorem mul_dist_eq_abs_dist_center_sq_sub_radius_sq {ω : Sphere Plane} {P A B : Plane}
     (hP : P ∈ line[ℝ, A, B]) (hA : A ∈ ω) (hB : B ∈ ω) :
     dist P A * dist P B = |dist P ω.center ^ 2 - ω.radius ^ 2| := by
