@@ -59,7 +59,7 @@ The theorem:
 ### When it holds
 
 - **D is not a square.** Root 9 is 3, x is a fraction, and its list stops.
-- **Q divides D − P².** It keeps every new Q whole; if not, multiply top and bottom by Q.
+- **Q divides D − P².** It keeps every new Q whole; if not, multiply top and bottom by |Q| (Q without its sign).
 - **Exact arithmetic.** On a decimal, root 7 goes wrong at flip 26.
 
 ---
@@ -84,11 +84,21 @@ With all 1s:
 x = 1 + 1/x \quad\Rightarrow\quad x^2 - x - 1 = 0 \quad\Rightarrow\quad x = (1 + \sqrt{5})/2 = 1.6180339887
 ```
 
-Any block works. The stops (fractions from cutting the list short) obey new top = step × last top + the top before, and any number may serve as the last step. With the tail y as the step after the block, y equals a fraction in y; clearing the bottom gives a whole-number quadratic. y is no fraction, since a fraction's list stops. A front part, like root 7's 2, is undone by x = a + 1/y.
+Any block works. The stops (fractions from cutting the list short) obey new top = step × last top + the top before. Any number may serve as the last step.
+
+With the tail y as the step after the block, y equals a fraction in y. Clearing the bottom gives a whole-number quadratic.
+
+y is no fraction, since a fraction's list stops. A front part, like root 7's 2, is undone by x = a + 1/y.
 
 ### Step 2: every quadratic root takes the shape (P + root D)/Q
 
-The quadratic formula gives each root as (P + root D)/Q: P is minus the middle coefficient, D is middle² − 4 × first × last, and Q is twice the first (the other root: P and Q change sign). Then D − P² = −4 × first × last, a multiple of Q.
+The quadratic formula gives each root as (P + root D)/Q, where:
+
+- P is minus the middle coefficient,
+- D is middle² − 4 × first × last,
+- Q is twice the first.
+
+For the other root, P and Q change sign. Then D − P² = −4 × first × last, a multiple of Q.
 
 ### Step 3: the flip keeps the shape
 
@@ -102,7 +112,11 @@ New Q is whole, because D − (new P)² is D − P² plus multiples of Q.
 
 ### Step 4: the pairs are trapped in a box
 
-Every (P + root D)/Q has a **mirror**, (P − root D)/Q: the other root of its quadratic. The flip treats the mirror the same way, and after a few steps the mirror is negative (fold below). The number is above 1 (one over a leftover below 1), and it minus its mirror is 2 root D/Q, so Q is positive. As Q × new Q = D − (new P)²:
+Every (P + root D)/Q has a **mirror**, (P − root D)/Q: the other root of its quadratic. The flip treats the mirror the same way, and after a few steps the mirror is negative (fold below).
+
+Once negative, the mirror stays negative: subtracting a step of at least 1 and flipping gives a number between −1 and 0. The number is above 1 (one over a leftover below 1), and it minus its mirror is 2 root D/Q, so Q is positive. One flip later the same holds, so new Q is positive too.
+
+As Q × new Q = D − (new P)², with both positive:
 
 - new P lies strictly between −root D and root D,
 - new Q is a whole number from 1 to D.
@@ -116,7 +130,7 @@ The stops rule builds x from the tail and the last two stops. Swapping root D fo
 
 ### Step 5: the loop closes
 
-The box holds only so many pairs, so one comes back. The code's 13,228 starts all loop within 4 steps.
+The box holds only so many pairs, so one comes back. Every one of the code's 13,228 starts enters its repeating loop within 4 steps.
 
 ---
 
@@ -929,13 +943,14 @@ end PeriodicContinuedFractions
 
 ## Where this goes next
 
+- [Farey fractions and Ford circles](04-farey-sequences-and-ford-circles.md): the next card. Neighbouring fractions, like the stops 5/2 and 8/3, sit exactly one over the product of their bottoms apart.
 - [Pell's equation](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/01-pell-and-continued-fractions-revisited.md): the square-root case in full, and why block ends solve it.
 - [Pell's equation](../../03-Algebra/10-For%20the%20Curious/04-pell-equation-and-root-two.md): root 2 alone, in the algebra wing.
 - [Hurwitz's theorem](05-hurwitz-approximation-theorem.md): why the golden ratio, all 1s, is the hardest number to trap with fractions.
 
-The shelf: [Binary quadratic forms](01-binary-quadratic-forms.md), [Reduced forms](02-reduced-forms-and-class-numbers.md), [Farey fractions and Ford circles](04-farey-sequences-and-ford-circles.md).
+Earlier on the shelf: [Binary quadratic forms](01-binary-quadratic-forms.md), [Reduced forms](02-reduced-forms-and-class-numbers.md).
 
-Left open: which numbers have steps that follow a rule without repeating, like e?
+Left open: root 7's stops 5/2 and 8/3 cross-multiply to 8 × 2 − 5 × 3 = 1. Why do neighbouring fractions do that, and how close does it let a fraction get to any irrational?
 
 ---
 

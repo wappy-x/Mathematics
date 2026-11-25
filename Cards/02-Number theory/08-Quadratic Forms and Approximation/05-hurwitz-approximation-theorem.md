@@ -8,7 +8,9 @@
 
 22/7 is off from π by 0.00126. Hurwitz's yardstick at bottom number 7 is 1/(√5 × 7²) = 0.00913, so 22/7 lands far inside it.
 
-Every irrational number (no fraction, such as π or √2) has infinitely many fractions inside that yardstick, and √5 is the best constant. Score a fraction by q² times its error. For the golden ratio φ = 1.6180340, the stops (cut-offs of its continued fraction) 8/5, 13/8 and 21/13 score 0.4508, 0.4458 and 0.4477, closing in on 1/√5 = 0.4472 from both sides.
+Every irrational number (no fraction, such as π or √2) has infinitely many fractions inside that yardstick, and √5 is the best constant.
+
+Score a fraction by q² times its error. Take the golden ratio φ = 1.6180340 and its stops (cut-offs of its continued fraction) 8/5, 13/8 and 21/13. They score 0.4508, 0.4458 and 0.4477, closing in on 1/√5 = 0.4472 from both sides.
 
 **Every irrational number α has infinitely many fractions p/q with an error below 1/(√5 q²), and for the golden ratio no constant bigger than √5 works.**
 
@@ -645,14 +647,16 @@ example : Nat.fib 7 = 13 ∧ Nat.fib 6 = 8 ∧ Nat.fib 9 = 34 ∧ Nat.fib 8 = 21
 ## What this builds on
 
 - [Farey fractions and Ford circles](04-farey-sequences-and-ford-circles.md): neighbours with bc − ad = 1, their gap 1/(bd) and the mediant between them.
-- [Periodic continued fractions](03-periodic-continued-fractions.md): φ = [1; 1, 1, …], whose stops are ratios of Fibonacci numbers.
+- [Periodic continued fractions](03-periodic-continued-fractions.md): every continued-fraction step of φ is 1, so its stops are ratios of Fibonacci numbers.
 - [Continued fractions](../07-For%20the%20Curious/05-continued-fractions-and-leap-years.md): stops, the best fractions for their size.
 
 ## Where this goes next
 
 - [Chasing an algebraic number with fractions](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/10-diophantine-approximation-liouville-to-roth.md): replace q² by a higher power of q; which numbers still have infinitely many fractions that close?
 
-Left open: set φ and its relatives aside, and the next hardest numbers allow √8 for √5. Why do the constants climb in a ladder?
+This card closes Number theory. The link above carries rational approximation further, into a later wing. The reading order goes on with [Letters for numbers](../../03-Algebra/01-Letters%20and%20Equations/01-letters-for-numbers.md), the first card of Algebra.
+
+Left open: set φ and its relatives aside, and the next hardest numbers allow √8 for √5. Why do the constants climb in a ladder? Markov answered this in 1879–1880 with binary quadratic forms, the kind that open this shelf. No card in the library covers it yet.
 
 ---
 

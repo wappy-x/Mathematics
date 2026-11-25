@@ -12,13 +12,13 @@ Neighbours 1/3 and 2/5 cross-multiply to 2 × 3 − 1 × 5 = 1, and their gap is
 
 Each new mark at a higher order is the **mediant** of its neighbours, tops and bottoms added: 1/3 and 1/2 give (1 + 1)/(3 + 2) = 2/5.
 
-**Farey neighbours a/b and c/d always have b × c − a × d = 1, so their gap is 1/(b × d), their mediant is the first fraction between them, and their circles of radius 1/(2b²) and 1/(2d²) just touch.**
+**Farey neighbours a/b and c/d have b × c − a × d = 1, so their gap is 1/(b × d), their mediant comes first between them, and their Ford circles just touch.**
 
 **What kind of fact this is:** a theorem, proved in Why it works. Step 4 is Dirichlet's approximation theorem.
 
 <p align="center"><img src="../figures/farey-sequences-and-ford-circles.svg" alt="Ford circles on the eleven order-5 fractions, drawn to scale; the circles on 1/3 and 2/5 are highlighted and touch at the point (13/34, 1/34)" width="420"></p>
 
-Each fraction p/q carries a **Ford circle** of radius 1/(2q²); those on 1/3 and 2/5 touch at (13/34, 1/34).
+Each fraction p/q carries a **Ford circle** of radius 1/(2q²). It sits on the number line at p/q, so its centre is (p/q, 1/(2q²)). The circles on 1/3 and 2/5 touch at (13/34, 1/34).
 
 ---
 
@@ -562,6 +562,8 @@ example : (1 * 4 - 2 * 2 : ℤ) = 0 := by norm_num
 
 - [Hurwitz's theorem](05-hurwitz-approximation-theorem.md): 1/q² tightens to 1/(√5 × q²); the golden ratio blocks more.
 - [The large sieve](../../21-Algebraic%20and%20analytic%20number%20theory/04-Sieves%20and%20Prime%20Gaps/03-the-large-sieve.md): spread-out Farey fractions limit how numbers crowd into remainder classes.
+
+Left open: Step 4 traps every irrational within 1/q², infinitely often. How far can that bound shrink and still hold for every irrational?
 
 ---
 

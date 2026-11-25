@@ -33,10 +33,10 @@ A form $`(a, b, c)`$ with discriminant $`D = b^2 - 4ac < 0`$ and $`a > 0`$ is **
 -a < b \le a \le c, \quad \text{and } b \ge 0 \text{ when } a = c
 ```
 
-The class number counts reduced forms of discriminant $`D`$ with no common factor ($`\#`$ means "how many"):
+The class number counts **primitive** reduced forms of discriminant $`D`$: forms whose three numbers share no common factor above 1 ($`\#`$ means "how many"):
 
 ```math
-h(D) = \#\{(a, b, c) \text{ reduced} : b^2 - 4ac = D\}
+h(D) = \#\{(a, b, c) \text{ reduced and primitive} : b^2 - 4ac = D\}
 ```
 
 **Read it aloud:** $`b`$ is above minus $`a`$ and at most $`a`$, $`a`$ is at most $`c`$, and on a tie $`b`$ is not negative.
@@ -45,14 +45,14 @@ h(D) = \#\{(a, b, c) \text{ reduced} : b^2 - 4ac = D\}
 | --- | --- | --- | --- |
 | $`a, c`$ | outer numbers | 3 and 7, ending at 2 and 3 | needs larger $`c`$ |
 | $`b`$ | middle number | 8, ending at 2 | above $`a`$: not reduced |
-| $`D`$ | discriminant, $`b^2 - 4ac`$ | $`-20`$ throughout | more reduced forms |
+| $`D`$ | discriminant, $`b^2 - 4ac`$ | $`-20`$ throughout | toward 0: fewer forms; more negative: usually more, not steadily ($`h(-163) = 1`$) |
 | $`k`$ | shift size | $`k = -1`$, then $`k = 1`$ | each step moves $`b`$ by $`2a`$ |
 | $`h(D)`$ | number of families | 2 | — |
 
 ### When it holds
 
-- **Determinant 1.** A plain swap $`x \leftrightarrow y`$, determinant $`-1`$, merges families.
-- **Positive forms.** For $`D > 0`$ reduction loops: see [Periodic continued fractions](03-periodic-continued-fractions.md).
+- **Determinant 1.** A renaming $`x, y \to px + qy, rx + sy`$ must have **determinant** $`ps - qr = 1`$, the cross number of [Binary quadratic forms](01-binary-quadratic-forms.md). A plain swap $`x \leftrightarrow y`$ has determinant $`-1`$ and merges families.
+- **Positive forms.** For $`D > 0`$, reduction does not stop at one form; it runs round a loop. The same kind of loop appears in the next card, [Periodic continued fractions](03-periodic-continued-fractions.md).
 - **One sign at each edge.** $`b = -a`$ is one shift from $`b = a`$, and on a tie a turn flips $`b`$. Without both rules, $`(2, -2, 3)`$ and $`(3, -2, 3)`$ count twice.
 - **Primitive only.** $`(2, 0, 4)`$, twice $`(1, 0, 2)`$, is not counted: $`h(-32) = 2`$.
 
@@ -632,11 +632,11 @@ example : reducedList (-163) 8 = {(1, 1, 41)} := by decide +kernel
 
 ## Where this goes next
 
-- [Periodic continued fractions](03-periodic-continued-fractions.md): the loop when $`D > 0`$.
+- [Periodic continued fractions](03-periodic-continued-fractions.md): the shelf turns from forms to approximation; a root of a quadratic gives a continued fraction that repeats.
 - [The class number formula](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/06-class-number-formula-and-the-dedekind-zeta-function.md): reduced forms return as ideal classes.
 - [Composition and genus](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/11-gauss-composition-and-genus-theory.md): multiplying binary quadratic forms is multiplying ideal classes.
 
-Left open: families combine into a group. By what rule?
+Left open: families combine into a group. By what rule? [Composition and genus](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/11-gauss-composition-and-genus-theory.md) answers that in a later wing. This shelf turns next to continued fractions.
 
 ---
 
