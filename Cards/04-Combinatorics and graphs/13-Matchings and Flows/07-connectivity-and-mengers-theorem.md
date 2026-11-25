@@ -57,7 +57,9 @@ Station form, for $`S`$ and $`T`$ not joined by a line:
 
 **Read it aloud:** routes sharing no station on the way number as many as the stations that must close.
 
-A line $`e`$ is a **bridge** when $`c(G - e) > c(G)`$. That happens exactly when $`e`$ lies on no loop: a loop through $`e`$ is a detour round it. A station is a **cut vertex** when removing it, with its lines, adds a piece. For a whole network, the connectivities are the fewest lines, or stations, whose removal splits it: a bridge makes the first 1, a cut vertex the second.
+A line $`e`$ is a **bridge** when $`c(G - e) > c(G)`$. That happens exactly when $`e`$ lies on no loop: a loop through $`e`$ is a detour round it. A station is a **cut vertex** when removing it, with its lines, adds a piece.
+
+For a whole network, the connectivities are the fewest lines, or stations, whose removal splits it: a bridge makes the first 1, a cut vertex the second.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -92,11 +94,15 @@ Suppose $`k`$ routes share no line. A closed line lies on at most one of them, s
 
 One unit along each of $`k`$ line-disjoint routes is a legal flow of value $`k`$.
 
-The other way round, use Ford-Fulkerson, the method of [Flows](05-flow-networks-and-ford-fulkerson.md): push units along any route with room left. With whole-number capacities it ends at a whole-number flow, so each line carries 0 or 1. From $`S`$, follow lines carrying a unit; every unit entering a station leaves it, so the walk reaches $`T`$. Remove that route's units and repeat. A flow of value $`k`$ peels into $`k`$ routes, no line used twice.
+The other way round, use Ford-Fulkerson, the method of [Flows](05-flow-networks-and-ford-fulkerson.md): push units along any route with room left. With whole-number capacities it ends at a whole-number flow, so each line carries 0 or 1.
+
+From $`S`$, follow lines carrying a unit; every unit entering a station leaves it, so the walk reaches $`T`$. Remove that route's units and repeat. A flow of value $`k`$ peels into $`k`$ routes, no line used twice.
 
 ### Step 3: a cheapest cut is a smallest set of closures
 
-A cut splits the stations into an $`S`$ side and a $`T`$ side; its price is the number of lines crossing. Closing them separates, so every price is at least $`\lambda(S,T)`$. Conversely, after any separating closures, put on the $`S`$ side every station $`S`$ still reaches. Every line leaving that side is closed, so that cut costs no more than the closures. The cheapest cut costs exactly $`\lambda(S,T)`$.
+A cut splits the stations into an $`S`$ side and a $`T`$ side; its price is the number of lines crossing. Closing them separates, so every price is at least $`\lambda(S,T)`$.
+
+Conversely, after any separating closures, put on the $`S`$ side every station $`S`$ still reaches. Every line leaving that side is closed, so that cut costs no more than the closures. The cheapest cut costs exactly $`\lambda(S,T)`$.
 
 ### Step 4: glue with max-flow min-cut
 
@@ -1187,9 +1193,10 @@ end ConnectivityAndMengersTheorem
 
 ## Where this goes next
 
-- [Graph algorithms as code](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/09-graph-algorithms-in-practice.md): finding every bridge and cut vertex of a large network in one sweep, Tarjan's method, instead of trying each line and station in turn.
+- [Tutte's theorem](08-tutte-one-factor-theorem.md): uses bridges from this card to prove Petersen's theorem, and extends matching tests beyond two-sided graphs.
+- [Graph algorithms as code](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/09-graph-algorithms-in-practice.md): Tarjan's one-pass depth-first search with low-link numbers, done there for directed strongly connected pieces; the same low-link idea finds every bridge and cut vertex in one sweep.
 
-Trying every line and station in turn finds the weak spots here, and that stops being affordable long before a national rail map.
+Trying every line and station in turn stops being affordable on a national rail map. Next on this shelf, [Tutte's theorem](08-tutte-one-factor-theorem.md) uses bridges to decide when any graph—two-sided or not—pairs up completely.
 
 ---
 

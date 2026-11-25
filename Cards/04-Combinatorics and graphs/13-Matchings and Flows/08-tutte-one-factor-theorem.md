@@ -156,7 +156,11 @@ Remove any set $`S`$ and compare applicants with posts in each piece left.
 
 At most: each odd piece of $`G - S`$ leaves a dot unmatched unless it borrows from $`S`$, so at least $`o(G - S) - \lvert S\rvert`$ dots stay unmatched.
 
-At least: let $`k`$ be the largest value of $`o(G - S) - \lvert S\rvert`$. Only odd pieces change the parity of the dots left, so $`k`$ and the dot count are both even or both odd. Add $`k`$ new dots joined to everything, for an even total. The bigger graph passes Tutte's test: a set missing a new dot leaves one piece, which is even if the set is empty, and a set holding all of them gains $`k`$ dots. So it pairs up. Deleting the new dots loses at most $`k`$ pairs, leaving $`(\lvert V\rvert - k)/2`$.
+At least: let $`k`$ be the largest value of $`o(G - S) - \lvert S\rvert`$. Only odd pieces change the parity of the dots left, so $`k`$ and the dot count are both even or both odd.
+
+Add $`k`$ new dots joined to everything, for an even total. A set missing a new dot leaves one piece, which is even if the set is empty; a set holding all of them gains $`k`$ dots.
+
+So the bigger graph passes Tutte's test and pairs up. Deleting the new dots loses at most $`k`$ pairs, leaving $`(\lvert V\rvert - k)/2`$.
 
 </details>
 
@@ -972,6 +976,7 @@ example : (12 + 2 - 4) / 2 = 5 := by norm_num     -- Hall's hotel, S = front des
 
 - [Matchings](01-matchings-and-augmenting-paths.md): matchings, perfect matchings, and $`\nu(G)`$.
 - [Hall's theorem](02-halls-marriage-theorem.md): the two-sided test that Step 5 shows is a special case.
+- [How many cuts break a network](07-connectivity-and-mengers-theorem.md): what a bridge is, used in Petersen's theorem.
 - [Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md): two-sided graphs, and the odd loops that make general graphs harder.
 
 ## Where this goes next

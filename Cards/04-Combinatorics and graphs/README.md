@@ -221,7 +221,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 13 · Matchings and Flows · 9 cards
 
-*Matchings and augmenting paths, Hall's theorem, Konig's theorem and vertex covers, stable matching by Gale-Shapley, flow networks with Ford-Fulkerson, the max-flow min-cut theorem, and connectivity with Menger's theorem.*
+*Matchings and augmenting paths, Hall's theorem, Konig's theorem and vertex covers, stable matching by Gale-Shapley, flow networks with Ford-Fulkerson, the max-flow min-cut theorem, connectivity with Menger's theorem, Tutte's theorem for general graphs, and Edmonds' blossom algorithm.*
 
 1. [Matchings: pair up vertices with no one used twice, and a matching is largest exactly when no alternating route can improve it](13-Matchings%20and%20Flows/01-matchings-and-augmenting-paths.md)
 2. [Hall's theorem: everyone on the left can be matched exactly when no group of them shares too few options](13-Matchings%20and%20Flows/02-halls-marriage-theorem.md)

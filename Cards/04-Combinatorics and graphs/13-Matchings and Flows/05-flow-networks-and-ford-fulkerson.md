@@ -95,7 +95,9 @@ Where no road runs from $`u`$ to $`v`$, the leftover is $`f(v,u)`$ alone: a **ba
 
 ### Step 0: room to push includes the right to undo
 
-After 1 load on s → A → B → t, the road B → t has 2 spare, and a forward-only method ends at 5. But the load on A → B gives the stub B → A a leftover of 1. Pushing 1 along s → B → A → t adds a load on s → B, cancels the load on A → B and adds one on A → t: value 6, cross road empty.
+After 1 load on s → A → B → t, the road B → t has 2 spare, and a forward-only method ends at 5. But the load on A → B gives the stub B → A a leftover of 1.
+
+Pushing 1 along s → B → A → t adds a load on s → B, cancels the load on A → B, and adds one on A → t. The value reaches 6 and the cross road is empty.
 
 ### Step 1: a push keeps the plan legal and adds the bottleneck to the value
 
@@ -124,9 +126,11 @@ Collect the same sum road by road. A road inside $`S`$ counts once as output and
 
 ### Step 3: the method stops
 
-With whole-number capacities every push raises the value by at least 1, and Step 2 caps it at 6, the price of {s}. So at most six pushes happen before no augmenting route remains. Every load stays a whole number, and the method ends at a best plan (Step 4). So whole-number capacities always have a best plan in whole loads: the **integrality theorem**, which lets flows count matchings.
+With whole-number capacities every push raises the value by at least 1, and Step 2 caps it at 6, the price of {s}. So at most six pushes happen before no augmenting route remains.
 
-That bound grows with the capacities. The Edmonds-Karp rule bounds the pushes by the numbers of junctions and roads alone; that count is on [Graph algorithms as code](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/09-graph-algorithms-in-practice.md).
+Every load stays a whole number, and the method ends at a best plan (Step 4). So whole-number capacities always have a best plan in whole loads: the **integrality theorem**, which lets flows count matchings.
+
+That bound grows with the capacities. The Edmonds-Karp rule bounds the pushes by the numbers of junctions and roads alone (Edmonds and Karp, 1972). [Graph algorithms as code](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/09-graph-algorithms-in-practice.md) proves the round bound for Dinic's layered version and compares both on a 1,200-station city.
 
 ### Step 4: the diamond ends at 6, with its certificate beside it
 
@@ -866,8 +870,8 @@ end FordFulkerson
 ## Where this goes next
 
 - [Max-flow min-cut](06-max-flow-min-cut.md): the best plan and the cheapest split are always the same number.
-- [Graph algorithms as code](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/09-graph-algorithms-in-practice.md): what the shortest-route rule costs, and faster methods.
-- [Network flows](../../15-Optimization/04-Linear%20Programming/06-network-flows-as-linear-programs.md): the same problem as a linear program, with the cut as its dual.
+- [Graph algorithms as code](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/09-graph-algorithms-in-practice.md): Dinic's layered shortest-route method, its round bound, and how it beats plain Edmonds-Karp.
+- [Network flows](../../15-Optimization/04-Linear%20Programming/06-network-flows-as-linear-programs.md): shipping and flow problems as linear programs, and why whole supplies and capacities still give whole answers.
 
 A plan worth 6 sits beside a split priced 6. Whether the two must always meet is [Max-flow min-cut](06-max-flow-min-cut.md).
 

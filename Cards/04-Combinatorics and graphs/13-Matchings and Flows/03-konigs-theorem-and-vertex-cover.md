@@ -14,7 +14,7 @@ Three, at W4, E1 and E2: every street meets one of them. Two never do. The stree
 
 The two arguments meet at three. A set of streets no two of which share a junction is a **matching**. A set of junctions meeting every street is a **vertex cover**, or **cover** for short.
 
-Dénes Kőnig proved in 1931 that they always meet in a **bipartite** graph: one whose dots split into two sides with every line crossing between them, as the river forces here ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)).
+Dénes Kőnig proved in 1931 that they always meet in a **bipartite** graph ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)). Its dots split into two sides with every line crossing between them, as the river forces here.
 
 **In a bipartite graph the largest matching and the smallest vertex cover have the same size, so a matching is a receipt proving no cover can be cheaper.**
 
@@ -145,7 +145,9 @@ A largest matching reaches $`2\nu`$ junctions with $`\nu`$ streets: 6 with 3. Gi
 <details>
 <summary>Detailed proof: why an edge cover cannot beat n − ν</summary>
 
-In a smallest edge cover, every street has an end no other street of the cover reaches, or it could be dropped. So each piece of the cover is a **star**: a centre with streets out to ends touching nothing else. A star has one street fewer than junctions, so $`\rho`$ streets over $`n`$ junctions make $`n - \rho`$ stars. One street per star is a matching: $`\nu \ge n - \rho`$. With Step 4's bound $`\rho \le n - \nu`$, this gives $`\nu + \rho = n`$.
+In a smallest edge cover, every street has an end no other street of the cover reaches, or it could be dropped. So each piece of the cover is a **star**: a centre with streets out to ends touching nothing else.
+
+A star has one street fewer than junctions, so $`\rho`$ streets over $`n`$ junctions make $`n - \rho`$ stars. One street per star is a matching: $`\nu \ge n - \rho`$. With Step 4's bound $`\rho \le n - \nu`$, this gives $`\nu + \rho = n`$.
 
 </details>
 
@@ -950,7 +952,7 @@ example : ∀ C : Finset (Fin 3), (∀ s ∈ ring, s.1 ∈ C ∨ s.2 ∈ C) → 
 
 - **Sensor placement.** A sensor at a pipe junction watches every pipe meeting it. The cheapest sensor set is a smallest cover.
 - **Tables of zeros and ones.** Kőnig's own form: the fewest rows and columns crossing out every 1 equals the most 1s with no two in a row or column. The assignment methods of [The assignment problem](../../14-Applied%20and%20computational/05-Operations%20Research/05-assignment-and-the-hungarian-algorithm.md) run on that reading.
-- **Where the ease stops.** On a general graph no fast method for a smallest cover is known (Karp's list). Two sides make it easy.
+- **Where the ease stops.** On a general graph no fast method for a smallest cover is known ([Karp's list](../../24-Computability%20and%20complexity/03-Time%20Complexity/05-karps-problems-and-hardness-recipes.md)). Two sides make it easy.
 
 > **Say it back**
 > A matching is streets sharing no junction; a cover is junctions meeting every street. Each matched street needs its own guard, so covers are never smaller. On two sides, alternating walks from a largest matching give a cover of equal size: 3 here. A cover's leftovers are independent, so 5 + 3 = 8; a largest matching and a smallest edge cover also sum to 8.
@@ -959,17 +961,19 @@ example : ∀ C : Finset (Fin 3), (∀ s ∈ ring, s.1 ∈ C ∨ s.2 ∈ C) → 
 
 ## What this builds on
 
+- [Matchings](01-matchings-and-augmenting-paths.md): matchings and alternating paths, which Step 2 uses to build the cover.
 - [Hall's theorem](02-halls-marriage-theorem.md): the shortfall that fixes the matching number and hands Step 3 its cover.
 
 ## Where this goes next
 
+- [Stable matching](04-stable-matching-gale-shapley.md): stays on two-sided graphs, but pairs by each side's preferences rather than matching size.
 - [The assignment problem](../../14-Applied%20and%20computational/05-Operations%20Research/05-assignment-and-the-hungarian-algorithm.md): the cover as the fewest lines through every zero of a cost table, which tells the method where to move.
 - [Approximation](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/06-approximation-algorithms.md): both ends of a matching as a cover at most twice the smallest, on graphs without two sides.
 - [Karp's list](../../24-Computability%20and%20complexity/03-Time%20Complexity/05-karps-problems-and-hardness-recipes.md): smallest vertex cover as one of Karp's original hard problems, once the two sides are gone.
 - [Parameterised complexity](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/05-parameterised-complexity.md): how fast a small cover can still be found on a general graph, with the cover's size as the dial.
-- [Dilworth's theorem](../15-Orders%20and%20Set%20Systems/01-dilworths-theorem.md): the fewest chains that cover an order equals the most items no two of which compare.
+- [Dilworth's theorem](../15-Orders%20and%20Set%20Systems/01-dilworths-theorem.md): Kőnig's matching–cover equality applied to a partial order, where chains cover the order and incomparable items play the role of an independent set.
 
-The river makes a smallest cover easy to find; later cards ask how hard it is without one.
+The river makes a smallest cover easy to find; later wings ask how hard it is without one. Next on this shelf, [Stable matching](04-stable-matching-gale-shapley.md) keeps two sides but replaces matching size with each side's preferences.
 
 ---
 

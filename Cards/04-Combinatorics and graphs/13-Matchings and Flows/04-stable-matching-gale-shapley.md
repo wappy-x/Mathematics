@@ -59,7 +59,7 @@ The theorem is about **deferred acceptance**, the propose-and-hold procedure. Wi
 \text{proposals} \le n^2 - n + 1, \qquad M_D \text{ is stable}, \qquad M_D(d) \succeq_d M(d) \text{ and } M(h) \succeq_h M_D(h) \text{ for every stable } M
 ```
 
-**Read it aloud:** it stops within n squared minus n plus one proposals, its result is stable, and against any stable placement every doctor does at least as well, every hospital at least as badly.
+**Read it aloud:** it stops within n squared minus n plus one proposals, and its result is stable. Against any stable placement, every doctor does at least as well and every hospital at least as badly.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -91,7 +91,9 @@ A hospital keeps its best offer so far and turns the rest away, but may drop the
 
 No doctor asks the same hospital twice: at most 3 × 3 = 9 proposals.
 
-Sharper: once asked, a hospital holds someone for good. A doctor reaching her last choice was turned away by the other $`n - 1`$ hospitals, which therefore hold the other $`n - 1`$ doctors, so the procedure ends when she is held. So only one doctor ever reaches her last choice. The others make at most $`n - 1`$ proposals each and she makes $`n`$: at most $`(n - 1)^2 + n = n^2 - n + 1`$, which is 7 here.
+Sharper: once asked, a hospital holds someone for good. A doctor reaching her last choice was turned away by the other $`n - 1`$ hospitals. Those hospitals therefore hold the other $`n - 1`$ doctors, so the procedure ends when she is held.
+
+So only one doctor ever reaches her last choice. The others make at most $`n - 1`$ proposals each and she makes $`n`$: at most $`(n - 1)^2 + n = n^2 - n + 1`$, which is 7 here.
 
 Across all 46656 ways six people could rank each other, the code finds 7 reached, never passed.
 
@@ -112,7 +114,9 @@ Call a hospital **achievable** for a doctor when some stable placement pairs the
 
 **Claim.** With doctors proposing, no doctor is rejected by a hospital achievable for her.
 
-Take the first rejection, in time, of a doctor $`d`$ by a hospital $`h`$ achievable for her, through a stable $`M`$ with $`M(d) = h`$. Then $`h`$ keeps some $`d'`$ with $`d' \succ_h d`$. Let $`h' = M(d')`$, so $`h' \ne h`$. Having reached $`h`$, $`d'`$ was rejected by every hospital he ranks above $`h`$. If $`h' \succ_{d'} h`$, that includes $`h'`$, achievable for him through $`M`$: an earlier rejection of the same kind, impossible. So $`h \succ_{d'} M(d')`$, and with $`d' \succ_h M(h)`$ the pair $`(d', h)`$ blocks $`M`$. Contradiction.
+Take the first rejection, in time, of a doctor $`d`$ by a hospital $`h`$ achievable for her, through a stable $`M`$ with $`M(d) = h`$. Then $`h`$ keeps some $`d'`$ with $`d' \succ_h d`$. Let $`h' = M(d')`$, so $`h' \ne h`$.
+
+Having reached $`h`$, $`d'`$ was rejected by every hospital he ranks above $`h`$. If $`h' \succ_{d'} h`$, that includes $`h'`$, achievable for him through $`M`$: an earlier rejection of the same kind, impossible. So $`h \succ_{d'} M(d')`$, and with $`d' \succ_h M(h)`$ the pair $`(d', h)`$ blocks $`M`$. Contradiction.
 
 **Doctors get their best.** Working down her list, never rejected by an achievable hospital, each doctor ends at her best achievable one: $`M_D(d) \succeq_d M(d)`$ for every stable $`M`$.
 
@@ -124,7 +128,7 @@ Take the first rejection, in time, of a doctor $`d`$ by a hospital $`h`$ achieva
 
 ### Step 5: the other side gets its worst
 
-If a stable placement gave some hospital a doctor it likes less than its $`M_D`$ partner, that partner, who by Step 4 likes the hospital more than any stable alternative, would block it.
+Suppose a stable placement gave some hospital a doctor it likes less than its $`M_D`$ partner. By Step 4, that partner likes the hospital more than any stable alternative, so the two would block it.
 
 Swap the roles: every hospital asks a different doctor, nobody is turned away, and it stops in one round. Each hospital has its first choice; by Steps 4 and 5 with the sides swapped, each doctor sits at her worst stable partner, here her last choice.
 
@@ -716,11 +720,12 @@ end StableMatching
 
 ## Where this goes next
 
+- [Flows](05-flow-networks-and-ford-fulkerson.md): sets preferences aside and turns matchings into a capacity problem on pipes.
 - [Auctions](../../14-Applied%20and%20computational/05-Operations%20Research/10-auctions-and-mechanism-design.md): rules under which nobody gains by misreporting.
 - [Minimax](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/08-minimax-theorem-and-convex-duality.md): another existence theorem for two opposed sides.
-- [Sharing a joint cost](../../14-Applied%20and%20computational/05-Operations%20Research/12-cooperative-games-shapley-value-and-core.md): the Shapley value and the core.
+- [Sharing a joint cost](../../14-Applied%20and%20computational/05-Operations%20Research/12-cooperative-games-shapley-value-and-core.md): the same "no group wants to break away" stability idea, as the core, alongside Shapley's rule for splitting a joint bill.
 
-This card assumed true rankings; whether anyone gains by lying about theirs is Auctions.
+This card assumed true rankings; whether anyone gains by lying about theirs is [Auctions](../../14-Applied%20and%20computational/05-Operations%20Research/10-auctions-and-mechanism-design.md). Next on this shelf, [Flows](05-flow-networks-and-ford-fulkerson.md) sets preferences aside and turns matchings into a capacity problem on pipes.
 
 ---
 

@@ -36,7 +36,7 @@ Thick lines are the draft's pairs; a and f are unpaired.
 
 ## The formula
 
-Notation from [Matchings](01-matchings-and-augmenting-paths.md): $`G`$ is the graph, $`M`$ a **matching** (lines no two of which share a dot), $`\lvert M\rvert`$ its count of lines, and $`\nu(G)`$, read "nu of G", the largest count any matching of $`G`$ reaches. A dot on no line of $`M`$ is **free**.
+Notation from [Matchings](01-matchings-and-augmenting-paths.md): $`G`$ is the graph, and $`M`$ is a **matching** (lines no two of which share a dot). Write $`\lvert M\rvert`$ for its count of lines, and $`\nu(G)`$, read "nu of G", for the largest count any matching of $`G`$ reaches. A dot on no line of $`M`$ is **free**.
 
 The search grows a tree from one free dot, the **root**. Each dot it reaches gets a label:
 
@@ -49,7 +49,7 @@ A **blossom** $`B`$ is an odd ring closed by a line between two outer dots of th
 M \text{ is maximum in } G \iff M/B \text{ is maximum in } G/B, \qquad \lvert M/B\rvert = \lvert M\rvert - k
 ```
 
-**Read it aloud:** the matching is as large as possible exactly when the shrunk matching is as large as possible in the shrunk graph, and shrinking removes the k lines inside the ring.
+**Read it aloud:** the matching is as large as possible exactly when the shrunk matching is as large as possible in the shrunk graph. Shrinking removes the k lines inside the ring.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -120,9 +120,15 @@ This is Edmonds' lemma, the formula above, in two halves.
 
 The **stem** is the even alternating route along the tree from the root to the base.
 
-Small to big. Let $`P'`$ be augmenting for $`M/B`$ in $`G/B`$. If it misses B, it is augmenting in $`G`$. Otherwise one line of $`P'`$ at B is unpaired, and it meets the ring at some dot. Replace B by the even way round the ring from that dot to the base. That way starts with a paired line and ends at the base, so the lines still alternate and the ends stay free. So $`M`$ is not maximum.
+Small to big. Let $`P'`$ be augmenting for $`M/B`$ in $`G/B`$. If it misses B, it is augmenting in $`G`$.
 
-Big to small. Flip the stem to get $`M'`$. It has the same count of lines, the base is now free, and the ring still holds its $`k`$ paired lines. $`M`$ not maximum means $`M'`$ not maximum, so by [Matchings](01-matchings-and-augmenting-paths.md) there is an augmenting path $`P`$ for $`M'`$. If $`P`$ misses the ring, it is augmenting in $`G/B`$. Otherwise, only the base is free in the ring, so one end of $`P`$ lies outside it. Follow $`P`$ from that end to its first ring dot. No paired line of $`M'`$ leaves the ring, so in $`G/B`$ that piece is an augmenting path ending at the free dot B. So $`M'/B`$ is not maximum.
+Otherwise $`P'`$'s unpaired line at B meets the ring at some dot $`v`$, and if B is matched, its paired line meets the base. Replace B by the even way round the ring from $`v`$ to the base. That piece is empty if $`v`$ is the base, and otherwise starts with a paired line. Either way, the lines still alternate and the ends stay free, so $`M`$ is not maximum.
+
+Big to small. Flip the stem to get $`M'`$. It has the same count of lines, the base is now free, and the ring still holds its $`k`$ paired lines. $`M`$ not maximum means $`M'`$ not maximum, so by [Matchings](01-matchings-and-augmenting-paths.md) there is an augmenting path $`P`$ for $`M'`$.
+
+If $`P`$ misses the ring, it is augmenting in $`G/B`$. Otherwise, only the base is free in the ring, so one end of $`P`$ lies outside it.
+
+Follow $`P`$ from that end to its first ring dot. No paired line of $`M'`$ leaves the ring, so in $`G/B`$ that piece is an augmenting path ending at the free dot B. So $`M'/B`$ is not maximum.
 
 $`\lvert M'/B\rvert = \lvert M'\rvert - k = \lvert M\rvert - k = \lvert M/B\rvert`$, and $`G/B`$ is the same graph for both. So $`M/B`$ is not maximum either.
 
@@ -134,7 +140,7 @@ Search from each free dot in turn, shrinking blossoms, even blossoms inside blos
 
 Each dot starts at most one search. A shrink removes at least 2 dots, so a search shrinks fewer times than there are dots, each shrink one pass over them. So the work grows like a fixed power of the number of dots.
 
-When the search from every free dot fails, remove all their inner dots. The shrunk blossoms and lone outer dots are odd pieces, outnumbering the removed dots by the number of free dots, so the Tutte–Berge formula on [Tutte's theorem](08-tutte-one-factor-theorem.md) proves no matching is larger.
+When the search from every free dot fails, remove all their inner dots. The shrunk blossoms and lone outer dots are odd pieces, outnumbering the removed dots by the number of free dots. So the Tutte–Berge formula on [Tutte's theorem](08-tutte-one-factor-theorem.md) proves no matching is larger.
 
 ---
 
@@ -1473,10 +1479,11 @@ example : Nat.choose 6 2 = 15 ∧ 2 ^ 15 = 32768 := by decide
 
 ## Where this goes next
 
+- [Friends and strangers](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/01-friends-and-strangers.md): starts the next shelf, turning from matchings to patterns forced by size alone.
 - The weighted blossom method, for the cheapest pairing: planned, and used by [The Chinese postman](../11-Tours%20-%20Euler%20and%20Hamilton/02-chinese-postman.md).
 - [The assignment problem](../../14-Applied%20and%20computational/05-Operations%20Research/05-assignment-and-the-hungarian-algorithm.md): the cheapest pairing in the two-sided case, by the Hungarian algorithm.
 
-Edmonds finds a largest matching in time that grows like a fixed power of the size; how small that power can be is the question this card leaves open.
+Edmonds finds a largest matching in time that grows like a fixed power of the size; how small that power can be is the question this card leaves open. That closes the Matchings and Flows shelf; the next shelf turns to patterns forced by size alone, starting with [Friends and strangers](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/01-friends-and-strangers.md).
 
 ---
 

@@ -45,7 +45,9 @@ One line per tick, 9 in all; thick lines are greedy's four pairs. Tomas and timi
 
 ## The formula
 
-The sign-up sheet is a **bipartite graph** $`G`$: dots in two groups, volunteers and jobs, every line running from one group to the other ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)). A **matching** $`M`$ is a set of lines no two sharing a dot: nobody works two jobs. Bars count lines, so $`\lvert M\rvert`$ is the matching's size. A dot on a line of $`M`$ is **matched**; any other dot is **free**.
+The sign-up sheet is a **bipartite graph** $`G`$: dots in two groups, volunteers and jobs, every line running from one group to the other ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)).
+
+A **matching** $`M`$ is a set of lines no two sharing a dot: nobody works two jobs. Bars count lines, so $`\lvert M\rvert`$ is the matching's size. A dot on a line of $`M`$ is **matched**; any other dot is **free**.
 
 **Maximal**: no line can be added as it stands. **Maximum**: no matching of $`G`$ is larger; that size is $`\nu(G)`$, read "nu of G". **Perfect**: every dot is matched. Greedy's four pairs are maximal, not maximum.
 
@@ -109,7 +111,11 @@ Let $`\lvert M^*\rvert > \lvert M\rvert`$ and keep the lines of $`M \triangle M^
 
 A connected piece in which every dot has at most two lines is a path or a cycle. Consecutive lines share a dot, so they come from different matchings. An alternating cycle has even length and equal counts; a path has equal counts or one more of one kind.
 
-Lines shared by both matchings are dropped from each count equally, so the kept lines still hold more of $`M^*`$. Some piece is therefore a path $`P`$ whose first and last lines lie in $`M^*`$. Let $`u`$ be an end. If $`M`$ matched $`u`$, that line of $`M`$ is not in $`M^*`$, since $`u`$ already has its $`M^*`$ line in $`P`$; so it is kept, and $`P`$ would continue past $`u`$. It does not, so $`u`$ is free in $`M`$, and likewise the other end $`w`$. So $`P`$ is augmenting for $`M`$. With Step 1, $`M`$ is maximum if and only if no augmenting path exists.
+Lines shared by both matchings are dropped from each count equally, so the kept lines still hold more of $`M^*`$. Some piece is therefore a path $`P`$ whose first and last lines lie in $`M^*`$.
+
+Let $`u`$ be an end. If $`M`$ matched $`u`$, that line of $`M`$ is not in $`M^*`$, since $`u`$ already has its $`M^*`$ line in $`P`$. So it is kept, and $`P`$ would continue past $`u`$.
+
+It does not, so $`u`$ is free in $`M`$, and likewise the other end $`w`$. So $`P`$ is augmenting for $`M`$. With Step 1, $`M`$ is maximum if and only if no augmenting path exists.
 
 </details>
 
@@ -996,8 +1002,8 @@ example : (symmDiff greedyPairs otherPerfect).card = 9 ∧ (otherPerfect \ greed
 - [The assignment problem](../../14-Applied%20and%20computational/05-Operations%20Research/05-assignment-and-the-hungarian-algorithm.md): the cheapest perfect matching when every pair has a cost.
 - [Total unimodularity](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/05-total-unimodularity.md): why matching problems solved with fractions still land on whole pairs.
 - [Permanent against determinant](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/03-algebraic-complexity-permanent-versus-determinant.md): counting perfect matchings, the 2 here, is easy to state and hard to compute.
-- [Tutte's theorem](08-tutte-one-factor-theorem.md): a graph has a perfect matching exactly when removing any set S leaves at most |S| pieces of odd size.
-- [Edmonds' blossom algorithm](09-edmonds-blossom-algorithm.md): search for improving routes in any graph by shrinking odd loops to a single point.
+- [Tutte's theorem](08-tutte-one-factor-theorem.md): when a graph without two sides has a perfect matching.
+- [Edmonds' blossom algorithm](09-edmonds-blossom-algorithm.md): how to search for augmenting paths when odd loops break the two-sided search.
 
 Berge says when a matching is stuck but not why; which crowded group of volunteers blocks a full pairing is the question [Hall's theorem](02-halls-marriage-theorem.md) answers.
 

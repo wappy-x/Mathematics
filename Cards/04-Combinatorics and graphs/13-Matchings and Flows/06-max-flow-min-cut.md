@@ -6,7 +6,9 @@
 
 ## General Overview
 
-A bottling plant ships lorry-loads nightly to a port through a north and a south depot. The plant can send 3 loads to each depot, each depot can forward 3 to the port, and a link road from north to south takes 1. At most 6 loads a night reach the port. The cheapest way to cut the plant off from the port closes roads worth 6 loads: both roads out of the plant.
+A bottling plant ships lorry-loads nightly to a port through a north and a south depot. The plant can send 3 loads to each depot, each depot can forward 3 to the port, and a link road from north to south takes 1.
+
+At most 6 loads a night reach the port. The cheapest way to cut the plant off from the port closes roads worth 6 loads: both roads out of the plant.
 
 Ford and Fulkerson proved in 1956 that these two numbers always meet: no shipment plan beats any severing, and the best plan equals the cheapest one. Their method pushes loads along augmenting routes, paths from plant to port with room on every road, until none is left.
 
@@ -108,7 +110,7 @@ With whole-number capacities the method stops, so Step 2's pair exists, and by S
 
 **Tightness.** For $`u`$ in $`R`$ and $`v`$ outside it, leftover $`(c(u,v) - f(u,v)) + f(v,u)`$ is 0 with both brackets at least 0, so $`f(u,v) = c(u,v)`$ and $`f(v,u) = 0`$.
 
-**Existence.** Whole-number capacities: each push adds at least 1 and the price of {s} caps the value, so pushing stops. Fractions: scale to whole numbers. Real capacities: the Edmonds-Karp rule stops ([Graph algorithms as code](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/09-graph-algorithms-in-practice.md)).
+**Existence.** Whole-number capacities: each push adds at least 1 and the price of {s} caps the value, so pushing stops. Fractions: scale to whole numbers. Real capacities: Dinic's layered shortest-route rule stops in fewer rounds than there are junctions ([Graph algorithms as code](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/09-graph-algorithms-in-practice.md)), as does Edmonds-Karp.
 
 **Hall's bound.** Let $`X`$ be the volunteers in $`S`$. Each volunteer outside $`X`$ gives a priced road from $`s`$. Each task $`j`$ reached by $`X`$ gives one more: its road to $`t`$ if $`j`$ is in $`S`$, a road from $`X`$ if not. The roads are distinct, which gives the bound in The formula.
 
@@ -120,13 +122,17 @@ Every push moves the smallest leftover on its route. With whole-number capacitie
 
 ### Step 5: a pairing is a flow of 0s and 1s
 
-Every fun-run road has capacity 1, so a whole-number flow puts 0 or 1 on each. A volunteer receives at most 1, so takes at most one task; a task passes at most 1 to $`t`$, so has at most one volunteer. The roads carrying 1 between them form a matching (pairs sharing nobody) as large as the value, and any matching is such a flow. So the largest matching equals the best flow and the cheapest cut.
+Every fun-run road has capacity 1, so a whole-number flow puts 0 or 1 on each. A volunteer receives at most 1, so takes at most one task; a task passes at most 1 to $`t`$, so has at most one volunteer.
 
-An augmenting route here is the alternating path of [Matchings](01-matchings-and-augmenting-paths.md). Greedy leaves Priya on registration, Lena on first aid and Tomas idle. The route s → Tomas → registration, back along the stub to Priya, on to first aid, back to Lena, then timing → t moves Priya and Lena along and gives Tomas registration.
+The roads carrying 1 between them form a matching (pairs sharing nobody) as large as the value, and any matching is such a flow. So the largest matching equals the best flow and the cheapest cut.
+
+An augmenting route here is the alternating path of [Matchings](01-matchings-and-augmenting-paths.md). Greedy leaves Priya on registration, Lena on first aid and Tomas idle. Follow s → Tomas → registration, back along the stub to Priya, on to first aid, back to Lena, then timing → t. That push moves Priya and Lena along and gives Tomas registration.
 
 ### Step 6: when the pairing falls short, the cut names the crowded group
 
-Suppose Priya cannot do first aid: she and Tomas both have only registration. The best flow is 4, and the reachable side is {s, Priya, Tomas, registration}. It pays for the roads from $`s`$ to Omar, Lena and Sam, and for registration → t: 4. Inside, $`X`$ = {Priya, Tomas} reaches $`N(X)`$ = {registration}, and the bound reads 5 − 2 + 1 = 4, met exactly.
+Suppose Priya cannot do first aid: she and Tomas both have only registration. The best flow is 4, and the reachable side is {s, Priya, Tomas, registration}. It pays for the roads from $`s`$ to Omar, Lena and Sam, and for registration → t: 4.
+
+Inside, $`X`$ = {Priya, Tomas} reaches $`N(X)`$ = {registration}, and the bound reads 5 − 2 + 1 = 4, met exactly.
 
 If every group reaches at least as many tasks as it has members, every cut costs at least $`\lvert P\rvert`$ and everyone is placed: Hall's theorem.
 
@@ -1175,6 +1181,7 @@ example : (∀ X : Finset (Fin 5), X.card ≤ (X.biUnion canDoBroken).card + 1) 
 ## What this builds on
 
 - [Flows](05-flow-networks-and-ford-fulkerson.md): flows, cuts, leftover and the pushing method.
+- [Matchings](01-matchings-and-augmenting-paths.md): matchings, alternating paths, and the fun-run example reused here.
 - [Hall's theorem](02-halls-marriage-theorem.md): the condition on groups, proved there by induction.
 
 ## Where this goes next

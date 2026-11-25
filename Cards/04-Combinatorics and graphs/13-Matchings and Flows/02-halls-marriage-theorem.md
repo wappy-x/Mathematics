@@ -75,7 +75,7 @@ One helper formula. The **defect** is the worst crowding: the most by which any 
 ### When it holds
 
 - **Finitely many applicants.** The induction must reach the bottom. With infinitely many, the condition can hold and placement still fail: one applicant qualified for posts 1, 2, 3, …, and applicant 1 for post 1 alone, applicant 2 for post 2 alone, and so on.
-- **Two sides, lines only across.** If lines may join two applicants, the condition is not enough; a different test (Tutte's) takes over.
+- **Two sides, lines only across.** If lines may join two applicants, the condition is not enough; a different test ([Tutte's theorem](08-tutte-one-factor-theorem.md)) takes over.
 - **One side covered, not both.** With more posts than applicants, some posts stay empty.
 - **Existence, not a best choice.** Whether anyone would swap, and what a placement costs, are separate questions ([Stable matching](04-stable-matching-gale-shapley.md), [The assignment problem](../../14-Applied%20and%20computational/05-Operations%20Research/05-assignment-and-the-hungarian-algorithm.md)).
 
@@ -101,18 +101,24 @@ Call a group **tight** when it reaches exactly as many posts as it has members, 
 
 **Case 1, room to spare everywhere.** Every non-empty group short of all of $`A`$ reaches more posts than it has members. Place any applicant $`a`$ in any post $`b`$ she is qualified for, and delete both. Each remaining group loses at most that one post, and it had one to spare. The condition survives, and the induction places the rest.
 
-**Case 2, some tight group.** Let $`S`$ be tight, neither empty nor all of $`A`$. A group inside $`S`$ reaches the same posts as before, so the condition holds for $`S`$ alone, and the induction places $`S`$ into all of $`N(S)`$. Delete $`S`$ and $`N(S)`$, and take any group $`T`$ of the applicants left. The induction places them too, once $`T`$ still reaches at least $`\lvert T\rvert`$ posts.
+**Case 2, some tight group.** Let $`S`$ be tight, neither empty nor all of $`A`$. A group inside $`S`$ reaches the same posts as before, so the condition holds for $`S`$ alone, and the induction places $`S`$ into all of $`N(S)`$.
+
+Delete $`S`$ and $`N(S)`$, and take any group $`T`$ of the applicants left. The induction places them too, once $`T`$ still reaches at least $`\lvert T\rvert`$ posts.
 
 <details>
 <summary>Detailed proof of the last step</summary>
 
-Every post reached by $`S`$ or $`T`$ in the original hiring lies either in $`N(S)`$ or among the posts $`T`$ reaches after the deletion, and those two sets share nothing. So $`\lvert N(S)\rvert`$ plus $`T`$'s new reach is at least $`\lvert N(S \cup T)\rvert`$, which is at least $`\lvert S\rvert + \lvert T\rvert`$ by Hall's condition on the group $`S \cup T`$ (the members of $`S`$ and of $`T`$ together). Cancelling $`\lvert N(S)\rvert = \lvert S\rvert`$ leaves $`T`$'s new reach at least $`\lvert T\rvert`$. Together the two placements cover $`A`$.
+Every post reached by $`S`$ or $`T`$ in the original hiring lies either in $`N(S)`$ or among the posts $`T`$ reaches after the deletion. Those two sets share nothing.
+
+So $`\lvert N(S)\rvert`$ plus $`T`$'s new reach is at least $`\lvert N(S \cup T)\rvert`$. By Hall's condition on $`S \cup T`$ (the members of $`S`$ and of $`T`$ together), that is at least $`\lvert S\rvert + \lvert T\rvert`$. Cancelling $`\lvert N(S)\rvert = \lvert S\rvert`$ leaves $`T`$'s new reach at least $`\lvert T\rvert`$. Together the two placements cover $`A`$.
 
 </details>
 
 ### Step 3: when it fails, the worst group counts who is left out
 
-Say the worst group beats its reach by $`d`$, the defect. At least $`d`$ applicants go unplaced, since that group has $`d`$ more members than posts. The count is exact: add $`d`$ spare posts everyone is qualified for. Every non-empty group's reach grows by $`d`$, so everyone is placed; at most $`d`$ sit in spare posts, so at least $`\lvert A\rvert - d`$ hold real ones. The bounds meet: at the hotel, 5 exactly.
+Say the worst group beats its reach by $`d`$, the defect. At least $`d`$ applicants go unplaced, since that group has $`d`$ more members than posts.
+
+The count is exact: add $`d`$ spare posts everyone is qualified for. Every non-empty group's reach grows by $`d`$, so everyone is placed; at most $`d`$ sit in spare posts, so at least $`\lvert A\rvert - d`$ hold real ones. The bounds meet: at the hotel, 5 exactly.
 
 Another road: treat the hiring as a network with a pipe along every line. A full placement is a flow of $`\lvert A\rvert`$ units, and a crowded group is a cheap place to cut the network: [Max-flow min-cut](06-max-flow-min-cut.md).
 
@@ -648,7 +654,7 @@ example : (∀ S : Finset (Fin 6), S.card ≤ (S.biUnion noAccounts).card + 1) �
 
 - **Rosters and timetables.** Staff qualified for some shifts, rooms licensed for some classes: the condition says whether a full roster exists.
 - **Filling a grid.** Adding a row to a Latin square filled in row by row (a grid where no symbol repeats in a row or column) means giving each column a symbol it may still take. Hall's condition always holds there, so a grid of complete rows can always be finished. Pairs of such grids: [Finite planes and orthogonal Latin squares](../16-Designs/03-projective-planes-and-orthogonal-latin-squares.md).
-- **The even case is free.** If every applicant qualifies for the same number of posts, and every post has that many qualified applicants, the condition holds unchecked: a group's lines all land in its reach, and each post there takes only that many.
+- **The even case is free.** If every applicant qualifies for the same positive number of posts, and every post has that many qualified applicants, the condition holds unchecked: a group's lines all land in its reach, and each post there takes only that many.
 
 > **Say it back**
 > A full placement gives every applicant a post nobody else takes. It exists exactly when no group reaches fewer posts than it has members. One direction is counting: a placement gives each group its own posts. The other is a construction: either every group has a post to spare, so one pair is settled and set aside, or some group is exactly full and is settled inside its own posts. When the condition fails, the worst crowding counts who is left out: 1 at the hotel.
@@ -665,10 +671,10 @@ example : (∀ S : Finset (Fin 6), S.card ≤ (S.biUnion noAccounts).card + 1) �
 - [Konig's theorem](03-konigs-theorem-and-vertex-cover.md): the same fact as the fewest dots touching every line.
 - [Max-flow min-cut](06-max-flow-min-cut.md): the crowded group as the cheapest cut of a network.
 - [The assignment problem](../../14-Applied%20and%20computational/05-Operations%20Research/05-assignment-and-the-hungarian-algorithm.md): from "a placement exists" to "the cheapest one".
-- [Tutte's theorem](08-tutte-one-factor-theorem.md): a graph has a perfect matching exactly when removing any set S leaves at most |S| pieces of odd size.
-- [Finite planes and orthogonal Latin squares](../16-Designs/03-projective-planes-and-orthogonal-latin-squares.md): build a plane of order q from a field with q elements, read off q - 1 Latin squares that pair perfectly, and why order 6 has none.
+- [Tutte's theorem](08-tutte-one-factor-theorem.md): the matching test when lines are not restricted to two sides.
+- [Finite planes and orthogonal Latin squares](../16-Designs/03-projective-planes-and-orthogonal-latin-squares.md): pairs of Latin squares that match up together, extending the grid-filling example above.
 
-Checking the condition meant listing all 64 groups, a count that doubles with each applicant; finding the crowded group without that list is [Konig's theorem](03-konigs-theorem-and-vertex-cover.md).
+Checking the condition meant listing all 64 groups, a count that doubles with each applicant; reading off a smallest blocking set directly from a largest matching is [Konig's theorem](03-konigs-theorem-and-vertex-cover.md).
 
 ---
 
