@@ -1002,7 +1002,7 @@ theorem gate_partner_level_sets_and_failure (W α : ℝ) (hW : 0 < W) (hα : 0 <
 ## Where you meet it in real life
 
 - **Optics and X-ray scattering.** How strongly a material absorbs light and how much it bends light form a Hilbert pair (the Kramers–Kronig relations). A sharp absorption edge, like the gate's edge, gives a logarithmic spike in the bending, seen near X-ray absorption edges.
-- **Elliptic equations.** For Poisson's equation, the second derivatives of the solution are singular integrals of the source (Riesz transforms, the Hilbert transform in higher dimensions). So they are controlled in every p-norm for 1 < p < ∞, but not at p = 1 or ∞. This was Calderón and Zygmund's original motivation.
+- **Elliptic equations.** For Poisson's equation, the second derivatives of the solution are singular integrals of the source ([Riesz transforms](07-riesz-transforms-and-singular-integrals-in-higher-dimensions.md), the Hilbert transform in higher dimensions). So they are controlled in every p-norm for 1 < p < ∞, but not at p = 1 or ∞. This was Calderón and Zygmund's original motivation.
 - **Fluid flow.** In a two-dimensional fluid, the velocity's rate of change is a singular integral of the vorticity (the local spin). Bounded spin does not give a bounded rate of change, for the gate's reason: a logarithmic loss.
 - **Digital Hilbert filters.** A filter built from the 1/(πt) kernel answers a sharp step with a slow 1/t tail and a tall, narrow peak at the step, as in the chart above. An envelope read from the analytic signal shows a false peak at a sudden switch-on for this reason.
 
@@ -1021,6 +1021,11 @@ theorem gate_partner_level_sets_and_failure (W α : ℝ) (hW : 0 < W) (hα : 0 <
 
 - [Interpolation](04-interpolation-riesz-thorin-and-marcinkiewicz.md): turns the energy bound and the weak bound at p = 1 into a bound at every p between 1 and 2.
 - [Restriction and Kakeya in outline](06-restriction-and-kakeya-in-outline.md): operators beyond the kernel conditions. In two dimensions the ball multiplier, 1 inside a disc of frequencies and 0 outside, has multiplier size 1 and so is bounded in energy, yet it is bounded in no other p-norm.
+- [Riesz transforms](07-riesz-transforms-and-singular-integrals-in-higher-dimensions.md): the Hilbert transform in n dimensions, and second derivatives from the Laplacian.
+- [BMO](09-bmo-and-the-john-nirenberg-inequality.md): functions that wobble a bounded amount on every interval, and the exponential tail that forces.
+- [The Hardy space H¹](10-hardy-space-h1-and-its-duality-with-bmo.md): atoms, the endpoint where singular integrals behave, and Fefferman's duality with BMO.
+- [Muckenhoupt weights](11-muckenhoupt-weights.md): exactly which weightings keep the maximal function and singular integrals bounded.
+- [The T(1) theorem](../07-Multipliers%20and%20Estimates%20for%20PDE/04-the-t1-theorem.md): a singular integral with no translation symmetry is bounded on L² when T(1) and T*(1) lie in BMO.
 
 Left open: the multiplier decides the energy bound exactly. Which multipliers keep the other p-norms bounded, when the kernel conditions fail?
 

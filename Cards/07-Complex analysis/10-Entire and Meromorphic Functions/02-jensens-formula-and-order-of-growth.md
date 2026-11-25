@@ -606,6 +606,7 @@ example : Real.log (1 / (1 / 2 : ℝ)) = Real.log 2 := by norm_num
 
 - [Hadamard factorization](03-hadamard-factorization-theorem.md): for finite order, the zero bound makes the Weierstrass product simple, and f is that product times a power of z and e to a polynomial of degree at most ρ.
 - [Counting the zeros](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/08-counting-the-zeros-riemann-von-mangoldt.md): Jensen's bound at work on the zeta function.
+- [Paley-Wiener-Schwartz](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/11-paley-wiener-schwartz-theorem.md): a signal confined to a window has an entire spectrum whose growth gives the window's width.
 
 Left open: the bound limits zeros from above, but when does a function of order ρ have nearly r^ρ zeros, and when does it have none, like e^(z^2)?
 

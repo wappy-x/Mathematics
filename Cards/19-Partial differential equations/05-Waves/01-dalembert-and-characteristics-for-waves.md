@@ -983,6 +983,7 @@ example : ((-990 : ℚ) + -1980) / 2 = -1485 ∧ ((-990 : ℚ) - -1980) / (2 * 1
 - [Wave energy is conserved, and nothing outruns the wave speed](02-energy-and-finite-speed.md): the next card. It proves uniqueness without a formula, by the string's energy, and shows that nothing travels faster than $`c`$.
 - [Reflection](03-reflection-at-a-wall-and-the-half-line.md): why the upside-down extension holds the ends, and what other kinds of end do.
 - [Dispersion](06-dispersion-group-velocity-and-kdv-in-outline.md): equations where each wavelength travels at its own speed, so corners do not stay sharp.
+- [Weak waves](../06-Weak%20Solutions%20and%20Free%20Boundaries/11-weak-solutions-of-the-wave-equation.md): Galerkin and the energy estimate for a plucked string with a corner.
 
 Left open: on a drumhead, where a wave spreads in two directions, does a sharp tap still travel without changing shape? [Kirchhoff's formula](04-kirchhoff-and-huygens.md) and [Drumheads](08-membranes-and-bessel-modes.md) take that up.
 

@@ -653,6 +653,13 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Restriction and Kakeya in outline](06-restriction-and-kakeya-in-outline.md): Hausdorff-Young says the spectrum of an $`L^p`$ signal is an $`L^{p'}`$ function, defined only up to sets of size zero. Restriction asks when the spectrum still makes sense on a curved surface, such as a sphere, which has size zero.
+- [Riesz transforms](07-riesz-transforms-and-singular-integrals-in-higher-dimensions.md): the Hilbert transform in n dimensions, and second derivatives from the Laplacian.
+- [Fractional integration](08-riesz-potentials-and-hardy-littlewood-sobolev.md): the Hardy-Littlewood-Sobolev inequality, and Sobolev embedding in one line.
+- [Muckenhoupt weights](11-muckenhoupt-weights.md): exactly which weightings keep the maximal function and singular integrals bounded.
+- [Stationary phase](12-oscillatory-integrals-and-stationary-phase.md): a fast-oscillating integral is decided near the points where the phase stops moving.
+- [Fourier multipliers](../07-Multipliers%20and%20Estimates%20for%20PDE/01-mihlin-hormander-multiplier-theorem.md): which equaliser settings are safe on every Lᵖ, by the Mihlin-Hörmander test.
+- [Littlewood-Paley](../07-Multipliers%20and%20Estimates%20for%20PDE/02-littlewood-paley-theory.md): split a signal into octaves, and its size is the size of the octaves' combined energy.
+- [Strichartz estimates](../07-Multipliers%20and%20Estimates%20for%20PDE/06-strichartz-estimates-and-nonlinear-schrodinger.md): dispersion averaged over time, and when a nonlinear Schrödinger wave exists, scatters or blows up.
 
 Interpolation fills in sizes between two known bounds, but it cannot create the endpoints: the question this card leaves open is how to prove the end bounds themselves, and what replaces them at sizes where none holds.
 

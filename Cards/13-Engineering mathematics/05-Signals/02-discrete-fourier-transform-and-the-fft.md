@@ -799,6 +799,7 @@ example : 1024 - 1016 = 8 := by norm_num
 - [Compressed sensing](10-compressed-sensing-in-outline.md): recovering a spectrum with only a few strong bins from far fewer samples than the block length.
 - [The fast Fourier transform](../../16-Numerical%20analysis/07-PDE%20Solvers/09-the-fast-fourier-transform.md): other splittings, by 3, 5 or any factor, and transforms of lengths that are not powers of two.
 - [Measured Bode plots](../11-Models%20from%20Data/02-frequency-response-estimation-and-coherence.md): divide the cross-spectrum by the input spectrum, and trust the coherence.
+- [Fourier analysis on a finite abelian group](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/01-fourier-analysis-on-finite-abelian-groups.md): characters as the waves, and the transform on bit strings.
 
 The long block named the strings to within 1.25 Hz, but a tuner needs a few cents, a small fraction of a bin: how can a peak be placed between bins without waiting ten seconds for a longer record?
 

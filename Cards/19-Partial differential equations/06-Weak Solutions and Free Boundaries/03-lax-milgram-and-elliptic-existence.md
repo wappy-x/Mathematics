@@ -947,6 +947,10 @@ The one-dimensional weak solution through a conductivity jump, with the bound an
 - [Galerkin](04-galerkin-and-finite-elements.md): the next card. It solves the weak form on finitely many hat functions, and the ratio $`M/\alpha`$ found here sets its error guarantee.
 - [Elliptic regularity](05-elliptic-regularity-in-outline.md): when the weak solution has more derivatives than $`H^1`$ promises. Here it is smooth inside each layer, but its slope still jumps at the joint.
 - [The obstacle problem](08-obstacle-problems-and-variational-inequalities.md): the same coercive form, minimised over profiles that must stay above an obstacle, where Lax-Milgram becomes Stampacchia's theorem.
+- [Bochner spaces and the weak heat equation](10-bochner-spaces-and-weak-solutions-of-the-heat-equation.md): a solution as a path through a space of functions.
+- [General elliptic operators](12-hopf-lemma-fredholm-alternative-and-the-principal-eigenvalue.md): Hopf's lemma, the Fredholm alternative, and a first eigenvalue with a positive mode.
+- [De Giorgi-Nash-Moser](15-de-giorgi-nash-moser.md): rough coefficients still give Hölder-continuous solutions.
+- [The direct method](../07-Nonlinear%20PDE%20and%20Fluids/10-direct-method-in-the-calculus-of-variations.md): minimise, take a weak limit, and check the energy cannot jump up.
 
 Other cards on this shelf: [Weak solutions](01-weak-solutions-and-the-weak-formulation.md), [Viscosity solutions](06-viscosity-solutions.md), [Free boundaries](07-free-boundaries-and-the-stefan-problem.md), [An American option](09-american-options-as-a-free-boundary-problem.md).
 

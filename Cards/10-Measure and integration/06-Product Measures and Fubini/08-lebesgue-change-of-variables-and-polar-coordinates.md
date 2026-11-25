@@ -735,6 +735,7 @@ example : Real.Gamma 6 = 120 := by
 ## Where this goes next
 
 - [The Ionescu-Tulcea theorem](09-ionescu-tulcea-theorem.md): the next card on this shelf, which builds measures on infinite sequences step by step, each step given by a rule that depends on the past.
+- [Haar measure](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/02-haar-measure.md): the one fair way to measure size on a group.
 
 This card needs a map from n dimensions onto n dimensions; how to measure the area of a general curved surface sitting in space, beyond the sphere, where the Jacobian matrix is not square, is the question it leaves open.
 

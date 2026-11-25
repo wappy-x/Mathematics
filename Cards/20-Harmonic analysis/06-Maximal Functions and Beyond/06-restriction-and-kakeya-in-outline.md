@@ -1137,7 +1137,7 @@ end RestrictionKakeya
 ## Where you meet it in real life
 
 - **Acoustics and optics.** A field at one frequency in free space has its spectrum on a circle or sphere. Step 3 is the trade-off of any focused beam: about $`1/\delta`$ wavelengths wide, it holds together for about $`1/\delta^2`$ wavelengths.
-- **Wave and Schrödinger equations.** Their solutions have spectra on a cone or a paraboloid. Restriction estimates for those surfaces are the Strichartz estimates, a standard tool for nonlinear wave equations.
+- **Wave and Schrödinger equations.** Their solutions have spectra on a cone or a paraboloid. Restriction estimates for those surfaces are the [Strichartz estimates](../07-Multipliers%20and%20Estimates%20for%20PDE/06-strichartz-estimates-and-nonlinear-schrodinger.md), a standard tool for nonlinear wave equations.
 - **Image filtering.** The ideal circular low-pass filter rings beside sharp edges in a picture, so practical filters taper the edge of the circle. The same sharp cut-off is what makes the ideal filter unbounded on $`L^p`$ for $`p \ne 2`$ (Step 7).
 - **Number theory.** Decoupling, an offshoot of restriction theory, proved in 2016 the main conjecture in Vinogradov's mean value theorem, about counting whole-number solutions of systems of equations.
 - **Computer science.** The finite-field Kakeya problem, solved in 2008 by a short polynomial argument, gave better ways to merge sources of randomness.
@@ -1159,6 +1159,8 @@ Related cards on this shelf: [The maximal function](01-hardy-littlewood-maximal-
 ## Where this goes next
 
 - [Kakeya](../../25-Frontier/04-Geometry%20and%20Combinatorics/02-kakeya-and-restriction.md): the 2025 proof that Kakeya sets in three dimensions have dimension 3, and where the problem stands in higher dimensions.
+- [Stationary phase](12-oscillatory-integrals-and-stationary-phase.md): a fast-oscillating integral is decided near the points where the phase stops moving.
+- [Strichartz estimates](../07-Multipliers%20and%20Estimates%20for%20PDE/06-strichartz-estimates-and-nonlinear-schrodinger.md): dispersion averaged over time, and when a nonlinear Schrödinger wave exists, scatters or blows up.
 
 Left open: in three dimensions, does every bounded amplitude on the sphere give a field with a finite $`p`$-th power total for every $`p`$ above 3?
 

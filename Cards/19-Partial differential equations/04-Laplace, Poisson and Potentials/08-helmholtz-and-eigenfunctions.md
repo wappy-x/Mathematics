@@ -1598,6 +1598,8 @@ example : (16 : ℚ) * (3 / 10 * (3 / 5 - 3 / 10)) * (1 / 5 * (2 / 5 - 1 / 5)) /
 
 - [Drumheads](../05-Waves/08-membranes-and-bessel-modes.md): the Helmholtz problem on a disc, with Bessel functions in place of sines.
 - The next card, [Subharmonic functions](09-subharmonic-functions-and-perrons-method.md), returns to λ = 0 and builds solutions of Laplace's equation from below.
+- [General elliptic operators](../06-Weak%20Solutions%20and%20Free%20Boundaries/12-hopf-lemma-fredholm-alternative-and-the-principal-eigenvalue.md): Hopf's lemma, the Fredholm alternative, and a first eigenvalue with a positive mode.
+- [Weyl's law](../06-Weak%20Solutions%20and%20Free%20Boundaries/13-weyls-law.md): a drum's area can be heard in how fast its notes pile up.
 
 Among all plates of one area, which outline has the lowest first note, and how much of the outline can the list of notes reveal?
 

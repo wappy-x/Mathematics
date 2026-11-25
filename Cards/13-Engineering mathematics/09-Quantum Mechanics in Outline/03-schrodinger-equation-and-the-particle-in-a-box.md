@@ -944,6 +944,7 @@ example : (List.range 5).map (fun n => (n + 1) * 110) = [110, 220, 330, 440, 550
 - [Tunnelling](09-quantum-tunnelling.md): a particle gets through a wall it cannot climb.
 - [Perturbation theory](10-time-independent-perturbation-theory.md): nudge the energy levels without solving again.
 - [Two particles](11-two-particle-states-and-entanglement.md): product states, the singlet, and the CHSH bound.
+- [Lax pairs and inverse scattering](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/16-lax-pairs-and-the-inverse-scattering-transform.md): why KdV solitons pass through each other unchanged.
 
 This card left the walls perfectly hard. What happens to the levels, and to the electron, when the wall is thin enough for the wave to reach through it is the question it leaves open.
 

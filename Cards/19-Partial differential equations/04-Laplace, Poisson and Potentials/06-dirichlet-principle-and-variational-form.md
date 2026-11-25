@@ -1288,6 +1288,7 @@ example : 5 * π / 4 = π + π / 4 := by ring
 - [Helmholtz](08-helmholtz-and-eigenfunctions.md): the same energy over the summed squared height, the Rayleigh quotient, gives the frequencies a region can hold.
 - [Subharmonic functions](09-subharmonic-functions-and-perrons-method.md): Perron's road to existence, which needs no energy and so handles rims like Hadamard's.
 - [Harnack and regularity](10-harnack-and-regularity-in-outline.md): why the weak minimiser from the direct method is a smooth harmonic function.
+- [The direct method](../07-Nonlinear%20PDE%20and%20Fluids/10-direct-method-in-the-calculus-of-variations.md): minimise, take a weak limit, and check the energy cannot jump up.
 
 The question this card leaves open: when the energy is not a square, as for the true area of a film, does a least-area surface still exist, and is it smooth?
 

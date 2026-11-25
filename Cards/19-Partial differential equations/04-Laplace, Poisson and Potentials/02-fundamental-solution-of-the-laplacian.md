@@ -1382,6 +1382,8 @@ example : ∀ d : ℤ, (2 - d) * ((2 - d) + d - 2) = 0 := by intro d; ring
 ## Where this goes next
 
 - [Poisson's equation](03-poissons-equation-and-the-newtonian-potential.md): smear $`\Phi`$ over any charge density to get its potential, and check it inside a charged ball.
+- [Layer potentials](../07-Nonlinear%20PDE%20and%20Fluids/14-layer-potentials-and-boundary-integral-equations.md): turn a boundary-value problem into an integral equation on the boundary.
+- [Riesz transforms](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/07-riesz-transforms-and-singular-integrals-in-higher-dimensions.md): the Hilbert transform in n dimensions, and second derivatives from the Laplacian.
 
 The open question this card leaves: the hall's walls change the potential's level by almost 10%, so how do you correct $`\Phi`$ to make it exactly zero on a given boundary?
 

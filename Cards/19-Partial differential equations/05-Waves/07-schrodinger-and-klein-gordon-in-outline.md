@@ -1047,6 +1047,7 @@ example : (1 : ℚ) + 2 ^ 2 / 2 = 3 := by norm_num
 - [Solitons](../07-Nonlinear%20PDE%20and%20Fluids/06-nonlinear-schrodinger-and-solitons-in-outline.md): add a term that steepens the packet as it spreads, and a pulse can travel for ever without changing shape.
 - [Drumheads](08-membranes-and-bessel-modes.md): the next card on this shelf, where waves on a 30 cm drumhead form modes whose notes are not whole multiples.
 - [Solving differential equations by transform](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/09-fourier-methods-for-differential-equations.md), in the harmonic-analysis wing: the Fourier-transform method, which splits any start into plane waves and moves each one on; here it writes every free solution as a sum of the turning plane waves of Step 1.
+- [Strichartz estimates](../../20-Harmonic%20analysis/07-Multipliers%20and%20Estimates%20for%20PDE/06-strichartz-estimates-and-nonlinear-schrodinger.md): dispersion averaged over time, and when a nonlinear Schrödinger wave exists, scatters or blows up.
 
 This card leaves open what a force does to the packet: how a slope or a barrier bends, splits or traps the spreading wave.
 

@@ -1069,6 +1069,9 @@ example : 2 * Real.sin (Real.pi * (1 / 4) * 2) = 2 := by
 ## Where this goes next
 
 - [The Hilbert transform](09-hilbert-transform-and-analytic-signals.md): multiplication by $`-i\,\mathrm{sgn}(\xi)`$ in frequency. By duality, the pair $`\widehat{\mathrm{sgn}} = \mathrm{p.v.}\,1/(\pi i\xi)`$ becomes its kernel, $`\mathrm{p.v.}\,1/(\pi t)`$.
+- [Paley-Wiener-Schwartz](11-paley-wiener-schwartz-theorem.md): a signal confined to a window has an entire spectrum whose growth gives the window's width.
+- [Fourier multipliers](../07-Multipliers%20and%20Estimates%20for%20PDE/01-mihlin-hormander-multiplier-theorem.md): which equaliser settings are safe on every Lᵖ, by the Mihlin-Hörmander test.
+- [Pseudodifferential operators](../07-Multipliers%20and%20Estimates%20for%20PDE/05-pseudodifferential-operators.md): a Fourier multiplier whose gain also depends on position.
 
 The question this card leaves open: the sign function's transform needs a balanced cut at one point, so what happens to an operator whose kernel blows up like this everywhere it is applied?
 

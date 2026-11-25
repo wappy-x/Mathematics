@@ -1107,7 +1107,7 @@ end RepresentationsInOutline
 >
 > - **Composing in the wrong order.** Writing $`x_{g(i)}`$ for the new entry at arm $`i`$ gives matrices that multiply backwards: 72 of 144 pairs fail.
 > - **Splitting too far.** The tilt plane looks like two lines, cosine and sine, but R60 mixes them: $`\mathrm{tr}^2 - 4\det = -3`$, so no real line is kept.
-> - **Assuming a complement always exists.** The shears keep the x-axis and no other line, 0 of 201 tried. Averaging needs a finite or compact group.
+> - **Assuming a complement always exists.** The shears keep the x-axis and no other line, 0 of 201 tried. Averaging needs a finite or compact group (for a compact group, the average is over [Haar measure](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/02-haar-measure.md)).
 
 ---
 

@@ -979,6 +979,8 @@ example : (delaySection 7 6 1).transpose * delaySection 7 6 1 = 1 := by decide
 - [Wiener's lemma](../06-Banach%20Algebras%20and%20Fixed%20Points/02-wieners-lemma-and-invertible-filters.md): a filter whose gain never vanishes has a stable inverse.
 - The Toeplitz index (planned): a filter cut to one side is a Toeplitz operator, and its index is minus the winding number of its frequency response.
 - [C-star algebras](../06-Banach%20Algebras%20and%20Fixed%20Points/03-c-star-algebras-in-outline.md): the setting where the Calkin algebra and index theory live.
+- [Layer potentials](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/14-layer-potentials-and-boundary-integral-equations.md): turn a boundary-value problem into an integral equation on the boundary.
+- [Pseudodifferential operators](../../20-Harmonic%20analysis/07-Multipliers%20and%20Estimates%20for%20PDE/05-pseudodifferential-operators.md): a Fourier multiplier whose gain also depends on position.
 
 The question this card leaves open: the index is a topological invariant of one operator, so can it be computed from the shape of the space an operator acts on, without finding a single solution?
 

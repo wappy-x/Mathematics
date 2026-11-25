@@ -906,7 +906,7 @@ example : (1000 : ℚ) * (981 / 100) / (8175 / 10) = 12 := by norm_num
 ## Where you meet it in real life
 
 - **Flat roofs.** Structural codes check ponding with this same feedback: the deflection adds water, and the design must keep the feedback below its critical value.
-- **Potential theory and boundary elements.** Fredholm built his 1903 theory to solve Laplace's equation by placing an unknown layer of dipoles (a double layer) on the boundary. Boundary element software still solves that second-kind equation.
+- **Potential theory and boundary elements.** Fredholm built his 1903 theory to solve Laplace's equation by placing an unknown layer of dipoles (a double layer) on the boundary ([Layer potentials](14-layer-potentials-and-boundary-integral-equations.md)). Boundary element software still solves that second-kind equation.
 - **Imaging and inverse problems.** Deblurring a photo or reading a scan solves a first-kind equation. The noise blow-up in "What breaks" is why such problems need regularization.
 - **Materials with memory.** In a viscoelastic material, today's stress depends on the whole strain history up to now: a Volterra integral, solved forward in time.
 - **Prices that jump.** An option's value under sudden price jumps obeys an equation with an integral over jump sizes: [When prices jump](09-partial-integro-differential-equations-for-jumps.md).
@@ -929,6 +929,9 @@ example : (1000 : ℚ) * (981 / 100) / (8175 / 10) = 12 := by norm_num
 
 - [The Fredholm alternative](08-fredholm-alternative-and-compact-operators.md): what happens exactly at λ = π², and why the kernels of boundary problems behave like big matrices.
 - [When prices jump](09-partial-integro-differential-equations-for-jumps.md): a pricing equation with both derivatives and an integral of the unknown, checked by Merton's series.
+- [Layer potentials](14-layer-potentials-and-boundary-integral-equations.md): turn a boundary-value problem into an integral equation on the boundary.
+- [Boundary elements](15-boundary-element-methods.md): solve Laplace's equation with unknowns only on the boundary.
+- [Lax pairs and inverse scattering](16-lax-pairs-and-the-inverse-scattering-transform.md): why KdV solitons pass through each other unchanged.
 
 The other cards on this shelf treat the fluid equations: [Navier-Stokes](01-navier-stokes-derivation.md), [Leray's weak solutions](02-leray-weak-solutions-of-navier-stokes.md), [The energy inequality, and the gap it leaves in three dimensions](03-energy-inequality-and-the-regularity-question.md), [Vorticity](04-vorticity-and-the-euler-equations.md), [Reaction-diffusion](05-reaction-diffusion-and-pattern-formation.md) and [Solitons](06-nonlinear-schrodinger-and-solitons-in-outline.md).
 

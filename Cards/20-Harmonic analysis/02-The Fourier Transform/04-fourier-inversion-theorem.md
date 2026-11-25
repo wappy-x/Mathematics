@@ -1140,6 +1140,7 @@ theorem bell_rebuild_tendsto_in_mean (f : ℝ → ℂ) (hf : Integrable f) :
 - [Plancherel](05-plancherel-and-l2.md): inversion keeps energy, which lets the transform reach every signal of finite energy, including ones that are not integrable.
 - [Poisson summation and sampling](08-poisson-summation-and-sampling.md): rebuilding a signal from samples, where inversion is applied to a spectrum confined to a band.
 - [Transforms in two and three dimensions](10-multidimensional-transform-and-tomography.md): the same bell proof in the plane and in space, used to rebuild images from their projections.
+- [Pontryagin duality](../08-Harmonic%20Analysis%20on%20Groups/03-pontryagin-duality.md): the line, the circle, the integers and the clock as one Fourier theory.
 
 Other cards on this shelf: [The transform rulebook](02-shift-scale-and-derivative-rules.md), [Schwartz space and tempered distributions](06-schwartz-space-and-tempered-distributions.md), [The uncertainty principle](07-uncertainty-principle.md) and [The Hilbert transform](09-hilbert-transform-and-analytic-signals.md).
 

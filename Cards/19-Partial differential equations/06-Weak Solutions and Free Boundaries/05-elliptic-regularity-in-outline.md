@@ -234,7 +234,7 @@ The check computes the squared bend integrated outside a small circle of radius 
 
 The same gain of two derivatives holds on other scales.
 
-- **Hölder classes.** If $`f`$ is Hölder continuous, the second derivatives are too. These are the Schauder estimates, stated on [Harnack and regularity](../04-Laplace%2C%20Poisson%20and%20Potentials/10-harnack-and-regularity-in-outline.md).
+- **Hölder classes.** If $`f`$ is Hölder continuous, the second derivatives are too. These are the Schauder estimates, stated on [Harnack and regularity](../04-Laplace%2C%20Poisson%20and%20Potentials/10-harnack-and-regularity-in-outline.md) and proved on [Schauder estimates](14-holder-spaces-and-schauder-estimates.md).
 - **Lp classes.** If the $`p`$-th power of $`f`$ is integrable, $`1 < p < \infty`$, so is that of the second derivatives. This is Calderón–Zygmund theory, built in the harmonic-analysis wing: Singular integrals, and Calderon-Zygmund decomposition.
 
 Both fail at the end points: merely continuous $`f`$, and $`p = 1`$ or $`p = \infty`$.
@@ -1076,6 +1076,11 @@ example : (2 / 3 : ℚ) - 2 = -4 / 3 := by norm_num
 - [Viscosity solutions](06-viscosity-solutions.md): fully nonlinear equations, where integration by parts is not available and smoothness must be earned another way.
 - [Singular integrals](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/03-singular-integrals-and-the-hilbert-transform-bound.md): the harmonic-analysis wing's tool behind the Lp estimates of Step 6.
 - [Calderon-Zygmund decomposition](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/02-calderon-zygmund-decomposition-in-outline.md): the cutting argument that proves those singular integrals are bounded.
+- [General elliptic operators](12-hopf-lemma-fredholm-alternative-and-the-principal-eigenvalue.md): Hopf's lemma, the Fredholm alternative, and a first eigenvalue with a positive mode.
+- [Schauder estimates](14-holder-spaces-and-schauder-estimates.md): a Hölder source gives a solution with Hölder second derivatives.
+- [De Giorgi-Nash-Moser](15-de-giorgi-nash-moser.md): rough coefficients still give Hölder-continuous solutions.
+- [Leray-Schauder](../07-Nonlinear%20PDE%20and%20Fluids/13-leray-schauder-and-a-priori-bounds.md): an a priori bound is enough to prove a solution exists.
+- [Pseudodifferential operators](../../20-Harmonic%20analysis/07-Multipliers%20and%20Estimates%20for%20PDE/05-pseudodifferential-operators.md): a Fourier multiplier whose gain also depends on position.
 
 The question this card leaves open: the proof needs coefficients with a derivative, yet the two-material wall still has a continuous temperature. How much regularity survives when the coefficients are only bounded and measurable?
 

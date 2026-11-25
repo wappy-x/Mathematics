@@ -1149,6 +1149,7 @@ example : ∑ j : Fin 9,
 - [Error bounds and Romberg](02-error-bounds-and-romberg.md): the sharp error constants, the h squared law, and cancelling it by extrapolation.
 - [Gaussian quadrature](03-gaussian-quadrature.md): free the nodes too, and reach degree 2m + 1 with m + 1 points and positive weights.
 - [Adaptive quadrature and awkward integrals](05-adaptive-and-improper-quadrature.md): smaller panels only where the curve misbehaves.
+- [Boundary elements](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/15-boundary-element-methods.md): solve Laplace's equation with unknowns only on the boundary.
 
 Equal spacing fixes where the readings sit; if the nodes could be placed anywhere, how high could the degree go with every weight still positive?
 

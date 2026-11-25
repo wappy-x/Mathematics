@@ -1400,6 +1400,7 @@ example : (905 ^ 2 + 40 ^ 2 + 75 ^ 2 + 325 ^ 2 + 30 ^ 2 + 40 ^ 2 + 30 ^ 2 + 20 ^
 - [Mallat's algorithm](04-mallats-fast-wavelet-transform.md): the next card. It turns the refinement-equation weights into two filters and computes every coefficient in time proportional to the number of samples.
 - [Daubechies wavelets](06-daubechies-and-vanishing-moments.md): scaling functions that satisfy all six axioms, are short like Haar, and are smooth enough to keep straight-line trends out of the details.
 - [Frames in outline](09-frames-in-outline.md): what survives when the pieces overlap, as with the half-shifted steps, and are no longer perpendicular.
+- [Littlewood-Paley](../07-Multipliers%20and%20Estimates%20for%20PDE/02-littlewood-paley-theory.md): split a signal into octaves, and its size is the size of the octaves' combined energy.
 
 The question this card leaves open: Haar's box jumps, so which other scaling functions satisfy the refinement equation, and how short and how smooth can they be at the same time?
 

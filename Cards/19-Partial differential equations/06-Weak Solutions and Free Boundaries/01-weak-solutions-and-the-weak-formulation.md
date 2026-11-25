@@ -1320,6 +1320,9 @@ example : ((1 : ℚ) ^ 2 / 2 - 0 ^ 2 / 2) / (1 - 0) = 1 / 2 := by norm_num
 - [Viscosity solutions](06-viscosity-solutions.md): a different way to weaken an equation, by touching the graph with smooth functions, for equations that cannot be integrated by parts.
 - [Leray's weak solutions](../07-Nonlinear%20PDE%20and%20Fluids/02-leray-weak-solutions-of-navier-stokes.md): the weak form applied to the Navier-Stokes equations of fluid flow.
 - On this shelf, [Lax-Milgram](03-lax-milgram-and-elliptic-existence.md) proves that weak problems like the sheet's have exactly one solution, [Galerkin](04-galerkin-and-finite-elements.md) solves them on finitely many shapes, and [Elliptic regularity](05-elliptic-regularity-in-outline.md) says when the weak solution is smooth after all. [Free boundaries](07-free-boundaries-and-the-stefan-problem.md) and [An American option](09-american-options-as-a-free-boundary-problem.md) use the weak form where the edge of the region is part of the answer.
+- [Bochner spaces and the weak heat equation](10-bochner-spaces-and-weak-solutions-of-the-heat-equation.md): a solution as a path through a space of functions.
+- [Weak waves](11-weak-solutions-of-the-wave-equation.md): Galerkin and the energy estimate for a plucked string with a corner.
+- [Schauder estimates](14-holder-spaces-and-schauder-estimates.md): a Hölder source gives a solution with Hölder second derivatives.
 
 This card checks that a given shape is a weak solution. It leaves open why a weak solution must exist when no shape is given in advance.
 

@@ -6,18 +6,20 @@
 
 Prove the convergence theorems for Fourier series and the inversion and Plancherel theorems for the transform, and use convolution, kernels and approximate identities as everyday tools. Derive the probability results that rest on characteristic functions, build and use wavelets, and read a modern harmonic-analysis statement about maximal functions, singular integrals and restriction.
 
-6 shelves · **52 of 52 cards ready to read**
+8 shelves · **70 of 70 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
 | Shelf | Cards |
 | --- | ---: |
 | [01 · Fourier Series in Depth](#s01) | 9 |
-| [02 · The Fourier Transform](#s02) | 10 |
-| [03 · Convolution and Approximate Identities](#s03) | 9 |
+| [02 · The Fourier Transform](#s02) | 11 |
+| [03 · Convolution and Approximate Identities](#s03) | 10 |
 | [04 · Characteristic Functions and Probability](#s04) | 9 |
 | [05 · Wavelets and Time-Frequency](#s05) | 9 |
-| [06 · Maximal Functions and Beyond](#s06) | 6 |
+| [06 · Maximal Functions and Beyond](#s06) | 12 |
+| [07 · Multipliers and Estimates for PDE](#s07) | 6 |
+| [08 · Harmonic Analysis on Groups](#s08) | 4 |
 
 <a name="s01"></a>
 
@@ -39,7 +41,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s02"></a>
 
-## 02 · The Fourier Transform · 10 cards
+## 02 · The Fourier Transform · 11 cards
 
 *The transform of an integrable and of a square-integrable signal, inversion, energy, distributions, and the limits on locality*
 
@@ -53,12 +55,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 8. [Poisson summation and sampling: samples are enough when nothing wiggles too fast](02-The%20Fourier%20Transform/08-poisson-summation-and-sampling.md)
 9. [The Hilbert transform: shift every frequency a quarter turn, and read off the envelope](02-The%20Fourier%20Transform/09-hilbert-transform-and-analytic-signals.md)
 10. [Transforms in two and three dimensions: a slice of the spectrum is a shadow of the object](02-The%20Fourier%20Transform/10-multidimensional-transform-and-tomography.md)
+11. [Paley-Wiener-Schwartz: a signal confined to a window has an entire spectrum whose growth gives the window's width](02-The%20Fourier%20Transform/11-paley-wiener-schwartz-theorem.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s03"></a>
 
-## 03 · Convolution and Approximate Identities · 9 cards
+## 03 · Convolution and Approximate Identities · 10 cards
 
 *Convolution as filtering and as smoothing, the kernels that do it, and what it does to densities and to spectra*
 
@@ -71,6 +74,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 7. [Wiener-Khinchin: the power spectrum is the transform of the autocorrelation](03-Convolution%20and%20Approximate%20Identities/07-wiener-khinchin-and-the-power-spectrum.md)
 8. [Densities add by convolution: the law of a sum of independent quantities](03-Convolution%20and%20Approximate%20Identities/08-convolution-of-densities.md)
 9. [Solving differential equations by transform: derivatives become multiplication](03-Convolution%20and%20Approximate%20Identities/09-fourier-methods-for-differential-equations.md)
+10. [Wiener's Tauberian theorem: shifts of one signal fill L¹ exactly when its spectrum never vanishes](03-Convolution%20and%20Approximate%20Identities/10-wieners-tauberian-theorem.md)
 
 [↑ Back to the shelves](#top)
 
@@ -112,7 +116,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s06"></a>
 
-## 06 · Maximal Functions and Beyond · 6 cards
+## 06 · Maximal Functions and Beyond · 12 cards
 
 *The tools of modern harmonic analysis, proved where the proof is short and stated where it is deep*
 
@@ -122,6 +126,40 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [Interpolation: bounds at two sizes give bounds at every size between](06-Maximal%20Functions%20and%20Beyond/04-interpolation-riesz-thorin-and-marcinkiewicz.md)
 5. [Bochner's theorem: which functions are fingerprints, and which are spectra](06-Maximal%20Functions%20and%20Beyond/05-bochner-and-positive-definite-functions.md)
 6. [Restriction and Kakeya in outline: what a spectrum living on a sphere can tell you](06-Maximal%20Functions%20and%20Beyond/06-restriction-and-kakeya-in-outline.md)
+7. [Riesz transforms: the Hilbert transform in n dimensions, and second derivatives from the Laplacian](06-Maximal%20Functions%20and%20Beyond/07-riesz-transforms-and-singular-integrals-in-higher-dimensions.md)
+8. [Fractional integration: the Hardy-Littlewood-Sobolev inequality, and Sobolev embedding in one line](06-Maximal%20Functions%20and%20Beyond/08-riesz-potentials-and-hardy-littlewood-sobolev.md)
+9. [BMO: functions that wobble a bounded amount on every interval, and the exponential tail that forces](06-Maximal%20Functions%20and%20Beyond/09-bmo-and-the-john-nirenberg-inequality.md)
+10. [The Hardy space H¹: atoms, the endpoint where singular integrals behave, and Fefferman's duality with BMO](06-Maximal%20Functions%20and%20Beyond/10-hardy-space-h1-and-its-duality-with-bmo.md)
+11. [Muckenhoupt weights: exactly which weightings keep the maximal function and singular integrals bounded](06-Maximal%20Functions%20and%20Beyond/11-muckenhoupt-weights.md)
+12. [Stationary phase: a fast-oscillating integral is decided near the points where the phase stops moving](06-Maximal%20Functions%20and%20Beyond/12-oscillatory-integrals-and-stationary-phase.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s07"></a>
+
+## 07 · Multipliers and Estimates for PDE · 6 cards
+
+*Operators that act on frequencies: the test for a safe multiplier, octave splitting, products sorted by frequency, singular integrals without translation symmetry, symbols that change with position, and the time-averaged decay behind nonlinear waves*
+
+1. [Fourier multipliers: which equaliser settings are safe on every Lᵖ, by the Mihlin-Hörmander test](07-Multipliers%20and%20Estimates%20for%20PDE/01-mihlin-hormander-multiplier-theorem.md)
+2. [Littlewood-Paley: split a signal into octaves, and its size is the size of the octaves' combined energy](07-Multipliers%20and%20Estimates%20for%20PDE/02-littlewood-paley-theory.md)
+3. [Paraproducts: sort a product by which factor carries the high frequencies](07-Multipliers%20and%20Estimates%20for%20PDE/03-paraproducts-and-the-coifman-meyer-theorem.md)
+4. [The T(1) theorem: a singular integral with no translation symmetry is bounded on L² when T(1) and T*(1) lie in BMO](07-Multipliers%20and%20Estimates%20for%20PDE/04-the-t1-theorem.md)
+5. [Pseudodifferential operators: a Fourier multiplier whose gain also depends on position](07-Multipliers%20and%20Estimates%20for%20PDE/05-pseudodifferential-operators.md)
+6. [Strichartz estimates: dispersion averaged over time, and when a nonlinear Schrödinger wave exists, scatters or blows up](07-Multipliers%20and%20Estimates%20for%20PDE/06-strichartz-estimates-and-nonlinear-schrodinger.md)
+
+[↑ Back to the shelves](#top)
+
+<a name="s08"></a>
+
+## 08 · Harmonic Analysis on Groups · 4 cards
+
+*One Fourier theory for every group with a fair way to measure size: characters of finite abelian groups, Haar measure, Pontryagin duality, and Peter-Weyl for compact groups*
+
+1. [Fourier analysis on a finite abelian group: characters as the waves, and the transform on bit strings](08-Harmonic%20Analysis%20on%20Groups/01-fourier-analysis-on-finite-abelian-groups.md)
+2. [Haar measure: the one fair way to measure size on a group](08-Harmonic%20Analysis%20on%20Groups/02-haar-measure.md)
+3. [Pontryagin duality: the line, the circle, the integers and the clock as one Fourier theory](08-Harmonic%20Analysis%20on%20Groups/03-pontryagin-duality.md)
+4. [Peter-Weyl: Fourier series on a compact group, with the matrix entries of its representations as the waves](08-Harmonic%20Analysis%20on%20Groups/04-peter-weyl-theorem.md)
 
 [↑ Back to the shelves](#top)
 

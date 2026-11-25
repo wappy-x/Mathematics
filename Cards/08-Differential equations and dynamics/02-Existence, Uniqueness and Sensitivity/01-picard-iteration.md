@@ -712,6 +712,7 @@ example : (2 : ℚ) ^ 2 / 4 = 1 := by norm_num
 - [Banach's fixed point theorem](../../17-Topology/01-Metric%20Spaces/08-banach-fixed-point-in-metric-spaces.md): any map that shrinks distances has one fixed point, Picard's recipe being one.
 - [Schauder](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/05-schauder-fixed-point-theorem.md): a fixed point without shrinking, giving solutions when the rule has no Lipschitz constant.
 - [Peano's theorem](06-peano-existence-theorem.md): continuity alone is enough for a solution, built from Euler polygons.
+- [Leray-Schauder](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/13-leray-schauder-and-a-priori-bounds.md): an a priori bound is enough to prove a solution exists.
 
 The guesses settle on a solution, but this card leaves open whether the Lipschitz constant rules out every other solution from the same start.
 

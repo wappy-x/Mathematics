@@ -784,6 +784,7 @@ example : 1 / ((6 / 5 : ℚ) * 150) * 3600 = 20 := by norm_num
 
 - [Entropy conditions](03-entropy-conditions-and-vanishing-viscosity.md): many jumps keep the count; adding a small viscosity and letting it vanish picks the one real traffic makes.
 - [Eikonal and traffic](07-eikonal-and-traffic-models.md): arrival times, and the tail of a jam behind a crash as a kink in the count of cars that have passed.
+- [Systems of conservation laws](08-systems-of-conservation-laws.md): several wave families, and the shocks, fans and contacts between them.
 
 Left open: the Rankine-Hugoniot rule also allows a jump from a full queue down to free traffic, so which jumps happen in reality, and what replaces the others when the light turns green?
 

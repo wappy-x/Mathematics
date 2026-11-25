@@ -769,6 +769,7 @@ example : (51 : ℚ) * (1 / 50) = 51 / 50 := by norm_num
 - [Fourier inversion](04-fourier-inversion-theorem.md): the next card. It uses the self-transforming bell to prove that the spectrum rebuilds the signal, and it shows the gate rebuilding as 1/2 at its edges.
 - [The uncertainty principle](07-uncertainty-principle.md): the 1/T law made general. No signal is both brief and narrow in frequency, and the bell is the case where the trade is tightest.
 - [Poisson summation and sampling](08-poisson-summation-and-sampling.md): why the sampled gate missed by 6.29e−04 ms at 1,500 Hz. Sampling adds copies of the spectrum, spaced by the sampling rate.
+- [Strichartz estimates](../07-Multipliers%20and%20Estimates%20for%20PDE/06-strichartz-estimates-and-nonlinear-schrodinger.md): dispersion averaged over time, and when a nonlinear Schrödinger wave exists, scatters or blows up.
 
 The question this card leaves open: sinc has no finite area, so in what sense does its inverse transform return the gate?
 

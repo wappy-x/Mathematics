@@ -139,7 +139,7 @@ A **bound state** is a ζ whose solution fades at both ends; for a pulse at rest
 2. Then the bound states do not move as the pulse travels: they are conserved, like energy.
 3. Each bound state η is one soliton, $`2\eta\,\mathrm{sech}(2\eta\tau)`$: peak power $`4\eta^2 P_0`$, FWHM 17.627 ps divided by 2η.
 
-The **inverse scattering transform** makes this a solution method: **scatter** (find the bound states and the wave reflection of the launched pulse), **evolve** (each piece of data changes by a known factor), **invert** (rebuild the pulse by solving a linear integral equation, the Gel'fand–Levitan–Marchenko equation).
+The **inverse scattering transform** ([Lax pairs and inverse scattering](16-lax-pairs-and-the-inverse-scattering-transform.md)) makes this a solution method: **scatter** (find the bound states and the wave reflection of the launched pulse), **evolve** (each piece of data changes by a known factor), **invert** (rebuild the pulse by solving a linear integral equation, the Gel'fand–Levitan–Marchenko equation).
 
 The code finds η = 0.500000 for the launched soliton, and still η = 0.500000 after 50 km on the grid; 2η = 1 is its amplitude. That case is easy, because the soliton's shape never changes. The real test of fact 2 is a pulse that does change shape, in Step 4.
 
@@ -945,6 +945,9 @@ example : 12 * (3 + 4 * Real.cosh (2 * 0 - 8 * 0) + Real.cosh (4 * 0 - 64 * 0))
 Related card, just before this one:
 
 - [Reaction-diffusion](05-reaction-diffusion-and-pattern-formation.md): another balance that holds a shape, there between local growth and diffusion, giving fronts that travel at a fixed speed.
+- [The mountain pass](11-mountain-pass-theorem.md): a solution that is a saddle of the energy, not a minimum.
+- [Lax pairs and inverse scattering](16-lax-pairs-and-the-inverse-scattering-transform.md): why KdV solitons pass through each other unchanged.
+- [Strichartz estimates](../../20-Harmonic%20analysis/07-Multipliers%20and%20Estimates%20for%20PDE/06-strichartz-estimates-and-nonlinear-schrodinger.md): dispersion averaged over time, and when a nonlinear Schrödinger wave exists, scatters or blows up.
 
 The question this card leaves open: real fibre has loss, higher-order dispersion and noise, so how long can a train of solitons carry data before they drift into each other?
 

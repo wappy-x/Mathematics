@@ -1085,6 +1085,7 @@ example : (10 : ℚ) ^ 2 = 100 ∧ (1 / 2 : ℚ) / 10 = 1 / 20 ∧ (5 : ℚ) ^ 2
 
 - [The Gaussian and Poisson kernels](04-gaussian-and-poisson-kernels.md): the next card. The two kernels with no edges, which turn this card's limits into the heat and Laplace equations.
 - [The maximal function](../06-Maximal%20Functions%20and%20Beyond/01-hardy-littlewood-maximal-function.md): controls all the averages at a point at once, which gives convergence at almost every point for every signal of finite size.
+- [Wiener's Tauberian theorem](10-wieners-tauberian-theorem.md): shifts of one signal fill L¹ exactly when its spectrum never vanishes.
 
 The question this card leaves open: at points where the signal is not continuous, do the averages still converge for almost every time, and what bound makes that true?
 

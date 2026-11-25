@@ -116,7 +116,7 @@ The plan has four parts:
 
 1. **Approximate.** Keep only $`N`$ shapes for the flow. The equations become a finite system of ordinary differential equations, which has a solution.
 2. **Bound.** Show the kinetic energy of every approximation stays below the same number, whatever $`N`$ is.
-3. **Extract a limit.** Bounded sequences have subsequences with limits, but only in a weak sense. Upgrade to a strong limit with the Aubin-Lions lemma.
+3. **Extract a limit.** Bounded sequences have subsequences with limits, but only in a weak sense, in the time-dependent spaces of [Bochner spaces and the weak heat equation](../06-Weak%20Solutions%20and%20Free%20Boundaries/10-bochner-spaces-and-weak-solutions-of-the-heat-equation.md). Upgrade to a strong limit with the Aubin-Lions lemma.
 4. **Check the limit.** Show the limit satisfies the weak form and the energy inequality.
 
 Uniqueness never enters. Two different subsequences could have two different limits, and nothing in the plan rules that out.

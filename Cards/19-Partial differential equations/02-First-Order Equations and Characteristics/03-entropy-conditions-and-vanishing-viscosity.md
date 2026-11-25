@@ -1042,6 +1042,7 @@ example : (4 : ℝ) * 20 / (15 - (-25)) = 2 := by norm_num
 - [The Riemann problem](04-rarefaction-and-the-riemann-problem.md): every pair of left and right densities, solved with the right mix of fans and allowed jumps.
 - [Hamilton-Jacobi](05-hamilton-jacobi-equations.md): the same vanishing viscosity idea picks the right answer when a value or an arrival time has a kink.
 - [Eikonal and traffic](07-eikonal-and-traffic-models.md): traffic models that use these tests on real roads.
+- [Systems of conservation laws](08-systems-of-conservation-laws.md): several wave families, and the shocks, fans and contacts between them.
 
 Left open: for a system like gas flow, or an S-shaped flux, which test picks the real jump, and is the answer still unique?
 

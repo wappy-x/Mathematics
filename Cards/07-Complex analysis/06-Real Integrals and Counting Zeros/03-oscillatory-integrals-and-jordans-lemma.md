@@ -914,6 +914,7 @@ example : Real.pi * 16 / (1 * (16 ^ 2 - 1)) = 16 * Real.pi / 255 := by
 
 - [Poles on the path](04-indented-contours-and-principal-values.md): a pole on the real line, as in sin x / x, dodged by a small half-circle.
 - [The Fourier transform](../08-Transforms%20in%20Outline/03-fourier-transform.md): the same integral for every frequency, as one function.
+- [Stationary phase](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/12-oscillatory-integrals-and-stationary-phase.md): a fast-oscillating integral is decided near the points where the phase stops moving.
 
 For sin x / x the partner e^(iz)/z has its pole at 0, on the path itself; what a contour does then is the open question.
 

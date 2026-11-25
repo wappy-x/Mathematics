@@ -581,6 +581,7 @@ example : ((4 / 5 : ℚ) - 5 / 7) * (7 / 10) - (3 / 10) * (1 / 5) = 0 := by norm
 - [Schur's lemma and orthogonality](../12-Group%20Representations/02-schurs-lemma-and-character-orthogonality.md): a map between two irreducible pieces is zero or an isomorphism, so their traces are perpendicular.
 - [Floquet theory](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/08-floquet-theory-and-parametric-resonance.md): a system with periodic coefficients is a constant one seen through a periodic lens, and pumping at twice the natural rate makes it grow.
 - [The structured singular value](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/07-structured-singular-value.md): robustness when the uncertainty has a known shape.
+- [Systems of conservation laws](../../19-Partial%20differential%20equations/02-First-Order%20Equations%20and%20Characteristics/08-systems-of-conservation-laws.md): several wave families, and the shocks, fans and contacts between them.
 
 This card says nothing about a mixture of the two patterns, which is every other pattern there is. Splitting any column into its two is next.
 

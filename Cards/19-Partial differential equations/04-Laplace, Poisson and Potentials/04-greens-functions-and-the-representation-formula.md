@@ -1972,6 +1972,8 @@ example : (2 : ℚ) * (1 / 3 * (1 / 2)) + 2 * (1 / 2) - 2 * (1 / 2 * (1 / 3) * (
 
 - [Method of images](05-method-of-images.md): the next card. For a half-space or a ball, the corrector h is the field of one mirror-image source, so G has a closed form with no series.
 - [Integral equations](../07-Nonlinear%20PDE%20and%20Fluids/07-integral-equations-fredholm-and-volterra.md): the representation formula turns a differential equation into an integral equation with kernel K(x, y) = G(x, y), solved by Fredholm's theory.
+- [Layer potentials](../07-Nonlinear%20PDE%20and%20Fluids/14-layer-potentials-and-boundary-integral-equations.md): turn a boundary-value problem into an integral equation on the boundary.
+- [Boundary elements](../07-Nonlinear%20PDE%20and%20Fluids/15-boundary-element-methods.md): solve Laplace's equation with unknowns only on the boundary.
 
 Related cards on this shelf: [Harmonic functions](01-harmonic-functions-and-mean-values.md) (the mean value property is the representation formula on a ball), [The fundamental solution](02-fundamental-solution-of-the-laplacian.md) (where Φ comes from), [Dirichlet's principle](06-dirichlet-principle-and-variational-form.md) (Green's first identity as an energy), [Helmholtz](08-helmholtz-and-eigenfunctions.md) (the eigenfunction series behind the cube's G), [Subharmonic functions](09-subharmonic-functions-and-perrons-method.md) (existence of G on a general region), [Harnack and regularity](10-harnack-and-regularity-in-outline.md) and [The Laplacian in round coordinates, and the modes it splits into](07-laplacian-in-polar-and-spherical-coordinates.md).
 

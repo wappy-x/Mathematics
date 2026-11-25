@@ -928,6 +928,7 @@ example : (35 : ℕ) ^ 3 = 42875 ∧ 1295 < 42875 := by decide
 
 - [Densities and likelihood ratios](../08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md): a likelihood ratio has mean 1 under its base measure, so by Jensen its logarithm has mean at most 0.
 - [The rules of conditional expectation](../09-Conditional%20Expectation/04-rules-of-conditional-expectation.md): the same inequality with the mean replaced by a conditional mean given partial information.
+- [Muckenhoupt weights](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/11-muckenhoupt-weights.md): exactly which weightings keep the maximal function and singular integrals bounded.
 
 Jensen compares a convex curve at the plain mean with the mean of the curve; whether the same holds when the plain mean is replaced by a mean given partial information is the question [The rules of conditional expectation](../09-Conditional%20Expectation/04-rules-of-conditional-expectation.md) answers.
 

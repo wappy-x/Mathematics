@@ -1250,6 +1250,9 @@ example : (269 : ℚ) / 200 + 1 = 469 / 200 := by norm_num
 - [Sobolev spaces](../../19-Partial%20differential%20equations/06-Weak%20Solutions%20and%20Free%20Boundaries/02-sobolev-spaces-for-pdes.md): the full $`W^{k,p}`$ theory that partial differential equations use, in any dimension.
 - [Friedrichs extension](../05-Unbounded%20Operators%20and%20Semigroups/10-friedrichs-extension-and-energy-forms.md): start from the energy, and a lower-bounded operator gets one natural self-adjoint version.
 - [Kato-Rellich](../05-Unbounded%20Operators%20and%20Semigroups/11-kato-rellich-and-perturbed-eigenvalues.md): a small enough addition keeps an operator self-adjoint, and eigenvalues move smoothly.
+- [De Giorgi-Nash-Moser](../../19-Partial%20differential%20equations/06-Weak%20Solutions%20and%20Free%20Boundaries/15-de-giorgi-nash-moser.md): rough coefficients still give Hölder-continuous solutions.
+- [The mountain pass](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/11-mountain-pass-theorem.md): a solution that is a saddle of the energy, not a minimum.
+- [Fractional integration](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/08-riesz-potentials-and-hardy-littlewood-sobolev.md): the Hardy-Littlewood-Sobolev inequality, and Sobolev embedding in one line.
 
 Left open: a weak solution in two or three dimensions is in $`H^1`$ but need not be continuous, so when does it gain the extra derivatives that make it smooth?
 

@@ -1539,6 +1539,9 @@ example : 1 + 1 + 4 * 60 + 2 * 10 = 262 := by decide
 - [Calderon-Zygmund decomposition](02-calderon-zygmund-decomposition-in-outline.md): the next card. Step 2 cut $`f`$ by height; that card cuts it by place, into halving intervals on each of which the bad part adds up to zero.
 - [Interpolation](04-interpolation-riesz-thorin-and-marcinkiewicz.md): Step 2 is a special case of Marcinkiewicz's theorem, which turns two weak bounds into strong bounds in between.
 - [Singular integrals](03-singular-integrals-and-the-hilbert-transform-bound.md): operators such as the Hilbert transform are not averages, yet obey the same weak bound at $`p`$ = 1.
+- [Fractional integration](08-riesz-potentials-and-hardy-littlewood-sobolev.md): the Hardy-Littlewood-Sobolev inequality, and Sobolev embedding in one line.
+- [BMO](09-bmo-and-the-john-nirenberg-inequality.md): functions that wobble a bounded amount on every interval, and the exponential tail that forces.
+- [Muckenhoupt weights](11-muckenhoupt-weights.md): exactly which weightings keep the maximal function and singular integrals bounded.
 
 The question this card leaves open: the maximal function is controlled because it is built from averages, so can an operator whose kernel changes sign and is not integrable still obey a weak bound at $`p`$ = 1?
 

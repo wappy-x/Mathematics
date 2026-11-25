@@ -803,6 +803,8 @@ end
 - [Sampling](06-sampling-the-dirac-comb-and-nyquist.md): the transform of a train of deltas, and why sampling copies a spectrum.
 - [Schwartz space and tempered distributions](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/06-schwartz-space-and-tempered-distributions.md): the full topology of $`\mathcal{S}`$ and $`\mathcal{S}'`$.
 - [Weak derivatives](07-weak-derivatives-and-sobolev-spaces.md): derivatives defined through probes, for kinks and jumps.
+- [Paley-Wiener-Schwartz](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/11-paley-wiener-schwartz-theorem.md): a signal confined to a window has an entire spectrum whose growth gives the window's width.
+- [Pseudodifferential operators](../../20-Harmonic%20analysis/07-Multipliers%20and%20Estimates%20for%20PDE/05-pseudodifferential-operators.md): a Fourier multiplier whose gain also depends on position.
 
 The question this card leaves open: the transform of a train of evenly spaced gusts is again a train of spikes, so what does that say about sampling a signal?
 

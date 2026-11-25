@@ -896,7 +896,7 @@ example : ((15 : ℚ) - (-25)) * 10 = 400 := by norm_num
 - **Ramp metering and queue spillback.** The shock half of the problem says how fast a queue grows back towards the junction upstream, which decides when a queue blocks it.
 - **Grid schemes for conservation laws.** Godunov's method splits the road into cells and solves a Riemann problem at every cell edge at every step. See [Flow problems](../../16-Numerical%20analysis/07-PDE%20Solvers/06-upwind-schemes-and-conservation-laws.md) for the upwind schemes this grows from.
 - **Gas in a pipe.** A shock tube is a pipe with a membrane between high and low pressure. Burst the membrane and a shock runs one way while a fan runs the other: Riemann's original problem for gas.
-- **Dam breaks.** The shallow-water equations give a fan of water spreading downstream when a dam fails suddenly, the same shape as the green light.
+- **Dam breaks.** The shallow-water equations ([Systems of conservation laws](08-systems-of-conservation-laws.md)) give a fan of water spreading downstream when a dam fails suddenly, the same shape as the green light.
 
 > **Say it back**
 > A Riemann problem starts with two constant states that meet at one point. Stretching place and time together leaves it unchanged, so the answer depends only on place divided by time. Burgers' equation then allows only constant pieces or the fan $`u = x/t`$. If the left waves are faster the jump stays and moves at the average of the two wave speeds; if they are slower the entropy test rejects the jump and the fan opens instead. At a green light the fan holds the light at half the jam density, so a jammed queue drains at the road's full capacity.
@@ -915,6 +915,7 @@ example : ((15 : ℚ) - (-25)) * 10 = 400 := by norm_num
 - [Eikonal and traffic](07-eikonal-and-traffic-models.md): traffic models beyond one light, with arrival times and jams as first-order equations.
 - [The HJB equation](06-hamilton-jacobi-bellman-and-verification.md): the same first-order machinery used for the value of steering a system well.
 - [Flow problems](../../16-Numerical%20analysis/07-PDE%20Solvers/06-upwind-schemes-and-conservation-laws.md): grid schemes that solve conservation laws, where Riemann problems at cell edges become the building block.
+- [Systems of conservation laws](08-systems-of-conservation-laws.md): several wave families, and the shocks, fans and contacts between them.
 
 The question this card leaves open: when several jumps sit near each other, their shocks and fans collide, so how do the waves interact?
 

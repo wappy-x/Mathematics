@@ -999,6 +999,7 @@ example : ((1 : ℚ) / 2) ^ 1 = 1 / 2 ∧ ((1 : ℚ) / 2) ^ (1 + 1) = 1 / 4 ∧
 
 - [Helmholtz](08-helmholtz-and-eigenfunctions.md): the next card. It replaces $`\Delta u = 0`$ by $`-\Delta u = \lambda u`$; in a disc or ball the same angular modes appear, and the radial powers become Bessel-type functions.
 - [Volume form and Laplace-Beltrami](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/08-volume-form-and-the-laplace-beltrami-operator.md): the outflow-from-a-box idea of Step 0 on any curved coordinates and curved surfaces, of which $`\Delta_S`$ is the first example.
+- [Peter-Weyl](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/04-peter-weyl-theorem.md): Fourier series on a compact group, with the matrix entries of its representations as the waves.
 
 The open question this card leaves: when a round drum vibrates instead of settling, which radial functions replace $`r^m`$, and which frequencies do they allow?
 

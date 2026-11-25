@@ -956,6 +956,7 @@ example : (1 + (3 / 10 : ℚ) / (2 * (3 / 2))) = 11 / 10 := by norm_num
 - [Schrodinger and Klein-Gordon](07-schrodinger-and-klein-gordon-in-outline.md): the next card. Two equations read off the same way: Schrodinger's $`\omega`$ grows as $`k^2`$, and Klein-Gordon's $`\omega^2`$ is $`c^2k^2`$ plus a constant, so their packets spread too.
 - [Solitons](../07-Nonlinear%20PDE%20and%20Fluids/06-nonlinear-schrodinger-and-solitons-in-outline.md): KdV's solitary waves passing through each other, and the method that solves KdV exactly.
 - [Solving differential equations by transform](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/09-fourier-methods-for-differential-equations.md) (harmonic analysis wing): the Fourier-transform method that writes any start as a continuous sum of plane waves, the tool behind the packet version of $`c_g`$.
+- [Lax pairs and inverse scattering](../07-Nonlinear%20PDE%20and%20Fluids/16-lax-pairs-and-the-inverse-scattering-transform.md): why KdV solitons pass through each other unchanged.
 
 This card leaves open what happens to a group on water whose depth changes along the way, where $`k`$ itself must change as the wave travels.
 

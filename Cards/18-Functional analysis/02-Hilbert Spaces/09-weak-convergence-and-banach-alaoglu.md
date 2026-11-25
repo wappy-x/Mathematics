@@ -869,6 +869,9 @@ example : (36 : ℚ) / 100 = (3 / 5) ^ 2 := by norm_num
 - [Krein-Milman](../06-Banach%20Algebras%20and%20Fixed%20Points/06-krein-milman-and-extreme-points.md) takes the weak-star compact unit ball from Banach–Alaoglu and shows it is rebuilt from its extreme points, its corners.
 - [Compactness in Lp](10-compactness-in-lp-kolmogorov-riesz-and-dunford-pettis.md): small shifts must change a family only a little, and in L1 no mass may pile up.
 - [Operator topologies](../03-Bounded%20Operators/13-strong-and-weak-operator-topologies.md): three meanings of 'these operators converge', and Goldstine's density theorem.
+- [Bochner spaces and the weak heat equation](../../19-Partial%20differential%20equations/06-Weak%20Solutions%20and%20Free%20Boundaries/10-bochner-spaces-and-weak-solutions-of-the-heat-equation.md): a solution as a path through a space of functions.
+- [The direct method](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/10-direct-method-in-the-calculus-of-variations.md): minimise, take a weak limit, and check the energy cannot jump up.
+- [Monotone operators](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/12-monotone-operators-and-minty-browder.md): Minty's trick solves nonlinear equations that have no energy.
 
 The swaps leave one question open: weak limits can lose size, so when does a cost that depends on the squared size still reach its least value at the limit?
 

@@ -923,6 +923,9 @@ example : (5 : ℚ) * 100 * (5 / 384) = 625 / 96 := by norm_num
 
 - The next card, [When prices jump](09-partial-integro-differential-equations-for-jumps.md), puts the unknown under an integral inside a PDE, and sums jumps round by round in the same way.
 - [Reaction-diffusion](05-reaction-diffusion-and-pattern-formation.md): what the self-heating does when the reaction is not linear and the layer is not steady.
+- [Leray-Schauder](13-leray-schauder-and-a-priori-bounds.md): an a priori bound is enough to prove a solution exists.
+- [Layer potentials](14-layer-potentials-and-boundary-integral-equations.md): turn a boundary-value problem into an integral equation on the boundary.
+- [Lax pairs and inverse scattering](16-lax-pairs-and-the-inverse-scattering-transform.md): why KdV solitons pass through each other unchanged.
 
 The linear model says only where a steady state stops existing. What does the true, exponential heat release do past that point: does the layer settle somewhere hotter, or run away?
 

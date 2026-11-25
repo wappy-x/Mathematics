@@ -774,6 +774,7 @@ example :
 - [Dual spaces](09-dual-spaces-and-lp-duality.md): the space of all bounded functionals. This card shows it has enough of them to separate any point from any closed convex set.
 - [Reflexive spaces](10-reflexive-spaces-and-the-second-dual.md): when every wall is a point of the original kind, unlike the price-list example above.
 - [Locally convex and Frechet spaces](11-locally-convex-and-frechet-spaces.md): a whole family of size checks instead of one norm.
+- [Wiener's Tauberian theorem](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/10-wieners-tauberian-theorem.md): shifts of one signal fill L¹ exactly when its spectrum never vanishes.
 
 The question this card leaves open: when the set has no interior and the space is a space of bounded lists, which walls can be written down, and which exist only by choice?
 

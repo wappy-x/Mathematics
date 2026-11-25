@@ -766,6 +766,7 @@ example : (1 : ℚ) - 1 / 100 * (125 / 3) = 7 / 12 ∧ (2 : ℚ) / (125 / 3) = 6
 - [Penalties and augmented Lagrangians](07-penalty-and-augmented-lagrangian-methods.md): algorithms that move the price toward the shortfall, as Step 6 does, while keeping the planner's problem well behaved.
 - [Monotone operators](../08-First-Order%20Methods%20at%20Scale/07-monotone-operators-and-splitting.md): the prox is a resolvent, and Douglas-Rachford and Chambolle-Pock split the work.
 - [Mixed finite elements](../../16-Numerical%20analysis/07-PDE%20Solvers/13-mixed-finite-elements-and-the-inf-sup-condition.md): two unknowns at once, and the inf-sup test that keeps the pressure honest.
+- [The mountain pass](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/11-mountain-pass-theorem.md): a solution that is a saddle of the energy, not a minimum.
 
 This card finds the saddle when one exists; how fast a two-player method reaches it when neither player can reply fully, as in the spiral above, is the question it leaves open.
 

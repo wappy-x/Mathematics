@@ -909,6 +909,7 @@ example : (2 : ℚ) / (1 / 10) = 20 ∧ (2 : ℚ) / (1 / 100) = 200 ∧ (2 : ℚ
 
 - [Kato-Rellich](11-kato-rellich-and-perturbed-eigenvalues.md), the next card: perturbations that are small as operators, not only as forms, keep the operator domain itself, and move eigenvalues by a controlled amount.
 - Schrödinger operators with singular potentials, in the PDE and Lie-group wings, use the same form method in three dimensions.
+- [Weyl's law](../../19-Partial%20differential%20equations/06-Weak%20Solutions%20and%20Free%20Boundaries/13-weyls-law.md): a drum's area can be heard in how fast its notes pile up.
 
 The form method needs a floor; what self-adjoint versions exist, and which is physical, when the energy has no lower bound at all is the question this card leaves open.
 

@@ -1063,6 +1063,9 @@ On this shelf, [Weak derivatives](07-weak-derivatives-and-sobolev-spaces.md) def
 ## Where this goes next
 
 - [Sobolev spaces](../../19-Partial%20differential%20equations/06-Weak%20Solutions%20and%20Free%20Boundaries/02-sobolev-spaces-for-pdes.md): fractional-order spaces such as $`H^{1/2}(\partial\Omega)`$, the exact set of traces, and the full chain of embeddings.
+- [General elliptic operators](../../19-Partial%20differential%20equations/06-Weak%20Solutions%20and%20Free%20Boundaries/12-hopf-lemma-fredholm-alternative-and-the-principal-eigenvalue.md): Hopf's lemma, the Fredholm alternative, and a first eigenvalue with a positive mode.
+- [The direct method](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/10-direct-method-in-the-calculus-of-variations.md): minimise, take a weak limit, and check the energy cannot jump up.
+- [The mountain pass](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/11-mountain-pass-theorem.md): a solution that is a saddle of the energy, not a minimum.
 
 Which edge profiles are traces, exactly, and how to measure half a derivative, is the question this card leaves open.
 

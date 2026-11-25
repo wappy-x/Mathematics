@@ -1033,6 +1033,7 @@ example : 2 * 50000 ^ 3 / 3 = 83333333333333 := by norm_num
 - [Incomplete factorisations](../09-Fast%20Solvers%20for%20Large%20Grids/01-incomplete-factorisation-preconditioners.md): LU and Cholesky that keep only the nonzeros you can afford.
 - [Algebraic multigrid](../09-Fast%20Solvers%20for%20Large%20Grids/03-algebraic-multigrid.md): choose the coarse grid from the matrix alone.
 - [Domain decomposition](../09-Fast%20Solvers%20for%20Large%20Grids/04-domain-decomposition-and-schwarz-methods.md): solve on overlapping pieces, and add a coarse grid so the pieces agree.
+- [Boundary elements](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/15-boundary-element-methods.md): solve Laplace's equation with unknowns only on the boundary.
 
 This card used the simplest preconditioner, the diagonal; it leaves open how to choose a preconditioner for a matrix whose trouble is not just scaling ([Incomplete factorisations](../09-Fast%20Solvers%20for%20Large%20Grids/01-incomplete-factorisation-preconditioners.md)).
 

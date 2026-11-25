@@ -6,19 +6,19 @@
 
 Classify a second-order equation, say whether its problem is well posed, and solve the model equations by characteristics, kernels, Green's functions and eigenfunction expansions. Say what a weak or a viscosity solution is, set up a free boundary problem such as an American option, and read the Navier-Stokes regularity question as a precise statement.
 
-7 shelves · **62 of 62 cards ready to read**
+7 shelves · **76 of 76 cards ready to read**
 
 Click a shelf to jump to its cards, then click a card's title to read it.
 
 | Shelf | Cards |
 | --- | ---: |
 | [01 · Classification and Well-Posedness](#s01) | 9 |
-| [02 · First-Order Equations and Characteristics](#s02) | 7 |
+| [02 · First-Order Equations and Characteristics](#s02) | 8 |
 | [03 · The Heat Equation in Depth](#s03) | 10 |
 | [04 · Laplace, Poisson and Potentials](#s04) | 10 |
 | [05 · Waves](#s05) | 8 |
-| [06 · Weak Solutions and Free Boundaries](#s06) | 9 |
-| [07 · Nonlinear PDE and Fluids](#s07) | 9 |
+| [06 · Weak Solutions and Free Boundaries](#s06) | 15 |
+| [07 · Nonlinear PDE and Fluids](#s07) | 16 |
 
 <a name="s01"></a>
 
@@ -40,7 +40,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s02"></a>
 
-## 02 · First-Order Equations and Characteristics · 7 cards
+## 02 · First-Order Equations and Characteristics · 8 cards
 
 *First-order equations solved along characteristics, the shocks they form, and the value equations of control*
 
@@ -51,6 +51,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Hamilton-Jacobi: a first-order equation for a value or an arrival time](02-First-Order%20Equations%20and%20Characteristics/05-hamilton-jacobi-equations.md)
 6. [The HJB equation: the value of steering a system well](02-First-Order%20Equations%20and%20Characteristics/06-hamilton-jacobi-bellman-and-verification.md)
 7. [Eikonal and traffic: arrival times and jams as first-order equations](02-First-Order%20Equations%20and%20Characteristics/07-eikonal-and-traffic-models.md)
+8. [Systems of conservation laws: several wave families, and the shocks, fans and contacts between them](02-First-Order%20Equations%20and%20Characteristics/08-systems-of-conservation-laws.md)
 
 [↑ Back to the shelves](#top)
 
@@ -111,7 +112,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 <a name="s06"></a>
 
-## 06 · Weak Solutions and Free Boundaries · 9 cards
+## 06 · Weak Solutions and Free Boundaries · 15 cards
 
 *Solutions that need no second derivative, the existence theory for them, and boundaries found as part of the answer*
 
@@ -124,12 +125,18 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 7. [Free boundaries: when the edge of the region is part of the answer](06-Weak%20Solutions%20and%20Free%20Boundaries/07-free-boundaries-and-the-stefan-problem.md)
 8. [The obstacle problem: a membrane that must clear an obstacle](06-Weak%20Solutions%20and%20Free%20Boundaries/08-obstacle-problems-and-variational-inequalities.md)
 9. [An American option: the boundary where holding stops beating exercising](06-Weak%20Solutions%20and%20Free%20Boundaries/09-american-options-as-a-free-boundary-problem.md)
+10. [Bochner spaces and the weak heat equation: a solution as a path through a space of functions](06-Weak%20Solutions%20and%20Free%20Boundaries/10-bochner-spaces-and-weak-solutions-of-the-heat-equation.md)
+11. [Weak waves: Galerkin and the energy estimate for a plucked string with a corner](06-Weak%20Solutions%20and%20Free%20Boundaries/11-weak-solutions-of-the-wave-equation.md)
+12. [General elliptic operators: Hopf's lemma, the Fredholm alternative, and a first eigenvalue with a positive mode](06-Weak%20Solutions%20and%20Free%20Boundaries/12-hopf-lemma-fredholm-alternative-and-the-principal-eigenvalue.md)
+13. [Weyl's law: a drum's area can be heard in how fast its notes pile up](06-Weak%20Solutions%20and%20Free%20Boundaries/13-weyls-law.md)
+14. [Schauder estimates: a Hölder source gives a solution with Hölder second derivatives](06-Weak%20Solutions%20and%20Free%20Boundaries/14-holder-spaces-and-schauder-estimates.md)
+15. [De Giorgi-Nash-Moser: rough coefficients still give Hölder-continuous solutions](06-Weak%20Solutions%20and%20Free%20Boundaries/15-de-giorgi-nash-moser.md)
 
 [↑ Back to the shelves](#top)
 
 <a name="s07"></a>
 
-## 07 · Nonlinear PDE and Fluids · 9 cards
+## 07 · Nonlinear PDE and Fluids · 16 cards
 
 *The fluid equations, the regularity question, patterns and solitons, and equations with the unknown under an integral*
 
@@ -142,6 +149,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 7. [Integral equations: the unknown sits inside the integral](07-Nonlinear%20PDE%20and%20Fluids/07-integral-equations-fredholm-and-volterra.md)
 8. [The Fredholm alternative: either exactly one solution, or extra free ones](07-Nonlinear%20PDE%20and%20Fluids/08-fredholm-alternative-and-compact-operators.md)
 9. [When prices jump: a pricing equation with an integral term](07-Nonlinear%20PDE%20and%20Fluids/09-partial-integro-differential-equations-for-jumps.md)
+10. [The direct method: minimise, take a weak limit, and check the energy cannot jump up](07-Nonlinear%20PDE%20and%20Fluids/10-direct-method-in-the-calculus-of-variations.md)
+11. [The mountain pass: a solution that is a saddle of the energy, not a minimum](07-Nonlinear%20PDE%20and%20Fluids/11-mountain-pass-theorem.md)
+12. [Monotone operators: Minty's trick solves nonlinear equations that have no energy](07-Nonlinear%20PDE%20and%20Fluids/12-monotone-operators-and-minty-browder.md)
+13. [Leray-Schauder: an a priori bound is enough to prove a solution exists](07-Nonlinear%20PDE%20and%20Fluids/13-leray-schauder-and-a-priori-bounds.md)
+14. [Layer potentials: turn a boundary-value problem into an integral equation on the boundary](07-Nonlinear%20PDE%20and%20Fluids/14-layer-potentials-and-boundary-integral-equations.md)
+15. [Boundary elements: solve Laplace's equation with unknowns only on the boundary](07-Nonlinear%20PDE%20and%20Fluids/15-boundary-element-methods.md)
+16. [Lax pairs and inverse scattering: why KdV solitons pass through each other unchanged](07-Nonlinear%20PDE%20and%20Fluids/16-lax-pairs-and-the-inverse-scattering-transform.md)
 
 [↑ Back to the shelves](#top)
 

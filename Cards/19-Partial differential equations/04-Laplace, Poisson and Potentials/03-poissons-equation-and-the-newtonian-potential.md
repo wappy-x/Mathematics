@@ -1199,6 +1199,9 @@ example : ((2 : ℚ) * 8) ^ 2 / 8 ^ 2 = 4 := by norm_num
 - [Green's function](04-greens-functions-and-the-representation-formula.md): the next card. It adds a correction to $`\Phi`$ so the smear meets the wall condition of a closed region, such as a grounded metal box.
 - [Method of images](05-method-of-images.md): builds that correction for a plane or a ball by placing a mirror charge outside.
 - [Weak solutions](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/08-weak-solutions-of-differential-equations.md): the meaning of "solves" at the ball's surface, where the second derivative jumps.
+- [Schauder estimates](../06-Weak%20Solutions%20and%20Free%20Boundaries/14-holder-spaces-and-schauder-estimates.md): a Hölder source gives a solution with Hölder second derivatives.
+- [Riesz transforms](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/07-riesz-transforms-and-singular-integrals-in-higher-dimensions.md): the Hilbert transform in n dimensions, and second derivatives from the Laplacian.
+- [Fractional integration](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/08-riesz-potentials-and-hardy-littlewood-sobolev.md): the Hardy-Littlewood-Sobolev inequality, and Sobolev embedding in one line.
 
 The question this card leaves open: inside a grounded metal box, the smear $`\Phi * f`$ no longer reads 0 on the walls, so what must be added to it?
 

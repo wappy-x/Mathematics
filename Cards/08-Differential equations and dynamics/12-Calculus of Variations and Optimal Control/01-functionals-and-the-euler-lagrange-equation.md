@@ -802,6 +802,7 @@ example : (80 : ℚ) * 250 + 160 * 250 = 60000 := by norm_num
 - [Geodesic and exponential map](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/04-geodesics-and-the-exponential-map.md): shortest routes on curved ground.
 - [Noether](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/08-noethers-theorem.md): why a missing slot, as in Step 5, gives a conserved quantity.
 - [The second variation](09-second-variation-and-free-endpoints.md): when a stationary path is truly a minimum, and what a free end must satisfy.
+- [The direct method](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/10-direct-method-in-the-calculus-of-variations.md): minimise, take a weak limit, and check the energy cannot jump up.
 
 Left open: what if the route must also meet a budget, such as a fixed length of cable? That is [Paths with a budget](03-constrained-paths-and-the-hanging-chain.md).
 

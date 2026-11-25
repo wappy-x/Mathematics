@@ -895,6 +895,7 @@ example : 1 + (4 / 5 : ℝ) ^ 2 * Real.sin (Real.pi / 2) ^ 2 = 41 / 25 := by
 - [Godunov's method](11-godunov-method-and-riemann-solvers.md): solve a small Riemann problem at every cell edge.
 - [Flux limiters](12-tvd-schemes-and-flux-limiters.md): second order where the wave is smooth, no wiggles where it is steep.
 - [Discontinuous Galerkin](14-discontinuous-galerkin-methods.md): finite elements that may jump at edges, joined by an upwind flux.
+- [Systems of conservation laws](../../19-Partial%20differential%20equations/02-First-Order%20Equations%20and%20Characteristics/08-systems-of-conservation-laws.md): several wave families, and the shocks, fans and contacts between them.
 
 Left open: how to get second order where the pulse is smooth and no wobble where it is steep ([Flux limiters](12-tvd-schemes-and-flux-limiters.md)). Godunov's theorem forces the answer to be nonlinear, with weights that switch toward upwind near a steep edge.
 

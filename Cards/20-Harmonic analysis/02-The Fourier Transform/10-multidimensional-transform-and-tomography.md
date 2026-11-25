@@ -795,6 +795,8 @@ example : (1 / 5 : ℚ) * 20 + 3 / 10 * 4 = 26 / 5 := by norm_num
 ## Where this goes next
 
 - [Restriction and Kakeya in outline](../06-Maximal%20Functions%20and%20Beyond/06-restriction-and-kakeya-in-outline.md): when $`\hat f`$ has meaningful values on a curved surface, such as a sphere, rather than on flat slices through the centre.
+- [Riesz transforms](../06-Maximal%20Functions%20and%20Beyond/07-riesz-transforms-and-singular-integrals-in-higher-dimensions.md): the Hilbert transform in n dimensions, and second derivatives from the Laplacian.
+- [Stationary phase](../06-Maximal%20Functions%20and%20Beyond/12-oscillatory-integrals-and-stationary-phase.md): a fast-oscillating integral is decided near the points where the phase stops moving.
 
 The question this card leaves open: the transform of a picture with sharp edges fades too slowly to be integrable, and a circle or a sphere has zero area, so when does $`\hat f`$ still have meaningful values on such a curved set?
 

@@ -133,7 +133,7 @@ Perhaps the measure is too generous to fine ripples. A stricter measure counts d
 
 The growth factor still wins. It rises like $`e^{2\kappa\pi^2 m^2\tau/L^2}`$, and an exponential beats every power. Any measure built from a fixed number of derivatives fails.
 
-A measure that weights pattern $`m`$ by $`A_{mm}(\tau)`$ itself would make the map stable. But for one second back, it demands 1 mm patterns measured $`7.44 \times 10^{102}`$ times more finely than the reading's error. No instrument does that. The real repair is extra knowledge about the answer, the subject of the planned card on blurring and unblurring.
+A measure that weights pattern $`m`$ by $`A_{mm}(\tau)`$ itself would make the map stable. But for one second back, it demands 1 mm patterns measured $`7.44 \times 10^{102}`$ times more finely than the reading's error. No instrument does that. The real repair is extra knowledge about the answer, the subject of [Smoothing, blurring and deconvolution](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/05-smoothing-blurring-and-deconvolution.md).
 
 ### Step 4: Hadamard's own example, the steady plate given one edge
 

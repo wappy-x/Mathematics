@@ -788,6 +788,7 @@ Also used from this shelf: [Metric space](01-metric-spaces.md) (the three distan
 - [Baire category theorem](10-baire-category-theorem.md): the second big theorem that needs completeness.
 - [Neumann series](../../18-Functional%20analysis/03-Bounded%20Operators/06-neumann-series-and-inverting-close-to-the-identity.md): the theorem for linear maps, inverting "one minus a small map" by a geometric series.
 - [Schauder](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/05-schauder-fixed-point-theorem.md): a fixed point from compactness and convexity alone, with no shrinking, and no promise of only one.
+- [Strichartz estimates](../../20-Harmonic%20analysis/07-Multipliers%20and%20Estimates%20for%20PDE/06-strichartz-estimates-and-nonlinear-schrodinger.md): dispersion averaged over time, and when a nonlinear Schrödinger wave exists, scatters or blows up.
 
 Left open: a map that does not shrink distances, such as a rotation of a disc, still has a fixed point; what guarantees one when no contraction constant exists?
 

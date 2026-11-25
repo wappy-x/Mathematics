@@ -415,6 +415,7 @@ example : (List.range 105).filter (fun d => d % 3 = 2 ∧ d % 5 = 3 ∧ d % 7 = 
 - [Which clocks have a primitive root](../04-Powers%20on%20the%20Clock/09-primitive-roots-mod-prime-powers.md): lifting from 7 to 49 to every power of 7, and why the 8-clock and 15-clock have none.
 - [Carmichael's function](../04-Powers%20on%20the%20Clock/11-carmichael-function.md): the smallest power that sends every coprime number home, often far below Euler's count.
 - [Square roots on a prime clock](../06-Codes%20and%20Secrets/06-square-roots-mod-p.md): a one-line formula when p is 3 mod 4, and Tonelli-Shanks for the rest.
+- [Fourier analysis on a finite abelian group](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/01-fourier-analysis-on-finite-abelian-groups.md): characters as the waves, and the transform on bit strings.
 
 This card leaves one question open: when the lengths do share a factor, which readings can still happen, and how often do they come round?
 

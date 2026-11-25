@@ -793,6 +793,8 @@ example : ‖(EuclideanSpace.single 0 1 - EuclideanSpace.single 1 1 : EuclideanS
 - [The Fredholm alternative](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/08-fredholm-alternative-and-compact-operators.md): the identity minus a compact operator behaves like a square matrix.
 - [Trace class](12-trace-class-and-schatten-operators.md): the operators small enough to have a trace, and Lidskii's theorem that the trace adds the eigenvalues.
 - [Fredholm index](15-fredholm-operators-and-the-index.md): dimension of the kernel minus the dimension of what the range misses, and compact changes cannot move it.
+- [Layer potentials](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/14-layer-potentials-and-boundary-integral-equations.md): turn a boundary-value problem into an integral equation on the boundary.
+- [Peter-Weyl](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/04-peter-weyl-theorem.md): Fourier series on a compact group, with the matrix entries of its representations as the waves.
 
 Nearby on this shelf, [Spectrum](07-spectrum-and-resolvent.md) gives the missing inverse a name: 0 lies in the spectrum of every compact operator on an infinite-dimensional space. The question left open: for a compact operator that is symmetric, are the modes always there to cut along, as they were for the rod?
 

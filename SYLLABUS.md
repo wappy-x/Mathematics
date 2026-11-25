@@ -1,10 +1,10 @@
 # Syllabus
 
-The whole library in reading order: **25 wings, 274 shelves and 2,213 cards**, from counting to the open problems of current research. Each card uses only ideas from the cards before it, so the library can be read from the first card to the last.
+The whole library in reading order: **25 wings, 276 shelves and 2,245 cards**, from counting to the open problems of current research. Each card uses only ideas from the cards before it, so the library can be read from the first card to the last.
 
 **Each wing has its own page.** Click a wing to see its shelves and every card on them, then click a card's title to read it.
 
-**2,213 of 2,213 cards are ready to read.**
+**2,245 of 2,245 cards are ready to read.**
 
 | # | Wing | What it's about | Shelves | Ready to read |
 | --- | --- | --- | ---: | --- |
@@ -26,8 +26,8 @@ The whole library in reading order: **25 wings, 274 shelves and 2,213 cards**, f
 | 16 | [Numerical analysis](Cards/16-Numerical%20analysis/README.md) | Computing answers you can trust, and knowing how far off they are. | 9 | 87 of 87 |
 | 17 | [Topology](Cards/17-Topology/README.md) | Shape without measurement: stretching, holes and knots. | 7 | 65 of 65 |
 | 18 | [Functional analysis](Cards/18-Functional%20analysis/README.md) | Infinite-dimensional spaces behind modern analysis. | 6 | 67 of 67 |
-| 19 | [Partial differential equations](Cards/19-Partial%20differential%20equations/README.md) | Heat, waves and fluids. | 7 | 62 of 62 |
-| 20 | [Harmonic analysis](Cards/20-Harmonic%20analysis/README.md) | Breaking signals into waves. | 6 | 52 of 52 |
+| 19 | [Partial differential equations](Cards/19-Partial%20differential%20equations/README.md) | Heat, waves and fluids. | 7 | 76 of 76 |
+| 20 | [Harmonic analysis](Cards/20-Harmonic%20analysis/README.md) | Breaking signals into waves. | 8 | 70 of 70 |
 | 21 | [Algebraic and analytic number theory](Cards/21-Algebraic%20and%20analytic%20number%20theory/README.md) | Primes in depth: zeta, L-functions and Galois. | 8 | 72 of 72 |
 | 22 | [Algebraic geometry](Cards/22-Algebraic%20geometry/README.md) | Shapes defined by equations. | 6 | 54 of 54 |
 | 23 | [Differential geometry and Lie groups](Cards/23-Differential%20geometry%20and%20Lie%20groups/README.md) | Curved space, symmetry and physics. | 7 | 69 of 69 |

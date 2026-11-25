@@ -1573,6 +1573,7 @@ example : 2 * min (10 - 5) (5 - 0) = (10 : ℕ) := by decide
 - [Minimax](08-minimax-theorem-and-convex-duality.md): compactness and convexity again, now giving a saddle point of a game.
 - Elsewhere on this shelf: [Banach algebras](01-banach-algebras-and-the-gelfand-transform.md), [Wiener's lemma](02-wieners-lemma-and-invertible-filters.md), [C-star algebras](03-c-star-algebras-in-outline.md), [States](04-states-representations-and-the-gns-construction.md) and [The slope transform](07-legendre-fenchel-and-subgradients.md).
 - [Factors in outline](09-von-neumann-algebras-and-factors-in-outline.md): von Neumann algebras with a trivial centre, sorted by the sizes their projections can take.
+- [Leray-Schauder](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/13-leray-schauder-and-a-priori-bounds.md): an a priori bound is enough to prove a solution exists.
 
 The question this card leaves open: when a map has a fixed point but is not a contraction, what extra structure lets an algorithm actually find it?
 

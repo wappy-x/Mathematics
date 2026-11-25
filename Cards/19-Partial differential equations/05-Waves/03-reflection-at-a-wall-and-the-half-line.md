@@ -1374,6 +1374,7 @@ example : dAlembert 14300 (oddExt tent) (oddExt fun _ => 0) 1 (11 / 14300) = -1 
 - Back to [Standing waves](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/06-standing-waves-on-a-string.md), met earlier: two ends make mirrors of mirrors, and the repeated echoes add into the string's harmonics.
 - [The retarded Green's function](05-retarded-greens-function-and-forced-waves.md): a string pushed while it moves; on a half-line its response gets a flipped mirror source too.
 - [Drumheads](08-membranes-and-bessel-modes.md): a round edge has no straight mirror line, so the drum needs its own modes instead.
+- [Weak waves](../06-Weak%20Solutions%20and%20Free%20Boundaries/11-weak-solutions-of-the-wave-equation.md): Galerkin and the energy estimate for a plucked string with a corner.
 
 The question this card leaves open: what happens when the end is neither clamped nor free, such as a bridge that gives a little or a cable ending in a resistor, so that only part of the pulse comes back?
 

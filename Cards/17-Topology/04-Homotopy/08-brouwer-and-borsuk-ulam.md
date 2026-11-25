@@ -960,6 +960,7 @@ example : ((13 * 4 - 21 * 2) + (21 * 11 - 15 * 4) + (15 * 2 - 13 * 11) : ℤ) = 
 - [Homology of spheres, and degree](../05-Homology/07-homology-of-spheres-and-degree.md): the hole counts of $`S^{n-1}`$ that prove no retraction in every dimension, and the degree of a map.
 - Hairy ball theorem (planned, in the differential geometry wing): every tangent arrow field on $`S^2`$ vanishes somewhere, proved with degree.
 - [Covering dimension](09-lebesgue-covering-dimension.md): count how many pieces of a fine cover must overlap at one point.
+- [Monotone operators](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/12-monotone-operators-and-minty-browder.md): Minty's trick solves nonlinear equations that have no energy.
 
 Brouwer guarantees a point that stays put, and the cell hunt found this one; how many steps such a search needs in the worst case is the question this card leaves open.
 

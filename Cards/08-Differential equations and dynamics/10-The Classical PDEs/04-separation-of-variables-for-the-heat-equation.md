@@ -812,6 +812,8 @@ end SeparationOfVariables
 - [Fourier's law](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/05-heat-conduction-and-fouriers-law.md): the heat equation in real materials and units.
 - [Spectral methods](../../16-Numerical%20analysis/07-PDE%20Solvers/10-spectral-methods-and-the-fft.md): computing with modes, summed by a fast transform.
 - [Stochastic PDEs in outline](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/09-stochastic-pdes-in-outline.md): the heat equation driven by space-time noise.
+- [Bochner spaces and the weak heat equation](../../19-Partial%20differential%20equations/06-Weak%20Solutions%20and%20Free%20Boundaries/10-bochner-spaces-and-weak-solutions-of-the-heat-equation.md): a solution as a path through a space of functions.
+- [Lax pairs and inverse scattering](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/16-lax-pairs-and-the-inverse-scattering-transform.md): why KdV solitons pass through each other unchanged.
 
 Left open: what heat does on a bar with no ends, where there is no list of modes; [The heat kernel](10-the-heat-kernel.md) answers it.
 

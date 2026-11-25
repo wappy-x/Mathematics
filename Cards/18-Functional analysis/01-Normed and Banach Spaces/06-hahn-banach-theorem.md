@@ -708,6 +708,7 @@ example : (100 : ℚ) * (1 / 10 + 17 / 40 + 17 / 40) = 95 ∧
 
 - [Separation](07-hahn-banach-separation-and-supporting-walls.md): the same theorem read geometrically. Two convex sets that do not meet can be split by a flat wall, which is a bounded functional and one of its values.
 - [Dual spaces](09-dual-spaces-and-lp-duality.md): the space of all bounded functionals. Norming functionals from Step 3 show it is large enough to tell any two points apart.
+- [The Hardy space H¹](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/10-hardy-space-h1-and-its-duality-with-bmo.md): atoms, the endpoint where singular integrals behave, and Fefferman's duality with BMO.
 
 Other cards on this shelf: [Sequence spaces](02-sequence-spaces-lp-and-c0.md), [Equivalent norms](04-equivalence-of-norms-in-finite-dimensions.md), [Infinite dimensions](05-why-infinite-dimensions-are-different.md), [Three Banach theorems](08-open-mapping-closed-graph-and-uniform-boundedness.md) and [Reflexive spaces](10-reflexive-spaces-and-the-second-dual.md).
 

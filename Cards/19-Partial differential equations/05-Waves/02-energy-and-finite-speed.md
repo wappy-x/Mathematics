@@ -65,7 +65,7 @@ Add it up over the whole string, and over a **window**: a stretch from $`x_-(t)`
 - **No friction and no driving force.** Air drag or a bow adds a term to $`e_t + p_x`$. Then $`E`$ falls or rises, but the speed limit survives, because the walls still outrun everything.
 - **Fixed or free ends.** A fixed end has $`u_t = 0`$ and a free end has $`u_x = 0`$; both make $`p = 0`$ there. A bridge that moves, as on a real guitar, takes power out at the end, which is how the sound reaches the body.
 - **A bounded wave speed.** The window must shrink at least as fast as the fastest signal. A stiff string has no fastest signal, and a window shrinking at $`c/2`$ lets the tap's energy in: both are worked in What breaks.
-- **Classical solutions with finite energy.** The proof differentiates under the integral. The $`\cos^2`$ tap qualifies; a hammer blow with a sudden jump in speed needs the weak form of later cards.
+- **Classical solutions with finite energy.** The proof differentiates under the integral. The $`\cos^2`$ tap qualifies; a hammer blow with a sudden jump in speed needs the weak form on [Weak waves](../06-Weak%20Solutions%20and%20Free%20Boundaries/11-weak-solutions-of-the-wave-equation.md).
 - **Small swings.** The tension is taken as fixed. Large swings stretch the string and change $`T`$, and then $`c`$ depends on the motion.
 
 ---
@@ -1214,6 +1214,7 @@ example : (10 : ℚ) - 428519 / 10000 * (2 / 10) = 142962 / 100000 := by norm_nu
 - [Kirchhoff's formula](04-kirchhoff-and-huygens.md): in three dimensions the energy spreads over a growing sphere, and a pulse passes and leaves silence behind it.
 - [Reflection](03-reflection-at-a-wall-and-the-half-line.md): the mirror image behind the bridge, used here in the code, made into a method.
 - [Dispersion](06-dispersion-group-velocity-and-kdv-in-outline.md): what replaces the speed limit when each wavelength travels at its own speed, as on the stiff string.
+- [Weak waves](../06-Weak%20Solutions%20and%20Free%20Boundaries/11-weak-solutions-of-the-wave-equation.md): Galerkin and the energy estimate for a plucked string with a corner.
 
 This card leaves open what the energy does when the string drives something else, such as a guitar's bridge and body, where the end is no longer a wall.
 

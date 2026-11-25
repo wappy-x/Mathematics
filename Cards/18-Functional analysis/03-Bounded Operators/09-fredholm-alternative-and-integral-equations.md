@@ -1191,6 +1191,7 @@ example : ![(4 : ℚ), 3, 4, 3] ⬝ᵥ ![0, -100, 100, 0] = 100 := by
 - [Integral equations](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/07-integral-equations-fredholm-and-volterra.md): numerical methods for second-kind equations, and first-kind equations, where the answer can jump when the data move slightly.
 - [The Fredholm alternative](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/08-fredholm-alternative-and-compact-operators.md): the PDE wing's solvability test for boundary problems, with either exactly one solution or extra free ones.
 - [Fredholm index](15-fredholm-operators-and-the-index.md): dimension of the kernel minus the dimension of what the range misses, and compact changes cannot move it.
+- [General elliptic operators](../../19-Partial%20differential%20equations/06-Weak%20Solutions%20and%20Free%20Boundaries/12-hopf-lemma-fredholm-alternative-and-the-principal-eigenvalue.md): Hopf's lemma, the Fredholm alternative, and a first eigenvalue with a positive mode.
 
 The question this card leaves open: when $`I - K`$ is replaced by an operator that is not identity minus compact, can the two null spaces have different dimensions, and what does the difference measure?
 

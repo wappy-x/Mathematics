@@ -736,6 +736,8 @@ example : !![(1 : ℤ), 1; 0, 1] ^ 10 = !![1, 10; 0, 1] := by decide
 - [Wiener's lemma](02-wieners-lemma-and-invertible-filters.md): the Gelfand transform on filters, with the circle of frequencies as the character space, decides when a filter can be inverted.
 - [C-star algebras](03-c-star-algebras-in-outline.md): add a mirror $`x \mapsto x^*`$ with $`\lVert x^*x\rVert = \lVert x\rVert^2`$, and every commutative example is exactly continuous functions on its characters.
 - [Factors in outline](09-von-neumann-algebras-and-factors-in-outline.md): von Neumann algebras with a trivial centre, sorted by the sizes their projections can take.
+- [Wiener's Tauberian theorem](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/10-wieners-tauberian-theorem.md): shifts of one signal fill L¹ exactly when its spectrum never vanishes.
+- [Pontryagin duality](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/03-pontryagin-duality.md): the line, the circle, the integers and the clock as one Fourier theory.
 
 Left open: what replaces the character space when the algebra does not commute, as with matrices or quantum observables that cannot be measured together?
 

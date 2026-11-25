@@ -1096,7 +1096,7 @@ end CalderonZygmund
 
 ## Where you meet it in real life
 
-- **Singular integrals.** The Hilbert transform, the Riesz transforms (its analogues in higher dimensions) and every operator on [Singular integrals](03-singular-integrals-and-the-hilbert-transform-bound.md) get their weak-type (1, 1) bound from this split, as Step 7 outlines.
+- **Singular integrals.** The Hilbert transform, the [Riesz transforms](07-riesz-transforms-and-singular-integrals-in-higher-dimensions.md) (its analogues in higher dimensions) and every operator on [Singular integrals](03-singular-integrals-and-the-hilbert-transform-bound.md) get their weak-type (1, 1) bound from this split, as Step 7 outlines.
 - **Partial differential equations.** The Calderón-Zygmund estimates, which bound all second derivatives of a solution of Poisson's equation by its Laplacian (the sum of its pure second derivatives) in every $`L^p`$ with $`1 < p < \infty`$, run through the same decomposition.
 - **Probability.** The averages over shrinking dyadic boxes around a point form a martingale (a fair-game sequence), and stopping at the first box above the level is a stopping time. The decomposition is the dyadic case of Gundy's decomposition of martingales.
 - **Adaptive grids.** Quadtree image coding (squares split into four) and adaptive mesh refinement split a cell into halves until a test on the cell passes or fails, the same stopping rule on the same dyadic tree.
@@ -1116,6 +1116,10 @@ end CalderonZygmund
 ## Where this goes next
 
 - [Singular integrals](03-singular-integrals-and-the-hilbert-transform-bound.md): the next card uses the good part's energy bound and the bad part's zero totals to outline, with constants, why the Hilbert transform is of weak type (1, 1).
+- [Riesz transforms](07-riesz-transforms-and-singular-integrals-in-higher-dimensions.md): the Hilbert transform in n dimensions, and second derivatives from the Laplacian.
+- [BMO](09-bmo-and-the-john-nirenberg-inequality.md): functions that wobble a bounded amount on every interval, and the exponential tail that forces.
+- [Muckenhoupt weights](11-muckenhoupt-weights.md): exactly which weightings keep the maximal function and singular integrals bounded.
+- [Fourier multipliers](../07-Multipliers%20and%20Estimates%20for%20PDE/01-mihlin-hormander-multiplier-theorem.md): which equaliser settings are safe on every Lᵖ, by the Mihlin-Hörmander test.
 
 Left open: the bad part cancels only when the kernel varies slowly away from the diagonal; which kernels do, and does the energy bound then carry over to every $`L^p`$?
 

@@ -753,6 +753,8 @@ theorem fourier_transform_continuous (f : ℝ → ℂ) (hf : Integrable f) :
 
 - [The transform rulebook](02-shift-scale-and-derivative-rules.md): how shifting, stretching and differentiating a signal change its transform.
 - [Fourier inversion](04-fourier-inversion-theorem.md): rebuilding the signal from its spectrum, with no factor in front.
+- [Wiener's Tauberian theorem](../03-Convolution%20and%20Approximate%20Identities/10-wieners-tauberian-theorem.md): shifts of one signal fill L¹ exactly when its spectrum never vanishes.
+- [Stationary phase](../06-Maximal%20Functions%20and%20Beyond/12-oscillatory-integrals-and-stationary-phase.md): a fast-oscillating integral is decided near the points where the phase stops moving.
 
 The rest of the shelf: [Two pairs worth memorising](03-gaussian-and-sinc-transform-pairs.md), [Plancherel](05-plancherel-and-l2.md), [Schwartz space and tempered distributions](06-schwartz-space-and-tempered-distributions.md), [The uncertainty principle](07-uncertainty-principle.md), [Poisson summation and sampling](08-poisson-summation-and-sampling.md), [The Hilbert transform](09-hilbert-transform-and-analytic-signals.md) and [Transforms in two and three dimensions](10-multidimensional-transform-and-tomography.md).
 

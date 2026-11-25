@@ -1538,6 +1538,7 @@ example : (1 : ℝ) / (2 * (1 / 100)) = 50 := by norm_num
 
 - [Short-time Fourier transform](../05-Wavelets%20and%20Time-Frequency/01-short-time-fourier-and-gabor.md): slices a signal into windows and transforms each. This card's floor limits how sharp each slice can be in both time and frequency.
 - [Poisson summation and sampling](08-poisson-summation-and-sampling.md): rebuilds a band-limited signal from its samples. Paley–Wiener says such a signal never falls silent on any interval.
+- [Paley-Wiener-Schwartz](11-paley-wiener-schwartz-theorem.md): a signal confined to a window has an entire spectrum whose growth gives the window's width.
 
 The question this card leaves open: if a signal cannot sit in one small box of time and frequency, how well can it be described by many overlapping boxes at once?
 

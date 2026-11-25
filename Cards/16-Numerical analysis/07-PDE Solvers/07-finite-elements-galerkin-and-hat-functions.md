@@ -1330,6 +1330,7 @@ example : 8 * (1024 - 1) - 7 = 8177 := by decide
 - [Mixed finite elements](13-mixed-finite-elements-and-the-inf-sup-condition.md): two unknowns at once, and the inf-sup test that keeps the pressure honest.
 - [Discontinuous Galerkin](14-discontinuous-galerkin-methods.md): finite elements that may jump at edges, joined by an upwind flux.
 - [Domain decomposition](../09-Fast%20Solvers%20for%20Large%20Grids/04-domain-decomposition-and-schwarz-methods.md): solve on overlapping pieces, and add a coarse grid so the pieces agree.
+- [Boundary elements](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/15-boundary-element-methods.md): solve Laplace's equation with unknowns only on the boundary.
 
 The proof here bounds the energy error, but the node heights fell twice as fast: what makes the heights more accurate than the slopes?
 

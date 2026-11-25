@@ -1105,7 +1105,7 @@ example : (50 : ℤ) * 1 - 50 * 0 = 50 ∧ (60 : ℤ) - 40 = 20 ∧ (1 : ℤ) + 
 
 ## Where you meet it in real life
 
-- **Existence of best designs.** The direct method of the calculus of variations takes a sequence of designs whose cost falls to its least value, extracts a weakly convergent subsequence, and shows the limit is a best design. That extraction needs a reflexive space, such as $`L^p`$ or a Sobolev space built on $`L^p`$, with $`1 < p < \infty`$.
+- **Existence of best designs.** [The direct method](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/10-direct-method-in-the-calculus-of-variations.md) of the calculus of variations takes a sequence of designs whose cost falls to its least value, extracts a weakly convergent subsequence, and shows the limit is a best design. That extraction needs a reflexive space, such as $`L^p`$ or a Sobolev space built on $`L^p`$, with $`1 < p < \infty`$.
 - **Equations solved weakly.** Elastic beams and heat flow are solved in Hilbert spaces, which are reflexive, so bounded approximate solutions have weak limits. [Lax-Milgram](../02-Hilbert%20Spaces/07-lax-milgram-theorem.md) solves such equations in a Hilbert space.
 - **Energy scheduling and transport.** Schedules sized by total energy, as on this card, can lose their mass to later and later hours. Planners close the gap by adding a final period or a terminal value, the "long-run price" ghost made explicit.
 - **Probability.** A sequence of probability densities in $`L^1`$ can drift off like the bump. The condition that rules this out, tightness, is the probabilist's version of the missing compactness.
@@ -1130,6 +1130,8 @@ example : (50 : ℤ) * 1 - 50 * 0 = 50 ∧ (60 : ℤ) - 40 = 20 ∧ (1 : ℤ) + 
 - [Weak convergence](../02-Hilbert%20Spaces/09-weak-convergence-and-banach-alaoglu.md) takes weak convergence in full, adds weak-star convergence, and proves Banach–Alaoglu: the unit ball of a dual space is compact in the weak-star sense, reflexive or not.
 - [Compactness in Lp](../02-Hilbert%20Spaces/10-compactness-in-lp-kolmogorov-riesz-and-dunford-pettis.md): small shifts must change a family only a little, and in L1 no mass may pile up.
 - [Operator topologies](../03-Bounded%20Operators/13-strong-and-weak-operator-topologies.md): three meanings of 'these operators converge', and Goldstine's density theorem.
+- [The direct method](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/10-direct-method-in-the-calculus-of-variations.md): minimise, take a weak limit, and check the energy cannot jump up.
+- [Monotone operators](../../19-Partial%20differential%20equations/07-Nonlinear%20PDE%20and%20Fluids/12-monotone-operators-and-minty-browder.md): Minty's trick solves nonlinear equations that have no energy.
 
 The bumps leave one question open: in $`\ell^\infty = (\ell^1)'`$, which is not reflexive, what kind of limit can every bounded sequence of price lists still be promised?
 

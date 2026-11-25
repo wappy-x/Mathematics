@@ -888,6 +888,8 @@ example : (343 : ℚ) * (1 / 10) / 2 = 343 / 20 := by norm_num
 - [Wiener-Khinchin](07-wiener-khinchin-and-the-power-spectrum.md): the theorem applied to a signal against itself gives its power spectrum.
 - [Densities add by convolution](08-convolution-of-densities.md): the law of a sum of independent quantities is a convolution, so its transform is a product.
 - [Solving differential equations by transform](09-fourier-methods-for-differential-equations.md): derivatives become multiplication, and the solution is a convolution with a kernel.
+- [Wiener's Tauberian theorem](10-wieners-tauberian-theorem.md): shifts of one signal fill L¹ exactly when its spectrum never vanishes.
+- [Fourier analysis on a finite abelian group](../08-Harmonic%20Analysis%20on%20Groups/01-fourier-analysis-on-finite-abelian-groups.md): characters as the waves, and the transform on bit strings.
 
 The rest of the shelf: [Approximate identities](03-approximate-identities.md), which makes the shrinking clap precise, and [The Gaussian and Poisson kernels](04-gaussian-and-poisson-kernels.md).
 

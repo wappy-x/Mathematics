@@ -848,6 +848,8 @@ example : (10 : ℚ) * 25 = 250 := by norm_num
 - [Elliptic regularity](05-elliptic-regularity-in-outline.md): when $`u`$ has square-integrable second derivatives, which is what decides between order 1 and the corner's 2/3.
 - [The obstacle problem](08-obstacle-problems-and-variational-inequalities.md): Galerkin on a constrained set, where the weak form becomes an inequality.
 - [An American option](09-american-options-as-a-free-boundary-problem.md): the same discretization pricing an option with an early-exercise boundary.
+- [Bochner spaces and the weak heat equation](10-bochner-spaces-and-weak-solutions-of-the-heat-equation.md): a solution as a path through a space of functions.
+- [Monotone operators](../07-Nonlinear%20PDE%20and%20Fluids/12-monotone-operators-and-minty-browder.md): Minty's trick solves nonlinear equations that have no energy.
 
 The question this card leaves open: how should the triangles be graded toward the corner so that order 1 comes back?
 

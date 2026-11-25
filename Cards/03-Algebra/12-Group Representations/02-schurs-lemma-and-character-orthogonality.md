@@ -619,6 +619,7 @@ end SchursLemmaAndCharacterOrthogonality
 
 - [Character tables](03-character-tables.md): as many irreducible pieces as classes, and the full tables of the tile group and the rearrangements of three things.
 - [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): the complex inner product, which replaces the undo when characters are complex.
+- [Fourier analysis on a finite abelian group](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/01-fourier-analysis-on-finite-abelian-groups.md): characters as the waves, and the transform on bit strings.
 
 The tile has five irreducible characters and five classes: does every group have as many irreducible pieces as classes?
 

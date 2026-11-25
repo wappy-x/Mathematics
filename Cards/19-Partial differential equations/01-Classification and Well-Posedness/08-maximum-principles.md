@@ -187,7 +187,7 @@ With loss, $`c\,w \ge 0`$ only adds to $`Lw`$, so every upper barrier still work
 
 The weak principle still allows an inside maximum equal to the rim maximum. The **strong maximum principle** (Hopf, 1927) forbids it: on a connected region with $`Lu \le 0`$ and $`c = 0`$, an inside maximum forces $`u`$ to be constant. With $`c \ge 0`$ the same holds for a maximum that is $`\ge 0`$.
 
-Its proof builds a small barrier at the edge of a ball (Hopf's lemma; Gilbarg and Trudinger, Theorem 3.5). It is why every inside point of the plate sits strictly below the bar's 80 K; the grid's warmest inside point, 68.19 K on the cooled plate, shows it.
+Its proof builds a small barrier at the edge of a ball (Hopf's lemma, proved on [General elliptic operators](../06-Weak%20Solutions%20and%20Free%20Boundaries/12-hopf-lemma-fredholm-alternative-and-the-principal-eigenvalue.md); Gilbarg and Trudinger, Theorem 3.5). It is why every inside point of the plate sits strictly below the bar's 80 K; the grid's warmest inside point, 68.19 K on the cooled plate, shows it.
 
 ---
 
@@ -1107,6 +1107,10 @@ example : (100 : ℚ) * (1 / 4 - 1 / 2) / 4 = -25 / 4 ∧ (-25 / 4 : ℚ) < 0 :=
 - [Diffusion's maximum principle](../03-The%20Heat%20Equation%20in%20Depth/04-maximum-principle-for-the-heat-equation.md): the same idea for the heat equation, where the starting moment joins the rim as boundary.
 - [Harmonic functions](../04-Laplace%2C%20Poisson%20and%20Potentials/01-harmonic-functions-and-mean-values.md): the mean-value property, which proves the strong maximum principle for Laplace's equation in $`d`$ dimensions in a few lines.
 - [Harnack and regularity](../04-Laplace%2C%20Poisson%20and%20Potentials/10-harnack-and-regularity-in-outline.md): Harnack's inequality and Liouville's theorem for solutions of Laplace's equation.
+- [General elliptic operators](../06-Weak%20Solutions%20and%20Free%20Boundaries/12-hopf-lemma-fredholm-alternative-and-the-principal-eigenvalue.md): Hopf's lemma, the Fredholm alternative, and a first eigenvalue with a positive mode.
+- [Schauder estimates](../06-Weak%20Solutions%20and%20Free%20Boundaries/14-holder-spaces-and-schauder-estimates.md): a Hölder source gives a solution with Hölder second derivatives.
+- [De Giorgi-Nash-Moser](../06-Weak%20Solutions%20and%20Free%20Boundaries/15-de-giorgi-nash-moser.md): rough coefficients still give Hölder-continuous solutions.
+- [Leray-Schauder](../07-Nonlinear%20PDE%20and%20Fluids/13-leray-schauder-and-a-priori-bounds.md): an a priori bound is enough to prove a solution exists.
 
 Left open: the barriers here bound the temperature, but how far can the bound be pushed for a general $`L`$ with only measured, rough coefficients? That question leads to the Alexandrov–Bakelman–Pucci estimate and Harnack's inequality.
 

@@ -1103,6 +1103,12 @@ example : ((1 / 50 : ℚ)) ^ 2 * 1 = 1 / 2500 := by norm_num
 - [Galerkin](04-galerkin-and-finite-elements.md): chooses finitely many shapes inside $`H^1_0`$ and solves the weak form on them; the grid on this card is a cousin of that method.
 - [Elliptic regularity](05-elliptic-regularity-in-outline.md): when the $`H^1`$ solution has second derivatives after all.
 - [The obstacle problem](08-obstacle-problems-and-variational-inequalities.md): the sheet over the rounded stone, posed as a set of $`H^1_0`$ shapes that clear it.
+- [Bochner spaces and the weak heat equation](10-bochner-spaces-and-weak-solutions-of-the-heat-equation.md): a solution as a path through a space of functions.
+- [General elliptic operators](12-hopf-lemma-fredholm-alternative-and-the-principal-eigenvalue.md): Hopf's lemma, the Fredholm alternative, and a first eigenvalue with a positive mode.
+- [Weyl's law](13-weyls-law.md): a drum's area can be heard in how fast its notes pile up.
+- [De Giorgi-Nash-Moser](15-de-giorgi-nash-moser.md): rough coefficients still give Hölder-continuous solutions.
+- [The direct method](../07-Nonlinear%20PDE%20and%20Fluids/10-direct-method-in-the-calculus-of-variations.md): minimise, take a weak limit, and check the energy cannot jump up.
+- [The mountain pass](../07-Nonlinear%20PDE%20and%20Fluids/11-mountain-pass-theorem.md): a solution that is a saddle of the energy, not a minimum.
 
 The question this card leaves open: the space guarantees finite energy, but when is the sheet's shape smooth enough to satisfy the equation point by point?
 

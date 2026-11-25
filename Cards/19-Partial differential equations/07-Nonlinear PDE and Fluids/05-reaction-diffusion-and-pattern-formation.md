@@ -1873,6 +1873,7 @@ Related cards met earlier:
 
 - [Navier-Stokes](01-navier-stokes-derivation.md): when the medium flows, a transport term joins the equation, as in reacting flows.
 - [Convection-diffusion](../03-The%20Heat%20Equation%20in%20Depth/06-convection-diffusion-and-drift.md): a steady drift added to spreading; with a reaction too, it carries fronts and patterns along.
+- [The mountain pass](11-mountain-pass-theorem.md): a solution that is a saddle of the energy, not a minimum.
 
 This card leaves open what happens far from the threshold: the linear analysis picks the spacing, but which pattern of stripes or spots wins in two dimensions, and why?
 

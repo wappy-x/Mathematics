@@ -1092,6 +1092,8 @@ example (c j : ℝ) : c * j / (2 * π * (3 / 10)) = (c * j / (2 * π * (3 / 20))
 - [Transforms in two and three dimensions](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/10-multidimensional-transform-and-tomography.md) (harmonic analysis wing): the Fourier transform of a round picture, where $`J_0`$ returns as the kernel of the Hankel transform.
 - [Kirchhoff's formula](04-kirchhoff-and-huygens.md): a wave in a plane keeps a tail after it passes, unlike one in space; the drumhead is a bounded piece of that plane.
 - [The retarded Green's function](05-retarded-greens-function-and-forced-waves.md): a driven wave, where each mode behaves as a forced oscillator. A drum hit by a stick is the same problem with a short push.
+- [Weyl's law](../06-Weak%20Solutions%20and%20Free%20Boundaries/13-weyls-law.md): a drum's area can be heard in how fast its notes pile up.
+- [Stationary phase](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/12-oscillatory-integrals-and-stationary-phase.md): a fast-oscillating integral is decided near the points where the phase stops moving.
 
 The question this card leaves open: knowing every note of a drum, could you work out its shape?
 

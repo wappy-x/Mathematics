@@ -844,6 +844,9 @@ end L2ConvergenceRieszFischer
 
 - [Smoothness shows in the tail](06-decay-of-coefficients-and-smoothness.md): Step 3's tail measured against smoothness. A jump gives a gap falling like $`1/N`$; each extra derivative speeds it up.
 - [Carleson's theorem in outline](09-carleson-in-outline.md): convergence at almost every point for every finite-energy signal, far harder than convergence in energy.
+- [Fourier analysis on a finite abelian group](../08-Harmonic%20Analysis%20on%20Groups/01-fourier-analysis-on-finite-abelian-groups.md): characters as the waves, and the transform on bit strings.
+- [Pontryagin duality](../08-Harmonic%20Analysis%20on%20Groups/03-pontryagin-duality.md): the line, the circle, the integers and the clock as one Fourier theory.
+- [Peter-Weyl](../08-Harmonic%20Analysis%20on%20Groups/04-peter-weyl-theorem.md): Fourier series on a compact group, with the matrix entries of its representations as the waves.
 
 The question this card leaves open: convergence in energy allows a gap that stays tall on a shrinking stretch, so do the partial sums of a finite-energy signal still settle at almost every point?
 

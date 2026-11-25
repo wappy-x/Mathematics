@@ -942,6 +942,8 @@ end CharacterTables
 - [Conjugacy and the class equation](../08-Groups/10-conjugacy-and-the-class-equation.md): the tile's five classes of look-alike moves.
 
 ## Where this goes next
+- [Peter-Weyl](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/04-peter-weyl-theorem.md): Fourier series on a compact group, with the matrix entries of its representations as the waves.
+
 
 Natural next topics: building a group's pieces from a subgroup's (induced representations), and extra data that separates equal tables, such as where a member's square lands.
 

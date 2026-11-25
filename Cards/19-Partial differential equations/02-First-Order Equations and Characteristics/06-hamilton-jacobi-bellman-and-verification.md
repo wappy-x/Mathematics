@@ -89,7 +89,7 @@ Here $`u_{\mathrm{eco}} = 60`$ km/h is the speed of least fuel per kilometre, an
 - **Fuel rate convex in speed.** $`F`$ curves upward ($`F'' > 0`$ for $`u > 0`$), so a steady speed beats any mix of speeds. With a car whose fuel rate dips at one gear change, the best trip can switch between two speeds and the value is no longer the formula above.
 - **The state is distance and time alone.** Hills, wind and traffic make $`F`$ depend on the place too. The HJB equation still holds, with $`H(V_x, x)`$, but the closed form is gone; trucks solve that version on a grid.
 - **A deadline that can be met.** Every allowed schedule arrives by the deadline, so $`V`$ is infinite at $`\tau = 0`$ for any $`x > 0`$. Drop that condition and $`0.047\,x`$, which solves the equation and is zero on arrival, passes for the value (see What breaks).
-- **A value with a slope.** The verification theorem below uses the chain rule, so the guess must have continuous first derivatives. Here it does, even across the seam. When the best value has a corner, as for a minimum-time problem with capped speed, the right meaning is a **viscosity solution** (a weak sense of solving that allows corners), the subject of a planned card on viscosity solutions on shelf 06.
+- **A value with a slope.** The verification theorem below uses the chain rule, so the guess must have continuous first derivatives. Here it does, even across the seam. When the best value has a corner, as for a minimum-time problem with capped speed, the right meaning is a **viscosity solution** (a weak sense of solving that allows corners), the subject of [Viscosity solutions](../06-Weak%20Solutions%20and%20Free%20Boundaries/06-viscosity-solutions.md).
 - **No noise.** A random delay adds a second-derivative term: [Stochastic control](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md).
 
 ---
@@ -1010,7 +1010,7 @@ example : (45 : ℚ) * (47 / 1000) + 1 / 2 * ((27 / 25) + 1 / 50 * 110 + 1 / 400
 ## Where this goes next
 
 - [Eikonal and traffic](07-eikonal-and-traffic-models.md): the next card. Minimum-time problems, where the value is an arrival time $`T(x)`$ and HJB becomes $`|\nabla T| = 1/\text{top speed}`$.
-- Viscosity solutions, a planned card on shelf 06 of this wing: the meaning of HJB when the value has a corner, and why that solution is unique.
+- [Viscosity solutions](../06-Weak%20Solutions%20and%20Free%20Boundaries/06-viscosity-solutions.md): the meaning of HJB when the value has a corner, and why that solution is unique.
 
 The question this card leaves open: when the value has a corner, so the chain rule in Step 5 fails, what does it mean to solve HJB, and which solution is the least cost?
 

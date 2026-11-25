@@ -1433,6 +1433,7 @@ example : (28 : ℚ) * (1 / 50) = 14 / 25 ∧ (44 : ℚ) * (1 / 50) = 22 / 25 �
 - [Conservation laws](02-conservation-laws-and-shocks.md): what the traffic does once characteristics cross, a moving jump called a shock.
 - [Hamilton-Jacobi](05-hamilton-jacobi-equations.md): fully nonlinear first-order equations, where the characteristic system also carries the slopes of the unknown.
 - [d'Alembert](../05-Waves/01-dalembert-and-characteristics-for-waves.md): the wave equation split into two families of characteristics running in opposite directions.
+- [Systems of conservation laws](08-systems-of-conservation-laws.md): several wave families, and the shocks, fans and contacts between them.
 
 Left open: once two characteristics meet, which of the three answers does the real traffic pick?
 

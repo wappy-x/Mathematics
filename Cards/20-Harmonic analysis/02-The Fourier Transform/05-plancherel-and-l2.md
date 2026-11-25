@@ -789,6 +789,10 @@ theorem fourier_L2_bijective : Function.Bijective (fun f : L2Signal => (𝓕 f :
 - [The Hilbert transform](09-hilbert-transform-and-analytic-signals.md): a frequency multiplier of size 1 keeps energy by Plancherel, so it is defined on every finite-energy signal.
 - [Short-time Fourier transform](../05-Wavelets%20and%20Time-Frequency/01-short-time-fourier-and-gabor.md): energy split over time and frequency at once, with a Plancherel identity of its own.
 - [Interpolation](../06-Maximal%20Functions%20and%20Beyond/04-interpolation-riesz-thorin-and-marcinkiewicz.md): from area and energy to the norms in between, giving the Hausdorff-Young inequality.
+- [Paley-Wiener-Schwartz](11-paley-wiener-schwartz-theorem.md): a signal confined to a window has an entire spectrum whose growth gives the window's width.
+- [Fourier multipliers](../07-Multipliers%20and%20Estimates%20for%20PDE/01-mihlin-hormander-multiplier-theorem.md): which equaliser settings are safe on every Lᵖ, by the Mihlin-Hörmander test.
+- [Littlewood-Paley](../07-Multipliers%20and%20Estimates%20for%20PDE/02-littlewood-paley-theory.md): split a signal into octaves, and its size is the size of the octaves' combined energy.
+- [Pontryagin duality](../08-Harmonic%20Analysis%20on%20Groups/03-pontryagin-duality.md): the line, the circle, the integers and the clock as one Fourier theory.
 
 The question this card leaves open: the transform keeps energy, the $`L^2`$ norm, exactly; what does it do to the other $`L^p`$ norms, between finite area and finite energy?
 

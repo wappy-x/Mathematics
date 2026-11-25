@@ -595,6 +595,7 @@ example : ((!![3, 1; 2, -1] : Matrix (Fin 2) (Fin 2) ℚ) * !![1, 0; 0, (1/2) ^ 
 - [Cayley-Hamilton and the minimal polynomial](08-cayley-hamilton-and-minimal-polynomial.md): every matrix satisfies its own characteristic equation, and the smallest such equation says whether it can be diagonalised.
 - [Generalised eigenvectors](09-generalised-eigenvectors.md): when a matrix has too few eigenvectors, the vectors killed by a power of A minus lambda fill the gap.
 - [Jordan form](10-jordan-canonical-form.md): every matrix is a stack of blocks, each an eigenvalue with ones just above the diagonal, and the block sizes are read from ranks.
+- [Systems of conservation laws](../../19-Partial%20differential%20equations/02-First-Order%20Equations%20and%20Characteristics/08-systems-of-conservation-laws.md): several wave families, and the shocks, fans and contacts between them.
 
 This card was handed its eigenvectors and got lucky; the next names a family where that luck is guaranteed and the eigenvectors arrive at right angles.
 

@@ -929,6 +929,7 @@ example : (Finset.univ.filter (fun e : Finset (Fin 4) =>
 - [Hausdorff measure and dimension](08-hausdorff-measure-and-dimension.md): cover with pieces of any shape, weigh each by its size to the power s, and a fractal gets a size in its own dimension.
 - [Lusin's theorem](../05-Swapping%20Limits%20and%20Integrals/06-lusins-theorem.md): every measurable function is continuous once you delete a set as small as you like.
 - [Change of variables for Lebesgue measure](../06-Product%20Measures%20and%20Fubini/08-lebesgue-change-of-variables-and-polar-coordinates.md): a linear map scales every volume by |det A|, a smooth map does so point by point, and polar coordinates follow.
+- [Haar measure](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/02-haar-measure.md): the one fair way to measure size on a group.
 
 Every Borel set now has a length, and so does everything a null set away from one; whether every subset of the line has one is what [Translation invariance and the Vitali set](04-translation-invariance-and-the-vitali-set.md) settles, and the answer is no.
 

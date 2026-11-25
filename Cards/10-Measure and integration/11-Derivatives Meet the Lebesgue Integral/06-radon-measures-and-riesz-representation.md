@@ -840,6 +840,7 @@ example : 2 * 10 + 1 = 21 ∧ 2 * 100 + 1 = 201 := by decide
 - [The area and coarea formulas](08-area-and-coarea-formulas.md): measures on curves and surfaces in $`\mathbb{R}^n`$, all Radon.
 - [Urysohn and Tietze](../../17-Topology/02-Topological%20Spaces/10-urysohn-tietze-and-metrisation.md): test functions in spaces with no distance, which is what the theorem needs on a locally compact Hausdorff space.
 - [Dual spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/09-dual-spaces-and-lp-duality.md): the dual of C[a, b] by Stieltjes integrals, the same theorem seen from the functional side.
+- [Haar measure](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/02-haar-measure.md): the one fair way to measure size on a group.
 
 On $`\mathbb{R}^n`$ the tents came from a distance formula and every reasonable measure was automatically regular; which spaces still carry enough test functions, and when regularity has to be demanded, is the question [Urysohn and Tietze](../../17-Topology/02-Topological%20Spaces/10-urysohn-tietze-and-metrisation.md) opens.
 

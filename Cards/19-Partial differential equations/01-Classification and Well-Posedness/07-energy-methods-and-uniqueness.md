@@ -1687,6 +1687,7 @@ example : (2 / 1000 : ℚ) * 7850 = 157 / 10 := by norm_num
 - [Dependence and influence](09-domains-of-dependence-and-influence.md): the energy method on a shrinking cone, which shows a disturbance spreads no faster than $`c`$, in any number of dimensions.
 - [Wave energy is conserved, and nothing outruns the wave speed](../05-Waves/02-energy-and-finite-speed.md): the wave's energy followed point by point along a guitar string with fixed ends, where it becomes a speed limit.
 - [Weak solutions](../06-Weak%20Solutions%20and%20Free%20Boundaries/01-weak-solutions-and-the-weak-formulation.md): the energy identity becomes the definition, so the method reaches solutions too rough for the classical argument.
+- [Bochner spaces and the weak heat equation](../06-Weak%20Solutions%20and%20Free%20Boundaries/10-bochner-spaces-and-weak-solutions-of-the-heat-equation.md): a solution as a path through a space of functions.
 
 The question this card leaves open: the energy bounds the gap on average over the plate, so how large can the gap be at a single point?
 

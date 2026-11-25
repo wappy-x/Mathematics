@@ -562,6 +562,7 @@ theorem hadamard_three_lines (f : ℂ → ℂ)
 
 - [Interpolation](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/04-interpolation-riesz-thorin-and-marcinkiewicz.md): three lines turned into bounds for linear maps under different ways of measuring a signal's size.
 - [The functional equation](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/02-functional-equation-proved.md): the far-side bound that Phragmen-Lindelof carries across the critical strip.
+- [Paley-Wiener-Schwartz](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/11-paley-wiener-schwartz-theorem.md): a signal confined to a window has an entire spectrum whose growth gives the window's width.
 
 Shelf neighbours: [Schwarz reflection](08-schwarz-reflection-principle.md) extends functions across a straight edge like these, and [Normal families](10-normal-families-montel-and-hurwitz.md) uses uniform bounds of the kind proved here.
 
