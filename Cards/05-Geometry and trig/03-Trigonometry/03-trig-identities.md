@@ -160,7 +160,9 @@ With the knuckle locked, the tip never rises above 38.98 m, reached with the mai
 
 ## Code, from first principles, and it actually runs
 
-Two roads. Road 1 is a calculator's: the built-in sine gives sin 40° and cos 40°, and later finds φ from its sine; sin 30° = 1/2 and cos 30° = √3/2 come exact from half an equilateral triangle ([Sine, cosine and tangent](01-right-triangle-trigonometry.md)); the identities do the rest. Road 2 uses no sine: adding two unit arrows and rescaling to length 1 halves the angle between them, since a rhombus's diagonal splits its angle ([Congruent triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md)). Sixty halvings pin each angle; the booms add as arrows.
+Two roads. Road 1 is a calculator's: the built-in sine gives sin 40° and cos 40°, and later finds φ from its sine; sin 30° = 1/2 and cos 30° = √3/2 come exact from half an equilateral triangle ([Sine, cosine and tangent](01-right-triangle-trigonometry.md)); the identities do the rest.
+
+Road 2 uses no sine: adding two unit arrows and rescaling to length 1 halves the angle between them, since a rhombus's diagonal splits its angle ([Congruent triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md)). Sixty halvings pin each angle; the booms add as arrows.
 
 ### Python
 
@@ -518,6 +520,7 @@ example : (30 : ℝ) + 10 * cos 0 = 40 ∧ (10 : ℝ) * sin 0 = 0 := by
 
 ## Where this goes next
 
+- [Trig graphs](04-trig-graphs-amplitude-period-and-phase.md): what $`R`$ and $`\varphi`$ look like on a wave, as amplitude and phase shift.
 - [Law of cosines](06-law-of-cosines.md): $`R`$'s formula, in any triangle.
 - [Derivatives of sine and cosine](../../06-Calculus%20and%20analysis/02-Derivatives/04-derivatives-of-trig-functions.md): the sum formula splits a sine's small step.
 - [Trig substitution](../../06-Calculus%20and%20analysis/04-Integrals/06-trig-substitution.md): the Pythagorean identity clears square roots.
@@ -527,9 +530,9 @@ example : (30 : ℝ) + 10 * cos 0 = 40 ∧ (10 : ℝ) * sin 0 = 0 := by
 - [The Lyapunov exponent](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/04-chaos-and-the-lyapunov-exponent.md): the logistic map's wildest case as angle doubling.
 - [AC power](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/09-power-and-three-phase.md): waves folded into one.
 - [Dirichlet and Fejer kernels](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/03-dirichlet-and-fejer-kernels.md): long sums of cosines collapsed.
-- [Every conic](../04-Coordinates%20and%20Curves/09-general-conics-and-dandelin-spheres.md): untangle a tilted equation by turning the axes, and the spheres that show a cone's slice is an ellipse.
+- [Every conic](../04-Coordinates%20and%20Curves/09-general-conics-and-dandelin-spheres.md): the double-angle formulas turn the axes to clear a tilted conic's $`xy`$ term.
 
-This card found $`R`$ from two lengths and a bend, unmeasured; why that expression gives the third side of every triangle is [Law of cosines](06-law-of-cosines.md).
+Folding two booms into $`R\sin(\theta + \varphi)`$ makes one shifted, scaled sine wave; reading $`R`$ and $`\varphi`$ straight off a wave's graph is [Trig graphs](04-trig-graphs-amplitude-period-and-phase.md).
 
 ---
 

@@ -118,7 +118,7 @@ Euclid (Book II, Propositions 12 and 13) used positive lengths only, so he split
 - **C right, D at C.** CD and $`\cos C`$ are both 0, and Pythagoras stands.
 - **C acute, D on A's side.** DA is $`b - \text{CD}`$ or $`\text{CD} - b`$, with the same square, so $`c^2 = a^2 + b^2 - 2b\,\text{CD}`$, where $`\text{CD} = a\cos C`$.
 
-**The SSS range.** The fraction $`(a^2 + b^2 - c^2)/(2ab)`$ is below 1 exactly when $`(a - b)^2 < c^2`$, and above −1 exactly when $`c^2 < (a + b)^2`$: exactly when the three lengths close into a triangle.
+**The SSS range.** For positive lengths $`a`$, $`b`$, $`c`$, the fraction $`(a^2 + b^2 - c^2)/(2ab)`$ is below 1 exactly when $`(a - b)^2 < c^2`$, and above −1 exactly when $`c^2 < (a + b)^2`$: exactly when the three lengths close into a triangle.
 
 </details>
 
@@ -373,7 +373,7 @@ The two outputs match line for line.
 Lean proves the law for any three points on a flat plane, at any angle, plus two facts beside it.
 
 - The law: the side facing an angle, squared, is the other two squared and added, minus twice their product times the angle's cosine.
-- Three sides that close: the rearranged law's cosine is above −1 and below 1 exactly when each side is shorter than the other two together.
+- Three sides that close: for positive lengths, the rearranged law's cosine is above −1 and below 1 exactly when each side is shorter than the other two together.
 - The arrow route: the dot product $`u \cdot v`$ is the two arrows' lengths times the cosine of the angle at C.
 - The numbers: at 90° the correction is 0, and sides of 300, 450 and 800 m ask for a cosine below −1.
 
@@ -492,7 +492,7 @@ example : ¬ ((800 : ℝ) < 300 + 450) := by norm_num
 
 - [Law of sines](07-law-of-sines-and-the-ambiguous-case.md): triangles known from two angles and a side, or from an angle facing a known side.
 - [Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md): the cosine rule on a globe, which shrinks to this card's law for small triangles.
-- [Hyperbolic trigonometry](../06-Beyond%20Euclid/10-hyperbolic-trigonometry.md): Pythagoras becomes cosh c = cosh a cosh b, and every distance has an angle of parallelism.
+- [Hyperbolic trigonometry](../06-Beyond%20Euclid/10-hyperbolic-trigonometry.md): the cosine rule in the hyperbolic plane, with cosh and sinh of the sides in place of squares.
 
 An angle that faces a known side, rather than lying between two, can leave none, one or two triangles; the law of sines sorts them.
 

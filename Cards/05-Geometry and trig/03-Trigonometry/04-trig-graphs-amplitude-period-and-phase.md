@@ -101,7 +101,7 @@ Take $`\theta = \pi/2`$, where the sine is 1. The sine is 1 only at the top of t
 
 ### Step 3: the slide gives the start
 
-At $`t = c`$ the angle is zero, so the wave is where the plain sine starts: on its midline, rising. High water follows a quarter period later, at c + P/4. Read backwards: a quarter period is 3.1 h, so c is 04:06 less 3.1 h, 01:00.
+With a and b positive, at $`t = c`$ the angle is zero, so the wave is where the plain sine starts: on its midline, rising. High water follows a quarter period later, at c + P/4. Read backwards: a quarter period is 3.1 h, so c is 04:06 less 3.1 h, 01:00.
 
 The slide reads as a time only while b sits outside the brackets. Multiplied out, the model is $`1.5\sin(0.5067t - 0.5067) + 2.0`$. That second 0.5067 is b times c, an angle in radians; divided by b it gives the slide, 1.0 h.
 
@@ -343,15 +343,15 @@ Lean proves the card's rules for every wave y = a sin(b(t − c)) + d in which n
 
 - The wave reaches every height from d − a to d + a, and no other, with a taken without its sign. So the amplitude is half the swing, and the midline is its middle.
 - The wave repeats after 2π/b hours, and no shorter slide lays it back on itself. With a negative b, the period is 2π over b without its sign.
-- At t = c the wave is on its midline, changing at a times b metres an hour. It is rising when a and b are positive. A quarter period later it reaches d + a, high water.
-- Three other formulas give the same height at every time. One is the cosine form, with its c at high water, a quarter period after c.
-- The others are the sine with c one period later, and the sine with a's sign flipped and c half a period later.
+- At t = c the wave is on its midline, changing at a times b metres an hour, and at t = c + 2π/(4b) it equals d + a. When a and b are positive, it is rising at c and reaches high water, d + a, a quarter period later.
+- Three other formulas give the same height at every time: the cosine form shifted by 2π/(4b), the sine shifted by 2π/b, and the sine with a's sign flipped shifted by 2π/(2b).
+- When a and b are positive, those shifts put c at high water a quarter period later, one full period later, and half a period later.
 - The tide table's sums: midline 2.0 m, amplitude 1.5 m, period 12.4 h, c at 01:00, and tomorrow's high water at 04:54.
 
 The height at 09:00, the decimals of b, road two's measuring and three of the mistakes are left to the Python and Rust checks.
 
 ```lean
--- Trig graphs: the wave y = a sin(b(t - c)) + d swings between d - |a| and d + |a|, repeats first after 2π/|b|, rises through its midline at t = c and peaks a quarter period later.
+-- Trig graphs: the wave y = a sin(b(t - c)) + d swings between d - |a| and d + |a|, repeats first after 2π/|b|, and when a and b are positive, rises through its midline at t = c and peaks a quarter period later.
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
@@ -426,9 +426,9 @@ theorem sine_wave_amplitude_midline_period (a b c d : ℝ) (ha : a ≠ 0) (hb : 
     rw [div_le_iff₀ hbb]
     nlinarith [pi_pos]
 
-/-- The phase shift c: at t = c the wave is on its midline d, climbing at rate a·b
-(rising when a and b are positive), and a quarter period P/4 = (2π/b)/4 later it reaches
-d + a, high water. -/
+/-- The phase shift c: at t = c the wave is on its midline d, changing at rate a·b, and at
+t = c + 2π/(4b) it equals d + a. When a and b are positive, it is rising at t = c and reaches
+high water d + a a quarter period P/4 = 2π/(4b) later. -/
 theorem sine_wave_phase_shift (a b c d : ℝ) (hb : b ≠ 0) :
     (fun t : ℝ => a * sin (b * (t - c)) + d) c = d ∧
     HasDerivAt (fun t : ℝ => a * sin (b * (t - c)) + d) (a * b) c ∧
@@ -443,10 +443,11 @@ theorem sine_wave_phase_shift (a b c d : ℝ) (hb : b ≠ 0) :
     have : b * (c + 2 * π / b / 4 - c) = π / 2 := by field_simp; ring
     rw [this, sin_pi_div_two]; ring
 
-/-- One tide, several formulas: the sine wave started at c equals the cosine wave started a
-quarter period later at its high water, the sine wave started one full period later, and the
-upside-down sine wave (amplitude -a) started half a period later. So the reading is unique only
-once a and b are positive and c is the first rising crossing. -/
+/-- One tide, several formulas: for any b ≠ 0, shifting c by 2π/(4b) gives the cosine form,
+by 2π/b gives the same sine wave, and by 2π/(2b) with amplitude -a gives the same wave again.
+When a and b are positive, those shifts are a quarter period later (at high water), one full
+period later, and half a period later; so the reading is unique only once a and b are positive
+and c is the first rising crossing. -/
 theorem sine_wave_equivalent_forms (a b c d : ℝ) (hb : b ≠ 0) (t : ℝ) :
     a * sin (b * (t - c)) + d = a * cos (b * (t - (c + 2 * π / b / 4))) + d ∧
     a * sin (b * (t - c)) + d = a * sin (b * (t - (c + 2 * π / b))) + d ∧

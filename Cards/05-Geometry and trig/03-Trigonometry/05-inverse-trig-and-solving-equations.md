@@ -479,7 +479,7 @@ example : π - arcsin (1 / 3) ≠ arcsin (1 / 3) := by
 - [Law of cosines](06-law-of-cosines.md): arccos returns a triangle's angle from three sides, no mirror needed.
 - [Law of sines](07-law-of-sines-and-the-ambiguous-case.md): arcsin's mirror angle becomes a second possible triangle.
 
-On the tide the mirror answer was always a second time; in a triangle it is a second shape, sometimes impossible, and the law of sines settles which.
+Arccos recovers a triangle's angle from three sides with no mirror in [Law of cosines](06-law-of-cosines.md); arcsin's mirror returns as a second triangle in [Law of sines](07-law-of-sines-and-the-ambiguous-case.md).
 
 ---
 

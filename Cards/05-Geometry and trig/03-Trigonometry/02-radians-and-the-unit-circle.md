@@ -95,7 +95,9 @@ Whole turns change nothing: 150° clockwise ends at the 210° spot, and so does 
 
 ### Step 4: the other four, and where their names come from
 
-The north–south line through (1, 0), where every point has $`x`$ = 1, touches the circle there: the **tangent line**, from Latin *tangens*, touching. Scaling the tip (x, y) by 1/x slides it along the jib's line, through the mast when x is negative, to (1, y/x) on the tangent line. So tan θ = y/x is a height on the tangent line: hence the name. The tip is 1 from the mast, so $`x^2 + y^2 = 1`$ (Pythagoras). The meeting point's distance from the mast, a hypotenuse over legs 1 and y/x, is $`\sqrt{1 + (y/x)^2} = \sqrt{(x^2 + y^2)/x^2}`$ = 1/|x|, |x| being x without its sign: the secant's size, from *secans*, cutting.
+The north–south line through (1, 0), where every point has $`x`$ = 1, touches the circle there: the **tangent line**, from Latin *tangens*, touching. Scaling the tip (x, y) by 1/x slides it along the jib's line, through the mast when x is negative, to (1, y/x) on the tangent line. So tan θ = y/x is a height on the tangent line: hence the name.
+
+The tip is 1 from the mast, so $`x^2 + y^2 = 1`$ (Pythagoras). The meeting point's distance from the mast, a hypotenuse over legs 1 and y/x, is $`\sqrt{1 + (y/x)^2} = \sqrt{(x^2 + y^2)/x^2}`$ = 1/|x|, |x| being x without its sign: the secant's size, from *secans*, cutting.
 
 ### The picture: tangent and secant at 210°
 

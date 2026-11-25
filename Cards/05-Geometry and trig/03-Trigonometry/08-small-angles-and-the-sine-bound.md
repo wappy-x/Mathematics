@@ -10,9 +10,9 @@ A clock pendulum is 1 m long. Its bob is pulled 5° out from straight down. It s
 
 The pull that swings the bob back is its weight times the sine of the angle. Physics swaps that sine for the angle itself, in radians: the length of arc the angle cuts from a circle of radius 1 ([The unit circle](02-radians-and-the-unit-circle.md)). 5° is 0.0873 radians; its sine is 0.0872. The swap overstates the pull by 0.127% and makes the swing easy to predict.
 
-Up to a right angle the three distances always come in that order, smallest first: the angle is sandwiched between its sine and its tangent. Three nested areas prove it.
+For any positive angle below a right angle, the three distances always come in that order, smallest first: the angle is sandwiched between its sine and its tangent. Three nested areas prove it.
 
-**In radians, a triangle inside a slice of circle inside a larger triangle gives sine < angle < tangent up to a right angle, so a small angle's sine and tangent are both nearly the angle, off by a share of it that shrinks like the angle squared.**
+**In radians, a triangle inside a slice of circle inside a larger triangle gives sine < angle < tangent for every positive angle below a right angle, so a small angle's sine and tangent are both nearly the angle, off by a share of it that shrinks like the angle squared.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; the small-angle rules it yields are approximations, each with its error stated.
 
@@ -20,7 +20,9 @@ Up to a right angle the three distances always come in that order, smallest firs
 
 <p align="center"><img src="../figures/small-angles-and-the-sine-bound.svg" alt="The proof&#x27;s three nested shapes drawn to scale at 40 degrees: pivot O, lowest point A, bob B, and T where the string&#x27;s line meets the level line through A; triangle OAB lies inside the sector OAB, which lies inside triangle OAT" width="420"></p>
 
-Drawn at 40°, not 5°, so the shapes separate; radius 1 = 200 units. Pivot O (110, 16), lowest point A (110, 216), bob B (238.56, 169.21), and T (277.82, 216), where OB carried on meets the level line. Darkest: triangle OAB. Middle: the sliver of the sector OAB, the slice of circle between OA and OB, beyond the chord AB, the straight cut from A to B. Palest: triangle OAT beyond the arc. Dashed: CB, B's sideways offset, square to OA at C.
+Drawn at 40°, not 5°, so the shapes separate; radius 1 = 200 units. Pivot O, lowest point A, bob B, and T, where OB carried on meets the level line.
+
+Darkest: triangle OAB. Middle: the sliver of the sector OAB, the slice of circle between OA and OB, beyond the chord AB, the straight cut from A to B. Palest: triangle OAT beyond the arc. Dashed: CB, B's sideways offset, square to OA at C.
 
 ---
 
@@ -32,7 +34,7 @@ Notation first. The angle is x, in radians, so 180° is π radians. Sine, cosine
 \sin x < x < \tan x \qquad \text{for } 0 < x < \tfrac{\pi}{2}
 ```
 
-**Read it aloud:** up to a right angle, in radians, the sine is less than the angle, and the angle less than the tangent.
+**Read it aloud:** for any positive angle below a right angle, in radians, the sine is less than the angle, and the angle less than the tangent.
 
 Dividing by x (Step 4) and putting a floor, a lower bound, under the cosine (Step 5) gives a chain whose links all sit near 1 when x is small, and so the small-angle rules:
 
@@ -108,7 +110,7 @@ Divide $`\sin x < x`$ by the positive x: $`\sin x / x < 1`$. Multiply $`x < \sin
 The half-angle rule of [Trig identities](03-trig-identities.md) gives $`1 - \cos x = 2\sin^2(x/2)`$, twice the squared sine of half the angle. Step 3 at half the angle gives $`\sin(x/2) < x/2`$, so $`1 - \cos x < x^2/2`$: the floor, 0.996192 against 0.996195 at 5°. Halve the angle and the cosine's distance below 1 roughly quarters. The bob's rise, $`L(1 - \cos x)`$, is 3.805 mm; the rule gives 3.808 mm.
 
 <details>
-<summary>Detailed proof: the cosine's ceiling, $x^4/8$ above the rule</summary>
+<summary>Detailed proof: the cosine's ceiling, x⁴/8 above the rule</summary>
 
 Step 4 at half the angle gives $`\sin(x/2) > (x/2)\cos(x/2)`$. Square and double:
 
@@ -164,7 +166,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Road one halves 30° to get sin 15°. It finds the sine s of 5° from the triple-angle rule `3s - 4s^3 = sin 15°` (the addition rule used twice) by a halving search: keep whichever half of a range holds the answer. The addition rule then steps on in 5s to 100°. Road two uses no trigonometry: it walks the arc round a circle of radius 1 in short steps, and the thin triangles it sweeps add up to the sector. Four asserts: the roads agree from 5° to 45°; the slices give x/2 between the triangles; the chain holds at all nine angles; 96 sides bracket π.
+Road one halves 30° to get sin 15°. It finds the sine s of 5° from the triple-angle rule `3s - 4s^3 = sin 15°` (the addition rule used twice) by a halving search: keep whichever half of a range holds the answer. The addition rule then steps on in 5s to 100°.
+
+Road two uses no trigonometry: it walks the arc round a circle of radius 1 in short steps, and the thin triangles it sweeps add up to the sector. Four asserts: the roads agree from 5° to 45°; the slices give x/2 between the triangles; the chain holds at all nine angles; 96 sides bracket π.
 
 ### Python
 
@@ -491,10 +495,11 @@ example : 96 * (π / 96) = π := by ring
 
 ## Where this goes next
 
+- [Distance and midpoint](../04-Coordinates%20and%20Curves/01-distance-and-midpoint.md): the next shelf puts shapes onto a coordinate grid, starting with straight-line distance and halfway points.
 - [Limit laws and the squeeze](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/04-limit-laws-and-the-squeeze.md): the sandwich's squeeze on sin x ÷ x, made exact.
 - [Derivatives of sine and cosine](../../06-Calculus%20and%20analysis/02-Derivatives/04-derivatives-of-trig-functions.md): the chain turned into the rates of change of sine and cosine.
 
-The chain pins sin x ÷ x ever closer to 1 as the angle shrinks, yet no angle makes it equal 1; what the ratio closes in on, and what "closes in" means, is [Limit laws and the squeeze](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/04-limit-laws-and-the-squeeze.md).
+Next on the wing's shelves, [Distance and midpoint](../04-Coordinates%20and%20Curves/01-distance-and-midpoint.md) puts geometry onto a coordinate grid. To follow this card's chain straight into calculus, what "closes in on 1" means is [Limit laws and the squeeze](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/04-limit-laws-and-the-squeeze.md).
 
 ---
 

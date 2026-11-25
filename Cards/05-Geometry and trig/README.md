@@ -56,7 +56,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 03 · Trigonometry · 8 cards
 
-*Sine, cosine and tangent from a right triangle to the whole circle; identities, graphs, inverses, and any triangle from three pieces of data*
+*Sine, cosine and tangent from a right triangle to the whole circle; identities, graphs, inverses, any triangle from three pieces of data, and small-angle bounds*
 
 1. [Sine, cosine and tangent: three ratios that turn an angle into lengths](03-Trigonometry/01-right-triangle-trigonometry.md)
 2. [The unit circle: sine and cosine for every angle, including the ones no triangle has](03-Trigonometry/02-radians-and-the-unit-circle.md)

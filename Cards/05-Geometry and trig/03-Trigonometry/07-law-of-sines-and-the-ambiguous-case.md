@@ -44,7 +44,7 @@ In the fog the law runs backwards, from the range $`a`$:
 
 **Read it aloud:** the sine of the ship's angle is the baseline times the sine of A, over the range.
 
-A sine between 0 and 1 belongs to two angles under 180°: the one from 0° to 90° that the inverse sine, $`\arcsin`$, returns ([Inverse trig](05-inverse-trig-and-solving-equations.md)), and its mirror, 180° minus that. Each stands only if it leaves a positive angle at B. With $`d = c \sin A`$, B's square-on distance to A's sightline, and A below 90°:
+A sine strictly between 0 and 1 belongs to two angles strictly between 0° and 180°: one strictly between 0° and 90° that the inverse sine, $`\arcsin`$, returns ([Inverse trig](05-inverse-trig-and-solving-equations.md)), and its mirror, 180° minus that. Each stands only if it leaves a positive angle at B. For positive lengths $`a`$ and $`c`$, with $`d = c \sin A`$, B's square-on distance to A's sightline, and 0° < A < 90°:
 
 | Range from B | Triangles | In the fog, d = 5.00 km |
 | --- | --- | --- |
@@ -53,7 +53,7 @@ A sine between 0 and 1 belongs to two angles under 180°: the one from 0° to 90
 | between d and c | two | 7.07 km: ship and phantom |
 | c or more | one | 12 km: one crossing is behind A |
 
-With A at 90° or more, one triangle if the range exceeds c, none otherwise.
+With 90° ≤ A < 180°, one triangle if the range exceeds c, none otherwise.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -69,6 +69,7 @@ With A at 90° or more, one triangle if the range exceeds c, none otherwise.
 ### When it holds
 
 - **Flat ground.** Across an ocean the sides are arcs, with a law of their own ([Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md)).
+- **Three corners not on one line.** Every angle must lie strictly between 0° and 180°; on one line a sine is 0 and no circle passes through all three corners.
 - **Each side over the sine of the angle it faces.** B's range faces A, so it goes over sin A; a wrong pairing fails silently.
 - **A range clear of d.** Near 5 km the circle grazes the sightline; a small error flips the count between none and two.
 
@@ -123,13 +124,13 @@ that is, $`(t - c\cos A)^2 = a^2 - d^2`$, so $`t = c\cos A \pm \sqrt{a^2 - d^2}`
 <details>
 <summary>Detailed proof: none, one or two</summary>
 
-Call the crossings $`t_1`$ and $`t_2`$. The quadratic is $`(t - t_1)(t - t_2)`$; multiplying out shows they add to $`2c\cos A`$ and multiply to $`c^2 - a^2`$.
+For positive lengths $`a`$ and $`c`$ and 0° < A < 180°, call the crossings $`t_1`$ and $`t_2`$. The quadratic is $`(t - t_1)(t - t_2)`$; multiplying out shows they add to $`2c\cos A`$ and multiply to $`c^2 - a^2`$.
 
 - **Range under d:** no crossing.
-- **A below 90°, range d:** one crossing, $`t = c\cos A`$, where B's line meets the sightline square on: a right angle at the ship.
-- **A below 90°, range between d and c:** sum and product positive, so both crossings lie ahead.
-- **A below 90°, range c or more:** product zero or negative, so exactly one lies ahead.
-- **A at 90° or more:** the sum is not positive, so a crossing lies ahead only when the product is negative, a range over c; then exactly one does.
+- **0° < A < 90°, range d:** one crossing, $`t = c\cos A`$, where B's line meets the sightline square on: a right angle at the ship.
+- **0° < A < 90°, range between d and c:** sum and product positive, so both crossings lie ahead.
+- **0° < A < 90°, range c or more:** product zero or negative, so exactly one lies ahead.
+- **90° ≤ A < 180°:** the sum is not positive, so a crossing lies ahead only when the product is negative, a range over c; then exactly one does.
 
 </details>
 
@@ -142,7 +143,7 @@ At corner A, with $`b`$ unknown, the law of cosines ([Law of cosines](06-law-of-
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | angle at the ship | 180° − 30° − 105° | 45° |
-| common ratio | 10 ÷ 0.7071 | 14.1421 km |
+| common ratio | 10 ÷ sin 45° = 10 ÷ 0.707107 | 14.1421 km |
 | ship to B | 14.1421 × 0.5000 | **7.07 km** |
 | ship to A | 14.1421 × 0.9659 | **13.66 km** |
 | off the coast | 13.66 × 0.5000 | **6.83 km** |
@@ -375,8 +376,8 @@ Lean proves the law of sines, the two-angles rule and the SSA count for every fl
 
 - Each side over the sine of the angle it faces gives the same length, the diameter of the circle through the corners. The corners must not lie on one line.
 - Two triangles that match in two angles and one side, between those angles or not, match in all three sides.
-- SSA with A below 90°: a range under d gives no triangle, d gives one, between d and c two, c or more one.
-- SSA with A at 90° or more: one triangle if the range exceeds c, none otherwise.
+- SSA with positive lengths a and c and 0° < A < 90°: a range under d gives no triangle, d gives one, between d and c two, c or more one.
+- SSA with positive lengths a and c and 90° ≤ A < 180°: one triangle if the range exceeds c, none otherwise.
 - The card's numbers: 45° at the ship, the ratio 10√2 km, d = 5 km, and both fog crossings, 5√3 ± 5 km.
 
 Decimals, the inverse sine by halving, the sightlines crossed on a grid, and the figure coordinates are left to the Python and Rust checks.
@@ -775,7 +776,7 @@ example : (105 : ℚ) / 30 = 7 / 2 := by norm_num
 
 - [Small angles](08-small-angles-and-the-sine-bound.md): a thin triangle's tiny angle.
 - [Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md): the law of sines on a globe, where sides are arcs.
-- [Hyperbolic trigonometry](../06-Beyond%20Euclid/10-hyperbolic-trigonometry.md): Pythagoras becomes cosh c = cosh a cosh b, and every distance has an angle of parallelism.
+- [Hyperbolic trigonometry](../06-Beyond%20Euclid/10-hyperbolic-trigonometry.md): the sine law in the hyperbolic plane, with sinh of each side in place of the side itself.
 
 Dividing by the tiny sine of a far ship's angle magnifies every error; how nearly that sine equals its angle, in radians, is the next card's question.
 

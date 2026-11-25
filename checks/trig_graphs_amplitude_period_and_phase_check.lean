@@ -1,4 +1,4 @@
--- Trig graphs: the wave y = a sin(b(t - c)) + d swings between d - |a| and d + |a|, repeats first after 2π/|b|, rises through its midline at t = c and peaks a quarter period later.
+-- Trig graphs: the wave y = a sin(b(t - c)) + d swings between d - |a| and d + |a|, repeats first after 2π/|b|, and when a and b are positive, rises through its midline at t = c and peaks a quarter period later.
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
@@ -73,9 +73,9 @@ theorem sine_wave_amplitude_midline_period (a b c d : ℝ) (ha : a ≠ 0) (hb : 
     rw [div_le_iff₀ hbb]
     nlinarith [pi_pos]
 
-/-- The phase shift c: at t = c the wave is on its midline d, climbing at rate a·b
-(rising when a and b are positive), and a quarter period P/4 = (2π/b)/4 later it reaches
-d + a, high water. -/
+/-- The phase shift c: at t = c the wave is on its midline d, changing at rate a·b, and at
+t = c + 2π/(4b) it equals d + a. When a and b are positive, it is rising at t = c and reaches
+high water d + a a quarter period P/4 = 2π/(4b) later. -/
 theorem sine_wave_phase_shift (a b c d : ℝ) (hb : b ≠ 0) :
     (fun t : ℝ => a * sin (b * (t - c)) + d) c = d ∧
     HasDerivAt (fun t : ℝ => a * sin (b * (t - c)) + d) (a * b) c ∧
@@ -90,10 +90,11 @@ theorem sine_wave_phase_shift (a b c d : ℝ) (hb : b ≠ 0) :
     have : b * (c + 2 * π / b / 4 - c) = π / 2 := by field_simp; ring
     rw [this, sin_pi_div_two]; ring
 
-/-- One tide, several formulas: the sine wave started at c equals the cosine wave started a
-quarter period later at its high water, the sine wave started one full period later, and the
-upside-down sine wave (amplitude -a) started half a period later. So the reading is unique only
-once a and b are positive and c is the first rising crossing. -/
+/-- One tide, several formulas: for any b ≠ 0, shifting c by 2π/(4b) gives the cosine form,
+by 2π/b gives the same sine wave, and by 2π/(2b) with amplitude -a gives the same wave again.
+When a and b are positive, those shifts are a quarter period later (at high water), one full
+period later, and half a period later; so the reading is unique only once a and b are positive
+and c is the first rising crossing. -/
 theorem sine_wave_equivalent_forms (a b c d : ℝ) (hb : b ≠ 0) (t : ℝ) :
     a * sin (b * (t - c)) + d = a * cos (b * (t - (c + 2 * π / b / 4))) + d ∧
     a * sin (b * (t - c)) + d = a * sin (b * (t - (c + 2 * π / b))) + d ∧
