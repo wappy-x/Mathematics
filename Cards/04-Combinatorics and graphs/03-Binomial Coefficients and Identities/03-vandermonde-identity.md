@@ -10,7 +10,9 @@ A studio is putting a five-piece band together. Six guitarists and four drummers
 
 Now ask what the studio cares about: how many guitars? That number settles the rest, since the seats left over go to drummers.
 
-So count one guitar-count at a time. One guitarist: 6 ways to pick that player, and all four drummers play — 6 bands. Two: 15 ways to pick the pair, 4 ways to leave one drummer out — 60. Three: 20 times 6 — 120. Four: 15 times 4 — 60. Five: 6 times 1 — 6. Nothing is double-booked and nothing escapes, so the cases add to the whole: 6 + 60 + 120 + 60 + 6 = 252 — the same number, counted the long way.
+So count one guitar-count at a time. One guitarist: 6 ways to pick that player, and all four drummers play — 6 bands. Two: 15 ways to pick the pair, 4 ways to leave one drummer out — 60. Three: 20 times 6 — 120. Four: 15 times 4 — 60. Five: 6 times 1 — 6.
+
+Nothing is double-booked and nothing escapes, so the cases add to the whole: 6 + 60 + 120 + 60 + 6 = 252 — the same number, counted the long way.
 
 That is the theorem. It carries the name of Alexandre-Théophile Vandermonde, a violinist who turned to mathematics at thirty-five; the identity is older, and Chinese texts had it by 1303.
 
@@ -91,7 +93,9 @@ Let A and B share no member, A holding $`m`$ people and B holding $`n`$. A band 
 
 Every S splits into the part inside A and the part inside B. Those share no one and together hold all of S, so their sizes add to $`r`$. Write $`k`$ for the size of the part inside A; the other has size $`r-k`$.
 
-The bands with a given $`k`$ are exactly the pairs — a set of $`k`$ from A, a set of $`r-k`$ from B. Each pair pools to one band and each band gives back one pair, so that pile holds C($`m`$, $`k`$) × C($`n`$, $`r-k`$) bands. Different $`k`$ give different bands and every band has a $`k`$, so adding over $`k`$ counts each band once. Terms where $`k`$ exceeds $`m`$, or $`r-k`$ exceeds $`n`$, count empty collections and contribute 0.
+The bands with a given $`k`$ are exactly the pairs — a set of $`k`$ from A, a set of $`r-k`$ from B. Each pair pools to one band and each band gives back one pair, so that pile holds C($`m`$, $`k`$) × C($`n`$, $`r-k`$) bands.
+
+Different $`k`$ give different bands and every band has a $`k`$, so adding over $`k`$ counts each band once. Terms where $`k`$ exceeds $`m`$, or $`r-k`$ exceeds $`n`$, count empty collections and contribute 0.
 
 </details>
 
@@ -109,7 +113,7 @@ C(2n,\ n) \;=\; \sum_{k=0}^{n} C(n,\ k)^2
 
 **Read it aloud:** the middle entry of an even-numbered row of Pascal's triangle is every entry of the half-sized row squared and added. Row 5 is 1 5 10 10 5 1, and its squares add to 252.
 
-A second road reaches the identity through powers rather than piles. Multiply out a bracket raised to $`m`$ against one raised to $`n`$ and collect the terms carrying the same number of one letter: drawing $`k`$ copies from the first bracket and $`r-k`$ from the second is a band again. The two brackets multiply to one raised to $`m+n`$, so the collected counts must agree. [The binomial theorem](02-binomial-theorem.md) sets up that expansion properly.
+A second road reaches the identity through powers rather than piles. Multiply out $`(1 + x)^m`$ against $`(1 + x)^n`$ and collect the $`x^r`$ terms: taking $`k`$ copies of $`x`$ from the first bracket and $`r-k`$ from the second is a band again. Together the brackets equal $`(1 + x)^{m+n}`$, so the collected counts must agree. [The binomial theorem](02-binomial-theorem.md) sets up that expansion properly.
 
 ---
 
@@ -460,7 +464,7 @@ example : Nat.choose 9 5 = 126 := by decide
 
 ## Where you meet it in real life
 
-- **Sampling a batch with two kinds in it.** Take 5 units from a crate of 6 good and 4 faulty: exactly 3 good ones happens in 120 of the 252 draws, favourable over possible — one term of this sum over the total.
+- **Sampling a batch with two kinds in it.** Take 5 units from a crate of 6 good and 4 faulty: exactly 3 good ones happens in 120 of the 252 draws, a chance of 120 in 252 — one term of this sum over the total.
 - **Routes across a grid.** Cut a route to a far corner at a line partway across: the pieces on each side multiply, and the cuts add. This identity, drawn on paper: [Lattice paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md).
 - **The middle of a row.** The sum-of-squares form is where the central entry 252 comes from, and that entry governs how big a row gets: [The middle of the row](07-central-binomial-and-bounds.md).
 
@@ -472,13 +476,16 @@ example : Nat.choose 9 5 = 126 := by decide
 ## What this builds on
 
 - [Pascal's rule](01-pascals-rule-and-the-triangle.md): what C(n, k) counts, the zero convention, and the triangle the code builds by addition alone.
+- [The binomial theorem](02-binomial-theorem.md): sigma shorthand for sums, and the expansion behind the second road.
+- [Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md): counting one collection two ways to prove an equation.
 
 ## Where this goes next
 
+- [The hockey stick](04-hockey-stick-identity.md): adding down a single column of the triangle instead of pairing entries across two rows.
 - [The middle of the row](07-central-binomial-and-bounds.md): how fast the middle entry grows.
 - [Lattice paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md): the same split made by cutting a route across a grid.
 
-Nothing here says how large that middle entry grows as rows lengthen — [The middle of the row](07-central-binomial-and-bounds.md) puts bounds on it.
+This identity pairs entries across two rows of the triangle; the next card adds straight down a single column instead, in [The hockey stick](04-hockey-stick-identity.md).
 
 ---
 

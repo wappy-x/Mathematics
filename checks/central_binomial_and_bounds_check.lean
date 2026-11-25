@@ -107,7 +107,7 @@ example : Nat.choose 20 10 ≤ 4 ^ 10 ∧ 4 ^ 10 ≤ 21 * Nat.choose 20 10 ∧
     21 * Nat.choose 20 10 = 3879876 := by
   decide
 
--- The house row, row 10: 252 is its middle, the row adds to 1,024, and 1,024 ≤ 11 × 252 ≤ 11 × 1,024.
+-- Row 10: 252 is its middle, the row adds to 1,024, and 1,024 ≤ 11 × 252 ≤ 11 × 1,024.
 example : Nat.choose 10 5 = 252 ∧ (∑ k ∈ range 11, Nat.choose 10 k) = 1024 ∧
     4 ^ 5 ≤ 11 * Nat.choose 10 5 ∧ Nat.choose 10 5 ≤ 4 ^ 5 := by
   decide

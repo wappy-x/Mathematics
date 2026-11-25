@@ -8,9 +8,11 @@
 
 The Lantern, a room above a pub, runs a Tuesday showcase. A player turns up with five tunes ready: Anchor, Bramble, Cinder, Dovetail and Ember. A setlist is a running order of some of them — which tunes, in what order, each played at most once. Playing nothing counts too: the empty setlist.
 
-Five tunes allow 326 setlists, four 65, three 16, two 5, one 2, none 1. Those totals are easy: list them. The harder question is how many of the 326 leave nothing out, using all five. That count is 120.
+Suppose the booking log keeps only the loose totals: five tunes allow 326 setlists, four 65, three 16, two 5, one 2, none 1. Can those loose totals alone recover how many of the 326 use all five tunes?
 
-The easy totals are built out of the hard ones. Every setlist uses one pick of tunes and uses all of it, and a pick of size k can be made in C(5, k) ways — row 5 of Pascal's triangle ([Pascal's rule](01-pascals-rule-and-the-triangle.md)). So 326 is the row 1 5 10 10 5 1 weighted by the leave-nothing-out counts 1, 1, 2, 6, 24, 120. Running that backwards, one total against six unknowns, looks hopeless.
+Here we know the answer in advance — 5 × 4 × 3 × 2 × 1 = 120 — so the tunes let us verify a reversal that works just as well when the exact count has no quick formula. Each loose total is built out of the exact counts.
+
+Every setlist chooses a subset of tunes and plays all of it. A subset of size k can be chosen in C(5, k) ways — row 5 of Pascal's triangle ([Pascal's rule](01-pascals-rule-and-the-triangle.md)). So 326 is row 5 weighted by the exact counts 1, 1, 2, 6, 24, 120. Running that backwards looks hopeless.
 
 It is not, and one small fact is why. Add row 5 with the signs flipping: 1 − 5 + 10 − 10 + 5 − 1 = 0. Every row past the top does the same, and that cancellation makes the forward sum reversible.
 
@@ -77,7 +79,9 @@ C(n, k) counts the picks of size k. Alternating signs put the even sizes in a pl
 
 ### Step 1: one item pairs the piles off
 
-Single out Anchor. Toggle it in any pick: Anchor in, take it out; Anchor out, put it in. The size moves by one, so an even pick becomes odd and an odd pick even. Toggling twice returns the original, so no pick is used twice and none left over — a one-for-one matching ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)). Of the 32 picks, 16 are even-size and 16 odd, so the signed total is 0.
+Single out Anchor. Toggle it in any pick: Anchor in, take it out; Anchor out, put it in. The size moves by one, so an even pick becomes odd and an odd pick even.
+
+Toggling twice returns the original, so no pick is used twice and none left over — a one-for-one matching ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)). Of the 32 picks, 16 are even-size and 16 odd, so the signed total is 0.
 
 Nothing about five was used: wherever there is an item to toggle the piles match, and with none there is only the empty pick, no partner, so row 0 comes to 1.
 
@@ -99,7 +103,9 @@ For five tunes the groups hold 1, 5, 20, 60, 120 and 120 setlists, adding to 326
 
 Put the forward sum inside the claimed inverse. Each loose count is itself a sum over sizes, so the result is a double sum; the question is what weight each $`a_j`$ carries.
 
-Choosing k tunes from n and then j of those k is the same act as choosing the j first and the other k − j from the n − j left over. So the nested picks count the other way round. That pulls a constant clear and leaves an alternating sum over the whole of row n − j. By Step 1 that sum is 0 unless the row is the top one, which happens only at j = n.
+Choosing k tunes from n and then j of those k is the same act as choosing the j first and the other k − j from the n − j left over. So the nested picks count the other way round.
+
+That pulls a constant clear and leaves an alternating sum over the whole of row n − j. By Step 1 that sum is 0 unless the row is the top one, which happens only at j = n.
 
 So every $`a_j`$ vanishes but $`a_n`$, weight 1: the inverse hands back what went in. At n = 5 the terms −1 + 10 − 50 + 160 − 325 + 326 come to 120.
 
@@ -609,7 +615,7 @@ example : ∑ k ∈ Ico 1 6, (-1 : ℤ) ^ (5 - k) * (Nat.choose 5 k : ℤ) *
 ## Where you meet it in real life
 
 - **Sieve counts.** Counting what dodges several conditions at once means adding, subtracting, adding back — these signs, applied to sets instead of sizes: [Inclusion-exclusion for any number of sets](../04-Inclusion-Exclusion%20and%20Pigeonhole/01-inclusion-exclusion-for-n-sets.md).
-- **Turning loose records into exact ones.** A log storing only "how many, at any size" still yields exact-size counts, given the loose counts for every smaller pool: 1, 2, 5, 16, 65, 326 give back 1, 1, 2, 6, 24, 120.
+- **Turning loose records into exact ones.** A log storing only "how many, at any size" still yields exact-size counts, given the loose counts for every smaller pool: 1, 2, 5, 16, 65, 326 give back 1, 1, 2, 6, 24, 120. The same inversion recovers hard exact counts — such as assignments that cover every slot — from simple loose totals.
 - **Differences of a table.** Subtracting neighbouring entries of a table, again and again, produces exactly these signed weights — the usual way of reading the polynomial behind a column of numbers.
 - **Checks on counting code.** A row of choice counts that fails to cancel has a wrong entry.
 
@@ -620,14 +626,17 @@ example : ∑ k ∈ Ico 1 6, (-1 : ℤ) ^ (5 - k) * (Nat.choose 5 k : ℤ) *
 
 ## What this builds on
 
+- [Pascal's rule](01-pascals-rule-and-the-triangle.md): what C(n, k) counts, the rows built by addition alone, and the row sum 2^n.
 - [The binomial theorem](02-binomial-theorem.md): the expansion of (x + y)^n, giving the alternating row sum in one line at x = 1, y = −1, and the sigma shorthand.
+- [Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md): why toggling one tune matches even-size and odd-size picks one for one.
 
 ## Where this goes next
 
+- [The middle of the row](07-central-binomial-and-bounds.md): how large the biggest entry of a row gets, and cheap bounds on any entry.
 - [Inclusion-exclusion for any number of sets](../04-Inclusion-Exclusion%20and%20Pigeonhole/01-inclusion-exclusion-for-n-sets.md): the same alternating signs applied to overlapping sets, each size of overlap a term of the row.
 - [Mobius inversion on an order](../15-Orders%20and%20Set%20Systems/03-mobius-inversion-on-posets.md): a sum over everything below can always be undone, and inclusion-exclusion and number theory's Mobius function are two cases.
 
-This card cancels a row indexed by size; what happens when the things counted overlap in named ways is [Inclusion-exclusion for any number of sets](../04-Inclusion-Exclusion%20and%20Pigeonhole/01-inclusion-exclusion-for-n-sets.md).
+Before the next shelf turns these alternating signs into a sieve for overlapping sets ([Inclusion-exclusion for any number of sets](../04-Inclusion-Exclusion%20and%20Pigeonhole/01-inclusion-exclusion-for-n-sets.md)), one question about a single row remains: how large its biggest entry gets, in [The middle of the row](07-central-binomial-and-bounds.md).
 
 ---
 

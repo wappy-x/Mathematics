@@ -90,7 +90,9 @@ The first and last entry of every row is 1: one way to take nothing, one to take
 
 ### Step 3: the triangle builds itself
 
-Row 0 is a single 1. Lined up by k, the size of the pick, each entry of row n is the sum of the one directly above it and the one above-left. These are the parents C(n − 1, k) and C(n − 1, k − 1), with blanks off the row counting as zero. Row 3 is 1 3 3 1, so row 4 is 1 4 6 4 1: the 6 is 3 + 3, each 4 is 1 + 3. The run below carries the array to row 10.
+Row 0 is a single 1. Lined up by k, the size of the pick, each entry of row n is the sum of the one directly above it and the one above-left. These are the parents C(n − 1, k) and C(n − 1, k − 1), with blanks off the row counting as zero.
+
+Row 3 is 1 3 3 1, so row 4 is 1 4 6 4 1: the 6 is 3 + 3, each 4 is 1 + 3. The run below carries the array to row 10.
 
 Step 1 proved the rule for every n and k, so the array of sums is the array of counts all the way down ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)). Every entry is reachable by addition, no factorial formed, no division done. A factorial is the product of every whole number from 1 up to a given number.
 
@@ -103,7 +105,13 @@ Step 1 proved the rule for every n and k, so the array of sums is the array of c
 <details>
 <summary>The algebra behind the rule, if you want it</summary>
 
-Write C(m, j) = m! / (j! (m − j)!), with m! = 1 × 2 × … × m and 0! = 1. For 0 < k < n, both C(n − 1, k − 1) = (n − 1)! / ((k − 1)! (n − k)!) and C(n − 1, k) = (n − 1)! / (k! (n − 1 − k)!) carry the factor (n − 1)! / ((k − 1)! (n − 1 − k)!). Pulling it out leaves 1/(n − k) and 1/k, which add to n / (k (n − k)). The total is then n! / (k! (n − k)!) = C(n, k), using (k − 1)! × k = k! and (n − 1 − k)! × (n − k) = (n − k)!. At k = 0 and k = n both sides read 1, since C(n − 1, −1) = C(n − 1, n) = 0.
+Write C(m, j) = m! / (j! (m − j)!), with m! = 1 × 2 × … × m and 0! = 1.
+
+For 0 < k < n, both C(n − 1, k − 1) and C(n − 1, k) carry the factor (n − 1)! / ((k − 1)! (n − 1 − k)!). Pulling it out leaves 1/(n − k) and 1/k, which add to n / (k (n − k)):
+
+$`\displaystyle C(n-1, k-1) + C(n-1, k) = \frac{(n-1)!}{(k-1)!\,(n-1-k)!}\left(\frac{1}{n-k} + \frac{1}{k}\right) = \frac{n!}{k!\,(n-k)!} = C(n, k)`$
+
+The last step uses (k − 1)! × k = k! and (n − 1 − k)! × (n − k) = (n − k)!. At k = 0 and k = n both sides read 1, since C(n − 1, −1) = C(n − 1, n) = 0.
 
 </details>
 
@@ -124,7 +132,7 @@ The triangle built by hand from the top, one addition at a time.
 | eleven, four times over | 11 × 11 × 11 × 11 | **14,641** |
 | row 10, added up | 32 doubled five more times | **1,024** |
 
-The band has 32 possible sets, 10 of them exactly two songs long. The last two lines are one fact twice: multiplying by 11 adds each digit to its neighbour, which is the rule again. Past row 4 the entries pass 9 and carry; row 5 gives 161,051.
+The band has 32 possible sets, 10 of them exactly two songs long. The two 14,641 lines are one fact twice: multiplying by 11 adds each digit to its neighbour, which is the rule again. Past row 4 the entries pass 9 and carry; row 5 gives 161,051.
 
 ### What breaks if you drop a piece
 
@@ -476,7 +484,7 @@ example : ∑ k ∈ range 5, Nat.choose 4 k = 16 := by decide
 ## Where you meet it in real life
 
 - **Tables of choice counts in software.** Addition keeps every number no larger than the answer; the factorial road builds enormous products first and overflows fixed-width integers (whole numbers stored in a set number of binary digits) far sooner.
-- **Switches and trials.** Five on-off switches give 32 settings, 10 of them with exactly two on; the same row says 10 of the 32 records of five coin tosses show exactly two heads, favourable over possible.
+- **Switches and trials.** Five on-off switches give 32 settings, 10 of them with exactly two on; the same row says 10 of the 32 equally likely records of five coin tosses show exactly two heads — a chance of 10 in 32.
 - **Routes across a grid.** Each junction's count is the sum of the two feeding it — this rule drawn on paper: [Lattice paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md).
 
 > **Say it back**

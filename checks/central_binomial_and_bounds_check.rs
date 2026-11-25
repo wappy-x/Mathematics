@@ -57,14 +57,14 @@ listing all {} selections {}, squaring and adding row {} {}",
              row[K] as f64 / total as f64, row[K] as f64 / avg, total as f64 / row[K] as f64);
     println!("digit counts: lower bound {}, the count {}, upper bound {}",
              (avg as u64).to_string().len(), row[K].to_string().len(), total.to_string().len());
-    println!("bounds at n = {}, k = {}: ({}/{})^{} = {} <= {} <= {}^{}/{}! = {:.2}",
+    println!("bounds at N = {}, k = {}: ({}/{})^{} = {} <= {} <= {}^{}/{}! = {:.2}",
              N, K, N, K, K, (N as u64 / K as u64).pow(K as u32), row[K], N, K, K, hi20);
-    println!("bounds at n = {}, k = {}: ({}/{})^{} = {} <= {} <= {}^{}/{}! = {:.2}",
+    println!("bounds at N = {}, k = {}: ({}/{})^{} = {} <= {} <= {}^{}/{}! = {:.2}",
              M, J, M, J, J, (M as u64 / J as u64).pow(J as u32), c100, M, J, J, hi100);
     println!("upper bound divided by the truth: {:.2} at k = {} of {}, {:.2} at k = {} of {}",
              hi20 / row[K] as f64, K, N, hi100 / c100 as f64, J, M);
-    println!("house row {}: {} adds to {} = 4^{}", K, tens.join(" "), ten_sum, K / 2);
-    println!("house row {} sandwich: {}/{} = {:.2} <= {} <= {}",
+    println!("row {}: {} adds to {} = 4^{}", K, tens.join(" "), ten_sum, K / 2);
+    println!("row {} sandwich: {}/{} = {:.2} <= {} <= {}",
              K, ten_sum, K + 1, ten_sum as f64 / (K + 1) as f64, ten[K / 2], ten_sum);
     println!("mistakes: half the row gives {}; 2^{} in place of 4^{} gives {}; the average {:.2} read as the count",
              total / 2, K, K, 2u64.pow(K as u32), avg);

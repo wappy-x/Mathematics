@@ -529,15 +529,14 @@ example : ∑ j ∈ range 7, Nat.choose 6 j = 64 := by decide
 ## What this builds on
 
 - [Pascal's rule](01-pascals-rule-and-the-triangle.md): the rule that rewrites each entry as a gap between two entries of the next column, the array the shaft runs down, and the convention that counts of the impossible are none.
+- [The binomial theorem](02-binomial-theorem.md): the capital sigma shorthand for summing down a column.
 
 ## Where this goes next
 
-Two neighbours work the same triangle from other directions:
+- [Committee and chair](05-committee-chair-identity.md): singling out a member of the chosen group, which turns a weighted row sum into $`n\,2^{n-1}`$.
+- [Alternating sums](06-alternating-sums-and-binomial-inversion.md): what a row adds to once the signs alternate, and how that inverts a sum.
 
-- [Vandermonde's identity](03-vandermonde-identity.md): splitting one pick across two separate pools rather than down one column.
-- [Committee and chair](05-committee-chair-identity.md): singling out a member of the chosen group, which turns a sum of entries into a product.
-
-Every term added here is positive; what a row adds to once the signs alternate, and how that inverts a sum, is [Alternating sums](06-alternating-sums-and-binomial-inversion.md).
+Here every entry in the column carried weight 1; weighting each entry of a row by its pick size instead leads to [Committee and chair](05-committee-chair-identity.md).
 
 ---
 

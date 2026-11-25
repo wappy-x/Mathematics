@@ -71,7 +71,7 @@ not {}; shifting the index gives {} x C({},3) = {} at k = 3, not {}",
              N, N - 1, N as u64 * rows[N - 1][3], 3 * rows[N][3]);
     assert!(pairs == closed);                           // every committee walked, against the formula
     assert!(listed == absorbed);                        // size by size: committee first vs chair first
-    assert!(row_total == 1024 && complement == pairs);  // the house row sum, and the third road
+    assert!(row_total == 1024 && complement == pairs);  // row 10's sum, and the third road
     assert!(front_sizes == vec![0, 4, 12, 12, 4] && front_pairs.len() == m * (1 << (m - 1)));
     println!("ALL CHECKS PASS");
 }

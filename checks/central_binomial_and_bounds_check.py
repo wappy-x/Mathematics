@@ -45,11 +45,11 @@ print(f"the same lower bound cleared of fractions: {total} <= {2 * K + 1} x {row
 print(f"the middle entry is {row[K] / total:.4f} of its row; it beats the average by "
       f"{row[K] / avg:.2f} and misses the whole row by {total / row[K]:.2f}")
 print(f"digit counts: lower bound {len(str(int(avg)))}, the count {len(str(row[K]))}, upper bound {len(str(total))}")
-print(f"bounds at n = {N}, k = {K}: ({N}/{K})^{K} = {(N // K) ** K} <= {row[K]} <= {N}^{K}/{K}! = {hi20:.2f}")
-print(f"bounds at n = {M}, k = {J}: ({M}/{J})^{J} = {(M // J) ** J} <= {c100} <= {M}^{J}/{J}! = {hi100:.2f}")
+print(f"bounds at N = {N}, k = {K}: ({N}/{K})^{K} = {(N // K) ** K} <= {row[K]} <= {N}^{K}/{K}! = {hi20:.2f}")
+print(f"bounds at N = {M}, k = {J}: ({M}/{J})^{J} = {(M // J) ** J} <= {c100} <= {M}^{J}/{J}! = {hi100:.2f}")
 print(f"upper bound divided by the truth: {hi20 / row[K]:.2f} at k = {K} of {N}, {hi100 / c100:.2f} at k = {J} of {M}")
-print(f"house row {K}: " + " ".join(str(x) for x in ten) + f" adds to {sum(ten)} = 4^{K // 2}")
-print(f"house row {K} sandwich: {sum(ten)}/{K + 1} = {sum(ten) / (K + 1):.2f} <= {ten[K // 2]} <= {sum(ten)}")
+print(f"row {K}: " + " ".join(str(x) for x in ten) + f" adds to {sum(ten)} = 4^{K // 2}")
+print(f"row {K} sandwich: {sum(ten)}/{K + 1} = {sum(ten) / (K + 1):.2f} <= {ten[K // 2]} <= {sum(ten)}")
 print(f"mistakes: half the row gives {total // 2}; 2^{K} in place of 4^{K} gives {2 ** K}; "
       f"the average {avg:.2f} read as the count")
 assert row == listed and row[K] == central and row[K] == vander and c100 == hundred[J]

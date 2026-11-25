@@ -10,7 +10,9 @@ Raise 11 to the fourth power: 14,641. The digits are 1, 4, 6, 4, 1 — row 4 of 
 
 No coincidence. 11 is 10 + 1, so 11^4 is four brackets of (10 + 1) multiplied together. Multiplying them out means taking the 10 or the 1 from each and multiplying the four things taken.
 
-Call each such run of choices a walk. There are 16 walks: one takes no 1 and gives 10,000, four take it once and give 1,000 apiece, six take it twice and give 100, four give 10, one gives 1. Walks with the same product form a pile. The piles add: 10,000 + 4,000 + 600 + 40 + 1 = 14,641.
+Call each such run of choices a walk. There are 16 walks: one takes no 1 and gives 10,000, four take it once and give 1,000 apiece, and six take it twice and give 100. Four more give 10, and one gives 1.
+
+Walks with the same product form a pile. The piles add: 10,000 + 4,000 + 600 + 40 + 1 = 14,641.
 
 A pile's size counts the ways of choosing which brackets handed over the 1, and the triangle holds those counts. This card states the rule for any two numbers and any whole power, adds the three-term version, and takes a familiar balance apart: $100 at 5% for ten years reaches $162.89, where simple interest alone would stop at $150.00.
 
@@ -101,7 +103,9 @@ The claim: for every whole n ≥ 0, (a + b)^n is the sum over k from 0 to n of C
 
 **Base.** At n = 0 the empty product is 1, and the sum holds one piece: C(0, 0) a^0 b^0 = 1.
 
-**Step.** Assume it at n and multiply by (a + b). Each piece times a gives C(n, k) a^(n+1−k) b^k; times b it gives C(n, k) a^(n−k) b^(k+1). Rename k + 1 as k in the second sum and its pieces read C(n, k − 1) a^(n+1−k) b^k. Both sums now cover the same pieces, so the coefficient of a^(n+1−k) b^k is C(n, k) + C(n, k − 1) — which Pascal's rule turns into C(n + 1, k). Off the ends, a count of something impossible is zero.
+**Step.** Assume it at n and multiply by (a + b). Each piece times a gives C(n, k) a^(n+1−k) b^k; times b it gives C(n, k) a^(n−k) b^(k+1). Rename k + 1 as k in the second sum and its pieces read C(n, k − 1) a^(n+1−k) b^k.
+
+Both sums now cover the same pieces, so the coefficient of a^(n+1−k) b^k is C(n, k) + C(n, k − 1) — which Pascal's rule turns into C(n + 1, k). Off the ends, a count of something impossible is zero.
 
 The claim at n forces it at n + 1 ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
 
@@ -119,7 +123,7 @@ With three doors a pile is fixed by a split rather than a choice, so it holds C(
 
 ## Worked numbers, by hand
 
-Rows 0 to 10 are the house example; 11^4 needs row 4.
+Rows 0 to 10 of Pascal's triangle are this shelf's running example; 11^4 needs row 4.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -372,7 +376,7 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves both rules for every whole power, whenever order of multiplication does not matter, and that each row adds to 2^n. Python and Rust check the worked numbers.
+Lean proves both rules for every whole power, whenever order of multiplication does not matter, and that each row adds to 2^n. Lean also checks the whole-number examples and mistake 1; the $100 at 5% compounding balance, walking every pick by hand, and mistakes 2 to 4 are left to the Python and Rust checks.
 
 ```lean
 -- The binomial theorem: for any whole power n, (a + b)^n is the sum of C(n, k) a^(n-k) b^k, and (a + b + c)^n is the sum of n!/(i! j! l!) a^i b^j c^l over all splits i + j + l = n, whenever the letters can be multiplied in either order.
@@ -537,12 +541,13 @@ example : (10 : ℕ) ^ 4 + 1 ^ 4 = 10001 ∧ (10 + 1 : ℕ) ^ 4 ≠ 10 ^ 4 + 1 ^
 
 ## Where this goes next
 
+- [Vandermonde's identity](03-vandermonde-identity.md): multiplying two expanded brackets together splits one choice count across two groups.
 - [Alternating sums](06-alternating-sums-and-binomial-inversion.md): what the a = 1, b = −1 setting is good for.
 - [Generating functions](../07-Generating%20Functions/01-ordinary-generating-functions.md): (1 + b)^n as a machine carrying a whole row.
 - [The binomial series and the number e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md): the same sum when the power is a half or a minus.
 - [Binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md): these pieces, with a and b as the chances of a miss and a hit.
 
-Every term here is weighed by a plain count, which leaves a later shelf's question: what a whole row is worth once the powers mark places in a sequence.
+Expanding one bracket gave a single row; multiplying two expanded brackets together splits a choice across two groups, which is [Vandermonde's identity](03-vandermonde-identity.md).
 
 ---
 

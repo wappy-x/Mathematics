@@ -55,6 +55,7 @@ The numbers C(n, 0), C(n, 1), …, C(n, n) form row n of Pascal's triangle. Mult
 | --- | --- | --- | --- |
 | $`n`$ | people to choose from | 10 in the office | doubles, and more, per extra person |
 | $`k`$ | how many sit on the committee | any size, 0 to 10 | peaks near mid-row, then falls |
+| $`\sum`$ | add the terms for $`k`$ from 0 to $`n`$ | 0 + 10 + 90 + … + 10 = 5,120 | — |
 | $`C(n,k)`$ | committees of $`k`$ from $`n`$, order ignored | C(10,3) = 120 | — |
 | $`k\,C(n,k)`$ | committee-and-chair pairs of that size | 3 × 120 = 360 | — |
 | $`C(n-1,k-1)`$ | ways to fill the seats a chair leaves | C(9,2) = 36 | — |
@@ -97,7 +98,11 @@ The k that stood outside on the left is absorbed: on the right the only multipli
 
 The counting argument above is the proof. This is the algebra it matches, with C(n, k) = n! / (k! (n − k)!), where n! = 1 × 2 × … × n and 0! = 1.
 
-Take k from 1 to n: k C(n, k) = k × n! / (k! (n − k)!). Since k! = k × (k − 1)!, the k on top cancels the k inside k!, leaving n! / ((k − 1)! (n − k)!). Peel one factor off: n! = n × (n − 1)!, giving n × (n − 1)! / ((k − 1)! (n − k)!). The bottom is what C(n − 1, k − 1) needs, since (n − 1) − (k − 1) = n − k, so the whole thing is n C(n − 1, k − 1).
+Take k from 1 to n: k C(n, k) = k × n! / (k! (n − k)!). Since k! = k × (k − 1)!, the k on top cancels the k inside k!, leaving n! / ((k − 1)! (n − k)!).
+
+Peel one factor off the top: n! = n × (n − 1)!, giving n × (n − 1)! / ((k − 1)! (n − k)!).
+
+The bottom is what C(n − 1, k − 1) needs, since (n − 1) − (k − 1) = n − k, so the whole thing is n C(n − 1, k − 1).
 
 At k = 0 the left is 0 × C(n, 0) = 0 and the right n × C(n − 1, −1) = 0 by the zero convention, so the sides agree along the whole row.
 
@@ -105,7 +110,9 @@ At k = 0 the left is 0 × C(n, 0) = 0 and the right n × C(n − 1, −1) = 0 by
 
 ### Step 4: add the identity across the row
 
-Add every size, k from 0 to n. On the left the sizes account for every committee-and-chair pair in the office. On the right the n comes out in front, leaving C(n − 1, 0) + C(n − 1, 1) + … + C(n − 1, n − 1) — a full row of the triangle, adding to 2 multiplied in n − 1 times ([Pascal's rule](01-pascals-rule-and-the-triangle.md)). So the weighted row sum is n 2^(n−1): for the office of ten, 10 × 512 = 5,120.
+Add every size, k from 0 to n. On the left the sizes account for every committee-and-chair pair in the office. On the right the n comes out in front, leaving C(n − 1, 0) + C(n − 1, 1) + … + C(n − 1, n − 1) — a full row of the triangle, adding to 2 multiplied in n − 1 times ([Pascal's rule](01-pascals-rule-and-the-triangle.md)).
+
+So the weighted row sum is n 2^(n−1): for the office of ten, 10 × 512 = 5,120.
 
 ### The other door: pair each committee with its opposite
 
@@ -218,12 +225,12 @@ print(f"mistakes: a chair from the whole office gives {N * len(office)}, not {pa
       f"{N} x C({N - 1},3) = {N * rows[N - 1][3]} at k = 3, not {3 * rows[N][3]}")
 assert pairs == closed                             # every committee walked, against the formula
 assert listed == absorbed                          # size by size: committee first vs chair first
-assert row_total == 1024 and complement == pairs   # the house row sum, and the third road
+assert row_total == 1024 and complement == pairs   # row 10's sum, and the third road
 assert front_sizes == [0, 4, 12, 12, 4] and len(front_pairs) == len(FRONT) * 2 ** (len(FRONT) - 1)
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-14 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 office of 10; a committee of any size, one chair from inside it
@@ -323,13 +330,13 @@ not {}; shifting the index gives {} x C({},3) = {} at k = 3, not {}",
              N, N - 1, N as u64 * rows[N - 1][3], 3 * rows[N][3]);
     assert!(pairs == closed);                           // every committee walked, against the formula
     assert!(listed == absorbed);                        // size by size: committee first vs chair first
-    assert!(row_total == 1024 && complement == pairs);  // the house row sum, and the third road
+    assert!(row_total == 1024 && complement == pairs);  // row 10's sum, and the third road
     assert!(front_sizes == vec![0, 4, 12, 12, 4] && front_pairs.len() == m * (1 << (m - 1)));
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-14 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 office of 10; a committee of any size, one chair from inside it
@@ -455,7 +462,7 @@ example : (List.range 5).map (fun k =>
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the office of ten, so expect one to stop the program.
-> - **Shrink the office.** Set `N` to 6. The roads still agree, but the third assert holds the house row total at 1,024 and stops the run.
+> - **Shrink the office.** Set `N` to 6. The roads still agree, but the third assert holds row 10's total at 1,024 and stops the run.
 > - **Let anyone chair.** Where `pairs` is computed, use `N` in place of `len(s)`: the total reads 10,240 and the first assert stops it.
 > - **Drop the weight.** In `listed`, count each committee once instead of once per member: the terms become row 10 itself, adding to 1,024 not 5,120, and the second assert stops it.
 
@@ -487,6 +494,7 @@ example : (List.range 5).map (fun k =>
 ## What this builds on
 
 - [Pascal's rule](01-pascals-rule-and-the-triangle.md): row 10, and the fact that a full row adds to 2 multiplied in n times — the step that collapses the right-hand sum.
+- [The binomial theorem](02-binomial-theorem.md): the capital sigma shorthand for summing across a row.
 - [Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md): why two honest counts of one collection may be set equal.
 
 ## Where this goes next
@@ -503,6 +511,6 @@ Weighting each term by its size gave a clean total; weighting by a sign that fli
 Verified 14 Sep 2026: every link below resolves to the publisher's page.
 
 - Graham, Ronald L., Donald E. Knuth, and Oren Patashnik. *Concrete Mathematics*, 2nd ed. Addison-Wesley, 1994. [Publisher page](https://www.informit.com/store/concrete-mathematics-a-foundation-for-computer-science-9780201558029). Chapter 5 names the absorption identity and uses it on weighted sums.
-- "A001787: a(n) = n*2^(n-1)." On-Line Encyclopedia of Integer Sequences. [Sequence page](https://oeis.org/A001787). The totals, 5,120 at n = 10, given as the size of all subsets added together and as the count of subset-and-member pairs.
+- "A001787: `a(n) = n*2^(n-1)`." On-Line Encyclopedia of Integer Sequences. [Sequence page](https://oeis.org/A001787). The totals, 5,120 at n = 10, given as the size of all subsets added together and as the count of subset-and-member pairs.
 - Bogart, Kenneth P. *Combinatorics Through Guided Discovery*. Open Textbook Library. [Textbook page](https://open.umn.edu/opentextbooks/textbooks/combinatorics-through-guided-discovery). Free and complete; builds the binomial identities from counting arguments of this shape.
 - Levin, Oscar. *Discrete Mathematics: An Open Introduction*, 3rd ed. [Full text](https://discrete.openmathbooks.org/dmoi3.html). Its chapter on combinatorial proofs works the committee-and-chair argument.

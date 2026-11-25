@@ -54,6 +54,6 @@ print(f"mistakes: a chair from the whole office gives {N * len(office)}, not {pa
       f"{N} x C({N - 1},3) = {N * rows[N - 1][3]} at k = 3, not {3 * rows[N][3]}")
 assert pairs == closed                             # every committee walked, against the formula
 assert listed == absorbed                          # size by size: committee first vs chair first
-assert row_total == 1024 and complement == pairs   # the house row sum, and the third road
+assert row_total == 1024 and complement == pairs   # row 10's sum, and the third road
 assert front_sizes == [0, 4, 12, 12, 4] and len(front_pairs) == len(FRONT) * 2 ** (len(FRONT) - 1)
 print("ALL CHECKS PASS")
