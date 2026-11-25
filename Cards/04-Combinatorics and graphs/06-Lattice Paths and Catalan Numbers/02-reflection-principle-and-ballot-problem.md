@@ -81,7 +81,7 @@ A running total that moves by one at each step is a path. Each of the 56 orders 
 
 ### Step 1: the first vote splits 56 into 21 and 35
 
-A first vote for B leaves A level or behind at once: spoiled, whatever follows. Those orders place five A's in the seven remaining slots, $`C(7, 5) = 21`$. The other 35 open with A, $`C(7, 4) = 35`$, and are spoiled only if the score goes level later.
+A first vote for B puts A behind at once (a lead of −1): spoiled, whatever follows. Those orders place five A's in the seven remaining slots, $`C(7, 5) = 21`$. The other 35 open with A, $`C(7, 4) = 35`$, and are spoiled only if the score goes level later.
 
 ### Step 2: mirror the part before the first level score
 
@@ -125,9 +125,11 @@ The other road to 14 is to list all 56 orders and test each, as the code does fi
 | of those, the ones going level later | mirrored onto the B-openers | 21 |
 | A ahead after every vote | 35 − 21 | **14** |
 | the same by the share form | $`(5 - 3) / (5 + 3) \times 56`$ | **14** |
-| ten-step paths, mirror one level lower | 252 − 210 | **42** |
+| ten-step paths, mirror one level lower | $`C(10, 5) - C(10, 4)`$ = 252 − 210 | **42** |
 
-Fourteen of the 56 orders keep A in front from first vote to last: favourable over possible, one in four. The last row drops the mirror a step, on the shelf's house example: of 252 ten-step paths back to the start, 42 never dip below it.
+Fourteen of the 56 orders keep A in front from first vote to last: favourable over possible, one in four.
+
+The last row drops the mirror one step to −1, on the 252 ten-step paths back to the start. Reflecting at −1 pairs the dipping paths with the $`C(10, 4) = 210`$ paths ending at −2. That leaves 42 paths that never dip below zero.
 
 ### What breaks if you drop a piece
 
@@ -143,7 +145,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Three roads reach 14: every order is listed and tested; the mirror is applied to each spoiled A-opener and matched against the B-openers; and the share form is worked from a binomial coefficient built in a loop.
+Nothing is imported, and three roads reach 14. The first lists and tests every order. The second mirrors each spoiled A-opener onto the B-openers. The third builds the binomial coefficient in a loop for the share form.
 
 ### Python
 

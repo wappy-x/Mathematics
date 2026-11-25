@@ -76,8 +76,8 @@ And as a recurrence, a rule reaching a term from earlier terms ([Recurrences](..
 | $`i`$ | pairs inside the first split | runs 0 to 4 | — |
 | $`\mathrm{Cat}(n)`$ | safe orders with n of each note | Cat(5) = 42 | — |
 | $`C(2n,n)`$ | every order, safe or not | C(10,5) = 252 | — |
-| $`C(2n,n+1)`$ | orders with one extra ten | C(10,6) = 210 | fewer survive |
-| $`n+1`$ | the divisor | 6 | fewer safe orders |
+| $`C(2n,n+1)`$ | orders with one extra ten | C(10,6) = 210 | — |
+| $`n+1`$ | the divisor | 6 | a smaller share of all orders survive |
 | $`\mathrm{Cat}(0)`$ | the empty queue, safe | 1 | — |
 
 ### When it holds
@@ -95,7 +95,7 @@ And as a recurrence, a rule reaching a term from earlier terms ([Recurrences](..
 
 The cashier's fate hangs on one number: the $5 notes in the till, fives taken minus tens served. A $5 customer raises it by one, a $10 lowers it by one, and the queue is safe exactly when it never falls below zero.
 
-Nothing else about the cinema survives. What is left is ten steps, five up and five down, whose running total never dips below the start: the lattice path of this shelf ([Lattice paths](01-lattice-paths.md)), and the bracket strings of the table.
+Nothing else about the cinema survives. What is left is ten steps, five up and five down, whose running total never dips below the start. Those are the lattice paths of this shelf ([Lattice paths](01-lattice-paths.md)) and the bracket strings of the table.
 
 ### Step 1: count every order, failures included
 
@@ -107,7 +107,7 @@ Take a stranded order and find the first customer the cashier cannot serve, the 
 
 At the cut the count stands at −1, so the untouched stretch holds one more ten than fives, and the swap trades the two kinds in the rest. Whichever stranded order went in, six $10 notes and four $5 notes come out.
 
-The move runs backwards. An order of six tens and four fives finishes at −2, and a count moving one step at a time cannot reach −2 without passing −1, so it has a first bad moment too. Cut there and swap the tail back.
+The move runs backwards. An order of six tens and four fives finishes at −2. Moving one step at a time, it cannot reach −2 without passing −1, so it has a first bad moment too. Cut there and swap the tail back.
 
 Neither move touches the cut or anything before it, and swapping a tail twice restores it, so the two collections are matched one for one ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)). There are C(10, 6) = 210 orders of six tens and four fives, so 210 stranded orders.
 
@@ -145,13 +145,13 @@ Everything between the two notes is a safe queue of its own: the till never empt
 
 In general a queue of n + 1 pairs splits into i inside and n − i after, exactly one way. Adding over i: 1×14 + 1×5 + 2×2 + 5×1 + 14×1 = 42.
 
-A third road packs the whole sequence into one expression and reads the closed form off it in a step: [The Catalan generating function](../07-Generating%20Functions/05-catalan-generating-function.md).
+A third road packs the whole sequence into one equation, $`C = 1 + x\,C^2`$, and solves it for the generating function: [The Catalan generating function](../07-Generating%20Functions/05-catalan-generating-function.md).
 
 ---
 
 ## Worked numbers, by hand
 
-The shelf's house example is this queue in path language: of the 252 ten-step paths with five steps up and five down, 42 never dip below the start.
+In the path language of [Lattice paths](01-lattice-paths.md), this queue is a ten-step walk. Of the 252 paths with five steps up and five down, 42 never dip below the start.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -179,7 +179,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Four roads reach the 42, sharing no arithmetic: listing all 252 orders and testing each running till; the closed form, on a choose-count built as a product; the reflection difference, with the swap applied to all 210 stranded orders; and the first-return recurrence, which uses no choose-count.
+Nothing is imported. Four roads reach the 42, sharing no arithmetic. One lists all 252 orders and tests each running till; a second runs the closed form on a choose-count built as a product.
+
+A third takes the reflection difference and swaps all 210 stranded orders. A fourth runs the first-return recurrence with no choose-count.
 
 ### Python
 
@@ -501,15 +503,15 @@ example : 42 * Nat.factorial 5 * Nat.factorial 5 = 604800 := by decide
 
 ## What this builds on
 
-- [The reflection principle](02-reflection-principle-and-ballot-problem.md): the swap after the first bad moment, and why it counts the failures exactly.
+- [The reflection principle](02-reflection-principle-and-ballot-problem.md): mirroring one side of a failing path at its first bad moment to match failures one for one with an easy choose count.
 
 ## Where this goes next
 
 - [Catalan everywhere](04-catalan-bijections.md): the same 42 counted as trees, triangulated shapes and handshakes.
 - [Counting coin-flip paths](05-random-walk-path-counts.md): the same steps read as coin flips.
-- [The Catalan generating function](../07-Generating%20Functions/05-catalan-generating-function.md): the recurrence solved in one pass.
+- [The Catalan generating function](../07-Generating%20Functions/05-catalan-generating-function.md): turns the first-return recurrence into $`C = 1 + x\,C^2`$ and solves it for the generating function.
 
-The recurrence reaches Cat(9) = 4862 only by grinding out every earlier term; turning a recurrence into a formula in one pass is [The Catalan generating function](../07-Generating%20Functions/05-catalan-generating-function.md).
+Here those 42 counts came from one ticket queue and its bracket strings. Why binary trees, cut polygons and non-crossing handshakes land on the exact same numbers is what [Catalan everywhere](04-catalan-bijections.md) shows next.
 
 ---
 

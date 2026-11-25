@@ -31,7 +31,7 @@ flowchart TB
 
 ## The formula
 
-C(n, k), read "n choose k", counts the ways to take k things from n when order is not recorded; it is 0 when k is below 0 or above n ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
+C(n, k), read "n choose k", counts the ways to take k things from n when order is not recorded. It is 0 when k is below 0 or above n ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
 
 ```math
 C(m+n,\ n) = \frac{(m+n)!}{m!\ n!}
@@ -72,7 +72,9 @@ Routes clear of that corner are the rest: the total minus the product. The tall 
 
 Stand at the hotel and walk. The only record worth keeping at each corner is which way the next block went.
 
-So a route trades for a row of 11 letters with 7 Es and 4 Ns. Two routes that part at some block give rows differing in that slot, so no row is used twice. Every row also gives a route back, since 11 east-or-north steps with 4 Ns land at the museum. Rows and routes are matched in pairs, none left over ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)): counting rows counts routes.
+So a route trades for a row of 11 letters with 7 Es and 4 Ns. Two routes that part at some block give rows differing in that slot, so no row is used twice.
+
+Every row also gives a route back, since 11 east-or-north steps with 4 Ns land at the museum. Rows and routes are matched in pairs, none left over ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)): counting rows counts routes.
 
 ### Step 1: choosing the route is choosing which steps go north
 
@@ -80,7 +82,9 @@ Naming which 4 of the 11 slots hold an N fixes the row; the rest are E. That is 
 
 ### Step 2: write the count on every corner, and Pascal's rule appears
 
-Now write on every corner the number of routes from the hotel to it. The bottom edge is all 1s: due east, one way reaches each corner, and the left edge is all 1s for the same reason. Every other corner is entered on its last step from the west or from the south, never both, and each group is counted by the corner that step came from. So a corner's number is the sum of its west and south neighbours — addition, no formula.
+Now write on every corner the number of routes from the hotel to it. The bottom edge is all 1s: due east, one way reaches each corner, and the left edge is all 1s for the same reason.
+
+Every other corner is entered on its last step from the west or from the south, never both. Each group is counted by the corner that step came from. So a corner's number is the sum of its west and south neighbours — addition, no formula.
 
 | routes to each corner | east 0 | east 1 | east 2 | east 3 | east 4 | east 5 | east 6 | east 7 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -96,13 +100,15 @@ The museum's 330 is 210 from the west plus 120 from the south: Pascal's rule wit
 
 ### Step 3: through a corner is a multiply, around it is a subtract
 
-The cafe sits 3 east and 2 north. Reaching it takes 5 blocks of which 2 go north, C(5, 2) = 10 routes; going on to the museum takes 4 east and 2 north, C(6, 2) = 15. Any first half pairs with any second, so 10 × 15 = 150 routes touch the cafe and the other 180 never do. The halves multiply because they are choices made one after the other, not alternatives to each other.
+The cafe sits 3 east and 2 north. Reaching it takes 5 blocks of which 2 go north, C(5, 2) = 10 routes; going on to the museum takes 4 east and 2 north, C(6, 2) = 15.
+
+Any first half pairs with any second, so 10 × 15 = 150 routes touch the cafe and the other 180 never do. The halves multiply because they are choices made one after the other, not alternatives to each other.
 
 ### Step 4: cut every route at the same distance, and Vandermonde appears
 
 After five blocks a walker has gone five blocks, whatever the route. So every route stands then on exactly one of the corners five blocks out: (5,0), (4,1), (3,2), (2,3) or (1,4), blocks east then north.
 
-If $`k`$ of the first five steps went north, that corner is 5−k east and k north, reached C(5, k) ways, and the remaining 6 blocks need 4−k north steps, C(6, 4−k) ways. The five groups hold 15, 100, 150, 60 and 5 routes, adding to 330.
+If $`k`$ of the first five steps went north, that corner is 5−k east and k north, reached C(5, k) ways. The remaining 6 blocks need 4−k north steps, C(6, 4−k) ways. The five groups hold 15, 100, 150, 60 and 5 routes, adding to 330.
 
 ```math
 C(11,\ 4)\ =\ \sum_{k=0}^{4} C(5,\ k)\ C(6,\ 4-k)
@@ -142,7 +148,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The 330 is reached by three roads sharing no arithmetic: a choose formula from a running product, a listing of all 2,048 orders of 11 east-or-north steps keeping those with exactly 4 north, and the map of corner counts filled in by addition. The cafe's 150 and the five groups along the cut are counted twice over, by formula and by listing. A 5-by-5 grid follows.
+Nothing is imported. Three roads reach 330 with no shared arithmetic: a choose formula from a running product, a listing of all 2,048 orders of 11 east-or-north steps (keeping those with 4 north), and the corner map filled by addition.
+
+The cafe's 150 and the five groups along the cut are counted twice over, by formula and by listing. A 5-by-5 grid follows.
 
 ### Python
 
@@ -681,9 +689,9 @@ end LatticePaths
 
 - [The reflection principle](02-reflection-principle-and-ballot-problem.md): counting the routes that break a rule by mirroring them, turning a forbidden line into an ordinary choose count.
 - [Many steps](../../12-Financial%20mathematics/04-Binomial%20Trees/03-multi-step-trees-and-backward-induction.md): the same routes carrying money, a payoff at the far corner and a price worked backwards.
-- [Young tableaux and the hook length formula](../08-Partitions/07-young-tableaux-and-hook-lengths.md): fill a partition's diagram with 1 to n rising along rows and down columns, and n! over the product of hook lengths counts the ways.
+- [Young tableaux and the hook length formula](../08-Partitions/07-young-tableaux-and-hook-lengths.md): a two-row tableau records a walk that never falls behind, and the hook length formula counts such walks on any stepped shape.
 
-Every route counted here was allowed. The next question is how many stay on one side of a line: of the 252 routes across a square 5-block grid, 42 never cross the diagonal, and the reflection principle explains that 42.
+Every route counted here was allowed. The next question is how many stay on one side of a line. Of the 252 routes across a square 5-block grid, 42 never cross the diagonal, and the reflection principle explains that 42.
 
 ---
 

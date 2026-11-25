@@ -10,7 +10,9 @@ A hexagonal tabletop rests on six corners, numbered 0 to 5 round the rim. To sti
 
 Eight people sit at that table. On a signal each takes one other person's hand, all at once, no two arms crossing. Again 14 ways.
 
-Nothing about a tabletop resembles a handshake, and the shared 14 is not luck. Both are Cat(4), the Catalan number for four bracket pairs ([Catalan numbers](03-catalan-numbers.md)). This card writes the recipes that carry a bracing to a handshake pattern and back. The recipes go on to three more collections: those bracket words, the never-dipping paths of the last card, and branching shapes called plane binary trees.
+Nothing about a tabletop resembles a handshake, and the shared 14 is not luck. Both are Cat(4), the Catalan number for four bracket pairs ([Catalan numbers](03-catalan-numbers.md)).
+
+This card writes the recipes that carry a bracing to a handshake pattern and back. The recipes go on to three more collections: those bracket words, the never-dipping paths of the last card, and branching shapes called plane binary trees.
 
 A plane binary tree is built from forks. Each fork has a left branch and a right branch, and each branch ends in a bare leaf or in another fork.
 
@@ -1447,9 +1449,9 @@ end CatalanEverywhere
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the hexagon and eight seats, so expect one to stop.
-> - **Move up a size.** Put `census(6)` for `census(4)`, and `8, 0, 7` for every `6, 0, 5`: every family reaches 132.
+> - **Move up a size.** Put `census(6)` in place of `census(5)` on the `l5, d5, ...` line: all five families print `132` before the final assert stops because `cat(5)` is `42`, not `132`.
 > - **Allow the arms to cross.** Drop the crossing filter from the handshakes in `census`: the count jumps to 105.
-> - **Forget left from right.** Replace `untree` with `fold`, which sorts a fork's branches: the 14 words collapse to 3.
+> - **Forget left from right.** In `back`, replace `sorted(untree(t) for t in forest)` with `sorted({fold(t) for t in forest})` and print `len(back)`: the 14 trees collapse to 3 distinct strings, and the second assert stops.
 
 ---
 
@@ -1481,9 +1483,10 @@ end CatalanEverywhere
 
 ## Where this goes next
 
+- [Counting coin-flip paths](05-random-walk-path-counts.md): the same up-and-down paths read as coin flips, counting endings at any height alongside the Catalan returns.
 - [The Catalan generating function](../07-Generating%20Functions/05-catalan-generating-function.md): turns the splitting rule under all five recipes into one equation that holds the whole sequence.
 
-The recipes leave size open: five collections are proved equal without saying how fast the shared count grows.
+Every path matched here starts and ends at zero and never dips below it. Next, [Counting coin-flip paths](05-random-walk-path-counts.md) steps back to count coin-flip paths ending at any height, how many return to zero, and how many stay strictly above it.
 
 ---
 

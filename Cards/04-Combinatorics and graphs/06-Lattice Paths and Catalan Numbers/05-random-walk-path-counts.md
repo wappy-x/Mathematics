@@ -6,7 +6,9 @@
 
 ## General Overview
 
-Flip a coin ten times and write the run down: H T T H H H T H T T. Score every head +1 and every tail −1, then keep a running total. It opens at zero, steps up or down by one at each flip, and after the tenth stands somewhere between −10 and +10. That run of totals is a **path**, the word used from here on.
+Flip a coin ten times and write the run down: H T T H H H T H T T. Score every head +1 and every tail −1, then keep a running total.
+
+It opens at zero, steps up or down by one at each flip, and after the tenth stands somewhere between −10 and +10. That run of totals is a **path**, the word used from here on.
 
 Ten flips fall 1,024 ways. Four counts inside those 1,024 do most of the work. 252 paths end level, back at zero, and 210 end at +2. Of the 252 that end level, 42 never once dip below zero, and only 14 stay strictly above zero from the first flip to the ninth.
 
@@ -50,13 +52,13 @@ P(2m,\ 0) \;=\; C(2m,\ m)
 Of those returns, the ones that never drop below zero and the ones that stay strictly above zero in between are two neighbouring Catalan numbers:
 
 ```math
-\text{never below zero} = \mathrm{Cat}(m) = \frac{C(2m,\ m)}{m+1}, \qquad \text{strictly above zero} = \mathrm{Cat}(m-1)
+\text{never below zero} = \mathrm{Cat}(m) = \frac{C(2m,\ m)}{m+1}, \qquad \text{strictly above zero} = \mathrm{Cat}(m-1) \quad (m \ge 1)
 ```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
 | $`n`$ | flips in the path, one step each | 10 | more paths, spread wider |
-| $`h`$ | the height the path ends at | 0, or +2 | falls away from zero |
+| $`h`$ | the height the path ends at | 0, or +2 | peaks at zero, falls as $`h`$ moves away |
 | $`u`$ | flips that came up heads | 5 to end level, 6 for +2 | the ending height rises |
 | $`m`$ | half the flips, when the flip count is even | 5 | — |
 | $`P(n,h)`$ | paths of $`n`$ flips ending at $`h`$ | 252 at zero, 210 at +2 | — |
@@ -65,10 +67,10 @@ Of those returns, the ones that never drop below zero and the ones that stay str
 
 ### When it holds
 
-- **Every flip moves the total by one, up or down.** A step of any other size breaks the link between head count and height, and the count comes out too low.
+- **Every flip moves the total by one, up or down.** A step of any other size breaks the link between head count and height, so C(n, (n + h)/2) no longer counts the paths ending at h.
 - **Flip count and ending height share parity: both even or both odd.** Ten flips cannot end at +1: the formula asks for five and a half heads, and the count is 0.
 - **The height cannot outrun the flips.** Outside −n to n, (n + h)/2 leaves the range 0 to n and the count is 0 again.
-- **The Catalan counts assume a level ending.** Paths that stay above zero and finish elsewhere are the ballot numbers of [The reflection principle](02-reflection-principle-and-ballot-problem.md).
+- **The Catalan counts assume a level ending.** Paths that stay above zero and finish elsewhere are the ballot numbers of [The reflection principle](02-reflection-principle-and-ballot-problem.md). The strictly-above count also needs at least two flips ($`m \ge 1`$).
 
 ---
 
@@ -94,13 +96,13 @@ Put h = 0 into Step 1: the head count is n/2, which needs n even. Write n = 2m a
 
 ### Step 3: never dipping below zero is a Catalan count
 
-Of the 252 level enders, some sink below zero and some never do. The ones staying at or above zero throughout are called Dyck paths ([Lattice paths](01-lattice-paths.md)). They are counted by the Catalan number Cat(m) — the middle entry shared among m + 1 equal parts:
+Of the 252 level enders, some sink below zero and some never do. The ones staying at or above zero throughout are called **Dyck paths** (the never-dipping paths counted on [Catalan numbers](03-catalan-numbers.md)). They are counted by the Catalan number Cat(m) — the middle entry shared among m + 1 equal parts:
 
 ```math
 \mathrm{Cat}(m) = \frac{C(2m,\ m)}{m+1} \quad\longrightarrow\quad \frac{252}{6} = 42
 ```
 
-The divisor is proved on [Catalan numbers](03-catalan-numbers.md). The reflection principle reaches the same 42 without it: every dipping path matches one for one with a path ending at −2 ([The reflection principle](02-reflection-principle-and-ballot-problem.md)), and those number C(10, 4) = 210, leaving 252 − 210 = 42.
+The divisor is proved on [Catalan numbers](03-catalan-numbers.md). The reflection principle reaches the same 42 without it. Every dipping path matches one for one with a path ending at −2 ([The reflection principle](02-reflection-principle-and-ballot-problem.md)). Those number C(10, 4) = 210, leaving 252 − 210 = 42.
 
 ### Step 4: staying strictly above zero costs two flips
 
@@ -122,7 +124,7 @@ Nothing in that argument used the number ten. Excursions of 2m flips are counted
 
 ## Worked numbers, by hand
 
-Ten flips, a head worth +1 and a tail worth −1. The shelf's house example is the sixth row of the table below: of the 252 paths that return to zero, 42 never dip below it.
+Ten flips, a head worth +1 and a tail worth −1. The sixth row of the table below returns to the 252-to-42 count from [Catalan numbers](03-catalan-numbers.md): of the 252 paths that return to zero, 42 never dip below it.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -151,7 +153,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported, and every count is reached twice. One road walks all 1,024 runs a flip at a time, tracking the running total, its lowest point, and its lowest point before the end; it knows no formula. The other builds C(n, (n+h)/2) from a product written out in the script and divides the middle entry down; it looks at no path. A four-flip run is the second worked case.
+Nothing is imported, and every count is reached twice. One road walks all 1,024 runs a flip at a time, tracking the running total, its lowest point, and its lowest point before the end; it knows no formula.
+
+The other builds C(n, (n+h)/2) from a product written out in the script and divides the middle entry down; it looks at no path. A four-flip run is the second worked case.
 
 ### Python
 
@@ -717,12 +721,11 @@ example : Nat.choose 10 2 = 45 ∧ 252 % 5 = 2 := by decide
 
 ## Where this goes next
 
+- [Generating functions](../07-Generating%20Functions/01-ordinary-generating-functions.md): the next shelf in this wing, packing whole sequences of counts into series so algebra does the counting.
 - [Binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md): the same row of counts divided by 1,024, read as chances.
 - [Simple random walk](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/02-simple-random-walk.md): the walk as a process in time, with its long-run behaviour.
-- **Probability and statistics.** Divide each count here by 1,024 and it becomes a chance, because a fair coin makes the 1,024 runs equally likely. The shape of the row, high in the middle and thin at the edges, is the bell curve before anyone takes a limit.
-- **Stochastic processes.** Shrink the step and speed up the flips and the staircase becomes a continuous wandering line, with these counts surviving in another form.
 
-This card counts and stops there: turning 252 out of 1,024 into a chance is the first thing the probability wing does with these numbers.
+This card counts and stops there. The probability wing turns 252 out of 1,024 into a chance. Next on this wing, [Generating functions](../07-Generating%20Functions/01-ordinary-generating-functions.md) packs whole count sequences into series so algebra can count for us.
 
 ---
 
