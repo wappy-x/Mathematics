@@ -113,7 +113,7 @@ theorem plane_projection_perpendicular_and_closest {n : ℕ} (u w₁ w₂ : Fin 
     ring_nf at hpos
     linarith
 
--- The rower: pull u = (6, 2), heading v = (1, 1).
+-- The towrope: pull u = (6, 2), in hundreds of newtons; heading v = (1, 1).
 example : (![6, 2] : Fin 2 → ℝ) ⬝ᵥ ![1, 1] = 8 := by
   norm_num [dotProduct, Fin.sum_univ_two]
 

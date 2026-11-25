@@ -46,7 +46,7 @@ row("Q^T Q rows, and det Q", vec((dot(q1, q1), dot(q1, q2))),
 row("quarter turn (0, 1) and (-1, 0), det", num(0.0 * 0.0 - (-1.0) * 1.0))
 row("flip (1, 0) and (0, -1), det", num(1.0 * -1.0 - 0.0 * 0.0))
 row("mistake: no divide by a1 . a1", vec(minus(a2, scale(dot(a2, a1), a1))))
-row("mistake: leftover never scaled",
+row("mistake: neither direction scaled",
     vec(plus(scale(dot(b, a1), a1), scale(dot(b, left), left))))
 row("mistake: a2 = (6, 2), leftover", vec(minus((6.0, 2.0), scale(dot((6.0, 2.0), q1), q1))))
 m = gram_schmidt([(3.0, 1.0, 0.0), (2.0, 2.0, 0.0), (1.0, 1.0, 1.0)])

@@ -53,7 +53,7 @@ fn main() {
     row("quarter turn (0, 1) and (-1, 0), det", &[num(0.0 * 0.0 - (-1.0) * 1.0)]);
     row("flip (1, 0) and (0, -1), det", &[num(1.0 * -1.0 - 0.0 * 0.0)]);
     row("mistake: no divide by a1 . a1", &[vec_s(&minus(&a2, &scale(dot(&a2, &a1), &a1)))]);
-    row("mistake: leftover never scaled",
+    row("mistake: neither direction scaled",
         &[vec_s(&plus(&scale(dot(&b, &a1), &a1), &scale(dot(&b, &left), &left)))]);
     let dep = vec![6.0, 2.0];
     row("mistake: a2 = (6, 2), leftover", &[vec_s(&minus(&dep, &scale(dot(&dep, &q1), &q1)))]);

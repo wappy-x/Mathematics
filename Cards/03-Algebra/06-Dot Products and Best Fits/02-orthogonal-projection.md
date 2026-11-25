@@ -6,11 +6,11 @@
 
 ## General Overview
 
-A rower pulls on the oar: 6 newtons east and 2 north, the pair (6, 2), measured against two fixed map directions.
+A horse on a canal towpath pulls a barge by a rope: 600 newtons east and 200 north, measured against two fixed map directions. Counting in hundreds of newtons, that is the pair (6, 2).
 
-The boat moves along the line it points down and nowhere else: northeast, say, along (1, 1) — a pair naming a direction, not a distance.
+The barge can only move along the canal, so the canal's direction is its heading: northeast, say, along (1, 1) — a pair naming a direction, not a distance.
 
-So the pull splits: (4, 4) runs along the heading and drives the boat, (2, -2) shoves the bow sideways and drives nothing; the two add back to (6, 2).
+So the pull splits: (4, 4) runs along the heading and drives the barge, (2, -2) drags the bow sideways toward the towpath and drives nothing; the two add back to (6, 2).
 
 Those parts sit at right angles. Multiply matching entries and add: 4 times 2 is 8, 4 times -2 is -8, total 0. A zero dot product means perpendicular ([The dot product](01-dot-product.md)).
 
@@ -32,19 +32,27 @@ The piece along the heading is the **projection**; the leftover is the **residua
 
 ## The formula
 
-Call the vector being split $`u`$, the rower's pull, and the direction projected onto $`v`$, the boat's heading. Shadow and leftover:
+Call the vector being split $`u`$, the rope's pull, and the direction projected onto $`v`$, the barge's heading. Shadow and leftover:
 
 ```math
 p \;=\; \frac{u \cdot v}{v \cdot v}\, v, \qquad\qquad e \;=\; u - p.
 ```
 
-**Read it aloud:** the dot product says how much of the pull runs along the heading; dividing by the heading's dot product with itself cancels the arrow's length, leaving the copies to lay down.
+**Read it aloud:** the dot product says how much of the pull runs along the heading. Dividing by the heading's dot product with itself cancels the arrow's length, leaving the copies to lay down.
 
 That count gets its own letter:
 
 ```math
 t \;=\; \frac{u \cdot v}{v \cdot v}, \qquad\qquad p \;=\; t\,v.
 ```
+
+For a plane, named by perpendicular directions $`w_1`$ and $`w_2`$, project onto each and add the shadows:
+
+```math
+p \;=\; \frac{u \cdot w_1}{w_1 \cdot w_1}\, w_1 \;+\; \frac{u \cdot w_2}{w_2 \cdot w_2}\, w_2.
+```
+
+The same formula twice, summed.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -56,14 +64,6 @@ t \;=\; \frac{u \cdot v}{v \cdot v}, \qquad\qquad p \;=\; t\,v.
 | $`p`$ | the projection: the useful part | (4, 4) | — |
 | $`e`$ | the residual: the leftover, at right angles to v | (2, -2) | more pull wasted sideways |
 | $`w_1`$, $`w_2`$ | perpendicular directions naming a plane | (1, 1, 0), (1, -1, 0) | a tilted plane, a tilted shadow |
-
-For a plane, named by perpendicular directions $`w_1`$ and $`w_2`$, project onto each and add the shadows:
-
-```math
-p \;=\; \frac{u \cdot w_1}{w_1 \cdot w_1}\, w_1 \;+\; \frac{u \cdot w_2}{w_2 \cdot w_2}\, w_2.
-```
-
-The same formula twice, summed.
 
 ### When it holds
 
@@ -136,7 +136,9 @@ Any other point w of W gives u - w = e + (p - w). Since p - w lies in W, it is p
 
 $`\displaystyle (u-w)\cdot(u-w) \;=\; e\cdot e \;+\; (p-w)\cdot(p-w).`$
 
-The last piece is never negative, so nothing in W beats p, and only w = p ties. Uniqueness follows: two splits u = p + e = p' + e' give p - p' = e' - e, lying in W and perpendicular to W, so it dots to zero with itself — only the zero vector does.
+The last piece is never negative, so nothing in W beats p, and only w = p ties.
+
+Uniqueness follows: two splits u = p + e = p' + e' give p - p' = e' - e. That vector lies in W and is perpendicular to W, so it dots to zero with itself — only the zero vector does.
 
 </details>
 
@@ -148,11 +150,11 @@ That 8 appears twice: the leftover's squared length, and the floor of the curve 
 
 ### Step 4: a plane is two lines at once, when the two are perpendicular
 
-The rower is also lifting the oar. Measure a third direction, upward: the pull becomes (6, 2, 3), the 3 being lift.
+The towpath sits above the water, so the rope also pulls upward. Measure a third direction, upward: the pull becomes (6, 2, 3), the 3 being 300 newtons of lift.
 
-The water surface is a plane. Two directions lie in it: the heading w1 = (1, 1, 0) and straight across the boat w2 = (1, -1, 0). Their dot product is 1 - 1 + 0 = 0, so they are perpendicular, as the formula needs.
+The water surface is a plane. Two directions lie in it: the heading w1 = (1, 1, 0) and straight across the canal w2 = (1, -1, 0). Their dot product is 1 - 1 + 0 = 0, so they are perpendicular, as the formula needs.
 
-Project onto each and add: (4, 4, 0) plus (2, -2, 0) is (6, 2, 0), leftover (0, 0, 3), which dots to 0 against both — the answer the eye gives: the surface is everything with no lift.
+Project onto each and add: (4, 4, 0) plus (2, -2, 0) is (6, 2, 0). The leftover is (0, 0, 3), which dots to 0 against both. That matches what the eye sees: the water surface is everything with no lift.
 
 Perpendicular matters: each shadow is invisible to the other direction, so neither disturbs the other's sum.
 
@@ -163,7 +165,9 @@ Stack the directions as the columns of a matrix A, none a mix of the others. Any
 
 $`\displaystyle P = A\,(A^{T} A)^{-1} A^{T}.`$
 
-Raised T means rows and columns swapped; raised -1 means the inverse, the matrix that undoes it, which exists exactly because no column is a mix of the others. For our line A is the single column (1, 1), the bracket holds only v dotted with itself, 2, and (6, 2) through P returns (4, 4). Projecting twice adds nothing: P P = P. It is the object [Least squares](04-least-squares.md) solves for.
+Raised T means rows and columns swapped; raised -1 means the inverse, the matrix that undoes it, which exists exactly because no column is a mix of the others.
+
+For our line A is the single column (1, 1), the bracket holds only v dotted with itself, 2, and (6, 2) through P returns (4, 4). Projecting twice adds nothing: P P = P. It is the object [Least squares](04-least-squares.md) solves for.
 
 </details>
 
@@ -174,7 +178,7 @@ Raised T means rows and columns swapped; raised -1 means the inverse, the matrix
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | the pull u | east, then north | (6, 2) |
-| the heading v | where the boat points | (1, 1) |
+| the heading v | the way the canal runs | (1, 1) |
 | u dotted with v | 6 times 1, plus 2 times 1 | 8 |
 | v dotted with itself | 1 times 1, plus 1 times 1 | 2 |
 | t, the copies | 8 divided by 2 | 4 |
@@ -183,7 +187,7 @@ Raised T means rows and columns swapped; raised -1 means the inverse, the matrix
 | the right angle, checked | 4 times 2, plus 4 times -2 | **0** |
 | squared lengths, shadow plus leftover | 32 plus 8 | **40**, the pull's own |
 
-Of the rower's (6, 2) the boat receives (4, 4); the other (2, -2) slews the bow for nothing. As lengths, not squares: 6.3246 newtons of pull, 5.6569 useful, 2.8284 wasted.
+Of the rope's (6, 2) the barge receives (4, 4); the other (2, -2) slews the bow for nothing. As lengths, not squares, in hundreds of newtons: 6.3246 of pull, 5.6569 useful, 2.8284 wasted. That is about 632 newtons on the rope, 566 moving the barge and 283 pulling it sideways.
 
 ### What breaks if you drop a piece
 
@@ -205,8 +209,8 @@ Nothing is imported. Road one is the formula: dot, divide, scale. Road two never
 ### Python
 
 ```python
-# Projection -- the check behind the card.  Nothing is imported.  A rower pulls
-# with force (6, 2) while the boat points along (1, 1).  Road one is the formula.
+# Projection -- the check behind the card.  Nothing is imported.  A towrope pulls
+# a barge with force (6, 2), in hundreds of newtons; the canal runs along (1, 1).  Road one is the formula.
 # Road two never touches it: it fits the parabola through three squared distances
 # from the pull to the line and takes that parabola's lowest point.  The plane
 # case is done twice too, from two perpendicular pairs inside the same plane.
@@ -267,7 +271,7 @@ assert pp == alt == (6.0, 2.0, 0.0) and ee == (0.0, 0.0, 3.0) and dot(ee, w1) ==
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-19 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 the pull u and the boat's heading v         (6, 2) and (1, 1)
@@ -296,8 +300,8 @@ ALL CHECKS PASS
 Same numbers, same labels, built with `rustc --edition 2021 -O`.
 
 ```rust
-// Projection -- the same check as the Python, in Rust.  No crates.  A rower pulls
-// with force (6, 2) while the boat points along (1, 1).  Road one is the formula.
+// Projection -- the same check as the Python, in Rust.  No crates.  A towrope pulls
+// a barge with force (6, 2), in hundreds of newtons; the canal runs along (1, 1).  Road one is the formula.
 // Road two never touches it: it fits the parabola through three squared distances
 // from the pull to the line and takes that parabola's lowest point.  The plane
 // case is done twice too, from two perpendicular pairs inside the same plane.
@@ -371,7 +375,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-19 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 the pull u and the boat's heading v         (6, 2) and (1, 1)
@@ -406,7 +410,7 @@ Lean proves the card's claims for any vector u and any direction v that is not t
 - Every other point on the line of v is farther from u than the shadow p, in squared distance.
 - Pythagoras: the squared lengths of the shadow and the leftover add up to the squared length of u.
 - The plane: for two perpendicular directions, neither the zero vector, the summed shadows leave a leftover dotting to 0 against both. Every other point of that plane is farther from u.
-- The rower's numbers, exactly: shadow (4, 4), leftover (2, -2), squared lengths 40 = 32 + 8, the completed square, and the plane's (6, 2, 0).
+- The towrope's numbers, exactly: shadow (4, 4), leftover (2, -2), squared lengths 40 = 32 + 8, the completed square, and the plane's (6, 2, 0).
 
 The decimal lengths, the parabola fitted through three distances, and the four mistakes are left to the Python and Rust checks.
 
@@ -526,7 +530,7 @@ theorem plane_projection_perpendicular_and_closest {n : ℕ} (u w₁ w₂ : Fin 
     ring_nf at hpos
     linarith
 
--- The rower: pull u = (6, 2), heading v = (1, 1).
+-- The towrope: pull u = (6, 2), in hundreds of newtons; heading v = (1, 1).
 example : (![6, 2] : Fin 2 → ℝ) ⬝ᵥ ![1, 1] = 8 := by
   norm_num [dotProduct, Fin.sum_univ_two]
 
@@ -576,7 +580,7 @@ example : (![6, 2, 3] : Fin 3 → ℝ) - ![6, 2, 0] = ![0, 0, 3] ∧
 #print axioms plane_projection_perpendicular_and_closest
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'dot_self_pos_of_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -587,17 +591,17 @@ example : (![6, 2, 3] : Fin 3 → ℝ) - ![6, 2, 0] = ![0, 0, 3] ∧
 
 > [!TIP]
 > **Try changing**
-> Guess first, then run it. The asserts, the lines that halt the program on a wrong number, are pinned to the rower's numbers.
-> - **Point the boat down the pull.** `v` as `(3, 1)`, half the pull: the shadow is the whole pull, (6, 2), the leftover (0, 0). The first assert stops it.
-> - **Turn the boat across the pull.** `v` as `(1, -3)`: the dot product is 0, t is 0, the whole pull wasted. The first assert stops it.
-> - **Stop the rower lifting.** `f` as `(6, 2, 0)`: the pull lies in the water surface, so the leftover is (0, 0, 0). The last assert stops it.
+> Guess first, then run it. The asserts, the lines that halt the program on a wrong number, are pinned to the towrope's numbers.
+> - **Run the canal down the pull.** `v` as `(3, 1)`, half the pull: the shadow is the whole pull, (6, 2), the leftover (0, 0). The first assert stops it.
+> - **Run the canal across the pull.** `v` as `(1, -3)`: the dot product is 0, t is 0, the whole pull wasted. The first assert stops it.
+> - **Bring the towpath down to the water.** `f` as `(6, 2, 0)`: the pull lies in the water surface, so the leftover is (0, 0, 0). The last assert stops it.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Thinking the shadow depends on how long the direction arrow is.** It does not. Doubling the heading changes nothing about where the boat points, and the formula agrees: the top doubles, the bottom quadruples, t halves, then multiplies an arrow twice as long — back where it started.
+> **Thinking the shadow depends on how long the direction arrow is.** It does not. Doubling the heading changes nothing about where the canal runs, and the formula agrees: the top doubles, the bottom quadruples, t halves, then multiplies an arrow twice as long — back where it started.
 >
 > - Skipping the division: (8, 8), with a leftover dotting to -8 against the heading, not 0. A leftover off the right angle means the shadow is wrong.
 > - Dividing by the heading's length: (5.6569, 5.6569), squared miss 13.4903 rather than 8.
@@ -612,13 +616,14 @@ example : (![6, 2, 3] : Fin 3 → ℝ) - ![6, 2, 0] = ![0, 0, 3] ∧
 - **Coordinates in new axes.** Against perpendicular directions one unit long, a vector's coordinates are its dot products with them, each one a projection: [Gram-Schmidt](03-gram-schmidt-and-orthonormal-bases.md).
 
 > **Say it back**
-> A vector splits into a piece along a chosen direction and a perpendicular leftover: projection and residual. Dot the vector with the direction, divide by that direction's dot product with itself, lay down that many copies. The rower's (6, 2) on a heading of (1, 1) gives (4, 4) useful and (2, -2) wasted, dotting to 0. Perpendicular and closest are one point, which is why projection is what "best fit" means.
+> A vector splits into a piece along a chosen direction and a perpendicular leftover: projection and residual. Dot the vector with the direction, divide by that direction's dot product with itself, lay down that many copies. The towrope's (6, 2) on a heading of (1, 1) gives (4, 4) useful and (2, -2) wasted, dotting to 0. Perpendicular and closest are one point, which is why projection is what "best fit" means.
 
 ---
 
 ## What this builds on
 
 - [The dot product](01-dot-product.md): multiplying matching entries and adding — the one number that gives length, tests perpendicularity at zero, and measures how much of one vector runs along another.
+- [The quadratic formula](../02-Polynomials/03-quadratic-formula.md): completing the square, which Step 2 uses to find the closest point.
 
 ## Where this goes next
 
@@ -635,7 +640,7 @@ example : (![6, 2, 3] : Fin 3 → ℝ) - ![6, 2, 0] = ![0, 0, 3] ∧
 - [Representations](../12-Group%20Representations/01-representations-and-maschkes-theorem.md): a group acting by matrices, and Maschke's theorem that every one splits into pieces that cannot split further.
 - [Analysis of variance](../../09-Probability%20and%20statistics/09-Regression/09-analysis-of-variance-and-the-f-test.md): comparing several means by splitting the spread.
 
-Each adds shadows onto several directions at once, which step 4 allows only while they stay perpendicular; [Gram-Schmidt](03-gram-schmidt-and-orthonormal-bases.md) makes them so.
+Projecting onto several directions at once works as a plain sum only while those directions stay perpendicular, as Step 4 showed. How to make skewed directions perpendicular is the question [Gram-Schmidt](03-gram-schmidt-and-orthonormal-bases.md) answers next.
 
 ---
 

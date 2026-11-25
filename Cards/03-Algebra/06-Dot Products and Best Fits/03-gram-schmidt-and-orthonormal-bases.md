@@ -58,6 +58,8 @@ b = (b \cdot q_1)\, q_1 + (b \cdot q_2)\, q_2
 
 **Read it aloud:** every point is its own shadow on each straightened direction, added back together — no equations, just dot products.
 
+Stack $`q_1`$ and $`q_2`$ side by side as the columns of a matrix $`Q`$, and the whole result reads $`Q^{\mathsf T}Q = I`$. Step 5 shows why.
+
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
 | $`a_1`$, $`a_2`$ | the survey lines to start from | (3, 1) and (2, 2) | — |
@@ -234,7 +236,7 @@ row("Q^T Q rows, and det Q", vec((dot(q1, q1), dot(q1, q2))),
 row("quarter turn (0, 1) and (-1, 0), det", num(0.0 * 0.0 - (-1.0) * 1.0))
 row("flip (1, 0) and (0, -1), det", num(1.0 * -1.0 - 0.0 * 0.0))
 row("mistake: no divide by a1 . a1", vec(minus(a2, scale(dot(a2, a1), a1))))
-row("mistake: leftover never scaled",
+row("mistake: neither direction scaled",
     vec(plus(scale(dot(b, a1), a1), scale(dot(b, left), left))))
 row("mistake: a2 = (6, 2), leftover", vec(minus((6.0, 2.0), scale(dot((6.0, 2.0), q1), q1))))
 m = gram_schmidt([(3.0, 1.0, 0.0), (2.0, 2.0, 0.0), (1.0, 1.0, 1.0)])
@@ -248,7 +250,7 @@ assert abs(dot(b, b) - 20) < 1e-12 and abs(c1 * c1 + c2 * c2 - 20) < 1e-12 and a
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-19 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 survey lines (3, 1), (2, 2), lengths        3.162278  2.828427
@@ -266,7 +268,7 @@ Q^T Q rows, and det Q                       (1.000000, 0.000000)  (0.000000, 1.0
 quarter turn (0, 1) and (-1, 0), det        1.000000
 flip (1, 0) and (0, -1), det                -1.000000
 mistake: no divide by a1 . a1               (-22.000000, -6.000000)
-mistake: leftover never scaled              (41.680000, 14.960000)
+mistake: neither direction scaled           (41.680000, 14.960000)
 mistake: a2 = (6, 2), leftover              (0.000000, 0.000000)
 mast (1, 1, 1) added, q3                    (0.000000, 0.000000, 1.000000)
 mast Q^T Q, largest off-diagonal            0.000000
@@ -333,7 +335,7 @@ fn main() {
     row("quarter turn (0, 1) and (-1, 0), det", &[num(0.0 * 0.0 - (-1.0) * 1.0)]);
     row("flip (1, 0) and (0, -1), det", &[num(1.0 * -1.0 - 0.0 * 0.0)]);
     row("mistake: no divide by a1 . a1", &[vec_s(&minus(&a2, &scale(dot(&a2, &a1), &a1)))]);
-    row("mistake: leftover never scaled",
+    row("mistake: neither direction scaled",
         &[vec_s(&plus(&scale(dot(&b, &a1), &a1), &scale(dot(&b, &left), &left)))]);
     let dep = vec![6.0, 2.0];
     row("mistake: a2 = (6, 2), leftover", &[vec_s(&minus(&dep, &scale(dot(&dep, &q1), &q1)))]);
@@ -350,7 +352,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-19 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 survey lines (3, 1), (2, 2), lengths        3.162278  2.828427
@@ -368,7 +370,7 @@ Q^T Q rows, and det Q                       (1.000000, 0.000000)  (0.000000, 1.0
 quarter turn (0, 1) and (-1, 0), det        1.000000
 flip (1, 0) and (0, -1), det                -1.000000
 mistake: no divide by a1 . a1               (-22.000000, -6.000000)
-mistake: leftover never scaled              (41.680000, 14.960000)
+mistake: neither direction scaled           (41.680000, 14.960000)
 mistake: a2 = (6, 2), leftover              (0.000000, 0.000000)
 mast (1, 1, 1) added, q3                    (0.000000, 0.000000, 1.000000)
 mast Q^T Q, largest off-diagonal            0.000000
@@ -602,10 +604,11 @@ example : (1 : ℚ) - 4 / 10 * 3 - 2 / 10 * (-1) = 0 ∧ (1 : ℚ) - 4 / 10 * 1 
 
 ## Where this goes next
 
+- [Least squares](04-least-squares.md): fitting a line to data no line hits, by projecting onto the columns of a matrix.
 - [The spectral theorem](../07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): symmetric matrices carry their own perpendicular directions.
 - [Sturm-Liouville](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/09-sturm-liouville-and-orthogonality.md): solutions of a differential equation, perpendicular under an integral.
 - [Wavelets](../../13-Engineering%20mathematics/05-Signals/08-wavelets-and-multiresolution.md): perpendicular unit directions, one per band of frequencies.
-- [Lattices](../../14-Applied%20and%20computational/04-Cryptography/09-lattices-and-post-quantum-cryptography.md): a skewed basis as the secret, straightening it as the attack.
+- [Lattices](../../14-Applied%20and%20computational/04-Cryptography/09-lattices-and-post-quantum-cryptography.md): a skewed basis published as the lock, whole-number straightening as the attack.
 - [QR](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/05-qr-householder-and-gram-schmidt.md): the same factorisation from reflections, steady at machine size.
 - [Orthonormal bases](../../18-Functional%20analysis/02-Hilbert%20Spaces/03-orthonormal-bases-and-parseval.md): endlessly many such directions, squared length still a sum of squares.
 - [Orthogonal polynomials](../../18-Functional%20analysis/02-Hilbert%20Spaces/05-orthogonal-polynomials-from-gram-schmidt.md): this loop on 1, x, x^2, with an integral as the dot product.
@@ -614,7 +617,7 @@ example : (1 : ℚ) - 4 / 10 * 3 - 2 / 10 * (-1) = 0 ∧ (1 : ℚ) - 4 / 10 * 1 
 - [Hadamard matrices](../../04-Combinatorics%20and%20graphs/16-Designs/04-hadamard-matrices.md): square tables of plus and minus ones with perpendicular rows, possible only in sizes 1, 2 and multiples of 4, and the largest determinant such a table can have.
 - [Smoothing and square roots](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/12-rts-smoothing-and-square-root-filters.md): use tomorrow's readings, and keep the covariance honest.
 
-Gram-Schmidt builds its directions from whatever lines it is handed; which matrices arrive with such a basis already fitted is the spectral theorem's answer.
+Gram-Schmidt straightens any list of directions, and projection splits a point along them. How to fit a line to data that no line hits exactly is the question [Least squares](04-least-squares.md) answers next, by projecting onto a matrix's columns.
 
 ---
 

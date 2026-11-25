@@ -1,5 +1,5 @@
-// Projection -- the same check as the Python, in Rust.  No crates.  A rower pulls
-// with force (6, 2) while the boat points along (1, 1).  Road one is the formula.
+// Projection -- the same check as the Python, in Rust.  No crates.  A towrope pulls
+// a barge with force (6, 2), in hundreds of newtons; the canal runs along (1, 1).  Road one is the formula.
 // Road two never touches it: it fits the parabola through three squared distances
 // from the pull to the line and takes that parabola's lowest point.  The plane
 // case is done twice too, from two perpendicular pairs inside the same plane.

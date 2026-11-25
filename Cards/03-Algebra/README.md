@@ -98,7 +98,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 06 · Dot Products and Best Fits · 5 cards
 
-*The dot product, length and perpendicularity, projection onto a line and a plane, Gram-Schmidt and orthonormal bases, least squares as projection. Needs roots; the angle is named but trigonometry is not used.*
+*The dot product, length and perpendicularity, projection onto a line and a plane, Gram-Schmidt and orthonormal bases, least squares as projection, and the four fundamental subspaces. Needs roots; the angle is named but trigonometry is not used.*
 
 1. [The dot product: multiply matching entries and add, and one number gives length, perpendicularity and alignment](06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)
 2. [Projection: the shadow of one vector on another, and the leftover that is always perpendicular](06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md)

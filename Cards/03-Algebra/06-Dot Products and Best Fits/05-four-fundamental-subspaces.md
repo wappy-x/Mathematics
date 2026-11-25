@@ -67,7 +67,9 @@ A x = b \text{ has a solution exactly when } y \cdot b = 0 \text{ for every } y 
 
 **Read it aloud:** some real-number order produces a total exactly when it passes every check in the left null space.
 
-With rank $`r`$, $`n`$ inputs and $`m`$ outputs, the sizes are $`r`$ and $`n - r`$ on the input side, $`r`$ and $`m - r`$ on the output side. Here that is 1 + 1 = 2 and 1 + 2 = 3.
+The **rank** $`r`$ is the number of independent rows, always equal to the number of independent columns ([Rank and nullity](../05-Solving%20Systems/05-rank-nullity.md)). Elimination counts it: one per **pivot**, a row's surviving leading entry.
+
+With $`n`$ inputs and $`m`$ outputs, the sizes are $`r`$ and $`n - r`$ on the input side, $`r`$ and $`m - r`$ on the output side. The null space's size, $`n - r`$, is the **nullity**. Here that is 1 + 1 = 2 and 1 + 2 = 3.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -104,7 +106,9 @@ Take $`x`$ = (−2, 1): two fewer small batches, one more double. Each row dotte
 
 A dot product splits over sums and scalings: (row 1 + 2 × row 2) · x = row 1 · x + 2 × (row 2 · x). So a vector perpendicular to every row is perpendicular to every mix of rows. That is the whole row space.
 
-Every order splits into a row part, its projection onto the row space ([Projection](02-orthogonal-projection.md)), and a leftover perpendicular to every row, which Step 0 puts in the null space. The order (3, 1) is (1, 2) + (2, −1). The null part changes nothing, so (3, 1) and (1, 2) both use (5, 10, 15) kg. Two row parts never share a total: their difference, in both spaces, is perpendicular to itself, so zero.
+Every order splits into a row part, its projection onto the row space ([Projection](02-orthogonal-projection.md)), and a leftover perpendicular to every row, which Step 0 puts in the null space.
+
+The order (3, 1) is (1, 2) + (2, −1). The null part changes nothing, so (3, 1) and (1, 2) both use (5, 10, 15) kg. Two row parts never share a total: their difference, in both spaces, is perpendicular to itself, so zero.
 
 ### Step 2: the column space is perpendicular to the left null space
 
@@ -144,7 +148,7 @@ Steps 0 to 4, with Step 4 run on $`A^T`$ as well, say more: each subspace is eve
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| staircase of $`A`$ | rows 2 and 3 are 2 and 3 times row 1 | one pivot, rank **1** |
+| staircase of $`A`$: its rows after elimination | rows 2 and 3 are 2 and 3 times row 1 | one pivot, rank **1** |
 | row space | the surviving row | along (1, 2) |
 | null space | small = −2 × double, double = 1 | along (−2, 1) |
 | column space | the pivot column of $`A`$ | along (1, 2, 3) |
@@ -495,16 +499,6 @@ theorem ffs_row_space_iff_perp_null_space {m n : ℕ} (A : Matrix (Fin m) (Fin n
 theorem ffs_rank_transpose {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) : Aᵀ.rank = A.rank :=
   Matrix.rank_transpose A
 
-/-- Every linear functional on `Fin m → ℝ` is a dot product. -/
-theorem dual_apply_eq_dotProduct {m : ℕ} (φ : Module.Dual ℝ (Fin m → ℝ)) (b : Fin m → ℝ) :
-    φ b = (fun i => φ (Pi.single i 1)) ⬝ᵥ b := by
-  rw [LinearMap.pi_apply_eq_sum_univ φ b, dotProduct]
-  refine Finset.sum_congr rfl fun i _ => ?_
-  rw [smul_eq_mul, mul_comm]
-  congr 2
-  ext j
-  simp [Pi.single_apply, eq_comm]
-
 /-- The main claim: for every matrix of real numbers, every vector in the row space is at right
 angles to every vector in the null space, and every vector in the column space is at right angles
 to every vector in the left null space. -/
@@ -520,28 +514,6 @@ theorem row_space_perp_null_space_and_column_space_perp_left_null_space {m n : �
     rw [LinearMap.mem_ker, mulVecLin_apply] at hy
     rw [mulVecLin_apply, dotProduct_comm, dotProduct_mulVec, ← mulVec_transpose, hy,
       zero_dotProduct]
-
-/-- The solvability test: `A x = b` has a real solution exactly when `y ⬝ᵥ b = 0` for every
-check `y` with `Aᵀ y = 0`. -/
-theorem solvable_iff_passes_every_left_null_check {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ)
-    (b : Fin m → ℝ) :
-    (∃ x, A *ᵥ x = b) ↔ ∀ y, Aᵀ *ᵥ y = 0 → y ⬝ᵥ b = 0 := by
-  constructor
-  · rintro ⟨x, rfl⟩ y hy
-    rw [dotProduct_mulVec, ← mulVec_transpose, hy, zero_dotProduct]
-  · intro h
-    have hb : b ∈ LinearMap.range A.mulVecLin := by
-      rw [← Subspace.forall_mem_dualAnnihilator_apply_eq_zero_iff]
-      intro φ hφ
-      rw [Submodule.mem_dualAnnihilator] at hφ
-      rw [dual_apply_eq_dotProduct]
-      apply h
-      ext j
-      rw [mulVec_transpose, Pi.zero_apply, ← mul_one ((_ ᵥ* A) j), ← dotProduct_single,
-        ← dotProduct_mulVec, ← dual_apply_eq_dotProduct]
-      exact hφ _ ⟨Pi.single j 1, rfl⟩
-    obtain ⟨x, hx⟩ := hb
-    exact ⟨x, hx⟩
 
 /-- The sizes: with rank `r`, the row space and column space both have size `r`, the null space
 has size `n - r`, and the left null space has size `m - r`. -/
@@ -625,13 +597,11 @@ example : (![1, 2, 3] : Fin 3 → ℤ) ⬝ᵥ ![5, 10, 15] = 70 ∧ (2 : ℤ) - 
 #print axioms ffs_rank_transpose
 #print axioms ffs_bakery_two_checks
 #print axioms ffs_bakery_report_impossible
-#print axioms dual_apply_eq_dotProduct
 #print axioms row_space_perp_null_space_and_column_space_perp_left_null_space
-#print axioms solvable_iff_passes_every_left_null_check
 #print axioms four_subspace_sizes
 ```
 
-**Checked 2026-11-23 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'ffs_null_iff_perp_rows' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -647,9 +617,7 @@ example : (![1, 2, 3] : Fin 3 → ℤ) ⬝ᵥ ![5, 10, 15] = 70 ∧ (2 : ℤ) - 
 'ffs_rank_transpose' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ffs_bakery_two_checks' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ffs_bakery_report_impossible' depends on axioms: [propext, Classical.choice, Quot.sound]
-'dual_apply_eq_dotProduct' depends on axioms: [propext, Classical.choice, Quot.sound]
 'row_space_perp_null_space_and_column_space_perp_left_null_space' depends on axioms: [propext, Classical.choice, Quot.sound]
-'solvable_iff_passes_every_left_null_check' depends on axioms: [propext, Classical.choice, Quot.sound]
 'four_subspace_sizes' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
@@ -694,9 +662,10 @@ example : (![1, 2, 3] : Fin 3 → ℤ) ⬝ᵥ ![5, 10, 15] = 70 ∧ (2 : ℤ) - 
 
 ## Where this goes next
 
+- [Change of basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md): the same point and the same matrix written in new axes, opening the next shelf.
 - [The singular value decomposition](../07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md): the rank as the count of nonzero stretch factors, and the direction a rank-1 matrix flattens to zero.
 
-How to test a report that misses by a rounding error is the question this card leaves open.
+Here all four subspaces are written in the standard axes. How the same matrix looks in axes chosen to suit it is the question [Change of basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md) answers next.
 
 ---
 

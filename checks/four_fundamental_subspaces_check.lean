@@ -111,16 +111,6 @@ theorem ffs_row_space_iff_perp_null_space {m n : ℕ} (A : Matrix (Fin m) (Fin n
 theorem ffs_rank_transpose {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) : Aᵀ.rank = A.rank :=
   Matrix.rank_transpose A
 
-/-- Every linear functional on `Fin m → ℝ` is a dot product. -/
-theorem dual_apply_eq_dotProduct {m : ℕ} (φ : Module.Dual ℝ (Fin m → ℝ)) (b : Fin m → ℝ) :
-    φ b = (fun i => φ (Pi.single i 1)) ⬝ᵥ b := by
-  rw [LinearMap.pi_apply_eq_sum_univ φ b, dotProduct]
-  refine Finset.sum_congr rfl fun i _ => ?_
-  rw [smul_eq_mul, mul_comm]
-  congr 2
-  ext j
-  simp [Pi.single_apply, eq_comm]
-
 /-- The main claim: for every matrix of real numbers, every vector in the row space is at right
 angles to every vector in the null space, and every vector in the column space is at right angles
 to every vector in the left null space. -/
@@ -136,28 +126,6 @@ theorem row_space_perp_null_space_and_column_space_perp_left_null_space {m n : �
     rw [LinearMap.mem_ker, mulVecLin_apply] at hy
     rw [mulVecLin_apply, dotProduct_comm, dotProduct_mulVec, ← mulVec_transpose, hy,
       zero_dotProduct]
-
-/-- The solvability test: `A x = b` has a real solution exactly when `y ⬝ᵥ b = 0` for every
-check `y` with `Aᵀ y = 0`. -/
-theorem solvable_iff_passes_every_left_null_check {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ)
-    (b : Fin m → ℝ) :
-    (∃ x, A *ᵥ x = b) ↔ ∀ y, Aᵀ *ᵥ y = 0 → y ⬝ᵥ b = 0 := by
-  constructor
-  · rintro ⟨x, rfl⟩ y hy
-    rw [dotProduct_mulVec, ← mulVec_transpose, hy, zero_dotProduct]
-  · intro h
-    have hb : b ∈ LinearMap.range A.mulVecLin := by
-      rw [← Subspace.forall_mem_dualAnnihilator_apply_eq_zero_iff]
-      intro φ hφ
-      rw [Submodule.mem_dualAnnihilator] at hφ
-      rw [dual_apply_eq_dotProduct]
-      apply h
-      ext j
-      rw [mulVec_transpose, Pi.zero_apply, ← mul_one ((_ ᵥ* A) j), ← dotProduct_single,
-        ← dotProduct_mulVec, ← dual_apply_eq_dotProduct]
-      exact hφ _ ⟨Pi.single j 1, rfl⟩
-    obtain ⟨x, hx⟩ := hb
-    exact ⟨x, hx⟩
 
 /-- The sizes: with rank `r`, the row space and column space both have size `r`, the null space
 has size `n - r`, and the left null space has size `m - r`. -/
@@ -241,7 +209,5 @@ example : (![1, 2, 3] : Fin 3 → ℤ) ⬝ᵥ ![5, 10, 15] = 70 ∧ (2 : ℤ) - 
 #print axioms ffs_rank_transpose
 #print axioms ffs_bakery_two_checks
 #print axioms ffs_bakery_report_impossible
-#print axioms dual_apply_eq_dotProduct
 #print axioms row_space_perp_null_space_and_column_space_perp_left_null_space
-#print axioms solvable_iff_passes_every_left_null_check
 #print axioms four_subspace_sizes

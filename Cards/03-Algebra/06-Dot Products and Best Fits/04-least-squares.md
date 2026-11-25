@@ -42,7 +42,7 @@ Stack the left-hand sides into a matrix, one row per car: the age, then a 1. Cal
 
 `[[1, 1], [2, 1], [3, 1], [4, 1]]`
 
-The first column holds the ages; the second is all ones and carries the intercept, the price at age zero. The unknowns go in $`x`$ = (slope, intercept), the prices in $`b`$ = (20, 17, 13, 10). Multiplying $`A`$ by $`x`$ ([Matrix multiplication](../04-Matrices/03-matrix-multiplication.md)) rebuilds all four left-hand sides:
+The first column holds the ages; the second is all ones and carries the intercept, the price at age zero. The unknowns go in $`x`$ = (slope, intercept), the prices in $`b`$ = (20, 17, 13, 10). Multiplying $`A`$ by $`x`$ ([Matrix times vector](../04-Matrices/02-matrix-times-vector.md)) rebuilds all four left-hand sides:
 
 ```math
 A x = b
@@ -72,7 +72,7 @@ Every entry is a dot product ([The dot product](01-dot-product.md)): multiply ma
 
 ### When it holds
 
-- **The ages differ.** Equal ages make the columns copies. Then the determinant, the number whose zero means no unique answer, is zero: no single slope and intercept.
+- **The ages differ.** Equal ages make the ages column a multiple of the ones column. Then the determinant, the number whose zero means no unique answer, is zero: no single slope and intercept.
 - **A line is the right shape.** A curved pattern gets a best line that is still the wrong shape; a column for age squared fits the curve.
 - **Only the prices miss.** Ages count as known; sloppy ages tilt the slope, unreported.
 - **Every car counts the same, squared.** One cheap sale to a friend outweighs three ordinary cars nudging back.
@@ -661,7 +661,7 @@ example : Matrix.det !![(16 : ℚ), 8; 8, 4] = 0 := by norm_num [Matrix.det_fin_
 > Guess first, then run it; the asserts are pinned to the four cars.
 > - **Nudge the prices.** Set `PRICES` to `[21.0, 18.0, 12.0, 9.0]`: slope −4.2000, intercept 25.5000, squared miss 1.8000. Those prices bend more than a line can follow.
 > - **Give every car the same age.** Set `AGES` to `[2.0, 2.0, 2.0, 2.0]`: the determinant is zero, so Python stops on a division by zero and Rust returns NaN, "not a number".
-> - **Stop squaring.** In `squared_miss`, drop the square: the fitted line scores 0.0000, and so does the line whose squared miss is 13.0000.
+> - **Stop squaring.** In `squared_miss`, drop the square: the fitted line scores 0.0000 (printed as -0.0000, a rounding sign), and so does the -5.0 line, whose real squared miss is 13.0000. The assert pinned to 0.2 then stops the run.
 
 ---
 
@@ -691,25 +691,27 @@ example : Matrix.det !![(16 : ℚ), 8; 8, 4] = 0 := by norm_num [Matrix.det_fin_
 ## What this builds on
 
 - [Projection](02-orthogonal-projection.md): the shadow and its perpendicular leftover, here with two columns.
-- [Matrix multiplication](../04-Matrices/03-matrix-multiplication.md): how $`A x`$ turns two unknowns into four predictions.
+- [Matrix times vector](../04-Matrices/02-matrix-times-vector.md): how $`A x`$ turns two unknowns into four predictions.
+- [Matrix multiplication](../04-Matrices/03-matrix-multiplication.md): how $`A^T A`$ multiplies the flipped table by $`A`$.
 - [The inverse matrix](../05-Solving%20Systems/03-inverse-matrix.md): solving the small square system, and the determinant behind it.
 - [Percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): judging a miss. 0.3 on a car worth 13 is small; on a car worth 1 it is not.
 
 ## Where this goes next
 
-- [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md): the same line with noise assumed, so the slope gets an error bar.
+- [The four fundamental subspaces](05-four-fundamental-subspaces.md): where the shadow and the leftover live, the column space and the left null space, meeting at right angles.
+- [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md): the same line from covariance and variance, with R squared for how much of the spread it explains.
+- [Regression error bars](../../09-Probability%20and%20statistics/09-Regression/02-regression-inference.md): how far to trust a fitted slope such as −3.4.
 - [Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md): many columns, and why no unbiased rival beats this fit.
 - [L2 as a Hilbert space](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md): the same geometry with functions as the arrows.
 - [Conditional expectation as a projection](../../10-Measure%20and%20integration/09-Conditional%20Expectation/03-conditional-expectation-as-projection.md): a forecast as the shadow of a random quantity.
 - [The SVI smile](../../12-Financial%20mathematics/12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md): squared misses minimised against traded option prices.
-- [A spot price that reverts](../../12-Financial%20mathematics/25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md): a pull-back speed fitted from price history.
+- [A spot price that reverts](../../12-Financial%20mathematics/25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md): a pull-back speed and long-run level fitted to a strip of futures prices.
 - [Wiener and LMS](../../13-Engineering%20mathematics/05-Signals/07-adaptive-and-optimal-filters.md): these equations re-solved as each reading arrives.
 - [Least squares two ways](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/06-least-squares-normal-equations-versus-qr.md): why software never forms $`A^T A`$.
 - [Fitting instead of passing through](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/07-least-squares-and-orthogonal-polynomials.md): perpendicular columns, so curves fit without the small matrix.
-- [The four fundamental subspaces](05-four-fundamental-subspaces.md): every matrix splits its inputs into row space and null space, its outputs into column space and left null space, at right angles.
 - [ARX identification](../../13-Engineering%20mathematics/11-Models%20from%20Data/01-arx-models-and-least-squares-identification.md): fit a difference equation to logged data by least squares.
 
-Nothing here says how far to trust −3.4, and that question opens [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md).
+Here the prices split into a shadow among the columns and a leftover that $`A^T`$ sends to zero. Which outputs a matrix can reach at all, and which checks rule the rest out, is the question [The four fundamental subspaces](05-four-fundamental-subspaces.md) answers next.
 
 ---
 
