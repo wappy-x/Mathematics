@@ -12,7 +12,7 @@ Ask for it monthly. The bank cuts the 5% into twelve slices and pays one a month
 
 The stop is the interesting part. Paying more often is free money, and the free money runs out. Turn the dial up: one dollar at 100% for a year. Paid once, $2.000000. Twice, $2.250000. Monthly, $2.613035. Daily, $2.714567. A million times, $2.718280.
 
-**Cutting a year's interest into more and finer payments always earns more, but the total is capped by a fixed number, 2.718281828, called e.**
+**Cutting a year's interest into more and finer payments always earns more, but the total hits a ceiling. For $1 at 100% over one year, that ceiling is about 2.718281828, called e.**
 
 **What kind of fact this is:** e is a definition, the name of the ceiling. That more payments always earn more but never pass it is a theorem, shown in words in Why it works.
 
@@ -58,7 +58,7 @@ The same list with 0.05 in it, on $100:
 | the starting money | day-one balance | $1.00, then $100.00 | end rises in step |
 | the yearly rate | percent promised for a year | 100%, then 5% | higher ceiling |
 | the payments | how often interest lands | 1, 2, 12, 365 | more, by less each time |
-| one slice | rate divided by payments | 100% ÷ 12 | finer, and more |
+| one slice | rate divided by payments | 100% ÷ 12 | set by the two rows above |
 | the growth factor | what $1.00 becomes | 2.000000 to 2.718282 | runs into its own ceiling |
 | e | the ceiling at 100% | 2.718281828 | nothing moves it |
 
@@ -90,13 +90,15 @@ Write out what earns what over the year, at 100%.
 - 1 ÷ 6 — interest on *that*
 - 1 ÷ 24 — and so on
 
-Each term is the one before divided by the next counting number: halved, then a third, then a quarter. A list shrinking that fast has a finite total: 2.718282, which the ladder only ever reaches from below.
+Why those sizes: interest on interest starts only once the first interest arrives. Plain interest trickles in all year, so on average it earns for half the year: 1 ÷ 2. The next layer starts later and earns a third of that: 1 ÷ 6.
+
+Each term is the one before divided by the next counting number: halved, then a third, then a quarter. A list shrinking that fast has a finite total, about 2.718282. The ladder only ever approaches it from below, without passing it.
 
 ### The ceiling has a name
 
 To nine decimals it is 2.718281828, and it is called **e**: a fixed number, like pi, that does not shift with the rate or the money. "Compounded continuously" means the ceiling was reached.
 
-Put 0.05 in the list instead of 1 and the total comes out smaller: $100 ends at 105.127110, or $105.13 to the cent. Going backwards, from a balance to the time it took, needs the tool that undoes e: [Natural log and doubling time](05-natural-log-and-doubling-time.md).
+Going backwards, from a balance to the time it took, needs the tool that undoes e: [Natural log and doubling time](05-natural-log-and-doubling-time.md).
 
 ---
 
@@ -121,9 +123,9 @@ Just under thirteen cents, for compounding continuously instead of yearly.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Expecting a windfall from continuous | 105.13, against 105.00 | Just under thirteen cents |
-| Calling monthly continuous | 2.613035, not 2.718282 | Monthly is nowhere near it |
-| Forgetting the slices earn too | 2.000000 | Interest on interest is the mover |
+| Expecting a windfall from continuous ($100 at 5%) | 105.13, against 105.00 | Just under thirteen cents |
+| Calling monthly continuous ($1 at 100%) | 2.613035, not 2.718282 | Monthly is nowhere near it |
+| Forgetting the slices earn too ($1 at 100%) | 2.000000 | Interest on interest is the mover |
 
 ---
 
@@ -385,7 +387,7 @@ example : (1 : ℚ) / 2 / 3 = 1 / 6 ∧ (1 : ℚ) / 6 / 4 = 1 / 24 := by norm_nu
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Pay it ten million times.** Change the last 1000000 to 10000000. The row prints 2.718282, matching the ceiling row under it: arrived to six decimals, still not past.
+> - **Pay it ten million times.** In the `paid a million times` row, change 1000000 to 10000000. The row prints 2.718282, matching the ceiling row under it: arrived to six decimals, still not past.
 > - **Turn the dial down to 5%.** Change `ladder(1.0, n)` to `ladder(0.05, n)`. It runs from 1.050000 to 1.051271 — on $100, the 105.127110 already there.
 
 ---
@@ -393,7 +395,7 @@ example : (1 : ℚ) / 2 / 3 = 1 / 6 ∧ (1 : ℚ) / 6 / 4 = 1 / 24 := by norm_nu
 ## The usual mistake
 
 > [!warning]
-> **Thinking that paying more often keeps paying more.** One dollar at 100% for a year ends under 2.718282 whether the interest lands twice, daily or a million times. Past daily there is nothing left to buy.
+> **Thinking that paying more often lets the balance grow without limit.** One dollar at 100% for a year ends under 2.718282 whether the interest lands twice, daily or a million times. Past daily there is almost nothing left to buy.
 >
 > - Reading "5% compounded monthly" as 5% a month. It is a twelfth of that.
 > - Rounding e before multiplying. Round money at the end, to the nearest cent.
@@ -403,12 +405,12 @@ example : (1 : ℚ) / 2 / 3 = 1 / 6 ∧ (1 : ℚ) / 6 / 4 = 1 / 24 := by norm_nu
 
 ## Where you meet it in real life
 
-- **The two rates on a credit card offer.** APR (annual percentage rate) is the advertised one, APY (annual percentage yield) the one you pay. They differ because the charge lands monthly or daily.
+- **The two rates on a savings account.** The bank quotes a rate, cut into daily or monthly slices, and an APY (annual percentage yield): what a year of those slices actually earns.
 - **Anything that grows or decays on its own.** Populations, bacteria, a cooling room, a drug clearing your blood: nothing waits for a payment date, so e is how they are written.
 - **Moving money between dates.** Option and rate models compound continuously: one convention instead of many schedules. [Discounting](06-discounting-and-present-value.md).
 
 > **Say it back**
-> Interest paid more often earns a little more, because the early payments earn too. One dollar at 100% goes 2.000000 paid once, 2.250000 twice, 2.613035 monthly, 2.714567 daily. The gains shrink and stop at a ceiling: 2.718281828, called e. Reaching it is what "compounded continuously" means. On $100 at 5% that is $105.13 against $105.00.
+> Interest paid more often earns a little more, because the early payments earn too. One dollar at 100% goes 2.000000 paid once, 2.250000 twice, 2.613035 monthly, 2.714567 daily. The gains shrink and stop at a ceiling: about 2.718281828, called e. Reaching it is what "compounded continuously" means. On $100 at 5% that is $105.13 against $105.00.
 
 ---
 

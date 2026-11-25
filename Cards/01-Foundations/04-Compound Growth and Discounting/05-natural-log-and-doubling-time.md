@@ -12,7 +12,7 @@ Most people guess twelve and a half years: 8 goes into 100 that many times. The 
 
 Each year's 8% lands on a bigger balance than the last — compounding, from [Compound interest](03-compound-interest.md). Nine years is not nine slices of 8%; it is 1.08 multiplied by itself nine times. How many multiplies by 1.08 reach a double? Counting multiplies is what a logarithm does ([Logarithms](../03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
 
-The log used here is the **natural log**, written **ln**: the log whose base is e, from [Compounding more often, and the number e](04-compounding-frequency-and-e.md). Any base would do; ln is the one finance uses. The count runs in fractions: 2 is 0.693 of the way to e, 1.08 only 0.077 of the way.
+The log used here is the **natural log**, written **ln**: the log whose base is e, from [Compounding more often, and the number e](04-compounding-frequency-and-e.md). Any base would do; ln is the one finance uses. The count runs in fractions: 0.693 of a multiply by e takes 1 to 2, and 0.077 of one takes 1 to 1.08.
 
 **Doubling time is ln 2 divided by the log of the growth factor, and 72 divided by the rate is close enough to say out loud.**
 
@@ -48,8 +48,8 @@ The shortcut, in your head:
 
 | Piece | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| the growth factor | one year's multiplier, an 8% rise as a decimal | 1.08 | fewer years |
-| ln | the natural log: how many of e, multiplied, reach a number | ln 1.08 = 0.076961 | fewer years |
+| the growth factor | one year's multiplier: 1 plus the 8% rate | 1.08 | fewer years |
+| ln | the natural log: how many of e, multiplied, reach a number | ln 1.08 = 0.076961 | a fixed rule; ln of a bigger factor means fewer years |
 | ln 2 | that question asked of 2: one doubling | 0.693147 | it never moves |
 | years to double | time to reach twice the start | 9.006 | this is the output |
 | the rate in percent | the yearly rise, before it becomes a factor | 8 | fewer years |
@@ -349,8 +349,8 @@ example : (41577 / 200 : ℚ) ≤ 100 * (21 / 20) ^ 15 ∧ (100 : ℚ) * (21 / 2
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Ask for tripling.** Swap ln 2 for the log of 3. The years climb, and 72 goes quiet: its top number was built for a doubling.
-> - **Switch the compounding off.** Change `out *= factor` to `out += 0.08`, so the balance grows in flat slices. Doubling arrives at 12.5 years, the first mistake above, and the bracketing assert fires.
+> - **Ask for tripling.** Change `ln(2.0)` to `ln(3.0)`. The years climb to 14.275 at 8%, but 72 ÷ 8 still prints 9.000: 72 was built for doubling. The first assert fires.
+> - **Switch the compounding off.** Change `out *= factor` to `out += factor - 1`, so the balance grows in flat slices. Doubling arrives at 12.5 years, the first mistake above, and the bracketing assert fires.
 
 ---
 
@@ -368,7 +368,7 @@ example : (41577 / 200 : ℚ) ≤ 100 * (21 / 20) ^ 15 ∧ (100 : ℚ) * (21 / 2
 
 ## Where you meet it in real life
 
-- **Anything with a rate on it.** A savings account, a fund, an inflation figure: 72 over the rate turns a percentage into years. [Compound interest](03-compound-interest.md)
+- **Anything with a rate on it.** A savings account, a fund, an inflation figure: 72 over the rate turns a percentage into years ([Compound interest](03-compound-interest.md)).
 - **Growth in the news.** Users, prices, a waiting list, a disease: anything climbing by a steady percentage has a doubling time.
 - **Half-life, turned around.** A thing losing 10% a year halves in ln 0.5 ÷ ln 0.9 = 6.58 years: ln of a half over ln of the shrink factor.
 

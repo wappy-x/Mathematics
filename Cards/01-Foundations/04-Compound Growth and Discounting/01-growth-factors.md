@@ -52,7 +52,7 @@ Write the percent as a decimal — 25% is 0.25 ([Percentages](../01-Everyday%20A
 | chaining | the factors multiplied | 0.9375 |
 | the new amount | old amount times the factor | 80.00 × 0.9375 |
 
-**new amount = old amount × (1 + the change)**, and the change is negative for a cut.
+**new amount = old amount × the growth factor**: 1 + the change for a rise, 1 − the change for a cut.
 
 Above 1 is a rise, below 1 a cut, exactly 1 no change.
 
@@ -89,11 +89,12 @@ To undo a multiply, divide. 1 ÷ 1.25 = 0.80, a 20% cut: 100.00 × 0.80 = $80.00
 ### Step 4: half off, half on
 
 The second jacket, also $80.00: halved to $40.00, then up 50%, 40.00 × 1.50 = $60.00. As factors, 0.50 × 1.50 = 0.75, a 25% cut. Half off then half on loses a quarter, whatever the price.
+
 ---
 
 ## Worked numbers, by hand
 
-Dollars to two decimal places; every figure lands on an exact cent — the +0.5 in the code is a guard, never used here.
+Dollars to two decimal places; every figure lands on an exact cent, so no rounding is needed.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -378,7 +379,11 @@ example : (1 : ℚ) + 5 / 100 = 105 / 100 := by norm_num
 
 - [Simple interest](02-simple-interest.md): the same rate on the starting amount every year, adding in a straight line instead of multiplying.
 - [Compound interest](03-compound-interest.md): one growth factor applied over and over, where this chaining bends upward.
-- Then [Compounding more often, and the number e](04-compounding-frequency-and-e.md) splits a year's factor into pieces, [Natural log and doubling time](05-natural-log-and-doubling-time.md) counts how many double the money, and [Discounting](06-discounting-and-present-value.md) runs one backwards.
+- [Compounding more often, and the number e](04-compounding-frequency-and-e.md): splits a year's rate into smaller slices, and finds the ceiling on growth.
+- [Natural log and doubling time](05-natural-log-and-doubling-time.md): counts how many growth factors it takes to double the money.
+- [Discounting](06-discounting-and-present-value.md): runs a growth factor backwards, to price future money today.
+
+This card leaves one question open: what happens when a yearly percent is charged only on the starting amount, instead of chaining?
 
 ---
 

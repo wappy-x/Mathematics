@@ -54,14 +54,14 @@ If the rate compounds continuously ([Compounding more often, and the number e](0
 
 **$100.00 ÷ 1.051271 = $95.12, a discount factor of 0.951229**
 
-Finance writes that factor as e^-rT, said aloud as "e to the minus r T": r the rate, T the years waited. It is the 0.951229 on [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+Finance writes that factor as e^(−rT), said aloud as "e to the minus r T": r the rate, T the years waited. It is the factor shown rounded to 0.9512 on [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
 
 | Piece | Plain meaning | In our example | Push it up… |
 | --- | --- | --- | --- |
 | the payment | money promised, and its date | $100.00, in a year | today's value rises |
-| the rate | what money earns while you wait | 0.05, that is 5% | today's value drops |
+| the rate (r) | what money earns while you wait | 0.05, that is 5% | today's value drops |
 | the growth factor | a year forward, as a multiplier | 1.05 | today's value drops |
-| the wait | years waited, so how many divides | 1, then 10 | today's value drops |
+| the wait (T) | years waited, so how many divides | 1, then 10 | today's value drops |
 | the discount factor | today's price of $1.00 due then | 0.952381, then 0.613913 | today's value rises |
 | the present value | the payment in today's money | $95.24, then $61.39 | — |
 
@@ -116,7 +116,11 @@ At 5%, a dollar you wait ten years for is worth about three fifths of one now.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The payment is walked back a year at a time, one divide per year. The ten-year answer is checked twice more. First in whole numbers: 10,000 cents cut by twenty over twenty-one, ten times. 20 ÷ 21 is exactly 1 ÷ 1.05, so it is the same sum. Then by growing it forward again to $100.00. The continuous factor is built from a shrinking list, checked against that list run with a minus sign.
+Nothing is imported. The payment is walked back a year at a time, one divide per year.
+
+The ten-year answer is checked twice more. First in whole numbers: 10,000 cents cut by twenty over twenty-one, ten times. 20 ÷ 21 is exactly 1 ÷ 1.05, so it is the same sum. Then by growing it forward again to $100.00.
+
+The continuous factor is built from a shrinking list, checked against that list run with a minus sign.
 
 ### Python
 
@@ -402,7 +406,7 @@ example : (11973 / 2 : ℚ) ≤ 10000 * (95 / 100) ^ 10 ∧
 
 - **Cash now for money later.** A lottery lump sum, a settlement, an invoice sold early: the buyer quotes a present value, and their rate is the negotiation.
 - **Bond prices.** A bond is a set of dated payments, each discounted back and added up. Bigger rate, smaller factors — so bond prices fall as rates rise.
-- **Option prices.** A strike price is cash due at expiry, so it enters discounted: [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), same 5% and year, 0.951229 unchanged.
+- **Option prices.** A strike price is cash due at expiry, so it enters discounted: [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), same 5% and year, the same factor, shown there as 0.9512.
 
 > **Say it back**
 > Money later is worth less than money now, because money now could be in the bank earning. To price a promise, ask what deposit would grow into it: divide the payment by the growth factor once per year of waiting. At 5%, $100 due in a year is worth $95.24; in ten years, $61.39. The one-step multiplier is the discount factor: 0.952381, 0.613913, or 0.951229 continuously.
@@ -416,7 +420,12 @@ example : (11973 / 2 : ℚ) ≤ 10000 * (95 / 100) ^ 10 ∧
 
 ## Where this goes next
 
-- [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): an option price, where cash due at expiry is discounted by this same 0.951229.
+Foundations moves on to logic next. The money thread continues in Financial mathematics, which answers the question below.
+
+- [Statements and connectives](../05-Logic/01-statements-and-connectives.md): the next shelf of Foundations, where numbers give way to logic, starting with statements and truth tables.
+- [Discount factors](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): this card's discount factor, under every compounding convention.
+- [Bond price and yield](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/05-bonds-price-and-yield.md): a bond priced by discounting every coupon and the face value, then adding them up.
+- [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): an option price, where cash due at expiry is discounted by this same factor, shown there as 0.9512.
 
 Left open: a bond pays many dated amounts, not one. How do you price them all at once?
 

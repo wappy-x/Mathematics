@@ -53,7 +53,7 @@ The standard form, the one you will meet elsewhere: interest = principal × rate
 | the interest | the charge for use of the money, added up | $100.00 | rises in step with all three above |
 | the total to repay | principal plus interest | $600.00 | rises with all three above too |
 
-4% means four per hundred, which as a decimal is 0.04 — the move made on [Growth factors](01-growth-factors.md).
+4% means four per hundred, which as a decimal is 0.04 ([Percentages](../01-Everyday%20Arithmetic/10-percentages.md)).
 
 ### When it holds
 
@@ -371,7 +371,8 @@ example : (60832.5 : ℚ) ≤ 500 * (1 + 4 / 100) ^ 5 * 100 ∧
 
 ## What this builds on
 
-- [Growth factors](01-growth-factors.md): turning 4% into the decimal 0.04 you multiply by.
+- [Percentages](../01-Everyday%20Arithmetic/10-percentages.md): turning 4% into the decimal 0.04 you multiply by.
+- [Growth factors](01-growth-factors.md): the 1 + rate multiplier (1.04), which compound interest repeats and simple interest does not.
 - [Linear versus exponential growth](../03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md): the shape of equal steps, which is what this balance is.
 
 ## Where this goes next
