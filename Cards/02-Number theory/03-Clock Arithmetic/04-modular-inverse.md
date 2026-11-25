@@ -79,9 +79,11 @@ The 26s are whole alphabets: they vanish, leaving 7 × (−11) on 1. So −11 un
 
 ### Step 3: one inverse only, so cancelling is safe
 
-Two undoing numbers: their difference times 7 lands on 0, a whole run of alphabets. Multiply 7 × (−11) + 26 × 3 = 1 by that difference ([Bezout's identity](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/04-bezouts-identity.md)): the 26 term is a run of alphabets, and so is the 7 term, being 7 times the difference — so the difference is one too.
+Say two numbers both undo 7. Then their difference times 7 lands on 0, a whole run of alphabets.
 
-−11 and 15 are the same slot, one inverse. Cancelling is then safe: 7 times one letter equal to 7 times another means the letters are equal.
+Multiply 7 × (−11) + 26 × 3 = 1 by that difference ([Bezout's identity](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/04-bezouts-identity.md)). The 26 term is a run of alphabets. So is the 7 term, being 7 times the difference. So the difference is a run of alphabets too.
+
+−11 and 15 are the same slot, one inverse. That inverse makes cancelling safe. If 7 times one letter lands where 7 times another does, multiply both by 15: since 7 × 15 leaves 1, the letters are equal.
 
 A prime modulus opens another route: [Fermat's little theorem](../04-Powers%20on%20the%20Clock/02-fermats-little-theorem.md). 26 is not prime, so it is shut.
 
@@ -335,7 +337,7 @@ example : Nat.Coprime 5 26 ∧ 5 * 21 = 105 ∧ 5 * 21 ≡ 1 [MOD 26] := by norm
 > **Try changing**
 > Guess first.
 > - **Set the key to 5.** Also coprime to 26: it prints inverse 21, and 5 × 21 = 105 too, then a pinned assert fires, since 15 is written into it.
-> - **Set the key to 13.** Euclid stops after one line, so the walk back up has nothing to stand on: an IndexError, before the search runs.
+> - **Set the key to 13.** Euclid stops after one line, so the walk back up has nothing to stand on: an IndexError in Python, a panic in Rust, before the search runs.
 
 ---
 

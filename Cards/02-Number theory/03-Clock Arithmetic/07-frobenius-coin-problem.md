@@ -22,7 +22,7 @@ This is the **coin problem**; its answer is the **Frobenius number**.
 
 Sort amounts by remainder after dividing by 5: five rows, the buckets of [Residue classes](03-residue-classes.md). A row's doorstep is its first payable amount; adding 5s pays the rest of the row.
 
-| Remainder | Cannot be paid | Doorstep (the Apéry set of 5) |
+| Remainder | Cannot be paid | Doorstep |
 | --- | --- | --- |
 | 0 | none | 0 |
 | 1 | 1, 6, 11, 16 | 21 |
@@ -55,13 +55,14 @@ $`ab`$ means $`a \times b`$. The values must be coprime: no whole number above 1
 | $`n`$ | the amount to pay | 24 cents | above 23, always payable |
 | $`ab - a - b`$ | the largest amount that cannot be paid | 23 | — |
 | $`(a - 1)(b - 1)/2`$ | how many amounts cannot be paid | 12 | — |
-| $`c`$, $`z`$ | a third size, and its count | 20, beside 6 and 9 | a larger last gap |
+| $`c`$, $`z`$ | a third size, and its count | boxes of 20, beside 6 and 9 | no single rule |
 
 ### When it holds
 
 - **The values are coprime.** 6 and 9 make only multiples of 3, so the gaps never end.
+- **Both values 2 or more.** A 1-cent stamp pays everything.
 - **Counts are 0 or more.** Allow a stamp handed back and every amount works: 3 × 5 − 2 × 7 = 1.
-- **Exactly two sizes.** Three sizes have no such formula; 6, 9 and 20 stop at 43.
+- **Exactly two sizes.** Three sizes have no such formula; boxes of 6, 9 and 20 stop at 43.
 
 ---
 
@@ -102,9 +103,11 @@ $`\displaystyle 23 - n = 5 \times 7 - 5 - 7 - 5 x - 7 y = 5 (-1 - x) + 7 (4 - y)
 
 ### Step 5: three sizes, with and without negative counts
 
-With negative counts, $`a x + b y + c z = n`$ has whole-number answers exactly when the greatest common divisor (gcd) of the sizes divides $`n`$. Apply [Bezout's identity](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/04-bezouts-identity.md) twice: 6 × (−1) + 9 × 1 = 3, then 3 × 7 + 20 × (−1) = 1, so 6 × (−7) + 9 × 7 + 20 × (−1) = 1. Scaling by $`n`$ reaches any $`n`$. Conversely, the gcd divides every size, hence every mix: 6, 9 and 15 give only multiples of 3.
+With negative counts, $`a x + b y + c z = n`$ has whole-number answers exactly when the greatest common divisor (gcd) of the sizes divides $`n`$. Apply [Bezout's identity](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/04-bezouts-identity.md) twice: 6 × (−1) + 9 × 1 = 3, then 3 × 7 + 20 × (−1) = 1, so 6 × (−7) + 9 × 7 + 20 × (−1) = 1.
 
-With counts of 0 or more, rows by remainder after dividing by 6 still work: doorsteps from 9s and 20s are 0, 49, 20, 9, 40 and 29, so the last gap is 49 − 6 = 43. No formula like $`ab - a - b`$ exists for three sizes, but methods faster than search do.
+Scaling by $`n`$ reaches any $`n`$. Conversely, the gcd divides every size, hence every mix: 6, 9 and 15 give only multiples of 3.
+
+With counts of 0 or more, boxes of 6, 9 and 20 sort into rows by remainder on 6: doorsteps from 9s and 20s are 0, 49, 20, 9, 40 and 29, so the last gap is 49 − 6 = 43. No formula like $`ab - a - b`$ exists for three sizes, but methods faster than search do.
 
 ---
 
@@ -553,13 +556,17 @@ example : Int.gcd (Int.gcd 6 9) 20 = 1 ∧ Int.gcd (Int.gcd 6 9) 15 = 3 := by de
 
 ## What this builds on
 
+- [Residue classes](03-residue-classes.md): the five remainder rows, each opened by its doorstep.
 - [Bezout's identity](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/04-bezouts-identity.md): any multiple of the gcd is a mix; twice, it settles three sizes.
 - [Solving a x ≡ b (mod n)](05-linear-congruences.md): one count of 7s from 0 to 4 lands in each row.
 - [Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md): no shared factor above 1, which makes the gaps end.
 
 ## Where this goes next
 
-Left open: as the number of sizes grows, can the largest gap still be found quickly?
+- [Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): the next shelf starts here, turning from sums of multiples to multiplying a number by itself many times on a clock.
+- [Pseudo-polynomial time](../../24-Computability%20and%20complexity/03-Time%20Complexity/06-pseudo-polynomial-time-and-numbers-in-the-input.md): why this card's upward search is fast only for small sizes.
+
+Left open: as the number of sizes grows, can the largest gap still be found quickly? This shelf ends here, so that question points off it; the next shelf turns to powers.
 
 ---
 

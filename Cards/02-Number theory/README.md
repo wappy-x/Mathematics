@@ -59,7 +59,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 03 · Clock Arithmetic · 7 cards
 
-*Congruence, adding and multiplying remainders, the n remainder buckets, inverses, solving a x = b on the clock, the Chinese remainder theorem. Needs negatives; no exponents.*
+*Congruence, adding and multiplying remainders, the n remainder buckets, inverses, solving a x = b on the clock, the Chinese remainder theorem, and the coin problem. Needs negatives; no exponents.*
 
 1. [Congruence: two numbers count as the same when they leave the same remainder, written a ≡ b (mod n)](03-Clock%20Arithmetic/01-congruence-mod-n.md)
 2. [Adding and multiplying on the clock: reduce before or after, the answer agrees](03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)

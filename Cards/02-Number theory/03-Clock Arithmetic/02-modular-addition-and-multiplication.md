@@ -6,7 +6,7 @@
 
 ## General Overview
 
-A market stall works your order out by hand on the receipt: 47 boxes at 23 cents, written 47 × 23 = 1,081. You are not redoing that multiplication at the counter.
+A hardware counter works your order out by hand on the receipt: 47 bolts at 23 cents each, written 47 × 23 = 1,081 cents. You are not redoing that multiplication at the counter.
 
 Add the digits instead. 47 gives 4 + 7 = 11, then 1 + 1 = 2. 23 gives 5. Multiply those: 2 × 5 = 10, then 1. Now the receipt's answer: 1 + 0 + 8 + 1 = 10, then 1.
 
@@ -138,13 +138,13 @@ row("a slipped 1061 is caught, not 1", cast_out(1061))
 row("1061 by taking 9s away, 8 again", take_nines_away(1061))
 row("3 x 4 = 12 and 3 x 1 = 3 both leave", cast_out(3 * 4))
 assert cast_out(47) == 2 and cast_out(23) == 5 and cast_out(2 * 5) == 1 and 47 * 23 == 1081
-assert cast_out(1081) == 1 and take_nines_away(1081) == 1 and cast_out(3 * 4) == 3
+assert cast_out(1081) == 1 and take_nines_away(1081) == 1 and cast_out(3 * 4) == 3 and cast_out(3 * 1) == 3
 assert cast_out(47 + 23) == 7 and cast_out(2 + 5) == 7 and cast_out(1801) == 1 and cast_out(1061) == 8
 assert take_nines_away(1061) == 8 and cast_out(9) == 0 and cast_out(18) == 0
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 47 by digit sums                               2
@@ -196,14 +196,14 @@ fn main() {
     row("1061 by taking 9s away, 8 again", take_nines_away(1061));
     row("3 x 4 = 12 and 3 x 1 = 3 both leave", cast_out(3 * 4));
     assert!(cast_out(47) == 2 && cast_out(23) == 5 && cast_out(2 * 5) == 1 && 47 * 23 == 1081);
-    assert!(cast_out(1081) == 1 && take_nines_away(1081) == 1 && cast_out(3 * 4) == 3);
+    assert!(cast_out(1081) == 1 && take_nines_away(1081) == 1 && cast_out(3 * 4) == 3 && cast_out(3 * 1) == 3);
     assert!(cast_out(47 + 23) == 7 && cast_out(2 + 5) == 7 && cast_out(1801) == 1 && cast_out(1061) == 8);
     assert!(take_nines_away(1061) == 8 && cast_out(9) == 0 && cast_out(18) == 0);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 47 by digit sums                               2
@@ -224,7 +224,7 @@ The two outputs match line for line: whole numbers, nothing to round.
 
 ### Lean
 
-Lean proves the rule on every clock, for every pair of whole numbers, not just the receipt.
+Lean proves the rule on every clock, for every pair of whole numbers 0 or more, not just the receipt. Negative numbers are left out; [Residue classes](03-residue-classes.md) proves the same rule with them.
 
 - Reduce two numbers first, then add or multiply and reduce: you land on the same remainder as reducing at the end.
 - If two numbers leave the same remainders as two others on one clock, their sums match, and so do their products.
@@ -315,7 +315,7 @@ example : 47 * 24 = 1128 ∧ 1128 % 9 = 3 := by decide
 > **Try changing**
 > Guess first, then run it.
 > - **Break the receipt.** Change every `47 * 23` to `47 * 24`. That is 1,128, which reduces to 3, not 1, and an assert fires.
-> - **Move the clock.** In the second road, swap both 9s for 10s. It returns the last digit now: 1 for 1,081, right by luck, and 1 for 1,061, where the answer is 8. The assert fires. Digit sums are a 9 trick, not a 10 trick.
+> - **Move the clock.** In the second road, swap both 9s for 10s. It returns the last digit now: 1 for 1,081, right by luck, and 1 for 1,061, where the assert expects 8, the remainder on the 9-clock. The assert fires. Digit sums are a 9 trick, not a 10 trick.
 
 ---
 
@@ -344,17 +344,18 @@ example : 47 * 24 = 1128 ∧ 1128 % 9 = 3 := by decide
 ## What this builds on
 
 - [Congruence](01-congruence-mod-n.md): what a remainder on a clock is, and what "leaves the same remainder as" means.
+- [Place value](../../01-Foundations/01-Everyday%20Arithmetic/01-place-value.md): reading a number by its ones, tens, hundreds and thousands columns, which Step 3 uses to explain digit sums.
 - [The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md): reordering and regrouping a sum or a product, which Steps 1 and 2 lean on.
 
 ## Where this goes next
 
 - [Residue classes](03-residue-classes.md): the remainders as numbers in their own right, with their own small tables.
 - [Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): multiplying on the clock over and over, so huge powers stay small.
-- [Barcode check digits](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/01-barcode-check-digit.md): this check, built into every barcode.
+- [Barcode check digits](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/01-barcode-check-digit.md): the same remainder idea with a weighted digit sum on a 10-clock, built into every barcode.
 - [Day of the week for any date](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md): the 7-hour clock, and what day a date lands on.
-- [Finding a pattern in text](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/11-string-matching-kmp-and-rabin-karp.md): never re-read a character, or compare fingerprints.
+- [Finding a pattern in text](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/11-string-matching-kmp-and-rabin-karp.md): Rabin–Karp's fingerprint is a sum of products taken on a prime clock, and reducing at every step keeps it small.
 
-This card leaves division open: when can you divide on the clock? [The modular inverse](04-modular-inverse.md) answers it.
+This card leaves division open: when can you divide on the clock? [Residue classes](03-residue-classes.md) comes first. It treats the remainders as numbers in their own right, and finds a clock where two non-zero ones multiply to 0. [The modular inverse](04-modular-inverse.md) then answers the question.
 
 ---
 

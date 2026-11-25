@@ -63,11 +63,11 @@ Divide by 12 and exactly one remainder from 0 to 11 comes back ([Division with a
 
 ### Step 1: which member you pick does not matter
 
-Play the G above middle C, 19 semitones up, not 7, and stack it again: 19 + 19 = 38, octaves off, leaves 2. D again.
+Play the G an octave higher, 19 semitones above middle C, not 7, and stack it again: 19 + 19 = 38, octaves off, leaves 2. D again.
 
 [Adding and multiplying on the clock](02-modular-addition-and-multiplication.md) showed that reducing before or after agrees, so the bucket you land in never depends on the members picked — the licence to add buckets rather than numbers.
 
-**Residue classes**, the name from line one, and the set of all n is **Z mod n** — on the piano, Z mod 12. (A set adding and multiplying this well is a **ring** — wing 03 takes that apart.)
+**Residue classes**, the name from line one, and the set of all n is **Z mod n** — on the piano, Z mod 12. (A set adding and multiplying this well is a **ring** — [Rings](../../03-Algebra/09-Rings%20and%20Fields/01-rings.md) takes that apart.)
 
 ### Step 2: out of 6 — six buckets, mod 6 — two non-zero ones multiply to zero
 
@@ -359,7 +359,7 @@ example : (2 * 3 : ZMod 6) = 2 * 0 ∧ (3 : ZMod 6) ≠ 0 := by decide
 > **Try changing**
 > Guess first, then run. The asserts are pinned to the house numbers, so the first change fires one.
 > - **Walk by 6 semitones, not 7.** Change `walk(7, 12)` to `walk(6, 12)`: a tritone comes home after two buckets, 0 and 6.
-> - **Count the zero pairs out of 7.** Change both `zero_pairs(6)` calls in the last print to `zero_pairs(7)` — the label still reads mod 6. Seven is prime, so the count prints 0, as out of 5. Nothing fires: the asserts keep their own 6.
+> - **Count the zero pairs out of 7.** In Python, change both `zero_pairs(6)` calls in the last print to `zero_pairs(7)` — the label still reads mod 6. Seven is prime, so the count prints 0, as out of 5. Nothing fires: the asserts keep their own 6. In Rust the print and the assert share `z6`, so changing it there fires the assert.
 
 ---
 
@@ -388,10 +388,11 @@ example : (2 * 3 : ZMod 6) = 2 * 0 ∧ (3 : ZMod 6) ≠ 0 := by decide
 
 - [Adding and multiplying on the clock](02-modular-addition-and-multiplication.md): reducing before or after agrees — what lets a bucket be added and multiplied, not just a number.
 - [Equivalence relations and partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md): cutting a set into non-overlapping bunches, the general idea; these buckets come from [Division with a remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md).
+- [Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md): if a prime divides a product it divides one factor, which is why out of 5 no two non-zero buckets multiply to 0.
 
 ## Where this goes next
 
-- [The modular inverse](04-modular-inverse.md): which buckets you may divide by, and why bucket 2 fails out of 6.
+- [The modular inverse](04-modular-inverse.md): which buckets you may divide by, and the coprime rule behind why bucket 2 fails out of 6.
 - [Euler's totient](../04-Powers%20on%20the%20Clock/03-eulers-totient.md): counting the buckets that have an undo.
 
 Left open: out of 6, nothing undoes bucket 2; which buckets can be undone, for any n?

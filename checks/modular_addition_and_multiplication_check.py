@@ -23,7 +23,7 @@ row("a slipped 1061 is caught, not 1", cast_out(1061))
 row("1061 by taking 9s away, 8 again", take_nines_away(1061))
 row("3 x 4 = 12 and 3 x 1 = 3 both leave", cast_out(3 * 4))
 assert cast_out(47) == 2 and cast_out(23) == 5 and cast_out(2 * 5) == 1 and 47 * 23 == 1081
-assert cast_out(1081) == 1 and take_nines_away(1081) == 1 and cast_out(3 * 4) == 3
+assert cast_out(1081) == 1 and take_nines_away(1081) == 1 and cast_out(3 * 4) == 3 and cast_out(3 * 1) == 3
 assert cast_out(47 + 23) == 7 and cast_out(2 + 5) == 7 and cast_out(1801) == 1 and cast_out(1061) == 8
 assert take_nines_away(1061) == 8 and cast_out(9) == 0 and cast_out(18) == 0
 print("ALL CHECKS PASS")

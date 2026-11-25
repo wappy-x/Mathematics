@@ -14,7 +14,7 @@ Count up. Cleaning alone allows day 2, day 5, day 8, on for ever. Deliveries all
 
 The rotas line up again only after 3 × 5 × 7 = 105 days. So the answer is not a date but a day of a 105-day cycle: 23, then 128.
 
-**Cycle lengths sharing no factor act as independent dials: the three day numbers pin down one day in 105, and that day can be built rather than hunted for.**
+**Cycle lengths sharing no factor above 1 act as independent dials: the three day numbers pin down one day in 105, and that day can be built rather than hunted for.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works.
 
@@ -49,7 +49,7 @@ Building it takes two folds, one modular inverse each. The first turns the 3-day
 | --- | --- | --- |
 | the cycle length (the modulus) | days before repeating | 3, 5, 7 |
 | the day number (the remainder) | where a cycle stands | 2, 3, 2 |
-| coprime | no two lengths share a factor | 3, 5, 7 do not |
+| coprime | no two lengths share a factor above 1 | 3, 5, 7 do not |
 | the combined cycle | the lengths multiplied | 105 |
 | the inverse | what undoes a multiplier | 2 undoes 3 on the 5-cycle |
 
@@ -79,7 +79,9 @@ A 15-cycle and a 7-cycle now, again sharing no factor. Each 15 pushes the week o
 
 ### Step 3: why exactly one day fits
 
-Say two days both fit. Their difference is a whole number of 3s, of 5s and of 7s. Divisible by 3 and by 5, which share no factor, means divisible by 15 — for coprime lengths the smallest number both divide is their product ([Least common multiple](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/02-lcm.md)). Again with the 7: divisible by 105. So the two are one day of the 105-day cycle. And 105 days give 105 readings, no two alike, so every reading has its day.
+Say two days both fit. Their difference is a whole number of 3s, of 5s and of 7s. Divisible by 3 and by 5, which share no factor, means divisible by 15 — for coprime lengths the smallest number both divide is their product ([Least common multiple](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/02-lcm.md)).
+
+Again with the 7: divisible by 105. So the two are one day of the 105-day cycle. And 105 days give 105 readings, no two alike, so every reading has its day.
 
 ---
 
@@ -394,7 +396,7 @@ example : (List.range 105).filter (fun d => d % 3 = 2 ∧ d % 5 = 3 ∧ d % 7 = 
 ## Where you meet it in real life
 
 - **Rotas and calendars.** Any "where is every cycle at once" question: shifts, bin collections, a payday against a billing date.
-- **Big arithmetic done small.** A sum on one huge clock is split across two smaller coprime ones, done separately, then folded back. It is why bank-grade encryption is fast enough to use.
+- **Big arithmetic done small.** A sum on one huge clock is split across two smaller coprime ones, done separately, then folded back. RSA decryption software does this to run about four times faster.
 - **Checking a serial number.** Hold a number as remainders on small coprime clocks: a bad digit shows as one board disagreeing.
 
 > **Say it back**
@@ -411,13 +413,14 @@ example : (List.range 105).filter (fun d => d % 3 = 2 ∧ d % 5 = 3 ∧ d % 7 = 
 
 ## Where this goes next
 
+- [The coin problem](07-frobenius-coin-problem.md): the next card on this shelf sorts amounts into remainder rows again, to find which ones two coprime stamp values can pay.
 - [When cycles meet again](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/04-cycles-that-realign.md): cycles that do share factors, and the line-ups that never happen.
-- [Which clocks have a primitive root](../04-Powers%20on%20the%20Clock/09-primitive-roots-mod-prime-powers.md): lifting from 7 to 49 to every power of 7, and why the 8-clock and 15-clock have none.
-- [Carmichael's function](../04-Powers%20on%20the%20Clock/11-carmichael-function.md): the smallest power that sends every coprime number home, often far below Euler's count.
-- [Square roots on a prime clock](../06-Codes%20and%20Secrets/06-square-roots-mod-p.md): a one-line formula when p is 3 mod 4, and Tonelli-Shanks for the rest.
-- [Fourier analysis on a finite abelian group](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/01-fourier-analysis-on-finite-abelian-groups.md): characters as the waves, and the transform on bit strings.
+- [Which clocks have a primitive root](../04-Powers%20on%20the%20Clock/09-primitive-roots-mod-prime-powers.md): this theorem splits the 15-clock into a 3-clock and a 5-clock, which is why it has no primitive root.
+- [Carmichael's function](../04-Powers%20on%20the%20Clock/11-carmichael-function.md): this theorem splits the 561-clock into 3-, 11- and 17-clocks, so the return time is the lcm of theirs.
+- [Square roots on a prime clock](../06-Codes%20and%20Secrets/06-square-roots-mod-p.md): this theorem pairs square roots on the 7-clock and the 11-clock into four roots on the 77-clock.
+- [Fourier analysis on a finite abelian group](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/01-fourier-analysis-on-finite-abelian-groups.md): this theorem splits the 12-hour clock into a 4-clock and a 3-clock, so its waves split too and the transform needs fewer products.
 
-This card leaves one question open: when the lengths do share a factor, which readings can still happen, and how often do they come round?
+This card leaves one question open: when the lengths do share a factor, which readings can still happen, and how often do they come round? [When cycles meet again](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/04-cycles-that-realign.md) answers it on shelf 05. The next card on this shelf, [The coin problem](07-frobenius-coin-problem.md), stays with coprime numbers and asks a different question: which amounts can be paid.
 
 ---
 
