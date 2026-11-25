@@ -88,7 +88,7 @@ A rigid motion keeps those distances, so where O, X and Y go fixes where every p
 
 ### Step 1: one flip can carry any point to any other
 
-The **perpendicular bisector** of two points is the line of points equally far from both: it crosses the segment between them at its midpoint, at a right angle ([Lines](../04-Coordinates%20and%20Curves/02-lines-slopes-and-intersections.md)). The flip in that line swaps the two points. In the formula, $`n`$ points from the first point to the second, and $`c`$ is $`n`$ dotted with the midpoint.
+The **perpendicular bisector** of two points is the line of points equally far from both: it crosses the segment between them at its midpoint, at a right angle ([Lines](../04-Coordinates%20and%20Curves/02-lines-slopes-and-intersections.md)). The flip in that line swaps the two points. For two different points, $`n`$ is the unit arrow (length 1) pointing from the first to the second, and $`c`$ is $`n`$ dotted with their midpoint.
 
 ### Step 2: match the anchors one at a time
 
@@ -152,7 +152,12 @@ On the quarter turn the recipe finds x − y = 0 and x = 0, crossing at 45°: a 
 
 ## Code, from first principles, and it actually runs
 
-The script builds four moves from mirrors: the quarter turn, the slide, a flip in y = x, and the glide. Two independent roads name each one. Road one reads the matrix: determinant, then the fixed point by Cramer's rule (solving two equations with determinants), or the slide along the mirror. Road two runs the recipe of Step 2 and names the kind from its mirrors alone: how many, crossing or parallel, and the angle or gap. The asserts check that the roads agree, that the fixed point stays put, that the flips match the move at 121 grid points, and the formulas (x + 2, −y) and (−y, x).
+The script builds four moves from mirrors: the quarter turn, the slide, a flip in y = x, and the glide. Two independent roads name each one:
+
+- **Road one** reads the matrix: determinant, then the fixed point by Cramer's rule (solving two equations with determinants), or the slide along the mirror.
+- **Road two** runs the recipe of Step 2 and names the kind from its mirrors alone: how many, crossing or parallel, and the angle or gap.
+
+The asserts check that the roads agree, that the fixed point stays put, that the flips match the move at 121 grid points, and the formulas (x + 2, −y) and (−y, x).
 
 ### Python
 
@@ -174,14 +179,14 @@ def line(n, c):
     s = n[0] if abs(n[0]) > 1e-9 else n[1]; w = lambda k: "" if abs(abs(k / s) - 1) < 1e-9 else num(abs(k / s))
     terms = [("-" if k / s < 0 else "+", w(k) + v) for k, v in ((n[0], "x"), (n[1], "y")) if abs(k) > 1e-9]
     return terms[0][1] + "".join(f" {g} {v}" for g, v in terms[1:]) + f" = {num(c / s)}"
-def say(kind, size): return {"rotation": f"rotation by {num(size)} degrees", "translation": f"translation by {num(size)}",
+def say(kind, size): return {"identity": "identity", "rotation": f"rotation by {num(size)} degrees", "translation": f"translation by {num(size)}",
                              "reflection": "reflection", "glide reflection": f"glide reflection, slide {num(size)}"}[kind]
 def road1(f):                        # from the matrix and the fixed points
     ((a, b), (c, d)), t = f
-    if a * d - b * c > 0 and abs(a - 1) + abs(c) < 1e-9: return "translation", dist(t, (0, 0)), "det +1, no fixed point"
+    if a * d - b * c > 0 and abs(a - 1) + abs(c) < 1e-9: return ("identity", 0, "det +1, every point fixed") if dist(t, (0, 0)) < 1e-9 else ("translation", dist(t, (0, 0)), "det +1, no fixed point")
     if a * d - b * c > 0:            # solve (I - A) p = t by Cramer's rule
         D = (1 - a) * (1 - d) - b * c; fix = ((t[0] * (1 - d) + b * t[1]) / D, ((1 - a) * t[1] + c * t[0]) / D); assert dist(go(f, fix), fix) < 1e-9
-        return "rotation", degrees(atan2(c, a)), f"det +1, one fixed point {pt(fix)}"
+        return "rotation", abs(degrees(atan2(c, a))), f"det +1, one fixed point {pt(fix)}"
     u = (1 + a, c) if abs(1 + a) + abs(c) > 1e-9 else (b, 1 + d)   # a column of I + A: along the mirror
     s = abs(t[0] * u[0] + t[1] * u[1]) / dist(u, (0, 0))
     return ("reflection", 0, "det -1, a whole line fixed") if s < 1e-9 else ("glide reflection", s, "det -1, no fixed point")
@@ -219,7 +224,7 @@ print("figure, O X Y after 0 to 3 recipe mirrors, drawn at (45 + 60x, 110 - 60y)
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-11-23 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 quarter turn: mirrors y = 0, x - y = 0; A = [[0, -1], [1, 0]], t = (0, 0)
@@ -271,15 +276,15 @@ fn line(m: &Mirror) -> String {
     format!("{}{} = {}", terms[0].1, rest, num(c / s))
 }
 fn lines(ms: &[Mirror]) -> String { ms.iter().map(line).collect::<Vec<_>>().join(", ") }
-fn say(kind: &str, size: f64) -> String { match kind { "rotation" => format!("rotation by {} degrees", num(size)),
+fn say(kind: &str, size: f64) -> String { match kind { "identity" => "identity".to_string(), "rotation" => format!("rotation by {} degrees", num(size)),
     "translation" => format!("translation by {}", num(size)), "reflection" => "reflection".to_string(), _ => format!("glide reflection, slide {}", num(size)) } }
 fn road1(f: &Iso) -> (&'static str, f64, String) {   // from the matrix and the fixed points
     let ([[a, b], [c, d]], t) = *f;
-    if a * d - b * c > 0.0 && (a - 1.0).abs() + c.abs() < 1e-9 { return ("translation", dist(t, [0.0, 0.0]), "det +1, no fixed point".into()); }
+    if a * d - b * c > 0.0 && (a - 1.0).abs() + c.abs() < 1e-9 { return if dist(t, [0.0, 0.0]) < 1e-9 { ("identity", 0.0, "det +1, every point fixed".into()) } else { ("translation", dist(t, [0.0, 0.0]), "det +1, no fixed point".into()) }; }
     if a * d - b * c > 0.0 {                       // solve (I - A) p = t by Cramer's rule
         let dd = (1.0 - a) * (1.0 - d) - b * c;
         let fix = [(t[0] * (1.0 - d) + b * t[1]) / dd, ((1.0 - a) * t[1] + c * t[0]) / dd]; assert!(dist(go(f, fix), fix) < 1e-9);
-        return ("rotation", c.atan2(a).to_degrees(), format!("det +1, one fixed point {}", pt(fix)));
+        return ("rotation", c.atan2(a).to_degrees().abs(), format!("det +1, one fixed point {}", pt(fix)));
     }
     let u = if (1.0 + a).abs() + c.abs() > 1e-9 { [1.0 + a, c] } else { [b, 1.0 + d] };  // a column of I + A
     let s = (t[0] * u[0] + t[1] * u[1]).abs() / dist(u, [0.0, 0.0]);
@@ -327,7 +332,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-11-23 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 quarter turn: mirrors y = 0, x - y = 0; A = [[0, -1], [1, 0]], t = (0, 0)
@@ -746,7 +751,7 @@ example : (!![0, 1; 1, 0] * !![1, 0; 0, -1] : Matrix (Fin 2) (Fin 2) ℤ) = !![0
 - [Rigid motions in space](09-rigid-motions-in-space-and-screws.md): mirrors become planes, up to four flips, and every move without a mirror is a screw: a turn plus a slide along its axis.
 - [Symmetry](../06-Beyond%20Euclid/04-symmetry-and-tilings.md): which of the four kinds a pattern can have, and the counts of border and wallpaper patterns.
 
-Left open: when measured points keep distances only roughly, which rigid motion fits them best?
+In the flat plane, at most three mirror lines build every rigid motion. What happens in three-dimensional space, where mirrors become planes and every proper rigid motion turns into a screw, is [Rigid motions in space](09-rigid-motions-in-space-and-screws.md).
 
 ---
 

@@ -64,7 +64,7 @@ When the cross-ratio is −1, the four points are a **harmonic set**, and D is t
 | $`A`$, $`B`$, $`C`$, $`D`$ | four points on one line, as positions along it | sleepers 4, 5, 6, 7 m | move D farther: the value climbs toward 2 |
 | $`(A,B;C,D)`$ | the cross-ratio of the four points, in that order | 4/3 = 1.333333 | — |
 | $`Z`$ | distance ahead of the camera, metres | 4 to 7 m | the photo height shrinks toward the horizon |
-| $`u`$, $`y`$ | photo position: $`u`$ across from centre, $`y`$ focal lengths below the horizon | sleeper 4: $`y`$ = 0.25 | — |
+| $`u`$, $`y`$ | photo position: $`u`$ across from centre, $`y`$ focal lengths below the photo centre (the horizon when level) | sleeper 4: $`y`$ = 0.25 | — |
 | $`f`$; $`p`$, $`q`$, $`r`$, $`s`$ | a projective map of the line, and its four numbers | $`f(Z) = 1/Z`$: 0, 1, 1, 0 | — |
 | $`ps - qr`$; $`t`$ | nonzero, or the line collapses to a point; $`t = \tan 10°`$, the tilt | −1 level; −1.031091 tipped | — |
 | $`k`$, $`x`$ | a cross-ratio read off a photo, and the unknown position it fixes | 4/3 and 7 m | larger $`k`$: farther $`x`$ |
@@ -127,7 +127,7 @@ Set the ground's cross-ratio, with an unknown fourth point x, equal to the photo
 x = \frac{(C-A)B - k(C-B)A}{(C-A) - k(C-B)}
 ```
 
-With A = 4, B = 5, C = 6 and k = 4/3: x = (10 − 16/3)/(2 − 4/3) = (14/3)/(2/3) = 7 m. The tipped photo gives the same k, so the same 7 m.
+When the denominator is 0, the fourth point sits at infinity. With A = 4, B = 5, C = 6 and k = 4/3: x = (10 − 16/3)/(2 − 4/3) = (14/3)/(2/3) = 7 m. The tipped photo gives the same k, so the same 7 m.
 
 A projective map that leaves three points in place solves px + q = x(rx + s) three times: a quadratic with three roots. So r = 0, q = 0 and p = s, and the map moves nothing. Two maps that agree on three points are then equal: one undone after the other fixes all three.
 
@@ -140,7 +140,7 @@ Solved for the middle image, it gives 2AB/(A + B), the **harmonic mean** of the 
 A ruler finds the conjugate with no measuring. In the photo A, B and C sit on the centre line u = 0 at 0.25, 0.166667 and 0.2.
 
 1. Pick any point P off the line, here (1, 0.1). Draw lines PA, PB and PC.
-2. Pick any point Q on PC, here halfway: (0.5, 0.15).
+2. Pick any point Q on line PC other than P and C, here halfway: (0.5, 0.15).
 3. Let R be where AQ meets PB: (0.625, 0.125). Let S be where BQ meets PA: (0.714286, 0.142857).
 4. Line RS meets the line u = 0 at D: (0, 0), the horizon.
 
@@ -583,9 +583,10 @@ example : ((1 / 4 + 1 / 6) / 2 : ℝ) = 5 / 24 ∧ (2 / (1 / 4 + 1 / 6) : ℝ) =
 
 ## Where this goes next
 
+- [Every rigid motion of the plane is at most three mirror flips, so there are only four kinds](08-plane-isometries-and-three-reflections.md): stepping back from perspective maps to moves of the plane that keep every distance unchanged.
 - [Mobius transformations](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/02-mobius-transformations-and-the-point-at-infinity.md): the same map (az + b)/(cz + d) on complex numbers, which keeps the complex cross-ratio and sends any three points to any three.
 
-Three points fix a projective map of a line; how many fix one of the whole plane, and what does a camera keep there?
+Three points fix a projective map of a line; four points, no three on one line, fix one of the whole plane. Next on this shelf, we step back from perspective maps to moves that keep every distance unchanged: [Every rigid motion of the plane is at most three mirror flips, so there are only four kinds](08-plane-isometries-and-three-reflections.md).
 
 ---
 

@@ -42,7 +42,7 @@ w \cdot u = 0, \qquad w \cdot v = 0, \qquad \lvert w\rvert = \lvert u\rvert\,\lv
 
 **Read it aloud:** the new arrow is square to both edges, and its length is one edge times the other's height above it: the parallelogram's area.
 
-Dividing $`w`$ by its length gives the **unit normal** $`n`$, length 1, same direction.
+When the edges are not parallel, dividing $`w`$ by its length gives the **unit normal** $`n`$, length 1, same direction.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -86,7 +86,7 @@ Each appears once with plus, once with minus: the sum is 0. Likewise $`w \cdot v
 
 ### Step 2: the length is base times height
 
-Geometry first. Area is base $`\lvert u\rvert`$ times height, the part of $`v`$ left after removing its part along $`u`$ ([Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md)). That part has length $`u \cdot v / \lvert u\rvert`$, so Pythagoras gives the height, and
+Geometry first. Area is base $`\lvert u\rvert`$ times height, the part of $`v`$ left after removing its part along $`u`$ ([Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md)). For a nonzero $`u`$, that part has length $`\lvert u \cdot v\rvert / \lvert u\rvert`$. Pythagoras gives the height (and for $`u = 0`$ both sides below are 0), so
 
 ```math
 \text{area}^2 = \lvert u\rvert^2 \lvert v\rvert^2 - (u \cdot v)^2
@@ -502,7 +502,10 @@ The card also leans on the dot product for lengths and right angles ([The dot pr
 ## Where this goes next
 
 - [Lines and planes](02-lines-and-planes-in-space.md): the normal becomes a plane's equation.
-- [Moving shapes with matrices](04-transformations-with-matrices.md): turning the panel with a matrix.
+- [Triple product](03-triple-product-and-volume.md): dotting the floor's area vector with a third edge to get a slanted box's signed volume.
+- [Moving shapes with matrices](04-transformations-with-matrices.md): rotating, reflecting, scaling and shifting flat shapes with 3 × 3 matrices, using signed area to spot a mirror.
+- [Perspective](05-perspective-and-projective-coordinates.md): joining points and meeting lines in the projective plane by cross products.
+- [Desargues and Pappus](06-desargues-and-pappus.md): joining points and meeting lines by cross products to prove two projective theorems.
 - [Shoelace formula](../07-Points%2C%20Convexity%20and%20Fractals/01-polygon-area-and-orientation.md): the third part alone, for flat polygons.
 - [Divergence and curl](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/03-divergence-and-curl.md): how a flow swirls.
 - [Surface integrals](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/05-surface-integrals-and-flux.md): area vectors of small patches, added over a surface.
@@ -510,7 +513,6 @@ The card also leans on the dot product for lengths and right angles ([The dot pr
 - [Precession](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/03-gyroscopes-and-precession.md): torque turning a spinning axis.
 - [Frenet-Serret frame](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/04-frenet-serret-frames.md): a curve's third frame direction from the first two.
 - [Differential form](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/01-forms-and-the-wedge-product.md): the shadows kept as they are, in any dimension.
-- [Desargues and Pappus](06-desargues-and-pappus.md): two theorems where only which lines meet matters, and the duality that swaps points and lines.
 
 The panel now has a normal and an area, but nothing yet says which points in space lie on its plane or where a straight flight path would strike it; that is [Lines and planes](02-lines-and-planes-in-space.md).
 

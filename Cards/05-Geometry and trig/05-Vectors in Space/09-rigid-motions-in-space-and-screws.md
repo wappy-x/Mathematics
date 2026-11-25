@@ -121,11 +121,11 @@ For the drone, $`\cot 45° = 1`$ and $`u \times t_\perp = (0, 1, 0)`$, so $`c = 
 
 ### Step 4: the axis is where the move moves points least
 
-A point on the axis only slides, so it moves exactly $`s`$. Any other point also swings round, so it moves further: the drone moves 4.582576 m. A grid search over the ground finds the least move, 2 m, at (0.5, 0.5): the axis, found without the formula.
+A point on the axis only slides, so it moves distance $`\lvert s\rvert`$. When the turn is nonzero, any other point also swings round, so it moves further: the drone moves 4.582576 m. A grid search over the ground finds the least move, 2 m, at (0.5, 0.5): the axis, found without the formula.
 
 ### Step 5: four mirrors make any screw
 
-Two mirror planes that meet along a line at angle $`\theta/2`$ make a turn by $`\theta`$ about that line. Two parallel mirror planes a distance $`s/2`$ apart make a slide of $`s`$ ([Every rigid motion of the plane is at most three mirror flips, so there are only four kinds](08-plane-isometries-and-three-reflections.md) proves both in the plane).
+Two mirror planes that meet along a line at angle $`\theta/2`$ make a turn by $`\theta`$ about that line. Two parallel mirror planes a distance $`\lvert s\rvert/2`$ apart make a slide of $`\lvert s\rvert`$ ([Every rigid motion of the plane is at most three mirror flips, so there are only four kinds](08-plane-isometries-and-three-reflections.md) proves both in the plane).
 
 For the drone, mirrors z = 0 then z = 1 lift it 2 m; mirrors y = 0.5 then y = x meet along the axis at 45° and turn it 90°. The Cartan–Dieudonné theorem bounds the count: a distance-keeping map of n-dimensional space that fixes a point needs at most n mirrors, so a rigid motion of space needs at most four.
 
@@ -157,7 +157,13 @@ The drone's move is a 90° turn about the vertical through (0.5, 0.5, 0) with a 
 
 ## Code, from first principles, and it actually runs
 
-Three roads reach the drone's screw. Road one reads the axis and angle off the matrix, by formula and again by crossing two rows of $`R - I`$, then rebuilds the screw and tests it on the drone and four corners of a solar panel. Road two searches a grid of ground points for the one moved least. Road three rebuilds the move from four mirrors. The camera mount runs through road one too.
+Three roads reach the drone's screw:
+
+- **Road one** reads the axis and angle off the matrix, by formula and by crossing two rows of $`R - I`$. It then rebuilds the screw and tests it on the drone and four corners of a solar panel.
+- **Road two** searches a grid of ground points for the one moved least.
+- **Road three** rebuilds the move from four mirrors.
+
+The camera mount runs through road one too.
 
 ### Python
 
@@ -183,8 +189,8 @@ def screw(R, t):                       # road one: axis u, angle, slide s, axis 
     return u, th, s, tp, [(a + b / tan(th / 2)) / 2 for a, b in zip(tp, cross(u, tp))]
 def axis_two(R):                       # second road: cross two rows of R - I, turn a side arrow
     m = [[R[i][j] - (i == j) for j in range(3)] for i in range(3)]
-    u = unit(cross(m[0], m[1]))
-    v = cross(u, [1, 0, 0])
+    u = unit(max((cross(m[0], m[1]), cross(m[1], m[2]), cross(m[2], m[0])), key=lambda w: dot(w, w)))
+    v = cross(u, [0, 1, 0] if abs(u[0]) > 0.9 else [1, 0, 0])
     rv = move(R, [0, 0, 0], v)
     return u, atan2(dot(u, cross(v, rv)), dot(v, rv)), dot(m[0], cross(m[1], m[2]))
 def rebuilt(u, th, s, c, x):           # turn about the line through c, then slide s along u
@@ -217,13 +223,13 @@ print(f"mistake, whole shift as the slide: {sqrt(dot(t, t)):.6f} m, not {s:.6f} 
 print(f"mistake, shift before the turn: axis point {f(screw(R, move(R, [0, 0, 0], t))[4], 1)}")
 P = lambda v: f"({200 + 50 * v[0]:.2f}, {220 - 50 * v[1]:.2f})"
 print(f"figure, 1 m = 50 units, axis {P(c)} start {P(p)} end {P(move(R, t, p))} radius {50 * gap(p[:2], c[:2]):.2f}")
-assert abs(best[0] - s) < 1e-12 and gap([best[1] / 100, best[2] / 100], c[:2]) < 1e-9   # roads one and two
+assert abs(best[0] - abs(s)) < 1e-12 and gap([best[1] / 100, best[2] / 100], c[:2]) < 1e-9   # roads one and two
 assert gap(c, [0.5, 0.5, 0]) < 1e-12 and abs(s - 2) < 1e-12          # the hand solution
 assert max(gap(a, b) for a, b in zip(tests, four)) < 1e-12            # road three
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-11-23 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 drone turn: det(R - I) = 0.000000, trace 1
@@ -276,8 +282,8 @@ fn screw(r: &M, t: V) -> (V, f64, f64, V, V) {   // road one: axis u, angle, sli
 }
 fn axis_two(r: &M) -> (V, f64, f64) {             // second road: cross two rows of R - I, turn a side arrow
     let m: M = [0, 1, 2].map(|i| [0, 1, 2].map(|j| r[i][j] - if i == j { 1.0 } else { 0.0 }));
-    let u = unit(cross(m[0], m[1]));
-    let v = cross(u, [1.0, 0.0, 0.0]);
+    let u = unit([cross(m[0], m[1]), cross(m[1], m[2]), cross(m[2], m[0])].into_iter().max_by(|a, b| dot(*a, *a).total_cmp(&dot(*b, *b))).unwrap());
+    let v = cross(u, if u[0].abs() > 0.9 { [0.0, 1.0, 0.0] } else { [1.0, 0.0, 0.0] });
     let rv = mv(r, [0.0; 3], v);
     (u, dot(u, cross(v, rv)).atan2(dot(v, rv)), dot(m[0], cross(m[1], m[2])))
 }
@@ -323,14 +329,14 @@ fn main() {
     let pp = |v: V| format!("({:.2}, {:.2})", 200.0 + 50.0 * v[0], 220.0 - 50.0 * v[1]);
     let rad = 50.0 * gap([p[0], p[1], 0.0], [c[0], c[1], 0.0]);
     println!("figure, 1 m = 50 units, axis {} start {} end {} radius {:.2}", pp(c), pp(p), pp(mv(&r, t, p)), rad);
-    assert!((best.0 - s).abs() < 1e-12 && gap([best.1 as f64 / 100.0, best.2 as f64 / 100.0, 0.0], [c[0], c[1], 0.0]) < 1e-9);
+    assert!((best.0 - s.abs()).abs() < 1e-12 && gap([best.1 as f64 / 100.0, best.2 as f64 / 100.0, 0.0], [c[0], c[1], 0.0]) < 1e-9);
     assert!(gap(c, [0.5, 0.5, 0.0]) < 1e-12 && (s - 2.0).abs() < 1e-12);   // the hand solution
     assert!(worst < 1e-12);                                                // road three
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-11-23 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 drone turn: det(R - I) = 0.000000, trace 1
@@ -741,10 +747,11 @@ example : (!![0, 0, 1; 1, 0, 0; 0, 1, 0] : Matrix (Fin 3) (Fin 3) ℝ) *ᵥ ![1,
 
 ## Where this goes next
 
+- [Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md): leaving flat Euclidean space behind to measure triangles and areas on a curved globe.
 - [Rotation group](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/04-rotations-so3-and-quaternions.md): all turns in space as one group, and quaternions, a four-number shortcut for chaining them.
 - [Symmetry](../06-Beyond%20Euclid/04-symmetry-and-tilings.md): the moves that leave a shape or a wallpaper pattern unchanged.
 
-The open question: when two screws are chained, where is the axis of the result?
+Chaining two screws belongs to [Rotation group](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/04-rotations-so3-and-quaternions.md). The next shelf leaves flat space behind, starting on a globe: [Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md).
 
 ---
 

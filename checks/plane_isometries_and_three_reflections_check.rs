@@ -23,15 +23,15 @@ fn line(m: &Mirror) -> String {
     format!("{}{} = {}", terms[0].1, rest, num(c / s))
 }
 fn lines(ms: &[Mirror]) -> String { ms.iter().map(line).collect::<Vec<_>>().join(", ") }
-fn say(kind: &str, size: f64) -> String { match kind { "rotation" => format!("rotation by {} degrees", num(size)),
+fn say(kind: &str, size: f64) -> String { match kind { "identity" => "identity".to_string(), "rotation" => format!("rotation by {} degrees", num(size)),
     "translation" => format!("translation by {}", num(size)), "reflection" => "reflection".to_string(), _ => format!("glide reflection, slide {}", num(size)) } }
 fn road1(f: &Iso) -> (&'static str, f64, String) {   // from the matrix and the fixed points
     let ([[a, b], [c, d]], t) = *f;
-    if a * d - b * c > 0.0 && (a - 1.0).abs() + c.abs() < 1e-9 { return ("translation", dist(t, [0.0, 0.0]), "det +1, no fixed point".into()); }
+    if a * d - b * c > 0.0 && (a - 1.0).abs() + c.abs() < 1e-9 { return if dist(t, [0.0, 0.0]) < 1e-9 { ("identity", 0.0, "det +1, every point fixed".into()) } else { ("translation", dist(t, [0.0, 0.0]), "det +1, no fixed point".into()) }; }
     if a * d - b * c > 0.0 {                       // solve (I - A) p = t by Cramer's rule
         let dd = (1.0 - a) * (1.0 - d) - b * c;
         let fix = [(t[0] * (1.0 - d) + b * t[1]) / dd, ((1.0 - a) * t[1] + c * t[0]) / dd]; assert!(dist(go(f, fix), fix) < 1e-9);
-        return ("rotation", c.atan2(a).to_degrees(), format!("det +1, one fixed point {}", pt(fix)));
+        return ("rotation", c.atan2(a).to_degrees().abs(), format!("det +1, one fixed point {}", pt(fix)));
     }
     let u = if (1.0 + a).abs() + c.abs() > 1e-9 { [1.0 + a, c] } else { [b, 1.0 + d] };  // a column of I + A
     let s = (t[0] * u[0] + t[1] * u[1]).abs() / dist(u, [0.0, 0.0]);

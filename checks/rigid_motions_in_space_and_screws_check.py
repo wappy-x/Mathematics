@@ -19,8 +19,8 @@ def screw(R, t):                       # road one: axis u, angle, slide s, axis 
     return u, th, s, tp, [(a + b / tan(th / 2)) / 2 for a, b in zip(tp, cross(u, tp))]
 def axis_two(R):                       # second road: cross two rows of R - I, turn a side arrow
     m = [[R[i][j] - (i == j) for j in range(3)] for i in range(3)]
-    u = unit(cross(m[0], m[1]))
-    v = cross(u, [1, 0, 0])
+    u = unit(max((cross(m[0], m[1]), cross(m[1], m[2]), cross(m[2], m[0])), key=lambda w: dot(w, w)))
+    v = cross(u, [0, 1, 0] if abs(u[0]) > 0.9 else [1, 0, 0])
     rv = move(R, [0, 0, 0], v)
     return u, atan2(dot(u, cross(v, rv)), dot(v, rv)), dot(m[0], cross(m[1], m[2]))
 def rebuilt(u, th, s, c, x):           # turn about the line through c, then slide s along u
@@ -53,7 +53,7 @@ print(f"mistake, whole shift as the slide: {sqrt(dot(t, t)):.6f} m, not {s:.6f} 
 print(f"mistake, shift before the turn: axis point {f(screw(R, move(R, [0, 0, 0], t))[4], 1)}")
 P = lambda v: f"({200 + 50 * v[0]:.2f}, {220 - 50 * v[1]:.2f})"
 print(f"figure, 1 m = 50 units, axis {P(c)} start {P(p)} end {P(move(R, t, p))} radius {50 * gap(p[:2], c[:2]):.2f}")
-assert abs(best[0] - s) < 1e-12 and gap([best[1] / 100, best[2] / 100], c[:2]) < 1e-9   # roads one and two
+assert abs(best[0] - abs(s)) < 1e-12 and gap([best[1] / 100, best[2] / 100], c[:2]) < 1e-9   # roads one and two
 assert gap(c, [0.5, 0.5, 0]) < 1e-12 and abs(s - 2) < 1e-12          # the hand solution
 assert max(gap(a, b) for a, b in zip(tests, four)) < 1e-12            # road three
 print("ALL CHECKS PASS")

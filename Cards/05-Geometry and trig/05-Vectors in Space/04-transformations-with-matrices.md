@@ -100,20 +100,20 @@ With p = 3, q = 1, θ = 30°, these are 0.901924 and −1.366025. They are exact
 
 ### Step 3: what the move keeps
 
-R's columns are each 1 long (cos^2θ + sin^2θ = 1) and at right angles. Their dot product, matching entries multiplied and added ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)), is −cos θ sin θ + sin θ cos θ = 0. So R keeps lengths; a shift cancels in any difference of two points. H keeps the sides at 4 cm and 2 cm.
+R's columns are each 1 long ($`\cos^2\theta + \sin^2\theta = 1`$) and at right angles. Their dot product, matching entries multiplied and added ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)), is −cos θ sin θ + sin θ cos θ = 0. So R keeps lengths; a shift cancels in any difference of two points. H keeps the sides at 4 cm and 2 cm.
 
-The determinant of a block with rows a, b and c, d is the number ad − bc ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). Area follows the determinant of the top-left block ([Cross product](01-cross-product-and-oriented-area.md)): cos^2θ + sin^2θ = 1 for R, so 8 square cm stays 8 square cm. A move that keeps every distance, like R, F or H, is an **isometry**.
+The determinant of a block with rows a, b and c, d is the number ad − bc ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). Area follows the determinant of the top-left block ([Cross product](01-cross-product-and-oriented-area.md)): $`\cos^2\theta + \sin^2\theta = 1`$ for R, so 8 square cm stays 8 square cm. A move that keeps every distance, like R, F or H, is an **isometry**.
 
 For S(k) the determinant is k × k: scaling by 1.5 gives 18 square cm. For F it is −1: the mirrored logo's corners run clockwise and its signed area reads −8 square cm.
 
 <details>
 <summary>Detailed proof: a rotation keeps every distance</summary>
 
-Two points differ by (u, v). R sends that difference to (u cos θ − v sin θ, u sin θ + v cos θ). Square and add: the cross terms −2uv cos θ sin θ and +2uv sin θ cos θ cancel, and the rest groups as u^2(cos^2θ + sin^2θ) + v^2(sin^2θ + cos^2θ) = u^2 + v^2. The squared distance is unchanged. H adds one shift to both points, which cancels in the difference, so H keeps distances too.
+Two points differ by (u, v). R sends that difference to (u cos θ − v sin θ, u sin θ + v cos θ). Square and add: the cross terms −2uv cos θ sin θ and +2uv sin θ cos θ cancel, and the rest groups as $`u^2(\cos^2\theta + \sin^2\theta) + v^2(\sin^2\theta + \cos^2\theta) = u^2 + v^2`$. The squared distance is unchanged. H adds one shift to both points, which cancels in the difference, so H keeps distances too.
 
 </details>
 
-In three dimensions the same construction uses 4 × 4 matrices, and the turns themselves are the subject of Rotation group.
+In three dimensions the same construction uses 4 × 4 matrices, and the turns themselves are the subject of [Rotation group](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/04-rotations-so3-and-quaternions.md).
 
 ---
 
@@ -150,7 +150,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Two roads that share no step move the four corners. Road one builds H from three 3 × 3 matrices and multiplies it into each (x, y, 1). Road two forms no matrix: each corner's distance and angle from A, angle plus 30°, converted back. Then come the kept lengths and area, a second case (scale 1.5 and a mirror, both about A), the four mistakes and the figure's coordinates.
+Two roads that share no step move the four corners. Road one builds H from three 3 × 3 matrices and multiplies it into each (x, y, 1). Road two forms no matrix: each corner's distance and angle from A, angle plus 30°, converted back.
+
+Then come the kept lengths and area, a second case (scale 1.5 and a mirror, both about A), the four mistakes and the figure's coordinates.
 
 ### Python
 
@@ -592,7 +594,7 @@ example : (shiftM 3 1 * turnM (-(π / 6)) * shiftM (-3) (-1)) *ᵥ ![7, 1, 1] =
 
 > [!TIP]
 > **Try changing**
-> - Guess first: in `about_a`, swap the two slides. A leaves its place and lands at (1.196152, 3.732051), the second mistake above; the pivot assert fails.
+> - Guess first: in `about_a`, swap the two slides. A leaves its place and lands at (1.196152, 3.732051), the second mistake above; the first assert stops the run because the matrix road no longer matches the polar road (and the pivot moved).
 > - Guess first: in the line that builds H, turn by −30° instead of 30°. B lands at (6.464102, −1), off the bottom of the page, and road two no longer agrees with road one.
 > - Guess first: in `move`, write 0 where the 1 goes. H then ignores its slides and turns A about the page corner, to (2.098076, 2.366025).
 
@@ -629,9 +631,9 @@ example : (shiftM 3 1 * turnM (-(π / 6)) * shiftM (-3) (-1)) *ᵥ ![7, 1, 1] =
 - [Symmetry](../06-Beyond%20Euclid/04-symmetry-and-tilings.md): the moves that leave a pattern unchanged, and how they combine.
 - [Spin one-half](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/06-spin-and-two-state-systems.md): rotation matrices acting on a quantum state instead of a logo.
 - [Rotation group](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/04-rotations-so3-and-quaternions.md): turns in three dimensions, and a four-number shortcut for chaining them.
-- [Desargues and Pappus](06-desargues-and-pappus.md): two theorems where only which lines meet matters, and the duality that swaps points and lines.
-- [Every rigid motion of the plane is at most three mirror flips, so there are only four kinds](08-plane-isometries-and-three-reflections.md): builds on this card.
-- [Rigid motions in space](09-rigid-motions-in-space-and-screws.md): every one is a screw, a turn about an axis plus a slide along it.
+- [Desargues and Pappus](06-desargues-and-pappus.md): invertible 3 × 3 matrices with a free bottom row that move projective lines into place.
+- [Every rigid motion of the plane is at most three mirror flips, so there are only four kinds](08-plane-isometries-and-three-reflections.md): classifying every distance-keeping matrix-plus-shift move into four kinds using its determinant and fixed points.
+- [Rigid motions in space](09-rigid-motions-in-space-and-screws.md): 3 × 3 rotation matrices plus shifts in space, where every proper rigid motion is a screw.
 
 Every move on this card keeps parallel lines parallel; how a camera makes parallel rails meet, by changing the bottom row, is [Perspective](05-perspective-and-projective-coordinates.md).
 

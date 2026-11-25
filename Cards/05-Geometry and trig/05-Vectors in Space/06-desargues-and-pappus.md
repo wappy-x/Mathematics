@@ -8,7 +8,9 @@
 
 A lamp makes a triangular card cast a triangular shadow, each shadow corner on the ray from the lamp through a card corner. Such triangles are **in perspective from a point**, the **centre**.
 
-A flat drawing of such a pair: centre O = (0, 0), triangle A = (1, 0), B = (0, 1), C = (1, 2), and A′ = (2, 0), B′ = (0, 3), C′ = (1.5, 3). Extend matching sides until they cross. AB and A′B′ meet at P = (4, −3), BC and B′C′ at Q = (2, 3), CA and C′A′ at R = (1, 6). The slope from P to Q is −3, and from Q to R it is −3 again: one line, where the planes of card and shadow meet. That is **Desargues' theorem**.
+A flat drawing of such a pair: centre O = (0, 0), triangle A = (1, 0), B = (0, 1), C = (1, 2), and A′ = (2, 0), B′ = (0, 3), C′ = (1.5, 3).
+
+Extend matching sides until they cross. AB and A′B′ meet at P = (4, −3), BC and B′C′ at Q = (2, 3), CA and C′A′ at R = (1, 6). The slope from P to Q is −3, and from Q to R it is −3 again: one line, where the planes of card and shadow meet. That is **Desargues' theorem**.
 
 **Pappus's theorem** is its partner. Put points D1, D2, D3 at x = 0, 1, 3 on the line y = 0, and T1, T2, T3 at x = 0, 2, 5 on y = 2. For positions 1 and 2, lines D1T2 and D2T1 cross; likewise for 1 and 3, and 2 and 3. The three crossings (2/3, 2/3), (15/8, 3/4) and (13/5, 4/5) have slope 2/29 between each pair: one line again.
 
@@ -63,6 +65,7 @@ M_{ij} = (D_i \times T_j) \times (D_j \times T_i),\qquad \det[M_{12}\ \ M_{13}\ 
 
 - **Genuine triangles, distinct sides.** If a triangle is flat, or AB and A′B′ are one line, the meets mean nothing.
 - **Sides matched correctly.** Mismatched pairs give slopes −15/7 and 6.
+- **Pappus's lines and crossings.** The two lines must differ and the three cross-join meets must be genuine.
 - **Points at infinity count.** If AB is parallel to A′B′, P has last entry 0 and the line through Q and R runs parallel to both (Try changing).
 - **Coordinates from numbers.** Some planes built from rules alone break Desargues (fold after Step 4).
 
@@ -112,7 +115,9 @@ So $`M_{12} = V_2 - V_1`$, $`M_{13} = V_3 - V_1`$ and $`M_{23} = V_3 - V_2`$, th
 <details>
 <summary>Why any two lines can be moved to y = 0 and y = h</summary>
 
-Let the lines meet at m; pick u on the first and v on the second. The triples m, u, v are independent, so one invertible 3 by 3 matrix $`G`$ sends them to (1, 0, 0), (0, 0, 1) and (0, h, 1). Combinations of m and u go to the line y = 0; those of m and v to y = h.
+Take distinct lines meeting at $`m`$. If one of the six points is $`m`$ itself, two of the crossings coincide, so the three crossings share a line. Otherwise pick $`u \neq m`$ on the first, $`v \neq m`$ on the second, and $`h \neq 0`$.
+
+Independent triples $`m, u, v`$ map via an invertible 3 by 3 matrix $`G`$ to (1, 0, 0), (0, 0, 1) and (0, $`h`$, 1), sending the lines to $`y = 0`$ and $`y = h`$ and $`m`$ to infinity.
 
 $`G`$ keeps every incidence, since a line $`\ell`$ becomes $`\ell G^{-1}`$ and
 
@@ -361,10 +366,10 @@ ALL CHECKS PASS
 
 Lean proves Desargues, Pappus and the dual of Desargues for all real triples, points at infinity included.
 
-- Take two genuine triangles in perspective from a point, with distinct matching sides. Then P, Q and R share a line.
-- Take three points on one line and three on another, with genuine crossings. Then the three crossings share a line.
-- Take two genuine triangles with distinct matching sides, and P, Q and R on one line. Then the lines through matching corners pass through one point.
-- It checks the worked numbers exactly: P, Q and R, both roads, the dual's lines, Pappus's crossings and the mismatched sides.
+- Two genuine triangles in perspective from a point, with distinct matching sides: P, Q and R share a line.
+- Three points on each of two lines, with genuine crossings: the three crossings share a line.
+- Two genuine triangles with distinct matching sides and P, Q, R on one line: matching-corner lines share one point.
+- Worked numbers checked exactly: P, Q, R, both roads, the dual's lines, Pappus's crossings and mismatched sides.
 
 The other mistakes, the random cases and the figure are left to the Python and Rust checks, and the general swap to Step 4.
 

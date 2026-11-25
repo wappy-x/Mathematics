@@ -67,7 +67,7 @@ Capacity is $`V`$ with its sign dropped. Four points $`P`$, $`Q`$, $`R`$, $`S`$ 
 - **Flat faces.** A crate whose sides bulge is no parallelepiped; the formula then measures the box on its corner edges, not the crate.
 - **One shared corner.** Edges taken from different corners describe a different box.
 - **One unit, square axes.** On slanted axes the dot product no longer measures lengths. The answer is in the unit cubed.
-- **A tolerance for measurements.** A real lid never gives exactly 0; divide by the base area and compare the gap with the measuring error.
+- **A tolerance for measurements.** A real lid never gives exactly 0; when the three base corners do not lie on one line, divide by the base area and compare the gap with the measuring error.
 
 ---
 
@@ -79,7 +79,7 @@ Slice the crate into thin horizontal layers. Each is a copy of the floor, slid s
 
 ### Step 1: the cross product delivers the floor
 
-The floor is the parallelogram on a and b. Their cross product, (0, 0, 300), points straight up, and its length is the floor's area, 300 dm^2. One calculation gives the area and the direction height is measured in.
+The floor is the parallelogram on a and b. Their cross product, (0, 0, 300), points straight up, and its length is the floor's area, 300 dm². One calculation gives the area and the direction height is measured in.
 
 ### Step 2: the dot product picks out the height
 
@@ -121,7 +121,7 @@ A road with no cross product: count small cubes inside the crate, as the code do
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | floor arrow | a × b = (0 × 0 − 0 × 15, 0 × 5 − 20 × 0, 20 × 15 − 0 × 5) | (0, 0, 300) |
-| floor area | length of (0, 0, 300) | 300 dm^2 |
+| floor area | length of (0, 0, 300) | 300 dm² |
 | dot with the post | 0 × 4 + 0 × 3 + 300 × 12 | **3600 litres** |
 | determinant, top row | 20(15 × 12 − 0 × 3) − 0 + 0 | 3600 |
 | height | 3600 / 300 | 12 dm |
@@ -527,10 +527,11 @@ example : ((![20, 0, 0] : Fin 3 → ℤ) ⨯₃ ![5, 15, 0]) ⬝ᵥ ![25, 15, -1
 - [Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): the 3 by 3 determinant and its meaning as a volume scale.
 
 ## Where this goes next
-- [Desargues and Pappus](06-desargues-and-pappus.md): two theorems where only which lines meet matters, and the duality that swaps points and lines.
 
+- [Moving shapes with matrices](04-transformations-with-matrices.md): moving flat shapes with 3 × 3 matrices whose top-left determinant scales signed area.
+- [Desargues and Pappus](06-desargues-and-pappus.md): testing whether three points share a line with a zero 3 × 3 determinant.
 
-The triple product measures one box; what a matrix does to every box at once, scaling all volumes by one factor, is [Moving shapes with matrices](04-transformations-with-matrices.md).
+The triple product measures one box; how 3 × 3 matrices rotate, mirror, scale and shift whole shapes in the plane, scaling signed area by their determinant, is [Moving shapes with matrices](04-transformations-with-matrices.md).
 
 ---
 

@@ -93,7 +93,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 05 · Vectors in Space · 9 cards
 
-*Cross products, lines and planes, volumes, and moving shapes with matrices*
+*Cross products, lines and planes, volumes, matrix moves, perspective and projective geometry (Desargues, Pappus, cross-ratio), and rigid motions in the plane and in space*
 
 1. [Cross product: a vector perpendicular to two others, with the parallelogram's area as its length](05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md)
 2. [Lines and planes: a point plus a direction, a point plus a normal](05-Vectors%20in%20Space/02-lines-and-planes-in-space.md)

@@ -26,8 +26,8 @@ fn screw(r: &M, t: V) -> (V, f64, f64, V, V) {   // road one: axis u, angle, sli
 }
 fn axis_two(r: &M) -> (V, f64, f64) {             // second road: cross two rows of R - I, turn a side arrow
     let m: M = [0, 1, 2].map(|i| [0, 1, 2].map(|j| r[i][j] - if i == j { 1.0 } else { 0.0 }));
-    let u = unit(cross(m[0], m[1]));
-    let v = cross(u, [1.0, 0.0, 0.0]);
+    let u = unit([cross(m[0], m[1]), cross(m[1], m[2]), cross(m[2], m[0])].into_iter().max_by(|a, b| dot(*a, *a).total_cmp(&dot(*b, *b))).unwrap());
+    let v = cross(u, if u[0].abs() > 0.9 { [0.0, 1.0, 0.0] } else { [1.0, 0.0, 0.0] });
     let rv = mv(r, [0.0; 3], v);
     (u, dot(u, cross(v, rv)).atan2(dot(v, rv)), dot(m[0], cross(m[1], m[2])))
 }
@@ -73,7 +73,7 @@ fn main() {
     let pp = |v: V| format!("({:.2}, {:.2})", 200.0 + 50.0 * v[0], 220.0 - 50.0 * v[1]);
     let rad = 50.0 * gap([p[0], p[1], 0.0], [c[0], c[1], 0.0]);
     println!("figure, 1 m = 50 units, axis {} start {} end {} radius {:.2}", pp(c), pp(p), pp(mv(&r, t, p)), rad);
-    assert!((best.0 - s).abs() < 1e-12 && gap([best.1 as f64 / 100.0, best.2 as f64 / 100.0, 0.0], [c[0], c[1], 0.0]) < 1e-9);
+    assert!((best.0 - s.abs()).abs() < 1e-12 && gap([best.1 as f64 / 100.0, best.2 as f64 / 100.0, 0.0], [c[0], c[1], 0.0]) < 1e-9);
     assert!(gap(c, [0.5, 0.5, 0.0]) < 1e-12 && (s - 2.0).abs() < 1e-12);   // the hand solution
     assert!(worst < 1e-12);                                                // road three
     println!("ALL CHECKS PASS");

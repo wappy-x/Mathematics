@@ -6,7 +6,9 @@
 
 ## General Overview
 
-A camera stands between the rails of a metre-gauge railway, level, 1.5 m up, pointing down the line. The rails stay 1 m apart. On the photo, through a 50 mm lens, the left rail sits 2.5 mm left of centre 10 m out, 1.25 mm left 20 m out; the right rail mirrors it. They close on one point of the horizon, the **vanishing point**, where parallel lines appear to meet.
+A camera stands between the rails of a metre-gauge railway, level, 1.5 m up, pointing down the line. The rails stay 1 m apart.
+
+On the photo, through a 50 mm lens, the left rail sits 2.5 mm left of centre 10 m out and 1.25 mm left 20 m out. The right rail mirrors it. They close on one point of the horizon, the **vanishing point**, where parallel lines appear to meet.
 
 Ordinary geometry says parallel lines never meet. Give every point one extra number, and let any multiple of the list name the same point: directions become points at infinity, and the rails genuinely meet at one. The camera carries it to a finite spot on the photo.
 
@@ -59,7 +61,7 @@ A photo line $`au + bv + c = 0`$ is stored as the triple $`\ell = (a, b, c)`$; a
 - **A level camera, for the horizon claim.** Tilted down, the horizon rises above the centre; the method still holds.
 - **A direction not parallel to the sensor.** If $`d_Z = 0`$, lines across the view stay parallel on the photo.
 - **Points in front of the lens, $`Z > 0`$.** At $`Z = 0`$ the division fails; behind the lens the formula still gives a spot that no camera records.
-- **Never (0, 0, 0).** It names no point.
+- **Never (0, 0, 0), and always two distinct points or lines.** Crossing a triple with a multiple of itself gives (0, 0, 0), which names neither a point nor a line.
 
 ---
 
@@ -77,7 +79,9 @@ From the side, the image sits on a small right triangle with legs $`f`$ and $`v`
 
 ### Step 2: parallel lines share one point at infinity
 
-The left rail's points are (−0.5, −1.5, k, 1) for distance k. Dividing by k names the same point, (−0.5/k, −1.5/k, 1, 1/k), which comes ever closer to (0, 0, 1, 0), the rails' direction with last entry 0. The right rail heads for the same list: only the direction survives. On the photo the left rail sits at u = −0.25 mm 100 m out, −0.025 mm at 1,000 m, −0.000025 mm at 1,000,000 m.
+The left rail's points are (−0.5, −1.5, k, 1) for distance k > 0. Dividing by k names the same point, (−0.5/k, −1.5/k, 1, 1/k), which comes ever closer to (0, 0, 1, 0), the rails' direction with last entry 0. The right rail heads for the same list: only the direction survives.
+
+On the photo the left rail sits at u = −0.25 mm 100 m out, −0.025 mm at 1,000 m, −0.000025 mm at 1,000,000 m.
 
 So the rails share the point (0 : 0 : 1 : 0), the same rule in space with four numbers, as legal as any other; the camera sends it to (0, 0, 1), the photo's centre.
 
@@ -524,11 +528,11 @@ example : (50 : ℚ) * (-3/2) / 15 = -5 ∧ ((-15/2 : ℚ) + (-15/4)) / 2 = -45/
 
 ## Where this goes next
 
+- [Desargues and Pappus](06-desargues-and-pappus.md): proving two incidence theorems and point–line duality directly from these triples and cross products.
+- [Cross-ratio](07-cross-ratio-and-harmonic-points.md): the one four-point number a perspective camera leaves unchanged, and how it measures distances from a photo.
 - [Projective space](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/03-projective-space-and-homogeneous-coordinates.md): projective space in any dimension, and shapes cut out by its equations.
-- [Desargues and Pappus](06-desargues-and-pappus.md): two theorems where only which lines meet matters, and the duality that swaps points and lines.
-- [Cross-ratio](07-cross-ratio-and-harmonic-points.md): the one number a perspective photo cannot change, and harmonic sets of points.
 
-Here the points at infinity came from a camera; whether projective space stands as a geometry on its own, with no favoured slice, is what a later card settles.
+With points and lines stored as triples that meet by cross products, geometry without lengths or angles opens up: [Desargues and Pappus](06-desargues-and-pappus.md).
 
 ---
 

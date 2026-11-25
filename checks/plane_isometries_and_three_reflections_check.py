@@ -15,14 +15,14 @@ def line(n, c):
     s = n[0] if abs(n[0]) > 1e-9 else n[1]; w = lambda k: "" if abs(abs(k / s) - 1) < 1e-9 else num(abs(k / s))
     terms = [("-" if k / s < 0 else "+", w(k) + v) for k, v in ((n[0], "x"), (n[1], "y")) if abs(k) > 1e-9]
     return terms[0][1] + "".join(f" {g} {v}" for g, v in terms[1:]) + f" = {num(c / s)}"
-def say(kind, size): return {"rotation": f"rotation by {num(size)} degrees", "translation": f"translation by {num(size)}",
+def say(kind, size): return {"identity": "identity", "rotation": f"rotation by {num(size)} degrees", "translation": f"translation by {num(size)}",
                              "reflection": "reflection", "glide reflection": f"glide reflection, slide {num(size)}"}[kind]
 def road1(f):                        # from the matrix and the fixed points
     ((a, b), (c, d)), t = f
-    if a * d - b * c > 0 and abs(a - 1) + abs(c) < 1e-9: return "translation", dist(t, (0, 0)), "det +1, no fixed point"
+    if a * d - b * c > 0 and abs(a - 1) + abs(c) < 1e-9: return ("identity", 0, "det +1, every point fixed") if dist(t, (0, 0)) < 1e-9 else ("translation", dist(t, (0, 0)), "det +1, no fixed point")
     if a * d - b * c > 0:            # solve (I - A) p = t by Cramer's rule
         D = (1 - a) * (1 - d) - b * c; fix = ((t[0] * (1 - d) + b * t[1]) / D, ((1 - a) * t[1] + c * t[0]) / D); assert dist(go(f, fix), fix) < 1e-9
-        return "rotation", degrees(atan2(c, a)), f"det +1, one fixed point {pt(fix)}"
+        return "rotation", abs(degrees(atan2(c, a))), f"det +1, one fixed point {pt(fix)}"
     u = (1 + a, c) if abs(1 + a) + abs(c) > 1e-9 else (b, 1 + d)   # a column of I + A: along the mirror
     s = abs(t[0] * u[0] + t[1] * u[1]) / dist(u, (0, 0))
     return ("reflection", 0, "det -1, a whole line fixed") if s < 1e-9 else ("glide reflection", s, "det -1, no fixed point")
