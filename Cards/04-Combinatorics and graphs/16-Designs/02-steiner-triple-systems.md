@@ -6,7 +6,9 @@
 
 ## General Overview
 
-Nine points sit in a 3 by 3 grid, numbered 1 to 9. Draw the 3 rows, the 3 columns, and the diagonals, letting a diagonal run off one edge and come back on the opposite edge. That gives 3 diagonals each way, 12 lines in all. Any two of the 9 points lie on exactly one of the 12 lines.
+A test kitchen has 9 recipes, numbered 1 to 9, and wants every pair compared side by side. Each taster tries 3 recipes at a time.
+
+Lay the 9 points in a 3 by 3 grid. Draw the 3 rows, the 3 columns, and the diagonals, letting a diagonal run off one edge and come back on the opposite edge. That gives 3 diagonals each way, 12 lines in all, one triple per taster. Any two of the 9 points lie on exactly one of the 12 lines.
 
 A list of triples with that property is a **Steiner triple system**: v points and 3-point blocks (triples) such that every pair of points lies in exactly one triple. It is a block design ([Block designs](01-block-designs-and-fishers-inequality.md)).
 
@@ -136,11 +138,11 @@ So each pair lands in exactly one triple. For $`v = 9`$: 3 uprights and 9 rule t
 
 For $`v = 6n + 1`$ the layers have $`2n`$ points, an even clock where halving fails. Th. Skolem (1958) repaired the rule.
 
-- **New halving:** an even sum $`s`$ is halved as usual; an odd sum $`s`$ goes to $`n + (s - 1)/2`$.
+- **New halving:** let $`s = (x + y) \bmod 2n`$. An even $`s`$ is halved as usual; an odd $`s`$ goes to $`n + (s - 1)/2`$.
 - **Fewer uprights:** now $`x \circ x = x`$ only for $`x`$ below $`n`$, so only those $`n`$ numbers keep an upright triple.
 - **One extra point $`\infty`$:** the pairs the rule misses go into triples $`\{\infty, (x + n, i), (x, i + 1)\}`$, for each $`x`$ below $`n`$.
 
-The code checks it for $`v = 7`$ (7 triples: the shelf's Fano plane, renamed) and $`v = 13`$ (26 triples).
+The code checks it for $`v = 7`$ (7 triples: the Fano plane from [Block designs](01-block-designs-and-fishers-inequality.md), renamed) and $`v = 13`$ (26 triples).
 
 ### Step 6: Kirkman's schoolgirls need more than a triple system
 
@@ -1090,7 +1092,7 @@ example : (Icc 3 15).filter (fun v => (v - 1) % 2 = 0 ∧ v * (v - 1) % 6 = 0) =
 
 - **Rotating groups.** Workshops that rotate people in threes, no two together twice, can use Kirkman's schedule.
 - **Taste tests.** To compare 9 recipes when a taster judges only 3, give 12 tasters one grid line each: every pair of recipes is compared exactly once.
-- **Error-correcting codes.** In the Hamming code of length 7, which fixes any one flipped bit, the 7 codewords with three 1s are the Fano plane's lines.
+- **Error-correcting codes.** In the Hamming code of length 7, which fixes any one flipped bit, the 7 codewords with three 1s are the Fano plane's lines ([Hamming and Reed-Solomon](../../14-Applied%20and%20computational/03-Information%20Theory/08-error-correcting-codes-hamming-and-reed-solomon.md)).
 
 > **Say it back**
 > A Steiner triple system covers every pair of v points with exactly one triple. Counting pairs at one point makes v odd; counting all pairs makes 6 divide v(v − 1); together, v leaves remainder 1 or 3 on division by 6. Bose's halving rule builds every remainder-3 system and Skolem's repaired rule every remainder-1 system. The grid's 12 wrapped lines are the system on 9 points, and Kirkman's 15 girls need one that also splits into 7 days.

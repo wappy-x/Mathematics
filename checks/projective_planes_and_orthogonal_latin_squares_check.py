@@ -12,7 +12,7 @@ def from_squares(sqs, n):                    # road one: cells, plus a point at 
     lines = [frozenset([(i, j) for i in range(n) for j in range(n) if f(i, j) == s] + [(n, c)])
              for c, f in enumerate(keys) for s in range(n)] + [frozenset((n, c) for c in range(n + 1))]
     return [(i, j) for i in range(n) for j in range(n)] + [(n, c) for c in range(n + 1)], lines
-def gf_plane(q):                             # road two: triples over GF(q), first nonzero entry 1
+def gf_plane(q):                             # road two: triples over GF(q) for prime q, first nonzero entry 1
     pts = [t for t in product(range(q), repeat=3) if any(t) and t[[x > 0 for x in t].index(True)] == 1]
     return pts, [frozenset(p for p in pts if sum(a * b for a, b in zip(p, l)) % q == 0) for l in pts]
 def reduced(n):                              # every Latin square with first row and column 0..n-1

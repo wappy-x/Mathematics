@@ -160,7 +160,7 @@ example : ∀ x y : Fin 7, x ≠ y →
 example : ∀ x y : Fin 7, x ≠ y →
     (Finset.univ.filter fun i => core8 i x = -1 ∧ core8 i y = -1).card = 2 := by decide
 
-/-- Back from the Fano plane: a border of `+1`s, then `+1` on each house line {1, 2, 4},
+/-- Back from the Fano plane: a border of `+1`s, then `+1` on each Fano line {1, 2, 4},
 {2, 3, 5}, {3, 4, 6}, {4, 5, 7}, {5, 6, 1}, {6, 7, 2}, {7, 1, 3} and `-1` off it. -/
 def fanoH8 : Matrix (Fin 8) (Fin 8) ℤ :=
   !![1, 1, 1, 1, 1, 1, 1, 1;

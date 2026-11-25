@@ -640,7 +640,7 @@ end BlockDesignsAndFishersInequality
 
 - **Field and taste trials.** A block is one field strip, one judge or one batch. When it holds too few units for every treatment, a balanced design makes every comparison equally precise ([Blocking and factorial designs](../../09-Probability%20and%20statistics/13-Survival%2C%20Design%20and%20Causality/05-blocking-and-factorial-designs.md)).
 - **Tournament and meeting schedules.** Groups of 3 where every pair of people meets exactly once is the Fano plane at 7 people; larger cases are [Steiner triple systems](02-steiner-triple-systems.md).
-- **Error-correcting codes.** The rows of the Fano incidence matrix, with their complements and the all-0 and all-1 words, form a Hamming code: one bit flip in a 7-bit word can be found and undone.
+- **Error-correcting codes.** The rows of the Fano incidence matrix, with their complements and the all-0 and all-1 words, form a Hamming code: one bit flip in a 7-bit word can be found and undone ([Hamming and Reed-Solomon](../../14-Applied%20and%20computational/03-Information%20Theory/08-error-correcting-codes-hamming-and-reed-solomon.md)).
 
 > **Say it back**
 > A block design puts v points into b blocks of size k so every pair shares exactly λ blocks. Counting cups gives b k = v r, and counting one point's partners gives r(k − 1) = λ(v − 1), so r must be whole. The incidence matrix N satisfies N N^T = (r − λ)I + λJ, whose determinant is (r − λ)^(v − 1) r k, never 0 when k < v. Full rank v needs at least v columns, so b ≥ v. The Fano plane, 7 blends and 7 tasters, meets that bound exactly.

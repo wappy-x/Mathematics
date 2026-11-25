@@ -15,7 +15,7 @@ fn from_squares(sqs: &[Sq], n: usize) -> Vec<u64> {          // road one: cell i
     let mut lines: Vec<u64> = (0..n + 1).flat_map(|c| (0..n).map(move |s| (c, s))).map(|(c, s)| (0..n * n)
         .filter(|&p| key(c, p / n, p % n) == s).fold(1u64 << (n * n + c), |m, p| m | 1 << p)).collect();
     lines.push((n * n..n * n + n + 1).fold(0, |m, p| m | 1 << p)); lines }
-fn gf_plane(q: usize) -> (usize, Vec<u64>) {                 // road two: triples over GF(q), first nonzero entry 1
+fn gf_plane(q: usize) -> (usize, Vec<u64>) {                 // road two: triples over GF(q) for prime q, first nonzero entry 1
     let pts: Vec<[usize; 3]> = (0..q * q * q).map(|x| [x / (q * q), x / q % q, x % q])
         .filter(|t| t.iter().any(|&v| v > 0) && *t.iter().find(|&&v| v > 0).unwrap() == 1).collect();
     let on = |p: &[usize; 3], l: &[usize; 3]| (0..3).map(|k| p[k] * l[k]).sum::<usize>() % q == 0;

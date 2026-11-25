@@ -46,10 +46,10 @@ flowchart LR
 Order 2, the Fano plane, gives 7 points on lines of 3; order 3 gives 13 on lines of 4.
 
 ```math
-L_m(i, j) = i + m\,j \ \text{ computed in } \mathrm{GF}(q), \qquad m = 1, 2, \ldots, q - 1
+L_m(i, j) = i + m\,j \ \text{ computed in } \mathrm{GF}(q), \qquad m \in \mathrm{GF}(q),\ m \ne 0
 ```
 
-**Read it aloud:** square number m puts row plus m times column in each cell, in the field's arithmetic.
+**Read it aloud:** for each nonzero element m of the field, square m puts row plus m times column in each cell, in the field's arithmetic.
 
 ```math
 N(n) \le n - 1, \qquad N(n) = n - 1 \iff \text{an affine plane of order } n \text{ exists} \iff \text{a projective plane of order } n \text{ exists}
@@ -88,7 +88,7 @@ If two cells in row $`i`$ of square $`m`$ match, $`i + mj = i + mj'`$, so $`m(j 
 
 If squares $`a`$ and $`b`$ show the same pair at cells $`(i, j)`$ and $`(i', j')`$, subtracting gives $`(a - b)(j - j') = 0`$. Divide by $`a - b`$: $`j = j'`$, then $`i = i'`$. No pair repeats, so all $`q^2`$ appear.
 
-Both steps divided. On the 6-hour clock, $`i + j`$ and $`i + 5j`$ are Latin but show only 18 of 36 pairs: $`a - b`$ is 2 there, and 2 times 3 wraps to 0.
+Both steps divided. On the 6-hour clock, $`i + j`$ and $`i + 5j`$ are Latin but show only 18 of 36 pairs: $`a - b = 1 - 5`$ wraps to 2 on the 6-hour clock, and 2 times 3 wraps to 0.
 
 ### Step 2: no more than n − 1 squares
 
@@ -162,7 +162,7 @@ Each of the 9 plots gets its own fertiliser–seed pair.
 | --- | --- | --- |
 | The 4-hour clock for GF(4) | row 0 of $`i + 2j`$: 0, 2, 0, 2 | 2 has no reciprocal mod 4 |
 | Second square $`2(i + j)`$ mod 3 | 3 of 9 pairs | a relabelled copy of the first |
-| $`i + j`$ and $`i + 5j`$ mod 6 | 18 of 36 pairs | the difference 2 times 3 wraps to 0 |
+| $`i + j`$ and $`i + 5j`$ mod 6 | 18 of 36 pairs | $`1 - 5`$ wraps to 2 mod 6, and 2 times 3 wraps to 0 |
 
 
 ---
@@ -188,7 +188,7 @@ def from_squares(sqs, n):                    # road one: cells, plus a point at 
     lines = [frozenset([(i, j) for i in range(n) for j in range(n) if f(i, j) == s] + [(n, c)])
              for c, f in enumerate(keys) for s in range(n)] + [frozenset((n, c) for c in range(n + 1))]
     return [(i, j) for i in range(n) for j in range(n)] + [(n, c) for c in range(n + 1)], lines
-def gf_plane(q):                             # road two: triples over GF(q), first nonzero entry 1
+def gf_plane(q):                             # road two: triples over GF(q) for prime q, first nonzero entry 1
     pts = [t for t in product(range(q), repeat=3) if any(t) and t[[x > 0 for x in t].index(True)] == 1]
     return pts, [frozenset(p for p in pts if sum(a * b for a, b in zip(p, l)) % q == 0) for l in pts]
 def reduced(n):                              # every Latin square with first row and column 0..n-1
@@ -236,7 +236,7 @@ assert same and mates[6][1] == 0 and mates[5][1] > 0 and mates[2][1] == 0
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-11-23 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 L1 = i + j mod 3: [[0, 1, 2], [1, 2, 0], [2, 0, 1]]   L2 = i + 2j mod 3: [[0, 2, 1], [1, 0, 2], [2, 1, 0]]
@@ -282,7 +282,7 @@ fn from_squares(sqs: &[Sq], n: usize) -> Vec<u64> {          // road one: cell i
     let mut lines: Vec<u64> = (0..n + 1).flat_map(|c| (0..n).map(move |s| (c, s))).map(|(c, s)| (0..n * n)
         .filter(|&p| key(c, p / n, p % n) == s).fold(1u64 << (n * n + c), |m, p| m | 1 << p)).collect();
     lines.push((n * n..n * n + n + 1).fold(0, |m, p| m | 1 << p)); lines }
-fn gf_plane(q: usize) -> (usize, Vec<u64>) {                 // road two: triples over GF(q), first nonzero entry 1
+fn gf_plane(q: usize) -> (usize, Vec<u64>) {                 // road two: triples over GF(q) for prime q, first nonzero entry 1
     let pts: Vec<[usize; 3]> = (0..q * q * q).map(|x| [x / (q * q), x / q % q, x % q])
         .filter(|t| t.iter().any(|&v| v > 0) && *t.iter().find(|&&v| v > 0).unwrap() == 1).collect();
     let on = |p: &[usize; 3], l: &[usize; 3]| (0..3).map(|k| p[k] * l[k]).sum::<usize>() % q == 0;
@@ -344,7 +344,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-11-23 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 L1 = i + j mod 3: [[0, 1, 2], [1, 2, 0], [2, 0, 1]]   L2 = i + 2j mod 3: [[0, 2, 1], [1, 0, 2], [2, 1, 0]]

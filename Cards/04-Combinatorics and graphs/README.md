@@ -4,7 +4,7 @@
 
 # 04 · Combinatorics and graphs
 
-Count any finite arrangement (orderings, selections, distributions, partitions) by formula and by brute-force listing, and turn a step rule or a counting problem into a recurrence or a generating function and read the answer off. Model a network as a graph and compute or prove the standard facts: degrees, paths and connectivity, trees and cheapest routes, Euler and Hamilton tours, planarity, colourings, matchings and flows, with Ramsey and extremal results in outline.
+Count any finite arrangement (orderings, selections, distributions, partitions) by formula and by brute-force listing, and turn a step rule or a counting problem into a recurrence or a generating function and read the answer off. Model a network as a graph and compute or prove the standard facts: degrees, paths and connectivity, trees and cheapest routes, Euler and Hamilton tours, planarity, colourings, matchings and flows, with Ramsey and extremal results in outline, orders and set systems, and combinatorial designs.
 
 16 shelves · **106 of 106 cards ready to read**
 

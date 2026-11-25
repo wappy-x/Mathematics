@@ -21,7 +21,7 @@ Each weight comes back as a signed average of the readings: parcel 1 is (450 + 2
 
 The sign table is $`H_4`$, a **Hadamard matrix**: a square table of +1 and −1 whose rows are **perpendicular**, meaning any two different rows have dot product 0 (multiply place by place, then add). Perpendicular rows let the readings untangle cleanly.
 
-**A Hadamard matrix is a square table of plus and minus ones whose rows are perpendicular; that forces its size to be 1, 2 or a multiple of 4, doubling builds one in every power of 2, and no square table with entries between −1 and 1 has a larger determinant.**
+**A Hadamard matrix is a ±1 square table with perpendicular rows: its size is 1, 2 or a multiple of 4, doubling builds every power of 2, and it reaches the largest determinant for entries in [−1, 1].**
 
 **What kind of fact this is:** a definition and four theorems, all proved on this card in Why it works. That every multiple of 4 has one is the Hadamard conjecture, unproved as of 2026-11-23.
 
@@ -43,7 +43,7 @@ flowchart LR
 HH^{\mathsf T} = nI \quad\Longrightarrow\quad n = 1,\ n = 2 \ \text{or}\ 4 \mid n, \qquad H_{2n} = H_2 \otimes H_n, \qquad \lvert \det A \rvert \le n^{n/2}
 ```
 
-**Read it aloud:** each row dotted with itself gives n and with any other row 0; that needs size 1, 2 or a multiple of 4; a Kronecker product with H2 doubles the size; and entries between −1 and 1 keep the determinant at most n to the power n/2.
+**Read it aloud:** each row dotted with itself gives n and with any other row 0, which needs size 1, 2 or a multiple of 4. A Kronecker product with H2 doubles the size, and entries between −1 and 1 cap the determinant at n to the power n/2.
 
 For $`H_4`$: $`\det H_4 = 16 = 4^{4/2}`$, so it reaches the bound.
 
@@ -91,7 +91,7 @@ a+b+c+d = n, \qquad a+b-c-d = 0, \qquad a-b+c-d = 0, \qquad a-b-c+d = 0
 
 Adding all four gives $`4a = n`$, and the same trick gives $`b = c = d = n/4`$. So 4 divides $`n`$. In $`H_8`$ the counts are 2, 2, 2, 2.
 
-At size 6 the counts would be 6/4, not whole. A search over all 10 balanced rows agrees: at most 2 perpendicular rows.
+At size 6 the counts would be 6/4, not whole. A search over all 10 balanced rows starting with +1 agrees: at most 2 perpendicular rows.
 
 ### Step 3: doubling with the Kronecker product
 
@@ -135,7 +135,11 @@ Here $`u_i`$ is the leftover of row $`i`$ and $`\lVert u_i \rVert`$ its length. 
 
 Normalise $`H_8`$ and delete its first row and column. The 7 by 7 **core** that remains has three +1 entries in each row: four in the full row, minus the first.
 
-Take the columns as points and the +1 places of each core row as a block. Sylvester's $`H_8`$ gives the blocks {2, 4, 6}, {1, 4, 5}, {3, 4, 7}, {1, 2, 3}, {2, 5, 7}, {1, 6, 7}, {3, 5, 6}. $`H^{\mathsf T}`$ is also Hadamard, because $`H^{\mathsf T}/n`$ is the inverse of $`H`$, so Step 2 applies to columns. Any two columns are both +1 in $`n/4 = 2`$ rows, one being the deleted top row. So each pair of points shares exactly 1 block: a 2-(7, 3, 1) design. Swap labels 3 and 4 and send 5 → 7 → 6 → 5, and the blocks become the house lines {1, 2, 4}, …, {7, 1, 3}.
+Take the columns as points and the +1 places of each core row as a block. Sylvester's $`H_8`$ gives the blocks {2, 4, 6}, {1, 4, 5}, {3, 4, 7}, {1, 2, 3}, {2, 5, 7}, {1, 6, 7}, {3, 5, 6}.
+
+$`H^{\mathsf T}`$ is also Hadamard, because $`H^{\mathsf T}/n`$ is the inverse of $`H`$, so Step 2 applies to columns. Any two columns are both +1 in $`n/4 = 2`$ rows, one being the deleted top row, so each pair of points shares 1 block: a 2-(7, 3, 1) design.
+
+Swap labels 3 and 4 and send 5 → 7 → 6 → 5, and the blocks become the Fano lines {1, 2, 4}, …, {7, 1, 3} from [Block designs](01-block-designs-and-fishers-inequality.md).
 
 In general a normalised $`H_n`$ gives a 2-(n − 1, n/2 − 1, n/4 − 1) design. It runs backwards too: +1 where a point lies on a Fano line, −1 elsewhere, plus a border of +1s, gives $`HH^{\mathsf T} = 8I`$. This core is twice the Fano plane's 0/1 incidence matrix, turned on its side, minus a table of all 1s.
 
@@ -378,7 +382,7 @@ Lean proves the size rule, the doubling step and Hadamard's bound for every size
 - Take parcels of 120, 75, 210 and 45 g. Then the readings are 450, 210, −60 and −120 g, and $`H_4^{\mathsf T}y/4`$ gives the parcels back.
 - In Sylvester's $`H_8`$, rows 2 and 3 give the column counts 2, 2, 2, 2.
 - The +1 places of the core of Sylvester's $`H_8`$ form a 2-(7, 3, 1) design, the Fano plane. In the −1 places, each pair of points is together 2 times.
-- Put +1 on each house line and −1 off it, plus a border of +1s. Then $`HH^{\mathsf T} = 8I`$.
+- Put +1 on each Fano line and −1 off it, plus a border of +1s. Then $`HH^{\mathsf T} = 8I`$.
 - Doubling without the minus, `[[H4, H4], [H4, H4]]`, fails: $`HH^{\mathsf T} \ne 8I`$.
 
 The equality case, the searches over small tables and the Gram-Schmidt leftovers are left to the Python and Rust checks.
@@ -546,7 +550,7 @@ example : ∀ x y : Fin 7, x ≠ y →
 example : ∀ x y : Fin 7, x ≠ y →
     (Finset.univ.filter fun i => core8 i x = -1 ∧ core8 i y = -1).card = 2 := by decide
 
-/-- Back from the Fano plane: a border of `+1`s, then `+1` on each house line {1, 2, 4},
+/-- Back from the Fano plane: a border of `+1`s, then `+1` on each Fano line {1, 2, 4},
 {2, 3, 5}, {3, 4, 6}, {4, 5, 7}, {5, 6, 1}, {6, 7, 2}, {7, 1, 3} and `-1` off it. -/
 def fanoH8 : Matrix (Fin 8) (Fin 8) ℤ :=
   !![1, 1, 1, 1, 1, 1, 1, 1;
@@ -571,7 +575,7 @@ example : (!![1, 1; 1, 1] ⊗ₖ H4) * (!![1, 1; 1, 1] ⊗ₖ H4)ᵀ ≠
 end HadamardMatrices
 ```
 
-**Checked 2026-11-23 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'HadamardMatrices.hadamard_size_one_two_or_four_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -613,16 +617,21 @@ end HadamardMatrices
 ## What this builds on
 
 - [Block designs](01-block-designs-and-fishers-inequality.md): the 2-(v, k, λ) language and the Fano plane that $`H_8`$ turns into.
-- [Steiner triple systems](02-steiner-triple-systems.md) and [Finite planes and orthogonal Latin squares](03-projective-planes-and-orthogonal-latin-squares.md): the Fano plane as the smallest of each family.
+- [Steiner triple systems](02-steiner-triple-systems.md): the Fano plane as a 7-point triple system.
+- [Finite planes and orthogonal Latin squares](03-projective-planes-and-orthogonal-latin-squares.md): the Fano plane as the smallest projective plane, of order 2.
 - [Tensor products](../../03-Algebra/11-Duals%2C%20Quotients%20and%20Tensors/03-tensor-products.md): the Kronecker product behind Sylvester's doubling.
 - [Gram-Schmidt](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md): the shadows and leftovers that prove Hadamard's bound.
 - [Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): the determinant as a volume, unchanged when multiples of one row are added to another.
 
 ## Where this goes next
 
-The fast Walsh–Hadamard transform, which multiplies by Sylvester's table in about $`n \log n`$ steps, and Hadamard codes are planned for the applied and computational wing.
+- [Fourier analysis on a finite abelian group](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/01-fourier-analysis-on-finite-abelian-groups.md): the Walsh–Hadamard transform on bit strings and its fast butterfly algorithm.
+- [Hamming and Reed-Solomon](../../14-Applied%20and%20computational/03-Information%20Theory/08-error-correcting-codes-hamming-and-reed-solomon.md): error-correcting codes built around keeping codewords far apart, the same distance idea behind Hadamard codes.
+- [Qubits](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/05-qubits-superposition-and-measurement.md): $`H_2 / \sqrt{2}`$ as the Hadamard gate of quantum computing.
 
-Does every multiple of 4 have a Hadamard matrix, starting with 668?
+This card closes Combinatorics and graphs. The three links above carry Hadamard matrices into later wings. The reading order goes on with [Angles](../../05-Geometry%20and%20trig/01-Angles%2C%20Triangles%20and%20Congruence/01-angles-and-parallel-lines.md), the first card of Geometry and trig, which starts from turns and parallel lines.
+
+Open question: does every multiple of 4 have a Hadamard matrix, starting with 668?
 
 ---
 
