@@ -36,7 +36,7 @@ B and D carry three lanes each, F two; A, C, E and G carry one apiece.
 
 ## The formula
 
-Notation first. A map is its houses and the pairs a lane joins: $`V`$ the houses, $`E`$ the lanes, $`n`$ and $`m`$ how many of each ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)).
+Notation first. A map is its houses and the pairs a lane joins: $`V`$ the houses (vertices), $`E`$ the lanes (edges), $`n`$ and $`m`$ how many of each ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)).
 
 $`G`$ is any map, $`T`$ a tree; $`c(G)`$ counts its pieces and $`\deg(v)`$ the lanes at house $`v`$, its **degree** ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)). A house of degree 1 is a **leaf**, and the double arrow $`\Longleftrightarrow`$ reads "exactly when".
 
@@ -61,7 +61,7 @@ m = n - c(G)
 | $`T`$, $`G`$ | a tree; any map, tree or not | the village; the trap, a triangle A-B-C beside the path D-E-F-G, 6 lanes in 2 pieces | — |
 | $`V`$, $`E`$, $`n`$, $`m`$ | houses, lanes, how many of each | A to G; six lanes; 7 and 6 | one more house than lanes, always |
 | $`c(G)`$ | pieces the map falls into | 1, then 2 once B-D is cut | one lane fewer for each extra piece |
-| $`\deg(v)`$ | lanes at a house | 3 at B, 1 at A | fewer leaves |
+| $`\deg(v)`$ | lanes at a house | 3 at B, 1 at A | more leaves elsewhere in a tree |
 | $`v`$, $`w`$, $`x`$, $`z`$ | houses in general | B, D | — |
 
 ### When it holds
@@ -76,7 +76,9 @@ m = n - c(G)
 
 ### Step 0: a second route is a loop, and a loop is a second route
 
-Follow two different routes from $`v`$ to $`w`$. Let $`x`$ be the last house they share before parting, $`z`$ the first beyond $`x`$ lying on both — they meet again, since both end at $`w`$. The two stretches from $`x`$ to $`z`$ share only their ends, so together they close a loop. They cannot both be the lane from $`x`$ to $`z`$, since there is at most one. The loop takes in three houses or more: a cycle.
+Follow two different routes from $`v`$ to $`w`$. Let $`x`$ be the last house they share before parting, $`z`$ the first beyond $`x`$ lying on both — they meet again, since both end at $`w`$.
+
+The two stretches from $`x`$ to $`z`$ share only their ends, so together they close a loop. They cannot both be the lane from $`x`$ to $`z`$, since there is at most one. The loop takes in three houses or more: a cycle.
 
 Read backwards, a cycle gives two routes between any two of its houses, one each way round. Spare routes and loops are one fact seen twice.
 
@@ -191,8 +193,8 @@ N, NB, miss = 7, nbrs(7, LANES), gaps(7, LANES)
 counts, deg = [len(routes(NB, u, v)) for u, v in pairs(N)], [len(NB[v]) for v in range(N)]
 blocks, (left, rest, trail) = pieces(N, LANES), peel(N, LANES)
 cuts = [(ln(e), [len(b) for b in cut(N, LANES, e)]) for e in LANES]
-closed = [(e, r) for e in miss for r in [routes(NB, e[0], e[1])[0]] for p in [peel(N, LANES + [e])] if sorted(p[0]) == sorted(r) and len(p[1]) == len(r)]
-ring = next(r for e, r in closed if e == (0, 6))
+closed = [(e, rs[0]) for e in miss for rs in [routes(NB, e[0], e[1])] if len(rs) == 1 for p in [peel(N, LANES + [e])] if sorted(p[0]) == sorted(rs[0]) and len(p[1]) == len(rs[0])]
+ring = next((r for e, r in closed if e == (0, 6)), ())
 f1, f2 = cut(N, LANES, (1, 3)), pieces(N, [f for f in LANES if f not in ((1, 3), (3, 5))])
 maps = [[p for i, p in enumerate(pairs(5)) if mask >> i & 1] for mask in range(1 << 10)]   # every lane map on 5 houses
 flags = [(len(pieces(5, es)) == 1, not peel(5, es)[1], len(es) == 4, one_each(5, es)) for es in maps]
@@ -205,12 +207,12 @@ rows = [("seven houses A to G, the six lanes", f"{' '.join(ln(e) for e in LANES)
         ("flood from A, then peel one-lane houses", f"{len(blocks)} piece of {len(blocks[0])}, peeled to {len(left)} house and {len(rest)} lanes"),
         ("houses and lanes down the peeling", " ".join(f"{h}-{m}" for h, m in trail)),
         ("degrees A to G, their sum, the leaves", f"{' '.join(str(d) for d in deg)}, sum {sum(deg)} = 2 x {len(LANES)} lanes, leaves {' '.join(NAMES[v] for v in range(N) if deg[v] == 1)}"),
-        ("cut one lane, pieces left, A's side first", ", ".join(f"{a} {b[0]}+{b[1]}" for a, b in cuts)),
+        ("cut one lane, pieces left, A's side first", ", ".join(f"{a} {'+'.join(str(x) for x in b)}" for a, b in cuts)),
         ("lanes whose loss strands someone", f"{len(strand(N, LANES))} of {len(LANES)}, each cut leaving 2 pieces and {len(LANES) - 1} lanes = {N} - 2"),
         (f"add one of the {len(miss)} missing lanes", f"{len(closed)} of {len(miss)} close exactly one loop"),
         (f"A-G closes the loop {' '.join(NAMES[v] for v in ring)}", f"{len(ring)} houses, {len(ring)} lanes; now only {len(strand(N, LANES + [(0, 6)]))} of {len(LANES) + 1} lanes strand someone"),
         ("trap: triangle A-B-C beside path D-E-F-G", f"{len(TRAP)} lanes = {N} - 1, {len(pieces(N, TRAP))} pieces, a loop of {len(peel(N, TRAP)[1])}"),
-        ("forest: cut B-D, then D-F as well", f"{len(f1)} pieces sized {len(f1[0])} and {len(f1[1])}, {len(LANES) - 1} lanes = {N} - 2; then {len(f2)} pieces, {len(LANES) - 2} lanes = {N} - 3"),
+        ("forest: cut B-D, then D-F as well", f"{len(f1)} pieces sized {' and '.join(str(len(b)) for b in f1)}, {len(LANES) - 1} lanes = {N} - 2; then {len(f2)} pieces, {len(LANES) - 2} lanes = {N} - 3"),
         (f"five houses, all {len(maps)} lane maps", f"connected and loop-free {len(sets[0])}, one route per pair {len(sets[1])}, connected with 4 lanes {len(sets[2])}, loop-free with 4 lanes {len(sets[3])}"),
         ("the four descriptions pick the same maps", f"{'yes' if same else 'no'}, {len(sets[0])} of them; {four} maps use 4 lanes, {four - len(sets[0])} of those not trees")]
 for a, b in rows: print(f"{a:<46}{b}")
@@ -221,7 +223,7 @@ assert same and len(sets[0]) == 125 and four == choose(10, 4) == 210
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-19 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 seven houses A to G, the six lanes            A-B B-C B-D D-E D-F F-G: 6 lanes, 7 houses, one fewer
@@ -294,11 +296,11 @@ fn main() {
     let cuts: Vec<(String, Vec<usize>)> = LANES.iter().map(|&e| (ln(e), cut(n, &LANES, e).iter().map(|b| b.len()).collect())).collect();
     let mut closed: Vec<((usize, usize), Vec<usize>)> = Vec::new();
     for &e in &miss {
-        let (r, (l, rst, _)) = (found(&nb, e.0, e.1)[0].clone(), peel(n, &[LANES.to_vec(), vec![e]].concat()));
-        let mut hs = r.clone(); hs.sort();
-        if l == hs && rst.len() == r.len() { closed.push((e, r)) }
+        let rs = found(&nb, e.0, e.1); if rs.len() != 1 { continue }
+        let (r, (l, rst, _)) = (rs[0].clone(), peel(n, &[LANES.to_vec(), vec![e]].concat()));
+        let mut hs = r.clone(); hs.sort(); if l == hs && rst.len() == r.len() { closed.push((e, r)) }
     }
-    let ring = closed.iter().find(|c| c.0 == (0, 6)).unwrap().1.clone();
+    let ring = closed.iter().find(|c| c.0 == (0, 6)).map(|c| c.1.clone()).unwrap_or_default();
     let (f1, f2) = (cut(n, &LANES, (1, 3)), pieces(n, &LANES.iter().copied().filter(|&f| f != (1, 3) && f != (3, 5)).collect::<Vec<_>>()));
     let maps: Vec<Vec<(usize, usize)>> = (0..1usize << 10).map(|mask| pairs(5).into_iter().enumerate().filter(|(i, _)| mask >> i & 1 == 1).map(|(_, p)| p).collect()).collect();
     let flags: Vec<(bool, bool, bool, bool)> = maps.iter().map(|es| (pieces(5, es).len() == 1, peel(5, es).1.is_empty(), es.len() == 4, one_each(5, es))).collect();
@@ -310,12 +312,12 @@ fn main() {
     row("flood from A, then peel one-lane houses".to_string(), format!("{} piece of {}, peeled to {} house and {} lanes", blocks.len(), blocks[0].len(), left.len(), rest.len()));
     row("houses and lanes down the peeling".to_string(), trail.iter().map(|(h, m)| format!("{}-{}", h, m)).collect::<Vec<String>>().join(" "));
     row("degrees A to G, their sum, the leaves".to_string(), format!("{}, sum {} = 2 x {} lanes, leaves {}", deg.iter().map(|d| d.to_string()).collect::<Vec<String>>().join(" "), deg.iter().sum::<usize>(), LANES.len(), nm(&(0..n).filter(|&v| deg[v] == 1).collect::<Vec<usize>>())));
-    row("cut one lane, pieces left, A's side first".to_string(), cuts.iter().map(|(a, b)| format!("{} {}+{}", a, b[0], b[1])).collect::<Vec<String>>().join(", "));
+    row("cut one lane, pieces left, A's side first".to_string(), cuts.iter().map(|(a, b)| format!("{} {}", a, b.iter().map(|x| x.to_string()).collect::<Vec<String>>().join("+"))).collect::<Vec<String>>().join(", "));
     row("lanes whose loss strands someone".to_string(), format!("{} of {}, each cut leaving 2 pieces and {} lanes = {} - 2", strand(n, &LANES), LANES.len(), LANES.len() - 1, n));
     row(format!("add one of the {} missing lanes", miss.len()), format!("{} of {} close exactly one loop", closed.len(), miss.len()));
     row(format!("A-G closes the loop {}", nm(&ring)), format!("{} houses, {} lanes; now only {} of {} lanes strand someone", ring.len(), ring.len(), strand(n, &[LANES.to_vec(), vec![(0, 6)]].concat()), LANES.len() + 1));
     row("trap: triangle A-B-C beside path D-E-F-G".to_string(), format!("{} lanes = {} - 1, {} pieces, a loop of {}", TRAP.len(), n, pieces(n, &TRAP).len(), peel(n, &TRAP).1.len()));
-    row("forest: cut B-D, then D-F as well".to_string(), format!("{} pieces sized {} and {}, {} lanes = {} - 2; then {} pieces, {} lanes = {} - 3", f1.len(), f1[0].len(), f1[1].len(), LANES.len() - 1, n, f2.len(), LANES.len() - 2, n));
+    row("forest: cut B-D, then D-F as well".to_string(), format!("{} pieces sized {}, {} lanes = {} - 2; then {} pieces, {} lanes = {} - 3", f1.len(), f1.iter().map(|b| b.len().to_string()).collect::<Vec<String>>().join(" and "), LANES.len() - 1, n, f2.len(), LANES.len() - 2, n));
     row(format!("five houses, all {} lane maps", maps.len()), format!("connected and loop-free {}, one route per pair {}, connected with 4 lanes {}, loop-free with 4 lanes {}", sets[0].len(), sets[1].len(), sets[2].len(), sets[3].len()));
     row("the four descriptions pick the same maps".to_string(), format!("{}, {} of them; {} maps use 4 lanes, {} of those not trees", if same { "yes" } else { "no" }, sets[0].len(), four, four - sets[0].len()));
     assert!(*counts.iter().min().unwrap() == 1 && *counts.iter().max().unwrap() == 1 && blocks.len() == 1 && (left.len(), rest.len()) == (1, 0));
@@ -326,7 +328,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-19 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 seven houses A to G, the six lanes            A-B B-C B-D D-E D-F F-G: 6 lanes, 7 houses, one fewer
@@ -509,7 +511,7 @@ example : 2 ^ Nat.choose 5 2 = 1024 ∧ Nat.choose 10 4 = 210 ∧ 210 - 125 = 85
 
 - **Networks with no spare link.** A cable run with every link load-bearing is cheapest to build and worst to lose; the cheapest such skeleton when lanes have prices is [The cheapest skeleton](04-minimum-spanning-trees.md).
 - **Folders, org charts, family lines.** One route from the top to each item is this property read downward, and naming a top house is what makes a tree rooted: [Rooted trees](02-rooted-and-binary-trees.md).
-- **What a search leaves behind.** The lanes a flood keeps as it marks new houses ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)) form a tree over the piece it reached; so does a sentence broken into phrases within phrases, Grammars and a stack.
+- **What a search leaves behind.** The lanes a flood keeps as it marks new houses ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)) form a tree over the piece it reached; so does a sentence broken into phrases within phrases, [Grammars and a stack](../../24-Computability%20and%20complexity/01-Models%20of%20Computation/05-context-free-grammars-and-pushdown-automata.md).
 
 > **Say it back**
 > A tree is a map that is joined up and carries no loop. Loops and spare routes are the same thing, so exactly one route joins every pair. Peel off a one-lane house again and again — a finite tree always has two to start from — and each peel costs a house and a lane: one lane fewer than houses, six for seven. Cut a lane and the pieces rise; add one and a single loop appears.
@@ -530,7 +532,7 @@ example : 2 ^ Nat.choose 5 2 = 1024 ∧ Nat.choose 10 4 = 210 ∧ 210 - 125 = 85
 - [Grammars and a stack](../../24-Computability%20and%20complexity/01-Models%20of%20Computation/05-context-free-grammars-and-pushdown-automata.md): trees as the record of how a sentence or a program was built.
 - [Treewidth](../12-Planarity%20and%20Colouring/10-treewidth.md): how close a graph is to a tree, measured by the thinnest tree of overlapping bags, and why hard problems turn easy on tree-like graphs.
 
-Nothing here told one lane from another: put a price on each and the cheapest skeleton becomes a question, [The cheapest skeleton](04-minimum-spanning-trees.md).
+A tree has no top until you pick one: naming one house the root gives every other a parent and a depth, which is where [Rooted trees](02-rooted-and-binary-trees.md) begins.
 
 ---
 

@@ -100,7 +100,9 @@ A tree holds exactly one path between any two vertices ([Trees](01-trees.md)). F
 
 ### Step 1: depth splits the tree into levels, and each level doubles
 
-Depth is the length of that one path: one path, one number, so each vertex sits in exactly one level and level-by-level counting misses nothing. In a perfect tree every vertex at a depth short of $`h`$ has two children one level down, and each of those children has one parent back above. So level $`k + 1`$ holds two for each vertex of level $`k`$: the count doubles exactly. From one root, level $`k`$ holds $`2^{k}`$ — 1, 2, 4, 8, 16 — and the last level's number is the height.
+Depth is the length of that one path: one path, one number, so each vertex sits in exactly one level and level-by-level counting misses nothing.
+
+In a perfect tree every vertex at a depth short of $`h`$ has two children one level down, and each of those children has one parent back above. So level $`k + 1`$ holds two for each vertex of level $`k`$: the count doubles exactly. From one root, level $`k`$ holds $`2^{k}`$ — 1, 2, 4, 8, 16 — and the last level's number is the height.
 
 ### Step 2: add the levels up
 
@@ -112,7 +114,9 @@ Why one short of the next double: double every term and each becomes the next on
 
 ### Step 3: a second count that never mentions depth
 
-Each match sends one team home, and fifteen of the sixteen must go to leave a champion: fifteen matches, whatever the draw. The same count reads off any full binary tree. Each inner vertex has two children, so the children number twice the inner vertices — and the children are every vertex but the root. Twice the inner count is therefore the inner count plus the leaves, less one: inner vertices run one behind leaves. No height enters, which is why the level formula is the fragile one.
+Each match sends one team home, and fifteen of the sixteen must go to leave a champion: fifteen matches, whatever the draw.
+
+The same count reads off any full binary tree. Each inner vertex has two children, so the children number twice the inner vertices — and the children are every vertex but the root. Twice the inner count is therefore the inner count plus the leaves, less one: inner vertices run one behind leaves. No height enters, which is why the level formula is the fragile one.
 
 ### Step 4: the three walks, and why each names every vertex once
 
@@ -136,7 +140,9 @@ Seven vertices, height 2, perfect again: $`2^{3} - 1 = 7`$.
 - **In-order**, between them: jan.jpg 2025 feb.jpg photos mar.jpg 2026 apr.jpg
 - **Post-order**, after both: jan.jpg feb.jpg 2025 mar.jpg apr.jpg 2026 photos
 
-Each earns its keep. Pre-order is how a listing prints. Post-order is how a size total must finish: a folder's megabytes need its contents' first, 2025 at 6 MB, 2026 at 8 MB, photos at 14 MB. In-order is the binary-only one, and it reads keys back sorted: 1 to 7 set smaller-left come out 1 2 3 4 5 6 7.
+Each earns its keep. Pre-order is how a listing prints. Post-order is how a size total must finish: a folder's megabytes need its contents' first, 2025 at 6 MB, 2026 at 8 MB, photos at 14 MB.
+
+In-order is the binary-only one. Place stored values (keys) with smaller ones on the left and larger ones on the right: 4 at the root, 1 to 3 left, 5 to 7 right. In-order reads them back sorted: 1 2 3 4 5 6 7.
 
 <details>
 <summary>Detailed proof: each walk names every vertex exactly once</summary>
@@ -147,7 +153,9 @@ By induction on the height. A tree of height 0 is one leaf, and all three rules 
 
 Two more routes, both in the code. Mirroring a tree — left and right swapped everywhere — turns pre-order into post-order read backwards.
 
-And addresses count the vertices with no levels: the root takes the empty word, a step left adds an L, a step right an R, so a vertex's word is as long as its depth. A perfect tree of height 4 is the words of length 0 to 4 over two letters, 31 of them ([Strings with repetition](../01-Counting%20Principles/02-strings-and-powers.md)), alphabetical order being pre-order. How many shapes are possible is counted on [Catalan everywhere](../06-Lattice%20Paths%20and%20Catalan%20Numbers/04-catalan-bijections.md).
+And addresses count the vertices with no levels: the root takes the empty word, a step left adds an L, a step right an R, so a vertex's word is as long as its depth.
+
+A perfect tree of height 4 is the words of length 0 to 4 over two letters, 31 of them ([Strings with repetition](../01-Counting%20Principles/02-strings-and-powers.md)), alphabetical order being pre-order. How many shapes are possible is counted on [Catalan everywhere](../06-Lattice%20Paths%20and%20Catalan%20Numbers/04-catalan-bijections.md).
 
 ---
 
@@ -386,7 +394,7 @@ Lean proves the counts for every finite tree, whatever its root and its height.
 - Its edges number $`2^{h+1} - 2`$, one fewer than the vertices.
 - In any full binary tree, the inner vertices plus one equal the leaves, whatever the height.
 
-It also checks the card's sums: the cup draw, the folder tree and the two mistakes. The three walks, the mirror and the sorted keys are left to the Python and Rust checks.
+It also checks the card's sums: the cup draw, the folder tree and the first two mistakes. The three walks, the mirror, the sorted keys and the third mistake are left to the Python and Rust checks.
 
 ```lean
 -- Rooted trees: a finite tree hung from a root, where every vertex has two children or none and every leaf sits at depth h, has 2^k vertices at each depth k, 2^(h+1) - 1 vertices in all, 2^h leaves and 2^h - 1 inner vertices, and in any such two-or-none tree the inner vertices run one behind the leaves.
@@ -691,7 +699,7 @@ example : 2 ^ (5 + 1) - 1 = 63 ∧ 2 ^ (15 + 1) - 1 = 65535 := by norm_num
 ## Where you meet it in real life
 
 - **File systems.** Every folder but the top has one parent, which is what lets a path be one line of text. A listing prints pre-order; a size total finishes in post-order.
-- **Arithmetic expressions.** Operators inside, numbers at the leaves: in-order with brackets is how one is written, post-order how a machine evaluates it, which is reverse Polish notation.
+- **Arithmetic expressions.** Operators inside, numbers at the leaves: in-order with brackets is how one is written, post-order how a machine evaluates it (`3 4 +` instead of `3 + 4`, known as reverse Polish notation).
 - **Sorted lookup.** With smaller keys left, a search follows one root-to-leaf path, so height is what matters ([Data structures](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/06-data-structures-heaps-hashes-and-trees.md)).
 
 > **Say it back**
@@ -705,11 +713,12 @@ example : 2 ^ (5 + 1) - 1 = 63 ∧ 2 ^ (15 + 1) - 1 = 65535 := by norm_num
 
 ## Where this goes next
 
+- [Spanning trees](03-spanning-trees-and-cayleys-formula.md): trees carved out of a larger graph, and how many a complete network holds.
 - [Data structures](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/06-data-structures-heaps-hashes-and-trees.md): keys held in a rooted tree, so a lookup costs a root-to-leaf path, not a scan.
 - [Huffman coding](../../14-Applied%20and%20computational/03-Information%20Theory/05-source-coding-and-huffman.md): a binary tree whose leaves are letters, lopsided on purpose so common letters sit shallow.
 - [Treewidth](../12-Planarity%20and%20Colouring/10-treewidth.md): how close a graph is to a tree, measured by the thinnest tree of overlapping bags, and why hard problems turn easy on tree-like graphs.
 
-The cup draw is level only because sixteen teams fit a doubling shape exactly; data arriving in the wrong order grows the ladder instead, 15 deep for the same 31 vertices, and keeping a tree short as it grows is where a later card starts.
+So far the whole graph was already a tree; finding a tree hidden inside a tangled network, and counting how many fit inside one, is next in [Spanning trees](03-spanning-trees-and-cayleys-formula.md). Keeping a search tree short as data arrives is taken up in [Data structures](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/06-data-structures-heaps-hashes-and-trees.md).
 
 ---
 

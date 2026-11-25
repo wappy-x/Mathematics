@@ -67,7 +67,7 @@ Split the vertices into a group $`S`$ and the rest, neither empty: that is a **c
 | $`V`$, $`n`$ | the vertices, and how many | A to G, $`n`$ is 7 | one more run to buy |
 | $`E`$ | the candidate edges | the 11 runs | the price can only fall, never rise |
 | $`e`$, $`f`$, $`u`$, $`v`$ | edges, and the vertices one joins | AD joins A and D | — |
-| $`w`$ | an edge's weight, here a price | $`w`$ of AD is 5 | the total rises |
+| $`w`$ | an edge's weight, here a price | $`w`$ of AD is 5 | the total stays the same or rises |
 | $`T`$, $`S`$ | kept edges; one side of a cut | the six runs; A, B, D, F | — |
 
 ### When it holds
@@ -86,7 +86,9 @@ Add BC to the six runs that win — AD, CE, DF, AB, BE, EG. The seven hold one l
 
 ### Step 1: a cheapest edge across a cut is safe
 
-Cut the vertices into $`S`$ and the rest. Let $`e`$ be a cheapest crossing edge, $`T`$ any cheapest skeleton. If $`T`$ holds $`e`$, nothing to prove. If not, add $`e`$ to $`T`$: one loop appears, it leaves $`S`$ and returns, so a second crossing edge $`f`$ lies on it. Drop $`f`$, keep $`e`$: a skeleton priced $`w(T) - w(f) + w(e)`$, no dearer, since $`e`$ was cheapest across the cut. Nothing beats a cheapest skeleton, so the new one is cheapest too, and holds $`e`$.
+Cut the vertices into $`S`$ and the rest. Let $`e`$ be a cheapest crossing edge, $`T`$ any cheapest skeleton. If $`T`$ holds $`e`$, nothing to prove. If not, add $`e`$ to $`T`$: one loop appears, it leaves $`S`$ and returns, so a second crossing edge $`f`$ lies on it.
+
+Drop $`f`$, keep $`e`$: a skeleton priced $`w(T) - w(f) + w(e)`$, no dearer, since $`e`$ was cheapest across the cut. Nothing beats a cheapest skeleton, so the new one is cheapest too, and holds $`e`$.
 
 After Kruskal keeps AD, CE, DF and AB, the group A, B, D, F faces C, E, G. Crossing it: BE 7, BC 8, EF 8, FG 11, DE 15 — cheapest BE 7, which is in the answer.
 
@@ -107,7 +109,9 @@ After $`n - 1`$ keeps, the kept set and that skeleton are both $`n - 1`$ loop-fr
 
 ### Step 3: both walks keep only cheapest crossing edges
 
-When Kruskal keeps the edge joining $`u`$ and $`v`$, let $`S`$ be the piece of kept edges holding $`u`$. No kept edge crosses that cut, each sitting inside one piece. Nor does a cheaper edge. It came earlier in the sort, and its ends lie in different pieces now. Pieces only merge, so its ends lay in different pieces then too, and the walk would have kept it. But a kept edge's ends sit in one piece. A skip needs no defence: its ends are joined already.
+When Kruskal keeps the edge joining $`u`$ and $`v`$, let $`S`$ be the piece of kept edges holding $`u`$. No kept edge crosses that cut, each sitting inside one piece.
+
+Nor does a cheaper edge. It came earlier in the sort, and its ends lie in different pieces now. Pieces only merge, so its ends lay in different pieces then too, and the walk would have kept it. But a kept edge's ends sit in one piece. A skip needs no defence: its ends are joined already.
 
 Prim's cut is the group itself: every kept edge lies inside it, and the edge kept is a cheapest one leaving it. Each keep adds a new vertex, so no loop forms; the start fixes only the order, all seven pricing out at 39.
 
@@ -169,7 +173,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Three roads reach the same six runs: Kruskal's walk, on a union-find where each building points at another until a piece's root is reached; Prim's growing group; and brute force over all 462 six-run subsets, reading off the cheapest, the dearest, and how many price at the cheapest.
+Nothing is imported. Three roads reach the same six runs: Kruskal's walk on a union-find (each building pointing toward its piece's root), Prim's growing group, and brute force over all 462 six-run subsets. Brute force also reads off the cheapest, the dearest, and how many tie at the cheapest.
 
 ### Python
 
@@ -776,11 +780,12 @@ example : total (skeletonRuns.take 5) = 30 ∧ total (kruskal cheapToDear.revers
 
 ## Where this goes next
 
+- [Dijkstra's algorithm](05-dijkstra.md): cheapest routes from one starting point to every other, rather than the cheapest whole-network build.
 - [The travelling salesman](../11-Tours%20-%20Euler%20and%20Hamilton/04-travelling-salesman-in-outline.md): the skeleton as a floor under a tour's price, and how a tour is built from one.
 - [Greedy](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/08-greedy-algorithms-and-matroids.md): why a sorted greedy walk is right here and wrong for tours.
 - [Graph algorithms as code](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/09-graph-algorithms-in-practice.md): union-find and heaps, and what these walks cost on maps of millions of edges.
 
-The skeleton says nothing about distances inside it: B reaches C only through E. So the price of one trip visiting every building is a separate question, the one travelling salesman opens.
+The skeleton minimises the total build, not the distance from one building to another: B reaches C only through E. Finding the cheapest route from one starting point to every other is next, in [Dijkstra's algorithm](05-dijkstra.md).
 
 ---
 

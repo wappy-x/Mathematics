@@ -172,7 +172,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 10 · Trees and Cheapest Routes · 7 cards
 
-*Trees and their characterisations, rooted and binary trees, spanning trees and Cayley's formula, minimum spanning trees by Kruskal and Prim, Dijkstra, and Bellman-Ford with negative cycles as currency arbitrage.*
+*Trees and their characterisations, rooted and binary trees, spanning trees and Cayley's formula, minimum spanning trees by Kruskal and Prim, Dijkstra, Bellman-Ford with negative cycles as currency arbitrage, and the matrix-tree theorem.*
 
 1. [Trees: connected with no cycles, exactly one fewer edge than vertices, and one route between any two points](10-Trees%20and%20Cheapest%20Routes/01-trees.md)
 2. [Rooted trees: hang a tree from one vertex and you get parents, children, depth and the shape behind every file system](10-Trees%20and%20Cheapest%20Routes/02-rooted-and-binary-trees.md)

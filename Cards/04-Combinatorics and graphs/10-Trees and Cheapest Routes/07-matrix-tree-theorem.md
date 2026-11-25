@@ -6,7 +6,7 @@
 
 ## General Overview
 
-A small office joins four network switches with five cables: P and Q in the offices, R in the store room, W in the loading bay. Every pair is cabled except R and W. Data sent round a loop circles forever, so the switches turn cables off until no loop is left. Ethernet's Spanning Tree Protocol does this.
+A small office joins four network switches with five cables: P and Q in the offices, R in the store room, W in the loading bay. Every pair is cabled except R and W. Data sent round a loop circles forever, so the switches turn cables off until no loop is left. Ethernet's Spanning Tree Protocol (STP) does this.
 
 What is left is a **spanning tree**: cables that reach every switch and close no loop ([Spanning trees](03-spanning-trees-and-cayleys-formula.md)). How many layouts are possible? A tree on 4 switches has 3 cables; of the 10 ways to keep 3 of the 5, two are triangles, so 8.
 
@@ -132,7 +132,9 @@ Each tree adds 1 and every other set 0, so $`\det L_0 = \tau(G)`$. No step used 
 
 ### Step 5: the eigenvalues, and Cayley's formula
 
-The first eigenvalue is 0, with every switch valued 1, since each row of $`L`$ adds to 0. None is negative: $`L`$ is symmetric, so its eigenvalues are real ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)), and with $`L = M^{\mathsf T} M`$ an eigenvector $`v`$ gives $`\lambda\, v \cdot v = v \cdot Lv = Mv \cdot Mv \ge 0`$. The **characteristic polynomial** $`\det(xI - L)`$ has the eigenvalues as roots. Its coefficient of $`x`$ is $`\pm\lambda_2 \cdots \lambda_n`$ from the roots, and $`\pm n\,\tau(G)`$ from the columns, the sum of $`n`$ cut determinants. In the office it is −32, and 32/4 = 8.
+The first eigenvalue is 0, with every switch valued 1, since each row of $`L`$ adds to 0. None is negative: $`L`$ is symmetric, so its eigenvalues are real ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)). With $`L = M^{\mathsf T} M`$, an eigenvector $`v`$ gives $`\lambda\, v \cdot v = v \cdot Lv = Mv \cdot Mv \ge 0`$.
+
+The **characteristic polynomial** $`\det(xI - L)`$ has the eigenvalues as roots. Its coefficient of $`x`$ is $`\pm\lambda_2 \cdots \lambda_n`$ from the roots, and $`\pm n\,\tau(G)`$ from the columns, the sum of $`n`$ cut determinants. In the office it is −32, and 32/4 = 8.
 
 <details>
 <summary>Detailed proof: the coefficient of x, two ways</summary>
@@ -1062,10 +1064,11 @@ end MatrixTreeTheorem
 
 ## Where this goes next
 
+- [Euler circuits](../11-Tours%20-%20Euler%20and%20Hamilton/01-euler-circuits.md): the next shelf, leaving trees behind to ask when one closed tour covers every edge once.
 - [The graph Laplacian](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/03-graph-laplacian-and-spectral-clustering.md): the same matrix, whose small eigenvalues count a network's pieces and cut it in two.
 - [Kirchhoff's laws](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/01-kirchhoffs-laws-and-equivalent-circuits.md): currents in wire networks, where this theorem began.
 
-This card counts every tree alike; weighted trees, Kirchhoff's own form, are not covered here.
+This card counts every spanning tree alike; weighted trees, Kirchhoff's own form, are not covered here. The next shelf leaves trees behind and asks when one route can cover every edge once, starting with [Euler circuits](../11-Tours%20-%20Euler%20and%20Hamilton/01-euler-circuits.md).
 
 ---
 

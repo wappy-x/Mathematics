@@ -14,11 +14,11 @@ Three currencies can be checked by hand. Hundreds cannot, and the paying loop ma
 
 Negative costs are what the greedy method cannot take: it settles the nearest dot and never reconsiders it ([Dijkstra's algorithm](05-dijkstra.md)). Lester Ford in 1956 and Richard Bellman in 1958 set out a method that locks nothing.
 
-Their method goes over every quoted rate, called an arrow or edge, in rounds. Whenever a rate offers a cheaper way into a currency, it lowers that currency's cost: that step is to relax the arrow. With n currencies, it runs n − 1 rounds and one more.
+Their method goes over every quoted rate, called an arrow or edge, in rounds. Whenever a rate offers a cheaper way into a currency, it lowers that currency's cost: that step is to relax the arrow.
 
 **Relaxing every edge n − 1 times finds every cheapest route whenever no loop pays, since a cheapest route has at most n − 1 legs; an n-th round that still improves proves a loop pays — an arbitrage.**
 
-**What kind of fact this is:** a method, resting on a theorem — n − 1 rounds suffice, a further improvement means a paying loop — proved on this card in Why it works.
+**What kind of fact this is:** a method, resting on a theorem proved on this card in Why it works.
 
 ### The picture: three currencies, three quoted rates
 
@@ -92,11 +92,13 @@ The same legs as costs: the generous 1.32 turned negative, and the three total �
 
 ### Step 1: after round $`k`$, every cheapest route of at most $`k`$ legs is on the table
 
-Every number in $`d`$ is the cost of a real route, so none is ever too low; the rounds chase the numbers that are too high. Round 1 relaxes the arrows leaving the start, so every one-leg route lands. Cut the last arrow, $`u`$ to $`v`$, off a cheapest route of at most $`k`$ legs: what is left reaches $`u`$ in at most $`k`$ − 1 legs, on the table by round $`k`$ − 1, and round $`k`$ relaxes that arrow.
+Every number in $`d`$ is the cost of a real route, so none is ever too low; the rounds chase the numbers that are too high. Round 1 relaxes the arrows leaving the start, so every one-leg route lands.
+
+Take a cheapest route of at most $`k`$ legs and cut off its last arrow, $`u`$ to $`v`$. What is left reaches $`u`$ in at most $`k - 1`$ legs, so it is on the table by round $`k - 1`$. Round $`k`$ then relaxes that arrow.
 
 ### Step 2: $`n`$ − 1 rounds are enough, when no loop pays
 
-A cheapest route never has to visit a currency twice: cut out the stretch between two visits and a loop is gone, whose costs add to 0 or more when nothing pays, so the route is no dearer. A route with no repeat has at most $`n`$ − 1 legs, all on the table by round $`n`$ − 1: with three currencies, two rounds.
+A cheapest route never has to visit a currency twice. Cut out the stretch between two visits to remove a loop; when nothing pays, its costs add to 0 or more, so the route is no dearer. A route with no repeat has at most $`n`$ − 1 legs, all on the table by round $`n`$ − 1: with three currencies, two rounds.
 
 ### Step 3: an $`n`$-th round that still improves is a money machine
 
@@ -107,7 +109,7 @@ Round 3 drops USD from 0.000000 to −0.009752, and following each improvement b
 <details>
 <summary>Detailed proof: the induction and the exchange</summary>
 
-Let $`D_k(v)`$ be the least cost of a route from the start to $`v`$ over at most $`k`$ arrows. **Claim 1:** after round $`k`$, $`d(v) \le D_k(v)`$. Induct: drop the last arrow, $`u`$ to $`v`$, of a $`k`$-arrow route costing $`D_k(v)`$; the rest is a $`k`$ − 1 case, so $`u`$ enters round $`k`$ at $`D_k(v) - w(u \to v)`$ or lower, and round $`k`$ relaxes that arrow.
+Let $`D_k(v)`$ be the least cost of a route from the start to $`v`$ over at most $`k`$ arrows. **Claim 1:** after round $`k`$, $`d(v) \le D_k(v)`$. Induct on $`k`$: drop the last arrow, $`u`$ to $`v`$, from a $`k`$-arrow route costing $`D_k(v)`$. The rest is a $`k - 1`$ case, so $`u`$ enters round $`k`$ at $`D_k(v) - w(u \to v)`$ or lower, and round $`k`$ relaxes that arrow.
 
 **Claim 2:** with no negative-total loop, deleting the loop between two visits to a repeated currency never raises a cost, so a cheapest route needs at most $`n`$ − 1 arrows. Those costs admit no relax, so an improvement in round $`n`$ denies the hypothesis; following each improvement back to the currency it came from, $`n`$ times, closes the paying loop.
 
@@ -116,7 +118,7 @@ Let $`D_k(v)`$ be the least cost of a route from the start to $`v`$ over at most
 <details>
 <summary>All pairs at once: Floyd-Warshall</summary>
 
-Bellman-Ford answers from one currency; a desk wants every pair. Robert Floyd's 1962 loop — Algorithm 97, on a theorem of Stephen Warshall — keeps a square table `D(i,j)` of costs, one row and column per currency: for each currency `s` in turn and every pair `i`, `j`, keep the smaller of `D(i,j)` and `D(i,s) + D(s,j)`.
+Bellman-Ford answers from one currency; a desk wants every pair. Robert Floyd's 1962 loop — Algorithm 97, on a theorem of Stephen Warshall — keeps a square table `D(i,j)` of costs, one row and column per currency. For each currency `s` in turn and every pair `i`, `j`, keep the smaller of `D(i,j)` and `D(i,s) + D(s,j)`.
 
 The outer loop is *which* currencies may be stepping-stones, not *how many* legs are allowed; move it inward and a different claim is proved. A negative number on the diagonal is then a paying loop: USD's own entry lands on −0.009752.
 
@@ -155,7 +157,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Two roads reach the verdict: one adds costs, minus the log of each rate, over $`n`$ − 1 rounds and one more; the other never takes a log, multiplying rates along every route of at most three legs. The log itself is computed twice: from a series, and as the area under 1/t, which is what a natural log measures.
+Nothing is imported. Two roads reach the verdict. One adds costs, minus the log of each rate, over $`n`$ − 1 rounds and one more. The other never takes a log, multiplying rates along every route of at most three legs. The log itself is computed twice: from a series, and as the area under 1/t, which is what a natural log measures.
 
 ### Python
 
@@ -790,7 +792,7 @@ example : 3 - 1 = 2 := by norm_num
 > [!warning]
 > **Reading one negative cost as free money.** The pound-to-dollar leg costs −0.277632, which is no arbitrage: it is a rate above 1, one pound fetching more than a dollar. Only a loop's total counts; getting back to where the money started is the test.
 >
-> - **Stopping when the table stops changing.** After two rounds USD reads 0.000000; the extra round is where −0.009752 appears.
+> - **Stopping after $`n - 1`$ rounds.** After two rounds USD still reads 0.000000 and looks settled; only the extra round reveals −0.009752. Stopping early is safe only if an entire round changes nothing in the table.
 > - **Crossing the thresholds over.** The product is tested against 1, the cost total against 0, never the other way about: the losing 1.30 market clears 0.994500 > 0 and 0.005515 < 1 too.
 > - **Losing the minus sign.** With plus the log the loop totals 0.009752, and the money machine is invisible.
 
@@ -815,9 +817,10 @@ example : 3 - 1 = 2 := by norm_num
 
 ## Where this goes next
 
+- [The matrix-tree theorem](07-matrix-tree-theorem.md): returning to unweighted networks to count spanning trees from a matrix determinant.
 - [No arbitrage](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md): the same test, no loop that pays, turned from a detector into the rule that prices a contract.
 
-This card says whether a loop pays, not how much it will take before the rates move to close it: sizing the trade needs prices that move as the trade is made, which is where no-arbitrage pricing begins.
+This finishes the shelf's cheapest-routes track; the final card on the shelf, [The matrix-tree theorem](07-matrix-tree-theorem.md), returns to counting spanning trees in unweighted networks. Turning "no loop pays" from a detector into the rule that pins down what a contract must cost is where [No arbitrage](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md) begins.
 
 ---
 

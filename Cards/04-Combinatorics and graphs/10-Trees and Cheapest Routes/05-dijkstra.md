@@ -698,7 +698,7 @@ example : (runOn rebate 0 [0, 2, 1]).d 2 = 2 ∧ routeCost rebate [0, 1, 2] = 1 
 > Guess first, then run it. The asserts are pinned to this map, so expect one to stop the program.
 > - **Make the little road dearer.** Set B-A to 7 minutes in `ROADS`: A is never improved, the direct road at 4 wins it, and the assert pinned to 13 stops the run.
 > - **Refuse to improve anything.** Pass `first_only=True` to `settle`: every point keeps its first guess and the stadium reads 16 minutes.
-> - **Put the rebate on the van's map.** Set C-E to −2: the predecessors' route no longer costs 13, and the second assert stops the run.
+> - **Shrink the rebate.** In `NEG`, change `("B", -3)` to `("B", -1)`: D-A-B now costs 3 against the direct 2, so settling and listing both read 2 and the last assert stops the run.
 
 ---
 
