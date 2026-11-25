@@ -6,7 +6,9 @@
 
 ## General Overview
 
-A college has six exams to place in one week: Algebra, Biology, Chemistry, Drama, Economics and French. Of its five students, one sits Algebra, Biology and Chemistry, another Drama, Economics and French, and three more each sit a cross pair — Algebra with Drama, Biology with Economics, Chemistry with French. Two exams clash when one student sits both, and clashing exams cannot share a session.
+A small tutor group has five students sitting six exams in one week: Algebra, Biology, Chemistry, Drama, Economics and French. One sits Algebra, Biology and Chemistry, and another sits Drama, Economics and French.
+
+Three more each sit a cross pair: Algebra with Drama, Biology with Economics, and Chemistry with French. Two exams clash when one student sits both, and clashing exams cannot share a session.
 
 Draw a dot per exam and a line per clash: nine lines. How few sessions does the week need? Algebra, Biology and Chemistry clash in every pair, so those three need three sessions: a floor of three. Three is also enough — Algebra with French, Biology with Drama, Chemistry with Economics.
 
@@ -93,7 +95,7 @@ At a dot's turn at most $`\Delta(G)`$ neighbours hold colours, so one of the fir
 
 ### Step 3: the order decides what greedy spends
 
-Take the exams as listed. Algebra 1, Biology 2, Chemistry 3; Drama clashes only with Algebra so far, so 2; Economics 1; French clashes with Chemistry, Drama and Economics, finds 1, 2 and 3 barred, and opens a fourth session — four, on a graph needing three.
+Take the exams as listed. Algebra gets 1, Biology 2, Chemistry 3, Drama 2 (clashing only with Algebra so far), and Economics 1. French clashes with Chemistry, Drama and Economics, finds 1, 2 and 3 barred, and opens a fourth session — four, on a graph needing three.
 
 Visit Algebra, French, Biology, Drama, Chemistry, Economics instead and the rule spends 1, 1, 2, 2, 3, 3 in that order — the timetable above. Some order always spends exactly $`\chi(G)`$ colours — the classes of a best colouring, listed one after another — but finding that order needs that colouring in hand: the whole problem.
 
@@ -583,7 +585,7 @@ example : (cycleGraph 5).cliqueNum = 2 ∧ (cycleGraph 5).chromaticNumber = 3 :=
 
 - **Exam and lecture timetables.** Dots are exams, lines shared students, colours sessions. Welsh and Powell put that translation in print in 1967, running greedy in order of decreasing clash count.
 - **Maps.** Regions sharing a border are joined, and any flat map needs at most four colours ([Colouring maps](05-five-and-four-colour-theorems.md)).
-- **Compilers and radio channels.** Two values needed at once cannot share a processor register, and two transmitters with overlapping ranges cannot share a frequency: both are colourings, done in practice by search that settles for good ([Local search](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/07-local-search-and-metaheuristics.md)), since the exact answer is among the standard hard problems (Reductions).
+- **Compilers and radio channels.** Two values needed at once cannot share a processor register, and two transmitters with overlapping ranges cannot share a frequency: both are colourings, done in practice by search that settles for good ([Local search](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/07-local-search-and-metaheuristics.md)), since the exact answer is among the standard hard problems ([Reductions](../../24-Computability%20and%20complexity/03-Time%20Complexity/03-polynomial-reductions-and-np-completeness.md)).
 
 > **Say it back**
 > A proper colouring gives joined dots different colours, and the chromatic number is the fewest that manage it. Read backwards, a colouring splits the dots into groups holding no line, so a timetable is a colouring. Dots joined in every pair need a colour each, which sets a floor. Colouring one dot at a time, lowest free colour each time, never spends more than one past the busiest dot's line count, and Brooks takes that one back off except on complete graphs and odd rings. Here both limits read 3.
@@ -603,12 +605,12 @@ example : (cycleGraph 5).cliqueNum = 2 ∧ (cycleGraph 5).chromaticNumber = 3 :=
 - [Local search](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/07-local-search-and-metaheuristics.md): clash graphs with thousands of exams.
 - [Reductions](../../24-Computability%20and%20complexity/03-Time%20Complexity/03-polynomial-reductions-and-np-completeness.md): why no fast exact method is known.
 - [Colouring the plane](../../25-Frontier/04-Geometry%20and%20Combinatorics/03-hadwiger-nelson-chromatic-number-of-the-plane.md): the same count over every point of the plane.
-- [Triangulating a polygon, and why n/3 guards can always watch a gallery with n walls](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/08-polygon-triangulation-and-art-gallery.md): builds on this card.
-- [List colouring](07-list-colouring-and-choosability.md): when every vertex brings its own short list of allowed colours, and Thomassen's proof that five per vertex always suffice on a flat map.
-- [Perfect graphs](08-perfect-and-chordal-graphs.md): graphs where the largest clique always gives the colour count, chordal graphs as the friendly family, and the strong perfect graph theorem.
-- [Beyond Turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/06-erdos-stone-and-kovari-sos-turan.md): forbid any graph H and its colour count sets the edge cap (Erdos-Stone), except when H is two-sided, where Kovari-Sos-Turan caps a network with no 4-cycle near n^(3/2)/2 edges.
-- [Compactness and Lowenheim-Skolem](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/13-compactness-and-lowenheim-skolem.md): finite checks decide everything, and no first-order theory can fix an infinite size.
-- [Hadwiger's conjecture](../../25-Frontier/04-Geometry%20and%20Combinatorics/12-hadwigers-conjecture.md): a graph with no K_t minor can be coloured with t - 1 colours.
+- [Triangulating a polygon, and why n/3 guards can always watch a gallery with n walls](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/08-polygon-triangulation-and-art-gallery.md): three-colours the corners of a triangulated polygon to place at most $`n/3`$ guards.
+- [List colouring](07-list-colouring-and-choosability.md): gives each dot its own short list of allowed colours instead of one shared box.
+- [Perfect graphs](08-perfect-and-chordal-graphs.md): the family of graphs where the clique floor always equals the colour count in every induced part.
+- [Beyond Turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/06-erdos-stone-and-kovari-sos-turan.md): uses a forbidden graph's chromatic number to set the edge cap on large networks (Erdős–Stone).
+- [Compactness and Lowenheim-Skolem](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/13-compactness-and-lowenheim-skolem.md): uses compactness to extend finite $`k`$-colourings to an infinite map.
+- [Hadwiger's conjecture](../../25-Frontier/04-Geometry%20and%20Combinatorics/12-hadwigers-conjecture.md): conjectures that a graph with no $`K_t`$ minor needs at most $`t - 1`$ colours.
 
 The limits pinned this graph only because they met; on most graphs they leave a range, which the next card closes by counting colourings rather than hunting one.
 

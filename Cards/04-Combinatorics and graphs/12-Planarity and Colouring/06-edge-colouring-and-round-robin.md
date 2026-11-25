@@ -127,7 +127,7 @@ Had it reached v, the line there would be red, since v has no blue line, and red
 <details>
 <summary>The fixture grid is a Latin square</summary>
 
-In the grid the code prints, `A . 4 2 5 3 1` says A meets B in round 4, C in 2, D in 5, E in 3, F in 1. Every row holds rounds 1 to 5 once, and every column too, the grid reading the same across the diagonal; a sixth symbol in each diagonal blank then makes a **Latin square** of order 6 — every symbol once per row and column ([Finite planes and orthogonal Latin squares](../16-Designs/03-projective-planes-and-orthogonal-latin-squares.md)).
+In the grid the code prints, `A . 4 2 5 3 1` says A meets B in weekend 4, C in 2, D in 5, E in 3, F in 1. Every row holds weekends 1 to 5 once, and every column too, the grid reading the same across the diagonal; a sixth symbol in each diagonal blank then makes a **Latin square** of order 6 — every symbol once per row and column ([Finite planes and orthogonal Latin squares](../16-Designs/03-projective-planes-and-orthogonal-latin-squares.md)).
 
 </details>
 
@@ -159,23 +159,25 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The code says teams and rounds for clubs and weekends, numbering them 1 to 5. Road one is the rotation's closed form; road two is a backtracking search that knows no formula, trying one colour, then two, until every line is coloured. The roads meet at 5. It also settles the five-club league, a doubled triangle, and two censuses — 1024 networks on five clubs against Vizing, 512 bipartite ones against König.
+Nothing is imported. The code numbers the five weekends 1 to 5 (shifting Step 3's 0 to 4 up by one). Road one is the rotation's closed form; road two is a backtracking search that knows no formula, trying one colour, then two, until every line is coloured. The roads meet at 5.
+
+It also settles the five-club league, a doubled triangle, and two censuses — 1024 networks on five clubs against Vizing, 512 bipartite ones against König.
 
 ### Python
 
 ```python
-# Edge colouring and the round-robin -- the check behind the card.  Nothing is imported.  Six teams
-# A to F each meet the other five: F is pinned while A to E rotate, so the pin meets team i in round
-# i and rotating teams i and j meet in round 3(i + j) mod 5.  Road two is a backtracking search that
-# knows no formula and reports the fewest colours it can manage: it settles the six-team league, the
-# five-team one, a doubled triangle, and two censuses of small networks against Vizing and Konig.
+# Edge colouring and the round-robin -- the check behind the card.  Nothing is imported.  Six clubs
+# A to F each meet the other five: F is pinned while A to E rotate, so the pin meets club i in
+# weekend i and rotating clubs i and j meet in weekend 3(i + j) mod 5.  Road two is a backtracking
+# search that knows no formula and reports the fewest colours it can manage: it settles the six-club
+# league, the five-club one, a doubled triangle, and two censuses of small networks against Vizing and Konig.
 NAMES = "ABCDEF"
-M = 5                                        # the rotating teams, labelled 0 to 4
+M = 5                                        # the rotating clubs, labelled 0 to 4
 def rotation():                              # road one: the closed form
-    rounds = [[(i, M)] for i in range(M)]    # the pin, team 5, meets team i in round i
+    weekends = [[(i, M)] for i in range(M)]  # the pin, club 5, meets club i in weekend i
     for i in range(M):
-        for j in range(i + 1, M): rounds[3 * (i + j) % M].append((i, j))
-    return rounds
+        for j in range(i + 1, M): weekends[3 * (i + j) % M].append((i, j))
+    return weekends
 def maxdeg(n, edges): return max(sum((u == t) + (v == t) for u, v in edges) for t in range(n))
 def fewest(n, edges):                        # road two: search, fewest colours first
     for k in range(len(edges) + 1):
@@ -190,7 +192,7 @@ def fewest(n, edges):                        # road two: search, fewest colours 
                     used[u][c] = used[v][c] = False
             return False
         if place(0): return k
-def clash(rs): return any(len({t for m in r for t in m}) != 2 * len(r) for r in rs)
+def clash(ws): return any(len({t for m in w for t in m}) != 2 * len(w) for w in ws)
 def show(ms): return " ".join(NAMES[u] + "-" + NAMES[v] for u, v in ms)
 def yn(c): return "yes" if c else "no"
 def subsets(pool): return ([p for i, p in enumerate(pool) if m >> i & 1] for m in range(1 << len(pool)))
@@ -198,50 +200,50 @@ pairs6, pairs5 = [[(a, b) for a in range(n) for b in range(a + 1, n)] for n in (
 bip = [(a, 3 + b) for a in range(3) for b in range(3)]        # 3 teachers against 3 classes
 fat = [(0, 1), (0, 1), (1, 2), (1, 2), (0, 2), (0, 2)]        # a triangle, every match played twice
 allsix = {(i, j) for k in range(6) for i in range(6) for j in range(i + 1, 6) if (i + j) % 6 == 2 * k % 6}
-rounds = rotation()
-grid = [[next((str(r + 1) for r, ms in enumerate(rounds) if (min(u, v), max(u, v)) in ms), ".") for v in range(6)] for u in range(6)]
-five = [[m for m in r if M not in m] for r in rounds]         # the same rounds without the pin
+weekends = rotation()
+grid = [[next((str(w + 1) for w, ms in enumerate(weekends) if (min(u, v), max(u, v)) in ms), ".") for v in range(6)] for u in range(6)]
+five = [[m for m in w if M not in m] for w in weekends]       # the same weekends without the pin
 d6, k6, d5, k5 = maxdeg(6, pairs6), fewest(6, pairs6), maxdeg(5, pairs5), fewest(5, pairs5)
 tally = [0, 0, 0]                            # slot 2 catches any count Vizing forbids
 for es in subsets(pairs5): tally[fewest(5, es) - maxdeg(5, es) if es else 0] += 1
 konig = all(fewest(6, es) == maxdeg(6, es) for es in subsets(bip) if es)
 latin = all(sorted(grid[u][v] for v in range(6) if v != u) == list("12345") for u in range(6))
-print(f"six teams {NAMES}: {len(pairs6)} matches, every team meets {d6} others, so at least {d6} rounds")
-for r, ms in enumerate(rounds): print(f"  round {r + 1}:  {show(ms)}")
-print(f"all {len(pairs6)} pairs, each exactly once: {yn(sorted(m for r in rounds for m in r) == pairs6)}; nobody twice in one round: {yn(not clash(rounds))}\nroad two, a search knowing no formula: fewest rounds {k6}, the busiest team's count {d6}")
-print(f"the fixture grid, entry = the round in which the row team meets the column team; every row holds rounds 1 to {M} once: {yn(latin)}\n  " + "    ".join(NAMES[u] + " " + " ".join(grid[u]) for u in range(6)))
-print(f"five teams {NAMES[:M]}: {len(pairs5)} matches, every team meets {d5}, and a round holds only {len(five[0])} matches, so fewest rounds {k5} = {d5} + 1\n  " + " | ".join(f"round {r + 1}: {show(five[r])}, {NAMES[r]} rests" for r in range(M)))
-print(f"all {1 << len(pairs5)} networks on five named teams: fewest = busiest degree in {tally[0]} of them, one more in {tally[1]}, never worse: {yn(tally[2] == 0)}\nall {1 << len(bip)} bipartite networks, 3 teachers against 3 classes: fewest = busiest degree every time: {yn(konig)}")
-print(f"a triangle with every match played twice: busiest degree {maxdeg(3, fat)}, fewest rounds {fewest(3, fat)}, past Vizing's {maxdeg(3, fat) + 1}")
-print(f"mistake, all six teams rotating: only {len(allsix)} of the {len(pairs6)} matches ever scheduled, and A-B is not among them: {yn((0, 1) not in allsix)}\nmistake, {len(pairs6)} matches in 4 rounds: 4 rounds x {len(rounds[0])} matches = {4 * len(rounds[0])}, short by {len(pairs6) - 4 * len(rounds[0])}\nmistake, five teams in the busiest count of {d5} rounds: {d5} rounds x {len(five[0])} matches = {d5 * len(five[0])}, short by {len(pairs5) - d5 * len(five[0])}")
-assert sorted(m for r in rounds for m in r) == pairs6 and not clash(rounds)
+print(f"six clubs {NAMES}: {len(pairs6)} matches, every club meets {d6} others, so at least {d6} weekends")
+for w, ms in enumerate(weekends): print(f"  weekend {w + 1}:  {show(ms)}")
+print(f"all {len(pairs6)} pairs, each exactly once: {yn(sorted(m for w in weekends for m in w) == pairs6)}; nobody twice in one weekend: {yn(not clash(weekends))}\nroad two, a search knowing no formula: fewest weekends {k6}, the busiest club's count {d6}")
+print(f"the fixture grid, entry = the weekend in which the row club meets the column club; every row holds weekends 1 to {M} once: {yn(latin)}\n  " + "    ".join(NAMES[u] + " " + " ".join(grid[u]) for u in range(6)))
+print(f"five clubs {NAMES[:M]}: {len(pairs5)} matches, every club meets {d5}, and a weekend holds only {len(five[0])} matches, so fewest weekends {k5} = {d5} + 1\n  " + " | ".join(f"weekend {w + 1}: {show(five[w])}, {NAMES[w]} rests" for w in range(M)))
+print(f"all {1 << len(pairs5)} networks on five named clubs: fewest = busiest degree in {tally[0]} of them, one more in {tally[1]}, never worse: {yn(tally[2] == 0)}\nall {1 << len(bip)} bipartite networks, 3 teachers against 3 classes: fewest = busiest degree every time: {yn(konig)}")
+print(f"a triangle with every match played twice: busiest degree {maxdeg(3, fat)}, fewest weekends {fewest(3, fat)}, past Vizing's {maxdeg(3, fat) + 1}")
+print(f"mistake, all six clubs rotating: only {len(allsix)} of the {len(pairs6)} matches ever scheduled, and A-B is not among them: {yn((0, 1) not in allsix)}\nmistake, {len(pairs6)} matches in 4 weekends: 4 weekends x {len(weekends[0])} matches = {4 * len(weekends[0])}, short by {len(pairs6) - 4 * len(weekends[0])}\nmistake, five clubs in the busiest count of {d5} weekends: {d5} weekends x {len(five[0])} matches = {d5 * len(five[0])}, short by {len(pairs5) - d5 * len(five[0])}")
+assert sorted(m for w in weekends for m in w) == pairs6 and not clash(weekends)
 assert k6 == 5 and d6 == 5 and latin
 assert k5 == 5 and d5 == 4 and fewest(3, fat) == 6
 assert tally == [951, 73, 0] and konig
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-19 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
-six teams ABCDEF: 15 matches, every team meets 5 others, so at least 5 rounds
-  round 1:  A-F B-E C-D
-  round 2:  B-F A-C D-E
-  round 3:  C-F A-E B-D
-  round 4:  D-F A-B C-E
-  round 5:  E-F A-D B-C
-all 15 pairs, each exactly once: yes; nobody twice in one round: yes
-road two, a search knowing no formula: fewest rounds 5, the busiest team's count 5
-the fixture grid, entry = the round in which the row team meets the column team; every row holds rounds 1 to 5 once: yes
+six clubs ABCDEF: 15 matches, every club meets 5 others, so at least 5 weekends
+  weekend 1:  A-F B-E C-D
+  weekend 2:  B-F A-C D-E
+  weekend 3:  C-F A-E B-D
+  weekend 4:  D-F A-B C-E
+  weekend 5:  E-F A-D B-C
+all 15 pairs, each exactly once: yes; nobody twice in one weekend: yes
+road two, a search knowing no formula: fewest weekends 5, the busiest club's count 5
+the fixture grid, entry = the weekend in which the row club meets the column club; every row holds weekends 1 to 5 once: yes
   A . 4 2 5 3 1    B 4 . 5 3 1 2    C 2 5 . 1 4 3    D 5 3 1 . 2 4    E 3 1 4 2 . 5    F 1 2 3 4 5 .
-five teams ABCDE: 10 matches, every team meets 4, and a round holds only 2 matches, so fewest rounds 5 = 4 + 1
-  round 1: B-E C-D, A rests | round 2: A-C D-E, B rests | round 3: A-E B-D, C rests | round 4: A-B C-E, D rests | round 5: A-D B-C, E rests
-all 1024 networks on five named teams: fewest = busiest degree in 951 of them, one more in 73, never worse: yes
+five clubs ABCDE: 10 matches, every club meets 4, and a weekend holds only 2 matches, so fewest weekends 5 = 4 + 1
+  weekend 1: B-E C-D, A rests | weekend 2: A-C D-E, B rests | weekend 3: A-E B-D, C rests | weekend 4: A-B C-E, D rests | weekend 5: A-D B-C, E rests
+all 1024 networks on five named clubs: fewest = busiest degree in 951 of them, one more in 73, never worse: yes
 all 512 bipartite networks, 3 teachers against 3 classes: fewest = busiest degree every time: yes
-a triangle with every match played twice: busiest degree 4, fewest rounds 6, past Vizing's 5
-mistake, all six teams rotating: only 6 of the 15 matches ever scheduled, and A-B is not among them: yes
-mistake, 15 matches in 4 rounds: 4 rounds x 3 matches = 12, short by 3
-mistake, five teams in the busiest count of 4 rounds: 4 rounds x 2 matches = 8, short by 2
+a triangle with every match played twice: busiest degree 4, fewest weekends 6, past Vizing's 5
+mistake, all six clubs rotating: only 6 of the 15 matches ever scheduled, and A-B is not among them: yes
+mistake, 15 matches in 4 weekends: 4 weekends x 3 matches = 12, short by 3
+mistake, five clubs in the busiest count of 4 weekends: 4 weekends x 2 matches = 8, short by 2
 ALL CHECKS PASS
 ```
 
@@ -250,21 +252,21 @@ ALL CHECKS PASS
 Same numbers, same labels, built with `rustc --edition 2021 -O`.
 
 ```rust
-// Edge colouring and the round-robin -- the same check as the Python, in Rust.  No crates.  Six teams
-// A to F each meet the other five: F is pinned while A to E rotate, so the pin meets team i in round
-// i and rotating teams i and j meet in round 3(i + j) mod 5.  Road two is a backtracking search that
-// knows no formula and reports the fewest colours it can manage: it settles the six-team league, the
-// five-team one, a doubled triangle, and two censuses of small networks against Vizing and Konig.
+// Edge colouring and the round-robin -- the same check as the Python, in Rust.  No crates.  Six clubs
+// A to F each meet the other five: F is pinned while A to E rotate, so the pin meets club i in
+// weekend i and rotating clubs i and j meet in weekend 3(i + j) mod 5.  Road two is a backtracking
+// search that knows no formula and reports the fewest colours it can manage: it settles the six-club
+// league, the five-club one, a doubled triangle, and two censuses of small networks against Vizing and Konig.
 const NAMES: &str = "ABCDEF";
-const M: usize = 5;                              // the rotating teams, labelled 0 to 4
+const M: usize = 5;                              // the rotating clubs, labelled 0 to 4
 type Edge = (usize, usize);
 fn tag(i: usize) -> char { NAMES.as_bytes()[i] as char }
 fn rotation() -> Vec<Vec<Edge>> {                // road one: the closed form
-    let mut rounds: Vec<Vec<Edge>> = (0..M).map(|i| vec![(i, M)]).collect();  // pin meets i in round i
-    for i in 0..M { for j in i + 1..M { rounds[3 * (i + j) % M].push((i, j)) } }
-    rounds
+    let mut weekends: Vec<Vec<Edge>> = (0..M).map(|i| vec![(i, M)]).collect();  // pin meets i in weekend i
+    for i in 0..M { for j in i + 1..M { weekends[3 * (i + j) % M].push((i, j)) } }
+    weekends
 }
-fn maxdeg(n: usize, es: &[Edge]) -> usize {      // the busiest team's match count
+fn maxdeg(n: usize, es: &[Edge]) -> usize {      // the busiest club's match count
     (0..n).map(|t| es.iter().map(|&(u, v)| (u == t) as usize + (v == t) as usize).sum()).max().unwrap()
 }
 fn place(es: &[Edge], e: usize, k: usize, used: &mut Vec<Vec<bool>>) -> bool {
@@ -281,9 +283,9 @@ fn place(es: &[Edge], e: usize, k: usize, used: &mut Vec<Vec<bool>>) -> bool {
 fn fewest(n: usize, es: &[Edge]) -> usize {      // road two: search, fewest colours first
     (0..=es.len()).find(|&k| place(es, 0, k, &mut vec![vec![false; k]; n])).unwrap_or(es.len())
 }
-fn clash(rs: &[Vec<Edge>]) -> bool {
-    rs.iter().any(|r| { let mut t: Vec<usize> = r.iter().flat_map(|&(u, v)| [u, v]).collect();
-        t.sort(); t.dedup(); t.len() != 2 * r.len() })
+fn clash(ws: &[Vec<Edge>]) -> bool {
+    ws.iter().any(|w| { let mut t: Vec<usize> = w.iter().flat_map(|&(u, v)| [u, v]).collect();
+        t.sort(); t.dedup(); t.len() != 2 * w.len() })
 }
 fn show(ms: &[Edge]) -> String {
     ms.iter().map(|&(u, v)| format!("{}-{}", tag(u), tag(v))).collect::<Vec<_>>().join(" ")
@@ -298,12 +300,12 @@ fn main() {
     let mut allsix: Vec<Edge> = Vec::new();
     for k in 0..6 { for i in 0..6 { for j in i + 1..6 {
         if (i + j) % 6 == 2 * k % 6 && !allsix.contains(&(i, j)) { allsix.push((i, j)) } } } }
-    let rounds = rotation();
-    let grid: Vec<Vec<String>> = (0..6).map(|u| (0..6).map(|v| rounds.iter()
+    let weekends = rotation();
+    let grid: Vec<Vec<String>> = (0..6).map(|u| (0..6).map(|v| weekends.iter()
         .position(|ms| ms.contains(&(u.min(v), u.max(v))))
-        .map_or(".".to_string(), |r| (r + 1).to_string())).collect()).collect();
-    let five: Vec<Vec<Edge>> = rounds.iter()     // the same rounds without the pin
-        .map(|r| r.iter().copied().filter(|&(u, v)| u != M && v != M).collect()).collect();
+        .map_or(".".to_string(), |w| (w + 1).to_string())).collect()).collect();
+    let five: Vec<Vec<Edge>> = weekends.iter()   // the same weekends without the pin
+        .map(|w| w.iter().copied().filter(|&(u, v)| u != M && v != M).collect()).collect();
     let (d6, k6, d5, k5) = (maxdeg(6, &pairs6), fewest(6, &pairs6), maxdeg(5, &pairs5), fewest(5, &pairs5));
     let mut tally = [0usize; 3];                 // slot 2 catches any count Vizing forbids
     for mask in 0..(1u32 << pairs5.len()) {
@@ -314,17 +316,17 @@ fn main() {
         es.is_empty() || fewest(6, &es) == maxdeg(6, &es) });
     let latin = (0..6).all(|u| { let mut row: Vec<&str> = (0..6).filter(|&v| v != u)
         .map(|v| grid[u][v].as_str()).collect(); row.sort(); row == ["1", "2", "3", "4", "5"] });
-    let mut played: Vec<Edge> = rounds.iter().flatten().copied().collect();
+    let mut played: Vec<Edge> = weekends.iter().flatten().copied().collect();
     played.sort();
-    println!("six teams {}: {} matches, every team meets {} others, so at least {} rounds", NAMES, pairs6.len(), d6, d6);
-    for (r, ms) in rounds.iter().enumerate() { println!("  round {}:  {}", r + 1, show(ms)) }
-    println!("all {} pairs, each exactly once: {}; nobody twice in one round: {}\nroad two, a search knowing no formula: fewest rounds {}, the busiest team's count {}", pairs6.len(), yn(played == pairs6), yn(!clash(&rounds)), k6, d6);
-    println!("the fixture grid, entry = the round in which the row team meets the column team; every row holds rounds 1 to {} once: {}\n  {}", M, yn(latin), (0..6).map(|u| format!("{} {}", tag(u), grid[u].join(" "))).collect::<Vec<_>>().join("    "));
-    println!("five teams {}: {} matches, every team meets {}, and a round holds only {} matches, so fewest rounds {} = {} + 1\n  {}", &NAMES[..M], pairs5.len(), d5, five[0].len(), k5, d5, (0..M).map(|r| format!("round {}: {}, {} rests", r + 1, show(&five[r]), tag(r))).collect::<Vec<_>>().join(" | "));
-    println!("all {} networks on five named teams: fewest = busiest degree in {} of them, one more in {}, never worse: {}\nall {} bipartite networks, 3 teachers against 3 classes: fewest = busiest degree every time: {}", 1 << pairs5.len(), tally[0], tally[1], yn(tally[2] == 0), 1 << bip.len(), yn(konig));
-    println!("a triangle with every match played twice: busiest degree {}, fewest rounds {}, past Vizing's {}", maxdeg(3, &fat), fewest(3, &fat), maxdeg(3, &fat) + 1);
-    println!("mistake, all six teams rotating: only {} of the {} matches ever scheduled, and A-B is not among them: {}\nmistake, {} matches in 4 rounds: 4 rounds x {} matches = {}, short by {}\nmistake, five teams in the busiest count of {} rounds: {} rounds x {} matches = {}, short by {}", allsix.len(), pairs6.len(), yn(!allsix.contains(&(0, 1))), pairs6.len(), rounds[0].len(), 4 * rounds[0].len(), pairs6.len() - 4 * rounds[0].len(), d5, d5, five[0].len(), d5 * five[0].len(), pairs5.len() - d5 * five[0].len());
-    assert!(played == pairs6 && !clash(&rounds));
+    println!("six clubs {}: {} matches, every club meets {} others, so at least {} weekends", NAMES, pairs6.len(), d6, d6);
+    for (w, ms) in weekends.iter().enumerate() { println!("  weekend {}:  {}", w + 1, show(ms)) }
+    println!("all {} pairs, each exactly once: {}; nobody twice in one weekend: {}\nroad two, a search knowing no formula: fewest weekends {}, the busiest club's count {}", pairs6.len(), yn(played == pairs6), yn(!clash(&weekends)), k6, d6);
+    println!("the fixture grid, entry = the weekend in which the row club meets the column club; every row holds weekends 1 to {} once: {}\n  {}", M, yn(latin), (0..6).map(|u| format!("{} {}", tag(u), grid[u].join(" "))).collect::<Vec<_>>().join("    "));
+    println!("five clubs {}: {} matches, every club meets {}, and a weekend holds only {} matches, so fewest weekends {} = {} + 1\n  {}", &NAMES[..M], pairs5.len(), d5, five[0].len(), k5, d5, (0..M).map(|w| format!("weekend {}: {}, {} rests", w + 1, show(&five[w]), tag(w))).collect::<Vec<_>>().join(" | "));
+    println!("all {} networks on five named clubs: fewest = busiest degree in {} of them, one more in {}, never worse: {}\nall {} bipartite networks, 3 teachers against 3 classes: fewest = busiest degree every time: {}", 1 << pairs5.len(), tally[0], tally[1], yn(tally[2] == 0), 1 << bip.len(), yn(konig));
+    println!("a triangle with every match played twice: busiest degree {}, fewest weekends {}, past Vizing's {}", maxdeg(3, &fat), fewest(3, &fat), maxdeg(3, &fat) + 1);
+    println!("mistake, all six clubs rotating: only {} of the {} matches ever scheduled, and A-B is not among them: {}\nmistake, {} matches in 4 weekends: 4 weekends x {} matches = {}, short by {}\nmistake, five clubs in the busiest count of {} weekends: {} weekends x {} matches = {}, short by {}", allsix.len(), pairs6.len(), yn(!allsix.contains(&(0, 1))), pairs6.len(), weekends[0].len(), 4 * weekends[0].len(), pairs6.len() - 4 * weekends[0].len(), d5, d5, five[0].len(), d5 * five[0].len(), pairs5.len() - d5 * five[0].len());
+    assert!(played == pairs6 && !clash(&weekends));
     assert!(k6 == 5 && d6 == 5 && latin);
     assert!(k5 == 5 && d5 == 4 && fewest(3, &fat) == 6);
     assert!(tally == [951, 73, 0] && konig);
@@ -332,27 +334,27 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-19 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
-six teams ABCDEF: 15 matches, every team meets 5 others, so at least 5 rounds
-  round 1:  A-F B-E C-D
-  round 2:  B-F A-C D-E
-  round 3:  C-F A-E B-D
-  round 4:  D-F A-B C-E
-  round 5:  E-F A-D B-C
-all 15 pairs, each exactly once: yes; nobody twice in one round: yes
-road two, a search knowing no formula: fewest rounds 5, the busiest team's count 5
-the fixture grid, entry = the round in which the row team meets the column team; every row holds rounds 1 to 5 once: yes
+six clubs ABCDEF: 15 matches, every club meets 5 others, so at least 5 weekends
+  weekend 1:  A-F B-E C-D
+  weekend 2:  B-F A-C D-E
+  weekend 3:  C-F A-E B-D
+  weekend 4:  D-F A-B C-E
+  weekend 5:  E-F A-D B-C
+all 15 pairs, each exactly once: yes; nobody twice in one weekend: yes
+road two, a search knowing no formula: fewest weekends 5, the busiest club's count 5
+the fixture grid, entry = the weekend in which the row club meets the column club; every row holds weekends 1 to 5 once: yes
   A . 4 2 5 3 1    B 4 . 5 3 1 2    C 2 5 . 1 4 3    D 5 3 1 . 2 4    E 3 1 4 2 . 5    F 1 2 3 4 5 .
-five teams ABCDE: 10 matches, every team meets 4, and a round holds only 2 matches, so fewest rounds 5 = 4 + 1
-  round 1: B-E C-D, A rests | round 2: A-C D-E, B rests | round 3: A-E B-D, C rests | round 4: A-B C-E, D rests | round 5: A-D B-C, E rests
-all 1024 networks on five named teams: fewest = busiest degree in 951 of them, one more in 73, never worse: yes
+five clubs ABCDE: 10 matches, every club meets 4, and a weekend holds only 2 matches, so fewest weekends 5 = 4 + 1
+  weekend 1: B-E C-D, A rests | weekend 2: A-C D-E, B rests | weekend 3: A-E B-D, C rests | weekend 4: A-B C-E, D rests | weekend 5: A-D B-C, E rests
+all 1024 networks on five named clubs: fewest = busiest degree in 951 of them, one more in 73, never worse: yes
 all 512 bipartite networks, 3 teachers against 3 classes: fewest = busiest degree every time: yes
-a triangle with every match played twice: busiest degree 4, fewest rounds 6, past Vizing's 5
-mistake, all six teams rotating: only 6 of the 15 matches ever scheduled, and A-B is not among them: yes
-mistake, 15 matches in 4 rounds: 4 rounds x 3 matches = 12, short by 3
-mistake, five teams in the busiest count of 4 rounds: 4 rounds x 2 matches = 8, short by 2
+a triangle with every match played twice: busiest degree 4, fewest weekends 6, past Vizing's 5
+mistake, all six clubs rotating: only 6 of the 15 matches ever scheduled, and A-B is not among them: yes
+mistake, 15 matches in 4 weekends: 4 weekends x 3 matches = 12, short by 3
+mistake, five clubs in the busiest count of 4 weekends: 4 weekends x 2 matches = 8, short by 2
 ALL CHECKS PASS
 ```
 
@@ -365,10 +367,10 @@ Lean proves Vizing's bound, König's equality and the league answer for every fi
 - The lines need at least as many colours as the busiest dot has lines, and at most one more.
 - A bipartite network needs exactly the busiest dot's line count, never the spare colour.
 - All n dots pairwise joined need n − 1 colours when n is even, and n when n is odd and at least 3.
-- The six-club rotation: 15 matches, five weekends of three, no club twice in a weekend, and A meets B in weekend 3.
+- The six-club rotation: 15 matches, five weekends of three, no club twice in a weekend, and A meets B in weekend 3 (the fourth weekend, numbered from 0).
 - Rotating all six clubs with no pin schedules only 6 of the 15 matches, and A-B is not among them.
 
-The backtracking search, the printed rounds and grid, and the two censuses of small networks are left to the Python and Rust checks.
+The backtracking search, the printed weekends and grid, and the two censuses of small networks are left to the Python and Rust checks.
 
 ```lean
 -- Edge colouring: a finite simple graph's edges need at least its largest degree in colours and at most one more, exactly that many when it is bipartite, and the complete graph on n dots needs n - 1 colours for even n and n for odd n.
@@ -1553,8 +1555,8 @@ example : ¬ ∃ k : Fin 6, (0 + 1) % 6 = 2 * k.val % 6 := by decide
 > [!TIP]
 > **Try changing**
 > Guess first, then run it; the asserts are pinned to the league, so expect one to stop it.
-> - **Wrong multiplier.** `2 * (i + j) % M`: round 2 reads B-F A-D B-C — one club booked twice, another idle; assert one stops it.
-> - **Search forgets one end.** `if not used[u][c]`: it reports 4 rounds for five clubs; assert three stops it.
+> - **Wrong multiplier.** `2 * (i + j) % M`: weekend 2 reads B-F A-D B-C — one club booked twice, another idle; assert one stops it.
+> - **Search forgets one end.** `if not used[u][c]`: it reports 4 weekends for five clubs; assert three stops it.
 > - **Pin's match moved.** `[[((i + 1) % M, M)] for i in range(M)]`: the pin collides with a rotating pair; assert one stops it.
 
 ---
@@ -1588,10 +1590,11 @@ example : ¬ ∃ k : Fin 6, (0 + 1) % 6 = 2 * k.val % 6 := by decide
 
 ## Where this goes next
 
+- [List colouring](07-list-colouring-and-choosability.md): gives each dot (or line, in the open list colouring conjecture) its own restricted list of allowed colours.
 - [Blocking and factorial designs](../../09-Probability%20and%20statistics/13-Survival%2C%20Design%20and%20Causality/05-blocking-and-factorial-designs.md): the same balanced grids laying out an experiment rather than a season.
-- [Finite planes and orthogonal Latin squares](../16-Designs/03-projective-planes-and-orthogonal-latin-squares.md): build a plane of order q from a field with q elements, read off q - 1 Latin squares that pair perfectly, and why order 6 has none.
+- [Finite planes and orthogonal Latin squares](../16-Designs/03-projective-planes-and-orthogonal-latin-squares.md): pairs Latin squares like this card's fixture grid so every combination of symbols meets once.
 
-The rotation hands over a balanced grid and says nothing about what the rounds are for; putting that balance to work in an experiment is [Blocking and factorial designs](../../09-Probability%20and%20statistics/13-Survival%2C%20Design%20and%20Causality/05-blocking-and-factorial-designs.md).
+Next on this shelf, [List colouring](07-list-colouring-and-choosability.md) tightens colouring by giving each dot its own short list of allowed colours. The balanced fixture grid also opens a side branch into experimental design on [Blocking and factorial designs](../../09-Probability%20and%20statistics/13-Survival%2C%20Design%20and%20Causality/05-blocking-and-factorial-designs.md).
 
 ---
 

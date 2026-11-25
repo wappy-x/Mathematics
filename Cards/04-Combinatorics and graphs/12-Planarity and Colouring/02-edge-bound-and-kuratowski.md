@@ -10,7 +10,9 @@ Three new houses stand on a dead-end street. Each needs gas, water and electrici
 
 The job is impossible, and not for want of ingenuity. Six points on a flat sheet, no pair joined twice and no three closing a ring, carry eight connections at most — one short of nine.
 
-The reason is a count. A crossing-free drawing cuts the sheet into regions, Euler's formula fixes how many, and no region closes without a minimum of lines around it. That sets a ceiling on the lines: on V dots, 3V − 6, and 2V − 4 when no three dots close a ring. Break the ceiling and no routing helps. Kazimierz Kuratowski proved in 1930 that two small networks — this one, and five dots each joined to all the rest — are the only obstructions, dots along their lines allowed.
+The reason is a count. A crossing-free drawing cuts the sheet into regions, Euler's formula fixes how many, and no region closes without a minimum of lines around it. That sets a ceiling on the lines: on V dots, 3V − 6, and 2V − 4 when no three dots close a ring. Break the ceiling and no routing helps.
+
+Kazimierz Kuratowski proved in 1930 that two small networks — this one, and five dots each joined to all the rest — are the only obstructions, dots along their lines allowed.
 
 **A flat drawing spends its lines walling regions, and no region closes with fewer than three, so V dots carry at most 3V − 6 lines: a network wanting more cannot be drawn flat.**
 
@@ -65,7 +67,7 @@ E \le 2V - 4
 
 - **Simple: one line per pair, none from a dot to itself.** A doubled line walls a two-sided region, and the count needs three.
 - **Three dots or more.** Two dots and one line read 1 > 0, a false verdict of impossible.
-- **For the second ceiling, no ring of three.** Lines drawn only between two groups close no ring ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)).
+- **For the second ceiling, no ring of three.** Lines drawn only between two groups close no odd ring, and so no ring of three ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)).
 - **One direction only.** Over the ceiling proves no flat drawing; under it proves nothing, as the Petersen network in Step 5 shows.
 
 ---
@@ -117,7 +119,9 @@ The ceiling belongs to the network, not to one drawing of it. Where no three dot
 
 ### Step 3: the three houses cannot be done, and neither can K(5)
 
-Suppose the nine pipes could be laid without a crossing. The sheet would hold 9 − 6 + 2 = 5 regions. No house joins a house and no main joins a main, so no ring of three closes: those 5 regions demand 4 × 5 = 20 sides and nine pipes supply 18. Demand above supply is a contradiction ([Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)), and the ceiling reads 2 × 6 − 4 = 8 against the builder's 9.
+Suppose the nine pipes could be laid without a crossing. The sheet would hold 9 − 6 + 2 = 5 regions. No house joins a house and no main joins a main, so no ring of three closes: those 5 regions demand 4 × 5 = 20 sides, while nine pipes supply 18.
+
+Demand above supply is a contradiction ([Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)), and the ceiling reads 2 × 6 − 4 = 8 against the builder's 9.
 
 The first ceiling catches K(5), 10 lines against 3 × 5 − 6 = 9. It misses the houses — 3 × 6 − 6 = 12, which 9 fits — so only the four-sided floor exposes them.
 
@@ -133,7 +137,9 @@ Insert a junction box along a pipe: the network gains a dot of degree 2, and the
 
 Kuratowski's theorem (1930) is the converse, and the surprise: **a finite network can be drawn flat exactly when it holds no subdivision of K(5) and none of K(3,3).** Klaus Wagner's 1937 version contracts lines — merging two joined dots — and reaches the same two ([Graph minors](09-graph-minors-and-wagner.md)).
 
-Petersen shows why the theorem is needed: a pentagon, a five-pointed star inside, five spokes joining them, 10 dots and 15 lines. Both ceilings stay silent, 15 being under 24 and under 16, and still no flat drawing exists. The code exhausts all 1024 cyclic orders (the orders in which lines leave each dot, going round it) and reaches 5 regions where 7 are needed. Kuratowski's test fires where counting cannot — a subdivision of K(3,3) sits inside.
+Petersen shows why the theorem is needed: a pentagon, a five-pointed star inside, five spokes joining them, 10 dots and 15 lines. Both ceilings stay silent, 15 being under 24 and under 16, and still no flat drawing exists.
+
+The code exhausts all 1024 cyclic orders (the orders in which lines leave each dot, going round it) and reaches 5 regions where 7 are needed. Kuratowski's test fires where counting cannot — a subdivision of K(3,3) sits inside.
 
 ```mermaid
 flowchart TB
@@ -176,7 +182,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Road one is the arithmetic above: count the lines, work out both ceilings, report which is broken. Road two never mentions a ceiling. A flat drawing is recorded by the cyclic order in which lines leave each dot, so the code tries every order at every dot and keeps the best region count. For a network in one piece, a flat drawing is the one reaching $`E - V + 2`$. Road one can only say no, so on K(5) minus one line and on Petersen road two answers alone.
+Nothing is imported. Road one is the arithmetic above: count the lines, work out both ceilings, report which is broken.
+
+Road two never mentions a ceiling. A flat drawing is recorded by the cyclic order in which lines leave each dot, so the code tries every order at every dot and keeps the best region count. For a network in one piece, a flat drawing is the one reaching $`E - V + 2`$. Road one can only say no, so on K(5) minus one line and on Petersen road two answers alone.
 
 ### Python
 
@@ -411,11 +419,12 @@ The two outputs match line for line.
 
 ## Where this goes next
 
+- [Colouring](03-vertex-colouring-and-chromatic-number.md): the general colouring question and chromatic number that map colouring builds on.
 - [Colouring maps](05-five-and-four-colour-theorems.md): that dot of degree 5 or less, used until a map is coloured.
-- [Graph minors](09-graph-minors-and-wagner.md): delete and contract edges, Wagner's theorem that flat graphs are exactly those without K5 or K(3,3) as a minor, and Robertson-Seymour in outline.
-- [Covering dimension](../../17-Topology/04-Homotopy/09-lebesgue-covering-dimension.md): count how many pieces of a fine cover must overlap at one point.
+- [Graph minors](09-graph-minors-and-wagner.md): Wagner's contraction version of Kuratowski, forbidding K(5) and K(3,3) as minors.
+- [Covering dimension](../../17-Topology/04-Homotopy/09-lebesgue-covering-dimension.md): uses K(5)'s non-planarity to show why an $`n`$-dimensional space can need $`2n + 1`$ coordinates to sit without crossings.
 
-This card finds the leftover dot and stops; what to do with it is a later card's work.
+This card finds the dot of degree 5 or less and stops; before applying it to maps, the shelf sets up colouring in general on [Colouring](03-vertex-colouring-and-chromatic-number.md).
 
 ---
 

@@ -12,7 +12,7 @@ Rebuild the four rooms round a courtyard, so room 4 shares a wall with room 1. S
 
 Draw each room as a dot and each shared wall as a line joining two dots. That drawing is a network, or graph, written G ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)).
 
-Both counts come from one expression in the number of tins, written q, and both read 2 when only two tins are in stock. Such a count, a polynomial in the number of colours, is the network's **chromatic polynomial**, written P(G, q). George Birkhoff put it in print in 1912, to attack map colouring.
+Each plan's count comes from a polynomial expression in the number of tins, written q, and both read 2 when only two tins are in stock. Such a count, a polynomial in the number of colours, is the network's **chromatic polynomial**, written P(G, q). George Birkhoff put it in print in 1912, to attack map colouring.
 
 One move computes it. Rub out a wall: every scheme of the wall-less plan keeps that wall's rooms apart or lets them match, and fusing those rooms into one counts the matching ones. A line between two dots is also an **edge**; rubbing one out is **deletion**, fusing its ends **contraction**.
 
@@ -124,7 +124,9 @@ since subtracting $`(-1)^{n-1}`$ adds $`(-1)^n`$: the claim for $`n`$.
 
 ### Step 3: where the count leaves zero
 
-The value is a count, so 0 means no colouring exists: the fewest colours that work is the smallest whole q with P(G, q) above 0, the chromatic number ([Colouring](03-vertex-colouring-and-chromatic-number.md)). Row and ring read 2 at two tins; the triangle reads 0 there and 6 at three, so it needs three. A five-room ring also reads 0 at two, since (2−1)^5 − (2−1) = 0: odd rings need three tins, even rings two.
+The value is a count, so 0 means no colouring exists: the fewest colours that work is the smallest whole q with P(G, q) above 0, the chromatic number ([Colouring](03-vertex-colouring-and-chromatic-number.md)). Row and ring read 2 at two tins; the triangle reads 0 there and 6 at three, so it needs three.
+
+A five-room ring also reads 0 at two, since $`(2 - 1)^5 - (2 - 1) = 0`$: odd rings need three tins, even rings two.
 
 A second road skips the recurrence: over every set of walls, add q raised to the number of pieces that set ties the rooms into, minus for odd-sized sets. Each term counts the schemes where those walls all match across, and the signs strike out the schemes that break a rule. Hassler Whitney published it in 1932; it gives the courtyard's 18.
 
@@ -137,7 +139,7 @@ A second road skips the recurrence: over every set of walls, add q raised to the
 | the row, room by room | 3 × 2 × 2 × 2 | 24 |
 | the triangle | 3 × 2 × 1 | 6 |
 | the ring, deletion less contraction | 24 − 6 | **18** |
-| the ring, by its polynomial | q^4 − 4q^3 + 6q^2 − 3q at q = 3 | **18** |
+| the ring, by its polynomial | $`q^4 - 4q^3 + 6q^2 - 3q`$ at $`q = 3`$ | **18** |
 | a hatch joining rooms 2 and 4 | 18 − 12 | **6** |
 
 Three tins give the courtyard 18 against the corridor's 24, the difference being the 6 schemes where rooms 4 and 1 matched. The last row is a second plan: a hatch joins rooms 2 and 4, and fusing them leaves a three-room row of 12.
@@ -156,7 +158,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Four roads reach the ring's count: try all q^n colourings and keep the proper ones, which needs no theory; run deletion and contraction on coefficient lists, so the polynomial falls out; add and subtract over every set of walls; and the closed form. The row takes three of them, the other plans fewer.
+Nothing is imported. Four roads reach the ring's count: try all $`q^n`$ colourings and keep the proper ones, which needs no theory; run deletion and contraction on coefficient lists, so the polynomial falls out; add and subtract over every set of walls; and the closed form. The row takes three of them, the other plans fewer.
 
 ### Python
 
@@ -938,7 +940,7 @@ example : (24 : ℕ) + 6 = 30 ∧ 24 < 24 + 6 := by norm_num
 > **Walking round the ring and multiplying as if it were a row.** A row of four gives 3 × 2 × 2 × 2 = 24, so the ring looks like 3 × 2 × 2 × 1 = 12, one colour left for room 4. It is 18: when rooms 1 and 3 match they forbid room 4 one colour, not two, and no single product holds both cases.
 >
 > - **Deleting without subtracting.** That plan counts the corridor's 24, not the courtyard's 18; the contraction's 6 is the part to remove, not the answer.
-> - **Reading the plan off the polynomial.** Every four-room tree gives q(q−1)^3, so the count cannot tell the corridor from one room with three others off it.
+> - **Reading the plan off the polynomial.** Every four-room tree gives $`q(q - 1)^3`$, so the count cannot tell the corridor from one room with three others off it.
 > - **Reading the value as a colour count.** At two tins the ring reads 2: two schemes, not two colours.
 
 ---
@@ -964,7 +966,7 @@ example : (24 : ℕ) + 6 = 30 ∧ 24 < 24 + 6 := by norm_num
 
 - [Colouring maps](05-five-and-four-colour-theorems.md): whether a flat map's count is ever 0 at four colours, Birkhoff's plan.
 - [Edge colouring](06-edge-colouring-and-round-robin.md): the same question, asked of the lines.
-- [Graph minors](09-graph-minors-and-wagner.md): delete and contract edges, Wagner's theorem that flat graphs are exactly those without K5 or K(3,3) as a minor, and Robertson-Seymour in outline.
+- [Graph minors](09-graph-minors-and-wagner.md): turns the same deletion and contraction moves into the definition of a minor, characterising flat drawings.
 
 Every wall doubles the split, so a real floor plan is past hand calculation. And nothing here rules out a flat map whose count reads 0 at four colours: that is the next card's question.
 

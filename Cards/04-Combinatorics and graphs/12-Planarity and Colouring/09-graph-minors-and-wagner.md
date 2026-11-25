@@ -625,9 +625,9 @@ end GraphMinors
 ## Where this goes next
 
 - [Treewidth](10-treewidth.md): how close a graph is to a tree, the main tool of the Graph Minors proof.
-- [Hadwiger's conjecture](../../25-Frontier/04-Geometry%20and%20Combinatorics/12-hadwigers-conjecture.md): a graph with no K_t minor can be coloured with t - 1 colours.
+- [Hadwiger's conjecture](../../25-Frontier/04-Geometry%20and%20Combinatorics/12-hadwigers-conjecture.md): conjectures that a graph with no K(t) minor needs at most t − 1 colours.
 
-The question left open looks back to [Colouring maps](05-five-and-four-colour-theorems.md): [Hadwiger's conjecture](../../25-Frontier/04-Geometry%20and%20Combinatorics/12-hadwigers-conjecture.md), grown from Wagner's paper, says a graph with no K(t) minor needs at most t − 1 colours; it is proved for small t, open in general.
+One question left open looks back to [Colouring maps](05-five-and-four-colour-theorems.md): [Hadwiger's conjecture](../../25-Frontier/04-Geometry%20and%20Combinatorics/12-hadwigers-conjecture.md) says a graph with no K(t) minor needs at most t − 1 colours, proved for small t and open in general. Next on this shelf, [Treewidth](10-treewidth.md) develops the tree-of-bags tool behind Robertson–Seymour and fast algorithms on minor-closed families.
 
 ---
 

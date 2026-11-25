@@ -202,7 +202,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 12 · Planarity and Colouring · 10 cards
 
-*Planar graphs and Euler's formula, the edge bound and Kuratowski's two forbidden graphs, vertex colouring and the chromatic number, the chromatic polynomial, the five- and four-colour theorems, and edge colouring with round-robin fixtures.*
+*Planar graphs and Euler's formula, the edge bound and Kuratowski's two forbidden graphs, vertex colouring and the chromatic number, the chromatic polynomial, the five- and four-colour theorems, edge colouring with round-robin fixtures, list colouring and Thomassen's proof, perfect and chordal graphs, graph minors with Wagner and Robertson-Seymour, and treewidth.*
 
 1. [Planar graphs: drawn flat with no crossings, and vertices minus edges plus faces is always 2](12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md)
 2. [Why some graphs cannot be drawn flat: at most 3V - 6 edges, so K(5) and the three-utilities graph fail, and Kuratowski says those two are the only obstacles](12-Planarity%20and%20Colouring/02-edge-bound-and-kuratowski.md)

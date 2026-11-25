@@ -646,7 +646,7 @@ example : (∀ u v, K24.Adj u v → plan u ≠ plan v) ∧
 
 - [Perfect graphs](08-perfect-and-chordal-graphs.md): graphs where the largest all-joined group always sets the number of colours.
 
-The question left open, the list colouring conjecture, looks back to [Edge colouring](06-edge-colouring-and-round-robin.md): does the choice number of line colouring always equal its chromatic number? Galvin proved it for two-sided graphs in 1995; in general it is unproved.
+One question left open, the list colouring conjecture, looks back to [Edge colouring](06-edge-colouring-and-round-robin.md): does the choice number of line colouring always equal its chromatic index? Galvin proved it for two-sided graphs in 1995; in general it is unproved. Next on this shelf, [Perfect graphs](08-perfect-and-chordal-graphs.md) asks the opposite question for ordinary colouring: which graphs never need more colours than their largest all-joined group?
 
 ---
 

@@ -10,9 +10,9 @@ Six radio masts stand in a ring round a city, numbered 1 to 6. Each mast interfe
 
 As a graph, the masts are vertices and each interfering pair is an edge: the 6-cycle 1-2-3-4-5-6-1. A set of vertices with no edge inside it is an **independent set**; the question asks for the largest. The answer is 3, for example masts 1, 3 and 5.
 
-Six masts allow 2^6 = 64 on-off choices; sixty allow 2^60, over a billion billion. Yet a ring is nearly a tree ([Trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md)), and treewidth measures that "nearly".
+Six masts allow $`2^6 = 64`$ on-off choices; sixty allow $`2^{60}`$, over a billion billion. Yet a ring is nearly a tree ([Trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md)), and treewidth measures that "nearly".
 
-Cover the graph with small overlapping groups of vertices, called **bags**, arranged as a tree. For the ring, four bags in a row do it: {1, 2, 6}, {2, 3, 6}, {3, 5, 6}, {3, 4, 5}. The search then runs bag by bag, with at most 2^3 = 8 on-off choices per bag.
+Cover the graph with small overlapping groups of vertices, called **bags**, arranged as a tree. For the ring, four bags in a row do it: {1, 2, 6}, {2, 3, 6}, {3, 5, 6}, {3, 4, 5}. The search then runs bag by bag, with at most $`2^3 = 8`$ on-off choices per bag.
 
 **Treewidth is the size of the largest bag, less one, in the thinnest tree of overlapping bags that covers a graph; trees score 1, cycles 2, the k by k grid k, and many problems that are hopeless on graphs in general become a short pass through the bags when that number is small.**
 
@@ -53,10 +53,10 @@ A **tree decomposition** of $`G`$ is a tree $`T`$ whose nodes $`t`$ each carry a
 The "minus one" makes trees score 1. The card proves or states four values:
 
 ```math
-\mathrm{tw}(\text{tree}) = 1, \qquad \mathrm{tw}(\text{cycle}) = 2, \qquad \mathrm{tw}(k \times k \text{ grid}) = k, \qquad \mathrm{tw}(G) \ge \delta(G)
+\mathrm{tw}(\text{tree with an edge}) = 1, \qquad \mathrm{tw}(\text{cycle}) = 2, \qquad \mathrm{tw}(k \times k \text{ grid}) = k \ (k \ge 2), \qquad \mathrm{tw}(G) \ge \delta(G)
 ```
 
-**Read it aloud:** trees score 1, cycles 2, a square grid of side k scores k, and no graph scores below its fewest neighbours $`\delta(G)`$.
+**Read it aloud:** trees with at least one edge score 1, cycles score 2, a square grid of side $`k`$ (from 2 up) scores $`k`$, and no graph scores below its fewest neighbours $`\delta(G)`$.
 
 The payoff: the bag-by-bag method keeps one table entry per on-off choice inside a bag.
 
@@ -95,7 +95,9 @@ In general, the vertices two neighbouring bags share **separate** the graph: rem
 <details>
 <summary>Detailed proof: shared vertices separate</summary>
 
-Cut the tree between two neighbouring bags, splitting the bags into side A and side B. A vertex with bags on both sides sits in both neighbouring bags (rule 3), so it is shared. Every other vertex is A-only or B-only. An edge from an A-only vertex to a B-only vertex would need a bag holding both ends (rule 2), and no bag on either side can. So every path from an A-only vertex to a B-only vertex passes through a shared vertex.
+Cut the tree between two neighbouring bags, splitting the bags into side A and side B. A vertex with bags on both sides sits in both neighbouring bags (rule 3), so it is shared.
+
+Every other vertex is A-only or B-only. An edge from an A-only vertex to a B-only vertex would need a bag holding both ends (rule 2), and no bag on either side can. So every path from an A-only vertex to a B-only vertex passes through a shared vertex.
 
 </details>
 
@@ -131,7 +133,9 @@ For each bag, list the independent choices inside it, and record for each the la
 2. Look only at earlier entries that **agree on the shared vertices**.
 3. Take the best of those, and add the vertices new in this bag.
 
-Step 0 makes this safe. Rule 3 counts each vertex once: once a vertex leaves the bags, it never returns. When the tree branches, hang it from one bag ([Rooted trees](../10-Trees%20and%20Cheapest%20Routes/02-rooted-and-binary-trees.md)): a bag with several children adds each child's best matching total, less the chosen vertices shared with this bag, then its own chosen vertices. A bag of $`w + 1`$ vertices, $`w`$ the width, has at most $`2^{w+1}`$ choices, so the work grows with the number of bags, not as $`2^n`$ for $`n`$ vertices.
+Step 0 makes this safe. Rule 3 counts each vertex once: once a vertex leaves the bags, it never returns.
+
+When the tree branches, hang it from one bag ([Rooted trees](../10-Trees%20and%20Cheapest%20Routes/02-rooted-and-binary-trees.md)). A bag with several children adds each child's best matching total, subtracts the chosen vertices shared with this bag, and adds its own chosen vertices. A bag of $`w + 1`$ vertices, $`w`$ the width, has at most $`2^{w+1}`$ choices, so the work grows with the number of bags, not as $`2^n`$ for $`n`$ vertices.
 
 ---
 
@@ -145,11 +149,11 @@ Each entry reads "choice inside the bag = best total so far". Choices holding an
 | bag {2, 3, 6}, shares 2 and 6 | {3}: best of {}, {1} is 1, plus mast 3 | {}=1 {2}=1 {3}=2 {6}=1 {2,6}=2 {3,6}=2 |
 | bag {3, 5, 6}, shares 3 and 6 | {3, 5}: from {3}=2, plus mast 5 | {}=1 {3}=2 {5}=2 {3,5}=3 {6}=2 {3,6}=2 |
 | bag {3, 4, 5}, shares 3 and 5 | {3, 5} carries 3; {4}: best of {}, {6} is 2, plus mast 4 | {}=2 {3}=2 {4}=3 {5}=2 {3,5}=3 |
-| table entries | 5 + 6 + 6 + 5, each at most 2^3 = 8 | 22 |
+| table entries | 5 + 6 + 6 + 5, each at most $`2^3 = 8`$ | 22 |
 | best in the last table | a tie, 3 and 3 | **3**, masts {1, 3, 5} |
 | check: every subset | 64 subsets, 18 independent | largest 3, by {1, 3, 5} and {2, 4, 6} |
 
-At most three masts can share the frequency. The method used 22 entries against 64 subsets; on 60 masts, 346 against 2^60 = 1152921504606846976. A ring alone has a shortcut, alternate masts; the method matters on small-treewidth layouts with no such rule.
+At most three masts can share the frequency. The method used 22 entries against 64 subsets; on 60 masts, 346 against $`2^{60} = 1152921504606846976`$. A ring alone has a shortcut, alternate masts; the method matters on small-treewidth layouts with no such rule.
 
 ### What breaks if you drop a piece
 
@@ -828,9 +832,10 @@ end Treewidth
 
 ## Where this goes next
 
+- [Matchings](../13-Matchings%20and%20Flows/01-matchings-and-augmenting-paths.md): opens the next shelf, pairing vertices with no overlap using alternating routes.
 - [Karp's list](../../24-Computability%20and%20complexity/03-Time%20Complexity/05-karps-problems-and-hardness-recipes.md): why independent set is hard in general, the hardness the bag-by-bag method escapes.
 
-The question left open: how to find the thinnest decomposition of a large graph, when the exact search grows as $`2^n`$.
+One question left open is how to find the thinnest decomposition of a large graph, when exact search grows as $`2^n`$. With planarity and colouring complete, the next shelf turns to pairing and capacity, starting with [Matchings](../13-Matchings%20and%20Flows/01-matchings-and-augmenting-paths.md).
 
 ---
 

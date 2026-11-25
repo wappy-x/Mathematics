@@ -157,7 +157,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The drawing arrives the only way it can without a picture: for each pad, the cyclic order in which its tracks leave it. Walking that order traces one face at a time, so the patch count is read off the drawing, not assumed; each track is walked from both sides, 24 sides for 12 tracks. Road one counts the traced faces, road two predicts the number from $`E - V + 2`$, and the proof runs as a program. The dual gives the second case: the map's five-region graph.
+Nothing is imported. The drawing arrives the only way it can without a picture: for each pad, the cyclic order in which its tracks leave it. Walking that order traces one face at a time, so the patch count is read off the drawing, not assumed; each track is walked from both sides, 24 sides for 12 tracks.
+
+Road one counts the traced faces, road two predicts the number from $`E - V + 2`$, and the proof runs as a program. The dual gives the second case: the map's five-region graph.
 
 ### Python
 
@@ -371,7 +373,7 @@ The two outputs match line for line.
 > - **Mixing "planar" with "plane".** Planar says a crossing-free drawing exists; plane says the drawing in hand is one. A crossing layout is a bad drawing, not a counterexample.
 > - **Reading a ring of patches as one patch.** The corridors run all the way round, but the spokes wall them apart: count one and the total reads −1.
 > - **Using it on a drawing in two pieces.** Two boards side by side come to 16 − 24 + 11 = 3.
-> - **Expecting 2 on any surface.** The 2 belongs to the flat sheet and the sphere; on a doughnut the count is 0 (Euler characteristic).
+> - **Expecting 2 on any surface.** The 2 belongs to the flat sheet and the sphere; on a doughnut the count is 0 ([Euler characteristic](../../17-Topology/03-Surfaces%20and%20Manifolds/04-euler-characteristic-and-triangulations.md)).
 
 ---
 
@@ -401,8 +403,8 @@ The two outputs match line for line.
 - [Euler characteristic](../../17-Topology/03-Surfaces%20and%20Manifolds/04-euler-characteristic-and-triangulations.md): the same count elsewhere, where the 2 names the surface.
 - [Cycle double cover](../../25-Frontier/04-Geometry%20and%20Combinatorics/04-cycle-double-cover-conjecture.md): the six faces here are cycles that cover each of the 12 tracks exactly twice; whether every network with no bridge (a line whose removal splits it) has such cycles, flat or not, was open until a proof was claimed in July 2026; it is not yet refereed.
 - [Pick's theorem](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/07-picks-theorem.md): count the dots inside and on the edge, and the area falls out.
-- [List colouring](07-list-colouring-and-choosability.md): when every vertex brings its own short list of allowed colours, and Thomassen's proof that five per vertex always suffice on a flat map.
-- [Graph minors](09-graph-minors-and-wagner.md): delete and contract edges, Wagner's theorem that flat graphs are exactly those without K5 or K(3,3) as a minor, and Robertson-Seymour in outline.
+- [List colouring](07-list-colouring-and-choosability.md): uses the outer face of a flat drawing to prove lists of five colours per dot always suffice.
+- [Graph minors](09-graph-minors-and-wagner.md): characterises flat drawings by deleting and contracting lines, with K(5) and K(3,3) as the two forbidden minors.
 
 This card assumes a crossing-free drawing is in hand and never asks whether one exists; deciding that is [Why some graphs cannot be drawn flat](02-edge-bound-and-kuratowski.md).
 

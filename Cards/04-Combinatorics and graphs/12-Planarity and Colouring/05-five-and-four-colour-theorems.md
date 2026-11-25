@@ -83,26 +83,28 @@ That averages under six lines a dot, and whole numbers cannot all sit above thei
 
 Lift out a ward with at most five neighbours — Step 1 promises one. What remains is still flat, so assume six inks shade it. Put the ward back: its neighbours wear five inks at most, so a sixth is free. Six wards or fewer get an ink apiece, where the induction stops ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)). Induction is this pattern: settle the smallest maps, then show each size follows from the one below.
 
-The code runs that proof: lift the least busy ward over and over, never finding one with more than 3 borders left at its lift, then shade back in reverse to A4 B1 C2 D1 E3 F2 G4 H1 I3 J2 K1 L3 — four inks, well under six.
+The code runs that proof, lifting the least busy ward over and over and never finding more than 3 borders left. Shading back in reverse gives A4 B1 C2 D1 E3 F2 G4 H1 I3 J2 K1 L3 — four inks, well under six.
 
 ### Step 3: five colours, by trading two inks along a chain
 
-Five neighbours block five inks, which is why six was easy. One case is hard: the five wear five different inks. Two of them not side by side round A must still share no border: five mutually bordering dots need 10 lines and five flat dots allow 9, and a B–D border would fence C off from E, leaving that pair free instead.
+Five neighbours block five inks, which is why six was easy. One case is hard: the five wear five different inks. Two of them not side by side round A must still share no border, because five mutually bordering dots need 10 lines where a flat drawing allows 9. A B–D border would fence C off from E, leaving C and E unjoined instead.
 
 Lift out A. Its neighbours, in the order they sit round it, are B, C, D, E, F; give them inks 1 to 5 and fill the outer ring as G 3, H 1, I 4, J 1, K 2, L 4. No ink is left for A.
 
-Here B and D share no border. Follow the wards wearing ink 1 or ink 3 from B: B (1) borders G (3), G borders H (1), and it ends — a **Kempe chain**, wards wearing two inks, linked border to border, followed as far as it goes.
+Here B and D share no border. Follow the wards wearing ink 1 or ink 3 from B: B (1) borders G (3), G borders H (1), and it ends. That connected run of two-ink wards is a **Kempe chain**, followed as far as it goes.
 
 D wears 3 and is off it, so trade the two inks along the chain: B becomes 3, G becomes 1, H becomes 3. Borders inside it still hold two inks, both ends having moved, and a border leaving it ends on a ward wearing neither. A's neighbours now wear 3, 2, 3, 4, 5, so ink 1 is free.
 
-Had the chain reached D, nothing would be freed. But a chain of 1s and 3s from B to D, closed by A's two lines, pens C inside with E outside, so no chain of 2s and 4s runs from C to E: trading those frees ink 2 instead.
+Had the chain reached D, nothing would be freed. But a chain of 1s and 3s from B to D, closed by A's two lines, pens C inside with E outside. No chain of 2s and 4s can cross it from C to E, so trading 2 and 4 frees ink 2 instead.
 
 <details>
 <summary>Detailed proof: from this map to every flat map</summary>
 
 Induct on the number of dots. Five or fewer: one colour each. Otherwise delete a dot v of degree at most 5 — Step 1 promises one — shade the rest by induction, and restore v. A colour is free unless v's five neighbours wear five colours.
 
-In that case run the steps above with v for A. Name the neighbours P, Q, R, S, T in the order their lines leave v; some pair not side by side is unjoined, since a line P–R would fence Q off from S. Trade 1 and 3 along P's chain, or, if that chain reaches R, trade 2 and 4 along Q's instead, which the closed curve through v keeps clear of S. Only the Jordan curve theorem is taken on trust: a closed curve drawn flat splits the sheet into an inside and an outside.
+In that case run the steps above with v for A. Name the neighbours P, Q, R, S, T in the order their lines leave v. Some pair not side by side is unjoined, since a line P–R would fence Q off from S.
+
+Trade 1 and 3 along P's chain. If that chain reaches R, trade 2 and 4 along Q's instead, which the closed curve through v keeps clear of S. Only the Jordan curve theorem is taken on trust: a closed curve drawn flat splits the sheet into an inside and an outside.
 
 </details>
 
@@ -110,7 +112,9 @@ In that case run the steps above with v for A. Name the neighbours P, Q, R, S, T
 
 Alfred Kempe published a proof of four colours in 1879 using this chain; Percy Heawood found the hole in 1890. With four inks the trade needs two chains, which can share wards, so the second can undo the first. What survived is Step 3.
 
-Appel and Haken closed the gap in 1976 with a finite check: a list of local patterns every flat map must contain one of, each shadeable once a smaller map is, leaving no smallest unshadeable map. Their list held nearly two thousand patterns, later trimmed to 1,476, and took about twelve hundred hours of machine time. Robertson, Sanders, Seymour and Thomas rebuilt it in 1997 with 633; Gonthier redid it inside a proof assistant in 2005, so a program now certifies every step.
+Appel and Haken closed the gap in 1976 with a finite check. They built a list of local patterns every flat map must contain, each shadeable once a smaller map is, leaving no smallest unshadeable map.
+
+Their list held nearly two thousand patterns, later trimmed to 1,476, and took about twelve hundred hours of machine time. Robertson, Sanders, Seymour and Thomas rebuilt it in 1997 with 633; Gonthier redid it inside a proof assistant in 2005, so a program now certifies every step.
 
 ---
 
@@ -375,10 +379,10 @@ The two outputs match line for line.
 ## Where this goes next
 
 - [Edge colouring](06-edge-colouring-and-round-robin.md): colouring the borders instead of the regions, where the busiest ward, not flatness, sets the count.
-- [List colouring](07-list-colouring-and-choosability.md): when every vertex brings its own short list of allowed colours, and Thomassen's proof that five per vertex always suffice on a flat map.
-- [Hadwiger's conjecture](../../25-Frontier/04-Geometry%20and%20Combinatorics/12-hadwigers-conjecture.md): a graph with no K_t minor can be coloured with t - 1 colours.
+- [List colouring](07-list-colouring-and-choosability.md): gives each region its own list of allowed inks, where Kempe chains fail and five per region is sharp.
+- [Hadwiger's conjecture](../../25-Frontier/04-Geometry%20and%20Combinatorics/12-hadwigers-conjecture.md): extends the four-colour theorem to graphs with no $`K_t`$ minor.
 
-The question left open is about proofs, not maps: nobody knows whether four colours can be settled in a way one person could read.
+One question left open is about proofs: nobody knows a proof of four colours that one person can read end to end. Next on this shelf, [Edge colouring](06-edge-colouring-and-round-robin.md) moves the colours from the regions onto the borders themselves.
 
 ---
 

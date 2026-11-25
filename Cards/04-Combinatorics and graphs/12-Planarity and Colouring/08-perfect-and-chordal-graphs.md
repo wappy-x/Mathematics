@@ -176,7 +176,7 @@ Berge conjectured both in 1961; the strong theorem's proof runs about 180 pages.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The room count comes three ways: a backtracking search, greedy colouring along an elimination order found by removing simplicial dots, and a clock sweep. Perfection is tested as $`\chi = \omega`$ on every induced subgraph.
+Nothing is imported. The room count comes three ways: a backtracking search, greedy colouring backwards along an elimination order found by removing simplicial dots, and a clock sweep. Perfection is tested as $`\chi = \omega`$ on every induced subgraph.
 
 ### Python
 
@@ -1110,7 +1110,7 @@ end PerfectChordal
 - **Compilers.** Values alive at the same time cannot share a register. When each value is written once, this clash graph is chordal, and greedy colouring in the right order gives the fewest registers.
 
 > **Say it back**
-> Every graph needs at least as many colours as its largest all-joined group. A perfect graph needs exactly that many, in every piece cut from it. Odd rings of five or more and their complements fail, and nothing else does. A chordal graph has an elimination order, and greedy colouring along it is exact. Meetings form such a graph, so the rooms needed equal the most meetings running at once: 2.
+> Every graph needs at least as many colours as its largest all-joined group. A perfect graph needs exactly that many, in every piece cut from it. Odd rings of five or more and their complements fail, and nothing else does. A chordal graph has an elimination order, and greedy colouring walking it backwards is exact. Meetings form such a graph, so the rooms needed equal the most meetings running at once: 2.
 
 ---
 
@@ -1121,11 +1121,12 @@ end PerfectChordal
 
 ## Where this goes next
 
+- [Graph minors](09-graph-minors-and-wagner.md): another forbidden-structure theorem, using deletion and contraction rather than induced subgraphs.
 - [Konig's theorem](../13-Matchings%20and%20Flows/03-konigs-theorem-and-vertex-cover.md): largest matching equals smallest cover in a bipartite graph, so their complements are perfect.
 - [Treewidth](10-treewidth.md): how far a graph is from chordal, and so from easy.
 - [Reductions](../../24-Computability%20and%20complexity/03-Time%20Complexity/03-polynomial-reductions-and-np-completeness.md): why colouring a general graph has no known fast method.
 
-Perfect graphs can be coloured exactly in reasonable time, but only by a geometric method; no simple combinatorial one is known.
+Perfect graphs can be coloured exactly in reasonable time, but only by a geometric method; no simple combinatorial one is known. Next on this shelf, [Graph minors](09-graph-minors-and-wagner.md) turns from induced-subgraph obstructions to minor obstructions, before [Treewidth](10-treewidth.md) returns to chordal graphs to measure how tree-like a graph is.
 
 ---
 
