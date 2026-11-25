@@ -356,7 +356,7 @@ Lean proves the card's three steps, for every number of merges and every allowed
 
 - The plan counts, hung on powers of x, satisfy C = 1 + x C^2. A plan is one stack, or a last merge joining a left plan to a right plan.
 - Start from C = 1 and iterate. After k rounds, every coefficient up to x^k is its Catalan number, and it never moves again.
-- Take a number x, not 0 and at most one quarter. Then x C^2 - C + 1 = 0 has exactly two solutions: the minus root and the plus root.
+- Take a number x, not 0 and at most one quarter. Then the solutions of x C^2 - C + 1 = 0 are exactly the minus root and the plus root. At x = 1/4 both equal 2, giving one solution.
 - The minus root equals 2/(1 + sqrt(1 - 4x)).
 - The counts 1, 1, 2, 5, 14, 42; five plans for four stacks; 42 plans for six; and 120 merge orders for five merges.
 

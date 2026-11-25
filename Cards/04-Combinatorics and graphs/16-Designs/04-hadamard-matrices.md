@@ -141,7 +141,7 @@ $`H^{\mathsf T}`$ is also Hadamard, because $`H^{\mathsf T}/n`$ is the inverse o
 
 Swap labels 3 and 4 and send 5 → 7 → 6 → 5, and the blocks become the Fano lines {1, 2, 4}, …, {7, 1, 3} from [Block designs](01-block-designs-and-fishers-inequality.md).
 
-In general a normalised $`H_n`$ gives a 2-(n − 1, n/2 − 1, n/4 − 1) design. It runs backwards too: +1 where a point lies on a Fano line, −1 elsewhere, plus a border of +1s, gives $`HH^{\mathsf T} = 8I`$. This core is twice the Fano plane's 0/1 incidence matrix, turned on its side, minus a table of all 1s.
+When $`n`$ is a multiple of 4 and at least 8, a normalised $`H_n`$ gives a 2-(n − 1, n/2 − 1, n/4 − 1) design. It runs backwards too: +1 where a point lies on a Fano line, −1 elsewhere, plus a border of +1s, gives $`HH^{\mathsf T} = 8I`$. This core is twice the Fano plane's 0/1 incidence matrix, turned on its side, minus a table of all 1s.
 
 ---
 

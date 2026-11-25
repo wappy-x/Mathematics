@@ -44,7 +44,7 @@ The recurrence runs from n = 1, k = 1 outward. The edges start the table:
 
 - S(0, 0) = 1, the empty set split into no groups.
 - S(n, 0) = 0 once there is an item to place.
-- S(n, 1) = 1 and S(n, n) = 1, all together or each alone.
+- S(n, 1) = 1 for n ≥ 1, and S(n, n) = 1, all together or each alone.
 - S(n, k) = 0 when k > n.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |

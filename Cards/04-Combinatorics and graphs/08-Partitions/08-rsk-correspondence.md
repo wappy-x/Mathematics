@@ -124,7 +124,7 @@ Back then forward: reverse bumping any same-shaped standard pair leaves a smalle
 
 ### Step 4: count both sides
 
-The left side has $`n!`$ shuffles. The right side has, for each shape $`\lambda`$, $`f^\lambda`$ choices of $`P`$ times $`f^\lambda`$ choices of $`Q`$. A bijection makes the two counts equal. [Character tables](../../03-Algebra/12-Group%20Representations/03-character-tables.md) meets the same sum: there the squared sizes of a group's basic symmetry families add up to the group's size. For n = 4:
+The left side has $`n!`$ shuffles. The right side has, for each shape $`\lambda`$, $`f^\lambda`$ choices of $`P`$ times $`f^\lambda`$ choices of $`Q`$. A bijection makes the two counts equal. [Character tables](../../03-Algebra/12-Group%20Representations/03-character-tables.md) meets the same sum: there a group's matrix pieces that cannot split any further have sizes whose squares add up to the group's size. For n = 4: For n = 4:
 
 ```text
 squares of the tableau counts, n = 4

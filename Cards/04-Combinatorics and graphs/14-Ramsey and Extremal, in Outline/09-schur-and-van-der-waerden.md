@@ -67,7 +67,7 @@ The key step turns three points into a sum. For points $`i < j < l`$ on a line:
 | $`R_r(3)`$ | triangle Ramsey number | $`R(3,3) = 6`$; with 3 colours, $`R(3,3,3) = 17`$ | Schur's ceiling rises |
 | $`a, d`$ | first term and gap of a progression $`a, a+d, a+2d`$ | 1 and 4: 1, 5, 9 | — |
 | $`W(k; r)`$ | fewest numbers forcing a one-colour progression of $`k`$ terms | $`W(3; 2) = 9`$ | rises fast with $`k`$ |
-| $`n`$ | dimension of a noughts-and-crosses board | 2 for paper, 3 for the cube | lines multiply |
+| $`n`$ | dimension of a noughts-and-crosses (tic-tac-toe) board | 2 for paper, 3 for the cube | lines multiply |
 
 ### When it holds
 

@@ -50,7 +50,7 @@ Deciding which branch is asked is half the work.
 
 One reminder first. $`C(m, r)`$, read "m choose r", counts the ways to pick r things out of m when the order of the pick does not matter ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
 
-Write $`n`$ for the identical items and $`k`$ for the labelled boxes. With empty boxes allowed:
+Write $`n`$ for the identical items and $`k`$ for the labelled boxes, with at least one box ($`k \ge 1`$). With empty boxes allowed:
 
 ```math
 \text{ways} = C(n + k - 1,\ k - 1)
@@ -60,7 +60,7 @@ Write $`n`$ for the identical items and $`k`$ for the labelled boxes. With empty
 
 Five scoops across three flavours: C(5 + 3 − 1, 3 − 1) = C(7, 2) = 21.
 
-Now the other question: twelve identical tins on three labelled shelves, no shelf left bare.
+Now the other question: twelve identical tins on three labelled shelves, no shelf left bare. For $`n \ge 1`$ and $`k \ge 1`$:
 
 ```math
 \text{ways, no box empty} = C(n - 1,\ k - 1)
@@ -366,10 +366,10 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves all three counts for every number of items and boxes, not just the gelato counter.
+Lean proves all three counts for every $`n`$ and every $`k \ge 1`$ (with $`n \ge 1`$ for the no-empty count), not just the gelato counter.
 
-- $`n`$ identical items go into $`k`$ labelled boxes, empties allowed, in $`C(n + k - 1,\ k - 1)`$ ways.
-- With no box empty, the count is $`C(n - 1,\ k - 1)`$, which is 0 when there are fewer items than boxes.
+- For $`k \ge 1`$, $`n`$ identical items go into $`k`$ labelled boxes, empties allowed, in $`C(n + k - 1,\ k - 1)`$ ways.
+- With no box empty, for $`n \ge 1`$ and $`k \ge 1`$, the count is $`C(n - 1,\ k - 1)`$, which is 0 when there are fewer items than boxes.
 - A whole number $`n`$ (at least 1) has $`2^{n-1}`$ compositions: each of the $`n - 1`$ gaps is cut or left alone.
 - The card's numbers: 21 tubs listed one by one, 6 using every flavour, 55 shelvings, 32 compositions, and the wrong turns 35, 10 and 6.
 
