@@ -13,14 +13,14 @@ fn main() {
     let mut chain: Vec<(i64, i64, i64, i64)> = Vec::new();
     while b != 0 { let t = a % b; chain.push((a, a / b, b, t)); a = b; b = t; }
     let g = a;
-    println!("{:<38}{:>4}", "gcd(21, 15) by Euclid", g);
+    println!("{:<38}{:>4}", format!("gcd({}, {}) by Euclid", A, B), g);
     for &(u, q, v, r) in &chain { println!("{} = {} x {} + {}", u, q, v, r); }
     let n = chain.len();
     let (mut p, mut s) = (1, -chain[n - 2].1);   // the last useful line: 3 = 15 - 2 x 6
     for &(_, q, _, _) in chain[..n - 2].iter().rev() { let (np, ns) = (s, p - s * q); p = np; s = ns; }
-    println!("Bezout: 21 x {} + 15 x {} = {} + {} = {}", p, s, A * p, B * s, A * p + B * s);
+    println!("Bezout: {} x {} + {} x {} = {} + {} = {}", A, p, B, s, A * p, B * s, A * p + B * s);
     let (p2, s2) = (p + B / g, s - A / g);       // slide along by one whole step
-    println!("one step along (21 x {} = 15 x {} = {}): 21 x {} + 15 x {} = {} + {} = {}", B / g, A / g, A * (B / g), p2, s2, A * p2, B * s2, A * p2 + B * s2);
+    println!("one step along ({} x {} = {} x {} = {}): {} x {} + {} x {} = {} + {} = {}", A, B / g, B, A / g, A * (B / g), A, p2, B, s2, A * p2, B * s2, A * p2 + B * s2);
     let mut mixes: Vec<i64> = Vec::new();
     for i in -9..=9 { for j in -9..=9 { mixes.push(A * i + B * j); } }
     let best = *mixes.iter().filter(|&&m| m > 0).min().unwrap();

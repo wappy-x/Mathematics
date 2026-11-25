@@ -55,7 +55,7 @@ The same fact in the form that does the work:
 
 - **Whole numbers.** The test counts whole teeth and whole helpings. Allow fractions and any two numbers mix to 1, so the test says nothing.
 - **The mix may take away.** 28 × 7 − 15 × 13 reaches 1 only by taking thirteen 15s away. Adding alone, 15s and 28s never make 1.
-- **The shared factor is exactly 1.** At 3, as with 15 and 27, the smallest mix is 3 and tooth 0 meets only 9 of the 27 slots.
+- **The shared factor is exactly 1.** At 3, as with 15 and 27, the smallest positive mix is 3 and tooth 0 meets only 9 of the 27 slots.
 
 ---
 
@@ -63,7 +63,7 @@ The same fact in the form that does the work:
 
 ### Step 0: a shared factor rules everything you build
 
-3 goes into 15 five times and into 27 nine times, so both are whole numbers of 3s. Mix them however you like: the total is still a whole number of 3s, never 1. The smallest they build is 3 itself: 27 × 4 − 15 × 7 = 3.
+3 goes into 15 five times and into 27 nine times, so both are whole numbers of 3s. Mix them however you like: the total is still a whole number of 3s, never 1. The smallest positive amount they build is 3 itself: 27 × 4 − 15 × 7 = 3.
 
 ### Step 1: coprime is exactly "some mix of them equals 1"
 
@@ -113,7 +113,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Each pair is done twice: Euclid's algorithm for the shared factor, and walking the small gear round the big one for the pairings. The mix is a third road.
+Nothing is imported. Each pair is done twice: Euclid's algorithm for the shared factor, and walking the small gear round the big one for the pairings. The mix is a third road: a search over counts from −15 to 15 finds the smallest positive mix of each pair, and it must equal the shared factor.
 
 ### Python
 
@@ -131,8 +131,8 @@ def meets(small, big):               # slots of the big gear that tooth 0 meets
         seen.append(step % big)
         step += small
     return seen
-def row(name, value):
-    print(f"{name:<42}{value:>7}")
+def row(name, value): print(f"{name:<42}{value:>7}")
+def smallest_mix(a, b): return min(a * i + b * j for i in range(-15, 16) for j in range(-15, 16) if a * i + b * j > 0)  # third road: a search
 for small, big in ((15, 28), (15, 27)):
     g = gcd(small, big)
     met = meets(small, big)
@@ -146,10 +146,11 @@ print("slots of the 27-gear tooth 0 meets: " + " ".join(str(t) for t in meets(15
 assert gcd(15, 28) == 1 and 28 * 7 - 15 * 13 == 1 and meets(15, 28)[:4] == [0, 15, 2, 17]
 assert len(meets(15, 28)) == 28 and 15 * len(meets(15, 28)) == 15 * 28
 assert gcd(15, 27) == 3 and len(meets(15, 27)) == 27 // 3 and 15 * len(meets(15, 27)) == 135
+assert smallest_mix(15, 28) == gcd(15, 28) == 1 and smallest_mix(15, 27) == gcd(15, 27) == 27 * 4 - 15 * 7
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 gcd of 15 and 28, by Euclid                     1
@@ -187,6 +188,9 @@ fn meets(small: i64, big: i64) -> Vec<i64> { // slots of the big gear that tooth
     seen
 }
 fn row(name: &str, value: &str) { println!("{:<42}{:>7}", name, value); }
+fn smallest_mix(a: i64, b: i64) -> i64 {     // third road: search counts -15 to 15, keep the smallest above zero
+    (-15..=15).flat_map(|i| (-15..=15).map(move |j| a * i + b * j)).filter(|&m| m > 0).min().unwrap()
+}
 fn main() {
     for (small, big) in [(15i64, 28i64), (15, 27)] {
         let g = gcd(small, big);
@@ -205,11 +209,12 @@ fn main() {
     assert!(gcd(15, 28) == 1 && 28 * 7 - 15 * 13 == 1 && meets(15, 28)[..4] == [0, 15, 2, 17]);
     assert!(meets(15, 28).len() == 28 && 15 * meets(15, 28).len() == 15 * 28);
     assert!(gcd(15, 27) == 3 && meets(15, 27).len() == 27 / 3 && 15 * meets(15, 27).len() == 135);
+    assert!(smallest_mix(15, 28) == 1 && gcd(15, 28) == 1 && smallest_mix(15, 27) == gcd(15, 27) && gcd(15, 27) == 27 * 4 - 15 * 7);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 gcd of 15 and 28, by Euclid                     1
@@ -378,7 +383,7 @@ example : ¬ Nat.Prime 15 ∧ ¬ Nat.Prime 28 ∧ Nat.Coprime 15 28 := by norm_n
 > **Reading coprime as "both prime".** 15 is 3 × 5 and 28 is 2 × 2 × 7. Neither is prime, yet they are coprime: no factor turns up in both lists. Coprime is a fact about a pair, never about one number.
 >
 > - "No common factor" is never true: 1 divides everything. The test is no common factor **except** 1.
-> - Expecting any pair to reach 1. Mix 15 and 27 how you like; you cannot get below 3.
+> - Expecting any pair to reach 1. Mix 15 and 27 how you like; nothing above zero comes out below 3.
 > - Thinking coprime pairs are rare. Any pair of neighbours is coprime.
 
 ---
@@ -406,10 +411,10 @@ example : ¬ Nat.Prime 15 ∧ ¬ Nat.Prime 28 ∧ Nat.Coprime 15 28 := by norm_n
 - [The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md): undoing a multiplication on a clock face needs a coprime multiplier.
 - [Solving a x ≡ b (mod n)](../03-Clock%20Arithmetic/05-linear-congruences.md): which remainder puzzles have answers, decided by the shared factor.
 - [The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md): two remainders pin down one number when the counts are coprime.
-- [The coin problem](../03-Clock%20Arithmetic/07-frobenius-coin-problem.md): with 5-cent and 7-cent stamps every amount above 23 can be paid, and 23 cannot.
-- [Binary quadratic forms](../08-Quadratic%20Forms%20and%20Approximation/01-binary-quadratic-forms.md): which numbers x^2 + 5y^2 and its cousins can reach, read off the discriminant.
+- [The coin problem](../03-Clock%20Arithmetic/07-frobenius-coin-problem.md): when two stamp values are coprime, only finitely many amounts cannot be paid without taking any away.
+- [Binary quadratic forms](../08-Quadratic%20Forms%20and%20Approximation/01-binary-quadratic-forms.md): which numbers x^2 + 5y^2 and its cousins reach when x and y are coprime.
 
-Left open: a coprime pair can build 1, but how does that 1 undo a multiplication on a clock face?
+Left open: a prime that misses one factor of a product is coprime to it, so a mix of the two lands on 1. Does that force the prime into the other factor? That is [Euclid's lemma](06-euclids-lemma.md).
 
 ---
 

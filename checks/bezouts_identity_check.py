@@ -11,15 +11,15 @@ while b:
     chain.append((a, a // b, b, a % b))
     a, b = b, a % b
 g = a
-print(f"{'gcd(21, 15) by Euclid':<38}{g:>4}")
+print(f"{f'gcd({A}, {B}) by Euclid':<38}{g:>4}")
 for (u, q, v, r) in chain:
     print(f"{u} = {q} x {v} + {r}")
 p, s = 1, -chain[-2][1]           # the last useful line: 3 = 15 - 2 x 6
 for (u, q, v, r) in reversed(chain[:-2]):
     p, s = s, p - s * q           # swap in the line above it
-print(f"Bezout: 21 x {p} + 15 x {s} = {A * p} + {B * s} = {A * p + B * s}")
+print(f"Bezout: {A} x {p} + {B} x {s} = {A * p} + {B * s} = {A * p + B * s}")
 p2, s2 = p + B // g, s - A // g   # slide along by one whole step
-print(f"one step along (21 x {B // g} = 15 x {A // g} = {A * (B // g)}): 21 x {p2} + 15 x {s2} = {A * p2} + {B * s2} = {A * p2 + B * s2}")
+print(f"one step along ({A} x {B // g} = {B} x {A // g} = {A * (B // g)}): {A} x {p2} + {B} x {s2} = {A * p2} + {B * s2} = {A * p2 + B * s2}")
 mixes = [A * i + B * j for i in range(-9, 10) for j in range(-9, 10)]
 print(f"{'smallest mix above zero, by search':<38}{min(m for m in mixes if m > 0):>4}")
 print(f"{'mixes that land on 1 or 2 litres':<38}{sum(m in (1, 2) for m in mixes):>4}")

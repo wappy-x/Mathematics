@@ -1,6 +1,6 @@
 # There are infinitely many primes -- the check behind the card.  Nothing is
-# imported.  Six primes multiplied, plus one, is 30031.  Two roads to a new
-# prime: factor it, and divide it by every prime on the list.
+# imported.  Six primes multiplied, plus one, is 30031.  Factor it by trial
+# division, and check by remainders that no listed prime divides it.
 LISTED = [2, 3, 5, 7, 11, 13]
 def factor(n):                   # trial division: the smallest prime factor of n
     d = 2

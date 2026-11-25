@@ -1,6 +1,6 @@
 // There are infinitely many primes -- the same check, in Rust.  No crates.
-// Six primes multiplied, plus one, is 30031.  Two roads to a new prime:
-// factor it, and divide it by every prime on the list.
+// Six primes multiplied, plus one, is 30031.  Factor it by trial division,
+// and check by remainders that no listed prime divides it.
 const LISTED: [i64; 6] = [2, 3, 5, 7, 11, 13];
 
 fn factor(n: i64) -> i64 {       // trial division: the smallest prime factor of n

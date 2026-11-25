@@ -141,15 +141,15 @@ while b:
     chain.append((a, a // b, b, a % b))
     a, b = b, a % b
 g = a
-print(f"{'gcd(21, 15) by Euclid':<38}{g:>4}")
+print(f"{f'gcd({A}, {B}) by Euclid':<38}{g:>4}")
 for (u, q, v, r) in chain:
     print(f"{u} = {q} x {v} + {r}")
 p, s = 1, -chain[-2][1]           # the last useful line: 3 = 15 - 2 x 6
 for (u, q, v, r) in reversed(chain[:-2]):
     p, s = s, p - s * q           # swap in the line above it
-print(f"Bezout: 21 x {p} + 15 x {s} = {A * p} + {B * s} = {A * p + B * s}")
+print(f"Bezout: {A} x {p} + {B} x {s} = {A * p} + {B * s} = {A * p + B * s}")
 p2, s2 = p + B // g, s - A // g   # slide along by one whole step
-print(f"one step along (21 x {B // g} = 15 x {A // g} = {A * (B // g)}): 21 x {p2} + 15 x {s2} = {A * p2} + {B * s2} = {A * p2 + B * s2}")
+print(f"one step along ({A} x {B // g} = {B} x {A // g} = {A * (B // g)}): {A} x {p2} + {B} x {s2} = {A * p2} + {B * s2} = {A * p2 + B * s2}")
 mixes = [A * i + B * j for i in range(-9, 10) for j in range(-9, 10)]
 print(f"{'smallest mix above zero, by search':<38}{min(m for m in mixes if m > 0):>4}")
 print(f"{'mixes that land on 1 or 2 litres':<38}{sum(m in (1, 2) for m in mixes):>4}")
@@ -160,7 +160,7 @@ assert min(m for m in mixes if m > 0) == g and 1 not in mixes and 2 not in mixes
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 gcd(21, 15) by Euclid                    3
@@ -195,14 +195,14 @@ fn main() {
     let mut chain: Vec<(i64, i64, i64, i64)> = Vec::new();
     while b != 0 { let t = a % b; chain.push((a, a / b, b, t)); a = b; b = t; }
     let g = a;
-    println!("{:<38}{:>4}", "gcd(21, 15) by Euclid", g);
+    println!("{:<38}{:>4}", format!("gcd({}, {}) by Euclid", A, B), g);
     for &(u, q, v, r) in &chain { println!("{} = {} x {} + {}", u, q, v, r); }
     let n = chain.len();
     let (mut p, mut s) = (1, -chain[n - 2].1);   // the last useful line: 3 = 15 - 2 x 6
     for &(_, q, _, _) in chain[..n - 2].iter().rev() { let (np, ns) = (s, p - s * q); p = np; s = ns; }
-    println!("Bezout: 21 x {} + 15 x {} = {} + {} = {}", p, s, A * p, B * s, A * p + B * s);
+    println!("Bezout: {} x {} + {} x {} = {} + {} = {}", A, p, B, s, A * p, B * s, A * p + B * s);
     let (p2, s2) = (p + B / g, s - A / g);       // slide along by one whole step
-    println!("one step along (21 x {} = 15 x {} = {}): 21 x {} + 15 x {} = {} + {} = {}", B / g, A / g, A * (B / g), p2, s2, A * p2, B * s2, A * p2 + B * s2);
+    println!("one step along ({} x {} = {} x {} = {}): {} x {} + {} x {} = {} + {} = {}", A, B / g, B, A / g, A * (B / g), A, p2, B, s2, A * p2, B * s2, A * p2 + B * s2);
     let mut mixes: Vec<i64> = Vec::new();
     for i in -9..=9 { for j in -9..=9 { mixes.push(A * i + B * j); } }
     let best = *mixes.iter().filter(|&&m| m > 0).min().unwrap();
@@ -217,7 +217,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 gcd(21, 15) by Euclid                    3
@@ -403,9 +403,9 @@ example : (3 : ℤ) ∣ 6 ∧ (3 : ℤ) ∣ 9 ∧ ¬ ((3 : ℤ) ∣ 4) := by dec
 - [Coprime numbers](05-coprime-numbers.md): what changes when the gcd is 1 and the mix lands on 1.
 - [Euclid's lemma](06-euclids-lemma.md): multiply that mix by another number; a prime dividing a product must divide a factor.
 - [The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md): the same counts, dividing on a clock.
-- [The coin problem](../03-Clock%20Arithmetic/07-frobenius-coin-problem.md): with 5-cent and 7-cent stamps every amount above 23 can be paid, and 23 cannot.
-- [Farey fractions and Ford circles](../08-Quadratic%20Forms%20and%20Approximation/04-farey-sequences-and-ford-circles.md): neighbours differ by one over the product of their bottoms, and their circles just touch.
-- [Generalised eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/09-generalised-eigenvectors.md): when a matrix has too few eigenvectors, the vectors killed by a power of A minus lambda fill the gap.
+- [The coin problem](../03-Clock%20Arithmetic/07-frobenius-coin-problem.md): which amounts a mix still reaches when throwing away is banned and both counts must be 0 or more.
+- [Farey fractions and Ford circles](../08-Quadratic%20Forms%20and%20Approximation/04-farey-sequences-and-ford-circles.md): neighbouring fractions cross-multiply to a mix landing on 1, which fixes their gap and makes their circles touch.
+- [Generalised eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/09-generalised-eigenvectors.md): the same mix landing on 1, built from polynomials instead of numbers, splits a matrix's space into pieces.
 
 Left open: when two numbers share no factor and the mix lands on 1, what can that 1 be used for?
 

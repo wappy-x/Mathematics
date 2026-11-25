@@ -30,7 +30,7 @@ fn main() {
     println!("{} = {}, {} divisors;  {} = {}, {} divisors", A, join(&primes(A), " x "), divisors(A).len(), B, join(&primes(B), " x "), divisors(B).len());
     println!("common divisors: {}  ({} of them, and they are the {} divisors of {})", join(&common, ", "), common.len(), divisors(big).len(), big);
     println!("road one, the largest of those: {}.  road two, the shared primes {}: {}", big, join(&sh, " x "), prod);
-    println!("at {} cm the floor is {} tiles across and {} down, {} in all", big, A / big, B / big, tiles[5]);
+    println!("at {} cm the floor is {} tiles across and {} down, {} in all", big, A / big, B / big, (A / big) * (B / big));
     println!("tiles needed at {} cm: {}", join(&SIZES, ", "), join(&tiles, ", "));
     println!("the three mistakes come out at {}, {} and {}", mix, prod * spare, second);
     assert!(big == 60 && prod == 60 && common == divisors(big) && !(big + 1..=A).any(|d| A % d == 0 && B % d == 0));

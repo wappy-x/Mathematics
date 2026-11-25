@@ -6,9 +6,9 @@
 
 ## General Overview
 
-A drum pattern 6 beats long, over a bass line 8 beats long. Both start on beat one. The drum comes round after 6 beats, the bass after 8, then they slide out of step.
+A drum pattern 6 beats long, over a bass line 8 beats long. Both start together. The drum comes round after 6 beats, the bass after 8, then they slide out of step.
 
-Keep counting and they snap back. The drum comes round on beat 6, 12, 18, 24. The bass on 8, 16, 24. First number in both lists: 24. Four drum loops, three bass loops, back on beat one.
+Keep counting and they snap back. The drum comes round after 6, 12, 18 and 24 beats. The bass comes round after 8, 16 and 24. First number in both lists: 24. Four drum loops, three bass loops, and both start again together.
 
 That 24 is the **least common multiple** of 6 and 8 — lcm(6, 8) for short. A multiple of a number is that number counted out whole times; a common multiple turns up in both counts; the least one is where the patterns meet. [Greatest common divisor](01-gcd.md) asked what goes into both; this asks what both go into.
 
@@ -36,7 +36,7 @@ On our two loops:
 
 **Read it aloud:** the first beat both patterns come round on is 24, and the biggest number going into both loops, times that beat, is 6 × 8.
 
-Two ways to the 24. From the lists: write out the multiples of each, stop at the first shared one. From the primes, the numbers that break down no further ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)): 6 = 2 × 3 and 8 = 2 × 2 × 2, so take each prime as often as the greedier wants it — three 2s and one 3, and 2 × 2 × 2 × 3 = 24.
+Two ways to the 24. From the lists: write out the multiples of each, stop at the first shared one. From the primes, the numbers that break down no further ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)): 6 = 2 × 3 and 8 = 2 × 2 × 2. Take each prime as often as the greedier number holds it: three 2s and one 3, and 2 × 2 × 2 × 3 = 24.
 
 | Piece | Plain meaning | In our beats |
 | --- | --- | --- |
@@ -70,11 +70,11 @@ Those 24s are a shared beat, and so is the beat you started with. Subtract, and 
 
 48 is a shared beat, so 24 goes into it: 48 ÷ 24 = 2. That 2 turns out to be the gcd. Here is why.
 
-It goes into both loops: 48 is 6 × 8 and 24 is 6 × 4, so the 6s cancel and 48 ÷ 24 is 8 ÷ 4 = 2; the 8s cancel the same way, 6 ÷ 3 = 2.
+It goes into both loops. 48 is 6 × 8 and 24 is 6 × 4, so cancel the 6s: 48 ÷ 24 = 8 ÷ 4 = 2, and 2 goes into 8. 24 is also 8 × 3, so cancel the 8s: 48 ÷ 24 = 6 ÷ 3 = 2, and 2 goes into 6.
 
-Nothing bigger does. Take any number that goes into both, call it d, and divide 48 by it: the answer is 6 times (8 ÷ d), and 8 times (6 ÷ d), so it is a shared beat. Shared beats are 24 or more, so 48 ÷ d is 24 or more, so d is 2 or less.
+Nothing bigger does. Take any number d that goes into both loops, and divide 48 by it. The answer is 6 times (8 ÷ d) and also 8 times (6 ÷ d), so it is a shared beat. Shared beats are 24 or more, so 48 ÷ d is 24 or more, and d is 2 or less.
 
-So the biggest number into both, times the first number both go into, is the two multiplied — and nothing here was special to 6 and 8, or to any two counting numbers.
+So the biggest number into both, times the first number both go into, is the two multiplied. Nothing here was special to 6 and 8: the same argument works for any two counting numbers.
 
 The prime route says it too: for each prime the lcm takes the most and the gcd the fewest, and most plus fewest is how many the two have between them ([Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md)).
 
@@ -348,10 +348,11 @@ example : Nat.gcd 4 8 = 4 ∧ Nat.lcm 4 8 = 8 := by decide
 
 ## Where this goes next
 
+- [Euclid's algorithm](03-euclidean-algorithm.md): the fast way to find the gcd, which the short way divides by, even when the numbers are too big to factor.
 - [The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md): which beat lands two patterns on any pair of positions you pick.
 - [When cycles meet again](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/04-cycles-that-realign.md): cycles of different lengths meeting again, drawn as time.
 
-The open question: when the two patterns start on different beats, do they ever land together, and on which beat?
+Left open: the short way needs the gcd first. How do you find the gcd fast when the numbers are too big to list or factor? That is [Euclid's algorithm](03-euclidean-algorithm.md).
 
 ---
 

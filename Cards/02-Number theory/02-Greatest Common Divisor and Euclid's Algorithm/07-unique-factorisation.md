@@ -51,7 +51,7 @@ On our number:
 
 - **1 is not a prime.** Let a 1 in and the day's list runs to 13 primes, then 14.
 - **Split all the way to primes.** Stop at 24 × 3,600 and you hold 2 pieces that still split, not 12 primes.
-- **Euclid's lemma holds.** In the world 1, 5, 9, 13, ... it fails, and 441 = 9 × 49 = 21 × 21.
+- **Euclid's lemma holds.** In the world 1, 5, 9, 13, ... there is no 3 or 7, so 9, 21 and 49 cannot split. The lemma fails there, and 441 = 9 × 49 = 21 × 21.
 
 ---
 
@@ -71,7 +71,9 @@ Suppose one is. Cancel a copy from each list. What remains is the offender divid
 
 ### Step 3: Euclid's lemma puts a prime on both
 
-Take the first prime on List One. List One multiplies to the offender, so our prime divides the offender. List Two multiplies to the offender too, so our prime divides that product. Euclid's lemma ([Euclid's lemma](06-euclids-lemma.md)): a prime dividing a product divides one of the things multiplied. Run it along List Two, and our prime divides one of List Two's primes — which, being prime, it can only equal.
+Take the first prime on List One. List One multiplies to the offender, so our prime divides the offender. List Two multiplies to the offender too, so our prime divides that product.
+
+Euclid's lemma ([Euclid's lemma](06-euclids-lemma.md)): a prime dividing a product divides one of the things multiplied. Run it along List Two, and our prime divides one of List Two's primes — which, being prime, it can only equal.
 
 ### Step 4: the collision
 
@@ -80,7 +82,9 @@ Step 2 says no prime is on both lists; Step 3 says one is. So there is no smalle
 <details>
 <summary>A world where uniqueness really is false</summary>
 
-Keep only 1, 5, 9, 13, 17, 21, 25, ... — every fourth whole number. Multiply any two and you stay inside. Here 9 will not split, since 3 is not here; nor will 21 or 49. All three are unsplittable — the local version of prime; mathematicians say **irreducible**. Yet 441 = 9 × 49 = 21 × 21, because Euclid's lemma fails here: 9 divides 21 × 21 without dividing 21.
+Keep only 1, 5, 9, 13, 17, 21, 25, ... — every fourth whole number. Multiply any two and you stay inside. Here 9 will not split, since 3 is not here; nor will 21 or 49. All three are unsplittable — the local version of prime; mathematicians say **irreducible**.
+
+Yet 441 = 9 × 49 = 21 × 21, because Euclid's lemma fails here: 9 divides 21 × 21 without dividing 21.
 
 </details>
 
@@ -367,7 +371,7 @@ example : 96 * 900 = 86400 := by norm_num
 ## Where you meet it in real life
 
 - **Clocks.** Those seven 2s, three 3s and two 5s are why a day cuts into whole halves, thirds, quarters and fifths. A decimal day carries only 2s and 5s, and loses thirds.
-- **gcd and lcm.** Off two lists, the smaller count of each prime gives the greatest common divisor, the bigger count the least common multiple ([Greatest common divisor](01-gcd.md), [Least common multiple](02-lcm.md)) — which works only because each number has one list.
+- **gcd and lcm.** Off two lists, the smaller count of each prime gives the greatest common divisor, the bigger count the least common multiple ([Greatest common divisor](01-gcd.md), [Least common multiple](02-lcm.md)) — which works only because each number has one list. The same holds for [Counting divisors](../01-Divisibility%20and%20Primes/08-counting-divisors.md).
 - **Public-key cryptography.** RSA leans on both halves at once: a big number has exactly one prime list, and nobody can find it in time.
 
 > **Say it back**
@@ -385,8 +389,8 @@ example : 96 * 900 = 86400 := by norm_num
 ## Where this goes next
 
 - [There are infinitely many primes](08-infinitude-of-primes.md): multiply the primes you have, add one, and a new prime must exist.
-- [Counting divisors](../01-Divisibility%20and%20Primes/08-counting-divisors.md): how many divisors a number has, read off its one prime list.
-- [Greatest common divisor](01-gcd.md) and [Least common multiple](02-lcm.md): the smaller and bigger count of each prime, from one list per number.
+- [Euler's totient](../04-Powers%20on%20the%20Clock/03-eulers-totient.md): how many numbers up to n share no factor with n, read straight off n's one prime list.
+- [RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md): a lock built on a number with exactly one prime list that nobody can find in time.
 
 Left open: every number has one list of primes, but does the supply of primes ever run out?
 

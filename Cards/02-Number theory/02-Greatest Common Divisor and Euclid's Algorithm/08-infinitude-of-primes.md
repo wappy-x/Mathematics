@@ -119,8 +119,8 @@ Nothing is imported. The new prime is found by factoring 30031 into 59 and 509; 
 
 ```python
 # There are infinitely many primes -- the check behind the card.  Nothing is
-# imported.  Six primes multiplied, plus one, is 30031.  Two roads to a new
-# prime: factor it, and divide it by every prime on the list.
+# imported.  Six primes multiplied, plus one, is 30031.  Factor it by trial
+# division, and check by remainders that no listed prime divides it.
 LISTED = [2, 3, 5, 7, 11, 13]
 def factor(n):                   # trial division: the smallest prime factor of n
     d = 2
@@ -150,7 +150,7 @@ assert rem == "1 1 1 1 1 1" and factor(product) == 2 and factor(14) == 2
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 2 x 3 x 5 x 7 x 11 x 13                   30030
@@ -173,8 +173,8 @@ Same numbers, same labels, built with `rustc --edition 2021 -O`.
 
 ```rust
 // There are infinitely many primes -- the same check, in Rust.  No crates.
-// Six primes multiplied, plus one, is 30031.  Two roads to a new prime:
-// factor it, and divide it by every prime on the list.
+// Six primes multiplied, plus one, is 30031.  Factor it by trial division,
+// and check by remainders that no listed prime divides it.
 const LISTED: [i64; 6] = [2, 3, 5, 7, 11, 13];
 
 fn factor(n: i64) -> i64 {       // trial division: the smallest prime factor of n
@@ -213,7 +213,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 2 x 3 x 5 x 7 x 11 x 13                   30030
@@ -354,10 +354,11 @@ example : 5 * 7 + 1 = 36 ∧ 36 = 2 * 2 * 3 * 3 := by norm_num
 
 ## Where this goes next
 
+- [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md): the next shelf. Numbers that leave the same remainder are treated as the same, the way 30031 and 1 look alike to every listed prime.
 - [How primes thin out](../07-For%20the%20Curious/03-how-primes-thin-out.md): they never run out, but they do get rarer — how much rarer, and how fast.
 - [Goldbach, twin primes and friends](../07-For%20the%20Curious/04-goldbach-and-open-problems.md): prime questions as easy to state as this one, still unanswered.
 
-Left open: the primes never run out, but how far apart do they sit as the numbers grow?
+Left open: here every listed prime left remainder 1, just as it does on 1 itself. What changes when numbers with the same remainder count as the same? That is the next shelf: [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md). How far apart the primes sit is on [How primes thin out](../07-For%20the%20Curious/03-how-primes-thin-out.md).
 
 ---
 

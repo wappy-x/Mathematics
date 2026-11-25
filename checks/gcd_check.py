@@ -22,7 +22,7 @@ print(f"floor {A} cm by {B} cm, one square tile, no cutting")
 print(f"{A} = {join(primes(A), ' x ')}, {len(divisors(A))} divisors;  {B} = {join(primes(B), ' x ')}, {len(divisors(B))} divisors")
 print(f"common divisors: {join(common, ', ')}  ({len(common)} of them, and they are the {len(divisors(big))} divisors of {big})")
 print(f"road one, the largest of those: {big}.  road two, the shared primes {join(sh, ' x ')}: {prod}")
-print(f"at {big} cm the floor is {A // big} tiles across and {B // big} down, {tiles[5]} in all")
+print(f"at {big} cm the floor is {A // big} tiles across and {B // big} down, {(A // big) * (B // big)} in all")
 print(f"tiles needed at {join(SIZES, ', ')} cm: {join(tiles, ', ')}")
 print(f"the three mistakes come out at {mix}, {prod * spare} and {second}")
 assert big == 60 and prod == 60 and common == divisors(big) and not [d for d in range(big + 1, A + 1) if A % d == 0 and B % d == 0]

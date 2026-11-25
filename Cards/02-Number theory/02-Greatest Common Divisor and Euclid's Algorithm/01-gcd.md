@@ -60,7 +60,7 @@ Road two, the primes ([Prime factorisation](../01-Divisibility%20and%20Primes/07
 
 ### When it holds
 
-- **Both numbers bigger than zero.** Every number divides zero, so two zeros share every number and there is no largest.
+- **Both numbers bigger than zero.** Every number divides zero, so two zeros share every number and there is no largest. With one zero the answer is the other number, gcd(n, 0) = n ([Euclid's algorithm](03-euclidean-algorithm.md)). Road two also needs prime lists, and zero has none.
 - **The piece goes into both numbers, not just one.** 180 goes into 180 but not into 300.
 - **Each shared prime kept only as often as the poorer side holds it.** Keep both of 300's 5s and you get 300, which does not go into 180.
 
@@ -143,7 +143,7 @@ print(f"floor {A} cm by {B} cm, one square tile, no cutting")
 print(f"{A} = {join(primes(A), ' x ')}, {len(divisors(A))} divisors;  {B} = {join(primes(B), ' x ')}, {len(divisors(B))} divisors")
 print(f"common divisors: {join(common, ', ')}  ({len(common)} of them, and they are the {len(divisors(big))} divisors of {big})")
 print(f"road one, the largest of those: {big}.  road two, the shared primes {join(sh, ' x ')}: {prod}")
-print(f"at {big} cm the floor is {A // big} tiles across and {B // big} down, {tiles[5]} in all")
+print(f"at {big} cm the floor is {A // big} tiles across and {B // big} down, {(A // big) * (B // big)} in all")
 print(f"tiles needed at {join(SIZES, ', ')} cm: {join(tiles, ', ')}")
 print(f"the three mistakes come out at {mix}, {prod * spare} and {second}")
 assert big == 60 and prod == 60 and common == divisors(big) and not [d for d in range(big + 1, A + 1) if A % d == 0 and B % d == 0]
@@ -151,7 +151,7 @@ assert tiles == [540, 375, 240, 135, 60, 15] and (A // big) * (B // big) == 15
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 floor 180 cm by 300 cm, one square tile, no cutting
@@ -201,7 +201,7 @@ fn main() {
     println!("{} = {}, {} divisors;  {} = {}, {} divisors", A, join(&primes(A), " x "), divisors(A).len(), B, join(&primes(B), " x "), divisors(B).len());
     println!("common divisors: {}  ({} of them, and they are the {} divisors of {})", join(&common, ", "), common.len(), divisors(big).len(), big);
     println!("road one, the largest of those: {}.  road two, the shared primes {}: {}", big, join(&sh, " x "), prod);
-    println!("at {} cm the floor is {} tiles across and {} down, {} in all", big, A / big, B / big, tiles[5]);
+    println!("at {} cm the floor is {} tiles across and {} down, {} in all", big, A / big, B / big, (A / big) * (B / big));
     println!("tiles needed at {} cm: {}", join(&SIZES, ", "), join(&tiles, ", "));
     println!("the three mistakes come out at {}, {} and {}", mix, prod * spare, second);
     assert!(big == 60 && prod == 60 && common == divisors(big) && !(big + 1..=A).any(|d| A % d == 0 && B % d == 0));
@@ -210,7 +210,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 floor 180 cm by 300 cm, one square tile, no cutting
@@ -373,10 +373,10 @@ example : Nat.gcd 180 180 = 180 ∧ Nat.gcd 180 200 = 20 ∧ 2 * 2 * 5 = 20 := b
 - [Least common multiple](02-lcm.md): the other end — the first number both divide into, and why gcd times lcm is the product.
 - [Euclid's algorithm](03-euclidean-algorithm.md): the same answer by remainders, fast even for numbers nobody can factor.
 - [Coprime numbers](05-coprime-numbers.md): when the gcd is 1 and two numbers share nothing.
-- [Farey fractions and Ford circles](../08-Quadratic%20Forms%20and%20Approximation/04-farey-sequences-and-ford-circles.md): neighbours differ by one over the product of their bottoms, and their circles just touch.
-- [Pick's theorem](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/07-picks-theorem.md): count the dots inside and on the edge, and the area falls out.
+- [Farey fractions and Ford circles](../08-Quadratic%20Forms%20and%20Approximation/04-farey-sequences-and-ford-circles.md): fractions in lowest terms, top and bottom with gcd 1, lined up in order; neighbours sit exactly one over the product of their bottoms apart.
+- [Pick's theorem](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/07-picks-theorem.md): a polygon's area from grid dots, where the gcd of an edge's across and up steps counts the dots on that edge.
 
-Left open: can 60 be made by adding and taking away whole 180s and 300s? That is [Bezout's identity](04-bezouts-identity.md).
+Left open: 60 is the biggest length that fits into both 180 and 300. What is the first length both 180 and 300 fit into, and how is it tied to 60? That is [Least common multiple](02-lcm.md).
 
 ---
 

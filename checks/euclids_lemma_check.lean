@@ -42,12 +42,12 @@ theorem composite_divides_a_product_but_neither_factor
   · intro h
     exact absurd (Nat.le_of_dvd (by omega) h) (by omega)
 
--- The office: 4 gifts of $21 make $84, and 7 is prime.
+-- The rota: 21 calls, 4 days apart, take 84 days, and 7 is prime.
 example : 4 * 21 = 84 := by decide
 example : Nat.Prime 7 := by norm_num
--- 7 divides the total: 84 = 7 × 12.
+-- 7 divides the days passed: 84 = 7 × 12, whole weeks.
 example : 84 = 7 * 12 ∧ 7 ∣ 84 := by decide
--- 7 misses the gift count: 4 shared by 7 leaves 4.
+-- 7 misses the 4-day gap: 4 divided by 7 leaves 4.
 example : 4 % 7 = 4 ∧ ¬ 7 ∣ 4 := by decide
 -- So 7 and 4 share only 1.
 example : Nat.gcd 7 4 = 1 := by norm_num
@@ -56,7 +56,7 @@ example : (4 : ℤ) * 2 + 7 * (-1) = 1 := by decide
 example : (84 : ℤ) * 2 + 147 * (-1) = 21 ∧ (84 : ℤ) = 4 * 21 ∧ (147 : ℤ) = 7 * 21 := by decide
 -- Pull the 7 out: 84 × 2 = 7 × 24, 147 = 7 × 21, and 7 × (24 − 21) = 7 × 3 = 21.
 example : 84 * 2 = 7 * 24 ∧ 7 * (24 - 21) = 7 * 3 ∧ 7 * 3 = 21 := by decide
--- The 7 is inside the gift: 21 shared by 7 leaves 0.
+-- The 7 is inside the number of calls: 21 divided by 7 leaves 0.
 example : 21 % 7 = 0 ∧ 7 ∣ 21 := by decide
 -- The composite 6 = 2 × 3 divides 36 = 4 × 9 but neither 4 nor 9.
 example : ¬ Nat.Prime 6 := by norm_num
@@ -66,6 +66,9 @@ example : 4 % 6 = 4 ∧ 9 % 6 = 3 ∧ ¬ 6 ∣ 4 ∧ ¬ 6 ∣ 9 := by decide
 example : 2 ∣ 4 ∧ 3 ∣ 9 := by decide
 -- 6 and 4 share the factor 2, so no mix of them lands on 1.
 example : Nat.gcd 6 4 = 2 := by norm_num
+-- The first 7 call nights land on 7 different weekdays; the club meets on only 3 of 6 days.
+example : (List.range 7).map (fun n => 4 * n % 7) = [0, 4, 1, 5, 2, 6, 3] := by decide
+example : (List.range 6).map (fun n => 4 * n % 6) = [0, 4, 2, 0, 4, 2] := by decide
 
 #print axioms prime_dividing_product_and_missing_one_factor_divides_the_other
 #print axioms prime_missing_a_number_is_coprime_to_it

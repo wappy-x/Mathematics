@@ -11,8 +11,8 @@ def meets(small, big):               # slots of the big gear that tooth 0 meets
         seen.append(step % big)
         step += small
     return seen
-def row(name, value):
-    print(f"{name:<42}{value:>7}")
+def row(name, value): print(f"{name:<42}{value:>7}")
+def smallest_mix(a, b): return min(a * i + b * j for i in range(-15, 16) for j in range(-15, 16) if a * i + b * j > 0)  # third road: a search
 for small, big in ((15, 28), (15, 27)):
     g = gcd(small, big)
     met = meets(small, big)
@@ -26,4 +26,5 @@ print("slots of the 27-gear tooth 0 meets: " + " ".join(str(t) for t in meets(15
 assert gcd(15, 28) == 1 and 28 * 7 - 15 * 13 == 1 and meets(15, 28)[:4] == [0, 15, 2, 17]
 assert len(meets(15, 28)) == 28 and 15 * len(meets(15, 28)) == 15 * 28
 assert gcd(15, 27) == 3 and len(meets(15, 27)) == 27 // 3 and 15 * len(meets(15, 27)) == 135
+assert smallest_mix(15, 28) == gcd(15, 28) == 1 and smallest_mix(15, 27) == gcd(15, 27) == 27 * 4 - 15 * 7
 print("ALL CHECKS PASS")

@@ -14,6 +14,9 @@ fn meets(small: i64, big: i64) -> Vec<i64> { // slots of the big gear that tooth
     seen
 }
 fn row(name: &str, value: &str) { println!("{:<42}{:>7}", name, value); }
+fn smallest_mix(a: i64, b: i64) -> i64 {     // third road: search counts -15 to 15, keep the smallest above zero
+    (-15..=15).flat_map(|i| (-15..=15).map(move |j| a * i + b * j)).filter(|&m| m > 0).min().unwrap()
+}
 fn main() {
     for (small, big) in [(15i64, 28i64), (15, 27)] {
         let g = gcd(small, big);
@@ -32,5 +35,6 @@ fn main() {
     assert!(gcd(15, 28) == 1 && 28 * 7 - 15 * 13 == 1 && meets(15, 28)[..4] == [0, 15, 2, 17]);
     assert!(meets(15, 28).len() == 28 && 15 * meets(15, 28).len() == 15 * 28);
     assert!(gcd(15, 27) == 3 && meets(15, 27).len() == 27 / 3 && 15 * meets(15, 27).len() == 135);
+    assert!(smallest_mix(15, 28) == 1 && gcd(15, 28) == 1 && smallest_mix(15, 27) == gcd(15, 27) && gcd(15, 27) == 27 * 4 - 15 * 7);
     println!("ALL CHECKS PASS");
 }

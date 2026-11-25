@@ -6,11 +6,17 @@
 
 ## General Overview
 
-Four people chip in $21 each for a leaving present. That is $84, in 4 gifts of $21.
+A hospital doctor is on call one night in four, starting on a Monday. The call nights fall Monday, Friday, Tuesday, Saturday, and so on.
 
-7 divides the $84: 84 = 7 × 12. And 7 does not divide the 4, so it had to land in a gift. Look inside one: 21 = 7 × 3. Not luck — 7 is prime.
+When is a call night a Monday again? After n more calls, 4 × n days have passed, and that must be whole weeks: 7 divides 4 × n.
 
-Leave the office a moment. Take 36, as 4 × 9. 6 divides 36 but neither the 4 nor the 9. The 6 came apart on the way: it is 2 × 3, the 2 into the 4, the 3 into the 9.
+Take 21 calls on: 4 × 21 = 84 days, and 84 = 7 × 12. 7 does not divide the 4, so it had to land in the 21: 21 = 7 × 3. Not luck — 7 is prime.
+
+So every return to Monday is a multiple of 7 calls on. Calls fewer than 7 apart never share a weekday, so the rota visits all seven nights before any repeats.
+
+Now try a composite cycle. Many schools run a 6-day timetable, Day 1 to Day 6. A club meeting every 4 school days lands on Day 1, 5, 3, then Day 1 again.
+
+Nine meetings on, 36 days have passed: 6 divides 36 but neither the 4 nor the 9. The 6 came apart: it is 2 × 3, the 2 into the 4, the 3 into the 9.
 
 **A prime that divides a product divides one of the numbers multiplied. A composite can split its factors across the two and divide neither.**
 
@@ -22,7 +28,7 @@ Leave the office a moment. Take 36, as 4 × 9. 6 divides 36 but neither the 4 no
 flowchart LR
   S6["6 = 2 x 3, so it comes apart"] --> T2["the 2 goes into the 4"]
   S6 --> T3["the 3 goes into the 9"]
-  S7["7 is prime, nothing to come apart into"] --> T7["the whole 7 goes into one gift: 21 = 7 x 3"]
+  S7["7 is prime, nothing to come apart into"] --> T7["the whole 7 goes into the 21 calls: 21 = 7 x 3"]
 ```
 
 A composite sends its factors two ways; a prime has nothing to send.
@@ -31,13 +37,13 @@ A composite sends its factors two ways; a prime has nothing to send.
 
 ## The formula
 
-In this office:
+On this rota:
 
 **7 divides 4 × 21, and 7 does not divide 4, so 7 divides 21.**
 
-**Read it aloud:** the prime is in the total, not in the gift count, so it is in the gift.
+**Read it aloud:** the prime is in the total, not in the 4-day gap, so it is in the number of calls.
 
-| Piece | Plain meaning | In our office |
+| Piece | Plain meaning | On our rota |
 | --- | --- | --- |
 | a prime | above 1, divisible only by 1 and itself ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)) | 7 |
 | a composite | above 1, not prime, so it splits into factors | 6 = 2 × 3 |
@@ -46,7 +52,7 @@ In this office:
 
 ### When it holds
 
-- **The divider is prime.** A composite can split: 6 divides 36, but 6 into 4 leaves 4 and 6 into 9 leaves 3.
+- **The divider is prime.** A composite can split: 6 divides 36, but 4 divided by 6 leaves 4, and 9 divided by 6 leaves 3.
 - **It misses one of the two.** Then it must be in the other. Without that, you know it is in one of them, but not which.
 - **Whole numbers only.** Allow fractions and 7 goes into the 4 as well, nothing left over, so "divides" no longer says anything.
 
@@ -56,7 +62,7 @@ In this office:
 
 ### Step 0: a prime shares nothing with a number it misses
 
-Only 1 and 7 divide 7, so 7 and 4 can share only 1 or 7. But 7 misses the 4: sharing 4 by 7 leaves 4. So the biggest shared number, their greatest common divisor (gcd), is 1 — they are coprime ([Coprime numbers](05-coprime-numbers.md)).
+Only 1 and 7 divide 7, so 7 and 4 can share only 1 or 7. But 7 misses the 4: 4 divided by 7 leaves 4. So the biggest shared number, their greatest common divisor (gcd), is 1 — they are coprime ([Coprime numbers](05-coprime-numbers.md)).
 
 ### Step 1: coprime gives a mix landing on 1
 
@@ -64,7 +70,9 @@ Bezout's identity ([Bezout's identity](04-bezouts-identity.md)): the biggest sha
 
 **4 × 2 + 7 × (−1) = 1**
 
-### Step 2: multiply that line by the gift
+On the rota: two calls on is 8 days, one week and one day.
+
+### Step 2: multiply that line by the number of calls
 
 Multiply both sides by 21:
 
@@ -78,7 +86,7 @@ The 84 is 4 × 21; the 147 is 7 × 21.
 
 **7 × 24 − 7 × 21 = 7 × (24 − 21) = 7 × 3**
 
-The left side is 21, so 21 = 7 × 3: the 7 is in the gift. A direct proof ([Direct proof](../../01-Foundations/06-Proof/01-direct-proof.md)), arithmetic the whole way. Nothing in it needed these numbers — only that the divider is prime and misses one side.
+The left side is 21, so 21 = 7 × 3: the 7 is in the number of calls. A direct proof ([Direct proof](../../01-Foundations/06-Proof/01-direct-proof.md)), arithmetic the whole way. Nothing in it needed these numbers — only that the divider is prime and misses one side.
 
 ### Step 4: where a composite falls out
 
@@ -90,24 +98,24 @@ The tempting route: 84's primes are 2, 2, 3 and 7, so the 7 lands on one side. B
 
 ## Worked numbers, by hand
 
-The office, in dollars.
+The rota, in days.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the money raised | 4 × 21 | 84 |
+| days after 21 calls | 4 × 21 | 84 |
 | the 7 in the total | 84 = 7 × 12 | 12 |
-| the 7 in the gift count | 4 shared by 7, remainder | 4 |
+| the 7 in the 4-day gap | 4 divided by 7, remainder | 4 |
 | a mix landing on 1 | 4 × 2 + 7 × (−1) | 1 |
 | that line, times 21 | 84 × 2 + 147 × (−1) | 21 |
 | pull the 7 out of the left | 24 − 21 | **3** |
 
-So 21 = 7 × 3, remainder 0: the prime that divided the total sits inside the gift.
+So 21 = 7 × 3, remainder 0: the prime that divided the total sits inside the number of calls.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Using 6, not a prime | 4 and 3 | 6 divides 36, but 4 shared by 6 leaves 4, 9 leaves 3 |
+| Using 6, not a prime | 4 and 3 | 6 divides 36, but 4 divided by 6 leaves 4, and 9 leaves 3 |
 | Building 1 out of 6 and 4 | 2 | Their shared factor is 2, so every mix is even |
 
 The code prints both.
@@ -121,51 +129,52 @@ Nothing is imported. The plain road divides 84 by 7, then 21 by 7. The second ne
 ### Python
 
 ```python
-# Euclid's lemma -- the check behind the card.  Nothing is imported.  $84 raised
-# as 4 gifts of $21: 7 divides the total, and so has to divide a gift.  Then 6,
-# not a prime, dividing 4 x 9 = 36 while dividing neither the 4 nor the 9.
-P, A, B = 7, 4, 21               # the prime, the number of gifts, one gift
-C, U, V = 6, 4, 9                # the composite, and the pair it splits between
-
+# Euclid's lemma -- the check behind the card.  Nothing is imported.  On call one
+# night in four: 21 calls on is 84 days, whole weeks, so 7 divides 4 x 21 and has
+# to divide the 21.  Then 6, not a prime, dividing 4 x 9 = 36 but neither factor.
+P, A, B = 7, 4, 21               # the prime (days in a week), days between calls, calls
+C, U, V = 6, 4, 9                # the composite (a 6-day timetable), the pair it splits between
 def listing_gcd(a, b):           # second road to a shared factor: list divisors
     return max(d for d in range(1, min(a, b) + 1) if a % d == 0 and b % d == 0)
-
-def row(name, value):
-    print(f"{name:<40}{value:>4}")
+def row(name, value): print(f"{name:<40}{value:>4}")
 
 total = A * B
 x = next(i for i in range(1, P) if (A * i) % P == 1)   # copies of 4 landing on 1
 y = (1 - A * x) // P
-row(f"{A} gifts of ${B}, the money raised", total)
-print(f"{total} shared by {P}: {total} = {P} x {total // P} + {total % P}")
-row(f"the {A} gifts shared by {P}, remainder", A % P)
+row(f"{B} calls {A} days apart, days passed", total)
+print(f"{total} divided by {P}: {total} = {P} x {total // P} + {total % P}")
+row(f"the {A}-day gap divided by {P}, remainder", A % P)
 row(f"shared factor of {P} and {A}, by listing", listing_gcd(P, A))
 print(f"a mix landing on 1: {A} x {x} + {P} x {y} = {A * x + P * y}")
 print(f"times {B}: {total} x {x} + {P * B} x {y} = {total * x + P * B * y}")
 print(f"{total} x {x} = {P} x {(total // P) * x}, {P * B} = {P} x {B}, so {B} = {P} x {(total // P) * x + B * y}")
-row(f"the ${B} gift shared by {P}, remainder", B % P)
-row(f"{U} x {V} = {U * V} shared by {C}, remainder", (U * V) % C)
+row(f"the {B} calls divided by {P}, remainder", B % P)
+row(f"{U} x {V} = {U * V} divided by {C}, remainder", (U * V) % C)
 print(f"but {C} into {U} leaves {U % C}, {C} into {V} leaves {V % C}, gcd({C}, {U}) = {listing_gcd(C, U)}")
+week, days = [(A * n) % P for n in range(P)], [(U * n) % C for n in range(C)]
+print(f"call nights, days after Monday: {' '.join(map(str, week))};  {C}-day club days: {' '.join(map(str, days))}")
 assert total == 84 and total % P == 0 and A % P == 4 and B % P == 0
 assert A * x + P * y == 1 and total * x + P * B * y == B and (total // P) * x + B * y == B // P == 3
 assert (U * V) % C == 0 and U % C == 4 and V % C == 3 and listing_gcd(C, U) == 2
 assert C % 2 == 0 and U % 2 == 0   # both even, so every mix of them is even, never 1
+assert sorted(week) == list(range(P)) and sorted(set(days)) == [0, 2, 4]
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
-4 gifts of $21, the money raised          84
-84 shared by 7: 84 = 7 x 12 + 0
-the 4 gifts shared by 7, remainder         4
+21 calls 4 days apart, days passed        84
+84 divided by 7: 84 = 7 x 12 + 0
+the 4-day gap divided by 7, remainder      4
 shared factor of 7 and 4, by listing       1
 a mix landing on 1: 4 x 2 + 7 x -1 = 1
 times 21: 84 x 2 + 147 x -1 = 21
 84 x 2 = 7 x 24, 147 = 7 x 21, so 21 = 7 x 3
-the $21 gift shared by 7, remainder        0
-4 x 9 = 36 shared by 6, remainder          0
+the 21 calls divided by 7, remainder       0
+4 x 9 = 36 divided by 6, remainder         0
 but 6 into 4 leaves 4, 6 into 9 leaves 3, gcd(6, 4) = 2
+call nights, days after Monday: 0 4 1 5 2 6 3;  6-day club days: 0 4 2 0 4 2
 ALL CHECKS PASS
 ```
 
@@ -175,58 +184,60 @@ Same numbers, same labels, `rustc --edition 2021 -O`.
 
 ```rust
 // Euclid's lemma -- the same check as the Python twin, in Rust.  No crates.
-// $84 raised as 4 gifts of $21: 7 divides the total, and so has to divide a
-// gift.  Then 6, not a prime, dividing 4 x 9 = 36 but neither the 4 nor the 9.
-const P: i64 = 7;                 // the prime
-const A: i64 = 4;                 // the number of gifts
-const B: i64 = 21;                // one gift
-const C: i64 = 6;                 // the composite
+// On call one night in four: 21 calls on is 84 days, whole weeks, so 7 divides
+// 4 x 21 and has to divide the 21.  Then 6, not a prime, dividing 4 x 9 = 36.
+const P: i64 = 7;                 // the prime: days in a week
+const A: i64 = 4;                 // days between calls
+const B: i64 = 21;                // the number of calls
+const C: i64 = 6;                 // the composite: a 6-day timetable
 const U: i64 = 4;                 // and the pair it splits between
 const V: i64 = 9;
-
 fn listing_gcd(a: i64, b: i64) -> i64 {   // second road: list the divisors
     (1..=a.min(b)).filter(|d| a % d == 0 && b % d == 0).max().unwrap()
 }
-
 fn row(name: &str, value: i64) { println!("{:<40}{:>4}", name, value); }
-
 fn main() {
     let total = A * B;
     let x = (1..P).find(|i| (A * i) % P == 1).unwrap();   // copies of 4 landing on 1
     let y = (1 - A * x) / P;
-    row(&format!("{} gifts of ${}, the money raised", A, B), total);
-    println!("{} shared by {}: {} = {} x {} + {}", total, P, total, P, total / P, total % P);
-    row(&format!("the {} gifts shared by {}, remainder", A, P), A % P);
+    row(&format!("{} calls {} days apart, days passed", B, A), total);
+    println!("{} divided by {}: {} = {} x {} + {}", total, P, total, P, total / P, total % P);
+    row(&format!("the {}-day gap divided by {}, remainder", A, P), A % P);
     row(&format!("shared factor of {} and {}, by listing", P, A), listing_gcd(P, A));
     println!("a mix landing on 1: {} x {} + {} x {} = {}", A, x, P, y, A * x + P * y);
     println!("times {}: {} x {} + {} x {} = {}", B, total, x, P * B, y, total * x + P * B * y);
     println!("{} x {} = {} x {}, {} = {} x {}, so {} = {} x {}",
              total, x, P, (total / P) * x, P * B, P, B, B, P, (total / P) * x + B * y);
-    row(&format!("the ${} gift shared by {}, remainder", B, P), B % P);
-    row(&format!("{} x {} = {} shared by {}, remainder", U, V, U * V, C), (U * V) % C);
+    row(&format!("the {} calls divided by {}, remainder", B, P), B % P);
+    row(&format!("{} x {} = {} divided by {}, remainder", U, V, U * V, C), (U * V) % C);
     println!("but {} into {} leaves {}, {} into {} leaves {}, gcd({}, {}) = {}",
              C, U, U % C, C, V, V % C, C, U, listing_gcd(C, U));
+    let (week, days): (Vec<i64>, Vec<i64>) = ((0..P).map(|n| (A * n) % P).collect(), (0..C).map(|n| (U * n) % C).collect());
+    let show = |v: &Vec<i64>| v.iter().map(|d| d.to_string()).collect::<Vec<String>>().join(" ");
+    println!("call nights, days after Monday: {};  {}-day club days: {}", show(&week), C, show(&days));
     assert!(total == 84 && total % P == 0 && A % P == 4 && B % P == 0);
     assert!(A * x + P * y == 1 && total * x + P * B * y == B && (total / P) * x + B * y == B / P && B / P == 3);
     assert!((U * V) % C == 0 && U % C == 4 && V % C == 3 && listing_gcd(C, U) == 2);
     assert!(C % 2 == 0 && U % 2 == 0);   // both even, so every mix of them is even, never 1
+    assert!((0..P).all(|d| week.contains(&d)) && (0..C).filter(|d| days.contains(d)).collect::<Vec<i64>>() == vec![0, 2, 4]);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
-4 gifts of $21, the money raised          84
-84 shared by 7: 84 = 7 x 12 + 0
-the 4 gifts shared by 7, remainder         4
+21 calls 4 days apart, days passed        84
+84 divided by 7: 84 = 7 x 12 + 0
+the 4-day gap divided by 7, remainder      4
 shared factor of 7 and 4, by listing       1
 a mix landing on 1: 4 x 2 + 7 x -1 = 1
 times 21: 84 x 2 + 147 x -1 = 21
 84 x 2 = 7 x 24, 147 = 7 x 21, so 21 = 7 x 3
-the $21 gift shared by 7, remainder        0
-4 x 9 = 36 shared by 6, remainder          0
+the 21 calls divided by 7, remainder       0
+4 x 9 = 36 divided by 6, remainder         0
 but 6 into 4 leaves 4, 6 into 9 leaves 3, gcd(6, 4) = 2
+call nights, days after Monday: 0 4 1 5 2 6 3;  6-day club days: 0 4 2 0 4 2
 ALL CHECKS PASS
 ```
 
@@ -234,7 +245,7 @@ Both outputs match line for line.
 
 ### Lean
 
-Lean proves three things for every whole number, not just the office's, and checks the office's numbers one by one.
+Lean proves three things for every whole number, not just the rota's, and checks the rota's numbers one by one.
 
 - Euclid's lemma: if a prime divides the product of two whole numbers and misses the first, it divides the second.
 - Step 0: a prime that misses a number shares only 1 with it, so the two are coprime.
@@ -287,12 +298,12 @@ theorem composite_divides_a_product_but_neither_factor
   · intro h
     exact absurd (Nat.le_of_dvd (by omega) h) (by omega)
 
--- The office: 4 gifts of $21 make $84, and 7 is prime.
+-- The rota: 21 calls, 4 days apart, take 84 days, and 7 is prime.
 example : 4 * 21 = 84 := by decide
 example : Nat.Prime 7 := by norm_num
--- 7 divides the total: 84 = 7 × 12.
+-- 7 divides the days passed: 84 = 7 × 12, whole weeks.
 example : 84 = 7 * 12 ∧ 7 ∣ 84 := by decide
--- 7 misses the gift count: 4 shared by 7 leaves 4.
+-- 7 misses the 4-day gap: 4 divided by 7 leaves 4.
 example : 4 % 7 = 4 ∧ ¬ 7 ∣ 4 := by decide
 -- So 7 and 4 share only 1.
 example : Nat.gcd 7 4 = 1 := by norm_num
@@ -301,7 +312,7 @@ example : (4 : ℤ) * 2 + 7 * (-1) = 1 := by decide
 example : (84 : ℤ) * 2 + 147 * (-1) = 21 ∧ (84 : ℤ) = 4 * 21 ∧ (147 : ℤ) = 7 * 21 := by decide
 -- Pull the 7 out: 84 × 2 = 7 × 24, 147 = 7 × 21, and 7 × (24 − 21) = 7 × 3 = 21.
 example : 84 * 2 = 7 * 24 ∧ 7 * (24 - 21) = 7 * 3 ∧ 7 * 3 = 21 := by decide
--- The 7 is inside the gift: 21 shared by 7 leaves 0.
+-- The 7 is inside the number of calls: 21 divided by 7 leaves 0.
 example : 21 % 7 = 0 ∧ 7 ∣ 21 := by decide
 -- The composite 6 = 2 × 3 divides 36 = 4 × 9 but neither 4 nor 9.
 example : ¬ Nat.Prime 6 := by norm_num
@@ -311,13 +322,16 @@ example : 4 % 6 = 4 ∧ 9 % 6 = 3 ∧ ¬ 6 ∣ 4 ∧ ¬ 6 ∣ 9 := by decide
 example : 2 ∣ 4 ∧ 3 ∣ 9 := by decide
 -- 6 and 4 share the factor 2, so no mix of them lands on 1.
 example : Nat.gcd 6 4 = 2 := by norm_num
+-- The first 7 call nights land on 7 different weekdays; the club meets on only 3 of 6 days.
+example : (List.range 7).map (fun n => 4 * n % 7) = [0, 4, 1, 5, 2, 6, 3] := by decide
+example : (List.range 6).map (fun n => 4 * n % 6) = [0, 4, 2, 0, 4, 2] := by decide
 
 #print axioms prime_dividing_product_and_missing_one_factor_divides_the_other
 #print axioms prime_missing_a_number_is_coprime_to_it
 #print axioms composite_divides_a_product_but_neither_factor
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'prime_dividing_product_and_missing_one_factor_divides_the_other' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -327,8 +341,8 @@ example : Nat.gcd 6 4 = 2 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> Guess first, then run. The numbers are pinned to this office, so the script will stop — on an assert, or on the hunt for the mix coming up empty.
-> - **Change the prime to 3.** The printed maths works out: the mix 4 × 1 + 3 × (−1) = 1, the gift 3 × 7. Then the assert pinned to 4 shared by 7 leaving 4 fires.
+> Guess first, then run. The numbers are pinned to this rota, so the script will stop — on an assert, or on the hunt for the mix coming up empty.
+> - **Change the prime to 3.** The printed maths works out: the mix 4 × 1 + 3 × (−1) = 1, and 21 = 3 × 7. Then the assert pinned to 4 divided by 7 leaving 4 fires.
 > - **Change the 7 to 6.** The hunt for a mix landing on 1 finds nothing and the script stops there — the lemma failing in front of you.
 
 ---
@@ -338,7 +352,7 @@ example : Nat.gcd 6 4 = 2 := by norm_num
 > [!warning]
 > **Thinking any number that divides a product sits whole inside one of the two factors.** Only primes promise that. 6 divides 36 and hides in neither: half in the 4, half in the 9.
 >
-> - **Expecting the prime in both.** One is all it promises: 4 shared by 7 leaves 4.
+> - **Expecting the prime in both.** One is all it promises: 4 divided by 7 leaves 4.
 > - **Dropping the "does not divide" half.** Without it you know the prime is in one of the two, but not which. 7 misses the 4, so it is the 21.
 > - **Stretching it to a long product.** It holds one factor at a time, but the repeating needs [Strong induction and the least element](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md).
 
@@ -351,7 +365,7 @@ example : Nat.gcd 6 4 = 2 := by norm_num
 - **Check digits and primality tests.** A check digit against a prime catches two swapped digits ([ISBN-10 and the prime modulus 11](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/02-isbn-check-digit.md)), and one that squares to 1 on a prime clock must be 1 or −1 — the step [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md) leans on.
 
 > **Say it back**
-> 7 divides the $84, raised as 4 gifts of $21. 7 does not divide 4, so the 7 must be inside a gift — and it is: 21 = 7 × 3. Why: 7 and 4 share no factor, so a mix of them lands on 1, and times 21 that mix puts the 7 in both terms on the left. Only primes get this: 6 divides 36 but neither the 4 nor the 9, since 6 is 2 × 3.
+> 21 calls, 4 days apart, take 84 days, and 7 divides 84. 7 does not divide 4, so the 7 must be inside the 21 — and it is: 21 = 7 × 3. Why: 7 and 4 share no factor, so a mix of them lands on 1, and times 21 that mix puts the 7 in both terms on the left. Only primes get this: 6 divides 36 but neither the 4 nor the 9, since 6 is 2 × 3.
 
 ---
 
@@ -368,7 +382,7 @@ example : Nat.gcd 6 4 = 2 := by norm_num
 - [Wilson's theorem](../04-Powers%20on%20the%20Clock/06-wilsons-theorem.md): pairing each number with the one that undoes it, on a prime clock.
 - [ISBN-10 and the prime modulus 11](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/02-isbn-check-digit.md): a check digit against a prime, and why a swap cannot slip past.
 - [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md): the primality test built on a prime dividing one factor.
-- [Lagrange's root bound](../04-Powers%20on%20the%20Clock/07-lagrange-root-bound.md): a degree-d polynomial has at most d roots on a prime clock, but x^2 = 1 has four on the 8-clock.
+- [Lagrange's root bound](../04-Powers%20on%20the%20Clock/07-lagrange-root-bound.md): on a prime clock a product reads 0 only when a factor does, so a degree-d polynomial has at most d roots.
 
 Left open: one prime lands in one factor, but does every number break into primes in only one way?
 
